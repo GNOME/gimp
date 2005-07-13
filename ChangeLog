@@ -1,3 +1,11 @@
+2005-07-13  Michael Schumacher  <schumaml@cvs.gnome.org>
+
+	* plug-ins/gfig/gfig-dialog.c
+	* plug-ins/gfig/gfig-grid.c
+	* plug-ins/gfig/gfig.h: applied a patch by Ted Shaneyfelt that
+	addresses parts of bug 151092: less sectors on inner, more sectors
+	on outer tracks. 
+
 2005-07-13  Sven Neumann  <sven@gimp.org>
 
 	* app/base/Makefile.am

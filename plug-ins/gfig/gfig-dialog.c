@@ -94,7 +94,12 @@ SelectItVals selvals =
     FALSE,                /* drawgrid                      */
     FALSE,                /* snap2grid                     */
     FALSE,                /* lockongrid                    */
-    TRUE                  /* show control points           */
+    TRUE,                 /* show control points           */
+    0.0,                  /* grid_radius_min               */
+    10.0,                 /* grid_radius_interval          */
+    0.0,	          /* grid_rotation                 */
+    5.0,                  /* grid_granularity              */
+    120                   /* grid_sectors_desired          */
   },
   FALSE,                  /* show image                    */
   MIN_UNDO + (MAX_UNDO - MIN_UNDO)/2,  /* Max level of undos */
@@ -127,6 +132,8 @@ selection_option selopt =
 typedef struct
 {
   GtkAdjustment *gridspacing;
+  GtkAdjustment *grid_sectors_desired;
+  GtkAdjustment *grid_radius_interval;
   GtkWidget     *gridtypemenu;
   GtkWidget     *drawgrid;
   GtkWidget     *snap2grid;
@@ -1348,6 +1355,8 @@ gfig_grid_action_callback (GtkAction *action,
       GtkWidget *table;
       GtkWidget *combo;
       GtkObject *size_data;
+      GtkObject *sectors_data;
+      GtkObject *radius_data;
 
       dialog = gimp_dialog_new (_("Grid"), "gfig-grid",
                                 GTK_WIDGET (data), 0, NULL, NULL,
@@ -1395,6 +1404,45 @@ gfig_grid_action_callback (GtkAction *action,
       gfig_opt_widget.gridspacing = GTK_ADJUSTMENT (size_data);
       g_object_add_weak_pointer (G_OBJECT (gfig_opt_widget.gridspacing),
                                  (gpointer) &gfig_opt_widget.gridspacing);
+
+      sectors_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
+                                        _("Polar grid sectors desired:"), 1, 5,
+                                        selvals.opts.grid_sectors_desired,
+                                        5, 360, 5, 1, 0,
+                                        TRUE, 0, 0,
+                                        NULL, NULL);
+      g_signal_connect (sectors_data, "value_changed",
+                        G_CALLBACK (gimp_int_adjustment_update),
+                        &selvals.opts.grid_sectors_desired);
+      g_signal_connect (sectors_data, "value_changed",
+                        G_CALLBACK (draw_grid_clear),
+                        NULL);
+
+      gfig_opt_widget.grid_sectors_desired = GTK_ADJUSTMENT (sectors_data);
+      g_object_add_weak_pointer (G_OBJECT (gfig_opt_widget.grid_sectors_desired),
+                                 (gpointer) &gfig_opt_widget.grid_sectors_desired);
+
+
+      gfig_opt_widget.gridspacing = GTK_ADJUSTMENT (size_data);
+      g_object_add_weak_pointer (G_OBJECT (gfig_opt_widget.gridspacing),
+                                 (gpointer) &gfig_opt_widget.gridspacing);
+
+      radius_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
+                                        _("Polar grid radius interval:"), 1, 5,
+                                        selvals.opts.grid_radius_interval,
+                                        5, 50, 5, 1, 0,
+                                        TRUE, 0, 0,
+                                        NULL, NULL);
+      g_signal_connect (radius_data, "value_changed",
+                        G_CALLBACK (gimp_double_adjustment_update),
+                        &selvals.opts.grid_radius_interval);
+      g_signal_connect (radius_data, "value_changed",
+                        G_CALLBACK (draw_grid_clear),
+                        NULL);
+
+      gfig_opt_widget.grid_radius_interval = GTK_ADJUSTMENT (radius_data);
+      g_object_add_weak_pointer (G_OBJECT (gfig_opt_widget.grid_radius_interval),
+                                 (gpointer) &gfig_opt_widget.grid_radius_interval);
 
       combo = gimp_int_combo_box_new (_("Rectangle"), RECT_GRID,
                                       _("Polar"),     POLAR_GRID,
@@ -1448,6 +1496,14 @@ options_update (GFigObj *old_obj)
     {
       old_obj->opts.gridspacing = selvals.opts.gridspacing;
     }
+  if (selvals.opts.grid_sectors_desired != old_obj->opts.grid_sectors_desired)
+    {
+      old_obj->opts.grid_sectors_desired = selvals.opts.grid_sectors_desired;
+    }
+  if (selvals.opts.grid_radius_interval != old_obj->opts.grid_radius_interval)
+    {
+      old_obj->opts.grid_radius_interval = selvals.opts.grid_radius_interval;
+    }
   if (selvals.opts.gridtype != old_obj->opts.gridtype)
     {
       old_obj->opts.gridtype = selvals.opts.gridtype;
@@ -1475,6 +1531,18 @@ options_update (GFigObj *old_obj)
       if (gfig_opt_widget.gridspacing)
         gtk_adjustment_set_value (gfig_opt_widget.gridspacing,
                                   gfig_context->current_obj->opts.gridspacing);
+    }
+  if (selvals.opts.grid_sectors_desired != gfig_context->current_obj->opts.grid_sectors_desired)
+    {
+      if (gfig_opt_widget.grid_sectors_desired)
+        gtk_adjustment_set_value (gfig_opt_widget.grid_sectors_desired,
+                                  gfig_context->current_obj->opts.grid_sectors_desired);
+    }
+  if (selvals.opts.grid_radius_interval != gfig_context->current_obj->opts.grid_radius_interval)
+    {
+      if (gfig_opt_widget.grid_radius_interval)
+        gtk_adjustment_set_value (gfig_opt_widget.grid_radius_interval,
+                                  gfig_context->current_obj->opts.grid_radius_interval);
     }
   if (selvals.opts.gridtype != gfig_context->current_obj->opts.gridtype)
     {
