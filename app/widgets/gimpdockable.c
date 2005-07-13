@@ -258,11 +258,7 @@ gimp_dockable_destroy (GtkObject *object)
     }
 
   if (dockable->blink_timeout_id)
-    {
-      g_source_remove (dockable->blink_timeout_id);
-      dockable->blink_timeout_id = 0;
-      dockable->blink_counter    = 0;
-    }
+    gimp_dockable_blink_cancel (dockable);
 
   GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
@@ -871,6 +867,18 @@ gimp_dockable_blink (GimpDockable *dockable)
   gimp_dockable_blink_timeout (dockable);
 }
 
+void
+gimp_dockable_blink_cancel (GimpDockable *dockable)
+{
+  g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
+
+  if (dockable->blink_timeout_id)
+    {
+      g_source_remove (dockable->blink_timeout_id);
+      dockable->blink_timeout_id = 0;
+      dockable->blink_counter    = 0;
+    }
+}
 
 /*  private functions  */
 

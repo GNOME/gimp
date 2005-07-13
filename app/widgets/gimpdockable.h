@@ -90,6 +90,7 @@ GimpUIManager * gimp_dockable_get_menu       (GimpDockable   *dockable,
 void            gimp_dockable_detach         (GimpDockable   *dockable);
 
 void            gimp_dockable_blink          (GimpDockable   *dockable);
+void            gimp_dockable_blink_cancel   (GimpDockable   *dockable);
 
 
 #endif /* __GIMP_DOCKABLE_H__ */

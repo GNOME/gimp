@@ -1,5 +1,14 @@
 2005-07-13  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpdockable.[ch]: added new public function
+	gimp_dockable_blink_cancel() which stops title blinking.
+
+	* app/tools/gimpcolorpickertool.c (gimp_color_picker_tool_picked):
+	cancel blinking when updating a picked color so the dockable
+	doesn't flicker for each cursor movement.
+
+2005-07-13  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimppaletteeditor.c (gimp_palette_editor_pick_color):
 	add colors after the cursor. Fixes bug #150608.
 

@@ -33,6 +33,7 @@
 
 #include "widgets/gimpcolorframe.h"
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpdockable.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimppaletteeditor.h"
 #include "widgets/gimptooldialog.h"
@@ -300,6 +301,10 @@ gimp_color_picker_tool_picked (GimpColorTool      *color_tool,
                                                    screen,
                                                    "gimp-palette-editor",
                                                    -1);
+
+      /* don't blink like mad when updating */
+      if (pick_state == GIMP_COLOR_PICK_STATE_UPDATE)
+        gimp_dockable_blink_cancel (GIMP_DOCKABLE (dockable));
 
       palette_editor = gtk_bin_get_child (GTK_BIN (dockable));
 
