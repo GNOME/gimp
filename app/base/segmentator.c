@@ -634,8 +634,7 @@ smooth_mask (TileManager *mask,
 
   pixel_region_init (&region, mask, x, y, width, height, TRUE);
 
-  /* inefficient */
-  gaussian_blur_region (&region, 1.0, 1.0);
+  smooth_region (&region);
 }
 
 static void

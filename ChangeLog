@@ -1,3 +1,10 @@
+2005-07-13  Sven Neumann  <sven@gimp.org>
+
+	* app/paint-funcs/paint-funcs.[ch]: added smooth_region(), a
+	simple convolution filter to smooth a mask.
+
+	* app/base/segmentator.c (smooth_mask): use the new function.
+
 2005-07-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpdockable.[ch]: added new public function
