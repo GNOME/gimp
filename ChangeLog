@@ -1,3 +1,11 @@
+2005-07-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimppalette.c (gimp_palette_add_entry): actually return
+	the added entry, and not always the palette's last entry (argh!).
+
+	* app/widgets/gimppaletteeditor.c: make sure the cursor is always
+	on the newly added color. Really fixes #15060 this time.
+
 2005-07-13  Sven Neumann  <sven@gimp.org>
 
 	* app/paint-funcs/paint-funcs.[ch]: added smooth_region(), a

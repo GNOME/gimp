@@ -611,10 +611,10 @@ gimp_palette_duplicate (GimpData *data)
 }
 
 GimpPaletteEntry *
-gimp_palette_add_entry (GimpPalette      *palette,
-                        gint              position,
-                        const gchar      *name,
-                        const GimpRGB    *color)
+gimp_palette_add_entry (GimpPalette   *palette,
+                        gint           position,
+                        const gchar   *name,
+                        const GimpRGB *color)
 {
   GimpPaletteEntry *entry;
 
@@ -623,8 +623,8 @@ gimp_palette_add_entry (GimpPalette      *palette,
 
   entry = g_new0 (GimpPaletteEntry, 1);
 
-  entry->color    = *color;
-  entry->name     = g_strdup (name ? name : _("Untitled"));
+  entry->color = *color;
+  entry->name  = g_strdup (name ? name : _("Untitled"));
 
   if (position < 0 || position >= palette->n_colors)
     {
@@ -643,8 +643,9 @@ gimp_palette_add_entry (GimpPalette      *palette,
            list;
            list = g_list_next (list))
         {
-          entry = (GimpPaletteEntry *) list->data;
-          entry->position += 1;
+          GimpPaletteEntry *entry2 = list->data;
+
+          entry2->position += 1;
         }
     }
 

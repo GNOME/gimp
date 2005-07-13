@@ -493,8 +493,11 @@ gimp_palette_editor_pick_color (GimpPaletteEditor  *editor,
 
   if (GIMP_DATA_EDITOR (editor)->data_editable)
     {
-      GimpData *data  = gimp_data_editor_get_data (GIMP_DATA_EDITOR (editor));
-      gint      index = -1;
+      GimpPaletteEntry *entry;
+      GimpData         *data;
+      gint              index = -1;
+
+      data = gimp_data_editor_get_data (GIMP_DATA_EDITOR (editor));
 
       switch (pick_state)
         {
@@ -502,8 +505,12 @@ gimp_palette_editor_pick_color (GimpPaletteEditor  *editor,
           if (editor->color)
             index = editor->color->position + 1;
 
-          editor->color = gimp_palette_add_entry (GIMP_PALETTE (data), index,
-                                                  NULL, color);
+          entry = gimp_palette_add_entry (GIMP_PALETTE (data), index,
+                                          NULL, color);
+          palette_editor_select_entry (editor, entry);
+          palette_editor_draw_entries (editor,
+                                       entry->position / editor->columns,
+                                       entry->position % editor->columns);
           break;
 
         case GIMP_COLOR_PICK_STATE_UPDATE:
@@ -1088,9 +1095,14 @@ palette_editor_drop_color (GtkWidget     *widget,
 
   if (GIMP_DATA_EDITOR (editor)->data_editable)
     {
-      GimpPalette *palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
+      GimpPalette      *palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
+      GimpPaletteEntry *entry;
 
-      editor->color = gimp_palette_add_entry (palette, -1, NULL, color);
+      entry = gimp_palette_add_entry (palette, -1, NULL, color);
+      palette_editor_select_entry (editor, entry);
+      palette_editor_draw_entries (editor,
+                                   entry->position / editor->columns,
+                                   entry->position % editor->columns);
     }
 }
 
@@ -1105,11 +1117,12 @@ palette_editor_color_area_drop_color (GtkWidget     *widget,
 
   if (GIMP_DATA_EDITOR (editor)->data_editable)
     {
-      GimpPalette *palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
-      gint         entry_width;
-      gint         entry_height;
-      gint         row, col;
-      gint         pos;
+      GimpPalette      *palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
+      GimpPaletteEntry *entry;
+      gint              entry_width;
+      gint              entry_height;
+      gint              row, col;
+      gint              pos;
 
       /* calc drop pos */
       entry_width  = editor->col_width + SPACING;
@@ -1119,7 +1132,11 @@ palette_editor_color_area_drop_color (GtkWidget     *widget,
       pos          = row * editor->columns + col;
 
       /* adding at a negative or non-existing pos will automatically append */
-      editor->color = gimp_palette_add_entry (palette, pos, NULL, color);
+      entry = gimp_palette_add_entry (palette, pos, NULL, color);
+      palette_editor_select_entry (editor, entry);
+      palette_editor_draw_entries (editor,
+                                   entry->position / editor->columns,
+                                   entry->position % editor->columns);
     }
 }
 
