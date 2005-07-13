@@ -10,6 +10,8 @@
  * Freie Universitaet Berlin, June 2005.
  * http://www.inf.fu-berlin.de/inst/pubs/tr-b-05-07.pdf
  *
+ * See http://www.siox.org/ for more information.
+ *
  * Algorithm idea by Gerald Friedland.
  * This implementation is Copyright (C) 2005
  * by Gerald Friedland <fland@inf.fu-berlin.de>
@@ -42,7 +44,7 @@
 #include "paint-funcs/paint-funcs.h"
 
 #include "pixel-region.h"
-#include "segmentator.h"
+#include "siox.h"
 #include "tile-manager.h"
 
 
@@ -214,7 +216,7 @@ stageone (lab       *points,
           int        dims,
           int        depth,
           ArrayList *clusters,
-          float      limits[DIMS],
+          float      limits[SIOX_DIMS],
           int        length)
 {
   int    curdim = depth % dims;
@@ -329,7 +331,7 @@ stagetwo (lab       *points,
           int        dims,
           int        depth,
           ArrayList *clusters,
-          float      limits[DIMS],
+          float      limits[SIOX_DIMS],
           int        length,
           int        total,
           float      threshold)
@@ -483,7 +485,7 @@ euklid (const lab p,
 static lab *
 create_signature (lab   *input,
                   int    length,
-                  float  limits[DIMS],
+                  float  limits[SIOX_DIMS],
                   int   *returnlength)
 {
   ArrayList *clusters1;
@@ -504,7 +506,7 @@ create_signature (lab   *input,
 
   clusters1 = g_new0 (ArrayList, 1);
 
-  stageone (input, DIMS, 0, clusters1, limits, length);
+  stageone (input, SIOX_DIMS, 0, clusters1, limits, length);
   clusters1size = list_size (clusters1);
   centroids = g_new (lab, clusters1size);
   curelem = clusters1;
@@ -536,7 +538,7 @@ create_signature (lab   *input,
 
   clusters2 = g_new0 (ArrayList, 1);
 
-  stagetwo (centroids, DIMS, 0, clusters2, limits, clusters1size, length, 0.1);
+  stagetwo (centroids, SIOX_DIMS, 0, clusters2, limits, clusters1size, length, 0.1);
 
   /* see paper by tomasi */
   rval = list_to_array (clusters2, returnlength);
@@ -776,7 +778,7 @@ find_max_blob (TileManager *mask,
 
 /* Returns squared clustersize */
 static gfloat
-getclustersize (const float limits[DIMS])
+getclustersize (const float limits[SIOX_DIMS])
 {
   float sum = (limits[0] - (-limits[0])) * (limits[0] - (-limits[0]));
 
@@ -787,25 +789,22 @@ getclustersize (const float limits[DIMS])
 }
 
 
-/*
- * Call this method:
- * rgbs - the picture
- * confidencematrix - a confidencematrix with values <=0.1 is sure background,
- *                    >=0.9 is sure foreground, rest unknown
- * xres, yres - the dimensions of the picture and the confidencematrix
- * limits - a three dimensional float array specifing the accuracy
- *          a good value is: {0.66,1.25,2.5}
- * int smoothness - specifies how smooth the boundaries of a picture should
- *                  be made (value greater or equal to 0).
- *                  More smooth = fault tolerant,
- *                  less smooth = exact boundaries - try 3 for a first guess.
- * returns and writes into the confidencematrix the resulting segmentation
+/**
+ * siox_foreground_extract:
+ * @pixels:     the tiles to extract the foreground from
+ * @mask:       a trimap indicating sure foreground, sure background and
+ *              undecided regions
+ * @limits:     a three dimensional float array specifing the accuracy,
+ *              a good value is: { 0.66, 1.25, 2.5 }
+ * @smoothness: boundary smoothness (a good value is 3)
+ *
+ * Writes the resulting segmentation into @mask.
  */
 void
-foreground_extract (TileManager  *pixels,
-                    TileManager  *mask,
-                    gfloat        limits[DIMS],
-                    gint          smoothness)
+siox_foreground_extract (TileManager  *pixels,
+                         TileManager  *mask,
+                         gfloat        limits[SIOX_DIMS],
+                         gint          smoothness)
 {
   gfloat    clustersize = getclustersize (limits);
   gint      surebgcount = 0;
@@ -1012,268 +1011,4 @@ foreground_extract (TileManager  *pixels,
 
   /* Now dilate, to fill up boundary pixels killed by erode */
   dilate_mask (mask, 0, 0, width, height);
-}
-
-
-/************ Unused functions, for reference ***************/
-
-/* calculates alpha \times Confidencematrix */
-static void
-premultiply_matrix (float  alpha,
-                    float *cm,
-                    int    length)
-{
-  int i;
-
-  for (i = 0; i < length; i++)
-    cm[i] = alpha * cm[i];
-}
-
-/* Normalizes a confidencematrix */
-static void
-normalize_matrix (float *cm,
-                  int   length)
-{
-  float max = 0.0;
-  float alpha = 0.0;
-  int i;
-
-  for (i = 0; i < length; i++)
-    {
-      if (max < cm[i])
-        max = cm[i];
-    }
-
-  if (max <= 0.0)
-    return;
-  if (max == 1.00)
-    return;
-
-  alpha = 1.00f / max;
-  premultiply_matrix (alpha, cm, length);
-}
-
-/* A confidence matrix eroder */
-static void
-erode2 (float *cm,
-        int    xres,
-        int    yres)
-{
-  int idx, x, y;
-
-  /* From right */
-  for (y = 0; y < yres; y++)
-    {
-      for (x = 0; x < xres - 1; x++)
-        {
-          idx = (y * xres) + x;
-          cm[idx] = MIN (cm[idx], cm[idx + 1]);
-        }
-    }
-
-  /* From left */
-  for (y = 0; y < yres; y++)
-    {
-      for (x = xres - 1; x >= 1; x--)
-        {
-          idx = (y * xres) + x;
-          cm[idx] = MIN (cm[idx - 1], cm[idx]);
-        }
-    }
-
-  /* From down */
-  for (y = 0; y < yres - 1; y++)
-    {
-      for (x = 0; x < xres; x++)
-        {
-          idx = (y * xres) + x;
-          cm[idx] = MIN (cm[idx], cm[((y + 1) * xres) + x]);
-        }
-    }
-
-  /* From up */
-  for (y = yres - 1; y >= 1; y--)
-    {
-      for (x = 0; x < xres; x++)
-        {
-          idx = (y * xres) + x;
-          cm[idx] = MIN (cm[((y - 1) * xres) + x], cm[idx]);
-        }
-    }
-}
-
-/* A confidence matrix dilater */
-static void
-dilate2 (float *cm,
-         int    xres,
-         int    yres)
-{
-  int x, y, idx;
-
-  /* From right */
-  for (y = 0; y < yres; y++)
-    {
-      for (x = 0; x < xres - 1; x++) {
-        idx = (y * xres) + x;
-        cm[idx] = MAX (cm[idx], cm[idx + 1]);
-      }
-    }
-
-  /* From left */
-  for (y = 0; y < yres; y++)
-    {
-      for (x = xres - 1; x >= 1; x--)
-        {
-          idx = (y * xres) + x;
-          cm[idx] = MAX (cm[idx - 1], cm[idx]);
-        }
-    }
-
-  /* From down */
-  for (y = 0; y < yres - 1; y++)
-    {
-      for (x = 0; x < xres; x++)
-        {
-          idx = (y * xres) + x;
-          cm[idx] = MAX (cm[idx], cm[((y + 1) * xres) + x]);
-        }
-    }
-
-    /* From up */
-   for (y = yres - 1; y >= 1; y--)
-     {
-       for (x = 0; x < xres; x++)
-         {
-           idx = (y * xres) + x;
-           cm[idx] = MAX (cm[((y - 1) * xres) + x], cm[idx]);
-         }
-     }
-}
-
-/* Smoothes the confidence matrix */
-static void
-smoothcm (float *cm,
-          int    xres,
-          int    yres,
-          float  f1,
-          float  f2,
-          float  f3)
-{
-  int y, x, idx;
-
-  /* Smoothright */
-  for (y = 0; y < yres; y++)
-    {
-      for (x = 0; x < xres - 2; x++)
-        {
-          idx = (y * xres) + x;
-          cm[idx] =
-            f1 * cm[idx]     +
-            f2 * cm[idx + 1] +
-            f3 * cm[idx + 2];
-        }
-    }
-
-  /* Smoothleft */
-  for (y = 0; y < yres; y++)
-    {
-      for (x = xres - 1; x >= 2; x--)
-        {
-          idx = (y * xres) + x;
-          cm[idx] =
-            f3 * cm[idx - 2] +
-            f2 * cm[idx - 1] +
-            f1 * cm[idx];
-      }
-    }
-
-  /* Smoothdown */
-  for (y = 0; y < yres - 2; y++)
-    {
-      for (x = 0; x < xres; x++)
-        {
-          idx = (y * xres) + x;
-          cm[idx] =
-            f1 * cm[idx] +
-            f2 * cm[((y + 1) * xres) + x] +
-            f3 * cm[((y + 2) * xres) + x];
-        }
-    }
-
-  /* Smoothup */
-  for (y = yres - 1; y >= 2; y--)
-    {
-      for (x = 0; x < xres; x++)
-        {
-          idx = (y * xres) + x;
-          cm[idx] =
-            f3 * cm[((y - 2) * xres) + x] +
-            f2 * cm[((y - 1) * xres) + x] +
-            f1 * cm[idx];
-        }
-    }
-}
-
-/* region growing */
-static void
-findmaxblob (float *cm,
-             guint *image,
-             int    xres,
-             int    yres)
-{
-  int     i;
-  int     curlabel = 1;
-  int     maxregion = 0;
-  int     maxblob = 0;
-  int     regioncount = 0;
-  int     pos = 0;
-  int     length = xres * yres;
-  int    *labelfield = g_new0 (int, length);
-  GQueue *q = g_queue_new ();
-
-  for (i = 0; i < length; i++)
-    {
-      regioncount = 0;
-
-      if (labelfield[i] == 0 && cm[i] >= 0.5)
-        g_queue_push_tail (q, GINT_TO_POINTER (i));
-
-      while (! g_queue_is_empty (q))
-        {
-          pos = GPOINTER_TO_INT (g_queue_pop_head (q));
-
-          if (pos < 0 || pos >= length)
-            continue;
-
-          if (labelfield[pos] == 0 && cm[pos] >= 0.5f)
-            {
-              labelfield[pos] = curlabel;
-
-              regioncount++;
-
-              g_queue_push_tail (q, GINT_TO_POINTER (pos + 1));
-              g_queue_push_tail (q, GINT_TO_POINTER (pos - 1));
-              g_queue_push_tail (q, GINT_TO_POINTER (pos + xres));
-              g_queue_push_tail (q, GINT_TO_POINTER (pos - xres));
-            }
-        }
-
-      if (regioncount > maxregion)
-        {
-          maxregion = regioncount;
-          maxblob = curlabel;
-        }
-
-      curlabel++;
-    }
-
-  for (i = 0; i < length; i++)
-    {
-      /* Kill everything that is not biggest blob! */
-      if (labelfield[i] != 0 && labelfield[i] != maxblob)
-        cm[i] = 0.0;
-    }
-
-  g_queue_free (q);
-  g_free (labelfield);
 }

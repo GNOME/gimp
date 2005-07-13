@@ -10,6 +10,8 @@
  * Freie Universitaet Berlin, June 2005.
  * http://www.inf.fu-berlin.de/inst/pubs/tr-b-05-07.pdf
  *
+ * See http://www.siox.org/ for more information.
+ *
  * Algorithm idea by Gerald Friedland.
  * This implementation is Copyright (C) 2005
  * by Gerald Friedland <fland@inf.fu-berlin.de>
@@ -37,13 +39,13 @@
 
 
 /* Amount of color dimensions in one point */
-#define DIMS 3
+#define SIOX_DIMS 3
 
 
-void  foreground_extract (TileManager  *tiles,
-                          TileManager  *trimap,
-                          gfloat        limits[DIMS],
-                          gint          smoothness);
+void  siox_foreground_extract (TileManager  *tiles,
+                               TileManager  *trimap,
+                               gfloat        limits[SIOX_DIMS],
+                               gint          smoothness);
 
 
 #endif /* __SEGMENTATOR_H__ */
