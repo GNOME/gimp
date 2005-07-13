@@ -1,6 +1,5 @@
 /*
- * The GIMP Foreground Extraction Utility
- * segmentator.c - main algorithm.
+ * SIOX: Simple Interactive Object Extraction
  *
  * For algorithm documentation refer to:
  * G. Friedland, K. Jantz, L. Knipping, R. Rojas:
@@ -34,8 +33,8 @@
  */
 
 
-#ifndef __SEGMENTATOR_H__
-#define __SEGMENTATOR_H__
+#ifndef __SIOX_H__
+#define __SIOX_H__
 
 
 /* Amount of color dimensions in one point */
@@ -48,4 +47,4 @@ void  siox_foreground_extract (TileManager  *tiles,
                                gint          smoothness);
 
 
-#endif /* __SEGMENTATOR_H__ */
+#endif /* __SIOX_H__ */

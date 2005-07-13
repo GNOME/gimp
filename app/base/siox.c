@@ -1,6 +1,5 @@
 /*
- * The GIMP Foreground Extraction Utility
- * segmentator.c - main algorithm.
+ * SIOX: Simple Interactive Object Extraction
  *
  * For algorithm documentation refer to:
  * G. Friedland, K. Jantz, L. Knipping, R. Rojas:
