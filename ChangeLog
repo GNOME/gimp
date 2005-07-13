@@ -1,5 +1,10 @@
 2005-07-13  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimppaletteeditor.c (gimp_palette_editor_pick_color):
+	add colors after the cursor. Fixes bug #150608.
+
+2005-07-13  Michael Natterer  <mitch@gimp.org>
+
 	* app/pdb/procedural_db.c (procedural_db_init_procs): sorted list
 	of deprecated procedures so deprecations since 2.0 and 2.2 are
 	grouped together.

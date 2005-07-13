@@ -493,12 +493,16 @@ gimp_palette_editor_pick_color (GimpPaletteEditor  *editor,
 
   if (GIMP_DATA_EDITOR (editor)->data_editable)
     {
-      GimpData *data = gimp_data_editor_get_data (GIMP_DATA_EDITOR (editor));
+      GimpData *data  = gimp_data_editor_get_data (GIMP_DATA_EDITOR (editor));
+      gint      index = -1;
 
       switch (pick_state)
         {
         case GIMP_COLOR_PICK_STATE_NEW:
-          editor->color = gimp_palette_add_entry (GIMP_PALETTE (data), -1,
+          if (editor->color)
+            index = editor->color->position + 1;
+
+          editor->color = gimp_palette_add_entry (GIMP_PALETTE (data), index,
                                                   NULL, color);
           break;
 
