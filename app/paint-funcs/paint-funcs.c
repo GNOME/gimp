@@ -142,8 +142,8 @@ static void     apply_layer_mode_replace (guchar         *src1,
                                           guint           bytes2,
                                           const gboolean *affect);
 
-static inline void rotate_pointers       (guchar         **p,
-                                          guint32          n);
+static inline void rotate_pointers       (guchar        **p,
+                                          guint32         n);
 
 static void
 update_tile_rowhints (Tile *tile,
@@ -2845,10 +2845,10 @@ rotate_pointers (guchar  **p,
   guchar  *tmp;
 
   tmp = p[0];
-  for (i = 0; i < n-1; i++)
-    {
-      p[i] = p[i+1];
-    }
+
+  for (i = 0; i < n - 1; i++)
+    p[i] = p[i + 1];
+
   p[i] = tmp;
 }
 
@@ -3317,8 +3317,8 @@ smooth_region (PixelRegion *region)
   gint      x, y;
   gint      width;
   gint      i;
-  guchar   *buf[3];  /* caches the the region's pixels           */
-  guchar   *out;     /* holds the new scan line we are computing */
+  guchar   *buf[3];
+  guchar   *out;
 
   width = region->w;
 
@@ -3333,16 +3333,13 @@ smooth_region (PixelRegion *region)
   buf[0][0]         = buf[0][1];
   buf[0][width + 1] = buf[0][width];
 
-  memcpy (buf[0], buf[1], width + 2);
+  memcpy (buf[1], buf[2], width + 2);
 
   for (y = 0; y < region->h; y++)
     {
-      rotate_pointers (buf, 2);
-
-      if (y < region->h + 1)
+      if (y + 1 < region->h)
         {
-          pixel_region_get_row (region,
-                                region->x, region->y + y + 1, width,
+          pixel_region_get_row (region, region->x, region->y + y + 1, width,
                                 buf[2] + 1, 1);
 
           buf[2][0]         = buf[2][1];
@@ -3363,6 +3360,8 @@ smooth_region (PixelRegion *region)
         }
 
       pixel_region_set_row (region, region->x, region->y + y, width, out);
+
+      rotate_pointers (buf, 3);
     }
 
   for (i = 0; i < 3; i++)
