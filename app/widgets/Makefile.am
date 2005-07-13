@@ -283,6 +283,8 @@ libappwidgets_a_sources = \
 	gimpviewrendererimagefile.h	\
 	gimpviewrendererlayer.c		\
 	gimpviewrendererlayer.h		\
+	gimpviewrendererpalette.c	\
+	gimpviewrendererpalette.h	\
 	gimpviewrenderervectors.c	\
 	gimpviewrenderervectors.h	\
 	gimpwidgets-constructors.c	\

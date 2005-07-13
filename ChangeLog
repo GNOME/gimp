@@ -1,3 +1,13 @@
+2005-07-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpviewrendererpalette.[ch]: new view renderer,
+	does nothing yet except chaining up in ::render().
+
+	* app/widgets/gimpviewrenderer-utils.c
+	(gimp_view_renderer_type_by_viewable_type): use it for palettes.
+
 2005-07-13  Michael Schumacher  <schumaml@cvs.gnome.org>
 
 	* plug-ins/gfig/gfig-dialog.c

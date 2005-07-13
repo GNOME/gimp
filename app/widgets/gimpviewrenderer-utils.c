@@ -29,9 +29,10 @@
 #include "core/gimpbuffer.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpgradient.h"
-#include "core/gimplayer.h"
 #include "core/gimpimage.h"
 #include "core/gimpimagefile.h"
+#include "core/gimplayer.h"
+#include "core/gimppalette.h"
 #include "vectors/gimpvectors.h"
 
 #include "gimpviewrendererbrush.h"
@@ -40,6 +41,7 @@
 #include "gimpviewrenderergradient.h"
 #include "gimpviewrendererimage.h"
 #include "gimpviewrendererimagefile.h"
+#include "gimpviewrendererpalette.h"
 #include "gimpviewrenderervectors.h"
 
 
@@ -82,6 +84,10 @@ gimp_view_renderer_type_from_viewable_type (GType viewable_type)
   else if (g_type_is_a (viewable_type, GIMP_TYPE_IMAGEFILE))
     {
       type = GIMP_TYPE_VIEW_RENDERER_IMAGEFILE;
+    }
+  else if (g_type_is_a (viewable_type, GIMP_TYPE_PALETTE))
+    {
+      type = GIMP_TYPE_VIEW_RENDERER_PALETTE;
     }
 
   return type;
