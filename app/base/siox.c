@@ -531,6 +531,7 @@ create_signature (lab   *input,
       centroids[i].a = centroid.a / (curelem->arraylength * 1.0);
       centroids[i].b = centroid.b / (curelem->arraylength * 1.0);
       centroids[i].cardinality = curelem->arraylength;
+
       i++;
       curelem = curelem->next;
     }
@@ -539,7 +540,8 @@ create_signature (lab   *input,
 
   clusters2 = g_new0 (ArrayList, 1);
 
-  stagetwo (centroids, SIOX_DIMS, 0, clusters2, limits, clusters1size, length, 0.1);
+  stagetwo (centroids,
+            SIOX_DIMS, 0, clusters2, limits, clusters1size, length, 0.1);
 
   /* see paper by tomasi */
   rval = list_to_array (clusters2, returnlength);
