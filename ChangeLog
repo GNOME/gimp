@@ -1,3 +1,11 @@
+2005-07-14  Sven Neumann  <sven@gimp.org>
+
+	* app/paint-funcs/paint-funcs.[ch]: added erode_region() and
+	dilate_region(). Less general than thin_region() and fatten_region()
+	but a little faster.
+
+	* app/base/siox.c: use the new functions.
+
 2005-07-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/Makefile.am

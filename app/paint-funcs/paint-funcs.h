@@ -388,6 +388,8 @@ void  fatten_region                       (PixelRegion *region,
                                            gint16       yradius);
 
 void  smooth_region                       (PixelRegion *region);
+void  erode_region                        (PixelRegion *region);
+void  dilate_region                       (PixelRegion *region);
 
 void  swap_region                         (PixelRegion *src,
                                            PixelRegion *dest);

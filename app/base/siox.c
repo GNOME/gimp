@@ -16,6 +16,8 @@
  * by Gerald Friedland <fland@inf.fu-berlin.de>
  * and Kristian Jantz <jantz@inf.fu-berlin.de>.
  *
+ * Adapted for GIMP by Sven Neumann <sven@gimp.org>
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
@@ -649,8 +651,7 @@ erode_mask (TileManager *mask,
 
   pixel_region_init (&region, mask, x, y, width, height, TRUE);
 
-  /* inefficient */
-  thin_region (&region, 1, 1, TRUE);
+  erode_region (&region);
 }
 
 static void
@@ -664,8 +665,7 @@ dilate_mask (TileManager *mask,
 
   pixel_region_init (&region, mask, x, y, width, height, TRUE);
 
-  /* inefficient */
-  fatten_region (&region, 1, 1);
+  dilate_region (&region);
 }
 
 static void

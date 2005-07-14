@@ -3350,13 +3350,149 @@ smooth_region (PixelRegion *region)
           memcpy (buf[2], buf[1], width + 2);
         }
 
-      for (x = 0 ; x < width; x++) /* render scan line */
+      for (x = 0 ; x < width; x++)
         {
           gint value = (buf[0][x] + buf[0][x+1] + buf[0][x+2] +
                         buf[1][x] + buf[2][x+1] + buf[1][x+2] +
                         buf[2][x] + buf[1][x+1] + buf[2][x+2]);
 
           out[x] = value / 9;
+        }
+
+      pixel_region_set_row (region, region->x, region->y + y, width, out);
+
+      rotate_pointers (buf, 3);
+    }
+
+  for (i = 0; i < 3; i++)
+    g_free (buf[i]);
+
+  g_free (out);
+}
+
+/*  Erode (radius 1 pixel) a mask (1bpp).  */
+void
+erode_region (PixelRegion *region)
+{
+  gint      x, y;
+  gint      width;
+  gint      i;
+  guchar   *buf[3];
+  guchar   *out;
+
+  width = region->w;
+
+  for (i = 0; i < 3; i++)
+    buf[i] = g_new (guchar, width + 2);
+
+  out = g_new (guchar, width);
+
+  /* load top of image */
+  pixel_region_get_row (region, region->x, region->y, width, buf[0] + 1, 1);
+
+  buf[0][0]         = buf[0][1];
+  buf[0][width + 1] = buf[0][width];
+
+  memcpy (buf[1], buf[2], width + 2);
+
+  for (y = 0; y < region->h; y++)
+    {
+      if (y + 1 < region->h)
+        {
+          pixel_region_get_row (region, region->x, region->y + y + 1, width,
+                                buf[2] + 1, 1);
+
+          buf[2][0]         = buf[2][1];
+          buf[2][width + 1] = buf[2][width];
+        }
+      else
+        {
+          memcpy (buf[2], buf[1], width + 2);
+        }
+
+      for (x = 0 ; x < width; x++)
+        {
+          gint min = 255;
+
+          if (buf[0][x]   < min) min = buf[0][x];
+          if (buf[0][x+1] < min) min = buf[0][x+1];
+          if (buf[0][x+2] < min) min = buf[0][x+2];
+          if (buf[1][x]   < min) min = buf[1][x];
+          if (buf[1][x+1] < min) min = buf[1][x+1];
+          if (buf[1][x+2] < min) min = buf[1][x+2];
+          if (buf[2][x]   < min) min = buf[2][x];
+          if (buf[2][x+1] < min) min = buf[2][x+1];
+          if (buf[2][x+2] < min) min = buf[2][x+2];
+
+          out[x] = min;
+        }
+
+      pixel_region_set_row (region, region->x, region->y + y, width, out);
+
+      rotate_pointers (buf, 3);
+    }
+
+  for (i = 0; i < 3; i++)
+    g_free (buf[i]);
+
+  g_free (out);
+}
+
+/*  Dilate (radius 1 pixel) a mask (1bpp).  */
+void
+dilate_region (PixelRegion *region)
+{
+  gint      x, y;
+  gint      width;
+  gint      i;
+  guchar   *buf[3];
+  guchar   *out;
+
+  width = region->w;
+
+  for (i = 0; i < 3; i++)
+    buf[i] = g_new (guchar, width + 2);
+
+  out = g_new (guchar, width);
+
+  /* load top of image */
+  pixel_region_get_row (region, region->x, region->y, width, buf[0] + 1, 1);
+
+  buf[0][0]         = buf[0][1];
+  buf[0][width + 1] = buf[0][width];
+
+  memcpy (buf[1], buf[2], width + 2);
+
+  for (y = 0; y < region->h; y++)
+    {
+      if (y + 1 < region->h)
+        {
+          pixel_region_get_row (region, region->x, region->y + y + 1, width,
+                                buf[2] + 1, 1);
+
+          buf[2][0]         = buf[2][1];
+          buf[2][width + 1] = buf[2][width];
+        }
+      else
+        {
+          memcpy (buf[2], buf[1], width + 2);
+        }
+
+      for (x = 0 ; x < width; x++)
+        {
+          gint max = 0;
+
+          if (buf[0][x]   < max) max = buf[0][x];
+          if (buf[0][x+1] < max) max = buf[0][x+1];
+          if (buf[0][x+2] < max) max = buf[0][x+2];
+          if (buf[1][x]   < max) max = buf[1][x];
+          if (buf[1][x+1] < max) max = buf[1][x+1];
+          if (buf[1][x+2] < max) max = buf[1][x+2];
+          if (buf[2][x]   < max) max = buf[2][x];
+          if (buf[2][x+1] < max) max = buf[2][x+1];
+          if (buf[2][x+2] < max) max = buf[2][x+2];
+
+          out[x] = max;
         }
 
       pixel_region_set_row (region, region->x, region->y + y, width, out);
