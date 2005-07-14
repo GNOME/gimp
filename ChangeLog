@@ -1,3 +1,15 @@
+2005-07-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimppaletteview.[ch]: new widget which manages the
+	selected palette entry itself and emits "selected", "activated"
+	and "context" signals. Not used yet.
+
+	* app/widgets/gimpviewrendererpalette.[ch]: reimplemented palette
+	drawing: added optional grid drawing and APIs to configure the
+	renderer. Should be ready for the palette editor now.
+
 2005-07-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpviewrendererpalette.c

@@ -91,13 +91,13 @@ gimp_view_renderer_palette_class_init (GimpViewRendererPaletteClass *klass)
 static void
 gimp_view_renderer_palette_init (GimpViewRendererPalette *renderer)
 {
+  renderer->cell_size = 4;
+  renderer->draw_grid = FALSE;
 }
 
 static void
 gimp_view_renderer_palette_finalize (GObject *object)
 {
-  GimpViewRendererPalette *renderer = GIMP_VIEW_RENDERER_PALETTE (object);
-
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
@@ -108,63 +108,146 @@ gimp_view_renderer_palette_render (GimpViewRenderer *renderer,
   GimpViewRendererPalette *renderpal = GIMP_VIEW_RENDERER_PALETTE (renderer);
   GimpPalette             *palette;
   guchar                  *row;
+  guchar                  *dest_row;
   GList                   *list;
-  gint                     columns;
-  gint                     rows;
-  gint                     cell_size;
-  gint                     x, y;
+  gint                     y;
 
   palette = GIMP_PALETTE (renderer->viewable);
 
   if (! renderer->buffer)
     renderer->buffer = g_new (guchar, renderer->height * renderer->rowstride);
 
-  memset (renderer->buffer, 255, renderer->height * renderer->rowstride);
-
-  if (palette->n_columns > 1)
-    cell_size = MAX (4, renderer->width / palette->n_columns);
+  if (renderpal->cell_size > 0)
+    {
+      if (palette->n_columns > 1)
+        renderpal->cell_width = MAX (renderpal->cell_size,
+                                     renderer->width / palette->n_columns);
+      else
+        renderpal->cell_width = renderpal->cell_size;
+    }
   else
-    cell_size = 4;
+    {
+      if (palette->n_columns > 1)
+        renderpal->cell_width = renderer->width / palette->n_columns;
+      else
+        renderpal->cell_width = renderer->width / 16;
+    }
 
-  columns = renderer->width  / cell_size;
-  rows    = renderer->height / cell_size;
+  renderpal->cell_width = MAX (4, renderpal->cell_width);
+
+  renderpal->columns = renderer->width / renderpal->cell_width;
+
+  renderpal->rows = palette->n_colors / renderpal->columns;
+  if (palette->n_colors % renderpal->columns)
+    renderpal->rows += 1;
+
+  renderpal->cell_height = MAX (4, renderer->height / renderpal->rows);
+
+  if (! renderpal->draw_grid)
+    renderpal->cell_height = MIN (renderpal->cell_height, renderpal->cell_width);
 
   list = palette->colors;
 
-  row = g_new0 (guchar, renderer->rowstride);
+  memset (renderer->buffer,
+          renderpal->draw_grid ? 0 : 255,
+          renderer->height * renderer->rowstride);
 
-  for (y = 0; y < rows && list; y++)
+  row = g_new (guchar, renderer->rowstride);
+
+  dest_row = renderer->buffer;
+
+  for (y = 0; y < renderer->height; y++)
     {
-      gint i;
-
-      memset (row, 255, renderer->rowstride);
-
-      for (x = 0; x < columns && list; x++)
+      if ((y % renderpal->cell_height) == 0)
         {
-          GimpPaletteEntry *entry = list->data;
+          guchar  r, g, b;
+          gint    x;
+          guchar *p = row;
 
-          list = g_list_next (list);
+          memset (row,
+                  renderpal->draw_grid ? 0 : 255,
+                  renderer->rowstride);
 
-          gimp_rgb_get_uchar (&entry->color,
-                              &row[x * cell_size * 3 + 0],
-                              &row[x * cell_size * 3 + 1],
-                              &row[x * cell_size * 3 + 2]);
+          r = g = b = (renderpal->draw_grid ? 0 : 255);
 
-          for (i = 1; i < cell_size; i++)
+          for (x = 0; x < renderer->width; x++)
             {
-              row[(x * cell_size + i) * 3 + 0] = row[(x * cell_size) * 3 + 0];
-              row[(x * cell_size + i) * 3 + 1] = row[(x * cell_size) * 3 + 1];
-              row[(x * cell_size + i) * 3 + 2] = row[(x * cell_size) * 3 + 2];
+              if ((x % renderpal->cell_width) == 0)
+                {
+                  if (list && renderer->width - x >= renderpal->cell_width)
+                    {
+                      GimpPaletteEntry *entry = list->data;
+
+                      list = g_list_next (list);
+
+                      gimp_rgb_get_uchar (&entry->color, &r, &g, &b);
+                    }
+                  else
+                    {
+                      r = g = b = (renderpal->draw_grid ? 0 : 255);
+                    }
+                }
+
+              if (renderpal->draw_grid && (x % renderpal->cell_width) == 0)
+                {
+                  *p++ = 0;
+                  *p++ = 0;
+                  *p++ = 0;
+                }
+              else
+                {
+                  *p++ = r;
+                  *p++ = g;
+                  *p++ = b;
+                }
             }
         }
 
-      for (i = 0; i < cell_size; i++)
-        memcpy (renderer->buffer + (y * cell_size + i) * renderer->rowstride,
-                row,
-                renderer->rowstride);
+      if (renderpal->draw_grid && (y % renderpal->cell_height) == 0)
+        {
+          memset (dest_row, 0,
+                  renderpal->cell_width * renderpal->columns * 3 + 3);
+        }
+      else
+        {
+          memcpy (dest_row, row, renderer->rowstride);
+        }
+
+      dest_row += renderer->rowstride;
     }
 
   g_free (row);
 
   renderer->needs_render = FALSE;
+}
+
+
+/*  public functions  */
+
+void
+gimp_view_renderer_palette_set_cell_size (GimpViewRendererPalette *renderer,
+                                          gint                     cell_size)
+{
+  g_return_if_fail (GIMP_IS_VIEW_RENDERER_PALETTE (renderer));
+
+  if (cell_size != renderer->cell_size)
+    {
+      renderer->cell_size = cell_size;
+
+      gimp_view_renderer_invalidate (GIMP_VIEW_RENDERER (renderer));
+    }
+}
+
+void
+gimp_view_renderer_palette_set_draw_grid (GimpViewRendererPalette *renderer,
+                                          gboolean                 draw_grid)
+{
+  g_return_if_fail (GIMP_IS_VIEW_RENDERER_PALETTE (renderer));
+
+  if (draw_grid != renderer->draw_grid)
+    {
+      renderer->draw_grid = draw_grid ? TRUE : FALSE;
+
+      gimp_view_renderer_invalidate (GIMP_VIEW_RENDERER (renderer));
+    }
 }

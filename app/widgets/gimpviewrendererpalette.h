@@ -37,6 +37,14 @@ typedef struct _GimpViewRendererPaletteClass  GimpViewRendererPaletteClass;
 struct _GimpViewRendererPalette
 {
   GimpViewRenderer  parent_instance;
+
+  gint              cell_size;
+  gboolean          draw_grid;
+
+  gint              cell_width;
+  gint              cell_height;
+  gint              columns;
+  gint              rows;
 };
 
 struct _GimpViewRendererPaletteClass
@@ -46,6 +54,11 @@ struct _GimpViewRendererPaletteClass
 
 
 GType   gimp_view_renderer_palette_get_type    (void) G_GNUC_CONST;
+
+void    gimp_view_renderer_palette_set_cell_size (GimpViewRendererPalette *renderer,
+                                                  gint                     cell_size);
+void    gimp_view_renderer_palette_set_draw_grid (GimpViewRendererPalette *renderer,
+                                                  gboolean                 draw_grid);
 
 
 #endif /* __GIMP_VIEW_RENDERER_PALETTE_H__ */

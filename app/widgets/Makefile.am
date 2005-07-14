@@ -189,6 +189,8 @@ libappwidgets_a_sources = \
 	gimppaletteeditor.h		\
 	gimppaletteselect.c		\
 	gimppaletteselect.h		\
+	gimppaletteview.c		\
+	gimppaletteview.h		\
 	gimppatternfactoryview.c	\
 	gimppatternfactoryview.h	\
 	gimppatternselect.c		\
