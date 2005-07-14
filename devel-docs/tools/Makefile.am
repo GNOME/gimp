@@ -23,7 +23,9 @@ LDADDS = \
 	$(X_LIBS) -lX11
 
 
+if ENABLE_GTK_DOC
 noinst_PROGRAMS = $(DOC_SHOOTER)
+endif
 
 EXTRA_PROGRAMS = doc-shooter
 
