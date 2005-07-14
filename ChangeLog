@@ -1,3 +1,14 @@
+2005-07-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimppaletteview.[ch]: added "entry-clicked" and
+	"color-dropped" signals. Completely handle color DND. Cleanup.
+
+	* app/core/gimpmarshal.list: marshallers for above signals.
+
+	* app/widgets/gimppaletteeditor.[ch]: chopped and reassembled.
+	Remove tons of code and use a GimpPaletteView instead of the
+	deprecated GtkPreview. Addresses bug #102204.
+
 2005-07-14  Sven Neumann  <sven@gimp.org>
 
 	* app/paint-funcs/paint-funcs.[ch]: added erode_region() and

@@ -37,7 +37,7 @@ struct _GimpPaletteEditor
 {
   GimpDataEditor    parent_instance;
 
-  GtkWidget        *color_area;
+  GtkWidget        *view;
   GtkWidget        *scrolled_window;
 
   GtkWidget        *color_name;
@@ -46,13 +46,11 @@ struct _GimpPaletteEditor
   GtkWidget        *color_dialog;
 
   GimpPaletteEntry *color;
-  GimpPaletteEntry *dnd_color;
 
   gfloat            zoom_factor;  /* range from 0.1 to 4.0 */
   gint              col_width;
   gint              last_width;
   gint              columns;
-  gboolean          columns_valid;
 };
 
 struct _GimpPaletteEditorClass

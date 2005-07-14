@@ -23,20 +23,25 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpcolor/gimpcolor.h"
+
 #include "widgets-types.h"
 
 #include "core/gimppalette.h"
 #include "core/gimpmarshal.h"
 
+#include "gimpdnd.h"
 #include "gimppaletteview.h"
 #include "gimpviewrendererpalette.h"
 
 
 enum
 {
+  ENTRY_CLICKED,
   ENTRY_SELECTED,
   ENTRY_ACTIVATED,
   ENTRY_CONTEXT,
+  COLOR_DROPPED,
   LAST_SIGNAL
 };
 
@@ -53,12 +58,24 @@ static gboolean gimp_palette_view_button_press   (GtkWidget        *widget,
 static void     gimp_palette_view_set_viewable   (GimpView         *view,
                                                   GimpViewable     *old_viewable,
                                                   GimpViewable     *new_viewable);
+static GimpPaletteEntry *
+                gimp_palette_view_find_entry     (GimpPaletteView *view,
+                                                  gint             x,
+                                                  gint             y);
 static void     gimp_palette_view_expose_entry   (GimpPaletteView  *view,
                                                   GimpPaletteEntry *entry);
 static void     gimp_palette_view_draw_selected  (GimpPaletteView  *view,
                                                   GdkRectangle     *area);
 static void     gimp_palette_view_invalidate     (GimpPalette      *palette,
                                                   GimpPaletteView  *view);
+static void     gimp_palette_view_drag_color     (GtkWidget        *widget,
+                                                  GimpRGB          *color,
+                                                  gpointer          data);
+static void     gimp_palette_view_drop_color     (GtkWidget        *widget,
+                                                  gint              x,
+                                                  gint              y,
+                                                  const GimpRGB    *color,
+                                                  gpointer          data);
 
 
 static guint view_signals[LAST_SIGNAL] = { 0 };
@@ -102,6 +119,17 @@ gimp_palette_view_class_init (GimpPaletteViewClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
+  view_signals[ENTRY_CLICKED] =
+    g_signal_new ("entry-clicked",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpPaletteViewClass, entry_clicked),
+                  NULL, NULL,
+                  gimp_marshal_VOID__POINTER_ENUM,
+                  G_TYPE_NONE, 2,
+                  G_TYPE_POINTER,
+                  GDK_TYPE_MODIFIER_TYPE);
+
   view_signals[ENTRY_SELECTED] =
     g_signal_new ("entry-selected",
                   G_TYPE_FROM_CLASS (klass),
@@ -132,6 +160,17 @@ gimp_palette_view_class_init (GimpPaletteViewClass *klass)
                   G_TYPE_NONE, 1,
                   G_TYPE_POINTER);
 
+  view_signals[COLOR_DROPPED] =
+    g_signal_new ("color-dropped",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpPaletteViewClass, color_dropped),
+                  NULL, NULL,
+                  gimp_marshal_VOID__POINTER_BOXED,
+                  G_TYPE_NONE, 2,
+                  G_TYPE_POINTER,
+                  GIMP_TYPE_RGB);
+
   widget_class->realize            = gimp_palette_view_realize;
   widget_class->unrealize          = gimp_palette_view_unrealize;
   widget_class->expose_event       = gimp_palette_view_expose;
@@ -148,6 +187,13 @@ gimp_palette_view_init (GimpPaletteView *view)
   view->selected  = NULL;
   view->dnd_entry = NULL;
   view->gc        = NULL;
+
+  gimp_dnd_color_source_add (GTK_WIDGET (view),
+                             gimp_palette_view_drag_color,
+			     view);
+  gimp_dnd_color_dest_add (GTK_WIDGET (view),
+                           gimp_palette_view_drop_color,
+                           view);
 }
 
 static void
@@ -199,28 +245,19 @@ static gboolean
 gimp_palette_view_button_press (GtkWidget      *widget,
                                 GdkEventButton *bevent)
 {
-  GimpPaletteView         *view  = GIMP_PALETTE_VIEW (widget);
-  GimpViewRendererPalette *renderer;
-  GimpPaletteEntry        *entry = NULL;
-  gint                     row, col;
+  GimpPaletteView  *view = GIMP_PALETTE_VIEW (widget);
+  GimpPaletteEntry *entry;
 
-  renderer = GIMP_VIEW_RENDERER_PALETTE (GIMP_VIEW (view)->renderer);
-
-  col = bevent->x / renderer->cell_width;
-  row = bevent->y / renderer->cell_height;
-
-  if (col >= 0 && col < renderer->columns &&
-      row >= 0 && row < renderer->rows)
-    {
-      entry =
-        g_list_nth_data (GIMP_PALETTE (GIMP_VIEW (view)->renderer->viewable)->colors,
-                         row * renderer->columns + col);
-    }
+  entry = gimp_palette_view_find_entry (view, bevent->x, bevent->y);
 
   view->dnd_entry = entry;
 
   if (! entry || bevent->button == 2)
     return FALSE;
+
+  if (bevent->type == GDK_BUTTON_PRESS)
+    g_signal_emit (view, view_signals[ENTRY_CLICKED], 0,
+                   entry, bevent->state);
 
   switch (bevent->button)
     {
@@ -260,7 +297,7 @@ gimp_palette_view_set_viewable (GimpView     *view,
   GimpPaletteView *pal_view = GIMP_PALETTE_VIEW (view);
 
   pal_view->dnd_entry = NULL;
-  pal_view->selected  = NULL;
+  gimp_palette_view_select_entry (pal_view, NULL);
 
   if (old_viewable)
     g_signal_handlers_disconnect_by_func (old_viewable,
@@ -302,13 +339,41 @@ gimp_palette_view_select_entry (GimpPaletteView  *view,
 
 /*  private funcions  */
 
+static GimpPaletteEntry *
+gimp_palette_view_find_entry (GimpPaletteView *view,
+                              gint             x,
+                              gint             y)
+{
+  GimpViewRendererPalette *renderer;
+  GimpPaletteEntry        *entry = NULL;
+  gint                     col, row;
+
+  renderer = GIMP_VIEW_RENDERER_PALETTE (GIMP_VIEW (view)->renderer);
+
+  col = x / renderer->cell_width;
+  row = y / renderer->cell_height;
+
+  if (col >= 0 && col < renderer->columns &&
+      row >= 0 && row < renderer->rows)
+    {
+      GimpPalette *palette;
+
+      palette = GIMP_PALETTE (GIMP_VIEW (view)->renderer->viewable);
+
+      entry = g_list_nth_data (palette->colors,
+                               row * renderer->columns + col);
+    }
+
+  return entry;
+}
+
 static void
 gimp_palette_view_expose_entry (GimpPaletteView  *view,
                                 GimpPaletteEntry *entry)
 {
   GimpViewRendererPalette *renderer;
   gint                     row, col;
-      GtkWidget               *widget = GTK_WIDGET (view);
+  GtkWidget               *widget = GTK_WIDGET (view);
 
   renderer = GIMP_VIEW_RENDERER_PALETTE (GIMP_VIEW (view)->renderer);
 
@@ -361,5 +426,34 @@ gimp_palette_view_invalidate (GimpPalette     *palette,
   view->dnd_entry = NULL;
 
   if (view->selected && ! g_list_find (palette->colors, view->selected))
-    view->selected = NULL;
+    gimp_palette_view_select_entry (view, NULL);
+}
+
+static void
+gimp_palette_view_drag_color (GtkWidget *widget,
+                              GimpRGB   *color,
+                              gpointer   data)
+{
+  GimpPaletteView *view = GIMP_PALETTE_VIEW (data);
+
+  if (view->dnd_entry)
+    *color = view->dnd_entry->color;
+  else
+    gimp_rgba_set (color, 0.0, 0.0, 0.0, 1.0);
+}
+
+static void
+gimp_palette_view_drop_color (GtkWidget     *widget,
+                              gint           x,
+                              gint           y,
+                              const GimpRGB *color,
+                              gpointer       data)
+{
+  GimpPaletteView  *view = GIMP_PALETTE_VIEW (data);
+  GimpPaletteEntry *entry;
+
+  entry = gimp_palette_view_find_entry (view, x, y);
+
+  g_signal_emit (view, view_signals[COLOR_DROPPED], 0,
+                 entry, color);
 }
