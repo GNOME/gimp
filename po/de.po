@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-07-14 16:59+0200\n"
-"PO-Revision-Date: 2005-07-14 17:05+0200\n"
+"PO-Revision-Date: 2005-07-14 17:06+0200\n"
 "Last-Translator: Hendrik Richter <hendi@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -11287,17 +11287,3 @@ msgstr "Bitte stellen Sie sicher, dass das Werkzeugefenster sichtbar ist!"
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "»%s« konnte nicht gestartet werden: %s"
-
-#~ msgid "The batch interpreter '%s' is not available, batch mode disabled."
-#~ msgstr ""
-#~ "Der Interpreter »%s« ist nicht verfügbar, der Stapelverarbeitungsmodus "
-#~ "wurde deaktiviert."
-
-#~ msgid "Kee_p Transparency"
-#~ msgstr "_Transparenz erhalten"
-
-#~ msgid "Set preserve trans"
-#~ msgstr "»Transparenz beibehalten« setzen"
-
-#~ msgid "Keep transparency"
-#~ msgstr "Transparenz erhalten"
