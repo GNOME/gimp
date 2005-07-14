@@ -1,5 +1,10 @@
 2005-07-14  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimphistogramview.c
+	* app/widgets/gimpnavigationview.c: cleanup.
+
+2005-07-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimppaletteview.[ch]: added "entry-clicked" and
 	"color-dropped" signals. Completely handle color DND. Cleanup.
 

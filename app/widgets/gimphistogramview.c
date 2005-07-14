@@ -119,13 +119,10 @@ gimp_histogram_view_get_type (void)
 static void
 gimp_histogram_view_class_init (GimpHistogramViewClass *klass)
 {
-  GObjectClass   *object_class;
-  GtkWidgetClass *widget_class;
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
-
-  object_class = G_OBJECT_CLASS (klass);
-  widget_class = GTK_WIDGET_CLASS (klass);
 
   histogram_view_signals[RANGE_CHANGED] =
     g_signal_new ("range-changed",
@@ -150,14 +147,16 @@ gimp_histogram_view_class_init (GimpHistogramViewClass *klass)
   klass->range_changed = NULL;
 
   g_object_class_install_property (object_class, PROP_CHANNEL,
-                                   g_param_spec_enum ("histogram-channel", NULL, NULL,
+                                   g_param_spec_enum ("histogram-channel",
+                                                      NULL, NULL,
                                                       GIMP_TYPE_HISTOGRAM_CHANNEL,
                                                       GIMP_HISTOGRAM_VALUE,
                                                       G_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_SCALE,
-                                   g_param_spec_enum ("histogram-scale", NULL, NULL,
+                                   g_param_spec_enum ("histogram-scale",
+                                                      NULL, NULL,
                                                       GIMP_TYPE_HISTOGRAM_SCALE,
                                                       GIMP_HISTOGRAM_SCALE_LINEAR,
                                                       G_PARAM_READWRITE |
