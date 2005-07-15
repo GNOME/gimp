@@ -1,3 +1,7 @@
+2005-07-15  Carol Spears  <carol@gimp.org>
+
+	* docs/Wilber_Construction_Kit.xcf.gz:  added a tassle and a fez.
+
 2005-07-15  Sven Neumann  <sven@gimp.org>
 
 	* app/paint-funcs/paint-funcs.c (erode_region) (dilate_region):
