@@ -21,11 +21,12 @@ EXTRA_DIST = \
 	plugin-defs.pl
 
 INCLUDES = \
-	-I$(top_srcdir)	\
-	$(GTK_CFLAGS)	\
-	$(EXIF_CFLAGS)	\
-	$(SVG_CFLAGS)	\
-	$(WMF_CFLAGS)	\
+	-I$(top_srcdir)	  \
+	$(GTK_CFLAGS)	  \
+	$(EXIF_CFLAGS)	  \
+	$(SVG_CFLAGS)	  \
+	$(WMF_CFLAGS)	  \
+	$(POPPLER_CFLAGS) \
 	-I$(includedir)
 
 libexec_PROGRAMS = \
@@ -118,6 +119,7 @@ libexec_PROGRAMS = \
 	$(PNG) \
 	pnm \
 	polar \
+	$(POPPLER) \
 	postscript \
 	psd \
 	psd_save \
@@ -173,6 +175,7 @@ EXTRA_PROGRAMS = \
 	mail \
 	mng \
 	png \
+	poppler \
 	psp \
 	screenshot \
 	svg \
@@ -1492,6 +1495,22 @@ polar_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
+poppler_SOURCES = \
+	poppler.c
+
+poppler_LDADD = \
+	$(libgimpui)		\
+	$(libgimpconfig)	\
+	$(libgimpwidgets)	\
+	$(libgimp)		\
+	$(libgimpcolor)		\
+	$(libgimpmath)		\
+	$(libgimpbase)		\
+	$(LIBPOPPLER)           \
+	$(GTK_LIBS)		\
+	$(RT_LIBS)		\
+	$(INTLLIBS)
+
 postscript_SOURCES = \
 	postscript.c
 
@@ -1503,6 +1522,7 @@ postscript_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpmath)		\
 	$(libgimpbase)		\
+	$(POPPLER_LIBS)         \
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)

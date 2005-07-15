@@ -1172,17 +1172,15 @@ AC_SUBST(LIBSVG)
 # Check for libpoppler
 ######################
 
-PKG_CHECK_MODULES(POPPLER, poppler-glib >= poppler_required_version,
+PKG_CHECK_MODULES(POPPLER, poppler-glib >= poppler_required_version gthread-2.0,
   POPPLER='poppler$(EXEEXT)'
   LIBPOPPLER=$POPPLER_LIBS
   AC_DEFINE(HAVE_POPPLER, 1, "Define to 1 if libpoppler is available")
   have_poppler=yes,
-  AC_MSG_WARN([*** PDF import will be by the postscript plugin (libpoppler not found) ***]))
+  AC_MSG_WARN([*** PDF import will be by the postscript plugin (poppler or gthread not found) ***]))
 
 AC_SUBST(POPPLER)
 AC_SUBST(LIBPOPPLER)
-
-AM_CONDITIONAL(HAVE_POPPLER, test x$have_poppler = xyes)
 
 
 #####################
