@@ -192,6 +192,9 @@ gimp_image_prop_view_constructor (GType                  type,
   view->memsize_label =
     gimp_image_prop_view_add_label (table, row++, _("Size in memory:"));
 
+  view->pixels_label =
+    gimp_image_prop_view_add_label (table, row++, _("Number of pixels:"));
+
   view->layers_label =
     gimp_image_prop_view_add_label (table, row++, _("Number of layers:"));
 
@@ -347,6 +350,10 @@ gimp_image_prop_view_update (GimpImagePropView *view)
     gtk_label_set_text (GTK_LABEL (view->memsize_label), str);
     g_free (str);
   }
+
+  /*  number of layers  */
+  g_snprintf (buf, sizeof (buf), "%d", image->width * image->height);
+  gtk_label_set_text (GTK_LABEL (view->pixels_label), buf);
 
   /*  number of layers  */
   g_snprintf (buf, sizeof (buf), "%d",

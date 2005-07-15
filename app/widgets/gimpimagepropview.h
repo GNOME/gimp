@@ -47,6 +47,7 @@ struct _GimpImagePropView
   GtkWidget *resolution_label;
   GtkWidget *colorspace_label;
   GtkWidget *memsize_label;
+  GtkWidget *pixels_label;
   GtkWidget *layers_label;
   GtkWidget *channels_label;
   GtkWidget *vectors_label;

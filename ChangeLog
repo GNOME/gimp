@@ -1,3 +1,7 @@
+2005-07-16  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpimagepropview.[ch]: also show the number of pixels.
+
 2005-07-15  Carol Spears  <carol@gimp.org>
 
 	* docs/Wilber_Construction_Kit.xcf.gz: corrected the spelling of
