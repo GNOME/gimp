@@ -11,6 +11,7 @@ scripts = \
 	whirlpinch.py
 
 test_scripts = \
+	benchmark-foreground-extract.py	\
 	sphere.py
 
 if GIMP_UNSTABLE
