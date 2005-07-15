@@ -3414,15 +3414,11 @@ erode_region (PixelRegion *region)
         {
           gint min = 255;
 
-          if (buf[0][x]   < min) min = buf[0][x];
           if (buf[0][x+1] < min) min = buf[0][x+1];
-          if (buf[0][x+2] < min) min = buf[0][x+2];
           if (buf[1][x]   < min) min = buf[1][x];
           if (buf[1][x+1] < min) min = buf[1][x+1];
           if (buf[1][x+2] < min) min = buf[1][x+2];
-          if (buf[2][x]   < min) min = buf[2][x];
           if (buf[2][x+1] < min) min = buf[2][x+1];
-          if (buf[2][x+2] < min) min = buf[2][x+2];
 
           out[x] = min;
         }
@@ -3482,15 +3478,11 @@ dilate_region (PixelRegion *region)
         {
           gint max = 0;
 
-          if (buf[0][x]   < max) max = buf[0][x];
-          if (buf[0][x+1] < max) max = buf[0][x+1];
-          if (buf[0][x+2] < max) max = buf[0][x+2];
-          if (buf[1][x]   < max) max = buf[1][x];
-          if (buf[1][x+1] < max) max = buf[1][x+1];
-          if (buf[1][x+2] < max) max = buf[1][x+2];
-          if (buf[2][x]   < max) max = buf[2][x];
-          if (buf[2][x+1] < max) max = buf[2][x+1];
-          if (buf[2][x+2] < max) max = buf[2][x+2];
+          if (buf[0][x+1] > max) max = buf[0][x+1];
+          if (buf[1][x]   > max) max = buf[1][x];
+          if (buf[1][x+1] > max) max = buf[1][x+1];
+          if (buf[1][x+2] > max) max = buf[1][x+2];
+          if (buf[2][x+1] > max) max = buf[2][x+1];
 
           out[x] = max;
         }

@@ -1,5 +1,12 @@
 2005-07-15  Sven Neumann  <sven@gimp.org>
 
+	* app/paint-funcs/paint-funcs.c (erode_region) (dilate_region):
+	fixed implementations.
+
+	* app/base/siox.c (create_signature): moved comment to the right place.
+
+2005-07-15  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpviewrendererpalette.c
 	(gimp_view_renderer_palette_render): don't crash on empty palettes.
 
