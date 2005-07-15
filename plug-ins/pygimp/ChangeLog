@@ -1,5 +1,9 @@
 2005-07-16  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/benchmark-foreground-extract.py: show elapsed time.
+
+2005-07-16  Sven Neumann  <sven@gimp.org>
+
 	* Makefile.am
 	* plug-ins/benchmark-foreground-extract.py: added a rough
 	implementation of the foreground extraxtion benchmark as proposed

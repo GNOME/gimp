@@ -90,7 +90,9 @@ def benchmark (folder):
 
         sys.stderr.write (os.path.basename (image_name))
 
+	start = time.time ()
         pdb.gimp_drawable_foreground_extract (image_layer, mask_layer)
+	end = time.time ()
 
         sys.stderr.write (" ")
 
@@ -111,9 +113,10 @@ def benchmark (folder):
 
         misclassified = different_pixels (mask_layer, truth.active_layer)
 
-        sys.stderr.write ("%d %d %.2f%%\n" %
+        sys.stderr.write ("%d %d %.2f%% %.3fs\n" %
 			  (unclassified, misclassified,
-			   (misclassified * 100.0 / unclassified)))
+			   (misclassified * 100.0 / unclassified),
+			   end - start))
 
 	total_unclassified += unclassified
 	total_misclassified += misclassified
@@ -157,7 +160,7 @@ def different_pixels (mask, truth):
 
 
 register (
-    "foreground_extraction_benchmark",
+    "benchmark_foreground_extract",
     "Foreground Extraction Benchmark",
     "Foreground Extraction Benchmark",
     "Sven Neumann",
