@@ -1,3 +1,16 @@
+2005-07-16  Nathan Summers  <rock@gimp.org>
+
+	* plug-ins/common/poppler.c: initial import into CVS.  There was much
+	rejoicing.
+
+	* configure.in: check for gthread-2.0 in the poppler check, because
+	it is not necessarily checked for elsewhere.  Once other threaded
+	plugins become available, this probably should be moved.
+
+	Also removed the HAVE_POPPLER am conditional; it wasn't needed.
+	
+	* plug-ins/common/Makefile.am: added poppler to the build process
+
 2005-07-16  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpimagepropview.[ch]: also show the number of pixels.
