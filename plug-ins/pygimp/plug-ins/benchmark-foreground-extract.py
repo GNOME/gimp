@@ -55,6 +55,7 @@ def benchmark (folder):
 
     total_unclassified = 0
     total_misclassified = 0
+    total_time = 0.0
 
     for name in os.listdir (images):
 
@@ -120,6 +121,7 @@ def benchmark (folder):
 
 	total_unclassified += unclassified
 	total_misclassified += misclassified
+	total_time += end - start
 
         gimp.delete (mask)
         gimp.delete (truth)
@@ -132,9 +134,10 @@ def benchmark (folder):
     except UnboundLocalError:
 	pass
 
-    sys.stderr.write ("Total: %d %d %.2f%%\n" %
+    sys.stderr.write ("Total: %d %d %.2f%% %.3fs\n" %
 		      (total_unclassified, total_misclassified,
-		       (total_misclassified * 100.0 / total_unclassified)))
+		       (total_misclassified * 100.0 / total_unclassified),
+		       total_time))
 
 
 def classified_pixels (mask):
