@@ -137,7 +137,7 @@ gimp_view_renderer_palette_render (GimpViewRenderer *renderer,
 
   renderpal->columns = renderer->width / renderpal->cell_width;
 
-  renderpal->rows = palette->n_colors / renderpal->columns;
+  renderpal->rows = MAX (1, palette->n_colors / renderpal->columns);
   if (palette->n_colors % renderpal->columns)
     renderpal->rows += 1;
 

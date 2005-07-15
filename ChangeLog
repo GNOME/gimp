@@ -1,3 +1,8 @@
+2005-07-15  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpviewrendererpalette.c
+	(gimp_view_renderer_palette_render): don't crash on empty palettes.
+
 2005-07-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimphistogramview.c
