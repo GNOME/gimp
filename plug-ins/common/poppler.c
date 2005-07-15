@@ -231,7 +231,7 @@ run (const gchar      *name,
                                pages);
 
       if (doc)
-        g_object_unref (G_OBJECT (doc));
+        g_object_unref (doc);
 
       if (image_ID != -1)
         {
@@ -273,7 +273,7 @@ run (const gchar      *name,
                 {
                   poppler_page_get_size (page, &width, &height);
                   
-                  g_object_unref (G_OBJECT (buf));
+                  g_object_unref (buf);
                 }
               
               buf = get_thumbnail (doc, 0, param[1].data.d_int32);
@@ -297,10 +297,10 @@ run (const gchar      *name,
           height *= scale;
 
           if (doc)
-            g_object_unref (G_OBJECT (doc));
+            g_object_unref (doc);
 
           if (buf)
-            g_object_unref (G_OBJECT (buf));
+            g_object_unref (buf);
 
           if (image != -1)
             {
@@ -502,7 +502,7 @@ load_image (PopplerDocument  *doc,
       doc_progress = (double) (i + 1) / pages->n_pages;
       gimp_progress_update (doc_progress);
 
-      g_object_unref (G_OBJECT (buf));
+      g_object_unref (buf);
    }
 
   return image;
@@ -544,7 +544,7 @@ get_thumbnail (PopplerDocument *doc,
                                      0, 0);
     }
 
-  g_object_unref (G_OBJECT (page));
+  g_object_unref (page);
 
   return pixbuf;
 }
@@ -611,6 +611,7 @@ load_dialog (PopplerDocument  *doc,
 {
   GtkWidget       *dialog;
   GtkWidget       *vbox;
+  GtkWidget       *title;
   GtkWidget       *selector;
   GtkWidget       *table;
   GtkWidget       *spinbutton;
@@ -619,6 +620,8 @@ load_dialog (PopplerDocument  *doc,
   
   ThreadData       thread_data;
   GThread         *thread;
+
+  int              i;
   int              n_pages;
   
   gboolean         run;
@@ -644,11 +647,32 @@ load_dialog (PopplerDocument  *doc,
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);
   gtk_widget_show (vbox);
 
+  /* Title */
+  title = gimp_prop_label_new (G_OBJECT (doc), "title");
+  gtk_box_pack_start (GTK_BOX (vbox), title, FALSE, FALSE, 0);
+  gtk_widget_show (title);
+
   /* Page Selector */
   selector = gimp_page_selector_new ();
   gtk_box_pack_start (GTK_BOX (vbox), selector, TRUE, TRUE, 0);
   n_pages = poppler_document_get_n_pages (doc);
   gimp_page_selector_set_n_pages (GIMP_PAGE_SELECTOR (selector), n_pages);
+
+  for (i=0; i<n_pages; i++)
+    {
+      PopplerPage     *page;
+      gchar           *label;
+
+      page = poppler_document_get_page (doc, i);
+      g_object_get (G_OBJECT (page), "label", &label, NULL);
+
+      gimp_page_selector_set_page_label (GIMP_PAGE_SELECTOR (selector), i,
+                                         label);
+
+      g_object_unref (page);
+      g_free (label);
+    }
+
   gtk_widget_show (selector);
   
   thread_data.document          = doc;
