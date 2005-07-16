@@ -150,6 +150,7 @@ free_list (ArrayList *list)
     }
 }
 
+/* FIXME: try to use cpersep conversion here, should be faster */
 static void
 calcLAB (const guchar *src,
          lab          *pixel)
@@ -284,6 +285,9 @@ stageone (lab       *points,
             }
         }
 
+      /* FIXME: consider to sort the array and split in place instead
+       *        of allocating memory here
+       */
       smallerpoints = g_new (lab, countsm);
       biggerpoints = g_new (lab, countgr);
       smallc = 0;
@@ -404,6 +408,9 @@ stagetwo (lab       *points,
             }
         }
 
+      /* FIXME: consider to sort the array and split in place instead
+       *        of allocating memory here
+       */
       smallerpoints = g_new (lab, countsm);
       biggerpoints = g_new (lab, countgr);
       smallc = 0;
@@ -831,6 +838,7 @@ siox_foreground_extract (TileManager  *pixels,
   height = tile_manager_height (pixels);
   bpp = tile_manager_bpp (pixels);
 
+  /* FIXME: handle grayscale and indexed images */
   g_return_if_fail (bpp == 3 || bpp == 4);
   g_return_if_fail (tile_manager_width (mask) == width);
   g_return_if_fail (tile_manager_height (mask) == height);
