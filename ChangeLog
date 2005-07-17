@@ -1,3 +1,7 @@
+2005-07-17  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpdnd-xds.c: added missing casts.
+
 2005-07-17  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/gimpmodule.c
