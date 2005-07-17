@@ -1,3 +1,26 @@
+2005-07-17  Nathan Summers  <rock@gimp.org>
+
+	* libgimpwidgets/gimpresolutionentry.[ch]: spiffy new widget that given
+	a physical size, displays that size in an arbitrary unit, and lets
+	you select a resolution via changing either the corresponding width
+	and height or specifying it directly in pixels per your chosen unit.
+	
+	* libgimpwidgets/Makefile.am
+	* libgimpwidgets/gimpwidgets.def 
+	* libgimpwidgets/gimpwidgets.h
+	* libgimpwidgets/gimpwidgetstypes.h: added appropriate files, function,
+	headers, and types, respectively
+
+	* devel-docs/libgimpwidgets/libgimpwidgets.types: added
+	gimp_resolution_entry_get_type.  A section still needs to be created
+	for it.
+	
+	* plug-ins/common/poppler.c (run): bugfix that accidentally wasn't
+	merged in previous commit.
+
+	* plug-ins/common/poppler.c (load_dialog): replaced resolution
+	spinbutton with a GimpResolutionEntry.
+
 2005-07-16  Sven Neumann  <sven@gimp.org>
 
 	* app/base/siox.c: added comments about possible improvements.
