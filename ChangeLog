@@ -1,3 +1,10 @@
+2005-07-17  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/gimpmodule.c
+	* plug-ins/pygimp/pygimp-drawable.c: revert to old behavior of
+	parasite_find functions returning None when there isn't a parasite
+	found. Fixed bug #310666.
+
 2005-07-17  Nathan Summers  <rock@gimp.org>
 
 	* libgimpwidgets/gimpresolutionentry.[ch]: spiffy new widget that given

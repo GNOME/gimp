@@ -1161,19 +1161,11 @@ static PyObject *
 pygimp_parasite_find(PyObject *self, PyObject *args)
 {
     char *name;
-    GimpParasite *para;
 
     if (!PyArg_ParseTuple(args, "s:parasite_find", &name))
 	return NULL;
 
-    para = gimp_parasite_find(name);
-
-    if (!para) {
-	PyErr_Format(pygimp_error, "could not find parasite '%s'", name);
-	return NULL;
-    }
-
-    return pygimp_parasite_new(para);
+    return pygimp_parasite_new(gimp_parasite_find(name));
 }
 
 static PyObject *

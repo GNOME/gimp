@@ -195,21 +195,11 @@ static PyObject *
 drw_parasite_find(PyGimpDrawable *self, PyObject *args)
 {
     char *name;
-    GimpParasite *para;
 
     if (!PyArg_ParseTuple(args, "s:parasite_find", &name))
 	return NULL;
 
-    para = gimp_drawable_parasite_find(self->ID, name);
-
-    if (!para) {
-	PyErr_Format(pygimp_error,
-		     "could not find parasite '%s' on drawable (ID %d)",
-		     name, self->ID);
-	return NULL;
-    }
-
-    return pygimp_parasite_new(para);
+    return pygimp_parasite_new(gimp_drawable_parasite_find(self->ID, name));
 }
 
 static PyObject *
