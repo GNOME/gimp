@@ -28,7 +28,7 @@ find_toplevel_window (Display *display,
                       Window   xid)
 {
   Window  root, parent, *children;
-  gint    nchildren;
+  guint   nchildren;
 
   do
     {
