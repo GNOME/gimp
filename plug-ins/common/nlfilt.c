@@ -904,7 +904,7 @@ nlfilter (GimpDrawable *drawable,
   guchar       *srcbuf, *dstbuf;
   guchar       *lastrow, *thisrow, *nextrow, *temprow;
   gint          x1, x2, y1, y2;
-  guint         width, height, bpp;
+  gint          width, height, bpp;
   gint          filtno, y, rowsize, exrowsize, p_update;
 
   if (preview)
@@ -920,6 +920,7 @@ nlfilter (GimpDrawable *drawable,
       width = x2 - x1;
       height = y2 - y1;
     }
+
   bpp = drawable->bpp;
 
   rowsize = width * bpp;

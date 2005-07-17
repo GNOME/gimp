@@ -1,5 +1,15 @@
 2005-07-17  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/nlfilt.c
+	* plug-ins/common/pat.c
+	* plug-ins/common/svg.c
+	* plug-ins/common/tiff.c
+	* plug-ins/common/tile.c
+	* plug-ins/common/uniteditor.c
+	* plug-ins/common/wmf.c: fixed signedness warnings.
+
+2005-07-17  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpdnd-xds.c: added missing casts.
 
 2005-07-17  Manish Singh  <yosh@gimp.org>

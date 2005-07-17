@@ -294,7 +294,7 @@ load_image (const gchar *filename)
   GimpDrawable *drawable;
   GimpPixelRgn	rgn;
   GdkPixbuf    *pixbuf;
-  gchar        *pixels;
+  guchar       *pixels;
   gint          width;
   gint          height;
   gint          rowstride;
@@ -439,7 +439,7 @@ load_rsvg_pixbuf (const gchar  *filename,
 
   while (success && status != G_IO_STATUS_EOF)
     {
-      guchar buf[8192];
+      gchar  buf[8192];
       gsize  len;
 
       status = g_io_channel_read_chars (io, buf, sizeof (buf), &len, error);
@@ -453,7 +453,8 @@ load_rsvg_pixbuf (const gchar  *filename,
           success = rsvg_handle_close (handle, error);
           break;
         case G_IO_STATUS_NORMAL:
-          success = rsvg_handle_write (handle, buf, len, error);
+          success = rsvg_handle_write (handle,
+                                       (const guchar *) buf, len, error);
           break;
         case G_IO_STATUS_AGAIN:
           break;
@@ -535,7 +536,7 @@ load_rsvg_size (const gchar  *filename,
 
   while (success && status != G_IO_STATUS_EOF && vals->resolution > 0.0)
     {
-      guchar buf[1024];
+      gchar  buf[1024];
       gsize  len;
 
       status = g_io_channel_read_chars (io, buf, sizeof (buf), &len, error);
@@ -549,7 +550,8 @@ load_rsvg_size (const gchar  *filename,
           success = rsvg_handle_close (handle, error);
           break;
         case G_IO_STATUS_NORMAL:
-          success = rsvg_handle_write (handle, buf, len, error);
+          success = rsvg_handle_write (handle,
+                                       (const guchar *) buf, len, error);
           break;
         case G_IO_STATUS_AGAIN:
           break;

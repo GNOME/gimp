@@ -124,8 +124,8 @@ run (const gchar      *name,
 {
   static GimpParam  values[3];
   GimpRunMode       run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  gint32            new_layer;
+  GimpPDBStatusType status    = GIMP_PDB_SUCCESS;
+  gint32            new_layer = -1;
   gint              width;
   gint              height;
 

@@ -502,6 +502,8 @@ load_image (const gchar *filename)
   GimpParasite *parasite;
   guint16       tmp;
 
+  gchar        *name;
+
   gboolean      flip_horizontal = FALSE;
   gboolean      flip_vertical   = FALSE;
 
@@ -509,10 +511,6 @@ load_image (const gchar *filename)
   uint32        profile_size;
   guchar       *icc_profile;
 #endif
-
-  gboolean      uselayername = FALSE;
-  guchar       *tmp_name;
-  gchar        *name;
 
 
   gimp_rgb_set (&color, 0.0, 0.0, 0.0);
@@ -865,29 +863,17 @@ load_image (const gchar *filename)
       channel = g_new0 (channel_data, extra + 1);
 
       /* try and use layer name from tiff file */
-      name = NULL;
-      uselayername = FALSE;
-
-      if (TIFFGetField (tif, TIFFTAG_PAGENAME, &name))
+      if (! TIFFGetField (tif, TIFFTAG_PAGENAME, &name) ||
+          ! g_utf8_validate (name, -1, NULL))
         {
-          tmp_name = name;
-          uselayername = TRUE;
-          for (tmp_name = name ; *tmp_name ; tmp_name++)
-            {
-              if (*tmp_name > 127)
-                {
-                  uselayername = FALSE;
-                  break;
-                }
-            }
+          name = NULL;
         }
 
-      if (uselayername)
+      if (name)
         {
           layer = gimp_layer_new (image, name,
                                   cols, rows,
                                   layer_type, 100, GIMP_NORMAL_MODE);
-          name = NULL;
         }
       else
         {

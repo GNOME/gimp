@@ -66,8 +66,8 @@ static guchar   *wmf_get_pixbuf (const gchar       *filename,
                                  gint              *width,
                                  gint              *height);
 static guchar   *wmf_load_file  (const gchar       *filename,
-                                 gint              *width,
-                                 gint              *height);
+                                 guint             *width,
+                                 guint             *height);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -291,8 +291,8 @@ load_wmf_size (const gchar *filename,
   wmfAPI         *API   = NULL;
   wmfAPI_Options  api_options;
   wmfD_Rect       bbox;
-  gint            width;
-  gint            height;
+  guint           width;
+  guint           height;
   gboolean        success = TRUE;
 
   width = height = -1;
@@ -757,8 +757,8 @@ wmf_get_pixbuf (const gchar *filename,
   wmf_gd_t       *ddata = NULL;
   wmfAPI         *API   = NULL;
   wmfAPI_Options  api_options;
-  gint            file_width;
-  gint            file_height;
+  guint           file_width;
+  guint           file_height;
   wmfD_Rect       bbox;
   gint           *gd_pixels = NULL;
 
@@ -847,8 +847,8 @@ wmf_get_pixbuf (const gchar *filename,
 
 static guchar *
 wmf_load_file (const gchar *filename,
-               gint        *width,
-               gint        *height)
+               guint       *width,
+               guint       *height)
 {
   guchar         *pixels   = NULL;
 
@@ -935,7 +935,7 @@ load_image (const gchar *filename)
   gint          i, rowstride;
 
   guchar       *pixels, *buf;
-  gint          width, height;
+  guint         width, height;
 
   pixels = buf = wmf_load_file (filename, &width, &height);
   rowstride = width * 4;
