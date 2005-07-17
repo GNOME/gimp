@@ -35,13 +35,13 @@
 /* Structs for the load dialog */
 typedef struct
 {
-  guint32  resolution;
+  gdouble  resolution;
   gboolean antialias;
 } PdfLoadVals;
 
 static PdfLoadVals loadvals =
 {
-  100, /* 100 dpi */
+  100.00, /* 100 dpi */
   TRUE /* antialias */
 };
 
@@ -273,7 +273,7 @@ run (const gchar      *name,
                 {
                   poppler_page_get_size (page, &width, &height);
                   
-                  g_object_unref (buf);
+                  g_object_unref (page);
                 }
               
               buf = get_thumbnail (doc, 0, param[1].data.d_int32);
@@ -614,8 +614,7 @@ load_dialog (PopplerDocument  *doc,
   GtkWidget       *title;
   GtkWidget       *selector;
   GtkWidget       *table;
-  GtkWidget       *spinbutton;
-  GtkObject       *adj;
+  GtkWidget       *resolution;
   GtkWidget       *toggle;
   
   ThreadData       thread_data;
@@ -623,6 +622,9 @@ load_dialog (PopplerDocument  *doc,
 
   int              i;
   int              n_pages;
+
+  gdouble          width;
+  gdouble          height;
   
   gboolean         run;
 
@@ -669,6 +671,9 @@ load_dialog (PopplerDocument  *doc,
       gimp_page_selector_set_page_label (GIMP_PAGE_SELECTOR (selector), i,
                                          label);
 
+      if (i == 0)
+        poppler_page_get_size (page, &width, &height);
+      
       g_object_unref (page);
       g_free (label);
     }
@@ -689,15 +694,25 @@ load_dialog (PopplerDocument  *doc,
   gtk_widget_show (table);
 
   /* Resolution */
-  spinbutton = gimp_spin_button_new (&adj, loadvals.resolution,
-				     5, 1440, 1, 10, 0, 1, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     "Resolution (_DPI):", 0.0, 0.5,
-			     spinbutton, 1, FALSE);
-  g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
-                    &loadvals.resolution);
 
+  resolution = gimp_resolution_entry_new ("_Width (pixels): ", width,
+                                          "_Height (pixels): ", height,
+                                          GIMP_UNIT_POINT,
+
+                                          "_Resolution: ", loadvals.resolution,
+                                          "_Resolution: ", loadvals.resolution,
+                                          GIMP_UNIT_INCH,
+
+                                          FALSE,
+                                          0);
+
+  gtk_box_pack_start (GTK_BOX (vbox), resolution, FALSE, FALSE, 0);
+  gtk_widget_show (resolution);
+
+  g_signal_connect (resolution, "x-changed",
+                    G_CALLBACK (gimp_resolution_entry_update_x_in_dpi),
+                    &loadvals.resolution);
+	  
   /* Antialiasing */
   toggle = gtk_check_button_new_with_mnemonic("A_ntialiasing");
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
