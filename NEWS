@@ -7,6 +7,20 @@ This is the development branch of The GIMP. Here's where all the shiny
 new stuff is being done that will one day be released as GIMP 2.4.
 
 
+Changes in GIMP 2.3.3
+=====================
+- improved new GimpPageSelector widget
+- minor improvements to the Procedure and Plug-In browsers
+- set alternative button order in some places that were missed earlier
+- added SIOX algorithm for foreground extraction
+- fixed most gcc 4.0 warnings
+- improved Cursor view and Sample Points functionality
+- prepared code and UI for more layer lock types
+- added GimpResolution entry widget
+- added new PDF import plug-in based on libpoppler
+- improved palette editor
+
+
 Changes in GIMP 2.3.2
 =====================
 
