@@ -900,8 +900,11 @@ gauss (GimpDrawable *drawable,
               break;
 
             case BLUR_RLE:
-              g_free (sum - length);
-              g_free (curve - length);
+              if (vert > 0.0)
+                {
+                  g_free (sum - length);
+                  g_free (curve - length);
+                }
 
               curve = make_curve (std_dev, &length);
               sum = g_new (gint, 2 * length + 1);
@@ -1082,8 +1085,11 @@ gauss (GimpDrawable *drawable,
       break;
 
     case BLUR_RLE:
-      g_free (sum - length);
-      g_free (curve - length);
+      if (horz > 0.0 || vert > 0.0)
+        {
+          g_free (sum - length);
+          g_free (curve - length);
+        }
       g_free (buf);
       break;
     }
