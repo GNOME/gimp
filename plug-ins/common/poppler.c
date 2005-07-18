@@ -23,14 +23,13 @@
 
 #include <string.h>
 
-#include <glib.h>
-
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
 #include <poppler.h>
 
 #include "libgimp/stdplugins-intl.h"
+
 
 /* Structs for the load dialog */
 typedef struct
@@ -284,8 +283,7 @@ run (const gchar      *name,
                                       gdk_pixbuf_get_height (buf),
                                       GIMP_RGB);
 
-              layer_from_pixbuf (image, "thumbnail", 0, buf,
-                                 0.0, 1.0);
+              layer_from_pixbuf (image, "thumbnail", 0, buf, 0.0, 1.0);
             }
 
 
@@ -336,8 +334,8 @@ open_document (const gchar *filename)
 
   if (err)
     {
-      g_message ("Could not convert '%s' to a URI: %s",
-                 gimp_filename_to_utf8(filename),
+      g_warning ("Could not convert '%s' to an URI: %s",
+                 gimp_filename_to_utf8 (filename),
                  err->message);
 
       return NULL;
@@ -349,8 +347,8 @@ open_document (const gchar *filename)
 
   if (err)
     {
-      g_message ("Could not open '%s' for reading: %s",
-                 gimp_filename_to_utf8(filename),
+      g_message (_("Could not open '%s' for reading: %s"),
+                 gimp_filename_to_utf8 (filename),
                  err->message);
 
       return NULL;
@@ -629,7 +627,7 @@ load_dialog (PopplerDocument  *doc,
 
   gimp_ui_init ("file-pdf-load", FALSE);
 
-  dialog = gimp_dialog_new ("Load PDF", "pdf",
+  dialog = gimp_dialog_new (_("Load PDF"), "pdf",
                             NULL, 0,
                             gimp_standard_help_func, "file-pdf-load",
 
@@ -691,12 +689,12 @@ load_dialog (PopplerDocument  *doc,
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  resolution = gimp_resolution_entry_new ("_Width (pixels):", width,
-                                          "_Height (pixels):", height,
+  resolution = gimp_resolution_entry_new (_("_Width (pixels):"), width,
+                                          _("_Height (pixels):"), height,
                                           GIMP_UNIT_POINT,
 
-                                          "_Resolution:", loadvals.resolution,
-                                          "_Resolution:", loadvals.resolution,
+                                          _("_Resolution:"), loadvals.resolution,
+                                          _("_Resolution:"), loadvals.resolution,
                                           GIMP_UNIT_INCH,
 
                                           FALSE,
@@ -710,15 +708,13 @@ load_dialog (PopplerDocument  *doc,
                     &loadvals.resolution);
 
   /* Antialiasing */
-  toggle = gtk_check_button_new_with_mnemonic ("A_ntialiasing");
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                loadvals.antialias);
+  toggle = gtk_check_button_new_with_mnemonic (_("A_ntialiasing"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), loadvals.antialias);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &loadvals.antialias);
-
 
   /* Setup done; display the dialog */
   gtk_widget_show (dialog);

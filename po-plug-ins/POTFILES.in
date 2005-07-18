@@ -101,6 +101,7 @@ plug-ins/common/plasma.c
 plug-ins/common/png.c
 plug-ins/common/pnm.c
 plug-ins/common/polar.c
+plug-ins/common/poppler.c
 plug-ins/common/postscript.c
 plug-ins/common/psd.c
 plug-ins/common/psd_save.c
