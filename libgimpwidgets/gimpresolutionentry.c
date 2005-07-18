@@ -22,7 +22,6 @@
  * Boston, MA 02111-1307, USA.
  */
 
-
 #include "config.h"
 
 #include <gtk/gtk.h>
@@ -35,9 +34,11 @@
 
 #include "libgimp/libgimp-intl.h"
 
+
 #define SIZE_MAX_VALUE 500000.0
 
-#define GIMP_RESOLUTION_ENTRY_DIGITS(unit) (MIN (gimp_unit_get_digits (unit), 5) + 1)
+#define GIMP_RESOLUTION_ENTRY_DIGITS(unit) \
+  (MIN (gimp_unit_get_digits (unit), 5) + 1)
 
 
 enum

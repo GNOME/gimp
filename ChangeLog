@@ -1,5 +1,9 @@
 2005-07-18  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/poppler.c: marked strings for translation.
+
+2005-07-18  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpeditselectiontool.c (gimp_edit_selection_tool_start):
 	need to sort the boundary here since gimp_draw_tool_draw_boundary()
 	expects a sorted boundary now. Fixes bug #310432.

@@ -1,10 +1,16 @@
+2005-07-18  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added libgimpwidgets/gimpresolutionentry.c.
+
+	* de.po: updated.
+
 2005-07-10  Miloslav Trmac  <mitr@volny.cz>
 
 	* cs.po: Updated Czech translation by Miloslav Trmač.
 
 2005-07-10  Hendrik Brandt  <heb@gnome-de.org>
 
-        * de.po: Updated German translation.
+	* de.po: Updated German translation.
 
 2005-07-07  Abel Cheung  <maddog@linuxhall.org>
 
@@ -28,11 +34,11 @@
 
 2005-06-16  Marco Ciampa  <ciampix@libero.it>
 
-        * it.po: updated italian translation.
+	* it.po: updated italian translation.
 
 2005-06-26  Hendrik Brandt  <heb@gnome-de.org>
 
-        * de.po: Updated German translation.
+	* de.po: Updated German translation.
 
 2005-06-25  Vincent van Adrighem  <adrighem@gnome.org>
 
@@ -105,7 +111,7 @@
 
 2005-04-28  Leonid Kanter <leon@asplinux.ru>
 
-        * ru.po: Updated Russian translation from
+	* ru.po: Updated Russian translation from
 	         Roxana Chernogolova <mavka@justos.org>
 
 2005-04-24  Vincent van Adrighem  <adrighem@gnome.org>
@@ -154,7 +160,7 @@
 	
 2005-04-04  Marco Ciampa <ciampix@libero.it>
 
-        * it.po: Updated italian translation.
+	* it.po: Updated italian translation.
 
 2005-04-03  Ole Laursen  <olau@hardworking.dk>
 
