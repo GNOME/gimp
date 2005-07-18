@@ -214,7 +214,11 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
   GimpEditSelectionTool *edit_select;
   GimpDisplayShell      *shell;
   GimpItem              *active_item;
+  GimpChannel           *channel;
   gint                   off_x, off_y;
+  const BoundSeg        *segs_in;
+  const BoundSeg        *segs_out;
+  gint                   num_groups;
   const gchar           *undo_desc;
 
   edit_select = g_object_new (GIMP_TYPE_EDIT_SELECTION_TOOL, NULL);
@@ -279,30 +283,26 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
     {
     case GIMP_TRANSLATE_MODE_CHANNEL:
     case GIMP_TRANSLATE_MODE_LAYER_MASK:
-      gimp_channel_boundary (GIMP_CHANNEL (active_item),
-                             (const BoundSeg **) &edit_select->segs_in,
-                             (const BoundSeg **) &edit_select->segs_out,
-                             &edit_select->num_segs_in,
-                             &edit_select->num_segs_out,
-                             0, 0, 0, 0);
-      break;
+      channel = GIMP_CHANNEL (active_item);
+     break;
 
     default:
-      gimp_channel_boundary (gimp_image_get_mask (gdisp->gimage),
-                             (const BoundSeg **) &edit_select->segs_in,
-                             (const BoundSeg **) &edit_select->segs_out,
-                             &edit_select->num_segs_in,
-                             &edit_select->num_segs_out,
-                             0, 0, 0, 0);
+      channel = gimp_image_get_mask (gdisp->gimage);
       break;
     }
 
-  edit_select->segs_in  = g_memdup (edit_select->segs_in,
-                                    edit_select->num_segs_in *
-                                    sizeof (BoundSeg));
-  edit_select->segs_out = g_memdup (edit_select->segs_out,
-                                    edit_select->num_segs_out *
-                                    sizeof (BoundSeg));
+  gimp_channel_boundary (channel,
+                         &segs_in, &segs_out,
+                         &edit_select->num_segs_in, &edit_select->num_segs_out,
+                         0, 0, 0, 0);
+
+  edit_select->segs_in = sort_boundary (segs_in, edit_select->num_segs_in,
+                                        &num_groups);
+  edit_select->num_segs_in += num_groups;
+
+  edit_select->segs_out = sort_boundary (segs_out, edit_select->num_segs_out,
+                                         &num_groups);
+  edit_select->num_segs_out += num_groups;
 
   if (edit_select->edit_mode == GIMP_TRANSLATE_MODE_VECTORS)
     {

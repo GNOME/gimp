@@ -802,7 +802,8 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
                                     PR.w, PR.h,
                                     0);
               brush_core->brush_bound_segs =
-		sort_boundary (boundary, brush_core->n_brush_bound_segs, &num_groups);
+                sort_boundary (boundary,
+                               brush_core->n_brush_bound_segs, &num_groups);
 	      brush_core->n_brush_bound_segs += num_groups;
 	      g_free (boundary);
 

@@ -1,5 +1,13 @@
 2005-07-18  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpeditselectiontool.c (gimp_edit_selection_tool_start):
+	need to sort the boundary here since gimp_draw_tool_draw_boundary()
+	expects a sorted boundary now. Fixes bug #310432.
+
+	* app/tools/gimppainttool.c: formatting.
+
+2005-07-18  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpresolutionentry.c: tweaked spacing and
 	alignments to make it look more like our other widgets.
 
