@@ -43,20 +43,17 @@ import os, re, struct, sys, time
 from gimpfu import *
 
 
-def benchmark (folder):
+def benchmark (folder, save_output):
     folder = os.path.abspath (folder)
     if not os.path.exists (folder):
         gimp.message("Folder '" + folder + "' doesn't exist.\n")
         return;
     
-    images = os.path.join (folder, "images")
-    masks = os.path.join (folder, "cm_bmp")
-    truths = os.path.join (folder, "truth")
-
     total_unclassified = 0
     total_misclassified = 0
     total_time = 0.0
 
+    images = os.path.join (folder, "images")
     for name in os.listdir (images):
 
         try:
@@ -72,22 +69,23 @@ def benchmark (folder):
         name = re.sub (r'\.JPG$', '', name)
         name = re.sub (r'\.bmp$', '', name)
 
-        mask_name = os.path.join (masks, name + '.png')
-        truth_name = os.path.join (truths, name + '.bmp')
+        mask_name = os.path.join (folder, "cm_bmp", name + '.png')
+        truth_name = os.path.join (folder, "truth", name + '.bmp')
 
         image = pdb.gimp_file_load (image_name, image_name)
         image_layer = image.active_layer;
 
         mask = pdb.gimp_file_load (mask_name, mask_name)
-        pdb.gimp_image_convert_grayscale (mask)
+        convert_grayscale (mask)
         mask_layer = mask.active_layer;
 
         truth = pdb.gimp_file_load (truth_name, truth_name)
+	convert_grayscale (truth)
+        truth_layer = truth.active_layer;
 
 	gimp.tile_cache_ntiles (2 * mask_layer.width / gimp.tile_width () + 1)
 
-        unclassified = ((mask_layer.width * mask_layer.height)
-			- classified_pixels (mask_layer))
+        unclassified = unclassified_pixels (mask_layer, truth_layer)
 
         sys.stderr.write (os.path.basename (image_name))
 
@@ -112,7 +110,7 @@ def benchmark (folder):
 
         gimp.delete (image)
 
-        misclassified = different_pixels (mask_layer, truth.active_layer)
+        misclassified = misclassified_pixels (mask_layer, truth_layer)
 
         sys.stderr.write ("%d %d %.2f%% %.3fs\n" %
 			  (unclassified, misclassified,
@@ -123,10 +121,15 @@ def benchmark (folder):
 	total_misclassified += misclassified
 	total_time += end - start
 
-        gimp.delete (mask)
         gimp.delete (truth)
 
-    # done
+	if save_output:
+	    filename = os.path.join (folder, "output", name + '.png')
+	    pdb.gimp_file_save (mask, mask_layer, filename, filename)
+
+        gimp.delete (mask)
+
+    # for loop ends
 
     try:
 	gimp.delete (image_display)
@@ -139,14 +142,19 @@ def benchmark (folder):
 		       (total_misclassified * 100.0 / total_unclassified),
 		       total_time))
 
+def convert_grayscale (image):
+    if image.base_type != GRAY:
+	pdb.gimp_image_convert_grayscale (image)
 
-def classified_pixels (mask):
-    (mean, std_dev, median, pixels, count, percentile) = pdb.gimp_histogram (mask, HISTOGRAM_VALUE, 224, 255)
+
+def unclassified_pixels (mask, truth):
+    (mean, std_dev, median, pixels,
+     count, percentile) = pdb.gimp_histogram (mask, HISTOGRAM_VALUE, 1, 254)
 
     return count
 
 
-def different_pixels (mask, truth):
+def misclassified_pixels (mask, truth):
     image = truth.image
 
     copy = pdb.gimp_layer_new_from_drawable (mask, image)
@@ -155,9 +163,19 @@ def different_pixels (mask, truth):
 
     image.add_layer (copy, -1)
 
-    (mean, std_dev, median,
-     pixels, count, percentile) = pdb.gimp_histogram (image.flatten (),
-						      HISTOGRAM_VALUE, 32, 255)
+    # The assumption made here is that the output of
+    # foreground_extract is a strict black and white mask. The truth
+    # however may contain unclassified pixels. These are considered
+    # unknown, a strict segmentation isn't possible here.
+    #
+    # The result of using the Difference mode as done here is that
+    # pure black pixels in the result can be considered correct.
+    # White pixels are wrong. Gray values were unknown in the truth
+    # and thus are not counted as wrong.
+
+    (mean, std_dev, median, pixels,
+     count, percentile) = pdb.gimp_histogram (image.flatten (),
+					      HISTOGRAM_VALUE, 255, 255)
 
     return count
 
@@ -171,8 +189,9 @@ register (
     "2005",
     "<Toolbox>/Xtns/Benchmark/Foreground Extraction",
     "",
-    [ (PF_FILE, "image_folder", "Image folder",
-                "~/segmentation/msbench/imagedata") ],
+    [ (PF_FILE,   "image_folder", "Image folder",
+                  "~/segmentation/msbench/imagedata"),
+      (PF_TOGGLE, "save_output",  "Save output images", False) ],
     [],
     benchmark)
 
