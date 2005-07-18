@@ -8,15 +8,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-09 02:15-0400\n"
-"PO-Revision-Date: 2005-07-09 14:31-0400\n"
+"POT-Creation-Date: 2005-07-18 04:31-0400\n"
+"PO-Revision-Date: 2005-07-18 14:31-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: plug-ins/FractalExplorer/Dialogs.c:529 plug-ins/gfig/gfig-dialog.c:275
+#: plug-ins/FractalExplorer/Dialogs.c:529 plug-ins/gfig/gfig-dialog.c:282
 #: plug-ins/gflare/gflare.c:886 plug-ins/gimpressionist/utils.c:124
 #, c-format
 msgid ""
@@ -372,13 +372,13 @@ msgstr "_Fractals"
 #: plug-ins/common/dicom.c:648 plug-ins/common/gbr.c:600
 #: plug-ins/common/gif.c:994 plug-ins/common/gih.c:1257
 #: plug-ins/common/gtm.c:222 plug-ins/common/mng.c:559
-#: plug-ins/common/mng.c:947 plug-ins/common/pat.c:447
+#: plug-ins/common/mng.c:947 plug-ins/common/pat.c:449
 #: plug-ins/common/pcx.c:585 plug-ins/common/pix.c:505
 #: plug-ins/common/png.c:1174 plug-ins/common/pnm.c:810
 #: plug-ins/common/postscript.c:1125 plug-ins/common/psd_save.c:1304
-#: plug-ins/common/raw.c:522 plug-ins/common/raw.c:549
+#: plug-ins/common/raw.c:526 plug-ins/common/raw.c:553
 #: plug-ins/common/spheredesigner.c:2107 plug-ins/common/sunras.c:504
-#: plug-ins/common/tga.c:1022 plug-ins/common/tiff.c:1929
+#: plug-ins/common/tga.c:1022 plug-ins/common/tiff.c:1915
 #: plug-ins/common/xbm.c:991 plug-ins/common/xwd.c:562
 #: plug-ins/fits/fits.c:445 plug-ins/flame/flame.c:443
 #: plug-ins/gfig/gfig.c:789 plug-ins/gfli/gfli.c:710
@@ -411,15 +411,15 @@ msgstr "Save Fractal Parameters"
 #: plug-ins/common/channel_mixer.c:980 plug-ins/common/curve_bend.c:912
 #: plug-ins/common/dicom.c:291 plug-ins/common/gbr.c:343
 #: plug-ins/common/gifload.c:294 plug-ins/common/gih.c:647
-#: plug-ins/common/mng.c:1118 plug-ins/common/pat.c:316
+#: plug-ins/common/mng.c:1118 plug-ins/common/pat.c:318
 #: plug-ins/common/pcx.c:305 plug-ins/common/pix.c:325
 #: plug-ins/common/png.c:672 plug-ins/common/pnm.c:434
 #: plug-ins/common/postscript.c:994 plug-ins/common/psd.c:1801
-#: plug-ins/common/psp.c:1454 plug-ins/common/raw.c:235
-#: plug-ins/common/raw.c:639 plug-ins/common/spheredesigner.c:1997
+#: plug-ins/common/psp.c:1454 plug-ins/common/raw.c:239
+#: plug-ins/common/raw.c:643 plug-ins/common/spheredesigner.c:1997
 #: plug-ins/common/sunras.c:375 plug-ins/common/svg.c:309
-#: plug-ins/common/svg.c:692 plug-ins/common/tga.c:409
-#: plug-ins/common/tiff.c:526 plug-ins/common/xbm.c:715
+#: plug-ins/common/svg.c:694 plug-ins/common/tga.c:409
+#: plug-ins/common/tiff.c:524 plug-ins/common/xbm.c:715
 #: plug-ins/common/xwd.c:415 plug-ins/faxg3/faxg3.c:219
 #: plug-ins/fits/fits.c:333 plug-ins/flame/flame.c:412
 #: plug-ins/gfig/gfig.c:429 plug-ins/gfli/gfli.c:422 plug-ins/gfli/gfli.c:457
@@ -1154,12 +1154,12 @@ msgstr "Bad colourmap"
 #: plug-ins/bmp/bmpread.c:158 plug-ins/common/CEL.c:302
 #: plug-ins/common/dicom.c:296 plug-ins/common/gbr.c:349
 #: plug-ins/common/gifload.c:299 plug-ins/common/gih.c:653
-#: plug-ins/common/pat.c:322 plug-ins/common/pcx.c:311
+#: plug-ins/common/pat.c:324 plug-ins/common/pcx.c:311
 #: plug-ins/common/pix.c:331 plug-ins/common/png.c:680
 #: plug-ins/common/pnm.c:440 plug-ins/common/postscript.c:1001
-#: plug-ins/common/psd.c:1807 plug-ins/common/raw.c:645
+#: plug-ins/common/psd.c:1807 plug-ins/common/raw.c:649
 #: plug-ins/common/sunras.c:430 plug-ins/common/tga.c:415
-#: plug-ins/common/tiff.c:532 plug-ins/common/wmf.c:951
+#: plug-ins/common/tiff.c:530 plug-ins/common/wmf.c:951
 #: plug-ins/common/xbm.c:721 plug-ins/common/xpm.c:341
 #: plug-ins/common/xwd.c:469 plug-ins/faxg3/faxg3.c:204
 #: plug-ins/gfli/gfli.c:463 plug-ins/jpeg/jpeg-load.c:93
@@ -1203,12 +1203,12 @@ msgstr "Unsupported or invalid bitdepth."
 #: plug-ins/common/gifload.c:866 plug-ins/common/pcx.c:336
 #: plug-ins/common/pcx.c:342 plug-ins/common/pix.c:365
 #: plug-ins/common/png.c:805 plug-ins/common/pnm.c:518
-#: plug-ins/common/psd.c:2215 plug-ins/common/raw.c:680
+#: plug-ins/common/psd.c:2215 plug-ins/common/raw.c:684
 #: plug-ins/common/smooth_palette.c:253 plug-ins/common/sunras.c:915
-#: plug-ins/common/tga.c:922 plug-ins/common/tiff.c:895
+#: plug-ins/common/tga.c:922 plug-ins/common/tiff.c:881
 #: plug-ins/common/tile.c:262 plug-ins/common/xbm.c:862
 #: plug-ins/faxg3/faxg3.c:464 plug-ins/fits/fits.c:500
-#: plug-ins/gfig/gfig-dialog.c:1283 plug-ins/gimpressionist/general.c:121
+#: plug-ins/gfig/gfig-dialog.c:1290 plug-ins/gimpressionist/general.c:121
 #: plug-ins/jpeg/jpeg-load.c:239 plug-ins/jpeg/jpeg-load.c:735
 #: plug-ins/sgi/sgi.c:368 plug-ins/twain/twain.c:571
 #: plug-ins/winsnap/winsnap.c:1156
@@ -1233,11 +1233,11 @@ msgstr "Cannot operate on indexed images with alpha channel."
 #: plug-ins/bmp/bmpwrite.c:212 plug-ins/common/CEL.c:574
 #: plug-ins/common/gbr.c:606 plug-ins/common/gif.c:1001
 #: plug-ins/common/gih.c:1262 plug-ins/common/gtm.c:243
-#: plug-ins/common/pat.c:453 plug-ins/common/pcx.c:547
+#: plug-ins/common/pat.c:455 plug-ins/common/pcx.c:547
 #: plug-ins/common/pix.c:511 plug-ins/common/png.c:1182
 #: plug-ins/common/pnm.c:815 plug-ins/common/postscript.c:1131
 #: plug-ins/common/psd_save.c:1310 plug-ins/common/sunras.c:510
-#: plug-ins/common/tga.c:1028 plug-ins/common/tiff.c:1935
+#: plug-ins/common/tga.c:1028 plug-ins/common/tiff.c:1921
 #: plug-ins/common/xbm.c:996 plug-ins/common/xpm.c:622
 #: plug-ins/common/xwd.c:567 plug-ins/fits/fits.c:451 plug-ins/gfli/gfli.c:679
 #: plug-ins/jpeg/jpeg-save.c:216 plug-ins/sgi/sgi.c:537
@@ -1861,7 +1861,7 @@ msgstr "Fill (right to left)"
 
 #. "snap to grid" checkbutton at bottom of style frame
 #: plug-ins/common/align_layers.c:423 plug-ins/common/align_layers.c:454
-#: plug-ins/gfig/gfig-dialog.c:494
+#: plug-ins/gfig/gfig-dialog.c:501
 msgid "Snap to grid"
 msgstr "Snap to grid"
 
@@ -2398,12 +2398,12 @@ msgid "to alpha"
 msgstr "to alpha"
 
 #: plug-ins/common/compose.c:133 plug-ins/common/decompose.c:129
-#: plug-ins/common/raw.c:961
+#: plug-ins/common/raw.c:965
 msgid "RGB"
 msgstr "RGB"
 
 #: plug-ins/common/compose.c:143 plug-ins/common/decompose.c:134
-#: plug-ins/common/raw.c:962
+#: plug-ins/common/raw.c:966
 msgid "RGBA"
 msgstr "RGBA"
 
@@ -2655,7 +2655,7 @@ msgid "D_ivisor:"
 msgstr "D_ivisor:"
 
 #: plug-ins/common/convmatrix.c:967 plug-ins/common/depthmerge.c:748
-#: plug-ins/common/raw.c:980
+#: plug-ins/common/raw.c:984
 msgid "O_ffset:"
 msgstr "O_ffset:"
 
@@ -2791,7 +2791,7 @@ msgstr "Automatic pre_view"
 #. the vertical box and its toggle buttons
 #. Options section
 #: plug-ins/common/curve_bend.c:1320 plug-ins/common/mosaic.c:619
-#: plug-ins/common/ripple.c:502 plug-ins/gfig/gfig-dialog.c:1206
+#: plug-ins/common/ripple.c:502 plug-ins/gfig/gfig-dialog.c:1213
 msgid "Options"
 msgstr "Options"
 
@@ -3129,7 +3129,7 @@ msgid "R_ecursive"
 msgstr "R_ecursive"
 
 #: plug-ins/common/despeckle.c:459 plug-ins/common/neon.c:733
-#: plug-ins/common/nlfilt.c:1083 plug-ins/common/nova.c:362
+#: plug-ins/common/nlfilt.c:1084 plug-ins/common/nova.c:362
 #: plug-ins/common/unsharp.c:666 plug-ins/common/whirlpinch.c:589
 #: plug-ins/gflare/gflare.c:2687 plug-ins/imagemap/imap_circle.c:278
 msgid "_Radius:"
@@ -3157,7 +3157,7 @@ msgstr "Destripe"
 
 #: plug-ins/common/destripe.c:470 plug-ins/common/gtm.c:579
 #: plug-ins/common/postscript.c:2974 plug-ins/common/postscript.c:3135
-#: plug-ins/common/raw.c:993 plug-ins/common/smooth_palette.c:430
+#: plug-ins/common/raw.c:997 plug-ins/common/smooth_palette.c:430
 #: plug-ins/common/tile.c:418 plug-ins/imagemap/imap_cmd_guides.c:167
 #: plug-ins/imagemap/imap_rectangle.c:403
 msgid "_Width:"
@@ -3405,7 +3405,7 @@ msgstr "Engrave"
 
 #: plug-ins/common/engrave.c:241 plug-ins/common/film.c:1198
 #: plug-ins/common/gtm.c:595 plug-ins/common/postscript.c:2983
-#: plug-ins/common/postscript.c:3144 plug-ins/common/raw.c:1006
+#: plug-ins/common/postscript.c:3144 plug-ins/common/raw.c:1010
 #: plug-ins/common/smooth_palette.c:435 plug-ins/common/tile.c:422
 #: plug-ins/imagemap/imap_cmd_guides.c:177
 #: plug-ins/imagemap/imap_rectangle.c:410
@@ -3801,34 +3801,34 @@ msgstr "_Gaussian Blur..."
 msgid "Gaussian Blur..."
 msgstr "Gaussian Blur..."
 
-#: plug-ins/common/gauss.c:457
+#: plug-ins/common/gauss.c:458
 msgid "Gaussian Blur"
 msgstr "Gaussian Blur"
 
 #. parameter settings
-#: plug-ins/common/gauss.c:485
+#: plug-ins/common/gauss.c:486
 msgid "Blur Radius"
 msgstr "Blur Radius"
 
-#: plug-ins/common/gauss.c:499 plug-ins/common/jigsaw.c:2458
+#: plug-ins/common/gauss.c:500 plug-ins/common/jigsaw.c:2458
 #: plug-ins/common/spread.c:383
 msgid "_Horizontal:"
 msgstr "_Horizontal:"
 
-#: plug-ins/common/gauss.c:503 plug-ins/common/jigsaw.c:2475
+#: plug-ins/common/gauss.c:504 plug-ins/common/jigsaw.c:2475
 #: plug-ins/common/spread.c:387
 msgid "_Vertical:"
 msgstr "_Vertical:"
 
-#: plug-ins/common/gauss.c:526
+#: plug-ins/common/gauss.c:527
 msgid "Blur Method"
 msgstr "Blur Method"
 
-#: plug-ins/common/gauss.c:530
+#: plug-ins/common/gauss.c:531
 msgid "_IIR"
 msgstr "_IIR"
 
-#: plug-ins/common/gauss.c:531
+#: plug-ins/common/gauss.c:532
 msgid "_RLE"
 msgstr "_RLE"
 
@@ -3869,7 +3869,7 @@ msgid "Spacing:"
 msgstr "Spacing:"
 
 #: plug-ins/common/gbr.c:712 plug-ins/common/gih.c:907
-#: plug-ins/common/pat.c:539 plug-ins/gimpressionist/presets.c:651
+#: plug-ins/common/pat.c:541 plug-ins/gimpressionist/presets.c:651
 msgid "Description:"
 msgstr "Description:"
 
@@ -4178,7 +4178,7 @@ msgstr "_Grid..."
 msgid "Drawing Grid..."
 msgstr "Drawing Grid..."
 
-#: plug-ins/common/grid.c:631 plug-ins/gfig/gfig-dialog.c:1352
+#: plug-ins/common/grid.c:631 plug-ins/gfig/gfig-dialog.c:1361
 msgid "Grid"
 msgstr "Grid"
 
@@ -4196,7 +4196,7 @@ msgid "Intersection"
 msgstr "Intersection"
 
 #. Width and Height
-#: plug-ins/common/grid.c:718 plug-ins/common/svg.c:764
+#: plug-ins/common/grid.c:718 plug-ins/common/svg.c:766
 #: plug-ins/common/wmf.c:547 plug-ins/print/gimp_main_window.c:1006
 #: plug-ins/print/gimp_main_window.c:1213
 msgid "Width:"
@@ -5142,7 +5142,7 @@ msgid "_Factory defaults"
 msgstr "_Factory defaults"
 
 #. anti-alias control
-#: plug-ins/common/newsprint.c:1439 plug-ins/gfig/gfig-dialog.c:1255
+#: plug-ins/common/newsprint.c:1439 plug-ins/gfig/gfig-dialog.c:1262
 msgid "Antialiasing"
 msgstr "Antialiasing"
 
@@ -5154,31 +5154,31 @@ msgstr "O_versample:"
 msgid "_NL Filter..."
 msgstr "_NL Filter..."
 
-#: plug-ins/common/nlfilt.c:949
+#: plug-ins/common/nlfilt.c:950
 msgid "NL Filter..."
 msgstr "NL Filter..."
 
-#: plug-ins/common/nlfilt.c:1012
+#: plug-ins/common/nlfilt.c:1013
 msgid "NL Filter"
 msgstr "NL Filter"
 
-#: plug-ins/common/nlfilt.c:1038
+#: plug-ins/common/nlfilt.c:1039
 msgid "Filter"
 msgstr "Filter"
 
-#: plug-ins/common/nlfilt.c:1042
+#: plug-ins/common/nlfilt.c:1043
 msgid "_Alpha trimmed mean"
 msgstr "_Alpha trimmed mean"
 
-#: plug-ins/common/nlfilt.c:1044
+#: plug-ins/common/nlfilt.c:1045
 msgid "Op_timal estimation"
 msgstr "Op_timal estimation"
 
-#: plug-ins/common/nlfilt.c:1046
+#: plug-ins/common/nlfilt.c:1047
 msgid "_Edge enhancement"
 msgstr "_Edge enhancement"
 
-#: plug-ins/common/nlfilt.c:1071
+#: plug-ins/common/nlfilt.c:1072
 msgid "A_lpha:"
 msgstr "A_lpha:"
 
@@ -5351,16 +5351,16 @@ msgstr "September 31, 1999"
 msgid "_Paper Tile..."
 msgstr "_Paper Tile..."
 
-#: plug-ins/common/pat.c:120 plug-ins/common/pat.c:142
+#: plug-ins/common/pat.c:120 plug-ins/common/pat.c:143
 msgid "GIMP pattern"
 msgstr "GIMP pattern"
 
-#: plug-ins/common/pat.c:358
+#: plug-ins/common/pat.c:360
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Invalid UTF-8 string in pattern file '%s'."
 
-#: plug-ins/common/pat.c:514
+#: plug-ins/common/pat.c:516
 msgid "Save as Pattern"
 msgstr "Save as Pattern"
 
@@ -5699,7 +5699,7 @@ msgid "Rendering"
 msgstr "Rendering"
 
 #. Resolution
-#: plug-ins/common/postscript.c:2965 plug-ins/common/svg.c:885
+#: plug-ins/common/postscript.c:2965 plug-ins/common/svg.c:887
 #: plug-ins/common/wmf.c:668 plug-ins/print/gimp_main_window.c:1101
 msgid "Resolution:"
 msgstr "Resolution:"
@@ -5901,75 +5901,75 @@ msgstr "R_epeat:"
 msgid "Number of times to apply filter"
 msgstr "Number of times to apply filter"
 
-#: plug-ins/common/raw.c:171 plug-ins/common/raw.c:186
+#: plug-ins/common/raw.c:175 plug-ins/common/raw.c:190
 msgid "Raw Image Data"
 msgstr "Raw Image Data"
 
-#: plug-ins/common/raw.c:918
+#: plug-ins/common/raw.c:922
 msgid "Raw Image Loader"
 msgstr "Raw Image Loader"
 
-#: plug-ins/common/raw.c:951
+#: plug-ins/common/raw.c:955
 msgid "Image"
 msgstr "Image"
 
-#: plug-ins/common/raw.c:963
+#: plug-ins/common/raw.c:967
 msgid "Planar RGB"
 msgstr "Planar RGB"
 
-#: plug-ins/common/raw.c:964
+#: plug-ins/common/raw.c:968
 msgid "Indexed"
 msgstr "Indexed"
 
-#: plug-ins/common/raw.c:969
+#: plug-ins/common/raw.c:973
 msgid "Image _Type:"
 msgstr "Image _Type:"
 
-#: plug-ins/common/raw.c:1019
+#: plug-ins/common/raw.c:1023
 msgid "Palette"
 msgstr "Palette"
 
-#: plug-ins/common/raw.c:1029 plug-ins/common/raw.c:1117
+#: plug-ins/common/raw.c:1033 plug-ins/common/raw.c:1121
 msgid "R, G, B (normal)"
 msgstr "R, G, B (normal)"
 
-#: plug-ins/common/raw.c:1030 plug-ins/common/raw.c:1119
+#: plug-ins/common/raw.c:1034 plug-ins/common/raw.c:1123
 msgid "B, G, R, X (bmp style)"
 msgstr "B, G, R, X (BMP style)"
 
-#: plug-ins/common/raw.c:1035
+#: plug-ins/common/raw.c:1039
 msgid "_Palette Type:"
 msgstr "_Palette Type:"
 
-#: plug-ins/common/raw.c:1046
+#: plug-ins/common/raw.c:1050
 msgid "Off_set:"
 msgstr "Off_set:"
 
-#: plug-ins/common/raw.c:1058
+#: plug-ins/common/raw.c:1062
 msgid "Select Palette File to Load"
 msgstr "Select Palette File to Load"
 
-#: plug-ins/common/raw.c:1061
+#: plug-ins/common/raw.c:1065
 msgid "Pal_ette File:"
 msgstr "Pal_ette File:"
 
-#: plug-ins/common/raw.c:1089
+#: plug-ins/common/raw.c:1093
 msgid "Raw Image Save"
 msgstr "Raw Image Save"
 
-#: plug-ins/common/raw.c:1103
+#: plug-ins/common/raw.c:1107
 msgid "RGB Save Type"
 msgstr "RGB Save Type"
 
-#: plug-ins/common/raw.c:1107
+#: plug-ins/common/raw.c:1111
 msgid "Standard (R,G,B)"
 msgstr "Standard (R,G,B)"
 
-#: plug-ins/common/raw.c:1108
+#: plug-ins/common/raw.c:1112
 msgid "Planar (RRR,GGG,BBB)"
 msgstr "Planar (RRR,GGG,BBB)"
 
-#: plug-ins/common/raw.c:1113
+#: plug-ins/common/raw.c:1117
 msgid "Indexed Palette Type"
 msgstr "Indexed Palette Type"
 
@@ -6925,7 +6925,7 @@ msgstr "RunLength Encoded"
 msgid "Scalable SVG image"
 msgstr "Scalable SVG image"
 
-#: plug-ins/common/svg.c:311 plug-ins/common/svg.c:694
+#: plug-ins/common/svg.c:311 plug-ins/common/svg.c:696
 msgid "Unknown reason"
 msgstr "Unknown reason"
 
@@ -6937,7 +6937,7 @@ msgstr "Rendering SVG..."
 msgid "Rendered SVG"
 msgstr "Rendered SVG"
 
-#: plug-ins/common/svg.c:490
+#: plug-ins/common/svg.c:491
 msgid ""
 "SVG file does not\n"
 "specify a size!"
@@ -6945,51 +6945,51 @@ msgstr ""
 "SVG file does not\n"
 "specify a size!"
 
-#: plug-ins/common/svg.c:496 plug-ins/common/wmf.c:336
+#: plug-ins/common/svg.c:497 plug-ins/common/wmf.c:336
 #, c-format
 msgid "%d x %d"
 msgstr "%d x %d"
 
 #. Scalable Vector Graphics is SVG, should perhaps not be translated
-#: plug-ins/common/svg.c:701
+#: plug-ins/common/svg.c:703
 msgid "Render Scalable Vector Graphics"
 msgstr "Render Scalable Vector Graphics"
 
-#: plug-ins/common/svg.c:770 plug-ins/common/wmf.c:553
+#: plug-ins/common/svg.c:772 plug-ins/common/wmf.c:553
 #: plug-ins/print/gimp_main_window.c:1023
 #: plug-ins/print/gimp_main_window.c:1226
 msgid "Height:"
 msgstr "Height:"
 
-#: plug-ins/common/svg.c:844 plug-ins/common/wmf.c:627
+#: plug-ins/common/svg.c:846 plug-ins/common/wmf.c:627
 msgid "_X ratio:"
 msgstr "_X ratio:"
 
-#: plug-ins/common/svg.c:866 plug-ins/common/wmf.c:649
+#: plug-ins/common/svg.c:868 plug-ins/common/wmf.c:649
 msgid "_Y ratio:"
 msgstr "_Y ratio:"
 
-#: plug-ins/common/svg.c:880 plug-ins/common/wmf.c:663
+#: plug-ins/common/svg.c:882 plug-ins/common/wmf.c:663
 msgid "Constrain aspect ratio"
 msgstr "Constrain aspect ratio"
 
-#: plug-ins/common/svg.c:891 plug-ins/common/wmf.c:674
+#: plug-ins/common/svg.c:893 plug-ins/common/wmf.c:674
 #, c-format
 msgid "pixels/%a"
 msgstr "pixels/%a"
 
 #. Path Import
-#: plug-ins/common/svg.c:911
+#: plug-ins/common/svg.c:913
 msgid "Import _paths"
 msgstr "Import _paths"
 
-#: plug-ins/common/svg.c:917
+#: plug-ins/common/svg.c:919
 msgid ""
 "Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr ""
 "Import path elements of the SVG so they can be used with the GIMP path tool"
 
-#: plug-ins/common/svg.c:930
+#: plug-ins/common/svg.c:932
 msgid "Merge imported paths"
 msgstr "Merge imported paths"
 
@@ -7026,8 +7026,8 @@ msgid "_Threshold Alpha..."
 msgstr "_Threshold Alpha..."
 
 #: plug-ins/common/threshold_alpha.c:129
-msgid "The layer preserves transparency."
-msgstr "The layer preserves transparency."
+msgid "The layer has its alpha channel locked."
+msgstr "The layer has its alpha channel locked."
 
 #: plug-ins/common/threshold_alpha.c:135
 msgid "RGBA/GRAYA drawable is not selected."
@@ -7050,16 +7050,16 @@ msgstr "Threshold:"
 msgid "TIFF image"
 msgstr "TIFF image"
 
-#: plug-ins/common/tiff.c:897
+#: plug-ins/common/tiff.c:883
 #, c-format
 msgid "Page %d"
 msgstr "Page %d"
 
-#: plug-ins/common/tiff.c:913
+#: plug-ins/common/tiff.c:899
 msgid "TIFF Channel"
 msgstr "TIFF Channel"
 
-#: plug-ins/common/tiff.c:922
+#: plug-ins/common/tiff.c:908
 msgid ""
 "Warning:\n"
 "The image you are loading has 16 bits per channel. GIMP can only handle 8 "
@@ -7071,7 +7071,7 @@ msgstr ""
 "bit, so it will be converted for you. Information will be lost because of "
 "this conversion."
 
-#: plug-ins/common/tiff.c:2095
+#: plug-ins/common/tiff.c:2081
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -7079,40 +7079,40 @@ msgstr ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
 
-#: plug-ins/common/tiff.c:2258
+#: plug-ins/common/tiff.c:2244
 msgid "Save as TIFF"
 msgstr "Save as TIFF"
 
 #. compression
-#: plug-ins/common/tiff.c:2277
+#: plug-ins/common/tiff.c:2263
 msgid "Compression"
 msgstr "Compression"
 
-#: plug-ins/common/tiff.c:2281
+#: plug-ins/common/tiff.c:2267
 msgid "_None"
 msgstr "_None"
 
-#: plug-ins/common/tiff.c:2282
+#: plug-ins/common/tiff.c:2268
 msgid "_LZW"
 msgstr "_LZW"
 
-#: plug-ins/common/tiff.c:2283
+#: plug-ins/common/tiff.c:2269
 msgid "_Pack Bits"
 msgstr "_Pack Bits"
 
-#: plug-ins/common/tiff.c:2284
+#: plug-ins/common/tiff.c:2270
 msgid "_Deflate"
 msgstr "_Deflate"
 
-#: plug-ins/common/tiff.c:2285
+#: plug-ins/common/tiff.c:2271
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: plug-ins/common/tiff.c:2294
+#: plug-ins/common/tiff.c:2280
 msgid "Save _color values from transparent pixels"
 msgstr "Save _colour values from transparent pixels"
 
-#: plug-ins/common/tiff.c:2310 plug-ins/common/xbm.c:1201
+#: plug-ins/common/tiff.c:2296 plug-ins/common/xbm.c:1201
 msgid "Comment:"
 msgstr "Comment:"
 
@@ -7285,47 +7285,47 @@ msgstr "Create a new unit with the currently selected unit as template."
 msgid "_Unit Editor"
 msgstr "_Unit Editor"
 
-#: plug-ins/common/uniteditor.c:208
+#: plug-ins/common/uniteditor.c:209
 msgid "New Unit"
 msgstr "New Unit"
 
-#: plug-ins/common/uniteditor.c:237
+#: plug-ins/common/uniteditor.c:238
 msgid "_ID:"
 msgstr "_ID:"
 
-#: plug-ins/common/uniteditor.c:248
+#: plug-ins/common/uniteditor.c:249
 msgid "_Factor:"
 msgstr "_Factor:"
 
-#: plug-ins/common/uniteditor.c:258
+#: plug-ins/common/uniteditor.c:259
 msgid "_Digits:"
 msgstr "_Digits:"
 
-#: plug-ins/common/uniteditor.c:270
+#: plug-ins/common/uniteditor.c:271
 msgid "_Symbol:"
 msgstr "_Symbol:"
 
-#: plug-ins/common/uniteditor.c:282
+#: plug-ins/common/uniteditor.c:283
 msgid "_Abbreviation:"
 msgstr "_Abbreviation:"
 
-#: plug-ins/common/uniteditor.c:294
+#: plug-ins/common/uniteditor.c:295
 msgid "Si_ngular:"
 msgstr "Si_ngular:"
 
-#: plug-ins/common/uniteditor.c:306
+#: plug-ins/common/uniteditor.c:307
 msgid "_Plural:"
 msgstr "_Plural:"
 
-#: plug-ins/common/uniteditor.c:342
+#: plug-ins/common/uniteditor.c:343
 msgid "Unit factor must not be 0."
 msgstr "Unit factor must not be 0."
 
-#: plug-ins/common/uniteditor.c:352
+#: plug-ins/common/uniteditor.c:353
 msgid "All text fields must contain a value."
 msgstr "All text fields must contain a value."
 
-#: plug-ins/common/uniteditor.c:406
+#: plug-ins/common/uniteditor.c:407
 msgid "Unit Editor"
 msgstr "Unit Editor"
 
@@ -7543,7 +7543,7 @@ msgid "Smear"
 msgstr "Smear"
 
 #: plug-ins/common/warp.c:513 plug-ins/fits/fits.c:987
-#: plug-ins/flame/flame.c:1146 plug-ins/gfig/gfig-dialog.c:1418
+#: plug-ins/flame/flame.c:1146 plug-ins/gfig/gfig-dialog.c:1466
 msgid "Black"
 msgstr "Black"
 
@@ -8234,8 +8234,8 @@ msgstr "Load FITS File"
 msgid "Replacement for undefined pixels"
 msgstr "Replacement for undefined pixels"
 
-#: plug-ins/fits/fits.c:988 plug-ins/gfig/gfig-dialog.c:1285
-#: plug-ins/gfig/gfig-dialog.c:1419
+#: plug-ins/fits/fits.c:988 plug-ins/gfig/gfig-dialog.c:1292
+#: plug-ins/gfig/gfig-dialog.c:1467
 msgid "White"
 msgstr "White"
 
@@ -8305,7 +8305,7 @@ msgstr "Swirl"
 msgid "Horseshoe"
 msgstr "Horseshoe"
 
-#: plug-ins/flame/flame.c:748 plug-ins/gfig/gfig-dialog.c:1400
+#: plug-ins/flame/flame.c:748 plug-ins/gfig/gfig-dialog.c:1448
 msgid "Polar"
 msgstr "Polar"
 
@@ -8386,197 +8386,197 @@ msgid "Draws lines between the control points. Only during curve creation"
 msgstr "Draws lines between the control points. Only during curve creation"
 
 #. Start building the dialog up
-#: plug-ins/gfig/gfig-dialog.c:287
+#: plug-ins/gfig/gfig-dialog.c:294
 msgid "Gfig"
 msgstr "Gfig"
 
 #. Tool options notebook
-#: plug-ins/gfig/gfig-dialog.c:338
+#: plug-ins/gfig/gfig-dialog.c:345
 msgid "Tool options"
 msgstr "Tool options"
 
-#: plug-ins/gfig/gfig-dialog.c:355
+#: plug-ins/gfig/gfig-dialog.c:362
 msgid "_Stroke"
 msgstr "_Stroke"
 
 #. Fill frame on right side
-#: plug-ins/gfig/gfig-dialog.c:402
+#: plug-ins/gfig/gfig-dialog.c:409
 msgid "Fill"
 msgstr "Fill"
 
-#: plug-ins/gfig/gfig-dialog.c:416
+#: plug-ins/gfig/gfig-dialog.c:423
 msgid "No fill"
 msgstr "No fill"
 
-#: plug-ins/gfig/gfig-dialog.c:417
+#: plug-ins/gfig/gfig-dialog.c:424
 msgid "Color fill"
 msgstr "Colour fill"
 
-#: plug-ins/gfig/gfig-dialog.c:418
+#: plug-ins/gfig/gfig-dialog.c:425
 msgid "Pattern fill"
 msgstr "Pattern fill"
 
-#: plug-ins/gfig/gfig-dialog.c:419
+#: plug-ins/gfig/gfig-dialog.c:426
 msgid "Shape Gradient"
 msgstr "Shape Gradient"
 
-#: plug-ins/gfig/gfig-dialog.c:420
+#: plug-ins/gfig/gfig-dialog.c:427
 msgid "Vertical Gradient"
 msgstr "Vertical Gradient"
 
-#: plug-ins/gfig/gfig-dialog.c:421
+#: plug-ins/gfig/gfig-dialog.c:428
 msgid "Horizontal Gradient"
 msgstr "Horizontal Gradient"
 
 #. "show image" checkbutton at bottom of style frame
-#: plug-ins/gfig/gfig-dialog.c:481
+#: plug-ins/gfig/gfig-dialog.c:488
 msgid "Show image"
 msgstr "Show image"
 
 #. "show grid" checkbutton at bottom of style frame
-#: plug-ins/gfig/gfig-dialog.c:503
+#: plug-ins/gfig/gfig-dialog.c:510
 msgid "Show grid"
 msgstr "Show grid"
 
-#: plug-ins/gfig/gfig-dialog.c:638
+#: plug-ins/gfig/gfig-dialog.c:645
 msgid "Load Gfig object collection"
 msgstr "Load Gfig object collection"
 
-#: plug-ins/gfig/gfig-dialog.c:687
+#: plug-ins/gfig/gfig-dialog.c:694
 msgid "Save Gfig Drawing"
 msgstr "Save Gfig Drawing"
 
-#: plug-ins/gfig/gfig-dialog.c:830
+#: plug-ins/gfig/gfig-dialog.c:837
 msgid "First Gfig"
 msgstr "First Gfig"
 
-#: plug-ins/gfig/gfig-dialog.c:869
+#: plug-ins/gfig/gfig-dialog.c:876
 msgid "_Undo"
 msgstr "_Undo"
 
-#: plug-ins/gfig/gfig-dialog.c:873
+#: plug-ins/gfig/gfig-dialog.c:880
 msgid "_Clear"
 msgstr "_Clear"
 
-#: plug-ins/gfig/gfig-dialog.c:877
+#: plug-ins/gfig/gfig-dialog.c:884
 msgid "_Grid"
 msgstr "_Grid"
 
-#: plug-ins/gfig/gfig-dialog.c:885
+#: plug-ins/gfig/gfig-dialog.c:892
 msgid "Raise selected object"
 msgstr "Raise selected object"
 
-#: plug-ins/gfig/gfig-dialog.c:889
+#: plug-ins/gfig/gfig-dialog.c:896
 msgid "Lower selected object"
 msgstr "Lower selected object"
 
-#: plug-ins/gfig/gfig-dialog.c:893
+#: plug-ins/gfig/gfig-dialog.c:900
 msgid "Raise selected object to top"
 msgstr "Raise selected object to top"
 
-#: plug-ins/gfig/gfig-dialog.c:897
+#: plug-ins/gfig/gfig-dialog.c:904
 msgid "Lower selected object to bottom"
 msgstr "Lower selected object to bottom"
 
-#: plug-ins/gfig/gfig-dialog.c:901
+#: plug-ins/gfig/gfig-dialog.c:908
 msgid "Show previous object"
 msgstr "Show previous object"
 
-#: plug-ins/gfig/gfig-dialog.c:905
+#: plug-ins/gfig/gfig-dialog.c:912
 msgid "Show next object"
 msgstr "Show next object"
 
-#: plug-ins/gfig/gfig-dialog.c:909 plug-ins/gfig/gfig-stock.c:53
+#: plug-ins/gfig/gfig-dialog.c:916 plug-ins/gfig/gfig-stock.c:53
 msgid "Show all objects"
 msgstr "Show all objects"
 
-#: plug-ins/gfig/gfig-dialog.c:915 plug-ins/gfig/gfig-stock.c:47
+#: plug-ins/gfig/gfig-dialog.c:922 plug-ins/gfig/gfig-stock.c:47
 msgid "Create line"
 msgstr "Create line"
 
-#: plug-ins/gfig/gfig-dialog.c:918 plug-ins/gfig/gfig-stock.c:51
+#: plug-ins/gfig/gfig-dialog.c:925 plug-ins/gfig/gfig-stock.c:51
 msgid "Create rectangle"
 msgstr "Create rectangle"
 
-#: plug-ins/gfig/gfig-dialog.c:921 plug-ins/gfig/gfig-stock.c:42
+#: plug-ins/gfig/gfig-dialog.c:928 plug-ins/gfig/gfig-stock.c:42
 msgid "Create circle"
 msgstr "Create circle"
 
-#: plug-ins/gfig/gfig-dialog.c:924 plug-ins/gfig/gfig-stock.c:46
+#: plug-ins/gfig/gfig-dialog.c:931 plug-ins/gfig/gfig-stock.c:46
 msgid "Create ellipse"
 msgstr "Create ellipse"
 
-#: plug-ins/gfig/gfig-dialog.c:927 plug-ins/gfig/gfig-stock.c:44
+#: plug-ins/gfig/gfig-dialog.c:934 plug-ins/gfig/gfig-stock.c:44
 msgid "Create arc"
 msgstr "Create arc"
 
-#: plug-ins/gfig/gfig-dialog.c:930 plug-ins/gfig/gfig-stock.c:50
+#: plug-ins/gfig/gfig-dialog.c:937 plug-ins/gfig/gfig-stock.c:50
 msgid "Create reg polygon"
 msgstr "Create reg polygon"
 
-#: plug-ins/gfig/gfig-dialog.c:933 plug-ins/gfig/gfig-stock.c:55
+#: plug-ins/gfig/gfig-dialog.c:940 plug-ins/gfig/gfig-stock.c:55
 msgid "Create star"
 msgstr "Create star"
 
-#: plug-ins/gfig/gfig-dialog.c:936 plug-ins/gfig/gfig-stock.c:54
+#: plug-ins/gfig/gfig-dialog.c:943 plug-ins/gfig/gfig-stock.c:54
 msgid "Create spiral"
 msgstr "Create spiral"
 
-#: plug-ins/gfig/gfig-dialog.c:939
+#: plug-ins/gfig/gfig-dialog.c:946
 msgid "Create bezier curve. Shift + Button ends object creation."
 msgstr "Create bezier curve. Shift + Button ends object creation."
 
-#: plug-ins/gfig/gfig-dialog.c:943 plug-ins/gfig/gfig-stock.c:48
+#: plug-ins/gfig/gfig-dialog.c:950 plug-ins/gfig/gfig-stock.c:48
 msgid "Move an object"
 msgstr "Move an object"
 
-#: plug-ins/gfig/gfig-dialog.c:946 plug-ins/gfig/gfig-stock.c:49
+#: plug-ins/gfig/gfig-dialog.c:953 plug-ins/gfig/gfig-stock.c:49
 msgid "Move a single point"
 msgstr "Move a single point"
 
-#: plug-ins/gfig/gfig-dialog.c:949 plug-ins/gfig/gfig-stock.c:43
+#: plug-ins/gfig/gfig-dialog.c:956 plug-ins/gfig/gfig-stock.c:43
 msgid "Copy an object"
 msgstr "Copy an object"
 
-#: plug-ins/gfig/gfig-dialog.c:952 plug-ins/gfig/gfig-stock.c:45
+#: plug-ins/gfig/gfig-dialog.c:959 plug-ins/gfig/gfig-stock.c:45
 msgid "Delete an object"
 msgstr "Delete an object"
 
-#: plug-ins/gfig/gfig-dialog.c:955 plug-ins/gfig/gfig-stock.c:52
+#: plug-ins/gfig/gfig-dialog.c:962 plug-ins/gfig/gfig-stock.c:52
 msgid "Select an object"
 msgstr "Select an object"
 
-#: plug-ins/gfig/gfig-dialog.c:1037
+#: plug-ins/gfig/gfig-dialog.c:1044
 msgid "This tool has no options"
 msgstr "This tool has no options"
 
 #. Put buttons in
-#: plug-ins/gfig/gfig-dialog.c:1227
+#: plug-ins/gfig/gfig-dialog.c:1234
 msgid "Show position"
 msgstr "Show position"
 
-#: plug-ins/gfig/gfig-dialog.c:1239
+#: plug-ins/gfig/gfig-dialog.c:1246
 msgid "Show control points"
 msgstr "Show control points"
 
-#: plug-ins/gfig/gfig-dialog.c:1273
+#: plug-ins/gfig/gfig-dialog.c:1280
 msgid "Max undo:"
 msgstr "Max undo:"
 
-#: plug-ins/gfig/gfig-dialog.c:1282 plug-ins/gimpressionist/general.c:166
+#: plug-ins/gfig/gfig-dialog.c:1289 plug-ins/gimpressionist/general.c:166
 msgid "Transparent"
 msgstr "Transparent"
 
-#: plug-ins/gfig/gfig-dialog.c:1284
+#: plug-ins/gfig/gfig-dialog.c:1291
 msgid "Foreground"
 msgstr "Foreground"
 
-#: plug-ins/gfig/gfig-dialog.c:1286 plug-ins/imagemap/imap_cmd_copy.c:54
+#: plug-ins/gfig/gfig-dialog.c:1293 plug-ins/imagemap/imap_cmd_copy.c:54
 #: plug-ins/imagemap/imap_cmd_copy_object.c:55
 msgid "Copy"
 msgstr "Copy"
 
-#: plug-ins/gfig/gfig-dialog.c:1295
+#: plug-ins/gfig/gfig-dialog.c:1302
 msgid ""
 "Layer background type. Copy causes the previous layer to be copied before "
 "the draw is performed."
@@ -8584,71 +8584,79 @@ msgstr ""
 "Layer background type. Copy causes the previous layer to be copied before "
 "the draw is performed."
 
-#: plug-ins/gfig/gfig-dialog.c:1301
+#: plug-ins/gfig/gfig-dialog.c:1308
 msgid "Background:"
 msgstr "Background:"
 
-#: plug-ins/gfig/gfig-dialog.c:1304
+#: plug-ins/gfig/gfig-dialog.c:1311
 msgid "Feather"
 msgstr "Feather"
 
-#: plug-ins/gfig/gfig-dialog.c:1328
+#: plug-ins/gfig/gfig-dialog.c:1335
 msgid "Radius:"
 msgstr "Radius:"
 
-#: plug-ins/gfig/gfig-dialog.c:1383
+#: plug-ins/gfig/gfig-dialog.c:1392
 msgid "Grid spacing:"
 msgstr "Grid spacing:"
 
-#: plug-ins/gfig/gfig-dialog.c:1399
+#: plug-ins/gfig/gfig-dialog.c:1409
+msgid "Polar grid sectors desired:"
+msgstr "Polar grid sectors desired:"
+
+#: plug-ins/gfig/gfig-dialog.c:1431
+msgid "Polar grid radius interval:"
+msgstr "Polar grid radius interval:"
+
+#: plug-ins/gfig/gfig-dialog.c:1447
 msgid "Rectangle"
 msgstr "Rectangle"
 
-#: plug-ins/gfig/gfig-dialog.c:1401
+#: plug-ins/gfig/gfig-dialog.c:1449
 msgid "Isometric"
 msgstr "Isometric"
 
-#: plug-ins/gfig/gfig-dialog.c:1410
+#: plug-ins/gfig/gfig-dialog.c:1458
 msgid "Grid type:"
 msgstr "Grid type:"
 
-#: plug-ins/gfig/gfig-dialog.c:1417 plug-ins/gflare/gflare.c:555
+#: plug-ins/gfig/gfig-dialog.c:1465 plug-ins/gflare/gflare.c:555
 msgid "Normal"
 msgstr "Normal"
 
-#: plug-ins/gfig/gfig-dialog.c:1420
+#: plug-ins/gfig/gfig-dialog.c:1468
 msgid "Grey"
 msgstr "Grey"
 
-#: plug-ins/gfig/gfig-dialog.c:1421
+#: plug-ins/gfig/gfig-dialog.c:1469
 msgid "Darker"
 msgstr "Darker"
 
-#: plug-ins/gfig/gfig-dialog.c:1422
+#: plug-ins/gfig/gfig-dialog.c:1470
 msgid "Lighter"
 msgstr "Lighter"
 
-#: plug-ins/gfig/gfig-dialog.c:1423
+#: plug-ins/gfig/gfig-dialog.c:1471
 msgid "Very dark"
 msgstr "Very dark"
 
-#: plug-ins/gfig/gfig-dialog.c:1432
+#: plug-ins/gfig/gfig-dialog.c:1480
 msgid "Grid color:"
 msgstr "Grid colour:"
 
-#: plug-ins/gfig/gfig-dialog.c:1635
+#: plug-ins/gfig/gfig-dialog.c:1703
 msgid "Sides:"
 msgstr "Sides:"
 
-#: plug-ins/gfig/gfig-dialog.c:1645
+#: plug-ins/gfig/gfig-dialog.c:1713
 msgid "Right"
 msgstr "Right"
 
-#: plug-ins/gfig/gfig-dialog.c:1646
+#: plug-ins/gfig/gfig-dialog.c:1714
 msgid "Left"
 msgstr "Left"
 
-#: plug-ins/gfig/gfig-dialog.c:1656 plug-ins/gimpressionist/orientation.c:130
+#: plug-ins/gfig/gfig-dialog.c:1724 plug-ins/gimpressionist/orientation.c:130
 #: plug-ins/print/gimp_main_window.c:508
 msgid "Orientation:"
 msgstr "Orientation:"
