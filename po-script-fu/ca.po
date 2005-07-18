@@ -1,16 +1,17 @@
 # translation of po-script-fu.po to Català
 # gimp-script-fu translation to Catalan.
-# Copyright (C) 2000, 2001, 2003, 2004,2005 Free Software Foundation, Inc.
+# Copyright © 2000, 2001, 2003, 2004, 2005 Free Software Foundation, Inc.
 # Softcatala <linux@softcatala.org>, 2000-2001
 # Xavier Beà <xbea@pie.xtec.es>, 2003, 2004.
 # Xavier Conde Rueda <xaviconde@eresmas.com>, 2004
 # Quim Perez Noguer <noguer@osona.com>, 2005
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp2.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-09 16:58+0200\n"
-"PO-Revision-Date: 2005-02-22 05:47+0100\n"
+"POT-Creation-Date: 2005-07-18 20:46+0200\n"
+"PO-Revision-Date: 2005-07-18 20:52+0200\n"
 "Last-Translator: Quim Perez i Noguer <noguer@osona.com>\n"
 "Language-Team: Català <tradgnome@softcatala.org>\n"
 "MIME-Version: 1.0\n"
@@ -24,23 +25,15 @@ msgstr ""
 "Si s'activa la consola  només es permetrà la invocació interactiva de les "
 "funcions"
 
-#: ../plug-ins/script-fu/script-fu-console.c:146
+#: ../plug-ins/script-fu/script-fu-console.c:144
 msgid "Script-Fu Console"
 msgstr "Consola de les funcions"
 
-#: ../plug-ins/script-fu/script-fu-console.c:173
-msgid "SIOD Output"
-msgstr "Sortida SIOD"
-
-#: ../plug-ins/script-fu/script-fu-console.c:239
-msgid "Current Command"
-msgstr "Ordre actual"
-
-#: ../plug-ins/script-fu/script-fu-console.c:257
+#: ../plug-ins/script-fu/script-fu-console.c:237
 msgid "_Browse..."
 msgstr "_Cerca..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:538
+#: ../plug-ins/script-fu/script-fu-console.c:518
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 "Si s'activa l'avaluador de funcions només es permetrà la invocació no "
@@ -79,70 +72,70 @@ msgstr "Arguments de la seqüència d'ordres"
 #  some languages want an extra space here
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: ../plug-ins/script-fu/script-fu-interface.c:290
+#: ../plug-ins/script-fu/script-fu-interface.c:291
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:333
+#: ../plug-ins/script-fu/script-fu-interface.c:334
 msgid "Script-Fu Color Selection"
 msgstr "Funció: Selecció del color"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:436
+#: ../plug-ins/script-fu/script-fu-interface.c:438
 msgid "Script-Fu File Selection"
 msgstr "Funció: Selecció del fitxer"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:440
+#: ../plug-ins/script-fu/script-fu-interface.c:442
 msgid "Script-Fu Folder Selection"
 msgstr "Funció: Selecció de la carpeta"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:452
+#: ../plug-ins/script-fu/script-fu-interface.c:454
 msgid "Script-Fu Font Selection"
 msgstr "Funció: Selecció del tipus de lletra"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:459
+#: ../plug-ins/script-fu/script-fu-interface.c:462
 msgid "Script-Fu Palette Selection"
 msgstr "Funció: Selecció de la paleta"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:467
+#: ../plug-ins/script-fu/script-fu-interface.c:470
 msgid "Script-fu Pattern Selection"
 msgstr "Funció: Selecció del patró"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:474
+#: ../plug-ins/script-fu/script-fu-interface.c:477
 msgid "Script-Fu Gradient Selection"
 msgstr "Funció: Selecció del degradat"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:482
+#: ../plug-ins/script-fu/script-fu-interface.c:485
 msgid "Script-Fu Brush Selection"
 msgstr "Funció: Selecció del pinzell"
 
 #  the script progress frame
 #  the script progress frame
 #. the script progress frame
-#: ../plug-ins/script-fu/script-fu-interface.c:549
+#: ../plug-ins/script-fu/script-fu-interface.c:552
 msgid "Script Progress"
 msgstr "Progrés de la seqüència d'ordres"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:557
+#: ../plug-ins/script-fu/script-fu-interface.c:560
 msgid "(none)"
 msgstr "cap"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1083
-#: ../plug-ins/dbbrowser/gimpprocview.c:199
+#: ../plug-ins/script-fu/script-fu-interface.c:1088
+#: ../plug-ins/dbbrowser/gimpprocview.c:205
 msgid "Author:"
 msgstr "Autor:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1090
-#: ../plug-ins/dbbrowser/gimpprocview.c:221
+#: ../plug-ins/script-fu/script-fu-interface.c:1095
+#: ../plug-ins/dbbrowser/gimpprocview.c:229
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1097
-#: ../plug-ins/dbbrowser/gimpprocview.c:210
+#: ../plug-ins/script-fu/script-fu-interface.c:1102
+#: ../plug-ins/dbbrowser/gimpprocview.c:217
 msgid "Date:"
 msgstr "Data:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1106
+#: ../plug-ins/script-fu/script-fu-interface.c:1111
 msgid "Image Types:"
 msgstr "Tipus d'imatge:"
 
@@ -157,15 +150,15 @@ msgstr ""
 "%s\n"
 "%s"
 
-#: ../plug-ins/script-fu/script-fu-server.c:648
+#: ../plug-ins/script-fu/script-fu-server.c:653
 msgid "Script-Fu Server Options"
 msgstr "Opcions de servidor de funcions"
 
-#: ../plug-ins/script-fu/script-fu-server.c:676
+#: ../plug-ins/script-fu/script-fu-server.c:686
 msgid "Server Port:"
 msgstr "Port del servidor:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:682
+#: ../plug-ins/script-fu/script-fu-server.c:692
 msgid "Server Logfile:"
 msgstr "Fitxer de traces del servidor:"
 
@@ -174,7 +167,7 @@ msgid "Script-Fu _Console"
 msgstr "_Consola de les funcions"
 
 #: ../plug-ins/script-fu/script-fu.c:123 ../plug-ins/script-fu/script-fu.c:152
-#: ../plug-ins/script-fu/script-fu.c:330
+#: ../plug-ins/script-fu/script-fu.c:321
 msgid "<Toolbox>/Xtns/Script-Fu"
 msgstr "<Toolbox>/Extensions/Funcions"
 
@@ -184,177 +177,184 @@ msgstr "_Inicia servidor..."
 
 #  strip the first part of the menupath if it contains _("/Script-Fu/")
 #  strip the first part of the menupath if it contains _("/Script-Fu/")
-#: ../plug-ins/script-fu/script-fu.c:271
-#, fuzzy
+#: ../plug-ins/script-fu/script-fu.c:270
 msgid "_Script-Fu"
-msgstr "/Funcions/"
+msgstr "_Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:273
-#, fuzzy
+#: ../plug-ins/script-fu/script-fu.c:272
 msgid "_Buttons"
-msgstr "B_otó..."
+msgstr "_Botons"
 
-#: ../plug-ins/script-fu/script-fu.c:275
+#: ../plug-ins/script-fu/script-fu.c:274
 msgid "_Logos"
-msgstr ""
+msgstr "_Logotips"
 
-#: ../plug-ins/script-fu/script-fu.c:277
+#: ../plug-ins/script-fu/script-fu.c:276
 #, fuzzy
 msgid "Make Br_ush"
 msgstr "Pinzell"
 
-#: ../plug-ins/script-fu/script-fu.c:279
+#: ../plug-ins/script-fu/script-fu.c:278
 msgid "_Misc"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu.c:281
-#, fuzzy
+#: ../plug-ins/script-fu/script-fu.c:280
 msgid "_Patterns"
-msgstr "Patró"
+msgstr "_Patrons"
 
-#: ../plug-ins/script-fu/script-fu.c:283
-#, fuzzy
+#: ../plug-ins/script-fu/script-fu.c:282
 msgid "_Test"
-msgstr "_Text"
+msgstr "_Test"
 
-#: ../plug-ins/script-fu/script-fu.c:285 ../plug-ins/script-fu/script-fu.c:314
+#: ../plug-ins/script-fu/script-fu.c:284
 msgid "_Utils"
-msgstr ""
+msgstr "_Utilitats"
 
-#: ../plug-ins/script-fu/script-fu.c:287
+#: ../plug-ins/script-fu/script-fu.c:286
 msgid "_Web Page Themes"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu.c:289
+#: ../plug-ins/script-fu/script-fu.c:288
 #, fuzzy
 msgid "_Alien Glow"
 msgstr "Lluentor estil Alien..."
 
-#: ../plug-ins/script-fu/script-fu.c:291
+#: ../plug-ins/script-fu/script-fu.c:290
 #, fuzzy
 msgid "_Beveled Pattern"
 msgstr "Patró"
 
-#: ../plug-ins/script-fu/script-fu.c:293
+#: ../plug-ins/script-fu/script-fu.c:292
 msgid "_Classic.Gimp.Org"
 msgstr ""
 
-#  strip the first part of the menupath if it contains _("/Script-Fu/")
-#  strip the first part of the menupath if it contains _("/Script-Fu/")
-#: ../plug-ins/script-fu/script-fu.c:296
-#, fuzzy
-msgid "S_cript-Fu"
-msgstr "/Funcions/"
-
-#: ../plug-ins/script-fu/script-fu.c:298
-msgid "_Alchemy"
-msgstr ""
-
-#: ../plug-ins/script-fu/script-fu.c:300
+#: ../plug-ins/script-fu/script-fu.c:295
 msgid "Alpha to _Logo"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu.c:302
+#: ../plug-ins/script-fu/script-fu.c:297
 msgid "A_nimators"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu.c:304
+#: ../plug-ins/script-fu/script-fu.c:299
 msgid "_Decor"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu.c:306
+#: ../plug-ins/script-fu/script-fu.c:301
 msgid "_Render"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu.c:308
-#, fuzzy
+#: ../plug-ins/script-fu/script-fu.c:303
 msgid "_Selection"
-msgstr "Manté la selecció"
+msgstr "_Selecció"
 
-#: ../plug-ins/script-fu/script-fu.c:310
-#, fuzzy
-msgid "S_hadow"
-msgstr "Ombra"
-
-#: ../plug-ins/script-fu/script-fu.c:312
+#: ../plug-ins/script-fu/script-fu.c:305
 msgid "Stencil _Ops"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu.c:322
+#: ../plug-ins/script-fu/script-fu.c:313
 msgid "_Refresh Scripts"
 msgstr "_Recarrega les funcions"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:126
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:131
 msgid "Procedure Browser"
 msgstr "Gestor de funcions"
 
-# error: msgstr "Navegador per defecte"
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:130
-msgid "Search by _Name"
-msgstr "Cerca pel _nom"
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:154
+msgid "by name"
+msgstr "per nom"
 
 # error: msgstr "Navegador per defecte"
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:131
-#, fuzzy
-msgid "Search by _Description"
-msgstr "Cerca pel _nom"
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:155
+msgid "by description"
+msgstr "per descripció"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:213
-msgid "_Search:"
-msgstr "_Cerca:"
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:156
+msgid "by help"
+msgstr ""
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:375
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:157
+msgid "by author"
+msgstr "per autor"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:158
+msgid "by copyright"
+msgstr "per copyright"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:159
+msgid "by date"
+msgstr "per data"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:160
+msgid "by type"
+msgstr "per tipus"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:332
 msgid "Searching by name - please wait"
 msgstr "S'està cercant pel nom. Espereu un moment"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:399
-msgid "Searching by blurb - please wait"
-msgstr "S'està cercant pel comentari. Espereu un moment"
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:352
+msgid "Searching by description - please wait"
+msgstr "S'està cercant per la descripció. Espereu un moment"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:410
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:360
+#, fuzzy
+msgid "Searching by help - please wait"
+msgstr "S'està cercant pel nom. Espereu un moment"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:368
+msgid "Searching by author - please wait"
+msgstr "S'està cercant per l'autor. Espereu un moment"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:376
+msgid "Searching by copyright - please wait"
+msgstr "S'està cercant pel copyright. Espereu un moment"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:384
+msgid "Searching by date - please wait"
+msgstr "S'està cercant per la data. Espereu un moment"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:392
+msgid "Searching by type - please wait"
+msgstr "S'està cercant pel tipus. Espereu un moment"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:400
 msgid "Searching - please wait"
 msgstr "S'està cercant. Espereu un moment"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:417
-msgid "1 Procedure"
-msgstr "1 procediment"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:419
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:408
 #, c-format
 msgid "%d Procedures"
 msgstr "%d procediments"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:465
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:415
+msgid "No matches for your query"
+msgstr ""
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:418
+msgid "1 procedure matches your query"
+msgstr ""
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:421
+#, c-format
+msgid "%d procedures match your query"
+msgstr ""
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:477
 msgid "No matches"
 msgstr "Cap coincidència"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:134
+#: ../plug-ins/dbbrowser/gimpprocview.c:138
 msgid "Parameters"
 msgstr "Paràmetres"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:147
+#: ../plug-ins/dbbrowser/gimpprocview.c:151
 msgid "Return Values"
 msgstr "Torna els valors"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:160
+#: ../plug-ins/dbbrowser/gimpprocview.c:164
 msgid "Additional Information"
 msgstr "Informació addicional"
-
-#: ../plug-ins/dbbrowser/gimpprocview.c:320
-msgid "Internal GIMP procedure"
-msgstr "Procediment intern del GIMP"
-
-#: ../plug-ins/dbbrowser/gimpprocview.c:321
-msgid "GIMP Plug-In"
-msgstr "Connector del GIMP"
-
-#: ../plug-ins/dbbrowser/gimpprocview.c:322
-msgid "GIMP Extension"
-msgstr "Extensió del GIMP"
-
-#: ../plug-ins/dbbrowser/gimpprocview.c:323
-msgid "Temporary Procedure"
-msgstr "Procediment temporal"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "3D _Outline..."
@@ -1919,7 +1919,6 @@ msgid "_Round Button..."
 msgstr "Botó _rodó..."
 
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:1
-#, fuzzy
 msgid "Behavior"
 msgstr "Comportament"
 
@@ -2356,10 +2355,6 @@ msgstr "Opacitat de la màscara"
 msgid "Mask size"
 msgstr "Mida de la màscara"
 
-#: ../plug-ins/script-fu/scripts/unsharp-mask.scm.h:3
-msgid "_Unsharp Mask..."
-msgstr "_Desbrava la mascara..."
-
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:1
 msgid "Amplitude"
 msgstr "Amplitud"
@@ -2455,6 +2450,47 @@ msgstr "Opacitat del ressaltat"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:11
 msgid "_Xach-Effect..."
 msgstr "Ombre decaient complexa..."
+
+#~ msgid "SIOD Output"
+#~ msgstr "Sortida SIOD"
+
+#~ msgid "Current Command"
+#~ msgstr "Ordre actual"
+
+#  strip the first part of the menupath if it contains _("/Script-Fu/")
+#  strip the first part of the menupath if it contains _("/Script-Fu/")
+#, fuzzy
+#~ msgid "S_cript-Fu"
+#~ msgstr "/Funcions/"
+
+#, fuzzy
+#~ msgid "S_hadow"
+#~ msgstr "Ombra"
+
+# error: msgstr "Navegador per defecte"
+#~ msgid "Search by _Name"
+#~ msgstr "Cerca pel _nom"
+
+#~ msgid "_Search:"
+#~ msgstr "_Cerca:"
+
+#~ msgid "1 Procedure"
+#~ msgstr "1 procediment"
+
+#~ msgid "Internal GIMP procedure"
+#~ msgstr "Procediment intern del GIMP"
+
+#~ msgid "GIMP Plug-In"
+#~ msgstr "Connector del GIMP"
+
+#~ msgid "GIMP Extension"
+#~ msgstr "Extensió del GIMP"
+
+#~ msgid "Temporary Procedure"
+#~ msgstr "Procediment temporal"
+
+#~ msgid "_Unsharp Mask..."
+#~ msgstr "_Desbrava la mascara..."
 
 #~ msgid "Search by _Blurb"
 #~ msgstr "Cerca pel _comentari"

@@ -7,18 +7,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-05-14 17:18+0200\n"
-"PO-Revision-Date: 2004-12-29 17:35+0100\n"
+"POT-Creation-Date: 2005-05-06 10:35+0000\n"
+"PO-Revision-Date: 2005-05-15 17:35+0100\n"
 "Last-Translator: Xavier Beà <xbea@pie.xtec.es>\n"
-"Language-Team: Softcatala <tradgnome@softcatala.org>\n"
+"Language-Team: Softcatalà <tradgnome@softcatala.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../tips/gimp-tips.xml.in.h:1
-#, fuzzy
 msgid "<big>Welcome to the GNU Image Manipulation Program!</big>"
-msgstr "<big>Benvingut al GIMP!</big>"
+msgstr "<big>Benvingut al programa de manipulació d'imatges de GNU!</big>"
 
 #: ../tips/gimp-tips.xml.in.h:2
 msgid ""
@@ -26,7 +25,7 @@ msgid ""
 "viewing the mask directly."
 msgstr ""
 "Premeu <tt>Alt</tt>-clic en la previsualització de la màscara de capa en el "
-"diàleg de capes, per commutar la visualització de la màscara directament ."
+"diàleg de capes per a commutar la visualització de la màscara directament ."
 
 #: ../tips/gimp-tips.xml.in.h:3
 msgid ""
@@ -34,14 +33,14 @@ msgid ""
 "the effect of the layer mask."
 msgstr ""
 "Premeu <tt>Ctrl</tt>-clic en la previsualització de la màscara de capa en el "
-"diàleg de capes, per commutar l'efecte de la màscara de capa."
+"diàleg de capes per a commutar l'efecte de la màscara de capa."
 
 #: ../tips/gimp-tips.xml.in.h:4
 msgid ""
 "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
 "color instead of the foreground color."
 msgstr ""
-"Premeu <tt>Ctrl</tt>-clic amb l'eina omple cubell per utilitzar el color de "
+"Premeu <tt>Ctrl</tt>-clic amb l'eina omple cubell per a utilitzar el color de "
 "fons en comptes del color de primer pla."
 
 #: ../tips/gimp-tips.xml.in.h:5
@@ -49,7 +48,7 @@ msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
 msgstr ""
-"Premeu <tt>Ctrl</tt>-i arrossegueu amb l'eina gira per forçar l'angle de gir "
+"Premeu <tt>Ctrl</tt> i arrossegueu amb l'eina gira per a forçar l'angle de gir "
 "en 15 graus."
 
 #: ../tips/gimp-tips.xml.in.h:6
@@ -57,8 +56,8 @@ msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
 "but that one. <tt>Shift</tt>-click again to show all layers."
 msgstr ""
-"Premeu <tt>majúscules</tt>-clic en l'icona ull del diàleg de capes per "
-"amagar totes les capes menys una. Premeu <tt>majúscules</tt>-clic de nou per "
+"Premeu <tt>majúscules</tt>-clic en la icona ull del diàleg de capes per a "
+"amagar totes les capes menys una. Premeu <tt>majúscules</tt>-clic de nou per a "
 "mostrar-les totes."
 
 #: ../tips/gimp-tips.xml.in.h:7
@@ -73,7 +72,6 @@ msgstr ""
 "capa&quot; o &quot;Ancora la capa&quot; en el diàleg capes, o utilitzeu els "
 "menús per fer el mateix."
 
-# era msgstr "Cal ancorar una selecció flotant en una nova capa o a l'última capa activa abans de fer altres operacions en la imatge. Cliqueu als botons \"Nova capa\" o \"Ancora la capa\" en el diàleg capes, o utilitzeu els menús per fer el mateix."
 #: ../tips/gimp-tips.xml.in.h:8
 msgid ""
 "After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
@@ -88,8 +86,6 @@ msgstr ""
 "&quot;Desa dreceres de teclat&quot; està activat, la tecla escollida es "
 "desarà quan sortiu del GIMP."
 
-# era: msgstr "Després d'activar \"Dreceres de teclat dinàmiques\" en el diàleg preferències podeu reassignar tecles de dreceres. Fareu això si , dins dels menú, seleccioneu un element, i premeu la combinació de tecles desitjada. Si \"Desa dreceres de teclat\" està activat, la tecla escollida es desarà quan sortiu del GIMP."
-# Tingues en compte que és un fitxer XML, no una cadena de caràcters de C, i per tant \" és un error de sintaxi.
 #: ../tips/gimp-tips.xml.in.h:9
 msgid ""
 "Click and drag on a ruler to place a guide on an image. All dragged "
@@ -101,44 +97,6 @@ msgstr ""
 "guies arrossegant-les fora de la imatge amb l'eina mou."
 
 #: ../tips/gimp-tips.xml.in.h:10
-#, fuzzy
-msgid ""
-"GIMP allows you to undo most changes to the image, so feel free to "
-"experiment."
-msgstr ""
-"El GIMP pot desfer la majoria de canvis en la imatge, així que experimenteu "
-"quant vulgueu."
-
-#: ../tips/gimp-tips.xml.in.h:11
-#, fuzzy
-msgid ""
-"GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
-"bz2</tt>, if you have bzip2 installed) to the filename and your image will "
-"be saved compressed. Of course loading compressed images works too."
-msgstr ""
-"El GIMP suporta la compressió gzip al vol. Només cal afegir <tt>.gz</tt> (o "
-"<tt>.bz2</tt> si teniu el bzip2 instal·lat) al nom de fitxer i la vostra "
-"imatge es desarà comprimida. També es poden carregar imatges comprimides."
-
-#: ../tips/gimp-tips.xml.in.h:12
-#, fuzzy
-msgid ""
-"GIMP uses layers to let you organize your image. Think of them as a stack of "
-"slides or filters, such that looking through them you see a composite of "
-"their contents."
-msgstr ""
-"El GIMP utilitza capes per permetre-us organitzar les vostres imatges. "
-"Penseu en elles com una pila de diapositives o filtres, que us deixen "
-"fullejar per veure una composició del seu contingut."
-
-#: ../tips/gimp-tips.xml.in.h:13
-msgid ""
-"If a layer's name in the Layers dialog is displayed in <b>bold</b>, this "
-"layer doesn't have an alpha-channel. You can add an alpha-channel using "
-"Layer-&gt;Transparency-&gt;Add Alpha Channel."
-msgstr ""
-
-#: ../tips/gimp-tips.xml.in.h:14
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
 "improve their tonal range with the &quot;Auto&quot; button in the Levels "
@@ -150,8 +108,7 @@ msgstr ""
 "(Capes-&gt;Colors-&gt;Nivells). Si hi ha algun color buit, el podeu corregir "
 "amb l'eina corbes (Capes-&gt;Colors-&gt;Corbes)."
 
-# ERA: msgstr "Si algunes de les fotos escanejades no tenen prou color, podeu millorar fàcilment el seu to amb el botó \"Automàtic\" en l'eina nivells (Capes-&gt;Colors-&gt;Nivells). Si hi ha algun color buit, el podeu corregir amb l'eina corbes (Capes-&gt;Colors-&gt;Corbes)."
-#: ../tips/gimp-tips.xml.in.h:15
+#: ../tips/gimp-tips.xml.in.h:11
 msgid ""
 "If you stroke a path (Edit-&gt;Stroke Path), the paint tools can be used "
 "with their current settings. You can use the Paintbrush in gradient mode or "
@@ -161,7 +118,7 @@ msgstr ""
 "utilitzar amb els seus paràmetres actuals. Podeu utilitzar el mode pinzell "
 "en mode degradat o fins i tot la goma d'esborrar o l'eina taca."
 
-#: ../tips/gimp-tips.xml.in.h:16
+#: ../tips/gimp-tips.xml.in.h:12
 msgid ""
 "If your screen is too cluttered, you can press <tt>Tab</tt> multiple times "
 "in an image window to hide or show the toolbox and other dialogs."
@@ -170,7 +127,7 @@ msgstr ""
 "moltes vegades en una finestra d'imatge per amagar o mostrar la caixa "
 "d'eines o altres diàlegs."
 
-#: ../tips/gimp-tips.xml.in.h:17
+#: ../tips/gimp-tips.xml.in.h:13
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
 "you will have to merge all layers (Image-&gt;Flatten Image) if you want the "
@@ -180,7 +137,7 @@ msgstr ""
 "alguns casos tindreu que fusionar totes les capes (Imatge-&gt;Aplana la "
 "imatge) si voleu que el connector funcioni en la imatge sencera."
 
-#: ../tips/gimp-tips.xml.in.h:18
+#: ../tips/gimp-tips.xml.in.h:14
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB (Image-"
@@ -193,8 +150,7 @@ msgstr ""
 "Transparència-&gt; Afegeix canal alfa) o aplanar-la (Imatge-&gt;Aplana "
 "imatge)."
 
-# era: msgstr "No tots els efectes es poden aplicar a tots els tipus d'imatges. Així s'indica amb un menú en relleu. Potser us caldrà canviar el mode imatge a RGB (Imatge-&gt;Mode-&gt;RGB), afegir una canal alfa (Capes-&gt; Transparència-&gt; Afegeix canal alfa) o aplanar-la (Imatge-&gt;Aplana imatge)."
-#: ../tips/gimp-tips.xml.in.h:19
+#: ../tips/gimp-tips.xml.in.h:15
 msgid ""
 "Pressing and holding the <tt>Shift</tt> key before making a selection allows "
 "you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
@@ -204,7 +160,46 @@ msgstr ""
 "us permetrà afegir la selecció actual en comptes de reemplaçar-la. Utilitzeu "
 "<tt>Ctrl</tt> abans de fer una selecció per sostreure-la de l'actual."
 
-# era: msgstr "La capa anomenada \"Fons\" és especial perquè no té transparència. Això us prevé d'afegir una màscara de capa o de moure la capa en la pila. Podeu afegir-li transparència clicant amb el botó dret sobre el diàleg capes i seleccionat \"Afegeix canal alfa\"."
+#: ../tips/gimp-tips.xml.in.h:16
+msgid ""
+"The GIMP can undo most changes to the image, so feel free to experiment."
+msgstr ""
+"El GIMP pot desfer la majoria de canvis en la imatge, així que experimenteu "
+"quant vulgueu."
+
+#: ../tips/gimp-tips.xml.in.h:17
+msgid ""
+"The GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or "
+"<tt>.bz2</tt>, if you have bzip2 installed) to the filename and your image "
+"will be saved compressed. Of course loading compressed images works too."
+msgstr ""
+"El GIMP suporta la compressió gzip al vol. Només cal afegir <tt>.gz</tt> (o "
+"<tt>.bz2</tt> si teniu el bzip2 instal·lat) al nom de fitxer i la vostra "
+"imatge es desarà comprimida. També es poden carregar imatges comprimides."
+
+#: ../tips/gimp-tips.xml.in.h:18
+msgid ""
+"The GIMP uses layers to let you organize your image. Think of them as a "
+"stack of slides or filters, such that looking through them you see a "
+"composite of their contents."
+msgstr ""
+"El GIMP utilitza capes per permetre-us organitzar les vostres imatges. "
+"Penseu en elles com una pila de diapositives o filtres, que us deixen "
+"fullejar per veure una composició del seu contingut."
+
+
+#: ../tips/gimp-tips.xml.in.h:19
+msgid ""
+"The layer named &quot;Background&quot; is special because it lacks "
+"transparency. This prevents you from moving the layer up in the stack. You "
+"may add transparency to it by right-clicking in the Layers dialog and "
+"selecting &quot;Add Alpha Channel&quot;."
+msgstr ""
+"La capa anomenada &quot;Fons&quot; és especial perquè no té transparència. "
+"Això us evita haver d'afegir una màscara de capa o de moure la capa en la "
+"pila. Podeu afegir-li transparència clicant amb el botó dret sobre el diàleg "
+"capes i seleccionat &quot;Afegeix canal alfa&quot;."
+
 #: ../tips/gimp-tips.xml.in.h:20
 msgid ""
 "To create a circle-shaped selection, hold <tt>Shift</tt> while doing an "
@@ -219,7 +214,6 @@ msgstr ""
 "vulgueu seleccionar, situar el cursor a la intersecció de les guies, i la "
 "selecció resultant tot just tocarà les guies."
 
-# era: msgstr "Per crear un cercle exacte, manteniu premuda <tt>majúscules</tt> mentre s'està fent una selecció d'el·lipse. Per col·locar un cercle amb precisió, arrossegueu les guies horitzontals i verticals tangents al cercle que volgueu seleccionar, situar el cursor a la intersecció de les guies, i la selecció resultant tot just tocarà les guies."
 #: ../tips/gimp-tips.xml.in.h:21
 msgid ""
 "When using a drawing tool (Paintbrush, Airbrush, or Pencil), <tt>Shift</tt>-"
@@ -233,9 +227,8 @@ msgstr ""
 "forçareu la línia en angles de 15 graus."
 
 #: ../tips/gimp-tips.xml.in.h:22
-#, fuzzy
 msgid ""
-"When you save an image to work on it again later, try using XCF, GIMP's "
+"When you save an image to work on it again later, try using XCF, the GIMP's "
 "native file format (use the file extension <tt>.xcf</tt>). This preserves "
 "the layers and every aspect of your work-in-progress. Once a project is "
 "completed, you can save it as JPEG, PNG, GIF, ..."
@@ -263,7 +256,6 @@ msgstr ""
 "Podeu ajustar el rang de selecció per a selecció difosa clicant i "
 "arrossegant a dreta i esquerra."
 
-# era: msgstr "Podeu ajustar el rang de selecció per a selecció difosa  clicant i arrossegant a dreta i esquerra."
 #: ../tips/gimp-tips.xml.in.h:25
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
@@ -283,9 +275,8 @@ msgstr ""
 "d'eines. Això crearà una nova imatge amb només aquesta capa."
 
 #: ../tips/gimp-tips.xml.in.h:27
-#, fuzzy
 msgid ""
-"You can drag and drop many things in GIMP. For example, dragging a color "
+"You can drag and drop many things in the GIMP. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
 "fill the current image or selection with that color."
 msgstr ""
@@ -294,7 +285,6 @@ msgstr ""
 "deixeu-lo dins una imatge: omplireu la imatge o selecció actual amb aquest "
 "color."
 
-# era: msgstr "Podeu arrossegar i alliberar moltes coses en el GIMP. Per exemple, arrossegueu un color des de la caixa d'eines o des de una paleta de colors i deixeu-lo dins una imatge: omplireu la imatge o selecció actual amb aquest color."
 #: ../tips/gimp-tips.xml.in.h:28
 msgid ""
 "You can draw simple squares or circles using Edit-&gt;Stroke Selection. It "
@@ -357,7 +347,7 @@ msgid ""
 "You can use the middle mouse button to pan around the image, if it's larger "
 "than its display window."
 msgstr ""
-"Podeu utilitzar el botó central del ratolí per enquadrar la imatge, si "
+"Podeu utilitzar el botó central del ratolí per a enquadrar la imatge, si "
 "aquesta és més gran que la finesta on es veu."
 
 #: ../tips/gimp-tips.xml.in.h:35
@@ -371,16 +361,3 @@ msgstr ""
 "botó &quot;Màscara ràpida&quot; al fons esquerre d'una finestra d'imatge. "
 "Canvieu la vostra selecció pintant en la imatge i cliqueu en el botó de nou "
 "per a tornar-la a convertir en una selecció normal."
-
-# era: msgstr "El GIMP utilitza capes per permetre-us organitzar les vostres imatges. Penseu en elles com una pila de pletines o filtres, que us deixen fullejar per veure una composició del seu contingut."
-#~ msgid ""
-#~ "The layer named &quot;Background&quot; is special because it lacks "
-#~ "transparency. This prevents you from moving the layer up in the stack. "
-#~ "You may add transparency to it by right-clicking in the Layers dialog and "
-#~ "selecting &quot;Add Alpha Channel&quot;."
-#~ msgstr ""
-#~ "La capa anomenada &quot;Fons&quot; és especial perquè no té "
-#~ "transparència. Això us evita haver d'afegir una màscara de capa o de "
-#~ "moure la capa en la pila. Podeu afegir-li transparència clicant amb el "
-#~ "botó dret sobre el diàleg capes i seleccionat &quot;Afegeix canal "
-#~ "alfa&quot;."
