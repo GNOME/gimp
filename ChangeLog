@@ -1,3 +1,11 @@
+2005-07-18  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpresolutionentry.c: tweaked spacing and
+	alignments to make it look more like our other widgets.
+
+	* plug-ins/common/poppler.c: put the resolution entry into a hbox
+	so that it doesn't expand horizontally; removed unused table.
+
 2005-07-17  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/nlfilt.c
