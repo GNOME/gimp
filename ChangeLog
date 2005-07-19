@@ -1,3 +1,7 @@
+2005-07-19  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/mng.c (mng_save_image): fixed signedness warnings.
+
 2005-07-19  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/Makefile.am

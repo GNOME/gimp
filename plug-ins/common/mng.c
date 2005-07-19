@@ -1129,24 +1129,25 @@ mng_save_image (const gchar *filename,
 
       while (!feof (infile))
         {
-          unsigned char   chunksize_chars[4];
-          unsigned long   chunksize;
-          unsigned char   chunkname[5];
-          guchar         *chunkbuffer;
-
-          long            chunkwidth;
-          long            chunkheight;
-          char            chunkbitdepth;
-          char            chunkcolortype;
-          char            chunkcompression;
-          char            chunkfilter;
-          char            chunkinterlaced;
+          guchar  chunksize_chars[4];
+          gulong  chunksize;
+          gchar   chunkname[5];
+          guchar *chunkbuffer;
+          glong   chunkwidth;
+          glong   chunkheight;
+          gchar   chunkbitdepth;
+          gchar   chunkcolortype;
+          gchar   chunkcompression;
+          gchar   chunkfilter;
+          gchar   chunkinterlaced;
 
 
           if (fread (chunksize_chars, 1, 4, infile) != 4)
             break;
+
           if (fread (chunkname, 1, 4, infile) != 4)
             break;
+
           chunkname[4] = 0;
 
           chunksize = (chunksize_chars[0] << 24) | (chunksize_chars[1] << 16)
