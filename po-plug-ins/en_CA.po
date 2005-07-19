@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-18 04:31-0400\n"
+"POT-Creation-Date: 2005-07-18 21:15-0400\n"
 "PO-Revision-Date: 2005-07-18 14:31-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
@@ -414,15 +414,16 @@ msgstr "Save Fractal Parameters"
 #: plug-ins/common/mng.c:1118 plug-ins/common/pat.c:318
 #: plug-ins/common/pcx.c:305 plug-ins/common/pix.c:325
 #: plug-ins/common/png.c:672 plug-ins/common/pnm.c:434
-#: plug-ins/common/postscript.c:994 plug-ins/common/psd.c:1801
-#: plug-ins/common/psp.c:1454 plug-ins/common/raw.c:239
-#: plug-ins/common/raw.c:643 plug-ins/common/spheredesigner.c:1997
-#: plug-ins/common/sunras.c:375 plug-ins/common/svg.c:309
-#: plug-ins/common/svg.c:694 plug-ins/common/tga.c:409
-#: plug-ins/common/tiff.c:524 plug-ins/common/xbm.c:715
-#: plug-ins/common/xwd.c:415 plug-ins/faxg3/faxg3.c:219
-#: plug-ins/fits/fits.c:333 plug-ins/flame/flame.c:412
-#: plug-ins/gfig/gfig.c:429 plug-ins/gfli/gfli.c:422 plug-ins/gfli/gfli.c:457
+#: plug-ins/common/poppler.c:350 plug-ins/common/postscript.c:994
+#: plug-ins/common/psd.c:1801 plug-ins/common/psp.c:1454
+#: plug-ins/common/raw.c:239 plug-ins/common/raw.c:643
+#: plug-ins/common/spheredesigner.c:1997 plug-ins/common/sunras.c:375
+#: plug-ins/common/svg.c:309 plug-ins/common/svg.c:694
+#: plug-ins/common/tga.c:409 plug-ins/common/tiff.c:524
+#: plug-ins/common/xbm.c:715 plug-ins/common/xwd.c:415
+#: plug-ins/faxg3/faxg3.c:219 plug-ins/fits/fits.c:333
+#: plug-ins/flame/flame.c:412 plug-ins/gfig/gfig.c:429
+#: plug-ins/gfli/gfli.c:422 plug-ins/gfli/gfli.c:457
 #: plug-ins/help/domain.c:423 plug-ins/jpeg/jpeg-load.c:85
 #: plug-ins/jpeg/jpeg-load.c:868 plug-ins/uri/uri-backend-gnomevfs.c:204
 #: plug-ins/winicon/icoload.c:135 plug-ins/xjt/xjt.c:2524
@@ -1156,15 +1157,15 @@ msgstr "Bad colourmap"
 #: plug-ins/common/gifload.c:299 plug-ins/common/gih.c:653
 #: plug-ins/common/pat.c:324 plug-ins/common/pcx.c:311
 #: plug-ins/common/pix.c:331 plug-ins/common/png.c:680
-#: plug-ins/common/pnm.c:440 plug-ins/common/postscript.c:1001
-#: plug-ins/common/psd.c:1807 plug-ins/common/raw.c:649
-#: plug-ins/common/sunras.c:430 plug-ins/common/tga.c:415
-#: plug-ins/common/tiff.c:530 plug-ins/common/wmf.c:951
-#: plug-ins/common/xbm.c:721 plug-ins/common/xpm.c:341
-#: plug-ins/common/xwd.c:469 plug-ins/faxg3/faxg3.c:204
-#: plug-ins/gfli/gfli.c:463 plug-ins/jpeg/jpeg-load.c:93
-#: plug-ins/sgi/sgi.c:317 plug-ins/winicon/icoload.c:461
-#: plug-ins/xjt/xjt.c:3309
+#: plug-ins/common/pnm.c:440 plug-ins/common/poppler.c:454
+#: plug-ins/common/postscript.c:1001 plug-ins/common/psd.c:1807
+#: plug-ins/common/raw.c:649 plug-ins/common/sunras.c:430
+#: plug-ins/common/tga.c:415 plug-ins/common/tiff.c:530
+#: plug-ins/common/wmf.c:951 plug-ins/common/xbm.c:721
+#: plug-ins/common/xpm.c:341 plug-ins/common/xwd.c:469
+#: plug-ins/faxg3/faxg3.c:204 plug-ins/gfli/gfli.c:463
+#: plug-ins/jpeg/jpeg-load.c:93 plug-ins/sgi/sgi.c:317
+#: plug-ins/winicon/icoload.c:461 plug-ins/xjt/xjt.c:3309
 #, c-format
 msgid "Opening '%s'..."
 msgstr "Opening '%s'..."
@@ -5650,6 +5651,31 @@ msgid ""
 msgstr ""
 "If unchecked the image will be circularly mapped onto a rectangle.  If "
 "checked the image will be mapped onto a circle."
+
+#: plug-ins/common/poppler.c:136
+msgid "Portable Document Format"
+msgstr "Portable Document Format"
+
+#: plug-ins/common/poppler.c:630
+msgid "Load PDF"
+msgstr "Load PDF"
+
+#: plug-ins/common/poppler.c:692
+msgid "_Width (pixels):"
+msgstr "_Width (pixels):"
+
+#: plug-ins/common/poppler.c:693
+msgid "_Height (pixels):"
+msgstr "_Height (pixels):"
+
+#: plug-ins/common/poppler.c:696 plug-ins/common/poppler.c:697
+msgid "_Resolution:"
+msgstr "_Resolution:"
+
+#. Antialiasing
+#: plug-ins/common/poppler.c:711
+msgid "A_ntialiasing"
+msgstr "A_ntialiasing"
 
 #: plug-ins/common/postscript.c:575 plug-ins/common/postscript.c:666
 msgid "PostScript document"

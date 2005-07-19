@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-03 18:23-0400\n"
-"PO-Revision-Date: 2005-07-03 20:02-0400\n"
+"POT-Creation-Date: 2005-07-18 21:15-0400\n"
+"PO-Revision-Date: 2005-07-18 20:02-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -806,7 +806,7 @@ msgstr "Failed to create thumbnail folder '%s'."
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Could not create thumbnail for %s: %s"
 
-#: libgimpwidgets/gimpbrowser.c:130
+#: libgimpwidgets/gimpbrowser.c:129
 msgid "_Search:"
 msgstr "_Search:"
 
@@ -895,10 +895,15 @@ msgstr "Check Style"
 msgid "_Preview"
 msgstr "_Preview"
 
-#: libgimpwidgets/gimppropwidgets.c:1798
+#: libgimpwidgets/gimppropwidgets.c:1807
 #, c-format
 msgid "This text input field is limited to %d characters."
 msgstr "This text input field is limited to %d characters."
+
+#: libgimpwidgets/gimpresolutionentry.c:382
+#, c-format
+msgid "pixels/%s"
+msgstr "pixels/%s"
 
 #: libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
@@ -1113,8 +1118,8 @@ msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
 msgstr ""
-"This filter takes its configuration from the Colour Management section in the "
-"Preferences dialogue."
+"This filter takes its configuration from the Colour Management section in "
+"the Preferences dialogue."
 
 #: modules/cdisplay_lcms.c:311
 msgid "Mode of operation:"
