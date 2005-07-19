@@ -24,7 +24,6 @@
 #include "config.h"
 
 #include <gtk/gtk.h>
-#include <gdk/gdkkeysyms.h>
 
 #include "imap_about.h"
 #include "imap_circle.h"
@@ -115,10 +114,10 @@ menu_shapes_selected(gint count)
   set_sensitive ("/MainMenu/EditMenu/DeselectAll", sensitive);
 }
 
+#ifdef _NOT_READY_YET_
 static void
 command_list_changed(Command_t *command, gpointer data)
 {
-#ifdef _NOT_READY_YET_
    gchar *scratch;
    GtkWidget *icon;
 
@@ -152,8 +151,8 @@ command_list_changed(Command_t *command, gpointer data)
    icon = gtk_image_new_from_stock(GTK_STOCK_REDO, GTK_ICON_SIZE_MENU);
    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(_menu.redo), icon);
    gtk_widget_show(icon);
-#endif
 }
+#endif
 
 static void
 paste_buffer_added(Object_t *obj, gpointer data)
