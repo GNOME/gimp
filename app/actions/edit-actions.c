@@ -125,7 +125,7 @@ static GimpActionEntry edit_actions[] =
     GIMP_HELP_BUFFER_PASTE },
 
   { "edit-clear", GTK_STOCK_CLEAR,
-    N_("Cl_ear"), "<control>K", NULL,
+    N_("Cl_ear"), "Delete", NULL,
     G_CALLBACK (edit_clear_cmd_callback),
     GIMP_HELP_EDIT_CLEAR }
 };

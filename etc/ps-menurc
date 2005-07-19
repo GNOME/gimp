@@ -58,7 +58,7 @@
 (gtk_accel_path "<Actions>/plug-in/plug_in_bump_map" "<Shift><Control>m")
 (gtk_accel_path "<Actions>/tools/tools-magnify" "z")
 (gtk_accel_path "<Actions>/layers/layers-mode-previous" "underscore")
-(gtk_accel_path "<Actions>/edit/edit-clear" "")
+(gtk_accel_path "<Actions>/edit/edit-clear" "Delete")
 (gtk_accel_path "<Actions>/plug-in/plug_in_iwarp" "<Shift><Control>x")
 (gtk_accel_path "<Actions>/select/select-none" "<Control>d")
 (gtk_accel_path "<Actions>/file/file-save-a-copy" "<Control><Alt>s")
