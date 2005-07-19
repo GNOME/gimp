@@ -41,6 +41,7 @@
 #include "core/gimpimage-snap.h"
 #include "core/gimpmarshal.h"
 
+#include "widgets/gimprender.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmenufactory.h"
 #include "widgets/gimpuimanager.h"
@@ -60,7 +61,6 @@
 #include "gimpdisplayshell-draw.h"
 #include "gimpdisplayshell-filter.h"
 #include "gimpdisplayshell-handlers.h"
-#include "gimpdisplayshell-render.h"
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-selection.h"
 #include "gimpdisplayshell-title.h"
@@ -270,9 +270,9 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->menubar                = NULL;
   shell->statusbar              = NULL;
 
-  shell->render_buf             = g_malloc (GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH  *
-                                           GIMP_DISPLAY_SHELL_RENDER_BUF_HEIGHT *
-                                           3);
+  shell->render_buf             = g_malloc (GIMP_RENDER_BUF_WIDTH  *
+                                            GIMP_RENDER_BUF_HEIGHT *
+                                            3);
 
   shell->title_idle_id          = 0;
 

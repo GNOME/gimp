@@ -32,6 +32,7 @@
 #include "core/gimpimage.h"
 
 #include "widgets/gimpactiongroup.h"
+#include "widgets/gimprender.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpwidgets-utils.h"
 
@@ -39,7 +40,6 @@
 #include "display/gimpdisplayoptions.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-appearance.h"
-#include "display/gimpdisplayshell-render.h"
 #include "display/gimpdisplayshell-selection.h"
 
 #include "actions.h"
@@ -629,17 +629,17 @@ view_actions_check_type_notify (GimpDisplayConfig *config,
   GimpRGB color;
 
   gimp_rgba_set_uchar (&color,
-                       render_blend_light_check[0],
-                       render_blend_light_check[1],
-                       render_blend_light_check[2],
+                       gimp_render_blend_light_check[0],
+                       gimp_render_blend_light_check[1],
+                       gimp_render_blend_light_check[2],
                        255);
   gimp_action_group_set_action_color (group, "view-padding-color-light-check",
                                       &color, FALSE);
 
   gimp_rgba_set_uchar (&color,
-                       render_blend_dark_check[0],
-                       render_blend_dark_check[1],
-                       render_blend_dark_check[2],
+                       gimp_render_blend_dark_check[0],
+                       gimp_render_blend_dark_check[1],
+                       gimp_render_blend_dark_check[2],
                        255);
   gimp_action_group_set_action_color (group, "view-padding-color-dark-check",
                                       &color, FALSE);

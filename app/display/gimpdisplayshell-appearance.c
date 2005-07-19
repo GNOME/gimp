@@ -30,6 +30,7 @@
 #include "core/gimpimage.h"
 
 #include "widgets/gimpactiongroup.h"
+#include "widgets/gimprender.h"
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpwidgets-utils.h"
 
@@ -40,7 +41,6 @@
 #include "gimpdisplayshell-appearance.h"
 #include "gimpdisplayshell-callbacks.h"
 #include "gimpdisplayshell-selection.h"
-#include "gimpdisplayshell-render.h"
 
 
 #define GET_OPTIONS(shell) \
@@ -542,16 +542,16 @@ gimp_display_shell_set_padding (GimpDisplayShell      *shell,
 
     case GIMP_CANVAS_PADDING_MODE_LIGHT_CHECK:
       gimp_rgb_set_uchar (&color,
-                          render_blend_light_check[0],
-                          render_blend_light_check[1],
-                          render_blend_light_check[2]);
+                          gimp_render_blend_light_check[0],
+                          gimp_render_blend_light_check[1],
+                          gimp_render_blend_light_check[2]);
       break;
 
     case GIMP_CANVAS_PADDING_MODE_DARK_CHECK:
       gimp_rgb_set_uchar (&color,
-                          render_blend_dark_check[0],
-                          render_blend_dark_check[1],
-                          render_blend_dark_check[2]);
+                          gimp_render_blend_dark_check[0],
+                          gimp_render_blend_dark_check[1],
+                          gimp_render_blend_dark_check[2]);
       break;
 
     case GIMP_CANVAS_PADDING_MODE_CUSTOM:

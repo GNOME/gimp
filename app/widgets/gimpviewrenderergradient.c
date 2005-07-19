@@ -30,15 +30,9 @@
 
 #include "widgets-types.h"
 
-#ifdef __GNUC__
-#warning FIXME #include "display/display-types.h"
-#endif
-#include "display/display-types.h"
-
 #include "core/gimpgradient.h"
 
-#include "display/gimpdisplayshell-render.h"
-
+#include "gimprender.h"
 #include "gimpviewrenderergradient.h"
 
 
@@ -177,23 +171,23 @@ gimp_view_renderer_gradient_render (GimpViewRenderer *renderer,
 
       if (x & 0x4)
         {
-          *even++ = render_blend_dark_check[(a << 8) | r];
-          *even++ = render_blend_dark_check[(a << 8) | g];
-          *even++ = render_blend_dark_check[(a << 8) | b];
+          *even++ = gimp_render_blend_dark_check[(a << 8) | r];
+          *even++ = gimp_render_blend_dark_check[(a << 8) | g];
+          *even++ = gimp_render_blend_dark_check[(a << 8) | b];
 
-          *odd++ = render_blend_light_check[(a << 8) | r];
-          *odd++ = render_blend_light_check[(a << 8) | g];
-          *odd++ = render_blend_light_check[(a << 8) | b];
+          *odd++ = gimp_render_blend_light_check[(a << 8) | r];
+          *odd++ = gimp_render_blend_light_check[(a << 8) | g];
+          *odd++ = gimp_render_blend_light_check[(a << 8) | b];
         }
       else
         {
-          *even++ = render_blend_light_check[(a << 8) | r];
-          *even++ = render_blend_light_check[(a << 8) | g];
-          *even++ = render_blend_light_check[(a << 8) | b];
+          *even++ = gimp_render_blend_light_check[(a << 8) | r];
+          *even++ = gimp_render_blend_light_check[(a << 8) | g];
+          *even++ = gimp_render_blend_light_check[(a << 8) | b];
 
-          *odd++ = render_blend_dark_check[(a << 8) | r];
-          *odd++ = render_blend_dark_check[(a << 8) | g];
-          *odd++ = render_blend_dark_check[(a << 8) | b];
+          *odd++ = gimp_render_blend_dark_check[(a << 8) | r];
+          *odd++ = gimp_render_blend_dark_check[(a << 8) | g];
+          *odd++ = gimp_render_blend_dark_check[(a << 8) | b];
         }
     }
 

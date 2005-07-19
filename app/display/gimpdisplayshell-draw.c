@@ -32,6 +32,7 @@
 #include "vectors/gimpstroke.h"
 #include "vectors/gimpvectors.h"
 
+#include "widgets/gimprender.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpcanvas.h"
@@ -502,14 +503,14 @@ gimp_display_shell_draw_area (GimpDisplayShell *shell,
       /*  display the image in RENDER_BUF_WIDTH x RENDER_BUF_HEIGHT
        *  sized chunks
        */
-      for (i = y; i < y2; i += GIMP_DISPLAY_SHELL_RENDER_BUF_HEIGHT)
+      for (i = y; i < y2; i += GIMP_RENDER_BUF_HEIGHT)
         {
-          for (j = x; j < x2; j += GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH)
+          for (j = x; j < x2; j += GIMP_RENDER_BUF_WIDTH)
             {
               gint dx, dy;
 
-              dx = MIN (x2 - j, GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH);
-              dy = MIN (y2 - i, GIMP_DISPLAY_SHELL_RENDER_BUF_HEIGHT);
+              dx = MIN (x2 - j, GIMP_RENDER_BUF_WIDTH);
+              dy = MIN (y2 - i, GIMP_RENDER_BUF_HEIGHT);
 
               gimp_display_shell_render (shell,
                                          j - shell->disp_xoffset,

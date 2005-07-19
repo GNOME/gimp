@@ -207,6 +207,8 @@ libappwidgets_a_sources = \
 	gimpprogressdialog.h		\
 	gimppropwidgets.c		\
 	gimppropwidgets.h		\
+	gimprender.c			\
+	gimprender.h			\
 	gimpsamplepointeditor.c		\
 	gimpsamplepointeditor.h		\
 	gimpselectiondata.c		\

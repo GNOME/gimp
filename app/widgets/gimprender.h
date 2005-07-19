@@ -16,19 +16,26 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_DISPLAY_SHELL_RENDER_H__
-#define __GIMP_DISPLAY_SHELL_RENDER_H__
+#ifndef __GIMP_RENDER_H__
+#define __GIMP_RENDER_H__
 
 
-void   gimp_display_shell_render_init (Gimp             *gimp);
-void   gimp_display_shell_render_exit (Gimp             *gimp);
-
-void   gimp_display_shell_render      (GimpDisplayShell *shell,
-                                       gint              x,
-                                       gint              y,
-                                       gint              w,
-                                       gint              h,
-                                       GdkRectangle     *highlight);
+#define GIMP_RENDER_BUF_WIDTH  256
+#define GIMP_RENDER_BUF_HEIGHT 256
 
 
-#endif  /*  __GIMP_DISPLAY_SHELL_RENDER_H__  */
+extern guchar *gimp_render_check_buf;
+extern guchar *gimp_render_empty_buf;
+extern guchar *gimp_render_white_buf;
+extern guchar *gimp_render_temp_buf;
+
+extern guchar *gimp_render_blend_dark_check;
+extern guchar *gimp_render_blend_light_check;
+extern guchar *gimp_render_blend_white;
+
+
+void   gimp_render_init (Gimp *gimp);
+void   gimp_render_exit (Gimp *gimp);
+
+
+#endif /* __GIMP_RENDER_H__ */

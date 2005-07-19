@@ -1,5 +1,24 @@
 2005-07-19  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/Makefile.am
+	* app/widgets/gimprender.[ch]: new files keeping the render
+	acceleration check buffers.
+
+	* app/display/gimpdisplayshell-render.[ch]: removed them here.
+
+	* app/gui/gui.c: initialize/shutdown the new buffers.
+
+	* app/widgets/gimpcolormapeditor.c
+	* app/widgets/gimpviewrenderer.c
+	* app/widgets/gimpviewrenderergradient.c
+	* app/actions/view-actions.c
+	* app/display/gimpdisplayshell-appearance.c
+	* app/display/gimpdisplayshell-draw.c
+	* app/display/gimpdisplayshell.c: use the new stuff. Removes
+	lots of broken widgets -> display dependencies.
+
+2005-07-19  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcolormapeditor.[ch]: renamed member "palette"
 	to "preview", cleanup.
 

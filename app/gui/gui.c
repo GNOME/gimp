@@ -51,6 +51,7 @@
 #include "widgets/gimpdevicestatus.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdnd.h"
+#include "widgets/gimprender.h"
 #include "widgets/gimphelp.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmenufactory.h"
@@ -392,7 +393,8 @@ gui_restore_callback (Gimp               *gimp,
 
   actions_init (gimp);
   menus_init (gimp, global_action_factory);
-  render_init (gimp);
+  gimp_render_init (gimp);
+  gimp_display_shell_render_init (gimp);
 
   dialogs_init (gimp, global_menu_factory);
 
@@ -508,7 +510,8 @@ gui_exit_after_callback (Gimp     *gimp,
   session_exit (gimp);
   menus_exit (gimp);
   actions_exit (gimp);
-  render_exit (gimp);
+  gimp_display_shell_render_exit (gimp);
+  gimp_render_exit (gimp);
 
   dialogs_exit (gimp);
   gimp_controllers_exit (gimp);

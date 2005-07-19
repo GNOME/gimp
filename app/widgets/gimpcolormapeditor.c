@@ -36,11 +36,6 @@
 
 #include "widgets-types.h"
 
-#ifdef __GNUC__
-#warning FIXME #include "display/display-types.h"
-#endif
-#include "display/display-types.h"
-
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
@@ -48,10 +43,9 @@
 #include "core/gimpimage-colormap.h"
 #include "core/gimpmarshal.h"
 
-#include "display/gimpdisplayshell-render.h"
-
 #include "gimpcolormapeditor.h"
 #include "gimpdnd.h"
+#include "gimprender.h"
 #include "gimpmenufactory.h"
 #include "gimpuimanager.h"
 
@@ -472,8 +466,8 @@ gimp_colormap_editor_draw (GimpColormapEditor *editor)
               row[l * 3 + b] = (((((i * cellsize + k) & 0x4) ?
                                   (l) :
                                   (l + 0x4)) & 0x4) ?
-                                render_blend_light_check[0] :
-                                render_blend_dark_check[0]);
+                                gimp_render_blend_light_check[0] :
+                                gimp_render_blend_dark_check[0]);
 
           gtk_preview_draw_row (GTK_PREVIEW (editor->preview), row, 0,
                                 i * cellsize + k,
@@ -583,7 +577,7 @@ gimp_colormap_editor_clear (GimpColormapEditor *editor,
         {
           row[j * 3 + 0] = row[j * 3 + 1] = row[j * 3 + 2] =
             ((j + offset) & 0x4) ?
-            render_blend_dark_check[0] : render_blend_light_check[0];
+            gimp_render_blend_dark_check[0] : gimp_render_blend_light_check[0];
         }
 
       for (j = 0; j < (4 - (start_row & 0x3)) && start_row + j < height; j++)
@@ -601,7 +595,7 @@ gimp_colormap_editor_clear (GimpColormapEditor *editor,
         {
           row[j * 3 + 0] = row[j * 3 + 1] = row[j * 3 + 2] =
             ((j + offset) & 0x4) ?
-            render_blend_dark_check[0] : render_blend_light_check[0];
+            gimp_render_blend_dark_check[0] : gimp_render_blend_light_check[0];
         }
 
       for (j = 0; j < 4 && i + j < height; j++)

@@ -36,6 +36,8 @@
 #include "core/gimpimage-colormap.h"
 #include "core/gimpprojection.h"
 
+#include "widgets/gimprender.h"
+
 #include "gimpcanvas.h"
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
@@ -72,25 +74,14 @@ static void   render_setup_notify (gpointer    config,
                                    Gimp       *gimp);
 
 
-/*  accelerate transparency of image scaling  */
-guchar *render_check_buf         = NULL;
-guchar *render_empty_buf         = NULL;
-guchar *render_white_buf         = NULL;
-guchar *render_temp_buf          = NULL;
-
-guchar *render_blend_dark_check  = NULL;
-guchar *render_blend_light_check = NULL;
-guchar *render_blend_white       = NULL;
-
-
-static guchar *tile_buf           = NULL;
-static guint   tile_shift         = 0;
-static guint   check_mod          = 0;
-static guint   check_shift        = 0;
+static guchar *tile_buf    = NULL;
+static guint   tile_shift  = 0;
+static guint   check_mod   = 0;
+static guint   check_shift = 0;
 
 
 void
-render_init (Gimp *gimp)
+gimp_display_shell_render_init (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
@@ -105,7 +96,7 @@ render_init (Gimp *gimp)
 }
 
 void
-render_exit (Gimp *gimp)
+gimp_display_shell_render_exit (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
@@ -118,48 +109,6 @@ render_exit (Gimp *gimp)
       g_free (tile_buf);
       tile_buf = NULL;
     }
-
-  if (render_blend_dark_check)
-    {
-      g_free (render_blend_dark_check);
-      render_blend_dark_check = NULL;
-    }
-
-  if (render_blend_light_check)
-    {
-      g_free (render_blend_light_check);
-      render_blend_light_check = NULL;
-    }
-
-  if (render_blend_white)
-    {
-      g_free (render_blend_white);
-      render_blend_white = NULL;
-    }
-
-  if (render_check_buf)
-    {
-      g_free (render_check_buf);
-      render_check_buf = NULL;
-    }
-
-  if (render_empty_buf)
-    {
-      g_free (render_empty_buf);
-      render_empty_buf = NULL;
-    }
-
-  if (render_white_buf)
-    {
-      g_free (render_white_buf);
-      render_white_buf = NULL;
-    }
-
-  if (render_temp_buf)
-    {
-      g_free (render_temp_buf);
-      render_temp_buf = NULL;
-    }
 }
 
 
@@ -168,13 +117,9 @@ render_setup_notify (gpointer    config,
                      GParamSpec *param_spec,
                      Gimp       *gimp)
 {
-  GimpCheckType check_type;
   GimpCheckSize check_size;
-  guchar        light, dark;
-  gint          i, j;
 
   g_object_get (config,
-                "transparency-type", &check_type,
                 "transparency-size", &check_size,
                 NULL);
 
@@ -187,28 +132,7 @@ render_setup_notify (gpointer    config,
 
   /*  allocate a buffer for arranging information from a row of tiles  */
   if (! tile_buf)
-    tile_buf = g_new (guchar,
-                      GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH * MAX_CHANNELS);
-
-  if (! render_blend_dark_check)
-    render_blend_dark_check = g_new (guchar, 65536);
-  if (! render_blend_light_check)
-    render_blend_light_check = g_new (guchar, 65536);
-  if (! render_blend_white)
-    render_blend_white = g_new (guchar, 65536);
-
-  gimp_checks_get_shades (check_type, &light, &dark);
-
-  for (i = 0; i < 256; i++)
-    for (j = 0; j < 256; j++)
-      {
-	render_blend_dark_check [(i << 8) + j] =
-	  (guchar) ((j * i + dark * (255 - i)) / 255);
-	render_blend_light_check [(i << 8) + j] =
-          (guchar) ((j * i + light * (255 - i)) / 255);
-	render_blend_white [(i << 8) + j] =
-          (guchar) ((j * i + 255 * (255 - i)) / 255);
-      }
+    tile_buf = g_new (guchar, GIMP_RENDER_BUF_WIDTH * MAX_CHANNELS);
 
   switch (check_size)
     {
@@ -225,41 +149,6 @@ render_setup_notify (gpointer    config,
       check_shift = 4;
       break;
     }
-
-  g_free (render_check_buf);
-  g_free (render_empty_buf);
-  g_free (render_white_buf);
-  g_free (render_temp_buf);
-
-#define BUF_SIZE (MAX (GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH, \
-                       GIMP_VIEWABLE_MAX_PREVIEW_SIZE) + 4)
-
-  render_check_buf = g_new  (guchar, BUF_SIZE * 3);
-  render_empty_buf = g_new0 (guchar, BUF_SIZE * 3);
-  render_white_buf = g_new  (guchar, BUF_SIZE * 3);
-  render_temp_buf  = g_new  (guchar, BUF_SIZE * 3);
-
-  /*  calculate check buffer for previews  */
-
-  memset (render_white_buf, 255, BUF_SIZE * 3);
-
-  for (i = 0; i < BUF_SIZE; i++)
-    {
-      if (i & 0x4)
-        {
-          render_check_buf[i * 3 + 0] = render_blend_dark_check[0];
-          render_check_buf[i * 3 + 1] = render_blend_dark_check[0];
-          render_check_buf[i * 3 + 2] = render_blend_dark_check[0];
-        }
-      else
-        {
-          render_check_buf[i * 3 + 0] = render_blend_light_check[0];
-          render_check_buf[i * 3 + 1] = render_blend_light_check[0];
-          render_check_buf[i * 3 + 2] = render_blend_light_check[0];
-        }
-    }
-
-#undef BUF_SIZE
 }
 
 
@@ -344,7 +233,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                                       shell->render_buf,
                                       w, h,
                                       3,
-                                      3 * GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH);
+                                      3 * GIMP_RENDER_BUF_WIDTH);
 
   /*  dim pixels outside the highlighted rectangle  */
   if (highlight)
@@ -355,7 +244,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                         x + shell->disp_xoffset, y + shell->disp_yoffset,
                         w, h,
                         shell->render_buf,
-                        3 * GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH,
+                        3 * GIMP_RENDER_BUF_WIDTH,
                         shell->offset_x, shell->offset_y);
 }
 
@@ -395,7 +284,7 @@ gimp_display_shell_render_highlight (GimpDisplayShell *shell,
           for (x = 0; x < w; x++)
             GIMP_DISPLAY_SHELL_DIM_PIXEL (buf, x)
 
-          buf += 3 * GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH;
+          buf += 3 * GIMP_RENDER_BUF_WIDTH;
         }
 
       for ( ; y < rect.y + rect.height; y++)
@@ -406,7 +295,7 @@ gimp_display_shell_render_highlight (GimpDisplayShell *shell,
           for (x += rect.width; x < w; x++)
             GIMP_DISPLAY_SHELL_DIM_PIXEL (buf, x)
 
-          buf += 3 * GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH;
+          buf += 3 * GIMP_RENDER_BUF_WIDTH;
         }
 
       for ( ; y < h; y++)
@@ -414,7 +303,7 @@ gimp_display_shell_render_highlight (GimpDisplayShell *shell,
           for (x = 0; x < w; x++)
             GIMP_DISPLAY_SHELL_DIM_PIXEL (buf, x)
 
-          buf += 3 * GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH;
+          buf += 3 * GIMP_RENDER_BUF_WIDTH;
         }
     }
   else
@@ -424,7 +313,7 @@ gimp_display_shell_render_highlight (GimpDisplayShell *shell,
           for (x = 0; x < w; x++)
             GIMP_DISPLAY_SHELL_DIM_PIXEL (buf, x)
 
-          buf += 3 * GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH;
+          buf += 3 * GIMP_RENDER_BUF_WIDTH;
         }
     }
 }
@@ -540,15 +429,15 @@ render_image_indexed_a (RenderInfo *info)
 
 	      if (dark_light & 0x1)
 		{
-		  r = render_blend_dark_check[(a | cmap[val + 0])];
-		  g = render_blend_dark_check[(a | cmap[val + 1])];
-		  b = render_blend_dark_check[(a | cmap[val + 2])];
+		  r = gimp_render_blend_dark_check[(a | cmap[val + 0])];
+		  g = gimp_render_blend_dark_check[(a | cmap[val + 1])];
+		  b = gimp_render_blend_dark_check[(a | cmap[val + 2])];
 		}
 	      else
 		{
-		  r = render_blend_light_check[(a | cmap[val + 0])];
-		  g = render_blend_light_check[(a | cmap[val + 1])];
-		  b = render_blend_light_check[(a | cmap[val + 2])];
+		  r = gimp_render_blend_light_check[(a | cmap[val + 0])];
+		  g = gimp_render_blend_light_check[(a | cmap[val + 1])];
+		  b = gimp_render_blend_light_check[(a | cmap[val + 2])];
 		}
 
 		dest[0] = r;
@@ -676,9 +565,9 @@ render_image_gray_a (RenderInfo *info)
               guint val;
 
 	      if (dark_light & 0x1)
-		val = render_blend_dark_check[(a | src[GRAY_PIX])];
+		val = gimp_render_blend_dark_check[(a | src[GRAY_PIX])];
 	      else
-		val = render_blend_light_check[(a | src[GRAY_PIX])];
+		val = gimp_render_blend_light_check[(a | src[GRAY_PIX])];
 
 	      src += 2;
 
@@ -794,15 +683,15 @@ render_image_rgb_a (RenderInfo *info)
 
 	      if (dark_light & 0x1)
 		{
-		  r = render_blend_dark_check[(a | src[RED_PIX])];
-		  g = render_blend_dark_check[(a | src[GREEN_PIX])];
-		  b = render_blend_dark_check[(a | src[BLUE_PIX])];
+		  r = gimp_render_blend_dark_check[(a | src[RED_PIX])];
+		  g = gimp_render_blend_dark_check[(a | src[GREEN_PIX])];
+		  b = gimp_render_blend_dark_check[(a | src[BLUE_PIX])];
 		}
 	      else
 		{
-		  r = render_blend_light_check[(a | src[RED_PIX])];
-		  g = render_blend_light_check[(a | src[GREEN_PIX])];
-		  b = render_blend_light_check[(a | src[BLUE_PIX])];
+		  r = gimp_render_blend_light_check[(a | src[RED_PIX])];
+		  g = gimp_render_blend_light_check[(a | src[GREEN_PIX])];
+		  b = gimp_render_blend_light_check[(a | src[BLUE_PIX])];
 		}
 
 	      src += 4;
@@ -859,7 +748,7 @@ render_image_init_info (RenderInfo       *info,
   info->src_bpp    = gimp_projection_get_bytes (gimage->projection);
   info->dest       = shell->render_buf;
   info->dest_bpp   = 3;
-  info->dest_bpl   = info->dest_bpp * GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH;
+  info->dest_bpl   = info->dest_bpp * GIMP_RENDER_BUF_WIDTH;
   info->dest_width = info->w * info->dest_bpp;
   info->scale      = render_image_accelerate_scaling (w,
                                                       info->x, info->scalex);
@@ -903,7 +792,7 @@ render_image_accelerate_scaling (gint    width,
   gint  i;
 
   if (! scale)
-    scale = g_new (guchar, GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH + 1);
+    scale = g_new (guchar, GIMP_RENDER_BUF_WIDTH + 1);
 
   for (i = 0; i <= width; i++)
     {

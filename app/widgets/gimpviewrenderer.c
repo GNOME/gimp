@@ -32,18 +32,12 @@
 
 #include "widgets-types.h"
 
-#ifdef __GNUC__
-#warning FIXME #include "display/display-types.h"
-#endif
-#include "display/display-types.h"
-
 #include "base/temp-buf.h"
 
 #include "core/gimpmarshal.h"
 #include "core/gimpviewable.h"
 
-#include "display/gimpdisplayshell-render.h"
-
+#include "gimprender.h"
 #include "gimpviewrenderer.h"
 #include "gimpviewrenderer-utils.h"
 #include "gimpwidgets-utils.h"
@@ -941,11 +935,11 @@ gimp_view_render_to_buffer (TempBuf    *temp_buf,
    *  we render a composite view
    */
   if (has_alpha && render_composite && outside_bg == GIMP_VIEW_BG_CHECKS)
-    pad_buf = render_check_buf;
+    pad_buf = gimp_render_check_buf;
   else if (outside_bg == GIMP_VIEW_BG_WHITE)
-    pad_buf = render_white_buf;
+    pad_buf = gimp_render_white_buf;
   else
-    pad_buf = render_empty_buf;
+    pad_buf = gimp_render_empty_buf;
 
   if (render_composite)
     {
@@ -1001,7 +995,7 @@ gimp_view_render_to_buffer (TempBuf    *temp_buf,
           /*  Handle the leading transparency  */
           for (j = 0; j < x1; j++)
             for (b = 0; b < dest_bytes; b++)
-              render_temp_buf[j * dest_bytes + b] = cb[j * 3 + b];
+              gimp_render_temp_buf[j * dest_bytes + b] = cb[j * 3 + b];
 
           /*  The stuff in the middle  */
           s = src;
@@ -1015,38 +1009,38 @@ gimp_view_render_to_buffer (TempBuf    *temp_buf,
                     {
                       if ((j + offset) & 0x4)
                         {
-                          render_temp_buf[j * 3 + 0] =
-                            render_blend_dark_check [(a | s[red_component])];
-                          render_temp_buf[j * 3 + 1] =
-                            render_blend_dark_check [(a | s[green_component])];
-                          render_temp_buf[j * 3 + 2] =
-                            render_blend_dark_check [(a | s[blue_component])];
+                          gimp_render_temp_buf[j * 3 + 0] =
+                            gimp_render_blend_dark_check [(a | s[red_component])];
+                          gimp_render_temp_buf[j * 3 + 1] =
+                            gimp_render_blend_dark_check [(a | s[green_component])];
+                          gimp_render_temp_buf[j * 3 + 2] =
+                            gimp_render_blend_dark_check [(a | s[blue_component])];
                         }
                       else
                         {
-                          render_temp_buf[j * 3 + 0] =
-                            render_blend_light_check [(a | s[red_component])];
-                          render_temp_buf[j * 3 + 1] =
-                            render_blend_light_check [(a | s[green_component])];
-                          render_temp_buf[j * 3 + 2] =
-                            render_blend_light_check [(a | s[blue_component])];
+                          gimp_render_temp_buf[j * 3 + 0] =
+                            gimp_render_blend_light_check [(a | s[red_component])];
+                          gimp_render_temp_buf[j * 3 + 1] =
+                            gimp_render_blend_light_check [(a | s[green_component])];
+                          gimp_render_temp_buf[j * 3 + 2] =
+                            gimp_render_blend_light_check [(a | s[blue_component])];
                         }
                     }
                   else /* GIMP_VIEW_BG_WHITE */
                     {
-                      render_temp_buf[j * 3 + 0] =
-                        render_blend_white [(a | s[red_component])];
-                      render_temp_buf[j * 3 + 1] =
-                        render_blend_white [(a | s[green_component])];
-                      render_temp_buf[j * 3 + 2] =
-                        render_blend_white [(a | s[blue_component])];
+                      gimp_render_temp_buf[j * 3 + 0] =
+                        gimp_render_blend_white [(a | s[red_component])];
+                      gimp_render_temp_buf[j * 3 + 1] =
+                        gimp_render_blend_white [(a | s[green_component])];
+                      gimp_render_temp_buf[j * 3 + 2] =
+                        gimp_render_blend_white [(a | s[blue_component])];
                     }
                 }
               else
                 {
-                  render_temp_buf[j * 3 + 0] = s[red_component];
-                  render_temp_buf[j * 3 + 1] = s[green_component];
-                  render_temp_buf[j * 3 + 2] = s[blue_component];
+                  gimp_render_temp_buf[j * 3 + 0] = s[red_component];
+                  gimp_render_temp_buf[j * 3 + 1] = s[green_component];
+                  gimp_render_temp_buf[j * 3 + 2] = s[blue_component];
                 }
 
               s += temp_buf->bytes;
@@ -1055,7 +1049,7 @@ gimp_view_render_to_buffer (TempBuf    *temp_buf,
           /*  Handle the trailing transparency  */
           for (j = x2; j < dest_width; j++)
             for (b = 0; b < dest_bytes; b++)
-              render_temp_buf[j * dest_bytes + b] = cb[j * 3 + b];
+              gimp_render_temp_buf[j * dest_bytes + b] = cb[j * 3 + b];
 
           src += rowstride;
         }
@@ -1063,11 +1057,11 @@ gimp_view_render_to_buffer (TempBuf    *temp_buf,
         {
           for (j = 0; j < dest_width; j++)
             for (b = 0; b < dest_bytes; b++)
-              render_temp_buf[j * dest_bytes + b] = cb[j * 3 + b];
+              gimp_render_temp_buf[j * dest_bytes + b] = cb[j * 3 + b];
         }
 
       memcpy (dest_buffer + i * dest_rowstride,
-              render_temp_buf,
+              gimp_render_temp_buf,
               dest_width * dest_bytes);
     }
 }
