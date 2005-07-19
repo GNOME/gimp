@@ -181,7 +181,8 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
                             editor);
 
   table = gtk_table_new (3, 4, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 1, 6);
   gtk_box_pack_start (GTK_BOX (editor), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
@@ -192,20 +193,25 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
 
       label = gtk_label_new (gettext (gimp_histogram_editor_labels[i]));
       gimp_label_set_attributes (GTK_LABEL (label),
-                                 PANGO_ATTR_SCALE, PANGO_SCALE_SMALL,
+                                 PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
+                                 PANGO_ATTR_SCALE,  PANGO_SCALE_SMALL,
                                  -1);
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
       gtk_table_attach (GTK_TABLE (table), label, x, x + 1, y, y + 1,
 			GTK_FILL | GTK_EXPAND, GTK_FILL, 2, 2);
       gtk_widget_show (label);
 
-      editor->labels[i] = label = gtk_label_new (NULL);
+      editor->labels[i] =
+        label = g_object_new (GTK_TYPE_LABEL,
+                              "xalign",      0.0,
+                              "yalign",      0.5,
+                              "width-chars", i > 2 ? 9 : 5,
+                              NULL);
       gimp_label_set_attributes (GTK_LABEL (editor->labels[i]),
                                  PANGO_ATTR_SCALE, PANGO_SCALE_SMALL,
                                  -1);
-      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
       gtk_table_attach (GTK_TABLE (table), label, x + 1, x + 2, y, y + 1,
-                        GTK_FILL | GTK_EXPAND, GTK_FILL, 2, 2);
+                        GTK_FILL, GTK_FILL, 2, 2);
       gtk_widget_show (label);
     }
 }
@@ -353,9 +359,9 @@ gimp_histogram_editor_layer_changed (GimpImage           *gimage,
     {
       gimp_histogram_calculate (editor->histogram, NULL, NULL);
       gtk_widget_queue_draw GTK_WIDGET (editor->box);
-      gimp_histogram_editor_info_update (editor);
     }
 
+  gimp_histogram_editor_info_update (editor);
   gimp_histogram_editor_name_update (editor);
 }
 
@@ -379,6 +385,7 @@ gimp_histogram_editor_idle_update (GimpHistogramEditor *editor)
   if (editor->drawable && editor->histogram)
     {
       gimp_drawable_calculate_histogram (editor->drawable, editor->histogram);
+
       gtk_widget_queue_draw GTK_WIDGET (editor->box);
       gimp_histogram_editor_info_update (editor);
     }
@@ -465,29 +472,29 @@ gimp_histogram_editor_info_update (GimpHistogramEditor *editor)
       count  = gimp_histogram_get_count (hist, view->channel,
                                          view->start, view->end);
 
-      g_snprintf (text, sizeof (text), "%3.1f",
+      g_snprintf (text, sizeof (text), "%.1f",
                   gimp_histogram_get_mean (hist, view->channel,
                                            view->start, view->end));
       gtk_label_set_text (GTK_LABEL (editor->labels[0]), text);
 
-      g_snprintf (text, sizeof (text), "%3.1f",
+      g_snprintf (text, sizeof (text), "%.1f",
                   gimp_histogram_get_std_dev (hist, view->channel,
                                               view->start, view->end));
       gtk_label_set_text (GTK_LABEL (editor->labels[1]), text);
 
-      g_snprintf (text, sizeof (text), "%3.1f",
+      g_snprintf (text, sizeof (text), "%.1f",
                   (gdouble) gimp_histogram_get_median  (hist, view->channel,
                                                         view->start,
                                                         view->end));
       gtk_label_set_text (GTK_LABEL (editor->labels[2]), text);
 
-      g_snprintf (text, sizeof (text), "%8d", (gint) pixels);
+      g_snprintf (text, sizeof (text), "%d", (gint) pixels);
       gtk_label_set_text (GTK_LABEL (editor->labels[3]), text);
 
-      g_snprintf (text, sizeof (text), "%8d", (gint) count);
+      g_snprintf (text, sizeof (text), "%d", (gint) count);
       gtk_label_set_text (GTK_LABEL (editor->labels[4]), text);
 
-      g_snprintf (text, sizeof (text), "%4.1f", (pixels > 0 ?
+      g_snprintf (text, sizeof (text), "%.1f", (pixels > 0 ?
                                                  (100.0 * count / pixels) :
                                                  0.0));
       gtk_label_set_text (GTK_LABEL (editor->labels[5]), text);

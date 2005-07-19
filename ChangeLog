@@ -1,3 +1,8 @@
+2005-07-19  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimphistogrameditor.c: try a different style for the
+	info labels below the histogram; mainly to avoid repositioning.
+
 2005-07-18  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/common/gauss.c: don't try to free unallocated space
