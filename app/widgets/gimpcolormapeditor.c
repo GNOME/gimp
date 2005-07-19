@@ -212,24 +212,24 @@ gimp_colormap_editor_init (GimpColormapEditor *editor)
   gtk_box_pack_start (GTK_BOX (editor), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  editor->palette = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_widget_set_size_request (editor->palette, -1, 60);
-  gtk_preview_set_expand (GTK_PREVIEW (editor->palette), TRUE);
-  gtk_widget_add_events (editor->palette, GDK_BUTTON_PRESS_MASK);
-  gtk_container_add (GTK_CONTAINER (frame), editor->palette);
-  gtk_widget_show (editor->palette);
+  editor->preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+  gtk_widget_set_size_request (editor->preview, -1, 60);
+  gtk_preview_set_expand (GTK_PREVIEW (editor->preview), TRUE);
+  gtk_widget_add_events (editor->preview, GDK_BUTTON_PRESS_MASK);
+  gtk_container_add (GTK_CONTAINER (frame), editor->preview);
+  gtk_widget_show (editor->preview);
 
-  g_signal_connect_after (editor->palette, "size-allocate",
+  g_signal_connect_after (editor->preview, "size-allocate",
                           G_CALLBACK (gimp_colormap_preview_size_allocate),
                           editor);
 
-  g_signal_connect (editor->palette, "button-press-event",
+  g_signal_connect (editor->preview, "button-press-event",
                     G_CALLBACK (gimp_colormap_preview_button_press),
                     editor);
 
-  gimp_dnd_color_source_add (editor->palette, gimp_colormap_preview_drag_color,
+  gimp_dnd_color_source_add (editor->preview, gimp_colormap_preview_drag_color,
                              editor);
-  gimp_dnd_color_dest_add (editor->palette, gimp_colormap_preview_drop_color,
+  gimp_dnd_color_dest_add (editor->preview, gimp_colormap_preview_drop_color,
                            editor);
 
   /*  Some helpful hints  */
@@ -414,14 +414,12 @@ gimp_colormap_editor_draw (GimpColormapEditor *editor)
   gint       col;
   guchar    *row;
   gint       cellsize, ncol, xn, yn, width, height;
-  GtkWidget *palette;
 
   gimage = GIMP_IMAGE_EDITOR (editor)->gimage;
 
-  palette = editor->palette;
-  width   = palette->allocation.width;
-  height  = palette->allocation.height;
-  ncol    = gimp_image_get_colormap_size (gimage);
+  width  = editor->preview->allocation.width;
+  height = editor->preview->allocation.height;
+  ncol   = gimp_image_get_colormap_size (gimage);
 
   if (! ncol)
     {
@@ -477,7 +475,7 @@ gimp_colormap_editor_draw (GimpColormapEditor *editor)
                                 render_blend_light_check[0] :
                                 render_blend_dark_check[0]);
 
-          gtk_preview_draw_row (GTK_PREVIEW (editor->palette), row, 0,
+          gtk_preview_draw_row (GTK_PREVIEW (editor->preview), row, 0,
                                 i * cellsize + k,
                                 width);
         }
@@ -488,7 +486,7 @@ gimp_colormap_editor_draw (GimpColormapEditor *editor)
   gimp_colormap_editor_draw_cell (editor, editor->col_index);
 
   g_free (row);
-  gtk_widget_queue_draw (palette);
+  gtk_widget_queue_draw (editor->preview);
 }
 
 static void
@@ -510,12 +508,12 @@ gimp_colormap_editor_draw_cell (GimpColormapEditor *editor,
     {
       for(k = 0; k < cellsize; k++)
         row[k*3] = row[k*3+1] = row[k*3+2] = (k & 1) * 255;
-      gtk_preview_draw_row (GTK_PREVIEW (editor->palette), row, x, y, cellsize);
+      gtk_preview_draw_row (GTK_PREVIEW (editor->preview), row, x, y, cellsize);
 
       if (!(cellsize & 1))
         for (k = 0; k < cellsize; k++)
           row[k*3] = row[k*3+1] = row[k*3+2] = ((x+y+1) & 1) * 255;
-      gtk_preview_draw_row (GTK_PREVIEW (editor->palette), row,
+      gtk_preview_draw_row (GTK_PREVIEW (editor->preview), row,
                             x, y+cellsize-1, cellsize);
 
       row[0]=row[1]=row[2]=255;
@@ -528,14 +526,14 @@ gimp_colormap_editor_draw_cell (GimpColormapEditor *editor,
           row[k*3+2] = gimage->cmap[col * 3 + 2];
         }
       for (k = 1; k < cellsize - 1; k+=2)
-        gtk_preview_draw_row (GTK_PREVIEW (editor->palette), row,
+        gtk_preview_draw_row (GTK_PREVIEW (editor->preview), row,
                               x, y+k, cellsize);
 
       row[0] = row[1] = row[2] = 0;
       row[cellsize*3-3] = row[cellsize*3-2] = row[cellsize*3-1]
         = 255 * ((cellsize+1) & 1);
       for (k = 2; k < cellsize - 1; k += 2)
-        gtk_preview_draw_row (GTK_PREVIEW (editor->palette), row,
+        gtk_preview_draw_row (GTK_PREVIEW (editor->preview), row,
                               x, y+k, cellsize);
     }
   else
@@ -547,11 +545,11 @@ gimp_colormap_editor_draw_cell (GimpColormapEditor *editor,
           row[k*3+2] = gimage->cmap[col * 3 + 2];
         }
       for (k = 0; k < cellsize; k++)
-        gtk_preview_draw_row (GTK_PREVIEW (editor->palette), row,
+        gtk_preview_draw_row (GTK_PREVIEW (editor->preview), row,
                               x, y+k, cellsize);
     }
 
-  gtk_widget_queue_draw_area (editor->palette,
+  gtk_widget_queue_draw_area (editor->preview,
                               x, y,
                               cellsize, cellsize);
 }
@@ -560,16 +558,13 @@ static void
 gimp_colormap_editor_clear (GimpColormapEditor *editor,
                             gint                start_row)
 {
-  gint       i, j;
-  gint       offset;
-  gint       width, height;
-  guchar    *row = NULL;
-  GtkWidget *palette;
+  gint    i, j;
+  gint    offset;
+  gint    width, height;
+  guchar *row = NULL;
 
-  palette = editor->palette;
-
-  width  = palette->allocation.width;
-  height = palette->allocation.height;
+  width  = editor->preview->allocation.width;
+  height = editor->preview->allocation.height;
 
   if (start_row < 0)
     start_row = 0;
@@ -592,7 +587,7 @@ gimp_colormap_editor_clear (GimpColormapEditor *editor,
         }
 
       for (j = 0; j < (4 - (start_row & 0x3)) && start_row + j < height; j++)
-        gtk_preview_draw_row (GTK_PREVIEW (editor->palette), row,
+        gtk_preview_draw_row (GTK_PREVIEW (editor->preview), row,
                               0, start_row + j, width);
 
       start_row += (4 - (start_row & 0x3));
@@ -610,14 +605,14 @@ gimp_colormap_editor_clear (GimpColormapEditor *editor,
         }
 
       for (j = 0; j < 4 && i + j < height; j++)
-        gtk_preview_draw_row (GTK_PREVIEW (editor->palette), row,
+        gtk_preview_draw_row (GTK_PREVIEW (editor->preview), row,
                               0, i + j, width);
     }
 
   if (width > 0)
     g_free (row);
 
-  gtk_widget_queue_draw (palette);
+  gtk_widget_queue_draw (editor->preview);
 }
 
 static void

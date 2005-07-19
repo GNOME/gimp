@@ -1,3 +1,8 @@
+2005-07-19  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcolormapeditor.[ch]: renamed member "palette"
+	to "preview", cleanup.
+
 2005-07-19  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/edit-actions.c 

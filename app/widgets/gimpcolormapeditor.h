@@ -39,7 +39,7 @@ struct _GimpColormapEditor
 
   gint             col_index;
   gint             dnd_col_index;
-  GtkWidget       *palette;
+  GtkWidget       *preview;
   gint             xn;
   gint             yn;
   gint             cellsize;
