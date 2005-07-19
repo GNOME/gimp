@@ -1,5 +1,11 @@
 2005-07-19  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpvectortool.c (gimp_vector_tool_key_press): return
+	FALSE if the keypress event isn't handled because the display
+	doesn't match.
+
+2005-07-19  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/mng.c (mng_save_image): fixed signedness warnings.
 
 2005-07-19  Michael Natterer  <mitch@gimp.org>

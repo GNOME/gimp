@@ -794,6 +794,9 @@ gimp_vector_tool_key_press (GimpTool     *tool,
   if (! vector_tool->vectors)
     return FALSE;
 
+  if (gdisp != draw_tool->gdisp)
+    return FALSE;
+
   shell = GIMP_DISPLAY_SHELL (draw_tool->gdisp->shell);
 
   if (kevent->state & GDK_SHIFT_MASK)
@@ -802,71 +805,68 @@ gimp_vector_tool_key_press (GimpTool     *tool,
   if (kevent->state & GDK_CONTROL_MASK)
     pixels = 50.0;
 
-  if (gdisp == draw_tool->gdisp)
+  switch (kevent->keyval)
     {
+    case GDK_KP_Enter:
+    case GDK_Return:
+      gimp_vector_tool_to_selection_extended (vector_tool, kevent->state);
+      break;
+
+    case GDK_BackSpace:
+    case GDK_Delete:
+      gimp_vector_tool_delete_selected_anchors (vector_tool);
+      break;
+
+    case GDK_Left:
+    case GDK_Right:
+    case GDK_Up:
+    case GDK_Down:
+      xdist = FUNSCALEX (shell, pixels);
+      ydist = FUNSCALEY (shell, pixels);
+
+      gimp_vector_tool_undo_push (vector_tool, _("Move Anchors"));
+
+      gimp_vectors_freeze (vector_tool->vectors);
+
       switch (kevent->keyval)
         {
-        case GDK_KP_Enter:
-        case GDK_Return:
-          gimp_vector_tool_to_selection_extended (vector_tool, kevent->state);
-          break;
-
-        case GDK_BackSpace:
-        case GDK_Delete:
-          gimp_vector_tool_delete_selected_anchors (vector_tool);
-          break;
-
         case GDK_Left:
-        case GDK_Right:
-        case GDK_Up:
-        case GDK_Down:
-          xdist = FUNSCALEX (shell, pixels);
-          ydist = FUNSCALEY (shell, pixels);
-
-          gimp_vector_tool_undo_push (vector_tool, _("Move Anchors"));
-
-          gimp_vectors_freeze (vector_tool->vectors);
-
-          switch (kevent->keyval)
-            {
-            case GDK_Left:
-              gimp_vector_tool_move_selected_anchors (vector_tool, -xdist, 0);
-              break;
-
-            case GDK_Right:
-              gimp_vector_tool_move_selected_anchors (vector_tool, xdist, 0);
-              break;
-
-            case GDK_Up:
-              gimp_vector_tool_move_selected_anchors (vector_tool, 0, -ydist);
-              break;
-
-            case GDK_Down:
-              gimp_vector_tool_move_selected_anchors (vector_tool, 0, ydist);
-              break;
-
-            default:
-              break;
-            }
-
-          gimp_vectors_thaw (vector_tool->vectors);
-          vector_tool->have_undo = FALSE;
+          gimp_vector_tool_move_selected_anchors (vector_tool, -xdist, 0);
           break;
 
-        case GDK_Escape:
-          options = GIMP_VECTOR_OPTIONS (tool->tool_info->tool_options);
+        case GDK_Right:
+          gimp_vector_tool_move_selected_anchors (vector_tool, xdist, 0);
+          break;
 
-          if (options->edit_mode != GIMP_VECTOR_MODE_DESIGN)
-            g_object_set (options, "vectors-edit-mode",
-                          GIMP_VECTOR_MODE_DESIGN, NULL);
+        case GDK_Up:
+          gimp_vector_tool_move_selected_anchors (vector_tool, 0, -ydist);
+          break;
+
+        case GDK_Down:
+          gimp_vector_tool_move_selected_anchors (vector_tool, 0, ydist);
           break;
 
         default:
-          return FALSE;
+          break;
         }
 
-      gimp_image_flush (gdisp->gimage);
+      gimp_vectors_thaw (vector_tool->vectors);
+      vector_tool->have_undo = FALSE;
+      break;
+
+    case GDK_Escape:
+      options = GIMP_VECTOR_OPTIONS (tool->tool_info->tool_options);
+
+      if (options->edit_mode != GIMP_VECTOR_MODE_DESIGN)
+        g_object_set (options, "vectors-edit-mode",
+                      GIMP_VECTOR_MODE_DESIGN, NULL);
+      break;
+
+    default:
+      return FALSE;
     }
+
+  gimp_image_flush (gdisp->gimage);
 
   return TRUE;
 }
