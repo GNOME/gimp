@@ -1,3 +1,8 @@
+2005-07-20  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/poppler.c (run): don't return an execution error
+	if the user cancelled the dialog.
+
 2005-07-20  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpconfig-dump.c: fixed typo (Debian bug #310018).

@@ -223,24 +223,26 @@ run (const gchar      *name,
         }
 
       if (status == GIMP_PDB_SUCCESS)
-        image_ID = load_image (doc, param[1].data.d_string,
-                               loadvals.resolution,
-                               loadvals.antialias,
-                               pages);
+        {
+          image_ID = load_image (doc, param[1].data.d_string,
+                                 loadvals.resolution,
+                                 loadvals.antialias,
+                                 pages);
+
+          if (image_ID != -1)
+            {
+              *nreturn_vals = 2;
+              values[1].type         = GIMP_PDB_IMAGE;
+              values[1].data.d_image = image_ID;
+            }
+          else
+            {
+              status = GIMP_PDB_EXECUTION_ERROR;
+            }
+        }
 
       if (doc)
         g_object_unref (doc);
-
-      if (image_ID != -1)
-        {
-          *nreturn_vals = 2;
-          values[1].type         = GIMP_PDB_IMAGE;
-          values[1].data.d_image = image_ID;
-        }
-      else
-        {
-          status = GIMP_PDB_EXECUTION_ERROR;
-        }
 
       g_free (pages->pages);
       g_free (pages);
