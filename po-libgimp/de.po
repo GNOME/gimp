@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-05-08 12:28+0200\n"
-"PO-Revision-Date: 2004-11-17 11:42+0100\n"
+"PO-Revision-Date: 2005-07-20 16:44+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -377,6 +377,8 @@ msgid ""
 "Cannot determine a valid home directory.\n"
 "Thumbnails will be stored in the folder for temporary files (%s) instead."
 msgstr ""
+"Es konnte kein gültiger Persönlicher Ordner gefunden werden.\n"
+"Vorschaubilder werden stattdessen in den Ordner für temporäre Dateien (%s) abgelegt."
 
 #: ../libgimpthumb/gimpthumb-utils.c:249 ../libgimpthumb/gimpthumb-utils.c:317
 #, c-format
@@ -402,7 +404,7 @@ msgstr "_Schwarz"
 
 #: ../libgimpwidgets/gimpcolorbutton.c:111
 msgid "_White"
-msgstr "_Weiss"
+msgstr "_Weiß"
 
 #: ../libgimpwidgets/gimpcolorscales.c:133
 msgid "Scales"
