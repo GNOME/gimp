@@ -1,3 +1,7 @@
+2005-07-20  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpconfig-dump.c: fixed typo (Debian bug #310018).
+
 2005-07-05  Manish Singh  <yosh@gimp.org>
 
 	* INSTALL
