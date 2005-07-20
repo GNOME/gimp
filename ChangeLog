@@ -1,3 +1,8 @@
+2005-07-20  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/gfig/gfig-grid.c: declare variables at the start of the
+	scope. Apply GIMP coding style to the new polar grid code.
+
 2005-07-19  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpvectortool.c (gimp_vector_tool_key_press): return

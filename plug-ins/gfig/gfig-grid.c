@@ -41,130 +41,146 @@
 #define TAN_1o6PI_RAD 1 / SQRT3        /* Tangent 1/6 Pi Radians == SIN / COS */
 #define RECIP_TAN_1o6PI_RAD SQRT3      /* Reciprocal of Tangent 1/6 Pi Radians */
 
-static GdkGC *grid_hightlight_drawgc;
-gint          grid_gc_type = GTK_STATE_NORMAL;
+static GdkGC  *grid_hightlight_drawgc = NULL;
+gint           grid_gc_type           = GTK_STATE_NORMAL;
 
-static void   draw_grid_polar  (GdkGC     *drawgc);
-static void   draw_grid_sq     (GdkGC     *drawgc);
-static void   draw_grid_iso    (GdkGC     *drawgc);
+static void    draw_grid_polar     (GdkGC     *drawgc);
+static void    draw_grid_sq        (GdkGC     *drawgc);
+static void    draw_grid_iso       (GdkGC     *drawgc);
 
-static GdkGC *gfig_get_grid_gc (GtkWidget *widget,
-                                gint       gctype);
+static GdkGC * gfig_get_grid_gc    (GtkWidget *widget,
+                                    gint       gctype);
 
-static void   find_grid_pos_polar (GdkPoint *p, 
-                                   GdkPoint *gp);
+static void    find_grid_pos_polar (GdkPoint  *p,
+                                    GdkPoint  *gp);
+
 
 /********** PrimeFactors for Shaneyfelt-style Polar Grid **********
  * Quickly factor any number up to 17160
  * Correctly factors numbers up to 131 * 131 - 1
  */
-typedef struct 
+typedef struct
 {
-    gint product;
-    gint remaining;
-    gint current;
-    gint next;
-    gint index;
+  gint product;
+  gint remaining;
+  gint current;
+  gint next;
+  gint index;
 } PrimeFactors;
 
-static char 
-primes[] = {2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,
-    59,61,67,71,73,79,83,89,97,101,103,107,109,113,127};
-#define PRIMES_MAX_INDEX 30 
+static gchar primes[] = { 2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,
+                          59,61,67,71,73,79,83,89,97,101,103,107,109,113,127 };
 
-static gint 
+#define PRIMES_MAX_INDEX 30
+
+
+static gint
 prime_factors_get (PrimeFactors *this)
 {
-    this->current = this->next;
-    while (this->index <= PRIMES_MAX_INDEX) 
+  this->current = this->next;
+  while (this->index <= PRIMES_MAX_INDEX)
     {
-        if (this->remaining % primes[this->index]==0)   // divisible
-       { 
-            this->remaining /= primes[this->index];
-            this->next = primes[this->index];
-            return this->current;
+      if (this->remaining % primes[this->index] == 0)   // divisible
+        {
+          this->remaining /= primes[this->index];
+          this->next = primes[this->index];
+          return this->current;
         }
-        this->index++;
+      this->index++;
     }
-    this->next = this->remaining;
-    this->remaining = 1;
-    return this->current;
+  this->next = this->remaining;
+  this->remaining = 1;
+
+  return this->current;
 }
 
-static gint 
+static gint
 prime_factors_lookahead (PrimeFactors *this)
 {
-    return this->next;
+  return this->next;
 }
 
-static void 
+static void
 prime_factors_reset (PrimeFactors *this)
 {
-    this->remaining = this->product;
-    this->index = 0;
-    prime_factors_get (this);
+  this->remaining = this->product;
+  this->index = 0;
+  prime_factors_get (this);
 }
 
-static PrimeFactors * 
-prime_factors_new (gint n) 
-{  
-    PrimeFactors *this = (PrimeFactors*)g_malloc (sizeof(PrimeFactors));
-    this->product = n;
-    prime_factors_reset (this);
-    return this;
+static PrimeFactors *
+prime_factors_new (gint n)
+{
+  PrimeFactors *this = g_new (PrimeFactors, 1);
+
+  this->product = n;
+  prime_factors_reset (this);
+
+  return this;
 }
 
-static void 
-prime_factors_delete (PrimeFactors* this) 
-{  
-    free (this);
+static void
+prime_factors_delete (PrimeFactors* this)
+{
+  g_free (this);
 }
 
 /********** ********** **********/
 
-static gdouble 
+static gdouble
 sector_size_at_radius (gdouble inner_radius)
 {
-    PrimeFactors *factors = prime_factors_new(selvals.opts.grid_sectors_desired);
-    gint current_sectors = 1;
-    gdouble sector_size = 2*G_PI / current_sectors;
-    while ((current_sectors < selvals.opts.grid_sectors_desired) 
-	    && (inner_radius*sector_size 
-	        > prime_factors_lookahead(factors) * selvals.opts.grid_granularity))
-     {
-	current_sectors *= prime_factors_get(factors);
-        sector_size = 2*G_PI / current_sectors;
+  PrimeFactors *factors = prime_factors_new (selvals.opts.grid_sectors_desired);
+  gint          current_sectors = 1;
+  gdouble       sector_size     = 2 * G_PI / current_sectors;
+
+  while ((current_sectors < selvals.opts.grid_sectors_desired)
+         && (inner_radius*sector_size
+             > (prime_factors_lookahead (factors) *
+                selvals.opts.grid_granularity)))
+    {
+      current_sectors *= prime_factors_get (factors);
+      sector_size = 2 * G_PI / current_sectors;
     }
-    prime_factors_delete(factors);
-    return sector_size;
+
+  prime_factors_delete(factors);
+
+  return sector_size;
 }
 
 static void
 find_grid_pos_polar (GdkPoint *p,
                      GdkPoint *gp)
 {
-    gdouble cx = preview_width / 2.0;
-    gdouble cy = preview_height / 2.0;
-    gdouble px = p->x - cx;
-    gdouble py = p->y - cy;
-    gdouble x = 0;
-    gdouble y = 0;
-    gdouble r = sqrt (px*px+py*py); 
-    if (r>=selvals.opts.grid_radius_min*.5) 
-    { 
-        r = selvals.opts.grid_radius_interval
-            * (gint)( 0.5 + ( (r - selvals.opts.grid_radius_min) / selvals.opts.grid_radius_interval))
-            + selvals.opts.grid_radius_min; 
-        gdouble t = atan2 (py, px) + 2*G_PI;
-        gdouble sectorSize = sector_size_at_radius (r);
-        t = selvals.opts.grid_rotation 
-            + (gint)( 0.5 + ( (t - selvals.opts.grid_rotation) / sectorSize ))
-            * sectorSize;
-        x = r * cos (t);
-        y = r * sin (t);
+  gdouble cx = preview_width / 2.0;
+  gdouble cy = preview_height / 2.0;
+  gdouble px = p->x - cx;
+  gdouble py = p->y - cy;
+  gdouble x  = 0;
+  gdouble y  = 0;
+  gdouble r  = sqrt (SQR (px) + SQR (py));
+
+  if (r >= selvals.opts.grid_radius_min * 0.5)
+    {
+      gdouble t;
+      gdouble sectorSize;
+
+      r = selvals.opts.grid_radius_interval
+        * (gint) (0.5 + ((r - selvals.opts.grid_radius_min) /
+                         selvals.opts.grid_radius_interval))
+        + selvals.opts.grid_radius_min;
+
+      t = atan2 (py, px) + 2 * G_PI;
+      sectorSize = sector_size_at_radius (r);
+      t = selvals.opts.grid_rotation
+        + (gint) (0.5 + ((t - selvals.opts.grid_rotation) / sectorSize))
+        * sectorSize;
+      x = r * cos (t);
+      y = r * sin (t);
     }
-    gp->x = x + cx;
-    gp->y = y + cy;
+
+  gp->x = x + cx;
+  gp->y = y + cy;
 }
 
 /* find_grid_pos - Given an x, y point return the grid position of it */
@@ -252,17 +268,21 @@ find_grid_pos (GdkPoint *p,
       /*
        * This really needs a picture to show the math...
        *
-       * Consider an isometric grid with one of the sets of lines parallel to the
-       * y axis (vertical alignment). Further define that the origin of a Cartesian
-       * grid is at a isometric vertex.  For simplicity consider the first quadrant only.
+       * Consider an isometric grid with one of the sets of lines
+       * parallel to the y axis (vertical alignment). Further define
+       * that the origin of a Cartesian grid is at a isometric vertex.
+       * For simplicity consider the first quadrant only.
        *
        *  - Let one line segment between vertices be r
        *  - Define the value of r as the grid spacing
-       *  - Assign an integer n identifier to each vertical grid line along the x axis.
-       *    with n=0 being the y axis. n can be any integer
+       *  - Assign an integer n identifier to each vertical grid line
+       *    along the x axis.  with n=0 being the y axis. n can be any
+       *    integer
        *  - Let m to be any integer
-       *  - Let h be the spacing between vertical grid lines measured along the x axis.
-       *    It follows from the isometric grid that h has a value of r * COS(1/6 Pi Rad)
+
+       *  - Let h be the spacing between vertical grid lines measured
+       *    along the x axis.  It follows from the isometric grid that
+       *    h has a value of r * COS(1/6 Pi Rad)
        *
        *  Consider a Vertex V at the Cartesian location [Xv, Yv]
        *
@@ -272,9 +292,11 @@ find_grid_pos (GdkPoint *p,
        *   for all integers n and m
        *
        * Who cares? Me. It's useful in solving this problem:
-       * Consider an arbitrary point P[Xp,Yp], find the closest vertex in the set V.
+       * Consider an arbitrary point P[Xp,Yp], find the closest vertex
+       * in the set V.
        *
-       * Restated this problem is "find values for m and n that are drive V closest to P"
+       * Restated this problem is "find values for m and n that are
+       * drive V closest to P"
        *
        * A Solution method (there may be a better one?):
        *
@@ -282,16 +304,20 @@ find_grid_pos (GdkPoint *p,
        *         n_lo = (int) (Xp / h)
        *         n_hi = n_lo + 1
        *
-       * Step 2) Consider the two closes vertices for each n_lo and n_hi. The further of
-       *         the vertices in each pair can readily be discarded.
+       * Step 2) Consider the two closes vertices for each n_lo and
+       *         n_hi. The further of the vertices in each pair can
+       *         readily be discarded.
+       *
        *         m_lo_n_lo = (int) ( (Yp / r) - 0.5 (n_lo % 2) )
        *         m_hi_n_lo = m_lo_n_lo + 1
        *
        *         m_lo_n_hi = (int) ( (Yp / r) - 0.5 (n_hi % 2) )
        *         m_hi_n_hi = m_hi_n_hi
        *
-       * Step 3) compute the distance from P to V1 and V2. Snap to the closer point.
+       * Step 3) compute the distance from P to V1 and V2. Snap to the
+       *         closer point.
        */
+
       gint n_lo;
       gint n_hi;
       gint m_lo_n_lo;
@@ -314,31 +340,39 @@ find_grid_pos (GdkPoint *p,
       n_hi = n_lo + 1;
 
       /* evaluate m candidates for n_lo */
-      m_lo_n_lo = (gint) ( (y / r) - 0.5 * (n_lo % 2) );
+      m_lo_n_lo = (gint) ((y / r) - 0.5 * (n_lo % 2));
       m_hi_n_lo = m_lo_n_lo + 1;
-      /* figure out which is the better candidate */
-      if (abs((m_lo_n_lo * r + (0.5 * r * (n_lo % 2))) - y) <
-          abs((m_hi_n_lo * r + (0.5 * r * (n_lo % 2))) - y)) {
-        m_n_lo = m_lo_n_lo;
-      }
-      else {
-        m_n_lo = m_hi_n_lo;
-      }
+
+     /* figure out which is the better candidate */
+      if (abs ((m_lo_n_lo * r + (0.5 * r * (n_lo % 2))) - y) <
+          abs ((m_hi_n_lo * r + (0.5 * r * (n_lo % 2))) - y))
+        {
+          m_n_lo = m_lo_n_lo;
+        }
+      else
+        {
+          m_n_lo = m_hi_n_lo;
+        }
 
       /* evaluate m candidates for n_hi */
       m_lo_n_hi = (gint) ( (y / r) - 0.5 * (n_hi % 2) );
       m_hi_n_hi = m_lo_n_hi + 1;
+
       /* figure out which is the better candidate */
       if (abs((m_lo_n_hi * r + (0.5 * r * (n_hi % 2))) - y) <
-          abs((m_hi_n_hi * r + (0.5 * r * (n_hi % 2))) - y)) {
-        m_n_hi = m_lo_n_hi;
-      }
-      else {
-        m_n_hi = m_hi_n_hi;
-      }
+          abs((m_hi_n_hi * r + (0.5 * r * (n_hi % 2))) - y))
+        {
+          m_n_hi = m_lo_n_hi;
+        }
+      else
+        {
+          m_n_hi = m_hi_n_hi;
+        }
 
-      /* Now, which is closer to [x,y]? we can use a somewhat abbreviated form of the
-       * distance formula since we only care about relative values. */
+      /* Now, which is closer to [x,y]? we can use a somewhat
+       * abbreviated form of the distance formula since we only care
+       * about relative values.
+       */
 
       x1 = (gint) (n_lo * h);
       y1 = (gint) (m_n_lo * r + (0.5 * r * (n_lo % 2)));
@@ -346,33 +380,34 @@ find_grid_pos (GdkPoint *p,
       y2 = (gint) (m_n_hi * r + (0.5 * r * (n_hi % 2)));
 
       if (((x - x1) * (x - x1) + (y - y1) * (y - y1)) <
-          ((x - x2) * (x - x2) + (y - y2) * (y - y2))) {
-        gp->x =  x1;
-        gp->y =  y1;
-      }
-      else {
-        gp->x =  x2;
-        gp->y =  y2;
-      }
-
+          ((x - x2) * (x - x2) + (y - y2) * (y - y2)))
+        {
+          gp->x =  x1;
+          gp->y =  y1;
+        }
+      else
+        {
+          gp->x =  x2;
+          gp->y =  y2;
+        }
     }
 }
 
 static void
 draw_grid_polar (GdkGC *drawgc)
 {
-    gdouble inner_radius;
-    gdouble outer_radius;
-    gdouble max_radius = sqrt (preview_width * preview_width + preview_height * preview_height);
-    gint current_sectors = 1;
-    PrimeFactors *factors = prime_factors_new(selvals.opts.grid_sectors_desired);
-    for ( inner_radius = 0 , outer_radius = selvals.opts.grid_radius_min; 
-          outer_radius <= max_radius; 
-          inner_radius = outer_radius , outer_radius += selvals.opts.grid_radius_interval ) 
-    {
+    gdouble       inner_radius;
+    gdouble       outer_radius;
+    gdouble       max_radius = sqrt (SQR (preview_width) + SQR (preview_height));
+    gint          current_sectors = 1;
+    PrimeFactors *factors = prime_factors_new (selvals.opts.grid_sectors_desired);
+    for (inner_radius = 0, outer_radius = selvals.opts.grid_radius_min;
+         outer_radius <= max_radius;
+         inner_radius = outer_radius, outer_radius += selvals.opts.grid_radius_interval)
+      {
         gdouble t;
-        gdouble sector_size = 2*G_PI / current_sectors;
-        
+        gdouble sector_size = 2 * G_PI / current_sectors;
+
         gdk_draw_arc (gfig_context->preview->window,
                       drawgc,
                       0,
@@ -382,16 +417,17 @@ draw_grid_polar (GdkGC *drawgc)
                       0.5 + (outer_radius * 2),
                       0,
                       360 * 64);
-                      
-        while ( (current_sectors < selvals.opts.grid_sectors_desired) 
-	    && ( inner_radius * sector_size 
-                > prime_factors_lookahead (factors) * selvals.opts.grid_granularity ) ) 
-        {
-             current_sectors *= prime_factors_get (factors);
-             sector_size = 2*G_PI / current_sectors;
-        }
-        for (t = 0 ; t < 2*G_PI ; t += sector_size) 
-        {
+
+        while ((current_sectors < selvals.opts.grid_sectors_desired)
+               && (inner_radius * sector_size
+                   > prime_factors_lookahead (factors) * selvals.opts.grid_granularity ))
+          {
+            current_sectors *= prime_factors_get (factors);
+            sector_size = 2 * G_PI / current_sectors;
+          }
+
+        for (t = 0 ; t < 2 * G_PI ; t += sector_size)
+          {
             gdouble normal_x = cos (selvals.opts.grid_rotation+t);
             gdouble normal_y = sin (selvals.opts.grid_rotation+t);
 
@@ -401,8 +437,9 @@ draw_grid_polar (GdkGC *drawgc)
                            0.5 + (preview_height / 2 - inner_radius * normal_y),
                            0.5 + (preview_width / 2 + outer_radius * normal_x),
                            0.5 + (preview_height / 2 - outer_radius * normal_y) );
-        }
-    }
+          }
+      }
+
     prime_factors_delete (factors);
 }
 
@@ -525,6 +562,7 @@ void
 draw_grid (void)
 {
   GdkGC *drawgc;
+
   /* Get the size of the preview and calc where the lines go */
   /* Draw in prelight to start with... */
   /* Always start in the upper left corner for rect.
