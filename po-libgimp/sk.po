@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-30 20:52+0200\n"
-"PO-Revision-Date: 2005-06-30 20:53+0200\n"
+"POT-Creation-Date: 2005-07-20 20:32+0200\n"
+"PO-Revision-Date: 2005-07-20 20:33+0200\n"
 "Last-Translator: Marcel Telka <marcel@telka.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -815,7 +815,7 @@ msgstr "Nepodarilo sa vytvoriť priečinok s náhľadmi '%s'."
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Nepodarilo sa vytvoriť náhľad na %s: %s"
 
-#: ../libgimpwidgets/gimpbrowser.c:130
+#: ../libgimpwidgets/gimpbrowser.c:129
 msgid "_Search:"
 msgstr "_Vyhľadať:"
 
@@ -904,10 +904,15 @@ msgstr "Štýl šachovnice"
 msgid "_Preview"
 msgstr "_Náhľad"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1798
+#: ../libgimpwidgets/gimppropwidgets.c:1807
 #, c-format
 msgid "This text input field is limited to %d characters."
 msgstr "Toto vstupné textové pole je obmedzené na %d znakov."
+
+#: ../libgimpwidgets/gimpresolutionentry.c:382
+#, c-format
+msgid "pixels/%s"
+msgstr "bodov/%s"
 
 #: ../libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
