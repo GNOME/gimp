@@ -1,3 +1,11 @@
+2005-07-21  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimppreview.[ch]: added gimp_preview_get_area()
+	for the rare case when one needs access to the GimpPreviewArea
+	used in the preview.
+
+	* libgimpwidgets/gimpwidgets.def: updated.
+
 2005-07-21  Pawan Chitrakar  <pawan@nplinux.org>
 
 	* configure.in: Added ne in ALL_LINGUAS

@@ -578,6 +578,27 @@ gimp_preview_get_position (GimpPreview *preview,
 }
 
 /**
+ * gimp_preview_get_area:
+ * @preview: a #GimpPreview widget
+ *
+ * In most cases, you shouldn't need to access the #GimpPreviewArea
+ * that is being used in the @preview. Sometimes however, you need to.
+ * For example if you want to receive mouse events from the area. In
+ * such cases, use gimp_preview_get_area().
+ *
+ * Return value: a pointer to the #GimpPreviewArea used in the @preview.
+ *
+ * Since: GIMP 2.4
+ **/
+GtkWidget *
+gimp_preview_get_area (GimpPreview  *preview)
+{
+  g_return_val_if_fail (GIMP_IS_PREVIEW (preview), NULL);
+
+  return preview->area;
+}
+
+/**
  * gimp_preview_draw:
  * @preview: a #GimpPreview widget
  *
