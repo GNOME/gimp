@@ -1,3 +1,7 @@
+2005-07-21  Pawan Chitrakar  <pawan@nplinux.org>
+
+	* configure.in: Added ne in ALL_LINGUAS
+
 2005-07-20  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/poppler.c (run): don't return an execution error
