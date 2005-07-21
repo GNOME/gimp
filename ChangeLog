@@ -1,3 +1,9 @@
+2005-07-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimppaletteview.c: setup the dnd stuff in
+	GimpView::set_viewable() and remove GimpView's automatically added
+	GimpPalette drag source. Fixes color dragging (bug #113237).
+
 2005-07-21  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimppreview.[ch]: added gimp_preview_get_area()

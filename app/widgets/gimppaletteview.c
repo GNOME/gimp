@@ -187,13 +187,6 @@ gimp_palette_view_init (GimpPaletteView *view)
   view->selected  = NULL;
   view->dnd_entry = NULL;
   view->gc        = NULL;
-
-  gimp_dnd_color_source_add (GTK_WIDGET (view),
-                             gimp_palette_view_drag_color,
-			     view);
-  gimp_dnd_color_dest_add (GTK_WIDGET (view),
-                           gimp_palette_view_drop_color,
-                           view);
 }
 
 static void
@@ -300,17 +293,40 @@ gimp_palette_view_set_viewable (GimpView     *view,
   gimp_palette_view_select_entry (pal_view, NULL);
 
   if (old_viewable)
-    g_signal_handlers_disconnect_by_func (old_viewable,
-                                          gimp_palette_view_invalidate,
-                                          view);
+    {
+      g_signal_handlers_disconnect_by_func (old_viewable,
+                                            gimp_palette_view_invalidate,
+                                            view);
+
+      if (! new_viewable)
+        {
+          gimp_dnd_color_source_remove (GTK_WIDGET (view));
+          gimp_dnd_color_dest_remove (GTK_WIDGET (view));
+        }
+    }
 
   GIMP_VIEW_CLASS (parent_class)->set_viewable (view,
                                                 old_viewable, new_viewable);
 
   if (new_viewable)
-    g_signal_connect (new_viewable, "invalidate-preview",
-                      G_CALLBACK (gimp_palette_view_invalidate),
-                      view);
+    {
+      g_signal_connect (new_viewable, "invalidate-preview",
+                        G_CALLBACK (gimp_palette_view_invalidate),
+                        view);
+
+      /*  unset the palette drag handler set by GimpView  */
+      gimp_dnd_viewable_source_remove (GTK_WIDGET (view), GIMP_TYPE_PALETTE);
+
+      if (! old_viewable)
+        {
+          gimp_dnd_color_source_add (GTK_WIDGET (view),
+                                     gimp_palette_view_drag_color,
+                                     view);
+          gimp_dnd_color_dest_add (GTK_WIDGET (view),
+                                   gimp_palette_view_drop_color,
+                                   view);
+        }
+    }
 }
 
 
