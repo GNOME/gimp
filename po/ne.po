@@ -10,14 +10,14 @@ msgstr ""
 "Project-Id-Version: gimp.HEAD\n"
 "Report-Msgid-Bugs-To: <info@mpp.org.np>\n"
 "POT-Creation-Date: 2005-04-04 03:13+0200\n"
-"PO-Revision-Date: 2005-07-13 10:27+0545\n"
-"Last-Translator: Shiva Pokharel <pokharelshiva@hotmail.com>\n"
+"PO-Revision-Date: 2005-07-21 14:16+0545\n"
+"Last-Translator: Pawan Chitrakar  <pawan@mpp.org.np>\n"
 "Language-Team: Nepali <info@mpp.org.np>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.9.1\n"
-"Plural-Forms: nplural=2;plural=(n!=1)\n"
+"X-Generator: KBabel 1.10\n"
+"Plural-Forms: nplurals=2;plural=(n!=1)\n"
 
 #: app/app_procs.c:133
 msgid "(This console window will close in ten seconds)\n"
@@ -6793,7 +6793,7 @@ msgstr "अर्को टिप"
 #.
 #: app/dialogs/tips-parser.c:165
 msgid "tips-locale:C"
-msgstr "टिपहरू-दृष्य स्थान:सि"
+msgstr "tips-locale:ne"
 
 #: app/dialogs/user-install-dialog.c:129
 msgid ""
