@@ -260,6 +260,10 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
 		    G_CALLBACK (palette_editor_color_dropped),
 		    editor);
 
+  gimp_dnd_viewable_dest_add (editor->view, GIMP_TYPE_PALETTE,
+			      palette_editor_drop_palette,
+                              editor);
+
   hbox = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (editor), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
