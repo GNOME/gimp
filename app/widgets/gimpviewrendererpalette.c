@@ -114,6 +114,9 @@ gimp_view_renderer_palette_render (GimpViewRenderer *renderer,
 
   palette = GIMP_PALETTE (renderer->viewable);
 
+  if (palette->n_colors < 1)
+    return;
+
   if (! renderer->buffer)
     renderer->buffer = g_new (guchar, renderer->height * renderer->rowstride);
 
@@ -137,14 +140,15 @@ gimp_view_renderer_palette_render (GimpViewRenderer *renderer,
 
   renderpal->columns = renderer->width / renderpal->cell_width;
 
-  renderpal->rows = MAX (1, palette->n_colors / renderpal->columns);
+  renderpal->rows = palette->n_colors / renderpal->columns;
   if (palette->n_colors % renderpal->columns)
     renderpal->rows += 1;
 
   renderpal->cell_height = MAX (4, renderer->height / renderpal->rows);
 
   if (! renderpal->draw_grid)
-    renderpal->cell_height = MIN (renderpal->cell_height, renderpal->cell_width);
+    renderpal->cell_height = MIN (renderpal->cell_height,
+                                  renderpal->cell_width);
 
   list = palette->colors;
 
