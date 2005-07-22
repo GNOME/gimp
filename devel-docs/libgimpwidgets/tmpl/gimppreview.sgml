@@ -90,6 +90,15 @@ A widget providing a #GimpPreviewArea plus framework to update the preview.
 @y: 
 
 
+<!-- ##### FUNCTION gimp_preview_get_area ##### -->
+<para>
+
+</para>
+
+@preview: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_preview_draw ##### -->
 <para>
 

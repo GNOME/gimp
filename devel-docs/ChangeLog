@@ -1,3 +1,8 @@
+2005-07-22  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/tmpl/gimppreview.sgml: added gimp_preview_get_area().
+
 2005-07-17  Sven Neumann  <sven@gimp.org>
 
 	* tools/shooter.c (find_toplevel_window): fixed signedness of
