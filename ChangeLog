@@ -1,3 +1,8 @@
+2005-07-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimppaletteeditor.c (gimp_palette_editor_init):
+	allow to drop palettes onto the palette view again.
+
 2005-07-22  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimppaletteeditor.c (gimp_palette_editor_zoom):
