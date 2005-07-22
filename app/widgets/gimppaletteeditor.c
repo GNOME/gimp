@@ -545,17 +545,16 @@ gimp_palette_editor_zoom (GimpPaletteEditor  *editor,
       zoom_factor -= 0.1;
       break;
 
-    case GIMP_ZOOM_TO: /* abused as ZOOM_ALL */
+    case GIMP_ZOOM_TO: /* used as ZOOM_ALL */
       {
-        gint height;
+        gint height  = editor->view->parent->parent->parent->allocation.height;
+        gint columns = palette->n_columns ? palette->n_columns : COLUMNS;
         gint rows;
 
-        height = editor->view->parent->parent->parent->allocation.height;
+        rows = palette->n_colors / columns;
 
-        if (palette->n_columns)
-          rows = palette->n_colors / palette->n_columns;
-        else
-          rows = palette->n_colors / COLUMNS;
+        if (palette->n_colors % columns)
+          rows += 1;
 
         rows = MAX (1, rows);
 

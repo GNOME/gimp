@@ -1,5 +1,11 @@
 2005-07-22  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimppaletteeditor.c (gimp_palette_editor_zoom):
+	fixed the GIMP_ZOOM_TO case for palettes with a number of colors
+	that is not a multiple of the number of columns.
+
+2005-07-22  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpviewrendererpalette.c
 	(gimp_view_renderer_palette_render): reverted my last change here
 	and replaced it with a better fix.
