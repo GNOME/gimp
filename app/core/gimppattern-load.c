@@ -88,19 +88,19 @@ gimp_pattern_get_type (void)
       static const GTypeInfo pattern_info =
       {
         sizeof (GimpPatternClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_pattern_class_init,
-	NULL,		/* class_finalize */
-	NULL,		/* class_data     */
-	sizeof (GimpPattern),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_pattern_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_pattern_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpPattern),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_pattern_init,
       };
 
       pattern_type = g_type_register_static (GIMP_TYPE_DATA,
-					     "GimpPattern",
-					     &pattern_info, 0);
+                                             "GimpPattern",
+                                             &pattern_info, 0);
   }
 
   return pattern_type;
@@ -109,15 +109,10 @@ gimp_pattern_get_type (void)
 static void
 gimp_pattern_class_init (GimpPatternClass *klass)
 {
-  GObjectClass      *object_class;
-  GimpObjectClass   *gimp_object_class;
-  GimpViewableClass *viewable_class;
-  GimpDataClass     *data_class;
-
-  object_class      = G_OBJECT_CLASS (klass);
-  gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  viewable_class    = GIMP_VIEWABLE_CLASS (klass);
-  data_class        = GIMP_DATA_CLASS (klass);
+  GObjectClass      *object_class      = G_OBJECT_CLASS (klass);
+  GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
+  GimpDataClass     *data_class        = GIMP_DATA_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -183,8 +178,8 @@ gimp_pattern_get_size (GimpViewable *viewable,
 
 static TempBuf *
 gimp_pattern_get_new_preview (GimpViewable *viewable,
-			      gint          width,
-			      gint          height)
+                              gint          width,
+                              gint          height)
 {
   GimpPattern *pattern = GIMP_PATTERN (viewable);
   TempBuf     *temp_buf;
@@ -195,11 +190,11 @@ gimp_pattern_get_new_preview (GimpViewable *viewable,
   copy_height = MIN (height, pattern->mask->height);
 
   temp_buf = temp_buf_new (copy_width, copy_height,
-			   pattern->mask->bytes,
-			   0, 0, NULL);
+                           pattern->mask->bytes,
+                           0, 0, NULL);
 
   temp_buf_copy_area (pattern->mask, temp_buf,
-		      0, 0, copy_width, copy_height, 0, 0);
+                      0, 0, copy_width, copy_height, 0, 0);
 
   return temp_buf;
 }
@@ -255,8 +250,8 @@ gimp_pattern_new (const gchar *name)
   for (row = 0; row < pattern->mask->height; row++)
     for (col = 0; col < pattern->mask->width; col++)
       {
-	memset (data, (col % 2) && (row % 2) ? 255 : 0, 3);
-	data += 3;
+        memset (data, (col % 2) && (row % 2) ? 255 : 0, 3);
+        data += 3;
       }
 
   return GIMP_DATA (pattern);
@@ -311,7 +306,7 @@ gimp_pattern_load (const gchar  *filename,
                    _("Fatal parse error in pattern file '%s': "
                      "Could not read %d bytes: %s"),
                    gimp_filename_to_utf8 (filename),
-		   (gint) sizeof (header), g_strerror (errno));
+                   (gint) sizeof (header), g_strerror (errno));
       goto error;
     }
 
@@ -358,9 +353,9 @@ gimp_pattern_load (const gchar  *filename,
                        _("Fatal parse error in pattern file '%s': "
                          "Could not read %d bytes: %s"),
                        gimp_filename_to_utf8 (filename), bn_size,
-		       g_strerror (errno));
+                       g_strerror (errno));
           g_free (name);
-	  goto error;
+          goto error;
         }
 
       utf8 = gimp_any_to_utf8 (name, -1,
@@ -390,7 +385,7 @@ gimp_pattern_load (const gchar  *filename,
                    _("Fatal parse error in pattern file '%s': "
                      "Could not read %d bytes: %s"),
                    gimp_filename_to_utf8 (filename),
-		   header.width * header.height * header.bytes,
+                   header.width * header.height * header.bytes,
                    g_strerror (errno));
       goto error;
     }
