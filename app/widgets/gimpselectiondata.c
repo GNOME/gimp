@@ -777,8 +777,11 @@ gimp_selection_data_get_buffer (GtkSelectionData *selection,
   if (! name)
     return NULL;
 
-  buffer = (GimpBuffer *)
-    gimp_container_get_child_by_name (gimp->named_buffers, name);
+  if (strcmp (name, "Global Buffer") == 0)
+    buffer = gimp->global_buffer;
+  else
+    buffer = (GimpBuffer *)
+      gimp_container_get_child_by_name (gimp->named_buffers, name);
 
   g_free (name);
 

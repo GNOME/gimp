@@ -1,5 +1,11 @@
 2005-07-23  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpselectiondata.c
+	(gimp_selection_data_get_buffer): special case the global buffer
+	so it can be dropped, not only dragged around.
+
+2005-07-23  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/gimppageselector.c: added a label showing the
 	number of selected pages. Allow to enter ranges like "5-" or "-7"
 	(treat them as if the user had entered "5-n_pages" or "1-7").
