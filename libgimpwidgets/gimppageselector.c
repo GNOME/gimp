@@ -32,6 +32,7 @@
 #include "gimppageselector.h"
 #include "gimppropwidgets.h"
 #include "gimpstock.h"
+#include "gimpwidgets.h"
 
 #include "libgimp/libgimp-intl.h"
 
@@ -68,9 +69,10 @@ struct _GimpPageSelectorPrivate
   GtkListStore           *store;
   GtkWidget              *view;
 
+  GtkWidget              *count_label;
   GtkWidget              *range_entry;
 
-  GdkPixbuf              *thumbnail;
+  GdkPixbuf              *default_thumbnail;
 
   gint                    default_item_width;
   gint                    max_item_width;
@@ -213,6 +215,7 @@ static void
 gimp_page_selector_init (GimpPageSelector *selector)
 {
   GimpPageSelectorPrivate *priv = GIMP_PAGE_SELECTOR_GET_PRIVATE (selector);
+  GtkWidget               *vbox;
   GtkWidget               *sw;
   GtkWidget               *hbox;
   GtkWidget               *hbbox;
@@ -227,11 +230,15 @@ gimp_page_selector_init (GimpPageSelector *selector)
 
   /*  Pages  */
 
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (selector), vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
+
   sw = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (sw), GTK_SHADOW_IN);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (sw),
                                   GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
-  gtk_box_pack_start (GTK_BOX (selector), sw, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), sw, TRUE, TRUE, 0);
   gtk_widget_show (sw);
 
   priv->store = gtk_list_store_new (4,
@@ -254,11 +261,21 @@ gimp_page_selector_init (GimpPageSelector *selector)
                     G_CALLBACK (gimp_page_selector_selection_changed),
                     selector);
 
+  /*  Count label  */
+
+  priv->count_label = gtk_label_new (_("Nothing selected"));
+  gtk_misc_set_alignment (GTK_MISC (priv->count_label), 0.0, 0.5);
+  gimp_label_set_attributes (GTK_LABEL (priv->count_label),
+                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
+                             -1);
+  gtk_box_pack_start (GTK_BOX (vbox), priv->count_label, FALSE, FALSE, 0);
+  gtk_widget_show (priv->count_label);
+
+  /*  Select all button & range entry  */
+
   hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (selector), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
-
-  /*  Select buttons  */
 
   hbbox = gtk_hbutton_box_new ();
   gtk_box_pack_start (GTK_BOX (hbox), hbbox, FALSE, FALSE, 0);
@@ -270,14 +287,6 @@ gimp_page_selector_init (GimpPageSelector *selector)
 
   g_signal_connect_swapped (button, "clicked",
                             G_CALLBACK (gimp_page_selector_select_all),
-                            selector);
-
-  button = gtk_button_new_with_mnemonic (_("Select _None"));
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect_swapped (button, "clicked",
-                            G_CALLBACK (gimp_page_selector_unselect_all),
                             selector);
 
   priv->range_entry = gtk_entry_new ();
@@ -314,10 +323,10 @@ gimp_page_selector_init (GimpPageSelector *selector)
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
 
-  priv->thumbnail = gtk_widget_render_icon (GTK_WIDGET (selector),
-                                            GTK_STOCK_FILE,
-                                            GTK_ICON_SIZE_DND,
-                                            NULL);
+  priv->default_thumbnail = gtk_widget_render_icon (GTK_WIDGET (selector),
+                                                    GTK_STOCK_FILE,
+                                                    GTK_ICON_SIZE_DND,
+                                                    NULL);
 }
 
 static void
@@ -339,8 +348,8 @@ gimp_page_selector_finalize (GObject *object)
 {
   GimpPageSelectorPrivate *priv = GIMP_PAGE_SELECTOR_GET_PRIVATE (object);
 
-  if (priv->thumbnail)
-    g_object_unref (priv->thumbnail);
+  if (priv->default_thumbnail)
+    g_object_unref (priv->default_thumbnail);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -416,8 +425,8 @@ gimp_page_selector_style_set (GtkWidget *widget,
 
 #define ICON_TEXT_PADDING 3 /* EEK */
 
-  item_width  = MAX (priv->thumbnail ?
-                     gdk_pixbuf_get_width (priv->thumbnail) : 0,
+  item_width  = MAX (priv->default_thumbnail ?
+                     gdk_pixbuf_get_width (priv->default_thumbnail) : 0,
                      PANGO_PIXELS (MAX (ink_rect.width,
                                         logical_rect.width)) +
                      2 * (focus_line_width + focus_padding +
@@ -458,8 +467,9 @@ gimp_page_selector_new (void)
 /**
  * gimp_page_selector_set_n_pages:
  * @selector: Pointer to a #GimpPageSelector.
- * @n_pages:
+ * @n_pages:  The number of pages.
  *
+ * Sets the number of pages in the document to open.
  *
  * Since: GIMP 2.4
  **/
@@ -501,7 +511,7 @@ gimp_page_selector_set_n_pages (GimpPageSelector *selector,
               gtk_list_store_append (priv->store, &iter);
               gtk_list_store_set (priv->store, &iter,
                                   COLUMN_PAGE_NO,   i,
-                                  COLUMN_THUMBNAIL, priv->thumbnail,
+                                  COLUMN_THUMBNAIL, priv->default_thumbnail,
                                   COLUMN_LABEL,     text,
                                   COLUMN_LABEL_SET, FALSE,
                                   -1);
@@ -615,7 +625,7 @@ gimp_page_selector_set_page_thumbnail (GimpPageSelector *selector,
 
   if (! thumbnail)
     {
-      thumbnail = g_object_ref (priv->thumbnail);
+      thumbnail = g_object_ref (priv->default_thumbnail);
 
       gimp_page_selector_update_item_width (selector);
     }
@@ -702,7 +712,7 @@ gimp_page_selector_get_page_thumbnail (GimpPageSelector *selector,
   if (thumbnail)
     g_object_unref (thumbnail);
 
-  if (thumbnail == priv->thumbnail)
+  if (thumbnail == priv->default_thumbnail)
     return NULL;
 
   return thumbnail;
@@ -1026,12 +1036,25 @@ gimp_page_selector_select_range (GimpPageSelector *selector,
 
           if (dash)
             {
-              gint page_from;
-              gint page_to;
+              gchar *from;
+              gchar *to;
+              gint   page_from = -1;
+              gint   page_to   = -1;
 
-              if (sscanf (range,    "%i", &page_from) == 1 &&
-                  sscanf (dash + 1, "%i", &page_to)   == 1 &&
-                  page_from <= page_to                     &&
+              *dash = '\0';
+
+              from = g_strstrip (range);
+              to   = g_strstrip (dash + 1);
+
+              if (sscanf (from, "%i", &page_from) != 1 && strlen (from) == 0)
+                page_from = 1;
+
+              if (sscanf (to, "%i", &page_to) != 1 && strlen (to) == 0)
+                page_to = priv->n_pages;
+
+              if (page_from > 0        &&
+                  page_to   > 0        &&
+                  page_from <= page_to &&
                   page_from <= priv->n_pages)
                 {
                   gint page_no;
@@ -1131,7 +1154,37 @@ gimp_page_selector_selection_changed (GtkIconView      *icon_view,
                                       GimpPageSelector *selector)
 {
   GimpPageSelectorPrivate *priv = GIMP_PAGE_SELECTOR_GET_PRIVATE (selector);
+  GList                   *selected;
+  gint                     n_selected;
   gchar                   *range;
+
+  selected = gtk_icon_view_get_selected_items (GTK_ICON_VIEW (priv->view));
+  n_selected = g_list_length (selected);
+  g_list_foreach (selected, (GFunc) gtk_tree_path_free, NULL);
+  g_list_free (selected);
+
+  if (n_selected == 0)
+    {
+      gtk_label_set_text (GTK_LABEL (priv->count_label),
+                          _("Nothing selected"));
+    }
+  else if (n_selected == 1)
+    {
+      gtk_label_set_text (GTK_LABEL (priv->count_label),
+                          _("One page selected"));
+    }
+  else
+    {
+      gchar *text;
+
+      if (n_selected == priv->n_pages)
+        text = g_strdup_printf (_("All %d pages selected"), n_selected);
+      else
+        text = g_strdup_printf (_("%d pages selected"), n_selected);
+
+      gtk_label_set_text (GTK_LABEL (priv->count_label), text);
+      g_free (text);
+    }
 
   range = gimp_page_selector_get_selected_range (selector);
   gtk_entry_set_text (GTK_ENTRY (priv->range_entry), range);
@@ -1224,7 +1277,7 @@ gimp_page_selector_item_width_idle (GimpPageSelector *selector)
 
       if (thumbnail)
         {
-          if (thumbnail != priv->thumbnail)
+          if (thumbnail != priv->default_thumbnail)
             {
               gint width;
 
@@ -1270,6 +1323,7 @@ draw_frame_row (GdkPixbuf *frame_image,
     {
       gint slab_width = (remaining_width > source_width ?
                          source_width : remaining_width);
+
       gdk_pixbuf_copy_area (frame_image,
                             left_offset, source_v_position,
                             slab_width, height,
