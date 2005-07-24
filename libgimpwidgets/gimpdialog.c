@@ -420,7 +420,8 @@ gimp_dialog_add_buttons_valist (GimpDialog *dialog,
         {
           GtkWidget *button = g_object_get_data (G_OBJECT (dialog),
                                                  "gimp-dialog-help-button");
-          gtk_widget_hide (button);
+          if (button)
+            gtk_widget_hide (button);
         }
 
       gtk_dialog_add_button (GTK_DIALOG (dialog), button_text, response_id);
