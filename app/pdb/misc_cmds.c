@@ -20,6 +20,12 @@
 
 #include "config.h"
 
+#include <sys/types.h>
+
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
 
 #include <glib-object.h>
 
@@ -31,12 +37,14 @@
 #include "core/gimp.h"
 
 static ProcRecord version_proc;
+static ProcRecord getpid_proc;
 static ProcRecord quit_proc;
 
 void
 register_misc_procs (Gimp *gimp)
 {
   procedural_db_register (gimp, &version_proc);
+  procedural_db_register (gimp, &getpid_proc);
   procedural_db_register (gimp, &quit_proc);
 }
 
@@ -78,6 +86,46 @@ static ProcRecord version_proc =
   1,
   version_outargs,
   { { version_invoker } }
+};
+
+static Argument *
+getpid_invoker (Gimp         *gimp,
+                GimpContext  *context,
+                GimpProgress *progress,
+                Argument     *args)
+{
+  Argument *return_args;
+
+  return_args = procedural_db_return_args (&getpid_proc, TRUE);
+  return_args[1].value.pdb_int = getpid ();
+
+  return return_args;
+}
+
+static ProcArg getpid_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "pid",
+    "The PID"
+  }
+};
+
+static ProcRecord getpid_proc =
+{
+  "gimp_getpid",
+  "Returns the PID of the host gimp process.",
+  "This procedure returns the process ID of the currently running gimp.",
+  "Michael Natterer",
+  "Michael Natterer",
+  "2005",
+  NULL,
+  GIMP_INTERNAL,
+  0,
+  NULL,
+  1,
+  getpid_outargs,
+  { { getpid_invoker } }
 };
 
 static Argument *

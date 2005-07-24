@@ -1,5 +1,15 @@
 2005-07-25  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb/misc.pdb: added gimp_getpid().
+
+	* libgimp/gimp.def: changed accordingly.
+
+	* app/pdb/internal_procs.c
+	* app/pdb/misc_cmds.c
+	* libgimp/gimpmisc_pdb.[ch]: regenerated.
+
+2005-07-25  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/gimpdialog.c (gimp_dialog_add_buttons_valist):
 	don't call gtk_widget_hide() on a NULL help button.
 

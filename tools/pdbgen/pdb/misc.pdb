@@ -38,6 +38,28 @@ HELP
     %invoke = ( headers => [ qw("libgimpbase/gimpbase.h") ] );
 }
 
+sub getpid {
+    $blurb = <<'BLURB';
+Returns the PID of the host gimp process.
+BLURB
+
+    $help = <<'HELP';
+This procedure returns the process ID of the currently running gimp.
+HELP
+
+    $author = $copyright = 'Michael Natterer';
+    $date = '2005';
+    $since = '2.4';
+
+    @outargs = (
+	{ name => 'pid', type => 'int32',
+	  desc => 'The PID',
+	  alias => 'getpid ()', no_declare => 1 }
+    );
+
+    %invoke = ( headers => [ qw(<sys/types.h> <unistd.h>) ] );
+}
+
 sub quit {
     $blurb = 'Causes the gimp to exit gracefully.';
 
@@ -62,8 +84,8 @@ HELP
     );
 }
 
-@procs = qw(version quit);
-%exports = (app => [@procs], lib => [$procs[0]]);
+@procs = qw(version getpid quit);
+%exports = (app => [@procs], lib => [@procs[0..1]]);
 
 $desc = 'Miscellaneous';
 

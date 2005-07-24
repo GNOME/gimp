@@ -207,6 +207,7 @@ EXPORTS
 	gimp_get_path_by_tattoo
 	gimp_get_progname
 	gimp_get_theme_dir
+	gimp_getpid
 	gimp_gimprc_query
 	gimp_gimprc_set
 	gimp_gradient_delete

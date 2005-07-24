@@ -53,3 +53,33 @@ gimp_version (void)
 
   return version;
 }
+
+/**
+ * gimp_getpid:
+ *
+ * Returns the PID of the host gimp process.
+ *
+ * This procedure returns the process ID of the currently running gimp.
+ *
+ * Returns: The PID.
+ *
+ * Since: GIMP 2.4
+ */
+gint
+gimp_getpid (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint pid = 0;
+
+  return_vals = gimp_run_procedure ("gimp_getpid",
+				    &nreturn_vals,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    pid = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return pid;
+}

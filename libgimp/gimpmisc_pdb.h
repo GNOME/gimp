@@ -30,6 +30,7 @@ G_BEGIN_DECLS
 
 
 gchar* gimp_version (void);
+gint   gimp_getpid  (void);
 
 
 G_END_DECLS
