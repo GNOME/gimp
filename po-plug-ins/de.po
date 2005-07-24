@@ -8,15 +8,15 @@
 # Michael Natterer <mitch@gimp.org>
 # Hendrik Brandt <eru@gmx.li>
 # Sven Neumann <sven@gimp.org>
-# 
+# Hendrik Richter <hendi@gnome-de.org>, 2005.
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-07-18 19:33+0200\n"
-"PO-Revision-Date: 2005-07-18 19:30+0200\n"
-"Last-Translator: Sven Neumann <sven@gimp.org>\n"
+"PO-Revision-Date: 2005-07-24 14:22+0200\n"
+"Last-Translator: Hendrik Richter <hendi@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1141,7 +1141,7 @@ msgstr "Bilder für die Grundflächen"
 #: ../plug-ins/MapObject/mapobject_ui.c:1262
 #: ../plug-ins/print/gimp_main_window.c:1116
 msgid "Size"
-msgstr "Grösse"
+msgstr "Größe"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1273
 msgid "R_adius:"
@@ -2162,7 +2162,7 @@ msgstr "Randmittelwert"
 
 #: ../plug-ins/common/borderaverage.c:366
 msgid "Border Size"
-msgstr "Randgrösse"
+msgstr "Randgröße"
 
 #: ../plug-ins/common/borderaverage.c:374
 msgid "_Thickness:"
@@ -2170,7 +2170,7 @@ msgstr "_Dicke:"
 
 #: ../plug-ins/common/borderaverage.c:417
 msgid "_Bucket size:"
-msgstr "_Eimergrösse:"
+msgstr "_Eimergröße:"
 
 #: ../plug-ins/common/bumpmap.c:336
 msgid "_Bump Map..."
@@ -2798,7 +2798,7 @@ msgstr "Kubismus"
 
 #: ../plug-ins/common/cubism.c:300
 msgid "_Tile size:"
-msgstr "_Kachelgrösse:"
+msgstr "_Kachelgröße:"
 
 #: ../plug-ins/common/cubism.c:313
 msgid "T_ile saturation:"
@@ -3822,7 +3822,7 @@ msgstr "Vorschau während des Ziehens"
 
 #: ../plug-ins/common/fp.c:1425
 msgid "Preview Size"
-msgstr "Grösse der Vorschau"
+msgstr "Größe der Vorschau"
 
 #: ../plug-ins/common/fractaltrace.c:121
 msgid "_Fractal Trace..."
@@ -4156,7 +4156,7 @@ msgstr "Pixel"
 
 #: ../plug-ins/common/gih.c:965
 msgid "Cell size:"
-msgstr "Zellgrösse:"
+msgstr "Zellgröße:"
 
 #: ../plug-ins/common/gih.c:977
 msgid "Number of cells:"
@@ -5083,7 +5083,7 @@ msgstr "Einstellungen"
 
 #: ../plug-ins/common/mosaic.c:727
 msgid "T_ile size:"
-msgstr "K_achelgrösse:"
+msgstr "K_achelgröße:"
 
 #: ../plug-ins/common/mosaic.c:751
 msgid "Til_e spacing:"
@@ -5196,7 +5196,7 @@ msgstr "_Ausgabe-LPI:"
 
 #: ../plug-ins/common/newsprint.c:1283
 msgid "C_ell size:"
-msgstr "Z_ellgrösse:"
+msgstr "Z_ellgröße:"
 
 #. screen settings
 #: ../plug-ins/common/newsprint.c:1296 ../plug-ins/gflare/gflare.c:558
@@ -5355,7 +5355,7 @@ msgstr "Ölgemälde"
 
 #: ../plug-ins/common/oilify.c:503
 msgid "_Mask size:"
-msgstr "_Maskengrösse:"
+msgstr "_Maskengröße:"
 
 #: ../plug-ins/common/oilify.c:514
 msgid "_Use intensity algorithm"
@@ -5926,7 +5926,7 @@ msgstr "_Vorschau"
 
 #: ../plug-ins/common/postscript.c:3259
 msgid "Preview _size:"
-msgstr "_Grösse der Vorschau:"
+msgstr "_Größe der Vorschau:"
 
 #: ../plug-ins/common/psd.c:491
 msgid "Invalid UTF-8 string in PSD file"
@@ -7690,7 +7690,7 @@ msgstr "Erweiterte Einstellungen"
 
 #: ../plug-ins/common/warp.c:564
 msgid "Dither size:"
-msgstr "Dither-Grösse:"
+msgstr "Dither-Größe:"
 
 #: ../plug-ins/common/warp.c:577
 msgid "Rotation angle:"
@@ -9060,7 +9060,7 @@ msgstr "Umfangs-Gradient:"
 #: ../plug-ins/gflare/gflare.c:3523 ../plug-ins/gflare/gflare.c:3628
 #: ../plug-ins/gflare/gflare.c:3765
 msgid "Size (%):"
-msgstr "Grösse (%):"
+msgstr "Größe (%):"
 
 #: ../plug-ins/gflare/gflare.c:3535 ../plug-ins/gflare/gflare.c:3640
 #: ../plug-ins/gflare/gflare.c:3777
@@ -9090,7 +9090,7 @@ msgstr "St_rahlen"
 
 #: ../plug-ins/gflare/gflare.c:3741
 msgid "Size Factor Gradient:"
-msgstr "Grössenfaktor für Gradient:"
+msgstr "Größenfaktor für Gradient:"
 
 #: ../plug-ins/gflare/gflare.c:3745
 msgid "Probability Gradient:"
@@ -9354,7 +9354,7 @@ msgstr "Der Startwinkel des ersten erstellten Pinsels"
 
 #: ../plug-ins/gimpressionist/orientation.c:112
 msgid "Angle span:"
-msgstr "Winkelgrösse"
+msgstr "Winkelgröße"
 
 #: ../plug-ins/gimpressionist/orientation.c:116
 msgid "The angle span of the first brush to create"
@@ -9562,7 +9562,7 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/paper.c:180
 msgid "Specifies the scale of the texture (in percent of original file)"
-msgstr "Stellt die Grösse der Textur ein (in % von der ursprüngl. Datei)"
+msgstr "Stellt die Größe der Textur ein (in % von der ursprüngl. Datei)"
 
 #: ../plug-ins/gimpressionist/placement.c:49
 msgid "Pl_acement"
@@ -9671,11 +9671,11 @@ msgstr "Größen:"
 # TODO kontext ?
 #: ../plug-ins/gimpressionist/size.c:95
 msgid "The number of sizes of brushes to use"
-msgstr "Die Anzahl der verwendeten Pinselgrössen"
+msgstr "Die Anzahl der verwendeten Pinselgrößen"
 
 #: ../plug-ins/gimpressionist/size.c:103
 msgid "Minimum size:"
-msgstr "Min. Grösse:"
+msgstr "Min. Größe:"
 
 #: ../plug-ins/gimpressionist/size.c:107
 msgid "The smallest brush to create"
@@ -9683,7 +9683,7 @@ msgstr "Der kleinste Pinsel, der erstellt wird"
 
 #: ../plug-ins/gimpressionist/size.c:115
 msgid "Maximum size:"
-msgstr "Max. Grösse:"
+msgstr "Max. Größe:"
 
 #: ../plug-ins/gimpressionist/size.c:119
 msgid "The largest brush to create"
@@ -9691,50 +9691,50 @@ msgstr "Der grösste Pinsel, der erstellt wird"
 
 #: ../plug-ins/gimpressionist/size.c:133
 msgid "Size:"
-msgstr "Grösse:"
+msgstr "Größe:"
 
 #: ../plug-ins/gimpressionist/size.c:142
 msgid ""
 "Let the value (brightness) of the region determine the size of the stroke"
-msgstr "Grösse des Pinselstrichs wird durch die Helligkeit der Region bestimmt"
+msgstr "Größe des Pinselstrichs wird durch die Helligkeit der Region bestimmt"
 
 #: ../plug-ins/gimpressionist/size.c:146
 msgid ""
 "The distance from the center of the image determines the size of the stroke"
 msgstr ""
-"Grösse des Pinselstrichs wird durch den Abstand zum Mittelpunkt des Bildes "
+"Größe des Pinselstrichs wird durch den Abstand zum Mittelpunkt des Bildes "
 "bestimmt"
 
 #: ../plug-ins/gimpressionist/size.c:150
 msgid "Selects a random size for each stroke"
-msgstr "Wählt die Grösse der Pinselstriche zufällig aus"
+msgstr "Wählt die Größe der Pinselstriche zufällig aus"
 
 #: ../plug-ins/gimpressionist/size.c:154
 msgid "Let the direction from the center determine the size of the stroke"
 msgstr ""
-"Grösse des Pinselstrichs wird durch die Richtung zum Mittelpunkt des Bildes "
+"Größe des Pinselstrichs wird durch die Richtung zum Mittelpunkt des Bildes "
 "bestimmt"
 
 #: ../plug-ins/gimpressionist/size.c:166
 msgid "The hue of the region determines the size of the stroke"
-msgstr "Grösse des Pinselstrichs wird durch den Farbton der Region bestimmt"
+msgstr "Größe des Pinselstrichs wird durch den Farbton der Region bestimmt"
 
 #: ../plug-ins/gimpressionist/size.c:170
 msgid "The brush-size that matches the original image the closest is selected"
 msgstr ""
-"Es wird die Pinselgrösse ausgesucht, die am ehesten zum ursprüngl. Bild passt"
+"Es wird die Pinselgröße ausgesucht, die am ehesten zum ursprüngl. Bild passt"
 
 #: ../plug-ins/gimpressionist/size.c:179
 msgid "Manually specify the stroke size"
-msgstr "Pinselgrösse manuell auswählen"
+msgstr "Pinselgröße manuell auswählen"
 
 #: ../plug-ins/gimpressionist/size.c:190
 msgid "Opens up the Size Map Editor"
-msgstr "Öffnet den Grössen-Map Editor"
+msgstr "Öffnet den Größen-Map Editor"
 
 #: ../plug-ins/gimpressionist/sizemap.c:383
 msgid "Size Map Editor"
-msgstr "Grössen-Map Editor"
+msgstr "Größen-Map Editor"
 
 # size-magnitude ?
 #: ../plug-ins/gimpressionist/sizemap.c:411
@@ -11401,11 +11401,11 @@ msgstr ""
 
 #: ../plug-ins/print/gimp_main_window.c:991
 msgid "Size of paper that you wish to print to"
-msgstr "Die Grösse des Papiers auf das Sie drucken möchten"
+msgstr "Die Größe des Papiers auf das Sie drucken möchten"
 
 #: ../plug-ins/print/gimp_main_window.c:994
 msgid "Media size:"
-msgstr "Mediengrösse:"
+msgstr "Mediengröße:"
 
 #: ../plug-ins/print/gimp_main_window.c:1003
 msgid "Dimensions:"
@@ -11453,7 +11453,7 @@ msgstr "Skalierung:"
 
 #: ../plug-ins/print/gimp_main_window.c:1141
 msgid "Set the scale (size) of the image"
-msgstr "Die Skalierung (Grösse) des Bildes einstellen"
+msgstr "Die Skalierung (Größe) des Bildes einstellen"
 
 #: ../plug-ins/print/gimp_main_window.c:1166
 msgid "Scale by:"
@@ -11464,7 +11464,7 @@ msgid ""
 "Select whether scaling is measured as percent of available page size or "
 "number of output dots per inch"
 msgstr ""
-"Wählen Sie, ob die Skalierung in Prozent der verfügbaren Papiergrösse oder "
+"Wählen Sie, ob die Skalierung in Prozent der verfügbaren Papiergröße oder "
 "in Punkten pro Inch festgelegt werden soll"
 
 #: ../plug-ins/print/gimp_main_window.c:1176
@@ -11473,7 +11473,7 @@ msgstr "Prozent"
 
 #: ../plug-ins/print/gimp_main_window.c:1183
 msgid "Scale the print to the size of the page"
-msgstr "Den Ausdruck relativ zur Papiergrösse skalieren"
+msgstr "Den Ausdruck relativ zur Papiergröße skalieren"
 
 #: ../plug-ins/print/gimp_main_window.c:1189
 msgid "PPI"
@@ -11497,7 +11497,7 @@ msgstr "Einheiten:"
 
 #: ../plug-ins/print/gimp_main_window.c:1256
 msgid "Select the base unit of measurement for printing"
-msgstr "Die Basis-Einheit für Grössenangaben auswählen"
+msgstr "Die Basis-Einheit für Größenangaben auswählen"
 
 #: ../plug-ins/print/gimp_main_window.c:1259
 msgid "Inch"
@@ -11528,7 +11528,7 @@ msgstr ""
 
 #: ../plug-ins/print/gimp_main_window.c:1294
 msgid "Set the print size to the size of the image"
-msgstr "Die Grösse des Ausdrucks an die Grösse des Bildes anpassen"
+msgstr "Die Größe des Ausdrucks an die Größe des Bildes anpassen"
 
 #: ../plug-ins/print/gimp_main_window.c:1317
 msgid "Image / Output Settings"
