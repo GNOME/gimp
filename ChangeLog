@@ -1,5 +1,11 @@
 2005-07-24  Michael Natterer  <mitch@gimp.org>
 
+	* libgimp/gimpbrushmenu.c
+	* libgimp/gimppatternmenu.c: put the previews into sunken instead
+	of etched-in frames.
+
+2005-07-24  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimppattern.c: untabify, minor cleanup.
 
 2005-07-23  Michael Natterer  <mitch@gimp.org>
