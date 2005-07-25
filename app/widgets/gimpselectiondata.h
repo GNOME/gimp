@@ -72,8 +72,8 @@ GimpItem      * gimp_selection_data_get_item      (GtkSelectionData *selection,
 
 /*  various data  */
 
-void            gimp_selection_data_set_viewable  (GtkSelectionData *selection,
-                                                   GimpViewable     *viewable);
+void            gimp_selection_data_set_object    (GtkSelectionData *selection,
+                                                   GimpObject       *object);
 
 GimpBrush     * gimp_selection_data_get_brush     (GtkSelectionData *selection,
                                                    Gimp             *gimp);
@@ -91,7 +91,7 @@ GimpImagefile * gimp_selection_data_get_imagefile (GtkSelectionData *selection,
                                                    Gimp             *gimp);
 GimpTemplate  * gimp_selection_data_get_template  (GtkSelectionData *selection,
                                                    Gimp             *gimp);
-GimpToolInfo  * gimp_selection_data_get_tool      (GtkSelectionData *selection,
+GimpToolInfo  * gimp_selection_data_get_tool_info (GtkSelectionData *selection,
                                                    Gimp             *gimp);
 
 

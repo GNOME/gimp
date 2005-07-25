@@ -1,3 +1,33 @@
+2005-07-25  Michael Natterer  <mitch@gimp.org>
+
+	Some DND fixes / cleanup:
+
+	* app/widgets/widgets-enums.h: renamed GIMP_DND_TYPE_TOOL to
+	GIMP_DND_TYPE_TOOL_INFO.
+
+	* app/widgets/gimpselectiondata.[ch]: s/tool/tool_info/g. Moved
+	private functions to the end of the file. Include GIMP's PID in
+	all GtkSelectionData strings which are used to pass around stuff
+	by reference. For things which are referenced by name, also encode
+	the object's address in the GtkSelectionData so having a brush
+	called "Standard" or a named buffer called "Global Buffer" will
+	work together with DND.
+
+	* app/widgets/gimpdnd.[ch]: s/tool/tool_info/g. Renamed
+	gimp_dnd_get_data_data() to gimp_dnd_get_object_data() since it's
+	not limited to GimpData objects. Follow above selection data API
+	changes. Cleanup.
+
+	* libgimp/gimpbrushmenu.c
+	* libgimp/gimpdrawablecombobox.c
+	* libgimp/gimpfontselectbutton.c
+	* libgimp/gimpgradientmenu.c
+	* libgimp/gimpimagecombobox.c
+	* libgimp/gimppalettemenu.c
+	* libgimp/gimppatternmenu.c: follow GtkSelectionData format change
+	and check the dropped things' PID against the return value of
+	gimp_getpid().
+
 2005-07-25  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/pdb/misc.pdb: on Win32, include <process.h> for

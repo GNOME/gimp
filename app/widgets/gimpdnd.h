@@ -89,8 +89,8 @@
 #define GIMP_TARGET_TEMPLATE \
         { "application/x-gimp-template-name", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_TEMPLATE }
 
-#define GIMP_TARGET_TOOL \
-        { "application/x-gimp-tool-name", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_TOOL }
+#define GIMP_TARGET_TOOL_INFO \
+        { "application/x-gimp-tool-info-name", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_TOOL_INFO }
 
 #define GIMP_TARGET_DIALOG \
         { "application/x-gimp-dialog", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_DIALOG }

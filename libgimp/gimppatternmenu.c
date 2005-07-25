@@ -498,7 +498,7 @@ gimp_pattern_select_drag_data_received (GtkWidget        *preview,
                                         guint             time,
                                         GtkWidget        *widget)
 {
-  gchar *name;
+  gchar *str;
 
   if ((selection->format != 8) || (selection->length < 1))
     {
@@ -506,10 +506,22 @@ gimp_pattern_select_drag_data_received (GtkWidget        *preview,
       return;
     }
 
-  name = g_strndup (selection->data, selection->length);
+  str = g_strndup (selection->data, selection->length);
 
-  if (g_utf8_validate (name, -1, NULL))
-    gimp_pattern_select_widget_set (widget, name);
+  if (g_utf8_validate (str, -1, NULL))
+    {
+      gint     pid;
+      gpointer unused;
+      gint     name_offset = 0;
 
-  g_free (name);
+      if (sscanf (str, "%i:%p:%n", &pid, &unused, &name_offset) >= 2 &&
+          pid == gimp_getpid () && name_offset > 0)
+        {
+          gchar *name = str + name_offset;
+
+          gimp_pattern_select_widget_set (widget, name);
+        }
+    }
+
+  g_free (str);
 }

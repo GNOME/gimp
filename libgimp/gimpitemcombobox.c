@@ -45,7 +45,7 @@ typedef struct _GimpLayerComboBoxClass    GimpLayerComboBoxClass;
 
 struct _GimpDrawableComboBox
 {
-  GimpIntComboBox  parent_instance; 
+  GimpIntComboBox  parent_instance;
 };
 
 struct _GimpDrawableComboBoxClass
@@ -55,7 +55,7 @@ struct _GimpDrawableComboBoxClass
 
 struct _GimpChannelComboBox
 {
-  GimpIntComboBox  parent_instance; 
+  GimpIntComboBox  parent_instance;
 };
 
 struct _GimpChannelComboBoxClass
@@ -65,7 +65,7 @@ struct _GimpChannelComboBoxClass
 
 struct _GimpLayerComboBox
 {
-  GimpIntComboBox  parent_instance; 
+  GimpIntComboBox  parent_instance;
 };
 
 struct _GimpLayerComboBoxClass
@@ -104,9 +104,7 @@ G_DEFINE_TYPE(GimpDrawableComboBox,
 static void
 gimp_drawable_combo_box_class_init (GimpDrawableComboBoxClass *klass)
 {
-  GtkWidgetClass *widget_class;
-
-  widget_class = GTK_WIDGET_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   widget_class->drag_data_received = gimp_drawable_combo_box_drag_data_received;
 }
@@ -276,9 +274,7 @@ G_DEFINE_TYPE(GimpLayerComboBox,
 static void
 gimp_layer_combo_box_class_init (GimpLayerComboBoxClass *klass)
 {
-  GtkWidgetClass *widget_class;
-
-  widget_class = GTK_WIDGET_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   widget_class->drag_data_received = gimp_drawable_combo_box_drag_data_received;
 }
@@ -402,8 +398,7 @@ gimp_drawable_combo_box_drag_data_received (GtkWidget        *widget,
                                             guint             info,
                                             guint             time)
 {
-  gchar *id;
-  gint   ID;
+  gchar *str;
 
   if ((selection->format != 8) || (selection->length < 1))
     {
@@ -411,9 +406,19 @@ gimp_drawable_combo_box_drag_data_received (GtkWidget        *widget,
       return;
     }
 
-  id = g_strndup (selection->data, selection->length);
-  ID = atoi (id);
-  g_free (id);
+  str = g_strndup (selection->data, selection->length);
 
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (widget), ID);
+  if (g_utf8_validate (str, -1, NULL))
+    {
+      gint pid;
+      gint ID;
+
+      if (sscanf (str, "%i:%i", &pid, &ID) == 2 &&
+          pid == gimp_getpid ())
+        {
+          gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (widget), ID);
+        }
+    }
+
+  g_free (str);
 }

@@ -77,9 +77,7 @@ G_DEFINE_TYPE(GimpImageComboBox,
 static void
 gimp_image_combo_box_class_init (GimpImageComboBoxClass *klass)
 {
-  GtkWidgetClass *widget_class;
-
-  widget_class = GTK_WIDGET_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   widget_class->drag_data_received = gimp_image_combo_box_drag_data_received;
 }
@@ -194,8 +192,7 @@ gimp_image_combo_box_drag_data_received (GtkWidget        *widget,
                                          guint             info,
                                          guint             time)
 {
-  gchar *id;
-  gint   ID;
+  gchar *str;
 
   if ((selection->format != 8) || (selection->length < 1))
     {
@@ -203,9 +200,19 @@ gimp_image_combo_box_drag_data_received (GtkWidget        *widget,
       return;
     }
 
-  id = g_strndup (selection->data, selection->length);
-  ID = atoi (id);
-  g_free (id);
+  str = g_strndup (selection->data, selection->length);
 
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (widget), ID);
+  if (g_utf8_validate (str, -1, NULL))
+    {
+      gint pid;
+      gint ID;
+
+      if (sscanf (str, "%i:%i", &pid, &ID) == 2 &&
+          pid == gimp_getpid ())
+        {
+          gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (widget), ID);
+        }
+    }
+
+  g_free (str);
 }
