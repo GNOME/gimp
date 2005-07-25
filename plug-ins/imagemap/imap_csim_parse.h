@@ -1,4 +1,4 @@
-/* A Bison parser, made by GNU Bison 1.875d.  */
+/* A Bison parser, made by GNU Bison 2.0.  */
 
 /* Skeleton parser for Yacc-like parsing with Bison,
    Copyright (C) 1984, 1989, 1990, 2000, 2001, 2002, 2003, 2004 Free Software Foundation, Inc.
@@ -90,11 +90,11 @@
 #if ! defined (YYSTYPE) && ! defined (YYSTYPE_IS_DECLARED)
 #line 49 "imap_csim.y"
 typedef union YYSTYPE {
-   int val;
-   double value;
-   char id[256];
+  int val;
+  double value;
+  char id[1024];		/* Large enough to hold all polygon points! */
 } YYSTYPE;
-/* Line 1285 of yacc.c.  */
+/* Line 1318 of yacc.c.  */
 #line 99 "y.tab.h"
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1

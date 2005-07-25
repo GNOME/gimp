@@ -4,7 +4,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-2003 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2005 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,9 +47,9 @@ static MapInfo_t *_map_info;
 %}
 
 %union {
-   int val;
-   double value;
-   char id[256];
+  int val;
+  double value;
+  char id[1024];		/* Large enough to hold all polygon points! */
 }
 
 %token<val> IMG SRC WIDTH HEIGHT BORDER USEMAP
