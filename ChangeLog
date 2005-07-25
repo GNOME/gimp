@@ -1,3 +1,10 @@
+2005-07-25  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/misc.pdb: on Win32, include <process.h> for
+	getpid().
+
+	* app/pdb/misc_cmds.c: regenerated.
+
 2005-07-25  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/misc.pdb: added gimp_getpid().

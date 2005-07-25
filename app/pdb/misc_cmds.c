@@ -20,6 +20,12 @@
 
 #include "config.h"
 
+#include <glib.h>
+
+#ifdef G_OS_WIN32
+#include <process.h>
+#endif
+
 #include <sys/types.h>
 
 #ifdef HAVE_UNISTD_H

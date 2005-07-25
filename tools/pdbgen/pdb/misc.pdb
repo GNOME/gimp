@@ -57,7 +57,7 @@ HELP
 	  alias => 'getpid ()', no_declare => 1 }
     );
 
-    %invoke = ( headers => [ qw(<sys/types.h> <unistd.h>) ] );
+    %invoke = ( headers => [ qw(<sys/types.h> <unistd.h> <process.h>) ] );
 }
 
 sub quit {
