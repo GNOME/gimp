@@ -1,3 +1,7 @@
+2005-07-26  Sven Neumann  <sven@gimp.org>
+
+	* configure.in (ALL_LINGUAS): added mk (Macedonian).
+
 2005-07-20  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpconfig-dump.c: fixed typo (Debian bug #310018).
