@@ -160,7 +160,8 @@ gimp_remote_find_window (GdkDisplay *display,
                               &data) == Success &&
           ret_type)
         {
-          if (nitems > 11 && strcmp (data, "gimp-toolbox") == 0)
+          if (nitems > 11 &&
+              strcmp ((const gchar *) data, "gimp-toolbox") == 0)
             {
               XFree (data);
               result = gdk_window_foreign_new_for_display (display, window);
@@ -185,7 +186,7 @@ source_selection_get (GtkWidget        *widget,
 {
   gtk_selection_data_set (selection_data,
                           selection_data->target,
-                          8, uri, strlen (uri));
+                          8, (const guchar *) uri, strlen (uri));
   gtk_main_quit ();
 }
 
