@@ -274,9 +274,10 @@ static void ifs_compose_response          (GtkWidget *widget,
  *  Some static variables
  */
 
-static IfsDialog        *ifsD      = NULL;
-static IfsOptionsDialog *ifsOptD   = NULL;
-static IfsDesignArea    *ifsDesign = NULL;
+static IfsDialog        *ifsD       = NULL;
+static IfsOptionsDialog *ifsOptD    = NULL;
+static IfsDesignArea    *ifsDesign  = NULL;
+
 
 static AffElement **elements = NULL;
 static gint        *element_selected = NULL;
@@ -692,28 +693,32 @@ ifs_compose_color_page (void)
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (ifsD->full_button));
   gtk_widget_show (ifsD->full_button);
 
-  gimp_rgb_set (&color, 1.0, 0.0, 0.0);
+  gimp_rgb_parse_name (&color, "red", -1);
+  gimp_rgb_set_alpha (&color, 1.0);
   ifsD->red_cmap = color_map_create (_("IFS Fractal: Red"), &color,
                                      &ifsD->current_vals.red_color, FALSE);
   gtk_table_attach (GTK_TABLE (table), ifsD->red_cmap->hbox, 1, 2, 2, 3,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ifsD->red_cmap->hbox);
 
-  gimp_rgb_set (&color, 0.0, 1.0, 0.0);
+  gimp_rgb_parse_name (&color, "green", -1);
+  gimp_rgb_set_alpha (&color, 1.0);
   ifsD->green_cmap = color_map_create (_("IFS Fractal: Green"), &color,
                                        &ifsD->current_vals.green_color, FALSE);
   gtk_table_attach (GTK_TABLE (table), ifsD->green_cmap->hbox, 2, 3, 2, 3,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ifsD->green_cmap->hbox);
 
-  gimp_rgb_set (&color, 0.0, 0.0, 1.0);
+  gimp_rgb_parse_name (&color, "blue", -1);
+  gimp_rgb_set_alpha (&color, 1.0);
   ifsD->blue_cmap = color_map_create (_("IFS Fractal: Blue"), &color,
                                       &ifsD->current_vals.blue_color, FALSE);
   gtk_table_attach (GTK_TABLE (table), ifsD->blue_cmap->hbox, 3, 4, 2, 3,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ifsD->blue_cmap->hbox);
 
-  gimp_rgb_set (&color, 0.0, 0.0, 0.0);
+  gimp_rgb_parse_name (&color, "black", -1);
+  gimp_rgb_set_alpha (&color, 1.0);
   ifsD->black_cmap = color_map_create (_("IFS Fractal: Black"), &color,
                                        &ifsD->current_vals.black_color, FALSE);
   gtk_table_attach (GTK_TABLE (table), ifsD->black_cmap->hbox, 4, 5, 2, 3,
@@ -1488,9 +1493,16 @@ set_current_element (gint index)
 static void
 design_area_realize (GtkWidget *widget)
 {
-  GdkDisplay *display = gtk_widget_get_display (widget);
-  GdkCursor  *cursor  = gdk_cursor_new_for_display (display, GDK_CROSSHAIR);
+  const gint cursors[3] =
+  {
+    GDK_FLEUR,     /* OP_TRANSLATE */
+    GDK_EXCHANGE,  /* OP_ROTATE    */
+    GDK_CROSSHAIR  /* OP_SHEAR     */
+  };
 
+  GdkDisplay *display = gtk_widget_get_display (widget);
+  GdkCursor  *cursor  = gdk_cursor_new_for_display (display,
+                                                    cursors[ifsDesign->op]);
   gdk_window_set_cursor (widget->window, cursor);
   gdk_cursor_unref (cursor);
 }
@@ -2181,7 +2193,7 @@ value_pair_scale_callback (GtkAdjustment *adjustment,
     }
 
   if (changed)
-      val_changed_update ();
+    val_changed_update ();
 }
 
 static void
@@ -2190,6 +2202,10 @@ design_op_update_callback (GtkRadioAction *action,
                            gpointer        data)
 {
   ifsDesign->op = gtk_radio_action_get_current_value (action);
+
+  /* cursor switch */
+  if (GTK_WIDGET_REALIZED (ifsDesign->area))
+    design_area_realize (ifsDesign->area);
 }
 
 static void
