@@ -16,6 +16,8 @@ libappbase_a_SOURCES = \
 	color-balance.h		\
 	colorize.c		\
 	colorize.h		\
+	cpercep.c		\
+	cpercep.h		\
 	curves.c		\
 	curves.h		\
 	cpu-accel.c		\

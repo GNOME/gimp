@@ -1,3 +1,18 @@
+2005-07-28  Sven Neumann  <sven@gimp.org>
+
+	* app/core/Makefile.am
+	* app/core/cpercep.[ch]: moved cpercep from here ...
+	
+	* app/base/Makefile.am
+	* app/base/cpercep.[ch]: ... to here.
+
+	* app/base/siox.[ch]: use the cpercep routines for RGB->LAB
+	conversion, gives a 20% speedup. Removed normalization which seems
+	redundant. Make it work for grayscale and indexed, not only RGB.
+
+	* app/core/gimpdrawable-foreground-extract.c
+	* app/core/gimpimage-convert.c: changed accordingly.
+
 2005-07-26  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/ifscompose/ifscompose.c: change the cursor with the tool

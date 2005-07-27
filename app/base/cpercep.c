@@ -54,17 +54,19 @@ from the Author.
   TODO: document functions, rename erroneously-named arguments
 */
 
-#include <stdlib.h>
-#include <math.h>
+#include "config.h"
+
+#include <glib-object.h>
+
+#include <libgimpmath/gimpmath.h>
 
 #ifndef __GLIBC__
 /* cbrt() is a GNU extension */
 #define cbrt(x) (pow(x, 1.0/3.0))
 #endif
 
-#ifdef GIMP_COMPILATION
-#include <glib.h> /* to get working 'inline' */
-#endif
+#include "cpercep.h"
+
 
 /* defines:
 
@@ -86,15 +88,13 @@ from the Author.
 #define SRGB
 
 
-#include "cpercep.h"
-
-
 #ifdef SRGB
 #define ASSUMED_GAMMA (2.2F)
 #else
 /*#define ASSUMED_GAMMA (2.591F)*/
 #define ASSUMED_GAMMA (2.2F)
 #endif
+
 #define REV_GAMMA ((1.0F / ASSUMED_GAMMA))
 
 

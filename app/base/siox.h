@@ -41,9 +41,10 @@
 #define SIOX_DIMS 3
 
 
-void  siox_foreground_extract (TileManager  *tiles,
-                               TileManager  *trimap,
-                               gfloat        limits[SIOX_DIMS],
+void  siox_foreground_extract (TileManager  *pixels,
+                               const guchar *colormap,
+                               TileManager  *map,
+                               const gfloat  limits[SIOX_DIMS],
                                gint          smoothness);
 
 

@@ -136,6 +136,7 @@
 
 #include "core-types.h"
 
+#include "base/cpercep.h"
 #include "base/pixel-region.h"
 #include "base/tile-manager.h"
 
@@ -152,7 +153,6 @@
 #include "gimppalette.h"
 #include "gimpprogress.h"
 
-#include "cpercep.h"
 #include "gimpimage-convert-fsdither.h"
 #include "gimpimage-convert-data.h"
 #include "gimpimage-convert.h"

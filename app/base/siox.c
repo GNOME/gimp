@@ -44,9 +44,17 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "cpercep.h"
 #include "pixel-region.h"
 #include "siox.h"
 #include "tile-manager.h"
+
+
+/*  thresholds in the the mask, pixels < LOW are known background,
+ *                              pixels > HIGH are known foreground
+ */
+#define LOW  1
+#define HIGH 254
 
 
 /* Simulate a java.util.ArrayList */
@@ -54,10 +62,10 @@
 
 typedef struct
 {
-  float l;
-  float a;
-  float b;
-  int   cardinality;
+  gfloat l;
+  gfloat a;
+  gfloat b;
+  gint   cardinality;
 } lab;
 
 typedef struct _ArrayList ArrayList;
@@ -110,7 +118,7 @@ list_size (ArrayList *list)
 
 static lab *
 list_to_array (ArrayList *list,
-               int       *returnlength)
+               gint      *returnlength)
 {
   ArrayList *cur   = list;
   gint       i     = 0;
@@ -152,80 +160,61 @@ free_list (ArrayList *list)
 
 /* FIXME: try to use cpersep conversion here, should be faster */
 static void
-calcLAB (const guchar *src,
-         lab          *pixel)
+calc_lab (const guchar *src,
+          gint          bpp,
+          const guchar *colormap,
+          lab          *pixel)
 {
-  gfloat r = src[RED_PIX] / 255.0;
-  gfloat g = src[GREEN_PIX] / 255.0;
-  gfloat b = src[BLUE_PIX] / 255.0;
-  gfloat x, y, z;
+  gdouble l, a, b;
 
-  if (r > 0.04045)
-    r = (float) pow ((r + 0.055) / 1.055, 2.4);
-  else
-    r = r / 12.92;
+  switch (bpp)
+    {
+    case 3:  /* RGB  */
+    case 4:  /* RGBA */
+      cpercep_rgb_to_space (src[RED_PIX],
+                            src[GREEN_PIX],
+                            src[BLUE_PIX], &l, &a, &b);
+      break;
 
-  if (g > 0.04045)
-    g = (float) pow ((g + 0.055) / 1.055, 2.4);
-  else
-    g = g / 12.92;
+    case 2:
+    case 1:
+      if (colormap) /* INDEXED(A) */
+        {
+          gint i = *src * 3;
 
-  if (b > 0.04045)
-    b = (float) pow ((b + 0.055) / 1.055, 2.4);
-  else
-    b = b / 12.92;
+          cpercep_rgb_to_space (colormap[i + RED_PIX],
+                                colormap[i + GREEN_PIX],
+                                colormap[i + BLUE_PIX], &l, &a, &b);
+        }
+      else /* GRAY(A) */
+        {
+          /*  FIXME: there should be cpercep_gray_to_space  */
+          cpercep_rgb_to_space (*src, *src, *src, &l, &a, &b);
+        }
+      break;
 
-  r = r * 100.0;
-  g = g * 100.0;
-  b = b * 100.0;
+    default:
+      g_return_if_reached ();
+    }
 
-  /* Observer. = 2°, Illuminant = D65 */
-  x = (float) (r * 0.4124 + g * 0.3576 + b * 0.1805) / 95.047;
-  y = (float) (r * 0.2126 + g * 0.7152 + b * 0.0722) / 100.0;
-  z = (float) (r * 0.0193 + g * 0.1192 + b * 0.9505) / 108.883;
-
-  if (x > 0.008856)
-    x = (float) pow (x, (1.0 / 3));
-  else
-    x = (7.787 * x) + (16.0 / 116);
-
-  if (y > 0.008856)
-    y = (float) pow (y, (1.0 / 3));
-  else
-    y = (7.787 * y) + (16.0 / 116);
-
-  if (z > 0.008856)
-    z = (float) pow (z, (1.0 / 3));
-  else
-    z = (7.787 * z) + (16.0 / 116);
-
-  pixel->l = (116 * y) - 16;
-  pixel->a = 500 * (x - y);
-  pixel->b = 200 * (y - z);
+  pixel->l = l;
+  pixel->a = a;
+  pixel->b = b;
 }
-
-#if 0
-static float cie_f (float t)
-{
-  return t > 0.008856 ? (1 / 3.0) : 7.787 * t + 16.0 / 116.0;
-}
-#endif
-
 
 /* Stage one of modified KD-Tree algorithm */
 static void
-stageone (lab       *points,
-          int        dims,
-          int        depth,
-          ArrayList *clusters,
-          float      limits[SIOX_DIMS],
-          int        length)
+stageone (lab          *points,
+          gint          dims,
+          gint          depth,
+          ArrayList    *clusters,
+          const gfloat  limits[SIOX_DIMS],
+          gint          length)
 {
-  int    curdim = depth % dims;
-  float  min, max;
-  /* find maximum and minimum */
-  int    i, countsm, countgr, smallc, bigc;
-  float  pivotvalue, curval;
+  gint    curdim = depth % dims;
+  gfloat  min, max;
+  gint    i, countsm, countgr, smallc, bigc;
+  gfloat  pivotvalue, curval;
   lab   *smallerpoints;
   lab   *biggerpoints;
 
@@ -332,24 +321,23 @@ stageone (lab       *points,
  * differences => not integrated into method stageone()
  */
 static void
-stagetwo (lab       *points,
-          int        dims,
-          int        depth,
-          ArrayList *clusters,
-          float      limits[SIOX_DIMS],
-          int        length,
-          int        total,
-          float      threshold)
+stagetwo (lab          *points,
+          gint          dims,
+          gint          depth,
+          ArrayList    *clusters,
+          const gfloat  limits[SIOX_DIMS],
+          gint          length,
+          gint          total,
+          gfloat        threshold)
 {
-  int    curdim = depth % dims;
-  float  min, max;
-  /* find maximum and minimum */
-  int    i, countsm, countgr, smallc, bigc;
-  float  pivotvalue, curval;
-  int    sum;
-  lab   *point;
-  lab   *smallerpoints;
-  lab   *biggerpoints;
+  gint    curdim = depth % dims;
+  gfloat  min, max;
+  gint    i, countsm, countgr, smallc, bigc;
+  gfloat  pivotvalue, curval;
+  gint    sum;
+  lab    *point;
+  lab    *smallerpoints;
+  lab    *biggerpoints;
 
   if (length < 1)
     return;
@@ -385,7 +373,8 @@ stagetwo (lab       *points,
     {
       pivotvalue = ((max - min) / 2.0) + min;
 
-      /*  g_printerr ("max=%f min=%f pivot=%f\n",max,min,pivotvalue); */
+      /*  g_printerr ("max=%f min=%f pivot=%f\n", max, min, pivotvalue); */
+
       countsm = 0;
       countgr = 0;
 
@@ -491,10 +480,10 @@ euklid (const lab p,
 
 /* Creates a color signature for a given set of pixels */
 static lab *
-create_signature (lab   *input,
-                  int    length,
-                  float  limits[SIOX_DIMS],
-                  int   *returnlength)
+create_signature (lab          *input,
+                  gint          length,
+                  const gfloat  limits[SIOX_DIMS],
+                  gint         *returnlength)
 {
   ArrayList *clusters1;
   ArrayList *clusters2;
@@ -559,47 +548,6 @@ create_signature (lab   *input,
   /* g_printerr ("step #2 -> %d clusters\n", returnlength[0]); */
 
   return rval;
-}
-
-static void
-normalize_mask (TileManager *mask,
-                gint         x,
-                gint         y,
-                gint         width,
-                gint         height)
-{
-  PixelRegion region;
-  gpointer    pr;
-  gint        row, col;
-  guchar      max = 0;
-
-  pixel_region_init (&region, mask, x, y, width, height, FALSE);
-
-  for (pr = pixel_regions_register (1, &region);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
-    {
-      guchar *data = region.data;
-
-      for (row = 0; row < region.h; row++)
-        {
-          guchar *d = data;
-
-          for (col = 0; col < region.w; col++, d++)
-            {
-              if (*d > max)
-                max = *d;
-            }
-
-          data += region.rowstride;
-        }
-    }
-
-  if (max == 255)
-    return;
-
-  g_printerr ("max = %d (need to actually implement normalize ?)\n", max);
-  /*  TODO (or not TODO)  */
 }
 
 static void
@@ -786,9 +734,9 @@ find_max_blob (TileManager *mask,
 
 /* Returns squared clustersize */
 static gfloat
-getclustersize (const float limits[SIOX_DIMS])
+getclustersize (const gfloat limits[SIOX_DIMS])
 {
-  float sum = (limits[0] - (-limits[0])) * (limits[0] - (-limits[0]));
+  gfloat sum = (limits[0] - (-limits[0])) * (limits[0] - (-limits[0]));
 
   sum += (limits[1] - (-limits[1])) * (limits[1] - (-limits[1]));
   sum += (limits[2] - (-limits[2])) * (limits[2] - (-limits[2]));
@@ -800,6 +748,7 @@ getclustersize (const float limits[SIOX_DIMS])
 /**
  * siox_foreground_extract:
  * @pixels:     the tiles to extract the foreground from
+ * @colormap:   colormap in case @pixels are indexed, %NULL otherwise
  * @mask:       a trimap indicating sure foreground, sure background and
  *              undecided regions
  * @limits:     a three dimensional float array specifing the accuracy,
@@ -810,38 +759,37 @@ getclustersize (const float limits[SIOX_DIMS])
  */
 void
 siox_foreground_extract (TileManager  *pixels,
+                         const guchar *colormap,
                          TileManager  *mask,
-                         gfloat        limits[SIOX_DIMS],
+                         const gfloat  limits[SIOX_DIMS],
                          gint          smoothness)
 {
-  gfloat    clustersize = getclustersize (limits);
-  gint      surebgcount = 0;
-  gint      surefgcount = 0;
-  gint      i, j;
-  gint      bgsiglen, fgsiglen;
-  lab      *surebg;
-  lab      *surefg;
-  lab      *bgsig;
-  lab      *fgsig;
-
   PixelRegion  srcPR;
   PixelRegion  mapPR;
   gpointer     pr;
   gint         width, height;
   gint         bpp;
   gint         row, col;
+  gfloat       clustersize = getclustersize (limits);
+  gint         surebgcount = 0;
+  gint         surefgcount = 0;
+  gint         i, j;
+  gint         bgsiglen, fgsiglen;
+  lab         *surebg;
+  lab         *surefg;
+  lab         *bgsig;
+  lab         *fgsig;
 
   g_return_if_fail (pixels != NULL);
   g_return_if_fail (mask != NULL && tile_manager_bpp (mask) == 1);
 
   width = tile_manager_width (pixels);
   height = tile_manager_height (pixels);
-  bpp = tile_manager_bpp (pixels);
 
-  /* FIXME: handle grayscale and indexed images */
-  g_return_if_fail (bpp == 3 || bpp == 4);
   g_return_if_fail (tile_manager_width (mask) == width);
   g_return_if_fail (tile_manager_height (mask) == height);
+
+  cpercep_init ();
 
   /* count given foreground and background pixels */
   pixel_region_init (&mapPR, mask, 0, 0, width, height, FALSE);
@@ -858,9 +806,9 @@ siox_foreground_extract (TileManager  *pixels,
 
           for (col = 0; col < mapPR.w; col++, m++)
             {
-              if (*m < 32)
+              if (*m < LOW)
                 surebgcount++;
-              else if (*m > 224)
+              else if (*m > HIGH)
                 surefgcount++;
             }
 
@@ -873,6 +821,8 @@ siox_foreground_extract (TileManager  *pixels,
 
   i = 0;
   j = 0;
+
+  bpp = tile_manager_bpp (pixels);
 
   /* create inputs for colorsignatures */
   pixel_region_init (&srcPR, pixels, 0, 0, width, height, FALSE);
@@ -892,14 +842,14 @@ siox_foreground_extract (TileManager  *pixels,
 
           for (col = 0; col < srcPR.w; col++, m++, s += bpp)
             {
-              if (*m < 32)
+              if (*m < LOW)
                 {
-                  calcLAB (s, surebg + i);
+                  calc_lab (s, bpp, colormap, surebg + i);
                   i++;
                 }
-              else if (*m > 224)
+              else if (*m > HIGH)
                 {
-                  calcLAB (s, surefg + j);
+                  calc_lab (s, bpp, colormap, surefg + j);
                   j++;
                 }
             }
@@ -909,7 +859,7 @@ siox_foreground_extract (TileManager  *pixels,
         }
     }
 
-  /* Create color signature for bg */
+  /* Create color signature for the background */
   bgsig = create_signature (surebg, surebgcount, limits, &bgsiglen);
   g_free (surebg);
 
@@ -919,7 +869,7 @@ siox_foreground_extract (TileManager  *pixels,
       return;
     }
 
-  /* Create color signature for fg */
+  /* Create color signature for the foreground */
   fgsig = create_signature (surefg, surefgcount, limits, &fgsiglen);
   g_free (surefg);
 
@@ -945,10 +895,10 @@ siox_foreground_extract (TileManager  *pixels,
               gboolean  background = FALSE;
               gfloat    min, d;
 
-              if (*m < 32 || *m > 224)
+              if (*m < LOW || *m > HIGH)
                 continue;
 
-              calcLAB (s, &labpixel);
+              calc_lab (s, bpp, colormap, &labpixel);
               background = TRUE;
               min = euklid (labpixel, bgsig[0]);
 
@@ -996,8 +946,6 @@ siox_foreground_extract (TileManager  *pixels,
   /* Smooth a bit for error killing */
   smooth_mask (mask, 0, 0, width, height);
 
-  normalize_mask (mask, 0, 0, width, height);
-
   /* Now erode, to make sure only "strongly connected components"
    * keep being connected
    */
@@ -1009,8 +957,6 @@ siox_foreground_extract (TileManager  *pixels,
   /* smooth again - as user specified */
   for (i = 0; i < smoothness; i++)
     smooth_mask (mask, 0, 0, width, height);
-
-  normalize_mask (mask, 0, 0, width, height);
 
   /* Threshold the values */
   threshold_mask (mask, 0, 0, width, height);

@@ -2,7 +2,6 @@
 
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-Core\"	\
-	-DGIMP_COMPILATION		\
 	@GTHREAD_CFLAGS@
 
 INCLUDES = \
@@ -19,8 +18,6 @@ noinst_LIBRARIES = libappcore.a
 libappcore_a_sources = \
 	core-enums.h			\
 	core-types.h			\
-	cpercep.c			\
-	cpercep.h			\
 	gimp.c				\
 	gimp.h				\
 	gimp-documents.c		\
