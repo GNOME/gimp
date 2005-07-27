@@ -30,6 +30,7 @@
 #include "gimpdrawable.h"
 #include "gimpdrawable-foreground-extract.h"
 #include "gimpimage.h"
+#include "gimpimage-colormap.h"
 
 
 /*  public functions  */

@@ -1,3 +1,8 @@
+2005-07-27  Manish Singh  <yosh@gimp.org>
+
+	* app/core/gimpdrawable-foreground-extract.c: #include
+	gimpimage-colormap.h
+
 2005-07-28  Sven Neumann  <sven@gimp.org>
 
 	* app/core/Makefile.am
