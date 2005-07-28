@@ -30,6 +30,7 @@
 
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
+#include "core/gimpundostack.h"
 #include "core/gimpunit.h"
 
 #include "gimpimagepropview.h"
@@ -63,6 +64,10 @@ static void      gimp_image_prop_view_get_property (GObject           *object,
 static GtkWidget * gimp_image_prop_view_add_label  (GtkTable          *table,
                                                     gint               row,
                                                     const gchar       *text);
+static void        gimp_image_prop_view_undo_event (GimpImage         *gimage,
+                                                    GimpUndoEvent      event,
+                                                    GimpUndo          *undo,
+                                                    GimpImagePropView *view);
 static void        gimp_image_prop_view_update     (GimpImagePropView *view);
 
 
@@ -118,8 +123,8 @@ gimp_image_prop_view_class_init (GimpImagePropViewClass *klass)
 static void
 gimp_image_prop_view_init (GimpImagePropView *view)
 {
-  gtk_table_set_col_spacing (GTK_TABLE (view), 0, 6);
-  gtk_table_set_row_spacings (GTK_TABLE (view), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (view), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (view), 3);
 }
 
 static void
@@ -192,6 +197,12 @@ gimp_image_prop_view_constructor (GType                  type,
   view->memsize_label =
     gimp_image_prop_view_add_label (table, row++, _("Size in memory:"));
 
+  view->undo_label =
+    gimp_image_prop_view_add_label (table, row++, _("Undo steps:"));
+
+  view->redo_label =
+    gimp_image_prop_view_add_label (table, row++, _("Redo steps:"));
+
   view->pixels_label =
     gimp_image_prop_view_add_label (table, row++, _("Number of pixels:"));
 
@@ -220,6 +231,10 @@ gimp_image_prop_view_constructor (GType                  type,
                            G_CALLBACK (gimp_image_prop_view_update),
                            G_OBJECT (view),
                            G_CONNECT_SWAPPED);
+  g_signal_connect_object (view->image, "undo-event",
+                           G_CALLBACK (gimp_image_prop_view_undo_event),
+                           G_OBJECT (view),
+                           0);
 
   gimp_image_prop_view_update (view);
 
@@ -263,14 +278,59 @@ gimp_image_prop_view_add_label (GtkTable    *table,
   gtk_widget_show (desc);
 
   label = g_object_new (GTK_TYPE_LABEL,
-                        "xalign", 0.0,
-                        "yalign", 0.5,
+                        "xalign",     0.0,
+                        "yalign",     0.5,
+                        "selectable", TRUE,
                         NULL);
   gtk_table_attach (table, label,
                     1, 2, row, row + 1, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   return label;
+}
+
+static void
+gimp_image_prop_view_label_set_memsize (GtkWidget  *label,
+                                        GimpObject *object)
+{
+  gchar *str = gimp_memsize_to_string (gimp_object_get_memsize (object, NULL));
+
+  gtk_label_set_text (GTK_LABEL (label), str);
+  g_free (str);
+}
+
+static void
+gimp_image_prop_view_label_set_undo (GtkWidget     *label,
+                                     GimpUndoStack *stack)
+{
+  gint steps = gimp_undo_stack_get_depth (stack);
+
+  if (steps > 0)
+    {
+      GimpObject *object = GIMP_OBJECT (stack);
+      gchar      *str;
+      gchar       buf[256];
+
+      str = gimp_memsize_to_string (gimp_object_get_memsize (object, NULL));
+      g_snprintf (buf, sizeof (buf), "%d (%s)", steps, str);
+      g_free (str);
+
+      gtk_label_set_text (GTK_LABEL (label), buf);
+    }
+  else
+    {
+      /*  no undo (or redo) steps available  */
+      gtk_label_set_text (GTK_LABEL (label), _("None"));
+    }
+}
+
+static void
+gimp_image_prop_view_undo_event (GimpImage         *gimage,
+                                 GimpUndoEvent      event,
+                                 GimpUndo          *undo,
+                                 GimpImagePropView *view)
+{
+  gimp_image_prop_view_update (view);
 }
 
 static void
@@ -341,15 +401,17 @@ gimp_image_prop_view_update (GimpImagePropView *view)
 
   gtk_label_set_text (GTK_LABEL (view->colorspace_label), buf);
 
-  /*  size in memory  */
-  {
-    GimpObject *object = GIMP_OBJECT (image);
-    gchar      *str;
+  gtk_table_set_row_spacing (GTK_TABLE (view), 3, 6);
 
-    str = gimp_memsize_to_string (gimp_object_get_memsize (object, NULL));
-    gtk_label_set_text (GTK_LABEL (view->memsize_label), str);
-    g_free (str);
-  }
+  /*  size in memory  */
+  gimp_image_prop_view_label_set_memsize (view->memsize_label,
+                                          GIMP_OBJECT (image));
+
+  /*  undo / redo  */
+  gimp_image_prop_view_label_set_undo (view->undo_label, image->undo_stack);
+  gimp_image_prop_view_label_set_undo (view->redo_label, image->redo_stack);
+
+  gtk_table_set_row_spacing (GTK_TABLE (view), 6, 6);
 
   /*  number of layers  */
   g_snprintf (buf, sizeof (buf), "%d", image->width * image->height);

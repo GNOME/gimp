@@ -1,3 +1,12 @@
+2005-07-29  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpundostack.[ch]: added gimp_undo_stack_get_depth().
+
+	* app/widgets/gimpimagepropview.[ch]: display number and memory
+	usage of undo/redo steps.
+
+	* app/core/gimpimage-merge.c: fixed signedness issue.
+
 2005-07-28  Sven Neumann  <sven@gimp.org>
 
 	* app/base/siox.[ch]: accept an offset between pixels and mask,

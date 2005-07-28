@@ -246,3 +246,11 @@ gimp_undo_stack_peek (GimpUndoStack *stack)
 
   return (object ? GIMP_UNDO (object) : NULL);
 }
+
+gint
+gimp_undo_stack_get_depth (GimpUndoStack *stack)
+{
+  g_return_val_if_fail (GIMP_IS_UNDO_STACK (stack), 0);
+
+  return gimp_container_num_children (stack->undos);
+}

@@ -521,7 +521,7 @@ gimp_image_merge_visible_vectors (GimpImage *gimage)
   GSList      *cur_item       = NULL;
   GimpVectors *vectors        = NULL;
   GimpVectors *target_vectors = NULL;
-  guchar      *name           = NULL;
+  gchar       *name           = NULL;
   gint         pos            = 0;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
