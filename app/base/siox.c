@@ -747,7 +747,7 @@ find_max_blob (TileManager *mask,
 
 /* Returns squared clustersize */
 static gfloat
-getclustersize (const gfloat limits[SIOX_DIMS])
+get_clustersize (const gfloat limits[SIOX_DIMS])
 {
   gfloat sum = (limits[0] - (-limits[0])) * (limits[0] - (-limits[0]));
 
@@ -785,11 +785,12 @@ siox_foreground_extract (TileManager  *pixels,
   PixelRegion  srcPR;
   PixelRegion  mapPR;
   gpointer     pr;
+  gboolean     intersect;
   gint         x, y;
   gint         width, height;
   gint         bpp;
   gint         row, col;
-  gfloat       clustersize = getclustersize (limits);
+  const gfloat clustersize = get_clustersize (limits);
   gint         surebgcount = 0;
   gint         surefgcount = 0;
   gint         i, j;
@@ -804,19 +805,19 @@ siox_foreground_extract (TileManager  *pixels,
 
   cpercep_init ();
 
-  gimp_rectangle_intersect (offset_x, offset_y,
-                            tile_manager_width (pixels),
-                            tile_manager_height (pixels),
-                            0, 0,
-                            tile_manager_width (mask),
-                            tile_manager_height (mask),
-                            &x, &y, &width, &height);
+  intersect = gimp_rectangle_intersect (offset_x, offset_y,
+                                        tile_manager_width (pixels),
+                                        tile_manager_height (pixels),
+                                        0, 0,
+                                        tile_manager_width (mask),
+                                        tile_manager_height (mask),
+                                        &x, &y, &width, &height);
 
   /* FIXME:
    * Should clear the mask outside the rectangle that we are working on.
    */
 
-  if (! (width > 0 && height > 0))
+  if (! intersect)
     return;
 
   /* count given foreground and background pixels */
