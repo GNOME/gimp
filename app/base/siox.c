@@ -44,14 +44,17 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "core/gimp-utils.h"  /*  FIXME  */
+
 #include "cpercep.h"
 #include "pixel-region.h"
 #include "siox.h"
 #include "tile-manager.h"
 
 
-/*  thresholds in the the mask, pixels < LOW are known background,
- *                              pixels > HIGH are known foreground
+/* Thresholds in the mask:
+ *   pixels < LOW are known background
+ *   pixels > HIGH are known foreground
  */
 #define LOW  1
 #define HIGH 254
@@ -759,8 +762,11 @@ getclustersize (const gfloat limits[SIOX_DIMS])
  * siox_foreground_extract:
  * @pixels:     the tiles to extract the foreground from
  * @colormap:   colormap in case @pixels are indexed, %NULL otherwise
- * @mask:       a trimap indicating sure foreground, sure background and
- *              undecided regions
+ * @offset_x:   horizontal offset of @pixels with respect to the @mask
+ * @offset_y:   vertical offset of @pixels with respect to the @mask
+
+ * @mask:       a mask indicating sure foreground (255), sure background (0)
+ *              and undecided regions ([1..254]).
  * @limits:     a three dimensional float array specifing the accuracy,
  *              a good value is: { 0.66, 1.25, 2.5 }
  * @smoothness: boundary smoothness (a good value is 3)
@@ -770,6 +776,8 @@ getclustersize (const gfloat limits[SIOX_DIMS])
 void
 siox_foreground_extract (TileManager  *pixels,
                          const guchar *colormap,
+                         gint          offset_x,
+                         gint          offset_y,
                          TileManager  *mask,
                          const gfloat  limits[SIOX_DIMS],
                          gint          smoothness)
@@ -777,6 +785,7 @@ siox_foreground_extract (TileManager  *pixels,
   PixelRegion  srcPR;
   PixelRegion  mapPR;
   gpointer     pr;
+  gint         x, y;
   gint         width, height;
   gint         bpp;
   gint         row, col;
@@ -793,16 +802,25 @@ siox_foreground_extract (TileManager  *pixels,
   g_return_if_fail (pixels != NULL);
   g_return_if_fail (mask != NULL && tile_manager_bpp (mask) == 1);
 
-  width = tile_manager_width (pixels);
-  height = tile_manager_height (pixels);
-
-  g_return_if_fail (tile_manager_width (mask) == width);
-  g_return_if_fail (tile_manager_height (mask) == height);
-
   cpercep_init ();
 
+  gimp_rectangle_intersect (offset_x, offset_y,
+                            tile_manager_width (pixels),
+                            tile_manager_height (pixels),
+                            0, 0,
+                            tile_manager_width (mask),
+                            tile_manager_height (mask),
+                            &x, &y, &width, &height);
+
+  /* FIXME:
+   * Should clear the mask outside the rectangle that we are working on.
+   */
+
+  if (! (width > 0 && height > 0))
+    return;
+
   /* count given foreground and background pixels */
-  pixel_region_init (&mapPR, mask, 0, 0, width, height, FALSE);
+  pixel_region_init (&mapPR, mask, x, y, width, height, FALSE);
 
   for (pr = pixel_regions_register (1, &mapPR);
        pr != NULL;
@@ -835,8 +853,9 @@ siox_foreground_extract (TileManager  *pixels,
   bpp = tile_manager_bpp (pixels);
 
   /* create inputs for colorsignatures */
-  pixel_region_init (&srcPR, pixels, 0, 0, width, height, FALSE);
-  pixel_region_init (&mapPR, mask, 0, 0, width, height, FALSE);
+  pixel_region_init (&srcPR, pixels,
+                     x - offset_x, y - offset_y, width, height, FALSE);
+  pixel_region_init (&mapPR, mask, x, y, width, height, FALSE);
 
   for (pr = pixel_regions_register (2, &srcPR, &mapPR);
        pr != NULL;
@@ -884,8 +903,9 @@ siox_foreground_extract (TileManager  *pixels,
   g_free (surefg);
 
   /* Classify - the slow way....Better: Tree traversation */
-  pixel_region_init (&srcPR, pixels, 0, 0, width, height, FALSE);
-  pixel_region_init (&mapPR, mask, 0, 0, width, height, TRUE);
+  pixel_region_init (&srcPR, pixels,
+                     x - offset_x, y - offset_y, width, height, FALSE);
+  pixel_region_init (&mapPR, mask, x, y, width, height, TRUE);
 
   for (pr = pixel_regions_register (2, &srcPR, &mapPR);
        pr != NULL;
@@ -954,26 +974,26 @@ siox_foreground_extract (TileManager  *pixels,
   g_free (bgsig);
 
   /* Smooth a bit for error killing */
-  smooth_mask (mask, 0, 0, width, height);
+  smooth_mask (mask, x, y, width, height);
 
   /* Now erode, to make sure only "strongly connected components"
    * keep being connected
    */
-  erode_mask (mask, 0, 0, width, height);
+  erode_mask (mask, x, y, width, height);
 
   /* search the biggest connected component */
-  find_max_blob (mask, 0, 0, width, height);
+  find_max_blob (mask, x, y, width, height);
 
   /* smooth again - as user specified */
   for (i = 0; i < smoothness; i++)
-    smooth_mask (mask, 0, 0, width, height);
+    smooth_mask (mask, x, y, width, height);
 
   /* Threshold the values */
-  threshold_mask (mask, 0, 0, width, height);
+  threshold_mask (mask, x, y, width, height);
 
   /* search the biggest connected component again to kill jitter */
-  find_max_blob (mask, 0, 0, width, height);
+  find_max_blob (mask, x, y, width, height);
 
   /* Now dilate, to fill up boundary pixels killed by erode */
-  dilate_mask (mask, 0, 0, width, height);
+  dilate_mask (mask, x, y, width, height);
 }

@@ -43,6 +43,8 @@
 
 void  siox_foreground_extract (TileManager  *pixels,
                                const guchar *colormap,
+                               gint          offset_x,
+                               gint          offset_y,
                                TileManager  *map,
                                const gfloat  limits[SIOX_DIMS],
                                gint          smoothness);
