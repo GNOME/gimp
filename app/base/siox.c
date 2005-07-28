@@ -57,6 +57,9 @@
 #define HIGH 254
 
 
+/* #define DEBUG */
+
+
 /* Simulate a java.util.ArrayList */
 /* These methods are NOT generic */
 
@@ -373,7 +376,9 @@ stagetwo (lab          *points,
     {
       pivotvalue = ((max - min) / 2.0) + min;
 
-      /*  g_printerr ("max=%f min=%f pivot=%f\n", max, min, pivotvalue); */
+#ifdef DEBUG
+      g_printerr ("max=%f min=%f pivot=%f\n", max, min, pivotvalue);
+#endif
 
       countsm = 0;
       countgr = 0;
@@ -457,9 +462,10 @@ stagetwo (lab          *points,
           point->a /= (length * 1.0);
           point->b /= (length * 1.0);
 
-          /* g_printerr ("cluster=%f, %f, %f sum=%d\n",
-                          point->l, point->a, point->b, sum);
-           */
+#ifdef DEBUG
+          g_printerr ("cluster=%f, %f, %f sum=%d\n",
+                      point->l, point->a, point->b, sum);
+#endif
 
           add_to_list (clusters, point, 1, TRUE);
         }
@@ -532,7 +538,9 @@ create_signature (lab          *input,
       curelem = curelem->next;
     }
 
-  /* g_printerr ("step #1 -> %d clusters\n", clusters1size); */
+#ifdef DEBUG
+  g_printerr ("step #1 -> %d clusters\n", clusters1size);
+#endif
 
   clusters2 = g_new0 (ArrayList, 1);
 
@@ -545,7 +553,9 @@ create_signature (lab          *input,
   free_list (clusters2);
   free_list (clusters1);
 
-  /* g_printerr ("step #2 -> %d clusters\n", returnlength[0]); */
+#ifdef DEBUG
+  g_printerr ("step #2 -> %d clusters\n", returnlength[0]);
+#endif
 
   return rval;
 }

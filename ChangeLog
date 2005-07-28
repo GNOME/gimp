@@ -1,3 +1,7 @@
+2005-07-28  Sven Neumann  <sven@gimp.org>
+
+	* app/base/siox.c: allow to enable some debug output.
+
 2005-07-27  Manish Singh  <yosh@gimp.org>
 
 	* app/core/gimpdrawable-foreground-extract.c: #include
