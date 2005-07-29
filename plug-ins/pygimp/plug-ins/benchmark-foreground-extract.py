@@ -90,7 +90,9 @@ def benchmark (folder, save_output):
         sys.stderr.write (os.path.basename (image_name))
 
 	start = time.time ()
-        pdb.gimp_drawable_foreground_extract (image_layer, mask_layer)
+        pdb.gimp_drawable_foreground_extract (image_layer,
+					      FOREGROUND_EXTRACT_SIOX,
+					      mask_layer)
 	end = time.time ()
 
         sys.stderr.write (" ")
