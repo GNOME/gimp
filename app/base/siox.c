@@ -64,7 +64,10 @@
 
 
 /* Simulate a java.util.ArrayList */
-/* These methods are NOT generic */
+
+/* Could be improved. At the moment we are wasting a node per list and
+ * the tail pointer on each node is only used in the first node.
+ */
 
 typedef struct
 {
@@ -82,7 +85,18 @@ struct _ArrayList
   guint      arraylength;
   gboolean   owned;
   ArrayList *next;
+  ArrayList *tail; /* only valid in the root item */
 };
+
+static ArrayList *
+list_new (void)
+{
+  ArrayList *list = g_new0 (ArrayList, 1);
+
+  list->tail = list;
+
+  return list;
+}
 
 static void
 add_to_list (ArrayList *list,
@@ -90,21 +104,13 @@ add_to_list (ArrayList *list,
              guint      arraylength,
              gboolean   take)
 {
-  ArrayList *cur = list;
-  ArrayList *prev;
+  ArrayList *tail = list->tail;
 
-  do
-    {
-      prev = cur;
-      cur = cur->next;
-    }
-  while (cur);
+  tail->array = array;
+  tail->arraylength = arraylength;
+  tail->owned = take;
 
-  prev->next = g_new0 (ArrayList, 1);
-
-  prev->array = array;
-  prev->arraylength = arraylength;
-  prev->owned = take;
+  list->tail = tail->next = g_new0 (ArrayList, 1);
 }
 
 static int
@@ -510,7 +516,7 @@ create_signature (lab          *input,
       return NULL;
     }
 
-  clusters1 = g_new0 (ArrayList, 1);
+  clusters1 = list_new ();
 
   stageone (input, SIOX_DIMS, 0, clusters1, limits, length);
   clusters1size = list_size (clusters1);
@@ -545,7 +551,7 @@ create_signature (lab          *input,
   g_printerr ("step #1 -> %d clusters\n", clusters1size);
 #endif
 
-  clusters2 = g_new0 (ArrayList, 1);
+  clusters2 = list_new ();
 
   stagetwo (centroids,
             SIOX_DIMS, 0, clusters2, limits, clusters1size, length,
