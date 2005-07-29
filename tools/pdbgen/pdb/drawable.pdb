@@ -852,6 +852,8 @@ HELP
 
     @inargs = (
 	&drawable_arg,
+        { name => 'mode', type => 'enum GimpForegroundExtractMode',
+	  desc => 'The algorithm to use: %%desc%%' },
         { name => 'mask', type => 'drawable', desc => 'Tri-Map' }
     );
 
@@ -861,7 +863,7 @@ HELP
   success = gimp_item_is_attached (GIMP_ITEM (drawable));
 
   if (success)
-    gimp_drawable_foreground_extract (drawable, mask);
+    gimp_drawable_foreground_extract (drawable, mode, mask);
 }
 CODE
     );

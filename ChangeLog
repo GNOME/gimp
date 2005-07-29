@@ -1,5 +1,20 @@
 2005-07-29  Sven Neumann  <sven@gimp.org>
 
+	* libgimpbase/gimpbaseenums.[ch]: added GimpForegroundExtractMode
+	in preparation for other implementations to be added in the future.
+
+	* libgimp/gimpenums.c.tail
+	* tools/pdbgen/enums.pl: regenerated.
+
+	* app/core/gimpdrawable-foreground-extract.[ch]
+	* app/tools/gimpforegroundselecttool.c
+	* tools/pdbgen/pdb/drawable.pdb: added the mode parameter.
+
+	* app/pdb/drawable_cmds.c
+	* libgimp/gimpdrawable_pdb.[ch]: regenerated.
+
+2005-07-29  Sven Neumann  <sven@gimp.org>
+
 	* libgimpconfig/gimpconfig-utils.c (gimp_config_string_append_escaped):
 	added casts to silent signedness warnings.
 

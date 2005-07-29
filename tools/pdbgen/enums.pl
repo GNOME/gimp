@@ -98,6 +98,12 @@ package Gimp::CodeGen::enums;
 	  mapping => { GIMP_DODGE => '0',
 		       GIMP_BURN => '1' }
 	},
+    GimpForegroundExtractMode =>
+	{ contig => 1,
+	  header => 'libgimpbase/gimpbaseenums.h',
+	  symbols => [ qw(GIMP_FOREGROUND_EXTRACT_SIOX) ],
+	  mapping => { GIMP_FOREGROUND_EXTRACT_SIOX => '0' }
+	},
     GimpGradientType =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',

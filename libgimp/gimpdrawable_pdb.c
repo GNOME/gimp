@@ -1302,6 +1302,7 @@ _gimp_drawable_sub_thumbnail (gint32   drawable_ID,
 /**
  * gimp_drawable_foreground_extract:
  * @drawable_ID: The drawable.
+ * @mode: The algorithm to use.
  * @mask_ID: Tri-Map.
  *
  * Extract the foreground of a drawable using a given trimap.
@@ -1314,8 +1315,9 @@ _gimp_drawable_sub_thumbnail (gint32   drawable_ID,
  * Since: GIMP 2.4
  */
 gboolean
-gimp_drawable_foreground_extract (gint32 drawable_ID,
-				  gint32 mask_ID)
+gimp_drawable_foreground_extract (gint32                    drawable_ID,
+				  GimpForegroundExtractMode mode,
+				  gint32                    mask_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -1324,6 +1326,7 @@ gimp_drawable_foreground_extract (gint32 drawable_ID,
   return_vals = gimp_run_procedure ("gimp_drawable_foreground_extract",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_INT32, mode,
 				    GIMP_PDB_DRAWABLE, mask_ID,
 				    GIMP_PDB_END);
 

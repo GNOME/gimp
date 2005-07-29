@@ -2511,13 +2511,18 @@ drawable_foreground_extract_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
+  gint32 mode;
   GimpDrawable *mask;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
     success = FALSE;
 
-  mask = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
+  mode = args[1].value.pdb_int;
+  if (mode != GIMP_FOREGROUND_EXTRACT_SIOX)
+    success = FALSE;
+
+  mask = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[2].value.pdb_int);
   if (! (GIMP_IS_DRAWABLE (mask) && ! gimp_item_is_removed (GIMP_ITEM (mask))))
     success = FALSE;
 
@@ -2526,7 +2531,7 @@ drawable_foreground_extract_invoker (Gimp         *gimp,
       success = gimp_item_is_attached (GIMP_ITEM (drawable));
 
       if (success)
-        gimp_drawable_foreground_extract (drawable, mask);
+        gimp_drawable_foreground_extract (drawable, mode, mask);
     }
 
   return procedural_db_return_args (&drawable_foreground_extract_proc, success);
@@ -2538,6 +2543,11 @@ static ProcArg drawable_foreground_extract_inargs[] =
     GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable"
+  },
+  {
+    GIMP_PDB_INT32,
+    "mode",
+    "The algorithm to use: GIMP_FOREGROUND_EXTRACT_SIOX (0)"
   },
   {
     GIMP_PDB_DRAWABLE,
@@ -2556,7 +2566,7 @@ static ProcRecord drawable_foreground_extract_proc =
   "2005",
   NULL,
   GIMP_INTERNAL,
-  2,
+  3,
   drawable_foreground_extract_inargs,
   0,
   NULL,

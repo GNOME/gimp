@@ -238,7 +238,9 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
                                   0, 0, 127);
   gimp_scan_convert_free (scan_convert);
 
-  gimp_drawable_foreground_extract (drawable, mask);
+  gimp_drawable_foreground_extract (drawable,
+                                    GIMP_FOREGROUND_EXTRACT_SIOX,
+                                    GIMP_DRAWABLE (mask));
 
   gimp_channel_select_channel (gimp_image_get_mask (gimage),
                                tool->tool_info->blurb,

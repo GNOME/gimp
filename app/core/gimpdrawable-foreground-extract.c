@@ -36,12 +36,12 @@
 /*  public functions  */
 
 void
-gimp_drawable_foreground_extract (GimpDrawable *drawable,
-                                  GimpDrawable *mask)
+gimp_drawable_foreground_extract (GimpDrawable              *drawable,
+                                  GimpForegroundExtractMode  mode,
+                                  GimpDrawable              *mask)
 {
   GimpImage    *gimage;
   const guchar *colormap          = NULL;
-  const gfloat  limits[SIOX_DIMS] = { 0.66, 1.25, 2.5 };
   gint          x, y;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
@@ -57,9 +57,20 @@ gimp_drawable_foreground_extract (GimpDrawable *drawable,
 
   gimp_item_offsets (GIMP_ITEM (drawable), &x, &y);
 
-  siox_foreground_extract (gimp_drawable_data (drawable), colormap, x, y,
-                           gimp_drawable_data (mask),
-                           limits, 3);
+  switch (mode)
+    {
+    case GIMP_FOREGROUND_EXTRACT_SIOX:
+      {
+        const gfloat  limits[SIOX_DIMS] = { 0.66, 1.25, 2.5 };
+        siox_foreground_extract (gimp_drawable_data (drawable), colormap, x, y,
+                                 gimp_drawable_data (mask),
+                                 limits, 3);
+      }
+      break;
+
+    default:
+      g_return_if_reached ();
+    }
 
   gimp_drawable_update (mask,
                         0, 0,
