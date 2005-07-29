@@ -402,7 +402,7 @@ gimp_config_string_append_escaped (GString     *string,
 
       g_string_append_c (string, '\"');
 
-      for (p = val, len = 0; *p; p++)
+      for (p = (const guchar *) val, len = 0; *p; p++)
         {
           if (*p < ' ' || *p == '\\' || *p == '\"')
             {
@@ -441,7 +441,7 @@ gimp_config_string_append_escaped (GString     *string,
 
               g_string_append_len (string, buf, len);
 
-              val = p + 1;
+              val = (const gchar *) p + 1;
               len = 0;
             }
           else

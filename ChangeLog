@@ -1,5 +1,10 @@
 2005-07-29  Sven Neumann  <sven@gimp.org>
 
+	* libgimpconfig/gimpconfig-utils.c (gimp_config_string_append_escaped):
+	added casts to silent signedness warnings.
+
+2005-07-29  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpselectionoptions.c (gimp_selection_options_gui): no
 	antialiasing for the foreground selection tool (yet).
 
