@@ -1,5 +1,9 @@
 2005-07-29  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimppageselector.c: increased spacing.
+
+2005-07-29  Sven Neumann  <sven@gimp.org>
+
 	* menus/image-menu.xml.in: added "tools-foreground-select" to the
 	Selection Tools menu.
 

@@ -226,7 +226,7 @@ gimp_page_selector_init (GimpPageSelector *selector)
   priv->n_pages = 0;
   priv->target  = GIMP_PAGE_SELECTOR_TARGET_LAYERS;
 
-  gtk_box_set_spacing (GTK_BOX (selector), 6);
+  gtk_box_set_spacing (GTK_BOX (selector), 12);
 
   /*  Pages  */
 
