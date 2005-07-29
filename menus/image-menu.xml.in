@@ -458,6 +458,7 @@
 	<menuitem action="tools-rect-select" />
 	<menuitem action="tools-ellipse-select" />
 	<menuitem action="tools-free-select" />
+	<menuitem action="tools-foreground-select" />
 	<menuitem action="tools-fuzzy-select" />
 	<menuitem action="tools-by-color-select" />
 	<menuitem action="tools-iscissors" />

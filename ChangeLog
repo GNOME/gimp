@@ -1,5 +1,12 @@
 2005-07-29  Sven Neumann  <sven@gimp.org>
 
+	* menus/image-menu.xml.in: added "tools-foreground-select" to the
+	Selection Tools menu.
+
+	* app/tools/gimpforegroundselecttool.c: resolved clashing mnemonic.
+
+2005-07-29  Sven Neumann  <sven@gimp.org>
+
 	* themes/Default/images/Makefile.am
 	* themes/Default/images/tools/stock-tool-foreground-select-16.png
 	* themes/Default/images/tools/stock-tool-foreground-select-22.png:

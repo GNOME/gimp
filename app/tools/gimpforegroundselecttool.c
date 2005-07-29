@@ -86,7 +86,7 @@ gimp_foreground_select_tool_register (GimpToolRegisterCallback  callback,
                 "gimp-foreground-select-tool",
                 _("Foreground Select"),
                 _("Extract foreground using SIOX algorithm"),
-                N_("_Foreground Select"), NULL,
+                N_("F_oreground Select"), NULL,
                 NULL, GIMP_HELP_TOOL_FOREGROUND_SELECT,
                 GIMP_STOCK_TOOL_FOREGROUND_SELECT,
                 data);
