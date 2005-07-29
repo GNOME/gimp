@@ -279,6 +279,8 @@ STOCK_TOOL_IMAGES = \
 	tools/stock-tool-flip-22.png			\
 	tools/stock-tool-free-select-16.png		\
 	tools/stock-tool-free-select-22.png		\
+	tools/stock-tool-foreground-select-16.png	\
+	tools/stock-tool-foreground-select-22.png	\
 	tools/stock-tool-fuzzy-select-16.png		\
 	tools/stock-tool-fuzzy-select-22.png		\
 	tools/stock-tool-hue-saturation-16.png		\

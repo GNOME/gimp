@@ -27,7 +27,7 @@ gboolean     gimp_clipboard_has_buffer (Gimp  *gimp);
 GimpBuffer * gimp_clipboard_get_buffer (Gimp  *gimp);
 
 gboolean     gimp_clipboard_has_svg    (Gimp  *gimp);
-guchar     * gimp_clipboard_get_svg    (Gimp  *gimp,
+gchar      * gimp_clipboard_get_svg    (Gimp  *gimp,
                                         gsize *svg_length);
 
 

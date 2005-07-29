@@ -1,5 +1,22 @@
 2005-07-29  Sven Neumann  <sven@gimp.org>
 
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/tools/stock-tool-foreground-select-16.png
+	* themes/Default/images/tools/stock-tool-foreground-select-22.png:
+	added placeholder for yet-to-be-drawn tool icon.
+
+	* libgimpwidgets/gimpstock.[ch]: register it.
+
+	* app/tools/gimpforegroundselecttool.c: use it.
+
+	* app/widgets/gimpclipboard.[ch] (gimp_clipboard_get_svg): return
+	a signed char pointer.
+
+	* app/actions/edit-commands.c 
+	* app/tools/gimpinkoptions-gui.c: fixed signedness issues.
+
+2005-07-29  Sven Neumann  <sven@gimp.org>
+
 	* app/base/siox.[ch]
 	* app/core/gimpdrawable-foreground-extract.c: pass progress_callback
 	and progress_data to siox_foreground_extract().

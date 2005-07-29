@@ -281,7 +281,7 @@ gimp_clipboard_get_buffer (Gimp *gimp)
  * Return value: a reference to a #GimpBuffer or %NULL if there's no
  *               image data
  **/
-guchar *
+gchar *
 gimp_clipboard_get_svg (Gimp  *gimp,
                         gsize *svg_length)
 {
@@ -304,12 +304,13 @@ gimp_clipboard_get_svg (Gimp  *gimp,
 
       if (data)
         {
-          guchar *svg;
+          const guchar *stream;
+          gchar        *svg = NULL;
 
-          svg = (guchar *) gimp_selection_data_get_stream (data, svg_length);
+          stream = gimp_selection_data_get_stream (data, svg_length);
 
-          if (svg)
-            svg = g_memdup (svg, *svg_length);
+          if (stream)
+            svg = g_memdup (stream, *svg_length);
 
           gtk_selection_data_free (data);
 

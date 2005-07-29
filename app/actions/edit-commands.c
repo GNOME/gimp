@@ -99,8 +99,8 @@ edit_undo_clear_cmd_callback (GtkAction *action,
   GtkWidget *widget;
   GtkWidget *dialog;
   gchar     *size;
-  guint64    memsize;
-  guint64    guisize;
+  gint64     memsize;
+  gint64     guisize;
   return_if_no_image (gimage, data);
   return_if_no_widget (widget, data);
 
@@ -319,8 +319,8 @@ static void
 edit_paste (GimpDisplay *gdisp,
             gboolean     paste_into)
 {
-  guchar *svg;
-  gsize   svg_size;
+  gchar *svg;
+  gsize  svg_size;
 
   svg = gimp_clipboard_get_svg (gdisp->gimage->gimp, &svg_size);
 
