@@ -94,6 +94,7 @@ app/core/gimpdrawable-blend.c
 app/core/gimpdrawable-bucket-fill.c
 app/core/gimpdrawable-desaturate.c
 app/core/gimpdrawable-equalize.c
+app/core/gimpdrawable-foreground-extract.c
 app/core/gimpdrawable-invert.c
 app/core/gimpdrawable-levels.c
 app/core/gimpdrawable-offset.c
@@ -262,6 +263,7 @@ app/tools/gimperasertool.c
 app/tools/gimpflipoptions.c
 app/tools/gimpfliptool.c
 app/tools/gimpfreeselecttool.c
+app/tools/gimpforegroundselecttool.c
 app/tools/gimpfuzzyselecttool.c
 app/tools/gimphistogramoptions.c
 app/tools/gimphuesaturationtool.c
