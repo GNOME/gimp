@@ -24,6 +24,7 @@
 
 #include "tools-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpchannel-select.h"
 #include "core/gimpdrawable-foreground-extract.h"

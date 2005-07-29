@@ -35,6 +35,7 @@
 
 #include "gimpbycolorselecttool.h"
 #include "gimpellipseselecttool.h"
+#include "gimpforegroundselecttool.h"
 #include "gimpnewrectselecttool.h"
 #include "gimpfuzzyselecttool.h"
 #include "gimpiscissorstool.h"
@@ -377,10 +378,8 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
 {
   GObject              *config  = G_OBJECT (tool_options);
   GimpSelectionOptions *options = GIMP_SELECTION_OPTIONS (tool_options);
-  GtkWidget            *vbox;
+  GtkWidget            *vbox    = gimp_tool_options_gui (tool_options);
   GtkWidget            *button;
-
-  vbox = gimp_tool_options_gui (tool_options);
 
   /*  the selection operation radio buttons  */
   {
@@ -433,14 +432,17 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
   }
 
   /*  the antialias toggle button  */
-  button = gimp_prop_check_button_new (config, "antialias",
-                                       _("Antialiasing"));
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  if (! tool_options->tool_info->tool_type == GIMP_TYPE_FOREGROUND_SELECT_TOOL)
+    {
+      button = gimp_prop_check_button_new (config, "antialias",
+                                                      _("Antialiasing"));
+      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+      gtk_widget_show (button);
 
-  if (tool_options->tool_info->tool_type == GIMP_TYPE_RECT_SELECT_TOOL ||
-      tool_options->tool_info->tool_type == GIMP_TYPE_NEW_RECT_SELECT_TOOL)
-    gtk_widget_set_sensitive (button, FALSE);
+      if (tool_options->tool_info->tool_type == GIMP_TYPE_RECT_SELECT_TOOL ||
+          tool_options->tool_info->tool_type == GIMP_TYPE_NEW_RECT_SELECT_TOOL)
+        gtk_widget_set_sensitive (button, FALSE);
+    }
 
   /*  the feather frame  */
   {

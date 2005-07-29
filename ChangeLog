@@ -1,5 +1,10 @@
 2005-07-29  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpselectionoptions.c (gimp_selection_options_gui): no
+	antialiasing for the foreground selection tool (yet).
+
+2005-07-29  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpscanconvert.[ch]: added
 	gimp_scan_convert_render_value(), a variant of
 	gimp_scan_convert_render() that allows to pass the foreground value.
