@@ -1,5 +1,21 @@
 2005-07-29  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpscanconvert.[ch]: added
+	gimp_scan_convert_render_value(), a variant of
+	gimp_scan_convert_render() that allows to pass the foreground value.
+
+	* app/tools/gimpfreeselecttool.[ch]: added a virtual "select" method.
+
+	* app/tools/Makefile.am
+	* app/tools/gimp-tools.c
+	* app/tools/gimpforegroundselecttool.[ch]: added a rough first
+	version of foreground selection tool based on the SIOX algorithm.
+	Work in progress...
+
+	* app/widgets/gimphelp-ids.h: added help-id for the new tool.
+
+2005-07-29  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpfreeselecttool.c: minor cleanup.
 
 2005-07-29  Sven Neumann  <sven@gimp.org>

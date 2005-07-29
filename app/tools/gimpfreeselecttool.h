@@ -48,6 +48,11 @@ struct _GimpFreeSelectTool
 struct _GimpFreeSelectToolClass
 {
   GimpSelectionToolClass  parent_class;
+
+  /*  virtual function  */
+
+  void (* select) (GimpFreeSelectTool *free_select_tool,
+                   GimpImage          *gimage);
 };
 
 

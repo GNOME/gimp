@@ -72,15 +72,20 @@ void              gimp_scan_convert_stroke     (GimpScanConvert *sc,
                                                 GArray          *dash_info);
 
 
-/* This is a more low level version. Expects a tile manager of depth 1.
+/* These are more low level version. Expects a tile manager of depth 1.
  *
  * You cannot add additional polygons after this command.
  */
-void              gimp_scan_convert_render     (GimpScanConvert *scan_converter,
+void            gimp_scan_convert_render       (GimpScanConvert *scan_converter,
                                                 TileManager     *tile_manager,
                                                 gint             off_x,
                                                 gint             off_y,
                                                 gboolean         antialias);
+void            gimp_scan_convert_render_value (GimpScanConvert *sc,
+                                                TileManager     *tile_manager,
+                                                gint             off_x,
+                                                gint             off_y,
+                                                guchar           value);
 
 
 #endif /* __GIMP_SCAN_CONVERT_H__ */

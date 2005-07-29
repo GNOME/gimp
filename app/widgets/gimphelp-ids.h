@@ -241,6 +241,7 @@
 #define GIMP_HELP_TOOL_ERASER                     "gimp-tool-eraser"
 #define GIMP_HELP_TOOL_FLIP                       "gimp-tool-flip"
 #define GIMP_HELP_TOOL_FREE_SELECT                "gimp-tool-free-select"
+#define GIMP_HELP_TOOL_FOREGROUND_SELECT          "gimp-tool-foreground-select"
 #define GIMP_HELP_TOOL_FUZZY_SELECT               "gimp-tool-fuzzy-select"
 #define GIMP_HELP_TOOL_HUE_SATURATION             "gimp-tool-hue-saturation"
 #define GIMP_HELP_TOOL_INK                        "gimp-tool-ink"

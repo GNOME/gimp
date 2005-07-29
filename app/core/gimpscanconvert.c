@@ -57,10 +57,18 @@ struct _GimpScanConvert
   gint         rowstride;
   gint         x0, x1;
   gboolean     antialias;
+  gboolean     value;
 };
+
 
 /* private functions */
 
+static void   gimp_scan_convert_render_internal  (GimpScanConvert *sc,
+                                                  TileManager     *tile_manager,
+                                                  gint             off_x,
+                                                  gint             off_y,
+                                                  gboolean         antialias,
+                                                  guchar           value);
 static void   gimp_scan_convert_finish           (GimpScanConvert *sc);
 static void   gimp_scan_convert_close_add_points (GimpScanConvert *sc);
 
@@ -201,8 +209,8 @@ gimp_scan_convert_add_polyline (GimpScanConvert *sc,
                                 GimpVector2     *points,
                                 gboolean         closed)
 {
-  GimpVector2  prev;
-  gint i;
+  GimpVector2  prev = { 0.0, 0.0, };
+  gint         i;
 
   g_return_if_fail (sc != NULL);
   g_return_if_fail (points != NULL);
@@ -437,11 +445,37 @@ gimp_scan_convert_render (GimpScanConvert *sc,
                           gint             off_y,
                           gboolean         antialias)
 {
-  PixelRegion  maskPR;
-  gpointer     pr;
-
   g_return_if_fail (sc != NULL);
   g_return_if_fail (tile_manager != NULL);
+
+  gimp_scan_convert_render_internal (sc,
+                                     tile_manager, off_x, off_y, antialias, 0);
+}
+
+void
+gimp_scan_convert_render_value (GimpScanConvert *sc,
+                                TileManager     *tile_manager,
+                                gint             off_x,
+                                gint             off_y,
+                                guchar           value)
+{
+  g_return_if_fail (sc != NULL);
+  g_return_if_fail (tile_manager != NULL);
+
+  gimp_scan_convert_render_internal (sc,
+                                     tile_manager, off_x, off_y, FALSE, value);
+}
+
+static void
+gimp_scan_convert_render_internal (GimpScanConvert *sc,
+                                   TileManager     *tile_manager,
+                                   gint             off_x,
+                                   gint             off_y,
+                                   gboolean         antialias,
+                                   guchar           value)
+{
+  PixelRegion  maskPR;
+  gpointer     pr;
 
   gimp_scan_convert_finish (sc);
 
@@ -456,15 +490,16 @@ gimp_scan_convert_render (GimpScanConvert *sc,
   g_return_if_fail (maskPR.bytes == 1);
 
   sc->antialias = antialias;
+  sc->value     = value;
 
   for (pr = pixel_regions_register (1, &maskPR);
        pr != NULL;
        pr = pixel_regions_process (pr))
     {
-      sc->buf = maskPR.data;
+      sc->buf       = maskPR.data;
       sc->rowstride = maskPR.rowstride;
-      sc->x0 = off_x + maskPR.x;
-      sc->x1 = off_x + maskPR.x + maskPR.w;
+      sc->x0        = off_x + maskPR.x;
+      sc->x1        = off_x + maskPR.x + maskPR.w;
 
       art_svp_render_aa (sc->svp,
                          sc->x0,
@@ -475,7 +510,6 @@ gimp_scan_convert_render (GimpScanConvert *sc,
 
     }
 }
-
 
 /* private function to convert the vpath to a svp when not using
  * gimp_scan_convert_stroke
@@ -560,7 +594,7 @@ gimp_scan_convert_render_callback (gpointer            user_data,
 
 #define VALUE_TO_PIXEL(x) (sc->antialias ? \
                            ((x) >> 16)   : \
-                           (((x) & (1 << 23) ? 255 : 0)))
+                           (((x) & (1 << 23) ? sc->value : 0)))
 
   if (n_steps > 0)
     {

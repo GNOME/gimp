@@ -66,6 +66,9 @@ static void   gimp_free_select_tool_motion         (GimpTool        *tool,
 
 static void   gimp_free_select_tool_draw           (GimpDrawTool    *draw_tool);
 
+static void   gimp_free_select_tool_select         (GimpFreeSelectTool *free_sel,
+                                                    GimpImage          *gimage);
+
 static void   gimp_free_select_tool_add_point      (GimpFreeSelectTool *free_sel,
                                                     gdouble             x,
                                                     gdouble             y);
@@ -142,6 +145,8 @@ gimp_free_select_tool_class_init (GimpFreeSelectToolClass *klass)
   tool_class->motion         = gimp_free_select_tool_motion;
 
   draw_tool_class->draw      = gimp_free_select_tool_draw;
+
+  klass->select              = gimp_free_select_tool_select;
 }
 
 static void
@@ -219,22 +224,19 @@ gimp_free_select_tool_button_release (GimpTool        *tool,
     {
       /*  If there is a floating selection, anchor it  */
       if (gimp_image_floating_sel (gdisp->gimage))
-        floating_sel_anchor (gimp_image_floating_sel (gdisp->gimage));
+        {
+          floating_sel_anchor (gimp_image_floating_sel (gdisp->gimage));
+        }
       /*  Otherwise, clear the selection mask  */
       else
-        gimp_channel_clear (gimp_image_get_mask (gdisp->gimage), NULL, TRUE);
+        {
+          gimp_channel_clear (gimp_image_get_mask (gdisp->gimage), NULL, TRUE);
+        }
     }
   else
     {
-      gimp_channel_select_polygon (gimp_image_get_mask (gdisp->gimage),
-                                   tool->tool_info->blurb,
-                                   free_sel->num_points,
-                                   free_sel->points,
-                                   GIMP_SELECTION_TOOL (tool)->op,
-                                   options->antialias,
-                                   options->feather,
-                                   options->feather_radius,
-                                   options->feather_radius);
+      GIMP_FREE_SELECT_TOOL_GET_CLASS (free_sel)->select (free_sel,
+                                                          gdisp->gimage);
     }
 
   gimp_image_flush (gdisp->gimage);
@@ -297,6 +299,26 @@ gimp_free_select_tool_draw (GimpDrawTool *draw_tool)
                                 free_sel->points[i].y,
                                 FALSE);
     }
+}
+
+static void
+gimp_free_select_tool_select (GimpFreeSelectTool *free_sel,
+                              GimpImage          *gimage)
+{
+  GimpTool             *tool = GIMP_TOOL (free_sel);
+  GimpSelectionOptions *options;
+
+  options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
+
+  gimp_channel_select_polygon (gimp_image_get_mask (gimage),
+                               tool->tool_info->blurb,
+                               free_sel->num_points,
+                               free_sel->points,
+                               GIMP_SELECTION_TOOL (tool)->op,
+                               options->antialias,
+                               options->feather,
+                               options->feather_radius,
+                               options->feather_radius);
 }
 
 static void

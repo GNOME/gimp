@@ -59,6 +59,7 @@
 #include "gimperasertool.h"
 #include "gimpfliptool.h"
 #include "gimpfreeselecttool.h"
+#include "gimpforegroundselecttool.h"
 #include "gimpfuzzyselecttool.h"
 #include "gimphuesaturationtool.h"
 #include "gimpinktool.h"
@@ -163,6 +164,7 @@ gimp_tools_init (Gimp *gimp)
 
     /*  selection tools */
 
+    gimp_foreground_select_tool_register,
     gimp_iscissors_tool_register,
     gimp_by_color_select_tool_register,
     gimp_fuzzy_select_tool_register,
