@@ -22,7 +22,8 @@
 
 void   gimp_drawable_foreground_extract (GimpDrawable              *drawable,
                                          GimpForegroundExtractMode  mode,
-                                         GimpDrawable              *mask);
+                                         GimpDrawable              *mask,
+                                         GimpProgress              *progress);
 
 
 #endif  /*  __GIMP_DRAWABLE_FOREGROUND_EXTRACT_H__  */

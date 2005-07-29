@@ -52,7 +52,7 @@ struct _GimpFreeSelectToolClass
   /*  virtual function  */
 
   void (* select) (GimpFreeSelectTool *free_select_tool,
-                   GimpImage          *gimage);
+                   GimpDisplay        *gdisp);
 };
 
 

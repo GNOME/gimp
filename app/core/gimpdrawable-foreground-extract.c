@@ -31,6 +31,9 @@
 #include "gimpdrawable-foreground-extract.h"
 #include "gimpimage.h"
 #include "gimpimage-colormap.h"
+#include "gimpprogress.h"
+
+#include "gimp-intl.h"
 
 
 /*  public functions  */
@@ -38,7 +41,8 @@
 void
 gimp_drawable_foreground_extract (GimpDrawable              *drawable,
                                   GimpForegroundExtractMode  mode,
-                                  GimpDrawable              *mask)
+                                  GimpDrawable              *mask,
+                                  GimpProgress              *progress)
 {
   GimpImage    *gimage;
   const guchar *colormap          = NULL;
@@ -50,12 +54,17 @@ gimp_drawable_foreground_extract (GimpDrawable              *drawable,
   g_return_if_fail (GIMP_IS_DRAWABLE (mask));
   g_return_if_fail (gimp_drawable_bytes (mask) == 1);
 
+  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
+
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
   if (gimp_image_base_type (gimage) == GIMP_INDEXED)
     colormap = gimp_image_get_colormap (gimage);
 
   gimp_item_offsets (GIMP_ITEM (drawable), &x, &y);
+
+  if (progress)
+    gimp_progress_start (progress, _("Foreground Extraction..."), FALSE);
 
   switch (mode)
     {
@@ -71,6 +80,9 @@ gimp_drawable_foreground_extract (GimpDrawable              *drawable,
     default:
       g_return_if_reached ();
     }
+
+  if (progress)
+    gimp_progress_end (progress);
 
   gimp_drawable_update (mask,
                         0, 0,

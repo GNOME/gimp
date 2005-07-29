@@ -67,7 +67,7 @@ static void   gimp_free_select_tool_motion         (GimpTool        *tool,
 static void   gimp_free_select_tool_draw           (GimpDrawTool    *draw_tool);
 
 static void   gimp_free_select_tool_select         (GimpFreeSelectTool *free_sel,
-                                                    GimpImage          *gimage);
+                                                    GimpDisplay        *gdisp);
 
 static void   gimp_free_select_tool_add_point      (GimpFreeSelectTool *free_sel,
                                                     gdouble             x,
@@ -235,8 +235,7 @@ gimp_free_select_tool_button_release (GimpTool        *tool,
     }
   else
     {
-      GIMP_FREE_SELECT_TOOL_GET_CLASS (free_sel)->select (free_sel,
-                                                          gdisp->gimage);
+      GIMP_FREE_SELECT_TOOL_GET_CLASS (free_sel)->select (free_sel, gdisp);
     }
 
   gimp_image_flush (gdisp->gimage);
@@ -303,14 +302,14 @@ gimp_free_select_tool_draw (GimpDrawTool *draw_tool)
 
 static void
 gimp_free_select_tool_select (GimpFreeSelectTool *free_sel,
-                              GimpImage          *gimage)
+                              GimpDisplay        *gdisp)
 {
   GimpTool             *tool = GIMP_TOOL (free_sel);
   GimpSelectionOptions *options;
 
   options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
-  gimp_channel_select_polygon (gimp_image_get_mask (gimage),
+  gimp_channel_select_polygon (gimp_image_get_mask (gdisp->gimage),
                                tool->tool_info->blurb,
                                free_sel->num_points,
                                free_sel->points,

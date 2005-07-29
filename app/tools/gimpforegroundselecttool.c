@@ -29,6 +29,7 @@
 #include "core/gimpchannel-select.h"
 #include "core/gimpdrawable-foreground-extract.h"
 #include "core/gimpimage.h"
+#include "core/gimpprogress.h"
 #include "core/gimpscanconvert.h"
 #include "core/gimptoolinfo.h"
 
@@ -66,7 +67,7 @@ static void   gimp_foreground_select_tool_motion         (GimpTool        *tool,
 static void   gimp_foreground_select_tool_draw           (GimpDrawTool    *draw_tool);
 
 static void   gimp_foreground_select_tool_select      (GimpFreeSelectTool *free_sel,
-                                                       GimpImage          *gimage);
+                                                       GimpDisplay        *gdisp);
 
 
 static GimpFreeSelectToolClass *parent_class = NULL;
@@ -209,9 +210,10 @@ gimp_foreground_select_tool_draw (GimpDrawTool *draw_tool)
 
 static void
 gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
-                                    GimpImage          *gimage)
+                                    GimpDisplay        *gdisp)
 {
   GimpTool             *tool     = GIMP_TOOL (free_sel);
+  GimpImage            *gimage   = gdisp->gimage;
   GimpDrawable         *drawable = gimp_image_active_drawable (gimage);
   GimpScanConvert      *scan_convert;
   GimpChannel          *mask;
@@ -240,7 +242,8 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
 
   gimp_drawable_foreground_extract (drawable,
                                     GIMP_FOREGROUND_EXTRACT_SIOX,
-                                    GIMP_DRAWABLE (mask));
+                                    GIMP_DRAWABLE (mask),
+                                    GIMP_PROGRESS (gdisp));
 
   gimp_channel_select_channel (gimp_image_get_mask (gimage),
                                tool->tool_info->blurb,

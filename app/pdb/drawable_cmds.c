@@ -2531,7 +2531,7 @@ drawable_foreground_extract_invoker (Gimp         *gimp,
       success = gimp_item_is_attached (GIMP_ITEM (drawable));
 
       if (success)
-        gimp_drawable_foreground_extract (drawable, mode, mask);
+        gimp_drawable_foreground_extract (drawable, mode, mask, progress);
     }
 
   return procedural_db_return_args (&drawable_foreground_extract_proc, success);

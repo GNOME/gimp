@@ -1,5 +1,18 @@
 2005-07-29  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpdrawable-foreground-extract.[ch]: added a progress
+	parameter.
+
+	* app/tools/gimpforegroundselecttool.[ch]: changed the "select"
+	method to take a GimpDisplay instead of a GimpImage.
+
+	* tools/pdbgen/pdb/drawable.pdb
+	* app/tools/gimpforegroundselecttool.c: changed accordingly.
+
+	* app/pdb/drawable_cmds.c: regenerated.
+
+2005-07-29  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/jpeg/jpeg-load.c: fixed signedness warnings.
 
 2005-07-29  Sven Neumann  <sven@gimp.org>
