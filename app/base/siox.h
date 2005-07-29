@@ -41,13 +41,19 @@
 #define SIOX_DIMS 3
 
 
-void  siox_foreground_extract (TileManager  *pixels,
-                               const guchar *colormap,
-                               gint          offset_x,
-                               gint          offset_y,
-                               TileManager  *map,
-                               const gfloat  limits[SIOX_DIMS],
-                               gint          smoothness);
+typedef void (* SioxProgressFunc) (gpointer  progress_data,
+                                   gdouble   fraction);
+
+
+void  siox_foreground_extract (TileManager      *pixels,
+                               const guchar     *colormap,
+                               gint              offset_x,
+                               gint              offset_y,
+                               TileManager      *map,
+                               const gfloat      limits[SIOX_DIMS],
+                               gint              smoothness,
+                               SioxProgressFunc  progress_callback,
+                               gpointer          progress_data);
 
 
 #endif /* __SIOX_H__ */

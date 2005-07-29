@@ -763,6 +763,14 @@ get_clustersize (const gfloat limits[SIOX_DIMS])
   return sum;
 }
 
+static inline void
+siox_progress_update (SioxProgressFunc  progress_callback,
+                      gpointer          progress_data,
+                      gdouble           value)
+{
+  if (progress_data)
+    progress_callback (progress_data, value);
+}
 
 /**
  * siox_foreground_extract:
@@ -780,13 +788,15 @@ get_clustersize (const gfloat limits[SIOX_DIMS])
  * Writes the resulting segmentation into @mask.
  */
 void
-siox_foreground_extract (TileManager  *pixels,
-                         const guchar *colormap,
-                         gint          offset_x,
-                         gint          offset_y,
-                         TileManager  *mask,
-                         const gfloat  limits[SIOX_DIMS],
-                         gint          smoothness)
+siox_foreground_extract (TileManager      *pixels,
+                         const guchar     *colormap,
+                         gint              offset_x,
+                         gint              offset_y,
+                         TileManager      *mask,
+                         const gfloat      limits[SIOX_DIMS],
+                         gint              smoothness,
+                         SioxProgressFunc  progress_callback,
+                         gpointer          progress_data)
 {
   PixelRegion  srcPR;
   PixelRegion  mapPR;
@@ -808,6 +818,7 @@ siox_foreground_extract (TileManager  *pixels,
 
   g_return_if_fail (pixels != NULL);
   g_return_if_fail (mask != NULL && tile_manager_bpp (mask) == 1);
+  g_return_if_fail (progress_data == NULL || progress_callback != NULL);
 
   cpercep_init ();
 
@@ -825,6 +836,8 @@ siox_foreground_extract (TileManager  *pixels,
 
   if (! intersect)
     return;
+
+  siox_progress_update (progress_callback, progress_data, 0.0);
 
   /* count given foreground and background pixels */
   pixel_region_init (&mapPR, mask, x, y, width, height, FALSE);
@@ -856,6 +869,8 @@ siox_foreground_extract (TileManager  *pixels,
 
   i = 0;
   j = 0;
+
+  siox_progress_update (progress_callback, progress_data, 0.1);
 
   bpp = tile_manager_bpp (pixels);
 
@@ -895,6 +910,8 @@ siox_foreground_extract (TileManager  *pixels,
         }
     }
 
+  siox_progress_update (progress_callback, progress_data, 0.2);
+
   /* Create color signature for the background */
   bgsig = create_signature (surebg, surebgcount, limits, &bgsiglen);
   g_free (surebg);
@@ -905,9 +922,13 @@ siox_foreground_extract (TileManager  *pixels,
       return;
     }
 
+  siox_progress_update (progress_callback, progress_data, 0.3);
+
   /* Create color signature for the foreground */
   fgsig = create_signature (surefg, surefgcount, limits, &fgsiglen);
   g_free (surefg);
+
+  siox_progress_update (progress_callback, progress_data, 0.4);
 
   /* Classify - the slow way....Better: Tree traversation */
   pixel_region_init (&srcPR, pixels,
@@ -980,6 +1001,8 @@ siox_foreground_extract (TileManager  *pixels,
   g_free (fgsig);
   g_free (bgsig);
 
+  siox_progress_update (progress_callback, progress_data, 0.9);
+
   /* Smooth a bit for error killing */
   smooth_mask (mask, x, y, width, height);
 
@@ -1003,4 +1026,6 @@ siox_foreground_extract (TileManager  *pixels,
 
   /* Now dilate, to fill up boundary pixels killed by erode */
   dilate_mask (mask, x, y, width, height);
+
+  siox_progress_update (progress_callback, progress_data, 1.0);
 }

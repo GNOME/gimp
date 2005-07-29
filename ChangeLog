@@ -1,5 +1,16 @@
 2005-07-29  Sven Neumann  <sven@gimp.org>
 
+	* app/base/siox.[ch]
+	* app/core/gimpdrawable-foreground-extract.c: pass progress_callback
+	and progress_data to siox_foreground_extract().
+
+2005-07-29  Sven Neumann  <sven@gimp.org>
+
+	* app/base/siox.c (add_to_list): keep a tail pointer. Speeds up
+	the benchmark by about 50%.
+
+2005-07-29  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpdrawable-foreground-extract.[ch]: added a progress
 	parameter.
 

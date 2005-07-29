@@ -71,9 +71,12 @@ gimp_drawable_foreground_extract (GimpDrawable              *drawable,
     case GIMP_FOREGROUND_EXTRACT_SIOX:
       {
         const gfloat  limits[SIOX_DIMS] = { 0.66, 1.25, 2.5 };
+
         siox_foreground_extract (gimp_drawable_data (drawable), colormap, x, y,
                                  gimp_drawable_data (mask),
-                                 limits, 3);
+                                 limits, 3,
+                                 (SioxProgressFunc) gimp_progress_set_value,
+                                 progress);
       }
       break;
 
