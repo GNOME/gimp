@@ -1,5 +1,9 @@
 2005-07-29  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpfreeselecttool.c: minor cleanup.
+
+2005-07-29  Sven Neumann  <sven@gimp.org>
+
 	* app/base/siox.c (siox_foreground_extract): minor cleanup.
 
 2005-07-29  Sven Neumann  <sven@gimp.org>

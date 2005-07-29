@@ -18,14 +18,9 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-#include <string.h>
-
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
-
-#include "libgimpmath/gimpmath.h"
 
 #include "tools-types.h"
 
@@ -217,22 +212,20 @@ gimp_free_select_tool_button_release (GimpTool        *tool,
   gimp_tool_control_halt (tool->control);
 
   /*  First take care of the case where the user "cancels" the action  */
-  if (! (state & GDK_BUTTON3_MASK))
+  if (state & GDK_BUTTON3_MASK)
+    return;
+
+  if (free_sel->num_points == 1)
     {
-      if (free_sel->num_points == 1)
-        {
-          /*  If there is a floating selection, anchor it  */
-          if (gimp_image_floating_sel (gdisp->gimage))
-            floating_sel_anchor (gimp_image_floating_sel (gdisp->gimage));
-          /*  Otherwise, clear the selection mask  */
-          else
-            gimp_channel_clear (gimp_image_get_mask (gdisp->gimage), NULL,
-                                TRUE);
-
-          gimp_image_flush (gdisp->gimage);
-          return;
-        }
-
+      /*  If there is a floating selection, anchor it  */
+      if (gimp_image_floating_sel (gdisp->gimage))
+        floating_sel_anchor (gimp_image_floating_sel (gdisp->gimage));
+      /*  Otherwise, clear the selection mask  */
+      else
+        gimp_channel_clear (gimp_image_get_mask (gdisp->gimage), NULL, TRUE);
+    }
+  else
+    {
       gimp_channel_select_polygon (gimp_image_get_mask (gdisp->gimage),
                                    tool->tool_info->blurb,
                                    free_sel->num_points,
@@ -242,9 +235,9 @@ gimp_free_select_tool_button_release (GimpTool        *tool,
                                    options->feather,
                                    options->feather_radius,
                                    options->feather_radius);
-
-      gimp_image_flush (gdisp->gimage);
     }
+
+  gimp_image_flush (gdisp->gimage);
 }
 
 static void
