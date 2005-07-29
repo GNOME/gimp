@@ -83,8 +83,6 @@ def benchmark (folder, save_output):
 	convert_grayscale (truth)
         truth_layer = truth.active_layer;
 
-	gimp.tile_cache_ntiles (2 * mask_layer.width / gimp.tile_width () + 1)
-
         unclassified = unclassified_pixels (mask_layer, truth_layer)
 
         sys.stderr.write (os.path.basename (image_name))
