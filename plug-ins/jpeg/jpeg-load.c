@@ -291,48 +291,55 @@ load_image (const gchar *filename,
   /* Step 5.2: check for metadata (comments, markers containing EXIF or XMP) */
   for (marker = cinfo.marker_list; marker; marker = marker->next)
     {
+      const gchar *data = (const gchar *) marker->data;
+      gsize        len  = marker->data_length;
+
       if (marker->marker == JPEG_COM)
         {
           g_print ("jpeg-load: found image comment (%d bytes)\n",
                    marker->data_length);
+
           if (!local_image_comments)
-            local_image_comments = g_string_new_len (marker->data,
-                                                     marker->data_length);
+            {
+              local_image_comments = g_string_new_len (data, len);
+            }
           else
             {
               g_string_append_c (local_image_comments, '\n');
-              g_string_append_len (local_image_comments,
-                                   marker->data, marker->data_length);
+              g_string_append_len (local_image_comments, data, len);
             }
         }
       else if ((marker->marker == JPEG_APP0 + 1)
-               && (marker->data_length > 13)
-               && ! strcmp (JPEG_APP_HEADER_EXIF, marker->data))
+               && (len > 13)
+               && ! strcmp (JPEG_APP_HEADER_EXIF, data))
         {
           /* FIXME: handle EXIF here once we don't use libexif anymore */
           g_print ("jpeg-load: found EXIF block (%d bytes)\n",
-                   (int) (marker->data_length - sizeof (JPEG_APP_HEADER_EXIF)));
+                   (gint) (len - sizeof (JPEG_APP_HEADER_EXIF)));
           /* Note: maybe split the loop to ensure that the EXIF block is */
           /*       always parsed before any XMP packet */
         }
       else if ((marker->marker == JPEG_APP0 + 1)
-               && (marker->data_length > 37)
-               && ! strcmp (JPEG_APP_HEADER_XMP, marker->data))
+               && (len > 37)
+               && ! strcmp (JPEG_APP_HEADER_XMP, data))
         {
           GimpParam *return_vals;
           gint       nreturn_vals;
           gchar     *xmp_packet;
 
           g_print ("jpeg-load: found XMP packet (%d bytes)\n",
-                   (int) (marker->data_length - sizeof (JPEG_APP_HEADER_XMP)));
-          xmp_packet = g_strndup (marker->data + sizeof (JPEG_APP_HEADER_XMP),
-                                  marker->data_length - sizeof (JPEG_APP_HEADER_XMP));
+                   (gint) (len - sizeof (JPEG_APP_HEADER_XMP)));
+
+          xmp_packet = g_strndup (data + sizeof (JPEG_APP_HEADER_XMP),
+                                  len - sizeof (JPEG_APP_HEADER_XMP));
+
           /* FIXME: running this through the PDB is not very efficient */
           return_vals = gimp_run_procedure ("plug_in_metadata_decode_xmp",
                                             &nreturn_vals,
                                             GIMP_PDB_IMAGE, image_ID,
                                             GIMP_PDB_STRING, xmp_packet,
                                             GIMP_PDB_END);
+
           if (return_vals[0].data.d_status != GIMP_PDB_SUCCESS)
             {
               g_warning ("JPEG - unable to decode XMP metadata packet");
@@ -518,7 +525,7 @@ typedef struct
 {
   struct jpeg_source_mgr pub;   /* public fields */
 
-  gchar   *buffer;
+  guchar  *buffer;
   gint     size;
   JOCTET   terminal[2];
 } my_source_mgr;

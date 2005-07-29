@@ -1,5 +1,9 @@
 2005-07-29  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/jpeg/jpeg-load.c: fixed signedness warnings.
+
+2005-07-29  Sven Neumann  <sven@gimp.org>
+
 	* libgimpbase/gimpbaseenums.[ch]: added GimpForegroundExtractMode
 	in preparation for other implementations to be added in the future.
 
