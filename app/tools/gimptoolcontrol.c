@@ -96,14 +96,15 @@ gimp_tool_control_init (GimpToolControl *control)
   control->tool_cursor            = GIMP_TOOL_CURSOR_NONE;
   control->cursor_modifier        = GIMP_CURSOR_MODIFIER_NONE;
 
-  control->toggle_cursor          = GIMP_CURSOR_MOUSE;
-  control->toggle_tool_cursor     = GIMP_TOOL_CURSOR_NONE;
-  control->toggle_cursor_modifier = GIMP_CURSOR_MODIFIER_NONE;
+  control->toggle_cursor          = -1;
+  control->toggle_tool_cursor     = -1;
+  control->toggle_cursor_modifier = -1;
 
   control->action_value_1         = NULL;
   control->action_value_2         = NULL;
   control->action_value_3         = NULL;
   control->action_value_4         = NULL;
+
   control->action_object_1        = NULL;
   control->action_object_2        = NULL;
 }
@@ -389,15 +390,10 @@ gimp_tool_control_get_cursor (GimpToolControl *control)
 {
   g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), FALSE);
 
+  if (control->toggled && control->toggle_cursor != -1)
+    return control->toggle_cursor;
+
   return control->cursor;
-}
-
-GimpCursorType
-gimp_tool_control_get_toggle_cursor (GimpToolControl *control)
-{
-  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), FALSE);
-
-  return control->toggle_cursor;
 }
 
 GimpToolCursorType
@@ -405,15 +401,10 @@ gimp_tool_control_get_tool_cursor (GimpToolControl *control)
 {
   g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), FALSE);
 
+  if (control->toggled && control->toggle_tool_cursor != -1)
+    return control->toggle_tool_cursor;
+
   return control->tool_cursor;
-}
-
-GimpToolCursorType
-gimp_tool_control_get_toggle_tool_cursor (GimpToolControl *control)
-{
-  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), FALSE);
-
-  return control->toggle_tool_cursor;
 }
 
 GimpCursorModifier
@@ -421,15 +412,10 @@ gimp_tool_control_get_cursor_modifier (GimpToolControl *control)
 {
   g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), FALSE);
 
+  if (control->toggled && control->toggle_cursor_modifier != -1)
+    return control->toggle_cursor_modifier;
+
   return control->cursor_modifier;
-}
-
-GimpCursorModifier
-gimp_tool_control_get_toggle_cursor_modifier (GimpToolControl *control)
-{
-  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), FALSE);
-
-  return control->toggle_cursor_modifier;
 }
 
 void

@@ -1,5 +1,18 @@
 2005-07-30  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimptoolcontrol.[ch]: transparently handle cursor
+	vs. toggle cursor in the cursor accessor functions.
+
+	* app/tools/gimpconvolvetool.c
+	* app/tools/gimperasertool.c
+	* app/tools/gimpmagnifytool.c
+	* app/tools/gimptool.c: simplifies things here.
+
+	* app/tools/gimpforegroundselecttool.c: set a toggle cursor and
+	toggle the tool if a mask is set.
+
+2005-07-30  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpforegroundselecttool.c: implement cursor_update().
 	Suppress standard selection tool functionality if a mask exists.
 

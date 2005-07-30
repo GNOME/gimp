@@ -307,20 +307,10 @@ gimp_tool_real_cursor_update (GimpTool        *tool,
                               GdkModifierType  state,
                               GimpDisplay     *gdisp)
 {
-  if (gimp_tool_control_is_toggled (tool->control))
-    {
-      gimp_tool_set_cursor (tool, gdisp,
-                            gimp_tool_control_get_toggle_cursor (tool->control),
-                            gimp_tool_control_get_toggle_tool_cursor (tool->control),
-                            gimp_tool_control_get_toggle_cursor_modifier (tool->control));
-    }
-  else
-    {
-      gimp_tool_set_cursor (tool, gdisp,
-                            gimp_tool_control_get_cursor (tool->control),
-                            gimp_tool_control_get_tool_cursor (tool->control),
-                            gimp_tool_control_get_cursor_modifier (tool->control));
-    }
+  gimp_tool_set_cursor (tool, gdisp,
+                        gimp_tool_control_get_cursor (tool->control),
+                        gimp_tool_control_get_tool_cursor (tool->control),
+                        gimp_tool_control_get_cursor_modifier (tool->control));
 }
 
 

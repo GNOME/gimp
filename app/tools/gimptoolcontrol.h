@@ -128,30 +128,24 @@ void               gimp_tool_control_snap_offsets               (GimpToolControl
                                                                  gint               *width,
                                                                  gint               *height);
 
-GimpCursorType     gimp_tool_control_get_cursor                 (GimpToolControl    *control);
-
 void               gimp_tool_control_set_cursor                 (GimpToolControl    *control,
                                                                  GimpCursorType      cursor);
-GimpToolCursorType gimp_tool_control_get_tool_cursor            (GimpToolControl    *control);
-
 void               gimp_tool_control_set_tool_cursor            (GimpToolControl    *control,
                                                                  GimpToolCursorType  cursor);
-GimpCursorModifier gimp_tool_control_get_cursor_modifier        (GimpToolControl    *control);
-
 void               gimp_tool_control_set_cursor_modifier        (GimpToolControl    *control,
                                                                  GimpCursorModifier  cmodifier);
-GimpCursorType     gimp_tool_control_get_toggle_cursor          (GimpToolControl    *control);
-
 void               gimp_tool_control_set_toggle_cursor          (GimpToolControl    *control,
                                                                  GimpCursorType      cursor);
-GimpToolCursorType gimp_tool_control_get_toggle_tool_cursor     (GimpToolControl    *control);
-
 void               gimp_tool_control_set_toggle_tool_cursor     (GimpToolControl    *control,
                                                                  GimpToolCursorType  cursor);
-GimpCursorModifier gimp_tool_control_get_toggle_cursor_modifier (GimpToolControl    *control);
-
 void               gimp_tool_control_set_toggle_cursor_modifier (GimpToolControl    *control,
                                                                  GimpCursorModifier  cmodifier);
+
+GimpCursorType     gimp_tool_control_get_cursor                 (GimpToolControl    *control);
+
+GimpToolCursorType gimp_tool_control_get_tool_cursor            (GimpToolControl    *control);
+
+GimpCursorModifier gimp_tool_control_get_cursor_modifier        (GimpToolControl    *control);
 
 void               gimp_tool_control_set_action_value_1         (GimpToolControl    *control,
                                                                  const gchar        *action_desc);

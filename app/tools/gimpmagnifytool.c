@@ -168,11 +168,6 @@ gimp_magnify_tool_init (GimpMagnifyTool *magnify_tool)
                                                 GIMP_TOOL_CURSOR_ZOOM);
   gimp_tool_control_set_cursor_modifier        (tool->control,
                                                 GIMP_CURSOR_MODIFIER_PLUS);
-
-  gimp_tool_control_set_toggle_cursor          (tool->control,
-                                                GIMP_CURSOR_ZOOM);
-  gimp_tool_control_set_toggle_tool_cursor     (tool->control,
-                                                GIMP_TOOL_CURSOR_ZOOM);
   gimp_tool_control_set_toggle_cursor_modifier (tool->control,
                                                 GIMP_CURSOR_MODIFIER_MINUS);
 }

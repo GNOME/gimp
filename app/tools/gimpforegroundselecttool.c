@@ -180,8 +180,11 @@ gimp_foreground_select_tool_init (GimpForegroundSelectTool *fg_select)
   GimpTool *tool = GIMP_TOOL (fg_select);
 
   gimp_tool_control_set_scroll_lock (tool->control, TRUE);
+
   gimp_tool_control_set_tool_cursor (tool->control,
                                      GIMP_TOOL_CURSOR_FREE_SELECT);
+  gimp_tool_control_set_toggle_tool_cursor (tool->control,
+                                            GIMP_TOOL_CURSOR_PAINTBRUSH);
 
   fg_select->mask = NULL;
 }
@@ -420,6 +423,8 @@ gimp_foreground_select_tool_set_mask (GimpForegroundSelectTool *fg_select,
 
   gimp_display_shell_set_overlay (GIMP_DISPLAY_SHELL (gdisp->shell),
                                   GIMP_DRAWABLE (mask));
+
+  gimp_tool_control_set_toggle (GIMP_TOOL (fg_select)->control, mask != NULL);
 }
 
 static void
