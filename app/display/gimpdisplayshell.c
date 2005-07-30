@@ -23,6 +23,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -318,6 +319,7 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->button_press_before_focus = FALSE;
 
   shell->highlight              = NULL;
+  shell->mask                   = NULL;
   shell->overlay                = NULL;
 
   gtk_window_set_role (GTK_WINDOW (shell), "gimp-image-window");
@@ -406,6 +408,12 @@ gimp_display_shell_destroy (GtkObject *object)
     {
       g_free (shell->highlight);
       shell->highlight = NULL;
+    }
+
+  if (shell->mask)
+    {
+      g_object_unref (shell->mask);
+      shell->mask = NULL;
     }
 
   if (shell->overlay)
@@ -1595,31 +1603,71 @@ gimp_display_shell_set_highlight (GimpDisplayShell   *shell,
 }
 
 /**
- * gimp_display_shell_set_overlay:
+ * gimp_display_shell_set_mask:
  * @shell: a #GimpDisplayShell
  * @mask:  a #GimpDrawable (1 byte per pixel)
  *
- * Allows to preview a selection (used by the foreground selection tool).
+ * Allows to preview a selection (used by the foreground selection
+ * tool).  Pixels that are not selected (> 127) in the mask are tinted
+ * with dark blue.
+ **/
+void
+gimp_display_shell_set_mask (GimpDisplayShell *shell,
+                             GimpDrawable     *mask)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (mask == NULL ||
+                    (GIMP_IS_DRAWABLE (mask) && gimp_drawable_bytes (mask) == 1));
+
+  if (shell->mask == mask)
+    return;
+
+  if (mask)
+    g_object_ref (mask);
+
+  if (shell->mask)
+    g_object_unref (shell->mask);
+
+  shell->mask = mask;
+
+  gimp_display_shell_expose_full (shell);
+}
+
+/**
+ * gimp_display_shell_set_overlay:
+ * @shell: a #GimpDisplayShell
+ * @mask:  a #GimpDrawable (1 byte per pixel)
+ * @color: the color to use for the overlay (or %NULL to not change color)
+ *
+ * Allows to mark areas in a given color (used by the foreground
+ * selection tool).  Pixels that are selected (> 127) in the mask are
+ * drawn in the given color.
  **/
 void
 gimp_display_shell_set_overlay (GimpDisplayShell *shell,
-                                GimpDrawable     *mask)
+                                GimpDrawable     *mask,
+                                const GimpRGB    *color)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (mask == NULL || GIMP_IS_DRAWABLE (mask));
+  g_return_if_fail (mask == NULL ||
+                    (GIMP_IS_DRAWABLE (mask) && gimp_drawable_bytes (mask) == 1));
 
-  if (shell->overlay)
-    {
-      g_object_unref (shell->overlay);
-      shell->overlay = NULL;
-    }
+  if (shell->overlay == mask && ! color)
+    return;
+
+  if (color)
+    gimp_rgb_get_uchar (color,
+                        shell->overlay_color + 0,
+                        shell->overlay_color + 1,
+                        shell->overlay_color + 2);
 
   if (mask)
-    {
-      g_return_if_fail (gimp_drawable_bytes (mask) == 1);
+    g_object_ref (mask);
 
-      shell->overlay = g_object_ref (mask);
-    }
+  if (shell->overlay)
+    g_object_unref (shell->overlay);
+
+  shell->overlay = mask;
 
   gimp_display_shell_expose_full (shell);
 }

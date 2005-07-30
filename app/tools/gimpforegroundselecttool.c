@@ -421,8 +421,8 @@ gimp_foreground_select_tool_set_mask (GimpForegroundSelectTool *fg_select,
   if (mask)
     fg_select->mask = g_object_ref (mask);
 
-  gimp_display_shell_set_overlay (GIMP_DISPLAY_SHELL (gdisp->shell),
-                                  GIMP_DRAWABLE (mask));
+  gimp_display_shell_set_mask (GIMP_DISPLAY_SHELL (gdisp->shell),
+                               GIMP_DRAWABLE (mask));
 
   gimp_tool_control_set_toggle (GIMP_TOOL (fg_select)->control, mask != NULL);
 }

@@ -1,5 +1,14 @@
 2005-07-30  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-render.c
+	* app/display/gimpdisplayshell.[ch]: renamed overlay to mask and
+	added a different overlay implementation that will be needed to
+	finish the new foreground-select tool.
+
+	* app/tools/gimpforegroundselecttool.c: changed accordingly.
+
+2005-07-30  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimptoolcontrol.[ch]: transparently handle cursor
 	vs. toggle cursor in the cursor accessor functions.
 
