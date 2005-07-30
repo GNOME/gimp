@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-18 04:31-0400\n"
-"PO-Revision-Date: 2005-07-18 14:29-0400\n"
+"POT-Creation-Date: 2005-07-30 16:15-0400\n"
+"PO-Revision-Date: 2005-07-30 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -143,7 +143,7 @@ msgstr ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
 
-#: app/main.c:443 tools/gimp-remote.c:314
+#: app/main.c:443 tools/gimp-remote.c:315
 #, c-format
 msgid "%s version %s"
 msgstr "%s version %s"
@@ -318,7 +318,7 @@ msgid "Text Editor"
 msgstr "Text Editor"
 
 #: app/actions/actions.c:190 app/dialogs/dialogs.c:126
-#: app/dialogs/preferences-dialog.c:1629 app/gui/gui.c:404
+#: app/dialogs/preferences-dialog.c:1629 app/gui/gui.c:406
 msgid "Tool Options"
 msgstr "Tool Options"
 
@@ -2756,7 +2756,7 @@ msgstr "Open Text File (UTF-8)"
 #: app/core/gimpbrush-load.c:115 app/core/gimpbrush-load.c:395
 #: app/core/gimpbrushgenerated.c:594 app/core/gimpbrushpipe.c:331
 #: app/core/gimpgradient-load.c:62 app/core/gimppalette.c:358
-#: app/core/gimppattern.c:302 app/tools/gimpimagemaptool.c:614
+#: app/core/gimppattern.c:297 app/tools/gimpimagemaptool.c:614
 #: app/xcf/xcf.c:293
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -3399,7 +3399,7 @@ msgstr "Grain merge"
 msgid "Color erase"
 msgstr "Colour erase"
 
-#: app/base/tile-swap.c:482
+#: app/base/tile-swap.c:483
 msgid ""
 "Unable to open swap file. The Gimp has run out of memory and cannot use the "
 "swap file. Some parts of your images may be corrupted. Try to save your work "
@@ -3986,8 +3986,10 @@ msgstr "fatal parse error"
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "value for token %s is not a valid UTF-8 string"
 
+#. no undo (or redo) steps available
 #: app/core/core-enums.c:53 app/core/core-enums.c:204
 #: app/core/core-enums.c:490 app/tools/gimptransformoptions.c:456
+#: app/widgets/gimpimagepropview.c:323
 msgid "None"
 msgstr "None"
 
@@ -4597,7 +4599,7 @@ msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Invalid UTF-8 string in brush file '%s'."
 
 #: app/core/gimpbrush-load.c:258 app/core/gimpcontext.c:1294
-#: app/core/gimpitem.c:475 app/core/gimppattern.c:374
+#: app/core/gimpitem.c:475 app/core/gimppattern.c:369
 #: app/dialogs/template-options-dialog.c:80 app/tools/gimpvectortool.c:334
 msgid "Unnamed"
 msgstr "Unnamed"
@@ -4819,6 +4821,10 @@ msgstr "Desaturate"
 #: app/core/gimpdrawable-equalize.c:78
 msgid "Equalize"
 msgstr "Equalize"
+
+#: app/core/gimpdrawable-foreground-extract.c:67
+msgid "Foreground Extraction..."
+msgstr "Foreground Extraction..."
 
 #: app/core/gimpdrawable-invert.c:61
 msgid "Invert"
@@ -5214,7 +5220,7 @@ msgid "(Preview may be out of date)"
 msgstr "(Preview may be out of date)"
 
 #. pixel size
-#: app/core/gimpimagefile.c:638 app/widgets/gimpimagepropview.c:289
+#: app/core/gimpimagefile.c:638 app/widgets/gimpimagepropview.c:349
 #: app/widgets/gimpsizebox.c:430 app/widgets/gimptemplateeditor.c:633
 #: app/widgets/gimptemplateeditor.c:671
 #, c-format
@@ -5424,20 +5430,20 @@ msgstr "Reading palette file '%s': Missing BLUE component in line %d."
 msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgstr "Reading palette file '%s': RGB value out of range in line %d."
 
-#: app/core/gimppattern.c:311 app/core/gimppattern.c:358
-#: app/core/gimppattern.c:390
+#: app/core/gimppattern.c:306 app/core/gimppattern.c:353
+#: app/core/gimppattern.c:385
 #, c-format
 msgid "Fatal parse error in pattern file '%s': Could not read %d bytes: %s"
 msgstr "Fatal parse error in pattern file '%s': Could not read %d bytes: %s"
 
-#: app/core/gimppattern.c:331
+#: app/core/gimppattern.c:326
 #, c-format
 msgid ""
 "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
 msgstr ""
 "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
 
-#: app/core/gimppattern.c:341
+#: app/core/gimppattern.c:336
 #, c-format
 msgid ""
 "Fatal parse error in pattern file '%s: Unsupported pattern depth %d.\n"
@@ -5446,7 +5452,7 @@ msgstr ""
 "Fatal parse error in pattern file '%s: Unsupported pattern depth %d.\n"
 "GIMP Patterns must be GRAY or RGB."
 
-#: app/core/gimppattern.c:367
+#: app/core/gimppattern.c:362
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Invalid UTF-8 string in pattern file '%s'."
@@ -5460,7 +5466,7 @@ msgstr "Unable to run %s callback. The corresponding plug-in may have crashed."
 msgid "Please wait..."
 msgstr "Please wait..."
 
-#: app/core/gimpselection.c:179 app/tools/gimpeditselectiontool.c:258
+#: app/core/gimpselection.c:179 app/tools/gimpeditselectiontool.c:262
 msgid "Move Selection"
 msgstr "Move Selection"
 
@@ -5649,7 +5655,7 @@ msgstr "Remove colours"
 msgid "Choose shade of gray based on:"
 msgstr "Choose shade of gray based on:"
 
-#: app/dialogs/dialogs-constructors.c:166 app/gui/gui.c:143
+#: app/dialogs/dialogs-constructors.c:166 app/gui/gui.c:144
 msgid "GIMP Message"
 msgstr "GIMP Message"
 
@@ -5860,13 +5866,13 @@ msgstr "Layer _Name:"
 
 #. The size labels
 #: app/dialogs/layer-options-dialog.c:128 app/tools/gimpcroptool.c:1050
-#: app/tools/gimpmeasuretool.c:957 app/tools/gimpselectionoptions.c:585
+#: app/tools/gimpmeasuretool.c:957 app/tools/gimpselectionoptions.c:587
 msgid "Width:"
 msgstr "Width:"
 
 #: app/dialogs/layer-options-dialog.c:134 app/tools/gimpcroptool.c:1054
 #: app/tools/gimpmeasuretool.c:983 app/tools/gimpscaletool.c:166
-#: app/tools/gimpselectionoptions.c:593
+#: app/tools/gimpselectionoptions.c:595
 msgid "Height:"
 msgstr "Height:"
 
@@ -6522,7 +6528,7 @@ msgstr "Get Monitor Resolution"
 msgid "Pixels"
 msgstr "Pixels"
 
-#: app/dialogs/preferences-dialog.c:2076 app/widgets/gimpimagepropview.c:321
+#: app/dialogs/preferences-dialog.c:2076 app/widgets/gimpimagepropview.c:381
 msgid "dpi"
 msgstr "dpi"
 
@@ -7385,11 +7391,11 @@ msgstr "Dark check colour"
 msgid "Custom color"
 msgstr "Custom colour"
 
-#: app/display/gimpdisplayshell.c:913
+#: app/display/gimpdisplayshell.c:920
 msgid "Zoom image when window size changes"
 msgstr "Zoom image when window size changes"
 
-#: app/display/gimpdisplayshell.c:933
+#: app/display/gimpdisplayshell.c:940
 msgid "Toggle Quick Mask"
 msgstr "Toggle Quick Mask"
 
@@ -7561,7 +7567,7 @@ msgstr "Plug-In could not save image"
 msgid "Invalid character sequence in URI"
 msgstr "Invalid character sequence in URI"
 
-#: app/gui/session.c:246 app/menus/menus.c:389 app/tools/gimp-tools.c:401
+#: app/gui/session.c:246 app/menus/menus.c:389 app/tools/gimp-tools.c:403
 #: app/widgets/gimpdevices.c:218
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
@@ -7840,7 +7846,7 @@ msgstr ""
 "PDB calling error for procedure '%s':\n"
 "Argument #%d type mismatch (expected %s, got %s)"
 
-#: app/pdb/selection_tools_cmds.c:332 app/tools/gimpfreeselecttool.c:96
+#: app/pdb/selection_tools_cmds.c:332 app/tools/gimpfreeselecttool.c:94
 msgid "Free Select"
 msgstr "Free Select"
 
@@ -8083,7 +8089,7 @@ msgstr "Number of grid lines"
 msgid "Grid line spacing"
 msgstr "Grid line spacing"
 
-#: app/tools/gimp-tools.c:298
+#: app/tools/gimp-tools.c:300
 msgid "This tool has no options."
 msgstr "This tool has no options."
 
@@ -8125,7 +8131,7 @@ msgid "Max Depth:"
 msgstr "Max Depth:"
 
 #: app/tools/gimpblendoptions.c:301 app/tools/gimpbucketfilloptions.c:294
-#: app/tools/gimpselectionoptions.c:522
+#: app/tools/gimpselectionoptions.c:524
 msgid "Threshold:"
 msgstr "Threshold:"
 
@@ -8178,7 +8184,7 @@ msgstr "Allow completely transparent regions to be filled"
 msgid "Base filled area on all visible layers"
 msgstr "Base filled area on all visible layers"
 
-#: app/tools/gimpbucketfilloptions.c:140 app/tools/gimpselectionoptions.c:161
+#: app/tools/gimpbucketfilloptions.c:140 app/tools/gimpselectionoptions.c:162
 msgid "Maximum color difference"
 msgstr "Maximum colour difference"
 
@@ -8202,7 +8208,7 @@ msgstr "Fill whole selection"
 msgid "Fill similar colors"
 msgstr "Fill similar colours"
 
-#: app/tools/gimpbucketfilloptions.c:260 app/tools/gimpselectionoptions.c:494
+#: app/tools/gimpbucketfilloptions.c:260 app/tools/gimpselectionoptions.c:496
 msgid "Finding Similar Colors"
 msgstr "Finding Similar Colours"
 
@@ -8211,8 +8217,8 @@ msgid "Fill transparent areas"
 msgstr "Fill transparent areas"
 
 #: app/tools/gimpbucketfilloptions.c:282
-#: app/tools/gimpcolorpickeroptions.c:177 app/tools/gimpselectionoptions.c:510
-#: app/tools/gimpselectionoptions.c:558
+#: app/tools/gimpcolorpickeroptions.c:177 app/tools/gimpselectionoptions.c:512
+#: app/tools/gimpselectionoptions.c:560
 msgid "Sample merged"
 msgstr "Sample merged"
 
@@ -8336,7 +8342,7 @@ msgstr "_Lightness:"
 msgid "Sample average"
 msgstr "Sample average"
 
-#: app/tools/gimpcoloroptions.c:192 app/tools/gimpselectionoptions.c:472
+#: app/tools/gimpcoloroptions.c:192 app/tools/gimpselectionoptions.c:474
 #: app/widgets/gimpbrusheditor.c:153
 msgid "Radius:"
 msgstr "Radius:"
@@ -8532,7 +8538,7 @@ msgstr "Mode"
 msgid "Exposure:"
 msgstr "Exposure:"
 
-#: app/tools/gimpeditselectiontool.c:262
+#: app/tools/gimpeditselectiontool.c:266
 #: app/tools/gimpeditselectiontool.c:1202
 msgid "Move Floating Selection"
 msgstr "Move Floating Selection"
@@ -8582,13 +8588,33 @@ msgstr "Flip the layer or selection"
 msgid "_Flip"
 msgstr "_Flip"
 
-#: app/tools/gimpfreeselecttool.c:97
+#: app/tools/gimpfreeselecttool.c:95
 msgid "Select hand-drawn regions"
 msgstr "Select hand-drawn regions"
 
-#: app/tools/gimpfreeselecttool.c:98
+#: app/tools/gimpfreeselecttool.c:96
 msgid "_Free Select"
 msgstr "_Free Select"
+
+#: app/tools/gimpforegroundselecttool.c:112
+msgid "Foreground Select"
+msgstr "Foreground Select"
+
+#: app/tools/gimpforegroundselecttool.c:113
+msgid "Extract foreground using SIOX algorithm"
+msgstr "Extract foreground using SIOX algorithm"
+
+#: app/tools/gimpforegroundselecttool.c:114
+msgid "F_oreground Select"
+msgstr "F_oreground Select"
+
+#: app/tools/gimpforegroundselecttool.c:240
+msgid "Press Enter to apply selection"
+msgstr "Press Enter to apply selection"
+
+#: app/tools/gimpforegroundselecttool.c:254
+msgid "Draw a rough outline around the object to extract"
+msgstr "Draw a rough outline around the object to extract"
 
 #: app/tools/gimpfuzzyselecttool.c:98
 msgid "Select contiguous regions"
@@ -8898,7 +8924,7 @@ msgstr "Paint fuzzy brush strokes"
 msgid "_Paintbrush"
 msgstr "_Paintbrush"
 
-#: app/tools/gimppaintoptions-gui.c:102 app/tools/gimpselectionoptions.c:429
+#: app/tools/gimppaintoptions-gui.c:102 app/tools/gimpselectionoptions.c:428
 #: app/widgets/gimpbrushselect.c:214 app/widgets/gimplayertreeview.c:295
 msgid "Mode:"
 msgstr "Mode:"
@@ -9156,39 +9182,39 @@ msgstr "Scale ratio Y:"
 msgid "Aspect Ratio:"
 msgstr "Aspect Ratio:"
 
-#: app/tools/gimpselectionoptions.c:136
+#: app/tools/gimpselectionoptions.c:137
 msgid "Smooth edges"
 msgstr "Smooth edges"
 
-#: app/tools/gimpselectionoptions.c:150
+#: app/tools/gimpselectionoptions.c:151
 msgid "Allow completely transparent regions to be selected"
 msgstr "Allow completely transparent regions to be selected"
 
-#: app/tools/gimpselectionoptions.c:156
+#: app/tools/gimpselectionoptions.c:157
 msgid "Base selection on all visible layers"
 msgstr "Base selection on all visible layers"
 
-#: app/tools/gimpselectionoptions.c:171
+#: app/tools/gimpselectionoptions.c:172
 msgid "Use all visible layers when shrinking the selection"
 msgstr "Use all visible layers when shrinking the selection"
 
-#: app/tools/gimpselectionoptions.c:437 app/tools/gimptextoptions.c:458
+#: app/tools/gimpselectionoptions.c:438 app/tools/gimptextoptions.c:458
 msgid "Antialiasing"
 msgstr "Antialiasing"
 
-#: app/tools/gimpselectionoptions.c:455
+#: app/tools/gimpselectionoptions.c:457
 msgid "Feather edges"
 msgstr "Feather edges"
 
-#: app/tools/gimpselectionoptions.c:481
+#: app/tools/gimpselectionoptions.c:483
 msgid "Show interactive boundary"
 msgstr "Show interactive boundary"
 
-#: app/tools/gimpselectionoptions.c:504
+#: app/tools/gimpselectionoptions.c:506
 msgid "Select transparent areas"
 msgstr "Select transparent areas"
 
-#: app/tools/gimpselectionoptions.c:544
+#: app/tools/gimpselectionoptions.c:546
 msgid "Auto shrink selection"
 msgstr "Auto shrink selection"
 
@@ -9499,7 +9525,7 @@ msgstr "Delete Anchor"
 msgid "Delete Segment"
 msgstr "Delete Segment"
 
-#: app/tools/gimpvectortool.c:826
+#: app/tools/gimpvectortool.c:827
 msgid "Move Anchors"
 msgstr "Move Anchors"
 
@@ -9819,11 +9845,11 @@ msgstr "Alpha:"
 msgid "n/a"
 msgstr "n/a"
 
-#: app/widgets/gimpcolormapeditor.c:246
+#: app/widgets/gimpcolormapeditor.c:240
 msgid "Color index:"
 msgstr "Colour index:"
 
-#: app/widgets/gimpcolormapeditor.c:256
+#: app/widgets/gimpcolormapeditor.c:250
 msgid "HTML notation:"
 msgstr "HTML notation:"
 
@@ -10510,53 +10536,61 @@ msgstr "Percentile:"
 msgid "Channel:"
 msgstr "Channel:"
 
-#: app/widgets/gimpimagepropview.c:181
+#: app/widgets/gimpimagepropview.c:186
 msgid "Pixel dimensions:"
 msgstr "Pixel dimensions:"
 
-#: app/widgets/gimpimagepropview.c:184
+#: app/widgets/gimpimagepropview.c:189
 msgid "Print size:"
 msgstr "Print size:"
 
-#: app/widgets/gimpimagepropview.c:187
+#: app/widgets/gimpimagepropview.c:192
 msgid "Resolution:"
 msgstr "Resolution:"
 
-#: app/widgets/gimpimagepropview.c:190
+#: app/widgets/gimpimagepropview.c:195
 msgid "Color space:"
 msgstr "Colour space:"
 
-#: app/widgets/gimpimagepropview.c:193
+#: app/widgets/gimpimagepropview.c:198
 msgid "Size in memory:"
 msgstr "Size in memory:"
 
-#: app/widgets/gimpimagepropview.c:196
+#: app/widgets/gimpimagepropview.c:201
+msgid "Undo steps:"
+msgstr "Undo steps:"
+
+#: app/widgets/gimpimagepropview.c:204
+msgid "Redo steps:"
+msgstr "Redo steps:"
+
+#: app/widgets/gimpimagepropview.c:207
 msgid "Number of pixels:"
 msgstr "Number of pixels:"
 
-#: app/widgets/gimpimagepropview.c:199
+#: app/widgets/gimpimagepropview.c:210
 msgid "Number of layers:"
 msgstr "Number of layers:"
 
-#: app/widgets/gimpimagepropview.c:202
+#: app/widgets/gimpimagepropview.c:213
 msgid "Number of channels:"
 msgstr "Number of channels:"
 
-#: app/widgets/gimpimagepropview.c:205
+#: app/widgets/gimpimagepropview.c:216
 msgid "Number of paths:"
 msgstr "Number of paths:"
 
-#: app/widgets/gimpimagepropview.c:316
+#: app/widgets/gimpimagepropview.c:376
 #, c-format
 msgid "pixels/%s"
 msgstr "pixels/%s"
 
-#: app/widgets/gimpimagepropview.c:318
+#: app/widgets/gimpimagepropview.c:378
 #, c-format
 msgid "%g x %g %s"
 msgstr "%g x %g %s"
 
-#: app/widgets/gimpimagepropview.c:338
+#: app/widgets/gimpimagepropview.c:398
 msgid "colors"
 msgstr "colours"
 
@@ -10604,15 +10638,15 @@ msgstr "Message repeated %d times."
 msgid "Message repeated once."
 msgstr "Message repeated once."
 
-#: app/widgets/gimppaletteeditor.c:270 app/widgets/gimppaletteeditor.c:692
+#: app/widgets/gimppaletteeditor.c:274 app/widgets/gimppaletteeditor.c:695
 msgid "Undefined"
 msgstr "Undefined"
 
-#: app/widgets/gimppaletteeditor.c:278
+#: app/widgets/gimppaletteeditor.c:282
 msgid "Columns:"
 msgstr "Columns:"
 
-#: app/widgets/gimpselectiondata.c:318
+#: app/widgets/gimpselectiondata.c:256
 #, c-format
 msgid ""
 "The filename '%s' couldn't be converted to a valid URI:\n"
@@ -10623,7 +10657,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/widgets/gimpselectiondata.c:322
+#: app/widgets/gimpselectiondata.c:260
 msgid "Invalid UTF-8"
 msgstr "Invalid UTF-8"
 
@@ -11021,16 +11055,16 @@ msgstr "Only check if GIMP is running, then quit"
 msgid "Start GIMP without showing the startup window"
 msgstr "Start GIMP without showing the startup window"
 
-#: tools/gimp-remote.c:196
+#: tools/gimp-remote.c:197
 msgid "Could not connect to GIMP."
 msgstr "Could not connect to GIMP."
 
-#: tools/gimp-remote.c:197
+#: tools/gimp-remote.c:198
 msgid "Make sure that the Toolbox is visible!"
 msgstr "Make sure that the Toolbox is visible!"
 
 #. if execv and execvp return, there was an error
-#: tools/gimp-remote.c:298
+#: tools/gimp-remote.c:299
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "Could not start '%s': %s"
