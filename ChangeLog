@@ -10,7 +10,8 @@
 	* plug-ins/imagemap/imap_preview.c 
 	* plug-ins/imagemap/imap_selection.c
 	* plug-ins/jpeg/jpeg-exif.c
-	* plug-ins/common/dicom.c: fixed signedness warnings.
+	* plug-ins/common/dicom.c
+	* plug/ins/common/screenshot.c: fixed signedness warnings.
 
 2005-07-30  Sven Neumann  <sven@gimp.org>
 
