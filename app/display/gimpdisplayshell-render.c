@@ -32,6 +32,7 @@
 #include "base/tile.h"
 
 #include "core/gimp.h"
+#include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-colormap.h"
 #include "core/gimpprojection.h"
@@ -191,6 +192,8 @@ static void  gimp_display_shell_render_highlight (GimpDisplayShell *shell,
                                                   gint              w,
                                                   gint              h,
                                                   GdkRectangle     *highlight);
+static void  gimp_display_shell_render_overlay   (GimpDisplayShell *shell,
+                                                  RenderInfo       *info);
 
 
 /*****************************************************************/
@@ -237,7 +240,21 @@ gimp_display_shell_render (GimpDisplayShell *shell,
 
   /*  dim pixels outside the highlighted rectangle  */
   if (highlight)
-    gimp_display_shell_render_highlight (shell, x, y, w, h, highlight);
+    {
+      gimp_display_shell_render_highlight (shell, x, y, w, h, highlight);
+    }
+  else if (shell->overlay)
+    {
+      info.src_tiles = gimp_drawable_data (shell->overlay);
+      info.src_bpp   = 1;
+      info.x         = x + shell->offset_x;
+      info.y         = y + shell->offset_y;
+      info.src_x     = (gdouble) info.x / info.scalex;
+      info.src_y     = (gdouble) info.y / info.scaley;
+      info.dest      = shell->render_buf;
+
+      gimp_display_shell_render_overlay (shell, &info);
+    }
 
   /*  put it to the screen  */
   gimp_canvas_draw_rgb (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_RENDER,
@@ -314,6 +331,63 @@ gimp_display_shell_render_highlight (GimpDisplayShell *shell,
             GIMP_DISPLAY_SHELL_DIM_PIXEL (buf, x)
 
           buf += 3 * GIMP_RENDER_BUF_WIDTH;
+        }
+    }
+}
+
+static void
+gimp_display_shell_render_overlay (GimpDisplayShell *shell,
+                                   RenderInfo       *info)
+{
+  gint      y, ye;
+  gint      x, xe;
+  gboolean  initial = TRUE;
+
+  y  = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  info->src = render_image_tile_fault (info);
+
+  while (TRUE)
+    {
+      gint error =
+        RINT (floor ((y + 1) / info->scaley) - floor (y / info->scaley));
+
+      if (!initial && (error == 0))
+	{
+	  memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+	}
+      else
+	{
+	  const guchar *src  = info->src;
+	  guchar       *dest = info->dest;
+
+	  for (x = info->x; x < xe; x++, src++, dest += 3)
+	    {
+              if (*src & 0x80)
+                continue;
+
+              dest[0] = dest[0] >> 2;
+              dest[1] = dest[1] >> 2;
+            }
+	}
+
+      if (++y == ye)
+        break;
+
+      info->dest += info->dest_bpl;
+
+      if (error)
+	{
+	  info->src_y += error;
+	  info->src = render_image_tile_fault (info);
+
+	  initial = TRUE;
+	}
+      else
+        {
+          initial = FALSE;
         }
     }
 }
@@ -737,6 +811,7 @@ render_image_init_info (RenderInfo       *info,
 
   info->shell      = shell;
   info->src_tiles  = gimp_projection_get_tiles (gimage->projection);
+  info->src_bpp    = gimp_projection_get_bytes (gimage->projection);
   info->x          = x + shell->offset_x;
   info->y          = y + shell->offset_y;
   info->w          = w;
@@ -745,7 +820,6 @@ render_image_init_info (RenderInfo       *info,
   info->scaley     = SCALEFACTOR_Y (shell);
   info->src_x      = (gdouble) info->x / info->scalex;
   info->src_y      = (gdouble) info->y / info->scaley;
-  info->src_bpp    = gimp_projection_get_bytes (gimage->projection);
   info->dest       = shell->render_buf;
   info->dest_bpp   = 3;
   info->dest_bpl   = info->dest_bpp * GIMP_RENDER_BUF_WIDTH;

@@ -1,5 +1,16 @@
 2005-07-30  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-render.c
+	* app/display/gimpdisplayshell.[ch]: added
+	gimp_display_shell_set_overlay(); allows to overlay a mask over the
+	display to visualize a selection.
+
+	* app/tools/gimpforegroundselecttool.[ch]: use the new functionality
+	to display the selection. Escape cancels the tool, Enter applies the
+	selection.
+
+2005-07-30  Sven Neumann  <sven@gimp.org>
+
 	* libgimpbase/gimpbase.def: added missing symbol.
 
 2005-07-30  Sven Neumann  <sven@gimp.org>

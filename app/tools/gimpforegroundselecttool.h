@@ -38,7 +38,7 @@ struct _GimpForegroundSelectTool
 {
   GimpFreeSelectTool  parent_instance;
 
-  GimpChannel       *mask;
+  GimpChannel        *mask;
 };
 
 struct _GimpForegroundSelectToolClass

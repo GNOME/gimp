@@ -318,6 +318,7 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->button_press_before_focus = FALSE;
 
   shell->highlight              = NULL;
+  shell->overlay                = NULL;
 
   gtk_window_set_role (GTK_WINDOW (shell), "gimp-image-window");
   gtk_window_set_resizable (GTK_WINDOW (shell), TRUE);
@@ -405,6 +406,12 @@ gimp_display_shell_destroy (GtkObject *object)
     {
       g_free (shell->highlight);
       shell->highlight = NULL;
+    }
+
+  if (shell->overlay)
+    {
+      g_object_unref (shell->overlay);
+      shell->overlay = NULL;
     }
 
   if (shell->title_idle_id)
@@ -1585,4 +1592,34 @@ gimp_display_shell_set_highlight (GimpDisplayShell   *shell,
 
       gimp_display_shell_expose_full (shell);
     }
+}
+
+/**
+ * gimp_display_shell_set_overlay:
+ * @shell: a #GimpDisplayShell
+ * @mask:  a #GimpDrawable (1 byte per pixel)
+ *
+ * Allows to preview a selection (used by the foreground selection tool).
+ **/
+void
+gimp_display_shell_set_overlay (GimpDisplayShell *shell,
+                                GimpDrawable     *mask)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (mask == NULL || GIMP_IS_DRAWABLE (mask));
+
+  if (shell->overlay)
+    {
+      g_object_unref (shell->overlay);
+      shell->overlay = NULL;
+    }
+
+  if (mask)
+    {
+      g_return_if_fail (gimp_drawable_bytes (mask) == 1);
+
+      shell->overlay = g_object_ref (mask);
+    }
+
+  gimp_display_shell_expose_full (shell);
 }

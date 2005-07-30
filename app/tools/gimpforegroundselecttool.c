@@ -19,6 +19,7 @@
 #include "config.h"
 
 #include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -36,6 +37,7 @@
 #include "widgets/gimphelp-ids.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
 
 #include "gimpforegroundselecttool.h"
 #include "gimpselectionoptions.h"
@@ -48,6 +50,12 @@ static void   gimp_foreground_select_tool_class_init (GimpForegroundSelectToolCl
 static void   gimp_foreground_select_tool_init       (GimpForegroundSelectTool      *fg_select);
 static void   gimp_foreground_select_tool_finalize       (GObject         *object);
 
+static void   gimp_foreground_select_tool_control        (GimpTool        *tool,
+                                                          GimpToolAction   action,
+                                                          GimpDisplay     *gdisp);
+static gboolean  gimp_foreground_select_tool_key_press   (GimpTool        *tool,
+                                                          GdkEventKey     *kevent,
+                                                          GimpDisplay     *gdisp);
 static void   gimp_foreground_select_tool_button_press   (GimpTool        *tool,
                                                           GimpCoords      *coords,
                                                           guint32          time,
@@ -68,6 +76,10 @@ static void   gimp_foreground_select_tool_draw           (GimpDrawTool    *draw_
 
 static void   gimp_foreground_select_tool_select      (GimpFreeSelectTool *free_sel,
                                                        GimpDisplay        *gdisp);
+static void  gimp_foreground_select_tool_set_mask     (GimpForegroundSelectTool *fg_select,
+                                                       GimpChannel              *mask);
+static void  gimp_foreground_select_tool_apply_mask   (GimpForegroundSelectTool *fg_select,
+                                                       GimpImage                *gimage);
 
 
 static GimpFreeSelectToolClass *parent_class = NULL;
@@ -134,6 +146,8 @@ gimp_foreground_select_tool_class_init (GimpForegroundSelectToolClass *klass)
 
   object_class->finalize         = gimp_foreground_select_tool_finalize;
 
+  tool_class->control            = gimp_foreground_select_tool_control;
+  tool_class->key_press          = gimp_foreground_select_tool_key_press;
   tool_class->button_press       = gimp_foreground_select_tool_button_press;
   tool_class->button_release     = gimp_foreground_select_tool_button_release;
   tool_class->motion             = gimp_foreground_select_tool_motion;
@@ -160,13 +174,56 @@ gimp_foreground_select_tool_finalize (GObject *object)
 {
   GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (object);
 
-  if (fg_select->mask)
-    {
-      g_object_unref (fg_select->mask);
-      fg_select->mask = NULL;
-    }
+  gimp_foreground_select_tool_set_mask (fg_select, NULL);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_foreground_select_tool_control (GimpTool       *tool,
+                                     GimpToolAction  action,
+                                     GimpDisplay    *gdisp)
+{
+  GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
+
+  switch (action)
+    {
+    case HALT:
+      gimp_foreground_select_tool_set_mask (fg_select, NULL);
+      gimp_display_shell_set_overlay (GIMP_DISPLAY_SHELL (gdisp->shell), NULL);
+      break;
+
+    default:
+      break;
+    }
+
+  GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
+}
+
+static gboolean
+gimp_foreground_select_tool_key_press (GimpTool    *tool,
+                                       GdkEventKey *kevent,
+                                       GimpDisplay *gdisp)
+{
+  if (gdisp != tool->gdisp)
+    return FALSE;
+
+  switch (kevent->keyval)
+    {
+    case GDK_KP_Enter:
+    case GDK_Return:
+      gimp_foreground_select_tool_apply_mask (GIMP_FOREGROUND_SELECT_TOOL (tool),
+                                              gdisp->gimage);
+      gimp_display_shell_set_overlay (GIMP_DISPLAY_SHELL (gdisp->shell), NULL);
+      return TRUE;
+
+    case GDK_Escape:
+      gimp_tool_control (tool, HALT, gdisp);
+      return TRUE;
+
+    default:
+      return FALSE;
+    }
 }
 
 static void
@@ -212,17 +269,13 @@ static void
 gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
                                     GimpDisplay        *gdisp)
 {
-  GimpTool             *tool     = GIMP_TOOL (free_sel);
-  GimpImage            *gimage   = gdisp->gimage;
-  GimpDrawable         *drawable = gimp_image_active_drawable (gimage);
-  GimpScanConvert      *scan_convert;
-  GimpChannel          *mask;
-  GimpSelectionOptions *options;
+  GimpImage       *gimage   = gdisp->gimage;
+  GimpDrawable    *drawable = gimp_image_active_drawable (gimage);
+  GimpScanConvert *scan_convert;
+  GimpChannel     *mask;
 
   if (! drawable)
     return;
-
-  options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   gimp_set_busy (gimage->gimp);
 
@@ -245,15 +298,52 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
                                     GIMP_DRAWABLE (mask),
                                     GIMP_PROGRESS (gdisp));
 
+  gimp_foreground_select_tool_set_mask (GIMP_FOREGROUND_SELECT_TOOL (free_sel),
+                                        mask);
+  gimp_display_shell_set_overlay (GIMP_DISPLAY_SHELL (gdisp->shell),
+                                  GIMP_DRAWABLE (mask));
+
+  g_object_unref (mask);
+
+  gimp_unset_busy (gimage->gimp);
+}
+
+static void
+gimp_foreground_select_tool_set_mask (GimpForegroundSelectTool *fg_select,
+                                      GimpChannel              *mask)
+{
+  if (fg_select->mask == mask)
+    return;
+
+  if (fg_select->mask)
+    {
+      g_object_unref (fg_select->mask);
+      fg_select->mask = NULL;
+    }
+
+  if (mask)
+    fg_select->mask = g_object_ref (mask);
+}
+
+static void
+gimp_foreground_select_tool_apply_mask (GimpForegroundSelectTool *fg_select,
+                                        GimpImage                *gimage)
+{
+  GimpTool             *tool = GIMP_TOOL (fg_select);
+  GimpSelectionOptions *options;
+
+  options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
+
+  if (! fg_select->mask)
+    return;
+
   gimp_channel_select_channel (gimp_image_get_mask (gimage),
                                tool->tool_info->blurb,
-                               mask, 0, 0,
+                               fg_select->mask, 0, 0,
                                GIMP_SELECTION_TOOL (tool)->op,
                                options->feather,
                                options->feather_radius,
                                options->feather_radius);
 
-  g_object_unref (mask);
-
-  gimp_unset_busy (gimage->gimp);
+  gimp_foreground_select_tool_set_mask (fg_select, NULL);
 }

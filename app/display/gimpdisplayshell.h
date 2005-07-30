@@ -166,6 +166,8 @@ struct _GimpDisplayShell
 
   GdkRectangle     *highlight;         /* in image coordinates, can be NULL   */
 
+  GimpDrawable     *overlay;
+
   gpointer          scroll_info;
 };
 
@@ -235,6 +237,8 @@ void        gimp_display_shell_selection_visibility  (GimpDisplayShell *shell,
                                                       GimpSelectionControl  control);
 void        gimp_display_shell_set_highlight         (GimpDisplayShell *shell,
                                                       const GdkRectangle *highlight);
+void        gimp_display_shell_set_overlay           (GimpDisplayShell *shell,
+                                                      GimpDrawable     *overlay);
 
 
 #endif /* __GIMP_DISPLAY_SHELL_H__ */
