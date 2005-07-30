@@ -144,7 +144,6 @@ static const guint8 screenshot_icon[] =
 typedef enum
 {
   SHOOT_ROOT,
-  SHOOT_REGION,
   SHOOT_WINDOW
 } ShootType;
 
@@ -152,6 +151,7 @@ typedef struct
 {
   ShootType  shoot_type;
   gboolean   decorate;
+  gboolean   region;
   guint      window_id;
   guint      select_delay;
   gint       x1;
@@ -287,30 +287,28 @@ run (const gchar      *name,
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      if (nparams == 3)
+      if (nparams >= 3)
 	{
-          gboolean do_root = param[1].data.d_int32;
-          if (do_root)
+          if (param[1].data.d_int32)
             shootvals.shoot_type = SHOOT_ROOT;
           else
             shootvals.shoot_type = SHOOT_WINDOW;
-	  shootvals.window_id    = param[2].data.d_int32;
-          shootvals.select_delay = 0;
-	}
-      else if (nparams == 7)
-	{
-	  shootvals.shoot_type   = SHOOT_REGION;
-	  shootvals.window_id    = param[2].data.d_int32;
-          shootvals.select_delay = 0;
-          shootvals.x1           = param[3].data.d_int32;
-          shootvals.y1           = param[4].data.d_int32;
-          shootvals.x2           = param[5].data.d_int32;
-          shootvals.y2           = param[6].data.d_int32;
-	}
 
+	  shootvals.window_id    = param[2].data.d_int32;
+          shootvals.select_delay = 0;
+	}
+      else
         {
           status = GIMP_PDB_CALLING_ERROR;
         }
+
+      if (nparams == 7)
+	{
+          shootvals.x1 = param[3].data.d_int32;
+          shootvals.y1 = param[4].data.d_int32;
+          shootvals.x2 = param[5].data.d_int32;
+          shootvals.y2 = param[6].data.d_int32;
+	}
 
       if (! gdk_init_check (NULL, NULL))
 	status = GIMP_PDB_CALLING_ERROR;
@@ -386,7 +384,7 @@ select_window_x11 (GdkScreen *screen)
   x_cursor = XCreateFontCursor (x_dpy, GDK_CROSSHAIR);
   buttons  = 0;
 
-  if (shootvals.shoot_type == SHOOT_REGION)
+  if (shootvals.region)
     {
       mask |= PointerMotionMask;
 
@@ -462,7 +460,8 @@ select_window_x11 (GdkScreen *screen)
         case ButtonRelease:
           if (buttons > 0)
             buttons--;
-          if (! buttons && shootvals.shoot_type == SHOOT_REGION)
+
+          if (! buttons && shootvals.region)
             {
               x = MIN (shootvals.x1, shootvals.x2);
               y = MIN (shootvals.y1, shootvals.y2);
@@ -690,40 +689,37 @@ shoot (GdkScreen *screen)
   screen_rect.width  = gdk_screen_get_width (screen);
   screen_rect.height = gdk_screen_get_height (screen);
 
-
-  if (shootvals.shoot_type == SHOOT_REGION)
+  if (shootvals.shoot_type == SHOOT_ROOT)
     {
-      rect.x = MIN (shootvals.x1, shootvals.x2);
-      rect.y = MIN (shootvals.y1, shootvals.y2);
-      rect.width  = ABS (shootvals.x2 - shootvals.x1);
-      rect.height = ABS (shootvals.y2 - shootvals.y1);
+      window = gdk_screen_get_root_window (screen);
+
+      if (shootvals.region)
+        {
+          rect.x = MIN (shootvals.x1, shootvals.x2);
+          rect.y = MIN (shootvals.y1, shootvals.y2);
+          rect.width  = ABS (shootvals.x2 - shootvals.x1);
+          rect.height = ABS (shootvals.y2 - shootvals.y1);
+        }
     }
   else
     {
-      if (shootvals.shoot_type == SHOOT_ROOT)
-        {
-          window = gdk_screen_get_root_window (screen);
-        }
-      else
-        {
-          GdkDisplay *display = gdk_screen_get_display (screen);
+      GdkDisplay *display = gdk_screen_get_display (screen);
 
-          window = gdk_window_foreign_new_for_display (display,
-                                                       shootvals.window_id);
-        }
-
-      if (! window)
-        {
-          g_message (_("Specified window not found"));
-          return -1;
-        }
-
-      gdk_drawable_get_size (GDK_DRAWABLE (window), &rect.width, &rect.height);
-      gdk_window_get_origin (window, &x, &y);
-
-      rect.x = x;
-      rect.y = y;
+      window = gdk_window_foreign_new_for_display (display,
+                                                   shootvals.window_id);
     }
+
+  if (! window)
+    {
+      g_message (_("Specified window not found"));
+      return -1;
+    }
+
+  gdk_drawable_get_size (GDK_DRAWABLE (window), &rect.width, &rect.height);
+  gdk_window_get_origin (window, &x, &y);
+
+  rect.x = x;
+  rect.y = y;
 
   window = gdk_screen_get_root_window (screen);
   gdk_window_get_origin (window, &x, &y);
@@ -767,14 +763,7 @@ shoot_dialog (GdkScreen **screen)
   GdkPixbuf *pixbuf;
   GSList    *radio_group = NULL;
   GtkObject *adj;
-  gboolean   region = FALSE;
   gboolean   run;
-
-  if (shootvals.shoot_type == SHOOT_REGION)
-    {
-      shootvals.shoot_type = SHOOT_ROOT;
-      region = TRUE;
-    }
 
   gimp_ui_init ("screenshot", FALSE);
 
@@ -867,7 +856,7 @@ shoot_dialog (GdkScreen **screen)
   gtk_widget_show (hbox);
 
   toggle = gtk_check_button_new_with_label (_("Select a region"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), region);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), shootvals.region);
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 24);
   gtk_widget_show (toggle);
 
@@ -879,7 +868,7 @@ shoot_dialog (GdkScreen **screen)
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
-                    &region);
+                    &shootvals.region);
 
   /*  grab delay  */
   hbox = gtk_hbox_new (FALSE, 6);
@@ -913,9 +902,6 @@ shoot_dialog (GdkScreen **screen)
 
   run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  if (shootvals.shoot_type == SHOOT_ROOT && region)
-    shootvals.shoot_type = SHOOT_REGION;
-
   if (run)
     {
       /* get the screen on which we are running */
@@ -932,7 +918,7 @@ shoot_dialog (GdkScreen **screen)
      g_timeout_add (100, (GSourceFunc) gtk_main_quit, NULL);
      gtk_main ();
 
-     if (shootvals.shoot_type != SHOOT_ROOT && ! shootvals.window_id)
+     if (shootvals.shoot_type == SHOOT_WINDOW && ! shootvals.window_id)
        {
          shootvals.window_id = select_window (*screen);
 

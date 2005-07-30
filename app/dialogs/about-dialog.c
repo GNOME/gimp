@@ -1034,7 +1034,7 @@ about_dialog_load_logo (GtkWidget *window)
   g_object_unref (pixbuf);
   g_object_unref (layout);
 
-  if ((noise = random ()) && line (noise,
+  if ((noise = random ()) && line (noise, (const guchar *)
         "\211\120\116\107\r\n\032\n\0\0\0\r\111\110D\122\0\0\001+\0\0\001"
         "\r\004\003\0\0\0\245\177^\254\0\0\0000\120\114TE\0\0\0\023\026\026"
         " \'(2=ANXYSr\177surg\216\234\226\230\225z\247\272\261\263\257\222Ê"

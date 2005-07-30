@@ -414,8 +414,8 @@ gfig_load (const gchar *filename,
   gint     chk_count;
   gint     load_count = 0;
   gdouble  version;
-  guchar   magic1[20];
-  guchar   magic2[20];
+  gchar    magic1[20];
+  gchar    magic2[20];
 
   g_assert (filename != NULL);
 

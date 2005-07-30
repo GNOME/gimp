@@ -71,18 +71,18 @@ static void      toggle_endian2        (guint16          *buf16,
 static void      add_tag_pointer       (GByteArray       *group_stream,
                                         gint              group,
                                         gint              element,
-                                        gchar            *value_rep,
-                                        guint8           *data,
+                                        const gchar      *value_rep,
+                                        const guint8     *data,
                                         gint              length);
 static void      add_tag_string        (GByteArray       *group_stream,
                                         gint              group,
                                         gint              element,
-                                        gchar            *value_rep,
-                                        gchar            *s);
+                                        const gchar      *value_rep,
+                                        const gchar      *s);
 static void      add_tag_int           (GByteArray       *group_stream,
                                         gint              group,
                                         gint              element,
-                                        gchar            *value_rep,
+                                        const gchar      *value_rep,
                                         gint              value);
 static gboolean  write_group_to_file   (FILE             *DICOM,
                                         gint              group,
@@ -666,7 +666,8 @@ save_image (const gchar  *filename,
   /* Meta element group */
   group = 0x0002;
   /* 0002,0001 - File Meta Information Version */
-  add_tag_pointer (group_stream, group, 0x0001, "OB", "\0\1", 2);
+  add_tag_pointer (group_stream, group, 0x0001, "OB",
+                   (const guint8 *) "\0\1", 2);
   /* 0002,0010 - Transfer syntax uid */
   add_tag_string (group_stream, group, 0x0010, "UI", "1.2.840.10008.1.2.1");
   /* 0002,0013 - Implementation version name */
@@ -761,12 +762,12 @@ save_image (const gchar  *filename,
  * corresponding value_rep. Note that we use "explicit VR".
  */
 static void
-add_tag_pointer (GByteArray *group_stream,
-		 gint        group,
-		 gint        element,
-		 gchar      *value_rep,
-		 guint8     *data,
-		 gint        length)
+add_tag_pointer (GByteArray   *group_stream,
+		 gint          group,
+		 gint          element,
+		 const gchar  *value_rep,
+		 const guint8 *data,
+		 gint          length)
 {
   gboolean is_long;
   guint16  swapped16;
@@ -775,24 +776,24 @@ add_tag_pointer (GByteArray *group_stream,
   is_long = (strstr ("OB|OW|SQ|UN", value_rep) != NULL) || length > 65535;
 
   swapped16 = g_ntohs (GUINT16_SWAP_LE_BE (group));
-  g_byte_array_append (group_stream, (gchar*) &swapped16, 2);
+  g_byte_array_append (group_stream, (guint8 *) &swapped16, 2);
 
   swapped16 = g_ntohs (GUINT16_SWAP_LE_BE (element));
-  g_byte_array_append (group_stream, (gchar*) &swapped16, 2);
+  g_byte_array_append (group_stream, (guint8 *) &swapped16, 2);
 
-  g_byte_array_append (group_stream, value_rep, 2);
+  g_byte_array_append (group_stream, (const guchar *) value_rep, 2);
   if (is_long)
     {
 
-      g_byte_array_append (group_stream, "\0\0", 2);
+      g_byte_array_append (group_stream, (const guchar *) "\0\0", 2);
 
       swapped32 = g_ntohl (GUINT32_SWAP_LE_BE (length));
-      g_byte_array_append (group_stream, (gchar*) &swapped32, 4);
+      g_byte_array_append (group_stream, (guint8 *) &swapped32, 4);
     }
   else
     {
       swapped16 = g_ntohs (GUINT16_SWAP_LE_BE (length));
-      g_byte_array_append (group_stream, (gchar*) &swapped16, 2);
+      g_byte_array_append (group_stream, (guint8 *) &swapped16, 2);
     }
 
   g_byte_array_append (group_stream, data, length);
@@ -800,33 +801,33 @@ add_tag_pointer (GByteArray *group_stream,
 
 /* Convenience function for adding a string to the dicom stream */
 static void
-add_tag_string (GByteArray *group_stream,
-		gint        group,
-		gint        element,
-		gchar      *value_rep,
-		gchar      *s)
+add_tag_string (GByteArray  *group_stream,
+		gint         group,
+		gint         element,
+		const gchar *value_rep,
+		const gchar *s)
 {
   add_tag_pointer (group_stream,
-                   group, element, value_rep, (guint8 *) s, strlen(s));
+                   group, element, value_rep, (const guint8 *) s, strlen (s));
 }
 
 /* Convenience function for adding an integer to the dicom stream */
 static void
-add_tag_int(GByteArray *group_stream,
-	    gint        group,
-	    gint        element,
-	    gchar      *value_rep,
-	    gint        value)
+add_tag_int (GByteArray  *group_stream,
+             gint         group,
+             gint         element,
+             const gchar *value_rep,
+             gint         value)
 {
   gint len;
 
-  if (strcmp(value_rep, "US") == 0)
+  if (strcmp (value_rep, "US") == 0)
     len = 2;
   else
     len = 4;
 
   add_tag_pointer (group_stream,
-                   group, element, value_rep, (guint8 *) &value, len);
+                   group, element, value_rep, (const guint8 *) &value, len);
 }
 
 /* Once a group has been built it has to be wrapped with a meta-group

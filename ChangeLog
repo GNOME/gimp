@@ -1,5 +1,19 @@
 2005-07-30  Sven Neumann  <sven@gimp.org>
 
+	* app/base/gimphistogram.c (gimp_histogram_calculate_sub_region):
+	loop unrolling.
+
+	* app/dialogs/about-dialog.c 
+	* app/widgets/gimpselectiondata.c
+	* plug-ins/bmp/bmpread.c (ReadBMP)
+	* plug-ins/gfig/gfig.c (gfig_load)
+	* plug-ins/imagemap/imap_preview.c 
+	* plug-ins/imagemap/imap_selection.c
+	* plug-ins/jpeg/jpeg-exif.c
+	* plug-ins/common/dicom.c: fixed signedness warnings.
+
+2005-07-30  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/scripts/Makefile.am
 	* plug-ins/script-fu/scripts/image-structure.scm: removed this
 	script (see bug #307016).

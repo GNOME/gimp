@@ -171,7 +171,7 @@ jpeg_setup_exif_for_save (ExifData      *exif_data,
   if ((entry = exif_content_get_entry (exif_data->ifd[EXIF_IFD_0],
                                        EXIF_TAG_SOFTWARE)))
     {
-      entry->data = g_strdup ("The GIMP");
+      entry->data = (guchar *) g_strdup ("The GIMP");
       entry->size = strlen ("The GIMP") + 1;
       entry->components = entry->size;
     }

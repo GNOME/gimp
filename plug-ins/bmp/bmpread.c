@@ -141,7 +141,7 @@ ReadBMP (const gchar *name)
   gboolean  Grey;
   guchar    ColorMap[256][3];
   gint32    image_ID;
-  guchar    magick[2];
+  gchar     magick[2];
   Bitmap_Channel *masks;
 
   filename = name;

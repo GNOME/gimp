@@ -457,42 +457,68 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
       src  = region->data;
       msrc = mask->data;
 
-      while (h--)
-	{
-	  s = src;
-	  m = msrc;
-	  w = region->w;
+      switch (region->bytes)
+        {
+        case 1:
+          while (h--)
+            {
+              s = src;
+              m = msrc;
+              w = region->w;
 
-	  switch (region->bytes)
-	    {
-	    case 1:
 	      while (w--)
 		{
 		  masked = m[0] / 255.0;
+
 		  VALUE (0, s[0]) += masked;
+
 		  s += 1;
 		  m += 1;
 		}
-	      break;
 
-	    case 2:
+              src  += region->rowstride;
+              msrc += mask->rowstride;
+            }
+          break;
+
+        case 2:
+          while (h--)
+            {
+              s = src;
+              m = msrc;
+              w = region->w;
+
 	      while (w--)
 		{
 		  masked = m[0] / 255.0;
+
 		  VALUE (0, s[0]) += masked;
 		  VALUE (1, s[1]) += masked;
+
 		  s += 2;
 		  m += 1;
 		}
-	      break;
 
-	    case 3: /* calculate separate value values */
+              src  += region->rowstride;
+              msrc += mask->rowstride;
+            }
+          break;
+
+        case 3: /* calculate separate value values */
+          while (h--)
+            {
+              s = src;
+              m = msrc;
+              w = region->w;
+
 	      while (w--)
 		{
 		  masked = m[0] / 255.0;
+
 		  VALUE (1, s[0]) += masked;
 		  VALUE (2, s[1]) += masked;
 		  VALUE (3, s[2]) += masked;
+
 		  max = (s[0] > s[1]) ? s[0] : s[1];
 
 		  if (s[2] > max)
@@ -503,16 +529,28 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
 		  s += 3;
 		  m += 1;
 		}
-	      break;
 
-	    case 4: /* calculate separate value values */
+              src  += region->rowstride;
+              msrc += mask->rowstride;
+            }
+          break;
+
+        case 4: /* calculate separate value values */
+          while (h--)
+            {
+              s = src;
+              m = msrc;
+              w = region->w;
+
 	      while (w--)
 		{
 		  masked = m[0] / 255.0;
+
 		  VALUE (1, s[0]) += masked;
 		  VALUE (2, s[1]) += masked;
 		  VALUE (3, s[2]) += masked;
 		  VALUE (4, s[3]) += masked;
+
 		  max = (s[0] > s[1]) ? s[0] : s[1];
 
 		  if (s[2] > max)
@@ -523,47 +561,66 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
 		  s += 4;
 		  m += 1;
 		}
-	      break;
-	    }
 
-	  src  += region->rowstride;
-	  msrc += mask->rowstride;
+              src  += region->rowstride;
+              msrc += mask->rowstride;
+            }
+          break;
 	}
     }
   else /* no mask */
     {
       src = region->data;
 
-      while (h--)
-	{
-	  s = src;
-	  w = region->w;
+      switch (region->bytes)
+        {
+        case 1:
+          while (h--)
+            {
+              s = src;
+              w = region->w;
 
-	  switch(region->bytes)
-	    {
-	    case 1:
 	      while (w--)
 		{
                   VALUE (0, s[0]) += 1.0;
+
 		  s += 1;
 		}
-	      break;
 
-	    case 2:
+              src += region->rowstride;
+            }
+          break;
+
+        case 2:
+          while (h--)
+            {
+              s = src;
+              w = region->w;
+
 	      while (w--)
 		{
                   VALUE (0, s[0]) += 1.0;
                   VALUE (1, s[1]) += 1.0;
+
 		  s += 2;
 		}
-	      break;
 
-	    case 3: /* calculate separate value values */
+              src += region->rowstride;
+            }
+          break;
+
+        case 3: /* calculate separate value values */
+          while (h--)
+            {
+              s = src;
+              w = region->w;
+
 	      while (w--)
 		{
                   VALUE (1, s[0]) += 1.0;
                   VALUE (2, s[1]) += 1.0;
                   VALUE (3, s[2]) += 1.0;
+
 		  max = (s[0] > s[1]) ? s[0] : s[1];
 
 		  if (s[2] > max)
@@ -573,15 +630,24 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
 
 		  s += 3;
 		}
-	      break;
 
-	    case 4: /* calculate separate value values */
+              src += region->rowstride;
+            }
+          break;
+
+        case 4: /* calculate separate value values */
+          while (h--)
+            {
+              s = src;
+              w = region->w;
+
 	      while (w--)
 		{
                   VALUE (1, s[0]) += 1.0;
                   VALUE (2, s[1]) += 1.0;
                   VALUE (3, s[2]) += 1.0;
                   VALUE (4, s[3]) += 1.0;
+
 		  max = (s[0] > s[1]) ? s[0] : s[1];
 
 		  if (s[2] > max)
@@ -591,10 +657,10 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
 
 		  s += 4;
 		}
-	      break;
-	    }
 
-	  src += region->rowstride;
+              src += region->rowstride;
+            }
+          break;
 	}
     }
 

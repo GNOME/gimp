@@ -279,7 +279,7 @@ handle_drop(GtkWidget *widget, GdkDragContext *context, gint x, gint y,
 	Object_t *obj = selection_get_object (model, &iter);
 	if (!obj->locked) {
 	  command_list_add(edit_object_command_new (obj));
-	  object_set_url (obj, data->data);
+	  object_set_url (obj, (const gchar *) data->data);
 	  object_emit_update_signal (obj);
 	  success = TRUE;
 	}

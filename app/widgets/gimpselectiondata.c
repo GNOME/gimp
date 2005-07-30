@@ -672,7 +672,7 @@ gimp_selection_data_get_name (GtkSelectionData *selection)
       return NULL;
     }
 
-  name = g_strndup (selection->data, selection->length);
+  name = g_strndup ((const gchar *) selection->data, selection->length);
 
   if (! g_utf8_validate (name, -1, NULL))
     {
