@@ -77,9 +77,10 @@ static void   gimp_foreground_select_tool_draw           (GimpDrawTool    *draw_
 static void   gimp_foreground_select_tool_select      (GimpFreeSelectTool *free_sel,
                                                        GimpDisplay        *gdisp);
 static void  gimp_foreground_select_tool_set_mask     (GimpForegroundSelectTool *fg_select,
+                                                       GimpDisplay              *gdisp,
                                                        GimpChannel              *mask);
 static void  gimp_foreground_select_tool_apply_mask   (GimpForegroundSelectTool *fg_select,
-                                                       GimpImage                *gimage);
+                                                       GimpDisplay              *gdisp);
 
 
 static GimpFreeSelectToolClass *parent_class = NULL;
@@ -174,7 +175,8 @@ gimp_foreground_select_tool_finalize (GObject *object)
 {
   GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (object);
 
-  gimp_foreground_select_tool_set_mask (fg_select, NULL);
+  if (fg_select->mask)
+    g_warning ("%s: mask should be NULL at this point", G_STRLOC);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -189,8 +191,7 @@ gimp_foreground_select_tool_control (GimpTool       *tool,
   switch (action)
     {
     case HALT:
-      gimp_foreground_select_tool_set_mask (fg_select, NULL);
-      gimp_display_shell_set_overlay (GIMP_DISPLAY_SHELL (gdisp->shell), NULL);
+      gimp_foreground_select_tool_set_mask (fg_select, gdisp, NULL);
       break;
 
     default:
@@ -213,8 +214,7 @@ gimp_foreground_select_tool_key_press (GimpTool    *tool,
     case GDK_KP_Enter:
     case GDK_Return:
       gimp_foreground_select_tool_apply_mask (GIMP_FOREGROUND_SELECT_TOOL (tool),
-                                              gdisp->gimage);
-      gimp_display_shell_set_overlay (GIMP_DISPLAY_SHELL (gdisp->shell), NULL);
+                                              gdisp);
       return TRUE;
 
     case GDK_Escape:
@@ -299,10 +299,7 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
                                     GIMP_PROGRESS (gdisp));
 
   gimp_foreground_select_tool_set_mask (GIMP_FOREGROUND_SELECT_TOOL (free_sel),
-                                        mask);
-  gimp_display_shell_set_overlay (GIMP_DISPLAY_SHELL (gdisp->shell),
-                                  GIMP_DRAWABLE (mask));
-
+                                        gdisp, mask);
   g_object_unref (mask);
 
   gimp_unset_busy (gimage->gimp);
@@ -310,6 +307,7 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
 
 static void
 gimp_foreground_select_tool_set_mask (GimpForegroundSelectTool *fg_select,
+                                      GimpDisplay              *gdisp,
                                       GimpChannel              *mask)
 {
   if (fg_select->mask == mask)
@@ -323,11 +321,14 @@ gimp_foreground_select_tool_set_mask (GimpForegroundSelectTool *fg_select,
 
   if (mask)
     fg_select->mask = g_object_ref (mask);
+
+  gimp_display_shell_set_overlay (GIMP_DISPLAY_SHELL (gdisp->shell),
+                                  GIMP_DRAWABLE (mask));
 }
 
 static void
 gimp_foreground_select_tool_apply_mask (GimpForegroundSelectTool *fg_select,
-                                        GimpImage                *gimage)
+                                        GimpDisplay              *gdisp)
 {
   GimpTool             *tool = GIMP_TOOL (fg_select);
   GimpSelectionOptions *options;
@@ -337,7 +338,7 @@ gimp_foreground_select_tool_apply_mask (GimpForegroundSelectTool *fg_select,
   if (! fg_select->mask)
     return;
 
-  gimp_channel_select_channel (gimp_image_get_mask (gimage),
+  gimp_channel_select_channel (gimp_image_get_mask (gdisp->gimage),
                                tool->tool_info->blurb,
                                fg_select->mask, 0, 0,
                                GIMP_SELECTION_TOOL (tool)->op,
@@ -345,5 +346,5 @@ gimp_foreground_select_tool_apply_mask (GimpForegroundSelectTool *fg_select,
                                options->feather_radius,
                                options->feather_radius);
 
-  gimp_foreground_select_tool_set_mask (fg_select, NULL);
+  gimp_foreground_select_tool_set_mask (fg_select, gdisp, NULL);
 }
