@@ -18,7 +18,9 @@ Changes in GIMP 2.3.3
 - prepared code and UI for more layer lock types
 - added GimpResolution entry widget
 - added new PDF import plug-in based on libpoppler
-- improved palette editor
+- undeprecated and improved palette editor
+- show more information in the Image Properties dialog
+- added first prototype of SIOX foreground selection tool
 
 
 Changes in GIMP 2.3.2

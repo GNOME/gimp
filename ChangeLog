@@ -1,3 +1,9 @@
+2005-07-30  Sven Neumann  <sven@gimp.org>
+
+	* app/base/tile-swap.c: increase the size of the swap file in
+	chunks of 16MB instead of only 256KB. Check the return value of
+	ftruncate().
+
 2005-07-29  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimppageselector.c: increased spacing.

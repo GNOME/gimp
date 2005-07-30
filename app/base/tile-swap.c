@@ -132,7 +132,8 @@ static GHashTable    * swap_files       = NULL;
 static GList         * open_swap_files  = NULL;
 static gint            nopen_swap_files = 0;
 static gint            next_swap_num    = 1;
-static off_t           swap_file_grow   = 16 * TILE_WIDTH * TILE_HEIGHT * 4;
+static const off_t     swap_file_grow   = 1024 * TILE_WIDTH * TILE_HEIGHT * 4;
+
 #ifdef ENABLE_THREADED_TILE_SWAPPER
 static GStaticMutex    swapfile_mutex         = G_STATIC_MUTEX_INIT;
 
@@ -817,7 +818,11 @@ tile_swap_resize (DefSwapFile *def_swap_file,
 {
   if (def_swap_file->swap_file_end > new_size)
     {
-      ftruncate (fd, new_size);
+      if (ftruncate (fd, new_size) != 0)
+        {
+          g_message ("Failed to resize swap file: %s", g_strerror (errno));
+          return;
+        }
     }
 
   def_swap_file->swap_file_end = new_size;
