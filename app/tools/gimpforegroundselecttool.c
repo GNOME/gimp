@@ -1,6 +1,9 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
+ * GimpForegroundSelectTool
+ * Copyright (C) 2005  Sven Neumann <sven@gimp.org>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -74,13 +77,14 @@ static void   gimp_foreground_select_tool_motion         (GimpTool        *tool,
 
 static void   gimp_foreground_select_tool_draw           (GimpDrawTool    *draw_tool);
 
-static void   gimp_foreground_select_tool_select      (GimpFreeSelectTool *free_sel,
-                                                       GimpDisplay        *gdisp);
-static void  gimp_foreground_select_tool_set_mask     (GimpForegroundSelectTool *fg_select,
-                                                       GimpDisplay              *gdisp,
-                                                       GimpChannel              *mask);
-static void  gimp_foreground_select_tool_apply_mask   (GimpForegroundSelectTool *fg_select,
-                                                       GimpDisplay              *gdisp);
+static void   gimp_foreground_select_tool_select   (GimpFreeSelectTool *free_sel,
+                                                    GimpDisplay        *gdisp);
+
+static void   gimp_foreground_select_tool_set_mask (GimpForegroundSelectTool *fg_select,
+                                                    GimpDisplay              *gdisp,
+                                                    GimpChannel              *mask);
+static void   gimp_foreground_select_tool_apply    (GimpForegroundSelectTool *fg_select,
+                                                    GimpDisplay              *gdisp);
 
 
 static GimpFreeSelectToolClass *parent_class = NULL;
@@ -141,7 +145,9 @@ gimp_foreground_select_tool_class_init (GimpForegroundSelectToolClass *klass)
   GObjectClass            *object_class    = G_OBJECT_CLASS (klass);
   GimpToolClass           *tool_class      = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass       *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
-  GimpFreeSelectToolClass *free_select_tool_class = GIMP_FREE_SELECT_TOOL_CLASS (klass);
+  GimpFreeSelectToolClass *free_select_tool_class;
+
+  free_select_tool_class = GIMP_FREE_SELECT_TOOL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -206,6 +212,8 @@ gimp_foreground_select_tool_key_press (GimpTool    *tool,
                                        GdkEventKey *kevent,
                                        GimpDisplay *gdisp)
 {
+  GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
+
   if (gdisp != tool->gdisp)
     return FALSE;
 
@@ -213,8 +221,7 @@ gimp_foreground_select_tool_key_press (GimpTool    *tool,
     {
     case GDK_KP_Enter:
     case GDK_Return:
-      gimp_foreground_select_tool_apply_mask (GIMP_FOREGROUND_SELECT_TOOL (tool),
-                                              gdisp);
+      gimp_foreground_select_tool_apply (fg_select, gdisp);
       return TRUE;
 
     case GDK_Escape:
@@ -327,16 +334,16 @@ gimp_foreground_select_tool_set_mask (GimpForegroundSelectTool *fg_select,
 }
 
 static void
-gimp_foreground_select_tool_apply_mask (GimpForegroundSelectTool *fg_select,
-                                        GimpDisplay              *gdisp)
+gimp_foreground_select_tool_apply (GimpForegroundSelectTool *fg_select,
+                                   GimpDisplay              *gdisp)
 {
   GimpTool             *tool = GIMP_TOOL (fg_select);
   GimpSelectionOptions *options;
 
-  options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
-
   if (! fg_select->mask)
     return;
+
+  options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   gimp_channel_select_channel (gimp_image_get_mask (gdisp->gimage),
                                tool->tool_info->blurb,
