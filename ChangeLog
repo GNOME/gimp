@@ -1,5 +1,10 @@
 2005-07-30  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpforegroundselecttool.c: implement oper_update()
+	and give some hints in the statusbar.
+
+2005-07-30  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-render.c
 	* app/display/gimpdisplayshell.[ch]: added
 	gimp_display_shell_set_overlay(); allows to overlay a mask over the
