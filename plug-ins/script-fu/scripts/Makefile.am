@@ -62,7 +62,6 @@ scripts = \
 	guides-remove-all.scm		\
 	hsv-graph.scm			\
 	i26-gunya2.scm			\
-	image-structure.scm		\
 	land.scm			\
 	lava.scm			\
 	line-nova.scm			\

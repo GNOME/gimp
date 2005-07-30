@@ -1,5 +1,11 @@
 2005-07-30  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/scripts/Makefile.am
+	* plug-ins/script-fu/scripts/image-structure.scm: removed this
+	script (see bug #307016).
+
+2005-07-30  Sven Neumann  <sven@gimp.org>
+
 	* app/base/tile-swap.c: increase the size of the swap file in
 	chunks of 16MB instead of only 256KB. Check the return value of
 	ftruncate().
