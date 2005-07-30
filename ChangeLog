@@ -1,5 +1,9 @@
 2005-07-30  Sven Neumann  <sven@gimp.org>
 
+	* libgimpbase/gimpbase.def: added missing symbol.
+
+2005-07-30  Sven Neumann  <sven@gimp.org>
+
 	* app/base/gimphistogram.c (gimp_histogram_calculate_sub_region):
 	loop unrolling.
 

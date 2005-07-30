@@ -31,6 +31,7 @@ EXPORTS
 	gimp_flags_set_value_descriptions
 	gimp_flags_value_get_desc
 	gimp_flags_value_get_help
+	gimp_foreground_extract_mode_get_type
 	gimp_gradient_type_get_type
 	gimp_gtkrc
 	gimp_icon_type_get_type
