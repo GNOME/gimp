@@ -1,6 +1,11 @@
 2005-07-30  Sven Neumann  <sven@gimp.org>
 
-	* app/tools/gimpforegroundselecttool.c: implement oper_update()
+	* app/tools/gimpforegroundselecttool.c: implement cursor_update().
+	Suppress standard selection tool functionality if a mask exists.
+
+2005-07-30  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpforegroundselecttool.c: implement oper_update() and
 	and give some hints in the statusbar.
 
 2005-07-30  Sven Neumann  <sven@gimp.org>

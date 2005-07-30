@@ -60,6 +60,10 @@ static void   gimp_foreground_select_tool_oper_update    (GimpTool        *tool,
                                                           GimpCoords      *coords,
                                                           GdkModifierType  state,
                                                           GimpDisplay     *gdisp);
+static void   gimp_foreground_select_tool_cursor_update  (GimpTool        *tool,
+                                                          GimpCoords      *coords,
+                                                          GdkModifierType  state,
+                                                          GimpDisplay     *gdisp);
 static gboolean  gimp_foreground_select_tool_key_press   (GimpTool        *tool,
                                                           GdkEventKey     *kevent,
                                                           GimpDisplay     *gdisp);
@@ -159,6 +163,7 @@ gimp_foreground_select_tool_class_init (GimpForegroundSelectToolClass *klass)
 
   tool_class->control            = gimp_foreground_select_tool_control;
   tool_class->oper_update        = gimp_foreground_select_tool_oper_update;
+  tool_class->cursor_update      = gimp_foreground_select_tool_cursor_update;
   tool_class->key_press          = gimp_foreground_select_tool_key_press;
   tool_class->button_press       = gimp_foreground_select_tool_button_press;
   tool_class->button_release     = gimp_foreground_select_tool_button_release;
@@ -225,16 +230,61 @@ gimp_foreground_select_tool_oper_update (GimpTool        *tool,
 
   if (fg_select->mask)
     {
-      if ((state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK | GDK_MOD1_MASK)) == 0)
-        status = _("Press Enter to apply selection");
+      switch (GIMP_SELECTION_TOOL (tool)->op)
+        {
+        case SELECTION_REPLACE:
+        case SELECTION_MOVE_MASK:
+        case SELECTION_MOVE:
+        case SELECTION_MOVE_COPY:
+        case SELECTION_ANCHOR:
+          status = _("Press Enter to apply selection");
+          break;
+        default:
+          break;
+        }
     }
   else
     {
-      status = _("Draw a rough outline around the object to extract");
+      switch (GIMP_SELECTION_TOOL (tool)->op)
+        {
+        case SELECTION_ADD:
+        case SELECTION_SUBTRACT:
+        case SELECTION_INTERSECT:
+        case SELECTION_REPLACE:
+          status = _("Draw a rough outline around the object to extract");
+          break;
+        default:
+          break;
+        }
     }
 
   if (status)
     gimp_tool_replace_status (tool, gdisp, status);
+}
+
+static void
+gimp_foreground_select_tool_cursor_update (GimpTool        *tool,
+                                           GimpCoords      *coords,
+                                           GdkModifierType  state,
+                                           GimpDisplay     *gdisp)
+{
+  GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
+
+  if (fg_select->mask)
+    {
+      switch (GIMP_SELECTION_TOOL (tool)->op)
+        {
+        case SELECTION_MOVE_MASK:
+        case SELECTION_MOVE:
+        case SELECTION_MOVE_COPY:
+        case SELECTION_ANCHOR:
+          return;
+        default:
+          break;
+        }
+    }
+
+  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }
 
 static gboolean
@@ -270,8 +320,11 @@ gimp_foreground_select_tool_button_press (GimpTool        *tool,
                                           GdkModifierType  state,
                                           GimpDisplay     *gdisp)
 {
-  GIMP_TOOL_CLASS (parent_class)->button_press (tool,
-                                                coords, time, state, gdisp);
+  GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
+
+  if (! fg_select->mask)
+    GIMP_TOOL_CLASS (parent_class)->button_press (tool,
+                                                  coords, time, state, gdisp);
 }
 
 static void
@@ -281,8 +334,11 @@ gimp_foreground_select_tool_button_release (GimpTool        *tool,
                                             GdkModifierType  state,
                                             GimpDisplay     *gdisp)
 {
-  GIMP_TOOL_CLASS (parent_class)->button_release (tool,
-                                                  coords, time, state, gdisp);
+  GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
+
+  if (! fg_select->mask)
+    GIMP_TOOL_CLASS (parent_class)->button_release (tool,
+                                                    coords, time, state, gdisp);
 }
 
 static void
@@ -292,8 +348,11 @@ gimp_foreground_select_tool_motion (GimpTool        *tool,
                                     GdkModifierType  state,
                                     GimpDisplay     *gdisp)
 {
-  GIMP_TOOL_CLASS (parent_class)->motion (tool,
-                                          coords, time, state, gdisp);
+  GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
+
+  if (! fg_select->mask)
+    GIMP_TOOL_CLASS (parent_class)->motion (tool,
+                                            coords, time, state, gdisp);
 }
 
 static void
@@ -368,17 +427,21 @@ gimp_foreground_select_tool_apply (GimpForegroundSelectTool *fg_select,
                                    GimpDisplay              *gdisp)
 {
   GimpTool             *tool = GIMP_TOOL (fg_select);
+  GimpChannelOps        op   = GIMP_SELECTION_TOOL (tool)->op;
   GimpSelectionOptions *options;
 
   if (! fg_select->mask)
     return;
+
+  if (op > GIMP_CHANNEL_OP_INTERSECT)
+    op = GIMP_CHANNEL_OP_REPLACE;
 
   options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   gimp_channel_select_channel (gimp_image_get_mask (gdisp->gimage),
                                tool->tool_info->blurb,
                                fg_select->mask, 0, 0,
-                               GIMP_SELECTION_TOOL (tool)->op,
+                               op,
                                options->feather,
                                options->feather_radius,
                                options->feather_radius);
