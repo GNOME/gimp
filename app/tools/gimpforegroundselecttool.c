@@ -351,10 +351,18 @@ gimp_foreground_select_tool_button_press (GimpTool        *tool,
                                           GimpDisplay     *gdisp)
 {
   GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
+  GimpDrawTool             *draw_tool = GIMP_DRAW_TOOL (tool);
 
   if (fg_select->mask)
     {
       GimpVector2 point = gimp_vector2_new (coords->x, coords->y);
+
+      gimp_draw_tool_pause (draw_tool);
+
+      if (gimp_draw_tool_is_active (draw_tool) && draw_tool->gdisp != gdisp)
+        {
+          gimp_draw_tool_stop (draw_tool);
+        }
 
       gimp_tool_control_activate (tool->control);
 
@@ -362,6 +370,11 @@ gimp_foreground_select_tool_button_press (GimpTool        *tool,
       fg_select->stroke = g_array_new (FALSE, FALSE, sizeof (GimpVector2));
 
       g_array_append_val (fg_select->stroke, point);
+
+      if (! gimp_draw_tool_is_active (draw_tool))
+        gimp_draw_tool_start (draw_tool, gdisp);
+
+      gimp_draw_tool_resume (draw_tool);
     }
   else
     {
@@ -381,15 +394,15 @@ gimp_foreground_select_tool_button_release (GimpTool        *tool,
 
   if (fg_select->mask)
     {
+      GList *list = fg_select->fg_strokes;
+
       gimp_tool_control_halt (tool->control);
 
-      fg_select->fg_strokes =
-        g_list_append (fg_select->fg_strokes,
-                       GINT_TO_POINTER (fg_select->stroke->len));
-      g_list_append (fg_select->fg_strokes,
-                     g_array_free (fg_select->stroke, FALSE));
-      g_list_append (fg_select->fg_strokes,
-                     GINT_TO_POINTER (fg_select->stroke_width));
+      list = g_list_append (list, GINT_TO_POINTER (fg_select->stroke->len));
+      list = g_list_append (list, g_array_free (fg_select->stroke, FALSE));
+      list = g_list_append (list, GINT_TO_POINTER (fg_select->stroke_width));
+
+      fg_select->fg_strokes = list;
 
       fg_select->stroke = NULL;
 
@@ -414,9 +427,20 @@ gimp_foreground_select_tool_motion (GimpTool        *tool,
 
   if (fg_select->mask)
     {
-      GimpVector2 point = gimp_vector2_new (coords->x, coords->y);
+      GimpVector2 *last = &g_array_index (fg_select->stroke,
+                                          GimpVector2,
+                                          fg_select->stroke->len - 1);
 
-      g_array_append_val (fg_select->stroke, point);
+      if (last->x != coords->x || last->y != coords->y)
+        {
+          GimpVector2 point = gimp_vector2_new (coords->x, coords->y);
+
+          gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+
+          g_array_append_val (fg_select->stroke, point);
+
+          gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+        }
     }
   else
     {
@@ -431,11 +455,14 @@ gimp_foreground_select_tool_draw (GimpDrawTool *draw_tool)
   GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (draw_tool);
 
   if (fg_select->stroke)
-    {
-      /* FIXME: draw current stroke here */
-    }
+    gimp_draw_tool_draw_lines (draw_tool,
+                               &g_array_index (fg_select->stroke,
+                                               GimpVector2, 0),
+                               fg_select->stroke->len,
+                               FALSE, FALSE);
 
-  GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
+  if (! fg_select->mask)
+    GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
 }
 
 static void
@@ -477,6 +504,16 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
 
       gimp_foreground_select_tool_stroke (mask,
                                           num_points, points, width, TRUE);
+    }
+
+  for (list = fg_select->bg_strokes; list; list = list->next->next->next)
+    {
+      gint         num_points = GPOINTER_TO_INT (list->data);
+      GimpVector2 *points     = list->next->data;
+      gint         width      = GPOINTER_TO_INT (list->next->next->data);
+
+      gimp_foreground_select_tool_stroke (mask,
+                                          num_points, points, width, FALSE);
     }
 
   gimp_drawable_foreground_extract (drawable,
