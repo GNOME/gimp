@@ -1,3 +1,9 @@
+2005-07-31  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added new files.
+
+	* de.po: updated.
+
 2005-07-30  Adam Weinberger  <adamw@gnome.org>
 
 	* en_CA.po: Updated Canadian English translation.

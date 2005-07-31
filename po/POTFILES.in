@@ -263,6 +263,7 @@ app/tools/gimperasertool.c
 app/tools/gimpflipoptions.c
 app/tools/gimpfliptool.c
 app/tools/gimpfreeselecttool.c
+app/tools/gimpforegroundselectoptions.c
 app/tools/gimpforegroundselecttool.c
 app/tools/gimpfuzzyselecttool.c
 app/tools/gimphistogramoptions.c

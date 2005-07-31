@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-29 20:03+0200\n"
-"PO-Revision-Date: 2005-07-29 20:08+0200\n"
+"POT-Creation-Date: 2005-07-31 20:26+0200\n"
+"PO-Revision-Date: 2005-07-31 20:29+0200\n"
 "Last-Translator: Hendrik Richter <hendi@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -3450,7 +3450,7 @@ msgstr "Faser mischen"
 msgid "Color erase"
 msgstr "Farbe entfernen"
 
-#: ../app/base/tile-swap.c:482
+#: ../app/base/tile-swap.c:483
 msgid ""
 "Unable to open swap file. The Gimp has run out of memory and cannot use the "
 "swap file. Some parts of your images may be corrupted. Try to save your work "
@@ -4940,6 +4940,10 @@ msgstr "Entsättigen"
 #: ../app/core/gimpdrawable-equalize.c:78
 msgid "Equalize"
 msgstr "Egalisieren"
+
+#: ../app/core/gimpdrawable-foreground-extract.c:67
+msgid "Foreground Extraction..."
+msgstr "Vordergrund extrahieren..."
 
 #: ../app/core/gimpdrawable-invert.c:61
 msgid "Invert"
@@ -7590,11 +7594,11 @@ msgstr "Dunkle Schachbrett-Farbe"
 msgid "Custom color"
 msgstr "Benutzerdefinierte Farbe"
 
-#: ../app/display/gimpdisplayshell.c:913
+#: ../app/display/gimpdisplayshell.c:921
 msgid "Zoom image when window size changes"
 msgstr "Bild zoomen, wenn die Fenstergröße sich ändert"
 
-#: ../app/display/gimpdisplayshell.c:933
+#: ../app/display/gimpdisplayshell.c:941
 msgid "Toggle Quick Mask"
 msgstr "Schnelle Maske aktivieren/deaktivieren"
 
@@ -7737,7 +7741,7 @@ msgstr "Randstil des Textes in der Statuszeile"
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: ../app/display/gimpstatusbar.c:455
+#: ../app/display/gimpstatusbar.c:452
 msgid "Other..."
 msgstr "Anders..."
 
@@ -8053,7 +8057,7 @@ msgstr ""
 "PDB-Aufruffehler für Prozedur »%s«:\n"
 "Falscher Typ bei Argument #%d (%s erwartet, %s erhalten)"
 
-#: ../app/pdb/selection_tools_cmds.c:332 ../app/tools/gimpfreeselecttool.c:94
+#: ../app/pdb/selection_tools_cmds.c:332 ../app/tools/gimpfreeselecttool.c:97
 msgid "Free Select"
 msgstr "Freie Auswahl"
 
@@ -8309,7 +8313,7 @@ msgstr "Mit variablem Druck sprühen"
 msgid "_Airbrush"
 msgstr "S_prühpistole"
 
-#: ../app/tools/gimpairbrushtool.c:122 ../app/tools/gimpconvolvetool.c:210
+#: ../app/tools/gimpairbrushtool.c:122 ../app/tools/gimpconvolvetool.c:208
 #: ../app/tools/gimpsmudgetool.c:122
 msgid "Rate:"
 msgstr "Rate:"
@@ -8612,7 +8616,7 @@ msgid "Con_volve"
 msgstr "_Verknüpfen"
 
 #. the type radio box
-#: ../app/tools/gimpconvolvetool.c:192
+#: ../app/tools/gimpconvolvetool.c:190
 #, c-format
 msgid "Convolve Type  %s"
 msgstr "Verknüpfungsart  %s"
@@ -8780,7 +8784,7 @@ msgid "_Eraser"
 msgstr "_Radierer"
 
 #. the anti_erase toggle
-#: ../app/tools/gimperasertool.c:184
+#: ../app/tools/gimperasertool.c:182
 #, c-format
 msgid "Anti erase  %s"
 msgstr "Un-Radieren  %s"
@@ -8804,25 +8808,45 @@ msgstr "Die Ebene oder Auswahl spiegeln"
 msgid "_Flip"
 msgstr "Sp_iegeln"
 
-#: ../app/tools/gimpfreeselecttool.c:95
+#: ../app/tools/gimpfreeselecttool.c:98
 msgid "Select hand-drawn regions"
 msgstr "Einen Bereich frei Hand wählen"
 
-#: ../app/tools/gimpfreeselecttool.c:96
+#: ../app/tools/gimpfreeselecttool.c:99
 msgid "_Free Select"
 msgstr "_Freie Auswahl"
 
-#: ../app/tools/gimpforegroundselecttool.c:87
+#: ../app/tools/gimpforegroundselectoptions.c:143
+msgid "Interactive refinement"
+msgstr "Interaktive Verbesserung"
+
+#: ../app/tools/gimpforegroundselectoptions.c:144
+msgid "Mark background"
+msgstr "Hintergrund markieren"
+
+#: ../app/tools/gimpforegroundselectoptions.c:145
+msgid "Mark foreground"
+msgstr "Vordergrund markieren"
+
+#: ../app/tools/gimpforegroundselecttool.c:120
 msgid "Foreground Select"
 msgstr "Vordergrundauswahl"
 
-#: ../app/tools/gimpforegroundselecttool.c:88
+#: ../app/tools/gimpforegroundselecttool.c:121
 msgid "Extract foreground using SIOX algorithm"
 msgstr "Vordergrund freistellen mittels SIOX Algorithmus"
 
-#: ../app/tools/gimpforegroundselecttool.c:89
-msgid "_Foreground Select"
-msgstr "_Vordergroundauswahl"
+#: ../app/tools/gimpforegroundselecttool.c:122
+msgid "F_oreground Select"
+msgstr "_Vordergrundauswahl"
+
+#: ../app/tools/gimpforegroundselecttool.c:268
+msgid "Press Enter to apply selection"
+msgstr "Auswahl mit Enter-Taste übernehmen"
+
+#: ../app/tools/gimpforegroundselecttool.c:282
+msgid "Draw a rough outline around the object to extract"
+msgstr "Ziehen Sie eine grobe Auswahl um das zu extrahierende Objekt"
 
 #: ../app/tools/gimpfuzzyselecttool.c:98
 msgid "Select contiguous regions"
@@ -11315,3 +11339,6 @@ msgstr "Bitte stellen Sie sicher, dass das Werkzeugefenster sichtbar ist!"
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "»%s« konnte nicht gestartet werden: %s"
+
+#~ msgid "_Foreground Select"
+#~ msgstr "_Vordergroundauswahl"
