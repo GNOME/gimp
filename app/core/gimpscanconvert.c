@@ -449,7 +449,8 @@ gimp_scan_convert_render (GimpScanConvert *sc,
   g_return_if_fail (tile_manager != NULL);
 
   gimp_scan_convert_render_internal (sc,
-                                     tile_manager, off_x, off_y, antialias, 0);
+                                     tile_manager, off_x, off_y,
+                                     antialias, 255);
 }
 
 void
@@ -463,7 +464,8 @@ gimp_scan_convert_render_value (GimpScanConvert *sc,
   g_return_if_fail (tile_manager != NULL);
 
   gimp_scan_convert_render_internal (sc,
-                                     tile_manager, off_x, off_y, FALSE, value);
+                                     tile_manager, off_x, off_y,
+                                     FALSE, value);
 }
 
 static void

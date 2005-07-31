@@ -38,6 +38,12 @@ struct _GimpForegroundSelectTool
 {
   GimpFreeSelectTool  parent_instance;
 
+  GArray             *stroke;
+  gint                stroke_width;
+
+  GList              *fg_strokes;
+  GList              *bg_strokes;
+
   GimpChannel        *mask;
 };
 
