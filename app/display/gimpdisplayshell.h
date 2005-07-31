@@ -165,10 +165,7 @@ struct _GimpDisplayShell
   guint32           last_motion_time;
 
   GdkRectangle     *highlight;         /* in image coordinates, can be NULL   */
-
   GimpDrawable     *mask;
-  GimpDrawable     *overlay;
-  guchar            overlay_color[3];
 
   gpointer          scroll_info;
 };
@@ -241,8 +238,6 @@ void        gimp_display_shell_set_highlight         (GimpDisplayShell *shell,
                                                       const GdkRectangle *highlight);
 void        gimp_display_shell_set_mask              (GimpDisplayShell *shell,
                                                       GimpDrawable     *mask);
-void        gimp_display_shell_set_overlay           (GimpDisplayShell *shell,
-                                                      GimpDrawable     *mask,
-                                                      const GimpRGB    *color);
+
 
 #endif /* __GIMP_DISPLAY_SHELL_H__ */

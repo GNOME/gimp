@@ -1,3 +1,12 @@
+2005-07-31  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-render.c
+
+	* app/display/gimpdisplayshell.[ch]: removed the overlay again.
+	This needs to be done differently.
+
+	* app/tools/gimpforegroundselecttool.c: changed accordingly.
+
 2005-07-30  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-render.c

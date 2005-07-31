@@ -320,7 +320,6 @@ gimp_display_shell_init (GimpDisplayShell *shell)
 
   shell->highlight              = NULL;
   shell->mask                   = NULL;
-  shell->overlay                = NULL;
 
   gtk_window_set_role (GTK_WINDOW (shell), "gimp-image-window");
   gtk_window_set_resizable (GTK_WINDOW (shell), TRUE);
@@ -414,12 +413,6 @@ gimp_display_shell_destroy (GtkObject *object)
     {
       g_object_unref (shell->mask);
       shell->mask = NULL;
-    }
-
-  if (shell->overlay)
-    {
-      g_object_unref (shell->overlay);
-      shell->overlay = NULL;
     }
 
   if (shell->title_idle_id)
@@ -1617,57 +1610,16 @@ gimp_display_shell_set_mask (GimpDisplayShell *shell,
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (mask == NULL ||
-                    (GIMP_IS_DRAWABLE (mask) && gimp_drawable_bytes (mask) == 1));
+                    (GIMP_IS_DRAWABLE (mask) &&
+                     gimp_drawable_bytes (mask) == 1));
 
   if (shell->mask == mask)
     return;
 
-  if (mask)
-    g_object_ref (mask);
-
   if (shell->mask)
     g_object_unref (shell->mask);
 
-  shell->mask = mask;
-
-  gimp_display_shell_expose_full (shell);
-}
-
-/**
- * gimp_display_shell_set_overlay:
- * @shell: a #GimpDisplayShell
- * @mask:  a #GimpDrawable (1 byte per pixel)
- * @color: the color to use for the overlay (or %NULL to not change color)
- *
- * Allows to mark areas in a given color (used by the foreground
- * selection tool).  Pixels that are selected (> 127) in the mask are
- * drawn in the given color.
- **/
-void
-gimp_display_shell_set_overlay (GimpDisplayShell *shell,
-                                GimpDrawable     *mask,
-                                const GimpRGB    *color)
-{
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (mask == NULL ||
-                    (GIMP_IS_DRAWABLE (mask) && gimp_drawable_bytes (mask) == 1));
-
-  if (shell->overlay == mask && ! color)
-    return;
-
-  if (color)
-    gimp_rgb_get_uchar (color,
-                        shell->overlay_color + 0,
-                        shell->overlay_color + 1,
-                        shell->overlay_color + 2);
-
-  if (mask)
-    g_object_ref (mask);
-
-  if (shell->overlay)
-    g_object_unref (shell->overlay);
-
-  shell->overlay = mask;
+  shell->mask = mask ? g_object_ref (mask) : NULL;
 
   gimp_display_shell_expose_full (shell);
 }

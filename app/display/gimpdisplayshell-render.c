@@ -200,9 +200,6 @@ static void  gimp_display_shell_render_highlight (GimpDisplayShell *shell,
                                                   GdkRectangle     *highlight);
 static void  gimp_display_shell_render_mask      (GimpDisplayShell *shell,
                                                   RenderInfo       *info);
-static void  gimp_display_shell_render_overlay   (GimpDisplayShell *shell,
-                                                  RenderInfo       *info,
-                                                  const guchar     *color);
 
 
 /*****************************************************************/
@@ -253,24 +250,12 @@ gimp_display_shell_render (GimpDisplayShell *shell,
     {
       gimp_display_shell_render_highlight (shell, x, y, w, h, highlight);
     }
-  else
+  else if (shell->mask)
     {
-      if (shell->mask)
-        {
-          render_image_init_info (&info, shell, x, y,
-                                  gimp_drawable_data (shell->mask));
+      render_image_init_info (&info, shell, x, y,
+                              gimp_drawable_data (shell->mask));
 
-          gimp_display_shell_render_mask (shell, &info);
-        }
-
-      if (shell->overlay)
-        {
-          render_image_init_info (&info, shell, x, y,
-                                  gimp_drawable_data (shell->overlay));
-
-          gimp_display_shell_render_overlay (shell, &info,
-                                             shell->overlay_color);
-        }
+      gimp_display_shell_render_mask (shell, &info);
     }
 
   /*  put it to the screen  */
@@ -409,64 +394,6 @@ gimp_display_shell_render_mask (GimpDisplayShell *shell,
     }
 }
 
-static void
-gimp_display_shell_render_overlay (GimpDisplayShell *shell,
-                                   RenderInfo       *info,
-                                   const guchar     *color)
-{
-  gint      y, ye;
-  gint      x, xe;
-  gboolean  initial = TRUE;
-
-  y  = info->y;
-  ye = info->y + info->h;
-  xe = info->x + info->w;
-
-  info->src = render_image_tile_fault (info);
-
-  while (TRUE)
-    {
-      gint error =
-        RINT (floor ((y + 1) / info->scaley) - floor (y / info->scaley));
-
-      if (!initial && (error == 0))
-	{
-	  memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
-	}
-      else
-	{
-	  const guchar *src  = info->src;
-	  guchar       *dest = info->dest;
-
-	  for (x = info->x; x < xe; x++, src++, dest += 3)
-	    {
-              if (*src & 0x80)
-                {
-                  dest[0] = color[0];
-                  dest[1] = color[1];
-                  dest[2] = color[2];
-                }
-            }
-	}
-
-      if (++y == ye)
-        break;
-
-      info->dest += info->dest_bpl;
-
-      if (error)
-	{
-	  info->src_y += error;
-	  info->src = render_image_tile_fault (info);
-
-	  initial = TRUE;
-	}
-      else
-        {
-          initial = FALSE;
-        }
-    }
-}
 
 /*************************/
 /*  8 Bit functions      */
