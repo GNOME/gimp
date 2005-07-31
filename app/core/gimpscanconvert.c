@@ -87,7 +87,7 @@ gimp_scan_convert_new (void)
 
   sc = g_new0 (GimpScanConvert, 1);
 
-  sc->ratio_xy  = 1.0;
+  sc->ratio_xy = 1.0;
 
   return sc;
 }
@@ -337,7 +337,7 @@ gimp_scan_convert_stroke (GimpScanConvert *sc,
 
       dashes = g_new (gdouble, dash_info->len);
 
-      for (i=0; i < dash_info->len ; i++)
+      for (i = 0; i < dash_info->len ; i++)
         dashes[i] = MAX (width, 1.0) * g_array_index (dash_info, gdouble, i);
 
       dash.n_dash = dash_info->len;
@@ -354,7 +354,7 @@ gimp_scan_convert_stroke (GimpScanConvert *sc,
           /* shift the pattern to really starts with a dash and
            * use the offset to skip into it.
            */
-          for (i=0; i < dash_info->len - 2; i++)
+          for (i = 0; i < dash_info->len - 2; i++)
             {
               dash.dash[i] = dash.dash[i+2];
               dash.offset += dash.dash[i];
@@ -421,7 +421,7 @@ gimp_scan_convert_stroke (GimpScanConvert *sc,
               segment->bbox.x0 /= sc->ratio_xy;
               segment->bbox.x1 /= sc->ratio_xy;
 
-              for (j=0; j < segment->n_points  ; j++)
+              for (j = 0; j < segment->n_points; j++)
                 {
                   point = segment->points + j;
                   point->x /= sc->ratio_xy;
@@ -533,7 +533,7 @@ gimp_scan_convert_finish (GimpScanConvert *sc)
   /* Debug output of libart path */
   /* {
    *   gint i;
-   *   for (i=0; i < sc->num_nodes + 1; i++)
+   *   for (i = 0; i < sc->num_nodes + 1; i++)
    *     {
    *       g_printerr ("X: %f, Y: %f, Type: %d\n", sc->vpath[i].x,
    *                                               sc->vpath[i].y,
