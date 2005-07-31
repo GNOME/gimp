@@ -48,6 +48,9 @@ static void   gimp_free_select_tool_class_init (GimpFreeSelectToolClass *klass);
 static void   gimp_free_select_tool_init       (GimpFreeSelectTool      *free_select);
 static void   gimp_free_select_tool_finalize       (GObject         *object);
 
+static void   gimp_free_select_tool_control        (GimpTool        *tool,
+                                                    GimpToolAction   action,
+                                                    GimpDisplay     *gdisp);
 static void   gimp_free_select_tool_button_press   (GimpTool        *tool,
                                                     GimpCoords      *coords,
                                                     guint32          time,
@@ -140,6 +143,7 @@ gimp_free_select_tool_class_init (GimpFreeSelectToolClass *klass)
 
   object_class->finalize     = gimp_free_select_tool_finalize;
 
+  tool_class->control        = gimp_free_select_tool_control;
   tool_class->button_press   = gimp_free_select_tool_button_press;
   tool_class->button_release = gimp_free_select_tool_button_release;
   tool_class->motion         = gimp_free_select_tool_motion;
@@ -175,6 +179,24 @@ gimp_free_select_tool_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_free_select_tool_control (GimpTool       *tool,
+                               GimpToolAction  action,
+                               GimpDisplay    *gdisp)
+{
+  switch (action)
+    {
+    case HALT:
+      GIMP_FREE_SELECT_TOOL (tool)->num_points = 0;
+      break;
+
+    default:
+      break;
+    }
+
+  GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
 }
 
 static void

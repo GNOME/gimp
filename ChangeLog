@@ -1,5 +1,17 @@
 2005-07-31  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/Makefile.am
+	* app/tools/gimpforegroundselectoptions.[ch]: added options for
+	GimpForegroundSelectionTool.
+
+	* app/tools/gimpforegroundselecttool.c: also allow to classify
+	background pixels.
+
+	* app/tools/gimpfreeselecttool.c: implement GimpTool::control and
+	reset the points array if the tool is HALTed.
+
+2005-07-31  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpforegroundselecttool.c: give some visual feedback
 	when the user is drawing. Should use a different GC though.
 

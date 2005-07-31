@@ -68,6 +68,8 @@ libapptools_a_sources = \
 	gimpfliptool.h			\
 	gimpfreeselecttool.c		\
 	gimpfreeselecttool.h		\
+	gimpforegroundselectoptions.c	\
+	gimpforegroundselectoptions.h	\
 	gimpforegroundselecttool.c	\
 	gimpforegroundselecttool.h	\
 	gimpfuzzyselecttool.c		\

@@ -44,7 +44,7 @@
 #include "display/gimpdisplayshell.h"
 
 #include "gimpforegroundselecttool.h"
-#include "gimpselectionoptions.h"
+#include "gimpforegroundselectoptions.h"
 #include "gimptoolcontrol.h"
 
 #include "gimp-intl.h"
@@ -113,8 +113,8 @@ gimp_foreground_select_tool_register (GimpToolRegisterCallback  callback,
                                       gpointer                  data)
 {
   (* callback) (GIMP_TYPE_FOREGROUND_SELECT_TOOL,
-                GIMP_TYPE_SELECTION_OPTIONS,
-                gimp_selection_options_gui,
+                GIMP_TYPE_FOREGROUND_SELECT_OPTIONS,
+                gimp_foreground_select_options_gui,
                 0,
                 "gimp-foreground-select-tool",
                 _("Foreground Select"),
@@ -191,8 +191,6 @@ gimp_foreground_select_tool_init (GimpForegroundSelectTool *fg_select)
 
   gimp_tool_control_set_tool_cursor (tool->control,
                                      GIMP_TOOL_CURSOR_FREE_SELECT);
-  gimp_tool_control_set_toggle_tool_cursor (tool->control,
-                                            GIMP_TOOL_CURSOR_PAINTBRUSH);
 
   fg_select->stroke       = NULL;
   fg_select->stroke_width = 6;
@@ -302,6 +300,12 @@ gimp_foreground_select_tool_cursor_update (GimpTool        *tool,
 
   if (fg_select->mask)
     {
+      GimpForegroundSelectOptions *options;
+
+      options = GIMP_FOREGROUND_SELECT_OPTIONS (tool->tool_info->tool_options);
+
+      gimp_tool_control_set_toggle (tool->control, options->background);
+
       switch (GIMP_SELECTION_TOOL (tool)->op)
         {
         case SELECTION_MOVE_MASK:
@@ -394,15 +398,24 @@ gimp_foreground_select_tool_button_release (GimpTool        *tool,
 
   if (fg_select->mask)
     {
-      GList *list = fg_select->fg_strokes;
+      GimpForegroundSelectOptions *options;
+      GList                       *list;
 
       gimp_tool_control_halt (tool->control);
+
+      options = GIMP_FOREGROUND_SELECT_OPTIONS (tool->tool_info->tool_options);
+
+      list = (options->background ?
+              fg_select->bg_strokes : fg_select->fg_strokes);
 
       list = g_list_append (list, GINT_TO_POINTER (fg_select->stroke->len));
       list = g_list_append (list, g_array_free (fg_select->stroke, FALSE));
       list = g_list_append (list, GINT_TO_POINTER (fg_select->stroke_width));
 
-      fg_select->fg_strokes = list;
+      if (options->background)
+        fg_select->bg_strokes = list;
+      else
+        fg_select->fg_strokes = list;
 
       fg_select->stroke = NULL;
 
@@ -455,11 +468,12 @@ gimp_foreground_select_tool_draw (GimpDrawTool *draw_tool)
   GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (draw_tool);
 
   if (fg_select->stroke)
-    gimp_draw_tool_draw_lines (draw_tool,
-                               &g_array_index (fg_select->stroke,
-                                               GimpVector2, 0),
-                               fg_select->stroke->len,
-                               FALSE, FALSE);
+    {
+      const gdouble *points = (const gdouble *) fg_select->stroke->data;
+
+      gimp_draw_tool_draw_lines (draw_tool,
+                                 points, fg_select->stroke->len, FALSE, FALSE);
+    }
 
   if (! fg_select->mask)
     GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
@@ -533,6 +547,8 @@ gimp_foreground_select_tool_set_mask (GimpForegroundSelectTool *fg_select,
                                       GimpDisplay              *gdisp,
                                       GimpChannel              *mask)
 {
+  GimpTool *tool = GIMP_TOOL (fg_select);
+
   if (fg_select->mask == mask)
     return;
 
@@ -548,7 +564,28 @@ gimp_foreground_select_tool_set_mask (GimpForegroundSelectTool *fg_select,
   gimp_display_shell_set_mask (GIMP_DISPLAY_SHELL (gdisp->shell),
                                GIMP_DRAWABLE (mask));
 
-  gimp_tool_control_set_toggle (GIMP_TOOL (fg_select)->control, mask != NULL);
+  if (mask)
+    {
+      GimpForegroundSelectOptions *options;
+
+      options = GIMP_FOREGROUND_SELECT_OPTIONS (tool->tool_info->tool_options);
+
+      gimp_tool_control_set_tool_cursor        (tool->control,
+                                                GIMP_TOOL_CURSOR_PAINTBRUSH);
+      gimp_tool_control_set_toggle_tool_cursor (tool->control,
+                                                GIMP_TOOL_CURSOR_ERASER);
+
+      gimp_tool_control_set_toggle (tool->control, options->background);
+    }
+  else
+    {
+      gimp_tool_control_set_tool_cursor        (tool->control,
+                                                GIMP_TOOL_CURSOR_FREE_SELECT);
+      gimp_tool_control_set_toggle_tool_cursor (tool->control,
+                                                GIMP_TOOL_CURSOR_FREE_SELECT);
+
+      gimp_tool_control_set_toggle (tool->control, FALSE);
+    }
 }
 
 static void
@@ -559,8 +596,7 @@ gimp_foreground_select_tool_apply (GimpForegroundSelectTool *fg_select,
   GimpChannelOps        op   = GIMP_SELECTION_TOOL (tool)->op;
   GimpSelectionOptions *options;
 
-  if (! fg_select->mask)
-    return;
+  g_return_if_fail (fg_select->mask != NULL);
 
   if (op > GIMP_CHANNEL_OP_INTERSECT)
     op = GIMP_CHANNEL_OP_REPLACE;
@@ -575,7 +611,7 @@ gimp_foreground_select_tool_apply (GimpForegroundSelectTool *fg_select,
                                options->feather_radius,
                                options->feather_radius);
 
-  gimp_foreground_select_tool_set_mask (fg_select, gdisp, NULL);
+  gimp_tool_control (tool, HALT, gdisp);
 
   gimp_image_flush (gdisp->gimage);
 }
