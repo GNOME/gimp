@@ -941,16 +941,16 @@ gimp_draw_tool_on_handle (GimpDrawTool   *draw_tool,
 }
 
 gboolean
-gimp_draw_tool_on_vectors_handle (GimpDrawTool    *draw_tool,
-                                  GimpDisplay     *gdisp,
-                                  GimpVectors     *vectors,
-                                  GimpCoords      *coord,
-                                  gint             width,
-                                  gint             height,
-                                  GimpAnchorType   preferred,
-                                  gboolean         exclusive,
-                                  GimpAnchor     **ret_anchor,
-                                  GimpStroke     **ret_stroke)
+gimp_draw_tool_on_vectors_handle (GimpDrawTool      *draw_tool,
+                                  GimpDisplay       *gdisp,
+                                  GimpVectors       *vectors,
+                                  const GimpCoords  *coord,
+                                  gint               width,
+                                  gint               height,
+                                  GimpAnchorType     preferred,
+                                  gboolean           exclusive,
+                                  GimpAnchor       **ret_anchor,
+                                  GimpStroke       **ret_stroke)
 {
   GimpStroke *stroke       = NULL;
   GimpStroke *pref_stroke  = NULL;
@@ -1065,17 +1065,17 @@ gimp_draw_tool_on_vectors_handle (GimpDrawTool    *draw_tool,
 }
 
 gboolean
-gimp_draw_tool_on_vectors_curve (GimpDrawTool  *draw_tool,
-                                 GimpDisplay   *gdisp,
-                                 GimpVectors   *vectors,
-                                 GimpCoords    *coord,
-                                 gint           width,
-                                 gint           height,
-                                 GimpCoords    *ret_coords,
-                                 gdouble       *ret_pos,
-                                 GimpAnchor   **ret_segment_start,
-                                 GimpAnchor   **ret_segment_end,
-                                 GimpStroke   **ret_stroke)
+gimp_draw_tool_on_vectors_curve (GimpDrawTool      *draw_tool,
+                                 GimpDisplay       *gdisp,
+                                 GimpVectors       *vectors,
+                                 const GimpCoords  *coord,
+                                 gint               width,
+                                 gint               height,
+                                 GimpCoords        *ret_coords,
+                                 gdouble           *ret_pos,
+                                 GimpAnchor       **ret_segment_start,
+                                 GimpAnchor       **ret_segment_end,
+                                 GimpStroke       **ret_stroke)
 {
   GimpStroke *stroke = NULL;
   GimpAnchor *segment_start;
@@ -1135,17 +1135,17 @@ gimp_draw_tool_on_vectors_curve (GimpDrawTool  *draw_tool,
 }
 
 gboolean
-gimp_draw_tool_on_vectors (GimpDrawTool *draw_tool,
-                           GimpDisplay  *gdisp,
-                           GimpCoords   *coords,
-                           gint          width,
-                           gint          height,
-                           GimpCoords   *ret_coords,
-                           gdouble      *ret_pos,
-                           GimpAnchor  **ret_segment_start,
-                           GimpAnchor  **ret_segment_end,
-                           GimpStroke  **ret_stroke,
-                           GimpVectors **ret_vectors)
+gimp_draw_tool_on_vectors (GimpDrawTool      *draw_tool,
+                           GimpDisplay       *gdisp,
+                           const GimpCoords  *coords,
+                           gint               width,
+                           gint               height,
+                           GimpCoords        *ret_coords,
+                           gdouble           *ret_pos,
+                           GimpAnchor       **ret_segment_start,
+                           GimpAnchor       **ret_segment_end,
+                           GimpStroke       **ret_stroke,
+                           GimpVectors      **ret_vectors)
 {
   GList *list;
 
@@ -1186,16 +1186,15 @@ gimp_draw_tool_on_vectors (GimpDrawTool *draw_tool,
 }
 
 void
-gimp_draw_tool_draw_lines (GimpDrawTool *draw_tool,
-			   gdouble      *points,
-			   gint          n_points,
-			   gboolean      filled,
-                           gboolean      use_offsets)
+gimp_draw_tool_draw_lines (GimpDrawTool  *draw_tool,
+			   const gdouble *points,
+			   gint           n_points,
+			   gboolean       filled,
+                           gboolean       use_offsets)
 {
   GimpDisplayShell *shell;
   GdkPoint         *coords;
   gint              i;
-  gint              sx, sy;
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
@@ -1207,10 +1206,8 @@ gimp_draw_tool_draw_lines (GimpDrawTool *draw_tool,
     {
       gimp_display_shell_transform_xy (shell,
                                        points[i*2], points[i*2+1],
-                                       &sx, &sy,
+                                       &coords[i].x, &coords[i].y,
                                        use_offsets);
-      coords[i].x = sx;
-      coords[i].y = sy;
     }
 
   if (filled)
@@ -1230,16 +1227,15 @@ gimp_draw_tool_draw_lines (GimpDrawTool *draw_tool,
 }
 
 void
-gimp_draw_tool_draw_strokes (GimpDrawTool *draw_tool,
-			     GimpCoords   *points,
-			     gint          n_points,
-			     gboolean      filled,
-                             gboolean      use_offsets)
+gimp_draw_tool_draw_strokes (GimpDrawTool     *draw_tool,
+			     const GimpCoords *points,
+			     gint              n_points,
+			     gboolean          filled,
+                             gboolean          use_offsets)
 {
   GimpDisplayShell *shell;
   GdkPoint         *coords;
   gint              i;
-  gint              sx, sy;
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
@@ -1251,10 +1247,8 @@ gimp_draw_tool_draw_strokes (GimpDrawTool *draw_tool,
     {
       gimp_display_shell_transform_xy (shell,
                                        points[i].x, points[i].y,
-                                       &sx, &sy,
+                                       &coords[i].x, &coords[i].y,
                                        use_offsets);
-      coords[i].x = sx;
-      coords[i].y = sy;
     }
 
   if (filled)

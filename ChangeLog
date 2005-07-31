@@ -1,10 +1,14 @@
 2005-07-31  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpdrawtool.[ch]: added some const qualifiers.
+
+2005-07-31  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpscanconvert.c (gimp_scan_convert_render): pass 255
 	as value to gimp_scan_convert_render_internal().
 
 	* app/tools/gimpforegroundselecttool.[ch]: add paint strokes as
-	foreground color; draw function is missing.
+	classified foreground area; draw function is missing.
 
 2005-07-31  Sven Neumann  <sven@gimp.org>
 
