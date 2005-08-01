@@ -26,7 +26,6 @@
 #include <glib-object.h>
 
 #include "base/base-types.h"
-#include "base/cpu-accel.h"
 
 #include "gimp-composite.h"
 #include "gimp-composite-altivec.h"
@@ -962,16 +961,3 @@ gimp_composite_dodge_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
 }
 
 #endif /* COMPILE_IS_OKAY */
-
-gboolean
-gimp_composite_altivec_init (void)
-{
-#ifdef COMPILE_ALTIVEC_IS_OKAY
-  if (cpu_accel () & CPU_ACCEL_PPC_ALTIVEC)
-    {
-      return (TRUE);
-    }
-#endif
-
-  return (FALSE);
-}

@@ -29,7 +29,6 @@
 #include <glib-object.h>
 
 #include "base/base-types.h"
-#include "base/cpu-accel.h"
 
 #include "gimp-composite.h"
 

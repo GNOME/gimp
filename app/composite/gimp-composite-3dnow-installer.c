@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "base/base-types.h"
+#include "base/cpu-accel.h"
 #include "gimp-composite.h"
 
 #include "gimp-composite-3dnow.h"
@@ -14,6 +15,19 @@ gboolean
 gimp_composite_3dnow_install (void)
 {
   /* nothing to do */
+
+  return (FALSE);
+}
+
+gboolean
+gimp_composite_3dnow_init (void)
+{
+#if defined(COMPILE_3DNOW_IS_OKAY)
+  if (cpu_accel () & CPU_ACCEL_X86_3DNOW)
+    {
+      return (TRUE);
+    }
+#endif
 
   return (FALSE);
 }

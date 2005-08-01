@@ -28,7 +28,6 @@
 #include <glib-object.h>
 
 #include "base/base-types.h"
-#include "base/cpu-accel.h"
 
 #include "gimp-composite.h"
 
@@ -37,15 +36,3 @@
 #ifdef COMPILE_3DNOW_IS_OKAY
 
 #endif
-
-gboolean
-gimp_composite_3dnow_init (void)
-{
-#ifdef COMPILE_3DNOW_IS_OKAY
-  if (cpu_accel () & CPU_ACCEL_X86_3DNOW)
-    {
-      return (TRUE);
-    }
-#endif
-  return (FALSE);
-}

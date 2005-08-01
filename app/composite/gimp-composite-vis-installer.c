@@ -17,3 +17,13 @@ gimp_composite_vis_install (void)
 
   return (FALSE);
 }
+
+gboolean
+gimp_composite_vis_init (void)
+{
+#if defined(COMPILE_VIS_IS_OKAY)
+  return (TRUE);
+#else
+  return (FALSE);
+#endif
+}

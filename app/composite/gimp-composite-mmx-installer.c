@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "base/base-types.h"
+#include "base/cpu-accel.h"
 #include "gimp-composite.h"
 
 #include "gimp-composite-mmx.h"
@@ -47,6 +48,19 @@ gimp_composite_mmx_install (void)
         }
       return (TRUE);
     }
+
+  return (FALSE);
+}
+
+gboolean
+gimp_composite_mmx_init (void)
+{
+#if defined(COMPILE_MMX_IS_OKAY)
+  if (cpu_accel () & CPU_ACCEL_X86_MMX)
+    {
+      return (TRUE);
+    }
+#endif
 
   return (FALSE);
 }

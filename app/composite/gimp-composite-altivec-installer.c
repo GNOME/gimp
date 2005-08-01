@@ -50,3 +50,16 @@ gimp_composite_altivec_install (void)
 
   return (FALSE);
 }
+
+gboolean
+gimp_composite_altivec_init (void)
+{
+#if defined(COMPILE_ALTIVEC_IS_OKAY)
+  if (cpu_accel () & CPU_ACCEL_PPC_ALTIVEC)
+    {
+      return (TRUE);
+    }
+#endif
+
+  return (FALSE);
+}

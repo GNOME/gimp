@@ -35,13 +35,3 @@
 #ifdef COMPILE_VIS_IS_OKAY
 
 #endif
-
-gboolean
-gimp_composite_vis_init (void)
-{
-#ifdef COMPILE_VIS_IS_OKAY
-  return (TRUE);
-#else
-  return (FALSE);
-#endif
-}

@@ -1,3 +1,39 @@
+2005-07-31  Manish Singh  <yosh@gimp.org>
+
+	* acinclude.m4
+	* m4macros/Makefile.am
+	* m4macros/detectcflags.m4: new macro: GIMP_DETECT_CFLAGS; used
+	to detect which of a set of compiler options a compiler supports.
+
+	* configure.in: use the above for the altivec and -fno-strict-aliasing
+	flags. Also, use it to detect the presence of -mmmx and -msse, since
+	those are needed to compile even MMX/SSE assembly with gcc 4.0. Define
+	MMX/SSE_EXTRA_CFLAGS.
+
+	* app/composite/Makefile.am: compile each of the composite flavors
+	into their own library, so we can use automake's per-target CFLAGS.
+	Use MMX/SSE/ALTIVEC_EXTRA_CFLAGS in the appropriate places. Build
+	libappcomposite.a out of the resulting objects.
+
+	* app/composite/gimp-composite-3dnow.c
+	* app/composite/gimp-composite-altivec.c
+	* app/composite/gimp-composite-mmx.c
+	* app/composite/gimp-composite-sse.c
+	* app/composite/gimp-composite-sse2.c
+	* app/composite/gimp-composite-vis.c
+	* app/composite/make-installer.py: move the _init functions into
+	the installers, so only actually mmx/sse/etc. code gets compiled
+	under the appropriate CFLAGS.
+
+	* app/composite/gimp-composite-3dnow-installer.c
+	* app/composite/gimp-composite-altivec-installer.c
+	* app/composite/gimp-composite-mmx-installer.c
+	* app/composite/gimp-composite-sse-installer.c
+	* app/composite/gimp-composite-sse2-installer.c
+	* app/composite/gimp-composite-vis-installer.c: regenerated.
+
+	* app/composite/gimp-composite.c: remove useless cpu-accel.h include.
+
 2005-07-31  DindinX  <dindinx@gimp.org>
 
 	* app/dialogs/preferences-dialog.c: when the notebook page is changed

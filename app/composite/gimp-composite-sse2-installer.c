@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "base/base-types.h"
+#include "base/cpu-accel.h"
 #include "gimp-composite.h"
 
 #include "gimp-composite-sse2.h"
@@ -41,6 +42,19 @@ gimp_composite_sse2_install (void)
         }
       return (TRUE);
     }
+
+  return (FALSE);
+}
+
+gboolean
+gimp_composite_sse2_init (void)
+{
+#if defined(COMPILE_SSE2_IS_OKAY)
+  if (cpu_accel () & CPU_ACCEL_X86_SSE2)
+    {
+      return (TRUE);
+    }
+#endif
 
   return (FALSE);
 }
