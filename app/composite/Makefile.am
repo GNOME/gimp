@@ -97,7 +97,7 @@ regenerate: gimp-composite-generic.o $(libcomposite3dnow_a_OBJECTS) $(libcomposi
 	$(srcdir)/make-installer.py -f gimp-composite-generic.o
 	$(srcdir)/make-installer.py -f $(libcompositemmx_a_OBJECTS) -t -r 'defined(COMPILE_MMX_IS_OKAY)' -c 'X86_MMX'
 	$(srcdir)/make-installer.py -f $(libcompositesse_a_OBJECTS) -t -r 'defined(COMPILE_SSE_IS_OKAY)' -c 'X86_SSE' -c 'X86_MMXEXT'
-	$(srcdir)/make-installer.py -f $(libcompositesse2_a_OBJECTS) -t -r 'defined(COMPILE_SSE2_IS_OKAY)'-c 'X86_SSE2'
+	$(srcdir)/make-installer.py -f $(libcompositesse2_a_OBJECTS) -t -r 'defined(COMPILE_SSE2_IS_OKAY)' -c 'X86_SSE2'
 	$(srcdir)/make-installer.py -f $(libcomposite3dnow_a_OBJECTS) -t -r 'defined(COMPILE_3DNOW_IS_OKAY)' -c 'X86_3DNOW' 
 	$(srcdir)/make-installer.py -f $(libcompositealtivec_a_OBJECTS) -t -r 'defined(COMPILE_ALTIVEC_IS_OKAY)' -c 'PPC_ALTIVEC'
 	$(srcdir)/make-installer.py -f $(libcompositevis_a_OBJECTS) -t -r 'defined(COMPILE_VIS_IS_OKAY)'
