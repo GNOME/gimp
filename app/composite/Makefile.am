@@ -93,14 +93,14 @@ all-local: libappcomposite.a
 
 clean_libs = libappcomposite.a
 
-regenerate: gimp-composite-generic.o gimp-composite-mmx.o gimp-composite-sse.o gimp-composite-sse2.o gimp-composite-3dnow.o gimp-composite-altivec.o gimp-composite-vis.o
+regenerate: gimp-composite-generic.o $(libcomposite3dnow_a_OBJECTS) $(libcompositealtivec_a_OBJECTS) $(libcompositemmx_a_OBJECTS) $(libcompositesse_a_OBJECTS) $(libcompositesse2_a_OBJECTS) $(libcompositevis_a_OBJECTS)
 	$(srcdir)/make-installer.py -f gimp-composite-generic.o
-	$(srcdir)/make-installer.py -f gimp-composite-mmx.o     -t -r 'defined(COMPILE_MMX_IS_OKAY)'     -c 'X86_MMX'
-	$(srcdir)/make-installer.py -f gimp-composite-sse.o     -t -r 'defined(COMPILE_SSE_IS_OKAY)'     -c 'X86_SSE' -c 'X86_MMXEXT'
-	$(srcdir)/make-installer.py -f gimp-composite-sse2.o    -t -r 'defined(COMPILE_SSE2_IS_OKAY)'    -c 'X86_SSE2'
-	$(srcdir)/make-installer.py -f gimp-composite-3dnow.o   -t -r 'defined(COMPILE_3DNOW_IS_OKAY)'   -c 'X86_3DNOW' 
-	$(srcdir)/make-installer.py -f gimp-composite-altivec.o -t -r 'defined(COMPILE_ALTIVEC_IS_OKAY)' -c 'PPC_ALTIVEC'
-	$(srcdir)/make-installer.py -f gimp-composite-vis.o     -t -r 'defined(COMPILE_VIS_IS_OKAY)'
+	$(srcdir)/make-installer.py -f $(libcompositemmx_a_OBJECTS) -t -r 'defined(COMPILE_MMX_IS_OKAY)' -c 'X86_MMX'
+	$(srcdir)/make-installer.py -f $(libcompositesse_a_OBJECTS) -t -r 'defined(COMPILE_SSE_IS_OKAY)' -c 'X86_SSE' -c 'X86_MMXEXT'
+	$(srcdir)/make-installer.py -f $(libcompositesse2_a_OBJECTS) -t -r 'defined(COMPILE_SSE2_IS_OKAY)'-c 'X86_SSE2'
+	$(srcdir)/make-installer.py -f $(libcomposite3dnow_a_OBJECTS) -t -r 'defined(COMPILE_3DNOW_IS_OKAY)' -c 'X86_3DNOW' 
+	$(srcdir)/make-installer.py -f $(libcompositealtivec_a_OBJECTS) -t -r 'defined(COMPILE_ALTIVEC_IS_OKAY)' -c 'PPC_ALTIVEC'
+	$(srcdir)/make-installer.py -f $(libcompositevis_a_OBJECTS) -t -r 'defined(COMPILE_VIS_IS_OKAY)'
 
 EXTRA_DIST = \
 	make-installer.py	\

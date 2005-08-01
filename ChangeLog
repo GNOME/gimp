@@ -1,5 +1,10 @@
 2005-07-31  Manish Singh  <yosh@gimp.org>
 
+	* app/composite/Makefile.am
+	* app/composite/make-installer.py: fix code generation filenames.
+
+2005-07-31  Manish Singh  <yosh@gimp.org>
+
 	* acinclude.m4
 	* m4macros/Makefile.am
 	* m4macros/detectcflags.m4: new macro: GIMP_DETECT_CFLAGS; used

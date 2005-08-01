@@ -25,6 +25,7 @@ import ns
 import pprint
 import optparse
 import copy
+import re
 
 #
 # This programme creates C code for gluing a collection of compositing
@@ -111,8 +112,12 @@ def pixel_depth_name(pixel_format):
 pp = pprint.PrettyPrinter(indent=4)
 
 
+def sanitize_filename(filename):
+  return re.sub('^lib[^-]+-', '', filename)
+
 def functionnameify(filename):
   f = os.path.basename(filename)
+  f = sanitize_filename(f)
   f = string.replace(f, ".o", "")
   f = string.replace(f, ".c", "")
   f = string.replace(f, ".h", "")
@@ -121,6 +126,7 @@ def functionnameify(filename):
 
 def filenameify(filename):
   f = os.path.basename(filename)
+  f = sanitize_filename(f)
   f = string.replace(f, ".o", "")
   f = string.replace(f, ".c", "")
   f = string.replace(f, ".h", "")
