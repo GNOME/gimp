@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "base/base-types.h"
+#include "base/cpu-accel.h"
 #include "gimp-composite.h"
 
 #include "gimp-composite-altivec.h"
