@@ -8,6 +8,8 @@ libgimp/gimpgradientmenu.c
 libgimp/gimpmenu.c
 libgimp/gimppalettemenu.c
 libgimp/gimppatternmenu.c
+libgimp/gimpprocbrowserdialog.c
+libgimp/gimpprocview.c
 libgimp/gimpunitcache.c
 
 libgimpbase/gimpbaseenums.c
