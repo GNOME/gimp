@@ -211,7 +211,7 @@ msgstr "色数:"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:898
 msgid "Change the number of colors in the mapping"
-msgstr "マッピクングする色数を変える"
+msgstr "マッピングする色数を変える"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:905
 msgid "Use loglog smoothing"
@@ -995,7 +995,7 @@ msgstr "深度(_D):"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:605
 msgid "Antialiasing quality. Higher is better, but slower"
-msgstr "アンチアエイリアシングの品位. 高い程綺麗だが遅い."
+msgstr "アンチエイリアシングの品位. 高い程綺麗だが遅い."
 
 #: ../plug-ins/MapObject/mapobject_ui.c:614 ../plug-ins/common/unsharp.c:691
 #: ../plug-ins/common/wind.c:993 ../plug-ins/imagemap/imap_preferences.c:539
@@ -4469,7 +4469,7 @@ msgid ""
 "If checked GTM will replace any rectangular sections of identically colored "
 "blocks with one large cell with ROWSPAN and COLSPAN values."
 msgstr ""
-"チェックしておくと RWSPAN と COLSPAN を用いて均質な色の矩形部分を一つの大きな"
+"チェックしておくと ROWSPAN と COLSPAN を用いて均質な色の矩形部分を一つの大きな"
 "セルにします."
 
 #: ../plug-ins/common/gtm.c:488
@@ -5917,7 +5917,7 @@ msgstr "圧縮レベル(_M):"
 
 #: ../plug-ins/common/png.c:1819
 msgid "Could not load PNG defaults"
-msgstr "PNG のでフォトが読み込めません"
+msgstr "PNG のデフォルトが読み込めません"
 
 #: ../plug-ins/common/pnm.c:228
 msgid "PNM Image"
@@ -9733,7 +9733,7 @@ msgstr "最初に作成するブラシの角度"
 msgid ""
 "Let the value (brightness) of the region determine the direction of the "
 "stroke"
-msgstr "部分的な値 (明度) によってストロ−クの方向を決めさせる"
+msgstr "部分的な値 (明度) によってストロークの方向を決めさせる"
 
 #: ../plug-ins/gimpressionist/orientation.c:142
 #: ../plug-ins/gimpressionist/size.c:145
@@ -9989,7 +9989,7 @@ msgstr "現状保存..."
 
 #: ../plug-ins/gimpressionist/presets.c:999
 msgid "Save the current settings to the specified file"
-msgstr "現在の設定を特定のファイルの保存します"
+msgstr "現在の設定を特定のファイルに保存します"
 
 #: ../plug-ins/gimpressionist/presets.c:1027
 msgid "Reads the selected Preset into memory"
@@ -15956,7 +15956,7 @@ msgstr "エラー: XJT プロパティファイル %s が空です"
 #~ msgstr "フレームの名前は: 基本名_番号.拡張子"
 
 #~ msgid "extension of resulting frames (is also used to define Fileformat)"
-#~ msgstr "生成フレームの拡張子 (ファイル形式の定義ためにも使われる)"
+#~ msgstr "生成フレームの拡張子 (ファイル形式の定義のためにも使われる)"
 
 #~ msgid "Inverse Order:"
 #~ msgstr "逆順:"
