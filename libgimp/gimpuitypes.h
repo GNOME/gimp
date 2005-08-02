@@ -31,6 +31,7 @@ G_BEGIN_DECLS
 
 typedef struct _GimpAspectPreview        GimpAspectPreview;
 typedef struct _GimpDrawablePreview      GimpDrawablePreview;
+typedef struct _GimpProcBrowserDialog    GimpProcBrowserDialog;
 typedef struct _GimpProgressBar          GimpProgressBar;
 
 typedef struct _GimpDrawableComboBox     GimpDrawableComboBox;

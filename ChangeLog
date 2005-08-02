@@ -1,5 +1,13 @@
 2005-08-02  Michael Natterer  <mitch@gimp.org>
 
+	* libgimp/gimpuitypes.h: added GimpProcBrowserDialog typedef here.
+
+	* libgimp/gimpprocbrowserdialog.[ch]
+	* libgimp/gimpprocview.[ch]: fixed copyright headers, added
+	G_BEGIN_DECLS / G_END_DECLS.
+
+2005-08-02  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/dbbrowser/Makefile.am
 	* plug-ins/dbbrowser/gimpprocbrowser.[ch]
 	* plug-ins/dbbrowser/gimpprocview.[ch]: removed these files...

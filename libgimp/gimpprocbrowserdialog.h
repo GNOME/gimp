@@ -1,32 +1,33 @@
-/* The GIMP -- an image manipulation program
- * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+/* LIBGIMP - The GIMP Library
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpprocbrowserdialog.h
+ * gimpprocbrowserdialog.c
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- */
-
-/*
- * dbbrowser_utils.h
- * 0.08  26th sept 97  by Thomas NOEL <thomas@minet.net>
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * Boston, MA 02111-1307, USA.
  */
 
 #ifndef __GIMP_PROC_BROWSER_DIALOG_H__
 #define __GIMP_PROC_BROWSER_DIALOG_H__
 
 #include <libgimpwidgets/gimpdialog.h>
+
+G_BEGIN_DECLS
+
+
+/* For information look into the C source or the html documentation */
 
 
 #define GIMP_TYPE_PROC_BROWSER_DIALOG            (gimp_proc_browser_dialog_get_type ())
@@ -37,7 +38,6 @@
 #define GIMP_PROC_BROWSER_DIALOG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PROC_BROWSER_DIALOG, GimpProcBrowserDialogClass))
 
 
-typedef struct _GimpProcBrowserDialog      GimpProcBrowserDialog;
 typedef struct _GimpProcBrowserDialogClass GimpProcBrowserDialogClass;
 
 struct _GimpProcBrowserDialog
@@ -73,5 +73,7 @@ GtkWidget * gimp_proc_browser_dialog_new          (gboolean               scheme
 
 gchar     * gimp_proc_browser_dialog_get_selected (GimpProcBrowserDialog *dialog);
 
+
+G_END_DECLS
 
 #endif  /* __GIMP_PROC_BROWSER_DIALOG_H__ */
