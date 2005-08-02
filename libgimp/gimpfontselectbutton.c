@@ -400,7 +400,7 @@ gimp_font_select_drag_data_received (GtkWidget        *widget,
       return;
     }
 
-  str = g_strndup (selection->data, selection->length);
+  str = g_strndup ((const gchar *) selection->data, selection->length);
 
   if (g_utf8_validate (str, -1, NULL))
     {

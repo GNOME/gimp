@@ -1,3 +1,13 @@
+2005-08-03  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimpbrushmenu.c
+	* libgimp/gimpdrawablecombobox.c
+	* libgimp/gimpfontselectbutton.c
+	* libgimp/gimpgradientmenu.c
+	* libgimp/gimpimagecombobox.c
+	* libgimp/gimppalettemenu.c
+	* libgimp/gimppatternmenu.c: fixed signedness warnings.
+
 2005-08-02  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/procbrowser.c: Quick and dirty restore of browser
