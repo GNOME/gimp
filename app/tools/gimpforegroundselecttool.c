@@ -50,6 +50,15 @@
 #include "gimp-intl.h"
 
 
+typedef struct
+{
+  gdouble      width;
+  gboolean     background;
+  gint         num_points;
+  GimpVector2 *points;
+} FgSelectStroke;
+
+
 static void   gimp_foreground_select_tool_class_init (GimpForegroundSelectToolClass *klass);
 static void   gimp_foreground_select_tool_init       (GimpForegroundSelectTool      *fg_select);
 static void   gimp_foreground_select_tool_finalize       (GObject         *object);
@@ -95,12 +104,11 @@ static void   gimp_foreground_select_tool_set_mask (GimpForegroundSelectTool *fg
 static void   gimp_foreground_select_tool_apply    (GimpForegroundSelectTool *fg_select,
                                                     GimpDisplay              *gdisp);
 
-static void   gimp_foreground_select_tool_stroke   (GimpChannel  *mask,
-                                                    gint          num_points,
-                                                    GimpVector2  *points,
-                                                    gint          width,
-                                                    gboolean      foreground);
-static void   gimp_foreground_select_tool_strokes_free    (GList *strokes);
+static void   gimp_foreground_select_tool_stroke   (GimpChannel              *mask,
+                                                    FgSelectStroke           *stroke);
+
+static void   gimp_foreground_select_tool_push_stroke     (GimpForegroundSelectTool    *fg_select,
+                                                           GimpForegroundSelectOptions *options);
 
 
 static GimpFreeSelectToolClass *parent_class = NULL;
@@ -192,11 +200,9 @@ gimp_foreground_select_tool_init (GimpForegroundSelectTool *fg_select)
   gimp_tool_control_set_tool_cursor (tool->control,
                                      GIMP_TOOL_CURSOR_FREE_SELECT);
 
-  fg_select->stroke       = NULL;
-  fg_select->stroke_width = 6;
-  fg_select->fg_strokes   = NULL;
-  fg_select->bg_strokes   = NULL;
-  fg_select->mask         = NULL;
+  fg_select->stroke  = NULL;
+  fg_select->strokes = NULL;
+  fg_select->mask    = NULL;
 }
 
 static void
@@ -207,11 +213,8 @@ gimp_foreground_select_tool_finalize (GObject *object)
   if (fg_select->stroke)
     g_warning ("%s: stroke should be NULL at this point", G_STRLOC);
 
-  if (fg_select->fg_strokes)
-    g_warning ("%s: fg_strokes should be NULL at this point", G_STRLOC);
-
-  if (fg_select->bg_strokes)
-    g_warning ("%s: bg_strokes should be NULL at this point", G_STRLOC);
+  if (fg_select->strokes)
+    g_warning ("%s: strokes should be NULL at this point", G_STRLOC);
 
   if (fg_select->mask)
     g_warning ("%s: mask should be NULL at this point", G_STRLOC);
@@ -229,13 +232,22 @@ gimp_foreground_select_tool_control (GimpTool       *tool,
   switch (action)
     {
     case HALT:
-      gimp_foreground_select_tool_set_mask (fg_select, gdisp, NULL);
+      {
+        GList *list;
 
-      gimp_foreground_select_tool_strokes_free (fg_select->fg_strokes);
-      fg_select->fg_strokes = NULL;
+        gimp_foreground_select_tool_set_mask (fg_select, gdisp, NULL);
 
-      gimp_foreground_select_tool_strokes_free (fg_select->bg_strokes);
-      fg_select->bg_strokes = NULL;
+        for (list = fg_select->strokes; list; list = list->next)
+          {
+            FgSelectStroke *stroke = list->data;
+
+            g_free (stroke->points);
+            g_free (stroke);
+          }
+
+        g_list_free (fg_select->strokes);
+        fg_select->strokes = NULL;
+      }
       break;
 
     default:
@@ -399,25 +411,12 @@ gimp_foreground_select_tool_button_release (GimpTool        *tool,
   if (fg_select->mask)
     {
       GimpForegroundSelectOptions *options;
-      GList                       *list;
-
-      gimp_tool_control_halt (tool->control);
 
       options = GIMP_FOREGROUND_SELECT_OPTIONS (tool->tool_info->tool_options);
 
-      list = (options->background ?
-              fg_select->bg_strokes : fg_select->fg_strokes);
+      gimp_tool_control_halt (tool->control);
 
-      list = g_list_append (list, GINT_TO_POINTER (fg_select->stroke->len));
-      list = g_list_append (list, g_array_free (fg_select->stroke, FALSE));
-      list = g_list_append (list, GINT_TO_POINTER (fg_select->stroke_width));
-
-      if (options->background)
-        fg_select->bg_strokes = list;
-      else
-        fg_select->fg_strokes = list;
-
-      fg_select->stroke = NULL;
+      gimp_foreground_select_tool_push_stroke (fg_select, options);
 
       gimp_foreground_select_tool_select (GIMP_FREE_SELECT_TOOL (tool), gdisp);
     }
@@ -510,25 +509,8 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
                                   0, 0, 127);
   gimp_scan_convert_free (scan_convert);
 
-  for (list = fg_select->fg_strokes; list; list = list->next->next->next)
-    {
-      gint         num_points = GPOINTER_TO_INT (list->data);
-      GimpVector2 *points     = list->next->data;
-      gint         width      = GPOINTER_TO_INT (list->next->next->data);
-
-      gimp_foreground_select_tool_stroke (mask,
-                                          num_points, points, width, TRUE);
-    }
-
-  for (list = fg_select->bg_strokes; list; list = list->next->next->next)
-    {
-      gint         num_points = GPOINTER_TO_INT (list->data);
-      GimpVector2 *points     = list->next->data;
-      gint         width      = GPOINTER_TO_INT (list->next->next->data);
-
-      gimp_foreground_select_tool_stroke (mask,
-                                          num_points, points, width, FALSE);
-    }
+  for (list = fg_select->strokes; list; list = list->next)
+    gimp_foreground_select_tool_stroke (mask, list->data);
 
   gimp_drawable_foreground_extract (drawable,
                                     GIMP_FOREGROUND_EXTRACT_SIOX,
@@ -617,11 +599,8 @@ gimp_foreground_select_tool_apply (GimpForegroundSelectTool *fg_select,
 }
 
 static void
-gimp_foreground_select_tool_stroke (GimpChannel  *mask,
-                                    gint          num_points,
-                                    GimpVector2  *points,
-                                    gint          width,
-                                    gboolean      foreground)
+gimp_foreground_select_tool_stroke (GimpChannel    *mask,
+                                    FgSelectStroke *stroke)
 {
   GimpScanConvert *scan_convert = gimp_scan_convert_new ();
   GimpItem        *item         = GIMP_ITEM (mask);
@@ -634,9 +613,11 @@ gimp_foreground_select_tool_stroke (GimpChannel  *mask,
    *        by doing some changes to GimpScanConvert.
    */
 
-  gimp_scan_convert_add_polyline (scan_convert, num_points, points, FALSE);
+  gimp_scan_convert_add_polyline (scan_convert,
+                                  stroke->num_points, stroke->points, FALSE);
   gimp_scan_convert_stroke (scan_convert,
-                            width, GIMP_JOIN_MITER, GIMP_CAP_ROUND, 10.0,
+                            stroke->width,
+                            GIMP_JOIN_MITER, GIMP_CAP_ROUND, 10.0,
                             0.0, NULL);
   gimp_scan_convert_render (scan_convert,
                             gimp_drawable_data (GIMP_DRAWABLE (channel)),
@@ -644,20 +625,29 @@ gimp_foreground_select_tool_stroke (GimpChannel  *mask,
   gimp_scan_convert_free (scan_convert);
 
   gimp_channel_combine_mask (mask, channel,
-                             foreground ?
-                             GIMP_CHANNEL_OP_ADD : GIMP_CHANNEL_OP_SUBTRACT,
+                             stroke->background ?
+                             GIMP_CHANNEL_OP_SUBTRACT : GIMP_CHANNEL_OP_ADD,
                              0, 0);
 
   g_object_unref (channel);
 }
 
 static void
-gimp_foreground_select_tool_strokes_free (GList *strokes)
+gimp_foreground_select_tool_push_stroke (GimpForegroundSelectTool    *fg_select,
+                                         GimpForegroundSelectOptions *options)
 {
-  GList *list;
+  FgSelectStroke *stroke;
 
-  for (list = strokes; list; list = list->next->next->next)
-    g_free (list->next->data);
+  g_return_if_fail (fg_select->stroke != NULL);
 
-  g_list_free (strokes);
+  stroke = g_new (FgSelectStroke, 1);
+
+  stroke->background = options->background;
+  stroke->width      = options->stroke_width;
+  stroke->num_points = fg_select->stroke->len;
+  stroke->points     = (GimpVector2 *) g_array_free (fg_select->stroke, FALSE);
+
+  fg_select->stroke = NULL;
+
+  fg_select->strokes = g_list_append (fg_select->strokes, stroke);
 }

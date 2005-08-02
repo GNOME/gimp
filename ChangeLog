@@ -1,3 +1,9 @@
+2005-08-02  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpforegroundselectoptions.[ch]
+	* app/tools/gimpforegroundselecttool.[ch]: some code cleanup; moved
+	stroke width to the tool options.
+
 2005-07-31  Manish Singh  <yosh@gimp.org>
 
 	* app/composite/Makefile.am

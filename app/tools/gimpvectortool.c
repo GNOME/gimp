@@ -1833,7 +1833,8 @@ gimp_vector_tool_verify_state (GimpVectorTool *vector_tool)
 }
 
 static void
-gimp_vector_tool_undo_push (GimpVectorTool *vector_tool, const gchar *desc)
+gimp_vector_tool_undo_push (GimpVectorTool *vector_tool,
+                            const gchar    *desc)
 {
   g_return_if_fail (vector_tool->vectors != NULL);
 
