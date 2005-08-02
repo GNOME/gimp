@@ -1,5 +1,11 @@
 2005-08-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/vectors-commands.c
+	* app/widgets/gimphelp.c: canonicalized some hardcoded procedure
+	names because internal functions accept only canonical names now.
+
+2005-08-03  Michael Natterer  <mitch@gimp.org>
+
 	Changed naming scheme for PDB procedure names from
 	random_crap_that_traditionally_has_underscores to
 	enforced-canonical-identifiers. I'm pretty sure some things are

@@ -137,13 +137,13 @@ gimp_idle_help (gpointer data)
   if (config->help_browser == GIMP_HELP_BROWSER_GIMP)
     {
       if (gimp_help_browser (idle_help->gimp))
-        procedure = "extension_gimp_help_browser_temp";
+        procedure = "extension-gimp-help-browser-temp";
     }
 
   if (config->help_browser == GIMP_HELP_BROWSER_WEB_BROWSER)
     {
       /*  FIXME: should check for procedure availability  */
-      procedure = "plug_in_web_browser";
+      procedure = "plug-in-web-browser";
     }
 
   if (procedure)
@@ -173,13 +173,13 @@ gimp_help_browser (Gimp *gimp)
   busy = TRUE;
 
   /*  Check if a help browser is already running  */
-  proc_rec = procedural_db_lookup (gimp, "extension_gimp_help_browser_temp");
+  proc_rec = procedural_db_lookup (gimp, "extension-gimp-help-browser-temp");
 
   if (! proc_rec)
     {
       Argument *args = NULL;
 
-      proc_rec = procedural_db_lookup (gimp, "extension_gimp_help_browser");
+      proc_rec = procedural_db_lookup (gimp, "extension-gimp-help-browser");
 
       if (! proc_rec)
 	{
@@ -205,7 +205,7 @@ gimp_help_browser (Gimp *gimp)
     }
 
   /*  Check if the help browser started properly  */
-  proc_rec = procedural_db_lookup (gimp, "extension_gimp_help_browser_temp");
+  proc_rec = procedural_db_lookup (gimp, "extension-gimp-help-browser-temp");
 
   if (! proc_rec)
     {
@@ -262,7 +262,7 @@ gimp_help_call (Gimp        *gimp,
   ProcRecord *proc_rec;
 
   /*  Check if a help parser is already running  */
-  proc_rec = procedural_db_lookup (gimp, "extension_gimp_help_temp");
+  proc_rec = procedural_db_lookup (gimp, "extension-gimp-help-temp");
 
   if (! proc_rec)
     {
@@ -271,7 +271,7 @@ gimp_help_call (Gimp        *gimp,
       gchar    **help_domains = NULL;
       gchar    **help_uris    = NULL;
 
-      proc_rec = procedural_db_lookup (gimp, "extension_gimp_help");
+      proc_rec = procedural_db_lookup (gimp, "extension-gimp-help");
 
       if (! proc_rec)
         /*  FIXME: error msg  */
@@ -297,7 +297,7 @@ gimp_help_call (Gimp        *gimp,
     }
 
   /*  Check if the help parser started properly  */
-  proc_rec = procedural_db_lookup (gimp, "extension_gimp_help_temp");
+  proc_rec = procedural_db_lookup (gimp, "extension-gimp-help-temp");
 
   if (proc_rec)
     {
@@ -316,7 +316,7 @@ gimp_help_call (Gimp        *gimp,
         procedural_db_run_proc (gimp,
                                 gimp_get_user_context (gimp),
                                 NULL,
-				"extension_gimp_help_temp",
+				"extension-gimp-help-temp",
                                 &n_return_vals,
                                 GIMP_PDB_STRING, procedure,
 				GIMP_PDB_STRING, help_domain,

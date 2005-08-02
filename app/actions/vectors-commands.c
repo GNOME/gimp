@@ -315,10 +315,10 @@ vectors_selection_to_vectors_cmd_callback (GtkAction *action,
 
   if (value)
     proc_rec = procedural_db_lookup (gimage->gimp,
-                                     "plug_in_sel2path_advanced");
+                                     "plug-in-sel2path-advanced");
   else
     proc_rec = procedural_db_lookup (gimage->gimp,
-                                     "plug_in_sel2path");
+                                     "plug-in-sel2path");
 
   if (! proc_rec)
     {
