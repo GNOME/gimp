@@ -996,7 +996,7 @@ msgstr "画像を開くか前面に(_R)"
 
 #: ../app/actions/documents-actions.c:53
 msgid "Raise window if already open"
-msgstr "もし開いていたらウィンドウを全面に"
+msgstr "もし開いていたらウィンドウを前面に"
 
 #: ../app/actions/documents-actions.c:58
 msgid "File Open _Dialog"
@@ -3827,7 +3827,7 @@ msgid ""
 "When enabled, the guides are visible by default. This can also be toggled "
 "with the \"View->Show Guides\" command."
 msgstr ""
-"オンの場合, デフォルトでものさしを表示します. これは \"表示->ものさし\" コマ"
+"オンの場合, デフォルトでガイドを表示します. これは \"表示->ガイド\" コマ"
 "ンドでも切り替えられます."
 
 #: ../app/config/gimprc-blurbs.h:322
@@ -3928,7 +3928,7 @@ msgid ""
 msgstr ""
 "タイルキャッシュは GIMP がタイルをメモリとディスクの間でスラッシングさせない"
 "ようにするために用いられます. この値を大きくすると GIMP のスワップ利用量は減"
-"少しますが, メモリ利用量は増加します. 逆に小くすると, スワップ利用量は増加"
+"少しますが, メモリ利用量は増加します. 逆に小さくすると, スワップ利用量は増加"
 "し, メモリ利用量は減少します."
 
 #: ../app/config/gimprc-blurbs.h:390
@@ -6545,7 +6545,7 @@ msgstr "ズーム時にウィンドウをリサイズする(_Z)"
 
 #: ../app/dialogs/preferences-dialog.c:1788
 msgid "Resize window on image _size change"
-msgstr "ズーム時にウィンドウをリサイズする(_S)"
+msgstr "画像サイズ変更時にウィンドウをリサイズする(_S)"
 
 #: ../app/dialogs/preferences-dialog.c:1794
 msgid "Fit to window"
@@ -6766,7 +6766,7 @@ msgstr "フォーカス"
 
 #: ../app/dialogs/preferences-dialog.c:2282
 msgid "Activate the _focused image"
-msgstr "フィーカスされた画像をアクティブに(_F)"
+msgstr "フォーカスされた画像をアクティブに(_F)"
 
 #. Window Positions
 #: ../app/dialogs/preferences-dialog.c:2286
@@ -7012,7 +7012,7 @@ msgid ""
 "interpolation type will affect channels and masks only."
 msgstr ""
 "インデックスカラーのレイヤーは常時補間なしで拡大縮小されます. その場合, 補間"
-"の種類はチャンンネルとマスクにのみ影響します."
+"の種類はチャンネルとマスクにのみ影響します."
 
 #: ../app/dialogs/stroke-dialog.c:101
 msgid "Choose Stroke Style"
@@ -7320,7 +7320,7 @@ msgid ""
 "any later version."
 msgstr ""
 "本プログラムはフリー・ソフトウェアです. あなたは、Free Software Foundation が"
-"公表したGNU一般公有使用許諾の「バージョン２」あるいははそれ以降の各バージョン"
+"公表したGNU一般公有使用許諾の「バージョン２」あるいはそれ以降の各バージョン"
 "の中からいずれかを選択し, そのバージョンが定める条項に従って本プログラムを再"
 "頒布または変更することができます."
 
@@ -7970,7 +7970,7 @@ msgid ""
 "PDB calling error for procedure '%s':\n"
 "Argument #%d type mismatch (expected %s, got %s)"
 msgstr ""
-"プロシージャ '%s' に対する PBD 呼び出しエラー:\n"
+"プロシージャ '%s' に対する PDB 呼び出しエラー:\n"
 "%d 番目の引数の種類が異っています (%s のはずが %s でした)"
 
 #: ../app/pdb/procedural_db_cmds.c:80
@@ -8609,7 +8609,7 @@ msgstr "開始点 の X:"
 #: ../app/tools/gimpcroptool.c:1038
 #, fuzzy
 msgid "Origin Y:"
-msgstr "開始点 の X:"
+msgstr "開始点 の Y:"
 
 #: ../app/tools/gimpcroptool.c:1076 ../app/widgets/gimpbrusheditor.c:193
 #, fuzzy
@@ -9238,7 +9238,7 @@ msgstr "中心座標 X:"
 #: ../app/tools/gimprotatetool.c:190
 #, fuzzy
 msgid "Center Y:"
-msgstr "中心座標 X:"
+msgstr "中心座標 Y:"
 
 #: ../app/tools/gimpscaletool.c:91
 msgid "Scale"
@@ -9266,7 +9266,7 @@ msgstr "現在の幅:"
 
 #: ../app/tools/gimpscaletool.c:174
 msgid "Current height:"
-msgstr "現在の幅:"
+msgstr "現在の高さ:"
 
 #: ../app/tools/gimpscaletool.c:189
 msgid "Scale ratio X:"
@@ -9274,7 +9274,7 @@ msgstr "拡大率 X:"
 
 #: ../app/tools/gimpscaletool.c:192
 msgid "Scale ratio Y:"
-msgstr "拡大率 X:"
+msgstr "拡大率 Y:"
 
 #: ../app/tools/gimpscaletool.c:196
 msgid "Aspect Ratio:"
@@ -9357,7 +9357,7 @@ msgstr "変形率 X:"
 #: ../app/tools/gimpsheartool.c:174
 #, fuzzy
 msgid "Shear magnitude Y:"
-msgstr "変形率 X:"
+msgstr "変形率 Y:"
 
 #: ../app/tools/gimpsmudgetool.c:54
 msgid "Smudge image"
@@ -9991,7 +9991,7 @@ msgstr "上にスクロール (Control + Alt)"
 #: ../app/widgets/gimpcontrollerkeyboard.c:75
 #, fuzzy
 msgid "Cursor Up (Shift + Alt)"
-msgstr "上にスクロール (Shift + Control)"
+msgstr "上にスクロール (Shift + Alt)"
 
 #: ../app/widgets/gimpcontrollerkeyboard.c:78
 #, fuzzy
@@ -10161,7 +10161,7 @@ msgstr "上にスクロール (Control + Alt)"
 
 #: ../app/widgets/gimpcontrollerwheel.c:74
 msgid "Scroll Up (Shift + Alt)"
-msgstr "上にスクロール (Shift + Control)"
+msgstr "上にスクロール (Shift + Alt)"
 
 #: ../app/widgets/gimpcontrollerwheel.c:77
 msgid "Scroll Up (Shift + Control)"
@@ -10341,7 +10341,7 @@ msgstr "このタブを削除"
 #: ../app/widgets/gimperrorconsole.c:235 ../app/widgets/gimperrordialog.c:252
 #, c-format
 msgid "%s Message"
-msgstr "%s 件のメッセージ"
+msgstr "%s メッセージ"
 
 #: ../app/widgets/gimperrordialog.c:229
 msgid "Too many error messages!"
@@ -10694,7 +10694,7 @@ msgstr "アイコン(_I):"
 #: ../app/widgets/gimptemplateeditor.c:695
 #, c-format
 msgid "%d x %d dpi, %s"
-msgstr "%d x %d dip, %s"
+msgstr "%d x %d dpi, %s"
 
 #: ../app/widgets/gimptemplateeditor.c:697
 #, c-format
@@ -10737,8 +10737,8 @@ msgid ""
 "The active image.\n"
 "Click to open the Image Dialog."
 msgstr ""
-"アクティブになっているパターンです.\n"
-"クリックするとパターンダイアログを開きます."
+"アクティブになっている画像です.\n"
+"クリックすると画像ダイアログを開きます."
 
 #: ../app/widgets/gimptoolbox-indicator-area.c:149
 msgid ""
@@ -10823,7 +10823,7 @@ msgstr "反転"
 #: ../app/widgets/gimpviewablebox.c:210
 #, fuzzy
 msgid "Open the palette selection dialog"
-msgstr "パターン選択ダイアログを開く"
+msgstr "パレット選択ダイアログを開く"
 
 #: ../app/widgets/gimpviewablebox.c:250
 msgid "Open the font selection dialog"
@@ -11362,7 +11362,7 @@ msgstr "'%s' を作成できませんでした: %s"
 
 #, fuzzy
 #~ msgid "Y ratio:"
-#~ msgstr "比率 X:"
+#~ msgstr "比率 Y:"
 
 #~ msgid "Constrain aspect ratio"
 #~ msgstr "縦横比を保持"
@@ -11372,11 +11372,11 @@ msgstr "'%s' を作成できませんでした: %s"
 
 #, fuzzy
 #~ msgid "X resolution:"
-#~ msgstr "解像度:"
+#~ msgstr "解像度 X:"
 
 #, fuzzy
 #~ msgid "Y resolution:"
-#~ msgstr "解像度:"
+#~ msgstr "解像度 Y:"
 
 #~ msgid "Stroke Options"
 #~ msgstr "ストロークオプション"
@@ -11585,7 +11585,7 @@ msgstr "'%s' を作成できませんでした: %s"
 #~ "Could not find the GIMP Help Browser procedure. It probably was not "
 #~ "compiled because you don't have GtkHtml2 installed."
 #~ msgstr ""
-#~ "GIMP ヘブルプラウザプロシージャが見つかりません. GtkHtml2 がなく, コンパイ"
+#~ "GIMP ヘルプブラウザプロシージャが見つかりません. GtkHtml2 がなく, コンパイ"
 #~ "ルされなかったのかもしれません."
 
 #~ msgid "Could not start GIMP Help Browser"

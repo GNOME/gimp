@@ -245,7 +245,7 @@ msgid ""
 "pressing <tt>Shift</tt> at the same time."
 msgstr ""
 "<tt>Alt</tt> を押しながらドラッグすると選択領域を調節し直すことができるよ．も"
-"しウィンドウが動いてしまうのであれば，君の使っているウィンドウマネージャーす"
+"しウィンドウが動いてしまうのであれば，君の使っているウィンドウマネージャーがす"
 "でに <tt>Alt</tt> を使ってるんだ．そういうときは <tt>Shift</tt> も押しながら"
 "試してみてね．"
 
@@ -263,7 +263,7 @@ msgid ""
 "dialog allows you to work on multiple paths and to convert them to "
 "selections."
 msgstr ""
-"ベジエツールを使って複雑な選択領域を作れるよ．パスダイアログでは複数のパスで"
+"パスツールを使って複雑な選択領域を作れるよ．パスダイアログでは複数のパスで"
 "作業したり選択領域に変換したりできるんだ．"
 
 #: ../tips/gimp-tips.xml.in.h:26
