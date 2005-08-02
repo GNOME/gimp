@@ -1,3 +1,8 @@
+2005-08-02  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/procbrowser.c: Quick and dirty restore of browser
+	functionality.
+
 2005-08-02  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimpuitypes.h: added GimpProcBrowserDialog typedef here.
