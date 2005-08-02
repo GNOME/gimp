@@ -68,7 +68,6 @@ typedef enum
 
 enum
 {
-  COLUMN_LABEL,
   COLUMN_PROC_NAME,
   N_COLUMNS
 };
@@ -91,7 +90,6 @@ static void       browser_search            (GimpBrowser           *browser,
                                              const gchar           *query_text,
                                              gint                   search_type,
                                              GimpProcBrowserDialog *dialog);
-static void       browser_convert_string    (gchar             *str);
 
 
 static GimpDialogClass *parent_class                = NULL;
@@ -150,8 +148,6 @@ gimp_proc_browser_dialog_init (GimpProcBrowserDialog *dialog)
   GtkWidget        *scrolled_window;
   GtkCellRenderer  *renderer;
   GtkTreeSelection *selection;
-
-  dialog->scheme_names = FALSE;
 
   dialog->browser = gimp_browser_new ();
   gimp_browser_add_search_types (GIMP_BROWSER (dialog->browser),
@@ -219,25 +215,11 @@ gimp_proc_browser_dialog_init (GimpProcBrowserDialog *dialog)
 /*  public functions  */
 
 GtkWidget *
-gimp_proc_browser_dialog_new (gboolean scheme_names,
-                              gboolean apply_button)
+gimp_proc_browser_dialog_new (void)
 {
   GimpProcBrowserDialog *dialog;
 
   dialog = g_object_new (GIMP_TYPE_PROC_BROWSER_DIALOG, NULL);
-
-  dialog->scheme_names = scheme_names ? TRUE : FALSE;
-
-  if (apply_button)
-    {
-      gtk_dialog_add_button (GTK_DIALOG (dialog),
-                             GTK_STOCK_APPLY, GTK_RESPONSE_APPLY);
-      gtk_dialog_set_default_response (GTK_DIALOG (dialog),
-                                       GTK_RESPONSE_APPLY);
-    }
-
-  gtk_dialog_add_button (GTK_DIALOG (dialog),
-                         GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE);
 
   /* first search (all procedures) */
   browser_search (GIMP_BROWSER (dialog->browser), "", SEARCH_TYPE_ALL,
@@ -306,7 +288,6 @@ static void
 browser_show_procedure (GimpProcBrowserDialog *dialog,
                         const gchar           *proc_name)
 {
-  gchar           *name;
   gchar           *proc_blurb;
   gchar           *proc_help;
   gchar           *proc_author;
@@ -317,11 +298,6 @@ browser_show_procedure (GimpProcBrowserDialog *dialog,
   gint             n_return_vals;
   GimpParamDef    *params;
   GimpParamDef    *return_vals;
-
-  name = g_strdup (proc_name);
-
-  if (dialog->scheme_names)
-    browser_convert_string (name);
 
   gimp_procedural_db_proc_info (proc_name,
                                 &proc_blurb,
@@ -336,7 +312,7 @@ browser_show_procedure (GimpProcBrowserDialog *dialog,
                                 &return_vals);
 
   gimp_browser_set_widget (GIMP_BROWSER (dialog->browser),
-                           gimp_proc_view_new (name,
+                           gimp_proc_view_new (proc_name,
                                                NULL,
                                                proc_blurb,
                                                proc_help,
@@ -349,7 +325,6 @@ browser_show_procedure (GimpProcBrowserDialog *dialog,
                                                params,
                                                return_vals));
 
-  g_free (name);
   g_free (proc_blurb);
   g_free (proc_help);
   g_free (proc_author);
@@ -358,7 +333,6 @@ browser_show_procedure (GimpProcBrowserDialog *dialog,
 
   gimp_destroy_paramdefs (params,      n_params);
   gimp_destroy_paramdefs (return_vals, n_return_vals);
-
 }
 
 static void
@@ -382,7 +356,7 @@ browser_search (GimpBrowser           *browser,
       while (*q)
         {
           if ((*q == '_') || (*q == '-'))
-            g_string_append (query, "[-_]");
+            g_string_append (query, "-");
           else
             g_string_append_c (query, *q);
 
@@ -482,7 +456,6 @@ browser_search (GimpBrowser           *browser,
       gint              i;
 
       dialog->store = gtk_list_store_new (N_COLUMNS,
-                                          G_TYPE_STRING,
                                           G_TYPE_STRING);
       gtk_tree_view_set_model (GTK_TREE_VIEW (dialog->tree_view),
                                GTK_TREE_MODEL (dialog->store));
@@ -490,18 +463,11 @@ browser_search (GimpBrowser           *browser,
 
       for (i = 0; i < num_procs; i++)
         {
-          str = g_strdup (proc_list[i]);
-
-          if (dialog->scheme_names)
-            browser_convert_string (str);
-
           gtk_list_store_append (dialog->store, &iter);
           gtk_list_store_set (dialog->store, &iter,
-                              COLUMN_LABEL,     str,
                               COLUMN_PROC_NAME, proc_list[i],
                               -1);
 
-          g_free (str);
           g_free (proc_list[i]);
         }
 
@@ -510,7 +476,8 @@ browser_search (GimpBrowser           *browser,
       gtk_tree_view_columns_autosize (GTK_TREE_VIEW (dialog->tree_view));
 
       gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (dialog->store),
-                                            COLUMN_LABEL, GTK_SORT_ASCENDING);
+                                            COLUMN_PROC_NAME,
+                                            GTK_SORT_ASCENDING);
 
       gtk_tree_model_get_iter_first (GTK_TREE_MODEL (dialog->store), &iter);
       selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->tree_view));
@@ -522,17 +489,5 @@ browser_search (GimpBrowser           *browser,
       dialog->store = NULL;
 
       gimp_browser_show_message (browser, _("No matches"));
-    }
-}
-
-static void
-browser_convert_string (gchar *str)
-{
-  while (*str)
-    {
-      if (*str == '_')
-        *str = '-';
-
-      str++;
     }
 }

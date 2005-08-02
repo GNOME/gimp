@@ -289,7 +289,14 @@ script_fu_browse_callback (GtkWidget        *widget,
 {
   if (! console->proc_browser)
     {
-      console->proc_browser = gimp_proc_browser_dialog_new (TRUE, TRUE);
+      console->proc_browser = gimp_proc_browser_dialog_new ();
+
+      gtk_dialog_add_buttons (GTK_DIALOG (console->proc_browser),
+                              GTK_STOCK_APPLY, GTK_RESPONSE_APPLY,
+                              GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
+                              NULL);
+      gtk_dialog_set_default_response (GTK_DIALOG (console->proc_browser),
+                                       GTK_RESPONSE_APPLY);
 
       g_object_add_weak_pointer (G_OBJECT (console->proc_browser),
                                  (gpointer) &console->proc_browser);

@@ -117,7 +117,9 @@ run (const gchar      *name,
 
         gimp_ui_init ("dbbrowser", FALSE);
 
-        dialog = gimp_proc_browser_dialog_new (FALSE, FALSE);
+        dialog = gimp_proc_browser_dialog_new ();
+        gtk_dialog_add_button (GTK_DIALOG (dialog),
+                               GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE);
         gtk_dialog_run (GTK_DIALOG (dialog));
         gtk_widget_destroy (dialog);
       }

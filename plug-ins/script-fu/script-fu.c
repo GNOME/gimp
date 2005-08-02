@@ -95,7 +95,7 @@ script_fu_query (void)
 
   gimp_plugin_domain_register (GETTEXT_PACKAGE "-script-fu", NULL);
 
-  gimp_install_procedure ("extension_script_fu",
+  gimp_install_procedure ("extension-script-fu",
 			  "A scheme interpreter for scripting GIMP operations",
 			  "More help here later",
 			  "Spencer Kimball & Peter Mattis",
@@ -106,7 +106,7 @@ script_fu_query (void)
 			  GIMP_EXTENSION,
 			  0, 0, NULL, NULL);
 
-  gimp_install_procedure ("plug_in_script_fu_console",
+  gimp_install_procedure ("plug-in-script-fu-console",
 			  "Provides a console mode for script-fu development",
 			  "Provides an interface which allows interactive "
                           "scheme development.",
@@ -119,10 +119,10 @@ script_fu_query (void)
 			  G_N_ELEMENTS (console_args), 0,
 			  console_args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_script_fu_console",
+  gimp_plugin_menu_register ("plug-in-script-fu-console",
                              N_("<Toolbox>/Xtns/Script-Fu"));
 
-  gimp_install_procedure ("plug_in_script_fu_text_console",
+  gimp_install_procedure ("plug-in-script-fu-text-console",
                           "Provides a text console mode for script-fu "
                           "development",
                           "Provides an interface which allows interactive "
@@ -136,7 +136,7 @@ script_fu_query (void)
                           G_N_ELEMENTS (textconsole_args), 0,
                           textconsole_args, NULL);
 
-  gimp_install_procedure ("plug_in_script_fu_server",
+  gimp_install_procedure ("plug-in-script-fu-server",
 			  "Provides a server for remote script-fu operation",
 			  "Provides a server for remote script-fu operation",
 			  "Spencer Kimball & Peter Mattis",
@@ -148,10 +148,10 @@ script_fu_query (void)
 			  G_N_ELEMENTS (server_args), 0,
 			  server_args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_script_fu_server",
+  gimp_plugin_menu_register ("plug-in-script-fu-server",
                              N_("<Toolbox>/Xtns/Script-Fu"));
 
-  gimp_install_procedure ("plug_in_script_fu_eval",
+  gimp_install_procedure ("plug-in-script-fu-eval",
 			  "Evaluate scheme code",
 			  "Evaluate the code under the scheme interpreter "
                           "(primarily for batch mode)",
@@ -180,7 +180,7 @@ script_fu_run (const gchar      *name,
   /*  Determine before we allow scripts to register themselves
    *   whether this is the base, automatically installed script-fu extension
    */
-  if (strcmp (name, "extension_script_fu") == 0)
+  if (strcmp (name, "extension-script-fu") == 0)
     {
       /*  Setup auxillary temporary procedures for the base extension  */
       script_fu_extension_init ();
@@ -197,7 +197,7 @@ script_fu_run (const gchar      *name,
   /*  Load all of the available scripts  */
   script_fu_find_scripts ();
 
-  if (strcmp (name, "extension_script_fu") == 0)
+  if (strcmp (name, "extension-script-fu") == 0)
     {
       /*
        *  The main, automatically installed script fu extension.  For
@@ -220,7 +220,7 @@ script_fu_run (const gchar      *name,
       values[0].type          = GIMP_PDB_STATUS;
       values[0].data.d_status = status;
     }
-  else if (strcmp (name, "plug_in_script_fu_text_console") == 0)
+  else if (strcmp (name, "plug-in-script-fu-text-console") == 0)
     {
       /*
        *  The script-fu text console for interactive SIOD development
@@ -229,7 +229,7 @@ script_fu_run (const gchar      *name,
       script_fu_text_console_run (name, nparams, param,
 				  nreturn_vals, return_vals);
     }
-  else if (strcmp (name, "plug_in_script_fu_console") == 0)
+  else if (strcmp (name, "plug-in-script-fu-console") == 0)
     {
       /*
        *  The script-fu console for interactive SIOD development
@@ -238,7 +238,7 @@ script_fu_run (const gchar      *name,
       script_fu_console_run (name, nparams, param,
 			     nreturn_vals, return_vals);
     }
-  else if (strcmp (name, "plug_in_script_fu_server") == 0)
+  else if (strcmp (name, "plug-in-script-fu-server") == 0)
     {
       /*
        *  The script-fu server for remote operation
@@ -247,7 +247,7 @@ script_fu_run (const gchar      *name,
       script_fu_server_run (name, nparams, param,
 			    nreturn_vals, return_vals);
     }
-  else if (strcmp (name, "plug_in_script_fu_eval") == 0)
+  else if (strcmp (name, "plug-in-script-fu-eval") == 0)
     {
       /*
        *  A non-interactive "console" (for batch mode)
@@ -304,7 +304,7 @@ script_fu_extension_init (void)
   gimp_plugin_menu_branch_register ("<Image>/Filters/Decor",
                                     N_("Stencil _Ops"));
 
-  gimp_install_temp_proc ("script_fu_refresh",
+  gimp_install_temp_proc ("script-fu-refresh",
 			  "Re-read all available scripts",
 			  "Re-read all available scripts",
 			  "Spencer Kimball & Peter Mattis",

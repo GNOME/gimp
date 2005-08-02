@@ -84,7 +84,6 @@ typedef union
 typedef struct
 {
   gchar         *script_name;
-  gchar         *pdb_name;
   gchar         *menu_path;
   gchar         *help;
   gchar         *author;

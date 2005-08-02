@@ -1,5 +1,24 @@
 2005-08-03  Michael Natterer  <mitch@gimp.org>
 
+	* libgimp/gimpprocbrowserdialog.[ch]: removed all parameters from
+	gimp_proc_browser_dialog_new() and removed the "scheme_names"
+	stuff.
+
+	* plug-ins/dbbrowser/procedure-browser.c
+	* plug-ins/pygimp/procbrowser.c
+	* plug-ins/script-fu/script-fu-console.c: changed accordingly.
+
+	* plug-ins/script-fu/script-fu-interface.c
+	* plug-ins/script-fu/script-fu-scripts.c
+	* plug-ins/script-fu/script-fu-types.h
+	* plug-ins/script-fu/siod-wrapper.c: removed all sorts of
+	conversions between '-' and '_' for procedure names.
+
+	* plug-ins/script-fu/script-fu.c: use canonical names for
+	script-fu's procedures.
+
+2005-08-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/vectors-commands.c
 	* app/widgets/gimphelp.c: canonicalized some hardcoded procedure
 	names because internal functions accept only canonical names now.

@@ -232,7 +232,6 @@ init_procedures (void)
         {
           LISP   args = NIL;
           LISP   code = NIL;
-          gchar *proc_name;
           gint   j;
 
           /*  create a new scheme func that calls gimp-proc-db-call  */
@@ -250,13 +249,8 @@ init_procedures (void)
           args = nreverse (args);
           code = nreverse (code);
 
-          /*  convert the procedure name to scheme-like naming conventions  */
-          proc_name = g_strdup (proc_list[i]);
-          convert_string (proc_name);
-
-          /*  set the scheme-based procedure name  */
-          args = cons (rintern (proc_name), args);
-          g_free (proc_name);
+          /*  set the procedure name  */
+          args = cons (rintern (proc_list[i]), args);
 
           /*  set the actual pdb procedure name  */
           code = cons (cons (cintern ("quote"),
@@ -556,7 +550,6 @@ marshall_proc_db_call (LISP a)
                                       &nparams, &nreturn_vals,
                                       &params, &return_vals))
     {
-      convert_string (proc_name);
       g_snprintf (error_str, sizeof (error_str),
                   "Invalid procedure name %s specified", proc_name);
       return my_err (error_str, NIL);
@@ -577,7 +570,6 @@ marshall_proc_db_call (LISP a)
   /*  Check the supplied number of arguments  */
   if ((nlength (a) - 1) != nparams)
     {
-      convert_string (proc_name);
       g_snprintf (error_str, sizeof (error_str),
                   "Invalid arguments supplied to %s -- "
                   "(# args: %ld, expecting: %d)",
@@ -656,7 +648,6 @@ marshall_proc_db_call (LISP a)
 
               if ((n_elements < 0) || (n_elements > nlength (list)))
                 {
-                  convert_string (proc_name);
                   g_snprintf (error_str, sizeof (error_str),
                               "INT32 array (argument %d) for function %s has "
                               "incorrect length (got %ld, expected %d)",
@@ -680,7 +671,6 @@ marshall_proc_db_call (LISP a)
 
               if ((n_elements < 0) || (n_elements > nlength (list)))
                 {
-                  convert_string (proc_name);
                   g_snprintf (error_str, sizeof (error_str),
                               "INT16 array (argument %d) for function %s has "
                               "incorrect length (got %ld, expected %d)",
@@ -704,7 +694,6 @@ marshall_proc_db_call (LISP a)
 
               if ((n_elements < 0) || (n_elements > nlength (list)))
                 {
-                  convert_string (proc_name);
                   g_snprintf (error_str, sizeof (error_str),
                               "INT8 array (argument %d) for function %s has "
                               "incorrect length (got %ld, expected %d)",
@@ -727,7 +716,6 @@ marshall_proc_db_call (LISP a)
 
               if ((n_elements < 0) || (n_elements > nlength (list)))
                 {
-                  convert_string (proc_name);
                   g_snprintf (error_str, sizeof (error_str),
                               "FLOAT array (argument %d) for function %s has "
                               "incorrect length (got %ld, expected %d)",
@@ -750,7 +738,6 @@ marshall_proc_db_call (LISP a)
 
               if ((n_elements < 0) || (n_elements > nlength (list)))
                 {
-                  convert_string (proc_name);
                   g_snprintf (error_str, sizeof (error_str),
                               "STRING array (argument %d) for function %s has "
                               "incorrect length (got %ld, expected %d)",
@@ -918,7 +905,6 @@ marshall_proc_db_call (LISP a)
           break;
 
         default:
-          convert_string (proc_name);
           g_snprintf (error_str, sizeof (error_str),
                       "Argument %d for %s is an unknown type",
                       i + 1, proc_name);

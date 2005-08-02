@@ -44,8 +44,6 @@ struct _GimpProcBrowserDialog
 {
   GimpDialog    parent_instance;
 
-  gboolean      scheme_names;
-
   GtkWidget    *browser;
 
   GtkListStore *store;
@@ -66,11 +64,9 @@ struct _GimpProcBrowserDialogClass
 };
 
 
-GType       gimp_proc_browser_dialog_get_type (void) G_GNUC_CONST;
+GType       gimp_proc_browser_dialog_get_type     (void) G_GNUC_CONST;
 
-GtkWidget * gimp_proc_browser_dialog_new          (gboolean               scheme_names,
-                                                   gboolean               apply_button);
-
+GtkWidget * gimp_proc_browser_dialog_new          (void);
 gchar     * gimp_proc_browser_dialog_get_selected (GimpProcBrowserDialog *dialog);
 
 

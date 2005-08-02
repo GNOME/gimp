@@ -160,7 +160,6 @@ script_fu_add_script (LISP a)
   LISP          adj_list;
   LISP          brush_list;
   LISP          option_list;
-  gchar        *s;
 
   /*  Check the length of a  */
   if (nlength (a) < 7)
@@ -173,14 +172,6 @@ script_fu_add_script (LISP a)
   val = get_c_string (car (a));
   script->script_name = g_strdup (val);
   a = cdr (a);
-
-  /* transform the function name into a name containing "_" for each "-".
-   * this does not hurt anybody, yet improves the life of many... ;)
-   */
-  script->pdb_name = g_strdup (val);
-  for (s = script->pdb_name; *s; s++)
-    if (*s == '-')
-      *s = '_';
 
   /*  Find the script menu_path  */
   val = get_c_string (car (a));
@@ -615,10 +606,9 @@ script_fu_add_script (LISP a)
 LISP
 script_fu_add_menu (LISP a)
 {
-  SFScript *script;
-  SFMenu   *menu;
-  gchar    *val;
-  gchar    *s;
+  SFScript    *script;
+  SFMenu      *menu;
+  const gchar *name;
 
   /*  Check the length of a  */
   if (nlength (a) != 2)
@@ -626,15 +616,10 @@ script_fu_add_menu (LISP a)
                    NIL);
 
   /*  Find the script PDB entry name  */
-  val = g_strdup (get_c_string (car (a)));
-  for (s = val; *s; s++)
-    if (*s == '-')
-      *s = '_';
+  name = get_c_string (car (a));
   a = cdr (a);
 
-  script = script_fu_find_script (val);
-
-  g_free (val);
+  script = script_fu_find_script (name);
 
   if (! script)
     return my_err ("Nonexisting procedure name in script-fu-menu-register",
@@ -646,8 +631,7 @@ script_fu_add_menu (LISP a)
   menu->script = script;
 
   /*  Find the script menu path  */
-  val = get_c_string (car (a));
-  menu->menu_path = g_strdup (val);
+  menu->menu_path = g_strdup (get_c_string (car (a)));
 
   script_menu_list = g_list_prepend (script_menu_list, menu);
 
@@ -710,7 +694,7 @@ script_fu_install_script (gpointer  foo,
       if (strncmp (script->menu_path, "<None>", 6) != 0)
         menu_path = script->menu_path;
 
-      gimp_install_temp_proc (script->pdb_name,
+      gimp_install_temp_proc (script->script_name,
                               script->help,
                               "",
                               script->author,
@@ -737,7 +721,7 @@ static void
 script_fu_install_menu (SFMenu   *menu,
                         gpointer  foo)
 {
-  gimp_plugin_menu_register (menu->script->pdb_name, menu->menu_path);
+  gimp_plugin_menu_register (menu->script->script_name, menu->menu_path);
 
   g_free (menu->menu_path);
   g_free (menu);
@@ -937,7 +921,7 @@ script_fu_lookup_script (gpointer      *foo,
     {
       SFScript *script = list->data;
 
-      if (strcmp (script->pdb_name, *name) == 0)
+      if (strcmp (script->script_name, *name) == 0)
         {
           /* store the script in the name pointer and stop the traversal */
           *name = script;
@@ -949,15 +933,15 @@ script_fu_lookup_script (gpointer      *foo,
 }
 
 static SFScript *
-script_fu_find_script (const gchar *pdb_name)
+script_fu_find_script (const gchar *script_name)
 {
-  gconstpointer script = pdb_name;
+  gconstpointer script = script_name;
 
   g_tree_foreach (script_tree,
                   (GTraverseFunc) script_fu_lookup_script,
                   &script);
 
-  if (script == pdb_name)
+  if (script == script_name)
     return NULL;
 
   return (SFScript *) script;
@@ -971,9 +955,8 @@ script_fu_free_script (SFScript *script)
   g_return_if_fail (script != NULL);
 
   /*  Uninstall the temporary procedure for this script  */
-  gimp_uninstall_temp_proc (script->pdb_name);
+  gimp_uninstall_temp_proc (script->script_name);
 
-  g_free (script->pdb_name);
   g_free (script->script_name);
   g_free (script->menu_path);
   g_free (script->help);

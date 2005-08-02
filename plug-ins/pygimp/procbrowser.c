@@ -162,7 +162,17 @@ proc_browser_dialog_new(PyObject *self, PyObject *args, PyObject *kwargs)
 	}
     }
 
-    dlg = G_OBJECT(gimp_proc_browser_dialog_new(FALSE, has_apply));
+    dlg = G_OBJECT(gimp_proc_browser_dialog_new());
+
+    if (has_apply) {
+        gtk_dialog_add_button(GTK_DIALOG(dlg),
+                              GTK_STOCK_APPLY, GTK_RESPONSE_APPLY);
+        gtk_dialog_set_default_response(GTK_DIALOG(dlg),
+                                        GTK_RESPONSE_APPLY);
+    }
+
+    gtk_dialog_add_button(GTK_DIALOG(dlg),
+                          GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE);
 
     g_signal_connect_data(dlg, "response",
                           G_CALLBACK(proxy_apply_callback), proxy_data,
