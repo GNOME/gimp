@@ -109,7 +109,8 @@ static ProcArg pattern_get_info_outargs[] =
 
 static ProcRecord pattern_get_info_proc =
 {
-  "gimp_pattern_get_info",
+  "gimp-pattern-get-info",
+  "gimp-pattern-get-info",
   "Retrieve information about the specified pattern.",
   "This procedure retrieves information about the specified pattern. This includes the pattern extents (width and height).",
   "Michael Natterer <mitch@gimp.org>",
@@ -211,7 +212,8 @@ static ProcArg pattern_get_pixels_outargs[] =
 
 static ProcRecord pattern_get_pixels_proc =
 {
-  "gimp_pattern_get_pixels",
+  "gimp-pattern-get-pixels",
+  "gimp-pattern-get-pixels",
   "Retrieve information about the specified pattern (including pixels).",
   "This procedure retrieves information about the specified. This includes the pattern extents (width and height), its bpp and its pixel data.",
   "Michael Natterer <mitch@gimp.org>",

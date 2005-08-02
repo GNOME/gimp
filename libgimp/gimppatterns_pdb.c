@@ -44,7 +44,7 @@ gimp_patterns_refresh (void)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_patterns_refresh",
+  return_vals = gimp_run_procedure ("gimp-patterns-refresh",
 				    &nreturn_vals,
 				    GIMP_PDB_END);
 
@@ -64,7 +64,7 @@ gimp_patterns_refresh (void)
  *
  * This procedure returns a complete listing of available GIMP
  * patterns. Each name returned can be used as input to the
- * 'gimp_context_set_pattern'.
+ * 'gimp-context-set-pattern'.
  *
  * Returns: The list of pattern names.
  */
@@ -77,7 +77,7 @@ gimp_patterns_get_list (const gchar *filter,
   gchar **pattern_list = NULL;
   gint i;
 
-  return_vals = gimp_run_procedure ("gimp_patterns_get_list",
+  return_vals = gimp_run_procedure ("gimp-patterns-get-list",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, filter,
 				    GIMP_PDB_END);
@@ -115,7 +115,7 @@ gimp_patterns_get_pattern (gint *width,
   gint nreturn_vals;
   gchar *name = NULL;
 
-  return_vals = gimp_run_procedure ("gimp_patterns_get_pattern",
+  return_vals = gimp_run_procedure ("gimp-patterns-get-pattern",
 				    &nreturn_vals,
 				    GIMP_PDB_END);
 
@@ -156,7 +156,7 @@ gimp_patterns_get_pattern_data (const gchar  *name,
   gint nreturn_vals;
   gchar *ret_name = NULL;
 
-  return_vals = gimp_run_procedure ("gimp_patterns_get_pattern_data",
+  return_vals = gimp_run_procedure ("gimp-patterns-get-pattern-data",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, name,
 				    GIMP_PDB_END);

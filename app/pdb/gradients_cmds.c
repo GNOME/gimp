@@ -62,7 +62,8 @@ gradients_refresh_invoker (Gimp         *gimp,
 
 static ProcRecord gradients_refresh_proc =
 {
-  "gimp_gradients_refresh",
+  "gimp-gradients-refresh",
+  "gimp-gradients-refresh",
   "Refresh current gradients. This function always succeeds.",
   "This procedure retrieves all gradients currently in the user's gradient path and updates the gradient dialogs accordingly.",
   "Michael Natterer",
@@ -132,9 +133,10 @@ static ProcArg gradients_get_list_outargs[] =
 
 static ProcRecord gradients_get_list_proc =
 {
-  "gimp_gradients_get_list",
+  "gimp-gradients-get-list",
+  "gimp-gradients-get-list",
   "Retrieve the list of loaded gradients.",
-  "This procedure returns a list of the gradients that are currently loaded. You can later use the 'gimp_context_set_gradient' function to set the active gradient.",
+  "This procedure returns a list of the gradients that are currently loaded. You can later use the 'gimp-context-set-gradient' function to set the active gradient.",
   "Federico Mena Quintero",
   "Federico Mena Quintero",
   "1997",
@@ -237,13 +239,14 @@ static ProcArg gradients_sample_uniform_outargs[] =
 
 static ProcRecord gradients_sample_uniform_proc =
 {
-  "gimp_gradients_sample_uniform",
-  "This procedure is deprecated! Use 'gimp_gradient_get_uniform_samples' instead.",
-  "This procedure is deprecated! Use 'gimp_gradient_get_uniform_samples' instead.",
+  "gimp-gradients-sample-uniform",
+  "gimp-gradients-sample-uniform",
+  "This procedure is deprecated! Use 'gimp-gradient-get-uniform-samples' instead.",
+  "This procedure is deprecated! Use 'gimp-gradient-get-uniform-samples' instead.",
   "",
   "",
   "",
-  "gimp_gradient_get_uniform_samples",
+  "gimp-gradient-get-uniform-samples",
   GIMP_INTERNAL,
   2,
   gradients_sample_uniform_inargs,
@@ -346,13 +349,14 @@ static ProcArg gradients_sample_custom_outargs[] =
 
 static ProcRecord gradients_sample_custom_proc =
 {
-  "gimp_gradients_sample_custom",
-  "This procedure is deprecated! Use 'gimp_gradient_get_custom_samples' instead.",
-  "This procedure is deprecated! Use 'gimp_gradient_get_custom_samples' instead.",
+  "gimp-gradients-sample-custom",
+  "gimp-gradients-sample-custom",
+  "This procedure is deprecated! Use 'gimp-gradient-get-custom-samples' instead.",
+  "This procedure is deprecated! Use 'gimp-gradient-get-custom-samples' instead.",
   "",
   "",
   "",
-  "gimp_gradient_get_custom_samples",
+  "gimp-gradient-get-custom-samples",
   GIMP_INTERNAL,
   3,
   gradients_sample_custom_inargs,
@@ -480,13 +484,14 @@ static ProcArg gradients_get_gradient_data_outargs[] =
 
 static ProcRecord gradients_get_gradient_data_proc =
 {
-  "gimp_gradients_get_gradient_data",
-  "This procedure is deprecated! Use 'gimp_gradient_get_uniform_samples' instead.",
-  "This procedure is deprecated! Use 'gimp_gradient_get_uniform_samples' instead.",
+  "gimp-gradients-get-gradient-data",
+  "gimp-gradients-get-gradient-data",
+  "This procedure is deprecated! Use 'gimp-gradient-get-uniform-samples' instead.",
+  "This procedure is deprecated! Use 'gimp-gradient-get-uniform-samples' instead.",
   "",
   "",
   "",
-  "gimp_gradient_get_uniform_samples",
+  "gimp-gradient-get-uniform-samples",
   GIMP_INTERNAL,
   3,
   gradients_get_gradient_data_inargs,

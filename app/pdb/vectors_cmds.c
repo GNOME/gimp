@@ -122,7 +122,8 @@ static ProcArg vectors_get_strokes_outargs[] =
 
 static ProcRecord vectors_get_strokes_proc =
 {
-  "gimp_vectors_get_strokes",
+  "gimp-vectors-get-strokes",
+  "gimp-vectors-get-strokes",
   "List the strokes associated with the passed path.",
   "Returns an Array with the stroke-IDs associated with the passed path.",
   "Simon Budig",
@@ -183,7 +184,8 @@ static ProcArg vectors_stroke_remove_inargs[] =
 
 static ProcRecord vectors_stroke_remove_proc =
 {
-  "gimp_vectors_stroke_remove",
+  "gimp-vectors-stroke-remove",
+  "gimp-vectors-stroke-remove",
   "return coordinates along the given stroke.",
   "Returns a lot of coordinates along the passed stroke.",
   "Simon Budig",
@@ -272,7 +274,8 @@ static ProcArg vectors_stroke_translate_inargs[] =
 
 static ProcRecord vectors_stroke_translate_proc =
 {
-  "gimp_vectors_stroke_translate",
+  "gimp-vectors-stroke-translate",
+  "gimp-vectors-stroke-translate",
   "translate the given stroke.",
   "Translate the given stroke.",
   "Simon Budig",
@@ -398,7 +401,8 @@ static ProcArg vectors_stroke_interpolate_outargs[] =
 
 static ProcRecord vectors_stroke_interpolate_proc =
 {
-  "gimp_vectors_stroke_interpolate",
+  "gimp-vectors-stroke-interpolate",
+  "gimp-vectors-stroke-interpolate",
   "returns polygonal approximation of the stroke.",
   "returns polygonal approximation of the stroke.",
   "Simon Budig",

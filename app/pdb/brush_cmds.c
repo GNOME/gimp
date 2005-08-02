@@ -136,7 +136,8 @@ static ProcArg brush_new_outargs[] =
 
 static ProcRecord brush_new_proc =
 {
-  "gimp_brush_new",
+  "gimp-brush-new",
+  "gimp-brush-new",
   "Creates a new brush",
   "This procedure creates a new, uninitialized brush",
   "Michael Natterer <mitch@gimp.org>",
@@ -212,7 +213,8 @@ static ProcArg brush_duplicate_outargs[] =
 
 static ProcRecord brush_duplicate_proc =
 {
-  "gimp_brush_duplicate",
+  "gimp-brush-duplicate",
+  "gimp-brush-duplicate",
   "Duplicates a brush",
   "This procedure creates an identical brush by a different name",
   "Michael Natterer <mitch@gimp.org>",
@@ -281,7 +283,8 @@ static ProcArg brush_is_generated_outargs[] =
 
 static ProcRecord brush_is_generated_proc =
 {
-  "gimp_brush_is_generated",
+  "gimp-brush-is-generated",
+  "gimp-brush-is-generated",
   "Tests if generated",
   "Returns True if this brush is parametric, False for other types",
   "Bill Skaggs <weskaggs@primate.ucdavis.edu",
@@ -360,7 +363,8 @@ static ProcArg brush_rename_outargs[] =
 
 static ProcRecord brush_rename_proc =
 {
-  "gimp_brush_rename",
+  "gimp-brush-rename",
+  "gimp-brush-rename",
   "Rename a brush",
   "This procedure renames a brush",
   "Michael Natterer <mitch@gimp.org>",
@@ -426,7 +430,8 @@ static ProcArg brush_delete_inargs[] =
 
 static ProcRecord brush_delete_proc =
 {
-  "gimp_brush_delete",
+  "gimp-brush-delete",
+  "gimp-brush-delete",
   "Deletes a brush",
   "This procedure deletes a brush",
   "Michael Natterer <mitch@gimp.org>",
@@ -495,7 +500,8 @@ static ProcArg brush_is_editable_outargs[] =
 
 static ProcRecord brush_is_editable_proc =
 {
-  "gimp_brush_is_editable",
+  "gimp-brush-is-editable",
+  "gimp-brush-is-editable",
   "Tests if brush can be edited",
   "Returns True if you have permission to change the brush",
   "Bill Skaggs <weskaggs@primate.ucdavis.edu",
@@ -581,7 +587,8 @@ static ProcArg brush_get_info_outargs[] =
 
 static ProcRecord brush_get_info_proc =
 {
-  "gimp_brush_get_info",
+  "gimp-brush-get-info",
+  "gimp-brush-get-info",
   "Retrieve information about the specified brush.",
   "This procedure retrieves information about the specified brush. This includes the brush name, and the brush extents (width and height).",
   "Michael Natterer <mitch@gimp.org>",
@@ -712,7 +719,8 @@ static ProcArg brush_get_pixels_outargs[] =
 
 static ProcRecord brush_get_pixels_proc =
 {
-  "gimp_brush_get_pixels",
+  "gimp-brush-get-pixels",
+  "gimp-brush-get-pixels",
   "Retrieve information about the specified brush.",
   "This procedure retrieves information about the specified brush. This includes the brush extents (width and height) and its pixels data.",
   "Michael Natterer <mitch@gimp.org>",
@@ -778,7 +786,8 @@ static ProcArg brush_get_spacing_outargs[] =
 
 static ProcRecord brush_get_spacing_proc =
 {
-  "gimp_brush_get_spacing",
+  "gimp-brush-get-spacing",
+  "gimp-brush-get-spacing",
   "Get the brush spacing.",
   "This procedure returns the spacing setting for the specified brush. The return value is an integer between 0 and 1000 which represents percentage of the maximum of the width and height of the mask.",
   "Michael Natterer <mitch@gimp.org>",
@@ -842,7 +851,8 @@ static ProcArg brush_set_spacing_inargs[] =
 
 static ProcRecord brush_set_spacing_proc =
 {
-  "gimp_brush_set_spacing",
+  "gimp-brush-set-spacing",
+  "gimp-brush-set-spacing",
   "Set the brush spacing.",
   "This procedure modifies the spacing setting for the specified brush. The value should be a integer between 0 and 1000.",
   "Bill Skaggs <weskaggs@primate.ucdavis.edu",
@@ -908,7 +918,8 @@ static ProcArg brush_get_shape_outargs[] =
 
 static ProcRecord brush_get_shape_proc =
 {
-  "gimp_brush_get_shape",
+  "gimp-brush-get-shape",
+  "gimp-brush-get-shape",
   "Get the shape of a generated brush.",
   "This procedure gets the shape value for a generated brush. If called for any other type of brush, it does not succeed. The current possibilities are Circle (GIMP_BRUSH_GENERATED_CIRCLE), Square (GIMP_BRUSH_GENERATED_SQUARE), and Diamond (GIMP_BRUSH_GENERATED_DIAMOND). Other shapes are likely to be added in the future.",
   "Bill Skaggs <weskaggs@primate.ucdavis.edu",
@@ -974,7 +985,8 @@ static ProcArg brush_get_radius_outargs[] =
 
 static ProcRecord brush_get_radius_proc =
 {
-  "gimp_brush_get_radius",
+  "gimp-brush-get-radius",
+  "gimp-brush-get-radius",
   "Get the radius of a generated brush.",
   "This procedure gets the radius value for a generated brush. If called for any other type of brush, it does not succeed.",
   "Bill Skaggs <weskaggs@primate.ucdavis.edu",
@@ -1040,7 +1052,8 @@ static ProcArg brush_get_spikes_outargs[] =
 
 static ProcRecord brush_get_spikes_proc =
 {
-  "gimp_brush_get_spikes",
+  "gimp-brush-get-spikes",
+  "gimp-brush-get-spikes",
   "Get the number of spikes for a generated brush.",
   "This procedure gets the number of spikes for a generated brush. If called for any other type of brush, it does not succeed.",
   "Bill Skaggs <weskaggs@primate.ucdavis.edu",
@@ -1106,7 +1119,8 @@ static ProcArg brush_get_hardness_outargs[] =
 
 static ProcRecord brush_get_hardness_proc =
 {
-  "gimp_brush_get_hardness",
+  "gimp-brush-get-hardness",
+  "gimp-brush-get-hardness",
   "Get the hardness of a generated brush.",
   "This procedure gets the hardness of a generated brush. The hardness of a brush is the amount its intensity fades at the outside edge. If called for any other type of brush, the function does not succeed.",
   "Bill Skaggs <weskaggs@primate.ucdavis.edu",
@@ -1172,7 +1186,8 @@ static ProcArg brush_get_aspect_ratio_outargs[] =
 
 static ProcRecord brush_get_aspect_ratio_proc =
 {
-  "gimp_brush_get_aspect_ratio",
+  "gimp-brush-get-aspect-ratio",
+  "gimp-brush-get-aspect-ratio",
   "Get the aspect ratio of a generated brush.",
   "This procedure gets the aspect ratio of a generated brush. If called for any other type of brush, it does not succeed.",
   "Bill Skaggs <weskaggs@primate.ucdavis.edu",
@@ -1238,7 +1253,8 @@ static ProcArg brush_get_angle_outargs[] =
 
 static ProcRecord brush_get_angle_proc =
 {
-  "gimp_brush_get_angle",
+  "gimp-brush-get-angle",
+  "gimp-brush-get-angle",
   "Get the rotation angle of a generated brush.",
   "This procedure gets the angle of rotation for a generated brush. If called for any other type of brush, it does not succeed.",
   "Bill Skaggs <weskaggs@primate.ucdavis.edu",
@@ -1315,7 +1331,8 @@ static ProcArg brush_set_shape_outargs[] =
 
 static ProcRecord brush_set_shape_proc =
 {
-  "gimp_brush_set_shape",
+  "gimp-brush-set-shape",
+  "gimp-brush-set-shape",
   "Set the shape of a generated brush.",
   "This procedure sets the shape value for a generated brush. If called for any other type of brush, it does not succeed. The current possibilities are Circle (GIMP_BRUSH_GENERATED_CIRCLE), Square (GIMP_BRUSH_GENERATED_SQUARE), and Diamond (GIMP_BRUSH_GENERATED_DIAMOND). Other shapes are likely to be added in the future.",
   "Bill Skaggs <weskaggs@primate.ucdavis.edu",
@@ -1392,7 +1409,8 @@ static ProcArg brush_set_radius_outargs[] =
 
 static ProcRecord brush_set_radius_proc =
 {
-  "gimp_brush_set_radius",
+  "gimp-brush-set-radius",
+  "gimp-brush-set-radius",
   "Set the radius of a generated brush.",
   "This procedure sets the radius for a generated brush. If called for any other type of brush, it does not succeed.",
   "Bill Skaggs <weskaggs@primate.ucdavis.edu",
@@ -1469,7 +1487,8 @@ static ProcArg brush_set_spikes_outargs[] =
 
 static ProcRecord brush_set_spikes_proc =
 {
-  "gimp_brush_set_spikes",
+  "gimp-brush-set-spikes",
+  "gimp-brush-set-spikes",
   "Set the number of spikes for a generated brush.",
   "This procedure sets the number of spikes for a generated brush. If called for any other type of brush, it does not succeed.",
   "Bill Skaggs <weskaggs@primate.ucdavis.edu",
@@ -1546,7 +1565,8 @@ static ProcArg brush_set_hardness_outargs[] =
 
 static ProcRecord brush_set_hardness_proc =
 {
-  "gimp_brush_set_hardness",
+  "gimp-brush-set-hardness",
+  "gimp-brush-set-hardness",
   "Set the hardness of a generated brush.",
   "This procedure sets the hardness for a generated brush. If called for any other type of brush, it does not succeed.",
   "Bill Skaggs <weskaggs@primate.ucdavis.edu",
@@ -1623,7 +1643,8 @@ static ProcArg brush_set_aspect_ratio_outargs[] =
 
 static ProcRecord brush_set_aspect_ratio_proc =
 {
-  "gimp_brush_set_aspect_ratio",
+  "gimp-brush-set-aspect-ratio",
+  "gimp-brush-set-aspect-ratio",
   "Set the aspect ratio of a generated brush.",
   "This procedure sets the aspect ratio for a generated brush. If called for any other type of brush, it does not succeed.",
   "Bill Skaggs <weskaggs@primate.ucdavis.edu",
@@ -1700,7 +1721,8 @@ static ProcArg brush_set_angle_outargs[] =
 
 static ProcRecord brush_set_angle_proc =
 {
-  "gimp_brush_set_angle",
+  "gimp-brush-set-angle",
+  "gimp-brush-set-angle",
   "Set the rotation angle of a generated brush.",
   "This procedure sets the rotation angle for a generated brush. If called for any other type of brush, it does not succeed.",
   "Bill Skaggs <weskaggs@primate.ucdavis.edu",

@@ -46,7 +46,7 @@ gimp_palettes_popup (const gchar *palette_callback,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_palettes_popup",
+  return_vals = gimp_run_procedure ("gimp-palettes-popup",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, palette_callback,
 				    GIMP_PDB_STRING, popup_title,
@@ -77,7 +77,7 @@ gimp_palettes_close_popup (const gchar *palette_callback)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_palettes_close_popup",
+  return_vals = gimp_run_procedure ("gimp-palettes-close-popup",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, palette_callback,
 				    GIMP_PDB_END);
@@ -108,7 +108,7 @@ gimp_palettes_set_popup (const gchar *palette_callback,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_palettes_set_popup",
+  return_vals = gimp_run_procedure ("gimp-palettes-set-popup",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, palette_callback,
 				    GIMP_PDB_STRING, palette_name,

@@ -105,7 +105,8 @@ context_push_invoker (Gimp         *gimp,
 
 static ProcRecord context_push_proc =
 {
-  "gimp_context_push",
+  "gimp-context-push",
+  "gimp-context-push",
   "Pushes a context to the top of the plug-in's context stack.",
   "This procedure creates a new context by copying the current context. This copy becomes the new current context for the calling plug-in until it is popped again.",
   "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
@@ -140,7 +141,8 @@ context_pop_invoker (Gimp         *gimp,
 
 static ProcRecord context_pop_proc =
 {
-  "gimp_context_pop",
+  "gimp-context-pop",
+  "gimp-context-pop",
   "Pops the topmost context from the plug-in's context stack.",
   "This procedure creates a new context and makes it the current context for the calling plug-in.",
   "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
@@ -183,7 +185,8 @@ static ProcArg context_get_foreground_outargs[] =
 
 static ProcRecord context_get_foreground_proc =
 {
-  "gimp_context_get_foreground",
+  "gimp-context-get-foreground",
+  "gimp-context-get-foreground",
   "Get the current GIMP foreground color.",
   "This procedure returns the current GIMP foreground color. The foreground color is used in a variety of tools such as paint tools, blending, and bucket fill.",
   "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
@@ -225,7 +228,8 @@ static ProcArg context_set_foreground_inargs[] =
 
 static ProcRecord context_set_foreground_proc =
 {
-  "gimp_context_set_foreground",
+  "gimp-context-set-foreground",
+  "gimp-context-set-foreground",
   "Set the current GIMP foreground color.",
   "This procedure sets the current GIMP foreground color. After this is set, operations which use foreground such as paint tools, blending, and bucket fill will use the new value.",
   "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
@@ -268,7 +272,8 @@ static ProcArg context_get_background_outargs[] =
 
 static ProcRecord context_get_background_proc =
 {
-  "gimp_context_get_background",
+  "gimp-context-get-background",
+  "gimp-context-get-background",
   "Get the current GIMP background color.",
   "This procedure returns the current GIMP background color. The background color is used in a variety of tools such as blending, erasing (with non-alpha images), and image filling.",
   "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
@@ -310,7 +315,8 @@ static ProcArg context_set_background_inargs[] =
 
 static ProcRecord context_set_background_proc =
 {
-  "gimp_context_set_background",
+  "gimp-context-set-background",
+  "gimp-context-set-background",
   "Set the current GIMP background color.",
   "This procedure sets the current GIMP background color. After this is set, operations which use background such as blending, filling images, clearing, and erasing (in non-alpha images) will use the new value.",
   "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
@@ -337,7 +343,8 @@ context_set_default_colors_invoker (Gimp         *gimp,
 
 static ProcRecord context_set_default_colors_proc =
 {
-  "gimp_context_set_default_colors",
+  "gimp-context-set-default-colors",
+  "gimp-context-set-default-colors",
   "Set the current GIMP foreground and background colors to black and white.",
   "This procedure sets the current GIMP foreground and background colors to their initial default values, black and white.",
   "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
@@ -364,7 +371,8 @@ context_swap_colors_invoker (Gimp         *gimp,
 
 static ProcRecord context_swap_colors_proc =
 {
-  "gimp_context_swap_colors",
+  "gimp-context-swap-colors",
+  "gimp-context-swap-colors",
   "Swap the current GIMP foreground and background colors.",
   "This procedure swaps the current GIMP foreground and background colors, so that the new foreground color becomes the old background color and vice versa.",
   "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
@@ -404,7 +412,8 @@ static ProcArg context_get_opacity_outargs[] =
 
 static ProcRecord context_get_opacity_proc =
 {
-  "gimp_context_get_opacity",
+  "gimp-context-get-opacity",
+  "gimp-context-get-opacity",
   "Get the opacity.",
   "This procedure returns the opacity setting. The return value is a floating point number between 0 and 100.",
   "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
@@ -449,7 +458,8 @@ static ProcArg context_set_opacity_inargs[] =
 
 static ProcRecord context_set_opacity_proc =
 {
-  "gimp_context_set_opacity",
+  "gimp-context-set-opacity",
+  "gimp-context-set-opacity",
   "Set the opacity.",
   "This procedure modifies the opacity setting. The value should be a floating point number between 0 and 100.",
   "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
@@ -489,7 +499,8 @@ static ProcArg context_get_paint_mode_outargs[] =
 
 static ProcRecord context_get_paint_mode_proc =
 {
-  "gimp_context_get_paint_mode",
+  "gimp-context-get-paint-mode",
+  "gimp-context-get-paint-mode",
   "Get the paint mode.",
   "This procedure returns the paint-mode setting. The return value is an integer which corresponds to the values listed in the argument description.",
   "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
@@ -534,7 +545,8 @@ static ProcArg context_set_paint_mode_inargs[] =
 
 static ProcRecord context_set_paint_mode_proc =
 {
-  "gimp_context_set_paint_mode",
+  "gimp-context-set-paint-mode",
+  "gimp-context-set-paint-mode",
   "Set the paint mode.",
   "This procedure modifies the paint_mode setting.",
   "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
@@ -580,7 +592,8 @@ static ProcArg context_get_brush_outargs[] =
 
 static ProcRecord context_get_brush_proc =
 {
-  "gimp_context_get_brush",
+  "gimp-context-get-brush",
+  "gimp-context-get-brush",
   "Retrieve the currently active brush.",
   "This procedure returns the nme of the currently active brush. All paint operations and stroke operations use this brush to control the application of paint to the image.",
   "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
@@ -634,7 +647,8 @@ static ProcArg context_set_brush_inargs[] =
 
 static ProcRecord context_set_brush_proc =
 {
-  "gimp_context_set_brush",
+  "gimp-context-set-brush",
+  "gimp-context-set-brush",
   "Set the specified brush as the active brush.",
   "This procedure allows the active brush to be set by specifying its name. The name is simply a string which corresponds to one of the names of the installed brushes. If there is no matching brush found, this procedure will return an error. Otherwise, the specified brush becomes active and will be used in all subsequent paint operations.",
   "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
@@ -680,7 +694,8 @@ static ProcArg context_get_pattern_outargs[] =
 
 static ProcRecord context_get_pattern_proc =
 {
-  "gimp_context_get_pattern",
+  "gimp-context-get-pattern",
+  "gimp-context-get-pattern",
   "Retrieve the currently active pattern.",
   "This procedure returns name of the the currently active pattern. All clone and bucket-fill operations with patterns will use this pattern to control the application of paint to the image.",
   "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
@@ -734,7 +749,8 @@ static ProcArg context_set_pattern_inargs[] =
 
 static ProcRecord context_set_pattern_proc =
 {
-  "gimp_context_set_pattern",
+  "gimp-context-set-pattern",
+  "gimp-context-set-pattern",
   "Set the specified pattern as the active pattern.",
   "This procedure allows the active pattern to be set by specifying its name. The name is simply a string which corresponds to one of the names of the installed patterns. If there is no matching pattern found, this procedure will return an error. Otherwise, the specified pattern becomes active and will be used in all subsequent paint operations.",
   "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
@@ -780,7 +796,8 @@ static ProcArg context_get_gradient_outargs[] =
 
 static ProcRecord context_get_gradient_proc =
 {
-  "gimp_context_get_gradient",
+  "gimp-context-get-gradient",
+  "gimp-context-get-gradient",
   "Retrieve the currently active gradient.",
   "This procedure returns the name of the currently active gradient.",
   "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
@@ -834,7 +851,8 @@ static ProcArg context_set_gradient_inargs[] =
 
 static ProcRecord context_set_gradient_proc =
 {
-  "gimp_context_set_gradient",
+  "gimp-context-set-gradient",
+  "gimp-context-set-gradient",
   "Sets the specified gradient as the active gradient.",
   "This procedure lets you set the specified gradient as the active or \"current\" one. The name is simply a string which corresponds to one of the loaded gradients. If no matching gradient is found, this procedure will return an error. Otherwise, the specified gradient will become active and will be used for subsequent custom gradient operations.",
   "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
@@ -880,7 +898,8 @@ static ProcArg context_get_palette_outargs[] =
 
 static ProcRecord context_get_palette_proc =
 {
-  "gimp_context_get_palette",
+  "gimp-context-get-palette",
+  "gimp-context-get-palette",
   "Retrieve the currently active palette.",
   "This procedure returns the name of the the currently active palette.",
   "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
@@ -934,7 +953,8 @@ static ProcArg context_set_palette_inargs[] =
 
 static ProcRecord context_set_palette_proc =
 {
-  "gimp_context_set_palette",
+  "gimp-context-set-palette",
+  "gimp-context-set-palette",
   "Set the specified palette as the active palette.",
   "This procedure allows the active palette to be set by specifying its name. The name is simply a string which corresponds to one of the names of the installed palettes. If no matching palette is found, this procedure will return an error. Otherwise, the specified palette becomes active and will be used in all subsequent palette operations.",
   "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
@@ -980,7 +1000,8 @@ static ProcArg context_get_font_outargs[] =
 
 static ProcRecord context_get_font_proc =
 {
-  "gimp_context_get_font",
+  "gimp-context-get-font",
+  "gimp-context-get-font",
   "Retrieve the currently active font.",
   "This procedure returns the name of the currently active font.",
   "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
@@ -1034,7 +1055,8 @@ static ProcArg context_set_font_inargs[] =
 
 static ProcRecord context_set_font_proc =
 {
-  "gimp_context_set_font",
+  "gimp-context-set-font",
+  "gimp-context-set-font",
   "Set the specified font as the active font.",
   "This procedure allows the active font to be set by specifying its name. The name is simply a string which corresponds to one of the names of the installed fonts. If no matching font is found, this procedure will return an error. Otherwise, the specified font becomes active and will be used in all subsequent font operations.",
   "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",

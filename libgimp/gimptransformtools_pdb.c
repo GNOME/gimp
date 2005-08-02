@@ -43,7 +43,7 @@ gimp_flip (gint32              drawable_ID,
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_flip",
+  return_vals = gimp_run_procedure ("gimp-flip",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_INT32, flip_type,
@@ -91,7 +91,7 @@ gimp_perspective (gint32   drawable_ID,
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_perspective",
+  return_vals = gimp_run_procedure ("gimp-perspective",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_INT32, interpolation,
@@ -133,7 +133,7 @@ gimp_rotate (gint32   drawable_ID,
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_rotate",
+  return_vals = gimp_run_procedure ("gimp-rotate",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_INT32, interpolation,
@@ -174,7 +174,7 @@ gimp_scale (gint32   drawable_ID,
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_scale",
+  return_vals = gimp_run_procedure ("gimp-scale",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_INT32, interpolation,
@@ -214,7 +214,7 @@ gimp_shear (gint32              drawable_ID,
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_shear",
+  return_vals = gimp_run_procedure ("gimp-shear",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_INT32, interpolation,
@@ -262,7 +262,7 @@ gimp_transform_2d (gint32   drawable_ID,
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_transform_2d",
+  return_vals = gimp_run_procedure ("gimp-transform-2d",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_INT32, interpolation,

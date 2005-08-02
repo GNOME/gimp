@@ -45,7 +45,7 @@ gimp_image_list (gint *num_images)
   gint nreturn_vals;
   gint *image_ids = NULL;
 
-  return_vals = gimp_run_procedure ("gimp_image_list",
+  return_vals = gimp_run_procedure ("gimp-image-list",
 				    &nreturn_vals,
 				    GIMP_PDB_END);
 
@@ -90,7 +90,7 @@ gimp_image_new (gint              width,
   gint nreturn_vals;
   gint32 image_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_image_new",
+  return_vals = gimp_run_procedure ("gimp-image-new",
 				    &nreturn_vals,
 				    GIMP_PDB_INT32, width,
 				    GIMP_PDB_INT32, height,
@@ -123,7 +123,7 @@ gimp_image_duplicate (gint32 image_ID)
   gint nreturn_vals;
   gint32 new_image_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_image_duplicate",
+  return_vals = gimp_run_procedure ("gimp-image-duplicate",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
@@ -158,7 +158,7 @@ gimp_image_delete (gint32 image_ID)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_image_delete",
+  return_vals = gimp_run_procedure ("gimp-image-delete",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
@@ -188,7 +188,7 @@ gimp_image_base_type (gint32 image_ID)
   gint nreturn_vals;
   GimpImageBaseType base_type = 0;
 
-  return_vals = gimp_run_procedure ("gimp_image_base_type",
+  return_vals = gimp_run_procedure ("gimp-image-base-type",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
@@ -219,7 +219,7 @@ gimp_image_width (gint32 image_ID)
   gint nreturn_vals;
   gint width = 0;
 
-  return_vals = gimp_run_procedure ("gimp_image_width",
+  return_vals = gimp_run_procedure ("gimp-image-width",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
@@ -250,7 +250,7 @@ gimp_image_height (gint32 image_ID)
   gint nreturn_vals;
   gint height = 0;
 
-  return_vals = gimp_run_procedure ("gimp_image_height",
+  return_vals = gimp_run_procedure ("gimp-image-height",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
@@ -282,7 +282,7 @@ gimp_image_free_shadow (gint32 image_ID)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_image_free_shadow",
+  return_vals = gimp_run_procedure ("gimp-image-free-shadow",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
@@ -326,7 +326,7 @@ gimp_image_resize (gint32 image_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_image_resize",
+  return_vals = gimp_run_procedure ("gimp-image-resize",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_INT32, new_width,
@@ -364,7 +364,7 @@ gimp_image_resize_to_layers (gint32 image_ID)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_image_resize_to_layers",
+  return_vals = gimp_run_procedure ("gimp-image-resize-to-layers",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
@@ -404,7 +404,7 @@ gimp_image_scale (gint32 image_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_image_scale",
+  return_vals = gimp_run_procedure ("gimp-image-scale",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_INT32, new_width,
@@ -448,7 +448,7 @@ gimp_image_crop (gint32 image_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_image_crop",
+  return_vals = gimp_run_procedure ("gimp-image-crop",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_INT32, new_width,
@@ -483,7 +483,7 @@ gimp_image_flip (gint32              image_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_image_flip",
+  return_vals = gimp_run_procedure ("gimp-image-flip",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_INT32, flip_type,
@@ -515,7 +515,7 @@ gimp_image_rotate (gint32           image_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_image_rotate",
+  return_vals = gimp_run_procedure ("gimp-image-rotate",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_INT32, rotate_type,
@@ -548,7 +548,7 @@ gimp_image_get_layers (gint32  image_ID,
   gint nreturn_vals;
   gint *layer_ids = NULL;
 
-  return_vals = gimp_run_procedure ("gimp_image_get_layers",
+  return_vals = gimp_run_procedure ("gimp-image-get-layers",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
@@ -589,7 +589,7 @@ gimp_image_get_channels (gint32  image_ID,
   gint nreturn_vals;
   gint *channel_ids = NULL;
 
-  return_vals = gimp_run_procedure ("gimp_image_get_channels",
+  return_vals = gimp_run_procedure ("gimp-image-get-channels",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
@@ -631,7 +631,7 @@ gimp_image_get_vectors (gint32  image_ID,
   gint nreturn_vals;
   gint *vector_ids = NULL;
 
-  return_vals = gimp_run_procedure ("gimp_image_get_vectors",
+  return_vals = gimp_run_procedure ("gimp-image-get-vectors",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
@@ -673,7 +673,7 @@ gimp_image_get_active_drawable (gint32 image_ID)
   gint nreturn_vals;
   gint32 drawable_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_image_get_active_drawable",
+  return_vals = gimp_run_procedure ("gimp-image-get-active-drawable",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
@@ -706,7 +706,7 @@ gimp_image_unset_active_channel (gint32 image_ID)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_image_unset_active_channel",
+  return_vals = gimp_run_procedure ("gimp-image-unset-active-channel",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
@@ -736,7 +736,7 @@ gimp_image_get_floating_sel (gint32 image_ID)
   gint nreturn_vals;
   gint32 floating_sel_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_image_get_floating_sel",
+  return_vals = gimp_run_procedure ("gimp-image-get-floating-sel",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
@@ -768,7 +768,7 @@ gimp_image_floating_sel_attached_to (gint32 image_ID)
   gint nreturn_vals;
   gint32 drawable_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_image_floating_sel_attached_to",
+  return_vals = gimp_run_procedure ("gimp-image-floating-sel-attached-to",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
@@ -823,7 +823,7 @@ gimp_image_pick_color (gint32    image_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_image_pick_color",
+  return_vals = gimp_run_procedure ("gimp-image-pick-color",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
@@ -869,7 +869,7 @@ gimp_image_pick_correlate_layer (gint32 image_ID,
   gint nreturn_vals;
   gint32 layer_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_image_pick_correlate_layer",
+  return_vals = gimp_run_procedure ("gimp-image-pick-correlate-layer",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_INT32, x,
@@ -909,7 +909,7 @@ gimp_image_add_layer (gint32 image_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_image_add_layer",
+  return_vals = gimp_run_procedure ("gimp-image-add-layer",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_LAYER, layer_ID,
@@ -946,7 +946,7 @@ gimp_image_remove_layer (gint32 image_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_image_remove_layer",
+  return_vals = gimp_run_procedure ("gimp-image-remove-layer",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_LAYER, layer_ID,
@@ -980,7 +980,7 @@ gimp_image_raise_layer (gint32 image_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_image_raise_layer",
+  return_vals = gimp_run_procedure ("gimp-image-raise-layer",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_LAYER, layer_ID,
@@ -1014,7 +1014,7 @@ gimp_image_lower_layer (gint32 image_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_image_lower_layer",
+  return_vals = gimp_run_procedure ("gimp-image-lower-layer",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_LAYER, layer_ID,
@@ -1048,7 +1048,7 @@ gimp_image_raise_layer_to_top (gint32 image_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_image_raise_layer_to_top",
+  return_vals = gimp_run_procedure ("gimp-image-raise-layer-to-top",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_LAYER, layer_ID,
@@ -1083,7 +1083,7 @@ gimp_image_lower_layer_to_bottom (gint32 image_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_image_lower_layer_to_bottom",
+  return_vals = gimp_run_procedure ("gimp-image-lower-layer-to-bottom",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_LAYER, layer_ID,
@@ -1119,7 +1119,7 @@ gimp_image_add_channel (gint32 image_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_image_add_channel",
+  return_vals = gimp_run_procedure ("gimp-image-add-channel",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_CHANNEL, channel_ID,
@@ -1153,7 +1153,7 @@ gimp_image_remove_channel (gint32 image_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_image_remove_channel",
+  return_vals = gimp_run_procedure ("gimp-image-remove-channel",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_CHANNEL, channel_ID,
@@ -1187,7 +1187,7 @@ gimp_image_raise_channel (gint32 image_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_image_raise_channel",
+  return_vals = gimp_run_procedure ("gimp-image-raise-channel",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_CHANNEL, channel_ID,
@@ -1221,7 +1221,7 @@ gimp_image_lower_channel (gint32 image_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_image_lower_channel",
+  return_vals = gimp_run_procedure ("gimp-image-lower-channel",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_LAYER, layer_ID,
@@ -1254,7 +1254,7 @@ gimp_image_flatten (gint32 image_ID)
   gint nreturn_vals;
   gint32 layer_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_image_flatten",
+  return_vals = gimp_run_procedure ("gimp-image-flatten",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
@@ -1291,7 +1291,7 @@ gimp_image_merge_visible_layers (gint32        image_ID,
   gint nreturn_vals;
   gint32 layer_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_image_merge_visible_layers",
+  return_vals = gimp_run_procedure ("gimp-image-merge-visible-layers",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_INT32, merge_type,
@@ -1332,7 +1332,7 @@ gimp_image_merge_down (gint32        image_ID,
   gint nreturn_vals;
   gint32 layer_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_image_merge_down",
+  return_vals = gimp_run_procedure ("gimp-image-merge-down",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_LAYER, merge_layer_ID,
@@ -1370,7 +1370,7 @@ _gimp_image_get_colormap (gint32  image_ID,
   gint nreturn_vals;
   guint8 *colormap = NULL;
 
-  return_vals = gimp_run_procedure ("gimp_image_get_colormap",
+  return_vals = gimp_run_procedure ("gimp-image-get-colormap",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
@@ -1415,7 +1415,7 @@ _gimp_image_set_colormap (gint32        image_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_image_set_colormap",
+  return_vals = gimp_run_procedure ("gimp-image-set-colormap",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_INT32, num_bytes,
@@ -1450,7 +1450,7 @@ gimp_image_clean_all (gint32 image_ID)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_image_clean_all",
+  return_vals = gimp_run_procedure ("gimp-image-clean-all",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
@@ -1480,7 +1480,7 @@ gimp_image_is_dirty (gint32 image_ID)
   gint nreturn_vals;
   gboolean dirty = FALSE;
 
-  return_vals = gimp_run_procedure ("gimp_image_is_dirty",
+  return_vals = gimp_run_procedure ("gimp-image-is-dirty",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
@@ -1527,7 +1527,7 @@ _gimp_image_thumbnail (gint32   image_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_image_thumbnail",
+  return_vals = gimp_run_procedure ("gimp-image-thumbnail",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_INT32, width,
@@ -1577,7 +1577,7 @@ gimp_image_get_active_layer (gint32 image_ID)
   gint nreturn_vals;
   gint32 active_layer_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_image_get_active_layer",
+  return_vals = gimp_run_procedure ("gimp-image-get-active-layer",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
@@ -1612,7 +1612,7 @@ gimp_image_set_active_layer (gint32 image_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_image_set_active_layer",
+  return_vals = gimp_run_procedure ("gimp-image-set-active-layer",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_LAYER, active_layer_ID,
@@ -1643,7 +1643,7 @@ gimp_image_get_active_channel (gint32 image_ID)
   gint nreturn_vals;
   gint32 active_channel_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_image_get_active_channel",
+  return_vals = gimp_run_procedure ("gimp-image-get-active-channel",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
@@ -1678,7 +1678,7 @@ gimp_image_set_active_channel (gint32 image_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_image_set_active_channel",
+  return_vals = gimp_run_procedure ("gimp-image-set-active-channel",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_CHANNEL, active_channel_ID,
@@ -1709,7 +1709,7 @@ gimp_image_get_selection (gint32 image_ID)
   gint nreturn_vals;
   gint32 selection_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_image_get_selection",
+  return_vals = gimp_run_procedure ("gimp-image-get-selection",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
@@ -1744,7 +1744,7 @@ gimp_image_get_component_active (gint32          image_ID,
   gint nreturn_vals;
   gboolean active = FALSE;
 
-  return_vals = gimp_run_procedure ("gimp_image_get_component_active",
+  return_vals = gimp_run_procedure ("gimp-image-get-component-active",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_INT32, component,
@@ -1782,7 +1782,7 @@ gimp_image_set_component_active (gint32          image_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_image_set_component_active",
+  return_vals = gimp_run_procedure ("gimp-image-set-component-active",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_INT32, component,
@@ -1819,7 +1819,7 @@ gimp_image_get_component_visible (gint32          image_ID,
   gint nreturn_vals;
   gboolean visible = FALSE;
 
-  return_vals = gimp_run_procedure ("gimp_image_get_component_visible",
+  return_vals = gimp_run_procedure ("gimp-image-get-component-visible",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_INT32, component,
@@ -1857,7 +1857,7 @@ gimp_image_set_component_visible (gint32          image_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_image_set_component_visible",
+  return_vals = gimp_run_procedure ("gimp-image-set-component-visible",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_INT32, component,
@@ -1890,7 +1890,7 @@ gimp_image_get_filename (gint32 image_ID)
   gint nreturn_vals;
   gchar *filename = NULL;
 
-  return_vals = gimp_run_procedure ("gimp_image_get_filename",
+  return_vals = gimp_run_procedure ("gimp-image-get-filename",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
@@ -1923,7 +1923,7 @@ gimp_image_set_filename (gint32       image_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_image_set_filename",
+  return_vals = gimp_run_procedure ("gimp-image-set-filename",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_STRING, filename,
@@ -1953,7 +1953,7 @@ gimp_image_get_name (gint32 image_ID)
   gint nreturn_vals;
   gchar *name = NULL;
 
-  return_vals = gimp_run_procedure ("gimp_image_get_name",
+  return_vals = gimp_run_procedure ("gimp-image-get-name",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
@@ -1988,7 +1988,7 @@ gimp_image_get_resolution (gint32   image_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_image_get_resolution",
+  return_vals = gimp_run_procedure ("gimp-image-get-resolution",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
@@ -2032,7 +2032,7 @@ gimp_image_set_resolution (gint32  image_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_image_set_resolution",
+  return_vals = gimp_run_procedure ("gimp-image-set-resolution",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_FLOAT, xresolution,
@@ -2066,7 +2066,7 @@ gimp_image_get_unit (gint32 image_ID)
   gint nreturn_vals;
   GimpUnit unit = 0;
 
-  return_vals = gimp_run_procedure ("gimp_image_get_unit",
+  return_vals = gimp_run_procedure ("gimp-image-get-unit",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
@@ -2101,7 +2101,7 @@ gimp_image_set_unit (gint32   image_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_image_set_unit",
+  return_vals = gimp_run_procedure ("gimp-image-set-unit",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_INT32, unit,
@@ -2133,7 +2133,7 @@ gimp_image_get_tattoo_state (gint32 image_ID)
   gint nreturn_vals;
   gint tattoo_state = 0;
 
-  return_vals = gimp_run_procedure ("gimp_image_get_tattoo_state",
+  return_vals = gimp_run_procedure ("gimp-image-get-tattoo-state",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
@@ -2176,7 +2176,7 @@ gimp_image_set_tattoo_state (gint32 image_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_image_set_tattoo_state",
+  return_vals = gimp_run_procedure ("gimp-image-set-tattoo-state",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_INT32, tattoo_state,
@@ -2209,7 +2209,7 @@ gimp_image_get_layer_by_tattoo (gint32 image_ID,
   gint nreturn_vals;
   gint32 layer_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_image_get_layer_by_tattoo",
+  return_vals = gimp_run_procedure ("gimp-image-get-layer-by-tattoo",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_INT32, tattoo,
@@ -2243,7 +2243,7 @@ gimp_image_get_channel_by_tattoo (gint32 image_ID,
   gint nreturn_vals;
   gint32 channel_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_image_get_channel_by_tattoo",
+  return_vals = gimp_run_procedure ("gimp-image-get-channel-by-tattoo",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_INT32, tattoo,

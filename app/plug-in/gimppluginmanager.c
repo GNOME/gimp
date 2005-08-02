@@ -1049,8 +1049,8 @@ plug_ins_add_to_db (Gimp        *gimp,
 
           g_free (procedural_db_execute (gimp, context, NULL,
                                          proc_def->image_types ?
-                                         "gimp_register_save_handler" :
-                                         "gimp_register_magic_load_handler",
+                                         "gimp-register-save-handler" :
+                                         "gimp-register-magic-load-handler",
                                          args));
 	}
     }
@@ -1092,9 +1092,9 @@ plug_ins_file_proc_compare (gconstpointer a,
   gchar               *label_b;
   gint                 retval = 0;
 
-  if (strncmp (proc_a->prog, "gimp_xcf", 8) == 0)
+  if (strncmp (proc_a->prog, "gimp-xcf", 8) == 0)
     return -1;
-  if (strncmp (proc_b->prog, "gimp_xcf", 8) == 0)
+  if (strncmp (proc_b->prog, "gimp-xcf", 8) == 0)
     return 1;
 
   label_a = plug_in_proc_def_get_label (proc_a,

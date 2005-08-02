@@ -102,7 +102,7 @@ sub palettes_get_list {
 
     $help = <<'HELP';
 This procedure returns a complete listing of available palettes. Each name
-returned can be used as input to the command 'gimp_context_set_palette'.
+returned can be used as input to the command 'gimp-context-set-palette'.
 HELP
 
     &rock_misc;
@@ -127,7 +127,7 @@ HELP
 }
 
 sub palettes_get_palette {
-    &std_pdb_deprecated ('gimp_context_get_palette');
+    &std_pdb_deprecated ('gimp-context-get-palette');
 
     @outargs = (
         &palette_arg,
@@ -143,7 +143,7 @@ sub palettes_get_palette {
 }
 
 sub palettes_get_palette_entry {
-    &std_pdb_deprecated ('gimp_palette_entry_get_color');
+    &std_pdb_deprecated ('gimp-palette-entry-get-color');
 
     @inargs = (
         &palette_arg,

@@ -1,3 +1,60 @@
+2005-08-03  Michael Natterer  <mitch@gimp.org>
+
+	Changed naming scheme for PDB procedure names from
+	random_crap_that_traditionally_has_underscores to
+	enforced-canonical-identifiers. I'm pretty sure some things are
+	broken after this commit. More changes to come...
+
+	* libgimpbase/gimpbase.def
+	* libgimpbase/gimputils.[ch]: added gimp_canonicalize_identifier().
+
+	* app/pdb/procedural_db.[ch] (struct ProcRecord): added
+	"gchar *original_name" to keep a procedure's original name as
+	reigstered by plug-ins (compat cruft).
+
+	(procedural_db_init_procs): canonicalized list of deprecated
+	procedures.
+
+	* app/plug-in/plug-in-proc-def.c (plug_in_proc_def_free): free
+	original_name.
+
+	* app/plug-in/plug-in-message.c: canonicalize procedure names
+	which are received over the wire.
+
+	* app/plug-in/plug-in-rc.c: serialize the original_name and create
+	the canonicalized name on-the-fly when deserializing.
+
+	* app/plug-in/plug-in-run.c: pass the original_name to plug-ins
+	when running them because they strcmp() the passed procedure name.
+
+	* app/plug-in/plug-ins.c (plug_ins_add_to_db): pass
+	canonical procedure names to procedural_db_execute().
+
+	(plug_ins_file_proc_compare): special-case "gimp-xcf", not "gimp_xcf".
+
+	* app/xcf/xcf.c: changed static XCF procedures accordingly.
+
+	* tools/pdbgen/app.pl
+	* tools/pdbgen/lib.pl: do some trivial substitutions to generate
+	canonicalized names in app/, and C identifiers with underscores in
+	libgimp/.
+
+	* tools/pdbgen/pdb/brushes.pdb
+	* tools/pdbgen/pdb/fileops.pdb
+	* tools/pdbgen/pdb/gradients.pdb
+	* tools/pdbgen/pdb/image.pdb
+	* tools/pdbgen/pdb/palettes.pdb
+	* tools/pdbgen/pdb/patterns.pdb
+	* tools/pdbgen/pdb/plug_in.pdb
+	* tools/pdbgen/pdb/procedural_db.pdb
+	* tools/pdbgen/pdb/text_tool.pdb
+	* tools/pdbgen/pdb/transform_tools.pdb: canonicaloized procedure
+	names in calls to std_pdb_deprecated() and in procedure names in
+	generated C code.
+
+	* app/pdb/*_cmds.c
+	* libgimp/*_pdb.c: regenerated.
+
 2005-08-03  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpbrushmenu.c

@@ -210,7 +210,8 @@ static ProcArg layer_new_outargs[] =
 
 static ProcRecord layer_new_proc =
 {
-  "gimp_layer_new",
+  "gimp-layer-new",
+  "gimp-layer-new",
   "Create a new layer.",
   "This procedure creates a new layer with the specified width, height, and type. Name, opacity, and mode are also supplied parameters. The new layer still needs to be added to the image, as this is not automatic. Add the new layer with the 'gimp_image_add_layer' command. Other attributes such as layer mask modes, and offsets should be set with explicit procedure calls.",
   "Spencer Kimball & Peter Mattis",
@@ -299,7 +300,8 @@ static ProcArg layer_new_from_drawable_outargs[] =
 
 static ProcRecord layer_new_from_drawable_proc =
 {
-  "gimp_layer_new_from_drawable",
+  "gimp-layer-new-from-drawable",
+  "gimp-layer-new-from-drawable",
   "Create a new layer by copying an existing drawable.",
   "This procedure creates a new layer as a copy of the specified drawable. The new layer still needs to be added to the image, as this is not automatic. Add the new layer with the 'gimp_image_add_layer' command. Other attributes such as layer mask modes, and offsets should be set with explicit procedure calls.",
   "Spencer Kimball & Peter Mattis",
@@ -368,7 +370,8 @@ static ProcArg layer_copy_outargs[] =
 
 static ProcRecord layer_copy_proc =
 {
-  "gimp_layer_copy",
+  "gimp-layer-copy",
+  "gimp-layer-copy",
   "Copy a layer.",
   "This procedure copies the specified layer and returns the copy. The newly copied layer is for use within the original layer's image. It should not be subsequently added to any other image. The copied layer can optionally have an added alpha channel. This is useful if the background layer in an image is being copied and added to the same image.",
   "Spencer Kimball & Peter Mattis",
@@ -413,7 +416,8 @@ static ProcArg layer_add_alpha_inargs[] =
 
 static ProcRecord layer_add_alpha_proc =
 {
-  "gimp_layer_add_alpha",
+  "gimp-layer-add-alpha",
+  "gimp-layer-add-alpha",
   "Add an alpha channel to the layer if it doesn't already have one.",
   "This procedure adds an additional component to the specified layer if it does not already possess an alpha channel. An alpha channel makes it possible to move a layer from the bottom of the layer stack and to clear and erase to transparency, instead of the background color. This transforms images of type RGB to RGBA, GRAY to GRAYA, and INDEXED to INDEXEDA.",
   "Spencer Kimball & Peter Mattis",
@@ -491,7 +495,8 @@ static ProcArg layer_scale_inargs[] =
 
 static ProcRecord layer_scale_proc =
 {
-  "gimp_layer_scale",
+  "gimp-layer-scale",
+  "gimp-layer-scale",
   "Scale the layer to the specified extents.",
   "This procedure scales the layer so that it's new width and height are equal to the supplied parameters. The \"local_origin\" parameter specifies whether to scale from the center of the layer, or from the image origin. This operation only works if the layer has been added to an image.",
   "Spencer Kimball & Peter Mattis",
@@ -577,7 +582,8 @@ static ProcArg layer_resize_inargs[] =
 
 static ProcRecord layer_resize_proc =
 {
-  "gimp_layer_resize",
+  "gimp-layer-resize",
+  "gimp-layer-resize",
   "Resize the layer to the specified extents.",
   "This procedure resizes the layer so that it's new width and height are equal to the supplied parameters. Offsets are also provided which describe the position of the previous layer's content. This operation only works if the layer has been added to an image.",
   "Spencer Kimball & Peter Mattis",
@@ -627,7 +633,8 @@ static ProcArg layer_resize_to_image_size_inargs[] =
 
 static ProcRecord layer_resize_to_image_size_proc =
 {
-  "gimp_layer_resize_to_image_size",
+  "gimp-layer-resize-to-image-size",
+  "gimp-layer-resize-to-image-size",
   "Resize a layer to the image size.",
   "This procedure resizes the layer so that it's new width and height are equal to the width and height of its image container.",
   "Manish Singh",
@@ -700,7 +707,8 @@ static ProcArg layer_translate_inargs[] =
 
 static ProcRecord layer_translate_proc =
 {
-  "gimp_layer_translate",
+  "gimp-layer-translate",
+  "gimp-layer-translate",
   "Translate the layer by the specified offsets.",
   "This procedure translates the layer by the amounts specified in the x and y arguments. These can be negative, and are considered offsets from the current position. This command only works if the layer has been added to an image. All additional layers contained in the image which have the linked flag set to TRUE w ill also be translated by the specified offsets.",
   "Spencer Kimball & Peter Mattis",
@@ -773,7 +781,8 @@ static ProcArg layer_set_offsets_inargs[] =
 
 static ProcRecord layer_set_offsets_proc =
 {
-  "gimp_layer_set_offsets",
+  "gimp-layer-set-offsets",
+  "gimp-layer-set-offsets",
   "Set the layer offsets.",
   "This procedure sets the offsets for the specified layer. The offsets are relative to the image origin and can be any values. This operation is valid only on layers which have been added to an image.",
   "Spencer Kimball & Peter Mattis",
@@ -844,7 +853,8 @@ static ProcArg layer_create_mask_outargs[] =
 
 static ProcRecord layer_create_mask_proc =
 {
-  "gimp_layer_create_mask",
+  "gimp-layer-create-mask",
+  "gimp-layer-create-mask",
   "Create a layer mask for the specified specified layer.",
   "This procedure creates a layer mask for the specified layer. Layer masks serve as an additional alpha channel for a layer. A number of ifferent types of masks are allowed for initialisation: completely white masks (which will leave the layer fully visible), completely black masks (which will give the layer complete transparency, the layer's already existing alpha channel (which will leave the layer fully visible, but which may be more useful than a white mask), the current selection or a grayscale copy of the layer. The layer mask still needs to be added to the layer. This can be done with a call to 'gimp_layer_add_mask'.",
   "Spencer Kimball & Peter Mattis",
@@ -901,7 +911,8 @@ static ProcArg layer_get_mask_outargs[] =
 
 static ProcRecord layer_get_mask_proc =
 {
-  "gimp_layer_get_mask",
+  "gimp-layer-get-mask",
+  "gimp-layer-get-mask",
   "Get the specified layer's mask if it exists.",
   "This procedure returns the specified layer's mask, or -1 if none exists.",
   "Spencer Kimball & Peter Mattis",
@@ -964,7 +975,8 @@ static ProcArg layer_from_mask_outargs[] =
 
 static ProcRecord layer_from_mask_proc =
 {
-  "gimp_layer_from_mask",
+  "gimp-layer-from-mask",
+  "gimp-layer-from-mask",
   "Get the specified mask's layer.",
   "This procedure returns the specified mask's layer , or -1 if none exists.",
   "Geert Jordaens",
@@ -1024,7 +1036,8 @@ static ProcArg layer_add_mask_inargs[] =
 
 static ProcRecord layer_add_mask_proc =
 {
-  "gimp_layer_add_mask",
+  "gimp-layer-add-mask",
+  "gimp-layer-add-mask",
   "Add a layer mask to the specified layer.",
   "This procedure adds a layer mask to the specified layer. Layer masks serve as an additional alpha channel for a layer. This procedure will fail if a number of prerequisites aren't met. The layer cannot already have a layer mask. The specified mask must exist and have the same dimensions as the layer. Both the mask and the layer must have been created for use with the specified image.",
   "Spencer Kimball & Peter Mattis",
@@ -1084,7 +1097,8 @@ static ProcArg layer_remove_mask_inargs[] =
 
 static ProcRecord layer_remove_mask_proc =
 {
-  "gimp_layer_remove_mask",
+  "gimp-layer-remove-mask",
+  "gimp-layer-remove-mask",
   "Remove the specified layer mask from the layer.",
   "This procedure removes the specified layer mask from the layer. If the mask doesn't exist, an error is returned.",
   "Spencer Kimball & Peter Mattis",
@@ -1141,7 +1155,8 @@ static ProcArg layer_is_floating_sel_outargs[] =
 
 static ProcRecord layer_is_floating_sel_proc =
 {
-  "gimp_layer_is_floating_sel",
+  "gimp-layer-is-floating-sel",
+  "gimp-layer-is-floating-sel",
   "Is the specified layer a floating selection?",
   "This procedure returns whether the layer is a floating selection. Floating selections are special cases of layers which are attached to a specific drawable.",
   "Spencer Kimball & Peter Mattis",
@@ -1198,7 +1213,8 @@ static ProcArg layer_get_lock_alpha_outargs[] =
 
 static ProcRecord layer_get_lock_alpha_proc =
 {
-  "gimp_layer_get_lock_alpha",
+  "gimp-layer-get-lock-alpha",
+  "gimp-layer-get-lock-alpha",
   "Get the lock alpha channel setting of the specified layer.",
   "This procedure returns the specified layer's lock alpha channel setting.",
   "Spencer Kimball & Peter Mattis",
@@ -1251,7 +1267,8 @@ static ProcArg layer_set_lock_alpha_inargs[] =
 
 static ProcRecord layer_set_lock_alpha_proc =
 {
-  "gimp_layer_set_lock_alpha",
+  "gimp-layer-set-lock-alpha",
+  "gimp-layer-set-lock-alpha",
   "Set the lock alpha channel setting of the specified layer.",
   "This procedure sets the specified layer's lock alpha channel setting.",
   "Spencer Kimball & Peter Mattis",
@@ -1308,7 +1325,8 @@ static ProcArg layer_get_apply_mask_outargs[] =
 
 static ProcRecord layer_get_apply_mask_proc =
 {
-  "gimp_layer_get_apply_mask",
+  "gimp-layer-get-apply-mask",
+  "gimp-layer-get-apply-mask",
   "Get the apply mask of the specified layer.",
   "This procedure returns the specified layer's apply mask. If the value is non-zero, then the layer mask for this layer is currently being composited with the layer's alpha channel.",
   "Spencer Kimball & Peter Mattis",
@@ -1361,7 +1379,8 @@ static ProcArg layer_set_apply_mask_inargs[] =
 
 static ProcRecord layer_set_apply_mask_proc =
 {
-  "gimp_layer_set_apply_mask",
+  "gimp-layer-set-apply-mask",
+  "gimp-layer-set-apply-mask",
   "Set the apply mask of the specified layer.",
   "This procedure sets the specified layer's apply mask. This controls whether the layer's mask is currently affecting the alpha channel. If there is no layer mask, this function will return an error.",
   "Spencer Kimball & Peter Mattis",
@@ -1418,7 +1437,8 @@ static ProcArg layer_get_show_mask_outargs[] =
 
 static ProcRecord layer_get_show_mask_proc =
 {
-  "gimp_layer_get_show_mask",
+  "gimp-layer-get-show-mask",
+  "gimp-layer-get-show-mask",
   "Get the show mask of the specified layer.",
   "This procedure returns the specified layer's show mask. If the value is non-zero, then the layer mask for this layer is currently being shown instead of the layer.",
   "Spencer Kimball & Peter Mattis",
@@ -1471,7 +1491,8 @@ static ProcArg layer_set_show_mask_inargs[] =
 
 static ProcRecord layer_set_show_mask_proc =
 {
-  "gimp_layer_set_show_mask",
+  "gimp-layer-set-show-mask",
+  "gimp-layer-set-show-mask",
   "Set the show mask of the specified layer.",
   "This procedure sets the specified layer's show mask. This controls whether the layer or it's mask is visible. Non-zero values indicate that the mask should be visible. If the layer has no mask, then this function returns an error.",
   "Spencer Kimball & Peter Mattis",
@@ -1528,7 +1549,8 @@ static ProcArg layer_get_edit_mask_outargs[] =
 
 static ProcRecord layer_get_edit_mask_proc =
 {
-  "gimp_layer_get_edit_mask",
+  "gimp-layer-get-edit-mask",
+  "gimp-layer-get-edit-mask",
   "Get the edit mask of the specified layer.",
   "This procedure returns the specified layer's edit mask. If the value is non-zero, then the layer mask for this layer is currently active, and not the layer.",
   "Spencer Kimball & Peter Mattis",
@@ -1581,7 +1603,8 @@ static ProcArg layer_set_edit_mask_inargs[] =
 
 static ProcRecord layer_set_edit_mask_proc =
 {
-  "gimp_layer_set_edit_mask",
+  "gimp-layer-set-edit-mask",
+  "gimp-layer-set-edit-mask",
   "Set the edit mask of the specified layer.",
   "This procedure sets the specified layer's edit mask. This controls whether the layer or it's mask is currently active for editing. If the specified layer has no layer mask, then this procedure will return an error.",
   "Spencer Kimball & Peter Mattis",
@@ -1638,7 +1661,8 @@ static ProcArg layer_get_opacity_outargs[] =
 
 static ProcRecord layer_get_opacity_proc =
 {
-  "gimp_layer_get_opacity",
+  "gimp-layer-get-opacity",
+  "gimp-layer-get-opacity",
   "Get the opacity of the specified layer.",
   "This procedure returns the specified layer's opacity.",
   "Spencer Kimball & Peter Mattis",
@@ -1693,7 +1717,8 @@ static ProcArg layer_set_opacity_inargs[] =
 
 static ProcRecord layer_set_opacity_proc =
 {
-  "gimp_layer_set_opacity",
+  "gimp-layer-set-opacity",
+  "gimp-layer-set-opacity",
   "Set the opacity of the specified layer.",
   "This procedure sets the specified layer's opacity.",
   "Spencer Kimball & Peter Mattis",
@@ -1750,7 +1775,8 @@ static ProcArg layer_get_mode_outargs[] =
 
 static ProcRecord layer_get_mode_proc =
 {
-  "gimp_layer_get_mode",
+  "gimp-layer-get-mode",
+  "gimp-layer-get-mode",
   "Get the combination mode of the specified layer.",
   "This procedure returns the specified layer's combination mode.",
   "Spencer Kimball & Peter Mattis",
@@ -1805,7 +1831,8 @@ static ProcArg layer_set_mode_inargs[] =
 
 static ProcRecord layer_set_mode_proc =
 {
-  "gimp_layer_set_mode",
+  "gimp-layer-set-mode",
+  "gimp-layer-set-mode",
   "Set the combination mode of the specified layer.",
   "This procedure sets the specified layer's combination mode.",
   "Spencer Kimball & Peter Mattis",

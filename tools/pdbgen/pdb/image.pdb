@@ -816,7 +816,7 @@ HELP
 }
 
 sub image_add_layer_mask {
-    &std_pdb_deprecated ('gimp_layer_add_mask');
+    &std_pdb_deprecated ('gimp-layer-add-mask');
 
     @inargs = (
 	&std_image_arg,
@@ -836,7 +836,7 @@ CODE
 }
 
 sub image_remove_layer_mask {
-    &std_pdb_deprecated ('gimp_layer_remove_mask');
+    &std_pdb_deprecated ('gimp-layer-remove-mask');
 
     @inargs = (
 	&std_image_arg,

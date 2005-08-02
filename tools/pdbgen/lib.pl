@@ -461,14 +461,21 @@ CODE
 		$procdesc = &desc_wrap("This procedure is deprecated!");
 	    }
 	    else {
+		my $underscores = $proc->{deprecated};
+		$underscores =~ s/-/_/g;
+
 		$procdesc = &desc_wrap("This procedure is deprecated! " .
-				       "Use $proc->{deprecated}() instead.");
+				       "Use $underscores() instead.");
 	    }
 	}
 	else {
 	    $procdesc = &desc_wrap($proc->{blurb}) . "\n *\n" .
 			&desc_wrap($proc->{help});
 	}
+
+        my $canonical = $funcname;
+        $canonical =~ s/_/-/g;
+
 	$out->{code} .= <<CODE;
 
 /**
@@ -484,7 +491,7 @@ $wrapped$funcname ($clist)
   GimpParam *return_vals;
   gint nreturn_vals;$return_args
 
-  return_vals = gimp_run_procedure ("$funcname",
+  return_vals = gimp_run_procedure ("$canonical",
 				    \&nreturn_vals,$argpass
 				    GIMP_PDB_END);
 

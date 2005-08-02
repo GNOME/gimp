@@ -189,7 +189,8 @@ static ProcArg text_fontname_outargs[] =
 
 static ProcRecord text_fontname_proc =
 {
-  "gimp_text_fontname",
+  "gimp-text-fontname",
+  "gimp-text-fontname",
   "Add text at the specified location as a floating selection or a new layer.",
   "This tool requires a fontname matching an installed PangoFT2 font. You can specify the fontsize in units of pixels or points, and the appropriate metric is specified using the size_type argument. The x and y parameters together control the placement of the new text by specifying the upper left corner of the text bounding box. If the specified drawable parameter is valid, the text will be created as a floating selection attached to the drawable. If the drawable parameter is not valid (-1), the text will appear as a new layer. Finally, a border can be specified around the final rendered text. The border is measured in pixels.",
   "Martin Edlman & Sven Neumann",
@@ -312,7 +313,8 @@ static ProcArg text_get_extents_fontname_outargs[] =
 
 static ProcRecord text_get_extents_fontname_proc =
 {
-  "gimp_text_get_extents_fontname",
+  "gimp-text-get-extents-fontname",
+  "gimp-text-get-extents-fontname",
   "Get extents of the bounding box for the specified text.",
   "This tool returns the width and height of a bounding box for the specified text string with the specified font information. Ascent and descent for the specified font are returned as well.",
   "Martin Edlman & Sven Neumann",
@@ -539,13 +541,14 @@ static ProcArg text_outargs[] =
 
 static ProcRecord text_proc =
 {
-  "gimp_text",
-  "This procedure is deprecated! Use 'gimp_text_fontname' instead.",
-  "This procedure is deprecated! Use 'gimp_text_fontname' instead.",
+  "gimp-text",
+  "gimp-text",
+  "This procedure is deprecated! Use 'gimp-text-fontname' instead.",
+  "This procedure is deprecated! Use 'gimp-text-fontname' instead.",
   "",
   "",
   "",
-  "gimp_text_fontname",
+  "gimp-text-fontname",
   GIMP_INTERNAL,
   17,
   text_inargs,
@@ -732,13 +735,14 @@ static ProcArg text_get_extents_outargs[] =
 
 static ProcRecord text_get_extents_proc =
 {
-  "gimp_text_get_extents",
-  "This procedure is deprecated! Use 'gimp_text_get_extents_fontname' instead.",
-  "This procedure is deprecated! Use 'gimp_text_get_extents_fontname' instead.",
+  "gimp-text-get-extents",
+  "gimp-text-get-extents",
+  "This procedure is deprecated! Use 'gimp-text-get-extents-fontname' instead.",
+  "This procedure is deprecated! Use 'gimp-text-get-extents-fontname' instead.",
   "",
   "",
   "",
-  "gimp_text_get_extents_fontname",
+  "gimp-text-get-extents-fontname",
   GIMP_INTERNAL,
   11,
   text_get_extents_inargs,

@@ -52,7 +52,7 @@ gimp_file_load (GimpRunMode  run_mode,
   gint nreturn_vals;
   gint32 image_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_file_load",
+  return_vals = gimp_run_procedure ("gimp-file-load",
 				    &nreturn_vals,
 				    GIMP_PDB_INT32, run_mode,
 				    GIMP_PDB_STRING, filename,
@@ -97,7 +97,7 @@ gimp_file_save (GimpRunMode  run_mode,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_file_save",
+  return_vals = gimp_run_procedure ("gimp-file-save",
 				    &nreturn_vals,
 				    GIMP_PDB_INT32, run_mode,
 				    GIMP_PDB_IMAGE, image_ID,
@@ -131,7 +131,7 @@ gimp_temp_name (const gchar *extension)
   gint nreturn_vals;
   gchar *name = NULL;
 
-  return_vals = gimp_run_procedure ("gimp_temp_name",
+  return_vals = gimp_run_procedure ("gimp-temp-name",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, extension,
 				    GIMP_PDB_END);
@@ -168,7 +168,7 @@ gimp_register_magic_load_handler (const gchar *procedure_name,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_register_magic_load_handler",
+  return_vals = gimp_run_procedure ("gimp-register-magic-load-handler",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, procedure_name,
 				    GIMP_PDB_STRING, extensions,
@@ -205,7 +205,7 @@ gimp_register_load_handler (const gchar *procedure_name,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_register_load_handler",
+  return_vals = gimp_run_procedure ("gimp-register-load-handler",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, procedure_name,
 				    GIMP_PDB_STRING, extensions,
@@ -241,7 +241,7 @@ gimp_register_save_handler (const gchar *procedure_name,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_register_save_handler",
+  return_vals = gimp_run_procedure ("gimp-register-save-handler",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, procedure_name,
 				    GIMP_PDB_STRING, extensions,
@@ -278,7 +278,7 @@ gimp_register_file_handler_mime (const gchar *procedure_name,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_register_file_handler_mime",
+  return_vals = gimp_run_procedure ("gimp-register-file-handler-mime",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, procedure_name,
 				    GIMP_PDB_STRING, mime_type,
@@ -317,7 +317,7 @@ gimp_register_thumbnail_loader (const gchar *load_proc,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_register_thumbnail_loader",
+  return_vals = gimp_run_procedure ("gimp-register-thumbnail-loader",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, load_proc,
 				    GIMP_PDB_STRING, thumb_proc,

@@ -81,17 +81,23 @@ HELP
 	vars => [ 'ProcRecord *proc', "ProcArg *$type = NULL" ],
 	code => <<CODE
 {
-  proc = procedural_db_lookup (gimp, proc_name);
+  gchar *canonical;
+
+  canonical = gimp_canonicalize_identifier (proc_name);
+
+  proc = procedural_db_lookup (gimp, canonical);
 
   if (! proc)
     {
       const gchar *compat_name;
 
-      compat_name = g_hash_table_lookup (gimp->procedural_compat_ht, proc_name);
+      compat_name = g_hash_table_lookup (gimp->procedural_compat_ht, canonical);
 
       if (compat_name)
         proc = procedural_db_lookup (gimp, compat_name);
     }
+
+  g_free (canonical);
 
   if (proc && (${type}_num >= 0 && ${type}_num < proc->num_$real_type))
     $type = \&proc->${real_type}\[${type}_num];
@@ -124,7 +130,7 @@ HELP
     %invoke = (
 	vars => [ 'static gint proc_number = 0' ],
 	code => <<'CODE'
-temp_name = g_strdup_printf ("temp_procedure_number_%d", proc_number++);
+temp_name = g_strdup_printf ("temp-procedure-number-%d", proc_number++);
 CODE
     );
 }
@@ -251,13 +257,17 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPDBProcType ptype;
+  GimpPDBProcType  ptype;
+  gchar           *canonical;
 
-  success = procedural_db_proc_info (gimp, proc_name,
+  canonical = gimp_canonicalize_identifier (proc_name);
+
+  success = procedural_db_proc_info (gimp, canonical,
                                      &blurb, &help, &author, &copyright, &date, &ptype,
                                      &num_args, &num_values);
-
   proc_type = ptype;
+
+  g_free (canonical);
 }
 CODE
     );
@@ -297,8 +307,14 @@ HELP
 	vars => [ 'const guint8 *data' ],
 	code => <<'CODE'
 {
-  data = procedural_db_get_data (gimp, identifier, &bytes);
+  gchar *canonical;
+
+  canonical = gimp_canonicalize_identifier (identifier);
+
+  data = procedural_db_get_data (gimp, canonical, &bytes);
   success = (data != NULL);
+
+  g_free (canonical);
 
   if (success)
     data_copy = g_memdup (data, bytes);
@@ -327,8 +343,14 @@ HELP
 	vars => [ 'const guint8 *data' ],
 	code => <<'CODE'
 {
-  data = procedural_db_get_data (gimp, identifier, &bytes);
+  gchar *canonical;
+
+  canonical = gimp_canonicalize_identifier (identifier);
+
+  data = procedural_db_get_data (gimp, canonical, &bytes);
   success = (data != NULL);
+
+  g_free (canonical);
 }
 CODE
     );
@@ -352,7 +374,17 @@ HELP
     delete @{$inargs[1]->{array}}{qw(alias no_declare)};
 
     %invoke = (
-	code => 'procedural_db_set_data (gimp, identifier, bytes, data);'
+	code => <<'CODE'
+{
+  gchar *canonical;
+
+  canonical = gimp_canonicalize_identifier (identifier);
+
+  procedural_db_set_data (gimp, canonical, bytes, data);
+
+  g_free (canonical);
+}
+CODE
     );
 }
 

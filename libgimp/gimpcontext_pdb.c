@@ -45,7 +45,7 @@ gimp_context_push (void)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_context_push",
+  return_vals = gimp_run_procedure ("gimp-context-push",
 				    &nreturn_vals,
 				    GIMP_PDB_END);
 
@@ -75,7 +75,7 @@ gimp_context_pop (void)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_context_pop",
+  return_vals = gimp_run_procedure ("gimp-context-pop",
 				    &nreturn_vals,
 				    GIMP_PDB_END);
 
@@ -107,7 +107,7 @@ gimp_context_get_foreground (GimpRGB *foreground)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_context_get_foreground",
+  return_vals = gimp_run_procedure ("gimp-context-get-foreground",
 				    &nreturn_vals,
 				    GIMP_PDB_END);
 
@@ -142,7 +142,7 @@ gimp_context_set_foreground (const GimpRGB *foreground)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_context_set_foreground",
+  return_vals = gimp_run_procedure ("gimp-context-set-foreground",
 				    &nreturn_vals,
 				    GIMP_PDB_COLOR, foreground,
 				    GIMP_PDB_END);
@@ -175,7 +175,7 @@ gimp_context_get_background (GimpRGB *background)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_context_get_background",
+  return_vals = gimp_run_procedure ("gimp-context-get-background",
 				    &nreturn_vals,
 				    GIMP_PDB_END);
 
@@ -211,7 +211,7 @@ gimp_context_set_background (const GimpRGB *background)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_context_set_background",
+  return_vals = gimp_run_procedure ("gimp-context-set-background",
 				    &nreturn_vals,
 				    GIMP_PDB_COLOR, background,
 				    GIMP_PDB_END);
@@ -243,7 +243,7 @@ gimp_context_set_default_colors (void)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_context_set_default_colors",
+  return_vals = gimp_run_procedure ("gimp-context-set-default-colors",
 				    &nreturn_vals,
 				    GIMP_PDB_END);
 
@@ -274,7 +274,7 @@ gimp_context_swap_colors (void)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_context_swap_colors",
+  return_vals = gimp_run_procedure ("gimp-context-swap-colors",
 				    &nreturn_vals,
 				    GIMP_PDB_END);
 
@@ -304,7 +304,7 @@ gimp_context_get_opacity (void)
   gint nreturn_vals;
   gdouble opacity = 0;
 
-  return_vals = gimp_run_procedure ("gimp_context_get_opacity",
+  return_vals = gimp_run_procedure ("gimp-context-get-opacity",
 				    &nreturn_vals,
 				    GIMP_PDB_END);
 
@@ -336,7 +336,7 @@ gimp_context_set_opacity (gdouble opacity)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_context_set_opacity",
+  return_vals = gimp_run_procedure ("gimp-context-set-opacity",
 				    &nreturn_vals,
 				    GIMP_PDB_FLOAT, opacity,
 				    GIMP_PDB_END);
@@ -368,7 +368,7 @@ gimp_context_get_paint_mode (void)
   gint nreturn_vals;
   GimpLayerModeEffects paint_mode = 0;
 
-  return_vals = gimp_run_procedure ("gimp_context_get_paint_mode",
+  return_vals = gimp_run_procedure ("gimp-context-get-paint-mode",
 				    &nreturn_vals,
 				    GIMP_PDB_END);
 
@@ -399,7 +399,7 @@ gimp_context_set_paint_mode (GimpLayerModeEffects paint_mode)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_context_set_paint_mode",
+  return_vals = gimp_run_procedure ("gimp-context-set-paint-mode",
 				    &nreturn_vals,
 				    GIMP_PDB_INT32, paint_mode,
 				    GIMP_PDB_END);
@@ -431,7 +431,7 @@ gimp_context_get_brush (void)
   gint nreturn_vals;
   gchar *name = NULL;
 
-  return_vals = gimp_run_procedure ("gimp_context_get_brush",
+  return_vals = gimp_run_procedure ("gimp-context-get-brush",
 				    &nreturn_vals,
 				    GIMP_PDB_END);
 
@@ -466,7 +466,7 @@ gimp_context_set_brush (const gchar *name)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_context_set_brush",
+  return_vals = gimp_run_procedure ("gimp-context-set-brush",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, name,
 				    GIMP_PDB_END);
@@ -498,7 +498,7 @@ gimp_context_get_pattern (void)
   gint nreturn_vals;
   gchar *name = NULL;
 
-  return_vals = gimp_run_procedure ("gimp_context_get_pattern",
+  return_vals = gimp_run_procedure ("gimp-context-get-pattern",
 				    &nreturn_vals,
 				    GIMP_PDB_END);
 
@@ -534,7 +534,7 @@ gimp_context_set_pattern (const gchar *name)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_context_set_pattern",
+  return_vals = gimp_run_procedure ("gimp-context-set-pattern",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, name,
 				    GIMP_PDB_END);
@@ -564,7 +564,7 @@ gimp_context_get_gradient (void)
   gint nreturn_vals;
   gchar *name = NULL;
 
-  return_vals = gimp_run_procedure ("gimp_context_get_gradient",
+  return_vals = gimp_run_procedure ("gimp-context-get-gradient",
 				    &nreturn_vals,
 				    GIMP_PDB_END);
 
@@ -600,7 +600,7 @@ gimp_context_set_gradient (const gchar *name)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_context_set_gradient",
+  return_vals = gimp_run_procedure ("gimp-context-set-gradient",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, name,
 				    GIMP_PDB_END);
@@ -630,7 +630,7 @@ gimp_context_get_palette (void)
   gint nreturn_vals;
   gchar *name = NULL;
 
-  return_vals = gimp_run_procedure ("gimp_context_get_palette",
+  return_vals = gimp_run_procedure ("gimp-context-get-palette",
 				    &nreturn_vals,
 				    GIMP_PDB_END);
 
@@ -666,7 +666,7 @@ gimp_context_set_palette (const gchar *name)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_context_set_palette",
+  return_vals = gimp_run_procedure ("gimp-context-set-palette",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, name,
 				    GIMP_PDB_END);
@@ -696,7 +696,7 @@ gimp_context_get_font (void)
   gint nreturn_vals;
   gchar *name = NULL;
 
-  return_vals = gimp_run_procedure ("gimp_context_get_font",
+  return_vals = gimp_run_procedure ("gimp-context-get-font",
 				    &nreturn_vals,
 				    GIMP_PDB_END);
 
@@ -731,7 +731,7 @@ gimp_context_set_font (const gchar *name)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_context_set_font",
+  return_vals = gimp_run_procedure ("gimp-context-set-font",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, name,
 				    GIMP_PDB_END);

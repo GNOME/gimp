@@ -176,7 +176,8 @@ static ProcArg plugins_query_outargs[] =
 
 static ProcRecord plugins_query_proc =
 {
-  "gimp_plugins_query",
+  "gimp-plugins-query",
+  "gimp-plugins-query",
   "Queries the plugin database for its contents.",
   "This procedure queries the contents of the plugin database.",
   "Andy Thomas",
@@ -239,7 +240,8 @@ static ProcArg plugin_domain_register_inargs[] =
 
 static ProcRecord plugin_domain_register_proc =
 {
-  "gimp_plugin_domain_register",
+  "gimp-plugin-domain-register",
+  "gimp-plugin-domain-register",
   "Registers a textdomain for localisation.",
   "This procedure adds a textdomain to the list of domains Gimp searches for strings when translating its menu entries. There is no need to call this function for plug-ins that have their strings included in the gimp-std-plugins domain as that is used by default. If the compiled message catalog is not in the standard location, you may specify an absolute path to another location. This procedure can only be called in the query function of a plug-in and it has to be called before any procedure is installed.",
   "Sven Neumann",
@@ -304,7 +306,8 @@ static ProcArg plugin_help_register_inargs[] =
 
 static ProcRecord plugin_help_register_proc =
 {
-  "gimp_plugin_help_register",
+  "gimp-plugin-help-register",
+  "gimp-plugin-help-register",
   "Register a help path for a plug-in.",
   "This procedure changes the help rootdir for the plug-in which calls it. All subsequent calls of gimp_help from this plug-in will be interpreted relative to this rootdir.",
   "Michael Natterer <mitch@gimp.org>",
@@ -342,14 +345,17 @@ plugin_menu_register_invoker (Gimp         *gimp,
       if (gimp->current_plug_in)
         {
           PlugInProcDef *proc_def = NULL;
+          gchar         *canonical;
+
+          canonical = gimp_canonicalize_identifier (procedure_name);
 
           if (gimp->current_plug_in->plug_in_def)
             proc_def = plug_in_proc_def_find (gimp->current_plug_in->plug_in_def->proc_defs,
-                                              procedure_name);
+                                              canonical);
 
           if (! proc_def)
             proc_def = plug_in_proc_def_find (gimp->current_plug_in->temp_proc_defs,
-                                              procedure_name);
+                                              canonical);
 
           if (proc_def)
             {
@@ -359,7 +365,7 @@ plugin_menu_register_invoker (Gimp         *gimp,
 
                   if (! plug_in_proc_args_check (gimp->current_plug_in->name,
                                                  gimp->current_plug_in->prog,
-                                                 procedure_name,
+                                                 canonical,
                                                  menu_path,
                                                  proc_def->db_info.args,
                                                  proc_def->db_info.num_args,
@@ -415,13 +421,15 @@ plugin_menu_register_invoker (Gimp         *gimp,
                              "label to gimp_install_procedure().",
                              gimp_filename_to_utf8 (gimp->current_plug_in->name),
                              gimp_filename_to_utf8 (gimp->current_plug_in->prog),
-                             menu_path, procedure_name);
+                             menu_path, canonical);
 
                   success = FALSE;
                 }
             }
           else
             success = FALSE;
+
+          g_free (canonical);
         }
       else
         success = FALSE;
@@ -446,7 +454,8 @@ static ProcArg plugin_menu_register_inargs[] =
 
 static ProcRecord plugin_menu_register_proc =
 {
-  "gimp_plugin_menu_register",
+  "gimp-plugin-menu-register",
+  "gimp-plugin-menu-register",
   "Register an additional menu path for a plug-in procedure.",
   "This procedure installs an additional menu entry for the given procedure.",
   "Michael Natterer <mitch@gimp.org>",
@@ -517,7 +526,8 @@ static ProcArg plugin_menu_branch_register_inargs[] =
 
 static ProcRecord plugin_menu_branch_register_proc =
 {
-  "gimp_plugin_menu_branch_register",
+  "gimp-plugin-menu-branch-register",
+  "gimp-plugin-menu-branch-register",
   "Register a sub-menu.",
   "This procedure installs an sub-menu which does not belong to any procedure.",
   "Michael Natterer <mitch@gimp.org>",
@@ -563,9 +573,14 @@ plugin_icon_register_invoker (Gimp         *gimp,
       if (gimp->current_plug_in && gimp->current_plug_in->query)
         {
           PlugInProcDef *proc_def;
+          gchar         *canonical;
+
+          canonical = gimp_canonicalize_identifier (procedure_name);
 
           proc_def = plug_in_proc_def_find (gimp->current_plug_in->plug_in_def->proc_defs,
-                                            procedure_name);
+                                            canonical);
+
+          g_free (canonical);
 
           if (proc_def)
             plug_in_proc_def_set_icon (proc_def, icon_type,
@@ -606,7 +621,8 @@ static ProcArg plugin_icon_register_inargs[] =
 
 static ProcRecord plugin_icon_register_proc =
 {
-  "gimp_plugin_icon_register",
+  "gimp-plugin-icon-register",
+  "gimp-plugin-icon-register",
   "Register an icon for a plug-in procedure.",
   "This procedure installs an icon for the given procedure.",
   "Michael Natterer <mitch@gimp.org>",

@@ -41,7 +41,7 @@ _gimp_unit_get_number_of_units (void)
   gint nreturn_vals;
   gint num_units = GIMP_UNIT_END;
 
-  return_vals = gimp_run_procedure ("gimp_unit_get_number_of_units",
+  return_vals = gimp_run_procedure ("gimp-unit-get-number-of-units",
 				    &nreturn_vals,
 				    GIMP_PDB_END);
 
@@ -70,7 +70,7 @@ _gimp_unit_get_number_of_built_in_units (void)
   gint nreturn_vals;
   gint num_units = GIMP_UNIT_END;
 
-  return_vals = gimp_run_procedure ("gimp_unit_get_number_of_built_in_units",
+  return_vals = gimp_run_procedure ("gimp-unit-get-number-of-built-in-units",
 				    &nreturn_vals,
 				    GIMP_PDB_END);
 
@@ -114,7 +114,7 @@ _gimp_unit_new (const gchar *identifier,
   gint nreturn_vals;
   GimpUnit unit_id = GIMP_UNIT_INCH;
 
-  return_vals = gimp_run_procedure ("gimp_unit_new",
+  return_vals = gimp_run_procedure ("gimp-unit-new",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, identifier,
 				    GIMP_PDB_FLOAT, factor,
@@ -152,7 +152,7 @@ _gimp_unit_get_deletion_flag (GimpUnit unit_id)
   gint nreturn_vals;
   gboolean deletion_flag = FALSE;
 
-  return_vals = gimp_run_procedure ("gimp_unit_get_deletion_flag",
+  return_vals = gimp_run_procedure ("gimp-unit-get-deletion-flag",
 				    &nreturn_vals,
 				    GIMP_PDB_INT32, unit_id,
 				    GIMP_PDB_END);
@@ -186,7 +186,7 @@ _gimp_unit_set_deletion_flag (GimpUnit unit_id,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_unit_set_deletion_flag",
+  return_vals = gimp_run_procedure ("gimp-unit-set-deletion-flag",
 				    &nreturn_vals,
 				    GIMP_PDB_INT32, unit_id,
 				    GIMP_PDB_INT32, deletion_flag,
@@ -218,7 +218,7 @@ _gimp_unit_get_identifier (GimpUnit unit_id)
   gint nreturn_vals;
   gchar *identifier = NULL;
 
-  return_vals = gimp_run_procedure ("gimp_unit_get_identifier",
+  return_vals = gimp_run_procedure ("gimp-unit-get-identifier",
 				    &nreturn_vals,
 				    GIMP_PDB_INT32, unit_id,
 				    GIMP_PDB_END);
@@ -250,7 +250,7 @@ _gimp_unit_get_factor (GimpUnit unit_id)
   gint nreturn_vals;
   gdouble factor = 0;
 
-  return_vals = gimp_run_procedure ("gimp_unit_get_factor",
+  return_vals = gimp_run_procedure ("gimp-unit-get-factor",
 				    &nreturn_vals,
 				    GIMP_PDB_INT32, unit_id,
 				    GIMP_PDB_END);
@@ -283,7 +283,7 @@ _gimp_unit_get_digits (GimpUnit unit_id)
   gint nreturn_vals;
   gint digits = 0;
 
-  return_vals = gimp_run_procedure ("gimp_unit_get_digits",
+  return_vals = gimp_run_procedure ("gimp-unit-get-digits",
 				    &nreturn_vals,
 				    GIMP_PDB_INT32, unit_id,
 				    GIMP_PDB_END);
@@ -313,7 +313,7 @@ _gimp_unit_get_symbol (GimpUnit unit_id)
   gint nreturn_vals;
   gchar *symbol = NULL;
 
-  return_vals = gimp_run_procedure ("gimp_unit_get_symbol",
+  return_vals = gimp_run_procedure ("gimp-unit-get-symbol",
 				    &nreturn_vals,
 				    GIMP_PDB_INT32, unit_id,
 				    GIMP_PDB_END);
@@ -344,7 +344,7 @@ _gimp_unit_get_abbreviation (GimpUnit unit_id)
   gint nreturn_vals;
   gchar *abbreviation = NULL;
 
-  return_vals = gimp_run_procedure ("gimp_unit_get_abbreviation",
+  return_vals = gimp_run_procedure ("gimp-unit-get-abbreviation",
 				    &nreturn_vals,
 				    GIMP_PDB_INT32, unit_id,
 				    GIMP_PDB_END);
@@ -374,7 +374,7 @@ _gimp_unit_get_singular (GimpUnit unit_id)
   gint nreturn_vals;
   gchar *singular = NULL;
 
-  return_vals = gimp_run_procedure ("gimp_unit_get_singular",
+  return_vals = gimp_run_procedure ("gimp-unit-get-singular",
 				    &nreturn_vals,
 				    GIMP_PDB_INT32, unit_id,
 				    GIMP_PDB_END);
@@ -404,7 +404,7 @@ _gimp_unit_get_plural (GimpUnit unit_id)
   gint nreturn_vals;
   gchar *plural = NULL;
 
-  return_vals = gimp_run_procedure ("gimp_unit_get_plural",
+  return_vals = gimp_run_procedure ("gimp-unit-get-plural",
 				    &nreturn_vals,
 				    GIMP_PDB_INT32, unit_id,
 				    GIMP_PDB_END);

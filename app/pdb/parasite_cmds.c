@@ -111,7 +111,8 @@ static ProcArg parasite_find_outargs[] =
 
 static ProcRecord parasite_find_proc =
 {
-  "gimp_parasite_find",
+  "gimp-parasite-find",
+  "gimp-parasite-find",
   "Finds the named parasite.",
   "Finds and returns the named parasite that was previously attached to the gimp.",
   "Jay Cox",
@@ -156,7 +157,8 @@ static ProcArg parasite_attach_inargs[] =
 
 static ProcRecord parasite_attach_proc =
 {
-  "gimp_parasite_attach",
+  "gimp-parasite-attach",
+  "gimp-parasite-attach",
   "Add a parasite to the gimp.",
   "This procedure attaches a parasite to the gimp. It has no return values.",
   "Jay Cox",
@@ -201,7 +203,8 @@ static ProcArg parasite_detach_inargs[] =
 
 static ProcRecord parasite_detach_proc =
 {
-  "gimp_parasite_detach",
+  "gimp-parasite-detach",
+  "gimp-parasite-detach",
   "Removes a parasite from the gimp.",
   "This procedure detaches a parasite from the gimp. It has no return values.",
   "Jay Cox",
@@ -252,7 +255,8 @@ static ProcArg parasite_list_outargs[] =
 
 static ProcRecord parasite_list_proc =
 {
-  "gimp_parasite_list",
+  "gimp-parasite-list",
+  "gimp-parasite-list",
   "List all parasites.",
   "Returns a list of all currently attached parasites.",
   "Marc Lehmann",
@@ -326,7 +330,8 @@ static ProcArg drawable_parasite_find_outargs[] =
 
 static ProcRecord drawable_parasite_find_proc =
 {
-  "gimp_drawable_parasite_find",
+  "gimp-drawable-parasite-find",
+  "gimp-drawable-parasite-find",
   "Finds the named parasite in a drawable",
   "Finds and returns the named parasite that was previously attached to a drawable.",
   "Jay Cox",
@@ -381,7 +386,8 @@ static ProcArg drawable_parasite_attach_inargs[] =
 
 static ProcRecord drawable_parasite_attach_proc =
 {
-  "gimp_drawable_parasite_attach",
+  "gimp-drawable-parasite-attach",
+  "gimp-drawable-parasite-attach",
   "Add a parasite to a drawable.",
   "This procedure attaches a parasite to a drawable. It has no return values.",
   "Jay Cox",
@@ -436,7 +442,8 @@ static ProcArg drawable_parasite_detach_inargs[] =
 
 static ProcRecord drawable_parasite_detach_proc =
 {
-  "gimp_drawable_parasite_detach",
+  "gimp-drawable-parasite-detach",
+  "gimp-drawable-parasite-detach",
   "Removes a parasite from a drawable.",
   "This procedure detaches a parasite from a drawable. It has no return values.",
   "Jay Cox",
@@ -506,7 +513,8 @@ static ProcArg drawable_parasite_list_outargs[] =
 
 static ProcRecord drawable_parasite_list_proc =
 {
-  "gimp_drawable_parasite_list",
+  "gimp-drawable-parasite-list",
+  "gimp-drawable-parasite-list",
   "List all parasites.",
   "Returns a list of all currently attached parasites.",
   "Marc Lehmann",
@@ -580,7 +588,8 @@ static ProcArg image_parasite_find_outargs[] =
 
 static ProcRecord image_parasite_find_proc =
 {
-  "gimp_image_parasite_find",
+  "gimp-image-parasite-find",
+  "gimp-image-parasite-find",
   "Finds the named parasite in an image",
   "Finds and returns the named parasite that was previously attached to an image.",
   "Jay Cox",
@@ -635,7 +644,8 @@ static ProcArg image_parasite_attach_inargs[] =
 
 static ProcRecord image_parasite_attach_proc =
 {
-  "gimp_image_parasite_attach",
+  "gimp-image-parasite-attach",
+  "gimp-image-parasite-attach",
   "Add a parasite to an image.",
   "This procedure attaches a parasite to an image. It has no return values.",
   "Jay Cox",
@@ -690,7 +700,8 @@ static ProcArg image_parasite_detach_inargs[] =
 
 static ProcRecord image_parasite_detach_proc =
 {
-  "gimp_image_parasite_detach",
+  "gimp-image-parasite-detach",
+  "gimp-image-parasite-detach",
   "Removes a parasite from an image.",
   "This procedure detaches a parasite from an image. It has no return values.",
   "Jay Cox",
@@ -760,7 +771,8 @@ static ProcArg image_parasite_list_outargs[] =
 
 static ProcRecord image_parasite_list_proc =
 {
-  "gimp_image_parasite_list",
+  "gimp-image-parasite-list",
+  "gimp-image-parasite-list",
   "List all parasites.",
   "Returns a list of all currently attached parasites.",
   "Marc Lehmann",

@@ -113,7 +113,8 @@ static ProcArg image_add_hguide_outargs[] =
 
 static ProcRecord image_add_hguide_proc =
 {
-  "gimp_image_add_hguide",
+  "gimp-image-add-hguide",
+  "gimp-image-add-hguide",
   "Add a horizontal guide to an image.",
   "This procedure adds a horizontal guide to an image. It takes the input image and the y-position of the new guide as parameters. It returns the guide ID of the new guide.",
   "Adam D. Moss",
@@ -193,7 +194,8 @@ static ProcArg image_add_vguide_outargs[] =
 
 static ProcRecord image_add_vguide_proc =
 {
-  "gimp_image_add_vguide",
+  "gimp-image-add-vguide",
+  "gimp-image-add-vguide",
   "Add a vertical guide to an image.",
   "This procedure adds a vertical guide to an image. It takes the input image and the x-position of the new guide as parameters. It returns the guide ID of the new guide.",
   "Adam D. Moss",
@@ -261,7 +263,8 @@ static ProcArg image_delete_guide_inargs[] =
 
 static ProcRecord image_delete_guide_proc =
 {
-  "gimp_image_delete_guide",
+  "gimp-image-delete-guide",
+  "gimp-image-delete-guide",
   "Deletes a guide from an image.",
   "This procedure takes an image and a guide ID as input and removes the specified guide from the specified image.",
   "Adam D. Moss",
@@ -368,7 +371,8 @@ static ProcArg image_find_next_guide_outargs[] =
 
 static ProcRecord image_find_next_guide_proc =
 {
-  "gimp_image_find_next_guide",
+  "gimp-image-find-next-guide",
+  "gimp-image-find-next-guide",
   "Find next guide on an image.",
   "This procedure takes an image and a guide ID as input and finds the guide ID of the successor of the given guide ID in the image's guide list. If the supplied guide ID is 0, the procedure will return the first Guide. The procedure will return 0 if given the final guide ID as an argument or the image has no guides.",
   "Adam D. Moss",
@@ -453,7 +457,8 @@ static ProcArg image_get_guide_orientation_outargs[] =
 
 static ProcRecord image_get_guide_orientation_proc =
 {
-  "gimp_image_get_guide_orientation",
+  "gimp-image-get-guide-orientation",
+  "gimp-image-get-guide-orientation",
   "Get orientation of a guide on an image.",
   "This procedure takes an image and a guide ID as input and returns the orientations of the guide.",
   "Adam D. Moss",
@@ -538,7 +543,8 @@ static ProcArg image_get_guide_position_outargs[] =
 
 static ProcRecord image_get_guide_position_proc =
 {
-  "gimp_image_get_guide_position",
+  "gimp-image-get-guide-position",
+  "gimp-image-get-guide-position",
   "Get position of a guide on an image.",
   "This procedure takes an image and a guide ID as input and returns the position of the guide relative to the top or left of the image.",
   "Adam D. Moss",

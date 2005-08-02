@@ -311,8 +311,12 @@ plug_in_proc_def_deserialize (GScanner      *scanner,
   gint       n_menu_paths;
   gint       i;
 
-  if (! gimp_scanner_parse_string (scanner, &proc_def->db_info.name))
+  if (! gimp_scanner_parse_string (scanner, &proc_def->db_info.original_name))
     return G_TOKEN_STRING;
+
+  proc_def->db_info.name =
+    gimp_canonicalize_identifier (proc_def->db_info.original_name);
+
   if (! gimp_scanner_parse_int (scanner, (gint *) &proc_def->db_info.proc_type))
     return G_TOKEN_INT;
   if (! gimp_scanner_parse_string (scanner, &proc_def->db_info.blurb))
@@ -730,7 +734,7 @@ plug_in_rc_write (GSList       *plug_in_defs,
 
               gimp_config_writer_open (writer, "proc-def");
               gimp_config_writer_printf (writer, "\"%s\" %d",
-                                         proc_def->db_info.name,
+                                         proc_def->db_info.original_name,
                                          proc_def->db_info.proc_type);
               gimp_config_writer_linefeed (writer);
               gimp_config_writer_string (writer, proc_def->db_info.blurb);

@@ -120,7 +120,8 @@ static ProcArg palette_new_outargs[] =
 
 static ProcRecord palette_new_proc =
 {
-  "gimp_palette_new",
+  "gimp-palette-new",
+  "gimp-palette-new",
   "Creates a new palette",
   "This procedure creates a new, uninitialized palette",
   "Michael Natterer <mitch@gimp.org>",
@@ -196,7 +197,8 @@ static ProcArg palette_duplicate_outargs[] =
 
 static ProcRecord palette_duplicate_proc =
 {
-  "gimp_palette_duplicate",
+  "gimp-palette-duplicate",
+  "gimp-palette-duplicate",
   "Duplicates a palette",
   "This procedure creates an identical palette by a different name",
   "Michael Natterer <mitch@gimp.org>",
@@ -275,7 +277,8 @@ static ProcArg palette_rename_outargs[] =
 
 static ProcRecord palette_rename_proc =
 {
-  "gimp_palette_rename",
+  "gimp-palette-rename",
+  "gimp-palette-rename",
   "Rename a palette",
   "This procedure renames a palette",
   "Michael Natterer <mitch@gimp.org>",
@@ -341,7 +344,8 @@ static ProcArg palette_delete_inargs[] =
 
 static ProcRecord palette_delete_proc =
 {
-  "gimp_palette_delete",
+  "gimp-palette-delete",
+  "gimp-palette-delete",
   "Deletes a palette",
   "This procedure deletes a palette",
   "Michael Natterer <mitch@gimp.org>",
@@ -410,7 +414,8 @@ static ProcArg palette_is_editable_outargs[] =
 
 static ProcRecord palette_is_editable_proc =
 {
-  "gimp_palette_is_editable",
+  "gimp-palette-is-editable",
+  "gimp-palette-is-editable",
   "Tests if palette can be edited",
   "Returns True if you have permission to change the palette",
   "Bill Skaggs <weskaggs@primate.ucdavis.edu",
@@ -476,7 +481,8 @@ static ProcArg palette_get_info_outargs[] =
 
 static ProcRecord palette_get_info_proc =
 {
-  "gimp_palette_get_info",
+  "gimp-palette-get-info",
+  "gimp-palette-get-info",
   "Retrieve information about the specified palette.",
   "This procedure retrieves information about the specified palette. This includes the name, and the number of colors.",
   "Michael Natterer <mitch@gimp.org>",
@@ -542,7 +548,8 @@ static ProcArg palette_get_columns_outargs[] =
 
 static ProcRecord palette_get_columns_proc =
 {
-  "gimp_palette_get_columns",
+  "gimp-palette-get-columns",
+  "gimp-palette-get-columns",
   "Retrieves the number of columns to use to display this palette",
   "This procedures retrieves the prefered number of columns to use when the palette is being displayed.",
   "Sven Neumann <sven@gimp.org>",
@@ -606,7 +613,8 @@ static ProcArg palette_set_columns_inargs[] =
 
 static ProcRecord palette_set_columns_proc =
 {
-  "gimp_palette_set_columns",
+  "gimp-palette-set-columns",
+  "gimp-palette-set-columns",
   "Sets the number of columns to use when displaying the palette",
   "This procedures allows to control how many colors are shown per row when the palette is being displayed. This value can only be changed if the palette is writable. The maximum allowed value is 64.",
   "Sven Neumann <sven@gimp.org>",
@@ -694,7 +702,8 @@ static ProcArg palette_add_entry_outargs[] =
 
 static ProcRecord palette_add_entry_proc =
 {
-  "gimp_palette_add_entry",
+  "gimp-palette-add-entry",
+  "gimp-palette-add-entry",
   "Adds a palette entry to the specified palette.",
   "This procedure adds an entry to the specifed palette. It returns an error if the entry palette does not exist.",
   "Michael Natterer <mitch@gimp.org>",
@@ -766,7 +775,8 @@ static ProcArg palette_delete_entry_inargs[] =
 
 static ProcRecord palette_delete_entry_proc =
 {
-  "gimp_palette_delete_entry",
+  "gimp-palette-delete-entry",
+  "gimp-palette-delete-entry",
   "Deletes a palette entry from the specified palette.",
   "This procedure deletes an entry from the specifed palette. It returns an error if the entry palette does not exist.",
   "Michael Natterer <mitch@gimp.org>",
@@ -854,7 +864,8 @@ static ProcArg palette_entry_get_color_outargs[] =
 
 static ProcRecord palette_entry_get_color_proc =
 {
-  "gimp_palette_entry_get_color",
+  "gimp-palette-entry-get-color",
+  "gimp-palette-entry-get-color",
   "Gets the specified palette entry from the specified palette.",
   "This procedure retrieves the color of the zero-based entry specifed for the specified palette. It returns an error if the entry does not exist.",
   "Michael Natterer <mitch@gimp.org>",
@@ -936,7 +947,8 @@ static ProcArg palette_entry_set_color_inargs[] =
 
 static ProcRecord palette_entry_set_color_proc =
 {
-  "gimp_palette_entry_set_color",
+  "gimp-palette-entry-set-color",
+  "gimp-palette-entry-set-color",
   "Sets the specified palette entry in the specified palette.",
   "This procedure sets the color of the zero-based entry specifed for the specified palette. It returns an error if the entry does not exist.",
   "Michael Natterer <mitch@gimp.org>",
@@ -1019,7 +1031,8 @@ static ProcArg palette_entry_get_name_outargs[] =
 
 static ProcRecord palette_entry_get_name_proc =
 {
-  "gimp_palette_entry_get_name",
+  "gimp-palette-entry-get-name",
+  "gimp-palette-entry-get-name",
   "Gets the specified palette entry from the specified palette.",
   "This procedure retrieves the name of the zero-based entry specifed for the specified palette. It returns an error if the entry does not exist.",
   "Michael Natterer <mitch@gimp.org>",
@@ -1104,7 +1117,8 @@ static ProcArg palette_entry_set_name_inargs[] =
 
 static ProcRecord palette_entry_set_name_proc =
 {
-  "gimp_palette_entry_set_name",
+  "gimp-palette-entry-set-name",
+  "gimp-palette-entry-set-name",
   "Sets the specified palette entry in the specified palette.",
   "This procedure sets the name of the zero-based entry specifed for the specified palette. It returns an error if the entry does not exist.",
   "Michael Natterer <mitch@gimp.org>",

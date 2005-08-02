@@ -63,7 +63,7 @@ procedural_db_temp_name_invoker (Gimp         *gimp,
   gchar *temp_name;
   static gint proc_number = 0;
 
-  temp_name = g_strdup_printf ("temp_procedure_number_%d", proc_number++);
+  temp_name = g_strdup_printf ("temp-procedure-number-%d", proc_number++);
 
   return_args = procedural_db_return_args (&procedural_db_temp_name_proc, TRUE);
   return_args[1].value.pdb_pointer = temp_name;
@@ -82,7 +82,8 @@ static ProcArg procedural_db_temp_name_outargs[] =
 
 static ProcRecord procedural_db_temp_name_proc =
 {
-  "gimp_procedural_db_temp_name",
+  "gimp-procedural-db-temp-name",
+  "gimp-procedural-db-temp-name",
   "Generates a unique temporary PDB name.",
   "This procedure generates a temporary PDB entry name that is guaranteed to be unique. It is mainly used by the interactive popup dialogs to generate a PDB entry name.",
   "Andy Thomas",
@@ -129,7 +130,8 @@ static ProcArg procedural_db_dump_inargs[] =
 
 static ProcRecord procedural_db_dump_proc =
 {
-  "gimp_procedural_db_dump",
+  "gimp-procedural-db-dump",
+  "gimp-procedural-db-dump",
   "Dumps the current contents of the procedural database",
   "This procedure dumps the contents of the procedural database to the specified file. The file will contain all of the information provided for each registered procedure. This file is in a format appropriate for use with the supplied \"pdb_self_doc.el\" Elisp script, which generates a texinfo document.",
   "Spencer Kimball & Josh MacDonald",
@@ -263,7 +265,8 @@ static ProcArg procedural_db_query_outargs[] =
 
 static ProcRecord procedural_db_query_proc =
 {
-  "gimp_procedural_db_query",
+  "gimp-procedural-db-query",
+  "gimp-procedural-db-query",
   "Queries the procedural database for its contents using regular expression matching.",
   "This procedure queries the contents of the procedural database. It is supplied with seven arguments matching procedures on { name, blurb, help, author, copyright, date, procedure type}. This is accomplished using regular expression matching. For instance, to find all procedures with \"jpeg\" listed in the blurb, all seven arguments can be supplied as \".*\", except for the second, which can be supplied as \".*jpeg.*\". There are two return arguments for this procedure. The first is the number of procedures matching the query. The second is a concatenated list of procedure names corresponding to those matching the query. If no matching entries are found, then the returned string is NULL and the number of entries is 0.",
   "Spencer Kimball & Peter Mattis",
@@ -302,13 +305,17 @@ procedural_db_proc_info_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpPDBProcType ptype;
+      GimpPDBProcType  ptype;
+      gchar           *canonical;
 
-      success = procedural_db_proc_info (gimp, proc_name,
+      canonical = gimp_canonicalize_identifier (proc_name);
+
+      success = procedural_db_proc_info (gimp, canonical,
                                          &blurb, &help, &author, &copyright, &date, &ptype,
                                          &num_args, &num_values);
-
       proc_type = ptype;
+
+      g_free (canonical);
     }
 
   return_args = procedural_db_return_args (&procedural_db_proc_info_proc, success);
@@ -383,7 +390,8 @@ static ProcArg procedural_db_proc_info_outargs[] =
 
 static ProcRecord procedural_db_proc_info_proc =
 {
-  "gimp_procedural_db_proc_info",
+  "gimp-procedural-db-proc-info",
+  "gimp-procedural-db-proc-info",
   "Queries the procedural database for information on the specified procedure.",
   "This procedure returns information on the specified procedure. A short blurb, detailed help, author(s), copyright information, procedure type, number of input, and number of return values are returned. For specific information on each input argument and return value, use the 'gimp_procedural_db_proc_arg' and 'gimp_procedural_db_proc_val' procedures.",
   "Spencer Kimball & Peter Mattis",
@@ -419,17 +427,23 @@ procedural_db_proc_arg_invoker (Gimp         *gimp,
 
   if (success)
     {
-      proc = procedural_db_lookup (gimp, proc_name);
+      gchar *canonical;
+
+      canonical = gimp_canonicalize_identifier (proc_name);
+
+      proc = procedural_db_lookup (gimp, canonical);
 
       if (! proc)
         {
           const gchar *compat_name;
 
-          compat_name = g_hash_table_lookup (gimp->procedural_compat_ht, proc_name);
+          compat_name = g_hash_table_lookup (gimp->procedural_compat_ht, canonical);
 
           if (compat_name)
             proc = procedural_db_lookup (gimp, compat_name);
         }
+
+      g_free (canonical);
 
       if (proc && (arg_num >= 0 && arg_num < proc->num_args))
         arg = &proc->args[arg_num];
@@ -484,7 +498,8 @@ static ProcArg procedural_db_proc_arg_outargs[] =
 
 static ProcRecord procedural_db_proc_arg_proc =
 {
-  "gimp_procedural_db_proc_arg",
+  "gimp-procedural-db-proc-arg",
+  "gimp-procedural-db-proc-arg",
   "Queries the procedural database for information on the specified procedure's argument.",
   "This procedure returns information on the specified procedure's argument. The argument type, name, and a description are retrieved.",
   "Spencer Kimball & Peter Mattis",
@@ -520,17 +535,23 @@ procedural_db_proc_val_invoker (Gimp         *gimp,
 
   if (success)
     {
-      proc = procedural_db_lookup (gimp, proc_name);
+      gchar *canonical;
+
+      canonical = gimp_canonicalize_identifier (proc_name);
+
+      proc = procedural_db_lookup (gimp, canonical);
 
       if (! proc)
         {
           const gchar *compat_name;
 
-          compat_name = g_hash_table_lookup (gimp->procedural_compat_ht, proc_name);
+          compat_name = g_hash_table_lookup (gimp->procedural_compat_ht, canonical);
 
           if (compat_name)
             proc = procedural_db_lookup (gimp, compat_name);
         }
+
+      g_free (canonical);
 
       if (proc && (val_num >= 0 && val_num < proc->num_values))
         val = &proc->values[val_num];
@@ -585,7 +606,8 @@ static ProcArg procedural_db_proc_val_outargs[] =
 
 static ProcRecord procedural_db_proc_val_proc =
 {
-  "gimp_procedural_db_proc_val",
+  "gimp-procedural-db-proc-val",
+  "gimp-procedural-db-proc-val",
   "Queries the procedural database for information on the specified procedure's return value.",
   "This procedure returns information on the specified procedure's return value. The return value type, name, and a description are retrieved.",
   "Spencer Kimball & Peter Mattis",
@@ -619,8 +641,14 @@ procedural_db_get_data_invoker (Gimp         *gimp,
 
   if (success)
     {
-      data = procedural_db_get_data (gimp, identifier, &bytes);
+      gchar *canonical;
+
+      canonical = gimp_canonicalize_identifier (identifier);
+
+      data = procedural_db_get_data (gimp, canonical, &bytes);
       success = (data != NULL);
+
+      g_free (canonical);
 
       if (success)
         data_copy = g_memdup (data, bytes);
@@ -662,7 +690,8 @@ static ProcArg procedural_db_get_data_outargs[] =
 
 static ProcRecord procedural_db_get_data_proc =
 {
-  "gimp_procedural_db_get_data",
+  "gimp-procedural-db-get-data",
+  "gimp-procedural-db-get-data",
   "Returns data associated with the specified identifier.",
   "This procedure returns any data which may have been associated with the specified identifier. The data is a variable length array of bytes. If no data has been associated with the identifier, an error is returned.",
   "Spencer Kimball & Peter Mattis",
@@ -695,8 +724,14 @@ procedural_db_get_data_size_invoker (Gimp         *gimp,
 
   if (success)
     {
-      data = procedural_db_get_data (gimp, identifier, &bytes);
+      gchar *canonical;
+
+      canonical = gimp_canonicalize_identifier (identifier);
+
+      data = procedural_db_get_data (gimp, canonical, &bytes);
       success = (data != NULL);
+
+      g_free (canonical);
     }
 
   return_args = procedural_db_return_args (&procedural_db_get_data_size_proc, success);
@@ -727,7 +762,8 @@ static ProcArg procedural_db_get_data_size_outargs[] =
 
 static ProcRecord procedural_db_get_data_size_proc =
 {
-  "gimp_procedural_db_get_data_size",
+  "gimp-procedural-db-get-data-size",
+  "gimp-procedural-db-get-data-size",
   "Returns size of data associated with the specified identifier.",
   "This procedure returns the size of any data which may have been associated with the specified identifier. If no data has been associated with the identifier, an error is returned.",
   "Nick Lamb",
@@ -764,7 +800,15 @@ procedural_db_set_data_invoker (Gimp         *gimp,
   data = (guint8 *) args[2].value.pdb_pointer;
 
   if (success)
-    procedural_db_set_data (gimp, identifier, bytes, data);
+    {
+      gchar *canonical;
+
+      canonical = gimp_canonicalize_identifier (identifier);
+
+      procedural_db_set_data (gimp, canonical, bytes, data);
+
+      g_free (canonical);
+    }
 
   return procedural_db_return_args (&procedural_db_set_data_proc, success);
 }
@@ -790,7 +834,8 @@ static ProcArg procedural_db_set_data_inargs[] =
 
 static ProcRecord procedural_db_set_data_proc =
 {
-  "gimp_procedural_db_set_data",
+  "gimp-procedural-db-set-data",
+  "gimp-procedural-db-set-data",
   "Associates the specified identifier with the supplied data.",
   "This procedure associates the supplied data with the provided identifier. The data may be subsequently retrieved by a call to 'procedural-db-get-data'.",
   "Spencer Kimball & Peter Mattis",

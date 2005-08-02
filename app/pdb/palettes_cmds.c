@@ -62,7 +62,8 @@ palettes_refresh_invoker (Gimp         *gimp,
 
 static ProcRecord palettes_refresh_proc =
 {
-  "gimp_palettes_refresh",
+  "gimp-palettes-refresh",
+  "gimp-palettes-refresh",
   "Refreshes current palettes. This function always succeeds.",
   "This procedure retrieves all palettes currently in the user's palette path and updates the palette dialogs accordingly.",
   "Adrian Likins <adrian@gimp.org>",
@@ -132,9 +133,10 @@ static ProcArg palettes_get_list_outargs[] =
 
 static ProcRecord palettes_get_list_proc =
 {
-  "gimp_palettes_get_list",
+  "gimp-palettes-get-list",
+  "gimp-palettes-get-list",
   "Retrieves a list of all of the available palettes",
-  "This procedure returns a complete listing of available palettes. Each name returned can be used as input to the command 'gimp_context_set_palette'.",
+  "This procedure returns a complete listing of available palettes. Each name returned can be used as input to the command 'gimp-context-set-palette'.",
   "Nathan Summers <rock@gimp.org>",
   "Nathan Summers",
   "2001",
@@ -186,13 +188,14 @@ static ProcArg palettes_get_palette_outargs[] =
 
 static ProcRecord palettes_get_palette_proc =
 {
-  "gimp_palettes_get_palette",
-  "This procedure is deprecated! Use 'gimp_context_get_palette' instead.",
-  "This procedure is deprecated! Use 'gimp_context_get_palette' instead.",
+  "gimp-palettes-get-palette",
+  "gimp-palettes-get-palette",
+  "This procedure is deprecated! Use 'gimp-context-get-palette' instead.",
+  "This procedure is deprecated! Use 'gimp-context-get-palette' instead.",
   "",
   "",
   "",
-  "gimp_context_get_palette",
+  "gimp-context-get-palette",
   GIMP_INTERNAL,
   0,
   NULL,
@@ -300,13 +303,14 @@ static ProcArg palettes_get_palette_entry_outargs[] =
 
 static ProcRecord palettes_get_palette_entry_proc =
 {
-  "gimp_palettes_get_palette_entry",
-  "This procedure is deprecated! Use 'gimp_palette_entry_get_color' instead.",
-  "This procedure is deprecated! Use 'gimp_palette_entry_get_color' instead.",
+  "gimp-palettes-get-palette-entry",
+  "gimp-palettes-get-palette-entry",
+  "This procedure is deprecated! Use 'gimp-palette-entry-get-color' instead.",
+  "This procedure is deprecated! Use 'gimp-palette-entry-get-color' instead.",
   "",
   "",
   "",
-  "gimp_palette_entry_get_color",
+  "gimp-palette-entry-get-color",
   GIMP_INTERNAL,
   2,
   palettes_get_palette_entry_inargs,

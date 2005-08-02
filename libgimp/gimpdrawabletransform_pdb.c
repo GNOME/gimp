@@ -60,7 +60,7 @@ gimp_drawable_transform_flip_simple (gint32              drawable_ID,
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_drawable_transform_flip_simple",
+  return_vals = gimp_run_procedure ("gimp-drawable-transform-flip-simple",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_INT32, flip_type,
@@ -123,7 +123,7 @@ gimp_drawable_transform_flip (gint32                 drawable_ID,
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_drawable_transform_flip",
+  return_vals = gimp_run_procedure ("gimp-drawable-transform-flip",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_FLOAT, x0,
@@ -178,7 +178,7 @@ gimp_drawable_transform_flip_default (gint32   drawable_ID,
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_drawable_transform_flip_default",
+  return_vals = gimp_run_procedure ("gimp-drawable-transform-flip-default",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_FLOAT, x0,
@@ -257,7 +257,7 @@ gimp_drawable_transform_perspective (gint32                 drawable_ID,
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_drawable_transform_perspective",
+  return_vals = gimp_run_procedure ("gimp-drawable-transform-perspective",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_FLOAT, x0,
@@ -325,7 +325,7 @@ gimp_drawable_transform_perspective_default (gint32   drawable_ID,
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_drawable_transform_perspective_default",
+  return_vals = gimp_run_procedure ("gimp-drawable-transform-perspective-default",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_FLOAT, x0,
@@ -384,7 +384,7 @@ gimp_drawable_transform_rotate_simple (gint32           drawable_ID,
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_drawable_transform_rotate_simple",
+  return_vals = gimp_run_procedure ("gimp-drawable-transform-rotate-simple",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_INT32, rotate_type,
@@ -446,7 +446,7 @@ gimp_drawable_transform_rotate (gint32                 drawable_ID,
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_drawable_transform_rotate",
+  return_vals = gimp_run_procedure ("gimp-drawable-transform-rotate",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_FLOAT, angle,
@@ -502,7 +502,7 @@ gimp_drawable_transform_rotate_default (gint32   drawable_ID,
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_drawable_transform_rotate_default",
+  return_vals = gimp_run_procedure ("gimp-drawable-transform-rotate-default",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_FLOAT, angle,
@@ -564,7 +564,7 @@ gimp_drawable_transform_scale (gint32                 drawable_ID,
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_drawable_transform_scale",
+  return_vals = gimp_run_procedure ("gimp-drawable-transform-scale",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_FLOAT, x0,
@@ -619,7 +619,7 @@ gimp_drawable_transform_scale_default (gint32   drawable_ID,
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_drawable_transform_scale_default",
+  return_vals = gimp_run_procedure ("gimp-drawable-transform-scale-default",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_FLOAT, x0,
@@ -681,7 +681,7 @@ gimp_drawable_transform_shear (gint32                 drawable_ID,
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_drawable_transform_shear",
+  return_vals = gimp_run_procedure ("gimp-drawable-transform-shear",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_INT32, shear_type,
@@ -731,7 +731,7 @@ gimp_drawable_transform_shear_default (gint32              drawable_ID,
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_drawable_transform_shear_default",
+  return_vals = gimp_run_procedure ("gimp-drawable-transform-shear-default",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_INT32, shear_type,
@@ -800,7 +800,7 @@ gimp_drawable_transform_2d (gint32                 drawable_ID,
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_drawable_transform_2d",
+  return_vals = gimp_run_procedure ("gimp-drawable-transform-2d",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_FLOAT, source_x,
@@ -864,7 +864,7 @@ gimp_drawable_transform_2d_default (gint32   drawable_ID,
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_drawable_transform_2d_default",
+  return_vals = gimp_run_procedure ("gimp-drawable-transform-2d-default",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_FLOAT, source_x,
@@ -940,7 +940,7 @@ gimp_drawable_transform_matrix (gint32                 drawable_ID,
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_drawable_transform_matrix",
+  return_vals = gimp_run_procedure ("gimp-drawable-transform-matrix",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_FLOAT, coeff_0_0,
@@ -1010,7 +1010,7 @@ gimp_drawable_transform_matrix_default (gint32   drawable_ID,
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_drawable_transform_matrix_default",
+  return_vals = gimp_run_procedure ("gimp-drawable-transform-matrix-default",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_FLOAT, coeff_0_0,

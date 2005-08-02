@@ -47,7 +47,7 @@ gimp_path_list (gint32  image_ID,
   gchar **path_list = NULL;
   gint i;
 
-  return_vals = gimp_run_procedure ("gimp_path_list",
+  return_vals = gimp_run_procedure ("gimp-path-list",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
@@ -84,7 +84,7 @@ gimp_path_get_current (gint32 image_ID)
   gint nreturn_vals;
   gchar *name = NULL;
 
-  return_vals = gimp_run_procedure ("gimp_path_get_current",
+  return_vals = gimp_run_procedure ("gimp-path-get-current",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
@@ -116,7 +116,7 @@ gimp_path_set_current (gint32       image_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_path_set_current",
+  return_vals = gimp_run_procedure ("gimp-path-set-current",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_STRING, name,
@@ -148,7 +148,7 @@ gimp_path_delete (gint32       image_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_path_delete",
+  return_vals = gimp_run_procedure ("gimp-path-delete",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_STRING, name,
@@ -186,7 +186,7 @@ gimp_path_get_points (gint32        image_ID,
   gint nreturn_vals;
   gint path_type = 0;
 
-  return_vals = gimp_run_procedure ("gimp_path_get_points",
+  return_vals = gimp_run_procedure ("gimp-path-get-points",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_STRING, name,
@@ -234,7 +234,7 @@ gimp_path_set_points (gint32         image_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_path_set_points",
+  return_vals = gimp_run_procedure ("gimp-path-set-points",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_STRING, name,
@@ -267,7 +267,7 @@ gimp_path_stroke_current (gint32 image_ID)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_path_stroke_current",
+  return_vals = gimp_run_procedure ("gimp-path-stroke-current",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
@@ -307,7 +307,7 @@ gimp_path_get_point_at_dist (gint32   image_ID,
   gint nreturn_vals;
   gint x_point = 0;
 
-  return_vals = gimp_run_procedure ("gimp_path_get_point_at_dist",
+  return_vals = gimp_run_procedure ("gimp-path-get-point-at-dist",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_FLOAT, distance,
@@ -347,7 +347,7 @@ gimp_path_get_tattoo (gint32       image_ID,
   gint nreturn_vals;
   gint tattoo = 0;
 
-  return_vals = gimp_run_procedure ("gimp_path_get_tattoo",
+  return_vals = gimp_run_procedure ("gimp-path-get-tattoo",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_STRING, name,
@@ -386,7 +386,7 @@ gimp_path_set_tattoo (gint32       image_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_path_set_tattoo",
+  return_vals = gimp_run_procedure ("gimp-path-set-tattoo",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_STRING, name,
@@ -423,7 +423,7 @@ gimp_get_path_by_tattoo (gint32 image_ID,
   gint nreturn_vals;
   gchar *name = NULL;
 
-  return_vals = gimp_run_procedure ("gimp_get_path_by_tattoo",
+  return_vals = gimp_run_procedure ("gimp-get-path-by-tattoo",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_INT32, tattoo,
@@ -458,7 +458,7 @@ gimp_path_get_locked (gint32       image_ID,
   gint nreturn_vals;
   gboolean locked = FALSE;
 
-  return_vals = gimp_run_procedure ("gimp_path_get_locked",
+  return_vals = gimp_run_procedure ("gimp-path-get-locked",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_STRING, name,
@@ -495,7 +495,7 @@ gimp_path_set_locked (gint32       image_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_path_set_locked",
+  return_vals = gimp_run_procedure ("gimp-path-set-locked",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_STRING, name,
@@ -538,7 +538,7 @@ gimp_path_to_selection (gint32          image_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_path_to_selection",
+  return_vals = gimp_run_procedure ("gimp-path-to-selection",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_STRING, name,
@@ -580,7 +580,7 @@ gimp_path_import (gint32       image_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_path_import",
+  return_vals = gimp_run_procedure ("gimp-path-import",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_STRING, filename,
@@ -624,7 +624,7 @@ gimp_path_import_string (gint32       image_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_path_import_string",
+  return_vals = gimp_run_procedure ("gimp-path-import-string",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_STRING, string,

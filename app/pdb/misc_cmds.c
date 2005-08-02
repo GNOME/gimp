@@ -79,7 +79,8 @@ static ProcArg version_outargs[] =
 
 static ProcRecord version_proc =
 {
-  "gimp_version",
+  "gimp-version",
+  "gimp-version",
   "Returns the host gimp version.",
   "This procedure returns the version number of the currently running gimp.",
   "Manish Singh",
@@ -119,7 +120,8 @@ static ProcArg getpid_outargs[] =
 
 static ProcRecord getpid_proc =
 {
-  "gimp_getpid",
+  "gimp-getpid",
+  "gimp-getpid",
   "Returns the PID of the host gimp process.",
   "This procedure returns the process ID of the currently running gimp.",
   "Michael Natterer",
@@ -160,7 +162,8 @@ static ProcArg quit_inargs[] =
 
 static ProcRecord quit_proc =
 {
-  "gimp_quit",
+  "gimp-quit",
+  "gimp-quit",
   "Causes the gimp to exit gracefully.",
   "The internal procedure which can either be used to make the gimp quit. If there are unsaved images in an interactive GIMP session, the user will be asked for confirmation. If force is TRUE, the application is quit without querying the user to save any dirty images.",
   "Spencer Kimball & Peter Mattis",

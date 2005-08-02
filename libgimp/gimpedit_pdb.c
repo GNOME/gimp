@@ -47,7 +47,7 @@ gimp_edit_cut (gint32 drawable_ID)
   gint nreturn_vals;
   gboolean non_empty = FALSE;
 
-  return_vals = gimp_run_procedure ("gimp_edit_cut",
+  return_vals = gimp_run_procedure ("gimp-edit-cut",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_END);
@@ -82,7 +82,7 @@ gimp_edit_copy (gint32 drawable_ID)
   gint nreturn_vals;
   gboolean non_empty = FALSE;
 
-  return_vals = gimp_run_procedure ("gimp_edit_copy",
+  return_vals = gimp_run_procedure ("gimp-edit-copy",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_END);
@@ -119,7 +119,7 @@ gimp_edit_copy_visible (gint32 image_ID)
   gint nreturn_vals;
   gboolean non_empty = FALSE;
 
-  return_vals = gimp_run_procedure ("gimp_edit_copy_visible",
+  return_vals = gimp_run_procedure ("gimp-edit-copy-visible",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
@@ -165,7 +165,7 @@ gimp_edit_paste (gint32   drawable_ID,
   gint nreturn_vals;
   gint32 floating_sel_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_edit_paste",
+  return_vals = gimp_run_procedure ("gimp-edit-paste",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_INT32, paste_into,
@@ -200,7 +200,7 @@ gimp_edit_clear (gint32 drawable_ID)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_edit_clear",
+  return_vals = gimp_run_procedure ("gimp-edit-clear",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_END);
@@ -237,7 +237,7 @@ gimp_edit_fill (gint32       drawable_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_edit_fill",
+  return_vals = gimp_run_procedure ("gimp-edit-fill",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_INT32, fill_type,
@@ -293,7 +293,7 @@ gimp_edit_bucket_fill (gint32               drawable_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_edit_bucket_fill",
+  return_vals = gimp_run_procedure ("gimp-edit-bucket-fill",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_INT32, fill_mode,
@@ -363,7 +363,7 @@ gimp_edit_blend (gint32               drawable_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_edit_blend",
+  return_vals = gimp_run_procedure ("gimp-edit-blend",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_INT32, blend_mode,
@@ -410,7 +410,7 @@ gimp_edit_stroke (gint32 drawable_ID)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_edit_stroke",
+  return_vals = gimp_run_procedure ("gimp-edit-stroke",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_END);

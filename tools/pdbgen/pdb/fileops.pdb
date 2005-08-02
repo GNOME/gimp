@@ -389,9 +389,13 @@ HELP
 	vars => [ 'ProcRecord *proc', 'PlugInProcDef *file_proc' ],
 	code => <<'CODE'
 {
+  gchar *canonical;
+
   success = FALSE;
 
-  proc = procedural_db_lookup (gimp, name);
+  canonical = gimp_canonicalize_identifier (name);
+
+  proc = procedural_db_lookup (gimp, canonical);
 
   if (proc && ((proc->num_args < 3) ||
 	       (proc->num_values < 1) ||
@@ -401,17 +405,17 @@ HELP
 	       (proc->values[0].arg_type != GIMP_PDB_IMAGE)))
     {
       g_message ("load handler \"%s\" does not take the standard load handler args",
-		 name);
+		 canonical);
       goto done;
     }
 
-  file_proc = plug_ins_file_register_magic (gimp, name,
+  file_proc = plug_ins_file_register_magic (gimp, canonical,
                                             extensions, prefixes, magics);
 
   if (! file_proc)
     {
       g_message ("attempt to register nonexistent load handler \"%s\"",
-		 name);
+		 canonical);
       goto done;
     }
 
@@ -420,7 +424,8 @@ HELP
 
   success = TRUE;
 
-done: ;
+done:
+  g_free (canonical);
 }
 CODE
     );
@@ -461,9 +466,13 @@ HELP
 	vars => [ 'ProcRecord *proc', 'PlugInProcDef *file_proc' ],
 	code => <<'CODE'
 {
+  gchar *canonical;
+
   success = FALSE;
 
-  proc = procedural_db_lookup (gimp, name);
+  canonical = gimp_canonicalize_identifier (name);
+
+  proc = procedural_db_lookup (gimp, canonical);
 
   if (proc && ((proc->num_args < 5) ||
 	       (proc->args[0].arg_type != GIMP_PDB_INT32) ||
@@ -473,17 +482,17 @@ HELP
 	       (proc->args[4].arg_type != GIMP_PDB_STRING)))
     {
       g_message ("save handler \"%s\" does not take the standard save handler args",
-		 name);
+		 canonical);
       goto done;
     }
 
-  file_proc = plug_ins_file_register_magic (gimp, name,
+  file_proc = plug_ins_file_register_magic (gimp, canonical,
                                             extensions, prefixes, NULL);
 
   if (! file_proc)
     {
       g_message ("attempt to register nonexistent save handler \"%s\"",
-		 name);
+		 canonical);
       goto done;
     }
 
@@ -492,7 +501,8 @@ HELP
 
   success = TRUE;
 
-done: ;
+done:
+  g_free (canonical);
 }
 CODE
     );
@@ -521,7 +531,13 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = (plug_ins_file_register_mime (gimp, name, mime_type) != NULL);
+  gchar *canonical;
+
+  canonical = gimp_canonicalize_identifier (name);
+
+  success = (plug_ins_file_register_mime (gimp, canonical, mime_type) != NULL);
+
+  g_free (canonical);
 }
 CODE
     );
@@ -547,9 +563,14 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = (plug_ins_file_register_thumb_loader (gimp,
-                                                  load_proc,
+  gchar *canonical;
+
+  canonical = gimp_canonicalize_identifier (load_proc);
+
+  success = (plug_ins_file_register_thumb_loader (gimp, canonical,
                                                   thumb_proc) != NULL);
+
+  g_free (canonical);
 }
 CODE
     );

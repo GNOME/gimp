@@ -42,7 +42,7 @@ gimp_fonts_refresh (void)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_fonts_refresh",
+  return_vals = gimp_run_procedure ("gimp-fonts-refresh",
 				    &nreturn_vals,
 				    GIMP_PDB_END);
 
@@ -74,7 +74,7 @@ gimp_fonts_get_list (const gchar *filter,
   gchar **font_list = NULL;
   gint i;
 
-  return_vals = gimp_run_procedure ("gimp_fonts_get_list",
+  return_vals = gimp_run_procedure ("gimp-fonts-get-list",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, filter,
 				    GIMP_PDB_END);

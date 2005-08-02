@@ -49,7 +49,7 @@ gimp_vectors_get_strokes (gint32  vectors_ID,
   gint nreturn_vals;
   gint *stroke_ids = NULL;
 
-  return_vals = gimp_run_procedure ("gimp_vectors_get_strokes",
+  return_vals = gimp_run_procedure ("gimp-vectors-get-strokes",
 				    &nreturn_vals,
 				    GIMP_PDB_PATH, vectors_ID,
 				    GIMP_PDB_END);
@@ -90,7 +90,7 @@ gimp_vectors_stroke_remove (gint32 vectors_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_vectors_stroke_remove",
+  return_vals = gimp_run_procedure ("gimp-vectors-stroke-remove",
 				    &nreturn_vals,
 				    GIMP_PDB_PATH, vectors_ID,
 				    GIMP_PDB_INT32, stroke_id,
@@ -128,7 +128,7 @@ gimp_vectors_stroke_translate (gint32 vectors_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_vectors_stroke_translate",
+  return_vals = gimp_run_procedure ("gimp-vectors-stroke-translate",
 				    &nreturn_vals,
 				    GIMP_PDB_PATH, vectors_ID,
 				    GIMP_PDB_INT32, stroke_id,
@@ -170,7 +170,7 @@ gimp_vectors_stroke_interpolate (gint32    vectors_ID,
   gint nreturn_vals;
   gboolean closed = FALSE;
 
-  return_vals = gimp_run_procedure ("gimp_vectors_stroke_interpolate",
+  return_vals = gimp_run_procedure ("gimp-vectors-stroke-interpolate",
 				    &nreturn_vals,
 				    GIMP_PDB_PATH, vectors_ID,
 				    GIMP_PDB_INT32, stroke_id,

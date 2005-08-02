@@ -127,7 +127,7 @@ plug_in_run (Gimp         *gimp,
       config.display_name     = gimp_get_display_name (gimp, gdisp_ID, &monitor);
       config.monitor_number   = monitor;
 
-      proc_run.name    = proc_rec->name;
+      proc_run.name    = proc_rec->original_name;
       proc_run.nparams = argc;
       proc_run.params  = plug_in_args_to_params (args, argc, FALSE);
 
@@ -256,7 +256,7 @@ plug_in_temp_run (ProcRecord   *proc_rec,
       proc_frame = plug_in_proc_frame_push (plug_in, context, progress,
                                             proc_rec);
 
-      proc_run.name    = proc_rec->name;
+      proc_run.name    = proc_rec->original_name;
       proc_run.nparams = argc;
       proc_run.params  = plug_in_args_to_params (args, argc, FALSE);
 

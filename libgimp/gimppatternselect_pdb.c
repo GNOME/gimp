@@ -46,7 +46,7 @@ gimp_patterns_popup (const gchar *pattern_callback,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_patterns_popup",
+  return_vals = gimp_run_procedure ("gimp-patterns-popup",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, pattern_callback,
 				    GIMP_PDB_STRING, popup_title,
@@ -77,7 +77,7 @@ gimp_patterns_close_popup (const gchar *pattern_callback)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_patterns_close_popup",
+  return_vals = gimp_run_procedure ("gimp-patterns-close-popup",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, pattern_callback,
 				    GIMP_PDB_END);
@@ -108,7 +108,7 @@ gimp_patterns_set_popup (const gchar *pattern_callback,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_patterns_set_popup",
+  return_vals = gimp_run_procedure ("gimp-patterns-set-popup",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, pattern_callback,
 				    GIMP_PDB_STRING, pattern_name,

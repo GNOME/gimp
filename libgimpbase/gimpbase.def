@@ -5,6 +5,7 @@ EXPORTS
 	gimp_base_init
 	gimp_blend_mode_get_type
 	gimp_bucket_fill_mode_get_type
+	gimp_canonicalize_identifier
 	gimp_channel_ops_get_type
 	gimp_channel_type_get_type
 	gimp_check_size_get_type

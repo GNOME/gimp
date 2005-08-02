@@ -45,7 +45,7 @@ gimp_image_undo_group_start (gint32 image_ID)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_image_undo_group_start",
+  return_vals = gimp_run_procedure ("gimp-image-undo-group-start",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
@@ -75,7 +75,7 @@ gimp_image_undo_group_end (gint32 image_ID)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_image_undo_group_end",
+  return_vals = gimp_run_procedure ("gimp-image-undo-group-end",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
@@ -107,7 +107,7 @@ gimp_image_undo_is_enabled (gint32 image_ID)
   gint nreturn_vals;
   gboolean enabled = FALSE;
 
-  return_vals = gimp_run_procedure ("gimp_image_undo_is_enabled",
+  return_vals = gimp_run_procedure ("gimp-image-undo-is-enabled",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
@@ -141,7 +141,7 @@ gimp_image_undo_disable (gint32 image_ID)
   gint nreturn_vals;
   gboolean disabled = FALSE;
 
-  return_vals = gimp_run_procedure ("gimp_image_undo_disable",
+  return_vals = gimp_run_procedure ("gimp-image-undo-disable",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
@@ -174,7 +174,7 @@ gimp_image_undo_enable (gint32 image_ID)
   gint nreturn_vals;
   gboolean enabled = FALSE;
 
-  return_vals = gimp_run_procedure ("gimp_image_undo_enable",
+  return_vals = gimp_run_procedure ("gimp-image-undo-enable",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
@@ -213,7 +213,7 @@ gimp_image_undo_freeze (gint32 image_ID)
   gint nreturn_vals;
   gboolean frozen = FALSE;
 
-  return_vals = gimp_run_procedure ("gimp_image_undo_freeze",
+  return_vals = gimp_run_procedure ("gimp-image-undo-freeze",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
@@ -252,7 +252,7 @@ gimp_image_undo_thaw (gint32 image_ID)
   gint nreturn_vals;
   gboolean thawed = FALSE;
 
-  return_vals = gimp_run_procedure ("gimp_image_undo_thaw",
+  return_vals = gimp_run_procedure ("gimp-image-undo-thaw",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);

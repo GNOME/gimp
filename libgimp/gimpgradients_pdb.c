@@ -44,7 +44,7 @@ gimp_gradients_refresh (void)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_gradients_refresh",
+  return_vals = gimp_run_procedure ("gimp-gradients-refresh",
 				    &nreturn_vals,
 				    GIMP_PDB_END);
 
@@ -63,7 +63,7 @@ gimp_gradients_refresh (void)
  * Retrieve the list of loaded gradients.
  *
  * This procedure returns a list of the gradients that are currently
- * loaded. You can later use the 'gimp_context_set_gradient' function
+ * loaded. You can later use the 'gimp-context-set-gradient' function
  * to set the active gradient.
  *
  * Returns: The list of gradient names.
@@ -77,7 +77,7 @@ gimp_gradients_get_list (const gchar *filter,
   gchar **gradient_list = NULL;
   gint i;
 
-  return_vals = gimp_run_procedure ("gimp_gradients_get_list",
+  return_vals = gimp_run_procedure ("gimp-gradients-get-list",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, filter,
 				    GIMP_PDB_END);
@@ -116,7 +116,7 @@ gimp_gradients_sample_uniform (gint     num_samples,
   gdouble *color_samples = NULL;
   gint num_color_samples;
 
-  return_vals = gimp_run_procedure ("gimp_gradients_sample_uniform",
+  return_vals = gimp_run_procedure ("gimp-gradients-sample-uniform",
 				    &nreturn_vals,
 				    GIMP_PDB_INT32, num_samples,
 				    GIMP_PDB_INT32, reverse,
@@ -156,7 +156,7 @@ gimp_gradients_sample_custom (gint           num_samples,
   gdouble *color_samples = NULL;
   gint num_color_samples;
 
-  return_vals = gimp_run_procedure ("gimp_gradients_sample_custom",
+  return_vals = gimp_run_procedure ("gimp-gradients-sample-custom",
 				    &nreturn_vals,
 				    GIMP_PDB_INT32, num_samples,
 				    GIMP_PDB_FLOATARRAY, positions,
@@ -200,7 +200,7 @@ gimp_gradients_get_gradient_data (const gchar  *name,
   gint nreturn_vals;
   gchar *ret_name = NULL;
 
-  return_vals = gimp_run_procedure ("gimp_gradients_get_gradient_data",
+  return_vals = gimp_run_procedure ("gimp-gradients-get-gradient-data",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, name,
 				    GIMP_PDB_INT32, sample_size,

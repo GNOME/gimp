@@ -181,14 +181,17 @@ HELP
   if (gimp->current_plug_in)
     {
       PlugInProcDef *proc_def = NULL;
+      gchar         *canonical;
+
+      canonical = gimp_canonicalize_identifier (procedure_name);
 
       if (gimp->current_plug_in->plug_in_def)
         proc_def = plug_in_proc_def_find (gimp->current_plug_in->plug_in_def->proc_defs,
-                                          procedure_name);
+                                          canonical);
 
       if (! proc_def)
         proc_def = plug_in_proc_def_find (gimp->current_plug_in->temp_proc_defs,
-                                          procedure_name);
+                                          canonical);
 
       if (proc_def)
         {
@@ -198,7 +201,7 @@ HELP
 
               if (! plug_in_proc_args_check (gimp->current_plug_in->name,
                                              gimp->current_plug_in->prog,
-                                             procedure_name,
+                                             canonical,
                                              menu_path,
                                              proc_def->db_info.args,
                                              proc_def->db_info.num_args,
@@ -254,13 +257,15 @@ HELP
                          "label to gimp_install_procedure().",
                          gimp_filename_to_utf8 (gimp->current_plug_in->name),
                          gimp_filename_to_utf8 (gimp->current_plug_in->prog),
-                         menu_path, procedure_name);
+                         menu_path, canonical);
 
               success = FALSE;
             }
         }
       else
         success = FALSE;
+
+      g_free (canonical);
     }
   else
     success = FALSE;
@@ -338,9 +343,14 @@ HELP
   if (gimp->current_plug_in && gimp->current_plug_in->query)
     {
       PlugInProcDef *proc_def;
+      gchar         *canonical;
+
+      canonical = gimp_canonicalize_identifier (procedure_name);
 
       proc_def = plug_in_proc_def_find (gimp->current_plug_in->plug_in_def->proc_defs,
-                                        procedure_name);
+                                        canonical);
+
+      g_free (canonical);
 
       if (proc_def)
         plug_in_proc_def_set_icon (proc_def, icon_type,

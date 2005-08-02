@@ -132,7 +132,8 @@ static ProcArg path_list_outargs[] =
 
 static ProcRecord path_list_proc =
 {
-  "gimp_path_list",
+  "gimp-path-list",
+  "gimp-path-list",
   "List the paths associated with the passed image.",
   "List the paths associated with the passed image.",
   "Andy Thomas",
@@ -201,7 +202,8 @@ static ProcArg path_get_current_outargs[] =
 
 static ProcRecord path_get_current_proc =
 {
-  "gimp_path_get_current",
+  "gimp-path-get-current",
+  "gimp-path-get-current",
   "The name of the current path. Error if no paths.",
   "The name of the current path. Error if no paths.",
   "Andy Thomas",
@@ -264,7 +266,8 @@ static ProcArg path_set_current_inargs[] =
 
 static ProcRecord path_set_current_proc =
 {
-  "gimp_path_set_current",
+  "gimp-path-set-current",
+  "gimp-path-set-current",
   "Sets the current path associated with the passed image.",
   "Sets a named path as the current path.",
   "Andy Thomas",
@@ -327,7 +330,8 @@ static ProcArg path_delete_inargs[] =
 
 static ProcRecord path_delete_proc =
 {
-  "gimp_path_delete",
+  "gimp-path-delete",
+  "gimp-path-delete",
   "Delete the named path associated with the passed image.",
   "Delete the named path.",
   "Andy Thomas",
@@ -460,7 +464,8 @@ static ProcArg path_get_points_outargs[] =
 
 static ProcRecord path_get_points_proc =
 {
-  "gimp_path_get_points",
+  "gimp-path-get-points",
+  "gimp-path-get-points",
   "List the points associated with the named path.",
   "List the points associated with the named path.",
   "Andy Thomas",
@@ -579,7 +584,8 @@ static ProcArg path_set_points_inargs[] =
 
 static ProcRecord path_set_points_proc =
 {
-  "gimp_path_set_points",
+  "gimp-path-set-points",
+  "gimp-path-set-points",
   "Set the points associated with the named path.",
   "Set the points associated with the named path.",
   "Andy Thomas",
@@ -641,7 +647,8 @@ static ProcArg path_stroke_current_inargs[] =
 
 static ProcRecord path_stroke_current_proc =
 {
-  "gimp_path_stroke_current",
+  "gimp-path-stroke-current",
+  "gimp-path-stroke-current",
   "Stroke the current path in the passed image.",
   "Stroke the current path in the passed image.",
   "Andy Thomas",
@@ -775,7 +782,8 @@ static ProcArg path_get_point_at_dist_outargs[] =
 
 static ProcRecord path_get_point_at_dist_proc =
 {
-  "gimp_path_get_point_at_dist",
+  "gimp-path-get-point-at-dist",
+  "gimp-path-get-point-at-dist",
   "Get point on a path at a specified distance along the path.",
   "This will return the x,y position of a point at a given distance along the bezier curve. The distance will be obtained by first digitizing the curve internally and then walking along the curve. For a closed curve the start of the path is the first point on the path that was created. This might not be obvious. Note the current path is used.",
   "Andy Thomas",
@@ -854,7 +862,8 @@ static ProcArg path_get_tattoo_outargs[] =
 
 static ProcRecord path_get_tattoo_proc =
 {
-  "gimp_path_get_tattoo",
+  "gimp-path-get-tattoo",
+  "gimp-path-get-tattoo",
   "Returns the tattoo associated with the name path.",
   "This procedure returns the tattoo associated with the specified path. A tattoo is a unique and permanent identifier attached to a path that can be used to uniquely identify a path within an image even between sessions.",
   "Andy Thomas",
@@ -925,7 +934,8 @@ static ProcArg path_set_tattoo_inargs[] =
 
 static ProcRecord path_set_tattoo_proc =
 {
-  "gimp_path_set_tattoo",
+  "gimp-path-set-tattoo",
+  "gimp-path-set-tattoo",
   "Sets the tattoo associated with the named path.",
   "This procedure sets the tattoo associated with the specified path. A tattoo is a unique and permenant identifier attached to a path that can be used to uniquely identify a path within an image even between sessions. Note that the value passed to this function must have been obtained from a previous call to path_get_tattoo.",
   "Andy Thomas",
@@ -1002,7 +1012,8 @@ static ProcArg get_path_by_tattoo_outargs[] =
 
 static ProcRecord get_path_by_tattoo_proc =
 {
-  "gimp_get_path_by_tattoo",
+  "gimp-get-path-by-tattoo",
+  "gimp-get-path-by-tattoo",
   "Return the name of the path with the given tattoo.",
   "The procedure returns the name of the path in the specified image which has the passed tattoo. The tattoos are unique within the image and will be preserved across sessions and through renaming of the path. An error is returned if no path with the specified tattoo can be found.",
   "Andy Thomas",
@@ -1081,7 +1092,8 @@ static ProcArg path_get_locked_outargs[] =
 
 static ProcRecord path_get_locked_proc =
 {
-  "gimp_path_get_locked",
+  "gimp-path-get-locked",
+  "gimp-path-get-locked",
   "Returns the locked status associated with the named path.",
   "This procedure returns the lock status associated with the specified path. A path can be \"locked\" which means that the transformation tool operations will also apply to the path.",
   "Andy Thomas",
@@ -1152,7 +1164,8 @@ static ProcArg path_set_locked_inargs[] =
 
 static ProcRecord path_set_locked_proc =
 {
-  "gimp_path_set_locked",
+  "gimp-path-set-locked",
+  "gimp-path-set-locked",
   "Set the locked status associated with the named path.",
   "This procedure sets the lock status associated with the specified path. A path can be \"locked\" which means that the transformation tool operations will also apply to the path.",
   "Andy Thomas",
@@ -1264,7 +1277,8 @@ static ProcArg path_to_selection_inargs[] =
 
 static ProcRecord path_to_selection_proc =
 {
-  "gimp_path_to_selection",
+  "gimp-path-to-selection",
+  "gimp-path-to-selection",
   "Transforms the active path into a selection",
   "This procedure renders the desired path into the current selection.",
   "Joao S. O. Bueno",
@@ -1335,7 +1349,8 @@ static ProcArg path_import_inargs[] =
 
 static ProcRecord path_import_proc =
 {
-  "gimp_path_import",
+  "gimp-path-import",
+  "gimp-path-import",
   "Import paths from an SVG file.",
   "This procedure imports paths from an SVG file. SVG elements other than paths and basic shapes are ignored.",
   "Sven Neumann",
@@ -1414,7 +1429,8 @@ static ProcArg path_import_string_inargs[] =
 
 static ProcRecord path_import_string_proc =
 {
-  "gimp_path_import_string",
+  "gimp-path-import-string",
+  "gimp-path-import-string",
   "Import paths from an SVG string.",
   "This procedure works like gimp_path_import() but takes a string rather than reading the SVG from a file. This allows you to write scripts that generate SVG and feed it to GIMP.",
   "Sven Neumann",

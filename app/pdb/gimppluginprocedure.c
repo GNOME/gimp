@@ -56,6 +56,7 @@ plug_in_proc_def_free (PlugInProcDef *proc_def)
   g_return_if_fail (proc_def != NULL);
 
   g_free (proc_def->db_info.name);
+  g_free (proc_def->db_info.original_name);
   g_free (proc_def->db_info.blurb);
   g_free (proc_def->db_info.help);
   g_free (proc_def->db_info.author);

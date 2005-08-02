@@ -44,7 +44,7 @@ gimp_brushes_refresh (void)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_brushes_refresh",
+  return_vals = gimp_run_procedure ("gimp-brushes-refresh",
 				    &nreturn_vals,
 				    GIMP_PDB_END);
 
@@ -64,7 +64,7 @@ gimp_brushes_refresh (void)
  *
  * This procedure returns a complete listing of available GIMP brushes.
  * Each name returned can be used as input to the
- * 'gimp_context_set_brush' procedure.
+ * 'gimp-context-set-brush' procedure.
  *
  * Returns: The list of brush names.
  */
@@ -77,7 +77,7 @@ gimp_brushes_get_list (const gchar *filter,
   gchar **brush_list = NULL;
   gint i;
 
-  return_vals = gimp_run_procedure ("gimp_brushes_get_list",
+  return_vals = gimp_run_procedure ("gimp-brushes-get-list",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, filter,
 				    GIMP_PDB_END);
@@ -116,7 +116,7 @@ gimp_brushes_get_brush (gint *width,
   gint nreturn_vals;
   gchar *name = NULL;
 
-  return_vals = gimp_run_procedure ("gimp_brushes_get_brush",
+  return_vals = gimp_run_procedure ("gimp-brushes-get-brush",
 				    &nreturn_vals,
 				    GIMP_PDB_END);
 
@@ -147,7 +147,7 @@ gimp_brushes_get_spacing (void)
   gint nreturn_vals;
   gint spacing = 0;
 
-  return_vals = gimp_run_procedure ("gimp_brushes_get_spacing",
+  return_vals = gimp_run_procedure ("gimp-brushes-get-spacing",
 				    &nreturn_vals,
 				    GIMP_PDB_END);
 
@@ -174,7 +174,7 @@ gimp_brushes_set_spacing (gint spacing)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_brushes_set_spacing",
+  return_vals = gimp_run_procedure ("gimp-brushes-set-spacing",
 				    &nreturn_vals,
 				    GIMP_PDB_INT32, spacing,
 				    GIMP_PDB_END);
@@ -215,7 +215,7 @@ gimp_brushes_get_brush_data (const gchar           *name,
   gint nreturn_vals;
   gchar *ret_name = NULL;
 
-  return_vals = gimp_run_procedure ("gimp_brushes_get_brush_data",
+  return_vals = gimp_run_procedure ("gimp-brushes-get-brush-data",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, name,
 				    GIMP_PDB_END);

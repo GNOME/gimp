@@ -58,7 +58,7 @@ _gimp_channel_new (gint32         image_ID,
   gint nreturn_vals;
   gint32 channel_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_channel_new",
+  return_vals = gimp_run_procedure ("gimp-channel-new",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_INT32, width,
@@ -99,7 +99,7 @@ gimp_channel_new_from_component (gint32           image_ID,
   gint nreturn_vals;
   gint32 channel_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_channel_new_from_component",
+  return_vals = gimp_run_procedure ("gimp-channel-new-from-component",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_INT32, component,
@@ -131,7 +131,7 @@ gimp_channel_copy (gint32 channel_ID)
   gint nreturn_vals;
   gint32 channel_copy_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_channel_copy",
+  return_vals = gimp_run_procedure ("gimp-channel-copy",
 				    &nreturn_vals,
 				    GIMP_PDB_CHANNEL, channel_ID,
 				    GIMP_PDB_END);
@@ -170,7 +170,7 @@ gimp_channel_combine_masks (gint32         channel1_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_channel_combine_masks",
+  return_vals = gimp_run_procedure ("gimp-channel-combine-masks",
 				    &nreturn_vals,
 				    GIMP_PDB_CHANNEL, channel1_ID,
 				    GIMP_PDB_CHANNEL, channel2_ID,
@@ -206,7 +206,7 @@ gimp_channel_get_show_masked (gint32 channel_ID)
   gint nreturn_vals;
   gboolean show_masked = FALSE;
 
-  return_vals = gimp_run_procedure ("gimp_channel_get_show_masked",
+  return_vals = gimp_run_procedure ("gimp-channel-get-show-masked",
 				    &nreturn_vals,
 				    GIMP_PDB_CHANNEL, channel_ID,
 				    GIMP_PDB_END);
@@ -240,7 +240,7 @@ gimp_channel_set_show_masked (gint32   channel_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_channel_set_show_masked",
+  return_vals = gimp_run_procedure ("gimp-channel-set-show-masked",
 				    &nreturn_vals,
 				    GIMP_PDB_CHANNEL, channel_ID,
 				    GIMP_PDB_INT32, show_masked,
@@ -270,7 +270,7 @@ gimp_channel_get_opacity (gint32 channel_ID)
   gint nreturn_vals;
   gdouble opacity = 0;
 
-  return_vals = gimp_run_procedure ("gimp_channel_get_opacity",
+  return_vals = gimp_run_procedure ("gimp-channel-get-opacity",
 				    &nreturn_vals,
 				    GIMP_PDB_CHANNEL, channel_ID,
 				    GIMP_PDB_END);
@@ -302,7 +302,7 @@ gimp_channel_set_opacity (gint32  channel_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_channel_set_opacity",
+  return_vals = gimp_run_procedure ("gimp-channel-set-opacity",
 				    &nreturn_vals,
 				    GIMP_PDB_CHANNEL, channel_ID,
 				    GIMP_PDB_FLOAT, opacity,
@@ -334,7 +334,7 @@ gimp_channel_get_color (gint32   channel_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_channel_get_color",
+  return_vals = gimp_run_procedure ("gimp-channel-get-color",
 				    &nreturn_vals,
 				    GIMP_PDB_CHANNEL, channel_ID,
 				    GIMP_PDB_END);
@@ -368,7 +368,7 @@ gimp_channel_set_color (gint32         channel_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_channel_set_color",
+  return_vals = gimp_run_procedure ("gimp-channel-set-color",
 				    &nreturn_vals,
 				    GIMP_PDB_CHANNEL, channel_ID,
 				    GIMP_PDB_COLOR, color,

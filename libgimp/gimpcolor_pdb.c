@@ -48,7 +48,7 @@ gimp_brightness_contrast (gint32 drawable_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_brightness_contrast",
+  return_vals = gimp_run_procedure ("gimp-brightness-contrast",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_INT32, brightness,
@@ -102,7 +102,7 @@ gimp_levels (gint32               drawable_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_levels",
+  return_vals = gimp_run_procedure ("gimp-levels",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_INT32, channel,
@@ -135,7 +135,7 @@ gimp_levels_auto (gint32 drawable_ID)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_levels_auto",
+  return_vals = gimp_run_procedure ("gimp-levels-auto",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_END);
@@ -168,7 +168,7 @@ gimp_levels_stretch (gint32 drawable_ID)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_levels_stretch",
+  return_vals = gimp_run_procedure ("gimp-levels-stretch",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_END);
@@ -200,7 +200,7 @@ gimp_posterize (gint32 drawable_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_posterize",
+  return_vals = gimp_run_procedure ("gimp-posterize",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_INT32, levels,
@@ -231,7 +231,7 @@ gimp_desaturate (gint32 drawable_ID)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_desaturate",
+  return_vals = gimp_run_procedure ("gimp-desaturate",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_END);
@@ -267,7 +267,7 @@ gimp_desaturate_full (gint32             drawable_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_desaturate_full",
+  return_vals = gimp_run_procedure ("gimp-desaturate-full",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_INT32, desaturate_mode,
@@ -306,7 +306,7 @@ gimp_equalize (gint32   drawable_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_equalize",
+  return_vals = gimp_run_procedure ("gimp-equalize",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_INT32, mask_only,
@@ -339,7 +339,7 @@ gimp_invert (gint32 drawable_ID)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_invert",
+  return_vals = gimp_run_procedure ("gimp-invert",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_END);
@@ -380,7 +380,7 @@ gimp_curves_spline (gint32                drawable_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_curves_spline",
+  return_vals = gimp_run_procedure ("gimp-curves-spline",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_INT32, channel,
@@ -424,7 +424,7 @@ gimp_curves_explicit (gint32                drawable_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_curves_explicit",
+  return_vals = gimp_run_procedure ("gimp-curves-explicit",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_INT32, channel,
@@ -473,7 +473,7 @@ gimp_color_balance (gint32           drawable_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_color_balance",
+  return_vals = gimp_run_procedure ("gimp-color-balance",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_INT32, transfer_mode,
@@ -518,7 +518,7 @@ gimp_colorize (gint32  drawable_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_colorize",
+  return_vals = gimp_run_procedure ("gimp-colorize",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_FLOAT, hue,
@@ -581,7 +581,7 @@ gimp_histogram (gint32                drawable_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_histogram",
+  return_vals = gimp_run_procedure ("gimp-histogram",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_INT32, channel,
@@ -640,7 +640,7 @@ gimp_hue_saturation (gint32       drawable_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_hue_saturation",
+  return_vals = gimp_run_procedure ("gimp-hue-saturation",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_INT32, hue_range,
@@ -680,7 +680,7 @@ gimp_threshold (gint32 drawable_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_threshold",
+  return_vals = gimp_run_procedure ("gimp-threshold",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_INT32, low_threshold,

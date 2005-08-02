@@ -117,7 +117,8 @@ static ProcArg edit_cut_outargs[] =
 
 static ProcRecord edit_cut_proc =
 {
-  "gimp_edit_cut",
+  "gimp-edit-cut",
+  "gimp-edit-cut",
   "Cut from the specified drawable.",
   "If there is a selection in the image, then the area specified by the selection is cut from the specified drawable and placed in an internal GIMP edit buffer. It can subsequently be retrieved using the 'gimp-edit-paste' command. If there is no selection, then the specified drawable will be removed and its contents stored in the internal GIMP edit buffer.",
   "Spencer Kimball & Peter Mattis",
@@ -187,7 +188,8 @@ static ProcArg edit_copy_outargs[] =
 
 static ProcRecord edit_copy_proc =
 {
-  "gimp_edit_copy",
+  "gimp-edit-copy",
+  "gimp-edit-copy",
   "Copy from the specified drawable.",
   "If there is a selection in the image, then the area specified by the selection is copied from the specified drawable and placed in an internal GIMP edit buffer. It can subsequently be retrieved using the 'gimp-edit-paste' command. If there is no selection, then the specified drawable's contents will be stored in the internal GIMP edit buffer.",
   "Spencer Kimball & Peter Mattis",
@@ -250,7 +252,8 @@ static ProcArg edit_copy_visible_outargs[] =
 
 static ProcRecord edit_copy_visible_proc =
 {
-  "gimp_edit_copy_visible",
+  "gimp-edit-copy-visible",
+  "gimp-edit-copy-visible",
   "Copy from the projection.",
   "If there is a selection in the image, then the area specified by the selection is copied from the projection and placed in an internal GIMP edit buffer. It can subsequently be retrieved using the 'gimp-edit-paste' command. If there is no selection, then the projection's contents will be stored in the internal GIMP edit buffer.",
   "Michael Natterer <mitch@gimp.org>",
@@ -331,7 +334,8 @@ static ProcArg edit_paste_outargs[] =
 
 static ProcRecord edit_paste_proc =
 {
-  "gimp_edit_paste",
+  "gimp-edit-paste",
+  "gimp-edit-paste",
   "Paste buffer to the specified drawable.",
   "This procedure pastes a copy of the internal GIMP edit buffer to the specified drawable. The GIMP edit buffer will be empty unless a call was previously made to either 'gimp-edit-cut' or 'gimp-edit-copy'. The \"paste_into\" option specifies whether to clear the current image selection, or to paste the buffer \"behind\" the selection. This allows the selection to act as a mask for the pasted buffer. Anywhere that the selection mask is non-zero, the pasted buffer will show through. The pasted buffer will be a new layer in the image which is designated as the image floating selection. If the image has a floating selection at the time of pasting, the old floating selection will be anchored to it's drawable before the new floating selection is added. This procedure returns the new floating layer. The resulting floating selection will already be attached to the specified drawable, and a subsequent call to floating_sel_attach is not needed.",
   "Spencer Kimball & Peter Mattis",
@@ -385,7 +389,8 @@ static ProcArg edit_clear_inargs[] =
 
 static ProcRecord edit_clear_proc =
 {
-  "gimp_edit_clear",
+  "gimp-edit-clear",
+  "gimp-edit-clear",
   "Clear selected area of drawable.",
   "This procedure clears the specified drawable. If the drawable has an alpha channel, the cleared pixels will become transparent. If the drawable does not have an alpha channel, cleared pixels will be set to the background color. This procedure only affects regions within a selection if there is a selection active.",
   "Spencer Kimball & Peter Mattis",
@@ -449,7 +454,8 @@ static ProcArg edit_fill_inargs[] =
 
 static ProcRecord edit_fill_proc =
 {
-  "gimp_edit_fill",
+  "gimp-edit-fill",
+  "gimp-edit-fill",
   "Fill selected area of drawable.",
   "This procedure fills the specified drawable with the fill mode. If the fill mode is foreground, the current foreground color is used. If the fill mode is background, the current background color is used. Other fill modes should not be used. This procedure only affects regions within a selection if there is a selection active. If you want to fill the whole drawable, regardless of the selection, use gimp_drawable_fill().",
   "Spencer Kimball & Peter Mattis & Raphael Quinet",
@@ -574,7 +580,8 @@ static ProcArg edit_bucket_fill_inargs[] =
 
 static ProcRecord edit_bucket_fill_proc =
 {
-  "gimp_edit_bucket_fill",
+  "gimp-edit-bucket-fill",
+  "gimp-edit-bucket-fill",
   "Fill the area specified either by the current selection if there is one, or by a seed fill starting at the specified coordinates.",
   "This tool requires information on the paint application mode, and the fill mode, which can either be in the foreground color, or in the currently active pattern. If there is no selection, a seed fill is executed at the specified coordinates and extends outward in keeping with the threshold parameter. If there is a selection in the target image, the threshold, sample merged, x, and y arguments are unused. If the sample_merged parameter is non-zero, the data of the composite image will be used instead of that for the specified drawable. This is equivalent to sampling for colors after merging all visible layers. In the case of merged sampling, the x and y coordinates are relative to the image's origin; otherwise, they are relative to the drawable's origin.",
   "Spencer Kimball & Peter Mattis",
@@ -778,7 +785,8 @@ static ProcArg edit_blend_inargs[] =
 
 static ProcRecord edit_blend_proc =
 {
-  "gimp_edit_blend",
+  "gimp-edit-blend",
+  "gimp-edit-blend",
   "Blend between the starting and ending coordinates with the specified blend mode and gradient type.",
   "This tool requires information on the paint application mode, the blend mode, and the gradient type. It creates the specified variety of blend using the starting and ending coordinates as defined for each gradient type.",
   "Spencer Kimball & Peter Mattis",
@@ -838,7 +846,8 @@ static ProcArg edit_stroke_inargs[] =
 
 static ProcRecord edit_stroke_proc =
 {
-  "gimp_edit_stroke",
+  "gimp-edit-stroke",
+  "gimp-edit-stroke",
   "Stroke the current selection",
   "This procedure strokes the current selection, painting along the selection boundary with the active brush and foreground color. The paint is applied to the specified drawable regardless of the active selection.",
   "Spencer Kimball & Peter Mattis",

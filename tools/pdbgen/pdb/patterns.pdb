@@ -70,7 +70,7 @@ sub patterns_get_list {
 
     $help = <<'HELP';
 This procedure returns a complete listing of available GIMP patterns. Each name
-returned can be used as input to the 'gimp_context_set_pattern'.
+returned can be used as input to the 'gimp-context-set-pattern'.
 HELP
 
     &std_pdb_misc;
@@ -96,7 +96,7 @@ HELP
 }
 
 sub patterns_get_pattern {
-    &std_pdb_deprecated ('gimp_context_get_pattern');
+    &std_pdb_deprecated ('gimp-context-get-pattern');
 
     @outargs = (
 	&pattern_arg,
@@ -112,7 +112,7 @@ sub patterns_get_pattern {
 }
 
 sub patterns_get_pattern_data {
-    &std_pdb_deprecated ('gimp_pattern_get_pixels');
+    &std_pdb_deprecated ('gimp-pattern-get-pixels');
 
     @inargs = (
         &pattern_arg

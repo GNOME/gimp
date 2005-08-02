@@ -42,7 +42,7 @@ gimp_version (void)
   gint nreturn_vals;
   gchar *version = NULL;
 
-  return_vals = gimp_run_procedure ("gimp_version",
+  return_vals = gimp_run_procedure ("gimp-version",
 				    &nreturn_vals,
 				    GIMP_PDB_END);
 
@@ -72,7 +72,7 @@ gimp_getpid (void)
   gint nreturn_vals;
   gint pid = 0;
 
-  return_vals = gimp_run_procedure ("gimp_getpid",
+  return_vals = gimp_run_procedure ("gimp-getpid",
 				    &nreturn_vals,
 				    GIMP_PDB_END);
 

@@ -43,7 +43,7 @@ gimp_parasite_find (const gchar *name)
   gint nreturn_vals;
   GimpParasite *parasite = NULL;
 
-  return_vals = gimp_run_procedure ("gimp_parasite_find",
+  return_vals = gimp_run_procedure ("gimp-parasite-find",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, name,
 				    GIMP_PDB_END);
@@ -74,7 +74,7 @@ gimp_parasite_attach (GimpParasite *parasite)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_parasite_attach",
+  return_vals = gimp_run_procedure ("gimp-parasite-attach",
 				    &nreturn_vals,
 				    GIMP_PDB_PARASITE, parasite,
 				    GIMP_PDB_END);
@@ -104,7 +104,7 @@ gimp_parasite_detach (const gchar *name)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_parasite_detach",
+  return_vals = gimp_run_procedure ("gimp-parasite-detach",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, name,
 				    GIMP_PDB_END);
@@ -136,7 +136,7 @@ gimp_parasite_list (gint    *num_parasites,
   gboolean success = TRUE;
   gint i;
 
-  return_vals = gimp_run_procedure ("gimp_parasite_list",
+  return_vals = gimp_run_procedure ("gimp-parasite-list",
 				    &nreturn_vals,
 				    GIMP_PDB_END);
 
@@ -178,7 +178,7 @@ gimp_drawable_parasite_find (gint32       drawable_ID,
   gint nreturn_vals;
   GimpParasite *parasite = NULL;
 
-  return_vals = gimp_run_procedure ("gimp_drawable_parasite_find",
+  return_vals = gimp_run_procedure ("gimp-drawable-parasite-find",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_STRING, name,
@@ -212,7 +212,7 @@ gimp_drawable_parasite_attach (gint32        drawable_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_drawable_parasite_attach",
+  return_vals = gimp_run_procedure ("gimp-drawable-parasite-attach",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_PARASITE, parasite,
@@ -245,7 +245,7 @@ gimp_drawable_parasite_detach (gint32       drawable_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_drawable_parasite_detach",
+  return_vals = gimp_run_procedure ("gimp-drawable-parasite-detach",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_STRING, name,
@@ -280,7 +280,7 @@ gimp_drawable_parasite_list (gint32    drawable_ID,
   gboolean success = TRUE;
   gint i;
 
-  return_vals = gimp_run_procedure ("gimp_drawable_parasite_list",
+  return_vals = gimp_run_procedure ("gimp-drawable-parasite-list",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_END);
@@ -323,7 +323,7 @@ gimp_image_parasite_find (gint32       image_ID,
   gint nreturn_vals;
   GimpParasite *parasite = NULL;
 
-  return_vals = gimp_run_procedure ("gimp_image_parasite_find",
+  return_vals = gimp_run_procedure ("gimp-image-parasite-find",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_STRING, name,
@@ -357,7 +357,7 @@ gimp_image_parasite_attach (gint32        image_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_image_parasite_attach",
+  return_vals = gimp_run_procedure ("gimp-image-parasite-attach",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_PARASITE, parasite,
@@ -390,7 +390,7 @@ gimp_image_parasite_detach (gint32       image_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_image_parasite_detach",
+  return_vals = gimp_run_procedure ("gimp-image-parasite-detach",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_STRING, name,
@@ -425,7 +425,7 @@ gimp_image_parasite_list (gint32    image_ID,
   gboolean success = TRUE;
   gint i;
 
-  return_vals = gimp_run_procedure ("gimp_image_parasite_list",
+  return_vals = gimp_run_procedure ("gimp-image-parasite-list",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);

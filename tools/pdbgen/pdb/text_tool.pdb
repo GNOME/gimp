@@ -176,7 +176,7 @@ CODE
 }
 
 sub text {
-    &std_pdb_deprecated ('gimp_text_fontname');
+    &std_pdb_deprecated ('gimp-text-fontname');
 
     @inargs = (
 	&render_args,
@@ -207,7 +207,7 @@ CODE
 }
 
 sub text_get_extents {
-    &std_pdb_deprecated ('gimp_text_get_extents_fontname');
+    &std_pdb_deprecated ('gimp-text-get-extents-fontname');
 
     @inargs = (
 	&text_arg,

@@ -42,7 +42,7 @@ gimp_palettes_refresh (void)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_palettes_refresh",
+  return_vals = gimp_run_procedure ("gimp-palettes-refresh",
 				    &nreturn_vals,
 				    GIMP_PDB_END);
 
@@ -62,7 +62,7 @@ gimp_palettes_refresh (void)
  *
  * This procedure returns a complete listing of available palettes.
  * Each name returned can be used as input to the command
- * 'gimp_context_set_palette'.
+ * 'gimp-context-set-palette'.
  *
  * Returns: The list of palette names.
  */
@@ -75,7 +75,7 @@ gimp_palettes_get_list (const gchar *filter,
   gchar **palette_list = NULL;
   gint i;
 
-  return_vals = gimp_run_procedure ("gimp_palettes_get_list",
+  return_vals = gimp_run_procedure ("gimp-palettes-get-list",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, filter,
 				    GIMP_PDB_END);
@@ -111,7 +111,7 @@ gimp_palettes_get_palette (gint *num_colors)
   gint nreturn_vals;
   gchar *name = NULL;
 
-  return_vals = gimp_run_procedure ("gimp_palettes_get_palette",
+  return_vals = gimp_run_procedure ("gimp-palettes-get-palette",
 				    &nreturn_vals,
 				    GIMP_PDB_END);
 
@@ -148,7 +148,7 @@ gimp_palettes_get_palette_entry (const gchar *name,
   gint nreturn_vals;
   gchar *ret_name = NULL;
 
-  return_vals = gimp_run_procedure ("gimp_palettes_get_palette_entry",
+  return_vals = gimp_run_procedure ("gimp-palettes-get-palette-entry",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, name,
 				    GIMP_PDB_INT32, entry_num,

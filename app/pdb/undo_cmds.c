@@ -90,7 +90,8 @@ static ProcArg image_undo_group_start_inargs[] =
 
 static ProcRecord image_undo_group_start_proc =
 {
-  "gimp_image_undo_group_start",
+  "gimp-image-undo-group-start",
+  "gimp-image-undo-group-start",
   "Starts a group undo.",
   "This function is used to start a group undo--necessary for logically combining two or more undo operations into a single operation. This call must be used in conjunction with a 'gimp-image-undo-group-end' call.",
   "Spencer Kimball & Peter Mattis",
@@ -135,7 +136,8 @@ static ProcArg image_undo_group_end_inargs[] =
 
 static ProcRecord image_undo_group_end_proc =
 {
-  "gimp_image_undo_group_end",
+  "gimp-image-undo-group-end",
+  "gimp-image-undo-group-end",
   "Finish a group undo.",
   "This function must be called once for each 'gimp-image-undo-group-start' call that is made.",
   "Spencer Kimball & Peter Mattis",
@@ -196,7 +198,8 @@ static ProcArg image_undo_is_enabled_outargs[] =
 
 static ProcRecord image_undo_is_enabled_proc =
 {
-  "gimp_image_undo_is_enabled",
+  "gimp-image-undo-is-enabled",
+  "gimp-image-undo-is-enabled",
   "Check if the image's undo stack is enabled.",
   "This procedure checks if the image's undo stack is currently enabled or disabled. This is useful when several plugins or scripts call each other and want to check if their caller has already used 'gimp_image_undo_disable' or 'gimp_image_undo_freeze'.",
   "Raphael Quinet",
@@ -256,7 +259,8 @@ static ProcArg image_undo_disable_outargs[] =
 
 static ProcRecord image_undo_disable_proc =
 {
-  "gimp_image_undo_disable",
+  "gimp-image-undo-disable",
+  "gimp-image-undo-disable",
   "Disable the image's undo stack.",
   "This procedure disables the image's undo stack, allowing subsequent operations to ignore their undo steps. This is generally called in conjunction with 'gimp_image_undo_enable' to temporarily disable an image undo stack. This is advantageous because saving undo steps can be time and memory intensive.",
   "Spencer Kimball & Peter Mattis",
@@ -316,7 +320,8 @@ static ProcArg image_undo_enable_outargs[] =
 
 static ProcRecord image_undo_enable_proc =
 {
-  "gimp_image_undo_enable",
+  "gimp-image-undo-enable",
+  "gimp-image-undo-enable",
   "Enable the image's undo stack.",
   "This procedure enables the image's undo stack, allowing subsequent operations to store their undo steps. This is generally called in conjunction with 'gimp_image_undo_disable' to temporarily disable an image undo stack.",
   "Spencer Kimball & Peter Mattis",
@@ -376,7 +381,8 @@ static ProcArg image_undo_freeze_outargs[] =
 
 static ProcRecord image_undo_freeze_proc =
 {
-  "gimp_image_undo_freeze",
+  "gimp-image-undo-freeze",
+  "gimp-image-undo-freeze",
   "Freeze the image's undo stack.",
   "This procedure freezes the image's undo stack, allowing subsequent operations to ignore their undo steps. This is generally called in conjunction with 'gimp_image_undo_thaw' to temporarily disable an image undo stack. This is advantageous because saving undo steps can be time and memory intensive. 'gimp_image_undo_{freeze,thaw}' and 'gimp_image_undo_{disable,enable}' differ in that the former does not free up all undo steps when undo is thawed, so is more suited to interactive in-situ previews. It is important in this case that the image is back to the same state it was frozen in before thawing, else 'undo' behaviour is undefined.",
   "Adam D. Moss",
@@ -436,7 +442,8 @@ static ProcArg image_undo_thaw_outargs[] =
 
 static ProcRecord image_undo_thaw_proc =
 {
-  "gimp_image_undo_thaw",
+  "gimp-image-undo-thaw",
+  "gimp-image-undo-thaw",
   "Thaw the image's undo stack.",
   "This procedure thaws the image's undo stack, allowing subsequent operations to store their undo steps. This is generally called in conjunction with 'gimp_image_undo_freeze' to temporarily freeze an image undo stack. 'gimp_image_undo_thaw' does NOT free the undo stack as 'gimp_image_undo_enable' does, so is suited for situations where one wishes to leave the undo stack in the same state in which one found it despite non-destructively playing with the image in the meantime. An example would be in-situ plugin previews. Balancing freezes and thaws and ensuring image consistancy is the responsibility of the caller.",
   "Adam D. Moss",

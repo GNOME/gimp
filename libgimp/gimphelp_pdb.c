@@ -49,7 +49,7 @@ gimp_help (const gchar *help_domain,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_help",
+  return_vals = gimp_run_procedure ("gimp-help",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, help_domain,
 				    GIMP_PDB_STRING, help_id,

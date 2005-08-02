@@ -46,7 +46,7 @@ gimp_display_new (gint32 image_ID)
   gint nreturn_vals;
   gint32 display_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_display_new",
+  return_vals = gimp_run_procedure ("gimp-display-new",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
@@ -78,7 +78,7 @@ gimp_display_delete (gint32 display_ID)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_display_delete",
+  return_vals = gimp_run_procedure ("gimp-display-delete",
 				    &nreturn_vals,
 				    GIMP_PDB_DISPLAY, display_ID,
 				    GIMP_PDB_END);
@@ -109,7 +109,7 @@ gimp_displays_flush (void)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_displays_flush",
+  return_vals = gimp_run_procedure ("gimp-displays-flush",
 				    &nreturn_vals,
 				    GIMP_PDB_END);
 
@@ -142,7 +142,7 @@ gimp_displays_reconnect (gint32 old_image_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_displays_reconnect",
+  return_vals = gimp_run_procedure ("gimp-displays-reconnect",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, old_image_ID,
 				    GIMP_PDB_IMAGE, new_image_ID,

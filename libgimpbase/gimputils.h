@@ -23,42 +23,44 @@
 G_BEGIN_DECLS
 
 
-gchar         * gimp_utf8_strtrim          (const gchar  *str,
-                                            gint          max_chars);
-gchar         * gimp_any_to_utf8           (const gchar  *str,
-                                            gssize        len,
-                                            const gchar  *warning_format,
-                                            ...) G_GNUC_PRINTF (3, 4);
-const gchar   * gimp_filename_to_utf8      (const gchar  *filename);
+gchar         * gimp_utf8_strtrim            (const gchar  *str,
+                                              gint          max_chars);
+gchar         * gimp_any_to_utf8             (const gchar  *str,
+                                              gssize        len,
+                                              const gchar  *warning_format,
+                                              ...) G_GNUC_PRINTF (3, 4);
+const gchar   * gimp_filename_to_utf8        (const gchar  *filename);
 
-gchar         * gimp_strip_uline           (const gchar  *str);
-gchar         * gimp_escape_uline          (const gchar  *str);
+gchar         * gimp_strip_uline             (const gchar  *str);
+gchar         * gimp_escape_uline            (const gchar  *str);
 
-GimpEnumDesc  * gimp_enum_get_desc         (GEnumClass   *enum_class,
-                                            gint          value);
-gboolean        gimp_enum_get_value        (GType         enum_type,
-                                            gint          value,
-                                            const gchar **value_name,
-                                            const gchar **value_nick,
-                                            const gchar **value_desc,
-                                            const gchar **value_help);
-const gchar   * gimp_enum_value_get_desc   (GEnumClass   *enum_class,
-                                            GEnumValue   *enum_value);
-const gchar   * gimp_enum_value_get_help   (GEnumClass   *enum_class,
-                                            GEnumValue   *enum_value);
+gchar         * gimp_canonicalize_identifier (const gchar  *name);
 
-GimpFlagsDesc * gimp_flags_get_first_desc  (GFlagsClass  *flags_class,
-                                            guint         value);
-gboolean        gimp_flags_get_first_value (GType         flags_type,
-                                            guint         value,
-                                            const gchar **value_name,
-                                            const gchar **value_nick,
-                                            const gchar **value_desc,
-                                            const gchar **value_help);
-const gchar   * gimp_flags_value_get_desc  (GFlagsClass  *flags_class,
-                                            GFlagsValue  *flags_value);
-const gchar   * gimp_flags_value_get_help  (GFlagsClass  *flags_class,
-                                            GFlagsValue  *flags_value);
+GimpEnumDesc  * gimp_enum_get_desc           (GEnumClass   *enum_class,
+                                              gint          value);
+gboolean        gimp_enum_get_value          (GType         enum_type,
+                                              gint          value,
+                                              const gchar **value_name,
+                                              const gchar **value_nick,
+                                              const gchar **value_desc,
+                                              const gchar **value_help);
+const gchar   * gimp_enum_value_get_desc     (GEnumClass   *enum_class,
+                                              GEnumValue   *enum_value);
+const gchar   * gimp_enum_value_get_help     (GEnumClass   *enum_class,
+                                              GEnumValue   *enum_value);
+
+GimpFlagsDesc * gimp_flags_get_first_desc    (GFlagsClass  *flags_class,
+                                              guint         value);
+gboolean        gimp_flags_get_first_value   (GType         flags_type,
+                                              guint         value,
+                                              const gchar **value_name,
+                                              const gchar **value_nick,
+                                              const gchar **value_desc,
+                                              const gchar **value_help);
+const gchar   * gimp_flags_value_get_desc    (GFlagsClass  *flags_class,
+                                              GFlagsValue  *flags_value);
+const gchar   * gimp_flags_value_get_help    (GFlagsClass  *flags_class,
+                                              GFlagsValue  *flags_value);
 
 
 G_END_DECLS

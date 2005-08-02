@@ -44,7 +44,7 @@ gimp_floating_sel_remove (gint32 floating_sel_ID)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_floating_sel_remove",
+  return_vals = gimp_run_procedure ("gimp-floating-sel-remove",
 				    &nreturn_vals,
 				    GIMP_PDB_LAYER, floating_sel_ID,
 				    GIMP_PDB_END);
@@ -76,7 +76,7 @@ gimp_floating_sel_anchor (gint32 floating_sel_ID)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_floating_sel_anchor",
+  return_vals = gimp_run_procedure ("gimp-floating-sel-anchor",
 				    &nreturn_vals,
 				    GIMP_PDB_LAYER, floating_sel_ID,
 				    GIMP_PDB_END);
@@ -112,7 +112,7 @@ gimp_floating_sel_to_layer (gint32 floating_sel_ID)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_floating_sel_to_layer",
+  return_vals = gimp_run_procedure ("gimp-floating-sel-to-layer",
 				    &nreturn_vals,
 				    GIMP_PDB_LAYER, floating_sel_ID,
 				    GIMP_PDB_END);
@@ -144,7 +144,7 @@ gimp_floating_sel_attach (gint32 layer_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_floating_sel_attach",
+  return_vals = gimp_run_procedure ("gimp-floating-sel-attach",
 				    &nreturn_vals,
 				    GIMP_PDB_LAYER, layer_ID,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
@@ -176,7 +176,7 @@ gimp_floating_sel_rigor (gint32   floating_sel_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_floating_sel_rigor",
+  return_vals = gimp_run_procedure ("gimp-floating-sel-rigor",
 				    &nreturn_vals,
 				    GIMP_PDB_LAYER, floating_sel_ID,
 				    GIMP_PDB_INT32, undo,
@@ -208,7 +208,7 @@ gimp_floating_sel_relax (gint32   floating_sel_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_floating_sel_relax",
+  return_vals = gimp_run_procedure ("gimp-floating-sel-relax",
 				    &nreturn_vals,
 				    GIMP_PDB_LAYER, floating_sel_ID,
 				    GIMP_PDB_INT32, undo,

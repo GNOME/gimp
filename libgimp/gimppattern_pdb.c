@@ -53,7 +53,7 @@ gimp_pattern_get_info (const gchar *name,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_pattern_get_info",
+  return_vals = gimp_run_procedure ("gimp-pattern-get-info",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, name,
 				    GIMP_PDB_END);
@@ -107,7 +107,7 @@ gimp_pattern_get_pixels (const gchar  *name,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_pattern_get_pixels",
+  return_vals = gimp_run_procedure ("gimp-pattern-get-pixels",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, name,
 				    GIMP_PDB_END);

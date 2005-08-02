@@ -39,7 +39,7 @@ sub drawable_out_arg {
 # The defs
 
 sub flip {
-    &std_pdb_deprecated ('gimp_drawable_transform_flip_simple');
+    &std_pdb_deprecated ('gimp-drawable-transform-flip-simple');
 
     @inargs = (
 	&drawable_arg,
@@ -68,7 +68,7 @@ CODE
 }
 
 sub perspective {
-    &std_pdb_deprecated ('gimp_drawable_transform_perspective_default');
+    &std_pdb_deprecated ('gimp-drawable-transform-perspective-default');
 
     @inargs = (
 	&drawable_arg,
@@ -135,7 +135,7 @@ CODE
 }
 
 sub rotate {
-    &std_pdb_deprecated ('gimp_drawable_transform_rotate_default');
+    &std_pdb_deprecated ('gimp-drawable-transform-rotate-default');
 
     @inargs = (
 	&drawable_arg,
@@ -187,7 +187,7 @@ CODE
 }
 
 sub scale {
-    &std_pdb_deprecated ('gimp_drawable_transform_scale_default');
+    &std_pdb_deprecated ('gimp-drawable-transform-scale-default');
 
     @inargs = (
 	&drawable_arg,
@@ -256,7 +256,7 @@ CODE
 }
 
 sub shear {
-    &std_pdb_deprecated ('gimp_drawable_transform_shear_default');
+    &std_pdb_deprecated ('gimp-drawable-transform-shear-default');
 
     @inargs = (
 	&drawable_arg,
@@ -311,7 +311,7 @@ CODE
 }
 
 sub transform_2d {
-    &std_pdb_deprecated ('gimp_drawable_transform_2d_default');
+    &std_pdb_deprecated ('gimp-drawable-transform-2d-default');
 
     @inargs = (
 	&drawable_arg,

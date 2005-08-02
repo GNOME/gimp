@@ -158,7 +158,8 @@ static ProcArg channel_new_outargs[] =
 
 static ProcRecord channel_new_proc =
 {
-  "gimp_channel_new",
+  "gimp-channel-new",
+  "gimp-channel-new",
   "Create a new channel.",
   "This procedure creates a new channel with the specified width and height. Name, opacity, and color are also supplied parameters. The new channel still needs to be added to the image, as this is not automatic. Add the new channel with the 'gimp_image_add_channel' command. Other attributes such as channel show masked, should be set with explicit procedure calls. The channel's contents are undefined initially.",
   "Spencer Kimball & Peter Mattis",
@@ -248,7 +249,8 @@ static ProcArg channel_new_from_component_outargs[] =
 
 static ProcRecord channel_new_from_component_proc =
 {
-  "gimp_channel_new_from_component",
+  "gimp-channel-new-from-component",
+  "gimp-channel-new-from-component",
   "Create a new channel from a color component",
   "This procedure creates a new channel from a color component.",
   "Shlomi Fish <shlomif@iglu.org.il>",
@@ -313,7 +315,8 @@ static ProcArg channel_copy_outargs[] =
 
 static ProcRecord channel_copy_proc =
 {
-  "gimp_channel_copy",
+  "gimp-channel-copy",
+  "gimp-channel-copy",
   "Copy a channel.",
   "This procedure copies the specified channel and returns the copy.",
   "Spencer Kimball & Peter Mattis",
@@ -396,7 +399,8 @@ static ProcArg channel_combine_masks_inargs[] =
 
 static ProcRecord channel_combine_masks_proc =
 {
-  "gimp_channel_combine_masks",
+  "gimp-channel-combine-masks",
+  "gimp-channel-combine-masks",
   "Combine two channel masks.",
   "This procedure combines two channel masks. The result is stored in the first channel.",
   "Spencer Kimball & Peter Mattis",
@@ -453,7 +457,8 @@ static ProcArg channel_get_show_masked_outargs[] =
 
 static ProcRecord channel_get_show_masked_proc =
 {
-  "gimp_channel_get_show_masked",
+  "gimp-channel-get-show-masked",
+  "gimp-channel-get-show-masked",
   "Get the composite method of the specified channel.",
   "This procedure returns the specified channel's composite method. If it is non-zero, then the channel is composited with the image so that masked regions are shown. Otherwise, selected regions are shown.",
   "Spencer Kimball & Peter Mattis",
@@ -506,7 +511,8 @@ static ProcArg channel_set_show_masked_inargs[] =
 
 static ProcRecord channel_set_show_masked_proc =
 {
-  "gimp_channel_set_show_masked",
+  "gimp-channel-set-show-masked",
+  "gimp-channel-set-show-masked",
   "Set the composite method of the specified channel.",
   "This procedure sets the specified channel's composite method. If it is non-zero, then the channel is composited with the image so that masked regions are shown. Otherwise, selected regions are shown.",
   "Spencer Kimball & Peter Mattis",
@@ -563,7 +569,8 @@ static ProcArg channel_get_opacity_outargs[] =
 
 static ProcRecord channel_get_opacity_proc =
 {
-  "gimp_channel_get_opacity",
+  "gimp-channel-get-opacity",
+  "gimp-channel-get-opacity",
   "Get the opacity of the specified channel.",
   "This procedure returns the specified channel's opacity.",
   "Spencer Kimball & Peter Mattis",
@@ -618,7 +625,8 @@ static ProcArg channel_set_opacity_inargs[] =
 
 static ProcRecord channel_set_opacity_proc =
 {
-  "gimp_channel_set_opacity",
+  "gimp-channel-set-opacity",
+  "gimp-channel-set-opacity",
   "Set the opacity of the specified channel.",
   "This procedure sets the specified channel's opacity.",
   "Spencer Kimball & Peter Mattis",
@@ -679,7 +687,8 @@ static ProcArg channel_get_color_outargs[] =
 
 static ProcRecord channel_get_color_proc =
 {
-  "gimp_channel_get_color",
+  "gimp-channel-get-color",
+  "gimp-channel-get-color",
   "Get the compositing color of the specified channel.",
   "This procedure returns the specified channel's compositing color.",
   "Spencer Kimball & Peter Mattis",
@@ -737,7 +746,8 @@ static ProcArg channel_set_color_inargs[] =
 
 static ProcRecord channel_set_color_proc =
 {
-  "gimp_channel_set_color",
+  "gimp-channel-set-color",
+  "gimp-channel-set-color",
   "Set the compositing color of the specified channel.",
   "This procedure sets the specified channel's compositing color.",
   "Spencer Kimball & Peter Mattis",

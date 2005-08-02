@@ -98,7 +98,7 @@ sub brushes_get_list {
     $help = <<'HELP';
 This procedure returns a complete listing of available GIMP
 brushes. Each name returned can be used as input to the
-'gimp_context_set_brush' procedure.
+'gimp-context-set-brush' procedure.
 HELP
 
     &std_pdb_misc;
@@ -123,7 +123,7 @@ HELP
 }
 
 sub brushes_get_brush {
-    &std_pdb_deprecated ('gimp_context_get_brush');
+    &std_pdb_deprecated ('gimp-context-get-brush');
 
     @outargs = (
 	&brush_arg,
@@ -140,7 +140,7 @@ sub brushes_get_brush {
 }
 
 sub brushes_get_spacing {
-    &std_pdb_deprecated ('gimp_brush_get_spacing');
+    &std_pdb_deprecated ('gimp-brush-get-spacing');
 
     @outargs = ( &spacing_arg );
     $outargs[0]->{alias} = 'gimp_brush_get_spacing (gimp_context_get_brush (context))';
@@ -148,7 +148,7 @@ sub brushes_get_spacing {
 }
 
 sub brushes_set_spacing {
-    &std_pdb_deprecated ('gimp_brush_set_spacing');
+    &std_pdb_deprecated ('gimp-brush-set-spacing');
 
     @inargs = ( &spacing_arg );
 
@@ -158,7 +158,7 @@ sub brushes_set_spacing {
 }
 
 sub brushes_get_brush_data {
-    &std_pdb_deprecated ('gimp_brush_get_pixels');
+    &std_pdb_deprecated ('gimp-brush-get-pixels');
 
     @inargs = (
         &brush_arg

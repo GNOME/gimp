@@ -46,7 +46,7 @@ gimp_fonts_popup (const gchar *font_callback,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_fonts_popup",
+  return_vals = gimp_run_procedure ("gimp-fonts-popup",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, font_callback,
 				    GIMP_PDB_STRING, popup_title,
@@ -77,7 +77,7 @@ gimp_fonts_close_popup (const gchar *font_callback)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_fonts_close_popup",
+  return_vals = gimp_run_procedure ("gimp-fonts-close-popup",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, font_callback,
 				    GIMP_PDB_END);
@@ -108,7 +108,7 @@ gimp_fonts_set_popup (const gchar *font_callback,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_fonts_set_popup",
+  return_vals = gimp_run_procedure ("gimp-fonts-set-popup",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, font_callback,
 				    GIMP_PDB_STRING, font_name,

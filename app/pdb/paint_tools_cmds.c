@@ -194,7 +194,8 @@ static ProcArg airbrush_inargs[] =
 
 static ProcRecord airbrush_proc =
 {
-  "gimp_airbrush",
+  "gimp-airbrush",
+  "gimp-airbrush",
   "Paint in the current brush with varying pressure. Paint application is time-dependent.",
   "This tool simulates the use of an airbrush. Paint pressure represents the relative intensity of the paint application. High pressure results in a thicker layer of paint while low pressure results in a thinner layer.",
   "Spencer Kimball & Peter Mattis",
@@ -272,7 +273,8 @@ static ProcArg airbrush_default_inargs[] =
 
 static ProcRecord airbrush_default_proc =
 {
-  "gimp_airbrush_default",
+  "gimp-airbrush-default",
+  "gimp-airbrush-default",
   "Paint in the current brush with varying pressure. Paint application is time-dependent.",
   "This tool simulates the use of an airbrush. It is similar to gimp_airbrush except that the pressure is derived from the airbrush tools options box. It the option has not been set the default for the option will be used.",
   "Andy Thomas",
@@ -401,7 +403,8 @@ static ProcArg clone_inargs[] =
 
 static ProcRecord clone_proc =
 {
-  "gimp_clone",
+  "gimp-clone",
+  "gimp-clone",
   "Clone from the source to the dest drawable using the current brush",
   "This tool clones (copies) from the source drawable starting at the specified source coordinates to the dest drawable. If the \"clone_type\" argument is set to PATTERN-CLONE, then the current pattern is used as the source and the \"src_drawable\" argument is ignored. Pattern cloning assumes a tileable pattern and mods the sum of the src coordinates and subsequent stroke offsets with the width and height of the pattern. For image cloning, if the sum of the src coordinates and subsequent stroke offsets exceeds the extents of the src drawable, then no paint is transferred. The clone tool is capable of transforming between any image types including RGB->Indexed--although converting from any type to indexed is significantly slower.",
   "Spencer Kimball & Peter Mattis",
@@ -479,7 +482,8 @@ static ProcArg clone_default_inargs[] =
 
 static ProcRecord clone_default_proc =
 {
-  "gimp_clone_default",
+  "gimp-clone-default",
+  "gimp-clone-default",
   "Clone from the source to the dest drawable using the current brush",
   "This tool clones (copies) from the source drawable starting at the specified source coordinates to the dest drawable. This function performs exactly the same as the gimp_clone function except that the tools arguments are obtained from the clones option dialog. It this dialog has not been activated then the dialogs default values will be used.",
   "Andy Thomas",
@@ -582,7 +586,8 @@ static ProcArg convolve_inargs[] =
 
 static ProcRecord convolve_proc =
 {
-  "gimp_convolve",
+  "gimp-convolve",
+  "gimp-convolve",
   "Convolve (Blur, Sharpen) using the current brush.",
   "This tool convolves the specified drawable with either a sharpening or blurring kernel. The pressure parameter controls the magnitude of the operation. Like the paintbrush, this tool linearly interpolates between the specified stroke coordinates.",
   "Spencer Kimball & Peter Mattis",
@@ -660,7 +665,8 @@ static ProcArg convolve_default_inargs[] =
 
 static ProcRecord convolve_default_proc =
 {
-  "gimp_convolve_default",
+  "gimp-convolve-default",
+  "gimp-convolve-default",
   "Convolve (Blur, Sharpen) using the current brush.",
   "This tool convolves the specified drawable with either a sharpening or blurring kernel. This function performs exactly the same as the gimp_convolve function except that the tools arguments are obtained from the convolve option dialog. It this dialog has not been activated then the dialogs default values will be used.",
   "Andy Thomas",
@@ -774,7 +780,8 @@ static ProcArg dodgeburn_inargs[] =
 
 static ProcRecord dodgeburn_proc =
 {
-  "gimp_dodgeburn",
+  "gimp-dodgeburn",
+  "gimp-dodgeburn",
   "Dodgeburn image with varying exposure.",
   "Dodgeburn. More details here later.",
   "Andy Thomas",
@@ -852,7 +859,8 @@ static ProcArg dodgeburn_default_inargs[] =
 
 static ProcRecord dodgeburn_default_proc =
 {
-  "gimp_dodgeburn_default",
+  "gimp-dodgeburn-default",
+  "gimp-dodgeburn-default",
   "Dodgeburn image with varying exposure. This is the same as the gimp_dodgeburn function except that the exposure, type and mode are taken from the tools option dialog. If the dialog has not been activated then the defaults as used by the dialog will be used.",
   "Dodgeburn. More details here later.",
   "Spencer Kimball & Peter Mattis",
@@ -955,7 +963,8 @@ static ProcArg eraser_inargs[] =
 
 static ProcRecord eraser_proc =
 {
-  "gimp_eraser",
+  "gimp-eraser",
+  "gimp-eraser",
   "Erase using the current brush.",
   "This tool erases using the current brush mask. If the specified drawable contains an alpha channel, then the erased pixels will become transparent. Otherwise, the eraser tool replaces the contents of the drawable with the background color. Like paintbrush, this tool linearly interpolates between the specified stroke coordinates.",
   "Spencer Kimball & Peter Mattis",
@@ -1033,7 +1042,8 @@ static ProcArg eraser_default_inargs[] =
 
 static ProcRecord eraser_default_proc =
 {
-  "gimp_eraser_default",
+  "gimp-eraser-default",
+  "gimp-eraser-default",
   "Erase using the current brush.",
   "This tool erases using the current brush mask. This function performs exactly the same as the gimp_eraser function except that the tools arguments are obtained from the eraser option dialog. It this dialog has not been activated then the dialogs default values will be used.",
   "Andy Thomas",
@@ -1149,7 +1159,8 @@ static ProcArg paintbrush_inargs[] =
 
 static ProcRecord paintbrush_proc =
 {
-  "gimp_paintbrush",
+  "gimp-paintbrush",
+  "gimp-paintbrush",
   "Paint in the current brush with optional fade out parameter and pull colors from a gradient.",
   "This tool is the standard paintbrush. It draws linearly interpolated lines through the specified stroke coordinates. It operates on the specified drawable in the foreground color with the active brush. The \"fade_out\" parameter is measured in pixels and allows the brush stroke to linearly fall off. The pressure is set to the maximum at the beginning of the stroke. As the distance of the stroke nears the fade_out value, the pressure will approach zero. The gradient_length is the distance to spread the gradient over. It is measured in pixels. If the gradient_length is 0, no gradient is used.",
   "Spencer Kimball & Peter Mattis",
@@ -1227,7 +1238,8 @@ static ProcArg paintbrush_default_inargs[] =
 
 static ProcRecord paintbrush_default_proc =
 {
-  "gimp_paintbrush_default",
+  "gimp-paintbrush-default",
+  "gimp-paintbrush-default",
   "Paint in the current brush. The fade out parameter and pull colors from a gradient parameter are set from the paintbrush options dialog. If this dialog has not been activated then the dialog defaults will be used.",
   "This tool is similar to the standard paintbrush. It draws linearly interpolated lines through the specified stroke coordinates. It operates on the specified drawable in the foreground color with the active brush. The \"fade_out\" parameter is measured in pixels and allows the brush stroke to linearly fall off (value obtained from the option dialog). The pressure is set to the maximum at the beginning of the stroke. As the distance of the stroke nears the fade_out value, the pressure will approach zero. The gradient_length (value obtained from the option dialog) is the distance to spread the gradient over. It is measured in pixels. If the gradient_length is 0, no gradient is used.",
   "Andy Thomas",
@@ -1305,7 +1317,8 @@ static ProcArg pencil_inargs[] =
 
 static ProcRecord pencil_proc =
 {
-  "gimp_pencil",
+  "gimp-pencil",
+  "gimp-pencil",
   "Paint in the current brush without sub-pixel sampling.",
   "This tool is the standard pencil. It draws linearly interpolated lines through the specified stroke coordinates. It operates on the specified drawable in the foreground color with the active brush. The brush mask is treated as though it contains only black and white values. Any value below half is treated as black; any above half, as white.",
   "Spencer Kimball & Peter Mattis",
@@ -1397,7 +1410,8 @@ static ProcArg smudge_inargs[] =
 
 static ProcRecord smudge_proc =
 {
-  "gimp_smudge",
+  "gimp-smudge",
+  "gimp-smudge",
   "Smudge image with varying pressure.",
   "This tool simulates a smudge using the current brush. High pressure results in a greater smudge of paint while low pressure results in a lesser smudge.",
   "Spencer Kimball & Peter Mattis",
@@ -1475,7 +1489,8 @@ static ProcArg smudge_default_inargs[] =
 
 static ProcRecord smudge_default_proc =
 {
-  "gimp_smudge_default",
+  "gimp-smudge-default",
+  "gimp-smudge-default",
   "Smudge image with varying pressure.",
   "This tool simulates a smudge using the current brush. It behaves exactly the same as gimp_smudge except that the pressure value is taken from the smudge tool options or the options default if the tools option dialog has not been activated.",
   "Andy Thomas",

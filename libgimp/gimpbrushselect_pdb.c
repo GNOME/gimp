@@ -52,7 +52,7 @@ gimp_brushes_popup (const gchar          *brush_callback,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_brushes_popup",
+  return_vals = gimp_run_procedure ("gimp-brushes-popup",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, brush_callback,
 				    GIMP_PDB_STRING, popup_title,
@@ -86,7 +86,7 @@ gimp_brushes_close_popup (const gchar *brush_callback)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_brushes_close_popup",
+  return_vals = gimp_run_procedure ("gimp-brushes-close-popup",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, brush_callback,
 				    GIMP_PDB_END);
@@ -123,7 +123,7 @@ gimp_brushes_set_popup (const gchar          *brush_callback,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_brushes_set_popup",
+  return_vals = gimp_run_procedure ("gimp-brushes-set-popup",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, brush_callback,
 				    GIMP_PDB_STRING, brush_name,

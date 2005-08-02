@@ -70,7 +70,7 @@ gimp_text_fontname (gint32        image_ID,
   gint nreturn_vals;
   gint32 text_layer_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_text_fontname",
+  return_vals = gimp_run_procedure ("gimp-text-fontname",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
@@ -125,7 +125,7 @@ gimp_text_get_extents_fontname (const gchar  *text,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_text_get_extents_fontname",
+  return_vals = gimp_run_procedure ("gimp-text-get-extents-fontname",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, text,
 				    GIMP_PDB_FLOAT, size,
@@ -200,7 +200,7 @@ gimp_text (gint32        image_ID,
   gint nreturn_vals;
   gint32 text_layer_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_text",
+  return_vals = gimp_run_procedure ("gimp-text",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
@@ -273,7 +273,7 @@ gimp_text_get_extents (const gchar  *text,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_text_get_extents",
+  return_vals = gimp_run_procedure ("gimp-text-get-extents",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, text,
 				    GIMP_PDB_FLOAT, size,

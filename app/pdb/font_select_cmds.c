@@ -97,7 +97,8 @@ static ProcArg fonts_popup_inargs[] =
 
 static ProcRecord fonts_popup_proc =
 {
-  "gimp_fonts_popup",
+  "gimp-fonts-popup",
+  "gimp-fonts-popup",
   "Invokes the Gimp font selection.",
   "This procedure popups the font selection dialog.",
   "Sven Neumann <sven@gimp.org>",
@@ -147,7 +148,8 @@ static ProcArg fonts_close_popup_inargs[] =
 
 static ProcRecord fonts_close_popup_proc =
 {
-  "gimp_fonts_close_popup",
+  "gimp-fonts-close-popup",
+  "gimp-fonts-close-popup",
   "Popdown the Gimp font selection.",
   "This procedure closes an opened font selection dialog.",
   "Sven Neumann <sven@gimp.org>",
@@ -208,7 +210,8 @@ static ProcArg fonts_set_popup_inargs[] =
 
 static ProcRecord fonts_set_popup_proc =
 {
-  "gimp_fonts_set_popup",
+  "gimp-fonts-set-popup",
+  "gimp-fonts-set-popup",
   "Sets the current font selection in a popup.",
   "Sets the current font selection in a popup.",
   "Sven Neumann <sven@gimp.org>",

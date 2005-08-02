@@ -131,7 +131,8 @@ static ProcArg brushes_popup_inargs[] =
 
 static ProcRecord brushes_popup_proc =
 {
-  "gimp_brushes_popup",
+  "gimp-brushes-popup",
+  "gimp-brushes-popup",
   "Invokes the Gimp brush selection.",
   "This procedure popups the brush selection dialog.",
   "Andy Thomas",
@@ -182,7 +183,8 @@ static ProcArg brushes_close_popup_inargs[] =
 
 static ProcRecord brushes_close_popup_proc =
 {
-  "gimp_brushes_close_popup",
+  "gimp-brushes-close-popup",
+  "gimp-brushes-close-popup",
   "Popdown the Gimp brush selection.",
   "This procedure closes an opened brush selection dialog.",
   "Andy Thomas",
@@ -277,7 +279,8 @@ static ProcArg brushes_set_popup_inargs[] =
 
 static ProcRecord brushes_set_popup_proc =
 {
-  "gimp_brushes_set_popup",
+  "gimp-brushes-set-popup",
+  "gimp-brushes-set-popup",
   "Sets the current brush selection in a popup.",
   "Sets the current brush selection in a popup.",
   "Andy Thomas",

@@ -51,7 +51,7 @@ gimp_plugin_domain_register (const gchar *domain_name,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_plugin_domain_register",
+  return_vals = gimp_run_procedure ("gimp-plugin-domain-register",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, domain_name,
 				    GIMP_PDB_STRING, domain_path,
@@ -85,7 +85,7 @@ gimp_plugin_help_register (const gchar *domain_name,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_plugin_help_register",
+  return_vals = gimp_run_procedure ("gimp-plugin-help-register",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, domain_name,
 				    GIMP_PDB_STRING, domain_uri,
@@ -120,7 +120,7 @@ gimp_plugin_menu_register (const gchar *procedure_name,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_plugin_menu_register",
+  return_vals = gimp_run_procedure ("gimp-plugin-menu-register",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, procedure_name,
 				    GIMP_PDB_STRING, menu_path,
@@ -155,7 +155,7 @@ gimp_plugin_menu_branch_register (const gchar *menu_path,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_plugin_menu_branch_register",
+  return_vals = gimp_run_procedure ("gimp-plugin-menu-branch-register",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, menu_path,
 				    GIMP_PDB_STRING, menu_name,
@@ -193,7 +193,7 @@ _gimp_plugin_icon_register (const gchar  *procedure_name,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_plugin_icon_register",
+  return_vals = gimp_run_procedure ("gimp-plugin-icon-register",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, procedure_name,
 				    GIMP_PDB_INT32, icon_type,

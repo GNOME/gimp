@@ -79,7 +79,8 @@ static ProcArg message_inargs[] =
 
 static ProcRecord message_proc =
 {
-  "gimp_message",
+  "gimp-message",
+  "gimp-message",
   "Displays a dialog box with a message.",
   "Displays a dialog box with a message. Useful for status or error reporting. The message must be in UTF-8 encoding.",
   "Manish Singh",
@@ -119,7 +120,8 @@ static ProcArg message_get_handler_outargs[] =
 
 static ProcRecord message_get_handler_proc =
 {
-  "gimp_message_get_handler",
+  "gimp-message-get-handler",
+  "gimp-message-get-handler",
   "Returns the current state of where warning messages are displayed.",
   "This procedure returns the way g_message warnings are displayed. They can be shown in a dialog box or printed on the console where gimp was started.",
   "Manish Singh",
@@ -164,7 +166,8 @@ static ProcArg message_set_handler_inargs[] =
 
 static ProcRecord message_set_handler_proc =
 {
-  "gimp_message_set_handler",
+  "gimp-message-set-handler",
+  "gimp-message-set-handler",
   "Controls where warning messages are displayed.",
   "This procedure controls how g_message warnings are displayed. They can be shown in a dialog box or printed on the console where gimp was started.",
   "Manish Singh",

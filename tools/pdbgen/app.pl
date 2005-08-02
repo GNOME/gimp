@@ -654,11 +654,15 @@ CODE
 
 	$out->{code} .= &make_arg_recs($proc, qw(inargs outargs));
 
+        my $canonical = $name;
+        $canonical =~ s/_/-/g;
+
 	$out->{code} .= <<CODE;
 
 static ProcRecord ${name}_proc =
 {
-  "gimp_$name",
+  "gimp-$canonical",
+  "gimp-$canonical",
   @{[ &quotewrap($proc->{blurb}, 2) ]},
   @{[ &quotewrap($proc->{help},  2) ]},
   "$proc->{author}",

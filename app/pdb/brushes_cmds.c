@@ -65,7 +65,8 @@ brushes_refresh_invoker (Gimp         *gimp,
 
 static ProcRecord brushes_refresh_proc =
 {
-  "gimp_brushes_refresh",
+  "gimp-brushes-refresh",
+  "gimp-brushes-refresh",
   "Refresh current brushes. This function always succeeds.",
   "This procedure retrieves all brushes currently in the user's brush path and updates the brush dialogs accordingly.",
   "Seth Burgess",
@@ -135,9 +136,10 @@ static ProcArg brushes_get_list_outargs[] =
 
 static ProcRecord brushes_get_list_proc =
 {
-  "gimp_brushes_get_list",
+  "gimp-brushes-get-list",
+  "gimp-brushes-get-list",
   "Retrieve a complete listing of the available brushes.",
-  "This procedure returns a complete listing of available GIMP brushes. Each name returned can be used as input to the 'gimp_context_set_brush' procedure.",
+  "This procedure returns a complete listing of available GIMP brushes. Each name returned can be used as input to the 'gimp-context-set-brush' procedure.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -201,13 +203,14 @@ static ProcArg brushes_get_brush_outargs[] =
 
 static ProcRecord brushes_get_brush_proc =
 {
-  "gimp_brushes_get_brush",
-  "This procedure is deprecated! Use 'gimp_context_get_brush' instead.",
-  "This procedure is deprecated! Use 'gimp_context_get_brush' instead.",
+  "gimp-brushes-get-brush",
+  "gimp-brushes-get-brush",
+  "This procedure is deprecated! Use 'gimp-context-get-brush' instead.",
+  "This procedure is deprecated! Use 'gimp-context-get-brush' instead.",
   "",
   "",
   "",
-  "gimp_context_get_brush",
+  "gimp-context-get-brush",
   GIMP_INTERNAL,
   0,
   NULL,
@@ -241,13 +244,14 @@ static ProcArg brushes_get_spacing_outargs[] =
 
 static ProcRecord brushes_get_spacing_proc =
 {
-  "gimp_brushes_get_spacing",
-  "This procedure is deprecated! Use 'gimp_brush_get_spacing' instead.",
-  "This procedure is deprecated! Use 'gimp_brush_get_spacing' instead.",
+  "gimp-brushes-get-spacing",
+  "gimp-brushes-get-spacing",
+  "This procedure is deprecated! Use 'gimp-brush-get-spacing' instead.",
+  "This procedure is deprecated! Use 'gimp-brush-get-spacing' instead.",
   "",
   "",
   "",
-  "gimp_brush_get_spacing",
+  "gimp-brush-get-spacing",
   GIMP_INTERNAL,
   0,
   NULL,
@@ -286,13 +290,14 @@ static ProcArg brushes_set_spacing_inargs[] =
 
 static ProcRecord brushes_set_spacing_proc =
 {
-  "gimp_brushes_set_spacing",
-  "This procedure is deprecated! Use 'gimp_brush_set_spacing' instead.",
-  "This procedure is deprecated! Use 'gimp_brush_set_spacing' instead.",
+  "gimp-brushes-set-spacing",
+  "gimp-brushes-set-spacing",
+  "This procedure is deprecated! Use 'gimp-brush-set-spacing' instead.",
+  "This procedure is deprecated! Use 'gimp-brush-set-spacing' instead.",
   "",
   "",
   "",
-  "gimp_brush_set_spacing",
+  "gimp-brush-set-spacing",
   GIMP_INTERNAL,
   1,
   brushes_set_spacing_inargs,
@@ -411,13 +416,14 @@ static ProcArg brushes_get_brush_data_outargs[] =
 
 static ProcRecord brushes_get_brush_data_proc =
 {
-  "gimp_brushes_get_brush_data",
-  "This procedure is deprecated! Use 'gimp_brush_get_pixels' instead.",
-  "This procedure is deprecated! Use 'gimp_brush_get_pixels' instead.",
+  "gimp-brushes-get-brush-data",
+  "gimp-brushes-get-brush-data",
+  "This procedure is deprecated! Use 'gimp-brush-get-pixels' instead.",
+  "This procedure is deprecated! Use 'gimp-brush-get-pixels' instead.",
   "",
   "",
   "",
-  "gimp_brush_get_pixels",
+  "gimp-brush-get-pixels",
   GIMP_INTERNAL,
   1,
   brushes_get_brush_data_inargs,

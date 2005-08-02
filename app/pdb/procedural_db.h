@@ -92,6 +92,7 @@ struct _ProcRecord
 {
   /*  Procedure information  */
   gchar       *name;          /*  Procedure name  */
+  gchar       *original_name; /*  Procedure name before canonicalization  */
   gchar       *blurb;         /*  Short procedure description  */
   gchar       *help;          /*  Detailed help instructions  */
   gchar       *author;        /*  Author field  */

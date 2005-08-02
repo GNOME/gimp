@@ -48,7 +48,7 @@ gimp_gradients_popup (const gchar *gradient_callback,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_gradients_popup",
+  return_vals = gimp_run_procedure ("gimp-gradients-popup",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, gradient_callback,
 				    GIMP_PDB_STRING, popup_title,
@@ -80,7 +80,7 @@ gimp_gradients_close_popup (const gchar *gradient_callback)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_gradients_close_popup",
+  return_vals = gimp_run_procedure ("gimp-gradients-close-popup",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, gradient_callback,
 				    GIMP_PDB_END);
@@ -111,7 +111,7 @@ gimp_gradients_set_popup (const gchar *gradient_callback,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_gradients_set_popup",
+  return_vals = gimp_run_procedure ("gimp-gradients-set-popup",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, gradient_callback,
 				    GIMP_PDB_STRING, gradient_name,

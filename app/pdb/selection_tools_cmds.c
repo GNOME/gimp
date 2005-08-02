@@ -153,7 +153,8 @@ static ProcArg by_color_select_inargs[] =
 
 static ProcRecord by_color_select_proc =
 {
-  "gimp_by_color_select",
+  "gimp-by-color-select",
+  "gimp-by-color-select",
   "Create a selection by selecting all pixels (in the specified drawable) with the same (or similar) color to that specified.",
   "This tool creates a selection over the specified image. A by-color selection is determined by the supplied color under the constraints of the specified threshold. Essentially, all pixels (in the drawable) that have color sufficiently close to the specified color (as determined by the threshold value) are included in the selection. The antialiasing parameter allows the final selection mask to contain intermediate values based on close misses to the threshold bar. Feathering can be enabled optionally and is controlled with the \"feather_radius\" parameter. If the sample_merged parameter is non-zero, the data of the composite image will be used instead of that for the specified drawable. This is equivalent to sampling for colors after merging all visible layers. In the case of a merged sampling, the supplied drawable is ignored.",
   "Spencer Kimball & Peter Mattis",
@@ -275,7 +276,8 @@ static ProcArg ellipse_select_inargs[] =
 
 static ProcRecord ellipse_select_proc =
 {
-  "gimp_ellipse_select",
+  "gimp-ellipse-select",
+  "gimp-ellipse-select",
   "Create an elliptical selection over the specified image.",
   "This tool creates an elliptical selection over the specified image. The elliptical region can be either added to, subtracted from, or replace the contents of the previous selection mask. If antialiasing is turned on, the edges of the elliptical region will contain intermediate values which give the appearance of a sharper, less pixelized edge. This should be set as TRUE most of the time. If the feather option is enabled, the resulting selection is blurred before combining. The blur is a gaussian blur with the specified feather radius.",
   "Spencer Kimball & Peter Mattis",
@@ -382,7 +384,8 @@ static ProcArg free_select_inargs[] =
 
 static ProcRecord free_select_proc =
 {
-  "gimp_free_select",
+  "gimp-free-select",
+  "gimp-free-select",
   "Create a polygonal selection over the specified image.",
   "This tool creates a polygonal selection over the specified image. The polygonal region can be either added to, subtracted from, or replace the contents of the previous selection mask. The polygon is specified through an array of floating point numbers and its length. The length of array must be 2n, where n is the number of points. Each point is defined by 2 floating point values which correspond to the x and y coordinates. If the final point does not connect to the starting point, a connecting segment is automatically added. If the feather option is enabled, the resulting selection is blurred before combining. The blur is a gaussian blur with the specified feather radius.",
   "Spencer Kimball & Peter Mattis",
@@ -510,7 +513,8 @@ static ProcArg fuzzy_select_inargs[] =
 
 static ProcRecord fuzzy_select_proc =
 {
-  "gimp_fuzzy_select",
+  "gimp-fuzzy-select",
+  "gimp-fuzzy-select",
   "Create a fuzzy selection starting at the specified coordinates on the specified drawable.",
   "This tool creates a fuzzy selection over the specified image. A fuzzy selection is determined by a seed fill under the constraints of the specified threshold. Essentially, the color at the specified coordinates (in the drawable) is measured and the selection expands outwards from that point to any adjacent pixels which are not significantly different (as determined by the threshold value). This process continues until no more expansion is possible. The antialiasing parameter allows the final selection mask to contain intermediate values based on close misses to the threshold bar at pixels along the seed fill boundary. Feathering can be enabled optionally and is controlled with the \"feather_radius\" paramter. If the sample_merged parameter is non-zero, the data of the composite image will be used instead of that for the specified drawable. This is equivalent to sampling for colors after merging all visible layers. In the case of a merged sampling, the supplied drawable is ignored."
   "If the sample is merged, the specified coordinates are relative to the image origin; otherwise, they are relative to the drawable's origin.",
@@ -624,7 +628,8 @@ static ProcArg rect_select_inargs[] =
 
 static ProcRecord rect_select_proc =
 {
-  "gimp_rect_select",
+  "gimp-rect-select",
+  "gimp-rect-select",
   "Create a rectangular selection over the specified image;",
   "This tool creates a rectangular selection over the specified image. The rectangular region can be either added to, subtracted from, or replace the contents of the previous selection mask. If the feather option is enabled, the resulting selection is blurred before combining. The blur is a gaussian blur with the specified feather radius.",
   "Spencer Kimball & Peter Mattis",

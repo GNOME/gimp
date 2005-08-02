@@ -152,7 +152,8 @@ static ProcArg drawable_delete_inargs[] =
 
 static ProcRecord drawable_delete_proc =
 {
-  "gimp_drawable_delete",
+  "gimp-drawable-delete",
+  "gimp-drawable-delete",
   "Delete a drawable.",
   "This procedure deletes the specified drawable. This must not be done if the gimage containing this drawable was already deleted or if the drawable was already removed from the image. The only case in which this procedure is useful is if you want to get rid of a drawable which has not yet been added to an image.",
   "Spencer Kimball & Peter Mattis",
@@ -209,7 +210,8 @@ static ProcArg drawable_is_layer_outargs[] =
 
 static ProcRecord drawable_is_layer_proc =
 {
-  "gimp_drawable_is_layer",
+  "gimp-drawable-is-layer",
+  "gimp-drawable-is-layer",
   "Returns whether the drawable is a layer.",
   "This procedure returns non-zero if the specified drawable is a layer.",
   "Spencer Kimball & Peter Mattis",
@@ -266,7 +268,8 @@ static ProcArg drawable_is_layer_mask_outargs[] =
 
 static ProcRecord drawable_is_layer_mask_proc =
 {
-  "gimp_drawable_is_layer_mask",
+  "gimp-drawable-is-layer-mask",
+  "gimp-drawable-is-layer-mask",
   "Returns whether the drawable is a layer mask.",
   "This procedure returns non-zero if the specified drawable is a layer mask.",
   "Spencer Kimball & Peter Mattis",
@@ -323,7 +326,8 @@ static ProcArg drawable_is_channel_outargs[] =
 
 static ProcRecord drawable_is_channel_proc =
 {
-  "gimp_drawable_is_channel",
+  "gimp-drawable-is-channel",
+  "gimp-drawable-is-channel",
   "Returns whether the drawable is a channel.",
   "This procedure returns non-zero if the specified drawable is a channel.",
   "Spencer Kimball & Peter Mattis",
@@ -380,7 +384,8 @@ static ProcArg drawable_type_outargs[] =
 
 static ProcRecord drawable_type_proc =
 {
-  "gimp_drawable_type",
+  "gimp-drawable-type",
+  "gimp-drawable-type",
   "Returns the drawable's type.",
   "This procedure returns the drawable's type.",
   "Spencer Kimball & Peter Mattis",
@@ -437,7 +442,8 @@ static ProcArg drawable_type_with_alpha_outargs[] =
 
 static ProcRecord drawable_type_with_alpha_proc =
 {
-  "gimp_drawable_type_with_alpha",
+  "gimp-drawable-type-with-alpha",
+  "gimp-drawable-type-with-alpha",
   "Returns the drawable's type with alpha.",
   "This procedure returns the drawable's type as if had an alpha channel. If the type is currently Gray, for instance, the returned type would be GrayA. If the drawable already has an alpha channel, the drawable's type is simply returned.",
   "Spencer Kimball & Peter Mattis",
@@ -494,7 +500,8 @@ static ProcArg drawable_has_alpha_outargs[] =
 
 static ProcRecord drawable_has_alpha_proc =
 {
-  "gimp_drawable_has_alpha",
+  "gimp-drawable-has-alpha",
+  "gimp-drawable-has-alpha",
   "Returns non-zero if the drawable has an alpha channel.",
   "This procedure returns whether the specified drawable has an alpha channel. This can only be true for layers, and the associated type will be one of: { RGBA , GRAYA, INDEXEDA }.",
   "Spencer Kimball & Peter Mattis",
@@ -551,7 +558,8 @@ static ProcArg drawable_is_rgb_outargs[] =
 
 static ProcRecord drawable_is_rgb_proc =
 {
-  "gimp_drawable_is_rgb",
+  "gimp-drawable-is-rgb",
+  "gimp-drawable-is-rgb",
   "Returns whether the drawable is an RGB type.",
   "This procedure returns non-zero if the specified drawable is of type { RGB, RGBA }.",
   "Spencer Kimball & Peter Mattis",
@@ -608,7 +616,8 @@ static ProcArg drawable_is_gray_outargs[] =
 
 static ProcRecord drawable_is_gray_proc =
 {
-  "gimp_drawable_is_gray",
+  "gimp-drawable-is-gray",
+  "gimp-drawable-is-gray",
   "Returns whether the drawable is a grayscale type.",
   "This procedure returns non-zero if the specified drawable is of type { Gray, GrayA }.",
   "Spencer Kimball & Peter Mattis",
@@ -665,7 +674,8 @@ static ProcArg drawable_is_indexed_outargs[] =
 
 static ProcRecord drawable_is_indexed_proc =
 {
-  "gimp_drawable_is_indexed",
+  "gimp-drawable-is-indexed",
+  "gimp-drawable-is-indexed",
   "Returns whether the drawable is an indexed type.",
   "This procedure returns non-zero if the specified drawable is of type { Indexed, IndexedA }.",
   "Spencer Kimball & Peter Mattis",
@@ -722,7 +732,8 @@ static ProcArg drawable_bpp_outargs[] =
 
 static ProcRecord drawable_bpp_proc =
 {
-  "gimp_drawable_bpp",
+  "gimp-drawable-bpp",
+  "gimp-drawable-bpp",
   "Returns the bytes per pixel.",
   "This procedure returns the number of bytes per pixel (or the number of channels) for the specified drawable.",
   "Spencer Kimball & Peter Mattis",
@@ -779,7 +790,8 @@ static ProcArg drawable_width_outargs[] =
 
 static ProcRecord drawable_width_proc =
 {
-  "gimp_drawable_width",
+  "gimp-drawable-width",
+  "gimp-drawable-width",
   "Returns the width of the drawable.",
   "This procedure returns the specified drawable's width in pixels.",
   "Spencer Kimball & Peter Mattis",
@@ -836,7 +848,8 @@ static ProcArg drawable_height_outargs[] =
 
 static ProcRecord drawable_height_proc =
 {
-  "gimp_drawable_height",
+  "gimp-drawable-height",
+  "gimp-drawable-height",
   "Returns the height of the drawable.",
   "This procedure returns the specified drawable's height in pixels.",
   "Spencer Kimball & Peter Mattis",
@@ -906,7 +919,8 @@ static ProcArg drawable_offsets_outargs[] =
 
 static ProcRecord drawable_offsets_proc =
 {
-  "gimp_drawable_offsets",
+  "gimp-drawable-offsets",
+  "gimp-drawable-offsets",
   "Returns the offsets for the drawable.",
   "This procedure returns the specified drawable's offsets. This only makes sense if the drawable is a layer since channels are anchored. The offsets of a channel will be returned as 0.",
   "Spencer Kimball & Peter Mattis",
@@ -967,7 +981,8 @@ static ProcArg drawable_get_image_outargs[] =
 
 static ProcRecord drawable_get_image_proc =
 {
-  "gimp_drawable_get_image",
+  "gimp-drawable-get-image",
+  "gimp-drawable-get-image",
   "Returns the drawable's image.",
   "This procedure returns the drawable's image.",
   "Spencer Kimball & Peter Mattis",
@@ -1024,7 +1039,8 @@ static ProcArg drawable_set_image_inargs[] =
 
 static ProcRecord drawable_set_image_proc =
 {
-  "gimp_drawable_set_image",
+  "gimp-drawable-set-image",
+  "gimp-drawable-set-image",
   "This procedure is deprecated!",
   "This procedure is deprecated!",
   "",
@@ -1081,7 +1097,8 @@ static ProcArg drawable_get_name_outargs[] =
 
 static ProcRecord drawable_get_name_proc =
 {
-  "gimp_drawable_get_name",
+  "gimp-drawable-get-name",
+  "gimp-drawable-get-name",
   "Get the name of the specified drawable.",
   "This procedure returns the specified drawable's name.",
   "Spencer Kimball & Peter Mattis",
@@ -1136,7 +1153,8 @@ static ProcArg drawable_set_name_inargs[] =
 
 static ProcRecord drawable_set_name_proc =
 {
-  "gimp_drawable_set_name",
+  "gimp-drawable-set-name",
+  "gimp-drawable-set-name",
   "Set the name of the specified drawable.",
   "This procedure sets the specified drawable's name.",
   "Spencer Kimball & Peter Mattis",
@@ -1193,7 +1211,8 @@ static ProcArg drawable_get_visible_outargs[] =
 
 static ProcRecord drawable_get_visible_proc =
 {
-  "gimp_drawable_get_visible",
+  "gimp-drawable-get-visible",
+  "gimp-drawable-get-visible",
   "Get the visibility of the specified drawable.",
   "This procedure returns the specified drawable's visibility.",
   "Spencer Kimball & Peter Mattis",
@@ -1246,7 +1265,8 @@ static ProcArg drawable_set_visible_inargs[] =
 
 static ProcRecord drawable_set_visible_proc =
 {
-  "gimp_drawable_set_visible",
+  "gimp-drawable-set-visible",
+  "gimp-drawable-set-visible",
   "Set the visibility of the specified drawable.",
   "This procedure sets the specified drawable's visibility.",
   "Spencer Kimball & Peter Mattis",
@@ -1303,7 +1323,8 @@ static ProcArg drawable_get_linked_outargs[] =
 
 static ProcRecord drawable_get_linked_proc =
 {
-  "gimp_drawable_get_linked",
+  "gimp-drawable-get-linked",
+  "gimp-drawable-get-linked",
   "Get the linked state of the specified drawable.",
   "This procedure returns the specified drawable's linked state.",
   "Wolfgang Hofer",
@@ -1356,7 +1377,8 @@ static ProcArg drawable_set_linked_inargs[] =
 
 static ProcRecord drawable_set_linked_proc =
 {
-  "gimp_drawable_set_linked",
+  "gimp-drawable-set-linked",
+  "gimp-drawable-set-linked",
   "Set the linked state of the specified drawable.",
   "This procedure sets the specified drawable's linked state.",
   "Wolfgang Hofer",
@@ -1413,7 +1435,8 @@ static ProcArg drawable_get_tattoo_outargs[] =
 
 static ProcRecord drawable_get_tattoo_proc =
 {
-  "gimp_drawable_get_tattoo",
+  "gimp-drawable-get-tattoo",
+  "gimp-drawable-get-tattoo",
   "Get the tattoo of the specified drawable.",
   "This procedure returns the specified drawable's tattoo. A tattoo is a unique and permanent identifier attached to a drawable that can be used to uniquely identify a drawable within an image even between sessions",
   "Jay Cox",
@@ -1468,7 +1491,8 @@ static ProcArg drawable_set_tattoo_inargs[] =
 
 static ProcRecord drawable_set_tattoo_proc =
 {
-  "gimp_drawable_set_tattoo",
+  "gimp-drawable-set-tattoo",
+  "gimp-drawable-set-tattoo",
   "Set the tattoo of the specified drawable.",
   "This procedure sets the specified drawable's tattoo. A tattoo is a unique and permanent identifier attached to a drawable that can be used to uniquely identify a drawable within an image even between sessions",
   "Jay Cox",
@@ -1559,7 +1583,8 @@ static ProcArg drawable_mask_bounds_outargs[] =
 
 static ProcRecord drawable_mask_bounds_proc =
 {
-  "gimp_drawable_mask_bounds",
+  "gimp-drawable-mask-bounds",
+  "gimp-drawable-mask-bounds",
   "Find the bounding box of the current selection in relation to the specified drawable.",
   "This procedure returns whether there is a selection. If there is one, the upper left and lower righthand corners of its bounding box are returned. These coordinates are specified relative to the drawable's origin, and bounded by the drawable's extents. Please note that the pixel specified by the lower righthand coordinate of the bounding box is not part of the selection. The selection ends at the upper left corner of this pixel. This means the width of the selection can be calculated as (x2 - x1), its height as (y2 - y1). Note that the returned boolean does NOT correspond with the returned region being empty or not, it always returns whether the selection is non_empty. See gimp_drawable_mask_intersect() for a boolean return value which is more useful in most cases.",
   "Spencer Kimball & Peter Mattis",
@@ -1650,7 +1675,8 @@ static ProcArg drawable_mask_intersect_outargs[] =
 
 static ProcRecord drawable_mask_intersect_proc =
 {
-  "gimp_drawable_mask_intersect",
+  "gimp-drawable-mask-intersect",
+  "gimp-drawable-mask-intersect",
   "Find the bounding box of the current selection in relation to the specified drawable.",
   "This procedure returns whether there is an intersection between the drawable and the selection. Unlike gimp_drawable_mask_bounds(), the intersection's bounds are returned as x, y, width, height. If there is no selection this function returns TRUE and the returned bounds are the extents of the whole drawable.",
   "Michael Natterer <mitch@gimp.org>",
@@ -1720,7 +1746,8 @@ static ProcArg drawable_merge_shadow_inargs[] =
 
 static ProcRecord drawable_merge_shadow_proc =
 {
-  "gimp_drawable_merge_shadow",
+  "gimp-drawable-merge-shadow",
+  "gimp-drawable-merge-shadow",
   "Merge the shadow buffer with the specified drawable.",
   "This procedure combines the contents of the image's shadow buffer (for temporary processing) with the specified drawable. The \"undo\" parameter specifies whether to add an undo step for the operation. Requesting no undo is useful for such applications as 'auto-apply'.",
   "Spencer Kimball & Peter Mattis",
@@ -1797,7 +1824,8 @@ static ProcArg drawable_update_inargs[] =
 
 static ProcRecord drawable_update_proc =
 {
-  "gimp_drawable_update",
+  "gimp-drawable-update",
+  "gimp-drawable-update",
   "Update the specified region of the drawable.",
   "This procedure updates the specified region of the drawable. The (x, y) coordinate pair is relative to the drawable's origin, not to the image origin. Therefore, the entire drawable can be updated using (0, 0, width, height).",
   "Spencer Kimball & Peter Mattis",
@@ -1911,7 +1939,8 @@ static ProcArg drawable_get_pixel_outargs[] =
 
 static ProcRecord drawable_get_pixel_proc =
 {
-  "gimp_drawable_get_pixel",
+  "gimp-drawable-get-pixel",
+  "gimp-drawable-get-pixel",
   "Gets the value of the pixel at the specified coordinates.",
   "This procedure gets the pixel value at the specified coordinates. The 'num_channels' argument must always be equal to the bytes-per-pixel value for the specified drawable.",
   "Spencer Kimball & Peter Mattis",
@@ -2014,7 +2043,8 @@ static ProcArg drawable_set_pixel_inargs[] =
 
 static ProcRecord drawable_set_pixel_proc =
 {
-  "gimp_drawable_set_pixel",
+  "gimp-drawable-set-pixel",
+  "gimp-drawable-set-pixel",
   "Sets the value of the pixel at the specified coordinates.",
   "This procedure sets the pixel value at the specified coordinates. The 'num_channels' argument must always be equal to the bytes-per-pixel value for the specified drawable. Note that this function is not undoable, you should use it only on drawables you just created yourself.",
   "Spencer Kimball & Peter Mattis",
@@ -2069,7 +2099,8 @@ static ProcArg drawable_fill_inargs[] =
 
 static ProcRecord drawable_fill_proc =
 {
-  "gimp_drawable_fill",
+  "gimp-drawable-fill",
+  "gimp-drawable-fill",
   "Fill the drawable with the specified fill mode.",
   "This procedure fills the drawable with the fill mode. If the fill mode is foreground the current foreground color is used. If the fill mode is background, the current background color is used. If the fill type is white, then white is used. Transparent fill only affects layers with an alpha channel, in which case the alpha channel is set to transparent. If the drawable has no alpha channel, it is filled to white. No fill leaves the drawable's contents undefined. This procedure is unlike the bucket fill tool because it fills regardless of a selection",
   "Spencer Kimball & Peter Mattis",
@@ -2154,7 +2185,8 @@ static ProcArg drawable_offset_inargs[] =
 
 static ProcRecord drawable_offset_proc =
 {
-  "gimp_drawable_offset",
+  "gimp-drawable-offset",
+  "gimp-drawable-offset",
   "Offset the drawable by the specified amounts in the X and Y directions",
   "This procedure offsets the specified drawable by the amounts specified by 'offset_x' and 'offset_y'. If 'wrap_around' is set to TRUE, then portions of the drawable which are offset out of bounds are wrapped around. Alternatively, the undefined regions of the drawable can be filled with transparency or the background color, as specified by the 'fill_type' parameter.",
   "Spencer Kimball & Peter Mattis",
@@ -2302,7 +2334,8 @@ static ProcArg drawable_thumbnail_outargs[] =
 
 static ProcRecord drawable_thumbnail_proc =
 {
-  "gimp_drawable_thumbnail",
+  "gimp-drawable-thumbnail",
+  "gimp-drawable-thumbnail",
   "Get a thumbnail of a drawable.",
   "This function gets data from which a thumbnail of a drawable preview can be created. Maximum x or y dimension is 512 pixels. The pixels are returned in RGB[A] or GRAY[A] format. The bpp return value gives the number of bytes in the image.",
   "Andy Thomas",
@@ -2488,7 +2521,8 @@ static ProcArg drawable_sub_thumbnail_outargs[] =
 
 static ProcRecord drawable_sub_thumbnail_proc =
 {
-  "gimp_drawable_sub_thumbnail",
+  "gimp-drawable-sub-thumbnail",
+  "gimp-drawable-sub-thumbnail",
   "Get a thumbnail of a sub-area of a drawable drawable.",
   "This function gets data from which a thumbnail of a drawable preview can be created. Maximum x or y dimension is 512 pixels. The pixels are returned in RGB[A] or GRAY[A] format. The bpp return value gives the number of bytes in the image.",
   "Michael Natterer <mitch@gimp.org>",
@@ -2558,7 +2592,8 @@ static ProcArg drawable_foreground_extract_inargs[] =
 
 static ProcRecord drawable_foreground_extract_proc =
 {
-  "gimp_drawable_foreground_extract",
+  "gimp-drawable-foreground-extract",
+  "gimp-drawable-foreground-extract",
   "Extract the foreground of a drawable using a given trimap.",
   "Image Segmentation by Uniform Color Clustering, see http://www.inf.fu-berlin.de/inst/pubs/tr-b-05-07.pdf",
   "Gerald Friedland <fland@inf.fu-berlin.de>, Kristian Jantz <jantz@inf.fu-berlin.de>, Sven Neumann <sven@gimp.org>",

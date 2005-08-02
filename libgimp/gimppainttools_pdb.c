@@ -52,7 +52,7 @@ gimp_airbrush (gint32         drawable_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_airbrush",
+  return_vals = gimp_run_procedure ("gimp-airbrush",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_FLOAT, pressure,
@@ -92,7 +92,7 @@ gimp_airbrush_default (gint32         drawable_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_airbrush_default",
+  return_vals = gimp_run_procedure ("gimp-airbrush-default",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_INT32, num_strokes,
@@ -146,7 +146,7 @@ gimp_clone (gint32         drawable_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_clone",
+  return_vals = gimp_run_procedure ("gimp-clone",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_DRAWABLE, src_drawable_ID,
@@ -190,7 +190,7 @@ gimp_clone_default (gint32         drawable_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_clone_default",
+  return_vals = gimp_run_procedure ("gimp-clone-default",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_INT32, num_strokes,
@@ -232,7 +232,7 @@ gimp_convolve (gint32            drawable_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_convolve",
+  return_vals = gimp_run_procedure ("gimp-convolve",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_FLOAT, pressure,
@@ -273,7 +273,7 @@ gimp_convolve_default (gint32         drawable_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_convolve_default",
+  return_vals = gimp_run_procedure ("gimp-convolve-default",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_INT32, num_strokes,
@@ -314,7 +314,7 @@ gimp_dodgeburn (gint32             drawable_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_dodgeburn",
+  return_vals = gimp_run_procedure ("gimp-dodgeburn",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_FLOAT, exposure,
@@ -355,7 +355,7 @@ gimp_dodgeburn_default (gint32         drawable_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_dodgeburn_default",
+  return_vals = gimp_run_procedure ("gimp-dodgeburn-default",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_INT32, num_strokes,
@@ -398,7 +398,7 @@ gimp_eraser (gint32                    drawable_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_eraser",
+  return_vals = gimp_run_procedure ("gimp-eraser",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_INT32, num_strokes,
@@ -439,7 +439,7 @@ gimp_eraser_default (gint32         drawable_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_eraser_default",
+  return_vals = gimp_run_procedure ("gimp-eraser-default",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_INT32, num_strokes,
@@ -490,7 +490,7 @@ gimp_paintbrush (gint32                    drawable_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_paintbrush",
+  return_vals = gimp_run_procedure ("gimp-paintbrush",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_FLOAT, fade_out,
@@ -541,7 +541,7 @@ gimp_paintbrush_default (gint32         drawable_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_paintbrush_default",
+  return_vals = gimp_run_procedure ("gimp-paintbrush-default",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_INT32, num_strokes,
@@ -581,7 +581,7 @@ gimp_pencil (gint32         drawable_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_pencil",
+  return_vals = gimp_run_procedure ("gimp-pencil",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_INT32, num_strokes,
@@ -620,7 +620,7 @@ gimp_smudge (gint32         drawable_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_smudge",
+  return_vals = gimp_run_procedure ("gimp-smudge",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_FLOAT, pressure,
@@ -659,7 +659,7 @@ gimp_smudge_default (gint32         drawable_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_smudge_default",
+  return_vals = gimp_run_procedure ("gimp-smudge-default",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_INT32, num_strokes,

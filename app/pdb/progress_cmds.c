@@ -96,7 +96,8 @@ static ProcArg progress_init_inargs[] =
 
 static ProcRecord progress_init_proc =
 {
-  "gimp_progress_init",
+  "gimp-progress-init",
+  "gimp-progress-init",
   "Initializes the progress bar for the current plug-in.",
   "Initializes the progress bar for the current plug-in. It is only valid to call this procedure from a plug-in.",
   "Spencer Kimball & Peter Mattis",
@@ -144,7 +145,8 @@ static ProcArg progress_update_inargs[] =
 
 static ProcRecord progress_update_proc =
 {
-  "gimp_progress_update",
+  "gimp-progress-update",
+  "gimp-progress-update",
   "Updates the progress bar for the current plug-in.",
   "Updates the progress bar for the current plug-in. It is only valid to call this procedure from a plug-in.",
   "Spencer Kimball & Peter Mattis",
@@ -178,7 +180,8 @@ progress_pulse_invoker (Gimp         *gimp,
 
 static ProcRecord progress_pulse_proc =
 {
-  "gimp_progress_pulse",
+  "gimp-progress-pulse",
+  "gimp-progress-pulse",
   "Pulses the progress bar for the current plug-in.",
   "Updates the progress bar for the current plug-in. It is only valid to call this procedure from a plug-in. Use this function instead of gimp_progress_update() if you cannot tell how much progress has been made. This usually causes the the progress bar to enter \"activity mode\", where a block bounces back and forth.",
   "Sven Neumann <sven@gimp.org>",
@@ -231,7 +234,8 @@ static ProcArg progress_set_text_inargs[] =
 
 static ProcRecord progress_set_text_proc =
 {
-  "gimp_progress_set_text",
+  "gimp-progress-set-text",
+  "gimp-progress-set-text",
   "Changes the text in the progress bar for the current plug-in.",
   "This function allows to change the text in the progress bar for the current plug-in. Unlike gimp_progress_init() it does not change the displayed value.",
   "Sven Neumann <sven@gimp.org>",
@@ -282,7 +286,8 @@ static ProcArg progress_install_inargs[] =
 
 static ProcRecord progress_install_proc =
 {
-  "gimp_progress_install",
+  "gimp-progress-install",
+  "gimp-progress-install",
   "Installs a progress callback for the current plug-in.",
   "This function installs a temporary PDB procedure which will handle all progress calls made by this plug-in and any procedure it calls. Calling this function multiple times simply replaces the old progress callbacks.",
   "Michael Natterer <mitch@gimp.org>",
@@ -333,7 +338,8 @@ static ProcArg progress_uninstall_inargs[] =
 
 static ProcRecord progress_uninstall_proc =
 {
-  "gimp_progress_uninstall",
+  "gimp-progress-uninstall",
+  "gimp-progress-uninstall",
   "Uninstalls the progress callback for the current plug-in.",
   "This function uninstalls any progress callback installed with gimp_progress_install() before.",
   "Michael Natterer <mitch@gimp.org>",
@@ -384,7 +390,8 @@ static ProcArg progress_cancel_inargs[] =
 
 static ProcRecord progress_cancel_proc =
 {
-  "gimp_progress_cancel",
+  "gimp-progress-cancel",
+  "gimp-progress-cancel",
   "Cancels a running progress.",
   "This function cancels the currently running progress.",
   "Michael Natterer <mitch@gimp.org>",

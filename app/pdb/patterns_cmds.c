@@ -61,7 +61,8 @@ patterns_refresh_invoker (Gimp         *gimp,
 
 static ProcRecord patterns_refresh_proc =
 {
-  "gimp_patterns_refresh",
+  "gimp-patterns-refresh",
+  "gimp-patterns-refresh",
   "Refresh current patterns. This function always succeeds.",
   "This procedure retrieves all patterns currently in the user's pattern path and updates all pattern dialogs accordingly.",
   "Michael Natterer",
@@ -131,9 +132,10 @@ static ProcArg patterns_get_list_outargs[] =
 
 static ProcRecord patterns_get_list_proc =
 {
-  "gimp_patterns_get_list",
+  "gimp-patterns-get-list",
+  "gimp-patterns-get-list",
   "Retrieve a complete listing of the available patterns.",
-  "This procedure returns a complete listing of available GIMP patterns. Each name returned can be used as input to the 'gimp_context_set_pattern'.",
+  "This procedure returns a complete listing of available GIMP patterns. Each name returned can be used as input to the 'gimp-context-set-pattern'.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -191,13 +193,14 @@ static ProcArg patterns_get_pattern_outargs[] =
 
 static ProcRecord patterns_get_pattern_proc =
 {
-  "gimp_patterns_get_pattern",
-  "This procedure is deprecated! Use 'gimp_context_get_pattern' instead.",
-  "This procedure is deprecated! Use 'gimp_context_get_pattern' instead.",
+  "gimp-patterns-get-pattern",
+  "gimp-patterns-get-pattern",
+  "This procedure is deprecated! Use 'gimp-context-get-pattern' instead.",
+  "This procedure is deprecated! Use 'gimp-context-get-pattern' instead.",
   "",
   "",
   "",
-  "gimp_context_get_pattern",
+  "gimp-context-get-pattern",
   GIMP_INTERNAL,
   0,
   NULL,
@@ -306,13 +309,14 @@ static ProcArg patterns_get_pattern_data_outargs[] =
 
 static ProcRecord patterns_get_pattern_data_proc =
 {
-  "gimp_patterns_get_pattern_data",
-  "This procedure is deprecated! Use 'gimp_pattern_get_pixels' instead.",
-  "This procedure is deprecated! Use 'gimp_pattern_get_pixels' instead.",
+  "gimp-patterns-get-pattern-data",
+  "gimp-patterns-get-pattern-data",
+  "This procedure is deprecated! Use 'gimp-pattern-get-pixels' instead.",
+  "This procedure is deprecated! Use 'gimp-pattern-get-pixels' instead.",
   "",
   "",
   "",
-  "gimp_pattern_get_pixels",
+  "gimp-pattern-get-pixels",
   GIMP_INTERNAL,
   1,
   patterns_get_pattern_data_inargs,

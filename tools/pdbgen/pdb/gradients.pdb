@@ -46,7 +46,7 @@ sub gradients_get_list {
 
     $help = <<'HELP';
 This procedure returns a list of the gradients that are currently loaded.
-You can later use the 'gimp_context_set_gradient' function to
+You can later use the 'gimp-context-set-gradient' function to
 set the active gradient.
 HELP
 
@@ -92,7 +92,7 @@ sub sample_outargs {
 }
 
 sub gradients_sample_uniform {
-    &std_pdb_deprecated ('gimp_gradient_get_uniform_samples');
+    &std_pdb_deprecated ('gimp-gradient-get-uniform-samples');
 
     @inargs = (
 	 &sample_num_arg('2 <= '),
@@ -133,7 +133,7 @@ CODE
 }
 
 sub gradients_sample_custom {
-    &std_pdb_deprecated ('gimp_gradient_get_custom_samples');
+    &std_pdb_deprecated ('gimp-gradient-get-custom-samples');
 
     @inargs = (
 	{ name  => 'positions',
@@ -184,7 +184,7 @@ sub sample_size_arg {
 }
 
 sub gradients_get_gradient_data {
-    &std_pdb_deprecated ('gimp_gradient_get_uniform_samples');
+    &std_pdb_deprecated ('gimp-gradient-get-uniform-samples');
 
     @inargs = (
 	{ name => 'name', type => 'string',

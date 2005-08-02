@@ -45,7 +45,7 @@ gimp_image_convert_rgb (gint32 image_ID)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_image_convert_rgb",
+  return_vals = gimp_run_procedure ("gimp-image-convert-rgb",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
@@ -76,7 +76,7 @@ gimp_image_convert_grayscale (gint32 image_ID)
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_image_convert_grayscale",
+  return_vals = gimp_run_procedure ("gimp-image-convert-grayscale",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
@@ -129,7 +129,7 @@ gimp_image_convert_indexed (gint32                  image_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_image_convert_indexed",
+  return_vals = gimp_run_procedure ("gimp-image-convert-indexed",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_INT32, dither_type,

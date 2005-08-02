@@ -69,7 +69,7 @@ gimp_by_color_select (gint32          drawable_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_by_color_select",
+  return_vals = gimp_run_procedure ("gimp-by-color-select",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_COLOR, color,
@@ -129,7 +129,7 @@ gimp_ellipse_select (gint32         image_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_ellipse_select",
+  return_vals = gimp_run_procedure ("gimp-ellipse-select",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_FLOAT, x,
@@ -188,7 +188,7 @@ gimp_free_select (gint32          image_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_free_select",
+  return_vals = gimp_run_procedure ("gimp-free-select",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_INT32, num_segs,
@@ -257,7 +257,7 @@ gimp_fuzzy_select (gint32         drawable_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_fuzzy_select",
+  return_vals = gimp_run_procedure ("gimp-fuzzy-select",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_FLOAT, x,
@@ -313,7 +313,7 @@ gimp_rect_select (gint32         image_ID,
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_rect_select",
+  return_vals = gimp_run_procedure ("gimp-rect-select",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_FLOAT, x,
