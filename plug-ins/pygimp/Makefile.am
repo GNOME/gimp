@@ -6,7 +6,6 @@ libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSIO
 libgimp = $(top_builddir)/libgimp/libgimp-$(GIMP_API_VERSION).la
 libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
 libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
-libgimpprocbrowser = $(top_builddir)/plug-ins/dbbrowser/libgimpprocbrowser.la
 libgimpmath = $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la
 
 SUBDIRS = plug-ins
@@ -84,7 +83,6 @@ gimpprocbrowser_la_LDFLAGS = -module -avoid-version $(no_undefined) \
 	-export-symbols-regex initgimpprocbrowser
 
 gimpprocbrowser_la_LIBADD = \
-	$(libgimpprocbrowser)	\
 	$(libgimpui)		\
 	$(libgimpwidgets)	\
 	$(libgimpconfig)	\

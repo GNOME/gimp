@@ -233,34 +233,38 @@ libgimpui_2_0_la_sources = \
 	gimpui.c		\
 	gimpui.h		\
 	gimpuitypes.h		\
-	gimpmenu.c		\
-	gimpmenu.h		\
 	gimpaspectpreview.c     \
 	gimpaspectpreview.h     \
 	gimpbrushmenu.c		\
 	gimpbrushmenu.h		\
+	gimpdrawablecombobox.c	\
+	gimpdrawablecombobox.h	\
 	gimpdrawablepreview.c	\
 	gimpdrawablepreview.h	\
+	gimpexport.c		\
+	gimpexport.h		\
 	gimpfontmenu.c		\
 	gimpfontmenu.h		\
 	gimpfontselectbutton.c	\
 	gimpfontselectbutton.h	\
 	gimpgradientmenu.c 	\
 	gimpgradientmenu.h 	\
+	gimpimagecombobox.c	\
+	gimpimagecombobox.h	\
+	gimpmenu.c		\
+	gimpmenu.h		\
 	gimppalettemenu.c	\
 	gimppalettemenu.h	\
 	gimppatternmenu.c	\
 	gimppatternmenu.h	\
-	gimpdrawablecombobox.c	\
-	gimpdrawablecombobox.h	\
-	gimpimagecombobox.c	\
-	gimpimagecombobox.h	\
 	gimppixbuf.c		\
 	gimppixbuf.h		\
+	gimpprocbrowserdialog.c	\
+	gimpprocbrowserdialog.h	\
+	gimpprocview.c		\
+	gimpprocview.h		\
 	gimpprogressbar.c	\
-	gimpprogressbar.h	\
-	gimpexport.c		\
-	gimpexport.h
+	gimpprogressbar.h
 
 libgimpui_2_0_la_built_sources = \
 	gimpuimarshal.c			\
@@ -304,20 +308,22 @@ gimpinclude_HEADERS = \
 	\
 	gimpui.h		\
 	gimpuitypes.h		\
-	gimpmenu.h		\
 	gimpaspectpreview.h	\
 	gimpbrushmenu.h		\
+	gimpdrawablecombobox.h	\
 	gimpdrawablepreview.h   \
+	gimpexport.h		\
 	gimpfontmenu.h		\
 	gimpfontselectbutton.h	\
 	gimpgradientmenu.h	\
+	gimpimagecombobox.h	\
+	gimpmenu.h		\
 	gimppalettemenu.h	\
 	gimppatternmenu.h	\
 	gimppixbuf.h		\
-	gimpprogressbar.h	\
-	gimpdrawablecombobox.h	\
-	gimpimagecombobox.h	\
-	gimpexport.h
+	gimpprocbrowserdialog.h	\
+	gimpprocview.h		\
+	gimpprogressbar.h
 
 libgimp_2_0_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\

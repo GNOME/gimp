@@ -23,12 +23,12 @@
 
 #include <gtk/gtk.h>
 
+#include <libgimpwidgets/gimpwidgets.h>
+
 #include <pygobject.h>
 #include <pygtk/pygtk.h>
 
 #include "pygimp-api.h"
-
-#include <plug-ins/dbbrowser/gimpprocbrowser.h>
 
 
 typedef struct
@@ -113,6 +113,7 @@ proxy_cleanup(gpointer data, GObject *obj)
 static PyObject *
 proc_browser_dialog_new(PyObject *self, PyObject *args, PyObject *kwargs)
 {
+#if 0
     PyObject *py_func = Py_None, *py_data = Py_None;
     GimpProcBrowserApplyCallback proxy_func = NULL;
     ProxyData *proxy_data = NULL;
@@ -150,6 +151,7 @@ proc_browser_dialog_new(PyObject *self, PyObject *args, PyObject *kwargs)
       g_object_weak_ref(dlg, proxy_cleanup, proxy_data);
 
     return pygobject_new(dlg);
+#endif
 }
 
 /* List of methods defined in the module */

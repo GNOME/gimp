@@ -16,14 +16,7 @@ AM_LDFLAGS = $(mwindows)
 
 libexecdir = $(gimpplugindir)/plug-ins
 
-noinst_LTLIBRARIES = libgimpprocbrowser.la
 libexec_PROGRAMS = plugin-browser procedure-browser
-
-libgimpprocbrowser_la_SOURCES = \
-	gimpprocbrowser.c	\
-	gimpprocbrowser.h	\
-	gimpprocview.c		\
-	gimpprocview.h
 
 plugin_browser_SOURCES = \
 	plugin-browser.c
@@ -40,7 +33,6 @@ INCLUDES = \
 	-I$(includedir)
 
 LDADD = \
-	libgimpprocbrowser.la	\
 	$(libgimpui)		\
 	$(libgimpwidgets)	\
 	$(libgimpconfig)	\

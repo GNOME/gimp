@@ -29,12 +29,14 @@
 
 #include <gtk/gtk.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include "libgimpwidgets/gimpwidgets.h"
 
+#include "gimp.h"
+
+#include "gimpuitypes.h"
 #include "gimpprocview.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libgimp-intl.h"
 
 
 /*  local function prototypes  */

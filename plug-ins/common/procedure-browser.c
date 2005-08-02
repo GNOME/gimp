@@ -46,8 +46,6 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include "gimpprocbrowser.h"
-
 #include "libgimp/stdplugins-intl.h"
 
 
@@ -115,13 +113,13 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       {
+        GtkWidget *dialog;
+
         gimp_ui_init ("dbbrowser", FALSE);
 
-        gtk_quit_add_destroy (1, (GtkObject *)
-                              gimp_proc_browser_dialog_new (FALSE, NULL, NULL));
-
-        gtk_main ();
-        gdk_flush ();
+        dialog = gimp_proc_browser_dialog_new (FALSE, FALSE);
+        gtk_dialog_run (GTK_DIALOG (dialog));
+        gtk_widget_destroy (dialog);
       }
       break;
 

@@ -1,3 +1,25 @@
+2005-08-02  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/dbbrowser/Makefile.am
+	* plug-ins/dbbrowser/gimpprocbrowser.[ch]
+	* plug-ins/dbbrowser/gimpprocview.[ch]: removed these files...
+
+	* libgimp/Makefile.am
+	* libgimp/gimpui.h
+	* libgimp/gimpui.def
+	* libgimp/gimpprocbrowserdialog.[ch]
+	* libgimp/gimpprocview.[ch]: ...and added them here. Turned the
+	procedure browser into a widget called GimpProcBrowserDialog and
+	changed its API completely. Fixes bug #165009.
+
+	* plug-ins/dbbrowser/plugin-browser.c
+	* plug-ins/dbbrowser/procedure-browser.c
+	* plug-ins/script-fu/Makefile.am
+	* plug-ins/script-fu/script-fu-console.c: changed accordingly.
+
+	* plug-ins/pygimp/Makefile.am
+	* plug-ins/pygimp/procbrowser.c: ditto (#if 0'ed stuff so it compiles).
+
 2005-08-02  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpforegroundselectoptions.[ch]

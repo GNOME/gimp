@@ -37,6 +37,10 @@ EXPORTS
 	gimp_pattern_select_widget_close
 	gimp_pattern_select_widget_new
 	gimp_pattern_select_widget_set
+	gimp_proc_browser_dialog_get_type
+	gimp_proc_browser_dialog_new
+	gimp_proc_browser_dialog_get_selected
+	gimp_proc_view_new
 	gimp_progress_bar_get_type
 	gimp_progress_bar_new
 	gimp_ui_init

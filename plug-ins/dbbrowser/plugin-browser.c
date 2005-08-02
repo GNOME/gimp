@@ -31,8 +31,6 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include "gimpprocview.h"
-
 #include "libgimp/stdplugins-intl.h"
 
 
