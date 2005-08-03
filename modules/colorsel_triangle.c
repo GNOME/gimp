@@ -359,7 +359,7 @@ colorsel_triangle_update_preview (ColorselTriangle *triangle)
 
   /* marker in triangle */
 
-  col = gimp_rgb_intensity (&selector->rgb) > 0.5 ? 0 : 255;
+  col = gimp_rgb_luminance (&selector->rgb) > 0.5 ? 0 : 255;
 
   sat = triangle->oldsat = selector->hsv.s;
   val = triangle->oldval = selector->hsv.v;
