@@ -155,7 +155,7 @@ typedef enum
 } GimpDodgeBurnType;
 
 
-#define GIMP_TYPE_FOEEGROUND_EXTRACT_MODE (gimp_foreground_extract_mode_get_type ())
+#define GIMP_TYPE_FOREGROUND_EXTRACT_MODE (gimp_foreground_extract_mode_get_type ())
 
 GType gimp_foreground_extract_mode_get_type (void) G_GNUC_CONST;
 
