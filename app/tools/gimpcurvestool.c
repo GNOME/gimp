@@ -620,7 +620,7 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
                                   tool,
                                   &tool->curve_type);
 
-  gtk_widget_style_get (bbox, "child_internal_pad_x", &padding, NULL);
+  gtk_widget_style_get (bbox, "child-internal-pad-x", &padding, NULL);
 
   gimp_enum_stock_box_set_child_padding (hbox, padding, -1);
 

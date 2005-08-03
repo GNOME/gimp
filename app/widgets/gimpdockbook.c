@@ -134,11 +134,8 @@ gimp_dockbook_get_type (void)
 static void
 gimp_dockbook_class_init (GimpDockbookClass *klass)
 {
-  GObjectClass   *object_class;
-  GtkWidgetClass *widget_class;
-
-  object_class = G_OBJECT_CLASS (klass);
-  widget_class = GTK_WIDGET_CLASS (klass);
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -236,11 +233,11 @@ gimp_dockbook_style_set (GtkWidget *widget,
     GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 
   gtk_widget_style_get (widget,
-                        "tab_border", &tab_border,
+                        "tab-border", &tab_border,
                         NULL);
 
   g_object_set (widget,
-                "tab_border", tab_border,
+                "tab-border", tab_border,
                 NULL);
 
   children = gtk_container_get_children (GTK_CONTAINER (widget));
@@ -412,7 +409,7 @@ gimp_dockbook_get_tab_widget (GimpDockbook *dockbook,
   GtkIconSize  tab_size = DEFAULT_TAB_ICON_SIZE;
 
   gtk_widget_style_get (GTK_WIDGET (dockbook),
-                        "tab_icon_size", &tab_size,
+                        "tab-icon-size", &tab_size,
                         NULL);
 
   tab_widget = gimp_dockable_get_tab_widget (dockable,
@@ -442,10 +439,10 @@ gimp_dockbook_get_tab_widget (GimpDockbook *dockbook,
                        GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
                        dialog_target_table, G_N_ELEMENTS (dialog_target_table),
                        GDK_ACTION_MOVE);
-  g_signal_connect (tab_widget, "drag_begin",
+  g_signal_connect (tab_widget, "drag-begin",
                     G_CALLBACK (gimp_dockbook_tab_drag_begin),
                     dockable);
-  g_signal_connect (tab_widget, "drag_end",
+  g_signal_connect (tab_widget, "drag-end",
                     G_CALLBACK (gimp_dockbook_tab_drag_end),
                     dockable);
 
@@ -453,10 +450,10 @@ gimp_dockbook_get_tab_widget (GimpDockbook *dockbook,
                        GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
                        dialog_target_table, G_N_ELEMENTS (dialog_target_table),
                        GDK_ACTION_MOVE);
-  g_signal_connect (dockable, "drag_begin",
+  g_signal_connect (dockable, "drag-begin",
                     G_CALLBACK (gimp_dockbook_tab_drag_begin),
                     dockable);
-  g_signal_connect (dockable, "drag_end",
+  g_signal_connect (dockable, "drag-end",
                     G_CALLBACK (gimp_dockbook_tab_drag_end),
                     dockable);
 
@@ -464,7 +461,7 @@ gimp_dockbook_get_tab_widget (GimpDockbook *dockbook,
                      GTK_DEST_DEFAULT_ALL,
                      dialog_target_table, G_N_ELEMENTS (dialog_target_table),
                      GDK_ACTION_MOVE);
-  g_signal_connect (tab_widget, "drag_drop",
+  g_signal_connect (tab_widget, "drag-drop",
                     G_CALLBACK (gimp_dockbook_tab_drag_drop),
                     dockbook);
 

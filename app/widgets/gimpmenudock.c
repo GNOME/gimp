@@ -264,8 +264,8 @@ gimp_menu_dock_style_set (GtkWidget *widget,
     GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 
   gtk_widget_style_get (widget,
-                        "minimal_width",     &minimal_width,
-                        "menu_preview_size", &menu_preview_size,
+                        "minimal-width",     &minimal_width,
+                        "menu-preview-size", &menu_preview_size,
                         NULL);
 
   screen = gtk_widget_get_screen (menu_dock->image_combo);
@@ -275,8 +275,8 @@ gimp_menu_dock_style_set (GtkWidget *widget,
                                      &menu_preview_height);
 
   gtk_widget_style_get (menu_dock->auto_button,
-                        "focus_line_width", &focus_line_width,
-                        "focus_padding",    &focus_padding,
+                        "focus-line-width", &focus_line_width,
+                        "focus-padding",    &focus_padding,
                         NULL);
 
   ythickness = menu_dock->auto_button->style->ythickness;
@@ -370,13 +370,13 @@ static void
 gimp_menu_dock_book_added (GimpDock     *dock,
                            GimpDockbook *dockbook)
 {
-  g_signal_connect (dockbook, "dockable_added",
+  g_signal_connect (dockbook, "dockable-added",
                     G_CALLBACK (gimp_menu_dock_dockbook_changed),
                     dock);
-  g_signal_connect (dockbook, "dockable_removed",
+  g_signal_connect (dockbook, "dockable-removed",
                     G_CALLBACK (gimp_menu_dock_dockbook_changed),
                     dock);
-  g_signal_connect (dockbook, "dockable_reordered",
+  g_signal_connect (dockbook, "dockable-reordered",
                     G_CALLBACK (gimp_menu_dock_dockbook_changed),
                     dock);
 

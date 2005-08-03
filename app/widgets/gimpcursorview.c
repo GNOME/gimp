@@ -144,7 +144,7 @@ gimp_cursor_view_init (GimpCursorView *view)
   view->sample_merged = TRUE;
 
   gtk_widget_style_get (GTK_WIDGET (view),
-                        "content_spacing", &content_spacing,
+                        "content-spacing", &content_spacing,
 			NULL);
 
 
@@ -354,7 +354,7 @@ gimp_cursor_view_style_set (GtkWidget *widget,
     GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 
   gtk_widget_style_get (GTK_WIDGET (view),
-                        "content_spacing", &content_spacing,
+                        "content-spacing", &content_spacing,
 			NULL);
 
   gtk_box_set_spacing (GTK_BOX (view->coord_hbox), content_spacing);

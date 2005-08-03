@@ -233,7 +233,7 @@ gimp_plug_in_action_new (const gchar   *name,
                        "name",     name,
                        "label",    label,
                        "tooltip",  tooltip,
-                       "stock_id", stock_id,
+                       "stock-id", stock_id,
                        "proc-def", proc_def,
                        NULL);
 }

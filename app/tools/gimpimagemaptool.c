@@ -277,15 +277,14 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
           image_map_tool->load_button =
             g_object_new (GIMP_TYPE_BUTTON,
                           "label",         GTK_STOCK_OPEN,
-                          "use_stock",     TRUE,
-                          "use_underline", TRUE,
+                          "use-stock",     TRUE,
+                          "use-underline", TRUE,
                           NULL);
 
           g_signal_connect (image_map_tool->load_button, "clicked",
                             G_CALLBACK (gimp_image_map_tool_load_clicked),
                             image_map_tool);
-
-          g_signal_connect (image_map_tool->load_button, "extended_clicked",
+          g_signal_connect (image_map_tool->load_button, "extended-clicked",
                             G_CALLBACK (gimp_image_map_tool_load_ext_clicked),
                             image_map_tool);
 
@@ -314,8 +313,7 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
           g_signal_connect (image_map_tool->save_button, "clicked",
                             G_CALLBACK (gimp_image_map_tool_save_clicked),
                             image_map_tool);
-
-          g_signal_connect (image_map_tool->save_button, "extended_clicked",
+          g_signal_connect (image_map_tool->save_button, "extended-clicked",
                             G_CALLBACK (gimp_image_map_tool_save_ext_clicked),
                             image_map_tool);
 

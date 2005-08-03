@@ -184,7 +184,7 @@ gimp_container_box_set_size_request (GimpContainerBox *box,
     scrollbar_width = sw_class->scrollbar_spacing;
   else
     gtk_widget_style_get (GTK_WIDGET (box->scrolled_win),
-                          "scrollbar_spacing", &scrollbar_width,
+                          "scrollbar-spacing", &scrollbar_width,
                           NULL);
 
   gtk_widget_size_request (GTK_SCROLLED_WINDOW (box->scrolled_win)->vscrollbar,

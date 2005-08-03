@@ -240,7 +240,7 @@ gimp_error_dialog_add (GimpErrorDialog *dialog,
     }
 
   box = g_object_new (GIMP_TYPE_MESSAGE_BOX,
-                      "stock_id", stock_id,
+                      "stock-id", stock_id,
                       NULL);
 
   dialog->num_messages++;

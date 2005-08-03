@@ -222,7 +222,7 @@ module_dialog_new (Gimp *gimp)
   g_signal_connect (gimp->module_db, "remove",
                     G_CALLBACK (dialog_info_remove),
                     dialog);
-  g_signal_connect (gimp->module_db, "module_modified",
+  g_signal_connect (gimp->module_db, "module-modified",
                     G_CALLBACK (dialog_info_update),
                     dialog);
 

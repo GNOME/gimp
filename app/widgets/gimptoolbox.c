@@ -458,8 +458,8 @@ gimp_toolbox_style_set (GtkWidget *widget,
   gimp = GIMP_DOCK (widget)->context->gimp;
 
   gtk_widget_style_get (widget,
-                        "tool_icon_size", &tool_icon_size,
-                        "button_relief",  &relief,
+                        "tool-icon-size", &tool_icon_size,
+                        "button-relief",  &relief,
                         NULL);
 
   for (list = GIMP_LIST (gimp->tool_info_list)->list;

@@ -494,8 +494,8 @@ gimp_layer_tree_view_style_set (GtkWidget *widget,
   gint               button_spacing;
 
   gtk_widget_style_get (widget,
-                        "content_spacing", &content_spacing,
-                        "button_spacing",  &button_spacing,
+                        "content-spacing", &content_spacing,
+                        "button-spacing",  &button_spacing,
                         NULL);
 
   gtk_table_set_col_spacings (GTK_TABLE (layer_view->options_box),

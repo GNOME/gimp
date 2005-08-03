@@ -681,7 +681,7 @@ gimp_dock_separator_new (GimpDock *dock)
   gtk_widget_set_name (event_box, "gimp-dock-separator");
 
   gtk_widget_style_get (GTK_WIDGET (dock),
-                        "separator_height", &separator_height,
+                        "separator-height", &separator_height,
                         NULL);
 
   gtk_widget_set_size_request (event_box, -1, separator_height);
@@ -700,13 +700,13 @@ gimp_dock_separator_new (GimpDock *dock)
                      dialog_target_table, G_N_ELEMENTS (dialog_target_table),
                      GDK_ACTION_MOVE);
 
-  g_signal_connect (event_box, "drag_leave",
+  g_signal_connect (event_box, "drag-leave",
 		    G_CALLBACK (gimp_dock_separator_drag_leave),
 		    NULL);
-  g_signal_connect (event_box, "drag_motion",
+  g_signal_connect (event_box, "drag-motion",
 		    G_CALLBACK (gimp_dock_separator_drag_motion),
 		    NULL);
-  g_signal_connect (event_box, "drag_drop",
+  g_signal_connect (event_box, "drag-drop",
 		    G_CALLBACK (gimp_dock_separator_drag_drop),
 		    dock);
 

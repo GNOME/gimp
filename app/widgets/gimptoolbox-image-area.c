@@ -101,7 +101,7 @@ gimp_toolbox_image_area_create (GimpToolbox *toolbox,
                                             width, height, 0,
                                             FALSE, TRUE, TRUE);
 
-  g_signal_connect (image_view, "set_viewable",
+  g_signal_connect (image_view, "set-viewable",
                     G_CALLBACK (image_preview_set_viewable),
                     NULL);
 

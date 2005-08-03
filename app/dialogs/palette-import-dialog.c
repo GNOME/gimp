@@ -291,8 +291,8 @@ palette_import_dialog_new (Gimp *gimp)
     gint ysize;
 
     gtk_widget_style_get (import_dialog->gradient_combo,
-                          "focus_line_width", &focus_line_width,
-                          "focus_padding",    &focus_padding,
+                          "focus-line-width", &focus_line_width,
+                          "focus-padding",    &focus_padding,
                           NULL);
 
     ythickness = import_dialog->gradient_combo->style->ythickness;

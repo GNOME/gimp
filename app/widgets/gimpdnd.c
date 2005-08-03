@@ -865,13 +865,13 @@ gimp_dnd_data_source_add (GimpDndType  data_type,
 
   if (! drag_connected)
     {
-      g_signal_connect (widget, "drag_begin",
+      g_signal_connect (widget, "drag-begin",
                         G_CALLBACK (gimp_dnd_data_drag_begin),
                         NULL);
-      g_signal_connect (widget, "drag_end",
+      g_signal_connect (widget, "drag-end",
                         G_CALLBACK (gimp_dnd_data_drag_end),
                         NULL);
-      g_signal_connect (widget, "drag_data_get",
+      g_signal_connect (widget, "drag-data-get",
                         G_CALLBACK (gimp_dnd_data_drag_handle),
                         NULL);
 
@@ -969,7 +969,7 @@ gimp_dnd_data_dest_add (GimpDndType  data_type,
 
   if (set_data_func && ! drop_connected)
     {
-      g_signal_connect (widget, "drag_data_received",
+      g_signal_connect (widget, "drag-data-received",
                         G_CALLBACK (gimp_dnd_data_drop_handle),
                         NULL);
 
@@ -1207,7 +1207,7 @@ gimp_dnd_xds_source_add (GtkWidget               *widget,
 
   if (! handler)
     {
-      handler = g_signal_connect (widget, "drag_begin",
+      handler = g_signal_connect (widget, "drag-begin",
                                   G_CALLBACK (gimp_dnd_xds_drag_begin),
                                   NULL);
       g_object_set_data (G_OBJECT (widget), "gimp-dnd-xds-drag-begin",
@@ -1219,7 +1219,7 @@ gimp_dnd_xds_source_add (GtkWidget               *widget,
 
   if (! handler)
     {
-      handler = g_signal_connect (widget, "drag_end",
+      handler = g_signal_connect (widget, "drag-end",
                                   G_CALLBACK (gimp_dnd_xds_drag_end),
                                   NULL);
       g_object_set_data (G_OBJECT (widget), "gimp-dnd-xds-drag-end",

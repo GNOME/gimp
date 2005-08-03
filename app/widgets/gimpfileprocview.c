@@ -157,7 +157,7 @@ gimp_file_proc_view_new (Gimp        *gimp,
 
   view = g_object_new (GIMP_TYPE_FILE_PROC_VIEW,
                        "model",      store,
-                       "rules_hint", TRUE,
+                       "rules-hint", TRUE,
                        NULL);
 
   g_object_unref (store);
@@ -237,7 +237,7 @@ gimp_file_proc_view_new (Gimp        *gimp,
   cell = gtk_cell_renderer_pixbuf_new ();
   gtk_tree_view_column_pack_start (column, cell, FALSE);
   gtk_tree_view_column_set_attributes (column, cell,
-                                       "stock_id", COLUMN_STOCK_ID,
+                                       "stock-id", COLUMN_STOCK_ID,
                                        "pixbuf",   COLUMN_PIXBUF,
                                        NULL);
 

@@ -182,9 +182,9 @@ gimp_color_editor_init (GimpColorEditor *editor)
   gimp_rgb_to_hsv (&rgb, &hsv);
 
   gtk_widget_style_get (GTK_WIDGET (editor),
-                        "content_spacing",  &content_spacing,
-			"button_spacing",   &button_spacing,
-                        "button_icon_size", &button_icon_size,
+                        "content-spacing",  &content_spacing,
+			"button-spacing",   &button_spacing,
+                        "button-icon-size", &button_icon_size,
 			NULL);
 
   editor->hbox = gtk_hbox_new (TRUE, button_spacing);
@@ -270,7 +270,7 @@ gimp_color_editor_init (GimpColorEditor *editor)
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  g_signal_connect (button, "color_picked",
+  g_signal_connect (button, "color-picked",
                     G_CALLBACK (gimp_color_editor_color_picked),
                     editor);
 

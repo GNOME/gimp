@@ -1,5 +1,40 @@
 2005-08-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/dialogs/module-dialog.c
+	* app/dialogs/palette-import-dialog.c
+	* app/gui/gui.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimpimagemaptool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpvectortool.c
+	* app/widgets/gimpaction.c
+	* app/widgets/gimpcoloreditor.c
+	* app/widgets/gimpcontainerbox.c
+	* app/widgets/gimpcontainertreeview.c
+	* app/widgets/gimpcursorview.c
+	* app/widgets/gimpdnd.c
+	* app/widgets/gimpdock.c
+	* app/widgets/gimpdockbook.c
+	* app/widgets/gimpdrawabletreeview.c
+	* app/widgets/gimpeditor.c
+	* app/widgets/gimpenumaction.c
+	* app/widgets/gimperrordialog.c
+	* app/widgets/gimpfileprocview.c
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimpmenudock.c
+	* app/widgets/gimpmessagebox.c
+	* app/widgets/gimpmessagedialog.c
+	* app/widgets/gimppluginaction.c
+	* app/widgets/gimpprogressdialog.c
+	* app/widgets/gimpsamplepointeditor.c
+	* app/widgets/gimpstringaction.c
+	* app/widgets/gimptemplateeditor.c
+	* app/widgets/gimptoolbox-image-area.c
+	* app/widgets/gimptoolbox.c: use canonical names for signals and
+	properties.
+
+2005-08-03  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/help/Makefile.am: link against libgimpcolor. WhyTheHack
 	did this work before?
 

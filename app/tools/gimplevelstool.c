@@ -359,8 +359,8 @@ gimp_levels_tool_color_picker_new (GimpLevelsTool *tool,
 
   button = g_object_new (GTK_TYPE_TOGGLE_BUTTON,
                          "label",          stock_id,
-                         "use_stock",      TRUE,
-                         "draw_indicator", FALSE,
+                         "use-stock",      TRUE,
+                         "draw-indicator", FALSE,
                          NULL);
 
   gimp_help_set_help_data (button, help, NULL);

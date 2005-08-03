@@ -1611,7 +1611,7 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
       g_signal_connect_swapped (sel_button, "clicked",
                                 G_CALLBACK (gimp_vector_tool_to_selection),
                                 tool);
-      g_signal_connect_swapped (sel_button, "extended_clicked",
+      g_signal_connect_swapped (sel_button, "extended-clicked",
                                 G_CALLBACK (gimp_vector_tool_to_selection_extended),
                                 tool);
       gtk_widget_set_sensitive (sel_button, TRUE);

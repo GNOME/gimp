@@ -278,16 +278,16 @@ gimp_container_tree_view_constructor (GType                  type,
                     G_CALLBACK (gimp_container_tree_view_selection_changed),
                     tree_view);
 
-  g_signal_connect (tree_view->view, "drag_leave",
+  g_signal_connect (tree_view->view, "drag-leave",
                     G_CALLBACK (gimp_container_tree_view_drag_leave),
                     tree_view);
-  g_signal_connect (tree_view->view, "drag_motion",
+  g_signal_connect (tree_view->view, "drag-motion",
                     G_CALLBACK (gimp_container_tree_view_drag_motion),
                     tree_view);
-  g_signal_connect (tree_view->view, "drag_drop",
+  g_signal_connect (tree_view->view, "drag-drop",
                     G_CALLBACK (gimp_container_tree_view_drag_drop),
                     tree_view);
-  g_signal_connect (tree_view->view, "drag_data_received",
+  g_signal_connect (tree_view->view, "drag-data-received",
                     G_CALLBACK (gimp_container_tree_view_drag_data_received),
                     tree_view);
 

@@ -326,8 +326,8 @@ gimp_template_editor_constructor (GType                  type,
   text = g_strdup_printf ("<b>%s</b>", _("_Advanced Options"));
   editor->expander = g_object_new (GTK_TYPE_EXPANDER,
                                    "label",         text,
-                                   "use_markup",    TRUE,
-                                   "use_underline", TRUE,
+                                   "use-markup",    TRUE,
+                                   "use-underline", TRUE,
                                    NULL);
   g_free (text);
 

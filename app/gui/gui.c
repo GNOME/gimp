@@ -149,8 +149,8 @@ gui_abort (const gchar *abort_message)
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
   box = g_object_new (GIMP_TYPE_MESSAGE_BOX,
-                      "stock_id",     GIMP_STOCK_WILBER_EEK,
-                      "border_width", 12,
+                      "stock-id",     GIMP_STOCK_WILBER_EEK,
+                      "border-width", 12,
                       NULL);
 
   gimp_message_box_set_text (GIMP_MESSAGE_BOX (box), abort_message);

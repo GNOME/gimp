@@ -238,7 +238,7 @@ gimp_action_new (const gchar *name,
                        "name",     name,
                        "label",    label,
                        "tooltip",  tooltip,
-                       "stock_id", stock_id,
+                       "stock-id", stock_id,
                        NULL);
 }
 

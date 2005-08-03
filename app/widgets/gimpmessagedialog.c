@@ -112,7 +112,7 @@ gimp_message_dialog_new (const gchar    *title,
   va_end (args);
 
   dialog->box = g_object_new (GIMP_TYPE_MESSAGE_BOX,
-                              "stock_id",  stock_id,
+                              "stock-id",  stock_id,
                               NULL);
 
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),

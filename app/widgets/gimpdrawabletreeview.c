@@ -326,7 +326,7 @@ gimp_drawable_tree_view_set_image (GimpItemTreeView *view,
 
   if (view->gimage)
     g_signal_connect (view->gimage,
-                      "floating_selection_changed",
+                      "floating-selection-changed",
                       G_CALLBACK (gimp_drawable_tree_view_floating_selection_changed),
                       view);
 }
