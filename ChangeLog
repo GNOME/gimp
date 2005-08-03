@@ -1,5 +1,22 @@
 2005-08-03  Sven Neumann  <sven@gimp.org>
 
+	* libgimpmath/gimpmd5.c
+	* libgimpmath/test-md5.c
+	* plug-ins/common/CEL.c
+	* plug-ins/common/cartoon.c
+	* plug-ins/common/emboss.c
+	* plug-ins/common/exchange.c
+	* plug-ins/common/gifload.c
+	* plug-ins/common/poppler.c
+	* plug-ins/jpeg/jpeg-save.c
+	* plug-ins/jpeg/jpeg-save.h
+	* plug-ins/metadata/interface.c
+	* plug-ins/metadata/metadata.c
+	* plug-ins/metadata/xmp-model.c
+	* plug-ins/script-fu/siod/sliba.c: fixed signedness warnings.
+
+2005-08-03  Sven Neumann  <sven@gimp.org>
+
 	* libgimpcolor/gimprgb.[ch]: deprecated RGB intensity functions
 	and definitions. These coefficients do not accurately compute
 	luminance for contemporary monitors. Instead the coefficients from

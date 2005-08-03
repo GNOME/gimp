@@ -450,9 +450,9 @@ ReadColorMap (FILE *fd,
 	      CMap  buffer,
 	      int  *format)
 {
-  int i;
-  unsigned char rgb[3];
-  int flag;
+  guchar rgb[3];
+  gint   flag;
+  gint   i;
 
   flag = TRUE;
 
@@ -480,7 +480,7 @@ static int
 DoExtension (FILE *fd,
 	     int   label)
 {
-  static guchar buf[256];
+  static gchar  buf[256];
   gchar        *str;
 
   switch (label)
@@ -529,7 +529,7 @@ DoExtension (FILE *fd,
 
 	  comment_parasite = gimp_parasite_new ("gimp-comment",
                                                 GIMP_PARASITE_PERSISTENT,
-                                                strlen(buf) + 1, buf);
+                                                strlen (buf) + 1, buf);
 #else
 	  if (showComment)
 	    g_print ("GIF: gif comment: %s\n", buf);

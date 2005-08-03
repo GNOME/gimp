@@ -340,7 +340,7 @@ emboss (GimpDrawable *drawable,
   gint          p_update;
   gint          y;
   gint          x1, y1, x2, y2;
-  guint         width, height;
+  gint          width, height;
   gint          bypp, rowsize, has_alpha;
   guchar       *srcbuf, *dstbuf;
 

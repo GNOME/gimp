@@ -41,7 +41,7 @@ main (void)
 
       for (j = 0; j < 16; j++)
         {
-          guchar buf[4];
+          gchar buf[4];
 
           g_snprintf (buf, 3, "%02x", digest[j]);
           g_print (buf);

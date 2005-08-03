@@ -767,14 +767,13 @@ xmp_model_parse_file (XMPModel     *xmp_model,
                       const gchar  *filename,
                       GError      **error)
 {
-  gchar    *buffer;
-  gssize    buffer_length;
+  gchar *buffer;
+  gsize  buffer_length;
 
   g_return_val_if_fail (filename != NULL, FALSE);
   if (! g_file_get_contents (filename, &buffer, &buffer_length, error))
     return FALSE;
-  if (! xmp_model_parse_buffer (xmp_model, buffer, buffer_length,
-                                TRUE, error))
+  if (! xmp_model_parse_buffer (xmp_model, buffer, buffer_length, TRUE, error))
     return FALSE;
   g_free (buffer);
   return TRUE;

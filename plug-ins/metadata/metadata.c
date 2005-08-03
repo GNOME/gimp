@@ -493,7 +493,7 @@ run (const gchar      *name,
   else if (! strcmp (name, "plug_in_metadata_import"))
     {
       const gchar *filename;
-      gchar       *buffer;
+      guchar      *buffer;
       gssize       buffer_length;
       GError      *error = NULL;
 

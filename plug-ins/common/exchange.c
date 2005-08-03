@@ -651,10 +651,10 @@ exchange (GimpDrawable *drawable,
   guchar        from_red, from_green, from_blue;
   guchar        to_red,   to_green,   to_blue;
   guchar       *src_row, *dest_row;
-  guint         x, y, bpp = drawable->bpp;
+  gint          x, y, bpp = drawable->bpp;
   gboolean      has_alpha;
   gint          x1, y1, x2, y2;
-  guint         width, height;
+  gint          width, height;
   GimpRGB       min;
   GimpRGB       max;
 
@@ -702,6 +702,7 @@ exchange (GimpDrawable *drawable,
   for (y = y1; y < y2; y++)
     {
       gimp_pixel_rgn_get_row (&srcPR, src_row, x1, y, width);
+
       for (x = 0; x < width; x++)
         {
           guchar pixel_red, pixel_green, pixel_blue;
@@ -731,6 +732,7 @@ exchange (GimpDrawable *drawable,
                 pixel_green - from_green : from_green - pixel_green;
               blue_delta  = pixel_blue > from_blue ?
                 pixel_blue - from_blue : from_blue - pixel_blue;
+
               new_red   = CLAMP (to_red   + red_delta,   0, 255);
               new_green = CLAMP (to_green + green_delta, 0, 255);
               new_blue  = CLAMP (to_blue  + blue_delta,  0, 255);
@@ -759,8 +761,8 @@ exchange (GimpDrawable *drawable,
         gimp_progress_update ((gdouble) y / (gdouble) height);
     }
 
-  g_free(src_row);
-  g_free(dest_row);
+  g_free (src_row);
+  g_free (dest_row);
 
   if (preview)
     {

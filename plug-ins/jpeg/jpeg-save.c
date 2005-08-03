@@ -70,6 +70,15 @@ static void  make_preview        (void);
 static void  save_restart_update (GtkAdjustment *adjustment,
                                   GtkWidget     *toggle);
 
+#ifdef HAVE_EXIF
+
+static gint  create_thumbnail    (gint32         image_ID,
+                                  gint32         drawable_ID,
+                                  gdouble        quality,
+                                  guchar       **thumbnail_buffer);
+
+#endif /* HAVE_EXIF */
+
 
 static GtkWidget *restart_markers_scale = NULL;
 static GtkWidget *restart_markers_label = NULL;
@@ -201,7 +210,7 @@ save_image (const gchar *filename,
   gint      rowstride, yend;
   gint      i, j;
 #ifdef HAVE_EXIF
-  gchar    *thumbnail_buffer        = NULL;
+  guchar   *thumbnail_buffer        = NULL;
   gint      thumbnail_buffer_length = 0;
 #endif
 
@@ -488,7 +497,7 @@ save_image (const gchar *filename,
         {
           const gchar *xmp_data;
           glong        xmp_data_size;
-          gchar       *app_block;
+          guchar      *app_block;
 
           xmp_data = ((const gchar *) gimp_parasite_data (parasite)) + 10;
           xmp_data_size = gimp_parasite_data_size (parasite) - 10;
@@ -1038,15 +1047,15 @@ save_restart_update (GtkAdjustment *adjustment,
 
 #ifdef HAVE_EXIF
 
-static gchar *tbuffer = NULL;
-static gchar *tbuffer2 = NULL;
+static guchar *tbuffer = NULL;
+static guchar *tbuffer2 = NULL;
 
 static gint tbuffer_count = 0;
 
 typedef struct
 {
   struct jpeg_destination_mgr  pub;   /* public fields */
-  gchar                       *buffer;
+  guchar                      *buffer;
   gint                         size;
 } my_destination_mgr;
 
@@ -1063,7 +1072,7 @@ empty_output_buffer (j_compress_ptr cinfo)
   my_dest_ptr dest = (my_dest_ptr) cinfo->dest;
 
   tbuffer_count = tbuffer_count + 16384;
-  tbuffer = (gchar *) g_realloc(tbuffer, tbuffer_count);
+  tbuffer = g_renew (guchar, tbuffer, tbuffer_count);
   g_memmove (tbuffer + tbuffer_count - 16384, tbuffer2, 16384);
 
   dest->pub.next_output_byte = tbuffer2;
@@ -1079,15 +1088,16 @@ term_destination (j_compress_ptr cinfo)
 
   tbuffer_count = (tbuffer_count + 16384) - (dest->pub.free_in_buffer);
 
-  tbuffer = (gchar *) g_realloc (tbuffer, tbuffer_count);
-  g_memmove(tbuffer + tbuffer_count - (16384 - dest->pub.free_in_buffer), tbuffer2, 16384 - dest->pub.free_in_buffer);
+  tbuffer = g_renew (guchar, tbuffer, tbuffer_count);
+  g_memmove (tbuffer + tbuffer_count - (16384 - dest->pub.free_in_buffer),
+             tbuffer2, 16384 - dest->pub.free_in_buffer);
 }
 
-gint
+static gint
 create_thumbnail (gint32    image_ID,
                   gint32    drawable_ID,
                   gdouble   quality,
-                  gchar   **thumbnail_buffer)
+                  guchar  **thumbnail_buffer)
 {
   GimpDrawable  *drawable;
   gint           req_width, req_height, bpp, rbpp;
@@ -1124,7 +1134,7 @@ create_thumbnail (gint32    image_ID,
     }
 
   buf = g_new (guchar, req_width * bpp);
-  tbuffer2 = g_new (gchar, 16384);
+  tbuffer2 = g_new (guchar, 16384);
 
   tbuffer_count = 0;
 

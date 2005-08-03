@@ -286,7 +286,7 @@ cartoon (GimpDrawable *drawable,
   gdouble       std_dev1;
   gdouble       std_dev2;
   gdouble       ramp;
-  gchar        *preview_buffer = NULL;
+  guchar       *preview_buffer = NULL;
 
   if (preview)
     {
@@ -498,7 +498,8 @@ cartoon (GimpDrawable *drawable,
     }
   else
     {
-      gimp_pixel_rgn_init (&dest_rgn, drawable, x1, y1, width, height, TRUE, TRUE);
+      gimp_pixel_rgn_init (&dest_rgn, drawable,
+                           x1, y1, width, height, TRUE, TRUE);
       pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
     }
 

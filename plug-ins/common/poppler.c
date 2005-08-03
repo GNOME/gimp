@@ -376,7 +376,7 @@ layer_from_pixbuf (gint32        image,
   gint             height;
   gint             rowstride;
   gint             bpp;
-  gchar           *pixels;
+  guchar          *pixels;
 
   gdouble          progress = 0;
 

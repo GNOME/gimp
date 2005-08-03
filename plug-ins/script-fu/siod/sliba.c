@@ -997,7 +997,7 @@ array_sxhash (LISP a, long n)
           char_data = (unsigned char *) a->storage_as.string_array.data[i];
           if (char_data != NULL)
             {
-              len = strlen (char_data);
+              len = strlen ((const char *) char_data);
               for (j = 0; j < len; ++j)
 	        hash = HASH_COMBINE (hash, *char_data++, n);
             }

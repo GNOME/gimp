@@ -43,7 +43,7 @@ static void  gimp_md5_init      (GimpMD5Context *ctx);
 static void  gimp_md5_transform (guint32         buf[4],
                                  const guint32   in[16]);
 static void  gimp_md5_update    (GimpMD5Context *ctx,
-                                 const guchar   *buf,
+                                 const gchar    *buf,
                                  guint32         len);
 static void  gimp_md5_final     (GimpMD5Context *ctx,
                                  guchar          digest[16]);
@@ -111,7 +111,7 @@ gimp_md5_init (GimpMD5Context *ctx)
 
 static void
 gimp_md5_update (GimpMD5Context *ctx,
-                 const guchar   *buf,
+                 const gchar    *buf,
                  guint32         len)
 {
   guint32 t;

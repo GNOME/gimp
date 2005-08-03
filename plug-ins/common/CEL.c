@@ -308,12 +308,12 @@ load_image (const gchar *file,
 
   fread (header, 4, 1, fp);
 
-  if (strncmp (header, "KiSS", 4))
+  if (strncmp ((const gchar *) header, "KiSS", 4))
     {
       colours= 16;
       bpp = 4;
-      width= header[0] + (256 * header[1]);
-      height= header[2] + (256 * header[3]);
+      width = header[0] + (256 * header[1]);
+      height = header[2] + (256 * header[3]);
       offx= 0;
       offy= 0;
     }
@@ -493,14 +493,14 @@ load_palette (FILE   *fp,
   int           i, bpp, colours= 0;
 
   fread (header, 4, 1, fp);
-  if (!strncmp(header, "KiSS", 4))
+  if (!strncmp ((const gchar *) header, "KiSS", 4))
     {
       fread (header+4, 28, 1, fp);
       bpp = header[5];
       colours = header[8] + header[9] * 256;
       if (bpp == 12)
         {
-          for (i= 0; i < colours; ++i)
+          for (i = 0; i < colours; ++i)
             {
               fread (buffer, 1, 2, fp);
               palette[i*3]= buffer[0] & 0xf0;
@@ -578,7 +578,7 @@ save_image (const gchar *file,
 
   /* Headers */
   memset (header, 0, 32);
-  strcpy (header, "KiSS");
+  strcpy ((gchar *) header, "KiSS");
   header[4]= 0x20;
 
   /* Work out whether to save as 8bit or 4bit */

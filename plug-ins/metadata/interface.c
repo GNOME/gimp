@@ -449,8 +449,8 @@ import_dialog_response (GtkWidget *dlg,
   if (response_id == GTK_RESPONSE_OK)
     {
       gchar  *filename;
-      gchar  *buffer;
-      gssize   buffer_length;
+      guchar *buffer;
+      gssize  buffer_length;
       GError *error = NULL;
 
       filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dlg));

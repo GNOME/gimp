@@ -60,13 +60,3 @@ gboolean  save_image          (const gchar      *filename,
                                gboolean          preview);
 
 gboolean  save_dialog         (void);
-
-#ifdef HAVE_EXIF
-
-gint      create_thumbnail    (gint32            image_ID,
-                               gint32            drawable_ID,
-                               gdouble           quality,
-                               gchar           **thumbnail_buffer);
-
-#endif /* HAVE_EXIF */
-
