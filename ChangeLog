@@ -1,3 +1,8 @@
+2005-08-03  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/help/Makefile.am: link against libgimpcolor. WhyTheHack
+	did this work before?
+
 2005-08-03  Sven Neumann  <sven@gimp.org>
 
 	* app/core/core-enums.[ch]: added GIMP_UNDO_FOREGROUND_SELECT.

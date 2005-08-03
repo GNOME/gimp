@@ -1,6 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
 libgimp = $(top_builddir)/libgimp/libgimp-$(GIMP_API_VERSION).la
+libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
 libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
 
 if OS_WIN32
@@ -30,6 +31,7 @@ INCLUDES = \
 
 LDADD = \
 	$(libgimp)	\
+	$(libgimpcolor)	\
 	$(libgimpbase)	\
 	$(GLIB_LIBS)	\
 	$(RT_LIBS)	\
