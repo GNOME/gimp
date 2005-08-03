@@ -1,3 +1,11 @@
+2005-08-03  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpbase/libgimpbase-sections.txt: added
+	GimpForegroundSelectMode stuff and gimp_canonicalize_identifier().
+
+	* libgimpbase/tmpl/gimpbaseenums.sgml
+	* libgimpbase/tmpl/gimputils.sgml: regenerated.
+
 2005-08-03  Sven Neumann  <sven@gimp.org>
 
 	* libgimpcolor/libgimpcolor-sections.txt

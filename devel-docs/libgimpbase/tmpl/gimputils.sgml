@@ -66,6 +66,15 @@ Utilities of general interest
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_canonicalize_identifier ##### -->
+<para>
+
+</para>
+
+@name: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_enum_get_desc ##### -->
 <para>
 

@@ -116,6 +116,13 @@ Basic GIMP enumeration data types.
 @GIMP_DODGE: 
 @GIMP_BURN: 
 
+<!-- ##### ENUM GimpForegroundExtractMode ##### -->
+<para>
+
+</para>
+
+@GIMP_FOREGROUND_EXTRACT_SIOX: 
+
 <!-- ##### ENUM GimpGradientType ##### -->
 <para>
 

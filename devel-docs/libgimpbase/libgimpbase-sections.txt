@@ -22,6 +22,7 @@ GimpCheckType
 GimpCloneType
 GimpDesaturateMode
 GimpDodgeBurnType
+GimpForegroundExtractMode
 GimpGradientType
 GimpIconType
 GimpImageBaseType
@@ -49,6 +50,7 @@ GIMP_TYPE_CHECK_TYPE
 GIMP_TYPE_CLONE_TYPE
 GIMP_TYPE_DESATURATE_MODE
 GIMP_TYPE_DODGE_BURN_TYPE
+GIMP_TYPE_FOREGROUND_EXTRACT_MODE
 GIMP_TYPE_GRADIENT_TYPE
 GIMP_TYPE_ICON_TYPE
 GIMP_TYPE_IMAGE_BASE_TYPE
@@ -75,6 +77,7 @@ gimp_check_type_get_type
 gimp_clone_type_get_type
 gimp_desaturate_mode_get_type
 gimp_dodge_burn_type_get_type
+gimp_foreground_extract_mode_get_type
 gimp_gradient_type_get_type
 gimp_icon_type_get_type
 gimp_image_base_type_get_type
@@ -241,6 +244,7 @@ gimp_filename_to_utf8
 gimp_utf8_strtrim
 gimp_escape_uline
 gimp_strip_uline
+gimp_canonicalize_identifier
 gimp_enum_get_desc
 gimp_enum_get_value
 gimp_enum_value_get_desc
