@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-31 22:12-0400\n"
-"PO-Revision-Date: 2005-07-31 14:29-0400\n"
+"POT-Creation-Date: 2005-08-03 01:43-0400\n"
+"PO-Revision-Date: 2005-08-03 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -222,8 +222,8 @@ msgstr "Dockable"
 msgid "Document History"
 msgstr "Document History"
 
-#: app/actions/actions.c:130 app/core/core-enums.c:818
-#: app/core/core-enums.c:849
+#: app/actions/actions.c:130 app/core/core-enums.c:819
+#: app/core/core-enums.c:850
 msgid "Drawable"
 msgstr "Drawable"
 
@@ -464,7 +464,7 @@ msgstr "Duplicate channel"
 msgid "_Delete Channel"
 msgstr "_Delete Channel"
 
-#: app/actions/channels-actions.c:73 app/core/core-enums.c:869
+#: app/actions/channels-actions.c:73 app/core/core-enums.c:870
 msgid "Delete channel"
 msgstr "Delete channel"
 
@@ -574,7 +574,7 @@ msgid "%s Channel Copy"
 msgstr "%s Channel Copy"
 
 #: app/actions/channels-commands.c:310 app/core/gimpselection.c:580
-#: app/pdb/selection_cmds.c:922 app/pdb/selection_cmds.c:1046
+#: app/pdb/selection_cmds.c:936 app/pdb/selection_cmds.c:1062
 msgid "Channel to Selection"
 msgstr "Channel to Selection"
 
@@ -726,7 +726,7 @@ msgstr ""
 #: app/actions/data-commands.c:126 app/core/gimpimage.c:1349
 #: app/core/gimppalette-import.c:221 app/core/gimppalette.c:517
 #: app/core/gimppalette.c:627 app/dialogs/palette-import-dialog.c:692
-#: app/pdb/image_cmds.c:3838 app/widgets/gimpdnd-xds.c:83
+#: app/pdb/image_cmds.c:3892 app/widgets/gimpdnd-xds.c:83
 msgid "Untitled"
 msgstr "Untitled"
 
@@ -1900,8 +1900,8 @@ msgstr "Set Image Print Resolution"
 msgid "Flipping..."
 msgstr "Flipping..."
 
-#: app/actions/image-commands.c:312 app/pdb/drawable_transform_cmds.c:1037
-#: app/pdb/drawable_transform_cmds.c:1195 app/pdb/transform_tools_cmds.c:341
+#: app/actions/image-commands.c:312 app/pdb/drawable_transform_cmds.c:1043
+#: app/pdb/drawable_transform_cmds.c:1202 app/pdb/transform_tools_cmds.c:343
 #: app/tools/gimprotatetool.c:159
 msgid "Rotating..."
 msgstr "Rotating..."
@@ -1920,8 +1920,8 @@ msgid "Scale Image"
 msgstr "Scale Image"
 
 #: app/actions/image-commands.c:548 app/actions/layers-commands.c:961
-#: app/pdb/drawable_transform_cmds.c:1349
-#: app/pdb/drawable_transform_cmds.c:1507 app/pdb/transform_tools_cmds.c:461
+#: app/pdb/drawable_transform_cmds.c:1357
+#: app/pdb/drawable_transform_cmds.c:1516 app/pdb/transform_tools_cmds.c:464
 #: app/tools/gimpscaletool.c:153
 msgid "Scaling..."
 msgstr "Scaling..."
@@ -2026,7 +2026,7 @@ msgstr "Duplicate layer"
 msgid "_Delete Layer"
 msgstr "_Delete Layer"
 
-#: app/actions/layers-actions.c:93 app/core/core-enums.c:857
+#: app/actions/layers-actions.c:93 app/core/core-enums.c:858
 msgid "Delete layer"
 msgstr "Delete layer"
 
@@ -2757,7 +2757,7 @@ msgstr "Open Text File (UTF-8)"
 #: app/core/gimpbrushgenerated.c:594 app/core/gimpbrushpipe.c:331
 #: app/core/gimpgradient-load.c:62 app/core/gimppalette.c:358
 #: app/core/gimppattern.c:297 app/tools/gimpimagemaptool.c:614
-#: app/xcf/xcf.c:293
+#: app/xcf/xcf.c:295
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Could not open '%s' for reading: %s"
@@ -3028,7 +3028,7 @@ msgstr "E_xport Path..."
 msgid "Path to Sele_ction"
 msgstr "Path to Sele_ction"
 
-#: app/actions/vectors-actions.c:163 app/tools/gimpvectortool.c:1882
+#: app/actions/vectors-actions.c:163 app/tools/gimpvectortool.c:1883
 msgid "Path to selection"
 msgstr "Path to selection"
 
@@ -3073,11 +3073,11 @@ msgstr "New Path"
 msgid "New Path Options"
 msgstr "New Path Options"
 
-#: app/actions/vectors-commands.c:299 app/pdb/paths_cmds.c:1212
+#: app/actions/vectors-commands.c:299 app/pdb/paths_cmds.c:1225
 msgid "Path to Selection"
 msgstr "Path to Selection"
 
-#: app/actions/vectors-commands.c:370 app/tools/gimpvectortool.c:1912
+#: app/actions/vectors-commands.c:370 app/tools/gimpvectortool.c:1913
 #: app/vectors/gimpvectors.c:237
 msgid "Stroke Path"
 msgstr "Stroke Path"
@@ -3415,7 +3415,7 @@ msgstr ""
 #: app/core/gimpgradient-save.c:51 app/core/gimpgradient-save.c:142
 #: app/core/gimppalette.c:561 app/gui/themes.c:238
 #: app/tools/gimpimagemaptool.c:613 app/vectors/gimpvectors-export.c:83
-#: app/xcf/xcf.c:350
+#: app/xcf/xcf.c:352
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Could not open '%s' for writing: %s"
@@ -4219,261 +4219,261 @@ msgstr "Normal (128x128)"
 msgid "Large (256x256)"
 msgstr "Large (256x256)"
 
-#: app/core/core-enums.c:804
+#: app/core/core-enums.c:805
 msgid "<<invalid>>"
 msgstr "<<invalid>>"
 
-#: app/core/core-enums.c:805
+#: app/core/core-enums.c:806
 msgid "Scale image"
 msgstr "Scale image"
 
-#: app/core/core-enums.c:806
+#: app/core/core-enums.c:807
 msgid "Resize image"
 msgstr "Resize image"
 
-#: app/core/core-enums.c:807
+#: app/core/core-enums.c:808
 msgid "Flip image"
 msgstr "Flip image"
 
-#: app/core/core-enums.c:808
+#: app/core/core-enums.c:809
 msgid "Rotate image"
 msgstr "Rotate image"
 
-#: app/core/core-enums.c:809
+#: app/core/core-enums.c:810
 msgid "Crop image"
 msgstr "Crop image"
 
-#: app/core/core-enums.c:810
+#: app/core/core-enums.c:811
 msgid "Convert image"
 msgstr "Convert image"
 
-#: app/core/core-enums.c:811
+#: app/core/core-enums.c:812
 msgid "Remove item"
 msgstr "Remove item"
 
-#: app/core/core-enums.c:812
+#: app/core/core-enums.c:813
 msgid "Merge layers"
 msgstr "Merge layers"
 
-#: app/core/core-enums.c:813
+#: app/core/core-enums.c:814
 msgid "Merge vectors"
 msgstr "Merge vectors"
 
-#: app/core/core-enums.c:814 app/core/gimpchannel.c:404
+#: app/core/core-enums.c:815 app/core/gimpchannel.c:404
 msgid "Quick Mask"
 msgstr "Quick Mask"
 
-#: app/core/core-enums.c:815 app/core/core-enums.c:845
+#: app/core/core-enums.c:816 app/core/core-enums.c:846
 msgid "Guide"
 msgstr "Guide"
 
-#: app/core/core-enums.c:816 app/core/core-enums.c:846
+#: app/core/core-enums.c:817 app/core/core-enums.c:847
 #: app/core/gimpimage-grid.c:58 app/dialogs/grid-dialog.c:149
 #: app/tools/tools-enums.c:203
 msgid "Grid"
 msgstr "Grid"
 
-#: app/core/core-enums.c:817 app/core/core-enums.c:847
+#: app/core/core-enums.c:818 app/core/core-enums.c:848
 msgid "Sample Point"
 msgstr "Sample Point"
 
-#: app/core/core-enums.c:819 app/core/core-enums.c:850
+#: app/core/core-enums.c:820 app/core/core-enums.c:851
 msgid "Drawable mod"
 msgstr "Drawable mod"
 
-#: app/core/core-enums.c:820 app/core/core-enums.c:851
+#: app/core/core-enums.c:821 app/core/core-enums.c:852
 msgid "Selection mask"
 msgstr "Selection mask"
 
-#: app/core/core-enums.c:821 app/core/core-enums.c:854
+#: app/core/core-enums.c:822 app/core/core-enums.c:855
 msgid "Item visibility"
 msgstr "Item visibility"
 
-#: app/core/core-enums.c:822
+#: app/core/core-enums.c:823
 msgid "Linked item"
 msgstr "Linked item"
 
-#: app/core/core-enums.c:823
+#: app/core/core-enums.c:824
 msgid "Item properties"
 msgstr "Item properties"
 
-#: app/core/core-enums.c:824 app/core/core-enums.c:853
+#: app/core/core-enums.c:825 app/core/core-enums.c:854
 msgid "Move item"
 msgstr "Move item"
 
-#: app/core/core-enums.c:825
+#: app/core/core-enums.c:826
 msgid "Scale item"
 msgstr "Scale item"
 
-#: app/core/core-enums.c:826
+#: app/core/core-enums.c:827
 msgid "Resize item"
 msgstr "Resize item"
 
-#: app/core/core-enums.c:827 app/core/core-enums.c:864
+#: app/core/core-enums.c:828 app/core/core-enums.c:865
 msgid "Add layer mask"
 msgstr "Add layer mask"
 
-#: app/core/core-enums.c:828 app/core/core-enums.c:866
+#: app/core/core-enums.c:829 app/core/core-enums.c:867
 msgid "Apply layer mask"
 msgstr "Apply layer mask"
 
-#: app/core/core-enums.c:829
+#: app/core/core-enums.c:830
 msgid "Floating selection to layer"
 msgstr "Floating selection to layer"
 
-#: app/core/core-enums.c:830
+#: app/core/core-enums.c:831
 msgid "Float selection"
 msgstr "Float selection"
 
-#: app/core/core-enums.c:831
+#: app/core/core-enums.c:832
 msgid "Anchor floating selection"
 msgstr "Anchor floating selection"
 
-#: app/core/core-enums.c:832
+#: app/core/core-enums.c:833
 msgid "Remove floating selection"
 msgstr "Remove floating selection"
 
-#: app/core/core-enums.c:833 app/core/gimp-edit.c:248
+#: app/core/core-enums.c:834 app/core/gimp-edit.c:248
 msgid "Paste"
 msgstr "Paste"
 
-#: app/core/core-enums.c:834 app/core/gimp-edit.c:412
+#: app/core/core-enums.c:835 app/core/gimp-edit.c:412
 msgid "Cut"
 msgstr "Cut"
 
-#: app/core/core-enums.c:835 app/core/core-enums.c:862
+#: app/core/core-enums.c:836 app/core/core-enums.c:863
 #: app/tools/gimptexttool.c:146 app/widgets/widgets-enums.c:263
 msgid "Text"
 msgstr "Text"
 
-#: app/core/core-enums.c:836 app/core/core-enums.c:879
+#: app/core/core-enums.c:837 app/core/core-enums.c:880
 #: app/core/gimpdrawable-transform.c:911
 msgid "Transform"
 msgstr "Transform"
 
-#: app/core/core-enums.c:837 app/core/core-enums.c:880
+#: app/core/core-enums.c:838 app/core/core-enums.c:881
 #: app/paint/gimppaintcore.c:345
 msgid "Paint"
 msgstr "Paint"
 
-#: app/core/core-enums.c:838 app/core/core-enums.c:882
+#: app/core/core-enums.c:839 app/core/core-enums.c:884
 msgid "Attach parasite"
 msgstr "Attach parasite"
 
-#: app/core/core-enums.c:839 app/core/core-enums.c:883
+#: app/core/core-enums.c:840 app/core/core-enums.c:885
 msgid "Remove parasite"
 msgstr "Remove parasite"
 
-#: app/core/core-enums.c:840
+#: app/core/core-enums.c:841
 msgid "Import paths"
 msgstr "Import paths"
 
-#: app/core/core-enums.c:841 app/pdb/drawable_cmds.c:1696
+#: app/core/core-enums.c:842 app/pdb/drawable_cmds.c:1722
 msgid "Plug-In"
 msgstr "Plug-In"
 
-#: app/core/core-enums.c:842
+#: app/core/core-enums.c:843
 msgid "Image type"
 msgstr "Image type"
 
-#: app/core/core-enums.c:843
+#: app/core/core-enums.c:844
 msgid "Image size"
 msgstr "Image size"
 
-#: app/core/core-enums.c:844
+#: app/core/core-enums.c:845
 msgid "Resolution change"
 msgstr "Resolution change"
 
-#: app/core/core-enums.c:848
+#: app/core/core-enums.c:849
 msgid "Change indexed palette"
 msgstr "Change indexed palette"
 
-#: app/core/core-enums.c:852
+#: app/core/core-enums.c:853
 msgid "Rename item"
 msgstr "Rename item"
 
-#: app/core/core-enums.c:855
+#: app/core/core-enums.c:856
 msgid "Set item linked"
 msgstr "Set item linked"
 
-#: app/core/core-enums.c:856
+#: app/core/core-enums.c:857
 msgid "New layer"
 msgstr "New layer"
 
-#: app/core/core-enums.c:858
+#: app/core/core-enums.c:859
 msgid "Reposition layer"
 msgstr "Reposition layer"
 
-#: app/core/core-enums.c:859
+#: app/core/core-enums.c:860
 msgid "Set layer mode"
 msgstr "Set layer mode"
 
-#: app/core/core-enums.c:860
+#: app/core/core-enums.c:861
 msgid "Set layer opacity"
 msgstr "Set layer opacity"
 
-#: app/core/core-enums.c:861
+#: app/core/core-enums.c:862
 msgid "Lock/Unlock alpha channel"
 msgstr "Lock/Unlock alpha channel"
 
-#: app/core/core-enums.c:863
+#: app/core/core-enums.c:864
 msgid "Text modified"
 msgstr "Text modified"
 
-#: app/core/core-enums.c:865
+#: app/core/core-enums.c:866
 msgid "Delete layer mask"
 msgstr "Delete layer mask"
 
-#: app/core/core-enums.c:867
+#: app/core/core-enums.c:868
 msgid "Show layer mask"
 msgstr "Show layer mask"
 
-#: app/core/core-enums.c:868
+#: app/core/core-enums.c:869
 msgid "New channel"
 msgstr "New channel"
 
-#: app/core/core-enums.c:870
+#: app/core/core-enums.c:871
 msgid "Reposition channel"
 msgstr "Reposition channel"
 
-#: app/core/core-enums.c:871
+#: app/core/core-enums.c:872
 msgid "Channel color"
 msgstr "Channel colour"
 
-#: app/core/core-enums.c:872
+#: app/core/core-enums.c:873
 msgid "New vectors"
 msgstr "New vectors"
 
-#: app/core/core-enums.c:873
+#: app/core/core-enums.c:874
 msgid "Delete vectors"
 msgstr "Delete vectors"
 
-#: app/core/core-enums.c:874
+#: app/core/core-enums.c:875
 msgid "Vectors mod"
 msgstr "Vectors mod"
 
-#: app/core/core-enums.c:875
+#: app/core/core-enums.c:876
 msgid "Reposition vectors"
 msgstr "Reposition vectors"
 
-#: app/core/core-enums.c:876
+#: app/core/core-enums.c:877
 msgid "FS to layer"
 msgstr "FS to layer"
 
-#: app/core/core-enums.c:877
+#: app/core/core-enums.c:878
 msgid "FS rigor"
 msgstr "FS rigor"
 
-#: app/core/core-enums.c:878
+#: app/core/core-enums.c:879
 msgid "FS relax"
 msgstr "FS relax"
 
-#: app/core/core-enums.c:881 app/paint/gimpink.c:103
+#: app/core/core-enums.c:882 app/paint/gimpink.c:103
 #: app/tools/gimpinktool.c:62
 msgid "Ink"
 msgstr "Ink"
 
-#: app/core/core-enums.c:884
+#: app/core/core-enums.c:886
 msgid "EEK: can't undo"
 msgstr "EEK: cannot undo"
 
@@ -5295,7 +5295,7 @@ msgstr "Layer"
 msgid "Rename Layer"
 msgstr "Rename Layer"
 
-#: app/core/gimplayer.c:285 app/pdb/layer_cmds.c:669 app/pdb/layer_cmds.c:742
+#: app/core/gimplayer.c:285 app/pdb/layer_cmds.c:676 app/pdb/layer_cmds.c:750
 msgid "Move Layer"
 msgstr "Move Layer"
 
@@ -7647,58 +7647,58 @@ msgstr "Sharpen"
 msgid "Brightness-Contrast"
 msgstr "Brightness-Contrast"
 
-#: app/pdb/color_cmds.c:460 app/tools/gimpposterizetool.c:78
+#: app/pdb/color_cmds.c:464 app/tools/gimpposterizetool.c:78
 msgid "Posterize"
 msgstr "Posterize"
 
-#: app/pdb/color_cmds.c:811 app/pdb/color_cmds.c:937
+#: app/pdb/color_cmds.c:820 app/pdb/color_cmds.c:947
 #: app/tools/gimpcurvestool.c:136
 msgid "Curves"
 msgstr "Curves"
 
-#: app/pdb/color_cmds.c:1057 app/tools/gimpcolorbalancetool.c:95
+#: app/pdb/color_cmds.c:1068 app/tools/gimpcolorbalancetool.c:95
 msgid "Color Balance"
 msgstr "Colour Balance"
 
-#: app/pdb/color_cmds.c:1177 app/tools/gimpcolorizetool.c:96
+#: app/pdb/color_cmds.c:1189 app/tools/gimpcolorizetool.c:96
 msgid "Colorize"
 msgstr "Colourize"
 
-#: app/pdb/color_cmds.c:1449 app/tools/gimphuesaturationtool.c:115
+#: app/pdb/color_cmds.c:1463 app/tools/gimphuesaturationtool.c:115
 msgid "Hue-Saturation"
 msgstr "Hue-Saturation"
 
-#: app/pdb/color_cmds.c:1556 app/tools/gimpthresholdtool.c:89
+#: app/pdb/color_cmds.c:1571 app/tools/gimpthresholdtool.c:89
 msgid "Threshold"
 msgstr "Threshold"
 
-#: app/pdb/drawable_transform_cmds.c:249 app/pdb/drawable_transform_cmds.c:404
+#: app/pdb/drawable_transform_cmds.c:250 app/pdb/drawable_transform_cmds.c:406
 msgid "Flip..."
 msgstr "Flip..."
 
-#: app/pdb/drawable_transform_cmds.c:564 app/pdb/drawable_transform_cmds.c:748
-#: app/pdb/transform_tools_cmds.c:198 app/tools/gimpperspectivetool.c:141
+#: app/pdb/drawable_transform_cmds.c:567 app/pdb/drawable_transform_cmds.c:752
+#: app/pdb/transform_tools_cmds.c:199 app/tools/gimpperspectivetool.c:141
 msgid "Perspective..."
 msgstr "Perspective..."
 
-#: app/pdb/drawable_transform_cmds.c:1655
-#: app/pdb/drawable_transform_cmds.c:1797 app/pdb/transform_tools_cmds.c:590
+#: app/pdb/drawable_transform_cmds.c:1665
+#: app/pdb/drawable_transform_cmds.c:1808 app/pdb/transform_tools_cmds.c:594
 #: app/tools/gimpsheartool.c:158
 msgid "Shearing..."
 msgstr "Shearing..."
 
-#: app/pdb/drawable_transform_cmds.c:1949
-#: app/pdb/drawable_transform_cmds.c:2130
-#: app/pdb/drawable_transform_cmds.c:2317
-#: app/pdb/drawable_transform_cmds.c:2518 app/pdb/transform_tools_cmds.c:723
+#: app/pdb/drawable_transform_cmds.c:1961
+#: app/pdb/drawable_transform_cmds.c:2143
+#: app/pdb/drawable_transform_cmds.c:2331
+#: app/pdb/drawable_transform_cmds.c:2533 app/pdb/transform_tools_cmds.c:728
 msgid "2D Transform..."
 msgstr "2D Transform..."
 
-#: app/pdb/edit_cmds.c:673 app/tools/gimpblendtool.c:243
+#: app/pdb/edit_cmds.c:680 app/tools/gimpblendtool.c:243
 msgid "Blending..."
 msgstr "Blending..."
 
-#: app/pdb/image_cmds.c:3975
+#: app/pdb/image_cmds.c:4031
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -7846,11 +7846,11 @@ msgstr ""
 "PDB calling error for procedure '%s':\n"
 "Argument #%d type mismatch (expected %s, got %s)"
 
-#: app/pdb/selection_tools_cmds.c:332 app/tools/gimpfreeselecttool.c:97
+#: app/pdb/selection_tools_cmds.c:334 app/tools/gimpfreeselecttool.c:97
 msgid "Free Select"
 msgstr "Free Select"
 
-#: app/pdb/vectors_cmds.c:238
+#: app/pdb/vectors_cmds.c:240
 msgid "Modify Path"
 msgstr "Modify Path"
 
@@ -7879,12 +7879,12 @@ msgstr ""
 msgid "Skipping '%s': wrong GIMP protocol version."
 msgstr "Skipping '%s': wrong GIMP protocol version."
 
-#: app/plug-in/plug-in-rc.c:446
+#: app/plug-in/plug-in-rc.c:450
 #, c-format
 msgid "invalid value '%s' for icon type"
 msgstr "invalid value '%s' for icon type"
 
-#: app/plug-in/plug-in-rc.c:461
+#: app/plug-in/plug-in-rc.c:465
 #, c-format
 msgid "invalid value '%ld' for icon type"
 msgstr "invalid value '%ld' for icon type"
@@ -8596,35 +8596,35 @@ msgstr "Select hand-drawn regions"
 msgid "_Free Select"
 msgstr "_Free Select"
 
-#: app/tools/gimpforegroundselectoptions.c:143
+#: app/tools/gimpforegroundselectoptions.c:154
 msgid "Interactive refinement"
 msgstr "Interactive refinement"
 
-#: app/tools/gimpforegroundselectoptions.c:144
+#: app/tools/gimpforegroundselectoptions.c:155
 msgid "Mark background"
 msgstr "Mark background"
 
-#: app/tools/gimpforegroundselectoptions.c:145
+#: app/tools/gimpforegroundselectoptions.c:156
 msgid "Mark foreground"
 msgstr "Mark foreground"
 
-#: app/tools/gimpforegroundselecttool.c:120
+#: app/tools/gimpforegroundselecttool.c:128
 msgid "Foreground Select"
 msgstr "Foreground Select"
 
-#: app/tools/gimpforegroundselecttool.c:121
+#: app/tools/gimpforegroundselecttool.c:129
 msgid "Extract foreground using SIOX algorithm"
 msgstr "Extract foreground using SIOX algorithm"
 
-#: app/tools/gimpforegroundselecttool.c:122
+#: app/tools/gimpforegroundselecttool.c:130
 msgid "F_oreground Select"
 msgstr "F_oreground Select"
 
-#: app/tools/gimpforegroundselecttool.c:268
+#: app/tools/gimpforegroundselecttool.c:280
 msgid "Press Enter to apply selection"
 msgstr "Press Enter to apply selection"
 
-#: app/tools/gimpforegroundselecttool.c:282
+#: app/tools/gimpforegroundselecttool.c:294
 msgid "Draw a rough outline around the object to extract"
 msgstr "Draw a rough outline around the object to extract"
 
@@ -9605,7 +9605,7 @@ msgstr "Click to make this node angular."
 msgid "Delete Anchors"
 msgstr "Delete Anchors"
 
-#: app/tools/gimpvectortool.c:1907
+#: app/tools/gimpvectortool.c:1908
 msgid "There is no active layer or channel to stroke to"
 msgstr "There is no active layer or channel to stroke to"
 
@@ -10404,68 +10404,68 @@ msgstr "Displaying [%0.6f, %0.6f]"
 msgid "Position: %0.6f"
 msgstr "Position: %0.6f"
 
-#: app/widgets/gimpgradienteditor.c:946
+#: app/widgets/gimpgradienteditor.c:945
 #, c-format
 msgid "RGB (%0.3f, %0.3f, %0.3f)"
 msgstr "RGB (%0.3f, %0.3f, %0.3f)"
 
-#: app/widgets/gimpgradienteditor.c:949
+#: app/widgets/gimpgradienteditor.c:947
 #, c-format
 msgid "HSV (%0.3f, %0.3f, %0.3f)"
 msgstr "HSV (%0.3f, %0.3f, %0.3f)"
 
-#: app/widgets/gimpgradienteditor.c:951
+#: app/widgets/gimpgradienteditor.c:949
 #, c-format
-msgid "Intensity: %0.3f    Opacity: %0.3f"
-msgstr "Intensity: %0.3f    Opacity: %0.3f"
+msgid "Luminance: %0.3f    Opacity: %0.3f"
+msgstr "Luminance: %0.3f    Opacity: %0.3f"
 
-#: app/widgets/gimpgradienteditor.c:984 app/widgets/gimpgradienteditor.c:1019
+#: app/widgets/gimpgradienteditor.c:982 app/widgets/gimpgradienteditor.c:1017
 #, c-format
 msgid "RGB (%d, %d, %d)"
 msgstr "RGB (%d, %d, %d)"
 
-#: app/widgets/gimpgradienteditor.c:992
+#: app/widgets/gimpgradienteditor.c:990
 msgid "Foreground color set to:"
 msgstr "Foreground colour set to:"
 
-#: app/widgets/gimpgradienteditor.c:1024
+#: app/widgets/gimpgradienteditor.c:1022
 #, c-format
 msgid "(%0.3f, %0.3f, %0.3f)"
 msgstr "(%0.3f, %0.3f, %0.3f)"
 
-#: app/widgets/gimpgradienteditor.c:1028
+#: app/widgets/gimpgradienteditor.c:1026
 msgid "Background color set to:"
 msgstr "Background colour set to:"
 
-#: app/widgets/gimpgradienteditor.c:1231 app/widgets/gimpgradienteditor.c:1297
+#: app/widgets/gimpgradienteditor.c:1229 app/widgets/gimpgradienteditor.c:1295
 #, c-format
 msgid "%s%sDrag: move & compress"
 msgstr "%s%sDrag: move & compress"
 
-#: app/widgets/gimpgradienteditor.c:1237
+#: app/widgets/gimpgradienteditor.c:1235
 msgid "Drag: move"
 msgstr "Drag: move"
 
-#: app/widgets/gimpgradienteditor.c:1244 app/widgets/gimpgradienteditor.c:1258
-#: app/widgets/gimpgradienteditor.c:1272 app/widgets/gimpgradienteditor.c:1294
+#: app/widgets/gimpgradienteditor.c:1242 app/widgets/gimpgradienteditor.c:1256
+#: app/widgets/gimpgradienteditor.c:1270 app/widgets/gimpgradienteditor.c:1292
 #, c-format
 msgid "%s%sClick: extend selection"
 msgstr "%s%sClick: extend selection"
 
-#: app/widgets/gimpgradienteditor.c:1250 app/widgets/gimpgradienteditor.c:1264
+#: app/widgets/gimpgradienteditor.c:1248 app/widgets/gimpgradienteditor.c:1262
 msgid "Click: select"
 msgstr "Click: select"
 
-#: app/widgets/gimpgradienteditor.c:1278 app/widgets/gimpgradienteditor.c:1302
+#: app/widgets/gimpgradienteditor.c:1276 app/widgets/gimpgradienteditor.c:1300
 msgid "Click: select    Drag: move"
 msgstr "Click: select    Drag: move"
 
-#: app/widgets/gimpgradienteditor.c:1524 app/widgets/gimpgradienteditor.c:1532
+#: app/widgets/gimpgradienteditor.c:1522 app/widgets/gimpgradienteditor.c:1530
 #, c-format
 msgid "Handle position: %0.6f"
 msgstr "Handle position: %0.6f"
 
-#: app/widgets/gimpgradienteditor.c:1549
+#: app/widgets/gimpgradienteditor.c:1547
 #, c-format
 msgid "Distance: %0.6f"
 msgstr "Distance: %0.6f"
@@ -11019,7 +11019,7 @@ msgid "Invalid UTF-8 string in XCF file"
 msgstr "Invalid UTF-8 string in XCF file"
 
 #: app/xcf/xcf-save.c:157 app/xcf/xcf-save.c:167 app/xcf/xcf-save.c:177
-#: app/xcf/xcf-save.c:187 app/xcf/xcf-save.c:211 app/xcf/xcf.c:344
+#: app/xcf/xcf-save.c:187 app/xcf/xcf-save.c:211 app/xcf/xcf.c:346
 #, c-format
 msgid "Error saving XCF file: %s"
 msgstr "Error saving XCF file: %s"
@@ -11034,11 +11034,11 @@ msgstr "Error writing XCF: %s"
 msgid "Could not seek in XCF file: %s"
 msgstr "Could not seek in XCF file: %s"
 
-#: app/xcf/xcf.c:86 app/xcf/xcf.c:144
+#: app/xcf/xcf.c:86 app/xcf/xcf.c:145
 msgid "GIMP XCF image"
 msgstr "GIMP XCF image"
 
-#: app/xcf/xcf.c:284
+#: app/xcf/xcf.c:286
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "XCF error: unsupported XCF file version %d encountered"

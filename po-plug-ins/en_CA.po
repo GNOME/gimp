@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-18 21:15-0400\n"
-"PO-Revision-Date: 2005-07-18 14:31-0400\n"
+"POT-Creation-Date: 2005-08-03 01:45-0400\n"
+"PO-Revision-Date: 2005-08-03 14:31-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -372,7 +372,7 @@ msgstr "_Fractals"
 #: plug-ins/common/dicom.c:648 plug-ins/common/gbr.c:600
 #: plug-ins/common/gif.c:994 plug-ins/common/gih.c:1257
 #: plug-ins/common/gtm.c:222 plug-ins/common/mng.c:559
-#: plug-ins/common/mng.c:947 plug-ins/common/pat.c:449
+#: plug-ins/common/mng.c:951 plug-ins/common/pat.c:449
 #: plug-ins/common/pcx.c:585 plug-ins/common/pix.c:505
 #: plug-ins/common/png.c:1174 plug-ins/common/pnm.c:810
 #: plug-ins/common/postscript.c:1125 plug-ins/common/psd_save.c:1304
@@ -382,7 +382,7 @@ msgstr "_Fractals"
 #: plug-ins/common/xbm.c:991 plug-ins/common/xwd.c:562
 #: plug-ins/fits/fits.c:445 plug-ins/flame/flame.c:443
 #: plug-ins/gfig/gfig.c:789 plug-ins/gfli/gfli.c:710
-#: plug-ins/ifscompose/ifscompose.c:2374 plug-ins/jpeg/jpeg-save.c:259
+#: plug-ins/ifscompose/ifscompose.c:2390 plug-ins/jpeg/jpeg-save.c:268
 #: plug-ins/uri/uri-backend-gnomevfs.c:215 plug-ins/winicon/icosave.c:244
 #: plug-ins/xjt/xjt.c:1265 plug-ins/xjt/xjt.c:1700
 #, c-format
@@ -411,10 +411,10 @@ msgstr "Save Fractal Parameters"
 #: plug-ins/common/channel_mixer.c:980 plug-ins/common/curve_bend.c:912
 #: plug-ins/common/dicom.c:291 plug-ins/common/gbr.c:343
 #: plug-ins/common/gifload.c:294 plug-ins/common/gih.c:647
-#: plug-ins/common/mng.c:1118 plug-ins/common/pat.c:318
+#: plug-ins/common/mng.c:1122 plug-ins/common/pat.c:318
 #: plug-ins/common/pcx.c:305 plug-ins/common/pix.c:325
 #: plug-ins/common/png.c:672 plug-ins/common/pnm.c:434
-#: plug-ins/common/poppler.c:350 plug-ins/common/postscript.c:994
+#: plug-ins/common/poppler.c:352 plug-ins/common/postscript.c:994
 #: plug-ins/common/psd.c:1801 plug-ins/common/psp.c:1454
 #: plug-ins/common/raw.c:239 plug-ins/common/raw.c:643
 #: plug-ins/common/spheredesigner.c:1997 plug-ins/common/sunras.c:375
@@ -425,7 +425,7 @@ msgstr "Save Fractal Parameters"
 #: plug-ins/flame/flame.c:412 plug-ins/gfig/gfig.c:429
 #: plug-ins/gfli/gfli.c:422 plug-ins/gfli/gfli.c:457
 #: plug-ins/help/domain.c:423 plug-ins/jpeg/jpeg-load.c:85
-#: plug-ins/jpeg/jpeg-load.c:868 plug-ins/uri/uri-backend-gnomevfs.c:204
+#: plug-ins/jpeg/jpeg-load.c:875 plug-ins/uri/uri-backend-gnomevfs.c:204
 #: plug-ins/winicon/icoload.c:135 plug-ins/xjt/xjt.c:2524
 #: plug-ins/xjt/xjt.c:2532
 #, c-format
@@ -652,7 +652,7 @@ msgstr "Direction"
 #: plug-ins/Lighting/lighting_ui.c:499 plug-ins/MapObject/mapobject_ui.c:710
 #: plug-ins/MapObject/mapobject_ui.c:764
 #: plug-ins/MapObject/mapobject_ui.c:1032
-#: plug-ins/MapObject/mapobject_ui.c:1081 plug-ins/ifscompose/ifscompose.c:527
+#: plug-ins/MapObject/mapobject_ui.c:1081 plug-ins/ifscompose/ifscompose.c:528
 msgid "X:"
 msgstr "X:"
 
@@ -665,7 +665,7 @@ msgstr "Light source X direction in XYZ space"
 #: plug-ins/MapObject/mapobject_ui.c:777
 #: plug-ins/MapObject/mapobject_ui.c:1045
 #: plug-ins/MapObject/mapobject_ui.c:1092
-#: plug-ins/MapObject/mapobject_ui.c:1190 plug-ins/ifscompose/ifscompose.c:541
+#: plug-ins/MapObject/mapobject_ui.c:1190 plug-ins/ifscompose/ifscompose.c:542
 msgid "Y:"
 msgstr "Y:"
 
@@ -1157,7 +1157,7 @@ msgstr "Bad colourmap"
 #: plug-ins/common/gifload.c:299 plug-ins/common/gih.c:653
 #: plug-ins/common/pat.c:324 plug-ins/common/pcx.c:311
 #: plug-ins/common/pix.c:331 plug-ins/common/png.c:680
-#: plug-ins/common/pnm.c:440 plug-ins/common/poppler.c:454
+#: plug-ins/common/pnm.c:440 plug-ins/common/poppler.c:456
 #: plug-ins/common/postscript.c:1001 plug-ins/common/psd.c:1807
 #: plug-ins/common/raw.c:649 plug-ins/common/sunras.c:430
 #: plug-ins/common/tga.c:415 plug-ins/common/tiff.c:530
@@ -1210,7 +1210,7 @@ msgstr "Unsupported or invalid bitdepth."
 #: plug-ins/common/tile.c:262 plug-ins/common/xbm.c:862
 #: plug-ins/faxg3/faxg3.c:464 plug-ins/fits/fits.c:500
 #: plug-ins/gfig/gfig-dialog.c:1290 plug-ins/gimpressionist/general.c:121
-#: plug-ins/jpeg/jpeg-load.c:239 plug-ins/jpeg/jpeg-load.c:735
+#: plug-ins/jpeg/jpeg-load.c:239 plug-ins/jpeg/jpeg-load.c:742
 #: plug-ins/sgi/sgi.c:368 plug-ins/twain/twain.c:571
 #: plug-ins/winsnap/winsnap.c:1156
 msgid "Background"
@@ -1241,7 +1241,7 @@ msgstr "Cannot operate on indexed images with alpha channel."
 #: plug-ins/common/tga.c:1028 plug-ins/common/tiff.c:1921
 #: plug-ins/common/xbm.c:996 plug-ins/common/xpm.c:622
 #: plug-ins/common/xwd.c:567 plug-ins/fits/fits.c:451 plug-ins/gfli/gfli.c:679
-#: plug-ins/jpeg/jpeg-save.c:216 plug-ins/sgi/sgi.c:537
+#: plug-ins/jpeg/jpeg-save.c:225 plug-ins/sgi/sgi.c:537
 #: plug-ins/winicon/icosave.c:978 plug-ins/xjt/xjt.c:1683
 #, c-format
 msgid "Saving '%s'..."
@@ -2207,15 +2207,15 @@ msgstr "Ca_rtoon..."
 msgid "Cannot operate on indexed color images."
 msgstr "Cannot operate on indexed colour images."
 
-#: plug-ins/common/cartoon.c:808
+#: plug-ins/common/cartoon.c:809
 msgid "Cartoon"
 msgstr "Cartoon"
 
-#: plug-ins/common/cartoon.c:843 plug-ins/common/photocopy.c:872
+#: plug-ins/common/cartoon.c:844 plug-ins/common/photocopy.c:872
 msgid "_Mask radius:"
 msgstr "_Mask radius:"
 
-#: plug-ins/common/cartoon.c:857
+#: plug-ins/common/cartoon.c:858
 msgid "_Percent black:"
 msgstr "_Percent black:"
 
@@ -3984,7 +3984,7 @@ msgstr "_Loop forever"
 msgid "_Delay between frames where unspecified:"
 msgstr "_Delay between frames where unspecified:"
 
-#: plug-ins/common/gif.c:1385 plug-ins/common/mng.c:1533
+#: plug-ins/common/gif.c:1385 plug-ins/common/mng.c:1538
 msgid "milliseconds"
 msgstr "milliseconds"
 
@@ -4155,19 +4155,19 @@ msgstr "Save (middle transform) as QBE file"
 msgid "G-Qbist"
 msgstr "G-Qbist"
 
-#: plug-ins/common/gradmap.c:99
+#: plug-ins/common/gradmap.c:95
 msgid "_Gradient Map"
 msgstr "_Gradient Map"
 
-#: plug-ins/common/gradmap.c:122
+#: plug-ins/common/gradmap.c:118
 msgid "_Palette Map"
 msgstr "_Palette Map"
 
-#: plug-ins/common/gradmap.c:165
+#: plug-ins/common/gradmap.c:161
 msgid "Gradient Map..."
 msgstr "Gradient Map..."
 
-#: plug-ins/common/gradmap.c:170
+#: plug-ins/common/gradmap.c:166
 msgid "Palette Map..."
 msgstr "Palette Map..."
 
@@ -4836,103 +4836,103 @@ msgstr "_Angle:"
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr "Couldn't losslessly save transparency, saving opacity instead."
 
-#: plug-ins/common/mng.c:1315
+#: plug-ins/common/mng.c:1320
 msgid "Save as MNG"
 msgstr "Save as MNG"
 
-#: plug-ins/common/mng.c:1333
+#: plug-ins/common/mng.c:1338
 msgid "MNG Options"
 msgstr "MNG Options"
 
-#: plug-ins/common/mng.c:1339
+#: plug-ins/common/mng.c:1344
 msgid "Interlace"
 msgstr "Interlace"
 
-#: plug-ins/common/mng.c:1351
+#: plug-ins/common/mng.c:1356
 msgid "Save background color"
 msgstr "Save background colour"
 
-#: plug-ins/common/mng.c:1362
+#: plug-ins/common/mng.c:1367
 msgid "Save gamma"
 msgstr "Save gamma"
 
-#: plug-ins/common/mng.c:1372
+#: plug-ins/common/mng.c:1377
 msgid "Save resolution"
 msgstr "Save resolution"
 
-#: plug-ins/common/mng.c:1383
+#: plug-ins/common/mng.c:1388
 msgid "Save creation time"
 msgstr "Save creation time"
 
-#: plug-ins/common/mng.c:1402
+#: plug-ins/common/mng.c:1407
 msgid "PNG"
 msgstr "PNG"
 
-#: plug-ins/common/mng.c:1403
+#: plug-ins/common/mng.c:1408
 msgid "JNG"
 msgstr "JNG"
 
-#: plug-ins/common/mng.c:1406
+#: plug-ins/common/mng.c:1411
 msgid "PNG + delta PNG"
 msgstr "PNG + delta PNG"
 
-#: plug-ins/common/mng.c:1407
+#: plug-ins/common/mng.c:1412
 msgid "JNG + delta PNG"
 msgstr "JNG + delta PNG"
 
-#: plug-ins/common/mng.c:1408
+#: plug-ins/common/mng.c:1413
 msgid "All PNG"
 msgstr "All PNG"
 
-#: plug-ins/common/mng.c:1409
+#: plug-ins/common/mng.c:1414
 msgid "All JNG"
 msgstr "All JNG"
 
-#: plug-ins/common/mng.c:1421
+#: plug-ins/common/mng.c:1426
 msgid "Default chunks type:"
 msgstr "Default chunks type:"
 
-#: plug-ins/common/mng.c:1424
+#: plug-ins/common/mng.c:1429
 msgid "Combine"
 msgstr "Combine"
 
-#: plug-ins/common/mng.c:1425
+#: plug-ins/common/mng.c:1430
 msgid "Replace"
 msgstr "Replace"
 
-#: plug-ins/common/mng.c:1436
+#: plug-ins/common/mng.c:1441
 msgid "Default frame disposal:"
 msgstr "Default frame disposal:"
 
-#: plug-ins/common/mng.c:1448
+#: plug-ins/common/mng.c:1453
 msgid "PNG compression level:"
 msgstr "PNG compression level:"
 
-#: plug-ins/common/mng.c:1456 plug-ins/common/png.c:1714
+#: plug-ins/common/mng.c:1461 plug-ins/common/png.c:1714
 msgid "Choose a high compression level for small file size"
 msgstr "Choose a high compression level for small file size"
 
-#: plug-ins/common/mng.c:1470
+#: plug-ins/common/mng.c:1475
 msgid "JPEG compression quality:"
 msgstr "JPEG compression quality:"
 
-#: plug-ins/common/mng.c:1487
+#: plug-ins/common/mng.c:1492
 msgid "JPEG smoothing factor:"
 msgstr "JPEG smoothing factor:"
 
-#: plug-ins/common/mng.c:1497
+#: plug-ins/common/mng.c:1502
 msgid "Animated MNG options"
 msgstr "Animated MNG options"
 
-#: plug-ins/common/mng.c:1503
+#: plug-ins/common/mng.c:1508
 msgid "Loop"
 msgstr "Loop"
 
-#: plug-ins/common/mng.c:1517
+#: plug-ins/common/mng.c:1522
 msgid "Default frame delay:"
 msgstr "Default frame delay:"
 
-#: plug-ins/common/mng.c:1595
+#: plug-ins/common/mng.c:1600
 msgid "MNG animation"
 msgstr "MNG animation"
 
@@ -5073,8 +5073,8 @@ msgid "_Yellow"
 msgstr "_Yellow"
 
 #: plug-ins/common/newsprint.c:410
-msgid "Intensity"
-msgstr "Intensity"
+msgid "Luminance"
+msgstr "Luminance"
 
 #: plug-ins/common/newsprint.c:526
 msgid "Newsprin_t..."
@@ -5656,24 +5656,24 @@ msgstr ""
 msgid "Portable Document Format"
 msgstr "Portable Document Format"
 
-#: plug-ins/common/poppler.c:630
+#: plug-ins/common/poppler.c:632
 msgid "Load PDF"
 msgstr "Load PDF"
 
-#: plug-ins/common/poppler.c:692
+#: plug-ins/common/poppler.c:694
 msgid "_Width (pixels):"
 msgstr "_Width (pixels):"
 
-#: plug-ins/common/poppler.c:693
+#: plug-ins/common/poppler.c:695
 msgid "_Height (pixels):"
 msgstr "_Height (pixels):"
 
-#: plug-ins/common/poppler.c:696 plug-ins/common/poppler.c:697
+#: plug-ins/common/poppler.c:698 plug-ins/common/poppler.c:699
 msgid "_Resolution:"
 msgstr "_Resolution:"
 
 #. Antialiasing
-#: plug-ins/common/poppler.c:711
+#: plug-ins/common/poppler.c:713
 msgid "A_ntialiasing"
 msgstr "A_ntialiasing"
 
@@ -6784,7 +6784,7 @@ msgstr "Colour Selection Dialogue"
 
 #. Scale
 #: plug-ins/common/spheredesigner.c:2704 plug-ins/gimpressionist/paper.c:176
-#: plug-ins/ifscompose/ifscompose.c:555
+#: plug-ins/ifscompose/ifscompose.c:556
 msgid "Scale:"
 msgstr "Scale:"
 
@@ -7178,7 +7178,7 @@ msgstr "TileIt"
 
 #. Area for buttons etc
 #. Flip
-#: plug-ins/common/tileit.c:411 plug-ins/ifscompose/ifscompose.c:611
+#: plug-ins/common/tileit.c:411 plug-ins/ifscompose/ifscompose.c:612
 msgid "Flip"
 msgstr "Flip"
 
@@ -7545,7 +7545,7 @@ msgstr "Basic Options"
 msgid "Step size:"
 msgstr "Step size:"
 
-#: plug-ins/common/warp.c:445 plug-ins/ifscompose/ifscompose.c:1206
+#: plug-ins/common/warp.c:445 plug-ins/ifscompose/ifscompose.c:1211
 msgid "Iterations:"
 msgstr "Iterations:"
 
@@ -7623,7 +7623,7 @@ msgid "Vector mag:"
 msgstr "Vector mag:"
 
 #. Angle
-#: plug-ins/common/warp.c:699 plug-ins/ifscompose/ifscompose.c:569
+#: plug-ins/common/warp.c:699 plug-ins/ifscompose/ifscompose.c:570
 msgid "Angle:"
 msgstr "Angle:"
 
@@ -8055,180 +8055,71 @@ msgstr "ZealousCropping(tm)..."
 msgid "Nothing to crop."
 msgstr "Nothing to crop."
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:131
-msgid "Procedure Browser"
-msgstr "Procedure Browser"
-
-#: plug-ins/dbbrowser/gimpprocbrowser.c:154
-msgid "by name"
-msgstr "by name"
-
-#: plug-ins/dbbrowser/gimpprocbrowser.c:155
-msgid "by description"
-msgstr "by description"
-
-#: plug-ins/dbbrowser/gimpprocbrowser.c:156
-msgid "by help"
-msgstr "by help"
-
-#: plug-ins/dbbrowser/gimpprocbrowser.c:157
-msgid "by author"
-msgstr "by author"
-
-#: plug-ins/dbbrowser/gimpprocbrowser.c:158
-msgid "by copyright"
-msgstr "by copyright"
-
-#: plug-ins/dbbrowser/gimpprocbrowser.c:159
-msgid "by date"
-msgstr "by date"
-
-#: plug-ins/dbbrowser/gimpprocbrowser.c:160
-msgid "by type"
-msgstr "by type"
-
-#: plug-ins/dbbrowser/gimpprocbrowser.c:332
-#: plug-ins/dbbrowser/plugin-browser.c:388
-msgid "Searching by name - please wait"
-msgstr "Searching by name - please wait"
-
-#: plug-ins/dbbrowser/gimpprocbrowser.c:352
-msgid "Searching by description - please wait"
-msgstr "Searching by description - please wait"
-
-#: plug-ins/dbbrowser/gimpprocbrowser.c:360
-msgid "Searching by help - please wait"
-msgstr "Searching by help - please wait"
-
-#: plug-ins/dbbrowser/gimpprocbrowser.c:368
-msgid "Searching by author - please wait"
-msgstr "Searching by author - please wait"
-
-#: plug-ins/dbbrowser/gimpprocbrowser.c:376
-msgid "Searching by copyright - please wait"
-msgstr "Searching by copyright - please wait"
-
-#: plug-ins/dbbrowser/gimpprocbrowser.c:384
-msgid "Searching by date - please wait"
-msgstr "Searching by date - please wait"
-
-#: plug-ins/dbbrowser/gimpprocbrowser.c:392
-msgid "Searching by type - please wait"
-msgstr "Searching by type - please wait"
-
-#: plug-ins/dbbrowser/gimpprocbrowser.c:400
-msgid "Searching - please wait"
-msgstr "Searching - please wait"
-
-#: plug-ins/dbbrowser/gimpprocbrowser.c:408
-#, c-format
-msgid "%d Procedures"
-msgstr "%d Procedures"
-
-#: plug-ins/dbbrowser/gimpprocbrowser.c:415
-#: plug-ins/dbbrowser/plugin-browser.c:409
-msgid "No matches for your query"
-msgstr "No matches for your query"
-
-#: plug-ins/dbbrowser/gimpprocbrowser.c:418
-msgid "1 procedure matches your query"
-msgstr "1 procedure matches your query"
-
-#: plug-ins/dbbrowser/gimpprocbrowser.c:421
-#, c-format
-msgid "%d procedures match your query"
-msgstr "%d procedures match your query"
-
-#: plug-ins/dbbrowser/gimpprocbrowser.c:477
-#: plug-ins/dbbrowser/plugin-browser.c:533
-msgid "No matches"
-msgstr "No matches"
-
-#.
-#. *  Scales
-#.
-#.
-#. *    Scales
-#.
-#: plug-ins/dbbrowser/gimpprocview.c:138 plug-ins/gflare/gflare.c:2674
-#: plug-ins/gflare/gflare.c:3511 plug-ins/gflare/gflare.c:3616
-#: plug-ins/gflare/gflare.c:3753
-msgid "Parameters"
-msgstr "Parameters"
-
-#: plug-ins/dbbrowser/gimpprocview.c:151
-msgid "Return Values"
-msgstr "Return Values"
-
-#: plug-ins/dbbrowser/gimpprocview.c:164
-msgid "Additional Information"
-msgstr "Additional Information"
-
-#: plug-ins/dbbrowser/gimpprocview.c:205
-msgid "Author:"
-msgstr "Author:"
-
-#: plug-ins/dbbrowser/gimpprocview.c:217
-msgid "Date:"
-msgstr "Date:"
-
-#: plug-ins/dbbrowser/gimpprocview.c:229
-msgid "Copyright:"
-msgstr "Copyright:"
-
-#: plug-ins/dbbrowser/plugin-browser.c:145
+#: plug-ins/dbbrowser/plugin-browser.c:143
 msgid "_Plug-In Browser"
 msgstr "_Plug-In Browser"
 
-#: plug-ins/dbbrowser/plugin-browser.c:402
+#: plug-ins/dbbrowser/plugin-browser.c:386
+msgid "Searching by name - please wait"
+msgstr "Searching by name - please wait"
+
+#: plug-ins/dbbrowser/plugin-browser.c:400
 #, c-format
 msgid "%d Plug-ins"
 msgstr "%d Plug-ins"
 
-#: plug-ins/dbbrowser/plugin-browser.c:412
+#: plug-ins/dbbrowser/plugin-browser.c:407
+msgid "No matches for your query"
+msgstr "No matches for your query"
+
+#: plug-ins/dbbrowser/plugin-browser.c:410
 msgid "1 plug-in matches your query"
 msgstr "1 plug-in matches your query"
 
-#: plug-ins/dbbrowser/plugin-browser.c:415
+#: plug-ins/dbbrowser/plugin-browser.c:413
 #, c-format
 msgid "%d plug-ins match your query"
 msgstr "%d plug-ins match your query"
 
-#: plug-ins/dbbrowser/plugin-browser.c:557
+#: plug-ins/dbbrowser/plugin-browser.c:531
+msgid "No matches"
+msgstr "No matches"
+
+#: plug-ins/dbbrowser/plugin-browser.c:555
 msgid "Plug-In Browser"
 msgstr "Plug-In Browser"
 
-#: plug-ins/dbbrowser/plugin-browser.c:600
+#: plug-ins/dbbrowser/plugin-browser.c:598
 msgid "Name"
 msgstr "Name"
 
-#: plug-ins/dbbrowser/plugin-browser.c:608
+#: plug-ins/dbbrowser/plugin-browser.c:606
 msgid "Menu Path"
 msgstr "Menu Path"
 
-#: plug-ins/dbbrowser/plugin-browser.c:616
-#: plug-ins/dbbrowser/plugin-browser.c:678
+#: plug-ins/dbbrowser/plugin-browser.c:614
+#: plug-ins/dbbrowser/plugin-browser.c:676
 msgid "Image Types"
 msgstr "Image Types"
 
-#: plug-ins/dbbrowser/plugin-browser.c:626
-#: plug-ins/dbbrowser/plugin-browser.c:687
+#: plug-ins/dbbrowser/plugin-browser.c:624
+#: plug-ins/dbbrowser/plugin-browser.c:685
 msgid "Installation Date"
 msgstr "Installation Date"
 
-#: plug-ins/dbbrowser/plugin-browser.c:649
+#: plug-ins/dbbrowser/plugin-browser.c:647
 msgid "List View"
 msgstr "List View"
 
-#: plug-ins/dbbrowser/plugin-browser.c:669
+#: plug-ins/dbbrowser/plugin-browser.c:667
 msgid "Menu Path/Name"
 msgstr "Menu Path/Name"
 
-#: plug-ins/dbbrowser/plugin-browser.c:710
+#: plug-ins/dbbrowser/plugin-browser.c:708
 msgid "Tree View"
 msgstr "Tree View"
 
-#: plug-ins/dbbrowser/procedure-browser.c:86
+#: plug-ins/dbbrowser/procedure-browser.c:84
 msgid "Procedure _Browser"
 msgstr "Procedure _Browser"
 
@@ -8805,6 +8696,17 @@ msgstr "`Default' is created."
 #: plug-ins/gflare/gflare.c:2399
 msgid "Default"
 msgstr "Default"
+
+#.
+#. *  Scales
+#.
+#.
+#. *    Scales
+#.
+#: plug-ins/gflare/gflare.c:2674 plug-ins/gflare/gflare.c:3511
+#: plug-ins/gflare/gflare.c:3616 plug-ins/gflare/gflare.c:3753
+msgid "Parameters"
+msgstr "Parameters"
 
 #: plug-ins/gflare/gflare.c:2700
 msgid "Ro_tation:"
@@ -9700,159 +9602,159 @@ msgstr "Document not found"
 msgid "The requested URL could not be loaded:"
 msgstr "The requested URL could not be loaded:"
 
-#: plug-ins/ifscompose/ifscompose.c:347
+#: plug-ins/ifscompose/ifscompose.c:348
 msgid "_IFS Fractal..."
 msgstr "_IFS Fractal..."
 
 #. Asym
-#: plug-ins/ifscompose/ifscompose.c:583
+#: plug-ins/ifscompose/ifscompose.c:584
 msgid "Asymmetry:"
 msgstr "Asymmetry:"
 
 #. Shear
-#: plug-ins/ifscompose/ifscompose.c:597
+#: plug-ins/ifscompose/ifscompose.c:598
 msgid "Shear:"
 msgstr "Shear:"
 
 #. Simple color control section
-#: plug-ins/ifscompose/ifscompose.c:642
+#: plug-ins/ifscompose/ifscompose.c:643
 msgid "Simple"
 msgstr "Simple"
 
-#: plug-ins/ifscompose/ifscompose.c:651
+#: plug-ins/ifscompose/ifscompose.c:652
 msgid "IFS Fractal: Target"
 msgstr "IFS Fractal: Target"
 
-#: plug-ins/ifscompose/ifscompose.c:657
+#: plug-ins/ifscompose/ifscompose.c:658
 msgid "Scale Hue by:"
 msgstr "Scale Hue by:"
 
-#: plug-ins/ifscompose/ifscompose.c:672
+#: plug-ins/ifscompose/ifscompose.c:673
 msgid "Scale Value by:"
 msgstr "Scale Value by:"
 
 #. Full color control section
-#: plug-ins/ifscompose/ifscompose.c:689
+#: plug-ins/ifscompose/ifscompose.c:690
 msgid "Full"
 msgstr "Full"
 
-#: plug-ins/ifscompose/ifscompose.c:696
+#: plug-ins/ifscompose/ifscompose.c:698
 msgid "IFS Fractal: Red"
 msgstr "IFS Fractal: Red"
 
-#: plug-ins/ifscompose/ifscompose.c:703
+#: plug-ins/ifscompose/ifscompose.c:706
 msgid "IFS Fractal: Green"
 msgstr "IFS Fractal: Green"
 
-#: plug-ins/ifscompose/ifscompose.c:710
+#: plug-ins/ifscompose/ifscompose.c:714
 msgid "IFS Fractal: Blue"
 msgstr "IFS Fractal: Blue"
 
-#: plug-ins/ifscompose/ifscompose.c:717
+#: plug-ins/ifscompose/ifscompose.c:722
 msgid "IFS Fractal: Black"
 msgstr "IFS Fractal: Black"
 
-#: plug-ins/ifscompose/ifscompose.c:767
+#: plug-ins/ifscompose/ifscompose.c:772
 msgid "IFS Fractal"
 msgstr "IFS Fractal"
 
-#: plug-ins/ifscompose/ifscompose.c:863
+#: plug-ins/ifscompose/ifscompose.c:868
 msgid "Spatial Transformation"
 msgstr "Spatial Transformation"
 
-#: plug-ins/ifscompose/ifscompose.c:869
+#: plug-ins/ifscompose/ifscompose.c:874
 msgid "Color Transformation"
 msgstr "Colour Transformation"
 
-#: plug-ins/ifscompose/ifscompose.c:879
+#: plug-ins/ifscompose/ifscompose.c:884
 msgid "Relative probability:"
 msgstr "Relative probability:"
 
-#: plug-ins/ifscompose/ifscompose.c:1054
+#: plug-ins/ifscompose/ifscompose.c:1059
 msgid "Select _All"
 msgstr "Select _All"
 
-#: plug-ins/ifscompose/ifscompose.c:1058
+#: plug-ins/ifscompose/ifscompose.c:1063
 msgid "Re_center"
 msgstr "Re_centre"
 
-#: plug-ins/ifscompose/ifscompose.c:1058
+#: plug-ins/ifscompose/ifscompose.c:1063
 msgid "Recompute Center"
 msgstr "Recompute Centre"
 
-#: plug-ins/ifscompose/ifscompose.c:1062
+#: plug-ins/ifscompose/ifscompose.c:1067
 msgid "Render options"
 msgstr "Render options"
 
-#: plug-ins/ifscompose/ifscompose.c:1068 plug-ins/imagemap/imap_cmd_move.c:86
+#: plug-ins/ifscompose/ifscompose.c:1073 plug-ins/imagemap/imap_cmd_move.c:86
 #: plug-ins/imagemap/imap_cmd_object_move.c:57
 msgid "Move"
 msgstr "Move"
 
-#: plug-ins/ifscompose/ifscompose.c:1071
+#: plug-ins/ifscompose/ifscompose.c:1076
 msgid "Rotate"
 msgstr "Rotate"
 
-#: plug-ins/ifscompose/ifscompose.c:1071
+#: plug-ins/ifscompose/ifscompose.c:1076
 msgid "Rotate / Scale"
 msgstr "Rotate / Scale"
 
-#: plug-ins/ifscompose/ifscompose.c:1074
+#: plug-ins/ifscompose/ifscompose.c:1079
 msgid "Stretch"
 msgstr "Stretch"
 
-#: plug-ins/ifscompose/ifscompose.c:1172
+#: plug-ins/ifscompose/ifscompose.c:1177
 msgid "IFS Fractal Render Options"
 msgstr "IFS Fractal Render Options"
 
-#: plug-ins/ifscompose/ifscompose.c:1193
+#: plug-ins/ifscompose/ifscompose.c:1198
 msgid "Max. Memory:"
 msgstr "Max. Memory:"
 
-#: plug-ins/ifscompose/ifscompose.c:1220
+#: plug-ins/ifscompose/ifscompose.c:1225
 msgid "Subdivide:"
 msgstr "Subdivide:"
 
-#: plug-ins/ifscompose/ifscompose.c:1233
+#: plug-ins/ifscompose/ifscompose.c:1238
 msgid "Spot Radius:"
 msgstr "Spot Radius:"
 
-#: plug-ins/ifscompose/ifscompose.c:1303
+#: plug-ins/ifscompose/ifscompose.c:1308
 #, c-format
 msgid "Rendering IFS (%d/%d)..."
 msgstr "Rendering IFS (%d/%d)..."
 
-#: plug-ins/ifscompose/ifscompose.c:1321
+#: plug-ins/ifscompose/ifscompose.c:1326
 #, c-format
 msgid "Copying IFS to image (%d/%d)..."
 msgstr "Copying IFS to image (%d/%d)..."
 
-#: plug-ins/ifscompose/ifscompose.c:1477
+#: plug-ins/ifscompose/ifscompose.c:1482
 #, c-format
 msgid "Transformation %s"
 msgstr "Transformation %s"
 
-#: plug-ins/ifscompose/ifscompose.c:2379 plug-ins/metadata/interface.c:562
+#: plug-ins/ifscompose/ifscompose.c:2395 plug-ins/metadata/interface.c:562
 #: plug-ins/metadata/interface.c:572
 msgid "Save failed"
 msgstr "Save failed"
 
-#: plug-ins/ifscompose/ifscompose.c:2460 plug-ins/ifscompose/ifscompose.c:2473
+#: plug-ins/ifscompose/ifscompose.c:2476 plug-ins/ifscompose/ifscompose.c:2489
 #: plug-ins/metadata/interface.c:461 plug-ins/metadata/interface.c:471
 #: plug-ins/metadata/interface.c:547
 msgid "Open failed"
 msgstr "Open failed"
 
-#: plug-ins/ifscompose/ifscompose.c:2468
+#: plug-ins/ifscompose/ifscompose.c:2484
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Fractal file."
 msgstr "File '%s' doesn't seem to be an IFS Fractal file."
 
-#: plug-ins/ifscompose/ifscompose.c:2508
+#: plug-ins/ifscompose/ifscompose.c:2524
 msgid "Save as IFS Fractal file"
 msgstr "Save as IFS Fractal file"
 
-#: plug-ins/ifscompose/ifscompose.c:2543
+#: plug-ins/ifscompose/ifscompose.c:2559
 msgid "Open IFS Fractal file"
 msgstr "Open IFS Fractal file"
 
@@ -10152,7 +10054,7 @@ msgstr "Area Settings"
 msgid "Area #%d Settings"
 msgstr "Area #%d Settings"
 
-#: plug-ins/imagemap/imap_file.c:48 plug-ins/imagemap/imap_menu.c:94
+#: plug-ins/imagemap/imap_file.c:48 plug-ins/imagemap/imap_menu.c:93
 msgid "Error opening file"
 msgstr "Error opening file"
 
@@ -10266,12 +10168,12 @@ msgstr "Couldn't read file:"
 msgid "URL: %s"
 msgstr "URL: %s"
 
-#: plug-ins/imagemap/imap_menu.c:128
+#: plug-ins/imagemap/imap_menu.c:127
 #, c-format
 msgid "_Undo %s"
 msgstr "_Undo %s"
 
-#: plug-ins/imagemap/imap_menu.c:144
+#: plug-ins/imagemap/imap_menu.c:143
 #, c-format
 msgid "_Redo %s"
 msgstr "_Redo %s"
@@ -10472,100 +10374,100 @@ msgstr "_Keep Orientation"
 msgid "JPEG preview"
 msgstr "JPEG preview"
 
-#: plug-ins/jpeg/jpeg-load.c:603 plug-ins/winicon/icoload.c:526
+#: plug-ins/jpeg/jpeg-load.c:610 plug-ins/winicon/icoload.c:526
 #, c-format
 msgid "Opening thumbnail for '%s'..."
 msgstr "Opening thumbnail for '%s'..."
 
-#: plug-ins/jpeg/jpeg-save.c:130
+#: plug-ins/jpeg/jpeg-save.c:139
 #, c-format
 msgid "File size: %02.01f kB"
 msgstr "File size: %02.01f kB"
 
-#: plug-ins/jpeg/jpeg-save.c:653 plug-ins/jpeg/jpeg-save.c:746
+#: plug-ins/jpeg/jpeg-save.c:662 plug-ins/jpeg/jpeg-save.c:755
 msgid "File size: unknown"
 msgstr "File size: unknown"
 
-#: plug-ins/jpeg/jpeg-save.c:706
+#: plug-ins/jpeg/jpeg-save.c:715
 msgid "Save as JPEG"
 msgstr "Save as JPEG"
 
-#: plug-ins/jpeg/jpeg-save.c:732
+#: plug-ins/jpeg/jpeg-save.c:741
 msgid "_Quality:"
 msgstr "_Quality:"
 
-#: plug-ins/jpeg/jpeg-save.c:736
+#: plug-ins/jpeg/jpeg-save.c:745
 msgid "JPEG quality parameter"
 msgstr "JPEG quality parameter"
 
-#: plug-ins/jpeg/jpeg-save.c:755
+#: plug-ins/jpeg/jpeg-save.c:764
 msgid "Show _Preview in image window"
 msgstr "Show _Preview in image window"
 
-#: plug-ins/jpeg/jpeg-save.c:767
+#: plug-ins/jpeg/jpeg-save.c:776
 msgid "_Advanced Options"
 msgstr "_Advanced Options"
 
-#: plug-ins/jpeg/jpeg-save.c:795
+#: plug-ins/jpeg/jpeg-save.c:804
 msgid "_Smoothing:"
 msgstr "_Smoothing:"
 
-#: plug-ins/jpeg/jpeg-save.c:808
+#: plug-ins/jpeg/jpeg-save.c:817
 msgid "Frequency (rows):"
 msgstr "Frequency (rows):"
 
-#: plug-ins/jpeg/jpeg-save.c:822
+#: plug-ins/jpeg/jpeg-save.c:831
 msgid "Use restart markers"
 msgstr "Use restart markers"
 
-#: plug-ins/jpeg/jpeg-save.c:838 plug-ins/xjt/xjt.c:862
+#: plug-ins/jpeg/jpeg-save.c:847 plug-ins/xjt/xjt.c:862
 msgid "Optimize"
 msgstr "Optimize"
 
-#: plug-ins/jpeg/jpeg-save.c:851
+#: plug-ins/jpeg/jpeg-save.c:860
 msgid "Progressive"
 msgstr "Progressive"
 
-#: plug-ins/jpeg/jpeg-save.c:865
+#: plug-ins/jpeg/jpeg-save.c:874
 msgid "Force baseline JPEG"
 msgstr "Force baseline JPEG"
 
-#: plug-ins/jpeg/jpeg-save.c:880
+#: plug-ins/jpeg/jpeg-save.c:889
 msgid "Save EXIF data"
 msgstr "Save EXIF data"
 
-#: plug-ins/jpeg/jpeg-save.c:896
+#: plug-ins/jpeg/jpeg-save.c:905
 msgid "Save thumbnail"
 msgstr "Save thumbnail"
 
 #. XMP metadata
-#: plug-ins/jpeg/jpeg-save.c:912
+#: plug-ins/jpeg/jpeg-save.c:921
 msgid "Save XMP data"
 msgstr "Save XMP data"
 
 #. Subsampling
-#: plug-ins/jpeg/jpeg-save.c:925
+#: plug-ins/jpeg/jpeg-save.c:934
 msgid "Subsampling:"
 msgstr "Subsampling:"
 
 #. DCT method
-#: plug-ins/jpeg/jpeg-save.c:952
+#: plug-ins/jpeg/jpeg-save.c:961
 msgid "DCT method:"
 msgstr "DCT method:"
 
-#: plug-ins/jpeg/jpeg-save.c:958
+#: plug-ins/jpeg/jpeg-save.c:967
 msgid "Fast Integer"
 msgstr "Fast Integer"
 
-#: plug-ins/jpeg/jpeg-save.c:959
+#: plug-ins/jpeg/jpeg-save.c:968
 msgid "Integer"
 msgstr "Integer"
 
-#: plug-ins/jpeg/jpeg-save.c:960
+#: plug-ins/jpeg/jpeg-save.c:969
 msgid "Floating-Point"
 msgstr "Floating-Point"
 
-#: plug-ins/jpeg/jpeg-save.c:974
+#: plug-ins/jpeg/jpeg-save.c:983
 msgid "Comment"
 msgstr "Comment"
 
