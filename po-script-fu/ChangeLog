@@ -1,3 +1,7 @@
+2005-08-03  Adam Weinberger  <adamw@gnome.org>
+
+	* POTFILES.in: Removed missing files.
+
 2005-07-30  Sven Neumann  <sven@gimp.org>
 
 	* POTFILES.in: removed image-structure.scm.
