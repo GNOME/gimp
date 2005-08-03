@@ -1600,12 +1600,12 @@ xcf_save_old_paths (XcfInfo    *info,
       gchar                  *name;
       guint32                 locked;
       guint8                  state;
-      guint32                 num_points;
-      guint32                 closed;
       guint32                 version;
       guint32                 pathtype;
       guint32                 tattoo;
       GimpVectorsCompatPoint *points;
+      gint32                  num_points;
+      gint32                  closed;
       gint                    i;
 
       /*

@@ -42,8 +42,8 @@ GimpVectors * gimp_vectors_compat_new (GimpImage              *gimage,
 gboolean              gimp_vectors_compat_is_compatible (GimpImage   *gimage);
 
 GimpVectorsCompatPoint * gimp_vectors_compat_get_points (GimpVectors *vectors,
-                                                         guint32     *n_points,
-                                                         guint32     *closed);
+                                                         gint32      *n_points,
+                                                         gint32      *closed);
 
 
 #endif /* __GIMP_VECTORS_COMPAT_H__ */
