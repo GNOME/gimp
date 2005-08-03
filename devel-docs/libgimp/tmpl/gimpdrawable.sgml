@@ -439,6 +439,17 @@ Functions to manipulate drawables.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_drawable_foreground_extract ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@mode: 
+@mask_ID: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_drawable_parasite_find ##### -->
 <para>
 

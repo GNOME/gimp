@@ -2,6 +2,7 @@
 <FILE>gimp</FILE>
 GIMPVAR
 gimp_version
+gimp_getpid
 gimp_major_version
 gimp_minor_version
 gimp_micro_version
@@ -292,6 +293,7 @@ gimp_drawable_is_layer
 gimp_drawable_is_layer_mask
 gimp_drawable_is_channel
 gimp_drawable_offset
+gimp_drawable_foreground_extract
 gimp_drawable_parasite_find
 gimp_drawable_parasite_list
 gimp_drawable_parasite_attach
@@ -539,6 +541,8 @@ gimp_layer_get_mask
 gimp_layer_add_mask
 gimp_layer_remove_mask
 gimp_layer_new_from_drawable
+gimp_layer_get_lock_alpha
+gimp_layer_set_lock_alpha
 gimp_layer_get_preserve_trans
 gimp_layer_set_preserve_trans
 gimp_layer_get_apply_mask
@@ -901,6 +905,28 @@ GIMP_IMAGE_COMBO_BOX
 GIMP_IS_IMAGE_COMBO_BOX
 GIMP_TYPE_IMAGE_COMBO_BOX
 gimp_image_combo_box_get_type
+</SECTION>
+
+<SECTION>
+<FILE>gimpprocbrowserdialog</FILE>
+<TITLE>GimpProcBrowserDialog</TITLE>
+GimpProcBrowserDialog
+gimp_proc_browser_dialog_new
+gimp_proc_browser_dialog_get_selected
+<SUBSECTION Standard>
+GimpProcBrowserDialogClass
+GIMP_PROC_BROWSER_DIALOG
+GIMP_IS_PROC_BROWSER_DIALOG
+GIMP_TYPE_PROC_BROWSER_DIALOG
+gimp_proc_browser_dialog_get_type
+GIMP_PROC_BROWSER_DIALOG_CLASS
+GIMP_IS_PROC_BROWSER_DIALOG_CLASS
+GIMP_PROC_BROWSER_DIALOG_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpprocview</FILE>
+gimp_proc_view_new
 </SECTION>
 
 <SECTION>

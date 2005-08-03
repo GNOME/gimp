@@ -1,0 +1,46 @@
+<!-- ##### SECTION Title ##### -->
+GimpProcBrowserDialog
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GimpProcBrowserDialog ##### -->
+<para>
+
+</para>
+
+@parent_instance: 
+@browser: 
+@store: 
+@tree_view: 
+
+<!-- ##### FUNCTION gimp_proc_browser_dialog_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_proc_browser_dialog_get_selected ##### -->
+<para>
+
+</para>
+
+@dialog: 
+@Returns: 
+
+

@@ -111,6 +111,8 @@
     <xi:include href="xml/gimpgradientmenu.xml" />
     <xi:include href="xml/gimppalettemenu.xml" />
     <xi:include href="xml/gimppatternmenu.xml" />
+    <xi:include href="xml/gimpprocbrowserdialog.xml" />
+    <xi:include href="xml/gimpprocview.xml" />
   </part>
 
   <index>

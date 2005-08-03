@@ -1,5 +1,22 @@
 2005-08-03  Michael Natterer  <mitch@gimp.org>
 
+	* libgimp/libgimp-sections.txt: added the proc browser and view
+	stuff.
+
+	* libgimp/libgimp.types: added gimp_proc_browser_dialog_get_type.
+
+	* libgimp/libgimp-docs.sgml: added their sections, added some
+	missing symbols.
+
+	* libgimp/tmpl/gimpprocbrowserdialog.sgml
+	* libgimp/tmpl/gimpprocview.sgml: new files.
+
+	* libgimp/tmpl/gimp.sgml
+	* libgimp/tmpl/gimpdrawable.sgml
+	* libgimp/tmpl/gimplayer.sgml: regenerated.
+
+2005-08-03  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpbase/libgimpbase-sections.txt: added
 	GimpForegroundSelectMode stuff and gimp_canonicalize_identifier().
 

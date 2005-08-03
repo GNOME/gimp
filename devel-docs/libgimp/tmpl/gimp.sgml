@@ -35,6 +35,14 @@ all other GIMP Library headers.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_getpid ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
 <!-- ##### VARIABLE gimp_major_version ##### -->
 <para>
 

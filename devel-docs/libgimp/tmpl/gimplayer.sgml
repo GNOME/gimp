@@ -165,6 +165,25 @@ Operations on a single layer.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_layer_get_lock_alpha ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_layer_set_lock_alpha ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@lock_alpha: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_layer_get_preserve_trans ##### -->
 <para>
 
