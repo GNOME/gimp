@@ -491,7 +491,7 @@ file_check_single_magic (const gchar  *offset,
   const gchar  *num_operator_ptr;
   gchar         num_operator;
   gchar         num_test;
-  guchar        mem_testval[256];
+  gchar         mem_testval[256];
 
   /* Check offset */
   if (sscanf (offset, "%ld", &offs) != 1) return (0);
@@ -606,7 +606,7 @@ file_check_single_magic (const gchar  *offset,
 
       if (offs + numbytes <= headsize)  /* We have it in memory ? */
         {
-          found = (memcmp (mem_testval, file_head+offs, numbytes) == 0);
+          found = (memcmp (mem_testval, file_head + offs, numbytes) == 0);
         }
       else   /* Read it from file */
         {
@@ -615,7 +615,7 @@ file_check_single_magic (const gchar  *offset,
           for (k = 0; found && (k < numbytes); k++)
             {
               c = getc (ifp);
-              found = (c != EOF) && (c == (int)mem_testval[k]);
+              found = (c != EOF) && (c == (int) mem_testval[k]);
             }
         }
     }

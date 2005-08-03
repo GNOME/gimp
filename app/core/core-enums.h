@@ -422,6 +422,7 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_TRANSFORM,                /*< desc="Transform"                 >*/
   GIMP_UNDO_PAINT,                    /*< desc="Paint"                     >*/
   GIMP_UNDO_INK,                      /*< desc="Ink"                       >*/
+  GIMP_UNDO_FOREGROUND_SELECT,        /*< desc="Select foreground          >*/
   GIMP_UNDO_PARASITE_ATTACH,          /*< desc="Attach parasite"           >*/
   GIMP_UNDO_PARASITE_REMOVE,          /*< desc="Remove parasite"           >*/
 

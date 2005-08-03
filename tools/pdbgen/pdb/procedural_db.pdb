@@ -388,7 +388,7 @@ CODE
     );
 }
 
-@headers = qw("core/gimp.h" "procedural-db-query.h");
+@headers = qw("libgimpbase/gimpbase.h" "core/gimp.h" "procedural-db-query.h");
 
 @procs = qw(procedural_db_temp_name procedural_db_dump
             procedural_db_query procedural_db_proc_info

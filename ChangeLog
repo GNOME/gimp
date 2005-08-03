@@ -1,5 +1,20 @@
 2005-08-03  Sven Neumann  <sven@gimp.org>
 
+	* app/core/core-enums.[ch]: added GIMP_UNDO_FOREGROUND_SELECT.
+
+	* app/tools/Makefile.am
+	* app/tools/gimpforegroundselecttool-undo.[ch]: added stubs for
+	undo in the new foreground selection tool.
+
+	* tools/pdbgen/pdb/procedural_db.pdb: include gimpbase.h for
+	gimp_canonicalize_identifier().
+
+	* app/pdb/procedural_db_cmds.c: regenerated.
+
+	* app/file/file-utils.c: fixed signedness warning.
+
+2005-08-03  Sven Neumann  <sven@gimp.org>
+
 	* libgimpmath/gimpmd5.c
 	* libgimpmath/test-md5.c
 	* plug-ins/common/CEL.c
