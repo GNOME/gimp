@@ -325,7 +325,7 @@ gimp_file_dialog_new (Gimp                 *gimp,
       automatic_help_id = GIMP_HELP_FILE_OPEN_BY_EXTENSION;
 
       /* FIXME */
-      local_only = (procedural_db_lookup (gimp, "file_uri_load") == NULL);
+      local_only = (procedural_db_lookup (gimp, "file-uri-load") == NULL);
       break;
 
     case GTK_FILE_CHOOSER_ACTION_SAVE:
@@ -334,7 +334,7 @@ gimp_file_dialog_new (Gimp                 *gimp,
       automatic_help_id = GIMP_HELP_FILE_SAVE_BY_EXTENSION;
 
       /* FIXME */
-      local_only = (procedural_db_lookup (gimp, "file_uri_save") == NULL);
+      local_only = (procedural_db_lookup (gimp, "file-uri-save") == NULL);
       break;
 
     default:

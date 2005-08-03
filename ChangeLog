@@ -1,5 +1,10 @@
 2005-08-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpfiledialog.c (gimp_file_dialog_new):
+	canonicalize hardcoded procedure names.
+
+2005-08-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/dialogs/module-dialog.c
 	* app/dialogs/palette-import-dialog.c
 	* app/gui/gui.c
