@@ -194,7 +194,7 @@ levels_adjust_by_colors (Levels               *levels,
       guchar lightness;
 
       /* Calculate lightness value */
-      lightness = GIMP_RGB_INTENSITY (gray[0], gray[1], gray[2]);
+      lightness = GIMP_RGB_LUMINANCE (gray[0], gray[1], gray[2]);
 
       input = levels_input_from_color (channel, gray);
 

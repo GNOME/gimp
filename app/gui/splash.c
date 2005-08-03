@@ -370,7 +370,7 @@ splash_average_bottom (GtkWidget *widget,
   gint          width, height;
   gint          rowstride;
   gint          channels;
-  gint          intensity;
+  gint          luminance;
   gint          count;
   guint         sum[3] = { 0, 0, 0 };
 
@@ -404,13 +404,13 @@ splash_average_bottom (GtkWidget *widget,
       pixels += rowstride;
     }
 
-  intensity = GIMP_RGB_INTENSITY (sum[0] / count,
+  luminance = GIMP_RGB_LUMINANCE (sum[0] / count,
                                   sum[1] / count,
                                   sum[2] / count);
 
-  intensity = CLAMP0255 (intensity > 127 ? intensity - 223 : intensity + 223);
+  luminance = CLAMP0255 (luminance > 127 ? luminance - 223 : luminance + 223);
 
-  color->red = color->green = color->blue = (intensity << 8 | intensity);
+  color->red = color->green = color->blue = (luminance << 8 | luminance);
 
   return gdk_colormap_alloc_color (gtk_widget_get_colormap (widget),
                                    color, FALSE, TRUE);

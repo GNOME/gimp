@@ -785,12 +785,12 @@ bumpmap_convert_row (guchar   *row,
       {
         if (has_alpha)
           *p++ = lut[(gint) (bmvals.waterlevel +
-                             (((gint) (GIMP_RGB_INTENSITY (row[0],
+                             (((gint) (GIMP_RGB_LUMINANCE (row[0],
                                                            row[1],
                                                            row[2]) + 0.5) -
                                bmvals.waterlevel) * row[3]) / 255.0)];
         else
-          *p++ = lut[(gint) (GIMP_RGB_INTENSITY (row[0],
+          *p++ = lut[(gint) (GIMP_RGB_LUMINANCE (row[0],
                                                  row[1],
                                                  row[2]) + 0.5)];
 

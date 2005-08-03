@@ -204,6 +204,12 @@ rgb_gamma(PyObject *self, PyObject *args, PyObject *kwargs)
 }
 
 static PyObject *
+rgb_luminance(PyObject *self)
+{
+    return PyFloat_FromDouble(gimp_rgb_luminance(pyg_boxed_get(self, GimpRGB)));
+}
+
+static PyObject *
 rgb_intensity(PyObject *self)
 {
     return PyFloat_FromDouble(gimp_rgb_intensity(pyg_boxed_get(self, GimpRGB)));
@@ -222,7 +228,7 @@ rgb_composite(PyObject *self, PyObject *args, PyObject *kwargs)
         return NULL;
 
     if (mode < GIMP_RGB_COMPOSITE_NONE || mode > GIMP_RGB_COMPOSITE_BEHIND) {
-	PyErr_SetString(PyExc_TypeError, "composite type is not valid");	
+	PyErr_SetString(PyExc_TypeError, "composite type is not valid");
 	return NULL;
     }
 
@@ -322,6 +328,7 @@ static PyMethodDef rgb_methods[] = {
     { "min", (PyCFunction)rgb_min, METH_NOARGS },
     { "clamp", (PyCFunction)rgb_clamp, METH_NOARGS },
     { "gamma", (PyCFunction)rgb_gamma, METH_VARARGS|METH_KEYWORDS },
+    { "luminance", (PyCFunction)rgb_luminance, METH_NOARGS },
     { "intensity", (PyCFunction)rgb_intensity, METH_NOARGS },
     { "composite", (PyCFunction)rgb_composite, METH_VARARGS|METH_KEYWORDS },
     { "parse_name", (PyCFunction)rgb_parse_name, METH_VARARGS|METH_KEYWORDS },

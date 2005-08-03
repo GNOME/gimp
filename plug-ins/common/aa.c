@@ -306,13 +306,13 @@ gimp2aa (gint32      drawable_ID,
         case 3:  /* RGB */
           for (x = 0, p = buffer; x < width; x++, p += 3)
             aa_putpixel (context, x, y,
-                         GIMP_RGB_INTENSITY (p[0], p[1], p[2]) + 0.5);
+                         GIMP_RGB_LUMINANCE (p[0], p[1], p[2]) + 0.5);
           break;
 
         case 4:  /* RGBA, blend over black */
           for (x = 0, p = buffer; x < width; x++, p += 4)
             aa_putpixel (context, x, y,
-                         ((guchar) (GIMP_RGB_INTENSITY (p[0], p[1], p[2]) + 0.5)
+                         ((guchar) (GIMP_RGB_LUMINANCE (p[0], p[1], p[2]) + 0.5)
                           * (p[3] + 1)) >> 8);
           break;
 

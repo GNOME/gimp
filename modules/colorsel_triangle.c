@@ -325,7 +325,7 @@ colorsel_triangle_update_preview (ColorselTriangle *triangle)
 
   gimp_hsv_to_rgb4 (buf, atn / (2 * G_PI), 1, 1);
 
-  col = GIMP_RGB_INTENSITY (buf[0], buf[1], buf[2]) > 127 ? 0 : 255;
+  col = GIMP_RGB_LUMINANCE (buf[0], buf[1], buf[2]) > 127 ? 0 : 255;
 
   d = CLAMP (triangle->wheelradius / 16, 2, 4);
 

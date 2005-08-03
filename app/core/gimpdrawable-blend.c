@@ -820,7 +820,7 @@ gradient_put_pixel (gint      x,
   else
     {
       /* Convert to grayscale */
-      gdouble gray = gimp_rgb_intensity (color);
+      gdouble gray = gimp_rgb_luminance (color);
 
       if (ppd->dither_rand)
         {
@@ -1078,7 +1078,7 @@ gradient_fill_single_region_gray (RenderBlendData *rbd,
 
         gradient_render_pixel (x, y, &color, rbd);
 
-        *dest++ = gimp_rgb_intensity_uchar (&color);
+        *dest++ = gimp_rgb_luminance_uchar (&color);
         *dest++ = ROUND (color.a * 255.0);
       }
 }
@@ -1102,7 +1102,7 @@ gradient_fill_single_region_gray_dither (RenderBlendData *rbd,
 
         gradient_render_pixel (x, y, &color, rbd);
 
-        gray = gimp_rgb_intensity (&color);
+        gray = gimp_rgb_luminance (&color);
 
         *dest++ = gray    * 255.0 + (gdouble) (i & 0xff) / 256.0; i >>= 8;
         *dest++ = color.a * 255.0 + (gdouble) (i & 0xff) / 256.0;

@@ -63,6 +63,8 @@ gimp_rgb_max
 gimp_rgb_min
 gimp_rgb_clamp
 gimp_rgb_gamma
+gimp_rgb_luminance
+gimp_rgb_luminance_uchar
 gimp_rgb_intensity
 gimp_rgb_intensity_uchar
 gimp_rgb_composite
@@ -74,6 +76,10 @@ gimp_rgba_add
 gimp_rgba_subtract
 gimp_rgba_multiply
 gimp_rgba_distance
+GIMP_RGB_LUMINANCE
+GIMP_RGB_LUMINANCE_RED
+GIMP_RGB_LUMINANCE_GREEN
+GIMP_RGB_LUMINANCE_BLUE
 GIMP_RGB_INTENSITY
 GIMP_RGB_INTENSITY_RED
 GIMP_RGB_INTENSITY_GREEN

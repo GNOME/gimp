@@ -1,3 +1,43 @@
+2005-08-03  Sven Neumann  <sven@gimp.org>
+
+	* libgimpcolor/gimprgb.[ch]: deprecated RGB intensity functions
+	and definitions. These coefficients do not accurately compute
+	luminance for contemporary monitors. Instead the coefficients from
+	the sRGB spec should be used which have now been added.
+
+	* libgimpcolor/gimpcolor.def: updated.
+
+	* libgimp/gimpdrawable.c
+	* libgimp/gimppixelfetcher.c
+	* app/base/colorize.c
+	* app/base/levels.c
+	* app/base/temp-buf.c
+	* app/core/gimpdrawable-blend.c
+	* app/core/gimpdrawable-convert.c
+	* app/core/gimpdrawable-desaturate.c
+	* app/core/gimpimage-convert.c
+	* app/core/gimpimage.c
+	* app/gui/splash.c
+	* app/widgets/gimpgradienteditor.c
+	* modules/colorsel_triangle.c
+	* plug-ins/common/aa.c
+	* plug-ins/common/bumpmap.c
+	* plug-ins/common/colorify.c
+	* plug-ins/common/despeckle.c
+	* plug-ins/common/displace.c
+	* plug-ins/common/engrave.c
+	* plug-ins/common/gradmap.c
+	* plug-ins/common/grid.c
+	* plug-ins/common/mng.c
+	* plug-ins/common/newsprint.c
+	* plug-ins/common/png.c
+	* plug-ins/common/whirlpinch.c
+	* plug-ins/gflare/gflare.c
+	* plug-ins/gfli/gfli.c
+	* plug-ins/maze/handy.c
+	* plug-ins/pagecurl/pagecurl.c: use gimp_rgb_luminance() and
+	friends instead of the deprecated intensity functions.
+
 2005-08-03  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimpprocbrowserdialog.[ch]: removed all parameters from

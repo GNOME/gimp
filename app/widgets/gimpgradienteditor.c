@@ -942,14 +942,12 @@ view_set_hint (GimpGradientEditor *editor,
   gimp_rgb_to_hsv (&rgb, &hsv);
 
   str1 = g_strdup_printf (_("Position: %0.6f"), xpos);
-
   str2 = g_strdup_printf (_("RGB (%0.3f, %0.3f, %0.3f)"),
                           rgb.r, rgb.g, rgb.b);
-
   str3 = g_strdup_printf (_("HSV (%0.3f, %0.3f, %0.3f)"),
                           hsv.h * 360.0, hsv.s, hsv.v);
-  str4 = g_strdup_printf (_("Intensity: %0.3f    Opacity: %0.3f"),
-                          GIMP_RGB_INTENSITY (rgb.r, rgb.g, rgb.b), rgb.a);
+  str4 = g_strdup_printf (_("Luminance: %0.3f    Opacity: %0.3f"),
+                          GIMP_RGB_LUMINANCE (rgb.r, rgb.g, rgb.b), rgb.a);
 
 
   gradient_editor_set_hint (editor, str1, str2, str3, str4);

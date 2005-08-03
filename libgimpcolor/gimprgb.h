@@ -99,8 +99,13 @@ void      gimp_rgb_clamp       (GimpRGB       *rgb);
 void      gimp_rgb_gamma       (GimpRGB       *rgb,
  			        gdouble        gamma);
 
-gdouble   gimp_rgb_intensity        (const GimpRGB *rgb);
-guchar    gimp_rgb_intensity_uchar  (const GimpRGB *rgb);
+gdouble   gimp_rgb_luminance       (const GimpRGB *rgb);
+guchar    gimp_rgb_luminance_uchar (const GimpRGB *rgb);
+
+#ifndef GIMP_DISABLE_DEPRECATED
+gdouble   gimp_rgb_intensity       (const GimpRGB *rgb);
+guchar    gimp_rgb_intensity_uchar (const GimpRGB *rgb);
+#endif
 
 void      gimp_rgb_composite   (GimpRGB              *color1,
                                 const GimpRGB        *color2,
@@ -146,12 +151,43 @@ gdouble   gimp_rgba_distance   (const GimpRGB *rgba1,
 
 /*  Map RGB to intensity  */
 
-#define GIMP_RGB_INTENSITY_RED    0.30
-#define GIMP_RGB_INTENSITY_GREEN  0.59
-#define GIMP_RGB_INTENSITY_BLUE   0.11
+/*
+ * The weights to compute true CIE luminance from linear red, green
+ * and blue, as defined by the ITU-R Recommendation BT.709, "Basic
+ * Parameter Values for the HDTV Standard for the Studio and for
+ * International Programme Exchange" (1990). Also suggested in the
+ * sRGB colorspace specification by the W3C.
+ */
+
+#define GIMP_RGB_LUMINANCE_RED    (0.2126)
+#define GIMP_RGB_LUMINANCE_GREEN  (0.7152)
+#define GIMP_RGB_LUMINANCE_BLUE   (0.0722)
+
+#define GIMP_RGB_LUMINANCE(r,g,b) ((r) * GIMP_RGB_LUMINANCE_RED   + \
+			           (g) * GIMP_RGB_LUMINANCE_GREEN + \
+			           (b) * GIMP_RGB_LUMINANCE_BLUE)
+
+
+#ifndef GIMP_DISABLE_DEPRECATED
+
+/*
+ * The coefficients below properly computed luminance for monitors
+ * having phosphors that were contemporary at the introduction of NTSC
+ * television in 1953. They are still appropriate for computing video
+ * luma. However, these coefficients do not accurately compute
+ * luminance for contemporary monitors. The use of these definitions
+ * is deprecated.
+ */
+
+#define GIMP_RGB_INTENSITY_RED    (0.30)
+#define GIMP_RGB_INTENSITY_GREEN  (0.59)
+#define GIMP_RGB_INTENSITY_BLUE   (0.11)
+
 #define GIMP_RGB_INTENSITY(r,g,b) ((r) * GIMP_RGB_INTENSITY_RED   + \
 			           (g) * GIMP_RGB_INTENSITY_GREEN + \
 			           (b) * GIMP_RGB_INTENSITY_BLUE)
+
+#endif
 
 
 G_END_DECLS

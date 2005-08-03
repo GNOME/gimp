@@ -2064,7 +2064,7 @@ gimp_image_transform_color (const GimpImage    *dest_gimage,
         case GIMP_GRAY_IMAGE:
         case GIMP_GRAYA_IMAGE:
           /*  NTSC conversion  */
-          *dest = GIMP_RGB_INTENSITY (src[RED_PIX],
+          *dest = GIMP_RGB_LUMINANCE (src[RED_PIX],
                                       src[GREEN_PIX],
                                       src[BLUE_PIX]) + 0.5;
           break;

@@ -193,6 +193,24 @@ Definitions and Functions relating to RGB colors.
 @gamma: 
 
 
+<!-- ##### FUNCTION gimp_rgb_luminance ##### -->
+<para>
+
+</para>
+
+@rgb: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_rgb_luminance_uchar ##### -->
+<para>
+
+</para>
+
+@rgb: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_rgb_intensity ##### -->
 <para>
 
@@ -303,6 +321,37 @@ Definitions and Functions relating to RGB colors.
 @rgba1: 
 @rgba2: 
 @Returns: 
+
+
+<!-- ##### MACRO GIMP_RGB_LUMINANCE ##### -->
+<para>
+
+</para>
+
+@r: 
+@g: 
+@b: 
+
+
+<!-- ##### MACRO GIMP_RGB_LUMINANCE_RED ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_RGB_LUMINANCE_GREEN ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_RGB_LUMINANCE_BLUE ##### -->
+<para>
+
+</para>
+
 
 
 <!-- ##### MACRO GIMP_RGB_INTENSITY ##### -->

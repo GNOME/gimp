@@ -186,7 +186,7 @@ gimp_drawable_convert_grayscale (GimpDrawable      *drawable,
               d = dest;
               for (col = 0; col < srcPR.w; col++)
                 {
-                  val = GIMP_RGB_INTENSITY (s[RED_PIX],
+                  val = GIMP_RGB_LUMINANCE (s[RED_PIX],
                                             s[GREEN_PIX],
                                             s[BLUE_PIX]) + 0.5;
                   *d++ = (guchar) val;
@@ -217,7 +217,7 @@ gimp_drawable_convert_grayscale (GimpDrawable      *drawable,
               for (col = 0; col < srcPR.w; col++)
                 {
                   offset = *s++ * 3;
-                  val = GIMP_RGB_INTENSITY (cmap[offset+0],
+                  val = GIMP_RGB_LUMINANCE (cmap[offset+0],
                                             cmap[offset+1],
                                             cmap[offset+2]) + 0.5;
                   *d++ = (guchar) val;

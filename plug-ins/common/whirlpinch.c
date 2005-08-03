@@ -632,12 +632,12 @@ dialog_update_preview (GimpDrawable *drawable,
   switch (img_bpp)
     {
     case 1:
-      outside[0] = outside[1] = outside [2] = gimp_rgb_intensity_uchar (&background);
+      outside[0] = outside[1] = outside [2] = gimp_rgb_luminance_uchar (&background);
       outside[3] = 255;
       break;
 
     case 2:
-      outside[0] = outside[1] = outside [2] = gimp_rgb_intensity_uchar (&background);
+      outside[0] = outside[1] = outside [2] = gimp_rgb_luminance_uchar (&background);
       outside[3] = 0;
       break;
 

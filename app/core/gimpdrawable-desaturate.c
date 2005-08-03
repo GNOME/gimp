@@ -161,7 +161,7 @@ desaturate_region_luminosity (gpointer     data,
 
       for (j = 0; j < srcPR->w; j++)
         {
-          gint luminosity = GIMP_RGB_INTENSITY (s[RED_PIX],
+          gint luminosity = GIMP_RGB_LUMINANCE (s[RED_PIX],
                                                 s[GREEN_PIX],
                                                 s[BLUE_PIX]) + 0.5;
 

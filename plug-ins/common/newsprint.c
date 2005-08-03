@@ -89,7 +89,7 @@
 #define CS_GREY         0
 #define CS_RGB          1
 #define CS_CMYK         2
-#define CS_INTENSITY    3
+#define CS_LUMINANCE    3
 #define NUM_CS          4
 #define VALID_CS(x)     ((x) >= 0 && (x) <= NUM_CS-1)
 
@@ -190,7 +190,7 @@ typedef struct
   gint    cell_width;
 
   /* screening section: */
-  gint    colourspace;  /* 0: RGB, 1: CMYK, 2: Intensity */
+  gint    colourspace;  /* 0: RGB, 1: CMYK, 2: Luminance */
   gint    k_pullout;    /* percentage of black to pull out */
 
   /* grey screen (only used if greyscale drawable) */
@@ -276,7 +276,7 @@ static const NewsprintValues factory_defaults =
   10,          /* cell width */
 
   /* screen setup (default is the classic rosette pattern) */
-  CS_RGB,      /* use RGB, not CMYK or Intensity */
+  CS_RGB,      /* use RGB, not CMYK or Luminance */
   100, /* max pullout */
 
   /* grey/black */
@@ -404,10 +404,10 @@ static const chan_tmpl cmyk_tmpl[] =
   { NULL, NULL, NULL, NULL, NULL }
 };
 
-static const chan_tmpl intensity_tmpl[] =
+static const chan_tmpl luminance_tmpl[] =
 {
   {
-    N_("Intensity"),
+    N_("Luminance"),
     &pvals.gry_ang,
     &pvals.gry_spotfn,
     &factory_defaults.gry_ang,
@@ -424,7 +424,7 @@ static const chan_tmpl *cspace_chan_tmpl[] =
   grey_tmpl,
   rgb_tmpl,
   cmyk_tmpl,
-  intensity_tmpl
+  luminance_tmpl
 };
 
 #define NCHANS(x) ((sizeof(x) / sizeof(chan_tmpl)) - 1)
@@ -437,7 +437,7 @@ static const gint cspace_nchans[] =
   NCHANS (grey_tmpl),
   NCHANS (rgb_tmpl),
   NCHANS (cmyk_tmpl),
-  NCHANS (intensity_tmpl)
+  NCHANS (luminance_tmpl)
 };
 
 
@@ -497,7 +497,7 @@ query (void)
 
     { GIMP_PDB_INT32, "cell_width", "screen cell width, in pixels" },
 
-    { GIMP_PDB_INT32, "colorspace", "separate to 0:RGB, 1:CMYK, 2:Intensity" },
+    { GIMP_PDB_INT32, "colorspace", "separate to 0:RGB, 1:CMYK, 2:Luminance" },
     { GIMP_PDB_INT32, "k_pullout", "Percentage of black to pullout (CMYK only)" },
 
     { GIMP_PDB_FLOAT, "gry_ang", "Grey/black screen angle (degrees)" },
@@ -1327,7 +1327,7 @@ newsprint_dialog (GimpDrawable *drawable)
                                 G_CALLBACK (gimp_preview_invalidate),
                                 preview);
 
-      /* RGB / CMYK / Intensity select */
+      /* RGB / CMYK / Luminance select */
       hbox = gtk_hbox_new (FALSE, 6);
       gtk_box_pack_start (GTK_BOX (st.vbox), hbox, FALSE, FALSE, 0);
 
@@ -1376,7 +1376,7 @@ newsprint_dialog (GimpDrawable *drawable)
       group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
       gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                    (pvals.colourspace == CS_INTENSITY));
+                                    (pvals.colourspace == CS_LUMINANCE));
       gtk_widget_show (toggle);
 
       g_object_set_data (G_OBJECT (toggle), "dialog", &st);
@@ -1384,7 +1384,7 @@ newsprint_dialog (GimpDrawable *drawable)
 
       g_signal_connect (toggle, "toggled",
                         G_CALLBACK (newsprint_cspace_update),
-                        GINT_TO_POINTER (CS_INTENSITY));
+                        GINT_TO_POINTER (CS_LUMINANCE));
       g_signal_connect_swapped (toggle, "toggled",
                                 G_CALLBACK (gimp_preview_invalidate),
                                 preview);
@@ -1840,7 +1840,7 @@ do {                                                            \
 } while(0)
 
   /* calculate the RGB / CMYK rotations and threshold matrices */
-  if (colour_bpp == 1 || colourspace == CS_INTENSITY)
+  if (colour_bpp == 1 || colourspace == CS_LUMINANCE)
     {
       rot[0]    = DEG2RAD (pvals.gry_ang);
       thresh[0] = spot2thresh (pvals.gry_spotfn, width);
@@ -1951,9 +1951,9 @@ do {                                                            \
                           }
                           break;
 
-                        case CS_INTENSITY:
+                        case CS_LUMINANCE:
                           data[3] = data[0]; /* save orig for later */
-                          data[0] = GIMP_RGB_INTENSITY (data[0],
+                          data[0] = GIMP_RGB_LUMINANCE (data[0],
                                                         data[1],
                                                         data[2]) + 0.5;
                           break;
@@ -2012,7 +2012,7 @@ do {                                                            \
                           data[2] = 0xff - data[2];
                           break;
 
-                        case CS_INTENSITY:
+                        case CS_LUMINANCE:
                           if (has_alpha)
                             {
                               dest[colour_bpp] = data[0];

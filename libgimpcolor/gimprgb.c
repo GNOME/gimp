@@ -25,6 +25,7 @@
 
 #include "gimpcolortypes.h"
 
+#undef GIMP_DISABLE_DEPRECATED  /*  for GIMP_RGB_INTENSITY()  */
 #include "gimprgb.h"
 
 
@@ -228,6 +229,50 @@ gimp_rgb_gamma (GimpRGB *rgb,
   rgb->b = pow (rgb->b, ig);
 }
 
+/**
+ * gimp_rgb_luminance:
+ * @rgb:
+ *
+ * Return value: the luminous intensity of the range from 0.0 to 1.0.
+ *
+ * Since: GIMP 2.4
+ **/
+gdouble
+gimp_rgb_luminance (const GimpRGB *rgb)
+{
+  gdouble luminance;
+
+  g_return_val_if_fail (rgb != NULL, 0.0);
+
+  luminance = GIMP_RGB_LUMINANCE (rgb->r, rgb->g, rgb->b);
+
+  return CLAMP (luminance, 0.0, 1.0);
+}
+
+/**
+ * gimp_rgb_luminance_uchar:
+ * @rgb:
+ *
+ * Return value: the luminous intensity in the range from 0 to 255.
+ *
+ * Since: GIMP 2.4
+ **/
+guchar
+gimp_rgb_luminance_uchar (const GimpRGB *rgb)
+{
+  g_return_val_if_fail (rgb != NULL, 0);
+
+  return ROUND (gimp_rgb_luminance (rgb) * 255.0);
+}
+
+/**
+ * gimp_rgb_intensity:
+ * @rgb:
+ *
+ * This function is deprecated! Use gimp_rgb_luminance() instead.
+ *
+ * Return value: the intensity in the range from 0.0 to 1.0.
+ **/
 gdouble
 gimp_rgb_intensity (const GimpRGB *rgb)
 {
@@ -240,6 +285,14 @@ gimp_rgb_intensity (const GimpRGB *rgb)
   return CLAMP (intensity, 0.0, 1.0);
 }
 
+/**
+ * gimp_rgb_intensity_uchar:
+ * @rgb:
+ *
+ * This function is deprecated! Use gimp_rgb_luminance_uchar() instead.
+ *
+ * Return value: the intensity in the range from 0 to 255.
+ **/
 guchar
 gimp_rgb_intensity_uchar (const GimpRGB *rgb)
 {

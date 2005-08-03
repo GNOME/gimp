@@ -662,7 +662,9 @@ mng_save_image (const gchar *filename,
                 gimp_context_get_background(&bgcolor);
                 gimp_rgb_get_uchar(&bgcolor, &red, &green, &blue);
 
-                if ((ret = mng_putchunk_back(handle, red, green, blue, MNG_BACKGROUNDCOLOR_MANDATORY, 0, MNG_BACKGROUNDIMAGE_NOTILE)) != MNG_NOERROR)
+                if ((ret = mng_putchunk_back(handle, red, green, blue,
+                                             MNG_BACKGROUNDCOLOR_MANDATORY,
+                                             0, MNG_BACKGROUNDIMAGE_NOTILE)) != MNG_NOERROR)
                 {
                         g_warning("Unable to mng_putchunk_back() in mng_save_image()");
                         mng_cleanup(&handle);
@@ -671,7 +673,9 @@ mng_save_image (const gchar *filename,
                         return 0;
                 }
 
-                if ((ret = mng_putchunk_bkgd(handle, MNG_FALSE, 2, 0, gimp_rgb_intensity_uchar(&bgcolor), red, green, blue)) != MNG_NOERROR)
+                if ((ret = mng_putchunk_bkgd(handle, MNG_FALSE, 2, 0,
+                                             gimp_rgb_luminance_uchar(&bgcolor),
+                                             red, green, blue)) != MNG_NOERROR)
                 {
                         g_warning("Unable to mng_putchunk_bkgd() in mng_save_image()");
                         mng_cleanup(&handle);

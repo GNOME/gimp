@@ -248,12 +248,12 @@ gimp_drawable_get_color_uchar (gint32         drawable_ID,
       break;
 
     case GIMP_GRAY_IMAGE:
-      color_uchar[0] = gimp_rgb_intensity_uchar (color);
+      color_uchar[0] = gimp_rgb_luminance_uchar (color);
       color_uchar[1] = 255;
       break;
 
     case GIMP_GRAYA_IMAGE:
-      color_uchar[0] = gimp_rgb_intensity_uchar (color);
+      color_uchar[0] = gimp_rgb_luminance_uchar (color);
       gimp_rgba_get_uchar (color, NULL, NULL, NULL, &color_uchar[1]);
       break;
 

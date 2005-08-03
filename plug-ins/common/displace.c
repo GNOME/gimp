@@ -31,7 +31,7 @@
  * (http://ha1.seikyou.ne.jp/home/taka/gimp/displace/displace.html)
  * Added ability to use transparency as the identity transformation
  * (Full transparency is treated as if it was grey 0.5)
- * and the possibility to use RGB/RGBA pictures where the intensity
+ * and the possibility to use RGB/RGBA pictures where the luminance
  * of the pixel is taken into account
  *
  * Joao S. O. Bueno, Dec. 2004:
@@ -175,7 +175,7 @@ query (void)
                           "Displace the contents of the specified drawable",
                           "Displaces the contents of the specified drawable "
                           "by the amounts specified by 'amount_x' and "
-                          "'amount_y' multiplied by the intensity of "
+                          "'amount_y' multiplied by the luminance of "
                           "corresponding pixels in the 'displace_map' "
                           "drawables.  If mode is polar coordinates"
                           "drawable is whirled and pinched according to map.",
@@ -757,7 +757,7 @@ displace_map_give_value (guchar *pt,
   gdouble ret, val_alpha;
 
   if (bytes >= 3)
-    ret =  GIMP_RGB_INTENSITY (pt[0], pt[1], pt[2]);
+    ret =  GIMP_RGB_LUMINANCE (pt[0], pt[1], pt[2]);
   else
     ret = (gdouble) *pt;
 

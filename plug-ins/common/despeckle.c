@@ -86,7 +86,7 @@ static void      preview_update            (GtkWidget     *preview);
 static gint      quick_median_select       (guchar       **p,
                                             guchar        *i,
                                             gint           n);
-static inline guchar  pixel_intensity      (const guchar  *p,
+static inline guchar  pixel_luminance      (const guchar  *p,
                                             gint           bpp);
 static inline void    pixel_copy           (guchar        *dest,
                                             const guchar  *src,
@@ -635,7 +635,7 @@ despeckle_median (guchar   *src,
 
               for (u = xmin, off2 += xmin * bpp; u <= xmax; u++, off2 += bpp)
                 {
-                  guchar value = pixel_intensity (src + off2, bpp);
+                  guchar value = pixel_luminance (src + off2, bpp);
 
                   if (value < black_level)
                     {
@@ -705,7 +705,7 @@ despeckle_median (guchar   *src,
  * Cambridge University Press, 1992, Section 8.5, ISBN 0-521-43108-5
  * This code by Nicolas Devillard - 1998. Public domain.
  *
- * Modified to swap pointers: swap is done by comparing intensity
+ * Modified to swap pointers: swap is done by comparing luminance
  * value for the pointer to RGB.
  */
 static gint
@@ -793,7 +793,7 @@ quick_median_select (guchar **p,
 }
 
 static inline guchar
-pixel_intensity (const guchar *p,
+pixel_luminance (const guchar *p,
                  gint          bpp)
 {
   switch (bpp)
@@ -804,7 +804,7 @@ pixel_intensity (const guchar *p,
 
     case 3:
     case 4:
-      return GIMP_RGB_INTENSITY (p[0], p[1], p[2]);
+      return GIMP_RGB_LUMINANCE (p[0], p[1], p[2]);
 
     default:
       return 0; /* should not be reached */

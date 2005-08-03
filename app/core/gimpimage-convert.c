@@ -760,8 +760,8 @@ color_quicksort (const void *c1,
   Color *color1 = (Color *)c1;
   Color *color2 = (Color *)c2;
 
-  double v1 = GIMP_RGB_INTENSITY (color1->red, color1->green, color1->blue);
-  double v2 = GIMP_RGB_INTENSITY (color2->red, color2->green, color2->blue);
+  double v1 = GIMP_RGB_LUMINANCE (color1->red, color1->green, color1->blue);
+  double v2 = GIMP_RGB_LUMINANCE (color2->red, color2->green, color2->blue);
 
   if (v1 < v2)
     return -1;

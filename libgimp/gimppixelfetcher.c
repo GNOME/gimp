@@ -160,7 +160,7 @@ gimp_pixel_fetcher_set_bg_color (GimpPixelFetcher *pf,
     {
     case 2: pf->bg_color[1] = 255;
     case 1:
-      pf->bg_color[0] = gimp_rgb_intensity_uchar (color);
+      pf->bg_color[0] = gimp_rgb_luminance_uchar (color);
       break;
 
     case 4: pf->bg_color[3] = 255;

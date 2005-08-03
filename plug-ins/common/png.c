@@ -1283,7 +1283,7 @@ save_image (const gchar *filename,
       background.red = red;
       background.green = green;
       background.blue = blue;
-      background.gray = gimp_rgb_intensity_uchar (&color);
+      background.gray = gimp_rgb_luminance_uchar (&color);
       png_set_bKGD (pp, info, &background);
     }
   else

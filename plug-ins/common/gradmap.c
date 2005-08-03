@@ -27,14 +27,10 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#ifdef RCSID
-static char rcsid[] = "$Id$";
-#endif
-
 /* Some useful macros */
 
 #define NSAMPLES      256
-#define LUMINOSITY(X) (GIMP_RGB_INTENSITY (X[0], X[1], X[2]) + 0.5)
+#define LUMINOSITY(X) (GIMP_RGB_LUMINANCE (X[0], X[1], X[2]) + 0.5)
 
 typedef enum
   {
@@ -331,7 +327,7 @@ get_samples_palette (GimpDrawable *drawable)
         gimp_rgb_get_uchar (&color_sample,
                             b_samp, b_samp + 1, b_samp + 2);
       else
-        *b_samp = gimp_rgb_intensity_uchar (&color_sample);
+        *b_samp = gimp_rgb_luminance_uchar (&color_sample);
 
       if (has_alpha)
         b_samp[alpha] = 255;

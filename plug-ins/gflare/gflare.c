@@ -58,7 +58,7 @@
 #define DEBUG_PRINT(X)
 #endif
 
-#define LUMINOSITY(PIX) (GIMP_RGB_INTENSITY (PIX[0], PIX[1], PIX[2]) + 0.5)
+#define LUMINOSITY(PIX) (GIMP_RGB_LUMINANCE (PIX[0], PIX[1], PIX[2]) + 0.5)
 #define OFFSETOF(t,f)   ((int) ((char*) &((t*) 0)->f))
 
 #define RESPONSE_RESCAN     1
@@ -1155,7 +1155,7 @@ plugin_put_pixel_func (gint      ix,
     }
   else
     {
-      dest[0] = gimp_rgb_intensity_uchar (color);
+      dest[0] = gimp_rgb_luminance_uchar (color);
     }
 
   if (dinfo.has_alpha)

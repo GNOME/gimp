@@ -212,9 +212,9 @@ colorify (GimpDrawable *drawable,
 
   for (i = 0; i < 256; i ++)
     {
-      lum_red_lookup[i]     = i * GIMP_RGB_INTENSITY_RED;
-      lum_green_lookup[i]   = i * GIMP_RGB_INTENSITY_GREEN;
-      lum_blue_lookup[i]    = i * GIMP_RGB_INTENSITY_BLUE;
+      lum_red_lookup[i]     = i * GIMP_RGB_LUMINANCE_RED;
+      lum_green_lookup[i]   = i * GIMP_RGB_LUMINANCE_GREEN;
+      lum_blue_lookup[i]    = i * GIMP_RGB_LUMINANCE_BLUE;
       final_red_lookup[i]   = i * cvals.color.r;
       final_green_lookup[i] = i * cvals.color.g;
       final_blue_lookup[i]  = i * cvals.color.b;

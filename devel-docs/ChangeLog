@@ -1,3 +1,9 @@
+2005-08-03  Sven Neumann  <sven@gimp.org>
+
+	* libgimpcolor/libgimpcolor-sections.txt
+	* libgimpcolor/tmpl/gimprgb.sgml: added gimp_rgb_luminance() and
+	friends.
+
 2005-07-22  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/libgimpwidgets-sections.txt

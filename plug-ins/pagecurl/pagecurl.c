@@ -760,10 +760,10 @@ do_curl_effect (gint32 drawable_id)
 
   /* Init shade_curl */
 
-  fore_grayval = GIMP_RGB_INTENSITY (fore_color[0],
+  fore_grayval = GIMP_RGB_LUMINANCE (fore_color[0],
                                      fore_color[1],
                                      fore_color[2]) + 0.5;
-  back_grayval = GIMP_RGB_INTENSITY (back_color[0],
+  back_grayval = GIMP_RGB_LUMINANCE (back_color[0],
                                      back_color[1],
                                      back_color[2]) + 0.5;
 
@@ -1069,7 +1069,7 @@ get_gradient_samples (gint32    drawable_id,
         for (j = 0; j < 3; j++)
           b_samp[j] = f_samp[j] * 255;
       else
-        b_samp[0] = GIMP_RGB_INTENSITY (f_samp[0], f_samp[1], f_samp[2]) * 255;
+        b_samp[0] = GIMP_RGB_LUMINANCE (f_samp[0], f_samp[1], f_samp[2]) * 255;
 
       if (has_alpha)
         b_samp[alpha] = f_samp[3] * 255;
