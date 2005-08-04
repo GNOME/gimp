@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-20 20:32+0200\n"
-"PO-Revision-Date: 2005-07-20 20:33+0200\n"
+"POT-Creation-Date: 2005-08-04 05:53+0200\n"
+"PO-Revision-Date: 2005-08-04 05:59+0200\n"
 "Last-Translator: Marcel Telka <marcel@telka.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -216,6 +216,112 @@ msgstr "Výber vzorky"
 msgid "Pattern Selection"
 msgstr "Výber vzorky"
 
+#: ../libgimp/gimpprocbrowserdialog.c:154
+msgid "by name"
+msgstr "podľa názvu"
+
+#: ../libgimp/gimpprocbrowserdialog.c:155
+msgid "by description"
+msgstr "podľa popisu"
+
+#: ../libgimp/gimpprocbrowserdialog.c:156
+msgid "by help"
+msgstr "podľa pomocníka"
+
+#: ../libgimp/gimpprocbrowserdialog.c:157
+msgid "by author"
+msgstr "podľa autora"
+
+#: ../libgimp/gimpprocbrowserdialog.c:158
+msgid "by copyright"
+msgstr "podľa autorských práv"
+
+#: ../libgimp/gimpprocbrowserdialog.c:159
+msgid "by date"
+msgstr "podľa dátumu"
+
+#: ../libgimp/gimpprocbrowserdialog.c:160
+msgid "by type"
+msgstr "podľa typu"
+
+#: ../libgimp/gimpprocbrowserdialog.c:354
+msgid "Searching by name - please wait"
+msgstr "Vyhľadávanie podľa názvu - prosím čakajte"
+
+#: ../libgimp/gimpprocbrowserdialog.c:374
+msgid "Searching by description - please wait"
+msgstr "Vyhľadávanie podľa popisu - prosím čakajte"
+
+#: ../libgimp/gimpprocbrowserdialog.c:382
+msgid "Searching by help - please wait"
+msgstr "Vyhľadávanie podľa pomocníka - prosím čakajte"
+
+#: ../libgimp/gimpprocbrowserdialog.c:390
+msgid "Searching by author - please wait"
+msgstr "Vyhľadávanie podľa autora - prosím čakajte"
+
+#: ../libgimp/gimpprocbrowserdialog.c:398
+msgid "Searching by copyright - please wait"
+msgstr "Vyhľadávanie podľa autorských práv - prosím čakajte"
+
+#: ../libgimp/gimpprocbrowserdialog.c:406
+msgid "Searching by date - please wait"
+msgstr "Vyhľadávanie podľa dátumu - prosím čakajte"
+
+#: ../libgimp/gimpprocbrowserdialog.c:414
+msgid "Searching by type - please wait"
+msgstr "Vyhľadávanie podľa typu - prosím čakajte"
+
+#: ../libgimp/gimpprocbrowserdialog.c:422
+msgid "Searching - please wait"
+msgstr "Vyhľadávanie - prosím čakajte"
+
+#: ../libgimp/gimpprocbrowserdialog.c:430
+#, c-format
+msgid "%d Procedures"
+msgstr "%d procedúr"
+
+#: ../libgimp/gimpprocbrowserdialog.c:437
+msgid "No matches for your query"
+msgstr "Pre vašu otázku nie sú zhody"
+
+#: ../libgimp/gimpprocbrowserdialog.c:440
+msgid "1 procedure matches your query"
+msgstr "1 procedúra vyhovuje vašej otázke"
+
+#: ../libgimp/gimpprocbrowserdialog.c:443
+#, c-format
+msgid "%d procedures match your query"
+msgstr "%d procedúr vyhovuje vašej otázke"
+
+#: ../libgimp/gimpprocbrowserdialog.c:491
+msgid "No matches"
+msgstr "Bez zhody"
+
+#: ../libgimp/gimpprocview.c:143
+msgid "Parameters"
+msgstr "Parametre"
+
+#: ../libgimp/gimpprocview.c:156
+msgid "Return Values"
+msgstr "Návratové hodnoty"
+
+#: ../libgimp/gimpprocview.c:169
+msgid "Additional Information"
+msgstr "Prídavné informácie"
+
+#: ../libgimp/gimpprocview.c:210
+msgid "Author:"
+msgstr "Autor:"
+
+#: ../libgimp/gimpprocview.c:222
+msgid "Date:"
+msgstr "Dátum:"
+
+#: ../libgimp/gimpprocview.c:234
+msgid "Copyright:"
+msgstr "Autorské práva:"
+
 #: ../libgimp/gimpunitcache.c:57
 msgid "percent"
 msgstr "percent"
@@ -304,7 +410,7 @@ msgstr "Modrá"
 msgid "Gray"
 msgstr "Šedá"
 
-#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpbase/gimpbaseenums.c:467
+#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpbase/gimpbaseenums.c:494
 msgid "Indexed"
 msgstr "Indexované"
 
@@ -376,163 +482,163 @@ msgstr "Zosvetliť"
 msgid "Burn"
 msgstr "Stmaviť"
 
-#: ../libgimpbase/gimpbaseenums.c:359 ../libgimpbase/gimpbaseenums.c:499
+#: ../libgimpbase/gimpbaseenums.c:386 ../libgimpbase/gimpbaseenums.c:526
 msgid "Linear"
 msgstr "Lineárna"
 
-#: ../libgimpbase/gimpbaseenums.c:360
+#: ../libgimpbase/gimpbaseenums.c:387
 msgid "Bi-linear"
 msgstr "Bilineárny"
 
-#: ../libgimpbase/gimpbaseenums.c:361
+#: ../libgimpbase/gimpbaseenums.c:388
 msgid "Radial"
 msgstr "Radiálny"
 
-#: ../libgimpbase/gimpbaseenums.c:362
+#: ../libgimpbase/gimpbaseenums.c:389
 msgid "Square"
 msgstr "Štvorcový"
 
-#: ../libgimpbase/gimpbaseenums.c:363
+#: ../libgimpbase/gimpbaseenums.c:390
 msgid "Conical (sym)"
 msgstr "Kužeľový (symetrický)"
 
-#: ../libgimpbase/gimpbaseenums.c:364
+#: ../libgimpbase/gimpbaseenums.c:391
 msgid "Conical (asym)"
 msgstr "Kužeľový (nesymetrický)"
 
-#: ../libgimpbase/gimpbaseenums.c:365
+#: ../libgimpbase/gimpbaseenums.c:392
 msgid "Shaped (angular)"
 msgstr "Prenikajúci (uhlový)"
 
-#: ../libgimpbase/gimpbaseenums.c:366
+#: ../libgimpbase/gimpbaseenums.c:393
 msgid "Shaped (spherical)"
 msgstr "Prenikajúci (guľový)"
 
-#: ../libgimpbase/gimpbaseenums.c:367
+#: ../libgimpbase/gimpbaseenums.c:394
 msgid "Shaped (dimpled)"
 msgstr "Prenikajúci (jamkový)"
 
-#: ../libgimpbase/gimpbaseenums.c:368
+#: ../libgimpbase/gimpbaseenums.c:395
 msgid "Spiral (cw)"
 msgstr "Špirála (v smere hod. ruč.)"
 
-#: ../libgimpbase/gimpbaseenums.c:369
+#: ../libgimpbase/gimpbaseenums.c:396
 msgid "Spiral (ccw)"
 msgstr "Špirála (proti smeru hod. ruč.)"
 
-#: ../libgimpbase/gimpbaseenums.c:398
+#: ../libgimpbase/gimpbaseenums.c:425
 msgid "Stock ID"
 msgstr "Štandardné ID"
 
-#: ../libgimpbase/gimpbaseenums.c:399
+#: ../libgimpbase/gimpbaseenums.c:426
 msgid "Inline pixbuf"
 msgstr "Inline pixbuf"
 
-#: ../libgimpbase/gimpbaseenums.c:400
+#: ../libgimpbase/gimpbaseenums.c:427
 msgid "Image file"
 msgstr "Súbor obrázka"
 
-#: ../libgimpbase/gimpbaseenums.c:429
+#: ../libgimpbase/gimpbaseenums.c:456
 msgid "RGB color"
 msgstr "RGB farba"
 
-#: ../libgimpbase/gimpbaseenums.c:430 ../libgimpbase/gimpbaseenums.c:465
+#: ../libgimpbase/gimpbaseenums.c:457 ../libgimpbase/gimpbaseenums.c:492
 msgid "Grayscale"
 msgstr "Odtiene šedej"
 
-#: ../libgimpbase/gimpbaseenums.c:431
+#: ../libgimpbase/gimpbaseenums.c:458
 msgid "Indexed color"
 msgstr "Indexovaná farba"
 
-#: ../libgimpbase/gimpbaseenums.c:463
+#: ../libgimpbase/gimpbaseenums.c:490
 msgid "RGB"
 msgstr "RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:464
+#: ../libgimpbase/gimpbaseenums.c:491
 msgid "RGB-alpha"
 msgstr "RGB-alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:466
+#: ../libgimpbase/gimpbaseenums.c:493
 msgid "Grayscale-alpha"
 msgstr "Odtiene šedej-alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:468
+#: ../libgimpbase/gimpbaseenums.c:495
 msgid "Indexed-alpha"
 msgstr "Indexovaná-alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:498
+#: ../libgimpbase/gimpbaseenums.c:525
 msgid "None (Fastest)"
 msgstr "Žiadna (najrýchlejšia)"
 
-#: ../libgimpbase/gimpbaseenums.c:500
+#: ../libgimpbase/gimpbaseenums.c:527
 msgid "Cubic"
 msgstr "Kubická"
 
-#: ../libgimpbase/gimpbaseenums.c:501
+#: ../libgimpbase/gimpbaseenums.c:528
 msgid "Lanczos (Best)"
 msgstr "Lanczosová (najlepšia)"
 
-#: ../libgimpbase/gimpbaseenums.c:529
+#: ../libgimpbase/gimpbaseenums.c:556
 msgid "Constant"
 msgstr "Obmedzenia"
 
-#: ../libgimpbase/gimpbaseenums.c:530
+#: ../libgimpbase/gimpbaseenums.c:557
 msgid "Incremental"
 msgstr "Postupný"
 
-#: ../libgimpbase/gimpbaseenums.c:559 ../modules/cdisplay_lcms.c:254
+#: ../libgimpbase/gimpbaseenums.c:586 ../modules/cdisplay_lcms.c:254
 msgid "None"
 msgstr "Žiadne"
 
-#: ../libgimpbase/gimpbaseenums.c:560
+#: ../libgimpbase/gimpbaseenums.c:587
 msgid "Sawtooth wave"
 msgstr "Pílová vlna"
 
-#: ../libgimpbase/gimpbaseenums.c:561
+#: ../libgimpbase/gimpbaseenums.c:588
 msgid "Triangular wave"
 msgstr "Trojuholníková vlna"
 
-#: ../libgimpbase/gimpbaseenums.c:589
+#: ../libgimpbase/gimpbaseenums.c:616
 msgid "Pixels"
 msgstr "Bodov"
 
-#: ../libgimpbase/gimpbaseenums.c:590
+#: ../libgimpbase/gimpbaseenums.c:617
 msgid "Points"
 msgstr "Body"
 
-#: ../libgimpbase/gimpbaseenums.c:619
+#: ../libgimpbase/gimpbaseenums.c:646
 msgid "Shadows"
 msgstr "Tiene"
 
-#: ../libgimpbase/gimpbaseenums.c:620
+#: ../libgimpbase/gimpbaseenums.c:647
 msgid "Midtones"
 msgstr "Stredné tóny"
 
-#: ../libgimpbase/gimpbaseenums.c:621
+#: ../libgimpbase/gimpbaseenums.c:648
 msgid "Highlights"
 msgstr "Svetlá"
 
-#: ../libgimpbase/gimpbaseenums.c:649
+#: ../libgimpbase/gimpbaseenums.c:676
 msgid "Forward"
 msgstr "Vpred"
 
-#: ../libgimpbase/gimpbaseenums.c:650
+#: ../libgimpbase/gimpbaseenums.c:677
 msgid "Backward"
 msgstr "Späť"
 
-#: ../libgimpbase/gimpbaseenums.c:751
+#: ../libgimpbase/gimpbaseenums.c:778
 msgid "Internal GIMP procedure"
 msgstr "Interná procedúra GIMPu"
 
-#: ../libgimpbase/gimpbaseenums.c:752
+#: ../libgimpbase/gimpbaseenums.c:779
 msgid "GIMP Plug-In"
 msgstr "Prídavné moduly GIMPu"
 
-#: ../libgimpbase/gimpbaseenums.c:753
+#: ../libgimpbase/gimpbaseenums.c:780
 msgid "GIMP Extension"
 msgstr "Rozšírenie GIMPu"
 
-#: ../libgimpbase/gimpbaseenums.c:754
+#: ../libgimpbase/gimpbaseenums.c:781
 msgid "Temporary Procedure"
 msgstr "Dočasná procedúra"
 
@@ -966,7 +1072,7 @@ msgstr "Riadkovanie"
 msgid "_Resize"
 msgstr "Zmeniť _veľkosť"
 
-#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:297
+#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:298
 msgid "_Scale"
 msgstr "_Mierka"
 
@@ -974,15 +1080,15 @@ msgstr "_Mierka"
 msgid "Crop"
 msgstr "Orezanie"
 
-#: ../libgimpwidgets/gimpstock.c:293
+#: ../libgimpwidgets/gimpstock.c:294
 msgid "_Transform"
 msgstr "_Transformovanie"
 
-#: ../libgimpwidgets/gimpstock.c:296
+#: ../libgimpwidgets/gimpstock.c:297
 msgid "_Rotate"
 msgstr "_Otočenie"
 
-#: ../libgimpwidgets/gimpstock.c:298
+#: ../libgimpwidgets/gimpstock.c:299
 msgid "_Shear"
 msgstr "_Skosenie"
 
