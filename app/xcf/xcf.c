@@ -63,13 +63,13 @@ static Argument * xcf_save_invoker (Gimp         *gimp,
 static ProcArg xcf_load_args[] =
 {
   { GIMP_PDB_INT32,
-    "dummy_param",
+    "dummy-param",
     "dummy parameter" },
   { GIMP_PDB_STRING,
     "filename",
     "The name of the file to load, in the on-disk character set and encoding" },
   { GIMP_PDB_STRING,
-    "raw_filename",
+    "raw-filename",
     "The basename of the file, in UTF-8" }
 };
 
@@ -123,7 +123,7 @@ static PlugInProcDef xcf_plug_in_load_proc =
 static ProcArg xcf_save_args[] =
 {
   { GIMP_PDB_INT32,
-    "dummy_param",
+    "dummy-param",
     "dummy parameter" },
   { GIMP_PDB_IMAGE,
     "image",
