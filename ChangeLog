@@ -1,3 +1,8 @@
+2005-08-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpimagepropview.c: increased spacing between
+	property groups to 12 pixels.
+
 2005-08-04  Sven Neumann  <sven@gimp.org>
 
 	* app/xcf/xcf.c: canonicalize PDB parameter names.

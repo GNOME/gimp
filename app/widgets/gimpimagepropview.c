@@ -192,7 +192,9 @@ gimp_image_prop_view_constructor (GType                  type,
     gimp_image_prop_view_add_label (table, row++, _("Resolution:"));
 
   view->colorspace_label =
-    gimp_image_prop_view_add_label (table, row++, _("Color space:"));
+    gimp_image_prop_view_add_label (table, row, _("Color space:"));
+
+  gtk_table_set_row_spacing (GTK_TABLE (view), row++, 12);
 
   view->memsize_label =
     gimp_image_prop_view_add_label (table, row++, _("Size in memory:"));
@@ -201,7 +203,9 @@ gimp_image_prop_view_constructor (GType                  type,
     gimp_image_prop_view_add_label (table, row++, _("Undo steps:"));
 
   view->redo_label =
-    gimp_image_prop_view_add_label (table, row++, _("Redo steps:"));
+    gimp_image_prop_view_add_label (table, row, _("Redo steps:"));
+
+  gtk_table_set_row_spacing (GTK_TABLE (view), row++, 12);
 
   view->pixels_label =
     gimp_image_prop_view_add_label (table, row++, _("Number of pixels:"));
@@ -401,8 +405,6 @@ gimp_image_prop_view_update (GimpImagePropView *view)
 
   gtk_label_set_text (GTK_LABEL (view->colorspace_label), buf);
 
-  gtk_table_set_row_spacing (GTK_TABLE (view), 3, 6);
-
   /*  size in memory  */
   gimp_image_prop_view_label_set_memsize (view->memsize_label,
                                           GIMP_OBJECT (image));
@@ -410,8 +412,6 @@ gimp_image_prop_view_update (GimpImagePropView *view)
   /*  undo / redo  */
   gimp_image_prop_view_label_set_undo (view->undo_label, image->undo_stack);
   gimp_image_prop_view_label_set_undo (view->redo_label, image->redo_stack);
-
-  gtk_table_set_row_spacing (GTK_TABLE (view), 6, 6);
 
   /*  number of layers  */
   g_snprintf (buf, sizeof (buf), "%d", image->width * image->height);
