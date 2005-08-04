@@ -22,6 +22,7 @@
 #include "config.h"
 
 #include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
 
 #include "libgimpcolor/gimpcolor.h"
 
@@ -55,6 +56,10 @@ static gboolean gimp_palette_view_expose         (GtkWidget        *widget,
                                                   GdkEventExpose   *eevent);
 static gboolean gimp_palette_view_button_press   (GtkWidget        *widget,
                                                   GdkEventButton   *bevent);
+static gboolean gimp_palette_view_key_press      (GtkWidget        *widget,
+                                                  GdkEventKey      *kevent);
+static gboolean gimp_palette_view_focus          (GtkWidget        *widget,
+                                                  GtkDirectionType  direction);
 static void     gimp_palette_view_set_viewable   (GimpView         *view,
                                                   GimpViewable     *old_viewable,
                                                   GimpViewable     *new_viewable);
@@ -175,6 +180,8 @@ gimp_palette_view_class_init (GimpPaletteViewClass *klass)
   widget_class->unrealize          = gimp_palette_view_unrealize;
   widget_class->expose_event       = gimp_palette_view_expose;
   widget_class->button_press_event = gimp_palette_view_button_press;
+  widget_class->key_press_event    = gimp_palette_view_key_press;
+  widget_class->focus              = gimp_palette_view_focus;
 
   view_class->set_viewable         = gimp_palette_view_set_viewable;
 }
@@ -241,6 +248,9 @@ gimp_palette_view_button_press (GtkWidget      *widget,
   GimpPaletteView  *view = GIMP_PALETTE_VIEW (widget);
   GimpPaletteEntry *entry;
 
+  if (GTK_WIDGET_CAN_FOCUS (widget) && ! GTK_WIDGET_HAS_FOCUS (widget))
+    gtk_widget_grab_focus (widget);
+
   entry = gimp_palette_view_find_entry (view, bevent->x, bevent->y);
 
   view->dnd_entry = entry;
@@ -277,6 +287,85 @@ gimp_palette_view_button_press (GtkWidget      *widget,
 
     default:
       break;
+    }
+
+  return FALSE;
+}
+
+static gboolean
+gimp_palette_view_key_press (GtkWidget   *widget,
+                             GdkEventKey *kevent)
+{
+  GimpPaletteView *view = GIMP_PALETTE_VIEW (widget);
+
+  if (view->selected &&
+      (kevent->keyval == GDK_space  ||
+       kevent->keyval == GDK_Return ||
+       kevent->keyval == GDK_KP_Enter))
+    {
+      g_signal_emit (view, view_signals[ENTRY_CLICKED], 0,
+                     view->selected, kevent->state);
+    }
+
+  return FALSE;
+}
+
+static gboolean
+gimp_palette_view_focus (GtkWidget        *widget,
+                         GtkDirectionType  direction)
+{
+  GimpPaletteView *view = GIMP_PALETTE_VIEW (widget);
+
+  if (GTK_WIDGET_CAN_FOCUS (widget) && ! GTK_WIDGET_HAS_FOCUS (widget))
+    {
+      gtk_widget_grab_focus (widget);
+      return TRUE;
+    }
+
+  if (view->selected)
+    {
+      GimpViewRendererPalette *renderer;
+      gint                     skip = 0;
+
+      renderer = GIMP_VIEW_RENDERER_PALETTE (GIMP_VIEW (view)->renderer);
+
+      switch (direction)
+        {
+        case GTK_DIR_UP:
+          skip = -renderer->columns;
+          break;
+        case GTK_DIR_DOWN:
+          skip = renderer->columns;
+          break;
+        case GTK_DIR_LEFT:
+          skip = -1;
+          break;
+        case GTK_DIR_RIGHT:
+          skip = 1;
+          break;
+
+        case GTK_DIR_TAB_FORWARD:
+        case GTK_DIR_TAB_BACKWARD:
+          break;
+        }
+
+      if (skip != 0)
+        {
+          GimpPalette      *palette;
+          GimpPaletteEntry *entry;
+          gint              position;
+
+          palette = GIMP_PALETTE (GIMP_VIEW (view)->renderer->viewable);
+
+          position = view->selected->position + skip;
+
+          entry = g_list_nth_data (palette->colors, position);
+
+          if (entry)
+            gimp_palette_view_select_entry (view, entry);
+        }
+
+      return TRUE;
     }
 
   return FALSE;
