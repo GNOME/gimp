@@ -758,14 +758,14 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
   for (i = 0; i < proc->num_args; i++)
     {
       proc->args[i].arg_type    = proc_install->params[i].type;
-      proc->args[i].name        = g_strdup (proc_install->params[i].name);
+      proc->args[i].name        = gimp_canonicalize_identifier (proc_install->params[i].name);
       proc->args[i].description = g_strdup (proc_install->params[i].description);
     }
 
   for (i = 0; i < proc->num_values; i++)
     {
       proc->values[i].arg_type    = proc_install->return_vals[i].type;
-      proc->values[i].name        = g_strdup (proc_install->return_vals[i].name);
+      proc->values[i].name        = gimp_canonicalize_identifier (proc_install->return_vals[i].name);
       proc->values[i].description = g_strdup (proc_install->return_vals[i].description);
     }
 

@@ -237,12 +237,8 @@ init_procedures (void)
           /*  create a new scheme func that calls gimp-proc-db-call  */
           for (j = 0; j < nparams; j++)
             {
-              gchar *arg_name = params[j].name;
-
-              convert_string (arg_name);
-
-              args = cons (rintern (arg_name), args);
-              code = cons (rintern (arg_name), code);
+              args = cons (rintern (params[j].name), args);
+              code = cons (rintern (params[j].name), code);
             }
 
           /*  reverse the list  */
