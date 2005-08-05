@@ -308,7 +308,7 @@ static ProcArg get_theme_dir_outargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "theme_dir",
+    "theme-dir",
     "The GUI theme dir"
   }
 };
@@ -396,7 +396,7 @@ static ProcArg get_module_load_inhibit_outargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "load_inhibit",
+    "load-inhibit",
     "The list of modules"
   }
 };

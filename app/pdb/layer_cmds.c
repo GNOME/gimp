@@ -284,7 +284,7 @@ static ProcArg layer_new_from_drawable_inargs[] =
   },
   {
     GIMP_PDB_IMAGE,
-    "dest_image",
+    "dest-image",
     "The destination image to which to add the layer"
   }
 };
@@ -293,7 +293,7 @@ static ProcArg layer_new_from_drawable_outargs[] =
 {
   {
     GIMP_PDB_LAYER,
-    "layer_copy",
+    "layer-copy",
     "The newly copied layer"
   }
 };
@@ -354,7 +354,7 @@ static ProcArg layer_copy_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "add_alpha",
+    "add-alpha",
     "Add an alpha channel to the copied layer"
   }
 };
@@ -363,7 +363,7 @@ static ProcArg layer_copy_outargs[] =
 {
   {
     GIMP_PDB_LAYER,
-    "layer_copy",
+    "layer-copy",
     "The newly copied layer"
   }
 };
@@ -478,17 +478,17 @@ static ProcArg layer_scale_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "new_width",
+    "new-width",
     "New layer width: (0 < new_width)"
   },
   {
     GIMP_PDB_INT32,
-    "new_height",
+    "new-height",
     "New layer height: (0 < new_height)"
   },
   {
     GIMP_PDB_INT32,
-    "local_origin",
+    "local-origin",
     "Use a local origin (as opposed to the image origin)"
   }
 };
@@ -560,12 +560,12 @@ static ProcArg layer_resize_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "new_width",
+    "new-width",
     "New layer width: (0 < new_width)"
   },
   {
     GIMP_PDB_INT32,
-    "new_height",
+    "new-height",
     "New layer height: (0 < new_height)"
   },
   {
@@ -837,7 +837,7 @@ static ProcArg layer_create_mask_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "mask_type",
+    "mask-type",
     "The type of mask: { GIMP_ADD_WHITE_MASK (0), GIMP_ADD_BLACK_MASK (1), GIMP_ADD_ALPHA_MASK (2), GIMP_ADD_ALPHA_TRANSFER_MASK (3), GIMP_ADD_SELECTION_MASK (4), GIMP_ADD_COPY_MASK (5) }"
   }
 };
@@ -1148,7 +1148,7 @@ static ProcArg layer_is_floating_sel_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "is_floating_sel",
+    "is-floating-sel",
     "Non-zero if the layer is a floating selection"
   }
 };
@@ -1206,7 +1206,7 @@ static ProcArg layer_get_lock_alpha_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "lock_alpha",
+    "lock-alpha",
     "The layer's lock alpha channel setting"
   }
 };
@@ -1260,7 +1260,7 @@ static ProcArg layer_set_lock_alpha_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "lock_alpha",
+    "lock-alpha",
     "The new layer's lock alpha channel setting"
   }
 };
@@ -1318,7 +1318,7 @@ static ProcArg layer_get_apply_mask_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "apply_mask",
+    "apply-mask",
     "The layer apply mask"
   }
 };
@@ -1372,7 +1372,7 @@ static ProcArg layer_set_apply_mask_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "apply_mask",
+    "apply-mask",
     "The new layer apply mask"
   }
 };
@@ -1430,7 +1430,7 @@ static ProcArg layer_get_show_mask_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "show_mask",
+    "show-mask",
     "The layer show mask"
   }
 };
@@ -1484,7 +1484,7 @@ static ProcArg layer_set_show_mask_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "show_mask",
+    "show-mask",
     "The new layer show mask"
   }
 };
@@ -1542,7 +1542,7 @@ static ProcArg layer_get_edit_mask_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "edit_mask",
+    "edit-mask",
     "The layer edit mask"
   }
 };
@@ -1596,7 +1596,7 @@ static ProcArg layer_set_edit_mask_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "edit_mask",
+    "edit-mask",
     "The new layer edit mask"
   }
 };

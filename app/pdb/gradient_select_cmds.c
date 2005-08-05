@@ -88,22 +88,22 @@ static ProcArg gradients_popup_inargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "gradient_callback",
+    "gradient-callback",
     "The callback PDB proc to call when gradient selection is made"
   },
   {
     GIMP_PDB_STRING,
-    "popup_title",
+    "popup-title",
     "Title to give the gradient popup window"
   },
   {
     GIMP_PDB_STRING,
-    "initial_gradient",
+    "initial-gradient",
     "The name of the pattern to set as the first selected"
   },
   {
     GIMP_PDB_INT32,
-    "sample_size",
+    "sample-size",
     "Size of the sample to return when the gradient is changed (0 < sample_size <= 10000)"
   }
 };
@@ -155,7 +155,7 @@ static ProcArg gradients_close_popup_inargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "gradient_callback",
+    "gradient-callback",
     "The name of the callback registered for this popup"
   }
 };
@@ -213,12 +213,12 @@ static ProcArg gradients_set_popup_inargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "gradient_callback",
+    "gradient-callback",
     "The name of the callback registered for this popup"
   },
   {
     GIMP_PDB_STRING,
-    "gradient_name",
+    "gradient-name",
     "The name of the gradient to set as selected"
   }
 };

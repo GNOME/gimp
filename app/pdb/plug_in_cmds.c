@@ -105,7 +105,7 @@ static ProcArg plugins_query_inargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "search_string",
+    "search-string",
     "If not an empty string then use this as a search pattern"
   }
 };
@@ -114,62 +114,62 @@ static ProcArg plugins_query_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "num_plugins",
+    "num-plugins",
     "The number of plugins"
   },
   {
     GIMP_PDB_STRINGARRAY,
-    "menu_path",
+    "menu-path",
     "The menu path of the plugin"
   },
   {
     GIMP_PDB_INT32,
-    "num_plugins",
+    "num-plugins",
     "The number of plugins"
   },
   {
     GIMP_PDB_STRINGARRAY,
-    "plugin_accelerator",
+    "plugin-accelerator",
     "String representing keyboard accelerator (could be empty string)"
   },
   {
     GIMP_PDB_INT32,
-    "num_plugins",
+    "num-plugins",
     "The number of plugins"
   },
   {
     GIMP_PDB_STRINGARRAY,
-    "plugin_location",
+    "plugin-location",
     "Location of the plugin program"
   },
   {
     GIMP_PDB_INT32,
-    "num_plugins",
+    "num-plugins",
     "The number of plugins"
   },
   {
     GIMP_PDB_STRINGARRAY,
-    "plugin_image_type",
+    "plugin-image-type",
     "Type of image that this plugin will work on"
   },
   {
     GIMP_PDB_INT32,
-    "num_plugins",
+    "num-plugins",
     "The number of plugins"
   },
   {
     GIMP_PDB_INT32ARRAY,
-    "plugin_install_time",
+    "plugin-install-time",
     "Time that the plugin was installed"
   },
   {
     GIMP_PDB_INT32,
-    "num_plugins",
+    "num-plugins",
     "The number of plugins"
   },
   {
     GIMP_PDB_STRINGARRAY,
-    "plugin_real_name",
+    "plugin-real-name",
     "The internal name of the plugin"
   }
 };
@@ -228,12 +228,12 @@ static ProcArg plugin_domain_register_inargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "domain_name",
+    "domain-name",
     "The name of the textdomain (must be unique)"
   },
   {
     GIMP_PDB_STRING,
-    "domain_path",
+    "domain-path",
     "The absolute path to the compiled message catalog (may be NULL)"
   }
 };
@@ -294,12 +294,12 @@ static ProcArg plugin_help_register_inargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "domain_name",
+    "domain-name",
     "The XML namespace of the plug-in's help pages"
   },
   {
     GIMP_PDB_STRING,
-    "domain_uri",
+    "domain-uri",
     "The root URI of the plug-in's help pages"
   }
 };
@@ -442,12 +442,12 @@ static ProcArg plugin_menu_register_inargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "procedure_name",
+    "procedure-name",
     "The procedure for which to install the menu path"
   },
   {
     GIMP_PDB_STRING,
-    "menu_path",
+    "menu-path",
     "The procedure's additional menu path"
   }
 };
@@ -514,12 +514,12 @@ static ProcArg plugin_menu_branch_register_inargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "menu_path",
+    "menu-path",
     "The sub-menu's menu path"
   },
   {
     GIMP_PDB_STRING,
-    "menu_name",
+    "menu-name",
     "The name of the sub-menu"
   }
 };
@@ -599,22 +599,22 @@ static ProcArg plugin_icon_register_inargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "procedure_name",
+    "procedure-name",
     "The procedure for which to install the icon"
   },
   {
     GIMP_PDB_INT32,
-    "icon_type",
+    "icon-type",
     "The type of the icon"
   },
   {
     GIMP_PDB_INT32,
-    "icon_data_length",
+    "icon-data-length",
     "The length of 'icon_data': 0 < icon_data_length"
   },
   {
     GIMP_PDB_INT8ARRAY,
-    "icon_data",
+    "icon-data",
     "The procedure's icon. The format depends on the 'icon_type' parameter"
   }
 };

@@ -120,12 +120,12 @@ static ProcArg path_list_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "num_paths",
+    "num-paths",
     "The number of paths returned."
   },
   {
     GIMP_PDB_STRINGARRAY,
-    "path_list",
+    "path-list",
     "List of the paths belonging to this image."
   }
 };
@@ -442,22 +442,22 @@ static ProcArg path_get_points_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "path_type",
+    "path-type",
     "The type of the path. Currently only one type (1 = Bezier) is supported"
   },
   {
     GIMP_PDB_INT32,
-    "path_closed",
+    "path-closed",
     "Return if the path is closed. (0 = path open, 1 = path closed)"
   },
   {
     GIMP_PDB_INT32,
-    "num_path_point_details",
+    "num-path-point-details",
     "The number of points returned. Each point is made up of (x, y, pnt_type) of floats."
   },
   {
     GIMP_PDB_FLOATARRAY,
-    "points_pairs",
+    "points-pairs",
     "The points in the path represented as 3 floats. The first is the x pos, next is the y pos, last is the type of the pnt. The type field is dependant on the path type. For beziers (type 1 paths) the type can either be (1.0 = BEZIER_ANCHOR, 2.0 = BEZIER_CONTROL, 3.0 = BEZIER_MOVE). Note all points are returned in pixel resolution."
   }
 };
@@ -572,12 +572,12 @@ static ProcArg path_set_points_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "num_path_points",
+    "num-path-points",
     "The number of elements in the array, i.e. the number of points in the path * 3. Each point is made up of (x, y, type) of floats. Currently only the creation of bezier curves is allowed. The type parameter must be set to (1) to indicate a BEZIER type curve. Note that for BEZIER curves, points must be given in the following order: ACCACCAC... If the path is not closed the last control point is missed off. Points consist of three control points (control/anchor/control) so for a curve that is not closed there must be at least two points passed (2 x,y pairs). If (num_path_points/3) % 3 = 0 then the path is assumed to be closed and the points are ACCACCACCACC."
   },
   {
     GIMP_PDB_FLOATARRAY,
-    "points_pairs",
+    "points-pairs",
     "The points in the path represented as 3 floats. The first is the x pos, next is the y pos, last is the type of the pnt. The type field is dependant on the path type. For beziers (type 1 paths) the type can either be (1.0 = BEZIER_ANCHOR, 2.0 = BEZIER_CONTROL, 3.0= BEZIER_MOVE). Note all points are returned in pixel resolution."
   }
 };
@@ -765,12 +765,12 @@ static ProcArg path_get_point_at_dist_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "x_point",
+    "x-point",
     "The x position of the point."
   },
   {
     GIMP_PDB_INT32,
-    "y_point",
+    "y-point",
     "The y position of the point."
   },
   {
@@ -1265,12 +1265,12 @@ static ProcArg path_to_selection_inargs[] =
   },
   {
     GIMP_PDB_FLOAT,
-    "feather_radius_x",
+    "feather-radius-x",
     "Feather radius x."
   },
   {
     GIMP_PDB_FLOAT,
-    "feather_radius_y",
+    "feather-radius-y",
     "Feather radius y."
   }
 };

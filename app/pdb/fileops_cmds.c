@@ -127,7 +127,7 @@ static ProcArg file_load_inargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "run_mode",
+    "run-mode",
     "The run mode: GIMP_RUN_INTERACTIVE (0) or GIMP_RUN_NONINTERACTIVE (1)"
   },
   {
@@ -137,7 +137,7 @@ static ProcArg file_load_inargs[] =
   },
   {
     GIMP_PDB_STRING,
-    "raw_filename",
+    "raw-filename",
     "The name as entered by the user"
   }
 };
@@ -216,7 +216,7 @@ static ProcArg file_save_inargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "run_mode",
+    "run-mode",
     "The run mode: GIMP_RUN_INTERACTIVE (0) or GIMP_RUN_NONINTERACTIVE (1)"
   },
   {
@@ -236,7 +236,7 @@ static ProcArg file_save_inargs[] =
   },
   {
     GIMP_PDB_STRING,
-    "raw_filename",
+    "raw-filename",
     "The name as entered by the user"
   }
 };
@@ -365,12 +365,12 @@ static ProcArg file_load_thumbnail_outargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "thumbnail_data_count",
+    "thumbnail-data-count",
     "The number of bytes in thumbnail data"
   },
   {
     GIMP_PDB_INT8ARRAY,
-    "thumb_data",
+    "thumb-data",
     "The thumbnail data"
   }
 };
@@ -630,7 +630,7 @@ static ProcArg register_magic_load_handler_inargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "procedure_name",
+    "procedure-name",
     "The name of the procedure to be used for loading"
   },
   {
@@ -690,7 +690,7 @@ static ProcArg register_load_handler_inargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "procedure_name",
+    "procedure-name",
     "The name of the procedure to be used for loading"
   },
   {
@@ -792,7 +792,7 @@ static ProcArg register_save_handler_inargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "procedure_name",
+    "procedure-name",
     "The name of the procedure to be used for saving"
   },
   {
@@ -861,12 +861,12 @@ static ProcArg register_file_handler_mime_inargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "procedure_name",
+    "procedure-name",
     "The name of the procedure to associate a MIME type with."
   },
   {
     GIMP_PDB_STRING,
-    "mime_type",
+    "mime-type",
     "A single MIME type, like for example \"image/jpeg\"."
   }
 };
@@ -926,12 +926,12 @@ static ProcArg register_thumbnail_loader_inargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "load_proc",
+    "load-proc",
     "The name of the procedure the thumbnail loader with."
   },
   {
     GIMP_PDB_STRING,
-    "thumb_proc",
+    "thumb-proc",
     "The name of the thumbnail load procedure."
   }
 };

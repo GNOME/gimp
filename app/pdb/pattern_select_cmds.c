@@ -81,17 +81,17 @@ static ProcArg patterns_popup_inargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "pattern_callback",
+    "pattern-callback",
     "The callback PDB proc to call when pattern selection is made"
   },
   {
     GIMP_PDB_STRING,
-    "popup_title",
+    "popup-title",
     "Title to give the pattern popup window"
   },
   {
     GIMP_PDB_STRING,
-    "initial_pattern",
+    "initial-pattern",
     "The name of the pattern to set as the first selected"
   }
 };
@@ -143,7 +143,7 @@ static ProcArg patterns_close_popup_inargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "pattern_callback",
+    "pattern-callback",
     "The name of the callback registered for this popup"
   }
 };
@@ -201,12 +201,12 @@ static ProcArg patterns_set_popup_inargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "pattern_callback",
+    "pattern-callback",
     "The name of the callback registered for this popup"
   },
   {
     GIMP_PDB_STRING,
-    "pattern_name",
+    "pattern-name",
     "The name of the pattern to set as selected"
   }
 };

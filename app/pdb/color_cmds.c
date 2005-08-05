@@ -265,12 +265,12 @@ static ProcArg levels_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "low_input",
+    "low-input",
     "Intensity of lowest input: (0 <= low_input <= 255)"
   },
   {
     GIMP_PDB_INT32,
-    "high_input",
+    "high-input",
     "Intensity of highest input: (0 <= high_input <= 255)"
   },
   {
@@ -280,12 +280,12 @@ static ProcArg levels_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "low_output",
+    "low-output",
     "Intensity of lowest output: (0 <= low_output <= 255)"
   },
   {
     GIMP_PDB_INT32,
-    "high_output",
+    "high-output",
     "Intensity of highest output: (0 <= high_output <= 255)"
   }
 };
@@ -595,7 +595,7 @@ static ProcArg desaturate_full_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "desaturate_mode",
+    "desaturate-mode",
     "The formula to use to desaturate"
   }
 };
@@ -656,7 +656,7 @@ static ProcArg equalize_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "mask_only",
+    "mask-only",
     "Equalization option"
   }
 };
@@ -840,12 +840,12 @@ static ProcArg curves_spline_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "num_points",
+    "num-points",
     "The number of values in the control point array (3 < num_points <= 34)"
   },
   {
     GIMP_PDB_INT8ARRAY,
-    "control_pts",
+    "control-pts",
     "The spline control points: { cp1.x, cp1.y, cp2.x, cp2.y, ... }"
   }
 };
@@ -967,7 +967,7 @@ static ProcArg curves_explicit_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "num_bytes",
+    "num-bytes",
     "The number of bytes in the new curve (always 256)"
   },
   {
@@ -1083,27 +1083,27 @@ static ProcArg color_balance_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "transfer_mode",
+    "transfer-mode",
     "Transfer mode: { GIMP_SHADOWS (0), GIMP_MIDTONES (1), GIMP_HIGHLIGHTS (2) }"
   },
   {
     GIMP_PDB_INT32,
-    "preserve_lum",
+    "preserve-lum",
     "Preserve luminosity values at each pixel"
   },
   {
     GIMP_PDB_FLOAT,
-    "cyan_red",
+    "cyan-red",
     "Cyan-Red color balance: (-100 <= cyan_red <= 100)"
   },
   {
     GIMP_PDB_FLOAT,
-    "magenta_green",
+    "magenta-green",
     "Magenta-Green color balance: (-100 <= magenta_green <= 100)"
   },
   {
     GIMP_PDB_FLOAT,
-    "yellow_blue",
+    "yellow-blue",
     "Yellow-Blue color balance: (-100 <= yellow_blue <= 100)"
   }
 };
@@ -1332,12 +1332,12 @@ static ProcArg histogram_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "start_range",
+    "start-range",
     "Start of the intensity measurement range"
   },
   {
     GIMP_PDB_INT32,
-    "end_range",
+    "end-range",
     "End of the intensity measurement range"
   }
 };
@@ -1351,7 +1351,7 @@ static ProcArg histogram_outargs[] =
   },
   {
     GIMP_PDB_FLOAT,
-    "std_dev",
+    "std-dev",
     "Standard deviation of intensity values"
   },
   {
@@ -1478,12 +1478,12 @@ static ProcArg hue_saturation_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "hue_range",
+    "hue-range",
     "Range of affected hues: { GIMP_ALL_HUES (0), GIMP_RED_HUES (1), GIMP_YELLOW_HUES (2), GIMP_GREEN_HUES (3), GIMP_CYAN_HUES (4), GIMP_BLUE_HUES (5), GIMP_MAGENTA_HUES (6) }"
   },
   {
     GIMP_PDB_FLOAT,
-    "hue_offset",
+    "hue-offset",
     "Hue offset in degrees: (-180 <= hue_offset <= 180)"
   },
   {
@@ -1586,12 +1586,12 @@ static ProcArg threshold_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "low_threshold",
+    "low-threshold",
     "The low threshold value: 0 <= low_threshold <= 255"
   },
   {
     GIMP_PDB_INT32,
-    "high_threshold",
+    "high-threshold",
     "The high threshold value: 0 <= high_threshold <= 255"
   }
 };

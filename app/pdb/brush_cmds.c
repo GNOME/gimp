@@ -347,7 +347,7 @@ static ProcArg brush_rename_inargs[] =
   },
   {
     GIMP_PDB_STRING,
-    "new_name",
+    "new-name",
     "The new name of the brush"
   }
 };
@@ -575,12 +575,12 @@ static ProcArg brush_get_info_outargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "mask_bpp",
+    "mask-bpp",
     "The brush mask bpp"
   },
   {
     GIMP_PDB_INT32,
-    "color_bpp",
+    "color-bpp",
     "The brush color bpp"
   }
 };
@@ -687,32 +687,32 @@ static ProcArg brush_get_pixels_outargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "mask_bpp",
+    "mask-bpp",
     "The brush mask bpp"
   },
   {
     GIMP_PDB_INT32,
-    "num_mask_bytes",
+    "num-mask-bytes",
     "Length of brush mask data"
   },
   {
     GIMP_PDB_INT8ARRAY,
-    "mask_bytes",
+    "mask-bytes",
     "The brush mask data"
   },
   {
     GIMP_PDB_INT32,
-    "color_bpp",
+    "color-bpp",
     "The brush color bpp"
   },
   {
     GIMP_PDB_INT32,
-    "num_color_bytes",
+    "num-color-bytes",
     "Length of brush color data"
   },
   {
     GIMP_PDB_INT8ARRAY,
-    "color_bytes",
+    "color-bytes",
     "The brush color data"
   }
 };
@@ -1179,7 +1179,7 @@ static ProcArg brush_get_aspect_ratio_outargs[] =
 {
   {
     GIMP_PDB_FLOAT,
-    "aspect_ratio",
+    "aspect-ratio",
     "The aspect ratio of the brush."
   }
 };
@@ -1315,7 +1315,7 @@ static ProcArg brush_set_shape_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "shape_in",
+    "shape-in",
     "An enumerated value representing the desired brush shape"
   }
 };
@@ -1324,7 +1324,7 @@ static ProcArg brush_set_shape_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "shape_out",
+    "shape-out",
     "The brush shape actually assigned"
   }
 };
@@ -1393,7 +1393,7 @@ static ProcArg brush_set_radius_inargs[] =
   },
   {
     GIMP_PDB_FLOAT,
-    "radius_in",
+    "radius-in",
     "The desired brush radius"
   }
 };
@@ -1402,7 +1402,7 @@ static ProcArg brush_set_radius_outargs[] =
 {
   {
     GIMP_PDB_FLOAT,
-    "radius_out",
+    "radius-out",
     "The brush radius actually assigned"
   }
 };
@@ -1471,7 +1471,7 @@ static ProcArg brush_set_spikes_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "spikes_in",
+    "spikes-in",
     "The desired number of spikes"
   }
 };
@@ -1480,7 +1480,7 @@ static ProcArg brush_set_spikes_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "spikes_out",
+    "spikes-out",
     "The number of spikes actually assigned"
   }
 };
@@ -1549,7 +1549,7 @@ static ProcArg brush_set_hardness_inargs[] =
   },
   {
     GIMP_PDB_FLOAT,
-    "hardness_in",
+    "hardness-in",
     "The desired brush hardness"
   }
 };
@@ -1558,7 +1558,7 @@ static ProcArg brush_set_hardness_outargs[] =
 {
   {
     GIMP_PDB_FLOAT,
-    "hardness_out",
+    "hardness-out",
     "The brush hardness actually assigned"
   }
 };
@@ -1627,7 +1627,7 @@ static ProcArg brush_set_aspect_ratio_inargs[] =
   },
   {
     GIMP_PDB_FLOAT,
-    "aspect_ratio_in",
+    "aspect-ratio-in",
     "The desired brush aspect ratio"
   }
 };
@@ -1636,7 +1636,7 @@ static ProcArg brush_set_aspect_ratio_outargs[] =
 {
   {
     GIMP_PDB_FLOAT,
-    "aspect_ratio_out",
+    "aspect-ratio-out",
     "The brush aspect ratio actually assigned"
   }
 };
@@ -1705,7 +1705,7 @@ static ProcArg brush_set_angle_inargs[] =
   },
   {
     GIMP_PDB_FLOAT,
-    "angle_in",
+    "angle-in",
     "The desired brush rotation angle"
   }
 };
@@ -1714,7 +1714,7 @@ static ProcArg brush_set_angle_outargs[] =
 {
   {
     GIMP_PDB_FLOAT,
-    "angle_out",
+    "angle-out",
     "The brush rotation angle actually assigned"
   }
 };

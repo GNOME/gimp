@@ -72,12 +72,12 @@ static ProcArg help_inargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "help_domain",
+    "help-domain",
     "The help domain in which help_id is registered"
   },
   {
     GIMP_PDB_STRING,
-    "help_id",
+    "help-id",
     "The help page's ID"
   }
 };

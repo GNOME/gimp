@@ -243,7 +243,7 @@ static ProcArg parasite_list_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "num_parasites",
+    "num-parasites",
     "The number of attached parasites"
   },
   {
@@ -501,7 +501,7 @@ static ProcArg drawable_parasite_list_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "num_parasites",
+    "num-parasites",
     "The number of attached parasites"
   },
   {
@@ -759,7 +759,7 @@ static ProcArg image_parasite_list_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "num_parasites",
+    "num-parasites",
     "The number of attached parasites"
   },
   {

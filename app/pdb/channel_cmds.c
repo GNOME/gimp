@@ -308,7 +308,7 @@ static ProcArg channel_copy_outargs[] =
 {
   {
     GIMP_PDB_CHANNEL,
-    "channel_copy",
+    "channel-copy",
     "The newly copied channel"
   }
 };
@@ -450,7 +450,7 @@ static ProcArg channel_get_show_masked_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "show_masked",
+    "show-masked",
     "The channel composite method"
   }
 };
@@ -504,7 +504,7 @@ static ProcArg channel_set_show_masked_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "show_masked",
+    "show-masked",
     "The new channel composite method"
   }
 };

@@ -1,3 +1,13 @@
+2005-08-05  Manish Singh  <yosh@gimp.org>
+
+	* tools/pdbgen/pdbgen.pl: store canonical names of proc names and
+	args in the proc structure.
+
+	* tools/pdbgen/app.pl
+	* tools/pdbgen/lib.pl: use the above.
+
+	* app/pdb/*_cmds.c: regenerated.
+
 2005-08-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpitem.c (gimp_item_parasite_attach): revert previous

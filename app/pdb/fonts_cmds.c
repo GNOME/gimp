@@ -112,12 +112,12 @@ static ProcArg fonts_get_list_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "num_fonts",
+    "num-fonts",
     "The number of available fonts"
   },
   {
     GIMP_PDB_STRINGARRAY,
-    "font_list",
+    "font-list",
     "The list of font names"
   }
 };

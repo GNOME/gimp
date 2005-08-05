@@ -182,7 +182,7 @@ static ProcArg airbrush_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "num_strokes",
+    "num-strokes",
     "Number of stroke control points (count each coordinate as 2 points)"
   },
   {
@@ -261,7 +261,7 @@ static ProcArg airbrush_default_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "num_strokes",
+    "num-strokes",
     "Number of stroke control points (count each coordinate as 2 points)"
   },
   {
@@ -371,27 +371,27 @@ static ProcArg clone_inargs[] =
   },
   {
     GIMP_PDB_DRAWABLE,
-    "src_drawable",
+    "src-drawable",
     "The source drawable"
   },
   {
     GIMP_PDB_INT32,
-    "clone_type",
+    "clone-type",
     "The type of clone: { GIMP_IMAGE_CLONE (0), GIMP_PATTERN_CLONE (1) }"
   },
   {
     GIMP_PDB_FLOAT,
-    "src_x",
+    "src-x",
     "The x coordinate in the source image"
   },
   {
     GIMP_PDB_FLOAT,
-    "src_y",
+    "src-y",
     "The y coordinate in the source image"
   },
   {
     GIMP_PDB_INT32,
-    "num_strokes",
+    "num-strokes",
     "Number of stroke control points (count each coordinate as 2 points)"
   },
   {
@@ -470,7 +470,7 @@ static ProcArg clone_default_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "num_strokes",
+    "num-strokes",
     "Number of stroke control points (count each coordinate as 2 points)"
   },
   {
@@ -569,12 +569,12 @@ static ProcArg convolve_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "convolve_type",
+    "convolve-type",
     "Convolve type: { GIMP_BLUR_CONVOLVE (0), GIMP_SHARPEN_CONVOLVE (1) }"
   },
   {
     GIMP_PDB_INT32,
-    "num_strokes",
+    "num-strokes",
     "Number of stroke control points (count each coordinate as 2 points)"
   },
   {
@@ -653,7 +653,7 @@ static ProcArg convolve_default_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "num_strokes",
+    "num-strokes",
     "Number of stroke control points (count each coordinate as 2 points)"
   },
   {
@@ -758,17 +758,17 @@ static ProcArg dodgeburn_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "dodgeburn_type",
+    "dodgeburn-type",
     "The type either dodge or burn: { GIMP_DODGE (0), GIMP_BURN (1) }"
   },
   {
     GIMP_PDB_INT32,
-    "dodgeburn_mode",
+    "dodgeburn-mode",
     "The mode: { GIMP_SHADOWS (0), GIMP_MIDTONES (1), GIMP_HIGHLIGHTS (2) }"
   },
   {
     GIMP_PDB_INT32,
-    "num_strokes",
+    "num-strokes",
     "Number of stroke control points (count each coordinate as 2 points)"
   },
   {
@@ -847,7 +847,7 @@ static ProcArg dodgeburn_default_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "num_strokes",
+    "num-strokes",
     "Number of stroke control points (count each coordinate as 2 points)"
   },
   {
@@ -941,7 +941,7 @@ static ProcArg eraser_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "num_strokes",
+    "num-strokes",
     "Number of stroke control points (count each coordinate as 2 points)"
   },
   {
@@ -1030,7 +1030,7 @@ static ProcArg eraser_default_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "num_strokes",
+    "num-strokes",
     "Number of stroke control points (count each coordinate as 2 points)"
   },
   {
@@ -1132,12 +1132,12 @@ static ProcArg paintbrush_inargs[] =
   },
   {
     GIMP_PDB_FLOAT,
-    "fade_out",
+    "fade-out",
     "Fade out parameter: 0 <= fade_out"
   },
   {
     GIMP_PDB_INT32,
-    "num_strokes",
+    "num-strokes",
     "Number of stroke control points (count each coordinate as 2 points)"
   },
   {
@@ -1152,7 +1152,7 @@ static ProcArg paintbrush_inargs[] =
   },
   {
     GIMP_PDB_FLOAT,
-    "gradient_length",
+    "gradient-length",
     "Length of gradient to draw: 0 <= gradient_length"
   }
 };
@@ -1226,7 +1226,7 @@ static ProcArg paintbrush_default_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "num_strokes",
+    "num-strokes",
     "Number of stroke control points (count each coordinate as 2 points)"
   },
   {
@@ -1305,7 +1305,7 @@ static ProcArg pencil_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "num_strokes",
+    "num-strokes",
     "Number of stroke control points (count each coordinate as 2 points)"
   },
   {
@@ -1398,7 +1398,7 @@ static ProcArg smudge_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "num_strokes",
+    "num-strokes",
     "Number of stroke control points (count each coordinate as 2 points)"
   },
   {
@@ -1477,7 +1477,7 @@ static ProcArg smudge_default_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "num_strokes",
+    "num-strokes",
     "Number of stroke control points (count each coordinate as 2 points)"
   },
   {

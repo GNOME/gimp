@@ -207,7 +207,7 @@ sub make_arg_recs {
 		$result .= <<CODE;
   {
     GIMP_PDB_$arg_types{$type}->{name},
-    "$arg->{name}",
+    "$arg->{canonical_name}",
     @{[ &quotewrap($desc, 4) ]}
   },
 CODE
@@ -654,15 +654,12 @@ CODE
 
 	$out->{code} .= &make_arg_recs($proc, qw(inargs outargs));
 
-        my $canonical = $name;
-        $canonical =~ s/_/-/g;
-
 	$out->{code} .= <<CODE;
 
 static ProcRecord ${name}_proc =
 {
-  "gimp-$canonical",
-  "gimp-$canonical",
+  "gimp-$proc->{canonical_name}",
+  "gimp-$proc->{canonical_name}",
   @{[ &quotewrap($proc->{blurb}, 2) ]},
   @{[ &quotewrap($proc->{help},  2) ]},
   "$proc->{author}",

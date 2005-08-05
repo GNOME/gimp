@@ -261,7 +261,7 @@ static ProcArg drawable_is_layer_mask_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "layer_mask",
+    "layer-mask",
     "Non-zero if the drawable is a layer mask"
   }
 };
@@ -435,7 +435,7 @@ static ProcArg drawable_type_with_alpha_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "type_with_alpha",
+    "type-with-alpha",
     "The drawable's type with alpha: { GIMP_RGB_IMAGE (0), GIMP_RGBA_IMAGE (1), GIMP_GRAY_IMAGE (2), GIMP_GRAYA_IMAGE (3), GIMP_INDEXED_IMAGE (4), GIMP_INDEXEDA_IMAGE (5) }"
   }
 };
@@ -493,7 +493,7 @@ static ProcArg drawable_has_alpha_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "has_alpha",
+    "has-alpha",
     "Does the drawable have an alpha channel?"
   }
 };
@@ -551,7 +551,7 @@ static ProcArg drawable_is_rgb_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "is_rgb",
+    "is-rgb",
     "non-zero if the drawable is an RGB type"
   }
 };
@@ -609,7 +609,7 @@ static ProcArg drawable_is_gray_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "is_gray",
+    "is-gray",
     "non-zero if the drawable is a grayscale type"
   }
 };
@@ -667,7 +667,7 @@ static ProcArg drawable_is_indexed_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "is_indexed",
+    "is-indexed",
     "non-zero if the drawable is an indexed type"
   }
 };
@@ -907,12 +907,12 @@ static ProcArg drawable_offsets_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "offset_x",
+    "offset-x",
     "x offset of drawable"
   },
   {
     GIMP_PDB_INT32,
-    "offset_y",
+    "offset-y",
     "y offset of drawable"
   }
 };
@@ -1556,7 +1556,7 @@ static ProcArg drawable_mask_bounds_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "non_empty",
+    "non-empty",
     "TRUE if there is a selection"
   },
   {
@@ -1648,7 +1648,7 @@ static ProcArg drawable_mask_intersect_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "non_empty",
+    "non-empty",
     "TRUE if the returned area is not empty"
   },
   {
@@ -1913,12 +1913,12 @@ static ProcArg drawable_get_pixel_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "x_coord",
+    "x-coord",
     "The x coordinate"
   },
   {
     GIMP_PDB_INT32,
-    "y_coord",
+    "y-coord",
     "The y coordinate"
   }
 };
@@ -1927,7 +1927,7 @@ static ProcArg drawable_get_pixel_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "num_channels",
+    "num-channels",
     "The number of channels for the pixel"
   },
   {
@@ -2021,17 +2021,17 @@ static ProcArg drawable_set_pixel_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "x_coord",
+    "x-coord",
     "The x coordinate"
   },
   {
     GIMP_PDB_INT32,
-    "y_coord",
+    "y-coord",
     "The y coordinate"
   },
   {
     GIMP_PDB_INT32,
-    "num_channels",
+    "num-channels",
     "The number of channels for the pixel"
   },
   {
@@ -2092,7 +2092,7 @@ static ProcArg drawable_fill_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "fill_type",
+    "fill-type",
     "The type of fill: GIMP_FOREGROUND_FILL (0), GIMP_BACKGROUND_FILL (1), GIMP_WHITE_FILL (2), GIMP_TRANSPARENT_FILL (3), GIMP_PATTERN_FILL (4)"
   }
 };
@@ -2163,22 +2163,22 @@ static ProcArg drawable_offset_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "wrap_around",
+    "wrap-around",
     "wrap image around or fill vacated regions"
   },
   {
     GIMP_PDB_INT32,
-    "fill_type",
+    "fill-type",
     "fill vacated regions of drawable with background or transparent: GIMP_OFFSET_BACKGROUND (0) or GIMP_OFFSET_TRANSPARENT (1)"
   },
   {
     GIMP_PDB_INT32,
-    "offset_x",
+    "offset-x",
     "offset by this amount in X direction"
   },
   {
     GIMP_PDB_INT32,
-    "offset_y",
+    "offset-y",
     "offset by this amount in Y direction"
   }
 };
@@ -2322,12 +2322,12 @@ static ProcArg drawable_thumbnail_outargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "thumbnail_data_count",
+    "thumbnail-data-count",
     "The number of bytes in thumbnail data"
   },
   {
     GIMP_PDB_INT8ARRAY,
-    "thumbnail_data",
+    "thumbnail-data",
     "The thumbnail data"
   }
 };
@@ -2460,32 +2460,32 @@ static ProcArg drawable_sub_thumbnail_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "src_x",
+    "src-x",
     "The x coordinate of the area"
   },
   {
     GIMP_PDB_INT32,
-    "src_y",
+    "src-y",
     "The y coordinate of the area"
   },
   {
     GIMP_PDB_INT32,
-    "src_width",
+    "src-width",
     "The width of the area"
   },
   {
     GIMP_PDB_INT32,
-    "src_height",
+    "src-height",
     "The height of the area"
   },
   {
     GIMP_PDB_INT32,
-    "dest_width",
+    "dest-width",
     "The thumbnail width"
   },
   {
     GIMP_PDB_INT32,
-    "dest_height",
+    "dest-height",
     "The thumbnail height"
   }
 };
@@ -2509,12 +2509,12 @@ static ProcArg drawable_sub_thumbnail_outargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "thumbnail_data_count",
+    "thumbnail-data-count",
     "The number of bytes in thumbnail data"
   },
   {
     GIMP_PDB_INT8ARRAY,
-    "thumbnail_data",
+    "thumbnail-data",
     "The thumbnail data"
   }
 };

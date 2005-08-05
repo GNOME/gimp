@@ -141,12 +141,12 @@ static ProcArg by_color_select_inargs[] =
   },
   {
     GIMP_PDB_FLOAT,
-    "feather_radius",
+    "feather-radius",
     "Radius for feather operation"
   },
   {
     GIMP_PDB_INT32,
-    "sample_merged",
+    "sample-merged",
     "Use the composite image, not the drawable"
   }
 };
@@ -269,7 +269,7 @@ static ProcArg ellipse_select_inargs[] =
   },
   {
     GIMP_PDB_FLOAT,
-    "feather_radius",
+    "feather-radius",
     "Radius for feather operation"
   }
 };
@@ -352,7 +352,7 @@ static ProcArg free_select_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "num_segs",
+    "num-segs",
     "Number of points (count 1 coordinate as two points)"
   },
   {
@@ -377,7 +377,7 @@ static ProcArg free_select_inargs[] =
   },
   {
     GIMP_PDB_FLOAT,
-    "feather_radius",
+    "feather-radius",
     "Radius for feather operation"
   }
 };
@@ -501,12 +501,12 @@ static ProcArg fuzzy_select_inargs[] =
   },
   {
     GIMP_PDB_FLOAT,
-    "feather_radius",
+    "feather-radius",
     "Radius for feather operation"
   },
   {
     GIMP_PDB_INT32,
-    "sample_merged",
+    "sample-merged",
     "Use the composite image, not the drawable"
   }
 };
@@ -621,7 +621,7 @@ static ProcArg rect_select_inargs[] =
   },
   {
     GIMP_PDB_FLOAT,
-    "feather_radius",
+    "feather-radius",
     "Radius for feather operation"
   }
 };

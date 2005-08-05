@@ -227,12 +227,12 @@ static ProcArg image_list_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "num_images",
+    "num-images",
     "The number of images currently open"
   },
   {
     GIMP_PDB_INT32ARRAY,
-    "image_ids",
+    "image-ids",
     "The list of images currently open"
   }
 };
@@ -379,7 +379,7 @@ static ProcArg image_duplicate_outargs[] =
 {
   {
     GIMP_PDB_IMAGE,
-    "new_image",
+    "new-image",
     "The new, duplicated image"
   }
 };
@@ -492,7 +492,7 @@ static ProcArg image_base_type_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "base_type",
+    "base-type",
     "The image's base type: { GIMP_RGB (0), GIMP_GRAY (1), GIMP_INDEXED (2) }"
   }
 };
@@ -724,12 +724,12 @@ static ProcArg image_resize_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "new_width",
+    "new-width",
     "New image width: 0 < new_width"
   },
   {
     GIMP_PDB_INT32,
-    "new_height",
+    "new-height",
     "New image height: 0 < new_height"
   },
   {
@@ -852,12 +852,12 @@ static ProcArg image_scale_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "new_width",
+    "new-width",
     "New image width: 0 < new_width"
   },
   {
     GIMP_PDB_INT32,
-    "new_height",
+    "new-height",
     "New image height: 0 < new_height"
   }
 };
@@ -938,12 +938,12 @@ static ProcArg image_crop_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "new_width",
+    "new-width",
     "New image width: (0 < new_width <= width)"
   },
   {
     GIMP_PDB_INT32,
-    "new_height",
+    "new-height",
     "New image height: (0 < new_height <= height)"
   },
   {
@@ -1011,7 +1011,7 @@ static ProcArg image_flip_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "flip_type",
+    "flip-type",
     "Type of flip: GIMP_ORIENTATION_HORIZONTAL (0) or GIMP_ORIENTATION_VERTICAL (1)"
   }
 };
@@ -1069,7 +1069,7 @@ static ProcArg image_rotate_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "rotate_type",
+    "rotate-type",
     "Angle of rotation: GIMP_ROTATE_90 (0), GIMP_ROTATE_180 (1), GIMP_ROTATE_270 (2)"
   }
 };
@@ -1147,12 +1147,12 @@ static ProcArg image_get_layers_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "num_layers",
+    "num-layers",
     "The number of layers contained in the image"
   },
   {
     GIMP_PDB_INT32ARRAY,
-    "layer_ids",
+    "layer-ids",
     "The list of layers contained in the image"
   }
 };
@@ -1230,12 +1230,12 @@ static ProcArg image_get_channels_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "num_channels",
+    "num-channels",
     "The number of channels contained in the image"
   },
   {
     GIMP_PDB_INT32ARRAY,
-    "channel_ids",
+    "channel-ids",
     "The list of channels contained in the image"
   }
 };
@@ -1313,12 +1313,12 @@ static ProcArg image_get_vectors_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "num_vectors",
+    "num-vectors",
     "The number of vectors contained in the image"
   },
   {
     GIMP_PDB_INT32ARRAY,
-    "vector_ids",
+    "vector-ids",
     "The list of vectors contained in the image"
   }
 };
@@ -1488,7 +1488,7 @@ static ProcArg image_get_floating_sel_outargs[] =
 {
   {
     GIMP_PDB_LAYER,
-    "floating_sel",
+    "floating-sel",
     "The image's floating selection"
   }
 };
@@ -1666,17 +1666,17 @@ static ProcArg image_pick_color_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "sample_merged",
+    "sample-merged",
     "Use the composite image, not the drawable"
   },
   {
     GIMP_PDB_INT32,
-    "sample_average",
+    "sample-average",
     "Average the color of all the pixels in a specified radius"
   },
   {
     GIMP_PDB_FLOAT,
-    "average_radius",
+    "average-radius",
     "The radius of pixels to average"
   }
 };
@@ -2483,7 +2483,7 @@ static ProcArg image_merge_visible_layers_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "merge_type",
+    "merge-type",
     "The type of merge: { GIMP_EXPAND_AS_NECESSARY (0), GIMP_CLIP_TO_IMAGE (1), GIMP_CLIP_TO_BOTTOM_LAYER (2) }"
   }
 };
@@ -2563,12 +2563,12 @@ static ProcArg image_merge_down_inargs[] =
   },
   {
     GIMP_PDB_LAYER,
-    "merge_layer",
+    "merge-layer",
     "The layer to merge down from"
   },
   {
     GIMP_PDB_INT32,
-    "merge_type",
+    "merge-type",
     "The type of merge: { GIMP_EXPAND_AS_NECESSARY (0), GIMP_CLIP_TO_IMAGE (1), GIMP_CLIP_TO_BOTTOM_LAYER (2) }"
   }
 };
@@ -2780,7 +2780,7 @@ static ProcArg image_get_colormap_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "num_bytes",
+    "num-bytes",
     "Number of bytes in the colormap array: 0 < num_bytes"
   },
   {
@@ -2844,7 +2844,7 @@ static ProcArg image_set_colormap_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "num_bytes",
+    "num-bytes",
     "Number of bytes in the colormap array: 0 <= num_bytes <= 768"
   },
   {
@@ -3102,12 +3102,12 @@ static ProcArg image_thumbnail_outargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "thumbnail_data_count",
+    "thumbnail-data-count",
     "The number of bytes in thumbnail data"
   },
   {
     GIMP_PDB_INT8ARRAY,
-    "thumbnail_data",
+    "thumbnail-data",
     "The thumbnail data"
   }
 };
@@ -3169,7 +3169,7 @@ static ProcArg image_get_active_layer_outargs[] =
 {
   {
     GIMP_PDB_LAYER,
-    "active_layer",
+    "active-layer",
     "The active layer"
   }
 };
@@ -3225,7 +3225,7 @@ static ProcArg image_set_active_layer_inargs[] =
   },
   {
     GIMP_PDB_LAYER,
-    "active_layer",
+    "active-layer",
     "The new image active layer"
   }
 };
@@ -3287,7 +3287,7 @@ static ProcArg image_get_active_channel_outargs[] =
 {
   {
     GIMP_PDB_CHANNEL,
-    "active_channel",
+    "active-channel",
     "The active channel"
   }
 };
@@ -3343,7 +3343,7 @@ static ProcArg image_set_active_channel_inargs[] =
   },
   {
     GIMP_PDB_CHANNEL,
-    "active_channel",
+    "active-channel",
     "The new image active channel"
   }
 };
@@ -4227,7 +4227,7 @@ static ProcArg image_get_tattoo_state_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "tattoo_state",
+    "tattoo-state",
     "The tattoo_state"
   }
 };
@@ -4281,7 +4281,7 @@ static ProcArg image_set_tattoo_state_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "tattoo_state",
+    "tattoo-state",
     "The new image tattoo_state"
   }
 };

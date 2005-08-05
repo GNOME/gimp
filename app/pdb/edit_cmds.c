@@ -110,7 +110,7 @@ static ProcArg edit_cut_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "non_empty",
+    "non-empty",
     "TRUE if the cut was successful, FALSE if the selection contained only transparent pixels"
   }
 };
@@ -181,7 +181,7 @@ static ProcArg edit_copy_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "non_empty",
+    "non-empty",
     "TRUE if the copy was successful, FALSE if the selection contained only transparent pixels"
   }
 };
@@ -245,7 +245,7 @@ static ProcArg edit_copy_visible_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "non_empty",
+    "non-empty",
     "TRUE if the copy was successful, FALSE if the selection contained only transparent pixels"
   }
 };
@@ -318,7 +318,7 @@ static ProcArg edit_paste_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "paste_into",
+    "paste-into",
     "Clear selection, or paste behind it?"
   }
 };
@@ -327,7 +327,7 @@ static ProcArg edit_paste_outargs[] =
 {
   {
     GIMP_PDB_LAYER,
-    "floating_sel",
+    "floating-sel",
     "The new floating selection"
   }
 };
@@ -447,7 +447,7 @@ static ProcArg edit_fill_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "fill_type",
+    "fill-type",
     "The type of fill: GIMP_FOREGROUND_FILL (0), GIMP_BACKGROUND_FILL (1), GIMP_WHITE_FILL (2), GIMP_TRANSPARENT_FILL (3), GIMP_PATTERN_FILL (4)"
   }
 };
@@ -543,12 +543,12 @@ static ProcArg edit_bucket_fill_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "fill_mode",
+    "fill-mode",
     "The type of fill: { GIMP_FG_BUCKET_FILL (0), GIMP_BG_BUCKET_FILL (1), GIMP_PATTERN_BUCKET_FILL (2) }"
   },
   {
     GIMP_PDB_INT32,
-    "paint_mode",
+    "paint-mode",
     "The paint application mode: { GIMP_NORMAL_MODE (0), GIMP_DISSOLVE_MODE (1), GIMP_BEHIND_MODE (2), GIMP_MULTIPLY_MODE (3), GIMP_SCREEN_MODE (4), GIMP_OVERLAY_MODE (5), GIMP_DIFFERENCE_MODE (6), GIMP_ADDITION_MODE (7), GIMP_SUBTRACT_MODE (8), GIMP_DARKEN_ONLY_MODE (9), GIMP_LIGHTEN_ONLY_MODE (10), GIMP_HUE_MODE (11), GIMP_SATURATION_MODE (12), GIMP_COLOR_MODE (13), GIMP_VALUE_MODE (14), GIMP_DIVIDE_MODE (15), GIMP_DODGE_MODE (16), GIMP_BURN_MODE (17), GIMP_HARDLIGHT_MODE (18), GIMP_SOFTLIGHT_MODE (19), GIMP_GRAIN_EXTRACT_MODE (20), GIMP_GRAIN_MERGE_MODE (21), GIMP_COLOR_ERASE_MODE (22) }"
   },
   {
@@ -563,7 +563,7 @@ static ProcArg edit_bucket_fill_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "sample_merged",
+    "sample-merged",
     "Use the composite image, not the drawable"
   },
   {
@@ -708,17 +708,17 @@ static ProcArg edit_blend_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "blend_mode",
+    "blend-mode",
     "The type of blend: { GIMP_FG_BG_RGB_MODE (0), GIMP_FG_BG_HSV_MODE (1), GIMP_FG_TRANSPARENT_MODE (2), GIMP_CUSTOM_MODE (3) }"
   },
   {
     GIMP_PDB_INT32,
-    "paint_mode",
+    "paint-mode",
     "The paint application mode: { GIMP_NORMAL_MODE (0), GIMP_DISSOLVE_MODE (1), GIMP_BEHIND_MODE (2), GIMP_MULTIPLY_MODE (3), GIMP_SCREEN_MODE (4), GIMP_OVERLAY_MODE (5), GIMP_DIFFERENCE_MODE (6), GIMP_ADDITION_MODE (7), GIMP_SUBTRACT_MODE (8), GIMP_DARKEN_ONLY_MODE (9), GIMP_LIGHTEN_ONLY_MODE (10), GIMP_HUE_MODE (11), GIMP_SATURATION_MODE (12), GIMP_COLOR_MODE (13), GIMP_VALUE_MODE (14), GIMP_DIVIDE_MODE (15), GIMP_DODGE_MODE (16), GIMP_BURN_MODE (17), GIMP_HARDLIGHT_MODE (18), GIMP_SOFTLIGHT_MODE (19), GIMP_GRAIN_EXTRACT_MODE (20), GIMP_GRAIN_MERGE_MODE (21), GIMP_COLOR_ERASE_MODE (22) }"
   },
   {
     GIMP_PDB_INT32,
-    "gradient_type",
+    "gradient-type",
     "The type of gradient: { GIMP_GRADIENT_LINEAR (0), GIMP_GRADIENT_BILINEAR (1), GIMP_GRADIENT_RADIAL (2), GIMP_GRADIENT_SQUARE (3), GIMP_GRADIENT_CONICAL_SYMMETRIC (4), GIMP_GRADIENT_CONICAL_ASYMMETRIC (5), GIMP_GRADIENT_SHAPEBURST_ANGULAR (6), GIMP_GRADIENT_SHAPEBURST_SPHERICAL (7), GIMP_GRADIENT_SHAPEBURST_DIMPLED (8), GIMP_GRADIENT_SPIRAL_CLOCKWISE (9), GIMP_GRADIENT_SPIRAL_ANTICLOCKWISE (10) }"
   },
   {
@@ -748,7 +748,7 @@ static ProcArg edit_blend_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "max_depth",
+    "max-depth",
     "Maximum recursion levels for supersampling"
   },
   {

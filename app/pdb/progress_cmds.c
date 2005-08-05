@@ -279,7 +279,7 @@ static ProcArg progress_install_inargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "progress_callback",
+    "progress-callback",
     "The callback PDB proc to call"
   }
 };
@@ -331,7 +331,7 @@ static ProcArg progress_uninstall_inargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "progress_callback",
+    "progress-callback",
     "The name of the callback registered for this progress"
   }
 };
@@ -383,7 +383,7 @@ static ProcArg progress_cancel_inargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "progress_callback",
+    "progress-callback",
     "The name of the callback registered for this progress"
   }
 };

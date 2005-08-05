@@ -110,12 +110,12 @@ static ProcArg vectors_get_strokes_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "num_strokes",
+    "num-strokes",
     "The number of strokes returned."
   },
   {
     GIMP_PDB_INT32ARRAY,
-    "stroke_ids",
+    "stroke-ids",
     "List of the strokes belonging to the path."
   }
 };
@@ -177,7 +177,7 @@ static ProcArg vectors_stroke_remove_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "stroke_id",
+    "stroke-id",
     "The stroke ID"
   }
 };
@@ -257,7 +257,7 @@ static ProcArg vectors_stroke_translate_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "stroke_id",
+    "stroke-id",
     "The stroke ID"
   },
   {
@@ -370,7 +370,7 @@ static ProcArg vectors_stroke_interpolate_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "stroke_id",
+    "stroke-id",
     "The stroke ID"
   },
   {
@@ -389,7 +389,7 @@ static ProcArg vectors_stroke_interpolate_outargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "num_coords",
+    "num-coords",
     "The number of floats returned."
   },
   {

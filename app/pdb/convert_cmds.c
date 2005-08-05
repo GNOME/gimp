@@ -232,27 +232,27 @@ static ProcArg image_convert_indexed_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "dither_type",
+    "dither-type",
     "The dither type to use: { GIMP_NO_DITHER (0), GIMP_FS_DITHER (1), GIMP_FSLOWBLEED_DITHER (2), GIMP_FIXED_DITHER (3) }"
   },
   {
     GIMP_PDB_INT32,
-    "palette_type",
+    "palette-type",
     "The type of palette to use: { GIMP_MAKE_PALETTE (0), GIMP_REUSE_PALETTE (1), GIMP_WEB_PALETTE (2), GIMP_MONO_PALETTE (3), GIMP_CUSTOM_PALETTE (4) }"
   },
   {
     GIMP_PDB_INT32,
-    "num_cols",
+    "num-cols",
     "The number of colors to quantize to, ignored unless (palette_type == GIMP_MAKE_PALETTE)"
   },
   {
     GIMP_PDB_INT32,
-    "alpha_dither",
+    "alpha-dither",
     "Dither transparency to fake partial opacity"
   },
   {
     GIMP_PDB_INT32,
-    "remove_unused",
+    "remove-unused",
     "Remove unused or duplicate colour entries from final palette, ignored if (palette_type == GIMP_MAKE_PALETTE)"
   },
   {

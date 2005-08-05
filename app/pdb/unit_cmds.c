@@ -78,7 +78,7 @@ static ProcArg unit_get_number_of_units_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "num_units",
+    "num-units",
     "The number of units"
   }
 };
@@ -119,7 +119,7 @@ static ProcArg unit_get_number_of_built_in_units_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "num_units",
+    "num-units",
     "The number of built-in units"
   }
 };
@@ -238,7 +238,7 @@ static ProcArg unit_new_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "unit_id",
+    "unit-id",
     "The new unit's ID"
   }
 };
@@ -287,7 +287,7 @@ static ProcArg unit_get_deletion_flag_inargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "unit_id",
+    "unit-id",
     "The unit's integer ID"
   }
 };
@@ -296,7 +296,7 @@ static ProcArg unit_get_deletion_flag_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "deletion_flag",
+    "deletion-flag",
     "The unit's deletion flag"
   }
 };
@@ -345,12 +345,12 @@ static ProcArg unit_set_deletion_flag_inargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "unit_id",
+    "unit-id",
     "The unit's integer ID"
   },
   {
     GIMP_PDB_INT32,
-    "deletion_flag",
+    "deletion-flag",
     "The new deletion flag of the unit"
   }
 };
@@ -399,7 +399,7 @@ static ProcArg unit_get_identifier_inargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "unit_id",
+    "unit-id",
     "The unit's integer ID"
   }
 };
@@ -457,7 +457,7 @@ static ProcArg unit_get_factor_inargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "unit_id",
+    "unit-id",
     "The unit's integer ID"
   }
 };
@@ -515,7 +515,7 @@ static ProcArg unit_get_digits_inargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "unit_id",
+    "unit-id",
     "The unit's integer ID"
   }
 };
@@ -573,7 +573,7 @@ static ProcArg unit_get_symbol_inargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "unit_id",
+    "unit-id",
     "The unit's integer ID"
   }
 };
@@ -631,7 +631,7 @@ static ProcArg unit_get_abbreviation_inargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "unit_id",
+    "unit-id",
     "The unit's integer ID"
   }
 };
@@ -689,7 +689,7 @@ static ProcArg unit_get_singular_inargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "unit_id",
+    "unit-id",
     "The unit's integer ID"
   }
 };
@@ -747,7 +747,7 @@ static ProcArg unit_get_plural_inargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "unit_id",
+    "unit-id",
     "The unit's integer ID"
   }
 };

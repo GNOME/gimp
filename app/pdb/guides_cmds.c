@@ -364,7 +364,7 @@ static ProcArg image_find_next_guide_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "next_guide",
+    "next-guide",
     "The next guide's ID"
   }
 };

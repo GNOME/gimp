@@ -261,7 +261,7 @@ static ProcArg palette_rename_inargs[] =
   },
   {
     GIMP_PDB_STRING,
-    "new_name",
+    "new-name",
     "The new name of the palette"
   }
 };
@@ -474,7 +474,7 @@ static ProcArg palette_get_info_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "num_colors",
+    "num-colors",
     "The number of colors in the palette"
   }
 };
@@ -541,7 +541,7 @@ static ProcArg palette_get_columns_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "num_columns",
+    "num-columns",
     "The number of columns used to display this palette"
   }
 };
@@ -681,7 +681,7 @@ static ProcArg palette_add_entry_inargs[] =
   },
   {
     GIMP_PDB_STRING,
-    "entry_name",
+    "entry-name",
     "The name of the entry"
   },
   {
@@ -695,7 +695,7 @@ static ProcArg palette_add_entry_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "entry_num",
+    "entry-num",
     "The index of the added entry"
   }
 };
@@ -768,7 +768,7 @@ static ProcArg palette_delete_entry_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "entry_num",
+    "entry-num",
     "The index of the added entry"
   }
 };
@@ -848,7 +848,7 @@ static ProcArg palette_entry_get_color_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "entry_num",
+    "entry-num",
     "The entry to retrieve"
   }
 };
@@ -935,7 +935,7 @@ static ProcArg palette_entry_set_color_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "entry_num",
+    "entry-num",
     "The entry to retrieve"
   },
   {
@@ -1015,7 +1015,7 @@ static ProcArg palette_entry_get_name_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "entry_num",
+    "entry-num",
     "The entry to retrieve"
   }
 };
@@ -1024,7 +1024,7 @@ static ProcArg palette_entry_get_name_outargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "entry_name",
+    "entry-name",
     "The name requested"
   }
 };
@@ -1105,12 +1105,12 @@ static ProcArg palette_entry_set_name_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "entry_num",
+    "entry-num",
     "The entry to retrieve"
   },
   {
     GIMP_PDB_STRING,
-    "entry_name",
+    "entry-name",
     "The new name"
   }
 };

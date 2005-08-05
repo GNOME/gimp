@@ -136,12 +136,12 @@ static ProcArg drawable_transform_flip_simple_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "flip_type",
+    "flip-type",
     "Type of flip: GIMP_ORIENTATION_HORIZONTAL (0) or GIMP_ORIENTATION_VERTICAL (1)"
   },
   {
     GIMP_PDB_INT32,
-    "auto_center",
+    "auto-center",
     "Whether to automatically position the axis in the selection center"
   },
   {
@@ -151,7 +151,7 @@ static ProcArg drawable_transform_flip_simple_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "clip_result",
+    "clip-result",
     "Whether to clip results"
   }
 };
@@ -298,7 +298,7 @@ static ProcArg drawable_transform_flip_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "transform_direction",
+    "transform-direction",
     "Direction of Transformation: { GIMP_TRANSFORM_FORWARD (0), GIMP_TRANSFORM_BACKWARD (1) }"
   },
   {
@@ -313,12 +313,12 @@ static ProcArg drawable_transform_flip_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "recursion_level",
+    "recursion-level",
     "Level of recursion (3 is a nice default)"
   },
   {
     GIMP_PDB_INT32,
-    "clip_result",
+    "clip-result",
     "Whether to clip results"
   }
 };
@@ -459,7 +459,7 @@ static ProcArg drawable_transform_flip_default_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "clip_result",
+    "clip-result",
     "Whether to clip results"
   }
 };
@@ -635,7 +635,7 @@ static ProcArg drawable_transform_perspective_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "transform_direction",
+    "transform-direction",
     "Direction of Transformation: { GIMP_TRANSFORM_FORWARD (0), GIMP_TRANSFORM_BACKWARD (1) }"
   },
   {
@@ -650,12 +650,12 @@ static ProcArg drawable_transform_perspective_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "recursion_level",
+    "recursion-level",
     "Level of recursion (3 is a nice default)"
   },
   {
     GIMP_PDB_INT32,
-    "clip_result",
+    "clip-result",
     "Whether to clip results"
   }
 };
@@ -825,7 +825,7 @@ static ProcArg drawable_transform_perspective_default_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "clip_result",
+    "clip-result",
     "Whether to clip results"
   }
 };
@@ -921,27 +921,27 @@ static ProcArg drawable_transform_rotate_simple_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "rotate_type",
+    "rotate-type",
     "Type of rotation: GIMP_ROTATE_90 (0), GIMP_ROTATE_180 (1), GIMP_ROTATE_270 (2)"
   },
   {
     GIMP_PDB_INT32,
-    "auto_center",
+    "auto-center",
     "Whether to automatically rotate around the selection center"
   },
   {
     GIMP_PDB_INT32,
-    "center_x",
+    "center-x",
     "The hor. coordinate of the center of rotation"
   },
   {
     GIMP_PDB_INT32,
-    "center_y",
+    "center-y",
     "The vert. coordinate of the center of rotation"
   },
   {
     GIMP_PDB_INT32,
-    "clip_result",
+    "clip-result",
     "Whether to clip results"
   }
 };
@@ -1076,22 +1076,22 @@ static ProcArg drawable_transform_rotate_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "auto_center",
+    "auto-center",
     "Whether to automatically rotate around the selection center"
   },
   {
     GIMP_PDB_INT32,
-    "center_x",
+    "center-x",
     "The hor. coordinate of the center of rotation"
   },
   {
     GIMP_PDB_INT32,
-    "center_y",
+    "center-y",
     "The vert. coordinate of the center of rotation"
   },
   {
     GIMP_PDB_INT32,
-    "transform_direction",
+    "transform-direction",
     "Direction of Transformation: { GIMP_TRANSFORM_FORWARD (0), GIMP_TRANSFORM_BACKWARD (1) }"
   },
   {
@@ -1106,12 +1106,12 @@ static ProcArg drawable_transform_rotate_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "recursion_level",
+    "recursion-level",
     "Level of recursion (3 is a nice default)"
   },
   {
     GIMP_PDB_INT32,
-    "clip_result",
+    "clip-result",
     "Whether to clip results"
   }
 };
@@ -1235,17 +1235,17 @@ static ProcArg drawable_transform_rotate_default_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "auto_center",
+    "auto-center",
     "Whether to automatically rotate around the selection center"
   },
   {
     GIMP_PDB_INT32,
-    "center_x",
+    "center-x",
     "The hor. coordinate of the center of rotation"
   },
   {
     GIMP_PDB_INT32,
-    "center_y",
+    "center-y",
     "The vert. coordinate of the center of rotation"
   },
   {
@@ -1255,7 +1255,7 @@ static ProcArg drawable_transform_rotate_default_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "clip_result",
+    "clip-result",
     "Whether to clip results"
   }
 };
@@ -1405,7 +1405,7 @@ static ProcArg drawable_transform_scale_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "transform_direction",
+    "transform-direction",
     "Direction of Transformation: { GIMP_TRANSFORM_FORWARD (0), GIMP_TRANSFORM_BACKWARD (1) }"
   },
   {
@@ -1420,12 +1420,12 @@ static ProcArg drawable_transform_scale_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "recursion_level",
+    "recursion-level",
     "Level of recursion (3 is a nice default)"
   },
   {
     GIMP_PDB_INT32,
-    "clip_result",
+    "clip-result",
     "Whether to clip results"
   }
 };
@@ -1569,7 +1569,7 @@ static ProcArg drawable_transform_scale_default_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "clip_result",
+    "clip-result",
     "Whether to clip results"
   }
 };
@@ -1693,7 +1693,7 @@ static ProcArg drawable_transform_shear_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "shear_type",
+    "shear-type",
     "Type of shear: GIMP_ORIENTATION_HORIZONTAL (0) or GIMP_ORIENTATION_VERTICAL (1)"
   },
   {
@@ -1703,7 +1703,7 @@ static ProcArg drawable_transform_shear_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "transform_direction",
+    "transform-direction",
     "Direction of Transformation: { GIMP_TRANSFORM_FORWARD (0), GIMP_TRANSFORM_BACKWARD (1) }"
   },
   {
@@ -1718,12 +1718,12 @@ static ProcArg drawable_transform_shear_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "recursion_level",
+    "recursion-level",
     "Level of recursion (3 is a nice default)"
   },
   {
     GIMP_PDB_INT32,
-    "clip_result",
+    "clip-result",
     "Whether to clip results"
   }
 };
@@ -1836,7 +1836,7 @@ static ProcArg drawable_transform_shear_default_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "shear_type",
+    "shear-type",
     "Type of shear: GIMP_ORIENTATION_HORIZONTAL (0) or GIMP_ORIENTATION_VERTICAL (1)"
   },
   {
@@ -1851,7 +1851,7 @@ static ProcArg drawable_transform_shear_default_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "clip_result",
+    "clip-result",
     "Whether to clip results"
   }
 };
@@ -1989,22 +1989,22 @@ static ProcArg drawable_transform_2d_inargs[] =
   },
   {
     GIMP_PDB_FLOAT,
-    "source_x",
+    "source-x",
     "X coordinate of the transformation center"
   },
   {
     GIMP_PDB_FLOAT,
-    "source_y",
+    "source-y",
     "Y coordinate of the transformation center"
   },
   {
     GIMP_PDB_FLOAT,
-    "scale_x",
+    "scale-x",
     "Amount to scale in x direction"
   },
   {
     GIMP_PDB_FLOAT,
-    "scale_y",
+    "scale-y",
     "Amount to scale in y direction"
   },
   {
@@ -2014,17 +2014,17 @@ static ProcArg drawable_transform_2d_inargs[] =
   },
   {
     GIMP_PDB_FLOAT,
-    "dest_x",
+    "dest-x",
     "X coordinate of where the center goes"
   },
   {
     GIMP_PDB_FLOAT,
-    "dest_y",
+    "dest-y",
     "Y coordinate of where the center goes"
   },
   {
     GIMP_PDB_INT32,
-    "transform_direction",
+    "transform-direction",
     "Direction of Transformation: { GIMP_TRANSFORM_FORWARD (0), GIMP_TRANSFORM_BACKWARD (1) }"
   },
   {
@@ -2039,12 +2039,12 @@ static ProcArg drawable_transform_2d_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "recursion_level",
+    "recursion-level",
     "Level of recursion (3 is a nice default)"
   },
   {
     GIMP_PDB_INT32,
-    "clip_result",
+    "clip-result",
     "Whether to clip results"
   }
 };
@@ -2171,22 +2171,22 @@ static ProcArg drawable_transform_2d_default_inargs[] =
   },
   {
     GIMP_PDB_FLOAT,
-    "source_x",
+    "source-x",
     "X coordinate of the transformation center"
   },
   {
     GIMP_PDB_FLOAT,
-    "source_y",
+    "source-y",
     "Y coordinate of the transformation center"
   },
   {
     GIMP_PDB_FLOAT,
-    "scale_x",
+    "scale-x",
     "Amount to scale in x direction"
   },
   {
     GIMP_PDB_FLOAT,
-    "scale_y",
+    "scale-y",
     "Amount to scale in y direction"
   },
   {
@@ -2196,12 +2196,12 @@ static ProcArg drawable_transform_2d_default_inargs[] =
   },
   {
     GIMP_PDB_FLOAT,
-    "dest_x",
+    "dest-x",
     "X coordinate of where the center goes"
   },
   {
     GIMP_PDB_FLOAT,
-    "dest_y",
+    "dest-y",
     "Y coordinate of where the center goes"
   },
   {
@@ -2211,7 +2211,7 @@ static ProcArg drawable_transform_2d_default_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "clip_result",
+    "clip-result",
     "Whether to clip results"
   }
 };
@@ -2359,52 +2359,52 @@ static ProcArg drawable_transform_matrix_inargs[] =
   },
   {
     GIMP_PDB_FLOAT,
-    "coeff_0_0",
+    "coeff-0-0",
     "coefficient (0,0) of the transformation matrix"
   },
   {
     GIMP_PDB_FLOAT,
-    "coeff_0_1",
+    "coeff-0-1",
     "coefficient (0,1) of the transformation matrix"
   },
   {
     GIMP_PDB_FLOAT,
-    "coeff_0_2",
+    "coeff-0-2",
     "coefficient (0,2) of the transformation matrix"
   },
   {
     GIMP_PDB_FLOAT,
-    "coeff_1_0",
+    "coeff-1-0",
     "coefficient (1,0) of the transformation matrix"
   },
   {
     GIMP_PDB_FLOAT,
-    "coeff_1_1",
+    "coeff-1-1",
     "coefficient (1,1) of the transformation matrix"
   },
   {
     GIMP_PDB_FLOAT,
-    "coeff_1_2",
+    "coeff-1-2",
     "coefficient (1,2) of the transformation matrix"
   },
   {
     GIMP_PDB_FLOAT,
-    "coeff_2_0",
+    "coeff-2-0",
     "coefficient (2,0) of the transformation matrix"
   },
   {
     GIMP_PDB_FLOAT,
-    "coeff_2_1",
+    "coeff-2-1",
     "coefficient (2,1) of the transformation matrix"
   },
   {
     GIMP_PDB_FLOAT,
-    "coeff_2_2",
+    "coeff-2-2",
     "coefficient (2,2) of the transformation matrix"
   },
   {
     GIMP_PDB_INT32,
-    "transform_direction",
+    "transform-direction",
     "Direction of Transformation: { GIMP_TRANSFORM_FORWARD (0), GIMP_TRANSFORM_BACKWARD (1) }"
   },
   {
@@ -2419,12 +2419,12 @@ static ProcArg drawable_transform_matrix_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "recursion_level",
+    "recursion-level",
     "Level of recursion (3 is a nice default)"
   },
   {
     GIMP_PDB_INT32,
-    "clip_result",
+    "clip-result",
     "Whether to clip results"
   }
 };
@@ -2561,47 +2561,47 @@ static ProcArg drawable_transform_matrix_default_inargs[] =
   },
   {
     GIMP_PDB_FLOAT,
-    "coeff_0_0",
+    "coeff-0-0",
     "coefficient (0,0) of the transformation matrix"
   },
   {
     GIMP_PDB_FLOAT,
-    "coeff_0_1",
+    "coeff-0-1",
     "coefficient (0,1) of the transformation matrix"
   },
   {
     GIMP_PDB_FLOAT,
-    "coeff_0_2",
+    "coeff-0-2",
     "coefficient (0,2) of the transformation matrix"
   },
   {
     GIMP_PDB_FLOAT,
-    "coeff_1_0",
+    "coeff-1-0",
     "coefficient (1,0) of the transformation matrix"
   },
   {
     GIMP_PDB_FLOAT,
-    "coeff_1_1",
+    "coeff-1-1",
     "coefficient (1,1) of the transformation matrix"
   },
   {
     GIMP_PDB_FLOAT,
-    "coeff_1_2",
+    "coeff-1-2",
     "coefficient (1,2) of the transformation matrix"
   },
   {
     GIMP_PDB_FLOAT,
-    "coeff_2_0",
+    "coeff-2-0",
     "coefficient (2,0) of the transformation matrix"
   },
   {
     GIMP_PDB_FLOAT,
-    "coeff_2_1",
+    "coeff-2-1",
     "coefficient (2,1) of the transformation matrix"
   },
   {
     GIMP_PDB_FLOAT,
-    "coeff_2_2",
+    "coeff-2-2",
     "coefficient (2,2) of the transformation matrix"
   },
   {
@@ -2611,7 +2611,7 @@ static ProcArg drawable_transform_matrix_default_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "clip_result",
+    "clip-result",
     "Whether to clip results"
   }
 };

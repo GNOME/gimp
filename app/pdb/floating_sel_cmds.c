@@ -76,7 +76,7 @@ static ProcArg floating_sel_remove_inargs[] =
 {
   {
     GIMP_PDB_LAYER,
-    "floating_sel",
+    "floating-sel",
     "The floating selection"
   }
 };
@@ -127,7 +127,7 @@ static ProcArg floating_sel_anchor_inargs[] =
 {
   {
     GIMP_PDB_LAYER,
-    "floating_sel",
+    "floating-sel",
     "The floating selection"
   }
 };
@@ -178,7 +178,7 @@ static ProcArg floating_sel_to_layer_inargs[] =
 {
   {
     GIMP_PDB_LAYER,
-    "floating_sel",
+    "floating-sel",
     "The floating selection"
   }
 };
@@ -293,7 +293,7 @@ static ProcArg floating_sel_rigor_inargs[] =
 {
   {
     GIMP_PDB_LAYER,
-    "floating_sel",
+    "floating-sel",
     "The floating selection"
   },
   {
@@ -352,7 +352,7 @@ static ProcArg floating_sel_relax_inargs[] =
 {
   {
     GIMP_PDB_LAYER,
-    "floating_sel",
+    "floating-sel",
     "The floating selection"
   },
   {

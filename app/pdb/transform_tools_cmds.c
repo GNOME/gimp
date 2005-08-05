@@ -105,7 +105,7 @@ static ProcArg flip_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "flip_type",
+    "flip-type",
     "Type of flip: GIMP_ORIENTATION_HORIZONTAL (0) or GIMP_ORIENTATION_VERTICAL (1)"
   }
 };
@@ -627,7 +627,7 @@ static ProcArg shear_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "shear_type",
+    "shear-type",
     "Type of shear: GIMP_ORIENTATION_HORIZONTAL (0) or GIMP_ORIENTATION_VERTICAL (1)"
   },
   {
@@ -760,22 +760,22 @@ static ProcArg transform_2d_inargs[] =
   },
   {
     GIMP_PDB_FLOAT,
-    "source_x",
+    "source-x",
     "X coordinate of the transformation center"
   },
   {
     GIMP_PDB_FLOAT,
-    "source_y",
+    "source-y",
     "Y coordinate of the transformation center"
   },
   {
     GIMP_PDB_FLOAT,
-    "scale_x",
+    "scale-x",
     "Amount to scale in x direction"
   },
   {
     GIMP_PDB_FLOAT,
-    "scale_y",
+    "scale-y",
     "Amount to scale in y direction"
   },
   {
@@ -785,12 +785,12 @@ static ProcArg transform_2d_inargs[] =
   },
   {
     GIMP_PDB_FLOAT,
-    "dest_x",
+    "dest-x",
     "X coordinate of where the centre goes"
   },
   {
     GIMP_PDB_FLOAT,
-    "dest_y",
+    "dest-y",
     "Y coordinate of where the centre goes"
   }
 };

@@ -81,17 +81,17 @@ static ProcArg palettes_popup_inargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "palette_callback",
+    "palette-callback",
     "The callback PDB proc to call when palette selection is made"
   },
   {
     GIMP_PDB_STRING,
-    "popup_title",
+    "popup-title",
     "Title to give the palette popup window"
   },
   {
     GIMP_PDB_STRING,
-    "initial_palette",
+    "initial-palette",
     "The name of the palette to set as the first selected"
   }
 };
@@ -143,7 +143,7 @@ static ProcArg palettes_close_popup_inargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "palette_callback",
+    "palette-callback",
     "The name of the callback registered for this popup"
   }
 };
@@ -201,12 +201,12 @@ static ProcArg palettes_set_popup_inargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "palette_callback",
+    "palette-callback",
     "The name of the callback registered for this popup"
   },
   {
     GIMP_PDB_STRING,
-    "palette_name",
+    "palette-name",
     "The name of the palette to set as selected"
   }
 };

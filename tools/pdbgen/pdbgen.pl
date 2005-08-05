@@ -67,7 +67,7 @@ $evalcode = <<'CODE';
 
     # Variables to evaluate and insert into the PDB structure
     my @procvars = qw($name $group $blurb $help $author $copyright $date $since
-		      $deprecated @inargs @outargs %invoke);
+		      $deprecated @inargs @outargs %invoke $canonical_name);
 
     # These are attached to the group structure
     my @groupvars = qw($desc @headers %extra);
@@ -102,6 +102,8 @@ $evalcode = <<'CODE';
 	# Some derived fields
 	$name = $proc;
 	$group = $file;
+
+	($canonical_name = $name) =~ s/_/-/g;
 
 	# Load the info into %pdb, making copies of the data instead of refs
 	my $entry = {};
@@ -182,6 +184,13 @@ sub arrayexpand {
     $$args = $newargs;
 }
 
+sub canonicalargs {
+    my $args = shift;
+    foreach $arg (@$args) {
+        ($arg->{canonical_name} = $arg->{name}) =~ s/_/-/g;
+    }
+}
+
 # Post-process each pdb entry
 while ((undef, $entry) = each %pdb) {
     &nicetext(\$entry->{blurb});
@@ -195,6 +204,7 @@ while ((undef, $entry) = each %pdb) {
 	if (exists $entry->{$args}) {
 	    &arrayexpand(\$entry->{$args});
     	    &niceargs($entry->{$args});
+	    &canonicalargs($entry->{$args});
 	}
     }
 

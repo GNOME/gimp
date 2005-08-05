@@ -200,12 +200,12 @@ static ProcArg pattern_get_pixels_outargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "num_color_bytes",
+    "num-color-bytes",
     "Number of pattern bytes"
   },
   {
     GIMP_PDB_INT8ARRAY,
-    "color_bytes",
+    "color-bytes",
     "The pattern data."
   }
 };

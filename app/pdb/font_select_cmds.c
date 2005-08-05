@@ -80,17 +80,17 @@ static ProcArg fonts_popup_inargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "font_callback",
+    "font-callback",
     "The callback PDB proc to call when font selection is made"
   },
   {
     GIMP_PDB_STRING,
-    "popup_title",
+    "popup-title",
     "Title to give the font popup window"
   },
   {
     GIMP_PDB_STRING,
-    "initial_font",
+    "initial-font",
     "The name of the font to set as the first selected"
   }
 };
@@ -141,7 +141,7 @@ static ProcArg fonts_close_popup_inargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "font_callback",
+    "font-callback",
     "The name of the callback registered for this popup"
   }
 };
@@ -198,12 +198,12 @@ static ProcArg fonts_set_popup_inargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "font_callback",
+    "font-callback",
     "The name of the callback registered for this popup"
   },
   {
     GIMP_PDB_STRING,
-    "font_name",
+    "font-name",
     "The name of the font to set as selected"
   }
 };

@@ -229,12 +229,12 @@ static ProcArg displays_reconnect_inargs[] =
 {
   {
     GIMP_PDB_IMAGE,
-    "old_image",
+    "old-image",
     "The old image (must have at least one display)"
   },
   {
     GIMP_PDB_IMAGE,
-    "new_image",
+    "new-image",
     "The new image (must not have a display)"
   }
 };

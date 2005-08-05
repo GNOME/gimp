@@ -121,12 +121,12 @@ static ProcArg gradients_get_list_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "num_gradients",
+    "num-gradients",
     "The number of loaded gradients"
   },
   {
     GIMP_PDB_STRINGARRAY,
-    "gradient_list",
+    "gradient-list",
     "The list of gradient names"
   }
 };
@@ -213,7 +213,7 @@ static ProcArg gradients_sample_uniform_inargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "num_samples",
+    "num-samples",
     "The number of samples to take"
   },
   {
@@ -227,12 +227,12 @@ static ProcArg gradients_sample_uniform_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "array_length",
+    "array-length",
     "Length of the color_samples array (4 * num_samples)"
   },
   {
     GIMP_PDB_FLOATARRAY,
-    "color_samples",
+    "color-samples",
     "Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }"
   }
 };
@@ -318,7 +318,7 @@ static ProcArg gradients_sample_custom_inargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "num_samples",
+    "num-samples",
     "The number of samples to take"
   },
   {
@@ -337,12 +337,12 @@ static ProcArg gradients_sample_custom_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "array_length",
+    "array-length",
     "Length of the color_samples array (4 * num_samples)"
   },
   {
     GIMP_PDB_FLOATARRAY,
-    "color_samples",
+    "color-samples",
     "Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }"
   }
 };
@@ -453,7 +453,7 @@ static ProcArg gradients_get_gradient_data_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "sample_size",
+    "sample-size",
     "Size of the sample to return when the gradient is changed (0 < sample_size <= 10000)"
   },
   {
@@ -477,7 +477,7 @@ static ProcArg gradients_get_gradient_data_outargs[] =
   },
   {
     GIMP_PDB_FLOATARRAY,
-    "grad_data",
+    "grad-data",
     "The gradient sample data"
   }
 };

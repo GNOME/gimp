@@ -364,7 +364,7 @@ static ProcArg gradient_rename_inargs[] =
   },
   {
     GIMP_PDB_STRING,
-    "new_name",
+    "new-name",
     "The new name of the gradient"
   }
 };
@@ -542,7 +542,7 @@ static ProcArg gradient_get_uniform_samples_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "num_samples",
+    "num-samples",
     "The number of samples to take"
   },
   {
@@ -556,12 +556,12 @@ static ProcArg gradient_get_uniform_samples_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "num_color_samples",
+    "num-color-samples",
     "Length of the color_samples array (4 * num_samples)"
   },
   {
     GIMP_PDB_FLOATARRAY,
-    "color_samples",
+    "color-samples",
     "Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }"
   }
 };
@@ -664,7 +664,7 @@ static ProcArg gradient_get_custom_samples_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "num_samples",
+    "num-samples",
     "The number of samples to take"
   },
   {
@@ -683,12 +683,12 @@ static ProcArg gradient_get_custom_samples_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "num_color_samples",
+    "num-color-samples",
     "Length of the color_samples array (4 * num_samples)"
   },
   {
     GIMP_PDB_FLOATARRAY,
-    "color_samples",
+    "color-samples",
     "Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }"
   }
 };
@@ -1277,7 +1277,7 @@ static ProcArg gradient_segment_set_left_pos_outargs[] =
 {
   {
     GIMP_PDB_FLOAT,
-    "final_pos",
+    "final-pos",
     "The return position"
   }
 };
@@ -1472,7 +1472,7 @@ static ProcArg gradient_segment_set_middle_pos_outargs[] =
 {
   {
     GIMP_PDB_FLOAT,
-    "final_pos",
+    "final-pos",
     "The return position"
   }
 };
@@ -1667,7 +1667,7 @@ static ProcArg gradient_segment_set_right_pos_outargs[] =
 {
   {
     GIMP_PDB_FLOAT,
-    "final_pos",
+    "final-pos",
     "The return position"
   }
 };
@@ -1760,7 +1760,7 @@ static ProcArg gradient_segment_get_blending_function_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "blend_func",
+    "blend-func",
     "The blending function of the segment: { GIMP_GRADIENT_SEGMENT_LINEAR (0), GIMP_GRADIENT_SEGMENT_CURVED (1), GIMP_GRADIENT_SEGMENT_SINE (2), GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING (3), GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING (4) }"
   }
 };
@@ -1853,7 +1853,7 @@ static ProcArg gradient_segment_get_coloring_type_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "coloring_type",
+    "coloring-type",
     "The coloring type of the segment: { GIMP_GRADIENT_SEGMENT_RGB (0), GIMP_GRADIENT_SEGMENT_HSV_CCW (1), GIMP_GRADIENT_SEGMENT_HSV_CW (2) }"
   }
 };
@@ -1959,17 +1959,17 @@ static ProcArg gradient_segment_range_set_blending_function_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "start_segment",
+    "start-segment",
     "The index of the first segment to operate on"
   },
   {
     GIMP_PDB_INT32,
-    "end_segment",
+    "end-segment",
     "The index of the last segment to operate on. If negative, the selection will extend to the end of the string."
   },
   {
     GIMP_PDB_INT32,
-    "blending_function",
+    "blending-function",
     "The Blending Function: { GIMP_GRADIENT_SEGMENT_LINEAR (0), GIMP_GRADIENT_SEGMENT_CURVED (1), GIMP_GRADIENT_SEGMENT_SINE (2), GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING (3), GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING (4) }"
   }
 };
@@ -2075,17 +2075,17 @@ static ProcArg gradient_segment_range_set_coloring_type_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "start_segment",
+    "start-segment",
     "The index of the first segment to operate on"
   },
   {
     GIMP_PDB_INT32,
-    "end_segment",
+    "end-segment",
     "The index of the last segment to operate on. If negative, the selection will extend to the end of the string."
   },
   {
     GIMP_PDB_INT32,
-    "coloring_type",
+    "coloring-type",
     "The Coloring Type: { GIMP_GRADIENT_SEGMENT_RGB (0), GIMP_GRADIENT_SEGMENT_HSV_CCW (1), GIMP_GRADIENT_SEGMENT_HSV_CW (2) }"
   }
 };
@@ -2186,12 +2186,12 @@ static ProcArg gradient_segment_range_flip_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "start_segment",
+    "start-segment",
     "The index of the first segment to operate on"
   },
   {
     GIMP_PDB_INT32,
-    "end_segment",
+    "end-segment",
     "The index of the last segment to operate on. If negative, the selection will extend to the end of the string."
   }
 };
@@ -2298,17 +2298,17 @@ static ProcArg gradient_segment_range_replicate_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "start_segment",
+    "start-segment",
     "The index of the first segment to operate on"
   },
   {
     GIMP_PDB_INT32,
-    "end_segment",
+    "end-segment",
     "The index of the last segment to operate on. If negative, the selection will extend to the end of the string."
   },
   {
     GIMP_PDB_INT32,
-    "replicate_times",
+    "replicate-times",
     "The number of times to replicate"
   }
 };
@@ -2409,12 +2409,12 @@ static ProcArg gradient_segment_range_split_midpoint_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "start_segment",
+    "start-segment",
     "The index of the first segment to operate on"
   },
   {
     GIMP_PDB_INT32,
-    "end_segment",
+    "end-segment",
     "The index of the last segment to operate on. If negative, the selection will extend to the end of the string."
   }
 };
@@ -2521,17 +2521,17 @@ static ProcArg gradient_segment_range_split_uniform_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "start_segment",
+    "start-segment",
     "The index of the first segment to operate on"
   },
   {
     GIMP_PDB_INT32,
-    "end_segment",
+    "end-segment",
     "The index of the last segment to operate on. If negative, the selection will extend to the end of the string."
   },
   {
     GIMP_PDB_INT32,
-    "split_parts",
+    "split-parts",
     "The number of uniform divisions to split each segment to"
   }
 };
@@ -2632,12 +2632,12 @@ static ProcArg gradient_segment_range_delete_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "start_segment",
+    "start-segment",
     "The index of the first segment to operate on"
   },
   {
     GIMP_PDB_INT32,
-    "end_segment",
+    "end-segment",
     "The index of the last segment to operate on. If negative, the selection will extend to the end of the string."
   }
 };
@@ -2737,12 +2737,12 @@ static ProcArg gradient_segment_range_redistribute_handles_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "start_segment",
+    "start-segment",
     "The index of the first segment to operate on"
   },
   {
     GIMP_PDB_INT32,
-    "end_segment",
+    "end-segment",
     "The index of the last segment to operate on. If negative, the selection will extend to the end of the string."
   }
 };
@@ -2844,12 +2844,12 @@ static ProcArg gradient_segment_range_blend_colors_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "start_segment",
+    "start-segment",
     "The index of the first segment to operate on"
   },
   {
     GIMP_PDB_INT32,
-    "end_segment",
+    "end-segment",
     "The index of the last segment to operate on. If negative, the selection will extend to the end of the string."
   }
 };
@@ -2951,12 +2951,12 @@ static ProcArg gradient_segment_range_blend_opacity_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "start_segment",
+    "start-segment",
     "The index of the first segment to operate on"
   },
   {
     GIMP_PDB_INT32,
-    "end_segment",
+    "end-segment",
     "The index of the last segment to operate on. If negative, the selection will extend to the end of the string."
   }
 };
@@ -3074,12 +3074,12 @@ static ProcArg gradient_segment_range_move_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "start_segment",
+    "start-segment",
     "The index of the first segment to operate on"
   },
   {
     GIMP_PDB_INT32,
-    "end_segment",
+    "end-segment",
     "The index of the last segment to operate on. If negative, the selection will extend to the end of the string."
   },
   {
@@ -3089,7 +3089,7 @@ static ProcArg gradient_segment_range_move_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "control_compress",
+    "control-compress",
     "Whether or not to compress the neighboring segments"
   }
 };
@@ -3098,7 +3098,7 @@ static ProcArg gradient_segment_range_move_outargs[] =
 {
   {
     GIMP_PDB_FLOAT,
-    "final_delta",
+    "final-delta",
     "The final delta by which the range moved"
   }
 };

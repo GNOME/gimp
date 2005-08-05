@@ -120,12 +120,12 @@ static ProcArg patterns_get_list_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "num_patterns",
+    "num-patterns",
     "The number of patterns in the pattern list"
   },
   {
     GIMP_PDB_STRINGARRAY,
-    "pattern_list",
+    "pattern-list",
     "The list of pattern names"
   }
 };
@@ -292,7 +292,7 @@ static ProcArg patterns_get_pattern_data_outargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "mask_bpp",
+    "mask-bpp",
     "Pattern bytes per pixel"
   },
   {
@@ -302,7 +302,7 @@ static ProcArg patterns_get_pattern_data_outargs[] =
   },
   {
     GIMP_PDB_INT8ARRAY,
-    "mask_data",
+    "mask-data",
     "The pattern mask data"
   }
 };

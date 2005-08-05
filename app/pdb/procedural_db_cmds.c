@@ -77,7 +77,7 @@ static ProcArg procedural_db_temp_name_outargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "temp_name",
+    "temp-name",
     "A unique temporary name for a temporary PDB entry"
   }
 };
@@ -246,7 +246,7 @@ static ProcArg procedural_db_query_inargs[] =
   },
   {
     GIMP_PDB_STRING,
-    "proc_type",
+    "proc-type",
     "The regex for procedure type: { 'Internal GIMP procedure', 'GIMP Plug-In', 'GIMP Extension', 'Temporary Procedure' }"
   }
 };
@@ -255,12 +255,12 @@ static ProcArg procedural_db_query_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "num_matches",
+    "num-matches",
     "The number of matching procedures"
   },
   {
     GIMP_PDB_STRINGARRAY,
-    "procedure_names",
+    "procedure-names",
     "The list of procedure names"
   }
 };
@@ -375,17 +375,17 @@ static ProcArg procedural_db_proc_info_outargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "proc_type",
+    "proc-type",
     "The procedure type: { GIMP_INTERNAL (0), GIMP_PLUGIN (1), GIMP_EXTENSION (2), GIMP_TEMPORARY (3) }"
   },
   {
     GIMP_PDB_INT32,
-    "num_args",
+    "num-args",
     "The number of input arguments"
   },
   {
     GIMP_PDB_INT32,
-    "num_values",
+    "num-values",
     "The number of return values"
   }
 };
@@ -474,7 +474,7 @@ static ProcArg procedural_db_proc_arg_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "arg_num",
+    "arg-num",
     "The argument number"
   }
 };
@@ -483,17 +483,17 @@ static ProcArg procedural_db_proc_arg_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "arg_type",
+    "arg-type",
     "The type of argument { GIMP_PDB_INT32 (0), GIMP_PDB_INT16 (1), GIMP_PDB_INT8 (2), GIMP_PDB_FLOAT (3), GIMP_PDB_STRING (4), GIMP_PDB_INT32ARRAY (5), GIMP_PDB_INT16ARRAY (6), GIMP_PDB_INT8ARRAY (7), GIMP_PDB_FLOATARRAY (8), GIMP_PDB_STRINGARRAY (9), GIMP_PDB_COLOR (10), GIMP_PDB_REGION (11), GIMP_PDB_DISPLAY (12), GIMP_PDB_IMAGE (13), GIMP_PDB_LAYER (14), GIMP_PDB_CHANNEL (15), GIMP_PDB_DRAWABLE (16), GIMP_PDB_SELECTION (17), GIMP_PDB_BOUNDARY (18), GIMP_PDB_PATH (19), GIMP_PDB_PARASITE (20), GIMP_PDB_STATUS (21) }"
   },
   {
     GIMP_PDB_STRING,
-    "arg_name",
+    "arg-name",
     "The name of the argument"
   },
   {
     GIMP_PDB_STRING,
-    "arg_desc",
+    "arg-desc",
     "A description of the argument"
   }
 };
@@ -582,7 +582,7 @@ static ProcArg procedural_db_proc_val_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "val_num",
+    "val-num",
     "The return value number"
   }
 };
@@ -591,17 +591,17 @@ static ProcArg procedural_db_proc_val_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "val_type",
+    "val-type",
     "The type of return value { GIMP_PDB_INT32 (0), GIMP_PDB_INT16 (1), GIMP_PDB_INT8 (2), GIMP_PDB_FLOAT (3), GIMP_PDB_STRING (4), GIMP_PDB_INT32ARRAY (5), GIMP_PDB_INT16ARRAY (6), GIMP_PDB_INT8ARRAY (7), GIMP_PDB_FLOATARRAY (8), GIMP_PDB_STRINGARRAY (9), GIMP_PDB_COLOR (10), GIMP_PDB_REGION (11), GIMP_PDB_DISPLAY (12), GIMP_PDB_IMAGE (13), GIMP_PDB_LAYER (14), GIMP_PDB_CHANNEL (15), GIMP_PDB_DRAWABLE (16), GIMP_PDB_SELECTION (17), GIMP_PDB_BOUNDARY (18), GIMP_PDB_PATH (19), GIMP_PDB_PARASITE (20), GIMP_PDB_STATUS (21) }"
   },
   {
     GIMP_PDB_STRING,
-    "val_name",
+    "val-name",
     "The name of the return value"
   },
   {
     GIMP_PDB_STRING,
-    "val_desc",
+    "val-desc",
     "A description of the return value"
   }
 };

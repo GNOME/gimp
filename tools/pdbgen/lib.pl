@@ -473,9 +473,6 @@ CODE
 			&desc_wrap($proc->{help});
 	}
 
-        my $canonical = $funcname;
-        $canonical =~ s/_/-/g;
-
 	$out->{code} .= <<CODE;
 
 /**
@@ -491,7 +488,7 @@ $wrapped$funcname ($clist)
   GimpParam *return_vals;
   gint nreturn_vals;$return_args
 
-  return_vals = gimp_run_procedure ("$canonical",
+  return_vals = gimp_run_procedure ("gimp-$proc->{canonical_name}",
 				    \&nreturn_vals,$argpass
 				    GIMP_PDB_END);
 

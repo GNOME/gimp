@@ -168,7 +168,7 @@ static ProcArg text_fontname_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "size_type",
+    "size-type",
     "The units of specified size: GIMP_PIXELS (0) or GIMP_POINTS (1)"
   },
   {
@@ -182,7 +182,7 @@ static ProcArg text_fontname_outargs[] =
 {
   {
     GIMP_PDB_LAYER,
-    "text_layer",
+    "text-layer",
     "The new text layer or -1 if no layer was created."
   }
 };
@@ -277,7 +277,7 @@ static ProcArg text_get_extents_fontname_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "size_type",
+    "size-type",
     "The units of specified size: GIMP_PIXELS (0) or GIMP_POINTS (1)"
   },
   {
@@ -485,7 +485,7 @@ static ProcArg text_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "size_type",
+    "size-type",
     "The units of specified size: GIMP_PIXELS (0) or GIMP_POINTS (1)"
   },
   {
@@ -510,7 +510,7 @@ static ProcArg text_inargs[] =
   },
   {
     GIMP_PDB_STRING,
-    "set_width",
+    "set-width",
     "The font set-width"
   },
   {
@@ -534,7 +534,7 @@ static ProcArg text_outargs[] =
 {
   {
     GIMP_PDB_LAYER,
-    "text_layer",
+    "text-layer",
     "The new text layer or -1 if no layer was created."
   }
 };
@@ -664,7 +664,7 @@ static ProcArg text_get_extents_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "size_type",
+    "size-type",
     "The units of specified size: GIMP_PIXELS (0) or GIMP_POINTS (1)"
   },
   {
@@ -689,7 +689,7 @@ static ProcArg text_get_extents_inargs[] =
   },
   {
     GIMP_PDB_STRING,
-    "set_width",
+    "set-width",
     "The font set-width"
   },
   {

@@ -121,12 +121,12 @@ static ProcArg palettes_get_list_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "num_palettes",
+    "num-palettes",
     "The number of palettes in the list"
   },
   {
     GIMP_PDB_STRINGARRAY,
-    "palette_list",
+    "palette-list",
     "The list of palette names"
   }
 };
@@ -181,7 +181,7 @@ static ProcArg palettes_get_palette_outargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "num_colors",
+    "num-colors",
     "The palette num_colors"
   }
 };
@@ -277,7 +277,7 @@ static ProcArg palettes_get_palette_entry_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "entry_num",
+    "entry-num",
     "The entry to retrieve"
   }
 };
@@ -291,7 +291,7 @@ static ProcArg palettes_get_palette_entry_outargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "num_colors",
+    "num-colors",
     "The palette num_colors"
   },
   {

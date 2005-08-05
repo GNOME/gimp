@@ -124,7 +124,7 @@ static ProcArg selection_bounds_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "non_empty",
+    "non-empty",
     "True if there is a selection"
   },
   {
@@ -276,7 +276,7 @@ static ProcArg selection_is_empty_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "is_empty",
+    "is-empty",
     "Is the selection empty?"
   }
 };
