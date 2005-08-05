@@ -1,3 +1,8 @@
+2005-08-04  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/pygimp-rgb.c: don't wrap deprecated function
+	gimp_rgb_intensity().
+
 2005-08-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpimagepropview.c: increased spacing between
