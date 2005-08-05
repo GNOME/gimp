@@ -1,3 +1,12 @@
+2005-08-05  Sven Neumann  <sven@gimp.org>
+
+	* app/xcf/xcf-load.c (xcf_load_image): disable undo while the
+	image is being loaded.
+
+	* app/core/gimpitem.c (gimp_item_parasite_attach): don't try to
+	push an undo step if undo is disabled. Gets rid of warnings while
+	loading an XCF file with undoable drawable parasites.
+
 2005-08-04  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/pygimp-rgb.c: don't wrap deprecated function

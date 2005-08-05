@@ -140,8 +140,10 @@ xcf_load_image (Gimp    *gimp,
                               image_type,
                               FALSE);
 
+  gimp_image_undo_disable (gimage);
+
   /* read the image properties */
-  if (!xcf_load_image_props (info, gimage))
+  if (! xcf_load_image_props (info, gimage))
     goto hard_error;
 
   /* check for a GimpGrid parasite */
@@ -159,7 +161,6 @@ xcf_load_image (Gimp    *gimp,
           gimp_image_set_grid (GIMP_IMAGE (gimage), grid, FALSE);
         }
     }
-
 
   while (TRUE)
     {
@@ -252,6 +253,8 @@ xcf_load_image (Gimp    *gimp,
   if (info->tattoo_state > 0)
     gimp_image_set_tattoo_state (gimage, info->tattoo_state);
 
+  gimp_image_undo_enable (gimage);
+
   return gimage;
 
  error:
@@ -260,6 +263,8 @@ xcf_load_image (Gimp    *gimp,
 
   g_message ("XCF: This file is corrupt!  I have loaded as much\n"
              "of it as I can, but it is incomplete.");
+
+  gimp_image_undo_enable (gimage);
 
   return gimage;
 

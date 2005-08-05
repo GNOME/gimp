@@ -1082,15 +1082,20 @@ gimp_item_parasite_attach (GimpItem     *item,
   g_return_if_fail (GIMP_IS_ITEM (item));
 
   /*  only set the dirty bit manually if we can be saved and the new
-   *  parasite differs from the current one and we arn't undoable
+   *  parasite differs from the current one and we aren't undoable
    */
   if (gimp_parasite_is_undoable (parasite))
     {
-      /* do a group in case we have attach_parent set */
-      gimp_image_undo_group_start (item->gimage, GIMP_UNDO_GROUP_PARASITE_ATTACH,
-                                   _("Attach Parasite"));
+      /*  skip undo if it is disabled, for example while loading an XCF  */
+      if (gimp_image_undo_is_enabled (item->gimage))
+        {
+          gimp_image_undo_group_start (item->gimage,
+                                       GIMP_UNDO_GROUP_PARASITE_ATTACH,
+                                       _("Attach Parasite"));
 
-      gimp_image_undo_push_item_parasite (item->gimage, NULL, item, parasite);
+          gimp_image_undo_push_item_parasite (item->gimage,
+                                              NULL, item, parasite);
+        }
     }
   else if (gimp_parasite_is_persistent (parasite) &&
            ! gimp_parasite_compare (parasite,
@@ -1115,7 +1120,8 @@ gimp_item_parasite_attach (GimpItem     *item,
       gimp_parasite_attach (item->gimage->gimp, parasite);
     }
 
-  if (gimp_parasite_is_undoable (parasite))
+  if (gimp_parasite_is_undoable (parasite) &&
+      gimp_image_undo_is_enabled (item->gimage))
     {
       gimp_image_undo_group_end (item->gimage);
     }
