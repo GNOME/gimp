@@ -51,8 +51,7 @@ static GdkGC * gimp_display_shell_get_grid_gc (GimpDisplayShell *shell,
                                                GimpGrid         *grid);
 static GdkGC * gimp_display_shell_get_pen_gc  (GimpDisplayShell *shell,
                                                GimpContext      *context,
-                                               GimpActiveColor   active,
-                                               gint              width);
+                                               GimpActiveColor   active);
 
 
 /*  public functions  */
@@ -306,10 +305,11 @@ gimp_display_shell_draw_pen (GimpDisplayShell  *shell,
                              GimpActiveColor    color,
                              gint               width)
 {
-  GimpCanvas *canvas;
-  GdkGC      *gc;
-  GdkPoint   *coords;
-  gint        i;
+  GimpCanvas  *canvas;
+  GdkGC       *gc;
+  GdkGCValues  values;
+  GdkPoint    *coords;
+  gint         i;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
@@ -325,7 +325,10 @@ gimp_display_shell_draw_pen (GimpDisplayShell  *shell,
                                      &coords[i].x, &coords[i].y,
                                      FALSE);
 
-  gc = gimp_display_shell_get_pen_gc (shell, context, color, width);
+  gc = gimp_display_shell_get_pen_gc (shell, context, color);
+
+  values.line_width = MAX (1, width);
+  gdk_gc_set_values (gc, &values, GDK_GC_LINE_WIDTH);
 
   gimp_canvas_set_custom_gc (canvas, gc);
   gimp_canvas_draw_lines (canvas, GIMP_CANVAS_STYLE_CUSTOM, coords, num_points);
@@ -620,8 +623,7 @@ gimp_display_shell_get_grid_gc (GimpDisplayShell *shell,
 static GdkGC *
 gimp_display_shell_get_pen_gc (GimpDisplayShell *shell,
                                GimpContext      *context,
-                               GimpActiveColor   active,
-                               gint              width)
+                               GimpActiveColor   active)
 {
   GdkGCValues  values;
   GimpRGB      rgb;
@@ -630,14 +632,12 @@ gimp_display_shell_get_pen_gc (GimpDisplayShell *shell,
   if (shell->pen_gc)
     return shell->pen_gc;
 
-  values.line_width = MAX (1, width);
   values.line_style = GDK_LINE_SOLID;
   values.cap_style  = GDK_CAP_ROUND;
   values.join_style = GDK_JOIN_MITER;
 
   shell->pen_gc = gdk_gc_new_with_values (shell->canvas->window,
-                                          &values, (GDK_GC_LINE_WIDTH |
-                                                    GDK_GC_LINE_STYLE |
+                                          &values, (GDK_GC_LINE_STYLE |
                                                     GDK_GC_CAP_STYLE  |
                                                     GDK_GC_JOIN_STYLE));
 
