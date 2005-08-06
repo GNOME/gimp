@@ -32,6 +32,7 @@
 #include "gimpimage.h"
 #include "gimpimage-colormap.h"
 #include "gimpprogress.h"
+#include "gimp-utils.h"
 
 #include "gimp-intl.h"
 
@@ -65,6 +66,7 @@ gimp_drawable_foreground_extract_rect (GimpDrawable              *drawable,
 {
   GimpImage    *gimage;
   const guchar *colormap = NULL;
+  gboolean      intersect;
   gint          offset_x;
   gint          offset_y;
 
@@ -82,6 +84,20 @@ gimp_drawable_foreground_extract_rect (GimpDrawable              *drawable,
     colormap = gimp_image_get_colormap (gimage);
 
   gimp_item_offsets (GIMP_ITEM (drawable), &offset_x, &offset_y);
+
+  intersect = gimp_rectangle_intersect (offset_x, offset_y,
+                                        gimp_item_width (GIMP_ITEM (drawable)),
+                                        gimp_item_height (GIMP_ITEM (drawable)),
+                                        x, y, width, height,
+                                        &x, &y, &width, &height);
+
+
+  /* FIXME:
+   * Clear the mask outside the rectangle that we are working on?
+   */
+
+  if (! intersect)
+    return;
 
   if (progress)
     gimp_progress_start (progress, _("Foreground Extraction..."), FALSE);

@@ -524,10 +524,6 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
                                   0, 0, 127);
   gimp_scan_convert_free (scan_convert);
 
-  /*  apply foreground and background markers  */
-  for (list = fg_select->strokes; list; list = list->next)
-    gimp_foreground_select_tool_stroke (mask, list->data);
-
   /*  restrict working area to double the size of the bounding box  */
   gimp_channel_bounds (mask, &x, &y, &x2, &y2);
   width  = x2 - x;
@@ -537,6 +533,10 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
   y = MAX (0, y - height / 2);
   width  = MIN (width * 2, gimp_item_width (GIMP_ITEM (mask)) - x);
   height = MIN (height * 2, gimp_item_height (GIMP_ITEM (mask)) - y);
+
+  /*  apply foreground and background markers  */
+  for (list = fg_select->strokes; list; list = list->next)
+    gimp_foreground_select_tool_stroke (mask, list->data);
 
   gimp_drawable_foreground_extract_rect (drawable,
                                          GIMP_FOREGROUND_EXTRACT_SIOX,
@@ -674,7 +674,8 @@ gimp_foreground_select_tool_push_stroke (GimpForegroundSelectTool    *fg_select,
   stroke = g_new (FgSelectStroke, 1);
 
   stroke->background = options->background;
-  stroke->width      = options->stroke_width / SCALEFACTOR_Y (shell);
+  stroke->width      = ROUND ((gdouble) options->stroke_width /
+                              SCALEFACTOR_Y (shell));
   stroke->num_points = fg_select->stroke->len;
   stroke->points     = (GimpVector2 *) g_array_free (fg_select->stroke, FALSE);
 

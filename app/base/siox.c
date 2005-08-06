@@ -44,8 +44,6 @@
 
 #include "paint-funcs/paint-funcs.h"
 
-#include "core/gimp-utils.h"  /*  FIXME (gimp_rectangle_intersect) */
-
 #include "cpercep.h"
 #include "pixel-region.h"
 #include "siox.h"
@@ -809,7 +807,6 @@ siox_foreground_extract (TileManager      *pixels,
   PixelRegion  srcPR;
   PixelRegion  mapPR;
   gpointer     pr;
-  gboolean     intersect;
   gint         bpp;
   gint         row, col;
   const gfloat clustersize = get_clustersize (limits);
@@ -829,19 +826,6 @@ siox_foreground_extract (TileManager      *pixels,
   g_return_if_fail (x + width <= tile_manager_width (mask));
   g_return_if_fail (y + height <= tile_manager_height (mask));
   g_return_if_fail (progress_data == NULL || progress_callback != NULL);
-
-  intersect = gimp_rectangle_intersect (offset_x, offset_y,
-                                        tile_manager_width (pixels),
-                                        tile_manager_height (pixels),
-                                        x, y, width, height,
-                                        &x, &y, &width, &height);
-
-  /* FIXME:
-   * Should clear the mask outside the rectangle that we are working on.
-   */
-
-  if (! intersect)
-    return;
 
   cpercep_init ();
 
