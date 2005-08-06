@@ -317,7 +317,7 @@ gimp_display_shell_draw_pen (GimpDisplayShell  *shell,
 
   canvas = GIMP_CANVAS (shell->canvas);
 
-  coords = g_new (GdkPoint, num_points);
+  coords = g_new (GdkPoint, MAX (2, num_points));
 
   for (i = 0; i < num_points ; i++)
     gimp_display_shell_transform_xy (shell,
@@ -325,13 +325,21 @@ gimp_display_shell_draw_pen (GimpDisplayShell  *shell,
                                      &coords[i].x, &coords[i].y,
                                      FALSE);
 
+  if (num_points == 1)
+    {
+      coords[1] = coords[0];
+      num_points = 2;
+    }
+
   gc = gimp_display_shell_get_pen_gc (shell, context, color);
 
   values.line_width = MAX (1, width);
   gdk_gc_set_values (gc, &values, GDK_GC_LINE_WIDTH);
 
   gimp_canvas_set_custom_gc (canvas, gc);
+
   gimp_canvas_draw_lines (canvas, GIMP_CANVAS_STYLE_CUSTOM, coords, num_points);
+
   gimp_canvas_set_custom_gc (canvas, NULL);
 
   g_free (coords);

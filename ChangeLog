@@ -1,5 +1,11 @@
 2005-08-06  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-draw.c (gimp_display_shell_draw_pen):
+	* app/tools/gimpforegroundselecttool.c: ccorrectly handle a stroke
+	consisting of just a single point.
+
+2005-08-06  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimppropwidgets.[ch]
 	* libgimpwidgets/gimpwidgets.def: added gimp_prop_hscale_new().
 

@@ -510,6 +510,7 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
   gimp_set_busy (gimage->gimp);
 
   scan_convert = gimp_scan_convert_new ();
+
   gimp_scan_convert_add_polyline (scan_convert,
                                   free_sel->num_points, free_sel->points, TRUE);
 
@@ -641,8 +642,24 @@ gimp_foreground_select_tool_stroke (GimpChannel    *mask,
    *        by doing some changes to GimpScanConvert.
    */
 
-  gimp_scan_convert_add_polyline (scan_convert,
-                                  stroke->num_points, stroke->points, FALSE);
+  if (stroke->num_points == 1)
+    {
+      GimpVector2 points[2];
+
+      points[0] = points[1] = stroke->points[0];
+
+      points[1].x += 0.01;
+      points[1].y += 0.01;
+
+      gimp_scan_convert_add_polyline (scan_convert, 2, points, FALSE);
+    }
+  else
+    {
+      gimp_scan_convert_add_polyline (scan_convert,
+                                      stroke->num_points, stroke->points,
+                                      FALSE);
+    }
+
   gimp_scan_convert_stroke (scan_convert,
                             SCALEFACTOR_Y (shell) * stroke->width,
                             GIMP_JOIN_MITER, GIMP_CAP_ROUND, 10.0,
