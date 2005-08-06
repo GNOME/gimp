@@ -1,3 +1,12 @@
+2005-08-06  Sven Neumann  <sven@gimp.org>
+
+	* app/batch.c: canonicalize hardcoded procedure names.
+
+	* app/base/siox.[ch]
+	* app/core/gimpdrawable-foreground-extract.[ch]
+	* app/tools/gimpforegroundselecttool.c: restrict the working area
+	to the double of the bounding box of the initial selection.
+
 2005-08-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug-in/plug-in-message.c (plug_in_handle_proc_install):

@@ -44,7 +44,7 @@
 
 #include "paint-funcs/paint-funcs.h"
 
-#include "core/gimp-utils.h"  /*  FIXME  */
+#include "core/gimp-utils.h"  /*  FIXME (gimp_rectangle_intersect) */
 
 #include "cpercep.h"
 #include "pixel-region.h"
@@ -781,6 +781,10 @@ siox_progress_update (SioxProgressFunc  progress_callback,
 
  * @mask:       a mask indicating sure foreground (255), sure background (0)
  *              and undecided regions ([1..254]).
+ * @x:          horizontal offset into the mask
+ * @y:          vertical offset into the mask
+ * @width:      width of working area on mask
+ * @height:     height of working area on mask
  * @limits:     a three dimensional float array specifing the accuracy,
  *              a good value is: { 0.66, 1.25, 2.5 }
  * @smoothness: boundary smoothness (a good value is 3)
@@ -793,6 +797,10 @@ siox_foreground_extract (TileManager      *pixels,
                          gint              offset_x,
                          gint              offset_y,
                          TileManager      *mask,
+                         gint              x,
+                         gint              y,
+                         gint              width,
+                         gint              height,
                          const gfloat      limits[SIOX_DIMS],
                          gint              smoothness,
                          SioxProgressFunc  progress_callback,
@@ -802,8 +810,6 @@ siox_foreground_extract (TileManager      *pixels,
   PixelRegion  mapPR;
   gpointer     pr;
   gboolean     intersect;
-  gint         x, y;
-  gint         width, height;
   gint         bpp;
   gint         row, col;
   const gfloat clustersize = get_clustersize (limits);
@@ -818,16 +824,16 @@ siox_foreground_extract (TileManager      *pixels,
 
   g_return_if_fail (pixels != NULL);
   g_return_if_fail (mask != NULL && tile_manager_bpp (mask) == 1);
+  g_return_if_fail (x >= 0);
+  g_return_if_fail (y >= 0);
+  g_return_if_fail (x + width <= tile_manager_width (mask));
+  g_return_if_fail (y + height <= tile_manager_height (mask));
   g_return_if_fail (progress_data == NULL || progress_callback != NULL);
-
-  cpercep_init ();
 
   intersect = gimp_rectangle_intersect (offset_x, offset_y,
                                         tile_manager_width (pixels),
                                         tile_manager_height (pixels),
-                                        0, 0,
-                                        tile_manager_width (mask),
-                                        tile_manager_height (mask),
+                                        x, y, width, height,
                                         &x, &y, &width, &height);
 
   /* FIXME:
@@ -836,6 +842,8 @@ siox_foreground_extract (TileManager      *pixels,
 
   if (! intersect)
     return;
+
+  cpercep_init ();
 
   siox_progress_update (progress_callback, progress_data, 0.0);
 
@@ -874,7 +882,7 @@ siox_foreground_extract (TileManager      *pixels,
 
   bpp = tile_manager_bpp (pixels);
 
-  /* create inputs for colorsignatures */
+  /* create inputs for color signatures */
   pixel_region_init (&srcPR, pixels,
                      x - offset_x, y - offset_y, width, height, FALSE);
   pixel_region_init (&mapPR, mask, x, y, width, height, FALSE);

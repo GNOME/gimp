@@ -20,10 +20,17 @@
 #define  __GIMP_DRAWABLE_FOREGROUND_EXTRACT_H__
 
 
-void   gimp_drawable_foreground_extract (GimpDrawable              *drawable,
-                                         GimpForegroundExtractMode  mode,
-                                         GimpDrawable              *mask,
-                                         GimpProgress              *progress);
-
+void   gimp_drawable_foreground_extract      (GimpDrawable              *drawable,
+                                              GimpForegroundExtractMode  mode,
+                                              GimpDrawable              *mask,
+                                              GimpProgress              *progress);
+void   gimp_drawable_foreground_extract_rect (GimpDrawable              *drawable,
+                                              GimpForegroundExtractMode  mode,
+                                              GimpDrawable              *mask,
+                                              gint                       x,
+                                              gint                       y,
+                                              gint                       width,
+                                              gint                       height,
+                                              GimpProgress              *progress);
 
 #endif  /*  __GIMP_DRAWABLE_FOREGROUND_EXTRACT_H__  */

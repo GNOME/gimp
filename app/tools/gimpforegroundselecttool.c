@@ -489,6 +489,9 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
   GimpScanConvert *scan_convert;
   GimpChannel     *mask;
   GList           *list;
+  gint             x, y;
+  gint             x2, y2;
+  gint             width, height;
 
   if (! drawable)
     return;
@@ -509,13 +512,25 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
                                   0, 0, 127);
   gimp_scan_convert_free (scan_convert);
 
+  gimp_channel_bounds (mask, &x, &y, &x2, &y2);
+  width  = x2 - x;
+  height = y2 - y;
+
+  /*  restrict working area to double the size of the bounding box  */
+  x = MAX (0, x - width / 2);
+  y = MAX (0, y - height / 2);
+  width  = MIN (width * 2, gimp_item_width (GIMP_ITEM (mask)) - x);
+  height = MIN (height * 2, gimp_item_height (GIMP_ITEM (mask)) - y);
+
+  /*  apply foreground and background markers  */
   for (list = fg_select->strokes; list; list = list->next)
     gimp_foreground_select_tool_stroke (mask, list->data);
 
-  gimp_drawable_foreground_extract (drawable,
-                                    GIMP_FOREGROUND_EXTRACT_SIOX,
-                                    GIMP_DRAWABLE (mask),
-                                    GIMP_PROGRESS (gdisp));
+  gimp_drawable_foreground_extract_rect (drawable,
+                                         GIMP_FOREGROUND_EXTRACT_SIOX,
+                                         GIMP_DRAWABLE (mask),
+                                         x, y, width, height,
+                                         GIMP_PROGRESS (gdisp));
 
   gimp_foreground_select_tool_set_mask (GIMP_FOREGROUND_SELECT_TOOL (free_sel),
                                         gdisp, mask);

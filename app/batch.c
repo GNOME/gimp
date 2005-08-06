@@ -36,7 +36,7 @@
 #include "gimp-intl.h"
 
 
-#define BATCH_DEFAULT_EVAL_PROC   "plug_in_script_fu_eval"
+#define BATCH_DEFAULT_EVAL_PROC   "plug-in-script-fu-eval"
 
 
 static gboolean  batch_exit_after_callback (Gimp        *gimp,
@@ -72,10 +72,10 @@ batch_run (Gimp         *gimp,
 
   /*  script-fu text console, hardcoded for backward compatibility  */
 
-  if (strcmp (batch_interpreter, "plug_in_script_fu_eval") == 0 &&
+  if (strcmp (batch_interpreter, "plug-in-script-fu-eval") == 0 &&
       strcmp (batch_commands[0], "-") == 0)
     {
-      const gchar *proc_name = "plug_in_script_fu_text_console";
+      const gchar *proc_name = "plug-in-script-fu-text-console";
       ProcRecord  *proc      = procedural_db_lookup (gimp, proc_name);
 
       if (proc)

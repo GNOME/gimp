@@ -44,9 +44,29 @@ gimp_drawable_foreground_extract (GimpDrawable              *drawable,
                                   GimpDrawable              *mask,
                                   GimpProgress              *progress)
 {
+  g_return_if_fail (GIMP_IS_DRAWABLE (mask));
+
+  gimp_drawable_foreground_extract_rect (drawable, mode, mask,
+                                         0, 0,
+                                         gimp_item_width (GIMP_ITEM (mask)),
+                                         gimp_item_height (GIMP_ITEM (mask)),
+                                         progress);
+}
+
+void
+gimp_drawable_foreground_extract_rect (GimpDrawable              *drawable,
+                                       GimpForegroundExtractMode  mode,
+                                       GimpDrawable              *mask,
+                                       gint                       x,
+                                       gint                       y,
+                                       gint                       width,
+                                       gint                       height,
+                                       GimpProgress              *progress)
+{
   GimpImage    *gimage;
-  const guchar *colormap          = NULL;
-  gint          x, y;
+  const guchar *colormap = NULL;
+  gint          offset_x;
+  gint          offset_y;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
@@ -61,7 +81,7 @@ gimp_drawable_foreground_extract (GimpDrawable              *drawable,
   if (gimp_image_base_type (gimage) == GIMP_INDEXED)
     colormap = gimp_image_get_colormap (gimage);
 
-  gimp_item_offsets (GIMP_ITEM (drawable), &x, &y);
+  gimp_item_offsets (GIMP_ITEM (drawable), &offset_x, &offset_y);
 
   if (progress)
     gimp_progress_start (progress, _("Foreground Extraction..."), FALSE);
@@ -70,10 +90,11 @@ gimp_drawable_foreground_extract (GimpDrawable              *drawable,
     {
     case GIMP_FOREGROUND_EXTRACT_SIOX:
       {
-        const gfloat  limits[SIOX_DIMS] = { 0.66, 1.25, 2.5 };
+        const gfloat limits[SIOX_DIMS] = { 0.66, 1.25, 2.5 };
 
-        siox_foreground_extract (gimp_drawable_data (drawable), colormap, x, y,
-                                 gimp_drawable_data (mask),
+        siox_foreground_extract (gimp_drawable_data (drawable), colormap,
+                                 offset_x, offset_y,
+                                 gimp_drawable_data (mask), x, y, width, height,
                                  limits, 3,
                                  (SioxProgressFunc) gimp_progress_set_value,
                                  progress);
