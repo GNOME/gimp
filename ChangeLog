@@ -1,3 +1,13 @@
+2005-08-06  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpscanconvert.[ch]: added gimp_scan_convert_compose(),
+	an alternative to gimp_scan_convert_render() that allows to compose
+	strokes on a drawable.
+
+	* app/tools/gimpforegroundselecttool.c: use the new function to
+	get rid of temporary channels for applying the strokes. Also fixed
+	calculation of stroke width from display scale.
+
 2005-08-06  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpuimanager.c (gimp_ui_manager_ui_popup): applied
@@ -7,7 +17,7 @@
 2005-08-06  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-draw.c (gimp_display_shell_draw_pen):
-	* app/tools/gimpforegroundselecttool.c: ccorrectly handle a stroke
+	* app/tools/gimpforegroundselecttool.c: correctly handle a stroke
 	consisting of just a single point.
 
 2005-08-06  Sven Neumann  <sven@gimp.org>

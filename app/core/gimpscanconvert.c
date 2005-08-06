@@ -37,33 +37,35 @@
 
 struct _GimpScanConvert
 {
-  gdouble      ratio_xy;
+  gdouble         ratio_xy;
 
   /* stuff necessary for the _add_polygons API...  :-/  */
-  gboolean     got_first;
-  gboolean     need_closing;
-  GimpVector2  first;
-  GimpVector2  prev;
+  gboolean        got_first;
+  gboolean        need_closing;
+  GimpVector2     first;
+  GimpVector2     prev;
 
-  gboolean     have_open;
-  guint        num_nodes;
-  ArtVpath    *vpath;
+  gboolean        have_open;
+  guint           num_nodes;
+  ArtVpath       *vpath;
 
-  ArtSVP      *svp;         /* Sorted vector path
+  ArtSVP         *svp;      /* Sorted vector path
                                (extension no longer possible)          */
 
   /* stuff necessary for the rendering callback */
-  guchar      *buf;
-  gint         rowstride;
-  gint         x0, x1;
-  gboolean     antialias;
-  gboolean     value;
+  GimpChannelOps  op;
+  guchar         *buf;
+  gint            rowstride;
+  gint            x0, x1;
+  gboolean        antialias;
+  gboolean        value;
 };
 
 
 /* private functions */
 
 static void   gimp_scan_convert_render_internal  (GimpScanConvert *sc,
+                                                  GimpChannelOps   op,
                                                   TileManager     *tile_manager,
                                                   gint             off_x,
                                                   gint             off_y,
@@ -72,11 +74,16 @@ static void   gimp_scan_convert_render_internal  (GimpScanConvert *sc,
 static void   gimp_scan_convert_finish           (GimpScanConvert *sc);
 static void   gimp_scan_convert_close_add_points (GimpScanConvert *sc);
 
-static void   gimp_scan_convert_render_callback (gpointer          user_data,
-                                                 gint              y,
-                                                 gint              start_value,
-                                                 ArtSVPRenderAAStep *steps,
-                                                 gint              n_steps);
+static void   gimp_scan_convert_render_callback  (gpointer            user_data,
+                                                  gint                y,
+                                                  gint                start_value,
+                                                  ArtSVPRenderAAStep *steps,
+                                                  gint                n_steps);
+static void   gimp_scan_convert_compose_callback (gpointer            user_data,
+                                                  gint                y,
+                                                  gint                start_value,
+                                                  ArtSVPRenderAAStep *steps,
+                                                  gint                n_steps);
 
 /*  public functions  */
 
@@ -448,7 +455,7 @@ gimp_scan_convert_render (GimpScanConvert *sc,
   g_return_if_fail (sc != NULL);
   g_return_if_fail (tile_manager != NULL);
 
-  gimp_scan_convert_render_internal (sc,
+  gimp_scan_convert_render_internal (sc, GIMP_CHANNEL_OP_REPLACE,
                                      tile_manager, off_x, off_y,
                                      antialias, 255);
 }
@@ -463,13 +470,29 @@ gimp_scan_convert_render_value (GimpScanConvert *sc,
   g_return_if_fail (sc != NULL);
   g_return_if_fail (tile_manager != NULL);
 
-  gimp_scan_convert_render_internal (sc,
+  gimp_scan_convert_render_internal (sc, GIMP_CHANNEL_OP_REPLACE,
                                      tile_manager, off_x, off_y,
                                      FALSE, value);
 }
 
+void
+gimp_scan_convert_compose (GimpScanConvert *sc,
+                           GimpChannelOps   op,
+                           TileManager     *tile_manager,
+                           gint             off_x,
+                           gint             off_y)
+{
+  g_return_if_fail (sc != NULL);
+  g_return_if_fail (tile_manager != NULL);
+
+  gimp_scan_convert_render_internal (sc, op,
+                                     tile_manager, off_x, off_y,
+                                     FALSE, 255);
+}
+
 static void
 gimp_scan_convert_render_internal (GimpScanConvert *sc,
+                                   GimpChannelOps   op,
                                    TileManager     *tile_manager,
                                    gint             off_x,
                                    gint             off_y,
@@ -478,6 +501,7 @@ gimp_scan_convert_render_internal (GimpScanConvert *sc,
 {
   PixelRegion  maskPR;
   gpointer     pr;
+  gpointer     callback;
 
   gimp_scan_convert_finish (sc);
 
@@ -493,6 +517,11 @@ gimp_scan_convert_render_internal (GimpScanConvert *sc,
 
   sc->antialias = antialias;
   sc->value     = value;
+  sc->op        = op;
+
+  callback = (op == GIMP_CHANNEL_OP_REPLACE ?
+              gimp_scan_convert_render_callback :
+              gimp_scan_convert_compose_callback);
 
   for (pr = pixel_regions_register (1, &maskPR);
        pr != NULL;
@@ -508,8 +537,7 @@ gimp_scan_convert_render_internal (GimpScanConvert *sc,
                          off_y + maskPR.y,
                          sc->x1,
                          off_y + maskPR.y + maskPR.h,
-                         gimp_scan_convert_render_callback, sc);
-
+                         callback, sc);
     }
 }
 
@@ -639,3 +667,87 @@ gimp_scan_convert_render_callback (gpointer            user_data,
 #undef VALUE_TO_PIXEL
 }
 
+static inline void
+compose (GimpChannelOps  op,
+         guchar         *buf,
+         guchar          value,
+         gint            len)
+{
+  switch (op)
+    {
+    case GIMP_CHANNEL_OP_ADD:
+      if (value)
+        memset (buf, value, len);
+      break;
+    case GIMP_CHANNEL_OP_SUBTRACT:
+      if (value)
+        memset (buf, 0, len);
+      break;
+    case GIMP_CHANNEL_OP_REPLACE:
+      memset (buf, value, len);
+      break;
+    case GIMP_CHANNEL_OP_INTERSECT:
+      do
+        {
+          if (*buf)
+            *buf = value;
+          buf++;
+        }
+      while (--len);
+      break;
+    }
+}
+
+static void
+gimp_scan_convert_compose_callback (gpointer            user_data,
+                                    gint                y,
+                                    gint                start_value,
+                                    ArtSVPRenderAAStep *steps,
+                                    gint                n_steps)
+{
+  GimpScanConvert *sc        = user_data;
+  gint             cur_value = start_value;
+  gint             k, run_x0, run_x1;
+
+#define VALUE_TO_PIXEL(x) (((x) & (1 << 23) ? 255 : 0))
+
+  if (n_steps > 0)
+    {
+      run_x1 = steps[0].x;
+
+      if (run_x1 > sc->x0)
+        compose (sc->op, sc->buf,
+                 VALUE_TO_PIXEL (cur_value),
+                 run_x1 - sc->x0);
+
+      for (k = 0; k < n_steps - 1; k++)
+        {
+          cur_value += steps[k].delta;
+
+          run_x0 = run_x1;
+          run_x1 = steps[k + 1].x;
+
+          if (run_x1 > run_x0)
+            compose (sc->op, sc->buf + run_x0 - sc->x0,
+                     VALUE_TO_PIXEL (cur_value),
+                     run_x1 - run_x0);
+        }
+
+      cur_value += steps[k].delta;
+
+      if (sc->x1 > run_x1)
+        compose (sc->op, sc->buf + run_x1 - sc->x0,
+                 VALUE_TO_PIXEL (cur_value),
+                 sc->x1 - run_x1);
+    }
+  else
+    {
+      compose (sc->op, sc->buf,
+               VALUE_TO_PIXEL (cur_value),
+               sc->x1 - sc->x0);
+    }
+
+  sc->buf += sc->rowstride;
+
+#undef VALUE_TO_PIXEL
+}

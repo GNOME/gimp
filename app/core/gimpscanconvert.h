@@ -87,5 +87,14 @@ void            gimp_scan_convert_render_value (GimpScanConvert *sc,
                                                 gint             off_y,
                                                 guchar           value);
 
+/* This is a variant of gimp_scan_convert_render() that composes the
+ * (unaliased) scan conversion with the existing drawable content.
+ */
+void            gimp_scan_convert_compose      (GimpScanConvert *sc,
+                                                GimpChannelOps   op,
+                                                TileManager     *tile_manager,
+                                                gint             off_x,
+                                                gint             off_y);
+
 
 #endif /* __GIMP_SCAN_CONVERT_H__ */
