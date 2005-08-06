@@ -1,5 +1,16 @@
 2005-08-06  Sven Neumann  <sven@gimp.org>
 
+	* app/base/siox.[ch]
+	* app/core/gimpdrawable-foreground-extract.[ch]: expose all
+	parameters of the SIOX algorithm. Provide default values.
+
+	* app/tools/gimpforegroundselectoptions.[ch]: added properties and
+	user interface for all SIOX parameters.
+
+	* app/tools/gimpforegroundselecttool.c: changed accordingly.
+
+2005-08-06  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpforegroundselecttool.c: added a statusbar message
 	to encourage the user to draw on the object.
 

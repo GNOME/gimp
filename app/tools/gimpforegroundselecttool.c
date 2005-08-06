@@ -496,8 +496,10 @@ static void
 gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
                                     GimpDisplay        *gdisp)
 {
-  GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (free_sel);
+  GimpForegroundSelectTool    *fg_select = GIMP_FOREGROUND_SELECT_TOOL (free_sel);
+  GimpForegroundSelectOptions *options;
 
+  GimpTool        *tool     = GIMP_TOOL (free_sel);
   GimpImage       *gimage   = gdisp->gimage;
   GimpDrawable    *drawable = gimp_image_active_drawable (gimage);
   GimpScanConvert *scan_convert;
@@ -509,6 +511,8 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
 
   if (! drawable)
     return;
+
+  options = GIMP_FOREGROUND_SELECT_OPTIONS (tool->tool_info->tool_options);
 
   gimp_set_busy (gimage->gimp);
 
@@ -541,10 +545,11 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
   for (list = fg_select->strokes; list; list = list->next)
     gimp_foreground_select_tool_stroke (mask, list->data);
 
-  gimp_drawable_foreground_extract_rect (drawable,
-                                         GIMP_FOREGROUND_EXTRACT_SIOX,
+  gimp_drawable_foreground_extract_siox (drawable,
                                          GIMP_DRAWABLE (mask),
                                          x, y, width, height,
+                                         options->smoothness,
+                                         options->limits,
                                          GIMP_PROGRESS (gdisp));
 
   gimp_foreground_select_tool_set_mask (GIMP_FOREGROUND_SELECT_TOOL (free_sel),

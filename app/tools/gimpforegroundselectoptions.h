@@ -38,8 +38,11 @@ struct _GimpForegroundSelectOptions
 {
   GimpSelectionOptions  parent_instance;
 
+  gboolean              expanded;
   gboolean              background;
   gint                  stroke_width;
+  gint                  smoothness;
+  gdouble               limits[3];
 };
 
 

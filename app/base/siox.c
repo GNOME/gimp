@@ -50,12 +50,16 @@
 #include "tile-manager.h"
 
 
+/* Amount of color dimensions in one point */
+#define SIOX_DIMS 3
+
+
 /* Thresholds in the mask:
  *   pixels < LOW are known background
  *   pixels > HIGH are known foreground
  */
-#define LOW  1
-#define HIGH 254
+#define SIOX_LOW  1
+#define SIOX_HIGH 254
 
 
 /* #define DEBUG */
@@ -783,7 +787,7 @@ siox_progress_update (SioxProgressFunc  progress_callback,
  * @y:          vertical offset into the mask
  * @width:      width of working area on mask
  * @height:     height of working area on mask
- * @limits:     a three dimensional float array specifing the accuracy,
+ * @limits:     a double array with three entries specifing the accuracy,
  *              a good value is: { 0.66, 1.25, 2.5 }
  * @smoothness: boundary smoothness (a good value is 3)
  *
@@ -799,7 +803,7 @@ siox_foreground_extract (TileManager      *pixels,
                          gint              y,
                          gint              width,
                          gint              height,
-                         const gfloat      limits[SIOX_DIMS],
+                         const gdouble     limits[SIOX_DIMS],
                          gint              smoothness,
                          SioxProgressFunc  progress_callback,
                          gpointer          progress_data)
@@ -809,7 +813,7 @@ siox_foreground_extract (TileManager      *pixels,
   gpointer     pr;
   gint         bpp;
   gint         row, col;
-  const gfloat clustersize = get_clustersize (limits);
+  gfloat       clustersize;
   gint         surebgcount = 0;
   gint         surefgcount = 0;
   gint         i, j;
@@ -818,6 +822,7 @@ siox_foreground_extract (TileManager      *pixels,
   lab         *surefg;
   lab         *bgsig;
   lab         *fgsig;
+  gfloat       flimits[3];
 
   g_return_if_fail (pixels != NULL);
   g_return_if_fail (mask != NULL && tile_manager_bpp (mask) == 1);
@@ -830,6 +835,12 @@ siox_foreground_extract (TileManager      *pixels,
   cpercep_init ();
 
   siox_progress_update (progress_callback, progress_data, 0.0);
+
+  flimits[0] = limits[0];
+  flimits[1] = limits[1];
+  flimits[2] = limits[2];
+
+  clustersize = get_clustersize (flimits);
 
   /* count given foreground and background pixels */
   pixel_region_init (&mapPR, mask, x, y, width, height, FALSE);
@@ -846,9 +857,9 @@ siox_foreground_extract (TileManager      *pixels,
 
           for (col = 0; col < mapPR.w; col++, m++)
             {
-              if (*m < LOW)
+              if (*m < SIOX_LOW)
                 surebgcount++;
-              else if (*m > HIGH)
+              else if (*m > SIOX_HIGH)
                 surefgcount++;
             }
 
@@ -885,12 +896,12 @@ siox_foreground_extract (TileManager      *pixels,
 
           for (col = 0; col < srcPR.w; col++, m++, s += bpp)
             {
-              if (*m < LOW)
+              if (*m < SIOX_LOW)
                 {
                   calc_lab (s, bpp, colormap, surebg + i);
                   i++;
                 }
-              else if (*m > HIGH)
+              else if (*m > SIOX_HIGH)
                 {
                   calc_lab (s, bpp, colormap, surefg + j);
                   j++;
@@ -905,7 +916,7 @@ siox_foreground_extract (TileManager      *pixels,
   siox_progress_update (progress_callback, progress_data, 0.2);
 
   /* Create color signature for the background */
-  bgsig = create_signature (surebg, surebgcount, limits, &bgsiglen);
+  bgsig = create_signature (surebg, surebgcount, flimits, &bgsiglen);
   g_free (surebg);
 
   if (bgsiglen < 1)
@@ -917,7 +928,7 @@ siox_foreground_extract (TileManager      *pixels,
   siox_progress_update (progress_callback, progress_data, 0.3);
 
   /* Create color signature for the foreground */
-  fgsig = create_signature (surefg, surefgcount, limits, &fgsiglen);
+  fgsig = create_signature (surefg, surefgcount, flimits, &fgsiglen);
   g_free (surefg);
 
   siox_progress_update (progress_callback, progress_data, 0.4);
@@ -945,7 +956,7 @@ siox_foreground_extract (TileManager      *pixels,
               gboolean  background = FALSE;
               gfloat    min, d;
 
-              if (*m < LOW || *m > HIGH)
+              if (*m < SIOX_LOW || *m > SIOX_HIGH)
                 continue;
 
               calc_lab (s, bpp, colormap, &labpixel);

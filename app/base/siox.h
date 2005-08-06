@@ -37,8 +37,11 @@
 #define __SIOX_H__
 
 
-/* Amount of color dimensions in one point */
-#define SIOX_DIMS 3
+#define SIOX_DEFAULT_SMOOTHNESS     3
+
+#define SIOX_DEFAULT_GRANULARITY_L  0.66
+#define SIOX_DEFAULT_GRANULARITY_A  1.25
+#define SIOX_DEFAULT_GRANULARITY_B  2.5
 
 
 typedef void (* SioxProgressFunc) (gpointer  progress_data,
@@ -54,7 +57,7 @@ void  siox_foreground_extract (TileManager      *pixels,
                                gint              y,
                                gint              width,
                                gint              height,
-                               const gfloat      limits[SIOX_DIMS],
+                               const gdouble     limits[3],
                                gint              smoothness,
                                SioxProgressFunc  progress_callback,
                                gpointer          progress_data);

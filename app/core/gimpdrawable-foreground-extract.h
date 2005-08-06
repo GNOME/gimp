@@ -24,13 +24,16 @@ void   gimp_drawable_foreground_extract      (GimpDrawable              *drawabl
                                               GimpForegroundExtractMode  mode,
                                               GimpDrawable              *mask,
                                               GimpProgress              *progress);
-void   gimp_drawable_foreground_extract_rect (GimpDrawable              *drawable,
-                                              GimpForegroundExtractMode  mode,
+
+/*  variant for SIOX that gives more control over the segmentation  */
+void   gimp_drawable_foreground_extract_siox (GimpDrawable              *drawable,
                                               GimpDrawable              *mask,
                                               gint                       x,
                                               gint                       y,
                                               gint                       width,
                                               gint                       height,
+                                              gint                       smoothness,
+                                              const gdouble              limits[3],
                                               GimpProgress              *progress);
 
 #endif  /*  __GIMP_DRAWABLE_FOREGROUND_EXTRACT_H__  */

@@ -45,24 +45,32 @@ gimp_drawable_foreground_extract (GimpDrawable              *drawable,
                                   GimpDrawable              *mask,
                                   GimpProgress              *progress)
 {
-  g_return_if_fail (GIMP_IS_DRAWABLE (mask));
+  const gint    smoothness = SIOX_DEFAULT_SMOOTHNESS;
+  const gdouble limits[3]  = { SIOX_DEFAULT_GRANULARITY_L,
+                               SIOX_DEFAULT_GRANULARITY_A,
+                               SIOX_DEFAULT_GRANULARITY_B };
 
-  gimp_drawable_foreground_extract_rect (drawable, mode, mask,
+  g_return_if_fail (GIMP_IS_DRAWABLE (mask));
+  g_return_if_fail (mode == GIMP_FOREGROUND_EXTRACT_SIOX);
+
+  gimp_drawable_foreground_extract_siox (drawable, mask,
                                          0, 0,
                                          gimp_item_width (GIMP_ITEM (mask)),
                                          gimp_item_height (GIMP_ITEM (mask)),
+                                         smoothness, limits,
                                          progress);
 }
 
 void
-gimp_drawable_foreground_extract_rect (GimpDrawable              *drawable,
-                                       GimpForegroundExtractMode  mode,
-                                       GimpDrawable              *mask,
-                                       gint                       x,
-                                       gint                       y,
-                                       gint                       width,
-                                       gint                       height,
-                                       GimpProgress              *progress)
+gimp_drawable_foreground_extract_siox (GimpDrawable  *drawable,
+                                       GimpDrawable  *mask,
+                                       gint           x,
+                                       gint           y,
+                                       gint           width,
+                                       gint           height,
+                                       gint           smoothness,
+                                       const gdouble  limits[3],
+                                       GimpProgress  *progress)
 {
   GimpImage    *gimage;
   const guchar *colormap = NULL;
@@ -102,24 +110,12 @@ gimp_drawable_foreground_extract_rect (GimpDrawable              *drawable,
   if (progress)
     gimp_progress_start (progress, _("Foreground Extraction..."), FALSE);
 
-  switch (mode)
-    {
-    case GIMP_FOREGROUND_EXTRACT_SIOX:
-      {
-        const gfloat limits[SIOX_DIMS] = { 0.66, 1.25, 2.5 };
-
-        siox_foreground_extract (gimp_drawable_data (drawable), colormap,
-                                 offset_x, offset_y,
-                                 gimp_drawable_data (mask), x, y, width, height,
-                                 limits, 3,
-                                 (SioxProgressFunc) gimp_progress_set_value,
-                                 progress);
-      }
-      break;
-
-    default:
-      g_return_if_reached ();
-    }
+  siox_foreground_extract (gimp_drawable_data (drawable), colormap,
+                           offset_x, offset_y,
+                           gimp_drawable_data (mask), x, y, width, height,
+                           limits, 3,
+                           (SioxProgressFunc) gimp_progress_set_value,
+                           progress);
 
   if (progress)
     gimp_progress_end (progress);
