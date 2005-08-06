@@ -1,3 +1,10 @@
+2005-08-05  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/script-fu/scripts/test-sphere.scm: Added missing argument
+	in define statement. Fixed spelling errors.
+
+	* ChangeLog: Corrected my e-mail address.
+
 2005-08-06  Sven Neumann  <sven@gimp.org>
 
 	* app/batch.c: canonicalize hardcoded procedure names.
@@ -1798,7 +1805,7 @@
 	* plug-ins/FractalExplorer/FractalExplorer.c: activate fractal on
 	double-click rather than select.
 
-2005-06-25  Kevin Cozens  <kcozens@cvs.gimp.org>
+2005-06-25  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/maze/maze_face.c: First step in changing the UI to match
 	the layout suggested in bug #82591.
@@ -1902,7 +1909,7 @@
 
 	* m4macros/Makefile.am: dist the above files.
 
-2005-06-24  Kevin Cozens  <kcozens@cvs.gimp.org>
+2005-06-24  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/scripts/text-circle.scm: Incorporated changes
 	made by Daniel P. Stasinski in his text-circle2.scm script. Letters
@@ -2014,7 +2021,7 @@
 	plug_in_actions_update() to update the sensitivity of the last used
 	plug-in entries.
 
-2005-06-23  Kevin Cozens  <kcozens@cvs.gimp.org>
+2005-06-23  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/scripts/font-map.scm: Updated to fix problems
 	related to change in handling of string arrays (see bug #168290).
@@ -5556,7 +5563,7 @@
 	* app/widgets/gimpimageview.c: allow to save images by dragging
 	them from the Images dialog to an XDS capable file manager.
 
-2005-03-25  Kevin Cozens  <kcozens@cvs.gimp.org>
+2005-03-25  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/common/displace.c: Fixed off-by-one error in check for
 	number of passed parameters.
@@ -6327,12 +6334,12 @@
 	Bjorklund that should fix bug #143887 (selection rectangle "moves"
 	when starting at the top-right corner).
 
-2005-03-07  Kevin Cozens  <kcozens@cvs.gimp.org>
+2005-03-07  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/scripts/perspective-shadow.scm: Reverting previous
 	change as I was mixing up two different versions of GIMP at the time.
 
-2005-03-07  Kevin Cozens  <kcozens@cvs.gimp.org>
+2005-03-07  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/scripts/perspective-shadow.scm: Fixed the
 	options for SF-ENUM in the register block which were changed (read
@@ -6403,7 +6410,7 @@
 	instruction with a movq.  Movntq is an SSE instruction, not an MMX
 	instruction.
 
-2005-03-05  Kevin Cozens  <kcozens@cvs.gimp.org>
+2005-03-05  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/siod/sliba.c: Oops...one 'case tc_string:' was
 	lost while fixing handling of string arrays.
@@ -6902,7 +6909,7 @@
 	* plug-ins/ifscompose/ifscompose_utils.c: purely cosmetic coding
 	style changes.
 
-2005-03-01  Kevin Cozens  <kcozens@cvs.gimp.org>
+2005-03-01  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/siod-wrapper.c: Fixed marshalling code to
 	treat string arrays as arrays instead of lists of strings. Last
@@ -7032,7 +7039,7 @@
 	* plug-ins/common/png.c: read non-interlaced files one row
 	at a time instead of in 64-row chunks; fixes bug #137327.
 
-2005-02-25  Kevin Cozens  <kcozens@cvs.gimp.org>
+2005-02-25  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/siod/siod.h
 	* plug-ins/script-fu/siod/sliba.c: Creation and manipulation of
@@ -7388,7 +7395,7 @@
 	* plug-ins/imagemap/imap_main.c: fixed the build for compilers that
 	don't support C99 extensions.
 
-2005-02-16  Kevin Cozens  <kcozens@cvs.gimp.org>
+2005-02-16  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/siod-wrapper.c: Added constants MIN-IMAGE-SIZE,
 	MAX-IMAGE-SIZE, MIN-RESOLUTION, and MAX-RESOLUTION for use in Script-Fu
@@ -9947,7 +9954,6 @@
 	is given enough space and then truncated instead of translated to
 	the center of the image, thus preventing the display of shadows
 	with a completely horizontal or vertical edge.
-
 	Fixes bug #132145.
 
 2005-01-07  Michael Natterer  <mitch@gimp.org>

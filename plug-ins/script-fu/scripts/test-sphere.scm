@@ -118,7 +118,7 @@
 ; SF-OPTION "Orientation" '("Horizontal" "Vertical")
 ;
 ; The value returned when the script is invoked is the number of the
-; choosen option, where the option first is counted as 0.
+; chosen option, where the option first is counted as 0.
 ; ----------------------------------------------------------------------
 ; SF-ENUM
 ; Only useful in interactive mode. It will create a widget in the control
@@ -130,7 +130,7 @@
 ; Usage:
 ; SF-ENUM "Interpolation" '("InterpolationType" "linear")
 ;
-; The value returned when the script is invoked corresponds to choosen
+; The value returned when the script is invoked corresponds to chosen
 ; enum value.
 ; ----------------------------------------------------------------------
 
@@ -151,6 +151,7 @@
 			       unused-palette
 			       unused-filename
 			       unused-orientation
+			       unused-interpolation
 			       unused-dirname
 			       unused-image
 			       unused-layer
