@@ -1,3 +1,9 @@
+2005-08-06  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimppalette-import.c:
+	* app/paint-funcs/paint-funcs-generic.h
+	* app/paint-funcs/paint-funcs.c: fixed signedness warnings.
+
 2005-08-05  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/scripts/test-sphere.scm: Added missing argument

@@ -510,8 +510,8 @@ saturation_only_pixels (const guchar *src1,
 {
   const guint has_alpha1 = HAS_ALPHA (bytes1);
   const guint has_alpha2 = HAS_ALPHA (bytes2);
-  guint r1, g1, b1;
-  guint r2, g2, b2;
+  gint r1, g1, b1;
+  gint r2, g2, b2;
 
   /*  assumes inputs are only 4 byte RGBA pixels  */
   while (length--)
@@ -550,8 +550,8 @@ value_only_pixels (const guchar *src1,
 {
   const guint has_alpha1 = HAS_ALPHA (bytes1);
   const guint has_alpha2 = HAS_ALPHA (bytes2);
-  guint r1, g1, b1;
-  guint r2, g2, b2;
+  gint r1, g1, b1;
+  gint r2, g2, b2;
 
   /*  assumes inputs are only 4 byte RGBA pixels  */
   while (length--)
@@ -590,8 +590,8 @@ color_only_pixels (const guchar *src1,
 {
   const guint has_alpha1 = HAS_ALPHA (bytes1);
   const guint has_alpha2 = HAS_ALPHA (bytes2);
-  guint r1, g1, b1;
-  guint r2, g2, b2;
+  gint r1, g1, b1;
+  gint r2, g2, b2;
 
   /*  assumes inputs are only 4 byte RGBA pixels  */
   while (length--)

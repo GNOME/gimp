@@ -389,7 +389,7 @@ gimp_palette_detect_file_format (const gchar *filename)
 {
   GimpPaletteFileFormat format = GIMP_PALETTE_FILE_FORMAT_UNKNOWN;
   gint                  fd;
-  guchar                header[16];
+  gchar                 header[16];
   struct stat           file_stat;
 
   fd = g_open (filename, O_RDONLY, 0);

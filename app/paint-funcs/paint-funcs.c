@@ -123,8 +123,8 @@ static const guchar  no_mask = OPAQUE_OPACITY;
 
 /*  Local function prototypes  */
 
-static gint *   make_curve               (gdouble        sigma,
-                                          guint         *length);
+static gint *   make_curve               (gdouble         sigma,
+                                          gint           *length);
 static gdouble  cubic                    (gdouble         dx,
                                           gint            jm1,
                                           gint            j,
@@ -338,7 +338,7 @@ update_tile_rowhints (Tile *tile,
 
 static gint *
 make_curve (gdouble  sigma,
-            guint   *length)
+            gint    *length)
 {
   gint    *curve;
   gdouble  sigma2;
@@ -2683,7 +2683,7 @@ gaussian_blur_region (PixelRegion *srcR,
   guchar *src, *sp;
   guchar *dest, *dp;
   guchar *data;
-  gint   *buf, *b;
+  guint  *buf, *b;
   gint    pixels;
   gint    total;
   gint    i, row, col;
@@ -2708,7 +2708,7 @@ gaussian_blur_region (PixelRegion *srcR,
   bytes = srcR->bytes;
   alpha = bytes - 1;
 
-  buf = g_new (gint, MAX (width, height) * 2);
+  buf = g_new (guint, MAX (width, height) * 2);
 
   if (radius_y != 0.0)
     {
