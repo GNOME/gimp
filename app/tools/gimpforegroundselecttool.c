@@ -297,7 +297,13 @@ gimp_foreground_select_tool_oper_update (GimpTool        *tool,
                                          GimpDisplay     *gdisp)
 {
   GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
+  GimpDrawTool             *draw_tool = GIMP_DRAW_TOOL (tool);
   const gchar              *status    = NULL;
+
+  if (fg_select->mask && gimp_draw_tool_is_active (draw_tool))
+    gimp_draw_tool_stop (draw_tool);
+
+  GIMP_FREE_SELECT_TOOL (tool)->last_coords = *coords;
 
   GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, gdisp);
 
@@ -336,6 +342,9 @@ gimp_foreground_select_tool_oper_update (GimpTool        *tool,
 
   if (status)
     gimp_tool_replace_status (tool, gdisp, status);
+
+  if (fg_select->mask)
+    gimp_draw_tool_start (draw_tool, gdisp);
 }
 
 static void
@@ -416,6 +425,8 @@ gimp_foreground_select_tool_button_press (GimpTool        *tool,
 
       gimp_tool_control_activate (tool->control);
 
+      GIMP_FREE_SELECT_TOOL (tool)->last_coords = *coords;
+
       g_return_if_fail (fg_select->stroke == NULL);
       fg_select->stroke = g_array_new (FALSE, FALSE, sizeof (GimpVector2));
 
@@ -448,11 +459,15 @@ gimp_foreground_select_tool_button_release (GimpTool        *tool,
 
       options = GIMP_FOREGROUND_SELECT_OPTIONS (tool->tool_info->tool_options);
 
+      gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+
       gimp_tool_control_halt (tool->control);
 
       gimp_foreground_select_tool_push_stroke (fg_select, gdisp, options);
 
       gimp_free_select_tool_select (GIMP_FREE_SELECT_TOOL (tool), gdisp);
+
+      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
     }
   else
     {
@@ -477,16 +492,18 @@ gimp_foreground_select_tool_motion (GimpTool        *tool,
                                           GimpVector2,
                                           fg_select->stroke->len - 1);
 
+      gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+
+      GIMP_FREE_SELECT_TOOL (tool)->last_coords = *coords;
+
       if (last->x != (gint) coords->x || last->y != (gint) coords->y)
         {
           GimpVector2 point = gimp_vector2_new (coords->x, coords->y);
 
-          gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
-
           g_array_append_val (fg_select->stroke, point);
-
-          gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
         }
+
+      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
     }
   else
     {
@@ -498,15 +515,14 @@ gimp_foreground_select_tool_motion (GimpTool        *tool,
 static void
 gimp_foreground_select_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (draw_tool);
+  GimpForegroundSelectTool    *fg_select = GIMP_FOREGROUND_SELECT_TOOL (draw_tool);
+  GimpTool                    *tool = GIMP_TOOL (draw_tool);
+  GimpForegroundSelectOptions *options;
+
+  options = GIMP_FOREGROUND_SELECT_OPTIONS (tool->tool_info->tool_options);
 
   if (fg_select->stroke)
     {
-      GimpTool                    *tool = GIMP_TOOL (draw_tool);
-      GimpForegroundSelectOptions *options;
-
-      options = GIMP_FOREGROUND_SELECT_OPTIONS (tool->tool_info->tool_options);
-
       gimp_display_shell_draw_pen (GIMP_DISPLAY_SHELL (draw_tool->gdisp->shell),
                                    (const GimpVector2 *)fg_select->stroke->data,
                                    fg_select->stroke->len,
@@ -517,8 +533,24 @@ gimp_foreground_select_tool_draw (GimpDrawTool *draw_tool)
                                    options->stroke_width);
     }
 
-  if (! fg_select->mask)
-    GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
+  if (fg_select->mask)
+    {
+      GimpFreeSelectTool *sel = GIMP_FREE_SELECT_TOOL (tool);
+      gdouble             width;
+
+      width = (options->stroke_width /
+               SCALEFACTOR_Y (GIMP_DISPLAY_SHELL (draw_tool->gdisp->shell)));
+
+      gimp_draw_tool_draw_arc (draw_tool, FALSE,
+                               sel->last_coords.x - width / 2,
+                               sel->last_coords.y - width / 2,
+                               width, width, 0, 360 * 64,
+                               TRUE);
+    }
+  else
+    {
+      GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
+    }
 }
 
 static void
@@ -745,7 +777,10 @@ gimp_foreground_select_options_notify (GimpForegroundSelectOptions *options,
                                        GParamSpec                  *pspec,
                                        GimpForegroundSelectTool    *fg_select)
 {
-  if (fg_select->mask &&
+  if (! fg_select->mask)
+    return;
+
+  if (pspec->name &&
       (strcmp (pspec->name, "smoothness") == 0 ||
        strncmp (pspec->name, "granularity", strlen ("granularity")) == 0))
     {

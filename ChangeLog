@@ -1,3 +1,10 @@
+2005-08-06  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpforegroundselectoptions.c: increased default brush
+	size and upper limit.
+
+	* app/tools/gimpforegroundselecttool.c: draw a brush outline.
+
 2005-08-06  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/Makefile.am: remove dbbrowser from SUBDIRS.
@@ -34,7 +41,7 @@
 	the right.
 
 	* app/tools/gimpfreeselecttool.[ch]: added
-	gimp_free_select_tool_select() to calls the virtual select() method.
+	gimp_free_select_tool_select() to call the virtual select() method.
 
 	* app/tools/gimpforegroundselecttool.[ch]: queue an idle select if
 	the smoothness or granularity values change in the tool options.
