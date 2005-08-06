@@ -1,5 +1,9 @@
 2005-08-06  Manish Singh  <yosh@gimp.org>
 
+	* plug-ins/Makefile.am: remove dbbrowser from SUBDIRS.
+
+2005-08-06  Manish Singh  <yosh@gimp.org>
+
 	* plug-ins/dbbrowser/plugin-browser.c
 	* plug-ins/dbbrowser/procedure-browser.c: removed these files...
 	

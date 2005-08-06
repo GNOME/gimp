@@ -33,7 +33,6 @@ endif
 
 
 SUBDIRS = \
-	dbbrowser		\
 	script-fu		\
 	FractalExplorer		\
 	Lighting		\
