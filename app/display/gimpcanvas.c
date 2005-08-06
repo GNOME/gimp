@@ -823,13 +823,13 @@ void
 gimp_canvas_set_custom_gc (GimpCanvas *canvas,
                            GdkGC      *gc)
 {
+  if (gc)
+    g_object_ref (gc);
+
   if (canvas->gc[GIMP_CANVAS_STYLE_CUSTOM])
     g_object_unref (canvas->gc[GIMP_CANVAS_STYLE_CUSTOM]);
 
   canvas->gc[GIMP_CANVAS_STYLE_CUSTOM] = gc;
-
-  if (gc)
-    g_object_ref (gc);
 }
 
 /**

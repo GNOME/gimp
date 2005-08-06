@@ -93,10 +93,10 @@ gimp_foreground_select_options_class_init (GimpForegroundSelectOptionsClass *kla
                                     "background", NULL,
                                     FALSE,
                                     0);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_STROKE_WIDTH,
-                                   "stroke-width", NULL,
-                                   0.0, 2000.0, 6.0,
-                                   0);
+  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_STROKE_WIDTH,
+                                "stroke-width", NULL,
+                                1, 100, 6,
+                                0);
 }
 
 static void
@@ -113,7 +113,7 @@ gimp_foreground_select_options_set_property (GObject      *object,
       options->background = g_value_get_boolean (value);
       break;
     case PROP_STROKE_WIDTH:
-      options->stroke_width = g_value_get_double (value);
+      options->stroke_width = g_value_get_int (value);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -135,7 +135,7 @@ gimp_foreground_select_options_get_property (GObject    *object,
       g_value_set_boolean (value, options->background);
       break;
     case PROP_STROKE_WIDTH:
-      g_value_set_double (value, options->stroke_width);
+      g_value_set_int (value, options->stroke_width);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);

@@ -26,6 +26,12 @@ void   gimp_display_shell_draw_guide         (GimpDisplayShell   *shell,
 void   gimp_display_shell_draw_guides        (GimpDisplayShell   *shell);
 void   gimp_display_shell_draw_grid          (GimpDisplayShell   *shell,
                                               const GdkRectangle *area);
+void   gimp_display_shell_draw_pen           (GimpDisplayShell   *shell,
+                                              const GimpVector2  *points,
+                                              gint                num_points,
+                                              GimpContext        *context,
+                                              GimpActiveColor     color,
+                                              gint                width);
 void   gimp_display_shell_draw_sample_point  (GimpDisplayShell   *shell,
                                               GimpSamplePoint    *sample_point,
                                               gboolean            active);

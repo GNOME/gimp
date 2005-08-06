@@ -254,6 +254,7 @@ gimp_display_shell_init (GimpDisplayShell *shell)
 
   shell->canvas                 = NULL;
   shell->grid_gc                = NULL;
+  shell->pen_gc                 = NULL;
 
   shell->hsbdata                = NULL;
   shell->vsbdata                = NULL;
@@ -271,9 +272,9 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->menubar                = NULL;
   shell->statusbar              = NULL;
 
-  shell->render_buf             = g_malloc (GIMP_RENDER_BUF_WIDTH  *
-                                            GIMP_RENDER_BUF_HEIGHT *
-                                            3);
+  shell->render_buf             = g_new (guchar,
+                                         GIMP_RENDER_BUF_WIDTH  *
+                                         GIMP_RENDER_BUF_HEIGHT * 3);
 
   shell->title_idle_id          = 0;
 

@@ -39,7 +39,7 @@ struct _GimpForegroundSelectOptions
   GimpSelectionOptions  parent_instance;
 
   gboolean              background;
-  gdouble               stroke_width;
+  gint                  stroke_width;
 };
 
 

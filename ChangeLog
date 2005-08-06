@@ -1,5 +1,19 @@
 2005-08-06  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpcanvas.c (gimp_canvas_set_custom_gc) do not
+	drop the reference if the same custom GC is being set again.
+
+	* app/display/gimpdisplayshell-draw.[ch]
+	* app/display/gimpdisplayshell-handlers.c
+	* app/display/gimpdisplayshell.[ch]: added GC and methods to draw
+	on the canvas with a solid pen.
+
+	* app/tools/gimpforegroundselectoptions.[ch]
+	* app/tools/gimpforegroundselecttool.c: draw using the new pen
+	functions. Scale the stroke width with the display scale.
+
+2005-08-06  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimppalette-import.c:
 	* app/paint-funcs/paint-funcs-generic.h
 	* app/paint-funcs/paint-funcs.c: fixed signedness warnings.

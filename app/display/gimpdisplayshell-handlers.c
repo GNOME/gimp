@@ -273,6 +273,12 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
       shell->grid_gc = NULL;
     }
 
+  if (shell->pen_gc)
+    {
+      g_object_unref (shell->pen_gc);
+      shell->pen_gc = NULL;
+    }
+
   g_signal_handlers_disconnect_by_func (gimage->gimp->config,
                                         gimp_display_shell_ants_speed_notify_handler,
                                         shell);

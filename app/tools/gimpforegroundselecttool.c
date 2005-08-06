@@ -42,6 +42,7 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
+#include "display/gimpdisplayshell-draw.h"
 
 #include "gimpforegroundselecttool.h"
 #include "gimpforegroundselectoptions.h"
@@ -52,7 +53,7 @@
 
 typedef struct
 {
-  gdouble      width;
+  gint         width;
   gboolean     background;
   gint         num_points;
   GimpVector2 *points;
@@ -105,6 +106,7 @@ static void   gimp_foreground_select_tool_apply    (GimpForegroundSelectTool *fg
                                                     GimpDisplay              *gdisp);
 
 static void   gimp_foreground_select_tool_stroke   (GimpChannel              *mask,
+                                                    GimpDisplay              *gdisp,
                                                     FgSelectStroke           *stroke);
 
 static void   gimp_foreground_select_tool_push_stroke     (GimpForegroundSelectTool    *fg_select,
@@ -123,7 +125,7 @@ gimp_foreground_select_tool_register (GimpToolRegisterCallback  callback,
   (* callback) (GIMP_TYPE_FOREGROUND_SELECT_TOOL,
                 GIMP_TYPE_FOREGROUND_SELECT_OPTIONS,
                 gimp_foreground_select_options_gui,
-                0,
+                GIMP_CONTEXT_FOREGROUND_MASK | GIMP_CONTEXT_BACKGROUND_MASK,
                 "gimp-foreground-select-tool",
                 _("Foreground Select"),
                 _("Extract foreground using SIOX algorithm"),
@@ -443,7 +445,7 @@ gimp_foreground_select_tool_motion (GimpTool        *tool,
                                           GimpVector2,
                                           fg_select->stroke->len - 1);
 
-      if (last->x != coords->x || last->y != coords->y)
+      if (last->x != (gint) coords->x || last->y != (gint) coords->y)
         {
           GimpVector2 point = gimp_vector2_new (coords->x, coords->y);
 
@@ -468,10 +470,19 @@ gimp_foreground_select_tool_draw (GimpDrawTool *draw_tool)
 
   if (fg_select->stroke)
     {
-      const gdouble *points = (const gdouble *) fg_select->stroke->data;
+      GimpTool                    *tool = GIMP_TOOL (draw_tool);
+      GimpForegroundSelectOptions *options;
 
-      gimp_draw_tool_draw_lines (draw_tool,
-                                 points, fg_select->stroke->len, FALSE, FALSE);
+      options = GIMP_FOREGROUND_SELECT_OPTIONS (tool->tool_info->tool_options);
+
+      gimp_display_shell_draw_pen (GIMP_DISPLAY_SHELL (draw_tool->gdisp->shell),
+                                   (const GimpVector2 *)fg_select->stroke->data,
+                                   fg_select->stroke->len,
+                                   GIMP_CONTEXT (options),
+                                   (options->background ?
+                                    GIMP_ACTIVE_COLOR_BACKGROUND :
+                                    GIMP_ACTIVE_COLOR_FOREGROUND),
+                                   options->stroke_width);
     }
 
   if (! fg_select->mask)
@@ -516,15 +527,15 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
   width  = x2 - x;
   height = y2 - y;
 
+  /*  apply foreground and background markers  */
+  for (list = fg_select->strokes; list; list = list->next)
+    gimp_foreground_select_tool_stroke (mask, gdisp, list->data);
+
   /*  restrict working area to double the size of the bounding box  */
   x = MAX (0, x - width / 2);
   y = MAX (0, y - height / 2);
   width  = MIN (width * 2, gimp_item_width (GIMP_ITEM (mask)) - x);
   height = MIN (height * 2, gimp_item_height (GIMP_ITEM (mask)) - y);
-
-  /*  apply foreground and background markers  */
-  for (list = fg_select->strokes; list; list = list->next)
-    gimp_foreground_select_tool_stroke (mask, list->data);
 
   gimp_drawable_foreground_extract_rect (drawable,
                                          GIMP_FOREGROUND_EXTRACT_SIOX,
@@ -615,14 +626,16 @@ gimp_foreground_select_tool_apply (GimpForegroundSelectTool *fg_select,
 
 static void
 gimp_foreground_select_tool_stroke (GimpChannel    *mask,
+                                    GimpDisplay    *gdisp,
                                     FgSelectStroke *stroke)
 {
-  GimpScanConvert *scan_convert = gimp_scan_convert_new ();
-  GimpItem        *item         = GIMP_ITEM (mask);
-  GimpChannel     *channel      = gimp_channel_new (gimp_item_get_image (item),
-                                                    gimp_item_width (item),
-                                                    gimp_item_height (item),
-                                                    "tmp", NULL);
+  GimpDisplayShell *shell        = GIMP_DISPLAY_SHELL (gdisp->shell);
+  GimpScanConvert  *scan_convert = gimp_scan_convert_new ();
+  GimpItem         *item         = GIMP_ITEM (mask);
+  GimpChannel      *channel      = gimp_channel_new (gimp_item_get_image (item),
+                                                     gimp_item_width (item),
+                                                     gimp_item_height (item),
+                                                     "tmp", NULL);
 
   /* FIXME: We should be able to get away w/o a temporary drawable
    *        by doing some changes to GimpScanConvert.
@@ -631,7 +644,7 @@ gimp_foreground_select_tool_stroke (GimpChannel    *mask,
   gimp_scan_convert_add_polyline (scan_convert,
                                   stroke->num_points, stroke->points, FALSE);
   gimp_scan_convert_stroke (scan_convert,
-                            stroke->width,
+                            SCALEFACTOR_Y (shell) * stroke->width,
                             GIMP_JOIN_MITER, GIMP_CAP_ROUND, 10.0,
                             0.0, NULL);
   gimp_scan_convert_render (scan_convert,

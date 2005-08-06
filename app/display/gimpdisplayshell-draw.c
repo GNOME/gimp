@@ -23,6 +23,7 @@
 #include "display-types.h"
 
 #include "core/gimp-utils.h"
+#include "core/gimpcontext.h"
 #include "core/gimpgrid.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-guides.h"
@@ -48,6 +49,10 @@
 
 static GdkGC * gimp_display_shell_get_grid_gc (GimpDisplayShell *shell,
                                                GimpGrid         *grid);
+static GdkGC * gimp_display_shell_get_pen_gc  (GimpDisplayShell *shell,
+                                               GimpContext      *context,
+                                               GimpActiveColor   active,
+                                               gint              width);
 
 
 /*  public functions  */
@@ -291,6 +296,42 @@ gimp_display_shell_draw_grid (GimpDisplayShell   *shell,
 
       gimp_canvas_set_custom_gc (canvas, NULL);
     }
+}
+
+void
+gimp_display_shell_draw_pen (GimpDisplayShell  *shell,
+                             const GimpVector2 *points,
+                             gint               num_points,
+                             GimpContext       *context,
+                             GimpActiveColor    color,
+                             gint               width)
+{
+  GimpCanvas *canvas;
+  GdkGC      *gc;
+  GdkPoint   *coords;
+  gint        i;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (num_points == 0 || points != NULL);
+
+  canvas = GIMP_CANVAS (shell->canvas);
+
+  coords = g_new (GdkPoint, num_points);
+
+  for (i = 0; i < num_points ; i++)
+    gimp_display_shell_transform_xy (shell,
+                                     points[i].x, points[i].y,
+                                     &coords[i].x, &coords[i].y,
+                                     FALSE);
+
+  gc = gimp_display_shell_get_pen_gc (shell, context, color, width);
+
+  gimp_canvas_set_custom_gc (canvas, gc);
+  gimp_canvas_draw_lines (canvas, GIMP_CANVAS_STYLE_CUSTOM, coords, num_points);
+  gimp_canvas_set_custom_gc (canvas, NULL);
+
+  g_free (coords);
 }
 
 void
@@ -568,10 +609,58 @@ gimp_display_shell_get_grid_gc (GimpDisplayShell *shell,
                                                      GDK_GC_JOIN_STYLE));
 
   gimp_rgb_get_gdk_color (&grid->fgcolor, &fg);
-  gimp_rgb_get_gdk_color (&grid->bgcolor, &bg);
-
   gdk_gc_set_rgb_fg_color (shell->grid_gc, &fg);
+
+  gimp_rgb_get_gdk_color (&grid->bgcolor, &bg);
   gdk_gc_set_rgb_bg_color (shell->grid_gc, &bg);
 
   return shell->grid_gc;
+}
+
+static GdkGC *
+gimp_display_shell_get_pen_gc (GimpDisplayShell *shell,
+                               GimpContext      *context,
+                               GimpActiveColor   active,
+                               gint              width)
+{
+  GdkGCValues  values;
+  GimpRGB      rgb;
+  GdkColor     color;
+
+  if (shell->pen_gc)
+    return shell->pen_gc;
+
+  values.line_width = MAX (1, width);
+  values.line_style = GDK_LINE_SOLID;
+  values.cap_style  = GDK_CAP_ROUND;
+  values.join_style = GDK_JOIN_MITER;
+
+  shell->pen_gc = gdk_gc_new_with_values (shell->canvas->window,
+                                          &values, (GDK_GC_LINE_WIDTH |
+                                                    GDK_GC_LINE_STYLE |
+                                                    GDK_GC_CAP_STYLE  |
+                                                    GDK_GC_JOIN_STYLE));
+
+  switch (active)
+    {
+    case GIMP_ACTIVE_COLOR_FOREGROUND:
+      gimp_context_get_foreground (context, &rgb);
+      break;
+
+    case GIMP_ACTIVE_COLOR_BACKGROUND:
+      gimp_context_get_background (context, &rgb);
+      break;
+    }
+
+  gimp_rgb_get_gdk_color (&rgb, &color);
+  gdk_gc_set_rgb_fg_color (shell->pen_gc, &color);
+
+  g_object_add_weak_pointer (G_OBJECT (shell->pen_gc),
+                             (gpointer *) &shell->pen_gc);
+
+  g_signal_connect_object (context, "notify",
+                           G_CALLBACK (g_object_unref),
+                           shell->pen_gc, G_CONNECT_SWAPPED);
+
+  return shell->pen_gc;
 }
