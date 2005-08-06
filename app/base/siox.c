@@ -803,8 +803,8 @@ siox_foreground_extract (TileManager      *pixels,
                          gint              y,
                          gint              width,
                          gint              height,
-                         const gdouble     limits[SIOX_DIMS],
                          gint              smoothness,
+                         const gdouble     limits[SIOX_DIMS],
                          SioxProgressFunc  progress_callback,
                          gpointer          progress_data)
 {
@@ -830,6 +830,7 @@ siox_foreground_extract (TileManager      *pixels,
   g_return_if_fail (y >= 0);
   g_return_if_fail (x + width <= tile_manager_width (mask));
   g_return_if_fail (y + height <= tile_manager_height (mask));
+  g_return_if_fail (smoothness >= 0);
   g_return_if_fail (progress_data == NULL || progress_callback != NULL);
 
   cpercep_init ();

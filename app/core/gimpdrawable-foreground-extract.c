@@ -113,7 +113,7 @@ gimp_drawable_foreground_extract_siox (GimpDrawable  *drawable,
   siox_foreground_extract (gimp_drawable_data (drawable), colormap,
                            offset_x, offset_y,
                            gimp_drawable_data (mask), x, y, width, height,
-                           limits, 3,
+                           smoothness, limits,
                            (SioxProgressFunc) gimp_progress_set_value,
                            progress);
 

@@ -69,7 +69,7 @@ static void   gimp_free_select_tool_motion         (GimpTool        *tool,
 
 static void   gimp_free_select_tool_draw           (GimpDrawTool    *draw_tool);
 
-static void   gimp_free_select_tool_select         (GimpFreeSelectTool *free_sel,
+static void   gimp_free_select_tool_real_select    (GimpFreeSelectTool *free_sel,
                                                     GimpDisplay        *gdisp);
 
 static void   gimp_free_select_tool_add_point      (GimpFreeSelectTool *free_sel,
@@ -130,6 +130,16 @@ gimp_free_select_tool_get_type (void)
   return tool_type;
 }
 
+void
+gimp_free_select_tool_select (GimpFreeSelectTool *free_sel,
+                              GimpDisplay        *gdisp)
+{
+  g_return_if_fail (GIMP_IS_FREE_SELECT_TOOL (free_sel));
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
+
+  GIMP_FREE_SELECT_TOOL_GET_CLASS (free_sel)->select (free_sel, gdisp);
+}
+
 /*  private functions  */
 
 static void
@@ -150,7 +160,7 @@ gimp_free_select_tool_class_init (GimpFreeSelectToolClass *klass)
 
   draw_tool_class->draw      = gimp_free_select_tool_draw;
 
-  klass->select              = gimp_free_select_tool_select;
+  klass->select              = gimp_free_select_tool_real_select;
 }
 
 static void
@@ -323,8 +333,8 @@ gimp_free_select_tool_draw (GimpDrawTool *draw_tool)
 }
 
 static void
-gimp_free_select_tool_select (GimpFreeSelectTool *free_sel,
-                              GimpDisplay        *gdisp)
+gimp_free_select_tool_real_select (GimpFreeSelectTool *free_sel,
+                                   GimpDisplay        *gdisp)
 {
   GimpTool             *tool = GIMP_TOOL (free_sel);
   GimpSelectionOptions *options;

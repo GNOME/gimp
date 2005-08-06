@@ -21,6 +21,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
@@ -62,6 +64,9 @@ typedef struct
 
 static void   gimp_foreground_select_tool_class_init (GimpForegroundSelectToolClass *klass);
 static void   gimp_foreground_select_tool_init       (GimpForegroundSelectTool      *fg_select);
+static GObject * gimp_foreground_select_tool_constructor (GType                  type,
+                                                          guint                  n_params,
+                                                          GObjectConstructParam *params);
 static void   gimp_foreground_select_tool_finalize       (GObject         *object);
 
 static void   gimp_foreground_select_tool_control        (GimpTool        *tool,
@@ -111,6 +116,10 @@ static void   gimp_foreground_select_tool_stroke   (GimpChannel              *ma
 static void   gimp_foreground_select_tool_push_stroke (GimpForegroundSelectTool    *fg_select,
                                                        GimpDisplay                 *gdisp,
                                                        GimpForegroundSelectOptions *options);
+
+static void   gimp_foreground_select_options_notify (GimpForegroundSelectOptions *options,
+                                                     GParamSpec                  *pspec,
+                                                     GimpForegroundSelectTool    *fg_select);
 
 
 static GimpFreeSelectToolClass *parent_class = NULL;
@@ -177,6 +186,7 @@ gimp_foreground_select_tool_class_init (GimpForegroundSelectToolClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
+  object_class->constructor      = gimp_foreground_select_tool_constructor;
   object_class->finalize         = gimp_foreground_select_tool_finalize;
 
   tool_class->control            = gimp_foreground_select_tool_control;
@@ -203,10 +213,29 @@ gimp_foreground_select_tool_init (GimpForegroundSelectTool *fg_select)
 
   gimp_tool_control_set_tool_cursor (tool->control,
                                      GIMP_TOOL_CURSOR_FREE_SELECT);
-
+  fg_select->idle_id = 0;
   fg_select->stroke  = NULL;
   fg_select->strokes = NULL;
   fg_select->mask    = NULL;
+}
+
+static GObject *
+gimp_foreground_select_tool_constructor (GType                  type,
+                                         guint                  n_params,
+                                         GObjectConstructParam *params)
+{
+  GObject         *object;
+  GimpToolOptions *options;
+
+  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+
+  options = GIMP_TOOL (object)->tool_info->tool_options;
+
+  g_signal_connect_object (options, "notify",
+                           G_CALLBACK (gimp_foreground_select_options_notify),
+                           object, 0);
+
+  return object;
 }
 
 static void
@@ -423,7 +452,7 @@ gimp_foreground_select_tool_button_release (GimpTool        *tool,
 
       gimp_foreground_select_tool_push_stroke (fg_select, gdisp, options);
 
-      gimp_foreground_select_tool_select (GIMP_FREE_SELECT_TOOL (tool), gdisp);
+      gimp_free_select_tool_select (GIMP_FREE_SELECT_TOOL (tool), gdisp);
     }
   else
     {
@@ -509,7 +538,13 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
   gint             x2, y2;
   gint             width, height;
 
-  if (! drawable)
+  if (fg_select->idle_id)
+    {
+      g_source_remove (fg_select->idle_id);
+      fg_select->idle_id = 0;
+    }
+
+ if (! drawable)
     return;
 
   options = GIMP_FOREGROUND_SELECT_OPTIONS (tool->tool_info->tool_options);
@@ -690,4 +725,36 @@ gimp_foreground_select_tool_push_stroke (GimpForegroundSelectTool    *fg_select,
   fg_select->stroke = NULL;
 
   fg_select->strokes = g_list_append (fg_select->strokes, stroke);
+}
+
+static gboolean
+gimp_foreground_select_tool_idle_select (GimpForegroundSelectTool *fg_select)
+{
+  GimpTool *tool = GIMP_TOOL (fg_select);
+
+  fg_select->idle_id = 0;
+
+  if (tool->gdisp)
+    gimp_free_select_tool_select (GIMP_FREE_SELECT_TOOL (tool), tool->gdisp);
+
+  return FALSE;
+}
+
+static void
+gimp_foreground_select_options_notify (GimpForegroundSelectOptions *options,
+                                       GParamSpec                  *pspec,
+                                       GimpForegroundSelectTool    *fg_select)
+{
+  if (fg_select->mask &&
+      (strcmp (pspec->name, "smoothness") == 0 ||
+       strncmp (pspec->name, "granularity", strlen ("granularity")) == 0))
+    {
+      if (fg_select->idle_id)
+        g_source_remove (fg_select->idle_id);
+
+      fg_select->idle_id =
+        g_idle_add_full (G_PRIORITY_LOW,
+                         (GSourceFunc) gimp_foreground_select_tool_idle_select,
+                         fg_select, NULL);
+    }
 }

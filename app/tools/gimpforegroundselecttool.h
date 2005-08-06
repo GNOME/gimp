@@ -38,9 +38,9 @@ struct _GimpForegroundSelectTool
 {
   GimpFreeSelectTool  parent_instance;
 
+  guint               idle_id;
   GArray             *stroke;
   GList              *strokes;
-
   GimpChannel        *mask;
 };
 

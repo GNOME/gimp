@@ -61,5 +61,8 @@ void    gimp_free_select_tool_register (GimpToolRegisterCallback  callback,
 
 GType   gimp_free_select_tool_get_type (void) G_GNUC_CONST;
 
+void    gimp_free_select_tool_select   (GimpFreeSelectTool       *free_sel,
+                                        GimpDisplay              *gdisp);
+
 
 #endif  /*  __GIMP_FREE_SELECT_TOOL_H__  */

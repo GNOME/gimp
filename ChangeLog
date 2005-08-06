@@ -1,5 +1,21 @@
 2005-08-06  Sven Neumann  <sven@gimp.org>
 
+	* app/base/siox.[ch]: reordered parameters to match the order of
+	parameters in gimp_drawable_foreground_extract_siox().
+
+	* app/core/gimpdrawable-foreground-extract.c: changed accordingly.
+
+	* app/tools/gimpforegroundselectoptions.[ch]: draw slider value to
+	the right.
+
+	* app/tools/gimpfreeselecttool.[ch]: added
+	gimp_free_select_tool_select() to calls the virtual select() method.
+
+	* app/tools/gimpforegroundselecttool.[ch]: queue an idle select if
+	the smoothness or granularity values change in the tool options.
+
+2005-08-06  Sven Neumann  <sven@gimp.org>
+
 	* app/base/siox.[ch]
 	* app/core/gimpdrawable-foreground-extract.[ch]: expose all
 	parameters of the SIOX algorithm. Provide default values.

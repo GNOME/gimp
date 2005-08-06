@@ -57,8 +57,8 @@ void  siox_foreground_extract (TileManager      *pixels,
                                gint              y,
                                gint              width,
                                gint              height,
-                               const gdouble     limits[3],
                                gint              smoothness,
+                               const gdouble     limits[3],
                                SioxProgressFunc  progress_callback,
                                gpointer          progress_data);
 
