@@ -1,5 +1,10 @@
 2005-08-06  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpforegroundselecttool.c: added a statusbar message
+	to encourage the user to draw on the object.
+
+2005-08-06  Sven Neumann  <sven@gimp.org>
+
 	* app/base/siox.c
 	* app/core/gimpdrawable-foreground-extract.c: moved rectangle
 	intersection into gimp_drawable_foreground_extract().

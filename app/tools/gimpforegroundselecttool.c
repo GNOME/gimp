@@ -281,7 +281,10 @@ gimp_foreground_select_tool_oper_update (GimpTool        *tool,
         case SELECTION_MOVE:
         case SELECTION_MOVE_COPY:
         case SELECTION_ANCHOR:
-          status = _("Press Enter to apply selection");
+          if (fg_select->strokes)
+            status = _("Press Enter to apply the selection");
+          else
+            status = _("Refine the selection by drawing on the object");
           break;
         default:
           break;
