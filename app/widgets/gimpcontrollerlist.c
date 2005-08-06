@@ -182,7 +182,7 @@ gimp_controller_list_init (GimpControllerList *list)
   gint               icon_width;
   gint               icon_height;
   GType             *controller_types;
-  gint               n_controller_types;
+  guint              n_controller_types;
   gint               i;
 
   list->gimp = NULL;

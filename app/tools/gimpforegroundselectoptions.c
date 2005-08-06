@@ -94,8 +94,9 @@ gimp_foreground_select_options_class_init (GimpForegroundSelectOptionsClass *kla
                                     FALSE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_STROKE_WIDTH,
-                                "stroke-width", NULL,
-                                1, 100, 6,
+                                "stroke-width",
+                                _("Size of the brush used for refinements"),
+                                1, 32, 12,
                                 0);
 }
 
@@ -147,16 +148,38 @@ GtkWidget *
 gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
 {
   GtkWidget *vbox = gimp_selection_options_gui (tool_options);
+  GtkWidget *hbox;
   GtkWidget *frame;
+  GtkWidget *scale;
+  GtkWidget *label;
 
-  frame = gimp_prop_boolean_radio_frame_new ( G_OBJECT (tool_options),
-                                              "background",
+  frame = gimp_prop_boolean_radio_frame_new (G_OBJECT (tool_options),
+                                             "background",
                                              _("Interactive refinement"),
                                              _("Mark background"),
                                              _("Mark foreground"));
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
+
+  scale = gimp_prop_hscale_new (G_OBJECT (tool_options), "stroke-width",
+                                1.0, 5.0, 0);
+  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
+
+  gtk_box_pack_start (GTK_BOX (GTK_BIN (frame)->child), scale, FALSE, FALSE, 0);
+  gtk_widget_show (scale);
+
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (GTK_BIN (frame)->child), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  label = gtk_label_new (_("Small"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  label = gtk_label_new (_("Large"));
+  gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
 
   return vbox;
 }

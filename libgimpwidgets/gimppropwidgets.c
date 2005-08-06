@@ -1094,6 +1094,67 @@ gimp_prop_spin_button_new (GObject     *config,
 }
 
 /**
+ * gimp_prop_hscale_new:
+ * @config:         Object to which property is attached.
+ * @property_name:  Name of integer or double property controlled by the scale.
+ * @step_increment: Step size.
+ * @page_increment: Page size.
+ * @digits:         Number of digits after decimal point to display.
+ *
+ * Creates a horizontal scale to control the value of the specified
+ * integer or double property.
+ *
+ * Return value: A new #GtkScale.
+ *
+ * Since GIMP 2.4
+ */
+GtkWidget *
+gimp_prop_hscale_new (GObject     *config,
+                      const gchar *property_name,
+                      gdouble      step_increment,
+                      gdouble      page_increment,
+                      gint         digits)
+{
+  GParamSpec *param_spec;
+  GtkWidget  *scale;
+  GtkObject  *adjustment;
+  gdouble     value;
+  gdouble     lower;
+  gdouble     upper;
+
+  param_spec = find_param_spec (config, property_name, G_STRFUNC);
+  if (! param_spec)
+    return NULL;
+
+  if (! get_numeric_values (config,
+                            param_spec, &value, &lower, &upper, G_STRFUNC))
+    return NULL;
+
+  if (! G_IS_PARAM_SPEC_DOUBLE (param_spec))
+    digits = 0;
+
+  adjustment = gtk_adjustment_new (value, lower, upper,
+                                   step_increment, page_increment, 0.0);
+
+  scale = g_object_new (GTK_TYPE_HSCALE,
+                        "adjustment", adjustment,
+                        "digits",     digits,
+                        NULL);
+
+  set_param_spec (G_OBJECT (adjustment), scale, param_spec);
+
+  g_signal_connect (adjustment, "value-changed",
+		    G_CALLBACK (gimp_prop_adjustment_callback),
+		    config);
+
+  connect_notify (config, property_name,
+                  G_CALLBACK (gimp_prop_adjustment_notify),
+                  adjustment);
+
+  return scale;
+}
+
+/**
  * gimp_prop_scale_entry_new:
  * @config:            Object to which property is attached.
  * @property_name:     Name of double property controlled by the spin button.

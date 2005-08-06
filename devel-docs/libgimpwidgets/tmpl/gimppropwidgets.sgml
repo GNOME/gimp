@@ -64,6 +64,19 @@ GimpPropWidgets
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_prop_hscale_new ##### -->
+<para>
+
+</para>
+
+@config: 
+@property_name: 
+@step_increment: 
+@page_increment: 
+@digits: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_prop_int_combo_box_new ##### -->
 <para>
 

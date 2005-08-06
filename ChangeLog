@@ -1,5 +1,18 @@
 2005-08-06  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimppropwidgets.[ch]
+	* libgimpwidgets/gimpwidgets.def: added gimp_prop_hscale_new().
+
+	* app/tools/gimpforegroundselectoptions.c: added a control for the
+	stroke width.
+
+	* app/tools/gimpforegroundselecttool.c: cancel the tool if the
+	active drawable or the image size changes.
+
+	* app/widgets/gimpcontrollerlist.c: fixed signedness warning.
+
+2005-08-06  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpcanvas.c (gimp_canvas_set_custom_gc) do not
 	drop the reference if the same custom GC is being set again.
 

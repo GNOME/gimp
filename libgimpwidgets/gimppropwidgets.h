@@ -91,6 +91,12 @@ GtkWidget     * gimp_prop_spin_button_new         (GObject      *config,
                                                    gdouble       page_increment,
                                                    gint          digits);
 
+GtkWidget     * gimp_prop_hscale_new              (GObject      *config,
+                                                   const gchar  *property_name,
+                                                   gdouble       step_increment,
+                                                   gdouble       page_increment,
+                                                   gint          digits);
+
 GtkObject     * gimp_prop_scale_entry_new         (GObject      *config,
                                                    const gchar  *property_name,
                                                    GtkTable     *table,

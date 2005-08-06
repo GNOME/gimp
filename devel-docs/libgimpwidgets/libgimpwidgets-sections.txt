@@ -793,6 +793,7 @@ gimp_prop_check_button_new
 gimp_prop_boolean_combo_box_new
 gimp_prop_boolean_radio_frame_new
 gimp_prop_expander_new
+gimp_prop_hscale_new
 gimp_prop_int_combo_box_new
 gimp_prop_enum_combo_box_new
 gimp_prop_enum_check_button_new

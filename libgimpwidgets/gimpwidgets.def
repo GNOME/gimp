@@ -236,6 +236,7 @@ EXPORTS
 	gimp_prop_expander_new
 	gimp_prop_file_chooser_button_new
 	gimp_prop_file_entry_new
+	gimp_prop_hscale_new
 	gimp_prop_int_combo_box_new
 	gimp_prop_label_new
 	gimp_prop_memsize_entry_new
