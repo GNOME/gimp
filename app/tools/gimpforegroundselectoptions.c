@@ -289,17 +289,17 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (table);
 
   adj = gimp_prop_opacity_entry_new (config, "granularity-l",
-                                     GTK_TABLE (table), 0, row++, "L:");
+                                     GTK_TABLE (table), 0, row++, "L");
   gtk_range_set_update_policy (GTK_RANGE (GIMP_SCALE_ENTRY_SCALE (adj)),
                                GTK_UPDATE_DELAYED);
 
   adj = gimp_prop_opacity_entry_new (config, "granularity-a",
-                                     GTK_TABLE (table), 0, row++, "a:");
+                                     GTK_TABLE (table), 0, row++, "a");
   gtk_range_set_update_policy (GTK_RANGE (GIMP_SCALE_ENTRY_SCALE (adj)),
                                GTK_UPDATE_DELAYED);
 
   adj = gimp_prop_opacity_entry_new (config, "granularity-b",
-                                     GTK_TABLE (table), 0, row++, "b:");
+                                     GTK_TABLE (table), 0, row++, "b");
   gtk_range_set_update_policy (GTK_RANGE (GIMP_SCALE_ENTRY_SCALE (adj)),
                                GTK_UPDATE_DELAYED);
 

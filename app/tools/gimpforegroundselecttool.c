@@ -513,6 +513,27 @@ gimp_foreground_select_tool_motion (GimpTool        *tool,
 }
 
 static void
+gimp_foreground_select_tool_get_area (GimpChannel *mask,
+                                      gint        *x1,
+                                      gint        *y1,
+                                      gint        *x2,
+                                      gint        *y2)
+{
+  gint width;
+  gint height;
+
+  gimp_channel_bounds (mask, x1, y1, x2, y2);
+
+  width  = *x2 - *x1;
+  height = *y2 - *y1;
+
+  *x1 = MAX (*x1 - width  / 2, 0);
+  *y1 = MAX (*y1 - height / 2, 0);
+  *x2 = MIN (*x2 + width  / 2, gimp_item_width (GIMP_ITEM (mask)));
+  *y2 = MIN (*y2 + height / 2, gimp_item_height (GIMP_ITEM (mask)));
+}
+
+static void
 gimp_foreground_select_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpForegroundSelectTool    *fg_select = GIMP_FOREGROUND_SELECT_TOOL (draw_tool);
@@ -536,15 +557,33 @@ gimp_foreground_select_tool_draw (GimpDrawTool *draw_tool)
   if (fg_select->mask)
     {
       GimpFreeSelectTool *sel = GIMP_FREE_SELECT_TOOL (tool);
-      gdouble             width;
+      gint                x   = sel->last_coords.x;
+      gint                y   = sel->last_coords.y;
+      gdouble             radius;
 
-      width = (options->stroke_width /
-               SCALEFACTOR_Y (GIMP_DISPLAY_SHELL (draw_tool->gdisp->shell)));
+      radius = (options->stroke_width /
+                SCALEFACTOR_Y (GIMP_DISPLAY_SHELL (draw_tool->gdisp->shell)));
+      radius /= 2;
+
+      /*  warn if the user is drawing outside of the working area  */
+      {
+        gint x1, y1;
+        gint x2, y2;
+
+        gimp_foreground_select_tool_get_area (fg_select->mask,
+                                              &x1, &y1, &x2, &y2);
+
+        if (x < x1 + radius || x > x2 - radius ||
+            y < y1 + radius || y > y2 - radius)
+          {
+            gimp_draw_tool_draw_rectangle (draw_tool, FALSE,
+                                           x1, y1, x2 - x1, y2 - y1, TRUE);
+          }
+      }
 
       gimp_draw_tool_draw_arc (draw_tool, FALSE,
-                               sel->last_coords.x - width / 2,
-                               sel->last_coords.y - width / 2,
-                               width, width, 0, 360 * 64,
+                               x - radius, y - radius,
+                               2 * radius, 2 * radius, 0, 360 * 64,
                                TRUE);
     }
   else
@@ -557,7 +596,7 @@ static void
 gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
                                     GimpDisplay        *gdisp)
 {
-  GimpForegroundSelectTool    *fg_select = GIMP_FOREGROUND_SELECT_TOOL (free_sel);
+  GimpForegroundSelectTool    *fg_select;
   GimpForegroundSelectOptions *options;
 
   GimpTool        *tool     = GIMP_TOOL (free_sel);
@@ -566,9 +605,11 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
   GimpScanConvert *scan_convert;
   GimpChannel     *mask;
   GList           *list;
-  gint             x, y;
+  gint             x1, y1;
   gint             x2, y2;
-  gint             width, height;
+
+  fg_select = GIMP_FOREGROUND_SELECT_TOOL (free_sel);
+  options = GIMP_FOREGROUND_SELECT_OPTIONS (tool->tool_info->tool_options);
 
   if (fg_select->idle_id)
     {
@@ -576,10 +617,8 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
       fg_select->idle_id = 0;
     }
 
- if (! drawable)
+  if (! drawable)
     return;
-
-  options = GIMP_FOREGROUND_SELECT_OPTIONS (tool->tool_info->tool_options);
 
   gimp_set_busy (gimage->gimp);
 
@@ -599,14 +638,7 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
   gimp_scan_convert_free (scan_convert);
 
   /*  restrict working area to double the size of the bounding box  */
-  gimp_channel_bounds (mask, &x, &y, &x2, &y2);
-  width  = x2 - x;
-  height = y2 - y;
-
-  x = MAX (0, x - width / 2);
-  y = MAX (0, y - height / 2);
-  width  = MIN (width * 2, gimp_item_width (GIMP_ITEM (mask)) - x);
-  height = MIN (height * 2, gimp_item_height (GIMP_ITEM (mask)) - y);
+  gimp_foreground_select_tool_get_area (mask, &x1, &y1, &x2, &y2);
 
   /*  apply foreground and background markers  */
   for (list = fg_select->strokes; list; list = list->next)
@@ -614,7 +646,7 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
 
   gimp_drawable_foreground_extract_siox (drawable,
                                          GIMP_DRAWABLE (mask),
-                                         x, y, width, height,
+                                         x1, y1, x2 - x1, y2 - y1,
                                          options->smoothness,
                                          options->limits,
                                          GIMP_PROGRESS (gdisp));
