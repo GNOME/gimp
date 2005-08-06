@@ -71,10 +71,6 @@ EXTRA_DIST = \\
 INCLUDES = \\
 	-I\$(top_srcdir)	\\
 	\$(GTK_CFLAGS)	\\
-	\$(EXIF_CFLAGS)	\\
-	\$(POPPLER_CFLAGS) \\
-	\$(SVG_CFLAGS)	\\
-	\$(WMF_CFLAGS)	\\
 	-I\$(includedir)
 
 libexec_PROGRAMS = \\
@@ -104,6 +100,9 @@ Makefile.in
 EOT
 
 foreach (sort keys %plugins) {
+    my $makename = $_;
+    $makename =~ s/-/_/g;
+
     my $libgimp = "";
 
     if (exists $plugins{$_}->{ui}) {
@@ -124,6 +123,16 @@ foreach (sort keys %plugins) {
     if (exists $plugins{$_}->{optional}) {
 	my $name = exists $plugins{$_}->{libopt} ? $plugins{$_}->{libopt} : $_;
 	$optlib = "\n\t\$(LIB\U$name\E)\t\t\\";
+
+	if (exists $plugins{$_}->{cflags}) {
+	    my $cflags = $plugins{$_}->{cflags};
+	    my $optflags = $cflags =~ /FLAGS/ ? $cflags : "\U$_\E_CFLAGS";
+
+	    print MK <<EOT;
+
+${makename}_CFLAGS = \$($optflags)
+EOT
+        }
     }
 
     my $deplib = "\$(RT_LIBS)\t\t\\\n\t\$(INTLLIBS)";
@@ -136,10 +145,10 @@ foreach (sort keys %plugins) {
 
     print MK <<EOT;
 
-${_}_SOURCES = \\
+${makename}_SOURCES = \\
 	$_.c
 
-${_}_LDADD = \\
+${makename}_LDADD = \\
 	$libgimp		\\$optlib
 	$deplib
 EOT

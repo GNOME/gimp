@@ -1678,7 +1678,6 @@ app/vectors/Makefile
 app/widgets/Makefile
 app/xcf/Makefile
 plug-ins/Makefile
-plug-ins/dbbrowser/Makefile
 plug-ins/script-fu/Makefile
 plug-ins/script-fu/siod/Makefile
 plug-ins/script-fu/scripts/Makefile

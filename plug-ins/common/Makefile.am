@@ -31,10 +31,6 @@ EXTRA_DIST = \
 INCLUDES = \
 	-I$(top_srcdir)	\
 	$(GTK_CFLAGS)	\
-	$(EXIF_CFLAGS)	\
-	$(POPPLER_CFLAGS) \
-	$(SVG_CFLAGS)	\
-	$(WMF_CFLAGS)	\
 	-I$(includedir)
 
 libexec_PROGRAMS = \
@@ -124,11 +120,13 @@ libexec_PROGRAMS = \
 	pix \
 	pixelize \
 	plasma \
+	plugin-browser \
 	$(PNG) \
 	pnm \
 	polar \
 	$(POPPLER) \
 	postscript \
+	procedure-browser \
 	psd \
 	psd_save \
 	$(PSP) \
@@ -1457,6 +1455,21 @@ plasma_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
+plugin_browser_SOURCES = \
+	plugin-browser.c
+
+plugin_browser_LDADD = \
+	$(libgimpui)		\
+	$(libgimpconfig)	\
+	$(libgimpwidgets)	\
+	$(libgimp)		\
+	$(libgimpcolor)		\
+	$(libgimpmath)		\
+	$(libgimpbase)		\
+	$(GTK_LIBS)		\
+	$(RT_LIBS)		\
+	$(INTLLIBS)
+
 png_SOURCES = \
 	png.c
 
@@ -1503,6 +1516,8 @@ polar_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
+poppler_CFLAGS = $(POPPLER_CFLAGS)
+
 poppler_SOURCES = \
 	poppler.c
 
@@ -1523,6 +1538,21 @@ postscript_SOURCES = \
 	postscript.c
 
 postscript_LDADD = \
+	$(libgimpui)		\
+	$(libgimpconfig)	\
+	$(libgimpwidgets)	\
+	$(libgimp)		\
+	$(libgimpcolor)		\
+	$(libgimpmath)		\
+	$(libgimpbase)		\
+	$(GTK_LIBS)		\
+	$(RT_LIBS)		\
+	$(INTLLIBS)
+
+procedure_browser_SOURCES = \
+	procedure-browser.c
+
+procedure_browser_LDADD = \
 	$(libgimpui)		\
 	$(libgimpconfig)	\
 	$(libgimpwidgets)	\
@@ -1899,6 +1929,8 @@ sunras_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
+svg_CFLAGS = $(SVG_CFLAGS)
+
 svg_SOURCES = \
 	svg.c
 
@@ -2159,6 +2191,8 @@ winprint_LDADD = \
 	$(GLIB_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
+
+wmf_CFLAGS = $(WMF_CFLAGS)
 
 wmf_SOURCES = \
 	wmf.c

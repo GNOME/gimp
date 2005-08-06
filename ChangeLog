@@ -1,3 +1,24 @@
+2005-08-06  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/dbbrowser/plugin-browser.c
+	* plug-ins/dbbrowser/procedure-browser.c: removed these files...
+	
+	* plug-ins/common/plugin-browser.c
+	* plug-ins/common/procedure-browser.c: ...and added them here.
+
+	* plug-ins/common/mkgen.pl: transform - to _ in makefile variable
+	names, and attach optional CFLAGS to only the plugins that need
+	them.
+
+	* plug-ins/common/plugin-defs.pl: added plugin-browser and
+	procedure-browser, and changed poppler, svg, and wmf to use the new
+	CFLAGS stuff.
+
+	* plug-ins/common/.cvsignore
+	* plug-ins/common/Makefile.am: regenerated.
+
+	* configure.in: remove plug-ins/dbbrowser reference.
+
 2005-08-06  Sven Neumann  <sven@gimp.org>
 
 	* app/base/siox.[ch]: reordered parameters to match the order of
