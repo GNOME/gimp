@@ -583,6 +583,9 @@ gimp_ui_manager_ui_popup (GimpUIManager        *manager,
       activate_time = 0;
     }
 
+  if (current_event)
+    gdk_event_free (current_event);
+
   menu_pos = g_object_get_data (G_OBJECT (widget), "menu-pos");
 
   if (! menu_pos)

@@ -1,3 +1,9 @@
+2005-08-06  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpuimanager.c (gimp_ui_manager_ui_popup): applied
+	patch from Robert Ögren that frees the event returned by
+	gtk_get_current_event(). Fixes bug #312017.
+
 2005-08-06  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-draw.c (gimp_display_shell_draw_pen):
