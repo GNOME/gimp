@@ -324,8 +324,8 @@ stagetwo (lab          *points,
 {
   gint    curdim = depth % dims;
   gfloat  min, max;
-  gint    i, countsm, countgr, smallc, bigc;
   gfloat  pivotvalue, curval;
+  gint    i, countsm, countgr, smallc, bigc;
   gint    sum;
   lab    *point;
   lab    *smallerpoints;
@@ -405,9 +405,7 @@ stagetwo (lab          *points,
       sum = 0;
 
       for (i = 0; i < length; i++)
-        {
-          sum += points[i].cardinality;
-        }
+        sum += points[i].cardinality;
 
       if (((sum * 100.0) / total) >= threshold)
         {
@@ -462,14 +460,13 @@ create_signature (lab          *input,
                   const gfloat *limits,
                   gint         *returnlength)
 {
-  ArrayList *clusters1;
-  ArrayList *clusters2;
+  ArrayList *clusters;
   ArrayList *curelem;
   lab       *centroids;
   lab       *cluster;
   lab       *rval;
   gint       k, i;
-  gint       clusters1size;
+  gint       size;
 
   if (length < 1)
     {
@@ -477,12 +474,12 @@ create_signature (lab          *input,
       return NULL;
     }
 
-  clusters1 = list_new ();
+  clusters = list_new ();
 
-  stageone (input, SIOX_DIMS, 0, clusters1, limits, length);
-  clusters1size = list_size (clusters1);
-  centroids = g_new (lab, clusters1size);
-  curelem = clusters1;
+  stageone (input, SIOX_DIMS, 0, clusters, limits, length);
+  size = list_size (clusters);
+  centroids = g_new (lab, size);
+  curelem = clusters;
 
   i = 0;
   while (curelem->array)
@@ -503,6 +500,7 @@ create_signature (lab          *input,
       centroids[i].l = l / curelem->arraylength;
       centroids[i].a = a / curelem->arraylength;
       centroids[i].b = b / curelem->arraylength;
+
       centroids[i].cardinality = curelem->arraylength;
 
       i++;
@@ -510,19 +508,20 @@ create_signature (lab          *input,
     }
 
 #ifdef DEBUG
-  g_printerr ("step #1 -> %d clusters\n", clusters1size);
+  g_printerr ("step #1 -> %d clusters\n", size);
 #endif
 
-  clusters2 = list_new ();
+  free_list (clusters);
+
+  clusters = list_new ();
 
   stagetwo (centroids,
-            SIOX_DIMS, 0, clusters2, limits, clusters1size, length,
+            SIOX_DIMS, 0, clusters, limits, size, length,
             0.1 /* magic constant, see paper by tomasi */);
 
-  rval = list_to_array (clusters2, returnlength);
+  rval = list_to_array (clusters, returnlength);
 
-  free_list (clusters2);
-  free_list (clusters1);
+  free_list (clusters);
 
 #ifdef DEBUG
   g_printerr ("step #2 -> %d clusters\n", returnlength[0]);
