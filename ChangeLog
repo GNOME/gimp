@@ -1,3 +1,8 @@
+2005-08-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimage-resize.c (gimp_image_resize_with_layers):
+	take care of sample points. Addresses bug #137776.
+
 2005-08-07  Sven Neumann  <sven@gimp.org>
 
 	* app/base/siox.c: made variables more local to make the code

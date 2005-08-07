@@ -27,6 +27,7 @@
 #include "gimpimage.h"
 #include "gimpimage-guides.h"
 #include "gimpimage-resize.h"
+#include "gimpimage-sample-points.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimplayer.h"
@@ -211,6 +212,32 @@ gimp_image_resize_with_layers (GimpImage             *gimage,
         gimp_image_remove_guide (gimage, guide, TRUE);
       else if (new_position != guide->position)
         gimp_image_move_guide (gimage, guide, new_position, TRUE);
+    }
+
+  /*  Reposition or remove sample points  */
+  list = gimage->sample_points;
+  while (list)
+    {
+      GimpSamplePoint *sample_point        = list->data;
+      gboolean         remove_sample_point = FALSE;
+      gint             new_x               = sample_point->x;
+      gint             new_y               = sample_point->y;
+
+      list = g_list_next (list);
+
+      new_y += offset_y;
+      if ((sample_point->y < 0) || (sample_point->y > new_height))
+        remove_sample_point = TRUE;
+
+      new_x += offset_x;
+      if ((sample_point->x < 0) || (sample_point->x > new_width))
+        remove_sample_point = TRUE;
+
+      if (remove_sample_point)
+        gimp_image_remove_sample_point (gimage, sample_point, TRUE);
+      else if (new_x != sample_point->x || new_y != sample_point->y)
+        gimp_image_move_sample_point (gimage, sample_point,
+                                      new_x, new_y, TRUE);
     }
 
   gimp_image_undo_group_end (gimage);
