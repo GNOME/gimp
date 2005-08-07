@@ -151,8 +151,6 @@ plug-ins/common/xbm.c
 plug-ins/common/xpm.c
 plug-ins/common/xwd.c
 plug-ins/common/zealouscrop.c
-plug-ins/dbbrowser/plugin-browser.c
-plug-ins/dbbrowser/procedure-browser.c
 plug-ins/faxg3/faxg3.c
 plug-ins/fits/fits.c
 plug-ins/flame/flame.c
