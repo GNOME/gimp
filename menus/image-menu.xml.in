@@ -386,6 +386,7 @@
       <menu action="layers-transparency-menu" name="Transparency">
         <placeholder name="Modify">
           <menuitem action="layers-alpha-add" />
+          <menuitem action="layers-alpha-remove" />
         </placeholder>
 	<separator />
         <placeholder name="Selection">

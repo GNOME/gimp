@@ -172,7 +172,12 @@ static GimpActionEntry layers_actions[] =
   { "layers-alpha-add", GIMP_STOCK_TRANSPARENCY,
     N_("Add Alpha C_hannel"), NULL, NULL,
     G_CALLBACK (layers_alpha_add_cmd_callback),
-    GIMP_HELP_LAYER_ALPHA_ADD }
+    GIMP_HELP_LAYER_ALPHA_ADD },
+
+  { "layers-alpha-remove", NULL,
+    N_("_Remove Alpha Channel"), NULL, NULL,
+    G_CALLBACK (layers_alpha_remove_cmd_callback),
+    GIMP_HELP_LAYER_ALPHA_REMOVE }
 };
 
 static GimpToggleActionEntry layers_toggle_actions[] =
@@ -464,6 +469,7 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-crop",            layer && sel);
 
   SET_SENSITIVE ("layers-alpha-add",       layer && !fs && !alpha);
+  SET_SENSITIVE ("layers-alpha-remove",    layer && !fs &&  alpha);
 
   SET_SENSITIVE ("layers-lock-alpha", layer);
   SET_ACTIVE    ("layers-lock-alpha", lock_alpha);

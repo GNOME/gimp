@@ -1652,6 +1652,57 @@ gimp_layer_add_alpha (GimpLayer *layer)
 }
 
 void
+gimp_layer_flatten (GimpLayer   *layer,
+                    GimpContext *context)
+{
+  PixelRegion    srcPR, destPR;
+  TileManager   *new_tiles;
+  GimpImageType  new_type;
+  guchar         bg[4];
+
+  g_return_if_fail (GIMP_IS_LAYER (layer));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
+
+  if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
+    return;
+
+  new_type = gimp_drawable_type_without_alpha (GIMP_DRAWABLE (layer));
+
+  gimp_image_get_background (gimp_item_get_image (GIMP_ITEM (layer)),
+                             GIMP_DRAWABLE (layer),
+                             context, bg);
+
+  /*  Allocate the new tiles  */
+  new_tiles = tile_manager_new (GIMP_ITEM (layer)->width,
+				GIMP_ITEM (layer)->height,
+				GIMP_IMAGE_TYPE_BYTES (new_type));
+
+  /*  Configure the pixel regions  */
+  pixel_region_init (&srcPR, GIMP_DRAWABLE (layer)->tiles,
+		     0, 0,
+		     GIMP_ITEM (layer)->width,
+		     GIMP_ITEM (layer)->height,
+		     FALSE);
+  pixel_region_init (&destPR, new_tiles,
+		     0, 0,
+		     GIMP_ITEM (layer)->width,
+		     GIMP_ITEM (layer)->height,
+		     TRUE);
+
+  /*  Remove alpha channel  */
+  flatten_region (&srcPR, &destPR, bg);
+
+  /*  Set the new tiles  */
+  gimp_drawable_set_tiles_full (GIMP_DRAWABLE (layer),
+                                gimp_item_is_attached (GIMP_ITEM (layer)),
+                                _("Remove Alpha Channel"),
+                                new_tiles, new_type,
+                                GIMP_ITEM (layer)->offset_x,
+                                GIMP_ITEM (layer)->offset_y);
+  tile_manager_unref (new_tiles);
+}
+
+void
 gimp_layer_resize_to_image (GimpLayer   *layer,
                             GimpContext *context)
 {

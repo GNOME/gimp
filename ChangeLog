@@ -1,3 +1,14 @@
+2005-08-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimplayer.[ch] (gimp_layer_flatten): new function.
+
+	* app/actions/layers-actions.c
+	* app/actions/layers-commands.[ch]
+	* app/widgets/gimphelp-ids.h
+	* menus/image-menu.xml.in
+	* menus/layers-menu.xml: added "Remove Alpha Channel" action,
+	action callback, help ID and menu items. Fixes bug #309762.
+
 2005-08-07  Sven Neumann  <sven@gimp.org>
 
 	* app/base/siox.c (siox_foreground_extract): micro optimizations.
@@ -12,7 +23,6 @@
 	* app/tools/gimpforegroundselecttool.c
 	(gimp_foreground_select_tool_draw): show the extents of the working
 	area if the user moves the mouse out of it. Is this useful?
-	
 
 	* app/tools/gimpforegroundselectoptions.c: removed colons from labels.
 

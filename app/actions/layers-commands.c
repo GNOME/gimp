@@ -706,6 +706,21 @@ layers_alpha_add_cmd_callback (GtkAction *action,
 }
 
 void
+layers_alpha_remove_cmd_callback (GtkAction *action,
+                                  gpointer   data)
+{
+  GimpImage *gimage;
+  GimpLayer *layer;
+  return_if_no_layer (gimage, layer, data);
+
+  if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
+    {
+      gimp_layer_flatten (layer, action_data_get_context (data));
+      gimp_image_flush (gimage);
+    }
+}
+
+void
 layers_alpha_to_selection_cmd_callback (GtkAction *action,
                                         gint       value,
                                         gpointer   data)

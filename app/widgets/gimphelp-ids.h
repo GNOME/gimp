@@ -164,6 +164,7 @@
 #define GIMP_HELP_LAYER_MASK_SELECTION_SUBTRACT   "gimp-layer-mask-selection-subtract"
 #define GIMP_HELP_LAYER_MASK_SELECTION_INTERSECT  "gimp-layer-mask-selection-intersect"
 #define GIMP_HELP_LAYER_ALPHA_ADD                 "gimp-layer-alpha-add"
+#define GIMP_HELP_LAYER_ALPHA_REMOVE              "gimp-layer-alpha-remove"
 #define GIMP_HELP_LAYER_ALPHA_SELECTION_REPLACE   "gimp-layer-alpha-selection-replace"
 #define GIMP_HELP_LAYER_ALPHA_SELECTION_ADD       "gimp-layer-alpha-selection-add"
 #define GIMP_HELP_LAYER_ALPHA_SELECTION_SUBTRACT  "gimp-layer-alpha-selection-subtract"

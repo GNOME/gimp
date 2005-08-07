@@ -33,6 +33,7 @@
     <menuitem action="layers-mask-selection-replace" />
     <separator />
     <menuitem action="layers-alpha-add" />
+    <menuitem action="layers-alpha-remove" />
     <menuitem action="layers-alpha-selection-replace" />
     <separator />
     <menuitem action="layers-merge-layers" />
