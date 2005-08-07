@@ -1,3 +1,8 @@
+2005-08-07  Sven Neumann  <sven@gimp.org>
+
+	* app/base/siox.c: made variables more local to make the code
+	easier to read and to optimize.
+
 2005-08-07  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimplayer.[ch] (gimp_layer_flatten): new function.
@@ -11,7 +16,7 @@
 
 2005-08-07  Sven Neumann  <sven@gimp.org>
 
-	* app/base/siox.c (siox_foreground_extract): micro optimizations.
+	* app/base/siox.c: micro optimizations.
 
 2005-08-07  Sven Neumann  <sven@gimp.org>
 

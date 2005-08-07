@@ -115,7 +115,7 @@ add_to_list (ArrayList *list,
   list->tail = tail->next = g_new0 (ArrayList, 1);
 }
 
-static int
+static gint
 list_size (ArrayList *list)
 {
   ArrayList *cur   = list;
@@ -172,7 +172,6 @@ free_list (ArrayList *list)
     }
 }
 
-/* FIXME: try to use cpersep conversion here, should be faster */
 static void
 calc_lab (const guchar *src,
           gint          bpp,
@@ -216,6 +215,7 @@ calc_lab (const guchar *src,
   pixel->b = b;
 }
 
+
 /*  assumes that lab starts with an array of floats (l,a,b)  */
 #define CURRENT_VALUE(points, i, dim) (((const gfloat *) (points + i))[dim])
 
@@ -229,11 +229,9 @@ stageone (lab          *points,
           gint          length)
 {
   gint    curdim = depth % dims;
-  gint    i, countsm, countgr, smallc, bigc;
   gfloat  min, max;
-  gfloat  pivotvalue, curval;
-  lab    *smallerpoints;
-  lab    *biggerpoints;
+  gfloat  curval;
+  gint    i;
 
   if (length < 1)
     return;
@@ -257,17 +255,20 @@ stageone (lab          *points,
   /* Split according to Rubner-Rule */
   if (max - min > limits[curdim])
     {
-      pivotvalue = ((max - min) / 2.0) + min;
-
-      countsm = 0;
-      countgr = 0;
+      lab    *smallerpoints;
+      lab    *biggerpoints;
+      gint    countsm = 0;
+      gint    countgr = 0;
+      gint    smallc  = 0;
+      gint    bigc    = 0;
+      gfloat  pivot   = (min + max) / 2.0;
 
       /* find out cluster sizes */
       for (i = 0; i < length; i++)
         {
           curval = CURRENT_VALUE (points, i, curdim);
 
-          if (curval <= pivotvalue)
+          if (curval <= pivot)
             countsm++;
           else
             countgr++;
@@ -279,15 +280,12 @@ stageone (lab          *points,
       smallerpoints = g_new (lab, countsm);
       biggerpoints  = g_new (lab, countgr);
 
-      smallc = 0;
-      bigc   = 0;
-
       for (i = 0; i < length; i++)
         {
           /* do actual split */
           curval = CURRENT_VALUE (points, i, curdim);
 
-          if (curval <= pivotvalue)
+          if (curval <= pivot)
             smallerpoints[smallc++] = points[i];
           else
             biggerpoints[bigc++] = points[i];
@@ -324,12 +322,8 @@ stagetwo (lab          *points,
 {
   gint    curdim = depth % dims;
   gfloat  min, max;
-  gfloat  pivotvalue, curval;
-  gint    i, countsm, countgr, smallc, bigc;
-  gint    sum;
-  lab    *point;
-  lab    *smallerpoints;
-  lab    *biggerpoints;
+  gfloat  curval;
+  gint    i;
 
   if (length < 1)
     return;
@@ -352,21 +346,24 @@ stagetwo (lab          *points,
   /* Split according to Rubner-Rule */
   if (max - min > limits[curdim])
     {
-      pivotvalue = ((max - min) / 2.0) + min;
+      lab    *smallerpoints;
+      lab    *biggerpoints;
+      gint    countsm = 0;
+      gint    countgr = 0;
+      gint    smallc  = 0;
+      gint    bigc    = 0;
+      gfloat  pivot   = (min + max) / 2.0;
 
 #ifdef DEBUG
-      g_printerr ("max=%f min=%f pivot=%f\n", max, min, pivotvalue);
+      g_printerr ("max=%f min=%f pivot=%f\n", max, min, pivot);
 #endif
-
-      countsm = 0;
-      countgr = 0;
 
       for (i = 0; i < length; i++)
         {
           /* find out cluster sizes */
           curval = CURRENT_VALUE (points, i, curdim);
 
-          if (curval <= pivotvalue)
+          if (curval <= pivot)
             countsm++;
           else
             countgr++;
@@ -378,15 +375,12 @@ stagetwo (lab          *points,
       smallerpoints = g_new (lab, countsm);
       biggerpoints  = g_new (lab, countgr);
 
-      smallc = 0;
-      bigc   = 0;
-
       /* do actual split */
       for (i = 0; i < length; i++)
         {
           curval = CURRENT_VALUE (points, i, curdim);
 
-          if (curval <= pivotvalue)
+          if (curval <= pivot)
             smallerpoints[smallc++] = points[i];
           else
             biggerpoints[bigc++] = points[i];
@@ -402,14 +396,14 @@ stagetwo (lab          *points,
     }
   else /* create leave */
     {
-      sum = 0;
+      gint sum = 0;
 
       for (i = 0; i < length; i++)
         sum += points[i].cardinality;
 
       if (((sum * 100.0) / total) >= threshold)
         {
-          point = g_new0 (lab, 1);
+          lab *point = g_new0 (lab, 1);
 
           for (i = 0; i < length; i++)
             {
@@ -439,18 +433,16 @@ static inline float
 euklid (const lab *p,
         const lab *q)
 {
-  return ((p->l - q->l) * (p->l - q->l) +
-          (p->a - q->a) * (p->a - q->a) +
-          (p->b - q->b) * (p->b - q->b));
+  return (SQR (p->l - q->l) + SQR (p->a - q->a) + SQR (p->b - q->b));
 }
 
 /* Returns squared clustersize */
 static gfloat
 get_clustersize (const gfloat *limits)
 {
-  return ((limits[0] - (-limits[0])) * (limits[0] - (-limits[0])) +
-          (limits[1] - (-limits[1])) * (limits[1] - (-limits[1])) +
-          (limits[2] - (-limits[2])) * (limits[2] - (-limits[2])));
+  return (SQR (limits[0] - (-limits[0])) +
+          SQR (limits[1] - (-limits[1])) +
+          SQR (limits[2] - (-limits[2])));
 }
 
 /* Creates a color signature for a given set of pixels */
@@ -463,10 +455,9 @@ create_signature (lab          *input,
   ArrayList *clusters;
   ArrayList *curelem;
   lab       *centroids;
-  lab       *cluster;
   lab       *rval;
-  gint       k, i;
   gint       size;
+  gint       i;
 
   if (length < 1)
     {
@@ -484,11 +475,11 @@ create_signature (lab          *input,
   i = 0;
   while (curelem->array)
     {
-      gfloat l = 0;
-      gfloat a = 0;
-      gfloat b = 0;
-
-      cluster = curelem->array;
+      lab    *cluster = curelem->array;
+      gfloat  l       = 0;
+      gfloat  a       = 0;
+      gfloat  b       = 0;
+      gint    k;
 
       for (k = 0; k < curelem->arraylength; k++)
         {
