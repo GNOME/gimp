@@ -1,8 +1,14 @@
 2005-08-07  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpforegroundselecttool.c: do not restart draw tool
+	unless shell->proximity.
+
+2005-08-07  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpforegroundselecttool.c
 	(gimp_foreground_select_tool_draw): show the extents of the working
 	area if the user moves the mouse out of it. Is this useful?
+	
 
 	* app/tools/gimpforegroundselectoptions.c: removed colons from labels.
 

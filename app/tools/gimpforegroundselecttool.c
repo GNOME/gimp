@@ -343,7 +343,7 @@ gimp_foreground_select_tool_oper_update (GimpTool        *tool,
   if (status)
     gimp_tool_replace_status (tool, gdisp, status);
 
-  if (fg_select->mask)
+  if (fg_select->mask && GIMP_DISPLAY_SHELL (gdisp->shell)->proximity)
     gimp_draw_tool_start (draw_tool, gdisp);
 }
 
