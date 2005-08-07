@@ -119,7 +119,7 @@ static int
 list_size (ArrayList *list)
 {
   ArrayList *cur   = list;
-  int        count = 0;
+  gint       count = 0;
 
   while (cur->array)
     {
@@ -216,43 +216,36 @@ calc_lab (const guchar *src,
   pixel->b = b;
 }
 
+/*  assumes that lab starts with an array of floats (l,a,b)  */
+#define CURRENT_VALUE(points, i, dim) (((const gfloat *) (points + i))[dim])
+
 /* Stage one of modified KD-Tree algorithm */
 static void
 stageone (lab          *points,
           gint          dims,
           gint          depth,
           ArrayList    *clusters,
-          const gfloat  limits[SIOX_DIMS],
+          const gfloat *limits,
           gint          length)
 {
   gint    curdim = depth % dims;
-  gfloat  min, max;
   gint    i, countsm, countgr, smallc, bigc;
+  gfloat  min, max;
   gfloat  pivotvalue, curval;
-  lab   *smallerpoints;
-  lab   *biggerpoints;
+  lab    *smallerpoints;
+  lab    *biggerpoints;
 
   if (length < 1)
     return;
 
-  if (curdim == 0)
-    curval = points[0].l;
-  else if (curdim == 1)
-    curval = points[0].a;
-  else
-    curval = points[0].b;
+  curval = CURRENT_VALUE (points, 0, curdim);
 
   min = curval;
   max = curval;
 
   for (i = 1; i < length; i++)
     {
-      if (curdim == 0)
-        curval = points[i].l;
-      else if (curdim == 1)
-        curval = points[i].a;
-      else if (curdim == 2)
-        curval = points[i].b;
+      curval = CURRENT_VALUE (points, i, curdim);
 
       if (min > curval)
         min = curval;
@@ -265,54 +258,39 @@ stageone (lab          *points,
   if (max - min > limits[curdim])
     {
       pivotvalue = ((max - min) / 2.0) + min;
+
       countsm = 0;
       countgr = 0;
 
       /* find out cluster sizes */
       for (i = 0; i < length; i++)
         {
-          if (curdim == 0)
-            curval = points[i].l;
-          else if (curdim == 1)
-            curval = points[i].a;
-          else if (curdim == 2)
-            curval = points[i].b;
+          curval = CURRENT_VALUE (points, i, curdim);
 
           if (curval <= pivotvalue)
-            {
-              countsm++;
-            }
+            countsm++;
           else
-            {
-              countgr++;
-            }
+            countgr++;
         }
 
       /* FIXME: consider to sort the array and split in place instead
        *        of allocating memory here
        */
       smallerpoints = g_new (lab, countsm);
-      biggerpoints = g_new (lab, countgr);
+      biggerpoints  = g_new (lab, countgr);
+
       smallc = 0;
-      bigc = 0;
+      bigc   = 0;
 
       for (i = 0; i < length; i++)
-        {       /* do actual split */
-          if (curdim == 0)
-            curval = points[i].l;
-          else if (curdim == 1)
-            curval = points[i].a;
-          else if (curdim == 2)
-            curval = points[i].b;
+        {
+          /* do actual split */
+          curval = CURRENT_VALUE (points, i, curdim);
 
           if (curval <= pivotvalue)
-            {
-              smallerpoints[smallc++] = points[i];
-            }
+            smallerpoints[smallc++] = points[i];
           else
-            {
-              biggerpoints[bigc++] = points[i];
-            }
+            biggerpoints[bigc++] = points[i];
         }
 
       if (depth > 0)
@@ -339,7 +317,7 @@ stagetwo (lab          *points,
           gint          dims,
           gint          depth,
           ArrayList    *clusters,
-          const gfloat  limits[SIOX_DIMS],
+          const gfloat *limits,
           gint          length,
           gint          total,
           gfloat        threshold)
@@ -356,29 +334,18 @@ stagetwo (lab          *points,
   if (length < 1)
     return;
 
-  if (curdim == 0)
-    curval = points[0].l;
-  else if (curdim == 1)
-    curval = points[0].a;
-  else
-    curval = points[0].b;
+  curval = CURRENT_VALUE (points, 0, curdim);
 
   min = curval;
   max = curval;
 
   for (i = 1; i < length; i++)
     {
-      if (curdim == 0)
-        curval = points[i].l;
-      else if (curdim == 1)
-        curval = points[i].a;
-      else if (curdim == 2)
-        curval = points[i].b;
+      curval = CURRENT_VALUE (points, i, curdim);
 
       if (min > curval)
         min = curval;
-
-      if (max < curval)
+      else if (max < curval)
         max = curval;
     }
 
@@ -395,50 +362,34 @@ stagetwo (lab          *points,
       countgr = 0;
 
       for (i = 0; i < length; i++)
-        {  /* find out cluster sizes */
-          if (curdim == 0)
-            curval = points[i].l;
-          else if (curdim == 1)
-            curval = points[i].a;
-          else if (curdim == 2)
-            curval = points[i].b;
+        {
+          /* find out cluster sizes */
+          curval = CURRENT_VALUE (points, i, curdim);
 
           if (curval <= pivotvalue)
-            {
-              countsm++;
-            }
+            countsm++;
           else
-            {
-              countgr++;
-            }
+            countgr++;
         }
 
       /* FIXME: consider to sort the array and split in place instead
        *        of allocating memory here
        */
       smallerpoints = g_new (lab, countsm);
-      biggerpoints = g_new (lab, countgr);
+      biggerpoints  = g_new (lab, countgr);
+
       smallc = 0;
-      bigc = 0;
+      bigc   = 0;
 
       /* do actual split */
       for (i = 0; i < length; i++)
         {
-          if (curdim == 0)
-            curval = points[i].l;
-          else if (curdim == 1)
-            curval = points[i].a;
-          else if (curdim == 2)
-            curval = points[i].b;
+          curval = CURRENT_VALUE (points, i, curdim);
 
           if (curval <= pivotvalue)
-            {
-              smallerpoints[smallc++] = points[i];
-            }
+            smallerpoints[smallc++] = points[i];
           else
-            {
-              biggerpoints[bigc++] = points[i];
-            }
+            biggerpoints[bigc++] = points[i];
         }
 
       g_free (points);
@@ -469,9 +420,9 @@ stagetwo (lab          *points,
               point->b += points[i].b;
             }
 
-          point->l /= (length * 1.0);
-          point->a /= (length * 1.0);
-          point->b /= (length * 1.0);
+          point->l /= length;
+          point->a /= length;
+          point->b /= length;
 
 #ifdef DEBUG
           g_printerr ("cluster=%f, %f, %f sum=%d\n",
@@ -487,19 +438,28 @@ stagetwo (lab          *points,
 
 /* squared euclidean distance */
 static inline float
-euklid (const lab p,
-        const lab q)
+euklid (const lab *p,
+        const lab *q)
 {
-  return ((p.l - q.l) * (p.l - q.l) +
-          (p.a - q.a) * (p.a - q.a) +
-          (p.b - q.b) * (p.b - q.b));
+  return ((p->l - q->l) * (p->l - q->l) +
+          (p->a - q->a) * (p->a - q->a) +
+          (p->b - q->b) * (p->b - q->b));
+}
+
+/* Returns squared clustersize */
+static gfloat
+get_clustersize (const gfloat *limits)
+{
+  return ((limits[0] - (-limits[0])) * (limits[0] - (-limits[0])) +
+          (limits[1] - (-limits[1])) * (limits[1] - (-limits[1])) +
+          (limits[2] - (-limits[2])) * (limits[2] - (-limits[2])));
 }
 
 /* Creates a color signature for a given set of pixels */
 static lab *
 create_signature (lab          *input,
                   gint          length,
-                  const gfloat  limits[SIOX_DIMS],
+                  const gfloat *limits,
                   gint         *returnlength)
 {
   ArrayList *clusters1;
@@ -507,10 +467,9 @@ create_signature (lab          *input,
   ArrayList *curelem;
   lab       *centroids;
   lab       *cluster;
-  lab        centroid;
   lab       *rval;
-  int        k, i;
-  int        clusters1size;
+  gint       k, i;
+  gint       clusters1size;
 
   if (length < 1)
     {
@@ -528,21 +487,22 @@ create_signature (lab          *input,
   i = 0;
   while (curelem->array)
     {
-      centroid.l = 0;
-      centroid.a = 0;
-      centroid.b = 0;
+      gfloat l = 0;
+      gfloat a = 0;
+      gfloat b = 0;
+
       cluster = curelem->array;
 
       for (k = 0; k < curelem->arraylength; k++)
         {
-          centroid.l += cluster[k].l;
-          centroid.a += cluster[k].a;
-          centroid.b += cluster[k].b;
+          l += cluster[k].l;
+          a += cluster[k].a;
+          b += cluster[k].b;
         }
 
-      centroids[i].l = centroid.l / (curelem->arraylength * 1.0);
-      centroids[i].a = centroid.a / (curelem->arraylength * 1.0);
-      centroids[i].b = centroid.b / (curelem->arraylength * 1.0);
+      centroids[i].l = l / curelem->arraylength;
+      centroids[i].a = a / curelem->arraylength;
+      centroids[i].b = b / curelem->arraylength;
       centroids[i].cardinality = curelem->arraylength;
 
       i++;
@@ -595,9 +555,7 @@ threshold_mask (TileManager *mask,
           guchar *d = data;
 
           for (col = 0; col < region.w; col++, d++)
-            {
-              *d = *d > 127 ? 255 : 0;
-            }
+            *d = (*d & 0x80) ? 255 : 0;
 
           data += region.rowstride;
         }
@@ -751,18 +709,6 @@ find_max_blob (TileManager *mask,
 
   g_queue_free (q);
   g_free (labelfield);
-}
-
-/* Returns squared clustersize */
-static gfloat
-get_clustersize (const gfloat limits[SIOX_DIMS])
-{
-  gfloat sum = (limits[0] - (-limits[0])) * (limits[0] - (-limits[0]));
-
-  sum += (limits[1] - (-limits[1])) * (limits[1] - (-limits[1]));
-  sum += (limits[2] - (-limits[2])) * (limits[2] - (-limits[2]));
-
-  return sum;
 }
 
 static inline void
@@ -962,11 +908,11 @@ siox_foreground_extract (TileManager      *pixels,
 
               calc_lab (s, bpp, colormap, &labpixel);
               background = TRUE;
-              min = euklid (labpixel, bgsig[0]);
+              min = euklid (&labpixel, bgsig + 0);
 
               for (i = 1; i < bgsiglen; i++)
                 {
-                  d = euklid (labpixel, bgsig[i]);
+                  d = euklid (&labpixel, bgsig + i);
 
                   if (d < min)
                     min = d;
@@ -983,7 +929,7 @@ siox_foreground_extract (TileManager      *pixels,
                 {
                   for (i = 0; i < fgsiglen; i++)
                     {
-                      d = euklid (labpixel, fgsig[i]);
+                      d = euklid (&labpixel, fgsig + i);
 
                       if (d < min)
                         {

@@ -1,5 +1,9 @@
 2005-08-07  Sven Neumann  <sven@gimp.org>
 
+	* app/base/siox.c (siox_foreground_extract): micro optimizations.
+
+2005-08-07  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpforegroundselecttool.c: do not restart draw tool
 	unless shell->proximity.
 
