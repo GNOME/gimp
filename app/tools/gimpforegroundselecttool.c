@@ -566,25 +566,26 @@ gimp_foreground_select_tool_draw (GimpDrawTool *draw_tool)
       radius /= 2;
 
       /*  warn if the user is drawing outside of the working area  */
-      {
-        gint x1, y1;
-        gint x2, y2;
+      if (FALSE)
+        {
+          gint x1, y1;
+          gint x2, y2;
 
-        gimp_foreground_select_tool_get_area (fg_select->mask,
-                                              &x1, &y1, &x2, &y2);
+          gimp_foreground_select_tool_get_area (fg_select->mask,
+                                                &x1, &y1, &x2, &y2);
 
-        if (x < x1 + radius || x > x2 - radius ||
-            y < y1 + radius || y > y2 - radius)
-          {
-            gimp_draw_tool_draw_rectangle (draw_tool, FALSE,
-                                           x1, y1, x2 - x1, y2 - y1, TRUE);
-          }
-      }
+          if (x < x1 + radius || x > x2 - radius ||
+              y < y1 + radius || y > y2 - radius)
+            {
+              gimp_draw_tool_draw_rectangle (draw_tool, FALSE,
+                                             x1, y1, x2 - x1, y2 - y1, FALSE);
+            }
+        }
 
       gimp_draw_tool_draw_arc (draw_tool, FALSE,
                                x - radius, y - radius,
                                2 * radius, 2 * radius, 0, 360 * 64,
-                               TRUE);
+                               FALSE);
     }
   else
     {

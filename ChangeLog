@@ -1,3 +1,9 @@
+2005-08-08  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpforegroundselecttool.c
+	(gimp_foreground_select_tool_draw): do not use drawable offsets.
+	Disabled the rectangle indicating the working area.
+
 2005-08-07  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage-resize.c (gimp_image_resize_with_layers):
