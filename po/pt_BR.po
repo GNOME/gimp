@@ -8,7 +8,6 @@
 # Cyro Mendes de Moraes Neto <neto@conectiva.com.br>, 1999.
 # Marcia Norie Nakaza <norie@conectiva.com.br>, 2000.
 # Alexandre Folle de Menezes <afmenez@terra.com.br>, 2002-2003.
-# Joao S. O. Bueno <gwidion@mpc.com.br>, 2004.
 # Joao S. O. Bueno Calligaris <gwidion@mpc.com.br>, 2004.
 #
 msgid ""
@@ -16,9 +15,9 @@ msgstr ""
 "Project-Id-Version: pt_BR\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-12-28 16:58+0100\n"
-"PO-Revision-Date: 2004-12-14 02:58-0200\n"
+"PO-Revision-Date: 2005-08-07 02:30-0300\n"
 "Last-Translator: Joao S. O. Bueno Calligaris <gwidion@mpc.com.br>\n"
-"Language-Team: Brazilian Portuguese <<gnome-l10n-br@listas.cipsga.org.br>>\n"
+"Language-Team: Brazilian Portuguese <gnome-l10n-br@listas.cipsga.org.br>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -5643,7 +5642,8 @@ msgstr ""
 "Cyro Mendes de Moraes Neto\n"
 "Marcia Norie Nakaza\n"
 "Alexandre Folle de Menezes\n"
-"João S. O. Bueno Calligaris"
+"João S. O. Bueno Calligaris\n"
+"Guilherme de S. Pastore"
 
 #: app/dialogs/about-dialog.c:59
 msgid "Contributions by"
@@ -10896,7 +10896,7 @@ msgstr "Erro de XCF: encontrada versão de arquivo XCF %d não suportada"
 
 #: data/misc/gimp.desktop.in.in.h:1
 msgid "Create and edit images or photographs"
-msgstr "Criar e editar imagens ou fotografias"
+msgstr "Crie e edite imagens ou fotografias"
 
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "Image Editor"
