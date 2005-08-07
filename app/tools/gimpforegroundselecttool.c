@@ -317,9 +317,9 @@ gimp_foreground_select_tool_oper_update (GimpTool        *tool,
         case SELECTION_MOVE_COPY:
         case SELECTION_ANCHOR:
           if (fg_select->strokes)
-            status = _("Press Enter to apply the selection");
+            status = _("Add more strokes or press Enter to accept the selection");
           else
-            status = _("Refine the selection by drawing on the object");
+            status = _("Mark foreground by painting on the object to extract");
           break;
         default:
           break;
@@ -333,7 +333,7 @@ gimp_foreground_select_tool_oper_update (GimpTool        *tool,
         case SELECTION_SUBTRACT:
         case SELECTION_INTERSECT:
         case SELECTION_REPLACE:
-          status = _("Draw a rough outline around the object to extract");
+          status = _("Draw a rough circle around the object to extract");
           break;
         default:
           break;
@@ -343,7 +343,7 @@ gimp_foreground_select_tool_oper_update (GimpTool        *tool,
   if (status)
     gimp_tool_replace_status (tool, gdisp, status);
 
-  if (fg_select->mask && GIMP_DISPLAY_SHELL (gdisp->shell)->proximity)
+  if (GIMP_DISPLAY_SHELL (gdisp->shell)->proximity)
     gimp_draw_tool_start (draw_tool, gdisp);
 }
 
@@ -605,9 +605,6 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
   GimpDrawable    *drawable = gimp_image_active_drawable (gimage);
   GimpScanConvert *scan_convert;
   GimpChannel     *mask;
-  GList           *list;
-  gint             x1, y1;
-  gint             x2, y2;
 
   fg_select = GIMP_FOREGROUND_SELECT_TOOL (free_sel);
   options = GIMP_FOREGROUND_SELECT_OPTIONS (tool->tool_info->tool_options);
@@ -621,8 +618,6 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
   if (! drawable)
     return;
 
-  gimp_set_busy (gimage->gimp);
-
   scan_convert = gimp_scan_convert_new ();
 
   gimp_scan_convert_add_polyline (scan_convert,
@@ -635,28 +630,41 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
 
   gimp_scan_convert_render_value (scan_convert,
                                   gimp_drawable_data (GIMP_DRAWABLE (mask)),
-                                  0, 0, 127);
+                                  0, 0, 128);
   gimp_scan_convert_free (scan_convert);
 
-  /*  restrict working area to double the size of the bounding box  */
-  gimp_foreground_select_tool_get_area (mask, &x1, &y1, &x2, &y2);
+  if (fg_select->strokes)
+    {
+      GList *list;
+      gint   x1, y1;
+      gint   x2, y2;
 
-  /*  apply foreground and background markers  */
-  for (list = fg_select->strokes; list; list = list->next)
-    gimp_foreground_select_tool_stroke (mask, list->data);
+      gimp_set_busy (gimage->gimp);
 
-  gimp_drawable_foreground_extract_siox (drawable,
-                                         GIMP_DRAWABLE (mask),
-                                         x1, y1, x2 - x1, y2 - y1,
-                                         options->smoothness,
-                                         options->limits,
-                                         GIMP_PROGRESS (gdisp));
+      /*  restrict working area to double the size of the bounding box  */
+      gimp_foreground_select_tool_get_area (mask, &x1, &y1, &x2, &y2);
 
-  gimp_foreground_select_tool_set_mask (GIMP_FOREGROUND_SELECT_TOOL (free_sel),
-                                        gdisp, mask);
+      /*  apply foreground and background markers  */
+      for (list = fg_select->strokes; list; list = list->next)
+        gimp_foreground_select_tool_stroke (mask, list->data);
+
+      gimp_drawable_foreground_extract_siox (drawable,
+                                             GIMP_DRAWABLE (mask),
+                                             x1, y1, x2 - x1, y2 - y1,
+                                             options->smoothness,
+                                             options->limits,
+                                             GIMP_PROGRESS (gdisp));
+
+      gimp_unset_busy (gimage->gimp);
+    }
+  else
+    {
+      g_object_set (options, "background", FALSE, NULL);
+    }
+
+  gimp_foreground_select_tool_set_mask (fg_select, gdisp, mask);
+
   g_object_unref (mask);
-
-  gimp_unset_busy (gimage->gimp);
 }
 
 static void

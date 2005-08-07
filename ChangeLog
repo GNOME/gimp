@@ -1,5 +1,10 @@
 2005-08-08  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpforegroundselecttool.c: do not attempt foreground
+	extraction until the user has specificied a foreground area.
+
+2005-08-08  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpforegroundselecttool.c
 	(gimp_foreground_select_tool_draw): do not use drawable offsets.
 	Disabled the rectangle indicating the working area.
