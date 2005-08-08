@@ -767,7 +767,7 @@ gimp_foreground_select_tool_stroke (GimpChannel    *mask,
 
   gimp_scan_convert_stroke (scan_convert,
                             stroke->width,
-                            GIMP_JOIN_MITER, GIMP_CAP_ROUND, 10.0,
+                            GIMP_JOIN_ROUND, GIMP_CAP_ROUND, 10.0,
                             0.0, NULL);
   gimp_scan_convert_compose (scan_convert,
                              stroke->background ?

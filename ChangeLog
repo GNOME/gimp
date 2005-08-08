@@ -1,5 +1,11 @@
 2005-08-08  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-draw.c (gimp_display_shell_get_pen_gc)
+	* app/tools/gimpforegroundselecttool.c: use round joins for the
+	brush strokes.
+
+2005-08-08  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpforegroundselecttool.c: do not attempt foreground
 	extraction until the user has specificied a foreground area.
 

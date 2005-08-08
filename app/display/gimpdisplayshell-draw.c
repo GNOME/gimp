@@ -642,7 +642,7 @@ gimp_display_shell_get_pen_gc (GimpDisplayShell *shell,
 
   values.line_style = GDK_LINE_SOLID;
   values.cap_style  = GDK_CAP_ROUND;
-  values.join_style = GDK_JOIN_MITER;
+  values.join_style = GDK_JOIN_ROUND;
 
   shell->pen_gc = gdk_gc_new_with_values (shell->canvas->window,
                                           &values, (GDK_GC_LINE_STYLE |
