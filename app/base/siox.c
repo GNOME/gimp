@@ -646,10 +646,10 @@ find_max_blob (TileManager *mask,
                   if (labelfield[pos] == 0)
                     {
                       guchar val;
-                      gint   x = pos % width;
-                      gint   y = pos / width;
+                      gint   pos_x = pos % width;
+                      gint   pos_y = pos / width;
 
-                      read_pixel_data_1 (mask, x, y , &val);
+                      read_pixel_data_1 (mask, x + pos_x, y + pos_y, &val);
 
                       if (val & 0x80)
                         {
@@ -657,16 +657,16 @@ find_max_blob (TileManager *mask,
 
                           regioncount++;
 
-                          if (x + 1 < width)
+                          if (pos_x + 1 < width)
                             g_queue_push_tail (q,
                                                GINT_TO_POINTER (pos + 1));
-                          if (x > 0)
+                          if (pos_x > 0)
                             g_queue_push_tail (q,
                                                GINT_TO_POINTER (pos - 1));
-                          if (y + 1 < height)
+                          if (pos_y + 1 < height)
                             g_queue_push_tail (q,
                                                GINT_TO_POINTER (pos + width));
-                          if (y > 0)
+                          if (pos_y > 0)
                             g_queue_push_tail (q,
                                                GINT_TO_POINTER (pos - width));
                         }
@@ -686,6 +686,8 @@ find_max_blob (TileManager *mask,
           index += width;
         }
     }
+
+  g_queue_free (q);
 
   pixel_region_init (&region, mask, x, y, width, height, TRUE);
 
@@ -712,7 +714,6 @@ find_max_blob (TileManager *mask,
         }
     }
 
-  g_queue_free (q);
   g_free (labelfield);
 }
 
