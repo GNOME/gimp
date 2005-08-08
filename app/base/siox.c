@@ -630,31 +630,45 @@ find_max_blob (TileManager *mask,
             {
               gint regioncount = 0;
 
-              if (labelfield[i] == 0 && *d > 127)
+              if (labelfield[i] == 0 && (*d & 0x80))
                 g_queue_push_tail (q, GINT_TO_POINTER (i));
 
               while (! g_queue_is_empty (q))
                 {
                   gint pos = GPOINTER_TO_INT (g_queue_pop_head (q));
 
-                  if (pos < 0 || pos >= length)
-                    continue;
+                  if (G_UNLIKELY (pos < 0 || pos >= length))
+                    {
+                      g_warning ("%s: should never get here", G_STRLOC);
+                      continue;
+                    }
 
                   if (labelfield[pos] == 0)
                     {
                       guchar val;
+                      gint   x = pos % width;
+                      gint   y = pos / width;
 
-                      read_pixel_data_1 (mask, pos % width, pos / width, &val);
-                      if (val > 127)
+                      read_pixel_data_1 (mask, x, y , &val);
+
+                      if (val & 0x80)
                         {
                           labelfield[pos] = curlabel;
 
                           regioncount++;
 
-                          g_queue_push_tail (q, GINT_TO_POINTER (pos + 1));
-                          g_queue_push_tail (q, GINT_TO_POINTER (pos - 1));
-                          g_queue_push_tail (q, GINT_TO_POINTER (pos + width));
-                          g_queue_push_tail (q, GINT_TO_POINTER (pos - width));
+                          if (x + 1 < width)
+                            g_queue_push_tail (q,
+                                               GINT_TO_POINTER (pos + 1));
+                          if (x > 0)
+                            g_queue_push_tail (q,
+                                               GINT_TO_POINTER (pos - 1));
+                          if (y + 1 < height)
+                            g_queue_push_tail (q,
+                                               GINT_TO_POINTER (pos + width));
+                          if (y > 0)
+                            g_queue_push_tail (q,
+                                               GINT_TO_POINTER (pos - width));
                         }
                     }
                 }
