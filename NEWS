@@ -9,6 +9,7 @@ new stuff is being done that will one day be released as GIMP 2.4.
 
 Changes in GIMP 2.3.3
 =====================
+
 - improved new GimpPageSelector widget
 - minor improvements to the Procedure and Plug-In browsers
 - set alternative button order in some places that were missed earlier
@@ -16,11 +17,16 @@ Changes in GIMP 2.3.3
 - fixed most gcc 4.0 warnings
 - improved Cursor view and Sample Points functionality
 - prepared code and UI for more layer lock types
-- added GimpResolution entry widget
 - added new PDF import plug-in based on libpoppler
-- undeprecated and improved palette editor
+- undeprecated and improved palette editor, added cursor navigation
 - show more information in the Image Properties dialog
-- added first prototype of SIOX foreground selection tool
+- added prototype of SIOX foreground selection tool
+- fixed build of MMX code on gcc 4.0
+- moved procedure browser to libgimpwidgets as GimpProcBrowserDialog
+- canonicalize PDB procedure and parameter names
+- use the coefficients from the sRGB spec when calculating luminance
+- allow to remove alpha channel from a layer
+- bug fixes and code cleanup
 
 
 Changes in GIMP 2.3.2
