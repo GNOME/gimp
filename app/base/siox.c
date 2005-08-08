@@ -571,15 +571,28 @@ find_max_blob (TileManager *mask,
                gint         width,
                gint         height)
 {
-  GQueue     *q          = g_queue_new ();
-  gint        length     = width * height;
-  gint       *labelfield = g_new0 (gint, length);
+  GQueue     *q;
+  gint       *labels;
+  glong       size;
   PixelRegion region;
   gpointer    pr;
   gint        row, col;
   gint        curlabel  = 1;
   gint        maxblob   = 1;
   gint        maxregion = 0;
+
+  /*  FIXME: this function uses an insane amount of memory  */
+  size = width * height * sizeof (gint);
+  labels = g_try_malloc (size);
+  if (! labels)
+    {
+      g_warning ("%s: couldn't allocate %ld bytes", G_STRFUNC, size);
+      return;
+    }
+
+  memset (labels, 0, size);
+
+  q = g_queue_new ();
 
   pixel_region_init (&region, mask, x, y, width, height, FALSE);
 
@@ -599,12 +612,12 @@ find_max_blob (TileManager *mask,
             {
               gint regioncount = 0;
 
-              if (labelfield[i])
+              if (labels[i])
                 continue;
 
               if (! (*d & 0x80))
                 {
-                  labelfield[i] = -1;
+                  labels[i] = -1;
                   continue;
                 }
 
@@ -617,7 +630,7 @@ find_max_blob (TileManager *mask,
                   gint   pos_y;
                   guchar val;
 
-                  if (labelfield[pos])
+                  if (labels[pos])
                     continue;
 
                   pos_x = pos % width;
@@ -627,25 +640,25 @@ find_max_blob (TileManager *mask,
 
                   if (val & 0x80)
                     {
-                      labelfield[pos] = curlabel;
+                      labels[pos] = curlabel;
 
                       regioncount++;
 
-                      if (pos_x + 1 < width && ! labelfield[pos + 1])
+                      if (pos_x + 1 < width && ! labels[pos + 1])
                         g_queue_push_tail (q, GINT_TO_POINTER (pos + 1));
 
-                      if (pos_x > 0 && ! labelfield[pos - 1])
+                      if (pos_x > 0 && ! labels[pos - 1])
                         g_queue_push_tail (q, GINT_TO_POINTER (pos - 1));
 
-                      if (pos_y + 1 < height && ! labelfield[pos + width])
+                      if (pos_y + 1 < height && ! labels[pos + width])
                         g_queue_push_tail (q, GINT_TO_POINTER (pos + width));
 
-                      if (pos_y > 0 && ! labelfield[pos - width])
+                      if (pos_y > 0 && ! labels[pos - width])
                         g_queue_push_tail (q, GINT_TO_POINTER (pos - width));
                     }
                   else
                     {
-                      labelfield[pos] = -1;
+                      labels[pos] = -1;
                     }
                 }
 
@@ -680,16 +693,14 @@ find_max_blob (TileManager *mask,
           gint    i = index;
 
           for (col = 0; col < region.w; col++, d++, i++)
-            {
-              *d = (labelfield[i] == maxblob) ? 255 : 0;
-            }
+            *d = (labels[i] == maxblob) ? 255 : 0;
 
           data += region.rowstride;
           index += width;
         }
     }
 
-  g_free (labelfield);
+  g_free (labels);
 }
 
 static inline void

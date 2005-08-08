@@ -1,5 +1,12 @@
 2005-08-08  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpscanconvert.[ch]: added the possibility to specify
+	a clip rectangle.
+
+	* app/base/siox.c (find_max_blob): use g_try_malloc().
+
+2005-08-08  Sven Neumann  <sven@gimp.org>
+
 	* app/base/siox.c (find_max_blob): optimizations.
 
 2005-08-08  Sven Neumann  <sven@gimp.org>

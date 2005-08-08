@@ -31,6 +31,12 @@ void              gimp_scan_convert_free       (GimpScanConvert *scan_converter)
 void         gimp_scan_convert_set_pixel_ratio (GimpScanConvert *sc,
                                                 gdouble          ratio_xy);
 
+void         gimp_scan_convert_set_clip_rectangle (GimpScanConvert *sc,
+                                                   gint             x,
+                                                   gint             y,
+                                                   gint             width,
+                                                   gint             height);
+
 /* Add "npoints" from "pointlist" to the polygon currently being
  * described by "scan_converter". DEPRECATED.
  */

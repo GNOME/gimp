@@ -39,6 +39,12 @@ struct _GimpScanConvert
 {
   gdouble         ratio_xy;
 
+  gboolean        clip;
+  gint            clip_x;
+  gint            clip_y;
+  gint            clip_w;
+  gint            clip_h;
+
   /* stuff necessary for the _add_polygons API...  :-/  */
   gboolean        got_first;
   gboolean        need_closing;
@@ -124,6 +130,22 @@ gimp_scan_convert_set_pixel_ratio (GimpScanConvert *sc,
   sc->ratio_xy = ratio_xy;
 }
 
+
+void
+gimp_scan_convert_set_clip_rectangle (GimpScanConvert *sc,
+                                      gint             x,
+                                      gint             y,
+                                      gint             width,
+                                      gint             height)
+{
+  g_return_if_fail (sc != NULL);
+
+  sc->clip   = TRUE;
+  sc->clip_x = x;
+  sc->clip_y = y;
+  sc->clip_w = width;
+  sc->clip_h = height;
+}
 
 /* Add "n_points" from "points" to the polygon currently being
  * described by "scan_converter". DEPRECATED.
@@ -502,16 +524,27 @@ gimp_scan_convert_render_internal (GimpScanConvert *sc,
   PixelRegion  maskPR;
   gpointer     pr;
   gpointer     callback;
+  gint         x, y;
+  gint         width, height;
 
   gimp_scan_convert_finish (sc);
 
   if (!sc->svp)
     return;
 
-  pixel_region_init (&maskPR, tile_manager, 0, 0,
-                     tile_manager_width (tile_manager),
-                     tile_manager_height (tile_manager),
-                     TRUE);
+  x = 0;
+  y = 0;
+  width  = tile_manager_width (tile_manager);
+  height = tile_manager_height (tile_manager);
+
+  if (sc->clip &&
+      ! gimp_rectangle_intersect (x, y, width, height,
+                                  sc->clip_x, sc->clip_y,
+                                  sc->clip_w, sc->clip_h,
+                                  &x, &y, &width, &height))
+    return;
+
+  pixel_region_init (&maskPR, tile_manager, x, y, width, height, TRUE);
 
   g_return_if_fail (maskPR.bytes == 1);
 
@@ -533,10 +566,8 @@ gimp_scan_convert_render_internal (GimpScanConvert *sc,
       sc->x1        = off_x + maskPR.x + maskPR.w;
 
       art_svp_render_aa (sc->svp,
-                         sc->x0,
-                         off_y + maskPR.y,
-                         sc->x1,
-                         off_y + maskPR.y + maskPR.h,
+                         sc->x0, off_y + maskPR.y,
+                         sc->x1, off_y + maskPR.y + maskPR.h,
                          callback, sc);
     }
 }
@@ -620,7 +651,9 @@ gimp_scan_convert_render_callback (gpointer            user_data,
 {
   GimpScanConvert *sc        = user_data;
   gint             cur_value = start_value;
-  gint             k, run_x0, run_x1;
+  gint             run_x0;
+  gint             run_x1;
+  gint             k;
 
 #define VALUE_TO_PIXEL(x) (sc->antialias ? \
                            ((x) >> 16)   : \
