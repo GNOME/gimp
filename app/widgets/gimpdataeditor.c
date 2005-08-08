@@ -24,6 +24,7 @@
 #include <string.h>
 
 #include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -77,6 +78,9 @@ static gchar    * gimp_data_editor_get_title         (GimpDocked     *docked);
 static void       gimp_data_editor_real_set_data     (GimpDataEditor *editor,
                                                       GimpData       *data);
 
+static gboolean   gimp_data_editor_name_key_press    (GtkWidget      *widget,
+                                                      GdkEventKey    *kevent,
+                                                      GimpDataEditor *editor);
 static void       gimp_data_editor_name_activate     (GtkWidget      *widget,
                                                       GimpDataEditor *editor);
 static gboolean   gimp_data_editor_name_focus_out    (GtkWidget      *widget,
@@ -175,6 +179,9 @@ gimp_data_editor_init (GimpDataEditor *editor)
 
   gtk_widget_set_sensitive (editor->name_entry, FALSE);
 
+  g_signal_connect (editor->name_entry, "key-press-event",
+		    G_CALLBACK (gimp_data_editor_name_key_press),
+                    editor);
   g_signal_connect (editor->name_entry, "activate",
 		    G_CALLBACK (gimp_data_editor_name_activate),
                     editor);
@@ -430,6 +437,21 @@ gimp_data_editor_get_data (GimpDataEditor *editor)
 
 
 /*  private functions  */
+
+static gboolean
+gimp_data_editor_name_key_press (GtkWidget      *widget,
+                                 GdkEventKey    *kevent,
+                                 GimpDataEditor *editor)
+{
+  if (kevent->keyval == GDK_Escape)
+    {
+      gtk_entry_set_text (GTK_ENTRY (editor->name_entry),
+                          gimp_object_get_name (GIMP_OBJECT (editor->data)));
+      return TRUE;
+    }
+
+  return FALSE;
+}
 
 static void
 gimp_data_editor_name_activate (GtkWidget      *widget,
