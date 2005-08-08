@@ -943,7 +943,7 @@ siox_foreground_extract (TileManager      *pixels,
   g_free (fgsig);
   g_free (bgsig);
 
-  siox_progress_update (progress_callback, progress_data, 0.9);
+  siox_progress_update (progress_callback, progress_data, 0.8);
 
   /* smooth a bit for error killing */
   smooth_mask (mask, x, y, width, height);
@@ -955,6 +955,8 @@ siox_foreground_extract (TileManager      *pixels,
 
   /* search the biggest connected component */
   find_max_blob (mask, x, y, width, height);
+
+  siox_progress_update (progress_callback, progress_data, 0.9);
 
   /* smooth again - as user specified */
   for (i = 0; i < smoothness; i++)

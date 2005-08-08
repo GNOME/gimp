@@ -1,5 +1,11 @@
 2005-08-08  Sven Neumann  <sven@gimp.org>
 
+	* app/base/siox.c: added another call to gimp_progress_update().
+
+	* app/core/gimp.c (gimp_init): fixed harmless cut-n-paste error.
+
+2005-08-08  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpscanconvert.[ch]: added the possibility to specify
 	a clip rectangle.
 

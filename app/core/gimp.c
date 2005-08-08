@@ -278,7 +278,7 @@ gimp_init (Gimp *gimp)
   gimp->documents           = gimp_document_list_new (gimp);
 
   gimp->templates           = gimp_list_new (GIMP_TYPE_TEMPLATE, TRUE);
-  gimp_object_set_name (GIMP_OBJECT (gimp->tool_info_list), "templates");
+  gimp_object_set_name (GIMP_OBJECT (gimp->templates), "templates");
 
   gimp->image_new_last_template = NULL;
   gimp->have_current_cut_buffer = FALSE;
