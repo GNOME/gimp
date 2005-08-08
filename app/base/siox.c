@@ -523,37 +523,6 @@ create_signature (lab          *input,
 }
 
 static void
-threshold_mask (TileManager *mask,
-                gint         x,
-                gint         y,
-                gint         width,
-                gint         height)
-{
-  PixelRegion region;
-  gpointer    pr;
-  gint        row, col;
-
-  pixel_region_init (&region, mask, x, y, width, height, TRUE);
-
-  for (pr = pixel_regions_register (1, &region);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
-    {
-      guchar *data = region.data;
-
-      for (row = 0; row < region.h; row++)
-        {
-          guchar *d = data;
-
-          for (col = 0; col < region.w; col++, d++)
-            *d = (*d & 0x80) ? 255 : 0;
-
-          data += region.rowstride;
-        }
-    }
-}
-
-static void
 smooth_mask (TileManager *mask,
              gint         x,
              gint         y,
@@ -609,8 +578,8 @@ find_max_blob (TileManager *mask,
   gpointer    pr;
   gint        row, col;
   gint        curlabel  = 1;
+  gint        maxblob   = 1;
   gint        maxregion = 0;
-  gint        maxblob   = 0;
 
   pixel_region_init (&region, mask, x, y, width, height, FALSE);
 
@@ -705,8 +674,7 @@ find_max_blob (TileManager *mask,
 
           for (col = 0; col < region.w; col++, d++, i++)
             {
-              if (labelfield[i] != 0 && labelfield[i] != maxblob)
-                *d = 0;
+              *d = (labelfield[i] == maxblob) ? 255 : 0;
             }
 
           data += region.rowstride;
@@ -959,10 +927,10 @@ siox_foreground_extract (TileManager      *pixels,
 
   siox_progress_update (progress_callback, progress_data, 0.9);
 
-  /* Smooth a bit for error killing */
+  /* smooth a bit for error killing */
   smooth_mask (mask, x, y, width, height);
 
-  /* Now erode, to make sure only "strongly connected components"
+  /* erode, to make sure only "strongly connected components"
    * keep being connected
    */
   erode_mask (mask, x, y, width, height);
@@ -974,13 +942,10 @@ siox_foreground_extract (TileManager      *pixels,
   for (i = 0; i < smoothness; i++)
     smooth_mask (mask, x, y, width, height);
 
-  /* Threshold the values */
-  threshold_mask (mask, x, y, width, height);
-
   /* search the biggest connected component again to kill jitter */
   find_max_blob (mask, x, y, width, height);
 
-  /* Now dilate, to fill up boundary pixels killed by erode */
+  /* dilate, to fill up boundary pixels killed by erode */
   dilate_mask (mask, x, y, width, height);
 
   siox_progress_update (progress_callback, progress_data, 1.0);
