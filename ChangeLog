@@ -1,3 +1,9 @@
+2005-08-08  Jakub Steiner <jimmac@ximian.com>
+
+	* themes/Default/images/tools/stock-tool-foreground-select-16.png
+	* themes/Default/images/tools/stock-tool-foreground-select-22.png:
+	  icon for the new tool. Hopefully gets the message across.
+
 2005-08-08  Sven Neumann  <sven@gimp.org>
 
 	* app/base/siox.c (find_max_blob): optimized further.
