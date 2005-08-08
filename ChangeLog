@@ -1,5 +1,9 @@
 2005-08-08  Sven Neumann  <sven@gimp.org>
 
+	* app/base/siox.c (find_max_blob): optimizations.
+
+2005-08-08  Sven Neumann  <sven@gimp.org>
+
 	* app/base/siox.c (find_max_blob): fixed for offsetted regions.
 	Do thresholding as part of find_max_blob().
 

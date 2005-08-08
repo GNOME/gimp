@@ -599,46 +599,53 @@ find_max_blob (TileManager *mask,
             {
               gint regioncount = 0;
 
-              if (labelfield[i] == 0 && (*d & 0x80))
-                g_queue_push_tail (q, GINT_TO_POINTER (i));
+              if (labelfield[i])
+                continue;
+
+              if (! (*d & 0x80))
+                {
+                  labelfield[i] = -1;
+                  continue;
+                }
+
+              g_queue_push_tail (q, GINT_TO_POINTER (i));
 
               while (! g_queue_is_empty (q))
                 {
-                  gint pos = GPOINTER_TO_INT (g_queue_pop_head (q));
+                  gint   pos = GPOINTER_TO_INT (g_queue_pop_head (q));
+                  gint   pos_x;
+                  gint   pos_y;
+                  guchar val;
 
-                  if (G_UNLIKELY (pos < 0 || pos >= length))
+                  if (labelfield[pos])
+                    continue;
+
+                  pos_x = pos % width;
+                  pos_y = pos / width;
+
+                  read_pixel_data_1 (mask, x + pos_x, y + pos_y, &val);
+
+                  if (val & 0x80)
                     {
-                      g_warning ("%s: should never get here", G_STRLOC);
-                      continue;
+                      labelfield[pos] = curlabel;
+
+                      regioncount++;
+
+                      if (pos_x + 1 < width && ! labelfield[pos + 1])
+                        g_queue_push_tail (q, GINT_TO_POINTER (pos + 1));
+
+                      if (pos_x > 0 && ! labelfield[pos - 1])
+                        g_queue_push_tail (q, GINT_TO_POINTER (pos - 1));
+
+                      if (pos_y + 1 < height && ! labelfield[pos + width])
+                        g_queue_push_tail (q, GINT_TO_POINTER (pos + width));
+
+                      if (pos_y > 0 && ! labelfield[pos - width])
+                        g_queue_push_tail (q, GINT_TO_POINTER (pos - width));
                     }
-
-                  if (labelfield[pos] == 0)
+                  else
                     {
-                      guchar val;
-                      gint   pos_x = pos % width;
-                      gint   pos_y = pos / width;
-
-                      read_pixel_data_1 (mask, x + pos_x, y + pos_y, &val);
-
-                      if (val & 0x80)
-                        {
-                          labelfield[pos] = curlabel;
-
-                          regioncount++;
-
-                          if (pos_x + 1 < width)
-                            g_queue_push_tail (q,
-                                               GINT_TO_POINTER (pos + 1));
-                          if (pos_x > 0)
-                            g_queue_push_tail (q,
-                                               GINT_TO_POINTER (pos - 1));
-                          if (pos_y + 1 < height)
-                            g_queue_push_tail (q,
-                                               GINT_TO_POINTER (pos + width));
-                          if (pos_y > 0)
-                            g_queue_push_tail (q,
-                                               GINT_TO_POINTER (pos - width));
-                        }
+                      labelfield[pos] = -1;
                     }
                 }
 
