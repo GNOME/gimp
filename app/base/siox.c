@@ -55,14 +55,14 @@
 
 
 /* Thresholds in the mask:
- *   pixels < LOW are known background
- *   pixels > HIGH are known foreground
+ *   pixels < SIOX_LOW  are known background
+ *   pixels > SIOX_HIGH are known foreground
  */
 #define SIOX_LOW  1
 #define SIOX_HIGH 254
 
 
-/* #define DEBUG */
+/* #define SIOX_DEBUG */
 
 
 /* Simulate a java.util.ArrayList */
@@ -299,7 +299,8 @@ stageone (lab          *points,
       stageone (biggerpoints, dims, depth + 1, clusters, limits, countgr);
     }
   else
-    { /* create leave */
+    {
+      /* create leave */
       add_to_list (clusters, points, length, depth != 0);
     }
 }
@@ -354,7 +355,7 @@ stagetwo (lab          *points,
       gint    bigc    = 0;
       gfloat  pivot   = (min + max) / 2.0;
 
-#ifdef DEBUG
+#ifdef SIOX_DEBUG
       g_printerr ("max=%f min=%f pivot=%f\n", max, min, pivot);
 #endif
 
@@ -416,7 +417,7 @@ stagetwo (lab          *points,
           point->a /= length;
           point->b /= length;
 
-#ifdef DEBUG
+#ifdef SIOX_DEBUG
           g_printerr ("cluster=%f, %f, %f sum=%d\n",
                       point->l, point->a, point->b, sum);
 #endif
@@ -498,7 +499,7 @@ create_signature (lab          *input,
       curelem = curelem->next;
     }
 
-#ifdef DEBUG
+#ifdef SIOX_DEBUG
   g_printerr ("step #1 -> %d clusters\n", size);
 #endif
 
@@ -514,7 +515,7 @@ create_signature (lab          *input,
 
   free_list (clusters);
 
-#ifdef DEBUG
+#ifdef SIOX_DEBUG
   g_printerr ("step #2 -> %d clusters\n", returnlength[0]);
 #endif
 
