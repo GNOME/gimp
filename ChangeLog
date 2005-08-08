@@ -1,5 +1,9 @@
 2005-08-08  Sven Neumann  <sven@gimp.org>
 
+	* app/base/siox.c (find_max_blob): optimized further.
+
+2005-08-08  Sven Neumann  <sven@gimp.org>
+
 	* app/base/siox.c: added another call to gimp_progress_update().
 
 	* app/core/gimp.c (gimp_init): fixed harmless cut-n-paste error.

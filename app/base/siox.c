@@ -610,7 +610,9 @@ find_max_blob (TileManager *mask,
 
           for (col = 0; col < region.w; col++, d++, i++)
             {
-              gint regioncount = 0;
+              gint regioncount;
+              gint pos_x;
+              gint pos_y;
 
               if (labels[i])
                 continue;
@@ -621,13 +623,27 @@ find_max_blob (TileManager *mask,
                   continue;
                 }
 
-              g_queue_push_tail (q, GINT_TO_POINTER (i));
+              labels[i] = curlabel;
+              regioncount = 1;
+
+              pos_x = i % width;
+              pos_y = i / width;
+
+              if (pos_x + 1 < width && ! labels[i + 1])
+                g_queue_push_tail (q, GINT_TO_POINTER (i + 1));
+
+              if (pos_x > 0 && ! labels[i - 1])
+                g_queue_push_tail (q, GINT_TO_POINTER (i - 1));
+
+              if (pos_y + 1 < height && ! labels[i + width])
+                g_queue_push_tail (q, GINT_TO_POINTER (i + width));
+
+              if (pos_y > 0 && ! labels[i - width])
+                g_queue_push_tail (q, GINT_TO_POINTER (i - width));
 
               while (! g_queue_is_empty (q))
                 {
                   gint   pos = GPOINTER_TO_INT (g_queue_pop_head (q));
-                  gint   pos_x;
-                  gint   pos_y;
                   guchar val;
 
                   if (labels[pos])
@@ -641,7 +657,6 @@ find_max_blob (TileManager *mask,
                   if (val & 0x80)
                     {
                       labels[pos] = curlabel;
-
                       regioncount++;
 
                       if (pos_x + 1 < width && ! labels[pos + 1])
@@ -892,14 +907,14 @@ siox_foreground_extract (TileManager      *pixels,
           for (col = 0; col < srcPR.w; col++, m++, s += bpp)
             {
               lab       labpixel;
-              gboolean  background = FALSE;
+              gboolean  background;
               gfloat    min, d;
 
               if (*m < SIOX_LOW || *m > SIOX_HIGH)
                 continue;
 
               calc_lab (s, bpp, colormap, &labpixel);
-              background = TRUE;
+
               min = euklid (&labpixel, bgsig + 0);
 
               for (i = 1; i < bgsiglen; i++)
@@ -912,13 +927,12 @@ siox_foreground_extract (TileManager      *pixels,
 
               if (fgsiglen == 0)
                 {
-                  if (min < clustersize)
-                    background = TRUE;
-                  else
-                    background = FALSE;
+                  background = (min < clustersize);
                 }
               else
                 {
+                  background = TRUE;
+
                   for (i = 0; i < fgsiglen; i++)
                     {
                       d = euklid (&labpixel, fgsig + i);
