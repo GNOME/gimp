@@ -107,7 +107,7 @@ gimp_foreground_select_options_class_init (GimpForegroundSelectOptionsClass *kla
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_STROKE_WIDTH,
                                 "stroke-width",
                                 _("Size of the brush used for refinements"),
-                                1, 80, 24,
+                                1, 80, 18,
                                 0);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_SMOOTHNESS,
                                 "smoothness",

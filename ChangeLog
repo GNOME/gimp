@@ -1,5 +1,8 @@
 2005-08-09  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpforegroundselectoptions.c: reduced default brush
+	size a little.
+
 	* app/config/gimpxmlparser.c: fixed signedness warnings.
 
 	* plug-ins/imagemap/imap_browse.c (handle_drop): UTF-8 validate
