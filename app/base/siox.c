@@ -757,7 +757,7 @@ siox_foreground_extract (TileManager      *pixels,
                          gint              width,
                          gint              height,
                          gint              smoothness,
-                         const gdouble     limits[SIOX_DIMS],
+                         const gdouble     sensitivity[SIOX_DIMS],
                          SioxProgressFunc  progress_callback,
                          gpointer          progress_data)
 {
@@ -775,7 +775,7 @@ siox_foreground_extract (TileManager      *pixels,
   lab         *surefg;
   lab         *bgsig;
   lab         *fgsig;
-  gfloat       flimits[3];
+  gfloat       limits[3];
 
   g_return_if_fail (pixels != NULL);
   g_return_if_fail (mask != NULL && tile_manager_bpp (mask) == 1);
@@ -790,11 +790,11 @@ siox_foreground_extract (TileManager      *pixels,
 
   siox_progress_update (progress_callback, progress_data, 0.0);
 
-  flimits[0] = limits[0];
-  flimits[1] = limits[1];
-  flimits[2] = limits[2];
+  limits[0] = sensitivity[0];
+  limits[1] = sensitivity[1];
+  limits[2] = sensitivity[2];
 
-  clustersize = get_clustersize (flimits);
+  clustersize = get_clustersize (limits);
 
   /* count given foreground and background pixels */
   pixel_region_init (&mapPR, mask, x, y, width, height, FALSE);
@@ -870,7 +870,7 @@ siox_foreground_extract (TileManager      *pixels,
   siox_progress_update (progress_callback, progress_data, 0.2);
 
   /* Create color signature for the background */
-  bgsig = create_signature (surebg, surebgcount, flimits, &bgsiglen);
+  bgsig = create_signature (surebg, surebgcount, limits, &bgsiglen);
   g_free (surebg);
 
   if (bgsiglen < 1)
@@ -882,7 +882,7 @@ siox_foreground_extract (TileManager      *pixels,
   siox_progress_update (progress_callback, progress_data, 0.3);
 
   /* Create color signature for the foreground */
-  fgsig = create_signature (surefg, surefgcount, flimits, &fgsiglen);
+  fgsig = create_signature (surefg, surefgcount, limits, &fgsiglen);
   g_free (surefg);
 
   siox_progress_update (progress_callback, progress_data, 0.4);

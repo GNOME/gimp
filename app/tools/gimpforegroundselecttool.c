@@ -652,7 +652,7 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
                                              GIMP_DRAWABLE (mask),
                                              x1, y1, x2 - x1, y2 - y1,
                                              options->smoothness,
-                                             options->limits,
+                                             options->sensitivity,
                                              GIMP_PROGRESS (gdisp));
 
       gimp_unset_busy (gimage->gimp);
@@ -823,7 +823,7 @@ gimp_foreground_select_options_notify (GimpForegroundSelectOptions *options,
 
   if (pspec->name &&
       (strcmp (pspec->name, "smoothness") == 0 ||
-       strncmp (pspec->name, "granularity", strlen ("granularity")) == 0))
+       strncmp (pspec->name, "sensitivity", strlen ("sensitivity")) == 0))
     {
       if (fg_select->idle_id)
         g_source_remove (fg_select->idle_id);

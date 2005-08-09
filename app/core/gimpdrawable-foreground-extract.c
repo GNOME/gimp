@@ -45,10 +45,10 @@ gimp_drawable_foreground_extract (GimpDrawable              *drawable,
                                   GimpDrawable              *mask,
                                   GimpProgress              *progress)
 {
-  const gint    smoothness = SIOX_DEFAULT_SMOOTHNESS;
-  const gdouble limits[3]  = { SIOX_DEFAULT_GRANULARITY_L,
-                               SIOX_DEFAULT_GRANULARITY_A,
-                               SIOX_DEFAULT_GRANULARITY_B };
+  const gint    smoothness     = SIOX_DEFAULT_SMOOTHNESS;
+  const gdouble sensitivity[3] = { SIOX_DEFAULT_SENSITIVITY_L,
+                                   SIOX_DEFAULT_SENSITIVITY_A,
+                                   SIOX_DEFAULT_SENSITIVITY_B };
 
   g_return_if_fail (GIMP_IS_DRAWABLE (mask));
   g_return_if_fail (mode == GIMP_FOREGROUND_EXTRACT_SIOX);
@@ -57,7 +57,7 @@ gimp_drawable_foreground_extract (GimpDrawable              *drawable,
                                          0, 0,
                                          gimp_item_width (GIMP_ITEM (mask)),
                                          gimp_item_height (GIMP_ITEM (mask)),
-                                         smoothness, limits,
+                                         smoothness, sensitivity,
                                          progress);
 }
 
@@ -69,7 +69,7 @@ gimp_drawable_foreground_extract_siox (GimpDrawable  *drawable,
                                        gint           width,
                                        gint           height,
                                        gint           smoothness,
-                                       const gdouble  limits[3],
+                                       const gdouble  sensitivity[3],
                                        GimpProgress  *progress)
 {
   GimpImage    *gimage;
@@ -113,7 +113,7 @@ gimp_drawable_foreground_extract_siox (GimpDrawable  *drawable,
   siox_foreground_extract (gimp_drawable_data (drawable), colormap,
                            offset_x, offset_y,
                            gimp_drawable_data (mask), x, y, width, height,
-                           smoothness, limits,
+                           smoothness, sensitivity,
                            (SioxProgressFunc) gimp_progress_set_value,
                            progress);
 

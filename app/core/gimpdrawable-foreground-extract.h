@@ -33,7 +33,7 @@ void   gimp_drawable_foreground_extract_siox (GimpDrawable              *drawabl
                                               gint                       width,
                                               gint                       height,
                                               gint                       smoothness,
-                                              const gdouble              limits[3],
+                                              const gdouble              sensitivity[3],
                                               GimpProgress              *progress);
 
 #endif  /*  __GIMP_DRAWABLE_FOREGROUND_EXTRACT_H__  */

@@ -42,7 +42,7 @@ struct _GimpForegroundSelectOptions
   gboolean              background;
   gint                  stroke_width;
   gint                  smoothness;
-  gdouble               limits[3];
+  gdouble               sensitivity[3];
 };
 
 

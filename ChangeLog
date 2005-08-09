@@ -1,6 +1,14 @@
 2005-08-09  Sven Neumann  <sven@gimp.org>
 
-	* plug-ins/common/dicom.c: use an empty field instead of "?" for
+	* app/base/siox.[ch]
+	* app/core/gimpdrawable-foreground-extract.[ch]
+	* app/tools/gimpforegroundselectoptions.[ch]
+	* app/tools/gimpforegroundselecttool.c: renamed Granularity to
+	Color Sensitivity, both in the GUI and in the APIs.
+
+2005-08-09  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/dicom.c: use an empty string instead of "?" for
 	the unknown value (bug #313008).
 
 2005-08-09  Sven Neumann  <sven@gimp.org>

@@ -42,9 +42,9 @@ enum
   PROP_BACKGROUND,
   PROP_STROKE_WIDTH,
   PROP_SMOOTHNESS,
-  PROP_GRANULARITY_L,
-  PROP_GRANULARITY_A,
-  PROP_GRANULARITY_B
+  PROP_SENSITIVITY_L,
+  PROP_SENSITIVITY_A,
+  PROP_SENSITIVITY_B
 };
 
 
@@ -116,20 +116,20 @@ gimp_foreground_select_options_class_init (GimpForegroundSelectOptionsClass *kla
                                   "in the selection"),
                                 0, 8, SIOX_DEFAULT_SMOOTHNESS,
                                 0);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_GRANULARITY_L,
-                                   "granularity-l",
-                                   _("Resolution for brightness component"),
-                                   0.0, 10.0, SIOX_DEFAULT_GRANULARITY_L,
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_SENSITIVITY_L,
+                                   "sensitivity-l",
+                                   _("Sensitivity for brightness component"),
+                                   0.0, 10.0, SIOX_DEFAULT_SENSITIVITY_L,
                                    0);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_GRANULARITY_A,
-                                   "granularity-a",
-                                   _("Resolution for red/green component"),
-                                   0.0, 10.0, SIOX_DEFAULT_GRANULARITY_A,
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_SENSITIVITY_A,
+                                   "sensitivity-a",
+                                   _("Sensitivity for red/green component"),
+                                   0.0, 10.0, SIOX_DEFAULT_SENSITIVITY_A,
                                    0);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_GRANULARITY_B,
-                                   "granularity-b",
-                                   _("Resolution for yellow/blue component"),
-                                   0.0, 10.0, SIOX_DEFAULT_GRANULARITY_B,
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_SENSITIVITY_B,
+                                   "sensitivity-b",
+                                   _("Sensitivity for yellow/blue component"),
+                                   0.0, 10.0, SIOX_DEFAULT_SENSITIVITY_B,
                                    0);
 }
 
@@ -155,14 +155,14 @@ gimp_foreground_select_options_set_property (GObject      *object,
     case PROP_SMOOTHNESS:
       options->smoothness = g_value_get_int (value);
       break;
-    case PROP_GRANULARITY_L:
-      options->limits[0] = g_value_get_double (value);
+    case PROP_SENSITIVITY_L:
+      options->sensitivity[0] = g_value_get_double (value);
       break;
-    case PROP_GRANULARITY_A:
-      options->limits[1] = g_value_get_double (value);
+    case PROP_SENSITIVITY_A:
+      options->sensitivity[1] = g_value_get_double (value);
       break;
-    case PROP_GRANULARITY_B:
-      options->limits[2] = g_value_get_double (value);
+    case PROP_SENSITIVITY_B:
+      options->sensitivity[2] = g_value_get_double (value);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -192,14 +192,14 @@ gimp_foreground_select_options_get_property (GObject    *object,
     case PROP_SMOOTHNESS:
       g_value_set_int (value, options->smoothness);
       break;
-    case PROP_GRANULARITY_L:
-      g_value_set_double (value, options->limits[0]);
+    case PROP_SENSITIVITY_L:
+      g_value_set_double (value, options->sensitivity[0]);
       break;
-    case PROP_GRANULARITY_A:
-      g_value_set_double (value, options->limits[1]);
+    case PROP_SENSITIVITY_A:
+      g_value_set_double (value, options->sensitivity[1]);
       break;
-    case PROP_GRANULARITY_B:
-      g_value_set_double (value, options->limits[2]);
+    case PROP_SENSITIVITY_B:
+      g_value_set_double (value, options->sensitivity[2]);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -274,7 +274,7 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
                              _("Smoothing:"), 0.0, 0.5, scale, 2, FALSE);
 
   /*  granularity  */
-  frame = gimp_prop_expander_new (config, "expanded", _("Granularity"));
+  frame = gimp_prop_expander_new (config, "expanded", _("Color Sensitivity"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -288,17 +288,17 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
   gtk_container_add (GTK_CONTAINER (inner_frame), table);
   gtk_widget_show (table);
 
-  adj = gimp_prop_opacity_entry_new (config, "granularity-l",
+  adj = gimp_prop_opacity_entry_new (config, "sensitivity-l",
                                      GTK_TABLE (table), 0, row++, "L");
   gtk_range_set_update_policy (GTK_RANGE (GIMP_SCALE_ENTRY_SCALE (adj)),
                                GTK_UPDATE_DELAYED);
 
-  adj = gimp_prop_opacity_entry_new (config, "granularity-a",
+  adj = gimp_prop_opacity_entry_new (config, "sensitivity-a",
                                      GTK_TABLE (table), 0, row++, "a");
   gtk_range_set_update_policy (GTK_RANGE (GIMP_SCALE_ENTRY_SCALE (adj)),
                                GTK_UPDATE_DELAYED);
 
-  adj = gimp_prop_opacity_entry_new (config, "granularity-b",
+  adj = gimp_prop_opacity_entry_new (config, "sensitivity-b",
                                      GTK_TABLE (table), 0, row++, "b");
   gtk_range_set_update_policy (GTK_RANGE (GIMP_SCALE_ENTRY_SCALE (adj)),
                                GTK_UPDATE_DELAYED);
