@@ -1282,31 +1282,55 @@ gimp_vector_tool_cursor_update (GimpTool        *tool,
 
     case VECTORS_ADD_ANCHOR:
     case VECTORS_INSERT_ANCHOR:
-      cmodifier = GIMP_CURSOR_MODIFIER_PLUS;
+      tool_cursor = GIMP_TOOL_CURSOR_PATHS_ANCHOR;
+      cmodifier   = GIMP_CURSOR_MODIFIER_PLUS;
       break;
 
     case VECTORS_DELETE_ANCHOR:
+      tool_cursor = GIMP_TOOL_CURSOR_PATHS_ANCHOR;
+      cmodifier   = GIMP_CURSOR_MODIFIER_MINUS;
+      break;
+
     case VECTORS_DELETE_SEGMENT:
-      cmodifier = GIMP_CURSOR_MODIFIER_MINUS;
+      tool_cursor = GIMP_TOOL_CURSOR_PATHS_SEGMENT;
+      cmodifier   = GIMP_CURSOR_MODIFIER_MINUS;
       break;
 
     case VECTORS_MOVE_HANDLE:
+      cursor      = GDK_HAND2;
+      tool_cursor = GIMP_TOOL_CURSOR_PATHS_CONTROL;
+      cmodifier   = GIMP_CURSOR_MODIFIER_MOVE;
+      break;
+
     case VECTORS_CONVERT_EDGE:
       cursor      = GDK_HAND2;
-      tool_cursor = GIMP_TOOL_CURSOR_HAND;
+      tool_cursor = GIMP_TOOL_CURSOR_PATHS_CONTROL;
       cmodifier   = GIMP_CURSOR_MODIFIER_CONTROL;
       break;
 
     case VECTORS_MOVE_ANCHOR:
+      tool_cursor = GIMP_TOOL_CURSOR_PATHS_ANCHOR;
+      cmodifier   = GIMP_CURSOR_MODIFIER_MOVE;
+      break;
+
     case VECTORS_MOVE_CURVE:
+      tool_cursor = GIMP_TOOL_CURSOR_PATHS_SEGMENT;
+      cmodifier   = GIMP_CURSOR_MODIFIER_MOVE;
+      break;
+
     case VECTORS_MOVE_STROKE:
     case VECTORS_MOVE_VECTORS:
-    case VECTORS_MOVE_ANCHORSET:
       cmodifier = GIMP_CURSOR_MODIFIER_MOVE;
       break;
 
+    case VECTORS_MOVE_ANCHORSET:
+      tool_cursor = GIMP_TOOL_CURSOR_PATHS_ANCHOR;
+      cmodifier   = GIMP_CURSOR_MODIFIER_MOVE;
+      break;
+
     case VECTORS_CONNECT_STROKES:
-      cmodifier = GIMP_CURSOR_MODIFIER_INTERSECT;
+      tool_cursor = GIMP_TOOL_CURSOR_PATHS_SEGMENT;
+      cmodifier   = GIMP_CURSOR_MODIFIER_PLUS;
       break;
 
     default:

@@ -52,6 +52,12 @@
 #include "cursors/xbm/tool-fuzzy-select-mask.xbm"
 #include "cursors/xbm/tool-paths.xbm"
 #include "cursors/xbm/tool-paths-mask.xbm"
+#include "cursors/xbm/tool-paths-anchor.xbm"
+#include "cursors/xbm/tool-paths-anchor-mask.xbm"
+#include "cursors/xbm/tool-paths-control.xbm"
+#include "cursors/xbm/tool-paths-control-mask.xbm"
+#include "cursors/xbm/tool-paths-segment.xbm"
+#include "cursors/xbm/tool-paths-segment-mask.xbm"
 #include "cursors/xbm/tool-iscissors.xbm"
 #include "cursors/xbm/tool-iscissors-mask.xbm"
 #include "cursors/xbm/tool-move.xbm"
@@ -231,6 +237,24 @@ static GimpCursor gimp_tool_cursors[] =
     tool_paths_width, tool_paths_height,
     0, 0,
     tool_paths, NULL, NULL, NULL
+  },
+  {
+    tool_paths_anchor_bits, tool_paths_anchor_mask_bits,
+    tool_paths_anchor_width, tool_paths_anchor_height,
+    0, 0,
+    tool_paths_anchor, NULL, NULL, NULL
+  },
+  {
+    tool_paths_control_bits, tool_paths_control_mask_bits,
+    tool_paths_control_width, tool_paths_control_height,
+    0, 0,
+    tool_paths_control, NULL, NULL, NULL
+  },
+  {
+    tool_paths_segment_bits, tool_paths_segment_mask_bits,
+    tool_paths_segment_width, tool_paths_segment_height,
+    0, 0,
+    tool_paths_segment, NULL, NULL, NULL
   },
   {
     tool_iscissors_bits, tool_iscissors_mask_bits,

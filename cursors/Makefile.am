@@ -42,6 +42,9 @@ CURSOR_IMAGES = \
 	tool-move.png			\
 	tool-paintbrush.png		\
 	tool-paths.png			\
+	tool-paths-anchor.png		\
+	tool-paths-control.png		\
+	tool-paths-segment.png		\
 	tool-pencil.png			\
 	tool-perspective.png		\
 	tool-rect-select.png		\
@@ -101,6 +104,12 @@ EXTRA_DIST = \
 	xbm/tool-free-select-mask.xbm		\
 	xbm/tool-fuzzy-select.xbm		\
 	xbm/tool-fuzzy-select-mask.xbm		\
+	xbm/tool-paths-anchor.xbm		\
+	xbm/tool-paths-anchor-mask.xbm		\
+	xbm/tool-paths-control.xbm		\
+	xbm/tool-paths-control-mask.xbm		\
+	xbm/tool-paths-segment.xbm		\
+	xbm/tool-paths-segment-mask.xbm		\
 	xbm/tool-paths.xbm			\
 	xbm/tool-paths-mask.xbm			\
 	xbm/tool-iscissors.xbm			\

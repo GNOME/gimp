@@ -1,5 +1,35 @@
 2005-08-09  Michael Natterer  <mitch@gimp.org>
 
+	* cursors/gimp-tool-cursors.xcf: changed path tool cursor to
+	actually show a path and added 3 new cursors which are supposed
+	to show a path's anchor, handle and segments. Someone really
+	needs to beautify these...
+
+	* cursors/tool-paths.png
+	* cursors/xbm/tool-paths-mask.xbm
+	* cursors/xbm/tool-paths.xbm: changed accordingly.
+
+	* cursors/Makefile.am
+	* cursors/tool-paths-anchor.png
+	* cursors/tool-paths-control.png
+	* cursors/tool-paths-segment.png
+	* cursors/xbm/tool-paths-anchor-mask.xbm
+	* cursors/xbm/tool-paths-anchor.xbm
+	* cursors/xbm/tool-paths-control-mask.xbm
+	* cursors/xbm/tool-paths-control.xbm
+	* cursors/xbm/tool-paths-segment-mask.xbm
+	* cursors/xbm/tool-paths-segment.xbm: new files.
+
+	* app/widgets/widgets-enums.h (enum GimpToolCursorType): added
+	PATH_ANCHOR, PATH_CONTROL and PATH_SEGMENTS.
+
+	* app/widgets/gimpcursor.c: added the new cursors.
+
+	* app/tools/gimpvectortool.c (gimp_vector_tool_cursor_update):
+	use them.
+
+2005-08-09  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/common/xbm.c: make sure the mask file has valid C
 	identifiers, too.
 
