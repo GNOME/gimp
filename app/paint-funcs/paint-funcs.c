@@ -1919,11 +1919,10 @@ extract_from_inten_pixels (guchar       *src,
                            const guchar *bg,
                            gboolean      cut,
                            guint         length,
-                           guint         bytes,
-                           gboolean      has_alpha)
+                           guint         src_bytes,
+                           guint         dest_bytes)
 {
   gint          b, alpha;
-  gint          dest_bytes;
   const guchar *m;
   gint          tmp;
 
@@ -1932,14 +1931,14 @@ extract_from_inten_pixels (guchar       *src,
   else
     m = &no_mask;
 
-  alpha = (has_alpha) ? bytes - 1 : bytes;
-  dest_bytes = (has_alpha) ? bytes : bytes + 1;
+  alpha = HAS_ALPHA (src_bytes) ? src_bytes - 1 : src_bytes;
+
   while (length --)
     {
       for (b = 0; b < alpha; b++)
         dest[b] = src[b];
 
-      if (has_alpha)
+      if (HAS_ALPHA (src_bytes))
         {
           dest[alpha] = INT_MULT(*m, src[alpha], tmp);
           if (cut)
@@ -1947,16 +1946,18 @@ extract_from_inten_pixels (guchar       *src,
         }
       else
         {
-          dest[alpha] = *m;
+          if (HAS_ALPHA (dest_bytes))
+            dest[alpha] = *m;
+
           if (cut)
-            for (b = 0; b < bytes; b++)
+            for (b = 0; b < src_bytes; b++)
               src[b] = INT_BLEND(bg[b], src[b], *m, tmp);
         }
 
       if (mask)
         m++;
 
-      src += bytes;
+      src += src_bytes;
       dest += dest_bytes;
     }
 }
@@ -1970,8 +1971,8 @@ extract_from_indexed_pixels (guchar       *src,
                              const guchar *bg,
                              gboolean      cut,
                              guint         length,
-                             guint         bytes,
-                             gboolean      has_alpha)
+                             guint         src_bytes,
+                             guint         dest_bytes)
 {
   gint          b;
   gint          index;
@@ -1989,7 +1990,7 @@ extract_from_indexed_pixels (guchar       *src,
       for (b = 0; b < 3; b++)
         dest[b] = cmap[index + b];
 
-      if (has_alpha)
+      if (HAS_ALPHA (src_bytes))
         {
           dest[3] = INT_MULT (*m, src[1], t);
           if (cut)
@@ -1997,7 +1998,9 @@ extract_from_indexed_pixels (guchar       *src,
         }
       else
         {
-          dest[3] = *m;
+          if (HAS_ALPHA (dest_bytes))
+            dest[3] = *m;
+
           if (cut)
             src[0] = (*m > 127) ? bg[0] : src[0];
         }
@@ -2005,8 +2008,8 @@ extract_from_indexed_pixels (guchar       *src,
       if (mask)
         m++;
 
-      src += bytes;
-      dest += 4;
+      src += src_bytes;
+      dest += dest_bytes;
     }
 }
 
@@ -2351,7 +2354,6 @@ extract_from_region (PixelRegion       *src,
                      const guchar      *cmap,
                      const guchar      *bg,
                      GimpImageBaseType  type,
-                     gboolean           has_alpha,
                      gboolean           cut)
 {
   gint    h;
@@ -2374,12 +2376,12 @@ extract_from_region (PixelRegion       *src,
             case GIMP_RGB:
             case GIMP_GRAY:
               extract_from_inten_pixels (s, d, m, bg, cut, src->w,
-                                         src->bytes, has_alpha);
+                                         src->bytes, dest->bytes);
               break;
 
             case GIMP_INDEXED:
               extract_from_indexed_pixels (s, d, m, cmap, bg, cut, src->w,
-                                           src->bytes, has_alpha);
+                                           src->bytes, dest->bytes);
               break;
             }
 

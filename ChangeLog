@@ -1,5 +1,20 @@
 2005-08-09  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint-funcs/paint-funcs.[ch] (extract_from_inten_pixels)
+	(extract_from_indexed_pixels): pass src_bytes and dest_bytes to
+	these functions instead of just the source's bytes and whether it
+	has an alpha. Honor dest_bytes when extracting instead of crashing
+	by always asuming that the destination has alpha.
+	Fixes bug #312392.
+
+	(extract_from_region): removed has_alpha paramater. pass
+	src->bytes and dest->bytes to above functions.
+
+	* app/core/gimpselection.c (gimp_selection_extract): changed
+	accordingly.
+
+2005-08-09  Michael Natterer  <mitch@gimp.org>
+
 	* cursors/gimp-tool-cursors.xcf: changed path tool cursor to
 	actually show a path and added 3 new cursors which are supposed
 	to show a path's anchor, handle and segments. Someone really

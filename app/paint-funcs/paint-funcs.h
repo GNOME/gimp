@@ -283,8 +283,8 @@ void  extract_from_inten_pixels           (guchar       *src,
                                            const guchar *bg,
                                            gboolean      cut,
                                            guint         length,
-                                           guint         bytes,
-                                           gboolean      has_alpha);
+                                           guint         src_bytes,
+                                           guint         dest_bytes);
 
 /*  extract information from indexed pixels based on
  *  a mask.
@@ -296,8 +296,8 @@ void  extract_from_indexed_pixels         (guchar       *src,
                                            const guchar *bg,
                                            gboolean      cut,
                                            guint         length,
-                                           guint         bytes,
-                                           gboolean      has_alpha);
+                                           guint         src_bytes,
+                                           guint         dest_bytes);
 
 
 /*  Region functions  */
@@ -345,7 +345,6 @@ void  extract_from_region                 (PixelRegion       *src,
                                            const guchar      *cmap,
                                            const guchar      *bg,
                                            GimpImageBaseType  type,
-                                           gboolean           has_alpha,
                                            gboolean           cut);
 
 

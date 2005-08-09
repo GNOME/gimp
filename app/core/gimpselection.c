@@ -725,8 +725,7 @@ gimp_selection_extract (GimpChannel  *selection,
 
       extract_from_region (&srcPR, &destPR, &maskPR,
 			   gimp_drawable_cmap (drawable),
-			   bg_color, base_type,
-			   gimp_drawable_has_alpha (drawable), cut_image);
+			   bg_color, base_type, cut_image);
 
       if (cut_image)
 	{
@@ -743,8 +742,7 @@ gimp_selection_extract (GimpChannel  *selection,
       if (base_type == GIMP_INDEXED && !keep_indexed)
 	extract_from_region (&srcPR, &destPR, NULL,
 			     gimp_drawable_cmap (drawable),
-			     bg_color, base_type,
-			     gimp_drawable_has_alpha (drawable), FALSE);
+			     bg_color, base_type, FALSE);
       /*  If the layer doesn't have an alpha channel, add one  */
       else if (bytes > srcPR.bytes)
 	add_alpha_region (&srcPR, &destPR);
