@@ -1,3 +1,8 @@
+2005-08-08  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/common/psd.c: Generate valid names for aux channels that
+	do not have names defined. Fixes bug #312963.
+
 2005-08-09  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimplayer.c (gimp_layer_transform_color): take image

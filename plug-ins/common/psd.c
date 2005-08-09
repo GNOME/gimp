@@ -398,6 +398,7 @@ static gchar* getstring(size_t n, FILE * fd, gchar *why);
 static void throwchunk(size_t n, FILE * fd, gchar *why);
 static void dumpchunk(size_t n, FILE * fd, gchar *why);
 static void seek_to_and_unpack_pixeldata(FILE* fd, gint layeri, gint channeli);
+static void validate_aux_channel_name(gint aux_index);
 
 
 MAIN ()
@@ -1605,6 +1606,19 @@ gboolean psd_layer_has_alpha(PSDlayer* layer)
 }
 
 static
+void validate_aux_channel_name(gint aux_index)
+{
+  if (psd_image.aux_channel[aux_index].name == NULL)
+    {
+      if (aux_index == 0)
+	psd_image.aux_channel[aux_index].name = g_strdup ("Aux channel");
+      else
+	psd_image.aux_channel[aux_index].name =
+	  g_strdup_printf ("Aux channel #%d", aux_index);
+    }
+}
+
+static
 void extract_data_and_channels(guchar* src, gint gimpstep, gint psstep,
 			       gint32 image_ID, GimpDrawable* drawable,
 			       gint width, gint height)
@@ -1647,7 +1661,7 @@ void extract_data_and_channels(guchar* src, gint gimpstep, gint psstep,
 
   aux_data = g_malloc (width * height);
   {
-    int pix, chan;
+    int pix, chan, aux_index;
     gint32 channel_ID;
     GimpDrawable* chdrawable;
     GimpRGB colour;
@@ -1660,8 +1674,12 @@ void extract_data_and_channels(guchar* src, gint gimpstep, gint psstep,
 	  {
 	    aux_data [pix] = src [pix * psstep + chan];
 	  }
+
+	aux_index = chan - gimpstep;
+	validate_aux_channel_name (aux_index);
+
 	channel_ID = gimp_channel_new (image_ID,
-                                       psd_image.aux_channel[chan-gimpstep].name,
+                                       psd_image.aux_channel[aux_index].name,
                                        width, height,
                                        100.0, &colour);
 	gimp_image_add_channel (image_ID, channel_ID, 0);
@@ -1703,7 +1721,7 @@ extract_channels(guchar* src, gint num_wanted, gint psstep,
 
   aux_data = g_malloc(width * height);
   {
-    int pix, chan;
+    int pix, chan, aux_index;
     gint32 channel_ID;
     GimpDrawable* chdrawable;
     GimpRGB colour;
@@ -1717,8 +1735,11 @@ extract_channels(guchar* src, gint num_wanted, gint psstep,
 	    aux_data [pix] = src [pix * psstep + chan];
 	  }
 
+	aux_index = chan - (psstep - num_wanted);
+	validate_aux_channel_name (aux_index);
+
 	channel_ID = gimp_channel_new (image_ID,
-                                       psd_image.aux_channel[chan-(psstep-num_wanted)].name,
+                                       psd_image.aux_channel[aux_index].name,
                                        width, height,
                                        100.0, &colour);
 	gimp_image_add_channel (image_ID, channel_ID, 0);
