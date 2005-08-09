@@ -1,3 +1,7 @@
+2005-08-10  Sven Neumann  <sven@gimp.org>
+
+	* mk.po: fixed broken entities.
+
 2005-08-09  Alexander Shopov  <ash@contact.bg>
 
 	* bg.po: Updated Bulgarian translation by
