@@ -1,3 +1,10 @@
+2005-08-09  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpxmlparser.c: fixed signedness warnings.
+
+	* plug-ins/imagemap/imap_browse.c (handle_drop): UTF-8 validate
+	the dropped text before setting it on the entry.
+
 2005-08-08  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/common/psd.c: Generate valid names for aux channels that

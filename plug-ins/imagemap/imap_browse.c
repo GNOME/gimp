@@ -96,16 +96,17 @@ static void
 handle_drop(GtkWidget *widget, GdkDragContext *context, gint x, gint y,
 	    GtkSelectionData *data, guint info, guint time)
 {
-   gboolean success;
+   gboolean success = FALSE;
 
    if (data->length >= 0 && data->format == 8)
      {
-       gtk_entry_set_text(GTK_ENTRY(widget), data->data);
-       success = TRUE;
-     }
-   else
-     {
-       success = FALSE;
+       const gchar *text = (const gchar *) data->data;
+
+       if (g_utf8_validate (text, -1, NULL))
+         {
+           gtk_entry_set_text (GTK_ENTRY (widget), text);
+           success = TRUE;
+         }
      }
 
    gtk_drag_finish(context, success, FALSE, time);

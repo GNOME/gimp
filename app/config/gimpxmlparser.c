@@ -157,7 +157,7 @@ gimp_xml_parser_parse_io_channel (GimpXmlParser  *parser,
                                   GError        **error)
 {
   GIOStatus    status;
-  guchar       buffer[4096];
+  gchar        buffer[4096];
   gsize        len = 0;
   gsize        bytes;
   const gchar *io_encoding;
@@ -259,12 +259,17 @@ gimp_xml_parser_parse_buffer (GimpXmlParser  *parser,
       if (g_ascii_strcasecmp (encoding, "UTF-8") &&
           g_ascii_strcasecmp (encoding, "UTF8"))
         {
-          conv = g_convert (buffer, len, "UTF-8", encoding, NULL, &len, error);
+          gsize written;
+
+          conv = g_convert (buffer, len,
+                            "UTF-8", encoding, NULL, &written, error);
           if (! conv)
             {
               g_free (encoding);
               return FALSE;
             }
+
+          len = written;
         }
 
       g_free (encoding);
