@@ -1,3 +1,10 @@
+2005-08-09  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimplayer.c (gimp_layer_transform_color): take image
+	type instead of basetype of the source drawable. Handle conversion
+	from drawables without alpha channel.
+	(gimp_layer_new_from_region): handle source regions without alpha.
+
 2005-08-08  Jakub Steiner <jimmac@ximian.com>
 
 	* themes/Default/images/tools/stock-tool-foreground-select-16.png
