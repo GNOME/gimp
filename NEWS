@@ -26,6 +26,7 @@ Changes in GIMP 2.3.3
 - canonicalize PDB procedure and parameter names
 - use the coefficients from the sRGB spec when calculating luminance
 - allow to remove alpha channel from a layer
+- added more different cursors for the paths tool
 - bug fixes and code cleanup
 
 
