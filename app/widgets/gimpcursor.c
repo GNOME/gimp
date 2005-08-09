@@ -490,7 +490,8 @@ static GdkBitmap *
 get_cursor_bitmap (GimpCursor *cursor)
 {
   if (! cursor->bitmap)
-    cursor->bitmap = gdk_bitmap_create_from_data (NULL, cursor->bits,
+    cursor->bitmap = gdk_bitmap_create_from_data (NULL,
+                                                  (const gchar *) cursor->bits,
                                                   cursor->width,
                                                   cursor->height);
   g_return_val_if_fail (cursor->bitmap != NULL, NULL);
@@ -502,7 +503,8 @@ static GdkBitmap *
 get_cursor_mask (GimpCursor *cursor)
 {
   if (! cursor->mask)
-    cursor->mask = gdk_bitmap_create_from_data (NULL, cursor->mask_bits,
+    cursor->mask = gdk_bitmap_create_from_data (NULL,
+                                                (const gchar *) cursor->mask_bits,
                                                 cursor->width,
                                                 cursor->height);
   g_return_val_if_fail (cursor->mask != NULL, NULL);
