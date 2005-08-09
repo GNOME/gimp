@@ -202,9 +202,9 @@ init_prefix (const gchar *filename)
 
   memset (xsvals.prefix, 0, sizeof (xsvals.prefix));
 
-  /* Strip any extension. */
   if (prefix)
     {
+      /* Strip any extension. */
       p = strrchr (prefix, '.');
       if (p && p != prefix)
         len = MIN (MAX_PREFIX, p - prefix);
@@ -421,16 +421,16 @@ run (const gchar      *name,
 	  g_free (temp);
 
 	  /* Change any non-alphanumeric prefix characters to underscores. */
-	  temp = xsvals.prefix;
-	  while (*temp)
-	    {
-	      if (!g_ascii_isalnum (*temp))
-		*temp = '_';
-	      temp ++;
-	    }
+	  for (temp = xsvals.prefix; *temp; temp++)
+            if (! g_ascii_isalnum (*temp))
+              *temp = '_';
 
 	  mask_prefix = g_strdup_printf ("%s%s",
                                          xsvals.prefix, xsvals.mask_ext);
+
+	  for (temp = mask_prefix; *temp; temp++)
+            if (! g_ascii_isalnum (*temp))
+              *temp = '_';
 
 	  if (save_image (param[3].data.d_string,
 			  xsvals.prefix,
@@ -943,6 +943,13 @@ save_image (const gchar *filename,
 
   guchar *data, *cmap;
   gchar  *name_buf, *intfmt;
+
+#if 0
+  if (save_mask)
+    g_printerr ("%s: save_mask '%s'\n", G_STRFUNC, prefix);
+  else
+    g_printerr ("%s: save_image '%s'\n", G_STRFUNC, prefix);
+#endif
 
   drawable = gimp_drawable_get (drawable_ID);
   width    = drawable->width;
