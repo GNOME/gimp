@@ -1,3 +1,8 @@
+2005-08-08  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/common/psd.c: Generate valid names for aux channels that
+	do not have names defined. Fixes bug #312963.
+
 2005-07-29  Maurits Rijk  <m.rijk@chello.nl>
 
 	* plug-ins/imagemap/imap_csim.y: make buffer large enough to hold
