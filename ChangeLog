@@ -1,3 +1,7 @@
+2005-08-10  Sven Neumann  <sven@gimp.org>
+
+	* app/Makefile.am: fixed dist-dump-gimprc rule.
+
 2005-08-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint-funcs/paint-funcs.[ch] (extract_from_inten_pixels)
