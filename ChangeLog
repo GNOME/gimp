@@ -1,5 +1,14 @@
 2005-08-10  Michael Natterer  <mitch@gimp.org>
 
+	* cursors/tool-paths-anchor.png
+	* cursors/tool-paths-control.png
+	* cursors/tool-paths-segment.png
+	* cursors/tool-paths.png
+	* cursors/xbm/tool-paths-control-mask.xbm
+	* cursors/xbm/tool-paths-control.xbm: applied Jimmac's changes.
+
+2005-08-10  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/common/xbm.c (mask_ext_entry_callback): fixed
 	copy'n'paste bug that was clearing the identifier prefix when
 	editing the mask extension.
