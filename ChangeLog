@@ -1,3 +1,7 @@
+2005-08-10  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: bumped version to 2.3.4.
+
 2005-08-10  Michael Natterer  <mitch@gimp.org>
 
 	* cursors/tool-paths-anchor.png
