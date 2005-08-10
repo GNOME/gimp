@@ -1,6 +1,7 @@
 2005-08-10  Jakub Steiner <jimmac@ximian.com>
 
-	* cursors/gimp-tool-cursors.xcf: touched up RGBA versions
+	* cursors/gimp-tool-cursors.xcf: touched up RGBA versions; add
+	  color
 
 2005-08-10  Simon Budig  <simon@gimp.org>
 
