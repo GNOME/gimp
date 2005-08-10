@@ -1,3 +1,9 @@
+2005-08-10  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/xbm.c (mask_ext_entry_callback): fixed
+	copy'n'paste bug that was clearing the identifier prefix when
+	editing the mask extension.
+
 2005-08-10  Jakub Steiner <jimmac@ximian.com>
 
 	* cursors/gimp-tool-cursors.xcf: touched up RGBA versions; add

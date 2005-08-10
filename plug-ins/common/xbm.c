@@ -1323,7 +1323,7 @@ static void
 mask_ext_entry_callback (GtkWidget *widget,
 		       gpointer   data)
 {
-  memset (xsvals.prefix, 0, sizeof (xsvals.mask_ext));
+  memset (xsvals.mask_ext, 0, sizeof (xsvals.mask_ext));
   strncpy (xsvals.mask_ext,
 	   gtk_entry_get_text (GTK_ENTRY (widget)), MAX_MASK_EXT);
 }
