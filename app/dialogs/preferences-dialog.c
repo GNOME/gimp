@@ -2210,6 +2210,9 @@ prefs_dialog_new (Gimp       *gimp,
                     G_CALLBACK (prefs_resolution_calibrate_callback),
                     entry);
 
+  g_object_unref (size_group);
+  size_group = NULL;
+
 
   /**********************/
   /*  Color Management  */
@@ -2263,11 +2266,18 @@ prefs_dialog_new (Gimp       *gimp,
 
     for (i = 0, row = 3; i < G_N_ELEMENTS (profiles); i++, row++)
       {
+#if 0
+	button = gimp_prop_file_entry_new (color_config,
+                                           profiles[i].property_name,
+                                           gettext (profiles[i].fs_label),
+                                           FALSE, TRUE);
+#else
         button =
           gimp_prop_file_chooser_button_new (color_config,
                                              profiles[i].property_name,
                                              gettext (profiles[i].fs_label),
                                              GTK_FILE_CHOOSER_ACTION_OPEN);
+#endif
 
         gimp_table_attach_aligned (GTK_TABLE (table), 0, row,
                                    gettext (profiles[i].label), 0.0, 0.5,
