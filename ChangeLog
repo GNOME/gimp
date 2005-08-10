@@ -1,3 +1,7 @@
+2005-08-10  Jakub Steiner <jimmac@ximian.com>
+
+	* cursors/gimp-tool-cursors.xcf: touched up RGBA versions
+
 2005-08-10  Simon Budig  <simon@gimp.org>
 
 	* app/tools/gimpvectortool.c: small fixes to the cursors - now
