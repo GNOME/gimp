@@ -19,7 +19,7 @@
 # 
 # (temp-path "${gimp_dir}/tmp")
 
-# Sets the swap file location. The gimp uses a tile based memory allocation
+# Sets the swap file location. The GIMP uses a tile based memory allocation
 # scheme. The swap file is used to quickly and easily swap tiles out to disk
 # and back in. Be aware that the swap file can easily get very large if the
 # GIMP is used with large images. Also, things can get horribly slow if the
@@ -280,12 +280,12 @@
 # 
 # (marching-ants-speed 300)
 
-# When enabled, the image window will automatically resize itself, when
+# When enabled, the image window will automatically resize itself when
 # zooming into and out of images.  Possible values are yes and no.
 # 
 # (resize-windows-on-zoom no)
 
-# When enabled, the image window will automatically resize itself, whenever
+# When enabled, the image window will automatically resize itself whenever
 # the physical image size changes.  Possible values are yes and no.
 # 
 # (resize-windows-on-resize no)
@@ -472,8 +472,8 @@
 # 
 # (move-tool-changes-active no)
 
-# When enabled, the GIMP will not save if the image is unchanged since
-# opening it.  Possible values are yes and no.
+# When enabled, the GIMP will not save an image if it has not been changed
+# since it was opened.  Possible values are yes and no.
 # 
 # (trust-dirty-flag no)
 
@@ -496,12 +496,12 @@
 # 
 # (save-tool-options no)
 
-# Enable to display a handy GIMP tip on startup.  Possible values are yes and
+# Enable displaying a handy GIMP tip on startup.  Possible values are yes and
 # no.
 # 
 # (show-tips yes)
 
-# Enable to display tooltips.  Possible values are yes and no.
+# Enable tooltips display.  Possible values are yes and no.
 # 
 # (show-tool-tips yes)
 

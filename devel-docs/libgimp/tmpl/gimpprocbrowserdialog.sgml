@@ -22,10 +22,13 @@ GimpProcBrowserDialog
 
 </para>
 
-@parent_instance: 
-@browser: 
-@store: 
-@tree_view: 
+
+<!-- ##### SIGNAL GimpProcBrowserDialog::selection-changed ##### -->
+<para>
+
+</para>
+
+@gimpprocbrowserdialog: the object which received the signal.
 
 <!-- ##### FUNCTION gimp_proc_browser_dialog_new ##### -->
 <para>
