@@ -1297,15 +1297,13 @@ gimp_vector_tool_cursor_update (GimpTool        *tool,
       break;
 
     case VECTORS_MOVE_HANDLE:
-      cursor      = GDK_HAND2;
       tool_cursor = GIMP_TOOL_CURSOR_PATHS_CONTROL;
       cmodifier   = GIMP_CURSOR_MODIFIER_MOVE;
       break;
 
     case VECTORS_CONVERT_EDGE:
-      cursor      = GDK_HAND2;
       tool_cursor = GIMP_TOOL_CURSOR_PATHS_CONTROL;
-      cmodifier   = GIMP_CURSOR_MODIFIER_CONTROL;
+      cmodifier   = GIMP_CURSOR_MODIFIER_MINUS;
       break;
 
     case VECTORS_MOVE_ANCHOR:

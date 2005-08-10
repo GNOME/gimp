@@ -1,3 +1,8 @@
+2005-08-10  Simon Budig  <simon@gimp.org>
+
+	* app/tools/gimpvectortool.c: small fixes to the cursors - now
+	the handles have their respective cursor as well.
+
 2005-08-10  Sven Neumann  <sven@gimp.org>
 
 	* Made 2.3.3, the "What The Hack" release.
