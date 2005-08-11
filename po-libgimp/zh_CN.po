@@ -1,13 +1,13 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Free Software Foundation, Inc.
-# Yuheng Xie <elephant@linux.net.cn>, 2001-2004.
+# Yuheng Xie <elephant@linux.net.cn>, 2001-2005.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-05-08 12:28+0200\n"
-"PO-Revision-Date: 2004-11-24 19:30+0800\n"
+"PO-Revision-Date: 2005-08-10 17:30+0800\n"
 "Last-Translator: Yuheng Xie <elephant@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -373,6 +373,8 @@ msgid ""
 "Cannot determine a valid home directory.\n"
 "Thumbnails will be stored in the folder for temporary files (%s) instead."
 msgstr ""
+"无法确定有效的主目录。\n"
+"将缩略图改放在临时文件的目录(%s)中。"
 
 #: ../libgimpthumb/gimpthumb-utils.c:249 ../libgimpthumb/gimpthumb-utils.c:317
 #, c-format
@@ -795,8 +797,3 @@ msgstr "水彩"
 msgid "Pressure"
 msgstr "压力"
 
-#~ msgid "He_x Triplet:"
-#~ msgstr "十六进制值(_X)："
-
-#~ msgid "None"
-#~ msgstr "无"
