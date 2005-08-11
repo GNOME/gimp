@@ -1,24 +1,26 @@
+# translation of mk.po to Macedonian
 # translation of gimp-tips.HEAD.mk.po to Macedonian
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
 # Vladimir Stefanov <vladoboss@mt.net.mk>, 2005.
+# Арангел Ангов <ufo@linux.net.mk>, 2005.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-tips.HEAD.mk\n"
+"Project-Id-Version: mk\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-06-10 18:11+0200\n"
-"PO-Revision-Date: 2005-08-10 01:47+0200\n"
-"Last-Translator: Vladimir Stefanov <vladoboss@mt.net.mk>\n"
-"Language-Team: Macedonian <mkde-l10n@lists.sourceforge.net>\n"
+"PO-Revision-Date: 2005-08-12 01:50+0200\n"
+"Last-Translator: Арангел Ангов <ufo@linux.net.mk>\n"
+"Language-Team: Macedonian <ossm-members@hedona.on.net.mk>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.10.1\n"
+"X-Generator: KBabel 1.10\n"
 
 #: ../data/tips/gimp-tips.xml.in.h:1
 msgid "<big>Welcome to the GNU Image Manipulation Program!</big>"
-msgstr "<big>Добродојдовте во ГНУ програмата за манипулација си слики!</big>"
+msgstr "<big>Добродојдовте во ГНУ програмата за манипулација со слики!</big>"
 
 #: ../data/tips/gimp-tips.xml.in.h:2
 msgid ""
@@ -75,7 +77,7 @@ msgid ""
 "selecting a menu item, and pressing the desired key combination. If &quot;"
 "Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved when "
 "you exit GIMP."
-msgstr "Одкога ќе ги овозможите &quot;Динамичните кратенки на тастатурата&quot; во дијалогот за Параметри, можете повторно да ги примените копчињата за кратенки. Ќе го направите тоа со подигање на менито, избирање на ставка од менито, и притискање на посакуваната комбинација од копчиња. Ако е овозоможено &quot;Зачувај ги кратенките на тастатурата&quot;, поврзувањето на копчињата се зачувани кога ќе го напуштите ГИМП."
+msgstr "Одкога ќе ги овозможите &quot;Динамичните кратенки на тастатурата&quot; во дијалогот за Параметри, можете повторно да ги примените копчињата за кратенки. Ќе го направите тоа со подигање на менито, избирање на ставка од менито, и притискање на посакуваната комбинација од копчиња. Ако е овозоможено &quot;Зачувај ги кратенките на тастатурата&quout;, поврзувањето на копчињата се зачувани кога ќе го напуштите ГИМП."
 
 #: ../data/tips/gimp-tips.xml.in.h:9
 msgid ""
@@ -113,7 +115,9 @@ msgid ""
 "If a layer's name in the Layers dialog is displayed in <b>bold</b>, this "
 "layer doesn't have an alpha-channel. You can add an alpha-channel using "
 "Layer-&gt;Transparency-&gt;Add Alpha Channel."
-msgstr "Ако е прикажано името на слојот во дијалогот за слоеви со <b>јаки</b> букви, тој слој нема алфа-канал. Можете да додадете алфа-канал со користење на Слој-&quot;Провидност&quot;Додај алфа канал."
+msgstr ""
+"Ако е прикажано името на слојот во дијалогот за слоеви со <b>јаки</b> букви, тој "
+"слој нема алфа-канал. Можете да додадете алфа-канал со користење на Слој-&quote;Провидност-&quote;Додај алфа канал."
 
 #: ../data/tips/gimp-tips.xml.in.h:14
 msgid ""
@@ -123,15 +127,15 @@ msgid ""
 "correct them with the Curves tool (Layer-&gt;Colors-&gt;Curves)."
 msgstr ""
 "Ако некои од вашите скенирани фотографии не изгледаат доволно колоритни, можете "
-"лесно да го поправите нивниот опсег на тонови со &quot;Авто&quot; копчето во алатката Слоеви (Слој-&gt;Бои-&gt;Слоеви). Ако има било какво растопување на бои, "
-"можете да ги поправите со алатката Криви (Слој-&gt;Бои-&gt;Криви)."
+"лесно да го поправите нивниот опсег на тонови со &quot;Авто&quot; копчето во алатката Слоеви (Слој-&qt;Бои-&qt;Слоеви). Ако има било какво растопување на бои, "
+"можете да ги поправите со алатката Криви (Слој-&qt;Бои-&qt;Криви)."
 
 #: ../data/tips/gimp-tips.xml.in.h:15
 msgid ""
 "If you stroke a path (Edit-&gt;Stroke Path), the paint tools can be used "
 "with their current settings. You can use the Paintbrush in gradient mode or "
 "even the Eraser or the Smudge tool."
-msgstr "Ако исцртате патека (Уреди-&gt;Исцртај патека), можат да се користат алатките за цртање со нивните тековни поставки. Можете да ја користите Четката за цртање во режим на прелив или дури и Бришачот или алатката за флеки."
+msgstr "Ако исцртате патека (Уреди-&qt;Исцртај патека), можат да се користат алатките за цртање со нивните тековни поставки. Можете да ја користите Четката за цртање во режим на прелив или дури и Бришачот или алатката за флеки."
 
 #: ../data/tips/gimp-tips.xml.in.h:16
 msgid ""
@@ -148,7 +152,7 @@ msgid ""
 "plug-in to work on the whole image."
 msgstr ""
 "Повеќето додатоци работат на тековниот слој од тековната слика. Во некои случаи, "
-"ќе морате да ги споите сите слоеви(Слика-&gt;Израмни слика) ако сакате додатокот да работи на целата слика."
+"ќе морате да ги споите сите слоеви(Слика-&qt;Израмни слика) ако сакате додатокот да работи на целата слика."
 
 #: ../data/tips/gimp-tips.xml.in.h:18
 msgid ""
@@ -159,7 +163,7 @@ msgid ""
 msgstr ""
 "Не можат сите ефекти да се применат на сите видови слики. Ова е означено "
 "од сивиот внес во менито. Можеби ќе морате да го промените режимот на "
-"сликата во RGB (Слика-&gt;Режим-&gt;RGB), да додадете алфа-канал (Слој-&gt;Додај Алфа канал) или да ја израмните (Слика-&gt;Израмни слика)."
+"сликата во RGB (Слика-&qt;Режим-&qt;RGB), да додадете алфа-канал (Слој-&qt;Додај Алфа канал) или да ја израмните (Слика-&qt;Израмни слика)."
 
 #: ../data/tips/gimp-tips.xml.in.h:19
 msgid ""
@@ -233,7 +237,7 @@ msgid ""
 "You can draw simple squares or circles using Edit-&gt;Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "
 "using the Path tool or with Filters-&gt;Render-&gt;Gfig."
-msgstr "Можете да цртате едноставни квадрати или кругови со користење на Уреди-&gt;Исцртај селекција. Тоа го исцртува работ на вашата тековна селекција. По комплексни облици можат да се цртат со користење на алатката Патека или со Филтери-&gt;Исцртај-&gt;Gfig."
+msgstr "Можете да цртате едноставни квадрати или кругови со користење на Уреди-&qt;Исцртај селекција. Тоа го исцртува работ на вашата тековна селекција. По комплексни облици можат да се цртат со користење на алатката Патека или со Филтери-&qt;Исцртај-&qt;Gfig."
 
 #: ../data/tips/gimp-tips.xml.in.h:29
 msgid ""
@@ -260,7 +264,7 @@ msgid ""
 "modify this channel with any paint tools. Using the buttons in the Channels "
 "dialog, you can toggle the visibility of this new channel or convert it to a "
 "selection."
-msgstr "Можете да ја зачувате селекцијата во канал (Избери-&gt;Зачувај во канал) и потоа да го промените овој канал со било која алатка за цртање. Со користење на копчињата во дијалогот Канали, можете да ја префрлате видливоста на овој нов канал или да го претворите во селекција."
+msgstr "Можете да ја зачувате селекцијата во канал (Избери-&qt;Зачувај во канал) и потоа да го промените овој канал со било која алатка за цртање. Со користење на копчињата во дијалогот Канали, можете да ја префрлате видливоста на овој нов канал или да го претворите во селекција."
 
 #: ../data/tips/gimp-tips.xml.in.h:33
 msgid ""
