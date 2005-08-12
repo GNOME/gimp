@@ -1,3 +1,7 @@
+2005-08-12  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/common/sample_colorize.c: preliminary clean-ups.
+
 2005-08-12  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/bmp/bmp.c
