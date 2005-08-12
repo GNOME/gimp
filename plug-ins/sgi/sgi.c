@@ -36,7 +36,7 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include "sgi.h"		/* SGI image library definitions */
+#include "sgi.h"                /* SGI image library definitions */
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -45,6 +45,9 @@
  * Constants...
  */
 
+#define LOAD_PROC        "file-sgi-load"
+#define SAVE_PROC        "file-sgi-save"
+#define PLUG_IN_BINARY   "sgi"
 #define PLUG_IN_VERSION  "1.1.1 - 17 May 1998"
 
 
@@ -52,17 +55,17 @@
  * Local functions...
  */
 
-static void	query       (void);
-static void	run         (const gchar      *name,
-			     gint              nparams,
-			     const GimpParam  *param,
-			     gint             *nreturn_vals,
-			     GimpParam       **return_vals);
+static void     query       (void);
+static void     run         (const gchar      *name,
+                             gint              nparams,
+                             const GimpParam  *param,
+                             gint             *nreturn_vals,
+                             GimpParam       **return_vals);
 
-static gint32	load_image  (const gchar      *filename);
-static gint	save_image  (const gchar      *filename,
-			     gint32            image_ID,
-			     gint32            drawable_ID);
+static gint32   load_image  (const gchar      *filename);
+static gint     save_image  (const gchar      *filename,
+                             gint32            image_ID,
+                             gint32            drawable_ID);
 
 static gboolean save_dialog (void);
 
@@ -70,7 +73,7 @@ static gboolean save_dialog (void);
  * Globals...
  */
 
-GimpPlugInInfo	PLUG_IN_INFO =
+GimpPlugInInfo  PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -88,9 +91,9 @@ query (void)
 {
   static GimpParamDef load_args[] =
   {
-    { GIMP_PDB_INT32,      "run_mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,      "run-mode",     "Interactive, non-interactive" },
     { GIMP_PDB_STRING,     "filename",     "The name of the file to load" },
-    { GIMP_PDB_STRING,     "raw_filename", "The name of the file to load" },
+    { GIMP_PDB_STRING,     "raw-filename", "The name of the file to load" },
   };
   static GimpParamDef load_return_vals[] =
   {
@@ -99,50 +102,50 @@ query (void)
 
   static GimpParamDef save_args[] =
   {
-    { GIMP_PDB_INT32,	"run_mode",	"Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE,	"image",	"Input image" },
-    { GIMP_PDB_DRAWABLE,	"drawable",	"Drawable to save" },
-    { GIMP_PDB_STRING,	"filename",	"The name of the file to save the image in" },
-    { GIMP_PDB_STRING,	"raw_filename",	"The name of the file to save the image in" },
-    { GIMP_PDB_INT32,	"compression",	"Compression level (0 = none, 1 = RLE, 2 = ARLE)" }
+    { GIMP_PDB_INT32,    "run-mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",        "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },
+    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
+    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in" },
+    { GIMP_PDB_INT32,    "compression",  "Compression level (0 = none, 1 = RLE, 2 = ARLE)" }
   };
 
-  gimp_install_procedure ("file_sgi_load",
-			  "Loads files in SGI image file format",
-			  "This plug-in loads SGI image files.",
-			  "Michael Sweet <mike@easysw.com>",
-			  "Copyright 1997-1998 by Michael Sweet",
-			  PLUG_IN_VERSION,
-			  N_("Silicon Graphics IRIS image"),
-			  NULL,
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (load_args),
-			  G_N_ELEMENTS (load_return_vals),
-			  load_args,
-			  load_return_vals);
+  gimp_install_procedure (LOAD_PROC,
+                          "Loads files in SGI image file format",
+                          "This plug-in loads SGI image files.",
+                          "Michael Sweet <mike@easysw.com>",
+                          "Copyright 1997-1998 by Michael Sweet",
+                          PLUG_IN_VERSION,
+                          N_("Silicon Graphics IRIS image"),
+                          NULL,
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (load_args),
+                          G_N_ELEMENTS (load_return_vals),
+                          load_args,
+                          load_return_vals);
 
-  gimp_register_file_handler_mime ("file_sgi_load", "image/x-sgi");
-  gimp_register_magic_load_handler ("file_sgi_load",
-				    "sgi,rgb,bw,icon",
-				    "",
-				    "0,short,474");
+  gimp_register_file_handler_mime (LOAD_PROC, "image/x-sgi");
+  gimp_register_magic_load_handler (LOAD_PROC,
+                                    "sgi,rgb,bw,icon",
+                                    "",
+                                    "0,short,474");
 
-  gimp_install_procedure ("file_sgi_save",
-			  "Saves files in SGI image file format",
-			  "This plug-in saves SGI image files.",
-			  "Michael Sweet <mike@easysw.com>",
-			  "Copyright 1997-1998 by Michael Sweet",
-			  PLUG_IN_VERSION,
-			  N_("Silicon Graphics IRIS image"),
-			  "RGB*,GRAY*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (save_args),
-			  0,
-			  save_args,
-			  NULL);
+  gimp_install_procedure (SAVE_PROC,
+                          "Saves files in SGI image file format",
+                          "This plug-in saves SGI image files.",
+                          "Michael Sweet <mike@easysw.com>",
+                          "Copyright 1997-1998 by Michael Sweet",
+                          PLUG_IN_VERSION,
+                          N_("Silicon Graphics IRIS image"),
+                          "RGB*,GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (save_args),
+                          0,
+                          save_args,
+                          NULL);
 
-  gimp_register_file_handler_mime ("file_sgi_save", "image/x-sgi");
-  gimp_register_save_handler ("file_sgi_save", "sgi,rgb,bw,icon", "");
+  gimp_register_file_handler_mime (SAVE_PROC, "image/x-sgi");
+  gimp_register_save_handler (SAVE_PROC, "sgi,rgb,bw,icon", "");
 }
 
 static void
@@ -155,7 +158,7 @@ run (const gchar      *name,
   static GimpParam  values[2];
   GimpRunMode       run_mode;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  gint32	    image_ID;
+  gint32            image_ID;
   gint32            drawable_ID;
   GimpExportReturn  export = GIMP_EXPORT_CANCEL;
 
@@ -168,104 +171,103 @@ run (const gchar      *name,
 
   INIT_I18N ();
 
-  if (strcmp (name, "file_sgi_load") == 0)
+  if (strcmp (name, LOAD_PROC) == 0)
     {
       image_ID = load_image (param[1].data.d_string);
 
       if (image_ID != -1)
-	{
-	  *nreturn_vals = 2;
-	  values[1].type         = GIMP_PDB_IMAGE;
-	  values[1].data.d_image = image_ID;
-	}
+        {
+          *nreturn_vals = 2;
+          values[1].type         = GIMP_PDB_IMAGE;
+          values[1].data.d_image = image_ID;
+        }
       else
-	{
-	  status = GIMP_PDB_EXECUTION_ERROR;
-	}
+        {
+          status = GIMP_PDB_EXECUTION_ERROR;
+        }
     }
-  else if (strcmp (name, "file_sgi_save") == 0)
+  else if (strcmp (name, LOAD_PROC) == 0)
     {
       image_ID    = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
 
       /*  eventually export the image */
       switch (run_mode)
-	{
-	case GIMP_RUN_INTERACTIVE:
-	case GIMP_RUN_WITH_LAST_VALS:
-	  gimp_ui_init ("sgi", FALSE);
-	  export = gimp_export_image (&image_ID, &drawable_ID, "SGI",
-				      (GIMP_EXPORT_CAN_HANDLE_RGB  |
-				       GIMP_EXPORT_CAN_HANDLE_GRAY |
-				       GIMP_EXPORT_CAN_HANDLE_ALPHA));
-	  if (export == GIMP_EXPORT_CANCEL)
-	    {
-	      values[0].data.d_status = GIMP_PDB_CANCEL;
-	      return;
-	    }
-	  break;
-	default:
-	  break;
-	}
+        {
+        case GIMP_RUN_INTERACTIVE:
+        case GIMP_RUN_WITH_LAST_VALS:
+          gimp_ui_init (PLUG_IN_BINARY, FALSE);
+          export = gimp_export_image (&image_ID, &drawable_ID, "SGI",
+                                      (GIMP_EXPORT_CAN_HANDLE_RGB  |
+                                       GIMP_EXPORT_CAN_HANDLE_GRAY |
+                                       GIMP_EXPORT_CAN_HANDLE_ALPHA));
+          if (export == GIMP_EXPORT_CANCEL)
+            {
+              values[0].data.d_status = GIMP_PDB_CANCEL;
+              return;
+            }
+          break;
+        default:
+          break;
+        }
 
       switch (run_mode)
-	{
-	case GIMP_RUN_INTERACTIVE:
-	  /*
-	   * Possibly retrieve data...
-	   */
-          gimp_get_data ("file_sgi_save", &compression);
+        {
+        case GIMP_RUN_INTERACTIVE:
+          /*
+           * Possibly retrieve data...
+           */
+          gimp_get_data (SAVE_PROC, &compression);
 
-	  /*
-	   * Then acquire information with a dialog...
-	   */
+          /*
+           * Then acquire information with a dialog...
+           */
           if (!save_dialog ())
             status = GIMP_PDB_CANCEL;
           break;
 
-	case GIMP_RUN_NONINTERACTIVE:
-	  /*
-	   * Make sure all the arguments are there!
-	   */
+        case GIMP_RUN_NONINTERACTIVE:
+          /*
+           * Make sure all the arguments are there!
+           */
           if (nparams != 6)
-	    {
-	      status = GIMP_PDB_CALLING_ERROR;
-	    }
+            {
+              status = GIMP_PDB_CALLING_ERROR;
+            }
           else
-	    {
-	      compression = param[5].data.d_int32;
+            {
+              compression = param[5].data.d_int32;
 
-	      if (compression < 0 || compression > 2)
-		status = GIMP_PDB_CALLING_ERROR;
-	    };
+              if (compression < 0 || compression > 2)
+                status = GIMP_PDB_CALLING_ERROR;
+            };
           break;
 
-	case GIMP_RUN_WITH_LAST_VALS:
-	  /*
-	   * Possibly retrieve data...
-	   */
-          gimp_get_data ("file_sgi_save", &compression);
+        case GIMP_RUN_WITH_LAST_VALS:
+          /*
+           * Possibly retrieve data...
+           */
+          gimp_get_data (SAVE_PROC, &compression);
           break;
 
-	default:
+        default:
           break;
-	};
+        };
 
       if (status == GIMP_PDB_SUCCESS)
-	{
-	  if (save_image (param[3].data.d_string, image_ID, drawable_ID))
-	    {
-	      gimp_set_data ("file_sgi_save",
-			     &compression, sizeof (compression));
-	    }
-	  else
-	    {
-	      status = GIMP_PDB_EXECUTION_ERROR;
-	    }
-	}
+        {
+          if (save_image (param[3].data.d_string, image_ID, drawable_ID))
+            {
+              gimp_set_data (SAVE_PROC, &compression, sizeof (compression));
+            }
+          else
+            {
+              status = GIMP_PDB_EXECUTION_ERROR;
+            }
+        }
 
       if (export == GIMP_EXPORT_EXPORT)
-	gimp_image_delete (image_ID);
+        gimp_image_delete (image_ID);
     }
   else
     {
@@ -325,22 +327,22 @@ load_image (const gchar *filename)  /* I - File to load */
 
   switch (sgip->zsize)
     {
-    case 1 :	/* Grayscale */
+    case 1 :    /* Grayscale */
       image_type = GIMP_GRAY;
       layer_type = GIMP_GRAY_IMAGE;
       break;
 
-    case 2 :	/* Grayscale + alpha */
+    case 2 :    /* Grayscale + alpha */
       image_type = GIMP_GRAY;
       layer_type = GIMP_GRAYA_IMAGE;
       break;
 
-    case 3 :	/* RGB */
+    case 3 :    /* RGB */
       image_type = GIMP_RGB;
       layer_type = GIMP_RGB_IMAGE;
       break;
 
-    case 4 :	/* RGBA */
+    case 4 :    /* RGBA */
       image_type = GIMP_RGB;
       layer_type = GIMP_RGBA_IMAGE;
       break;
@@ -366,7 +368,7 @@ load_image (const gchar *filename)  /* I - File to load */
    */
 
   layer = gimp_layer_new (image, _("Background"), sgip->xsize, sgip->ysize,
-			  layer_type, 100, GIMP_NORMAL_MODE);
+                          layer_type, 100, GIMP_NORMAL_MODE);
   gimp_image_add_layer (image, layer, 0);
 
   /*
@@ -404,39 +406,39 @@ load_image (const gchar *filename)  /* I - File to load */
        y ++, count ++)
     {
       if (count >= tile_height)
-	{
-	  gimp_pixel_rgn_set_rect (&pixel_rgn, pixel,
-				   0, y - count, drawable->width, count);
-	  count = 0;
+        {
+          gimp_pixel_rgn_set_rect (&pixel_rgn, pixel,
+                                   0, y - count, drawable->width, count);
+          count = 0;
 
-	  gimp_progress_update ((double) y / (double) sgip->ysize);
-	}
+          gimp_progress_update ((double) y / (double) sgip->ysize);
+        }
 
       for (i = 0; i < sgip->zsize; i ++)
-	if (sgiGetRow (sgip, rows[i], sgip->ysize - 1 - y, i) < 0)
-	  printf("sgiGetRow(sgip, rows[i], %d, %d) failed!\n",
-		 sgip->ysize - 1 - y, i);
+        if (sgiGetRow (sgip, rows[i], sgip->ysize - 1 - y, i) < 0)
+          printf("sgiGetRow(sgip, rows[i], %d, %d) failed!\n",
+                 sgip->ysize - 1 - y, i);
 
       if (sgip->bpp == 1)
-	{
-	  /*
-	   * 8-bit (unsigned) pixels...
-	   */
+        {
+          /*
+           * 8-bit (unsigned) pixels...
+           */
 
-	  for (x = 0, pptr = pixels[count]; x < sgip->xsize; x ++)
-	    for (i = 0; i < bytes; i ++, pptr ++)
-	      *pptr = rows[i][x];
-	}
+          for (x = 0, pptr = pixels[count]; x < sgip->xsize; x ++)
+            for (i = 0; i < bytes; i ++, pptr ++)
+              *pptr = rows[i][x];
+        }
       else
-	{
-	  /*
-	   * 16-bit (unsigned) pixels...
-	   */
+        {
+          /*
+           * 16-bit (unsigned) pixels...
+           */
 
-	  for (x = 0, pptr = pixels[count]; x < sgip->xsize; x ++)
-	    for (i = 0; i < bytes; i ++, pptr ++)
-	      *pptr = rows[i][x] >> 8;
-	}
+          for (x = 0, pptr = pixels[count]; x < sgip->xsize; x ++)
+            for (i = 0; i < bytes; i ++, pptr ++)
+              *pptr = rows[i][x] >> 8;
+        }
     }
 
   /*
@@ -444,7 +446,7 @@ load_image (const gchar *filename)  /* I - File to load */
    */
 
   gimp_pixel_rgn_set_rect (&pixel_rgn, pixel, 0,
-			   y - count, drawable->width, count);
+                           y - count, drawable->width, count);
 
   /*
    * Done with the file...
@@ -474,8 +476,8 @@ load_image (const gchar *filename)  /* I - File to load */
 
 static gint
 save_image (const gchar *filename,
-	    gint32       image_ID,
-	    gint32       drawable_ID)
+            gint32       image_ID,
+            gint32       drawable_ID)
 {
   gint        i, j,        /* Looping var */
               x,           /* Current X coordinate */
@@ -483,7 +485,7 @@ save_image (const gchar *filename,
               tile_height, /* Height of tile in GIMP */
               count,       /* Count of rows to put in image */
               zsize;       /* Number of channels in file */
-  sgi_t	     *sgip;        /* File pointer */
+  sgi_t      *sgip;        /* File pointer */
   GimpDrawable  *drawable;    /* Drawable for layer */
   GimpPixelRgn   pixel_rgn;   /* Pixel region for layer */
   guchar    **pixels,      /* Pixel rows */
@@ -498,7 +500,7 @@ save_image (const gchar *filename,
   drawable = gimp_drawable_get (drawable_ID);
 
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width,
-		       drawable->height, FALSE, FALSE);
+                       drawable->height, FALSE, FALSE);
 
   zsize = 0;
   switch (gimp_drawable_type (drawable_ID))
@@ -525,7 +527,7 @@ save_image (const gchar *filename,
    */
 
   sgip = sgiOpen ((char *) filename, SGI_WRITE, compression, 1,
-		  drawable->width, drawable->height, zsize);
+                  drawable->width, drawable->height, zsize);
   if (sgip == NULL)
     {
       g_message (_("Could not open '%s' for writing."),
@@ -565,9 +567,9 @@ save_image (const gchar *filename,
        */
 
       if ((y + tile_height) >= drawable->height)
-	count = drawable->height - y;
+        count = drawable->height - y;
       else
-	count = tile_height;
+        count = tile_height;
 
       gimp_pixel_rgn_get_rect (&pixel_rgn, pixel, 0, y, drawable->width, count);
 
@@ -576,14 +578,14 @@ save_image (const gchar *filename,
        */
 
       for (i = 0, pptr = pixels[0]; i < count; i ++)
-	{
-	  for (x = 0; x < drawable->width; x ++)
-	    for (j = 0; j < zsize; j ++, pptr ++)
-	      rows[j][x] = *pptr;
+        {
+          for (x = 0; x < drawable->width; x ++)
+            for (j = 0; j < zsize; j ++, pptr ++)
+              rows[j][x] = *pptr;
 
-	  for (j = 0; j < zsize; j ++)
-	    sgiPutRow (sgip, rows[j], drawable->height - 1 - y - i, j);
-	};
+          for (j = 0; j < zsize; j ++)
+            sgiPutRow (sgip, rows[j], drawable->height - 1 - y - i, j);
+        };
 
       gimp_progress_update ((double) y / (double) drawable->height);
     };
@@ -609,14 +611,14 @@ save_dialog (void)
   GtkWidget *frame;
   gboolean   run;
 
-  dlg = gimp_dialog_new (_("Save as SGI"), "sgi",
+  dlg = gimp_dialog_new (_("Save as SGI"), PLUG_IN_BINARY,
                          NULL, 0,
-			 gimp_standard_help_func, "file-sgi-save",
+                         gimp_standard_help_func, SAVE_PROC,
 
-			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 NULL);
+                         NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
                                               GTK_RESPONSE_OK,
@@ -624,17 +626,17 @@ save_dialog (void)
                                               -1);
 
   frame = gimp_int_radio_group_new (TRUE, _("Compression type"),
-				    G_CALLBACK (gimp_radio_button_update),
-				    &compression, compression,
+                                    G_CALLBACK (gimp_radio_button_update),
+                                    &compression, compression,
 
-				    _("No compression"),
-				    SGI_COMP_NONE, NULL,
-				    _("RLE compression"),
-				    SGI_COMP_RLE, NULL,
-				    _("Aggressive RLE\n(not supported by SGI)"),
-				    SGI_COMP_ARLE, NULL,
+                                    _("No compression"),
+                                    SGI_COMP_NONE, NULL,
+                                    _("RLE compression"),
+                                    SGI_COMP_RLE, NULL,
+                                    _("Aggressive RLE\n(not supported by SGI)"),
+                                    SGI_COMP_ARLE, NULL,
 
-				    NULL);
+                                    NULL);
 
   gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);

@@ -35,9 +35,9 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define VARIATION_SAME    (-2)
+#define PLUG_IN_PROC      "plug-in-flame"
 
-#define HELP_ID           "plug-in-flame"
+#define VARIATION_SAME    (-2)
 
 #define BUFFER_SIZE       10000
 
@@ -119,12 +119,12 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode", "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",    "Input image (unused)"         },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"               }
   };
 
-  gimp_install_procedure ("plug_in_flame",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Creates cosmic recursive fractal flames",
                           "Creates cosmic recursive fractal flames",
                           "Scott Draves",
@@ -136,8 +136,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_flame",
-                             "<Image>/Filters/Render/Nature");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Render/Nature");
 }
 
 static void
@@ -195,7 +194,7 @@ run (const gchar      *name,
     }
   else
     {
-      gimp_get_data ("plug_in_flame", &config);
+      gimp_get_data (PLUG_IN_PROC, &config);
       maybe_init_cp ();
 
       drawable = gimp_drawable_get (param[2].data.d_drawable);
@@ -233,7 +232,7 @@ run (const gchar      *name,
           if (run_mode != GIMP_RUN_NONINTERACTIVE)
             gimp_displays_flush ();
 
-          gimp_set_data ("plug_in_flame", &config, sizeof (config));
+          gimp_set_data (PLUG_IN_PROC, &config, sizeof (config));
         }
       else
         {
@@ -641,7 +640,7 @@ edit_callback (GtkWidget *widget,
 
       edit_dlg = gimp_dialog_new (_("Edit Flame"), "flame",
                                   parent, GTK_DIALOG_DESTROY_WITH_PARENT,
-                                  gimp_standard_help_func, HELP_ID,
+                                  gimp_standard_help_func, PLUG_IN_PROC,
 
                                   GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                                   GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -940,7 +939,7 @@ dialog (void)
 
   dlg = gimp_dialog_new (_("Flame"), "flame",
                          NULL, 0,
-                         gimp_standard_help_func, HELP_ID,
+                         gimp_standard_help_func, PLUG_IN_PROC,
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,

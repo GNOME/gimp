@@ -39,7 +39,9 @@
 
 /* Global defines */
 
-#define TP (2*G_PI)
+#define PLUG_IN_PROC   "plug-in-rotate-colormap"
+#define PLUG_IN_BINARY "rcm"
+#define TP             (2*G_PI)
 
 
 /* Typedefs */

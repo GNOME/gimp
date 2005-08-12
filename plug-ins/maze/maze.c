@@ -135,21 +135,21 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",    "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE,    "image_ID",    "(unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable_ID", "ID of drawable" },
+    { GIMP_PDB_INT32,    "run-mode",  "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",     "(unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable",  "ID of drawable" },
     /* If we did have parameters, these be them: */
-    { GIMP_PDB_INT16,    "width",       "Width of the passages" },
-    { GIMP_PDB_INT16,    "height",      "Height of the passages"},
-    { GIMP_PDB_INT8,     "tileable",    "Tileable maze?"},
-    { GIMP_PDB_INT8,     "algorithm",   "Generation algorithm"
-                                        "(0=DEPTH FIRST, 1=PRIM'S ALGORITHM)" },
-    { GIMP_PDB_INT32,    "seed",        "Random Seed"},
-    { GIMP_PDB_INT16,    "multiple",    "Multiple (use 57)" },
-    { GIMP_PDB_INT16,    "offset",      "Offset (use 1)" }
+    { GIMP_PDB_INT16,    "width",     "Width of the passages" },
+    { GIMP_PDB_INT16,    "height",    "Height of the passages"},
+    { GIMP_PDB_INT8,     "tileable",  "Tileable maze?"},
+    { GIMP_PDB_INT8,     "algorithm", "Generation algorithm"
+                                      "(0=DEPTH FIRST, 1=PRIM'S ALGORITHM)" },
+    { GIMP_PDB_INT32,    "seed",      "Random Seed"},
+    { GIMP_PDB_INT16,    "multiple",  "Multiple (use 57)" },
+    { GIMP_PDB_INT16,    "offset",    "Offset (use 1)" }
   };
 
-  gimp_install_procedure ("plug_in_maze",
+  gimp_install_procedure (PLUG_IN_PROC,
 			  "Draws a maze.",
 			  "Generates a maze using either the depth-first "
                           "search method or Prim's algorithm.  Can make "
@@ -163,7 +163,7 @@ query (void)
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_maze",
+  gimp_plugin_menu_register (PLUG_IN_PROC,
                              "<Image>/Filters/Render/Pattern");
 }
 
@@ -201,7 +201,7 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       /* Possibly retrieve data */
-      gimp_get_data ("plug_in_maze", &mvals);
+      gimp_get_data (PLUG_IN_PROC, &mvals);
 
       /* The interface needs to know the dimensions of the image... */
       gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
@@ -237,7 +237,7 @@ run (const gchar      *name,
 
     case GIMP_RUN_WITH_LAST_VALS:
       /* Possibly retrieve data */
-      gimp_get_data ("plug_in_maze", &mvals);
+      gimp_get_data (PLUG_IN_PROC, &mvals);
 
       if (mvals.random_seed)
         mvals.seed = g_random_int ();
@@ -259,7 +259,7 @@ run (const gchar      *name,
 
       if (run_mode == GIMP_RUN_INTERACTIVE ||
 	  (run_mode == GIMP_RUN_WITH_LAST_VALS))
-	gimp_set_data ("plug_in_maze", &mvals, sizeof (MazeValues));
+	gimp_set_data (PLUG_IN_PROC, &mvals, sizeof (MazeValues));
     }
   else
     {

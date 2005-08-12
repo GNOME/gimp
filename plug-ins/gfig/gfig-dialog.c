@@ -222,7 +222,7 @@ gfig_dialog (void)
   GtkWidget    *empty_label;
   gchar        *path;
 
-  gimp_ui_init ("gfig", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
   img_width  = gimp_drawable_width (gfig_context->drawable_id);
   img_height = gimp_drawable_height (gfig_context->drawable_id);
@@ -291,9 +291,9 @@ gfig_dialog (void)
     }
 
   /* Start building the dialog up */
-  top_level_dlg = gimp_dialog_new (_("Gfig"), "gfig",
+  top_level_dlg = gimp_dialog_new (_("Gfig"), PLUG_IN_BINARY,
                                    NULL, 0,
-                                   gimp_standard_help_func, HELP_ID,
+                                   gimp_standard_help_func, PLUG_IN_PROC,
 
                                    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                                    GTK_STOCK_CLOSE,  GTK_RESPONSE_OK,

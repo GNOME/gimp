@@ -38,8 +38,8 @@
 
 /*  defines  */
 
-#define GIMP_HELP_BROWSER_EXT_NAME       "extension_gimp_help_browser"
-#define GIMP_HELP_BROWSER_TEMP_EXT_NAME  "extension_gimp_help_browser_temp"
+#define GIMP_HELP_BROWSER_EXT_PROC       "extension-gimp-help-browser"
+#define GIMP_HELP_BROWSER_TEMP_EXT_PROC  "extension-gimp-help-browser-temp"
 
 
 /*  forward declarations  */
@@ -77,10 +77,10 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive" },
+    { GIMP_PDB_INT32, "run-mode", "Interactive" },
   };
 
-  gimp_install_procedure (GIMP_HELP_BROWSER_EXT_NAME,
+  gimp_install_procedure (GIMP_HELP_BROWSER_EXT_PROC,
                           "Browse the GIMP help pages",
                           "A small and simple HTML browser optimized for "
 			  "browsing the GIMP help pages.",
@@ -158,7 +158,7 @@ temp_proc_install (void)
     { GIMP_PDB_STRING, "uri", "Full uri of the file to open" }
   };
 
-  gimp_install_temp_proc (GIMP_HELP_BROWSER_TEMP_EXT_NAME,
+  gimp_install_temp_proc (GIMP_HELP_BROWSER_TEMP_EXT_PROC,
 			  "DON'T USE THIS ONE",
 			  "(Temporary procedure)",
 			  "Sven Neumann <sven@gimp.org>, "

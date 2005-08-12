@@ -79,6 +79,9 @@
 /* XJT includes */
 #include "xjpeg.h"
 
+#define LOAD_PROC      "file-xjt-load"
+#define SAVE_PROC      "file-xjt-save"
+
 #define GIMP_XJ_IMAGE  "GIMP_XJ_IMAGE"
 
 #define SCALE_WIDTH 125
@@ -441,9 +444,9 @@ query (void)
 {
   static GimpParamDef load_args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_STRING, "filename", "The name of the file to load" },
-    { GIMP_PDB_STRING, "raw_filename", "The name of the file to load" },
+    { GIMP_PDB_INT32,  "run-mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_STRING, "filename",     "The name of the file to load" },
+    { GIMP_PDB_STRING, "raw-filename", "The name of the file to load" },
   };
   static GimpParamDef load_return_vals[] =
   {
@@ -452,18 +455,18 @@ query (void)
 
   static GimpParamDef save_args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable", "is ignored" },
-    { GIMP_PDB_STRING, "filename", "The name of the file to save the image in" },
-    { GIMP_PDB_STRING, "raw_filename", "The name of the file to save the image in" },
-    { GIMP_PDB_FLOAT, "quality", "Quality of saved image (0 <= quality <= 1)" },
-    { GIMP_PDB_FLOAT, "smoothing", "Smoothing factor for saved image (0 <= smoothing <= 1)" },
-    { GIMP_PDB_INT32, "optimize", "Optimization of entropy encoding parameters" },
-    { GIMP_PDB_INT32, "clr_transparent", "set all full-transparent pixels to 0" },
+    { GIMP_PDB_INT32,    "run-mode",        "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",           "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable",        "is ignored" },
+    { GIMP_PDB_STRING,   "filename",        "The name of the file to save the image in" },
+    { GIMP_PDB_STRING,   "raw-filename",    "The name of the file to save the image in" },
+    { GIMP_PDB_FLOAT,    "quality",         "Quality of saved image (0 <= quality <= 1)" },
+    { GIMP_PDB_FLOAT,    "smoothing",       "Smoothing factor for saved image (0 <= smoothing <= 1)" },
+    { GIMP_PDB_INT32,    "optimize",        "Optimization of entropy encoding parameters" },
+    { GIMP_PDB_INT32,    "clr-transparent", "set all full-transparent pixels to 0" },
   };
 
-  gimp_install_procedure ("file_xjt_load",
+  gimp_install_procedure (LOAD_PROC,
                           "loads files of the jpeg-tar file format",
 			  "loads files of the jpeg-tar file format",
                           "Wolfgang Hofer",
@@ -476,12 +479,12 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
-  gimp_register_magic_load_handler ("file_xjt_load",
+  gimp_register_magic_load_handler (LOAD_PROC,
 				    "xjt,xjtgz,xjtbz2",
 				    "",
 				    "");
 
-  gimp_install_procedure ("file_xjt_save",
+  gimp_install_procedure (SAVE_PROC,
                           "saves files in the jpeg-tar file format",
 			  "saves files in the jpeg-tar file format",
                           "Wolfgang Hofer",
@@ -493,7 +496,7 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_save_handler ("file_xjt_save", "xjt,xjtgz,xjtbz2", "");
+  gimp_register_save_handler (SAVE_PROC, "xjt,xjtgz,xjtbz2", "");
 }
 
 static void
@@ -527,7 +530,7 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  if (strcmp (name, "file_xjt_load") == 0)
+  if (strcmp (name, LOAD_PROC) == 0)
     {
       image_ID = load_xjt_image (param[1].data.d_string);
 
@@ -542,13 +545,13 @@ run (const gchar      *name,
 	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
     }
-  else if (strcmp (name, "file_xjt_save") == 0)
+  else if (strcmp (name, SAVE_PROC) == 0)
     {
       switch (run_mode)
 	{
 	case GIMP_RUN_INTERACTIVE:
 	  /*  Possibly retrieve data  */
-	  gimp_get_data ("file_xjt_save", &jsvals);
+	  gimp_get_data (SAVE_PROC, &jsvals);
 
 	  /*  First acquire information with a dialog  */
 	  if (! save_dialog ())
@@ -583,7 +586,7 @@ run (const gchar      *name,
 
 	case GIMP_RUN_WITH_LAST_VALS:
 	  /*  Possibly retrieve data  */
-	  gimp_get_data ("file_xjt_save", &jsvals);
+	  gimp_get_data (SAVE_PROC, &jsvals);
 	  break;
 
 	default:
@@ -601,7 +604,7 @@ run (const gchar      *name,
 	  else
 	    {
 	      /*  Store mvals data  */
-	      gimp_set_data ("file_xjt_save", &jsvals, sizeof (t_JpegSaveVals));
+	      gimp_set_data (SAVE_PROC, &jsvals, sizeof (t_JpegSaveVals));
 	    }
 	}
     }

@@ -56,8 +56,6 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-/***** Magic numbers *****/
-
 #define GFIG_HEADER      "GFIG Version 0.2\n"
 
 static void      query  (void);
@@ -115,7 +113,7 @@ query (void)
     { GIMP_PDB_INT32,    "dummy",    "dummy" }
   };
 
-  gimp_install_procedure ("plug_in_gfig",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Create Geometrical shapes with the Gimp",
                           "Draw Vector Graphics and paint them onto your images.  "
                           "Gfig allows you to draw many types of objects "
@@ -133,7 +131,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_gfig", "<Image>/Filters/Render");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Render");
 }
 
 static void
@@ -216,7 +214,7 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
     case GIMP_RUN_WITH_LAST_VALS:
-      /*gimp_get_data ("plug_in_gfig", &selvals);*/
+      /*gimp_get_data (PLUG_IN_PROC, &selvals);*/
       if (! gfig_dialog ())
         {
           gimp_drawable_detach (gfig_drawable);
@@ -243,7 +241,7 @@ run (const gchar      *name,
   else
 #if 0
   if (run_mode == GIMP_RUN_INTERACTIVE)
-    gimp_set_data ("plug_in_gfig", &selvals, sizeof (SelectItVals));
+    gimp_set_data (PLUG_IN_PROC, &selvals, sizeof (SelectItVals));
   else
 #endif /* 0 */
     {

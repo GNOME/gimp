@@ -87,12 +87,12 @@ query (void)
 {
   GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image (used for indexed images)" },
+    { GIMP_PDB_INT32,    "run-mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image (used for indexed images)" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
   };
 
-  gimp_install_procedure ("plug_in_rotate_colormap",
+  gimp_install_procedure (PLUG_IN_PROC,
 			  "Colormap rotation as in xv",
 			  "Exchanges two color ranges. "
                           "Based on code from Pavel Grinfeld (pavel@ml.com). "
@@ -106,8 +106,7 @@ query (void)
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_rotate_colormap",
-                             "<Image>/Filters/Colors/Map");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Colors/Map");
 }
 
 
@@ -159,7 +158,7 @@ rcm_row (const guchar *src_row,
 
       if (! skip)
         {
-          H = rcm_linear( rcm_left_end (Current.From->angle),
+          H = rcm_linear (rcm_left_end (Current.From->angle),
                           rcm_right_end (Current.From->angle),
                           rcm_left_end (Current.To->angle),
                           rcm_right_end (Current.To->angle),

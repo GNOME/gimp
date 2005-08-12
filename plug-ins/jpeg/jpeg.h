@@ -16,6 +16,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#define LOAD_PROC       "file-jpeg-load"
+#define LOAD_THUMB_PROC "file-jpeg-load-thumb"
+#define SAVE_PROC       "file-jpeg-save"
+#define PLUG_IN_BINARY  "jpeg"
+
 /* headers used in some APPn markers */
 #define JPEG_APP_HEADER_EXIF "Exif"
 #define JPEG_APP_HEADER_XMP  "http://ns.adobe.com/xap/1.0/"

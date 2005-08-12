@@ -38,6 +38,10 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define LOAD_PROC "file-uri-load"
+#define SAVE_PROC "file-uri-save"
+
+
 static void                query         (void);
 static void                run           (const gchar      *name,
                                           gint              nparams,
@@ -72,9 +76,9 @@ query (void)
 {
   static GimpParamDef load_args[] =
   {
-    { GIMP_PDB_INT32,  "run_mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,  "run-mode",     "Interactive, non-interactive" },
     { GIMP_PDB_STRING, "filename",     "The name of the file to load" },
-    { GIMP_PDB_STRING, "raw_filename", "The name entered"             }
+    { GIMP_PDB_STRING, "raw-filename", "The name entered"             }
   };
 
   static GimpParamDef load_return_vals[] =
@@ -84,11 +88,11 @@ query (void)
 
   static GimpParamDef save_args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode",     "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",        "Input image" },
     { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },
     { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
-    { GIMP_PDB_STRING,   "raw_filename", "The name of the file to save the image in" }
+    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in" }
   };
 
   GError *error = NULL;
@@ -103,7 +107,7 @@ query (void)
 
   if (uri_backend_get_load_protocols ())
     {
-      gimp_install_procedure ("file_uri_load",
+      gimp_install_procedure (LOAD_PROC,
                               "loads files given an URI",
                               "You need to have GNU Wget or GnomeVFS installed.",
                               "Spencer Kimball & Peter Mattis",
@@ -116,15 +120,15 @@ query (void)
                               G_N_ELEMENTS (load_return_vals),
                               load_args, load_return_vals);
 
-      gimp_plugin_icon_register ("file_uri_load",
+      gimp_plugin_icon_register (LOAD_PROC,
                                  GIMP_ICON_TYPE_STOCK_ID, GIMP_STOCK_WEB);
-      gimp_register_load_handler ("file_uri_load",
+      gimp_register_load_handler (LOAD_PROC,
                                   "", uri_backend_get_load_protocols ());
     }
 
   if (uri_backend_get_save_protocols ())
     {
-      gimp_install_procedure ("file_uri_save",
+      gimp_install_procedure (SAVE_PROC,
                               "saves files given an URI",
                               "You need to have GNU Wget or GnomeVFS installed.",
                               "Michael Natterer",
@@ -136,9 +140,9 @@ query (void)
                               G_N_ELEMENTS (save_args), 0,
                               save_args, NULL);
 
-      gimp_plugin_icon_register ("file_uri_save",
+      gimp_plugin_icon_register (SAVE_PROC,
                                  GIMP_ICON_TYPE_STOCK_ID, GIMP_STOCK_WEB);
-      gimp_register_save_handler ("file_uri_save",
+      gimp_register_save_handler (SAVE_PROC,
                                   "", uri_backend_get_save_protocols ());
     }
 
@@ -174,8 +178,7 @@ run (const gchar      *name,
       return;
     }
 
-  if (! strcmp (name, "file_uri_load") &&
-      uri_backend_get_load_protocols ())
+  if (! strcmp (name, LOAD_PROC) && uri_backend_get_load_protocols ())
     {
       image_ID = load_image (param[2].data.d_string, run_mode);
 
@@ -188,8 +191,7 @@ run (const gchar      *name,
 	  values[1].data.d_image = image_ID;
 	}
     }
-  else if (! strcmp (name, "file_uri_save") &&
-           uri_backend_get_save_protocols ())
+  else if (! strcmp (name, SAVE_PROC) && uri_backend_get_save_protocols ())
     {
       status = save_image (param[3].data.d_string,
                            param[1].data.d_int32,

@@ -48,7 +48,8 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define VERSION "0.6"
+#define LOAD_PROC "file-faxg3-load"
+#define VERSION   "0.6"
 
 /* Declare local functions.
  */
@@ -83,16 +84,16 @@ void query (void)
 {
   static GimpParamDef load_args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_STRING, "filename", "The name of the file to load" },
-    { GIMP_PDB_STRING, "raw_filename", "The name of the file to load" },
+    { GIMP_PDB_INT32,  "run-mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_STRING, "filename",     "The name of the file to load" },
+    { GIMP_PDB_STRING, "raw-filename", "The name of the file to load" },
   };
   static GimpParamDef load_return_vals[] =
   {
     { GIMP_PDB_IMAGE, "image", "Output image" },
   };
 
-  gimp_install_procedure ("file_faxg3_load",
+  gimp_install_procedure (LOAD_PROC,
                           "loads g3 fax files",
 			  "This plug-in loads Fax G3 Image files.",
                           "Jochen Friedrich",
@@ -105,8 +106,8 @@ void query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
-  gimp_register_file_handler_mime ("file_faxg3_load", "image/g3-fax");
-  gimp_register_magic_load_handler ("file_faxg3_load",
+  gimp_register_file_handler_mime (LOAD_PROC, "image/g3-fax");
+  gimp_register_magic_load_handler (LOAD_PROC,
 				    "g3",
 				    "",
 				    "0,short,0x0001,0,short,0x0014");
@@ -130,7 +131,7 @@ run (const gchar      *name,
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
 
-  if (strcmp (name, "file_faxg3_load") == 0)
+  if (strcmp (name, LOAD_PROC) == 0)
     {
       INIT_I18N();
 

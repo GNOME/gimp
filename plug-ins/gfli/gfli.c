@@ -65,6 +65,12 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define LOAD_PROC      "file-fli-load"
+#define SAVE_PROC      "file-fli-save"
+#define INFO_PROC      "file-fli-info"
+#define PLUG_IN_BINARY "gfli"
+
+
 static void      query       (void);
 static void      run         (const gchar      *name,
                               gint              nparams,
@@ -147,7 +153,7 @@ query (void)
   /*
    * Load/save procedures
    */
-  gimp_install_procedure ("file_fli_load",
+  gimp_install_procedure (LOAD_PROC,
 			  "load FLI-movies",
 			  "This is an experimantal plug-in to handle FLI movies",
 			  "Jens Ch. Restemeier",
@@ -161,13 +167,13 @@ query (void)
 			  load_args,
                           load_return_vals);
 
-  gimp_register_file_handler_mime ("file_fli_load", "image/x-flic");
-  gimp_register_magic_load_handler ("file_fli_load",
+  gimp_register_file_handler_mime (LOAD_PROC, "image/x-flic");
+  gimp_register_magic_load_handler (LOAD_PROC,
 				    "fli,flc",
 				    "",
 				    "");
 
-  gimp_install_procedure ("file_fli_save",
+  gimp_install_procedure (SAVE_PROC,
 			  "save FLI-movies",
 			  "This is an experimantal plug-in to handle FLI movies",
 			  "Jens Ch. Restemeier",
@@ -179,15 +185,15 @@ query (void)
 			  G_N_ELEMENTS (save_args), 0,
 			  save_args, NULL);
 
-  gimp_register_file_handler_mime ("file_fli_save", "image/x-flic");
-  gimp_register_save_handler ("file_fli_save",
+  gimp_register_file_handler_mime (SAVE_PROC, "image/x-flic");
+  gimp_register_save_handler (SAVE_PROC,
 			      "fli,flc",
 			      "");
 
   /*
    * Utility functions:
    */
-  gimp_install_procedure ("file_fli_info",
+  gimp_install_procedure (INFO_PROC,
 			  "Get info about a Fli movie",
 			  "This is a experimantal plug-in to handle FLI movies",
 			  "Jens Ch. Restemeier",
@@ -229,7 +235,7 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  if (strcmp (name, "file_fli_load") == 0)
+  if (strcmp (name, LOAD_PROC) == 0)
     {
       switch (run_mode)
 	{
@@ -303,7 +309,7 @@ run (const gchar      *name,
 	  break;
 	}
     }
-  else if (strcmp (name, "file_fli_save") == 0)
+  else if (strcmp (name, SAVE_PROC) == 0)
     {
       image_ID    = orig_image_ID = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
@@ -332,7 +338,7 @@ run (const gchar      *name,
 
 	case GIMP_RUN_INTERACTIVE:
 	case GIMP_RUN_WITH_LAST_VALS:
-	  gimp_ui_init ("gfli", FALSE);
+	  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "FLI",
 				      GIMP_EXPORT_CAN_HANDLE_INDEXED |
                                       GIMP_EXPORT_CAN_HANDLE_GRAY    |
@@ -357,7 +363,7 @@ run (const gchar      *name,
       if (export == GIMP_EXPORT_EXPORT)
 	gimp_image_delete (image_ID);
     }
-  else if (strcmp (name, "file_fli_info") == 0)
+  else if (strcmp (name, INFO_PROC) == 0)
     {
       gint32 width, height, frames;
 
@@ -801,11 +807,11 @@ load_dialog (const gchar *name)
   from_frame = 1;
   to_frame   = nframes;
 
-  gimp_ui_init ("gfli", FALSE);
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("GFLI 1.3 - Load framestack"), "gfli",
+  dialog = gimp_dialog_new (_("GFLI 1.3 - Load framestack"), PLUG_IN_BINARY,
                             NULL, 0,
-			    gimp_standard_help_func, "file-gfli-load",
+			    gimp_standard_help_func, LOAD_PROC,
 
 			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			    GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -871,9 +877,9 @@ save_dialog (gint32 image_id)
   from_frame = 1;
   to_frame   = nframes;
 
-  dialog = gimp_dialog_new (_("GFLI 1.3 - Save framestack"), "gfli",
+  dialog = gimp_dialog_new (_("GFLI 1.3 - Save framestack"), PLUG_IN_BINARY,
                             NULL, 0,
-			    gimp_standard_help_func, "file-gfli-save",
+			    gimp_standard_help_func, SAVE_PROC,
 
 			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			    GTK_STOCK_OK,     GTK_RESPONSE_OK,

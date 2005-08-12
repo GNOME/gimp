@@ -38,8 +38,8 @@
 
 /*  defines  */
 
-#define GIMP_HELP_EXT_NAME        "extension_gimp_help"
-#define GIMP_HELP_TEMP_EXT_NAME   "extension_gimp_help_temp"
+#define GIMP_HELP_EXT_PROC        "extension-gimp-help"
+#define GIMP_HELP_TEMP_EXT_PROC   "extension-gimp-help-temp"
 
 
 typedef struct
@@ -102,13 +102,13 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,       "num_domain_names", "" },
-    { GIMP_PDB_STRINGARRAY, "domain_names",     "" },
-    { GIMP_PDB_INT32,       "num_domain_uris",  "" },
-    { GIMP_PDB_STRINGARRAY, "domain_uris",      "" }
+    { GIMP_PDB_INT32,       "num-domain-names", "" },
+    { GIMP_PDB_STRINGARRAY, "domain-names",     "" },
+    { GIMP_PDB_INT32,       "num-domain-uris",  "" },
+    { GIMP_PDB_STRINGARRAY, "domain-uris",      "" }
   };
 
-  gimp_install_procedure (GIMP_HELP_EXT_NAME,
+  gimp_install_procedure (GIMP_HELP_EXT_PROC,
                           "", /* FIXME */
                           "", /* FIXME */
                           "Sven Neumann <sven@gimp.org>, "
@@ -204,7 +204,7 @@ run (const gchar      *name,
       g_main_loop_unref (main_loop);
       main_loop = NULL;
 
-      gimp_uninstall_temp_proc (GIMP_HELP_TEMP_EXT_NAME);
+      gimp_uninstall_temp_proc (GIMP_HELP_TEMP_EXT_PROC);
     }
 
   values[0].type          = GIMP_PDB_STATUS;
@@ -220,12 +220,12 @@ temp_proc_install (void)
   static GimpParamDef args[] =
   {
     { GIMP_PDB_STRING, "procedure",    "The procedure of the browser to use" },
-    { GIMP_PDB_STRING, "help_domain",  "Help domain to use" },
-    { GIMP_PDB_STRING, "help_locales", "Language to use"    },
-    { GIMP_PDB_STRING, "help_id",      "Help ID to open"    }
+    { GIMP_PDB_STRING, "help-domain",  "Help domain to use" },
+    { GIMP_PDB_STRING, "help-locales", "Language to use"    },
+    { GIMP_PDB_STRING, "help-id",      "Help ID to open"    }
   };
 
-  gimp_install_temp_proc (GIMP_HELP_TEMP_EXT_NAME,
+  gimp_install_temp_proc (GIMP_HELP_TEMP_EXT_PROC,
                           "DON'T USE THIS ONE",
                           "(Temporary procedure)",
 			  "Sven Neumann <sven@gimp.org>, "

@@ -51,9 +51,9 @@
 #include "pagecurl-icons.h"
 
 
-#define PLUG_IN_NAME    "plug_in_pagecurl"
+#define PLUG_IN_PROC    "plug-in-pagecurl"
+#define PLUG_IN_BINARY  "pagecurl"
 #define PLUG_IN_VERSION "July 2004, 1.0"
-#define HELP_ID         "plug-in-pagecurl"
 #define NGRADSAMPLES    256
 
 
@@ -212,7 +212,7 @@ query (void)
     { GIMP_PDB_LAYER, "Curl Layer", "The new layer with the curl." }
   };
 
-  gimp_install_procedure (PLUG_IN_NAME,
+  gimp_install_procedure (PLUG_IN_PROC,
 			  "Pagecurl effect",
 			  "This plug-in creates a pagecurl-effect.",
 			  "Federico Mena Quintero and Simon Budig",
@@ -226,7 +226,7 @@ query (void)
 			  args,
 			  return_vals);
 
-  gimp_plugin_menu_register (PLUG_IN_NAME, "<Image>/Filters/Distorts");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Distorts");
 }
 
 static void
@@ -248,7 +248,7 @@ run (const gchar      *name,
   set_default_params ();
 
   /*  Possibly retrieve data  */
-  gimp_get_data (PLUG_IN_NAME, &curl);
+  gimp_get_data (PLUG_IN_PROC, &curl);
 
   *nreturn_vals = 2;
   *return_vals = values;
@@ -305,7 +305,7 @@ run (const gchar      *name,
             gimp_displays_flush ();
 
 	  if (run_mode == GIMP_RUN_INTERACTIVE)
-            gimp_set_data (PLUG_IN_NAME, &curl, sizeof (CurlParams));
+            gimp_set_data (PLUG_IN_PROC, &curl, sizeof (CurlParams));
 	}
     }
   else
@@ -435,11 +435,11 @@ dialog (void)
   GtkObject *adjustment;
   gboolean   run;
 
-  gimp_ui_init ("pagecurl", FALSE);
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Pagecurl Effect"), "pagecurl",
+  dialog = gimp_dialog_new (_("Pagecurl Effect"), PLUG_IN_BINARY,
                             NULL, 0,
-			    gimp_standard_help_func, HELP_ID,
+			    gimp_standard_help_func, PLUG_IN_PROC,
 
 			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			    GTK_STOCK_OK,     GTK_RESPONSE_OK,

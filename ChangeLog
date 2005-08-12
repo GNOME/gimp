@@ -1,5 +1,32 @@
 2005-08-12  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/bmp/bmp.c
+	* plug-ins/faxg3/faxg3.c
+	* plug-ins/fits/fits.c
+	* plug-ins/flame/flame.c
+	* plug-ins/gfig/gfig-dialog.c
+	* plug-ins/gfig/gfig.[ch]
+	* plug-ins/gflare/gflare.c
+	* plug-ins/gfli/gfli.c
+	* plug-ins/help/help.c
+	* plug-ins/helpbrowser/helpbrowser.c
+	* plug-ins/ifscompose/ifscompose.c
+	* plug-ins/jpeg/jpeg-save.c
+	* plug-ins/jpeg/jpeg.[ch]
+	* plug-ins/maze/maze.[ch]
+	* plug-ins/maze/maze_face.c
+	* plug-ins/pagecurl/pagecurl.c
+	* plug-ins/rcm/rcm.[ch]
+	* plug-ins/rcm/rcm_dialog.c
+	* plug-ins/sel2path/sel2path.c
+	* plug-ins/sgi/sgi.c
+	* plug-ins/uri/uri.c
+	* plug-ins/xjt/xjt.c: canonicalize procedure and parameter names.
+	#define them instead of repeating the same string several times.
+	Minor cleanups.
+
+2005-08-12  Michael Natterer  <mitch@gimp.org>
+
 	* app/plug-in/plug-in-proc-def.c (plug_in_proc_def_get_help_id):
 	removed s/_/-/, proc names are already canonicalized.
 

@@ -63,7 +63,8 @@
 
 #define RESPONSE_RESCAN     1
 
-#define HELP_ID             "plug-in-gflare"
+#define PLUG_IN_PROC        "plug-in-gflare"
+#define PLUG_IN_BINARY      "gflare"
 
 #define GRADIENT_NAME_MAX   256
 #define GRADIENT_RESOLUTION 360
@@ -784,10 +785,10 @@ plugin_query (void)
 {
   static GimpParamDef args[]=
   {
-    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode", "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",    "Input image (unused)" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_STRING,   "gflare_name", "The name of GFlare" },
+    { GIMP_PDB_STRING,   "gflare-name", "The name of GFlare" },
     { GIMP_PDB_INT32,    "xcenter",  "X coordinate of center of GFlare" },
     { GIMP_PDB_INT32,    "ycenter",  "Y coordinate of center of GFlare" },
     { GIMP_PDB_FLOAT,    "radius",   "Radius of GFlare (pixel)" },
@@ -795,9 +796,9 @@ plugin_query (void)
     { GIMP_PDB_FLOAT,    "hue",      "Hue rotation of GFlare (degree)" },
     { GIMP_PDB_FLOAT,    "vangle",   "Vector angle for second flares (degree)" },
     { GIMP_PDB_FLOAT,    "vlength",  "Vector length for second flares (percentage to Radius)" },
-    { GIMP_PDB_INT32,    "use_asupsample", "Whether it uses or not adaptive supersampling while rendering (boolean)" },
-    { GIMP_PDB_INT32,    "asupsample_max_depth", "Max depth for adaptive supersampling"},
-    { GIMP_PDB_FLOAT,   "asupsample_threshold", "Threshold for adaptive supersampling"}
+    { GIMP_PDB_INT32,    "use-asupsample", "Whether it uses or not adaptive supersampling while rendering (boolean)" },
+    { GIMP_PDB_INT32,    "asupsample-max-depth", "Max depth for adaptive supersampling"},
+    { GIMP_PDB_FLOAT,    "asupsample-threshold", "Threshold for adaptive supersampling"}
   };
 
   const gchar *help_string =
@@ -808,7 +809,7 @@ plugin_query (void)
     "In non-interactive call, the user can only render one of GFlare "
     "which has been stored in gflare-path already.";
 
-  gimp_install_procedure ("plug_in_gflare",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Produce lense flare effect using custom gradients",
                           help_string,
                           "Eiichi Takamori",
@@ -820,7 +821,7 @@ plugin_query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_gflare",
+  gimp_plugin_menu_register (PLUG_IN_PROC,
                              "<Image>/Filters/Light and Shadow/Light");
 }
 
@@ -904,7 +905,7 @@ plugin_run (const gchar      *name,
     case GIMP_RUN_INTERACTIVE:
 
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_gflare", &pvals);
+      gimp_get_data (PLUG_IN_PROC, &pvals);
 
       /*  First acquire information with a dialog  */
       if (! dlg_run ())
@@ -940,7 +941,7 @@ plugin_run (const gchar      *name,
 
     case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_gflare", &pvals);
+      gimp_get_data (PLUG_IN_PROC, &pvals);
       break;
 
     default:
@@ -961,7 +962,7 @@ plugin_run (const gchar      *name,
 
           /*  Store data  */
           if (run_mode == GIMP_RUN_INTERACTIVE)
-            gimp_set_data ("plug_in_gflare", &pvals, sizeof (PluginValues));
+            gimp_set_data (PLUG_IN_PROC, &pvals, sizeof (PluginValues));
         }
       else
         {
@@ -2266,7 +2267,7 @@ dlg_run (void)
   GtkWidget *notebook;
   gboolean   run = FALSE;
 
-  gimp_ui_init ("gflare", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
   /*
    *    Init Main Dialog
@@ -2287,9 +2288,9 @@ dlg_run (void)
    *    Dialog Shell
    */
 
-  shell = dlg->shell = gimp_dialog_new (_("GFlare"), "gflare",
+  shell = dlg->shell = gimp_dialog_new (_("GFlare"), PLUG_IN_BINARY,
                                         NULL, 0,
-                                        gimp_standard_help_func, HELP_ID,
+                                        gimp_standard_help_func, PLUG_IN_PROC,
 
                                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -2987,7 +2988,7 @@ dlg_selector_new_callback (GtkWidget *widget,
 
   query_box = gimp_query_string_box (_("New GFlare"),
                                      gtk_widget_get_toplevel (widget),
-                                     gimp_standard_help_func, HELP_ID,
+                                     gimp_standard_help_func, PLUG_IN_PROC,
                                      _("Enter a name for the new GFlare"),
                                      _("Unnamed"),
                                      NULL, NULL,
@@ -3066,7 +3067,7 @@ dlg_selector_copy_callback (GtkWidget *widget,
 
   query_box = gimp_query_string_box (_("Copy GFlare"),
                                      gtk_widget_get_toplevel (widget),
-                                     gimp_standard_help_func, HELP_ID,
+                                     gimp_standard_help_func, PLUG_IN_PROC,
                                      _("Enter a name for the copied GFlare"),
                                      name,
                                      NULL, NULL,
@@ -3132,7 +3133,7 @@ dlg_selector_delete_callback (GtkWidget *widget,
 
   dialog = gimp_query_boolean_box (_("Delete GFlare"),
                                    dlg->shell,
-                                   gimp_standard_help_func, HELP_ID,
+                                   gimp_standard_help_func, PLUG_IN_PROC,
                                    GTK_STOCK_DIALOG_QUESTION,
                                    str,
                                    GTK_STOCK_DELETE, GTK_STOCK_CANCEL,
@@ -3243,9 +3244,9 @@ ed_run (GtkWindow            *parent,
    *    Dialog Shell
    */
   ed->shell =
-    shell = gimp_dialog_new (_("GFlare Editor"), "gflare",
+    shell = gimp_dialog_new (_("GFlare Editor"), PLUG_IN_BINARY,
                              GTK_WIDGET (parent), 0,
-                             gimp_standard_help_func, HELP_ID,
+                             gimp_standard_help_func, PLUG_IN_PROC,
 
                              _("Rescan Gradients"), RESPONSE_RESCAN,
                              GTK_STOCK_CANCEL,      GTK_RESPONSE_CANCEL,

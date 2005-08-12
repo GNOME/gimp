@@ -18,6 +18,9 @@
 
 #include "glib.h"
 
+#define PLUG_IN_PROC   "plug-in-maze"
+#define PLUG_IN_BINARY "maze"
+
 typedef enum {
      DEPTH_FIRST,
      PRIMS_ALGORITHM

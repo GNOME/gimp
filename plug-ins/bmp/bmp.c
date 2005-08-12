@@ -61,6 +61,10 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define LOAD_PROC "file-bmp-load"
+#define SAVE_PROC "file-bmp-save"
+
+
 const gchar *filename  = NULL;
 gboolean     interactive_bmp;
 
@@ -91,9 +95,9 @@ query (void)
 {
   static GimpParamDef load_args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode",     "Interactive, non-interactive" },
     { GIMP_PDB_STRING,   "filename",     "The name of the file to load" },
-    { GIMP_PDB_STRING,   "raw_filename", "The name entered" },
+    { GIMP_PDB_STRING,   "raw-filename", "The name entered" },
   };
   static GimpParamDef load_return_vals[] =
   {
@@ -102,14 +106,14 @@ query (void)
 
   static GimpParamDef save_args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode",     "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",        "Input image" },
     { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },
     { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
-    { GIMP_PDB_STRING,   "raw_filename", "The name entered" },
+    { GIMP_PDB_STRING,   "raw-filename", "The name entered" },
   };
 
-  gimp_install_procedure ("file_bmp_load",
+  gimp_install_procedure (LOAD_PROC,
                           "Loads files of Windows BMP file format",
                           "Loads files of Windows BMP file format",
                           "Alexander Schulz",
@@ -122,13 +126,13 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
-  gimp_register_file_handler_mime ("file_bmp_load", "image/bmp");
-  gimp_register_magic_load_handler ("file_bmp_load",
+  gimp_register_file_handler_mime (LOAD_PROC, "image/bmp");
+  gimp_register_magic_load_handler (LOAD_PROC,
 				    "bmp",
 				    "",
 				    "0,string,BM");
 
-  gimp_install_procedure ("file_bmp_save",
+  gimp_install_procedure (SAVE_PROC,
                           "Saves files in Windows BMP file format",
                           "Saves files in Windows BMP file format",
                           "Alexander Schulz",
@@ -140,8 +144,8 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_file_handler_mime ("file_bmp_save", "image/bmp");
-  gimp_register_save_handler ("file_bmp_save", "bmp", "");
+  gimp_register_file_handler_mime (SAVE_PROC, "image/bmp");
+  gimp_register_save_handler (SAVE_PROC, "bmp", "");
 }
 
 static void
@@ -167,7 +171,7 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  if (strcmp (name, "file_bmp_load") == 0)
+  if (strcmp (name, LOAD_PROC) == 0)
     {
        switch (run_mode)
         {
@@ -202,7 +206,7 @@ run (const gchar      *name,
 	     }
 	 }
     }
-  else if (strcmp (name, "file_bmp_save") == 0)
+  else if (strcmp (name, SAVE_PROC) == 0)
     {
       image_ID    = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;

@@ -634,15 +634,15 @@ rcm_dialog (void)
   Current.Bna = g_new (RcmBna, 1);
 
   /* init GTK and install colormap */
-  gimp_ui_init ("rcm", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
   /* init stock icons */
   rcm_stock_init ();
 
   /* Create dialog */
-  dlg = gimp_dialog_new (_("Colormap Rotation"), "rcm",
+  dlg = gimp_dialog_new (_("Colormap Rotation"), PLUG_IN_BINARY,
                          NULL, 0,
-			 gimp_standard_help_func, "plug-in-rotate-colormap",
+			 gimp_standard_help_func, PLUG_IN_PROC,
 
 			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			 GTK_STOCK_OK,     GTK_RESPONSE_OK,

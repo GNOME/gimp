@@ -67,7 +67,8 @@ void       object_end              (GdkPoint *pnt, gint shift_down);
 #define MAX_LOAD_LINE    256
 #define SQ_SIZE 8
 
-#define HELP_ID "plug-in-gfig"
+#define PLUG_IN_PROC   "plug-in-gfig"
+#define PLUG_IN_BINARY "gfig"
 
 extern gint       line_no;
 extern gint       preview_width, preview_height;

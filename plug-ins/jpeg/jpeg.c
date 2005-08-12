@@ -39,6 +39,7 @@
 #include "jpeg-save.h"
 #include "gimpexif.h"
 
+
 /* Declare local functions.
  */
 
@@ -67,9 +68,9 @@ query (void)
 {
   static GimpParamDef load_args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode",     "Interactive, non-interactive" },
     { GIMP_PDB_STRING,   "filename",     "The name of the file to load" },
-    { GIMP_PDB_STRING,   "raw_filename", "The name of the file to load" }
+    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to load" }
   };
   static GimpParamDef load_return_vals[] =
   {
@@ -81,24 +82,24 @@ query (void)
   static GimpParamDef thumb_args[] =
   {
     { GIMP_PDB_STRING, "filename",     "The name of the file to load"  },
-    { GIMP_PDB_INT32,  "thumb_size",   "Preferred thumbnail size"      }
+    { GIMP_PDB_INT32,  "thumb-size",   "Preferred thumbnail size"      }
   };
   static GimpParamDef thumb_return_vals[] =
   {
     { GIMP_PDB_IMAGE,  "image",        "Thumbnail image"               },
-    { GIMP_PDB_INT32,  "image_width",  "Width of full-sized image"     },
-    { GIMP_PDB_INT32,  "image_height", "Height of full-sized image"    }
+    { GIMP_PDB_INT32,  "image-width",  "Width of full-sized image"     },
+    { GIMP_PDB_INT32,  "image-height", "Height of full-sized image"    }
   };
 
 #endif /* HAVE_EXIF */
 
   static GimpParamDef save_args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode",     "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",        "Input image" },
     { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },
     { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
-    { GIMP_PDB_STRING,   "raw_filename", "The name of the file to save the image in" },
+    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in" },
     { GIMP_PDB_FLOAT,    "quality",      "Quality of saved image (0 <= quality <= 1)" },
     { GIMP_PDB_FLOAT,    "smoothing",    "Smoothing factor for saved image (0 <= smoothing <= 1)" },
     { GIMP_PDB_INT32,    "optimize",     "Optimization of entropy encoding parameters (0/1)" },
@@ -110,7 +111,7 @@ query (void)
     { GIMP_PDB_INT32,    "dct",          "DCT algorithm to use (speed/quality tradeoff)" }
   };
 
-  gimp_install_procedure ("file_jpeg_load",
+  gimp_install_procedure (LOAD_PROC,
                           "loads files in the JPEG file format",
                           "loads files in the JPEG file format",
                           "Spencer Kimball, Peter Mattis & others",
@@ -123,15 +124,15 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
-  gimp_register_file_handler_mime ("file_jpeg_load", "image/jpeg");
-  gimp_register_magic_load_handler ("file_jpeg_load",
+  gimp_register_file_handler_mime (LOAD_PROC, "image/jpeg");
+  gimp_register_magic_load_handler (LOAD_PROC,
                                     "jpg,jpeg,jpe",
                                     "",
                                     "6,string,JFIF,6,string,Exif");
 
 #ifdef HAVE_EXIF
 
-  gimp_install_procedure ("file_jpeg_load_thumb",
+  gimp_install_procedure (LOAD_THUMB_PROC,
                           "Loads a thumbnail from a JPEG image",
                           "Loads a thumbnail from a JPEG image (only if it exists)",
                           "S. Mukund <muks@mukund.org>, Sven Neumann <sven@gimp.org>",
@@ -144,11 +145,11 @@ query (void)
                           G_N_ELEMENTS (thumb_return_vals),
                           thumb_args, thumb_return_vals);
 
-  gimp_register_thumbnail_loader ("file_jpeg_load", "file_jpeg_load_thumb");
+  gimp_register_thumbnail_loader (LOAD_PROC, LOAD_THUMB_PROC);
 
 #endif /* HAVE_EXIF */
 
-  gimp_install_procedure ("file_jpeg_save",
+  gimp_install_procedure (SAVE_PROC,
                           "saves files in the JPEG file format",
                           "saves files in the lossy, widely supported JPEG format",
                           "Spencer Kimball, Peter Mattis & others",
@@ -160,8 +161,8 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_file_handler_mime ("file_jpeg_save", "image/jpeg");
-  gimp_register_save_handler ("file_jpeg_save", "jpg,jpeg,jpe", "");
+  gimp_register_file_handler_mime (SAVE_PROC, "image/jpeg");
+  gimp_register_save_handler (SAVE_PROC, "jpg,jpeg,jpe", "");
 }
 
 static void
@@ -190,13 +191,13 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  if (strcmp (name, "file_jpeg_load") == 0)
+  if (strcmp (name, LOAD_PROC) == 0)
     {
       switch (run_mode)
         {
         case GIMP_RUN_INTERACTIVE:
         case GIMP_RUN_WITH_LAST_VALS:
-          gimp_ui_init ("jpeg", FALSE);
+          gimp_ui_init (PLUG_IN_BINARY, FALSE);
           load_interactive = TRUE;
           break;
         default:
@@ -221,7 +222,7 @@ run (const gchar      *name,
 
 #ifdef HAVE_EXIF
 
-  else if (strcmp (name, "file_jpeg_load_thumb") == 0)
+  else if (strcmp (name, LOAD_THUMB_PROC) == 0)
     {
       if (nparams < 2)
         {
@@ -255,7 +256,7 @@ run (const gchar      *name,
 
 #endif /* HAVE_EXIF */
 
-  else if (strcmp (name, "file_jpeg_save") == 0)
+  else if (strcmp (name, SAVE_PROC) == 0)
     {
       image_ID = orig_image_ID = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
@@ -265,7 +266,7 @@ run (const gchar      *name,
         {
         case GIMP_RUN_INTERACTIVE:
         case GIMP_RUN_WITH_LAST_VALS:
-          gimp_ui_init ("jpeg", FALSE);
+          gimp_ui_init (PLUG_IN_BINARY, FALSE);
           export = gimp_export_image (&image_ID, &drawable_ID, "JPEG",
                                       (GIMP_EXPORT_CAN_HANDLE_RGB |
                                        GIMP_EXPORT_CAN_HANDLE_GRAY));
@@ -339,7 +340,7 @@ run (const gchar      *name,
         {
         case GIMP_RUN_INTERACTIVE:
           /*  Possibly retrieve data  */
-          gimp_get_data ("file_jpeg_save", &jsvals);
+          gimp_get_data (SAVE_PROC, &jsvals);
 
           /* load up the previously used values */
           parasite = gimp_image_parasite_find (orig_image_ID,
@@ -435,7 +436,7 @@ run (const gchar      *name,
 
         case GIMP_RUN_WITH_LAST_VALS:
           /*  Possibly retrieve data  */
-          gimp_get_data ("file_jpeg_save", &jsvals);
+          gimp_get_data (SAVE_PROC, &jsvals);
 
           parasite = gimp_image_parasite_find (orig_image_ID,
                                                "jpeg-save-options");
@@ -470,7 +471,7 @@ run (const gchar      *name,
                           FALSE))
             {
               /*  Store mvals data  */
-              gimp_set_data ("file_jpeg_save", &jsvals, sizeof (JpegSaveVals));
+              gimp_set_data (SAVE_PROC, &jsvals, sizeof (JpegSaveVals));
             }
           else
             {

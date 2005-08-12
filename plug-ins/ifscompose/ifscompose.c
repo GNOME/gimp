@@ -56,8 +56,7 @@
 #define UNDO_LEVELS             24
 
 #define IFSCOMPOSE_PARASITE "ifscompose-parasite"
-#define IFSCOMPOSE_DATA     "plug_in_ifscompose"
-#define HELP_ID             "plug-in-ifs-compose"
+#define IFSCOMPOSE_PROC     "plug-in-ifscompose"
 
 typedef enum
 {
@@ -324,7 +323,7 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode", "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",    "Input image" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
   };
@@ -332,7 +331,7 @@ query (void)
   static GimpParamDef *return_vals = NULL;
   static int nreturn_vals = 0;
 
-  gimp_install_procedure ("plug_in_ifs_compose",
+  gimp_install_procedure (IFSCOMPOSE_PROC,
                           "Create an Iterated Function System (IFS) Fractal",
                           "Interactively create an Iterated Function System "
                           "fractal. Use the window on the upper left to adjust "
@@ -351,7 +350,7 @@ query (void)
                           G_N_ELEMENTS (args), nreturn_vals,
                           args, return_vals);
 
-  gimp_plugin_menu_register ("plug_in_ifs_compose",
+  gimp_plugin_menu_register (IFSCOMPOSE_PROC,
                              "<Image>/Filters/Render/Nature");
 }
 
@@ -400,13 +399,13 @@ run (const gchar      *name,
 
       if (!found_parasite)
         {
-          gint length = gimp_get_data_size (IFSCOMPOSE_DATA);
+          gint length = gimp_get_data_size (IFSCOMPOSE_PROC);
 
           if (length > 0)
             {
               gchar *data = g_new (gchar, length);
 
-              gimp_get_data (IFSCOMPOSE_DATA, data);
+              gimp_get_data (IFSCOMPOSE_PROC, data);
               ifsvals_parse_string (data, &ifsvals, &elements);
               g_free (data);
             }
@@ -426,13 +425,13 @@ run (const gchar      *name,
 
     case GIMP_RUN_WITH_LAST_VALS:
       {
-        gint length = gimp_get_data_size (IFSCOMPOSE_DATA);
+        gint length = gimp_get_data_size (IFSCOMPOSE_PROC);
 
         if (length > 0)
           {
             gchar *data = g_new (gchar, length);
 
-            gimp_get_data (IFSCOMPOSE_DATA, data);
+            gimp_get_data (IFSCOMPOSE_PROC, data);
             ifsvals_parse_string (data, &ifsvals, &elements);
             g_free (data);
           }
@@ -471,7 +470,7 @@ run (const gchar      *name,
            */
           str = ifsvals_stringify (&ifsvals, elements);
 
-          gimp_set_data (IFSCOMPOSE_DATA, str, strlen (str) + 1);
+          gimp_set_data (IFSCOMPOSE_PROC, str, strlen (str) + 1);
 
           parasite = gimp_parasite_new (IFSCOMPOSE_PARASITE,
                                         GIMP_PARASITE_PERSISTENT |
@@ -771,7 +770,7 @@ ifs_compose_dialog (GimpDrawable *drawable)
 
   dialog = gimp_dialog_new (_("IFS Fractal"), "ifscompose",
                             NULL, 0,
-                            gimp_standard_help_func, HELP_ID,
+                            gimp_standard_help_func, IFSCOMPOSE_PROC,
 
                             GTK_STOCK_OPEN,   RESPONSE_OPEN,
                             GTK_STOCK_SAVE,   RESPONSE_SAVE,
@@ -782,12 +781,12 @@ ifs_compose_dialog (GimpDrawable *drawable)
                             NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-					      RESPONSE_OPEN,
-					      RESPONSE_SAVE,
-					      RESPONSE_RESET,
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           RESPONSE_OPEN,
+                                           RESPONSE_SAVE,
+                                           RESPONSE_RESET,
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   g_object_add_weak_pointer (G_OBJECT (dialog), (gpointer) &dialog);
 

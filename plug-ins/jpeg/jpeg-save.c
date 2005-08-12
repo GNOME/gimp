@@ -712,9 +712,9 @@ save_dialog (void)
   gchar         *text;
   gboolean       run;
 
-  dialog = gimp_dialog_new (_("Save as JPEG"), "jpeg",
+  dialog = gimp_dialog_new (_("Save as JPEG"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, "file-jpeg-save",
+                            gimp_standard_help_func, SAVE_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
