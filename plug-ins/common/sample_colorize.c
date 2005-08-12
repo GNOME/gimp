@@ -350,6 +350,9 @@ run (const gchar      *name,
 
   /* Possibly retrieve data from a previous run */
   gimp_get_data (PLUG_IN_NAME, &g_values);
+  if (g_values.sample_id == SMP_GRADIENT ||
+      g_values.sample_id == SMP_INV_GRADIENT)
+    g_values.sample_id = -1;
 
   /* fix value */
   g_values.tol_col_err = 5.5;

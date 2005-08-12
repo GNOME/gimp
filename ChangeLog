@@ -1,5 +1,11 @@
 2005-08-12  DindinX  <dindinx@gimp.org>
 
+	* plug-ins/common/sample_colorize.c: shut up a Gtk-Critical Warning
+	that happened after reopening the filter, but only when a gradient had
+	been selected on the previous invocation.
+
+2005-08-12  DindinX  <dindinx@gimp.org>
+
 	* plug-ins/common/sample_colorize.c: preliminary clean-ups.
 
 2005-08-12  Michael Natterer  <mitch@gimp.org>
