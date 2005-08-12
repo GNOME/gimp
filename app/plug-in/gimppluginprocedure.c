@@ -277,28 +277,12 @@ gchar *
 plug_in_proc_def_get_help_id (const PlugInProcDef *proc_def,
                               const gchar         *help_domain)
 {
-  gchar *help_id;
-  gchar *p;
-
   g_return_val_if_fail (proc_def != NULL, NULL);
 
-  help_id = g_strdup (proc_def->db_info.name);
-
-  for (p = help_id; p && *p; p++)
-    if (*p == '_')
-      *p = '-';
-
   if (help_domain)
-    {
-      gchar *domain_and_id;
+    return g_strconcat (help_domain, "?", proc_def->db_info.name, NULL);
 
-      domain_and_id = g_strconcat (help_domain, "?", help_id, NULL);
-      g_free (help_id);
-
-      return domain_and_id;
-    }
-
-  return help_id;
+  return g_strdup (proc_def->db_info.name);
 }
 
 gboolean

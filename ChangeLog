@@ -1,3 +1,8 @@
+2005-08-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/plug-in-proc-def.c (plug_in_proc_def_get_help_id):
+	removed s/_/-/, proc names are already canonicalized.
+
 2005-08-10  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped version to 2.3.4.
