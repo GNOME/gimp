@@ -34,6 +34,11 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
+#define PLUG_IN_PROC   "plug-in-dog"
+#define PLUG_IN_BINARY "dog"
+
+
 typedef struct
 {
   gdouble  inner;
@@ -42,6 +47,7 @@ typedef struct
   gboolean invert;
   gboolean preview;
 } DoGValues;
+
 
 /* Declare local functions.
  */
@@ -116,16 +122,16 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_FLOAT, "inner", "Radius of inner gaussian blur (in pixels, > 0.0)" },
-    { GIMP_PDB_FLOAT, "outer",   "Radius of outer gaussian blur (in pixels, > 0.0)" },
-    { GIMP_PDB_INT32, "normalize", "True, False" },
-    { GIMP_PDB_INT32, "invert", "True, False" }
+    { GIMP_PDB_INT32,    "run-mode",  "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",     "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable",  "Input drawable" },
+    { GIMP_PDB_FLOAT,    "inner",     "Radius of inner gaussian blur (in pixels, > 0.0)" },
+    { GIMP_PDB_FLOAT,    "outer",     "Radius of outer gaussian blur (in pixels, > 0.0)" },
+    { GIMP_PDB_INT32,    "normalize", "True, False" },
+    { GIMP_PDB_INT32,    "invert",    "True, False" }
   };
 
-  gimp_install_procedure ("plug_in_dog",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Edge detection using difference of Gaussians.",
                           "Applies two Gaussian blurs to the drawable, and "
                           "subtracts the results.  This is robust and widely "
@@ -140,7 +146,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_dog", "<Image>/Filters/Edge-Detect");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Edge-Detect");
 }
 
 static void
@@ -175,13 +181,13 @@ run (const gchar      *name,
                           (MAX (drawable->width, drawable->height) /
                            gimp_tile_width () + 1));
 
-  if (strcmp (name, "plug_in_dog") == 0)
+  if (strcmp (name, PLUG_IN_PROC) == 0)
     {
       switch (run_mode)
         {
         case GIMP_RUN_INTERACTIVE:
           /*  Possibly retrieve data  */
-          gimp_get_data ("plug_in_dog", &dogvals);
+          gimp_get_data (PLUG_IN_PROC, &dogvals);
 
           /*  First acquire information with a dialog  */
           if (! dog_dialog (image_ID, drawable))
@@ -206,7 +212,7 @@ run (const gchar      *name,
 
         case GIMP_RUN_WITH_LAST_VALS:
           /*  Possibly retrieve data  */
-          gimp_get_data ("plug_in_dog", &dogvals);
+          gimp_get_data (PLUG_IN_PROC, &dogvals);
           break;
 
         default:
@@ -233,10 +239,8 @@ run (const gchar      *name,
 
           /*  Store data  */
           if (run_mode == GIMP_RUN_INTERACTIVE)
-            {
-              gimp_set_data ("plug_in_dog",
-                             &dogvals, sizeof (DoGValues));
-            }
+            gimp_set_data (PLUG_IN_PROC, &dogvals, sizeof (DoGValues));
+
           if (run_mode != GIMP_RUN_NONINTERACTIVE)
             gimp_displays_flush ();
         }
@@ -267,11 +271,11 @@ dog_dialog (gint32        image_ID,
   gdouble    yres;
   gboolean   run;
 
-  gimp_ui_init ("dog", FALSE);
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("DoG Edge Detect"), "dog",
+  dialog = gimp_dialog_new (_("DoG Edge Detect"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, "plug-in-dog",
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -279,9 +283,9 @@ dog_dialog (gint32        image_ID,
                             NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);

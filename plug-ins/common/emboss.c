@@ -36,6 +36,10 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define PLUG_IN_PROC   "plug-in-emboss"
+#define PLUG_IN_BINARY "emboss"
+
+
 enum
 {
   FUNCTION_BUMPMAP = 0,
@@ -109,16 +113,16 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "img", "The Image" },
-    { GIMP_PDB_DRAWABLE, "drw", "The Drawable" },
-    { GIMP_PDB_FLOAT, "azimuth", "The Light Angle (degrees)" },
-    { GIMP_PDB_FLOAT, "elevation", "The Elevation Angle (degrees)" },
-    { GIMP_PDB_INT32, "depth", "The Filter Width" },
-    { GIMP_PDB_INT32, "embossp", "Emboss or Bumpmap" }
+    { GIMP_PDB_INT32,    "run-mode",  "Interactive, non-interactive"  },
+    { GIMP_PDB_IMAGE,    "image",     "The Image"                     },
+    { GIMP_PDB_DRAWABLE, "drawable",  "The Drawable"                  },
+    { GIMP_PDB_FLOAT,    "azimuth",   "The Light Angle (degrees)"     },
+    { GIMP_PDB_FLOAT,    "elevation", "The Elevation Angle (degrees)" },
+    { GIMP_PDB_INT32,    "depth",     "The Filter Width"              },
+    { GIMP_PDB_INT32,    "embossp",   "Emboss or Bumpmap"             }
   };
 
-  gimp_install_procedure ("plug_in_emboss",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Emboss filter",
                           "Emboss or Bumpmap the given drawable, specifying "
                           "the angle and elevation for the light source.",
@@ -131,7 +135,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_emboss", "<Image>/Filters/Distorts");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Distorts");
 }
 
 static void
@@ -159,7 +163,7 @@ run (const gchar      *name,
   switch (param[0].data.d_int32)
     {
     case GIMP_RUN_INTERACTIVE:
-      gimp_get_data ("plug_in_emboss", &evals);
+      gimp_get_data (PLUG_IN_PROC, &evals);
 
       if (emboss_dialog (drawable) == -1)
         {
@@ -167,7 +171,7 @@ run (const gchar      *name,
         }
       else
         {
-          gimp_set_data ("plug_in_emboss", &evals, sizeof (piArgs));
+          gimp_set_data (PLUG_IN_PROC, &evals, sizeof (piArgs));
         }
 
       break;
@@ -192,7 +196,7 @@ run (const gchar      *name,
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data ("plug_in_emboss", &evals);
+      gimp_get_data (PLUG_IN_PROC, &evals);
       /* use this image and drawable, even with last args */
       if (emboss (drawable, NULL)==-1)
         {
@@ -442,11 +446,11 @@ emboss_dialog (GimpDrawable *drawable)
   GtkObject *adj;
   gboolean   run;
 
-  gimp_ui_init ("emboss", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Emboss"), "emboss",
+  dialog = gimp_dialog_new (_("Emboss"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, "plug-in-emboss",
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -454,9 +458,9 @@ emboss_dialog (GimpDrawable *drawable)
                             NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
@@ -540,7 +544,6 @@ emboss_dialog (GimpDrawable *drawable)
 
   if (run)
     return emboss (drawable, NULL);
-  else
-    return -1;
-}
 
+  return -1;
+}

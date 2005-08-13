@@ -42,6 +42,11 @@
 #define cbrt(x) (pow(x, 1.0/3.0))
 #endif
 
+
+#define PLUG_IN_PROC   "plug-in-decompose"
+#define PLUG_IN_BINARY "decompose"
+
+
 /* Declare local functions
  */
 static void    query            (void);
@@ -220,21 +225,21 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode",        "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image",           "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable",     "Input drawable" },
-    { GIMP_PDB_STRING, "decompose_type", "What to decompose: RGB, Red, Green, Blue, RGBA, Red, Green, Blue, Alpha, HSV, Hue, Saturation, Value, CMY, Cyan, Magenta, Yellow, CMYK, Cyan_K, Magenta_K, Yellow_K, Alpha, LAB" },
-    { GIMP_PDB_INT32, "layers_mode",     "Create channels as layers in a single image" }
+    { GIMP_PDB_INT32,    "run-mode",       "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",          "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable",       "Input drawable" },
+    { GIMP_PDB_STRING,   "decompose-type", "What to decompose: RGB, Red, Green, Blue, RGBA, Red, Green, Blue, Alpha, HSV, Hue, Saturation, Value, CMY, Cyan, Magenta, Yellow, CMYK, Cyan_K, Magenta_K, Yellow_K, Alpha, LAB" },
+    { GIMP_PDB_INT32,    "layers-mode",    "Create channels as layers in a single image" }
   };
   static GimpParamDef return_vals[] =
   {
-    { GIMP_PDB_IMAGE, "new_image", "Output gray image" },
-    { GIMP_PDB_IMAGE, "new_image", "Output gray image (N/A for single channel extract)" },
-    { GIMP_PDB_IMAGE, "new_image", "Output gray image (N/A for single channel extract)" },
-    { GIMP_PDB_IMAGE, "new_image", "Output gray image (N/A for single channel extract)" }
+    { GIMP_PDB_IMAGE, "new-image", "Output gray image" },
+    { GIMP_PDB_IMAGE, "new-image", "Output gray image (N/A for single channel extract)" },
+    { GIMP_PDB_IMAGE, "new-image", "Output gray image (N/A for single channel extract)" },
+    { GIMP_PDB_IMAGE, "new-image", "Output gray image (N/A for single channel extract)" }
   };
 
-  gimp_install_procedure ("plug_in_decompose",
+  gimp_install_procedure (PLUG_IN_PROC,
 			  "Decompose an image into different types of channels",
 			  "This function creates new gray images with "
 			  "different channel information in each of them",
@@ -248,8 +253,8 @@ query (void)
                           G_N_ELEMENTS (return_vals),
 			  args, return_vals);
 
-  gimp_plugin_menu_register ("plug_in_decompose", "<Image>/Filters/Colors");
-  gimp_plugin_menu_register ("plug_in_decompose", "<Image>/Image/Mode");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Colors");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Image/Mode");
 }
 
 static void
@@ -290,7 +295,7 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_decompose", &decovals);
+      gimp_get_data (PLUG_IN_PROC, &decovals);
 
       /*  First acquire information with a dialog  */
       if (! decompose_dialog ())
@@ -315,7 +320,7 @@ run (const gchar      *name,
 
     case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_decompose", &decovals);
+      gimp_get_data (PLUG_IN_PROC, &decovals);
       break;
 
     default:
@@ -368,7 +373,7 @@ run (const gchar      *name,
 
 	  /*  Store data  */
 	  if (run_mode == GIMP_RUN_INTERACTIVE)
-	    gimp_set_data ("plug_in_decompose", &decovals, sizeof (DecoVals));
+	    gimp_set_data (PLUG_IN_PROC, &decovals, sizeof (DecoVals));
 	}
     }
 
@@ -1218,11 +1223,11 @@ decompose_dialog (void)
   gint       j;
   gboolean   run;
 
-  gimp_ui_init ("decompose", FALSE);
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dlg = gimp_dialog_new (_("Decompose"), "decompose",
+  dlg = gimp_dialog_new (_("Decompose"), PLUG_IN_BINARY,
                          NULL, 0,
-			 gimp_standard_help_func, "plug-in-decompose",
+			 gimp_standard_help_func, PLUG_IN_PROC,
 
 			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -1230,9 +1235,9 @@ decompose_dialog (void)
 			 NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);

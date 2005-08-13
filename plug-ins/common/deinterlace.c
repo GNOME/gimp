@@ -29,6 +29,10 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define PLUG_IN_PROC   "plug-in-deinterlace"
+#define PLUG_IN_BINARY "deinterlace"
+
+
 enum
 {
   ODD_FIELDS,
@@ -40,6 +44,7 @@ typedef struct
   gint     evenness;
   gboolean preview;
 } DeinterlaceValues;
+
 
 /* Declare local functions.
  */
@@ -78,13 +83,13 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,     "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,     "run-mode", "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,     "image",    "Input image (unused)"         },
     { GIMP_PDB_DRAWABLE,  "drawable", "Input drawable"               },
     { GIMP_PDB_INT32,     "evenodd",  "0 = keep odd, 1 = keep even"  }
   };
 
-  gimp_install_procedure ("plug_in_deinterlace",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Deinterlace",
                           "Deinterlace is useful for processing images from "
                           "video capture cards. When only the odd or even "
@@ -100,7 +105,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_deinterlace", "<Image>/Filters/Enhance");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Enhance");
 }
 
 static void
@@ -125,7 +130,7 @@ run (const gchar      *name,
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      gimp_get_data ("plug_in_deinterlace", &devals);
+      gimp_get_data (PLUG_IN_PROC, &devals);
       if (! deinterlace_dialog (drawable))
         status = GIMP_PDB_EXECUTION_ERROR;
       break;
@@ -138,7 +143,7 @@ run (const gchar      *name,
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data ("plug_in_deinterlace", &devals);
+      gimp_get_data (PLUG_IN_PROC, &devals);
       break;
 
     default:
@@ -159,8 +164,7 @@ run (const gchar      *name,
           if (run_mode != GIMP_RUN_NONINTERACTIVE)
             gimp_displays_flush ();
           if (run_mode == GIMP_RUN_INTERACTIVE)
-            gimp_set_data ("plug_in_deinterlace",
-                           &devals, sizeof (DeinterlaceValues));
+            gimp_set_data (PLUG_IN_PROC, &devals, sizeof (DeinterlaceValues));
         }
       else
         {
@@ -317,11 +321,11 @@ deinterlace_dialog (GimpDrawable *drawable)
   GtkWidget *even;
   gboolean   run;
 
-  gimp_ui_init ("deinterlace", FALSE);
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Deinterlace"), "deinterlace",
+  dialog = gimp_dialog_new (_("Deinterlace"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, "plug-in-deinterlace",
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -329,9 +333,9 @@ deinterlace_dialog (GimpDrawable *drawable)
                             NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);

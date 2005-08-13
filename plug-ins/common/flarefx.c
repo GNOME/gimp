@@ -53,6 +53,9 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define PLUG_IN_PROC   "plug-in-flarefx"
+#define PLUG_IN_BINARY "flarefx"
+
 /* --- Typedefs --- */
 typedef struct
 {
@@ -176,14 +179,14 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode", "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",    "Input image (unused)"         },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"               },
-    { GIMP_PDB_INT32,    "posx",     "X-position"                   },
-    { GIMP_PDB_INT32,    "posy",     "Y-position"                   }
+    { GIMP_PDB_INT32,    "pos-x",    "X-position"                   },
+    { GIMP_PDB_INT32,    "pos-y",    "Y-position"                   }
   };
 
-  gimp_install_procedure ("plug_in_flarefx",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Add lens flare effects",
                           "Adds a lens flare effects.  Makes your image look "
                           "like it was snapped with a cheap camera with a lot "
@@ -197,7 +200,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_flarefx",
+  gimp_plugin_menu_register (PLUG_IN_PROC,
                              "<Image>/Filters/Light and Shadow/Light");
 }
 
@@ -230,7 +233,7 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_flarefx", &fvals);
+      gimp_get_data (PLUG_IN_PROC, &fvals);
 
       /*  First acquire information with a dialog  */
       if (! flare_dialog (drawable))
@@ -253,7 +256,7 @@ run (const gchar      *name,
 
     case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_flarefx", &fvals);
+      gimp_get_data (PLUG_IN_PROC, &fvals);
       break;
 
     default:
@@ -277,7 +280,7 @@ run (const gchar      *name,
 
           /*  Store data  */
           if (run_mode == GIMP_RUN_INTERACTIVE)
-            gimp_set_data ("plug_in_flarefx", &fvals, sizeof (FlareValues));
+            gimp_set_data (PLUG_IN_PROC, &fvals, sizeof (FlareValues));
         }
       else
         {
@@ -301,11 +304,11 @@ flare_dialog (GimpDrawable *drawable)
   GtkWidget   *frame;
   gboolean     run;
 
-  gimp_ui_init ("flarefx", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("FlareFX"), "flarefx",
+  dialog = gimp_dialog_new (_("FlareFX"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, "plug-in-flarefx",
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -313,9 +316,9 @@ flare_dialog (GimpDrawable *drawable)
                             NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);

@@ -30,6 +30,9 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+#define PLUG_IN_PROC       "plug-in-filter-pack"
+#define PLUG_IN_BINARY     "fp"
+
 #define MAX_PREVIEW_SIZE   125
 #define MAX_ROUGHNESS      128
 #define RANGE_HEIGHT       15
@@ -37,14 +40,12 @@
 #define ALL                255
 #define MARGIN             4
 
-#define HELP_ID            "plug-in-filter-pack"
-
 #define RANGE_ADJUST_MASK GDK_EXPOSURE_MASK | \
-                        GDK_ENTER_NOTIFY_MASK | \
-                        GDK_BUTTON_PRESS_MASK | \
-                        GDK_BUTTON_RELEASE_MASK | \
-                        GDK_BUTTON1_MOTION_MASK | \
-                        GDK_POINTER_MOTION_HINT_MASK
+                          GDK_ENTER_NOTIFY_MASK | \
+                          GDK_BUTTON_PRESS_MASK | \
+                          GDK_BUTTON_RELEASE_MASK | \
+                          GDK_BUTTON1_MOTION_MASK | \
+                          GDK_POINTER_MOTION_HINT_MASK
 
 
 typedef struct
@@ -314,12 +315,12 @@ query (void)
 {
   GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode", "Interactive, non-interactive"          },
     { GIMP_PDB_IMAGE,    "image",    "Input image (used for indexed images)" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"                        }
   };
 
-  gimp_install_procedure ("plug_in_filter_pack",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Allows the user to change H, S, or C with many previews",
                           "No help available",
                           "Pavel Grinfeld (pavel@ml.com)",
@@ -331,7 +332,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_filter_pack", "<Image>/Filters/Colors");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Colors");
 }
 
 /********************************STANDARD RUN*************************/
@@ -366,7 +367,7 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_filter_pack", &fpvals);
+      gimp_get_data (PLUG_IN_PROC, &fpvals);
 
       if (gimp_drawable_is_indexed (drawable->drawable_id) ||
           gimp_drawable_is_gray (drawable->drawable_id) )
@@ -387,7 +388,7 @@ run (const gchar      *name,
 
     case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_filter_pack", &fpvals);
+      gimp_get_data (PLUG_IN_PROC, &fpvals);
       break;
 
     default:
@@ -405,8 +406,7 @@ run (const gchar      *name,
 
           /*  Store data  */
           if (run_mode == GIMP_RUN_INTERACTIVE)
-            gimp_set_data ("plug_in_filter_pack",
-                           &fpvals, sizeof (FPValues));
+            gimp_set_data (PLUG_IN_PROC, &fpvals, sizeof (FPValues));
 
           gimp_displays_flush ();
         }
@@ -569,7 +569,7 @@ fp_create_circle_palette (void)
 
   win = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 
-  gimp_help_connect (win, gimp_standard_help_func, HELP_ID, NULL);
+  gimp_help_connect (win, gimp_standard_help_func, PLUG_IN_PROC, NULL);
 
   gtk_window_set_title (GTK_WINDOW (win), _("Hue Variations"));
 
@@ -724,7 +724,7 @@ fp_create_lnd (void)
 
   win = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 
-  gimp_help_connect (win, gimp_standard_help_func, HELP_ID, NULL);
+  gimp_help_connect (win, gimp_standard_help_func, PLUG_IN_PROC, NULL);
 
   gtk_window_set_title (GTK_WINDOW (win), _("Value Variations"));
 
@@ -768,7 +768,7 @@ fp_create_msnls (void)
 
   win = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 
-  gimp_help_connect (win, gimp_standard_help_func, HELP_ID, NULL);
+  gimp_help_connect (win, gimp_standard_help_func, PLUG_IN_PROC, NULL);
 
   gtk_window_set_title (GTK_WINDOW (win), _("Saturation Variations"));
 
@@ -1175,11 +1175,11 @@ fp_dialog (void)
                               fpvals.preview_size,
                               fpvals.selection_only);
 
-  gimp_ui_init ("fp", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dlg = gimp_dialog_new (_("Filter Pack Simulation"), "fp",
+  dlg = gimp_dialog_new (_("Filter Pack Simulation"), PLUG_IN_BINARY,
                          NULL, 0,
-                         gimp_standard_help_func, HELP_ID,
+                         gimp_standard_help_func, PLUG_IN_PROC,
 
                          GIMP_STOCK_RESET, RESPONSE_RESET,
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
@@ -1304,7 +1304,7 @@ fp_advanced_dialog (void)
 
   AW.window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 
-  gimp_help_connect (AW.window, gimp_standard_help_func, HELP_ID, NULL);
+  gimp_help_connect (AW.window, gimp_standard_help_func, PLUG_IN_PROC, NULL);
 
   gtk_window_set_title (GTK_WINDOW (AW.window),
                         _("Advanced Filter Pack Options"));

@@ -33,9 +33,9 @@
  * Constants...
  */
 
-#define PLUG_IN_NAME     "plug_in_despeckle"
+#define PLUG_IN_PROC     "plug-in-despeckle"
+#define PLUG_IN_BINARY   "despeckle"
 #define PLUG_IN_VERSION  "1.3.2 - 17 May 1998"
-#define HELP_ID          "plug-in-despeckle"
 #define SCALE_WIDTH      100
 #define ENTRY_WIDTH        3
 #define MAX_RADIUS        20
@@ -142,7 +142,7 @@ query (void)
     { GIMP_PDB_INT32,    "white",    "White level (0 to 255)" }
   };
 
-  gimp_install_procedure (PLUG_IN_NAME,
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Despeckle filter, typically used to \'despeckle\' "
                           "a photographic image.",
                           "This plug-in selectively performs a median or "
@@ -156,7 +156,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register (PLUG_IN_NAME, "<Image>/Filters/Enhance");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Enhance");
 }
 
 
@@ -209,7 +209,7 @@ run (const gchar      *name,
        * Possibly retrieve data...
        */
 
-      gimp_get_data (PLUG_IN_NAME, &despeckle_radius);
+      gimp_get_data (PLUG_IN_PROC, &despeckle_radius);
 
       /*
        * Get information from the dialog...
@@ -265,7 +265,7 @@ run (const gchar      *name,
        */
 
       INIT_I18N();
-      gimp_get_data (PLUG_IN_NAME, despeckle_vals);
+      gimp_get_data (PLUG_IN_PROC, despeckle_vals);
         break;
 
     default:
@@ -301,7 +301,7 @@ run (const gchar      *name,
            */
 
           if (run_mode == GIMP_RUN_INTERACTIVE)
-            gimp_set_data (PLUG_IN_NAME,
+            gimp_set_data (PLUG_IN_PROC,
                            despeckle_vals, sizeof (despeckle_vals));
         }
       else
@@ -388,11 +388,11 @@ despeckle_dialog (void)
   GtkObject *adj;
   gboolean   run;
 
-  gimp_ui_init ("despeckle", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Despeckle"), "despeckle",
+  dialog = gimp_dialog_new (_("Despeckle"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, HELP_ID,
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -400,9 +400,9 @@ despeckle_dialog (void)
                             NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);

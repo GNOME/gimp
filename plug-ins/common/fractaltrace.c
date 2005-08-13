@@ -21,9 +21,9 @@
 
 ******************************************************************************/
 
-#define PLUG_IN_NAME     "plug_in_fractal_trace"
+#define PLUG_IN_PROC     "plug-in-fractal-trace"
+#define PLUG_IN_BINARY   "fractaltrace"
 #define PLUG_IN_VERSION  "v0.4 test version (Dec. 25 1997)"
-#define HELP_ID          "plug-in-fractal-trace"
 
 /*****************************************************************************/
 
@@ -112,7 +112,7 @@ query (void)
                                          "(0=WRAP/1=TRANS/2=BLACK/3=WHITE)" }
   };
 
-  gimp_install_procedure (PLUG_IN_NAME,
+  gimp_install_procedure (PLUG_IN_PROC,
                           "transform image with the Mandelbrot Fractal",
                           "transform image with the Mandelbrot Fractal",
                           "Hirotsuna Mizuno <s1041150@u-aizu.ac.jp>",
@@ -124,7 +124,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register (PLUG_IN_NAME, "<Image>/Filters/Map");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Map");
 }
 
 /******************************************************************************/
@@ -195,17 +195,17 @@ run (const gchar      *name,
   switch (run_mode)
     {
     case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data (PLUG_IN_NAME, &parameters);
+      gimp_get_data (PLUG_IN_PROC, &parameters);
       break;
 
     case GIMP_RUN_INTERACTIVE:
-      gimp_get_data (PLUG_IN_NAME, &parameters);
+      gimp_get_data (PLUG_IN_PROC, &parameters);
       if (!dialog_show ())
         {
           status = GIMP_PDB_EXECUTION_ERROR;
           break;
         }
-      gimp_set_data (PLUG_IN_NAME, &parameters, sizeof (parameter_t));
+      gimp_set_data (PLUG_IN_PROC, &parameters, sizeof (parameter_t));
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
@@ -682,11 +682,11 @@ dialog_show (void)
   GtkObject *adj;
   gboolean   run;
 
-  gimp_ui_init ("fractaltrace", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Fractal Trace"), "fractaltrace",
+  dialog = gimp_dialog_new (_("Fractal Trace"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, HELP_ID,
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -694,9 +694,9 @@ dialog_show (void)
                             NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   mainbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (mainbox), 12);

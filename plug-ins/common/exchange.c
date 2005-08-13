@@ -43,8 +43,10 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define SCALE_WIDTH  128
-#define PREVIEW_SIZE 128
+#define PLUG_IN_PROC   "plug-in-exchange"
+#define PLUG_IN_BINARY "exchange"
+#define SCALE_WIDTH    128
+#define PREVIEW_SIZE   128
 
 /* datastructure to store parameters in */
 typedef struct
@@ -103,21 +105,21 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_INT8, "fromred", "Red value (from)" },
-    { GIMP_PDB_INT8, "fromgreen", "Green value (from)" },
-    { GIMP_PDB_INT8, "fromblue", "Blue value (from)" },
-    { GIMP_PDB_INT8, "tored", "Red value (to)" },
-    { GIMP_PDB_INT8, "togreen", "Green value (to)" },
-    { GIMP_PDB_INT8, "toblue", "Blue value (to)" },
-    { GIMP_PDB_INT8, "red_threshold", "Red threshold" },
-    { GIMP_PDB_INT8, "green_threshold", "Green threshold" },
-    { GIMP_PDB_INT8, "blue_threshold", "Blue threshold" }
+    { GIMP_PDB_INT32,    "run-mode",        "Interactive"        },
+    { GIMP_PDB_IMAGE,    "image",           "Input image"        },
+    { GIMP_PDB_DRAWABLE, "drawable",        "Input drawable"     },
+    { GIMP_PDB_INT8,     "from-red",        "Red value (from)"   },
+    { GIMP_PDB_INT8,     "from-green",      "Green value (from)" },
+    { GIMP_PDB_INT8,     "from-blue",       "Blue value (from)"  },
+    { GIMP_PDB_INT8,     "to-red",          "Red value (to)"     },
+    { GIMP_PDB_INT8,     "to-green",        "Green value (to)"   },
+    { GIMP_PDB_INT8,     "to-blue",         "Blue value (to)"    },
+    { GIMP_PDB_INT8,     "red-threshold",   "Red threshold"      },
+    { GIMP_PDB_INT8,     "green-threshold", "Green threshold"    },
+    { GIMP_PDB_INT8,     "blue-threshold",  "Blue threshold"     }
   };
 
-  gimp_install_procedure ("plug_in_exchange",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Color Exchange",
                           "Exchange one color with another, optionally setting a threshold "
                           "to convert from one shade to another",
@@ -130,7 +132,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_exchange", "<Image>/Filters/Colors/Map");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Colors/Map");
 }
 
 /* main function */
@@ -161,7 +163,7 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       /* retrieve stored arguments (if any) */
-      gimp_get_data ("plug_in_exchange", &xargs);
+      gimp_get_data (PLUG_IN_PROC, &xargs);
       /* initialize using foreground color */
       gimp_context_get_foreground (&xargs.from);
 
@@ -170,7 +172,7 @@ run (const gchar      *name,
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data ("plug_in_exchange", &xargs);
+      gimp_get_data (PLUG_IN_PROC, &xargs);
       /*
        * instead of recalling the last-set values,
        * run with the current foreground as 'from'
@@ -217,7 +219,7 @@ run (const gchar      *name,
 
           /* store our settings */
           if (runmode == GIMP_RUN_INTERACTIVE)
-            gimp_set_data ("plug_in_exchange", &xargs, sizeof (myParams));
+            gimp_set_data (PLUG_IN_PROC, &xargs, sizeof (myParams));
 
           /* and flush */
           if (runmode != GIMP_RUN_NONINTERACTIVE)
@@ -281,12 +283,11 @@ exchange_dialog (GimpDrawable *drawable)
   gint          framenumber;
   gboolean      run;
 
-  gimp_ui_init ("exchange", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  /* set up the dialog */
-  dialog = gimp_dialog_new (_("Color Exchange"), "exchange",
+  dialog = gimp_dialog_new (_("Color Exchange"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, "plug-in-exchange",
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -294,9 +295,9 @@ exchange_dialog (GimpDrawable *drawable)
                             NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   /* do some boxes here */
   main_vbox = gtk_vbox_new (FALSE, 12);
@@ -471,7 +472,6 @@ exchange_dialog (GimpDrawable *drawable)
       g_signal_connect_swapped (adj, "value-changed",
                                 G_CALLBACK (gimp_preview_invalidate),
                                 preview);
-
 
       scale = GTK_WIDGET (GIMP_SCALE_ENTRY_SCALE (adj));
       gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);

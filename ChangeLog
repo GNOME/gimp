@@ -1,3 +1,23 @@
+2005-08-13  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/decompose.c
+	* plug-ins/common/deinterlace.c
+	* plug-ins/common/despeckle.c
+	* plug-ins/common/destripe.c
+	* plug-ins/common/dicom.c
+	* plug-ins/common/diffraction.c
+	* plug-ins/common/displace.c
+	* plug-ins/common/dog.c
+	* plug-ins/common/edge.c
+	* plug-ins/common/emboss.c
+	* plug-ins/common/engrave.c
+	* plug-ins/common/exchange.c
+	* plug-ins/common/film.c
+	* plug-ins/common/flarefx.c
+	* plug-ins/common/fp.c
+	* plug-ins/common/fractaltrace.c: canonicalize procedure and
+	parameter names. Misc cleanups.
+
 2005-08-13  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/common/threshold_alpha.c: added a preview, and some minor

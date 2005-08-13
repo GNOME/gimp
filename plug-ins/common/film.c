@@ -32,6 +32,9 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define PLUG_IN_PROC        "plug-in-film"
+#define PLUG_IN_BINARY      "film"
+
 /* Maximum number of pictures per film */
 #define MAX_FILM_PICTURES   64
 #define COLOR_BUTTON_WIDTH  50
@@ -207,26 +210,26 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image (only used as default image in interactive mode)" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable (not used)" },
-    { GIMP_PDB_INT32, "film_height", "Height of film (0: fit to images)" },
-    { GIMP_PDB_COLOR, "film_color", "Color of the film" },
-    { GIMP_PDB_INT32, "number_start", "Start index for numbering" },
-    { GIMP_PDB_STRING, "number_font", "Font for drawing numbers" },
-    { GIMP_PDB_COLOR, "number_color", "Color for numbers" },
-    { GIMP_PDB_INT32, "at_top", "Flag for drawing numbers at top of film" },
-    { GIMP_PDB_INT32, "at_bottom", "Flag for drawing numbers at bottom of film" },
-    { GIMP_PDB_INT32, "num_images", "Number of images to be used for film" },
-    { GIMP_PDB_INT32ARRAY, "image_ids", "num_images image IDs to be used for film"}
+    { GIMP_PDB_INT32,      "run-mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,      "image",        "Input image (only used as default image in interactive mode)" },
+    { GIMP_PDB_DRAWABLE,   "drawable",     "Input drawable (not used)" },
+    { GIMP_PDB_INT32,      "film-height",  "Height of film (0: fit to images)" },
+    { GIMP_PDB_COLOR,      "film-color",   "Color of the film" },
+    { GIMP_PDB_INT32,      "number-start", "Start index for numbering" },
+    { GIMP_PDB_STRING,     "number-font",  "Font for drawing numbers" },
+    { GIMP_PDB_COLOR,      "number-color", "Color for numbers" },
+    { GIMP_PDB_INT32,      "at-top",       "Flag for drawing numbers at top of film" },
+    { GIMP_PDB_INT32,      "at-bottom",    "Flag for drawing numbers at bottom of film" },
+    { GIMP_PDB_INT32,      "num-images",   "Number of images to be used for film" },
+    { GIMP_PDB_INT32ARRAY, "image-ids",    "num_images image IDs to be used for film"}
   };
 
   static GimpParamDef return_vals[] =
   {
-    { GIMP_PDB_IMAGE, "new_image", "Output image" }
+    { GIMP_PDB_IMAGE, "new-image", "Output image" }
   };
 
-  gimp_install_procedure ("plug_in_film",
+  gimp_install_procedure (PLUG_IN_PROC,
 			  "Compose several images to a roll film",
 			  "Compose several images to a roll film",
 			  "Peter Kirchgessner",
@@ -239,7 +242,7 @@ query (void)
                           G_N_ELEMENTS (return_vals),
 			  args, return_vals);
 
-  gimp_plugin_menu_register ("plug_in_film", "<Image>/Filters/Effects/Combine");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Effects/Combine");
 }
 
 static void
@@ -270,7 +273,7 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_film", &filmvals);
+      gimp_get_data (PLUG_IN_PROC, &filmvals);
 
       /*  First acquire information with a dialog  */
       if (! film_dialog (param[1].data.d_int32))
@@ -305,7 +308,7 @@ run (const gchar      *name,
 
     case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_film", &filmvals);
+      gimp_get_data (PLUG_IN_PROC, &filmvals);
       break;
 
     default:
@@ -336,7 +339,7 @@ run (const gchar      *name,
 
       /*  Store data  */
       if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data ("plug_in_film", &filmvals, sizeof (FilmVals));
+        gimp_set_data (PLUG_IN_PROC, &filmvals, sizeof (FilmVals));
     }
 
   values[0].data.d_status = status;
@@ -1438,11 +1441,11 @@ film_dialog (gint32 image_ID)
   GtkWidget *notebook;
   gboolean   run;
 
-  gimp_ui_init ("film", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dlg = gimp_dialog_new (_("Filmstrip"), "film",
+  dlg = gimp_dialog_new (_("Filmstrip"), PLUG_IN_BINARY,
                          NULL, 0,
-			 gimp_standard_help_func, "plug-in-film",
+			 gimp_standard_help_func, PLUG_IN_PROC,
 
 			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -1450,9 +1453,9 @@ film_dialog (gint32 image_ID)
 			 NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);

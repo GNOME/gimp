@@ -62,6 +62,8 @@ static gchar rcsid[] = "$Id$";
 
 /* Some useful macros */
 
+#define PLUG_IN_PROC    "plug-in-edge"
+#define PLUG_IN_BINARY  "edge"
 #define TILE_CACHE_SIZE 48
 
 enum
@@ -132,12 +134,12 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_INT32,    "run-mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image (unused)" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_FLOAT, "amount", "Edge detection amount" },
-    { GIMP_PDB_INT32, "wrapmode", "Edge detection behavior: { WRAP (0), SMEAR (1), BLACK (2) }" },
-    { GIMP_PDB_INT32, "edgemode", "Edge detection algorithm: { SOBEL (0), PREWITT (1), GRADIENT (2), ROBERTS (3),  DIFFERENTIAL (4), LAPLACE (5) }" }
+    { GIMP_PDB_FLOAT,    "amount",   "Edge detection amount" },
+    { GIMP_PDB_INT32,    "wrapmode", "Edge detection behavior: { WRAP (0), SMEAR (1), BLACK (2) }" },
+    { GIMP_PDB_INT32,    "edgemode", "Edge detection algorithm: { SOBEL (0), PREWITT (1), GRADIENT (2), ROBERTS (3),  DIFFERENTIAL (4), LAPLACE (5) }" }
   };
 
   const gchar *help_string =
@@ -147,7 +149,7 @@ query (void)
     "transform applied to the pixels, SOBEL was the method used in older "
     "versions.";
 
-  gimp_install_procedure ("plug_in_edge",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Perform edge detection on the contents of the specified drawable",
                           help_string,
                           "Peter Mattis & (ported to 1.0 by) Eiichi Takamori",
@@ -159,7 +161,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_edge", "<Image>/Filters/Edge-Detect");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Edge-Detect");
 }
 
 static void
@@ -191,7 +193,7 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_edge", &evals);
+      gimp_get_data (PLUG_IN_PROC, &evals);
 
       /*  First acquire information with a dialog  */
       if (! edge_dialog (drawable))
@@ -214,7 +216,7 @@ run (const gchar      *name,
 
     case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_edge", &evals);
+      gimp_get_data (PLUG_IN_PROC, &evals);
       break;
 
     default:
@@ -238,7 +240,7 @@ run (const gchar      *name,
 
       /*  Store data  */
       if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data ("plug_in_edge", &evals, sizeof (EdgeVals));
+        gimp_set_data (PLUG_IN_PROC, &evals, sizeof (EdgeVals));
     }
   else
     {
@@ -637,11 +639,11 @@ edge_dialog (GimpDrawable *drawable)
   gboolean use_smear = (evals.wrapmode == GIMP_PIXEL_FETCHER_EDGE_SMEAR);
   gboolean use_black = (evals.wrapmode == GIMP_PIXEL_FETCHER_EDGE_BLACK);
 
-  gimp_ui_init ("edge", FALSE);
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Edge Detection"), "edge",
+  dialog = gimp_dialog_new (_("Edge Detection"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, "plug-in-edge",
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -649,9 +651,9 @@ edge_dialog (GimpDrawable *drawable)
                             NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);

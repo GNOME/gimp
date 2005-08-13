@@ -35,6 +35,11 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define LOAD_PROC      "file-dicom-load"
+#define SAVE_PROC      "file-dicom-save"
+#define PLUG_IN_BINARY "dicom"
+
+
 /* A lot of Dicom images are wrongly encoded. By guessing the endian
  * we can get around this problem.
  */
@@ -104,9 +109,9 @@ query (void)
 {
   static GimpParamDef load_args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode",     "Interactive, non-interactive" },
     { GIMP_PDB_STRING,   "filename",     "The name of the file to load" },
-    { GIMP_PDB_STRING,   "raw_filename", "The name of the file to load" }
+    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to load" }
   };
   static GimpParamDef load_return_vals[] =
   {
@@ -115,14 +120,14 @@ query (void)
 
   static GimpParamDef save_args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode",     "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",        "Input image" },
     { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },
     { GIMP_PDB_STRING,   "filename",     "The name of the file to save" },
-    { GIMP_PDB_STRING,   "raw_filename", "The name of the file to save" },
+    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save" },
   };
 
-  gimp_install_procedure ("file_dicom_load",
+  gimp_install_procedure (LOAD_PROC,
                           "loads files of the dicom file format",
                           "Load a file in the DICOM standard format."
 			  "The standard is defined at "
@@ -139,14 +144,14 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
-  gimp_register_file_handler_mime ("file_dicom_load", "image/x-dcm");
-  gimp_register_magic_load_handler ("file_dicom_load",
+  gimp_register_file_handler_mime (LOAD_PROC, "image/x-dcm");
+  gimp_register_magic_load_handler (LOAD_PROC,
 				    "dcm,dicom",
 				    "",
 				    "128,string,DICM"
 				    );
 
-  gimp_install_procedure ("file_dicom_save",
+  gimp_install_procedure (SAVE_PROC,
                           "Save file in the DICOM file format",
                           "Save an image in the medical standard DICOM image "
                           "formats. The standard is defined at "
@@ -163,8 +168,8 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_file_handler_mime ("file_dicom_save", "image/x-dcm");
-  gimp_register_save_handler ("file_dicom_save", "dcm,dicom", "");
+  gimp_register_file_handler_mime (SAVE_PROC, "image/x-dcm");
+  gimp_register_save_handler (SAVE_PROC, "dcm,dicom", "");
 }
 
 static void
@@ -190,7 +195,7 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  if (strcmp (name, "file_dicom_load") == 0)
+  if (strcmp (name, LOAD_PROC) == 0)
     {
       image_ID = load_image (param[1].data.d_string);
 
@@ -206,7 +211,7 @@ run (const gchar      *name,
 	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
     }
-  else if (strcmp (name, "file_dicom_save") == 0)
+  else if (strcmp (name, SAVE_PROC) == 0)
     {
       image_ID    = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
@@ -215,7 +220,7 @@ run (const gchar      *name,
 	{
 	case GIMP_RUN_INTERACTIVE:
 	case GIMP_RUN_WITH_LAST_VALS:
-	  gimp_ui_init ("dicom", FALSE);
+	  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "DICOM",
 				      GIMP_EXPORT_CAN_HANDLE_RGB |
                                       GIMP_EXPORT_CAN_HANDLE_GRAY);

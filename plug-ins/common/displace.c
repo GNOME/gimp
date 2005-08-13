@@ -52,6 +52,9 @@
 
 /* Some useful macros */
 
+#define PLUG_IN_PROC    "plug-in-displace"
+#define PLUG_IN_BINARY  "displace"
+
 #define ENTRY_WIDTH     75
 #define TILE_CACHE_SIZE 48
 
@@ -151,27 +154,20 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",       "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode",       "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",          "Input image (unused)" },
     { GIMP_PDB_DRAWABLE, "drawable",       "Input drawable" },
-    { GIMP_PDB_FLOAT,    "amount_x",
-           "Displace multiplier for X or radial direction" },
-    { GIMP_PDB_FLOAT,    "amount_y",
-           "Displace multiplier for Y or tangent (degrees) direction" },
-    { GIMP_PDB_INT32,    "do_x",
-           "Displace in X or radial direction?" },
-    { GIMP_PDB_INT32,    "do_y",
-           "Displace in Y or tangent direction?" },
-    { GIMP_PDB_DRAWABLE, "displace_map_x",
-           "Displacement map for X or radial direction" },
-    { GIMP_PDB_DRAWABLE, "displace_map_y",
-           "Displacement map for Y or tangent direction" },
-    { GIMP_PDB_INT32,    "displace_type",  "Edge behavior: { WRAP (0), SMEAR (1), BLACK (2) }" },
-    { GIMP_PDB_INT32,    "mode",
-           "Mode of displacement: { CARTESIAN (0), POLAR (1) }"}
+    { GIMP_PDB_FLOAT,    "amount-x",       "Displace multiplier for X or radial direction" },
+    { GIMP_PDB_FLOAT,    "amount-y",       "Displace multiplier for Y or tangent (degrees) direction" },
+    { GIMP_PDB_INT32,    "do-x",           "Displace in X or radial direction?" },
+    { GIMP_PDB_INT32,    "do-y",           "Displace in Y or tangent direction?" },
+    { GIMP_PDB_DRAWABLE, "displace-map-x", "Displacement map for X or radial direction" },
+    { GIMP_PDB_DRAWABLE, "displace-map-y", "Displacement map for Y or tangent direction" },
+    { GIMP_PDB_INT32,    "displace-type",  "Edge behavior: { WRAP (0), SMEAR (1), BLACK (2) }" },
+    { GIMP_PDB_INT32,    "mode",           "Mode of displacement: { CARTESIAN (0), POLAR (1) }"}
   };
 
-  gimp_install_procedure ("plug_in_displace",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Displace the contents of the specified drawable",
                           "Displaces the contents of the specified drawable "
                           "by the amounts specified by 'amount_x' and "
@@ -189,7 +185,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_displace", "<Image>/Filters/Map");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Map");
 }
 
 static void
@@ -224,7 +220,7 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_displace", &dvals);
+      gimp_get_data (PLUG_IN_PROC, &dvals);
 
       /*  First acquire information with a dialog  */
       if (! displace_dialog (drawable))
@@ -256,7 +252,7 @@ run (const gchar      *name,
 
     case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_displace", &dvals);
+      gimp_get_data (PLUG_IN_PROC, &dvals);
       break;
 
     default:
@@ -275,7 +271,7 @@ run (const gchar      *name,
 
       /*  Store data  */
       if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data ("plug_in_displace", &dvals, sizeof (DisplaceVals));
+        gimp_set_data (PLUG_IN_PROC, &dvals, sizeof (DisplaceVals));
     }
 
   values[0].data.d_status = status;
@@ -299,11 +295,11 @@ displace_dialog (GimpDrawable *drawable)
   GtkWidget *black;
   gboolean   run;
 
-  gimp_ui_init ("displace", FALSE);
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Displace"), "displace",
+  dialog = gimp_dialog_new (_("Displace"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, "plug-in-displace",
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -311,9 +307,9 @@ displace_dialog (GimpDrawable *drawable)
                             NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
