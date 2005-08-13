@@ -1,5 +1,12 @@
 2005-08-13  Manish Singh  <yosh@gimp.org>
 
+	* app/core/gimpimage-preview.c (gimp_image_get_new_preview): if the
+	offsets of the layer are such that they are just on the border of
+	the image, detect that and bail instead of trying to make a
+	sub-preview with a 0 dimension. Fixes bug #312144.
+
+2005-08-13  Manish Singh  <yosh@gimp.org>
+
 	Backported mmx/sse CFLAGS automake gymnastics from HEAD:
 
 	* acinclude.m4: new macro: GIMP_DETECT_CFLAGS; used to detect which

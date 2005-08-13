@@ -261,6 +261,9 @@ gimp_image_get_new_preview (GimpViewable *viewable,
       x2 = CLAMP (x + w, 0, width);
       y2 = CLAMP (y + h, 0, height);
 
+      if (x2 == x1 || y2 == y1)
+	continue;
+
       src1PR.bytes     = comp->bytes;
       src1PR.x         = x1;
       src1PR.y         = y1;
