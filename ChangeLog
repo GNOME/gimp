@@ -1,3 +1,8 @@
+2005-08-13  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/common/checkerboard.c: added a preview, and some minor
+	cleanups.
+
 2005-08-12  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/common/sample_colorize.c: shut up a Gtk-Critical Warning

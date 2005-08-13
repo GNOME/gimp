@@ -32,26 +32,26 @@
 /* Variables set in dialog box */
 typedef struct data
 {
-  gint   mode;
-  gint   size;
+  gboolean mode;
+  gint     size;
 } CheckVals;
 
 
 static void      query  (void);
 static void      run    (const gchar       *name,
-			 gint               nparams,
-			 const GimpParam   *param,
-			 gint              *nreturn_vals,
-			 GimpParam        **return_vals);
+                         gint               nparams,
+                         const GimpParam   *param,
+                         gint              *nreturn_vals,
+                         GimpParam        **return_vals);
 
-static void      do_checkerboard_pattern    (GimpDrawable *drawable);
+static void      do_checkerboard_pattern    (GimpDrawable *drawable,
+                                             GimpPreview  *preview);
 static gint      inblock                    (gint          pos,
                                              gint          size);
 
-static gboolean	 checkerboard_dialog        (gint32        image_ID,
+static gboolean  checkerboard_dialog        (gint32        image_ID,
                                              GimpDrawable *drawable);
-static void      check_size_update_callback (GtkWidget    *widget,
-                                             gpointer       data);
+static void      check_size_update_callback (GtkWidget    *widget);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -64,8 +64,8 @@ GimpPlugInInfo PLUG_IN_INFO =
 
 static CheckVals cvals =
 {
-  0,
-  10
+  FALSE,     /* mode */
+  10         /* size */
 };
 
 MAIN ()
@@ -83,16 +83,16 @@ query (void)
   };
 
   gimp_install_procedure ("plug_in_checkerboard",
-			  "Adds a checkerboard pattern to an image",
-			  "More here later",
-			  "Brent Burton & the Edward Blevins",
-			  "Brent Burton & the Edward Blevins",
-			  "1997",
-			  N_("_Checkerboard..."),
-			  "RGB*, GRAY*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "Adds a checkerboard pattern to an image",
+                          "More here later",
+                          "Brent Burton & the Edward Blevins",
+                          "Brent Burton & the Edward Blevins",
+                          "1997",
+                          N_("_Checkerboard..."),
+                          "RGB*, GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 
   gimp_plugin_menu_register ("plug_in_checkerboard",
                              "<Image>/Filters/Render/Pattern");
@@ -129,20 +129,20 @@ run (const gchar      *name,
     case GIMP_RUN_INTERACTIVE:
       gimp_get_data ("plug_in_checkerboard", &cvals);
       if (! checkerboard_dialog (image_ID, drawable))
-	{
-	  gimp_drawable_detach (drawable);
-	  return;
-	}
+        {
+          gimp_drawable_detach (drawable);
+          return;
+        }
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
       if (nparams != 5)
-	status = GIMP_PDB_CALLING_ERROR;
+        status = GIMP_PDB_CALLING_ERROR;
       if (status == GIMP_PDB_SUCCESS)
-	{
-	  cvals.mode = param[3].data.d_int32;
-	  cvals.size = param[4].data.d_int32;
-	}
+        {
+          cvals.mode = param[3].data.d_int32;
+          cvals.size = param[4].data.d_int32;
+        }
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
@@ -158,13 +158,13 @@ run (const gchar      *name,
     {
       gimp_progress_init (_("Adding Checkerboard..."));
 
-      do_checkerboard_pattern(drawable);
+      do_checkerboard_pattern (drawable, NULL);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	gimp_displays_flush ();
+        gimp_displays_flush ();
 
       if (run_mode == GIMP_RUN_INTERACTIVE)
-	gimp_set_data ("plug_in_checkerboard", &cvals, sizeof (CheckVals));
+        gimp_set_data ("plug_in_checkerboard", &cvals, sizeof (CheckVals));
     }
   else
     {
@@ -176,19 +176,21 @@ run (const gchar      *name,
   gimp_drawable_detach (drawable);
 }
 
-typedef struct {
+typedef struct
+{
   guchar fg[4];
   guchar bg[4];
 } CheckerboardParam_t;
 
 static void
-checkerboard_func (gint x,
-		   gint y,
-		   guchar *dest,
-		   gint bpp,
-		   gpointer data)
+checkerboard_func (gint      x,
+                   gint      y,
+                   guchar   *dest,
+                   gint      bpp,
+                   gpointer  data)
 {
   CheckerboardParam_t *param = (CheckerboardParam_t*) data;
+
   gint val, xp, yp;
   gint b;
 
@@ -215,7 +217,8 @@ checkerboard_func (gint x,
 }
 
 static void
-do_checkerboard_pattern (GimpDrawable *drawable)
+do_checkerboard_pattern (GimpDrawable *drawable,
+                         GimpPreview  *preview)
 {
   CheckerboardParam_t  param;
   GimpRgnIterator     *iter;
@@ -233,30 +236,61 @@ do_checkerboard_pattern (GimpDrawable *drawable)
       cvals.size = 1;
     }
 
-  iter = gimp_rgn_iterator_new (drawable, 0);
-  gimp_rgn_iterator_dest (iter, checkerboard_func, &param);
-  gimp_rgn_iterator_free (iter);
+  if (preview)
+    {
+      gint    x1, y1;
+      gint    width, height;
+      gint    i;
+      gint    bpp;
+      guchar *buffer;
+
+      gimp_preview_get_position (preview, &x1, &y1);
+      gimp_preview_get_size (preview, &width, &height);
+      bpp = drawable->bpp;
+      buffer = g_new (guchar, width * height * bpp);
+
+      for (i = 0; i < width * height; i++)
+        {
+          checkerboard_func (x1 + i % width,
+                             y1 + i / width,
+                             buffer + i * bpp,
+                             bpp, &param);
+        }
+      gimp_preview_draw_buffer (preview, buffer, width * bpp);
+      g_free (buffer);
+    }
+  else
+    {
+      iter = gimp_rgn_iterator_new (drawable, 0);
+      gimp_rgn_iterator_dest (iter, checkerboard_func, &param);
+      gimp_rgn_iterator_free (iter);
+    }
 }
 
 static gint
 inblock (gint pos,
-	 gint size)
+         gint size)
 {
-  static gint *in = NULL;	/* initialized first time */
-  gint         len;
+  static gint *in  = NULL;       /* initialized first time */
+  static gint  len = -1;
 
   /* avoid a FP exception */
   if (size == 1)
     size = 2;
 
-  len = size*size;
+  if (in && len != size * size)
+    {
+      g_free (in);
+      in = NULL;
+    }
+  len = size * size;
   /*
    * Initialize the array; since we'll be called thousands of
    * times with the same size value, precompute the array.
    */
   if (in == NULL)
     {
-      gint cell = 1;	/* cell value */
+      gint cell = 1;    /* cell value */
       gint i, j, k;
 
       in = g_new (gint, len);
@@ -266,38 +300,39 @@ inblock (gint pos,
        * j is current number of blocks to fill in with a 1 or 0.
        * k is just counter for the j cells.
        */
-      i=0;
-      for (j=1; j<=size; j++ )
-	{ /* first half */
-	  for (k=0; k<j; k++ )
-	    {
-	      in[i++] = cell;
-	    }
-	  cell = !cell;
-	}
-      for ( j=size-1; j>=1; j--)
-	{ /* second half */
-	  for (k=0; k<j; k++ )
-	    {
-	      in[i++] = cell;
-	    }
-	  cell = !cell;
-	}
+      i = 0;
+      for (j = 1; j <= size; j++)
+        { /* first half */
+          for (k = 0; k < j; k++)
+            {
+              in[i++] = cell;
+            }
+          cell = !cell;
+        }
+      for (j = size - 1; j >= 1; j--)
+        { /* second half */
+          for (k = 0; k < j; k++)
+            {
+              in[i++] = cell;
+            }
+          cell = !cell;
+        }
     }
 
   /* place pos within 0..(len-1) grid and return the value. */
-  return in[ pos % (len-1) ];
+  return in[pos % (len - 1)];
 }
 
 static gboolean
 checkerboard_dialog (gint32        image_ID,
                      GimpDrawable *drawable)
 {
-  GtkWidget *dlg;
+  GtkWidget *dialog;
   GtkWidget *vbox;
+  GtkWidget *preview;
   GtkWidget *toggle;
   GtkWidget *size_entry;
-  gint	     size, width, height;
+  gint       size, width, height;
   GimpUnit   unit;
   gdouble    xres;
   gdouble    yres;
@@ -305,32 +340,31 @@ checkerboard_dialog (gint32        image_ID,
 
   gimp_ui_init ("checkerboard", FALSE);
 
-  dlg = gimp_dialog_new (_("Checkerboard"), "checkerboard",
-                         NULL, 0,
-			 gimp_standard_help_func, "plug-in-checkerboard",
+  dialog = gimp_dialog_new (_("Checkerboard"), "checkerboard",
+                            NULL, 0,
+                            gimp_standard_help_func, "plug-in-checkerboard",
 
-			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 NULL);
+                            NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
-
-  /*  Get the image resolution and unit  */
-  gimp_image_get_resolution (image_ID, &xres, &yres);
-  unit = gimp_image_get_unit (image_ID);
-
-  width  = gimp_drawable_width (drawable->drawable_id);
-  height = gimp_drawable_height (drawable->drawable_id);
-  size   = MIN (width, height);
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);
   gtk_widget_show (vbox);
+
+  preview = gimp_drawable_preview_new (drawable, NULL);
+  gtk_container_add (GTK_CONTAINER (vbox), preview);
+  gtk_widget_show (preview);
+  g_signal_connect_swapped (preview, "invalidated",
+                            G_CALLBACK (do_checkerboard_pattern),
+                            drawable);
 
   toggle = gtk_check_button_new_with_mnemonic (_("_Psychobilly"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
@@ -340,6 +374,17 @@ checkerboard_dialog (gint32        image_ID,
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &cvals.mode);
+  g_signal_connect_swapped (toggle, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
+
+  /*  Get the image resolution and unit  */
+  gimp_image_get_resolution (image_ID, &xres, &yres);
+  unit = gimp_image_get_unit (image_ID);
+
+  width  = gimp_drawable_width (drawable->drawable_id);
+  height = gimp_drawable_height (drawable->drawable_id);
+  size   = MIN (width, height);
 
   size_entry = gimp_size_entry_new (1, unit, "%a",
                                     TRUE, TRUE, FALSE, SPIN_BUTTON_WIDTH,
@@ -370,22 +415,24 @@ checkerboard_dialog (gint32        image_ID,
   g_signal_connect (size_entry, "value-changed",
                     G_CALLBACK (check_size_update_callback),
                     &cvals.size);
+  g_signal_connect_swapped (size_entry, "value-changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
-  gtk_container_add (GTK_CONTAINER (vbox), size_entry);
+  gtk_box_pack_start (GTK_BOX (vbox), size_entry, FALSE, FALSE, 0);
   gtk_widget_show (size_entry);
 
-  gtk_widget_show (dlg);
+  gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  gtk_widget_destroy (dlg);
+  gtk_widget_destroy (dialog);
 
   return run;
 }
 
 static void
-check_size_update_callback (GtkWidget *widget,
-                            gpointer   data)
+check_size_update_callback (GtkWidget *widget)
 {
   cvals.size = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
 }
