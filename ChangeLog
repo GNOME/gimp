@@ -1,3 +1,8 @@
+2005-08-13  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/common/threshold_alpha.c: added a preview, and some minor
+	cleanups.
+
 2005-08-13  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/AlienMap2.c
