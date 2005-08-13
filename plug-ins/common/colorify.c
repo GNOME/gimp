@@ -27,9 +27,9 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define PLUG_IN_NAME    "plug_in_colorify"
+#define PLUG_IN_PROC    "plug-in-colorify"
+#define PLUG_IN_BINARY  "colorify"
 #define PLUG_IN_VERSION "1.1"
-#define HELP_ID         "plug-in-colorify"
 
 #define COLOR_SIZE 30
 
@@ -94,13 +94,13 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE,    "image",    "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_COLOR,    "color",    "Color to apply"}
+    { GIMP_PDB_INT32,    "run-mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image"                  },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"               },
+    { GIMP_PDB_COLOR,    "color",    "Color to apply"               }
   };
 
-  gimp_install_procedure (PLUG_IN_NAME,
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Similar to the \"Color\" mode for layers.",
                           "Makes an average of the RGB channels and uses it "
                           "to set the color",
@@ -113,7 +113,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register (PLUG_IN_NAME, "<Image>/Filters/Colors");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Colors");
 }
 
 static void
@@ -144,7 +144,7 @@ run (const gchar      *name,
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      gimp_get_data (PLUG_IN_NAME, &cvals);
+      gimp_get_data (PLUG_IN_PROC, &cvals);
       if (!colorify_dialog (drawable))
         return;
       break;
@@ -159,7 +159,7 @@ run (const gchar      *name,
 
     case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
-      gimp_get_data (PLUG_IN_NAME, &cvals);
+      gimp_get_data (PLUG_IN_PROC, &cvals);
       break;
 
     default:
@@ -173,7 +173,7 @@ run (const gchar      *name,
       colorify (drawable, NULL);
 
       if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data (PLUG_IN_NAME, &cvals, sizeof (ColorifyVals));
+        gimp_set_data (PLUG_IN_PROC, &cvals, sizeof (ColorifyVals));
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush ();
@@ -253,11 +253,11 @@ colorify_dialog (GimpDrawable *drawable)
   gint       i;
   gboolean   run;
 
-  gimp_ui_init ("colorify", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Colorify"), "colorify",
+  dialog = gimp_dialog_new (_("Colorify"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, HELP_ID,
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,

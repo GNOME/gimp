@@ -31,6 +31,10 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define SAVE_PROC      "file-csource-save"
+#define PLUG_IN_BINARY "csource"
+
+
 typedef struct
 {
   gchar    *file_name;
@@ -90,14 +94,14 @@ query (void)
 {
   static GimpParamDef save_args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Drawable to save" },
-    { GIMP_PDB_STRING, "filename", "The name of the file to save the image in" },
-    { GIMP_PDB_STRING, "raw_filename", "The name of the file to save the image in" }
+    { GIMP_PDB_INT32,    "run-mode",     "Interactive" },
+    { GIMP_PDB_IMAGE,    "image",        "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },
+    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
+    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in" }
   };
 
-  gimp_install_procedure ("file_csource_save",
+  gimp_install_procedure (SAVE_PROC,
                           "Dump image data in RGB(A) format for C source",
                           "CSource cannot be run non-interactively.",
                           "Tim Janik",
@@ -109,8 +113,8 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_file_handler_mime ("file_csource_save", "text/x-csrc");
-  gimp_register_save_handler ("file_csource_save", "c", "");
+  gimp_register_file_handler_mime (SAVE_PROC, "text/x-csrc");
+  gimp_register_save_handler (SAVE_PROC, "c", "");
 }
 
 static void
@@ -136,7 +140,7 @@ run (const gchar      *name,
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
   if (run_mode == GIMP_RUN_INTERACTIVE &&
-      strcmp (name, "file_csource_save") == 0)
+      strcmp (name, SAVE_PROC) == 0)
     {
       gint32         image_ID    = param[1].data.d_int32;
       gint32         drawable_ID = param[2].data.d_int32;
@@ -144,7 +148,7 @@ run (const gchar      *name,
       gchar         *x;
       GimpImageType  drawable_type = gimp_drawable_type (drawable_ID);
 
-      gimp_get_data ("file_csource_save", &config);
+      gimp_get_data (SAVE_PROC, &config);
       config.prefixed_name = "gimp_image";
       config.comment       = NULL;
 
@@ -162,7 +166,7 @@ run (const gchar      *name,
 	}
       x = config.comment;
 
-      gimp_ui_init ("csource", FALSE);
+      gimp_ui_init (PLUG_IN_BINARY, FALSE);
       export = gimp_export_image (&image_ID, &drawable_ID, "C Source",
 				  (GIMP_EXPORT_CAN_HANDLE_RGB |
 				   GIMP_EXPORT_CAN_HANDLE_ALPHA ));
@@ -196,7 +200,7 @@ run (const gchar      *name,
 	    }
 	  else
 	    {
-	      gimp_set_data ("file_csource_save", &config, sizeof (config));
+	      gimp_set_data (SAVE_PROC, &config, sizeof (config));
 	    }
 	}
       else
@@ -630,9 +634,9 @@ run_save_dialog	(Config *config)
   GtkObject *adj;
   gboolean   run;
 
-  dialog = gimp_dialog_new (_("Save as C-Source"), "csource",
+  dialog = gimp_dialog_new (_("Save as C-Source"), PLUG_IN_BINARY,
                             NULL, 0,
-			    gimp_standard_help_func, "file-csource-save",
+			    gimp_standard_help_func, SAVE_PROC,
 
 			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			    GTK_STOCK_OK,     GTK_RESPONSE_OK,

@@ -32,8 +32,10 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#define SCALE_WIDTH  200
-#define ENTRY_WIDTH    6
+#define PLUG_IN_PROC   "plug-in-alienmap2"
+#define PLUG_IN_BINARY "AlienMap2"
+#define SCALE_WIDTH    200
+#define ENTRY_WIDTH      6
 
 /***** Color model *****/
 
@@ -164,7 +166,7 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",       "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode",       "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",          "Input image" },
     { GIMP_PDB_DRAWABLE, "drawable",       "Input drawable" },
     { GIMP_PDB_FLOAT,    "redfrequency",   "Red/hue component frequency factor" },
@@ -179,7 +181,7 @@ query (void)
     { GIMP_PDB_INT8,     "bluemode",       "Blue/luminance application mode (TRUE, FALSE)" },
   };
 
-  gimp_install_procedure ("plug_in_alienmap2",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "AlienMap2 Color Transformation Plug-In",
                           "No help yet. Just try it and you'll see!",
                           "Martin Weber (martweb@gmx.net)",
@@ -191,7 +193,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_alienmap2", "<Image>/Filters/Colors/Map");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Colors/Map");
 }
 
 static void
@@ -274,7 +276,7 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       /* Possibly retrieve data */
-      gimp_get_data ("plug_in_alienmap2", &wvals);
+      gimp_get_data (PLUG_IN_PROC, &wvals);
 
       /* Get information from the dialog */
       if (!alienmap2_dialog ())
@@ -305,7 +307,7 @@ run (const gchar      *name,
 
     case GIMP_RUN_WITH_LAST_VALS:
       /* Possibly retrieve data */
-      gimp_get_data ("plug_in_alienmap2", &wvals);
+      gimp_get_data (PLUG_IN_PROC, &wvals);
       break;
 
     default:
@@ -331,8 +333,8 @@ run (const gchar      *name,
 
           /* Store data */
           if (run_mode == GIMP_RUN_INTERACTIVE)
-            gimp_set_data ("plug_in_alienmap2",
-                           &wvals, sizeof(alienmap2_vals_t));
+            gimp_set_data (PLUG_IN_PROC,
+                           &wvals, sizeof (alienmap2_vals_t));
         }
       else
         {
@@ -388,11 +390,11 @@ alienmap2_dialog (void)
   GtkObject *adj;
   gboolean   run;
 
-  gimp_ui_init ("alienmap2", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("AlienMap2"), "alienmap2",
+  dialog = gimp_dialog_new (_("AlienMap2"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, "plug-in-alienmap2",
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,

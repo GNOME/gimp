@@ -32,6 +32,11 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define LOAD_PROC      "file-cel-load"
+#define SAVE_PROC      "file-cel-save"
+#define PLUG_IN_BINARY "CEL"
+
+
 static void query (void);
 static void run   (const gchar      *name,
                    gint              nparams,
@@ -75,10 +80,10 @@ query (void)
 {
   static GimpParamDef load_args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_STRING, "filename", "Filename to load image from" },
-    { GIMP_PDB_STRING, "raw_filename", "Name entered" },
-    { GIMP_PDB_STRING, "palette_filename", "Filename to load palette from" }
+    { GIMP_PDB_INT32,  "run-mode",         "Interactive, non-interactive"  },
+    { GIMP_PDB_STRING, "filename",         "Filename to load image from"   },
+    { GIMP_PDB_STRING, "raw-filename",     "Name entered"                  },
+    { GIMP_PDB_STRING, "palette-filename", "Filename to load palette from" }
   };
   static GimpParamDef load_return_vals[] =
   {
@@ -87,15 +92,15 @@ query (void)
 
   static GimpParamDef save_args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Drawable to save" },
-    { GIMP_PDB_STRING, "filename", "Filename to save image to" },
-    { GIMP_PDB_STRING, "raw_filename", "Name entered" },
-    { GIMP_PDB_STRING, "palette_filename", "Filename to save palette to" },
+    { GIMP_PDB_INT32,    "run-mode",         "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",            "Input image"                  },
+    { GIMP_PDB_DRAWABLE, "drawable",         "Drawable to save"             },
+    { GIMP_PDB_STRING,   "filename",         "Filename to save image to"    },
+    { GIMP_PDB_STRING,   "raw-filename",     "Name entered"                 },
+    { GIMP_PDB_STRING,   "palette-filename", "Filename to save palette to"  },
   };
 
-  gimp_install_procedure ("file_cel_load",
+  gimp_install_procedure (LOAD_PROC,
                           "Loads files in KISS CEL file format",
                           "This plug-in loads individual KISS cell files.",
                           "Nick Lamb",
@@ -108,12 +113,12 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
-  gimp_register_magic_load_handler ("file_cel_load",
+  gimp_register_magic_load_handler (LOAD_PROC,
                                     "cel",
                                     "",
                                     "0,string,KiSS\\040");
 
-  gimp_install_procedure ("file_cel_save",
+  gimp_install_procedure (SAVE_PROC,
                           "Saves files in KISS CEL file format",
                           "This plug-in saves individual KISS cell files.",
                           "Nick Lamb",
@@ -125,7 +130,7 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_save_handler ("file_cel_save", "cel", "");
+  gimp_register_save_handler (SAVE_PROC, "cel", "");
 }
 
 static void
@@ -154,15 +159,15 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  if (strcmp (name, "file_cel_load") == 0)
+  if (strcmp (name, LOAD_PROC) == 0)
     {
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         {
-          gimp_get_data ("file_cel_save:length", &data_length);
+          data_length = gimp_get_data_size (SAVE_PROC);
           if (data_length > 0)
             {
               palette_file = g_malloc (data_length);
-              gimp_get_data ("file_cel_save:data", palette_file);
+              gimp_get_data (SAVE_PROC, palette_file);
             }
           else
             {
@@ -182,8 +187,7 @@ run (const gchar      *name,
           if (need_palette (param[1].data.d_string))
             palette_dialog (_("Load KISS Palette"));
 
-          gimp_set_data ("file_cel_save:length", &data_length, sizeof (gsize));
-          gimp_set_data ("file_cel_save:data", palette_file, data_length);
+          gimp_set_data (SAVE_PROC, palette_file, data_length);
         }
 
       image = load_image (param[1].data.d_string, param[2].data.d_string);
@@ -199,7 +203,7 @@ run (const gchar      *name,
           status = GIMP_PDB_EXECUTION_ERROR;
         }
     }
-  else if (strcmp (name, "file_cel_save") == 0)
+  else if (strcmp (name, SAVE_PROC) == 0)
     {
       image_ID      = param[1].data.d_int32;
       drawable_ID   = param[2].data.d_int32;
@@ -228,8 +232,7 @@ run (const gchar      *name,
       if (save_image (param[3].data.d_string, param[4].data.d_string,
 		      image_ID, drawable_ID))
         {
-          gimp_set_data ("file_cel_save:length", &data_length, sizeof (gsize));
-          gimp_set_data ("file_cel_save:data", palette_file, data_length);
+          gimp_set_data (SAVE_PROC, palette_file, data_length);
         }
       else
         {
@@ -675,7 +678,7 @@ palette_dialog (const gchar *title)
 {
   GtkWidget *dialog;
 
-  gimp_ui_init ("CEL", FALSE);
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
   dialog = gtk_file_chooser_dialog_new (title, NULL,
                                         GTK_FILE_CHOOSER_ACTION_OPEN,
@@ -686,9 +689,9 @@ palette_dialog (const gchar *title)
                                         NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog), palette_file);
 

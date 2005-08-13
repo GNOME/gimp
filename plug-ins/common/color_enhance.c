@@ -29,6 +29,9 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define PLUG_IN_PROC "plug-in-color-enhance"
+
+
 /* Declare local functions.
  */
 static void   query                 (void);
@@ -38,8 +41,8 @@ static void   run                   (const gchar      *name,
                                      gint             *nreturn_vals,
                                      GimpParam       **return_vals);
 
-static void   Color_Enhance         (GimpDrawable *drawable);
-static void   indexed_Color_Enhance (gint32        image_ID);
+static void   Color_Enhance         (GimpDrawable     *drawable);
+static void   indexed_Color_Enhance (gint32            image_ID);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -58,12 +61,12 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE,    "image",    "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" }
+    { GIMP_PDB_INT32,    "run-mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image"                  },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"               }
   };
 
-  gimp_install_procedure ("plug_in_color_enhance",
+  gimp_install_procedure (PLUG_IN_PROC,
 			  "Automatically stretch the saturation of the "
 			  "specified drawable to cover all possible ranges.",
 			  "This simple plug-in does an automatic saturation "
@@ -83,8 +86,7 @@ query (void)
 	 	  	  G_N_ELEMENTS (args), 0,
  			  args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_color_enhance",
-                             "<Image>/Layer/Colors/Auto");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Layer/Colors/Auto");
 }
 
 static void
@@ -132,9 +134,9 @@ run (const gchar      *name,
     }
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
 
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   gimp_drawable_detach (drawable);
@@ -144,9 +146,9 @@ static gdouble
 get_v (const guchar *src)
 {
   gdouble h, z, v;
-  gint c, m, y;
-  gint k;
-  guchar map[3];
+  gint    c, m, y;
+  gint    k;
+  guchar  map[3];
 
   c = 255 - src[0];
   m = 255 - src[1];
@@ -169,9 +171,9 @@ static void
 enhance_it (const guchar *src, guchar *dest, gdouble vlo, gdouble vhi)
 {
   gdouble h, z, v;
-  gint c, m, y;
-  gint k;
-  guchar map[3];
+  gint    c, m, y;
+  gint    k;
+  guchar  map[3];
 
   c = 255 - src[0];
   m = 255 - src[1];
@@ -185,12 +187,12 @@ enhance_it (const guchar *src, guchar *dest, gdouble vlo, gdouble vhi)
   map[1] = m - k;
   map[2] = y - k;
 
-  gimp_rgb_to_hsv4(map, &h, &z, &v);
+  gimp_rgb_to_hsv4 (map, &h, &z, &v);
 
   if (vhi != vlo)
     v = (v - vlo) / (vhi - vlo);
 
-  gimp_hsv_to_rgb4(map, h, z, v);
+  gimp_hsv_to_rgb4 (map, h, z, v);
 
   c = map[0];
   m = map[1];
@@ -212,7 +214,7 @@ static void
 indexed_Color_Enhance (gint32 image_ID)
 {
   guchar *cmap;
-  gint ncols,i;
+  gint    ncols,i;
   gdouble vhi = 0.0, vlo = 1.0;
 
   cmap = gimp_image_get_colormap (image_ID, &ncols);
@@ -239,9 +241,10 @@ indexed_Color_Enhance (gint32 image_ID)
   gimp_image_set_colormap (image_ID, cmap, ncols);
 }
 
-typedef struct {
-  gdouble vhi;
-  gdouble vlo;
+typedef struct
+{
+  gdouble  vhi;
+  gdouble  vlo;
   gboolean has_alpha;
 } ColorEnhanceParam_t;
 

@@ -41,12 +41,15 @@
 
 /***** Magic numbers *****/
 
-#define SCALE_WIDTH  150
+#define PLUG_IN_PROC   "plug-in-blinds"
+#define PLUG_IN_BINARY "blinds"
 
-#define MAX_FANS      10
+#define SCALE_WIDTH    150
 
-#define HORIZONTAL     0
-#define VERTICAL       1
+#define MAX_FANS        10
+
+#define HORIZONTAL       0
+#define VERTICAL         1
 
 /* Variables set in dialog box */
 typedef struct data
@@ -102,16 +105,16 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_INT32, "angle_dsp", "Angle of Displacement " },
-    { GIMP_PDB_INT32, "number_of_segments", "Number of segments in blinds" },
-    { GIMP_PDB_INT32, "orientation", "orientation; 0 = Horizontal, 1 = Vertical" },
-    { GIMP_PDB_INT32, "backgndg_trans", "background transparent; FALSE,TRUE" }
+    { GIMP_PDB_INT32,    "run-mode",       "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",          "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable",       "Input drawable" },
+    { GIMP_PDB_INT32,    "angle-dsp",      "Angle of Displacement " },
+    { GIMP_PDB_INT32,    "num-segments",   "Number of segments in blinds" },
+    { GIMP_PDB_INT32,    "orientation",    "orientation; 0 = Horizontal, 1 = Vertical" },
+    { GIMP_PDB_INT32,    "bg-transparent", "background transparent; FALSE,TRUE" }
   };
 
-  gimp_install_procedure ("plug_in_blinds",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Adds a blinds effect to the image. Rather like "
                           "putting the image on a set of window blinds and "
                           "the closing or opening the blinds",
@@ -125,7 +128,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_blinds", "<Image>/Filters/Distorts");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Distorts");
 }
 
 static void
@@ -155,7 +158,7 @@ run (const gchar      *name,
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      gimp_get_data ("plug_in_blinds", &bvals);
+      gimp_get_data (PLUG_IN_PROC, &bvals);
       if (! blinds_dialog(drawable))
         {
           gimp_drawable_detach (drawable);
@@ -176,7 +179,7 @@ run (const gchar      *name,
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data ("plug_in_blinds", &bvals);
+      gimp_get_data (PLUG_IN_PROC, &bvals);
       break;
 
     default:
@@ -194,7 +197,7 @@ run (const gchar      *name,
         gimp_displays_flush ();
 
       if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data ("plug_in_blinds", &bvals, sizeof (BlindVals));
+        gimp_set_data (PLUG_IN_PROC, &bvals, sizeof (BlindVals));
     }
   else
     {
@@ -222,11 +225,11 @@ blinds_dialog (GimpDrawable *drawable)
   GtkWidget *vertical;
   gboolean   run;
 
-  gimp_ui_init ("blinds", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Blinds"), "blinds",
+  dialog = gimp_dialog_new (_("Blinds"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, "plug-in-blinds",
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -234,9 +237,9 @@ blinds_dialog (GimpDrawable *drawable)
                             NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
@@ -713,5 +716,4 @@ apply_blinds (GimpDrawable *drawable)
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
   gimp_drawable_update (drawable->drawable_id,
                         sel_x1, sel_y1, sel_width, sel_height);
-
 }

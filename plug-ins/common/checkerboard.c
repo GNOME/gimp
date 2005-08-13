@@ -27,7 +27,10 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define PLUG_IN_PROC      "plug-in-checkerboard"
+#define PLUG_IN_BINARY    "checkerboard"
 #define SPIN_BUTTON_WIDTH 8
+
 
 /* Variables set in dialog box */
 typedef struct data
@@ -75,14 +78,14 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_INT32, "check_mode", "Regular or Psychobilly" },
-    { GIMP_PDB_INT32, "check_size", "Size of the checks" }
+    { GIMP_PDB_INT32,    "run-mode",   "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",      "Input image (unused)"         },
+    { GIMP_PDB_DRAWABLE, "drawable",   "Input drawable"               },
+    { GIMP_PDB_INT32,    "check-mode", "Regular or Psychobilly"       },
+    { GIMP_PDB_INT32,    "check-size", "Size of the checks"           }
   };
 
-  gimp_install_procedure ("plug_in_checkerboard",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Adds a checkerboard pattern to an image",
                           "More here later",
                           "Brent Burton & the Edward Blevins",
@@ -94,8 +97,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_checkerboard",
-                             "<Image>/Filters/Render/Pattern");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Render/Pattern");
 }
 
 static void
@@ -127,7 +129,7 @@ run (const gchar      *name,
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      gimp_get_data ("plug_in_checkerboard", &cvals);
+      gimp_get_data (PLUG_IN_PROC, &cvals);
       if (! checkerboard_dialog (image_ID, drawable))
         {
           gimp_drawable_detach (drawable);
@@ -146,7 +148,7 @@ run (const gchar      *name,
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data ("plug_in_checkerboard", &cvals);
+      gimp_get_data (PLUG_IN_PROC, &cvals);
       break;
 
     default:
@@ -164,7 +166,7 @@ run (const gchar      *name,
         gimp_displays_flush ();
 
       if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data ("plug_in_checkerboard", &cvals, sizeof (CheckVals));
+        gimp_set_data (PLUG_IN_PROC, &cvals, sizeof (CheckVals));
     }
   else
     {
@@ -338,11 +340,11 @@ checkerboard_dialog (gint32        image_ID,
   gdouble    yres;
   gboolean   run;
 
-  gimp_ui_init ("checkerboard", FALSE);
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Checkerboard"), "checkerboard",
+  dialog = gimp_dialog_new (_("Checkerboard"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, "plug-in-checkerboard",
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,

@@ -29,8 +29,10 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define PRV_WIDTH  40
-#define PRV_HEIGHT 20
+#define PLUG_IN_PROC   "plug-in-colortoalpha"
+#define PLUG_IN_BINARY "colortoaplha"
+#define PRV_WIDTH      40
+#define PRV_HEIGHT     20
 
 
 typedef struct
@@ -84,13 +86,13 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE,    "image",    "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_COLOR,    "color",    "Color to remove" }
+    { GIMP_PDB_INT32,    "run-mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image (unused)"         },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"               },
+    { GIMP_PDB_COLOR,    "color",    "Color to remove"              }
   };
 
-  gimp_install_procedure ("plug_in_colortoalpha",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Convert the color in an image to alpha",
                           "This replaces as much of a given color as possible "
                           "in each pixel with a corresponding amount of alpha, "
@@ -104,10 +106,8 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_colortoalpha",
-                             "<Image>/Filters/Colors");
-  gimp_plugin_menu_register ("plug_in_colortoalpha",
-                             "<Image>/Layer/Transparency/Modify");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Colors");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Layer/Transparency/Modify");
 }
 
 static void
@@ -139,7 +139,7 @@ run (const gchar      *name,
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      gimp_get_data ("plug_in_colortoalpha", &pvals);
+      gimp_get_data (PLUG_IN_PROC, &pvals);
       if (! color_to_alpha_dialog (drawable))
         {
           gimp_drawable_detach (drawable);
@@ -156,7 +156,7 @@ run (const gchar      *name,
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data ("plug_in_colortoalpha", &pvals);
+      gimp_get_data (PLUG_IN_PROC, &pvals);
       break;
 
     default:
@@ -195,7 +195,7 @@ run (const gchar      *name,
   gimp_drawable_detach (drawable);
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
-    gimp_set_data ("plug_in_colortoalpha", &pvals, sizeof (pvals));
+    gimp_set_data (PLUG_IN_PROC, &pvals, sizeof (pvals));
 
   values[0].data.d_status = status;
 }
@@ -372,11 +372,11 @@ color_to_alpha_dialog (GimpDrawable *drawable)
   GtkWidget *label;
   gboolean   run;
 
-  gimp_ui_init ("colortoalpha", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Color to Alpha"), "colortoalpha",
+  dialog = gimp_dialog_new (_("Color to Alpha"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, "plug-in-colortoalpha",
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -384,9 +384,9 @@ color_to_alpha_dialog (GimpDrawable *drawable)
                             NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);

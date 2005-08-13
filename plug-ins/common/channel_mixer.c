@@ -37,9 +37,9 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define PLUG_IN_NAME        "plug_in_colors_channel_mixer"
+#define PLUG_IN_PROC        "plug-in-colors-channel-mixer"
+#define PLUG_IN_BINARY      "channel_mixer"
 #define PLUG_IN_VERSION     "Channel Mixer 0.8"
-#define HELP_ID             "plug-in-colors-channel-mixer"
 #define PROGRESS_UPDATE_NUM 20
 #define CM_LINE_SIZE        1024
 
@@ -160,22 +160,22 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_INT32, "monochrome", "Monochrome (TRUE or FALSE)" },
-    { GIMP_PDB_FLOAT, "rr_gain", "Set the red gain for the red channel" },
-    { GIMP_PDB_FLOAT, "rg_gain", "Set the green gain for the red channel" },
-    { GIMP_PDB_FLOAT, "rb_gain", "Set the blue gain for the red channel" },
-    { GIMP_PDB_FLOAT, "gr_gain", "Set the red gain for the green channel" },
-    { GIMP_PDB_FLOAT, "gg_gain", "Set the green gain for the green channel" },
-    { GIMP_PDB_FLOAT, "gb_gain", "Set the blue gain for the green channel" },
-    { GIMP_PDB_FLOAT, "br_gain", "Set the red gain for the blue channel" },
-    { GIMP_PDB_FLOAT, "bg_gain", "Set the green gain for the blue channel" },
-    { GIMP_PDB_FLOAT, "bb_gain", "Set the blue gain for the blue channel" }
+    { GIMP_PDB_INT32,    "run-mode",   "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",      "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable",   "Input drawable" },
+    { GIMP_PDB_INT32,    "monochrome", "Monochrome (TRUE or FALSE)" },
+    { GIMP_PDB_FLOAT,    "rr-gain",    "Set the red gain for the red channel" },
+    { GIMP_PDB_FLOAT,    "rg-gain",    "Set the green gain for the red channel" },
+    { GIMP_PDB_FLOAT,    "rb-gain",    "Set the blue gain for the red channel" },
+    { GIMP_PDB_FLOAT,    "gr-gain",    "Set the red gain for the green channel" },
+    { GIMP_PDB_FLOAT,    "gg-gain",    "Set the green gain for the green channel" },
+    { GIMP_PDB_FLOAT,    "gb-gain",    "Set the blue gain for the green channel" },
+    { GIMP_PDB_FLOAT,    "br-gain",    "Set the red gain for the blue channel" },
+    { GIMP_PDB_FLOAT,    "bg-gain",    "Set the green gain for the blue channel" },
+    { GIMP_PDB_FLOAT,    "bb-gain",    "Set the blue gain for the blue channel" }
   };
 
-  gimp_install_procedure (PLUG_IN_NAME,
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Mix RGB Channels.",
                           "This plug-in mixes the RGB channels.",
                           "Martin Guldahl <mguldahl@xmission.com>",
@@ -187,7 +187,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register (PLUG_IN_NAME, "<Image>/Filters/Colors");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Colors");
 }
 
 /*----------------------------------------------------------------------
@@ -228,7 +228,7 @@ run (const gchar      *name,
       switch (run_mode)
         {
         case GIMP_RUN_INTERACTIVE:
-          gimp_get_data (PLUG_IN_NAME, &mix);
+          gimp_get_data (PLUG_IN_PROC, &mix);
 
           if (! cm_dialog (drawable))
             {
@@ -262,7 +262,7 @@ run (const gchar      *name,
           break;
 
         case GIMP_RUN_WITH_LAST_VALS:
-          gimp_get_data (PLUG_IN_NAME, &mix);
+          gimp_get_data (PLUG_IN_PROC, &mix);
           break;
 
         default:
@@ -283,7 +283,7 @@ run (const gchar      *name,
             gimp_displays_flush ();
 
           if (run_mode == GIMP_RUN_INTERACTIVE)
-            gimp_set_data (PLUG_IN_NAME, &mix, sizeof (CmParamsType));
+            gimp_set_data (PLUG_IN_PROC, &mix, sizeof (CmParamsType));
         }
     }
   else
@@ -299,7 +299,8 @@ run (const gchar      *name,
 static void
 cm_set_defaults (CmParamsType *mix)
 {
-  static CmParamsType defaults = {
+  static CmParamsType defaults =
+  {
     { 1.0, 0.0, 0.0 },
     { 0.0, 1.0, 0.0 },
     { 0.0, 0.0, 1.0 },
@@ -449,7 +450,7 @@ cm_dialog (GimpDrawable *drawable)
   gdouble    red_value, green_value, blue_value;
   gboolean   run;
 
-  gimp_ui_init ("channel_mixer", FALSE);
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
   /* get values */
   if (mix.monochrome_flag == TRUE)
@@ -488,9 +489,9 @@ cm_dialog (GimpDrawable *drawable)
         }
     }
 
-  dialog = gimp_dialog_new (_("Channel Mixer"), "mixer",
+  dialog = gimp_dialog_new (_("Channel Mixer"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, HELP_ID,
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -1085,9 +1086,9 @@ cm_force_overwrite (const gchar *filename,
   gboolean   overwrite;
 
   dlg = gimp_dialog_new (_("Channel Mixer File Operation Warning"),
-                         "channel_mixer",
+                         PLUG_IN_BINARY,
                          parent, GTK_DIALOG_MODAL,
-                         gimp_standard_help_func, HELP_ID,
+                         gimp_standard_help_func, PLUG_IN_PROC,
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,

@@ -73,8 +73,7 @@
  */
 #define PROG_UPDATE_TIME ((row % 10) == 0)
 
-#define PLUG_IN_NAME "plug_in_blur"
-#define HELP_ID      "plug-in-blur"
+#define PLUG_IN_PROC "plug-in-blur"
 
 /*********************************
  *
@@ -122,7 +121,7 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode", "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",    "Input image (unused)"         },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"               },
   };
@@ -138,7 +137,7 @@ query (void)
     "Brian Degenhardt, Federico Mena Quintero, Stephen Norris, Daniel Cotting";
   const gchar *copyright_date = "1995-1998";
 
-  gimp_install_procedure ("plug_in_blur",
+  gimp_install_procedure (PLUG_IN_PROC,
                           blurb,
                           help,
                           author,
@@ -150,9 +149,8 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_blur", "<Image>/Filters/Blur");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Blur");
 }
-
 
 static void
 run (const gchar      *name,
@@ -168,12 +166,13 @@ run (const gchar      *name,
 
   INIT_I18N ();
 
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
-  *nreturn_vals = 1;
-  *return_vals = values;
 
-  if (strcmp (name, "plug_in_blur") != 0 || nparams < 3)
+  *nreturn_vals = 1;
+  *return_vals  = values;
+
+  if (strcmp (name, PLUG_IN_PROC) != 0 || nparams < 3)
     {
       values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
       return;
@@ -385,4 +384,3 @@ blur (GimpDrawable *drawable)
   g_free (next_row);
   g_free (dest);
 }
-

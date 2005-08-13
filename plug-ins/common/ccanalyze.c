@@ -35,6 +35,13 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define PLUG_IN_PROC   "plug-in-ccanalyze"
+#define PLUG_IN_BINARY "ccanalyze"
+
+/* size of histogram image */
+#define PREWIDTH  256
+#define PREHEIGHT 150
+
 /* lets prototype */
 static void query (void);
 static void run   (const gchar      *name,
@@ -68,10 +75,6 @@ static gdouble    maxred = 0.0, maxgreen = 0.0, maxblue = 0.0;
 static gint       uniques = 0;
 static gint32     imageID;
 
-/* size of histogram image */
-static const int PREWIDTH = 256;
-static const int PREHEIGHT = 150;
-
 /* lets declare what we want to do */
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -90,17 +93,17 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE,    "image",    "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" }
+    { GIMP_PDB_INT32,    "run-mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image"                  },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"               }
   };
 
   static GimpParamDef return_vals[] =
   {
-    { GIMP_PDB_INT32, "num_colors", "Number of colors in the image" }
+    { GIMP_PDB_INT32, "num-colors", "Number of colors in the image" }
   };
 
-  gimp_install_procedure ("plug_in_ccanalyze",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Colorcube analysis",
                           "Analyze colorcube and print some information about "
                           "the current image (also displays a color-histogram)",
@@ -113,8 +116,8 @@ query (void)
                           G_N_ELEMENTS (args), G_N_ELEMENTS (return_vals),
                           args, return_vals);
 
-  gimp_plugin_menu_register ("plug_in_ccanalyze", "<Image>/Filters/Colors");
-  gimp_plugin_menu_register ("plug_in_ccanalyze", "<Image>/Layer/Colors/Info");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Colors");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Layer/Colors/Info");
 }
 
 /* main function */
@@ -135,7 +138,7 @@ run (const gchar      *name,
   INIT_I18N ();
 
   *nreturn_vals = 2;
-  *return_vals = values;
+  *return_vals  = values;
 
   if (run_mode == GIMP_RUN_NONINTERACTIVE)
     {
@@ -146,7 +149,7 @@ run (const gchar      *name,
   if (status == GIMP_PDB_SUCCESS)
     {
       drawable = gimp_drawable_get (param[2].data.d_drawable);
-      imageID = param[1].data.d_image;
+      imageID  = param[1].data.d_image;
 
       if (gimp_drawable_is_rgb (drawable->drawable_id) ||
           gimp_drawable_is_gray (drawable->drawable_id) ||
@@ -353,11 +356,11 @@ doDialog (void)
   gchar       *memsize;
   struct stat  st;
 
-  gimp_ui_init ("ccanalyze", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Colorcube Analysis"), "ccanalyze",
+  dialog = gimp_dialog_new (_("Colorcube Analysis"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, "plug-in-ccanalyze",
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 

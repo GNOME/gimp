@@ -83,9 +83,8 @@
 #include "libgimp/stdplugins-intl.h"
 
 #define PARAM_FILE_FORMAT_VERSION 1.0
-#define PLUG_IN_NAME              "plug_in_cml_explorer"
-#define SHORT_NAME                "CML_explorer"
-#define HELP_ID                   "plug-in-cml-explorer"
+#define PLUG_IN_PROC              "plug-in-cml-explorer"
+#define PLUG_IN_BINARY            "CML_explorer"
 #define VALS                      CML_explorer_vals
 #define PROGRESS_UPDATE_NUM        100
 #define CML_LINE_SIZE             1024
@@ -454,7 +453,7 @@ query (void)
     { GIMP_PDB_STRING,   "parameter_file_name", "The name of parameter file. CML_explorer makes an image with its settings." }
   };
 
-  gimp_install_procedure (PLUG_IN_NAME,
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Make an image of Coupled-Map Lattice",
                           "Make an image of Coupled-Map Lattice (CML). CML is "
                           "a kind of Cellula Automata on continuous (value) "
@@ -472,7 +471,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register (PLUG_IN_NAME, "<Image>/Filters/Render/Pattern");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Render/Pattern");
 }
 
 static void
@@ -500,7 +499,7 @@ run (const gchar      *name,
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      gimp_get_data (PLUG_IN_NAME, &VALS);
+      gimp_get_data (PLUG_IN_PROC, &VALS);
       if (! CML_explorer_dialog ())
         return;
       break;
@@ -513,7 +512,7 @@ run (const gchar      *name,
         break;
       }
     case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data (PLUG_IN_NAME, &VALS);
+      gimp_get_data (PLUG_IN_PROC, &VALS);
       break;
     }
 
@@ -523,7 +522,7 @@ run (const gchar      *name,
   if (run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_displays_flush();
   if (run_mode == GIMP_RUN_INTERACTIVE && status == GIMP_PDB_SUCCESS)
-    gimp_set_data (PLUG_IN_NAME, &VALS, sizeof (ValueType));
+    gimp_set_data (PLUG_IN_PROC, &VALS, sizeof (ValueType));
 
   g_free (mem_chank0);
   g_free (mem_chank1);
@@ -1180,11 +1179,11 @@ CML_explorer_dialog (void)
   GtkWidget *button;
   gboolean   run;
 
-  gimp_ui_init (SHORT_NAME, TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dlg = gimp_dialog_new (_("Coupled-Map-Lattice Explorer"), "cml_explorer",
+  dlg = gimp_dialog_new (_("Coupled-Map-Lattice Explorer"), PLUG_IN_BINARY,
                          NULL, 0,
-                         gimp_standard_help_func, HELP_ID,
+                         gimp_standard_help_func, PLUG_IN_PROC,
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -1822,7 +1821,7 @@ function_graph_new (GtkWidget *widget,
 
   dlg = gimp_dialog_new (_("Graph of the current settings"), "cml_explorer",
                          gtk_widget_get_toplevel (widget), 0,
-                         gimp_standard_help_func, HELP_ID,
+                         gimp_standard_help_func, PLUG_IN_PROC,
 
                          GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 
@@ -2085,7 +2084,7 @@ force_overwrite (const gchar *filename,
 
   dlg = gimp_dialog_new (_("CML Explorer: Overwrite File?"), "cml_explorer",
                          parent, GTK_DIALOG_MODAL,
-                         gimp_standard_help_func, HELP_ID,
+                         gimp_standard_help_func, PLUG_IN_PROC,
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,

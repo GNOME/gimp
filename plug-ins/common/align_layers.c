@@ -26,10 +26,9 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#define PLUG_IN_NAME "plug_in_align_layers"
-#define SHORT_NAME   "align_layers"
-#define HELP_ID      "plug-in-align-layers"
-#define SCALE_WIDTH  150
+#define PLUG_IN_PROC   "plug-in-align-layers"
+#define PLUG_IN_BINARY "align_layers"
+#define SCALE_WIDTH    150
 
 enum
 {
@@ -117,14 +116,14 @@ query (void)
 {
   static GimpParamDef args [] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive"},
-    { GIMP_PDB_IMAGE, "image", "Input image"},
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable (not used)"},
-    { GIMP_PDB_INT32, "link-afteer-alignment", "Link the visible layers after alignment"},
-    { GIMP_PDB_INT32, "use-bottom", "use the bottom layer as the base of alignment"}
+    { GIMP_PDB_INT32,    "run-mode",             "Interactive, non-interactive"},
+    { GIMP_PDB_IMAGE,    "image",                "Input image"},
+    { GIMP_PDB_DRAWABLE, "drawable",             "Input drawable (not used)"},
+    { GIMP_PDB_INT32,    "link-after-alignment", "Link the visible layers after alignment"},
+    { GIMP_PDB_INT32,    "use-bottom",           "use the bottom layer as the base of alignment"}
   };
 
-  gimp_install_procedure (PLUG_IN_NAME,
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Align visible layers",
                           "Align visible layers",
                           "Shuji Narazaki <narazaki@InetQ.or.jp>",
@@ -136,7 +135,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register (PLUG_IN_NAME, "<Image>/Layer");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Layer");
 }
 
 static void
@@ -171,7 +170,7 @@ run (const gchar      *name,
           g_message (_("There are not enough layers to align."));
           return;
         }
-      gimp_get_data (PLUG_IN_NAME, &VALS);
+      gimp_get_data (PLUG_IN_PROC, &VALS);
       if (! align_layers_dialog ())
         return;
       break;
@@ -180,7 +179,7 @@ run (const gchar      *name,
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data (PLUG_IN_NAME, &VALS);
+      gimp_get_data (PLUG_IN_PROC, &VALS);
       break;
     }
 
@@ -189,7 +188,7 @@ run (const gchar      *name,
   if (run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_displays_flush ();
   if (run_mode == GIMP_RUN_INTERACTIVE && status == GIMP_PDB_SUCCESS)
-    gimp_set_data (PLUG_IN_NAME, &VALS, sizeof (ValueType));
+    gimp_set_data (PLUG_IN_PROC, &VALS, sizeof (ValueType));
 
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
@@ -392,11 +391,11 @@ align_layers_dialog (void)
   GtkObject *adj;
   gboolean   run;
 
-  gimp_ui_init (SHORT_NAME, FALSE);
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dlg = gimp_dialog_new (_("Align Visible Layers"), SHORT_NAME,
+  dlg = gimp_dialog_new (_("Align Visible Layers"), PLUG_IN_BINARY,
                          NULL, 0,
-                         gimp_standard_help_func, HELP_ID,
+                         gimp_standard_help_func, PLUG_IN_PROC,
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,

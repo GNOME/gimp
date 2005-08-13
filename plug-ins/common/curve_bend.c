@@ -49,13 +49,13 @@
 
 
 /* Defines */
-#define PLUG_IN_NAME        "plug_in_curve_bend"
+#define PLUG_IN_PROC        "plug-in-curve-bend"
+#define PLUG_IN_BINARY      "curve_bend"
 #define PLUG_IN_VERSION     "v1.3.18 (2003/08/26)"
 #define PLUG_IN_IMAGE_TYPES "RGB*, GRAY*"
 #define PLUG_IN_AUTHOR      "Wolfgang Hofer (hof@hotbot.com)"
 #define PLUG_IN_COPYRIGHT   "Wolfgang Hofer"
 #define PLUG_IN_DESCRIPTION "Bends a layer using 2 spline-curves"
-#define HELP_ID             "plug-in-curve-bend"
 
 #define PLUG_IN_ITER_NAME       "plug_in_curve_bend_Iterator"
 #define PLUG_IN_DATA_ITER_FROM  "plug_in_curve_bend_ITER_FROM"
@@ -541,7 +541,7 @@ query (void)
   };
 
   /* the actual installation of the bend plugin */
-  gimp_install_procedure (PLUG_IN_NAME,
+  gimp_install_procedure (PLUG_IN_PROC,
                           PLUG_IN_DESCRIPTION,
                           "This plug-in does bend the active layer "
                           "If there is a current selection it is copied to "
@@ -571,7 +571,7 @@ query (void)
                           args,
                           return_vals);
 
-  gimp_plugin_menu_register (PLUG_IN_NAME, "<Image>/Filters/Distorts");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Distorts");
 
    /* the installation of the Iterator procedure for the bend plugin */
   gimp_install_procedure (PLUG_IN_ITER_NAME,
@@ -675,7 +675,7 @@ run (const gchar      *name,
               bval.total_steps = total_steps;
               bval.current_step = current_step;
 
-              gimp_set_data (PLUG_IN_NAME, &bval, sizeof (bval));
+              gimp_set_data (PLUG_IN_PROC, &bval, sizeof (bval));
             }
           else
             {
@@ -748,7 +748,7 @@ run (const gchar      *name,
         {
         case GIMP_RUN_INTERACTIVE:
           /* Possibly retrieve data from a previous run */
-          /* gimp_get_data (PLUG_IN_NAME, &g_bndvals); */
+          /* gimp_get_data (PLUG_IN_PROC, &g_bndvals); */
 
           /* Get information from the dialog */
           cd = do_dialog (l_active_drawable);
@@ -1023,7 +1023,7 @@ p_store_values (BenderDialog *cd)
   BenderValues l_bval;
 
   p_cd_to_bval(cd, &l_bval);
-  gimp_set_data(PLUG_IN_NAME, &l_bval, sizeof(l_bval));
+  gimp_set_data(PLUG_IN_PROC, &l_bval, sizeof(l_bval));
 }
 
 static void
@@ -1034,7 +1034,7 @@ p_retrieve_values (BenderDialog *cd)
   l_bval.total_steps = 0;
   l_bval.current_step = -444.4;  /* init with an invalid  dummy value */
 
-  gimp_get_data (PLUG_IN_NAME, &l_bval);
+  gimp_get_data (PLUG_IN_PROC, &l_bval);
 
   if (l_bval.total_steps == 0)
   {
@@ -1144,7 +1144,7 @@ do_dialog (GimpDrawable *drawable)
   BenderDialog *cd;
 
   /* Init GTK  */
-  gimp_ui_init ("curve_bend", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
   /*  The curve_bend dialog  */
   cd = bender_new_dialog (drawable);
@@ -1235,9 +1235,9 @@ bender_new_dialog (GimpDrawable *drawable)
   p_retrieve_values(cd);       /* Possibly retrieve data from a previous run */
 
   /*  The shell and main vbox  */
-  cd->shell = gimp_dialog_new (_("Curve Bend"), "curve_bend",
+  cd->shell = gimp_dialog_new (_("Curve Bend"), PLUG_IN_BINARY,
                                NULL, 0,
-                               gimp_standard_help_func, HELP_ID,
+                               gimp_standard_help_func, PLUG_IN_PROC,
 
                                GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                                GTK_STOCK_OK,     GTK_RESPONSE_OK,

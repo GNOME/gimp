@@ -37,6 +37,12 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define COMPOSE_PROC          "plug-in-compose"
+#define DRAWABLE_COMPOSE_PROC "plug-in-drawable-compose"
+#define RECOMPOSE_PROC        "plug-in-recompose"
+#define PLUG_IN_BINARY        "compose"
+
+
 /* Declare local functions
  */
 static void      query  (void);
@@ -266,13 +272,13 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode",     "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image1",       "First input image" },
     { GIMP_PDB_DRAWABLE, "drawable",     "Input drawable (not used)" },
     { GIMP_PDB_IMAGE,    "image2",       "Second input image" },
     { GIMP_PDB_IMAGE,    "image3",       "Third input image" },
     { GIMP_PDB_IMAGE,    "image4",       "Fourth input image" },
-    { GIMP_PDB_STRING,   "compose_type", "What to compose: RGB, RGBA, HSV, CMY, CMYK" }
+    { GIMP_PDB_STRING,   "compose-type", "What to compose: RGB, RGBA, HSV, CMY, CMYK" }
   };
 
   static GimpParamDef return_vals[] =
@@ -282,13 +288,13 @@ query (void)
 
   static GimpParamDef drw_args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode",     "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image1",       "First input image (not used)" },
     { GIMP_PDB_DRAWABLE, "drawable1",    "First input drawable" },
     { GIMP_PDB_DRAWABLE, "drawable2",    "Second input drawable" },
     { GIMP_PDB_DRAWABLE, "drawable3",    "Third input drawable" },
     { GIMP_PDB_DRAWABLE, "drawable4",    "Fourth input drawable" },
-    { GIMP_PDB_STRING,   "compose_type", "What to compose: RGB, RGBA, HSV, CMY, CMYK" }
+    { GIMP_PDB_STRING,   "compose-type", "What to compose: RGB, RGBA, HSV, CMY, CMYK" }
   };
 
   static GimpParamDef drw_return_vals[] =
@@ -298,12 +304,12 @@ query (void)
 
   static GimpParamDef recompose_args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode", "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",    "Image to recompose from" },
     { GIMP_PDB_DRAWABLE, "drawable", "Not used" },
   };
 
-  gimp_install_procedure ("plug_in_compose",
+  gimp_install_procedure (COMPOSE_PROC,
 			  "Compose an image from multiple gray images",
 			  "This function creates a new image from "
 			  "multiple gray images",
@@ -317,10 +323,10 @@ query (void)
                           G_N_ELEMENTS (return_vals),
 			  args, return_vals);
 
-  gimp_plugin_menu_register ("plug_in_compose", "<Image>/Filters/Colors");
-  gimp_plugin_menu_register ("plug_in_compose", "<Image>/Image/Mode");
+  gimp_plugin_menu_register (COMPOSE_PROC, "<Image>/Filters/Colors");
+  gimp_plugin_menu_register (COMPOSE_PROC, "<Image>/Image/Mode");
 
-  gimp_install_procedure ("plug_in_drawable_compose",
+  gimp_install_procedure (DRAWABLE_COMPOSE_PROC,
 			  "Compose an image from multiple drawables of gray images",
 			  "This function creates a new image from "
 			  "multiple drawables of gray images",
@@ -334,7 +340,7 @@ query (void)
                           G_N_ELEMENTS (drw_return_vals),
 			  drw_args, drw_return_vals);
 
-  gimp_install_procedure ("plug_in_recompose",
+  gimp_install_procedure (RECOMPOSE_PROC,
 			  "Recompose a layer from multiple drawables of gray images",
 			  "This function recombines the grayscale layers produced "
 			  "by Decompose into a single RGB or RGBA layer, and "
@@ -348,8 +354,9 @@ query (void)
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (recompose_args), 0,
 			  recompose_args, NULL);
-  gimp_plugin_menu_register ("plug_in_recompose", "<Image>/Filters/Colors");
-  gimp_plugin_menu_register ("plug_in_recompose", "<Image>/Image/Mode");
+
+  gimp_plugin_menu_register (RECOMPOSE_PROC, "<Image>/Filters/Colors");
+  gimp_plugin_menu_register (RECOMPOSE_PROC, "<Image>/Image/Mode");
 }
 
 
@@ -369,7 +376,7 @@ run (const gchar      *name,
   INIT_I18N ();
 
   run_mode = param[0].data.d_int32;
-  compose_by_drawable = (strcmp (name, "plug_in_drawable_compose") == 0);
+  compose_by_drawable = (strcmp (name, DRAWABLE_COMPOSE_PROC) == 0);
 
   *nreturn_vals = 2;
   *return_vals  = values;
@@ -379,7 +386,7 @@ run (const gchar      *name,
   values[1].type          = GIMP_PDB_IMAGE;
   values[1].data.d_int32  = -1;
 
-  if (strcmp (name, "plug_in_recompose") == 0)
+  if (strcmp (name, RECOMPOSE_PROC) == 0)
     {
       gint          nlayers;
       gint          nret;
@@ -425,7 +432,7 @@ run (const gchar      *name,
           gimp_get_data (name , &composevals);
 
           /* The dialog is now drawable based. Get a drawable-ID of the image */
-          if (strcmp (name, "plug_in_compose") == 0)
+          if (strcmp (name, COMPOSE_PROC) == 0)
             {
               gint32 *layer_list;
               gint nlayers;
@@ -1264,14 +1271,14 @@ compose_dialog (const gchar *compose_type,
   composeint.width  = gimp_drawable_width (drawable_ID);
   composeint.height = gimp_drawable_height (drawable_ID);
 
-  gimp_ui_init ("compose", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
   layer_list = gimp_image_get_layers (gimp_drawable_get_image (drawable_ID),
                                       &nlayers);
 
-  dlg = gimp_dialog_new (_("Compose"), "compose",
+  dlg = gimp_dialog_new (_("Compose"), PLUG_IN_BINARY,
                          NULL, 0,
-			 gimp_standard_help_func, "plug-in-compose",
+			 gimp_standard_help_func, COMPOSE_PROC,
 
 			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			 GTK_STOCK_OK,     GTK_RESPONSE_OK,

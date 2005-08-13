@@ -54,7 +54,10 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define DITHERTYPE GDK_RGB_DITHER_NORMAL
+#define PLUG_IN_PROC   "plug-in-animationplay"
+#define PLUG_IN_BINARY "animationplay"
+#define DITHERTYPE     GDK_RGB_DITHER_NORMAL
+
 
 typedef enum
 {
@@ -62,7 +65,6 @@ typedef enum
   DISPOSE_COMBINE   = 0x01,
   DISPOSE_REPLACE   = 0x02
 } DisposeType;
-
 
 
 /* Declare local functions. */
@@ -75,15 +77,15 @@ static void run   (const gchar      *name,
 
 static void do_playback                (void);
 
-static void window_response            (GtkWidget *widget,
-                                        gint       response_id,
-                                        gpointer   data);
-static void playstop_callback          (GtkWidget *widget,
-                                        gpointer   data);
-static void rewind_callback            (GtkWidget *widget,
-                                        gpointer   data);
-static void step_callback              (GtkWidget *widget,
-                                        gpointer   data);
+static void window_response            (GtkWidget      *widget,
+                                        gint            response_id,
+                                        gpointer        data);
+static void playstop_callback          (GtkWidget      *widget,
+                                        gpointer        data);
+static void rewind_callback            (GtkWidget      *widget,
+                                        gpointer        data);
+static void step_callback              (GtkWidget      *widget,
+                                        gpointer        data);
 static gboolean repaint_sda            (GtkWidget      *darea,
                                         GdkEventExpose *event,
                                         gpointer        data);
@@ -98,16 +100,16 @@ static void        init_preview_misc   (void);
 
 
 /* tag util functions*/
-static int         parse_ms_tag        (const char *str);
-static DisposeType parse_disposal_tag  (const char *str);
-static DisposeType get_frame_disposal  (guint whichframe);
-static guint32     get_frame_duration  (guint whichframe);
-static gboolean    is_disposal_tag     (const char *str,
+static int         parse_ms_tag        (const char  *str);
+static DisposeType parse_disposal_tag  (const char  *str);
+static DisposeType get_frame_disposal  (guint        whichframe);
+static guint32     get_frame_duration  (guint        whichframe);
+static gboolean    is_disposal_tag     (const char  *str,
                                         DisposeType *disposal,
-                                        int *taglength);
-static gboolean    is_ms_tag           (const char *str,
-                                        int *duration,
-                                        int *taglength);
+                                        int         *taglength);
+static gboolean    is_ms_tag           (const char  *str,
+                                        int         *duration,
+                                        int         *taglength);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -161,13 +163,14 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE,    "image",    "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable (unused)" }
+    { GIMP_PDB_INT32,    "run-mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image"                  },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable (unused)"      }
   };
 
-  gimp_install_procedure ("plug_in_animationplay",
-                          "This plugin allows you to preview a GIMP layer-based animation.",
+  gimp_install_procedure (PLUG_IN_PROC,
+                          "This plugin allows you to preview a GIMP "
+                          "layer-based animation.",
                           "",
                           "Adam D. Moss <adam@gimp.org>",
                           "Adam D. Moss <adam@gimp.org>",
@@ -178,8 +181,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_animationplay",
-                             "<Image>/Filters/Animation");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Animation");
 }
 
 static void
@@ -189,12 +191,12 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam values[1];
-  GimpRunMode run_mode;
+  static GimpParam  values[1];
+  GimpRunMode       run_mode;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
 
   run_mode = param[0].data.d_int32;
 
@@ -209,10 +211,10 @@ run (const gchar      *name,
     {
       image_id = param[1].data.d_image;
 
-      do_playback();
+      do_playback ();
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
-        gimp_displays_flush();
+        gimp_displays_flush ();
     }
 
   values[0].type = GIMP_PDB_STATUS;
@@ -401,13 +403,13 @@ build_dialog (GimpImageBaseType  basetype,
   GtkWidget    *eventbox;
   GdkCursor    *cursor;
 
-  gimp_ui_init ("animationplay", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
   windowname = g_strconcat (_("Animation Playback:"), " ", imagename, NULL);
 
-  dlg = gimp_dialog_new (windowname, "animationplay",
+  dlg = gimp_dialog_new (windowname, PLUG_IN_BINARY,
                          NULL, 0,
-                         gimp_standard_help_func, "plug-in-animationplay",
+                         gimp_standard_help_func, PLUG_IN_PROC,
 
                          GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 

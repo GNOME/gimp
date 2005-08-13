@@ -30,14 +30,16 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define SCALE_WIDTH    125
-#define BLACK            0
-#define BG               1
-#define SUPERSAMPLE      4
-#define MAX_POINTS       4
-#define MIN_ANGLE   -36000
-#define MAX_ANGLE    36000
-#define RANDOMNESS       5
+#define PLUG_IN_PROC   "plug-in-cubism"
+#define PLUG_IN_BINARY "cubism"
+#define SCALE_WIDTH       125
+#define BLACK               0
+#define BG                  1
+#define SUPERSAMPLE         4
+#define MAX_POINTS          4
+#define MIN_ANGLE      -36000
+#define MAX_ANGLE       36000
+#define RANDOMNESS          5
 
 typedef struct
 {
@@ -136,16 +138,17 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_FLOAT, "tile_size", "Average diameter of each tile (in pixels)" },
-    { GIMP_PDB_FLOAT, "tile_saturation", "Expand tiles by this amount" },
-    { GIMP_PDB_INT32, "bg_color", "Background color: { BLACK (0), BG (1) }" }
+    { GIMP_PDB_INT32,    "run-mode",        "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",           "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable",        "Input drawable" },
+    { GIMP_PDB_FLOAT,    "tile-size",       "Average diameter of each tile (in pixels)" },
+    { GIMP_PDB_FLOAT,    "tile-saturation", "Expand tiles by this amount" },
+    { GIMP_PDB_INT32,    "bg-color",        "Background color: { BLACK (0), BG (1) }" }
   };
 
-  gimp_install_procedure ("plug_in_cubism",
-                          "Convert the input drawable into a collection of rotated squares",
+  gimp_install_procedure (PLUG_IN_PROC,
+                          "Convert the input drawable into a collection "
+                          "of rotated squares",
                           "Help not yet written for this plug-in",
                           "Spencer Kimball & Tracy Scott",
                           "Spencer Kimball & Tracy Scott",
@@ -156,7 +159,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_cubism", "<Image>/Filters/Artistic");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Artistic");
 }
 
 static void
@@ -192,7 +195,7 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_cubism", &cvals);
+      gimp_get_data (PLUG_IN_PROC, &cvals);
 
       /*  First acquire information with a dialog  */
       if (! cubism_dialog (drawable))
@@ -216,7 +219,7 @@ run (const gchar      *name,
 
     case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_cubism", &cvals);
+      gimp_get_data (PLUG_IN_PROC, &cvals);
       break;
 
     default:
@@ -237,7 +240,7 @@ run (const gchar      *name,
 
       /*  Store mvals data  */
       if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data ("plug_in_cubism", &cvals, sizeof (CubismVals));
+        gimp_set_data (PLUG_IN_PROC, &cvals, sizeof (CubismVals));
     }
   else if (status == GIMP_PDB_SUCCESS)
     {
@@ -261,11 +264,11 @@ cubism_dialog (GimpDrawable *drawable)
   GtkObject *scale_data;
   gboolean   run;
 
-  gimp_ui_init ("cubism", FALSE);
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Cubism"), "cubism",
+  dialog = gimp_dialog_new (_("Cubism"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, "plug-in-cubism",
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -273,9 +276,9 @@ cubism_dialog (GimpDrawable *drawable)
                             NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);

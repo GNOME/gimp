@@ -28,6 +28,9 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define PLUG_IN_PROC "plug-in-c-astretch"
+
+
 /* Declare local functions.
  */
 static void   query              (void);
@@ -57,12 +60,12 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE,    "image",    "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" }
+    { GIMP_PDB_INT32,    "run-mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image"                  },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"               }
   };
 
-  gimp_install_procedure ("plug_in_c_astretch",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Automatically stretch the contrast of the "
                           "specified drawable to cover all possible ranges.",
                           "This simple plug-in does an automatic contrast "
@@ -81,7 +84,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_c_astretch", "<Image>/Layer/Colors/Auto");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Layer/Colors/Auto");
 }
 
 static void
@@ -125,14 +128,13 @@ run (const gchar      *name,
     }
   else
     {
-      /* gimp_message ("c_astretch: cannot operate on indexed color images"); */
       status = GIMP_PDB_EXECUTION_ERROR;
     }
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
 
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   gimp_drawable_detach (drawable);
@@ -250,4 +252,3 @@ c_astretch (GimpDrawable *drawable)
 
   gimp_rgn_iterate2 (drawable, 0 /* unused */, c_astretch_func, &param);
 }
-

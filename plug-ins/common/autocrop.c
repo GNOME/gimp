@@ -30,6 +30,10 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define AUTOCROP_PROC       "plug-in-autocrop"
+#define AUTOCROP_LAYER_PROC "plug-in-autocrop-layer"
+
+
 /* Declare local functions. */
 static void      query         (void);
 static void      run           (const gchar      *name,
@@ -71,12 +75,12 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" }
+    { GIMP_PDB_INT32,    "run-mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image"                  },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"               }
   };
 
-  gimp_install_procedure ("plug_in_autocrop",
+  gimp_install_procedure (AUTOCROP_PROC,
                           "Automagically crops an image.",
                           "",
                           "Tim Newsome",
@@ -88,9 +92,9 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_autocrop", "<Image>/Image/Crop");
+  gimp_plugin_menu_register (AUTOCROP_PROC, "<Image>/Image/Crop");
 
-  gimp_install_procedure ("plug_in_autocrop_layer",
+  gimp_install_procedure (AUTOCROP_LAYER_PROC,
                           "Automagically crops a layer.",
                           "",
                           "Tim Newsome",
@@ -102,7 +106,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_autocrop_layer", "<Image>/Layer/Crop");
+  gimp_plugin_menu_register (AUTOCROP_LAYER_PROC, "<Image>/Layer/Crop");
 }
 
 static void
@@ -149,7 +153,7 @@ run (const gchar      *name,
                                    drawable->height / gimp_tile_height ()) + 1);
 
       autocrop (drawable, image_id, interactive,
-                strcmp (name, "plug_in_autocrop_layer") == 0);
+                strcmp (name, AUTOCROP_LAYER_PROC) == 0);
 
       if (interactive)
         gimp_displays_flush ();

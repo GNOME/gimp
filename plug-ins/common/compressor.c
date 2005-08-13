@@ -162,13 +162,13 @@ static const Compressor compressors[] =
     ".xcfgz",
     ".gz",
 
-    "file_gz_load",
+    "file-gz-load",
     "loads files compressed with gzip",
     "You need to have gzip installed.",
     "gzip", "-cfd",
     "minigzip -d",
 
-    "file_gz_save",
+    "file-gz-save",
     "saves files compressed with gzip",
     "You need to have gzip installed.",
     "gzip", "-cfn",
@@ -183,13 +183,13 @@ static const Compressor compressors[] =
     ".xcfbz2",
     ".bz2",
 
-    "file_bz2_load",
+    "file-bz2-load",
     "loads files compressed with bzip2",
     "You need to have bzip2 installed.",
     "bzip2", "-cfd",
     "bzip2 -cfd",
 
-    "file_bz2_save",
+    "file-bz2-save",
     "saves files compressed with bzip2",
     "You need to have bzip2 installed",
     "bzip2", "-cf",
@@ -214,9 +214,9 @@ query (void)
 {
   static GimpParamDef load_args[] =
   {
-    { GIMP_PDB_INT32,  "run_mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,  "run-mode",     "Interactive, non-interactive" },
     { GIMP_PDB_STRING, "filename",     "The name of the file to load" },
-    { GIMP_PDB_STRING, "raw_filename", "The name entered"             }
+    { GIMP_PDB_STRING, "raw-filename", "The name entered"             }
   };
   static GimpParamDef load_return_vals[] =
   {
@@ -225,11 +225,12 @@ query (void)
 
   static GimpParamDef save_args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",     "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE,    "image",        "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },
-    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
-    { GIMP_PDB_STRING,   "raw_filename", "The name of the file to save the image in" }
+    { GIMP_PDB_INT32,    "run-mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",        "Input image"                  },
+    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save"             },
+    { GIMP_PDB_STRING,   "filename",     "The name of the file to "
+                                         "save the image in"            },
+    { GIMP_PDB_STRING,   "raw-filename", "The name entered"             },
   };
 
   gint i;

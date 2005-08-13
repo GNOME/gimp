@@ -1,3 +1,34 @@
+2005-08-13  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/AlienMap2.c
+	* plug-ins/common/CEL.c
+	* plug-ins/common/CML_explorer.c
+	* plug-ins/common/aa.c
+	* plug-ins/common/align_layers.c
+	* plug-ins/common/animationplay.c
+	* plug-ins/common/apply_lens.c
+	* plug-ins/common/autocrop.c
+	* plug-ins/common/autostretch_hsv.c
+	* plug-ins/common/blinds.c
+	* plug-ins/common/blur.c
+	* plug-ins/common/borderaverage.c
+	* plug-ins/common/bumpmap.c
+	* plug-ins/common/c_astretch.c
+	* plug-ins/common/cartoon.c
+	* plug-ins/common/ccanalyze.c
+	* plug-ins/common/channel_mixer.c
+	* plug-ins/common/checkerboard.c
+	* plug-ins/common/color_enhance.c
+	* plug-ins/common/colorify.c
+	* plug-ins/common/colortoalpha.c
+	* plug-ins/common/compose.c
+	* plug-ins/common/compressor.c
+	* plug-ins/common/convmatrix.c
+	* plug-ins/common/csource.c
+	* plug-ins/common/cubism.c
+	* plug-ins/common/curve_bend.c: canonicalize procedure and
+	parameter names. Misc cleanups.
+
 2005-08-13  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/common/checkerboard.c: added a preview, and some minor

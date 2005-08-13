@@ -112,7 +112,10 @@
 
 /***** Magic numbers *****/
 
-#define PLUG_IN_VERSION   "April 2000, 3.0-pre1-ac2"
+#define PLUG_IN_PROC       "plug-in-bump-map"
+#define PLUG_IN_TILED_PROC "plug-in-bump-map-tiled"
+#define PLUG_IN_BINARY     "bumpmap"
+#define PLUG_IN_VERSION    "April 2000, 3.0-pre1-ac2"
 
 #define SCALE_WIDTH       100
 
@@ -305,23 +308,25 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",   "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE,    "image",      "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable",   "Input drawable" },
-    { GIMP_PDB_DRAWABLE, "bumpmap",    "Bump map drawable" },
-    { GIMP_PDB_FLOAT,    "azimuth",    "Azimuth" },
-    { GIMP_PDB_FLOAT,    "elevation",  "Elevation" },
-    { GIMP_PDB_INT32,    "depth",      "Depth" },
-    { GIMP_PDB_INT32,    "xofs",       "X offset" },
-    { GIMP_PDB_INT32,    "yofs",       "Y offset" },
-    { GIMP_PDB_INT32,    "waterlevel", "Level that full transparency should represent" },
-    { GIMP_PDB_INT32,    "ambient",    "Ambient lighting factor" },
-    { GIMP_PDB_INT32,    "compensate", "Compensate for darkening" },
-    { GIMP_PDB_INT32,    "invert",     "Invert bumpmap" },
-    { GIMP_PDB_INT32,    "type",       "Type of map (LINEAR (0), SPHERICAL (1), SINUSOIDAL (2))" }
+    { GIMP_PDB_INT32,    "run-mode",   "Interactive, non-interactive"   },
+    { GIMP_PDB_IMAGE,    "image",      "Input image"                    },
+    { GIMP_PDB_DRAWABLE, "drawable",   "Input drawable"                 },
+    { GIMP_PDB_DRAWABLE, "bumpmap",    "Bump map drawable"              },
+    { GIMP_PDB_FLOAT,    "azimuth",    "Azimuth"                        },
+    { GIMP_PDB_FLOAT,    "elevation",  "Elevation"                      },
+    { GIMP_PDB_INT32,    "depth",      "Depth"                          },
+    { GIMP_PDB_INT32,    "xofs",       "X offset"                       },
+    { GIMP_PDB_INT32,    "yofs",       "Y offset"                       },
+    { GIMP_PDB_INT32,    "waterlevel", "Level that full transparency "
+                                       "should represent"               },
+    { GIMP_PDB_INT32,    "ambient",    "Ambient lighting factor"        },
+    { GIMP_PDB_INT32,    "compensate", "Compensate for darkening"       },
+    { GIMP_PDB_INT32,    "invert",     "Invert bumpmap"                 },
+    { GIMP_PDB_INT32,    "type",       "Type of map (LINEAR (0), "
+                                       "SPHERICAL (1), SINUSOIDAL (2))" }
   };
 
-  gimp_install_procedure ("plug_in_bump_map",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Create an embossing effect using an image as a "
                           "bump map",
                           "This plug-in uses the algorithm described by John "
@@ -339,9 +344,9 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_bump_map", "<Image>/Filters/Map");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Map");
 
-  gimp_install_procedure ("plug_in_bump_map_tiled",
+  gimp_install_procedure (PLUG_IN_TILED_PROC,
                           "Create an embossing effect using a tiled image "
                           "as a bump map",
                           "This plug-in uses the algorithm described by John "
@@ -427,7 +432,7 @@ run (const gchar      *name,
           bmvals.compensate = param[11].data.d_int32;
           bmvals.invert     = param[12].data.d_int32;
           bmvals.type       = param[13].data.d_int32;
-          bmvals.tiled      = strcmp (name, "plug_in_bump_map_tiled") == 0;
+          bmvals.tiled      = strcmp (name, PLUG_IN_TILED_PROC) == 0;
         }
       break;
 
@@ -824,11 +829,11 @@ bumpmap_dialog (void)
   gboolean   run;
   gint       row = 0;
 
-  gimp_ui_init ("bumpmap", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Bump Map"), "bumpmap",
+  dialog = gimp_dialog_new (_("Bump Map"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, "plug-in-bump-map",
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,

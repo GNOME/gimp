@@ -61,6 +61,8 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define PLUG_IN_PROC   "plug-in-convmatrix"
+#define PLUG_IN_BINARY "convmatrix"
 #define RESPONSE_RESET 1
 
 typedef enum
@@ -164,21 +166,21 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,      "run_mode",    "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,      "run-mode",    "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,      "image",       "Input image (unused)" },
     { GIMP_PDB_DRAWABLE,   "drawable",    "Input drawable" },
-    { GIMP_PDB_INT32,      "argc_matrix", "The number of elements in the following array. Should be always 25." },
+    { GIMP_PDB_INT32,      "argc-matrix", "The number of elements in the following array. Should be always 25." },
     { GIMP_PDB_FLOATARRAY, "matrix",      "The 5x5 convolution matrix" },
-    { GIMP_PDB_INT32,      "alpha_alg",   "Enable weighting by alpha channel" },
+    { GIMP_PDB_INT32,      "alpha-alg",   "Enable weighting by alpha channel" },
     { GIMP_PDB_FLOAT,      "divisor",     "Divisor" },
     { GIMP_PDB_FLOAT,      "offset",      "Offset" },
 
-    { GIMP_PDB_INT32,      "argc_channels", "The number of elements in following array. Should be always 5." },
+    { GIMP_PDB_INT32,      "argc-channels", "The number of elements in following array. Should be always 5." },
     { GIMP_PDB_INT32ARRAY, "channels",      "Mask of the channels to be filtered" },
     { GIMP_PDB_INT32,      "bmode",         "Mode for treating image borders" }
   };
 
-  gimp_install_procedure ("plug_in_convmatrix",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "A generic 5x5 convolution matrix",
                           "",
                           "Lauri Alanko",
@@ -190,7 +192,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_convmatrix", "<Image>/Filters/Effects/Generic");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Effects/Generic");
 }
 
 static void
@@ -269,7 +271,7 @@ run (const gchar      *name,
     }
   else
     {
-      gimp_get_data ("plug_in_convmatrix", &my_config);
+      gimp_get_data (PLUG_IN_PROC, &my_config);
 
       if (run_mode == GIMP_RUN_INTERACTIVE)
         {
@@ -301,8 +303,7 @@ run (const gchar      *name,
             gimp_displays_flush ();
 
           if (run_mode == GIMP_RUN_INTERACTIVE)
-            gimp_set_data ("plug_in_convmatrix",
-                           &my_config, sizeof (my_config));
+            gimp_set_data (PLUG_IN_PROC, &my_config, sizeof (my_config));
         }
       else
         {
@@ -866,11 +867,11 @@ convmatrix_dialog (GimpDrawable *drawable)
   gint       x, y, i;
   GSList    *group;
 
-  gimp_ui_init ("convmatrix", FALSE);
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Convolution Matrix"), "convmatrix",
+  dialog = gimp_dialog_new (_("Convolution Matrix"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, "plug-in-convmatrix",
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GIMP_STOCK_RESET, RESPONSE_RESET,
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,

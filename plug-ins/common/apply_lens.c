@@ -44,7 +44,11 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#define ENTRY_WIDTH 100
+
+#define PLUG_IN_PROC   "plug-in-applylens"
+#define PLUG_IN_BINARY "apply_lens"
+#define ENTRY_WIDTH    100
+
 
 /* Declare local functions.
  */
@@ -92,18 +96,19 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_FLOAT, "refraction", "Lens refraction index" },
-    { GIMP_PDB_INT32, "keep_surroundings", "Keep lens surroundings" },
-    { GIMP_PDB_INT32, "set_background", "Set lens surroundings to bkgr value" },
-    { GIMP_PDB_INT32, "set_transparent", "Set lens surroundings transparent" }
+    { GIMP_PDB_INT32,    "run-mode",          "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",             "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable",          "Input drawable" },
+    { GIMP_PDB_FLOAT,    "refraction",        "Lens refraction index" },
+    { GIMP_PDB_INT32,    "keep-surroundings", "Keep lens surroundings" },
+    { GIMP_PDB_INT32,    "set-background",    "Set lens surroundings to BG value" },
+    { GIMP_PDB_INT32,    "set-transparent",   "Set lens surroundings transparent" }
   };
 
-  gimp_install_procedure ("plug_in_applylens",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Apply a lens effect",
-                          "This plug-in uses Snell's law to draw an ellipsoid lens over the image",
+                          "This plug-in uses Snell's law to draw "
+                          "an ellipsoid lens over the image",
                           "Morten Eriksen",
                           "Morten Eriksen",
                           "1997",
@@ -113,7 +118,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_applylens",
+  gimp_plugin_menu_register (PLUG_IN_PROC,
                              "<Image>/Filters/Light and Shadow/Glass");
 }
 
@@ -133,18 +138,18 @@ run (const gchar      *name,
 
   run_mode = param[0].data.d_int32;
 
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
 
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   switch(run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      gimp_get_data ("plug_in_applylens", &lvals);
+      gimp_get_data (PLUG_IN_PROC, &lvals);
       if (!lens_dialog (drawable))
         return;
       break;
@@ -155,9 +160,9 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
         {
-          lvals.refraction = param[3].data.d_float;
-          lvals.keep_surr = param[4].data.d_int32;
-          lvals.use_bkgr = param[5].data.d_int32;
+          lvals.refraction      = param[3].data.d_float;
+          lvals.keep_surr       = param[4].data.d_int32;
+          lvals.use_bkgr        = param[5].data.d_int32;
           lvals.set_transparent = param[6].data.d_int32;
         }
 
@@ -166,7 +171,7 @@ run (const gchar      *name,
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data ("plug_in_applylens", &lvals);
+      gimp_get_data (PLUG_IN_PROC, &lvals);
       break;
 
     default:
@@ -180,7 +185,7 @@ run (const gchar      *name,
   if (run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_displays_flush ();
   if (run_mode == GIMP_RUN_INTERACTIVE)
-    gimp_set_data ("plug_in_applylens", &lvals, sizeof (LensValues));
+    gimp_set_data (PLUG_IN_PROC, &lvals, sizeof (LensValues));
 
   values[0].data.d_status = status;
 
@@ -384,11 +389,11 @@ lens_dialog (GimpDrawable *drawable)
   GtkObject *adj;
   gboolean   run;
 
-  gimp_ui_init ("apply_lens", FALSE);
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Lens Effect"), "apply_lens",
+  dialog = gimp_dialog_new (_("Lens Effect"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, "plug-in-applylens",
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -396,9 +401,9 @@ lens_dialog (GimpDrawable *drawable)
                             NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
