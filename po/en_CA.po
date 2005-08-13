@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-08 03:01-0400\n"
-"PO-Revision-Date: 2005-08-08 14:29-0400\n"
+"POT-Creation-Date: 2005-08-13 14:18-0400\n"
+"PO-Revision-Date: 2005-08-13 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -178,7 +178,7 @@ msgstr ""
 
 #. initialize the list of gimp brushes
 #: app/actions/actions.c:97 app/core/gimp.c:871 app/dialogs/dialogs.c:145
-#: app/dialogs/preferences-dialog.c:2484 app/pdb/internal_procs.c:93
+#: app/dialogs/preferences-dialog.c:2494 app/pdb/internal_procs.c:93
 msgid "Brushes"
 msgstr "Brushes"
 
@@ -241,7 +241,7 @@ msgstr "File"
 
 #. initialize the list of gimp fonts
 #: app/actions/actions.c:142 app/core/gimp.c:887 app/dialogs/dialogs.c:153
-#: app/dialogs/preferences-dialog.c:2500 app/pdb/internal_procs.c:129
+#: app/dialogs/preferences-dialog.c:2510 app/pdb/internal_procs.c:129
 msgid "Fonts"
 msgstr "Fonts"
 
@@ -252,7 +252,7 @@ msgstr "Gradient Editor"
 
 #. initialize the list of gimp gradients
 #: app/actions/actions.c:148 app/core/gimp.c:883 app/dialogs/dialogs.c:149
-#: app/dialogs/preferences-dialog.c:2496 app/pdb/internal_procs.c:141
+#: app/dialogs/preferences-dialog.c:2506 app/pdb/internal_procs.c:141
 msgid "Gradients"
 msgstr "Gradients"
 
@@ -282,17 +282,17 @@ msgstr "Palette Editor"
 
 #. initialize the list of gimp palettes
 #: app/actions/actions.c:166 app/core/gimp.c:879 app/dialogs/dialogs.c:151
-#: app/dialogs/preferences-dialog.c:2492 app/pdb/internal_procs.c:171
+#: app/dialogs/preferences-dialog.c:2502 app/pdb/internal_procs.c:171
 msgid "Palettes"
 msgstr "Palettes"
 
 #. initialize the list of gimp patterns
 #: app/actions/actions.c:169 app/core/gimp.c:875 app/dialogs/dialogs.c:147
-#: app/dialogs/preferences-dialog.c:2488 app/pdb/internal_procs.c:186
+#: app/dialogs/preferences-dialog.c:2498 app/pdb/internal_procs.c:186
 msgid "Patterns"
 msgstr "Patterns"
 
-#: app/actions/actions.c:172 app/dialogs/preferences-dialog.c:2504
+#: app/actions/actions.c:172 app/dialogs/preferences-dialog.c:2514
 msgid "Plug-Ins"
 msgstr "Plug-Ins"
 
@@ -2200,7 +2200,7 @@ msgstr "Crop Layer"
 msgid "Layer Mask to Selection"
 msgstr "Layer Mask to Selection"
 
-#: app/actions/layers-commands.c:921 app/core/gimplayer.c:1287
+#: app/actions/layers-commands.c:921 app/core/gimplayer.c:1294
 #: app/dialogs/layer-add-mask-dialog.c:61
 msgid "Add Layer Mask"
 msgstr "Add Layer Mask"
@@ -3032,7 +3032,7 @@ msgstr "E_xport Path..."
 msgid "Path to Sele_ction"
 msgstr "Path to Sele_ction"
 
-#: app/actions/vectors-actions.c:163 app/tools/gimpvectortool.c:1883
+#: app/actions/vectors-actions.c:163 app/tools/gimpvectortool.c:1905
 msgid "Path to selection"
 msgstr "Path to selection"
 
@@ -3081,7 +3081,7 @@ msgstr "New Path Options"
 msgid "Path to Selection"
 msgstr "Path to Selection"
 
-#: app/actions/vectors-commands.c:370 app/tools/gimpvectortool.c:1913
+#: app/actions/vectors-commands.c:370 app/tools/gimpvectortool.c:1935
 #: app/vectors/gimpvectors.c:237
 msgid "Stroke Path"
 msgstr "Stroke Path"
@@ -4557,7 +4557,7 @@ msgid "Documents"
 msgstr "Documents"
 
 #. initialize the module list
-#: app/core/gimp.c:900 app/dialogs/preferences-dialog.c:2512
+#: app/core/gimp.c:900 app/dialogs/preferences-dialog.c:2522
 msgid "Modules"
 msgstr "Modules"
 
@@ -5315,7 +5315,7 @@ msgstr "Flip Layer"
 msgid "Rotate Layer"
 msgstr "Rotate Layer"
 
-#: app/core/gimplayer.c:441 app/core/gimplayer.c:1331
+#: app/core/gimplayer.c:441 app/core/gimplayer.c:1338
 #: app/core/gimplayermask.c:237
 #, c-format
 msgid "%s mask"
@@ -5330,43 +5330,43 @@ msgstr ""
 "Floating Selection\n"
 "(%s)"
 
-#: app/core/gimplayer.c:1257
+#: app/core/gimplayer.c:1264
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr "Cannot add layer mask to layer which is not part of an image."
 
-#: app/core/gimplayer.c:1264
+#: app/core/gimplayer.c:1271
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Unable to add a layer mask since the layer already has one."
 
-#: app/core/gimplayer.c:1271
+#: app/core/gimplayer.c:1278
 msgid "Cannot add layer mask to a layer with no alpha channel."
 msgstr "Cannot add layer mask to a layer with no alpha channel."
 
-#: app/core/gimplayer.c:1281
+#: app/core/gimplayer.c:1288
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Cannot add layer mask of different dimensions than specified layer."
 
-#: app/core/gimplayer.c:1385
+#: app/core/gimplayer.c:1392
 msgid "Transfer Alpha to Mask"
 msgstr "Transfer Alpha to Mask"
 
-#: app/core/gimplayer.c:1545 app/core/gimplayermask.c:264
+#: app/core/gimplayer.c:1552 app/core/gimplayermask.c:264
 msgid "Apply Layer Mask"
 msgstr "Apply Layer Mask"
 
-#: app/core/gimplayer.c:1546
+#: app/core/gimplayer.c:1553
 msgid "Delete Layer Mask"
 msgstr "Delete Layer Mask"
 
-#: app/core/gimplayer.c:1647
+#: app/core/gimplayer.c:1654
 msgid "Add Alpha Channel"
 msgstr "Add Alpha Channel"
 
-#: app/core/gimplayer.c:1698
+#: app/core/gimplayer.c:1705
 msgid "Remove Alpha Channel"
 msgstr "Remove Alpha Channel"
 
-#: app/core/gimplayer.c:1720
+#: app/core/gimplayer.c:1727
 msgid "Layer to Image Size"
 msgstr "Layer to Image Size"
 
@@ -5498,15 +5498,15 @@ msgstr "Invert Selection"
 msgid "No selection to stroke."
 msgstr "No selection to stroke."
 
-#: app/core/gimpselection.c:807
+#: app/core/gimpselection.c:805
 msgid "Cannot float selection because the selected region is empty."
 msgstr "Cannot float selection because the selected region is empty."
 
-#: app/core/gimpselection.c:814
+#: app/core/gimpselection.c:812
 msgid "Float Selection"
 msgstr "Float Selection"
 
-#: app/core/gimpselection.c:831
+#: app/core/gimpselection.c:829
 msgid "Floated Layer"
 msgstr "Floated Layer"
 
@@ -6179,7 +6179,7 @@ msgstr "Select custom canvas padding colour"
 msgid "Preferences"
 msgstr "Preferences"
 
-#: app/dialogs/preferences-dialog.c:1404 app/dialogs/preferences-dialog.c:2520
+#: app/dialogs/preferences-dialog.c:1404 app/dialogs/preferences-dialog.c:2530
 msgid "Environment"
 msgstr "Environment"
 
@@ -6553,254 +6553,254 @@ msgstr "_Manually"
 msgid "C_alibrate..."
 msgstr "C_alibrate..."
 
-#: app/dialogs/preferences-dialog.c:2219
+#: app/dialogs/preferences-dialog.c:2222
 msgid "Color Management"
 msgstr "Colour Management"
 
-#: app/dialogs/preferences-dialog.c:2239
+#: app/dialogs/preferences-dialog.c:2242
 msgid "_RGB profile:"
 msgstr "_RGB profile:"
 
-#: app/dialogs/preferences-dialog.c:2240
+#: app/dialogs/preferences-dialog.c:2243
 msgid "Select RGB color profile"
 msgstr "Select RGB colour profile"
 
-#: app/dialogs/preferences-dialog.c:2241
+#: app/dialogs/preferences-dialog.c:2244
 msgid "_CMYK profile:"
 msgstr "_CMYK profile:"
 
-#: app/dialogs/preferences-dialog.c:2242
+#: app/dialogs/preferences-dialog.c:2245
 msgid "Select CMYK color profile"
 msgstr "Select CMYK colour profile"
 
-#: app/dialogs/preferences-dialog.c:2243
+#: app/dialogs/preferences-dialog.c:2246
 msgid "_Monitor profile:"
 msgstr "_Monitor profile:"
 
-#: app/dialogs/preferences-dialog.c:2244
+#: app/dialogs/preferences-dialog.c:2247
 msgid "Select monitor color profile"
 msgstr "Select monitor colour profile"
 
-#: app/dialogs/preferences-dialog.c:2245
+#: app/dialogs/preferences-dialog.c:2248
 msgid "_Print simulation profile:"
 msgstr "_Print simulation profile:"
 
-#: app/dialogs/preferences-dialog.c:2246
+#: app/dialogs/preferences-dialog.c:2249
 msgid "Select printer color profile"
 msgstr "Select printer colour profile"
 
-#: app/dialogs/preferences-dialog.c:2255
+#: app/dialogs/preferences-dialog.c:2258
 msgid "_Mode of operation:"
 msgstr "_Mode of operation:"
 
-#: app/dialogs/preferences-dialog.c:2258
+#: app/dialogs/preferences-dialog.c:2261
 msgid "_Display rendering intent:"
 msgstr "_Display rendering intent:"
 
-#: app/dialogs/preferences-dialog.c:2261
+#: app/dialogs/preferences-dialog.c:2264
 msgid "_Softproof rendering intent:"
 msgstr "_Softproof rendering intent:"
 
-#: app/dialogs/preferences-dialog.c:2283
+#: app/dialogs/preferences-dialog.c:2293
 msgid "_Try to obtain the monitor profile from the X server"
 msgstr "_Try to obtain the monitor profile from the X server"
 
-#: app/dialogs/preferences-dialog.c:2302
+#: app/dialogs/preferences-dialog.c:2312
 msgid "Input Devices"
 msgstr "Input Devices"
 
 #. Extended Input Devices
-#: app/dialogs/preferences-dialog.c:2312
+#: app/dialogs/preferences-dialog.c:2322
 msgid "Extended Input Devices"
 msgstr "Extended Input Devices"
 
-#: app/dialogs/preferences-dialog.c:2316
+#: app/dialogs/preferences-dialog.c:2326
 msgid "Configure E_xtended Input Devices..."
 msgstr "Configure E_xtended Input Devices..."
 
-#: app/dialogs/preferences-dialog.c:2323
+#: app/dialogs/preferences-dialog.c:2333
 msgid "_Save input device settings on exit"
 msgstr "_Save input device settings on exit"
 
-#: app/dialogs/preferences-dialog.c:2327
+#: app/dialogs/preferences-dialog.c:2337
 msgid "Save Input Device Settings _Now"
 msgstr "Save Input Device Settings _Now"
 
-#: app/dialogs/preferences-dialog.c:2334
+#: app/dialogs/preferences-dialog.c:2344
 msgid "_Reset Saved Input Device Settings to Default Values"
 msgstr "_Reset Saved Input Device Settings to Default Values"
 
-#: app/dialogs/preferences-dialog.c:2349
+#: app/dialogs/preferences-dialog.c:2359
 msgid "Additional Input Controllers"
 msgstr "Additional Input Controllers"
 
-#: app/dialogs/preferences-dialog.c:2352
+#: app/dialogs/preferences-dialog.c:2362
 msgid "Input Controllers"
 msgstr "Input Controllers"
 
-#: app/dialogs/preferences-dialog.c:2368
+#: app/dialogs/preferences-dialog.c:2378
 msgid "Window Management"
 msgstr "Window Management"
 
-#: app/dialogs/preferences-dialog.c:2377
+#: app/dialogs/preferences-dialog.c:2387
 msgid "Window Manager Hints"
 msgstr "Window Manager Hints"
 
-#: app/dialogs/preferences-dialog.c:2383
+#: app/dialogs/preferences-dialog.c:2393
 msgid "Hint for the _toolbox:"
 msgstr "Hint for the _toolbox:"
 
-#: app/dialogs/preferences-dialog.c:2387
+#: app/dialogs/preferences-dialog.c:2397
 msgid "Hint for other _docks:"
 msgstr "Hint for other _docks:"
 
-#: app/dialogs/preferences-dialog.c:2391
+#: app/dialogs/preferences-dialog.c:2401
 msgid "Toolbox and other docks are transient to the active display"
 msgstr "Toolbox and other docks are transient to the active display"
 
-#: app/dialogs/preferences-dialog.c:2395
+#: app/dialogs/preferences-dialog.c:2405
 msgid "Focus"
 msgstr "Focus"
 
-#: app/dialogs/preferences-dialog.c:2399
+#: app/dialogs/preferences-dialog.c:2409
 msgid "Activate the _focused image"
 msgstr "Activate the _focused image"
 
 #. Window Positions
-#: app/dialogs/preferences-dialog.c:2403
+#: app/dialogs/preferences-dialog.c:2413
 msgid "Window Positions"
 msgstr "Window Positions"
 
-#: app/dialogs/preferences-dialog.c:2406
+#: app/dialogs/preferences-dialog.c:2416
 msgid "_Save window positions on exit"
 msgstr "_Save window positions on exit"
 
-#: app/dialogs/preferences-dialog.c:2410
+#: app/dialogs/preferences-dialog.c:2420
 msgid "Save Window Positions _Now"
 msgstr "Save Window Positions _Now"
 
-#: app/dialogs/preferences-dialog.c:2417
+#: app/dialogs/preferences-dialog.c:2427
 msgid "_Reset Saved Window Positions to Default Values"
 msgstr "_Reset Saved Window Positions to Default Values"
 
-#: app/dialogs/preferences-dialog.c:2432
+#: app/dialogs/preferences-dialog.c:2442
 msgid "Folders"
 msgstr "Folders"
 
-#: app/dialogs/preferences-dialog.c:2450
+#: app/dialogs/preferences-dialog.c:2460
 msgid "Temp folder:"
 msgstr "Temp folder:"
 
-#: app/dialogs/preferences-dialog.c:2450
+#: app/dialogs/preferences-dialog.c:2460
 msgid "Select Temp Folder"
 msgstr "Select Temp Folder"
 
-#: app/dialogs/preferences-dialog.c:2451
+#: app/dialogs/preferences-dialog.c:2461
 #: app/dialogs/user-install-dialog.c:1420
 msgid "Swap folder:"
 msgstr "Swap folder:"
 
-#: app/dialogs/preferences-dialog.c:2451
+#: app/dialogs/preferences-dialog.c:2461
 msgid "Select Swap Folder"
 msgstr "Select Swap Folder"
 
-#: app/dialogs/preferences-dialog.c:2484
+#: app/dialogs/preferences-dialog.c:2494
 msgid "Brush Folders"
 msgstr "Brush Folders"
 
-#: app/dialogs/preferences-dialog.c:2486
+#: app/dialogs/preferences-dialog.c:2496
 msgid "Select Brush Folders"
 msgstr "Select Brush Folders"
 
-#: app/dialogs/preferences-dialog.c:2488
+#: app/dialogs/preferences-dialog.c:2498
 msgid "Pattern Folders"
 msgstr "Pattern Folders"
 
-#: app/dialogs/preferences-dialog.c:2490
+#: app/dialogs/preferences-dialog.c:2500
 msgid "Select Pattern Folders"
 msgstr "Select Pattern Folders"
 
-#: app/dialogs/preferences-dialog.c:2492
+#: app/dialogs/preferences-dialog.c:2502
 msgid "Palette Folders"
 msgstr "Palette Folders"
 
-#: app/dialogs/preferences-dialog.c:2494
+#: app/dialogs/preferences-dialog.c:2504
 msgid "Select Palette Folders"
 msgstr "Select Palette Folders"
 
-#: app/dialogs/preferences-dialog.c:2496
+#: app/dialogs/preferences-dialog.c:2506
 msgid "Gradient Folders"
 msgstr "Gradient Folders"
 
-#: app/dialogs/preferences-dialog.c:2498
+#: app/dialogs/preferences-dialog.c:2508
 msgid "Select Gradient Folders"
 msgstr "Select Gradient Folders"
 
-#: app/dialogs/preferences-dialog.c:2500
+#: app/dialogs/preferences-dialog.c:2510
 msgid "Font Folders"
 msgstr "Font Folders"
 
-#: app/dialogs/preferences-dialog.c:2502
+#: app/dialogs/preferences-dialog.c:2512
 msgid "Select Font Folders"
 msgstr "Select Font Folders"
 
-#: app/dialogs/preferences-dialog.c:2504
+#: app/dialogs/preferences-dialog.c:2514
 msgid "Plug-In Folders"
 msgstr "Plug-In Folders"
 
-#: app/dialogs/preferences-dialog.c:2506
+#: app/dialogs/preferences-dialog.c:2516
 msgid "Select Plug-In Folders"
 msgstr "Select Plug-In Folders"
 
-#: app/dialogs/preferences-dialog.c:2508
+#: app/dialogs/preferences-dialog.c:2518
 msgid "Scripts"
 msgstr "Scripts"
 
-#: app/dialogs/preferences-dialog.c:2508
+#: app/dialogs/preferences-dialog.c:2518
 msgid "Script-Fu Folders"
 msgstr "Script-Fu Folders"
 
-#: app/dialogs/preferences-dialog.c:2510
+#: app/dialogs/preferences-dialog.c:2520
 msgid "Select Script-Fu Folders"
 msgstr "Select Script-Fu Folders"
 
-#: app/dialogs/preferences-dialog.c:2512
+#: app/dialogs/preferences-dialog.c:2522
 msgid "Module Folders"
 msgstr "Module Folders"
 
-#: app/dialogs/preferences-dialog.c:2514
+#: app/dialogs/preferences-dialog.c:2524
 msgid "Select Module Folders"
 msgstr "Select Module Folders"
 
-#: app/dialogs/preferences-dialog.c:2516
+#: app/dialogs/preferences-dialog.c:2526
 msgid "Interpreters"
 msgstr "Interpreters"
 
-#: app/dialogs/preferences-dialog.c:2516
+#: app/dialogs/preferences-dialog.c:2526
 msgid "Interpreter Folders"
 msgstr "Interpreter Folders"
 
-#: app/dialogs/preferences-dialog.c:2518
+#: app/dialogs/preferences-dialog.c:2528
 msgid "Select Interpreter Folders"
 msgstr "Select Interpreter Folders"
 
-#: app/dialogs/preferences-dialog.c:2520
+#: app/dialogs/preferences-dialog.c:2530
 msgid "Environment Folders"
 msgstr "Environment Folders"
 
-#: app/dialogs/preferences-dialog.c:2522
+#: app/dialogs/preferences-dialog.c:2532
 msgid "Select Environment Folders"
 msgstr "Select Environment Folders"
 
-#: app/dialogs/preferences-dialog.c:2524
+#: app/dialogs/preferences-dialog.c:2534
 msgid "Themes"
 msgstr "Themes"
 
-#: app/dialogs/preferences-dialog.c:2524
+#: app/dialogs/preferences-dialog.c:2534
 msgid "Theme Folders"
 msgstr "Theme Folders"
 
-#: app/dialogs/preferences-dialog.c:2526
+#: app/dialogs/preferences-dialog.c:2536
 msgid "Select Theme Folders"
 msgstr "Select Theme Folders"
 
@@ -8617,16 +8617,16 @@ msgstr ""
 "in the selection"
 
 #: app/tools/gimpforegroundselectoptions.c:121
-msgid "Resolution for brightness component"
-msgstr "Resolution for brightness component"
+msgid "Sensitivity for brightness component"
+msgstr "Sensitivity for brightness component"
 
 #: app/tools/gimpforegroundselectoptions.c:126
-msgid "Resolution for red/green component"
-msgstr "Resolution for red/green component"
+msgid "Sensitivity for red/green component"
+msgstr "Sensitivity for red/green component"
 
 #: app/tools/gimpforegroundselectoptions.c:131
-msgid "Resolution for yellow/blue component"
-msgstr "Resolution for yellow/blue component"
+msgid "Sensitivity for yellow/blue component"
+msgstr "Sensitivity for yellow/blue component"
 
 #: app/tools/gimpforegroundselectoptions.c:226
 msgid "Interactive refinement"
@@ -8654,8 +8654,8 @@ msgstr "Smoothing:"
 
 #. granularity
 #: app/tools/gimpforegroundselectoptions.c:277
-msgid "Granularity"
-msgstr "Granularity"
+msgid "Color Sensitivity"
+msgstr "Colour Sensitivity"
 
 #: app/tools/gimpforegroundselecttool.c:139
 msgid "Foreground Select"
@@ -9654,11 +9654,11 @@ msgstr "Click to open up the path."
 msgid "Click to make this node angular."
 msgstr "Click to make this node angular."
 
-#: app/tools/gimpvectortool.c:1740
+#: app/tools/gimpvectortool.c:1762
 msgid "Delete Anchors"
 msgstr "Delete Anchors"
 
-#: app/tools/gimpvectortool.c:1908
+#: app/tools/gimpvectortool.c:1930
 msgid "There is no active layer or channel to stroke to"
 msgstr "There is no active layer or channel to stroke to"
 
