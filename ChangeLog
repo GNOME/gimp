@@ -1,3 +1,10 @@
+2005-08-13  Manish Singh  <yosh@gimp.org>
+
+	* app/core/gimpimage-preview.c (gimp_image_get_new_preview): if the
+	offsets of the layer are such that they are just on the border of
+	the image, detect that and bail instead of trying to make a
+	sub-preview with a 0 dimension.
+
 2005-08-14  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/gauss.c
