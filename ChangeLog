@@ -3,7 +3,7 @@
 	* app/core/gimpimage-preview.c (gimp_image_get_new_preview): if the
 	offsets of the layer are such that they are just on the border of
 	the image, detect that and bail instead of trying to make a
-	sub-preview with a 0 dimension.
+	sub-preview with a 0 dimension. Fixes bug #312144.
 
 2005-08-14  Michael Natterer  <mitch@gimp.org>
 
