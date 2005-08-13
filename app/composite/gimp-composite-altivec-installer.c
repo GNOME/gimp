@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "base/base-types.h"
+#include "base/cpu-accel.h"
 #include "gimp-composite.h"
 
 #include "gimp-composite-altivec.h"
@@ -14,6 +15,19 @@ gboolean
 gimp_composite_altivec_install (void)
 {
   /* nothing to do */
+
+  return (FALSE);
+}
+
+gboolean
+gimp_composite_altivec_init (void)
+{
+#if defined(COMPILE_ALTIVEC_IS_OKAY)
+  if (cpu_accel () & CPU_ACCEL_PPC_ALTIVEC)
+    {
+      return (TRUE);
+    }
+#endif
 
   return (FALSE);
 }

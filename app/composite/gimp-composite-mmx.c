@@ -36,7 +36,6 @@
 #include <glib-object.h>
 
 #include "base/base-types.h"
-#include "base/cpu-accel.h"
 
 #include "gimp-composite.h"
 #include "gimp-composite-mmx.h"
@@ -2279,15 +2278,3 @@ xxxgimp_composite_valueonly_va8_va8_va8_mmx (GimpCompositeContext *_op)
 #endif
 
 #endif /* COMPILE_IS_OKAY */
-
-gboolean
-gimp_composite_mmx_init (void)
-{
-#ifdef COMPILE_MMX_IS_OKAY
-  if (cpu_accel () & CPU_ACCEL_X86_MMX)
-    {
-      return (TRUE);
-    }
-#endif
-  return (FALSE);
-}

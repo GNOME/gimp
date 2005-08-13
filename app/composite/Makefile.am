@@ -7,40 +7,61 @@ AM_CPPFLAGS = \
 	@GIMP_THREAD_FLAGS@			\
 	@GIMP_MP_FLAGS@
 
-AM_CCASFLAGS = \
-	-I$(top_builddir)	\
-	-I$(top_srcdir) 	\
-	-I$(top_srcdir)/app
-
 INCLUDES = \
 	-I$(top_srcdir)		\
 	-I$(top_srcdir)/app	\
 	$(GLIB_CFLAGS)		\
 	-I$(includedir)
 
-noinst_LIBRARIES = libappcomposite.a
+composite_libraries = \
+        libcomposite3dnow.a	\
+        libcompositealtivec.a	\
+        libcompositemmx.a	\
+        libcompositesse.a	\
+        libcompositesse2.a	\
+        libcompositevis.a
 
-libappcomposite_a_sources = \
+noinst_LIBRARIES = $(composite_libraries) libcomposite.a
+
+libcomposite3dnow_a_SOURCES = \
 	gimp-composite-3dnow.c		\
-	gimp-composite-3dnow.h		\
+	gimp-composite-3dnow.h
+
+libcompositealtivec_a_SOURCES = \
 	gimp-composite-altivec.c	\
-	gimp-composite-altivec.h	\
+	gimp-composite-altivec.h
+
+libcompositemmx_a_CFLAGS = $(MMX_EXTRA_CFLAGS)
+
+libcompositemmx_a_SOURCES = \
+	gimp-composite-mmx.c		\
+	gimp-composite-mmx.h
+
+libcompositesse_a_CFLAGS = $(SSE_EXTRA_CFLAGS)
+
+libcompositesse_a_SOURCES = \
+	gimp-composite-sse.c		\
+	gimp-composite-sse.h
+
+libcompositesse2_a_CFLAGS = $(SSE_EXTRA_CFLAGS)
+
+libcompositesse2_a_SOURCES = \
+	gimp-composite-sse2.c		\
+	gimp-composite-sse2.h
+
+libcompositevis_a_SOURCES = \
+	gimp-composite-vis.c		\
+	gimp-composite-vis.h
+
+libcomposite_a_sources = \
 	gimp-composite-generic.c	\
 	gimp-composite-generic.h	\
-	gimp-composite-mmx.c		\
-	gimp-composite-mmx.h		\
-	gimp-composite-sse.c		\
-	gimp-composite-sse.h		\
-	gimp-composite-sse2.c		\
-	gimp-composite-sse2.h		\
 	gimp-composite-util.h		\
-	gimp-composite-vis.c		\
-	gimp-composite-vis.h		\
 	gimp-composite-x86.h		\
 	gimp-composite.c		\
 	gimp-composite.h
 
-libappcomposite_a_built_sources = \
+libcomposite_a_built_sources = \
 	gimp-composite-3dnow-installer.c	\
 	gimp-composite-altivec-installer.c	\
 	gimp-composite-generic-installer.c	\
@@ -49,18 +70,34 @@ libappcomposite_a_built_sources = \
 	gimp-composite-sse2-installer.c		\
 	gimp-composite-vis-installer.c
 
-libappcomposite_a_SOURCES = \
-	$(libappcomposite_a_built_sources)	\
-	$(libappcomposite_a_sources)
+libcomposite_a_SOURCES = \
+	$(libcomposite_a_built_sources)	\
+	$(libcomposite_a_sources)
 
-regenerate: gimp-composite-generic.o gimp-composite-mmx.o gimp-composite-sse.o gimp-composite-sse2.o gimp-composite-3dnow.o gimp-composite-altivec.o gimp-composite-vis.o
-	$(srcdir)/make-installer.py                                          -f gimp-composite-generic.o
-	$(srcdir)/make-installer.py -t -r 'defined(COMPILE_MMX_IS_OKAY)'     -f gimp-composite-mmx.o
-	$(srcdir)/make-installer.py -t -r 'defined(COMPILE_SSE_IS_OKAY)'     -f gimp-composite-sse.o
-	$(srcdir)/make-installer.py -t -r 'defined(COMPILE_SSE2_IS_OKAY)'    -f gimp-composite-sse2.o
-	$(srcdir)/make-installer.py -t -r 'defined(COMPILE_3DNOW_IS_OKAY)'   -f gimp-composite-3dnow.o
-	$(srcdir)/make-installer.py -t -r 'defined(COMPILE_ALTIVEC_IS_OKAY)' -f gimp-composite-altivec.o
-	$(srcdir)/make-installer.py -t -r 'defined(COMPILE_VIS_IS_OKAY)'     -f gimp-composite-vis.o
+## This is a huge hack
+libappcomposite.a: $(noinst_LIBRARIES)
+	-rm -f libappcomposite.a
+	$(AR) $(ARFLAGS) libappcomposite.a $(libcomposite_a_OBJECTS) \
+	  $(libcomposite3dnow_a_OBJECTS) \
+	  $(libcompositealtivec_a_OBJECTS) \
+	  $(libcompositemmx_a_OBJECTS) \
+	  $(libcompositesse_a_OBJECTS) \
+	  $(libcompositesse2_a_OBJECTS) \
+	  $(libcompositevis_a_OBJECTS)
+	$(RANLIB) libappcomposite.a
+
+all-local: libappcomposite.a
+
+clean_libs = libappcomposite.a
+
+regenerate: gimp-composite-generic.o $(libcomposite3dnow_a_OBJECTS) $(libcompositealtivec_a_OBJECTS) $(libcompositemmx_a_OBJECTS) $(libcompositesse_a_OBJECTS) $(libcompositesse2_a_OBJECTS) $(libcompositevis_a_OBJECTS)
+	$(srcdir)/make-installer.py -f gimp-composite-generic.o
+	$(srcdir)/make-installer.py -f $(libcompositemmx_a_OBJECTS) -t -r 'defined(COMPILE_MMX_IS_OKAY)' -c 'X86_MMX'
+	$(srcdir)/make-installer.py -f $(libcompositesse_a_OBJECTS) -t -r 'defined(COMPILE_SSE_IS_OKAY)' -c 'X86_SSE' -c 'X86_MMXEXT'
+	$(srcdir)/make-installer.py -f $(libcompositesse2_a_OBJECTS) -t -r 'defined(COMPILE_SSE2_IS_OKAY)' -c 'X86_SSE2'
+	$(srcdir)/make-installer.py -f $(libcomposite3dnow_a_OBJECTS) -t -r 'defined(COMPILE_3DNOW_IS_OKAY)' -c 'X86_3DNOW' 
+	$(srcdir)/make-installer.py -f $(libcompositealtivec_a_OBJECTS) -t -r 'defined(COMPILE_ALTIVEC_IS_OKAY)' -c 'PPC_ALTIVEC'
+	$(srcdir)/make-installer.py -f $(libcompositevis_a_OBJECTS) -t -r 'defined(COMPILE_VIS_IS_OKAY)'
 
 EXTRA_DIST = \
 	make-installer.py	\
@@ -82,7 +119,7 @@ TESTS = \
 
 EXTRA_PROGRAMS = gimp-composite-test $(TESTS)
 
-CLEANFILES = $(EXTRA_PROGRAMS)
+CLEANFILES = $(EXTRA_PROGRAMS) $(clean_libs)
 
 gimp_composite_test_SOURCES = \
 	gimp-composite-regression.c	\

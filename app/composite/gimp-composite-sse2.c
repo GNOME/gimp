@@ -30,7 +30,6 @@
 #include <glib-object.h>
 
 #include "base/base-types.h"
-#include "base/cpu-accel.h"
 
 #include "gimp-composite.h"
 #include "gimp-composite-sse2.h"
@@ -861,17 +860,3 @@ gimp_composite_swap_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
 }
 
 #endif /* COMPILE_SSE2_IS_OKAY */
-
-gboolean
-gimp_composite_sse2_init (void)
-{
-#ifdef COMPILE_SSE2_IS_OKAY
-  guint32 cpu = cpu_accel ();
-
-  if (cpu & CPU_ACCEL_X86_SSE2)
-    {
-      return (TRUE);
-    }
-#endif
-  return (FALSE);
-}

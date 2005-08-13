@@ -1,3 +1,41 @@
+2005-08-13  Manish Singh  <yosh@gimp.org>
+
+	Backported mmx/sse CFLAGS automake gymnastics from HEAD:
+
+	* acinclude.m4: new macro: GIMP_DETECT_CFLAGS; used to detect which
+	of a set of compiler options a compiler supports.
+
+	* configure.in: use the above for -fno-strict-aliasing flag. Also,
+	use it to detect the presence of -mmmx and -msse, since those are
+	needed to compile even MMX/SSE assembly with gcc 4.0. Define
+	MMX/SSE_EXTRA_CFLAGS.
+
+	* app/composite/Makefile.am: compile each of the composite flavors
+	into their own library, so we can use automake's per-target CFLAGS.
+	Use MMX/SSE_EXTRA_CFLAGS in the appropriate places. Build
+	libappcomposite.a out of the resulting objects.
+
+	* app/composite/gimp-composite-3dnow.c
+	* app/composite/gimp-composite-altivec.c
+	* app/composite/gimp-composite-mmx.c
+	* app/composite/gimp-composite-sse.c
+	* app/composite/gimp-composite-sse2.c
+	* app/composite/gimp-composite-vis.c
+	* app/composite/make-installer.py: move the _init functions into
+	the installers, so only actually mmx/sse code gets compiled
+	under the appropriate CFLAGS.
+
+	* app/composite/gimp-composite-3dnow-installer.c
+	* app/composite/gimp-composite-altivec-installer.c
+	* app/composite/gimp-composite-mmx-installer.c
+	* app/composite/gimp-composite-sse-installer.c
+	* app/composite/gimp-composite-sse2-installer.c
+	* app/composite/gimp-composite-vis-installer.c: regenerated.
+
+	* app/composite/gimp-composite.c: remove useless cpu-accel.h include.
+
+	* app/composite/ns.py: resynced with HEAD.
+
 2005-08-08  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/common/psd.c: Generate valid names for aux channels that

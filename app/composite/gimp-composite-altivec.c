@@ -25,7 +25,6 @@
 #include <glib-object.h>
 
 #include "base/base-types.h"
-#include "base/cpu-accel.h"
 
 #include "gimp-composite.h"
 #include "gimp-composite-altivec.h"
@@ -33,16 +32,3 @@
 #ifdef COMPILE_ALTIVEC_IS_OKAY
 
 #endif
-
-gboolean
-gimp_composite_altivec_init (void)
-{
-#ifdef COMPILE_ALTIVEC_IS_OKAY
-  if (cpu_accel () & CPU_ACCEL_PPC_ALTIVEC)
-    {
-      return (TRUE);
-    }
-#endif
-
-  return (FALSE);
-}

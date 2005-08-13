@@ -49,13 +49,18 @@ class nmx:
 
         return (None)
 
+    def split_(self, line):
+      tmp=string.split(line)[0:2]
+      tmp.reverse()
+      return tmp
+
     def update(self, objfile):
         self.filename = objfile
 
         (sysname, nodename, release, version, machine) = os.uname()
         if sysname == "Linux":
-            fp = os.popen("nm -B " + objfile, "r")
-            symbols = map(lambda l: string.split(l[8:]), fp.readlines())
+            fp = os.popen("nm -P " + objfile, "r")
+            symbols = map(self.split_, fp.readlines())
         elif sysname == "SunOS":
             fp = os.popen("nm -p " + objfile, "r")
             symbols = map(lambda l: string.split(l[12:]), fp.readlines())

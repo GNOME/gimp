@@ -36,7 +36,6 @@
 #include <glib-object.h>
 
 #include "base/base-types.h"
-#include "base/cpu-accel.h"
 
 #include "gimp-composite.h"
 #include "gimp-composite-sse.h"
@@ -2227,18 +2226,3 @@ xxxgimp_composite_valueonly_va8_va8_va8_sse (GimpCompositeContext *_op)
 #endif
 
 #endif /* COMPILE_SSE_IS_OKAY */
-
-gboolean
-gimp_composite_sse_init (void)
-{
-#ifdef COMPILE_SSE_IS_OKAY
-  guint32 cpu = cpu_accel ();
-
-  if (cpu & CPU_ACCEL_X86_SSE || cpu & CPU_ACCEL_X86_MMXEXT)
-    {
-      return (TRUE);
-    }
-#endif
-
-  return (FALSE);
-}

@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "base/base-types.h"
+#include "base/cpu-accel.h"
 #include "gimp-composite.h"
 
 #include "gimp-composite-mmx.h"
@@ -19,11 +20,10 @@ static struct install_table {
 #if defined(COMPILE_MMX_IS_OKAY)
  { GIMP_COMPOSITE_MULTIPLY, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, gimp_composite_multiply_rgba8_rgba8_rgba8_mmx }, 
  { GIMP_COMPOSITE_SCREEN, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, gimp_composite_screen_rgba8_rgba8_rgba8_mmx }, 
- { GIMP_COMPOSITE_DIFFERENCE, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, gimp_composite_difference_rgba8_rgba8_rgba8_mmx },
+ { GIMP_COMPOSITE_DIFFERENCE, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, gimp_composite_difference_rgba8_rgba8_rgba8_mmx }, 
 #if 0
- { GIMP_COMPOSITE_ADDITION, GIMP_PIXELFORMAT_VA8, GIMP_PIXELFORMAT_VA8, GIMP_PIXELFORMAT_VA8, gimp_composite_addition_va8_va8_va8_mmx },
-#endif
  { GIMP_COMPOSITE_ADDITION, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, gimp_composite_addition_rgba8_rgba8_rgba8_mmx }, 
+#endif
  { GIMP_COMPOSITE_SUBTRACT, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, gimp_composite_subtract_rgba8_rgba8_rgba8_mmx }, 
  { GIMP_COMPOSITE_DARKEN, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, gimp_composite_darken_rgba8_rgba8_rgba8_mmx }, 
  { GIMP_COMPOSITE_LIGHTEN, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, gimp_composite_lighten_rgba8_rgba8_rgba8_mmx }, 
@@ -49,6 +49,19 @@ gimp_composite_mmx_install (void)
         }
       return (TRUE);
     }
+
+  return (FALSE);
+}
+
+gboolean
+gimp_composite_mmx_init (void)
+{
+#if defined(COMPILE_MMX_IS_OKAY)
+  if (cpu_accel () & CPU_ACCEL_X86_MMX)
+    {
+      return (TRUE);
+    }
+#endif
 
   return (FALSE);
 }
