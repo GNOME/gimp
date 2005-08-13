@@ -26,7 +26,7 @@
 #include "libgimp/gimp.h"
 
 
-#define  PROCEDURE_NAME  "file_glob"
+#define PLUG_IN_PROC "file-glob"
 
 
 static void      query        (void);
@@ -66,12 +66,12 @@ query (void)
 
   static GimpParamDef glob_return_vals[] =
   {
-    { GIMP_PDB_INT32,       "num_files", "The number of returned names" },
+    { GIMP_PDB_INT32,       "num-files", "The number of returned names" },
     { GIMP_PDB_STRINGARRAY, "files",     "The list of matching names"   }
   };
 
 
-  gimp_install_procedure (PROCEDURE_NAME,
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Returns a list of matching filenames",
                           "This can be useful in scripts and other plugins "
                           "(e.g., batch-conversion). See the glob(7) manpage "
@@ -105,7 +105,7 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
 
-  if (strcmp (name, PROCEDURE_NAME) == 0 && nparams >= 1)
+  if (strcmp (name, PLUG_IN_PROC) == 0 && nparams >= 1)
     {
       gchar    **matches;
       gint       num_matches;

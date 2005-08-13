@@ -29,6 +29,14 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define PLUG_IN_PROC   "plug-in-the-slimy-egg"
+#define PLUG_IN_BINARY "gee"
+
+/* These aren't really redefinable, easily. */
+#define IWIDTH  256
+#define IHEIGHT 256
+
+
 /* Declare local functions. */
 static void       query (void);
 static void       run   (const gchar      *name,
@@ -55,11 +63,6 @@ GimpPlugInInfo PLUG_IN_INFO =
   query, /* query_proc */
   run,   /* run_proc   */
 };
-
-
-/* These aren't really redefinable, easily. */
-#define IWIDTH  256
-#define IHEIGHT 256
 
 
 /* Global widgets'n'stuff */
@@ -89,12 +92,12 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode", "Must be interactive (1)" },
+    { GIMP_PDB_INT32,    "run-mode", "Must be interactive (1)" },
     { GIMP_PDB_IMAGE,    "image",    "Input Image"             },
     { GIMP_PDB_DRAWABLE, "drawable", "Input Drawable"          }
   };
 
-  gimp_install_procedure ("plug_in_the_slimy_egg",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "A big hello from the GIMP team!",
                           "Beyond help.",
                           "Adam D. Moss <adam@gimp.org>",
@@ -119,7 +122,7 @@ run (const gchar      *name,
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
 
   run_mode = param[0].data.d_int32;
 
@@ -154,11 +157,11 @@ build_dialog (void)
   GtkWidget *frame;
   gchar     *tmp;
 
-  gimp_ui_init ("gee", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dlg = gimp_dialog_new (_("Gee Slime"), "gee",
+  dlg = gimp_dialog_new (_("Gee Slime"), PLUG_IN_BINARY,
                          NULL, 0,
-                         gimp_standard_help_func, "plug-in-the-slimy-egg",
+                         gimp_standard_help_func, PLUG_IN_PROC,
                          NULL);
 
   button = gtk_dialog_add_button (GTK_DIALOG (dlg),

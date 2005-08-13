@@ -28,6 +28,10 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define SAVE_PROC      "file-header-save"
+#define PLUG_IN_BINARY "header"
+
+
 /* Declare some local functions.
  */
 static void   query      (void);
@@ -57,14 +61,14 @@ query (void)
 {
   static GimpParamDef save_args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Drawable to save" },
-    { GIMP_PDB_STRING, "filename", "The name of the file to save the image in" },
-    { GIMP_PDB_STRING, "raw_filename", "The name of the file to save the image in" }
+    { GIMP_PDB_INT32,    "run-mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",        "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },
+    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
+    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in" }
   };
 
-  gimp_install_procedure ("file_header_save",
+  gimp_install_procedure (SAVE_PROC,
                           "saves files as C unsigned character array",
                           "FIXME: write help",
                           "Spencer Kimball & Peter Mattis",
@@ -76,8 +80,8 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_file_handler_mime ("file_header_save", "text/x-chdr");
-  gimp_register_save_handler ("file_header_save", "h", "");
+  gimp_register_file_handler_mime (SAVE_PROC, "text/x-chdr");
+  gimp_register_save_handler (SAVE_PROC, "h", "");
 }
 
 static void
@@ -103,7 +107,7 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  if (strcmp (name, "file_header_save") == 0)
+  if (strcmp (name, SAVE_PROC) == 0)
     {
       image_ID    = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
@@ -113,7 +117,7 @@ run (const gchar      *name,
 	{
 	case GIMP_RUN_INTERACTIVE:
 	case GIMP_RUN_WITH_LAST_VALS:
-	  gimp_ui_init ("header", FALSE);
+	  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "Header",
 				      (GIMP_EXPORT_CAN_HANDLE_RGB |
 				       GIMP_EXPORT_CAN_HANDLE_INDEXED));

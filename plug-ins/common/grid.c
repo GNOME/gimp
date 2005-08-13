@@ -46,6 +46,9 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
+#define PLUG_IN_PROC        "plug-in-grid"
+#define PLUG_IN_BINARY      "grid"
 #define SPIN_BUTTON_WIDTH    8
 #define COLOR_BUTTON_WIDTH  55
 
@@ -112,30 +115,30 @@ void query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE,    "image",    "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_INT32,    "run-mode", "Interactive, non-interactive"   },
+    { GIMP_PDB_IMAGE,    "image",    "Input image"                    },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"                 },
 
-    { GIMP_PDB_INT32,    "hwidth",   "Horizontal Width   (>= 0)" },
-    { GIMP_PDB_INT32,    "hspace",   "Horizontal Spacing (>= 1)" },
-    { GIMP_PDB_INT32,    "hoffset",  "Horizontal Offset  (>= 0)" },
-    { GIMP_PDB_COLOR,    "hcolor",   "Horizontal Colour" },
-    { GIMP_PDB_INT8,     "hopacity", "Horizontal Opacity (0...255)" },
+    { GIMP_PDB_INT32,    "hwidth",   "Horizontal Width   (>= 0)"      },
+    { GIMP_PDB_INT32,    "hspace",   "Horizontal Spacing (>= 1)"      },
+    { GIMP_PDB_INT32,    "hoffset",  "Horizontal Offset  (>= 0)"      },
+    { GIMP_PDB_COLOR,    "hcolor",   "Horizontal Colour"              },
+    { GIMP_PDB_INT8,     "hopacity", "Horizontal Opacity (0...255)"   },
 
-    { GIMP_PDB_INT32,    "vwidth",   "Vertical Width   (>= 0)" },
-    { GIMP_PDB_INT32,    "vspace",   "Vertical Spacing (>= 1)" },
-    { GIMP_PDB_INT32,    "voffset",  "Vertical Offset  (>= 0)" },
-    { GIMP_PDB_COLOR,    "vcolor",   "Vertical Colour" },
-    { GIMP_PDB_INT8,     "vopacity", "Vertical Opacity (0...255)" },
+    { GIMP_PDB_INT32,    "vwidth",   "Vertical Width   (>= 0)"        },
+    { GIMP_PDB_INT32,    "vspace",   "Vertical Spacing (>= 1)"        },
+    { GIMP_PDB_INT32,    "voffset",  "Vertical Offset  (>= 0)"        },
+    { GIMP_PDB_COLOR,    "vcolor",   "Vertical Colour"                },
+    { GIMP_PDB_INT8,     "vopacity", "Vertical Opacity (0...255)"     },
 
-    { GIMP_PDB_INT32,    "iwidth",   "Intersection Width   (>= 0)" },
-    { GIMP_PDB_INT32,    "ispace",   "Intersection Spacing (>= 0)" },
-    { GIMP_PDB_INT32,    "ioffset",  "Intersection Offset  (>= 0)" },
-    { GIMP_PDB_COLOR,    "icolor",   "Intersection Colour" },
+    { GIMP_PDB_INT32,    "iwidth",   "Intersection Width   (>= 0)"    },
+    { GIMP_PDB_INT32,    "ispace",   "Intersection Spacing (>= 0)"    },
+    { GIMP_PDB_INT32,    "ioffset",  "Intersection Offset  (>= 0)"    },
+    { GIMP_PDB_COLOR,    "icolor",   "Intersection Colour"            },
     { GIMP_PDB_INT8,     "iopacity", "Intersection Opacity (0...255)" }
   };
 
-  gimp_install_procedure ("plug_in_grid",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Draws a grid.",
                           "Draws a grid using the specified colors. "
                           "The grid origin is the upper left corner.",
@@ -148,7 +151,7 @@ void query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_grid", "<Image>/Filters/Render/Pattern");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Render/Pattern");
 }
 
 static void
@@ -216,7 +219,7 @@ run (const gchar      *name,
       grid_cfg.vcolor = grid_cfg.icolor = grid_cfg.hcolor;
 
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_grid", &grid_cfg);
+      gimp_get_data (PLUG_IN_PROC, &grid_cfg);
     }
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
@@ -244,7 +247,7 @@ run (const gchar      *name,
         gimp_displays_flush ();
 
       if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data ("plug_in_grid", &grid_cfg, sizeof (grid_cfg));
+        gimp_set_data (PLUG_IN_PROC, &grid_cfg, sizeof (grid_cfg));
 
       gimp_drawable_detach (drawable);
     }
@@ -626,11 +629,11 @@ dialog (gint32        image_ID,
 
   g_return_val_if_fail (main_dialog == NULL, FALSE);
 
-  gimp_ui_init ("grid", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  main_dialog = dlg = gimp_dialog_new (_("Grid"), "grid",
+  main_dialog = dlg = gimp_dialog_new (_("Grid"), PLUG_IN_BINARY,
                                        NULL, 0,
-                                       gimp_standard_help_func, "plug-in-grid",
+                                       gimp_standard_help_func, PLUG_IN_PROC,
 
                                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                                        GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -638,9 +641,9 @@ dialog (gint32        image_ID,
                                        NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   /*  Get the image resolution and unit  */
   gimp_image_get_resolution (image_ID, &xres, &yres);

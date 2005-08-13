@@ -48,14 +48,16 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define PLUG_IN_PROC           "plug-in-iwarp"
+#define PLUG_IN_BINARY         "iwarp"
 #define RESPONSE_RESET         1
 
 #define MAX_PREVIEW_WIDTH      256
 #define MAX_PREVIEW_HEIGHT     256
 #define MAX_DEFORM_AREA_RADIUS 100
 
-#define SCALE_WIDTH    100
-#define MAX_NUM_FRAMES 100
+#define SCALE_WIDTH            100
+#define MAX_NUM_FRAMES         100
 
 typedef enum
 {
@@ -236,12 +238,12 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode", "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",    "Input image (unused)"         },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"               }
   };
 
-  gimp_install_procedure ("plug_in_iwarp",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Interactive warping of the specified drawable",
                           "Interactive warping of the specified drawable",
                           "Norbert Schmitz",
@@ -253,7 +255,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_iwarp", "<Image>/Filters/Distorts");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Distorts");
 }
 
 static void
@@ -282,12 +284,12 @@ run (const gchar      *name,
       switch (run_mode)
         {
         case GIMP_RUN_INTERACTIVE:
-          gimp_get_data ("plug_in_iwarp", &iwarp_vals);
+          gimp_get_data (PLUG_IN_PROC, &iwarp_vals);
           gimp_tile_cache_ntiles (2 * (drawable->width + gimp_tile_width ()-1) /
                                   gimp_tile_width ());
           if (iwarp_dialog())
             iwarp();
-          gimp_set_data ("plug_in_iwarp", &iwarp_vals, sizeof (iwarp_vals_t));
+          gimp_set_data (PLUG_IN_PROC, &iwarp_vals, sizeof (iwarp_vals_t));
           gimp_displays_flush ();
           break;
 
@@ -309,9 +311,9 @@ run (const gchar      *name,
     }
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
 
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   gimp_drawable_detach (drawable);
@@ -1140,13 +1142,13 @@ iwarp_dialog (void)
   GtkWidget *abox;
   GtkWidget *notebook;
 
-  gimp_ui_init ("iwarp", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
   iwarp_init ();
 
-  dlg = gimp_dialog_new (_("IWarp"), "iwarp",
+  dlg = gimp_dialog_new (_("IWarp"), PLUG_IN_BINARY,
                          NULL, 0,
-                         gimp_standard_help_func, "plug-in-iwarp",
+                         gimp_standard_help_func, PLUG_IN_PROC,
 
                          GIMP_STOCK_RESET, RESPONSE_RESET,
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
@@ -1155,10 +1157,10 @@ iwarp_dialog (void)
                          NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
-                                              RESPONSE_RESET,
-					      GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           RESPONSE_RESET,
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   g_signal_connect (dlg, "response",
                     G_CALLBACK (iwarp_response),

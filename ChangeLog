@@ -1,3 +1,25 @@
+2005-08-14  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/gauss.c
+	* plug-ins/common/gbr.c
+	* plug-ins/common/gee.c
+	* plug-ins/common/gee_zoom.c
+	* plug-ins/common/gif.c
+	* plug-ins/common/gifload.c
+	* plug-ins/common/gih.c
+	* plug-ins/common/glasstile.c
+	* plug-ins/common/glob.c
+	* plug-ins/common/gqbist.c
+	* plug-ins/common/gradmap.c
+	* plug-ins/common/grid.c
+	* plug-ins/common/gtm.c
+	* plug-ins/common/guillotine.c
+	* plug-ins/common/header.c
+	* plug-ins/common/hot.c
+	* plug-ins/common/illusion.c
+	* plug-ins/common/iwarp.c: canonicalize procedure and
+	parameter names. Misc cleanups.
+
 2005-08-13  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/decompose.c

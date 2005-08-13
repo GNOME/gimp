@@ -48,9 +48,9 @@
 #define NUM_REGISTERS    6
 #define PREVIEW_SIZE    64
 
-#define PLUG_IN_NAME    "plug_in_qbist"
+#define PLUG_IN_PROC    "plug-in-qbist"
+#define PLUG_IN_BINARY  "gqbist"
 #define PLUG_IN_VERSION "January 2001, 1.12"
-#define HELP_ID         "plug-in-qbist"
 
 /** types *******************************************************************/
 
@@ -396,14 +396,17 @@ query (void)
 {
   GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode", "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",    "Input image (unused)"         },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"               }
   };
 
-  gimp_install_procedure (PLUG_IN_NAME,
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Create images based on a random genetic formula",
-                          "This Plug-in is based on an article by Jörn Loviscach (appeared in c't 10/95, page 326). It generates modern art pictures from a random genetic formula.",
+                          "This Plug-in is based on an article by "
+                          "Jörn Loviscach (appeared in c't 10/95, page 326). "
+                          "It generates modern art pictures from a random "
+                          "genetic formula.",
                           "Jörn Loviscach, Jens Ch. Restemeier",
                           "Jörn Loviscach, Jens Ch. Restemeier",
                           PLUG_IN_VERSION,
@@ -413,7 +416,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register (PLUG_IN_NAME, "<Image>/Filters/Render/Pattern");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Render/Pattern");
 }
 
 static void
@@ -432,7 +435,7 @@ run (const gchar      *name,
   GimpPDBStatusType  status;
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
 
   status = GIMP_PDB_SUCCESS;
 
@@ -467,13 +470,13 @@ run (const gchar      *name,
         {
         case GIMP_RUN_INTERACTIVE:
           /* Possibly retrieve data */
-          gimp_get_data (PLUG_IN_NAME, &qbist_info);
+          gimp_get_data (PLUG_IN_PROC, &qbist_info);
 
           /* Get information from the dialog */
           if (dialog_run ())
             {
               status = GIMP_PDB_SUCCESS;
-              gimp_set_data (PLUG_IN_NAME, &qbist_info, sizeof (QbistInfo));
+              gimp_set_data (PLUG_IN_PROC, &qbist_info, sizeof (QbistInfo));
             }
           else
             status = GIMP_PDB_EXECUTION_ERROR;
@@ -485,7 +488,7 @@ run (const gchar      *name,
 
         case GIMP_RUN_WITH_LAST_VALS:
           /* Possibly retrieve data */
-          gimp_get_data (PLUG_IN_NAME, &qbist_info);
+          gimp_get_data (PLUG_IN_PROC, &qbist_info);
           status = GIMP_PDB_SUCCESS;
           break;
 
@@ -781,11 +784,11 @@ dialog_run (void)
   gint       i;
   gboolean   run;
 
-  gimp_ui_init ("gqbist", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("G-Qbist"), "gqbist",
+  dialog = gimp_dialog_new (_("G-Qbist"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, HELP_ID,
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -793,9 +796,9 @@ dialog_run (void)
                             NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);

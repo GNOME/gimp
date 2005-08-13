@@ -285,6 +285,10 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define SAVE_PROC      "file-gif-save"
+#define PLUG_IN_BINARY "gif"
+
+
 /* Define only one of these to determine which kind of gif's you would like.
  * GIF_UN means use uncompressed gifs.  These will be large, but no
  * patent problems.
@@ -376,18 +380,18 @@ query (void)
 {
   static GimpParamDef save_args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",        "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode",        "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",           "Image to save" },
     { GIMP_PDB_DRAWABLE, "drawable",        "Drawable to save" },
     { GIMP_PDB_STRING,   "filename",        "The name of the file to save the image in" },
-    { GIMP_PDB_STRING,   "raw_filename",    "The name entered" },
+    { GIMP_PDB_STRING,   "raw-filename",    "The name entered" },
     { GIMP_PDB_INT32,    "interlace",       "Try to save as interlaced" },
     { GIMP_PDB_INT32,    "loop",            "(animated gif) loop infinitely" },
-    { GIMP_PDB_INT32,    "default_delay",   "(animated gif) Default delay between framese in milliseconds" },
-    { GIMP_PDB_INT32,    "default_dispose", "(animated gif) Default disposal type (0=`don't care`, 1=combine, 2=replace)" }
+    { GIMP_PDB_INT32,    "default-delay",   "(animated gif) Default delay between framese in milliseconds" },
+    { GIMP_PDB_INT32,    "default-dispose", "(animated gif) Default disposal type (0=`don't care`, 1=combine, 2=replace)" }
   };
 
-  gimp_install_procedure ("file_gif_save",
+  gimp_install_procedure (SAVE_PROC,
                           "saves files in Compuserve GIF file format",
                           "Save a file in Compuserve GIF format, with "
 			  "possible animation, transparency, and comment.  "
@@ -405,8 +409,8 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_file_handler_mime ("file_gif_save", "image/gif");
-  gimp_register_save_handler ("file_gif_save", "gif", "");
+  gimp_register_file_handler_mime (SAVE_PROC, "image/gif");
+  gimp_register_save_handler (SAVE_PROC, "gif", "");
 }
 
 static void
@@ -432,7 +436,7 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  if (strcmp (name, "file_gif_save") == 0)
+  if (strcmp (name, SAVE_PROC) == 0)
     {
       image_ID    = orig_image_ID = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
@@ -442,7 +446,7 @@ run (const gchar      *name,
 	{
 	case GIMP_RUN_INTERACTIVE:
 	case GIMP_RUN_WITH_LAST_VALS:
-          gimp_ui_init ("gif", FALSE);
+          gimp_ui_init (PLUG_IN_BINARY, FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "GIF",
 				      (GIMP_EXPORT_CAN_HANDLE_INDEXED |
 				       GIMP_EXPORT_CAN_HANDLE_GRAY |
@@ -466,7 +470,7 @@ run (const gchar      *name,
 	    {
 	    case GIMP_RUN_INTERACTIVE:
 	      /*  Possibly retrieve data  */
-	      gimp_get_data ("file_gif_save", &gsvals);
+	      gimp_get_data (SAVE_PROC, &gsvals);
 
 	      /*  First acquire information with a dialog  */
 	      if (! save_dialog (image_ID))
@@ -491,7 +495,7 @@ run (const gchar      *name,
 
 	    case GIMP_RUN_WITH_LAST_VALS:
 	      /*  Possibly retrieve data  */
-	      gimp_get_data ("file_gif_save", &gsvals);
+	      gimp_get_data (SAVE_PROC, &gsvals);
 	      break;
 
 	    default:
@@ -506,8 +510,7 @@ run (const gchar      *name,
 			      orig_image_ID))
 		{
 		  /*  Store psvals data  */
-		  gimp_set_data ("file_gif_save",
-                                 &gsvals, sizeof (GIFSaveVals));
+		  gimp_set_data (SAVE_PROC, &gsvals, sizeof (GIFSaveVals));
 		}
 	      else
 		{
@@ -1201,9 +1204,9 @@ badbounds_dialog (void)
 			 NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   /*  the warning message  */
 
@@ -1256,14 +1259,19 @@ save_dialog (gint32 image_ID)
 
   gimp_image_get_layers (image_ID, &nlayers);
 
-  dlg = gimp_dialog_new (_("Save as GIF"), "gif",
+  dlg = gimp_dialog_new (_("Save as GIF"), PLUG_IN_BINARY,
                          NULL, 0,
-			 gimp_standard_help_func, "file-gif-save",
+			 gimp_standard_help_func, SAVE_PROC,
 
 			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
+
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);

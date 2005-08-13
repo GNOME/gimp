@@ -73,6 +73,10 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define PLUG_IN_PROC   "plug-in-hot"
+#define PLUG_IN_BINARY "hot"
+
+
 typedef struct
 {
   gint32 image;
@@ -191,15 +195,15 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "The Image" },
-    { GIMP_PDB_DRAWABLE, "drawable", "The Drawable" },
-    { GIMP_PDB_INT32, "mode", "Mode -- NTSC/PAL" },
-    { GIMP_PDB_INT32, "action", "The action to perform" },
-    { GIMP_PDB_INT32, "new_layerp", "Create a new layer iff True" }
+    { GIMP_PDB_INT32,    "run-mode",  "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",     "The Image" },
+    { GIMP_PDB_DRAWABLE, "drawable",  "The Drawable" },
+    { GIMP_PDB_INT32,    "mode",      "Mode -- NTSC/PAL" },
+    { GIMP_PDB_INT32,    "action",    "The action to perform" },
+    { GIMP_PDB_INT32,    "new-layer", "Create a new layer if True" }
   };
 
-  gimp_install_procedure ("plug_in_hot",
+  gimp_install_procedure (PLUG_IN_PROC,
 			  "Look for hot NTSC or PAL pixels ",
 			  "hot scans an image for pixels that will give unsave "
 			  "values of chrominance or composite signale "
@@ -216,7 +220,7 @@ query (void)
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_hot", "<Image>/Filters/Colors");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Colors");
 }
 
 static void
@@ -237,7 +241,7 @@ run (const gchar      *name,
   memset (&args, (int) 0, sizeof (args));
   args.mode = -1;
 
-  gimp_get_data ("plug_in_hot", &args);
+  gimp_get_data (PLUG_IN_PROC, &args);
 
   args.image    = param[1].data.d_image;
   args.drawable = param[2].data.d_drawable;
@@ -260,7 +264,7 @@ run (const gchar      *name,
 	{
 	  rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 	}
-      gimp_set_data ("plug_in_hot", &args, sizeof (args));
+      gimp_set_data (PLUG_IN_PROC, &args, sizeof (args));
 
     break;
 
@@ -561,11 +565,11 @@ pluginCoreIA (piArgs *argp)
   GtkWidget *frame;
   gboolean   run;
 
-  gimp_ui_init ("hot", FALSE);
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dlg = gimp_dialog_new (_("Hot"), "hot",
+  dlg = gimp_dialog_new (_("Hot"), PLUG_IN_BINARY,
                          NULL, 0,
-			 gimp_standard_help_func, "plug-in-hot",
+			 gimp_standard_help_func, PLUG_IN_PROC,
 
 			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -573,9 +577,9 @@ pluginCoreIA (piArgs *argp)
 			 NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   hbox = gtk_hbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);

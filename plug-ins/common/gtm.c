@@ -61,6 +61,9 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define SAVE_PROC      "file-gtm-save"
+#define PLUG_IN_BINARY "gtm"
+
 /* Typedefs */
 
 typedef struct
@@ -136,14 +139,14 @@ query (void)
 {
   static GimpParamDef save_args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",     "Interactive" },
+    { GIMP_PDB_INT32,    "run-mode",     "Interactive" },
     { GIMP_PDB_IMAGE,    "image",        "Input image" },
     { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },
     { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
-    { GIMP_PDB_STRING,   "raw_filename", "The name of the file to save the image in" }
+    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in" }
   };
 
-  gimp_install_procedure ("file_gtm_save",
+  gimp_install_procedure (SAVE_PROC,
                           "GIMP Table Magic",
                           "Allows you to draw an HTML table in GIMP. See help for more info.",
                           "Daniel Dunbar",
@@ -155,8 +158,8 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_file_handler_mime ("file_gtm_save", "text/html");
-  gimp_register_save_handler ("file_gtm_save", "html,htm", "");
+  gimp_register_file_handler_mime (SAVE_PROC, "text/html");
+  gimp_register_save_handler (SAVE_PROC, "html,htm", "");
 }
 
 static void
@@ -180,13 +183,13 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  gimp_get_data ("file_gtm_save", &gtmvals);
+  gimp_get_data (SAVE_PROC, &gtmvals);
 
   if (save_dialog (param[1].data.d_int32))
     {
       if (save_image (param[3].data.d_string, drawable))
 	{
-	  gimp_set_data ("file_gtm_save", &gtmvals, sizeof (GTMValues));
+	  gimp_set_data (SAVE_PROC, &gtmvals, sizeof (GTMValues));
 	}
       else
 	{
@@ -390,11 +393,11 @@ save_dialog (gint32 image_ID)
   GtkWidget *toggle;
   gboolean   run;
 
-  gimp_ui_init ("gtm", FALSE);
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dlg = gimp_dialog_new (_("GIMP Table Magic"), "gtm",
+  dlg = gimp_dialog_new (_("GIMP Table Magic"), PLUG_IN_BINARY,
                          NULL, 0,
-			 gimp_standard_help_func, "file-gtm-save",
+			 gimp_standard_help_func, SAVE_PROC,
 
 			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -402,9 +405,9 @@ save_dialog (gint32 image_ID)
 			 NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);

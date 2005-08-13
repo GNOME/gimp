@@ -75,6 +75,9 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define LOAD_PROC "file-gif-load"
+
+
 /* uncomment the line below for a little debugging info */
 /* #define GIFDEBUG yesplease */
 
@@ -123,16 +126,16 @@ query (void)
 {
   static GimpParamDef load_args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_STRING, "filename", "The name of the file to load" },
-    { GIMP_PDB_STRING, "raw_filename", "The name entered" }
+    { GIMP_PDB_INT32,  "run-mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_STRING, "filename",     "The name of the file to load" },
+    { GIMP_PDB_STRING, "raw-filename", "The name entered"             }
   };
   static GimpParamDef load_return_vals[] =
   {
     { GIMP_PDB_IMAGE, "image", "Output image" }
   };
 
-  gimp_install_procedure ("file_gif_load",
+  gimp_install_procedure (LOAD_PROC,
                           "loads files of Compuserve GIF file format",
                           "FIXME: write help for gif_load",
                           "Spencer Kimball, Peter Mattis, Adam Moss, David Koblas",
@@ -145,8 +148,8 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
-  gimp_register_file_handler_mime ("file_gif_load", "image/gif");
-  gimp_register_magic_load_handler ("file_gif_load",
+  gimp_register_file_handler_mime (LOAD_PROC, "image/gif");
+  gimp_register_magic_load_handler (LOAD_PROC,
 				    "gif",
 				    "",
 				    "0,string,GIF8");
@@ -170,10 +173,11 @@ run (const gchar      *name,
 
   *nreturn_vals = 1;
   *return_vals  = values;
+
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  if (strcmp (name, "file_gif_load") == 0)
+  if (strcmp (name, LOAD_PROC) == 0)
     {
       image_ID = load_image (param[1].data.d_string);
 

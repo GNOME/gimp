@@ -38,6 +38,10 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define PLUG_IN_PROC   "plug-in-the-old-egg"
+#define PLUG_IN_BINARY "gee_zoom"
+
+
 /* Declare local functions. */
 static void       query (void);
 static void       run   (const gchar      *name,
@@ -108,12 +112,12 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode", "Must be interactive (1)" },
+    { GIMP_PDB_INT32,    "run-mode", "Must be interactive (1)" },
     { GIMP_PDB_IMAGE,    "image",    "Input Image"             },
     { GIMP_PDB_DRAWABLE, "drawable", "Input Drawable"          }
   };
 
-  gimp_install_procedure ("plug_in_the_old_egg",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "A big hello from the GIMP team!",
                           "Hay-ulp",
                           "Adam D. Moss <adam@gimp.org>",
@@ -177,11 +181,11 @@ build_dialog (void)
   GtkWidget *frame;
   gchar     *tmp;
 
-  gimp_ui_init ("gee_zoom", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dlg = gimp_dialog_new (_("Gee Zoom"), "gee_zoom",
+  dlg = gimp_dialog_new (_("Gee Zoom"), PLUG_IN_BINARY,
                          NULL, 0,
-                         gimp_standard_help_func, "plug-in-the-old-egg",
+                         gimp_standard_help_func, PLUG_IN_PROC,
                          NULL);
 
   button = gtk_dialog_add_button (GTK_DIALOG (dlg),

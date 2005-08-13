@@ -29,8 +29,11 @@
 
 /* Some useful macros */
 
-#define NSAMPLES      256
-#define LUMINOSITY(X) (GIMP_RGB_LUMINANCE (X[0], X[1], X[2]) + 0.5)
+#define GRADMAP_PROC    "plug-in-gradmap"
+#define PALETTEMAP_PROC "plug-in-palettemap"
+#define PLUG_IN_BINARY  "gradmap"
+#define NSAMPLES        256
+#define LUMINOSITY(X)   (GIMP_RGB_LUMINANCE (X[0], X[1], X[2]) + 0.5)
 
 typedef enum
   {
@@ -72,12 +75,12 @@ query (void)
 {
   static GimpParamDef args[]=
   {
-    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode", "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",    "Input image (unused)"         },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"               }
   };
 
-  gimp_install_procedure ("plug_in_gradmap",
+  gimp_install_procedure (GRADMAP_PROC,
                           "Map the contents of the specified drawable with "
                           "active gradient",
                           "This plug-in maps the contents of the specified "
@@ -98,9 +101,9 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_gradmap", "<Image>/Filters/Colors/Map");
+  gimp_plugin_menu_register (GRADMAP_PROC, "<Image>/Filters/Colors/Map");
 
-  gimp_install_procedure ("plug_in_palettemap",
+  gimp_install_procedure (PALETTEMAP_PROC,
                           "Map the contents of the specified drawable with "
                           "the active palette",
                           "This plug-in maps the contents of the specified "
@@ -121,7 +124,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_palettemap", "<Image>/Filters/Colors/Map");
+  gimp_plugin_menu_register (PALETTEMAP_PROC, "<Image>/Filters/Colors/Map");
 }
 
 static void
@@ -153,26 +156,31 @@ run (const gchar      *name,
   if (gimp_drawable_is_rgb (drawable->drawable_id) ||
       gimp_drawable_is_gray (drawable->drawable_id))
     {
-      MapMode  mode = 0;
+      MapMode mode = 0;
 
-      if ( !strcmp (name, "plug_in_gradmap"))
+      if ( !strcmp (name, GRADMAP_PROC))
         {
           mode = GRADIENT_MODE;
           gimp_progress_init (_("Gradient Map..."));
         }
-      else if ( !strcmp (name, "plug_in_palettemap"))
+      else if ( !strcmp (name, PALETTEMAP_PROC))
         {
           mode = PALETTE_MODE;
           gimp_progress_init (_("Palette Map..."));
         }
       else
-        status = GIMP_PDB_EXECUTION_ERROR;
+        {
+          status = GIMP_PDB_CALLING_ERROR;
+        }
 
-      if (mode)
-        map (drawable, mode);
+      if (status == GIMP_PDB_SUCCESS)
+        {
+          if (mode)
+            map (drawable, mode);
 
-      if (run_mode != GIMP_RUN_NONINTERACTIVE)
-        gimp_displays_flush ();
+          if (run_mode != GIMP_RUN_NONINTERACTIVE)
+            gimp_displays_flush ();
+        }
     }
   else
     {
@@ -194,9 +202,9 @@ typedef struct
 
 static void
 map_func (const guchar *src,
-              guchar       *dest,
-              gint          bpp,
-              gpointer      data)
+          guchar       *dest,
+          gint          bpp,
+          gpointer      data)
 {
   MapParam *param = data;
   gint      lum;

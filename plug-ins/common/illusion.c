@@ -34,9 +34,9 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define PLUG_IN_NAME    "plug_in_illusion"
+#define PLUG_IN_PROC    "plug_in_illusion"
+#define PLUG_IN_BINARY  "illusion"
 #define PLUG_IN_VERSION "v0.8 (May 14 2000)"
-#define HELP_ID         "plug-in-illusion"
 
 
 static void      query  (void);
@@ -82,14 +82,14 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",  "interactive / non-interactive"    },
+    { GIMP_PDB_INT32,    "run-mode",  "interactive / non-interactive"    },
     { GIMP_PDB_IMAGE,    "image",     "input image"                      },
     { GIMP_PDB_DRAWABLE, "drawable",  "input drawable"                   },
     { GIMP_PDB_INT32,    "division",  "the number of divisions"          },
     { GIMP_PDB_INT32,    "type",      "illusion type (0=type1, 1=type2)" }
   };
 
-  gimp_install_procedure (PLUG_IN_NAME,
+  gimp_install_procedure (PLUG_IN_PROC,
                           "produce illusion",
                           "produce illusion",
                           "Hirotsuna Mizuno <s1041150@u-aizu.ac.jp>",
@@ -101,7 +101,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register (PLUG_IN_NAME, "<Image>/Filters/Map");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Map");
 }
 
 static void
@@ -129,10 +129,10 @@ run (const gchar      *name,
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      gimp_get_data (PLUG_IN_NAME, &parameters);
+      gimp_get_data (PLUG_IN_PROC, &parameters);
       if (! illusion_dialog (drawable))
         return;
-      gimp_set_data (PLUG_IN_NAME, &parameters, sizeof (IllValues));
+      gimp_set_data (PLUG_IN_PROC, &parameters, sizeof (IllValues));
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
@@ -157,7 +157,7 @@ run (const gchar      *name,
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data (PLUG_IN_NAME, &parameters);
+      gimp_get_data (PLUG_IN_PROC, &parameters);
       break;
     }
 
@@ -386,11 +386,11 @@ illusion_dialog (GimpDrawable *drawable)
   GSList    *group = NULL;
   gboolean   run;
 
-  gimp_ui_init ("illusion", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Illusion"), "illusion",
+  dialog = gimp_dialog_new (_("Illusion"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, HELP_ID,
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -398,9 +398,9 @@ illusion_dialog (GimpDrawable *drawable)
                             NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
@@ -410,8 +410,10 @@ illusion_dialog (GimpDrawable *drawable)
   preview = gimp_aspect_preview_new (drawable, &parameters.preview);
   gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
   gtk_widget_show (preview);
+
   g_signal_connect (preview, "invalidated",
-                    G_CALLBACK (illusion_preview), drawable);
+                    G_CALLBACK (illusion_preview),
+                    drawable);
 
   table = gtk_table_new (3, 2, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);

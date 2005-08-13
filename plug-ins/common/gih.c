@@ -76,9 +76,11 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define LOAD_PROC          "file-gih-load"
+#define SAVE_PROC          "file-gih-save"
+#define PLUG_IN_BINARY     "gih"
 #define DUMMY_PATTERN_NAME "x"
-
-#define MAXDESCLEN 256
+#define MAXDESCLEN         256
 
 /* Parameters applicable each time we save a gih, saved in the
  * main gimp application between invocations of this plug-in.
@@ -166,37 +168,37 @@ query (void)
 {
   static GimpParamDef gih_save_args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",     "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE,    "image",        "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },
-    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the brush pipe in" },
-    { GIMP_PDB_STRING,   "raw_filename", "The name of the file to save the brush pipe in" },
-    { GIMP_PDB_INT32,    "spacing",      "Spacing of the brush" },
-    { GIMP_PDB_STRING,   "description",  "Short description of the brush pipe" },
-    { GIMP_PDB_INT32,    "cell_width",	 "Width of the brush cells" },
-    { GIMP_PDB_INT32,    "cell_height",	 "Width of the brush cells" },
-    { GIMP_PDB_INT8,     "display_cols",   "Display column number" },
-    { GIMP_PDB_INT8,     "display_rows",   "Display row number" },
-    { GIMP_PDB_INT32,     "dimension",	 "Dimension of the brush pipe" },
+    { GIMP_PDB_INT32,       "run-mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,       "image",        "Input image" },
+    { GIMP_PDB_DRAWABLE,    "drawable",     "Drawable to save" },
+    { GIMP_PDB_STRING,      "filename",     "The name of the file to save the brush pipe in" },
+    { GIMP_PDB_STRING,      "raw-filename", "The name of the file to save the brush pipe in" },
+    { GIMP_PDB_INT32,       "spacing",      "Spacing of the brush" },
+    { GIMP_PDB_STRING,      "description",  "Short description of the brush pipe" },
+    { GIMP_PDB_INT32,       "cell-width",   "Width of the brush cells" },
+    { GIMP_PDB_INT32,       "cell-height",  "Width of the brush cells" },
+    { GIMP_PDB_INT8,        "display-cols", "Display column number" },
+    { GIMP_PDB_INT8,        "display-rows", "Display row number" },
+    { GIMP_PDB_INT32,       "dimension",    "Dimension of the brush pipe" },
     /* The number of rank and sel args depend on the dimension */
-    { GIMP_PDB_INT8ARRAY,"rank",		 "Ranks of the dimensions" },
-    { GIMP_PDB_INT32,     "dimension",	 "Dimension (again)" },
-    { GIMP_PDB_STRINGARRAY, "sel",	 "Selection modes" }
+    { GIMP_PDB_INT8ARRAY,   "rank",         "Ranks of the dimensions" },
+    { GIMP_PDB_INT32,       "dimension",    "Dimension (again)" },
+    { GIMP_PDB_STRINGARRAY, "sel",	    "Selection modes" }
   };
 
   static GimpParamDef gih_load_args[] =
   {
-    { GIMP_PDB_INT32,  "run_mode",       "Interactive, non-interactive" },
-    { GIMP_PDB_STRING, "filename",       "The name of the file to load" },
-    { GIMP_PDB_STRING, "raw_filename",   "The name of the file to load" }
+    { GIMP_PDB_INT32,  "run-mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_STRING, "filename",     "The name of the file to load" },
+    { GIMP_PDB_STRING, "raw-filename", "The name of the file to load" }
   };
   static GimpParamDef gih_load_return_vals[] =
   {
-    { GIMP_PDB_IMAGE,  "image",          "Output image" }
+    { GIMP_PDB_IMAGE,  "image",        "Output image" }
   };
 
 
-  gimp_install_procedure ("file_gih_load",
+  gimp_install_procedure (LOAD_PROC,
 			  "loads images in GIMP brush pipe format",
 			  "This plug-in loads a GIMP brush pipe as an image.",
 			  "Jens Lautenbacher, Sven Neumann",
@@ -209,15 +211,15 @@ query (void)
                           G_N_ELEMENTS (gih_load_return_vals),
                           gih_load_args, gih_load_return_vals);
 
-  gimp_plugin_icon_register ("file_gih_load",
+  gimp_plugin_icon_register (LOAD_PROC,
                              GIMP_ICON_TYPE_STOCK_ID, GIMP_STOCK_BRUSH);
-  gimp_register_file_handler_mime ("file_gih_load", "image/x-gimp-gih");
-  gimp_register_magic_load_handler ("file_gih_load",
+  gimp_register_file_handler_mime (LOAD_PROC, "image/x-gimp-gih");
+  gimp_register_magic_load_handler (LOAD_PROC,
 				    "gih",
 				    "",
 				    "");
 
-  gimp_install_procedure ("file_gih_save",
+  gimp_install_procedure (SAVE_PROC,
 			  "saves images in GIMP brush pipe format",
 			  "This plug-in saves an image in the GIMP brush pipe format. The image must have an alpha chnannel and can be multi-layered, and additionally the layers can be divided into a rectangular array of brushes.",
 			  "Tor Lillqvist",
@@ -229,10 +231,10 @@ query (void)
                           G_N_ELEMENTS (gih_save_args), 0,
 			  gih_save_args, NULL);
 
-  gimp_plugin_icon_register ("file_gih_save",
+  gimp_plugin_icon_register (SAVE_PROC,
                              GIMP_ICON_TYPE_STOCK_ID, GIMP_STOCK_BRUSH);
   gimp_register_file_handler_mime ("file_gih_save", "image/x-gimp-gih");
-  gimp_register_save_handler ("file_gih_save",
+  gimp_register_save_handler (SAVE_PROC,
 			      "gih",
 			      "");
 }
@@ -267,7 +269,7 @@ run (const gchar      *name,
 
   INIT_I18N();
 
-  if (strcmp (name, "file_gih_load") == 0)
+  if (strcmp (name, LOAD_PROC) == 0)
     {
       image_ID = gih_load_image (param[1].data.d_string);
 
@@ -282,7 +284,7 @@ run (const gchar      *name,
 	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
     }
-  else if (strcmp (name, "file_gih_save") == 0)
+  else if (strcmp (name, SAVE_PROC) == 0)
     {
       image_ID = orig_image_ID = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
@@ -292,7 +294,7 @@ run (const gchar      *name,
 	{
 	case GIMP_RUN_INTERACTIVE:
 	case GIMP_RUN_WITH_LAST_VALS:
-	  gimp_ui_init ("gih", FALSE);
+	  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "GIH",
 				      GIMP_EXPORT_CAN_HANDLE_RGB    |
 				      GIMP_EXPORT_CAN_HANDLE_GRAY   |
@@ -327,7 +329,7 @@ run (const gchar      *name,
 	{
 	case GIMP_RUN_INTERACTIVE:
 	  /*  Possibly retrieve data  */
-	  gimp_get_data ("file_gih_save", &info);
+	  gimp_get_data (SAVE_PROC, &info);
 
 	  gimp_pixpipe_params_init (&gihparams);
 
@@ -393,7 +395,7 @@ run (const gchar      *name,
 	  break;
 
 	case GIMP_RUN_WITH_LAST_VALS:
-	  gimp_get_data ("file_gih_save", &info);
+	  gimp_get_data (SAVE_PROC, &info);
 	  pipe_parasite =
 	    gimp_image_parasite_find (orig_image_ID,
 				      "gimp-brush-pipe-parameters");
@@ -409,7 +411,7 @@ run (const gchar      *name,
 	  if (gih_save_image (param[3].data.d_string,
 			      image_ID, orig_image_ID, drawable_ID))
 	    {
-	      gimp_set_data ("file_gih_save", &info, sizeof (info));
+	      gimp_set_data (SAVE_PROC, &info, sizeof (info));
 	    }
 	  else
 	    {
@@ -862,9 +864,9 @@ gih_save_dialog (gint32 image_ID)
   gint32     nlayers;
   gboolean   run;
 
-  dlg = gimp_dialog_new (_("Save as Brush Pipe"), "gih",
+  dlg = gimp_dialog_new (_("Save as Brush Pipe"), PLUG_IN_BINARY,
                          NULL, 0,
-			 gimp_standard_help_func, "file-gih-save",
+			 gimp_standard_help_func, SAVE_PROC,
 
 			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -872,9 +874,9 @@ gih_save_dialog (gint32 image_ID)
 			 NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   /* The main table */
   table = gtk_table_new (8, 2, FALSE);
