@@ -43,8 +43,11 @@ static char dversio[] =                          "v1.03  22-May-00";
 #include "libgimp/stdplugins-intl.h"
 
 
-#define PRV_WIDTH  50
-#define PRV_HEIGHT 20
+#define COLOR_MAP_PROC    "plug-in-color-map"
+#define COLOR_ADJUST_PROC "plug-in-color-adjust"
+#define PLUG_IN_BINARY    "mapcolor"
+#define PRV_WIDTH         50
+#define PRV_HEIGHT        20
 
 typedef struct
 {
@@ -136,7 +139,7 @@ query (void)
     { GIMP_PDB_INT32,    "map_mode",   "Mapping mode (0: linear, others reserved)" }
   };
 
-  gimp_install_procedure ("plug_in_color_adjust",
+  gimp_install_procedure (COLOR_ADJUST_PROC,
                           "Adjust color range given by foreground/background "
                           "color to black/white",
                           "The current foreground color is mapped to black "
@@ -152,10 +155,9 @@ query (void)
                           G_N_ELEMENTS (adjust_args), 0,
                           adjust_args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_color_adjust",
-                             "<Image>/Filters/Colors/Map");
+  gimp_plugin_menu_register (COLOR_ADJUST_PROC, "<Image>/Filters/Colors/Map");
 
-  gimp_install_procedure ("plug_in_color_map",
+  gimp_install_procedure (COLOR_MAP_PROC,
                           "Map color range specified by two colors"
                           "to color range specified by two other color.",
                           "Map color range specified by two colors"
@@ -170,8 +172,7 @@ query (void)
                           G_N_ELEMENTS (map_args), 0,
                           map_args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_color_map",
-                             "<Image>/Filters/Colors/Map");
+  gimp_plugin_menu_register (COLOR_MAP_PROC, "<Image>/Filters/Colors/Map");
 }
 
 
@@ -216,7 +217,7 @@ run (const gchar      *name,
           break;
         }
 
-      if (strcmp (name, "plug_in_color_adjust") == 0)
+      if (strcmp (name, COLOR_ADJUST_PROC) == 0)
         {
           if (nparams != 3)  /* Make sure all the arguments are there */
             {
@@ -238,7 +239,7 @@ run (const gchar      *name,
           break;
         }
 
-      if (strcmp (name, "plug_in_color_map") == 0)
+      if (strcmp (name, COLOR_MAP_PROC) == 0)
         {
           if (run_mode == GIMP_RUN_NONINTERACTIVE)
             {
@@ -349,11 +350,11 @@ mapcolor_dialog (GimpDrawable *drawable)
   gint       j;
   gboolean   run;
 
-  gimp_ui_init ("mapcolor", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Map Color Range"), "mapcolor",
+  dialog = gimp_dialog_new (_("Map Color Range"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, "plug-in-color-map",
+                            gimp_standard_help_func, COLOR_MAP_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -361,9 +362,9 @@ mapcolor_dialog (GimpDrawable *drawable)
                             NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);

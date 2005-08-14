@@ -49,7 +49,8 @@
 #define numx    40              /* Pseudo-random vector grid size */
 #define numy    40
 
-#define HELP_ID "plug-in-lic"
+#define PLUG_IN_PROC   "plug-in-lic"
+#define PLUG_IN_BINARY "lic"
 
 typedef enum
 {
@@ -636,11 +637,11 @@ create_main_dialog (void)
   gint       row;
   gboolean   run;
 
-  gimp_ui_init ("lic", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Van Gogh (LIC)"), "lic",
+  dialog = gimp_dialog_new (_("Van Gogh (LIC)"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, HELP_ID,
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -648,9 +649,9 @@ create_main_dialog (void)
                             NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
@@ -798,12 +799,12 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode", "Interactive"    },
+    { GIMP_PDB_INT32,    "run-mode", "Interactive"    },
     { GIMP_PDB_IMAGE,    "image",    "Input image"    },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" }
   };
 
-  gimp_install_procedure ("plug_in_lic",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Creates a Van Gogh effect (Line Integral Convolution)",
                           "No help yet",
                           "Tom Bech & Federico Mena Quintero",
@@ -815,7 +816,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_lic", "<Image>/Filters/Artistic");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Artistic");
 }
 
 static void
@@ -848,7 +849,7 @@ run (const gchar      *name,
   /* Possibly retrieve data */
   /* ====================== */
 
-  gimp_get_data ("plug_in_lic", &licvals);
+  gimp_get_data (PLUG_IN_PROC, &licvals);
 
   /* Get the specified drawable */
   /* ========================== */
@@ -873,7 +874,7 @@ run (const gchar      *name,
                 if (create_main_dialog ())
                   compute_image (drawable);
 
-                gimp_set_data ("plug_in_lic", &licvals, sizeof (LicValues));
+                gimp_set_data (PLUG_IN_PROC, &licvals, sizeof (LicValues));
               break;
               case GIMP_RUN_WITH_LAST_VALS:
                 compute_image (drawable);

@@ -37,6 +37,10 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define PLUG_IN_PROC   "plug-in-neon"
+#define PLUG_IN_BINARY "neon"
+
+
 typedef struct
 {
   gdouble radius;
@@ -111,10 +115,10 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE,    "image",    "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_FLOAT,    "radius",   "Radius of neon effect (in pixels)" },
+    { GIMP_PDB_INT32,    "run-mode", "Interactive, non-interactive"          },
+    { GIMP_PDB_IMAGE,    "image",    "Input image (unused)"                  },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"                        },
+    { GIMP_PDB_FLOAT,    "radius",   "Radius of neon effect (in pixels)"     },
     { GIMP_PDB_FLOAT,    "amount",   "Effect enhancement variable (0.0 - 1.0)" },
   };
 
@@ -126,7 +130,7 @@ query (void)
     "the processing time constant between large and small"
     "standard deviations.";
 
-  gimp_install_procedure ("plug_in_neon",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Resolution independent edge detection",
                           help_string,
                           "Spencer Kimball",
@@ -138,7 +142,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_neon", "<Image>/Filters/Edge-Detect");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Edge-Detect");
 }
 
 static void
@@ -173,7 +177,7 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_neon", &evals);
+      gimp_get_data (PLUG_IN_PROC, &evals);
 
       /*  First acquire information with a dialog  */
       if (! neon_dialog (drawable))
@@ -193,7 +197,7 @@ run (const gchar      *name,
 
     case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_neon", &evals);
+      gimp_get_data (PLUG_IN_PROC, &evals);
       break;
 
     default:
@@ -214,7 +218,7 @@ run (const gchar      *name,
 
       /*  Store data  */
       if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data ("plug_in_neon", &evals, sizeof (NeonVals));
+        gimp_set_data (PLUG_IN_PROC, &evals, sizeof (NeonVals));
     }
   else
     {
@@ -693,11 +697,11 @@ neon_dialog (GimpDrawable *drawable)
   GtkObject *scale_data;
   gboolean   run;
 
-  gimp_ui_init ("neon", FALSE);
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Neon Detection"), "neon",
+  dialog = gimp_dialog_new (_("Neon Detection"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, "plug-in-neon",
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -705,9 +709,9 @@ neon_dialog (GimpDrawable *drawable)
                             NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);

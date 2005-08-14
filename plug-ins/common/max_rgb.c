@@ -33,9 +33,8 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define PLUG_IN_NAME "plug_in_max_rgb"
-#define SHORT_NAME   "max_rgb"
-#define HELP_ID      "plug-in-max-rgb"
+#define PLUG_IN_PROC   "plug-in-max-rgb"
+#define PLUG_IN_BINARY "max_rgb"
 
 
 static void     query   (void);
@@ -83,13 +82,13 @@ query (void)
 {
   static GimpParamDef args [] =
   {
-    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive"       },
+    { GIMP_PDB_INT32,    "run-mode", "Interactive, non-interactive"       },
     { GIMP_PDB_IMAGE,    "image",    "Input image (not used)"             },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"                     },
-    { GIMP_PDB_INT32,    "max_p",    "1 for maximizing, 0 for minimizing" }
+    { GIMP_PDB_INT32,    "max-p",    "1 for maximizing, 0 for minimizing" }
   };
 
-  gimp_install_procedure (PLUG_IN_NAME,
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Return an image in which each pixel holds only "
                           "the channel that has the maximum value in three "
                           "(red, green, blue) channels, and other channels "
@@ -104,7 +103,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register (PLUG_IN_NAME, "<Image>/Filters/Colors");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Colors");
 }
 
 static void
@@ -133,7 +132,7 @@ run (const gchar      *name,
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      gimp_get_data (PLUG_IN_NAME, &pvals);
+      gimp_get_data (PLUG_IN_PROC, &pvals);
       /* Since a channel might be selected, we must check wheter RGB or not. */
       if (!gimp_drawable_is_rgb (drawable->drawable_id))
         {
@@ -148,7 +147,7 @@ run (const gchar      *name,
       pvals.max_p = param[3].data.d_int32;
       break;
     case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data (PLUG_IN_NAME, &pvals);
+      gimp_get_data (PLUG_IN_PROC, &pvals);
       break;
     }
 
@@ -157,14 +156,15 @@ run (const gchar      *name,
   if (run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_displays_flush ();
   if (run_mode == GIMP_RUN_INTERACTIVE && status == GIMP_PDB_SUCCESS)
-    gimp_set_data (PLUG_IN_NAME, &pvals, sizeof (ValueType));
+    gimp_set_data (PLUG_IN_PROC, &pvals, sizeof (ValueType));
 
   values[0].data.d_status = status;
 }
 
-typedef struct {
-  gint init_value;
-  gint flag;
+typedef struct
+{
+  gint     init_value;
+  gint     flag;
   gboolean has_alpha;
 } MaxRgbParam_t;
 
@@ -260,11 +260,11 @@ max_rgb_dialog (GimpDrawable *drawable)
   GtkWidget *min;
   gboolean   run;
 
-  gimp_ui_init ("max_rgb", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Max RGB"), "max_rgb",
+  dialog = gimp_dialog_new (_("Max RGB"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, "plug-in-max-rgb",
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -272,9 +272,9 @@ max_rgb_dialog (GimpDrawable *drawable)
                             NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);

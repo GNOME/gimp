@@ -65,6 +65,9 @@
 
 /*#define TIMINGS*/
 
+#define PLUG_IN_PROC       "plug-in-newsprint"
+#define PLUG_IN_BINARY     "newsprint"
+
 #define TILE_CACHE_SIZE     16
 #define SCALE_WIDTH        125
 #define DEF_OVERSAMPLE       1 /* default for how much to oversample by */
@@ -491,29 +494,28 @@ query (void)
 {
   static GimpParamDef args[]=
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_INT32,    "run-mode",   "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",      "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable",   "Input drawable" },
 
-    { GIMP_PDB_INT32, "cell_width", "screen cell width, in pixels" },
+    { GIMP_PDB_INT32,    "cell-width", "screen cell width, in pixels" },
 
-    { GIMP_PDB_INT32, "colorspace", "separate to 0:RGB, 1:CMYK, 2:Luminance" },
-    { GIMP_PDB_INT32, "k_pullout", "Percentage of black to pullout (CMYK only)" },
+    { GIMP_PDB_INT32,    "colorspace", "separate to 0:RGB, 1:CMYK, 2:Luminance" },
+    { GIMP_PDB_INT32,    "k-pullout",  "Percentage of black to pullout (CMYK only)" },
 
-    { GIMP_PDB_FLOAT, "gry_ang", "Grey/black screen angle (degrees)" },
-    { GIMP_PDB_INT32, "gry_spotfn", "Grey/black spot function (0=dots, 1=lines, 2=diamonds, 3=euclidean dot, 4=PS diamond)" },
-    { GIMP_PDB_FLOAT, "red_ang", "Red/cyan screen angle (degrees)" },
-    { GIMP_PDB_INT32, "red_spotfn", "Red/cyan spot function (values as gry_spotfn)" },
-    { GIMP_PDB_FLOAT, "grn_ang", "Green/magenta screen angle (degrees)" },
-    { GIMP_PDB_INT32, "grn_spotfn", "Green/magenta spot function (values as gry_spotfn)" },
-    { GIMP_PDB_FLOAT, "blu_ang", "Blue/yellow screen angle (degrees)" },
-    { GIMP_PDB_INT32, "blu_spotfn", "Blue/yellow spot function (values as gry_spotfn)" },
+    { GIMP_PDB_FLOAT,    "gry-ang",    "Grey/black screen angle (degrees)" },
+    { GIMP_PDB_INT32,    "gry-spotfn", "Grey/black spot function (0=dots, 1=lines, 2=diamonds, 3=euclidean dot, 4=PS diamond)" },
+    { GIMP_PDB_FLOAT,    "red-ang",    "Red/cyan screen angle (degrees)" },
+    { GIMP_PDB_INT32,    "red-spotfn", "Red/cyan spot function (values as gry_spotfn)" },
+    { GIMP_PDB_FLOAT,    "grn-ang",    "Green/magenta screen angle (degrees)" },
+    { GIMP_PDB_INT32,    "grn-spotfn", "Green/magenta spot function (values as gry_spotfn)" },
+    { GIMP_PDB_FLOAT,    "blu-ang",    "Blue/yellow screen angle (degrees)" },
+    { GIMP_PDB_INT32,    "blu-spotfn", "Blue/yellow spot function (values as gry_spotfn)" },
 
-    { GIMP_PDB_INT32, "oversample", "how many times to oversample spot fn" }
-    /* 15 args */
+    { GIMP_PDB_INT32,    "oversample", "how many times to oversample spot fn" }
   };
 
-  gimp_install_procedure ("plug_in_newsprint",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Re-sample the image to give a newspaper-like effect",
                           "Halftone the image, trading off resolution to "
                           "represent colors or grey levels using the process "
@@ -529,7 +531,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_newsprint", "<Image>/Filters/Distorts");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Distorts");
 }
 
 static void
@@ -565,8 +567,8 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_newsprint", &pvals);
-      gimp_get_data ("plug_in_newsprint_ui", &pvals_ui);
+      gimp_get_data (PLUG_IN_PROC, &pvals);
+      gimp_get_data (PLUG_IN_PROC "-ui", &pvals_ui);
 
       /*  First acquire information with a dialog  */
       if (! newsprint_dialog (drawable))
@@ -611,7 +613,7 @@ run (const gchar      *name,
 
     case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_newsprint", &pvals);
+      gimp_get_data (PLUG_IN_PROC, &pvals);
       break;
 
     default:
@@ -638,9 +640,9 @@ run (const gchar      *name,
           /*  Store data  */
           if (run_mode == GIMP_RUN_INTERACTIVE)
             {
-              gimp_set_data ("plug_in_newsprint",
+              gimp_set_data (PLUG_IN_PROC,
                              &pvals, sizeof (NewsprintValues));
-              gimp_set_data ("plug_in_newsprint_ui",
+              gimp_set_data (PLUG_IN_PROC "-ui",
                              &pvals_ui, sizeof (NewsprintUIValues));
             }
         }
@@ -1161,7 +1163,7 @@ newsprint_dialog (GimpDrawable *drawable)
   gdouble    xres, yres;
   gboolean   run;
 
-  gimp_ui_init ("newsprint", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
   /* flag values to say we haven't filled these channel
    * states in yet */
@@ -1185,9 +1187,9 @@ newsprint_dialog (GimpDrawable *drawable)
         pvals.colourspace = CS_RGB;
     }
 
-  dialog = gimp_dialog_new (_("Newsprint"), "newsprint",
+  dialog = gimp_dialog_new (_("Newsprint"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, "plug-in-newsprint",
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -1195,9 +1197,9 @@ newsprint_dialog (GimpDrawable *drawable)
                             NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   paned = gtk_hpaned_new ();
   gtk_container_set_border_width (GTK_CONTAINER (paned), 12);

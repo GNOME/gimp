@@ -33,24 +33,28 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define  SCALE_WIDTH     150
+#define PLUG_IN_PROC    "plug-in-mosaic"
+#define PLUG_IN_BINARY  "mosaic"
 
-#define  HORIZONTAL        0
-#define  VERTICAL          1
-#define  SUPERSAMPLE       3
-#define  MAG_THRESHOLD     7.5
-#define  COUNT_THRESHOLD   0.1
-#define  MAX_POINTS        12
+#define SCALE_WIDTH     150
 
-#define  SQUARES  0
-#define  HEXAGONS 1
-#define  OCTAGONS 2
+#define HORIZONTAL        0
+#define VERTICAL          1
+#define SUPERSAMPLE       3
+#define MAG_THRESHOLD     7.5
+#define COUNT_THRESHOLD   0.1
+#define MAX_POINTS        12
 
-#define  SMOOTH   0
-#define  ROUGH    1
+#define SQUARES  0
+#define HEXAGONS 1
+#define OCTAGONS 2
 
-#define  BW       0
-#define  FG_BG    1
+#define SMOOTH   0
+#define ROUGH    1
+
+#define BW       0
+#define FG_BG    1
+
 
 typedef struct
 {
@@ -328,26 +332,24 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_FLOAT, "tile_size", "Average diameter of each tile (in pixels)" },
-    { GIMP_PDB_FLOAT, "tile_height", "Apparent height of each tile (in pixels)" },
-    { GIMP_PDB_FLOAT, "tile_spacing", "Inter-tile spacing (in pixels)" },
-    { GIMP_PDB_FLOAT, "tile_neatness", "Deviation from perfectly formed tiles (0.0 - 1.0)" },
-    { GIMP_PDB_INT32, "tile_allow_split", "Allows splitting tiles at hard edges" },
-    { GIMP_PDB_FLOAT, "light_dir", "Direction of light-source (in degrees)" },
-    { GIMP_PDB_FLOAT, "color_variation", "Magnitude of random color variations (0.0 - 1.0)" },
-    { GIMP_PDB_INT32, "antialiasing", "Enables smoother tile output at the cost of speed" },
-    { GIMP_PDB_INT32, "color_averaging", "Tile color based on average of subsumed pixels" },
-    { GIMP_PDB_INT32, "tile_type", "Tile geometry: { SQUARES (0), HEXAGONS (1), OCTAGONS (2) }" },
-    { GIMP_PDB_INT32, "tile_surface", "Surface characteristics: { SMOOTH (0), ROUGH (1) }" },
-    { GIMP_PDB_INT32, "grout_color", "Grout color (black/white or fore/background): { BW (0), FG_BG (1) }" }
+    { GIMP_PDB_INT32,    "run-mode",        "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",            "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable",         "Input drawable" },
+    { GIMP_PDB_FLOAT,    "tile-size",        "Average diameter of each tile (in pixels)" },
+    { GIMP_PDB_FLOAT,    "tile-height",      "Apparent height of each tile (in pixels)" },
+    { GIMP_PDB_FLOAT,    "tile-spacing",     "Inter-tile spacing (in pixels)" },
+    { GIMP_PDB_FLOAT,    "tile-neatness",    "Deviation from perfectly formed tiles (0.0 - 1.0)" },
+    { GIMP_PDB_INT32,    "tile-allow-split", "Allows splitting tiles at hard edges" },
+    { GIMP_PDB_FLOAT,    "light-dir",        "Direction of light-source (in degrees)" },
+    { GIMP_PDB_FLOAT,    "color-variation",  "Magnitude of random color variations (0.0 - 1.0)" },
+    { GIMP_PDB_INT32,    "antialiasing",     "Enables smoother tile output at the cost of speed" },
+    { GIMP_PDB_INT32,    "color-averaging",  "Tile color based on average of subsumed pixels" },
+    { GIMP_PDB_INT32,    "tile-type",        "Tile geometry: { SQUARES (0), HEXAGONS (1), OCTAGONS (2) }" },
+    { GIMP_PDB_INT32,    "tile-surface",     "Surface characteristics: { SMOOTH (0), ROUGH (1) }" },
+    { GIMP_PDB_INT32,    "grout-color",      "Grout color (black/white or fore/background): { BW (0), FG_BG (1) }" }
   };
-  static GimpParamDef *return_vals = NULL;
-  static int nreturn_vals = 0;
 
-  gimp_install_procedure ("plug_in_mosaic",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Convert the input drawable into a collection of tiles",
                           "Help not yet written for this plug-in",
                           "Spencer Kimball",
@@ -356,10 +358,10 @@ query (void)
                           N_("_Mosaic..."),
                           "RGB*, GRAY*",
                           GIMP_PLUGIN,
-                          G_N_ELEMENTS (args), nreturn_vals,
-                          args, return_vals);
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_mosaic", "<Image>/Filters/Distorts");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Distorts");
 }
 
 static void
@@ -395,7 +397,7 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_mosaic", &mvals);
+      gimp_get_data (PLUG_IN_PROC, &mvals);
 
       /*  First acquire information with a dialog  */
       if (! mosaic_dialog (drawable))
@@ -434,7 +436,7 @@ run (const gchar      *name,
 
     case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_mosaic", &mvals);
+      gimp_get_data (PLUG_IN_PROC, &mvals);
       break;
 
     default:
@@ -455,7 +457,7 @@ run (const gchar      *name,
 
       /*  Store mvals data  */
       if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data ("plug_in_mosaic", &mvals, sizeof (MosaicVals));
+        gimp_set_data (PLUG_IN_PROC, &mvals, sizeof (MosaicVals));
     }
   else if (status == GIMP_PDB_SUCCESS)
     {
@@ -577,11 +579,11 @@ mosaic_dialog (GimpDrawable *drawable)
   GtkObject *scale_data;
   gboolean   run;
 
-  gimp_ui_init ("mosaic", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Mosaic"), "mosaic",
+  dialog = gimp_dialog_new (_("Mosaic"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, "plug-in-mosaic",
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,

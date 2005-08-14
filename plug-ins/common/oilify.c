@@ -28,11 +28,15 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#define SCALE_WIDTH  125
-#define HISTSIZE     256
 
-#define MODE_RGB       0
-#define MODE_INTEN     1
+#define PLUG_IN_PROC   "plug-in-oilify"
+#define PLUG_IN_BINARY "oilify"
+
+#define SCALE_WIDTH    125
+#define HISTSIZE       256
+
+#define MODE_RGB         0
+#define MODE_INTEN       1
 
 #define INTENSITY(p)   ((guint) (p[0]*77+p[1]*150+p[2]*29) >> 8)
 
@@ -86,14 +90,14 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_INT32, "mask_size", "Oil paint mask size" },
-    { GIMP_PDB_INT32, "mode", "Algorithm {RGB (0), INTENSITY (1)}" }
+    { GIMP_PDB_INT32,    "run-mode",  "Interactive, non-interactive"       },
+    { GIMP_PDB_IMAGE,    "image",     "Input image (unused)"               },
+    { GIMP_PDB_DRAWABLE, "drawable",  "Input drawable"                     },
+    { GIMP_PDB_INT32,    "mask-size", "Oil paint mask size"                },
+    { GIMP_PDB_INT32,    "mode",      "Algorithm {RGB (0), INTENSITY (1)}" }
   };
 
-  gimp_install_procedure ("plug_in_oilify",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Modify the specified drawable to resemble an oil "
                           "painting",
                           "This function performs the well-known oil-paint "
@@ -108,7 +112,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_oilify", "<Image>/Filters/Artistic");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Artistic");
 }
 
 static void
@@ -141,7 +145,7 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_oilify", &ovals);
+      gimp_get_data (PLUG_IN_PROC, &ovals);
 
       /*  First acquire information with a dialog  */
       if (! oilify_dialog (drawable))
@@ -168,7 +172,7 @@ run (const gchar      *name,
 
     case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_oilify", &ovals);
+      gimp_get_data (PLUG_IN_PROC, &ovals);
       break;
 
     default:
@@ -189,7 +193,7 @@ run (const gchar      *name,
 
       /*  Store data  */
       if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data ("plug_in_oilify", &ovals, sizeof (OilifyVals));
+        gimp_set_data (PLUG_IN_PROC, &ovals, sizeof (OilifyVals));
     }
   else
     {
@@ -294,7 +298,7 @@ oilify_rgb (GimpDrawable *drawable,
                   src_row += width * bytes;
                 }
 
-                dest += bytes;
+              dest += bytes;
             }
 
           dest_row += dest_rgn.rowstride;
@@ -466,11 +470,11 @@ oilify_dialog (GimpDrawable *drawable)
   GtkObject *adj;
   gboolean   run;
 
-  gimp_ui_init ("oilify", FALSE);
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Oilify"), "oilify",
+  dialog = gimp_dialog_new (_("Oilify"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, "plug-in-oilify",
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -478,9 +482,9 @@ oilify_dialog (GimpDrawable *drawable)
                             NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);

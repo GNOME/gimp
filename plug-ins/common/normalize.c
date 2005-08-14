@@ -36,6 +36,9 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define PLUG_IN_PROC "plug-in-normalize"
+
+
 /* Declare local functions.
  */
 static void   query             (void);
@@ -65,12 +68,12 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE,    "image",    "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" }
+    { GIMP_PDB_INT32,    "run-mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image"                  },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"               }
   };
 
-  gimp_install_procedure ("plug_in_normalize",
+  gimp_install_procedure (PLUG_IN_PROC,
 			  "Normalize the contrast of the specified drawable to "
 			  "cover all possible ranges.",
 			  "This plugin performs almost the same operation as "
@@ -90,7 +93,7 @@ query (void)
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_normalize", "<Image>/Layer/Colors/Auto");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Layer/Colors/Auto");
 }
 
 static void
@@ -135,7 +138,6 @@ run (const gchar      *name,
     }
   else
     {
-      /* gimp_message ("normalize: cannot operate on indexed color images"); */
       status = GIMP_PDB_EXECUTION_ERROR;
     }
 
@@ -256,4 +258,3 @@ normalize (GimpDrawable *drawable)
 
   gimp_rgn_iterate2 (drawable, 0 /* unused */, normalize_func, &param);
 }
-

@@ -1,3 +1,23 @@
+2005-08-14  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/jigsaw.c
+	* plug-ins/common/laplace.c
+	* plug-ins/common/lic.c
+	* plug-ins/common/mail.c
+	* plug-ins/common/mapcolor.c
+	* plug-ins/common/max_rgb.c
+	* plug-ins/common/mblur.c
+	* plug-ins/common/mng.c
+	* plug-ins/common/mosaic.c
+	* plug-ins/common/neon.c
+	* plug-ins/common/newsprint.c
+	* plug-ins/common/nlfilt.c
+	* plug-ins/common/noisify.c
+	* plug-ins/common/normalize.c
+	* plug-ins/common/nova.c
+	* plug-ins/common/oilify.c: canonicalize procedure and
+	parameter names. Misc cleanups.
+
 2005-08-13  Manish Singh  <yosh@gimp.org>
 
 	* app/core/gimpimage-preview.c (gimp_image_get_new_preview): if the

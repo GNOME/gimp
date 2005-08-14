@@ -164,8 +164,8 @@ enum
 
 #define BUFFER_SIZE 256
 
-#define PLUG_IN_NAME  "plug_in_mail_image"
-#define HELP_ID       "plug-in-mail-image"
+#define PLUG_IN_PROC   "plug-in-mail-image"
+#define PLUG_IN_BINARY "mail"
 
 typedef struct
 {
@@ -238,18 +238,18 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Drawable to save" },
-    { GIMP_PDB_STRING, "filename", "The name of the file to save the image in" },
-    { GIMP_PDB_STRING, "receipt", "The email address to send to" },
-    { GIMP_PDB_STRING, "from", "The email address for the From: field" },
-    { GIMP_PDB_STRING, "subject", "The subject" },
-    { GIMP_PDB_STRING, "comment", "The Comment" },
-    { GIMP_PDB_INT32,  "encapsulation", "Uuencode, MIME" }
+    { GIMP_PDB_INT32,    "run-mode",      "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",         "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable",      "Drawable to save" },
+    { GIMP_PDB_STRING,   "filename",      "The name of the file to save the image in" },
+    { GIMP_PDB_STRING,   "receipt",       "The email address to send to" },
+    { GIMP_PDB_STRING,   "from",          "The email address for the From: field" },
+    { GIMP_PDB_STRING,   "subject",       "The subject" },
+    { GIMP_PDB_STRING,   "comment",       "The Comment" },
+    { GIMP_PDB_INT32,    "encapsulation", "Uuencode, MIME" }
   };
 
-  gimp_install_procedure (PLUG_IN_NAME,
+  gimp_install_procedure (PLUG_IN_PROC,
 			  "pipe files to uuencode then mail them",
 			  "You need to have uuencode and mail installed",
 			  "Adrian Likins, Reagan Blundell",
@@ -262,8 +262,8 @@ query (void)
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 
-  gimp_plugin_menu_register (PLUG_IN_NAME, "<Image>/File/Send");
-  gimp_plugin_icon_register (PLUG_IN_NAME,
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/File/Send");
+  gimp_plugin_icon_register (PLUG_IN_PROC,
                              GIMP_ICON_TYPE_INLINE_PIXBUF, mail_icon);
 }
 
@@ -292,12 +292,12 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  if (strcmp (name, PLUG_IN_NAME) == 0)
+  if (strcmp (name, PLUG_IN_PROC) == 0)
     {
       switch (run_mode)
 	{
 	case GIMP_RUN_INTERACTIVE:
-	  gimp_get_data (PLUG_IN_NAME, &mail_info);
+	  gimp_get_data (PLUG_IN_PROC, &mail_info);
           if (! strlen (mail_info.filename))
             {
               gchar *filename = gimp_image_get_filename (image_ID);
@@ -334,7 +334,7 @@ run (const gchar      *name,
 	  break;
 
 	case GIMP_RUN_WITH_LAST_VALS:
-	  gimp_get_data (PLUG_IN_NAME, &mail_info);
+	  gimp_get_data (PLUG_IN_PROC, &mail_info);
 	  break;
 
 	default:
@@ -349,7 +349,7 @@ run (const gchar      *name,
 			       run_mode);
 
 	  if (status == GIMP_PDB_SUCCESS)
-	    gimp_set_data (PLUG_IN_NAME, &mail_info, sizeof (m_info));
+	    gimp_set_data (PLUG_IN_PROC, &mail_info, sizeof (m_info));
 	}
     }
   else
@@ -494,7 +494,7 @@ save_dialog (void)
   gint           row = 0;
   gboolean       run;
 
-  gimp_ui_init ("mail", FALSE);
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
   /* check gimprc for a preferred "From:" address */
   gump_from = gimp_gimprc_query ("gump-from");
@@ -505,9 +505,9 @@ save_dialog (void)
       g_free (gump_from);
     }
 
-  dlg = gimp_dialog_new (_("Send as Mail"), "mail",
+  dlg = gimp_dialog_new (_("Send as Mail"), PLUG_IN_BINARY,
                          NULL, 0,
-			 gimp_standard_help_func, HELP_ID,
+			 gimp_standard_help_func, PLUG_IN_PROC,
 
 			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			 GTK_STOCK_OK,     GTK_RESPONSE_OK,

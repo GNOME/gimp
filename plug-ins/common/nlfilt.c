@@ -37,6 +37,11 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
+#define PLUG_IN_PROC   "plug-in-nlfilt"
+#define PLUG_IN_BINARY "nlfilt"
+
+
 typedef struct
 {
   gdouble  alpha;
@@ -100,7 +105,7 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode", "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "img",      "The Image to Filter" },
     { GIMP_PDB_DRAWABLE, "drw",      "The Drawable" },
     { GIMP_PDB_FLOAT,    "alpha",    "The amount of the filter to apply" },
@@ -111,7 +116,7 @@ query (void)
                                      "2 - edge enhancement" }
   };
 
-  gimp_install_procedure ("plug_in_nlfilt",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Nonlinear swiss army knife filter",
                           "This is the pnmnlfilt, in gimp's clothing.  "
                           "See the pnmnlfilt manpage for details.",
@@ -124,7 +129,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_nlfilt", "<Image>/Filters/Enhance");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Enhance");
 }
 
 static void
@@ -154,7 +159,7 @@ run (const gchar      *name,
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      gimp_get_data ("plug_in_nlfilt", &nlfvals);
+      gimp_get_data (PLUG_IN_PROC, &nlfvals);
 
       if (! nlfilter_dialog (drawable))
         return;
@@ -175,7 +180,7 @@ run (const gchar      *name,
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data ("plug_in_nlfilt", &nlfvals);
+      gimp_get_data (PLUG_IN_PROC, &nlfvals);
       break;
 
     default:
@@ -188,7 +193,7 @@ run (const gchar      *name,
 
       /* Store data */
       if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data ("plug_in_nlfilt", &nlfvals, sizeof (NLFilterValues));
+        gimp_set_data (PLUG_IN_PROC, &nlfvals, sizeof (NLFilterValues));
     }
 
   values[0].data.d_status = status;
@@ -1008,11 +1013,11 @@ nlfilter_dialog (GimpDrawable *drawable)
   GtkObject *adj;
   gboolean   run;
 
-  gimp_ui_init ("nlfilt", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("NL Filter"), "nlfilt",
+  dialog = gimp_dialog_new (_("NL Filter"), PLUG_IN_BINARY,
                          NULL, 0,
-                         gimp_standard_help_func, "plug-in-nlfilt",
+                         gimp_standard_help_func, PLUG_IN_PROC,
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -1020,9 +1025,9 @@ nlfilter_dialog (GimpDrawable *drawable)
                          NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);

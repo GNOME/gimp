@@ -69,8 +69,10 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define ENTRY_WIDTH      50
-#define SCALE_WIDTH     125
+#define PLUG_IN_PROC   "plug-in-nova"
+#define PLUG_IN_BINARY "nova"
+#define ENTRY_WIDTH     50
+#define SCALE_WIDTH    125
 
 typedef struct
 {
@@ -152,7 +154,7 @@ query (void)
 {
   static GimpParamDef args[]=
   {
-    { GIMP_PDB_INT32,    "run_mode",  "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode",  "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",     "Input image (unused)" },
     { GIMP_PDB_DRAWABLE, "drawable",  "Input drawable" },
     { GIMP_PDB_INT32,    "xcenter",   "X coordinates of the center of supernova" },
@@ -163,7 +165,7 @@ query (void)
     { GIMP_PDB_INT32,    "randomhue", "Random hue" }
   };
 
-  gimp_install_procedure ("plug_in_nova",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Produce Supernova effect to the specified drawable",
                           "This plug-in produces an effect like a supernova "
                           "burst. The amount of the light effect is "
@@ -179,7 +181,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_nova",
+  gimp_plugin_menu_register (PLUG_IN_PROC,
                              "<Image>/Filters/Light and Shadow/Light");
 }
 
@@ -212,7 +214,7 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_nova", &pvals);
+      gimp_get_data (PLUG_IN_PROC, &pvals);
 
       /*  First acquire information with a dialog  */
       if (! nova_dialog (drawable))
@@ -244,7 +246,7 @@ run (const gchar      *name,
 
     case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_nova", &pvals);
+      gimp_get_data (PLUG_IN_PROC, &pvals);
       break;
 
     default:
@@ -268,7 +270,7 @@ run (const gchar      *name,
 
           /*  Store data  */
           if (run_mode == GIMP_RUN_INTERACTIVE)
-            gimp_set_data ("plug_in_nova", &pvals, sizeof (NovaValues));
+            gimp_set_data (PLUG_IN_PROC, &pvals, sizeof (NovaValues));
         }
       else
         {
@@ -298,11 +300,11 @@ nova_dialog (GimpDrawable *drawable)
   GtkObject  *adj;
   gboolean    run;
 
-  gimp_ui_init ("nova", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("SuperNova"), "nova",
+  dialog = gimp_dialog_new (_("SuperNova"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, "plug-in-nova",
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -310,9 +312,9 @@ nova_dialog (GimpDrawable *drawable)
                             NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);

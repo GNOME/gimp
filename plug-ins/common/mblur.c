@@ -54,9 +54,10 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define PLUG_IN_NAME    "plug_in_mblur"
+#define PLUG_IN_PROC    "plug-in-mblur"
+#define PLUG_IN_BINARY  "mblur"
 #define PLUG_IN_VERSION "Sep 1997, 1.2"
-#define HELP_ID         "plug-in-mblur"
+
 
 typedef enum
 {
@@ -162,7 +163,7 @@ query (void)
     { GIMP_PDB_INT32,     "blur_outward", "For radial, 1 for outward, 0 for inward (optional)" },
   };
 
-  gimp_install_procedure (PLUG_IN_NAME,
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Motion blur of image",
                           "This plug-in simulates the effect seen when "
                           "photographing a moving object at a slow shutter "
@@ -176,7 +177,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register (PLUG_IN_NAME, "<Image>/Filters/Blur");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Blur");
 }
 
 static void
@@ -223,7 +224,7 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       /* Possibly retrieve data */
-      gimp_get_data (PLUG_IN_NAME, &mbvals);
+      gimp_get_data (PLUG_IN_PROC, &mbvals);
 
       /* Get information from the dialog */
       if (! mblur_dialog (param[1].data.d_image, drawable))
@@ -259,7 +260,7 @@ run (const gchar      *name,
 
     case GIMP_RUN_WITH_LAST_VALS:
       /* Possibly retrieve data */
-      gimp_get_data (PLUG_IN_NAME, &mbvals);
+      gimp_get_data (PLUG_IN_PROC, &mbvals);
       break;
 
     default:
@@ -283,7 +284,7 @@ run (const gchar      *name,
 
       /* Store data */
       if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data (PLUG_IN_NAME, &mbvals, sizeof(mblur_vals_t));
+        gimp_set_data (PLUG_IN_PROC, &mbvals, sizeof (mblur_vals_t));
     }
   else if (status == GIMP_PDB_SUCCESS)
     status = GIMP_PDB_EXECUTION_ERROR;
@@ -904,11 +905,11 @@ mblur_dialog (gint32        image_ID,
   gdouble    xres, yres;
   gboolean   run;
 
-  gimp_ui_init ("mblur", FALSE);
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Motion Blur"), "mblur",
+  dialog = gimp_dialog_new (_("Motion Blur"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, "plug-in-mblur",
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -916,9 +917,9 @@ mblur_dialog (gint32        image_ID,
                             NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);

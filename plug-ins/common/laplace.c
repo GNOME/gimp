@@ -29,6 +29,10 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define PLUG_IN_PROC   "plug-in-laplace"
+#define PLUG_IN_BINARY "laplace"
+
+
 /* Declare local functions.
  */
 static void   query  (void);
@@ -62,12 +66,12 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode", "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",    "Input image (unused)"         },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"               }
   };
 
-  gimp_install_procedure ("plug_in_laplace",
+  gimp_install_procedure (PLUG_IN_PROC,
 			  "Edge Detection with Laplace Operation",
 			  "This plugin creates one-pixel wide edges from the "
 			  "image, with the value proportional to the gradient. "
@@ -84,8 +88,7 @@ query (void)
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_laplace",
-                             "<Image>/Filters/Edge-Detect");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Edge-Detect");
 }
 
 static void

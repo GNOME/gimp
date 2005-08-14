@@ -43,6 +43,10 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define PLUG_IN_PROC   "plug-in-jigsaw"
+#define PLUG_IN_BINARY "jigsaw"
+
+
 typedef enum
 {
   BEZIER_1,
@@ -187,8 +191,6 @@ static void draw_bezier_horizontal_border (guchar *buffer, gint bufsize,
 static void check_config           (gint width, gint height);
 
 
-
-#define PLUG_IN_NAME    "jigsaw"
 
 #define XFACTOR2 0.0833
 #define XFACTOR3 0.2083
@@ -342,17 +344,17 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, Non-interactive, Last-Vals" },
-    { GIMP_PDB_IMAGE, "image", "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_INT32, "x", "Number of tiles across > 0" },
-    { GIMP_PDB_INT32, "y", "Number of tiles down > 0" },
-    { GIMP_PDB_INT32, "style", "The style/shape of the jigsaw puzzle, 0 or 1" },
-    { GIMP_PDB_INT32, "blend_lines", "Number of lines for shading bevels >= 0" },
-    { GIMP_PDB_FLOAT, "blend_amount", "The power of the light highlights 0 =< 5" }
+    { GIMP_PDB_INT32,    "run-mode",     "Interactive, Non-interactive, Last-Vals" },
+    { GIMP_PDB_IMAGE,    "image",        "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable",     "Input drawable" },
+    { GIMP_PDB_INT32,    "x",            "Number of tiles across > 0" },
+    { GIMP_PDB_INT32,    "y",            "Number of tiles down > 0" },
+    { GIMP_PDB_INT32,    "style",        "The style/shape of the jigsaw puzzle, 0 or 1" },
+    { GIMP_PDB_INT32,    "blend-lines",  "Number of lines for shading bevels >= 0" },
+    { GIMP_PDB_FLOAT,    "blend-amount", "The power of the light highlights 0 =< 5" }
   };
 
-  gimp_install_procedure ("plug_in_jigsaw",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Renders a jigsaw puzzle look",
                           "Jigsaw puzzle look",
                           "Nigel Wetten",
@@ -364,8 +366,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_jigsaw",
-                             "<Image>/Filters/Render/Pattern");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Render/Pattern");
 }
 
 static void
@@ -406,7 +407,7 @@ run (const gchar      *name,
       break;
 
     case GIMP_RUN_INTERACTIVE:
-      gimp_get_data("plug_in_jigsaw", &config);
+      gimp_get_data (PLUG_IN_PROC, &config);
       if (! jigsaw_dialog (drawable))
         {
           status = GIMP_PDB_CANCEL;
@@ -415,12 +416,12 @@ run (const gchar      *name,
       gimp_progress_init (_("Assembling Jigsaw..."));
 
       jigsaw (drawable, NULL);
-      gimp_set_data ("plug_in_jigsaw", &config, sizeof(config_t));
+      gimp_set_data (PLUG_IN_PROC, &config, sizeof(config_t));
       gimp_displays_flush ();
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data("plug_in_jigsaw", &config);
+      gimp_get_data (PLUG_IN_PROC, &config);
       jigsaw (drawable, NULL);
       gimp_displays_flush ();
     }  /* switch */
@@ -2415,11 +2416,11 @@ jigsaw_dialog (GimpDrawable *drawable)
   GtkObject    *adj;
   gboolean      run;
 
-  gimp_ui_init ("jigsaw", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Jigsaw"), "jigsaw",
+  dialog = gimp_dialog_new (_("Jigsaw"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, "plug-in-jigsaw",
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -2427,9 +2428,9 @@ jigsaw_dialog (GimpDrawable *drawable)
                             NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
