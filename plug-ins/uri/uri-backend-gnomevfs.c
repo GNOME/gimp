@@ -20,6 +20,10 @@
 
 #include <libgnomevfs/gnome-vfs.h>
 
+#ifdef HAVE_GNOMEUI
+#include <libgnomeui/gnome-authentication-manager.h>
+#endif
+
 #include <libgimp/gimp.h>
 
 #include "libgimp/stdplugins-intl.h"
@@ -53,6 +57,10 @@ uri_backend_init (GError **error)
       g_set_error (error, 0, 0, "Could not initialize GnomeVFS");
       return FALSE;
     }
+
+#ifdef HAVE_GNOMEUI
+  gnome_authentication_manager_init ();
+#endif
 
   return TRUE;
 }

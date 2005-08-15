@@ -20,8 +20,13 @@ libexec_PROGRAMS = uri
 
 if HAVE_GNOMEVFS
 backend_sources = uri-backend-gnomevfs.c
+if HAVE_GNOMEUI
+backend_cflags = $(GNOMEVFS_CFLAGS) $(GNOMEUI_CFLAGS)
+backend_libs = $(GNOMEVFS_LIBS) $(GNOMEUI_LIBS)
+else
 backend_cflags = $(GNOMEVFS_CFLAGS)
 backend_libs = $(GNOMEVFS_LIBS)
+endif
 else
 backend_sources = uri-backend-wget.c
 endif

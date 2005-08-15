@@ -55,6 +55,8 @@ m4_define([rsvg_required_version], [2.8.0])
 m4_define([wmf_required_version], [0.2.8])
 m4_define([pygtk_required_version], [1.99.15])
 m4_define([poppler_required_version], [0.3.1])
+m4_define([gnome_vfs_required_version], [2.10.0])
+m4_define([gnomeui_required_version], [2.10.0])
 
 AC_INIT([GIMP], [gimp_version],
         [http://bugzilla.gnome.org/enter_bug.cgi?product=GIMP],
@@ -1187,11 +1189,26 @@ AC_SUBST(LIBPOPPLER)
 # Check for gnome-vfs
 #####################
 
-PKG_CHECK_MODULES(GNOMEVFS, gnome-vfs-2.0,
+PKG_CHECK_MODULES(GNOMEVFS, gnome-vfs-2.0 >= gnome_vfs_required_version,
   have_gnomevfs=yes,
   AC_MSG_WARN([*** URI plug-in will be built without gnome-vfs support (gnome-vfs-2.0 not found) ***]))
 
 AM_CONDITIONAL(HAVE_GNOMEVFS, test x$have_gnomevfs = xyes)
+
+
+######################
+# Check for libgnomeui
+######################
+
+PKG_CHECK_MODULES(GNOMEUI, libgnomeui-2.0 >= gnomeui_required_version,
+  have_gnomeui=yes,
+  AC_MSG_WARN([*** URI plug-in will be built without libgnomeui support (libgnomeui-2.0 not found) ***]))
+
+AM_CONDITIONAL(HAVE_GNOMEUI, test x$have_gnomeui = xyes)
+
+if test "x$have_gnomeui" != xyes; then
+  AC_DEFINE(HAVE_GNOMEUI, 1, "Define to 1 if libgnomeui is available"),
+fi
 
 
 ######################

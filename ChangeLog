@@ -1,5 +1,19 @@
 2005-08-15  Michael Natterer  <mitch@gimp.org>
 
+	* configure.in: check for libgnomeui-2.0. Added version
+	requirements (>= 2.10.0) for libgnomeui and gnome-vfs.
+
+	* plug-ins/uri/Makefile.am
+	* plug-ins/uri/uri-backend-gnomevfs.c: if libgnomeui is available,
+	call gnome_authentication_manager_init() so the URI plug-in can
+	access sites that require authentication.
+
+	(this needs more hacking so packagers can build both versions of
+	the uri plug-in at the same time, since they will want to make the
+	libgnomeui dependency optional)
+
+2005-08-15  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/common/randomize.c
 	* plug-ins/common/raw.c
 	* plug-ins/common/retinex.c
