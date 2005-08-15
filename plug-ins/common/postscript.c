@@ -107,6 +107,16 @@ static char dversio[] = "v1.17  19-Sep-2004";
 #endif
 
 
+#define LOAD_PS_PROC         "file-ps-load"
+#define LOAD_EPS_PROC        "file-eps-load"
+#define LOAD_PDF_PROC        "file-pdf-load"
+#define LOAD_PS_SETARGS_PROC "file-ps-load-setargs"
+#define LOAD_PS_THUMB_PROC   "file-ps-load-thumb"
+#define SAVE_PS_PROC         "file-ps-save"
+#define SAVE_EPS_PROC        "file-eps-save"
+#define PLUG_IN_BINARY       "postscript"
+
+
 #define STR_LENGTH 64
 
 #ifndef G_OS_WIN32
@@ -518,9 +528,9 @@ query (void)
 {
   static GimpParamDef load_args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_STRING, "filename", "The name of the file to load" },
-    { GIMP_PDB_STRING, "raw_filename", "The name of the file to load" }
+    { GIMP_PDB_INT32,  "run-mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_STRING, "filename",     "The name of the file to load" },
+    { GIMP_PDB_STRING, "raw-filename", "The name of the file to load" }
   };
   static GimpParamDef load_return_vals[] =
   {
@@ -529,20 +539,20 @@ query (void)
 
   static GimpParamDef set_load_args[] =
   {
-    { GIMP_PDB_INT32, "resolution", "Resolution to interprete image (dpi)" },
-    { GIMP_PDB_INT32, "width", "Desired width" },
-    { GIMP_PDB_INT32, "height", "Desired height" },
-    { GIMP_PDB_INT32, "check_bbox", "0: Use width/height, 1: Use BoundingBox" },
-    { GIMP_PDB_STRING, "pages", "Pages to load (e.g.: 1,3,5-7)" },
-    { GIMP_PDB_INT32, "coloring", "4: b/w, 5: grey, 6: colour image, 7: automatic" },
-    { GIMP_PDB_INT32, "TextAlphaBits", "1, 2, or 4" },
-    { GIMP_PDB_INT32, "GraphicsAlphaBits", "1, 2, or 4" }
+    { GIMP_PDB_INT32,  "resolution", "Resolution to interprete image (dpi)"    },
+    { GIMP_PDB_INT32,  "width",      "Desired width"                           },
+    { GIMP_PDB_INT32,  "height",     "Desired height"                          },
+    { GIMP_PDB_INT32,  "check-bbox", "0: Use width/height, 1: Use BoundingBox" },
+    { GIMP_PDB_STRING, "pages",      "Pages to load (e.g.: 1,3,5-7)"           },
+    { GIMP_PDB_INT32,  "coloring",   "4: b/w, 5: grey, 6: colour image, 7: automatic" },
+    { GIMP_PDB_INT32,  "TextAlphaBits",     "1, 2, or 4" },
+    { GIMP_PDB_INT32,  "GraphicsAlphaBits", "1, 2, or 4" }
   };
 
   static GimpParamDef thumb_args[] =
   {
     { GIMP_PDB_STRING, "filename",     "The name of the file to load"  },
-    { GIMP_PDB_INT32,  "thumb_size",   "Preferred thumbnail size"      }
+    { GIMP_PDB_INT32,  "thumb-size",   "Preferred thumbnail size"      }
   };
   static GimpParamDef thumb_return_vals[] =
   {
@@ -551,25 +561,24 @@ query (void)
 
   static GimpParamDef save_args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Drawable to save" },
-    { GIMP_PDB_STRING, "filename", "The name of the file to save the image in" },
-    { GIMP_PDB_STRING, "raw_filename",
-            "The name of the file to save the image in" },
-    { GIMP_PDB_FLOAT, "width", "Width of the image in PostScript file (0: use input image size)" },
-    { GIMP_PDB_FLOAT, "height", "Height of image in PostScript file (0: use input image size)" },
-    { GIMP_PDB_FLOAT, "x_offset", "X-offset to image from lower left corner" },
-    { GIMP_PDB_FLOAT, "y_offset", "Y-offset to image from lower left corner" },
-    { GIMP_PDB_INT32, "unit", "Unit for width/height/offset. 0: inches, 1: millimeters" },
-    { GIMP_PDB_INT32, "keep_ratio", "0: use width/height, 1: keep aspect ratio" },
-    { GIMP_PDB_INT32, "rotation", "0, 90, 180, 270" },
-    { GIMP_PDB_INT32, "eps_flag", "0: PostScript, 1: Encapsulated PostScript" },
-    { GIMP_PDB_INT32, "preview", "0: no preview, >0: max. size of preview" },
-    { GIMP_PDB_INT32, "level", "1: PostScript Level 1, 2: PostScript Level 2" }
+    { GIMP_PDB_INT32,    "run-mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",        "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },
+    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
+    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in" },
+    { GIMP_PDB_FLOAT,    "width",        "Width of the image in PostScript file (0: use input image size)" },
+    { GIMP_PDB_FLOAT,    "height",       "Height of image in PostScript file (0: use input image size)" },
+    { GIMP_PDB_FLOAT,    "x-offset",     "X-offset to image from lower left corner" },
+    { GIMP_PDB_FLOAT,    "y-offset",     "Y-offset to image from lower left corner" },
+    { GIMP_PDB_INT32,    "unit",         "Unit for width/height/offset. 0: inches, 1: millimeters" },
+    { GIMP_PDB_INT32,    "keep-ratio",   "0: use width/height, 1: keep aspect ratio" },
+    { GIMP_PDB_INT32,    "rotation",     "0, 90, 180, 270" },
+    { GIMP_PDB_INT32,    "eps-flag",     "0: PostScript, 1: Encapsulated PostScript" },
+    { GIMP_PDB_INT32,    "preview",      "0: no preview, >0: max. size of preview" },
+    { GIMP_PDB_INT32,    "level",        "1: PostScript Level 1, 2: PostScript Level 2" }
   };
 
-  gimp_install_procedure ("file_ps_load",
+  gimp_install_procedure (LOAD_PS_PROC,
                           "load PostScript documents",
                           "load PostScript documents",
                           "Peter Kirchgessner <peter@kirchgessner.net>",
@@ -582,13 +591,13 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
-  gimp_register_file_handler_mime ("file_ps_load", "application/postscript");
-  gimp_register_magic_load_handler ("file_ps_load",
+  gimp_register_file_handler_mime (LOAD_PS_PROC, "application/postscript");
+  gimp_register_magic_load_handler (LOAD_PS_PROC,
 				    "ps",
 				    "",
                                     "0,string,%!,0,long,0xc5d0d3c6");
 
-  gimp_install_procedure ("file_eps_load",
+  gimp_install_procedure (LOAD_EPS_PROC,
                           "load Encapsulated PostScript images",
                           "load Encapsulated PostScript images",
                           "Peter Kirchgessner <peter@kirchgessner.net>",
@@ -601,14 +610,14 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
-  gimp_register_file_handler_mime ("file_eps_load", "image/x-eps");
-  gimp_register_magic_load_handler ("file_eps_load",
+  gimp_register_file_handler_mime (LOAD_EPS_PROC, "image/x-eps");
+  gimp_register_magic_load_handler (LOAD_EPS_PROC,
 				    "eps",
 				    "",
                                     "0,string,%!,0,long,0xc5d0d3c6");
 
 #ifndef HAVE_POPPLER
-  gimp_install_procedure ("file_pdf_load",
+  gimp_install_procedure (LOAD_PDF_PROC,
                           "load PDF documents",
                           "load PDF documents",
                           "Peter Kirchgessner <peter@kirchgessner.net>",
@@ -621,14 +630,14 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
-  gimp_register_file_handler_mime ("file_pdf_load", "application/pdf");
-  gimp_register_magic_load_handler ("file_pdf_load",
+  gimp_register_file_handler_mime (LOAD_PDF_PROC, "application/pdf");
+  gimp_register_magic_load_handler (LOAD_PDF_PROC,
 				    "pdf",
 				    "",
                                     "0,string,%PDF");
 #endif
 
-  gimp_install_procedure ("file_ps_load_setargs",
+  gimp_install_procedure (LOAD_PS_SETARGS_PROC,
                           "set additional parameters for procedure file_ps_load",
                           "set additional parameters for procedure file_ps_load",
                           "Peter Kirchgessner <peter@kirchgessner.net>",
@@ -640,7 +649,7 @@ query (void)
                           G_N_ELEMENTS (set_load_args), 0,
                           set_load_args, NULL);
 
-  gimp_install_procedure ("file_ps_load_thumb",
+  gimp_install_procedure (LOAD_PS_THUMB_PROC,
                           "Loads a small preview from a Postscript or PDF document",
                           "",
                           "Peter Kirchgessner <peter@kirchgessner.net>",
@@ -653,16 +662,17 @@ query (void)
                           G_N_ELEMENTS (thumb_return_vals),
                           thumb_args, thumb_return_vals);
 
-  gimp_register_thumbnail_loader ("file_ps_load",  "file_ps_load_thumb");
-  gimp_register_thumbnail_loader ("file_eps_load", "file_ps_load_thumb");
+  gimp_register_thumbnail_loader (LOAD_PS_PROC,  LOAD_PS_THUMB_PROC);
+  gimp_register_thumbnail_loader (LOAD_EPS_PROC, LOAD_PS_THUMB_PROC);
 
 #ifndef HAVE_POPPLER
-  gimp_register_thumbnail_loader ("file_pdf_load", "file_ps_load_thumb");
+  gimp_register_thumbnail_loader (LOAD_PDF_PROC, LOAD_PS_THUMB_PROC);
 #endif
 
-  gimp_install_procedure ("file_ps_save",
+  gimp_install_procedure (SAVE_PS_PROC,
                           "save image as PostScript docuement",
-                          "PostScript saving handles all image types except those with alpha channels.",
+                          "PostScript saving handles all image types except "
+                          "those with alpha channels.",
                           "Peter Kirchgessner <peter@kirchgessner.net>",
                           "Peter Kirchgessner",
                           dversio,
@@ -672,12 +682,13 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_file_handler_mime ("file_ps_save", "application/postscript");
-  gimp_register_save_handler ("file_ps_save", "ps", "");
+  gimp_register_file_handler_mime (SAVE_PS_PROC, "application/postscript");
+  gimp_register_save_handler (SAVE_PS_PROC, "ps", "");
 
-  gimp_install_procedure ("file_eps_save",
+  gimp_install_procedure (SAVE_EPS_PROC,
                           "save image as Encapsulated PostScript image",
-                          "PostScript saving handles all image types except those with alpha channels.",
+                          "PostScript saving handles all image types except "
+                          "those with alpha channels.",
                           "Peter Kirchgessner <peter@kirchgessner.net>",
                           "Peter Kirchgessner",
                           dversio,
@@ -687,8 +698,8 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_file_handler_mime ("file_eps_save", "application/x-eps");
-  gimp_register_save_handler ("file_eps_save", "eps", "");
+  gimp_register_file_handler_mime (SAVE_EPS_PROC, "application/x-eps");
+  gimp_register_save_handler (SAVE_EPS_PROC, "eps", "");
 }
 
 static void
@@ -754,18 +765,18 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  if (strcmp (name, "file_ps_load")  == 0  ||
-      strcmp (name, "file_eps_load") == 0  ||
-      strcmp (name, "file_pdf_load") == 0)
+  if (strcmp (name, LOAD_PS_PROC)  == 0  ||
+      strcmp (name, LOAD_EPS_PROC) == 0  ||
+      strcmp (name, LOAD_PDF_PROC) == 0)
     {
       switch (run_mode)
 	{
         case GIMP_RUN_INTERACTIVE:
           /*  Possibly retrieve data  */
-          gimp_get_data ("file_ps_load", &plvals);
+          gimp_get_data (LOAD_PS_PROC, &plvals);
 
           if (! load_dialog (param[1].data.d_string,
-                             ! strcmp (name, "file_pdf_load")))
+                             ! strcmp (name, LOAD_PDF_PROC)))
 	    status = GIMP_PDB_CANCEL;
           break;
 
@@ -774,12 +785,12 @@ run (const gchar      *name,
           if (nparams != 3)
             status = GIMP_PDB_CALLING_ERROR;
           else    /* Get additional interpretation arguments */
-            gimp_get_data ("file_ps_load", &plvals);
+            gimp_get_data (LOAD_PS_PROC, &plvals);
           break;
 
         case GIMP_RUN_WITH_LAST_VALS:
           /* Possibly retrieve data */
-          gimp_get_data ("file_ps_load", &plvals);
+          gimp_get_data (LOAD_PS_PROC, &plvals);
           break;
 
         default:
@@ -805,9 +816,9 @@ run (const gchar      *name,
 
       /*  Store plvals data  */
       if (status == GIMP_PDB_SUCCESS)
-	gimp_set_data ("file_ps_load", &plvals, sizeof (PSLoadVals));
+	gimp_set_data (LOAD_PS_PROC, &plvals, sizeof (PSLoadVals));
     }
-  else if (strcmp (name, "file_ps_load_thumb") == 0)
+  else if (strcmp (name, LOAD_PS_THUMB_PROC) == 0)
     {
       if (nparams < 2)
         {
@@ -842,10 +853,10 @@ run (const gchar      *name,
             }
         }
     }
-  else if (strcmp (name, "file_ps_save")  == 0 ||
-           strcmp (name, "file_eps_save") == 0)
+  else if (strcmp (name, SAVE_PS_PROC)  == 0 ||
+           strcmp (name, SAVE_EPS_PROC) == 0)
     {
-      psvals.eps = strcmp (name, "file_ps_save");
+      psvals.eps = strcmp (name, SAVE_PS_PROC);
 
       image_ID = orig_image_ID = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
@@ -855,7 +866,7 @@ run (const gchar      *name,
 	{
 	case GIMP_RUN_INTERACTIVE:
 	case GIMP_RUN_WITH_LAST_VALS:
-	  gimp_ui_init ("ps", FALSE);
+	  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID,
                                       psvals.eps ? "EPS" : "PostScript",
 				      (GIMP_EXPORT_CAN_HANDLE_RGB |
@@ -935,7 +946,7 @@ run (const gchar      *name,
       if (export == GIMP_EXPORT_EXPORT)
 	gimp_image_delete (image_ID);
     }
-  else if (strcmp (name, "file_ps_load_setargs") == 0)
+  else if (strcmp (name, LOAD_PS_SETARGS_PROC) == 0)
     {
       /*  Make sure all the arguments are there!  */
       if (nparams != 8)
@@ -958,7 +969,8 @@ run (const gchar      *name,
 	  plvals.textalpha     = param[6].data.d_int32;
 	  plvals.graphicsalpha = param[7].data.d_int32;
 	  check_load_vals ();
-	  gimp_set_data ("file_ps_load", &plvals, sizeof (PSLoadVals));
+
+	  gimp_set_data (LOAD_PS_PROC, &plvals, sizeof (PSLoadVals));
 	}
     }
   else
@@ -3011,11 +3023,11 @@ load_dialog (const gchar *filename,
 
   page_count = count_ps_pages (filename);
 
-  gimp_ui_init ("ps", FALSE);
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Load PostScript"), "ps",
+  dialog = gimp_dialog_new (_("Load PostScript"), PLUG_IN_BINARY,
                             NULL, 0,
-			    gimp_standard_help_func, "file-ps-load",
+			    gimp_standard_help_func, LOAD_PS_PROC,
 
 			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			    GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -3235,14 +3247,19 @@ save_dialog (void)
   vals = g_new (SaveDialogVals, 1);
   vals->level = (psvals.level > 1);
 
-  dialog = gimp_dialog_new (_("Save as PostScript"), "ps",
+  dialog = gimp_dialog_new (_("Save as PostScript"), PLUG_IN_BINARY,
                             NULL, 0,
-			    gimp_standard_help_func, "file-ps-save",
+			    gimp_standard_help_func, SAVE_PS_PROC,
 
 			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			    GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			    NULL);
+
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   /* Main hbox */
   hbox = gtk_hbox_new (FALSE, 12);

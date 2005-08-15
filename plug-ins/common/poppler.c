@@ -31,6 +31,11 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define LOAD_PROC       "file-pdf-load"
+#define LOAD_THUMB_PROC "file-pdf-load-thumb"
+#define PLUG_IN_BINARY  "poppler"
+
+
 /* Structs for the load dialog */
 typedef struct
 {
@@ -69,16 +74,16 @@ static gboolean          load_dialog       (PopplerDocument  *doc,
 
 static PopplerDocument * open_document     (const gchar      *filename);
 
-static GdkPixbuf *       get_thumbnail     (PopplerDocument *doc,
-                                            int              page,
-                                            int              preferred_size);
+static GdkPixbuf *       get_thumbnail     (PopplerDocument  *doc,
+                                            int               page,
+                                            int               preferred_size);
 
-static gint32            layer_from_pixbuf (gint32        image,
-                                            const gchar  *layer_name,
-                                            gint          position,
-                                            GdkPixbuf    *buf,
-                                            gdouble       progress_start,
-                                            gdouble       progress_scale);
+static gint32            layer_from_pixbuf (gint32            image,
+                                            const gchar      *layer_name,
+                                            gint              position,
+                                            GdkPixbuf        *buf,
+                                            gdouble           progress_start,
+                                            gdouble           progress_scale);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -96,13 +101,13 @@ query (void)
 {
   static GimpParamDef load_args[] =
   {
-    { GIMP_PDB_INT32,     "run_mode",     "Interactive, non-interactive" },
-    { GIMP_PDB_STRING,    "filename",     "The name of the file to load" },
-    { GIMP_PDB_STRING,    "raw_filename", "The name entered" },
-    { GIMP_PDB_INT32,     "resolution",   "Resolution to rasterize to (dpi)"},
-    { GIMP_PDB_INT32,     "antialias",    "Whether to antialias"},
-    { GIMP_PDB_INT32,     "n_pages",      "Number of pages to load (0 for all)"},
-    { GIMP_PDB_INT32ARRAY,"page",         "The pages to load"}
+    { GIMP_PDB_INT32,     "run-mode",     "Interactive, non-interactive"     },
+    { GIMP_PDB_STRING,    "filename",     "The name of the file to load"     },
+    { GIMP_PDB_STRING,    "raw-filename", "The name entered"                 },
+    { GIMP_PDB_INT32,     "resolution",   "Resolution to rasterize to (dpi)" },
+    { GIMP_PDB_INT32,     "antialias",    "Whether to antialias"             },
+    { GIMP_PDB_INT32,     "n-pages",      "Number of pages to load (0 for all)" },
+    { GIMP_PDB_INT32ARRAY,"page",         "The pages to load"                }
   };
 
   static GimpParamDef load_return_vals[] =
@@ -113,17 +118,17 @@ query (void)
   static GimpParamDef thumb_args[] =
   {
     { GIMP_PDB_STRING, "filename",     "The name of the file to load"  },
-    { GIMP_PDB_INT32,  "thumb_size",   "Preferred thumbnail size"      }
+    { GIMP_PDB_INT32,  "thumb-size",   "Preferred thumbnail size"      }
   };
 
   static GimpParamDef thumb_return_vals[] =
   {
     { GIMP_PDB_IMAGE,  "image",        "Thumbnail image"               },
-    { GIMP_PDB_INT32,  "image_width",  "Width of full-sized image"     },
-    { GIMP_PDB_INT32,  "image_height", "Height of full-sized image"    }
+    { GIMP_PDB_INT32,  "image-width",  "Width of full-sized image"     },
+    { GIMP_PDB_INT32,  "image-height", "Height of full-sized image"    }
   };
 
-  gimp_install_procedure ("file_pdf_load",
+  gimp_install_procedure (LOAD_PROC,
                           "Load file in PDF format.",
                           "Load file in PDF format. "
                           "PDF is a portable document format created by Adobe. "
@@ -140,13 +145,13 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
-  gimp_register_file_handler_mime ("file_pdf_load", "application/pdf");
-  gimp_register_magic_load_handler ("file_pdf_load",
+  gimp_register_file_handler_mime (LOAD_PROC, "application/pdf");
+  gimp_register_magic_load_handler (LOAD_PROC,
                                     "pdf",
                                     "",
                                     "0, string,%PDF-");
 
-  gimp_install_procedure ("file_pdf_load_thumb",
+  gimp_install_procedure (LOAD_THUMB_PROC,
                           "Loads a preview from a PDF file.",
                           "Loads a small preview of the first page of the PDF "
                           "format file. Uses the embedded thumbnail if "
@@ -161,7 +166,7 @@ query (void)
                           G_N_ELEMENTS (thumb_return_vals),
                           thumb_args, thumb_return_vals);
 
-  gimp_register_thumbnail_loader ("file_pdf_load", "file_pdf_load_thumb");
+  gimp_register_thumbnail_loader (LOAD_PROC, LOAD_THUMB_PROC);
 }
 
 static void
@@ -190,7 +195,7 @@ run (const gchar      *name,
   if (! g_thread_supported ())
     g_thread_init (NULL);
 
-  if (strcmp (name, "file_pdf_load") == 0)
+  if (strcmp (name, LOAD_PROC) == 0)
     {
       PdfSelectedPages *pages = g_new (PdfSelectedPages, 1);
 
@@ -198,7 +203,7 @@ run (const gchar      *name,
         {
         case GIMP_RUN_INTERACTIVE:
           /* Possibly retrieve last settings */
-          gimp_get_data ("file_pdf_load", &loadvals);
+          gimp_get_data (LOAD_PROC, &loadvals);
 
           doc = open_document (param[1].data.d_string);
 
@@ -209,7 +214,7 @@ run (const gchar      *name,
             }
 
           if (load_dialog (doc, pages))
-            gimp_set_data ("file_pdf_load", &loadvals, sizeof(loadvals));
+            gimp_set_data (LOAD_PROC, &loadvals, sizeof(loadvals));
           else
             status = GIMP_PDB_CANCEL;
           break;
@@ -247,7 +252,7 @@ run (const gchar      *name,
       g_free (pages->pages);
       g_free (pages);
     }
-  else if (strcmp (name, "file_pdf_load_thumb") == 0)
+  else if (strcmp (name, LOAD_THUMB_PROC) == 0)
     {
       if (nparams < 2)
         {
@@ -262,7 +267,7 @@ run (const gchar      *name,
           GdkPixbuf   *buf      = NULL;
 
           /* Possibly retrieve last settings */
-          gimp_get_data ("file_pdf_load", &loadvals);
+          gimp_get_data (LOAD_PROC, &loadvals);
 
           doc = open_document (param[0].data.d_string);
 
@@ -285,7 +290,10 @@ run (const gchar      *name,
                                       gdk_pixbuf_get_height (buf),
                                       GIMP_RGB);
 
+              gimp_image_undo_disable (image);
               layer_from_pixbuf (image, "thumbnail", 0, buf, 0.0, 1.0);
+              gimp_image_undo_enable (image);
+              gimp_image_clean_all (image);
             }
 
 
@@ -435,22 +443,10 @@ load_image (PopplerDocument  *doc,
             gboolean          antialias,
             PdfSelectedPages *pages)
 {
-  gint32 image = 0;
-
-
-  double scale;
-
-  PopplerPage     *page;
-  gchar           *page_label;
-  int              i;
-  double           page_width;
-  double           page_height;
-
-  GdkPixbuf       *buf;
-  gint             width;
-  gint             height;
-
-  double doc_progress = 0;
+  gint32  image = 0;
+  gint    i;
+  gdouble scale;
+  gdouble doc_progress = 0;
 
   gimp_progress_init (NULL);
   gimp_progress_set_text (_("Opening '%s'..."),
@@ -466,8 +462,16 @@ load_image (PopplerDocument  *doc,
 
   for (i = 0; i < pages->n_pages; i++)
     {
-      page = poppler_document_get_page (doc, pages->pages[i]);
+      PopplerPage *page;
+      gchar       *page_label;
+      gdouble      page_width;
+      gdouble      page_height;
 
+      GdkPixbuf   *buf;
+      gint         width;
+      gint         height;
+
+      page = poppler_document_get_page (doc, pages->pages[i]);
 
       poppler_page_get_size (page, &page_width, &page_height);
       width  = page_width  * scale;
@@ -475,9 +479,14 @@ load_image (PopplerDocument  *doc,
 
       if (!image)
         {
-          image = gimp_image_new (width, height, GIMP_RGB);
+          gchar *name;
 
-          gimp_image_set_filename (image, filename);
+          image = gimp_image_new (width, height, GIMP_RGB);
+          gimp_image_undo_disable (image);
+
+          name = g_strdup_printf (_("%s-pages"), filename);
+          gimp_image_set_filename (image, name);
+          g_free (name);
 
           gimp_image_set_resolution (image, resolution, resolution);
         }
@@ -496,13 +505,17 @@ load_image (PopplerDocument  *doc,
                          doc_progress, 1.0 / pages->n_pages);
 
       g_free (page_label);
-
+      g_object_unref (buf);
 
       doc_progress = (double) (i + 1) / pages->n_pages;
       gimp_progress_update (doc_progress);
-
-      g_object_unref (buf);
    }
+
+  if (image)
+    {
+      gimp_image_undo_enable (image);
+      gimp_image_clean_all (image);
+    }
 
   return image;
 }
@@ -627,11 +640,11 @@ load_dialog (PopplerDocument  *doc,
 
   gboolean    run;
 
-  gimp_ui_init ("file-pdf-load", FALSE);
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Load PDF"), "pdf",
+  dialog = gimp_dialog_new (_("Load PDF"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, "file-pdf-load",
+                            gimp_standard_help_func, LOAD_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,

@@ -1,5 +1,15 @@
 2005-08-15  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/common/poppler.c: make sure the opened image has a
+	filename that cannot be saved (ok, we don't have a PDF save
+	plug-in, but PS does the same and this way it's consistent).
+
+	* plug-ins/common/poppler.c
+	* plug-ins/common/postscript.c: canonicalize procedure and
+	parameter names.
+
+2005-08-15  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/common/postscript.c: applied patch from Felix Riemann
 	that adds page counting and a page selector widget to the load
 	dialog.  Fixed some minor issues in the patch and added code that
