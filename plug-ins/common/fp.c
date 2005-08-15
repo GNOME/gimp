@@ -49,41 +49,47 @@
                         GDK_POINTER_MOTION_HINT_MASK
 
 
-typedef struct {
+typedef struct
+{
   gint run;
 } fpInterface;
 
-typedef struct {
-  gint      width;
-  gint      height;
+typedef struct
+{
+  gint       width;
+  gint       height;
   guchar    *rgb;
   gdouble   *hsv;
   guchar    *mask;
 } ReducedImage;
 
-typedef enum {
+typedef enum
+{
   SHADOWS,
   MIDTONES,
   HIGHLIGHTS,
   INTENSITIES
-}FP_Intensity;
+}FPIntensity;
 
-enum {
-  NONEATALL  =0,
-  CURRENT    =1,
-  HUE        =2,
-  SATURATION =4,
-  VALUE      =8
+enum
+{
+  NONEATALL  = 0,
+  CURRENT    = 1,
+  HUE        = 2,
+  SATURATION = 4,
+  VALUE      = 8
 };
 
-enum {
+enum
+{
   BY_HUE,
   BY_SAT,
   BY_VAL,
   JUDGE_BY
 };
 
-enum {
+enum
+{
   RED,
   GREEN,
   BLUE,
@@ -93,120 +99,125 @@ enum {
   ALL_PRIMARY
 };
 
-enum {
+enum
+{
   DOWN = -1,
   UP   =  1
 };
 
-typedef struct {
+typedef struct
+{
   GtkWidget *window;
-  GtkWidget *shadowsEntry;
-  GtkWidget *midtonesEntry;
-  GtkWidget *rangePreview;
-  GtkWidget *aliasingPreview;
-  GtkObject *aliasingData;
-  GtkWidget *aliasingGraph;
+  GtkWidget *range_preview;
+  GtkWidget *aliasing_preview;
+  GtkWidget *aliasing_graph;
 } AdvancedWindow;
 
 
-typedef struct {
-  int Color;
-  float Rough;
-  GtkWidget *roughnessScale;
-  float Alias;
-  GtkWidget *aliasingScale;
-  float PreviewSize;
-  GtkWidget *previewSizeScale;
-  FP_Intensity Range;
-  gint ValueBy;
-  gint SlctnOnly;
-  gint  RealTime;
-  guchar Offset;
-  guchar VisibleFrames;
-  guchar Cutoffs[INTENSITIES];
-  gint Touched[JUDGE_BY];
-  gint redAdj[JUDGE_BY][256];
-  gint blueAdj[JUDGE_BY][256];
-  gint greenAdj[JUDGE_BY][256];
-  gint satAdj[JUDGE_BY][256];
-  GtkWidget *rangeLabels[12];
-} FP_Params;
+typedef struct
+{
+  gdouble       roughness;
+  gdouble       aliasing;
+  gdouble       preview_size;
+  FPIntensity   intensity_range;
+  gint          value_by;
+  gint          selection_only;
+  gboolean      real_time;
+  guchar        offset;
+  guchar        visible_frames;
+  guchar        cutoff[INTENSITIES];
+  gint          touched[JUDGE_BY];
+  gint          red_adjust[JUDGE_BY][256];
+  gint          blue_adjust[JUDGE_BY][256];
+  gint          green_adjust[JUDGE_BY][256];
+  gint          sat_adjust[JUDGE_BY][256];
+} FPValues;
 
-static void  fp_show_hide_frame(GtkWidget *button,
-                                GtkWidget *frame);
+typedef struct
+{
+  GtkWidget    *roughness_scale;
+  GtkWidget    *aliasing_scale;
+  GtkWidget    *preview_size_scale;
+  GtkWidget    *range_label[12];
+} FPWidgets;
 
-static ReducedImage  *Reduce_The_Image   (GimpDrawable *,
-                                          GimpDrawable *,
-                                          gint,
-                                          gint);
+static void           fp_show_hide_frame          (GtkWidget     *button,
+                                                   GtkWidget     *frame);
 
-static void      fp_render_preview  (GtkWidget *,
-                                     gint,
-                                     gint);
+static ReducedImage * fp_reduce_image             (GimpDrawable  *drawable,
+                                                   GimpDrawable  *mask,
+                                                   gint           longer_size,
+                                                   gint           selection);
 
-static void      Update_Current_FP  (gint,
-                                     gint);
+static void           fp_render_preview           (GtkWidget     *preview,
+                                                   gint           change_what,
+                                                   gint           change_which);
 
-static void      fp_Create_Nudge    (gint*);
+static void           update_current_fp           (gint           change_what,
+                                                   gint           change_which);
 
-static gboolean  fp_dialog          (void);
-static void      fp_advanced_dialog (void);
+static void           fp_create_nudge             (gint          *adj_array);
 
-static void      selectionMade                  (GtkWidget *,
-                                                 gpointer     );
-static void      fp_scale_update                (GtkAdjustment *,
-                                                 float*       );
-static void      resetFilterPacks               (void);
+static gboolean       fp_dialog                   (void);
+static void           fp_advanced_dialog          (void);
 
-static void      fp_create_smoothness_graph     (GtkWidget*    );
+static void           fp_selection_made           (GtkWidget     *widget,
+                                                   gpointer       data);
+static void           fp_scale_update             (GtkAdjustment *adjustment,
+                                                   gdouble        *scale_val);
+static void           fp_reset_filter_packs       (void);
 
-static void      fp_range_preview_spill         (GtkWidget*,
-                                                 gint           );
-static void      Adjust_Preview_Sizes     (gint width,
-                                           gint height   );
-static void     fp_redraw_all_windows (void);
-static void      refreshPreviews          (int);
-static void      initializeFilterPacks    (void);
+static void           fp_create_smoothness_graph  (GtkWidget     *preview);
 
-static void     As_You_Drag               (GtkWidget *button);
-static void     preview_size_scale_update (GtkAdjustment *adjustment,
-                                           float         *scale_val);
+static void           fp_range_preview_spill      (GtkWidget     *preview,
+                                                   gint           type);
+static void           fp_adjust_preview_sizes     (gint           width,
+                                                   gint           height);
+static void           fp_redraw_all_windows       (void);
+static void           fp_refresh_previews         (gint           which);
+static void           fp_init_filter_packs        (void);
 
-static void             fp                      (GimpDrawable  *drawable);
-static GtkWidget       *fp_create_bna           (void);
-static GtkWidget       *fp_create_rough         (void);
-static GtkWidget       *fp_create_range         (void);
-static GtkWidget       *fp_create_circle_palette(void);
-static GtkWidget       *fp_create_lnd           (void);
-static GtkWidget       *fp_create_show          (void);
-static GtkWidget       *fp_create_msnls         (void);
-static GtkWidget       *fp_create_pixels_select_by(void);
-static void             update_range_labels    (void);
-static gboolean         FP_Range_Change_Events (GtkWidget *widget,
-                                                GdkEvent  *event,
-                                                FP_Params *current);
+static void           fp_drag                     (GtkWidget     *button);
+static void           fp_preview_scale_update     (GtkAdjustment *adjustment,
+                                                   gdouble        *scale_val);
 
-static void      Create_A_Preview        (GtkWidget  **,
-                                          GtkWidget  **,
-                                          int,
-                                          int           );
+static void           fp                          (GimpDrawable  *drawable);
+static GtkWidget *    fp_create_bna               (void);
+static GtkWidget *    fp_create_rough             (void);
+static GtkWidget *    fp_create_range             (void);
+static GtkWidget *    fp_create_circle_palette    (void);
+static GtkWidget *    fp_create_lnd               (void);
+static GtkWidget *    fp_create_show              (void);
+static GtkWidget *    fp_create_msnls             (void);
+static GtkWidget *    fp_create_pixels_select_by  (void);
+static void           update_range_labels         (void);
+static gboolean       fp_range_change_events      (GtkWidget     *widget,
+                                                   GdkEvent      *event,
+                                                   FPValues     *current);
 
-static void      Create_A_Table_Entry    (GtkWidget  **,
-                                          GtkWidget  *,
-                                          const gchar *);
+static void           fp_create_preview           (GtkWidget    **preview,
+                                                   GtkWidget    **frame,
+                                                   gint           preview_width,
+                                                   gint           preview_height);
 
-static void Check_Button_In_A_Box       (GtkWidget     *,
-                                         const gchar   *label,
-                                         GtkSignalFunc  func,
-                                         gpointer       data,
-                                         int            clicked);
+static void           fp_create_table_entry      (GtkWidget     **box,
+                                                  GtkWidget      *smaller_frame,
+                                                  const gchar    *description);
 
-static void Frames_Check_Button_In_A_Box (GtkWidget     *,
-                                          const gchar   *label,
-                                          GtkSignalFunc  func,
-                                          GtkWidget     *frame,
-                                          int            clicked);
+static void           fp_checkbutton_in_box      (GtkWidget      *vbox,
+                                                  const gchar    *label,
+                                                  GtkSignalFunc   func,
+                                                  gpointer        data,
+                                                  gboolean        clicked);
 
+static void         fp_frames_checkbutton_in_box (GtkWidget      *vbox,
+                                                  const gchar    *label,
+                                                  GtkSignalFunc   func,
+                                                  GtkWidget      *frame,
+                                                  gboolean        clicked);
+
+static void             fp_preview_size_allocate (GtkWidget      *widget,
+                                                  GtkAllocation  *allocation);
 
 #define RESPONSE_RESET 1
 
@@ -232,7 +243,9 @@ static const gchar *current_val = N_("Current:");
 static gint colorSign[3][ALL_PRIMARY]=
 {{1,-1,-1,-1,1,1},{-1,1,-1,1,1,-1},{-1,-1,1,1,-1,1}};
 
-static AdvancedWindow AW = { NULL, NULL, NULL, NULL, NULL, NULL, NULL };
+static AdvancedWindow AW = { NULL, NULL, NULL, NULL };
+
+static FPWidgets fp_widgets = { NULL, NULL, NULL };
 
 static gint nudgeArray[256];
 
@@ -255,7 +268,7 @@ static struct
   GtkWidget *pixelsBy;
   GtkWidget *frameSelect;
   GtkWidget *satur;
-} fpFrames;
+} fp_frames;
 
 static fpInterface FPint =
 {
@@ -264,23 +277,19 @@ static fpInterface FPint =
 
 static ReducedImage *reduced;
 
-static FP_Params Current =
+static FPValues fpvals =
 {
-  1,
   .25,                /* Initial Roughness */
-  NULL,
   .6,                 /* Initial Degree of Aliasing */
-  NULL,
-  80,
-  NULL,
+  80,                 /* Initial preview size */
   MIDTONES,           /* Initial Range */
   BY_VAL,             /* Initial God knows what */
   TRUE,               /* Selection Only */
   TRUE,               /* Real Time */
   0,                  /* Offset */
-  0,
-  {32,224,255},
-  {0,0,0}
+  0,                  /* Visible frames */
+  {32,224,255},       /* cutoffs */
+  {0,0,0}             /* touched */
 };
 
 static GimpDrawable *drawable, *mask;
@@ -350,26 +359,61 @@ run (const gchar      *name,
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
-  initializeFilterPacks();
+  fp_init_filter_packs();
 
   drawable = gimp_drawable_get (param[2].data.d_drawable);
   mask = gimp_drawable_get (gimp_image_get_selection (param[1].data.d_image));
 
-  if (gimp_drawable_is_indexed (drawable->drawable_id) ||
-      gimp_drawable_is_gray (drawable->drawable_id) )
+  switch (run_mode)
     {
-      gimp_message (_("Convert the image to RGB first!"));
-      status = GIMP_PDB_EXECUTION_ERROR;
-    }
-  else if (gimp_drawable_is_rgb (drawable->drawable_id) && fp_dialog())
-    {
-      gimp_progress_init (_("Applying the Filter Pack..."));
-      gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
-      fp (drawable);
-      gimp_displays_flush ();
-    }
-  else status = GIMP_PDB_EXECUTION_ERROR;
+    case GIMP_RUN_INTERACTIVE:
+      /*  Possibly retrieve data  */
+      gimp_get_data ("plug_in_filter_pack", &fpvals);
 
+      if (gimp_drawable_is_indexed (drawable->drawable_id) ||
+          gimp_drawable_is_gray (drawable->drawable_id) )
+        {
+          gimp_message (_("FP can only be used on RGB images."));
+          status = GIMP_PDB_EXECUTION_ERROR;
+        }
+      else if (! fp_dialog())
+        {
+          status = GIMP_PDB_CANCEL;
+        }
+      break;
+
+    case GIMP_RUN_NONINTERACTIVE:
+      gimp_message (_("FP can only be run interactively."));
+      status = GIMP_PDB_CALLING_ERROR;
+      break;
+
+    case GIMP_RUN_WITH_LAST_VALS:
+      /*  Possibly retrieve data  */
+      gimp_get_data ("plug_in_filter_pack", &fpvals);
+      break;
+
+    default:
+      break;
+    }
+
+  if (status == GIMP_PDB_SUCCESS)
+    {
+      /*  Make sure that the drawable is gray or RGB color  */
+      if (gimp_drawable_is_rgb (drawable->drawable_id))
+        {
+          gimp_progress_init (_("Applying Filter Pack..."));
+          gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
+          fp (drawable);
+
+          /*  Store data  */
+          if (run_mode == GIMP_RUN_INTERACTIVE)
+            gimp_set_data ("plug_in_filter_pack",
+                           &fpvals, sizeof (FPValues));
+
+          gimp_displays_flush ();
+        }
+      else status = GIMP_PDB_EXECUTION_ERROR;
+    }
 
   values[0].data.d_status = status;
 
@@ -398,7 +442,7 @@ fp_func (const guchar *src,
 
   for (JudgeBy = BY_HUE; JudgeBy < JUDGE_BY; JudgeBy++)
     {
-      if (!Current.Touched[JudgeBy])
+      if (!fpvals.touched[JudgeBy])
         continue;
 
       switch (JudgeBy)
@@ -431,14 +475,14 @@ fp_func (const guchar *src,
         if (M != m)
           {
             if (P[k] == M)
-              P[k] = MAX (P[k] + Current.satAdj[JudgeBy][Intensity], middle);
+              P[k] = MAX (P[k] + fpvals.sat_adjust[JudgeBy][Intensity], middle);
             else if (P[k] == m)
-              P[k] = MIN (P[k] - Current.satAdj[JudgeBy][Intensity], middle);
+              P[k] = MIN (P[k] - fpvals.sat_adjust[JudgeBy][Intensity], middle);
           }
 
-      P[0] += Current.redAdj[JudgeBy][Intensity];
-      P[1] += Current.greenAdj[JudgeBy][Intensity];
-      P[2] += Current.blueAdj[JudgeBy][Intensity];
+      P[0] += fpvals.red_adjust[JudgeBy][Intensity];
+      P[1] += fpvals.green_adjust[JudgeBy][Intensity];
+      P[2] += fpvals.blue_adjust[JudgeBy][Intensity];
 
       P[0]  = CLAMP0255(P[0]);
       P[1]  = CLAMP0255(P[1]);
@@ -470,8 +514,8 @@ fp_create_bna (void)
   GtkWidget *label;
   GtkWidget *bframe, *aframe;
 
-  Create_A_Preview (&origPreview, &bframe, reduced->width, reduced->height);
-  Create_A_Preview (&curPreview, &aframe, reduced->width, reduced->height);
+  fp_create_preview (&origPreview, &bframe, reduced->width, reduced->height);
+  fp_create_preview (&curPreview, &aframe, reduced->width, reduced->height);
 
   table = gtk_table_new (2, 2, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
@@ -542,22 +586,22 @@ fp_create_circle_palette (void)
   gtk_container_add (GTK_CONTAINER (win), table);
   gtk_widget_show (table);
 
-  Create_A_Preview (&rPreview, &rFrame, reduced->width, reduced->height);
-  Create_A_Preview (&gPreview, &gFrame, reduced->width, reduced->height);
-  Create_A_Preview (&bPreview, &bFrame, reduced->width, reduced->height);
-  Create_A_Preview (&cPreview, &cFrame, reduced->width, reduced->height);
-  Create_A_Preview (&yPreview, &yFrame, reduced->width, reduced->height);
-  Create_A_Preview (&mPreview, &mFrame, reduced->width, reduced->height);
-  Create_A_Preview (&centerPreview, &centerFrame,
+  fp_create_preview (&rPreview, &rFrame, reduced->width, reduced->height);
+  fp_create_preview (&gPreview, &gFrame, reduced->width, reduced->height);
+  fp_create_preview (&bPreview, &bFrame, reduced->width, reduced->height);
+  fp_create_preview (&cPreview, &cFrame, reduced->width, reduced->height);
+  fp_create_preview (&yPreview, &yFrame, reduced->width, reduced->height);
+  fp_create_preview (&mPreview, &mFrame, reduced->width, reduced->height);
+  fp_create_preview (&centerPreview, &centerFrame,
                     reduced->width, reduced->height);
 
-  Create_A_Table_Entry (&rVbox, rFrame, hue_red);
-  Create_A_Table_Entry (&gVbox, gFrame, hue_green);
-  Create_A_Table_Entry (&bVbox, bFrame, hue_blue);
-  Create_A_Table_Entry (&cVbox, cFrame, hue_cyan);
-  Create_A_Table_Entry (&yVbox, yFrame, hue_yellow);
-  Create_A_Table_Entry (&mVbox, mFrame, hue_magenta);
-  Create_A_Table_Entry (&centerVbox, centerFrame, current_val);
+  fp_create_table_entry (&rVbox, rFrame, hue_red);
+  fp_create_table_entry (&gVbox, gFrame, hue_green);
+  fp_create_table_entry (&bVbox, bFrame, hue_blue);
+  fp_create_table_entry (&cVbox, cFrame, hue_cyan);
+  fp_create_table_entry (&yVbox, yFrame, hue_yellow);
+  fp_create_table_entry (&mVbox, mFrame, hue_magenta);
+  fp_create_table_entry (&centerVbox, centerFrame, current_val);
 
   gtk_table_attach (GTK_TABLE (table), rVbox, 8, 11 ,4 , 7,
                     GTK_EXPAND , GTK_EXPAND, 0 ,0);
@@ -590,8 +634,8 @@ fp_create_rough (void)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  data = gtk_adjustment_new (Current.Rough, 0, 1.0, 0.05, 0.01, 0.0);
-  Current.roughnessScale = scale = gtk_hscale_new (GTK_ADJUSTMENT (data));
+  data = gtk_adjustment_new (fpvals.roughness, 0, 1.0, 0.05, 0.01, 0.0);
+  fp_widgets.roughness_scale = scale = gtk_hscale_new (GTK_ADJUSTMENT (data));
 
   gtk_widget_set_size_request (scale, 60, -1);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
@@ -600,7 +644,7 @@ fp_create_rough (void)
 
   g_signal_connect (data, "value_changed",
                     G_CALLBACK (fp_scale_update),
-                    &Current.Rough);
+                    &fpvals.roughness);
 
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
@@ -615,9 +659,9 @@ fp_change_current_range (GtkWidget *widget,
 
   if (GTK_TOGGLE_BUTTON (widget)->active)
     {
-      refreshPreviews (Current.VisibleFrames);
+      fp_refresh_previews (fpvals.visible_frames);
       if (AW.window && GTK_WIDGET_VISIBLE (AW.window))
-        fp_create_smoothness_graph (AW.aliasingPreview);
+        fp_create_smoothness_graph (AW.aliasing_preview);
     }
 }
 
@@ -628,7 +672,7 @@ fp_create_range (void)
 
   frame = gimp_int_radio_group_new (TRUE, _("Affected Range"),
                                     G_CALLBACK (fp_change_current_range),
-                                    &Current.Range, Current.Range,
+                                    &fpvals.intensity_range, fpvals.intensity_range,
 
                                     _("Sha_dows"),  SHADOWS, NULL,
                                     _("_Midtones"), MIDTONES, NULL,
@@ -652,19 +696,19 @@ fp_create_control (void)
   gtk_container_add (GTK_CONTAINER (frame), box);
   gtk_widget_show (box);
 
-  Frames_Check_Button_In_A_Box (box, _("_Hue"),
+  fp_frames_checkbutton_in_box (box, _("_Hue"),
                                 GTK_SIGNAL_FUNC (fp_show_hide_frame),
-                                fpFrames.palette,
-                                Current.VisibleFrames & HUE);
-  Frames_Check_Button_In_A_Box (box, _("_Saturation"),
+                                fp_frames.palette,
+                                fpvals.visible_frames & HUE);
+  fp_frames_checkbutton_in_box (box, _("_Saturation"),
                                 GTK_SIGNAL_FUNC (fp_show_hide_frame),
-                                fpFrames.satur,
-                                Current.VisibleFrames & SATURATION);
-  Frames_Check_Button_In_A_Box (box, _("_Value"),
+                                fp_frames.satur,
+                                fpvals.visible_frames & SATURATION);
+  fp_frames_checkbutton_in_box (box, _("_Value"),
                                 GTK_SIGNAL_FUNC (fp_show_hide_frame),
-                                fpFrames.lnd,
-                                Current.VisibleFrames & VALUE);
-  Frames_Check_Button_In_A_Box (box, _("A_dvanced"),
+                                fp_frames.lnd,
+                                fpvals.visible_frames & VALUE);
+  fp_frames_checkbutton_in_box (box, _("A_dvanced"),
                                 GTK_SIGNAL_FUNC (fp_show_hide_frame),
                                 AW.window,
                                 FALSE);
@@ -690,16 +734,16 @@ fp_create_lnd (void)
                     G_CALLBACK (sub_dialog_destroy),
                     NULL);
 
-  Create_A_Preview (&lighterPreview, &lighterFrame,
+  fp_create_preview (&lighterPreview, &lighterFrame,
                     reduced->width, reduced->height);
-  Create_A_Preview (&middlePreview, &middleFrame,
+  fp_create_preview (&middlePreview, &middleFrame,
                     reduced->width, reduced->height);
-  Create_A_Preview (&darkerPreview, &darkerFrame,
+  fp_create_preview (&darkerPreview, &darkerFrame,
                     reduced->width, reduced->height);
 
-  Create_A_Table_Entry (&lighterVbox, lighterFrame, val_lighter);
-  Create_A_Table_Entry (&middleVbox, middleFrame, current_val);
-  Create_A_Table_Entry (&darkerVbox, darkerFrame, val_darker);
+  fp_create_table_entry (&lighterVbox, lighterFrame, val_lighter);
+  fp_create_table_entry (&middleVbox, middleFrame, current_val);
+  fp_create_table_entry (&darkerVbox, darkerFrame, val_darker);
 
   table = gtk_table_new (1, 11, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
@@ -734,16 +778,16 @@ fp_create_msnls (void)
                     G_CALLBACK (sub_dialog_destroy),
                     NULL);
 
-  Create_A_Preview (&minusSatPreview, &lessFrame,
+  fp_create_preview (&minusSatPreview, &lessFrame,
                     reduced->width, reduced->height);
-  Create_A_Preview (&SatPreview, &middleFrame,
+  fp_create_preview (&SatPreview, &middleFrame,
                     reduced->width, reduced->height);
-  Create_A_Preview (&plusSatPreview, &moreFrame,
+  fp_create_preview (&plusSatPreview, &moreFrame,
                     reduced->width, reduced->height);
 
-  Create_A_Table_Entry (&moreVbox, moreFrame, sat_more);
-  Create_A_Table_Entry (&middleVbox, middleFrame, current_val);
-  Create_A_Table_Entry (&lessVbox, lessFrame, sat_less);
+  fp_create_table_entry (&moreVbox, moreFrame, sat_more);
+  fp_create_table_entry (&middleVbox, middleFrame, current_val);
+  fp_create_table_entry (&lessVbox, lessFrame, sat_less);
 
   table = gtk_table_new (1, 11, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
@@ -769,9 +813,9 @@ fp_change_current_pixels_by (GtkWidget *widget,
 
   if (GTK_TOGGLE_BUTTON (widget)->active)
     {
-      refreshPreviews (Current.VisibleFrames);
-      if (AW.window && GTK_WIDGET_VISIBLE (AW.window) && AW.rangePreview)
-        fp_range_preview_spill (AW.rangePreview,Current.ValueBy);
+      fp_refresh_previews (fpvals.visible_frames);
+      if (AW.window && GTK_WIDGET_VISIBLE (AW.window) && AW.range_preview)
+        fp_range_preview_spill (AW.range_preview,fpvals.value_by);
     }
 }
 
@@ -782,8 +826,8 @@ fp_create_pixels_select_by (void)
 
   frame = gimp_int_radio_group_new (TRUE, _("Select Pixels by"),
                                     G_CALLBACK (fp_change_current_pixels_by),
-                                    &Current.ValueBy,
-                                    Current.ValueBy,
+                                    &fpvals.value_by,
+                                    fpvals.value_by,
 
                                     _("H_ue"),  0, NULL,
                                     _("Satu_ration"), 1, NULL,
@@ -815,8 +859,8 @@ fp_create_show (void)
 
   frame = gimp_int_radio_group_new (TRUE, _("Show"),
                                     G_CALLBACK (fp_change_selection),
-                                    &Current.SlctnOnly,
-                                    Current.SlctnOnly,
+                                    &fpvals.selection_only,
+                                    fpvals.selection_only,
 
                                     _("_Entire Image"),  0, NULL,
                                     _("Se_lection Only"), 1, NULL,
@@ -830,23 +874,25 @@ fp_create_show (void)
 }
 
 static void
-Create_A_Preview (GtkWidget **preview,
-                  GtkWidget **frame,
-                  gint        previewWidth,
-                  gint        previewHeight)
+fp_create_preview (GtkWidget **preview,
+                  GtkWidget  **frame,
+                  gint         preview_width,
+                  gint         preview_height)
 {
   *frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (*frame), GTK_SHADOW_IN);
   gtk_widget_show (*frame);
 
   *preview = gimp_preview_area_new ();
-  gtk_widget_set_size_request (*preview, previewWidth, previewHeight);
+  gtk_widget_set_size_request (*preview, preview_width, preview_height);
+  g_signal_connect (*preview, "size_allocate",
+                    G_CALLBACK (fp_preview_size_allocate), NULL);
   gtk_widget_show (*preview);
   gtk_container_add (GTK_CONTAINER (*frame), *preview);
 }
 
 static void
-Check_Button_In_A_Box (GtkWidget     *vbox,
+fp_checkbutton_in_box (GtkWidget     *vbox,
                        const gchar   *label,
                        GtkSignalFunc  function,
                        gpointer       data,
@@ -866,7 +912,7 @@ Check_Button_In_A_Box (GtkWidget     *vbox,
 }
 
 static void
-Frames_Check_Button_In_A_Box (GtkWidget     *vbox,
+fp_frames_checkbutton_in_box (GtkWidget     *vbox,
                               const gchar   *label,
                               GtkSignalFunc  function,
                               GtkWidget     *frame,
@@ -887,8 +933,8 @@ Frames_Check_Button_In_A_Box (GtkWidget     *vbox,
 }
 
 static void
-Create_A_Table_Entry (GtkWidget   **box,
-                      GtkWidget    *SmallerFrame,
+fp_create_table_entry (GtkWidget   **box,
+                      GtkWidget    *smaller_frame,
                       const gchar  *description)
 {
   GtkWidget *label, *button, *table;
@@ -918,15 +964,15 @@ Create_A_Table_Entry (GtkWidget   **box,
                         0, 0, 0, 4);
       gtk_widget_show (button);
 
-      gtk_container_add (GTK_CONTAINER (button), SmallerFrame);
+      gtk_container_add (GTK_CONTAINER (button), smaller_frame);
 
       g_signal_connect (button, "clicked",
-                        G_CALLBACK (selectionMade),
+                        G_CALLBACK (fp_selection_made),
                         (gchar *) description);
     }
   else
     {
-      gtk_table_attach (GTK_TABLE (table), SmallerFrame, 0, 1, 1, 2,
+      gtk_table_attach (GTK_TABLE (table), smaller_frame, 0, 1, 1, 2,
                         0, 0, 0, 4);
     }
 }
@@ -934,24 +980,24 @@ Create_A_Table_Entry (GtkWidget   **box,
 static void
 fp_redraw_all_windows (void)
 {
-  reduced = Reduce_The_Image (drawable,mask,
-                              Current.PreviewSize,
-                              Current.SlctnOnly);
-  Adjust_Preview_Sizes (reduced->width, reduced->height);
+  reduced = fp_reduce_image (drawable,mask,
+                              fpvals.preview_size,
+                              fpvals.selection_only);
+  fp_adjust_preview_sizes (reduced->width, reduced->height);
 
-  gtk_widget_queue_draw (fpFrames.palette);
-  gtk_widget_queue_draw (fpFrames.satur);
-  gtk_widget_queue_draw (fpFrames.lnd);
+  gtk_widget_queue_draw (fp_frames.palette);
+  gtk_widget_queue_draw (fp_frames.satur);
+  gtk_widget_queue_draw (fp_frames.lnd);
   gtk_widget_queue_draw (dlg);
 
-  refreshPreviews (Current.VisibleFrames);
+  fp_refresh_previews (fpvals.visible_frames);
 }
 
 static void
 fp_show_hide_frame (GtkWidget *button,
                     GtkWidget *frame)
 {
-  gint prev = Current.VisibleFrames;
+  gint prev = fpvals.visible_frames;
 
   if (frame == NULL)
     return;
@@ -962,16 +1008,16 @@ fp_show_hide_frame (GtkWidget *button,
         {
           gtk_widget_show (frame);
 
-          if (frame==fpFrames.palette)
-            Current.VisibleFrames |= HUE;
-          else if (frame==fpFrames.satur)
-            Current.VisibleFrames |= SATURATION;
-          else if (frame==fpFrames.lnd)
-            Current.VisibleFrames |= VALUE;
+          if (frame==fp_frames.palette)
+            fpvals.visible_frames |= HUE;
+          else if (frame==fp_frames.satur)
+            fpvals.visible_frames |= SATURATION;
+          else if (frame==fp_frames.lnd)
+            fpvals.visible_frames |= VALUE;
 
-          refreshPreviews (Current.VisibleFrames & ~prev);
-          fp_create_smoothness_graph (AW.aliasingPreview);
-          fp_range_preview_spill (AW.rangePreview,Current.ValueBy);
+          fp_refresh_previews (fpvals.visible_frames & ~prev);
+          fp_create_smoothness_graph (AW.aliasing_preview);
+          fp_range_preview_spill (AW.range_preview,fpvals.value_by);
         }
     }
   else
@@ -980,19 +1026,19 @@ fp_show_hide_frame (GtkWidget *button,
         {
           gtk_widget_hide (frame);
 
-          if (frame==fpFrames.palette)
-            Current.VisibleFrames &= ~HUE;
-          else if (frame==fpFrames.satur)
-            Current.VisibleFrames &= ~SATURATION;
-          else if (frame==fpFrames.lnd)
-            Current.VisibleFrames &= ~VALUE;
+          if (frame==fp_frames.palette)
+            fpvals.visible_frames &= ~HUE;
+          else if (frame==fp_frames.satur)
+            fpvals.visible_frames &= ~SATURATION;
+          else if (frame==fp_frames.lnd)
+            fpvals.visible_frames &= ~VALUE;
         }
     }
 }
 
 static void
-Adjust_Preview_Sizes (gint width,
-                      gint height)
+fp_adjust_preview_sizes (gint width,
+                         gint height)
 {
   gtk_widget_set_size_request (origPreview,     width, height);
   gtk_widget_set_size_request (curPreview,      width, height);
@@ -1009,43 +1055,44 @@ Adjust_Preview_Sizes (gint width,
   gtk_widget_set_size_request (minusSatPreview, width, height);
   gtk_widget_set_size_request (SatPreview,      width, height);
   gtk_widget_set_size_request (plusSatPreview,  width, height);
+
 }
 
 static void
-selectionMade (GtkWidget *widget,
-               gpointer   data)
+fp_selection_made (GtkWidget *widget,
+                   gpointer   data)
 {
-  Current.Touched[Current.ValueBy] = 1;
+  fpvals.touched[fpvals.value_by] = 1;
 
   if (data == (gpointer) hue_red) {
-    Update_Current_FP (HUE, RED);
+    update_current_fp (HUE, RED);
   } else if (data == (gpointer) hue_green) {
-    Update_Current_FP (HUE, GREEN);
+    update_current_fp (HUE, GREEN);
   } else if (data == (gpointer) hue_blue) {
-    Update_Current_FP (HUE, BLUE);
+    update_current_fp (HUE, BLUE);
   } else if (data == (gpointer) hue_cyan) {
-    Update_Current_FP (HUE, CYAN);
+    update_current_fp (HUE, CYAN);
   } else if (data == (gpointer) hue_yellow) {
-    Update_Current_FP (HUE, YELLOW);
+    update_current_fp (HUE, YELLOW);
   } else if (data == (gpointer) hue_magenta) {
-    Update_Current_FP (HUE, MAGENTA);
+    update_current_fp (HUE, MAGENTA);
   } else if (data == (gpointer) val_darker) {
-    Update_Current_FP (VALUE, DOWN);
+    update_current_fp (VALUE, DOWN);
   } else if (data == (gpointer) val_lighter) {
-    Update_Current_FP (VALUE, UP);
+    update_current_fp (VALUE, UP);
   } else if (data == (gpointer) sat_more) {
-    Update_Current_FP (SATURATION, UP);
+    update_current_fp (SATURATION, UP);
   } else if (data == (gpointer) sat_less) {
-    Update_Current_FP (SATURATION, DOWN);
+    update_current_fp (SATURATION, DOWN);
   }
 
-  refreshPreviews (Current.VisibleFrames);
+  fp_refresh_previews (fpvals.visible_frames);
 }
 
 static void
-refreshPreviews (gint which)
+fp_refresh_previews (gint which)
 {
-  fp_Create_Nudge (nudgeArray);
+  fp_create_nudge (nudgeArray);
   fp_render_preview (origPreview, NONEATALL, 0);
   fp_render_preview (curPreview, CURRENT, 0);
   if (which & HUE)
@@ -1080,7 +1127,7 @@ fp_response (GtkWidget *widget,
   switch (response_id)
     {
     case RESPONSE_RESET:
-      resetFilterPacks ();
+      fp_reset_filter_packs ();
       break;
 
     case GTK_RESPONSE_OK:
@@ -1096,18 +1143,18 @@ fp_response (GtkWidget *widget,
 
 static void
 fp_scale_update (GtkAdjustment *adjustment,
-                 float         *scale_val)
+                 gdouble        *scale_val)
 {
-  static gfloat prevValue = 0.25;
+  static gdouble prevValue = 0.25;
 
   *scale_val = adjustment->value;
 
   if (prevValue != adjustment->value)
     {
-      fp_Create_Nudge (nudgeArray);
-      refreshPreviews (Current.VisibleFrames);
+      fp_create_nudge (nudgeArray);
+      fp_refresh_previews (fpvals.visible_frames);
       if (AW.window != NULL && GTK_WIDGET_VISIBLE (AW.window))
-        fp_create_smoothness_graph (AW.aliasingPreview);
+        fp_create_smoothness_graph (AW.aliasing_preview);
       prevValue = adjustment->value;
     }
 }
@@ -1126,9 +1173,9 @@ fp_dialog (void)
   GtkWidget *control;
   GtkWidget *table;
 
-  reduced = Reduce_The_Image (drawable,mask,
-                              Current.PreviewSize,
-                              Current.SlctnOnly);
+  reduced = fp_reduce_image (drawable,mask,
+                              fpvals.preview_size,
+                              fpvals.selection_only);
 
   gimp_ui_init ("fp", TRUE);
 
@@ -1152,14 +1199,14 @@ fp_dialog (void)
 
   fp_advanced_dialog ();
 
-  fpFrames.bna          = bna          = fp_create_bna();
-  fpFrames.rough        = rough        = fp_create_rough();
-  fpFrames.range        = range        = fp_create_range();
-  fpFrames.palette      = palette      = fp_create_circle_palette();
-  fpFrames.lnd          = lnd          = fp_create_lnd();
-  fpFrames.show         = show         = fp_create_show();
-  fpFrames.satur        = satur        = fp_create_msnls();
-  fpFrames.pixelsBy     = pixelsBy     = fp_create_pixels_select_by();
+  fp_frames.bna          = bna          = fp_create_bna();
+  fp_frames.rough        = rough        = fp_create_rough();
+  fp_frames.range        = range        = fp_create_range();
+  fp_frames.palette      = palette      = fp_create_circle_palette();
+  fp_frames.lnd          = lnd          = fp_create_lnd();
+  fp_frames.show         = show         = fp_create_show();
+  fp_frames.satur        = satur        = fp_create_msnls();
+  fp_frames.pixelsBy     = pixelsBy     = fp_create_pixels_select_by();
                           control      = fp_create_control();
   /********************************************************************/
   /********************   PUT EVERYTHING TOGETHER    ******************/
@@ -1191,7 +1238,7 @@ fp_dialog (void)
 
   gtk_widget_show (dlg);
 
-  refreshPreviews (Current.VisibleFrames);
+  fp_refresh_previews (fpvals.visible_frames);
 
   gtk_main ();
 
@@ -1203,7 +1250,7 @@ fp_dialog (void)
 /***********************************************************/
 
 static void
-As_You_Drag (GtkWidget *button)
+fp_drag (GtkWidget *button)
 {
   static gboolean notFirstTime = FALSE;
 
@@ -1214,28 +1261,28 @@ As_You_Drag (GtkWidget *button)
 
   if (GTK_TOGGLE_BUTTON (button)->active)
     {
-      Current.RealTime=TRUE;
-      gtk_range_set_update_policy (GTK_RANGE (Current.roughnessScale),0);
-      gtk_range_set_update_policy (GTK_RANGE (Current.aliasingScale),0);
-      gtk_range_set_update_policy (GTK_RANGE (Current.previewSizeScale),0);
+      fpvals.real_time=TRUE;
+      gtk_range_set_update_policy (GTK_RANGE (fp_widgets.roughness_scale),0);
+      gtk_range_set_update_policy (GTK_RANGE (fp_widgets.aliasing_scale),0);
+      gtk_range_set_update_policy (GTK_RANGE (fp_widgets.preview_size_scale),0);
     }
   else
     {
-      Current.RealTime=FALSE;
-      gtk_range_set_update_policy (GTK_RANGE (Current.roughnessScale),
+      fpvals.real_time=FALSE;
+      gtk_range_set_update_policy (GTK_RANGE (fp_widgets.roughness_scale),
                                    GTK_UPDATE_DELAYED);
-      gtk_range_set_update_policy (GTK_RANGE (Current.aliasingScale),
+      gtk_range_set_update_policy (GTK_RANGE (fp_widgets.aliasing_scale),
                                    GTK_UPDATE_DELAYED);
-      gtk_range_set_update_policy (GTK_RANGE (Current.previewSizeScale),
+      gtk_range_set_update_policy (GTK_RANGE (fp_widgets.preview_size_scale),
                                    GTK_UPDATE_DELAYED);
     }
 }
 
 static void
-preview_size_scale_update (GtkAdjustment *adjustment,
-                           float         *scale_val)
+fp_preview_scale_update (GtkAdjustment *adjustment,
+                         gdouble        *scale_val)
 {
-  Current.PreviewSize = adjustment->value;
+  fpvals.preview_size = adjustment->value;
   fp_redraw_all_windows();
 }
 
@@ -1295,19 +1342,19 @@ fp_advanced_dialog (void)
   gtk_container_add (GTK_CONTAINER (alignment), inner_vbox);
   gtk_widget_show (inner_vbox);
 
-  AW.aliasingPreview = gimp_preview_area_new ();
-  gtk_widget_set_size_request (AW.aliasingPreview, 256, MAX_ROUGHNESS);
-  gtk_box_pack_start (GTK_BOX (inner_vbox), AW.aliasingPreview, TRUE, TRUE, 0);
-  gtk_widget_show (AW.aliasingPreview);
+  AW.aliasing_preview = gimp_preview_area_new ();
+  gtk_widget_set_size_request (AW.aliasing_preview, 256, MAX_ROUGHNESS);
+  gtk_box_pack_start (GTK_BOX (inner_vbox), AW.aliasing_preview, TRUE, TRUE, 0);
+  gtk_widget_show (AW.aliasing_preview);
 
-  fp_create_smoothness_graph (AW.aliasingPreview);
+  fp_create_smoothness_graph (AW.aliasing_preview);
 
-  AW.rangePreview = gimp_preview_area_new ();
-  gtk_widget_set_size_request (AW.rangePreview, 256, RANGE_HEIGHT);
-  gtk_box_pack_start(GTK_BOX (inner_vbox), AW.rangePreview, TRUE, TRUE, 0);
-  gtk_widget_show (AW.rangePreview);
+  AW.range_preview = gimp_preview_area_new ();
+  gtk_widget_set_size_request (AW.range_preview, 256, RANGE_HEIGHT);
+  gtk_box_pack_start(GTK_BOX (inner_vbox), AW.range_preview, TRUE, TRUE, 0);
+  gtk_widget_show (AW.range_preview);
 
-  fp_range_preview_spill (AW.rangePreview, Current.ValueBy);
+  fp_range_preview_spill (AW.range_preview, fpvals.value_by);
 
   labelTable = gtk_table_new (3, 4, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (labelTable), 6);
@@ -1318,7 +1365,7 @@ fp_advanced_dialog (void)
 
   for (i = 0; i < 12; i++)
     {
-      label = Current.rangeLabels[i] = gtk_label_new ("-");
+      label = fp_widgets.range_label[i] = gtk_label_new ("-");
       if (!(i % 4))
         {
           gtk_label_set_text (GTK_LABEL(label), gettext (rangeNames[i/4]));
@@ -1331,23 +1378,23 @@ fp_advanced_dialog (void)
 
   /************************************************************/
 
-  AW.aliasingGraph = gtk_drawing_area_new ();
-  gtk_widget_set_size_request (AW.aliasingGraph,
+  AW.aliasing_graph = gtk_drawing_area_new ();
+  gtk_widget_set_size_request (AW.aliasing_graph,
                                2 * MARGIN + 256,
                                RANGE_HEIGHT);
-  gtk_box_pack_start (GTK_BOX (vbox), AW.aliasingGraph, TRUE, TRUE, 0);
-  gtk_widget_show (AW.aliasingGraph);
-  gtk_widget_set_events (AW.aliasingGraph, RANGE_ADJUST_MASK);
+  gtk_box_pack_start (GTK_BOX (vbox), AW.aliasing_graph, TRUE, TRUE, 0);
+  gtk_widget_show (AW.aliasing_graph);
+  gtk_widget_set_events (AW.aliasing_graph, RANGE_ADJUST_MASK);
 
-  g_signal_connect (AW.aliasingGraph, "event",
-                    G_CALLBACK (FP_Range_Change_Events),
-                    &Current);
+  g_signal_connect (AW.aliasing_graph, "event",
+                    G_CALLBACK (fp_range_change_events),
+                    &fpvals);
 
   /************************************************************/
 
-  smoothnessData = gtk_adjustment_new (Current.Alias, 0, 1.0, 0.05, 0.01, 0.0);
+  smoothnessData = gtk_adjustment_new (fpvals.aliasing, 0, 1.0, 0.05, 0.01, 0.0);
 
-  Current.aliasingScale = scale =
+  fp_widgets.aliasing_scale = scale =
     gtk_hscale_new (GTK_ADJUSTMENT (smoothnessData));
   gtk_widget_set_size_request (scale, 200, -1);
   gtk_scale_set_digits (GTK_SCALE (scale), 2);
@@ -1359,7 +1406,7 @@ fp_advanced_dialog (void)
 
   g_signal_connect (smoothnessData, "value_changed",
                     G_CALLBACK (fp_scale_update),
-                    &Current.Alias);
+                    &fpvals.aliasing);
 
   /******************* MISC OPTIONS ***************************/
 
@@ -1367,18 +1414,18 @@ fp_advanced_dialog (void)
   gtk_box_pack_start (GTK_BOX (mainvbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  Check_Button_In_A_Box (vbox, _("Preview as You Drag"),
-                         GTK_SIGNAL_FUNC (As_You_Drag),
+  fp_checkbutton_in_box (vbox, _("Preview as You Drag"),
+                         GTK_SIGNAL_FUNC (fp_drag),
                          NULL, TRUE);
 
   frame = gimp_frame_new (_("Preview Size"));
   gtk_widget_show (frame);
 
-  smoothnessData = gtk_adjustment_new (Current.PreviewSize,
+  smoothnessData = gtk_adjustment_new (fpvals.preview_size,
                                        50, MAX_PREVIEW_SIZE,
                                        5, 5, 0.0);
 
-  Current.previewSizeScale = scale =
+  fp_widgets.preview_size_scale = scale =
     gtk_hscale_new (GTK_ADJUSTMENT (smoothnessData));
   gtk_container_add (GTK_CONTAINER (frame), scale);
   gtk_widget_set_size_request (scale, 100, -1);
@@ -1388,8 +1435,8 @@ fp_advanced_dialog (void)
   gtk_widget_show (scale);
 
   g_signal_connect (smoothnessData, "value_changed",
-                    G_CALLBACK (preview_size_scale_update),
-                    &Current.PreviewSize);
+                    G_CALLBACK (fp_preview_scale_update),
+                    &fpvals.preview_size);
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 }
@@ -1427,26 +1474,26 @@ draw_slider (GdkWindow *window,
 static void
 draw_it (GtkWidget *widget)
 {
-  draw_slider (AW.aliasingGraph->window,
-               AW.aliasingGraph->style->black_gc,
-               AW.aliasingGraph->style->dark_gc[GTK_STATE_NORMAL],
-               Current.Cutoffs[SHADOWS]);
+  draw_slider (AW.aliasing_graph->window,
+               AW.aliasing_graph->style->black_gc,
+               AW.aliasing_graph->style->dark_gc[GTK_STATE_NORMAL],
+               fpvals.cutoff[SHADOWS]);
 
-  draw_slider (AW.aliasingGraph->window,
-               AW.aliasingGraph->style->black_gc,
-               AW.aliasingGraph->style->dark_gc[GTK_STATE_NORMAL],
-               Current.Cutoffs[MIDTONES]);
+  draw_slider (AW.aliasing_graph->window,
+               AW.aliasing_graph->style->black_gc,
+               AW.aliasing_graph->style->dark_gc[GTK_STATE_NORMAL],
+               fpvals.cutoff[MIDTONES]);
 
-  draw_slider (AW.aliasingGraph->window,
-               AW.aliasingGraph->style->black_gc,
-               AW.aliasingGraph->style->dark_gc[GTK_STATE_SELECTED],
-               Current.Offset);
+  draw_slider (AW.aliasing_graph->window,
+               AW.aliasing_graph->style->black_gc,
+               AW.aliasing_graph->style->dark_gc[GTK_STATE_SELECTED],
+               fpvals.offset);
 }
 
 static gboolean
-FP_Range_Change_Events (GtkWidget *widget,
+fp_range_change_events (GtkWidget *widget,
                         GdkEvent  *event,
-                        FP_Params *current)
+                        FPValues *current)
 {
   GdkEventButton *bevent;
   GdkEventMotion *mevent;
@@ -1463,43 +1510,43 @@ FP_Range_Change_Events (GtkWidget *widget,
     case GDK_BUTTON_PRESS:
       bevent= (GdkEventButton *) event;
 
-      shad   =  abs (bevent->x - Current.Cutoffs[SHADOWS]);
-      mid    =  abs (bevent->x - Current.Cutoffs[MIDTONES]);
-      offset =  abs (bevent->x - Current.Offset);
+      shad   =  abs (bevent->x - fpvals.cutoff[SHADOWS]);
+      mid    =  abs (bevent->x - fpvals.cutoff[MIDTONES]);
+      offset =  abs (bevent->x - fpvals.offset);
 
       min = MIN (MIN (shad, mid), offset);
 
       if (bevent->x >0 && bevent->x<256)
         {
           if (min == shad)
-            new = &Current.Cutoffs[SHADOWS];
+            new = &fpvals.cutoff[SHADOWS];
           else if (min == mid)
-            new = &Current.Cutoffs[MIDTONES];
+            new = &fpvals.cutoff[MIDTONES];
           else
-            new = &Current.Offset;
+            new = &fpvals.offset;
 
-          slider_erase (AW.aliasingGraph->window, *new);
+          slider_erase (AW.aliasing_graph->window, *new);
           *new = bevent->x;
         }
 
       draw_it (NULL);
 
-      if (Current.RealTime)
+      if (fpvals.real_time)
         {
-          fp_range_preview_spill (AW.rangePreview, Current.ValueBy);
+          fp_range_preview_spill (AW.range_preview, fpvals.value_by);
           update_range_labels ();
-          fp_create_smoothness_graph (AW.aliasingPreview);
-          refreshPreviews (Current.VisibleFrames);
+          fp_create_smoothness_graph (AW.aliasing_preview);
+          fp_refresh_previews (fpvals.visible_frames);
         }
       break;
 
     case GDK_BUTTON_RELEASE:
-      if (!Current.RealTime)
+      if (!fpvals.real_time)
         {
-          fp_range_preview_spill (AW.rangePreview, Current.ValueBy);
+          fp_range_preview_spill (AW.range_preview, fpvals.value_by);
           update_range_labels ();
-          fp_create_smoothness_graph (AW.aliasingPreview);
-          refreshPreviews (Current.VisibleFrames);
+          fp_create_smoothness_graph (AW.aliasing_preview);
+          fp_refresh_previews (fpvals.visible_frames);
         }
       break;
 
@@ -1509,15 +1556,15 @@ FP_Range_Change_Events (GtkWidget *widget,
 
       if (x >= 0 && x < 256)
         {
-          slider_erase (AW.aliasingGraph->window, *new);
+          slider_erase (AW.aliasing_graph->window, *new);
           *new = x;
           draw_it (NULL);
-          if (Current.RealTime)
+          if (fpvals.real_time)
             {
-              fp_range_preview_spill (AW.rangePreview, Current.ValueBy);
+              fp_range_preview_spill (AW.range_preview, fpvals.value_by);
               update_range_labels ();
-              fp_create_smoothness_graph (AW.aliasingPreview);
-              refreshPreviews (Current.VisibleFrames);
+              fp_create_smoothness_graph (AW.aliasing_preview);
+              fp_refresh_previews (fpvals.visible_frames);
             }
         }
       break;
@@ -1534,45 +1581,45 @@ update_range_labels (void)
 {
   gchar buffer[3];
 
-  gtk_label_set_text (GTK_LABEL(Current.rangeLabels[1]),"0");
+  gtk_label_set_text (GTK_LABEL(fp_widgets.range_label[1]),"0");
 
-  g_snprintf (buffer, sizeof (buffer), "%d", Current.Cutoffs[SHADOWS]);
-  gtk_label_set_text (GTK_LABEL (Current.rangeLabels[3]), buffer);
-  gtk_label_set_text (GTK_LABEL (Current.rangeLabels[5]), buffer);
+  g_snprintf (buffer, sizeof (buffer), "%d", fpvals.cutoff[SHADOWS]);
+  gtk_label_set_text (GTK_LABEL (fp_widgets.range_label[3]), buffer);
+  gtk_label_set_text (GTK_LABEL (fp_widgets.range_label[5]), buffer);
 
-  g_snprintf (buffer, sizeof (buffer), "%d", Current.Cutoffs[MIDTONES]);
-  gtk_label_set_text (GTK_LABEL (Current.rangeLabels[7]), buffer);
-  gtk_label_set_text (GTK_LABEL (Current.rangeLabels[9]), buffer);
+  g_snprintf (buffer, sizeof (buffer), "%d", fpvals.cutoff[MIDTONES]);
+  gtk_label_set_text (GTK_LABEL (fp_widgets.range_label[7]), buffer);
+  gtk_label_set_text (GTK_LABEL (fp_widgets.range_label[9]), buffer);
 
-  gtk_label_set_text (GTK_LABEL(Current.rangeLabels[11]), "255");
+  gtk_label_set_text (GTK_LABEL(fp_widgets.range_label[11]), "255");
 }
 
 static void
-initializeFilterPacks (void)
+fp_init_filter_packs (void)
 {
   gint i, j;
   for (i = 0; i < 256; i++)
     for (j = BY_HUE; j < JUDGE_BY; j++)
       {
-        Current.redAdj   [j][i] = 0;
-        Current.greenAdj [j][i] = 0;
-        Current.blueAdj  [j][i] = 0;
-        Current.satAdj   [j][i] = 0;
+        fpvals.red_adjust   [j][i] = 0;
+        fpvals.green_adjust [j][i] = 0;
+        fpvals.blue_adjust  [j][i] = 0;
+        fpvals.sat_adjust   [j][i] = 0;
       }
 }
 
 static void
-resetFilterPacks (void)
+fp_reset_filter_packs (void)
 {
-  initializeFilterPacks ();
-  refreshPreviews (Current.VisibleFrames);
+  fp_init_filter_packs ();
+  fp_refresh_previews (fpvals.visible_frames);
 }
 
 static ReducedImage *
-Reduce_The_Image (GimpDrawable *drawable,
-                  GimpDrawable *mask,
-                  gint LongerSize,
-                  gint Slctn)
+fp_reduce_image (GimpDrawable  *drawable,
+                 GimpDrawable *mask,
+                 gint          longer_size,
+                 gint          selection)
 {
   gint          RH, RW, width, height, bytes=drawable->bpp;
   ReducedImage *temp = (ReducedImage *) malloc (sizeof (ReducedImage));
@@ -1591,14 +1638,14 @@ Reduce_The_Image (GimpDrawable *drawable,
   if (width != drawable->width && height != drawable->height)
     NoSelectionMade = FALSE;
 
-  if (Slctn == 0)
+  if (selection == 0)
     {
       x1 = 0;
       x2 = drawable->width;
       y1 = 0;
       y2 = drawable->height;
     }
-  else if (Slctn == 2)
+  else if (selection == 2)
     {
       x1 = MAX (0,                x1 - width  / 2.0);
       x2 = MIN (drawable->width,  x2 + width  / 2.0);
@@ -1611,13 +1658,13 @@ Reduce_The_Image (GimpDrawable *drawable,
 
   if (width > height)
     {
-      RW = LongerSize;
-      RH = (gfloat) height * (gfloat) LongerSize / (gfloat) width;
+      RW = longer_size;
+      RH = (gdouble) height * (gdouble) longer_size / (gdouble) width;
     }
   else
     {
-      RH = LongerSize;
-      RW = (gfloat) width * (gfloat) LongerSize / (gfloat) height;
+      RH = longer_size;
+      RW = (gdouble) width * (gdouble) longer_size / (gdouble) height;
     }
 
   tempRGB  = (guchar *)  malloc (RW * RH * bytes);
@@ -1632,14 +1679,14 @@ Reduce_The_Image (GimpDrawable *drawable,
 
   for (i = 0; i < RH; i++)
     {
-      whichrow = (gfloat) i * (gfloat) height / (gfloat) RH;
+      whichrow = (gdouble) i * (gdouble) height / (gdouble) RH;
 
       gimp_pixel_rgn_get_row (&srcPR, src_row, x1, y1 + whichrow, width);
       gimp_pixel_rgn_get_row (&srcMask, src_mask_row, x1, y1 + whichrow, width);
 
       for (j = 0; j < RW; j++)
         {
-          whichcol = (gfloat) j * (gfloat) width / (gfloat) RW;
+          whichcol = (gdouble) j * (gdouble) width / (gdouble) RW;
 
           if (NoSelectionMade)
             tempmask[i * RW + j] = 255;
@@ -1678,104 +1725,119 @@ Reduce_The_Image (GimpDrawable *drawable,
 
 static void
 fp_render_preview(GtkWidget *preview,
-                  gint       changewhat,
-                  gint       changewhich)
+                  gint       change_what,
+                  gint       change_which)
 {
   guchar *a;
-  gint Inten, bytes = drawable->bpp;
-  gint i, j, k, nudge, M, m, middle,JudgeBy;
-  float partial;
-  gint RW = reduced->width;
-  gint RH = reduced->height;
-  gint backupP[3], P[3], tempSat[JUDGE_BY][256];
+  gint    Inten;
+  gint    bytes = drawable->bpp;
+  gint    i, j, k, nudge, M, m, middle, JudgeBy;
+  gdouble partial;
+  gint    RW = reduced->width;
+  gint    RH = reduced->height;
+  gint    backupP[3];
+  gint    P[3];
+  gint    tempSat[JUDGE_BY][256];
 
   a = g_new (guchar, 4*RW*RH);
 
-  if (changewhat==SATURATION)
-    for (k=0; k<256; k++) {
-      for (JudgeBy=BY_HUE; JudgeBy<JUDGE_BY; JudgeBy++)
-        tempSat[JudgeBy][k]=0;
-        tempSat[Current.ValueBy][k] += changewhich*nudgeArray[(k+Current.Offset)%256];
-    }
+  if (change_what==SATURATION)
+    for (k = 0; k < 256; k++)
+      {
+        for (JudgeBy = BY_HUE; JudgeBy < JUDGE_BY; JudgeBy++)
+          tempSat[JudgeBy][k] = 0;
+        tempSat[fpvals.value_by][k] += change_which * nudgeArray[(k + fpvals.offset) % 256];
+      }
 
-  for (i=0; i<RH; i++) {
-    for (j=0; j<RW; j++) {
+  for (i = 0; i < RH; i++)
+    {
+      for (j = 0; j < RW; j++)
+        {
+          backupP[0] = P[0]  = (int) reduced->rgb[i * RW * bytes + j * bytes + 0];
+          backupP[1] = P[1]  = (int) reduced->rgb[i * RW * bytes + j * bytes + 1];
+          backupP[2] = P[2]  = (int) reduced->rgb[i * RW * bytes + j * bytes + 2];
 
-      backupP[0] = P[0]  = (int) reduced->rgb[i*RW*bytes + j*bytes + 0];
-      backupP[1] = P[1]  = (int) reduced->rgb[i*RW*bytes + j*bytes + 1];
-      backupP[2] = P[2]  = (int) reduced->rgb[i*RW*bytes + j*bytes + 2];
+      m = MIN (MIN (P[0], P[1]), P[2]);
+      M = MAX (MAX (P[0], P[1]), P[2]);
 
-      m = MIN(MIN(P[0],P[1]),P[2]);
-      M = MAX(MAX(P[0],P[1]),P[2]);
-      middle=(M+m)/2;
-      for (k=0; k<3; k++)
-        if (P[k]!=m && P[k]!=M) middle=P[k];
+      middle = (M + m) / 2;
 
-      partial = reduced->mask[i*RW+j]/255.0;
+      for (k = 0; k < 3; k++)
+        if (P[k] != m && P[k] != M) middle = P[k];
 
-      for (JudgeBy=BY_HUE; JudgeBy<JUDGE_BY; JudgeBy++) {
-        if (!Current.Touched[JudgeBy]) continue;
+      partial = reduced->mask[i * RW + j] / 255.0;
 
-        Inten   = reduced->hsv[i*RW*bytes + j*bytes + JudgeBy]*255.0;
+      for (JudgeBy = BY_HUE; JudgeBy < JUDGE_BY; JudgeBy++)
+        {
+         if (!fpvals.touched[JudgeBy]) continue;
 
-        /*DO SATURATION FIRST*/
-        if (changewhat != NONEATALL) {
-          if (M!=m) {
-            for (k=0; k<3; k++)
-              if (backupP[k] == M)
-                P[k] = MAX(P[k]+partial*Current.satAdj[JudgeBy][Inten],middle);
-              else if (backupP[k] == m)
-                P[k] = MIN(P[k]-partial*Current.satAdj[JudgeBy][Inten],middle);
-          }
-          P[0]  += partial*Current.redAdj[JudgeBy][Inten];
-          P[1]  += partial*Current.greenAdj[JudgeBy][Inten];
-          P[2]  += partial*Current.blueAdj[JudgeBy][Inten];
+         Inten   = reduced->hsv[i * RW * bytes + j * bytes + JudgeBy] * 255.0;
+
+         /*DO SATURATION FIRST*/
+         if (change_what != NONEATALL)
+           {
+             if (M != m)
+               {
+                 for (k = 0; k < 3; k++)
+                   if (backupP[k] == M)
+                     P[k] = MAX (P[k] + partial * fpvals.sat_adjust[JudgeBy][Inten],
+                                 middle);
+                   else if (backupP[k] == m)
+                     P[k] = MIN (P[k] - partial * fpvals.sat_adjust[JudgeBy][Inten],
+                                 middle);
+               }
+
+             P[0]  += partial * fpvals.red_adjust[JudgeBy][Inten];
+             P[1]  += partial * fpvals.green_adjust[JudgeBy][Inten];
+             P[2]  += partial * fpvals.blue_adjust[JudgeBy][Inten];
+           }
         }
-      }
 
-      Inten   = reduced->hsv[i*RW*bytes + j*bytes + Current.ValueBy]*255.0;
-      nudge   = partial*nudgeArray[(Inten+Current.Offset)%256];
+      Inten   = reduced->hsv[i * RW * bytes + j * bytes + fpvals.value_by] * 255.0;
+      nudge   = partial * nudgeArray[(Inten + fpvals.offset) % 256];
 
-      switch (changewhat) {
-      case HUE:
-        P[0]  += colorSign[RED][changewhich]   * nudge;
-        P[1]  += colorSign[GREEN][changewhich] * nudge;
-        P[2]  += colorSign[BLUE][changewhich]  * nudge;
-        break;
+      switch (change_what)
+        {
+        case HUE:
+          P[0]  += colorSign[RED][change_which]   * nudge;
+          P[1]  += colorSign[GREEN][change_which] * nudge;
+          P[2]  += colorSign[BLUE][change_which]  * nudge;
+          break;
 
-      case SATURATION:
-        for (JudgeBy=BY_HUE; JudgeBy<JUDGE_BY; JudgeBy++)
-          for (k=0; k<3; k++)
-            if (M!=m) {
-              if (backupP[k] == M)
-                P[k] = MAX(P[k]+
-                           partial*tempSat[JudgeBy][Inten],middle);
-              else if (backupP[k] == m)
-                P[k] = MIN(P[k]-
-                           partial*tempSat[JudgeBy][Inten],middle);
-            }
-        break;
+        case SATURATION:
+          for (JudgeBy = BY_HUE; JudgeBy < JUDGE_BY; JudgeBy++)
+            for (k = 0; k < 3; k++)
+              if (M != m)
+                {
+                  if (backupP[k] == M)
+                    P[k] = MAX (P[k] + partial * tempSat[JudgeBy][Inten],
+                                middle);
+                  else if (backupP[k] == m)
+                    P[k] = MIN (P[k]- partial * tempSat[JudgeBy][Inten],
+                                middle);
+                }
+          break;
 
-      case VALUE:
-        P[0]  += changewhich * nudge;
-        P[1]  += changewhich * nudge;
-        P[2]  += changewhich * nudge;
-        break;
+        case VALUE:
+          P[0]  += change_which * nudge;
+          P[1]  += change_which * nudge;
+          P[2]  += change_which * nudge;
+          break;
 
-      default:
-        break;
-      }
+        default:
+          break;
+        }
 
       a[(i * RW + j) * 4 + 0] = CLAMP0255(P[0]);
       a[(i * RW + j) * 4 + 1] = CLAMP0255(P[1]);
       a[(i * RW + j) * 4 + 2] = CLAMP0255(P[2]);
 
       if (bytes == 4)
-        a[(i * RW + j) * 4 + 3] = reduced->rgb[i*RW*bytes+j*bytes+3];
+        a[(i * RW + j) * 4 + 3] = reduced->rgb[i * RW * bytes + j * bytes + 3];
       else
         a[(i * RW + j) * 4 + 3] = 255;
+        }
     }
-  }
 
   gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
                           0, 0, RW, RH,
@@ -1786,8 +1848,8 @@ fp_render_preview(GtkWidget *preview,
 }
 
 static void
-Update_Current_FP (gint changewhat,
-                   gint changewhich)
+update_current_fp (gint change_what,
+                   gint change_which)
 {
   gint i;
 
@@ -1795,29 +1857,29 @@ Update_Current_FP (gint changewhat,
     {
       gint nudge;
 
-      fp_Create_Nudge (nudgeArray);
-      nudge = nudgeArray[(i + Current.Offset) % 256];
+      fp_create_nudge (nudgeArray);
+      nudge = nudgeArray[(i + fpvals.offset) % 256];
 
-      switch (changewhat) {
+      switch (change_what) {
       case HUE:
-        Current.redAdj[Current.ValueBy][i] +=
-          colorSign[RED][changewhich] * nudge;
+        fpvals.red_adjust[fpvals.value_by][i] +=
+          colorSign[RED][change_which] * nudge;
 
-        Current.greenAdj[Current.ValueBy][i] +=
-          colorSign[GREEN][changewhich] * nudge;
+        fpvals.green_adjust[fpvals.value_by][i] +=
+          colorSign[GREEN][change_which] * nudge;
 
-        Current.blueAdj[Current.ValueBy][i] +=
-          colorSign[BLUE][changewhich]  * nudge;
+        fpvals.blue_adjust[fpvals.value_by][i] +=
+          colorSign[BLUE][change_which]  * nudge;
         break;
 
       case SATURATION:
-        Current.satAdj[Current.ValueBy][i] += changewhich * nudge;
+        fpvals.sat_adjust[fpvals.value_by][i] += change_which * nudge;
         break;
 
       case VALUE:
-        Current.redAdj[Current.ValueBy][i]   += changewhich * nudge;
-        Current.greenAdj[Current.ValueBy][i] += changewhich * nudge;
-        Current.blueAdj[Current.ValueBy][i]  += changewhich * nudge;
+        fpvals.red_adjust[fpvals.value_by][i]   += change_which * nudge;
+        fpvals.green_adjust[fpvals.value_by][i] += change_which * nudge;
+        fpvals.blue_adjust[fpvals.value_by][i]  += change_which * nudge;
         break;
 
       default:
@@ -1834,7 +1896,7 @@ fp_create_smoothness_graph (GtkWidget *preview)
   gint i, j;
   gboolean toBeBlack;
 
-  fp_Create_Nudge(nArray);
+  fp_create_nudge(nArray);
 
   for (i = 0; i < MAX_ROUGHNESS; i++)
     {
@@ -1902,14 +1964,14 @@ fp_range_preview_spill (GtkWidget *preview,
               switch (type)
                 {
                 case BY_VAL:
-                  data[3 * (i * 256 + j) + 0] = j - Current.Offset;
-                  data[3 * (i * 256 + j) + 1] = j - Current.Offset;
-                  data[3 * (i * 256 + j) + 2] = j - Current.Offset;
+                  data[3 * (i * 256 + j) + 0] = j - fpvals.offset;
+                  data[3 * (i * 256 + j) + 1] = j - fpvals.offset;
+                  data[3 * (i * 256 + j) + 2] = j - fpvals.offset;
                   break;
 
                 case BY_HUE:
                   gimp_hsv_set (&hsv,
-                                ((j - Current.Offset + 256) % 256) / 255.0,
+                                ((j - fpvals.offset + 256) % 256) / 255.0,
                                 1.0,
                                 0.5);
                   gimp_hsv_to_rgb (&hsv, &rgb);
@@ -1922,7 +1984,7 @@ fp_range_preview_spill (GtkWidget *preview,
                 case BY_SAT:
                   gimp_hsv_set (&hsv,
                                 0.5,
-                                ((j-(gint)Current.Offset+256)%256) / 255.0,
+                                ((j-(gint)fpvals.offset+256)%256) / 255.0,
                                 0.5);
                   gimp_hsv_to_rgb (&hsv, &rgb);
                   gimp_rgb_get_uchar (&rgb,
@@ -1942,27 +2004,76 @@ fp_range_preview_spill (GtkWidget *preview,
 }
 
 static void
-fp_Create_Nudge(gint *adjArray)
+fp_create_nudge (gint *adj_array)
 {
   gint left, right, middle,i;
   /* The following function was determined by trial and error */
-  gdouble Steepness = pow (1 - Current.Alias, 4) * .8;
+  gdouble Steepness = pow (1 - fpvals.aliasing, 4) * .8;
 
-  left = (Current.Range == SHADOWS) ? 0 : Current.Cutoffs[Current.Range - 1];
-  right = Current.Cutoffs[Current.Range];
+  left = (fpvals.intensity_range == SHADOWS) ? 0 : fpvals.cutoff[fpvals.intensity_range - 1];
+  right = fpvals.cutoff[fpvals.intensity_range];
   middle = (left + right)/2;
 
-  if (Current.Alias)
+  if (fpvals.aliasing)
     for (i = 0; i < 256; i++)
       if (i <= middle)
-        adjArray[i] = MAX_ROUGHNESS *
-          Current.Rough * (1 + tanh (Steepness * (i - left))) / 2;
+        adj_array[i] = MAX_ROUGHNESS *
+          fpvals.roughness * (1 + tanh (Steepness * (i - left))) / 2;
       else
-        adjArray[i] = MAX_ROUGHNESS *
-          Current.Rough * (1 + tanh (Steepness * (right - i))) / 2;
+        adj_array[i] = MAX_ROUGHNESS *
+          fpvals.roughness * (1 + tanh (Steepness * (right - i))) / 2;
   else
     for (i = 0; i < 256; i++)
-      adjArray[i] = (left <= i && i <= right)
-        ? MAX_ROUGHNESS * Current.Rough : 0;
+      adj_array[i] = (left <= i && i <= right)
+        ? MAX_ROUGHNESS * fpvals.roughness : 0;
 }
 
+static void
+fp_preview_size_allocate (GtkWidget     *widget,
+                          GtkAllocation *allocation)
+{
+  gint  which   = fpvals.visible_frames;
+
+  if (widget == origPreview)
+    fp_render_preview (origPreview, NONEATALL, 0);
+  else if (widget == curPreview)
+    fp_render_preview (curPreview, CURRENT, 0);
+
+  if (which & HUE)
+    {
+      if (widget == rPreview)
+        fp_render_preview (rPreview,        HUE,        RED);
+      else if (widget == gPreview)
+        fp_render_preview (gPreview,        HUE,        GREEN);
+      else if (widget == bPreview)
+        fp_render_preview (bPreview,        HUE,        BLUE);
+      else if (widget == cPreview)
+        fp_render_preview (cPreview,        HUE,        CYAN);
+      else if (widget == yPreview)
+        fp_render_preview (yPreview,        HUE,        YELLOW);
+      else if (widget == mPreview)
+        fp_render_preview (mPreview,        HUE,        MAGENTA);
+      else if (widget == centerPreview)
+        fp_render_preview (centerPreview,   CURRENT,    0);
+    }
+
+  if (which & VALUE)
+    {
+      if (widget == lighterPreview)
+        fp_render_preview (lighterPreview,  VALUE,      UP);
+      else if (widget == middlePreview)
+        fp_render_preview (middlePreview,   CURRENT,    0);
+      else if (widget == darkerPreview)
+        fp_render_preview (darkerPreview,   VALUE,      DOWN);
+    }
+
+  if (which & SATURATION)
+    {
+      if (widget == plusSatPreview)
+        fp_render_preview (plusSatPreview,  SATURATION, UP);
+      else if (widget == SatPreview)
+        fp_render_preview (SatPreview,      CURRENT,    0);
+      else if (widget == minusSatPreview)
+        fp_render_preview (minusSatPreview, SATURATION, DOWN);
+    }
+}
