@@ -1,3 +1,10 @@
+2005-08-15  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/rcm/rcm_callback.c
+	* plug-ins/rcm/rcm_dialog.c
+	* plug-ins/rcm/rcm_misc.[ch]: redraw the previews if their size
+	changes. Fixes bug #172284.
+
 2005-08-15  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/CML_explorer.c

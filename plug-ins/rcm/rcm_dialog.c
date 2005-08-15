@@ -73,6 +73,7 @@
 
 static GtkWidget *
 rcm_create_one_preview (GtkWidget **preview,
+                        gint        mode,
 			gint        width,
 			gint        height)
 {
@@ -89,6 +90,8 @@ rcm_create_one_preview (GtkWidget **preview,
   gtk_widget_set_size_request (*preview, width, height);
   gtk_container_add (GTK_CONTAINER (frame), *preview);
   gtk_widget_show (*preview);
+
+  g_object_set_data (G_OBJECT (*preview), "mode", GINT_TO_POINTER (mode));
 
   return align;
 }
@@ -117,11 +120,15 @@ rcm_create_previews (void)
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  frame = rcm_create_one_preview (&Current.Bna->before,
+  frame = rcm_create_one_preview (&Current.Bna->before, ORIGINAL,
                                   Current.reduced->width,
                                   Current.reduced->height);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
+
+  g_signal_connect_after (Current.Bna->before, "size-allocate",
+                          G_CALLBACK (rcm_render_preview),
+                          NULL);
 
   vbox = gtk_vbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (top_vbox), vbox, TRUE, TRUE, 0);
@@ -131,11 +138,15 @@ rcm_create_previews (void)
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  frame = rcm_create_one_preview (&Current.Bna->after,
+  frame = rcm_create_one_preview (&Current.Bna->after, CURRENT,
                                   Current.reduced->width,
                                   Current.reduced->height);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
+
+  g_signal_connect_after (Current.Bna->after, "size-allocate",
+                          G_CALLBACK (rcm_render_preview),
+                          NULL);
 
   vbox = gtk_vbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (top_vbox), vbox, FALSE, FALSE, 0);
@@ -687,8 +698,6 @@ rcm_dialog (void)
 
   gtk_widget_show (dlg);
 
-  rcm_render_preview (Current.Bna->before, ORIGINAL);
-  rcm_render_preview (Current.Bna->after,  CURRENT);
   rcm_render_circle (Current.From->preview, SUM, MARGIN);
   rcm_render_circle (Current.To->preview, SUM, MARGIN);
   rcm_render_circle (Current.Gray->preview, GRAY_SUM, GRAY_MARGIN);

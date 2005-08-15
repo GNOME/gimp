@@ -53,12 +53,11 @@ float        *closest            (gfloat       *alpha,
                                   gfloat       *beta,
                                   gfloat        angle);
 float         angle_mod_2PI      (gfloat        angle);
-ReducedImage *rcm_reduce_image   (GimpDrawable *,
-                                  GimpDrawable *,
-                                  gint          ,
-                                  gint          );
-void          rcm_render_preview (GtkWidget    *,
-                                  gint);
+ReducedImage *rcm_reduce_image   (GimpDrawable *drawable,
+                                  GimpDrawable *mask,
+                                  gint          longer_size,
+                                  gint          selection);
+void          rcm_render_preview (GtkWidget    *preview);
 void          rcm_render_circle  (GtkWidget    *preview,
                                   gint          sum,
                                   gint          margin);
