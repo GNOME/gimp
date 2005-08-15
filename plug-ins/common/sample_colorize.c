@@ -542,7 +542,7 @@ smp_dest_combo_callback (GtkWidget *widget)
 static gint
 smp_constrain (gint32   image_id,
                gint32   drawable_id,
-	       gpointer data)
+               gpointer data)
 {
   if (image_id < 0)
     return FALSE;
