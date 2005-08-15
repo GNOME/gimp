@@ -1,3 +1,8 @@
+2005-08-15  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/common/sample_colorize.c (smp_constrain): add an extra
+	user data arg, so we fit the GimpDrawableConstraintFunc type.
+
 2005-08-15  Karine Delvare  <kdelvare@nerim.net>
 
 	* app/tools/gimprectangletool.[ch]
