@@ -36,9 +36,12 @@
 
 /* Some useful macros */
 
+#define PLUG_IN_PROC    "plug-in-photocopy"
+#define PLUG_IN_BINARY  "photocopy"
 #define TILE_CACHE_SIZE 48
 #define GAMMA           1.0
 #define EPSILON         2
+
 
 typedef struct
 {
@@ -118,13 +121,13 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",    "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode",    "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",       "Input image (unused)" },
     { GIMP_PDB_DRAWABLE, "drawable",    "Input drawable" },
-    { GIMP_PDB_FLOAT,    "mask_radius", "Photocopy mask radius (radius of pixel neighborhood)" },
+    { GIMP_PDB_FLOAT,    "mask-radius", "Photocopy mask radius (radius of pixel neighborhood)" },
     { GIMP_PDB_FLOAT,    "sharpness",   "Sharpness (detail level) (0.0 - 1.0)" },
-    { GIMP_PDB_FLOAT,    "pct_black",   "Percentage of darkened pixels to set to black (0.0 - 1.0)" },
-    { GIMP_PDB_FLOAT,    "pct_white",   "Percentage of non-darkened pixels left white (0.0 - 1.0)" }
+    { GIMP_PDB_FLOAT,    "pct-black",   "Percentage of darkened pixels to set to black (0.0 - 1.0)" },
+    { GIMP_PDB_FLOAT,    "pct-white",   "Percentage of non-darkened pixels left white (0.0 - 1.0)" }
   };
 
   gchar *help_string =
@@ -148,7 +151,7 @@ query (void)
     "the toner regions themselves thinner and less noticable; larger values "
     "achieve the opposite effect.";
 
-  gimp_install_procedure ("plug_in_photocopy",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Propagates dark values and white regions in an "
                           "image to achieve photocopy effect",
                           help_string,
@@ -161,7 +164,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_photocopy", "<Image>/Filters/Artistic");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Artistic");
 }
 
 static void
@@ -196,7 +199,7 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_photocopy", &pvals);
+      gimp_get_data (PLUG_IN_PROC, &pvals);
 
       /*  First acquire information with a dialog  */
       if (! photocopy_dialog (drawable))
@@ -212,7 +215,7 @@ run (const gchar      *name,
 
     case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_photocopy", &pvals);
+      gimp_get_data (PLUG_IN_PROC, &pvals);
       break;
 
     default:
@@ -234,7 +237,7 @@ run (const gchar      *name,
 
           /*  Store data  */
           if (run_mode == GIMP_RUN_INTERACTIVE)
-            gimp_set_data ("plug_in_photocopy", &pvals, sizeof (PhotocopyVals));
+            gimp_set_data (PLUG_IN_PROC, &pvals, sizeof (PhotocopyVals));
         }
       else
         {
@@ -832,11 +835,11 @@ photocopy_dialog (GimpDrawable *drawable)
   GtkObject *scale_data;
   gboolean   run;
 
-  gimp_ui_init ("photocopy", FALSE);
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Photocopy"), "photocopy",
+  dialog = gimp_dialog_new (_("Photocopy"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, "plug_in_photocopy",
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -844,9 +847,9 @@ photocopy_dialog (GimpDrawable *drawable)
                             NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);

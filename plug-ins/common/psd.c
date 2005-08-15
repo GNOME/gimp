@@ -162,6 +162,9 @@
 
 /* *** USER DEFINES *** */
 
+#define LOAD_PROC      "file-psd-load"
+#define PLUG_IN_BINARY "psd"
+
 /* set to TRUE if you want debugging, FALSE otherwise */
 #define PSD_DEBUG FALSE
 
@@ -409,9 +412,9 @@ query (void)
 {
   static GimpParamDef load_args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_STRING, "filename", "The name of the file to load" },
-    { GIMP_PDB_STRING, "raw_filename", "The name of the file to load" }
+    { GIMP_PDB_INT32,  "run-mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_STRING, "filename",     "The name of the file to load" },
+    { GIMP_PDB_STRING, "raw-filename", "The name of the file to load" }
   };
   static GimpParamDef load_return_vals[] =
   {
@@ -419,9 +422,12 @@ query (void)
   };
 
 
-  gimp_install_procedure ("file_psd_load",
+  gimp_install_procedure (LOAD_PROC,
                           "loads files of the Photoshop(tm) PSD file format",
-                          "This filter loads files of Adobe Photoshop(tm) native PSD format.  These files may be of any image type supported by GIMP, with or without layers, layer masks, aux channels and guides.",
+                          "This filter loads files of Adobe Photoshop(tm) "
+                          "native PSD format.  These files may be of any "
+                          "image type supported by GIMP, with or without "
+                          "layers, layer masks, aux channels and guides.",
                           "Adam D. Moss & Torsten Martinsen",
                           "Adam D. Moss & Torsten Martinsen",
                           "1996-1998",
@@ -432,8 +438,8 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
-  gimp_register_file_handler_mime ("file_psd_load", "image/x-psd");
-  gimp_register_magic_load_handler ("file_psd_load",
+  gimp_register_file_handler_mime (LOAD_PROC, "image/x-psd");
+  gimp_register_magic_load_handler (LOAD_PROC,
 				    "psd",
 				    "",
 				    "0,string,8BPS");
@@ -449,18 +455,18 @@ run (const gchar      *name,
      GimpParam       **return_vals)
 {
   static GimpParam values[2];
-  GimpRunMode run_mode;
-  /*  GimpPDBStatusType status = GIMP_PDB_SUCCESS;*/
-  gint32 image_ID;
+  GimpRunMode      run_mode;
+  gint32           image_ID;
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
-  *return_vals = values;
-  values[0].type = GIMP_PDB_STATUS;
+  *return_vals  = values;
+
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
 
-  if (strcmp (name, "file_psd_load") == 0)
+  if (strcmp (name, LOAD_PROC) == 0)
     {
       image_ID = load_image (param[1].data.d_string);
 
@@ -468,19 +474,14 @@ run (const gchar      *name,
 	{
 	  *nreturn_vals = 2;
 	  values[0].data.d_status = GIMP_PDB_SUCCESS;
-	  values[1].type = GIMP_PDB_IMAGE;
-	  values[1].data.d_image = image_ID;
+	  values[1].type          = GIMP_PDB_IMAGE;
+	  values[1].data.d_image  = image_ID;
 	}
       else
 	{
 	  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 	}
     }
-  else
-    {
-      values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
-    }
-
 }
 
 

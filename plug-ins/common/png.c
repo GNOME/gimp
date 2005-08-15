@@ -58,6 +58,14 @@
  * Constants...
  */
 
+#define LOAD_PROC              "file-png-load"
+#define SAVE_PROC              "file-png-save"
+#define SAVE2_PROC             "file-png-save2"
+#define SAVE_DEFAULTS_PROC     "file-png-save-defaults"
+#define GET_DEFAULTS_PROC      "file-png-get-defaults"
+#define SET_DEFAULTS_PROC      "file-png-set-defaults"
+#define PLUG_IN_BINARY         "png"
+
 #define PLUG_IN_VERSION        "1.3.4 - 03 September 2002"
 #define SCALE_WIDTH            125
 
@@ -184,65 +192,74 @@ MAIN ()
 static void
 query (void)
 {
-  static GimpParamDef load_args[] = {
-    {GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive"},
-    {GIMP_PDB_STRING, "filename", "The name of the file to load"},
-    {GIMP_PDB_STRING, "raw_filename", "The name of the file to load"}
+  static GimpParamDef load_args[] =
+  {
+    { GIMP_PDB_INT32,  "run-mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_STRING, "filename",     "The name of the file to load" },
+    { GIMP_PDB_STRING, "raw-filename", "The name of the file to load" }
   };
-  static GimpParamDef load_return_vals[] = {
-    {GIMP_PDB_IMAGE, "image", "Output image"}
+  static GimpParamDef load_return_vals[] =
+  {
+    { GIMP_PDB_IMAGE, "image", "Output image" }
   };
 
 #define COMMON_SAVE_ARGS \
-    {GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive"}, \
-    {GIMP_PDB_IMAGE, "image", "Input image"},                     \
-    {GIMP_PDB_DRAWABLE, "drawable", "Drawable to save"},          \
-    {GIMP_PDB_STRING, "filename",                                 \
-     "The name of the file to save the image in"},                \
-    {GIMP_PDB_STRING, "raw_filename",                             \
-     "The name of the file to save the image in"}
+    { GIMP_PDB_INT32,    "run_mode",     "Interactive, non-interactive" }, \
+    { GIMP_PDB_IMAGE,    "image",        "Input image"                  }, \
+    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save"             }, \
+    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in"}, \
+    { GIMP_PDB_STRING,   "raw_filename", "The name of the file to save the image in"}
 
 #define OLD_CONFIG_ARGS \
-    {GIMP_PDB_INT32, "interlace", "Use Adam7 interlacing?"},              \
-    {GIMP_PDB_INT32, "compression", "Deflate Compression factor (0--9)"}, \
-    {GIMP_PDB_INT32, "bkgd", "Write bKGD chunk?"},                        \
-    {GIMP_PDB_INT32, "gama", "Write gAMA chunk?"},                        \
-    {GIMP_PDB_INT32, "offs", "Write oFFs chunk?"},                        \
-    {GIMP_PDB_INT32, "phys", "Write pHYs chunk?"},                        \
-    {GIMP_PDB_INT32, "time", "Write tIME chunk?"}
+    { GIMP_PDB_INT32, "interlace",   "Use Adam7 interlacing?"            }, \
+    { GIMP_PDB_INT32, "compression", "Deflate Compression factor (0--9)" }, \
+    { GIMP_PDB_INT32, "bkgd",        "Write bKGD chunk?"                 }, \
+    { GIMP_PDB_INT32, "gama",        "Write gAMA chunk?"                 }, \
+    { GIMP_PDB_INT32, "offs",        "Write oFFs chunk?"                 }, \
+    { GIMP_PDB_INT32, "phys",        "Write pHYs chunk?"                 }, \
+    { GIMP_PDB_INT32, "time",        "Write tIME chunk?"                 }
 
 #define FULL_CONFIG_ARGS \
-    OLD_CONFIG_ARGS,                                                      \
-    {GIMP_PDB_INT32, "comment", "Write comment?"},                        \
-    {GIMP_PDB_INT32, "svtrans", "Preserve color of transparent pixels?"}
+    OLD_CONFIG_ARGS,                                                        \
+    { GIMP_PDB_INT32, "comment", "Write comment?"                        }, \
+    { GIMP_PDB_INT32, "svtrans", "Preserve color of transparent pixels?" }
 
-  static GimpParamDef save_args[] = {
+  static GimpParamDef save_args[] =
+  {
     COMMON_SAVE_ARGS,
     OLD_CONFIG_ARGS
   };
 
-  static GimpParamDef save_args2[] = {
+  static GimpParamDef save_args2[] =
+  {
     COMMON_SAVE_ARGS,
     FULL_CONFIG_ARGS
   };
 
-  static GimpParamDef save_args_defaults[] = {
+  static GimpParamDef save_args_defaults[] =
+  {
     COMMON_SAVE_ARGS
   };
 
-  static GimpParamDef save_get_defaults_return_vals[] = {
+  static GimpParamDef save_get_defaults_return_vals[] =
+  {
     FULL_CONFIG_ARGS
   };
 
-  static GimpParamDef save_args_set_defaults[] = {
+  static GimpParamDef save_args_set_defaults[] =
+  {
     FULL_CONFIG_ARGS
   };
 
-  gimp_install_procedure ("file_png_load",
+  gimp_install_procedure (LOAD_PROC,
                           "Loads files in PNG file format",
-                          "This plug-in loads Portable Network Graphics (PNG) files.",
-                          "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>",
-                          "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>, Nick Lamb <njl195@zepler.org.uk>",
+                          "This plug-in loads Portable Network Graphics "
+                          "(PNG) files.",
+                          "Michael Sweet <mike@easysw.com>, "
+                          "Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>",
+                          "Michael Sweet <mike@easysw.com>, "
+                          "Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>, "
+                          "Nick Lamb <njl195@zepler.org.uk>",
                           PLUG_IN_VERSION,
                           N_("PNG image"),
                           NULL,
@@ -251,15 +268,19 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
-  gimp_register_file_handler_mime ("file_png_load", "image/png");
-  gimp_register_magic_load_handler ("file_png_load",
+  gimp_register_file_handler_mime (LOAD_PROC, "image/png");
+  gimp_register_magic_load_handler (LOAD_PROC,
                                     "png", "", "0,string,\211PNG\r\n\032\n");
 
-  gimp_install_procedure ("file_png_save",
+  gimp_install_procedure (SAVE_PROC,
                           "Saves files in PNG file format",
-                          "This plug-in saves Portable Network Graphics (PNG) files.",
-                          "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>",
-                          "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>, Nick Lamb <njl195@zepler.org.uk>",
+                          "This plug-in saves Portable Network Graphics "
+                          "(PNG) files.",
+                          "Michael Sweet <mike@easysw.com>, "
+                          "Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>",
+                          "Michael Sweet <mike@easysw.com>, "
+                          "Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>, "
+                          "Nick Lamb <njl195@zepler.org.uk>",
                           PLUG_IN_VERSION,
                           N_("PNG image"),
                           "RGB*,GRAY*,INDEXED*",
@@ -267,14 +288,21 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_file_handler_mime ("file_png_save", "image/png");
+  gimp_register_file_handler_mime (SAVE_PROC, "image/png");
 
-  gimp_install_procedure ("file_png_save2",
+  gimp_install_procedure (SAVE2_PROC,
                           "Saves files in PNG file format",
-                          "This plug-in saves Portable Network Graphics (PNG) files. "
-                          "This procedure adds 2 extra parameters to file_png_save that allows to control whether image comments are saved and whether transparent pixels are saved or nullified.",
-                          "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>",
-                          "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>, Nick Lamb <njl195@zepler.org.uk>",
+                          "This plug-in saves Portable Network Graphics "
+                          "(PNG) files. "
+                          "This procedure adds 2 extra parameters to "
+                          "file_png_save that allows to control whether "
+                          "image comments are saved and whether transparent "
+                          "pixels are saved or nullified.",
+                          "Michael Sweet <mike@easysw.com>, "
+                          "Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>",
+                          "Michael Sweet <mike@easysw.com>, "
+                          "Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>, "
+                          "Nick Lamb <njl195@zepler.org.uk>",
                           PLUG_IN_VERSION,
                           N_("PNG image"),
                           "RGB*,GRAY*,INDEXED*",
@@ -282,13 +310,18 @@ query (void)
                           G_N_ELEMENTS (save_args2), 0,
                           save_args2, NULL);
 
-  gimp_register_file_handler_mime ("file_png_save2", "image/png");
+  gimp_register_file_handler_mime (SAVE2_PROC, "image/png");
 
-  gimp_install_procedure ("file_png_save_defaults",
+  gimp_install_procedure (SAVE_DEFAULTS_PROC,
                           "Saves files in PNG file format",
-                          "This plug-in saves Portable Network Graphics (PNG) files, using the default settings stored as a parasite.",
-                          "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>",
-                          "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>, Nick Lamb <njl195@zepler.org.uk>",
+                          "This plug-in saves Portable Network Graphics (PNG) "
+                          "files, using the default settings stored as "
+                          "a parasite.",
+                          "Michael Sweet <mike@easysw.com>, "
+                          "Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>",
+                          "Michael Sweet <mike@easysw.com>, "
+                          "Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>, "
+                          "Nick Lamb <njl195@zepler.org.uk>",
                           PLUG_IN_VERSION,
                           N_("PNG image"),
                           "RGB*,GRAY*,INDEXED*",
@@ -296,15 +329,23 @@ query (void)
                           G_N_ELEMENTS (save_args_defaults), 0,
                           save_args_defaults, NULL);
 
-  gimp_register_file_handler_mime ("file_png_save_defaults", "image/png");
-  gimp_register_save_handler ("file_png_save_defaults", "png", "");
+  gimp_register_file_handler_mime (SAVE_DEFAULTS_PROC, "image/png");
+  gimp_register_save_handler (SAVE_DEFAULTS_PROC, "png", "");
 
-  gimp_install_procedure ("file_png_get_defaults",
-                          "Get the current set of defaults used by the PNG file save plug-in",
-                          "This procedure returns the current set of defaults stored as a parasite for the PNG save plug-in. "
-                          "These defaults are used to seed the UI, by the file_png_save_defaults procedure, and by gimp_file_save when it detects to use PNG.",
-                          "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>",
-                          "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>, Nick Lamb <njl195@zepler.org.uk>",
+  gimp_install_procedure (GET_DEFAULTS_PROC,
+                          "Get the current set of defaults used by the "
+                          "PNG file save plug-in",
+                          "This procedure returns the current set of "
+                          "defaults stored as a parasite for the PNG "
+                          "save plug-in. "
+                          "These defaults are used to seed the UI, by the "
+                          "file_png_save_defaults procedure, and by "
+                          "gimp_file_save when it detects to use PNG.",
+                          "Michael Sweet <mike@easysw.com>, "
+                          "Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>",
+                          "Michael Sweet <mike@easysw.com>, "
+                          "Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>, "
+                          "Nick Lamb <njl195@zepler.org.uk>",
                           PLUG_IN_VERSION,
                           NULL,
                           NULL,
@@ -312,12 +353,19 @@ query (void)
                           0, G_N_ELEMENTS (save_get_defaults_return_vals),
                           NULL, save_get_defaults_return_vals);
 
-  gimp_install_procedure ("file_png_set_defaults",
-                          "Set the current set of defaults used by the PNG file save plug-in",
-                          "This procedure set the current set of defaults stored as a parasite for the PNG save plug-in. "
-                          "These defaults are used to seed the UI, by the file_png_save_defaults procedure, and by gimp_file_save when it detects to use PNG.",
-                          "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>",
-                          "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>, Nick Lamb <njl195@zepler.org.uk>",
+  gimp_install_procedure (SET_DEFAULTS_PROC,
+                          "Set the current set of defaults used by the "
+                          "PNG file save plug-in",
+                          "This procedure set the current set of defaults "
+                          "stored as a parasite for the PNG save plug-in. "
+                          "These defaults are used to seed the UI, by the "
+                          "file_png_save_defaults procedure, and by "
+                          "gimp_file_save when it detects to use PNG.",
+                          "Michael Sweet <mike@easysw.com>, "
+                          "Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>",
+                          "Michael Sweet <mike@easysw.com>, "
+                          "Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>, "
+                          "Nick Lamb <njl195@zepler.org.uk>",
                           PLUG_IN_VERSION,
                           NULL,
                           NULL,
@@ -354,7 +402,7 @@ run (const gchar      *name,
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  if (strcmp (name, "file_png_load") == 0)
+  if (strcmp (name, LOAD_PROC) == 0)
     {
       run_mode = param[0].data.d_int32;
 
@@ -372,9 +420,9 @@ run (const gchar      *name,
           status = GIMP_PDB_EXECUTION_ERROR;
         }
     }
-  else if (strcmp (name, "file_png_save")  == 0 ||
-           strcmp (name, "file_png_save2") == 0 ||
-           strcmp (name, "file_png_save_defaults") == 0)
+  else if (strcmp (name, SAVE_PROC)  == 0 ||
+           strcmp (name, SAVE2_PROC) == 0 ||
+           strcmp (name, SAVE_DEFAULTS_PROC) == 0)
     {
       gboolean alpha;
 
@@ -389,7 +437,7 @@ run (const gchar      *name,
         {
         case GIMP_RUN_INTERACTIVE:
         case GIMP_RUN_WITH_LAST_VALS:
-          gimp_ui_init ("png", FALSE);
+          gimp_ui_init (PLUG_IN_BINARY, FALSE);
           export = gimp_export_image (&image_ID, &drawable_ID, "PNG",
                                       (GIMP_EXPORT_CAN_HANDLE_RGB |
                                        GIMP_EXPORT_CAN_HANDLE_GRAY |
@@ -412,7 +460,7 @@ run (const gchar      *name,
           /*
            * Possibly retrieve data...
            */
-          gimp_get_data ("file_png_save", &pngvals);
+          gimp_get_data (SAVE_PROC, &pngvals);
 
           alpha = gimp_drawable_has_alpha (drawable_ID);
 
@@ -473,7 +521,7 @@ run (const gchar      *name,
           /*
            * Possibly retrieve data...
            */
-          gimp_get_data ("file_png_save", &pngvals);
+          gimp_get_data (SAVE_PROC, &pngvals);
           break;
 
         default:
@@ -485,7 +533,7 @@ run (const gchar      *name,
           if (save_image (param[3].data.d_string,
                           image_ID, drawable_ID, orig_image_ID))
             {
-              gimp_set_data ("file_png_save", &pngvals, sizeof (pngvals));
+              gimp_set_data (SAVE_PROC, &pngvals, sizeof (pngvals));
             }
           else
             {
@@ -496,7 +544,7 @@ run (const gchar      *name,
       if (export == GIMP_EXPORT_EXPORT)
         gimp_image_delete (image_ID);
     }
-  else if (strcmp (name, "file_png_get_defaults") == 0)
+  else if (strcmp (name, GET_DEFAULTS_PROC) == 0)
     {
       load_defaults ();
 
@@ -519,7 +567,7 @@ run (const gchar      *name,
 
 #undef SET_VALUE
     }
-  else if (strcmp (name, "file_png_set_defaults") == 0)
+  else if (strcmp (name, GET_DEFAULTS_PROC) == 0)
     {
       if (nparams == 10)
         {
@@ -1592,9 +1640,9 @@ save_dialog (gint32    image_ID,
   GtkObject    *scale;
   GimpParasite *parasite;
 
-  dlg = gimp_dialog_new (_("Save as PNG"), "png",
+  dlg = gimp_dialog_new (_("Save as PNG"), PLUG_IN_BINARY,
                          NULL, 0,
-                         gimp_standard_help_func, "file-png-save-defaults",
+                         gimp_standard_help_func, SAVE_PROC,
 
                          _("_Load defaults"), RESPONSE_LOAD_DEFAULTS,
                          _("_Save defaults"), RESPONSE_SAVE_DEFAULTS,

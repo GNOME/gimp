@@ -1,5 +1,23 @@
 2005-08-15  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/common/papertile.c
+	* plug-ins/common/pat.c
+	* plug-ins/common/pcx.c
+	* plug-ins/common/photocopy.c
+	* plug-ins/common/pix.c
+	* plug-ins/common/pixelize.c
+	* plug-ins/common/plasma.c
+	* plug-ins/common/plugin-browser.c
+	* plug-ins/common/png.c
+	* plug-ins/common/polar.c
+	* plug-ins/common/procedure-browser.c
+	* plug-ins/common/psd.c
+	* plug-ins/common/psd_save.c
+	* plug-ins/common/psp.c: canonicalize procedure and
+	parameter names. Misc cleanups.
+
+2005-08-15  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/common/poppler.c: make sure the opened image has a
 	filename that cannot be saved (ok, we don't have a PDF save
 	plug-in, but PS does the same and this way it's consistent).

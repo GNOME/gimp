@@ -68,6 +68,9 @@
 
 /* Some useful macros */
 
+#define PIXELIZE_PROC   "plug-in-pixelize"
+#define PIXELIZE2_PROC  "plug-in-pixelize2"
+#define PLUG_IN_BINARY  "pixelize"
 #define TILE_CACHE_SIZE  16
 #define SCALE_WIDTH     125
 #define ENTRY_WIDTH       6
@@ -142,22 +145,22 @@ query (void)
 {
   static GimpParamDef pixelize_args[]=
   {
-    { GIMP_PDB_INT32,    "run_mode",   "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE,    "image",      "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable",   "Input drawable" },
-    { GIMP_PDB_INT32,    "pixelwidth", "Pixel width (the decrease in resolution)" }
+    { GIMP_PDB_INT32,    "run-mode",    "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",       "Input image (unused)"         },
+    { GIMP_PDB_DRAWABLE, "drawable",    "Input drawable"               },
+    { GIMP_PDB_INT32,    "pixel-width", "Pixel width (the decrease in resolution)" }
   };
 
   static GimpParamDef pixelize2_args[]=
   {
-    { GIMP_PDB_INT32,    "run_mode",    "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE,    "image",       "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable",    "Input drawable" },
-    { GIMP_PDB_INT32,    "pixelwidth",  "Pixel width (the decrease in horizontal resolution)" },
-    { GIMP_PDB_INT32,    "pixelheight", "Pixel height (the decrease in vertical resolution)" }
+    { GIMP_PDB_INT32,    "run-mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",        "Input image (unused)"         },
+    { GIMP_PDB_DRAWABLE, "drawable",     "Input drawable"               },
+    { GIMP_PDB_INT32,    "pixel-width",  "Pixel width (the decrease in horizontal resolution)" },
+    { GIMP_PDB_INT32,    "pixel-height", "Pixel height (the decrease in vertical resolution)" }
   };
 
-  gimp_install_procedure ("plug_in_pixelize",
+  gimp_install_procedure (PIXELIZE_PROC,
                           "Pixelize the contents of the specified drawable",
                           "Pixelize the contents of the specified drawable "
                           "with speficied pixelizing width.",
@@ -171,9 +174,9 @@ query (void)
                           G_N_ELEMENTS (pixelize_args), 0,
                           pixelize_args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_pixelize", "<Image>/Filters/Blur");
+  gimp_plugin_menu_register (PIXELIZE_PROC, "<Image>/Filters/Blur");
 
-  gimp_install_procedure ("plug_in_pixelize2",
+  gimp_install_procedure (PIXELIZE2_PROC,
                           "Pixelize the contents of the specified drawable",
                           "Pixelize the contents of the specified drawable "
                           "with speficied pixelizing width.",
@@ -217,7 +220,7 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_pixelize", &pvals);
+      gimp_get_data (PIXELIZE_PROC, &pvals);
 
       /*  First acquire information with a dialog  */
       if (! pixelize_dialog (drawable))
@@ -229,8 +232,8 @@ run (const gchar      *name,
 
     case GIMP_RUN_NONINTERACTIVE:
       /*  Make sure all the arguments are there!  */
-      if ((! strcmp (name, "plug_in_pixelize") && nparams != 4) ||
-          (! strcmp (name, "plug_in_pixelize2") && nparams != 5))
+      if ((! strcmp (name, PIXELIZE_PROC) && nparams != 4) ||
+          (! strcmp (name, PIXELIZE2_PROC) && nparams != 5))
         {
           status = GIMP_PDB_CALLING_ERROR;
         }
@@ -254,7 +257,7 @@ run (const gchar      *name,
 
     case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_pixelize", &pvals);
+      gimp_get_data (PIXELIZE_PROC, &pvals);
       break;
 
     default:
@@ -280,7 +283,7 @@ run (const gchar      *name,
 
           /*  Store data  */
           if (run_mode == GIMP_RUN_INTERACTIVE)
-            gimp_set_data ("plug_in_pixelize", &pvals, sizeof (PixelizeValues));
+            gimp_set_data (PIXELIZE_PROC, &pvals, sizeof (PixelizeValues));
         }
       else
         {
@@ -306,11 +309,11 @@ pixelize_dialog (GimpDrawable *drawable)
   gdouble    xres, yres;
   gboolean   run;
 
-  gimp_ui_init ("pixelize", FALSE);
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Pixelize"), "pixelize",
+  dialog = gimp_dialog_new (_("Pixelize"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, "plug-in-pixelize",
+                            gimp_standard_help_func, PIXELIZE_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -318,9 +321,9 @@ pixelize_dialog (GimpDrawable *drawable)
                             NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);

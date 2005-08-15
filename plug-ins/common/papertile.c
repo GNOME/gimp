@@ -34,8 +34,8 @@
 /* DEFINES                                                                   */
 /*===========================================================================*/
 
-#define PLUGIN_PROCEDURE_NAME "plug_in_papertile"
-#define HELP_ID               "plug-in-papertile"
+#define PLUG_IN_PROC   "plug-in-papertile"
+#define PLUG_IN_BINARY "papertile"
 
 /*===========================================================================*/
 /* TYPES                                                                     */
@@ -125,13 +125,13 @@ static struct
 static void
 params_save_to_gimp (void)
 {
-  gimp_set_data (PLUGIN_PROCEDURE_NAME, &p.params, sizeof p.params);
+  gimp_set_data (PLUG_IN_PROC, &p.params, sizeof p.params);
 }
 
 static void
 params_load_from_gimp (void)
 {
-  gimp_get_data (PLUGIN_PROCEDURE_NAME, &p.params);
+  gimp_get_data (PLUG_IN_PROC, &p.params);
 
   if (0 < p.params.division_x)
     {
@@ -229,11 +229,11 @@ open_dialog (void)
   GtkWidget *frame;
   GtkWidget *color_button;
 
-  gimp_ui_init ("papertile", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Paper Tile"), "papertile",
+  dialog = gimp_dialog_new (_("Paper Tile"), PLUG_IN_BINARY,
                             NULL, 0,
-			    gimp_standard_help_func, HELP_ID,
+			    gimp_standard_help_func, PLUG_IN_PROC,
 
 			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			    GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -241,9 +241,9 @@ open_dialog (void)
 			    NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   main_hbox = gtk_hbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 12);
@@ -793,23 +793,22 @@ filter (void)
 static void
 plugin_query (void)
 {
-  static GimpParamDef     args[]            =
+  static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",         "run mode"                         },
-    { GIMP_PDB_IMAGE,    "image",            "input image"                      },
-    { GIMP_PDB_DRAWABLE, "drawable",         "input drawable"                   },
-    { GIMP_PDB_INT32,    "tile_size",        "tile size (pixels)"               },
-    { GIMP_PDB_FLOAT,    "move_max",         "max move rate (%)"                },
-    { GIMP_PDB_INT32,    "fractional_type",  "0:Background 1:Ignore 2:Force"    },
-    { GIMP_PDB_INT32,    "wrap_around",      "wrap around (bool)"               },
-    { GIMP_PDB_INT32,    "centering",        "centering (bool)"                 },
-    { GIMP_PDB_INT32,    "background_type",
-      "0:Transparent 1:Inverted 2:Image? 3:FG 4:BG 5:Color"                  },
-    { GIMP_PDB_INT32,    "background_color", "background color (for bg-type 5)" },
-    { GIMP_PDB_INT32,    "background_alpha", "opacity (for bg-type 5)"          }
+    { GIMP_PDB_INT32,    "run-mode",         "run mode"                       },
+    { GIMP_PDB_IMAGE,    "image",            "input image"                    },
+    { GIMP_PDB_DRAWABLE, "drawable",         "input drawable"                 },
+    { GIMP_PDB_INT32,    "tile-size",        "tile size (pixels)"             },
+    { GIMP_PDB_FLOAT,    "move-max",         "max move rate (%)"              },
+    { GIMP_PDB_INT32,    "fractional-type",  "0:Background 1:Ignore 2:Force"  },
+    { GIMP_PDB_INT32,    "wrap-around",      "wrap around (bool)"             },
+    { GIMP_PDB_INT32,    "centering",        "centering (bool)"               },
+    { GIMP_PDB_INT32,    "background-type",  "0:Transparent 1:Inverted 2:Image? 3:FG 4:BG 5:Color"                  },
+    { GIMP_PDB_INT32,    "background-color", "background color (for bg-type 5)" },
+    { GIMP_PDB_INT32,    "background-alpha", "opacity (for bg-type 5)"        }
   };
 
-  gimp_install_procedure (PLUGIN_PROCEDURE_NAME,
+  gimp_install_procedure (PLUG_IN_PROC,
 			  "Cuts an image into paper tiles, and slides each "
                           "paper tile.",
 			  "This plug-in cuts an image into paper tiles and "
@@ -823,7 +822,7 @@ plugin_query (void)
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 
-  gimp_plugin_menu_register (PLUGIN_PROCEDURE_NAME, "<Image>/Filters/Map");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Map");
 }
 
 static void

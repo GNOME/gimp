@@ -49,6 +49,10 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define PLUG_IN_PROC   "plug-in-dbbrowser"
+#define PLUG_IN_BINARY "procedure-browser"
+
+
 static void   query (void);
 static void   run   (const gchar      *name,
                      gint              nparams,
@@ -72,10 +76,10 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, [non-interactive]" }
+    { GIMP_PDB_INT32, "run-mode", "Interactive, [non-interactive]" }
   };
 
-  gimp_install_procedure ("plug_in_db_browser",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "List available procedures in the PDB",
                           "",
                           "Thomas Noel",
@@ -87,7 +91,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_db_browser", "<Toolbox>/Xtns/Extensions");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Toolbox>/Xtns/Extensions");
 }
 
 static void
@@ -104,6 +108,7 @@ run (const gchar      *name,
 
   *nreturn_vals = 1;
   *return_vals  = values;
+
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_SUCCESS;
 
@@ -115,7 +120,7 @@ run (const gchar      *name,
       {
         GtkWidget *dialog;
 
-        gimp_ui_init ("dbbrowser", FALSE);
+        gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
         dialog = gimp_proc_browser_dialog_new ();
         gtk_dialog_add_button (GTK_DIALOG (dialog),

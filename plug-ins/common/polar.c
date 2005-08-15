@@ -68,12 +68,12 @@
 
 /***** Magic numbers *****/
 
-#define PLUG_IN_NAME    "plug_in_polar_coords"
+#define PLUG_IN_PROC    "plug-in-polar-coords"
+#define PLUG_IN_BINARY  "polar"
 #define PLUG_IN_VERSION "July 1997, 0.5"
-#define HELP_ID         "plug-in-polar-coords"
 
-#define SCALE_WIDTH  200
-#define ENTRY_WIDTH   60
+#define SCALE_WIDTH     200
+#define ENTRY_WIDTH      60
 
 /***** Types *****/
 
@@ -142,7 +142,7 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",  "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode",  "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",     "Input image"                  },
     { GIMP_PDB_DRAWABLE, "drawable",  "Input drawable"               },
     { GIMP_PDB_FLOAT,    "circle",    "Circle depth in %"            },
@@ -152,7 +152,7 @@ query (void)
     { GIMP_PDB_INT32,    "polrec",    "Polar to rectangular?"        }
   };
 
-  gimp_install_procedure (PLUG_IN_NAME,
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Converts and image to and from polar coords",
                           "Remaps and image from rectangular coordinates "
                           "to polar coordinates "
@@ -166,7 +166,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register (PLUG_IN_NAME, "<Image>/Filters/Distorts");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Distorts");
 }
 
 static void
@@ -202,7 +202,8 @@ run (const gchar      *name,
   img_height    = gimp_drawable_height (drawable->drawable_id);
   img_has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
-  gimp_drawable_mask_bounds (drawable->drawable_id, &sel_x1, &sel_y1, &sel_x2, &sel_y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id,
+                             &sel_x1, &sel_y1, &sel_x2, &sel_y2);
 
   /* Calculate scaling parameters */
 
@@ -237,7 +238,7 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       /* Possibly retrieve data */
-      gimp_get_data (PLUG_IN_NAME, &pcvals);
+      gimp_get_data (PLUG_IN_PROC, &pcvals);
 
       /* Get information from the dialog */
       if (! polarize_dialog (drawable))
@@ -263,7 +264,7 @@ run (const gchar      *name,
 
     case GIMP_RUN_WITH_LAST_VALS:
       /* Possibly retrieve data */
-      gimp_get_data (PLUG_IN_NAME, &pcvals);
+      gimp_get_data (PLUG_IN_PROC, &pcvals);
       break;
 
     default:
@@ -288,7 +289,7 @@ run (const gchar      *name,
 
       /* Store data */
       if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data (PLUG_IN_NAME, &pcvals, sizeof (polarize_vals_t));
+        gimp_set_data (PLUG_IN_PROC, &pcvals, sizeof (polarize_vals_t));
     }
   else if (status == GIMP_PDB_SUCCESS)
     status = GIMP_PDB_EXECUTION_ERROR;
@@ -577,11 +578,11 @@ polarize_dialog (GimpDrawable *drawable)
   GtkObject *adj;
   gboolean   run;
 
-  gimp_ui_init ("polar", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Polarize"), "polar",
+  dialog = gimp_dialog_new (_("Polarize"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, HELP_ID,
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -589,9 +590,9 @@ polarize_dialog (GimpDrawable *drawable)
                             NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
@@ -786,4 +787,3 @@ dialog_update_preview (GimpDrawable *drawable,
   g_free (buffer);
   g_free (preview_cache);
 }
-

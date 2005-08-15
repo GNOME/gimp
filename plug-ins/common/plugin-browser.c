@@ -34,6 +34,8 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define PLUG_IN_PROC    "plug-in-plug-in-details"
+#define PLUG_IN_BINARY  "plugin-browser"
 #define DBL_LIST_WIDTH  250
 #define DBL_WIDTH       (DBL_LIST_WIDTH + 400)
 #define DBL_HEIGHT      250
@@ -106,9 +108,6 @@ static gboolean    find_existing_mpath            (GtkTreeModel     *model,
                                                    GtkTreeIter      *return_iter);
 
 
-
-static PluginBrowser *browser = NULL;
-
 GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
@@ -126,10 +125,10 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, [non-interactive]" }
+    { GIMP_PDB_INT32, "run-mode", "Interactive, [non-interactive]" }
   };
 
-  gimp_install_procedure ("plug_in_plug_in_details",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Displays plug-in details",
                           "Allows to browse the plug-in menus system. You can "
                           "search for plug-in names, sort by name or menu "
@@ -146,9 +145,8 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_plug_in_details",
-                             "<Toolbox>/Xtns/Extensions");
-  gimp_plugin_icon_register ("plug_in_plug_in_details",
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Toolbox>/Xtns/Extensions");
+  gimp_plugin_icon_register (PLUG_IN_PROC,
                              GIMP_ICON_TYPE_STOCK_ID, GIMP_STOCK_PLUGIN);
 }
 
@@ -172,16 +170,13 @@ run (const gchar      *name,
 
   INIT_I18N ();
 
-  if (strcmp (name, "plug_in_plug_in_details") == 0)
+  if (strcmp (name, PLUG_IN_PROC) == 0)
     {
-      GtkWidget *plugin_dialog;
-
       *nreturn_vals = 1;
 
       values[0].data.d_status = GIMP_PDB_SUCCESS;
 
-      plugin_dialog = browser_dialog_new ();
-
+      browser_dialog_new ();
       gtk_main ();
     }
 }
@@ -537,6 +532,7 @@ browser_search (GimpBrowser   *gimp_browser,
 static GtkWidget *
 browser_dialog_new (void)
 {
+  PluginBrowser     *browser;
   GtkWidget         *label, *notebook;
   GtkWidget         *scrolled_window;
   GtkListStore      *list_store;
@@ -548,14 +544,13 @@ browser_dialog_new (void)
   GtkTreeSelection  *selection;
   GtkTreeIter        iter;
 
-  gimp_ui_init ("plugindetails", FALSE);
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
   browser = g_new0 (PluginBrowser, 1);
 
-  browser->dialog = gimp_dialog_new (_("Plug-In Browser"), "plugindetails",
+  browser->dialog = gimp_dialog_new (_("Plug-In Browser"), PLUG_IN_BINARY,
                                      NULL, 0,
-                                     gimp_standard_help_func,
-                                     "plug-in-plug-in-details",
+                                     gimp_standard_help_func, PLUG_IN_PROC,
 
                                      GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 

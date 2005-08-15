@@ -53,6 +53,11 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define LOAD_PROC      "file-pix-load"
+#define SAVE_PROC      "file-pix-save"
+#define PLUG_IN_BINARY "pix"
+
+
 /* #define PIX_DEBUG */
 
 #ifdef PIX_DEBUG
@@ -81,9 +86,9 @@ static gboolean save_image (const gchar     *filename,
 			    gint32           image_ID,
 			    gint32           drawable_ID);
 
-static guint16  get_short  (FILE    *file);
-static void     put_short  (guint16  value,
-			    FILE    *file);
+static guint16  get_short  (FILE            *file);
+static void     put_short  (guint16          value,
+			    FILE            *file);
 
 /******************
  * Implementation *
@@ -108,9 +113,9 @@ query (void)
    */
   static GimpParamDef load_args[] =
   {
-    { GIMP_PDB_INT32,  "run_mode",      "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,  "run-mode",      "Interactive, non-interactive" },
     { GIMP_PDB_STRING, "filename",      "The name of the file to load" },
-    { GIMP_PDB_STRING, "raw_filename",   "The name entered" }
+    { GIMP_PDB_STRING, "raw-filename",   "The name entered"            }
   };
   static GimpParamDef load_return_vals[] =
   {
@@ -119,14 +124,14 @@ query (void)
 
   static GimpParamDef save_args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",     "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE,    "image",        "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },
+    { GIMP_PDB_INT32,    "run-mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",        "Input image"                  },
+    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save"             },
     { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
-    { GIMP_PDB_STRING,   "raw_filename", "The name of the file to save the image in" }
+    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in" }
   };
 
-  gimp_install_procedure ("file_pix_load",
+  gimp_install_procedure (LOAD_PROC,
 			  "loads files of the PIX file format",
 			  "loads files of the PIX file format",
 			  "Michael Taylor",
@@ -139,11 +144,11 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
 			  load_args, load_return_vals);
 
-  gimp_register_load_handler ("file_pix_load",
+  gimp_register_load_handler (LOAD_PROC,
 			      "pix,matte,mask,alpha,als",
 			      "");
 
-  gimp_install_procedure ("file_pix_save",
+  gimp_install_procedure (SAVE_PROC,
                           "save file in the Alias|Wavefront pix/matte file format",
                           "save file in the Alias|Wavefront pix/matte file format",
                           "Michael Taylor",
@@ -155,7 +160,7 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_save_handler ("file_pix_save", "pix,matte,mask,alpha,als", "");
+  gimp_register_save_handler (SAVE_PROC, "pix,matte,mask,alpha,als", "");
 }
 
 /*
@@ -193,7 +198,7 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  if (strcmp (name, "file_pix_load") == 0)
+  if (strcmp (name, LOAD_PROC) == 0)
     {
       /* Perform the image load */
       image_ID = load_image (param[1].data.d_string);
@@ -211,7 +216,7 @@ run (const gchar      *name,
 	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
     }
-  else if (strcmp (name, "file_pix_save") == 0)
+  else if (strcmp (name, LOAD_PROC) == 0)
     {
       image_ID    = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
@@ -221,7 +226,7 @@ run (const gchar      *name,
 	{
 	case GIMP_RUN_INTERACTIVE:
 	case GIMP_RUN_WITH_LAST_VALS:
-	  gimp_ui_init ("pix", FALSE);
+	  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "PIX",
 				      (GIMP_EXPORT_CAN_HANDLE_RGB |
 				       GIMP_EXPORT_CAN_HANDLE_GRAY));
@@ -318,7 +323,6 @@ load_image (const gchar *filename)
 
   PIX_DEBUG_PRINT ("Opening file: %s\n", filename);
 
-  /* Open the file */
   file = g_fopen (filename, "rb");
   if (NULL == file)
     {

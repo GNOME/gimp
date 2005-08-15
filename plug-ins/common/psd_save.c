@@ -73,6 +73,9 @@
 
 /* *** DEFINES *** */
 
+#define SAVE_PROC      "file-psd-save"
+#define PLUG_IN_BINARY "psd_save"
+
 /* set to TRUE if you want debugging, FALSE otherwise */
 #define DEBUG FALSE
 
@@ -167,16 +170,16 @@ query (void)
 {
   static GimpParamDef save_args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Drawable to save" },
-    { GIMP_PDB_STRING, "filename", "The name of the file to save the image in" },
-    { GIMP_PDB_STRING, "raw_filename", "The name of the file to save the image in" },
-    { GIMP_PDB_INT32, "compression", "Compression type: { NONE (0), LZW (1), PACKBITS (2)" },
-    { GIMP_PDB_INT32, "fillorder", "Fill Order: { MSB to LSB (0), LSB to MSB (1)" }
+    { GIMP_PDB_INT32,    "run-mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",        "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },
+    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
+    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in" },
+    { GIMP_PDB_INT32,    "compression",  "Compression type: { NONE (0), LZW (1), PACKBITS (2)" },
+    { GIMP_PDB_INT32,    "fill-order",   "Fill Order: { MSB to LSB (0), LSB to MSB (1)" }
   };
 
-  gimp_install_procedure ("file_psd_save",
+  gimp_install_procedure (SAVE_PROC,
                           "saves files in the Photoshop(tm) PSD file format",
                           "This filter saves files of Adobe Photoshop(tm) native PSD format.  These files may be of any image type supported by GIMP, with or without layers, layer masks, aux channels and guides.",
                           "Monigotes",
@@ -188,10 +191,9 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_file_handler_mime ("file_psd_save", "image/x-psd");
-  gimp_register_save_handler ("file_psd_save", "psd", "");
+  gimp_register_file_handler_mime (SAVE_PROC, "image/x-psd");
+  gimp_register_save_handler (SAVE_PROC, "psd", "");
 }
-
 
 
 static void
@@ -208,16 +210,18 @@ run (const gchar      *name,
 
   *nreturn_vals = 1;
   *return_vals  = values;
+
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
 
-  if (strcmp (name, "file_psd_save") == 0)
+  if (strcmp (name, SAVE_PROC) == 0)
     {
       gint32           image_id;
       gint32           drawable_id;
       GimpExportReturn export = GIMP_EXPORT_IGNORE;
 
-      IFDBG printf ("\n---------------- %s ----------------\n", param[3].data.d_string);
+      IFDBG printf ("\n---------------- %s ----------------\n",
+                    param[3].data.d_string);
 
       image_id    = param[1].data.d_int32;
       drawable_id = param[2].data.d_int32;
@@ -226,7 +230,7 @@ run (const gchar      *name,
 	{
 	case GIMP_RUN_INTERACTIVE:
 	case GIMP_RUN_WITH_LAST_VALS:
-          gimp_ui_init ("psd_save", FALSE);
+          gimp_ui_init (PLUG_IN_BINARY, FALSE);
           export = gimp_export_image (&image_id, &drawable_id, "PSD",
                                       GIMP_EXPORT_CAN_HANDLE_RGB     |
                                       GIMP_EXPORT_CAN_HANDLE_GRAY    |

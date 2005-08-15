@@ -33,14 +33,10 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-/* Declare plug-in functions.  */
+#define LOAD_PROC      "file-pcx-load"
+#define SAVE_PROC      "file-pcx-save"
+#define PLUG_IN_BINARY "pcx"
 
-static void query (void);
-static void run   (const gchar      *name,
-		   gint              nparams,
-		   const GimpParam  *param,
-		   gint             *nreturn_vals,
-		   GimpParam       **return_vals);
 
 #if G_BYTE_ORDER == G_BIG_ENDIAN
 #define qtohl(x) \
@@ -58,6 +54,57 @@ static void run   (const gchar      *name,
 #define htoql(x) qtohl(x)
 #define htoqs(x) qtohs(x)
 
+
+/* Declare loacl functions.  */
+
+static void   query      (void);
+static void   run        (const gchar      *name,
+                          gint              nparams,
+                          const GimpParam  *param,
+                          gint             *nreturn_vals,
+                          GimpParam       **return_vals);
+
+static gint32 load_image (const gchar      *filename);
+static void   load_1     (FILE             *fp,
+                          gint              width,
+                          gint              height,
+                          guchar           *buffer,
+                          gint              bytes);
+static void   load_4     (FILE             *fp,
+                          gint              width,
+                          gint              height,
+                          guchar           *buffer,
+                          gint              bytes);
+static void   load_8     (FILE             *fp,
+                          gint              width,
+                          gint              height,
+                          guchar           *buffer,
+                          gint              bytes);
+static void   load_24    (FILE             *fp,
+                          gint              width,
+                          gint              height,
+                          guchar           *buffer,
+                          gint              bytes);
+static void   readline   (FILE             *fp,
+                          guchar           *buffer,
+                          gint              bytes);
+
+static gint   save_image (const gchar      *filename,
+                          gint32            image,
+                          gint32            layer);
+static void   save_8     (FILE             *fp,
+                          gint              width,
+                          gint              height,
+                          guchar           *buffer);
+static void   save_24    (FILE             *fp,
+                          gint              width,
+                          gint              height,
+                          guchar           *buffer);
+static void   writeline  (FILE             *fp,
+                          guchar           *buffer,
+                          gint              bytes);
+
+
 GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
@@ -73,9 +120,9 @@ query (void)
 {
   static GimpParamDef load_args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_STRING, "filename", "The name of the file to load" },
-    { GIMP_PDB_STRING, "raw_filename", "The name entered" }
+    { GIMP_PDB_INT32,  "run-mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_STRING, "filename",     "The name of the file to load" },
+    { GIMP_PDB_STRING, "raw-filename", "The name entered"             }
   };
   static GimpParamDef load_return_vals[] =
   {
@@ -84,14 +131,14 @@ query (void)
 
   static GimpParamDef save_args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Drawable to save" },
-    { GIMP_PDB_STRING, "filename", "The name of the file to save the image in" },
-    { GIMP_PDB_STRING, "raw_filename", "The name entered" }
+    { GIMP_PDB_INT32,    "run-mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",        "Input image"                  },
+    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save"             },
+    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
+    { GIMP_PDB_STRING,   "raw-filename", "The name entered"             }
   };
 
-  gimp_install_procedure ("file_pcx_load",
+  gimp_install_procedure (LOAD_PROC,
                           "Loads files in Zsoft PCX file format",
                           "FIXME: write help for pcx_load",
                           "Francisco Bustamante & Nick Lamb",
@@ -104,13 +151,13 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
-  gimp_register_file_handler_mime ("file_pcx_load", "image/x-pcx");
-  gimp_register_magic_load_handler ("file_pcx_load",
+  gimp_register_file_handler_mime (LOAD_PROC, "image/x-pcx");
+  gimp_register_magic_load_handler (LOAD_PROC,
 				    "pcx,pcc",
 				    "",
 				    "0&,byte,10,2&,byte,1,3&,byte,>0,3,byte,<9");
 
-  gimp_install_procedure ("file_pcx_save",
+  gimp_install_procedure (SAVE_PROC,
                           "Saves files in ZSoft PCX file format",
                           "FIXME: write help for pcx_save",
                           "Francisco Bustamante & Nick Lamb",
@@ -122,53 +169,9 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_file_handler_mime ("file_pcx_save", "image/x-pcx");
-  gimp_register_save_handler ("file_pcx_save", "pcx,pcc", "");
+  gimp_register_file_handler_mime (SAVE_PROC, "image/x-pcx");
+  gimp_register_save_handler (SAVE_PROC, "pcx,pcc", "");
 }
-
-/* Declare internal functions. */
-
-static gint32 load_image (const gchar *filename);
-static void   load_1     (FILE   *fp,
-			  gint    width,
-			  gint    height,
-			  guchar *buffer,
-			  gint    bytes);
-static void   load_4     (FILE   *fp,
-			  gint    width,
-			  gint    height,
-			  guchar *buffer,
-			  gint    bytes);
-static void   load_8     (FILE   *fp,
-			  gint    width,
-			  gint    height,
-			  guchar *buffer,
-			  gint    bytes);
-static void   load_24    (FILE   *fp,
-			  gint    width,
-			  gint    height,
-			  guchar *buffer,
-			  gint    bytes);
-static void   readline   (FILE   *fp,
-			  guchar *buffer,
-			  gint    bytes);
-
-static gint   save_image (const gchar *filename,
-			  gint32  image,
-			  gint32  layer);
-static void   save_8     (FILE   *fp,
-			  gint    width,
-			  gint    height,
-			  guchar *buffer);
-static void   save_24    (FILE   *fp,
-			  gint    width,
-			  gint    height,
-			  guchar *buffer);
-static void   writeline  (FILE   *fp,
-			  guchar *buffer,
-			  gint    bytes);
-
-/* Plug-in implementation */
 
 static void
 run (const gchar      *name,
@@ -190,10 +193,11 @@ run (const gchar      *name,
 
   *nreturn_vals = 1;
   *return_vals  = values;
+
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  if (strcmp (name, "file_pcx_load") == 0)
+  if (strcmp (name, LOAD_PROC) == 0)
     {
       image_ID = load_image (param[1].data.d_string);
 
@@ -208,7 +212,7 @@ run (const gchar      *name,
 	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
     }
-  else if (strcmp (name, "file_pcx_save") == 0)
+  else if (strcmp (name, SAVE_PROC) == 0)
     {
       image_ID    = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
@@ -218,7 +222,7 @@ run (const gchar      *name,
 	{
 	case GIMP_RUN_INTERACTIVE:
 	case GIMP_RUN_WITH_LAST_VALS:
-	  gimp_ui_init ("pcx", FALSE);
+	  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "PCX",
 				      (GIMP_EXPORT_CAN_HANDLE_RGB |
 				       GIMP_EXPORT_CAN_HANDLE_GRAY |
@@ -292,12 +296,12 @@ static struct
 static gint32
 load_image (const gchar *filename)
 {
-  FILE *fd;
+  FILE         *fd;
   GimpDrawable *drawable;
-  GimpPixelRgn pixel_rgn;
-  gint offset_x, offset_y, height, width;
-  gint32 image, layer;
-  guchar *dest, cmap[768];
+  GimpPixelRgn  pixel_rgn;
+  gint          offset_x, offset_y, height, width;
+  gint32        image, layer;
+  guchar       *dest, cmap[768];
 
   fd = g_fopen (filename, "rb");
   if (!fd)
@@ -528,13 +532,14 @@ save_image (const gchar *filename,
 	    gint32       image,
 	    gint32       layer)
 {
-  FILE *fp;
-  GimpPixelRgn pixel_rgn;
-  GimpDrawable *drawable;
-  GimpImageType drawable_type;
-  guchar *cmap= NULL, *pixels;
-  gint offset_x, offset_y, width, height;
-  int colors, i;
+  FILE          *fp;
+  GimpPixelRgn   pixel_rgn;
+  GimpDrawable  *drawable;
+  GimpImageType  drawable_type;
+  guchar        *cmap= NULL;
+  guchar        *pixels;
+  gint           offset_x, offset_y, width, height;
+  gint           colors, i;
 
   drawable = gimp_drawable_get (layer);
   drawable_type = gimp_drawable_type (layer);

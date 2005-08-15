@@ -26,6 +26,10 @@
  *
  */
 
+#define LOAD_PROC      "file-psp-load"
+#define SAVE_PROC      "file-psp-save"
+#define PLUG_IN_BINARY "psp"
+
 /* set to the level of debugging output you want, 0 for none */
 #define PSP_DEBUG 0
 
@@ -322,27 +326,28 @@ query (void)
 {
   static GimpParamDef load_args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_STRING, "filename", "The name of the file to load" },
-    { GIMP_PDB_STRING, "raw_filename", "The name of the file to load" }
+    { GIMP_PDB_INT32,  "run-mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_STRING, "filename",     "The name of the file to load" },
+    { GIMP_PDB_STRING, "raw-filename", "The name of the file to load" }
   };
   static GimpParamDef load_return_vals[] =
   {
     { GIMP_PDB_IMAGE, "image", "Output image" }
   };
 
-/*    static GimpParamDef save_args[] = */
-/*    { */
-/*      { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" }, */
-/*      { GIMP_PDB_IMAGE, "image", "Input image" }, */
-/*      { GIMP_PDB_DRAWABLE, "drawable", "Drawable to save" }, */
-/*      { GIMP_PDB_STRING, "filename", "The name of the file to save the image in" }, */
-/*      { GIMP_PDB_STRING, "raw_filename", "The name of the file to save the image in" }, */
-/*      { GIMP_PDB_INT32, "compression", "Specify 0 for no compression, " */
-/*        "1 for RLE, and 2 for LZ77" } */
-/*    }; */
+#if 0
+  static GimpParamDef save_args[] =
+  {
+    { GIMP_PDB_INT32,    "run-mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",        "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },
+    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
+    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in" },
+    { GIMP_PDB_INT32,    "compression",  "Specify 0 for no compression, 1 for RLE, and 2 for LZ77" }
+  };
+#endif
 
-  gimp_install_procedure ("file_psp_load",
+  gimp_install_procedure (LOAD_PROC,
                           "loads images from the Paint Shop Pro PSP file format",
                           "This plug-in loads and saves images in "
 			  "Paint Shop Pro's native PSP format. "
@@ -358,14 +363,15 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
-  gimp_register_file_handler_mime ("file_psp_load", "image/x-psp");
-  gimp_register_magic_load_handler ("file_psp_load",
+  gimp_register_file_handler_mime (LOAD_PROC, "image/x-psp");
+  gimp_register_magic_load_handler (LOAD_PROC,
 				    "psp,tub",
 				    "",
 				    "0,string,Paint\\040Shop\\040Pro\\040Image\\040File\n\032");
 
-/* Removed until Saving is implemented -- njl195@zepler.org
-  gimp_install_procedure ("file_psp_save",
+  /* Removed until Saving is implemented -- njl195@zepler.org */
+#if 0
+  gimp_install_procedure (SAVE_PROC,
                           "saves images in the Paint Shop Pro PSP file format",
                           "This plug-in loads and saves images in "
 			  "Paint Shop Pro's native PSP format. "
@@ -380,8 +386,8 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_save_handler ("file_psp_save", "psp,tub", "");
-*/
+  gimp_register_save_handler (SAVE_PROC, "psp,tub", "");
+#endif
 }
 
 static gboolean
@@ -391,9 +397,9 @@ save_dialog (void)
   GtkWidget *frame;
   gint       run;
 
-  dlg = gimp_dialog_new (_("Save as PSP"), "psp",
+  dlg = gimp_dialog_new (_("Save as PSP"), PLUG_IN_BINARY,
                          NULL, 0,
-			 gimp_standard_help_func, "file-psp-load",
+			 gimp_standard_help_func, SAVE_PROC,
 
 			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -401,9 +407,9 @@ save_dialog (void)
 			 NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   /*  file save type  */
   frame = gimp_int_radio_group_new (TRUE, _("Data Compression"),
@@ -1650,7 +1656,7 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  if (strcmp (name, "file_psp_load") == 0)
+  if (strcmp (name, LOAD_PROC) == 0)
     {
       image_ID = load_image (param[1].data.d_string);
 
@@ -1665,7 +1671,7 @@ run (const gchar      *name,
 	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
     }
-  else if (strcmp (name, "file_psp_save") == 0)
+  else if (strcmp (name, SAVE_PROC) == 0)
     {
       image_ID = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
@@ -1675,13 +1681,13 @@ run (const gchar      *name,
 	{
 	case GIMP_RUN_INTERACTIVE:
 	case GIMP_RUN_WITH_LAST_VALS:
-	  gimp_ui_init ("psp", FALSE);
+	  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "PSP",
-				      (GIMP_EXPORT_CAN_HANDLE_RGB |
-				       GIMP_EXPORT_CAN_HANDLE_GRAY |
-				       GIMP_EXPORT_CAN_HANDLE_INDEXED |
-				       GIMP_EXPORT_CAN_HANDLE_ALPHA  |
-				       GIMP_EXPORT_CAN_HANDLE_LAYERS));
+				      GIMP_EXPORT_CAN_HANDLE_RGB     |
+                                      GIMP_EXPORT_CAN_HANDLE_GRAY    |
+                                      GIMP_EXPORT_CAN_HANDLE_INDEXED |
+                                      GIMP_EXPORT_CAN_HANDLE_ALPHA   |
+                                      GIMP_EXPORT_CAN_HANDLE_LAYERS);
 	  if (export == GIMP_EXPORT_CANCEL)
 	    {
 	      values[0].data.d_status = GIMP_PDB_CANCEL;
@@ -1695,9 +1701,8 @@ run (const gchar      *name,
       switch (run_mode)
 	{
 	case GIMP_RUN_INTERACTIVE:
-
 	  /*  Possibly retrieve data  */
-	  gimp_get_data ("file_pnm_save", &psvals);
+	  gimp_get_data (SAVE_PROC, &psvals);
 
 	  /*  First acquire information with a dialog  */
 	  if (! save_dialog ())
@@ -1720,7 +1725,7 @@ run (const gchar      *name,
 	    }
 
 	case GIMP_RUN_WITH_LAST_VALS:
-	  gimp_get_data ("file_psp_save", &psvals);
+	  gimp_get_data (SAVE_PROC, &psvals);
 	  break;
 
 	default:
@@ -1731,7 +1736,7 @@ run (const gchar      *name,
 	{
 	  if (save_image (param[3].data.d_string, image_ID, drawable_ID))
 	    {
-	      gimp_set_data ("file_psp_save", &psvals, sizeof (PSPSaveVals));
+	      gimp_set_data (SAVE_PROC, &psvals, sizeof (PSPSaveVals));
 	    }
 	  else
 	    {
