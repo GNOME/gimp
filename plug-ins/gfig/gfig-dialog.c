@@ -301,9 +301,9 @@ gfig_dialog (void)
                                    NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (top_level_dlg),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   g_signal_connect (top_level_dlg, "response",
                     G_CALLBACK (gfig_response),

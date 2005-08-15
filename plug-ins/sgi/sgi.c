@@ -621,9 +621,9 @@ save_dialog (void)
                          NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   frame = gimp_int_radio_group_new (TRUE, _("Compression type"),
                                     G_CALLBACK (gimp_radio_button_update),

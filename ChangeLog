@@ -1,5 +1,20 @@
 2005-08-15  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/common/CML_explorer.c
+	* plug-ins/common/cartoon.c
+	* plug-ins/common/channel_mixer.c
+	* plug-ins/common/colorify.c
+	* plug-ins/common/compose.c
+	* plug-ins/common/csource.c
+	* plug-ins/flame/flame.c
+	* plug-ins/gfig/gfig-dialog.c
+	* plug-ins/gfli/gfli.c
+	* plug-ins/pagecurl/pagecurl.c
+	* plug-ins/rcm/rcm_dialog.c
+	* plug-ins/sgi/sgi.c: fix indentation.
+
+2005-08-15  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/common/papertile.c
 	* plug-ins/common/pat.c
 	* plug-ins/common/pcx.c
