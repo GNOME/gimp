@@ -257,9 +257,11 @@ static void   dither_grey      (guchar            *grey,
 
 /* Dialog-handling */
 
-static gboolean  load_dialog               (void);
-static void      load_pages_entry_callback (GtkWidget *widget,
-                                            gpointer   data);
+static gint32    count_ps_pages            (const gchar *filename);
+static gboolean  load_dialog               (const gchar *filename,
+                                            gboolean     loadPDF);
+static void      load_pages_entry_callback (GtkWidget   *widget,
+                                            gpointer     data);
 
 typedef struct
 {
@@ -292,6 +294,7 @@ static void compress_packbits (int            nin,
 static guint32 ascii85_buf;
 static int ascii85_len = 0;
 static int ascii85_linewidth = 0;
+static GimpPageSelectorTarget ps_pagemode = GIMP_PAGE_SELECTOR_TARGET_LAYERS;
 
 static void
 ascii85_init (void)
@@ -761,7 +764,8 @@ run (const gchar      *name,
           /*  Possibly retrieve data  */
           gimp_get_data ("file_ps_load", &plvals);
 
-          if (! load_dialog ())
+          if (! load_dialog (param[1].data.d_string,
+                             ! strcmp (name, "file_pdf_load")))
 	    status = GIMP_PDB_CANCEL;
           break;
 
@@ -969,14 +973,15 @@ run (const gchar      *name,
 static gint32
 load_image (const gchar *filename)
 {
-  gint32 image_ID, *image_list, *nl;
-  guint page_count;
-  gint  ChildPid;
-  FILE *ifp;
-  char *temp;
-  int  llx, lly, urx, ury;
-  int  k, n_images, max_images, max_pagenum;
-  int  is_epsf;
+  gint32  image_ID = 0;
+  gint32 *image_list, *nl;
+  guint   page_count;
+  gint    ChildPid;
+  FILE   *ifp;
+  char   *temp;
+  int     llx, lly, urx, ury;
+  int     k, n_images, max_images, max_pagenum;
+  int     is_epsf;
 
 #ifdef PS_DEBUG
   g_print ("load_image:\n resolution = %d\n", plvals.resolution);
@@ -1070,14 +1075,57 @@ load_image (const gchar *filename)
 
   ps_close (ifp, ChildPid);
 
-  /* Display images in reverse order. The last will be displayed by GIMP itself*/
-  if (l_run_mode != GIMP_RUN_NONINTERACTIVE)
+  if (ps_pagemode == GIMP_PAGE_SELECTOR_TARGET_LAYERS)
     {
-      for (k = n_images-1; k >= 1; k--)
-	gimp_display_new (image_list[k]);
+      for (k = 0; k < n_images; k++)
+        {
+          gchar *name;
+
+          if (k == 0)
+            {
+              image_ID = image_list[0];
+
+              name = g_strdup_printf (_("%s-pages"), filename);
+              gimp_image_set_filename (image_ID, name);
+              g_free (name);
+            }
+          else
+            {
+              gint32 current_layer;
+              gint32 tmp_ID;
+
+              tmp_ID = gimp_image_get_active_drawable (image_list[k]);
+
+              name = gimp_drawable_get_name (tmp_ID);
+
+              current_layer = gimp_layer_new_from_drawable (tmp_ID, image_ID);
+              gimp_drawable_set_name (current_layer, name);
+              gimp_image_add_layer (image_ID, current_layer, -1);
+              gimp_image_delete (image_list[k]);
+
+              g_free (name);
+            }
+        }
+
+      gimp_image_undo_enable (image_ID);
+    }
+  else
+    {
+      /* Display images in reverse order.
+       * The last will be displayed by GIMP itself
+       */
+      for (k = n_images - 1; k >= 0; k--)
+        {
+          gimp_image_undo_enable (image_list[k]);
+          gimp_image_clean_all (image_list[k]);
+
+          if (l_run_mode != GIMP_RUN_NONINTERACTIVE && k > 0)
+            gimp_display_new (image_list[k]);
+        }
+
+      image_ID = (n_images > 0) ? image_list[0] : -1;
     }
 
-  image_ID = (n_images > 0) ? image_list[0] : -1;
   g_free (image_list);
 
   return image_ID;
@@ -1811,28 +1859,24 @@ create_new_image (const gchar        *filename,
 {
   gint32         image_ID;
   GimpImageType  gdtype;
+  gchar         *tmp;
 
   if (type == GIMP_GRAY) gdtype = GIMP_GRAY_IMAGE;
   else if (type == GIMP_INDEXED) gdtype = GIMP_INDEXED_IMAGE;
   else gdtype = GIMP_RGB_IMAGE;
 
   image_ID = gimp_image_new (width, height, type);
+  gimp_image_undo_disable (image_ID);
 
-  if (pagenum > 1)
-    {
-      gchar *tmp;
+  tmp = g_strdup_printf ("%s-%d", filename, pagenum);
+  gimp_image_set_filename (image_ID, tmp);
+  g_free (tmp);
 
-      tmp = g_strdup_printf ("%s-pg%ld", filename, (long)pagenum);
-      gimp_image_set_filename (image_ID, tmp);
-      g_free (tmp);
-    }
-  else
-    {
-      gimp_image_set_filename (image_ID, filename);
-    }
-
-  *layer_ID = gimp_layer_new (image_ID, "Background", width, height,
+  tmp = g_strdup_printf (_("Page %d"), pagenum);
+  *layer_ID = gimp_layer_new (image_ID, tmp, width, height,
 			      gdtype, 100, GIMP_NORMAL_MODE);
+  g_free (tmp);
+
   gimp_image_add_layer (image_ID, *layer_ID, 0);
 
   *drawable = gimp_drawable_get (*layer_ID);
@@ -2904,8 +2948,50 @@ save_rgb (FILE   *ofp,
 
 /*  Load interface functions  */
 
+static gint32
+count_ps_pages (const gchar *filename)
+{
+  FILE   *psfile         = NULL;
+  gchar  *curr_line      = NULL;
+  gint32  num_pages      = 0;
+  gint32  showpage_count = 0;
+
+  if (strncmp (g_ascii_strup (filename + (strlen (filename) - 3), 3), "EPS", 3) == 0)
+    return 1;
+
+  psfile = g_fopen (filename, "r");
+
+  if (psfile == NULL)
+    {
+      g_message (_("Could not open '%s' for reading: %s"),
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      return 0;
+    }
+
+  curr_line = g_malloc0 (1024 * sizeof (gchar));
+
+  while (num_pages == 0 && !feof (psfile))
+    {
+      fgets (curr_line, 1023, psfile);
+
+      if (strncmp (curr_line + 2, "Pages:", 6) == 0)
+        sscanf (curr_line + strlen ("%%Pages:"), "%d", &num_pages);
+      else if (strncmp (curr_line, "showpage", 8) == 0)
+        showpage_count++;
+    }
+
+  if (feof (psfile) && num_pages < 1 && showpage_count > 0)
+    num_pages = showpage_count;
+
+  g_free (curr_line);
+  fclose (psfile);
+
+  return num_pages;
+}
+
 static gboolean
-load_dialog (void)
+load_dialog (const gchar *filename,
+             gboolean     loadPDF)
 {
   GtkWidget *dialog;
   GtkWidget *main_vbox;
@@ -2915,9 +3001,15 @@ load_dialog (void)
   GtkWidget *table;
   GtkWidget *spinbutton;
   GtkObject *adj;
-  GtkWidget *entry;
+  GtkWidget *entry    = NULL;
+  GtkWidget *target   = NULL;
   GtkWidget *toggle;
+  GtkWidget *selector = NULL;
+  gint32     page_count;
+  gchar     *range    = NULL;
   gboolean   run;
+
+  page_count = count_ps_pages (filename);
 
   gimp_ui_init ("ps", FALSE);
 
@@ -2931,15 +3023,26 @@ load_dialog (void)
 			    NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), main_vbox,
-                      FALSE, FALSE, 0);
+                      TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
+
+  if (page_count > 1)
+    {
+      selector = gimp_page_selector_new ();
+      gtk_box_pack_start (GTK_BOX (main_vbox), selector, TRUE, TRUE, 0);
+      gimp_page_selector_set_n_pages (GIMP_PAGE_SELECTOR (selector),
+		                      page_count);
+      gimp_page_selector_set_target (GIMP_PAGE_SELECTOR (selector),
+		                     ps_pagemode);
+      gtk_widget_show (selector);
+    }
 
   hbox = gtk_hbox_new (TRUE, 12);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
@@ -2986,17 +3089,31 @@ load_dialog (void)
                     G_CALLBACK (gimp_int_adjustment_update),
                     &plvals.height);
 
-  entry = gtk_entry_new ();
-  gtk_widget_set_size_request (entry, 80, -1);
-  gtk_entry_set_text (GTK_ENTRY (entry), plvals.pages);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
-			     _("Pages:"), 0.0, 0.5,
-			     entry, 1, FALSE);
-  g_signal_connect (entry, "changed",
-                    G_CALLBACK (load_pages_entry_callback),
-                    NULL);
-  gimp_help_set_help_data (GTK_WIDGET (entry),
-                           _("Pages to load (e.g.: 1-4 or 1,3,5-7)"), NULL);
+  if (loadPDF || page_count == 0)
+    {
+      entry = gtk_entry_new ();
+      gtk_widget_set_size_request (entry, 80, -1);
+      gtk_entry_set_text (GTK_ENTRY (entry), plvals.pages);
+      gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
+  	 		         _("Pages:"), 0.0, 0.5,
+  			         entry, 1, FALSE);
+
+      g_signal_connect (entry, "changed",
+                        G_CALLBACK (load_pages_entry_callback),
+                        NULL);
+      gimp_help_set_help_data (GTK_WIDGET (entry),
+                               _("Pages to load (e.g.: 1-4 or 1,3,5-7)"), NULL);
+
+      target = gtk_combo_box_new_text ();
+      gtk_combo_box_insert_text (GTK_COMBO_BOX (target),
+		                 GIMP_PAGE_SELECTOR_TARGET_LAYERS, _("Layers"));
+      gtk_combo_box_insert_text (GTK_COMBO_BOX (target),
+		                 GIMP_PAGE_SELECTOR_TARGET_IMAGES, _("Images"));
+      gtk_combo_box_set_active (GTK_COMBO_BOX (target), (int) ps_pagemode);
+      gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
+		                 _("Open as"), 0.0, 0.5,
+				 target, 1, FALSE);
+    }
 
   toggle = gtk_check_button_new_with_label (_("Try Bounding Box"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
@@ -3055,6 +3172,32 @@ load_dialog (void)
   gtk_widget_show (dialog);
 
   run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+
+  if (page_count > 1)
+    {
+      range = gimp_page_selector_get_selected_range (GIMP_PAGE_SELECTOR (selector));
+
+      if (strlen (range) < 1)
+        {
+          gimp_page_selector_select_all (GIMP_PAGE_SELECTOR (selector));
+          range = gimp_page_selector_get_selected_range (GIMP_PAGE_SELECTOR (selector));
+        }
+
+      strncpy (plvals.pages, range, sizeof (plvals.pages));
+      plvals.pages[strlen (range)] = '\0';
+
+      ps_pagemode = gimp_page_selector_get_target (GIMP_PAGE_SELECTOR (selector));
+    }
+  else if (loadPDF || page_count == 0)
+    {
+      ps_pagemode = gtk_combo_box_get_active (GTK_COMBO_BOX (target));
+    }
+  else
+    {
+      strncpy (plvals.pages, "1", 1);
+      plvals.pages[1] = '\0';
+      ps_pagemode = GIMP_PAGE_SELECTOR_TARGET_IMAGES;
+    }
 
   gtk_widget_destroy (dialog);
 

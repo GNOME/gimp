@@ -1,3 +1,12 @@
+2005-08-15  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/postscript.c: applied patch from Felix Riemann
+	that adds page counting and a page selector widget to the load
+	dialog.  Fixed some minor issues in the patch and added code that
+	names layers and images after the document's pages. Disable undo
+	on all created images and set them clean before returning them.
+	Addresses bug #138495.
+
 2005-08-15  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/psd_save.c: fixed signedness issue.
