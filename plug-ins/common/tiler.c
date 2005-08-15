@@ -29,6 +29,9 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define PLUG_IN_PROC "plug-in-make-seamless"
+
+
 /* Declare local functions.
  */
 static void query (void);
@@ -60,7 +63,7 @@ query (void)
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" }
   };
 
-  gimp_install_procedure ("plug_in_make_seamless",
+  gimp_install_procedure (PLUG_IN_PROC,
 			  "Seamless tile creation",
 			  "This plugin creates a seamless tileable from "
                           "the input drawable",
@@ -73,7 +76,7 @@ query (void)
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_make_seamless", "<Image>/Filters/Map");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Map");
 }
 
 
@@ -134,7 +137,7 @@ weld_pixels (guchar *dest1,
   gdouble a = (ABS(x - width) - 1)/ (gdouble) (width - 1);
   gdouble b = (ABS(y - height) - 1) / (gdouble) (height - 1);
   gdouble w;
-  guint i;
+  guint   i;
 
   /* mimic ambiguous point handling in original algorithm */
   if (a < 1e-8 && b > 0.99999999)
@@ -151,11 +154,11 @@ weld_pixels (guchar *dest1,
 static void
 weld_pixels_alpha (guchar *dest1,
                    guchar *dest2,
-                   gint width,
-                   gint height,
-                   gint x,
-                   gint y,
-                   guint bpp,
+                   gint    width,
+                   gint    height,
+                   gint    x,
+                   gint    y,
+                   guint   bpp,
                    guchar *src1,
                    guchar *src2)
 {
@@ -163,8 +166,8 @@ weld_pixels_alpha (guchar *dest1,
   gdouble b = (ABS(y - height) - 1) / (gdouble) (height - 1);
   gdouble w;
   gdouble alpha;
-  guint ai = bpp-1;
-  guint i;
+  guint   ai = bpp-1;
+  guint   i;
 
   /* mimic ambiguous point handling in original algorithm */
   if (a < 1e-8 && b > 0.99999999)
@@ -187,20 +190,24 @@ weld_pixels_alpha (guchar *dest1,
 }
 
 static void
-tile_region (GimpDrawable *drawable, gboolean left,
-	     gint x1, gint y1, gint x2, gint y2)
+tile_region (GimpDrawable *drawable,
+             gboolean      left,
+	     gint          x1,
+             gint          y1,
+             gint          x2,
+             gint          y2)
 {
-  glong      width, height;
-  gint       bpp;
-  gint       wodd, hodd;
-  gint	     w, h, x, y;
-  gint	     rgn1_x, rgn2_x, off_x;
-  static gint progress = 0;
-  gint       max_progress;
+  glong         width, height;
+  gint          bpp;
+  gint          wodd, hodd;
+  gint	        w, h, x, y;
+  gint	        rgn1_x, rgn2_x, off_x;
+  static gint   progress = 0;
+  gint          max_progress;
   GimpPixelRgn  src1_rgn, src2_rgn, dest1_rgn, dest2_rgn;
-  gpointer     pr;
-  gboolean   has_alpha;
-  guint      asymmetry_correction;
+  gpointer      pr;
+  gboolean      has_alpha;
+  guint         asymmetry_correction;
 
   bpp = gimp_drawable_bpp (drawable->drawable_id);
   has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
@@ -214,12 +221,12 @@ tile_region (GimpDrawable *drawable, gboolean left,
   w = width / 2;
   h = height / 2;
 
-  if (left) 
+  if (left)
     {
       rgn1_x = x1;
       rgn2_x = x1 + w + wodd;
       off_x = w + wodd;
-    } 
+    }
   else
     {
       rgn1_x = x1 + w + wodd;
@@ -231,9 +238,9 @@ tile_region (GimpDrawable *drawable, gboolean left,
 
   gimp_pixel_rgn_init (&src1_rgn, drawable, rgn1_x, y1, w, h, FALSE, FALSE);
   gimp_pixel_rgn_init (&dest1_rgn, drawable, rgn1_x, y1, w, h, TRUE, TRUE);
-  gimp_pixel_rgn_init (&src2_rgn, drawable, rgn2_x, y1 + h + hodd, 
+  gimp_pixel_rgn_init (&src2_rgn, drawable, rgn2_x, y1 + h + hodd,
 		       w, h, FALSE, FALSE);
-  gimp_pixel_rgn_init (&dest2_rgn, drawable, rgn2_x, y1 + h + hodd, 
+  gimp_pixel_rgn_init (&dest2_rgn, drawable, rgn2_x, y1 + h + hodd,
 		       w, h, TRUE, TRUE);
 
   max_progress = width * height / 2;
@@ -247,7 +254,7 @@ tile_region (GimpDrawable *drawable, gboolean left,
       guchar *dest1 = dest1_rgn.data;
       guchar *src2  = src2_rgn.data;
       guchar *dest2 = dest2_rgn.data;
-      gint row = src1_rgn.y - y1;
+      gint   row    = src1_rgn.y - y1;
 
       for (y = 0; y < src1_rgn.h; y++, row++)
 	{
@@ -287,15 +294,20 @@ tile_region (GimpDrawable *drawable, gboolean left,
 	  dest1 += dest1_rgn.rowstride;
 	  dest2 += dest2_rgn.rowstride;
 	}
+
       progress += src1_rgn.w * src1_rgn.h;
       gimp_progress_update ((gdouble) progress / (gdouble) max_progress);
     }
 }
 
 static void
-copy_region (GimpDrawable *drawable, gint x, gint y, gint w, gint h)
+copy_region (GimpDrawable *drawable,
+             gint          x,
+             gint          y,
+             gint          w,
+             gint          h)
 {
-  GimpPixelRgn  src_rgn, dest_rgn;
+  GimpPixelRgn src_rgn, dest_rgn;
   gpointer     pr;
 
   gimp_pixel_rgn_init (&src_rgn, drawable, x, y, w, h, FALSE, FALSE);
@@ -319,12 +331,12 @@ copy_region (GimpDrawable *drawable, gint x, gint y, gint w, gint h)
 static void
 tile (GimpDrawable *drawable)
 {
-  glong      width, height;
-  gint       x1, y1, x2, y2;
+  glong width, height;
+  gint  x1, y1, x2, y2;
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
   gimp_progress_init (_("Tiler..."));
-  
+
   height = y2 - y1;
   width = x2 - x1;
 

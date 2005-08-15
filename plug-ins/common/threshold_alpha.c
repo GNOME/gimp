@@ -30,9 +30,8 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define PLUG_IN_NAME        "plug_in_threshold_alpha"
-#define SHORT_NAME          "threshold_alpha"
-#define HELP_ID             "plug-in-threshold-alpha"
+#define PLUG_IN_PROC        "plug-in-threshold-alpha"
+#define PLUG_IN_BINARY      "threshold_alpha"
 #define PROGRESS_UPDATE_NUM 100
 #define SCALE_WIDTH         120
 
@@ -82,7 +81,7 @@ query (void)
     { GIMP_PDB_INT32,    "threshold", "Threshold"                    }
   };
 
-  gimp_install_procedure (PLUG_IN_NAME,
+  gimp_install_procedure (PLUG_IN_PROC,
                           "",
                           "",
                           "Shuji Narazaki (narazaki@InetQ.or.jp)",
@@ -94,7 +93,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register (PLUG_IN_NAME,
+  gimp_plugin_menu_register (PLUG_IN_PROC,
                              "<Image>/Layer/Transparency/Modify");
 }
 
@@ -138,7 +137,7 @@ run (const gchar      *name,
           g_message (_("RGBA/GRAYA drawable is not selected."));
           return;
         }
-      gimp_get_data (PLUG_IN_NAME, &VALS);
+      gimp_get_data (PLUG_IN_PROC, &VALS);
       if (! threshold_alpha_dialog (drawable))
         return;
       break;
@@ -155,7 +154,7 @@ run (const gchar      *name,
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data (PLUG_IN_NAME, &VALS);
+      gimp_get_data (PLUG_IN_PROC, &VALS);
       break;
     }
 
@@ -170,7 +169,7 @@ run (const gchar      *name,
           if (run_mode != GIMP_RUN_NONINTERACTIVE)
             gimp_displays_flush ();
           if (run_mode == GIMP_RUN_INTERACTIVE && status == GIMP_PDB_SUCCESS)
-            gimp_set_data (PLUG_IN_NAME, &VALS, sizeof (ValueType));
+            gimp_set_data (PLUG_IN_PROC, &VALS, sizeof (ValueType));
         }
       else
         {
@@ -244,11 +243,11 @@ threshold_alpha_dialog (GimpDrawable *drawable)
   GtkObject *adj;
   gboolean   run;
 
-  gimp_ui_init (SHORT_NAME, FALSE);
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Threshold Alpha"), SHORT_NAME,
+  dialog = gimp_dialog_new (_("Threshold Alpha"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, HELP_ID,
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,

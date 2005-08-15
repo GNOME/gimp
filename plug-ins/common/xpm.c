@@ -69,7 +69,10 @@ static const gchar linenoise [] =
 " .+@#$%&*=-;>,')!~{]^/(_:<[}|1234567890abcdefghijklmnopqrstuvwxyz\
 ABCDEFGHIJKLMNOPQRSTUVWXYZ`";
 
-#define SCALE_WIDTH 125
+#define LOAD_PROC      "file-xpm-load"
+#define SAVE_PROC      "file-xpm-save"
+#define PLUG_IN_BINARY "xpm"
+#define SCALE_WIDTH    125
 
 /* Structs for the save dialog */
 typedef struct
@@ -135,9 +138,9 @@ query (void)
 {
   static GimpParamDef load_args[] =
   {
-    { GIMP_PDB_INT32,     "run_mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,     "run-mode",     "Interactive, non-interactive" },
     { GIMP_PDB_STRING,    "filename",     "The name of the file to load" },
-    { GIMP_PDB_STRING,    "raw_filename", "The name entered" }
+    { GIMP_PDB_STRING,    "raw-filename", "The name entered"             }
   };
 
   static GimpParamDef load_return_vals[] =
@@ -147,15 +150,15 @@ query (void)
 
   static GimpParamDef save_args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",      "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode",      "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",         "Input image" },
     { GIMP_PDB_DRAWABLE, "drawable",      "Drawable to save" },
     { GIMP_PDB_STRING,   "filename",      "The name of the file to save the image in" },
-    { GIMP_PDB_STRING,   "raw_filename",  "The name of the file to save the image in" },
+    { GIMP_PDB_STRING,   "raw-filename",  "The name of the file to save the image in" },
     { GIMP_PDB_INT32,    "threshold",     "Alpha threshold (0-255)" }
   };
 
-  gimp_install_procedure ("file_xpm_load",
+  gimp_install_procedure (LOAD_PROC,
                           "Load files in XPM (X11 Pixmap) format.",
                           "Load files in XPM (X11 Pixmap) format. "
                           "XPM is a portable image format designed to be "
@@ -174,13 +177,13 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
-  gimp_register_file_handler_mime ("file_xpm_load", "image/x-xpixmap");
-  gimp_register_magic_load_handler ("file_xpm_load",
+  gimp_register_file_handler_mime (LOAD_PROC, "image/x-xpixmap");
+  gimp_register_magic_load_handler (LOAD_PROC,
                                     "xpm",
                                     "",
                                     "0, string,/*\\040XPM\\040*/");
 
-  gimp_install_procedure ("file_xpm_save",
+  gimp_install_procedure (SAVE_PROC,
                           "Save files in XPM (X11 Pixmap) format.",
                           "Save files in XPM (X11 Pixmap) format. "
                           "XPM is a portable image format designed to be "
@@ -198,8 +201,8 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_file_handler_mime ("file_xpm_save", "image/x-xpixmap");
-  gimp_register_save_handler ("file_xpm_save", "xpm", "");
+  gimp_register_file_handler_mime (SAVE_PROC, "image/x-xpixmap");
+  gimp_register_save_handler (SAVE_PROC, "xpm", "");
 }
 
 static void
@@ -226,7 +229,7 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  if (strcmp (name, "file_xpm_load") == 0)
+  if (strcmp (name, LOAD_PROC) == 0)
     {
       image_ID = load_image (param[1].data.d_string);
 
@@ -241,9 +244,9 @@ run (const gchar      *name,
           status = GIMP_PDB_EXECUTION_ERROR;
         }
     }
-  else if (strcmp (name, "file_xpm_save") == 0)
+  else if (strcmp (name, SAVE_PROC) == 0)
     {
-      gimp_ui_init ("xpm", FALSE);
+      gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
       image_ID    = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
@@ -768,9 +771,9 @@ save_dialog (void)
   GtkObject *scale_data;
   gboolean   run;
 
-  dlg = gimp_dialog_new (_("Save as XPM"), "xpm",
+  dlg = gimp_dialog_new (_("Save as XPM"), PLUG_IN_BINARY,
                          NULL, 0,
-                         gimp_standard_help_func, "file-xpm-save",
+                         gimp_standard_help_func, SAVE_PROC,
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -778,9 +781,9 @@ save_dialog (void)
                          NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   table = gtk_table_new (1, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);

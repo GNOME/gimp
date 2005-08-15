@@ -24,6 +24,9 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define PLUG_IN_PROC "plug-in-zealouscrop"
+
+
 /* Declare local functions. */
 static void        query         (void);
 static void        run           (const gchar      *name,
@@ -73,12 +76,12 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode", "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",    "Input image"                  },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"               }
   };
 
-  gimp_install_procedure ("plug_in_zealouscrop",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Automagically crops unused space from the edges "
                           "and middle of a picture.",
                           "",
@@ -91,7 +94,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_zealouscrop", "<Image>/Image/Crop");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Image/Crop");
 }
 
 static void
@@ -110,7 +113,7 @@ run (const gchar      *name,
   INIT_I18N();
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
 
   run_mode = param[0].data.d_int32;
 

@@ -74,6 +74,8 @@
 
 /* Some useful macros */
 
+#define PLUG_IN_PROC    "plug-in-warp"
+#define PLUG_IN_BINARY  "warp"
 #define ENTRY_WIDTH     75
 #define TILE_CACHE_SIZE 30  /* was 48. There is a cache flush problem in GIMP preventing sequential updates */
 #define MIN_ARGS         6  /* minimum number of arguments required */
@@ -211,26 +213,26 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_FLOAT, "amount", "Pixel displacement multiplier" },
-    { GIMP_PDB_DRAWABLE, "warp_map", "Displacement control map" },
-    { GIMP_PDB_INT32, "iter", "Iteration count (last required argument)" },
-    { GIMP_PDB_FLOAT, "dither", "Random dither amount (first optional argument)" },
-    { GIMP_PDB_FLOAT, "angle", "Angle of gradient vector rotation" },
-    { GIMP_PDB_INT32, "wrap_type", "Edge behavior: { WRAP (0), SMEAR (1), BLACK (2), COLOR (3) }" },
-    { GIMP_PDB_DRAWABLE, "mag_map", "Magnitude control map" },
-    { GIMP_PDB_INT32, "mag_use", "Use magnitude map: { FALSE (0), TRUE (1) }" },
-    { GIMP_PDB_INT32, "substeps", "Substeps between image updates" },
-    { GIMP_PDB_INT32, "grad_map", "Gradient control map" },
-    { GIMP_PDB_FLOAT, "grad_scale", "Scaling factor for gradient map (0=don't use)" },
-    { GIMP_PDB_INT32, "vector_map", "Fixed vector control map" },
-    { GIMP_PDB_FLOAT, "vector_scale", "Scaling factor for fixed vector map (0=don't use)" },
-    { GIMP_PDB_FLOAT, "vector_angle", "Angle for fixed vector map" }
+    { GIMP_PDB_INT32,    "run-mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",        "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable",     "Input drawable" },
+    { GIMP_PDB_FLOAT,    "amount",       "Pixel displacement multiplier" },
+    { GIMP_PDB_DRAWABLE, "warp-map",     "Displacement control map" },
+    { GIMP_PDB_INT32,    "iter",         "Iteration count (last required argument)" },
+    { GIMP_PDB_FLOAT,    "dither",       "Random dither amount (first optional argument)" },
+    { GIMP_PDB_FLOAT,    "angle",        "Angle of gradient vector rotation" },
+    { GIMP_PDB_INT32,    "wrap-type",    "Edge behavior: { WRAP (0), SMEAR (1), BLACK (2), COLOR (3) }" },
+    { GIMP_PDB_DRAWABLE, "mag-map",      "Magnitude control map" },
+    { GIMP_PDB_INT32,    "mag-use",      "Use magnitude map: { FALSE (0), TRUE (1) }" },
+    { GIMP_PDB_INT32,    "substeps",     "Substeps between image updates" },
+    { GIMP_PDB_INT32,    "grad-map",     "Gradient control map" },
+    { GIMP_PDB_FLOAT,    "grad-scale",   "Scaling factor for gradient map (0=don't use)" },
+    { GIMP_PDB_INT32,    "vector-map",   "Fixed vector control map" },
+    { GIMP_PDB_FLOAT,    "vector-scale", "Scaling factor for fixed vector map (0=don't use)" },
+    { GIMP_PDB_FLOAT,    "vector-angle", "Angle for fixed vector map" }
   };
 
-  gimp_install_procedure ("plug_in_warp",
+  gimp_install_procedure (PLUG_IN_PROC,
 			  "Twist or smear an image. (only first six "
                           "arguments are required)",
 			  "Smears an image along vector paths calculated as "
@@ -246,7 +248,7 @@ query (void)
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_warp", "<Image>/Filters/Map");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Map");
 }
 
 static void
@@ -293,7 +295,7 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_warp", &dvals);
+      gimp_get_data (PLUG_IN_PROC, &dvals);
 
       /*  First acquire information with a dialog  */
       if (! warp_dialog (drawable))
@@ -330,7 +332,7 @@ run (const gchar      *name,
 
     case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_warp", &dvals);
+      gimp_get_data (PLUG_IN_PROC, &dvals);
       break;
 
     default:
@@ -347,7 +349,7 @@ run (const gchar      *name,
 
       /*  Store data  */
       if (run_mode == GIMP_RUN_INTERACTIVE)
-	gimp_set_data ("plug_in_warp", &dvals, sizeof (WarpVals));
+	gimp_set_data (PLUG_IN_PROC, &dvals, sizeof (WarpVals));
     }
 
   values[0].data.d_status = status;
@@ -385,11 +387,11 @@ warp_dialog (GimpDrawable *drawable)
   GSList       *group = NULL;
   gboolean      run;
 
-  gimp_ui_init ("warp", FALSE);
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dlg = gimp_dialog_new (_("Warp"), "warp",
+  dlg = gimp_dialog_new (_("Warp"), PLUG_IN_BINARY,
                          NULL, 0,
-			 gimp_standard_help_func, "plug-in-warp",
+			 gimp_standard_help_func, PLUG_IN_PROC,
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -397,9 +399,9 @@ warp_dialog (GimpDrawable *drawable)
                          NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);

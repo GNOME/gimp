@@ -32,6 +32,9 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define PLUG_IN_PROC   "plug-in-waves"
+#define PLUG_IN_BINARY "waves"
+
 enum
 {
   MODE_SMEAR,
@@ -102,7 +105,7 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",   "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode",   "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",      "The Image"                    },
     { GIMP_PDB_DRAWABLE, "drawable",   "The Drawable"                 },
     { GIMP_PDB_FLOAT,    "amplitude",  "The Amplitude of the Waves"   },
@@ -112,7 +115,7 @@ query (void)
     { GIMP_PDB_INT32,    "reflective", "Use Reflection"               }
   };
 
-  gimp_install_procedure ("plug_in_waves",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Distort the image with waves",
                           "none yet",
                           "Eric L. Hernes, Stephen Norris",
@@ -124,7 +127,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_waves", "<Image>/Filters/Distorts");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Distorts");
 }
 
 static void
@@ -152,7 +155,7 @@ run (const gchar      *name,
     {
 
     case GIMP_RUN_INTERACTIVE:
-      gimp_get_data ("plug_in_waves", &wvals);
+      gimp_get_data (PLUG_IN_PROC, &wvals);
 
       if (! waves_dialog (drawable))
         return;
@@ -175,7 +178,7 @@ run (const gchar      *name,
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data ("plug_in_waves", &wvals);
+      gimp_get_data (PLUG_IN_PROC, &wvals);
       break;
 
     default:
@@ -186,7 +189,7 @@ run (const gchar      *name,
     {
       waves (drawable);
 
-      gimp_set_data ("plug_in_waves", &wvals, sizeof (piArgs));
+      gimp_set_data (PLUG_IN_PROC, &wvals, sizeof (piArgs));
       values[0].data.d_status = status;
     }
 }
@@ -238,11 +241,11 @@ waves_dialog (GimpDrawable *drawable)
   GtkObject *adj;
   gboolean   run;
 
-  gimp_ui_init ("waves", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Waves"), "waves",
+  dialog = gimp_dialog_new (_("Waves"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, "plug-in-waves",
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -250,9 +253,9 @@ waves_dialog (GimpDrawable *drawable)
                             NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);

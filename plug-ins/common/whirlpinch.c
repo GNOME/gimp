@@ -53,9 +53,9 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define PLUG_IN_NAME    "plug_in_whirl_pinch"
+#define PLUG_IN_PROC    "plug-in-whirl-pinch"
+#define PLUG_IN_BINARY  "whirlpinch"
 #define PLUG_IN_VERSION "May 1997, 2.09"
-#define HELP_ID         "plug-in-whirl-pinch"
 
 /***** Magic numbers *****/
 
@@ -129,16 +129,15 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",  "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE,    "image",     "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable",  "Input drawable" },
-    { GIMP_PDB_FLOAT,    "whirl",     "Whirl angle (degrees)" },
-    { GIMP_PDB_FLOAT,    "pinch",     "Pinch amount" },
-    { GIMP_PDB_FLOAT,    "radius",    "Radius (1.0 is the largest circle that fits in the image, "
-      "and 2.0 goes all the way to the corners)" }
+    { GIMP_PDB_INT32,    "run-mode",  "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",     "Input image"                  },
+    { GIMP_PDB_DRAWABLE, "drawable",  "Input drawable"               },
+    { GIMP_PDB_FLOAT,    "whirl",     "Whirl angle (degrees)"        },
+    { GIMP_PDB_FLOAT,    "pinch",     "Pinch amount"                 },
+    { GIMP_PDB_FLOAT,    "radius",    "Radius (1.0 is the largest circle that fits in the image, and 2.0 goes all the way to the corners)" }
   };
 
-  gimp_install_procedure (PLUG_IN_NAME,
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Distort an image by whirling and pinching",
                           "Distorts the image by whirling and pinching, which "
                           "are two common center-based, circular distortions.  "
@@ -156,7 +155,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register (PLUG_IN_NAME, "<Image>/Filters/Distorts");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Distorts");
 }
 
 static void
@@ -235,7 +234,7 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       /* Possibly retrieve data */
-      gimp_get_data (PLUG_IN_NAME, &wpvals);
+      gimp_get_data (PLUG_IN_PROC, &wpvals);
 
       /* Get information from the dialog */
       if (!whirl_pinch_dialog (drawable))
@@ -260,7 +259,7 @@ run (const gchar      *name,
 
     case GIMP_RUN_WITH_LAST_VALS:
       /* Possibly retrieve data */
-      gimp_get_data (PLUG_IN_NAME, &wpvals);
+      gimp_get_data (PLUG_IN_PROC, &wpvals);
       break;
 
     default:
@@ -283,7 +282,7 @@ run (const gchar      *name,
       /* Store data */
 
       if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data (PLUG_IN_NAME, &wpvals, sizeof (whirl_pinch_vals_t));
+        gimp_set_data (PLUG_IN_PROC, &wpvals, sizeof (whirl_pinch_vals_t));
     }
   else if (status == GIMP_PDB_SUCCESS)
     status = GIMP_PDB_EXECUTION_ERROR;
@@ -526,11 +525,11 @@ whirl_pinch_dialog (GimpDrawable *drawable)
   GtkObject *adj;
   gboolean   run;
 
-  gimp_ui_init ("whirlpinch", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Whirl and Pinch"), "whirlpinch",
+  dialog = gimp_dialog_new (_("Whirl and Pinch"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, HELP_ID,
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -538,9 +537,9 @@ whirl_pinch_dialog (GimpDrawable *drawable)
                             NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
@@ -732,4 +731,3 @@ dialog_update_preview (GimpDrawable *drawable,
   g_free (src);
   g_free (dest);
 }
-

@@ -30,6 +30,8 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define PLUG_IN_PROC     "plug-in-unit-editor"
+#define PLUG_IN_BINARY   "uniteditor"
 #define RESPONSE_REFRESH 1
 
 enum
@@ -137,10 +139,10 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive" }
+    { GIMP_PDB_INT32, "run-mode", "Interactive" }
   };
 
-  gimp_install_procedure ("plug_in_unit_editor",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "The GIMP unit editor (runs in interactive mode only)",
                           "The GIMP unit editor (runs in interactive mode only)",
                           "Michael Natterer <mitch@gimp.org>",
@@ -152,9 +154,8 @@ query (void)
 			  G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_unit_editor",
-                             "<Toolbox>/Xtns/Extensions");
-  gimp_plugin_icon_register ("plug_in_unit_editor",
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Toolbox>/Xtns/Extensions");
+  gimp_plugin_icon_register (PLUG_IN_PROC,
                              GIMP_ICON_TYPE_STOCK_ID,
                              (const guchar *) GIMP_STOCK_TOOL_MEASURE);
 }
@@ -179,7 +180,7 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
 
-  if (strcmp (name, "plug_in_unit_editor") == 0)
+  if (strcmp (name, PLUG_IN_PROC) == 0)
     {
       values[0].data.d_status = GIMP_PDB_SUCCESS;
 
@@ -206,9 +207,9 @@ new_unit_dialog (GtkWidget *main_dialog,
 
   GimpUnit   unit = GIMP_UNIT_PIXEL;
 
-  dialog = gimp_dialog_new (_("New Unit"), "uniteditor",
+  dialog = gimp_dialog_new (_("New Unit"), PLUG_IN_BINARY,
                             main_dialog, GTK_DIALOG_MODAL,
-			    gimp_standard_help_func, "plug-in-unit-editor",
+			    gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -216,9 +217,9 @@ new_unit_dialog (GtkWidget *main_dialog,
                             NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   table = gtk_table_new (7, 2, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
@@ -386,7 +387,7 @@ unit_editor_dialog (void)
   GtkCellRenderer   *rend;
   gint               i;
 
-  gimp_ui_init ("uniteditor", FALSE);
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
   list_store = gtk_list_store_new (NUM_COLUMNS,
                                    G_TYPE_BOOLEAN,   /*  SAVE          */
@@ -404,9 +405,9 @@ unit_editor_dialog (void)
   tv = gtk_tree_view_new_with_model (GTK_TREE_MODEL (list_store));
   g_object_unref (list_store);
 
-  main_dialog = gimp_dialog_new (_("Unit Editor"), "uniteditor",
+  main_dialog = gimp_dialog_new (_("Unit Editor"), PLUG_IN_BINARY,
                                  NULL, 0,
-                                 gimp_standard_help_func, "plug-in-unit-editor",
+                                 gimp_standard_help_func, PLUG_IN_PROC,
 
                                  GTK_STOCK_REFRESH, RESPONSE_REFRESH,
                                  GTK_STOCK_CLOSE,   GTK_RESPONSE_CLOSE,

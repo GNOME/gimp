@@ -29,6 +29,10 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define PLUG_IN_PROC   "plug-in-tile"
+#define PLUG_IN_BINARY "tile"
+
+
 typedef struct
 {
   gint new_width;
@@ -79,21 +83,21 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",  "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode",  "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",      "Input image (unused)"        },
     { GIMP_PDB_DRAWABLE, "drawable",   "Input drawable"              },
-    { GIMP_PDB_INT32,    "new_width",  "New (tiled) image width"     },
-    { GIMP_PDB_INT32,    "new_height", "New (tiled) image height"    },
-    { GIMP_PDB_INT32,    "new_image",  "Create a new image?"         }
+    { GIMP_PDB_INT32,    "new-width",  "New (tiled) image width"     },
+    { GIMP_PDB_INT32,    "new-height", "New (tiled) image height"    },
+    { GIMP_PDB_INT32,    "new-image",  "Create a new image?"         }
   };
 
   static GimpParamDef return_vals[] =
   {
-    { GIMP_PDB_IMAGE, "new_image", "Output image (N/A if new_image == FALSE)" },
-    { GIMP_PDB_LAYER, "new_layer", "Output layer (N/A if new_image == FALSE)" }
+    { GIMP_PDB_IMAGE, "new-image", "Output image (N/A if new-image == FALSE)" },
+    { GIMP_PDB_LAYER, "new-layer", "Output layer (N/A if new-image == FALSE)" }
   };
 
-  gimp_install_procedure ("plug_in_tile",
+  gimp_install_procedure (PLUG_IN_PROC,
 			  "Create a new image which is a tiled version of the "
 			  "input drawable",
 			  "This function creates a new image with a single "
@@ -112,7 +116,7 @@ query (void)
                           G_N_ELEMENTS (return_vals),
 			  args, return_vals);
 
-  gimp_plugin_menu_register ("plug_in_tile", "<Image>/Filters/Map");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Map");
 }
 
 static void
@@ -148,7 +152,7 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_tile", &tvals);
+      gimp_get_data (PLUG_IN_PROC, &tvals);
 
       /*  First acquire information with a dialog  */
       if (! tile_dialog (param[1].data.d_image,
@@ -175,7 +179,7 @@ run (const gchar      *name,
 
     case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_tile", &tvals);
+      gimp_get_data (PLUG_IN_PROC, &tvals);
       break;
 
     default:
@@ -195,7 +199,7 @@ run (const gchar      *name,
 
       /*  Store data  */
       if (run_mode == GIMP_RUN_INTERACTIVE)
-	gimp_set_data ("plug_in_tile", &tvals, sizeof (TileVals));
+	gimp_set_data (PLUG_IN_PROC, &tvals, sizeof (TileVals));
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	{
@@ -377,7 +381,7 @@ tile_dialog (gint32 image_ID,
   GimpUnit   unit;
   gboolean   run;
 
-  gimp_ui_init ("tile", FALSE);
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
   width  = gimp_drawable_width (drawable_ID);
   height = gimp_drawable_height (drawable_ID);
@@ -387,9 +391,9 @@ tile_dialog (gint32 image_ID,
   tvals.new_width  = width;
   tvals.new_height = height;
 
-  dlg = gimp_dialog_new (_("Tile"), "tile",
+  dlg = gimp_dialog_new (_("Tile"), PLUG_IN_BINARY,
                          NULL, 0,
-			 gimp_standard_help_func, "plug-in-tile",
+			 gimp_standard_help_func, PLUG_IN_PROC,
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -397,9 +401,9 @@ tile_dialog (gint32 image_ID,
                          NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);

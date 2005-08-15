@@ -45,8 +45,8 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define NAME_PRINT "file_print"
-#define NAME_PAGE_SETUP "file_page_setup"
+#define PRINT_PROC      "file-print"
+#define PAGE_SETUP_PROC "file-page-setup"
 
 #define PING() g_message ("%s: %d", __FILE__, __LINE__)
 
@@ -215,7 +215,7 @@ query (void)
     { GIMP_PDB_DRAWABLE,	"drawable",	"Input drawable" }
   };
 
-  gimp_install_procedure (NAME_PRINT,
+  gimp_install_procedure (PRINT_PROC,
 			  "This plug-in prints images from the GIMP.",
 			  "Prints images to any printer recognized by Windows.",
 			  "Tor Lillqvist <tml@iki.fi>",
@@ -227,7 +227,7 @@ query (void)
 			  G_N_ELEMENTS (print_args), 0,
 			  print_args, NULL);
 
-  gimp_install_procedure (NAME_PAGE_SETUP,
+  gimp_install_procedure (PAGE_SETUP_PROC,
 			  "This plug-in sets up the page for printing from the GIMP.",
 			  "Sets up the page parameters for printing to any Windows printer.",
 			  "Tor Lillqvist <tml@iki.fi>",
@@ -239,8 +239,8 @@ query (void)
 			  G_N_ELEMENTS (pagesetup_args), 0,
 			  pagesetup_args, NULL);
 
-  gimp_plugin_menu_register (NAME_PRINT,      "<Image>/File/Send");
-  gimp_plugin_menu_register (NAME_PAGE_SETUP, "<Image>/File/Send");
+  gimp_plugin_menu_register (PRINT_PROC,      "<Image>/File/Send");
+  gimp_plugin_menu_register (PAGE_SETUP_PROC, "<Image>/File/Send");
 }
 
 /*
@@ -298,25 +298,25 @@ run (const gchar      *name,
   width  = drawable->width;
   height = drawable->height;
 
-  if (strcmp (name, NAME_PRINT) == 0)
+  if (strcmp (name, PRINT_PROC) == 0)
     {
       switch (run_mode)
 	{
 	case GIMP_RUN_INTERACTIVE:
-	  if (gimp_get_data_size (NAME_PRINT) > 0)
+	  if (gimp_get_data_size (PRINT_PROC) > 0)
 	    {
-	      g_assert (gimp_get_data_size (NAME_PRINT) == sizeof (vars));
-	      gimp_get_data (NAME_PRINT, &vars);
+	      g_assert (gimp_get_data_size (PRINT_PROC) == sizeof (vars));
+	      gimp_get_data (PRINT_PROC, &vars);
 	      if (vars.devmodeSize > 0)
 		{
 		  /* Restore saved DEVMODE. */
-		  g_assert (gimp_get_data_size (NAME_PRINT "devmode")
+		  g_assert (gimp_get_data_size (PRINT_PROC "devmode")
 			    == vars.devmodeSize);
 		  hDevMode = GlobalAlloc (GMEM_MOVEABLE, vars.devmodeSize);
 		  g_assert (hDevMode != NULL);
 		  dmp = GlobalLock (hDevMode);
 		  g_assert (dmp != NULL);
-		  gimp_get_data (NAME_PRINT "devmode", dmp);
+		  gimp_get_data (PRINT_PROC "devmode", dmp);
 		  GlobalUnlock (hDevMode);
 		  vars.prDlg.hDevMode = hDevMode;
 		}
@@ -596,25 +596,25 @@ run (const gchar      *name,
 
       DeleteDC (vars.prDlg.hDC);
     }
-  else if (strcmp (name, NAME_PAGE_SETUP) == 0)
+  else if (strcmp (name, PAGE_SETUP_PROC) == 0)
     {
       switch (run_mode)
 	{
 	case GIMP_RUN_INTERACTIVE:
-	  if (gimp_get_data_size (NAME_PRINT) > 0)
+	  if (gimp_get_data_size (PRINT_PROC) > 0)
 	    {
-	      g_assert (gimp_get_data_size (NAME_PRINT) == sizeof (vars));
-	      gimp_get_data (NAME_PRINT, &vars);
+	      g_assert (gimp_get_data_size (PRINT_PROC) == sizeof (vars));
+	      gimp_get_data (PRINT_PROC, &vars);
 	      if (vars.devmodeSize > 0)
 		{
 		  /* Restore saved DEVMODE. */
-		  g_assert (gimp_get_data_size (NAME_PRINT "devmode")
+		  g_assert (gimp_get_data_size (PRINT_PROC "devmode")
 			    == vars.devmodeSize);
 		  hDevMode = GlobalAlloc (GMEM_MOVEABLE, vars.devmodeSize);
 		  g_assert (hDevMode != NULL);
 		  dmp = GlobalLock (hDevMode);
 		  g_assert (dmp != NULL);
-		  gimp_get_data (NAME_PRINT "devmode", dmp);
+		  gimp_get_data (PRINT_PROC "devmode", dmp);
 		  GlobalUnlock (hDevMode);
 		  vars.psDlg.hDevMode = hDevMode;
 		}
@@ -702,9 +702,9 @@ run (const gchar      *name,
 
 		      "?")))))));
 #endif
-      gimp_set_data (NAME_PRINT "devmode", dmp, vars.devmodeSize);
+      gimp_set_data (PRINT_PROC "devmode", dmp, vars.devmodeSize);
       GlobalUnlock (hDevMode);
-      gimp_set_data (NAME_PRINT, &vars, sizeof(vars));
+      gimp_set_data (PRINT_PROC, &vars, sizeof(vars));
     }
 
   if (hDevMode != NULL)

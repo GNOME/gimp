@@ -1,3 +1,29 @@
+2005-08-16  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/tga.c
+	* plug-ins/common/threshold_alpha.c
+	* plug-ins/common/tiff.c
+	* plug-ins/common/tile.c
+	* plug-ins/common/tileit.c
+	* plug-ins/common/tiler.c
+	* plug-ins/common/uniteditor.c
+	* plug-ins/common/unsharp.c
+	* plug-ins/common/video.c
+	* plug-ins/common/vinvert.c
+	* plug-ins/common/vpropagate.c
+	* plug-ins/common/warp.c
+	* plug-ins/common/waves.c
+	* plug-ins/common/webbrowser.c
+	* plug-ins/common/whirlpinch.c
+	* plug-ins/common/wind.c
+	* plug-ins/common/winprint.c
+	* plug-ins/common/wmf.c
+	* plug-ins/common/xbm.c
+	* plug-ins/common/xpm.c
+	* plug-ins/common/xwd.c
+	* plug-ins/common/zealouscrop.c: canonicalize procedure and
+	parameter names. Misc cleanups.
+
 2005-08-15  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in: check for libgnomeui-2.0. Added version

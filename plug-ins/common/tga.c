@@ -84,6 +84,11 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define LOAD_PROC      "file-tga-load"
+#define SAVE_PROC      "file-tga-save"
+#define PLUG_IN_BINARY "tga"
+
+
 /* Round up a division to the nearest integer. */
 #define ROUNDUP_DIVIDE(n,d) (((n) + (d - 1)) / (d))
 
@@ -197,9 +202,9 @@ query (void)
 {
   static GimpParamDef load_args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_STRING, "filename", "The name of the file to load" },
-    { GIMP_PDB_STRING, "raw_filename", "The name entered" }
+    { GIMP_PDB_INT32,  "run-mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_STRING, "filename",     "The name of the file to load" },
+    { GIMP_PDB_STRING, "raw-filename", "The name entered"             }
   };
 
   static GimpParamDef load_return_vals[] =
@@ -209,17 +214,16 @@ query (void)
 
   static GimpParamDef save_args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Drawable to save" },
-    { GIMP_PDB_STRING, "filename", "The name of the file to save the image in" },
-    { GIMP_PDB_STRING, "raw_filename", "The name of the file to save the image in" },
-    { GIMP_PDB_INT32, "rle", "Use RLE compression" },
-    { GIMP_PDB_INT32, "origin", "Image origin (0 = top-left, 1 = bottom-left)"}
-
+    { GIMP_PDB_INT32,    "run_mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",        "Input image"                  },
+    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save"             },
+    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
+    { GIMP_PDB_STRING,   "raw_filename", "The name of the file to save the image in" },
+    { GIMP_PDB_INT32,    "rle",          "Use RLE compression"          },
+    { GIMP_PDB_INT32,    "origin",       "Image origin (0 = top-left, 1 = bottom-left)"}
   } ;
 
-  gimp_install_procedure ("file_tga_load",
+  gimp_install_procedure (LOAD_PROC,
                           "Loads files of Targa file format",
                           "FIXME: write help for tga_load",
                           "Raphael FRANCOIS, Gordon Matzigkeit",
@@ -232,10 +236,10 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
-  gimp_register_file_handler_mime ("file_tga_load", "image/x-tga");
-  gimp_register_load_handler ("file_tga_load", "tga", "");
+  gimp_register_file_handler_mime (LOAD_PROC, "image/x-tga");
+  gimp_register_load_handler (LOAD_PROC, "tga", "");
 
-  gimp_install_procedure ("file_tga_save",
+  gimp_install_procedure (SAVE_PROC,
                           "saves files in the Targa file format",
                           "FIXME: write help for tga_save",
 			  "Raphael FRANCOIS, Gordon Matzigkeit",
@@ -247,8 +251,8 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_file_handler_mime ("file_tga_save", "image/x-tga");
-  gimp_register_save_handler ("file_tga_save", "tga", "");
+  gimp_register_file_handler_mime (SAVE_PROC, "image/x-tga");
+  gimp_register_save_handler (SAVE_PROC, "tga", "");
 }
 
 static void
@@ -275,10 +279,11 @@ run (const gchar      *name,
 
   *nreturn_vals = 1;
   *return_vals  = values;
+
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  if (strcmp (name, "file_tga_load") == 0)
+  if (strcmp (name, LOAD_PROC) == 0)
     {
 #ifdef PROFILE
       times (&tbuf1);
@@ -297,9 +302,9 @@ run (const gchar      *name,
           status = GIMP_PDB_EXECUTION_ERROR;
         }
     }
-  else if (strcmp (name, "file_tga_save") == 0)
+  else if (strcmp (name, SAVE_PROC) == 0)
     {
-      gimp_ui_init ("tga", FALSE);
+      gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
       image_ID     = param[1].data.d_int32;
       drawable_ID  = param[2].data.d_int32;
@@ -328,7 +333,7 @@ run (const gchar      *name,
 	{
 	case GIMP_RUN_INTERACTIVE:
 	  /*  Possibly retrieve data  */
-	  gimp_get_data ("file_tga_save", &tsvals);
+	  gimp_get_data (SAVE_PROC, &tsvals);
 
 	  /*  First acquire information with a dialog  */
 	  if (! save_dialog ())
@@ -349,7 +354,7 @@ run (const gchar      *name,
 
 	case GIMP_RUN_WITH_LAST_VALS:
 	  /*  Possibly retrieve data  */
-	  gimp_get_data ("file_tga_save", &tsvals);
+	  gimp_get_data (SAVE_PROC, &tsvals);
 	  break;
 
 	default:
@@ -365,7 +370,7 @@ run (const gchar      *name,
 	  if (save_image (param[3].data.d_string, image_ID, drawable_ID))
 	    {
 	      /*  Store psvals data  */
-	      gimp_set_data ("file_tga_save", &tsvals, sizeof (tsvals));
+	      gimp_set_data (SAVE_PROC, &tsvals, sizeof (tsvals));
 	    }
 	  else
 	    {
@@ -1182,9 +1187,9 @@ save_dialog (void)
   GtkWidget *vbox;
   gboolean   run;
 
-  dlg = gimp_dialog_new (_("Save as TGA"), "tga",
+  dlg = gimp_dialog_new (_("Save as TGA"), PLUG_IN_BINARY,
                          NULL, 0,
-			 gimp_standard_help_func, "file-tga-save",
+			 gimp_standard_help_func, SAVE_PROC,
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -1192,9 +1197,9 @@ save_dialog (void)
                          NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);

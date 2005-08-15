@@ -28,6 +28,8 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define PLUG_IN_PROC    "plug-in-unsharp-mask"
+#define PLUG_IN_BINARY  "unsharp"
 #define PLUG_IN_VERSION "0.10"
 
 #define SCALE_WIDTH   120
@@ -125,7 +127,7 @@ query (void)
       { GIMP_PDB_FLOAT,    "threshold", "Threshold" }
     };
 
-  gimp_install_procedure ("plug_in_unsharp_mask",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "An unsharp mask filter",
                           "The unsharp mask is a sharpening filter that works "
                           "by comparing using the difference of the image and "
@@ -142,8 +144,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_unsharp_mask",
-                             "<Image>/Filters/Enhance");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Enhance");
 }
 
 static void
@@ -180,7 +181,7 @@ run (const gchar      *name,
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      gimp_get_data ("plug_in_unsharp_mask", &unsharp_params);
+      gimp_get_data (PLUG_IN_PROC, &unsharp_params);
       /* Reset default values show preview unmodified */
 
       /* initialize pixel regions and buffer */
@@ -208,7 +209,7 @@ run (const gchar      *name,
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data ("plug_in_unsharp_mask", &unsharp_params);
+      gimp_get_data (PLUG_IN_PROC, &unsharp_params);
       break;
 
     default:
@@ -225,7 +226,7 @@ run (const gchar      *name,
       gimp_displays_flush ();
 
       /* set data for next use of filter */
-      gimp_set_data ("plug_in_unsharp_mask", &unsharp_params,
+      gimp_set_data (PLUG_IN_PROC, &unsharp_params,
                      sizeof (UnsharpMaskParams));
 
       gimp_drawable_detach(drawable);
@@ -626,11 +627,11 @@ unsharp_mask_dialog (GimpDrawable *drawable)
   GtkObject *adj;
   gboolean   run;
 
-  gimp_ui_init ("unsharp", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Unsharp Mask"), "unsharp",
+  dialog = gimp_dialog_new (_("Unsharp Mask"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, "plug-in-unsharp-mask",
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -638,9 +639,9 @@ unsharp_mask_dialog (GimpDrawable *drawable)
                             NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);

@@ -33,7 +33,7 @@
 #include <windows.h>
 #endif
 
-#define PLUG_IN_NAME "plug_in_web_browser"
+#define PLUG_IN_PROC "plug-in-web-browser"
 
 
 static void     query            (void);
@@ -69,7 +69,7 @@ query (void)
     { GIMP_PDB_STRING, "url", "URL to open" }
   };
 
-  gimp_install_procedure (PLUG_IN_NAME,
+  gimp_install_procedure (PLUG_IN_PROC,
 			  "Open an URL in the user specified web browser",
                           "Opens the given URL in the user specified web browser.",
 			  "Henrik Brix Andersen <brix@gimp.org>",

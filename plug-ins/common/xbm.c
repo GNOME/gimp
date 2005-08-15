@@ -49,6 +49,11 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define LOAD_PROC      "file-xbm-load"
+#define SAVE_PROC      "file-xbm-save"
+#define PLUG_IN_BINARY "xbm"
+
+
 /* Wear your GIMP with pride! */
 #define DEFAULT_USE_COMMENT TRUE
 #define MAX_COMMENT         72
@@ -132,9 +137,9 @@ query (void)
 {
   static GimpParamDef load_args[] =
   {
-    { GIMP_PDB_INT32,  "run_mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,  "run-mode",     "Interactive, non-interactive" },
     { GIMP_PDB_STRING, "filename",     "The name of the file to load" },
-    { GIMP_PDB_STRING, "raw_filename", "The name entered" }
+    { GIMP_PDB_STRING, "raw-filename", "The name entered"             }
   };
 
   static GimpParamDef load_return_vals[] =
@@ -144,21 +149,21 @@ query (void)
 
   static GimpParamDef save_args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",       "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode",       "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",          "Input image" },
     { GIMP_PDB_DRAWABLE, "drawable",       "Drawable to save" },
     { GIMP_PDB_STRING,   "filename",       "The name of the file to save" },
-    { GIMP_PDB_STRING,   "raw_filename",   "The name entered" },
+    { GIMP_PDB_STRING,   "raw-filename",   "The name entered" },
     { GIMP_PDB_STRING,   "comment",        "Image description (maximum 72 bytes)" },
     { GIMP_PDB_INT32,    "x10",            "Save in X10 format" },
-    { GIMP_PDB_INT32,    "x_hot",          "X coordinate of hotspot" },
-    { GIMP_PDB_INT32,    "y_hot",          "Y coordinate of hotspot" },
+    { GIMP_PDB_INT32,    "x-hot",          "X coordinate of hotspot" },
+    { GIMP_PDB_INT32,    "y-hot",          "Y coordinate of hotspot" },
     { GIMP_PDB_STRING,   "prefix",         "Identifier prefix [determined from filename]"},
-    { GIMP_PDB_INT32,    "write_mask",     "(0 = ignore, 1 = save as extra file)" },
-    { GIMP_PDB_STRING,   "mask_extension", "Extension of the mask file" }
+    { GIMP_PDB_INT32,    "write-mask",     "(0 = ignore, 1 = save as extra file)" },
+    { GIMP_PDB_STRING,   "mask-extension", "Extension of the mask file" }
   } ;
 
-  gimp_install_procedure ("file_xbm_load",
+  gimp_install_procedure (LOAD_PROC,
                           "Load a file in X10 or X11 bitmap (XBM) file format",
                           "Load a file in X10 or X11 bitmap (XBM) file format.  XBM is a lossless format for flat black-and-white (two color indexed) images.",
                           "Gordon Matzigkeit",
@@ -171,12 +176,12 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
-  gimp_register_file_handler_mime ("file_xbm_load", "image/x-xbitmap");
-  gimp_register_load_handler ("file_xbm_load",
+  gimp_register_file_handler_mime (LOAD_PROC, "image/x-xbitmap");
+  gimp_register_load_handler (LOAD_PROC,
 			      "xbm,icon,bitmap",
 			      "");
 
-  gimp_install_procedure ("file_xbm_save",
+  gimp_install_procedure (SAVE_PROC,
                           "Save a file in X10 or X11 bitmap (XBM) file format",
                           "Save a file in X10 or X11 bitmap (XBM) file format.  XBM is a lossless format for flat black-and-white (two color indexed) images.",
 			  "Gordon Matzigkeit",
@@ -188,8 +193,8 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_file_handler_mime ("file_xbm_save", "image/x-xbitmap");
-  gimp_register_save_handler ("file_xbm_save", "xbm,icon,bitmap", "");
+  gimp_register_file_handler_mime (SAVE_PROC, "image/x-xbitmap");
+  gimp_register_save_handler (SAVE_PROC, "xbm,icon,bitmap", "");
 }
 
 static gchar *
@@ -251,7 +256,7 @@ run (const gchar      *name,
     printf ("XBM: RUN %s\n", name);
 #endif
 
-  if (strcmp (name, "file_xbm_load") == 0)
+  if (strcmp (name, LOAD_PROC) == 0)
     {
       image_ID = load_image (param[1].data.d_string);
 
@@ -266,7 +271,7 @@ run (const gchar      *name,
           status = GIMP_PDB_EXECUTION_ERROR;
         }
     }
-  else if (strcmp (name, "file_xbm_save") == 0)
+  else if (strcmp (name, SAVE_PROC) == 0)
     {
       image_ID    = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
@@ -275,7 +280,7 @@ run (const gchar      *name,
 	{
 	case GIMP_RUN_INTERACTIVE:
 	case GIMP_RUN_WITH_LAST_VALS:
-	  gimp_ui_init ("xbm", FALSE);
+	  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "XBM",
 				      GIMP_EXPORT_CAN_HANDLE_BITMAP |
 				      GIMP_EXPORT_CAN_HANDLE_ALPHA);
@@ -296,7 +301,7 @@ run (const gchar      *name,
 	case GIMP_RUN_INTERACTIVE:
 	case GIMP_RUN_WITH_LAST_VALS:
 	  /*  Possibly retrieve data  */
-	  gimp_get_data ("file_xbm_save", &xsvals);
+	  gimp_get_data (SAVE_PROC, &xsvals);
 
 	  /* Always override the prefix with the filename. */
 	  mask_filename = g_strdup (init_prefix (param[3].data.d_string));
@@ -444,7 +449,7 @@ run (const gchar      *name,
                                                     image_ID, drawable_ID)))
 	    {
 	      /*  Store xsvals data  */
-	      gimp_set_data ("file_xbm_save", &xsvals, sizeof (xsvals));
+	      gimp_set_data (SAVE_PROC, &xsvals, sizeof (xsvals));
 	    }
 	  else
 	    {
@@ -1147,9 +1152,9 @@ save_dialog (gint32 drawable_ID)
   GtkObject *adj;
   gboolean   run;
 
-  dlg = gimp_dialog_new (_("Save as XBM"), "xbm",
+  dlg = gimp_dialog_new (_("Save as XBM"), PLUG_IN_BINARY,
                          NULL, 0,
-			 gimp_standard_help_func, "file-xbm-save",
+			 gimp_standard_help_func, SAVE_PROC,
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -1157,9 +1162,9 @@ save_dialog (gint32 drawable_ID)
                          NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   /* parameter settings */
   frame = gimp_frame_new (_("XBM Options"));

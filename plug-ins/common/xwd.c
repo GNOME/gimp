@@ -62,6 +62,11 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define LOAD_PROC      "file-xwd-load"
+#define SAVE_PROC      "file-xwd-save"
+#define PLUG_IN_BINARY "xwd"
+
+
 typedef gulong  L_CARD32;
 typedef gushort L_CARD16;
 typedef guchar  L_CARD8;
@@ -241,9 +246,9 @@ query (void)
 {
   static GimpParamDef load_args[] =
   {
-    { GIMP_PDB_INT32,  "run_mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,  "run-mode",     "Interactive, non-interactive" },
     { GIMP_PDB_STRING, "filename",     "The name of the file to load" },
-    { GIMP_PDB_STRING, "raw_filename", "The name of the file to load" }
+    { GIMP_PDB_STRING, "raw-filename", "The name of the file to load" }
   };
 
   static GimpParamDef load_return_vals[] =
@@ -253,14 +258,14 @@ query (void)
 
   static GimpParamDef save_args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode",     "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",        "Input image" },
     { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },
     { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
-    { GIMP_PDB_STRING,   "raw_filename", "The name of the file to save the image in" }
+    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in" }
   };
 
-  gimp_install_procedure ("file_xwd_load",
+  gimp_install_procedure (LOAD_PROC,
                           "Loads files in the XWD (X Window Dump) format",
                           "Loads files in the XWD (X Window Dump) format. "
                           "XWD image files are produced by the program xwd. "
@@ -275,13 +280,13 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
-  gimp_register_file_handler_mime ("file_xwd_load", "image/x-xwindowdump");
-  gimp_register_magic_load_handler ("file_xwd_load",
+  gimp_register_file_handler_mime (LOAD_PROC, "image/x-xwindowdump");
+  gimp_register_magic_load_handler (LOAD_PROC,
                                     "xwd",
                                     "",
                                     "4,long,0x00000007");
 
-  gimp_install_procedure ("file_xwd_save",
+  gimp_install_procedure (SAVE_PROC,
                           "Saves files in the XWD (X Window Dump) format",
                           "XWD saving handles all image types except "
                           "those with alpha channels.",
@@ -294,8 +299,8 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_file_handler_mime ("file_xwd_save", "image/x-xwindowdump");
-  gimp_register_save_handler ("file_xwd_save", "xwd", "");
+  gimp_register_file_handler_mime (SAVE_PROC, "image/x-xwindowdump");
+  gimp_register_save_handler (SAVE_PROC, "xwd", "");
 }
 
 
@@ -323,7 +328,7 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  if (strcmp (name, "file_xwd_load") == 0)
+  if (strcmp (name, LOAD_PROC) == 0)
     {
       image_ID = load_image (param[1].data.d_string);
 
@@ -338,7 +343,7 @@ run (const gchar      *name,
           status = GIMP_PDB_EXECUTION_ERROR;
         }
     }
-  else if (strcmp (name, "file_xwd_save") == 0)
+  else if (strcmp (name, SAVE_PROC) == 0)
     {
       image_ID    = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
@@ -348,7 +353,7 @@ run (const gchar      *name,
         {
         case GIMP_RUN_INTERACTIVE:
         case GIMP_RUN_WITH_LAST_VALS:
-          gimp_ui_init ("xwd", FALSE);
+          gimp_ui_init (PLUG_IN_BINARY, FALSE);
           export = gimp_export_image (&image_ID, &drawable_ID, "XWD",
                                       (GIMP_EXPORT_CAN_HANDLE_RGB |
                                        GIMP_EXPORT_CAN_HANDLE_GRAY |

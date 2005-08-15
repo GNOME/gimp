@@ -28,8 +28,10 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define MAX_PATTERNS 9
+#define PLUG_IN_PROC     "plug-in-video"
+#define PLUG_IN_BINARY   "video"
 
+#define MAX_PATTERNS       9
 #define MAX_PATTERN_SIZE 108
 
 const gint   pattern_width[MAX_PATTERNS] = { 2, 4, 1, 1, 2, 3, 6, 6, 5 };
@@ -1792,15 +1794,15 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",       "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE,    "image",          "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable",       "Input drawable" },
-    { GIMP_PDB_INT32,    "pattern_number", "Type of RGB pattern to use" },
+    { GIMP_PDB_INT32,    "run-mode",       "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",          "Input image (unused)"         },
+    { GIMP_PDB_DRAWABLE, "drawable",       "Input drawable"               },
+    { GIMP_PDB_INT32,    "pattern-number", "Type of RGB pattern to use"   },
     { GIMP_PDB_INT32,    "additive",       "Whether the function adds the result to the original image" },
     { GIMP_PDB_INT32,    "rotated",        "Whether to rotate the RGB pattern by ninety degrees" }
   };
 
-  gimp_install_procedure ("plug_in_video",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Apply low-dotpitch RGB simulation to the "
                           "specified drawable",
                           "This function simulates the degradation of "
@@ -1815,7 +1817,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_video", "<Image>/Filters/Distorts");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Distorts");
 }
 
 static void
@@ -1844,7 +1846,7 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_video", &vvals);
+      gimp_get_data (PLUG_IN_PROC, &vvals);
 
       /*  First acquire information with a dialog  */
       if (! video_dialog ())
@@ -1865,7 +1867,7 @@ run (const gchar      *name,
 
       case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_video", &vvals);
+      gimp_get_data (PLUG_IN_PROC, &vvals);
       break;
 
     default:
@@ -1891,7 +1893,7 @@ run (const gchar      *name,
 
           /*  Store vvals data  */
           if (run_mode == GIMP_RUN_INTERACTIVE)
-            gimp_set_data ("plug_in_video", &vvals, sizeof (VideoValues));
+            gimp_set_data (PLUG_IN_PROC, &vvals, sizeof (VideoValues));
         }
       else
         {
@@ -2010,11 +2012,11 @@ video_dialog (void)
   gint       y;
   gboolean   run;
 
-  gimp_ui_init ("video", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dlg = gimp_dialog_new (_("Video"), "video",
+  dlg = gimp_dialog_new (_("Video"), PLUG_IN_BINARY,
                          NULL, 0,
-                         gimp_standard_help_func, "plug-in-video",
+                         gimp_standard_help_func, PLUG_IN_PROC,
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -2022,9 +2024,9 @@ video_dialog (void)
                          NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   hbox = gtk_hbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);

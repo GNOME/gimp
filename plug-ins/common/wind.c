@@ -38,7 +38,8 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define PLUG_IN_NAME "wind"
+#define PLUG_IN_PROC   "plug-in-wind"
+#define PLUG_IN_BINARY "wind"
 
 #define COMPARE_WIDTH   3
 
@@ -162,17 +163,17 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",  "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode",  "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",     "Input image (unused)" },
     { GIMP_PDB_DRAWABLE, "drawable",  "Input drawable" },
     { GIMP_PDB_INT32,    "threshold", "Controls where blending will be done >= 0" },
     { GIMP_PDB_INT32,    "direction", "Left or Right: 0 or 1" },
     { GIMP_PDB_INT32,    "strength",  "Controls the extent of the blending > 1" },
-    { GIMP_PDB_INT32,    "alg",       "WIND, BLAST" },
+    { GIMP_PDB_INT32,    "algorithm", "WIND, BLAST" },
     { GIMP_PDB_INT32,    "edge",      "LEADING, TRAILING, or BOTH" }
   };
 
-  gimp_install_procedure ("plug_in_wind",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Renders a wind effect.",
                           "Renders a wind effect.",
                           "Nigel Wetten",
@@ -184,7 +185,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_wind", "<Image>/Filters/Distorts");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Distorts");
 }
 
 static void
@@ -226,7 +227,7 @@ run (const gchar      *name,
       break;
 
     case GIMP_RUN_INTERACTIVE:
-      gimp_get_data ("plug_in_wind", &config);
+      gimp_get_data (PLUG_IN_PROC, &config);
       if (! dialog_box (drawable))
         {
           status = GIMP_PDB_CANCEL;
@@ -237,12 +238,12 @@ run (const gchar      *name,
           status = GIMP_PDB_CALLING_ERROR;
           break;
         }
-      gimp_set_data ("plug_in_wind", &config, sizeof (config_t));
+      gimp_set_data (PLUG_IN_PROC, &config, sizeof (config_t));
       gimp_displays_flush ();
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data ("plug_in_wind", &config);
+      gimp_get_data (PLUG_IN_PROC, &config);
       if (render_effect (drawable, NULL) == -1)
         {
           status = GIMP_PDB_EXECUTION_ERROR;
@@ -875,11 +876,11 @@ dialog_box (GimpDrawable *drawable)
   GtkWidget *edge3;
   gboolean   run;
 
-  gimp_ui_init ("wind", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Wind"), "wind",
+  dialog = gimp_dialog_new (_("Wind"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, "plug-in-wind",
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -887,9 +888,9 @@ dialog_box (GimpDrawable *drawable)
                             NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);

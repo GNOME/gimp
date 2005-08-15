@@ -49,6 +49,12 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define LOAD_PROC      "file-tiff-load"
+#define SAVE_PROC      "file-tiff-save"
+#define SAVE2_PROC     "file-tiff-save2"
+#define PLUG_IN_BINARY "tiff"
+
+
 typedef struct
 {
   gint      compression;
@@ -188,9 +194,9 @@ query (void)
 {
   static GimpParamDef load_args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_STRING, "filename", "The name of the file to load" },
-    { GIMP_PDB_STRING, "raw_filename", "The name of the file to load" }
+    { GIMP_PDB_INT32,  "run-mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_STRING, "filename",     "The name of the file to load" },
+    { GIMP_PDB_STRING, "raw-filename", "The name of the file to load" }
   };
   static GimpParamDef load_return_vals[] =
   {
@@ -198,12 +204,12 @@ query (void)
   };
 
 #define COMMON_SAVE_ARGS \
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },\
-    { GIMP_PDB_IMAGE, "image", "Input image" },\
-    { GIMP_PDB_DRAWABLE, "drawable", "Drawable to save" },\
-    { GIMP_PDB_STRING, "filename", "The name of the file to save the image in" },\
-    { GIMP_PDB_STRING, "raw_filename", "The name of the file to save the image in" },\
-    { GIMP_PDB_INT32, "compression", "Compression type: { NONE (0), LZW (1), PACKBITS (2), DEFLATE (3), JPEG (4)" }
+    { GIMP_PDB_INT32,    "run-mode",     "Interactive, non-interactive" },\
+    { GIMP_PDB_IMAGE,    "image",        "Input image" },\
+    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },\
+    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },\
+    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in" },\
+    { GIMP_PDB_INT32,    "compression",  "Compression type: { NONE (0), LZW (1), PACKBITS (2), DEFLATE (3), JPEG (4)" }
 
   static GimpParamDef save_args_old[] =
   {
@@ -213,10 +219,10 @@ query (void)
   static GimpParamDef save_args[] =
   {
     COMMON_SAVE_ARGS,
-    { GIMP_PDB_INT32, "save_transp_pixels", "Keep the color data masked by an alpha channel intact" }
+    { GIMP_PDB_INT32, "save-transp-pixels", "Keep the color data masked by an alpha channel intact" }
   };
 
-  gimp_install_procedure ("file_tiff_load",
+  gimp_install_procedure (LOAD_PROC,
                           "loads files of the tiff file format",
                           "FIXME: write help for tiff_load",
                           "Spencer Kimball, Peter Mattis & Nick Lamb",
@@ -229,13 +235,13 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
-  gimp_register_file_handler_mime ("file_tiff_load", "image/tiff");
-  gimp_register_magic_load_handler ("file_tiff_load",
+  gimp_register_file_handler_mime (LOAD_PROC, "image/tiff");
+  gimp_register_magic_load_handler (LOAD_PROC,
                                     "tif,tiff",
                                     "",
                                     "0,string,II*\\0,0,string,MM\\0*");
 
-  gimp_install_procedure ("file_tiff_save",
+  gimp_install_procedure (SAVE_PROC,
                           "saves files in the tiff file format",
                           "Saves files in the Tagged Image File Format.  "
                           "The value for the saved comment is taken "
@@ -249,10 +255,10 @@ query (void)
                           G_N_ELEMENTS (save_args_old), 0,
                           save_args_old, NULL);
 
-  gimp_register_file_handler_mime ("file_tiff_save", "image/tiff");
-  gimp_register_save_handler ("file_tiff_save", "tif,tiff", "");
+  gimp_register_file_handler_mime (SAVE_PROC, "image/tiff");
+  gimp_register_save_handler (SAVE_PROC, "tif,tiff", "");
 
-  gimp_install_procedure ("file_tiff_save2",
+  gimp_install_procedure (SAVE2_PROC,
                           "saves files in the tiff file format",
                           "Saves files in the Tagged Image File Format.  "
                           "The value for the saved comment is taken "
@@ -266,7 +272,7 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_file_handler_mime ("file_tiff_save2", "image/tiff");
+  gimp_register_file_handler_mime (SAVE2_PROC, "image/tiff");
 }
 
 static void
@@ -294,7 +300,7 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  if (strcmp (name, "file_tiff_load") == 0)
+  if (strcmp (name, LOAD_PROC) == 0)
     {
       image = load_image (param[1].data.d_string);
 
@@ -309,8 +315,8 @@ run (const gchar      *name,
           status = GIMP_PDB_EXECUTION_ERROR;
         }
     }
-  else if (strcmp (name, "file_tiff_save") == 0 ||
-           strcmp (name, "file_tiff_save2") == 0)
+  else if (strcmp (name, SAVE_PROC) == 0 ||
+           strcmp (name, SAVE2_PROC) == 0)
     {
       /* Plug-in is either file_tiff_save or file_tiff_save2 */
       image = orig_image = param[1].data.d_int32;
@@ -324,7 +330,7 @@ run (const gchar      *name,
         {
         case GIMP_RUN_INTERACTIVE:
         case GIMP_RUN_WITH_LAST_VALS:
-          gimp_ui_init ("tiff", FALSE);
+          gimp_ui_init (PLUG_IN_BINARY, FALSE);
           export = gimp_export_image (&image, &drawable, "TIFF",
                                       (GIMP_EXPORT_CAN_HANDLE_RGB |
                                        GIMP_EXPORT_CAN_HANDLE_GRAY |
@@ -352,7 +358,7 @@ run (const gchar      *name,
         {
         case GIMP_RUN_INTERACTIVE:
           /*  Possibly retrieve data  */
-          gimp_get_data ("file_tiff_save", &tsvals);
+          gimp_get_data (SAVE_PROC, &tsvals);
 
           parasite = gimp_image_parasite_find (orig_image, "tiff-save-options");
           if (parasite)
@@ -396,7 +402,7 @@ run (const gchar      *name,
 
         case GIMP_RUN_WITH_LAST_VALS:
           /*  Possibly retrieve data  */
-          gimp_get_data ("file_tiff_save", &tsvals);
+          gimp_get_data (SAVE_PROC, &tsvals);
 
           parasite = gimp_image_parasite_find (orig_image, "tiff-save-options");
           if (parasite)
@@ -418,7 +424,7 @@ run (const gchar      *name,
           if (save_image (param[3].data.d_string, image, drawable, orig_image))
             {
               /*  Store mvals data  */
-              gimp_set_data ("file_tiff_save", &tsvals, sizeof (TiffSaveVals));
+              gimp_set_data (SAVE_PROC, &tsvals, sizeof (TiffSaveVals));
             }
           else
             {
@@ -2241,9 +2247,9 @@ save_dialog (gboolean alpha)
   GtkWidget *toggle;
   gboolean   run;
 
-  dlg = gimp_dialog_new (_("Save as TIFF"), "tiff",
+  dlg = gimp_dialog_new (_("Save as TIFF"), PLUG_IN_BINARY,
                          NULL, 0,
-                         gimp_standard_help_func, "file-tiff-save",
+                         gimp_standard_help_func, SAVE_PROC,
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -2251,9 +2257,9 @@ save_dialog (gboolean alpha)
                          NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
