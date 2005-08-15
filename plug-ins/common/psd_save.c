@@ -1071,9 +1071,8 @@ write_pixel_data (FILE *fd, gint32 drawableID, gint32 *ChanLenPosition,
   gimp_tile_cache_ntiles (2* (drawable->width / gimp_tile_width () + 1));
 
   LengthsTable = g_new (gshort, height);
-  rledata = g_new (gchar, (MIN(height, tile_height) *
-			   (width + 10 + (width/100))));
-
+  rledata = g_new (guchar, (MIN (height, tile_height) *
+                            (width + 10 + (width / 100))));
 
   data = g_new (guchar, MIN(height, tile_height) * width * bytes);
 
