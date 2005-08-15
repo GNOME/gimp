@@ -118,6 +118,8 @@ libapptools_a_sources = \
 	gimpposterizetool.h		\
 	gimpnewrectselecttool.c		\
 	gimpnewrectselecttool.h		\
+	gimpnewrectselectoptions.c		\
+	gimpnewrectselectoptions.h		\
 	gimprectangletool.c		\
 	gimprectangletool.h		\
 	gimprectangleoptions.c		\

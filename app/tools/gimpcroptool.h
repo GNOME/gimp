@@ -19,12 +19,6 @@
 #ifndef  __GIMP_CROP_TOOL_H__
 #define  __GIMP_CROP_TOOL_H__
 
-
-#ifdef __GNUC__
-#warning FIXME #include "gui/gui-types.h"
-#endif
-#include "gui/gui-types.h"
-
 #include "gimpdrawtool.h"
 
 
@@ -32,7 +26,8 @@
 #define GIMP_CROP_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CROP_TOOL, GimpCropTool))
 #define GIMP_CROP_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CROP_TOOL, GimpCropToolClass))
 #define GIMP_IS_CROP_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CROP_TOOL))
-#define GIMP_CROP_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CROP_TOOL, GimpCropToolClass))
+#define GIMP_IS_CROP_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CROP_TOOL))
+#define GIMP_CROP_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CROP_TOOL, GimpCropToolClass))
 
 
 typedef struct _GimpCropTool      GimpCropTool;
@@ -42,11 +37,17 @@ struct _GimpCropTool
 {
   GimpDrawTool  parent_instance;
 
+  GtkWidget    *controls;
+  GtkWidget    *dimensions_entry;
+
   gint          startx;     /*  starting x coord            */
   gint          starty;     /*  starting y coord            */
 
   gint          lastx;      /*  previous x coord            */
   gint          lasty;      /*  previous y coord            */
+
+  gint          pressx;     /*  x where button pressed      */
+  gint          pressy;     /*  y where button pressed      */
 
   gint          x1, y1;     /*  upper left hand coordinate  */
   gint          x2, y2;     /*  lower right hand coords     */
@@ -56,22 +57,10 @@ struct _GimpCropTool
   gint          dx1, dy1;   /*  display coords              */
   gint          dx2, dy2;   /*                              */
 
-  gint          dcw, dch;   /*  width and height of corners */
+  gint          dcw, dch;   /*  width and height of edges   */
 
-  /* the crop dialog */
-  InfoDialog   *crop_info;
-
-  gdouble       orig_vals[2];
-  gdouble       size_vals[2];
-  gdouble	aspect_ratio;
-  gboolean	change_aspect_ratio; /* Boolean for the crop_info_update function */
-  				     /* aspect_ratio should not be chaget whith   */
-  				     /* crop_info_update when is called from      */
-				     /* crop_aspect_changed, due to the innacurate*/
-  				     /* decimal precision                         */
-
-  GtkWidget    *origin_sizeentry;
-  GtkWidget    *size_sizeentry;
+  gdouble       origx, origy;
+  gdouble       sizew, sizeh;
 };
 
 struct _GimpCropToolClass

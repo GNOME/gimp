@@ -19,14 +19,14 @@
 #ifndef  __GIMP_NEW_RECT_SELECT_TOOL_H__
 #define  __GIMP_NEW_RECT_SELECT_TOOL_H__
 
-#include "gimprectangletool.h"
+#include "gimpselectiontool.h"
 
 
 #define GIMP_TYPE_NEW_RECT_SELECT_TOOL            (gimp_new_rect_select_tool_get_type ())
 #define GIMP_NEW_RECT_SELECT_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_NEW_RECT_SELECT_TOOL, GimpNewRectSelectTool))
 #define GIMP_NEW_RECT_SELECT_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_NEW_RECT_SELECT_TOOL, GimpNewRectSelectToolClass))
 #define GIMP_IS_NEW_RECT_SELECT_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_NEW_RECT_SELECT_TOOL))
-#define GIMP_NEW_RECT_SELECT_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_NEW_RECT_SELECT_TOOL, GimpNewRectSelectToolClass))
+#define GIMP_IS_NEW_RECT_SELECT_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_NEW_RECT_SELECT_TOOL))
 #define GIMP_NEW_RECT_SELECT_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_NEW_RECT_SELECT_TOOL, GimpNewRectSelectToolClass))
 
 
@@ -35,17 +35,42 @@ typedef struct _GimpNewRectSelectToolClass GimpNewRectSelectToolClass;
 
 struct _GimpNewRectSelectTool
 {
-  GimpRectangleTool  parent_instance;
+  GimpSelectionTool  parent_instance;
+
+  GtkWidget         *controls;
+  GtkWidget         *dimensions_entry;
+
+  gint               startx;     /*  starting x coord            */
+  gint               starty;     /*  starting y coord            */
+
+  gint               lastx;      /*  previous x coord            */
+  gint               lasty;      /*  previous y coord            */
+
+  gint               pressx;     /*  x where button pressed      */
+  gint               pressy;     /*  y where button pressed      */
+
+  gint               x1, y1;     /*  upper left hand coordinate  */
+  gint               x2, y2;     /*  lower right hand coords     */
+
+  guint              function;   /*  moving or resizing          */
+
+  gint               dx1, dy1;   /*  display coords              */
+  gint               dx2, dy2;   /*                              */
+
+  gint               dcw, dch;   /*  width and height of edges   */
+
+  gdouble            origx, origy;
+  gdouble            sizew, sizeh;
 };
 
 struct _GimpNewRectSelectToolClass
 {
-  GimpRectangleToolClass parent_class;
+  GimpSelectionToolClass parent_class;
 };
 
 
 void    gimp_new_rect_select_tool_register (GimpToolRegisterCallback  callback,
-                                 gpointer                  data);
+                                            gpointer                  data);
 
 GType   gimp_new_rect_select_tool_get_type (void) G_GNUC_CONST;
 

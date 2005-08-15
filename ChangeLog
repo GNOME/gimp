@@ -1,3 +1,17 @@
+2005-08-15  Karine Delvare  <kdelvare@nerim.net>
+
+	* app/tools/gimprectangletool.[ch]
+	* app/tools/gimprectangleoptions.[ch]: transform into an interface.
+	
+	* app/tools/gimpcroptool.[ch]
+	* app/tools/gimpnewrectselecttool.[ch]: use the rectangletool interface.
+	
+	* app/tools/gimpcropoptions.[ch]
+	* app/tools/gimpnewrectselectoptions.[ch]: use the rectangleoptions
+	interface.
+	
+	* app/tools/Makefile.am: added gimpnewrectselectionoptions.[ch]
+
 2005-08-15  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/rcm/rcm_callback.c

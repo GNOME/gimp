@@ -39,9 +39,24 @@ struct _GimpCropOptions
   GimpToolOptions  parent_instence;
 
   gboolean         layer_only;
-  gboolean         allow_enlarge;
-  gboolean         keep_aspect;
   GimpCropMode     crop_mode;
+  
+  gboolean         highlight;
+
+  gboolean         fixed_width;
+  gdouble          width;
+
+  gboolean         fixed_height;
+  gdouble          height;
+
+  gboolean         fixed_aspect;
+  gdouble          aspect;
+
+  gboolean         fixed_center;
+  gdouble          center_x;
+  gdouble          center_y;
+
+  GimpUnit         unit;
 };
 
 

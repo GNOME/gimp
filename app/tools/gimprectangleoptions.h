@@ -20,46 +20,103 @@
 #define __GIMP_RECTANGLE_OPTIONS_H__
 
 
-#include "gimpselectionoptions.h"
+#define GIMP_TYPE_RECTANGLE_OPTIONS               (gimp_rectangle_options_interface_get_type ())
+#define GIMP_IS_RECTANGLE_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_RECTANGLE_OPTIONS))
+#define GIMP_RECTANGLE_OPTIONS(obj)               (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_RECTANGLE_OPTIONS, GimpRectangleOptions))
+#define GIMP_RECTANGLE_OPTIONS_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), GIMP_TYPE_RECTANGLE_OPTIONS, GimpRectangleOptionsInterface))
 
 
-#define GIMP_TYPE_RECTANGLE_OPTIONS            (gimp_rectangle_options_get_type ())
-#define GIMP_RECTANGLE_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_RECTANGLE_OPTIONS, GimpRectangleOptions))
-#define GIMP_RECTANGLE_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_RECTANGLE_OPTIONS, GimpRectangleOptionsClass))
-#define GIMP_IS_RECTANGLE_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_RECTANGLE_OPTIONS))
-#define GIMP_IS_RECTANGLE_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_RECTANGLE_OPTIONS))
-#define GIMP_RECTANGLE_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_RECTANGLE_OPTIONS, GimpRectangleOptionsClass))
+typedef struct _GimpRectangleOptions          GimpRectangleOptions;
+typedef struct _GimpRectangleOptionsInterface GimpRectangleOptionsInterface;
 
-
-typedef struct _GimpRectangleOptions GimpRectangleOptions;
-typedef struct _GimpToolOptionsClass GimpRectangleOptionsClass;
-
-struct _GimpRectangleOptions
+struct _GimpRectangleOptionsInterface
 {
-  GimpSelectionOptions     parent_instance;
+  GTypeInterface base_iface;
 
-  gboolean                 highlight;
+  /*  virtual functions  */
+  void       (* set_highlight)    (GimpRectangleOptions *options,
+                                   gboolean              highlight);
+  gboolean   (* get_highlight)    (GimpRectangleOptions *options);
 
-  gboolean                 fixed_width;
-  gdouble                  width;
+  void       (* set_fixed_width)  (GimpRectangleOptions *options,
+                                   gboolean              fixed_width);
+  gboolean   (* get_fixed_width)  (GimpRectangleOptions *options);
+  void       (* set_width)        (GimpRectangleOptions *options,
+                                   gdouble               width);
+  gdouble    (* get_width)        (GimpRectangleOptions *options);
 
-  gboolean                 fixed_height;
-  gdouble                  height;
+  void       (* set_fixed_height) (GimpRectangleOptions *options,
+                                   gboolean              fixed_height);
+  gboolean   (* get_fixed_height) (GimpRectangleOptions *options);
+  void       (* set_height)       (GimpRectangleOptions *options,
+                                   gdouble               height);
+  gdouble    (* get_height)       (GimpRectangleOptions *options);
 
-  gboolean                 fixed_aspect;
-  gdouble                  aspect;
+  void       (* set_fixed_aspect) (GimpRectangleOptions *options,
+                                   gboolean              fixed_aspect);
+  gboolean   (* get_fixed_aspect) (GimpRectangleOptions *options);
+  void       (* set_aspect)       (GimpRectangleOptions *options,
+                                   gdouble               aspect);
+  gdouble    (* get_aspect)       (GimpRectangleOptions *options);
 
-  gboolean                 fixed_center;
-  gdouble                  center_x;
-  gdouble                  center_y;
+  void       (* set_fixed_center) (GimpRectangleOptions *options,
+                                   gboolean              fixed_center);
+  gboolean   (* get_fixed_center) (GimpRectangleOptions *options);
+  void       (* set_center_x)     (GimpRectangleOptions *options,
+                                   gdouble               center_x);
+  gdouble    (* get_center_x)     (GimpRectangleOptions *options);
+  void       (* set_center_y)     (GimpRectangleOptions *options,
+                                   gdouble               center_y);
+  gdouble    (* get_center_y)     (GimpRectangleOptions *options);
 
-  GimpUnit                 unit;
+  void       (* set_unit)         (GimpRectangleOptions *options,
+                                   GimpUnit              unit);
+  GimpUnit   (* get_unit)         (GimpRectangleOptions *options);
 };
 
 
-GType       gimp_rectangle_options_get_type (void) G_GNUC_CONST;
+GType       gimp_rectangle_options_interface_get_type  (void) G_GNUC_CONST;
 
-GtkWidget * gimp_rectangle_options_gui      (GimpToolOptions *tool_options);
+void        gimp_rectangle_options_set_highlight       (GimpRectangleOptions *options,
+                                                        gboolean              highlight);
+gboolean    gimp_rectangle_options_get_highlight       (GimpRectangleOptions *options);
+
+void        gimp_rectangle_options_set_fixed_width     (GimpRectangleOptions *options,
+                                                        gboolean              fixed_width);
+gboolean    gimp_rectangle_options_get_fixed_width     (GimpRectangleOptions *options);
+void        gimp_rectangle_options_set_width           (GimpRectangleOptions *options,
+                                                        gdouble               width);
+gdouble     gimp_rectangle_options_get_width           (GimpRectangleOptions *options);
+
+void        gimp_rectangle_options_set_fixed_height    (GimpRectangleOptions *options,
+                                                        gboolean              fixed_height);
+gboolean    gimp_rectangle_options_get_fixed_height    (GimpRectangleOptions *options);
+void        gimp_rectangle_options_set_height          (GimpRectangleOptions *options,
+                                                        gdouble               height);
+gdouble     gimp_rectangle_options_get_height          (GimpRectangleOptions *options);
+
+void        gimp_rectangle_options_set_fixed_aspect    (GimpRectangleOptions *options,
+                                                        gboolean              fixed_aspect);
+gboolean    gimp_rectangle_options_get_fixed_aspect    (GimpRectangleOptions *options);
+void        gimp_rectangle_options_set_aspect          (GimpRectangleOptions *options,
+                                                        gdouble               aspect);
+gdouble     gimp_rectangle_options_get_aspect          (GimpRectangleOptions *options);
+
+void        gimp_rectangle_options_set_fixed_center    (GimpRectangleOptions *options,
+                                                        gboolean              fixed_center);
+gboolean    gimp_rectangle_options_get_fixed_center    (GimpRectangleOptions *options);
+void        gimp_rectangle_options_set_center_x        (GimpRectangleOptions *options,
+                                                        gdouble               center_x);
+gdouble     gimp_rectangle_options_get_center_x        (GimpRectangleOptions *options);
+void        gimp_rectangle_options_set_center_y        (GimpRectangleOptions *options,
+                                                        gdouble               center_y);
+gdouble     gimp_rectangle_options_get_center_y        (GimpRectangleOptions *options);
+
+void        gimp_rectangle_options_set_unit            (GimpRectangleOptions *options,
+                                                        GimpUnit              unit);
+GimpUnit    gimp_rectangle_options_get_unit            (GimpRectangleOptions *options);
+
+GtkWidget * gimp_rectangle_options_gui                 (GimpToolOptions *tool_options);
 
 
-#endif  /*  __GIMP_SELCTION_OPTIONS_H__  */
+#endif  /* __GIMP_RECTANGLE_OPTIONS_H__ */
