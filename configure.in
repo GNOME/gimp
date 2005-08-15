@@ -1206,7 +1206,7 @@ PKG_CHECK_MODULES(GNOMEUI, libgnomeui-2.0 >= gnomeui_required_version,
 
 AM_CONDITIONAL(HAVE_GNOMEUI, test x$have_gnomeui = xyes)
 
-if test "x$have_gnomeui" != xyes; then
+if test "x$have_gnomeui" = xyes; then
   AC_DEFINE(HAVE_GNOMEUI, 1, "Define to 1 if libgnomeui is available"),
 fi
 
