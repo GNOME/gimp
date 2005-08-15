@@ -1,3 +1,12 @@
+2005-08-15  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
+	* plug-ins/rcm/rcm_callback.c
+	* plug-ins/rcm/rcm_dialog.c
+	* plug-ins/rcm/rcm_misc.[ch]: redraw the previews if their size
+	changes. Fixes bug #172284.
+
 2005-08-13  Manish Singh  <yosh@gimp.org>
 
 	* app/core/gimpimage-preview.c (gimp_image_get_new_preview): if the

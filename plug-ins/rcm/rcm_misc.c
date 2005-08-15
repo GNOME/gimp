@@ -317,20 +317,21 @@ rcm_reduce_image (GimpDrawable *drawable,
 
 /* render before/after preview */
 void
-rcm_render_preview (GtkWidget *preview,
-		    gint       version)
+rcm_render_preview (GtkWidget *preview)
 {
   ReducedImage *reduced;
-  gint          RW, RH, bytes, i, j, unchanged, skip;
+  gint          version;
+  gint          RW, RH, bytes, i, j;
+  gboolean      unchanged, skip;
   guchar       *rgb_array, *a;
   gdouble       H, S, V;
   gdouble      *hsv_array;
   guchar        rgb[3];
   gfloat        degree;
 
-  /* init some variables */
-
   g_return_if_fail (preview != NULL);
+
+  version = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (preview), "mode"));
 
   reduced = Current.reduced;
   RW = reduced->width;
@@ -347,8 +348,8 @@ rcm_render_preview (GtkWidget *preview,
         {
           for (j = 0; j < RW; j++)
             {
-              unchanged = 1; /* TRUE */
-              skip = 0; /* FALSE */
+              unchanged = TRUE;
+              skip = FALSE;
 
               H = hsv_array[i*RW*bytes + j*bytes + 0];
               S = hsv_array[i*RW*bytes + j*bytes + 1];
@@ -366,13 +367,16 @@ rcm_render_preview (GtkWidget *preview,
                           S = Current.Gray->satur;
                         }
                       else
-                        skip = 1;
+                        skip = TRUE;
                       break;
 
                     case GRAY_TO:
-                      unchanged = 0;
-                      skip = 1;
-                      gimp_hsv_to_rgb4 (rgb, Current.Gray->hue/TP, Current.Gray->satur, V);
+                      unchanged = FALSE;
+                      skip = TRUE;
+                      gimp_hsv_to_rgb4 (rgb,
+                                        Current.Gray->hue/TP,
+                                        Current.Gray->satur,
+                                        V);
                       break;
 
                     default:
@@ -382,7 +386,7 @@ rcm_render_preview (GtkWidget *preview,
 
               if (!skip)
                 {
-                  unchanged = 0;
+                  unchanged = FALSE;
                   H = rcm_linear (rcm_left_end (Current.From->angle),
                                   rcm_right_end (Current.From->angle),
                                   rcm_left_end (Current.To->angle),
@@ -427,11 +431,12 @@ rcm_render_preview (GtkWidget *preview,
             }
         }
     }
-    gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
-                            0, 0, RW, RH,
-                            GIMP_RGBA_IMAGE,
-                            a,
-                            RW * 4);
+
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+                          0, 0, RW, RH,
+                          GIMP_RGBA_IMAGE,
+                          a,
+                          RW * 4);
   g_free (a);
 }
 

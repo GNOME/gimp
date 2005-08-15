@@ -96,7 +96,7 @@ rcm_360_degrees (GtkWidget *button,
   rcm_draw_arrows (circle->preview->window, circle->preview->style->black_gc,
                    circle->angle);
   circle->action_flag = VIRGIN;
-  rcm_render_preview (Current.Bna->after, CURRENT);
+  rcm_render_preview (Current.Bna->after);
 }
 
 void
@@ -129,7 +129,7 @@ rcm_a_to_b (GtkWidget *button,
                    circle->angle);
 
   circle->action_flag = VIRGIN;
-  rcm_render_preview (Current.Bna->after, CURRENT);
+  rcm_render_preview (Current.Bna->after);
 }
 
 
@@ -299,7 +299,7 @@ rcm_switch_to_gray_to (GtkWidget *button,
     return;
 
   Current.Gray_to_from = GRAY_TO;
-  rcm_render_preview (Current.Bna->after, CURRENT);
+  rcm_render_preview (Current.Bna->after);
 }
 
 void
@@ -310,7 +310,7 @@ rcm_switch_to_gray_from (GtkWidget *button,
     return;
 
   Current.Gray_to_from = GRAY_FROM;
-  rcm_render_preview (Current.Bna->after, CURRENT);
+  rcm_render_preview (Current.Bna->after);
 }
 
 
@@ -323,32 +323,6 @@ rcm_preview_as_you_drag (GtkWidget *button,
   Current.RealTime = GTK_TOGGLE_BUTTON (button)->active;
 }
 
-static void
-rcm_change_preview (void)
-{
-  /* must hide and show or resize would not work ... */
-
-  gtk_widget_hide (Current.Bna->before);
-  gtk_widget_hide (Current.Bna->after);
-
-  gtk_widget_set_size_request (Current.Bna->before,
-                               Current.reduced->width,
-                               Current.reduced->height);
-
-  gtk_widget_set_size_request (Current.Bna->after,
-                               Current.reduced->width,
-                               Current.reduced->height);
-
-  rcm_render_preview (Current.Bna->before, ORIGINAL);
-  rcm_render_preview (Current.Bna->after, CURRENT);
-
-  gtk_widget_queue_draw (Current.Bna->before);
-  gtk_widget_queue_draw (Current.Bna->after);
-
-  gtk_widget_show (Current.Bna->before);
-  gtk_widget_show (Current.Bna->after);
-}
-
 void
 rcm_combo_callback (GtkWidget *widget,
                     gpointer   data)
@@ -359,7 +333,13 @@ rcm_combo_callback (GtkWidget *widget,
 
   Current.reduced = rcm_reduce_image (Current.drawable, Current.mask,
                                       MAX_PREVIEW_SIZE, value);
-  rcm_change_preview ();
+
+  gtk_widget_set_size_request (Current.Bna->before,
+                               Current.reduced->width,
+                               Current.reduced->height);
+  gtk_widget_set_size_request (Current.Bna->after,
+                               Current.reduced->width,
+                               Current.reduced->height);
 }
 
 
@@ -370,18 +350,11 @@ rcm_expose_event (GtkWidget *widget,
 		  GdkEvent  *event,
 		  RcmCircle *circle)
 {
-  switch (circle->action_flag)
+  if (circle->action_flag == VIRGIN)
     {
-    case DO_NOTHING: return FALSE; break;
+      rcm_draw_arrows (widget->window, widget->style->black_gc, circle->angle);
+    }
 
-    case VIRGIN:     rcm_draw_arrows(widget->window, widget->style->black_gc,
-				     circle->angle);
-                     break;
-
-    default:         if (Current.RealTime)
-                       rcm_render_preview(Current.Bna->after,CURRENT);
-		     break;
-  }
   return TRUE;
 }
 
@@ -426,7 +399,7 @@ rcm_button_press_event (GtkWidget *widget,
                                      rcm_units_factor(Current.Units));
 
           if (Current.RealTime)
-            rcm_render_preview (Current.Bna->after, CURRENT);
+            rcm_render_preview (Current.Bna->after);
         }
     }
   else
@@ -448,8 +421,7 @@ rcm_release_event (GtkWidget *widget,
 
   circle->action_flag = VIRGIN;
 
-  if (! Current.RealTime)
-    rcm_render_preview (Current.Bna->after, CURRENT);
+  rcm_render_preview (Current.Bna->after);
 
   return TRUE;
 }
@@ -517,7 +489,7 @@ rcm_motion_notify_event (GtkWidget *widget,
                                  rcm_units_factor(Current.Units));
 
       if (Current.RealTime)
-        rcm_render_preview (Current.Bna->after, CURRENT);
+        rcm_render_preview (Current.Bna->after);
   }
 
   return TRUE;
@@ -539,8 +511,6 @@ rcm_gray_expose_event (GtkWidget *widget,
       rcm_draw_large_circle (widget->window,
                              widget->style->black_gc, circle->gray_sat);
     }
-  else if (Current.RealTime)
-    rcm_render_preview (Current.Bna->after, CURRENT);
 
   return TRUE;
 }
@@ -579,7 +549,7 @@ rcm_gray_button_press_event (GtkWidget *widget,
                              circle->satur);
 
   if (Current.RealTime)
-    rcm_render_preview (Current.Bna->after,CURRENT);
+    rcm_render_preview (Current.Bna->after);
 
   return TRUE;
 }
@@ -597,8 +567,7 @@ rcm_gray_release_event (GtkWidget *widget,
 
   circle->action_flag = VIRGIN;
 
-  if (!Current.RealTime)
-    rcm_render_preview (Current.Bna->after, CURRENT);
+  rcm_render_preview (Current.Bna->after);
 
   return TRUE;
 }
@@ -652,7 +621,7 @@ rcm_gray_motion_notify_event (GtkWidget *widget,
                              circle->satur);
 
   if (Current.RealTime)
-    rcm_render_preview (Current.Bna->after, CURRENT);
+    rcm_render_preview (Current.Bna->after);
 
   return TRUE;
 }
@@ -677,7 +646,7 @@ rcm_set_alpha (GtkWidget *entry,
   rcm_draw_arrows (circle->preview->window, circle->preview->style->black_gc,
                    circle->angle);
 
-  rcm_render_preview (Current.Bna->after, CURRENT);
+  rcm_render_preview (Current.Bna->after);
 }
 
 void
@@ -697,7 +666,7 @@ rcm_set_beta (GtkWidget *entry,
   rcm_draw_arrows (circle->preview->window, circle->preview->style->black_gc,
                    circle->angle);
 
-  rcm_render_preview (Current.Bna->after, CURRENT);
+  rcm_render_preview (Current.Bna->after);
 }
 
 void
@@ -722,7 +691,7 @@ rcm_set_hue (GtkWidget *entry,
                          circle->preview->style->black_gc,
                          circle->gray_sat);
 
-  rcm_render_preview (Current.Bna->after, CURRENT);
+  rcm_render_preview (Current.Bna->after);
 }
 
 void
@@ -746,7 +715,7 @@ rcm_set_satur (GtkWidget *entry,
                          circle->preview->style->black_gc,
                          circle->gray_sat);
 
-  rcm_render_preview (Current.Bna->after, CURRENT);
+  rcm_render_preview (Current.Bna->after);
 }
 
 void
@@ -763,5 +732,5 @@ rcm_set_gray_sat (GtkWidget *entry,
                          circle->preview->style->black_gc,
                          circle->gray_sat);
 
-  rcm_render_preview (Current.Bna->after, CURRENT);
+  rcm_render_preview (Current.Bna->after);
 }
