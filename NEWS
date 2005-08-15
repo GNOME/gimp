@@ -6,6 +6,18 @@ here. New features are being added in the HEAD branch that will be
 released as GIMP version 2.4.
 
 
+Bugs fixed in GIMP 2.2.9
+========================
+- fixed minor problem in JPEG plug-in (bug #309091)
+- allow to disable build of gtkhtml2, svg, and lcms features (bug #307704)
+- fixed bug in Imagemap plug-in (bug #169698)
+- handle PSD files with untitled channels (bug #312963)
+- fixed build of MMX/SSE assembly code on gcc 4.0 (bug #308412)
+- fixed crash in image preview code (bug #312144)
+- fixed redraw of previews in Rotate Colormap plug-in (bug #172284)
+- fixed redraw of previews in Filterpack plug-in (bug #160032)
+
+
 Bugs fixed in GIMP 2.2.8
 ========================
 - fixed possible crash in plug-ins-query PDB function
