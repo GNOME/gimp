@@ -9,14 +9,15 @@
 # Hendrik Brandt <eru@gmx.li>
 # Sven Neumann <sven@gimp.org>
 # Hendrik Richter <hendi@gnome-de.org>, 2005.
+# Jens Seidel <jseidel@cvs.gnome.org>, 2005.
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-07-18 19:33+0200\n"
-"PO-Revision-Date: 2005-07-24 14:22+0200\n"
-"Last-Translator: Hendrik Richter <hendi@gnome-de.org>\n"
+"PO-Revision-Date: 2005-08-15 14:22+0200\n"
+"Last-Translator: Jens Seidel <jseidel@cvs.gnome.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -4636,7 +4637,7 @@ msgstr "_Glanzlicht:"
 
 #: ../plug-ins/common/jigsaw.c:2523
 msgid "The amount of highlighting on the edges of each piece"
-msgstr "Um wieviel die Intensität am Rand der Teile angehoben werden soll"
+msgstr "Um wie viel die Intensität am Rand der Teile angehoben werden soll"
 
 #. frame for primitive radio buttons
 #: ../plug-ins/common/jigsaw.c:2540
@@ -6995,16 +6996,16 @@ msgstr "U_nten Rechts"
 
 #: ../plug-ins/common/sunras.c:211 ../plug-ins/common/sunras.c:231
 msgid "SUN Rasterfile image"
-msgstr "SUN-Rasterfile-Bild"
+msgstr "SUN-Raster-Datei-Bild"
 
 #: ../plug-ins/common/sunras.c:385
 #, c-format
 msgid "Could not open '%s' as SUN-raster-file"
-msgstr "Konnte '%s' nicht als SUN-raster-datei öffnen"
+msgstr "Konnte '%s' nicht als SUN-Raster-Datei öffnen"
 
 #: ../plug-ins/common/sunras.c:393
 msgid "The type of this SUN-rasterfile is not supported"
-msgstr "Der Typ dieser SUN-rasterdatei ist nicht unterstützt"
+msgstr "Der Typ dieser SUN-Raster-Datei ist nicht unterstützt"
 
 #: ../plug-ins/common/sunras.c:416
 #, c-format
@@ -7350,7 +7351,7 @@ msgstr "Faktor"
 
 #: ../plug-ins/common/uniteditor.c:96
 msgid "How many units make up an inch."
-msgstr "Wieviele Einheiten machen ein Inch."
+msgstr "Wie viele Einheiten machen ein Inch."
 
 #: ../plug-ins/common/uniteditor.c:97
 msgid "Digits"
@@ -7363,7 +7364,7 @@ msgid ""
 "accuracy as an \"inch\" input field with two decimal digits."
 msgstr ""
 "Dieses Feld ist ein Hinweis für numerische Eingabefelder. Es legt fest, "
-"wieviele Dezimalstellen das Eingabefeld bereitstellen sollte, um ungefähr "
+"wie viele Dezimalstellen das Eingabefeld bereitstellen sollte, um ungefähr "
 "die gleiche Genauigkeit wie ein \"inch\"-Eingabefeld mit zwei Dezimalstellen "
 "zu bekommen."
 
@@ -8782,7 +8783,7 @@ msgstr "Sehr Dunkel"
 msgid "Grid color:"
 msgstr "Gitterfarbe:"
 
-# muss das nicht Directions: heissen ?
+# muss das nicht Directions: heißen?
 #: ../plug-ins/gfig/gfig-dialog.c:1703
 msgid "Sides:"
 msgstr "Seiten:"
@@ -9663,7 +9664,7 @@ msgstr "Neu zeichnen"
 msgid "_Size"
 msgstr "_Größe"
 
-# muss das nicht Directions: heissen ?
+# muss das nicht Directions: heißen?
 #: ../plug-ins/gimpressionist/size.c:91
 msgid "Sizes:"
 msgstr "Größen:"
@@ -9687,7 +9688,7 @@ msgstr "Max. Größe:"
 
 #: ../plug-ins/gimpressionist/size.c:119
 msgid "The largest brush to create"
-msgstr "Der grösste Pinsel, der erstellt wird"
+msgstr "Der größte Pinsel, der erstellt wird"
 
 #: ../plug-ins/gimpressionist/size.c:133
 msgid "Size:"

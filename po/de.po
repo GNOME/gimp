@@ -9,14 +9,15 @@
 # Sven Neumann <sven@gimp.org>, 2004.
 # Roman Joost <romanofski@gimp.org>, 2005.
 # Hendrik Richter <hendi@gnome-de.org>, 2005.
+# Jens Seidel <jseidel@cvs.gnome.org>, 2005.
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-07-31 20:26+0200\n"
-"PO-Revision-Date: 2005-07-31 20:29+0200\n"
-"Last-Translator: Hendrik Richter <hendi@gnome-de.org>\n"
+"PO-Revision-Date: 2005-08-15 20:29+0200\n"
+"Last-Translator: Jens Seidel <jseidel@cvs.gnome.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1762,7 +1763,7 @@ msgid ""
 "Select the number of uniform parts\n"
 "in which to split the selected segment."
 msgstr ""
-"Geben Sie an, in wieviele Abschnitte das\n"
+"Geben Sie an, in wie viele Abschnitte das\n"
 "ausgewählte Segment aufgeteilt werden soll."
 
 #: ../app/actions/gradient-editor-commands.c:499
@@ -1770,7 +1771,7 @@ msgid ""
 "Select the number of uniform parts\n"
 "in which to split the segments in the selection."
 msgstr ""
-"Geben Sie an, in wieviele Abschnitte die\n"
+"Geben Sie an, in wie viele Abschnitte die\n"
 "Segmente in der Auswahl aufgeteilt werden sollen."
 
 #: ../app/actions/gradients-actions.c:44
@@ -3643,7 +3644,7 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:175
 msgid "How many recently opened image filenames to keep on the File menu."
 msgstr ""
-"Legt fest, wieviele »zuletzt geöffnet«-Einträge im Dateimenü vorgehalten "
+"Legt fest, wie viele »zuletzt geöffnet«-Einträge im Dateimenü vorgehalten "
 "werden sollen."
 
 #: ../app/config/gimprc-blurbs.h:178
@@ -3718,7 +3719,7 @@ msgid ""
 "On multiprocessor machines, if GIMP has been compiled with --enable-mp this "
 "sets how many processors GIMP should use simultaneously."
 msgstr ""
-"Auf Rechnern mit mehreren Prozessoren legt dieser Wert fest, wieviele "
+"Auf Rechnern mit mehreren Prozessoren legt dieser Wert fest, wie viele "
 "Prozessoren GIMP gleichzeitig belegen soll (nur, falls GIMP mit --enable-mp "
 "kompiliert wurde)."
 
@@ -3760,7 +3761,7 @@ msgid ""
 "physical image size changes."
 msgstr ""
 "Wenn diese Option ausgewählt ist, wird sich die Größe des Bildfensters "
-"jedesmal anpassen, wenn sich die physikalische Größe des Bildes ändert."
+"jedes Mal anpassen, wenn sich die physikalische Größe des Bildes ändert."
 
 #: ../app/config/gimprc-blurbs.h:259
 msgid ""
@@ -6714,7 +6715,7 @@ msgstr "DPI"
 #: ../app/dialogs/preferences-dialog.c:2092
 #, c-format
 msgid "From _windowing system (currently %d x %d dpi)"
-msgstr "Auflösung vom _Fenstersystem beziehen (zur Zeit %d x %d dpi)"
+msgstr "Auflösung vom _Fenstersystem beziehen (zurzeit %d x %d dpi)"
 
 #: ../app/dialogs/preferences-dialog.c:2112
 msgid "_Manually"
@@ -7199,7 +7200,7 @@ msgstr ""
 "Die Datei unitrc wird dazu verwendet, Ihre Einheiten-Datenbank zu speichern. "
 "Sie können zusätzliche Einheiten definieren und sie wie die vordefinierten "
 "Einheiten wie Zoll, Millimeter, Punkt und Pica einsetzen. Diese Datei wird "
-"jedesmal überschrieben, wenn Sie GIMP beenden."
+"jedes Mal überschrieben, wenn Sie GIMP beenden."
 
 #: ../app/dialogs/user-install-dialog.c:186
 msgid ""
