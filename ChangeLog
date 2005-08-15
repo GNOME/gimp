@@ -1,3 +1,30 @@
+2005-08-15  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/randomize.c
+	* plug-ins/common/raw.c
+	* plug-ins/common/retinex.c
+	* plug-ins/common/ripple.c
+	* plug-ins/common/rotate.c
+	* plug-ins/common/sample_colorize.c
+	* plug-ins/common/scatter_hsv.c
+	* plug-ins/common/screenshot.c
+	* plug-ins/common/sel_gauss.c
+	* plug-ins/common/semiflatten.c
+	* plug-ins/common/sharpen.c
+	* plug-ins/common/shift.c
+	* plug-ins/common/sinus.c
+	* plug-ins/common/smooth_palette.c
+	* plug-ins/common/snoise.c
+	* plug-ins/common/sobel.c
+	* plug-ins/common/softglow.c
+	* plug-ins/common/sparkle.c
+	* plug-ins/common/spheredesigner.c
+	* plug-ins/common/spread.c
+	* plug-ins/common/struc.c
+	* plug-ins/common/sunras.c
+	* plug-ins/common/svg.c: canonicalize procedure and parameter
+	names. Misc cleanups.
+
 2005-08-15  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/common/sample_colorize.c (smp_constrain): add an extra

@@ -26,6 +26,8 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define PLUG_IN_PROC        "plug-in-retinex"
+#define PLUG_IN_BINARY      "retinex"
 #define MAX_RETINEX_SCALES    8
 #define MIN_GAUSSIAN_SCALE   16
 #define MAX_GAUSSIAN_SCALE  250
@@ -143,16 +145,16 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",    "Interactive, non-interactive"        },
+    { GIMP_PDB_INT32,    "run-mode",    "Interactive, non-interactive"        },
     { GIMP_PDB_IMAGE,    "image",       "Input image (unused)"                },
     { GIMP_PDB_DRAWABLE, "drawable",    "Input drawable"                      },
     { GIMP_PDB_INT32,    "scale",       "Biggest scale value"                 },
     { GIMP_PDB_INT32,    "nscales",     "Number of scales"                    },
-    { GIMP_PDB_INT32,    "scales_mode", "Retinex distribution through scales" },
+    { GIMP_PDB_INT32,    "scales-mode", "Retinex distribution through scales" },
     { GIMP_PDB_FLOAT,    "cvar",        "Variance value"                      }
   };
 
-  gimp_install_procedure ("plug_in_retinex",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Retinex Image Enhancement Algorithm",
                           "The Retinex Image Enhancement Algorithm is an "
                           "automatic image enhancement method that enhances "
@@ -169,7 +171,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_retinex", "<Image>/Filters/Colors");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Colors");
 }
 
 static void
@@ -214,7 +216,8 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_retinex", &rvals);
+      gimp_get_data (PLUG_IN_PROC, &rvals);
+
       /*  First acquire information with a dialog  */
       if (! retinex_dialog (drawable))
         return;
@@ -236,7 +239,7 @@ run (const gchar      *name,
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data ("plug_in_retinex", &rvals);
+      gimp_get_data (PLUG_IN_PROC, &rvals);
       break;
 
     default:
@@ -255,7 +258,7 @@ run (const gchar      *name,
 
       /*  Store data  */
       if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data ("plug_in_retinex", &rvals, sizeof (RetinexParams));
+        gimp_set_data (PLUG_IN_PROC, &rvals, sizeof (RetinexParams));
     }
   else
     {
@@ -283,20 +286,21 @@ retinex_dialog (GimpDrawable *drawable)
   GtkWidget *frame;
   gboolean   run;
 
-  gimp_ui_init ("retinex", FALSE);
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Retinex Image Enhancement"), "retinex",
+  dialog = gimp_dialog_new (_("Retinex Image Enhancement"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, "plug-in-retinex",
+                            gimp_standard_help_func, PLUG_IN_PROC,
+
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
                             NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);

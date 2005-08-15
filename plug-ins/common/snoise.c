@@ -73,12 +73,15 @@
 
 /*---- Defines ----*/
 
-#define TABLE_SIZE    64
-#define WEIGHT(T)     ((2.0*fabs(T)-3.0)*(T)*(T)+1.0)
+#define PLUG_IN_PROC   "plug-in-solid-noise"
+#define PLUG_IN_BINARY "snoise"
 
-#define SCALE_WIDTH   128
-#define MIN_SIZE      0.1
-#define MAX_SIZE      16.0
+#define TABLE_SIZE      64
+#define WEIGHT(T)      ((2.0*fabs(T)-3.0)*(T)*(T)+1.0)
+
+#define SCALE_WIDTH    128
+#define MIN_SIZE         0.1
+#define MAX_SIZE        16.0
 
 /*---- Typedefs ----*/
 
@@ -160,7 +163,7 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",  "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode",  "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",     "Input image" },
     { GIMP_PDB_DRAWABLE, "drawable",  "Input drawable" },
     { GIMP_PDB_INT32,    "tilable",   "Create a tilable output (n=0/y=1)" },
@@ -171,7 +174,7 @@ query (void)
     { GIMP_PDB_FLOAT,    "ysize",     "Vertical texture size" }
   };
 
-  gimp_install_procedure ("plug_in_solid_noise",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Creates a grayscale noise texture",
                           "Generates 2D textures using Perlin's classic "
                           "solid noise function.",
@@ -184,8 +187,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_solid_noise",
-                             "<Image>/Filters/Render/Clouds");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Render/Clouds");
 }
 
 
@@ -221,7 +223,7 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       /*  Possibly retrieve data  */
-      gimp_get_data("plug_in_solid_noise", &snvals);
+      gimp_get_data (PLUG_IN_PROC, &snvals);
 
       /*  Get information from the dialog  */
       if (!solid_noise_dialog (drawable))
@@ -250,7 +252,7 @@ run (const gchar      *name,
 
     case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_solid_noise", &snvals);
+      gimp_get_data (PLUG_IN_PROC, &snvals);
 
       if (snvals.random_seed)
         snvals.seed = g_random_int ();
@@ -280,8 +282,7 @@ run (const gchar      *name,
       if (run_mode == GIMP_RUN_INTERACTIVE ||
           run_mode == GIMP_RUN_WITH_LAST_VALS)
         {
-          gimp_set_data ("plug_in_solid_noise",
-                         &snvals, sizeof (SolidNoiseValues));
+          gimp_set_data (PLUG_IN_PROC, &snvals, sizeof (SolidNoiseValues));
         }
     }
   else
@@ -572,12 +573,12 @@ solid_noise_dialog (GimpDrawable *drawable)
   GtkObject *adj;
   gboolean   run;
 
-  gimp_ui_init ("snoise", FALSE);
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
   /*  Dialog initialization  */
-  dialog = gimp_dialog_new (_("Solid Noise"), "snoise",
+  dialog = gimp_dialog_new (_("Solid Noise"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, "plug-in-solid-noise",
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -585,9 +586,9 @@ solid_noise_dialog (GimpDrawable *drawable)
                             NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);

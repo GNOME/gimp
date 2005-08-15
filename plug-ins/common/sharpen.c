@@ -34,9 +34,9 @@
  * Constants...
  */
 
-#define PLUG_IN_NAME    "plug_in_sharpen"
+#define PLUG_IN_PROC    "plug-in-sharpen"
+#define PLUG_IN_BINARY  "sharpen"
 #define PLUG_IN_VERSION "1.4.2 - 3 June 1998"
-#define HELP_ID         "plug-in-sharpen"
 #define SCALE_WIDTH     100
 
 /*
@@ -105,13 +105,13 @@ query (void)
 {
   static GimpParamDef   args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive"      },
+    { GIMP_PDB_INT32,    "run-mode", "Interactive, non-interactive"      },
     { GIMP_PDB_IMAGE,    "image",    "Input image"                       },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"                    },
     { GIMP_PDB_INT32,    "percent",  "Percent sharpening (default = 10)" }
   };
 
-  gimp_install_procedure (PLUG_IN_NAME,
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Sharpen filter, typically used to 'sharpen' a "
                           "photographic image.",
                           "This plug-in selectively performs a convolution "
@@ -125,7 +125,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register (PLUG_IN_NAME, "<Image>/Filters/Enhance");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Enhance");
 }
 
 static void
@@ -175,7 +175,7 @@ run (const gchar      *name,
       /*
        * Possibly retrieve data...
        */
-      gimp_get_data (PLUG_IN_NAME, &sharpen_params);
+      gimp_get_data (PLUG_IN_PROC, &sharpen_params);
 
       /*
        * Get information from the dialog...
@@ -198,7 +198,7 @@ run (const gchar      *name,
       /*
        * Possibly retrieve data...
        */
-      gimp_get_data (PLUG_IN_NAME, &sharpen_params);
+      gimp_get_data (PLUG_IN_PROC, &sharpen_params);
       break;
 
     default:
@@ -230,7 +230,7 @@ run (const gchar      *name,
            * Store data...
            */
           if (run_mode == GIMP_RUN_INTERACTIVE)
-            gimp_set_data (PLUG_IN_NAME,
+            gimp_set_data (PLUG_IN_PROC,
                            &sharpen_params, sizeof (SharpenParams));
         }
       else
@@ -473,11 +473,11 @@ sharpen_dialog (GimpDrawable *drawable)
   GtkObject *adj;
   gboolean   run;
 
-  gimp_ui_init ("sharpen", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Sharpen"), "Sharpen",
+  dialog = gimp_dialog_new (_("Sharpen"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, HELP_ID,
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -485,9 +485,9 @@ sharpen_dialog (GimpDrawable *drawable)
                             NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);

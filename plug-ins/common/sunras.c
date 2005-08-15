@@ -50,6 +50,11 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define LOAD_PROC      "file-sunras-load"
+#define SAVE_PROC      "file-sunras-save"
+#define PLUG_IN_BINARY "sunras"
+
+
 typedef int WRITE_FUN(void*,size_t,size_t,FILE*);
 
 typedef gulong  L_CARD32;
@@ -182,9 +187,9 @@ query (void)
 {
   static GimpParamDef load_args[] =
   {
-    { GIMP_PDB_INT32,  "run_mode",      "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,  "run-mode",      "Interactive, non-interactive" },
     { GIMP_PDB_STRING, "filename",      "The name of the file to load" },
-    { GIMP_PDB_STRING, "raw_filename",  "The name of the file to load" }
+    { GIMP_PDB_STRING, "raw-filename",  "The name of the file to load" }
   };
 
   static GimpParamDef load_return_vals[] =
@@ -194,15 +199,15 @@ query (void)
 
   static GimpParamDef save_args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode",     "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",        "Input image" },
     { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },
     { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
-    { GIMP_PDB_STRING,   "raw_filename", "The name of the file to save the image in" },
+    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in" },
     { GIMP_PDB_INT32,    "rle",          "Specify non-zero for rle output, zero for standard output" }
   };
 
-  gimp_install_procedure ("file_sunras_load",
+  gimp_install_procedure (LOAD_PROC,
                           "load file of the SunRaster file format",
                           "load file of the SunRaster file format",
                           "Peter Kirchgessner",
@@ -215,13 +220,13 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
-  gimp_register_file_handler_mime ("file_sunras_load", "image/x-sun-raster");
-  gimp_register_magic_load_handler ("file_sunras_load",
+  gimp_register_file_handler_mime (LOAD_PROC, "image/x-sun-raster");
+  gimp_register_magic_load_handler (LOAD_PROC,
 				    "im1,im8,im24,im32,rs,ras",
 				    "",
 				    "0,long,0x59a66a95");
 
-  gimp_install_procedure ("file_sunras_save",
+  gimp_install_procedure (SAVE_PROC,
                           "save file in the SunRaster file format",
                           "SUNRAS saving handles all image types except "
 			  "those with alpha channels.",
@@ -234,8 +239,8 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_file_handler_mime ("file_sunras_save", "image/x-sun-raster");
-  gimp_register_save_handler ("file_sunras_save",
+  gimp_register_file_handler_mime (SAVE_PROC, "image/x-sun-raster");
+  gimp_register_save_handler (SAVE_PROC,
                               "im1,im8,im24,im32,rs,ras", "");
 }
 
@@ -263,7 +268,7 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  if (strcmp (name, "file_sunras_load") == 0)
+  if (strcmp (name, LOAD_PROC) == 0)
     {
       image_ID = load_image (param[1].data.d_string);
 
@@ -278,7 +283,7 @@ run (const gchar      *name,
 	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
     }
-  else if (strcmp (name, "file_sunras_save") == 0)
+  else if (strcmp (name, SAVE_PROC) == 0)
     {
       image_ID = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
@@ -288,7 +293,7 @@ run (const gchar      *name,
 	{
 	case GIMP_RUN_INTERACTIVE:
 	case GIMP_RUN_WITH_LAST_VALS:
-	  gimp_ui_init ("sunras", FALSE);
+	  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "SUNRAS",
 				      (GIMP_EXPORT_CAN_HANDLE_RGB |
 				       GIMP_EXPORT_CAN_HANDLE_GRAY |
@@ -307,7 +312,7 @@ run (const gchar      *name,
         {
         case GIMP_RUN_INTERACTIVE:
           /*  Possibly retrieve data  */
-          gimp_get_data ("file_sunras_save", &psvals);
+          gimp_get_data (SAVE_PROC, &psvals);
 
           /*  First acquire information with a dialog  */
           if (! save_dialog ())
@@ -328,7 +333,7 @@ run (const gchar      *name,
 
         case GIMP_RUN_WITH_LAST_VALS:
           /*  Possibly retrieve data  */
-          gimp_get_data ("file_sunras_save", &psvals);
+          gimp_get_data (SAVE_PROC, &psvals);
           break;
 
         default:
@@ -340,8 +345,7 @@ run (const gchar      *name,
 	  if (save_image (param[3].data.d_string, image_ID, drawable_ID))
 	    {
 	      /*  Store psvals data  */
-	      gimp_set_data ("file_sunras_save", &psvals,
-			     sizeof (SUNRASSaveVals));
+	      gimp_set_data (SAVE_PROC, &psvals, sizeof (SUNRASSaveVals));
 	    }
 	  else
 	    {
@@ -1566,9 +1570,9 @@ save_dialog (void)
   GtkWidget *frame;
   gboolean   run;
 
-  dlg = gimp_dialog_new (_("Save as SUNRAS"), "sunras",
+  dlg = gimp_dialog_new (_("Save as SUNRAS"), PLUG_IN_BINARY,
                          NULL, 0,
-			 gimp_standard_help_func, "file-sunras-save",
+			 gimp_standard_help_func, SAVE_PROC,
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -1576,9 +1580,9 @@ save_dialog (void)
                          NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   /*  file save type  */
   frame = gimp_int_radio_group_new (TRUE, _("Data Formatting"),

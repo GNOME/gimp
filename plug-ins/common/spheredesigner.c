@@ -36,8 +36,6 @@
  * - (Probably more. ;-)
  */
 
-#define PLUG_IN_NAME "SphereDesigner"
-
 #include "config.h"
 
 #include <string.h>
@@ -50,6 +48,9 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
+#define PLUG_IN_PROC   "plug-in-spheredesigner"
+#define PLUG_IN_BINARY "spheredesigner"
 
 #define RESPONSE_RESET 1
 
@@ -2502,10 +2503,9 @@ makewindow (void)
   GtkWidget  *list;
   GimpRGB     rgb;
 
-  window = gimp_dialog_new (_("Sphere Designer"), "spheredesigner",
+  window = gimp_dialog_new (_("Sphere Designer"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func,
-                            "plug-in-spheredesigner",
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GIMP_STOCK_RESET, RESPONSE_RESET,
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
@@ -2514,10 +2514,10 @@ makewindow (void)
                             NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (window),
-                                              RESPONSE_RESET,
-					      GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           RESPONSE_RESET,
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   g_signal_connect (window, "response",
                     G_CALLBACK (sphere_response),
@@ -2993,12 +2993,12 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode", "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",    "Input image (unused)"         },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"               }
   };
 
-  gimp_install_procedure ("plug_in_spheredesigner",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Renders textures spheres",
                           "This plugin can be used to create textured and/or "
                           "bumpmapped spheres, and uses a small lightweight "
@@ -3012,8 +3012,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_spheredesigner",
-                             "<Image>/Filters/Render");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Render");
 }
 
 static gboolean
@@ -3021,7 +3020,7 @@ sphere_main (GimpDrawable *drawable)
 {
   initworld ();
 
-  gimp_ui_init ("spheredesigner", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
   memset (img, 0, PREVIEWSIZE * PREVIEWSIZE * 3);
   makewindow ();
@@ -3071,7 +3070,7 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       s.com.numtexture = 0;
-      gimp_get_data (PLUG_IN_NAME, &s);
+      gimp_get_data (PLUG_IN_PROC, &s);
       if (!sphere_main (drawable))
         {
           gimp_drawable_detach (drawable);
@@ -3080,7 +3079,7 @@ run (const gchar      *name,
       break;
     case GIMP_RUN_WITH_LAST_VALS:
       s.com.numtexture = 0;
-      gimp_get_data (PLUG_IN_NAME, &s);
+      gimp_get_data (PLUG_IN_PROC, &s);
       if (s.com.numtexture == 0)
         {
           gimp_drawable_detach (drawable);
@@ -3094,7 +3093,7 @@ run (const gchar      *name,
       return;
     }
 
-  gimp_set_data (PLUG_IN_NAME, &s, sizeof (s));
+  gimp_set_data (PLUG_IN_PROC, &s, sizeof (s));
 
   realrender (drawable);
   gimp_displays_flush ();

@@ -47,7 +47,10 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define PREVIEW_SIZE 350
+#define LOAD_PROC      "file-raw-load"
+#define SAVE_PROC      "file-raw-save"
+#define PLUG_IN_BINARY "raw"
+#define PREVIEW_SIZE   350
 
 
 typedef enum
@@ -147,9 +150,9 @@ query (void)
 {
   static GimpParamDef load_args[] =
   {
-    { GIMP_PDB_INT32,  "run_mode",     "Interactive"                  },
+    { GIMP_PDB_INT32,  "run-mode",     "Interactive"                  },
     { GIMP_PDB_STRING, "filename",     "The name of the file to load" },
-    { GIMP_PDB_STRING, "raw_filename", "The name entered"             }
+    { GIMP_PDB_STRING, "raw-filename", "The name entered"             }
   };
 
   static GimpParamDef load_return_vals[] =
@@ -159,14 +162,14 @@ query (void)
 
   static GimpParamDef save_args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode",     "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",        "Input image"                  },
     { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save"             },
     { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
-    { GIMP_PDB_STRING,   "raw_filename", "The name entered"             }
+    { GIMP_PDB_STRING,   "raw-filename", "The name entered"             }
   };
 
-  gimp_install_procedure ("file_raw_load",
+  gimp_install_procedure (LOAD_PROC,
                           "Load raw images, specifying image information",
                           "Load raw images, specifying image information",
                           "timecop, pg@futureware.at",
@@ -179,9 +182,9 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
-  gimp_register_load_handler ("file_raw_load", "", "");
+  gimp_register_load_handler (LOAD_PROC, "", "");
 
-  gimp_install_procedure ("file_raw_save",
+  gimp_install_procedure (SAVE_PROC,
                           "Dump images to disk in raw format",
                           "Dump images to disk in raw format",
                           "timecop, pg@futureware.at",
@@ -193,7 +196,7 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_save_handler ("file_raw_save", "", "");
+  gimp_register_save_handler (SAVE_PROC, "", "");
 }
 
 static void
@@ -226,11 +229,11 @@ run (const gchar      *name,
   runtime->palette_offset = 0;
   runtime->palette_type   = RAW_PALETTE_RGB;
 
-  if (strcmp (name, "file_raw_load") == 0)
+  if (strcmp (name, LOAD_PROC) == 0)
     {
       if (run_mode == GIMP_RUN_INTERACTIVE)
         {
-          gimp_get_data ("file_raw_load", runtime);
+          gimp_get_data (LOAD_PROC, runtime);
 
           preview_fd = g_open (param[1].data.d_string, O_RDONLY, 0);
 
@@ -265,7 +268,7 @@ run (const gchar      *name,
 
           if (image_id != -1)
             {
-              gimp_set_data ("file_raw_load", runtime, sizeof (RawConfig));
+              gimp_set_data (LOAD_PROC, runtime, sizeof (RawConfig));
 
               *nreturn_vals = 2;
               values[1].type         = GIMP_PDB_IMAGE;
@@ -277,14 +280,14 @@ run (const gchar      *name,
             }
         }
     }
-  else if (strcmp (name, "file_raw_save") == 0)
+  else if (strcmp (name, SAVE_PROC) == 0)
     {
       image_id    = param[1].data.d_int32;
       drawable_id = param[2].data.d_int32;
 
       if (run_mode == GIMP_RUN_INTERACTIVE)
         {
-          gimp_get_data ("file_raw_save", runtime);
+          gimp_get_data (SAVE_PROC, runtime);
 
           if (nparams != 5)
             {
@@ -917,11 +920,11 @@ load_dialog (gchar *filename)
 
   size = get_file_info (filename);
 
-  gimp_ui_init ("raw", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Raw Image Loader"), "raw",
+  dialog = gimp_dialog_new (_("Raw Image Loader"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, "file-load-raw",
+                            gimp_standard_help_func, LOAD_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -929,9 +932,9 @@ load_dialog (gchar *filename)
                             NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
@@ -1088,15 +1091,21 @@ save_dialog (gchar * filename,
   GtkWidget *frame;
   gboolean   run;
 
-  gimp_ui_init ("raw", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Raw Image Save"), "raw", NULL, 0,
-                            gimp_standard_help_func, "file-raw-save",
+  dialog = gimp_dialog_new (_("Raw Image Save"), PLUG_IN_BINARY,
+                            NULL, 0,
+                            gimp_standard_help_func, SAVE_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
                             NULL);
+
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);

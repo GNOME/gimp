@@ -36,8 +36,10 @@
 
 /* Some useful macros */
 
+#define PLUG_IN_PROC    "plug-in-softglow"
+#define PLUG_IN_BINARY  "softglow"
 #define TILE_CACHE_SIZE 48
-#define SIGMOIDAL_BASE  2
+#define SIGMOIDAL_BASE   2
 #define SIGMOIDAL_RANGE 20
 
 #define INT_MULT(a,b,t)  ((t) = (a) * (b) + 0x80, ((((t) >> 8) + (t)) >> 8))
@@ -108,12 +110,12 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",    "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE,    "image",       "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable",    "Input drawable" },
-    { GIMP_PDB_FLOAT,    "glow_radius", "Glow radius (radius in pixels)" },
-    { GIMP_PDB_FLOAT,    "brightness",  "Glow brightness (0.0 - 1.0)" },
-    { GIMP_PDB_FLOAT,    "sharpness",   "Glow sharpness (0.0 - 1.0)" },
+    { GIMP_PDB_INT32,    "run-mode",    "Interactive, non-interactive"   },
+    { GIMP_PDB_IMAGE,    "image",       "Input image (unused)"           },
+    { GIMP_PDB_DRAWABLE, "drawable",    "Input drawable"                 },
+    { GIMP_PDB_FLOAT,    "glow-radius", "Glow radius (radius in pixels)" },
+    { GIMP_PDB_FLOAT,    "brightness",  "Glow brightness (0.0 - 1.0)"    },
+    { GIMP_PDB_FLOAT,    "sharpness",   "Glow sharpness (0.0 - 1.0)"     }
   };
 
   gchar *help_string =
@@ -128,7 +130,7 @@ query (void)
     "to image highlights. The sharpness parameter controls how defined or "
     "alternatively, diffuse, the glow effect should be.";
 
-  gimp_install_procedure ("plug_in_softglow",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Photographic 'softglow' effect by intensifying "
                           "the highlights",
                           help_string,
@@ -141,7 +143,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_softglow", "<Image>/Filters/Artistic");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Artistic");
 }
 
 static void
@@ -176,7 +178,7 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_softglow", &svals);
+      gimp_get_data (PLUG_IN_PROC, &svals);
 
       /*  First acquire information with a dialog  */
       if (! softglow_dialog (drawable))
@@ -191,7 +193,7 @@ run (const gchar      *name,
 
     case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_softglow", &svals);
+      gimp_get_data (PLUG_IN_PROC, &svals);
       break;
 
     default:
@@ -213,7 +215,7 @@ run (const gchar      *name,
 
           /*  Store data  */
           if (run_mode == GIMP_RUN_INTERACTIVE)
-            gimp_set_data ("plug_in_softglow", &svals, sizeof (SoftglowVals));
+            gimp_set_data (PLUG_IN_PROC, &svals, sizeof (SoftglowVals));
         }
       else
         {
@@ -624,11 +626,11 @@ softglow_dialog (GimpDrawable *drawable)
   GtkObject *scale_data;
   gboolean   run;
 
-  gimp_ui_init ("softglow", FALSE);
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Softglow"), "softglow",
+  dialog = gimp_dialog_new (_("Softglow"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, "plug-in-softglow",
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -636,9 +638,9 @@ softglow_dialog (GimpDrawable *drawable)
                             NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);

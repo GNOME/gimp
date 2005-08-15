@@ -25,7 +25,9 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define TILE_CACHE_SIZE  16
+#define PLUG_IN_PROC    "plug-in-spread"
+#define PLUG_IN_BINARY  "spread"
+#define TILE_CACHE_SIZE 16
 
 typedef struct
 {
@@ -76,16 +78,16 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode", "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",    "Input image (unused)" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_FLOAT,    "spread_amount_x",
+    { GIMP_PDB_FLOAT,    "spread-amount-x",
       "Horizontal spread amount (0 <= spread_amount_x <= 200)" },
-    { GIMP_PDB_FLOAT,    "spread_amount_y",
+    { GIMP_PDB_FLOAT,    "spread-amount-y",
       "Vertical spread amount (0 <= spread_amount_y <= 200)"   }
   };
 
-  gimp_install_procedure ("plug_in_spread",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Spread the contents of the specified drawable",
                           "Spreads the pixels of the specified drawable.  "
                           "Pixels are randomly moved to another location whose "
@@ -101,7 +103,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_spread", "<Image>/Filters/Noise");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Noise");
 }
 
 static void
@@ -138,7 +140,7 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_spread", &spvals);
+      gimp_get_data (PLUG_IN_PROC, &spvals);
 
       /*  First acquire information with a dialog  */
       if (! spread_dialog (image_ID, drawable))
@@ -165,7 +167,7 @@ run (const gchar      *name,
 
     case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_spread", &spvals);
+      gimp_get_data (PLUG_IN_PROC, &spvals);
       break;
 
     default:
@@ -189,7 +191,7 @@ run (const gchar      *name,
 
           /*  Store data  */
           if (run_mode == GIMP_RUN_INTERACTIVE)
-            gimp_set_data ("plug_in_spread", &spvals, sizeof (SpreadValues));
+            gimp_set_data (PLUG_IN_PROC, &spvals, sizeof (SpreadValues));
         }
       else
         {
@@ -340,11 +342,11 @@ spread_dialog (gint32        image_ID,
   gdouble    yres;
   gboolean   run;
 
-  gimp_ui_init ("spread", FALSE);
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Spread"), "spread",
+  dialog = gimp_dialog_new (_("Spread"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, "plug-in-spread",
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -352,9 +354,9 @@ spread_dialog (gint32        image_ID,
                             NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);

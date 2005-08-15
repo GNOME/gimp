@@ -39,15 +39,19 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define  SCALE_WIDTH  175
-#define  ENTRY_WIDTH    7
-#define  MAX_CHANNELS   4
-#define  PSV            2  /* point spread value */
-#define  EPSILON        0.001
+#define PLUG_IN_PROC   "plug-in-sparkle"
+#define PLUG_IN_BINARY "sparkle"
 
-#define  NATURAL     0
-#define  FOREGROUND  1
-#define  BACKGROUND  2
+#define SCALE_WIDTH    175
+#define ENTRY_WIDTH      7
+#define MAX_CHANNELS     4
+#define PSV              2  /* point spread value */
+#define EPSILON          0.001
+
+#define NATURAL          0
+#define FOREGROUND       1
+#define BACKGROUND       2
+
 
 typedef struct
 {
@@ -155,25 +159,25 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",      "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode",      "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",         "Input image (unused)" },
     { GIMP_PDB_DRAWABLE, "drawable",      "Input drawable" },
-    { GIMP_PDB_FLOAT,    "lum_threshold", "Luminosity threshold (0.0 - 1.0)" },
-    { GIMP_PDB_FLOAT,    "flare_inten",   "Flare intensity (0.0 - 1.0)" },
-    { GIMP_PDB_INT32,    "spike_len",     "Spike length (in pixels)" },
-    { GIMP_PDB_INT32,    "spike_pts",     "# of spike points" },
-    { GIMP_PDB_INT32,    "spike_angle",   "Spike angle (0-360 degrees, -1: random)" },
+    { GIMP_PDB_FLOAT,    "lum-threshold", "Luminosity threshold (0.0 - 1.0)" },
+    { GIMP_PDB_FLOAT,    "flare-inten",   "Flare intensity (0.0 - 1.0)" },
+    { GIMP_PDB_INT32,    "spike-len",     "Spike length (in pixels)" },
+    { GIMP_PDB_INT32,    "spike-pts",     "# of spike points" },
+    { GIMP_PDB_INT32,    "spike-angle",   "Spike angle (0-360 degrees, -1: random)" },
     { GIMP_PDB_FLOAT,    "density",       "Spike density (0.0 - 1.0)" },
     { GIMP_PDB_FLOAT,    "opacity",       "Opacity (0.0 - 1.0)" },
-    { GIMP_PDB_FLOAT,    "random_hue",    "Random hue (0.0 - 1.0)" },
-    { GIMP_PDB_FLOAT,    "random_saturation",   "Random saturation (0.0 - 1.0)" },
-    { GIMP_PDB_INT32,    "preserve_luminosity", "Preserve luminosity (TRUE/FALSE)" },
+    { GIMP_PDB_FLOAT,    "random-hue",    "Random hue (0.0 - 1.0)" },
+    { GIMP_PDB_FLOAT,    "random-saturation",   "Random saturation (0.0 - 1.0)" },
+    { GIMP_PDB_INT32,    "preserve-luminosity", "Preserve luminosity (TRUE/FALSE)" },
     { GIMP_PDB_INT32,    "inverse",       "Inverse (TRUE/FALSE)" },
     { GIMP_PDB_INT32,    "border",        "Add border (TRUE/FALSE)" },
-    { GIMP_PDB_INT32,    "colortype",     "Color of sparkles: { NATURAL (0), FOREGROUND (1), BACKGROUND (2) }" }
+    { GIMP_PDB_INT32,    "color-type",    "Color of sparkles: { NATURAL (0), FOREGROUND (1), BACKGROUND (2) }" }
   };
 
-  gimp_install_procedure ("plug_in_sparkle",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Simulates pixel bloom and diffraction effects",
                           "Uses a percentage based luminoisty threhsold to find "
                           "candidate pixels for adding some sparkles (spikes). ",
@@ -188,7 +192,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_sparkle",
+  gimp_plugin_menu_register (PLUG_IN_PROC,
                              "<Image>/Filters/Light and Shadow/Light");
 }
 
@@ -229,7 +233,7 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_sparkle", &svals);
+      gimp_get_data (PLUG_IN_PROC, &svals);
 
       /*  First acquire information with a dialog  */
       if (! sparkle_dialog (drawable))
@@ -284,7 +288,7 @@ run (const gchar      *name,
 
     case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_sparkle", &svals);
+      gimp_get_data (PLUG_IN_PROC, &svals);
       break;
 
     default:
@@ -304,7 +308,7 @@ run (const gchar      *name,
 
       /*  Store mvals data  */
       if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data ("plug_in_sparkle", &svals, sizeof (SparkleVals));
+        gimp_set_data (PLUG_IN_PROC, &svals, sizeof (SparkleVals));
     }
   else
     {
@@ -331,11 +335,11 @@ sparkle_dialog (GimpDrawable *drawable)
   GtkObject *scale_data;
   gboolean   run;
 
-  gimp_ui_init ("sparkle", FALSE);
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Sparkle"), "sparkle",
+  dialog = gimp_dialog_new (_("Sparkle"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, "plug-in-sparkle",
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,

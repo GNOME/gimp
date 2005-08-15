@@ -130,8 +130,8 @@ static const guint8 screenshot_icon[] =
 
 
 /* Defines */
-#define PLUG_IN_NAME "plug_in_screenshot"
-#define HELP_ID      "plug-in-screenshot"
+#define PLUG_IN_PROC   "plug-in-screenshot"
+#define PLUG_IN_BINARY "screenshot"
 
 #ifdef __GNUC__
 #ifdef GDK_NATIVE_WINDOW_POINTER
@@ -208,13 +208,13 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode",  "Interactive, non-interactive" },
-    { GIMP_PDB_INT32, "root",      "Root window { TRUE, FALSE }" },
-    { GIMP_PDB_INT32, "window_id", "Window id" },
-    { GIMP_PDB_INT32, "x1",        "(optional) Region left x coord" },
-    { GIMP_PDB_INT32, "y1",        "(optional) Region top y coord" },
-    { GIMP_PDB_INT32, "x2",        "(optional) Region right x coord" },
-    { GIMP_PDB_INT32, "y2",        "(optional) Region bottom y coord" },
+    { GIMP_PDB_INT32, "run-mode",  "Interactive, non-interactive"     },
+    { GIMP_PDB_INT32, "root",      "Root window { TRUE, FALSE }"      },
+    { GIMP_PDB_INT32, "window-id", "Window id"                        },
+    { GIMP_PDB_INT32, "x1",        "(optional) Region left x coord"   },
+    { GIMP_PDB_INT32, "y1",        "(optional) Region top y coord"    },
+    { GIMP_PDB_INT32, "x2",        "(optional) Region right x coord"  },
+    { GIMP_PDB_INT32, "y2",        "(optional) Region bottom y coord" }
   };
 
   static GimpParamDef return_vals[] =
@@ -222,7 +222,7 @@ query (void)
     { GIMP_PDB_IMAGE, "image", "Output image" }
   };
 
-  gimp_install_procedure (PLUG_IN_NAME,
+  gimp_install_procedure (PLUG_IN_PROC,
 			  "Take a screenshot",
                           "The plug-in allows to take screenshots of a an "
                           "interactively selected window or of the desktop, "
@@ -243,10 +243,10 @@ query (void)
                           G_N_ELEMENTS (return_vals),
 			  args, return_vals);
 
-  gimp_plugin_menu_register (PLUG_IN_NAME, "<Toolbox>/File/Acquire");
-  /* gimp_plugin_menu_register (PLUG_IN_NAME, "<Image>/File/Acquire"); */
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Toolbox>/File/Acquire");
+  /* gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/File/Acquire"); */
 
-  gimp_plugin_icon_register (PLUG_IN_NAME,
+  gimp_plugin_icon_register (PLUG_IN_PROC,
                              GIMP_ICON_TYPE_INLINE_PIXBUF, screenshot_icon);
 }
 
@@ -278,7 +278,7 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       /* Possibly retrieve data from a previous run */
-      gimp_get_data (PLUG_IN_NAME, &shootvals);
+      gimp_get_data (PLUG_IN_PROC, &shootvals);
       shootvals.window_id = 0;
 
      /* Get information from the dialog */
@@ -318,7 +318,7 @@ run (const gchar      *name,
 
     case GIMP_RUN_WITH_LAST_VALS:
       /* Possibly retrieve data from a previous run */
-      gimp_get_data (PLUG_IN_NAME, &shootvals);
+      gimp_get_data (PLUG_IN_PROC, &shootvals);
       break;
 
     default:
@@ -340,7 +340,7 @@ run (const gchar      *name,
       if (run_mode == GIMP_RUN_INTERACTIVE)
 	{
 	  /* Store variable states for next run */
-	  gimp_set_data (PLUG_IN_NAME, &shootvals, sizeof (ScreenshotValues));
+	  gimp_set_data (PLUG_IN_PROC, &shootvals, sizeof (ScreenshotValues));
 
 	  gimp_display_new (image_ID);
 	}
@@ -776,11 +776,11 @@ shoot_dialog (GdkScreen **screen)
       region = TRUE;
     }
 
-  gimp_ui_init ("screenshot", FALSE);
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Screenshot"), "screenshot",
+  dialog = gimp_dialog_new (_("Screenshot"), PLUG_IN_BINARY,
                             NULL, 0,
-			    gimp_standard_help_func, HELP_ID,
+			    gimp_standard_help_func, PLUG_IN_PROC,
 
 			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 
@@ -790,9 +790,9 @@ shoot_dialog (GdkScreen **screen)
                                   _("_Grab"), GTK_RESPONSE_OK);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   pixbuf = gdk_pixbuf_new_from_inline (-1, screenshot_icon, FALSE, NULL);
   if (pixbuf)

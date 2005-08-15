@@ -36,6 +36,10 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define PLUG_IN_PROC   "plug-in-sel-gauss"
+#define PLUG_IN_BINARY "sel_gauss"
+
+
 typedef struct
 {
   gdouble  radius;
@@ -82,14 +86,14 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE,    "image",    "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_FLOAT,    "radius",   "Radius of gaussian blur (in pixels, > 0.0)" },
-    { GIMP_PDB_INT32,    "maxdelta", "Maximum delta" }
+    { GIMP_PDB_INT32,    "run-mode",  "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",     "Input image (unused)"         },
+    { GIMP_PDB_DRAWABLE, "drawable",  "Input drawable"               },
+    { GIMP_PDB_FLOAT,    "radius",    "Radius of gaussian blur (in pixels, > 0.0)" },
+    { GIMP_PDB_INT32,    "max-delta", "Maximum delta"                }
   };
 
-  gimp_install_procedure ("plug_in_sel_gauss",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Applies a selective gaussian blur to the "
                           "specified drawable.",
                           "This filter functions similar to the regular "
@@ -108,7 +112,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_sel_gauss", "<Image>/Filters/Blur");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Blur");
 }
 
 static void
@@ -142,7 +146,7 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       /* Possibly retrieve data */
-      gimp_get_data ("plug_in_sel_gauss", &bvals);
+      gimp_get_data (PLUG_IN_PROC, &bvals);
 
       /* First acquire information with a dialog */
       if (! sel_gauss_dialog (drawable))
@@ -165,7 +169,7 @@ run (const gchar      *name,
 
     case GIMP_RUN_WITH_LAST_VALS:
       /* Possibly retrieve data */
-      gimp_get_data ("plug_in_sel_gauss", &bvals);
+      gimp_get_data (PLUG_IN_PROC, &bvals);
       break;
 
     default:
@@ -191,8 +195,7 @@ run (const gchar      *name,
 
       /* Store data */
       if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data ("plug_in_sel_gauss",
-                       &bvals, sizeof (BlurValues));
+        gimp_set_data (PLUG_IN_PROC, &bvals, sizeof (BlurValues));
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush ();
@@ -218,11 +221,11 @@ sel_gauss_dialog (GimpDrawable *drawable)
   GtkObject *adj;
   gboolean   run;
 
-  gimp_ui_init ("sel_gauss", FALSE);
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Selective Gaussian Blur"), "sel_gauss",
+  dialog = gimp_dialog_new (_("Selective Gaussian Blur"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, "plug-in-sel-gauss",
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -230,9 +233,9 @@ sel_gauss_dialog (GimpDrawable *drawable)
                             NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);

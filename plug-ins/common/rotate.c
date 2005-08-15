@@ -57,6 +57,7 @@
 
 
 /* Defines */
+#define PLUG_IN_PROC        "plug-in-rotate"
 #define PLUG_IN_VERSION     "v1.0 (2000/06/18)"
 #define PLUG_IN_IMAGE_TYPES "RGB*, INDEXED*, GRAY*"
 #define PLUG_IN_AUTHOR      "Sven Neumann <sven@gimp.org>, Adam D. Moss <adam@gimp.org>"
@@ -121,14 +122,14 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",   "Interactive, non-interactive"},
-    { GIMP_PDB_IMAGE,    "image",      "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable",   "Input drawable" },
+    { GIMP_PDB_INT32,    "run-mode",   "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",      "Input image"                  },
+    { GIMP_PDB_DRAWABLE, "drawable",   "Input drawable"               },
     { GIMP_PDB_INT32,    "angle",      "Angle { 90 (1), 180 (2), 270 (3) } degrees" },
     { GIMP_PDB_INT32,    "everything", "Rotate the whole image? { TRUE, FALSE }" }
   };
 
-  gimp_install_procedure ("plug_in_rotate",
+  gimp_install_procedure (PLUG_IN_PROC,
 			  "Rotates a layer or the whole image by 90, 180 or 270 degrees",
 			  "This plug-in does rotate the active layer or the "
 			  "whole image clockwise by multiples of 90 degrees. "
@@ -151,31 +152,22 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  /* Get the runmode from the in-parameters */
-  GimpRunMode run_mode = param[0].data.d_int32;
+  GimpRunMode       run_mode = param[0].data.d_int32;
+  GimpPDBStatusType status   = GIMP_PDB_SUCCESS;
+  static GimpParam  values[1];
 
-  /* status variable, use it to check for errors in invocation usualy only
-     during non-interactive calling */
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-
-  /*always return at least the status to the caller. */
-  static GimpParam values[1];
-
-  /* initialize the return of the status */
-  values[0].type = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
+
+  values[0].type          = GIMP_PDB_STATUS;
+  values[0].data.d_status = status;
 
   INIT_I18N ();
 
-  /* get image and drawable */
-  image_ID = param[1].data.d_int32;
+  image_ID        = param[1].data.d_int32;
   active_drawable = gimp_drawable_get (param[2].data.d_drawable);
 
-  /* Check the procedure name we were called with, to decide
-     what needs to be done. */
-  if (strcmp (name, "plug_in_rotate") == 0)
+  if (strcmp (name, PLUG_IN_PROC) == 0)
     {
       switch (run_mode)
 	{
@@ -188,14 +180,14 @@ run (const gchar      *name,
 	      rotvals.angle = rotvals.angle % 4;
 	      rotvals.everything = (gint) param[4].data.d_int32;
 	      /* Store variable states for next run */
-	      gimp_set_data ("plug_in_rotate", &rotvals, sizeof (RotateValues));
+	      gimp_set_data (PLUG_IN_PROC, &rotvals, sizeof (RotateValues));
 	    }
 	  else
 	    status = GIMP_PDB_CALLING_ERROR;
 	  break;
 	case GIMP_RUN_WITH_LAST_VALS:
 	  /* Possibly retrieve data from a previous run */
-	  gimp_get_data ("plug_in_rotate", &rotvals);
+	  gimp_get_data (PLUG_IN_PROC, &rotvals);
 	  rotvals.angle = rotvals.angle % 4;
 	  break;
 	default:

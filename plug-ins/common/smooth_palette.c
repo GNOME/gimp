@@ -30,6 +30,10 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define PLUG_IN_PROC   "plug-in-smooth-palette"
+#define PLUG_IN_BINARY "smooth_palette"
+
+
 /* Declare local functions. */
 static void      query          (void);
 static void      run            (const gchar      *name,
@@ -60,22 +64,22 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",   "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode",   "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",      "Input image (unused)"         },
     { GIMP_PDB_DRAWABLE, "drawable",   "Input drawable"               },
     { GIMP_PDB_INT32,    "width",      "Width"                        },
     { GIMP_PDB_INT32,    "height",     "Height"                       },
     { GIMP_PDB_INT32,    "ntries",     "Search Depth"                 },
-    { GIMP_PDB_INT32,    "show_image", "Show Image?"                  }
+    { GIMP_PDB_INT32,    "show-image", "Show Image?"                  }
   };
 
   static GimpParamDef return_vals[] =
   {
-    { GIMP_PDB_IMAGE, "new_image", "Output image" },
-    { GIMP_PDB_LAYER, "new_layer", "Output layer" }
+    { GIMP_PDB_IMAGE, "new-image", "Output image" },
+    { GIMP_PDB_LAYER, "new-layer", "Output layer" }
   };
 
-  gimp_install_procedure ("plug_in_smooth_palette",
+  gimp_install_procedure (PLUG_IN_PROC,
                           "derive smooth palette from image",
                           "help!",
                           "Scott Draves",
@@ -87,8 +91,7 @@ query (void)
                           G_N_ELEMENTS (args), G_N_ELEMENTS (return_vals),
                           args, return_vals);
 
-  gimp_plugin_menu_register ("plug_in_smooth_palette",
-                             "<Image>/Filters/Colors");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Colors");
 }
 
 static struct
@@ -136,7 +139,7 @@ run (const gchar      *name,
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      gimp_get_data ("plug_in_smooth_palette", &config);
+      gimp_get_data (PLUG_IN_PROC, &config);
       if (! dialog (drawable))
         return;
       break;
@@ -162,7 +165,7 @@ run (const gchar      *name,
 
     case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_smooth_palette", &config);
+      gimp_get_data (PLUG_IN_PROC, &config);
       break;
 
     default:
@@ -182,7 +185,8 @@ run (const gchar      *name,
                                                    &values[2].data.d_layer);
 
           if (run_mode == GIMP_RUN_INTERACTIVE)
-            gimp_set_data ("plug_in_smooth_palette", &config, sizeof (config));
+            gimp_set_data (PLUG_IN_PROC, &config, sizeof (config));
+
           if (config.show_image)
             gimp_display_new (values[1].data.d_image);
         }
@@ -403,11 +407,11 @@ dialog (GimpDrawable *drawable)
   gdouble    xres, yres;
   gboolean   run;
 
-  gimp_ui_init ("smooth_palette", FALSE);
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dlg = gimp_dialog_new (_("Smooth Palette"), "smooth_palette",
+  dlg = gimp_dialog_new (_("Smooth Palette"), PLUG_IN_BINARY,
                          NULL, 0,
-                         gimp_standard_help_func, "plug-in-smooth-palette",
+                         gimp_standard_help_func, PLUG_IN_PROC,
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -415,9 +419,9 @@ dialog (GimpDrawable *drawable)
                          NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   image_id = gimp_drawable_get_image (drawable->drawable_id);
   unit = gimp_image_get_unit (image_id);
@@ -465,4 +469,3 @@ dialog (GimpDrawable *drawable)
 
   return run;
 }
-

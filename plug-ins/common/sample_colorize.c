@@ -37,9 +37,9 @@
 #define RESPONSE_RESET      1
 #define RESPONSE_GET_COLORS 2
 
-#define PLUG_IN_NAME        "plug_in_sample_colorize"
+#define PLUG_IN_PROC        "plug-in-sample-colorize"
+#define PLUG_IN_BINARY      "sample_colorize"
 #define NUMBER_IN_ARGS      13
-#define HELP_ID             "plug-in-sample-colorize"
 
 #define TILE_CACHE_SIZE      32
 #define LUMINOSITY_0(X)      ((X[0] * 30 + X[1] * 59 + X[2] * 11))
@@ -294,7 +294,7 @@ query (void)
     " (the image with the dst_drawable is converted to RGB if necessary)"
     " The sample_drawable should be of type RGB or RGBA";
 
-  gimp_install_procedure (PLUG_IN_NAME,
+  gimp_install_procedure (PLUG_IN_PROC,
                           "Colorize the contents of the specified drawable "
                           "similar to sample drawable",
                           help_string,
@@ -307,8 +307,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register (PLUG_IN_NAME,
-                             "<Image>/Filters/Colors/Map");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Colors/Map");
 }
 
 static void
@@ -349,7 +348,7 @@ run (const gchar      *name,
   g_values.lvl_in_gamma = 1.0;
 
   /* Possibly retrieve data from a previous run */
-  gimp_get_data (PLUG_IN_NAME, &g_values);
+  gimp_get_data (PLUG_IN_PROC, &g_values);
   if (g_values.sample_id == SMP_GRADIENT ||
       g_values.sample_id == SMP_INV_GRADIENT)
     g_values.sample_id = -1;
@@ -374,7 +373,7 @@ run (const gchar      *name,
         case GIMP_RUN_INTERACTIVE:
           smp_dialog ();
           free_colors ();
-          gimp_set_data (PLUG_IN_NAME, &g_values, sizeof (t_values));
+          gimp_set_data (PLUG_IN_PROC, &g_values, sizeof (t_values));
           gimp_displays_flush ();
           break;
 
@@ -1309,13 +1308,13 @@ smp_dialog (void)
   g_di.orig_inten_button     = NULL;
 
   /* Init GTK  */
-  gimp_ui_init ("sample_colorize", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
   /* Main Dialog */
   g_di.dialog = dialog =
-    gimp_dialog_new (_("Sample Colorize"), "sample_colorize",
+    gimp_dialog_new (_("Sample Colorize"), PLUG_IN_BINARY,
                      NULL, 0,
-                     gimp_standard_help_func, HELP_ID,
+                     gimp_standard_help_func, PLUG_IN_PROC,
 
                      GIMP_STOCK_RESET,       RESPONSE_RESET,
                      _("Get sample colors"), RESPONSE_GET_COLORS,
