@@ -123,21 +123,7 @@ gimp_container_entry_class_init (GimpContainerEntryClass *klass)
   object_class->set_property = gimp_container_view_set_property;
   object_class->get_property = gimp_container_view_get_property;
 
-  g_object_class_override_property (object_class,
-                                    GIMP_CONTAINER_VIEW_PROP_CONTAINER,
-                                    "container");
-  g_object_class_override_property (object_class,
-                                    GIMP_CONTAINER_VIEW_PROP_CONTEXT,
-                                    "context");
-  g_object_class_override_property (object_class,
-                                    GIMP_CONTAINER_VIEW_PROP_REORDERABLE,
-                                    "reorderable");
-  g_object_class_override_property (object_class,
-                                    GIMP_CONTAINER_VIEW_PROP_PREVIEW_SIZE,
-                                    "preview-size");
-  g_object_class_override_property (object_class,
-                                    GIMP_CONTAINER_VIEW_PROP_PREVIEW_BORDER_WIDTH,
-                                    "preview-border-width");
+  gimp_container_view_install_properties (object_class);
 }
 
 static void

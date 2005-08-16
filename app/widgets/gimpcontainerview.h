@@ -23,15 +23,16 @@
 #define __GIMP_CONTAINER_VIEW_H__
 
 
-enum
+typedef enum
 {
   GIMP_CONTAINER_VIEW_PROP_0,
   GIMP_CONTAINER_VIEW_PROP_CONTAINER,
   GIMP_CONTAINER_VIEW_PROP_CONTEXT,
   GIMP_CONTAINER_VIEW_PROP_REORDERABLE,
   GIMP_CONTAINER_VIEW_PROP_PREVIEW_SIZE,
-  GIMP_CONTAINER_VIEW_PROP_PREVIEW_BORDER_WIDTH
-};
+  GIMP_CONTAINER_VIEW_PROP_PREVIEW_BORDER_WIDTH,
+  GIMP_CONTAINER_VIEW_PROP_LAST = GIMP_CONTAINER_VIEW_PROP_PREVIEW_BORDER_WIDTH
+} GimpContainerViewProp;
 
 
 #define GIMP_TYPE_CONTAINER_VIEW               (gimp_container_view_interface_get_type ())
@@ -131,14 +132,15 @@ void      gimp_container_view_item_context     (GimpContainerView *view,
 
 /*  convenience functions  */
 
-void      gimp_container_view_set_property     (GObject      *object,
-                                                guint         property_id,
-                                                const GValue *value,
-                                                GParamSpec   *pspec);
-void      gimp_container_view_get_property     (GObject      *object,
-                                                guint         property_id,
-                                                GValue       *value,
-                                                GParamSpec   *pspec);
+void      gimp_container_view_install_properties (GObjectClass *klass);
+void      gimp_container_view_set_property       (GObject      *object,
+                                                  guint         property_id,
+                                                  const GValue *value,
+                                                  GParamSpec   *pspec);
+void      gimp_container_view_get_property       (GObject      *object,
+                                                  guint         property_id,
+                                                  GValue       *value,
+                                                  GParamSpec   *pspec);
 
 
 #endif  /*  __GIMP_CONTAINER_VIEW_H__  */

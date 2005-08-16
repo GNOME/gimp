@@ -291,6 +291,37 @@ gimp_container_view_get_private (GimpContainerView *view)
   return private;
 }
 
+/**
+ * gimp_container_view_install_properties:
+ * @klass: the class structure for a type deriving from #GObject
+ *
+ * Installs the necessary properties for a class implementing
+ * #GimpContainerView. A #GimpContainerViewProp property is installed
+ * for each property, using the values from the #GimpContainerViewProp
+ * enumeration. The caller must make sure itself that the enumeration
+ * values don't collide with some other property values they
+ * are using (that's what %GIMP_CONTAINER_VIEW_PROP_LAST is good for).
+ **/
+void
+gimp_container_view_install_properties (GObjectClass *klass)
+{
+  g_object_class_override_property (klass,
+                                    GIMP_CONTAINER_VIEW_PROP_CONTAINER,
+                                    "container");
+  g_object_class_override_property (klass,
+                                    GIMP_CONTAINER_VIEW_PROP_CONTEXT,
+                                    "context");
+  g_object_class_override_property (klass,
+                                    GIMP_CONTAINER_VIEW_PROP_REORDERABLE,
+                                    "reorderable");
+  g_object_class_override_property (klass,
+                                    GIMP_CONTAINER_VIEW_PROP_PREVIEW_SIZE,
+                                    "preview-size");
+  g_object_class_override_property (klass,
+                                    GIMP_CONTAINER_VIEW_PROP_PREVIEW_BORDER_WIDTH,
+                                    "preview-border-width");
+}
+
 GimpContainer *
 gimp_container_view_get_container (GimpContainerView *view)
 {

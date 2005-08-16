@@ -1,5 +1,15 @@
 2005-08-16  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpcontainerview.[ch]: added utility function
+	gimp_container_view_install_properties() to reduce code duplication
+	in classes implementing this interface.
+
+	* app/widgets/gimpcontainerbox.c
+	* app/widgets/gimpcontainercombobox.c
+	* app/widgets/gimpcontainerentry.c: changed accordingly.
+
+2005-08-16  Sven Neumann  <sven@gimp.org>
+
 	* configure.in
 	* plug-ins/uri/Makefile.am: redid the libgnomeui and gnome-vfs
 	checks so that pkg-config combines the compiler and linker flags
