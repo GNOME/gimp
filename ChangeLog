@@ -1,3 +1,14 @@
+2005-08-16  Akkana Peck  <akkana@cvs.gnome.org>
+	* menus/image-menu.xml.in
+	* app/actions/image-actions.c
+	* app/actions/plug-in-actions.c
+	* plug-ins/common/compose.c
+	* plug-ins/common/decompose.c
+	* plug-ins/common/vinvert.c:
+	Remove erroneous extra *compose entries, and move *compose into
+	a Components submenu (re IRC discussion); move Value Invert to
+	near Invert (suggested by mitch)
+
 2005-08-16  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpcontainerview.[ch]: added utility function

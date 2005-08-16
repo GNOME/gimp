@@ -323,8 +323,7 @@ query (void)
                           G_N_ELEMENTS (return_vals),
 			  args, return_vals);
 
-  gimp_plugin_menu_register (COMPOSE_PROC, "<Image>/Colors");
-  gimp_plugin_menu_register (COMPOSE_PROC, "<Image>/Colors/Image Mode");
+  gimp_plugin_menu_register (COMPOSE_PROC, "<Image>/Colors/Components");
 
   gimp_install_procedure (DRAWABLE_COMPOSE_PROC,
 			  "Compose an image from multiple drawables of gray images",
@@ -355,8 +354,7 @@ query (void)
 			  G_N_ELEMENTS (recompose_args), 0,
 			  recompose_args, NULL);
 
-  gimp_plugin_menu_register (RECOMPOSE_PROC, "<Image>/Colors");
-  gimp_plugin_menu_register (RECOMPOSE_PROC, "<Image>/Colors/Image Mode");
+  gimp_plugin_menu_register (RECOMPOSE_PROC, "<Image>/Colors/Components");
 }
 
 

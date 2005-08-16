@@ -63,6 +63,7 @@ static GimpActionEntry plug_in_actions[] =
   { "plug-in-blur-menu",           NULL, N_("_Blur")          },
   { "plug-in-colors-menu",         NULL, N_("_Colors")        },
   { "plug-in-colors-map-menu",     NULL, N_("Ma_p")           },
+  { "plug-in-colors-components-menu",     NULL, N_("_Components")           },
   { "plug-in-noise-menu",          NULL, N_("_Noise")         },
   { "plug-in-edge-detect-menu",    NULL, N_("Edge-De_tect")   },
   { "plug-in-enhance-menu",        NULL, N_("En_hance")       },

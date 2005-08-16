@@ -439,7 +439,9 @@
       <menuitem action="tools-posterize" />
       <separator />
       <menuitem action="drawable-desaturate" />
-      <menuitem action="drawable-invert" />
+      <placeholder name="Invert">
+        <menuitem action="drawable-invert" />
+      </placeholder>
       <menu action="layers-colors-auto-menu" name="Auto">
         <menuitem action="drawable-equalize" />
         <menuitem action="drawable-levels-stretch" />
@@ -450,6 +452,8 @@
       </placeholder>
       <separator />
       <menu action="plug-in-colors-map-menu" name="Map" />
+      <menu action="plug-in-colors-components-menu" name="Components" />
+      <separator />
       <placeholder action="plug-in-colors-menu" name="Color Plug-Ins" />
     </menu>
 
