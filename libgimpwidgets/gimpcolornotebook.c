@@ -150,8 +150,8 @@ static void
 gimp_color_notebook_init (GimpColorNotebook *notebook)
 {
   GType *selector_types;
-  gint   n_selector_types;
-  gint   i;
+  guint  n_selector_types;
+  guint  i;
 
   notebook->notebook = gtk_notebook_new ();
   gtk_box_pack_start (GTK_BOX (notebook), notebook->notebook, TRUE, TRUE, 0);

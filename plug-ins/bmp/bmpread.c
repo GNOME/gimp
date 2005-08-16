@@ -138,7 +138,7 @@ ReadBMP (const gchar *name)
   FILE     *fd;
   guchar    buffer[64];
   gint      ColormapSize, rowbytes, Maps;
-  gboolean  Grey;
+  gboolean  Grey = FALSE;
   guchar    ColorMap[256][3];
   gint32    image_ID;
   gchar     magick[2];

@@ -186,8 +186,8 @@ static gchar         *_display_name      = NULL;
 static gint           _monitor_number    = 0;
 static const gchar   *progname           = NULL;
 
-static guint8         write_buffer[WRITE_BUFFER_SIZE];
-static guint          write_buffer_index = 0;
+static gchar          write_buffer[WRITE_BUFFER_SIZE];
+static gulong         write_buffer_index = 0;
 
 static GimpStackTraceMode stack_trace_mode = GIMP_STACK_TRACE_NEVER;
 

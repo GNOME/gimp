@@ -767,7 +767,7 @@ drag_data_get (GtkWidget        *widget,
     {
       gtk_selection_data_set (selection_data,
                               selection_data->target,
-                              8, current_uri, strlen (current_uri));
+                              8, (guchar *) current_uri, strlen (current_uri));
     }
 }
 

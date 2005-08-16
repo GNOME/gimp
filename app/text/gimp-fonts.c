@@ -128,7 +128,7 @@ gimp_fonts_load_fonts_conf (FcConfig *config,
 {
   gboolean ret = TRUE;
 
-  if (! FcConfigParseAndLoad (config, fonts_conf, FcFalse))
+  if (! FcConfigParseAndLoad (config, (const guchar *) fonts_conf, FcFalse))
     {
       FcConfigDestroy (config);
       ret = FALSE;
@@ -152,7 +152,7 @@ gimp_fonts_add_directories (FcConfig    *config,
   path = gimp_path_parse (path_str, 256, TRUE, NULL);
 
   for (list = path; list; list = list->next)
-    FcConfigAppFontAddDir (config, (gchar *) list->data);
+    FcConfigAppFontAddDir (config, (const guchar *) list->data);
 
   gimp_path_free (path);
 }

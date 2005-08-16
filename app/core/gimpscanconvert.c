@@ -33,6 +33,7 @@
 #include "base/tile-manager.h"
 
 #include "gimpscanconvert.h"
+#include "gimp-utils.h"
 
 
 struct _GimpScanConvert

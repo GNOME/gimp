@@ -1,3 +1,16 @@
+2005-08-16  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: define G_DISABLE_DEPRECATED unless glib >= 2.9.0.
+
+	* app/core/gimpscanconvert.c: added missing include.
+
+	* app/text/gimp-fonts.c 
+	* libgimp/gimp.c 
+	* libgimpwidgets/gimpcolornotebook.c
+	* plug-ins/helpbrowser/dialog.c: fixed signedness warnings.
+
+	* plug-ins/bmp/bmpread.c (ReadBMP): initialize variable.
+
 2005-08-15  Manish Singh  <yosh@gimp.org>
 
 	* configure.in: fix reversed libgnomeui conditional test for
