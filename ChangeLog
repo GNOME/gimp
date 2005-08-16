@@ -1,4 +1,12 @@
+2005-08-16  Sven Neumann  <sven@gimp.org>
+
+	* configure.in
+	* plug-ins/uri/Makefile.am: redid the libgnomeui and gnome-vfs
+	checks so that pkg-config combines the compiler and linker flags
+	instead of concatenating them in the Makefile.
+
 2005-08-15  Akkana Peck  <akkana@cvs.gnome.org>
+
 	* app/actions/image-actions.c
 	* app/tools/gimpaligntool.c
 	* menus/image-menu.xml.in

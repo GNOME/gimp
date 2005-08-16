@@ -1185,26 +1185,24 @@ AC_SUBST(POPPLER)
 AC_SUBST(LIBPOPPLER)
 
 
-#####################
-# Check for gnome-vfs
-#####################
+#################################################
+# Check for gnome-vfs (and optionally libgnomeui)
+#################################################
 
-PKG_CHECK_MODULES(GNOMEVFS, gnome-vfs-2.0 >= gnome_vfs_required_version,
+uri_modules="gnome-vfs-2.0 >= gnome_vfs_required_version"
+
+if $PKG_CONFIG --atleast-version=gnomeui_required_version libgnomeui-2.0; then
+  have_gnomeui=yes
+  uri_modules="$uri_modules libgnomeui-2.0"
+else
+  AC_MSG_WARN([*** URI plug-in will be built without libgnomeui support (libgnomeui-2.0 not found) ***])
+fi
+
+PKG_CHECK_MODULES(URI, $uri_modules,
   have_gnomevfs=yes,
   AC_MSG_WARN([*** URI plug-in will be built without gnome-vfs support (gnome-vfs-2.0 not found) ***]))
 
 AM_CONDITIONAL(HAVE_GNOMEVFS, test x$have_gnomevfs = xyes)
-
-
-######################
-# Check for libgnomeui
-######################
-
-PKG_CHECK_MODULES(GNOMEUI, libgnomeui-2.0 >= gnomeui_required_version,
-  have_gnomeui=yes,
-  AC_MSG_WARN([*** URI plug-in will be built without libgnomeui support (libgnomeui-2.0 not found) ***]))
-
-AM_CONDITIONAL(HAVE_GNOMEUI, test x$have_gnomeui = xyes)
 
 if test "x$have_gnomeui" = xyes; then
   AC_DEFINE(HAVE_GNOMEUI, 1, "Define to 1 if libgnomeui is available")
