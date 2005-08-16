@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-13 14:18-0400\n"
+"POT-Creation-Date: 2005-08-16 03:07-0400\n"
 "PO-Revision-Date: 2005-08-13 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
@@ -1820,8 +1820,9 @@ msgid "_Image"
 msgstr "_Image"
 
 #: app/actions/image-actions.c:60
-msgid "_Mode"
-msgstr "_Mode"
+#, fuzzy
+msgid "_Image Mode"
+msgstr "Image Menu"
 
 #: app/actions/image-actions.c:61 app/actions/layers-actions.c:57
 msgid "_Transform"
@@ -5873,14 +5874,13 @@ msgid "Layer _Name:"
 msgstr "Layer _Name:"
 
 #. The size labels
-#: app/dialogs/layer-options-dialog.c:128 app/tools/gimpcroptool.c:1050
-#: app/tools/gimpmeasuretool.c:957 app/tools/gimpselectionoptions.c:587
+#: app/dialogs/layer-options-dialog.c:128 app/tools/gimpmeasuretool.c:957
+#: app/tools/gimpselectionoptions.c:587
 msgid "Width:"
 msgstr "Width:"
 
-#: app/dialogs/layer-options-dialog.c:134 app/tools/gimpcroptool.c:1054
-#: app/tools/gimpmeasuretool.c:983 app/tools/gimpscaletool.c:166
-#: app/tools/gimpselectionoptions.c:595
+#: app/dialogs/layer-options-dialog.c:134 app/tools/gimpmeasuretool.c:983
+#: app/tools/gimpscaletool.c:166 app/tools/gimpselectionoptions.c:595
 msgid "Height:"
 msgstr "Height:"
 
@@ -8410,69 +8410,70 @@ msgstr "Con_volve"
 msgid "Convolve Type  %s"
 msgstr "Convolve Type  %s"
 
+#: app/tools/gimpcropoptions.c:172
+msgid "Highlight rectangle"
+msgstr "Highlight rectangle"
+
+#: app/tools/gimpcropoptions.c:177
+msgid "Fixed width"
+msgstr "Fixed width"
+
+#: app/tools/gimpcropoptions.c:180 app/tools/gimprectangleoptions.c:441
+#: app/widgets/gimpgrideditor.c:263 app/widgets/gimpgrideditor.c:295
+msgid "Width"
+msgstr "Width"
+
+#: app/tools/gimpcropoptions.c:185
+msgid "Fixed height"
+msgstr "Fixed height"
+
+#: app/tools/gimpcropoptions.c:188 app/tools/gimprectangleoptions.c:451
+#: app/widgets/gimpgrideditor.c:265 app/widgets/gimpgrideditor.c:297
+msgid "Height"
+msgstr "Height"
+
+#: app/tools/gimpcropoptions.c:193
+msgid "Fixed aspect"
+msgstr "Fixed aspect"
+
+#: app/tools/gimpcropoptions.c:196 app/tools/gimprectangleoptions.c:461
+msgid "Aspect"
+msgstr "Aspect"
+
+#: app/tools/gimpcropoptions.c:201
+msgid "Fixed center"
+msgstr "Fixed centre"
+
+#: app/tools/gimpcropoptions.c:204
+msgid "Center X"
+msgstr "Centre X"
+
+#: app/tools/gimpcropoptions.c:208
+msgid "Center Y"
+msgstr "Centre Y"
+
 #. tool toggle
-#: app/tools/gimpcropoptions.c:186 app/tools/gimpmagnifyoptions.c:206
+#: app/tools/gimpcropoptions.c:534 app/tools/gimpmagnifyoptions.c:206
 #: app/tools/gimpmoveoptions.c:215
 #, c-format
 msgid "Tool Toggle  %s"
 msgstr "Tool Toggle  %s"
 
-#: app/tools/gimpcropoptions.c:198
+#: app/tools/gimpcropoptions.c:546
 msgid "Current layer only"
 msgstr "Current layer only"
 
-#. enlarge toggle
-#: app/tools/gimpcropoptions.c:203
-#, c-format
-msgid "Allow enlarging  %s"
-msgstr "Allow enlarging  %s"
-
-#. layer toggle
-#: app/tools/gimpcropoptions.c:213
-#, c-format
-msgid "Keep aspect ratio  %s"
-msgstr "Keep aspect ratio  %s"
-
-#: app/tools/gimpcroptool.c:164
+#: app/tools/gimpcroptool.c:159
 msgid "Crop & Resize"
 msgstr "Crop & Resize"
 
-#: app/tools/gimpcroptool.c:165
+#: app/tools/gimpcroptool.c:160
 msgid "Crop or Resize an image"
 msgstr "Crop or Resize an image"
 
-#: app/tools/gimpcroptool.c:166
+#: app/tools/gimpcroptool.c:161
 msgid "_Crop & Resize"
 msgstr "_Crop & Resize"
-
-#. initialize the statusbar display
-#: app/tools/gimpcroptool.c:498 app/tools/gimpcroptool.c:982
-msgid "Crop: "
-msgstr "Crop: "
-
-#: app/tools/gimpcroptool.c:1009
-msgid "Crop & Resize Information"
-msgstr "Crop & Resize Information"
-
-#: app/tools/gimpcroptool.c:1033
-msgid "Origin X:"
-msgstr "Origin X:"
-
-#: app/tools/gimpcroptool.c:1037
-msgid "Origin Y:"
-msgstr "Origin Y:"
-
-#: app/tools/gimpcroptool.c:1075 app/widgets/gimpbrusheditor.c:194
-msgid "Aspect ratio:"
-msgstr "Aspect ratio:"
-
-#: app/tools/gimpcroptool.c:1086
-msgid "From selection"
-msgstr "From selection"
-
-#: app/tools/gimpcroptool.c:1094
-msgid "Auto shrink"
-msgstr "Auto shrink"
 
 #: app/tools/gimpcurvestool.c:137
 msgid "Adjust color curves"
@@ -9099,78 +9100,36 @@ msgstr "Posterize does not operate on indexed layers."
 msgid "Posterize _levels:"
 msgstr "Posterize _levels:"
 
-#: app/tools/gimprectangleoptions.c:114
-msgid "Highlight rectangle"
-msgstr "Highlight rectangle"
-
-#: app/tools/gimprectangleoptions.c:119
-msgid "Fixed width"
-msgstr "Fixed width"
-
-#: app/tools/gimprectangleoptions.c:122 app/tools/gimprectangleoptions.c:291
-#: app/widgets/gimpgrideditor.c:263 app/widgets/gimpgrideditor.c:295
-msgid "Width"
-msgstr "Width"
-
-#: app/tools/gimprectangleoptions.c:127
-msgid "Fixed height"
-msgstr "Fixed height"
-
-#: app/tools/gimprectangleoptions.c:130 app/tools/gimprectangleoptions.c:301
-#: app/widgets/gimpgrideditor.c:265 app/widgets/gimpgrideditor.c:297
-msgid "Height"
-msgstr "Height"
-
-#: app/tools/gimprectangleoptions.c:135
-msgid "Fixed aspect"
-msgstr "Fixed aspect"
-
-#: app/tools/gimprectangleoptions.c:138 app/tools/gimprectangleoptions.c:311
-msgid "Aspect"
-msgstr "Aspect"
-
-#: app/tools/gimprectangleoptions.c:143
-msgid "Fixed center"
-msgstr "Fixed centre"
-
-#: app/tools/gimprectangleoptions.c:146
-msgid "Center X"
-msgstr "Centre X"
-
-#: app/tools/gimprectangleoptions.c:150
-msgid "Center Y"
-msgstr "Centre Y"
-
-#: app/tools/gimprectangleoptions.c:274
+#: app/tools/gimprectangleoptions.c:424
 msgid "Highlight"
 msgstr "Highlight"
 
-#: app/tools/gimprectangleoptions.c:286
+#: app/tools/gimprectangleoptions.c:436
 msgid "Fix"
 msgstr "Fix"
 
-#: app/tools/gimprectangleoptions.c:319
+#: app/tools/gimprectangleoptions.c:469
 msgid "Center"
 msgstr "Centre"
 
-#: app/tools/gimprectangletool.c:805 app/tools/gimprectangletool.c:1178
+#: app/tools/gimprectangletool.c:1410 app/tools/gimprectangletool.c:1831
 msgid "Rectangle: "
 msgstr "Rectangle: "
 
-#: app/tools/gimprectangletool.c:1577
+#: app/tools/gimprectangletool.c:2231
 msgid "1 "
 msgstr "1 "
 
-#: app/tools/gimprectangletool.c:1578
+#: app/tools/gimprectangletool.c:2232
 msgid "2 "
 msgstr "2 "
 
-#: app/tools/gimprectangletool.c:1579 app/widgets/gimpcursorview.c:170
+#: app/tools/gimprectangletool.c:2233 app/widgets/gimpcursorview.c:170
 #: app/widgets/gimpcursorview.c:192
 msgid "X"
 msgstr "X"
 
-#: app/tools/gimprectangletool.c:1580 app/widgets/gimpcursorview.c:176
+#: app/tools/gimprectangletool.c:2234 app/widgets/gimpcursorview.c:176
 #: app/widgets/gimpcursorview.c:198
 msgid "Y"
 msgstr "Y"
@@ -9774,6 +9733,10 @@ msgstr "Spikes:"
 #: app/widgets/gimpbrusheditor.c:181
 msgid "Hardness:"
 msgstr "Hardness:"
+
+#: app/widgets/gimpbrusheditor.c:194
+msgid "Aspect ratio:"
+msgstr "Aspect ratio:"
 
 #: app/widgets/gimpbrusheditor.c:220 app/widgets/gimpbrushfactoryview.c:114
 msgid "Spacing:"
