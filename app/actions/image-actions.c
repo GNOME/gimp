@@ -55,11 +55,17 @@ static GimpActionEntry image_actions[] =
     N_("Image Menu"), NULL, NULL, NULL,
     GIMP_HELP_IMAGE_WINDOW },
 
-  { "extensions-menu",      NULL, N_("_Xtns")       },
-  { "image-menu",           NULL, N_("_Image")      },
-  { "image-mode-menu",      NULL, N_("_Image Mode") },
-  { "image-transform-menu", NULL, N_("_Transform")  },
-  { "image-guides-menu",    NULL, N_("_Guides")     },
+  { "extensions-menu",        NULL, N_("_Xtns")       },
+
+  { "image-menu",             NULL, N_("_Image")      },
+  { "image-transform-menu",   NULL, N_("_Transform")  },
+  { "image-guides-menu",      NULL, N_("_Guides")     },
+
+  { "colors-menu",            NULL, N_("_Colors")     },
+  { "colors-image-mode-menu", NULL, N_("_Image Mode") },
+  { "colors-auto-menu",       NULL, N_("_Auto")       },
+  { "colors-map-menu",        NULL, N_("Ma_p")        },
+  { "colors-components-menu", NULL, N_("_Components") },
 
   { "image-new", GTK_STOCK_NEW,
     N_("_New..."), "<control>N", NULL,

@@ -1,3 +1,14 @@
+2005-08-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/layers-actions.c
+	* app/actions/plug-in-actions.c
+	* app/actions/image-actions.c: moved all color menu actions to
+	image-actions.c because that's the place where we collect menu
+	actions of menus that don't have its own foo-actions.c file.
+	Renamed them all to "colors-foo-menu".
+
+	* menus/image-menu.xml.in: changed accordingly.
+
 2005-08-16  Akkana Peck  <akkana@cvs.gnome.org>
 
 	* menus/image-menu.xml.in

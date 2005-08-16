@@ -50,8 +50,6 @@ static GimpActionEntry layers_actions[] =
 
   { "layers-menu",              NULL,                    N_("_Layer")        },
   { "layers-stack-menu",        NULL,                    N_("Stac_k")        },
-  { "layers-colors-menu",       NULL,                    N_("_Colors")       },
-  { "layers-colors-auto-menu",  NULL,                    N_("_Auto")         },
   { "layers-mask-menu",         NULL,                    N_("_Mask")         },
   { "layers-transparency-menu", NULL,                    N_("Tr_ansparency") },
   { "layers-transform-menu",    NULL,                    N_("_Transform")    },

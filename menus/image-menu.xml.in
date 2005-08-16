@@ -422,8 +422,8 @@
       <separator />
     </menu>
 
-    <menu action="layers-colors-menu" name="Colors">
-      <menu action="image-mode-menu" name="Image Mode">
+    <menu action="colors-menu" name="Colors">
+      <menu action="colors-image-mode-menu" name="Image Mode">
         <menuitem action="image-convert-rgb" />
         <menuitem action="image-convert-grayscale" />
         <menuitem action="image-convert-indexed" />
@@ -442,7 +442,7 @@
       <placeholder name="Invert">
         <menuitem action="drawable-invert" />
       </placeholder>
-      <menu action="layers-colors-auto-menu" name="Auto">
+      <menu action="colors-auto-menu" name="Auto">
         <menuitem action="drawable-equalize" />
         <menuitem action="drawable-levels-stretch" />
       </menu>
@@ -451,10 +451,9 @@
         <menuitem action="dialogs-histogram" />
       </placeholder>
       <separator />
-      <menu action="plug-in-colors-map-menu" name="Map" />
-      <menu action="plug-in-colors-components-menu" name="Components" />
+      <menu action="colors-map-menu" name="Map" />
+      <menu action="colors-components-menu" name="Components" />
       <separator />
-      <placeholder action="plug-in-colors-menu" name="Color Plug-Ins" />
     </menu>
 
     <menu action="tools-menu" name="Tools">
