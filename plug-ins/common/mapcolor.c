@@ -155,7 +155,7 @@ query (void)
                           G_N_ELEMENTS (adjust_args), 0,
                           adjust_args, NULL);
 
-  gimp_plugin_menu_register (COLOR_ADJUST_PROC, "<Image>/Filters/Colors/Map");
+  gimp_plugin_menu_register (COLOR_ADJUST_PROC, "<Image>/Colors/Map");
 
   gimp_install_procedure (COLOR_MAP_PROC,
                           "Map color range specified by two colors"
@@ -172,7 +172,7 @@ query (void)
                           G_N_ELEMENTS (map_args), 0,
                           map_args, NULL);
 
-  gimp_plugin_menu_register (COLOR_MAP_PROC, "<Image>/Filters/Colors/Map");
+  gimp_plugin_menu_register (COLOR_MAP_PROC, "<Image>/Colors/Map");
 }
 
 

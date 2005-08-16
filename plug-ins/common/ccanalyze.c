@@ -116,8 +116,7 @@ query (void)
                           G_N_ELEMENTS (args), G_N_ELEMENTS (return_vals),
                           args, return_vals);
 
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Colors");
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Layer/Colors/Info");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Colors/Info");
 }
 
 /* main function */

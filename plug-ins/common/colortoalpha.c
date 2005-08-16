@@ -106,8 +106,10 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Colors");
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Layer/Transparency/Modify");
+  gimp_plugin_menu_register ("plug_in_colortoalpha",
+                             "<Image>/Colors");
+  gimp_plugin_menu_register ("plug_in_colortoalpha",
+                             "<Image>/Layer/Transparency/Modify");
 }
 
 static void

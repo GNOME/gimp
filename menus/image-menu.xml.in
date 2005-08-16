@@ -268,12 +268,6 @@
       <placeholder name="New">
         <menuitem action="image-duplicate" />
       </placeholder>
-      <menu action="image-mode-menu" name="Mode">
-        <menuitem action="image-convert-rgb" />
-        <menuitem action="image-convert-grayscale" />
-        <menuitem action="image-convert-indexed" />
-	<separator />
-      </menu>
       <menu action="image-transform-menu" name="Transform">
         <placeholder name="Flip">
           <menuitem action="image-flip-horizontal" />
@@ -337,28 +331,6 @@
           <menuitem action="layers-lower" />
           <menuitem action="layers-raise-to-top" />
           <menuitem action="layers-lower-to-bottom" />
-        </placeholder>
-        <separator />
-      </menu>
-      <menu action="layers-colors-menu" name="Colors">
-        <menuitem action="tools-color-balance" />
-        <menuitem action="tools-hue-saturation" />
-        <menuitem action="tools-colorize" />
-        <menuitem action="tools-brightness-contrast" />
-        <menuitem action="tools-threshold" />
-        <menuitem action="tools-levels" />
-        <menuitem action="tools-curves" />
-        <menuitem action="tools-posterize" />
-	<separator />
-        <menuitem action="drawable-desaturate" />
-        <menuitem action="drawable-invert" />
-	<menu action="layers-colors-auto-menu" name="Auto">
-	  <menuitem action="drawable-equalize" />
-	  <menuitem action="drawable-levels-stretch" />
-	</menu>
-	<separator />
-        <placeholder name="Info">
-          <menuitem action="dialogs-histogram" />
         </placeholder>
         <separator />
       </menu>
@@ -450,6 +422,37 @@
       <separator />
     </menu>
 
+    <menu action="layers-colors-menu" name="Colors">
+      <menu action="image-mode-menu" name="Image Mode">
+        <menuitem action="image-convert-rgb" />
+        <menuitem action="image-convert-grayscale" />
+        <menuitem action="image-convert-indexed" />
+      </menu>
+      <separator />
+      <menuitem action="tools-color-balance" />
+      <menuitem action="tools-hue-saturation" />
+      <menuitem action="tools-colorize" />
+      <menuitem action="tools-brightness-contrast" />
+      <menuitem action="tools-threshold" />
+      <menuitem action="tools-levels" />
+      <menuitem action="tools-curves" />
+      <menuitem action="tools-posterize" />
+      <separator />
+      <menuitem action="drawable-desaturate" />
+      <menuitem action="drawable-invert" />
+      <menu action="layers-colors-auto-menu" name="Auto">
+        <menuitem action="drawable-equalize" />
+        <menuitem action="drawable-levels-stretch" />
+      </menu>
+      <separator />
+      <placeholder name="Info">
+        <menuitem action="dialogs-histogram" />
+      </placeholder>
+      <separator />
+      <menu action="plug-in-colors-map-menu" name="Map" />
+      <placeholder action="plug-in-colors-menu" name="Color Plug-Ins" />
+    </menu>
+
     <menu action="tools-menu" name="Tools">
       <menuitem action="dialogs-toolbox" />
       <menuitem action="context-colors-default" />
@@ -520,9 +523,6 @@
       <menu action="plug-in-blur-menu" name="Blur" />
       <menu action="plug-in-enhance-menu" name="Enhance" />
       <menu action="plug-in-distorts-menu" name="Distorts" />
-      <menu action="plug-in-colors-menu" name="Colors">
-	<menu action="plug-in-colors-map-menu" name="Map" />
-      </menu>
       <menu action="plug-in-light-shadow-menu" name="Light and Shadow">
         <placeholder name="Light" />
 	<separator />

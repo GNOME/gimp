@@ -253,8 +253,8 @@ query (void)
                           G_N_ELEMENTS (return_vals),
 			  args, return_vals);
 
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Colors");
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Image/Mode");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Colors");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Colors/Image Mode");
 }
 
 static void

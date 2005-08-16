@@ -101,7 +101,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register (GRADMAP_PROC, "<Image>/Filters/Colors/Map");
+  gimp_plugin_menu_register (GRADMAP_PROC, "<Image>/Colors/Map");
 
   gimp_install_procedure (PALETTEMAP_PROC,
                           "Map the contents of the specified drawable with "
@@ -124,7 +124,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register (PALETTEMAP_PROC, "<Image>/Filters/Colors/Map");
+  gimp_plugin_menu_register (PALETTEMAP_PROC, "<Image>/Colors/Map");
 }
 
 static void
