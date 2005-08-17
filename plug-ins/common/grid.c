@@ -299,13 +299,11 @@ pix_composite (guchar   *p1,
 {
   gint b;
 
-  if (alpha)
-    {
-      bytes--;
-    }
-
   if (blend)
     {
+      if (alpha)
+        bytes--;
+
       for (b = 0; b < bytes; b++)
         {
           *p1 = *p1 * (1.0 - p2[3]/255.0) + p2[b] * p2[3]/255.0;
@@ -320,7 +318,8 @@ pix_composite (guchar   *p1,
 
   if (alpha && *p1 < 255)
     {
-      b = *p1 + 255.0 * ((double)p2[3] / (255.0 - *p1));
+      b = *p1 + 255.0 * ((gdouble) p2[3] / (255.0 - *p1));
+
       *p1 = b > 255 ? 255 : b;
     }
 }
@@ -487,8 +486,10 @@ grid (gint32        image_ID,
         }
       else
         {
-          gimp_pixel_rgn_set_row (&destPR, dest, sx1, y, (sx2 - sx1) );
-          gimp_progress_update ((double) y / (double) (sy2 - sy1));
+          gimp_pixel_rgn_set_row (&destPR, dest, sx1, y, (sx2 - sx1));
+
+          if (y % 16 == 0)
+            gimp_progress_update ((gdouble) y / (gdouble) (sy2 - sy1));
         }
     }
 
