@@ -1,3 +1,9 @@
+2005-08-16  Akkana Peck  <akkana@cvs.gnome.org>
+
+	* plug-ins/script-fu/scripts/grid-system.scm: Rename "Grid" to
+	"Divisions" to avoid confusion with the existing grid plug-in;
+	move into Render->Pattern along with the other Grid plug-in.
+
 2005-08-17  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimppaletteview.c (gimp_palette_view_focus): return
