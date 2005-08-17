@@ -315,10 +315,17 @@ gimp_palette_view_focus (GtkWidget        *widget,
                          GtkDirectionType  direction)
 {
   GimpPaletteView *view = GIMP_PALETTE_VIEW (widget);
+  GimpPalette     *palette;
+
+  palette = GIMP_PALETTE (GIMP_VIEW (view)->renderer->viewable);
 
   if (GTK_WIDGET_CAN_FOCUS (widget) && ! GTK_WIDGET_HAS_FOCUS (widget))
     {
       gtk_widget_grab_focus (widget);
+
+      if (! view->selected && palette->colors)
+        gimp_palette_view_select_entry (view, palette->colors->data);
+
       return TRUE;
     }
 
@@ -351,11 +358,8 @@ gimp_palette_view_focus (GtkWidget        *widget,
 
       if (skip != 0)
         {
-          GimpPalette      *palette;
           GimpPaletteEntry *entry;
           gint              position;
-
-          palette = GIMP_PALETTE (GIMP_VIEW (view)->renderer->viewable);
 
           position = view->selected->position + skip;
 

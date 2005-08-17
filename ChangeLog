@@ -1,3 +1,9 @@
+2005-08-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimppaletteview.c (gimp_palette_view_focus): when
+	focussing the widget, select the palette's first entry if none is
+	selected. Enables cursor navigation after tabbing in.
+
 2005-08-17  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/deinterlace.c: fixed boundary conditions.
