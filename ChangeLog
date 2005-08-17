@@ -1,5 +1,11 @@
 2005-08-17  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimppaletteview.c (gimp_palette_view_focus): return
+	FALSE on TAB_FORWARD and TAB_BACKWARD. Enables tabbing out of the
+	widget.
+
+2005-08-17  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/layers-actions.c
 	* app/actions/plug-in-actions.c
 	* app/actions/image-actions.c: moved all color menu actions to

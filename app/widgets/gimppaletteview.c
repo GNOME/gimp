@@ -346,7 +346,7 @@ gimp_palette_view_focus (GtkWidget        *widget,
 
         case GTK_DIR_TAB_FORWARD:
         case GTK_DIR_TAB_BACKWARD:
-          break;
+          return FALSE;
         }
 
       if (skip != 0)
