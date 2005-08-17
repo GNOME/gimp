@@ -168,7 +168,6 @@ run (const gchar      *name,
         }
       else
         {
-          /* gimp_message ("deinterlace: cannot operate on indexed color images"); */
           status = GIMP_PDB_EXECUTION_ERROR;
         }
     }
@@ -236,16 +235,18 @@ deinterlace (GimpDrawable *drawable,
     {
       gimp_pixel_rgn_get_row (&srcPR, dest, x, row, width);
 
-      /*  Only do interpolation if the row:
-       *  (1) Isn't one we want to keep
-       *  (2) Has both an upper and a lower row
-       *  Otherwise, just duplicate the source row
-       */
-      if ((row % 2 != devals.evenness) &&
-          (row - 1 >= 0) && (row + 1 < drawable->height))
+      if (row % 2 != devals.evenness)
         {
-          gimp_pixel_rgn_get_row (&srcPR, upper, x, row - 1, width);
-          gimp_pixel_rgn_get_row (&srcPR, lower, x, row + 1, width);
+          if (row > 0)
+            gimp_pixel_rgn_get_row (&srcPR, upper, x, row - 1, width);
+          else
+            gimp_pixel_rgn_get_row (&srcPR, upper, x, devals.evenness, width);
+
+          if (row + 1 < drawable->height)
+            gimp_pixel_rgn_get_row (&srcPR, lower, x, row + 1, width);
+          else
+            gimp_pixel_rgn_get_row (&srcPR, lower, x, row - 1 + devals.evenness,
+                                    width);
 
           if (has_alpha)
             {
