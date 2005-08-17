@@ -32,8 +32,8 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-SNAPPY                  ICON    DISCARDABLE     "WINSNAP.ICO"
-SMALL                   ICON    DISCARDABLE     "SMALL.ICO"
+SNAPPY                  ICON    DISCARDABLE     "winsnap.ico"
+SMALL                   ICON    DISCARDABLE     "small.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //

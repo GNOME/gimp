@@ -26,8 +26,8 @@ EXTRA_DIST = \
 	winsnap.rc
 
 INCLUDES = \
-	-I$(top_srcdir)			\
-	$(GTK_CFLAGS)			\
+	-I$(top_srcdir)		\
+	$(GTK_CFLAGS)		\
 	-I$(includedir)
 
 LDADD = \
@@ -44,4 +44,4 @@ LDADD = \
 	$(INTLLIBS)
 
 winsnap-win32res.o: winsnap.rc select.cur small.ico winsnap.ico
-	windres winsnap.rc winsnap-win32res.o
+	$(WINDRES) winsnap.rc winsnap-win32res.o

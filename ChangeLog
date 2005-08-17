@@ -1,3 +1,11 @@
+2005-08-17  Tor Lillqvist  <tml@novell.com>
+
+	* plug-ins/winsnap/Makefile.am (LDADD): Use $(WINDRES) to handle
+	cross-compilation.
+
+	* plug-ins/winsnap/winsnap.rc: Refer to the .ico files in
+	lowercase, in case cross-compiling.
+
 2005-08-17  Sven Neumann  <sven@gimp.org>
 
 	* app/base/siox.c: applied patch by Kristian Jantz. Reimplements
