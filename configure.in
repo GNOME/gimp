@@ -108,7 +108,7 @@ dnl The symbol GIMP_UNSTABLE is defined above for substitution in
 dnl Makefiles and conditionally defined here as a preprocessor symbol
 dnl and automake conditional.
 if test "x$GIMP_UNSTABLE" = "xyes"; then
-  AC_DEFINE(GIMP_UNSTABLE,1,
+  AC_DEFINE(GIMP_UNSTABLE, 1,
             [Define to 1 if this is an unstable version of the GIMP])
 fi
 AM_CONDITIONAL(GIMP_UNSTABLE, test "x$GIMP_UNSTABLE" = "xyes")
@@ -365,6 +365,18 @@ AC_FUNC_ALLOCA
 
 dnl check some more funcs
 AC_CHECK_FUNCS(difftime putenv mmap)
+
+
+# _NL_MEASUREMENT_MEASUREMENT is an enum and not a define
+AC_MSG_CHECKING([for _NL_MEASUREMENT_MEASUREMENT])
+AC_TRY_LINK([#include <langinfo.h>], [
+char c = *((unsigned char *)  nl_langinfo(_NL_MEASUREMENT_MEASUREMENT));
+], nl_ok=yes, nl_ok=no)
+AC_MSG_RESULT($nl_ok)
+if test "$nl_ok" = "yes"; then
+  AC_DEFINE(HAVE__NL_MEASUREMENT_MEASUREMENT, 1,
+	    [Define to 1 if _NL_MEASUREMENT_MEASUREMENT is available])
+fi
 
 
 ######################

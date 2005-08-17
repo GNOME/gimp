@@ -1,5 +1,12 @@
 2005-08-17  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: check for langinfo.h and _NL_MEASUREMENT_MEASUREMENT.
+
+	* app/core/gimptemplate.c: try to determine the default unit from
+	the locale settings. Supposed to fix bug #107497.
+
+2005-08-17  Sven Neumann  <sven@gimp.org>
+
 	* app/paint-funcs/paint-funcs.c (smooth_region): fixed
 	initialization of row array.
 

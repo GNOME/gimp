@@ -22,6 +22,7 @@
 #include "config.h"
 
 #include <string.h>
+#include <langinfo.h>
 
 #include <glib-object.h>
 
@@ -37,6 +38,7 @@
 #include "gimptemplate.h"
 
 #include "gimp-intl.h"
+
 
 /*  The default image aspect ratio is the golden mean. We use
  *  two adjacent fibonacci numbers for the unstable series and
@@ -68,19 +70,20 @@ enum
 };
 
 
-static void      gimp_template_class_init    (GimpTemplateClass *klass);
+static void      gimp_template_class_init       (GimpTemplateClass *klass);
 
-static void      gimp_template_finalize      (GObject           *object);
-static void      gimp_template_set_property  (GObject           *object,
-                                              guint              property_id,
-                                              const GValue      *value,
-                                              GParamSpec        *pspec);
-static void      gimp_template_get_property  (GObject           *object,
-                                              guint              property_id,
-                                              GValue            *value,
-                                              GParamSpec        *pspec);
-static void      gimp_template_notify        (GObject           *object,
-                                              GParamSpec        *pspec);
+static void      gimp_template_finalize         (GObject           *object);
+static void      gimp_template_set_property     (GObject           *object,
+                                                 guint              property_id,
+                                                 const GValue      *value,
+                                                 GParamSpec        *pspec);
+static void      gimp_template_get_property     (GObject           *object,
+                                                 guint              property_id,
+                                                 GValue            *value,
+                                                 GParamSpec        *pspec);
+static void      gimp_template_notify           (GObject           *object,
+                                                 GParamSpec        *pspec);
+static GimpUnit  gimp_template_unit_from_locale (void);
 
 
 static GimpViewableClass *parent_class = NULL;
@@ -171,7 +174,8 @@ gimp_template_class_init (GimpTemplateClass *klass)
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_RESOLUTION_UNIT,
                                  "resolution-unit",
                                  NULL,
-                                 FALSE, FALSE, GIMP_UNIT_INCH,
+                                 FALSE, FALSE,
+                                 gimp_template_unit_from_locale (),
                                  0);
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_IMAGE_TYPE,
@@ -337,6 +341,25 @@ gimp_template_notify (GObject    *object,
 
   if (! strcmp (pspec->name, "stock-id"))
     gimp_viewable_invalidate_preview (GIMP_VIEWABLE (object));
+}
+
+static GimpUnit
+gimp_template_unit_from_locale (void)
+{
+#ifdef HAVE__NL_MEASUREMENT_MEASUREMENT
+  const gchar *measurement = nl_langinfo (_NL_MEASUREMENT_MEASUREMENT);
+
+  switch (*((guchar *) measurement))
+    {
+    case 1: /* metric   */
+      return GIMP_UNIT_MM;
+
+    case 2: /* imperial */
+      return GIMP_UNIT_INCH;
+    }
+#endif
+
+  return GIMP_UNIT_INCH;
 }
 
 
