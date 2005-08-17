@@ -1,5 +1,11 @@
 2005-08-17  Sven Neumann  <sven@gimp.org>
 
+	* app/base/siox.c: applied patch by Kristian Jantz. Reimplements
+	find_max_blob() so that it needs less memory. Slows things down a
+	bit, but that can be improved later.
+
+2005-08-17  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/grid.c: update the progress less frequently.
 
 2005-08-17  Michael Natterer  <mitch@gimp.org>

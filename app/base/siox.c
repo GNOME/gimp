@@ -564,6 +564,194 @@ dilate_mask (TileManager *mask,
   dilate_region (&region);
 }
 
+
+static void
+threshold_mask (TileManager *mask,
+		guchar 	     maskval,
+		guchar       newval,
+                gint         x,
+                gint         y,
+                gint         width,
+                gint         height)
+{
+  PixelRegion region;
+  gpointer    pr;
+  gint        row, col;
+
+  pixel_region_init (&region, mask, x, y, width, height, TRUE);
+
+  for (pr = pixel_regions_register (1, &region);
+       pr != NULL;
+       pr = pixel_regions_process (pr))
+    {
+      guchar *data = region.data;
+
+      for (row = 0; row < region.h; row++)
+        {
+	  guchar *d = data;
+
+	  /* everything that fits the mask is in the image*/
+          for (col = 0; col < region.w; col++, d++)
+	    *d = (*d & maskval) ? newval: 0;
+
+          data += region.rowstride;
+	}
+    }
+}
+
+static void
+set_mask (TileManager *mask,
+          guchar       maskval,
+          gint         x,
+          gint         y,
+          gint         width,
+          gint         height)
+{
+  PixelRegion region;
+  gpointer    pr;
+  gint        row, col;
+
+  pixel_region_init (&region, mask, x, y, width, height, TRUE);
+
+  for (pr = pixel_regions_register (1, &region);
+       pr != NULL;
+       pr = pixel_regions_process (pr))
+    {
+      guchar *data = region.data;
+
+      for (row = 0; row < region.h; row++)
+        {
+	  guchar *d = data;
+
+          for (col = 0; col < region.w; col++, d++)
+	    *d = *d & maskval;
+
+          data += region.rowstride;
+	}
+    }
+}
+
+/* This method checks out the neighbourhood of the pixel at position
+ * (pos_x,pos_y) in the TileManager mask, it adds the sourrounding
+ * pixels to the queue to allow further processing it uses maskVal to
+ * determine if the sourounding pixels have already been visited x,y
+ * are passed from above.
+ */
+static void
+process_neighbours (gint         pos_x,
+                    gint         pos_y,
+                    gint         x,
+                    gint         y,
+                    gint         width,
+                    gint         height,
+                    GQueue      *q,
+                    TileManager *mask,
+                    guchar       maskval)
+{
+  guchar val;
+
+  if (pos_x + 1 < width)
+    {
+      read_pixel_data_1 (mask, x + pos_x + 1, y + pos_y, &val);
+
+      if (!(val & maskval))
+	{
+	  g_queue_push_tail (q, GINT_TO_POINTER (pos_x + 1));
+	  g_queue_push_tail (q, GINT_TO_POINTER (pos_y));
+	}
+    }
+
+  if (pos_x > 0)
+    {
+      read_pixel_data_1 (mask, x + pos_x - 1, y + pos_y, &val);
+
+      if (!(val & maskval))
+        {
+          g_queue_push_tail (q, GINT_TO_POINTER (pos_x - 1));
+          g_queue_push_tail (q, GINT_TO_POINTER (pos_y));
+        }
+    }
+
+  if (pos_y + 1 < height)
+    {
+      read_pixel_data_1 (mask, x + pos_x, y + pos_y + 1, &val);
+
+      if (!(val & maskval))
+	{
+	  g_queue_push_tail (q, GINT_TO_POINTER (pos_x));
+	  g_queue_push_tail (q, GINT_TO_POINTER (pos_y + 1));
+	}
+    }
+
+  if (pos_y > 0)
+    {
+      read_pixel_data_1 (mask, x + pos_x , y + pos_y - 1, &val);
+
+      if (!(val & maskval))
+	{
+	  g_queue_push_tail (q, GINT_TO_POINTER (pos_x ));
+	  g_queue_push_tail (q, GINT_TO_POINTER (pos_y - 1));
+	}
+    }
+}
+
+
+/* This method processes every position in the queue, it finishes when
+ * the queeue is empty and no further pixels kann be visited.
+ */
+static int
+process_queue (GQueue      *q,
+               gint         x,
+               gint         y,
+               gint         width,
+               gint         height,
+               TileManager *mask,
+               guchar       maskval)
+{
+  gint regioncount = 0;
+
+  while (! g_queue_is_empty (q))
+    {
+      gint   pos_x = GPOINTER_TO_INT (g_queue_pop_head (q));
+      gint   pos_y = GPOINTER_TO_INT (g_queue_pop_head (q));
+      guchar val;
+
+      read_pixel_data_1 (mask, x + pos_x, y + pos_y, &val);
+
+      if (val & maskval)
+	continue;
+
+      val |= maskval;
+
+      /* pixel is set in original selection */
+      if (val & 0x1)
+	{
+	  write_pixel_data_1 (mask, x + pos_x, y + pos_y, &val);
+
+	  regioncount++;
+
+	  process_neighbours (pos_x, pos_y,
+                              x, y, width, height, q, mask, maskval);
+	}
+    }
+
+  return regioncount;
+}
+
+/*
+ * This method finds the biggest connected component in mask, it
+ * clears everything in mask except the biggest component Pixels that
+ * should be considererd set in incoming mask, must fullfil (pixel &
+ * 0x1) the method uses no further memory, except a queue, it finds
+ * the biggest component by a 2 phase algorithm 1. in the first phase
+ * the koordinates of an element of the biggest component are
+ * identified, during set phase all pixels are visited 2. in the
+ * second phase first visitation flags are reseted, and afterwards a
+ * connected component starting at the found coordinates is
+ * determined, this is the biggest component, the result is written
+ * into mask, all pixels that belong to the biggest component, are set
+ * to 255 any other to 0.
+ */
 static void
 find_max_blob (TileManager *mask,
                gint         x,
@@ -571,30 +759,30 @@ find_max_blob (TileManager *mask,
                gint         width,
                gint         height)
 {
-  GQueue     *q;
-  gint       *labels;
-  glong       size;
-  PixelRegion region;
-  gpointer    pr;
-  gint        row, col;
-  gint        curlabel  = 1;
-  gint        maxblob   = 1;
-  gint        maxregion = 0;
+  GQueue      *q;
+  PixelRegion  region;
+  gpointer     pr;
+  gint         row, col;
+  gint         maxblobx  = 0;
+  gint         maxbloby  = 0;
+  gint         maxregion = 0;
+  gint         pos_x;
+  gint         pos_y;
+  guchar       val;
 
-  /*  FIXME: this function uses an insane amount of memory  */
-  size = width * height * sizeof (gint);
-  labels = g_try_malloc (size);
-  if (! labels)
-    {
-      g_warning ("%s: couldn't allocate %ld bytes", G_STRFUNC, size);
-      return;
-    }
+  /* this mask is used to check if a pixel has been visited */
+  const guchar visited   = 0x80;
+  /* this mask is used to set a pixel to unvisited          */
+  const guchar unvisited = 0x7F;
 
-  memset (labels, 0, size);
+  threshold_mask (mask, 0x80, 0x1, x, y, width, height);
 
   q = g_queue_new ();
 
-  pixel_region_init (&region, mask, x, y, width, height, FALSE);
+  pixel_region_init (&region, mask, x, y, width, height, TRUE);
+
+  /* mark every pixel in the mask as unvisited */
+  set_mask (mask, unvisited, x, y, width, height);
 
   for (pr = pixel_regions_register (1, &region);
        pr != NULL;
@@ -611,79 +799,40 @@ find_max_blob (TileManager *mask,
           for (col = 0; col < region.w; col++, d++, i++)
             {
               gint regioncount;
-              gint pos_x;
-              gint pos_y;
 
-              if (labels[i])
-                continue;
-
-              if (! (*d & 0x80))
-                {
-                  labels[i] = -1;
-                  continue;
-                }
-
-              labels[i] = curlabel;
-              regioncount = 1;
-
-              pos_x = i % width;
+	      pos_x = i % width;
               pos_y = i / width;
 
-              if (pos_x + 1 < width && ! labels[i + 1])
-                g_queue_push_tail (q, GINT_TO_POINTER (i + 1));
+	      read_pixel_data_1 (mask, x + pos_x, y + pos_y, &val);
 
-              if (pos_x > 0 && ! labels[i - 1])
-                g_queue_push_tail (q, GINT_TO_POINTER (i - 1));
+	      if (val & visited)
+                continue;
 
-              if (pos_y + 1 < height && ! labels[i + width])
-                g_queue_push_tail (q, GINT_TO_POINTER (i + width));
+	      /* mark current pixel as visited */
+	      val |= visited;
+	      write_pixel_data_1 (mask, x + pos_x, y + pos_y, &val);
 
-              if (pos_y > 0 && ! labels[i - width])
-                g_queue_push_tail (q, GINT_TO_POINTER (i - width));
+	      /* if this pixel is not marked as selection in original,
+               * image skip it
+               */
+	      if (!(val & 0x1))
+		continue;
 
-              while (! g_queue_is_empty (q))
-                {
-                  gint   pos = GPOINTER_TO_INT (g_queue_pop_head (q));
-                  guchar val;
+	      /* check out neighbourhood*/
+	      process_neighbours (pos_x, pos_y,
+                                  x, y, width, height, q, mask, visited);
 
-                  if (labels[pos])
-                    continue;
+              regioncount = 1 + process_queue (q,
+                                               x, y, width, height, mask,
+                                               visited);
 
-                  pos_x = pos % width;
-                  pos_y = pos / width;
-
-                  read_pixel_data_1 (mask, x + pos_x, y + pos_y, &val);
-
-                  if (val & 0x80)
-                    {
-                      labels[pos] = curlabel;
-                      regioncount++;
-
-                      if (pos_x + 1 < width && ! labels[pos + 1])
-                        g_queue_push_tail (q, GINT_TO_POINTER (pos + 1));
-
-                      if (pos_x > 0 && ! labels[pos - 1])
-                        g_queue_push_tail (q, GINT_TO_POINTER (pos - 1));
-
-                      if (pos_y + 1 < height && ! labels[pos + width])
-                        g_queue_push_tail (q, GINT_TO_POINTER (pos + width));
-
-                      if (pos_y > 0 && ! labels[pos - width])
-                        g_queue_push_tail (q, GINT_TO_POINTER (pos - width));
-                    }
-                  else
-                    {
-                      labels[pos] = -1;
-                    }
-                }
-
+	      /* remember bigest regions size and coords of an element*/
               if (regioncount > maxregion)
                 {
                   maxregion = regioncount;
-                  maxblob = curlabel;
+		  maxblobx = pos_x;
+		  maxbloby = pos_y;
                 }
-
-              curlabel++;
             }
 
           data += region.rowstride;
@@ -691,31 +840,28 @@ find_max_blob (TileManager *mask,
         }
     }
 
+  /* clear visited flag for all pixels */
+  set_mask (mask, unvisited, x, y, width, height);
+
+  /* now push maxblob coords onto stack and find maxblob again, so
+   * that it can be set as resulting mask
+   */
+
+  /* mark startpixel als visited */
+  read_pixel_data_1 (mask, x + maxblobx, y + maxbloby, &val);
+
+  /* mark as visited */
+  val |= visited;
+  write_pixel_data_1 (mask, x + maxblobx, y + maxbloby, &val);
+
+  process_neighbours (maxblobx, maxbloby,
+                      x, y, width, height, q, mask, visited);
+  maxregion = process_queue (q, x, y, width, height, mask, visited);
+
   g_queue_free (q);
 
-  pixel_region_init (&region, mask, x, y, width, height, TRUE);
-
-  for (pr = pixel_regions_register (1, &region);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
-    {
-      guchar *data  = region.data;
-      gint    index = (region.x - x) + (region.y - y) * width;
-
-      for (row = 0; row < region.h; row++)
-        {
-          guchar *d = data;
-          gint    i = index;
-
-          for (col = 0; col < region.w; col++, d++, i++)
-            *d = (labels[i] == maxblob) ? 255 : 0;
-
-          data += region.rowstride;
-          index += width;
-        }
-    }
-
-  g_free (labels);
+  /* set found pixel to 255 in the mask */
+  threshold_mask (mask, visited, 0xFF, x, y, width, height);
 }
 
 static inline void
@@ -733,7 +879,6 @@ siox_progress_update (SioxProgressFunc  progress_callback,
  * @colormap:   colormap in case @pixels are indexed, %NULL otherwise
  * @offset_x:   horizontal offset of @pixels with respect to the @mask
  * @offset_y:   vertical offset of @pixels with respect to the @mask
-
  * @mask:       a mask indicating sure foreground (255), sure background (0)
  *              and undecided regions ([1..254]).
  * @x:          horizontal offset into the mask
