@@ -40,9 +40,9 @@ typedef struct
 
 
 static void
-proxy_apply_callback(GtkWidget *widget,
-                     gint       response_id,
-		     ProxyData *proxy_data)
+proxy_response (GtkWidget *widget,
+                gint       response_id,
+                ProxyData *proxy_data)
 {
     PyObject        *pdb_func, *ret;
     gchar           *name;
@@ -117,15 +117,21 @@ bail:
 static void
 proxy_cleanup(gpointer data, GClosure *closure)
 {
-  ProxyData *proxy_data = data;
+    ProxyData *proxy_data = data;
 
-  if (!data)
-    return;
+    if (!data)
+        return;
 
-  Py_DECREF(proxy_data->func);
-  Py_XDECREF(proxy_data->data);
+    Py_DECREF(proxy_data->func);
+    Py_XDECREF(proxy_data->data);
 
-  g_free(proxy_data);
+    g_free(proxy_data);
+}
+
+static void
+proxy_row_activated(GtkDialog *dialog)
+{
+    gtk_dialog_response (dialog, GTK_RESPONSE_APPLY);
 }
 
 static PyObject *
@@ -175,8 +181,11 @@ proc_browser_dialog_new(PyObject *self, PyObject *args, PyObject *kwargs)
                           GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE);
 
     g_signal_connect_data(dlg, "response",
-                          G_CALLBACK(proxy_apply_callback), proxy_data,
+                          G_CALLBACK(proxy_response), proxy_data,
 			  proxy_cleanup, 0);
+    g_signal_connect(dlg, "row-activated",
+                     G_CALLBACK(proxy_row_activated),
+                     NULL);
 
     gtk_widget_show(GTK_WIDGET(dlg));
 

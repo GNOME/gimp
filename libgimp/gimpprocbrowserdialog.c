@@ -19,13 +19,6 @@
  * Boston, MA 02111-1307, USA.
  */
 
-/*
- * dbbrowser_utils.c
- * 0.08  26th sept 97  by Thomas NOEL <thomas@minet.net>
- *
- * 98/12/13  Sven Neumann <sven@gimp.org> : added help display
- */
-
 #include "config.h"
 
 #include <string.h>
@@ -51,6 +44,7 @@
 enum
 {
   SELECTION_CHANGED,
+  ROW_ACTIVATED,
   LAST_SIGNAL
 };
 
@@ -129,6 +123,12 @@ gimp_proc_browser_dialog_class_init (GimpProcBrowserDialogClass *klass)
 {
   parent_class = g_type_class_peek_parent (klass);
 
+  /**
+   * GimpProcBrowserDialog::selection-changed:
+   * @dialog: the object that received the signal
+   *
+   * Emitted when the selection in the contained #GtkTreeView changes.
+   */
   dialog_signals[SELECTION_CHANGED] =
     g_signal_new ("selection-changed",
                   G_TYPE_FROM_CLASS (klass),
@@ -139,7 +139,24 @@ gimp_proc_browser_dialog_class_init (GimpProcBrowserDialogClass *klass)
                   g_cclosure_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
+  /**
+   * GimpProcBrowserDialog::row-activated:
+   * @dialog: the object that received the signal
+   *
+   * Emitted when one of the rows in the contained #GtkTreeView is activated.
+   */
+  dialog_signals[ROW_ACTIVATED] =
+    g_signal_new ("row-activated",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_LAST,
+                  G_STRUCT_OFFSET (GimpProcBrowserDialogClass,
+                                   row_activated),
+                  NULL, NULL,
+                  g_cclosure_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+
   klass->selection_changed = NULL;
+  klass->row_activated     = NULL;
 }
 
 static void
@@ -281,7 +298,7 @@ browser_row_activated (GtkTreeView           *treeview,
                        GtkTreeViewColumn     *column,
                        GimpProcBrowserDialog *dialog)
 {
-  gtk_dialog_response (GTK_DIALOG (dialog), GTK_RESPONSE_APPLY);
+  g_signal_emit (dialog, dialog_signals[ROW_ACTIVATED], 0);
 }
 
 static void

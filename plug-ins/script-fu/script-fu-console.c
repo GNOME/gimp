@@ -55,22 +55,23 @@ typedef struct
 /*
  *  Local Functions
  */
-static void       script_fu_console_interface  (void);
-static void       script_fu_response           (GtkWidget        *widget,
-                                                gint              response_id,
-						ConsoleInterface *console);
-static void       script_fu_browse_callback    (GtkWidget        *widget,
-						ConsoleInterface *console);
-static void       script_fu_browse_response    (GtkWidget        *widget,
-                                                gint              response_id,
-                                                ConsoleInterface *console);
-static gboolean   script_fu_cc_is_empty        (ConsoleInterface *console);
-static gboolean   script_fu_cc_key_function    (GtkWidget        *widget,
-						GdkEventKey      *event,
-						ConsoleInterface *console);
+static void       script_fu_console_interface    (void);
+static void       script_fu_response             (GtkWidget        *widget,
+                                                  gint              response_id,
+                                                  ConsoleInterface *console);
+static void       script_fu_browse_callback      (GtkWidget        *widget,
+                                                  ConsoleInterface *console);
+static void       script_fu_browse_response      (GtkWidget        *widget,
+                                                  gint              response_id,
+                                                  ConsoleInterface *console);
+static void       script_fu_browse_row_activated (GtkDialog        *dialog);
+static gboolean   script_fu_cc_is_empty          (ConsoleInterface *console);
+static gboolean   script_fu_cc_key_function      (GtkWidget        *widget,
+                                                  GdkEventKey      *event,
+                                                  ConsoleInterface *console);
 
-static void       script_fu_open_siod_console  (void);
-static void       script_fu_close_siod_console (void);
+static void       script_fu_open_siod_console    (void);
+static void       script_fu_close_siod_console   (void);
 
 
 /*
@@ -306,6 +307,9 @@ script_fu_browse_callback (GtkWidget        *widget,
       g_signal_connect (console->proc_browser, "response",
                         G_CALLBACK (script_fu_browse_response),
                         console);
+      g_signal_connect (console->proc_browser, "row-activated",
+                        G_CALLBACK (script_fu_browse_row_activated),
+                        console);
     }
 
   gtk_window_present (GTK_WINDOW (console->proc_browser));
@@ -377,6 +381,12 @@ script_fu_browse_response (GtkWidget        *widget,
 
   gimp_destroy_paramdefs (params,      n_params);
   gimp_destroy_paramdefs (return_vals, n_return_vals);
+}
+
+static void
+script_fu_browse_row_activated (GtkDialog *dialog)
+{
+  gtk_dialog_response (dialog, GTK_RESPONSE_APPLY);
 }
 
 static gboolean

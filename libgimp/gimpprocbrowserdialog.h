@@ -55,6 +55,7 @@ struct _GimpProcBrowserDialogClass
   GimpDialogClass  parent_class;
 
   void (* selection_changed) (GimpProcBrowserDialog *dialog);
+  void (* row_activated)     (GimpProcBrowserDialog *dialog);
 
   /* Padding for future expansion */
   void (* _gimp_reserved1) (void);

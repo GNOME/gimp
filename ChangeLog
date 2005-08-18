@@ -1,5 +1,16 @@
 2005-08-18  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/procedure-browser.c (run): reverted last change.
+
+	* libgimp/gimpprocbrowserdialog.[ch]: emit new signal "row-activated"
+	instead of emitting "response" with GTK_RESPONSE_APPLY.
+
+	* plug-ins/pygimp/procbrowser.c
+	* plug-ins/script-fu/script-fu-console.c: connect to "row-activated"
+	and call gtk_dialog_response() with GTK_RESPONSE_APPLY.
+
+2005-08-18  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/procedure-browser.c (run): only close the dialog
 	on GTK_RESPONSE_CLOSE.
 
