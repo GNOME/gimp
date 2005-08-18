@@ -1328,7 +1328,7 @@ gimp_vector_tool_cursor_update (GimpTool        *tool,
 
     case VECTORS_CONNECT_STROKES:
       tool_cursor = GIMP_TOOL_CURSOR_PATHS_SEGMENT;
-      cmodifier   = GIMP_CURSOR_MODIFIER_PLUS;
+      cmodifier   = GIMP_CURSOR_MODIFIER_JOIN;
       break;
 
     default:

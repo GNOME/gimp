@@ -132,6 +132,8 @@
 #include "cursors/xbm/modifier-background-mask.xbm"
 #include "cursors/xbm/modifier-pattern.xbm"
 #include "cursors/xbm/modifier-pattern-mask.xbm"
+#include "cursors/xbm/modifier-join.xbm"
+#include "cursors/xbm/modifier-join-mask.xbm"
 
 
 typedef struct _GimpCursor GimpCursor;
@@ -483,6 +485,12 @@ static GimpCursor gimp_cursor_modifiers[] =
     modifier_pattern_width, modifier_pattern_height,
     0, 0,
     modifier_pattern, NULL, NULL, NULL
+  },
+  {
+    modifier_join_bits, modifier_join_mask_bits,
+    modifier_join_width, modifier_join_height,
+    0, 0,
+    modifier_join, NULL, NULL, NULL
   }
 };
 

@@ -1,3 +1,17 @@
+2005-08-18  Michael Natterer  <mitch@gimp.org>
+
+	* cursors/Makefile.am
+	* cursors/gimp-tool-cursors.xcf
+	* cursors/modifier-join.png
+	* cursors/xbm/modifier-join-mask.xbm
+	* cursors/xbm/modifier-join.xbm: images for a "join" cursor modifier.
+
+	* app/widgets/widgets-enums.h
+	* app/widgets/gimpcursor.c: add the cursor.
+
+	* app/tools/gimpvectortool.c: use it for connecting strokes.
+	Fixes bug #313252.
+
 2005-08-18  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpforegroundselecttool.c: removed reference to SIOX
