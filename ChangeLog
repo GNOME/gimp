@@ -1,5 +1,17 @@
 2005-08-18  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimptemplate.c: go back to using dpi as the default
+	resolution unit.
+
+	* app/core/gimp-utils.[ch]: moved the code to determine the unit
+	from the locale settings here as gimp_get_default_unit().
+
+	* app/dialogs/print-size-dialog.c
+	* app/widgets/gimpimagepropview.c: use the unit returned by the
+	new function to display the print size (bug #107497).
+
+2005-08-18  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/procedure-browser.c (run): reverted last change.
 
 	* libgimp/gimpprocbrowserdialog.[ch]: emit new signal "row-activated"

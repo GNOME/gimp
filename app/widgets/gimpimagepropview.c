@@ -32,6 +32,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpundostack.h"
 #include "core/gimpunit.h"
+#include "core/gimp-utils.h"
 
 #include "gimpimagepropview.h"
 #include "gimppropwidgets.h"
@@ -355,12 +356,7 @@ gimp_image_prop_view_update (GimpImagePropView *view)
   gtk_label_set_text (GTK_LABEL (view->pixel_size_label), buf);
 
   /*  print size  */
-#if 0
-  unit = GIMP_DISPLAY_SHELL (gdisp->shell)->unit;
-
-  if (unit == GIMP_UNIT_PIXEL)
-#endif
-    unit = gimp_image_get_unit (image);
+  unit = gimp_get_default_unit ();
 
   unit_factor = _gimp_unit_get_factor (image->gimp, unit);
   unit_digits = _gimp_unit_get_digits (image->gimp, unit);

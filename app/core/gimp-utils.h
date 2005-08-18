@@ -42,6 +42,7 @@ gint64        gimp_g_list_get_memsize       (GList        *list,
 gint64        gimp_g_value_get_memsize      (GValue       *value);
 
 gchar       * gimp_get_default_language     (const gchar  *category);
+GimpUnit      gimp_get_default_unit         (void);
 
 gboolean      gimp_boolean_handled_accum    (GSignalInvocationHint *ihint,
                                              GValue       *return_accu,

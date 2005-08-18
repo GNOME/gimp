@@ -22,6 +22,10 @@
 #include <string.h>
 #include <locale.h>
 
+#ifdef HAVE__NL_MEASUREMENT_MEASUREMENT
+#include <langinfo.h>
+#endif
+
 #include <glib-object.h>
 #include <gobject/gvaluecollector.h>
 
@@ -193,6 +197,25 @@ gimp_get_default_language (const gchar *category)
     *p = '\0';
 
   return lang;
+}
+
+GimpUnit
+gimp_get_default_unit (void)
+{
+#ifdef HAVE__NL_MEASUREMENT_MEASUREMENT
+  const gchar *measurement = nl_langinfo (_NL_MEASUREMENT_MEASUREMENT);
+
+  switch (*((guchar *) measurement))
+    {
+    case 1: /* metric   */
+      return GIMP_UNIT_MM;
+
+    case 2: /* imperial */
+      return GIMP_UNIT_INCH;
+    }
+#endif
+
+  return GIMP_UNIT_INCH;
 }
 
 gboolean
