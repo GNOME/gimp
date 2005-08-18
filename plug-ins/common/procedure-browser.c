@@ -125,14 +125,14 @@ run (const gchar      *name,
         dialog = gimp_proc_browser_dialog_new ();
         gtk_dialog_add_button (GTK_DIALOG (dialog),
                                GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE);
-        gtk_dialog_run (GTK_DIALOG (dialog));
+        while (gtk_dialog_run (GTK_DIALOG (dialog)) != GTK_RESPONSE_CLOSE);
         gtk_widget_destroy (dialog);
       }
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
     case GIMP_RUN_NONINTERACTIVE:
-      g_warning ("dbbrowser allows only interactive invocation");
+      g_warning (PLUG_IN_PROC " allows only interactive invocation");
       values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
       break;
 
