@@ -1,3 +1,13 @@
+2005-08-19  Michael Natterer  <mitch@gimp.org>
+
+	Poppler 0.4 changes the API of poppler_page_render_to_pixbuf():
+
+	* configure.in: define HAVE_POPPLER_0_4 if it is available.
+
+	* plug-ins/common/poppler.c: added some #ifdefs to compile with
+	both the new and old version. Can be removed in some weeks
+	propably.
+
 2005-08-18  Michael Natterer  <mitch@gimp.org>
 
 	* cursors/Makefile.am

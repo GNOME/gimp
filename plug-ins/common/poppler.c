@@ -496,8 +496,11 @@ load_image (PopplerDocument  *doc,
       poppler_page_render_to_pixbuf (page, 0, 0,
                                      width, height,
                                      scale,
-                                     buf,
-                                     0, 0);
+                                     buf
+#ifndef HAVE_POPPLER_0_4
+                                     ,0, 0,
+#endif
+                                     );
 
       g_object_get (G_OBJECT (page), "label", &page_label, NULL);
 
@@ -552,8 +555,11 @@ get_thumbnail (PopplerDocument *doc,
       poppler_page_render_to_pixbuf (page, 0, 0,
                                      width, height,
                                      scale,
-                                     pixbuf,
-                                     0, 0);
+                                     pixbuf
+#ifndef HAVE_POPPLER_0_4
+                                     ,0, 0,
+#endif
+                                     );
     }
 
   g_object_unref (page);
