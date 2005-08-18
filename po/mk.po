@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: mk\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-07-21 03:21+0000\n"
-"PO-Revision-Date: 2005-07-22 12:16+0200\n"
+"PO-Revision-Date: 2005-08-18 13:35+0200\n"
 "Last-Translator: Арангел Ангов <ufo@linux.net.mk>\n"
 "Language-Team: Macedonian <ossm-members@hedona.on.net.mk>\n"
 "MIME-Version: 1.0\n"
@@ -64,7 +64,7 @@ msgstr "Бач преведувачот '%s' не е достапен, бач р
 
 #: ../app/main.c:121 ../tools/gimp-remote.c:78
 msgid "Show version information and exit"
-msgstr "Прикажи информации за врзијата и излези"
+msgstr "Прикажи информации за верзијата и излези"
 
 #: ../app/main.c:126
 msgid "Be more verbose"
@@ -100,7 +100,7 @@ msgstr "Користи друга sessionrc датотека"
 
 #: ../app/main.c:166
 msgid "Use an alternate user gimprc file"
-msgstr "Користи друга системска gimprc датотека"
+msgstr "Користи друга корисничка gimprc датотека"
 
 #: ../app/main.c:171
 msgid "Use an alternate system gimprc file"
@@ -164,8 +164,7 @@ msgid ""
 "\n"
 "Please check the value of the environment variable G_FILENAME_ENCODING."
 msgstr ""
-"Подесениот енкодинг на името на датотеката не може да се претвори во UTF-8: %"
-"s\n"
+"Подесениот енкодинг на името на датотеката не може да се претвори во UTF-8: %s\n"
 "\n"
 "Ве молам проверете ја вредноста на варијаблата на опкружувањето "
 "G_FILENAME_ENCODING."
@@ -1539,7 +1538,7 @@ msgstr "Боја на крајната _лева точка"
 
 #: ../app/actions/gradient-editor-actions.c:244
 msgid "_Linear"
-msgstr "_Линијски"
+msgstr "_Линиски"
 
 #: ../app/actions/gradient-editor-actions.c:249
 msgid "_Curved"
@@ -1839,7 +1838,7 @@ msgstr "Мени за слика"
 
 #: ../app/actions/image-actions.c:58
 msgid "_Xtns"
-msgstr "П_роширувања"
+msgstr "Д_одатоци"
 
 #: ../app/actions/image-actions.c:59
 msgid "_Image"
@@ -4011,7 +4010,7 @@ msgstr ""
 "Поставува надворешен читач на веб кој треба да се користи. Ова може да биде "
 "целосна патека или име на извршниот програм која ќе ја барам во корисничката "
 "патека (PATH). Доколку наредбата содржи '%s' тоа ќе биде заменето со адреса, "
-"ианку адресата ќе биде додадена на наредбата раздвоена со размак."
+"инаку адресата ќе биде додадена на наредбата раздвоена со раздел."
 
 #: ../app/config/gimprc-deserialize.c:135 ../app/core/gimp-modules.c:130
 #: ../app/core/gimp-units.c:160 ../app/gui/session.c:157
@@ -7221,7 +7220,9 @@ msgstr "Продолжи"
 msgid ""
 "Welcome to\n"
 "The GIMP %d.%d User Installation"
-msgstr "Добродојдовте во ГИМП %d.%d корисничката инсталација"
+msgstr ""
+"Добродојдовте во\n"
+"ГИМП %d.%d корисничката инсталација"
 
 #: ../app/dialogs/user-install-dialog.c:780
 msgid "Click \"Continue\" to enter the GIMP user installation."
@@ -7244,9 +7245,9 @@ msgid ""
 "Software Foundation; either version 2 of the License, or (at your option) "
 "any later version."
 msgstr ""
-"Овaa програмa е бесплатен софтвер, можете да го делите и/или менуватево "
-"склад со условите на GNU Општата Јавна Лиценца објавена од страна наFree "
-"Software Foundation, или верзијата 2 на оваа лиценца, или(по ваш избор) било "
+"Овaa програмa е бесплатен софтвер, можете да го делите и/или менувате во "
+"склад со условите на GNU Општата Јавна Лиценца објавена од страна на Free "
+"Software Foundation, или верзијата 2 на оваа лиценца, или (по ваш избор) било "
 "која понова верзија."
 
 #: ../app/dialogs/user-install-dialog.c:803
@@ -10998,7 +10999,7 @@ msgstr "Прелистувач на веб"
 
 #: ../app/widgets/widgets-enums.c:227
 msgid "Linear"
-msgstr "Линијски"
+msgstr "Линиски"
 
 #: ../app/widgets/widgets-enums.c:228
 msgid "Logarithmic"

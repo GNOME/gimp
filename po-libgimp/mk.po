@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.HEAD.mk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-19 03:37+0000\n"
-"PO-Revision-Date: 2005-07-19 12:11+0200\n"
+"POT-Creation-Date: 2005-08-17 03:30+0000\n"
+"PO-Revision-Date: 2005-08-17 09:22+0200\n"
 "Last-Translator: Vladimir Stefanov <vladoboss@mt.net.mk>\n"
 "Language-Team: Macedonian <mkde-l10n@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -43,7 +43,7 @@ msgstr "Спој ги видливите нивоа"
 #: ../libgimp/gimpexport.c:224
 #, c-format
 msgid "%s can't handle layer offsets, size or opacity"
-msgstr "%s Неможе да ракува со офсетот на нивото, големината или затемнетоста"
+msgstr "%s Не може да ракува со офсетот на нивото, големината или затемнетоста"
 
 #: ../libgimp/gimpexport.c:233 ../libgimp/gimpexport.c:242
 #, c-format
@@ -62,12 +62,12 @@ msgstr "Израмнета слика"
 #: ../libgimp/gimpexport.c:260
 #, c-format
 msgid "%s can't handle transparency"
-msgstr "%s неможе да ракува со провидноста"
+msgstr "%s не може да ракува со провидноста"
 
 #: ../libgimp/gimpexport.c:269
 #, c-format
 msgid "%s can't handle layer masks"
-msgstr "%s неможе да работи со маски на слоевите"
+msgstr "%s не може да работи со маски на слоевите"
 
 #: ../libgimp/gimpexport.c:270
 msgid "Apply Layer Masks"
@@ -221,6 +221,112 @@ msgstr "Селекција на палета"
 msgid "Pattern Selection"
 msgstr "Селекција на образец"
 
+#: ../libgimp/gimpprocbrowserdialog.c:154
+msgid "by name"
+msgstr "по име"
+
+#: ../libgimp/gimpprocbrowserdialog.c:155
+msgid "by description"
+msgstr "по опис"
+
+#: ../libgimp/gimpprocbrowserdialog.c:156
+msgid "by help"
+msgstr "по помош"
+
+#: ../libgimp/gimpprocbrowserdialog.c:157
+msgid "by author"
+msgstr "по автор"
+
+#: ../libgimp/gimpprocbrowserdialog.c:158
+msgid "by copyright"
+msgstr "по авторски права"
+
+#: ../libgimp/gimpprocbrowserdialog.c:159
+msgid "by date"
+msgstr "по датум"
+
+#: ../libgimp/gimpprocbrowserdialog.c:160
+msgid "by type"
+msgstr "по тип"
+
+#: ../libgimp/gimpprocbrowserdialog.c:354
+msgid "Searching by name - please wait"
+msgstr "Пребарувам по име - ве молам почекајте"
+
+#: ../libgimp/gimpprocbrowserdialog.c:374
+msgid "Searching by description - please wait"
+msgstr "Пребарувам по опис - ве молам почекајте"
+
+#: ../libgimp/gimpprocbrowserdialog.c:382
+msgid "Searching by help - please wait"
+msgstr "Пребарувам по помош - ве молам почекајте"
+
+#: ../libgimp/gimpprocbrowserdialog.c:390
+msgid "Searching by author - please wait"
+msgstr "Пребарувам по автор - ве молам почекајте"
+
+#: ../libgimp/gimpprocbrowserdialog.c:398
+msgid "Searching by copyright - please wait"
+msgstr "Пребарувам по авторски права - ве молам почекајте"
+
+#: ../libgimp/gimpprocbrowserdialog.c:406
+msgid "Searching by date - please wait"
+msgstr "Пребарувам по датум - ве молам почекајте"
+
+#: ../libgimp/gimpprocbrowserdialog.c:414
+msgid "Searching by type - please wait"
+msgstr "Пребарувам по тип - ве молам почекајте"
+
+#: ../libgimp/gimpprocbrowserdialog.c:422
+msgid "Searching - please wait"
+msgstr "Пребарувам - ве молам почекајте"
+
+#: ../libgimp/gimpprocbrowserdialog.c:430
+#, c-format
+msgid "%d Procedures"
+msgstr "%d Процедури"
+
+#: ../libgimp/gimpprocbrowserdialog.c:437
+msgid "No matches for your query"
+msgstr "Нема совпаѓања за вашето барање"
+
+#: ../libgimp/gimpprocbrowserdialog.c:440
+msgid "1 procedure matches your query"
+msgstr "1 процедура се совпадна со вашето барање"
+
+#: ../libgimp/gimpprocbrowserdialog.c:443
+#, c-format
+msgid "%d procedures match your query"
+msgstr "%d процедури се совпаднаа со вашето барање"
+
+#: ../libgimp/gimpprocbrowserdialog.c:491
+msgid "No matches"
+msgstr "Нема совпаѓања"
+
+#: ../libgimp/gimpprocview.c:143
+msgid "Parameters"
+msgstr "Параметри"
+
+#: ../libgimp/gimpprocview.c:156
+msgid "Return Values"
+msgstr "Повратни вредности"
+
+#: ../libgimp/gimpprocview.c:169
+msgid "Additional Information"
+msgstr "Дополнителна информација"
+
+#: ../libgimp/gimpprocview.c:210
+msgid "Author:"
+msgstr "Автор:"
+
+#: ../libgimp/gimpprocview.c:222
+msgid "Date:"
+msgstr "Дата:"
+
+#: ../libgimp/gimpprocview.c:234
+msgid "Copyright:"
+msgstr "Авторски права:"
+
 #: ../libgimp/gimpunitcache.c:57
 msgid "percent"
 msgstr "процент"
@@ -309,7 +415,7 @@ msgstr "Сина"
 msgid "Gray"
 msgstr "Сива"
 
-#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpbase/gimpbaseenums.c:467
+#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpbase/gimpbaseenums.c:494
 msgid "Indexed"
 msgstr "Индексирано"
 
@@ -381,163 +487,163 @@ msgstr "Симни"
 msgid "Burn"
 msgstr "Спали"
 
-#: ../libgimpbase/gimpbaseenums.c:359 ../libgimpbase/gimpbaseenums.c:499
+#: ../libgimpbase/gimpbaseenums.c:386 ../libgimpbase/gimpbaseenums.c:526
 msgid "Linear"
 msgstr "Линијски"
 
-#: ../libgimpbase/gimpbaseenums.c:360
+#: ../libgimpbase/gimpbaseenums.c:387
 msgid "Bi-linear"
 msgstr "Билинеарно"
 
-#: ../libgimpbase/gimpbaseenums.c:361
+#: ../libgimpbase/gimpbaseenums.c:388
 msgid "Radial"
 msgstr "Радијално"
 
-#: ../libgimpbase/gimpbaseenums.c:362
+#: ../libgimpbase/gimpbaseenums.c:389
 msgid "Square"
 msgstr "Квадрат"
 
-#: ../libgimpbase/gimpbaseenums.c:363
+#: ../libgimpbase/gimpbaseenums.c:390
 msgid "Conical (sym)"
 msgstr "Конусна (симетрична)"
 
-#: ../libgimpbase/gimpbaseenums.c:364
+#: ../libgimpbase/gimpbaseenums.c:391
 msgid "Conical (asym)"
 msgstr "Конусна (асиметрична)"
 
-#: ../libgimpbase/gimpbaseenums.c:365
+#: ../libgimpbase/gimpbaseenums.c:392
 msgid "Shaped (angular)"
 msgstr "Обликувана (аголно)"
 
-#: ../libgimpbase/gimpbaseenums.c:366
+#: ../libgimpbase/gimpbaseenums.c:393
 msgid "Shaped (spherical)"
 msgstr "Обликувана (сферично)"
 
-#: ../libgimpbase/gimpbaseenums.c:367
+#: ../libgimpbase/gimpbaseenums.c:394
 msgid "Shaped (dimpled)"
 msgstr "Обликувана (со помош на дупчиња)"
 
-#: ../libgimpbase/gimpbaseenums.c:368
+#: ../libgimpbase/gimpbaseenums.c:395
 msgid "Spiral (cw)"
 msgstr "Спирала (во насока на стрелките на часовникот)"
 
-#: ../libgimpbase/gimpbaseenums.c:369
+#: ../libgimpbase/gimpbaseenums.c:396
 msgid "Spiral (ccw)"
 msgstr "Спирала (обратно од стрелките на часовникот)"
 
-#: ../libgimpbase/gimpbaseenums.c:398
+#: ../libgimpbase/gimpbaseenums.c:425
 msgid "Stock ID"
 msgstr "Испорачана ИБ"
 
-#: ../libgimpbase/gimpbaseenums.c:399
+#: ../libgimpbase/gimpbaseenums.c:426
 msgid "Inline pixbuf"
 msgstr "Вградена слика"
 
-#: ../libgimpbase/gimpbaseenums.c:400
+#: ../libgimpbase/gimpbaseenums.c:427
 msgid "Image file"
 msgstr "Големина на слика"
 
-#: ../libgimpbase/gimpbaseenums.c:429
+#: ../libgimpbase/gimpbaseenums.c:456
 msgid "RGB color"
 msgstr "RGB боја"
 
-#: ../libgimpbase/gimpbaseenums.c:430 ../libgimpbase/gimpbaseenums.c:465
+#: ../libgimpbase/gimpbaseenums.c:457 ../libgimpbase/gimpbaseenums.c:492
 msgid "Grayscale"
 msgstr "Сиво нијансирано"
 
-#: ../libgimpbase/gimpbaseenums.c:431
+#: ../libgimpbase/gimpbaseenums.c:458
 msgid "Indexed color"
 msgstr "Индексирана боја"
 
-#: ../libgimpbase/gimpbaseenums.c:463
+#: ../libgimpbase/gimpbaseenums.c:490
 msgid "RGB"
 msgstr "RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:464
+#: ../libgimpbase/gimpbaseenums.c:491
 msgid "RGB-alpha"
 msgstr "RGB-алфа"
 
-#: ../libgimpbase/gimpbaseenums.c:466
+#: ../libgimpbase/gimpbaseenums.c:493
 msgid "Grayscale-alpha"
 msgstr "Сиво нијансирано-алфа"
 
-#: ../libgimpbase/gimpbaseenums.c:468
+#: ../libgimpbase/gimpbaseenums.c:495
 msgid "Indexed-alpha"
 msgstr "Индексирано-алфа"
 
-#: ../libgimpbase/gimpbaseenums.c:498
+#: ../libgimpbase/gimpbaseenums.c:525
 msgid "None (Fastest)"
 msgstr "Ништо (најбрзо)"
 
-#: ../libgimpbase/gimpbaseenums.c:500
+#: ../libgimpbase/gimpbaseenums.c:527
 msgid "Cubic"
 msgstr "Кубен"
 
-#: ../libgimpbase/gimpbaseenums.c:501
+#: ../libgimpbase/gimpbaseenums.c:528
 msgid "Lanczos (Best)"
 msgstr "Ланцзос (Најдобро)"
 
-#: ../libgimpbase/gimpbaseenums.c:529
+#: ../libgimpbase/gimpbaseenums.c:556
 msgid "Constant"
 msgstr "Константно"
 
-#: ../libgimpbase/gimpbaseenums.c:530
+#: ../libgimpbase/gimpbaseenums.c:557
 msgid "Incremental"
 msgstr "Инкрементално"
 
-#: ../libgimpbase/gimpbaseenums.c:559 ../modules/cdisplay_lcms.c:254
+#: ../libgimpbase/gimpbaseenums.c:586 ../modules/cdisplay_lcms.c:254
 msgid "None"
 msgstr "Ништо"
 
-#: ../libgimpbase/gimpbaseenums.c:560
+#: ../libgimpbase/gimpbaseenums.c:587
 msgid "Sawtooth wave"
 msgstr "Тестераст бран"
 
-#: ../libgimpbase/gimpbaseenums.c:561
+#: ../libgimpbase/gimpbaseenums.c:588
 msgid "Triangular wave"
 msgstr "Триаголен бран"
 
-#: ../libgimpbase/gimpbaseenums.c:589
+#: ../libgimpbase/gimpbaseenums.c:616
 msgid "Pixels"
 msgstr "Точки"
 
-#: ../libgimpbase/gimpbaseenums.c:590
+#: ../libgimpbase/gimpbaseenums.c:617
 msgid "Points"
 msgstr "Точки"
 
-#: ../libgimpbase/gimpbaseenums.c:619
+#: ../libgimpbase/gimpbaseenums.c:646
 msgid "Shadows"
 msgstr "Сенки"
 
-#: ../libgimpbase/gimpbaseenums.c:620
+#: ../libgimpbase/gimpbaseenums.c:647
 msgid "Midtones"
 msgstr "Средни тонови"
 
-#: ../libgimpbase/gimpbaseenums.c:621
+#: ../libgimpbase/gimpbaseenums.c:648
 msgid "Highlights"
 msgstr "Нагласено"
 
-#: ../libgimpbase/gimpbaseenums.c:649
+#: ../libgimpbase/gimpbaseenums.c:676
 msgid "Forward"
 msgstr "Напред"
 
-#: ../libgimpbase/gimpbaseenums.c:650
+#: ../libgimpbase/gimpbaseenums.c:677
 msgid "Backward"
 msgstr "Назад"
 
-#: ../libgimpbase/gimpbaseenums.c:751
+#: ../libgimpbase/gimpbaseenums.c:778
 msgid "Internal GIMP procedure"
 msgstr "Внатрешна ГИМП процедура"
 
-#: ../libgimpbase/gimpbaseenums.c:752
+#: ../libgimpbase/gimpbaseenums.c:779
 msgid "GIMP Plug-In"
 msgstr "ГИМП додаток"
 
-#: ../libgimpbase/gimpbaseenums.c:753
+#: ../libgimpbase/gimpbaseenums.c:780
 msgid "GIMP Extension"
 msgstr "ГИМП проширување"
 
-#: ../libgimpbase/gimpbaseenums.c:754
+#: ../libgimpbase/gimpbaseenums.c:781
 msgid "Temporary Procedure"
 msgstr "Привремена процедура"
 
@@ -811,7 +917,8 @@ msgid ""
 "Thumbnails will be stored in the folder for temporary files (%s) instead."
 msgstr ""
 "Не можам да одредам валиден home директориум.\n"
-"Малите сликички наместо тоа ќе бидат зачувани папката за привремени датотеки (%s)."
+"Малите сликички наместо тоа ќе бидат зачувани папката за привремени датотеки "
+"(%s)."
 
 #: ../libgimpthumb/gimpthumb-utils.c:249 ../libgimpthumb/gimpthumb-utils.c:317
 #, c-format
@@ -912,7 +1019,7 @@ msgstr "Провери стил"
 msgid "_Preview"
 msgstr "Пре_глед"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1807
+#: ../libgimpwidgets/gimppropwidgets.c:1868
 #, c-format
 msgid "This text input field is limited to %d characters."
 msgstr "Ова поле за внесување на текст е ограничено на %d карактери."
@@ -974,7 +1081,7 @@ msgstr "Размак на _редовите"
 msgid "_Resize"
 msgstr "_Промени големина"
 
-#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:297
+#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:298
 msgid "_Scale"
 msgstr "_Скалирај"
 
@@ -982,15 +1089,15 @@ msgstr "_Скалирај"
 msgid "Crop"
 msgstr "Исечи"
 
-#: ../libgimpwidgets/gimpstock.c:293
+#: ../libgimpwidgets/gimpstock.c:294
 msgid "_Transform"
 msgstr "_Трансформирај"
 
-#: ../libgimpwidgets/gimpstock.c:296
+#: ../libgimpwidgets/gimpstock.c:297
 msgid "_Rotate"
 msgstr "_Ротирај"
 
-#: ../libgimpwidgets/gimpstock.c:298
+#: ../libgimpwidgets/gimpstock.c:299
 msgid "_Shear"
 msgstr "_Дели"
 
