@@ -785,7 +785,7 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
 
   add_label (GTK_BOX (page),
              _("<b>The GIMP - GNU Image Manipulation Program</b>\n"
-               "Copyright (C) 1995-2004\n"
+               "Copyright (C) 1995-2005\n"
                "Spencer Kimball, Peter Mattis and the GIMP Development Team."));
 
   sep = gtk_hseparator_new ();

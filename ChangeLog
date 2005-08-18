@@ -1,5 +1,12 @@
 2005-08-18  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/user-install-dialog.c: updated year in copyright.
+
+	* libgimpwidgets/gimpwidgets-private.c (gimp_widgets_init):
+	register the default window icons in descending sizes.
+
+2005-08-18  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimptemplate.c: go back to using dpi as the default
 	resolution unit.
 

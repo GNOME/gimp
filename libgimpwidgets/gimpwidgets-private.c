@@ -55,10 +55,10 @@ gimp_widgets_init (GimpHelpFunc          standard_help_func,
 
   const guint8 *inline_pixbufs[] =
   {
-    stock_wilber_16,
-    stock_wilber_32,
+    stock_wilber_64,
     stock_wilber_48,
-    stock_wilber_64
+    stock_wilber_32,
+    stock_wilber_16
   };
 
   g_return_if_fail (standard_help_func != NULL);
