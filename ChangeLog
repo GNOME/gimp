@@ -1,5 +1,10 @@
 2005-08-18  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpforegroundselecttool.c: removed reference to SIOX
+	algorithm from tooltip, it's an implementation detail.
+
+2005-08-18  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/user-install-dialog.c: updated year in copyright.
 
 	* libgimpwidgets/gimpwidgets-private.c (gimp_widgets_init):
