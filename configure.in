@@ -1196,9 +1196,9 @@ PKG_CHECK_MODULES(POPPLER, poppler-glib >= poppler_required_version gthread-2.0,
 AC_SUBST(POPPLER)
 AC_SUBST(LIBPOPPLER)
 
-PKG_CHECK_MODULES(POPPLER, poppler-glib >= 0.4,
+if $PKG_CONFIG --atleast-version=0.4 poppler-glib; then
   AC_DEFINE(HAVE_POPPLER_0_4, 1, "Define to 1 if libpoppler >= 0.4 is available")
-  ,)
+fi
 
 #################################################
 # Check for gnome-vfs (and optionally libgnomeui)
