@@ -1,3 +1,10 @@
+2005-08-18  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/script-fu/scripts/text-circle.scm: Incorporated changes
+	made by Daniel P. Stasinski in his text-circle2.scm script. Letters
+	are now placed properly for both positive and negative fill angles.
+	Fix for bug #144588.
+
 2005-08-17  Tor Lillqvist  <tml@novell.com>
 
 	* plug-ins/winsnap/Makefile.am (LDADD): Use $(WINDRES) to handle

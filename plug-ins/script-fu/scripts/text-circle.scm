@@ -5,7 +5,11 @@
 ;; Thanks:
 ;;   jseymour@jimsun.LinxNet.com (Jim Seymour)
 ;;   Sven Neumann <neumanns@uni-duesseldorf.de>
-
+;;
+;; Modified June 24, 2005 by Kevin Cozens
+;; Incorporated changes made by Daniel P. Stasinski in his text-circle3.scm
+;; script. The letters are now placed properly for both positive and negative
+;; fill angles.
 
 (if (not (symbol-bound? 'script-fu-text-circle-debug? (the-environment)))
     (define script-fu-text-circle-debug? #f))
@@ -17,6 +21,7 @@
   (define (wrap-string str) (string-append "\"" str "\""))
   (define (white-space-string? str)
     (or (equal? " " str) (equal? "	" str)))
+
   (let* ((drawable-size (* 2.0 (+ radius (* 2 font-size))))
 	 (img (car (gimp-image-new drawable-size drawable-size RGB)))
 	 (BG-layer (car (gimp-layer-new img drawable-size drawable-size
@@ -30,14 +35,28 @@
 	 (font-infos (gimp-text-get-extents-fontname "lAgy" font-size
 						     PIXELS font-name))
 	 (desc (nth 3 font-infos))
+     (start-angle-rad (* (/ (modulo start-angle 360) 360) 2 *pi*))
 	 (angle-list #f)
 	 (letter "")
 	 (new-layer #f)
-	 (index 0))
+	 (index 0)
+	 (ndx 0)
+	 (ndx-start 0)
+	 (ndx-step 1)
+	 (ccw 0)
+     (rot-op))
     (gimp-image-undo-disable img)
     (gimp-image-add-layer img BG-layer 0)
     (gimp-edit-fill BG-layer BACKGROUND-FILL)
+
     ;; change units
+    (if (< fill-angle 0)
+        (begin
+          (set! ccw 1)
+          (set! fill-angle (abs fill-angle))
+          (set! start-angle-rad (* (/ (modulo (+ (- start-angle fill-angle) 360) 360) 360) 2 *pi*))
+          (set! ndx-start (- char-num 1))
+          (set! ndx-step -1)))
     (set! start-angle-rad (* (/ (modulo start-angle 360) 360) 2 *pi*))
     (set! fill-angle-rad (* (/ fill-angle 360) 2 *pi*))
     (set! radian-step (/ fill-angle-rad char-num))
@@ -52,9 +71,10 @@
 	  (temp-layer #f)
 	  (scale 0)
 	  (temp #f))
+      (set! ndx ndx-start)
       (set! index 0)
       (while (< index char-num)
-	(set! temp-str (substring text index (+ index 1)))
+	(set! temp-str (substring text ndx (+ ndx 1)))
 	(if (white-space-string? temp-str)
 	    (set! temp-str "x"))
 	(set! temp-layer (car (gimp-text-fontname img -1 0 0
@@ -64,6 +84,7 @@
 						  font-name)))
 	(set! temp-list (cons (car (gimp-drawable-width temp-layer)) temp-list))
 	(gimp-image-remove-layer img temp-layer)
+	(set! ndx (+ ndx ndx-step))
 	(set! index (+ index 1)))
       (set! angle-list (nreverse temp-list))
       (set! temp 0)
@@ -75,9 +96,10 @@
 		    angle-list))
       (set! scale (/ fill-angle-rad temp))
       (set! angle-list (mapcar (lambda (angle) (* scale angle)) angle-list)))
+    (set! ndx ndx-start)
     (set! index 0)
     (while (< index char-num)
-      (set! letter (substring text index (+ index 1)))
+      (set! letter (substring text ndx (+ ndx 1)))
       (if (not (white-space-string? letter))
 	  ;; Running gimp-text with " " causes an error!
 	  (let* ((new-layer
@@ -95,9 +117,11 @@
 	    (set! width (car (gimp-drawable-width new-layer)))
 	    (if (not script-fu-text-circle-debug?)
 		(begin
-		  (gimp-drawable-transform-rotate-default new-layer
-							  ((if (< 0 fill-angle-rad)
-							       + -) angle rad-90)
+          (if (= ccw 0)
+              (set! rot-op (if (< 0 fill-angle-rad) + -))
+              (set! rot-op (if (> 0 fill-angle-rad) + -)))
+          (gimp-drawable-transform-rotate-default new-layer
+							  (rot-op angle rad-90)
 							  TRUE 0 0
 							  TRUE FALSE)
 		  (gimp-layer-translate new-layer
@@ -117,6 +141,7 @@
 					   (- (/ height 2))))
                   
                   ))))
+      (set! ndx (+ ndx ndx-step))
       (set! index (+ index 1)))
     (gimp-drawable-set-visible BG-layer 0)
     (if (not script-fu-text-circle-debug?)
@@ -134,7 +159,7 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-text-circle"
-		    _"Text Circle..."
+		    _"Text C_ircle..."
 		    "Render the specified text along the perimeter of a circle"
 		    "Shuji Narazaki <narazaki@gimp.org>"
 		    "Shuji Narazaki"
@@ -149,4 +174,4 @@
 		    SF-FONT       _"Font"               "Sans")
 
 (script-fu-menu-register "script-fu-text-circle"
-			 _"<Toolbox>/Xtns/Script-Fu/Logos")
+			 "<Toolbox>/Xtns/Script-Fu/Logos")
