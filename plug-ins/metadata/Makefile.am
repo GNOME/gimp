@@ -18,6 +18,7 @@ libexec_PROGRAMS = metadata
 
 metadata_SOURCES = \
 	metadata.c	\
+	metadata.h	\
 	interface.h	\
 	interface.c	\
 	base64.h	\

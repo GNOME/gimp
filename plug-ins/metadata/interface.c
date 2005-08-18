@@ -50,6 +50,7 @@
 #include "libgimp/stdplugins-intl.h"
 
 #include "interface.h"
+#include "metadata.h"
 #include "xmp-schemas.h"
 #include "xmp-encode.h"
 
@@ -656,11 +657,11 @@ metadata_dialog (gint32    image_ID,
   MetadataGui  mgui;
   GtkWidget   *notebook;
 
-  gimp_ui_init ("metadata", FALSE);
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  mgui.dlg = gimp_dialog_new (_("Image Properties"), "metadata",
+  mgui.dlg = gimp_dialog_new (_("Image Properties"), PLUG_IN_BINARY,
                               NULL, 0,
-                              gimp_standard_help_func, "plug-in-metadata",
+                              gimp_standard_help_func, EDITOR_PROC,
 
                               _("_Import XMP"), RESPONSE_IMPORT,
                               _("_Export XMP"), RESPONSE_EXPORT,

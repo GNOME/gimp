@@ -1,3 +1,14 @@
+2005-08-18  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/animoptimize.c
+	* plug-ins/common/pnm.c
+	* plug-ins/metadata/interface.c
+	* plug-ins/metadata/metadata.c: some forgotten canonical names.
+
+	* plug-ins/metadata/Makefile.am
+	* plug-ins/metadata/metadata.h: new header containing the
+	procedure name #defines for metadata.
+
 2005-08-17  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: check for langinfo.h and _NL_MEASUREMENT_MEASUREMENT.

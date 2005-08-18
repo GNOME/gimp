@@ -56,6 +56,14 @@
 #define _O_BINARY 0
 #endif
 
+
+#define LOAD_PROC      "file-pnm-load"
+#define PNM_SAVE_PROC  "file-pnm-save"
+#define PGM_SAVE_PROC  "file-pgm-save"
+#define PPM_SAVE_PROC  "file-ppm-save"
+#define PLUG_IN_BINARY "pnm"
+
+
 /* Declare local data types
  */
 
@@ -203,9 +211,9 @@ query (void)
 {
   static GimpParamDef load_args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_STRING, "filename", "The name of the file to load" },
-    { GIMP_PDB_STRING, "raw_filename", "The name of the file to load" }
+    { GIMP_PDB_INT32,  "run-mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_STRING, "filename",     "The name of the file to load" },
+    { GIMP_PDB_STRING, "raw-filename", "The name of the file to load" }
   };
   static GimpParamDef load_return_vals[] =
   {
@@ -214,15 +222,15 @@ query (void)
 
   static GimpParamDef save_args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",     "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE,    "image",        "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },
+    { GIMP_PDB_INT32,    "run-mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",        "Input image"                  },
+    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save"             },
     { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
-    { GIMP_PDB_STRING,   "raw_filename", "The name of the file to save the image in" },
+    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in" },
     { GIMP_PDB_INT32,    "raw",          "Specify non-zero for raw output, zero for ascii output" }
   };
 
-  gimp_install_procedure ("file_pnm_load",
+  gimp_install_procedure (LOAD_PROC,
                           "loads files of the pnm file format",
                           "FIXME: write help for pnm_load",
                           "Erik Nygren",
@@ -235,14 +243,14 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
-  gimp_register_file_handler_mime ("file_pnm_load", "image/x-portable-anymap");
-  gimp_register_magic_load_handler ("file_pnm_load",
+  gimp_register_file_handler_mime (LOAD_PROC, "image/x-portable-anymap");
+  gimp_register_magic_load_handler (LOAD_PROC,
                                     "pnm,ppm,pgm,pbm",
 				    "",
 				    "0,string,P1,0,string,P2,0,string,P3,0,"
 				    "string,P4,0,string,P5,0,string,P6");
 
-  gimp_install_procedure ("file_pnm_save",
+  gimp_install_procedure (PNM_SAVE_PROC,
                           "saves files in the pnm file format",
                           "PNM saving handles all image types without transparency.",
                           "Erik Nygren",
@@ -254,7 +262,7 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_install_procedure ("file_pgm_save",
+  gimp_install_procedure (PGM_SAVE_PROC,
                           "saves files in the pnm file format",
                           "PGM saving produces grayscale images without transparency.",
                           "Erik Nygren",
@@ -266,7 +274,7 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_install_procedure ("file_ppm_save",
+  gimp_install_procedure (PPM_SAVE_PROC,
                           "saves files in the pnm file format",
                           "PPM saving handles RGB images without transparency.",
                           "Erik Nygren",
@@ -278,10 +286,10 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_file_handler_mime ("file_pgm_save", "image/x-portable-graymap");
-  gimp_register_file_handler_mime ("file_ppm_save", "image/x-portable-pixmap");
-  gimp_register_save_handler ("file_pgm_save", "pgm", "");
-  gimp_register_save_handler ("file_ppm_save", "ppm", "");
+  gimp_register_file_handler_mime (PGM_SAVE_PROC, "image/x-portable-graymap");
+  gimp_register_file_handler_mime (PPM_SAVE_PROC, "image/x-portable-pixmap");
+  gimp_register_save_handler (PGM_SAVE_PROC, "pgm", "");
+  gimp_register_save_handler (PPM_SAVE_PROC, "ppm", "");
 }
 
 static void
@@ -307,7 +315,7 @@ run (const gchar      *name,
 
   INIT_I18N ();
 
-  if (strcmp (name, "file_pnm_load") == 0)
+  if (strcmp (name, LOAD_PROC) == 0)
     {
       image_ID = load_image (param[1].data.d_string);
 
@@ -322,25 +330,25 @@ run (const gchar      *name,
 	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
     }
-  else if (strcmp (name, "file_pnm_save") == 0
-           || strcmp (name, "file_pgm_save") == 0
-           || strcmp (name, "file_ppm_save") == 0 )
+  else if (strcmp (name, PNM_SAVE_PROC) == 0 ||
+           strcmp (name, PGM_SAVE_PROC) == 0 ||
+           strcmp (name, PPM_SAVE_PROC) == 0)
     {
-      image_ID      = param[1].data.d_int32;
-      drawable_ID   = param[2].data.d_int32;
+      image_ID    = param[1].data.d_int32;
+      drawable_ID = param[2].data.d_int32;
 
       /*  eventually export the image */
       switch (run_mode)
 	{
 	case GIMP_RUN_INTERACTIVE:
 	case GIMP_RUN_WITH_LAST_VALS:
-	  gimp_ui_init ("pnm", FALSE);
-          if (strcmp (name, "file_pnm_save") == 0)
+	  gimp_ui_init (PLUG_IN_BINARY, FALSE);
+          if (strcmp (name, PNM_SAVE_PROC) == 0)
             export = gimp_export_image (&image_ID, &drawable_ID, "PNM",
                                         (GIMP_EXPORT_CAN_HANDLE_RGB |
                                          GIMP_EXPORT_CAN_HANDLE_GRAY |
                                          GIMP_EXPORT_CAN_HANDLE_INDEXED));
-          else if (strcmp (name, "file_pgm_save") == 0)
+          else if (strcmp (name, PGM_SAVE_PROC) == 0)
             export = gimp_export_image (&image_ID, &drawable_ID, "PGM",
                                         (GIMP_EXPORT_CAN_HANDLE_GRAY));
           else
@@ -416,15 +424,15 @@ run (const gchar      *name,
 static gint32
 load_image (const gchar *filename)
 {
-  GimpPixelRgn pixel_rgn;
+  GimpPixelRgn    pixel_rgn;
   gint32 volatile image_ID = -1;
-  gint32 layer_ID;
-  GimpDrawable *drawable;
-  int fd;			/* File descriptor */
-  char buf[BUFLEN];		/* buffer for random things like scanning */
-  PNMInfo *pnminfo;
+  gint32          layer_ID;
+  GimpDrawable   *drawable;
+  int             fd;           /* File descriptor */
+  char            buf[BUFLEN];  /* buffer for random things like scanning */
+  PNMInfo        *pnminfo;
   PNMScanner * volatile scan;
-  int ctr;
+  int             ctr;
 
   /* open the file */
   fd = g_open (filename, O_RDONLY | _O_BINARY, 0);
@@ -457,8 +465,8 @@ load_image (const gchar *filename)
       return -1;
     }
 
-  if (!(scan = pnmscanner_create(fd)))
-    longjmp(pnminfo->jmpbuf,1);
+  if (!(scan = pnmscanner_create (fd)))
+    longjmp (pnminfo->jmpbuf, 1);
 
   /* Get magic number */
   pnmscanner_gettoken (scan, buf, BUFLEN);
@@ -476,6 +484,7 @@ load_image (const gchar *filename)
 	pnminfo->maxval    = pnm_types[ctr].maxval;
 	pnminfo->loader    = pnm_types[ctr].loader;
       }
+
   if (!pnminfo->loader)
     {
       g_message (_("File not in a supported format."));
@@ -544,9 +553,9 @@ load_image (const gchar *filename)
 }
 
 static void
-pnm_load_ascii (PNMScanner *scan,
-		PNMInfo    *info,
-		GimpPixelRgn  *pixel_rgn)
+pnm_load_ascii (PNMScanner   *scan,
+		PNMInfo      *info,
+		GimpPixelRgn *pixel_rgn)
 {
   unsigned char *data, *d;
   int            x, y, i, b;
@@ -606,9 +615,9 @@ pnm_load_ascii (PNMScanner *scan,
 }
 
 static void
-pnm_load_raw (PNMScanner *scan,
-	      PNMInfo    *info,
-	      GimpPixelRgn  *pixel_rgn)
+pnm_load_raw (PNMScanner   *scan,
+	      PNMInfo      *info,
+	      GimpPixelRgn *pixel_rgn)
 {
   guchar *data, *d;
   gint    x, y, i;
@@ -654,9 +663,9 @@ pnm_load_raw (PNMScanner *scan,
 }
 
 static void
-pnm_load_rawpbm (PNMScanner *scan,
-		 PNMInfo    *info,
-		 GimpPixelRgn  *pixel_rgn)
+pnm_load_rawpbm (PNMScanner   *scan,
+		 PNMInfo      *info,
+		 GimpPixelRgn *pixel_rgn)
 {
   unsigned char *buf;
   unsigned char  curbyte;
@@ -772,23 +781,23 @@ save_image (const gchar *filename,
 	    gint32       image_ID,
 	    gint32       drawable_ID)
 {
-  GimpPixelRgn pixel_rgn;
-  GimpDrawable *drawable;
-  GimpImageType drawable_type;
-  PNMRowInfo rowinfo;
+  GimpPixelRgn   pixel_rgn;
+  GimpDrawable  *drawable;
+  GimpImageType  drawable_type;
+  PNMRowInfo     rowinfo;
   void (*saverow) (PNMRowInfo *, unsigned char *) = NULL;
-  unsigned char red[256];
-  unsigned char grn[256];
-  unsigned char blu[256];
+  unsigned char  red[256];
+  unsigned char  grn[256];
+  unsigned char  blu[256];
   unsigned char *data, *d;
-  char *rowbuf;
-  char buf[BUFLEN];
-  char *temp;
-  int np = 0;
-  int xres, yres;
-  int ypos, yend;
-  int rowbufsize = 0;
-  int fd;
+  char          *rowbuf;
+  char           buf[BUFLEN];
+  char          *temp;
+  int            np = 0;
+  int            xres, yres;
+  int            ypos, yend;
+  int            rowbufsize = 0;
+  int            fd;
 
   drawable = gimp_drawable_get (drawable_ID);
   drawable_type = gimp_drawable_type (drawable_ID);
@@ -947,19 +956,19 @@ save_dialog (void)
   GtkWidget *frame;
   gboolean   run;
 
-  dlg = gimp_dialog_new (_("Save as PNM"), "pnm",
+  dlg = gimp_dialog_new (_("Save as PNM"), PLUG_IN_BINARY,
                          NULL, 0,
-			 gimp_standard_help_func, "file-pnm-save",
+                         gimp_standard_help_func, PNM_SAVE_PROC,
 
-			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 NULL);
+                         NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   /*  file save type  */
   frame = gimp_int_radio_group_new (TRUE, _("Data formatting"),

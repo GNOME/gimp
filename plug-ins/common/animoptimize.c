@@ -37,6 +37,13 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define OPTIMIZE_PROC        "plug-in-animationoptimize"
+#define OPTIMIZE_DIFF_PROC   "plug-in-animationoptimize-diff"
+#define UNOPTIMIZE_PROC      "plug-in-animationunoptimize"
+#define REMOVE_BACKDROP_PROC "plug-in-animation-remove-backdrop"
+#define FIND_BACKDROP_PROC   "plug-in-animation-find-backdrop"
+
+
 typedef enum
 {
   DISPOSE_UNDEFINED = 0x00,
@@ -62,8 +69,8 @@ static  void run   (const gchar      *name,
                     gint             *nreturn_vals,
                     GimpParam       **return_vals);
 
-static  gint32     do_optimizations    (GimpRunMode   run_mode,
-                                        gboolean      diff_only);
+static  gint32      do_optimizations    (GimpRunMode  run_mode,
+                                         gboolean     diff_only);
 
 /* tag util functions*/
 static  gint        parse_ms_tag        (const gchar *str);
@@ -113,16 +120,16 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable (unused)" }
+    { GIMP_PDB_INT32,    "run-mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image"                  },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable (unused)"      }
   };
   static GimpParamDef return_args[] =
   {
     { GIMP_PDB_IMAGE, "result", "Resulting image" }
   };
 
-  gimp_install_procedure ("plug_in_animationoptimize",
+  gimp_install_procedure (OPTIMIZE_PROC,
                           "This procedure applies various optimizations to"
                           " a GIMP layer-based animation in an attempt to"
                           " reduce the final file size.  If a frame of the"
@@ -142,7 +149,7 @@ query (void)
                           G_N_ELEMENTS (return_args),
                           args, return_args);
 
-  gimp_install_procedure ("plug_in_animationoptimize_diff",
+  gimp_install_procedure (OPTIMIZE_DIFF_PROC,
                           "This procedure applies various optimizations to"
                           " a GIMP layer-based animation in an attempt to"
                           " reduce the final file size.  If a frame of the"
@@ -160,7 +167,7 @@ query (void)
                           G_N_ELEMENTS (return_args),
                           args, return_args);
 
-  gimp_install_procedure ("plug_in_animationunoptimize",
+  gimp_install_procedure (UNOPTIMIZE_PROC,
                           "This procedure 'simplifies' a GIMP layer-based"
                           " animation that has been AnimationOptimized.  This"
                           " makes the animation much easier to work with if,"
@@ -177,15 +184,12 @@ query (void)
                           G_N_ELEMENTS (return_args),
                           args, return_args);
 
-  gimp_plugin_menu_register ("plug_in_animationoptimize",
-                             "<Image>/Filters/Animation");
-  gimp_plugin_menu_register ("plug_in_animationoptimize_diff",
-                             "<Image>/Filters/Animation");
-  gimp_plugin_menu_register ("plug_in_animationunoptimize",
-                             "<Image>/Filters/Animation");
+  gimp_plugin_menu_register (OPTIMIZE_PROC,      "<Image>/Filters/Animation");
+  gimp_plugin_menu_register (OPTIMIZE_DIFF_PROC, "<Image>/Filters/Animation");
+  gimp_plugin_menu_register (UNOPTIMIZE_PROC,    "<Image>/Filters/Animation");
 
 #ifdef EXPERIMENTAL_BACKDROP_CODE
-  gimp_install_procedure ("plug_in_animation_remove_backdrop",
+  gimp_install_procedure (REMOVE_BACKDROP_PROC,
                           "This procedure attempts to remove the backdrop"
                           " from a GIMP layer-based animation, leaving"
                           " the foreground animation over transparency.",
@@ -200,7 +204,7 @@ query (void)
                           G_N_ELEMENTS (return_args),
                           args, return_args);
 
-  gimp_install_procedure ("plug_in_animation_find_backdrop",
+  gimp_install_procedure (FIND_BACKDROP_PROC,
                           "This procedure attempts to remove the foreground"
                           " from a GIMP layer-based animation, leaving"
                           " a one-layered image containing only the"
@@ -216,10 +220,8 @@ query (void)
                           G_N_ELEMENTS (return_args),
                           args, return_args);
 
-  gimp_plugin_menu_register ("plug_in_animation_remove_backdrop",
-                             "<Image>/Filters/Animation");
-  gimp_plugin_menu_register ("plug_in_animation_find_backdrop",
-                             "<Image>/Filters/Animation");
+  gimp_plugin_menu_register (REMOVE_BACKDROP_PROC, "<Image>/Filters/Animation");
+  gimp_plugin_menu_register (FIND_BACKDROP_PROC,   "<Image>/Filters/Animation");
 #endif
 }
 
@@ -232,11 +234,11 @@ run (const gchar      *name,
 {
   static GimpParam  values[2];
   GimpRunMode       run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  GimpPDBStatusType status    = GIMP_PDB_SUCCESS;
   gboolean          diff_only = FALSE;
 
   *nreturn_vals = 2;
-  *return_vals = values;
+  *return_vals  = values;
 
   run_mode = param[0].data.d_int32;
 
@@ -249,18 +251,18 @@ run (const gchar      *name,
 
   /* Check the procedure name we were called with, to decide
      what needs to be done. */
-  if (strcmp (name, "plug_in_animationoptimize") == 0)
+  if (strcmp (name, OPTIMIZE_PROC) == 0)
     opmode = OPOPTIMIZE;
-  else if (strcmp (name, "plug_in_animationoptimize_diff") == 0)
+  else if (strcmp (name, OPTIMIZE_DIFF_PROC) == 0)
     {
       opmode = OPOPTIMIZE;
       diff_only = TRUE;
     }
-  else if (strcmp (name, "plug_in_animationunoptimize") == 0)
+  else if (strcmp (name, UNOPTIMIZE_PROC) == 0)
     opmode = OPUNOPTIMIZE;
-  else if (strcmp (name, "plug_in_animation_find_backdrop") == 0)
+  else if (strcmp (name, FIND_BACKDROP_PROC) == 0)
     opmode = OPBACKGROUND;
-  else if (strcmp (name, "plug_in_animation_remove_backdrop") == 0)
+  else if (strcmp (name, REMOVE_BACKDROP_PROC) == 0)
     opmode = OPFOREGROUND;
   else
     g_error("GAH!!!");
@@ -275,10 +277,10 @@ run (const gchar      *name,
         gimp_displays_flush();
     }
 
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
-  values[1].type = GIMP_PDB_IMAGE;
+  values[1].type         = GIMP_PDB_IMAGE;
   values[1].data.d_image = new_image_id;
 }
 
