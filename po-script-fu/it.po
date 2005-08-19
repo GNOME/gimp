@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-06-26 20:16+0200\n"
-"PO-Revision-Date: 2005-06-12 17:50+0200\n"
+"PO-Revision-Date: 2005-08-19 19:54+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -199,7 +199,7 @@ msgstr "Temi per pagine _web"
 
 #: ../plug-ins/script-fu/script-fu.c:289
 msgid "_Alien Glow"
-msgstr "Incandescenza _aliena..."
+msgstr "Bagliore _alieno"
 
 #: ../plug-ins/script-fu/script-fu.c:291
 msgid "_Beveled Pattern"
@@ -622,7 +622,7 @@ msgstr "Immagine appiattita"
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:4
 msgid "Glow color"
-msgstr "Colore incandescenza"
+msgstr "Colore bagliore"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:5
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
@@ -686,7 +686,7 @@ msgstr "P_ulsante..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:7
 msgid "Glow radius"
-msgstr "Raggio incandescenza"
+msgstr "Raggio bagliore"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
 #: ../plug-ins/script-fu/scripts/beveled-button.scm.h:5
@@ -710,11 +710,11 @@ msgstr "Colore testo"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:1
 msgid "Alien _Glow..."
-msgstr "Incandescen_za aliena..."
+msgstr "Ba_gliore alieno..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:5
 msgid "Glow size (pixels * 4)"
-msgstr "Dimensione incandescenza (pixel * 4)"
+msgstr "Dimensione bagliore (pixel * 4)"
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:1
 msgid "Alien _Neon..."
@@ -879,11 +879,11 @@ msgstr "Densità macchie Y"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:1
 msgid "Add glowing"
-msgstr "Aggiungi incandescenza"
+msgstr "Aggiungi bagliore"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:2
 msgid "After glow"
-msgstr "Post-incandescenza"
+msgstr "Post bagliore"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
 msgid "B_urn-In..."
@@ -1513,7 +1513,7 @@ msgstr "Dimensione effetto (pixel * 3)"
 
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:5
 msgid "Glo_wing Hot..."
-msgstr "Caldo fumante..."
+msgstr "Incandescen_za..."
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:2
 msgid "Bevel height (Sharpness)"
@@ -2410,21 +2410,3 @@ msgstr "Opacità illuminazione"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:11
 msgid "_Xach-Effect..."
 msgstr "Effetto _xach..."
-
-#~ msgid "SIOD Output"
-#~ msgstr "Uscita SIOD"
-
-#~ msgid "Current Command"
-#~ msgstr "Comando corrente"
-
-#~ msgid "S_cript-Fu"
-#~ msgstr "S_cript-Fu"
-
-#~ msgid "_Alchemy"
-#~ msgstr "_Alchimia"
-
-#~ msgid "S_hadow"
-#~ msgstr "_Ombra"
-
-#~ msgid "_Unsharp Mask..."
-#~ msgstr "Maschera sf_uocata..."
