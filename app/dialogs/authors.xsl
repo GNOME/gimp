@@ -16,7 +16,7 @@
 
 static const gchar *authors[] =
 {
-</xsl:text><xsl:apply-templates select="contributor" /><xsl:text>
+</xsl:text><xsl:apply-templates select="contributor" /><xsl:text>  NULL
 };
 </xsl:text>
   </xsl:template>

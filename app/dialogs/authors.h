@@ -200,5 +200,5 @@ static const gchar *authors[] =
   "Calvin Williamson",
   "Matthew Wilson",
   "Shirasaki Yasuhiro",
-
+  NULL
 };

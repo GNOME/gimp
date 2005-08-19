@@ -20,7 +20,7 @@
 #define __ABOUT_DIALOG_H__
 
 
-GtkWidget * about_dialog_create (void);
+GtkWidget * about_dialog_create (GimpContext *context);
 
 
 #endif /* __ABOUT_DIALOG_H__ */

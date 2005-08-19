@@ -1,7 +1,18 @@
+2005-08-19  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/authors.xsl: generate a NULL terminated array.
+
+	* app/dialogs/authors.h: regenerated.
+
+	* app/dialogs/about-dialog.[ch]: embedded the about box into a
+	GtkAboutDialog.
+
+	* app/dialogs/dialogs-constructors.c: pass a GimpContext to
+	about_dialog_create().
+
 2005-08-19  Nathan Summers  <rock@gimp.org>
 
-	* plugins/poppler.c: removed some extraneous commas
-
+	* plugins/common/poppler.c: removed some extraneous commas.
 
 2005-08-19  Michael Natterer  <mitch@gimp.org>
 

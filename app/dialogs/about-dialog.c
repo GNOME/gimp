@@ -22,448 +22,387 @@
 #include <time.h>
 
 #include <gtk/gtk.h>
-#include <gdk/gdkkeysyms.h>
 
-#include "libgimpmath/gimpmath.h"
 #include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
 
 #include "dialogs-types.h"
 
-#include "core/gimptoolinfo.h"
+#include "core/gimpcontext.h"
 
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimpdnd.h"
+#include "pdb/procedural_db.h"
 
 #include "about-dialog.h"
 #include "authors.h"
 
 #include "gimp-intl.h"
 
-static gchar *founders[] =
-{
-  N_("Version %s brought to you by"),
-  "Spencer Kimball & Peter Mattis"
-};
 
-static gchar *translators[] =
-{
-  N_("Translation by"),
-  /* Translators: insert your names here, separated by newline */
-  /* we'd prefer just the names, please no email addresses.    */
-  N_("translator-credits"),
-};
+#define COPYRIGHT \
+  "Copyright (C) 1995-2005\n" \
+  "Spencer Kimball, Peter Mattis and the GIMP Development Team"
 
-static gchar *contri_intro[] =
-{
-  N_("Contributions by")
-};
+/* FIXME: let GTK+ do the wrapping (requires GTK+ 2.8) */
+#define LICENSE \
+  "This program is free software; you can redistribute it and/or modify\n" \
+  "it under the terms of the GNU General Public License as published by\n" \
+  "the Free Software Foundation; either version 2 of the License, or\n"    \
+  "(at your option) any later version.\n\n"                                \
+  "This program is distributed in the hope that it will be useful,\n"      \
+  "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"       \
+  "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n"                 \
+  "See the GNU General Public License for more details.\n\n"               \
+  "You should have received a copy of the GNU General Public License\n"    \
+  "along with this program; if not, write to the Free Software\n"          \
+  "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA."
 
-static gchar **translator_names = NULL;
+#define COMMENTS       _("GNU Image Manipulation Program")
+
+#define WEBSITE        "http://www.gimp.org/"
+#define WEBSITE_LABEL  _("Visit the GIMP website")
+
+#define PDB_URL_LOAD   "plug-in-web-browser"
+
 
 typedef struct
 {
-  GtkWidget    *about_dialog;
+  GtkWidget    *dialog;
+
   GtkWidget    *logo_area;
   GdkPixmap    *logo_pixmap;
-  GdkRectangle  pixmaparea;
+  gint          logo_width;
+  gint          logo_height;
 
-  GdkBitmap    *shape_bitmap;
-  GdkGC        *trans_gc;
-  GdkGC        *opaque_gc;
-
-  GdkRectangle  textarea;
+  GdkRectangle  text_area;
   gdouble       text_size;
   gdouble       min_text_size;
   PangoLayout  *layout;
+  PangoFontDescription *font_desc;
 
-  gint          timer;
+  gint          n_authors;
+  gint          shuffle[G_N_ELEMENTS (authors) - 1];  /* NULL terminated */
+
+  guint         timer;
 
   gint          index;
   gint          animstep;
-  gboolean      visible;
   gint          textrange[2];
   gint          state;
+  gboolean      visible;
+  gboolean      pp;
+} GimpAboutDialog;
 
-} GimpAboutInfo;
 
-PangoColor gradient[] =
+static const gchar *founders[] =
 {
-  { 139 * 257, 137 * 257, 124 * 257 },
-  { 65535, 65535, 65535 },
-  { 5000, 5000, 5000 },
+  N_("Version %s brought to you by"), "Spencer Kimball & Peter Mattis"
 };
 
-PangoColor foreground = { 5000, 5000, 5000 };
-PangoColor background = { 139 * 257, 137 * 257, 124 * 257 };
+static const PangoColor foreground = { 5000,      5000,      5000      };
+static const PangoColor background = { 139 * 257, 137 * 257, 124 * 257 };
+
+static const PangoColor gradient[] =
+{
+  { 139 * 257,  137 * 257,  124 * 257  },
+  { 65535,      65535,      65535      },
+  { 5000,       5000,       5000       }
+};
 
 /* backup values */
 
-PangoColor grad1ent[] =
+static const PangoColor grad1ent[] =
 {
   { 0xff * 257, 0xba * 257, 0x00 * 257 },
-  { 37522, 51914, 57568 },
+  { 37522,      51914,      57568      }
 };
 
-PangoColor foregr0und = { 37522, 51914, 57568 };
-PangoColor backgr0und = { 0, 0, 0 };
-
-static GimpAboutInfo about_info = { 0, };
-static gboolean pp = FALSE;
-
-static gboolean  about_dialog_load_logo   (GtkWidget         *window);
-static void      about_dialog_destroy     (GtkObject         *object,
-                                           gpointer           data);
-static void      about_dialog_unmap       (GtkWidget         *widget,
-                                           gpointer           data);
-static void      about_dialog_center      (GtkWindow         *window);
-static gboolean  about_dialog_logo_expose (GtkWidget         *widget,
-                                           GdkEventExpose    *event,
-                                           gpointer           data);
-static gint      about_dialog_button      (GtkWidget         *widget,
-                                           GdkEventButton    *event,
-                                           gpointer           data);
-static gint      about_dialog_key         (GtkWidget         *widget,
-                                           GdkEventKey       *event,
-                                           gpointer           data);
-static void      reshuffle_array          (void);
-static gboolean  about_dialog_timer       (gpointer           data);
+static const PangoColor foregr0und = { 37522, 51914, 57568 };
+static const PangoColor backgr0und = { 0,     0,     0     };
 
 
-static PangoFontDescription  *font_desc     = NULL;
-static const gchar          **scroll_text   = authors;
-static gint                   nscroll_texts = G_N_ELEMENTS (authors);
-static gint                   shuffle_array[G_N_ELEMENTS (authors)];
+static void      about_dialog_map         (GtkWidget       *widget,
+                                           GimpAboutDialog *dialog);
+static void      about_dialog_unmap       (GtkWidget       *widget,
+                                           GimpAboutDialog *dialog);
+static void      about_dialog_load_url    (GtkAboutDialog  *dialog,
+                                           const gchar     *url,
+                                           gpointer         data);
+static void      about_dialog_add_logo    (GtkWidget       *vbox,
+                                           GimpAboutDialog *dialog);
+static gboolean  about_dialog_logo_expose (GtkWidget       *widget,
+                                           GdkEventExpose  *event,
+                                           GimpAboutDialog *dialog);
+static gboolean  about_dialog_load_logo   (GtkWidget       *widget,
+                                           GimpAboutDialog *dialog);
+static void      about_dialog_reshuffle   (GimpAboutDialog *dialog);
+static gboolean  about_dialog_timer       (gpointer         data);
 
 
 GtkWidget *
-about_dialog_create (void)
+about_dialog_create (GimpContext *context)
 {
-  if (! about_info.about_dialog)
+  static GimpAboutDialog *dialog = NULL;
+
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+
+  if (! dialog)
     {
-      GtkWidget   *widget;
-      GdkGCValues  shape_gcv;
+      GtkWidget       *widget;
+      GtkWidget       *container;
+      GList           *children;
+      GdkModifierType  mask;
 
-      about_info.visible = FALSE;
-      about_info.state = 0;
-      about_info.animstep = -1;
+      if (procedural_db_lookup (context->gimp, PDB_URL_LOAD))
+        gtk_about_dialog_set_url_hook (about_dialog_load_url,
+                                       g_object_ref (context),
+                                       (GDestroyNotify) g_object_unref);
 
-      widget = g_object_new (GTK_TYPE_WINDOW,
-                             "type",            GTK_WINDOW_POPUP,
-                             "title",           _("About The GIMP"),
-                             "window_position", GTK_WIN_POS_CENTER,
-                             "resizable",       FALSE,
+      dialog = g_new0 (GimpAboutDialog, 1);
+
+      dialog->n_authors = G_N_ELEMENTS (authors) - 1;
+
+      widget = g_object_new (GTK_TYPE_ABOUT_DIALOG,
+                             "version",            GIMP_VERSION,
+                             "copyright",          COPYRIGHT,
+                             "comments",           COMMENTS,
+                             "license",            LICENSE,
+                             "website",            WEBSITE,
+                             "website-label",      WEBSITE_LABEL,
+                             "authors",            authors,
+                             /* Translators: insert your names here,
+                              * separated by newline
+                              */
+                             "translator-credits", _("translator-credits"),
                              NULL);
 
-      about_info.about_dialog = widget;
+      dialog->dialog = widget;
 
-      gtk_window_set_role (GTK_WINDOW (widget), "about-dialog");
+      g_object_add_weak_pointer (G_OBJECT (widget), (gpointer) &dialog);
 
-      g_signal_connect (widget, "destroy",
-                        G_CALLBACK (about_dialog_destroy),
+      g_signal_connect (widget, "response",
+                        G_CALLBACK (gtk_widget_destroy),
                         NULL);
+
+      g_signal_connect (widget, "map",
+                        G_CALLBACK (about_dialog_map),
+                        dialog);
       g_signal_connect (widget, "unmap",
                         G_CALLBACK (about_dialog_unmap),
-                        NULL);
-      g_signal_connect (widget, "button-press-event",
-                        G_CALLBACK (about_dialog_button),
-                        NULL);
-      g_signal_connect (widget, "key-press-event",
-                        G_CALLBACK (about_dialog_key),
-                        NULL);
+                        dialog);
 
-      gtk_widget_set_events (widget, GDK_BUTTON_PRESS_MASK);
-
-      if (! about_dialog_load_logo (widget))
+      if (! about_dialog_load_logo (widget, dialog))
         {
           gtk_widget_destroy (widget);
-          about_info.about_dialog = NULL;
           return NULL;
         }
 
-      about_dialog_center (GTK_WINDOW (widget));
+      /*  kids, don't try this at home!  */
+      container = GTK_DIALOG (widget)->vbox;
+      children = gtk_container_get_children (GTK_CONTAINER (container));
 
-      /* place the scrolltext at the bottom of the image */
-      about_info.textarea.width = about_info.pixmaparea.width;
-      about_info.textarea.height = 32; /* gets changed in _expose () as well */
-      about_info.textarea.x = 0;
-      about_info.textarea.y = (about_info.pixmaparea.height -
-                               about_info.textarea.height);
+      if (GTK_IS_VBOX (children->data))
+        about_dialog_add_logo (children->data, dialog);
+      else
+        g_warning ("%s: ooops, no vbox in this container?", G_STRLOC);
 
-      widget = gtk_drawing_area_new ();
-      about_info.logo_area = widget;
+      g_list_free (children);
 
-      gtk_widget_set_size_request (widget,
-                                   about_info.pixmaparea.width,
-                                   about_info.pixmaparea.height);
-      gtk_widget_set_events (widget, GDK_EXPOSURE_MASK);
-      gtk_container_add (GTK_CONTAINER (about_info.about_dialog),
-                         widget);
-      gtk_widget_show (widget);
+      /* weird magic to determine the way the logo should be shown */
+      gdk_window_get_pointer (NULL, NULL, NULL, &mask);
 
-      g_signal_connect (widget, "expose-event",
-                        G_CALLBACK (about_dialog_logo_expose),
-                        NULL);
+      mask &= ~GDK_BUTTON3_MASK;
+      dialog->pp = (mask &= (GDK_SHIFT_MASK | GDK_CONTROL_MASK) &
+                    (GDK_CONTROL_MASK | GDK_MOD1_MASK) &
+                    (GDK_MOD1_MASK | ~GDK_SHIFT_MASK));
 
-      gtk_widget_realize (widget);
-      gdk_window_set_background (widget->window,
-                                 &(widget->style)->black);
-
-      /* setup shape bitmap */
-
-      about_info.shape_bitmap = gdk_pixmap_new (widget->window,
-                                                about_info.pixmaparea.width,
-                                                about_info.pixmaparea.height,
-                                                1);
-      about_info.trans_gc = gdk_gc_new (about_info.shape_bitmap);
-
-      about_info.opaque_gc = gdk_gc_new (about_info.shape_bitmap);
-      gdk_gc_get_values (about_info.opaque_gc, &shape_gcv);
-      gdk_gc_set_foreground (about_info.opaque_gc, &shape_gcv.background);
-
-      gdk_draw_rectangle (about_info.shape_bitmap,
-                          about_info.trans_gc,
-                          TRUE,
-                          0, 0,
-                          about_info.pixmaparea.width,
-                          about_info.pixmaparea.height);
-
-      gdk_draw_line (about_info.shape_bitmap,
-                     about_info.opaque_gc,
-                     0, 0,
-                     about_info.pixmaparea.width, 0);
-
-      gtk_widget_shape_combine_mask (about_info.about_dialog,
-                                     about_info.shape_bitmap,
-                                     0, 0);
-      about_info.layout = gtk_widget_create_pango_layout (about_info.logo_area,
-                                                          NULL);
-      g_object_weak_ref (G_OBJECT (about_info.logo_area),
-                         (GWeakNotify) g_object_unref, about_info.layout);
-
-      font_desc = pango_font_description_from_string ("Sans, 11");
-
-      pango_layout_set_font_description (about_info.layout, font_desc);
-      pango_layout_set_justify (about_info.layout, PANGO_ALIGN_CENTER);
-
+      dialog->text_area.height = dialog->pp ? 50 : 32;
+      dialog->text_area.y = (dialog->logo_height - dialog->text_area.height);
     }
 
-  if (! GTK_WIDGET_VISIBLE (about_info.about_dialog))
-    {
-      about_info.state = 0;
-      about_info.index = 0;
+  gtk_window_present (GTK_WINDOW (dialog->dialog));
 
-      reshuffle_array ();
-      pango_layout_set_text (about_info.layout, "", -1);
-    }
-
-  gtk_window_present (GTK_WINDOW (about_info.about_dialog));
-
-  return about_info.about_dialog;
+  return dialog->dialog;
 }
 
 static void
-about_dialog_destroy (GtkObject *object,
-                      gpointer   data)
+about_dialog_map (GtkWidget       *widget,
+                  GimpAboutDialog *dialog)
 {
-  about_info.about_dialog = NULL;
-  about_dialog_unmap (NULL, NULL);
-}
-
-static void
-about_dialog_unmap (GtkWidget *widget,
-                    gpointer   data)
-{
-  if (about_info.timer)
+  if (dialog->layout && dialog->timer == 0)
     {
-      g_source_remove (about_info.timer);
-      about_info.timer = 0;
-    }
+      dialog->state    = 0;
+      dialog->index    = 0;
+      dialog->animstep = 0;
+      dialog->visible  = FALSE;
 
-  if (about_info.about_dialog)
-    {
-      gdk_draw_rectangle (about_info.shape_bitmap,
-                          about_info.trans_gc,
-                          TRUE,
-                          0, 0,
-                          about_info.pixmaparea.width,
-                          about_info.pixmaparea.height);
+      about_dialog_reshuffle (dialog);
 
-      gdk_draw_line (about_info.shape_bitmap,
-                     about_info.opaque_gc,
-                     0, 0,
-                     about_info.pixmaparea.width, 0);
-
-      gtk_widget_shape_combine_mask (about_info.about_dialog,
-                                     about_info.shape_bitmap,
-                                     0, 0);
+      dialog->timer = g_timeout_add (800, about_dialog_timer, dialog);
     }
 }
 
 static void
-about_dialog_center (GtkWindow *window)
+about_dialog_unmap (GtkWidget       *widget,
+                    GimpAboutDialog *dialog)
 {
-  GdkDisplay   *display = gtk_widget_get_display (GTK_WIDGET (window));
-  GdkScreen    *screen;
-  GdkRectangle  rect;
-  gint          monitor;
-  gint          x, y;
+  if (dialog->timer)
+    {
+      g_source_remove (dialog->timer);
+      dialog->timer = 0;
+    }
+}
 
-  gdk_display_get_pointer (display, &screen, &x, &y, NULL);
+static void
+about_dialog_load_url (GtkAboutDialog *dialog,
+                       const gchar    *url,
+                       gpointer        data)
+{
+  GimpContext *context = GIMP_CONTEXT (data);
+  Argument    *return_vals;
+  gint         nreturn_vals;
 
-  monitor = gdk_screen_get_monitor_at_point (screen, x, y);
-  gdk_screen_get_monitor_geometry (screen, monitor, &rect);
+  return_vals = procedural_db_run_proc (context->gimp, context, NULL,
+                                        PDB_URL_LOAD,
+                                        &nreturn_vals,
+                                        GIMP_PDB_STRING, url,
+                                        GIMP_PDB_END);
+  procedural_db_destroy_args (return_vals, nreturn_vals);
+}
 
-  gtk_window_set_screen (window, screen);
-  gtk_window_move (window,
-                   rect.x + (rect.width  - about_info.pixmaparea.width)  / 2,
-                   rect.y + (rect.height - about_info.pixmaparea.height) / 2);
+
+static void
+about_dialog_add_logo (GtkWidget       *vbox,
+                       GimpAboutDialog *dialog)
+{
+  GtkWidget *align;
+  GList     *children;
+
+  children = gtk_container_get_children (GTK_CONTAINER (vbox));
+
+  for (children = gtk_container_get_children (GTK_CONTAINER (vbox));
+       children;
+       children = g_list_next (children))
+    {
+      if (GTK_IS_IMAGE (children->data))
+        {
+          gtk_widget_hide (children->data);
+          break;
+        }
+    }
+
+  g_list_free (children);
+
+  align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+  gtk_box_pack_start (GTK_BOX (vbox), align, FALSE, FALSE, 0);
+  gtk_widget_show (align);
+
+  dialog->logo_area = gtk_drawing_area_new ();
+  gtk_widget_set_size_request (dialog->logo_area,
+                               dialog->logo_width, dialog->logo_height);
+  gtk_widget_set_events (dialog->logo_area, GDK_EXPOSURE_MASK);
+  gtk_container_add (GTK_CONTAINER (align), dialog->logo_area);
+  gtk_widget_show (dialog->logo_area);
+
+  g_signal_connect (dialog->logo_area, "expose-event",
+                    G_CALLBACK (about_dialog_logo_expose),
+                    dialog);
+
+  /* place the scrolltext at the bottom of the image */
+  dialog->text_area.width = dialog->logo_width;
+  dialog->text_area.height = 32; /* gets changed in map() as well */
+  dialog->text_area.x = 0;
+  dialog->text_area.y = (dialog->logo_height - dialog->text_area.height);
+
+  dialog->layout = gtk_widget_create_pango_layout (dialog->logo_area, NULL);
+  g_object_weak_ref (G_OBJECT (dialog->logo_area),
+                     (GWeakNotify) g_object_unref, dialog->layout);
+
+  dialog->font_desc = pango_font_description_from_string ("Sans, 11");
+
+  pango_layout_set_font_description (dialog->layout, dialog->font_desc);
+  pango_layout_set_justify (dialog->layout, PANGO_ALIGN_CENTER);
+}
+
+static void
+about_dialog_reshuffle (GimpAboutDialog *dialog)
+{
+  GRand *gr = g_rand_new ();
+  gint   i;
+
+  for (i = 0; i < dialog->n_authors; i++)
+    dialog->shuffle[i] = i;
+
+  for (i = 0; i < dialog->n_authors; i++)
+    {
+      gint j = g_rand_int_range (gr, 0, dialog->n_authors);
+
+      if (i != j)
+        {
+          gint t;
+
+          t = dialog->shuffle[j];
+          dialog->shuffle[j] = dialog->shuffle[i];
+          dialog->shuffle[i] = t;
+        }
+    }
+
+  g_rand_free (gr);
 }
 
 static gboolean
-about_dialog_logo_expose (GtkWidget      *widget,
-                          GdkEventExpose *event,
-                          gpointer        data)
+about_dialog_logo_expose (GtkWidget       *widget,
+                          GdkEventExpose  *event,
+                          GimpAboutDialog *dialog)
 {
-  gint width, height;
-
-  if (!about_info.timer)
-    {
-      GdkModifierType mask;
-
-      /* No timeout, we were unmapped earlier */
-      about_info.state = 0;
-      about_info.index = 1;
-      about_info.animstep = -1;
-      about_info.visible = FALSE;
-      reshuffle_array ();
-      gdk_draw_rectangle (about_info.shape_bitmap,
-                          about_info.trans_gc,
-                          TRUE,
-                          0, 0,
-                          about_info.pixmaparea.width,
-                          about_info.pixmaparea.height);
-
-      gdk_draw_line (about_info.shape_bitmap,
-                     about_info.opaque_gc,
-                     0, 0,
-                     about_info.pixmaparea.width, 0);
-
-      gtk_widget_shape_combine_mask (about_info.about_dialog,
-                                     about_info.shape_bitmap,
-                                     0, 0);
-      about_info.timer = g_timeout_add (30, about_dialog_timer, NULL);
-
-      gdk_window_get_pointer (NULL, NULL, NULL, &mask);
-
-      /* weird magic to determine the way the logo should be shown */
-      mask &= ~GDK_BUTTON3_MASK;
-      pp = (mask &= (GDK_SHIFT_MASK | GDK_CONTROL_MASK) &
-                    (GDK_CONTROL_MASK | GDK_MOD1_MASK) &
-                    (GDK_MOD1_MASK | ~GDK_SHIFT_MASK),
-      height = mask ? (about_info.pixmaparea.height > 0) &&
-                      (about_info.pixmaparea.width > 0): 0);
-
-      about_info.textarea.height = pp ? 50 : 32;
-      about_info.textarea.y = (about_info.pixmaparea.height -
-                               about_info.textarea.height);
-    }
-
-  /* only operate on the region covered by the pixmap */
-  if (! gdk_rectangle_intersect (&(about_info.pixmaparea),
-                                 &(event->area),
-                                 &(event->area)))
-    return FALSE;
-
-  gdk_gc_set_clip_rectangle (widget->style->black_gc, &(event->area));
+  gdk_gc_set_clip_rectangle (widget->style->black_gc, &event->area);
 
   gdk_draw_drawable (widget->window,
-                     widget->style->white_gc,
-                     about_info.logo_pixmap,
+                     widget->style->black_gc,
+                     dialog->logo_pixmap,
                      event->area.x, event->area.y +
-                     (pp ? about_info.pixmaparea.height : 0),
+                     (dialog->pp ? dialog->logo_height : 0),
                      event->area.x, event->area.y,
                      event->area.width, event->area.height);
 
-  if (pp && about_info.state == 0 &&
-      (about_info.index < about_info.pixmaparea.height / 12 ||
-       about_info.index < g_random_int () %
-                          (about_info.pixmaparea.height / 8 + 13)))
+  gdk_gc_set_clip_rectangle (widget->style->black_gc, NULL);
+
+  if (dialog->visible)
     {
-      gdk_draw_rectangle (widget->window,
-                          widget->style->black_gc,
-                          TRUE,
-                          0, 0, about_info.pixmaparea.width, 158);
+      GdkGC *text_gc;
+      gint   layout_x, layout_y;
+      gint   width, height;
 
-    }
+      text_gc = dialog->logo_area->style->text_gc[GTK_STATE_NORMAL];
 
-  if (about_info.visible == TRUE)
-    {
-      gint layout_x, layout_y;
+      pango_layout_get_pixel_size (dialog->layout, &width, &height);
 
-      pango_layout_get_pixel_size (about_info.layout, &width, &height);
+      layout_x = dialog->text_area.x + (dialog->text_area.width - width) / 2;
+      layout_y = dialog->text_area.y + (dialog->text_area.height - height) / 2;
 
-      layout_x = about_info.textarea.x +
-                        (about_info.textarea.width - width) / 2;
-      layout_y = about_info.textarea.y +
-                        (about_info.textarea.height - height) / 2;
-
-      if (about_info.textrange[1] > 0)
+      if (dialog->textrange[1] > 0)
         {
           GdkRegion *covered_region = NULL;
           GdkRegion *rect_region;
 
-          covered_region = gdk_pango_layout_get_clip_region
-                                    (about_info.layout,
-                                     layout_x, layout_y,
-                                     about_info.textrange, 1);
+          covered_region =
+            gdk_pango_layout_get_clip_region (dialog->layout,
+                                              layout_x, layout_y,
+                                              dialog->textrange, 1);
 
-          rect_region = gdk_region_rectangle (&(event->area));
+          rect_region = gdk_region_rectangle (&event->area);
 
           gdk_region_intersect (covered_region, rect_region);
           gdk_region_destroy (rect_region);
 
-          gdk_gc_set_clip_region (about_info.logo_area->style->text_gc[GTK_STATE_NORMAL],
-                                  covered_region);
+          gdk_gc_set_clip_region (text_gc, covered_region);
           gdk_region_destroy (covered_region);
         }
 
       gdk_draw_layout (widget->window,
                        widget->style->text_gc[GTK_STATE_NORMAL],
                        layout_x, layout_y,
-                       about_info.layout);
+                       dialog->layout);
 
-    }
-
-  gdk_gc_set_clip_rectangle (widget->style->black_gc, NULL);
-
-  return FALSE;
-}
-
-static gint
-about_dialog_button (GtkWidget      *widget,
-                     GdkEventButton *event,
-                     gpointer        data)
-{
-  gtk_widget_hide (about_info.about_dialog);
-
-  return FALSE;
-}
-
-static gint
-about_dialog_key (GtkWidget      *widget,
-                  GdkEventKey    *event,
-                  gpointer        data)
-{
-  /* placeholder */
-  switch (event->keyval)
-    {
-    case GDK_a:
-    case GDK_A:
-    case GDK_b:
-    case GDK_B:
-    default:
-        break;
+      gdk_gc_set_clip_region (text_gc, NULL);
     }
 
   return FALSE;
@@ -472,11 +411,10 @@ about_dialog_key (GtkWidget      *widget,
 static gchar *
 insert_spacers (const gchar *string)
 {
-  gchar *normalized, *ptr;
-  gunichar unichr;
-  GString *str;
-
-  str = g_string_new (NULL);
+  GString  *str = g_string_new (NULL);
+  gchar    *normalized;
+  gchar    *ptr;
+  gunichar  unichr;
 
   normalized = g_utf8_normalize (string, -1, G_NORMALIZE_DEFAULT_COMPOSE);
   ptr = normalized;
@@ -494,108 +432,77 @@ insert_spacers (const gchar *string)
 }
 
 static void
-mix_gradient (PangoColor *gradient, guint ncolors,
-              PangoColor *target, gdouble pos)
+mix_gradient (const PangoColor *gradient,
+              guint             ncolors,
+              PangoColor       *target,
+              gdouble           pos)
 {
   gint index;
 
-  g_return_if_fail (gradient != NULL);
-  g_return_if_fail (ncolors > 1);
-  g_return_if_fail (target != NULL);
-  g_return_if_fail (pos >= 0.0  &&  pos <= 1.0);
-
   if (pos == 1.0)
     {
-      target->red   = gradient[ncolors-1].red;
-      target->green = gradient[ncolors-1].green;
-      target->blue  = gradient[ncolors-1].blue;
+      target->red   = gradient[ncolors - 1].red;
+      target->green = gradient[ncolors - 1].green;
+      target->blue  = gradient[ncolors - 1].blue;
       return;
     }
 
-  index = (int) floor (pos * (ncolors-1));
+  index = (gint) floor (pos * (ncolors - 1));
   pos = pos * (ncolors - 1) - index;
 
-  target->red   = gradient[index].red   * (1.0 - pos) + gradient[index+1].red   * pos;
-  target->green = gradient[index].green * (1.0 - pos) + gradient[index+1].green * pos;
-  target->blue  = gradient[index].blue  * (1.0 - pos) + gradient[index+1].blue  * pos;
-
+  target->red   = (gradient[index].red *
+                   (1.0 - pos) + gradient[index + 1].red   * pos);
+  target->green = (gradient[index].green *
+                   (1.0 - pos) + gradient[index + 1].green * pos);
+  target->blue  = (gradient[index].blue *
+                   (1.0 - pos) + gradient[index + 1].blue  * pos);
 }
 
-static void
-mix_colors (PangoColor *start, PangoColor *end,
-            PangoColor *target,
-            gdouble pos)
+static void inline
+mix_colors (const PangoColor *start,
+            const PangoColor *end,
+            PangoColor       *target,
+            gdouble           pos)
 {
-  g_return_if_fail (start != NULL);
-  g_return_if_fail (end != NULL);
-  g_return_if_fail (target != NULL);
-  g_return_if_fail (pos >= 0.0  &&  pos <= 1.0);
-
   target->red   = start->red   * (1.0 - pos) + end->red   * pos;
   target->green = start->green * (1.0 - pos) + end->green * pos;
   target->blue  = start->blue  * (1.0 - pos) + end->blue  * pos;
 }
 
 static void
-reshuffle_array (void)
+decorate_text (GimpAboutDialog *dialog,
+               gint             anim_type,
+               gdouble          time)
 {
-  GRand *gr = g_rand_new ();
-  gint i;
-
-  for (i = 0; i < nscroll_texts; i++)
-    {
-      shuffle_array[i] = i;
-    }
-
-  for (i = 0; i < nscroll_texts; i++)
-    {
-      gint j;
-
-      j = g_rand_int_range (gr, 0, nscroll_texts);
-      if (i != j)
-        {
-          gint t;
-
-          t = shuffle_array[j];
-          shuffle_array[j] = shuffle_array[i];
-          shuffle_array[i] = t;
-        }
-    }
-
-  g_rand_free (gr);
-}
-
-static void
-decorate_text (PangoLayout *layout, gint anim_type, gdouble time)
-{
-  gint letter_count = 0;
-  gint text_length = 0;
-  gint text_bytelen = 0;
-  gint cluster_start, cluster_end;
-  const gchar *text;
-  const gchar *ptr;
-  gunichar unichr;
-  PangoAttrList *attrlist = NULL;
+  const gchar    *text;
+  const gchar    *ptr;
+  gint            letter_count = 0;
+  gint            text_length  = 0;
+  gint            text_bytelen = 0;
+  gint            cluster_start, cluster_end;
+  gunichar        unichr;
+  PangoAttrList  *attrlist = NULL;
   PangoAttribute *attr;
-  PangoRectangle irect = {0, 0, 0, 0};
-  PangoRectangle lrect = {0, 0, 0, 0};
-  PangoColor mix;
+  PangoRectangle  irect = {0, 0, 0, 0};
+  PangoRectangle  lrect = {0, 0, 0, 0};
+  PangoColor      mix;
 
-  mix_colors ((pp ? &backgr0und : &background),
-              (pp ? &foregr0und : &foreground),
-              &mix, time);
+  mix_colors ((dialog->pp ? &backgr0und : &background),
+              (dialog->pp ? &foregr0und : &foreground), &mix, time);
 
-  text = pango_layout_get_text (layout);
+  text = pango_layout_get_text (dialog->layout);
+  g_return_if_fail (text != NULL);
+
   text_length = g_utf8_strlen (text, -1);
   text_bytelen = strlen (text);
 
   attrlist = pango_attr_list_new ();
 
-  about_info.textrange[0] = 0;
-  about_info.textrange[1] = text_bytelen;
+  dialog->textrange[0] = 0;
+  dialog->textrange[1] = text_bytelen;
 
   switch (anim_type)
-  {
+    {
     case 0: /* Fade in */
       attr = pango_attr_foreground_new (mix.red, mix.green, mix.blue);
       attr->start_index = 0;
@@ -638,6 +545,7 @@ decorate_text (PangoLayout *layout, gint anim_type, gdouble time)
       ptr = text;
 
       cluster_start = 0;
+
       while ((unichr = g_utf8_get_char (ptr)))
         {
           if (unichr == 0x200b)
@@ -661,14 +569,13 @@ decorate_text (PangoLayout *layout, gint anim_type, gdouble time)
     case 3: /* letterwise Fade in */
       ptr = text;
 
-      letter_count = 0;
+      letter_count  = 0;
       cluster_start = 0;
+
       while ((unichr = g_utf8_get_char (ptr)))
         {
-          gint border;
+          gint    border = (text_length + 15) * time - 15;
           gdouble pos;
-
-          border = (text_length + 15) * time - 15;
 
           if (letter_count < border)
             pos = 0;
@@ -677,8 +584,8 @@ decorate_text (PangoLayout *layout, gint anim_type, gdouble time)
           else
             pos = ((gdouble) (letter_count - border)) / 15;
 
-          mix_colors ((pp ? &foregr0und : &foreground),
-                      (pp ? &backgr0und : &background),
+          mix_colors ((dialog->pp ? &foregr0und : &foreground),
+                      (dialog->pp ? &backgr0und : &background),
                       &mix, pos);
 
           ptr = g_utf8_next_char (ptr);
@@ -691,7 +598,7 @@ decorate_text (PangoLayout *layout, gint anim_type, gdouble time)
           pango_attr_list_change (attrlist, attr);
 
           if (pos < 1.0)
-            about_info.textrange[1] = cluster_end;
+            dialog->textrange[1] = cluster_end;
 
           letter_count++;
           cluster_start = cluster_end;
@@ -702,14 +609,13 @@ decorate_text (PangoLayout *layout, gint anim_type, gdouble time)
     case 4: /* letterwise Fade in, triangular */
       ptr = text;
 
-      letter_count = 0;
+      letter_count  = 0;
       cluster_start = 0;
+
       while ((unichr = g_utf8_get_char (ptr)))
         {
-          gint border;
+          gint    border = (text_length + 15) * time - 15;
           gdouble pos;
-
-          border = (text_length + 15) * time - 15;
 
           if (letter_count < border)
             pos = 1.0;
@@ -718,8 +624,9 @@ decorate_text (PangoLayout *layout, gint anim_type, gdouble time)
           else
             pos = 1.0 - ((gdouble) (letter_count - border)) / 15;
 
-          mix_gradient (pp ? grad1ent : gradient,
-                        pp ? G_N_ELEMENTS (grad1ent) : G_N_ELEMENTS (gradient),
+          mix_gradient (dialog->pp ? grad1ent : gradient,
+                        dialog->pp ?
+                        G_N_ELEMENTS (grad1ent) : G_N_ELEMENTS (gradient),
                         &mix, pos);
 
           ptr = g_utf8_next_char (ptr);
@@ -732,7 +639,7 @@ decorate_text (PangoLayout *layout, gint anim_type, gdouble time)
           pango_attr_list_change (attrlist, attr);
 
           if (pos > 0.0)
-            about_info.textrange[1] = cluster_end;
+            dialog->textrange[1] = cluster_end;
 
           letter_count++;
           cluster_start = cluster_end;
@@ -741,224 +648,142 @@ decorate_text (PangoLayout *layout, gint anim_type, gdouble time)
 
     default:
       g_printerr ("Unknown animation type %d\n", anim_type);
-  }
+    }
 
-
-  pango_layout_set_attributes (layout, attrlist);
+  pango_layout_set_attributes (dialog->layout, attrlist);
   pango_attr_list_unref (attrlist);
-
 }
 
 static gboolean
 about_dialog_timer (gpointer data)
 {
-  gboolean return_val;
-  gint width, height;
-  gdouble size;
-  gchar *text;
-  return_val = TRUE;
+  GimpAboutDialog *dialog  = data;
+  gint             timeout = 0;
 
-  if (about_info.animstep == 0)
+  if (dialog->state == 0)
     {
-      size = 11.0;
-      text = NULL;
-      about_info.visible = TRUE;
+      dialog->timer = g_timeout_add (30, about_dialog_timer, dialog);
+      dialog->index = 0;
+      dialog->state = 1;
+      return FALSE;
+    }
 
-      if (about_info.state == 0)
+  if (dialog->animstep == 0)
+    {
+      gchar   *text = NULL;
+      gdouble  size = 11.0;
+      gint     width;
+      gint     height;
+
+      dialog->visible = TRUE;
+
+      if (dialog->state == 1)
         {
-          if (about_info.index > (about_info.pixmaparea.height /
-                                  (pp ? 8 : 16)) + 16)
+          if (dialog->index >= G_N_ELEMENTS (founders))
             {
-              about_info.index = 0;
-              about_info.state ++;
+              dialog->index = 0;
+              dialog->state = 2;
             }
           else
             {
-              height = about_info.index * 16;
-
-              if (height < about_info.pixmaparea.height)
-                gdk_draw_line (about_info.shape_bitmap,
-                               about_info.opaque_gc,
-                               0, height,
-                               about_info.pixmaparea.width, height);
-
-              height -= 15;
-              while (height > 0)
+              if (dialog->index == 0)
                 {
-                  if (height < about_info.pixmaparea.height)
-                    gdk_draw_line (about_info.shape_bitmap,
-                                   about_info.opaque_gc,
-                                   0, height,
-                                   about_info.pixmaparea.width, height);
-                  height -= 15;
-                }
-
-              gtk_widget_shape_combine_mask (about_info.about_dialog,
-                                             about_info.shape_bitmap,
-                                             0, 0);
-              about_info.index++;
-              about_info.visible = FALSE;
-              gtk_widget_queue_draw_area (about_info.logo_area,
-                                          0, 0,
-                                          about_info.pixmaparea.width,
-                                          about_info.pixmaparea.height);
-              return TRUE;
-            }
-        }
-
-      if (about_info.state == 1)
-        {
-          if (about_info.index >= G_N_ELEMENTS (founders))
-            {
-              about_info.index = 0;
-
-              /* skip the translators section when the translator
-               * did not provide a translation with his name
-               */
-              if (gettext (translators[1]) == translators[1])
-                about_info.state = 4;
-              else
-                about_info.state = 2;
-            }
-          else
-            {
-              if (about_info.index == 0)
-                {
-                  gchar *tmp;
-                  tmp = g_strdup_printf (gettext (founders[0]), GIMP_VERSION);
+                  gchar *tmp = g_strdup_printf (gettext (founders[0]),
+                                                GIMP_VERSION);
                   text = insert_spacers (tmp);
                   g_free (tmp);
                 }
               else
                 {
-                  text = insert_spacers (gettext (founders[about_info.index]));
+                  text = insert_spacers (gettext (founders[dialog->index]));
                 }
-              about_info.index++;
+
+              dialog->index++;
             }
         }
 
-      if (about_info.state == 2)
+      if (dialog->state == 2)
         {
-          if (about_info.index >= G_N_ELEMENTS (translators) - 1)
-            {
-              about_info.index = 0;
-              about_info.state++;
-            }
-          else
-            {
-              text = insert_spacers (gettext (translators[about_info.index]));
-              about_info.index++;
-            }
+          text = insert_spacers (_("Contributions by"));
+
+          dialog->index = 0;
+          dialog->state++;
         }
 
-      if (about_info.state == 3)
+      if (dialog->state == 3)
         {
-          if (!translator_names)
-            translator_names = g_strsplit (gettext (translators[1]), "\n", 0);
+          dialog->index += 1;
+          if (dialog->index == dialog->n_authors)
+            dialog->index = 0;
 
-          if (translator_names[about_info.index] == NULL)
-            {
-              about_info.index = 0;
-              about_info.state++;
-            }
-          else
-            {
-              text = insert_spacers (translator_names[about_info.index]);
-              about_info.index++;
-            }
+          text = insert_spacers (authors[dialog->shuffle[dialog->index]]);
         }
 
-      if (about_info.state == 4)
-        {
-          if (about_info.index >= G_N_ELEMENTS (contri_intro))
-            {
-              about_info.index = 0;
-              about_info.state++;
-            }
-          else
-            {
-              text = insert_spacers (gettext (contri_intro[about_info.index]));
-              about_info.index++;
-            }
+      g_return_val_if_fail (text != NULL, TRUE);
 
-        }
+      pango_layout_set_text (dialog->layout, text, -1);
+      pango_layout_set_attributes (dialog->layout, NULL);
 
-      if (about_info.state == 5)
-        {
+      pango_font_description_set_size (dialog->font_desc, size * PANGO_SCALE);
+      pango_layout_set_font_description (dialog->layout, dialog->font_desc);
 
-          about_info.index += 1;
-          if (about_info.index == nscroll_texts)
-            about_info.index = 0;
+      pango_layout_get_pixel_size (dialog->layout, &width, &height);
 
-          text = insert_spacers (scroll_text[shuffle_array[about_info.index]]);
-        }
-
-      if (text == NULL)
-        {
-          g_printerr ("TEXT == NULL\n");
-          return TRUE;
-        }
-      pango_layout_set_text (about_info.layout, text, -1);
-      pango_layout_set_attributes (about_info.layout, NULL);
-
-      pango_font_description_set_size (font_desc, size * PANGO_SCALE);
-      pango_layout_set_font_description (about_info.layout, font_desc);
-
-      pango_layout_get_pixel_size (about_info.layout, &width, &height);
-
-      while (width >= about_info.textarea.width && size >= 6.0)
+      while (width >= dialog->text_area.width && size >= 6.0)
         {
           size -= 0.5;
-          pango_font_description_set_size (font_desc, size * PANGO_SCALE);
-          pango_layout_set_font_description (about_info.layout, font_desc);
-
-          pango_layout_get_pixel_size (about_info.layout, &width, &height);
+          pango_font_description_set_size (dialog->font_desc,
+                                           size * PANGO_SCALE);
+          pango_layout_set_font_description (dialog->layout, dialog->font_desc);
+          pango_layout_get_pixel_size (dialog->layout, &width, &height);
         }
     }
 
-  about_info.animstep++;
-
-  if (about_info.animstep < 16)
+  if (dialog->animstep < 16)
     {
-      decorate_text (about_info.layout, 4,
-                     ((float) about_info.animstep) / 15.0);
+      decorate_text (dialog, 4, ((gfloat) dialog->animstep) / 15.0);
     }
-  else if (about_info.animstep == 16)
+  else if (dialog->animstep == 16)
     {
-      about_info.timer = g_timeout_add (800, about_dialog_timer, NULL);
-      return_val = FALSE;
+      timeout = 800;
     }
-  else if (about_info.animstep == 17)
+  else if (dialog->animstep == 17)
     {
-      about_info.timer = g_timeout_add (30, about_dialog_timer, NULL);
-      return_val = FALSE;
+      timeout = 30;
     }
-  else if (about_info.animstep < 33)
+  else if (dialog->animstep < 33)
     {
-      decorate_text (about_info.layout, 1,
-                     1.0 - ((float) (about_info.animstep-17)) / 15.0);
+      decorate_text (dialog, 1,
+                     1.0 - ((gfloat) (dialog->animstep - 17)) / 15.0);
     }
-  else if (about_info.animstep == 33)
+  else if (dialog->animstep == 33)
     {
-      about_info.timer = g_timeout_add (300, about_dialog_timer, NULL);
-      return_val = FALSE;
-      about_info.visible = FALSE;
+      dialog->visible = FALSE;
+      timeout = 300;
     }
   else
     {
-      about_info.animstep = 0;
-      about_info.timer = g_timeout_add (30, about_dialog_timer, NULL);
-      return_val = FALSE;
-      about_info.visible = FALSE;
+      dialog->visible  = FALSE;
+      dialog->animstep = -1;
+      timeout = 30;
     }
 
-  gtk_widget_queue_draw_area (about_info.logo_area,
-                              about_info.textarea.x,
-                              about_info.textarea.y,
-                              about_info.textarea.width,
-                              about_info.textarea.height);
+  dialog->animstep++;
 
-  return return_val;
+  gtk_widget_queue_draw_area (dialog->logo_area,
+                              dialog->text_area.x,
+                              dialog->text_area.y,
+                              dialog->text_area.width,
+                              dialog->text_area.height);
+
+  if (timeout > 0)
+    {
+      dialog->timer = g_timeout_add (timeout, about_dialog_timer, dialog);
+      return FALSE;
+    }
+
+  /* else keep the current timeout */
+  return TRUE;
 }
 
 
@@ -973,20 +798,19 @@ about_dialog_timer (gpointer data)
 #define GPL GdkPixbufLoader
 
 static gboolean
-about_dialog_load_logo (GtkWidget *window)
+about_dialog_load_logo (GtkWidget       *widget,
+                         GimpAboutDialog *dialog)
 {
-  gchar       *filename;
-  GdkPixbuf   *pixbuf;
-  GdkGC       *gc;
-  PangoLayout *layout;
-  PangoFontDescription *desc;
-  GPL         *noise;
+  GdkPixbuf *pixbuf;
+  GdkGC     *gc;
+  GPL       *noise;
+  gchar     *filename;
 
-  if (about_info.logo_pixmap)
-    return TRUE;
+  g_return_val_if_fail (dialog->logo_pixmap == NULL, FALSE);
 
   filename = g_build_filename (gimp_data_directory (), "images",
-                               "gimp-logo.png", NULL);
+                               "gimp-logo.png",
+                               NULL);
 
   pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
   g_free (filename);
@@ -994,45 +818,31 @@ about_dialog_load_logo (GtkWidget *window)
   if (! pixbuf)
     return FALSE;
 
-  about_info.pixmaparea.x = 0;
-  about_info.pixmaparea.y = 0;
-  about_info.pixmaparea.width = gdk_pixbuf_get_width (pixbuf);
-  about_info.pixmaparea.height = gdk_pixbuf_get_height (pixbuf);
+  dialog->logo_width = gdk_pixbuf_get_width (pixbuf);
+  dialog->logo_height = gdk_pixbuf_get_height (pixbuf);
 
-  gtk_widget_realize (window);
+  gtk_widget_realize (widget);
 
-  about_info.logo_pixmap = gdk_pixmap_new (window->window,
-                                about_info.pixmaparea.width,
-                                about_info.pixmaparea.height * 2,
-                                gtk_widget_get_visual (window)->depth);
+  dialog->logo_pixmap = gdk_pixmap_new (widget->window,
+                                        dialog->logo_width,
+                                        dialog->logo_height * 2,
+                                        -1);
 
-  layout = gtk_widget_create_pango_layout (window, NULL);
-  desc = pango_font_description_from_string ("Sans, Italic 9");
-  pango_layout_set_font_description (layout, desc);
-  pango_layout_set_justify (layout, PANGO_ALIGN_CENTER);
-  pango_layout_set_text (layout, GIMP_VERSION, -1);
+  gc = gdk_gc_new (dialog->logo_pixmap);
 
-  gc = gdk_gc_new (about_info.logo_pixmap);
-
-  /* draw a defined content to the Pixmap */
-  gdk_draw_rectangle (GDK_DRAWABLE (about_info.logo_pixmap),
+  /* draw a defined content to the pixmap */
+  gdk_draw_rectangle (GDK_DRAWABLE (dialog->logo_pixmap),
                       gc, TRUE,
                       0, 0,
-                      about_info.pixmaparea.width,
-                      about_info.pixmaparea.height * 2);
+                      dialog->logo_width, dialog->logo_height * 2);
 
-  gdk_draw_pixbuf (GDK_DRAWABLE (about_info.logo_pixmap),
+  gdk_draw_pixbuf (GDK_DRAWABLE (dialog->logo_pixmap),
                    gc, pixbuf,
                    0, 0, 0, 0,
-                   about_info.pixmaparea.width,
-                   about_info.pixmaparea.height,
+                   dialog->logo_width, dialog->logo_height,
                    GDK_RGB_DITHER_NORMAL, 0, 0);
 
-  gdk_draw_layout (GDK_DRAWABLE (about_info.logo_pixmap),
-                   gc, 8, 39, layout);
-
   g_object_unref (pixbuf);
-  g_object_unref (layout);
 
   if ((noise = random ()) && line (noise, (const guchar *)
         "\211\120\116\107\r\n\032\n\0\0\0\r\111\110D\122\0\0\001+\0\0\001"
@@ -1171,13 +981,11 @@ about_dialog_load_logo (GtkWidget *window)
         "$\220@þßä\177tÐ\007ÇuUy$\0\0\0\0IE\116\104\256B`\202", 4093, NULL)
       && pink (noise) && white (noise))
     {
-      gdk_draw_pixbuf (GDK_DRAWABLE (about_info.logo_pixmap),
+      gdk_draw_pixbuf (GDK_DRAWABLE (dialog->logo_pixmap),
                        gc, white (noise), 0, 0,
-                       (about_info.pixmaparea.width -
-                        level (white (noise))) / 2,
-                       about_info.pixmaparea.height +
-                       (about_info.pixmaparea.height -
-                        variance (white (noise))) / 2,
+                       (dialog->logo_width - level (white (noise))) / 2,
+                       dialog->logo_height + (dialog->logo_height -
+                                              variance (white (noise))) / 2,
                        level (white (noise)),
                        variance (white (noise)),
                        GDK_RGB_DITHER_NORMAL, 0, 0);
@@ -1188,4 +996,3 @@ about_dialog_load_logo (GtkWidget *window)
 
   return TRUE;
 }
-
