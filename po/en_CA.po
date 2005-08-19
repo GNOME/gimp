@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-16 03:07-0400\n"
-"PO-Revision-Date: 2005-08-13 14:29-0400\n"
+"POT-Creation-Date: 2005-08-19 00:46-0400\n"
+"PO-Revision-Date: 2005-08-19 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -508,7 +508,7 @@ msgstr "Channel to Sele_ction"
 msgid "Channel to selection"
 msgstr "Channel to selection"
 
-#: app/actions/channels-actions.c:111 app/actions/layers-actions.c:231
+#: app/actions/channels-actions.c:111 app/actions/layers-actions.c:229
 #: app/actions/vectors-actions.c:173
 msgid "_Add to Selection"
 msgstr "_Add to Selection"
@@ -517,8 +517,8 @@ msgstr "_Add to Selection"
 msgid "Add"
 msgstr "Add"
 
-#: app/actions/channels-actions.c:117 app/actions/layers-actions.c:236
-#: app/actions/layers-actions.c:259 app/actions/vectors-actions.c:179
+#: app/actions/channels-actions.c:117 app/actions/layers-actions.c:234
+#: app/actions/layers-actions.c:257 app/actions/vectors-actions.c:179
 msgid "_Subtract from Selection"
 msgstr "_Subtract from Selection"
 
@@ -527,8 +527,8 @@ msgstr "_Subtract from Selection"
 msgid "Subtract"
 msgstr "Subtract"
 
-#: app/actions/channels-actions.c:123 app/actions/layers-actions.c:241
-#: app/actions/layers-actions.c:264 app/actions/vectors-actions.c:185
+#: app/actions/channels-actions.c:123 app/actions/layers-actions.c:239
+#: app/actions/layers-actions.c:262 app/actions/vectors-actions.c:185
 msgid "_Intersect with Selection"
 msgstr "_Intersect with Selection"
 
@@ -621,12 +621,11 @@ msgstr "Edit Colourmap Entry"
 msgid "_Context"
 msgstr "_Context"
 
-#: app/actions/context-actions.c:47 app/actions/layers-actions.c:53
-#: app/actions/plug-in-actions.c:64
+#: app/actions/context-actions.c:47 app/actions/image-actions.c:64
 msgid "_Colors"
 msgstr "_Colours"
 
-#: app/actions/context-actions.c:48 app/actions/layers-actions.c:59
+#: app/actions/context-actions.c:48 app/actions/layers-actions.c:57
 msgid "_Opacity"
 msgstr "_Opacity"
 
@@ -642,7 +641,7 @@ msgstr "_Tool"
 msgid "_Brush"
 msgstr "_Brush"
 
-#: app/actions/context-actions.c:52 app/actions/plug-in-actions.c:77
+#: app/actions/context-actions.c:52 app/actions/plug-in-actions.c:75
 #: app/dialogs/preferences-dialog.c:1763
 msgid "_Pattern"
 msgstr "_Pattern"
@@ -1103,24 +1102,24 @@ msgstr "_Linked"
 msgid "_Visible"
 msgstr "_Visible"
 
-#: app/actions/drawable-actions.c:88 app/actions/image-actions.c:146
+#: app/actions/drawable-actions.c:88 app/actions/image-actions.c:152
 msgid "Flip _Horizontally"
 msgstr "Flip _Horizontally"
 
-#: app/actions/drawable-actions.c:93 app/actions/image-actions.c:151
+#: app/actions/drawable-actions.c:93 app/actions/image-actions.c:157
 msgid "Flip _Vertically"
 msgstr "Flip _Vertically"
 
 #. please use the degree symbol in the translation
-#: app/actions/drawable-actions.c:101 app/actions/image-actions.c:160
+#: app/actions/drawable-actions.c:101 app/actions/image-actions.c:166
 msgid "Rotate 90 degrees _CW"
 msgstr "Rotate 90 degrees _CW"
 
-#: app/actions/drawable-actions.c:106 app/actions/image-actions.c:165
+#: app/actions/drawable-actions.c:106 app/actions/image-actions.c:171
 msgid "Rotate _180 degrees"
 msgstr "Rotate _180 degrees"
 
-#: app/actions/drawable-actions.c:111 app/actions/image-actions.c:170
+#: app/actions/drawable-actions.c:111 app/actions/image-actions.c:176
 msgid "Rotate 90 degrees CC_W"
 msgstr "Rotate 90 degrees CC_W"
 
@@ -1537,7 +1536,7 @@ msgstr "Spherical (_decreasing)"
 msgid "(Varies)"
 msgstr "(Varies)"
 
-#: app/actions/gradient-editor-actions.c:277 app/actions/image-actions.c:128
+#: app/actions/gradient-editor-actions.c:277 app/actions/image-actions.c:134
 msgid "_RGB"
 msgstr "_RGB"
 
@@ -1815,16 +1814,11 @@ msgstr "Image Menu"
 msgid "_Xtns"
 msgstr "_Xtns"
 
-#: app/actions/image-actions.c:59
+#: app/actions/image-actions.c:60
 msgid "_Image"
 msgstr "_Image"
 
-#: app/actions/image-actions.c:60
-#, fuzzy
-msgid "_Image Mode"
-msgstr "Image Menu"
-
-#: app/actions/image-actions.c:61 app/actions/layers-actions.c:57
+#: app/actions/image-actions.c:61 app/actions/layers-actions.c:55
 msgid "_Transform"
 msgstr "_Transform"
 
@@ -1832,56 +1826,72 @@ msgstr "_Transform"
 msgid "_Guides"
 msgstr "_Guides"
 
-#: app/actions/image-actions.c:65 app/actions/image-actions.c:70
+#: app/actions/image-actions.c:65
+msgid "_Image Mode"
+msgstr "_Image Mode"
+
+#: app/actions/image-actions.c:66 app/tools/gimplevelstool.c:648
+msgid "_Auto"
+msgstr "_Auto"
+
+#: app/actions/image-actions.c:67
+msgid "Ma_p"
+msgstr "Ma_p"
+
+#: app/actions/image-actions.c:68
+msgid "_Components"
+msgstr "_Components"
+
+#: app/actions/image-actions.c:71 app/actions/image-actions.c:76
 msgid "_New..."
 msgstr "_New..."
 
-#: app/actions/image-actions.c:75
+#: app/actions/image-actions.c:81
 msgid "Can_vas Size..."
 msgstr "Can_vas Size..."
 
-#: app/actions/image-actions.c:80
+#: app/actions/image-actions.c:86
 msgid "F_it Canvas to Layers"
 msgstr "F_it Canvas to Layers"
 
-#: app/actions/image-actions.c:85
+#: app/actions/image-actions.c:91
 msgid "_Print Size..."
 msgstr "_Print Size..."
 
-#: app/actions/image-actions.c:90
+#: app/actions/image-actions.c:96
 msgid "_Scale Image..."
 msgstr "_Scale Image..."
 
-#: app/actions/image-actions.c:95
+#: app/actions/image-actions.c:101
 msgid "_Crop Image"
 msgstr "_Crop Image"
 
-#: app/actions/image-actions.c:100
+#: app/actions/image-actions.c:106
 msgid "_Duplicate"
 msgstr "_Duplicate"
 
-#: app/actions/image-actions.c:105
+#: app/actions/image-actions.c:111
 msgid "Merge Visible _Layers..."
 msgstr "Merge Visible _Layers..."
 
-#: app/actions/image-actions.c:110 app/actions/layers-actions.c:138
+#: app/actions/image-actions.c:116 app/actions/layers-actions.c:136
 msgid "_Flatten Image"
 msgstr "_Flatten Image"
 
-#: app/actions/image-actions.c:115
+#: app/actions/image-actions.c:121
 msgid "Configure G_rid..."
 msgstr "Configure G_rid..."
 
-#: app/actions/image-actions.c:120 app/dialogs/image-properties-dialog.c:54
+#: app/actions/image-actions.c:126 app/dialogs/image-properties-dialog.c:54
 #: app/dialogs/image-properties-dialog.c:57
 msgid "Image Properties"
 msgstr "Image Properties"
 
-#: app/actions/image-actions.c:133
+#: app/actions/image-actions.c:139
 msgid "_Grayscale"
 msgstr "_Grayscale"
 
-#: app/actions/image-actions.c:138
+#: app/actions/image-actions.c:144
 msgid "_Indexed..."
 msgstr "_Indexed..."
 
@@ -1967,203 +1977,199 @@ msgstr "_Layer"
 msgid "Stac_k"
 msgstr "Stac_k"
 
-#: app/actions/layers-actions.c:54 app/tools/gimplevelstool.c:648
-msgid "_Auto"
-msgstr "_Auto"
-
-#: app/actions/layers-actions.c:55
+#: app/actions/layers-actions.c:53
 msgid "_Mask"
 msgstr "_Mask"
 
-#: app/actions/layers-actions.c:56
+#: app/actions/layers-actions.c:54
 msgid "Tr_ansparency"
 msgstr "Tr_ansparency"
 
-#: app/actions/layers-actions.c:58
+#: app/actions/layers-actions.c:56
 msgid "_Properties"
 msgstr "_Properties"
 
-#: app/actions/layers-actions.c:60
+#: app/actions/layers-actions.c:58
 msgid "Layer _Mode"
 msgstr "Layer _Mode"
 
-#: app/actions/layers-actions.c:63
+#: app/actions/layers-actions.c:61
 msgid "Te_xt Tool"
 msgstr "Te_xt Tool"
 
-#: app/actions/layers-actions.c:68
+#: app/actions/layers-actions.c:66
 msgid "_Edit Layer Attributes..."
 msgstr "_Edit Layer Attributes..."
 
-#: app/actions/layers-actions.c:69
+#: app/actions/layers-actions.c:67
 msgid "Edit layer attributes"
 msgstr "Edit layer attributes"
 
-#: app/actions/layers-actions.c:74
+#: app/actions/layers-actions.c:72
 msgid "_New Layer..."
 msgstr "_New Layer..."
 
-#: app/actions/layers-actions.c:75
+#: app/actions/layers-actions.c:73
 msgid "New layer..."
 msgstr "New layer..."
 
-#: app/actions/layers-actions.c:80
+#: app/actions/layers-actions.c:78
 msgid "_New Layer"
 msgstr "_New Layer"
 
-#: app/actions/layers-actions.c:81
+#: app/actions/layers-actions.c:79
 msgid "New layer with last values"
 msgstr "New layer with last values"
 
-#: app/actions/layers-actions.c:86
+#: app/actions/layers-actions.c:84
 msgid "D_uplicate Layer"
 msgstr "D_uplicate Layer"
 
-#: app/actions/layers-actions.c:87
+#: app/actions/layers-actions.c:85
 msgid "Duplicate layer"
 msgstr "Duplicate layer"
 
-#: app/actions/layers-actions.c:92
+#: app/actions/layers-actions.c:90
 msgid "_Delete Layer"
 msgstr "_Delete Layer"
 
-#: app/actions/layers-actions.c:93 app/core/core-enums.c:858
+#: app/actions/layers-actions.c:91 app/core/core-enums.c:858
 msgid "Delete layer"
 msgstr "Delete layer"
 
-#: app/actions/layers-actions.c:98
+#: app/actions/layers-actions.c:96
 msgid "_Raise Layer"
 msgstr "_Raise Layer"
 
-#: app/actions/layers-actions.c:99
+#: app/actions/layers-actions.c:97
 msgid "Raise layer"
 msgstr "Raise layer"
 
-#: app/actions/layers-actions.c:104
+#: app/actions/layers-actions.c:102
 msgid "Layer to _Top"
 msgstr "Layer to _Top"
 
-#: app/actions/layers-actions.c:105
+#: app/actions/layers-actions.c:103
 msgid "Raise layer to top"
 msgstr "Raise layer to top"
 
-#: app/actions/layers-actions.c:110
+#: app/actions/layers-actions.c:108
 msgid "_Lower Layer"
 msgstr "_Lower Layer"
 
-#: app/actions/layers-actions.c:111
+#: app/actions/layers-actions.c:109
 msgid "Lower layer"
 msgstr "Lower layer"
 
-#: app/actions/layers-actions.c:116
+#: app/actions/layers-actions.c:114
 msgid "Layer to _Bottom"
 msgstr "Layer to _Bottom"
 
-#: app/actions/layers-actions.c:117
+#: app/actions/layers-actions.c:115
 msgid "Lower layer to bottom"
 msgstr "Lower layer to bottom"
 
-#: app/actions/layers-actions.c:122
+#: app/actions/layers-actions.c:120
 msgid "_Anchor Layer"
 msgstr "_Anchor Layer"
 
-#: app/actions/layers-actions.c:123
+#: app/actions/layers-actions.c:121
 msgid "Anchor floating layer"
 msgstr "Anchor floating layer"
 
-#: app/actions/layers-actions.c:128
+#: app/actions/layers-actions.c:126
 msgid "Merge Do_wn"
 msgstr "Merge Do_wn"
 
-#: app/actions/layers-actions.c:133
+#: app/actions/layers-actions.c:131
 msgid "Merge _Visible Layers..."
 msgstr "Merge _Visible Layers..."
 
-#: app/actions/layers-actions.c:143
+#: app/actions/layers-actions.c:141
 msgid "_Discard Text Information"
 msgstr "_Discard Text Information"
 
-#: app/actions/layers-actions.c:148
+#: app/actions/layers-actions.c:146
 msgid "Layer B_oundary Size..."
 msgstr "Layer B_oundary Size..."
 
-#: app/actions/layers-actions.c:153
+#: app/actions/layers-actions.c:151
 msgid "Layer to _Image Size"
 msgstr "Layer to _Image Size"
 
-#: app/actions/layers-actions.c:158
+#: app/actions/layers-actions.c:156
 msgid "_Scale Layer..."
 msgstr "_Scale Layer..."
 
-#: app/actions/layers-actions.c:163
+#: app/actions/layers-actions.c:161
 msgid "Cr_op Layer"
 msgstr "Cr_op Layer"
 
-#: app/actions/layers-actions.c:168
+#: app/actions/layers-actions.c:166
 msgid "Add La_yer Mask..."
 msgstr "Add La_yer Mask..."
 
-#: app/actions/layers-actions.c:173
+#: app/actions/layers-actions.c:171
 msgid "Add Alpha C_hannel"
 msgstr "Add Alpha C_hannel"
 
-#: app/actions/layers-actions.c:178
+#: app/actions/layers-actions.c:176
 msgid "_Remove Alpha Channel"
 msgstr "_Remove Alpha Channel"
 
-#: app/actions/layers-actions.c:186
+#: app/actions/layers-actions.c:184
 msgid "Lock Alph_a Channel"
 msgstr "Lock Alph_a Channel"
 
-#: app/actions/layers-actions.c:192
+#: app/actions/layers-actions.c:190
 msgid "_Edit Layer Mask"
 msgstr "_Edit Layer Mask"
 
-#: app/actions/layers-actions.c:198
+#: app/actions/layers-actions.c:196
 msgid "S_how Layer Mask"
 msgstr "S_how Layer Mask"
 
-#: app/actions/layers-actions.c:204
+#: app/actions/layers-actions.c:202
 msgid "_Disable Layer Mask"
 msgstr "_Disable Layer Mask"
 
-#: app/actions/layers-actions.c:213
+#: app/actions/layers-actions.c:211
 msgid "Apply Layer _Mask"
 msgstr "Apply Layer _Mask"
 
-#: app/actions/layers-actions.c:218
+#: app/actions/layers-actions.c:216
 msgid "Delete Layer Mas_k"
 msgstr "Delete Layer Mas_k"
 
-#: app/actions/layers-actions.c:226
+#: app/actions/layers-actions.c:224
 msgid "_Mask to Selection"
 msgstr "_Mask to Selection"
 
-#: app/actions/layers-actions.c:249
+#: app/actions/layers-actions.c:247
 msgid "Al_pha to Selection"
 msgstr "Al_pha to Selection"
 
-#: app/actions/layers-actions.c:254
+#: app/actions/layers-actions.c:252
 msgid "A_dd to Selection"
 msgstr "A_dd to Selection"
 
-#: app/actions/layers-actions.c:272
+#: app/actions/layers-actions.c:270
 msgid "Select _Top Layer"
 msgstr "Select _Top Layer"
 
-#: app/actions/layers-actions.c:277
+#: app/actions/layers-actions.c:275
 msgid "Select _Bottom Layer"
 msgstr "Select _Bottom Layer"
 
-#: app/actions/layers-actions.c:282
+#: app/actions/layers-actions.c:280
 msgid "Select _Previous Layer"
 msgstr "Select _Previous Layer"
 
-#: app/actions/layers-actions.c:287
+#: app/actions/layers-actions.c:285
 msgid "Select _Next Layer"
 msgstr "Select _Next Layer"
 
-#: app/actions/layers-actions.c:295
+#: app/actions/layers-actions.c:293
 msgid "Set Opacity"
 msgstr "Set Opacity"
 
@@ -2386,93 +2392,89 @@ msgstr "Filte_rs"
 msgid "_Blur"
 msgstr "_Blur"
 
-#: app/actions/plug-in-actions.c:65
-msgid "Ma_p"
-msgstr "Ma_p"
-
-#: app/actions/plug-in-actions.c:66
+#: app/actions/plug-in-actions.c:64
 msgid "_Noise"
 msgstr "_Noise"
 
-#: app/actions/plug-in-actions.c:67
+#: app/actions/plug-in-actions.c:65
 msgid "Edge-De_tect"
 msgstr "Edge-De_tect"
 
-#: app/actions/plug-in-actions.c:68
+#: app/actions/plug-in-actions.c:66
 msgid "En_hance"
 msgstr "En_hance"
 
-#: app/actions/plug-in-actions.c:69
+#: app/actions/plug-in-actions.c:67
 msgid "_Effects"
 msgstr "_Effects"
 
-#: app/actions/plug-in-actions.c:70
+#: app/actions/plug-in-actions.c:68
 msgid "_Light and Shadow"
 msgstr "_Light and Shadow"
 
-#: app/actions/plug-in-actions.c:71
+#: app/actions/plug-in-actions.c:69
 msgid "_Distorts"
 msgstr "_Distorts"
 
-#: app/actions/plug-in-actions.c:72
+#: app/actions/plug-in-actions.c:70
 msgid "_Artistic"
 msgstr "_Artistic"
 
-#: app/actions/plug-in-actions.c:73
+#: app/actions/plug-in-actions.c:71
 msgid "_Map"
 msgstr "_Map"
 
-#: app/actions/plug-in-actions.c:74
+#: app/actions/plug-in-actions.c:72
 msgid "_Render"
 msgstr "_Render"
 
-#: app/actions/plug-in-actions.c:75
+#: app/actions/plug-in-actions.c:73
 msgid "_Clouds"
 msgstr "_Clouds"
 
-#: app/actions/plug-in-actions.c:76
+#: app/actions/plug-in-actions.c:74
 msgid "_Nature"
 msgstr "_Nature"
 
-#: app/actions/plug-in-actions.c:78
+#: app/actions/plug-in-actions.c:76
 msgid "_Web"
 msgstr "_Web"
 
-#: app/actions/plug-in-actions.c:79
+#: app/actions/plug-in-actions.c:77
 msgid "An_imation"
 msgstr "An_imation"
 
-#: app/actions/plug-in-actions.c:80
+#: app/actions/plug-in-actions.c:78
 msgid "C_ombine"
 msgstr "C_ombine"
 
-#: app/actions/plug-in-actions.c:83
+#: app/actions/plug-in-actions.c:81
 msgid "Reset all _Filters"
 msgstr "Reset all _Filters"
 
-#: app/actions/plug-in-actions.c:91
+#: app/actions/plug-in-actions.c:89
 msgid "Re_peat Last"
 msgstr "Re_peat Last"
 
-#: app/actions/plug-in-actions.c:96
+#: app/actions/plug-in-actions.c:94
 msgid "R_e-Show Last"
 msgstr "R_e-Show Last"
 
-#: app/actions/plug-in-actions.c:393
+#: app/actions/plug-in-actions.c:391
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "Re_peat \"%s\""
 
-#: app/actions/plug-in-actions.c:394
+#: app/actions/plug-in-actions.c:392
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "R_e-Show \"%s\""
 
-#: app/actions/plug-in-actions.c:407
+#: app/actions/plug-in-actions.c:405
 msgid "Repeat Last"
 msgstr "Repeat Last"
 
-#: app/actions/plug-in-actions.c:409
+#: app/actions/plug-in-actions.c:407
 msgid "Re-Show Last"
 msgstr "Re-Show Last"
 
@@ -3994,7 +3996,7 @@ msgstr "value for token %s is not a valid UTF-8 string"
 #. no undo (or redo) steps available
 #: app/core/core-enums.c:53 app/core/core-enums.c:204
 #: app/core/core-enums.c:490 app/tools/gimptransformoptions.c:456
-#: app/widgets/gimpimagepropview.c:327
+#: app/widgets/gimpimagepropview.c:328
 msgid "None"
 msgstr "None"
 
@@ -5225,7 +5227,7 @@ msgid "(Preview may be out of date)"
 msgstr "(Preview may be out of date)"
 
 #. pixel size
-#: app/core/gimpimagefile.c:638 app/widgets/gimpimagepropview.c:353
+#: app/core/gimpimagefile.c:638 app/widgets/gimpimagepropview.c:354
 #: app/widgets/gimpsizebox.c:430 app/widgets/gimptemplateeditor.c:633
 #: app/widgets/gimptemplateeditor.c:671
 #, c-format
@@ -5519,19 +5521,19 @@ msgstr ""
 "Convert a mitered join to a bevelled join if the miter would extend to a "
 "distance of more than (miter-limit * line-width) from the actual join point."
 
-#: app/core/gimptemplate.c:156
+#: app/core/gimptemplate.c:157
 msgid "The unit used for coordinate display when not in dot-for-dot mode."
 msgstr "The unit used for coordinate display when not in dot-for-dot mode."
 
-#: app/core/gimptemplate.c:163
+#: app/core/gimptemplate.c:164
 msgid "The horizontal image resolution."
 msgstr "The horizontal image resolution."
 
-#: app/core/gimptemplate.c:168
+#: app/core/gimptemplate.c:169
 msgid "The vertical image resolution."
 msgstr "The vertical image resolution."
 
-#: app/core/gimptemplate.c:448 app/widgets/widgets-enums.c:24
+#: app/core/gimptemplate.c:449 app/widgets/widgets-enums.c:24
 msgid "Background"
 msgstr "Background"
 
@@ -6536,7 +6538,7 @@ msgstr "Get Monitor Resolution"
 msgid "Pixels"
 msgstr "Pixels"
 
-#: app/dialogs/preferences-dialog.c:2149 app/widgets/gimpimagepropview.c:385
+#: app/dialogs/preferences-dialog.c:2149 app/widgets/gimpimagepropview.c:381
 msgid "dpi"
 msgstr "dpi"
 
@@ -6804,33 +6806,33 @@ msgstr "Theme Folders"
 msgid "Select Theme Folders"
 msgstr "Select Theme Folders"
 
-#: app/dialogs/print-size-dialog.c:134
+#: app/dialogs/print-size-dialog.c:135
 msgid "Print Size"
 msgstr "Print Size"
 
 #. the image size labels
-#: app/dialogs/print-size-dialog.c:161 app/widgets/gimpsizebox.c:221
+#: app/dialogs/print-size-dialog.c:162 app/widgets/gimpsizebox.c:221
 #: app/widgets/gimptemplateeditor.c:232
 msgid "_Width:"
 msgstr "_Width:"
 
-#: app/dialogs/print-size-dialog.c:168 app/widgets/gimpsizebox.c:225
+#: app/dialogs/print-size-dialog.c:169 app/widgets/gimpsizebox.c:225
 #: app/widgets/gimptemplateeditor.c:239
 msgid "H_eight:"
 msgstr "H_eight:"
 
 #. the resolution labels
-#: app/dialogs/print-size-dialog.c:216 app/widgets/gimpsizebox.c:274
+#: app/dialogs/print-size-dialog.c:217 app/widgets/gimpsizebox.c:274
 #: app/widgets/gimptemplateeditor.c:359
 msgid "_X resolution:"
 msgstr "_X resolution:"
 
-#: app/dialogs/print-size-dialog.c:223 app/widgets/gimpsizebox.c:277
+#: app/dialogs/print-size-dialog.c:224 app/widgets/gimpsizebox.c:277
 #: app/widgets/gimptemplateeditor.c:366
 msgid "_Y resolution:"
 msgstr "_Y resolution:"
 
-#: app/dialogs/print-size-dialog.c:234 app/widgets/gimpsizebox.c:270
+#: app/dialogs/print-size-dialog.c:235 app/widgets/gimpsizebox.c:270
 #: app/widgets/gimptemplateeditor.c:379
 #, c-format
 msgid "pixels/%a"
@@ -7180,11 +7182,11 @@ msgstr "Click \"Continue\" to enter the GIMP user installation."
 #: app/dialogs/user-install-dialog.c:787
 msgid ""
 "<b>The GIMP - GNU Image Manipulation Program</b>\n"
-"Copyright (C) 1995-2004\n"
+"Copyright (C) 1995-2005\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team."
 msgstr ""
 "<b>The GIMP - GNU Image Manipulation Program</b>\n"
-"Copyright (C) 1995-2004\n"
+"Copyright (C) 1995-2005\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team."
 
 #: app/dialogs/user-install-dialog.c:797
@@ -8663,8 +8665,8 @@ msgid "Foreground Select"
 msgstr "Foreground Select"
 
 #: app/tools/gimpforegroundselecttool.c:140
-msgid "Extract foreground using SIOX algorithm"
-msgstr "Extract foreground using SIOX algorithm"
+msgid "Extract a single foreground object"
+msgstr "Extract a single foreground object"
 
 #: app/tools/gimpforegroundselecttool.c:141
 msgid "F_oreground Select"
@@ -10564,61 +10566,61 @@ msgstr "Percentile:"
 msgid "Channel:"
 msgstr "Channel:"
 
-#: app/widgets/gimpimagepropview.c:186
+#: app/widgets/gimpimagepropview.c:187
 msgid "Pixel dimensions:"
 msgstr "Pixel dimensions:"
 
-#: app/widgets/gimpimagepropview.c:189
+#: app/widgets/gimpimagepropview.c:190
 msgid "Print size:"
 msgstr "Print size:"
 
-#: app/widgets/gimpimagepropview.c:192
+#: app/widgets/gimpimagepropview.c:193
 msgid "Resolution:"
 msgstr "Resolution:"
 
-#: app/widgets/gimpimagepropview.c:195
+#: app/widgets/gimpimagepropview.c:196
 msgid "Color space:"
 msgstr "Colour space:"
 
-#: app/widgets/gimpimagepropview.c:200
+#: app/widgets/gimpimagepropview.c:201
 msgid "Size in memory:"
 msgstr "Size in memory:"
 
-#: app/widgets/gimpimagepropview.c:203
+#: app/widgets/gimpimagepropview.c:204
 msgid "Undo steps:"
 msgstr "Undo steps:"
 
-#: app/widgets/gimpimagepropview.c:206
+#: app/widgets/gimpimagepropview.c:207
 msgid "Redo steps:"
 msgstr "Redo steps:"
 
-#: app/widgets/gimpimagepropview.c:211
+#: app/widgets/gimpimagepropview.c:212
 msgid "Number of pixels:"
 msgstr "Number of pixels:"
 
-#: app/widgets/gimpimagepropview.c:214
+#: app/widgets/gimpimagepropview.c:215
 msgid "Number of layers:"
 msgstr "Number of layers:"
 
-#: app/widgets/gimpimagepropview.c:217
+#: app/widgets/gimpimagepropview.c:218
 msgid "Number of channels:"
 msgstr "Number of channels:"
 
-#: app/widgets/gimpimagepropview.c:220
+#: app/widgets/gimpimagepropview.c:221
 msgid "Number of paths:"
 msgstr "Number of paths:"
 
-#: app/widgets/gimpimagepropview.c:380
+#: app/widgets/gimpimagepropview.c:376
 #, c-format
 msgid "pixels/%s"
 msgstr "pixels/%s"
 
-#: app/widgets/gimpimagepropview.c:382
+#: app/widgets/gimpimagepropview.c:378
 #, c-format
 msgid "%g x %g %s"
 msgstr "%g x %g %s"
 
-#: app/widgets/gimpimagepropview.c:402
+#: app/widgets/gimpimagepropview.c:398
 msgid "colors"
 msgstr "colours"
 

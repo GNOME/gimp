@@ -8,28 +8,28 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-03 01:46-0400\n"
-"PO-Revision-Date: 2005-07-06 00:14-0400\n"
+"POT-Creation-Date: 2005-08-19 00:47-0400\n"
+"PO-Revision-Date: 2005-08-19 00:14-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: plug-ins/script-fu/script-fu-console.c:129
+#: plug-ins/script-fu/script-fu-console.c:130
 #: plug-ins/script-fu/script-fu-text-console.c:67
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "Script-Fu console mode allows only interactive invocation"
 
-#: plug-ins/script-fu/script-fu-console.c:162
+#: plug-ins/script-fu/script-fu-console.c:163
 msgid "Script-Fu Console"
 msgstr "Script-Fu Console"
 
-#: plug-ins/script-fu/script-fu-console.c:255
+#: plug-ins/script-fu/script-fu-console.c:256
 msgid "_Browse..."
 msgstr "_Browse..."
 
-#: plug-ins/script-fu/script-fu-console.c:591
+#: plug-ins/script-fu/script-fu-console.c:601
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Script-Fu evaluate mode allows only noninteractive invocation"
 
@@ -1453,8 +1453,8 @@ msgid "Y divisions"
 msgstr "Y divisions"
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:3
-msgid "_Grid..."
-msgstr "_Grid..."
+msgid "_Divisions..."
+msgstr "_Divisions..."
 
 #: plug-ins/script-fu/scripts/guides-from-selection.scm.h:1
 msgid "Creates four Guides around the bounding box of the current selection."
@@ -2270,108 +2270,3 @@ msgstr "Highlight opacity"
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:11
 msgid "_Xach-Effect..."
 msgstr "_Xach-Effect..."
-
-#~ msgid "Procedure Browser"
-#~ msgstr "Procedure Browser"
-
-#~ msgid "by name"
-#~ msgstr "by name"
-
-#~ msgid "by description"
-#~ msgstr "by description"
-
-#~ msgid "by help"
-#~ msgstr "by help"
-
-#~ msgid "by author"
-#~ msgstr "by author"
-
-#~ msgid "by copyright"
-#~ msgstr "by copyright"
-
-#~ msgid "by date"
-#~ msgstr "by date"
-
-#~ msgid "by type"
-#~ msgstr "by type"
-
-#~ msgid "Searching by name - please wait"
-#~ msgstr "Searching by name - please wait"
-
-#~ msgid "Searching by description - please wait"
-#~ msgstr "Searching by description - please wait"
-
-#~ msgid "Searching by help - please wait"
-#~ msgstr "Searching by help - please wait"
-
-#~ msgid "Searching by author - please wait"
-#~ msgstr "Searching by author - please wait"
-
-#~ msgid "Searching by copyright - please wait"
-#~ msgstr "Searching by copyright - please wait"
-
-#~ msgid "Searching by date - please wait"
-#~ msgstr "Searching by date - please wait"
-
-#~ msgid "Searching by type - please wait"
-#~ msgstr "Searching by type - please wait"
-
-#~ msgid "Searching - please wait"
-#~ msgstr "Searching - please wait"
-
-#~ msgid "%d Procedures"
-#~ msgstr "%d Procedures"
-
-#~ msgid "No matches for your query"
-#~ msgstr "No matches for your query"
-
-#~ msgid "1 procedure matches your query"
-#~ msgstr "1 procedure matches your query"
-
-#~ msgid "%d procedures match your query"
-#~ msgstr "%d procedures match your query"
-
-#~ msgid "No matches"
-#~ msgstr "No matches"
-
-#~ msgid "Parameters"
-#~ msgstr "Parameters"
-
-#~ msgid "Return Values"
-#~ msgstr "Return Values"
-
-#~ msgid "Additional Information"
-#~ msgstr "Additional Information"
-
-#~ msgid "Apply layer mask (or discard)"
-#~ msgstr "Apply layer mask (or discard)"
-
-#~ msgid "Create new image"
-#~ msgstr "Create new image"
-
-#~ msgid "Insert layer names"
-#~ msgstr "Insert layer names"
-
-#~ msgid "Make new background"
-#~ msgstr "Make new background"
-
-#~ msgid "Outer border"
-#~ msgstr "Outer border"
-
-#~ msgid "Pad color"
-#~ msgstr "Pad colour"
-
-#~ msgid "Pad opacity"
-#~ msgstr "Pad opacity"
-
-#~ msgid "Padding for transparent regions"
-#~ msgstr "Padding for transparent regions"
-
-#~ msgid "Shear length"
-#~ msgstr "Shear length"
-
-#~ msgid "Show Image _Structure..."
-#~ msgstr "Show Image _Structure..."
-
-#~ msgid "Space between layers"
-#~ msgstr "Space between layers"
