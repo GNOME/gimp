@@ -53,7 +53,7 @@ static void  gimp_gui_config_get_property (GObject            *object,
 #  define DEFAULT_WEB_BROWSER  "not used on Windows"
 #else
 #  define DEFAULT_GIMP_HELP_BROWSER GIMP_HELP_BROWSER_GIMP
-#  define DEFAULT_WEB_BROWSER  "mozilla %s"
+#  define DEFAULT_WEB_BROWSER  "mozilla-firefox %s"
 #endif
 
 enum
