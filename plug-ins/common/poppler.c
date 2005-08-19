@@ -498,7 +498,7 @@ load_image (PopplerDocument  *doc,
                                      scale,
                                      buf
 #ifndef HAVE_POPPLER_0_4
-                                     ,0, 0,
+                                     ,0, 0
 #endif
                                      );
 
@@ -557,7 +557,7 @@ get_thumbnail (PopplerDocument *doc,
                                      scale,
                                      pixbuf
 #ifndef HAVE_POPPLER_0_4
-                                     ,0, 0,
+                                     ,0, 0
 #endif
                                      );
     }
