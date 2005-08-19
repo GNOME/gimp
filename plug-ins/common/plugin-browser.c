@@ -380,7 +380,7 @@ browser_search (GimpBrowser   *gimp_browser,
   gimp_browser_show_message (GIMP_BROWSER (browser->browser),
                              _("Searching by name - please wait"));
 
-  return_vals = gimp_run_procedure ("gimp_plugins_query",
+  return_vals = gimp_run_procedure ("gimp-plugins-query",
                                     &nreturn_vals,
                                     GIMP_PDB_STRING, search_text,
                                     GIMP_PDB_END);

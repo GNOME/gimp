@@ -334,7 +334,7 @@ load_image (const gchar *filename,
                                   len - sizeof (JPEG_APP_HEADER_XMP));
 
           /* FIXME: running this through the PDB is not very efficient */
-          return_vals = gimp_run_procedure ("plug_in_metadata_decode_xmp",
+          return_vals = gimp_run_procedure ("plug-in-metadata-decode-xmp",
                                             &nreturn_vals,
                                             GIMP_PDB_IMAGE, image_ID,
                                             GIMP_PDB_STRING, xmp_packet,

@@ -1,5 +1,14 @@
 2005-08-19  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/curve_bend.c
+	* plug-ins/common/plugin-browser.c
+	* plug-ins/helpbrowser/dialog.c
+	* plug-ins/imagemap/imap_main.c
+	* plug-ins/jpeg/jpeg-load.c: use canonical procedure names with
+	gimp_run_procedure().
+
+2005-08-19  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/authors.xsl: generate a NULL terminated array.
 
 	* app/dialogs/authors.h: regenerated.

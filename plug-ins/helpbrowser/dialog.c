@@ -952,7 +952,7 @@ load_remote_page (const gchar *uri)
   gint       nreturn_vals;
 
   /*  try to call the user specified web browser */
-  return_vals = gimp_run_procedure ("plug_in_web_browser",
+  return_vals = gimp_run_procedure ("plug-in-web-browser",
                                     &nreturn_vals,
                                     GIMP_PDB_STRING, uri,
                                     GIMP_PDB_END);

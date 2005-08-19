@@ -375,7 +375,7 @@ p_gimp_rotate (gint32  image_id,
                gint32  interpolation,
                gdouble angle_deg)
 {
-  static gchar *l_rotate_proc = "gimp_rotate";
+  static gchar *l_rotate_proc = "gimp-rotate";
   GimpParam    *return_vals;
   gint          nreturn_vals;
   gdouble       l_angle_rad;
@@ -383,7 +383,7 @@ p_gimp_rotate (gint32  image_id,
   gint          l_rc;
 
 #ifdef ROTATE_OPTIMIZE
-  static gchar *l_rotate_proc2 = "plug_in_rotate";
+  static gchar *l_rotate_proc2 = "plug-in-rotate";
   gint32        l_angle_step;
 
   if     (angle_deg == 90.0)  { l_angle_step = 1; }

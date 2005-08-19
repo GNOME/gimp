@@ -449,7 +449,7 @@ fuzzy_select_on_button_press (GtkWidget      *widget,
 	 GimpParam *return_vals;
 	 gint       nreturn_vals;
 
-	 return_vals = gimp_run_procedure ("plug_in_sel2path",
+	 return_vals = gimp_run_procedure ("plug-in-sel2path",
                                            &nreturn_vals,
                                            GIMP_PDB_INT32,    TRUE,
                                            GIMP_PDB_IMAGE,    image_ID,

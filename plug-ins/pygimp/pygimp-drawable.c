@@ -1,9 +1,9 @@
-/* -*- Mode: C; c-basic-offset: 4 -*- 
+/* -*- Mode: C; c-basic-offset: 4 -*-
     Gimp-Python - allows the writing of Gimp plugins in Python.
     Copyright (C) 1997-2002  James Henstridge <james@daa.com.au>
 
     This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published 
+    it under the terms of the GNU General Public License as published
     the Free Software Foundation; either version 2 of the License, or
     (at your option) any later version.
 
@@ -255,7 +255,7 @@ drw_parasite_detach(PyGimpDrawable *self, PyObject *args)
 	return NULL;
 
     if (!gimp_drawable_parasite_detach(self->ID, name)) {
-	PyErr_Format(pygimp_error, 
+	PyErr_Format(pygimp_error,
 		     "could not detach parasite '%s' from drawable (ID %d)",
 		     name, self->ID);
 	return NULL;
@@ -281,7 +281,7 @@ drw_parasite_list(PyGimpDrawable *self)
 	    PyTuple_SetItem(ret, i, PyString_FromString(parasites[i]));
 	    g_free(parasites[i]);
 	}
-	
+
 	g_free(parasites);
 	return ret;
     }
@@ -356,7 +356,7 @@ drw_set_pixel(PyGimpDrawable *self, PyObject *args)
 
 	    if (!PyInt_Check(item)) {
 		PyErr_SetString(PyExc_TypeError,
-				"pixel values must be a sequence of ints"); 
+				"pixel values must be a sequence of ints");
 		goto out;
 	    }
 
@@ -364,7 +364,7 @@ drw_set_pixel(PyGimpDrawable *self, PyObject *args)
 
 	    if (val < 0 || val > 255) {
 		PyErr_SetString(PyExc_TypeError,
-				"pixel values must be between 0 and 255"); 
+				"pixel values must be between 0 and 255");
 		goto out;
 	    }
 
@@ -393,7 +393,7 @@ out:
 	Py_INCREF(Py_None);
 	return Py_None;
     } else
-	return NULL; 
+	return NULL;
 }
 
 static PyObject *
@@ -808,7 +808,7 @@ drw_transform_matrix(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
 
     static char *kwlist[] = { "coeff_0_0", "coeff_0_1", "coeff_0_2",
 			      "coeff_1_0", "coeff_1_1", "coeff_1_2",
-			      "coeff_2_0", "coeff_2_1", "coeff_2_2", 
+			      "coeff_2_0", "coeff_2_1", "coeff_2_2",
 			      "transform_direction", "interpolation",
 			      "supersample", "recursion_level",
 			      "clip_result", NULL };
@@ -817,7 +817,7 @@ drw_transform_matrix(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
 				     "dddddddddii|iii:transform_matrix", kwlist,
 				     &coeff_0_0, &coeff_0_1, &coeff_0_2,
 				     &coeff_1_0, &coeff_1_1, &coeff_1_2,
-				     &coeff_2_0, &coeff_2_1, &coeff_2_2, 
+				     &coeff_2_0, &coeff_2_1, &coeff_2_2,
 				     &transform_direction, &interpolation,
 				     &supersample, &recursion_level,
 				     &clip_result))
@@ -826,7 +826,7 @@ drw_transform_matrix(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
     id = gimp_drawable_transform_matrix(self->ID,
 					coeff_0_0, coeff_0_1, coeff_0_2,
 					coeff_1_0, coeff_1_1, coeff_1_2,
-					coeff_2_0, coeff_2_1, coeff_2_2, 
+					coeff_2_0, coeff_2_1, coeff_2_2,
 					transform_direction, interpolation,
 					supersample, recursion_level,
 					clip_result);
@@ -845,7 +845,7 @@ drw_transform_matrix_default(PyGimpDrawable *self, PyObject *args, PyObject *kwa
 
     static char *kwlist[] = { "coeff_0_0", "coeff_0_1", "coeff_0_2",
 			      "coeff_1_0", "coeff_1_1", "coeff_1_2",
-			      "coeff_2_0", "coeff_2_1", "coeff_2_2", 
+			      "coeff_2_0", "coeff_2_1", "coeff_2_2",
 			      "interpolate", "clip_result", NULL };
 
     if (!PyArg_ParseTupleAndKeywords(args, kwargs,
@@ -853,7 +853,7 @@ drw_transform_matrix_default(PyGimpDrawable *self, PyObject *args, PyObject *kwa
 				     kwlist,
 				     &coeff_0_0, &coeff_0_1, &coeff_0_2,
 				     &coeff_1_0, &coeff_1_1, &coeff_1_2,
-				     &coeff_2_0, &coeff_2_1, &coeff_2_2, 
+				     &coeff_2_0, &coeff_2_1, &coeff_2_2,
 				     &interpolate, &clip_result))
 	return NULL;
 
@@ -1075,7 +1075,7 @@ drw_get_visible(PyGimpDrawable *self, void *closure)
 {
     return PyBool_FromLong(gimp_drawable_get_visible(self->ID));
 }
-                                                                                
+
 static int
 drw_set_visible(PyGimpDrawable *self, PyObject *value, void *closure)
 {
@@ -1238,8 +1238,8 @@ lay_copy(PyGimpLayer *self, PyObject *args, PyObject *kwargs)
 				     &add_alpha))
 	return NULL;
 
-    return_vals = gimp_run_procedure("gimp_layer_copy",
-				     &nreturn_vals, 
+    return_vals = gimp_run_procedure("gimp-layer-copy",
+				     &nreturn_vals,
 				     GIMP_PDB_LAYER, self->ID,
 				     GIMP_PDB_INT32, add_alpha,
 				     GIMP_PDB_END);
@@ -1698,7 +1698,7 @@ lay_init(PyGimpLayer *self, PyObject *args, PyObject *kwargs)
     GimpImageType type = GIMP_RGB_IMAGE;
     double opacity = 100.0;
     GimpLayerModeEffects mode = GIMP_NORMAL_MODE;
-	
+
 
     if (!PyArg_ParseTuple(args, "O!sii|idi:gimp.Layer.__init__",
 			  &PyGimpImage_Type, &img, &name, &width, &height,
@@ -1793,7 +1793,7 @@ static PyObject *
 chn_copy(PyGimpChannel *self)
 {
     gint32 id;
-	
+
     id = gimp_channel_copy(self->ID);
 
     if (id == -1) {

@@ -284,7 +284,7 @@ pygimp_set_data(PyObject *self, PyObject *args)
     if (!PyArg_ParseTuple(args, "ss#:set_data", &id, &data, &bytes))
 	return NULL;
 
-    return_vals = gimp_run_procedure("gimp_procedural_db_set_data",
+    return_vals = gimp_run_procedure("gimp-procedural-db-set-data",
 				     &nreturn_vals,
 				     GIMP_PDB_STRING, id,
 				     GIMP_PDB_INT32, bytes,
@@ -313,7 +313,7 @@ pygimp_get_data(PyObject *self, PyObject *args)
     if (!PyArg_ParseTuple(args, "s:get_data", &id))
 	return NULL;
 
-    return_vals = gimp_run_procedure("gimp_procedural_db_get_data",
+    return_vals = gimp_run_procedure("gimp-procedural-db-get-data",
 				     &nreturn_vals,
 				     GIMP_PDB_STRING, id,
 				     GIMP_PDB_END);
