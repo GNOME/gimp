@@ -161,6 +161,8 @@ about_dialog_create (GimpContext *context)
       dialog->n_authors = G_N_ELEMENTS (authors) - 1;
 
       widget = g_object_new (GTK_TYPE_ABOUT_DIALOG,
+                             "role",               "about-dialog",
+                             "window-position",    GTK_WIN_POS_CENTER,
                              "version",            GIMP_VERSION,
                              "copyright",          COPYRIGHT,
                              "comments",           COMMENTS,
