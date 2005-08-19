@@ -1,3 +1,8 @@
+2005-08-19  Nathan Summers  <rock@gimp.org>
+
+	* plugins/poppler.c: removed some extraneous commas
+
+
 2005-08-19  Michael Natterer  <mitch@gimp.org>
 
 	Poppler 0.4 changes the API of poppler_page_render_to_pixbuf():
