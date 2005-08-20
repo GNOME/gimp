@@ -1,6 +1,6 @@
 2005-08-20  Sven Neumann  <sven@gimp.org>
 
-	* authors.xml: expemplary added artist and documenter roles to
+	* authors.xml: exemplarily added artist and documenter roles to
 	some contributors.
 
 	* app/dialogs/authors.xsl: generate arrays for the new roles.
