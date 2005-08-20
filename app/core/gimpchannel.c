@@ -919,11 +919,10 @@ gimp_channel_real_boundary (GimpChannel     *channel,
           pixel_region_init (&bPR, GIMP_DRAWABLE (channel)->tiles,
                              x3, y3, x4 - x3, y4 - y3, FALSE);
 
-          channel->segs_out = find_mask_boundary (&bPR, &channel->num_segs_out,
-                                                  IgnoreBounds,
-                                                  x1, y1,
-                                                  x2, y2,
-                                                  HALF_WAY);
+          channel->segs_out = boundary_find (&bPR, BOUNDARY_IGNORE_BOUNDS,
+                                             x1, y1, x2, y2,
+                                             BOUNDARY_HALF_WAY,
+                                             &channel->num_segs_out);
           x1 = MAX (x1, x3);
           y1 = MAX (y1, y3);
           x2 = MIN (x2, x4);
@@ -936,11 +935,10 @@ gimp_channel_real_boundary (GimpChannel     *channel,
                                  GIMP_ITEM (channel)->width,
                                  GIMP_ITEM (channel)->height, FALSE);
 
-              channel->segs_in = find_mask_boundary (&bPR, &channel->num_segs_in,
-                                                     WithinBounds,
-                                                     x1, y1,
-                                                     x2, y2,
-                                                     HALF_WAY);
+              channel->segs_in = boundary_find (&bPR, BOUNDARY_WITHIN_BOUNDS,
+                                                x1, y1, x2, y2,
+                                                BOUNDARY_HALF_WAY,
+                                                &channel->num_segs_in);
             }
           else
             {

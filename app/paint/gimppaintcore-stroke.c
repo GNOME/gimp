@@ -109,7 +109,7 @@ gimp_paint_core_stroke_boundary (GimpPaintCore    *core,
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
-  stroke_segs = sort_boundary (bound_segs, n_bound_segs, &n_stroke_segs);
+  stroke_segs = boundary_sort (bound_segs, n_bound_segs, &n_stroke_segs);
 
   if (n_stroke_segs == 0)
     return TRUE;

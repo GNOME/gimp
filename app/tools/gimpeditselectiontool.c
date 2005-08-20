@@ -296,11 +296,11 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
                          &edit_select->num_segs_in, &edit_select->num_segs_out,
                          0, 0, 0, 0);
 
-  edit_select->segs_in = sort_boundary (segs_in, edit_select->num_segs_in,
+  edit_select->segs_in = boundary_sort (segs_in, edit_select->num_segs_in,
                                         &num_groups);
   edit_select->num_segs_in += num_groups;
 
-  edit_select->segs_out = sort_boundary (segs_out, edit_select->num_segs_out,
+  edit_select->segs_out = boundary_sort (segs_out, edit_select->num_segs_out,
                                          &num_groups);
   edit_select->num_segs_out += num_groups;
 

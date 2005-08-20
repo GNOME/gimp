@@ -795,16 +795,17 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
               PR.bytes     = mask->bytes;
               PR.rowstride = PR.w * PR.bytes;
 
-              boundary =
-                find_mask_boundary (&PR, &brush_core->n_brush_bound_segs,
-                                    WithinBounds,
-                                    0, 0,
-                                    PR.w, PR.h,
-                                    0);
+              boundary = boundary_find (&PR, BOUNDARY_WITHIN_BOUNDS,
+                                        0, 0, PR.w, PR.h,
+                                        0,
+                                        &brush_core->n_brush_bound_segs);
+
               brush_core->brush_bound_segs =
-                sort_boundary (boundary,
-                               brush_core->n_brush_bound_segs, &num_groups);
+                boundary_sort (boundary, brush_core->n_brush_bound_segs,
+                               &num_groups);
+
 	      brush_core->n_brush_bound_segs += num_groups;
+
 	      g_free (boundary);
 
               brush_core->brush_bound_width  = mask->width;

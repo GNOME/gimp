@@ -425,12 +425,12 @@ gimp_fuzzy_select_tool_calculate (GimpFuzzySelectTool *fuzzy_sel,
                      gimp_item_height (GIMP_ITEM (fuzzy_sel->fuzzy_mask)),
                      FALSE);
 
-  bsegs =
-    find_mask_boundary (&maskPR, num_segs, WithinBounds,
-                        0, 0,
-                        gimp_item_width  (GIMP_ITEM (fuzzy_sel->fuzzy_mask)),
-                        gimp_item_height (GIMP_ITEM (fuzzy_sel->fuzzy_mask)),
-                        HALF_WAY);
+  bsegs = boundary_find (&maskPR, BOUNDARY_WITHIN_BOUNDS,
+                         0, 0,
+                         gimp_item_width  (GIMP_ITEM (fuzzy_sel->fuzzy_mask)),
+                         gimp_item_height (GIMP_ITEM (fuzzy_sel->fuzzy_mask)),
+                         BOUNDARY_HALF_WAY,
+                         num_segs);
 
   segs = g_new (GdkSegment, *num_segs);
 

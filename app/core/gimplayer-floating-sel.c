@@ -532,11 +532,12 @@ floating_sel_boundary (GimpLayer *layer,
 			 0, 0,
 			 GIMP_ITEM (layer)->width,
 			 GIMP_ITEM (layer)->height, FALSE);
-      layer->fs.segs = find_mask_boundary (&bPR, &layer->fs.num_segs,
-					   WithinBounds, 0, 0,
-					   GIMP_ITEM (layer)->width,
-					   GIMP_ITEM (layer)->height,
-                                           HALF_WAY);
+      layer->fs.segs = boundary_find (&bPR, BOUNDARY_WITHIN_BOUNDS,
+                                      0, 0,
+                                      GIMP_ITEM (layer)->width,
+                                      GIMP_ITEM (layer)->height,
+                                      BOUNDARY_HALF_WAY,
+                                      &layer->fs.num_segs);
 
       /*  offset the segments  */
       for (i = 0; i < layer->fs.num_segs; i++)

@@ -1,5 +1,19 @@
 2005-08-20  Michael Natterer  <mitch@gimp.org>
 
+	* app/base/boundary.[ch]: renamed puclic functions, defines and
+	enums to live in a proper "boundary" namespace. Cleaned up and
+	simplified internal code even more.
+
+	* app/core/gimpchannel.c
+	* app/core/gimpdrawable-stroke.c
+	* app/core/gimplayer-floating-sel.c
+	* app/paint/gimppaintcore-stroke.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimpfuzzyselecttool.c
+	* app/tools/gimppainttool.c: changed accordingly.
+
+2005-08-20  Michael Natterer  <mitch@gimp.org>
+
 	* app/base/boundary.c: rename local "ns" variables to "num_segs"
 	now that the global "num_segs" is gone.
 
