@@ -145,6 +145,8 @@ about_dialog_create (GimpContext *context)
                              "website",            WEBSITE,
                              "website-label",      WEBSITE_LABEL,
                              "authors",            authors,
+                             "artists",            artists,
+                             "documenters",        documenters,
                              /* Translators: insert your names here,
                               * separated by newline
                               */

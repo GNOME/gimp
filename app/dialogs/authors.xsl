@@ -15,7 +15,25 @@ static const gchar *authors[] =
 {
 </xsl:text>
   <xsl:apply-templates select="dc:creator" />
-  <xsl:apply-templates select="dc:contributor" />
+  <xsl:apply-templates select="dc:contributor[contains(@role, 'author')]" />
+<xsl:text>  NULL
+};
+</xsl:text>
+
+<xsl:text>
+static const gchar *artists[] =
+{
+</xsl:text>
+  <xsl:apply-templates select="dc:contributor[contains(@role, 'artist')]" />
+<xsl:text>  NULL
+};
+</xsl:text>
+
+<xsl:text>
+static const gchar *documenters[] =
+{
+</xsl:text>
+  <xsl:apply-templates select="dc:contributor[contains(@role, 'documenter')]" />
 <xsl:text>  NULL
 };
 </xsl:text>

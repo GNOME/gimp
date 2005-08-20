@@ -1,5 +1,17 @@
 2005-08-20  Sven Neumann  <sven@gimp.org>
 
+	* authors.xml: expemplary added artist and documenter roles to
+	some contributors.
+
+	* app/dialogs/authors.xsl: generate arrays for the new roles.
+
+	* app/dialogs/authors.h: regenerated.
+
+	* app/dialogs/about-dialog.c: pass the new arrays to the
+	GtkAboutDialog constructor.
+
+2005-08-20  Sven Neumann  <sven@gimp.org>
+
 	* authors.dtd
 	* authors.xml: simplified by making dc: the default namespace.
 

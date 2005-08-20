@@ -97,9 +97,9 @@
   <contributor role="author">Daniel Kobras</contributor>
   <contributor role="author">Øyvind Kolås</contributor>
   <contributor role="author">Robert L Krawitz</contributor>
-  <contributor role="author">Tuomas Kuosmanen</contributor>
-  <contributor role="author">Karin Kylander</contributor>
-  <contributor role="author">Olof S Kylander</contributor>
+  <contributor role="artist author">Tuomas Kuosmanen</contributor>
+  <contributor role="documenter">Karin Kylander</contributor>
+  <contributor role="author documenter">Olof S Kylander</contributor>
   <contributor role="author">Karl La Rocca</contributor>
   <contributor role="author">Philip Lafleur</contributor>
   <contributor role="author">Chris Lahey</contributor>
@@ -181,7 +181,7 @@
   <contributor role="author">Daniel Skarda</contributor>
   <contributor role="author">Carol Spears</contributor>
   <contributor role="author">Adam Spiers</contributor>
-  <contributor role="author">Jakub Steiner</contributor>
+  <contributor role="artist author">Jakub Steiner</contributor>
   <contributor role="author">Nathan Summers</contributor>
   <contributor role="author">Mike Sweet</contributor>
   <contributor role="author">Yuri Syrota</contributor>

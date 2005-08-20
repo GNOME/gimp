@@ -94,7 +94,6 @@ static const gchar *authors[] =
   "Øyvind Kolås",
   "Robert L Krawitz",
   "Tuomas Kuosmanen",
-  "Karin Kylander",
   "Olof S Kylander",
   "Karl La Rocca",
   "Philip Lafleur",
@@ -198,5 +197,19 @@ static const gchar *authors[] =
   "Calvin Williamson",
   "Matthew Wilson",
   "Shirasaki Yasuhiro",
+  NULL
+};
+
+static const gchar *artists[] =
+{
+  "Tuomas Kuosmanen",
+  "Jakub Steiner",
+  NULL
+};
+
+static const gchar *documenters[] =
+{
+  "Karin Kylander",
+  "Olof S Kylander",
   NULL
 };
