@@ -1,5 +1,18 @@
 2005-08-19  Sven Neumann  <sven@gimp.org>
 
+	* authors.dtd
+	* authors.xml: use elements and attributes from Dublin Core.
+
+	* authors.xsl
+	* app/dialogs/authors.xsl: changed accordingly.
+
+	* app/dialogs/authors.h: regenerated.
+
+	* app/dialogs/about-dialog.c: Peter and Spencer are now part of
+	the list of authors (but listed before everyone else).
+
+2005-08-19  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/about-dialog.c: set the role and window position.
 
 2005-08-19  Michael Natterer  <mitch@gimp.org>

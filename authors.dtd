@@ -1,6 +1,10 @@
 <!-- simple DTD for GIMP authors -->
 
-<!ELEMENT gimp-authors (author+, contributor+)>
+<!ELEMENT gimp-authors (dc:creator+, dc:contributor+)>
+<!ATTLIST gimp-authors xmlns:dc CDATA #FIXED "http://purl.org/dc/elements/1.1/">
 
-<!ELEMENT author (#PCDATA)>
-<!ELEMENT contributor (#PCDATA)>
+<!ELEMENT dc:creator (#PCDATA)>
+<!ATTLIST dc:creator role CDATA #REQUIRED>
+
+<!ELEMENT dc:contributor (#PCDATA)>
+<!ATTLIST dc:contributor role CDATA #REQUIRED>

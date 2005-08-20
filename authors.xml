@@ -4,203 +4,203 @@
 <!-- This file is supposed to list all GIMP authors and contributors.       -->
 <!-- It's in XML format so that it can easily be used for the About dialog. -->
 
-<gimp-authors>
+<gimp-authors xmlns:dc="http://purl.org/dc/elements/1.1/">
 
-  <author>Spencer Kimball</author>
-  <author>Peter Mattis</author>
+  <dc:creator role="author">Spencer Kimball</dc:creator>
+  <dc:creator role="author">Peter Mattis</dc:creator>
 
-  <contributor>Lauri Alanko</contributor>
-  <contributor>Shawn Amundson</contributor>
-  <contributor>Sven Anders</contributor>
-  <contributor>Henrik Brix Andersen</contributor>
-  <contributor>Karl-Johan Andersson</contributor>
-  <contributor>John Beale</contributor>
-  <contributor>Zach Beane</contributor>
-  <contributor>Tom Bech</contributor>
-  <contributor>Marc Bless</contributor>
-  <contributor>Edward Blevins</contributor>
-  <contributor>Reagan Blundell</contributor>
-  <contributor>Xavier Bouchoux</contributor>
-  <contributor>Roberto Boyd</contributor>
-  <contributor>Stanislav Brabec</contributor>
-  <contributor>Robert Brady</contributor>
-  <contributor>Hans Breuer</contributor>
-  <contributor>Simon Budig</contributor>
-  <contributor>João S. O. Bueno Calligaris</contributor>
-  <contributor>Carey Bunks</contributor>
-  <contributor>Seth Burgess</contributor>
-  <contributor>Brent Burton</contributor>
-  <contributor>Francisco Bustamante</contributor>
-  <contributor>Albert Cahalan</contributor>
-  <contributor>George J. Carrette</contributor>
-  <contributor>Sean Cier</contributor>
-  <contributor>Winston Chang</contributor>
-  <contributor>Kenneth Christiansen</contributor>
-  <contributor>Zbigniew Chyla</contributor>
-  <contributor>Branko Collin</contributor>
-  <contributor>Ed Connel</contributor>
-  <contributor>Piers Cornwell</contributor>
-  <contributor>Daniel Cotting</contributor>
-  <contributor>Jay Cox</contributor>
-  <contributor>Kevin Cozens</contributor>
-  <contributor>Brian Degenhardt</contributor>
-  <contributor>Karine Delvare</contributor>
-  <contributor>Gert Dewit</contributor>
-  <contributor>Andreas Dilger</contributor>
-  <contributor>Austin Donnelly</contributor>
-  <contributor>Scott Draves</contributor>
-  <contributor>Daniel Dunbar</contributor>
-  <contributor>Misha Dynin</contributor>
-  <contributor>Daniel Egger</contributor>
-  <contributor>Morton Eriksen</contributor>
-  <contributor>Larry Ewing</contributor>
-  <contributor>Nick Fetchak</contributor>
-  <contributor>Valek Filippov</contributor>
-  <contributor>Shlomi Fish</contributor>
-  <contributor>David Forsyth</contributor>
-  <contributor>Raphael Francois</contributor>
-  <contributor>Jochen Friedrich</contributor>
-  <contributor>Jordi Gay</contributor>
-  <contributor>Sami Gerdt</contributor>
-  <contributor>Jim Geuther</contributor>
-  <contributor>Graeme Gill</contributor>
-  <contributor>Pedro Gimeno</contributor>
-  <contributor>Scott Goehring</contributor>
-  <contributor>Heiko Goller</contributor>
-  <contributor>Marcelo de Gomensoro Malheiros</contributor>
-  <contributor>David Gowers</contributor>
-  <contributor>Cameron Gregory</contributor>
-  <contributor>Pavel Grinfeld</contributor>
-  <contributor>Dov Grobgeld</contributor>
-  <contributor>Michael Hammel</contributor>
-  <contributor>Henrik Hansen</contributor>
-  <contributor>Ville Hautamäki</contributor>
-  <contributor>James Henstridge</contributor>
-  <contributor>Eric Hernes</contributor>
-  <contributor>David Hodson</contributor>
-  <contributor>Christoph Hoegl</contributor>
-  <contributor>Wolfgang Hofer</contributor>
-  <contributor>Alan Horkan</contributor>
-  <contributor>Jan Hubička</contributor>
-  <contributor>Andreas Hyden</contributor>
-  <contributor>Ben Jackson</contributor>
-  <contributor>Krzysztof Jakubowski</contributor>
-  <contributor>Simon Janes</contributor>
-  <contributor>Tim Janik</contributor>
-  <contributor>Fellmann Joaquim</contributor>
-  <contributor>Róman Joost</contributor>
-  <contributor>Geert Jordaens</contributor>
-  <contributor>Andrew Kieschnick</contributor>
-  <contributor>Peter Kirchgessner</contributor>
-  <contributor>Philipp Klaus</contributor>
-  <contributor>David Koblas</contributor>
-  <contributor>Daniel Kobras</contributor>
-  <contributor>Øyvind Kolås</contributor>
-  <contributor>Robert L Krawitz</contributor>
-  <contributor>Tuomas Kuosmanen</contributor>
-  <contributor>Karin Kylander</contributor>
-  <contributor>Olof S Kylander</contributor>
-  <contributor>Karl La Rocca</contributor>
-  <contributor>Philip Lafleur</contributor>
-  <contributor>Chris Lahey</contributor>
-  <contributor>Nick Lamb</contributor>
-  <contributor>Marco Lamberto</contributor>
-  <contributor>Jens Lautenbacher</contributor>
-  <contributor>Laramie Leavitt</contributor>
-  <contributor>Elliot Lee</contributor>
-  <contributor>Marc Lehmann</contributor>
-  <contributor>Ray Lehtiniemi</contributor>
-  <contributor>Raph Levien</contributor>
-  <contributor>Wing Tung Leung</contributor>
-  <contributor>Adrian Likins</contributor>
-  <contributor>Tor Lillqvist</contributor>
-  <contributor>Ingo Lütkebohle</contributor>
-  <contributor>Josh MacDonald</contributor>
-  <contributor>Ed Mackey</contributor>
-  <contributor>Vidar Madsen</contributor>
-  <contributor>Ian Main</contributor>
-  <contributor>Kjartan Maraas</contributor>
-  <contributor>Kelly Martin</contributor>
-  <contributor>Torsten Martinsen</contributor>
-  <contributor>Gordon Matzigkeit</contributor>
-  <contributor>Gregory McLean</contributor>
-  <contributor>Daniele Medri</contributor>
-  <contributor>Federico Mena Quintero</contributor>
-  <contributor>Jim Meyer</contributor>
-  <contributor>James Mitchell</contributor>
-  <contributor>Hirotsuna Mizuno</contributor>
-  <contributor>David Monniaux</contributor>
-  <contributor>Adam D Moss</contributor>
-  <contributor>Balazs Nagy</contributor>
-  <contributor>Yukihiro Nakai</contributor>
-  <contributor>Sung-Hyun Nam</contributor>
-  <contributor>Shuji Narazaki</contributor>
-  <contributor>Felix Natter</contributor>
-  <contributor>Michael Natterer</contributor>
-  <contributor>David Neary</contributor>
-  <contributor>David Necas</contributor>
-  <contributor>Sven Neumann</contributor>
-  <contributor>Stephen Robert Norris</contributor>
-  <contributor>Tim Newsome</contributor>
-  <contributor>Erik Nygren</contributor>
-  <contributor>Miles O'Neal</contributor>
-  <contributor>David Odin </contributor>
-  <contributor>Robert Ögren</contributor>
-  <contributor>Thom van Os</contributor>
-  <contributor>Garry R. Osgood</contributor>
-  <contributor>Alan Paeth</contributor>
-  <contributor>Jay Painter</contributor>
-  <contributor>Sergey Panov</contributor>
-  <contributor>Ville Pätsi</contributor>
-  <contributor>Akkana Peck</contributor>
-  <contributor>Asbjorn Pettersen</contributor>
-  <contributor>Mike Phillips</contributor>
-  <contributor>Artur Polaczynski</contributor>
-  <contributor>Ari Pollak</contributor>
-  <contributor>Raphaël Quinet</contributor>
-  <contributor>Tom Rathborne</contributor>
-  <contributor>Vincent Renardias</contributor>
-  <contributor>Jens Restemeier</contributor>
-  <contributor>Maurits Rijk</contributor>
-  <contributor>Daniel Risacher</contributor>
-  <contributor>James Robinson</contributor>
-  <contributor>Guillermo S. Romero</contributor>
-  <contributor>Tim Rowley</contributor>
-  <contributor>Pablo Saratxaga</contributor>
-  <contributor>Mike Schaeffer</contributor>
-  <contributor>John Schlag</contributor>
-  <contributor>Norbert Schmitz</contributor>
-  <contributor>Thorsten Schnier</contributor>
-  <contributor>Alexander Schulz</contributor>
-  <contributor>Michael Schumacher</contributor>
-  <contributor>Tracy Scott</contributor>
-  <contributor>Craig Setera</contributor>
-  <contributor>Aaron Sherman</contributor>
-  <contributor>Manish Singh</contributor>
-  <contributor>William Skaggs</contributor>
-  <contributor>Daniel Skarda</contributor>
-  <contributor>Carol Spears</contributor>
-  <contributor>Adam Spiers</contributor>
-  <contributor>Jakub Steiner</contributor>
-  <contributor>Nathan Summers</contributor>
-  <contributor>Mike Sweet</contributor>
-  <contributor>Yuri Syrota</contributor>
-  <contributor>Eiichi Takamori</contributor>
-  <contributor>Tristan Tarrant</contributor>
-  <contributor>Michael Taylor</contributor>
-  <contributor>Owen Taylor</contributor>
-  <contributor>Ian Tester</contributor>
-  <contributor>Andy Thomas</contributor>
-  <contributor>Kevin Turner</contributor>
-  <contributor>Brion Vibber</contributor>
-  <contributor>Helvetix Victorinox</contributor>
-  <contributor>Rebecca Walter</contributor>
-  <contributor>Martin Weber</contributor>
-  <contributor>James Wang</contributor>
-  <contributor>Kris Wehner</contributor>
-  <contributor>Nigel Wetten</contributor>
-  <contributor>Calvin Williamson</contributor>
-  <contributor>Matthew Wilson</contributor>
-  <contributor>Shirasaki Yasuhiro</contributor>
+  <dc:contributor role="author">Lauri Alanko</dc:contributor>
+  <dc:contributor role="author">Shawn Amundson</dc:contributor>
+  <dc:contributor role="author">Sven Anders</dc:contributor>
+  <dc:contributor role="author">Henrik Brix Andersen</dc:contributor>
+  <dc:contributor role="author">Karl-Johan Andersson</dc:contributor>
+  <dc:contributor role="author">John Beale</dc:contributor>
+  <dc:contributor role="author">Zach Beane</dc:contributor>
+  <dc:contributor role="author">Tom Bech</dc:contributor>
+  <dc:contributor role="author">Marc Bless</dc:contributor>
+  <dc:contributor role="author">Edward Blevins</dc:contributor>
+  <dc:contributor role="author">Reagan Blundell</dc:contributor>
+  <dc:contributor role="author">Xavier Bouchoux</dc:contributor>
+  <dc:contributor role="author">Roberto Boyd</dc:contributor>
+  <dc:contributor role="author">Stanislav Brabec</dc:contributor>
+  <dc:contributor role="author">Robert Brady</dc:contributor>
+  <dc:contributor role="author">Hans Breuer</dc:contributor>
+  <dc:contributor role="author">Simon Budig</dc:contributor>
+  <dc:contributor role="author">João S. O. Bueno Calligaris</dc:contributor>
+  <dc:contributor role="author">Carey Bunks</dc:contributor>
+  <dc:contributor role="author">Seth Burgess</dc:contributor>
+  <dc:contributor role="author">Brent Burton</dc:contributor>
+  <dc:contributor role="author">Francisco Bustamante</dc:contributor>
+  <dc:contributor role="author">Albert Cahalan</dc:contributor>
+  <dc:contributor role="author">George J. Carrette</dc:contributor>
+  <dc:contributor role="author">Sean Cier</dc:contributor>
+  <dc:contributor role="author">Winston Chang</dc:contributor>
+  <dc:contributor role="author">Kenneth Christiansen</dc:contributor>
+  <dc:contributor role="author">Zbigniew Chyla</dc:contributor>
+  <dc:contributor role="author">Branko Collin</dc:contributor>
+  <dc:contributor role="author">Ed Connel</dc:contributor>
+  <dc:contributor role="author">Piers Cornwell</dc:contributor>
+  <dc:contributor role="author">Daniel Cotting</dc:contributor>
+  <dc:contributor role="author">Jay Cox</dc:contributor>
+  <dc:contributor role="author">Kevin Cozens</dc:contributor>
+  <dc:contributor role="author">Brian Degenhardt</dc:contributor>
+  <dc:contributor role="author">Karine Delvare</dc:contributor>
+  <dc:contributor role="author">Gert Dewit</dc:contributor>
+  <dc:contributor role="author">Andreas Dilger</dc:contributor>
+  <dc:contributor role="author">Austin Donnelly</dc:contributor>
+  <dc:contributor role="author">Scott Draves</dc:contributor>
+  <dc:contributor role="author">Daniel Dunbar</dc:contributor>
+  <dc:contributor role="author">Misha Dynin</dc:contributor>
+  <dc:contributor role="author">Daniel Egger</dc:contributor>
+  <dc:contributor role="author">Morton Eriksen</dc:contributor>
+  <dc:contributor role="author">Larry Ewing</dc:contributor>
+  <dc:contributor role="author">Nick Fetchak</dc:contributor>
+  <dc:contributor role="author">Valek Filippov</dc:contributor>
+  <dc:contributor role="author">Shlomi Fish</dc:contributor>
+  <dc:contributor role="author">David Forsyth</dc:contributor>
+  <dc:contributor role="author">Raphael Francois</dc:contributor>
+  <dc:contributor role="author">Jochen Friedrich</dc:contributor>
+  <dc:contributor role="author">Jordi Gay</dc:contributor>
+  <dc:contributor role="author">Sami Gerdt</dc:contributor>
+  <dc:contributor role="author">Jim Geuther</dc:contributor>
+  <dc:contributor role="author">Graeme Gill</dc:contributor>
+  <dc:contributor role="author">Pedro Gimeno</dc:contributor>
+  <dc:contributor role="author">Scott Goehring</dc:contributor>
+  <dc:contributor role="author">Heiko Goller</dc:contributor>
+  <dc:contributor role="author">Marcelo de Gomensoro Malheiros</dc:contributor>
+  <dc:contributor role="author">David Gowers</dc:contributor>
+  <dc:contributor role="author">Cameron Gregory</dc:contributor>
+  <dc:contributor role="author">Pavel Grinfeld</dc:contributor>
+  <dc:contributor role="author">Dov Grobgeld</dc:contributor>
+  <dc:contributor role="author">Michael Hammel</dc:contributor>
+  <dc:contributor role="author">Henrik Hansen</dc:contributor>
+  <dc:contributor role="author">Ville Hautamäki</dc:contributor>
+  <dc:contributor role="author">James Henstridge</dc:contributor>
+  <dc:contributor role="author">Eric Hernes</dc:contributor>
+  <dc:contributor role="author">David Hodson</dc:contributor>
+  <dc:contributor role="author">Christoph Hoegl</dc:contributor>
+  <dc:contributor role="author">Wolfgang Hofer</dc:contributor>
+  <dc:contributor role="author">Alan Horkan</dc:contributor>
+  <dc:contributor role="author">Jan Hubička</dc:contributor>
+  <dc:contributor role="author">Andreas Hyden</dc:contributor>
+  <dc:contributor role="author">Ben Jackson</dc:contributor>
+  <dc:contributor role="author">Krzysztof Jakubowski</dc:contributor>
+  <dc:contributor role="author">Simon Janes</dc:contributor>
+  <dc:contributor role="author">Tim Janik</dc:contributor>
+  <dc:contributor role="author">Fellmann Joaquim</dc:contributor>
+  <dc:contributor role="author">Róman Joost</dc:contributor>
+  <dc:contributor role="author">Geert Jordaens</dc:contributor>
+  <dc:contributor role="author">Andrew Kieschnick</dc:contributor>
+  <dc:contributor role="author">Peter Kirchgessner</dc:contributor>
+  <dc:contributor role="author">Philipp Klaus</dc:contributor>
+  <dc:contributor role="author">David Koblas</dc:contributor>
+  <dc:contributor role="author">Daniel Kobras</dc:contributor>
+  <dc:contributor role="author">Øyvind Kolås</dc:contributor>
+  <dc:contributor role="author">Robert L Krawitz</dc:contributor>
+  <dc:contributor role="author">Tuomas Kuosmanen</dc:contributor>
+  <dc:contributor role="author">Karin Kylander</dc:contributor>
+  <dc:contributor role="author">Olof S Kylander</dc:contributor>
+  <dc:contributor role="author">Karl La Rocca</dc:contributor>
+  <dc:contributor role="author">Philip Lafleur</dc:contributor>
+  <dc:contributor role="author">Chris Lahey</dc:contributor>
+  <dc:contributor role="author">Nick Lamb</dc:contributor>
+  <dc:contributor role="author">Marco Lamberto</dc:contributor>
+  <dc:contributor role="author">Jens Lautenbacher</dc:contributor>
+  <dc:contributor role="author">Laramie Leavitt</dc:contributor>
+  <dc:contributor role="author">Elliot Lee</dc:contributor>
+  <dc:contributor role="author">Marc Lehmann</dc:contributor>
+  <dc:contributor role="author">Ray Lehtiniemi</dc:contributor>
+  <dc:contributor role="author">Raph Levien</dc:contributor>
+  <dc:contributor role="author">Wing Tung Leung</dc:contributor>
+  <dc:contributor role="author">Adrian Likins</dc:contributor>
+  <dc:contributor role="author">Tor Lillqvist</dc:contributor>
+  <dc:contributor role="author">Ingo Lütkebohle</dc:contributor>
+  <dc:contributor role="author">Josh MacDonald</dc:contributor>
+  <dc:contributor role="author">Ed Mackey</dc:contributor>
+  <dc:contributor role="author">Vidar Madsen</dc:contributor>
+  <dc:contributor role="author">Ian Main</dc:contributor>
+  <dc:contributor role="author">Kjartan Maraas</dc:contributor>
+  <dc:contributor role="author">Kelly Martin</dc:contributor>
+  <dc:contributor role="author">Torsten Martinsen</dc:contributor>
+  <dc:contributor role="author">Gordon Matzigkeit</dc:contributor>
+  <dc:contributor role="author">Gregory McLean</dc:contributor>
+  <dc:contributor role="author">Daniele Medri</dc:contributor>
+  <dc:contributor role="author">Federico Mena Quintero</dc:contributor>
+  <dc:contributor role="author">Jim Meyer</dc:contributor>
+  <dc:contributor role="author">James Mitchell</dc:contributor>
+  <dc:contributor role="author">Hirotsuna Mizuno</dc:contributor>
+  <dc:contributor role="author">David Monniaux</dc:contributor>
+  <dc:contributor role="author">Adam D Moss</dc:contributor>
+  <dc:contributor role="author">Balazs Nagy</dc:contributor>
+  <dc:contributor role="author">Yukihiro Nakai</dc:contributor>
+  <dc:contributor role="author">Sung-Hyun Nam</dc:contributor>
+  <dc:contributor role="author">Shuji Narazaki</dc:contributor>
+  <dc:contributor role="author">Felix Natter</dc:contributor>
+  <dc:contributor role="author">Michael Natterer</dc:contributor>
+  <dc:contributor role="author">David Neary</dc:contributor>
+  <dc:contributor role="author">David Necas</dc:contributor>
+  <dc:contributor role="author">Sven Neumann</dc:contributor>
+  <dc:contributor role="author">Stephen Robert Norris</dc:contributor>
+  <dc:contributor role="author">Tim Newsome</dc:contributor>
+  <dc:contributor role="author">Erik Nygren</dc:contributor>
+  <dc:contributor role="author">Miles O'Neal</dc:contributor>
+  <dc:contributor role="author">David Odin </dc:contributor>
+  <dc:contributor role="author">Robert Ögren</dc:contributor>
+  <dc:contributor role="author">Thom van Os</dc:contributor>
+  <dc:contributor role="author">Garry R. Osgood</dc:contributor>
+  <dc:contributor role="author">Alan Paeth</dc:contributor>
+  <dc:contributor role="author">Jay Painter</dc:contributor>
+  <dc:contributor role="author">Sergey Panov</dc:contributor>
+  <dc:contributor role="author">Ville Pätsi</dc:contributor>
+  <dc:contributor role="author">Akkana Peck</dc:contributor>
+  <dc:contributor role="author">Asbjorn Pettersen</dc:contributor>
+  <dc:contributor role="author">Mike Phillips</dc:contributor>
+  <dc:contributor role="author">Artur Polaczynski</dc:contributor>
+  <dc:contributor role="author">Ari Pollak</dc:contributor>
+  <dc:contributor role="author">Raphaël Quinet</dc:contributor>
+  <dc:contributor role="author">Tom Rathborne</dc:contributor>
+  <dc:contributor role="author">Vincent Renardias</dc:contributor>
+  <dc:contributor role="author">Jens Restemeier</dc:contributor>
+  <dc:contributor role="author">Maurits Rijk</dc:contributor>
+  <dc:contributor role="author">Daniel Risacher</dc:contributor>
+  <dc:contributor role="author">James Robinson</dc:contributor>
+  <dc:contributor role="author">Guillermo S. Romero</dc:contributor>
+  <dc:contributor role="author">Tim Rowley</dc:contributor>
+  <dc:contributor role="author">Pablo Saratxaga</dc:contributor>
+  <dc:contributor role="author">Mike Schaeffer</dc:contributor>
+  <dc:contributor role="author">John Schlag</dc:contributor>
+  <dc:contributor role="author">Norbert Schmitz</dc:contributor>
+  <dc:contributor role="author">Thorsten Schnier</dc:contributor>
+  <dc:contributor role="author">Alexander Schulz</dc:contributor>
+  <dc:contributor role="author">Michael Schumacher</dc:contributor>
+  <dc:contributor role="author">Tracy Scott</dc:contributor>
+  <dc:contributor role="author">Craig Setera</dc:contributor>
+  <dc:contributor role="author">Aaron Sherman</dc:contributor>
+  <dc:contributor role="author">Manish Singh</dc:contributor>
+  <dc:contributor role="author">William Skaggs</dc:contributor>
+  <dc:contributor role="author">Daniel Skarda</dc:contributor>
+  <dc:contributor role="author">Carol Spears</dc:contributor>
+  <dc:contributor role="author">Adam Spiers</dc:contributor>
+  <dc:contributor role="author">Jakub Steiner</dc:contributor>
+  <dc:contributor role="author">Nathan Summers</dc:contributor>
+  <dc:contributor role="author">Mike Sweet</dc:contributor>
+  <dc:contributor role="author">Yuri Syrota</dc:contributor>
+  <dc:contributor role="author">Eiichi Takamori</dc:contributor>
+  <dc:contributor role="author">Tristan Tarrant</dc:contributor>
+  <dc:contributor role="author">Michael Taylor</dc:contributor>
+  <dc:contributor role="author">Owen Taylor</dc:contributor>
+  <dc:contributor role="author">Ian Tester</dc:contributor>
+  <dc:contributor role="author">Andy Thomas</dc:contributor>
+  <dc:contributor role="author">Kevin Turner</dc:contributor>
+  <dc:contributor role="author">Brion Vibber</dc:contributor>
+  <dc:contributor role="author">Helvetix Victorinox</dc:contributor>
+  <dc:contributor role="author">Rebecca Walter</dc:contributor>
+  <dc:contributor role="author">Martin Weber</dc:contributor>
+  <dc:contributor role="author">James Wang</dc:contributor>
+  <dc:contributor role="author">Kris Wehner</dc:contributor>
+  <dc:contributor role="author">Nigel Wetten</dc:contributor>
+  <dc:contributor role="author">Calvin Williamson</dc:contributor>
+  <dc:contributor role="author">Matthew Wilson</dc:contributor>
+  <dc:contributor role="author">Shirasaki Yasuhiro</dc:contributor>
 
 </gimp-authors>

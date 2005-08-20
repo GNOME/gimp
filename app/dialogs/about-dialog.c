@@ -46,11 +46,13 @@
   "This program is free software; you can redistribute it and/or modify\n" \
   "it under the terms of the GNU General Public License as published by\n" \
   "the Free Software Foundation; either version 2 of the License, or\n"    \
-  "(at your option) any later version.\n\n"                                \
+  "(at your option) any later version.\n"                                  \
+  "\n"                                                                     \
   "This program is distributed in the hope that it will be useful,\n"      \
   "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"       \
   "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n"                 \
-  "See the GNU General Public License for more details.\n\n"               \
+  "See the GNU General Public License for more details.\n"                 \
+  "\n"                                                                     \
   "You should have received a copy of the GNU General Public License\n"    \
   "along with this program; if not, write to the Free Software\n"          \
   "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA."
@@ -90,33 +92,6 @@ typedef struct
   gboolean      visible;
   gboolean      pp;
 } GimpAboutDialog;
-
-
-static const gchar *founders[] =
-{
-  N_("Version %s brought to you by"), "Spencer Kimball & Peter Mattis"
-};
-
-static const PangoColor foreground = { 5000,      5000,      5000      };
-static const PangoColor background = { 139 * 257, 137 * 257, 124 * 257 };
-
-static const PangoColor gradient[] =
-{
-  { 139 * 257,  137 * 257,  124 * 257  },
-  { 65535,      65535,      65535      },
-  { 5000,       5000,       5000       }
-};
-
-/* backup values */
-
-static const PangoColor grad1ent[] =
-{
-  { 0xff * 257, 0xba * 257, 0x00 * 257 },
-  { 37522,      51914,      57568      }
-};
-
-static const PangoColor foregr0und = { 37522, 51914, 57568 };
-static const PangoColor backgr0und = { 0,     0,     0     };
 
 
 static void      about_dialog_map         (GtkWidget       *widget,
@@ -333,9 +308,12 @@ about_dialog_reshuffle (GimpAboutDialog *dialog)
   for (i = 0; i < dialog->n_authors; i++)
     dialog->shuffle[i] = i;
 
-  for (i = 0; i < dialog->n_authors; i++)
+  /* here we rely on the authors array having Peter and Spencer first */
+#define START_INDEX 2
+
+  for (i = START_INDEX; i < dialog->n_authors; i++)
     {
-      gint j = g_rand_int_range (gr, 0, dialog->n_authors);
+      gint j = g_rand_int_range (gr, START_INDEX, dialog->n_authors);
 
       if (i != j)
         {
@@ -346,6 +324,8 @@ about_dialog_reshuffle (GimpAboutDialog *dialog)
           dialog->shuffle[i] = t;
         }
     }
+
+#undef START_INDEX
 
   g_rand_free (gr);
 }
@@ -432,6 +412,30 @@ insert_spacers (const gchar *string)
 
   return g_string_free (str, FALSE);
 }
+
+
+/* color constants */
+
+static const PangoColor foreground = { 5000,      5000,      5000      };
+static const PangoColor background = { 139 * 257, 137 * 257, 124 * 257 };
+
+static const PangoColor gradient[] =
+{
+  { 139 * 257,  137 * 257,  124 * 257  },
+  { 65535,      65535,      65535      },
+  { 5000,       5000,       5000       }
+};
+
+/* backup values */
+
+static const PangoColor grad1ent[] =
+{
+  { 0xff * 257, 0xba * 257, 0x00 * 257 },
+  { 37522,      51914,      57568      }
+};
+
+static const PangoColor foregr0und = { 37522, 51914, 57568 };
+static const PangoColor backgr0und = { 0,     0,     0     };
 
 static void
 mix_gradient (const PangoColor *gradient,
@@ -662,14 +666,6 @@ about_dialog_timer (gpointer data)
   GimpAboutDialog *dialog  = data;
   gint             timeout = 0;
 
-  if (dialog->state == 0)
-    {
-      dialog->timer = g_timeout_add (30, about_dialog_timer, dialog);
-      dialog->index = 0;
-      dialog->state = 1;
-      return FALSE;
-    }
-
   if (dialog->animstep == 0)
     {
       gchar   *text = NULL;
@@ -679,46 +675,29 @@ about_dialog_timer (gpointer data)
 
       dialog->visible = TRUE;
 
-      if (dialog->state == 1)
+      switch (dialog->state)
         {
-          if (dialog->index >= G_N_ELEMENTS (founders))
-            {
-              dialog->index = 0;
-              dialog->state = 2;
-            }
-          else
-            {
-              if (dialog->index == 0)
-                {
-                  gchar *tmp = g_strdup_printf (gettext (founders[0]),
-                                                GIMP_VERSION);
-                  text = insert_spacers (tmp);
-                  g_free (tmp);
-                }
-              else
-                {
-                  text = insert_spacers (gettext (founders[dialog->index]));
-                }
+        case 0:
+          dialog->timer = g_timeout_add (30, about_dialog_timer, dialog);
+          dialog->state += 1;
+          return FALSE;
 
-              dialog->index++;
-            }
-        }
+        case 1:
+          text = insert_spacers (_("GIMP is brought to you by"));
+          dialog->state += 1;
+          break;
 
-      if (dialog->state == 2)
-        {
-          text = insert_spacers (_("Contributions by"));
-
-          dialog->index = 0;
-          dialog->state++;
-        }
-
-      if (dialog->state == 3)
-        {
-          dialog->index += 1;
-          if (dialog->index == dialog->n_authors)
+        case 2:
+          if (! (dialog->index < dialog->n_authors))
             dialog->index = 0;
 
           text = insert_spacers (authors[dialog->shuffle[dialog->index]]);
+          dialog->index += 1;
+          break;
+
+        default:
+          g_return_val_if_reached (TRUE);
+          break;
         }
 
       g_return_val_if_fail (text != NULL, TRUE);
