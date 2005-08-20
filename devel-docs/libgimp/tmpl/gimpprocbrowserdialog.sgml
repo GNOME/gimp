@@ -23,6 +23,13 @@ GimpProcBrowserDialog
 </para>
 
 
+<!-- ##### SIGNAL GimpProcBrowserDialog::row-activated ##### -->
+<para>
+
+</para>
+
+@gimpprocbrowserdialog: the object which received the signal.
+
 <!-- ##### SIGNAL GimpProcBrowserDialog::selection-changed ##### -->
 <para>
 
