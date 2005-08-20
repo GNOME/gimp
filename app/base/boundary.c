@@ -36,22 +36,28 @@
 #define MAX_SEGS_INC  2048
 
 
-/*  The array of vertical segments  */
-static gint      *vert_segs      = NULL;
+typedef struct _Boundary Boundary;
 
-/*  The array of segments  */
-static BoundSeg  *tmp_segs       = NULL;
-static gint       num_segs       = 0;
-static gint       max_segs       = 0;
+struct _Boundary
+{
+  /*  The array of vertical segments  */
+  gint      *vert_segs;
 
-/* static empty segment arrays */
-static gint      *empty_segs_n   = NULL;
-static gint      *empty_segs_c   = NULL;
-static gint      *empty_segs_l   = NULL;
-static gint       max_empty_segs = 0;
+  /*  The array of segments  */
+  BoundSeg  *tmp_segs;
+  gint       num_segs;
+  gint       max_segs;
+
+  /* static empty segment arrays */
+  gint      *empty_segs_n;
+  gint      *empty_segs_c;
+  gint      *empty_segs_l;
+  gint       max_empty_segs;
+};
 
 
 /*  local function prototypes  */
+static void free_boundary       (Boundary     *boundary);
 static void find_empty_segs     (PixelRegion  *maskPR,
 				 gint          scanline,
 				 gint          empty_segs[],
@@ -63,25 +69,31 @@ static void find_empty_segs     (PixelRegion  *maskPR,
 				 gint          x2,
 				 gint          y2,
                                  guchar        threshold);
-static void make_seg            (gint          x1,
+static void make_seg            (Boundary     *bounrady,
+                                 gint          x1,
 				 gint          y1,
 				 gint          x2,
 				 gint          y2,
 				 gboolean      open);
-static void allocate_vert_segs  (PixelRegion  *PR);
-static void allocate_empty_segs (PixelRegion  *PR);
-static void process_horiz_seg   (gint          x1,
+static void allocate_vert_segs  (Boundary     *boundary,
+                                 PixelRegion  *PR);
+static void allocate_empty_segs (Boundary     *boundary,
+                                 PixelRegion  *PR);
+static void process_horiz_seg   (Boundary     *boundary,
+                                 gint          x1,
 				 gint          y1,
 				 gint          x2,
 				 gint          y2,
 				 gboolean      open);
-static void make_horiz_segs     (gint          start,
+static void make_horiz_segs     (Boundary     *boundary,
+                                 gint          start,
 				 gint          end,
 				 gint          scanline,
 				 gint          empty[],
 				 gint          num_empty,
 				 gint          top);
-static void generate_boundary   (PixelRegion  *PR,
+static void generate_boundary   (Boundary     *boundary,
+                                 PixelRegion  *PR,
 				 BoundaryType  type,
 				 gint          x1,
 				 gint          y1,
@@ -94,6 +106,27 @@ static void simplify_subdivide  (const         BoundSeg *segs,
                                  GArray      **ret_points);
 
 /*  Function definitions  */
+
+static void
+free_boundary (Boundary *boundary)
+{
+  if (boundary->vert_segs)
+    g_free (boundary->vert_segs);
+
+  if (boundary->tmp_segs)
+    g_free (boundary->tmp_segs);
+
+  if (boundary->empty_segs_n)
+    g_free (boundary->empty_segs_n);
+
+  if (boundary->empty_segs_c)
+    g_free (boundary->empty_segs_c);
+
+  if (boundary->empty_segs_l)
+    g_free (boundary->empty_segs_l);
+
+  g_free (boundary);
+}
 
 static void
 find_empty_segs (PixelRegion  *maskPR,
@@ -242,97 +275,108 @@ find_empty_segs (PixelRegion  *maskPR,
 
 
 static void
-make_seg (gint     x1,
-	  gint     y1,
-	  gint     x2,
-	  gint     y2,
-	  gboolean open)
+make_seg (Boundary *boundary,
+          gint      x1,
+	  gint      y1,
+	  gint      x2,
+	  gint      y2,
+	  gboolean  open)
 {
-  if (num_segs >= max_segs)
+  if (boundary->num_segs >= boundary->max_segs)
     {
-      max_segs += MAX_SEGS_INC;
+      boundary->max_segs += MAX_SEGS_INC;
 
-      tmp_segs = g_renew (BoundSeg, tmp_segs, max_segs);
+      boundary->tmp_segs = g_renew (BoundSeg, boundary->tmp_segs,
+                                    boundary->max_segs);
     }
 
-  tmp_segs[num_segs].x1 = x1;
-  tmp_segs[num_segs].y1 = y1;
-  tmp_segs[num_segs].x2 = x2;
-  tmp_segs[num_segs].y2 = y2;
-  tmp_segs[num_segs].open = open;
-  num_segs ++;
+  boundary->tmp_segs[boundary->num_segs].x1 = x1;
+  boundary->tmp_segs[boundary->num_segs].y1 = y1;
+  boundary->tmp_segs[boundary->num_segs].x2 = x2;
+  boundary->tmp_segs[boundary->num_segs].y2 = y2;
+  boundary->tmp_segs[boundary->num_segs].open = open;
+  boundary->num_segs ++;
 }
 
 
 static void
-allocate_vert_segs (PixelRegion *PR)
+allocate_vert_segs (Boundary    *boundary,
+                    PixelRegion *PR)
 {
   gint i;
 
   /*  allocate and initialize the vert_segs array  */
-  vert_segs = g_renew (gint, vert_segs, PR->w + PR->x + 1);
+  boundary->vert_segs = g_renew (gint, boundary->vert_segs, PR->w + PR->x + 1);
 
   for (i = 0; i <= (PR->w + PR->x); i++)
-    vert_segs[i] = -1;
+    boundary->vert_segs[i] = -1;
 }
 
 
 static void
-allocate_empty_segs (PixelRegion *PR)
+allocate_empty_segs (Boundary    *boundary,
+                     PixelRegion *PR)
 {
   gint need_num_segs;
 
-  /*  find the maximum possible number of empty segments given the current mask  */
+  /*  find the maximum possible number of empty segments
+   *  given the current mask
+   */
   need_num_segs = PR->w + 3;
 
-  if (need_num_segs > max_empty_segs)
+  if (need_num_segs > boundary->max_empty_segs)
     {
-      max_empty_segs = need_num_segs;
+      boundary->max_empty_segs = need_num_segs;
 
-      empty_segs_n = g_renew (gint, empty_segs_n, max_empty_segs);
-      empty_segs_c = g_renew (gint, empty_segs_c, max_empty_segs);
-      empty_segs_l = g_renew (gint, empty_segs_l, max_empty_segs);
+      boundary->empty_segs_n = g_renew (gint, boundary->empty_segs_n,
+                                        boundary->max_empty_segs);
+      boundary->empty_segs_c = g_renew (gint, boundary->empty_segs_c,
+                                        boundary->max_empty_segs);
+      boundary->empty_segs_l = g_renew (gint, boundary->empty_segs_l,
+                                        boundary->max_empty_segs);
     }
 }
 
 
 static void
-process_horiz_seg (gint     x1,
-		   gint     y1,
-		   gint     x2,
-		   gint     y2,
-		   gboolean open)
+process_horiz_seg (Boundary *boundary,
+                   gint      x1,
+		   gint      y1,
+		   gint      x2,
+		   gint      y2,
+		   gboolean  open)
 {
   /*  This procedure accounts for any vertical segments that must be
       drawn to close in the horizontal segments.                     */
 
-  if (vert_segs[x1] >= 0)
+  if (boundary->vert_segs[x1] >= 0)
     {
-      make_seg (x1, vert_segs[x1], x1, y1, !open);
-      vert_segs[x1] = -1;
+      make_seg (boundary, x1, boundary->vert_segs[x1], x1, y1, !open);
+      boundary->vert_segs[x1] = -1;
     }
   else
-    vert_segs[x1] = y1;
+    boundary->vert_segs[x1] = y1;
 
-  if (vert_segs[x2] >= 0)
+  if (boundary->vert_segs[x2] >= 0)
     {
-      make_seg (x2, vert_segs[x2], x2, y2, open);
-      vert_segs[x2] = -1;
+      make_seg (boundary, x2, boundary->vert_segs[x2], x2, y2, open);
+      boundary->vert_segs[x2] = -1;
     }
   else
-    vert_segs[x2] = y2;
+    boundary->vert_segs[x2] = y2;
 
-  make_seg (x1, y1, x2, y2, open);
+  make_seg (boundary, x1, y1, x2, y2, open);
 }
 
 
 static void
-make_horiz_segs (gint start,
-		 gint end,
-		 gint scanline,
-		 gint empty[],
-		 gint num_empty,
-		 gint top)
+make_horiz_segs (Boundary *boundary,
+                 gint      start,
+		 gint      end,
+		 gint      scanline,
+		 gint      empty[],
+		 gint      num_empty,
+		 gint      top)
 {
   gint empty_index;
   gint e_s, e_e;    /* empty segment start and end values */
@@ -341,18 +385,22 @@ make_horiz_segs (gint start,
     {
       e_s = *empty++;
       e_e = *empty++;
+
       if (e_s <= start && e_e >= end)
-	process_horiz_seg (start, scanline, end, scanline, top);
+	process_horiz_seg (boundary,
+                           start, scanline, end, scanline, top);
       else if ((e_s > start && e_s < end) ||
 	       (e_e < end && e_e > start))
-	process_horiz_seg (MAX (e_s, start), scanline,
+	process_horiz_seg (boundary,
+                           MAX (e_s, start), scanline,
 			   MIN (e_e, end), scanline, top);
     }
 }
 
 
 static void
-generate_boundary (PixelRegion  *PR,
+generate_boundary (Boundary     *boundary,
+                   PixelRegion  *PR,
 		   BoundaryType  type,
 		   gint          x1,
 		   gint          y1,
@@ -373,17 +421,17 @@ generate_boundary (PixelRegion  *PR,
   end   = 0;
 
   /*  array for determining the vertical line segments which must be drawn  */
-  allocate_vert_segs (PR);
+  allocate_vert_segs (boundary, PR);
 
   /*  make sure there is enough space for the empty segment array  */
-  allocate_empty_segs (PR);
+  allocate_empty_segs (boundary, PR);
 
-  num_segs = 0;
+  boundary->num_segs = 0;
 
   if (type == WithinBounds)
     {
       start = y1;
-      end = y2;
+      end   = y2;
     }
   else if (type == IgnoreBounds)
     {
@@ -392,39 +440,43 @@ generate_boundary (PixelRegion  *PR,
     }
 
   /*  Find the empty segments for the previous and current scanlines  */
-  find_empty_segs (PR, start - 1, empty_segs_l,
-		   max_empty_segs, &num_empty_l,
+  find_empty_segs (PR, start - 1, boundary->empty_segs_l,
+		   boundary->max_empty_segs, &num_empty_l,
 		   type, x1, y1, x2, y2,
                    threshold);
-  find_empty_segs (PR, start, empty_segs_c,
-		   max_empty_segs, &num_empty_c,
+  find_empty_segs (PR, start, boundary->empty_segs_c,
+		   boundary->max_empty_segs, &num_empty_c,
 		   type, x1, y1, x2, y2,
                    threshold);
 
   for (scanline = start; scanline < end; scanline++)
     {
       /*  find the empty segment list for the next scanline  */
-      find_empty_segs (PR, scanline + 1, empty_segs_n,
-		       max_empty_segs, &num_empty_n,
+      find_empty_segs (PR, scanline + 1, boundary->empty_segs_n,
+		       boundary->max_empty_segs, &num_empty_n,
 		       type, x1, y1, x2, y2,
                        threshold);
 
       /*  process the segments on the current scanline  */
       for (i = 1; i < num_empty_c - 1; i += 2)
 	{
-	  make_horiz_segs (empty_segs_c [i], empty_segs_c [i+1],
-			   scanline, empty_segs_l, num_empty_l, 1);
-	  make_horiz_segs (empty_segs_c [i], empty_segs_c [i+1],
-			   scanline+1, empty_segs_n, num_empty_n, 0);
+	  make_horiz_segs (boundary,
+                           boundary->empty_segs_c [i],
+                           boundary->empty_segs_c [i+1],
+			   scanline, boundary->empty_segs_l, num_empty_l, 1);
+	  make_horiz_segs (boundary,
+                           boundary->empty_segs_c [i],
+                           boundary->empty_segs_c [i+1],
+			   scanline + 1, boundary->empty_segs_n, num_empty_n, 0);
 	}
 
       /*  get the next scanline of empty segments, swap others  */
-      tmp_segs = empty_segs_l;
-      empty_segs_l = empty_segs_c;
-      num_empty_l = num_empty_c;
-      empty_segs_c = empty_segs_n;
-      num_empty_c = num_empty_n;
-      empty_segs_n = tmp_segs;
+      tmp_segs               = boundary->empty_segs_l;
+      boundary->empty_segs_l = boundary->empty_segs_c;
+      num_empty_l            = num_empty_c;
+      boundary->empty_segs_c = boundary->empty_segs_n;
+      num_empty_c            = num_empty_n;
+      boundary->empty_segs_n = tmp_segs;
     }
 }
 
@@ -439,6 +491,7 @@ find_mask_boundary (PixelRegion  *maskPR,
 		    int           y2,
                     guchar        threshold)
 {
+  Boundary *boundary = g_new0 (Boundary, 1);
   BoundSeg *new_segs = NULL;
 
   /*  The mask paramater can be any PixelRegion.  If the region
@@ -447,17 +500,19 @@ find_mask_boundary (PixelRegion  *maskPR,
    */
 
   /*  Calculate the boundary  */
-  generate_boundary (maskPR, type, x1, y1, x2, y2, threshold);
+  generate_boundary (boundary, maskPR, type, x1, y1, x2, y2, threshold);
 
   /*  Set the number of X segments  */
-  *num_elems = num_segs;
+  *num_elems = boundary->num_segs;
 
-  /*  Make a copy of the boundary  */
-  if (num_segs)
+  /*  Get the boundary  */
+  if (boundary->num_segs)
     {
-      new_segs = g_new (BoundSeg, num_segs);
-      memcpy (new_segs, tmp_segs, (sizeof (BoundSeg) * num_segs));
+      new_segs = boundary->tmp_segs;
+      boundary->tmp_segs = NULL;
     }
+
+  free_boundary (boundary);
 
   /*  Return the new boundary  */
   return new_segs;
@@ -490,6 +545,7 @@ sort_boundary (const BoundSeg *segs,
 	       gint            ns,
 	       gint           *num_groups)
 {
+  Boundary *boundary;
   gint      i;
   gint      index;
   gint      x, y;
@@ -497,13 +553,16 @@ sort_boundary (const BoundSeg *segs,
   gboolean  empty = (ns == 0);
   BoundSeg *new_segs;
 
+  boundary = g_new0 (Boundary, 1);
+
   index    = 0;
   new_segs = NULL;
 
   for (i = 0; i < ns; i++)
     ((BoundSeg *) segs)[i].visited = FALSE;
 
-  num_segs    = 0;
+  boundary->num_segs = 0;
+
   *num_groups = 0;
 
   while (! empty)
@@ -521,7 +580,8 @@ sort_boundary (const BoundSeg *segs,
 
       if (! empty)
 	{
-	  make_seg (segs[index].x1, segs[index].y1,
+	  make_seg (boundary,
+                    segs[index].x1, segs[index].y1,
 		    segs[index].x2, segs[index].y2,
 		    segs[index].open);
 	  ((BoundSeg *) segs)[index].visited = TRUE;
@@ -536,7 +596,8 @@ sort_boundary (const BoundSeg *segs,
 	      /*  make sure ordering is correct  */
 	      if (x == segs[index].x1 && y == segs[index].y1)
 		{
-		  make_seg (segs[index].x1, segs[index].y1,
+		  make_seg (boundary,
+                            segs[index].x1, segs[index].y1,
 			    segs[index].x2, segs[index].y2,
 			    segs[index].open);
 		  x = segs[index].x2;
@@ -544,7 +605,8 @@ sort_boundary (const BoundSeg *segs,
 		}
 	      else
 		{
-		  make_seg (segs[index].x2, segs[index].y2,
+		  make_seg (boundary,
+                            segs[index].x2, segs[index].y2,
 			    segs[index].x1, segs[index].y1,
 			    segs[index].open);
 		  x = segs[index].x1;
@@ -559,16 +621,18 @@ sort_boundary (const BoundSeg *segs,
 
 	  /*  Mark the end of a group  */
 	  *num_groups = *num_groups + 1;
-	  make_seg (-1, -1, -1, -1, 0);
+	  make_seg (boundary, -1, -1, -1, -1, 0);
 	}
     }
 
-  /*  Make a copy of the boundary  */
-  if (num_segs)
+  /*  Get the new boundary  */
+  if (boundary->num_segs)
     {
-      new_segs = g_new (BoundSeg, num_segs);
-      memcpy (new_segs, tmp_segs, (sizeof (BoundSeg) * num_segs));
+      new_segs = boundary->tmp_segs;
+      boundary->tmp_segs = NULL;
     }
+
+  free_boundary (boundary);
 
   /*  Return the new boundary  */
   return new_segs;
@@ -692,7 +756,7 @@ simplify_subdivide (const    BoundSeg *segs,
     {
       dx = segs[end_idx].x1 - segs[start_idx].x1;
       dy = segs[end_idx].y1 - segs[start_idx].y1;
-      
+
       /* g_printerr ("dx: %d, dy: %d\n", dx, dy); */
 
       for (i = start_idx + 1; i < end_idx; i++)
@@ -717,7 +781,7 @@ simplify_subdivide (const    BoundSeg *segs,
         }
       realdist = ((gdouble) maxdist) / sqrt ((gdouble) (SQR (dx) + SQR (dy)));
     }
-  
+
   /* g_printerr ("Index %d, x: %d, y: %d, distance: %.4f\n", maxdist_idx,
               segs[maxdist_idx].x1, segs[maxdist_idx].y1, realdist); */
   /* threshold is chosen to catch 45 degree stairs */
@@ -734,6 +798,4 @@ simplify_subdivide (const    BoundSeg *segs,
 
   simplify_subdivide (segs, start_idx, maxdist_idx, ret_points);
   simplify_subdivide (segs, maxdist_idx, end_idx, ret_points);
-
 }
-
