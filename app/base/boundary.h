@@ -53,7 +53,7 @@ BoundSeg * boundary_find      (PixelRegion    *maskPR,
 BoundSeg * boundary_sort      (const BoundSeg *segs,
 			       gint            num_segs,
 			       gint           *num_groups);
-BoundSeg * boundary_simplify  (BoundSeg       *stroke_segs,
+BoundSeg * boundary_simplify  (BoundSeg       *sorted_segs,
                                gint            num_groups,
                                gint           *num_segs);
 

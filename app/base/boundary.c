@@ -48,7 +48,7 @@ struct _Boundary
   /*  The array of vertical segments  */
   gint     *vert_segs;
 
-  /* static empty segment arrays */
+  /*  The empty segment arrays */
   gint     *empty_segs_n;
   gint     *empty_segs_c;
   gint     *empty_segs_l;
@@ -62,6 +62,13 @@ static Boundary * boundary_new       (PixelRegion     *PR);
 static BoundSeg * boundary_free      (Boundary        *boundary,
                                       gboolean         free_segs);
 
+static void       boundary_add_seg   (Boundary        *bounrady,
+                                      gint             x1,
+                                      gint             y1,
+                                      gint             x2,
+                                      gint             y2,
+                                      gboolean         open);
+
 static void       find_empty_segs    (PixelRegion     *maskPR,
                                       gint             scanline,
                                       gint             empty_segs[],
@@ -73,12 +80,6 @@ static void       find_empty_segs    (PixelRegion     *maskPR,
                                       gint             x2,
                                       gint             y2,
                                       guchar           threshold);
-static void       make_seg           (Boundary        *bounrady,
-                                      gint             x1,
-                                      gint             y1,
-                                      gint             x2,
-                                      gint             y2,
-                                      gboolean         open);
 static void       process_horiz_seg  (Boundary        *boundary,
                                       gint             x1,
                                       gint             y1,
@@ -113,6 +114,27 @@ static void       simplify_subdivide (const BoundSeg  *segs,
 
 /*  public functions  */
 
+/**
+ * boundary_find:
+ * @maskPR:    any PixelRegion
+ * @type:      type of bounds
+ * @x1:        left side of bounds
+ * @y1:        top side of bounds
+ * @x2:        right side of bounds
+ * @y2:        botton side of bounds
+ * @threshold: pixel value of boundary line
+ * @num_segs:  number of returned #BoundSeg's
+ *
+ * This function returns an array of #BoundSeg's which describe all
+ * outlines along pixel value @threahold, optionally within specified
+ * bounds instead of the whole region.
+ *
+ * The @maskPR paramater can be any PixelRegion.  If the region has
+ * more than 1 bytes/pixel, the last byte of each pixel is used to
+ * determine the boundary outline.
+ *
+ * Return value: the boundary array.
+ **/
 BoundSeg *
 boundary_find (PixelRegion  *maskPR,
                BoundaryType  type,
@@ -125,10 +147,8 @@ boundary_find (PixelRegion  *maskPR,
 {
   Boundary *boundary;
 
-  /*  The mask paramater can be any PixelRegion.  If the region
-   *  has more than 1 bytes/pixel, the last byte of each pixel is
-   *  used to determine the boundary outline.
-   */
+  g_return_val_if_fail (maskPR != NULL, NULL);
+  g_return_val_if_fail (num_segs != NULL, NULL);
 
   boundary = generate_boundary (maskPR, type, x1, y1, x2, y2, threshold);
 
@@ -137,6 +157,19 @@ boundary_find (PixelRegion  *maskPR,
   return boundary_free (boundary, FALSE);
 }
 
+/**
+ * boundary_sort:
+ * @segs:       unsorted input segs.
+ * @num_segs:   number of input segs
+ * @num_groups: number of groups in the sorted segs
+ *
+ * This function takes an array of #BoundSeg's as returned by
+ * boundary_find() and sorts it by contiguous groups. The returned
+ * array contains markers consisting of -1 coordinates and is
+ * @num_groups elements longer than @segs.
+ *
+ * Return value: the sorted segs
+ **/
 BoundSeg *
 boundary_sort (const BoundSeg *segs,
 	       gint            num_segs,
@@ -147,20 +180,26 @@ boundary_sort (const BoundSeg *segs,
   gint      index;
   gint      x, y;
   gint      startx, starty;
-  gboolean  empty = (num_segs == 0);
+  gboolean  empty;
   BoundSeg *new_segs;
+
+  g_return_val_if_fail ((segs == NULL && num_segs == 0) ||
+                        (segs != NULL && num_segs >  0), NULL);
+  g_return_val_if_fail (num_groups != NULL, NULL);
+
+  *num_groups = 0;
+
+  if (num_segs == 0)
+    return NULL;
+
+  for (i = 0; i < num_segs; i++)
+    ((BoundSeg *) segs)[i].visited = FALSE;
 
   boundary = boundary_new (NULL);
 
   index    = 0;
   new_segs = NULL;
-
-  for (i = 0; i < num_segs; i++)
-    ((BoundSeg *) segs)[i].visited = FALSE;
-
-  boundary->num_segs = 0;
-
-  *num_groups = 0;
+  empty    = FALSE;
 
   while (! empty)
     {
@@ -177,10 +216,11 @@ boundary_sort (const BoundSeg *segs,
 
       if (! empty)
 	{
-	  make_seg (boundary,
-                    segs[index].x1, segs[index].y1,
-		    segs[index].x2, segs[index].y2,
-		    segs[index].open);
+	  boundary_add_seg (boundary,
+                            segs[index].x1, segs[index].y1,
+                            segs[index].x2, segs[index].y2,
+                            segs[index].open);
+
 	  ((BoundSeg *) segs)[index].visited = TRUE;
 
 	  startx = segs[index].x1;
@@ -193,19 +233,19 @@ boundary_sort (const BoundSeg *segs,
 	      /*  make sure ordering is correct  */
 	      if (x == segs[index].x1 && y == segs[index].y1)
 		{
-		  make_seg (boundary,
-                            segs[index].x1, segs[index].y1,
-			    segs[index].x2, segs[index].y2,
-			    segs[index].open);
+		  boundary_add_seg (boundary,
+                                    segs[index].x1, segs[index].y1,
+                                    segs[index].x2, segs[index].y2,
+                                    segs[index].open);
 		  x = segs[index].x2;
 		  y = segs[index].y2;
 		}
 	      else
 		{
-		  make_seg (boundary,
-                            segs[index].x2, segs[index].y2,
-			    segs[index].x1, segs[index].y1,
-			    segs[index].open);
+		  boundary_add_seg (boundary,
+                                    segs[index].x2, segs[index].y2,
+                                    segs[index].x1, segs[index].y1,
+                                    segs[index].open);
 		  x = segs[index].x1;
 		  y = segs[index].y1;
 		}
@@ -214,33 +254,39 @@ boundary_sort (const BoundSeg *segs,
 	    }
 
 	  if (x != startx || y != starty)
-	    g_message ("sort_boundary(): Unconnected boundary group!");
+	    g_warning ("sort_boundary(): Unconnected boundary group!");
 
 	  /*  Mark the end of a group  */
 	  *num_groups = *num_groups + 1;
-	  make_seg (boundary, -1, -1, -1, -1, 0);
+	  boundary_add_seg (boundary, -1, -1, -1, -1, 0);
 	}
     }
 
   return boundary_free (boundary, FALSE);
 }
 
-/*********************************/
-/* Reducing the number of points */
-/* We expect the Boundary to be  */
-/* sorted.                       */
-
+/**
+ * boundary_simplify:
+ * @sorted_segs: sorted input segs
+ * @num_groups:  number of groups in the sorted segs
+ * @num_segs:    number of returned segs.
+ *
+ * This function takes an array of #BoundSeg's which has been sorted
+ * with boundary_sort() and reduces the number of segments while
+ * preserving the general shape as close as possible.
+ *
+ * Return value: the simplified segs.
+ **/
 BoundSeg *
-boundary_simplify (BoundSeg *stroke_segs,
+boundary_simplify (BoundSeg *sorted_segs,
                    gint      num_groups,
                    gint     *num_segs)
 {
-  GArray   *new_bounds;
-  GArray   *points;
-  BoundSeg *ret_bounds;
-  BoundSeg  tmp_seg;
-  gint      i, j, seg, start, n_points;
+  GArray *new_bounds;
+  gint    i, seg;
 
+  g_return_val_if_fail ((sorted_segs == NULL && num_groups == 0) ||
+                        (sorted_segs != NULL && num_groups >  0), NULL);
   g_return_val_if_fail (num_segs != NULL, NULL);
 
   new_bounds = g_array_new (FALSE, FALSE, sizeof (BoundSeg));
@@ -249,13 +295,13 @@ boundary_simplify (BoundSeg *stroke_segs,
 
   for (i = 0; i < num_groups; i++)
     {
-      start = seg;
-      n_points = 0;
+      gint start    = seg;
+      gint n_points = 0;
 
-      while (stroke_segs[seg].x1 != -1 ||
-             stroke_segs[seg].x2 != -1 ||
-             stroke_segs[seg].y1 != -1 ||
-             stroke_segs[seg].y2 != -1)
+      while (sorted_segs[seg].x1 != -1 ||
+             sorted_segs[seg].x2 != -1 ||
+             sorted_segs[seg].y1 != -1 ||
+             sorted_segs[seg].y2 != -1)
         {
           n_points++;
           seg++;
@@ -263,40 +309,35 @@ boundary_simplify (BoundSeg *stroke_segs,
 
       if (n_points > 0)
         {
-          points = g_array_new (FALSE, FALSE, sizeof (gint));
+          GArray   *tmp_points;
+          BoundSeg  tmp_seg;
+          gint      j;
+
+          tmp_points = g_array_new (FALSE, FALSE, sizeof (gint));
 
           /* temporarily use the delimiter to close the polygon */
-          tmp_seg = stroke_segs[seg];
-          stroke_segs[seg] = stroke_segs[start];
-          simplify_subdivide (stroke_segs, start, start + n_points,
-                              &points);
-          stroke_segs[seg] = tmp_seg;
+          tmp_seg = sorted_segs[seg];
+          sorted_segs[seg] = sorted_segs[start];
+          simplify_subdivide (sorted_segs, start, start + n_points,
+                              &tmp_points);
+          sorted_segs[seg] = tmp_seg;
 
-          for (j = 0; j < points->len; j++)
+          for (j = 0; j < tmp_points->len; j++)
             g_array_append_val (new_bounds,
-                                stroke_segs [g_array_index (points, gint, j)]);
+                                sorted_segs[g_array_index (tmp_points,
+                                                           gint, j)]);
 
-          g_array_append_val (new_bounds, stroke_segs[seg]);
+          g_array_append_val (new_bounds, sorted_segs[seg]);
 
-          g_array_free (points, TRUE);
+          g_array_free (tmp_points, TRUE);
         }
+
       seg++;
     }
 
-  if (new_bounds->len > 0)
-    {
-      ret_bounds = (BoundSeg *) new_bounds->data;
-      *num_segs = new_bounds->len;
-    }
-  else
-    {
-      ret_bounds = NULL;
-      *num_segs = 0;
-    }
+  *num_segs = new_bounds->len;
 
-  g_array_free (new_bounds, FALSE);
-
-  return ret_bounds;
+  return (BoundSeg *) g_array_free (new_bounds, FALSE);
 }
 
 
@@ -351,6 +392,29 @@ boundary_free (Boundary *boundary,
   g_free (boundary);
 
   return segs;
+}
+
+static void
+boundary_add_seg (Boundary *boundary,
+                  gint      x1,
+                  gint      y1,
+                  gint      x2,
+                  gint      y2,
+                  gboolean  open)
+{
+  if (boundary->num_segs >= boundary->max_segs)
+    {
+      boundary->max_segs += MAX_SEGS_INC;
+
+      boundary->segs = g_renew (BoundSeg, boundary->segs, boundary->max_segs);
+    }
+
+  boundary->segs[boundary->num_segs].x1 = x1;
+  boundary->segs[boundary->num_segs].y1 = y1;
+  boundary->segs[boundary->num_segs].x2 = x2;
+  boundary->segs[boundary->num_segs].y2 = y2;
+  boundary->segs[boundary->num_segs].open = open;
+  boundary->num_segs ++;
 }
 
 static void
@@ -487,6 +551,7 @@ find_empty_segs (PixelRegion  *maskPR,
 	    }
 	}
     }
+
   *num_empty = l_num_empty;
 
   if (last > 0)
@@ -496,29 +561,6 @@ find_empty_segs (PixelRegion  *maskPR,
 
   if (tile)
     tile_release (tile, FALSE);
-}
-
-static void
-make_seg (Boundary *boundary,
-          gint      x1,
-	  gint      y1,
-	  gint      x2,
-	  gint      y2,
-	  gboolean  open)
-{
-  if (boundary->num_segs >= boundary->max_segs)
-    {
-      boundary->max_segs += MAX_SEGS_INC;
-
-      boundary->segs = g_renew (BoundSeg, boundary->segs, boundary->max_segs);
-    }
-
-  boundary->segs[boundary->num_segs].x1 = x1;
-  boundary->segs[boundary->num_segs].y1 = y1;
-  boundary->segs[boundary->num_segs].x2 = x2;
-  boundary->segs[boundary->num_segs].y2 = y2;
-  boundary->segs[boundary->num_segs].open = open;
-  boundary->num_segs ++;
 }
 
 static void
@@ -534,7 +576,7 @@ process_horiz_seg (Boundary *boundary,
 
   if (boundary->vert_segs[x1] >= 0)
     {
-      make_seg (boundary, x1, boundary->vert_segs[x1], x1, y1, !open);
+      boundary_add_seg (boundary, x1, boundary->vert_segs[x1], x1, y1, !open);
       boundary->vert_segs[x1] = -1;
     }
   else
@@ -542,13 +584,13 @@ process_horiz_seg (Boundary *boundary,
 
   if (boundary->vert_segs[x2] >= 0)
     {
-      make_seg (boundary, x2, boundary->vert_segs[x2], x2, y2, open);
+      boundary_add_seg (boundary, x2, boundary->vert_segs[x2], x2, y2, open);
       boundary->vert_segs[x2] = -1;
     }
   else
     boundary->vert_segs[x2] = y2;
 
-  make_seg (boundary, x1, y1, x2, y2, open);
+  boundary_add_seg (boundary, x1, y1, x2, y2, open);
 }
 
 static void
@@ -657,7 +699,6 @@ generate_boundary (PixelRegion  *PR,
   return boundary;
 }
 
-
 /*  sorting utility functions  */
 
 static gint
@@ -680,10 +721,10 @@ find_segment (const BoundSeg *segs,
 /*  simplifying utility functions  */
 
 static void
-simplify_subdivide (const    BoundSeg *segs,
-                    gint     start_idx,
-                    gint     end_idx,
-                    GArray **ret_points)
+simplify_subdivide (const BoundSeg *segs,
+                    gint            start_idx,
+                    gint            end_idx,
+                    GArray        **ret_points)
 {
   gint    maxdist_idx;
   gint    dist, maxdist;
