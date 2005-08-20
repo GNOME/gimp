@@ -524,13 +524,13 @@ find_mask_boundary (PixelRegion  *maskPR,
 
 static gint
 find_segment (const BoundSeg *segs,
-	      gint            ns,
+	      gint            num_segs,
 	      gint            x,
 	      gint            y)
 {
   gint index;
 
-  for (index = 0; index < ns; index++)
+  for (index = 0; index < num_segs; index++)
     if (((segs[index].x1 == x && segs[index].y1 == y) ||
          (segs[index].x2 == x && segs[index].y2 == y)) &&
 	segs[index].visited == FALSE)
@@ -542,7 +542,7 @@ find_segment (const BoundSeg *segs,
 
 BoundSeg *
 sort_boundary (const BoundSeg *segs,
-	       gint            ns,
+	       gint            num_segs,
 	       gint           *num_groups)
 {
   Boundary *boundary;
@@ -550,7 +550,7 @@ sort_boundary (const BoundSeg *segs,
   gint      index;
   gint      x, y;
   gint      startx, starty;
-  gboolean  empty = (ns == 0);
+  gboolean  empty = (num_segs == 0);
   BoundSeg *new_segs;
 
   boundary = g_new0 (Boundary, 1);
@@ -558,7 +558,7 @@ sort_boundary (const BoundSeg *segs,
   index    = 0;
   new_segs = NULL;
 
-  for (i = 0; i < ns; i++)
+  for (i = 0; i < num_segs; i++)
     ((BoundSeg *) segs)[i].visited = FALSE;
 
   boundary->num_segs = 0;
@@ -570,12 +570,12 @@ sort_boundary (const BoundSeg *segs,
       empty = TRUE;
 
       /*  find the index of a non-visited segment to start a group  */
-      for (i = 0; i < ns; i++)
+      for (i = 0; i < num_segs; i++)
 	if (segs[i].visited == FALSE)
 	  {
 	    index = i;
 	    empty = FALSE;
-	    i = ns;
+	    i = num_segs;
 	  }
 
       if (! empty)
@@ -591,7 +591,7 @@ sort_boundary (const BoundSeg *segs,
 	  x = segs[index].x2;
 	  y = segs[index].y2;
 
-	  while ((index = find_segment (segs, ns, x, y)) != -1)
+	  while ((index = find_segment (segs, num_segs, x, y)) != -1)
 	    {
 	      /*  make sure ordering is correct  */
 	      if (x == segs[index].x1 && y == segs[index].y1)

@@ -1,8 +1,13 @@
 2005-08-20  Michael Natterer  <mitch@gimp.org>
 
+	* app/base/boundary.c: rename local "ns" variables to "num_segs"
+	now that the global "num_segs" is gone.
+
+2005-08-20  Michael Natterer  <mitch@gimp.org>
+
 	* app/base/boundary.c: moved the entire internal state of boundary
-	creation and simplification from <eek>global variables</eek> to a
-	new "Boundary" struct that needs to be newly allocated for each
+	creation and sorting from <eek>global variables</eek> to a new
+	"Boundary" struct that needs to be newly allocated for each
 	boundary. Yes this allocates and frees memory more often than
 	before but the old code was simply one big eek.
 
