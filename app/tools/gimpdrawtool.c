@@ -1298,7 +1298,8 @@ gimp_draw_tool_draw_boundary (GimpDrawTool   *draw_tool,
   gint              i;
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
-  g_return_if_fail (n_bound_segs > 0 || bound_segs == NULL);
+  g_return_if_fail (n_bound_segs > 0);
+  g_return_if_fail (bound_segs != NULL);
 
   shell = GIMP_DISPLAY_SHELL (draw_tool->gdisp->shell);
 

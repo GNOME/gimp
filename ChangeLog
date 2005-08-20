@@ -1,3 +1,9 @@
+2005-08-19  Akkana Peck  <akkana@cvs.gnome.org>
+
+	* app/tools/gimpdrawtool.c: Fix the parameter check at the
+	beginning of gimp_draw_tool_draw_boundary, to fix the crash
+	described in bug 313922.
+
 2005-08-20  Sven Neumann  <sven@gimp.org>
 
 	* authors.xml: exemplarily added artist and documenter roles to
