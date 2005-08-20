@@ -1,3 +1,11 @@
+2005-08-20  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
+	* app/widgets/gimpfiledialog.c (gimp_file_dialog_proc_changed):
+	when looking for the file extension, only look at the part after
+	the last directory separator.
+
 2005-08-18  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/scripts/text-circle.scm: Incorporated changes

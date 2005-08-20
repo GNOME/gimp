@@ -625,6 +625,10 @@ gimp_file_dialog_proc_changed (GimpFileProcView *view,
             {
               const gchar *last_dot = strrchr (uri, '.');
 
+              /*  if the dot is before the last slash, ignore it  */
+              if (last_dot && strrchr (uri, '/') > last_dot)
+                last_dot = NULL;
+
               /*  check if the uri has a "meta extension" (e.g. foo.bar.gz)
                *  and try to truncate both extensions away.
                */
