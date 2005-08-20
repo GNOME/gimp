@@ -8,7 +8,7 @@
 
   <xsl:output method="text" />
 
-  <xsl:template match="/gimp-authors">
+  <xsl:template match="/dc:gimp-authors">
     <xsl:text>This file is generated from authors.xml, do not edit it directly.
     </xsl:text>
     <xsl:apply-templates />

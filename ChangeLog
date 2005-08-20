@@ -1,3 +1,12 @@
+2005-08-20  Sven Neumann  <sven@gimp.org>
+
+	* authors.dtd
+	* authors.xml: simplified by making dc: the default namespace.
+
+	* authors.xsl
+	* app/dialogs/authors.xsl: match the toplevel element in the dc:
+	namespace.
+
 2005-08-19  Sven Neumann  <sven@gimp.org>
 
 	* authors.dtd
