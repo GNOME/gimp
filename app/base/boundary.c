@@ -494,7 +494,7 @@ sort_boundary (const BoundSeg *segs,
   gint      index;
   gint      x, y;
   gint      startx, starty;
-  gboolean  empty = (num_segs == 0);
+  gboolean  empty = (ns == 0);
   BoundSeg *new_segs;
 
   index    = 0;
