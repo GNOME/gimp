@@ -1,9 +1,14 @@
 2005-08-21  Jens Seidel  <jseidel@cvs.gnome.org>
 
+	* app/paint/gimpconvolve.c
+	* app/tools/gimpiscissorstool.c
+	* app/vectors/gimpvectors-import.c
 	* libgimp/gimp.c
 	* m4macros/gimp-2.0.m4
 	* m4macros/gimpprint.m4
 	* plug-ins/common/wind.c
+	* plug-ins/fits/fitsrw.c
+	* plug-ins/metadata/xmp-model.c
 	* plug-ins/uri/uri-backend-wget.c: Fixed the typo
 	"occured" (also in all effected PO files to avoid fuzzyness)
 
