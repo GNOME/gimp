@@ -22,10 +22,6 @@
 #include "gimpdrawable.h"
 
 
-/*  Half way point where a region is no longer visible in a selection  */
-#define HALF_WAY 127
-
-
 #define GIMP_TYPE_CHANNEL            (gimp_channel_get_type ())
 #define GIMP_CHANNEL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CHANNEL, GimpChannel))
 #define GIMP_CHANNEL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CHANNEL, GimpChannelClass))
