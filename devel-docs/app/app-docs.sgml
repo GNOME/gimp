@@ -65,6 +65,7 @@
       <xi:include href="xml/cpercep.xml" />
       <xi:include href="xml/gimphistogram.xml" />
       <xi:include href="xml/gimplut.xml" />
+      <xi:include href="xml/siox.xml" />
       <xi:include href="xml/temp-buf.xml" />
     </chapter>
 
@@ -205,6 +206,7 @@
       <xi:include href="xml/gimpdrawable-convert.xml" />
       <xi:include href="xml/gimpdrawable-desaturate.xml" />
       <xi:include href="xml/gimpdrawable-equalize.xml" />
+      <xi:include href="xml/gimpdrawable-foreground-extract.xml" />
       <xi:include href="xml/gimpdrawable-histogram.xml" />
       <xi:include href="xml/gimpdrawable-invert.xml" />
       <xi:include href="xml/gimpdrawable-levels.xml" />
@@ -538,6 +540,8 @@
       <xi:include href="xml/gimpfuzzyselecttool.xml" />
       <xi:include href="xml/gimpbycolorselecttool.xml" />
       <xi:include href="xml/gimpiscissorstool.xml" />
+      <xi:include href="xml/gimpforegroundselecttool.xml" />
+      <xi:include href="xml/gimpforegroundselectoptions.xml" />
     </chapter>
 
     <chapter id="app-tools-paint">
@@ -784,6 +788,7 @@
       <xi:include href="xml/gimpview.xml" />
       <xi:include href="xml/gimpview-popup.xml" />
       <xi:include href="xml/gimpnavigationview.xml" />
+      <xi:include href="xml/gimppaletteview.xml" />
     </chapter>
 
     <chapter id="app-widgets-view-renderers">
@@ -798,6 +803,7 @@
       <xi:include href="xml/gimpviewrendererimage.xml" />
       <xi:include href="xml/gimpviewrendererimagefile.xml" />
       <xi:include href="xml/gimpviewrendererlayer.xml" />
+      <xi:include href="xml/gimpviewrendererpalette.xml" />
       <xi:include href="xml/gimpviewrenderervectors.xml" />
     </chapter>
 
@@ -920,12 +926,16 @@
 
     <chapter id="app-actions-misc-actions">
       <title>Other Actions &amp; Callbacks</title>
+      <xi:include href="xml/cursor-info-actions.xml" />
+      <xi:include href="xml/cursor-info-commands.xml" />
       <xi:include href="xml/dock-actions.xml" />
       <xi:include href="xml/dock-commands.xml" />
       <xi:include href="xml/dockable-actions.xml" />
       <xi:include href="xml/dockable-commands.xml" />
       <xi:include href="xml/error-console-actions.xml" />
       <xi:include href="xml/error-console-commands.xml" />
+      <xi:include href="xml/sample-point-editor-actions.xml" />
+      <xi:include href="xml/sample-point-editor-commands.xml" />
       <xi:include href="xml/text-editor-actions.xml" />
       <xi:include href="xml/text-editor-commands.xml" />
       <xi:include href="xml/tool-options-actions.xml" />
@@ -979,7 +989,6 @@
       <xi:include href="xml/image-properties-dialog.xml" />
       <xi:include href="xml/image-scale-dialog.xml" />
       <xi:include href="xml/info-dialog.xml" />
-      <xi:include href="xml/info-window.xml" />
       <xi:include href="xml/layer-add-mask-dialog.xml" />
       <xi:include href="xml/layer-options-dialog.xml" />
       <xi:include href="xml/module-dialog.xml" />

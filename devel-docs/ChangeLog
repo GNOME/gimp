@@ -1,3 +1,11 @@
+2005-08-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
+	* app/app-docs.sgml
+	* app/app-sections.txt
+	* app/app.types: lots of updates and fixes, still not completely
+	up-to-date.
+
 2005-08-03  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/libgimp-sections.txt: added the proc browser and view
