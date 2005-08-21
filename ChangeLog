@@ -1,7 +1,7 @@
 2005-08-21  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint/gimppencil.h
-	* app/paint/gimppenciloptions.h
+	* app/paint/gimppenciloptions.[ch]
 	* app/widgets/widgets-types.h
 	* app/widgets/gimptooldialog.h: don't simply typedef object
 	instance structs which add no members as their parent instance

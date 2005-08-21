@@ -102,7 +102,7 @@ gimp_pencil_options_set_property (GObject      *object,
                                   const GValue *value,
                                   GParamSpec   *pspec)
 {
-  GimpPencilOptions *options = GIMP_PENCIL_OPTIONS (object);
+  GimpPaintOptions *options = GIMP_PAINT_OPTIONS (object);
 
   switch (property_id)
     {
@@ -121,7 +121,7 @@ gimp_pencil_options_get_property (GObject    *object,
                                   GValue     *value,
                                   GParamSpec *pspec)
 {
-  GimpPencilOptions *options = GIMP_PENCIL_OPTIONS (object);
+  GimpPaintOptions *options = GIMP_PAINT_OPTIONS (object);
 
   switch (property_id)
     {
