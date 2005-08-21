@@ -31,8 +31,13 @@
 #define GIMP_PENCIL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PENCIL, GimpPencilClass))
 
 
-typedef struct _GimpPaintbrush      GimpPencil;
+typedef struct _GimpPencil          GimpPencil;
 typedef struct _GimpPaintbrushClass GimpPencilClass;
+
+struct _GimpPencil
+{
+  GimpPaintbrush  parent_instance;
+};
 
 
 void    gimp_pencil_register (Gimp                      *gimp,

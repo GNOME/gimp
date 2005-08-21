@@ -31,8 +31,13 @@
 #define GIMP_PENCIL_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PENCIL_OPTIONS, GimpPencilOptionsClass))
 
 
-typedef struct _GimpPaintOptions      GimpPencilOptions;
+typedef struct _GimpPencilOptions     GimpPencilOptions;
 typedef struct _GimpPaintOptionsClass GimpPencilOptionsClass;
+
+struct _GimpPencilOptions
+{
+  GimpPaintOptions  parent_instance;
+};
 
 
 GType   gimp_pencil_options_get_type (void) G_GNUC_CONST;

@@ -35,6 +35,11 @@
 
 typedef struct _GimpViewableDialogClass GimpToolDialogClass;
 
+struct _GimpToolDialog
+{
+  GimpViewableDialog  parent_instance;
+};
+
 
 GType       gimp_tool_dialog_get_type (void) G_GNUC_CONST;
 

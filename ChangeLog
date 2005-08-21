@@ -1,5 +1,15 @@
 2005-08-21  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint/gimppencil.h
+	* app/paint/gimppenciloptions.h
+	* app/widgets/widgets-types.h
+	* app/widgets/gimptooldialog.h: don't simply typedef object
+	instance structs which add no members as their parent instance
+	structs. Give them their own instance structs.  Fixes gtk-doc
+	confusion.
+
+2005-08-21  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpchannel.h: removed HALF_WAY define, it's
 	BOUNDARY_HALF_WAY now.
 
