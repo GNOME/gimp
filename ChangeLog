@@ -1,3 +1,8 @@
+2005-08-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpselectionoptions.c (gimp_selection_options_gui):
+	the "Antialias" toggle got lost, resurrect it.
+
 2005-08-21  Jens Seidel  <jseidel@cvs.gnome.org>
 
 	* app/paint/gimpconvolve.c
