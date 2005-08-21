@@ -335,7 +335,7 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
     }
   else
     {
-      /* TempBuf clipping has occured on at least one edge...
+      /* TempBuf clipping has occurred on at least one edge...
        * Edge case: expand area under brush margin px on near edge(s), convolve
        * expanded buffers. copy src -> ovrsz1 convolve ovrsz1 -> ovrsz2
        * copy-with-crop ovrsz2 -> dest

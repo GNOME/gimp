@@ -13487,7 +13487,7 @@ msgstr "Fejl: XJT-egenskabsfilen \"%s\" er tom."
 #~ msgid "<Image>/Filters/Distorts/P_olar Coords..."
 #~ msgstr "<Image>/Filtre/Forvrængning/_Polære koordinater..."
 
-#~ msgid "write error occured"
+#~ msgid "write error occurred"
 #~ msgstr "fejl under skrivning"
 
 #~ msgid "_X-Offset:"
@@ -14376,7 +14376,7 @@ msgstr "Fejl: XJT-egenskabsfilen \"%s\" er tom."
 #~ msgid "    to your xanim exporting program and restart gimp"
 #~ msgstr "    til dit xanim eksportprogram og genstarte Gimp'en"
 
-#~ msgid "An ERROR occured while trying to call xanim:"
+#~ msgid "An ERROR occurred while trying to call xanim:"
 #~ msgstr "En fejl opstod ved forsøg på at kalde xanim:"
 
 #~ msgid "XANIM Information"

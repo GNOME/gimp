@@ -11661,7 +11661,7 @@ msgstr "Otvírám URI..."
 #: ../plug-ins/uri/uri-backend-wget.c:206
 #: ../plug-ins/uri/uri-backend-wget.c:239
 #, c-format
-msgid "A network error occured: %s"
+msgid "A network error occurred: %s"
 msgstr "Došlo k chybě sítě: %s"
 
 #: ../plug-ins/uri/uri-backend-wget.c:284

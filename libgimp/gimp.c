@@ -952,7 +952,7 @@ gimp_run_procedure2 (const gchar     *name,
       break;
 
     case GIMP_PDB_CALLING_ERROR:
-      g_printerr ("a calling error occured while trying to run: \"%s\"", name);
+      g_printerr ("a calling error occurred while trying to run: \"%s\"", name);
       break;
 
     default:

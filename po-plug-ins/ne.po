@@ -11501,7 +11501,7 @@ msgstr "युआरआइ खुल्दैछ..."
 
 #: plug-ins/uri/uri-backend-wget.c:206 plug-ins/uri/uri-backend-wget.c:239
 #, c-format
-msgid "A network error occured: %s"
+msgid "A network error occurred: %s"
 msgstr "सञ्जालमा त्रुटि रहयो: %s"
 
 #: plug-ins/uri/uri-backend-wget.c:284

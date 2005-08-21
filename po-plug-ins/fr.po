@@ -12679,7 +12679,7 @@ msgstr "Erreur : le fichier de propriétés XJT « %s » est vide."
 #~ msgid "<Image>/Filters/Distorts/P_olar Coords..."
 #~ msgstr "<Image>/Filtres/Distorsions/Coordo_nnées polaires..."
 
-#~ msgid "write error occured"
+#~ msgid "write error occurred"
 #~ msgstr "une erreur d'écriture est survenue"
 
 #~ msgid "_X-Offset:"

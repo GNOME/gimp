@@ -13903,7 +13903,7 @@ msgstr "읽기위해 \"%s\" 파일을 열수 없습니다!\n"
 #~ msgid "<Image>/Filters/Distorts/P_olar Coords..."
 #~ msgstr "<Image>/필터/색/색상화"
 
-#~ msgid "write error occured"
+#~ msgid "write error occurred"
 #~ msgstr "쓰기 애러 발생"
 
 #, fuzzy

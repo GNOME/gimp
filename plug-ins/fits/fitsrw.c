@@ -1663,7 +1663,7 @@ FITS_HDU_LIST *fits_seek_image (FITS_FILE *ff, int picind)
 /* The function reads npix pixel values from the file, transforms them       */
 /* checking for blank/NaN pixels and stores the transformed values in buf.   */
 /* The number of transformed pixels is returned. If the returned value is    */
-/* less than npix (or even -1), an error has occured.                        */
+/* less than npix (or even -1), an error has occurred.                       */
 /* hdulist must be a pointer returned by fits_seek_image(). Before starting  */
 /* to read an image, fits_seek_image() must be called. Even for successive   */
 /* images.                                                                   */

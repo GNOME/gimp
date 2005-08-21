@@ -203,7 +203,7 @@ uri_backend_load_image (const gchar  *uri,
       else if (! connected)
         {
           g_set_error (error, 0, 0,
-                       _("A network error occured: %s"), buf);
+                       _("A network error occurred: %s"), buf);
 
           DEBUG (buf);
 
@@ -236,7 +236,7 @@ uri_backend_load_image (const gchar  *uri,
       else
         {
           g_set_error (error, 0, 0,
-                       _("A network error occured: %s"), buf);
+                       _("A network error occurred: %s"), buf);
 
           DEBUG (buf);
 

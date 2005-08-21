@@ -11697,8 +11697,8 @@ msgstr "Opening URI..."
 #: ../plug-ins/uri/uri-backend-wget.c:206
 #: ../plug-ins/uri/uri-backend-wget.c:239
 #, c-format
-msgid "A network error occured: %s"
-msgstr "A network error occured: %s"
+msgid "A network error occurred: %s"
+msgstr "A network error occurred: %s"
 
 #: ../plug-ins/uri/uri-backend-wget.c:284
 msgid "Downloading unknown amount of image data..."

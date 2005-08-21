@@ -13354,7 +13354,7 @@ msgstr "Erro: ficheiro de propriedade XJT '%s' está vazio."
 #~ msgid "<Image>/Filters/Distorts/P_olar Coords..."
 #~ msgstr "<Image>/Filtros/Distorções/Coorden. P_olares..."
 
-#~ msgid "write error occured"
+#~ msgid "write error occurred"
 #~ msgstr "ocorreu erro de escrita"
 
 #~ msgid "_X-Offset:"

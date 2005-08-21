@@ -11518,7 +11518,7 @@ msgstr "URI avamine..."
 #: ../plug-ins/uri/uri-backend-wget.c:206
 #: ../plug-ins/uri/uri-backend-wget.c:239
 #, c-format
-msgid "A network error occured: %s"
+msgid "A network error occurred: %s"
 msgstr "Tekkis arvutivõrgu viga: %s"
 
 #: ../plug-ins/uri/uri-backend-wget.c:284

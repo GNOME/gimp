@@ -1,3 +1,12 @@
+2005-08-21  Jens Seidel  <jseidel@cvs.gnome.org>
+
+	* libgimp/gimp.c
+	* m4macros/gimp-2.0.m4
+	* m4macros/gimpprint.m4
+	* plug-ins/common/wind.c
+	* plug-ins/uri/uri-backend-wget.c: Fixed the typo
+	"occured" (also in all effected PO files to avoid fuzzyness)
+
 2005-08-21  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint/gimppencil.h

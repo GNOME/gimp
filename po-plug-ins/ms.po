@@ -13437,7 +13437,7 @@ msgstr "Ralat: failciri XJT %s kosong"
 #~ msgid "<Image>/Filters/Distorts/P_olar Coords..."
 #~ msgstr "<Image>/Filters/Distorts/P_olar Coords..."
 
-#~ msgid "write error occured"
+#~ msgid "write error occurred"
 #~ msgstr "ralat tulis berlaku"
 
 #~ msgid "_X-Offset:"

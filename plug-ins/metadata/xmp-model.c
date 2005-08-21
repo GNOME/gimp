@@ -860,7 +860,7 @@ xmp_model_get_scalar_property (XMPModel    *xmp_model,
  *
  * Store a new value for the specified XMP property.
  *
- * Return value: %TRUE if the property was set, %FALSE if an error occured (for example, the @schema_name is invalid)
+ * Return value: %TRUE if the property was set, %FALSE if an error occurred (for example, the @schema_name is invalid)
  **/
 gboolean
 xmp_model_set_scalar_property (XMPModel    *xmp_model,

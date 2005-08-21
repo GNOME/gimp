@@ -466,7 +466,7 @@ gimp_iscissors_tool_button_press (GimpTool        *tool,
       break;
 
     default:
-      /*  Check if the mouse click occured on a vertex or the curve itself  */
+      /*  Check if the mouse click occurred on a vertex or the curve itself  */
       if (clicked_on_vertex (tool))
 	{
 	  iscissors->nx    = iscissors->x;

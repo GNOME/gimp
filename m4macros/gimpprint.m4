@@ -172,7 +172,7 @@ main ()
           echo "*** If you have an old version installed, it is best to remove it, although"
           echo "*** you may also be able to get things to work by modifying LD_LIBRARY_PATH" ],
         [ echo "*** The test program failed to compile or link. See the file config.log for the"
-          echo "*** exact error that occured. This usually means GIMP-PRINT was incorrectly"
+          echo "*** exact error that occurred. This usually means GIMP-PRINT was incorrectly"
           echo "*** installed or that you have moved GIMP-PRINT since it was installed. In the"
           echo "*** latter case, you may want to edit the gimpprint-config script:"
 	  echo "*** $GIMPPRINT_CONFIG" ])

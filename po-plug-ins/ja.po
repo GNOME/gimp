@@ -12303,7 +12303,7 @@ msgstr "'%s' を開いています..."
 #: ../plug-ins/uri/uri-backend-wget.c:206
 #: ../plug-ins/uri/uri-backend-wget.c:239
 #, fuzzy, c-format
-msgid "A network error occured: %s"
+msgid "A network error occurred: %s"
 msgstr "書き出しエラー発生"
 
 #: ../plug-ins/uri/uri-backend-wget.c:284
@@ -14952,7 +14952,7 @@ msgstr "エラー: XJT プロパティファイル %s が空です"
 #~ msgid "    to your xanim exporting program and restart gimp"
 #~ msgstr "    gimp を再起動して下さい"
 
-#~ msgid "An ERROR occured while trying to call xanim:"
+#~ msgid "An ERROR occurred while trying to call xanim:"
 #~ msgstr "xanim 呼び出し中にエラー発生"
 
 #~ msgid "XANIM Information"

@@ -12846,7 +12846,7 @@ msgstr "Ошибка: файл свойств XJT '%s' пуст"
 #~ msgid "Preview (in image window, will modify image's undo history!)"
 #~ msgstr "Просмотр (в окне изображения, история отмен будт изменена!)"
 
-#~ msgid "write error occured"
+#~ msgid "write error occurred"
 #~ msgstr "возникла ошибка записи"
 
 #~ msgid "M_inimum Height:"

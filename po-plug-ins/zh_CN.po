@@ -11575,7 +11575,7 @@ msgstr "正在打开“%s”..."
 #: ../plug-ins/uri/uri-backend-wget.c:206
 #: ../plug-ins/uri/uri-backend-wget.c:239
 #, fuzzy, c-format
-msgid "A network error occured: %s"
+msgid "A network error occurred: %s"
 msgstr "出现写错误"
 
 #: ../plug-ins/uri/uri-backend-wget.c:284

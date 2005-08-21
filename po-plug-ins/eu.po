@@ -13359,7 +13359,7 @@ msgstr "Errorea: %s XJT propietate-fitxategia hutsik dago"
 #~ msgid "<Image>/Filters/Distorts/P_olar Coords..."
 #~ msgstr "<Image>/Iragazkiak/Distortsioak/_Koordenatu polarrak..."
 
-#~ msgid "write error occured"
+#~ msgid "write error occurred"
 #~ msgstr "errorea gertatu da idaztean"
 
 #~ msgid "_X-Offset:"

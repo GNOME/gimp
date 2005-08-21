@@ -247,7 +247,7 @@ run (const gchar      *name,
       if (render_effect (drawable, NULL) == -1)
         {
           status = GIMP_PDB_EXECUTION_ERROR;
-          gimp_message ("An execution error occured.");
+          gimp_message ("An execution error occurred.");
         }
       else
         {

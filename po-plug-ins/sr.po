@@ -13559,7 +13559,7 @@ msgstr "Грешка: XЈТ датотека %s је празна"
 #~ msgid "Preview (in image window, will modify image's undo history!)"
 #~ msgstr "Преглед (у прозору за слике, измениће историјат поништавања слике!)"
 
-#~ msgid "write error occured"
+#~ msgid "write error occurred"
 #~ msgstr "погрешка при записивању"
 
 #

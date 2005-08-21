@@ -12434,7 +12434,7 @@ msgstr "錯誤：XJT 屬性檔‘%s’是空的。"
 #~ msgid "<Image>/Filters/Distorts/P_olar Coords..."
 #~ msgstr "<Image>/濾鏡/扭曲/極座標系統(_O)..."
 
-#~ msgid "write error occured"
+#~ msgid "write error occurred"
 #~ msgstr "發生寫入錯誤"
 
 #~ msgid "_X-Offset:"

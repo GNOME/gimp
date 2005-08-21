@@ -11483,7 +11483,7 @@ msgstr "Відкривається %s..."
 
 #: plug-ins/uri/uri-backend-wget.c:192 plug-ins/uri/uri-backend-wget.c:215
 #, fuzzy, c-format
-msgid "A network error occured: %s"
+msgid "A network error occurred: %s"
 msgstr "Помилка при записуванні"
 
 #: plug-ins/winicon/icodialog.c:123
