@@ -296,7 +296,7 @@ rcm_create_one_circle (gint   height,
   gtk_widget_show (legend_table);
 
   /* spinbutton 1 */
-  label = gtk_label_new (_("From"));
+  label = gtk_label_new (_("From:"));
   gtk_widget_show (label);
   gtk_table_attach (GTK_TABLE (legend_table), label, 0, 1, 0, 1,
                     0, GTK_EXPAND, 5, 5);
@@ -322,7 +322,7 @@ rcm_create_one_circle (gint   height,
                     0, GTK_EXPAND, 4, 4);
 
   /* spinbutton 2 */
-  label = gtk_label_new (_("To"));
+  label = gtk_label_new (_("To:"));
   gtk_widget_show (label);
   gtk_table_attach (GTK_TABLE (legend_table), label, 3,4, 0,1,
                     0, GTK_EXPAND, 4, 4);
@@ -374,8 +374,8 @@ rcm_create_main (void)
 {
   GtkWidget *vbox;
 
-  Current.From = rcm_create_one_circle (SUM, _("From"));
-  Current.To   = rcm_create_one_circle (SUM, _("To"));
+  Current.From = rcm_create_one_circle (SUM, _("From:"));
+  Current.To   = rcm_create_one_circle (SUM, _("To:"));
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
@@ -553,7 +553,7 @@ rcm_create_gray (void)
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);
 
-  label = gtk_label_new (_("Saturation"));
+  label = gtk_label_new (_("Saturation:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 

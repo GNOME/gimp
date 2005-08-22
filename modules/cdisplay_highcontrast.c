@@ -248,7 +248,7 @@ cdisplay_contrast_configure (GimpColorDisplay *display)
 
   hbox = gtk_hbox_new (FALSE, 6);
 
-  label = gtk_label_new_with_mnemonic (_("Contrast C_ycles:"));
+  label = gtk_label_new_with_mnemonic (_("Contrast c_ycles:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 

@@ -273,7 +273,7 @@ add_description_tab (GtkWidget *notebook)
   entry = gtk_entry_new ();
   register_entry_xref (entry, XMP_SCHEMA_DUBLIN_CORE, "title");
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Image _Title:"), 0.0, 0.5,
+			     _("Image _title:"), 0.0, 0.5,
 			     entry, 1, FALSE);
 
   entry = gtk_entry_new ();
@@ -304,7 +304,7 @@ add_description_tab (GtkWidget *notebook)
   entry = gtk_entry_new ();
   register_entry_xref (entry, XMP_SCHEMA_PHOTOSHOP, "CaptionWriter");
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
-			     _("Description _Writer:"), 0.0, 0.5,
+			     _("Description _writer:"), 0.0, 0.5,
 			     entry, 1, FALSE);
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);

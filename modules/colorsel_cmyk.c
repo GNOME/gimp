@@ -188,7 +188,7 @@ colorsel_cmyk_init (ColorselCmyk *module)
       module->adj[i] = GTK_ADJUSTMENT (adj);
     }
 
-  label = gtk_label_new_with_mnemonic (_("Black _Pullout:"));
+  label = gtk_label_new_with_mnemonic (_("Black _pullout:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label,
                     1, 3, i, i + 1,

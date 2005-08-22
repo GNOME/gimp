@@ -555,7 +555,7 @@ create_positioning_frame (void)
   right_border_entry = gtk_entry_new ();
   gtk_widget_set_size_request (right_border_entry, 60, -1);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
-                             _("Right Border:"), 0.0, 0.5,
+                             _("Right border:"), 0.0, 0.5,
                              right_border_entry, 1, FALSE);
 
   gimp_help_set_help_data (right_border_entry,
@@ -583,7 +583,7 @@ create_positioning_frame (void)
   bottom_border_entry = gtk_entry_new ();
   gtk_widget_set_size_request (bottom_border_entry, 60, -1);
   gimp_table_attach_aligned (GTK_TABLE (table), 2, 4,
-                             _("Bottom Border:"), 0.0, 0.5,
+                             _("Bottom border:"), 0.0, 0.5,
                              bottom_border_entry, 1, FALSE);
 
   gimp_help_set_help_data (bottom_border_entry,

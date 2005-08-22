@@ -127,7 +127,7 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
   const gchar *gimp_histogram_editor_labels[] =
     {
       N_("Mean:"),
-      N_("Std Dev:"),
+      N_("Std dev:"),
       N_("Median:"),
       N_("Pixels:"),
       N_("Count:"),

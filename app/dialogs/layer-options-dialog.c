@@ -116,7 +116,7 @@ layer_options_dialog_new (GimpImage    *gimage,
   /*  The name label and entry  */
   options->name_entry = gtk_entry_new ();
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Layer _Name:"), 0.0, 0.5,
+                             _("Layer _name:"), 0.0, 0.5,
                              options->name_entry, 1, FALSE);
 
   gtk_entry_set_activates_default (GTK_ENTRY (options->name_entry), TRUE);

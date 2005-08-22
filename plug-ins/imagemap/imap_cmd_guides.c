@@ -169,7 +169,7 @@ make_guides_dialog (void)
    g_signal_connect (data->width, "changed",
                      G_CALLBACK(recalc_bounds), (gpointer) data);
 
-   label = create_label_in_table(table, 0, 2, _("_Left Start at:"));
+   label = create_label_in_table(table, 0, 2, _("_Left start at:"));
    data->left = create_spin_button_in_table (table, label, 0, 3, 0, 0, 100);
    g_signal_connect (data->left, "changed",
                      G_CALLBACK(recalc_bounds), (gpointer) data);
@@ -179,30 +179,30 @@ make_guides_dialog (void)
    g_signal_connect (data->height, "changed",
                      G_CALLBACK(recalc_bounds), (gpointer) data);
 
-   label = create_label_in_table (table, 1, 2, _("_Top Start at:"));
+   label = create_label_in_table (table, 1, 2, _("_Top start at:"));
    data->top = create_spin_button_in_table (table, label, 1, 3, 0, 0, 100);
    g_signal_connect (data->top, "changed",
                      G_CALLBACK(recalc_bounds), (gpointer) data);
 
-   label = create_label_in_table (table, 2, 0, _("_Horz. Spacing:"));
+   label = create_label_in_table (table, 2, 0, _("_Horz. spacing:"));
    data->horz_spacing = create_spin_button_in_table (table, label, 2, 1, 0, 0,
                                                      100);
    g_signal_connect (data->horz_spacing, "changed",
                      G_CALLBACK(recalc_bounds), (gpointer) data);
 
-   label = create_label_in_table(table, 2, 2, _("_No. Across:"));
+   label = create_label_in_table(table, 2, 2, _("_No. across:"));
    data->no_across = create_spin_button_in_table(table, label, 2, 3, 0, 0,
 						 100);
    g_signal_connect (data->no_across, "changed",
                      G_CALLBACK(recalc_bounds), (gpointer) data);
 
-   label = create_label_in_table(table, 3, 0, _("_Vert. Spacing:"));
+   label = create_label_in_table(table, 3, 0, _("_Vert. spacing:"));
    data->vert_spacing = create_spin_button_in_table(table, label, 3, 1, 0, 0,
 						    100);
    g_signal_connect (data->vert_spacing, "changed",
                      G_CALLBACK(recalc_bounds), (gpointer) data);
 
-   label = create_label_in_table(table, 3, 2, _("No. _Down:"));
+   label = create_label_in_table(table, 3, 2, _("No. _down:"));
    data->no_down = create_spin_button_in_table (table, label, 3, 3, 0, 0, 100);
    g_signal_connect (data->no_down, "changed",
                      G_CALLBACK(recalc_bounds), (gpointer) data);

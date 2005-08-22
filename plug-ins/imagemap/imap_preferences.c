@@ -392,7 +392,7 @@ create_menu_tab(PreferencesDialog_t *data, GtkWidget *notebook)
    GtkWidget *label;
 
    label = create_label_in_table(table, 0, 0,
-				 _("Number of _Undo levels (1 - 99):"));
+				 _("Number of _undo levels (1 - 99):"));
    data->undo_levels = create_spin_button_in_table(table, label, 0, 1, 1, 1,
 						   99);
 

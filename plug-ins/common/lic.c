@@ -712,7 +712,7 @@ create_main_dialog (void)
                               &licvals.effect_image_id);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("_Effect Image:"), 0.0, 0.5, combo, 2, TRUE);
+                             _("_Effect image:"), 0.0, 0.5, combo, 2, TRUE);
 
   table = gtk_table_new (5, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);

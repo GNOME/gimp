@@ -642,7 +642,7 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
 
   hbox = gtk_hbox_new (FALSE, 6);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             _("Zoom Ratio:"), 0.0, 0.5,
+                             _("Zoom ratio:"), 0.0, 0.5,
                              hbox, 1, FALSE);
 
   if (fabs (shell->other_scale) <= 0.0001)

@@ -287,7 +287,7 @@ colorify_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  label = gtk_label_new (_("Custom Color:"));
+  label = gtk_label_new (_("Custom color:"));
   gtk_table_attach (GTK_TABLE (table), label, 4, 6, 0, 1,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);

@@ -683,13 +683,13 @@ server_interface (void)
   sint.port_entry = gtk_entry_new ();
   gtk_entry_set_text (GTK_ENTRY (sint.port_entry), "10008");
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Server Port:"), 0.0, 0.5,
+			     _("Server port:"), 0.0, 0.5,
 			     sint.port_entry, 1, FALSE);
 
   /*  The server logfile  */
   sint.log_entry = gtk_entry_new ();
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Server Logfile:"), 0.0, 0.5,
+			     _("Server logfile:"), 0.0, 0.5,
 			     sint.log_entry, 1, FALSE);
 
   gtk_widget_show (table);

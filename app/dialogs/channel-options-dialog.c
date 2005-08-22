@@ -141,7 +141,7 @@ channel_options_dialog_new (GimpImage     *gimage,
       options->name_entry = gtk_entry_new ();
       gtk_entry_set_activates_default (GTK_ENTRY (options->name_entry), TRUE);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                                 _("Channel _Name:"), 0.0, 0.5,
+                                 _("Channel _name:"), 0.0, 0.5,
                                  options->name_entry, 2, FALSE);
 
       gtk_entry_set_text (GTK_ENTRY (options->name_entry), channel_name);

@@ -291,7 +291,7 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
   /*  max depth scale  */
   gimp_prop_scale_entry_new (config, "supersample-depth",
                              GTK_TABLE (table), 0, 0,
-                             _("Max Depth:"),
+                             _("Max depth:"),
                              1.0, 1.0, 0,
                              FALSE, 0.0, 0.0);
 

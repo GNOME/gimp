@@ -1597,7 +1597,7 @@ smp_dialog (void)
   gtk_table_attach (GTK_TABLE (table), hbox, 3, 5, ty, ty+1,
                     GTK_FILL, 0, 0, 0);
 
-  label = gtk_label_new (_("Output Levels:"));
+  label = gtk_label_new (_("Output levels:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 

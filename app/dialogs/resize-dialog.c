@@ -286,7 +286,7 @@ resize_dialog_new (GimpViewable       *viewable,
       gtk_container_add (GTK_CONTAINER (frame), hbox);
       gtk_widget_show (hbox);
 
-      label = gtk_label_new_with_mnemonic (_("Resize _Layers:"));
+      label = gtk_label_new_with_mnemonic (_("Resize _layers:"));
       gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
       gtk_widget_show (label);
 

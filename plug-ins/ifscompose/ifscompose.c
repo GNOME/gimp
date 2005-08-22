@@ -654,7 +654,7 @@ ifs_compose_color_page (void)
                     GTK_FILL, 0, 0, 0);
   gtk_widget_show (ifsD->target_cmap->hbox);
 
-  label = gtk_label_new (_("Scale Hue by:"));
+  label = gtk_label_new (_("Scale hue by:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1,
                     GTK_FILL, GTK_FILL, 0, 0);
@@ -669,7 +669,7 @@ ifs_compose_color_page (void)
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ifsD->hue_scale_pair->spin);
 
-  label = gtk_label_new (_("Scale Value by:"));
+  label = gtk_label_new (_("Scale value by:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 1, 2,
                     GTK_FILL, GTK_FILL, 0, 0);
@@ -1194,7 +1194,7 @@ ifs_options_dialog (GtkWidget *parent)
                           FALSE, FALSE, 0);
       gtk_widget_show (table);
 
-      label = gtk_label_new (_("Max. Memory:"));
+      label = gtk_label_new (_("Max. memory:"));
       gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
       gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
                         GTK_FILL, GTK_FILL, 0, 0);
@@ -1234,7 +1234,7 @@ ifs_options_dialog (GtkWidget *parent)
                         1, 2, 2, 3, GTK_FILL, GTK_FILL, 0, 0);
       gtk_widget_show (ifsOptD->subdivide_pair->spin);
 
-      label = gtk_label_new (_("Spot Radius:"));
+      label = gtk_label_new (_("Spot radius:"));
       gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
       gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
                         GTK_FILL, GTK_FILL, 0, 0);

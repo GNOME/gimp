@@ -371,7 +371,7 @@ sparkle_dialog (GimpDrawable *drawable)
 
   scale_data =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-              _("Luminosity _Threshold:"), SCALE_WIDTH, ENTRY_WIDTH,
+              _("Luminosity _threshold:"), SCALE_WIDTH, ENTRY_WIDTH,
               svals.lum_threshold, 0.0, 0.1, 0.001, 0.01, 3,
               TRUE, 0, 0,
               _("Adjust the Luminosity Threshold"), NULL);

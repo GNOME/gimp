@@ -198,7 +198,7 @@ gimp_stroke_editor_constructor (GType                   type,
   gtk_box_pack_start (GTK_BOX (editor), box, FALSE, FALSE, 0);
   gtk_widget_show (box);
 
-  label = gtk_label_new (_("Line Width:"));
+  label = gtk_label_new (_("Line width:"));
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 

@@ -503,8 +503,8 @@ dialog_info_init (ModuleDialog *dialog,
     N_("Date:"),
     N_("Location:"),
     N_("State:"),
-    N_("Last Error:"),
-    N_("Available Types:")
+    N_("Last error:"),
+    N_("Available types:")
   };
 
   for (i = 0; i < G_N_ELEMENTS (text); i++)

@@ -695,7 +695,7 @@ sinus_dialog (void)
   gtk_container_add (GTK_CONTAINER(frame), table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                              _("_X Scale:"), 140, 8,
+                              _("_X scale:"), 140, 8,
                               svals.scalex, 0.0001, 100.0, 0.0001, 5, 4,
                               TRUE, 0, 0,
                               NULL, NULL);
@@ -704,7 +704,7 @@ sinus_dialog (void)
                     &svals.scalex);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-                              _("_Y Scale:"), 140, 8,
+                              _("_Y scale:"), 140, 8,
                               svals.scaley, 0.0001, 100.0, 0.0001, 5, 4,
                               TRUE, 0, 0,
                               NULL, NULL);
@@ -850,7 +850,7 @@ sinus_dialog (void)
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                              _("F_irst Color:"), 0, 0,
+                              _("F_irst color:"), 0, 0,
                               svals.col1.a, 0.0, 1.0, 0.01, 0.1, 2,
                               TRUE, 0, 0,
                               NULL, NULL);
@@ -865,7 +865,7 @@ sinus_dialog (void)
                       adj);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-                              _("S_econd Color:"), 0, 0,
+                              _("S_econd color:"), 0, 0,
                               svals.col2.a, 0.0, 1.0, 0.01, 0.1, 2,
                               TRUE, 0, 0,
                               NULL, NULL);

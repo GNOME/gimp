@@ -2722,7 +2722,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
                     NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-                              _("Vector _Angle:"), SCALE_WIDTH, 6,
+                              _("Vector _angle:"), SCALE_WIDTH, 6,
                               pvals.vangle, 0.0, 359.0, 1.0, 15.0, 1,
                               TRUE, 0, 0,
                               NULL, NULL);
@@ -2734,7 +2734,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
                     NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-                              _("Vector _Length:"), SCALE_WIDTH, 6,
+                              _("Vector _length:"), SCALE_WIDTH, 6,
                               pvals.vlength, 1, 1000, 1.0, 10.0, 1,
                               FALSE, 1, GIMP_MAX_IMAGE_SIZE,
                               NULL, NULL);
@@ -2774,7 +2774,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
                     &pvals.use_asupsample);
 
   adj = gimp_scale_entry_new (GTK_TABLE (asup_table), 0, 0,
-                              _("_Max Depth:"), -1, 4,
+                              _("_Max depth:"), -1, 4,
                               pvals.asupsample_max_depth,
                               1.0, 10.0, 1.0, 1.0, 0,
                               TRUE, 0.0, 0.0,
@@ -3397,7 +3397,7 @@ ed_make_page_general (GFlareEditor *ed,
 
   combo = ed_mode_menu_new (&gflare->glow_mode);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Paint Mode:"), 0.0, 0.5, combo, 1, FALSE);
+                             _("Paint mode:"), 0.0, 0.5, combo, 1, FALSE);
 
   /*  Rays  */
 
@@ -3425,7 +3425,7 @@ ed_make_page_general (GFlareEditor *ed,
 
   combo = ed_mode_menu_new (&gflare->rays_mode);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Paint Mode:"), 0.0, 0.5, combo, 1, FALSE);
+                             _("Paint mode:"), 0.0, 0.5, combo, 1, FALSE);
 
   /*  Rays  */
 
@@ -3453,7 +3453,7 @@ ed_make_page_general (GFlareEditor *ed,
 
   combo = ed_mode_menu_new (&gflare->sflare_mode);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Paint Mode:"), 0.0, 0.5, combo, 1, FALSE);
+                             _("Paint mode:"), 0.0, 0.5, combo, 1, FALSE);
 
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
                             gtk_label_new_with_mnemonic (_("_General")));
@@ -3493,15 +3493,15 @@ ed_make_page_glow (GFlareEditor *ed,
 
   gm = gradient_menu_new ((GradientMenuCallback) &ed_gradient_menu_callback,
                           gflare->glow_radial, gflare->glow_radial);
-  ed_put_gradient_menu (table, 0, 0, _("Radial Gradient:"), gm);
+  ed_put_gradient_menu (table, 0, 0, _("Radial gradient:"), gm);
 
   gm = gradient_menu_new ((GradientMenuCallback) &ed_gradient_menu_callback,
                           gflare->glow_angular, gflare->glow_angular);
-  ed_put_gradient_menu (table, 0, 1, _("Angular Gradient:"), gm);
+  ed_put_gradient_menu (table, 0, 1, _("Angular gradient:"), gm);
 
   gm = gradient_menu_new ((GradientMenuCallback) &ed_gradient_menu_callback,
                           gflare->glow_angular_size, gflare->glow_angular_size);
-  ed_put_gradient_menu (table, 0, 2, _("Angular Size Gradient:"), gm);
+  ed_put_gradient_menu (table, 0, 2, _("Angular size gradient:"), gm);
 
   gtk_widget_show (table);
 
@@ -3545,7 +3545,7 @@ ed_make_page_glow (GFlareEditor *ed,
                     NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-                              _("Hue Rotation:"), SCALE_WIDTH, 6,
+                              _("Hue rotation:"), SCALE_WIDTH, 6,
                               gflare->glow_hue, -180.0, 180.0, 1.0, 15.0, 1,
                               TRUE, 0, 0,
                               NULL, NULL);
@@ -3598,15 +3598,15 @@ ed_make_page_rays (GFlareEditor *ed,
 
   gm = gradient_menu_new ((GradientMenuCallback) &ed_gradient_menu_callback,
                           gflare->rays_radial, gflare->rays_radial);
-  ed_put_gradient_menu (table, 0, row++, _("Radial Gradient:"), gm);
+  ed_put_gradient_menu (table, 0, row++, _("Radial gradient:"), gm);
 
   gm = gradient_menu_new ((GradientMenuCallback) &ed_gradient_menu_callback,
                           gflare->rays_angular, gflare->rays_angular);
-  ed_put_gradient_menu (table, 0, row++, _("Angular Gradient:"), gm);
+  ed_put_gradient_menu (table, 0, row++, _("Angular gradient:"), gm);
 
   gm = gradient_menu_new ((GradientMenuCallback) &ed_gradient_menu_callback,
                           gflare->rays_angular_size, gflare->rays_angular_size);
-  ed_put_gradient_menu (table, 0, row++, _("Angular Size Gradient:"), gm);
+  ed_put_gradient_menu (table, 0, row++, _("Angular size gradient:"), gm);
 
   gtk_widget_show (table);
 
@@ -3651,7 +3651,7 @@ ed_make_page_rays (GFlareEditor *ed,
                     NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-                              _("Hue Rotation:"), SCALE_WIDTH, 6,
+                              _("Hue rotation:"), SCALE_WIDTH, 6,
                               gflare->rays_hue, -180.0, 180.0, 1.0, 15.0, 1,
                               TRUE, 0, 0,
                               NULL, NULL);
@@ -3675,7 +3675,7 @@ ed_make_page_rays (GFlareEditor *ed,
                     NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-                              _("Spike Thickness:"), SCALE_WIDTH, 6,
+                              _("Spike thickness:"), SCALE_WIDTH, 6,
                               gflare->rays_thickness, 1.0, 100.0, 1.0, 10.0, 1,
                               FALSE, 0, GIMP_MAX_IMAGE_SIZE,
                               NULL, NULL);
@@ -3735,15 +3735,15 @@ ed_make_page_sflare (GFlareEditor *ed,
 
   gm = gradient_menu_new ((GradientMenuCallback) &ed_gradient_menu_callback,
                           gflare->sflare_radial, gflare->sflare_radial);
-  ed_put_gradient_menu (table, 0, 0, _("Radial Gradient:"), gm);
+  ed_put_gradient_menu (table, 0, 0, _("Radial gradient:"), gm);
 
   gm = gradient_menu_new ((GradientMenuCallback) &ed_gradient_menu_callback,
                           gflare->sflare_sizefac, gflare->sflare_sizefac);
-  ed_put_gradient_menu (table, 0, 1, _("Size Factor Gradient:"), gm);
+  ed_put_gradient_menu (table, 0, 1, _("Size factor gradient:"), gm);
 
   gm = gradient_menu_new ((GradientMenuCallback) &ed_gradient_menu_callback,
                           gflare->sflare_probability, gflare->sflare_probability);
-  ed_put_gradient_menu (table, 0, 2, _("Probability Gradient:"), gm);
+  ed_put_gradient_menu (table, 0, 2, _("Probability gradient:"), gm);
 
   gtk_widget_show (table);
 
@@ -3788,7 +3788,7 @@ ed_make_page_sflare (GFlareEditor *ed,
                     NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-                              _("Hue Rotation:"), SCALE_WIDTH, 6,
+                              _("Hue rotation:"), SCALE_WIDTH, 6,
                               gflare->sflare_hue, -180.0, 180.0, 1.0, 15.0, 1,
                               TRUE, 0, 0,
                               NULL, NULL);
@@ -3863,7 +3863,7 @@ ed_make_page_sflare (GFlareEditor *ed,
   gtk_box_pack_start (GTK_BOX (vbox), seed_hbox, FALSE, FALSE, 0);
   gtk_widget_show (seed_hbox);
 
-  label = gtk_label_new (_("Random Seed:"));
+  label = gtk_label_new (_("Random seed:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_box_pack_start (GTK_BOX (seed_hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);

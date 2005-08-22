@@ -283,7 +283,7 @@ gimp_color_selection_init (GimpColorSelection *selection)
   gtk_box_pack_end (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
   gtk_widget_show (entry);
 
-  label = gtk_label_new_with_mnemonic (_("HTML _Notation:"));
+  label = gtk_label_new_with_mnemonic (_("HTML _notation:"));
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry);
   gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);

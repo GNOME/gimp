@@ -955,7 +955,7 @@ iwarp_animate_dialog (GtkWidget *dlg,
   gtk_widget_set_sensitive (table, do_animate);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                                     _("Number of _Frames:"), SCALE_WIDTH, 0,
+                                     _("Number of _frames:"), SCALE_WIDTH, 0,
                                      animate_num_frames,
                                      2, MAX_NUM_FRAMES, 1, 10, 0,
                                      TRUE, 0, 0,

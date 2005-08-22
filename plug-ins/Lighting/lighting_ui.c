@@ -324,7 +324,7 @@ create_options_page (void)
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                              _("Distance"), 100, 6,
+                              _("Distance:"), 100, 6,
                               mapvals.viewpoint.z,
                               0.0, 2.0, 0.01, 0.05,
                               3, TRUE, 0.0, 0.0,

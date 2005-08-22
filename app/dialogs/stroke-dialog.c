@@ -209,7 +209,7 @@ stroke_dialog_new (GimpItem    *item,
                               desc->method == GIMP_STROKE_METHOD_PAINT_CORE);
     g_object_set_data (G_OBJECT (paint_radio), "set_sensitive", hbox);
 
-    label = gtk_label_new (_("Paint Tool:"));
+    label = gtk_label_new (_("Paint tool:"));
     gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
     gtk_widget_show (label);
 

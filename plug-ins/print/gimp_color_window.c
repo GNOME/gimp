@@ -429,7 +429,7 @@ gimp_create_color_adjust_window (void)
 
   event_box = gtk_event_box_new ();
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 8,
-                             _("Dither Algorithm:"), 0.0, 0.5,
+                             _("Dither algorithm:"), 0.0, 0.5,
                              event_box, 2, FALSE);
 
   dither_algo_combo = gtk_combo_new ();

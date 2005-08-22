@@ -502,7 +502,7 @@ gimp_align_tool_controls (GimpAlignTool *align_tool)
   row++;
 
   /* next row */
-  label = gtk_label_new (_("Offset"));
+  label = gtk_label_new (_("Offset:"));
   gtk_table_attach_defaults (GTK_TABLE (table), label, 1, 3, row, row + 1);
   gtk_widget_show (label);
 
@@ -553,7 +553,7 @@ gimp_align_tool_controls (GimpAlignTool *align_tool)
   row++;
 
   /* next row */
-  label = gtk_label_new (_("Offset"));
+  label = gtk_label_new (_("Offset:"));
   gtk_table_attach_defaults (GTK_TABLE (table), label, 1, 3, row, row + 1);
   gtk_widget_show (label);
 

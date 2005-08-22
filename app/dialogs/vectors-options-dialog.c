@@ -115,7 +115,7 @@ vectors_options_dialog_new (GimpImage   *gimage,
   gtk_widget_set_size_request (options->name_entry, 150, -1);
   gtk_entry_set_activates_default (GTK_ENTRY (options->name_entry), TRUE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Path Name:"), 0.0, 0.5,
+                             _("Path name:"), 0.0, 0.5,
                              options->name_entry, 1, FALSE);
 
   gtk_entry_set_text (GTK_ENTRY (options->name_entry), vectors_name);

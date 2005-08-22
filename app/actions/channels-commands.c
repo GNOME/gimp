@@ -89,7 +89,7 @@ channels_edit_attributes_cmd_callback (GtkAction *action,
                                         _("Edit Channel Attributes"),
                                         GIMP_HELP_CHANNEL_EDIT,
                                         _("Edit Channel Color"),
-                                        _("_Fill Opacity:"),
+                                        _("_Fill opacity:"),
 					FALSE);
 
   g_signal_connect (options->dialog, "response",
@@ -122,7 +122,7 @@ channels_new_cmd_callback (GtkAction *action,
                                         _("New Channel Options"),
                                         GIMP_HELP_CHANNEL_NEW,
                                         _("New Channel Color"),
-                                        _("_Fill Opacity:"),
+                                        _("_Fill opacity:"),
 					TRUE);
 
   g_signal_connect (options->dialog, "response",
