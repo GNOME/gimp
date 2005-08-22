@@ -1838,7 +1838,7 @@ msgstr "Мени за слика"
 
 #: ../app/actions/image-actions.c:58
 msgid "_Xtns"
-msgstr "Д_одатоци"
+msgstr "_Проширувања"
 
 #: ../app/actions/image-actions.c:59
 msgid "_Image"
