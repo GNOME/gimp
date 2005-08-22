@@ -39,12 +39,14 @@
 /* Structs for the load dialog */
 typedef struct
 {
-  gdouble  resolution;
-  gboolean antialias;
+  GimpPageSelectorTarget target;
+  gdouble                resolution;
+  gboolean               antialias;
 } PdfLoadVals;
 
 static PdfLoadVals loadvals =
 {
+  GIMP_PAGE_SELECTOR_TARGET_LAYERS,
   100.00, /* 100 dpi */
   TRUE /* antialias */
 };
@@ -57,33 +59,35 @@ typedef struct
 
 /* Declare local functions */
 static void              query             (void);
-static void              run               (const gchar      *name,
-                                            gint              nparams,
-                                            const GimpParam  *param,
-                                            gint             *nreturn_vals,
-                                            GimpParam       **return_vals);
+static void              run               (const gchar            *name,
+                                            gint                    nparams,
+                                            const GimpParam        *param,
+                                            gint                   *nreturn_vals,
+                                            GimpParam             **return_vals);
 
-static gint32            load_image        (PopplerDocument  *doc,
-                                            const gchar      *filename,
-                                            guint32           resolution,
-                                            gboolean          antialias,
-                                            PdfSelectedPages *pages);
+static gint32            load_image        (PopplerDocument        *doc,
+                                            const gchar            *filename,
+                                            GimpRunMode             run_mode,
+                                            GimpPageSelectorTarget  target,
+                                            guint32                 resolution,
+                                            gboolean                antialias,
+                                            PdfSelectedPages       *pages);
 
-static gboolean          load_dialog       (PopplerDocument  *doc,
-                                            PdfSelectedPages *pages);
+static gboolean          load_dialog       (PopplerDocument        *doc,
+                                            PdfSelectedPages       *pages);
 
-static PopplerDocument * open_document     (const gchar      *filename);
+static PopplerDocument * open_document     (const gchar            *filename);
 
-static GdkPixbuf *       get_thumbnail     (PopplerDocument  *doc,
-                                            int               page,
-                                            int               preferred_size);
+static GdkPixbuf *       get_thumbnail     (PopplerDocument        *doc,
+                                            gint                    page,
+                                            gint                    preferred_size);
 
-static gint32            layer_from_pixbuf (gint32            image,
-                                            const gchar      *layer_name,
-                                            gint              position,
-                                            GdkPixbuf        *buf,
-                                            gdouble           progress_start,
-                                            gdouble           progress_scale);
+static gint32            layer_from_pixbuf (gint32                  image,
+                                            const gchar            *layer_name,
+                                            gint                    position,
+                                            GdkPixbuf              *buf,
+                                            gdouble                 progress_start,
+                                            gdouble                 progress_scale);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -230,6 +234,8 @@ run (const gchar      *name,
       if (status == GIMP_PDB_SUCCESS)
         {
           image_ID = load_image (doc, param[1].data.d_string,
+                                 run_mode,
+                                 loadvals.target,
                                  loadvals.resolution,
                                  loadvals.antialias,
                                  pages);
@@ -437,16 +443,22 @@ layer_from_pixbuf (gint32        image,
 }
 
 static gint32
-load_image (PopplerDocument  *doc,
-            const gchar      *filename,
-            guint32           resolution,
-            gboolean          antialias,
-            PdfSelectedPages *pages)
+load_image (PopplerDocument        *doc,
+            const gchar            *filename,
+            GimpRunMode             run_mode,
+            GimpPageSelectorTarget  target,
+            guint32                 resolution,
+            gboolean                antialias,
+            PdfSelectedPages       *pages)
 {
-  gint32  image = 0;
-  gint    i;
-  gdouble scale;
-  gdouble doc_progress = 0;
+  gint32   image_ID = 0;
+  gint32  *images   = NULL;
+  gint     i;
+  gdouble  scale;
+  gdouble  doc_progress = 0;
+
+  if (target == GIMP_PAGE_SELECTOR_TARGET_IMAGES)
+    images = g_new0 (gint32, pages->n_pages);
 
   gimp_progress_init (NULL);
   gimp_progress_set_text (_("Opening '%s'..."),
@@ -477,18 +489,24 @@ load_image (PopplerDocument  *doc,
       width  = page_width  * scale;
       height = page_height * scale;
 
-      if (!image)
+      g_object_get (G_OBJECT (page), "label", &page_label, NULL);
+
+      if (! image_ID)
         {
           gchar *name;
 
-          image = gimp_image_new (width, height, GIMP_RGB);
-          gimp_image_undo_disable (image);
+          image_ID = gimp_image_new (width, height, GIMP_RGB);
+          gimp_image_undo_disable (image_ID);
 
-          name = g_strdup_printf (_("%s-pages"), filename);
-          gimp_image_set_filename (image, name);
+          if (target == GIMP_PAGE_SELECTOR_TARGET_IMAGES)
+            name = g_strdup_printf (_("%s-%s"), filename, page_label);
+          else
+            name = g_strdup_printf (_("%s-pages"), filename);
+
+          gimp_image_set_filename (image_ID, name);
           g_free (name);
 
-          gimp_image_set_resolution (image, resolution, resolution);
+          gimp_image_set_resolution (image_ID, resolution, resolution);
         }
 
       buf = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8, width, height);
@@ -498,13 +516,11 @@ load_image (PopplerDocument  *doc,
                                      scale,
                                      buf
 #ifndef HAVE_POPPLER_0_4
-                                     ,0, 0
+                                     , 0, 0
 #endif
                                      );
 
-      g_object_get (G_OBJECT (page), "label", &page_label, NULL);
-
-      layer_from_pixbuf (image, page_label, i, buf,
+      layer_from_pixbuf (image_ID, page_label, i, buf,
                          doc_progress, 1.0 / pages->n_pages);
 
       g_free (page_label);
@@ -512,15 +528,41 @@ load_image (PopplerDocument  *doc,
 
       doc_progress = (double) (i + 1) / pages->n_pages;
       gimp_progress_update (doc_progress);
+
+      if (target == GIMP_PAGE_SELECTOR_TARGET_IMAGES)
+        {
+          images[i] = image_ID;
+
+          gimp_image_undo_enable (image_ID);
+          gimp_image_clean_all (image_ID);
+
+          image_ID = 0;
+        }
    }
 
-  if (image)
+  if (image_ID)
     {
-      gimp_image_undo_enable (image);
-      gimp_image_clean_all (image);
+      gimp_image_undo_enable (image_ID);
+      gimp_image_clean_all (image_ID);
     }
 
-  return image;
+  if (target == GIMP_PAGE_SELECTOR_TARGET_IMAGES)
+    {
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
+        {
+          /* Display images in reverse order.  The last will be
+           * displayed by GIMP itself
+           */
+          for (i = pages->n_pages - 1; i > 0; i--)
+            gimp_display_new (images[i]);
+        }
+
+      image_ID = images[0];
+
+      g_free (images);
+    }
+
+  return image_ID;
 }
 
 static GdkPixbuf *
@@ -742,6 +784,9 @@ load_dialog (PopplerDocument  *doc,
 
   /* run the dialog */
   run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+
+  loadvals.target =
+    gimp_page_selector_get_target (GIMP_PAGE_SELECTOR (selector));
 
   pages->pages =
     gimp_page_selector_get_selected_pages (GIMP_PAGE_SELECTOR (selector),

@@ -1,3 +1,7 @@
+2005-08-23  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/poppler.c: added loading of pages as images.
+
 2005-08-22  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/sample_colorize.c (smp_dialog): applied patch
