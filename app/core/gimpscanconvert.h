@@ -20,83 +20,42 @@
 #define __GIMP_SCAN_CONVERT_H__
 
 
-/* Create a new scan conversion context.
- */
 GimpScanConvert * gimp_scan_convert_new        (void);
 
-void              gimp_scan_convert_free       (GimpScanConvert *scan_converter);
-
-/* set the Pixel-Ratio (width / height) for the pixels.
- */
-void         gimp_scan_convert_set_pixel_ratio (GimpScanConvert *sc,
+void      gimp_scan_convert_free               (GimpScanConvert *sc);
+void      gimp_scan_convert_set_pixel_ratio    (GimpScanConvert *sc,
                                                 gdouble          ratio_xy);
-
-void         gimp_scan_convert_set_clip_rectangle (GimpScanConvert *sc,
-                                                   gint             x,
-                                                   gint             y,
-                                                   gint             width,
-                                                   gint             height);
-
-/* Add "npoints" from "pointlist" to the polygon currently being
- * described by "scan_converter". DEPRECATED.
- */
-void              gimp_scan_convert_add_points (GimpScanConvert *scan_converter,
+void      gimp_scan_convert_set_clip_rectangle (GimpScanConvert *sc,
+                                                gint             x,
+                                                gint             y,
+                                                gint             width,
+                                                gint             height);
+void      gimp_scan_convert_add_points         (GimpScanConvert *sc,
                                                 guint            n_points,
                                                 GimpVector2     *points,
                                                 gboolean         new_polygon);
-
-/* Add a polygon with "npoints" "points" that may be open or closed.
- * It is not recommended to mix gimp_scan_convert_add_polyline with
- * gimp_scan_convert_add_points.
- *
- * Please note that you should use gimp_scan_convert_stroke() if you
- * specify open polygons.
- */
-void              gimp_scan_convert_add_polyline (GimpScanConvert *sc,
-                                                  guint            n_points,
-                                                  GimpVector2     *points,
-                                                  gboolean         closed);
-
-/* Stroke the content of a GimpScanConvert. The next
- * gimp_scan_convert_to_channel will result in the outline of the polygon
- * defined with the commands above.
- *
- * You cannot add additional polygons after this command.
- *
- * Note that if you have nonstandard resolution, "width" gives the
- * width (in pixels) for a vertical stroke, i.e. use the X-resolution
- * to calculate the width of a stroke when operating with real world
- * units.
- */
-
-void              gimp_scan_convert_stroke     (GimpScanConvert *sc,
+void      gimp_scan_convert_add_polyline       (GimpScanConvert *sc,
+                                                guint            n_points,
+                                                GimpVector2     *points,
+                                                gboolean         closed);
+void      gimp_scan_convert_stroke             (GimpScanConvert *sc,
                                                 gdouble          width,
                                                 GimpJoinStyle    join,
                                                 GimpCapStyle     cap,
                                                 gdouble          miter,
                                                 gdouble          dash_offset,
                                                 GArray          *dash_info);
-
-
-/* These are more low level version. Expects a tile manager of depth 1.
- *
- * You cannot add additional polygons after this command.
- */
-void            gimp_scan_convert_render       (GimpScanConvert *scan_converter,
+void      gimp_scan_convert_render             (GimpScanConvert *sc,
                                                 TileManager     *tile_manager,
                                                 gint             off_x,
                                                 gint             off_y,
                                                 gboolean         antialias);
-void            gimp_scan_convert_render_value (GimpScanConvert *sc,
+void      gimp_scan_convert_render_value       (GimpScanConvert *sc,
                                                 TileManager     *tile_manager,
                                                 gint             off_x,
                                                 gint             off_y,
                                                 guchar           value);
-
-/* This is a variant of gimp_scan_convert_render() that composes the
- * (unaliased) scan conversion with the existing drawable content.
- */
-void            gimp_scan_convert_compose      (GimpScanConvert *sc,
+void      gimp_scan_convert_compose            (GimpScanConvert *sc,
                                                 GimpChannelOps   op,
                                                 TileManager     *tile_manager,
                                                 gint             off_x,

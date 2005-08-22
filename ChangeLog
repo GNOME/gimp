@@ -1,5 +1,10 @@
 2005-08-22  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpscanconvert.[ch]: converted comments to gtk-doc
+	inline API docs.
+
+2005-08-22  Sven Neumann  <sven@gimp.org>
+
 	* tools/test-clipboard.c: added --version command-line option.
 
 2005-08-21  Michael Natterer  <mitch@gimp.org>
