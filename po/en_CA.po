@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-19 00:46-0400\n"
-"PO-Revision-Date: 2005-08-19 14:29-0400\n"
+"POT-Creation-Date: 2005-08-22 01:39-0400\n"
+"PO-Revision-Date: 2005-08-22 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -4734,15 +4734,15 @@ msgstr "Shrink Channel"
 msgid "Cannot stroke empty channel."
 msgstr "Cannot stroke empty channel."
 
-#: app/core/gimpchannel.c:1629
+#: app/core/gimpchannel.c:1627
 msgid "Set Channel Color"
 msgstr "Set Channel Colour"
 
-#: app/core/gimpchannel.c:1677
+#: app/core/gimpchannel.c:1675
 msgid "Set Channel Opacity"
 msgstr "Set Channel Opacity"
 
-#: app/core/gimpchannel.c:1745 app/core/gimpselection.c:548
+#: app/core/gimpchannel.c:1743 app/core/gimpselection.c:548
 msgid "Selection Mask"
 msgstr "Selection Mask"
 
@@ -5586,28 +5586,24 @@ msgstr "picas"
 msgid "percent"
 msgstr "percent"
 
-#: app/dialogs/about-dialog.c:45
-#, c-format
-msgid "Version %s brought to you by"
-msgstr "Version %s brought to you by"
+#: app/dialogs/about-dialog.c:60 desktop/gimp.desktop.in.in.h:2
+msgid "GNU Image Manipulation Program"
+msgstr "GNU Image Manipulation Program"
 
-#: app/dialogs/about-dialog.c:51
-msgid "Translation by"
-msgstr "Translation by"
+#: app/dialogs/about-dialog.c:63
+msgid "Visit the GIMP website"
+msgstr "Visit the GIMP website"
 
-#. Translators: insert your names here, separated by newline
-#. we'd prefer just the names, please no email addresses.
-#: app/dialogs/about-dialog.c:54
+#. Translators: insert your names here,
+#. * separated by newline
+#.
+#: app/dialogs/about-dialog.c:153
 msgid "translator-credits"
 msgstr "Adam Weinberger <adamw@gnome.org>"
 
-#: app/dialogs/about-dialog.c:59
-msgid "Contributions by"
-msgstr "Contributions by"
-
-#: app/dialogs/about-dialog.c:153
-msgid "About The GIMP"
-msgstr "About The GIMP"
+#: app/dialogs/about-dialog.c:688
+msgid "GIMP is brought to you by"
+msgstr "GIMP is brought to you by"
 
 #: app/dialogs/channel-options-dialog.c:144
 msgid "Channel _Name:"
@@ -9224,7 +9220,7 @@ msgstr "Base selection on all visible layers"
 msgid "Use all visible layers when shrinking the selection"
 msgstr "Use all visible layers when shrinking the selection"
 
-#: app/tools/gimpselectionoptions.c:438 app/tools/gimptextoptions.c:458
+#: app/tools/gimpselectionoptions.c:436 app/tools/gimptextoptions.c:458
 msgid "Antialiasing"
 msgstr "Antialiasing"
 
@@ -11064,10 +11060,6 @@ msgstr "XCF error: unsupported XCF file version %d encountered"
 #: desktop/gimp.desktop.in.in.h:1
 msgid "Create images and edit photographs"
 msgstr "Create images and edit photographs"
-
-#: desktop/gimp.desktop.in.in.h:2
-msgid "GNU Image Manipulation Program"
-msgstr "GNU Image Manipulation Program"
 
 #: desktop/gimp.desktop.in.in.h:3
 msgid "Image Editor"
