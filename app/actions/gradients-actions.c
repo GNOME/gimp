@@ -63,7 +63,7 @@ static GimpActionEntry gradients_actions[] =
     GIMP_HELP_GRADIENT_SAVE_AS_POV },
 
   { "gradients-delete", GTK_STOCK_DELETE,
-    N_("_Delete Gradient..."), "",
+    N_("_Delete Gradient"), "",
     N_("Delete gradient"),
     G_CALLBACK (data_delete_cmd_callback),
     GIMP_HELP_GRADIENT_DELETE },

@@ -663,8 +663,8 @@ metadata_dialog (gint32    image_ID,
                               NULL, 0,
                               gimp_standard_help_func, EDITOR_PROC,
 
-                              _("_Import XMP"), RESPONSE_IMPORT,
-                              _("_Export XMP"), RESPONSE_EXPORT,
+                              _("_Import XMP..."), RESPONSE_IMPORT,
+                              _("_Export XMP..."), RESPONSE_EXPORT,
                               GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                               GTK_STOCK_OK,     GTK_RESPONSE_OK,
 

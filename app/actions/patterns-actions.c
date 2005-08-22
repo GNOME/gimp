@@ -62,7 +62,7 @@ static GimpActionEntry patterns_actions[] =
     GIMP_HELP_PATTERN_DUPLICATE },
 
   { "patterns-delete", GTK_STOCK_DELETE,
-    N_("_Delete Pattern..."), "",
+    N_("_Delete Pattern"), "",
     N_("Delete pattern"),
     G_CALLBACK (data_delete_cmd_callback),
     GIMP_HELP_PATTERN_DELETE },

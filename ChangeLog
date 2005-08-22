@@ -1,5 +1,14 @@
 2005-08-23  Sven Neumann  <sven@gimp.org>
 
+	* app/base/siox.c: minor optimizations.
+
+	* app/actions/gradients-actions.c
+	* app/actions/patterns-actions.c
+	* plug-ins/metadata/interface.c: applied patch from Stephan Binner
+	that fixes wrong use of ellipsis (bug #309657).
+
+2005-08-23  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/sample_colorize.c: use GTK_STOCK_APPLY and fixed
 	capitalization in button label.
 

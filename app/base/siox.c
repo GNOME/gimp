@@ -599,38 +599,6 @@ threshold_mask (TileManager *mask,
     }
 }
 
-static void
-set_mask (TileManager *mask,
-          guchar       maskval,
-          gint         x,
-          gint         y,
-          gint         width,
-          gint         height)
-{
-  PixelRegion region;
-  gpointer    pr;
-  gint        row, col;
-
-  pixel_region_init (&region, mask, x, y, width, height, TRUE);
-
-  for (pr = pixel_regions_register (1, &region);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
-    {
-      guchar *data = region.data;
-
-      for (row = 0; row < region.h; row++)
-        {
-	  guchar *d = data;
-
-          for (col = 0; col < region.w; col++, d++)
-	    *d = *d & maskval;
-
-          data += region.rowstride;
-	}
-    }
-}
-
 /* This method checks out the neighbourhood of the pixel at position
  * (pos_x,pos_y) in the TileManager mask, it adds the sourrounding
  * pixels to the queue to allow further processing it uses maskVal to
@@ -762,27 +730,25 @@ find_max_blob (TileManager *mask,
   PixelRegion  region;
   gpointer     pr;
   gint         row, col;
+  gint         half      = (width * height) / 2;
   gint         maxblob_x = 0;
   gint         maxblob_y = 0;
   gint         maxregion = 0;
   guchar       val;
 
-  /* this mask is used to check if a pixel has been visited */
-  const guchar visited   = 0x80;
-  /* this mask is used to set a pixel to unvisited          */
-  const guchar unvisited = 0x7F;
+  /* this mask is used to flag a pixel as visited in the first pass */
+  const guchar visited   = 0x40;
+  /* this mask is used to mark a pixel in the second pass           */
+  const guchar contained = 0x80;
 
   threshold_mask (mask, 0x80, 0x1, x, y, width, height);
-
-  /* mark every pixel in the mask as unvisited */
-  set_mask (mask, unvisited, x, y, width, height);
 
   q = g_queue_new ();
 
   pixel_region_init (&region, mask, x, y, width, height, TRUE);
 
   for (pr = pixel_regions_register (1, &region);
-       pr != NULL;
+       pr != NULL && maxregion < half;
        pr = pixel_regions_process (pr))
     {
       const guchar *data  = region.data;
@@ -790,8 +756,8 @@ find_max_blob (TileManager *mask,
 
       for (row = 0; row < region.h; row++, pos_y++)
         {
-          gint          pos_x = region.x;
-          const guchar *d     = data;
+          gint          pos_x    = region.x;
+          const guchar *d        = data;
 
           for (col = 0; col < region.w; col++, d++, pos_x++)
             {
@@ -832,26 +798,23 @@ find_max_blob (TileManager *mask,
         }
     }
 
-  /* clear visited flag for all pixels */
-  set_mask (mask, unvisited, x, y, width, height);
-
-  /* now push maxblob coords onto stack and find maxblob again, so
-   * that it can be set as resulting mask
+  /* now push maxblob coords to the queue and find maxblob again,
+   * so that it can be set as the resulting mask
    */
 
   /* mark startpixel as visited */
   read_pixel_data_1 (mask, maxblob_x, maxblob_y, &val);
-  val |= visited;
+  val |= contained;
   write_pixel_data_1 (mask, maxblob_x, maxblob_y, &val);
 
   process_neighbours (q, maxblob_x, maxblob_y,
-                      mask, visited, x, y, width, height);
-  maxregion = process_queue (q, mask, visited, x, y, width, height);
+                      mask, contained, x, y, width, height);
+  maxregion = process_queue (q, mask, contained, x, y, width, height);
 
   g_queue_free (q);
 
   /* set found pixel to 255 in the mask */
-  threshold_mask (mask, visited, 0xFF, x, y, width, height);
+  threshold_mask (mask, contained, 0xFF, x, y, width, height);
 }
 
 static inline void
