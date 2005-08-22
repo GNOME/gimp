@@ -1317,9 +1317,9 @@ smp_dialog (void)
                      gimp_standard_help_func, PLUG_IN_PROC,
 
                      GIMP_STOCK_RESET,        RESPONSE_RESET,
-                     _("Get _sample colors"), RESPONSE_GET_COLORS,
+                     _("Get _Sample Colors"), RESPONSE_GET_COLORS,
                      GTK_STOCK_CLOSE,         GTK_RESPONSE_CLOSE,
-                     _("_Apply"),             GTK_RESPONSE_APPLY,
+                     GTK_STOCK_APPLY,         GTK_RESPONSE_APPLY,
 
                      NULL);
 

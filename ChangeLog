@@ -1,3 +1,8 @@
+2005-08-23  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/sample_colorize.c: use GTK_STOCK_APPLY and fixed
+	capitalization in button label.
+
 2005-08-23  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/poppler.c: added loading of pages as images.
