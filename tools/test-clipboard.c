@@ -20,6 +20,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpversion.h"
+
 
 typedef struct _CopyData CopyData;
 
@@ -31,6 +33,7 @@ struct _CopyData
 };
 
 
+static void     test_clipboard_show_version    (void) G_GNUC_NORETURN;
 static gboolean test_clipboard_parse_selection (const gchar       *option_name,
                                                 const gchar       *value,
                                                 gpointer           data,
@@ -90,6 +93,11 @@ static const GOptionEntry main_entries[] =
     "paste", 'p', 0,
     G_OPTION_ARG_STRING, &option_paste_filename,
     "Paste clipoard into <file>", "<file>"
+  },
+  {
+    "version", 'v', 0,
+    G_OPTION_ARG_CALLBACK, test_clipboard_show_version,
+    "Show version information and exit", NULL
   },
   { NULL }
 };
@@ -189,6 +197,15 @@ main (gint   argc,
     }
 
   return EXIT_SUCCESS;
+}
+
+static void
+test_clipboard_show_version (void)
+{
+  g_print ("test-clipboard (GIMP clipboard testbed) version %s\n",
+           GIMP_VERSION);
+
+  exit (EXIT_SUCCESS);
 }
 
 static gboolean
