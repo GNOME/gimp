@@ -1,5 +1,10 @@
 2005-08-23  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/iwarp.c (iwarp_dialog): added a hint on how to
+	use this plug-in.
+
+2005-08-23  Sven Neumann  <sven@gimp.org>
+
 	* [lots of files]: applied capitalization patches contributed by
 	Stephan Binner. Fixes bug #309657.
 
