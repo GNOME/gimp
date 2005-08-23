@@ -1082,7 +1082,7 @@ AC_SUBST(LIBMNG)
 AC_ARG_WITH(libexif,  [  --without-libexif       build without EXIF support])
 if test x$with_libexif != xno && test -z "$LIBEXIF" && test -n "$LIBJPEG"; then
   PKG_CHECK_MODULES(EXIF, libexif, 
-    AC_DEFINE(HAVE_EXIF, 1, "Define to 1 if libexif is available"),
+    AC_DEFINE(HAVE_EXIF, 1, [Define to 1 if libexif is available]),
     AC_MSG_WARN([libexif not found!
 EXIF support will not be built into the JPEG plug-in. 
 libexif is available from http://www.sourceforge.net/projects/libexif]))
@@ -1094,7 +1094,8 @@ libexif is available from http://www.sourceforge.net/projects/libexif]))
   fi
   AC_MSG_RESULT($have_exif_0_6)
   if test x$have_exif_0_6 == xyes; then
-    AC_DEFINE(HAVE_EXIF_0_6, 1, "Define to 1 if libexif is at least version 0.6.0")
+    AC_DEFINE(HAVE_EXIF_0_6, 1,
+              [Define to 1 if libexif is at least version 0.6.0])
   fi
 fi
 
@@ -1189,7 +1190,7 @@ AC_SUBST(LIBSVG)
 PKG_CHECK_MODULES(POPPLER, poppler-glib >= poppler_required_version gthread-2.0,
   POPPLER='poppler$(EXEEXT)'
   LIBPOPPLER=$POPPLER_LIBS
-  AC_DEFINE(HAVE_POPPLER, 1, "Define to 1 if libpoppler is available")
+  AC_DEFINE(HAVE_POPPLER, 1, [Define to 1 if libpoppler is available])
   have_poppler=yes,
   AC_MSG_WARN([*** PDF import will be by the postscript plugin (poppler or gthread not found) ***]))
 
@@ -1197,7 +1198,8 @@ AC_SUBST(POPPLER)
 AC_SUBST(LIBPOPPLER)
 
 if $PKG_CONFIG --atleast-version=0.4 poppler-glib; then
-  AC_DEFINE(HAVE_POPPLER_0_4, 1, "Define to 1 if libpoppler >= 0.4 is available")
+  AC_DEFINE(HAVE_POPPLER_0_4, 1,
+            [Define to 1 if libpoppler >= 0.4 is available])
 fi
 
 #################################################
@@ -1220,7 +1222,7 @@ PKG_CHECK_MODULES(URI, $uri_modules,
 AM_CONDITIONAL(HAVE_GNOMEVFS, test x$have_gnomevfs = xyes)
 
 if test "x$have_gnomeui" = xyes; then
-  AC_DEFINE(HAVE_GNOMEUI, 1, "Define to 1 if libgnomeui is available")
+  AC_DEFINE(HAVE_GNOMEUI, 1, [Define to 1 if libgnomeui is available])
 fi
 
 
