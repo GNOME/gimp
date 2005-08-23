@@ -11,28 +11,28 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-06 21:10+0200\n"
-"PO-Revision-Date: 2005-07-06 21:18+0200\n"
+"POT-Creation-Date: 2005-08-23 23:32+0200\n"
+"PO-Revision-Date: 2005-08-24 00:48+0200\n"
 "Last-Translator: Marcel Telka <marcel@telka.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../plug-ins/script-fu/script-fu-console.c:119
+#: ../plug-ins/script-fu/script-fu-console.c:130
 #: ../plug-ins/script-fu/script-fu-text-console.c:67
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "Iba interaktívne spustenie umožňuje režim Script-Fu konzoly"
 
-#: ../plug-ins/script-fu/script-fu-console.c:144
+#: ../plug-ins/script-fu/script-fu-console.c:163
 msgid "Script-Fu Console"
 msgstr "Script-Fu konzola"
 
-#: ../plug-ins/script-fu/script-fu-console.c:237
+#: ../plug-ins/script-fu/script-fu-console.c:256
 msgid "_Browse..."
 msgstr "_Prechádzať..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:518
+#: ../plug-ins/script-fu/script-fu-console.c:601
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Iba neinteraktívne spustenie umožňuje režim vyhodnocovanie Script-Fu"
 
@@ -57,78 +57,75 @@ msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
 #. the script arguments frame
-#: ../plug-ins/script-fu/script-fu-interface.c:259
+#: ../plug-ins/script-fu/script-fu-interface.c:255
 msgid "Script Arguments"
 msgstr "Argumenty skriptu"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: ../plug-ins/script-fu/script-fu-interface.c:291
+#: ../plug-ins/script-fu/script-fu-interface.c:287
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:334
+#: ../plug-ins/script-fu/script-fu-interface.c:330
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu výber farby"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:438
+#: ../plug-ins/script-fu/script-fu-interface.c:434
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu výber súboru"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:442
+#: ../plug-ins/script-fu/script-fu-interface.c:438
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu výber priečinka"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:454
+#: ../plug-ins/script-fu/script-fu-interface.c:450
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu výber písma"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:462
+#: ../plug-ins/script-fu/script-fu-interface.c:458
 msgid "Script-Fu Palette Selection"
 msgstr "Script-Fu výber farby"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:470
+#: ../plug-ins/script-fu/script-fu-interface.c:466
 msgid "Script-fu Pattern Selection"
 msgstr "Script-Fu výber vzorky"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:477
+#: ../plug-ins/script-fu/script-fu-interface.c:473
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu výber prechodu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:485
+#: ../plug-ins/script-fu/script-fu-interface.c:481
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu výber štetca"
 
 #. the script progress frame
-#: ../plug-ins/script-fu/script-fu-interface.c:552
+#: ../plug-ins/script-fu/script-fu-interface.c:548
 msgid "Script Progress"
 msgstr "Priebeh skriptu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:560
+#: ../plug-ins/script-fu/script-fu-interface.c:556
 msgid "(none)"
 msgstr "(nič)"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1088
-#: ../plug-ins/dbbrowser/gimpprocview.c:205
+#: ../plug-ins/script-fu/script-fu-interface.c:1084
 msgid "Author:"
 msgstr "Autor:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1095
-#: ../plug-ins/dbbrowser/gimpprocview.c:229
+#: ../plug-ins/script-fu/script-fu-interface.c:1091
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1102
-#: ../plug-ins/dbbrowser/gimpprocview.c:217
+#: ../plug-ins/script-fu/script-fu-interface.c:1098
 msgid "Date:"
 msgstr "Dátum:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1111
+#: ../plug-ins/script-fu/script-fu-interface.c:1107
 msgid "Image Types:"
 msgstr "Typ obrázka:"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:660
+#: ../plug-ins/script-fu/script-fu-scripts.c:644
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -143,20 +140,20 @@ msgstr ""
 msgid "Script-Fu Server Options"
 msgstr "Nastavenia Script-Fu servera"
 
-#: ../plug-ins/script-fu/script-fu-server.c:681
-msgid "Server Port:"
+#: ../plug-ins/script-fu/script-fu-server.c:686
+msgid "Server port:"
 msgstr "Port servera:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:687
-msgid "Server Logfile:"
-msgstr "Protokol servera:"
+#: ../plug-ins/script-fu/script-fu-server.c:692
+msgid "Server logfile:"
+msgstr "Súbor záznamov servera:"
 
 #: ../plug-ins/script-fu/script-fu.c:116
 msgid "Script-Fu _Console"
 msgstr "Script-Fu konzola"
 
 #: ../plug-ins/script-fu/script-fu.c:123 ../plug-ins/script-fu/script-fu.c:152
-#: ../plug-ins/script-fu/script-fu.c:322
+#: ../plug-ins/script-fu/script-fu.c:321
 msgid "<Toolbox>/Xtns/Script-Fu"
 msgstr "<Toolbox>/Rozš./Script-Fu"
 
@@ -164,179 +161,81 @@ msgstr "<Toolbox>/Rozš./Script-Fu"
 msgid "_Start Server..."
 msgstr "Štart _servera..."
 
-#: ../plug-ins/script-fu/script-fu.c:271
+#: ../plug-ins/script-fu/script-fu.c:270
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:273
+#: ../plug-ins/script-fu/script-fu.c:272
 msgid "_Buttons"
 msgstr "_Tlačidlá"
 
-#: ../plug-ins/script-fu/script-fu.c:275
+#: ../plug-ins/script-fu/script-fu.c:274
 msgid "_Logos"
 msgstr "_Logá"
 
-#: ../plug-ins/script-fu/script-fu.c:277
+#: ../plug-ins/script-fu/script-fu.c:276
 msgid "Make Br_ush"
 msgstr "Vytvoriť Št_etec"
 
-#: ../plug-ins/script-fu/script-fu.c:279
+#: ../plug-ins/script-fu/script-fu.c:278
 msgid "_Misc"
 msgstr "_Rôzne"
 
-#: ../plug-ins/script-fu/script-fu.c:281
+#: ../plug-ins/script-fu/script-fu.c:280
 msgid "_Patterns"
 msgstr "_Vzorky"
 
-#: ../plug-ins/script-fu/script-fu.c:283
+#: ../plug-ins/script-fu/script-fu.c:282
 msgid "_Test"
 msgstr "_Test"
 
-#: ../plug-ins/script-fu/script-fu.c:285
+#: ../plug-ins/script-fu/script-fu.c:284
 msgid "_Utils"
 msgstr "_Nástroje"
 
-#: ../plug-ins/script-fu/script-fu.c:287
+#: ../plug-ins/script-fu/script-fu.c:286
 msgid "_Web Page Themes"
 msgstr "Témy _www stránky"
 
-#: ../plug-ins/script-fu/script-fu.c:289
+#: ../plug-ins/script-fu/script-fu.c:288
 msgid "_Alien Glow"
 msgstr "Mimo_zemská žiara"
 
-#: ../plug-ins/script-fu/script-fu.c:291
+#: ../plug-ins/script-fu/script-fu.c:290
 msgid "_Beveled Pattern"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu.c:293
+#: ../plug-ins/script-fu/script-fu.c:292
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
-#: ../plug-ins/script-fu/script-fu.c:296
+#: ../plug-ins/script-fu/script-fu.c:295
 msgid "Alpha to _Logo"
 msgstr "Alfa do _loga"
 
-#: ../plug-ins/script-fu/script-fu.c:298
+#: ../plug-ins/script-fu/script-fu.c:297
 msgid "A_nimators"
 msgstr "A_nimátori"
 
-#: ../plug-ins/script-fu/script-fu.c:300
+#: ../plug-ins/script-fu/script-fu.c:299
 msgid "_Decor"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu.c:302
+#: ../plug-ins/script-fu/script-fu.c:301
 msgid "_Render"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu.c:304
+#: ../plug-ins/script-fu/script-fu.c:303
 msgid "_Selection"
 msgstr "_Výber"
 
-#: ../plug-ins/script-fu/script-fu.c:306
+#: ../plug-ins/script-fu/script-fu.c:305
 msgid "Stencil _Ops"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu.c:314
+#: ../plug-ins/script-fu/script-fu.c:313
 msgid "_Refresh Scripts"
 msgstr "_Znovunačítať skripty"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:131
-msgid "Procedure Browser"
-msgstr "Prehliadač procedúr"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:154
-msgid "by name"
-msgstr "podľa názvu"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:155
-msgid "by description"
-msgstr "podľa popisu"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:156
-msgid "by help"
-msgstr "podľa pomoci"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:157
-msgid "by author"
-msgstr "podľa autora"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:158
-msgid "by copyright"
-msgstr "podľa autorských práv"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:159
-msgid "by date"
-msgstr "podľa dátumu"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:160
-msgid "by type"
-msgstr "podľa typu"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:332
-msgid "Searching by name - please wait"
-msgstr "Hľadanie podľa názvu - čakajte prosím"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:352
-msgid "Searching by description - please wait"
-msgstr "Hľadanie podľa popisu - čakajte prosím"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:360
-msgid "Searching by help - please wait"
-msgstr "Hľadanie podľa pomoci - čakajte prosím"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:368
-msgid "Searching by author - please wait"
-msgstr "Hľadanie podľa autora - čakajte prosím"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:376
-msgid "Searching by copyright - please wait"
-msgstr "Hľadanie podľa autorských práv - čakajte prosím"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:384
-msgid "Searching by date - please wait"
-msgstr "Hľadanie podľa dátumu - čakajte prosím"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:392
-msgid "Searching by type - please wait"
-msgstr "Hľadanie podľa typu - čakajte prosím"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:400
-msgid "Searching - please wait"
-msgstr "Hľadanie - čakajte prosím"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:408
-#, c-format
-msgid "%d Procedures"
-msgstr "%d procedúr"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:415
-msgid "No matches for your query"
-msgstr "Pre vašu požiadavku neboli nájdené zhody"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:418
-msgid "1 procedure matches your query"
-msgstr "1 procedúra vyhovuje vašej požiadavke"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:421
-#, c-format
-msgid "%d procedures match your query"
-msgstr "%d procedúr vyhovuje vašej požiadavke"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:477
-msgid "No matches"
-msgstr "Nenájdené"
-
-#: ../plug-ins/dbbrowser/gimpprocview.c:138
-msgid "Parameters"
-msgstr "Parametre"
-
-#: ../plug-ins/dbbrowser/gimpprocview.c:151
-msgid "Return Values"
-msgstr "Návratové hodnoty"
-
-#: ../plug-ins/dbbrowser/gimpprocview.c:164
-msgid "Additional Information"
-msgstr "Ďalšie informácie"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "3D _Outline..."
@@ -361,11 +260,11 @@ msgstr "Štandardné nastavenie mapy vyvýšenia"
 #: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:2
 #: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:9
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:3
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:3
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:6
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:3
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:3
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:5
@@ -401,11 +300,11 @@ msgstr "Písmo"
 #: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:3
 #: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:2
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:10
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:4
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:7
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:6
@@ -471,11 +370,11 @@ msgstr "Polomer rozmazania tieňa"
 #: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:6
 #: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:5
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:15
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:5
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:12
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:9
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:7
@@ -514,9 +413,9 @@ msgstr "3_D Truchet..."
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:1
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:1
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:1
@@ -524,7 +423,6 @@ msgstr "3_D Truchet..."
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:1
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:1
-#: ../plug-ins/script-fu/scripts/image-structure.scm.h:2
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:1
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:1
@@ -668,14 +566,12 @@ msgid "_Arrow..."
 msgstr "Šípk_a..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:2
-#, fuzzy
 msgid "Bar height"
-msgstr "Výška kusu"
+msgstr "Výška pásu"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
-#, fuzzy
 msgid "Bar length"
-msgstr "Dĺžka kusu"
+msgstr "Dĺžka pásu"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:6
 #: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:4
@@ -874,20 +770,15 @@ msgstr "Obrátený prechod"
 msgid "Offset (pixels)"
 msgstr "Posun (v bodoch)"
 
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:1
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:1
-msgid "Background Color"
-msgstr "Farba pozadia"
-
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
 msgid "Bo_vination..."
 msgstr "_Flaky..."
 
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:5
 msgid "Spots density X"
 msgstr "X hustota bodiek"
 
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:6
 msgid "Spots density Y"
 msgstr "Y hustota bodiek"
 
@@ -971,8 +862,9 @@ msgid "Image to carve"
 msgstr "Obrázok na vyrezanie"
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:1
-msgid "Background Image"
-msgstr "Obrázok na pozadí"
+#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:1
+msgid "Background image"
+msgstr "Obrázok pozadia"
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:2
 msgid "Carve raised text"
@@ -1062,11 +954,11 @@ msgstr "Mapa prostredia"
 msgid "Highlight balance"
 msgstr "Vyváženie svetiel"
 
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:2
 msgid "C_hrome..."
 msgstr "Chrómovať..."
 
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:5
 msgid "Offsets (pixels * 2)"
 msgstr "Posun (v bodoch * 2)"
 
@@ -1163,10 +1055,6 @@ msgstr "St_udený kov..."
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:2
 msgid "Effect size (pixels)"
 msgstr "Veľkosť efektu (body)"
-
-#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:1
-msgid "Background image"
-msgstr "Obrázok pozadia"
 
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:3
 msgid "Crystal..."
@@ -1272,7 +1160,7 @@ msgid "Rows/cols"
 msgstr "Riadky/Stĺpce"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:10
-msgid "_Erase every other Row..."
+msgid "_Erase Every Other Row..."
 msgstr "_Vymazať každý druhý riadok..."
 
 #: ../plug-ins/script-fu/scripts/fade-outline.scm.h:1
@@ -1560,8 +1448,8 @@ msgid "Y divisions"
 msgstr "Rozdelenie Y"
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm.h:3
-msgid "_Grid..."
-msgstr "_Mriežka..."
+msgid "_Divisions..."
+msgstr "_Rozdelenia..."
 
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm.h:1
 msgid "Creates four Guides around the bounding box of the current selection."
@@ -1650,50 +1538,6 @@ msgstr "Veľkosť rámu"
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:5
 msgid "Imigre-_26..."
 msgstr "Imigre-_26..."
-
-#: ../plug-ins/script-fu/scripts/image-structure.scm.h:1
-msgid "Apply layer mask (or discard)"
-msgstr "Použiť masku vrstvy (alebo zahodiť)"
-
-#: ../plug-ins/script-fu/scripts/image-structure.scm.h:3
-msgid "Create new image"
-msgstr "Vytvoriť nový obrázok"
-
-#: ../plug-ins/script-fu/scripts/image-structure.scm.h:4
-msgid "Insert layer names"
-msgstr "Vložiť názvy vrstiev"
-
-#: ../plug-ins/script-fu/scripts/image-structure.scm.h:5
-msgid "Make new background"
-msgstr "Vytvoriť nové pozadie"
-
-#: ../plug-ins/script-fu/scripts/image-structure.scm.h:6
-msgid "Outer border"
-msgstr "Vonkajšia hranica"
-
-#: ../plug-ins/script-fu/scripts/image-structure.scm.h:7
-msgid "Pad color"
-msgstr "Farba výplne"
-
-#: ../plug-ins/script-fu/scripts/image-structure.scm.h:8
-msgid "Pad opacity"
-msgstr "Krytie výplne"
-
-#: ../plug-ins/script-fu/scripts/image-structure.scm.h:9
-msgid "Padding for transparent regions"
-msgstr "Výplň pre priesvitné oblasti"
-
-#: ../plug-ins/script-fu/scripts/image-structure.scm.h:10
-msgid "Shear length"
-msgstr "Dĺžka strihu"
-
-#: ../plug-ins/script-fu/scripts/image-structure.scm.h:11
-msgid "Show Image _Structure..."
-msgstr "Zobraziť _štruktúru dokumentu..."
-
-#: ../plug-ins/script-fu/scripts/image-structure.scm.h:12
-msgid "Space between layers"
-msgstr "Rozostup medzi vrstvami"
 
 #: ../plug-ins/script-fu/scripts/land.scm.h:5
 msgid "Land height"
@@ -1900,7 +1744,7 @@ msgid "Behavior"
 msgstr "Správanie"
 
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:2
-msgid "Detail in Middle"
+msgid "Detail in middle"
 msgstr "Detaily v strede"
 
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:7
@@ -2082,12 +1926,12 @@ msgid "Frame"
 msgstr "Rám"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:10
-msgid "Gradient: Loop Sawtooth"
-msgstr "Prechod: Cyklická píla"
+msgid "Gradient: loop sawtooth"
+msgstr "Prechod: cyklická píla"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:11
-msgid "Gradient: Loop Triangle"
-msgstr "Prechod: Cyklický trojuholník"
+msgid "Gradient: loop triangle"
+msgstr "Prechod: cyklický trojuholník"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:12
 msgid "Hexagon"
@@ -2421,114 +2265,3 @@ msgstr "Krytie svetiel"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:11
 msgid "_Xach-Effect..."
 msgstr "Efekt _Xach..."
-
-#~ msgid "SIOD Output"
-#~ msgstr "SIOD výstup"
-
-#~ msgid "Current Command"
-#~ msgstr "Aktuálny príkaz"
-
-#~ msgid "Search by _Name"
-#~ msgstr "Hľadať podľa _názvu"
-
-#~ msgid "Search by _Blurb"
-#~ msgstr "Hľadanie podľa _popisu"
-
-#~ msgid "_Search:"
-#~ msgstr "_Hľadať:"
-
-#~ msgid "1 Procedure"
-#~ msgstr "1 procedúra"
-
-#~ msgid "Internal GIMP procedure"
-#~ msgstr "Interná procedúra GIMP"
-
-#~ msgid "GIMP Plug-In"
-#~ msgstr "GIMP modul"
-
-#~ msgid "GIMP Extension"
-#~ msgstr "Rozšírenie programu GIMP"
-
-#~ msgid "Temporary Procedure"
-#~ msgstr "Dočasná procedúra"
-
-#~ msgid "<Image>/Script-Fu/Alpha to Logo"
-#~ msgstr "<Image>/Script-Fu/Alfa do loga"
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos"
-#~ msgstr "<Toolbox>/Rozš./Script-Fu/Logá"
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns"
-#~ msgstr "<Toolbox>/Rozš./Script-Fu/Vzorky"
-
-#~ msgid "<Image>/Script-Fu/Decor"
-#~ msgstr "<Image>/Script-Fu/Dekorácia"
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow"
-#~ msgstr "<Toolbox>/Rozš./Script-Fu/Témy pre web stránky/Mimozemská žiara"
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Buttons"
-#~ msgstr "<Toolbox>/Rozš./Script-Fu/Tlačítka"
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern"
-#~ msgstr "<Toolbox>/Rozš./Script-Fu/Témy pre web stránky/Skosený vzor"
-
-#~ msgid "<Image>/Script-Fu/Animators"
-#~ msgstr "<Image>/Script-Fu/Animátory"
-
-#~ msgid "<Image>/Script-Fu/Stencil Ops"
-#~ msgstr "<Image>/Script-Fu/Šablóny"
-
-#~ msgid "<Image>/Script-Fu/Render"
-#~ msgstr "<Image>/Script-Fu/Generovanie"
-
-#~ msgid "<Image>/Script-Fu/Alchemy"
-#~ msgstr "<Image>/Script-Fu/Alchýmia"
-
-#~ msgid "<Image>/Script-Fu/Selection"
-#~ msgstr "<Image>/Script-Fu/Výber"
-
-#~ msgid "<Image>/Script-Fu/Shadow"
-#~ msgstr "<Image>/Script-Fu/Tieň"
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Utils"
-#~ msgstr "<Toolbox>/Rozš./Script-Fu/Pomôcky"
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org"
-#~ msgstr "<Toolbox>/Rozš./Script-Fu/Témy pre web stránky/Klasický.Gimp.org"
-
-#~ msgid "<Image>/Script-Fu/Utils"
-#~ msgstr "<Image>/Script-Fu/Pomôcky"
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Make Brush"
-#~ msgstr "<Toolbox>/Rozš./Script-Fu/Vytvoriť štetec"
-
-#~ msgid "Cubic"
-#~ msgstr "Kubická"
-
-#~ msgid "Linear"
-#~ msgstr "Lineárna"
-
-#~ msgid "None"
-#~ msgstr "žiadna"
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Misc"
-#~ msgstr "<Toolbox>/Rozš./Script-Fu/Rôzne"
-
-#~ msgid "_Unsharp Mask..."
-#~ msgstr "_Rozostriť masku..."
-
-#~ msgid "<Toolbox>/Help/The GIMP Online"
-#~ msgstr "<Toolbox>/Pomocník/GIMP online"
-
-#~ msgid "Buffer amount (% height of text)"
-#~ msgstr "Veľkosť zásobníka (% výšky textu)"
-
-#~ msgid "_ASCII to Image..."
-#~ msgstr "_ASCII do obrázku"
-
-#~ msgid "_ASCII to Layer..."
-#~ msgstr "_ASCII do vrstvy"
-
-#~ msgid "Copy _Visible"
-#~ msgstr "Kopírovať _viditeľné"
