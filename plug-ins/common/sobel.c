@@ -253,7 +253,7 @@ sobel_dialog (GimpDrawable *drawable)
                     G_CALLBACK (sobel_preview_update),
                     NULL);
 
-  toggle = gtk_check_button_new_with_mnemonic (_("Sobel _Horizontally"));
+  toggle = gtk_check_button_new_with_mnemonic (_("Sobel _horizontally"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bvals.horizontal);
   gtk_box_pack_start (GTK_BOX (main_vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
@@ -265,7 +265,7 @@ sobel_dialog (GimpDrawable *drawable)
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  toggle = gtk_check_button_new_with_mnemonic (_("Sobel _Vertically"));
+  toggle = gtk_check_button_new_with_mnemonic (_("Sobel _vertically"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bvals.vertical);
   gtk_box_pack_start (GTK_BOX (main_vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);

@@ -299,7 +299,7 @@ dog_dialog (gint32        image_ID,
                     G_CALLBACK (preview_update_preview),
                     drawable);
 
-  frame = gimp_frame_new (_("Smoothing parameters"));
+  frame = gimp_frame_new (_("Smoothing Parameters"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 

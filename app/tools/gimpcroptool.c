@@ -189,7 +189,7 @@ gimp_crop_tool_get_type (void)
         NULL,           /* interface_finalize */
         NULL            /* interface_data */
       };
-      
+
       tool_type = g_type_register_static (GIMP_TYPE_DRAW_TOOL,
                                           "GimpCropTool",
                                           &tool_info, 0);
@@ -304,7 +304,7 @@ static void
 gimp_crop_tool_finalize (GObject *object)
 {
   gimp_rectangle_tool_finalize (object);
-  
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
@@ -355,7 +355,7 @@ gimp_crop_tool_execute (GimpRectangleTool  *rectangle,
                        x, y, w + x, h + y,
                        options->layer_only,
                        options->crop_mode == GIMP_CROP_MODE_CROP);
-      
+
       gimp_image_flush (gimage);
 
       return TRUE;

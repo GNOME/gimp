@@ -1412,7 +1412,7 @@ newsprint_dialog (GimpDrawable *drawable)
                                 G_CALLBACK (gimp_preview_invalidate),
                                 preview);
 
-      button = gtk_button_new_with_mnemonic (_("_Factory defaults"));
+      button = gtk_button_new_with_mnemonic (_("_Factory Defaults"));
       gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
 

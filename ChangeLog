@@ -1,43 +1,7 @@
 2005-08-23  Sven Neumann  <sven@gimp.org>
 
-	* app/actions/channels-commands.c
-	* app/actions/qmask-commands.c
-	* app/dialogs/channel-options-dialog.c
-	* app/dialogs/layer-options-dialog.c
-	* app/dialogs/module-dialog.c
-	* app/dialogs/palette-import-dialog.c
-	* app/dialogs/preferences-dialog.c
-	* app/dialogs/resize-dialog.c
-	* app/dialogs/stroke-dialog.c
-	* app/dialogs/vectors-options-dialog.c
-	* app/display/gimpdisplayshell-scale.c
-	* app/tools/gimpaligntool.c
-	* app/tools/gimpblendoptions.c
-	* app/widgets/gimphistogrameditor.c
-	* app/widgets/gimpstrokeeditor.c
-	* libgimpwidgets/gimpcolorselection.c
-	* modules/cdisplay_colorblind.c
-	* modules/cdisplay_highcontrast.c
-	* modules/colorsel_cmyk.c
-	* plug-ins/Lighting/lighting_ui.c
-	* plug-ins/common/colorify.c
-	* plug-ins/common/film.c
-	* plug-ins/common/iwarp.c
-	* plug-ins/common/lic.c
-	* plug-ins/common/pixelize.c
-	* plug-ins/common/sample_colorize.c
-	* plug-ins/common/sinus.c
-	* plug-ins/common/sparkle.c
-	* plug-ins/gflare/gflare.c
-	* plug-ins/ifscompose/ifscompose.c
-	* plug-ins/imagemap/imap_cmd_guides.c
-	* plug-ins/imagemap/imap_preferences.c
-	* plug-ins/metadata/interface.c
-	* plug-ins/print/gimp_color_window.c
-	* plug-ins/print/gimp_main_window.c
-	* plug-ins/rcm/rcm_dialog.c
-	* plug-ins/script-fu/script-fu-server.c: applied patch from
-	Stephan Binner that fixes capitalization issues (bug #309657).
+	* [lots of files]: applied capitalization patches contributed by
+	Stephan Binner. Fixes bug #309657.
 
 2005-08-23  Sven Neumann  <sven@gimp.org>
 

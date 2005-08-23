@@ -1002,7 +1002,7 @@ create_presetpage (GtkNotebook *notebook)
   gtk_widget_set_size_request (tmpw, 150, -1);
   gtk_widget_show (tmpw);
 
-  presetsavebutton = tmpw = gtk_button_new_with_label ( _("Save current..."));
+  presetsavebutton = tmpw = gtk_button_new_with_label ( _("Save Current..."));
   gtk_box_pack_start (GTK_BOX (box1), tmpw, FALSE, FALSE, 0);
   gtk_widget_show (tmpw);
   g_signal_connect (tmpw, "clicked", G_CALLBACK (create_save_preset), NULL);

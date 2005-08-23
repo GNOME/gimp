@@ -1412,7 +1412,7 @@ user_install_tuning (GimpRc *gimprc)
   gtk_widget_show (hbox);
 
   entry = gimp_prop_file_entry_new (G_OBJECT (gimprc), "swap-path",
-                                    _("Select swap dir"),
+                                    _("Select Swap Dir"),
                                     TRUE, TRUE);
   gtk_box_pack_end (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
   gtk_widget_show (entry);

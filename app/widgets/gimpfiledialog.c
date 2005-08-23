@@ -466,7 +466,7 @@ gimp_file_overwrite_dialog (GtkWidget   *parent,
   gchar     *filename;
   gboolean   overwrite = FALSE;
 
-  dialog = gimp_message_dialog_new (_("File exists"), GIMP_STOCK_WARNING,
+  dialog = gimp_message_dialog_new (_("File Exists"), GIMP_STOCK_WARNING,
                                     parent, GTK_DIALOG_DESTROY_WITH_PARENT,
                                     gimp_standard_help_func, NULL,
 

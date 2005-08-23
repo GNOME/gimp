@@ -305,7 +305,7 @@ exchange_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  frame = gimp_frame_new (_("Middle-click inside preview to pick \"From Color\""));
+  frame = gimp_frame_new (_("Middle-Click Inside Preview to Pick \"From Color\""));
   gtk_box_pack_start_defaults (GTK_BOX (main_vbox), frame);
   gtk_widget_show (frame);
 

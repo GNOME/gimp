@@ -339,7 +339,7 @@ gimp_dock_delete_event (GtkWidget   *widget,
   if (n > 1)
     {
       GtkWidget *dialog =
-        gimp_message_dialog_new (_("Close all tabs?"),
+        gimp_message_dialog_new (_("Close all Tabs?"),
                                  GIMP_STOCK_WARNING,
                                  widget, GTK_DIALOG_MODAL,
                                  NULL, NULL,

@@ -973,7 +973,7 @@ iwarp_animate_dialog (GtkWidget *dlg,
                     G_CALLBACK (gimp_toggle_button_update),
                     &do_animate_reverse);
 
-  button = gtk_check_button_new_with_mnemonic (_("_Ping Pong"));
+  button = gtk_check_button_new_with_mnemonic (_("_Ping pong"));
   gtk_table_attach (GTK_TABLE (table), button, 0, 3, 2, 3,
                     GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0);
   gtk_widget_show (button);

@@ -32,13 +32,13 @@ static GtkIconFactory *rcm_icon_factory = NULL;
 static GtkStockItem rcm_stock_items[] =
 {
   { STOCK_COLORMAP_SWITCH_CLOCKWISE,
-    N_("Switch to clockwise"),    0, 0, NULL },
+    N_("Switch to Clockwise"),    0, 0, NULL },
   { STOCK_COLORMAP_SWITCH_COUNTERCLOCKWISE,
-    N_("Switch to c/clockwise"),  0, 0, NULL },
+    N_("Switch to C/Clockwise"),  0, 0, NULL },
   { STOCK_COLORMAP_CHANGE_ORDER,
-    N_("Change order of arrows"), 0, 0, NULL },
+    N_("Change Order of Arrows"), 0, 0, NULL },
   { STOCK_COLORMAP_SELECT_ALL,
-    N_("Select all"),             0, 0, NULL }
+    N_("Select All"),             0, 0, NULL }
 };
 
 

@@ -1221,7 +1221,7 @@ prefs_display_options_frame_add (Gimp         *gimp,
 
   button = prefs_color_button_add (object, "padding-color",
                                    _("Custom p_adding color:"),
-                                   _("Select custom canvas padding color"),
+                                   _("Select Custom Canvas Padding Color"),
                                    GTK_TABLE (table), 1, NULL);
   gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
                                 gimp_get_user_context (gimp));
@@ -1683,7 +1683,7 @@ prefs_dialog_new (Gimp       *gimp,
   table = prefs_table_new (1, GTK_CONTAINER (vbox2));
 
   entry = gimp_prop_file_entry_new (object, "web-browser",
-                                    _("Select web browser"),
+                                    _("Select Web Browser"),
                                     FALSE, FALSE);
 
   prefs_widget_add_aligned (entry, _("_Web browser to use:"),
@@ -1736,7 +1736,7 @@ prefs_dialog_new (Gimp       *gimp,
 
 
   /*  Snapping Distance  */
-  vbox2 = prefs_frame_new (_("Guide and Grid Snapping"),
+  vbox2 = prefs_frame_new (_("Guide & Grid Snapping"),
                            GTK_CONTAINER (vbox), FALSE);
   table = prefs_table_new (1, GTK_CONTAINER (vbox2));
 
@@ -2240,13 +2240,13 @@ prefs_dialog_new (Gimp       *gimp,
     profiles[] =
     {
       { N_("_RGB profile:"),
-        N_("Select RGB color profile"),     "rgb-profile"     },
+        N_("Select RGB Color Profile"),     "rgb-profile"     },
       { N_("_CMYK profile:"),
-        N_("Select CMYK color profile"),    "cmyk-profile"    },
+        N_("Select CMYK Color Profile"),    "cmyk-profile"    },
       { N_("_Monitor profile:"),
-        N_("Select monitor color profile"), "display-profile" },
+        N_("Select Monitor Color Profile"), "display-profile" },
       { N_("_Print simulation profile:"),
-        N_("Select printer color profile"), "printer-profile" }
+        N_("Select Printer Color Profile"), "printer-profile" }
     };
 
     GObject *color_config;

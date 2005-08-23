@@ -97,7 +97,7 @@ layer_add_mask_dialog_new (GimpLayer       *layer,
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  button = gtk_check_button_new_with_mnemonic (_("In_vert Mask"));
+  button = gtk_check_button_new_with_mnemonic (_("In_vert mask"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), dialog->invert);
   gtk_box_pack_end (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);

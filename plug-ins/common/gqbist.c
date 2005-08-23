@@ -690,7 +690,7 @@ dialog_load (GtkWidget *widget,
 
   parent = gtk_widget_get_toplevel (widget);
 
-  dialog = gtk_file_chooser_dialog_new (_("Load QBE file"),
+  dialog = gtk_file_chooser_dialog_new (_("Load QBE File"),
                                         GTK_WINDOW (parent),
                                         GTK_FILE_CHOOSER_ACTION_OPEN,
 
@@ -733,7 +733,7 @@ dialog_save (GtkWidget *widget,
 
   parent = gtk_widget_get_toplevel (widget);
 
-  dialog = gtk_file_chooser_dialog_new (_("Save (middle transform) as QBE file"),
+  dialog = gtk_file_chooser_dialog_new (_("Save (middle transform) as QBE File"),
                                         GTK_WINDOW (parent),
                                         GTK_FILE_CHOOSER_ACTION_SAVE,
 

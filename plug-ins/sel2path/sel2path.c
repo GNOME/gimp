@@ -297,7 +297,7 @@ sel2path_dialog (SELVALS *sels)
 
   gimp_ui_init ("sel2path", FALSE);
 
-  dlg = gimp_dialog_new (_("Selection To Path Advanced Settings"), "sel2path",
+  dlg = gimp_dialog_new (_("Selection to Path Advanced Settings"), "sel2path",
                          NULL, 0,
                          gimp_standard_help_func, "plug-in-sel2path-advanced",
 

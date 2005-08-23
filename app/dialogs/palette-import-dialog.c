@@ -277,7 +277,7 @@ palette_import_dialog_new (Gimp *gimp)
 
   /*  Palette file name entry  */
   import_dialog->filename_entry =
-    gimp_file_entry_new (_("Select palette file"), NULL, FALSE, FALSE);
+    gimp_file_entry_new (_("Select Palette File"), NULL, FALSE, FALSE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
                              NULL, 0.0, 0.5,
                              import_dialog->filename_entry, 1, FALSE);

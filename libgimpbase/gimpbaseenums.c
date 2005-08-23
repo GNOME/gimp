@@ -225,12 +225,12 @@ gimp_check_type_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_CHECK_TYPE_LIGHT_CHECKS, N_("Light Checks"), NULL },
-    { GIMP_CHECK_TYPE_GRAY_CHECKS, N_("Mid-Tone Checks"), NULL },
-    { GIMP_CHECK_TYPE_DARK_CHECKS, N_("Dark Checks"), NULL },
-    { GIMP_CHECK_TYPE_WHITE_ONLY, N_("White Only"), NULL },
-    { GIMP_CHECK_TYPE_GRAY_ONLY, N_("Gray Only"), NULL },
-    { GIMP_CHECK_TYPE_BLACK_ONLY, N_("Black Only"), NULL },
+    { GIMP_CHECK_TYPE_LIGHT_CHECKS, N_("Light checks"), NULL },
+    { GIMP_CHECK_TYPE_GRAY_CHECKS, N_("Mid-tone checks"), NULL },
+    { GIMP_CHECK_TYPE_DARK_CHECKS, N_("Dark checks"), NULL },
+    { GIMP_CHECK_TYPE_WHITE_ONLY, N_("White only"), NULL },
+    { GIMP_CHECK_TYPE_GRAY_ONLY, N_("Gray only"), NULL },
+    { GIMP_CHECK_TYPE_BLACK_ONLY, N_("Black only"), NULL },
     { 0, NULL, NULL }
   };
 

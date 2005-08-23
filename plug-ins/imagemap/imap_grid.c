@@ -198,7 +198,7 @@ create_grid_settings_dialog(void)
    default_dialog_set_ok_cb(dialog, grid_settings_ok_cb, (gpointer) data);
    main_table = default_dialog_add_table(dialog, 4, 2);
 
-   data->snap = gtk_check_button_new_with_mnemonic(_("_Snap-To Grid Enabled"));
+   data->snap = gtk_check_button_new_with_mnemonic(_("_Snap-to grid enabled"));
    g_signal_connect(data->snap, "toggled",
                     G_CALLBACK (snap_toggled_cb), data);
    gtk_table_attach_defaults(GTK_TABLE(main_table), data->snap, 0, 1, 0, 1);

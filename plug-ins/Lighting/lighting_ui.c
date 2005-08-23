@@ -307,7 +307,7 @@ create_options_page (void)
   gimp_help_set_help_data (toggle,
                            _("Create a new image when applying filter"), NULL);
 
-  toggle = gtk_check_button_new_with_mnemonic (_("High _Quality preview"));
+  toggle = gtk_check_button_new_with_mnemonic (_("High _quality preview"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 mapvals.previewquality);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
@@ -585,7 +585,7 @@ create_material_page (void)
   page = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (page), 12);
 
-  frame = gimp_frame_new (_("Material properties"));
+  frame = gimp_frame_new (_("Material Properties"));
   gtk_box_pack_start (GTK_BOX (page), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 

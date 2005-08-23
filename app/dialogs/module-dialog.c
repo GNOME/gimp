@@ -172,7 +172,7 @@ module_dialog_new (Gimp *gimp)
   gtk_tree_view_append_column (GTK_TREE_VIEW (tv), col);
 
   gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (tv), 1,
-                                               _("Module path"),
+                                               _("Module Path"),
                                                gtk_cell_renderer_text_new (),
                                                "text", PATH_COLUMN,
                                                NULL);

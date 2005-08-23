@@ -1298,7 +1298,7 @@ bender_new_dialog (GimpDrawable *drawable)
   gtk_widget_show (hbox);
 
   /*  The preview button  */
-  button = gtk_button_new_with_mnemonic (_("_Preview once"));
+  button = gtk_button_new_with_mnemonic (_("_Preview Once"));
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
@@ -2048,7 +2048,7 @@ bender_load_callback (GtkWidget    *w,
   if (! cd->filechooser)
     {
       cd->filechooser =
-        gtk_file_chooser_dialog_new (_("Load Curve Points from file"),
+        gtk_file_chooser_dialog_new (_("Load Curve Points from File"),
                                      GTK_WINDOW (gtk_widget_get_toplevel (w)),
                                      GTK_FILE_CHOOSER_ACTION_OPEN,
 
@@ -2083,7 +2083,7 @@ bender_save_callback (GtkWidget    *w,
   if (! cd->filechooser)
     {
       cd->filechooser =
-        gtk_file_chooser_dialog_new (_("Save Curve Points to file"),
+        gtk_file_chooser_dialog_new (_("Save Curve Points to File"),
                                      GTK_WINDOW (gtk_widget_get_toplevel (w)),
                                      GTK_FILE_CHOOSER_ACTION_SAVE,
 

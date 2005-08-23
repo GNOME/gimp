@@ -493,7 +493,7 @@ file_import_dialog (GtkWidget   *parent,
 
   if (! dlg)
     {
-      dlg = gtk_file_chooser_dialog_new (_("Import XMP from file"),
+      dlg = gtk_file_chooser_dialog_new (_("Import XMP from File"),
                                          GTK_WINDOW (parent),
                                          GTK_FILE_CHOOSER_ACTION_OPEN,
 
@@ -593,7 +593,7 @@ file_export_dialog (GtkWidget   *parent,
 
   if (! dlg)
     {
-      dlg = gtk_file_chooser_dialog_new (_("Export XMP to file"),
+      dlg = gtk_file_chooser_dialog_new (_("Export XMP to File"),
                                          GTK_WINDOW (parent),
                                          GTK_FILE_CHOOSER_ACTION_SAVE,
 

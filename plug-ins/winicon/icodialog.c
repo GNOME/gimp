@@ -151,7 +151,7 @@ ico_specs_dialog_new (gint num_layers)
 
   g_object_set_data (G_OBJECT (dialog), "icon_depths", icon_depths);
 
-  frame = gimp_frame_new (_("Icon details"));
+  frame = gimp_frame_new (_("Icon Details"));
   gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), frame,
                       TRUE, TRUE, 0);

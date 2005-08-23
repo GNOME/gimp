@@ -200,7 +200,7 @@ create_generalpage (GtkNotebook *notebook)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw),
                                 pcvals.general_tileable);
 
-  tmpw = gtk_check_button_new_with_label ( _("Drop Shadow"));
+  tmpw = gtk_check_button_new_with_label ( _("Drop shadow"));
   general_drop_shadow = tmpw;
   gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
   gtk_widget_show (tmpw);

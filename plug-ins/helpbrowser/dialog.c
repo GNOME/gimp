@@ -187,7 +187,7 @@ browser_dialog_open (void)
 
   /*  the dialog window  */
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-  gtk_window_set_title (GTK_WINDOW (window), _("GIMP Help browser"));
+  gtk_window_set_title (GTK_WINDOW (window), _("GIMP Help Browser"));
   gtk_window_set_role (GTK_WINDOW (window), "helpbrowser");
 
   gtk_window_set_default_size (GTK_WINDOW (window), 420, 500);

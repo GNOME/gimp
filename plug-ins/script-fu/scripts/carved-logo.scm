@@ -162,7 +162,7 @@
 		    SF-STRING     _"Text" "Marble"
 		    SF-ADJUSTMENT _"Font size (pixels)"  '(100 2 1000 1 10 0 1)
 		    SF-FONT       _"Font"                "Engraver"
-		    SF-FILENAME   _"Background Image"
+		    SF-FILENAME   _"Background image"
 		                  (string-append ""
 						 gimp-data-directory
 						 "/scripts/images/texture3.jpg")

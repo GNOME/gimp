@@ -53,9 +53,9 @@ static const GEnumValue enum_values[] =
 static const GimpEnumDesc enum_descs[] =
 {
   { INTENT_PERCEPTUAL,             N_("Perceptual"),            NULL },
-  { INTENT_RELATIVE_COLORIMETRIC,  N_("Relative Colorimetric"), NULL },
+  { INTENT_RELATIVE_COLORIMETRIC,  N_("Relative colorimetric"), NULL },
   { INTENT_SATURATION,             N_("Saturation"),            NULL },
-  { INTENT_ABSOLUTE_COLORIMETRIC,  N_("Absolute Colorimetric"), NULL },
+  { INTENT_ABSOLUTE_COLORIMETRIC,  N_("Absolute colorimetric"), NULL },
   { 0, NULL, NULL }
 };
 

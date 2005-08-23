@@ -84,7 +84,7 @@
                     SF-IMAGE       "Image"                0
                     SF-DRAWABLE    "Drawable"             0
 		    SF-ADJUSTMENT _"Offsets (pixels * 2)" '(10 2 100 1 10 0 1)
-		    SF-COLOR      _"Background Color"     '(191 191 191))
+		    SF-COLOR      _"Background color"     '(191 191 191))
 
 (script-fu-menu-register "script-fu-chrome-logo-alpha"
 			 "<Image>/Filters/Alpha to Logo")

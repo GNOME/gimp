@@ -598,7 +598,7 @@ diffraction_dialog (void)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.edges_b);
 
-  label = gtk_label_new_with_mnemonic (_("Sharp edges"));
+  label = gtk_label_new_with_mnemonic (_("Sharp Edges"));
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), table, label);
 
   /* Other options tab */
@@ -636,7 +636,7 @@ diffraction_dialog (void)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.polarization);
 
-  label = gtk_label_new_with_mnemonic (_("Other options"));
+  label = gtk_label_new_with_mnemonic (_("Other Options"));
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), table, label);
 
   /* Done */

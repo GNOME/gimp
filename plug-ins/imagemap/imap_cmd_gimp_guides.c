@@ -174,19 +174,19 @@ make_gimp_guides_dialog(void)
    gtk_container_add(GTK_CONTAINER(frame), vbox);
    gtk_widget_show(vbox);
 
-   data->left_border = gtk_check_button_new_with_mnemonic(_("L_eft Border"));
+   data->left_border = gtk_check_button_new_with_mnemonic(_("L_eft border"));
    gtk_container_add(GTK_CONTAINER(vbox), data->left_border);
    gtk_widget_show(data->left_border);
 
-   data->right_border = gtk_check_button_new_with_mnemonic(_("_Right Border"));
+   data->right_border = gtk_check_button_new_with_mnemonic(_("_Right border"));
    gtk_container_add(GTK_CONTAINER(vbox), data->right_border);
    gtk_widget_show(data->right_border);
 
-   data->upper_border = gtk_check_button_new_with_mnemonic(_("_Upper Border"));
+   data->upper_border = gtk_check_button_new_with_mnemonic(_("_Upper border"));
    gtk_container_add(GTK_CONTAINER(vbox), data->upper_border);
    gtk_widget_show(data->upper_border);
 
-   data->lower_border = gtk_check_button_new_with_mnemonic(_("Lo_wer Border"));
+   data->lower_border = gtk_check_button_new_with_mnemonic(_("Lo_wer border"));
    gtk_container_add(GTK_CONTAINER(vbox), data->lower_border);
    gtk_widget_show(data->lower_border);
 

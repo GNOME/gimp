@@ -432,7 +432,7 @@ tile_dialog (gint32 image_ID,
 
   chainbutton = GTK_WIDGET (GIMP_COORDINATES_CHAINBUTTON (sizeentry));
 
-  toggle = gtk_check_button_new_with_mnemonic (_("C_reate New Image"));
+  toggle = gtk_check_button_new_with_mnemonic (_("C_reate new image"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), tvals.new_image);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);

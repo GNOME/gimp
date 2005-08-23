@@ -381,8 +381,8 @@ mapcolor_dialog (GimpDrawable *drawable)
   for (j = 0; j < 2; j++)
     {
       frame = gimp_frame_new ((j == 0) ?
-                              _("Source color range") :
-                              _("Destination color range"));
+                              _("Source Color Range") :
+                              _("Destination Color Range"));
       gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 

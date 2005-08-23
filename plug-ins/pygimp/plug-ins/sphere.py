@@ -100,10 +100,10 @@ register(
     "",
     [
         (PF_INT, "radius", "Radius for sphere", 100),
-        (PF_SLIDER, "light", "light angle", 45, (0,360,1)),
-        (PF_TOGGLE, "shadow", "shadow?", 1),
-        (PF_COLOR, "bg_colour", "background", (255,255,255)),
-        (PF_COLOR, "sphere_colour", "sphere", (255,0,0))
+        (PF_SLIDER, "light", "Light angle", 45, (0,360,1)),
+        (PF_TOGGLE, "shadow", "Shadow?", 1),
+        (PF_COLOR, "bg_colour", "Background", (255,255,255)),
+        (PF_COLOR, "sphere_colour", "Sphere", (255,0,0))
     ],
     [],
     python_sphere)

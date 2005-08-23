@@ -355,8 +355,8 @@
                     SF-BRUSH      _"Brush"         '("Circle (01)" 1.0 -1 0)
 
                     SF-OPTION     _"Color method"  '(_"Solid Color" 
-                                                     _"Gradient: Loop Sawtooth" 
-                                                     _"Gradient: Loop Triangle")
+                                                     _"Gradient: loop sawtooth" 
+                                                     _"Gradient: loop triangle")
                     SF-COLOR      _"Color"         '(0 0 0)
                     SF-GRADIENT   _"Gradient"       "Deep Sea")
 

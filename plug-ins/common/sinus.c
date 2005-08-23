@@ -1044,7 +1044,7 @@ mw_preview_new (GtkWidget *parent,
   gtk_container_add (GTK_CONTAINER (frame), preview);
   gtk_widget_show (preview);
 
-  button = gtk_check_button_new_with_mnemonic (_("Do _Preview"));
+  button = gtk_check_button_new_with_mnemonic (_("Do _preview"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), do_preview);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);

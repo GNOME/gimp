@@ -449,10 +449,10 @@ gimp_align_tool_controls (GimpAlignTool *align_tool)
                                     G_CALLBACK (gimp_radio_button_update),
                                     &align_tool->select_reference, FALSE,
 
-                                    _("Select Target"),
+                                    _("Select target"),
                                     FALSE, NULL,
 
-                                    _("Select Reference (Ctrl)"),
+                                    _("Select reference (Ctrl)"),
                                     TRUE, NULL,
                                     NULL);
   gtk_box_pack_start (GTK_BOX (main_vbox), vbox2, FALSE, FALSE, 0);

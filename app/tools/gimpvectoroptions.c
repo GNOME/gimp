@@ -191,7 +191,7 @@ gimp_vector_options_gui (GimpToolOptions *tool_options)
                                               GDK_CONTROL_MASK));
 
   button = gimp_button_new ();
-  gtk_button_set_label (GTK_BUTTON (button), _("Create selection from path"));
+  gtk_button_set_label (GTK_BUTTON (button), _("Create Selection from Path"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_set_sensitive (button, FALSE);
   gimp_help_set_help_data (button, str, GIMP_HELP_PATH_SELECTION_REPLACE);
@@ -202,7 +202,7 @@ gimp_vector_options_gui (GimpToolOptions *tool_options)
   g_object_set_data (G_OBJECT (tool_options),
                      "gimp-vectors-to-selection", button);
 
-  button = gtk_button_new_with_label (_("Stroke path"));
+  button = gtk_button_new_with_label (_("Stroke Path"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_set_sensitive (button, FALSE);
   gimp_help_set_help_data (button, NULL, GIMP_HELP_PATH_STROKE);

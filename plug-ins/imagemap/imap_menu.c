@@ -74,7 +74,7 @@ menu_get_widget(const gchar *path)
   return gtk_ui_manager_get_widget (ui_manager, path);
 }
 
-static void 
+static void
 set_sensitive (const gchar *path, gboolean sensitive)
 {
   GtkAction *action = gtk_ui_manager_get_action (ui_manager, path);
@@ -172,7 +172,7 @@ static GtkActionEntry entries[] = {
   { "Open", GTK_STOCK_OPEN, "_Open...", NULL, "Open", do_file_open_dialog},
   { "OpenRecentMenu", NULL, "Open Recent" },
   { "Save", GTK_STOCK_SAVE, "_Save...", NULL, "Save", save},
-  { "SaveAs", GTK_STOCK_SAVE_AS, "Save _as...", "<shift><control>S", NULL, 
+  { "SaveAs", GTK_STOCK_SAVE_AS, "Save _As...", "<shift><control>S", NULL,
     do_file_save_as_dialog},
   { "Close", GTK_STOCK_CLOSE, NULL, NULL, NULL, do_close},
   { "Quit", GTK_STOCK_QUIT, NULL, NULL, NULL, do_quit},
@@ -185,13 +185,13 @@ static GtkActionEntry entries[] = {
   { "Paste", GTK_STOCK_PASTE, NULL, NULL, "Paste", do_paste},
   { "Clear", GTK_STOCK_DELETE, NULL, "Delete", NULL, do_clear},
   { "SelectAll", NULL, "Select _All", "<control>A", NULL, do_select_all},
-  { "DeselectAll", NULL, "Deselect _All", "<shift><control>A", NULL, 
+  { "DeselectAll", NULL, "Deselect _All", "<shift><control>A", NULL,
     do_deselect_all},
-  { "EditAreaInfo", GTK_STOCK_EDIT, "Edit Area Info...", NULL, 
+  { "EditAreaInfo", GTK_STOCK_EDIT, "Edit Area Info...", NULL,
     "Edit selected area info", do_edit_selected_shape},
-  { "Preferences", GTK_STOCK_PREFERENCES, NULL, NULL, "Preferences", 
+  { "Preferences", GTK_STOCK_PREFERENCES, NULL, NULL, "Preferences",
     do_preferences_dialog},
-  { "MoveToFront", IMAP_STOCK_TO_FRONT, "", NULL, "Move to Front", 
+  { "MoveToFront", IMAP_STOCK_TO_FRONT, "", NULL, "Move to Front",
     do_move_to_front},
   { "SendToBack", IMAP_STOCK_TO_BACK, "", NULL, "Send to Back",
     do_send_to_back},
@@ -209,20 +209,20 @@ static GtkActionEntry entries[] = {
   { "ZoomToMenu", NULL, "_Zoom To" },
 
   { "MappingMenu", NULL, "_Mapping" },
-  { "EditMapInfo", IMAP_STOCK_MAP_INFO, "Edit Map Info...", NULL, NULL, 
+  { "EditMapInfo", IMAP_STOCK_MAP_INFO, "Edit Map Info...", NULL, NULL,
     do_settings_dialog},
-  
+
   { "ToolsMenu", NULL, "_Tools" },
-  { "GridSettings", NULL, "Grid Settings...", NULL, NULL, 
+  { "GridSettings", NULL, "Grid Settings...", NULL, NULL,
     do_grid_settings_dialog},
-  { "UseGimpGuides", NULL, "Use GIMP Guides...", NULL, NULL, 
+  { "UseGimpGuides", NULL, "Use GIMP Guides...", NULL, NULL,
     do_use_gimp_guides_dialog},
-  { "CreateGuides", NULL, "Create Guides...", NULL, NULL, 
+  { "CreateGuides", NULL, "Create Guides...", NULL, NULL,
     do_create_guides_dialog},
 
   { "HelpMenu", NULL, "_Help" },
   { "Contents", GTK_STOCK_HELP, "_Contents", NULL, NULL, imap_help},
-  { "About", GTK_STOCK_ABOUT, "_About ImageMap...", NULL, NULL, 
+  { "About", GTK_STOCK_ABOUT, "_About ImageMap...", NULL, NULL,
     do_about_dialog},
 
   { "ZoomMenu", NULL, "_Zoom" },
@@ -236,12 +236,12 @@ static GtkToggleActionEntry toggle_entries[] = {
 
 static GtkRadioActionEntry color_entries[] = {
   { "Color", NULL, "Color", NULL, NULL, 0},
-  { "Gray", NULL, "Gray", NULL, NULL, 1},  
+  { "Gray", NULL, "Gray", NULL, NULL, 1},
 };
 
 static GtkRadioActionEntry mapping_entries[] = {
   { "Arrow", GIMP_STOCK_CURSOR, "Arrow", NULL, "Select existing area", 0},
-  { "Rectangle", IMAP_STOCK_RECTANGLE, "Rectangle", NULL, 
+  { "Rectangle", IMAP_STOCK_RECTANGLE, "Rectangle", NULL,
     "Define Rectangle area", 1},
   { "Circle", IMAP_STOCK_CIRCLE, "Circle", NULL, "Define Circle/Oval area", 2},
   { "Polygon", IMAP_STOCK_POLYGON, "Polygon", NULL, "Define Polygon area", 3},
@@ -411,35 +411,35 @@ make_menu(GtkWidget *main_vbox, GtkWidget *window)
   GError *error;
 
   action_group = gtk_action_group_new ("MenuActions");
-  gtk_action_group_add_actions (action_group, entries, G_N_ELEMENTS (entries), 
+  gtk_action_group_add_actions (action_group, entries, G_N_ELEMENTS (entries),
 				window);
-  gtk_action_group_add_toggle_actions (action_group, toggle_entries, 
+  gtk_action_group_add_toggle_actions (action_group, toggle_entries,
 				       G_N_ELEMENTS (toggle_entries), window);
-  gtk_action_group_add_radio_actions (action_group, color_entries, 
-				      G_N_ELEMENTS (color_entries), 0, 
+  gtk_action_group_add_radio_actions (action_group, color_entries,
+				      G_N_ELEMENTS (color_entries), 0,
 				      NULL, window);
-  gtk_action_group_add_radio_actions (action_group, zoom_entries, 
-				      G_N_ELEMENTS (zoom_entries), 0, 
+  gtk_action_group_add_radio_actions (action_group, zoom_entries,
+				      G_N_ELEMENTS (zoom_entries), 0,
 				      NULL, window);
-  gtk_action_group_add_radio_actions (action_group, mapping_entries, 
-				      G_N_ELEMENTS (mapping_entries), 0, 
+  gtk_action_group_add_radio_actions (action_group, mapping_entries,
+				      G_N_ELEMENTS (mapping_entries), 0,
 				      G_CALLBACK (set_func), window);
 
   ui_manager = gtk_ui_manager_new ();
   gtk_ui_manager_insert_action_group (ui_manager, action_group, 0);
-  
+
   accel_group = gtk_ui_manager_get_accel_group (ui_manager);
   gtk_window_add_accel_group (GTK_WINDOW (window), accel_group);
-  
+
   error = NULL;
-  if (!gtk_ui_manager_add_ui_from_string (ui_manager, ui_description, -1, 
+  if (!gtk_ui_manager_add_ui_from_string (ui_manager, ui_description, -1,
 					  &error))
     {
       g_message ("building menus failed: %s", error->message);
       g_error_free (error);
       /* exit (EXIT_FAILURE); */
     }
-  
+
   menubar = gtk_ui_manager_get_widget (ui_manager, "/MainMenu");
   gtk_widget_show (menubar);
   gtk_box_pack_start (GTK_BOX (main_vbox), menubar, FALSE, FALSE, 0);
@@ -497,7 +497,7 @@ do_main_popup_menu(GdkEventButton *event)
 void
 menu_check_grid(gboolean check)
 {
-  GtkAction *action = gtk_ui_manager_get_action (ui_manager, 
+  GtkAction *action = gtk_ui_manager_get_action (ui_manager,
 						 "/MainMenu/ToolsMenu/Grid");
   gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), check);
 }
@@ -512,7 +512,7 @@ GtkWidget*
 make_toolbar(GtkWidget *main_vbox, GtkWidget *window)
 {
   GtkWidget *handlebox, *toolbar;
-  
+
   handlebox = gtk_handle_box_new ();
   gtk_box_pack_start (GTK_BOX (main_vbox), handlebox, FALSE, FALSE, 0);
   toolbar = gtk_ui_manager_get_widget (ui_manager, "/Toolbar");
@@ -523,7 +523,7 @@ make_toolbar(GtkWidget *main_vbox, GtkWidget *window)
   gtk_container_add (GTK_CONTAINER (handlebox), toolbar);
   gtk_widget_show (toolbar);
   gtk_widget_show (handlebox);
-  
+
   return handlebox;
 }
 
@@ -534,7 +534,7 @@ make_tools(GtkWidget *window)
 
   handlebox = gtk_handle_box_new ();
   toolbar = gtk_ui_manager_get_widget (ui_manager, "/Tools");
-  gtk_toolbar_set_orientation (GTK_TOOLBAR (toolbar), 
+  gtk_toolbar_set_orientation (GTK_TOOLBAR (toolbar),
 			       GTK_ORIENTATION_VERTICAL);
 
   gtk_toolbar_set_style (GTK_TOOLBAR (toolbar), GTK_TOOLBAR_ICONS);

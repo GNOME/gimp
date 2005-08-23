@@ -84,7 +84,7 @@
 		    SF-GRADIENT   _"Gradient"         "Land and Sea"
 		    SF-TOGGLE     _"Gradient reverse" FALSE
 		    SF-OPTION     _"Behavior"         '(_"Tile"
-							_"Detail in Middle"))
+							_"Detail in middle"))
 
 (script-fu-menu-register "script-fu-render-map"
 			 "<Toolbox>/Xtns/Script-Fu/Patterns")

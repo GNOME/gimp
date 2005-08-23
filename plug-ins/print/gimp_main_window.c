@@ -948,7 +948,7 @@ create_printer_settings_frame (void)
    * Setup printer button
    */
 
-  button = gtk_button_new_with_label (_("Setup printer..."));
+  button = gtk_button_new_with_label (_("Setup Printer..."));
   gimp_help_set_help_data (button,
                            _("Choose the printer model, PPD file, and command "
                              "that is used to print to this printer"),
@@ -965,7 +965,7 @@ create_printer_settings_frame (void)
    * New printer button
    */
 
-  button = gtk_button_new_with_label (_("New printer..."));
+  button = gtk_button_new_with_label (_("New Printer..."));
   gimp_help_set_help_data (button,
                            _("Define a new logical printer. This can be used to "
                              "name a collection of settings that you wish to "
@@ -1453,7 +1453,7 @@ create_image_settings_frame (void)
    *  Color adjust button
    */
 
-  adjust_color_button = gtk_button_new_with_label (_("Adjust output..."));
+  adjust_color_button = gtk_button_new_with_label (_("Adjust Output..."));
   gtk_misc_set_padding (GTK_MISC (GTK_BIN (adjust_color_button)->child), 4, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
                              NULL, 0.5, 0.5,

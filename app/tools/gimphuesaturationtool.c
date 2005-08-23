@@ -168,7 +168,7 @@ gimp_hue_saturation_tool_class_init (GimpHueSaturationToolClass *klass)
 
   tool_class->initialize       = gimp_hue_saturation_tool_initialize;
 
-  image_map_tool_class->shell_desc = _("Adjust hue / lightness / saturation");
+  image_map_tool_class->shell_desc = _("Adjust Hue / Lightness / Saturation");
 
   image_map_tool_class->map    = gimp_hue_saturation_tool_map;
   image_map_tool_class->dialog = gimp_hue_saturation_tool_dialog;
@@ -455,7 +455,7 @@ gimp_hue_saturation_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  button = gtk_button_new_with_mnemonic (_("R_eset color"));
+  button = gtk_button_new_with_mnemonic (_("R_eset Color"));
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 

@@ -342,7 +342,7 @@ gfig_dialog (void)
   gtk_widget_show (right_vbox);
 
   /* Tool options notebook */
-  frame = gimp_frame_new ( _("Tool options"));
+  frame = gimp_frame_new ( _("Tool Options"));
   gtk_box_pack_start (GTK_BOX (right_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -423,9 +423,9 @@ gfig_dialog (void)
     = gimp_int_combo_box_new (_("No fill"),             FILL_NONE,
                               _("Color fill"),          FILL_COLOR,
                               _("Pattern fill"),        FILL_PATTERN,
-                              _("Shape Gradient"),      FILL_GRADIENT,
-                              _("Vertical Gradient"),   FILL_VERTICAL,
-                              _("Horizontal Gradient"), FILL_HORIZONTAL,
+                              _("Shape gradient"),      FILL_GRADIENT,
+                              _("Vertical gradient"),   FILL_VERTICAL,
+                              _("Horizontal gradient"), FILL_HORIZONTAL,
                               NULL);
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), 0);
   g_signal_connect (combo, "changed",
@@ -642,7 +642,7 @@ gfig_load_action_callback (GtkAction *action,
       gchar *dir;
 
       dialog =
-        gtk_file_chooser_dialog_new (_("Load Gfig object collection"),
+        gtk_file_chooser_dialog_new (_("Load Gfig Object Collection"),
                                      GTK_WINDOW (data),
                                      GTK_FILE_CHOOSER_ACTION_OPEN,
 

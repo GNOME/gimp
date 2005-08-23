@@ -761,7 +761,7 @@ save_dialog (void)
   gtk_widget_show (preview_size);
 
   toggle =
-    gtk_check_button_new_with_mnemonic (_("Show _Preview in image window"));
+    gtk_check_button_new_with_mnemonic (_("Show _preview in image window"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), jsvals.preview);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);

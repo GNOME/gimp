@@ -822,7 +822,7 @@ fp_create_pixels_select_by (void)
 {
   GtkWidget *frame;
 
-  frame = gimp_int_radio_group_new (TRUE, _("Select Pixels by"),
+  frame = gimp_int_radio_group_new (TRUE, _("Select Pixels By"),
                                     G_CALLBACK (fp_change_current_pixels_by),
                                     &fpvals.value_by,
                                     fpvals.value_by,
@@ -860,9 +860,9 @@ fp_create_show (void)
                                     &fpvals.selection_only,
                                     fpvals.selection_only,
 
-                                    _("_Entire Image"),  0, NULL,
-                                    _("Se_lection Only"), 1, NULL,
-                                    _("Selec_tion In Context"), 2, NULL,
+                                    _("_Entire image"),  0, NULL,
+                                    _("Se_lection only"), 1, NULL,
+                                    _("Selec_tion in context"), 2, NULL,
 
                                     NULL);
 

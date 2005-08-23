@@ -493,7 +493,7 @@ create_options_page (void)
 
   /* General options */
 
-  frame = gimp_frame_new (_("General options"));
+  frame = gimp_frame_new (_("General Options"));
   gtk_box_pack_start (GTK_BOX (page), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 

@@ -1063,7 +1063,7 @@ design_op_menu_create (GtkWidget *window)
       G_CALLBACK (recompute_center_cb) },
 
     { "options", GTK_STOCK_PREFERENCES,
-      N_("Render options"), NULL, NULL,
+      N_("Render Options"), NULL, NULL,
       G_CALLBACK (ifs_compose_options_callback) }
   };
   static GtkRadioActionEntry radio_actions[] =

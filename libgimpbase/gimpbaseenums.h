@@ -112,12 +112,12 @@ GType gimp_check_type_get_type (void) G_GNUC_CONST;
 
 typedef enum  /*< pdb-skip >*/
 {
-  GIMP_CHECK_TYPE_LIGHT_CHECKS = 0,  /*< desc="Light Checks"    >*/
-  GIMP_CHECK_TYPE_GRAY_CHECKS  = 1,  /*< desc="Mid-Tone Checks" >*/
-  GIMP_CHECK_TYPE_DARK_CHECKS  = 2,  /*< desc="Dark Checks"     >*/
-  GIMP_CHECK_TYPE_WHITE_ONLY   = 3,  /*< desc="White Only"      >*/
-  GIMP_CHECK_TYPE_GRAY_ONLY    = 4,  /*< desc="Gray Only"       >*/
-  GIMP_CHECK_TYPE_BLACK_ONLY   = 5   /*< desc="Black Only"      >*/
+  GIMP_CHECK_TYPE_LIGHT_CHECKS = 0,  /*< desc="Light checks"    >*/
+  GIMP_CHECK_TYPE_GRAY_CHECKS  = 1,  /*< desc="Mid-tone checks" >*/
+  GIMP_CHECK_TYPE_DARK_CHECKS  = 2,  /*< desc="Dark checks"     >*/
+  GIMP_CHECK_TYPE_WHITE_ONLY   = 3,  /*< desc="White only"      >*/
+  GIMP_CHECK_TYPE_GRAY_ONLY    = 4,  /*< desc="Gray only"       >*/
+  GIMP_CHECK_TYPE_BLACK_ONLY   = 5   /*< desc="Black only"      >*/
 } GimpCheckType;
 
 

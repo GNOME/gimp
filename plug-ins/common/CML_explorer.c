@@ -1225,7 +1225,7 @@ CML_explorer_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), bbox, FALSE, FALSE, 0);
   gtk_widget_show (bbox);
 
-  button = gtk_button_new_with_label (_("New seed"));
+  button = gtk_button_new_with_label (_("New Seed"));
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
 
@@ -1236,7 +1236,7 @@ CML_explorer_dialog (void)
   random_sensitives[0].widget = button;
   random_sensitives[0].logic  = TRUE;
 
-  button = gtk_button_new_with_label (_("Fix seed"));
+  button = gtk_button_new_with_label (_("Fix Seed"));
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
 
@@ -1247,7 +1247,7 @@ CML_explorer_dialog (void)
   random_sensitives[1].widget = button;
   random_sensitives[1].logic  = TRUE;
 
-  button = gtk_button_new_with_label (_("Random seed"));
+  button = gtk_button_new_with_label (_("Random Seed"));
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
 
@@ -1386,7 +1386,7 @@ CML_explorer_dialog (void)
 
       button =
         gtk_button_new_with_label
-        (_("Switch to \"From seed\" with the last seed"));
+        (_("Switch to \"From seed\" With the Last Seed"));
       gtk_table_attach_defaults (GTK_TABLE (table), button, 0, 3, 1, 2);
       gtk_widget_show (button);
 
@@ -1459,7 +1459,7 @@ CML_explorer_dialog (void)
                                          combo, 1, FALSE);
       gtk_size_group_add_widget (group, label);
 
-      button = gtk_button_new_with_label (_("Copy parameters"));
+      button = gtk_button_new_with_label (_("Copy Parameters"));
       gtk_table_attach (GTK_TABLE (table), button, 0, 2, 2, 3,
                         GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
       gtk_widget_show (button);
@@ -1677,7 +1677,7 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
   chank[0] = GINT_TO_POINTER (channel_id);
   chank[1] = param;
 
-  button = gtk_button_new_with_label (_("Plot a graph of the settings"));
+  button = gtk_button_new_with_label (_("Plot a Graph of the Settings"));
   gtk_table_attach_defaults (GTK_TABLE (table), button,
                              0, 3, index, index + 1);
   gtk_widget_show (button);
@@ -1819,7 +1819,7 @@ function_graph_new (GtkWidget *widget,
   GtkWidget *frame;
   GtkWidget *preview;
 
-  dlg = gimp_dialog_new (_("Graph of the current settings"), "cml_explorer",
+  dlg = gimp_dialog_new (_("Graph of the Current Settings"), "cml_explorer",
                          gtk_widget_get_toplevel (widget), 0,
                          gimp_standard_help_func, PLUG_IN_PROC,
 
@@ -1948,7 +1948,7 @@ CML_save_to_file_callback (GtkWidget *widget,
   if (! dialog)
     {
       dialog =
-        gtk_file_chooser_dialog_new (_("Save Parameters to"),
+        gtk_file_chooser_dialog_new (_("Save Parameters To"),
                                      GTK_WINDOW (gtk_widget_get_toplevel (widget)),
                                      GTK_FILE_CHOOSER_ACTION_SAVE,
 
@@ -2150,9 +2150,9 @@ CML_load_from_file_callback (GtkWidget *widget,
     }
 
   if ((selective_load_source == 0) || (selective_load_destination == 0))
-    gtk_window_set_title (GTK_WINDOW (dialog), _("Load Parameters from"));
+    gtk_window_set_title (GTK_WINDOW (dialog), _("Load Parameters From"));
   else
-    gtk_window_set_title (GTK_WINDOW (dialog), _("Selective Load from"));
+    gtk_window_set_title (GTK_WINDOW (dialog), _("Selective Load From"));
 
   if (strlen (VALS.last_file_name) > 0)
     gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog),

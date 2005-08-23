@@ -1179,7 +1179,7 @@ vpropagate_dialog (GimpDrawable *drawable)
       GtkWidget *toggle;
 
       toggle =
-        gtk_table_add_toggle (table, _("Propagating _Alpha Channel"),
+        gtk_table_add_toggle (table, _("Propagating _alpha channel"),
                               0, 3, 6,
                               G_CALLBACK (vpropagate_toggle_button_update),
                               &propagate_alpha);
@@ -1190,7 +1190,7 @@ vpropagate_dialog (GimpDrawable *drawable)
           gtk_widget_set_sensitive (toggle, FALSE);
         }
 
-      gtk_table_add_toggle (table, _("Propagating Value Channel"), 0, 3, 7,
+      gtk_table_add_toggle (table, _("Propagating value channel"), 0, 3, 7,
                             G_CALLBACK (vpropagate_toggle_button_update),
                             &propagate_value);
     }

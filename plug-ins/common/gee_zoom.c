@@ -189,7 +189,7 @@ build_dialog (void)
                          NULL);
 
   button = gtk_dialog_add_button (GTK_DIALOG (dlg),
-                                  _("Thank you for choosing GIMP"),
+                                  _("Thank You for Choosing GIMP"),
                                   GTK_RESPONSE_OK);
 
   g_signal_connect (dlg, "response",
