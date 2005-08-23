@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-04 05:53+0200\n"
-"PO-Revision-Date: 2005-08-04 05:59+0200\n"
+"POT-Creation-Date: 2005-08-23 23:26+0200\n"
+"PO-Revision-Date: 2005-08-23 23:29+0200\n"
 "Last-Translator: Marcel Telka <marcel@telka.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -216,85 +216,85 @@ msgstr "Výber vzorky"
 msgid "Pattern Selection"
 msgstr "Výber vzorky"
 
-#: ../libgimp/gimpprocbrowserdialog.c:154
+#: ../libgimp/gimpprocbrowserdialog.c:171
 msgid "by name"
 msgstr "podľa názvu"
 
-#: ../libgimp/gimpprocbrowserdialog.c:155
+#: ../libgimp/gimpprocbrowserdialog.c:172
 msgid "by description"
 msgstr "podľa popisu"
 
-#: ../libgimp/gimpprocbrowserdialog.c:156
+#: ../libgimp/gimpprocbrowserdialog.c:173
 msgid "by help"
 msgstr "podľa pomocníka"
 
-#: ../libgimp/gimpprocbrowserdialog.c:157
+#: ../libgimp/gimpprocbrowserdialog.c:174
 msgid "by author"
 msgstr "podľa autora"
 
-#: ../libgimp/gimpprocbrowserdialog.c:158
+#: ../libgimp/gimpprocbrowserdialog.c:175
 msgid "by copyright"
 msgstr "podľa autorských práv"
 
-#: ../libgimp/gimpprocbrowserdialog.c:159
+#: ../libgimp/gimpprocbrowserdialog.c:176
 msgid "by date"
 msgstr "podľa dátumu"
 
-#: ../libgimp/gimpprocbrowserdialog.c:160
+#: ../libgimp/gimpprocbrowserdialog.c:177
 msgid "by type"
 msgstr "podľa typu"
 
-#: ../libgimp/gimpprocbrowserdialog.c:354
+#: ../libgimp/gimpprocbrowserdialog.c:371
 msgid "Searching by name - please wait"
 msgstr "Vyhľadávanie podľa názvu - prosím čakajte"
 
-#: ../libgimp/gimpprocbrowserdialog.c:374
+#: ../libgimp/gimpprocbrowserdialog.c:391
 msgid "Searching by description - please wait"
 msgstr "Vyhľadávanie podľa popisu - prosím čakajte"
 
-#: ../libgimp/gimpprocbrowserdialog.c:382
+#: ../libgimp/gimpprocbrowserdialog.c:399
 msgid "Searching by help - please wait"
 msgstr "Vyhľadávanie podľa pomocníka - prosím čakajte"
 
-#: ../libgimp/gimpprocbrowserdialog.c:390
+#: ../libgimp/gimpprocbrowserdialog.c:407
 msgid "Searching by author - please wait"
 msgstr "Vyhľadávanie podľa autora - prosím čakajte"
 
-#: ../libgimp/gimpprocbrowserdialog.c:398
+#: ../libgimp/gimpprocbrowserdialog.c:415
 msgid "Searching by copyright - please wait"
 msgstr "Vyhľadávanie podľa autorských práv - prosím čakajte"
 
-#: ../libgimp/gimpprocbrowserdialog.c:406
+#: ../libgimp/gimpprocbrowserdialog.c:423
 msgid "Searching by date - please wait"
 msgstr "Vyhľadávanie podľa dátumu - prosím čakajte"
 
-#: ../libgimp/gimpprocbrowserdialog.c:414
+#: ../libgimp/gimpprocbrowserdialog.c:431
 msgid "Searching by type - please wait"
 msgstr "Vyhľadávanie podľa typu - prosím čakajte"
 
-#: ../libgimp/gimpprocbrowserdialog.c:422
+#: ../libgimp/gimpprocbrowserdialog.c:439
 msgid "Searching - please wait"
 msgstr "Vyhľadávanie - prosím čakajte"
 
-#: ../libgimp/gimpprocbrowserdialog.c:430
+#: ../libgimp/gimpprocbrowserdialog.c:447
 #, c-format
 msgid "%d Procedures"
 msgstr "%d procedúr"
 
-#: ../libgimp/gimpprocbrowserdialog.c:437
+#: ../libgimp/gimpprocbrowserdialog.c:454
 msgid "No matches for your query"
 msgstr "Pre vašu otázku nie sú zhody"
 
-#: ../libgimp/gimpprocbrowserdialog.c:440
+#: ../libgimp/gimpprocbrowserdialog.c:457
 msgid "1 procedure matches your query"
 msgstr "1 procedúra vyhovuje vašej otázke"
 
-#: ../libgimp/gimpprocbrowserdialog.c:443
+#: ../libgimp/gimpprocbrowserdialog.c:460
 #, c-format
 msgid "%d procedures match your query"
 msgstr "%d procedúr vyhovuje vašej otázke"
 
-#: ../libgimp/gimpprocbrowserdialog.c:491
+#: ../libgimp/gimpprocbrowserdialog.c:508
 msgid "No matches"
 msgstr "Bez zhody"
 
@@ -431,27 +431,27 @@ msgid "Large"
 msgstr "Veľké"
 
 #: ../libgimpbase/gimpbaseenums.c:228
-msgid "Light Checks"
+msgid "Light checks"
 msgstr "Svetlá šachovnica"
 
 #: ../libgimpbase/gimpbaseenums.c:229
-msgid "Mid-Tone Checks"
+msgid "Mid-tone checks"
 msgstr "Stredná šachovnica"
 
 #: ../libgimpbase/gimpbaseenums.c:230
-msgid "Dark Checks"
+msgid "Dark checks"
 msgstr "Tmavá šachovnica"
 
 #: ../libgimpbase/gimpbaseenums.c:231
-msgid "White Only"
+msgid "White only"
 msgstr "Iba biela"
 
 #: ../libgimpbase/gimpbaseenums.c:232
-msgid "Gray Only"
+msgid "Gray only"
 msgstr "Iba šedá"
 
 #: ../libgimpbase/gimpbaseenums.c:233
-msgid "Black Only"
+msgid "Black only"
 msgstr "Iba čierna"
 
 #: ../libgimpbase/gimpbaseenums.c:261
@@ -755,7 +755,7 @@ msgid "Perceptual"
 msgstr "Vnímateľné"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:57 ../modules/cdisplay_proof.c:56
-msgid "Relative Colorimetric"
+msgid "Relative colorimetric"
 msgstr "Relatívna kalorimetria"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:58
@@ -764,7 +764,7 @@ msgid "Saturation"
 msgstr "Sýtosť"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:59 ../modules/cdisplay_proof.c:58
-msgid "Absolute Colorimetric"
+msgid "Absolute colorimetric"
 msgstr "Absolútna kalorimetria"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:88
@@ -958,7 +958,7 @@ msgid "Hexadecimal color notation as used in HTML and CSS"
 msgstr "Hexadecimálny zápis farby ako v HTML a CSS"
 
 #: ../libgimpwidgets/gimpcolorselection.c:286
-msgid "HTML _Notation:"
+msgid "HTML _notation:"
 msgstr "HTML _zápis:"
 
 #: ../libgimpwidgets/gimpfileentry.c:351
@@ -1010,7 +1010,7 @@ msgstr "Štýl šachovnice"
 msgid "_Preview"
 msgstr "_Náhľad"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1807
+#: ../libgimpwidgets/gimppropwidgets.c:1868
 #, c-format
 msgid "This text input field is limited to %d characters."
 msgstr "Toto vstupné textové pole je obmedzené na %d znakov."
@@ -1193,7 +1193,7 @@ msgid "Color Deficient Vision"
 msgstr "Videnie s farebnou poruchou"
 
 #: ../modules/cdisplay_colorblind.c:503
-msgid "Color _Deficiency Type:"
+msgid "Color _deficiency type:"
 msgstr "Typ farebnej ne_dokonalosti:"
 
 #: ../modules/cdisplay_gamma.c:91
@@ -1217,7 +1217,7 @@ msgid "Contrast"
 msgstr "Kontrast"
 
 #: ../modules/cdisplay_highcontrast.c:251
-msgid "Contrast C_ycles:"
+msgid "Contrast c_ycles:"
 msgstr "C_ykly kontrastu:"
 
 #: ../modules/cdisplay_lcms.c:105
@@ -1317,7 +1317,7 @@ msgid "Black"
 msgstr "Čierna"
 
 #: ../modules/colorsel_cmyk.c:191
-msgid "Black _Pullout:"
+msgid "Black _pullout:"
 msgstr "Použitie č_iernej:"
 
 #: ../modules/colorsel_cmyk.c:208
