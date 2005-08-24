@@ -1,3 +1,11 @@
+2005-08-24  Tor Lillqvist  <tml@novell.com>
+
+	* libgimpbase/gimpenv.c (gimp_toplevel_directory): [Win32] Use
+	_mbsrchr() to search for backslashes in the path to the executable
+	file. Doing it with strchr() doesn't work in East Asian locales
+	with double-byte codepages, where the trailing byte of double-byte
+	character can be a backslash.
+
 2005-08-20  Sven Neumann  <sven@gimp.org>
 
 	Merged from HEAD branch:

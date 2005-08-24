@@ -44,6 +44,7 @@
 #define WIN32_LEAN_AND_MEAN	/* without it DATADIR in objidl.h will collide */
 #include <windows.h>		/* For GetModuleFileName */
 #include <io.h>
+#include <mbstring.h>
 #ifndef S_IWUSR
 # define S_IWUSR _S_IWRITE
 #endif
@@ -208,10 +209,10 @@ gimp_toplevel_directory (void)
    * Otherwise, use the directory where the executable is.
    */
 
-  sep1 = strrchr (filename, '\\');
+  sep1 = _mbsrchr (filename, '\\');
   *sep1 = '\0';
 
-  sep2 = strrchr (filename, '\\');
+  sep2 = _mbsrchr (filename, '\\');
   if (sep2 != NULL)
     {
       if (g_ascii_strcasecmp (sep2 + 1, "bin") == 0)
