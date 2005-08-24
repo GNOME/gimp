@@ -1,5 +1,14 @@
 2005-08-24  Tor Lillqvist  <tml@novell.com>
 
+	* README.win32: Update. Mention should build against GLib
+	2.4. Better late than never.
+
+	* app/core/gimpdata.c (gimp_data_create_filename): Make safer on
+	Win32. Not just \ is verboten in file names, also < > / : " | .
+	Look for these in the UTF-8 string, so we don't have to do
+	double-byte aware scanning of the string after conversion to
+	system codepage.
+
 	* libgimpbase/gimpenv.c (gimp_toplevel_directory): [Win32] Use
 	_mbsrchr() to search for backslashes in the path to the executable
 	file. Doing it with strchr() doesn't work in East Asian locales

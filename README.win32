@@ -1,6 +1,10 @@
-For pre-built binary packages of GLib, GTK etc, see
-http://www.gimp.org/win32/downloads.html . No pre-built GIMP 1.3
-packages, though.
+For pre-built binary packages of GIMP, see
+http://gimp-win.sourceforge.net. 
+
+GIMP 2.2.x should be built against GLib 2.4. Building against GLib 2.6
+or later will result in a GIMP that doesn't handle non-ASCII filenames
+correctly. It is fine to *run* GIMP 2.2.x against GLib 2.6 or later,
+though.
 
 Building GIMP on Win32
 ======================

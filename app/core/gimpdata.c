@@ -44,6 +44,12 @@
 
 #include "gimp-intl.h"
 
+/* Need this test somewhere, might as well do it here */
+#ifdef G_OS_WIN32
+#if GLIB_CHECK_VERSION (2,6,0)
+#error GIMP 2.2 for Win32 must be compiled against GLib 2.4 
+#endif
+#endif
 
 enum
 {
@@ -416,6 +422,46 @@ gimp_data_create_filename (GimpData    *data,
   if (data->internal)
     return;
 
+#ifdef G_OS_WIN32
+  {
+    const gchar *charset;
+
+    filename = g_strdup (gimp_object_get_name (GIMP_OBJECT (data)));
+
+    /* Map illegal characters to '-' while the name is still in UTF-8 */
+    for (i = 0; filename[i]; i++)
+      if (strchr ("<>:\"/\\|", filename[i]) ||
+	  g_ascii_iscntrl (filename[i]) ||
+	  g_ascii_isspace (filename[i]))
+	filename[i] = '-';
+
+    /* Map also trailing periods to '-' */
+    for (i = strlen (filename) - 1; i >= 0; i--)
+      if (filename[i] == '.')
+	filename[i] = '-';
+      else
+	break;
+
+    /* Next convert to the filename charset. Note that this branch of
+     * GIMP must be compiled against GLib 2.4 and we thus use system
+     * codepage for file names in the GLib API.
+     */
+    g_get_charset (&charset);
+    safename = g_convert_with_fallback (filename,
+					-1, charset, "UTF-8",
+					"-", NULL, NULL, &error);
+    if (! safename)
+      {
+	g_warning ("gimp_data_create_filename:\n"
+		   "g_convert_with_fallback() failed for '%s': %s",
+		   filename, error->message);
+	g_free (filename);
+	g_error_free (error);
+	return;
+      }
+    g_free (filename);
+  }
+#else
   safename = g_filename_from_utf8 (gimp_object_get_name (GIMP_OBJECT (data)),
                                    -1, NULL, NULL, &error);
   if (! safename)
@@ -433,6 +479,7 @@ gimp_data_create_filename (GimpData    *data,
   for (i = 0; safename[i]; i++)
     if (safename[i] == G_DIR_SEPARATOR || g_ascii_isspace (safename[i]))
       safename[i] = '-';
+#endif
 
   filename = g_strconcat (safename, gimp_data_get_extension (data), NULL);
 
