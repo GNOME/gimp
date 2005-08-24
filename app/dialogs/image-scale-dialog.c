@@ -76,6 +76,7 @@ image_scale_dialog_new (GimpImage                *image,
                         ImageScaleDialogCallback  callback)
 {
   ImageScaleDialog *dialog;
+  GimpUnit          unit;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_DISPLAY (display), NULL);
@@ -83,6 +84,11 @@ image_scale_dialog_new (GimpImage                *image,
   g_return_val_if_fail (callback != NULL, NULL);
 
   dialog = g_new0 (ImageScaleDialog, 1);
+
+  unit = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (image),
+                                             "scale-dialog-unit"));
+  if (! unit)
+    unit = GIMP_DISPLAY_SHELL (display->shell)->unit;
 
   dialog->gimage  = image;
   dialog->gdisp   = display;
@@ -92,7 +98,7 @@ image_scale_dialog_new (GimpImage                *image,
                                       parent,
                                       gimp_standard_help_func,
                                       GIMP_HELP_IMAGE_SCALE,
-                                      GIMP_DISPLAY_SHELL (display->shell)->unit,
+                                      unit,
                                       image->gimp->config->interpolation_type,
                                       image_scale_callback,
                                       dialog);
@@ -152,6 +158,10 @@ image_scale_callback (GtkWidget             *widget,
       /* If all is well, return directly after scaling image. */
       dialog->callback (dialog);
       gtk_widget_destroy (widget);
+
+      /* remember the last used unit */
+      g_object_set_data (G_OBJECT (image),
+                         "scale-dialog-unit", GINT_TO_POINTER (unit));
       break;
     }
 }

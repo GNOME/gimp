@@ -78,6 +78,7 @@ static void   image_resize_callback        (GtkWidget              *dialog,
                                             GimpViewable           *viewable,
                                             gint                    width,
                                             gint                    height,
+                                            GimpUnit                unit,
                                             gint                    offset_x,
                                             gint                    offset_y,
                                             GimpImageResizeLayers   resize_layers,
@@ -177,11 +178,12 @@ image_resize_cmd_callback (GtkAction *action,
 			   gpointer   data)
 {
   ImageResizeOptions *options;
-  GimpImage          *gimage;
+  GimpImage          *image;
   GtkWidget          *widget;
   GimpDisplay        *gdisp;
   GtkWidget          *dialog;
-  return_if_no_image (gimage, data);
+  GimpUnit            unit;
+  return_if_no_image (image, data);
   return_if_no_widget (widget, data);
   return_if_no_display (gdisp, data);
 
@@ -190,11 +192,16 @@ image_resize_cmd_callback (GtkAction *action,
   options->gdisp   = gdisp;
   options->context = action_data_get_context (data);
 
-  dialog = resize_dialog_new (GIMP_VIEWABLE (gimage),
+  unit = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (image),
+                                             "scale-dialog-unit"));
+  if (! unit)
+    unit = GIMP_DISPLAY_SHELL (gdisp->shell)->unit;
+
+  dialog = resize_dialog_new (GIMP_VIEWABLE (image),
                               _("Set Image Canvas Size"), "gimp-image-resize",
                               widget,
                               gimp_standard_help_func, GIMP_HELP_IMAGE_RESIZE,
-                              GIMP_DISPLAY_SHELL (gdisp->shell)->unit,
+                              unit,
                               image_resize_callback,
                               options);
 
@@ -452,6 +459,7 @@ image_resize_callback (GtkWidget             *dialog,
                        GimpViewable          *viewable,
                        gint                   width,
                        gint                   height,
+                       GimpUnit               unit,
                        gint                   offset_x,
                        gint                   offset_y,
                        GimpImageResizeLayers  resize_layers,
@@ -467,6 +475,10 @@ image_resize_callback (GtkWidget             *dialog,
       GimpProgress *progress;
 
       gtk_widget_destroy (dialog);
+
+      /* remember the last used unit */
+      g_object_set_data (G_OBJECT (image),
+                         "scale-dialog-unit", GINT_TO_POINTER (unit));
 
       if (width == image->width && height == image->height)
         return;

@@ -123,6 +123,7 @@ static void   layers_resize_layer_callback (GtkWidget             *dialog,
                                             GimpViewable          *viewable,
                                             gint                   width,
                                             gint                   height,
+                                            GimpUnit               unit,
                                             gint                   offset_x,
                                             gint                   offset_y,
                                             GimpImageResizeLayers  unused,
@@ -459,22 +460,26 @@ layers_resize_cmd_callback (GtkAction *action,
 			    gpointer   data)
 {
   GimpDisplay *gdisp;
-  GimpImage   *gimage;
+  GimpImage   *image;
   GimpLayer   *layer;
   GtkWidget   *widget;
   GtkWidget   *dialog;
-  return_if_no_layer (gimage, layer, data);
+  GimpUnit     unit;
+  return_if_no_layer (image, layer, data);
   return_if_no_widget (widget, data);
 
   gdisp = GIMP_IS_DISPLAY (data) ? data : NULL;
+
+  unit = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (image),
+                                             "scale-dialog-unit"));
+  if (! unit)
+    unit = gdisp ? GIMP_DISPLAY_SHELL (gdisp->shell)->unit : GIMP_UNIT_PIXEL;
 
   dialog = resize_dialog_new (GIMP_VIEWABLE (layer),
                               _("Set Layer Boundary Size"), "gimp-layer-resize",
                               widget,
                               gimp_standard_help_func, GIMP_HELP_LAYER_RESIZE,
-                              (gdisp ?
-                               GIMP_DISPLAY_SHELL (gdisp->shell)->unit :
-                               GIMP_UNIT_PIXEL),
+                              unit,
                               layers_resize_layer_callback,
                               action_data_get_context (data));
 
@@ -497,24 +502,27 @@ void
 layers_scale_cmd_callback (GtkAction *action,
 			   gpointer   data)
 {
-  GimpImage   *gimage;
+  GimpImage   *image;
   GimpLayer   *layer;
   GtkWidget   *widget;
   GimpDisplay *gdisp;
   GtkWidget   *dialog;
   GimpUnit     unit;
-  return_if_no_layer (gimage, layer, data);
+  return_if_no_layer (image, layer, data);
   return_if_no_widget (widget, data);
 
   gdisp = action_data_get_display (data);
 
-  unit = gdisp ? GIMP_DISPLAY_SHELL (gdisp->shell)->unit : GIMP_UNIT_PIXEL;
+  unit = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (image),
+                                             "scale-dialog-unit"));
+  if (! unit)
+    unit = gdisp ? GIMP_DISPLAY_SHELL (gdisp->shell)->unit : GIMP_UNIT_PIXEL;
 
   dialog = scale_dialog_new (GIMP_VIEWABLE (layer),
                              _("Scale Layer"), "gimp-layer-scale",
                              widget,
                              gimp_standard_help_func, GIMP_HELP_LAYER_SCALE,
-                             unit, gimage->gimp->config->interpolation_type,
+                             unit, image->gimp->config->interpolation_type,
                              layers_scale_layer_callback,
                              gdisp);
 
@@ -960,6 +968,10 @@ layers_scale_layer_callback (GtkWidget             *dialog,
 
       gtk_widget_destroy (dialog);
 
+      /* remember the last used unit */
+      g_object_set_data (G_OBJECT (gimp_item_get_image (item)),
+                         "scale-dialog-unit", GINT_TO_POINTER (unit));
+
       if (width == gimp_item_width (item) && height == gimp_item_height (item))
         return;
 
@@ -998,6 +1010,7 @@ layers_resize_layer_callback (GtkWidget             *dialog,
                               GimpViewable          *viewable,
                               gint                   width,
                               gint                   height,
+                              GimpUnit               unit,
                               gint                   offset_x,
                               gint                   offset_y,
                               GimpImageResizeLayers  unused,
@@ -1010,6 +1023,10 @@ layers_resize_layer_callback (GtkWidget             *dialog,
       GimpItem *item = GIMP_ITEM (viewable);
 
       gtk_widget_destroy (dialog);
+
+      /* remember the last used unit */
+      g_object_set_data (G_OBJECT (gimp_item_get_image (item)),
+                         "scale-dialog-unit", GINT_TO_POINTER (unit));
 
       if (width == gimp_item_width (item) && height == gimp_item_height (item))
         return;

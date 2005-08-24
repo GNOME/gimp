@@ -311,6 +311,7 @@ resize_dialog_response (GtkWidget    *dialog,
                         ResizeDialog *private)
 {
   GimpSizeEntry *entry = GIMP_SIZE_ENTRY (private->offset);
+  GimpUnit       unit;
   gint           width;
   gint           height;
 
@@ -324,12 +325,14 @@ resize_dialog_response (GtkWidget    *dialog,
       g_object_get (private->box,
                     "width",  &width,
                     "height", &height,
+                    "unit",   &unit,
                     NULL);
 
       private->callback (dialog,
                          private->viewable,
                          width,
                          height,
+                         unit,
                          gimp_size_entry_get_refval (entry, 0),
                          gimp_size_entry_get_refval (entry, 1),
                          private->resize_layers,
