@@ -16,6 +16,8 @@ Bugs fixed in GIMP 2.2.9
 - fixed crash in image preview code (bug #312144)
 - fixed redraw of previews in Rotate Colormap plug-in (bug #172284)
 - fixed redraw of previews in Filterpack plug-in (bug #160032)
+- cross-compilation fixes
+- fixed character placement in Text Circle script (bug #144588)
 
 
 Bugs fixed in GIMP 2.2.8
