@@ -695,7 +695,7 @@ save_image (const gchar  *filename,
   /* Patient Birth date */
   add_tag_string (group_stream, group, 0x0030, "DA", today_string);
   /* Patient sex */
-  add_tag_string (group_stream, group, 0x0040, "CS", "?");
+  add_tag_string (group_stream, group, 0x0040, "CS", "" /* unknown */);
   write_group_to_file (DICOM, group, group_stream);
 
   /* Relationship group */

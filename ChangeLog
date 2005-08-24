@@ -1,7 +1,14 @@
+2005-08-24  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
+	* plug-ins/common/dicom.c: use an empty field instead of "?" for
+	the unknown value (bug #313008).
+
 2005-08-24  Tor Lillqvist  <tml@novell.com>
 
-	* README.win32: Update. Mention should build against GLib
-	2.4. Better late than never.
+	* README.win32: Update. Mention should build against GLib 2.4.
+	Better late than never.
 
 	* app/core/gimpdata.c (gimp_data_create_filename): Make safer on
 	Win32. Not just \ is verboten in file names, also < > / : " | .
