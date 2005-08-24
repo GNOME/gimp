@@ -425,12 +425,38 @@ plug_in_open (PlugIn *plug_in)
 
   argc = 0;
 
+#if defined (G_OS_WIN32) && !GLIB_CHECK_VERSION (2, 8, 2)
+  /* In GLib < 2.8.2 on Win32 the argument vector passed to g_spawn*()
+   * should be in system codepage.
+   *
+   * Checking compile-time GLib version is the right thing to do.
+   * Even if running against GLib >= 2.8.2, code compiled against
+   * headers from GLib < 2.8.2 use backward-compatible functions that
+   * still take system codepage. Only code compiled against headers
+   * from GLib >= 2.8.2 use the g_spawn versions (that actually are
+   * called g_spawn*_utf8()) that take UTF-8.
+   */
+  if (interp)
+    {
+      args[argc++] = g_locale_from_utf8 (interp, -1, NULL, NULL, NULL);
+      if (args[argc-1] == NULL)
+	g_error ("Interpreter %s is a file name with characters not in the system codepage. That doesn't work when GIMP is built against GLib 2.8.1 or earlier.", interp);
+    }
+#else
   if (interp)
     args[argc++] = interp;
+#endif
+
   if (interp_arg)
     args[argc++] = interp_arg;
 
+#if defined (G_OS_WIN32) && !GLIB_CHECK_VERSION (2, 8, 2)
+  args[argc++] = g_locale_from_utf8 (plug_in->prog, -1, NULL, NULL, NULL);
+  if (args[argc-1] == NULL)
+    g_error ("Plug-in %s is a file name with characters not in the system codepage. That doesn't work when GIMP is built against GLib 2.8.1 or earlier.", plug_in->prog);
+#else
   args[argc++] = plug_in->prog;
+#endif
   args[argc++] = "-gimp";
   args[argc++] = read_fd;
   args[argc++] = write_fd;
@@ -509,6 +535,17 @@ cleanup:
   g_free (read_fd);
   g_free (write_fd);
   g_free (stm);
+
+#if defined (G_OS_WIN32) && !GLIB_CHECK_VERSION (2, 8, 2)
+  argc = 0;
+  if (interp)
+    g_free (args[argc++]);
+
+  if (interp_arg)
+    argc++;
+
+  g_free (args[argc++]);
+#endif
 
   g_free (interp);
   g_free (interp_arg);

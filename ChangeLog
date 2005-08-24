@@ -1,3 +1,19 @@
+2005-08-24  Tor Lillqvist  <tml@novell.com>
+
+	Make GIMP work on Win32 even if installed in a path containing
+	random non-ASCII characters.
+
+	* libgimpbase/gimpenv.c (gimp_toplevel_directory): [Win32] Use
+	wide-char API on NT-based Windowses. Keep the toplevel directory
+	name in UTF-8. The rest of GIMP assumes it is UTF-8 anyway, and
+	for instance passes file names constructed from it to g_open().
+
+	* app/plug-in/plug-in.c (plug_in_open): On Win32, if compiled
+	against GLib < 2.8.2, convert the pathname arguments passed to
+	g_spawn_async() to locale charset (system codepage). The
+	g_spawn*() functions in GLib < 2.8.2 take system codepage
+	arguments and not UTF-8.
+
 2005-08-24  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/paint-funcs/paint-funcs-generic.h (blend_pixels):

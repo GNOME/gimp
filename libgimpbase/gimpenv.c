@@ -189,15 +189,35 @@ gimp_toplevel_directory (void)
   /* Figure it out from the executable name */
   static gchar *toplevel = NULL;
 
-  gchar         filename[MAX_PATH];
+  gchar	       *filename;
   gchar        *sep1, *sep2;
 
   if (toplevel)
     return toplevel;
 
-  if (GetModuleFileName (NULL, filename, sizeof (filename)) == 0)
-    g_error ("GetModuleFilename failed");
+  if (G_WIN32_HAVE_WIDECHAR_API ())
+    {
+      wchar_t w_filename[MAX_PATH];
 
+      if (GetModuleFileNameW (NULL, w_filename, G_N_ELEMENTS (w_filename)) == 0)
+	g_error ("GetModuleFilenameW failed");
+
+      filename = g_utf16_to_utf8 (w_filename, -1, NULL, NULL, NULL);
+      if (filename == NULL)
+	g_error ("Converting module filename to UTF-8 failed");
+    }
+  else
+    {
+      gchar cp_filename[MAX_PATH];
+
+      if (GetModuleFileNameA (NULL, cp_filename, G_N_ELEMENTS (cp_filename)) == 0)
+	g_error ("GetModuleFilenameA failed");
+
+      filename = g_locale_to_utf8 (cp_filename, -1, NULL, NULL, NULL);
+      if (filename == NULL)
+	g_error ("Converting module filename to UTF-8 failed");
+    }
+  
   /* If the executable file name is of the format
    * <foobar>\bin\*.exe or
    * <foobar>\lib\gimp\GIMP_API_VERSION\plug-ins\*.exe, use <foobar>.
@@ -230,7 +250,7 @@ gimp_toplevel_directory (void)
 	}
     }
 
-  toplevel = g_strdup (filename);
+  toplevel = filename;
 
   return toplevel;
 }
