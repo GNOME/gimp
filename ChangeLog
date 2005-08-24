@@ -1,3 +1,9 @@
+2005-08-24  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/paint-funcs/paint-funcs-generic.h (blend_pixels):
+	Change blending algorithm to fix misbehavior of smudge
+	tool, should fix bug #163721.
+
 2005-08-24  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/scripts/i26-gunya2.scm

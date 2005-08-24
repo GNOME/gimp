@@ -276,6 +276,13 @@ pattern_pixels_mask (guchar  *dest,
     }
 }
 
+/* 
+ * blend_pixels patched 8-24-05 to fix bug #163721.  Note that this change
+ * causes the function to treat src1 and src2 asymmetrically.  This gives the
+ * right behavior for the smudge tool, which is the only user of this function
+ * at the time of patching.  If you want to use the function for something
+ * else, caveat emptor.
+ */
 inline void
 blend_pixels (const guchar *src1,
               const guchar *src2,
@@ -288,7 +295,7 @@ blend_pixels (const guchar *src1,
 
   if (HAS_ALPHA (bytes))
     {
-      const guint blend1 = 256 - blend;
+      const guint blend1 = 255 - blend;
       const guint blend2 = blend + 1;
       const guint c      = bytes - 1;
 
@@ -306,7 +313,7 @@ blend_pixels (const guchar *src1,
           else
             {
               for (b = 0; b < c; b++)
-                dest[b] = (src1[b] * a1 + src2[b] * a2) / a;
+                dest[b] = src1[b] + (src1[b] * a1 + src2[b] * a2 - a * src1[b]) / a;
 
               dest[c] = a >> 8;
             }
@@ -323,7 +330,7 @@ blend_pixels (const guchar *src1,
       while (w--)
         {
           for (b = 0; b < bytes; b++)
-            dest[b] = (src1[b] * blend1 + src2[b] * blend) / 255;
+            dest[b] = src1[b] + (src1[b] * blend1 + src2[b] * blend - src1[b] * 255) / 255;
 
           src1 += bytes;
           src2 += bytes;
