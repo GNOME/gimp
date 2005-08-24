@@ -1,3 +1,10 @@
+2005-08-24  Tor Lillqvist  <tml@novell.com>
+
+	* plug-ins/script-fu/scripts/i26-gunya2.scm
+	* plug-ins/script-fu/scripts/ripply-anim.scm: Add the new last
+	parameter to plug-in-displace calls. (See entry for displace.c
+	from 2005-02-10 below.)
+
 2005-08-24  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: fixed quotes in AC_DEFINE() macros.
