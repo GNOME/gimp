@@ -93,7 +93,7 @@
 	     (set! dup-layer (car (gimp-image-get-active-layer dup-image)))
 	     (plug-in-displace 1 out-imagestack this-layer
 			       displacement displacement
-			       TRUE TRUE dup-layer dup-layer edge-type 0)
+			       TRUE TRUE dup-layer dup-layer edge-type)
 	     
 	     (gimp-image-undo-enable dup-image)
 	     (gimp-image-delete dup-image)

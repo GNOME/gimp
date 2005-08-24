@@ -44,6 +44,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
@@ -62,7 +64,7 @@
 typedef enum
 {
   CARTESIAN_MODE = 0,
-  POLAR_MODE = 1
+  POLAR_MODE     = 1
 } DisplaceMode;
 
 typedef struct
@@ -163,8 +165,7 @@ query (void)
     { GIMP_PDB_INT32,    "do-y",           "Displace in Y or tangent direction?" },
     { GIMP_PDB_DRAWABLE, "displace-map-x", "Displacement map for X or radial direction" },
     { GIMP_PDB_DRAWABLE, "displace-map-y", "Displacement map for Y or tangent direction" },
-    { GIMP_PDB_INT32,    "displace-type",  "Edge behavior: { WRAP (0), SMEAR (1), BLACK (2) }" },
-    { GIMP_PDB_INT32,    "mode",           "Mode of displacement: { CARTESIAN (0), POLAR (1) }"}
+    { GIMP_PDB_INT32,    "displace-type",  "Edge behavior: { WRAP (0), SMEAR (1), BLACK (2) }" }
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
@@ -173,8 +174,7 @@ query (void)
                           "by the amounts specified by 'amount_x' and "
                           "'amount_y' multiplied by the luminance of "
                           "corresponding pixels in the 'displace_map' "
-                          "drawables.  If mode is polar coordinates"
-                          "drawable is whirled and pinched according to map.",
+                          "drawables.",
                           "Stephen Robert Norris & (ported to 1.0 by) "
                           "Spencer Kimball",
                           "Stephen Robert Norris",
@@ -186,6 +186,21 @@ query (void)
                           args, NULL);
 
   gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Map");
+
+  gimp_install_procedure ("plug-in-displace-polar",
+                          "Displace the contents of the specified drawable",
+                          "Just like plug-in-displace but working in "
+                          "polar coordinates. The drawable is whirled and "
+                          "pinched according to the map.",
+                          "Stephen Robert Norris & (ported to 1.0 by) "
+                          "Spencer Kimball",
+                          "Stephen Robert Norris",
+                          "1996",
+                          "Displace Polar",
+                          "RGB*, GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 }
 
 static void
@@ -229,8 +244,7 @@ run (const gchar      *name,
 
     case GIMP_RUN_NONINTERACTIVE:
       /*  Make sure all the arguments are there!  */
-      /* The mode argument is optional to ensure backwards compatibility */
-      if (nparams != 10 && nparams != 11)
+      if (nparams != 10)
         {
           status = GIMP_PDB_CALLING_ERROR;
         }
@@ -243,10 +257,9 @@ run (const gchar      *name,
           dvals.displace_map_x = param[7].data.d_int32;
           dvals.displace_map_y = param[8].data.d_int32;
           dvals.displace_type  = param[9].data.d_int32;
-          if (nparams == 11)
-            dvals.mode = param[10].data.d_int32;
-          else
-            dvals.mode = CARTESIAN_MODE;
+
+          dvals.mode = (strcmp (name, "plug-in-displace-polar") == 0 ?
+                        POLAR_MODE : CARTESIAN_MODE);
         }
       break;
 
