@@ -464,7 +464,7 @@ ico_init_data (MsIcon *ico,
   MsIconEntry    *entry;
   MsIconData     *data;
   gint            and_len, xor_len, palette_index, x, y;
-  gint            num_colors = 0, num_colors_used = 0, black_index;
+  gint            num_colors = 0, num_colors_used = 0, black_index = 0;
   guchar         *buffer = NULL, *pixel;
   guint32        *buffer32;
   guchar         *palette;

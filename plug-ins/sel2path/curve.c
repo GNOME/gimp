@@ -107,8 +107,9 @@ new_curve_list (void)
 {
   curve_list_type curve_list;
 
-  curve_list.length = 0;
-  curve_list.data = NULL;
+  curve_list.length    = 0;
+  curve_list.data      = NULL;
+  curve_list.clockwise = FALSE;
 
   return curve_list;
 }

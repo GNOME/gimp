@@ -1,5 +1,5 @@
 /* fit.c: turn a bitmap representation of a curve into a list of splines.
-   Some of the ideas, but not the code, comes from the Phoenix thesis. 
+   Some of the ideas, but not the code, comes from the Phoenix thesis.
    See README for the reference.
 
 Copyright (C) 1992 Free Software Foundation, Inc.
@@ -33,12 +33,12 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
 #include "pxl-outline.h"
 
 /* If two endpoints are closer than this, they are made to be equal.
-   (-align-threshold)  */ 
+   (-align-threshold)  */
 real align_threshold = 0.5;
 
 /* If the angle defined by a point and its predecessors and successors
    is smaller than this, it's a corner, even if it's within
-   `corner_surround' pixels of a point with a smaller angle. 
+   `corner_surround' pixels of a point with a smaller angle.
    (-corner-always-threshold)  */
 real corner_always_threshold = 60.0;
 
@@ -46,7 +46,7 @@ real corner_always_threshold = 60.0;
    or not.  (-corner-surround)  */
 unsigned corner_surround = 4;
 
-/* If a point, its predecessors, and its successors define an angle 
+/* If a point, its predecessors, and its successors define an angle
     smaller than this, it's a corner.  Should be in range 0..180.
    (-corner-threshold)  */
 real corner_threshold = 100.0;
@@ -85,7 +85,7 @@ unsigned filter_secondary_surround = 3;
   (-filter-surround)  */
 unsigned filter_surround = 2;
 
-/* Says whether or not to remove ``knee'' points after finding the outline. 
+/* Says whether or not to remove ``knee'' points after finding the outline.
    (See the comments at `remove_knee_points'.)  (-remove-knees).  */
 boolean keep_knees = false;
 
@@ -204,7 +204,7 @@ fitted_splines (pixel_outline_list_type pixel_outline_list)
   for (this_list = 0; this_list < SPLINE_LIST_ARRAY_LENGTH (char_splines);
        this_list++)
     total
-      += SPLINE_LIST_LENGTH (SPLINE_LIST_ARRAY_ELT (char_splines, this_list)); 
+      += SPLINE_LIST_LENGTH (SPLINE_LIST_ARRAY_ELT (char_splines, this_list));
 
 /*   REPORT1 ("=%u", total); */
 
@@ -254,7 +254,7 @@ fit_set_default_params(SELVALS *selVals)
   selVals->filter_surround = filter_surround;
   selVals->keep_knees = keep_knees;
   selVals->line_reversion_threshold = line_reversion_threshold;
-  selVals->line_threshold = line_threshold; 
+  selVals->line_threshold = line_threshold;
   selVals->reparameterize_improvement = reparameterize_improvement;
   selVals->reparameterize_threshold = reparameterize_threshold;
   selVals->subdivide_search = subdivide_search;
@@ -330,7 +330,7 @@ fit_curve_list (curve_list_type curve_list)
         {
 /*           LOG1 ("Fitted splines for curve #%u:\n", this_curve); */
           for (this_spline = 0;
-               this_spline < SPLINE_LIST_LENGTH (*curve_splines); 
+               this_spline < SPLINE_LIST_LENGTH (*curve_splines);
                this_spline++)
             {
 /*               LOG1 ("  %u: ", this_spline); */
@@ -377,7 +377,7 @@ fit_curve (curve_type curve)
 
   /* Do we have enough points to fit with a spline?  */
   fitted_splines = CURVE_LENGTH (curve) < 4
-                   ? fit_with_line (curve) 
+                   ? fit_with_line (curve)
                    : fit_with_least_squares (curve);
 
   return fitted_splines;
@@ -401,7 +401,7 @@ fit_curve (curve_type curve)
    PIXEL_LIST will start at the pixel below the `x'.  If we considered
    this pixel a corner, we would wind up matching a very small segment
    from there to the end of the line, probably as a straight line, which
-   is certainly not what we want.  
+   is certainly not what we want.
 
    PIXEL_LIST has one element for each closed outline on the character.
    To preserve this information, we return an array of curve_lists, one
@@ -426,7 +426,7 @@ split_at_corners (pixel_outline_list_type pixel_list)
       pixel_outline_type pixel_o = O_LIST_OUTLINE (pixel_list, this_pixel_o);
 
       CURVE_LIST_CLOCKWISE (curve_list) = O_CLOCKWISE (pixel_o);
-      
+
 /*       LOG1 ("#%u:", this_pixel_o); */
 
       /* If the outline does not have enough points, we can't do
@@ -435,9 +435,14 @@ split_at_corners (pixel_outline_list_type pixel_list)
          either side of a point before it is conceivable that we might
          want another corner.  */
       if (O_LENGTH (pixel_o) > corner_surround * 2 + 2)
-        corner_list = find_corners (pixel_o);
+        {
+          corner_list = find_corners (pixel_o);
+        }
       else
-        corner_list.length = 0;
+        {
+          corner_list.data   = NULL;
+          corner_list.length = 0;
+        }
 
       /* Remember the first curve so we can make it be the `next' of the
          last one.  (And vice versa.)  */
@@ -628,7 +633,7 @@ find_corners (pixel_outline_type pixel_outline)
        only way to fit such a ``curve'' would be with a straight
        line, which usually interrupts the continuity dreadfully.  */
     remove_adjacent_corners (&corner_list, O_LENGTH (pixel_outline) - 1);
-          
+
   return corner_list;
 }
 
@@ -655,7 +660,7 @@ find_vectors (unsigned test_index, pixel_outline_type outline,
   out->dy = 0.0;
 
   /* Add up the differences from p of the `corner_surround' points
-     before p.  */ 
+     before p.  */
   for (i = O_PREV (outline, test_index), n_done = 0; n_done < corner_surround;
        i = O_PREV (outline, i), n_done++)
     *in = Vadd (*in, IPsubtract (O_COORDINATE (outline, i), candidate));
@@ -706,7 +711,7 @@ find_vectors (unsigned test_index, pixel_outline_type outline,
    Computer Programming, vol.3) is good enough.  LAST_INDEX is the index
    of the last pixel on the outline, i.e., the next one is the first
    pixel.  We need this for checking the adjacency of the last corner.
-   
+
    We need to do this because the adjacent corners turn into
    two-pixel-long curves, which can only be fit by straight lines.  */
 
@@ -716,18 +721,18 @@ remove_adjacent_corners (index_list_type *list, unsigned last_index)
   unsigned j;
   unsigned last;
   index_list_type new = new_index_list ();
-  
+
   for (j = INDEX_LIST_LENGTH (*list) - 1; j > 0; j--)
     {
       unsigned search;
       unsigned temp;
       /* Find maximal element below `j'.  */
       unsigned max_index = j;
-      
+
       for (search = 0; search < j; search++)
         if (GET_INDEX (*list, search) > GET_INDEX (*list, max_index))
           max_index = search;
-          
+
       if (max_index != j)
         {
           temp = GET_INDEX (*list, j);
@@ -736,7 +741,7 @@ remove_adjacent_corners (index_list_type *list, unsigned last_index)
           printf ("needed exchange"); /* xx -- really have to sort?  */
         }
     }
-  
+
   /* The list is sorted.  Now look for adjacent entries.  Each time
      through the loop we insert the current entry and, if appropriate,
      the next entry.  */
@@ -744,15 +749,15 @@ remove_adjacent_corners (index_list_type *list, unsigned last_index)
     {
       unsigned current = GET_INDEX (*list, j);
       unsigned next = GET_INDEX (*list, j + 1);
-      
+
       /* We should never have inserted the same element twice.  */
       assert (current != next);
-      
+
       append_index (&new, current);
       if (next == current + 1)
         j++;
     }
-  
+
   /* Don't append the last element if it is 1) adjacent to the previous
      one; or 2) adjacent to the very first one.  */
   last = GET_LAST_INDEX (*list);
@@ -760,7 +765,7 @@ remove_adjacent_corners (index_list_type *list, unsigned last_index)
       || !(last == GET_LAST_INDEX (new) + 1
            || (last == last_index && GET_INDEX (*list, 0) == 0)))
     append_index (&new, last);
-  
+
   free_index_list (list);
   *list = new;
 }
@@ -772,9 +777,9 @@ remove_adjacent_corners (index_list_type *list, unsigned last_index)
    The argument CLOCKWISE tells us which direction we're moving.  (We
    can't figure that information out from just the single segment with
    which we are given to work.)
-   
+
    We should never find two consecutive knees.
-   
+
    Since the first and last points are corners (unless the curve is
    cyclic), it doesn't make sense to remove those.  */
 
@@ -808,9 +813,9 @@ remove_knee_points (curve_type curve, boolean clockwise)
   int i;
   unsigned offset = CURVE_CYCLIC (curve) ? 0 : 1;
   coordinate_type previous
-    = real_to_int_coord (CURVE_POINT (curve, CURVE_PREV (curve, offset))); 
+    = real_to_int_coord (CURVE_POINT (curve, CURVE_PREV (curve, offset)));
   curve_type trimmed_curve = copy_most_of_curve (curve);
-  
+
   if (!CURVE_CYCLIC (curve))
     append_pixel (trimmed_curve, real_to_int_coord (CURVE_POINT (curve, 0)));
 
@@ -900,7 +905,7 @@ filter (curve_type curve)
   for (iteration = 0; iteration < filter_iteration_count; iteration++)
     {
       curve_type new_curve = copy_most_of_curve (curve);
-      
+
       /* Keep the first point on the curve.  */
       if (offset)
         append_point (new_curve, CURVE_POINT (curve, 0));
@@ -920,7 +925,7 @@ filter (curve_type curve)
           angle = filter_angle (in, out);
 
           /* Find the angle using the alternative (presumably smaller)
-             number.  */ 
+             number.  */
           find_curve_vectors (this_point, curve, filter_alternative_surround,
                               &in_alt, &out_alt, &alt_count);
           angle_alt = filter_angle (in_alt, out_alt);
@@ -968,11 +973,11 @@ filter (curve_type curve)
              doesn't affect future computation (on this iteration).  */
           append_point (new_curve, new_point);
        }
-     
+
      /* Just as with the first point, we have to keep the last point.  */
      if (offset)
        append_point (new_curve, LAST_CURVE_POINT (curve));
-       
+
      /* Set the original curve to the newly filtered one, and go again.  */
      free_curve (curve);
      *curve = *new_curve;
@@ -998,7 +1003,7 @@ find_curve_vectors (unsigned test_index, curve_type curve,
   real_coordinate_type candidate = CURVE_POINT (curve, test_index);
 
   /* Add up the differences from p of the `surround' points
-     before p.  */ 
+     before p.  */
 
   in->dx = 0.0;
   in->dy = 0.0;
@@ -1019,7 +1024,7 @@ find_curve_vectors (unsigned test_index, curve_type curve,
        i = CURVE_NEXT (curve, i), n_done++)
     *out = Vadd (*out, Psubtract (CURVE_POINT (curve, i), candidate));
   out_count = n_done;
-  
+
   /* If we used more points before p than after p, we have to go back
      and redo it.  (We could just subtract the ones that were missing,
      but for this few of points, efficiency doesn't matter.)  */
@@ -1034,7 +1039,7 @@ find_curve_vectors (unsigned test_index, curve_type curve,
         *in = Vadd (*in, Psubtract (CURVE_POINT (curve, i), candidate));
       in_count = n_done;
     }
-  
+
   assert (in_count == out_count);
   *count = in_count;
 }
@@ -1047,7 +1052,7 @@ static real
 filter_angle (vector_type in, vector_type out)
 {
   real angle = Vangle (in, out);
-  
+
   /* What we want to do between 90 and 180 is the same as what we
      want to do between 0 and 90.  */
   angle = fmod (angle, 1990.0);
@@ -1075,7 +1080,7 @@ fit_with_line (curve_type curve)
   SPLINE_DEGREE (line) = LINEAR;
   START_POINT (line) = CONTROL1 (line) = CURVE_POINT (curve, 0);
   END_POINT (line) = CONTROL2 (line) = LAST_CURVE_POINT (curve);
-  
+
   /* Make sure that this line is never changed to a cubic.  */
   SPLINE_LINEARITY (line) = 0;
 
@@ -1103,7 +1108,7 @@ fit_with_least_squares (curve_type curve)
   unsigned iteration = 0;
   real previous_error = FLT_MAX;
   real improvement = FLT_MAX;
-  
+
 /*   LOG ("\nFitting with least squares:\n"); */
 
   /* Phoenix reduces the number of points with a ``linear spline
@@ -1213,7 +1218,7 @@ fit_with_least_squares (curve_type curve)
 /*             CURVE_POINT (curve, subdivision_index).x, */
 /*             CURVE_POINT (curve, subdivision_index).y, subdivision_index); */
 /*       display_subdivision (CURVE_POINT (curve, subdivision_index)); */
-      
+
       /* The last point of the left-hand curve will also be the first
          point of the right-hand curve.  */
       CURVE_LENGTH (left_curve) = subdivision_index + 1;
@@ -1278,9 +1283,9 @@ fit_with_least_squares (curve_type curve)
 
    and the resulting spline (starting_point .. control1 and control2 ..
    ending_point) minimizes the least-square error from CURVE.
-   
+
    See pp.57--59 of the Phoenix thesis.
-   
+
    The B?(t) here corresponds to B_i^3(U_i) there.
    The Bernshte\u in polynomials of degree n are defined by
    B_i^n(t) = { n \choose i } t^i (1-t)^{n-i}, i = 0..n  */
@@ -1307,8 +1312,8 @@ fit_one_spline (curve_type curve)
   real C[2][2] = { { 0.0, 0.0 }, { 0.0, 0.0 } };
   real X[2] = { 0.0, 0.0 };
   int Alen = CURVE_LENGTH (curve);
-  vector_type *A; 
-  
+  vector_type *A;
+
   A = g_new0 (vector_type, Alen * 2);
 
   START_POINT (spline) = CURVE_POINT (curve, 0);
@@ -1363,7 +1368,7 @@ fit_one_spline (curve_type curve)
   SPLINE_DEGREE (spline) = CUBIC;
 
   g_free (A);
-  
+
   return spline;
 }
 
@@ -1462,9 +1467,9 @@ reparameterize (curve_type curve, spline_type S)
    example, at the end of a serif that tapers into the stem, the best
    subdivision point is at the point where they join, even if the worst
    point is a little ways into the serif.
-   
+
    We return the index of the point at which to subdivide.  */
-         
+
 static unsigned
 find_subdivision (curve_type curve, unsigned initial)
 {
@@ -1474,7 +1479,7 @@ find_subdivision (curve_type curve, unsigned initial)
   unsigned search = subdivide_search * CURVE_LENGTH (curve);
 
 /*   LOG1 ("  Number of points to search: %u.\n", search); */
-  
+
   /* We don't want to find the first (or last) point in the curve.  */
   for (i = initial, n_done = 0; i > 0 && n_done < search;
        i = CURVE_PREV (curve, i), n_done++)
@@ -1509,7 +1514,7 @@ find_subdivision (curve_type curve, unsigned initial)
 
 
 /* Here are some macros that decide whether or not we're at a
-   ``join point'', as described above.  */ 
+   ``join point'', as described above.  */
 #define ONLY_ONE_LESS(v)						\
   (((v).dx < subdivide_threshold && (v).dy > subdivide_threshold)	\
    || ((v).dy < subdivide_threshold && (v).dx > subdivide_threshold))
@@ -1544,7 +1549,7 @@ test_subdivision_point (curve_type curve, unsigned index, vector_type *best)
   boolean join = false;
 
   find_curve_vectors (index, curve, subdivide_surround, &in, &out, &count);
-  
+
   /* We don't want to subdivide at points which are very close to the
      endpoints, so if the vectors aren't computed from as many points as
      we asked for, don't bother checking this point.  */
@@ -1562,7 +1567,7 @@ test_subdivision_point (curve_type curve, unsigned index, vector_type *best)
           UPDATE_BEST (out, dy);
         }
     }
-  
+
   return join;
 }
 
@@ -1613,7 +1618,7 @@ find_tangent (curve_type curve, boolean to_start_point, boolean cross_curve)
   vector_type **curve_tangent = to_start_point ? &(CURVE_START_TANGENT (curve))
                                                : &(CURVE_END_TANGENT (curve));
   unsigned n_points = 0;
-  
+
 /*   LOG1 ("  tangent to %s: ", to_start_point ? "start" : "end"); */
 
   if (*curve_tangent == NULL)
@@ -1627,7 +1632,7 @@ find_tangent (curve_type curve, boolean to_start_point, boolean cross_curve)
             = to_start_point ? PREVIOUS_CURVE (curve) : NEXT_CURVE (curve);
           vector_type tangent2
             = find_half_tangent (adjacent_curve, !to_start_point, &n_points);
-          
+
 /*           LOG2 ("(adjacent curve half tangent (%.3f,%.3f)) ", */
 /*                 tangent2.dx, tangent2.dy); */
           tangent = Vadd (tangent, tangent2);
@@ -1696,9 +1701,9 @@ find_error (curve_type curve, spline_type spline, unsigned *worst_point)
   unsigned this_point;
   real total_error = 0.0;
   real worst_error = FLT_MIN;
-  
+
   *worst_point = CURVE_LENGTH (curve) + 1;   /* A sentinel value.  */
-  
+
   for (this_point = 0; this_point < CURVE_LENGTH (curve); this_point++)
     {
       real_coordinate_type curve_point = CURVE_POINT (curve, this_point);
@@ -1747,7 +1752,7 @@ spline_linear_enough (spline_type *spline, curve_type curve)
   real distance = 0.0;
 
 /*   LOG ("Checking linearity:\n"); */
-  
+
   /* For a line described by Ax + By + C = 0, the distance d from a
      point (x0,y0) to that line is:
 
@@ -1755,7 +1760,7 @@ spline_linear_enough (spline_type *spline, curve_type curve)
 
      We can find A, B, and C from the starting and ending points,
      unless the line defined by those two points is vertical.  */
-     
+
   if (epsilon_equal (START_POINT (*spline).x, END_POINT (*spline).x))
     {
       A = 1;
@@ -1778,12 +1783,12 @@ spline_linear_enough (spline_type *spline, curve_type curve)
       C = slope * START_POINT (*spline).x - START_POINT (*spline).y;
     }
 /*   LOG3 ("  Line is %.3fx + %.3fy + %.3f = 0.\n", A, B, C); */
-  
+
   for (this_point = 0; this_point < CURVE_LENGTH (curve); this_point++)
     {
       real t = CURVE_T (curve, this_point);
       real_coordinate_type spline_point = evaluate_spline (*spline, t);
-      
+
       distance += fabs (A * spline_point.x + B * spline_point.y + C)
                    / sqrt (A * A + B * B);
     }
@@ -1791,13 +1796,13 @@ spline_linear_enough (spline_type *spline, curve_type curve)
 
   distance /= CURVE_LENGTH (curve);
 /*   LOG1 ("which is %.3f normalized.\n", distance); */
-  
+
   /* We want reversion of short curves to splines to be more likely than
      reversion of long curves, hence the second division by the curve
      length, for use in `change_bad_lines'.  */
   SPLINE_LINEARITY (*spline) = distance / CURVE_LENGTH (curve);
 /*   LOG1 ("  Final linearity: %.3f.\n", SPLINE_LINEARITY (*spline)); */
-  
+
   return distance < line_threshold;
 }
 
@@ -1816,11 +1821,11 @@ change_bad_lines (spline_list_type *spline_list)
   unsigned this_spline;
   boolean found_cubic = false;
   unsigned length = SPLINE_LIST_LENGTH (*spline_list);
-  
+
 /*   LOG1 ("\nChecking for bad lines (length %u):\n", length); */
-  
+
   /* First see if there are any splines in the fitted shape.  */
-  for (this_spline = 0; this_spline < length; this_spline++)  
+  for (this_spline = 0; this_spline < length; this_spline++)
     {
       if (SPLINE_DEGREE (SPLINE_LIST_ELT (*spline_list, this_spline)) == CUBIC)
         {
@@ -1828,7 +1833,7 @@ change_bad_lines (spline_list_type *spline_list)
           break;
         }
     }
-  
+
   /* If so, change lines back to splines (we haven't done anything to
      their control points, so we only have to change the degree) unless
      the spline is close enough to being a line.  */
@@ -1836,7 +1841,7 @@ change_bad_lines (spline_list_type *spline_list)
     for (this_spline = 0; this_spline < length; this_spline++)
       {
         spline_type s = SPLINE_LIST_ELT (*spline_list, this_spline);
-        
+
         if (SPLINE_DEGREE (s) == LINEAR)
           {
 /*             LOG1 ("  #%u: ", this_spline); */
@@ -1886,22 +1891,22 @@ align (spline_list_type *l)
   boolean change;
   unsigned this_spline;
   unsigned length = SPLINE_LIST_LENGTH (*l);
-  
+
 /*   LOG1 ("\nAligning spline list (length %u):\n", length); */
-  
+
   do
     {
       change = false;
-      
+
 /*       LOG ("  "); */
-      
-      for (this_spline = 0; this_spline < length; this_spline++) 
+
+      for (this_spline = 0; this_spline < length; this_spline++)
         {
           boolean spline_change = false;
           spline_type *s = &SPLINE_LIST_ELT (*l, this_spline);
           real_coordinate_type start = START_POINT (*s);
           real_coordinate_type end = END_POINT (*s);
-          
+
           TRY_AXIS (x);
           TRY_AXIS (y);
           if (spline_change)
