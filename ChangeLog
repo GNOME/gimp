@@ -22,6 +22,14 @@
 
 2005-08-24  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/image-commands.c
+	* app/actions/layers-commands.c
+	* app/dialogs/image-scale-dialog.c
+	* app/dialogs/resize-dialog.[ch]: remember the selected unit for
+	scale and resize dialogs on a per-image basis (bug #312950).
+
+2005-08-24  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/scripts/i26-gunya2.scm
 	* plug-ins/script-fu/scripts/ripply-anim.scm: reverted the last
 	change...
