@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpview.c
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001-2005 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -289,7 +289,10 @@ gimp_view_unmap (GtkWidget *widget)
   GimpView *view = GIMP_VIEW (widget);
 
   if (view->has_grab)
-    gtk_grab_remove (widget);
+    {
+      gtk_grab_remove (widget);
+      view->has_grab = FALSE;
+    }
 
   if (view->event_window)
     gdk_window_hide (view->event_window);
@@ -412,15 +415,15 @@ gimp_view_size_allocate (GtkWidget     *widget,
 
 static gboolean
 gimp_view_expose_event (GtkWidget      *widget,
-                           GdkEventExpose *event)
+                        GdkEventExpose *event)
 {
-  if (! GTK_WIDGET_DRAWABLE (widget))
-    return FALSE;
-
-  gimp_view_renderer_draw (GIMP_VIEW (widget)->renderer,
-                           widget->window, widget,
-                           &widget->allocation,
-                           &event->area);
+  if (GTK_WIDGET_DRAWABLE (widget))
+    {
+      gimp_view_renderer_draw (GIMP_VIEW (widget)->renderer,
+                               widget->window, widget,
+                               &widget->allocation,
+                               &event->area);
+    }
 
   return FALSE;
 }
@@ -513,7 +516,6 @@ gimp_view_button_release_event (GtkWidget      *widget,
   if (bevent->button == 1)
     {
       gtk_grab_remove (widget);
-
       view->has_grab = FALSE;
 
       if (view->clickable && view->in_button)
@@ -623,7 +625,7 @@ gimp_view_real_set_viewable (GimpView     *view,
       g_object_add_weak_pointer (G_OBJECT (view->viewable),
                                  (gpointer *) &view->viewable);
     }
-  }
+}
 
 /*  public functions  */
 
