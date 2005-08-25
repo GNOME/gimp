@@ -47,8 +47,8 @@ typedef struct
 static PdfLoadVals loadvals =
 {
   GIMP_PAGE_SELECTOR_TARGET_LAYERS,
-  100.00, /* 100 dpi */
-  TRUE /* antialias */
+  100.00, /* 100 dpi   */
+  TRUE    /* antialias */
 };
 
 typedef struct
@@ -514,6 +514,9 @@ load_image (PopplerDocument        *doc,
       poppler_page_render_to_pixbuf (page, 0, 0,
                                      width, height,
                                      scale,
+#ifdef HAVE_POPPLER_0_4_1
+                                     0,
+#endif
                                      buf
 #ifndef HAVE_POPPLER_0_4
                                      , 0, 0
@@ -597,6 +600,9 @@ get_thumbnail (PopplerDocument *doc,
       poppler_page_render_to_pixbuf (page, 0, 0,
                                      width, height,
                                      scale,
+#ifdef HAVE_POPPLER_0_4_1
+                                     0,
+#endif
                                      pixbuf
 #ifndef HAVE_POPPLER_0_4
                                      ,0, 0

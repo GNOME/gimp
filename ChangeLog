@@ -1,5 +1,15 @@
 2005-08-25  Michael Natterer  <mitch@gimp.org>
 
+	* configure.in: define FOO_DISABLE_DEPRECATED for the new stable
+	versions of GTK+ and Pango.
+
+	Check for poppler >= 0.4.1, they did another API change.
+
+	* plug-ins/common/poppler.c: and some more #ifdefs to
+	poppler_page_render_to_pixbuf().
+
+2005-08-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpview.[ch]: minor code and formatting cleanup. 
 
 2005-08-25  Sven Neumann  <sven@gimp.org>
