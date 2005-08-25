@@ -1,3 +1,8 @@
+2005-08-25  Sven Neumann  <sven@gimp.org>
+
+	* libgimpbase/gimputils.h (gimp_canonicalize_identifier): sync
+	parameter name with implementation to please gtk-doc.
+
 2005-08-24  Tor Lillqvist  <tml@novell.com>
 
 	Make GIMP work on Win32 even if installed in a path containing

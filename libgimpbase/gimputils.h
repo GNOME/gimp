@@ -34,7 +34,7 @@ const gchar   * gimp_filename_to_utf8        (const gchar  *filename);
 gchar         * gimp_strip_uline             (const gchar  *str);
 gchar         * gimp_escape_uline            (const gchar  *str);
 
-gchar         * gimp_canonicalize_identifier (const gchar  *name);
+gchar         * gimp_canonicalize_identifier (const gchar  *identifier);
 
 GimpEnumDesc  * gimp_enum_get_desc           (GEnumClass   *enum_class,
                                               gint          value);
