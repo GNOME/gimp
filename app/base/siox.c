@@ -828,19 +828,19 @@ siox_progress_update (SioxProgressFunc  progress_callback,
 
 /**
  * siox_foreground_extract:
- * @pixels:     the tiles to extract the foreground from
- * @colormap:   colormap in case @pixels are indexed, %NULL otherwise
- * @offset_x:   horizontal offset of @pixels with respect to the @mask
- * @offset_y:   vertical offset of @pixels with respect to the @mask
- * @mask:       a mask indicating sure foreground (255), sure background (0)
- *              and undecided regions ([1..254]).
- * @x:          horizontal offset into the mask
- * @y:          vertical offset into the mask
- * @width:      width of working area on mask
- * @height:     height of working area on mask
- * @limits:     a double array with three entries specifing the accuracy,
- *              a good value is: { 0.66, 1.25, 2.5 }
- * @smoothness: boundary smoothness (a good value is 3)
+ * @pixels:      the tiles to extract the foreground from
+ * @colormap:    colormap in case @pixels are indexed, %NULL otherwise
+ * @offset_x:    horizontal offset of @pixels with respect to the @mask
+ * @offset_y:    vertical offset of @pixels with respect to the @mask
+ * @mask:        a mask indicating sure foreground (255), sure background (0)
+ *               and undecided regions ([1..254]).
+ * @x:           horizontal offset into the mask
+ * @y:           vertical offset into the mask
+ * @width:       width of working area on mask
+ * @height:      height of working area on mask
+ * @sensitivity: a double array with three entries specifing the accuracy,
+ *               a good value is: { 0.66, 1.25, 2.5 }
+ * @smoothness:  boundary smoothness (a good value is 3)
  *
  * Writes the resulting segmentation into @mask.
  */

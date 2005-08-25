@@ -1,3 +1,10 @@
+2005-08-25  Sven Neumann  <sven@gimp.org>
+
+	* app/app-sections.txt
+	* app/app.types: minor updates.
+
+	* libgimpbase/tmpl/gimputils.sgml: regenerated.
+
 2005-08-21  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am

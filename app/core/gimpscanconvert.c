@@ -586,7 +586,6 @@ gimp_scan_convert_render_value (GimpScanConvert *sc,
  * @tile_manager: the #TileManager to render to
  * @off_x:        horizontal offset into the @tile_manager
  * @off_y:        vertical offset into the @tile_manager
- * @value:        value to use for covered pixels
  *
  * This is a variant of gimp_scan_convert_render() that composes the
  * (aliased) scan conversion with the content of the @tile_manager.

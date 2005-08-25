@@ -1,5 +1,10 @@
 2005-08-25  Sven Neumann  <sven@gimp.org>
 
+	* app/base/siox.[ch]
+	* app/core/gimpscanconvert.c: fixed API docs.
+
+2005-08-25  Sven Neumann  <sven@gimp.org>
+
 	* libgimpbase/gimputils.h (gimp_canonicalize_identifier): sync
 	parameter name with implementation to please gtk-doc.
 

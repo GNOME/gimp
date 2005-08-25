@@ -3253,31 +3253,25 @@ GIMP_POSTERIZE_TOOL_GET_CLASS
 <SECTION>
 <FILE>gimprectangleoptions</FILE>
 GimpRectangleOptions
+GimpRectangleOptionsInterface
 gimp_rectangle_options_gui
 <SUBSECTION Standard>
-GimpRectangleOptionsClass
 GIMP_RECTANGLE_OPTIONS
 GIMP_IS_RECTANGLE_OPTIONS
 GIMP_TYPE_RECTANGLE_OPTIONS
-gimp_rectangle_options_get_type
-GIMP_RECTANGLE_OPTIONS_CLASS
-GIMP_IS_RECTANGLE_OPTIONS_CLASS
-GIMP_RECTANGLE_OPTIONS_GET_CLASS
+gimp_rectangle_options_interface_get_type
 </SECTION>
 
 <SECTION>
 <FILE>gimprectangletool</FILE>
 <TITLE>GimpRectangleTool</TITLE>
 GimpRectangleTool
-gimp_rectangle_tool_width_changed
+GimpRectangleToolInterface
 <SUBSECTION Standard>
-GimpRectangleToolClass
 GIMP_RECTANGLE_TOOL
 GIMP_IS_RECTANGLE_TOOL
 GIMP_TYPE_RECTANGLE_TOOL
-gimp_rectangle_tool_get_type
-GIMP_RECTANGLE_TOOL_CLASS
-GIMP_RECTANGLE_TOOL_GET_CLASS
+gimp_rectangle_tool_interface_get_type
 </SECTION>
 
 <SECTION>
