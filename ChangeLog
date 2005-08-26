@@ -1,3 +1,8 @@
+2005-08-26  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/scripts/blend-anim.scm: removed newline from
+	description.
+
 2005-08-25  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/sel2path/curve.c (new_curve_list)

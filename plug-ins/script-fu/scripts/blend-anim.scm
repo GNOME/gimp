@@ -218,11 +218,10 @@
 
 (script-fu-register "script-fu-blend-anim"
 		    _"_Blend..."
-		    "Blend two or more layers over a background, so that an 
-                     animation can be saved"
+		    "Blend two or more layers over a background, so that an animation can be saved"
 		    "Sven Neumann <sven@gimp.org>"
 		    "Sven Neumann"
-		    "1999/12/21"
+		    "1999"
 		    "RGB* GRAY*"
 		    SF-IMAGE       "Image"               0
 		    SF-DRAWABLE    "Drawable"            0
