@@ -1,3 +1,13 @@
+2005-08-26  Tor Lillqvist  <tml@novell.com>
+
+	* app/plug-in/plug-in.c (plug_in_prep_for_exec, plug_in_open):
+	Instead of passing a child_setup function whose body is ifdeffed
+	out on Win32 to g_spawn_async(), pass NULL for child_setup on
+	Win32. Newer g_spawn_async() implementations on Win32 warn if
+	child_setup functions are attempted to be used, as they don't make
+	sense because without any fork(), they are called in the parent
+	process.
+
 2005-08-26  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/scripts/blend-anim.scm: removed newline from

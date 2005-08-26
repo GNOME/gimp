@@ -102,8 +102,9 @@ static gboolean   plug_in_recv_message  (GIOChannel   *channel,
                                          GIOCondition  cond,
                                          gpointer      data);
 
+#if !defined(G_OS_WIN32) && !defined (G_WITH_CYGWIN)
 static void       plug_in_prep_for_exec (gpointer      data);
-
+#endif
 
 void
 plug_in_init (Gimp *gimp)
@@ -318,10 +319,11 @@ plug_in_unref (PlugIn *plug_in)
     }
 }
 
+#if !defined(G_OS_WIN32) && !defined (G_WITH_CYGWIN)
+
 static void
 plug_in_prep_for_exec (gpointer data)
 {
-#if !defined(G_OS_WIN32) && !defined (G_WITH_CYGWIN)
   PlugIn *plug_in = data;
 
   g_io_channel_unref (plug_in->my_read);
@@ -329,8 +331,13 @@ plug_in_prep_for_exec (gpointer data)
 
   g_io_channel_unref (plug_in->my_write);
   plug_in->my_write  = NULL;
-#endif
 }
+
+#else
+
+#define plug_in_prep_for_exec NULL
+
+#endif
 
 gboolean
 plug_in_open (PlugIn *plug_in)
