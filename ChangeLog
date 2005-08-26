@@ -1,3 +1,12 @@
+2005-08-24  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
+        * plug-ins/common/svg.c: deal with SVG API change. This is a
+        compile-time check and thus somewhat ugly because it requires a
+        recompile of the plug-in when updating librsvg to 2.11.0 or newer.
+	Fixes bug #314400.
+
 2005-08-26  Tor Lillqvist  <tml@novell.com>
 
 	* app/plug-in/plug-in.c (plug_in_prep_for_exec, plug_in_open):
