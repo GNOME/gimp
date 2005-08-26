@@ -272,6 +272,7 @@ about_dialog_add_logo (GtkWidget       *vbox,
 
   align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), align, FALSE, FALSE, 0);
+  gtk_box_reorder_child (GTK_BOX (vbox), align, 0);
   gtk_widget_show (align);
 
   dialog->logo_area = gtk_drawing_area_new ();

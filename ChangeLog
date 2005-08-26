@@ -1,3 +1,8 @@
+2005-08-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/dialogs/about-dialog.c (about_dialog_add_logo): move the
+	logo to the top of the dialog.
+
 2005-08-26  Tor Lillqvist  <tml@novell.com>
 
 	* app/plug-in/plug-in.c (plug_in_prep_for_exec, plug_in_open):
