@@ -1,3 +1,14 @@
+2005-08-27  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/jpeg/jpeg-load.c (load_image)
+	* plug-ins/jpeg/jpeg-save.c (save_image): set tile cache.
+
+2005-08-27  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/documents-commands.c 
+	documents_recreate_preview_cmd_callback): pass TRUE for replace
+	to gimp_imagefile_create_preview().
+
 2005-08-26  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/svg.c: deal with SVG API change. This is a
