@@ -313,6 +313,8 @@ get_samples_palette (GimpDrawable *drawable)
   gint     bpp, color, has_alpha, alpha;
   gint     i;
   gint     num_colors;
+  gfloat   factor;
+  gint     pal_entry;
 
   palette_name = gimp_context_get_palette ();
   gimp_palette_get_info (palette_name, &num_colors);
@@ -323,13 +325,14 @@ get_samples_palette (GimpDrawable *drawable)
   alpha     = (has_alpha ? bpp - 1 : bpp);
 
   byte_samples = g_new (guchar, NSAMPLES * bpp);
+  factor = ( (float) num_colors) / NSAMPLES;
 
   for (i = 0; i < NSAMPLES; i++)
     {
       b_samp = &byte_samples[i * bpp];
 
-      if (i < num_colors)
-        gimp_palette_entry_get_color (palette_name, i, &color_sample);
+      pal_entry = CLAMP( (int)(i * factor), 0, num_colors);
+      gimp_palette_entry_get_color (palette_name, pal_entry, &color_sample);
 
       if (color)
         gimp_rgb_get_uchar (&color_sample,
