@@ -1,8 +1,15 @@
+2005-08-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpviewrendererpalette.c
+	(gimp_view_renderer_palette_init): initialize renderer->columns
+	to != 0 to avoid floating point exceptions on initial layout
+	calculation. Fixes bug #314663.
+
 2005-08-27  Michael Schumacher  <schumaml@cvs.gnome.org>
 
 	* plug-ins/common/gradmap.c: applied a patch by David Gowers,
-	which makes palette-map behave the same as gradient-map. Fixes bug
-	313458.
+	which makes palette-map behave the same as gradient-map.
+	Fixes bug #313458.
 
 2005-08-27  Sven Neumann  <sven@gimp.org>
 

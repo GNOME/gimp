@@ -35,6 +35,9 @@
 #include "gimpviewrendererpalette.h"
 
 
+#define COLUMNS 16
+
+
 static void   gimp_view_renderer_palette_class_init (GimpViewRendererPaletteClass *klass);
 static void   gimp_view_renderer_palette_init       (GimpViewRendererPalette      *renderer);
 
@@ -93,6 +96,7 @@ gimp_view_renderer_palette_init (GimpViewRendererPalette *renderer)
 {
   renderer->cell_size = 4;
   renderer->draw_grid = FALSE;
+  renderer->columns   = COLUMNS;
 }
 
 static void
