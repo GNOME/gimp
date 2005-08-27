@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-22 01:39-0400\n"
-"PO-Revision-Date: 2005-08-22 14:29-0400\n"
+"POT-Creation-Date: 2005-08-27 17:22-0400\n"
+"PO-Revision-Date: 2005-08-27 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -549,8 +549,8 @@ msgid "Edit Channel Color"
 msgstr "Edit Channel Colour"
 
 #: app/actions/channels-commands.c:92 app/actions/channels-commands.c:125
-msgid "_Fill Opacity:"
-msgstr "_Fill Opacity:"
+msgid "_Fill opacity:"
+msgstr "_Fill opacity:"
 
 #: app/actions/channels-commands.c:118 app/actions/channels-commands.c:119
 #: app/actions/channels-commands.c:161 app/actions/channels-commands.c:165
@@ -1766,8 +1766,8 @@ msgid "Save gradient as POV-Ray"
 msgstr "Save gradient as POV-Ray"
 
 #: app/actions/gradients-actions.c:66
-msgid "_Delete Gradient..."
-msgstr "_Delete Gradient..."
+msgid "_Delete Gradient"
+msgstr "_Delete Gradient"
 
 #: app/actions/gradients-actions.c:67
 msgid "Delete gradient"
@@ -1895,42 +1895,42 @@ msgstr "_Grayscale"
 msgid "_Indexed..."
 msgstr "_Indexed..."
 
-#: app/actions/image-commands.c:194
+#: app/actions/image-commands.c:201
 msgid "Set Image Canvas Size"
 msgstr "Set Image Canvas Size"
 
-#: app/actions/image-commands.c:221 app/actions/image-commands.c:475
+#: app/actions/image-commands.c:228 app/actions/image-commands.c:487
 msgid "Resizing..."
 msgstr "Resizing..."
 
-#: app/actions/image-commands.c:244
+#: app/actions/image-commands.c:251
 msgid "Set Image Print Resolution"
 msgstr "Set Image Print Resolution"
 
-#: app/actions/image-commands.c:291
+#: app/actions/image-commands.c:298
 msgid "Flipping..."
 msgstr "Flipping..."
 
-#: app/actions/image-commands.c:312 app/pdb/drawable_transform_cmds.c:1043
+#: app/actions/image-commands.c:319 app/pdb/drawable_transform_cmds.c:1043
 #: app/pdb/drawable_transform_cmds.c:1202 app/pdb/transform_tools_cmds.c:343
 #: app/tools/gimprotatetool.c:159
 msgid "Rotating..."
 msgstr "Rotating..."
 
-#: app/actions/image-commands.c:334 app/actions/layers-commands.c:537
+#: app/actions/image-commands.c:341 app/actions/layers-commands.c:545
 msgid "Cannot crop because the current selection is empty."
 msgstr "Cannot crop because the current selection is empty."
 
-#: app/actions/image-commands.c:511
+#: app/actions/image-commands.c:523
 msgid "Change Print Size"
 msgstr "Change Print Size"
 
-#: app/actions/image-commands.c:535 app/core/gimpimage-scale.c:72
-#: app/dialogs/image-scale-dialog.c:91
+#: app/actions/image-commands.c:547 app/core/gimpimage-scale.c:72
+#: app/dialogs/image-scale-dialog.c:97
 msgid "Scale Image"
 msgstr "Scale Image"
 
-#: app/actions/image-commands.c:548 app/actions/layers-commands.c:976
+#: app/actions/image-commands.c:560 app/actions/layers-commands.c:988
 #: app/pdb/drawable_transform_cmds.c:1357
 #: app/pdb/drawable_transform_cmds.c:1516 app/pdb/transform_tools_cmds.c:464
 #: app/tools/gimpscaletool.c:153
@@ -2173,46 +2173,46 @@ msgstr "Select _Next Layer"
 msgid "Set Opacity"
 msgstr "Set Opacity"
 
-#: app/actions/layers-commands.c:198
+#: app/actions/layers-commands.c:199
 msgid "Layer Attributes"
 msgstr "Layer Attributes"
 
-#: app/actions/layers-commands.c:201
+#: app/actions/layers-commands.c:202
 msgid "Edit Layer Attributes"
 msgstr "Edit Layer Attributes"
 
-#: app/actions/layers-commands.c:234 app/actions/layers-commands.c:236
-#: app/actions/layers-commands.c:293 app/actions/layers-commands.c:297
+#: app/actions/layers-commands.c:235 app/actions/layers-commands.c:237
+#: app/actions/layers-commands.c:294 app/actions/layers-commands.c:298
 #: app/widgets/gimpdrawabletreeview.c:361 app/widgets/gimplayertreeview.c:871
 msgid "New Layer"
 msgstr "New Layer"
 
-#: app/actions/layers-commands.c:239
+#: app/actions/layers-commands.c:240
 msgid "Create a New Layer"
 msgstr "Create a New Layer"
 
-#: app/actions/layers-commands.c:472
+#: app/actions/layers-commands.c:479
 msgid "Set Layer Boundary Size"
 msgstr "Set Layer Boundary Size"
 
-#: app/actions/layers-commands.c:514 app/core/gimplayer.c:286
+#: app/actions/layers-commands.c:522 app/core/gimplayer.c:286
 msgid "Scale Layer"
 msgstr "Scale Layer"
 
-#: app/actions/layers-commands.c:547
+#: app/actions/layers-commands.c:555
 msgid "Crop Layer"
 msgstr "Crop Layer"
 
-#: app/actions/layers-commands.c:685
+#: app/actions/layers-commands.c:693
 msgid "Layer Mask to Selection"
 msgstr "Layer Mask to Selection"
 
-#: app/actions/layers-commands.c:921 app/core/gimplayer.c:1294
+#: app/actions/layers-commands.c:929 app/core/gimplayer.c:1294
 #: app/dialogs/layer-add-mask-dialog.c:61
 msgid "Add Layer Mask"
 msgstr "Add Layer Mask"
 
-#: app/actions/layers-commands.c:992 app/actions/layers-commands.c:1025
+#: app/actions/layers-commands.c:1004 app/actions/layers-commands.c:1042
 msgid "Invalid width or height. Both must be positive."
 msgstr "Invalid width or height. Both must be positive."
 
@@ -2361,8 +2361,8 @@ msgid "Duplicate pattern"
 msgstr "Duplicate pattern"
 
 #: app/actions/patterns-actions.c:65
-msgid "_Delete Pattern..."
-msgstr "_Delete Pattern..."
+msgid "_Delete Pattern"
+msgstr "_Delete Pattern"
 
 #: app/actions/patterns-actions.c:66
 msgid "Delete pattern"
@@ -2523,8 +2523,8 @@ msgid "Edit Quick Mask Color"
 msgstr "Edit Quick Mask Colour"
 
 #: app/actions/qmask-commands.c:112
-msgid "_Mask Opacity:"
-msgstr "_Mask Opacity:"
+msgid "_Mask opacity:"
+msgstr "_Mask opacity:"
 
 #: app/actions/sample-point-editor-actions.c:40
 msgid "Sample Point Menu"
@@ -2774,12 +2774,12 @@ msgid "Tool Options Menu"
 msgstr "Tool Options Menu"
 
 #: app/actions/tool-options-actions.c:60
-msgid "_Save Options to"
-msgstr "_Save Options to"
+msgid "_Save Options To"
+msgstr "_Save Options To"
 
 #: app/actions/tool-options-actions.c:64
-msgid "_Restore Options from"
-msgstr "_Restore Options from"
+msgid "_Restore Options From"
+msgstr "_Restore Options From"
 
 #: app/actions/tool-options-actions.c:68
 msgid "Re_name Saved Options"
@@ -3084,8 +3084,8 @@ msgstr "New Path Options"
 msgid "Path to Selection"
 msgstr "Path to Selection"
 
-#: app/actions/vectors-commands.c:370 app/tools/gimpvectortool.c:1935
-#: app/vectors/gimpvectors.c:237
+#: app/actions/vectors-commands.c:370 app/tools/gimpvectoroptions.c:205
+#: app/tools/gimpvectortool.c:1935 app/vectors/gimpvectors.c:237
 msgid "Stroke Path"
 msgstr "Stroke Path"
 
@@ -4767,7 +4767,7 @@ msgstr "%s Channel to Selection"
 msgid "Fuzzy Select"
 msgstr "Fuzzy Select"
 
-#: app/core/gimpchannel-select.c:493
+#: app/core/gimpchannel-select.c:493 app/tools/gimpbycolorselecttool.c:82
 msgid "Select by Color"
 msgstr "Select by Colour"
 
@@ -5601,13 +5601,13 @@ msgstr "Visit the GIMP website"
 msgid "translator-credits"
 msgstr "Adam Weinberger <adamw@gnome.org>"
 
-#: app/dialogs/about-dialog.c:688
+#: app/dialogs/about-dialog.c:689
 msgid "GIMP is brought to you by"
 msgstr "GIMP is brought to you by"
 
 #: app/dialogs/channel-options-dialog.c:144
-msgid "Channel _Name:"
-msgstr "Channel _Name:"
+msgid "Channel _name:"
+msgstr "Channel _name:"
 
 #: app/dialogs/channel-options-dialog.c:173
 msgid "Initialize from _selection"
@@ -5655,8 +5655,8 @@ msgid "Cannot convert to a palette with more than 256 colors."
 msgstr "Cannot convert to a palette with more than 256 colours."
 
 #: app/dialogs/desaturate-dialog.c:61
-msgid "Remove colors"
-msgstr "Remove colours"
+msgid "Remove Colors"
+msgstr "Remove Colours"
 
 #: app/dialogs/desaturate-dialog.c:93
 msgid "Choose shade of gray based on:"
@@ -5809,7 +5809,7 @@ msgstr "_Template:"
 msgid "Confirm Image Size"
 msgstr "Confirm Image Size"
 
-#: app/dialogs/image-new-dialog.c:301 app/dialogs/image-scale-dialog.c:198
+#: app/dialogs/image-new-dialog.c:301 app/dialogs/image-scale-dialog.c:208
 #, c-format
 msgid "You are trying to create an image with a size of %s."
 msgstr "You are trying to create an image with a size of %s."
@@ -5823,11 +5823,11 @@ msgstr ""
 "An image of the chosen size will use more memory than what is configured as "
 "\"Maximum Image Size\" in the Preferences dialogue (currently %s)."
 
-#: app/dialogs/image-scale-dialog.c:164
+#: app/dialogs/image-scale-dialog.c:174
 msgid "Confirm Scaling"
 msgstr "Confirm Scaling"
 
-#: app/dialogs/image-scale-dialog.c:204
+#: app/dialogs/image-scale-dialog.c:214
 #, c-format
 msgid ""
 "Scaling the image to the chosen size will make it use more memory than what "
@@ -5838,13 +5838,13 @@ msgstr ""
 "is configured as \"Maximum Image Size\" in the Preferences dialogue "
 "(currently %s)."
 
-#: app/dialogs/image-scale-dialog.c:219
+#: app/dialogs/image-scale-dialog.c:229
 msgid ""
 "Scaling the image to the chosen size will shrink some layers completely away."
 msgstr ""
 "Scaling the image to the chosen size will shrink away some layers completely."
 
-#: app/dialogs/image-scale-dialog.c:223
+#: app/dialogs/image-scale-dialog.c:233
 msgid "Is this what you want to do?"
 msgstr "Is this what you want to do?"
 
@@ -5864,12 +5864,12 @@ msgid "Initialize Layer Mask to:"
 msgstr "Initialize Layer Mask to:"
 
 #: app/dialogs/layer-add-mask-dialog.c:100
-msgid "In_vert Mask"
-msgstr "In_vert Mask"
+msgid "In_vert mask"
+msgstr "In_vert mask"
 
 #: app/dialogs/layer-options-dialog.c:119
-msgid "Layer _Name:"
-msgstr "Layer _Name:"
+msgid "Layer _name:"
+msgstr "Layer _name:"
 
 #. The size labels
 #: app/dialogs/layer-options-dialog.c:128 app/tools/gimpmeasuretool.c:957
@@ -5887,8 +5887,8 @@ msgid "Layer Fill Type"
 msgstr "Layer Fill Type"
 
 #: app/dialogs/layer-options-dialog.c:206
-msgid "Set Name from _Text"
-msgstr "Set Name from _Text"
+msgid "Set name from _text"
+msgstr "Set name from _text"
 
 #: app/dialogs/module-dialog.c:122
 msgid "Module Manager"
@@ -5903,8 +5903,8 @@ msgid "Autoload"
 msgstr "Autoload"
 
 #: app/dialogs/module-dialog.c:175
-msgid "Module path"
-msgstr "Module path"
+msgid "Module Path"
+msgstr "Module Path"
 
 #: app/dialogs/module-dialog.c:418
 msgid "<No modules>"
@@ -5963,12 +5963,12 @@ msgid "State:"
 msgstr "State:"
 
 #: app/dialogs/module-dialog.c:506
-msgid "Last Error:"
-msgstr "Last Error:"
+msgid "Last error:"
+msgstr "Last error:"
 
 #: app/dialogs/module-dialog.c:507
-msgid "Available Types:"
-msgstr "Available Types:"
+msgid "Available types:"
+msgstr "Available types:"
 
 #: app/dialogs/offset-dialog.c:98
 msgid "Offset Layer"
@@ -6043,8 +6043,8 @@ msgid "Palette _file"
 msgstr "Palette _file"
 
 #: app/dialogs/palette-import-dialog.c:280
-msgid "Select palette file"
-msgstr "Select palette file"
+msgid "Select Palette File"
+msgstr "Select Palette File"
 
 #. The "Import" frame
 #: app/dialogs/palette-import-dialog.c:311
@@ -6056,8 +6056,8 @@ msgid "New import"
 msgstr "New import"
 
 #: app/dialogs/palette-import-dialog.c:326
-msgid "Palette _Name:"
-msgstr "Palette _Name:"
+msgid "Palette _name:"
+msgstr "Palette _name:"
 
 #: app/dialogs/palette-import-dialog.c:332
 msgid "N_umber of colors:"
@@ -6170,8 +6170,8 @@ msgid "Custom p_adding color:"
 msgstr "Custom p_adding colour:"
 
 #: app/dialogs/preferences-dialog.c:1224
-msgid "Select custom canvas padding color"
-msgstr "Select custom canvas padding colour"
+msgid "Select Custom Canvas Padding Color"
+msgstr "Select Custom Canvas Padding Colour"
 
 #: app/dialogs/preferences-dialog.c:1293
 msgid "Preferences"
@@ -6323,8 +6323,8 @@ msgid "Web Browser"
 msgstr "Web Browser"
 
 #: app/dialogs/preferences-dialog.c:1686
-msgid "Select web browser"
-msgstr "Select web browser"
+msgid "Select Web Browser"
+msgstr "Select Web Browser"
 
 #: app/dialogs/preferences-dialog.c:1689
 msgid "_Web browser to use:"
@@ -6344,8 +6344,8 @@ msgstr "_Reset Saved Tool Options to Default Values"
 
 #. Snapping Distance
 #: app/dialogs/preferences-dialog.c:1739
-msgid "Guide and Grid Snapping"
-msgstr "Guide and Grid Snapping"
+msgid "Guide & Grid Snapping"
+msgstr "Guide & Grid Snapping"
 
 #: app/dialogs/preferences-dialog.c:1744
 msgid "_Snap distance:"
@@ -6518,12 +6518,12 @@ msgid "Display"
 msgstr "Display"
 
 #: app/dialogs/preferences-dialog.c:2117
-msgid "_Check Style:"
-msgstr "_Check Style:"
+msgid "_Check style:"
+msgstr "_Check style:"
 
 #: app/dialogs/preferences-dialog.c:2120
-msgid "Check _Size:"
-msgstr "Check _Size:"
+msgid "Check _size:"
+msgstr "Check _size:"
 
 #: app/dialogs/preferences-dialog.c:2123
 msgid "Get Monitor Resolution"
@@ -6560,32 +6560,32 @@ msgid "_RGB profile:"
 msgstr "_RGB profile:"
 
 #: app/dialogs/preferences-dialog.c:2243
-msgid "Select RGB color profile"
-msgstr "Select RGB colour profile"
+msgid "Select RGB Color Profile"
+msgstr "Select RGB Colour Profile"
 
 #: app/dialogs/preferences-dialog.c:2244
 msgid "_CMYK profile:"
 msgstr "_CMYK profile:"
 
 #: app/dialogs/preferences-dialog.c:2245
-msgid "Select CMYK color profile"
-msgstr "Select CMYK colour profile"
+msgid "Select CMYK Color Profile"
+msgstr "Select CMYK Colour Profile"
 
 #: app/dialogs/preferences-dialog.c:2246
 msgid "_Monitor profile:"
 msgstr "_Monitor profile:"
 
 #: app/dialogs/preferences-dialog.c:2247
-msgid "Select monitor color profile"
-msgstr "Select monitor colour profile"
+msgid "Select Monitor Color Profile"
+msgstr "Select Monitor Colour Profile"
 
 #: app/dialogs/preferences-dialog.c:2248
 msgid "_Print simulation profile:"
 msgstr "_Print simulation profile:"
 
 #: app/dialogs/preferences-dialog.c:2249
-msgid "Select printer color profile"
-msgstr "Select printer colour profile"
+msgid "Select Printer Color Profile"
+msgstr "Select Printer Colour Profile"
 
 #: app/dialogs/preferences-dialog.c:2258
 msgid "_Mode of operation:"
@@ -6864,8 +6864,8 @@ msgid "Layer Size"
 msgstr "Layer Size"
 
 #: app/dialogs/resize-dialog.c:289
-msgid "Resize _Layers:"
-msgstr "Resize _Layers:"
+msgid "Resize _layers:"
+msgstr "Resize _layers:"
 
 #: app/dialogs/resolution-calibrate-dialog.c:70
 msgid "Calibrate Monitor Resolution"
@@ -6909,8 +6909,8 @@ msgid "Choose Stroke Style"
 msgstr "Choose Stroke Style"
 
 #: app/dialogs/stroke-dialog.c:212
-msgid "Paint Tool:"
-msgstr "Paint Tool:"
+msgid "Paint tool:"
+msgstr "Paint tool:"
 
 #: app/dialogs/tips-dialog.c:89
 msgid "<b>Your GIMP tips file appears to be missing!</b>"
@@ -6934,12 +6934,12 @@ msgid "Show tip next time GIMP starts"
 msgstr "Show tip next time GIMP starts"
 
 #: app/dialogs/tips-dialog.c:218
-msgid "_Previous tip"
-msgstr "_Previous tip"
+msgid "_Previous Tip"
+msgstr "_Previous Tip"
 
 #: app/dialogs/tips-dialog.c:227
-msgid "_Next tip"
-msgstr "_Next tip"
+msgid "_Next Tip"
+msgstr "_Next Tip"
 
 #. This is a special string to specify the language identifier to
 #. look for in the gimp-tips.xml file. Please translate the C in it
@@ -7330,8 +7330,8 @@ msgstr ""
 "to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
 
 #: app/dialogs/user-install-dialog.c:1415
-msgid "Select swap dir"
-msgstr "Select swap dir"
+msgid "Select Swap Dir"
+msgstr "Select Swap Dir"
 
 #: app/dialogs/vectors-export-dialog.c:53
 msgid "Export Path to SVG"
@@ -7366,8 +7366,8 @@ msgid "_Scale imported paths to fit image"
 msgstr "_Scale imported paths to fit image"
 
 #: app/dialogs/vectors-options-dialog.c:118
-msgid "Path Name:"
-msgstr "Path Name:"
+msgid "Path name:"
+msgstr "Path name:"
 
 #: app/display/display-enums.c:24
 msgid "Tool icon"
@@ -7480,8 +7480,8 @@ msgid "Select Zoom Ratio"
 msgstr "Select Zoom Ratio"
 
 #: app/display/gimpdisplayshell-scale.c:645
-msgid "Zoom Ratio:"
-msgstr "Zoom Ratio:"
+msgid "Zoom ratio:"
+msgstr "Zoom ratio:"
 
 #: app/display/gimpdisplayshell-scale.c:672
 msgid "Zoom:"
@@ -7860,12 +7860,12 @@ msgstr "Free Select"
 msgid "Modify Path"
 msgstr "Modify Path"
 
-#: app/plug-in/plug-in.c:563 app/plug-in/plug-in.c:596
+#: app/plug-in/plug-in.c:607 app/plug-in/plug-in.c:640
 #, c-format
 msgid "Terminating plug-in: '%s'\n"
 msgstr "Terminating plug-in: '%s'\n"
 
-#: app/plug-in/plug-in.c:749
+#: app/plug-in/plug-in.c:793
 #, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"
@@ -8133,8 +8133,8 @@ msgid "Adaptive supersampling"
 msgstr "Adaptive supersampling"
 
 #: app/tools/gimpblendoptions.c:294
-msgid "Max Depth:"
-msgstr "Max Depth:"
+msgid "Max depth:"
+msgstr "Max depth:"
 
 #: app/tools/gimpblendoptions.c:301 app/tools/gimpbucketfilloptions.c:294
 #: app/tools/gimpselectionoptions.c:524
@@ -8235,10 +8235,6 @@ msgstr "Fill with a colour or pattern"
 #: app/tools/gimpbucketfilltool.c:94
 msgid "_Bucket Fill"
 msgstr "_Bucket Fill"
-
-#: app/tools/gimpbycolorselecttool.c:82
-msgid "Select By Color"
-msgstr "Select By Colour"
 
 #: app/tools/gimpbycolorselecttool.c:83
 msgid "Select regions by color"
@@ -8509,9 +8505,9 @@ msgstr "Curves for indexed layers cannot be adjusted."
 msgid "Cha_nnel:"
 msgstr "Cha_nnel:"
 
-#: app/tools/gimpcurvestool.c:493
-msgid "R_eset channel"
-msgstr "R_eset channel"
+#: app/tools/gimpcurvestool.c:493 app/tools/gimplevelstool.c:429
+msgid "R_eset Channel"
+msgstr "R_eset Channel"
 
 #. Horizontal button box for load / save
 #: app/tools/gimpcurvestool.c:595 app/tools/gimplevelstool.c:623
@@ -8705,8 +8701,8 @@ msgid "Hue-_Saturation..."
 msgstr "Hue-_Saturation..."
 
 #: app/tools/gimphuesaturationtool.c:171
-msgid "Adjust hue / lightness / saturation"
-msgstr "Adjust hue / lightness / saturation"
+msgid "Adjust Hue / Lightness / Saturation"
+msgstr "Adjust Hue / Lightness / Saturation"
 
 #: app/tools/gimphuesaturationtool.c:215
 msgid "Hue-Saturation operates only on RGB color layers."
@@ -8757,8 +8753,8 @@ msgid "Modify Selected Color"
 msgstr "Modify Selected Colour"
 
 #: app/tools/gimphuesaturationtool.c:458
-msgid "R_eset color"
-msgstr "R_eset colour"
+msgid "R_eset Color"
+msgstr "R_eset Colour"
 
 #: app/tools/gimpimagemaptool.c:265 app/widgets/gimpthumbbox.c:368
 msgid "_Preview"
@@ -8872,10 +8868,6 @@ msgstr "Pick gray point"
 #: app/tools/gimplevelstool.c:354
 msgid "Pick white point"
 msgstr "Pick white point"
-
-#: app/tools/gimplevelstool.c:429
-msgid "R_eset Channel"
-msgstr "R_eset Channel"
 
 #. Input levels frame
 #: app/tools/gimplevelstool.c:444
@@ -9177,8 +9169,8 @@ msgid "_Scale"
 msgstr "_Scale"
 
 #: app/tools/gimpscaletool.c:152
-msgid "Scaling information"
-msgstr "Scaling information"
+msgid "Scaling Information"
+msgstr "Scaling Information"
 
 #: app/tools/gimpscaletool.c:163
 msgid "Original Width:"
@@ -9359,12 +9351,12 @@ msgstr ""
 "spacing:"
 
 #: app/tools/gimptextoptions.c:496
-msgid "Create path from text"
-msgstr "Create path from text"
+msgid "Create Path from Text"
+msgstr "Create Path from Text"
 
 #: app/tools/gimptextoptions.c:504
-msgid "Text along path"
-msgstr "Text along path"
+msgid "Text along Path"
+msgstr "Text along Path"
 
 #: app/tools/gimptexttool.c:147
 msgid "Add text to the image"
@@ -9488,12 +9480,8 @@ msgstr ""
 "%s  Intersect"
 
 #: app/tools/gimpvectoroptions.c:194
-msgid "Create selection from path"
-msgstr "Create selection from path"
-
-#: app/tools/gimpvectoroptions.c:205
-msgid "Stroke path"
-msgstr "Stroke path"
+msgid "Create Selection from Path"
+msgstr "Create Selection from Path"
 
 #: app/tools/gimpvectortool.c:155
 msgid "Create and edit paths"
@@ -9904,8 +9892,8 @@ msgid "Event"
 msgstr "Event"
 
 #: app/widgets/gimpcontrollereditor.c:418
-msgid "_Grab Event"
-msgstr "_Grab Event"
+msgid "_Grab event"
+msgstr "_Grab event"
 
 #: app/widgets/gimpcontrollereditor.c:428
 msgid "Select the next event arriving from the controller"
@@ -10315,13 +10303,17 @@ msgstr "Background: %d, %d, %d"
 msgid "The given filename does not have any known file extension."
 msgstr "The given filename does not have any known file extension."
 
-#: app/widgets/gimpdock.c:342 app/widgets/gimpdock.c:358
-msgid "Close all tabs?"
-msgstr "Close all tabs?"
+#: app/widgets/gimpdock.c:342
+msgid "Close all Tabs?"
+msgstr "Close all Tabs?"
 
 #: app/widgets/gimpdock.c:348
 msgid "Close all Tabs"
 msgstr "Close all Tabs"
+
+#: app/widgets/gimpdock.c:358
+msgid "Close all tabs?"
+msgstr "Close all tabs?"
 
 #: app/widgets/gimpdock.c:360
 #, c-format
@@ -10362,8 +10354,8 @@ msgid "By Extension"
 msgstr "By Extension"
 
 #: app/widgets/gimpfiledialog.c:469
-msgid "File exists"
-msgstr "File exists"
+msgid "File Exists"
+msgstr "File Exists"
 
 #: app/widgets/gimpfiledialog.c:474
 msgid "_Replace"
@@ -10539,8 +10531,8 @@ msgid "Mean:"
 msgstr "Mean:"
 
 #: app/widgets/gimphistogrameditor.c:130
-msgid "Std Dev:"
-msgstr "Std Dev:"
+msgid "Std dev:"
+msgstr "Std dev:"
 
 #: app/widgets/gimphistogrameditor.c:131
 msgid "Median:"
@@ -10698,8 +10690,8 @@ msgid "%d dpi"
 msgstr "%d dpi"
 
 #: app/widgets/gimpstrokeeditor.c:201
-msgid "Line Width:"
-msgstr "Line Width:"
+msgid "Line width:"
+msgstr "Line width:"
 
 #: app/widgets/gimpstrokeeditor.c:212
 msgid "_Line Style"

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-19 00:47-0400\n"
-"PO-Revision-Date: 2005-08-19 00:14-0400\n"
+"POT-Creation-Date: 2005-08-27 17:29-0400\n"
+"PO-Revision-Date: 2005-08-27 00:14-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -138,12 +138,12 @@ msgid "Script-Fu Server Options"
 msgstr "Script-Fu Server Options"
 
 #: plug-ins/script-fu/script-fu-server.c:686
-msgid "Server Port:"
-msgstr "Server Port:"
+msgid "Server port:"
+msgstr "Server port:"
 
 #: plug-ins/script-fu/script-fu-server.c:692
-msgid "Server Logfile:"
-msgstr "Server Logfile:"
+msgid "Server logfile:"
+msgstr "Server logfile:"
 
 #: plug-ins/script-fu/script-fu.c:116
 msgid "Script-Fu _Console"
@@ -257,11 +257,11 @@ msgstr "Default bumpmap settings"
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:2
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:9
-#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:4
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:3
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:4
 #: plug-ins/script-fu/scripts/chalk.scm.h:3
 #: plug-ins/script-fu/scripts/chip-away.scm.h:6
-#: plug-ins/script-fu/scripts/chrome-logo.scm.h:4
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:3
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:3
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:4
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:5
@@ -297,11 +297,11 @@ msgstr "Font"
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:3
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:2
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:10
-#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:5
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:4
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:5
 #: plug-ins/script-fu/scripts/chalk.scm.h:4
 #: plug-ins/script-fu/scripts/chip-away.scm.h:7
-#: plug-ins/script-fu/scripts/chrome-logo.scm.h:5
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:4
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:4
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:5
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:6
@@ -367,11 +367,11 @@ msgstr "Shadow blur radius"
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:6
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:5
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:15
-#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:8
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:7
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:7
 #: plug-ins/script-fu/scripts/chalk.scm.h:5
 #: plug-ins/script-fu/scripts/chip-away.scm.h:12
-#: plug-ins/script-fu/scripts/chrome-logo.scm.h:7
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:6
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:9
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:8
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:7
@@ -410,9 +410,9 @@ msgstr "3_D Truchet..."
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:1
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:2
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:1
-#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:1
 #: plug-ins/script-fu/scripts/chalk.scm.h:1
-#: plug-ins/script-fu/scripts/chrome-logo.scm.h:2
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:1
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:1
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:1
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:1
@@ -767,20 +767,15 @@ msgstr "Gradient reverse"
 msgid "Offset (pixels)"
 msgstr "Offset (pixels)"
 
-#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:1
-#: plug-ins/script-fu/scripts/chrome-logo.scm.h:1
-msgid "Background Color"
-msgstr "Background Colour"
-
-#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:3
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
 msgid "Bo_vination..."
 msgstr "Bo_vination..."
 
-#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:6
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:5
 msgid "Spots density X"
 msgstr "Spots density X"
 
-#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:7
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:6
 msgid "Spots density Y"
 msgstr "Spots density Y"
 
@@ -864,8 +859,9 @@ msgid "Image to carve"
 msgstr "Image to carve"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:1
-msgid "Background Image"
-msgstr "Background Image"
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:1
+msgid "Background image"
+msgstr "Background image"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:2
 msgid "Carve raised text"
@@ -955,11 +951,11 @@ msgstr "Environment map"
 msgid "Highlight balance"
 msgstr "Highlight balance"
 
-#: plug-ins/script-fu/scripts/chrome-logo.scm.h:3
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:2
 msgid "C_hrome..."
 msgstr "C_hrome..."
 
-#: plug-ins/script-fu/scripts/chrome-logo.scm.h:6
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:5
 msgid "Offsets (pixels * 2)"
 msgstr "Offsets (pixels * 2)"
 
@@ -1056,10 +1052,6 @@ msgstr "Cool _Metal..."
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:2
 msgid "Effect size (pixels)"
 msgstr "Effect size (pixels)"
-
-#: plug-ins/script-fu/scripts/crystal-logo.scm.h:1
-msgid "Background image"
-msgstr "Background image"
 
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:3
 msgid "Crystal..."
@@ -1165,8 +1157,8 @@ msgid "Rows/cols"
 msgstr "Rows/cols"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:10
-msgid "_Erase every other Row..."
-msgstr "_Erase every other Row..."
+msgid "_Erase Every Other Row..."
+msgstr "_Erase Every Other Row..."
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:1
 msgid "Apply generated layermask"
@@ -1749,8 +1741,8 @@ msgid "Behavior"
 msgstr "Behaviour"
 
 #: plug-ins/script-fu/scripts/rendermap.scm.h:2
-msgid "Detail in Middle"
-msgstr "Detail in Middle"
+msgid "Detail in middle"
+msgstr "Detail in middle"
 
 #: plug-ins/script-fu/scripts/rendermap.scm.h:7
 msgid "Render _Map..."
@@ -1931,12 +1923,12 @@ msgid "Frame"
 msgstr "Frame"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:10
-msgid "Gradient: Loop Sawtooth"
-msgstr "Gradient: Loop Sawtooth"
+msgid "Gradient: loop sawtooth"
+msgstr "Gradient: loop sawtooth"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:11
-msgid "Gradient: Loop Triangle"
-msgstr "Gradient: Loop Triangle"
+msgid "Gradient: loop triangle"
+msgstr "Gradient: loop triangle"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:12
 msgid "Hexagon"

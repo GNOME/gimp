@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-03 01:44-0400\n"
-"PO-Revision-Date: 2005-08-03 20:02-0400\n"
+"POT-Creation-Date: 2005-08-27 17:24-0400\n"
+"PO-Revision-Date: 2005-08-27 20:02-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -210,85 +210,85 @@ msgstr "Palette Selection"
 msgid "Pattern Selection"
 msgstr "Pattern Selection"
 
-#: libgimp/gimpprocbrowserdialog.c:154
+#: libgimp/gimpprocbrowserdialog.c:171
 msgid "by name"
 msgstr "by name"
 
-#: libgimp/gimpprocbrowserdialog.c:155
+#: libgimp/gimpprocbrowserdialog.c:172
 msgid "by description"
 msgstr "by description"
 
-#: libgimp/gimpprocbrowserdialog.c:156
+#: libgimp/gimpprocbrowserdialog.c:173
 msgid "by help"
 msgstr "by help"
 
-#: libgimp/gimpprocbrowserdialog.c:157
+#: libgimp/gimpprocbrowserdialog.c:174
 msgid "by author"
 msgstr "by author"
 
-#: libgimp/gimpprocbrowserdialog.c:158
+#: libgimp/gimpprocbrowserdialog.c:175
 msgid "by copyright"
 msgstr "by copyright"
 
-#: libgimp/gimpprocbrowserdialog.c:159
+#: libgimp/gimpprocbrowserdialog.c:176
 msgid "by date"
 msgstr "by date"
 
-#: libgimp/gimpprocbrowserdialog.c:160
+#: libgimp/gimpprocbrowserdialog.c:177
 msgid "by type"
 msgstr "by type"
 
-#: libgimp/gimpprocbrowserdialog.c:354
+#: libgimp/gimpprocbrowserdialog.c:371
 msgid "Searching by name - please wait"
 msgstr "Searching by name - please wait"
 
-#: libgimp/gimpprocbrowserdialog.c:374
+#: libgimp/gimpprocbrowserdialog.c:391
 msgid "Searching by description - please wait"
 msgstr "Searching by description - please wait"
 
-#: libgimp/gimpprocbrowserdialog.c:382
+#: libgimp/gimpprocbrowserdialog.c:399
 msgid "Searching by help - please wait"
 msgstr "Searching by help - please wait"
 
-#: libgimp/gimpprocbrowserdialog.c:390
+#: libgimp/gimpprocbrowserdialog.c:407
 msgid "Searching by author - please wait"
 msgstr "Searching by author - please wait"
 
-#: libgimp/gimpprocbrowserdialog.c:398
+#: libgimp/gimpprocbrowserdialog.c:415
 msgid "Searching by copyright - please wait"
 msgstr "Searching by copyright - please wait"
 
-#: libgimp/gimpprocbrowserdialog.c:406
+#: libgimp/gimpprocbrowserdialog.c:423
 msgid "Searching by date - please wait"
 msgstr "Searching by date - please wait"
 
-#: libgimp/gimpprocbrowserdialog.c:414
+#: libgimp/gimpprocbrowserdialog.c:431
 msgid "Searching by type - please wait"
 msgstr "Searching by type - please wait"
 
-#: libgimp/gimpprocbrowserdialog.c:422
+#: libgimp/gimpprocbrowserdialog.c:439
 msgid "Searching - please wait"
 msgstr "Searching - please wait"
 
-#: libgimp/gimpprocbrowserdialog.c:430
+#: libgimp/gimpprocbrowserdialog.c:447
 #, c-format
 msgid "%d Procedures"
 msgstr "%d Procedures"
 
-#: libgimp/gimpprocbrowserdialog.c:437
+#: libgimp/gimpprocbrowserdialog.c:454
 msgid "No matches for your query"
 msgstr "No matches for your query"
 
-#: libgimp/gimpprocbrowserdialog.c:440
+#: libgimp/gimpprocbrowserdialog.c:457
 msgid "1 procedure matches your query"
 msgstr "1 procedure matches your query"
 
-#: libgimp/gimpprocbrowserdialog.c:443
+#: libgimp/gimpprocbrowserdialog.c:460
 #, c-format
 msgid "%d procedures match your query"
 msgstr "%d procedures match your query"
 
-#: libgimp/gimpprocbrowserdialog.c:491
+#: libgimp/gimpprocbrowserdialog.c:508
 msgid "No matches"
 msgstr "No matches"
 
@@ -425,28 +425,28 @@ msgid "Large"
 msgstr "Large"
 
 #: libgimpbase/gimpbaseenums.c:228
-msgid "Light Checks"
-msgstr "Light Checks"
+msgid "Light checks"
+msgstr "Light checks"
 
 #: libgimpbase/gimpbaseenums.c:229
-msgid "Mid-Tone Checks"
-msgstr "Mid-Tone Checks"
+msgid "Mid-tone checks"
+msgstr "Mid-tone checks"
 
 #: libgimpbase/gimpbaseenums.c:230
-msgid "Dark Checks"
-msgstr "Dark Checks"
+msgid "Dark checks"
+msgstr "Dark checks"
 
 #: libgimpbase/gimpbaseenums.c:231
-msgid "White Only"
-msgstr "White Only"
+msgid "White only"
+msgstr "White only"
 
 #: libgimpbase/gimpbaseenums.c:232
-msgid "Gray Only"
-msgstr "Gray Only"
+msgid "Gray only"
+msgstr "Gray only"
 
 #: libgimpbase/gimpbaseenums.c:233
-msgid "Black Only"
-msgstr "Black Only"
+msgid "Black only"
+msgstr "Black only"
 
 #: libgimpbase/gimpbaseenums.c:261
 msgid "Image source"
@@ -748,8 +748,8 @@ msgid "Perceptual"
 msgstr "Perceptual"
 
 #: libgimpconfig/gimpcolorconfig-enums.c:57 modules/cdisplay_proof.c:56
-msgid "Relative Colorimetric"
-msgstr "Relative Colourimetric"
+msgid "Relative colorimetric"
+msgstr "Relative colourimetric"
 
 #: libgimpconfig/gimpcolorconfig-enums.c:58
 #: libgimpwidgets/gimpwidgetsenums.c:93 modules/cdisplay_proof.c:57
@@ -757,8 +757,8 @@ msgid "Saturation"
 msgstr "Saturation"
 
 #: libgimpconfig/gimpcolorconfig-enums.c:59 modules/cdisplay_proof.c:58
-msgid "Absolute Colorimetric"
-msgstr "Absolute Colourimetric"
+msgid "Absolute colorimetric"
+msgstr "Absolute colourimetric"
 
 #: libgimpconfig/gimpcolorconfig-enums.c:88
 msgid "Ask"
@@ -949,8 +949,8 @@ msgid "Hexadecimal color notation as used in HTML and CSS"
 msgstr "Hexadecimal colour notation as used in HTML and CSS"
 
 #: libgimpwidgets/gimpcolorselection.c:286
-msgid "HTML _Notation:"
-msgstr "HTML _Notation:"
+msgid "HTML _notation:"
+msgstr "HTML _notation:"
 
 #: libgimpwidgets/gimpfileentry.c:351
 msgid "Select Folder"
@@ -1001,7 +1001,7 @@ msgstr "Check Style"
 msgid "_Preview"
 msgstr "_Preview"
 
-#: libgimpwidgets/gimppropwidgets.c:1807
+#: libgimpwidgets/gimppropwidgets.c:1868
 #, c-format
 msgid "This text input field is limited to %d characters."
 msgstr "This text input field is limited to %d characters."
@@ -1184,8 +1184,8 @@ msgid "Color Deficient Vision"
 msgstr "Colour Deficient Vision"
 
 #: modules/cdisplay_colorblind.c:503
-msgid "Color _Deficiency Type:"
-msgstr "Colour _Deficiency Type:"
+msgid "Color _deficiency type:"
+msgstr "Colour _deficiency type:"
 
 #: modules/cdisplay_gamma.c:91
 msgid "Gamma color display filter"
@@ -1208,8 +1208,8 @@ msgid "Contrast"
 msgstr "Contrast"
 
 #: modules/cdisplay_highcontrast.c:251
-msgid "Contrast C_ycles:"
-msgstr "Contrast C_ycles:"
+msgid "Contrast c_ycles:"
+msgstr "Contrast c_ycles:"
 
 #: modules/cdisplay_lcms.c:105
 msgid "Color management display filter using ICC color profiles"
@@ -1308,8 +1308,8 @@ msgid "Black"
 msgstr "Black"
 
 #: modules/colorsel_cmyk.c:191
-msgid "Black _Pullout:"
-msgstr "Black _Pullout:"
+msgid "Black _pullout:"
+msgstr "Black _pullout:"
 
 #: modules/colorsel_cmyk.c:208
 msgid "The percentage of black to pull out of the colored inks."
