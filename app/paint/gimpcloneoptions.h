@@ -40,6 +40,7 @@ struct _GimpCloneOptions
 
   GimpCloneType       clone_type;
   GimpCloneAlignMode  align_mode;
+  gboolean            sample_merged;
 };
 
 

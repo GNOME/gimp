@@ -1,3 +1,42 @@
+2005-08-28  Michael Natterer  <mitch@gimp.org>
+
+	Immplement "Sample Merged" for the clone tool. Fixes bug #123627.
+
+	* app/paint/gimppaintcore.[ch] (struct GimpPaintCore): added
+	members "saved_proj_tiles" which stores the unmodified projection,
+	"orig_proj_buf" which stores the unmodified temp paint application
+	buf and "use_saved_proj" which controls if all the additional
+	stuff should be allocated and managed.
+
+	(gimp_paint_core_start): allocate the saved_proj_tiles if needed.
+
+	(gimp_paint_core_get_orig_proj): new function like
+	gimp_paint_core_get_orig_image() which returns unmodified
+	projection pixels for paint application.
+
+	(gimp_paint_core_validate_saved_proj_tiles): new function like
+	gimp_paint_core_validate_undo_tiles() which copies the tiles that
+	will be dirtied to saved_proj_tiles.
+
+	(gimp_paint_core_paste): call above save_proj_tiles() so
+	projection tiles are saved before dirtying them.
+
+	* app/paint/gimpclone.[ch]: replaced member src_drawable by
+	src_pickable and use the image's projection if sample_merged it
+	TRUE. Adjust src offsets accordingly and use GimpPaintCore's new
+	get_orig_proj() API to get the src pixels.
+
+	* app/paint/gimpcloneoptions.[ch]: added boolean "sample_merged"
+	property.
+
+	* app/tools/gimpclonetool.c: follow GimpClone's src_drawable ->
+	src_pickable change.
+
+	(gimp_clone_tool_button_press): set the paint_core's
+	"use_saved_proj" boolean before chaining up.
+
+	(gimp_clone_options_gui): add a "Sample Merged" toggle button.
+
 2005-08-28  Manish Singh  <yosh@gimp.org>
 
 	* m4macros/pythondev.m4: python headers on Win32 don't live in a

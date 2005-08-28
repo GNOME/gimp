@@ -160,8 +160,13 @@ gimp_clone_tool_button_press (GimpTool        *tool,
                               GdkModifierType  state,
                               GimpDisplay     *gdisp)
 {
-  GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (tool);
-  GimpCloneTool *clone_tool = GIMP_CLONE_TOOL (tool);
+  GimpPaintTool    *paint_tool = GIMP_PAINT_TOOL (tool);
+  GimpCloneTool    *clone_tool = GIMP_CLONE_TOOL (tool);
+  GimpCloneOptions *options;
+
+  options = GIMP_CLONE_OPTIONS (tool->tool_info->tool_options);
+
+  paint_tool->core->use_saved_proj = FALSE;
 
   if ((state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK)) == GDK_CONTROL_MASK)
     {
@@ -181,6 +186,13 @@ gimp_clone_tool_button_press (GimpTool        *tool,
   else
     {
       GIMP_CLONE (paint_tool->core)->set_source = FALSE;
+
+      if (options->clone_type == GIMP_IMAGE_CLONE &&
+          options->sample_merged                  &&
+          gdisp == clone_tool->src_gdisp)
+        {
+          paint_tool->core->use_saved_proj = TRUE;
+        }
     }
 
   GIMP_TOOL_CLASS (parent_class)->button_press (tool, coords, time, state,
@@ -232,7 +244,7 @@ gimp_clone_tool_cursor_update (GimpTool        *tool,
     {
       if ((state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK)) == GDK_CONTROL_MASK)
         ctype = GIMP_CURSOR_CROSSHAIR_SMALL;
-      else if (! GIMP_CLONE (GIMP_PAINT_TOOL (tool)->core)->src_drawable)
+      else if (! GIMP_CLONE (GIMP_PAINT_TOOL (tool)->core)->src_pickable)
         ctype = GIMP_CURSOR_BAD;
     }
 
@@ -252,7 +264,7 @@ gimp_clone_tool_oper_update (GimpTool        *tool,
   GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, gdisp);
 
   if (GIMP_CLONE_OPTIONS (options)->clone_type == GIMP_IMAGE_CLONE &&
-      GIMP_CLONE (GIMP_PAINT_TOOL (tool)->core)->src_drawable == NULL)
+      GIMP_CLONE (GIMP_PAINT_TOOL (tool)->core)->src_pickable == NULL)
     {
       gimp_tool_replace_status (tool, gdisp,
                                 _("Ctrl-Click to set a clone source."));
@@ -271,14 +283,15 @@ gimp_clone_tool_draw (GimpDrawTool *draw_tool)
 
       options = (GimpCloneOptions *) tool->tool_info->tool_options;
 
-      if (options->clone_type == GIMP_IMAGE_CLONE && clone->src_drawable)
+      if (options->clone_type == GIMP_IMAGE_CLONE && clone->src_pickable)
         {
-          gint           off_x;
-          gint           off_y;
+          gint           off_x = 0;
+          gint           off_y = 0;
           GimpDisplay   *tmp_gdisp;
           GimpCloneTool *clone_tool = GIMP_CLONE_TOOL (draw_tool);
 
-          gimp_item_offsets (GIMP_ITEM (clone->src_drawable), &off_x, &off_y);
+          if (GIMP_IS_DRAWABLE (clone->src_pickable))
+            gimp_item_offsets (GIMP_ITEM (clone->src_pickable), &off_x, &off_y);
 
           tmp_gdisp = draw_tool->gdisp;
           draw_tool->gdisp = clone_tool->src_gdisp;
@@ -309,6 +322,7 @@ gimp_clone_options_gui (GimpToolOptions *tool_options)
   GtkWidget *vbox;
   GtkWidget *frame;
   GtkWidget *hbox;
+  GtkWidget *button;
 
   vbox = gimp_paint_options_gui (tool_options);
 
@@ -326,6 +340,11 @@ gimp_clone_options_gui (GimpToolOptions *tool_options)
                                           0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
+
+  button = gimp_prop_check_button_new (config, "sample-merged",
+                                       _("Sample Merged"));
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
   return vbox;
 }
