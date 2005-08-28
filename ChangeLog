@@ -18,7 +18,7 @@
 	gimp_paint_core_validate_undo_tiles() which copies the tiles that
 	will be dirtied to saved_proj_tiles.
 
-	(gimp_paint_core_paste): call above save_proj_tiles() so
+	(gimp_paint_core_paste): call above validate_saved_proj_tiles() so
 	projection tiles are saved before dirtying them.
 
 	* app/paint/gimpclone.[ch]: replaced member src_drawable by
