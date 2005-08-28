@@ -1,3 +1,8 @@
+2005-08-28  Manish Singh  <yosh@gimp.org>
+
+	* m4macros/pythondev.m4: python headers on Win32 don't live in a
+	versioned subdir. Handle that case.
+
 2005-08-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpviewrendererpalette.c
