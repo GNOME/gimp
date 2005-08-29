@@ -40,7 +40,7 @@ struct _GimpClone
 
   gboolean      set_source;
 
-  GimpPickable *src_pickable;
+  GimpDrawable *src_drawable;
   gint          src_x;
   gint          src_y;
 

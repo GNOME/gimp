@@ -1,5 +1,27 @@
 2005-08-29  Michael Natterer  <mitch@gimp.org>
 
+	The previous commit added tons of code just to completely break
+	clone align behavior. Reverted lots of the changes and do the
+	sample-merged stuff at the innermost place (gimp_clone_motion).
+	This change also enables changing sample-merged between paint
+	strokes.
+
+	* app/paint/gimpclone.[ch] (struct GimpClone): changed member
+	"src_pickable" back to "src_drawable".
+
+	(gimp_clone_paint): completely reverted.
+
+	(gimp_clone_motion): do the drawable/projection -> pickable
+	stuff and drawable offset handling here.
+
+	Fixed signal handling to connect to the drawable's "removed"
+	signal (not "disconnect", eek). Disconnect from the signal once
+	the drawable has been removed.
+
+	* app/tools/gimpclonetool.c: changed accordingly.
+
+2005-08-29  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/common/gif.c: added toggles which allow to always use
 	the frame delay and disposal entered in the dialog, overriding the
 	ones specified in the layer names. Fixes bug #314726. Also fixed
@@ -16,7 +38,7 @@
 
 2005-08-28  Michael Natterer  <mitch@gimp.org>
 
-	Immplement "Sample Merged" for the clone tool. Fixes bug #123627.
+	Implement "Sample Merged" for the clone tool. Fixes bug #123627.
 
 	* app/paint/gimppaintcore.[ch] (struct GimpPaintCore): added
 	members "saved_proj_tiles" which stores the unmodified projection,

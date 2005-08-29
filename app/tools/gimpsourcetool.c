@@ -244,7 +244,7 @@ gimp_clone_tool_cursor_update (GimpTool        *tool,
     {
       if ((state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK)) == GDK_CONTROL_MASK)
         ctype = GIMP_CURSOR_CROSSHAIR_SMALL;
-      else if (! GIMP_CLONE (GIMP_PAINT_TOOL (tool)->core)->src_pickable)
+      else if (! GIMP_CLONE (GIMP_PAINT_TOOL (tool)->core)->src_drawable)
         ctype = GIMP_CURSOR_BAD;
     }
 
@@ -264,7 +264,7 @@ gimp_clone_tool_oper_update (GimpTool        *tool,
   GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, gdisp);
 
   if (GIMP_CLONE_OPTIONS (options)->clone_type == GIMP_IMAGE_CLONE &&
-      GIMP_CLONE (GIMP_PAINT_TOOL (tool)->core)->src_pickable == NULL)
+      GIMP_CLONE (GIMP_PAINT_TOOL (tool)->core)->src_drawable == NULL)
     {
       gimp_tool_replace_status (tool, gdisp,
                                 _("Ctrl-Click to set a clone source."));
@@ -283,15 +283,14 @@ gimp_clone_tool_draw (GimpDrawTool *draw_tool)
 
       options = (GimpCloneOptions *) tool->tool_info->tool_options;
 
-      if (options->clone_type == GIMP_IMAGE_CLONE && clone->src_pickable)
+      if (options->clone_type == GIMP_IMAGE_CLONE && clone->src_drawable)
         {
-          gint           off_x = 0;
-          gint           off_y = 0;
+          gint           off_x;
+          gint           off_y;
           GimpDisplay   *tmp_gdisp;
           GimpCloneTool *clone_tool = GIMP_CLONE_TOOL (draw_tool);
 
-          if (GIMP_IS_DRAWABLE (clone->src_pickable))
-            gimp_item_offsets (GIMP_ITEM (clone->src_pickable), &off_x, &off_y);
+          gimp_item_offsets (GIMP_ITEM (clone->src_drawable), &off_x, &off_y);
 
           tmp_gdisp = draw_tool->gdisp;
           draw_tool->gdisp = clone_tool->src_gdisp;

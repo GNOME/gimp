@@ -74,8 +74,8 @@ static void   gimp_clone_line_pattern     (GimpImage        *dest,
                                            gint              bytes,
                                            gint              width);
 
-static void   gimp_clone_set_src_pickable (GimpClone        *clone,
-                                           GimpPickable     *pickable);
+static void   gimp_clone_set_src_drawable (GimpClone        *clone,
+                                           GimpDrawable     *drawable);
 
 
 static GimpBrushCoreClass *parent_class = NULL;
@@ -137,7 +137,7 @@ gimp_clone_init (GimpClone *clone)
 {
   clone->set_source   = FALSE;
 
-  clone->src_pickable = NULL;
+  clone->src_drawable = NULL;
   clone->src_x        = 0.0;
   clone->src_y        = 0.0;
 
@@ -165,27 +165,10 @@ gimp_clone_paint (GimpPaintCore    *paint_core,
     case GIMP_PAINT_STATE_INIT:
       if (clone->set_source)
         {
+          gimp_clone_set_src_drawable (clone, drawable);
+
           clone->src_x = paint_core->cur_coords.x;
           clone->src_y = paint_core->cur_coords.y;
-
-          if (options->sample_merged)
-            {
-              GimpItem  *item   = GIMP_ITEM (drawable);
-              GimpImage *gimage = gimp_item_get_image (item);
-              gint       off_x, off_y;
-
-              gimp_item_offsets (item, &off_x, &off_y);
-
-              clone->src_x += off_x;
-              clone->src_y += off_y;
-
-              gimp_clone_set_src_pickable (clone,
-                                           GIMP_PICKABLE (gimage->projection));
-            }
-          else
-            {
-              gimp_clone_set_src_pickable (clone, GIMP_PICKABLE (drawable));
-            }
 
           clone->first_stroke = TRUE;
         }
@@ -209,16 +192,6 @@ gimp_clone_paint (GimpPaintCore    *paint_core,
 
           clone->src_x = paint_core->cur_coords.x;
           clone->src_y = paint_core->cur_coords.y;
-
-          if (options->sample_merged)
-            {
-              gint off_x, off_y;
-
-              gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
-
-              clone->src_x += off_x;
-              clone->src_y += off_y;
-            }
 
           clone->first_stroke = TRUE;
         }
@@ -275,7 +248,8 @@ gimp_clone_motion (GimpPaintCore    *paint_core,
   GimpContext         *context          = GIMP_CONTEXT (paint_options);
   GimpPressureOptions *pressure_options = paint_options->pressure_options;
   GimpImage           *gimage;
-  GimpImage           *src_gimage = NULL;
+  GimpImage           *src_gimage       = NULL;
+  GimpPickable        *src_pickable     = NULL;
   guchar              *s;
   guchar              *d;
   TempBuf             *area;
@@ -303,13 +277,23 @@ gimp_clone_motion (GimpPaintCore    *paint_core,
   /*  Make sure we still have a source if we are doing image cloning */
   if (options->clone_type == GIMP_IMAGE_CLONE)
     {
-      if (! clone->src_pickable)
+      if (! clone->src_drawable)
         return;
 
-      src_gimage = gimp_pickable_get_image (clone->src_pickable);
+      src_pickable = GIMP_PICKABLE (clone->src_drawable);
+      src_gimage   = gimp_pickable_get_image (src_pickable);
 
-      if (! src_gimage)
-        return;
+      if (options->sample_merged)
+        {
+          gint off_x, off_y;
+
+          src_pickable = GIMP_PICKABLE (src_gimage->projection);
+
+          gimp_item_offsets (GIMP_ITEM (clone->src_drawable), &off_x, &off_y);
+
+          offset_x += off_x;
+          offset_y += off_y;
+        }
     }
 
   area = gimp_paint_core_get_paint_area (paint_core, drawable, paint_options);
@@ -322,7 +306,7 @@ gimp_clone_motion (GimpPaintCore    *paint_core,
       /*  Set the paint area to transparent  */
       temp_buf_data_clear (area);
 
-      src_tiles = gimp_pickable_get_tiles (clone->src_pickable);
+      src_tiles = gimp_pickable_get_tiles (src_pickable);
 
       x1 = CLAMP (area->x + offset_x,
                   0, tile_manager_width  (src_tiles));
@@ -342,9 +326,8 @@ gimp_clone_motion (GimpPaintCore    *paint_core,
        *  Otherwise, we need a call to get_orig_image to make sure
        *  we get a copy of the unblemished (offset) image
        */
-      if ((  options->sample_merged && (gimage != src_gimage)) ||
-          (! options->sample_merged && (clone->src_pickable !=
-                                        (GimpPickable *) drawable)))
+      if ((  options->sample_merged && (src_gimage          != gimage)) ||
+          (! options->sample_merged && (clone->src_drawable != drawable)))
         {
           pixel_region_init (&srcPR, src_tiles,
                              x1, y1, (x2 - x1), (y2 - y1), FALSE);
@@ -356,11 +339,11 @@ gimp_clone_motion (GimpPaintCore    *paint_core,
           /*  get the original image  */
           if (options->sample_merged)
             orig = gimp_paint_core_get_orig_proj (paint_core,
-                                                  clone->src_pickable,
+                                                  src_pickable,
                                                   x1, y1, x2, y2);
           else
             orig = gimp_paint_core_get_orig_image (paint_core,
-                                                   GIMP_DRAWABLE (clone->src_pickable),
+                                                   GIMP_DRAWABLE (src_pickable),
                                                    x1, y1, x2, y2);
 
           srcPR.bytes     = orig->bytes;
@@ -419,7 +402,7 @@ gimp_clone_motion (GimpPaintCore    *paint_core,
             {
             case GIMP_IMAGE_CLONE:
               gimp_clone_line_image (gimage, src_gimage,
-                                     drawable, clone->src_pickable,
+                                     drawable, src_pickable,
                                      s, d,
                                      srcPR.bytes, destPR.bytes, destPR.w);
               s += srcPR.rowstride;
@@ -527,31 +510,35 @@ gimp_clone_line_pattern (GimpImage    *dest,
 }
 
 static void
-gimp_clone_src_pickable_disconnect_cb (GimpPickable *pickable,
-                                       GimpClone    *clone)
+gimp_clone_src_drawable_removed (GimpDrawable *drawable,
+                                 GimpClone    *clone)
 {
-  if (pickable == clone->src_pickable)
+  if (drawable == clone->src_drawable)
     {
-      clone->src_pickable = NULL;
+      clone->src_drawable = NULL;
     }
+
+  g_signal_handlers_disconnect_by_func (drawable,
+                                        gimp_clone_src_drawable_removed,
+                                        clone);
 }
 
 static void
-gimp_clone_set_src_pickable (GimpClone    *clone,
-                             GimpPickable *pickable)
+gimp_clone_set_src_drawable (GimpClone    *clone,
+                             GimpDrawable *drawable)
 {
-  if (clone->src_pickable == pickable)
+  if (clone->src_drawable == drawable)
     return;
 
-  if (clone->src_pickable)
-    g_signal_handlers_disconnect_by_func (clone->src_pickable,
-                                          gimp_clone_src_pickable_disconnect_cb,
+  if (clone->src_drawable)
+    g_signal_handlers_disconnect_by_func (clone->src_drawable,
+                                          gimp_clone_src_drawable_removed,
                                           clone);
 
-  clone->src_pickable = pickable;
+  clone->src_drawable = drawable;
 
-  if (clone->src_pickable)
-    g_signal_connect (clone->src_pickable, "disconnect",
-                      G_CALLBACK (gimp_clone_src_pickable_disconnect_cb),
+  if (clone->src_drawable)
+    g_signal_connect (clone->src_drawable, "removed",
+                      G_CALLBACK (gimp_clone_src_drawable_removed),
                       clone);
 }
