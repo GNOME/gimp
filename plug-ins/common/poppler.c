@@ -696,12 +696,12 @@ load_dialog (PopplerDocument  *doc,
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Load PDF"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Import from PDF"), PLUG_IN_BINARY,
                             NULL, 0,
                             gimp_standard_help_func, LOAD_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            _("_Import"),     GTK_RESPONSE_OK,
 
                             NULL);
 
