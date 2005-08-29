@@ -316,11 +316,13 @@ enum
 
 typedef struct
 {
-  gint interlace;
-  gint save_comment;
-  gint loop;
-  gint default_delay;
-  gint default_dispose;
+  gint     interlace;
+  gint     save_comment;
+  gint     loop;
+  gint     default_delay;
+  gint     default_dispose;
+  gboolean always_use_default_delay;
+  gboolean always_use_default_dispose;
 } GIFSaveVals;
 
 
@@ -369,7 +371,9 @@ static GIFSaveVals gsvals =
   TRUE,    /* save comment                         */
   TRUE,    /* loop infinitely                      */
   100,     /* default_delay between frames (100ms) */
-  0        /* default_dispose = "don't care"       */
+  0,       /* default_dispose = "don't care"       */
+  FALSE,   /* don't always use default_delay       */
+  FALSE    /* don't always use default_dispose     */
 };
 
 
@@ -1125,7 +1129,7 @@ save_image (const gchar *filename,
 
       if (is_gif89)
 	{
-	  if (i > 0)
+	  if (i > 0 && !gsvals.always_use_default_dispose)
 	    {
 	      layer_name = gimp_drawable_get_name (layers[i - 1]);
 	      Disposal = parse_disposal_tag (layer_name);
@@ -1138,7 +1142,7 @@ save_image (const gchar *filename,
 	  Delay89 = parse_ms_tag (layer_name);
 	  g_free (layer_name);
 
-	  if (Delay89 < 0)
+	  if (Delay89 < 0 || gsvals.always_use_default_delay)
 	    Delay89 = (gsvals.default_delay + 5) / 10;
 	  else
 	    Delay89 = (Delay89 + 5) / 10;
@@ -1285,7 +1289,7 @@ save_dialog (gint32 image_ID)
   vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
-  toggle = gtk_check_button_new_with_mnemonic (_("_Interlace"));
+  toggle = gtk_check_button_new_with_mnemonic (_("I_nterlace"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), gsvals.interlace);
   gtk_widget_show (toggle);
@@ -1377,7 +1381,7 @@ save_dialog (gint32 image_ID)
   hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  label = gtk_label_new (_("_Delay between frames where unspecified:"));
+  label = gtk_label_new_with_mnemonic (_("_Delay between frames where unspecified:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -1385,6 +1389,8 @@ save_dialog (gint32 image_ID)
 				     0, 65000, 10, 100, 0, 1, 0);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
+
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
 
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
@@ -1400,7 +1406,7 @@ save_dialog (gint32 image_ID)
   hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  label = gtk_label_new (_("Frame disposal where unspecified: "));
+  label = gtk_label_new_with_mnemonic (_("_Frame disposal where unspecified:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -1414,12 +1420,35 @@ save_dialog (gint32 image_ID)
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
                                  gsvals.default_dispose);
 
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
+
   g_signal_connect (combo, "changed",
                     G_CALLBACK (gimp_int_combo_box_get_active),
                     &gsvals.default_dispose);
 
   gtk_box_pack_start (GTK_BOX (hbox), combo, FALSE, FALSE, 0);
   gtk_widget_show (combo);
+
+  /* The "Always use default values" toggles */
+  toggle = gtk_check_button_new_with_mnemonic (_("_Use delay entered above for all frames"));
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+                                gsvals.always_use_default_delay);
+  gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &gsvals.always_use_default_delay);
+
+  toggle = gtk_check_button_new_with_mnemonic (_("U_se disposal entered above for all frames"));
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+                                gsvals.always_use_default_dispose);
+  gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &gsvals.always_use_default_dispose);
 
   gtk_widget_show (hbox);
   gtk_widget_show (vbox);

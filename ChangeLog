@@ -1,4 +1,11 @@
-2005-08-29  Karine Delvare	<kdelvare@nerim.net>
+2005-08-29  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/gif.c: added toggles which allow to always use
+	the frame delay and disposal entered in the dialog, overriding the
+	ones specified in the layer names. Fixes bug #314726. Also fixed
+	missing and non-working mnemonics.
+
+2005-08-29  Karine Delvare  <kdelvare@nerim.net>
 
 	* app/tools/gimprectangletool.c: fix canceling the tool.
 
