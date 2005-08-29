@@ -1858,23 +1858,26 @@ rectangle_response (GtkWidget         *widget,
 {
   GimpTool                   *tool = GIMP_TOOL (rectangle);
   GimpRectangleToolInterface *tool_iface;
-  gboolean                    finish;
-
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (rectangle));
+  gboolean                    finish = TRUE;
 
   tool_iface = GIMP_RECTANGLE_TOOL_GET_INTERFACE (rectangle);
 
-  g_return_if_fail (tool_iface->get_x1 && tool_iface->get_y1
-      && tool_iface->get_x2 && tool_iface->get_y2);
+  if (response_id == GIMP_RECTANGLE_MODE_EXECUTE)
+    {
+      gimp_draw_tool_pause (GIMP_DRAW_TOOL (rectangle));
 
-  finish = gimp_rectangle_tool_execute (GIMP_RECTANGLE_TOOL (tool),
-                                        tool_iface->get_x1 (rectangle), tool_iface->get_y1 (rectangle),
-                                        tool_iface->get_x2 (rectangle) - tool_iface->get_x1 (rectangle),
-                                        tool_iface->get_y2 (rectangle) - tool_iface->get_y1 (rectangle));
+      g_return_if_fail (tool_iface->get_x1 && tool_iface->get_y1
+        && tool_iface->get_x2 && tool_iface->get_y2);
 
-  rectangle_recalc (rectangle);
+      finish = gimp_rectangle_tool_execute (GIMP_RECTANGLE_TOOL (tool),
+                                            tool_iface->get_x1 (rectangle), tool_iface->get_y1 (rectangle),
+                                            tool_iface->get_x2 (rectangle) - tool_iface->get_x1 (rectangle),
+                                            tool_iface->get_y2 (rectangle) - tool_iface->get_y1 (rectangle));
 
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (rectangle));
+      rectangle_recalc (rectangle);
+
+      gimp_draw_tool_resume (GIMP_DRAW_TOOL (rectangle));
+    }
 
   if (finish)
     {
