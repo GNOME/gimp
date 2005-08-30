@@ -1,3 +1,12 @@
+2005-08-31  Michael Natterer  <mitch@gimp.org>
+
+	* app/dialogs/preferences-dialog.c
+	(prefs_check_button_add_with_icon): added optional size group
+	parameter and add the icon to the group.
+
+	(prefs_dialog_new): align the icons on the tool options and
+	toolbox pages.
+
 2005-08-29  Michael Natterer  <mitch@gimp.org>
 
 	The previous commit added tons of code just to completely break

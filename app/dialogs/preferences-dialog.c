@@ -1010,11 +1010,12 @@ prefs_check_button_add (GObject     *config,
 }
 
 static GtkWidget *
-prefs_check_button_add_with_icon (GObject     *config,
-                                  const gchar *property_name,
-                                  const gchar *label,
-                                  const gchar *stock_id,
-                                  GtkBox      *vbox)
+prefs_check_button_add_with_icon (GObject      *config,
+                                  const gchar  *property_name,
+                                  const gchar  *label,
+                                  const gchar  *stock_id,
+                                  GtkBox       *vbox,
+                                  GtkSizeGroup *group)
 {
   GtkWidget *button;
   GtkWidget *hbox;
@@ -1035,6 +1036,9 @@ prefs_check_button_add_with_icon (GObject     *config,
 
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
+
+  if (group)
+    gtk_size_group_add_widget (group, image);
 
   return button;
 }
@@ -1734,7 +1738,6 @@ prefs_dialog_new (Gimp       *gimp,
 
   g_object_set_data (G_OBJECT (button), "clear-button", button2);
 
-
   /*  Snapping Distance  */
   vbox2 = prefs_frame_new (_("Guide & Grid Snapping"),
                            GTK_CONTAINER (vbox), FALSE);
@@ -1752,19 +1755,22 @@ prefs_dialog_new (Gimp       *gimp,
                             _("Default _interpolation:"),
                             GTK_TABLE (table), 0, size_group);
 
+  g_object_unref (size_group);
+  size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+
   /*  Global Brush, Pattern, ...  */
   vbox2 = prefs_frame_new (_("Paint Options Shared Between Tools"),
                            GTK_CONTAINER (vbox), FALSE);
 
   prefs_check_button_add_with_icon (object, "global-brush",
                                     _("_Brush"),    GIMP_STOCK_BRUSH,
-                                    GTK_BOX (vbox2));
+                                    GTK_BOX (vbox2), size_group);
   prefs_check_button_add_with_icon (object, "global-pattern",
                                     _("_Pattern"),  GIMP_STOCK_PATTERN,
-                                    GTK_BOX (vbox2));
+                                    GTK_BOX (vbox2), size_group);
   prefs_check_button_add_with_icon (object, "global-gradient",
                                     _("_Gradient"), GIMP_STOCK_GRADIENT,
-                                    GTK_BOX (vbox2));
+                                    GTK_BOX (vbox2), size_group);
 
   vbox2 = prefs_frame_new (_("Move Tool"),
                            GTK_CONTAINER (vbox), FALSE);
@@ -1772,7 +1778,7 @@ prefs_dialog_new (Gimp       *gimp,
   prefs_check_button_add_with_icon (object, "move-tool-changes-active",
                                     _("Change current layer or path"),
                                     GIMP_STOCK_TOOL_MOVE,
-                                    GTK_BOX (vbox2));
+                                    GTK_BOX (vbox2), size_group);
 
   g_object_unref (size_group);
   size_group = NULL;
@@ -1792,6 +1798,8 @@ prefs_dialog_new (Gimp       *gimp,
                                      &top_iter,
                                      page_index++);
 
+  size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+
   /*  Appearance  */
   vbox2 = prefs_frame_new (_("Appearance"),
                            GTK_CONTAINER (vbox), FALSE);
@@ -1799,15 +1807,18 @@ prefs_dialog_new (Gimp       *gimp,
   prefs_check_button_add_with_icon (object, "toolbox-color-area",
                                     _("Show _foreground & background color"),
                                     GIMP_STOCK_DEFAULT_COLORS,
-                                    GTK_BOX (vbox2));
+                                    GTK_BOX (vbox2), size_group);
   prefs_check_button_add_with_icon (object, "toolbox-foo-area",
                                     _("Show active _brush, pattern & gradient"),
                                     GIMP_STOCK_BRUSH,
-                                    GTK_BOX (vbox2));
+                                    GTK_BOX (vbox2), size_group);
   prefs_check_button_add_with_icon (object, "toolbox-image-area",
                                     _("Show active _image"),
                                     GIMP_STOCK_IMAGE,
-                                    GTK_BOX (vbox2));
+                                    GTK_BOX (vbox2), size_group);
+
+  g_object_unref (size_group);
+  size_group = NULL;
 
 
   /***********************/
