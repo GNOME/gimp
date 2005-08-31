@@ -691,8 +691,9 @@ gimp_uninstall_temp_proc (const gchar *name)
  * The procedure's parameters are given by a va_list in the format
  * (type, value, type, value) and must be terminated by #GIMP_PDB_END.
  *
- * This function converts the va_list of parameters into an array
- * and passes them to gimp_run_procedure2().
+ * This function converts the va_list of parameters into an array and
+ * passes them to gimp_run_procedure2(). Please look there for further
+ * information.
  *
  * Return value: the procedure's return values.
  **/
@@ -906,7 +907,6 @@ gimp_read_expect_msg (WireMessage *msg,
     }
 }
 
-
 /**
  * gimp_run_procedure2:
  * @name:          the name of the procedure to run
@@ -915,6 +915,12 @@ gimp_read_expect_msg (WireMessage *msg,
  * @params:        the procedure's parameters array.
  *
  * This function calls a GIMP procedure and returns its return values.
+ * To get more information about the available procedures and the
+ * parameters they expect, please have a look at the Procedure Browser
+ * as found in the Xtns menu in the GIMP's Toolbox.
+ *
+ * As soon as you don't need the return values any longer, you should
+ * free them using gimp_destroy_params().
  *
  * Return value: the procedure's return values.
  **/
@@ -970,7 +976,8 @@ gimp_run_procedure2 (const gchar     *name,
  * @params:   the #GimpParam array to destroy
  * @n_params: the number of elements in the array
  *
- * Destroys a #GimpParam array as returned by gimp_run_procedure()
+ * Destroys a #GimpParam array as returned by gimp_run_procedure() or
+ * gimp_run_procedure2().
  **/
 void
 gimp_destroy_params (GimpParam *params,

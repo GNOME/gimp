@@ -1,3 +1,8 @@
+2005-08-31  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimp.c (gimp_run_procedure2, gimp_run_procedure):
+	improved documentation.
+
 2005-08-31  Michael Natterer  <mitch@gimp.org>
 
 	* app/dialogs/preferences-dialog.c
