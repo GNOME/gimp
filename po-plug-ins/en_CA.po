@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-27 17:25-0400\n"
-"PO-Revision-Date: 2005-08-27 14:31-0400\n"
+"POT-Creation-Date: 2005-08-31 17:23-0400\n"
+"PO-Revision-Date: 2005-08-31 14:31-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -370,7 +370,7 @@ msgstr "_Fractals"
 #: plug-ins/common/channel_mixer.c:1064 plug-ins/common/compressor.c:410
 #: plug-ins/common/compressor.c:541 plug-ins/common/curve_bend.c:860
 #: plug-ins/common/dicom.c:653 plug-ins/common/gbr.c:605
-#: plug-ins/common/gif.c:997 plug-ins/common/gih.c:1259
+#: plug-ins/common/gif.c:1001 plug-ins/common/gih.c:1259
 #: plug-ins/common/gtm.c:225 plug-ins/common/mng.c:561
 #: plug-ins/common/mng.c:953 plug-ins/common/pat.c:452
 #: plug-ins/common/pcx.c:590 plug-ins/common/pix.c:509
@@ -1227,7 +1227,7 @@ msgstr "Cannot operate on indexed images with alpha channel."
 #. And let's begin the progress
 #. init the progress meter
 #: plug-ins/bmp/bmpwrite.c:212 plug-ins/common/CEL.c:577
-#: plug-ins/common/gbr.c:611 plug-ins/common/gif.c:1004
+#: plug-ins/common/gbr.c:611 plug-ins/common/gif.c:1008
 #: plug-ins/common/gih.c:1264 plug-ins/common/gtm.c:246
 #: plug-ins/common/pat.c:458 plug-ins/common/pcx.c:552
 #: plug-ins/common/pix.c:515 plug-ins/common/png.c:1230
@@ -3892,15 +3892,15 @@ msgstr "Gee Zoom"
 msgid "An obsolete creation by %s"
 msgstr "An obsolete creation by %s"
 
-#: plug-ins/common/gif.c:406 plug-ins/common/gifload.c:144
+#: plug-ins/common/gif.c:410 plug-ins/common/gifload.c:144
 msgid "GIF image"
 msgstr "GIF image"
 
-#: plug-ins/common/gif.c:690
+#: plug-ins/common/gif.c:694
 msgid "Couldn't simply reduce colors further. Saving as opaque."
 msgstr "Couldn't simply reduce colours further. Saving as opaque."
 
-#: plug-ins/common/gif.c:912
+#: plug-ins/common/gif.c:916
 msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
@@ -3908,13 +3908,13 @@ msgstr ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
 
-#: plug-ins/common/gif.c:973
+#: plug-ins/common/gif.c:977
 msgid ""
 "Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "Cannot save RGB colour images. Convert to indexed colour or grayscale first."
 
-#: plug-ins/common/gif.c:1116
+#: plug-ins/common/gif.c:1120
 msgid ""
 "Warning:\n"
 "Transparent color in written file might be incorrect on viewers which don't "
@@ -3924,15 +3924,15 @@ msgstr ""
 "Transparent colour in written file might be incorrect on viewers which don't "
 "support transparency."
 
-#: plug-ins/common/gif.c:1155
+#: plug-ins/common/gif.c:1159
 msgid "Delay inserted to prevent evil CPU-sucking anim."
 msgstr "Delay inserted to prevent evil CPU-sucking anim."
 
-#: plug-ins/common/gif.c:1197
+#: plug-ins/common/gif.c:1201
 msgid "GIF Warning"
 msgstr "GIF Warning"
 
-#: plug-ins/common/gif.c:1218
+#: plug-ins/common/gif.c:1222
 msgid ""
 "The image which you are trying to save as a GIF\n"
 "contains layers which extend beyond the actual\n"
@@ -3950,61 +3950,70 @@ msgstr ""
 "You may choose whether to crop all of the layers to\n"
 "the image borders, or cancel this save."
 
-#: plug-ins/common/gif.c:1262
+#: plug-ins/common/gif.c:1266
 msgid "Save as GIF"
 msgstr "Save as GIF"
 
 #. regular gif parameter settings
-#: plug-ins/common/gif.c:1282
+#: plug-ins/common/gif.c:1286
 msgid "GIF Options"
 msgstr "GIF Options"
 
-#: plug-ins/common/gif.c:1288
-msgid "_Interlace"
-msgstr "_Interlace"
+#: plug-ins/common/gif.c:1292
+msgid "I_nterlace"
+msgstr "I_nterlace"
 
-#: plug-ins/common/gif.c:1304
+#: plug-ins/common/gif.c:1308
 msgid "_GIF comment:"
 msgstr "_GIF comment:"
 
 #. additional animated gif parameter settings
-#: plug-ins/common/gif.c:1361
+#: plug-ins/common/gif.c:1365
 msgid "Animated GIF Options"
 msgstr "Animated GIF Options"
 
-#: plug-ins/common/gif.c:1367
+#: plug-ins/common/gif.c:1371
 msgid "_Loop forever"
 msgstr "_Loop forever"
 
-#: plug-ins/common/gif.c:1380
+#: plug-ins/common/gif.c:1384
 msgid "_Delay between frames where unspecified:"
 msgstr "_Delay between frames where unspecified:"
 
-#: plug-ins/common/gif.c:1393 plug-ins/common/mng.c:1540
+#: plug-ins/common/gif.c:1399 plug-ins/common/mng.c:1540
 msgid "milliseconds"
 msgstr "milliseconds"
 
-#: plug-ins/common/gif.c:1403
-msgid "Frame disposal where unspecified: "
-msgstr "Frame disposal where unspecified: "
+#: plug-ins/common/gif.c:1409
+msgid "_Frame disposal where unspecified:"
+msgstr "_Frame disposal where unspecified:"
 
-#: plug-ins/common/gif.c:1407
+#: plug-ins/common/gif.c:1413
 msgid "I don't care"
 msgstr "I don't care"
 
-#: plug-ins/common/gif.c:1409
+#: plug-ins/common/gif.c:1415
 msgid "Cumulative layers (combine)"
 msgstr "Cumulative layers (combine)"
 
-#: plug-ins/common/gif.c:1411
+#: plug-ins/common/gif.c:1417
 msgid "One frame per layer (replace)"
 msgstr "One frame per layer (replace)"
 
-#: plug-ins/common/gif.c:2624
+#. The "Always use default values" toggles
+#: plug-ins/common/gif.c:1433
+msgid "_Use delay entered above for all frames"
+msgstr "_Use delay entered above for all frames"
+
+#: plug-ins/common/gif.c:1443
+msgid "U_se disposal entered above for all frames"
+msgstr "U_se disposal entered above for all frames"
+
+#: plug-ins/common/gif.c:2653
 msgid "Error writing output file."
 msgstr "Error writing output file."
 
-#: plug-ins/common/gif.c:2694
+#: plug-ins/common/gif.c:2723
 #, c-format
 msgid "The default comment is limited to %d characters."
 msgstr "The default comment is limited to %d characters."
@@ -5673,8 +5682,12 @@ msgid "%s-pages"
 msgstr "%s-pages"
 
 #: plug-ins/common/poppler.c:699
-msgid "Load PDF"
-msgstr "Load PDF"
+msgid "Import from PDF"
+msgstr "Import from PDF"
+
+#: plug-ins/common/poppler.c:704
+msgid "_Import"
+msgstr "_Import"
 
 #: plug-ins/common/poppler.c:761
 msgid "_Width (pixels):"
