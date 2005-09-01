@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu Gnome HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-30 03:37+0000\n"
-"PO-Revision-Date: 2005-08-31 22:03+0930\n"
+"POT-Creation-Date: 2005-09-01 03:55+0000\n"
+"PO-Revision-Date: 2005-09-01 14:56+0930\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -285,8 +285,8 @@ msgstr "Thiết lập ánh xạ mụn mặc định"
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:3
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/title-header.scm.h:1
-msgid "Phông chữ"
-msgstr "Phông"
+msgid "Font"
+msgstr "Phông chữ"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:5
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:5
@@ -1020,7 +1020,8 @@ msgstr "Tạo hiệu ứng _vải..."
 msgid ""
 "Darken only\n"
 "(Better, but only for images with alot of white)"
-msgstr "Chỉ tối\n"
+msgstr ""
+"Chỉ tối\n"
 "(Tốt hơn, mà chỉ cho ảnh có trắng nhiều)"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:2
@@ -1910,7 +1911,9 @@ msgstr "Phương pháp màu"
 msgid ""
 "Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://"
 "netword.com/*spyrogimp"
-msgstr "Có vẽ mẫu xoắn ốc, hình cuốn tròn ở quanh tròn khác và đường cong Li-xa-chu. Có thể tìm thông tin thêm tại <http://netword.com/*spyrogimp>."
+msgstr ""
+"Có vẽ mẫu xoắn ốc, hình cuốn tròn ở quanh tròn khác và đường cong Li-xa-chu. "
+"Có thể tìm thông tin thêm tại <http://netword.com/*spyrogimp>."
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:7
 msgid "Epitrochoid"
