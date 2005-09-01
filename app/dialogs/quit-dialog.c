@@ -171,14 +171,13 @@ quit_dialog_container_changed (GimpContainer  *images,
   GtkWidget *label      = g_object_get_data (G_OBJECT (box), "lost-label");
   GtkWidget *button     = g_object_get_data (G_OBJECT (box), "ok-button");
   GtkWidget *dialog     = gtk_widget_get_toplevel (button);
+  gchar     *text;
 
-  if (num_images == 1)
-    gimp_message_box_set_primary_text (box,
-                                       _("There is one image with unsaved changes:"));
-  else
-    gimp_message_box_set_primary_text (box,
-                                       _("There are %d images with unsaved changes:"),
-                                       num_images);
+  text = g_strdup_printf (ngettext ("There is %d image with unsaved changes:",
+                                    "There are %d images with unsaved changes:",
+                                    num_images), num_images);
+  gimp_message_box_set_primary_text (box, text);
+  g_free (text);
 
   if (num_images == 0)
     {

@@ -1,3 +1,9 @@
+2005-09-01  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/quit-dialog.c
+	* libgimp/gimpprocbrowserdialog.c: use ngettext() for plural forms
+	(bug #314764).
+
 2005-08-31  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimp.c (gimp_run_procedure2, gimp_run_procedure):

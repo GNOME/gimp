@@ -453,12 +453,11 @@ browser_search (GimpBrowser           *browser,
         case 0:
           str = g_strdup (_("No matches for your query"));
           break;
-        case 1:
-          str = g_strdup (_("1 procedure matches your query"));
-          break;
         default:
-          str = g_strdup_printf (_("%d procedures match your query"),
-                                 num_procs);
+          str = g_strdup_printf (dngettext (GETTEXT_PACKAGE "-libgimp",
+                                            "%d procedure matches your query",
+                                            "%d procedures match your query",
+                                            num_procs), num_procs);
           break;
         }
     }
