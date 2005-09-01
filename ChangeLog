@@ -1,3 +1,12 @@
+2005-09-01  Sven Neumann  <neumann@jpk.com>
+
+	* app/core/gimppalette.[ch]: reverted, it duplicates existing
+	functionality.
+
+	* app/core/gimppalette-import.c
+	(gimp_palette_import_from_indexed_image): name the colors using
+	their index in the colormap.
+
 2005-09-01  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimppalette.[ch]: added gimp_palette_new_from_colormap().

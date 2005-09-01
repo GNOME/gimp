@@ -358,15 +358,19 @@ gimp_palette_import_from_indexed_image (GimpImage   *gimage,
 
   palette = GIMP_PALETTE (gimp_palette_new (palette_name));
 
-  for (count= 0; count < gimage->num_cols; ++count)
+  for (count = 0; count < gimage->num_cols; ++count)
     {
+      gchar name[256];
+
+      g_snprintf (name, sizeof (name), _("Index %d"), count);
+
       gimp_rgba_set_uchar (&color,
 			   gimage->cmap[count * 3],
 			   gimage->cmap[count * 3 + 1],
 			   gimage->cmap[count * 3 + 2],
 			   255);
 
-      gimp_palette_add_entry (palette, -1, NULL, &color);
+      gimp_palette_add_entry (palette, -1, name, &color);
     }
 
   return palette;
