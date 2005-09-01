@@ -315,6 +315,37 @@ gimp_palette_new (const gchar *name)
 }
 
 GimpData *
+gimp_palette_new_from_colormap (const gchar  *name,
+                                const guchar *cmap,
+                                gint          n_colors)
+{
+  GimpPalette *palette;
+  gint         i;
+
+  g_return_val_if_fail (name != NULL, NULL);
+  g_return_val_if_fail (n_colors == 0 || cmap != NULL, NULL);
+
+  palette = g_object_new (GIMP_TYPE_PALETTE,
+                          "name", name,
+                          NULL);
+
+  for (i = 0; i < n_colors; i++)
+    {
+      GimpRGB  color;
+      gchar    name[256];
+
+      g_snprintf (name, sizeof (name), _("Index %d"), i + 1);
+
+      gimp_rgba_set_uchar (&color,
+                           cmap[i*3], cmap[i*3 + 1], cmap[i*3 + 2], 255);
+
+      gimp_palette_add_entry (palette, i, name, &color);
+    }
+
+  return GIMP_DATA (palette);
+}
+
+GimpData *
 gimp_palette_get_standard (void)
 {
   static GimpData *standard_palette = NULL;

@@ -1,5 +1,9 @@
 2005-09-01  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimppalette.[ch]: added gimp_palette_new_from_colormap().
+
+2005-09-01  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/quit-dialog.c
 	* libgimp/gimpprocbrowserdialog.c: use ngettext() for plural forms
 	(bug #314764).
