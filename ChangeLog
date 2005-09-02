@@ -1,5 +1,10 @@
 2005-09-02  Sven Neumann  <sven@gimp.org>
 
+	* modules/Makefile.am: applied patch that fixes a build issue on
+	Cygwin (bug #314893).
+
+2005-09-02  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimptextoptions.c
 	* app/widgets/gimpwidgets-utils.[ch]: dropped the labels from text
 	tool options that have icons. Reduces visual clutter.
