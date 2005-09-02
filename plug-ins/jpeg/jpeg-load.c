@@ -167,8 +167,6 @@ load_image (const gchar *filename,
   buf = g_new (guchar,
                tile_height * cinfo.output_width * cinfo.output_components);
 
-  gimp_tile_cache_ntiles (1 + cinfo.output_width / gimp_tile_width ());
-
   rowbuf = g_new (guchar *, tile_height);
 
   for (i = 0; i < tile_height; i++)

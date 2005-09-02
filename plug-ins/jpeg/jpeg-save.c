@@ -537,8 +537,6 @@ save_image (const gchar *filename,
   temp = g_new (guchar, cinfo.image_width * cinfo.input_components);
   data = g_new (guchar, rowstride * gimp_tile_height ());
 
-  gimp_tile_cache_ntiles (1 + cinfo.image_width / gimp_tile_width ());
-
   /* fault if cinfo.next_scanline isn't initially a multiple of
    * gimp_tile_height */
   src = NULL;

@@ -1,4 +1,10 @@
-2005-09-01  Sven Neumann  <neumann@jpk.com>
+2005-09-02  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/jpeg/jpeg-load.c (load_image)
+	* plug-ins/jpeg/jpeg-save.c (save_image): removed tile cache again,
+	it doesn't help for the way the plug-in accesses the pixels.
+
+2005-09-01  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimppalette.[ch]: reverted, it duplicates existing
 	functionality.
