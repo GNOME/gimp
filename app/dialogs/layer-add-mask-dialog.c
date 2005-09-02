@@ -66,7 +66,7 @@ layer_add_mask_dialog_new (GimpLayer       *layer,
                               GIMP_HELP_LAYER_MASK_ADD,
 
                               GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                              GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                              GTK_STOCK_ADD,    GTK_RESPONSE_OK,
 
                               NULL);
 

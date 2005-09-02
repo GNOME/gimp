@@ -113,7 +113,7 @@ offset_dialog_new (GimpDrawable *drawable,
                               GIMP_HELP_LAYER_OFFSET,
 
                               GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                              GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                              _("_Offset"),     GTK_RESPONSE_OK,
 
                               NULL);
 

@@ -1,5 +1,13 @@
 2005-09-02  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/convert-dialog.c
+	* app/dialogs/image-merge-layers-dialog.c
+	* app/dialogs/layer-add-mask-dialog.c
+	* app/dialogs/offset-dialog.c: use verbs instead of "OK" in the
+	confirmative dialog button.
+
+2005-09-02  Sven Neumann  <sven@gimp.org>
+
 	* AUTHORS
 	* app/dialogs/authors.h: regenerated.
 

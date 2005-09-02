@@ -125,7 +125,7 @@ convert_dialog_new (GimpImage    *gimage,
                               GIMP_HELP_IMAGE_CONVERT_INDEXED,
 
                               GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                              GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                              _("C_onvert"),    GTK_RESPONSE_OK,
 
                               NULL);
 

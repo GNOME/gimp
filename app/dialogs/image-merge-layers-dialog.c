@@ -65,7 +65,7 @@ image_merge_layers_dialog_new (GimpImage     *image,
                               GIMP_HELP_IMAGE_MERGE_LAYERS,
 
                               GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                              GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                              _("_Merge"),      GTK_RESPONSE_OK,
 
                               NULL);
 
