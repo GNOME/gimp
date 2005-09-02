@@ -510,7 +510,7 @@ save_dialog (void)
 			 gimp_standard_help_func, PLUG_IN_PROC,
 
 			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
+			 _("_Send"),       GTK_RESPONSE_OK,
 
 			 NULL);
 

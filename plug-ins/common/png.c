@@ -1646,8 +1646,8 @@ save_dialog (gint32    image_ID,
 
                          _("_Load defaults"), RESPONSE_LOAD_DEFAULTS,
                          _("_Save defaults"), RESPONSE_SAVE_DEFAULTS,
-                         GTK_STOCK_CANCEL,   GTK_RESPONSE_CANCEL,
-                         GTK_STOCK_OK,       GTK_RESPONSE_OK,
+                         GTK_STOCK_CANCEL,    GTK_RESPONSE_CANCEL,
+                         GTK_STOCK_SAVE,      GTK_RESPONSE_OK,
 
                          NULL);
 

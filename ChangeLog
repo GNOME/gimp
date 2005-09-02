@@ -1,3 +1,35 @@
+2005-09-02  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/bmp/bmpwrite.c
+	* plug-ins/common/aa.c
+	* plug-ins/common/csource.c
+	* plug-ins/common/gbr.c
+	* plug-ins/common/gif.c
+	* plug-ins/common/gih.c
+	* plug-ins/common/gtm.c
+	* plug-ins/common/mail.c
+	* plug-ins/common/mng.c
+	* plug-ins/common/pat.c
+	* plug-ins/common/png.c
+	* plug-ins/common/pnm.c
+	* plug-ins/common/postscript.c
+	* plug-ins/common/psp.c
+	* plug-ins/common/raw.c
+	* plug-ins/common/sunras.c
+	* plug-ins/common/svg.c
+	* plug-ins/common/tga.c
+	* plug-ins/common/tiff.c
+	* plug-ins/common/xbm.c
+	* plug-ins/common/xpm.c
+	* plug-ins/fits/fits.c
+	* plug-ins/gfli/gfli.c
+	* plug-ins/jpeg/jpeg-save.c
+	* plug-ins/script-fu/script-fu-server.c
+	* plug-ins/sgi/sgi.c
+	* plug-ins/winicon/icodialog.c
+	* plug-ins/xjt/xjt.c: use verbs instead of "OK" in the
+	confirmative dialog button.
+
 2005-09-02  Tor Lillqvist  <tml@novell.com>
 
 	* authors.xml: Mark people as documenter or artist, based on

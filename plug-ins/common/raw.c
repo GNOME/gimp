@@ -922,12 +922,12 @@ load_dialog (gchar *filename)
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Raw Image Loader"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Load Image from Raw Data"), PLUG_IN_BINARY,
                             NULL, 0,
                             gimp_standard_help_func, LOAD_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
 
                             NULL);
 

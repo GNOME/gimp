@@ -395,12 +395,12 @@ save_dialog (gint32 image_ID)
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dlg = gimp_dialog_new (_("GIMP Table Magic"), PLUG_IN_BINARY,
+  dlg = gimp_dialog_new (_("Save as HTML table"), PLUG_IN_BINARY,
                          NULL, 0,
 			 gimp_standard_help_func, SAVE_PROC,
 
 			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
+			 GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
 
 			 NULL);
 

@@ -654,8 +654,8 @@ server_interface (void)
                          NULL, 0,
 			 gimp_standard_help_func, "plug-in-script-fu-server",
 
-			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
+			 GTK_STOCK_CANCEL,   GTK_RESPONSE_CANCEL,
+			 _("_Start Server"), GTK_RESPONSE_OK,
 
 			 NULL);
 

@@ -129,7 +129,7 @@ ico_specs_dialog_new (gint num_layers)
                              NULL, 0,
                              gimp_standard_help_func, "plug-in-winicon",
                              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                             GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
                              NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),

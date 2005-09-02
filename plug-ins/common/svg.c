@@ -714,7 +714,8 @@ load_dialog (const gchar *filename)
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
   /* Scalable Vector Graphics is SVG, should perhaps not be translated */
-  dialog = gimp_dialog_new (_("Render Scalable Vector Graphics"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Render Scalable Vector Graphics"),
+                            PLUG_IN_BINARY,
                             NULL, 0,
                             gimp_standard_help_func, LOAD_PROC,
 

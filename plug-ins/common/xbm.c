@@ -1157,7 +1157,7 @@ save_dialog (gint32 drawable_ID)
 			 gimp_standard_help_func, SAVE_PROC,
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                         GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
 
                          NULL);
 
