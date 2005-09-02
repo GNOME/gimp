@@ -426,8 +426,8 @@ test_clipboard_copy_callback (GtkClipboard     *clipboard,
 
   g_free (buf);
 
-  if (! option_store_filename)
-    gtk_main_quit ();
-
   copy_data->file_copied = TRUE;
+
+  g_print ("%s: data transfer in progress, hit <ctrl>+c when pasted...",
+           G_STRFUNC);
 }
