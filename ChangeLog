@@ -1,5 +1,10 @@
 2005-09-02  Sven Neumann  <sven@gimp.org>
 
+	* AUTHORS
+	* app/dialogs/authors.h: regenerated.
+
+2005-09-02  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/bmp/bmpwrite.c
 	* plug-ins/common/aa.c
 	* plug-ins/common/csource.c
