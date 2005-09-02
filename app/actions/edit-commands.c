@@ -225,7 +225,16 @@ edit_paste_as_new_cmd_callback (GtkAction *action,
 
   if (buffer)
     {
-      gimp_edit_paste_as_new (gimp, action_data_get_image (data), buffer);
+      GimpImage *image;
+
+      image = gimp_edit_paste_as_new (gimp, action_data_get_image (data),
+                                      buffer);
+
+      if (image)
+        {
+          gimp_create_display (image->gimp, image, GIMP_UNIT_PIXEL, 1.0);
+          g_object_unref (image);
+        }
 
       g_object_unref (buffer);
     }
@@ -366,9 +375,8 @@ cut_named_buffer_callback (GtkWidget   *widget,
                            const gchar *name,
                            gpointer     data)
 {
-  GimpImage        *gimage = GIMP_IMAGE (data);
-  const GimpBuffer *cut_buffer;
-  GimpDrawable     *drawable;
+  GimpImage    *gimage = GIMP_IMAGE (data);
+  GimpDrawable *drawable;
 
   drawable = gimp_image_active_drawable (gimage);
 
@@ -378,22 +386,12 @@ cut_named_buffer_callback (GtkWidget   *widget,
       return;
     }
 
-  cut_buffer = gimp_edit_cut (gimage, drawable,
-                              gimp_get_user_context (gimage->gimp));
+  if (! (name && strlen (name)))
+    name = _("(Unnamed Buffer)");
 
-  if (cut_buffer)
+  if (gimp_edit_named_cut (gimage, name, drawable,
+                           gimp_get_user_context (gimage->gimp)))
     {
-      GimpBuffer *new_buffer;
-
-      if (! (name && strlen (name)))
-        name = _("(Unnamed Buffer)");
-
-      new_buffer = gimp_buffer_new (cut_buffer->tiles, name, TRUE);
-
-      gimp_container_add (gimage->gimp->named_buffers,
-                          GIMP_OBJECT (new_buffer));
-      g_object_unref (new_buffer);
-
       gimp_image_flush (gimage);
     }
 }
@@ -403,9 +401,8 @@ copy_named_buffer_callback (GtkWidget   *widget,
 			    const gchar *name,
 			    gpointer     data)
 {
-  GimpImage        *gimage = GIMP_IMAGE (data);
-  const GimpBuffer *copy_buffer;
-  GimpDrawable     *drawable;
+  GimpImage    *gimage = GIMP_IMAGE (data);
+  GimpDrawable *drawable;
 
   drawable = gimp_image_active_drawable (gimage);
 
@@ -415,22 +412,12 @@ copy_named_buffer_callback (GtkWidget   *widget,
       return;
     }
 
-  copy_buffer = gimp_edit_copy (gimage, drawable,
-                                gimp_get_user_context (gimage->gimp));
+  if (! (name && strlen (name)))
+    name = _("(Unnamed Buffer)");
 
-  if (copy_buffer)
+  if (gimp_edit_named_copy (gimage, name, drawable,
+                            gimp_get_user_context (gimage->gimp)))
     {
-      GimpBuffer *new_buffer;
-
-      if (! (name && strlen (name)))
-        name = _("(Unnamed Buffer)");
-
-      new_buffer = gimp_buffer_new (copy_buffer->tiles, name, TRUE);
-
-      gimp_container_add (gimage->gimp->named_buffers,
-                          GIMP_OBJECT (new_buffer));
-      g_object_unref (new_buffer);
-
       gimp_image_flush (gimage);
     }
 }

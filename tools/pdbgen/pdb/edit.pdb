@@ -17,33 +17,6 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-# Common arguments
-sub inargs {
-    @inargs = (
-	{ name => 'drawable', type => 'drawable',
-	  desc => "The drawable to @{[shift]}" }
-    );
-}
-
-sub outargs {
-    @outargs = (
-	{ name => 'non_empty', type => 'boolean', init => 1,
-	  desc => "TRUE if the @{[shift]} was successful, FALSE if the selection contained only transparent pixels" }
-    );
-}
-
-sub drawable_arg () {{
-    name => 'drawable',
-    type => 'drawable',
-    desc => 'The affected drawable',
-}}
-
-sub sample_merged_arg () {{
-    name => 'sample_merged',
-    type => 'boolean',
-    desc => 'Use the composite image, not the drawable'
-}}
-
 # Common invoker for checking for image/drawable consistency
 sub invoke {
     %invoke = (
@@ -53,7 +26,7 @@ sub invoke {
 
   if (success)
     {
-      GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+      GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
 
       @{[shift]};
     }
@@ -76,9 +49,18 @@ stored in the internal GIMP edit buffer.
 HELP
 
     &std_pdb_misc;
-    &inargs('cut from');
-    &outargs('cut');
-    &invoke('non_empty = gimp_edit_cut (gimage, drawable, context) != NULL');
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable to cut from' }
+    );
+
+    @outargs = (
+	{ name => 'non_empty', type => 'boolean', init => 1,
+	  desc => 'TRUE if the cut was successful, FALSE if the selection contained only transparent pixels' }
+    );
+
+    &invoke('non_empty = gimp_edit_cut (image, drawable, context) != NULL');
 }
 
 sub edit_copy {
@@ -93,9 +75,18 @@ in the internal GIMP edit buffer.
 HELP
 
     &std_pdb_misc;
-    &inargs('copy from');
-    &outargs('copy');
-    &invoke('non_empty = gimp_edit_copy (gimage, drawable, context) != NULL');
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable to copy from' }
+    );
+
+    @outargs = (
+	{ name => 'non_empty', type => 'boolean', init => 1,
+	  desc => 'TRUE if the copy was successful, FALSE if the selection contained only transparent pixels' }
+    );
+
+    &invoke('non_empty = gimp_edit_copy (image, drawable, context) != NULL');
 }
 
 sub edit_copy_visible {
@@ -117,7 +108,11 @@ HELP
 	{ name => 'image', type => 'image',
 	  desc => "The image to copy from" }
     );
-    &outargs('copy');
+
+    @outargs = (
+	{ name => 'non_empty', type => 'boolean', init => 1,
+	  desc => 'TRUE if the copy was successful, FALSE if the selection contained only transparent pixels' }
+    );
 
     %invoke = (
 	code => <<CODE
@@ -149,9 +144,12 @@ HELP
 
     &std_pdb_misc;
 
-    &inargs('paste to');
-    push @inargs, { name => 'paste_into', type => 'boolean',
-		    desc => 'Clear selection, or paste behind it?' };
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable to paste to' },
+        { name => 'paste_into', type => 'boolean',
+	  desc => 'Clear selection, or paste behind it?' }
+    );
 
     @outargs = (
 	{ name  => 'floating_sel', type  => 'layer',
@@ -174,7 +172,263 @@ HELP
     }
 }
 CODE
+    );
+}
+
+sub edit_paste_as_new {
+    $blurb = 'Paste buffer to a new image.';
+
+    $help = <<'HELP';
+This procedure pastes a copy of the internal GIMP edit buffer to a new
+image.  The GIMP edit buffer will be empty unless a call was
+previously made to either 'gimp-edit-cut' or 'gimp-edit-copy'. This
+procedure returns the new image.
+HELP
+
+    $author = $copyright = 'Michael Natterer <mitch@gimp.org>';
+    $date   = '2005';
+    $since  = '2.4';
+
+    @outargs = (
+	{ name => 'image', type => 'image', init => 1,
+	  desc => 'The new image' }
+    );
+    %invoke = (
+	code => <<CODE
+{
+  success = (gimp->global_buffer != NULL);
+
+  if (success)
+    {
+      image = gimp_edit_paste_as_new (gimp, NULL, gimp->global_buffer);
+      if (! image)
+        success = FALSE;
+    }
+}
+CODE
+    );
+}
+
+sub edit_named_cut {
+    $blurb = 'Cut into a named buffer.';
+
+    $help = <<'HELP';
+This procedure works like gimp-edit-cut, but additionally stores the cut buffer into a named buffer that will stay available for later pasting, regardless of any intermediate copy or cut operations.
+HELP
+
+    $author = $copyright = 'Michael Natterer <mitch@gimp.org>';
+    $date   = '2005';
+    $since  = '2.4';
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => "The drawable to cut from" },
+        { name => 'buffer_name', type => 'string',
+          desc => 'The name of the buffer to create' }
+    );
+    @outargs = (
+	{ name => 'real_name', type => 'string', init => 1,
+	  desc => 'The real name given to the buffer, or NULL if the selection contained only transparent pixels' }
+    );
+
+    %invoke = (
+	code => <<CODE
+{
+   success = (strlen (buffer_name) > 0 &&
+              gimp_item_is_attached (GIMP_ITEM (drawable)));
+
+   if (success)
+     {
+        GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+
+        real_name = (gchar *) gimp_edit_named_cut (image, buffer_name,
+                                                   drawable, context);
+
+        if (real_name)
+          real_name = g_strdup (real_name);
+        else
+          success = FALSE;
+     }
+}
+CODE
+    );
+}
+
+sub edit_named_copy {
+    $blurb = 'Copy into a named buffer.';
+
+    $help = <<'HELP';
+This procedure works like gimp-edit-copy, but additionally stores the copied buffer into a named buffer that will stay available for later pasting, regardless of any intermediate copy or cut operations.
+HELP
+
+    $author = $copyright = 'Michael Natterer <mitch@gimp.org>';
+    $date   = '2005';
+    $since  = '2.4';
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => "The drawable to copy from" },
+        { name => 'buffer_name', type => 'string',
+          desc => 'The name of the buffer to create' }
+    );
+    @outargs = (
+	{ name => 'real_name', type => 'string', init => 1,
+	  desc => 'The real name given to the buffer, or NULL if the selection contained only transparent pixels' }
+    );
+
+    %invoke = (
+	code => <<CODE
+{
+   success = (strlen (buffer_name) > 0 &&
+              gimp_item_is_attached (GIMP_ITEM (drawable)));
+
+   if (success)
+     {
+        GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+
+        real_name = (gchar *) gimp_edit_named_copy (image, buffer_name,
+                                                    drawable, context);
+
+        if (real_name)
+          real_name = g_strdup (real_name);
+        else
+          success = FALSE;
+     }
+}
+CODE
+    );
+}
+
+sub edit_named_copy_visible {
+    $blurb = 'Copy from the projection into a named buffer.';
+
+    $help = <<'HELP';
+This procedure works like gimp-edit-copy-visible, but additionally stores the copied buffer into a named buffer that will stay available for later pasting, regardless of any intermediate copy or cut operations.
+HELP
+
+    $author = $copyright = 'Michael Natterer <mitch@gimp.org>';
+    $date   = '2005';
+    $since  = '2.4';
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => "The image to copy from" },
+        { name => 'buffer_name', type => 'string',
+          desc => 'The name of the buffer to create' }
+    );
+    @outargs = (
+	{ name => 'real_name', type => 'string', init => 1,
+	  desc => 'The real name given to the buffer' }
+    );
+
+    %invoke = (
+	code => <<CODE
+{
+   if (strlen (buffer_name) > 0)
+     {
+        real_name = (gchar *) gimp_edit_named_copy_visible (image, buffer_name,
+                                                            context);
+
+        if (real_name)
+          real_name = g_strdup (real_name);
+        else
+          success = FALSE;
+     }
+}
+CODE
+    );
+}
+
+sub edit_named_paste {
+    $blurb = 'Paste named buffer to the specified drawable.';
+
+    $help = <<'HELP';
+This procedure works like gimp-edit-paste but pastes a named buffer instead
+of the global buffer.
+HELP
+
+    $author = $copyright = 'Michael Natterer <mitch@gimp.org>';
+    $date   = '2005';
+    $since  = '2.4';
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable to paste to' },
+        { name => 'buffer_name', type => 'string',
+          desc => 'The name of the buffer to paste' },
+        { name => 'paste_into', type => 'boolean',
+	  desc => 'Clear selection, or paste behind it?' }
+    );
+
+    @outargs = (
+	{ name  => 'floating_sel', type  => 'layer',
+	  desc  => 'The new floating selection', alias => 'layer', init => 1 }
+    );
+
+    %invoke = (
+	code => <<CODE
+{
+  GimpBuffer *buffer;
+
+  buffer = (GimpBuffer *)
+    gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
+
+  success = (buffer != NULL && gimp_item_is_attached (GIMP_ITEM (drawable)));
+
+  if (success)
+    {
+      layer = gimp_edit_paste (gimp_item_get_image (GIMP_ITEM (drawable)),
+                               drawable, buffer,
+                               paste_into, -1, -1, -1, -1);
+      if (! layer)
+        success = FALSE;
+    }
+}
+CODE
     )
+}
+
+sub edit_named_paste_as_new {
+    $blurb = 'Paste named buffer to a new image.';
+
+    $help = <<'HELP';
+This procedure works like gimp-edit-paste-as-new but pastes a named buffer
+instead of the global buffer.
+HELP
+
+    $author = $copyright = 'Michael Natterer <mitch@gimp.org>';
+    $date   = '2005';
+    $since  = '2.4';
+
+    @inargs = (
+        { name => 'buffer_name', type => 'string',
+          desc => 'The name of the buffer to paste' }
+    );
+
+    @outargs = (
+	{ name => 'image', type => 'image', init => 1,
+	  desc => 'The new image' }
+    );
+
+    %invoke = (
+	code => <<CODE
+{
+  GimpBuffer *buffer;
+
+  buffer = (GimpBuffer *)
+    gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
+
+  success = (buffer != NULL);
+
+  if (success)
+    {
+      image = gimp_edit_paste_as_new (gimp, NULL, buffer);
+      if (! image)
+        success = FALSE;
+    }
+}
+CODE
+    );
 }
 
 sub edit_clear {
@@ -189,8 +443,11 @@ active.
 HELP
 
     &std_pdb_misc;
-    &inargs('clear from');
-    &invoke('success = gimp_edit_clear (gimage, drawable, context)');
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable to clear from' }
+    );
+    &invoke('success = gimp_edit_clear (image, drawable, context)');
 }
 
 sub edit_fill {
@@ -214,7 +471,7 @@ HELP
 	{ name => 'fill_type', type => 'enum GimpFillType',
 	  desc => 'The type of fill: %%desc%%' }
     );
-    &invoke('success = gimp_edit_fill (gimage, drawable, context, (GimpFillType) fill_type)');
+    &invoke('success = gimp_edit_fill (image, drawable, context, (GimpFillType) fill_type)');
 }
 
 sub edit_bucket_fill {
@@ -244,7 +501,8 @@ HELP
 		    the specified image.';
 
     @inargs = (
-	&drawable_arg,
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The affected drawable' },
 	{ name => 'fill_mode', type => 'enum GimpBucketFillMode',
 	  desc => 'The type of fill: { %%desc%% }' },
 	{ name => paint_mode, type => 'enum GimpLayerModeEffects',
@@ -255,7 +513,8 @@ HELP
 	  desc => "The threshold determines how extensive the seed fill will
 		   be. It's value is specified in terms of intensity levels
 		   (%%desc%%). $validity" },
-	&sample_merged_arg
+	{ name => 'sample_merged', type => 'boolean',
+	  desc => 'Use the composite image, not the drawable' }
     );
 
     foreach (qw(x y)) {
@@ -273,10 +532,10 @@ HELP
 
   if (success)
     {
-      GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+      GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
       gboolean   do_seed_fill;
 
-      do_seed_fill = gimp_channel_is_empty (gimp_image_get_mask (gimage));
+      do_seed_fill = gimp_channel_is_empty (gimp_image_get_mask (image));
 
       gimp_drawable_bucket_fill (drawable, context, fill_mode,
                                  paint_mode, opacity / 100.0,
@@ -304,7 +563,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&drawable_arg,
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The affected drawable' },
         { name => 'blend_mode', type => 'enum GimpBlendMode',
 	  desc => 'The type of blend: { %%desc%% }' },
 	{ name => 'paint_mode', type => 'enum GimpLayerModeEffects',
@@ -382,7 +642,10 @@ the specified drawable regardless of the active selection.
 HELP
 
     &std_pdb_misc;
-    &inargs('stroke to');
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable to stroke to' }
+    );
 
     %invoke = (
 	headers => [ qw("core/gimpstrokedesc.h") ],
@@ -392,12 +655,12 @@ HELP
 
   if (success)
     {
-      GimpImage      *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-      GimpStrokeDesc *desc   = gimp_stroke_desc_new (gimp, context);
+      GimpImage      *image = gimp_item_get_image (GIMP_ITEM (drawable));
+      GimpStrokeDesc *desc  = gimp_stroke_desc_new (gimp, context);
 
       g_object_set (desc, "method", GIMP_STROKE_METHOD_PAINT_CORE, NULL);
 
-      success = gimp_item_stroke (GIMP_ITEM (gimp_image_get_mask (gimage)),
+      success = gimp_item_stroke (GIMP_ITEM (gimp_image_get_mask (image)),
                                   drawable, context, desc, TRUE);
 
       g_object_unref (desc);
@@ -407,12 +670,15 @@ CODE
     );
 }
 
-@headers = qw("core/gimp.h" "core/gimp-edit.h" "core/gimpimage.h"
-              "core/gimpprogress.h"
+@headers = qw(<string.h> "core/gimp.h" "core/gimp-edit.h"
+              "core/gimpcontainer.h" "core/gimpimage.h" "core/gimpprogress.h"
               "gimp-intl.h");
 
-@procs = qw(edit_cut edit_copy edit_copy_visible edit_paste edit_clear
-            edit_fill edit_bucket_fill edit_blend edit_stroke);
+@procs = qw(edit_cut edit_copy edit_copy_visible
+            edit_paste edit_paste_as_new
+            edit_named_cut edit_named_copy edit_named_copy_visible
+            edit_named_paste edit_named_paste_as_new
+            edit_clear edit_fill edit_bucket_fill edit_blend edit_stroke);
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Edit procedures';

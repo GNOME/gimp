@@ -22,6 +22,7 @@
 
 #include "actions-types.h"
 
+#include "core/gimp.h"
 #include "core/gimp-edit.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
@@ -77,10 +78,21 @@ buffers_paste_as_new_cmd_callback (GtkAction *action,
 
   if (buffer && gimp_container_have (container, GIMP_OBJECT (buffer)))
     {
-      GimpImage *gimage = gimp_context_get_image (context);
+      GimpImage *image = gimp_context_get_image (context);
 
-      if (gimage)
-        gimp_edit_paste_as_new (gimage->gimp, gimage, buffer);
+      if (image)
+        {
+          GimpImage *new_image;
+
+          new_image = gimp_edit_paste_as_new (image->gimp, image, buffer);
+
+          if (new_image)
+            {
+              gimp_create_display (image->gimp, new_image,
+                                   GIMP_UNIT_PIXEL, 1.0);
+              g_object_unref (new_image);
+            }
+        }
     }
 }
 

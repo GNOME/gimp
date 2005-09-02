@@ -320,10 +320,100 @@ gimp_edit_paste_as_new (Gimp       *gimp,
 
   gimp_image_undo_enable (gimage);
 
-  gimp_create_display (gimp, gimage, GIMP_UNIT_PIXEL, 1.0);
-  g_object_unref (gimage);
-
   return gimage;
+}
+
+const gchar *
+gimp_edit_named_cut (GimpImage    *gimage,
+                     const gchar  *name,
+                     GimpDrawable *drawable,
+                     GimpContext  *context)
+{
+  const GimpBuffer *buffer;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (name != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+
+  buffer = gimp_edit_cut (gimage, drawable, context);
+
+  if (buffer)
+    {
+      GimpBuffer *named_buffer;
+
+      named_buffer = gimp_buffer_new (buffer->tiles, name, TRUE);
+
+      gimp_container_add (gimage->gimp->named_buffers,
+                          GIMP_OBJECT (named_buffer));
+      g_object_unref (named_buffer);
+
+      return gimp_object_get_name (GIMP_OBJECT (named_buffer));
+    }
+
+  return NULL;
+}
+
+const gchar *
+gimp_edit_named_copy (GimpImage    *gimage,
+                      const gchar  *name,
+                      GimpDrawable *drawable,
+                      GimpContext  *context)
+{
+  const GimpBuffer *buffer;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (name != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+
+  buffer = gimp_edit_copy (gimage, drawable, context);
+
+  if (buffer)
+    {
+      GimpBuffer *named_buffer;
+
+      named_buffer = gimp_buffer_new (buffer->tiles, name, TRUE);
+
+      gimp_container_add (gimage->gimp->named_buffers,
+                          GIMP_OBJECT (named_buffer));
+      g_object_unref (named_buffer);
+
+      return gimp_object_get_name (GIMP_OBJECT (named_buffer));
+    }
+
+  return NULL;
+}
+
+const gchar *
+gimp_edit_named_copy_visible (GimpImage   *gimage,
+                              const gchar *name,
+                              GimpContext *context)
+{
+  const GimpBuffer *buffer;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (name != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+
+  buffer = gimp_edit_copy_visible (gimage, context);
+
+  if (buffer)
+    {
+      GimpBuffer *named_buffer;
+
+      named_buffer = gimp_buffer_new (buffer->tiles, name, TRUE);
+
+      gimp_container_add (gimage->gimp->named_buffers,
+                          GIMP_OBJECT (named_buffer));
+      g_object_unref (named_buffer);
+
+      return gimp_object_get_name (GIMP_OBJECT (named_buffer));
+    }
+
+  return NULL;
 }
 
 gboolean

@@ -1,3 +1,31 @@
+2005-09-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimp-edit.[ch] (gimp_edit_paste_as_new): don't create a
+	display here.
+
+	(gimp_edit_named_cut)
+	(gimp_edit_named_copy)
+	(gimp_edit_named_copy_visible): new functions containing named
+	buffer wrappers around the functions affecting the global buffer
+	only.
+
+	* app/actions/edit-commands.c: use the new functions instead of
+	implementing them here, create a display for the image returned
+	by paste as new.
+
+	* app/actions/buffers-commands.c
+	* app/widgets/gimptoolbox-dnd.c: create displays here too.
+
+	* tools/pdbgen/pdb/edit.pdb: added wrappers for paste as new and
+	wrappers for all the cut/copy/paste named stuff.
+	Fixes bug #315130. Cleaned up and de-obfuscated.
+
+	* libgimp/gimp.def: changed accordingly.
+
+	* app/pdb/edit_cmds.c
+	* app/pdb/internal_procs.c
+	* libgimp/gimpedit_pdb.[ch]: regenerated.
+
 2005-09-02  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpcontainergridview.c

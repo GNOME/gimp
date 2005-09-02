@@ -180,6 +180,224 @@ gimp_edit_paste (gint32   drawable_ID,
 }
 
 /**
+ * gimp_edit_paste_as_new:
+ *
+ * Paste buffer to a new image.
+ *
+ * This procedure pastes a copy of the internal GIMP edit buffer to a
+ * new image. The GIMP edit buffer will be empty unless a call was
+ * previously made to either 'gimp-edit-cut' or 'gimp-edit-copy'. This
+ * procedure returns the new image.
+ *
+ * Returns: The new image.
+ *
+ * Since: GIMP 2.4
+ */
+gint32
+gimp_edit_paste_as_new (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint32 image_ID = -1;
+
+  return_vals = gimp_run_procedure ("gimp-edit-paste-as-new",
+				    &nreturn_vals,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    image_ID = return_vals[1].data.d_image;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return image_ID;
+}
+
+/**
+ * gimp_edit_named_cut:
+ * @drawable_ID: The drawable to cut from.
+ * @buffer_name: The name of the buffer to create.
+ *
+ * Cut into a named buffer.
+ *
+ * This procedure works like gimp-edit-cut, but additionally stores the
+ * cut buffer into a named buffer that will stay available for later
+ * pasting, regardless of any intermediate copy or cut operations.
+ *
+ * Returns: The real name given to the buffer, or NULL if the selection contained only transparent pixels.
+ *
+ * Since: GIMP 2.4
+ */
+gchar *
+gimp_edit_named_cut (gint32       drawable_ID,
+		     const gchar *buffer_name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gchar *real_name = NULL;
+
+  return_vals = gimp_run_procedure ("gimp-edit-named-cut",
+				    &nreturn_vals,
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_STRING, buffer_name,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    real_name = g_strdup (return_vals[1].data.d_string);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return real_name;
+}
+
+/**
+ * gimp_edit_named_copy:
+ * @drawable_ID: The drawable to copy from.
+ * @buffer_name: The name of the buffer to create.
+ *
+ * Copy into a named buffer.
+ *
+ * This procedure works like gimp-edit-copy, but additionally stores
+ * the copied buffer into a named buffer that will stay available for
+ * later pasting, regardless of any intermediate copy or cut
+ * operations.
+ *
+ * Returns: The real name given to the buffer, or NULL if the selection contained only transparent pixels.
+ *
+ * Since: GIMP 2.4
+ */
+gchar *
+gimp_edit_named_copy (gint32       drawable_ID,
+		      const gchar *buffer_name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gchar *real_name = NULL;
+
+  return_vals = gimp_run_procedure ("gimp-edit-named-copy",
+				    &nreturn_vals,
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_STRING, buffer_name,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    real_name = g_strdup (return_vals[1].data.d_string);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return real_name;
+}
+
+/**
+ * gimp_edit_named_copy_visible:
+ * @image_ID: The image to copy from.
+ * @buffer_name: The name of the buffer to create.
+ *
+ * Copy from the projection into a named buffer.
+ *
+ * This procedure works like gimp-edit-copy-visible, but additionally
+ * stores the copied buffer into a named buffer that will stay
+ * available for later pasting, regardless of any intermediate copy or
+ * cut operations.
+ *
+ * Returns: The real name given to the buffer.
+ *
+ * Since: GIMP 2.4
+ */
+gchar *
+gimp_edit_named_copy_visible (gint32       image_ID,
+			      const gchar *buffer_name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gchar *real_name = NULL;
+
+  return_vals = gimp_run_procedure ("gimp-edit-named-copy-visible",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_STRING, buffer_name,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    real_name = g_strdup (return_vals[1].data.d_string);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return real_name;
+}
+
+/**
+ * gimp_edit_named_paste:
+ * @drawable_ID: The drawable to paste to.
+ * @buffer_name: The name of the buffer to paste.
+ * @paste_into: Clear selection, or paste behind it?
+ *
+ * Paste named buffer to the specified drawable.
+ *
+ * This procedure works like gimp-edit-paste but pastes a named buffer
+ * instead of the global buffer.
+ *
+ * Returns: The new floating selection.
+ *
+ * Since: GIMP 2.4
+ */
+gint32
+gimp_edit_named_paste (gint32       drawable_ID,
+		       const gchar *buffer_name,
+		       gboolean     paste_into)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint32 floating_sel_ID = -1;
+
+  return_vals = gimp_run_procedure ("gimp-edit-named-paste",
+				    &nreturn_vals,
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_STRING, buffer_name,
+				    GIMP_PDB_INT32, paste_into,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    floating_sel_ID = return_vals[1].data.d_layer;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return floating_sel_ID;
+}
+
+/**
+ * gimp_edit_named_paste_as_new:
+ * @buffer_name: The name of the buffer to paste.
+ *
+ * Paste named buffer to a new image.
+ *
+ * This procedure works like gimp-edit-paste-as-new but pastes a named
+ * buffer instead of the global buffer.
+ *
+ * Returns: The new image.
+ *
+ * Since: GIMP 2.4
+ */
+gint32
+gimp_edit_named_paste_as_new (const gchar *buffer_name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint32 image_ID = -1;
+
+  return_vals = gimp_run_procedure ("gimp-edit-named-paste-as-new",
+				    &nreturn_vals,
+				    GIMP_PDB_STRING, buffer_name,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    image_ID = return_vals[1].data.d_image;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return image_ID;
+}
+
+/**
  * gimp_edit_clear:
  * @drawable_ID: The drawable to clear from.
  *

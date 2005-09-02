@@ -254,11 +254,18 @@ gimp_toolbox_drop_buffer (GtkWidget    *widget,
                           gpointer      data)
 {
   GimpContext *context = GIMP_CONTEXT (data);
+  GimpImage   *image;
 
   if (context->gimp->busy)
     return;
 
-  gimp_edit_paste_as_new (context->gimp, NULL, GIMP_BUFFER (viewable));
+  image = gimp_edit_paste_as_new (context->gimp, NULL, GIMP_BUFFER (viewable));
+
+  if (image)
+    {
+      gimp_create_display (image->gimp, image, GIMP_UNIT_PIXEL, 1.0);
+      g_object_unref (image);
+    }
 }
 
 static void
