@@ -374,7 +374,13 @@ gimp_container_grid_view_menu_position (GtkMenu  *menu,
                                         gint     *y,
                                         gpointer  data)
 {
-  GtkWidget *widget = GTK_WIDGET (data);
+  GimpContainerGridView *grid_view = GIMP_CONTAINER_GRID_VIEW (data);
+  GtkWidget             *widget;
+
+  if (grid_view->selected_item)
+    widget = GTK_WIDGET (grid_view->selected_item);
+  else
+    widget = GTK_WIDGET (grid_view->wrap_box);
 
   gdk_window_get_origin (widget->window, x, y);
 
@@ -384,8 +390,16 @@ gimp_container_grid_view_menu_position (GtkMenu  *menu,
       *y += widget->allocation.y;
     }
 
-  *x += widget->allocation.width  / 2;
-  *y += widget->allocation.height / 2;
+  if (grid_view->selected_item)
+    {
+      *x += widget->allocation.width  / 2;
+      *y += widget->allocation.height / 2;
+    }
+  else
+    {
+      *x += widget->style->xthickness;
+      *y += widget->style->ythickness;
+    }
 
   gimp_menu_position (menu, x, y);
 }
@@ -395,14 +409,9 @@ gimp_container_grid_view_popup_menu (GtkWidget *widget)
 {
   GimpContainerGridView *grid_view = GIMP_CONTAINER_GRID_VIEW (widget);
 
-  if (grid_view->selected_item)
-    {
-      return gimp_editor_popup_menu (GIMP_EDITOR (grid_view),
-                                     gimp_container_grid_view_menu_position,
-                                     grid_view->selected_item);
-    }
-
-  return FALSE;
+  return gimp_editor_popup_menu (GIMP_EDITOR (widget),
+                                 gimp_container_grid_view_menu_position,
+                                 grid_view);
 }
 
 static gpointer

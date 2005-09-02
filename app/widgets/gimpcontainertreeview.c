@@ -380,16 +380,9 @@ gimp_container_tree_view_menu_position (GtkMenu  *menu,
 static gboolean
 gimp_container_tree_view_popup_menu (GtkWidget *widget)
 {
-  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (widget);
-
-  if (gtk_tree_selection_get_selected (tree_view->selection, NULL, NULL))
-    {
-      return gimp_editor_popup_menu (GIMP_EDITOR (tree_view),
-                                     gimp_container_tree_view_menu_position,
-                                     tree_view);
-    }
-
-  return FALSE;
+  return gimp_editor_popup_menu (GIMP_EDITOR (widget),
+                                 gimp_container_tree_view_menu_position,
+                                 widget);
 }
 
 GtkWidget *
