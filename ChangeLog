@@ -1,8 +1,13 @@
+2005-09-02  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_canvas_expose): draw guides over the grid.
+
 2005-09-02  Michael Natterer  <mitch@gimp.org>
 
 	* tools/test-clipboard.c (test_clipboard_copy_callback): don't
 	quit the main loop after transferring the data to GTK, it needs a
-	running main loop to get the chunks tranferred to X.
+	running main loop to get the chunks transferred to X.
 
 2005-09-02  Sven Neumann  <sven@gimp.org>
 

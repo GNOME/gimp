@@ -412,11 +412,11 @@ gimp_display_shell_canvas_expose (GtkWidget        *widget,
   /* draw the transform tool preview */
   gimp_display_shell_preview_transform (shell);
 
-  /* draw the guides */
-  gimp_display_shell_draw_guides (shell);
-
   /* draw the grid */
   gimp_display_shell_draw_grid (shell, &eevent->area);
+
+  /* draw the guides */
+  gimp_display_shell_draw_guides (shell);
 
   /* draw the sample points */
   gimp_display_shell_draw_sample_points (shell);
