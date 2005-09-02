@@ -476,22 +476,19 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
 
   spinbutton = gimp_prop_spin_button_new (config, "indent", 1.0, 10.0, 1);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 5);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             _("Indent:"), 0.0, 0.5,
-                             spinbutton, 1, FALSE);
+  gimp_table_attach_stock (GTK_TABLE (table), row++,
+                           GTK_STOCK_INDENT, spinbutton, 1, TRUE);
 
   spinbutton = gimp_prop_spin_button_new (config, "line-spacing", 1.0, 10.0, 1);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 5);
   gimp_table_attach_stock (GTK_TABLE (table), row++,
-                           _("Line\nspacing:"), 0.0,
-                           spinbutton, 1, GIMP_STOCK_LINE_SPACING);
+                           GIMP_STOCK_LINE_SPACING, spinbutton, 1, TRUE);
 
   spinbutton = gimp_prop_spin_button_new (config,
                                           "letter-spacing", 1.0, 10.0, 1);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 5);
   gimp_table_attach_stock (GTK_TABLE (table), row++,
-                           _("Letter\nspacing:"), 0.0,
-                           spinbutton, 1, GIMP_STOCK_LETTER_SPACING);
+                           GIMP_STOCK_LETTER_SPACING, spinbutton, 1, TRUE);
 
   button = gtk_button_new_with_label (_("Create Path from Text"));
   gtk_box_pack_end (GTK_BOX (vbox), button, FALSE, FALSE, 0);

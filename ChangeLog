@@ -1,5 +1,11 @@
 2005-09-02  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimptextoptions.c
+	* app/widgets/gimpwidgets-utils.[ch]: dropped the labels from text
+	tool options that have icons. Reduces visual clutter.
+
+2005-09-02  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-callbacks.c
 	(gimp_display_shell_canvas_expose): draw guides over the grid.
 

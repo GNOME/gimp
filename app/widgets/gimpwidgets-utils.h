@@ -34,11 +34,10 @@ void          gimp_button_menu_position  (GtkWidget       *button,
 
 void          gimp_table_attach_stock    (GtkTable        *table,
 					  gint             row,
-					  const gchar     *label_text,
-					  gdouble          yalign,
+					  const gchar     *stock_id,
 					  GtkWidget       *widget,
 					  gint             colspan,
-					  const gchar     *stock_id);
+                                          gboolean         left_align);
 void          gimp_enum_radio_frame_add  (GtkFrame        *frame,
                                           GtkWidget       *widget,
                                           gint             enum_value);

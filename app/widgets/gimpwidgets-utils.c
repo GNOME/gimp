@@ -197,46 +197,36 @@ gimp_button_menu_position (GtkWidget       *button,
 void
 gimp_table_attach_stock (GtkTable    *table,
                          gint         row,
-			 const gchar *label_text,
-			 gdouble      yalign,
+			 const gchar *stock_id,
                          GtkWidget   *widget,
 			 gint         colspan,
-                         const gchar *stock_id)
+                         gboolean     left_align)
 {
   GtkWidget *image;
-  GtkWidget *label;
 
   g_return_if_fail (GTK_IS_TABLE (table));
-  g_return_if_fail (label_text != NULL);
-
-  label = gtk_label_new_with_mnemonic (label_text);
-
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, yalign);
-  gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
-  gtk_table_attach (table, label, 0, 1, row, row + 1,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  if (widget)
-    {
-      g_return_if_fail (GTK_IS_WIDGET (widget));
-
-      gtk_table_attach (table, widget, 1, 1 + colspan, row, row + 1,
-			GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-      gtk_widget_show (widget);
-
-      gtk_label_set_mnemonic_widget (GTK_LABEL (label), widget);
-    }
+  g_return_if_fail (stock_id != NULL);
+  g_return_if_fail (GTK_IS_WIDGET (widget));
 
   image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_BUTTON);
+  gtk_misc_set_alignment (GTK_MISC (image), 1.0, 0.5);
+  gtk_table_attach (table, image, 0, 1, row, row + 1,
+		    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (image);
 
-  if (image)
+  if (left_align)
     {
-      gtk_misc_set_alignment (GTK_MISC (image), 0.0, 0.5);
-      gtk_table_attach (table, image, 1 + colspan, 2 + colspan, row, row + 1,
-			GTK_SHRINK | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-      gtk_widget_show (image);
+      GtkWidget *hbox = gtk_hbox_new (FALSE, 0);
+
+      gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 0);
+      gtk_widget_show (widget);
+
+      widget = hbox;
     }
+
+  gtk_table_attach (table, widget, 1, 1 + colspan, row, row + 1,
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_widget_show (widget);
 }
 
 void
