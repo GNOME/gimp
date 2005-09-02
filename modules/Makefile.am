@@ -5,7 +5,7 @@ libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
 libgimpmodule = $(top_builddir)/libgimpmodule/libgimpmodule-$(GIMP_API_VERSION).la
 libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
 
-if OS_WIN32
+if PLATFORM_WIN32
 no_undefined = -no-undefined
 endif
 

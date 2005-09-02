@@ -870,7 +870,7 @@ if test "$gdk_target" = x11; then
       LDFLAGS="$LDFLAGS $X_LIBS"
       AC_CHECK_LIB(Xmu, XmuClientWindow,
         [AC_CHECK_HEADERS(X11/Xmu/WinUtil.h,
-          GIMP_REMOTE='gimp-remote-gimp_app_version';
+          GIMP_REMOTE='gimp-remote-gimp_app_version$(EXEEXT)';
 	  have_libxmu=yes
           LIBXMU="$X_LIBS $X_PRE_LIBS -lX11 -lXmu -lXt",
 	  [AC_MSG_WARN(*** gimp-remote will not be built (XMU header file not found) ***)],[#include <gdk/gdkx.h>])],
