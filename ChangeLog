@@ -1,3 +1,11 @@
+2005-09-03  Seth Burgess <sjburges@gimp.org>
+	
+	* app/tools/gimpbrightnesscontrasttool.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcolorizetool.c
+	* app/tools/gimphuesaturationtool.c: change the update policy to 
+	GTK_UPDATE_CONTINUOUS for considerably better responsiveness
+	
 2005-09-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimp-edit.[ch] (gimp_edit_paste_as_new): don't create a

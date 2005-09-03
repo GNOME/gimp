@@ -326,7 +326,7 @@ gimp_brightness_contrast_tool_dialog (GimpImageMapTool *image_map_tool)
                                NULL, NULL);
   bc_tool->brightness_data = GTK_ADJUSTMENT (data);
   slider = GIMP_SCALE_ENTRY_SCALE (data);
-  gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
+  gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_CONTINUOUS);
 
   g_signal_connect (data, "value-changed",
                     G_CALLBACK (brightness_contrast_brightness_adjustment_update),
@@ -341,7 +341,7 @@ gimp_brightness_contrast_tool_dialog (GimpImageMapTool *image_map_tool)
                                NULL, NULL);
   bc_tool->contrast_data = GTK_ADJUSTMENT (data);
   slider = GIMP_SCALE_ENTRY_SCALE (data);
-  gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
+  gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_CONTINUOUS);
 
   g_signal_connect (data, "value-changed",
                     G_CALLBACK (brightness_contrast_contrast_adjustment_update),
