@@ -172,10 +172,12 @@ gimp_pixel_rgn_resize (GimpPixelRgn *pr,
   g_return_if_fail (x >= 0 && x + width  <= pr->drawable->width);
   g_return_if_fail (y >= 0 && y + height <= pr->drawable->height);
 
+  /*  If the data is non-null, data is contiguous--need to advance  */
   if (pr->data != NULL)
     pr->data += ((y - pr->y) * pr->rowstride +
                  (x - pr->x) * pr->bpp);
 
+  /*  update sizes for both contiguous and tiled regions  */
   pr->x = x;
   pr->y = y;
   pr->w = width;
@@ -698,23 +700,23 @@ gpointer
 gimp_pixel_rgns_register2 (gint           nrgns,
                            GimpPixelRgn **prs)
 {
-  GimpPixelRgn         *pr;
-  GimpPixelRgnHolder   *prh;
   GimpPixelRgnIterator *pri;
   gboolean              found;
 
   g_return_val_if_fail (nrgns > 0, NULL);
   g_return_val_if_fail (prs != NULL, NULL);
 
-  pri = g_new (GimpPixelRgnIterator, 1);
-  pri->pixel_regions = NULL;
-  pri->process_count = 0;
+  pri = g_new0 (GimpPixelRgnIterator, 1);
 
   found = FALSE;
   while (nrgns --)
     {
+      GimpPixelRgnHolder *prh;
+      GimpPixelRgn       *pr;
+
       pr = prs[nrgns];
-      prh = g_new (GimpPixelRgnHolder, 1);
+
+      prh = g_new0 (GimpPixelRgnHolder, 1);
       prh->pr = pr;
 
       if (pr != NULL)
@@ -722,6 +724,7 @@ gimp_pixel_rgns_register2 (gint           nrgns,
           /*  If there is a defined value for data, make sure tiles is NULL  */
           if (pr->data)
             pr->drawable = NULL;
+
           prh->original_data     = pr->data;
           prh->startx            = pr->x;
           prh->starty            = pr->y;
@@ -829,7 +832,7 @@ gimp_pixel_rgns_process (gpointer pri_ptr)
 
           if ((prh->pr->x - prh->startx) >= pri->region_width)
             {
-              prh->pr->x = prh->startx;
+              prh->pr->x  = prh->startx;
               prh->pr->y += pri->portion_height;
             }
         }
@@ -869,7 +872,9 @@ gimp_get_portion_width (GimpPixelRgnIterator *pri)
                              (pri->region_width - (prh->pr->x - prh->startx)));
             }
           else
-            width = (pri->region_width - (prh->pr->x - prh->startx));
+            {
+              width = (pri->region_width - (prh->pr->x - prh->startx));
+            }
 
           if (width < min_width)
             min_width = width;
@@ -909,7 +914,9 @@ gimp_get_portion_height (GimpPixelRgnIterator *pri)
                               (pri->region_height - (prh->pr->y - prh->starty)));
             }
           else
-            height = (pri->region_height - (prh->pr->y - prh->starty));
+            {
+              height = (pri->region_height - (prh->pr->y - prh->starty));
+            }
 
           if (height < min_height)
             min_height = height;
@@ -925,11 +932,11 @@ gimp_pixel_rgns_configure (GimpPixelRgnIterator *pri)
   GSList *list;
 
   /*  Determine the portion width and height  */
-  pri->portion_width = gimp_get_portion_width (pri);
+  pri->portion_width  = gimp_get_portion_width (pri);
   pri->portion_height = gimp_get_portion_height (pri);
 
-  if ((pri->portion_width == 0) ||
-      (pri->portion_height == 0))
+  if (pri->portion_width  == 0 ||
+      pri->portion_height == 0)
     {
       /*  free the pixel regions list  */
       for (list = pri->pixel_regions; list; list = list->next)
@@ -987,8 +994,8 @@ gimp_pixel_rgn_configure (GimpPixelRgnHolder   *prh,
   else
     {
       prh->pr->data = (prh->original_data +
-                       (prh->pr->y - prh->starty) * prh->pr->rowstride +
-                       (prh->pr->x - prh->startx) * prh->pr->bpp);
+                       prh->pr->y * prh->pr->rowstride +
+                       prh->pr->x * prh->pr->bpp);
     }
 
   prh->pr->w = pri->portion_width;

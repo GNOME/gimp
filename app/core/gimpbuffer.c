@@ -252,13 +252,8 @@ gimp_buffer_get_new_preview (GimpViewable *viewable,
   else
     temp_buf = temp_buf_new (buffer_width, buffer_height, bytes, 0, 0, NULL);
 
-  destPR.bytes     = temp_buf->bytes;
-  destPR.x         = 0;
-  destPR.y         = 0;
-  destPR.w         = temp_buf->width;
-  destPR.h         = temp_buf->height;
-  destPR.rowstride = temp_buf->width * destPR.bytes;
-  destPR.data      = temp_buf_data (temp_buf);
+  pixel_region_init_temp_buf (&destPR, temp_buf,
+                              0, 0, temp_buf->width, temp_buf->height);
 
   if (buffer_height > height || buffer_width > width)
     {

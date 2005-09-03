@@ -1079,13 +1079,12 @@ gimp_layer_new_from_pixbuf (GdkPixbuf            *pixbuf,
   g_return_val_if_fail (GIMP_IS_IMAGE (dest_gimage), NULL);
   g_return_val_if_fail (name != NULL, NULL);
 
-  bufPR.data      = gdk_pixbuf_get_pixels (pixbuf);
-  bufPR.rowstride = gdk_pixbuf_get_rowstride (pixbuf);
-  bufPR.x         = 0;
-  bufPR.y         = 0;
-  bufPR.w         = gdk_pixbuf_get_width (pixbuf);
-  bufPR.h         = gdk_pixbuf_get_height (pixbuf);
-  bufPR.bytes     = gdk_pixbuf_get_n_channels (pixbuf);
+  pixel_region_init_data (&bufPR, gdk_pixbuf_get_pixels (pixbuf),
+                          gdk_pixbuf_get_n_channels (pixbuf),
+                          gdk_pixbuf_get_rowstride (pixbuf),
+                          0, 0,
+                          gdk_pixbuf_get_width (pixbuf),
+                          gdk_pixbuf_get_height (pixbuf));
 
   return gimp_layer_new_from_region (&bufPR, dest_gimage, type,
                                      name, opacity, mode);

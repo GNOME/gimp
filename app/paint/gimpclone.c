@@ -330,7 +330,7 @@ gimp_clone_motion (GimpPaintCore    *paint_core,
           (! options->sample_merged && (clone->src_drawable != drawable)))
         {
           pixel_region_init (&srcPR, src_tiles,
-                             x1, y1, (x2 - x1), (y2 - y1), FALSE);
+                             x1, y1, x2 - x1, y2 - y1, FALSE);
         }
       else
         {
@@ -346,28 +346,16 @@ gimp_clone_motion (GimpPaintCore    *paint_core,
                                                    GIMP_DRAWABLE (src_pickable),
                                                    x1, y1, x2, y2);
 
-          srcPR.bytes     = orig->bytes;
-          srcPR.x         = 0;
-          srcPR.y         = 0;
-          srcPR.w         = x2 - x1;
-          srcPR.h         = y2 - y1;
-          srcPR.rowstride = srcPR.bytes * orig->width;
-          srcPR.data      = temp_buf_data (orig);
+          pixel_region_init_temp_buf (&srcPR, orig,
+                                      0, 0, x2 - x1, y2 - y1);
         }
 
       offset_x = x1 - (area->x + offset_x);
       offset_y = y1 - (area->y + offset_y);
 
       /*  configure the destination  */
-      destPR.bytes     = area->bytes;
-      destPR.x         = 0;
-      destPR.y         = 0;
-      destPR.w         = srcPR.w;
-      destPR.h         = srcPR.h;
-      destPR.rowstride = destPR.bytes * area->width;
-      destPR.data      = (temp_buf_data (area) +
-                          offset_y * destPR.rowstride +
-                          offset_x * destPR.bytes);
+      pixel_region_init_temp_buf (&destPR, area,
+                                  offset_x, offset_y, srcPR.w, srcPR.h);
 
       pr = pixel_regions_register (2, &srcPR, &destPR);
       break;
@@ -379,13 +367,8 @@ gimp_clone_motion (GimpPaintCore    *paint_core,
         return;
 
       /*  configure the destination  */
-      destPR.bytes     = area->bytes;
-      destPR.x         = 0;
-      destPR.y         = 0;
-      destPR.w         = area->width;
-      destPR.h         = area->height;
-      destPR.rowstride = destPR.bytes * area->width;
-      destPR.data      = temp_buf_data (area);
+      pixel_region_init_temp_buf (&destPR, area,
+                                  0, 0, area->width, area->height);
 
       pr = pixel_regions_register (1, &destPR);
       break;

@@ -233,37 +233,27 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
     /*  get the original untouched image  */
     orig = gimp_paint_core_get_orig_image (paint_core, drawable, x1, y1, x2, y2);
 
-    srcPR.bytes     = orig->bytes;
-    srcPR.x         = 0;
-    srcPR.y         = 0;
-    srcPR.w         = x2 - x1;
-    srcPR.h         = y2 - y1;
-    srcPR.rowstride = srcPR.bytes * orig->width;
-    srcPR.data      = temp_buf_data (orig);
+    pixel_region_init_temp_buf (&srcPR, orig,
+                                0, 0, x2 - x1, y2 - y1);
   }
 
   /* tempPR will hold the dodgeburned region */
-  tempPR.bytes     = srcPR.bytes;
-  tempPR.x         = srcPR.x;
-  tempPR.y         = srcPR.y;
-  tempPR.w         = srcPR.w;
-  tempPR.h         = srcPR.h;
-  tempPR.rowstride = tempPR.bytes * tempPR.w;
-  tempPR.data      = g_malloc (tempPR.h * tempPR.rowstride);
+  temp_data = g_malloc (srcPR.h * srcPR.bytes * srcPR.w);
 
-  temp_data        = tempPR.data;
+  pixel_region_init_data (&tempPR, temp_data,
+                          srcPR.bytes,
+                          srcPR.bytes * srcPR.w,
+                          srcPR.x,
+                          srcPR.y,
+                          srcPR.w,
+                          srcPR.h);
 
   /*  DodgeBurn the region  */
   gimp_lut_process (dodgeburn->lut, &srcPR, &tempPR);
 
   /* The dest is the paint area we got above (= canvas_buf) */
-  destPR.bytes     = area->bytes;
-  destPR.x         = 0;
-  destPR.y         = 0;
-  destPR.w         = area->width;
-  destPR.h         = area->height;
-  destPR.rowstride = area->width * destPR.bytes;
-  destPR.data      = temp_buf_data (area);
+  pixel_region_init_temp_buf (&destPR, area,
+                              0, 0, area->width, area->height);
 
   /* Now add an alpha to the dodgeburned region
    * and put this in area = canvas_buf

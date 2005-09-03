@@ -227,14 +227,8 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
 		     area->x, area->y, area->width, area->height, FALSE);
 
   /*  configure the destination pixel region  */
-  destPR.bytes     = area->bytes;
-  destPR.tiles     = NULL;
-  destPR.x         = 0;
-  destPR.y         = 0;
-  destPR.w         = area->width;
-  destPR.h         = area->height;
-  destPR.rowstride = area->width * destPR.bytes;
-  destPR.data      = temp_buf_data (area);
+  pixel_region_init_temp_buf (&destPR, area,
+                              0, 0, area->width, area->height);
 
   rate = options->rate;
 
@@ -287,13 +281,8 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
       /*  If the source has no alpha, then add alpha pixels          */
       /*  Because paint_core.c is alpha-only code. See below.        */
 
-      PixelRegion  tempPR;
-
-      tempPR.x     = 0;
-      tempPR.y     = 0;
-      tempPR.w     = area->width;
-      tempPR.h     = area->height;
-      tempPR.tiles = NULL;
+      PixelRegion tempPR;
+      gint        bytes;
 
       if (! gimp_drawable_has_alpha (drawable))
 	{
@@ -302,30 +291,33 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
 	     tempPR the same number of bytes as srcPR, and extend the
 	     paint_core_replace_canvas API to handle non-alpha images. */
 
-          tempPR.bytes     = srcPR.bytes + 1;
-          tempPR.rowstride = tempPR.bytes * tempPR.w;
-          temp_data        = g_malloc (tempPR.h * tempPR.rowstride);
-          tempPR.data      = temp_data;
+          bytes = srcPR.bytes + 1;
+
+          temp_data = g_malloc (area->height * bytes * area->width);
+
+          pixel_region_init_data (&tempPR, temp_data,
+                                  bytes, bytes * area->width,
+                                  0, 0, area->width, area->height);
 
           add_alpha_region (&srcPR, &tempPR);
 	}
       else
 	{
-          tempPR.bytes     = srcPR.bytes;
-          tempPR.rowstride = tempPR.bytes * tempPR.w;
-          temp_data        = g_malloc (tempPR.h * tempPR.rowstride);
-          tempPR.data      = temp_data;
+          bytes = srcPR.bytes;
+
+          temp_data = g_malloc (area->height * bytes * area->width);
+
+          pixel_region_init_data (&tempPR, temp_data,
+                                  bytes, bytes * area->width,
+                                  0, 0, area->width, area->height);
 
           copy_region (&srcPR, &tempPR);
 	}
 
       /*  Convolve the region  */
-
-      tempPR.x    = 0;
-      tempPR.y    = 0;
-      tempPR.w    = area->width;
-      tempPR.h    = area->height;
-      tempPR.data = temp_data;
+      pixel_region_init_data (&tempPR, temp_data,
+                              bytes, bytes * area->width,
+                              0, 0, area->width, area->height);
 
       convolve_region (&tempPR, &destPR, matrix, matrix_size,
                        matrix_divisor, GIMP_NORMAL_CONVOL, TRUE);
@@ -345,6 +337,8 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
       guchar      *ovrsz1_data = NULL;
       guchar      *ovrsz2_data = NULL;
       guchar      *fillcolor;
+      gint         bytes;
+      gint         rowstride;
 
       fillcolor = gimp_pickable_get_color_at
         (GIMP_PICKABLE (drawable),
@@ -356,41 +350,33 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
       marginx *= (marginx < 0) ? -1 : 0;
       marginy *= (marginy < 0) ? -1 : 0;
 
-      ovrsz2PR.x         = 0;
-      ovrsz2PR.y         = 0;
-      ovrsz2PR.w         = area->width  + marginx;
-      ovrsz2PR.h         = area->height + marginy;
-      ovrsz2PR.bytes     = (gimp_drawable_has_alpha (drawable) ?
-                            srcPR.bytes : srcPR.bytes + 1);
-      ovrsz2PR.offx      = 0;
-      ovrsz2PR.offy      = 0;
-      ovrsz2PR.rowstride = ovrsz2PR.bytes * ovrsz2PR.w;
-      ovrsz2PR.tiles     = NULL;
-      ovrsz2_data        = g_malloc (ovrsz2PR.h * ovrsz2PR.rowstride);
-      ovrsz2PR.data      = ovrsz2_data;
+      bytes     = (gimp_drawable_has_alpha (drawable) ?
+                   srcPR.bytes : srcPR.bytes + 1);
+      rowstride = (area->width + marginx) * bytes;
 
-      ovrsz1PR.x         = 0;
-      ovrsz1PR.y         = 0;
-      ovrsz1PR.w         = area->width  + marginx;
-      ovrsz1PR.h         = area->height + marginy;
-      ovrsz1PR.bytes     = (gimp_drawable_has_alpha (drawable) ?
-                            srcPR.bytes : srcPR.bytes + 1);
-      ovrsz1PR.offx      = 0;
-      ovrsz1PR.offy      = 0;
-      ovrsz1PR.rowstride = ovrsz2PR.bytes * ovrsz2PR.w;
-      ovrsz1PR.tiles     = NULL;
-      ovrsz1_data        = g_malloc (ovrsz1PR.h * ovrsz1PR.rowstride);
-      ovrsz1PR.data      = ovrsz1_data;
+      ovrsz2_data = g_malloc ((area->height + marginy) * rowstride);
+      ovrsz2_data = g_malloc ((area->width  + marginx) * rowstride);
+
+      pixel_region_init_data (&ovrsz2PR, ovrsz2_data,
+                              bytes, rowstride,
+                              0, 0,
+                              area->width  + marginx,
+                              area->height + marginy);
+
+      pixel_region_init_data (&ovrsz1PR, ovrsz1_data,
+                              bytes, rowstride,
+                              0, 0,
+                              area->width  + marginx,
+                              area->height + marginy);
 
       color_region (&ovrsz1PR, fillcolor);
 
-      ovrsz1PR.x         = (area_hclip == CONVOLVE_NCLIP)? marginx : 0;
-      ovrsz1PR.y         = (area_vclip == CONVOLVE_NCLIP)? marginy : 0;
-      ovrsz1PR.w         = area->width;
-      ovrsz1PR.h         = area->height;
-      ovrsz1PR.data      = (ovrsz1_data +
-                            (ovrsz1PR.rowstride * ovrsz1PR.y) +
-                            (ovrsz1PR.bytes * ovrsz1PR.x));
+      pixel_region_init_data (&ovrsz1PR, ovrsz1_data,
+                              bytes, rowstride,
+                              (area_hclip == CONVOLVE_NCLIP) ? marginx : 0,
+                              (area_vclip == CONVOLVE_NCLIP) ? marginy : 0,
+                              area->width,
+                              area->height);
 
       if (! gimp_drawable_has_alpha (drawable))
 	add_alpha_region (&srcPR, &ovrsz1PR);
@@ -398,25 +384,22 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
 	copy_region (&srcPR, &ovrsz1PR);
 
       /*  Convolve the region  */
-
-      ovrsz1PR.x    = 0;
-      ovrsz1PR.y    = 0;
-      ovrsz1PR.w    = area->width  + marginx;
-      ovrsz1PR.h    = area->height + marginy;
-      ovrsz1PR.data = ovrsz1_data;
+      pixel_region_init_data (&ovrsz1PR, ovrsz1_data,
+                              bytes, rowstride,
+                              0, 0,
+                              area->width  + marginx,
+                              area->height + marginy);
 
       convolve_region (&ovrsz1PR, &ovrsz2PR, matrix, matrix_size,
                        matrix_divisor, GIMP_NORMAL_CONVOL, TRUE);
 
       /* Crop and copy to destination */
-
-      ovrsz2PR.x    = (area_hclip == CONVOLVE_NCLIP)? marginx : 0;
-      ovrsz2PR.y    = (area_vclip == CONVOLVE_NCLIP)? marginy : 0;
-      ovrsz2PR.w    = area->width;
-      ovrsz2PR.h    = area->height;
-      ovrsz2PR.data = (ovrsz2_data +
-                       (ovrsz2PR.rowstride * ovrsz2PR.y) +
-                       (ovrsz2PR.bytes * ovrsz2PR.x));
+      pixel_region_init_data (&ovrsz2PR, ovrsz2_data,
+                              bytes, rowstride,
+                              (area_hclip == CONVOLVE_NCLIP) ? marginx : 0,
+                              (area_vclip == CONVOLVE_NCLIP) ? marginy : 0,
+                              area->width,
+                              area->height);
 
       copy_region (&ovrsz2PR, &destPR);
 

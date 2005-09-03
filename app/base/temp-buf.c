@@ -448,17 +448,8 @@ temp_buf_copy_area (TempBuf *src,
     }
 
   /*  Copy the region  */
-  srcPR.bytes     = src->bytes;
-  srcPR.w         = width;
-  srcPR.h         = height;
-  srcPR.rowstride = src->bytes * src->width;
-  srcPR.data      = temp_buf_data (src) + (y1 * srcPR.rowstride +
-					   x1 * srcPR.bytes);
-
-  destPR.bytes     = dest->bytes;
-  destPR.rowstride = new->bytes * new->width;
-  destPR.data      = temp_buf_data (new) + (dest_y * destPR.rowstride +
-					    dest_x * destPR.bytes);
+  pixel_region_init_temp_buf (&srcPR,  src, x1, y1, width, height);
+  pixel_region_init_temp_buf (&destPR, new, dest_x, dest_y, width, height);
 
   copy_region (&srcPR, &destPR);
 

@@ -787,13 +787,8 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
 	      BoundSeg    *boundary;
 	      gint	   num_groups;
 
-              PR.data      = temp_buf_data (mask);
-              PR.x         = 0;
-              PR.y         = 0;
-              PR.w         = mask->width;
-              PR.h         = mask->height;
-              PR.bytes     = mask->bytes;
-              PR.rowstride = PR.w * PR.bytes;
+              pixel_region_init_temp_buf (&PR, mask,
+                                          0, 0, mask->width, mask->height);
 
               boundary = boundary_find (&PR, BOUNDARY_WITHIN_BOUNDS,
                                         0, 0, PR.w, PR.h,

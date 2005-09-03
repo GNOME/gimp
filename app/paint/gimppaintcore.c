@@ -569,15 +569,11 @@ gimp_paint_core_get_orig_image (GimpPaintCore *core,
                      (x2 - x1), (y2 - y1),
                      FALSE);
 
-  destPR.bytes     = core->orig_buf->bytes;
-  destPR.x         = 0;
-  destPR.y         = 0;
-  destPR.w         = (x2 - x1);
-  destPR.h         = (y2 - y1);
-  destPR.rowstride = core->orig_buf->bytes * core->orig_buf->width;
-  destPR.data      = (temp_buf_data (core->orig_buf) +
-                      (y1 - core->orig_buf->y) * destPR.rowstride +
-                      (x1 - core->orig_buf->x) * destPR.bytes);
+  pixel_region_init_temp_buf (&destPR, core->orig_buf,
+                              x1 - core->orig_buf->x,
+                              y1 - core->orig_buf->y,
+                              x2 - x1,
+                              y2 - y1);
 
   for (pr = pixel_regions_register (2, &srcPR, &destPR);
        pr != NULL;
@@ -668,15 +664,11 @@ gimp_paint_core_get_orig_proj (GimpPaintCore *core,
                      (x2 - x1), (y2 - y1),
                      FALSE);
 
-  destPR.bytes     = core->orig_proj_buf->bytes;
-  destPR.x         = 0;
-  destPR.y         = 0;
-  destPR.w         = (x2 - x1);
-  destPR.h         = (y2 - y1);
-  destPR.rowstride = core->orig_proj_buf->bytes * core->orig_proj_buf->width;
-  destPR.data      = (temp_buf_data (core->orig_proj_buf) +
-                      (y1 - core->orig_proj_buf->y) * destPR.rowstride +
-                      (x1 - core->orig_proj_buf->x) * destPR.bytes);
+  pixel_region_init_temp_buf (&destPR, core->orig_proj_buf,
+                              x1 - core->orig_proj_buf->x,
+                              y1 - core->orig_proj_buf->y,
+                              x2 - x1,
+                              y2 - y1);
 
   for (pr = pixel_regions_register (2, &srcPR, &destPR);
        pr != NULL;
@@ -796,13 +788,10 @@ gimp_paint_core_paste (GimpPaintCore            *core,
     }
 
   /*  intialize canvas buf source pixel regions  */
-  srcPR.bytes     = core->canvas_buf->bytes;
-  srcPR.x         = 0;
-  srcPR.y         = 0;
-  srcPR.w         = core->canvas_buf->width;
-  srcPR.h         = core->canvas_buf->height;
-  srcPR.rowstride = core->canvas_buf->width * core->canvas_buf->bytes;
-  srcPR.data      = temp_buf_data (core->canvas_buf);
+  pixel_region_init_temp_buf (&srcPR, core->canvas_buf,
+                              0, 0,
+                              core->canvas_buf->width,
+                              core->canvas_buf->height);
 
   /*  apply the paint area to the gimage  */
   gimp_drawable_apply_region (drawable, &srcPR,
@@ -901,13 +890,10 @@ gimp_paint_core_replace (GimpPaintCore            *core,
     }
 
   /*  intialize canvas buf source pixel regions  */
-  srcPR.bytes     = core->canvas_buf->bytes;
-  srcPR.x         = 0;
-  srcPR.y         = 0;
-  srcPR.w         = core->canvas_buf->width;
-  srcPR.h         = core->canvas_buf->height;
-  srcPR.rowstride = core->canvas_buf->width * core->canvas_buf->bytes;
-  srcPR.data      = temp_buf_data (core->canvas_buf);
+  pixel_region_init_temp_buf (&srcPR, core->canvas_buf,
+                              0, 0,
+                              core->canvas_buf->width,
+                              core->canvas_buf->height);
 
   /*  apply the paint area to the gimage  */
   gimp_drawable_replace_region (drawable, &srcPR,
@@ -942,13 +928,10 @@ canvas_tiles_to_canvas_buf (GimpPaintCore *core)
   PixelRegion maskPR;
 
   /*  combine the canvas tiles and the canvas buf  */
-  srcPR.bytes     = core->canvas_buf->bytes;
-  srcPR.x         = 0;
-  srcPR.y         = 0;
-  srcPR.w         = core->canvas_buf->width;
-  srcPR.h         = core->canvas_buf->height;
-  srcPR.rowstride = core->canvas_buf->width * core->canvas_buf->bytes;
-  srcPR.data      = temp_buf_data (core->canvas_buf);
+  pixel_region_init_temp_buf (&srcPR, core->canvas_buf,
+                              0, 0,
+                              core->canvas_buf->width,
+                              core->canvas_buf->height);
 
   pixel_region_init (&maskPR, core->canvas_tiles,
                      core->canvas_buf->x,
@@ -989,13 +972,10 @@ paint_mask_to_canvas_buf (GimpPaintCore *core,
   PixelRegion srcPR;
 
   /*  combine the canvas buf and the paint mask to the canvas buf  */
-  srcPR.bytes     = core->canvas_buf->bytes;
-  srcPR.x         = 0;
-  srcPR.y         = 0;
-  srcPR.w         = core->canvas_buf->width;
-  srcPR.h         = core->canvas_buf->height;
-  srcPR.rowstride = core->canvas_buf->width * core->canvas_buf->bytes;
-  srcPR.data      = temp_buf_data (core->canvas_buf);
+  pixel_region_init_temp_buf (&srcPR, core->canvas_buf,
+                              0, 0,
+                              core->canvas_buf->width,
+                              core->canvas_buf->height);
 
   /*  apply the mask  */
   apply_mask_to_region (&srcPR, paint_maskPR, paint_opacity * 255.999);

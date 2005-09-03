@@ -755,24 +755,19 @@ gimp_brush_core_paste_canvas (GimpBrushCore            *core,
       PixelRegion    brush_maskPR;
       gint           x;
       gint           y;
-      gint           xoff;
-      gint           yoff;
+      gint           off_x;
+      gint           off_y;
 
       x = (gint) floor (paint_core->cur_coords.x) - (brush_mask->width  >> 1);
       y = (gint) floor (paint_core->cur_coords.y) - (brush_mask->height >> 1);
 
-      xoff = (x < 0) ? -x : 0;
-      yoff = (y < 0) ? -y : 0;
+      off_x = (x < 0) ? -x : 0;
+      off_y = (y < 0) ? -y : 0;
 
-      brush_maskPR.bytes     = 1;
-      brush_maskPR.x         = 0;
-      brush_maskPR.y         = 0;
-      brush_maskPR.w         = paint_core->canvas_buf->width;
-      brush_maskPR.h         = paint_core->canvas_buf->height;
-      brush_maskPR.rowstride = brush_maskPR.bytes * brush_mask->width;
-      brush_maskPR.data      = (mask_buf_data (brush_mask) +
-                                yoff * brush_maskPR.rowstride +
-                                xoff * brush_maskPR.bytes);
+      pixel_region_init_temp_buf (&brush_maskPR, brush_mask,
+                                  off_x, off_y,
+                                  paint_core->canvas_buf->width,
+                                  paint_core->canvas_buf->height);
 
       gimp_paint_core_paste (paint_core, &brush_maskPR, drawable,
                              brush_opacity,
@@ -812,15 +807,10 @@ gimp_brush_core_replace_canvas (GimpBrushCore            *core,
       off_x = (x < 0) ? -x : 0;
       off_y = (y < 0) ? -y : 0;
 
-      brush_maskPR.bytes     = 1;
-      brush_maskPR.x         = 0;
-      brush_maskPR.y         = 0;
-      brush_maskPR.w         = paint_core->canvas_buf->width;
-      brush_maskPR.h         = paint_core->canvas_buf->height;
-      brush_maskPR.rowstride = brush_maskPR.bytes * brush_mask->width;
-      brush_maskPR.data      = (mask_buf_data (brush_mask) +
-                                off_y * brush_maskPR.rowstride +
-                                off_x * brush_maskPR.bytes);
+      pixel_region_init_temp_buf (&brush_maskPR, brush_mask,
+                                  off_x, off_y,
+                                  paint_core->canvas_buf->width,
+                                  paint_core->canvas_buf->height);
 
       gimp_paint_core_replace (paint_core, &brush_maskPR, drawable,
                                brush_opacity,
@@ -1383,13 +1373,8 @@ gimp_brush_core_color_area_with_pixmap (GimpBrushCore            *core,
   else
     brush_mask = NULL;
 
-  destPR.bytes     = area->bytes;
-  destPR.x         = 0;
-  destPR.y         = 0;
-  destPR.w         = area->width;
-  destPR.h         = area->height;
-  destPR.rowstride = destPR.bytes * area->width;
-  destPR.data      = temp_buf_data (area);
+  pixel_region_init_temp_buf (&destPR, area,
+                              0, 0, area->width, area->height);
 
   pr = pixel_regions_register (1, &destPR);
 

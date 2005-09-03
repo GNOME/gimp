@@ -189,6 +189,7 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
   GimpImage   *gimage;
   TempBuf     *area;
   PixelRegion  srcPR;
+  gint         bytes;
   gint         x, y, w, h;
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
@@ -203,9 +204,10 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
   /*  adjust the x and y coordinates to the upper left corner of the brush  */
   gimp_smudge_nonclipped_painthit_coords (paint_core, &x, &y, &w, &h);
 
+
   /*  Allocate the accumulation buffer */
-  smudge->accumPR.bytes = gimp_drawable_bytes (drawable);
-  smudge->accum_data    = g_malloc (w * h * smudge->accumPR.bytes);
+  bytes = gimp_drawable_bytes (drawable);
+  smudge->accum_data = g_malloc (w * h * bytes);
 
   /*  If clipped, prefill the smudge buffer
       with the color at the brush position.  */
@@ -220,39 +222,33 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
                                                 0, gimp_item_height (GIMP_ITEM (drawable)) - 1));
       g_return_val_if_fail (fill != NULL, FALSE);
 
-      srcPR.w         = w;
-      srcPR.h         = h;
-      srcPR.bytes     = smudge->accumPR.bytes;
-      srcPR.rowstride = srcPR.bytes * w;
-      srcPR.data      = smudge->accum_data;
+      pixel_region_init_data (&srcPR, smudge->accum_data,
+                              bytes, bytes * w,
+                              0, 0, w, h);
 
       color_region (&srcPR, fill);
       g_free (fill);
     }
 
-  smudge->accumPR.x         = area->x - x;
-  smudge->accumPR.y         = area->y - y;
-  smudge->accumPR.w         = area->width;
-  smudge->accumPR.h         = area->height;
-  smudge->accumPR.rowstride = smudge->accumPR.bytes * w;
-  smudge->accumPR.data      = (smudge->accum_data +
-                               smudge->accumPR.rowstride * smudge->accumPR.y +
-                               smudge->accumPR.x * smudge->accumPR.bytes);
-
   pixel_region_init (&srcPR, gimp_drawable_data (drawable),
 		     area->x, area->y, area->width, area->height, FALSE);
+
+  pixel_region_init_data (&smudge->accumPR, smudge->accum_data,
+                          bytes, bytes * w,
+                          area->x - x,
+                          area->y - y,
+                          area->width,
+                          area->height);
 
   /* copy the region under the original painthit. */
   copy_region (&srcPR, &smudge->accumPR);
 
-  smudge->accumPR.x         = area->x - x;
-  smudge->accumPR.y         = area->y - y;
-  smudge->accumPR.w         = area->width;
-  smudge->accumPR.h         = area->height;
-  smudge->accumPR.rowstride = smudge->accumPR.bytes * w;
-  smudge->accumPR.data      = (smudge->accum_data +
-                               smudge->accumPR.rowstride * smudge->accumPR.y +
-                               smudge->accumPR.x * smudge->accumPR.bytes);
+  pixel_region_init_data (&smudge->accumPR, smudge->accum_data,
+                          bytes, bytes * w,
+                          area->x - x,
+                          area->y - y,
+                          area->width,
+                          area->height);
 
   return TRUE;
 }
@@ -302,25 +298,17 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
     rate = options->rate / 100.0;
 
   /* The tempPR will be the built up buffer (for smudge) */
-  tempPR.x         = area->x - x;
-  tempPR.y         = area->y - y;
-  tempPR.w         = area->width;
-  tempPR.h         = area->height;
-  tempPR.bytes     = smudge->accumPR.bytes;
-  tempPR.rowstride = smudge->accumPR.rowstride;
-  tempPR.data      = (smudge->accum_data +
-                      tempPR.y * tempPR.rowstride +
-                      tempPR.x * tempPR.bytes);
+  pixel_region_init_data (&tempPR, smudge->accum_data,
+                          smudge->accumPR.bytes,
+                          smudge->accumPR.rowstride,
+                          area->x - x,
+                          area->y - y,
+                          area->width,
+                          area->height);
 
   /* The dest will be the paint area we got above (= canvas_buf) */
-
-  destPR.x         = 0;
-  destPR.y         = 0;
-  destPR.w         = area->width;
-  destPR.h         = area->height;
-  destPR.bytes     = area->bytes;
-  destPR.rowstride = area->width * area->bytes;
-  destPR.data      = temp_buf_data (area);
+  pixel_region_init_temp_buf (&destPR, area,
+                              0, 0, area->width, area->height);
 
   /*  Smudge uses the buffer Accum.
    *  For each successive painthit Accum is built like this
@@ -333,16 +321,13 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
   blend_region (&srcPR, &tempPR, &tempPR, ROUND (rate * 255.0));
 
   /* re-init the tempPR */
-
-  tempPR.x         = area->x - x;
-  tempPR.y         = area->y - y;
-  tempPR.w         = area->width;
-  tempPR.h         = area->height;
-  tempPR.bytes     = smudge->accumPR.bytes;
-  tempPR.rowstride = smudge->accumPR.rowstride;
-  tempPR.data      = (smudge->accum_data +
-                      tempPR.y * tempPR.rowstride +
-                      tempPR.x * tempPR.bytes);
+  pixel_region_init_data (&tempPR, smudge->accum_data,
+                          smudge->accumPR.bytes,
+                          smudge->accumPR.rowstride,
+                          area->x - x,
+                          area->y - y,
+                          area->width,
+                          area->height);
 
   if (! gimp_drawable_has_alpha (drawable))
     add_alpha_region (&tempPR, &destPR);

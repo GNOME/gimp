@@ -1,3 +1,50 @@
+2005-09-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/base/pixel-region.[ch]: some general cleanup.
+
+	(pixel_region_init_temp_buf)
+	(pixel_region_init_data): new functions which initialize pixel
+	regions on TempBufs and on raw contiguous arrays of pixel data.
+
+	(pixel_region_configure): fixed a bug that has probably been there
+	forever: when processing contiguous (non-tiled) data, interpret
+	the original x and y coordinates of the region as offsets into
+	the data. Before this fix, the initial x and y were simply ignored
+	(by using them in a broken way), thus always forcing the upper
+	left corner of the region being the beginning of the passed data.
+
+	Lots of code was working around this problem by setting the
+	pixel_region's data pointer to the proper starting pixel of the
+	region in the middle the buffer.
+
+	* libgimp/gimppixelrgn.c: some general cleanup.
+
+	(gimp_pixel_rgn_configure): same fix as above. Fortunately, nobody
+	seems to know that libgimp pixel regions can be used on arrays of
+	data, just as core ones. Only two plug-ins were using this
+	feature, and they are antique and written by spencer and federico,
+	respectively. They both don't use offsets into the buffers and are
+	not affected by this change. It's highly unlikely that anybody out
+	there knows/uses this feature, so it can IMHO be safely changed.
+
+	* app/base/temp-buf.c
+	* app/core/gimpbuffer.c
+	* app/core/gimpdrawable-combine.c
+	* app/core/gimpdrawable-preview.c
+	* app/core/gimpimage-preview.c
+	* app/core/gimplayer.c
+	* app/paint/gimpbrushcore.c
+	* app/paint/gimpclone.c
+	* app/paint/gimpconvolve.c
+	* app/paint/gimpdodgeburn.c
+	* app/paint/gimppaintcore.c
+	* app/paint/gimpsmudge.c
+	* app/tools/gimpiscissorstool.c
+	* app/tools/gimppainttool.c: use the pixel_region_init_foo()
+	functions instead of initializing regions of TempBufs and raw data
+	manually. Removed lots of workarounds for the broken offset
+	handling. The changed places of code are much more readable now.
+
 2005-09-03  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpcolorbalancetool.c

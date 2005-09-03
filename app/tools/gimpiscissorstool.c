@@ -1742,11 +1742,11 @@ gradmap_tile_validate (TileManager *tm,
   sw = tile_ewidth (srctile);
   sh = tile_eheight (srctile);
 
-  srcPR.w         = MIN (dw, sw);
-  srcPR.h         = MIN (dh, sh);
-  srcPR.bytes     = gimp_projection_get_bytes (gimage->projection);
-  srcPR.data      = tile_data_pointer (srctile, 0, 0);
-  srcPR.rowstride = srcPR.w * srcPR.bytes;
+  pixel_region_init_data (&srcPR, tile_data_pointer (srctile, 0, 0),
+                          gimp_projection_get_bytes (gimage->projection),
+                          gimp_projection_get_bytes (gimage->projection) *
+                          MIN (dw, sw),
+                          0, 0, MIN (dw, sw), MIN (dh, sh));
 
   /* XXX tile edges? */
 

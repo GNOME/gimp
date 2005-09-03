@@ -252,30 +252,20 @@ gimp_drawable_real_replace_region (GimpDrawable *drawable,
 			 (x2 - x1), (y2 - y1),
 			 FALSE);
 
-      tempPR.bytes     = 1;
-      tempPR.x         = 0;
-      tempPR.y         = 0;
-      tempPR.w         = x2 - x1;
-      tempPR.h         = y2 - y1;
-      tempPR.rowstride = tempPR.w * tempPR.bytes;
-      tempPR.data      = temp_data = g_malloc (tempPR.h * tempPR.rowstride);
+      temp_data = g_malloc ((y2 - y1) * (x2 - x1));
+
+      pixel_region_init_data (&tempPR, temp_data, 1, x2 - x1,
+                              0, 0, x2 - x1, y2 - y1);
 
       copy_region (&mask2PR, &tempPR);
 
-      /* apparently, region operations can mutate some PR data. */
-      tempPR.x    = 0;
-      tempPR.y    = 0;
-      tempPR.w    = x2 - x1;
-      tempPR.h    = y2 - y1;
-      tempPR.data = temp_data;
+      pixel_region_init_data (&tempPR, temp_data, 1, x2 - x1,
+                              0, 0, x2 - x1, y2 - y1);
 
       apply_mask_to_region (&tempPR, maskPR, OPAQUE_OPACITY);
 
-      tempPR.x    = 0;
-      tempPR.y    = 0;
-      tempPR.w    = x2 - x1;
-      tempPR.h    = y2 - y1;
-      tempPR.data = temp_data;
+      pixel_region_init_data (&tempPR, temp_data, 1, x2 - x1,
+                              0, 0, x2 - x1, y2 - y1);
 
       combine_regions_replace (&src1PR, src2PR, &destPR, &tempPR, NULL,
                                opacity * 255.999,

@@ -167,13 +167,8 @@ gimp_drawable_get_sub_preview (GimpDrawable *drawable,
 
   preview_buf = temp_buf_new (dest_width, dest_height, bytes, 0, 0, NULL);
 
-  destPR.bytes     = preview_buf->bytes;
-  destPR.x         = 0;
-  destPR.y         = 0;
-  destPR.w         = dest_width;
-  destPR.h         = dest_height;
-  destPR.rowstride = dest_width * destPR.bytes;
-  destPR.data      = temp_buf_data (preview_buf);
+  pixel_region_init_temp_buf (&destPR, preview_buf,
+                              0, 0, dest_width, dest_height);
 
   if (GIMP_IS_LAYER (drawable))
     {
