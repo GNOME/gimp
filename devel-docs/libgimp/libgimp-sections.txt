@@ -327,6 +327,12 @@ gimp_edit_cut
 gimp_edit_copy
 gimp_edit_copy_visible
 gimp_edit_paste
+gimp_edit_paste_as_new
+gimp_edit_named_cut
+gimp_edit_named_copy
+gimp_edit_named_copy_visible
+gimp_edit_named_paste
+gimp_edit_named_paste_as_new
 gimp_edit_clear
 gimp_edit_fill
 gimp_edit_bucket_fill
