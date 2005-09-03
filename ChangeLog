@@ -1,4 +1,11 @@
-2005-09-03  Karine Delvare	<kdelvare@nerim.net>
+2005-09-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/gimppaintcore.c (gimp_paint_core_get_orig_image)
+	(gimp_paint_core_get_orig_proj): replaced manual calculation of
+	the offset of a pixel in a tile (marked as /* dubious... */ for a
+	reason) by simply using the offset parameters of tile_data_pointer().
+
+2005-09-03  Karine Delvare  <kdelvare@nerim.net>
 
 	* app/tools/gimprectangletool.[ch]
 	* app/tools/gimprectangleoptions.[ch]: code cleanup, replace
