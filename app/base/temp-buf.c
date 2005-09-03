@@ -317,26 +317,23 @@ temp_buf_resize (TempBuf *buf,
 		 gint     width,
 		 gint     height)
 {
-  gint size;
-
   g_return_val_if_fail (width > 0 && height > 0, NULL);
 
-  /*  calculate the requested size  */
-  size = width * height * bytes;
-
-  /*  First, configure the canvas buffer  */
-  if (!buf)
+  if (! buf)
     {
       buf = temp_buf_new (width, height, bytes, x, y, NULL);
     }
   else
     {
-      if (size != (buf->width * buf->height * buf->bytes))
+      gint new_size;
+
+      new_size = width * height * bytes;
+
+      if (new_size != (buf->width * buf->height * buf->bytes))
         {
-          buf->data = g_renew (guchar, buf->data, size);
+          buf->data = g_renew (guchar, buf->data, new_size);
         }
 
-      /*  Make sure the temp buf fields are valid  */
       buf->x      = x;
       buf->y      = y;
       buf->width  = width;

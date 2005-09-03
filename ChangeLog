@@ -1,5 +1,10 @@
 2005-09-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/base/temp-buf.c (temp_buf_resize): do new_size calculation
+	only when needed.
+
+2005-09-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/paint/gimppaintcore.c (gimp_paint_core_get_orig_image)
 	(gimp_paint_core_get_orig_proj): replaced manual calculation of
 	the offset of a pixel in a tile (marked as /* dubious... */ for a
