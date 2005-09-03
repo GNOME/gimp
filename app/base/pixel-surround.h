@@ -34,7 +34,7 @@ typedef struct _PixelSurround
   gint         w;
   gint         h;
   guchar       bg[MAX_CHANNELS];
-  gint         row_stride;
+  gint         rowstride;
 } PixelSurround;
 
 

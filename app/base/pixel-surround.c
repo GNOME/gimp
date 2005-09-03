@@ -40,15 +40,15 @@ pixel_surround_init (PixelSurround *ps,
   for (i = 0; i < MAX_CHANNELS; ++i)
     ps->bg[i] = bg[i];
 
-  ps->tile       = NULL;
-  ps->mgr        = tm;
-  ps->bpp        = tile_manager_bpp (tm);
-  ps->w          = w;
-  ps->h          = h;
+  ps->tile      = NULL;
+  ps->mgr       = tm;
+  ps->bpp       = tile_manager_bpp (tm);
+  ps->w         = w;
+  ps->h         = h;
   /* make sure buffer is big enough */
-  ps->buff_size  = w * h * ps->bpp;
-  ps->buff       = g_new (guchar, ps->buff_size);
-  ps->row_stride = 0;
+  ps->buff_size = w * h * ps->bpp;
+  ps->buff      = g_new (guchar, ps->buff_size);
+  ps->rowstride = 0;
 }
 
 guchar *
@@ -70,7 +70,7 @@ pixel_surround_lock (PixelSurround *ps,
       (i < (tile_ewidth (ps->tile) - ps->w)) &&
       (j < (tile_eheight (ps->tile) - ps->h)))
     {
-      ps->row_stride = tile_ewidth (ps->tile) * ps->bpp;
+      ps->rowstride = tile_ewidth (ps->tile) * ps->bpp;
 
       /* is this really the correct way? */
       return tile_data_pointer (ps->tile, i, j);
@@ -110,7 +110,8 @@ pixel_surround_lock (PixelSurround *ps,
 	    }
 	}
     }
-  ps->row_stride = ps->w * ps->bpp;
+
+  ps->rowstride = ps->w * ps->bpp;
 
   return ps->buff;
 }
@@ -118,7 +119,7 @@ pixel_surround_lock (PixelSurround *ps,
 gint
 pixel_surround_rowstride (PixelSurround *ps)
 {
-  return ps->row_stride;
+  return ps->rowstride;
 }
 
 void
@@ -138,7 +139,7 @@ pixel_surround_clear (PixelSurround *ps)
   if (ps->buff)
     {
       g_free (ps->buff);
-      ps->buff = NULL;
+      ps->buff      = NULL;
       ps->buff_size = 0;
     }
 }

@@ -1,5 +1,9 @@
 2005-09-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/base/pixel-surround.c: s/row_stride/rowstride/g.
+
+2005-09-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/base/pixel-region.[ch]: some general cleanup.
 
 	(pixel_region_init_temp_buf)
