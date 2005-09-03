@@ -38,8 +38,6 @@
 enum
 {
   PROP_0,
-  PROP_LAYER_ONLY,
-  PROP_CROP_MODE,
   PROP_HIGHLIGHT,
   PROP_FIXED_WIDTH,
   PROP_WIDTH,
@@ -50,7 +48,9 @@ enum
   PROP_FIXED_CENTER,
   PROP_CENTER_X,
   PROP_CENTER_Y,
-  PROP_UNIT
+  PROP_UNIT,
+  PROP_LAYER_ONLY,
+  PROP_CROP_MODE
 };
 
 
@@ -65,46 +65,6 @@ static void   gimp_crop_options_get_property (GObject      *object,
                                               guint         property_id,
                                               GValue       *value,
                                               GParamSpec   *pspec);
-
-void          gimp_crop_options_set_highlight    (GimpRectangleOptions *options,
-                                                  gboolean              highlight);
-gboolean      gimp_crop_options_get_highlight    (GimpRectangleOptions *options);
-
-void          gimp_crop_options_set_fixed_width  (GimpRectangleOptions *options,
-                                                  gboolean              fixed_width);
-gboolean      gimp_crop_options_get_fixed_width  (GimpRectangleOptions *options);
-void          gimp_crop_options_set_width        (GimpRectangleOptions *options,
-                                                  gdouble               width);
-gdouble       gimp_crop_options_get_width        (GimpRectangleOptions *options);
-
-void          gimp_crop_options_set_fixed_height (GimpRectangleOptions *options,
-                                                  gboolean              fixed_height);
-gboolean      gimp_crop_options_get_fixed_height (GimpRectangleOptions *options);
-void          gimp_crop_options_set_height       (GimpRectangleOptions *options,
-                                                  gdouble               height);
-gdouble       gimp_crop_options_get_height       (GimpRectangleOptions *options);
-
-void          gimp_crop_options_set_fixed_aspect (GimpRectangleOptions *options,
-                                                  gboolean              fixed_aspect);
-gboolean      gimp_crop_options_get_fixed_aspect (GimpRectangleOptions *options);
-void          gimp_crop_options_set_aspect       (GimpRectangleOptions *options,
-                                                  gdouble               aspect);
-gdouble       gimp_crop_options_get_aspect       (GimpRectangleOptions *options);
-
-void          gimp_crop_options_set_fixed_center (GimpRectangleOptions *options,
-                                                  gboolean              fixed_center);
-gboolean      gimp_crop_options_get_fixed_center (GimpRectangleOptions *options);
-void          gimp_crop_options_set_center_x     (GimpRectangleOptions *options,
-                                                  gdouble               center_x);
-gdouble       gimp_crop_options_get_center_x     (GimpRectangleOptions *options);
-void          gimp_crop_options_set_center_y     (GimpRectangleOptions *options,
-                                                  gdouble               center_y);
-gdouble       gimp_crop_options_get_center_y     (GimpRectangleOptions *options);
-
-void          gimp_crop_options_set_unit         (GimpRectangleOptions *options,
-                                                  GimpUnit              unit);
-GimpUnit      gimp_crop_options_get_unit         (GimpRectangleOptions *options);
-
 
 
 static GimpToolOptionsClass *parent_class = NULL;
@@ -166,79 +126,13 @@ gimp_crop_options_class_init (GimpCropOptionsClass *klass)
                                  GIMP_TYPE_CROP_MODE,
                                  GIMP_CROP_MODE_CROP,
                                  0);
-  
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_HIGHLIGHT,
-                                    "highlight",
-                                    N_("Highlight rectangle"),
-                                    TRUE,
-                                    0);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FIXED_WIDTH,
-                                    "fixed-width", N_("Fixed width"),
-                                    FALSE, 0);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_WIDTH,
-                                   "width", N_("Width"),
-                                   0.0, GIMP_MAX_IMAGE_SIZE, 1.0,
-                                   0);
-
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FIXED_HEIGHT,
-                                    "fixed-height", N_("Fixed height"),
-                                    FALSE, 0);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_HEIGHT,
-                                   "height", N_("Height"),
-                                   0.0, GIMP_MAX_IMAGE_SIZE, 1.0,
-                                   0);
-
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FIXED_ASPECT,
-                                    "fixed-aspect", N_("Fixed aspect"),
-                                    FALSE, 0);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_ASPECT,
-                                   "aspect", N_("Aspect"),
-                                   0.0, GIMP_MAX_IMAGE_SIZE, 1.0,
-                                   0);
-
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FIXED_CENTER,
-                                    "fixed-center", N_("Fixed center"),
-                                    FALSE, 0);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_CENTER_X,
-                                   "center-x", N_("Center X"),
-                                   0.0, GIMP_MAX_IMAGE_SIZE, 1.0,
-                                   0);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_CENTER_Y,
-                                   "center-y", N_("Center Y"),
-                                   0.0, GIMP_MAX_IMAGE_SIZE, 1.0,
-                                   0);
-
-  GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_UNIT,
-                                 "unit", NULL,
-                                 TRUE, FALSE, GIMP_UNIT_PIXEL, 0);
+  gimp_rectangle_options_install_properties (object_class);
 }
 
 static void
 gimp_crop_options_rectangle_options_iface_init (GimpRectangleOptionsInterface *rectangle_iface)
 {
-  rectangle_iface->set_highlight    = gimp_crop_options_set_highlight;
-  rectangle_iface->get_highlight    = gimp_crop_options_get_highlight;
-  rectangle_iface->set_fixed_width  = gimp_crop_options_set_fixed_width;
-  rectangle_iface->get_fixed_width  = gimp_crop_options_get_fixed_width;
-  rectangle_iface->set_width        = gimp_crop_options_set_width;
-  rectangle_iface->get_width        = gimp_crop_options_get_width;
-  rectangle_iface->set_fixed_height = gimp_crop_options_set_fixed_height;
-  rectangle_iface->get_fixed_height = gimp_crop_options_get_fixed_height;
-  rectangle_iface->set_height       = gimp_crop_options_set_height;
-  rectangle_iface->get_height       = gimp_crop_options_get_height;
-  rectangle_iface->set_fixed_aspect = gimp_crop_options_set_fixed_aspect;
-  rectangle_iface->get_fixed_aspect = gimp_crop_options_get_fixed_aspect;
-  rectangle_iface->set_aspect       = gimp_crop_options_set_aspect;
-  rectangle_iface->get_aspect       = gimp_crop_options_get_aspect;
-  rectangle_iface->set_fixed_center = gimp_crop_options_set_fixed_center;
-  rectangle_iface->get_fixed_center = gimp_crop_options_get_fixed_center;
-  rectangle_iface->set_center_x     = gimp_crop_options_set_center_x;
-  rectangle_iface->get_center_x     = gimp_crop_options_get_center_x;
-  rectangle_iface->set_center_y     = gimp_crop_options_set_center_y;
-  rectangle_iface->get_center_y     = gimp_crop_options_get_center_y;
-  rectangle_iface->set_unit         = gimp_crop_options_set_unit;
-  rectangle_iface->get_unit         = gimp_crop_options_get_unit;
 }
 
 static void
@@ -248,48 +142,27 @@ gimp_crop_options_set_property (GObject      *object,
                                 GParamSpec   *pspec)
 {
   GimpCropOptions      *options           = GIMP_CROP_OPTIONS (object);
-  GimpRectangleOptions *rectangle_options = GIMP_RECTANGLE_OPTIONS (options);
 
   switch (property_id)
     {
+    case GIMP_RECTANGLE_OPTIONS_PROP_HIGHLIGHT:
+    case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_WIDTH:
+    case GIMP_RECTANGLE_OPTIONS_PROP_WIDTH:
+    case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_HEIGHT:
+    case GIMP_RECTANGLE_OPTIONS_PROP_HEIGHT:
+    case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_ASPECT:
+    case GIMP_RECTANGLE_OPTIONS_PROP_ASPECT:
+    case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_CENTER:
+    case GIMP_RECTANGLE_OPTIONS_PROP_CENTER_X:
+    case GIMP_RECTANGLE_OPTIONS_PROP_CENTER_Y:
+    case GIMP_RECTANGLE_OPTIONS_PROP_UNIT:
+      gimp_rectangle_options_set_property (object, property_id, value, pspec);
+      break;
     case PROP_LAYER_ONLY:
       options->layer_only = g_value_get_boolean (value);
       break;
     case PROP_CROP_MODE:
       options->crop_mode = g_value_get_enum (value);
-      break;
-    case PROP_HIGHLIGHT:
-      gimp_rectangle_options_set_highlight (rectangle_options, g_value_get_boolean (value));
-      break;
-    case PROP_FIXED_WIDTH:
-      gimp_rectangle_options_set_fixed_width (rectangle_options, g_value_get_boolean (value));
-      break;
-    case PROP_WIDTH:
-      gimp_rectangle_options_set_width (rectangle_options, g_value_get_double (value));
-      break;
-    case PROP_FIXED_HEIGHT:
-      gimp_rectangle_options_set_fixed_height (rectangle_options, g_value_get_boolean (value));
-      break;
-    case PROP_HEIGHT:
-      gimp_rectangle_options_set_height (rectangle_options, g_value_get_double (value));
-      break;
-    case PROP_FIXED_ASPECT:
-      gimp_rectangle_options_set_fixed_aspect (rectangle_options, g_value_get_boolean (value));
-      break;
-    case PROP_ASPECT:
-      gimp_rectangle_options_set_aspect (rectangle_options, g_value_get_double (value));
-      break;
-    case PROP_FIXED_CENTER:
-      gimp_rectangle_options_set_fixed_center (rectangle_options, g_value_get_boolean (value));
-      break;
-    case PROP_CENTER_X:
-      gimp_rectangle_options_set_center_x (rectangle_options, g_value_get_double (value));
-      break;
-    case PROP_CENTER_Y:
-      gimp_rectangle_options_set_center_y (rectangle_options, g_value_get_double (value));
-      break;
-    case PROP_UNIT:
-      gimp_rectangle_options_set_unit (rectangle_options, g_value_get_int (value));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -304,218 +177,32 @@ gimp_crop_options_get_property (GObject    *object,
                                 GParamSpec *pspec)
 {
   GimpCropOptions      *options           = GIMP_CROP_OPTIONS (object);
-  GimpRectangleOptions *rectangle_options = GIMP_RECTANGLE_OPTIONS (options);
 
   switch (property_id)
     {
+    case GIMP_RECTANGLE_OPTIONS_PROP_HIGHLIGHT:
+    case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_WIDTH:
+    case GIMP_RECTANGLE_OPTIONS_PROP_WIDTH:
+    case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_HEIGHT:
+    case GIMP_RECTANGLE_OPTIONS_PROP_HEIGHT:
+    case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_ASPECT:
+    case GIMP_RECTANGLE_OPTIONS_PROP_ASPECT:
+    case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_CENTER:
+    case GIMP_RECTANGLE_OPTIONS_PROP_CENTER_X:
+    case GIMP_RECTANGLE_OPTIONS_PROP_CENTER_Y:
+    case GIMP_RECTANGLE_OPTIONS_PROP_UNIT:
+      gimp_rectangle_options_get_property (object, property_id, value, pspec);
+      break;
     case PROP_LAYER_ONLY:
       g_value_set_boolean (value, options->layer_only);
       break;
     case PROP_CROP_MODE:
       g_value_set_enum (value, options->crop_mode);
       break;
-    case PROP_HIGHLIGHT:
-      g_value_set_boolean (value, gimp_rectangle_options_get_highlight (rectangle_options));
-      break;
-    case PROP_FIXED_WIDTH:
-      g_value_set_boolean (value, gimp_rectangle_options_get_fixed_width (rectangle_options));
-      break;
-    case PROP_WIDTH:
-      g_value_set_double (value, gimp_rectangle_options_get_width (rectangle_options));
-      break;
-    case PROP_FIXED_HEIGHT:
-      g_value_set_boolean (value, gimp_rectangle_options_get_fixed_height (rectangle_options));
-      break;
-    case PROP_HEIGHT:
-      g_value_set_double (value, gimp_rectangle_options_get_height (rectangle_options));
-      break;
-    case PROP_FIXED_ASPECT:
-      g_value_set_boolean (value, gimp_rectangle_options_get_fixed_aspect (rectangle_options));
-      break;
-    case PROP_ASPECT:
-      g_value_set_double (value, gimp_rectangle_options_get_aspect (rectangle_options));
-      break;
-    case PROP_FIXED_CENTER:
-      g_value_set_boolean (value, gimp_rectangle_options_get_fixed_center (rectangle_options));
-      break;
-    case PROP_CENTER_X:
-      g_value_set_double (value, gimp_rectangle_options_get_center_x (rectangle_options));
-      break;
-    case PROP_CENTER_Y:
-      g_value_set_double (value, gimp_rectangle_options_get_center_y (rectangle_options));
-      break;
-    case PROP_UNIT:
-      g_value_set_int (value, gimp_rectangle_options_get_unit (rectangle_options));
-      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
-}
-
-void
-gimp_crop_options_set_highlight (GimpRectangleOptions *options,
-                                 gboolean              highlight)
-{
-  GimpCropOptions *crop_options = GIMP_CROP_OPTIONS (options);
-  crop_options->highlight = highlight;
-}
-
-gboolean
-gimp_crop_options_get_highlight (GimpRectangleOptions *options)
-{
-  GimpCropOptions *crop_options = GIMP_CROP_OPTIONS (options);
-  return crop_options->highlight; 
-}
-
-void
-gimp_crop_options_set_fixed_width (GimpRectangleOptions *options,
-                                   gboolean              fixed_width)
-{
-  GimpCropOptions *crop_options = GIMP_CROP_OPTIONS (options);
-  crop_options->fixed_width = fixed_width;
-}
-
-gboolean
-gimp_crop_options_get_fixed_width (GimpRectangleOptions *options)
-{
-  GimpCropOptions *crop_options = GIMP_CROP_OPTIONS (options);
-  return crop_options->fixed_width;
-}
-
-void
-gimp_crop_options_set_width (GimpRectangleOptions *options,
-                             gdouble               width)
-{
-  GimpCropOptions *crop_options = GIMP_CROP_OPTIONS (options);
-  crop_options->width = width;
-}
-
-gdouble
-gimp_crop_options_get_width (GimpRectangleOptions *options)
-{
-  GimpCropOptions *crop_options = GIMP_CROP_OPTIONS (options);
-  return crop_options->width;
-}
-
-void
-gimp_crop_options_set_fixed_height (GimpRectangleOptions *options,
-                                    gboolean              fixed_height)
-{
-  GimpCropOptions *crop_options = GIMP_CROP_OPTIONS (options);
-  crop_options->fixed_height = fixed_height;
-}
-
-gboolean
-gimp_crop_options_get_fixed_height (GimpRectangleOptions *options)
-{
-  GimpCropOptions *crop_options = GIMP_CROP_OPTIONS (options);
-  return crop_options->fixed_height;
-}
-
-void
-gimp_crop_options_set_height (GimpRectangleOptions *options,
-                              gdouble               height)
-{
-  GimpCropOptions *crop_options = GIMP_CROP_OPTIONS (options);
-  crop_options->height = height;
-}
-
-gdouble
-gimp_crop_options_get_height (GimpRectangleOptions *options)
-{
-  GimpCropOptions *crop_options = GIMP_CROP_OPTIONS (options);
-  return crop_options->height;
-}
-
-void
-gimp_crop_options_set_fixed_aspect (GimpRectangleOptions *options,
-                                    gboolean              fixed_aspect)
-{
-  GimpCropOptions *crop_options = GIMP_CROP_OPTIONS (options);
-  crop_options->fixed_aspect = fixed_aspect;
-}
-
-gboolean
-gimp_crop_options_get_fixed_aspect (GimpRectangleOptions *options)
-{
-  GimpCropOptions *crop_options = GIMP_CROP_OPTIONS (options);
-  return crop_options->fixed_aspect;
-}
-
-void
-gimp_crop_options_set_aspect (GimpRectangleOptions *options,
-                              gdouble               aspect)
-{
-  GimpCropOptions *crop_options = GIMP_CROP_OPTIONS (options);
-  crop_options->aspect = aspect;
-}
-
-gdouble
-gimp_crop_options_get_aspect (GimpRectangleOptions *options)
-{
-  GimpCropOptions *crop_options = GIMP_CROP_OPTIONS (options);
-  return crop_options->aspect;
-}
-
-void
-gimp_crop_options_set_fixed_center (GimpRectangleOptions *options,
-                                    gboolean              fixed_center)
-{
-  GimpCropOptions *crop_options = GIMP_CROP_OPTIONS (options);
-  crop_options->fixed_center = fixed_center;
-}
-
-gboolean
-gimp_crop_options_get_fixed_center (GimpRectangleOptions *options)
-{
-  GimpCropOptions *crop_options = GIMP_CROP_OPTIONS (options);
-  return crop_options->fixed_center;
-}
-
-void
-gimp_crop_options_set_center_x (GimpRectangleOptions *options,
-                                gdouble               center_x)
-{
-  GimpCropOptions *crop_options = GIMP_CROP_OPTIONS (options);
-  crop_options->center_x = center_x;
-}
-
-gdouble
-gimp_crop_options_get_center_x (GimpRectangleOptions *options)
-{
-  GimpCropOptions *crop_options = GIMP_CROP_OPTIONS (options);
-  return crop_options->center_x;
-}
-
-void
-gimp_crop_options_set_center_y (GimpRectangleOptions *options,
-                                gdouble               center_y)
-{
-  GimpCropOptions *crop_options = GIMP_CROP_OPTIONS (options);
-  crop_options->center_y = center_y;
-}
-
-gdouble
-gimp_crop_options_get_center_y (GimpRectangleOptions *options)
-{
-  GimpCropOptions *crop_options = GIMP_CROP_OPTIONS (options);
-  return crop_options->center_y;
-}
-
-void
-gimp_crop_options_set_unit (GimpRectangleOptions *options,
-                            GimpUnit              unit)
-{
-  GimpCropOptions *crop_options = GIMP_CROP_OPTIONS (options);
-  crop_options->unit = unit;
-}
-
-GimpUnit
-gimp_crop_options_get_unit (GimpRectangleOptions *options)
-{
-  GimpCropOptions *crop_options = GIMP_CROP_OPTIONS (options);
-  return crop_options->unit;
 }
 
 GtkWidget *

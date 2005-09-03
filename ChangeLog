@@ -1,3 +1,15 @@
+2005-09-03  Karine Delvare	<kdelvare@nerim.net>
+
+	* app/tools/gimprectangletool.[ch]
+	* app/tools/gimprectangleoptions.[ch]: code cleanup, replace
+	virtualization functions with interface properties.
+
+	* app/tools/gimpcroptool.[ch]
+	* app/tools/gimpnewrectselecttool.[ch]
+	* app/tools/gimpcropoptions.[ch]
+	* app/tools/gimpnewrectselectoptions.[ch]: code cleanup, use said
+	interface properties.
+
 2005-09-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/base/pixel-surround.c: s/row_stride/rowstride/g.

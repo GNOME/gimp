@@ -36,31 +36,6 @@ typedef struct _GimpCropToolClass GimpCropToolClass;
 struct _GimpCropTool
 {
   GimpDrawTool  parent_instance;
-
-  GtkWidget    *controls;
-  GtkWidget    *dimensions_entry;
-
-  gint          startx;     /*  starting x coord            */
-  gint          starty;     /*  starting y coord            */
-
-  gint          lastx;      /*  previous x coord            */
-  gint          lasty;      /*  previous y coord            */
-
-  gint          pressx;     /*  x where button pressed      */
-  gint          pressy;     /*  y where button pressed      */
-
-  gint          x1, y1;     /*  upper left hand coordinate  */
-  gint          x2, y2;     /*  lower right hand coords     */
-
-  guint         function;   /*  moving or resizing          */
-
-  gint          dx1, dy1;   /*  display coords              */
-  gint          dx2, dy2;   /*                              */
-
-  gint          dcw, dch;   /*  width and height of edges   */
-
-  gdouble       origx, origy;
-  gdouble       sizew, sizeh;
 };
 
 struct _GimpCropToolClass
