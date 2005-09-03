@@ -1,3 +1,9 @@
+2005-09-03  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimptextoptions.c: minor strings changes.
+
 2005-09-03  Seth Burgess <sjburges@gimp.org>
 	
 	* app/tools/gimpbrightnesscontrasttool.c

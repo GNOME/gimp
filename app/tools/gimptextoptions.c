@@ -180,12 +180,12 @@ gimp_text_options_class_init (GimpTextOptionsClass *klass)
                                    GIMP_CONFIG_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LINE_SPACING,
                                    "line-spacing",
-                                   N_("Modify line spacing"),
+                                   N_("Adjust line spacing"),
                                    -8192.0, 8192.0, 0.0,
                                    GIMP_CONFIG_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LETTER_SPACING,
                                    "letter-spacing",
-                                   N_("Modify letter spacing"),
+                                   N_("Adjust letter spacing"),
                                    -8192.0, 8192.0, 0.0,
                                    GIMP_CONFIG_PARAM_DEFAULTS);
 }

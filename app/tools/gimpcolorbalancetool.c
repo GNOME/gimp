@@ -272,7 +272,7 @@ gimp_color_balance_tool_dialog (GimpImageMapTool *image_map_tool)
   GtkWidget            *frame;
 
   frame = gimp_enum_radio_frame_new (GIMP_TYPE_TRANSFER_MODE,
-                                     gtk_label_new (_("Select Range to Modify")),
+                                     gtk_label_new (_("Select Range to Adjust")),
                                      G_CALLBACK (color_balance_range_callback),
                                      cb_tool,
                                      &toggle);
@@ -280,7 +280,7 @@ gimp_color_balance_tool_dialog (GimpImageMapTool *image_map_tool)
                       FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  frame = gimp_frame_new (_("Modify Selected Range's Color Levels"));
+  frame = gimp_frame_new (_("Adjust Color Levels"));
   gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), frame,
                       FALSE, FALSE, 0);
   gtk_widget_show (frame);

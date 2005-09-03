@@ -276,7 +276,7 @@ gimp_hue_saturation_tool_dialog (GimpImageMapTool *image_map_tool)
     { N_("_M"),      3, 2, 4, 2 }
   };
 
-  frame = gimp_frame_new (_("Select Primary Color to Modify"));
+  frame = gimp_frame_new (_("Select Primary Color to Adjust"));
   gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), frame,
                       TRUE, TRUE, 0);
   gtk_widget_show (frame);
@@ -309,7 +309,7 @@ gimp_hue_saturation_tool_dialog (GimpImageMapTool *image_map_tool)
       if (i == 0)
         {
           gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
-          gimp_help_set_help_data (button, _("Modify all colors"), NULL);
+          gimp_help_set_help_data (button, _("Adjust all colors"), NULL);
         }
 
       gtk_table_attach (GTK_TABLE (table), button,
@@ -381,7 +381,7 @@ gimp_hue_saturation_tool_dialog (GimpImageMapTool *image_map_tool)
                     G_CALLBACK (hue_saturation_overlap_adjustment_update),
                     hs_tool);
 
-  frame = gimp_frame_new (_("Modify Selected Color"));
+  frame = gimp_frame_new (_("Adjust Selected Color"));
   gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), frame,
                       FALSE, FALSE, 0);
   gtk_widget_show (frame);
