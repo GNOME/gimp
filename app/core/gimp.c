@@ -40,6 +40,7 @@
 #include "xcf/xcf.h"
 
 #include "gimp.h"
+#include "gimp-contexts.h"
 #include "gimp-documents.h"
 #include "gimp-gradients.h"
 #include "gimp-modules.h"
@@ -319,8 +320,7 @@ gimp_finalize (GObject *object)
   if (gimp->be_verbose)
     g_print ("EXIT: gimp_finalize\n");
 
-  gimp_set_user_context (gimp, NULL);
-  gimp_set_default_context (gimp, NULL);
+  gimp_contexts_exit (gimp);
 
   if (gimp->image_new_last_template)
     {
@@ -541,8 +541,7 @@ static void
 gimp_real_initialize (Gimp               *gimp,
                       GimpInitStatusFunc  status_callback)
 {
-  GimpContext *context;
-  gchar       *path;
+  gchar *path;
 
   static const GimpDataFactoryLoaderEntry brush_loader_entries[] =
   {
@@ -626,19 +625,8 @@ gimp_real_initialize (Gimp               *gimp,
 
   gimp->have_current_cut_buffer = FALSE;
 
-  /*  the default context contains the user's saved preferences
-   *
-   *  TODO: load from disk
-   */
-  context = gimp_context_new (gimp, "Default", NULL);
-  gimp_set_default_context (gimp, context);
-  g_object_unref (context);
-
-  /*  the initial user_context is a straight copy of the default context
-   */
-  context = gimp_context_new (gimp, "User", context);
-  gimp_set_user_context (gimp, context);
-  g_object_unref (context);
+  /*  create user and default context  */
+  gimp_contexts_init (gimp);
 
   /*  add the builtin FG -> BG etc. gradients  */
   gimp_gradients_init (gimp);
@@ -999,15 +987,18 @@ gimp_set_default_context (Gimp        *gimp,
                           GimpContext *context)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (! context || GIMP_IS_CONTEXT (context));
+  g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
 
-  if (gimp->default_context)
-    g_object_unref (gimp->default_context);
+  if (context != gimp->default_context)
+    {
+      if (gimp->default_context)
+        g_object_unref (gimp->default_context);
 
-  gimp->default_context = context;
+      gimp->default_context = context;
 
-  if (gimp->default_context)
-    g_object_ref (gimp->default_context);
+      if (gimp->default_context)
+        g_object_ref (gimp->default_context);
+    }
 }
 
 GimpContext *
@@ -1023,15 +1014,18 @@ gimp_set_user_context (Gimp        *gimp,
                        GimpContext *context)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (! context || GIMP_IS_CONTEXT (context));
+  g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
 
-  if (gimp->user_context)
-    g_object_unref (gimp->user_context);
+  if (context != gimp->user_context)
+    {
+      if (gimp->user_context)
+        g_object_unref (gimp->user_context);
 
-  gimp->user_context = context;
+      gimp->user_context = context;
 
-  if (gimp->user_context)
-    g_object_ref (gimp->user_context);
+      if (gimp->user_context)
+        g_object_ref (gimp->user_context);
+    }
 }
 
 GimpContext *

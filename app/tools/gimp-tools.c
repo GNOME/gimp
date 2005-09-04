@@ -33,6 +33,7 @@
 #include "tools-types.h"
 
 #include "core/gimp.h"
+#include "core/gimp-contexts.h"
 #include "core/gimplist.h"
 #include "core/gimptoolinfo.h"
 #include "core/gimptooloptions.h"
@@ -273,14 +274,25 @@ gimp_tools_restore (Gimp *gimp)
        list;
        list = g_list_next (list))
     {
-      GimpToolInfo           *tool_info;
-      GimpToolOptionsGUIFunc  options_gui_func;
-      GtkWidget              *options_gui;
-
-      tool_info = GIMP_TOOL_INFO (list->data);
+      GimpToolInfo *tool_info = GIMP_TOOL_INFO (list->data);
 
       /*  get default values from prefs (see bug #120832)  */
       gimp_tool_options_reset (tool_info->tool_options);
+    }
+
+  gimp_contexts_load (gimp);
+
+  for (list = GIMP_LIST (gimp->tool_info_list)->list;
+       list;
+       list = g_list_next (list))
+    {
+      GimpToolInfo           *tool_info = GIMP_TOOL_INFO (list->data);
+      GimpToolOptionsGUIFunc  options_gui_func;
+      GtkWidget              *options_gui;
+
+      gimp_context_copy_properties (gimp_get_user_context (gimp),
+                                    GIMP_CONTEXT (tool_info->tool_options),
+                                    GIMP_CONTEXT_ALL_PROPS_MASK);
 
       gimp_tool_options_deserialize (tool_info->tool_options, NULL, NULL);
 
@@ -337,6 +349,9 @@ gimp_tools_save (Gimp     *gimp,
   gchar *filename;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  if (save_tool_options && (! tool_options_deleted || always_save))
+    gimp_contexts_save (gimp);
 
   for (list = GIMP_LIST (gimp->tool_info_list)->list;
        list;
@@ -408,6 +423,9 @@ gimp_tools_clear (Gimp    *gimp,
 
       g_free (filename);
     }
+
+  if (success)
+    success = gimp_contexts_clear (gimp, error);
 
   if (success)
     tool_options_deleted = TRUE;

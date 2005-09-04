@@ -124,6 +124,7 @@ gimp_devices_restore (Gimp *gimp)
   GimpDeviceManager *manager;
   GimpDeviceInfo    *device_info;
   GimpContext       *user_context;
+  GList             *list;
   gchar             *filename;
   GError            *error = NULL;
 
@@ -132,6 +133,18 @@ gimp_devices_restore (Gimp *gimp)
   manager = gimp_device_manager_get (gimp);
 
   g_return_if_fail (manager != NULL);
+
+  user_context = gimp_get_user_context (gimp);
+
+  for (list = GIMP_LIST (manager->device_info_list)->list;
+       list;
+       list = g_list_next (list))
+    {
+      GimpDeviceInfo *device_info = list->data;
+
+      gimp_context_copy_properties (user_context, GIMP_CONTEXT (device_info),
+                                    GIMP_DEVICE_INFO_CONTEXT_MASK);
+    }
 
   filename = gimp_personal_rc_file ("devicerc");
 
@@ -154,8 +167,6 @@ gimp_devices_restore (Gimp *gimp)
   device_info = gimp_device_info_get_by_device (manager->current_device);
 
   g_return_if_fail (GIMP_IS_DEVICE_INFO (device_info));
-
-  user_context = gimp_get_user_context (gimp);
 
   gimp_context_copy_properties (GIMP_CONTEXT (device_info), user_context,
                                 GIMP_DEVICE_INFO_CONTEXT_MASK);

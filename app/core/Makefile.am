@@ -20,6 +20,8 @@ libappcore_a_sources = \
 	core-types.h			\
 	gimp.c				\
 	gimp.h				\
+	gimp-contexts.c			\
+	gimp-contexts.h			\
 	gimp-documents.c		\
 	gimp-documents.h		\
 	gimp-edit.c			\

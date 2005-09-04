@@ -1,3 +1,30 @@
+2005-09-04  Michael Natterer  <mitch@gimp.org>
+
+	Cleaned up and fixed the order in which default tool options and
+	user context values are initialized, and added loading / saving of
+	the global user context.  Fixes bug #165078.
+
+	* app/core/Makefile.am
+	* app/core/gimp-contexts.[ch]: new files which manage the global
+	contexts. Contains gimp_contexts_init/exit/load/save/clear().
+
+	* app/core/gimp.c: use the new init/exit functions instead of
+	implementing the stuff here.
+
+	* app/tools/gimp-tools.c: load/save/clear the user context from
+	here so it follows the same logic as the tool options. Reset all
+	tool options before loading the user context and copy the user
+	context's property to all tool options before loading tool
+	options.
+
+	* app/core/gimptoolinfo.c (gimp_tool_info_new): don't initialize
+	the tool options with the users context's properties. It's way too
+	early here and they will be overwritten later.
+
+	* app/widgets/gimpdevices.c (gimp_devices_restore): initialize all
+	device contexts with the user context's properties before loading
+	the devices and copying the active one back to the user context.
+
 2005-09-04  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/scripts/coffee.scm
