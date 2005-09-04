@@ -106,7 +106,7 @@ gimp_rectangle_options_iface_base_init (GimpRectangleOptionsInterface *options_i
       g_object_interface_install_property (options_iface,
         g_param_spec_double ("width",
                              NULL, NULL,
-                             0.0, 666.0,
+                             0.0, GIMP_MAX_IMAGE_SIZE,
                              0.0,
                              G_PARAM_READWRITE));
 
@@ -118,7 +118,7 @@ gimp_rectangle_options_iface_base_init (GimpRectangleOptionsInterface *options_i
       g_object_interface_install_property (options_iface,
         g_param_spec_double ("height",
                              NULL, NULL,
-                             0.0, 666.0,
+                             0.0, GIMP_MAX_IMAGE_SIZE,
                              0.0,
                              G_PARAM_READWRITE));
 
@@ -130,7 +130,7 @@ gimp_rectangle_options_iface_base_init (GimpRectangleOptionsInterface *options_i
       g_object_interface_install_property (options_iface,
         g_param_spec_double ("aspect",
                              NULL, NULL,
-                             0.0, 666.0,
+                             0.0, GIMP_MAX_IMAGE_SIZE,
                              0.0,
                              G_PARAM_READWRITE));
 
@@ -142,13 +142,13 @@ gimp_rectangle_options_iface_base_init (GimpRectangleOptionsInterface *options_i
       g_object_interface_install_property (options_iface,
         g_param_spec_double ("center-x",
                              NULL, NULL,
-                             0.0, 666.0,
+                             0.0, GIMP_MAX_IMAGE_SIZE,
                              0.0,
                              G_PARAM_READWRITE));
       g_object_interface_install_property (options_iface,
         g_param_spec_double ("center-y",
                              NULL, NULL,
-                             0.0, 666.0,
+                             0.0, GIMP_MAX_IMAGE_SIZE,
                              0.0,
                              G_PARAM_READWRITE));
 

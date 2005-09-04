@@ -1,5 +1,9 @@
 2005-09-04  Karine Delvare  <kdelvare@nerim.net>
 
+	* app/tools/gimprectangleoptions.c: evil => GIMP_MAX_IMAGE_SIZE.
+
+2005-09-04  Karine Delvare  <kdelvare@nerim.net>
+
 	* app/tools/gimprectangletool.c: stay within image boundaries.
 
 2005-09-04  Michael Natterer  <mitch@gimp.org>
