@@ -97,7 +97,7 @@
                     SF-IMAGE      "Image"                     0
                     SF-DRAWABLE   "Drawable"                  0
 		    SF-ADJUSTMENT _"Border size (pixels)"     '(22 1 300 1 10 0 1)
-		    SF-ADJUSTMENT _"Bevel height (Sharpness)" '(40 1 250 1 10 0 1)
+		    SF-ADJUSTMENT _"Bevel height (sharpness)" '(40 1 250 1 10 0 1)
 		    SF-ADJUSTMENT _"Bevel width"              '(2.5 1 200 1 10 1 1)
 		    SF-COLOR      _"Background color"         '(255 255 255))
 

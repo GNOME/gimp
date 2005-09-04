@@ -1,3 +1,12 @@
+2005-09-04  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/scripts/coffee.scm
+	* plug-ins/script-fu/scripts/fade-outline.scm
+	* plug-ins/script-fu/scripts/glossy.scm
+	* plug-ins/script-fu/scripts/gradient-bevel-logo.scm
+	* plug-ins/script-fu/scripts/select-to-pattern.scm: string fixes as
+	pointed out in bug #315211.
+
 2005-09-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/base/temp-buf.c (temp_buf_resize): do new_size calculation
@@ -77,7 +86,7 @@
 
 	* app/tools/gimpcolorbalancetool.c
 	* app/tools/gimphuesaturationtool.c
-	* app/tools/gimptextoptions.c: minor strings changes.
+	* app/tools/gimptextoptions.c: minor string changes.
 
 2005-09-03  Seth Burgess <sjburges@gimp.org>
 	
