@@ -1444,6 +1444,10 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
   switch (function)
     {
     case RECT_CREATING:
+      if (x1 < 0)
+        x1 = 0;
+      if (x2 > max_x)
+        x2 = max_x;
       break;
 
     case RECT_RESIZING_UPPER_LEFT:
@@ -1481,6 +1485,8 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
       else
         {
           x2 = MAX (x1, rx2);
+          if (x1 < 0)
+            x1 = 0;
         }
       g_object_set (rectangle, "startx", curx, NULL);
       break;
@@ -1520,6 +1526,8 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
       else
         {
           x1 = MIN (rx1, x2);
+          if (x2 > max_x)
+            x2 = max_x;
         }
       g_object_set (rectangle, "startx", curx, NULL);
       break;
@@ -1532,9 +1540,8 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
       break;
 
     case RECT_MOVING:
-      if (fixed_width &&
-          (rx1 + inc_x < 0 ||
-           rx2 + inc_x > max_x))
+      if (rx1 + inc_x < 0 ||
+          rx2 + inc_x > max_x)
         {
           x1 = rx1;
           x2 = rx2;
@@ -1551,6 +1558,10 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
   switch (function)
     {
     case RECT_CREATING:
+      if (y1 < 0)
+        y1 = 0;
+      if (y2 > max_y)
+        y2 = max_y;
       break;
 
     case RECT_RESIZING_UPPER_LEFT:
@@ -1588,6 +1599,8 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
       else
         {
           y2 = MAX (y1, ry2);
+          if (y1 < 0)
+            y1 = 0;
         }
       g_object_set (rectangle, "starty", cury, NULL);
       break;
@@ -1627,6 +1640,8 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
       else
         {
           y1 = MIN (ry1, y2);
+          if (y2 > max_y)
+            y2 = max_y;
         }
       g_object_set (rectangle, "starty", cury, NULL);
       break;
@@ -1639,9 +1654,8 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
       break;
 
     case RECT_MOVING:
-      if (fixed_height &&
-          (ry1 + inc_y < 0 ||
-           ry2 + inc_y > max_y))
+      if (ry1 + inc_y < 0 ||
+          ry2 + inc_y > max_y)
         {
           y1 = ry1;
           y2 = ry2;

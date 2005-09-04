@@ -1,3 +1,7 @@
+2005-09-04  Karine Delvare  <kdelvare@nerim.net>
+
+	* app/tools/gimprectangletool.c: stay within image boundaries.
+
 2005-09-04  Michael Natterer  <mitch@gimp.org>
 
 	Cleaned up and fixed the order in which default tool options and
