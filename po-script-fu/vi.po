@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu Gnome HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-01 03:55+0000\n"
-"PO-Revision-Date: 2005-09-01 14:56+0930\n"
+"POT-Creation-Date: 2005-09-04 03:48+0000\n"
+"PO-Revision-Date: 2005-09-04 18:25+0930\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -137,6 +137,10 @@ msgstr ""
 #: ../plug-ins/script-fu/script-fu-server.c:653
 msgid "Script-Fu Server Options"
 msgstr "Tùy chọn trình phục vụ Script-Fu"
+
+#: ../plug-ins/script-fu/script-fu-server.c:658
+msgid "_Start Server"
+msgstr "_Khởi chạy trình phục vụ"
 
 #: ../plug-ins/script-fu/script-fu-server.c:686
 msgid "Server port:"

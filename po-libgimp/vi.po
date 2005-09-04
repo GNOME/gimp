@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-libgimp Gnome HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-26 03:37+0000\n"
-"PO-Revision-Date: 2005-08-30 17:43+0930\n"
+"POT-Creation-Date: 2005-09-04 03:43+0000\n"
+"PO-Revision-Date: 2005-09-04 18:23+0930\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -283,16 +283,13 @@ msgstr "Thủ tục %d"
 msgid "No matches for your query"
 msgstr "Không khớp gì."
 
-#: ../libgimp/gimpprocbrowserdialog.c:457
-msgid "1 procedure matches your query"
-msgstr "1 thủ tục khớp với truy vấn bạn."
-
-#: ../libgimp/gimpprocbrowserdialog.c:460
+#: ../libgimp/gimpprocbrowserdialog.c:458
 #, c-format
-msgid "%d procedures match your query"
-msgstr "%d thủ tục khớp với truy vấn bạn."
+msgid "%d procedure matches your query"
+msgid_plural "%d procedures match your query"
+msgstr[0] "%d thủ tục khớp với truy vấn bạn."
 
-#: ../libgimp/gimpprocbrowserdialog.c:508
+#: ../libgimp/gimpprocbrowserdialog.c:507
 msgid "No matches"
 msgstr "Không khớp gì."
 
@@ -708,7 +705,9 @@ msgid ""
 "When enabled, the GIMP will try to use the display color profile from the "
 "windowing system. The configured monitor profile is then only used as a "
 "fallback."
-msgstr "Khi bật, GIMP sẽ cố dùng xác lập màu bộ trình bày từ hệ thống cửa sổ. Như thế thì, nó dùng xác lập màn hình đã cấu hình chỉ như là dự trữ."
+msgstr ""
+"Khi bật, GIMP sẽ cố dùng xác lập màu bộ trình bày từ hệ thống cửa sổ. Như "
+"thế thì, nó dùng xác lập màn hình đã cấu hình chỉ như là dự trữ."
 
 #: ../libgimpconfig/gimpcolorconfig.c:48
 msgid "The default RGB workspace color profile."
@@ -859,8 +858,7 @@ msgstr "chuỗi UTF-8 không hợp lệ"
 #: ../libgimpconfig/gimpscanner.c:623
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
-msgstr ""
-"Gặp lỗi khi phân tách « %s » trong dòng %d: %s"
+msgstr "Gặp lỗi khi phân tách « %s » trong dòng %d: %s"
 
 #: ../libgimpmodule/gimpmodule.c:180
 #, c-format
@@ -900,7 +898,8 @@ msgstr "Chưa tải"
 msgid ""
 "Cannot determine a valid home directory.\n"
 "Thumbnails will be stored in the folder for temporary files (%s) instead."
-msgstr "Không thể quyết định thư mục chính hợp lệ.\n"
+msgstr ""
+"Không thể quyết định thư mục chính hợp lệ.\n"
 "Các hình thu nhỏ sẽ được lưu vào thư mục cho tập tin tạm (%s) thay thế."
 
 #: ../libgimpthumb/gimpthumb-utils.c:249 ../libgimpthumb/gimpthumb-utils.c:317
@@ -985,7 +984,9 @@ msgstr "Danh mục"
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
-msgstr "Hãy nhắp vào ống nhỏ giọt, rồi nhắp vào màu tại bất cứ nơi nào trên màn hình, để chọn màu đó."
+msgstr ""
+"Hãy nhắp vào ống nhỏ giọt, rồi nhắp vào màu tại bất cứ nơi nào trên màn "
+"hình, để chọn màu đó."
 
 #: ../libgimpwidgets/gimppreviewarea.c:126
 msgid "Check Size"
@@ -1222,7 +1223,8 @@ msgstr "Quản lý màu"
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
-msgstr "Bộ lọc này lấy cấu hình từ phần Quản lý Màu trong hộp thoại « Tùy thích »."
+msgstr ""
+"Bộ lọc này lấy cấu hình từ phần Quản lý Màu trong hộp thoại « Tùy thích »."
 
 #: ../modules/cdisplay_lcms.c:311
 msgid "Mode of operation:"
