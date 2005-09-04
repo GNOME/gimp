@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-11 19:25+0000\n"
-"PO-Revision-Date: 2005-06-25 18:08+0300\n"
+"POT-Creation-Date: 2005-08-13 19:29+0000\n"
+"PO-Revision-Date: 2005-09-02 23:47+0300\n"
 "Last-Translator: Olle Niit <olle@paalalinn.com>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -18,8 +18,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Emacs\n"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:542
-#: ../plug-ins/gfig/gfig-dialog.c:277 ../plug-ins/gflare/gflare.c:889
+#: ../plug-ins/FractalExplorer/Dialogs.c:529
+#: ../plug-ins/gfig/gfig-dialog.c:282 ../plug-ins/gflare/gflare.c:887
 #: ../plug-ins/gimpressionist/utils.c:124
 #, c-format
 msgid ""
@@ -33,482 +33,465 @@ msgstr ""
 "(%s \"%s\")\n"
 "oma %s faili."
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:562
-#: ../plug-ins/FractalExplorer/Dialogs.c:1672
-#: ../plug-ins/print/gimp_main_window.c:367
-msgid "About"
-msgstr "Teave"
-
-#: ../plug-ins/FractalExplorer/Dialogs.c:633
+#: ../plug-ins/FractalExplorer/Dialogs.c:618
 msgid "Realtime Preview"
 msgstr "Reaalaja eelvaade"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:640
+#: ../plug-ins/FractalExplorer/Dialogs.c:625
 msgid "If you enable this option the preview will be redrawn automatically"
 msgstr ""
 "Kui selle võimaluse lubad, joonistatakse eelvaade muudatuste korral "
 "automaatselt"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:643
+#: ../plug-ins/FractalExplorer/Dialogs.c:628
 msgid "Redraw"
 msgstr "Joonista uuesti"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:649
+#: ../plug-ins/FractalExplorer/Dialogs.c:634
 msgid "Redraw preview"
 msgstr "Uuestijoonistuse eelvaade"
 
 #. Zoom Options
-#: ../plug-ins/FractalExplorer/Dialogs.c:652
+#: ../plug-ins/FractalExplorer/Dialogs.c:637
 msgid "Zoom"
 msgstr "Suurendus"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:680
+#: ../plug-ins/FractalExplorer/Dialogs.c:665
 msgid "Undo last zoom"
 msgstr "Tühista viimane suurendus"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:690
+#: ../plug-ins/FractalExplorer/Dialogs.c:675
 msgid "Redo last zoom"
 msgstr "Korda viimast suurendust"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:705
+#: ../plug-ins/FractalExplorer/Dialogs.c:690
 msgid "_Parameters"
 msgstr "_Parameetrid"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:708
+#: ../plug-ins/FractalExplorer/Dialogs.c:693
 msgid "Fractal Parameters"
 msgstr ""
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:721
+#: ../plug-ins/FractalExplorer/Dialogs.c:706
 msgid "XMIN:"
 msgstr "XMIN:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:724
+#: ../plug-ins/FractalExplorer/Dialogs.c:709
 msgid "Change the first (minimal) x-coordinate delimitation"
 msgstr "Muuda esimest (minimaalset) x-koordinaadi piirajat"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:732
+#: ../plug-ins/FractalExplorer/Dialogs.c:717
 msgid "XMAX:"
 msgstr "XMAKS:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:735
+#: ../plug-ins/FractalExplorer/Dialogs.c:720
 msgid "Change the second (maximal) x-coordinate delimitation"
 msgstr "Muuda teist (maksimaalset) x-koordinaadi piirajat"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:743
+#: ../plug-ins/FractalExplorer/Dialogs.c:728
 msgid "YMIN:"
 msgstr "YMIN:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:746
+#: ../plug-ins/FractalExplorer/Dialogs.c:731
 msgid "Change the first (minimal) y-coordinate delimitation"
 msgstr "Muuda esimest (minimaalset) y-koordinaadi piirajat"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:754
+#: ../plug-ins/FractalExplorer/Dialogs.c:739
 msgid "YMAX:"
 msgstr "YMAKS:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:757
+#: ../plug-ins/FractalExplorer/Dialogs.c:742
 msgid "Change the second (maximal) y-coordinate delimitation"
 msgstr "Muuda teist (maksimaalset) y-koordinaadi piirajat"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:765
+#: ../plug-ins/FractalExplorer/Dialogs.c:750
 msgid "ITER:"
 msgstr ""
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:768
+#: ../plug-ins/FractalExplorer/Dialogs.c:753
 msgid ""
 "Change the iteration value. The higher it is, the more details will be "
 "calculated, which will take more time"
 msgstr ""
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:777
+#: ../plug-ins/FractalExplorer/Dialogs.c:762
 msgid "CX:"
 msgstr "CX:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:780
+#: ../plug-ins/FractalExplorer/Dialogs.c:765
 msgid ""
 "Change the CX value (changes aspect of fractal, active with every fractal "
 "but Mandelbrot and Sierpinski)"
 msgstr ""
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:789
+#: ../plug-ins/FractalExplorer/Dialogs.c:774
 msgid "CY:"
 msgstr "CY:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:792
+#: ../plug-ins/FractalExplorer/Dialogs.c:777
 msgid ""
 "Change the CY value (changes aspect of fractal, active with every fractal "
 "but Mandelbrot and Sierpinski)"
 msgstr ""
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:809
+#: ../plug-ins/FractalExplorer/Dialogs.c:794
 msgid "Load a fractal from file"
 msgstr ""
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:817
+#: ../plug-ins/FractalExplorer/Dialogs.c:802
 msgid "Reset parameters to default values"
 msgstr "Sea uuesti algväärtused"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:826
+#: ../plug-ins/FractalExplorer/Dialogs.c:811
 msgid "Save active fractal to file"
 msgstr ""
 
 #. Fractal type toggle box
-#: ../plug-ins/FractalExplorer/Dialogs.c:829
+#: ../plug-ins/FractalExplorer/Dialogs.c:814
 msgid "Fractal Type"
 msgstr ""
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:842
+#: ../plug-ins/FractalExplorer/Dialogs.c:827
 msgid "Mandelbrot"
 msgstr "Mandelbrot"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:844
+#: ../plug-ins/FractalExplorer/Dialogs.c:829
 msgid "Julia"
 msgstr "Julia"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:846
+#: ../plug-ins/FractalExplorer/Dialogs.c:831
 msgid "Barnsley 1"
 msgstr "Barnsley 1"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:848
+#: ../plug-ins/FractalExplorer/Dialogs.c:833
 msgid "Barnsley 2"
 msgstr "Barnsley 2"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:850
+#: ../plug-ins/FractalExplorer/Dialogs.c:835
 msgid "Barnsley 3"
 msgstr "Barnsley 3"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:852
+#: ../plug-ins/FractalExplorer/Dialogs.c:837
 msgid "Spider"
 msgstr "Ämblik"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:854
+#: ../plug-ins/FractalExplorer/Dialogs.c:839
 msgid "Man'o'war"
 msgstr "Sõjalaev"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:856
+#: ../plug-ins/FractalExplorer/Dialogs.c:841
 msgid "Lambda"
 msgstr "Lambda"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:858
+#: ../plug-ins/FractalExplorer/Dialogs.c:843
 msgid "Sierpinski"
 msgstr "Sierpinski"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:904 ../plug-ins/common/sinus.c:879
+#: ../plug-ins/FractalExplorer/Dialogs.c:889 ../plug-ins/common/sinus.c:879
 msgid "Co_lors"
 msgstr "_Värvid"
 
 #. Number of Colors frame
-#: ../plug-ins/FractalExplorer/Dialogs.c:908
-#: ../plug-ins/common/borderaverage.c:409
+#: ../plug-ins/FractalExplorer/Dialogs.c:893
+#: ../plug-ins/common/borderaverage.c:413
 msgid "Number of Colors"
 msgstr "Värvide arv"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:920
+#: ../plug-ins/FractalExplorer/Dialogs.c:905
 msgid "Number of colors:"
 msgstr "Värvide arv:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:923
+#: ../plug-ins/FractalExplorer/Dialogs.c:908
 msgid "Change the number of colors in the mapping"
 msgstr ""
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:930
+#: ../plug-ins/FractalExplorer/Dialogs.c:915
 msgid "Use loglog smoothing"
 msgstr ""
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:937
+#: ../plug-ins/FractalExplorer/Dialogs.c:922
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
 msgstr ""
 
 #. Color Density frame
-#: ../plug-ins/FractalExplorer/Dialogs.c:941
+#: ../plug-ins/FractalExplorer/Dialogs.c:926
 msgid "Color Density"
 msgstr "Värvitihedus"
 
 #. These values are translated for the GUI but also used internally
 #. to figure out which button the user pushed, etc.
 #. Not my design, please don't blame me -- njl
-#: ../plug-ins/FractalExplorer/Dialogs.c:953 ../plug-ins/common/compose.c:134
-#: ../plug-ins/common/compose.c:144 ../plug-ins/common/fp.c:226
+#: ../plug-ins/FractalExplorer/Dialogs.c:938 ../plug-ins/common/compose.c:140
+#: ../plug-ins/common/compose.c:150 ../plug-ins/common/fp.c:226
 msgid "Red:"
 msgstr "Punane:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:956
+#: ../plug-ins/FractalExplorer/Dialogs.c:941
 msgid "Change the intensity of the red channel"
 msgstr "Muuda punase kanali intensiivsust"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:963 ../plug-ins/common/compose.c:135
-#: ../plug-ins/common/compose.c:145 ../plug-ins/common/fp.c:227
+#: ../plug-ins/FractalExplorer/Dialogs.c:948 ../plug-ins/common/compose.c:141
+#: ../plug-ins/common/compose.c:151 ../plug-ins/common/fp.c:227
 msgid "Green:"
 msgstr "Roheline:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:966
+#: ../plug-ins/FractalExplorer/Dialogs.c:951
 msgid "Change the intensity of the green channel"
 msgstr "Muuda rohelise kanali intensiivsust"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:973 ../plug-ins/common/compose.c:136
-#: ../plug-ins/common/compose.c:146 ../plug-ins/common/fp.c:228
+#: ../plug-ins/FractalExplorer/Dialogs.c:958 ../plug-ins/common/compose.c:142
+#: ../plug-ins/common/compose.c:152 ../plug-ins/common/fp.c:228
 msgid "Blue:"
 msgstr "Sinine:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:976
+#: ../plug-ins/FractalExplorer/Dialogs.c:961
 msgid "Change the intensity of the blue channel"
 msgstr "Muuda sinise kanali intensiivsust"
 
 #. Color Function frame
-#: ../plug-ins/FractalExplorer/Dialogs.c:982
+#: ../plug-ins/FractalExplorer/Dialogs.c:967
 msgid "Color Function"
 msgstr "Värvi funktsioon"
 
 #. Redmode radio frame
-#: ../plug-ins/FractalExplorer/Dialogs.c:991
-#: ../plug-ins/common/channel_mixer.c:534 ../plug-ins/common/decompose.c:132
+#: ../plug-ins/FractalExplorer/Dialogs.c:976
+#: ../plug-ins/common/channel_mixer.c:535 ../plug-ins/common/decompose.c:132
 msgid "Red"
 msgstr "Punane"
+
+#: ../plug-ins/FractalExplorer/Dialogs.c:980
+#: ../plug-ins/FractalExplorer/Dialogs.c:1021
+#: ../plug-ins/FractalExplorer/Dialogs.c:1062
+msgid "Sine"
+msgstr "Siinus"
+
+#: ../plug-ins/FractalExplorer/Dialogs.c:982
+#: ../plug-ins/FractalExplorer/Dialogs.c:1023
+#: ../plug-ins/FractalExplorer/Dialogs.c:1064
+msgid "Cosine"
+msgstr "Koosinus"
+
+#: ../plug-ins/FractalExplorer/Dialogs.c:984
+#: ../plug-ins/FractalExplorer/Dialogs.c:1025
+#: ../plug-ins/FractalExplorer/Dialogs.c:1066
+#: ../plug-ins/Lighting/lighting_ui.c:399
+#: ../plug-ins/common/CML_explorer.c:166 ../plug-ins/common/align_layers.c:418
+#: ../plug-ins/common/align_layers.c:449 ../plug-ins/common/postscript.c:3035
+#: ../plug-ins/common/postscript.c:3047 ../plug-ins/common/psp.c:413
+#: ../plug-ins/fits/fits.c:1020
+msgid "None"
+msgstr "Puudub"
+
+#: ../plug-ins/FractalExplorer/Dialogs.c:989
+#: ../plug-ins/FractalExplorer/Dialogs.c:1030
+#: ../plug-ins/FractalExplorer/Dialogs.c:1071
+msgid "Use sine-function for this color component"
+msgstr ""
+
+#: ../plug-ins/FractalExplorer/Dialogs.c:992
+#: ../plug-ins/FractalExplorer/Dialogs.c:1033
+#: ../plug-ins/FractalExplorer/Dialogs.c:1074
+msgid "Use cosine-function for this color component"
+msgstr ""
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:995
 #: ../plug-ins/FractalExplorer/Dialogs.c:1036
 #: ../plug-ins/FractalExplorer/Dialogs.c:1077
-msgid "Sine"
-msgstr "Siinus"
-
-#: ../plug-ins/FractalExplorer/Dialogs.c:997
-#: ../plug-ins/FractalExplorer/Dialogs.c:1038
-#: ../plug-ins/FractalExplorer/Dialogs.c:1079
-msgid "Cosine"
-msgstr "Koosinus"
-
-#: ../plug-ins/FractalExplorer/Dialogs.c:999
-#: ../plug-ins/FractalExplorer/Dialogs.c:1040
-#: ../plug-ins/FractalExplorer/Dialogs.c:1081
-#: ../plug-ins/Lighting/lighting_ui.c:399
-#: ../plug-ins/common/CML_explorer.c:167 ../plug-ins/common/align_layers.c:419
-#: ../plug-ins/common/align_layers.c:450 ../plug-ins/common/postscript.c:3030
-#: ../plug-ins/common/postscript.c:3042 ../plug-ins/common/psp.c:413
-#: ../plug-ins/fits/fits.c:1011
-msgid "None"
-msgstr "Puudub"
-
-#: ../plug-ins/FractalExplorer/Dialogs.c:1004
-#: ../plug-ins/FractalExplorer/Dialogs.c:1045
-#: ../plug-ins/FractalExplorer/Dialogs.c:1086
-msgid "Use sine-function for this color component"
-msgstr ""
-
-#: ../plug-ins/FractalExplorer/Dialogs.c:1007
-#: ../plug-ins/FractalExplorer/Dialogs.c:1048
-#: ../plug-ins/FractalExplorer/Dialogs.c:1089
-msgid "Use cosine-function for this color component"
-msgstr ""
-
-#: ../plug-ins/FractalExplorer/Dialogs.c:1010
-#: ../plug-ins/FractalExplorer/Dialogs.c:1051
-#: ../plug-ins/FractalExplorer/Dialogs.c:1092
 msgid ""
 "Use linear mapping instead of any trigonometrical function for this color "
 "channel"
 msgstr ""
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1019
-#: ../plug-ins/FractalExplorer/Dialogs.c:1060
-#: ../plug-ins/FractalExplorer/Dialogs.c:1101
+#: ../plug-ins/FractalExplorer/Dialogs.c:1004
+#: ../plug-ins/FractalExplorer/Dialogs.c:1045
+#: ../plug-ins/FractalExplorer/Dialogs.c:1086
 msgid "Inversion"
 msgstr ""
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1027
-#: ../plug-ins/FractalExplorer/Dialogs.c:1068
-#: ../plug-ins/FractalExplorer/Dialogs.c:1109
+#: ../plug-ins/FractalExplorer/Dialogs.c:1012
+#: ../plug-ins/FractalExplorer/Dialogs.c:1053
+#: ../plug-ins/FractalExplorer/Dialogs.c:1094
 msgid ""
 "If you enable this option higher color values will be swapped with lower "
 "ones and vice versa"
 msgstr ""
 
 #. Greenmode radio frame
-#: ../plug-ins/FractalExplorer/Dialogs.c:1032
-#: ../plug-ins/common/channel_mixer.c:539 ../plug-ins/common/decompose.c:133
+#: ../plug-ins/FractalExplorer/Dialogs.c:1017
+#: ../plug-ins/common/channel_mixer.c:540 ../plug-ins/common/decompose.c:133
 msgid "Green"
 msgstr "Roheline"
 
 #. Bluemode radio frame
-#: ../plug-ins/FractalExplorer/Dialogs.c:1073
-#: ../plug-ins/common/channel_mixer.c:544 ../plug-ins/common/decompose.c:138
+#: ../plug-ins/FractalExplorer/Dialogs.c:1058
+#: ../plug-ins/common/channel_mixer.c:545 ../plug-ins/common/decompose.c:138
 msgid "Blue"
 msgstr "Sinine"
 
 #. Colormode toggle box
-#: ../plug-ins/FractalExplorer/Dialogs.c:1114
+#: ../plug-ins/FractalExplorer/Dialogs.c:1099
 msgid "Color Mode"
 msgstr "Värvirežiim"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1123
+#: ../plug-ins/FractalExplorer/Dialogs.c:1108
 msgid "As specified above"
 msgstr "Nagu eelnevalt kirjeldatud"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1135
+#: ../plug-ins/FractalExplorer/Dialogs.c:1120
 msgid ""
 "Create a color-map with the options you specified above (color density/"
 "function). The result is visible in the preview image"
 msgstr ""
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1145
+#: ../plug-ins/FractalExplorer/Dialogs.c:1130
 msgid "Apply active gradient to final image"
 msgstr "Rakenda aktiivne spektrikomplekti lõplikule pildile"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1157
+#: ../plug-ins/FractalExplorer/Dialogs.c:1142
 msgid "Create a color-map using a gradient from the gradient editor"
 msgstr ""
 "Loo värvikaart kasutades spektrikomplekti spektrikomplektide redaktorist"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1168
+#: ../plug-ins/FractalExplorer/Dialogs.c:1153
 msgid "FractalExplorer Gradient"
 msgstr ""
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1198
+#: ../plug-ins/FractalExplorer/Dialogs.c:1183
 msgid "_Fractals"
 msgstr ""
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1819
+#: ../plug-ins/FractalExplorer/Dialogs.c:1694
 #: ../plug-ins/Lighting/lighting_ui.c:1158 ../plug-ins/bmp/bmpwrite.c:201
-#: ../plug-ins/common/CEL.c:569 ../plug-ins/common/CML_explorer.c:2010
-#: ../plug-ins/common/channel_mixer.c:1063 ../plug-ins/common/compressor.c:409
-#: ../plug-ins/common/compressor.c:540 ../plug-ins/common/curve_bend.c:860
+#: ../plug-ins/common/CEL.c:572 ../plug-ins/common/CML_explorer.c:2009
+#: ../plug-ins/common/channel_mixer.c:1064 ../plug-ins/common/compressor.c:410
+#: ../plug-ins/common/compressor.c:541 ../plug-ins/common/curve_bend.c:860
 #: ../plug-ins/common/dicom.c:648 ../plug-ins/common/gbr.c:600
 #: ../plug-ins/common/gif.c:994 ../plug-ins/common/gih.c:1257
 #: ../plug-ins/common/gtm.c:222 ../plug-ins/common/mng.c:559
-#: ../plug-ins/common/mng.c:947 ../plug-ins/common/pat.c:447
+#: ../plug-ins/common/mng.c:951 ../plug-ins/common/pat.c:449
 #: ../plug-ins/common/pcx.c:585 ../plug-ins/common/pix.c:505
-#: ../plug-ins/common/png.c:1173 ../plug-ins/common/pnm.c:810
-#: ../plug-ins/common/postscript.c:1120 ../plug-ins/common/psd_save.c:1330
-#: ../plug-ins/common/raw.c:522 ../plug-ins/common/raw.c:549
+#: ../plug-ins/common/png.c:1174 ../plug-ins/common/pnm.c:810
+#: ../plug-ins/common/postscript.c:1125 ../plug-ins/common/psd_save.c:1304
+#: ../plug-ins/common/raw.c:526 ../plug-ins/common/raw.c:553
 #: ../plug-ins/common/spheredesigner.c:2107 ../plug-ins/common/sunras.c:504
-#: ../plug-ins/common/tga.c:1022 ../plug-ins/common/tiff.c:1929
-#: ../plug-ins/common/xbm.c:991 ../plug-ins/common/xwd.c:562
-#: ../plug-ins/fits/fits.c:445 ../plug-ins/flame/flame.c:443
-#: ../plug-ins/gfig/gfig.c:789 ../plug-ins/gfli/gfli.c:710
-#: ../plug-ins/ifscompose/ifscompose.c:2374 ../plug-ins/jpeg/jpeg-save.c:257
+#: ../plug-ins/common/tga.c:1022 ../plug-ins/common/tiff.c:1915
+#: ../plug-ins/common/xbm.c:998 ../plug-ins/common/xwd.c:562
+#: ../plug-ins/fits/fits.c:454 ../plug-ins/flame/flame.c:442
+#: ../plug-ins/gfig/gfig.c:787 ../plug-ins/gfli/gfli.c:716
+#: ../plug-ins/ifscompose/ifscompose.c:2389 ../plug-ins/jpeg/jpeg-save.c:268
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:215
-#: ../plug-ins/winicon/icosave.c:244 ../plug-ins/xjt/xjt.c:1265
-#: ../plug-ins/xjt/xjt.c:1700
+#: ../plug-ins/winicon/icosave.c:244 ../plug-ins/xjt/xjt.c:1268
+#: ../plug-ins/xjt/xjt.c:1703
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Ei suutnud '%s' kirjutamiseks avada: %s"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1833
+#: ../plug-ins/FractalExplorer/Dialogs.c:1708
 #, c-format
 msgid "Could not write '%s': %s"
 msgstr "Ei suutnud '%s' kirjutada: %s"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1886
+#: ../plug-ins/FractalExplorer/Dialogs.c:1761
 msgid "Load Fractal Parameters"
 msgstr ""
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1922
+#: ../plug-ins/FractalExplorer/Dialogs.c:1797
 msgid "Save Fractal Parameters"
 msgstr ""
 
 #. Do not rely on librsvg setting GError on failure!
 #. stat error (file does not exist)
-#: ../plug-ins/FractalExplorer/Dialogs.c:2128
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:1164
+#: ../plug-ins/FractalExplorer/Dialogs.c:2003
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:917
 #: ../plug-ins/Lighting/lighting_ui.c:1302 ../plug-ins/bmp/bmpread.c:152
-#: ../plug-ins/common/CEL.c:297 ../plug-ins/common/CML_explorer.c:2230
-#: ../plug-ins/common/channel_mixer.c:980 ../plug-ins/common/curve_bend.c:912
+#: ../plug-ins/common/CEL.c:300 ../plug-ins/common/CML_explorer.c:2229
+#: ../plug-ins/common/channel_mixer.c:981 ../plug-ins/common/curve_bend.c:912
 #: ../plug-ins/common/dicom.c:291 ../plug-ins/common/gbr.c:343
 #: ../plug-ins/common/gifload.c:294 ../plug-ins/common/gih.c:647
-#: ../plug-ins/common/mng.c:1118 ../plug-ins/common/pat.c:316
+#: ../plug-ins/common/mng.c:1122 ../plug-ins/common/pat.c:318
 #: ../plug-ins/common/pcx.c:305 ../plug-ins/common/pix.c:325
-#: ../plug-ins/common/png.c:671 ../plug-ins/common/pnm.c:434
-#: ../plug-ins/common/postscript.c:989 ../plug-ins/common/psd.c:1801
-#: ../plug-ins/common/psp.c:1454 ../plug-ins/common/raw.c:235
-#: ../plug-ins/common/raw.c:639 ../plug-ins/common/spheredesigner.c:1997
-#: ../plug-ins/common/sunras.c:375 ../plug-ins/common/svg.c:309
-#: ../plug-ins/common/svg.c:692 ../plug-ins/common/tga.c:409
-#: ../plug-ins/common/tiff.c:526 ../plug-ins/common/xbm.c:715
-#: ../plug-ins/common/xwd.c:415 ../plug-ins/faxg3/faxg3.c:219
-#: ../plug-ins/fits/fits.c:333 ../plug-ins/flame/flame.c:412
-#: ../plug-ins/gfig/gfig.c:429 ../plug-ins/gfli/gfli.c:422
-#: ../plug-ins/gfli/gfli.c:457 ../plug-ins/help/domain.c:423
-#: ../plug-ins/jpeg/jpeg-load.c:82 ../plug-ins/jpeg/jpeg-load.c:841
-#: ../plug-ins/uri/uri-backend-gnomevfs.c:204
-#: ../plug-ins/winicon/icoload.c:135 ../plug-ins/xjt/xjt.c:2524
-#: ../plug-ins/xjt/xjt.c:2532
+#: ../plug-ins/common/png.c:672 ../plug-ins/common/pnm.c:434
+#: ../plug-ins/common/poppler.c:352 ../plug-ins/common/postscript.c:994
+#: ../plug-ins/common/psd.c:1822 ../plug-ins/common/psp.c:1454
+#: ../plug-ins/common/raw.c:239 ../plug-ins/common/raw.c:643
+#: ../plug-ins/common/spheredesigner.c:1997 ../plug-ins/common/sunras.c:375
+#: ../plug-ins/common/svg.c:309 ../plug-ins/common/svg.c:694
+#: ../plug-ins/common/tga.c:409 ../plug-ins/common/tiff.c:524
+#: ../plug-ins/common/xbm.c:715 ../plug-ins/common/xwd.c:415
+#: ../plug-ins/faxg3/faxg3.c:220 ../plug-ins/fits/fits.c:342
+#: ../plug-ins/flame/flame.c:411 ../plug-ins/gfig/gfig.c:427
+#: ../plug-ins/gfli/gfli.c:428 ../plug-ins/gfli/gfli.c:463
+#: ../plug-ins/help/domain.c:423 ../plug-ins/jpeg/jpeg-load.c:85
+#: ../plug-ins/jpeg/jpeg-load.c:875 ../plug-ins/uri/uri-backend-gnomevfs.c:204
+#: ../plug-ins/winicon/icoload.c:135 ../plug-ins/xjt/xjt.c:2527
+#: ../plug-ins/xjt/xjt.c:2535
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Ei suutnud avada '%s' lugemiseks: %s"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:2136
+#: ../plug-ins/FractalExplorer/Dialogs.c:2011
 #, c-format
 msgid "'%s' is not a FractalExplorer file"
 msgstr ""
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:2142
+#: ../plug-ins/FractalExplorer/Dialogs.c:2017
 #, c-format
 msgid "'%s' is corrupt. Line %d Option section incorrect"
 msgstr ""
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:272
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:249
 msgid "_Fractal Explorer..."
 msgstr ""
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:403
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:380
 msgid "Rendering Fractal..."
 msgstr ""
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:775
-#: ../plug-ins/gflare/gflare.c:3132
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:743
+#: ../plug-ins/gflare/gflare.c:3130
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
-msgstr "Oled sa ikka päris kindel et tahad kustutada \"%s\" nii nimekirjast kui ka kõvakettalt?"
+msgstr ""
+"Oled sa ikka päris kindel et tahad kustutada \"%s\" nii nimekirjast kui ka "
+"kõvakettalt?"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:779
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:747
 msgid "Delete Fractal"
 msgstr ""
 
-#. the dialog
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:856
-msgid "Edit fractal name"
-msgstr ""
-
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:882
-msgid "Fractal name:"
-msgstr ""
-
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:904
-msgid "New Fractal"
-msgstr ""
-
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:1185
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:938
 #, c-format
 msgid "File '%s' is not a FractalExplorer file"
 msgstr ""
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:1194
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:947
 #, c-format
 msgid ""
 "File '%s' is corrupt.\n"
 "Line %d Option section incorrect"
 msgstr ""
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:1244
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:991
 msgid "My first fractal"
 msgstr ""
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:1260
-msgid "Choose Fractal by double-clicking on it"
-msgstr ""
-
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:1297
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:1055
 msgid "Select folder and rescan collection"
 msgstr ""
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:1309
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:1067
+msgid "Apply currently selected fractal"
+msgstr ""
+
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:1079
 msgid "Delete currently selected fractal"
 msgstr ""
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:1360
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:1102
 msgid "Rescan for Fractals"
 msgstr ""
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:1377
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:1121
 msgid "Add FractalExplorer Path"
 msgstr ""
 
@@ -632,9 +615,9 @@ msgid "Position"
 msgstr "Asukoht"
 
 #: ../plug-ins/Lighting/lighting_ui.c:456 ../plug-ins/common/flarefx.c:759
-#: ../plug-ins/common/mblur.c:999 ../plug-ins/common/nova.c:453
-#: ../plug-ins/common/papertile.c:271 ../plug-ins/flame/flame.c:1222
-#: ../plug-ins/gflare/gflare.c:2657
+#: ../plug-ins/common/mblur.c:989 ../plug-ins/common/nova.c:454
+#: ../plug-ins/common/papertile.c:271 ../plug-ins/flame/flame.c:1221
+#: ../plug-ins/gflare/gflare.c:2655
 msgid "_X:"
 msgstr "_X:"
 
@@ -644,9 +627,9 @@ msgid "Light source X position in XYZ space"
 msgstr ""
 
 #: ../plug-ins/Lighting/lighting_ui.c:469 ../plug-ins/common/flarefx.c:764
-#: ../plug-ins/common/mblur.c:1005 ../plug-ins/common/nova.c:458
-#: ../plug-ins/common/papertile.c:280 ../plug-ins/flame/flame.c:1236
-#: ../plug-ins/gflare/gflare.c:2661
+#: ../plug-ins/common/mblur.c:994 ../plug-ins/common/nova.c:459
+#: ../plug-ins/common/papertile.c:280 ../plug-ins/flame/flame.c:1235
+#: ../plug-ins/gflare/gflare.c:2659
 msgid "_Y:"
 msgstr "_Y:"
 
@@ -783,8 +766,8 @@ msgid "Bumpm_ap image:"
 msgstr ""
 
 #. Map type menu
-#: ../plug-ins/Lighting/lighting_ui.c:788 ../plug-ins/common/bumpmap.c:896
-#: ../plug-ins/flame/flame.c:743
+#: ../plug-ins/Lighting/lighting_ui.c:788 ../plug-ins/common/bumpmap.c:901
+#: ../plug-ins/flame/flame.c:742
 msgid "Linear"
 msgstr "Lineaarne"
 
@@ -792,13 +775,13 @@ msgstr "Lineaarne"
 msgid "Logarithmic"
 msgstr "Logaritmiline"
 
-#: ../plug-ins/Lighting/lighting_ui.c:790 ../plug-ins/common/bumpmap.c:898
-#: ../plug-ins/flame/flame.c:744
+#: ../plug-ins/Lighting/lighting_ui.c:790 ../plug-ins/common/bumpmap.c:903
+#: ../plug-ins/flame/flame.c:743
 msgid "Sinusoidal"
 msgstr ""
 
-#: ../plug-ins/Lighting/lighting_ui.c:791 ../plug-ins/common/bumpmap.c:897
-#: ../plug-ins/flame/flame.c:745
+#: ../plug-ins/Lighting/lighting_ui.c:791 ../plug-ins/common/bumpmap.c:902
+#: ../plug-ins/flame/flame.c:744
 msgid "Spherical"
 msgstr ""
 
@@ -970,7 +953,7 @@ msgstr ""
 msgid "Enable/disable jagged edges removal (antialiasing)"
 msgstr ""
 
-#: ../plug-ins/MapObject/mapobject_ui.c:602 ../plug-ins/common/bumpmap.c:977
+#: ../plug-ins/MapObject/mapobject_ui.c:602 ../plug-ins/common/bumpmap.c:982
 #: ../plug-ins/common/emboss.c:522 ../plug-ins/common/fractaltrace.c:790
 #: ../plug-ins/common/struc.c:1321
 msgid "_Depth:"
@@ -1056,7 +1039,7 @@ msgstr ""
 
 #. Rotation
 #: ../plug-ins/MapObject/mapobject_ui.c:1070
-#: ../plug-ins/common/postscript.c:3194
+#: ../plug-ins/common/postscript.c:3199
 msgid "Rotation"
 msgstr ""
 
@@ -1146,7 +1129,7 @@ msgstr "R_aadius:"
 msgid "Cylinder radius"
 msgstr "Silindri raadius"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1287 ../plug-ins/common/mblur.c:939
+#: ../plug-ins/MapObject/mapobject_ui.c:1287 ../plug-ins/common/mblur.c:1020
 msgid "L_ength:"
 msgstr ""
 
@@ -1187,7 +1170,7 @@ msgstr ""
 msgid "Show/hide preview wireframe"
 msgstr ""
 
-#: ../plug-ins/bmp/bmp.c:118 ../plug-ins/bmp/bmp.c:137
+#: ../plug-ins/bmp/bmp.c:122 ../plug-ins/bmp/bmp.c:141
 msgid "Windows BMP image"
 msgstr ""
 
@@ -1195,20 +1178,20 @@ msgstr ""
 msgid "Bad colormap"
 msgstr ""
 
-#: ../plug-ins/bmp/bmpread.c:158 ../plug-ins/common/CEL.c:302
+#: ../plug-ins/bmp/bmpread.c:158 ../plug-ins/common/CEL.c:305
 #: ../plug-ins/common/dicom.c:296 ../plug-ins/common/gbr.c:349
 #: ../plug-ins/common/gifload.c:299 ../plug-ins/common/gih.c:653
-#: ../plug-ins/common/pat.c:322 ../plug-ins/common/pcx.c:311
-#: ../plug-ins/common/pix.c:331 ../plug-ins/common/png.c:679
-#: ../plug-ins/common/pnm.c:440 ../plug-ins/common/postscript.c:996
-#: ../plug-ins/common/psd.c:1807 ../plug-ins/common/raw.c:645
-#: ../plug-ins/common/sunras.c:430 ../plug-ins/common/tga.c:415
-#: ../plug-ins/common/tiff.c:532 ../plug-ins/common/wmf.c:951
-#: ../plug-ins/common/xbm.c:721 ../plug-ins/common/xpm.c:341
-#: ../plug-ins/common/xwd.c:469 ../plug-ins/faxg3/faxg3.c:204
-#: ../plug-ins/gfli/gfli.c:463 ../plug-ins/jpeg/jpeg-load.c:90
-#: ../plug-ins/sgi/sgi.c:317 ../plug-ins/winicon/icoload.c:461
-#: ../plug-ins/xjt/xjt.c:3309
+#: ../plug-ins/common/pat.c:324 ../plug-ins/common/pcx.c:311
+#: ../plug-ins/common/pix.c:331 ../plug-ins/common/png.c:680
+#: ../plug-ins/common/pnm.c:440 ../plug-ins/common/poppler.c:456
+#: ../plug-ins/common/postscript.c:1001 ../plug-ins/common/psd.c:1828
+#: ../plug-ins/common/raw.c:649 ../plug-ins/common/sunras.c:430
+#: ../plug-ins/common/tga.c:415 ../plug-ins/common/tiff.c:530
+#: ../plug-ins/common/wmf.c:951 ../plug-ins/common/xbm.c:721
+#: ../plug-ins/common/xpm.c:341 ../plug-ins/common/xwd.c:469
+#: ../plug-ins/faxg3/faxg3.c:205 ../plug-ins/gfli/gfli.c:469
+#: ../plug-ins/jpeg/jpeg-load.c:93 ../plug-ins/sgi/sgi.c:319
+#: ../plug-ins/winicon/icoload.c:461 ../plug-ins/xjt/xjt.c:3312
 #, c-format
 msgid "Opening '%s'..."
 msgstr ""
@@ -1240,21 +1223,21 @@ msgstr ""
 #.
 #. * Create the "background" layer to hold the image...
 #.
-#: ../plug-ins/bmp/bmpread.c:488 ../plug-ins/common/CEL.c:349
-#: ../plug-ins/common/CEL.c:352 ../plug-ins/common/blinds.c:276
-#: ../plug-ins/common/compose.c:759 ../plug-ins/common/decompose.c:619
+#: ../plug-ins/bmp/bmpread.c:488 ../plug-ins/common/CEL.c:352
+#: ../plug-ins/common/CEL.c:355 ../plug-ins/common/blinds.c:279
+#: ../plug-ins/common/compose.c:766 ../plug-ins/common/decompose.c:619
 #: ../plug-ins/common/dicom.c:443 ../plug-ins/common/film.c:941
 #: ../plug-ins/common/gifload.c:866 ../plug-ins/common/pcx.c:336
 #: ../plug-ins/common/pcx.c:342 ../plug-ins/common/pix.c:365
-#: ../plug-ins/common/png.c:804 ../plug-ins/common/pnm.c:518
-#: ../plug-ins/common/psd.c:2215 ../plug-ins/common/raw.c:680
+#: ../plug-ins/common/png.c:805 ../plug-ins/common/pnm.c:518
+#: ../plug-ins/common/psd.c:2236 ../plug-ins/common/raw.c:684
 #: ../plug-ins/common/smooth_palette.c:253 ../plug-ins/common/sunras.c:915
-#: ../plug-ins/common/tga.c:922 ../plug-ins/common/tiff.c:895
+#: ../plug-ins/common/tga.c:922 ../plug-ins/common/tiff.c:881
 #: ../plug-ins/common/tile.c:262 ../plug-ins/common/xbm.c:862
-#: ../plug-ins/faxg3/faxg3.c:464 ../plug-ins/fits/fits.c:500
-#: ../plug-ins/gfig/gfig-dialog.c:1285
-#: ../plug-ins/gimpressionist/general.c:121 ../plug-ins/jpeg/jpeg-load.c:224
-#: ../plug-ins/jpeg/jpeg-load.c:708 ../plug-ins/sgi/sgi.c:368
+#: ../plug-ins/faxg3/faxg3.c:465 ../plug-ins/fits/fits.c:509
+#: ../plug-ins/gfig/gfig-dialog.c:1290
+#: ../plug-ins/gimpressionist/general.c:121 ../plug-ins/jpeg/jpeg-load.c:239
+#: ../plug-ins/jpeg/jpeg-load.c:742 ../plug-ins/sgi/sgi.c:370
 #: ../plug-ins/twain/twain.c:571 ../plug-ins/winsnap/winsnap.c:1156
 msgid "Background"
 msgstr "Tagapõhi"
@@ -1274,19 +1257,19 @@ msgstr "Ei saa alfakanaliga indekseeritud pilte töödelda."
 
 #. And let's begin the progress
 #. init the progress meter
-#: ../plug-ins/bmp/bmpwrite.c:212 ../plug-ins/common/CEL.c:574
+#: ../plug-ins/bmp/bmpwrite.c:212 ../plug-ins/common/CEL.c:577
 #: ../plug-ins/common/gbr.c:606 ../plug-ins/common/gif.c:1001
 #: ../plug-ins/common/gih.c:1262 ../plug-ins/common/gtm.c:243
-#: ../plug-ins/common/pat.c:453 ../plug-ins/common/pcx.c:547
-#: ../plug-ins/common/pix.c:511 ../plug-ins/common/png.c:1181
-#: ../plug-ins/common/pnm.c:815 ../plug-ins/common/postscript.c:1126
-#: ../plug-ins/common/psd_save.c:1336 ../plug-ins/common/sunras.c:510
-#: ../plug-ins/common/tga.c:1028 ../plug-ins/common/tiff.c:1935
-#: ../plug-ins/common/xbm.c:996 ../plug-ins/common/xpm.c:622
-#: ../plug-ins/common/xwd.c:567 ../plug-ins/fits/fits.c:451
-#: ../plug-ins/gfli/gfli.c:679 ../plug-ins/jpeg/jpeg-save.c:214
-#: ../plug-ins/sgi/sgi.c:537 ../plug-ins/winicon/icosave.c:978
-#: ../plug-ins/xjt/xjt.c:1683
+#: ../plug-ins/common/pat.c:455 ../plug-ins/common/pcx.c:547
+#: ../plug-ins/common/pix.c:511 ../plug-ins/common/png.c:1182
+#: ../plug-ins/common/pnm.c:815 ../plug-ins/common/postscript.c:1131
+#: ../plug-ins/common/psd_save.c:1310 ../plug-ins/common/sunras.c:510
+#: ../plug-ins/common/tga.c:1028 ../plug-ins/common/tiff.c:1921
+#: ../plug-ins/common/xbm.c:1003 ../plug-ins/common/xpm.c:622
+#: ../plug-ins/common/xwd.c:567 ../plug-ins/fits/fits.c:460
+#: ../plug-ins/gfli/gfli.c:685 ../plug-ins/jpeg/jpeg-save.c:225
+#: ../plug-ins/sgi/sgi.c:539 ../plug-ins/winicon/icosave.c:978
+#: ../plug-ins/xjt/xjt.c:1686
 #, c-format
 msgid "Saving '%s'..."
 msgstr "'%s' salvestamine..."
@@ -1299,413 +1282,413 @@ msgstr "Salvesta kui BMP"
 msgid "_RLE encoded"
 msgstr ""
 
-#: ../plug-ins/common/AlienMap2.c:140
+#: ../plug-ins/common/AlienMap2.c:142
 msgid "_Modify red channel"
 msgstr ""
 
-#: ../plug-ins/common/AlienMap2.c:140
+#: ../plug-ins/common/AlienMap2.c:142
 msgid "_Modify hue channel"
 msgstr ""
 
-#: ../plug-ins/common/AlienMap2.c:141
+#: ../plug-ins/common/AlienMap2.c:143
 msgid "Mo_dify green channel"
 msgstr ""
 
-#: ../plug-ins/common/AlienMap2.c:141
+#: ../plug-ins/common/AlienMap2.c:143
 msgid "Mo_dify saturation channel"
 msgstr ""
 
-#: ../plug-ins/common/AlienMap2.c:142
+#: ../plug-ins/common/AlienMap2.c:144
 msgid "Mod_ify blue channel"
 msgstr ""
 
-#: ../plug-ins/common/AlienMap2.c:142
+#: ../plug-ins/common/AlienMap2.c:144
 msgid "Mod_ify luminosity channel"
 msgstr ""
 
-#: ../plug-ins/common/AlienMap2.c:147
+#: ../plug-ins/common/AlienMap2.c:149
 msgid "Red _frequency:"
 msgstr ""
 
-#: ../plug-ins/common/AlienMap2.c:147
+#: ../plug-ins/common/AlienMap2.c:149
 msgid "Hue _frequency:"
 msgstr ""
 
-#: ../plug-ins/common/AlienMap2.c:148
+#: ../plug-ins/common/AlienMap2.c:150
 msgid "Green fr_equency:"
 msgstr ""
 
-#: ../plug-ins/common/AlienMap2.c:148
+#: ../plug-ins/common/AlienMap2.c:150
 msgid "Saturation fr_equency:"
 msgstr ""
 
-#: ../plug-ins/common/AlienMap2.c:149
+#: ../plug-ins/common/AlienMap2.c:151
 msgid "Blue freq_uency:"
 msgstr ""
 
-#: ../plug-ins/common/AlienMap2.c:149
+#: ../plug-ins/common/AlienMap2.c:151
 msgid "Luminosity freq_uency:"
 msgstr ""
 
-#: ../plug-ins/common/AlienMap2.c:151
+#: ../plug-ins/common/AlienMap2.c:153
 msgid "Red _phaseshift:"
 msgstr ""
 
-#: ../plug-ins/common/AlienMap2.c:151
+#: ../plug-ins/common/AlienMap2.c:153
 msgid "Hue _phaseshift:"
 msgstr ""
 
-#: ../plug-ins/common/AlienMap2.c:152
+#: ../plug-ins/common/AlienMap2.c:154
 msgid "Green ph_aseshift:"
 msgstr ""
 
-#: ../plug-ins/common/AlienMap2.c:152
+#: ../plug-ins/common/AlienMap2.c:154
 msgid "Saturation ph_aseshift:"
 msgstr ""
 
-#: ../plug-ins/common/AlienMap2.c:153
+#: ../plug-ins/common/AlienMap2.c:155
 msgid "Blue pha_seshift:"
 msgstr ""
 
-#: ../plug-ins/common/AlienMap2.c:153
+#: ../plug-ins/common/AlienMap2.c:155
 msgid "Luminosity pha_seshift:"
 msgstr ""
 
-#: ../plug-ins/common/AlienMap2.c:188
+#: ../plug-ins/common/AlienMap2.c:190
 msgid "Alien Map _2..."
 msgstr ""
 
-#: ../plug-ins/common/AlienMap2.c:320
+#: ../plug-ins/common/AlienMap2.c:322
 msgid "AlienMap2: Transforming..."
 msgstr ""
 
-#: ../plug-ins/common/AlienMap2.c:393
+#: ../plug-ins/common/AlienMap2.c:395
 msgid "AlienMap2"
 msgstr ""
 
-#: ../plug-ins/common/AlienMap2.c:438 ../plug-ins/common/AlienMap2.c:462
-#: ../plug-ins/common/AlienMap2.c:486
+#: ../plug-ins/common/AlienMap2.c:440 ../plug-ins/common/AlienMap2.c:464
+#: ../plug-ins/common/AlienMap2.c:488
 msgid "Number of cycles covering full value range"
 msgstr ""
 
-#: ../plug-ins/common/AlienMap2.c:450 ../plug-ins/common/AlienMap2.c:474
-#: ../plug-ins/common/AlienMap2.c:498
+#: ../plug-ins/common/AlienMap2.c:452 ../plug-ins/common/AlienMap2.c:476
+#: ../plug-ins/common/AlienMap2.c:500
 msgid "Phase angle, range 0-360"
 msgstr ""
 
 #. Propagate Mode
-#: ../plug-ins/common/AlienMap2.c:512 ../plug-ins/common/hot.c:589
+#: ../plug-ins/common/AlienMap2.c:514 ../plug-ins/common/hot.c:589
 #: ../plug-ins/common/vpropagate.c:1086 ../plug-ins/common/waves.c:269
 msgid "Mode"
 msgstr ""
 
-#: ../plug-ins/common/AlienMap2.c:516
+#: ../plug-ins/common/AlienMap2.c:518
 msgid "_RGB color model"
 msgstr ""
 
-#: ../plug-ins/common/AlienMap2.c:517
+#: ../plug-ins/common/AlienMap2.c:519
 msgid "_HSL color model"
 msgstr ""
 
-#: ../plug-ins/common/CEL.c:104 ../plug-ins/common/CEL.c:122
+#: ../plug-ins/common/CEL.c:109 ../plug-ins/common/CEL.c:127
 msgid "KISS CEL"
 msgstr ""
 
-#: ../plug-ins/common/CEL.c:183
+#: ../plug-ins/common/CEL.c:188
 msgid "Load KISS Palette"
 msgstr ""
 
-#: ../plug-ins/common/CEL.c:341
+#: ../plug-ins/common/CEL.c:344
 msgid "Can't create a new image"
 msgstr ""
 
-#: ../plug-ins/common/CEL.c:430
+#: ../plug-ins/common/CEL.c:433
 #, c-format
 msgid "Unsupported bit depth (%d)!"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:130
+#: ../plug-ins/common/CML_explorer.c:129
 msgid "Keep image's values"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:131
+#: ../plug-ins/common/CML_explorer.c:130
 msgid "Keep the first value"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:132
+#: ../plug-ins/common/CML_explorer.c:131
 msgid "Fill with parameter k"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:133
+#: ../plug-ins/common/CML_explorer.c:132
 msgid "k{x(1-x)}^p"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:134
+#: ../plug-ins/common/CML_explorer.c:133
 msgid "k{x(1-x)}^p stepped"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:135
+#: ../plug-ins/common/CML_explorer.c:134
 msgid "kx^p"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:136
+#: ../plug-ins/common/CML_explorer.c:135
 msgid "kx^p stepped"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:137
+#: ../plug-ins/common/CML_explorer.c:136
 msgid "k(1-x^p)"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:138
+#: ../plug-ins/common/CML_explorer.c:137
 msgid "k(1-x^p) stepped"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:139
+#: ../plug-ins/common/CML_explorer.c:138
 msgid "Delta function"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:140
+#: ../plug-ins/common/CML_explorer.c:139
 msgid "Delta function stepped"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:141
+#: ../plug-ins/common/CML_explorer.c:140
 msgid "sin^p-based function"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:142
+#: ../plug-ins/common/CML_explorer.c:141
 msgid "sin^p, stepped"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:168
+#: ../plug-ins/common/CML_explorer.c:167
 msgid "Max (x, -)"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:169
+#: ../plug-ins/common/CML_explorer.c:168
 msgid "Max (x+d, -)"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:170
+#: ../plug-ins/common/CML_explorer.c:169
 msgid "Max (x-d, -)"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:171
+#: ../plug-ins/common/CML_explorer.c:170
 msgid "Min (x, -)"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:172
+#: ../plug-ins/common/CML_explorer.c:171
 msgid "Min (x+d, -)"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:173
+#: ../plug-ins/common/CML_explorer.c:172
 msgid "Min (x-d, -)"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:174
+#: ../plug-ins/common/CML_explorer.c:173
 msgid "Max (x+d, -), (x < 0.5)"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:175
+#: ../plug-ins/common/CML_explorer.c:174
 msgid "Max (x+d, -), (0.5 < x)"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:176
+#: ../plug-ins/common/CML_explorer.c:175
 msgid "Max (x-d, -), (x < 0.5)"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:177
+#: ../plug-ins/common/CML_explorer.c:176
 msgid "Max (x-d, -), (0.5 < x)"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:178
+#: ../plug-ins/common/CML_explorer.c:177
 msgid "Min (x+d, -), (x < 0.5)"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:179
+#: ../plug-ins/common/CML_explorer.c:178
 msgid "Min (x+d, -), (0.5 < x)"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:180
+#: ../plug-ins/common/CML_explorer.c:179
 msgid "Min (x-d, -), (x < 0.5)"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:181
+#: ../plug-ins/common/CML_explorer.c:180
 msgid "Min (x-d, -), (0.5 < x)"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:201 ../plug-ins/common/sunras.c:1589
+#: ../plug-ins/common/CML_explorer.c:200 ../plug-ins/common/sunras.c:1589
 #: ../plug-ins/print/gimp_main_window.c:1665
 msgid "Standard"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:202
+#: ../plug-ins/common/CML_explorer.c:201
 msgid "Use average value"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:203
+#: ../plug-ins/common/CML_explorer.c:202
 msgid "Use reverse value"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:204
+#: ../plug-ins/common/CML_explorer.c:203
 msgid "With random power (0,10)"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:205
+#: ../plug-ins/common/CML_explorer.c:204
 msgid "With random power (0,1)"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:206
+#: ../plug-ins/common/CML_explorer.c:205
 msgid "With gradient power (0,1)"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:207
+#: ../plug-ins/common/CML_explorer.c:206
 msgid "Multiply rand. value (0,1)"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:208
+#: ../plug-ins/common/CML_explorer.c:207
 msgid "Multiply rand. value (0,2)"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:209
+#: ../plug-ins/common/CML_explorer.c:208
 msgid "Multiply gradient (0,1)"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:210
+#: ../plug-ins/common/CML_explorer.c:209
 msgid "With p and random (0,1)"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:224
+#: ../plug-ins/common/CML_explorer.c:223
 msgid "All black"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:225
+#: ../plug-ins/common/CML_explorer.c:224
 msgid "All gray"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:226
+#: ../plug-ins/common/CML_explorer.c:225
 msgid "All white"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:227
+#: ../plug-ins/common/CML_explorer.c:226
 msgid "The first row of the image"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:228
+#: ../plug-ins/common/CML_explorer.c:227
 msgid "Continuous gradient"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:229
+#: ../plug-ins/common/CML_explorer.c:228
 msgid "Continuous grad. w/o gap"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:230
+#: ../plug-ins/common/CML_explorer.c:229
 msgid "Random, ch. independent"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:231
+#: ../plug-ins/common/CML_explorer.c:230
 msgid "Random shared"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:232
+#: ../plug-ins/common/CML_explorer.c:231
 msgid "Randoms from seed"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:233
+#: ../plug-ins/common/CML_explorer.c:232
 msgid "Randoms from seed (shared)"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:301 ../plug-ins/common/CML_explorer.c:309
+#: ../plug-ins/common/CML_explorer.c:300 ../plug-ins/common/CML_explorer.c:308
 #: ../plug-ins/common/decompose.c:142
 #: ../plug-ins/gimpressionist/orientation.c:162
 #: ../plug-ins/gimpressionist/size.c:165
 msgid "Hue"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:302 ../plug-ins/common/CML_explorer.c:310
+#: ../plug-ins/common/CML_explorer.c:301 ../plug-ins/common/CML_explorer.c:309
 #: ../plug-ins/common/decompose.c:143 ../plug-ins/rcm/rcm_dialog.c:545
 msgid "Saturation"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:303 ../plug-ins/common/CML_explorer.c:311
+#: ../plug-ins/common/CML_explorer.c:302 ../plug-ins/common/CML_explorer.c:310
 #: ../plug-ins/common/decompose.c:144
 #: ../plug-ins/gimpressionist/orientation.c:138
 #: ../plug-ins/gimpressionist/size.c:141 ../plug-ins/metadata/interface.c:141
 msgid "Value"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:308
+#: ../plug-ins/common/CML_explorer.c:307
 msgid "(None)"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:469
+#: ../plug-ins/common/CML_explorer.c:468
 msgid "CML _Explorer..."
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:759
+#: ../plug-ins/common/CML_explorer.c:758
 msgid "CML_explorer: evoluting..."
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:1185
+#: ../plug-ins/common/CML_explorer.c:1184
 msgid "Coupled-Map-Lattice Explorer"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:1229
+#: ../plug-ins/common/CML_explorer.c:1228
 msgid "New seed"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:1240
+#: ../plug-ins/common/CML_explorer.c:1239
 msgid "Fix seed"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:1251
+#: ../plug-ins/common/CML_explorer.c:1250
 msgid "Random seed"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:1293 ../plug-ins/common/fp.c:697
+#: ../plug-ins/common/CML_explorer.c:1292 ../plug-ins/common/fp.c:697
 #: ../plug-ins/common/lic.c:669
 msgid "_Hue"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:1297
+#: ../plug-ins/common/CML_explorer.c:1296
 msgid "Sat_uration"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:1301 ../plug-ins/common/fp.c:705
+#: ../plug-ins/common/CML_explorer.c:1300 ../plug-ins/common/fp.c:705
 msgid "_Value"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:1305
+#: ../plug-ins/common/CML_explorer.c:1304
 msgid "_Advanced"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:1320
+#: ../plug-ins/common/CML_explorer.c:1319
 msgid "Channel Independent Parameters"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:1342
+#: ../plug-ins/common/CML_explorer.c:1341
 msgid "Initial value:"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:1348
+#: ../plug-ins/common/CML_explorer.c:1347
 msgid "Zoom scale:"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:1357
+#: ../plug-ins/common/CML_explorer.c:1356
 msgid "Start offset:"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:1366
+#: ../plug-ins/common/CML_explorer.c:1365
 msgid "Seed of Random (only for \"From Seed\" Modes)"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:1377 ../plug-ins/maze/maze_face.c:282
+#: ../plug-ins/common/CML_explorer.c:1376 ../plug-ins/maze/maze_face.c:298
 msgid "Seed:"
-msgstr ""
+msgstr "Seeme:"
 
-#: ../plug-ins/common/CML_explorer.c:1390
+#: ../plug-ins/common/CML_explorer.c:1389
 msgid "Switch to \"From seed\" with the last seed"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:1402
+#: ../plug-ins/common/CML_explorer.c:1401
 msgid ""
 "\"Fix seed\" button is an alias of me.\n"
 "The same seed produces the same image, if (1) the widths of images are same "
@@ -1713,284 +1696,286 @@ msgid ""
 "(2) all mutation rates equal to zero."
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:1410
+#: ../plug-ins/common/CML_explorer.c:1409
 msgid "O_thers"
-msgstr ""
+msgstr "_Muud"
 
-#: ../plug-ins/common/CML_explorer.c:1425
+#: ../plug-ins/common/CML_explorer.c:1424
 msgid "Copy Settings"
-msgstr ""
+msgstr "Kopeerimise seaded"
 
-#: ../plug-ins/common/CML_explorer.c:1444
+#: ../plug-ins/common/CML_explorer.c:1443
 msgid "Source channel:"
-msgstr ""
+msgstr "Lähtekanal:"
 
-#: ../plug-ins/common/CML_explorer.c:1459
-#: ../plug-ins/common/CML_explorer.c:1507
+#: ../plug-ins/common/CML_explorer.c:1458
+#: ../plug-ins/common/CML_explorer.c:1506
 msgid "Destination channel:"
-msgstr ""
+msgstr "Sihtkanal:"
 
-#: ../plug-ins/common/CML_explorer.c:1463
+#: ../plug-ins/common/CML_explorer.c:1462
 msgid "Copy parameters"
-msgstr ""
+msgstr "Kopeerimise parameetrid"
 
-#: ../plug-ins/common/CML_explorer.c:1472
+#: ../plug-ins/common/CML_explorer.c:1471
 msgid "Selective Load Settings"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:1492
+#: ../plug-ins/common/CML_explorer.c:1491
 msgid "Source channel in file:"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:1513
+#: ../plug-ins/common/CML_explorer.c:1512
 msgid "_Misc Ops."
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:1562
+#: ../plug-ins/common/CML_explorer.c:1561
 msgid "Function type:"
-msgstr ""
+msgstr "Funktsiooni tüüp:"
 
-#: ../plug-ins/common/CML_explorer.c:1578
+#: ../plug-ins/common/CML_explorer.c:1577
 msgid "Composition:"
-msgstr ""
+msgstr "Paigutus:"
 
-#: ../plug-ins/common/CML_explorer.c:1592
+#: ../plug-ins/common/CML_explorer.c:1591
 msgid "Misc arrange:"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:1596
+#: ../plug-ins/common/CML_explorer.c:1595
 msgid "Use cyclic range"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:1606
+#: ../plug-ins/common/CML_explorer.c:1605
 msgid "Mod. rate:"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:1615
+#: ../plug-ins/common/CML_explorer.c:1614
 msgid "Env. sensitivity:"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:1624
+#: ../plug-ins/common/CML_explorer.c:1623
 msgid "Diffusion dist.:"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:1633
+#: ../plug-ins/common/CML_explorer.c:1632
 msgid "# of subranges:"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:1642
+#: ../plug-ins/common/CML_explorer.c:1641
 msgid "P(ower factor):"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:1651
+#: ../plug-ins/common/CML_explorer.c:1650
 msgid "Parameter k:"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:1660
+#: ../plug-ins/common/CML_explorer.c:1659
 msgid "Range low:"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:1669
+#: ../plug-ins/common/CML_explorer.c:1668
 msgid "Range high:"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:1681
+#: ../plug-ins/common/CML_explorer.c:1680
 msgid "Plot a graph of the settings"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:1726
+#: ../plug-ins/common/CML_explorer.c:1725
 msgid "Ch. sensitivity:"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:1736
+#: ../plug-ins/common/CML_explorer.c:1735
 msgid "Mutation rate:"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:1746
+#: ../plug-ins/common/CML_explorer.c:1745
 msgid "Mutation dist.:"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:1823
+#: ../plug-ins/common/CML_explorer.c:1822
 msgid "Graph of the current settings"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:1893
+#: ../plug-ins/common/CML_explorer.c:1892
 msgid "Warning: the source and the destination are the same channel."
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:1952
+#: ../plug-ins/common/CML_explorer.c:1951
 msgid "Save Parameters to"
-msgstr ""
+msgstr "Parameetrite salvestamine"
 
-#: ../plug-ins/common/CML_explorer.c:2065
-#: ../plug-ins/common/channel_mixer.c:1071
+#: ../plug-ins/common/CML_explorer.c:2064
+#: ../plug-ins/common/channel_mixer.c:1072
 #, c-format
 msgid "Parameters were saved to '%s'"
-msgstr ""
+msgstr "Parameetrid on '%s'-i salvestatud"
 
-#: ../plug-ins/common/CML_explorer.c:2086
+#: ../plug-ins/common/CML_explorer.c:2085
 msgid "CML Explorer: Overwrite File?"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:2100
-#: ../plug-ins/common/channel_mixer.c:1102
+#: ../plug-ins/common/CML_explorer.c:2099
+#: ../plug-ins/common/channel_mixer.c:1103
 #, c-format
 msgid ""
 "File '%s' exists.\n"
 "Overwrite it?"
 msgstr ""
+"Fail '%s' on olemas.\n"
+"Kas kirjutame üle?"
 
-#: ../plug-ins/common/CML_explorer.c:2154
+#: ../plug-ins/common/CML_explorer.c:2153
 msgid "Load Parameters from"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:2156
+#: ../plug-ins/common/CML_explorer.c:2155
 msgid "Selective Load from"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:2252
+#: ../plug-ins/common/CML_explorer.c:2251
 msgid "Error: it's not CML parameter file."
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:2259
+#: ../plug-ins/common/CML_explorer.c:2258
 #, c-format
 msgid "Warning: '%s' is an old format file."
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:2262
+#: ../plug-ins/common/CML_explorer.c:2261
 #, c-format
 msgid "Warning: '%s' is a parameter file for newer CML_explorer than me."
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:2325
+#: ../plug-ins/common/CML_explorer.c:2324
 msgid "Error: failed to load parameters"
 msgstr ""
 
-#: ../plug-ins/common/aa.c:93
+#: ../plug-ins/common/aa.c:98
 msgid "ASCII art"
 msgstr ""
 
 #. Create the actual window.
-#: ../plug-ins/common/aa.c:344
+#: ../plug-ins/common/aa.c:349
 msgid "Save as Text"
 msgstr ""
 
-#: ../plug-ins/common/aa.c:364
+#: ../plug-ins/common/aa.c:369
 msgid "_Format:"
 msgstr ""
 
-#: ../plug-ins/common/align_layers.c:133
+#: ../plug-ins/common/align_layers.c:132
 msgid "Align _Visible Layers..."
 msgstr "_Joonda nähtavad kihid..."
 
-#: ../plug-ins/common/align_layers.c:171
+#: ../plug-ins/common/align_layers.c:170
 msgid "There are not enough layers to align."
 msgstr "Pole piisavalt kihte et neid joondada saaks."
 
-#: ../plug-ins/common/align_layers.c:397
+#: ../plug-ins/common/align_layers.c:396
 msgid "Align Visible Layers"
 msgstr "Joonda nähtavad kihid"
 
-#: ../plug-ins/common/align_layers.c:420 ../plug-ins/common/align_layers.c:451
+#: ../plug-ins/common/align_layers.c:419 ../plug-ins/common/align_layers.c:450
 msgid "Collect"
 msgstr ""
 
-#: ../plug-ins/common/align_layers.c:421
+#: ../plug-ins/common/align_layers.c:420
 msgid "Fill (left to right)"
 msgstr "Täida (vasakult paremale)"
 
-#: ../plug-ins/common/align_layers.c:422
+#: ../plug-ins/common/align_layers.c:421
 msgid "Fill (right to left)"
 msgstr "Täida (paremalt vasakule)"
 
 #. "snap to grid" checkbutton at bottom of style frame
-#: ../plug-ins/common/align_layers.c:423 ../plug-ins/common/align_layers.c:454
-#: ../plug-ins/gfig/gfig-dialog.c:496
+#: ../plug-ins/common/align_layers.c:422 ../plug-ins/common/align_layers.c:453
+#: ../plug-ins/gfig/gfig-dialog.c:501
 msgid "Snap to grid"
 msgstr "Napsa ruudustikule"
 
-#: ../plug-ins/common/align_layers.c:432
+#: ../plug-ins/common/align_layers.c:431
 msgid "_Horizontal style:"
 msgstr ""
 
-#: ../plug-ins/common/align_layers.c:436
+#: ../plug-ins/common/align_layers.c:435
 msgid "Left edge"
 msgstr ""
 
-#: ../plug-ins/common/align_layers.c:437 ../plug-ins/common/align_layers.c:467
-#: ../plug-ins/gflare/gflare.c:2645
+#: ../plug-ins/common/align_layers.c:436 ../plug-ins/common/align_layers.c:466
+#: ../plug-ins/gflare/gflare.c:2643
 msgid "Center"
 msgstr "Keskele"
 
-#: ../plug-ins/common/align_layers.c:438
+#: ../plug-ins/common/align_layers.c:437
 msgid "Right edge"
 msgstr ""
 
-#: ../plug-ins/common/align_layers.c:447
+#: ../plug-ins/common/align_layers.c:446
 msgid "Ho_rizontal base:"
 msgstr ""
 
-#: ../plug-ins/common/align_layers.c:452
+#: ../plug-ins/common/align_layers.c:451
 msgid "Fill (top to bottom)"
 msgstr "Täida (ülevalt alla)"
 
-#: ../plug-ins/common/align_layers.c:453
+#: ../plug-ins/common/align_layers.c:452
 msgid "Fill (bottom to top)"
 msgstr "Täida (alt üles)"
 
-#: ../plug-ins/common/align_layers.c:463
+#: ../plug-ins/common/align_layers.c:462
 msgid "_Vertical style:"
 msgstr ""
 
-#: ../plug-ins/common/align_layers.c:466
+#: ../plug-ins/common/align_layers.c:465
 msgid "Top edge"
 msgstr ""
 
-#: ../plug-ins/common/align_layers.c:468
+#: ../plug-ins/common/align_layers.c:467
 msgid "Bottom edge"
 msgstr ""
 
-#: ../plug-ins/common/align_layers.c:477
+#: ../plug-ins/common/align_layers.c:476
 msgid "Ver_tical base:"
 msgstr ""
 
-#: ../plug-ins/common/align_layers.c:481
+#: ../plug-ins/common/align_layers.c:480
 msgid "_Grid size:"
 msgstr "_Ruudustiku suurus:"
 
-#: ../plug-ins/common/align_layers.c:490
+#: ../plug-ins/common/align_layers.c:489
 msgid "_Ignore the bottom layer even if visible"
 msgstr ""
 
-#: ../plug-ins/common/align_layers.c:500
+#: ../plug-ins/common/align_layers.c:499
 msgid "_Use the (invisible) bottom layer as the base"
 msgstr ""
 
-#: ../plug-ins/common/animationplay.c:175
+#: ../plug-ins/common/animationplay.c:178
 msgid "_Playback..."
 msgstr ""
 
-#: ../plug-ins/common/animationplay.c:406
+#: ../plug-ins/common/animationplay.c:408
 msgid "Animation Playback:"
 msgstr ""
 
-#: ../plug-ins/common/animationplay.c:424
+#: ../plug-ins/common/animationplay.c:426
 msgid "Playback:"
 msgstr ""
 
-#: ../plug-ins/common/animationplay.c:450
+#: ../plug-ins/common/animationplay.c:452
 msgid "Play/Stop"
 msgstr ""
 
-#: ../plug-ins/common/animationplay.c:456
+#: ../plug-ins/common/animationplay.c:458
 msgid "Rewind"
 msgstr ""
 
-#: ../plug-ins/common/animationplay.c:462
+#: ../plug-ins/common/animationplay.c:464
 msgid "Step"
 msgstr ""
 
-#: ../plug-ins/common/animationplay.c:1125
+#: ../plug-ins/common/animationplay.c:1127
 #, c-format
 msgid "Frame %d of %d"
 msgstr ""
@@ -2031,283 +2016,283 @@ msgstr ""
 msgid "Optimizing Animation..."
 msgstr ""
 
-#: ../plug-ins/common/apply_lens.c:110
+#: ../plug-ins/common/apply_lens.c:115
 msgid "Apply _Lens..."
 msgstr ""
 
-#: ../plug-ins/common/apply_lens.c:177
+#: ../plug-ins/common/apply_lens.c:182
 msgid "Applying lens..."
 msgstr ""
 
-#: ../plug-ins/common/apply_lens.c:389
+#: ../plug-ins/common/apply_lens.c:394
 msgid "Lens Effect"
 msgstr ""
 
-#: ../plug-ins/common/apply_lens.c:420
+#: ../plug-ins/common/apply_lens.c:425
 msgid "_Keep original surroundings"
 msgstr ""
 
-#: ../plug-ins/common/apply_lens.c:435
+#: ../plug-ins/common/apply_lens.c:440
 msgid "_Set surroundings to index 0"
 msgstr ""
 
-#: ../plug-ins/common/apply_lens.c:436
+#: ../plug-ins/common/apply_lens.c:441
 msgid "_Set surroundings to background color"
 msgstr ""
 
-#: ../plug-ins/common/apply_lens.c:451
+#: ../plug-ins/common/apply_lens.c:456
 msgid "_Make surroundings transparent"
 msgstr ""
 
-#: ../plug-ins/common/apply_lens.c:468
+#: ../plug-ins/common/apply_lens.c:473
 msgid "_Lens refraction index:"
 msgstr ""
 
-#: ../plug-ins/common/autocrop.c:85
+#: ../plug-ins/common/autocrop.c:89
 msgid "_Autocrop Image"
 msgstr "Pildi _automaatkärbe"
 
-#: ../plug-ins/common/autocrop.c:99
+#: ../plug-ins/common/autocrop.c:103
 msgid "_Autocrop Layer"
 msgstr "_Kihi automaatkärbe"
 
-#: ../plug-ins/common/autocrop.c:146
+#: ../plug-ins/common/autocrop.c:150
 msgid "Cropping..."
 msgstr "Kärpimine..."
 
-#: ../plug-ins/common/autostretch_hsv.c:80
+#: ../plug-ins/common/autostretch_hsv.c:83
 msgid "Stretch _HSV"
 msgstr ""
 
-#: ../plug-ins/common/autostretch_hsv.c:116
+#: ../plug-ins/common/autostretch_hsv.c:118
 msgid "Auto-Stretching HSV..."
 msgstr ""
 
-#: ../plug-ins/common/autostretch_hsv.c:192
+#: ../plug-ins/common/autostretch_hsv.c:194
 msgid "autostretch_hsv: cmap was NULL!  Quitting...\n"
 msgstr ""
 
-#: ../plug-ins/common/blinds.c:122
+#: ../plug-ins/common/blinds.c:125
 msgid "_Blinds..."
 msgstr ""
 
-#: ../plug-ins/common/blinds.c:189
+#: ../plug-ins/common/blinds.c:192
 msgid "Adding Blinds..."
 msgstr ""
 
-#: ../plug-ins/common/blinds.c:227
+#: ../plug-ins/common/blinds.c:230
 msgid "Blinds"
 msgstr ""
 
 #. Orientation toggle box
-#: ../plug-ins/common/blinds.c:258 ../plug-ins/common/ripple.c:536
+#: ../plug-ins/common/blinds.c:261 ../plug-ins/common/ripple.c:536
 msgid "Orientation"
 msgstr ""
 
-#: ../plug-ins/common/blinds.c:262 ../plug-ins/common/ripple.c:540
+#: ../plug-ins/common/blinds.c:265 ../plug-ins/common/ripple.c:540
 #: ../plug-ins/common/tileit.c:423 ../plug-ins/pagecurl/pagecurl.c:532
 msgid "_Horizontal"
 msgstr ""
 
-#: ../plug-ins/common/blinds.c:263 ../plug-ins/common/ripple.c:541
+#: ../plug-ins/common/blinds.c:266 ../plug-ins/common/ripple.c:541
 #: ../plug-ins/common/tileit.c:433 ../plug-ins/pagecurl/pagecurl.c:531
 msgid "_Vertical"
 msgstr ""
 
-#: ../plug-ins/common/blinds.c:280 ../plug-ins/common/fractaltrace.c:732
+#: ../plug-ins/common/blinds.c:283 ../plug-ins/common/fractaltrace.c:732
 #: ../plug-ins/common/papertile.c:362
 msgid "_Transparent"
 msgstr ""
 
-#: ../plug-ins/common/blinds.c:306
+#: ../plug-ins/common/blinds.c:309
 msgid "_Displacement:"
 msgstr ""
 
-#: ../plug-ins/common/blinds.c:318
+#: ../plug-ins/common/blinds.c:321
 msgid "_Number of segments:"
 msgstr ""
 
-#: ../plug-ins/common/blur.c:147
+#: ../plug-ins/common/blur.c:146
 msgid "_Blur"
 msgstr ""
 
-#: ../plug-ins/common/blur.c:191 ../plug-ins/common/unsharp.c:428
+#: ../plug-ins/common/blur.c:190 ../plug-ins/common/unsharp.c:428
 msgid "Blurring..."
 msgstr ""
 
-#: ../plug-ins/common/borderaverage.c:100
+#: ../plug-ins/common/borderaverage.c:104
 msgid "_Border Average..."
 msgstr ""
 
-#: ../plug-ins/common/borderaverage.c:167
+#: ../plug-ins/common/borderaverage.c:171
 msgid "Border Average..."
 msgstr ""
 
-#: ../plug-ins/common/borderaverage.c:347
+#: ../plug-ins/common/borderaverage.c:351
 msgid "Borderaverage"
 msgstr ""
 
-#: ../plug-ins/common/borderaverage.c:366
+#: ../plug-ins/common/borderaverage.c:370
 msgid "Border Size"
 msgstr ""
 
-#: ../plug-ins/common/borderaverage.c:374
+#: ../plug-ins/common/borderaverage.c:378
 msgid "_Thickness:"
 msgstr ""
 
-#: ../plug-ins/common/borderaverage.c:417
+#: ../plug-ins/common/borderaverage.c:421
 msgid "_Bucket size:"
 msgstr ""
 
-#: ../plug-ins/common/bumpmap.c:336
+#: ../plug-ins/common/bumpmap.c:341
 msgid "_Bump Map..."
 msgstr ""
 
-#: ../plug-ins/common/bumpmap.c:485
+#: ../plug-ins/common/bumpmap.c:490
 msgid "Bump-mapping..."
 msgstr ""
 
-#: ../plug-ins/common/bumpmap.c:829
+#: ../plug-ins/common/bumpmap.c:834
 msgid "Bump Map"
 msgstr ""
 
-#: ../plug-ins/common/bumpmap.c:893
+#: ../plug-ins/common/bumpmap.c:898
 msgid "_Bump map:"
 msgstr ""
 
-#: ../plug-ins/common/bumpmap.c:905
+#: ../plug-ins/common/bumpmap.c:910
 msgid "_Map type:"
 msgstr ""
 
 #. Compensate darkening
-#: ../plug-ins/common/bumpmap.c:910
+#: ../plug-ins/common/bumpmap.c:915
 msgid "Co_mpensate for darkening"
 msgstr ""
 
 #. Invert bumpmap
-#: ../plug-ins/common/bumpmap.c:924
+#: ../plug-ins/common/bumpmap.c:929
 msgid "I_nvert bumpmap"
 msgstr ""
 
 #. Tile bumpmap
-#: ../plug-ins/common/bumpmap.c:938
+#: ../plug-ins/common/bumpmap.c:943
 msgid "_Tile bumpmap"
 msgstr ""
 
-#: ../plug-ins/common/bumpmap.c:953 ../plug-ins/common/emboss.c:498
+#: ../plug-ins/common/bumpmap.c:958 ../plug-ins/common/emboss.c:498
 msgid "_Azimuth:"
 msgstr ""
 
-#: ../plug-ins/common/bumpmap.c:965
+#: ../plug-ins/common/bumpmap.c:970
 msgid "_Elevation:"
 msgstr ""
 
-#: ../plug-ins/common/bumpmap.c:991 ../plug-ins/common/postscript.c:3148
+#: ../plug-ins/common/bumpmap.c:996 ../plug-ins/common/postscript.c:3153
 msgid "_X offset:"
-msgstr ""
+msgstr "_X nihe:"
 
-#: ../plug-ins/common/bumpmap.c:994 ../plug-ins/common/bumpmap.c:1008
+#: ../plug-ins/common/bumpmap.c:999 ../plug-ins/common/bumpmap.c:1013
 msgid ""
 "The offset can be adjusted by dragging the preview using the middle mouse "
 "button."
 msgstr ""
 
-#: ../plug-ins/common/bumpmap.c:1005 ../plug-ins/common/postscript.c:3157
+#: ../plug-ins/common/bumpmap.c:1010 ../plug-ins/common/postscript.c:3162
 msgid "_Y offset:"
-msgstr ""
+msgstr "_Y nihe:"
 
-#: ../plug-ins/common/bumpmap.c:1019
+#: ../plug-ins/common/bumpmap.c:1024
 msgid "_Waterlevel:"
 msgstr ""
 
-#: ../plug-ins/common/bumpmap.c:1031
+#: ../plug-ins/common/bumpmap.c:1036
 msgid "A_mbient:"
 msgstr ""
 
-#: ../plug-ins/common/c_astretch.c:78
+#: ../plug-ins/common/c_astretch.c:81
 msgid "_Stretch Contrast"
 msgstr ""
 
-#: ../plug-ins/common/c_astretch.c:112
+#: ../plug-ins/common/c_astretch.c:115
 msgid "Auto-Stretching Contrast..."
 msgstr ""
 
-#: ../plug-ins/common/c_astretch.c:152
+#: ../plug-ins/common/c_astretch.c:154
 msgid "c_astretch: cmap was NULL!  Quitting...\n"
 msgstr ""
 
-#: ../plug-ins/common/cartoon.c:147
+#: ../plug-ins/common/cartoon.c:149
 msgid "Ca_rtoon..."
 msgstr ""
 
-#: ../plug-ins/common/cartoon.c:229 ../plug-ins/common/dog.c:245
+#: ../plug-ins/common/cartoon.c:231 ../plug-ins/common/dog.c:245
 #: ../plug-ins/common/gauss.c:427 ../plug-ins/common/neon.c:221
 #: ../plug-ins/common/photocopy.c:241 ../plug-ins/common/sel_gauss.c:202
-#: ../plug-ins/common/softglow.c:220 ../plug-ins/gflare/gflare.c:971
-#: ../plug-ins/sgi/sgi.c:519 ../plug-ins/xjt/xjt.c:1673
+#: ../plug-ins/common/softglow.c:220 ../plug-ins/gflare/gflare.c:969
+#: ../plug-ins/sgi/sgi.c:521 ../plug-ins/xjt/xjt.c:1676
 msgid "Cannot operate on indexed color images."
 msgstr ""
 
-#: ../plug-ins/common/cartoon.c:808
+#: ../plug-ins/common/cartoon.c:811
 msgid "Cartoon"
 msgstr ""
 
-#: ../plug-ins/common/cartoon.c:843 ../plug-ins/common/photocopy.c:872
+#: ../plug-ins/common/cartoon.c:846 ../plug-ins/common/photocopy.c:872
 msgid "_Mask radius:"
 msgstr "_Maski raadius:"
 
-#: ../plug-ins/common/cartoon.c:857
+#: ../plug-ins/common/cartoon.c:860
 msgid "_Percent black:"
 msgstr ""
 
-#: ../plug-ins/common/ccanalyze.c:110
+#: ../plug-ins/common/ccanalyze.c:113
 msgid "Colorcube A_nalysis..."
 msgstr ""
 
-#: ../plug-ins/common/ccanalyze.c:200
+#: ../plug-ins/common/ccanalyze.c:203
 msgid "Colorcube Analysis..."
 msgstr ""
 
-#: ../plug-ins/common/ccanalyze.c:358
+#: ../plug-ins/common/ccanalyze.c:361
 msgid "Colorcube Analysis"
 msgstr ""
 
 #. output results
-#: ../plug-ins/common/ccanalyze.c:384
+#: ../plug-ins/common/ccanalyze.c:387
 #: ../plug-ins/imagemap/imap_cmd_guides.c:233
 #, c-format
 msgid "Image dimensions: %d x %d"
-msgstr ""
+msgstr "Pildi mõõtmed: %d x %d"
 
-#: ../plug-ins/common/ccanalyze.c:387
+#: ../plug-ins/common/ccanalyze.c:390
 msgid "No colors"
-msgstr ""
+msgstr "Värvideta"
 
-#: ../plug-ins/common/ccanalyze.c:389
+#: ../plug-ins/common/ccanalyze.c:392
 msgid "Only one unique color"
-msgstr ""
-
-#: ../plug-ins/common/ccanalyze.c:391
-#, c-format
-msgid "Number of unique colors: %d"
-msgstr ""
+msgstr "Ainult üks unikaalne värv"
 
 #: ../plug-ins/common/ccanalyze.c:394
 #, c-format
-msgid "Uncompressed size: %s"
-msgstr ""
+msgid "Number of unique colors: %d"
+msgstr "Unikaalsete värvide arv: %d"
 
-#: ../plug-ins/common/ccanalyze.c:401
+#: ../plug-ins/common/ccanalyze.c:397
+#, c-format
+msgid "Uncompressed size: %s"
+msgstr "Suurus pakkimata: %s"
+
+#: ../plug-ins/common/ccanalyze.c:404
 #, c-format
 msgid "Filename: %s"
-msgstr ""
+msgstr "Faili nimi: %s"
 
-#: ../plug-ins/common/ccanalyze.c:402
+#: ../plug-ins/common/ccanalyze.c:405
 #, c-format
 msgid "Compressed size: %s"
-msgstr ""
+msgstr "Suurus pakitult: %s"
 
-#: ../plug-ins/common/ccanalyze.c:403
+#: ../plug-ins/common/ccanalyze.c:406
 #, c-format
 msgid "Compression ratio (approx.): %d to 1"
 msgstr ""
@@ -2316,82 +2301,82 @@ msgstr ""
 msgid "Channel Mi_xer..."
 msgstr ""
 
-#: ../plug-ins/common/channel_mixer.c:491
+#: ../plug-ins/common/channel_mixer.c:492
 msgid "Channel Mixer"
 msgstr ""
 
-#: ../plug-ins/common/channel_mixer.c:525
+#: ../plug-ins/common/channel_mixer.c:526
 msgid "O_utput channel:"
-msgstr ""
+msgstr "_Väljundkanal:"
 
-#: ../plug-ins/common/channel_mixer.c:579 ../plug-ins/common/diffraction.c:494
+#: ../plug-ins/common/channel_mixer.c:580 ../plug-ins/common/diffraction.c:494
 #: ../plug-ins/common/diffraction.c:532 ../plug-ins/common/diffraction.c:570
 #: ../plug-ins/common/exchange.c:396 ../plug-ins/common/noisify.c:525
 #: ../plug-ins/common/noisify.c:532
 msgid "_Red:"
-msgstr ""
+msgstr "_Punane:"
 
-#: ../plug-ins/common/channel_mixer.c:597 ../plug-ins/common/diffraction.c:503
+#: ../plug-ins/common/channel_mixer.c:598 ../plug-ins/common/diffraction.c:503
 #: ../plug-ins/common/diffraction.c:541 ../plug-ins/common/diffraction.c:579
 #: ../plug-ins/common/exchange.c:456 ../plug-ins/common/noisify.c:526
 #: ../plug-ins/common/noisify.c:533
 msgid "_Green:"
-msgstr ""
+msgstr "_Roheline:"
 
-#: ../plug-ins/common/channel_mixer.c:616 ../plug-ins/common/diffraction.c:512
+#: ../plug-ins/common/channel_mixer.c:617 ../plug-ins/common/diffraction.c:512
 #: ../plug-ins/common/diffraction.c:550 ../plug-ins/common/diffraction.c:588
 #: ../plug-ins/common/exchange.c:518 ../plug-ins/common/noisify.c:527
 #: ../plug-ins/common/noisify.c:534
 msgid "_Blue:"
-msgstr ""
+msgstr "_Sinine:"
 
 #. The monochrome toggle
-#: ../plug-ins/common/channel_mixer.c:627
+#: ../plug-ins/common/channel_mixer.c:628
 msgid "_Monochrome"
 msgstr ""
 
-#: ../plug-ins/common/channel_mixer.c:639
+#: ../plug-ins/common/channel_mixer.c:640
 msgid "Preserve _luminosity"
 msgstr ""
 
-#: ../plug-ins/common/channel_mixer.c:876
+#: ../plug-ins/common/channel_mixer.c:877
 msgid "Load Channel Mixer Settings"
 msgstr ""
 
-#: ../plug-ins/common/channel_mixer.c:1003
+#: ../plug-ins/common/channel_mixer.c:1004
 msgid "Save Channel Mixer Settings"
 msgstr ""
 
-#: ../plug-ins/common/channel_mixer.c:1087
+#: ../plug-ins/common/channel_mixer.c:1088
 msgid "Channel Mixer File Operation Warning"
 msgstr ""
 
-#: ../plug-ins/common/checkerboard.c:91
+#: ../plug-ins/common/checkerboard.c:94
 msgid "_Checkerboard..."
 msgstr ""
 
-#: ../plug-ins/common/checkerboard.c:159
+#: ../plug-ins/common/checkerboard.c:161
 msgid "Adding Checkerboard..."
 msgstr ""
 
-#: ../plug-ins/common/checkerboard.c:308
+#: ../plug-ins/common/checkerboard.c:345
 msgid "Checkerboard"
 msgstr ""
 
-#: ../plug-ins/common/checkerboard.c:335
+#: ../plug-ins/common/checkerboard.c:371
 msgid "_Psychobilly"
 msgstr ""
 
-#: ../plug-ins/common/checkerboard.c:368 ../plug-ins/common/papertile.c:291
+#: ../plug-ins/common/checkerboard.c:415 ../plug-ins/common/papertile.c:291
 #: ../plug-ins/gimpressionist/sizemap.c:493
 msgid "_Size:"
-msgstr ""
+msgstr "_Suurus:"
 
-#: ../plug-ins/common/color_enhance.c:80
+#: ../plug-ins/common/color_enhance.c:83
 msgid "_Color Enhance"
 msgstr ""
 
-#: ../plug-ins/common/color_enhance.c:115
+#: ../plug-ins/common/color_enhance.c:117
 msgid "Color Enhance..."
 msgstr ""
 
@@ -2415,9 +2400,9 @@ msgstr ""
 msgid "Colorify Custom Color"
 msgstr ""
 
-#: ../plug-ins/common/colortoalpha.c:101
+#: ../plug-ins/common/colortoalpha.c:103
 msgid "Color to _Alpha..."
-msgstr ""
+msgstr "Värv _alfakanaliks..."
 
 #: ../plug-ins/common/colortoalpha.c:184
 msgid "Removing color..."
@@ -2425,10 +2410,10 @@ msgstr ""
 
 #: ../plug-ins/common/colortoalpha.c:377
 msgid "Color to Alpha"
-msgstr ""
+msgstr "Värv alfaks"
 
 #: ../plug-ins/common/colortoalpha.c:407 ../plug-ins/common/mapcolor.c:424
-#: ../plug-ins/gfli/gfli.c:835 ../plug-ins/gfli/gfli.c:898
+#: ../plug-ins/gfli/gfli.c:841 ../plug-ins/gfli/gfli.c:904
 msgid "From:"
 msgstr ""
 
@@ -2438,179 +2423,179 @@ msgstr ""
 
 #: ../plug-ins/common/colortoalpha.c:426
 msgid "to alpha"
-msgstr ""
+msgstr "alfaks"
 
-#: ../plug-ins/common/compose.c:133 ../plug-ins/common/decompose.c:129
-#: ../plug-ins/common/raw.c:961
+#: ../plug-ins/common/compose.c:139 ../plug-ins/common/decompose.c:129
+#: ../plug-ins/common/raw.c:965
 msgid "RGB"
 msgstr ""
 
-#: ../plug-ins/common/compose.c:143 ../plug-ins/common/decompose.c:134
-#: ../plug-ins/common/raw.c:962
+#: ../plug-ins/common/compose.c:149 ../plug-ins/common/decompose.c:134
+#: ../plug-ins/common/raw.c:966
 msgid "RGBA"
-msgstr ""
+msgstr "RGBA"
 
-#: ../plug-ins/common/compose.c:147
+#: ../plug-ins/common/compose.c:153
 msgid "Alpha:"
-msgstr ""
+msgstr "Alfa:"
 
-#: ../plug-ins/common/compose.c:153 ../plug-ins/common/decompose.c:139
+#: ../plug-ins/common/compose.c:159 ../plug-ins/common/decompose.c:139
 msgid "HSV"
-msgstr ""
+msgstr "HSV"
 
 #. Gray: Circle: Spinbutton 1
-#: ../plug-ins/common/compose.c:154 ../plug-ins/rcm/rcm_dialog.c:456
+#: ../plug-ins/common/compose.c:160 ../plug-ins/rcm/rcm_dialog.c:456
 msgid "Hue:"
-msgstr ""
+msgstr "Värvitoon:"
 
 #. Gray: Circle: Spinbutton 2
-#: ../plug-ins/common/compose.c:155 ../plug-ins/print/gimp_color_window.c:364
+#: ../plug-ins/common/compose.c:161 ../plug-ins/print/gimp_color_window.c:364
 #: ../plug-ins/rcm/rcm_dialog.c:483
 msgid "Saturation:"
-msgstr ""
+msgstr "Küllastus:"
 
-#: ../plug-ins/common/compose.c:156
+#: ../plug-ins/common/compose.c:162
 msgid "Value:"
-msgstr ""
+msgstr "Väärtus:"
 
-#: ../plug-ins/common/compose.c:160 ../plug-ins/common/decompose.c:145
+#: ../plug-ins/common/compose.c:166 ../plug-ins/common/decompose.c:145
 msgid "CMY"
-msgstr ""
+msgstr "CMY"
 
-#: ../plug-ins/common/compose.c:161 ../plug-ins/common/compose.c:168
+#: ../plug-ins/common/compose.c:167 ../plug-ins/common/compose.c:174
 #: ../plug-ins/common/fp.c:229 ../plug-ins/print/gimp_color_window.c:307
 msgid "Cyan:"
-msgstr ""
+msgstr "Tsüaan:"
 
-#: ../plug-ins/common/compose.c:162 ../plug-ins/common/compose.c:169
+#: ../plug-ins/common/compose.c:168 ../plug-ins/common/compose.c:175
 #: ../plug-ins/common/fp.c:231 ../plug-ins/print/gimp_color_window.c:326
 msgid "Magenta:"
-msgstr ""
+msgstr "Magenta:"
 
-#: ../plug-ins/common/compose.c:163 ../plug-ins/common/compose.c:170
+#: ../plug-ins/common/compose.c:169 ../plug-ins/common/compose.c:176
 #: ../plug-ins/common/fp.c:230 ../plug-ins/print/gimp_color_window.c:345
 msgid "Yellow:"
-msgstr ""
+msgstr "Kollane:"
 
-#: ../plug-ins/common/compose.c:167 ../plug-ins/common/decompose.c:151
+#: ../plug-ins/common/compose.c:173 ../plug-ins/common/decompose.c:151
 msgid "CMYK"
-msgstr ""
+msgstr "CMYK"
 
-#: ../plug-ins/common/compose.c:171
+#: ../plug-ins/common/compose.c:177
 msgid "Black:"
-msgstr ""
+msgstr "Must:"
 
-#: ../plug-ins/common/compose.c:174 ../plug-ins/common/decompose.c:160
+#: ../plug-ins/common/compose.c:180 ../plug-ins/common/decompose.c:160
 msgid "LAB"
 msgstr ""
 
-#: ../plug-ins/common/compose.c:182
+#: ../plug-ins/common/compose.c:188
 msgid "Luma_y470:"
 msgstr ""
 
-#: ../plug-ins/common/compose.c:183
+#: ../plug-ins/common/compose.c:189
 msgid "Blueness_cb470:"
 msgstr ""
 
-#: ../plug-ins/common/compose.c:184
+#: ../plug-ins/common/compose.c:190
 msgid "Redness_cr470:"
 msgstr ""
 
-#: ../plug-ins/common/compose.c:189
+#: ../plug-ins/common/compose.c:195
 msgid "Luma_y709:"
 msgstr ""
 
-#: ../plug-ins/common/compose.c:190
+#: ../plug-ins/common/compose.c:196
 msgid "Blueness_cb709:"
 msgstr ""
 
-#: ../plug-ins/common/compose.c:191
+#: ../plug-ins/common/compose.c:197
 msgid "Redness_cr709:"
 msgstr ""
 
-#: ../plug-ins/common/compose.c:196
+#: ../plug-ins/common/compose.c:202
 msgid "Luma_y470f:"
 msgstr ""
 
-#: ../plug-ins/common/compose.c:197
+#: ../plug-ins/common/compose.c:203
 msgid "Blueness_cb470f:"
 msgstr ""
 
-#: ../plug-ins/common/compose.c:198
+#: ../plug-ins/common/compose.c:204
 msgid "Redness_cr470f:"
 msgstr ""
 
-#: ../plug-ins/common/compose.c:203
+#: ../plug-ins/common/compose.c:209
 msgid "Luma_y709f:"
 msgstr ""
 
-#: ../plug-ins/common/compose.c:204
+#: ../plug-ins/common/compose.c:210
 msgid "Blueness_cb709f:"
 msgstr ""
 
-#: ../plug-ins/common/compose.c:205
+#: ../plug-ins/common/compose.c:211
 msgid "Redness_cr709f:"
 msgstr ""
 
-#: ../plug-ins/common/compose.c:313
+#: ../plug-ins/common/compose.c:319
 msgid "C_ompose..."
 msgstr ""
 
-#: ../plug-ins/common/compose.c:346
+#: ../plug-ins/common/compose.c:352
 msgid "R_ecompose"
 msgstr ""
 
-#: ../plug-ins/common/compose.c:391
+#: ../plug-ins/common/compose.c:398
 msgid ""
 "You can only run 'Recompose' if the active image was originally produced by "
 "'Decompose'."
 msgstr ""
 
-#: ../plug-ins/common/compose.c:406
+#: ../plug-ins/common/compose.c:413
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
 msgstr ""
 
-#: ../plug-ins/common/compose.c:436
+#: ../plug-ins/common/compose.c:443
 #, c-format
 msgid "Could not get layers for image %d"
 msgstr ""
 
-#: ../plug-ins/common/compose.c:488
+#: ../plug-ins/common/compose.c:495
 msgid "Composing..."
 msgstr ""
 
-#: ../plug-ins/common/compose.c:561 ../plug-ins/common/compose.c:572
+#: ../plug-ins/common/compose.c:568 ../plug-ins/common/compose.c:579
 #, c-format
 msgid "Specified layer %d not found"
 msgstr "Ei leidnud kirjeldatud kihti %d "
 
-#: ../plug-ins/common/compose.c:579
+#: ../plug-ins/common/compose.c:586
 msgid "Drawables have different size"
 msgstr ""
 
-#: ../plug-ins/common/compose.c:596
+#: ../plug-ins/common/compose.c:603
 msgid "Images have different size"
 msgstr ""
 
-#: ../plug-ins/common/compose.c:610
+#: ../plug-ins/common/compose.c:617
 msgid "Error in getting layer IDs"
 msgstr ""
 
-#: ../plug-ins/common/compose.c:627
+#: ../plug-ins/common/compose.c:634
 #, c-format
 msgid "Image is not a gray image (bpp=%d)"
 msgstr ""
 
-#: ../plug-ins/common/compose.c:647
+#: ../plug-ins/common/compose.c:654
 msgid "Unable to recompose, source layer not found"
 msgstr ""
 
-#: ../plug-ins/common/compose.c:1272
+#: ../plug-ins/common/compose.c:1279
 msgid "Compose"
 msgstr ""
 
 #. The left frame keeps the compose type toggles
-#: ../plug-ins/common/compose.c:1293
+#: ../plug-ins/common/compose.c:1300
 msgid "Compose Channels"
 msgstr ""
 
@@ -2618,175 +2603,175 @@ msgstr ""
 #. Because the labels within this frame will change when a toggle
 #. in the left frame is changed, fill in the right part first.
 #. Otherwise it can occur, that a non-existing label might be changed.
-#: ../plug-ins/common/compose.c:1304
+#: ../plug-ins/common/compose.c:1311
 msgid "Channel Representations"
 msgstr ""
 
 #: ../plug-ins/common/compressor.c:158
 msgid "gzip archive"
-msgstr ""
+msgstr "gzip arhiiv"
 
 #: ../plug-ins/common/compressor.c:179
 msgid "bzip archive"
-msgstr ""
+msgstr "bzip arhiiv"
 
-#: ../plug-ins/common/compressor.c:372
+#: ../plug-ins/common/compressor.c:373
 msgid "No sensible extension, saving as compressed XCF."
 msgstr ""
 
-#: ../plug-ins/common/compressor.c:513
+#: ../plug-ins/common/compressor.c:514
 msgid "No sensible extension, attempting to load with file magic."
 msgstr ""
 
-#: ../plug-ins/common/convmatrix.c:75
+#: ../plug-ins/common/convmatrix.c:77
 msgid "Gr_ey"
-msgstr ""
+msgstr "_Hall"
 
-#: ../plug-ins/common/convmatrix.c:76
+#: ../plug-ins/common/convmatrix.c:78
 msgid "Re_d"
-msgstr ""
+msgstr "_Punane"
 
-#: ../plug-ins/common/convmatrix.c:77 ../plug-ins/common/newsprint.c:352
+#: ../plug-ins/common/convmatrix.c:79 ../plug-ins/common/newsprint.c:352
 msgid "_Green"
-msgstr ""
+msgstr "_Roheline"
 
-#: ../plug-ins/common/convmatrix.c:78 ../plug-ins/common/newsprint.c:360
+#: ../plug-ins/common/convmatrix.c:80 ../plug-ins/common/newsprint.c:360
 msgid "_Blue"
-msgstr ""
+msgstr "_Sinine"
 
-#: ../plug-ins/common/convmatrix.c:79
+#: ../plug-ins/common/convmatrix.c:81
 msgid "_Alpha"
-msgstr ""
+msgstr "_Alfa"
 
-#: ../plug-ins/common/convmatrix.c:84
+#: ../plug-ins/common/convmatrix.c:86
 msgid "E_xtend"
-msgstr ""
+msgstr "_Laiendatud"
 
-#: ../plug-ins/common/convmatrix.c:85 ../plug-ins/common/displace.c:448
+#: ../plug-ins/common/convmatrix.c:87 ../plug-ins/common/displace.c:448
 #: ../plug-ins/common/edge.c:715 ../plug-ins/common/ripple.c:561
 msgid "_Wrap"
 msgstr ""
 
-#: ../plug-ins/common/convmatrix.c:86
+#: ../plug-ins/common/convmatrix.c:88
 msgid "Cro_p"
-msgstr ""
+msgstr "_Kärbi"
 
-#: ../plug-ins/common/convmatrix.c:187
+#: ../plug-ins/common/convmatrix.c:189
 msgid "_Convolution Matrix..."
 msgstr ""
 
-#: ../plug-ins/common/convmatrix.c:222
+#: ../plug-ins/common/convmatrix.c:224
 msgid "Convolution Matrix does not work on layers smaller than 3 pixels."
 msgstr ""
 
-#: ../plug-ins/common/convmatrix.c:295
+#: ../plug-ins/common/convmatrix.c:297
 msgid "Applying convolution"
 msgstr ""
 
-#: ../plug-ins/common/convmatrix.c:871
+#: ../plug-ins/common/convmatrix.c:872
 msgid "Convolution Matrix"
 msgstr ""
 
-#: ../plug-ins/common/convmatrix.c:906
+#: ../plug-ins/common/convmatrix.c:907
 msgid "Matrix"
 msgstr ""
 
-#: ../plug-ins/common/convmatrix.c:943
+#: ../plug-ins/common/convmatrix.c:944
 msgid "D_ivisor:"
 msgstr ""
 
-#: ../plug-ins/common/convmatrix.c:967 ../plug-ins/common/depthmerge.c:748
-#: ../plug-ins/common/raw.c:980
+#: ../plug-ins/common/convmatrix.c:968 ../plug-ins/common/depthmerge.c:748
+#: ../plug-ins/common/raw.c:984
 msgid "O_ffset:"
 msgstr ""
 
-#: ../plug-ins/common/convmatrix.c:996
+#: ../plug-ins/common/convmatrix.c:997
 msgid "A_utomatic"
-msgstr ""
+msgstr "A_utomaatne"
 
-#: ../plug-ins/common/convmatrix.c:1008
+#: ../plug-ins/common/convmatrix.c:1009
 msgid "A_lpha-weighting"
 msgstr ""
 
-#: ../plug-ins/common/convmatrix.c:1027
+#: ../plug-ins/common/convmatrix.c:1028
 msgid "Border"
 msgstr ""
 
-#: ../plug-ins/common/convmatrix.c:1054
+#: ../plug-ins/common/convmatrix.c:1055
 msgid "Channels"
 msgstr ""
 
-#: ../plug-ins/common/csource.c:106
+#: ../plug-ins/common/csource.c:110
 msgid "C source code"
-msgstr ""
+msgstr "C lähtekood"
 
-#: ../plug-ins/common/csource.c:633
+#: ../plug-ins/common/csource.c:637
 msgid "Save as C-Source"
-msgstr ""
+msgstr "Salvesta C lähtekoodina"
 
-#: ../plug-ins/common/csource.c:662
+#: ../plug-ins/common/csource.c:666
 msgid "_Prefixed name:"
 msgstr ""
 
-#: ../plug-ins/common/csource.c:671
+#: ../plug-ins/common/csource.c:675
 msgid "Co_mment:"
-msgstr ""
+msgstr "Ko_mmentaar:"
 
 #. Use Comment
 #.
-#: ../plug-ins/common/csource.c:678
+#: ../plug-ins/common/csource.c:682
 msgid "_Save comment to file"
-msgstr ""
+msgstr "_Salvesta kommentaar faili"
 
 #. GLib types
 #.
-#: ../plug-ins/common/csource.c:690
+#: ../plug-ins/common/csource.c:694
 msgid "_Use GLib types (guint8*)"
 msgstr ""
 
 #. Use Macros
 #.
-#: ../plug-ins/common/csource.c:702
+#: ../plug-ins/common/csource.c:706
 msgid "Us_e macros instead of struct"
 msgstr ""
 
 #. Use RLE
 #.
-#: ../plug-ins/common/csource.c:714
+#: ../plug-ins/common/csource.c:718
 msgid "Use _1 byte Run-Length-Encoding"
 msgstr ""
 
 #. Alpha
 #.
-#: ../plug-ins/common/csource.c:726
+#: ../plug-ins/common/csource.c:730
 msgid "Sa_ve alpha channel (RGBA/RGB)"
 msgstr ""
 
-#: ../plug-ins/common/csource.c:744 ../plug-ins/common/sparkle.c:449
+#: ../plug-ins/common/csource.c:748 ../plug-ins/common/sparkle.c:449
 msgid "Op_acity:"
-msgstr ""
+msgstr "_Läbipaistmatus:"
 
-#: ../plug-ins/common/cubism.c:153
+#: ../plug-ins/common/cubism.c:156
 msgid "_Cubism..."
 msgstr ""
 
-#: ../plug-ins/common/cubism.c:266
+#: ../plug-ins/common/cubism.c:269
 msgid "Cubism"
 msgstr ""
 
-#: ../plug-ins/common/cubism.c:300
+#: ../plug-ins/common/cubism.c:303
 msgid "_Tile size:"
 msgstr ""
 
-#: ../plug-ins/common/cubism.c:313
+#: ../plug-ins/common/cubism.c:316
 msgid "T_ile saturation:"
 msgstr ""
 
-#: ../plug-ins/common/cubism.c:324
+#: ../plug-ins/common/cubism.c:327
 msgid "_Use background color"
 msgstr "Kasuta _tagapõhja värv"
 
-#: ../plug-ins/common/cubism.c:414
+#: ../plug-ins/common/cubism.c:417
 msgid "Cubistic Transformation..."
 msgstr ""
 
@@ -2817,7 +2802,7 @@ msgstr ""
 #: ../plug-ins/gimpressionist/orientmap.c:573
 #: ../plug-ins/gimpressionist/sizemap.c:443
 msgid "Preview"
-msgstr ""
+msgstr "Eelvaade"
 
 #. The preview button
 #: ../plug-ins/common/curve_bend.c:1301
@@ -2833,14 +2818,14 @@ msgstr ""
 #. the vertical box and its toggle buttons
 #. Options section
 #: ../plug-ins/common/curve_bend.c:1320 ../plug-ins/common/mosaic.c:619
-#: ../plug-ins/common/ripple.c:502 ../plug-ins/gfig/gfig-dialog.c:1208
+#: ../plug-ins/common/ripple.c:502 ../plug-ins/gfig/gfig-dialog.c:1213
 msgid "Options"
 msgstr ""
 
 #. Rotate spinbutton
 #: ../plug-ins/common/curve_bend.c:1334
 msgid "Rotat_e:"
-msgstr ""
+msgstr "_Pööra:"
 
 #. The smoothing toggle
 #: ../plug-ins/common/curve_bend.c:1352
@@ -2856,7 +2841,7 @@ msgstr ""
 #. The work_on_copy toggle
 #: ../plug-ins/common/curve_bend.c:1372
 msgid "Work on cop_y"
-msgstr ""
+msgstr "Tööta _koopiaga"
 
 #. The curves graph
 #: ../plug-ins/common/curve_bend.c:1382
@@ -3171,9 +3156,9 @@ msgid "R_ecursive"
 msgstr ""
 
 #: ../plug-ins/common/despeckle.c:459 ../plug-ins/common/neon.c:733
-#: ../plug-ins/common/nlfilt.c:1083 ../plug-ins/common/nova.c:361
+#: ../plug-ins/common/nlfilt.c:1084 ../plug-ins/common/nova.c:362
 #: ../plug-ins/common/unsharp.c:666 ../plug-ins/common/whirlpinch.c:589
-#: ../plug-ins/gflare/gflare.c:2690 ../plug-ins/imagemap/imap_circle.c:278
+#: ../plug-ins/gflare/gflare.c:2688 ../plug-ins/imagemap/imap_circle.c:278
 msgid "_Radius:"
 msgstr "_Raadius:"
 
@@ -3198,8 +3183,8 @@ msgid "Destripe"
 msgstr ""
 
 #: ../plug-ins/common/destripe.c:470 ../plug-ins/common/gtm.c:579
-#: ../plug-ins/common/postscript.c:2969 ../plug-ins/common/postscript.c:3130
-#: ../plug-ins/common/raw.c:993 ../plug-ins/common/smooth_palette.c:430
+#: ../plug-ins/common/postscript.c:2974 ../plug-ins/common/postscript.c:3135
+#: ../plug-ins/common/raw.c:997 ../plug-ins/common/smooth_palette.c:430
 #: ../plug-ins/common/tile.c:418 ../plug-ins/imagemap/imap_cmd_guides.c:167
 #: ../plug-ins/imagemap/imap_rectangle.c:403
 msgid "_Width:"
@@ -3211,26 +3196,26 @@ msgstr "Loo _histogramm"
 
 #: ../plug-ins/common/dicom.c:135
 msgid "DICOM image"
-msgstr ""
+msgstr "DICOM pilt"
 
 #: ../plug-ins/common/dicom.c:160
 msgid "Digital Imaging and Communications in Medicine image"
-msgstr ""
+msgstr "Digital Imaging and Communications in Medicine pilt"
 
 #: ../plug-ins/common/dicom.c:319
 #, c-format
 msgid "'%s' is not a DICOM file."
-msgstr ""
+msgstr "'%s' ei ole DICOM fail."
 
 #: ../plug-ins/common/dicom.c:618 ../plug-ins/common/pcx.c:579
 msgid "Cannot save images with alpha channel."
 msgstr "Ei saa alfakanaliga pilte salvestada."
 
-#: ../plug-ins/common/dicom.c:633 ../plug-ins/common/postscript.c:1111
-#: ../plug-ins/common/xwd.c:553 ../plug-ins/fits/fits.c:436
-#: ../plug-ins/xjt/xjt.c:1677
+#: ../plug-ins/common/dicom.c:633 ../plug-ins/common/postscript.c:1116
+#: ../plug-ins/common/xwd.c:553 ../plug-ins/fits/fits.c:445
+#: ../plug-ins/xjt/xjt.c:1680
 msgid "Cannot operate on unknown image types."
-msgstr ""
+msgstr "Ei saa töötada tundmatut tüüpi piltidega."
 
 #: ../plug-ins/common/diffraction.c:168
 msgid "_Diffraction Patterns..."
@@ -3250,14 +3235,14 @@ msgstr ""
 
 #: ../plug-ins/common/diffraction.c:558
 msgid "Contours"
-msgstr ""
+msgstr "Kontuurid"
 
 #: ../plug-ins/common/diffraction.c:596
 msgid "Sharp edges"
-msgstr ""
+msgstr "Teravad servad"
 
 #: ../plug-ins/common/diffraction.c:608 ../plug-ins/common/softglow.c:678
-#: ../plug-ins/flame/flame.c:1052
+#: ../plug-ins/flame/flame.c:1051
 msgid "_Brightness:"
 msgstr "_Heledus:"
 
@@ -3447,8 +3432,8 @@ msgid "Engrave"
 msgstr ""
 
 #: ../plug-ins/common/engrave.c:241 ../plug-ins/common/film.c:1198
-#: ../plug-ins/common/gtm.c:595 ../plug-ins/common/postscript.c:2978
-#: ../plug-ins/common/postscript.c:3139 ../plug-ins/common/raw.c:1006
+#: ../plug-ins/common/gtm.c:595 ../plug-ins/common/postscript.c:2983
+#: ../plug-ins/common/postscript.c:3144 ../plug-ins/common/raw.c:1010
 #: ../plug-ins/common/smooth_palette.c:435 ../plug-ins/common/tile.c:422
 #: ../plug-ins/imagemap/imap_cmd_guides.c:177
 #: ../plug-ins/imagemap/imap_rectangle.c:410
@@ -3509,8 +3494,8 @@ msgid "Lock _thresholds"
 msgstr ""
 
 #: ../plug-ins/common/film.c:235
-msgid "_Film..."
-msgstr "_Film..."
+msgid "_Filmstrip..."
+msgstr "_Filmilint..."
 
 #: ../plug-ins/common/film.c:320
 msgid "Composing Images..."
@@ -3542,8 +3527,8 @@ msgstr "Valik"
 
 #. Film height/colour
 #: ../plug-ins/common/film.c:1171 ../plug-ins/common/film.c:1443
-msgid "Film"
-msgstr "Film"
+msgid "Filmstrip"
+msgstr "Filmilint"
 
 #. Keep maximum image height
 #: ../plug-ins/common/film.c:1180
@@ -3556,7 +3541,7 @@ msgid "Select Film Color"
 msgstr "Vali filmi värv"
 
 #: ../plug-ins/common/film.c:1221 ../plug-ins/common/film.c:1271
-#: ../plug-ins/common/nova.c:348
+#: ../plug-ins/common/nova.c:349
 msgid "Co_lor:"
 msgstr "_Värv:"
 
@@ -3592,7 +3577,7 @@ msgid "Image Selection"
 msgstr ""
 
 #: ../plug-ins/common/film.c:1323
-msgid "All Values are Fractions of the Film Height"
+msgid "All Values are Fractions of the Strip Height"
 msgstr ""
 
 #: ../plug-ins/common/film.c:1326
@@ -3844,34 +3829,34 @@ msgstr ""
 msgid "Gaussian Blur..."
 msgstr ""
 
-#: ../plug-ins/common/gauss.c:457
+#: ../plug-ins/common/gauss.c:458
 msgid "Gaussian Blur"
 msgstr ""
 
 #. parameter settings
-#: ../plug-ins/common/gauss.c:485
+#: ../plug-ins/common/gauss.c:486
 msgid "Blur Radius"
 msgstr ""
 
-#: ../plug-ins/common/gauss.c:499 ../plug-ins/common/jigsaw.c:2458
+#: ../plug-ins/common/gauss.c:500 ../plug-ins/common/jigsaw.c:2458
 #: ../plug-ins/common/spread.c:383
 msgid "_Horizontal:"
 msgstr ""
 
-#: ../plug-ins/common/gauss.c:503 ../plug-ins/common/jigsaw.c:2475
+#: ../plug-ins/common/gauss.c:504 ../plug-ins/common/jigsaw.c:2475
 #: ../plug-ins/common/spread.c:387
 msgid "_Vertical:"
 msgstr ""
 
-#: ../plug-ins/common/gauss.c:526
+#: ../plug-ins/common/gauss.c:527
 msgid "Blur Method"
 msgstr ""
 
-#: ../plug-ins/common/gauss.c:530
+#: ../plug-ins/common/gauss.c:531
 msgid "_IIR"
 msgstr ""
 
-#: ../plug-ins/common/gauss.c:531
+#: ../plug-ins/common/gauss.c:532
 msgid "_RLE"
 msgstr ""
 
@@ -3894,7 +3879,7 @@ msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr ""
 
 #: ../plug-ins/common/gbr.c:421 ../plug-ins/common/gih.c:497
-#: ../plug-ins/common/gih.c:1157 ../plug-ins/gflare/gflare.c:2995
+#: ../plug-ins/common/gih.c:1157 ../plug-ins/gflare/gflare.c:2993
 msgid "Unnamed"
 msgstr ""
 
@@ -3907,50 +3892,40 @@ msgid "Save as Brush"
 msgstr ""
 
 #. attach labels
-#: ../plug-ins/common/gbr.c:701 ../plug-ins/common/grid.c:770
+#: ../plug-ins/common/gbr.c:701 ../plug-ins/common/grid.c:784
 msgid "Spacing:"
 msgstr "Vahemaa:"
 
 #: ../plug-ins/common/gbr.c:712 ../plug-ins/common/gih.c:907
-#: ../plug-ins/common/pat.c:539 ../plug-ins/gimpressionist/presets.c:651
+#: ../plug-ins/common/pat.c:541 ../plug-ins/gimpressionist/presets.c:651
 msgid "Description:"
+msgstr "Kirjeldus:"
+
+#: ../plug-ins/common/gee.c:103 ../plug-ins/common/gee.c:159
+msgid "Gee Slime"
 msgstr ""
 
-#: ../plug-ins/common/gee.c:103
-msgid "Gee-_Slime"
-msgstr ""
-
-#: ../plug-ins/common/gee.c:160
-msgid "GEE-SLIME"
-msgstr ""
-
-#: ../plug-ins/common/gee.c:166 ../plug-ins/common/gee_zoom.c:189
+#: ../plug-ins/common/gee.c:165 ../plug-ins/common/gee_zoom.c:188
 msgid "Thank you for choosing GIMP"
+msgstr "Aitäh et valisid GIMP'i"
+
+#: ../plug-ins/common/gee.c:172
+#, c-format
+msgid "A less obsolete creation by %s"
 msgstr ""
 
-#: ../plug-ins/common/gee.c:174
-msgid ""
-"A less-obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
-"1998-2000"
+#: ../plug-ins/common/gee_zoom.c:122 ../plug-ins/common/gee_zoom.c:182
+msgid "Gee Zoom"
 msgstr ""
 
-#: ../plug-ins/common/gee_zoom.c:122
-msgid "Gee-_Zoom"
-msgstr ""
-
-#: ../plug-ins/common/gee_zoom.c:183
-msgid "GEE-ZOOM"
-msgstr ""
-
-#: ../plug-ins/common/gee_zoom.c:197
-msgid ""
-"An obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
-"1998-2000"
+#: ../plug-ins/common/gee_zoom.c:196
+#, c-format
+msgid "An obsolete creation by %s"
 msgstr ""
 
 #: ../plug-ins/common/gif.c:402 ../plug-ins/common/gifload.c:141
 msgid "GIF image"
-msgstr ""
+msgstr "GIF pilt"
 
 #: ../plug-ins/common/gif.c:687
 msgid "Couldn't simply reduce colors further. Saving as opaque."
@@ -4023,7 +3998,7 @@ msgstr ""
 msgid "_Delay between frames where unspecified:"
 msgstr ""
 
-#: ../plug-ins/common/gif.c:1385 ../plug-ins/common/mng.c:1533
+#: ../plug-ins/common/gif.c:1385 ../plug-ins/common/mng.c:1538
 msgid "milliseconds"
 msgstr ""
 
@@ -4192,19 +4167,19 @@ msgstr ""
 msgid "G-Qbist"
 msgstr ""
 
-#: ../plug-ins/common/gradmap.c:99
+#: ../plug-ins/common/gradmap.c:95
 msgid "_Gradient Map"
 msgstr ""
 
-#: ../plug-ins/common/gradmap.c:122
+#: ../plug-ins/common/gradmap.c:118
 msgid "_Palette Map"
 msgstr ""
 
-#: ../plug-ins/common/gradmap.c:165
+#: ../plug-ins/common/gradmap.c:161
 msgid "Gradient Map..."
 msgstr "Spektrikomplekti kaart..."
 
-#: ../plug-ins/common/gradmap.c:170
+#: ../plug-ins/common/gradmap.c:166
 msgid "Palette Map..."
 msgstr "Värvipaleti kaart..."
 
@@ -4216,45 +4191,45 @@ msgstr "_Ruudustik..."
 msgid "Drawing Grid..."
 msgstr ""
 
-#: ../plug-ins/common/grid.c:617 ../plug-ins/gfig/gfig-dialog.c:1354
+#: ../plug-ins/common/grid.c:631 ../plug-ins/gfig/gfig-dialog.c:1361
 msgid "Grid"
 msgstr "Ruudustik"
 
 #. attach labels
-#: ../plug-ins/common/grid.c:697
+#: ../plug-ins/common/grid.c:711
 msgid "Horizontal"
 msgstr "Horisontaalne"
 
-#: ../plug-ins/common/grid.c:699
+#: ../plug-ins/common/grid.c:713
 msgid "Vertical"
 msgstr "Vertikaalne"
 
-#: ../plug-ins/common/grid.c:701
+#: ../plug-ins/common/grid.c:715
 msgid "Intersection"
 msgstr ""
 
 #. Width and Height
-#: ../plug-ins/common/grid.c:704 ../plug-ins/common/svg.c:764
+#: ../plug-ins/common/grid.c:718 ../plug-ins/common/svg.c:766
 #: ../plug-ins/common/wmf.c:547 ../plug-ins/print/gimp_main_window.c:1006
 #: ../plug-ins/print/gimp_main_window.c:1213
 msgid "Width:"
 msgstr "Laius:"
 
 #. attach labels
-#: ../plug-ins/common/grid.c:837
+#: ../plug-ins/common/grid.c:851
 msgid "Offset:"
 msgstr "Nihe:"
 
 #. attach color selectors
-#: ../plug-ins/common/grid.c:876
+#: ../plug-ins/common/grid.c:890
 msgid "Horizontal Color"
 msgstr ""
 
-#: ../plug-ins/common/grid.c:894
+#: ../plug-ins/common/grid.c:908
 msgid "Vertical Color"
 msgstr ""
 
-#: ../plug-ins/common/grid.c:912
+#: ../plug-ins/common/grid.c:926
 msgid "Intersection Color"
 msgstr ""
 
@@ -4533,7 +4508,7 @@ msgid "Thresho_ld:"
 msgstr "_Lävi:"
 
 #: ../plug-ins/common/iwarp.c:1131 ../plug-ins/common/sinus.c:764
-#: ../plug-ins/gflare/gflare.c:2799
+#: ../plug-ins/gflare/gflare.c:2797
 msgid "_Settings"
 msgstr "_Seaded"
 
@@ -4610,11 +4585,11 @@ msgstr "Kõik tükid on kumerate servadega"
 msgid "_Laplace"
 msgstr ""
 
-#: ../plug-ins/common/laplace.c:244
+#: ../plug-ins/common/laplace.c:242
 msgid "Laplace..."
 msgstr ""
 
-#: ../plug-ins/common/laplace.c:324
+#: ../plug-ins/common/laplace.c:320
 msgid "Cleanup..."
 msgstr ""
 
@@ -4784,8 +4759,8 @@ msgstr ""
 msgid "Destination color range"
 msgstr ""
 
-#: ../plug-ins/common/mapcolor.c:424 ../plug-ins/gfli/gfli.c:844
-#: ../plug-ins/gfli/gfli.c:907
+#: ../plug-ins/common/mapcolor.c:424 ../plug-ins/gfli/gfli.c:850
+#: ../plug-ins/gfli/gfli.c:913
 msgid "To:"
 msgstr ""
 
@@ -4813,149 +4788,153 @@ msgstr ""
 msgid "Ho_ld the minimal channels"
 msgstr ""
 
-#: ../plug-ins/common/mblur.c:169
+#: ../plug-ins/common/mblur.c:173
 msgid "_Motion Blur..."
 msgstr ""
 
-#: ../plug-ins/common/mblur.c:789
+#: ../plug-ins/common/mblur.c:807
 msgid "Motion Blurring..."
 msgstr ""
 
-#: ../plug-ins/common/mblur.c:886
+#: ../plug-ins/common/mblur.c:909
 msgid "Motion Blur"
 msgstr ""
 
-#: ../plug-ins/common/mblur.c:913
+#: ../plug-ins/common/mblur.c:940
 msgid "Blur Type"
 msgstr ""
 
-#: ../plug-ins/common/mblur.c:917
+#: ../plug-ins/common/mblur.c:944
 msgid "_Linear"
 msgstr "_Lineaarne"
 
-#: ../plug-ins/common/mblur.c:918
+#: ../plug-ins/common/mblur.c:945
 msgid "_Radial"
 msgstr ""
 
-#: ../plug-ins/common/mblur.c:919
+#: ../plug-ins/common/mblur.c:946
 msgid "_Zoom"
 msgstr ""
 
-#: ../plug-ins/common/mblur.c:928
+#: ../plug-ins/common/mblur.c:953
+msgid "Blur Center"
+msgstr ""
+
+#: ../plug-ins/common/mblur.c:996
+msgid "Blur _outward"
+msgstr ""
+
+#: ../plug-ins/common/mblur.c:1009
 msgid "Blur Parameters"
 msgstr ""
 
-#: ../plug-ins/common/mblur.c:954 ../plug-ins/common/newsprint.c:1001
+#: ../plug-ins/common/mblur.c:1033 ../plug-ins/common/newsprint.c:1001
 msgid "_Angle:"
-msgstr ""
-
-#: ../plug-ins/common/mblur.c:967
-msgid "Blur Center"
 msgstr ""
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: ../plug-ins/common/mng.c:496 ../plug-ins/common/png.c:1556
+#: ../plug-ins/common/mng.c:496 ../plug-ins/common/png.c:1565
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 
-#: ../plug-ins/common/mng.c:1315
+#: ../plug-ins/common/mng.c:1320
 msgid "Save as MNG"
 msgstr "Salvesta kui MNG"
 
-#: ../plug-ins/common/mng.c:1333
+#: ../plug-ins/common/mng.c:1338
 msgid "MNG Options"
 msgstr "MNG võimalused"
 
-#: ../plug-ins/common/mng.c:1339
+#: ../plug-ins/common/mng.c:1344
 msgid "Interlace"
 msgstr "Ülerealaotus"
 
-#: ../plug-ins/common/mng.c:1351
+#: ../plug-ins/common/mng.c:1356
 msgid "Save background color"
 msgstr "Salvesta tagapõhja värv"
 
-#: ../plug-ins/common/mng.c:1362
+#: ../plug-ins/common/mng.c:1367
 msgid "Save gamma"
 msgstr "Salvesta gamma"
 
-#: ../plug-ins/common/mng.c:1372
+#: ../plug-ins/common/mng.c:1377
 msgid "Save resolution"
 msgstr "Salvesta eraldusvõime"
 
-#: ../plug-ins/common/mng.c:1383
+#: ../plug-ins/common/mng.c:1388
 msgid "Save creation time"
 msgstr "Salvesta loomisaeg"
 
-#: ../plug-ins/common/mng.c:1402
+#: ../plug-ins/common/mng.c:1407
 msgid "PNG"
 msgstr "PNG"
 
-#: ../plug-ins/common/mng.c:1403
+#: ../plug-ins/common/mng.c:1408
 msgid "JNG"
 msgstr "JNG"
 
-#: ../plug-ins/common/mng.c:1406
+#: ../plug-ins/common/mng.c:1411
 msgid "PNG + delta PNG"
 msgstr "PNG + delta PNG"
 
-#: ../plug-ins/common/mng.c:1407
+#: ../plug-ins/common/mng.c:1412
 msgid "JNG + delta PNG"
 msgstr "JNG + delta PNG"
 
-#: ../plug-ins/common/mng.c:1408
+#: ../plug-ins/common/mng.c:1413
 msgid "All PNG"
 msgstr "Kõik PNG"
 
-#: ../plug-ins/common/mng.c:1409
+#: ../plug-ins/common/mng.c:1414
 msgid "All JNG"
 msgstr "Kõik JNG"
 
-#: ../plug-ins/common/mng.c:1421
+#: ../plug-ins/common/mng.c:1426
 msgid "Default chunks type:"
 msgstr ""
 
-#: ../plug-ins/common/mng.c:1424
+#: ../plug-ins/common/mng.c:1429
 msgid "Combine"
 msgstr ""
 
-#: ../plug-ins/common/mng.c:1425
+#: ../plug-ins/common/mng.c:1430
 msgid "Replace"
 msgstr "Asenda"
 
-#: ../plug-ins/common/mng.c:1436
+#: ../plug-ins/common/mng.c:1441
 msgid "Default frame disposal:"
 msgstr ""
 
-#: ../plug-ins/common/mng.c:1448
+#: ../plug-ins/common/mng.c:1453
 msgid "PNG compression level:"
 msgstr "PNG tihenduse tase:"
 
-#: ../plug-ins/common/mng.c:1456 ../plug-ins/common/png.c:1704
+#: ../plug-ins/common/mng.c:1461 ../plug-ins/common/png.c:1714
 msgid "Choose a high compression level for small file size"
 msgstr "Kõrgema tihenduse tasemega saad väiksema faili"
 
-#: ../plug-ins/common/mng.c:1470
+#: ../plug-ins/common/mng.c:1475
 msgid "JPEG compression quality:"
 msgstr "JPEG tihenduse kvaliteet:"
 
-#: ../plug-ins/common/mng.c:1487
+#: ../plug-ins/common/mng.c:1492
 msgid "JPEG smoothing factor:"
 msgstr "JPEG silumisfaktor:"
 
-#: ../plug-ins/common/mng.c:1497
+#: ../plug-ins/common/mng.c:1502
 msgid "Animated MNG options"
 msgstr "Animeeritud MNG võimalused"
 
-#: ../plug-ins/common/mng.c:1503
+#: ../plug-ins/common/mng.c:1508
 msgid "Loop"
 msgstr ""
 
-#: ../plug-ins/common/mng.c:1517
+#: ../plug-ins/common/mng.c:1522
 msgid "Default frame delay:"
 msgstr ""
 
-#: ../plug-ins/common/mng.c:1595
+#: ../plug-ins/common/mng.c:1600
 msgid "MNG animation"
 msgstr "MNG animatsioon"
 
@@ -5077,27 +5056,27 @@ msgstr ""
 
 #: ../plug-ins/common/newsprint.c:331
 msgid "_Grey"
-msgstr ""
+msgstr "_Hall"
 
 #: ../plug-ins/common/newsprint.c:344
 msgid "R_ed"
-msgstr ""
+msgstr "_Punane"
 
 #: ../plug-ins/common/newsprint.c:373
 msgid "C_yan"
-msgstr ""
+msgstr "_Tsüaan"
 
 #: ../plug-ins/common/newsprint.c:381
 msgid "Magen_ta"
-msgstr ""
+msgstr "_Magenta"
 
 #: ../plug-ins/common/newsprint.c:389
 msgid "_Yellow"
-msgstr ""
+msgstr "_Kollane"
 
 #: ../plug-ins/common/newsprint.c:410
-msgid "Intensity"
-msgstr ""
+msgid "Luminance"
+msgstr "Heledus"
 
 #: ../plug-ins/common/newsprint.c:526
 msgid "Newsprin_t..."
@@ -5133,7 +5112,7 @@ msgid "C_ell size:"
 msgstr ""
 
 #. screen settings
-#: ../plug-ins/common/newsprint.c:1296 ../plug-ins/gflare/gflare.c:561
+#: ../plug-ins/common/newsprint.c:1296 ../plug-ins/gflare/gflare.c:559
 msgid "Screen"
 msgstr "Ekraan"
 
@@ -5166,7 +5145,7 @@ msgid "_Factory defaults"
 msgstr ""
 
 #. anti-alias control
-#: ../plug-ins/common/newsprint.c:1439 ../plug-ins/gfig/gfig-dialog.c:1257
+#: ../plug-ins/common/newsprint.c:1439 ../plug-ins/gfig/gfig-dialog.c:1262
 msgid "Antialiasing"
 msgstr ""
 
@@ -5178,36 +5157,36 @@ msgstr ""
 msgid "_NL Filter..."
 msgstr ""
 
-#: ../plug-ins/common/nlfilt.c:949
+#: ../plug-ins/common/nlfilt.c:950
 msgid "NL Filter..."
 msgstr ""
 
-#: ../plug-ins/common/nlfilt.c:1012
+#: ../plug-ins/common/nlfilt.c:1013
 msgid "NL Filter"
 msgstr ""
 
-#: ../plug-ins/common/nlfilt.c:1038
+#: ../plug-ins/common/nlfilt.c:1039
 msgid "Filter"
 msgstr ""
 
-#: ../plug-ins/common/nlfilt.c:1042
+#: ../plug-ins/common/nlfilt.c:1043
 msgid "_Alpha trimmed mean"
 msgstr ""
 
-#: ../plug-ins/common/nlfilt.c:1044
+#: ../plug-ins/common/nlfilt.c:1045
 msgid "Op_timal estimation"
 msgstr ""
 
-#: ../plug-ins/common/nlfilt.c:1046
+#: ../plug-ins/common/nlfilt.c:1047
 msgid "_Edge enhancement"
 msgstr ""
 
-#: ../plug-ins/common/nlfilt.c:1071
+#: ../plug-ins/common/nlfilt.c:1072
 msgid "A_lpha:"
 msgstr ""
 
 #: ../plug-ins/common/noisify.c:151
-msgid "_Scatter RGB..."
+msgid "_RGB Noise..."
 msgstr ""
 
 #: ../plug-ins/common/noisify.c:279
@@ -5247,31 +5226,31 @@ msgstr ""
 msgid "Su_perNova..."
 msgstr ""
 
-#: ../plug-ins/common/nova.c:259
+#: ../plug-ins/common/nova.c:260
 msgid "Rendering SuperNova..."
 msgstr ""
 
-#: ../plug-ins/common/nova.c:302
+#: ../plug-ins/common/nova.c:303
 msgid "SuperNova"
 msgstr ""
 
-#: ../plug-ins/common/nova.c:344
+#: ../plug-ins/common/nova.c:345
 msgid "SuperNova Color Picker"
 msgstr ""
 
-#: ../plug-ins/common/nova.c:373
+#: ../plug-ins/common/nova.c:374
 msgid "_Spokes:"
 msgstr ""
 
-#: ../plug-ins/common/nova.c:388
+#: ../plug-ins/common/nova.c:389
 msgid "R_andom hue:"
 msgstr ""
 
-#: ../plug-ins/common/nova.c:440
+#: ../plug-ins/common/nova.c:441
 msgid "Center of SuperNova"
 msgstr ""
 
-#: ../plug-ins/common/nova.c:474
+#: ../plug-ins/common/nova.c:475
 msgid "S_how cursor"
 msgstr ""
 
@@ -5375,16 +5354,16 @@ msgstr ""
 msgid "_Paper Tile..."
 msgstr ""
 
-#: ../plug-ins/common/pat.c:120 ../plug-ins/common/pat.c:142
+#: ../plug-ins/common/pat.c:120 ../plug-ins/common/pat.c:143
 msgid "GIMP pattern"
 msgstr ""
 
-#: ../plug-ins/common/pat.c:358
+#: ../plug-ins/common/pat.c:360
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr ""
 
-#: ../plug-ins/common/pat.c:514
+#: ../plug-ins/common/pat.c:516
 msgid "Save as Pattern"
 msgstr "Salvesta mustrina"
 
@@ -5476,77 +5455,77 @@ msgstr ""
 msgid "PNG image"
 msgstr "PNG pilt"
 
-#: ../plug-ins/common/png.c:654
+#: ../plug-ins/common/png.c:655
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "Viga '%s' lugemisel. Fail rikutud?"
 
 #. Aie! Unknown type
-#: ../plug-ins/common/png.c:787
+#: ../plug-ins/common/png.c:788
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr ""
 
-#: ../plug-ins/common/png.c:842
+#: ../plug-ins/common/png.c:843
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
 msgstr "PNG fail kirjeldab nihet, mis põhjustab kihi asukoha väljaspool pilti."
 
-#: ../plug-ins/common/png.c:1158
+#: ../plug-ins/common/png.c:1159
 #, c-format
 msgid "Error while saving '%s'. Could not save image."
 msgstr "Viga '%s' salvestamisel. Faili ei salvestatud."
 
-#: ../plug-ins/common/png.c:1585
+#: ../plug-ins/common/png.c:1595
 msgid "Save as PNG"
 msgstr "Salvesta kui PNG"
 
-#: ../plug-ins/common/png.c:1589
+#: ../plug-ins/common/png.c:1599
 msgid "_Load defaults"
 msgstr "_Laadi vaikeseaded"
 
-#: ../plug-ins/common/png.c:1590
+#: ../plug-ins/common/png.c:1600
 msgid "_Save defaults"
 msgstr "_Salvesta vaikeseaded"
 
-#: ../plug-ins/common/png.c:1618
+#: ../plug-ins/common/png.c:1628
 msgid "_Interlacing (Adam7)"
 msgstr "Ülerealaot_us (Adam7)"
 
-#: ../plug-ins/common/png.c:1629
+#: ../plug-ins/common/png.c:1639
 msgid "Save _background color"
 msgstr "Salvesta _tagapõhja värv"
 
-#: ../plug-ins/common/png.c:1637
+#: ../plug-ins/common/png.c:1647
 msgid "Save _gamma"
 msgstr "Salvesta _gamma"
 
-#: ../plug-ins/common/png.c:1646
+#: ../plug-ins/common/png.c:1656
 msgid "Save layer o_ffset"
 msgstr "Salvesta kihi _nihe"
 
-#: ../plug-ins/common/png.c:1655
+#: ../plug-ins/common/png.c:1665
 msgid "Save _resolution"
 msgstr "Salvesta _eraldusvõime"
 
-#: ../plug-ins/common/png.c:1664
+#: ../plug-ins/common/png.c:1674
 msgid "Save creation _time"
 msgstr "Salvesta loomiseaeg"
 
-#: ../plug-ins/common/png.c:1672
+#: ../plug-ins/common/png.c:1682
 msgid "Save comme_nt"
 msgstr "Salvesta komme_ntaar"
 
-#: ../plug-ins/common/png.c:1687
+#: ../plug-ins/common/png.c:1697
 msgid "Save color _values from transparent pixels"
 msgstr ""
 
-#: ../plug-ins/common/png.c:1700
+#: ../plug-ins/common/png.c:1710
 msgid "Co_mpression level:"
 msgstr "_Tihenduse tase:"
 
-#: ../plug-ins/common/png.c:1820
+#: ../plug-ins/common/png.c:1830
 msgid "Could not load PNG defaults"
 msgstr "Ei suutnud PNG vaikeseadeid laadida"
 
@@ -5667,173 +5646,198 @@ msgid ""
 "checked the image will be mapped onto a circle."
 msgstr ""
 
-#: ../plug-ins/common/postscript.c:575 ../plug-ins/common/postscript.c:661
+#: ../plug-ins/common/poppler.c:136
+msgid "Portable Document Format"
+msgstr ""
+
+#: ../plug-ins/common/poppler.c:632
+msgid "Load PDF"
+msgstr ""
+
+#: ../plug-ins/common/poppler.c:694
+msgid "_Width (pixels):"
+msgstr "_Laius (pikslites):"
+
+#: ../plug-ins/common/poppler.c:695
+msgid "_Height (pixels):"
+msgstr "_Kõrgus (pikslites):"
+
+#: ../plug-ins/common/poppler.c:698 ../plug-ins/common/poppler.c:699
+msgid "_Resolution:"
+msgstr "_Eraldusvõime:"
+
+#. Antialiasing
+#: ../plug-ins/common/poppler.c:713
+msgid "A_ntialiasing"
+msgstr ""
+
+#: ../plug-ins/common/postscript.c:575 ../plug-ins/common/postscript.c:666
 msgid "PostScript document"
 msgstr "PostScript dokument"
 
-#: ../plug-ins/common/postscript.c:594 ../plug-ins/common/postscript.c:676
+#: ../plug-ins/common/postscript.c:594 ../plug-ins/common/postscript.c:681
 msgid "Encapsulated PostScript image"
 msgstr ""
 
-#: ../plug-ins/common/postscript.c:613
+#: ../plug-ins/common/postscript.c:614
 msgid "PDF document"
 msgstr "PDF dokument"
 
-#: ../plug-ins/common/postscript.c:1003
+#: ../plug-ins/common/postscript.c:1008
 #, c-format
 msgid "Could not interpret '%s'"
 msgstr ""
 
-#: ../plug-ins/common/postscript.c:1100
+#: ../plug-ins/common/postscript.c:1105
 msgid "PostScript save cannot handle images with alpha channels"
 msgstr ""
 
-#: ../plug-ins/common/postscript.c:1628
+#: ../plug-ins/common/postscript.c:1633
 #, c-format
 msgid "Error starting ghostscript (%s)"
 msgstr ""
 
-#: ../plug-ins/common/postscript.c:1658
+#: ../plug-ins/common/postscript.c:1663
 #, c-format
 msgid "Error starting ghostscript: %s"
 msgstr ""
 
-#: ../plug-ins/common/postscript.c:2478 ../plug-ins/common/postscript.c:2611
-#: ../plug-ins/common/postscript.c:2763 ../plug-ins/common/postscript.c:2892
+#: ../plug-ins/common/postscript.c:2483 ../plug-ins/common/postscript.c:2616
+#: ../plug-ins/common/postscript.c:2768 ../plug-ins/common/postscript.c:2897
 #: ../plug-ins/common/sunras.c:1444 ../plug-ins/common/sunras.c:1552
-#: ../plug-ins/fits/fits.c:820 ../plug-ins/fits/fits.c:944
+#: ../plug-ins/fits/fits.c:829 ../plug-ins/fits/fits.c:953
 msgid "Write error occurred"
 msgstr "Kirjutamisel juhtus viga"
 
-#: ../plug-ins/common/postscript.c:2919
+#: ../plug-ins/common/postscript.c:2924
 msgid "Load PostScript"
 msgstr "Laadi PostScript"
 
 #. Rendering
-#: ../plug-ins/common/postscript.c:2944
+#: ../plug-ins/common/postscript.c:2949
 msgid "Rendering"
 msgstr ""
 
 #. Resolution
-#: ../plug-ins/common/postscript.c:2960 ../plug-ins/common/svg.c:885
+#: ../plug-ins/common/postscript.c:2965 ../plug-ins/common/svg.c:887
 #: ../plug-ins/common/wmf.c:668 ../plug-ins/print/gimp_main_window.c:1101
 msgid "Resolution:"
 msgstr "Eraldusvõime:"
 
-#: ../plug-ins/common/postscript.c:2988
+#: ../plug-ins/common/postscript.c:2993
 msgid "Pages:"
 msgstr "Lehti:"
 
-#: ../plug-ins/common/postscript.c:2994
+#: ../plug-ins/common/postscript.c:2999
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr ""
 
-#: ../plug-ins/common/postscript.c:2996
+#: ../plug-ins/common/postscript.c:3001
 msgid "Try Bounding Box"
 msgstr ""
 
 #. Colouring
-#: ../plug-ins/common/postscript.c:3009
+#: ../plug-ins/common/postscript.c:3014
 msgid "Coloring"
 msgstr ""
 
-#: ../plug-ins/common/postscript.c:3013
+#: ../plug-ins/common/postscript.c:3018
 msgid "B/W"
 msgstr ""
 
-#: ../plug-ins/common/postscript.c:3014 ../plug-ins/rcm/rcm_dialog.c:408
+#: ../plug-ins/common/postscript.c:3019 ../plug-ins/rcm/rcm_dialog.c:408
 msgid "Gray"
 msgstr "Hall"
 
-#: ../plug-ins/common/postscript.c:3015 ../plug-ins/common/xpm.c:466
+#: ../plug-ins/common/postscript.c:3020 ../plug-ins/common/xpm.c:466
 #: ../plug-ins/gimpressionist/color.c:48
 #: ../plug-ins/gimpressionist/general.c:151
 #: ../plug-ins/print/gimp_main_window.c:1413
 msgid "Color"
 msgstr ""
 
-#: ../plug-ins/common/postscript.c:3016 ../plug-ins/fits/fits.c:999
+#: ../plug-ins/common/postscript.c:3021 ../plug-ins/fits/fits.c:1008
 msgid "Automatic"
 msgstr "Automaatne"
 
-#: ../plug-ins/common/postscript.c:3026
+#: ../plug-ins/common/postscript.c:3031
 msgid "Text antialiasing"
 msgstr ""
 
-#: ../plug-ins/common/postscript.c:3031 ../plug-ins/common/postscript.c:3043
+#: ../plug-ins/common/postscript.c:3036 ../plug-ins/common/postscript.c:3048
 msgid "Weak"
 msgstr "Nõrk"
 
-#: ../plug-ins/common/postscript.c:3032 ../plug-ins/common/postscript.c:3044
+#: ../plug-ins/common/postscript.c:3037 ../plug-ins/common/postscript.c:3049
 msgid "Strong"
 msgstr "Tugev"
 
-#: ../plug-ins/common/postscript.c:3038
+#: ../plug-ins/common/postscript.c:3043
 msgid "Graphic antialiasing"
 msgstr ""
 
-#: ../plug-ins/common/postscript.c:3090
+#: ../plug-ins/common/postscript.c:3095
 msgid "Save as PostScript"
 msgstr "Salvesta kui PostScript"
 
 #. Image Size
-#: ../plug-ins/common/postscript.c:3114
+#: ../plug-ins/common/postscript.c:3119
 msgid "Image Size"
 msgstr "Pildi suurus"
 
-#: ../plug-ins/common/postscript.c:3163
+#: ../plug-ins/common/postscript.c:3168
 msgid "_Keep aspect ratio"
 msgstr "Säilita _külgede suhe"
 
-#: ../plug-ins/common/postscript.c:3169
+#: ../plug-ins/common/postscript.c:3174
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
 msgstr ""
 
 #. Unit
-#: ../plug-ins/common/postscript.c:3178
+#: ../plug-ins/common/postscript.c:3183
 msgid "Unit"
 msgstr "Ühik"
 
-#: ../plug-ins/common/postscript.c:3182
+#: ../plug-ins/common/postscript.c:3187
 msgid "_Inch"
 msgstr "_Tolli"
 
-#: ../plug-ins/common/postscript.c:3183
+#: ../plug-ins/common/postscript.c:3188
 msgid "_Millimeter"
 msgstr "_Millimeetrit"
 
 #. Format
-#: ../plug-ins/common/postscript.c:3209
+#: ../plug-ins/common/postscript.c:3214
 msgid "Output"
 msgstr ""
 
-#: ../plug-ins/common/postscript.c:3215
+#: ../plug-ins/common/postscript.c:3220
 msgid "_PostScript level 2"
 msgstr ""
 
-#: ../plug-ins/common/postscript.c:3224
+#: ../plug-ins/common/postscript.c:3229
 msgid "_Encapsulated PostScript"
 msgstr "_Kapseldatud PostScript"
 
-#: ../plug-ins/common/postscript.c:3233
+#: ../plug-ins/common/postscript.c:3238
 msgid "P_review"
 msgstr "_Eelvaade"
 
-#: ../plug-ins/common/postscript.c:3254
+#: ../plug-ins/common/postscript.c:3259
 msgid "Preview _size:"
 msgstr "Eelvaate _suurus:"
 
-#: ../plug-ins/common/psd.c:491
+#: ../plug-ins/common/psd.c:492
 msgid "Invalid UTF-8 string in PSD file"
 msgstr "PSD failis on vigane UTF-8 tekstilõik"
 
-#: ../plug-ins/common/psd_save.c:187
+#: ../plug-ins/common/psd_save.c:185
 msgid "Photoshop image"
 msgstr "Photoshopi pilt"
 
-#: ../plug-ins/common/psd_save.c:1306
+#: ../plug-ins/common/psd_save.c:1280
 #, c-format
 msgid ""
 "Unable to save '%s'.  The psd file format does not support images that are "
@@ -5842,7 +5846,7 @@ msgstr ""
 "Ei saa '%s' salvestada. PSD failiformaat ei toeta pilte mis on rohkem kui "
 "30000 pikslit lai või kõrge"
 
-#: ../plug-ins/common/psd_save.c:1318
+#: ../plug-ins/common/psd_save.c:1292
 #, c-format
 msgid ""
 "Unable to save '%s'.  The psd file format does not support images with "
@@ -5916,75 +5920,75 @@ msgstr ""
 msgid "Number of times to apply filter"
 msgstr ""
 
-#: ../plug-ins/common/raw.c:171 ../plug-ins/common/raw.c:186
+#: ../plug-ins/common/raw.c:175 ../plug-ins/common/raw.c:190
 msgid "Raw Image Data"
 msgstr ""
 
-#: ../plug-ins/common/raw.c:918
+#: ../plug-ins/common/raw.c:922
 msgid "Raw Image Loader"
 msgstr ""
 
-#: ../plug-ins/common/raw.c:951
+#: ../plug-ins/common/raw.c:955
 msgid "Image"
 msgstr "Pilt"
 
-#: ../plug-ins/common/raw.c:963
+#: ../plug-ins/common/raw.c:967
 msgid "Planar RGB"
 msgstr ""
 
-#: ../plug-ins/common/raw.c:964
+#: ../plug-ins/common/raw.c:968
 msgid "Indexed"
 msgstr ""
 
-#: ../plug-ins/common/raw.c:969
+#: ../plug-ins/common/raw.c:973
 msgid "Image _Type:"
 msgstr ""
 
-#: ../plug-ins/common/raw.c:1019
+#: ../plug-ins/common/raw.c:1023
 msgid "Palette"
 msgstr ""
 
-#: ../plug-ins/common/raw.c:1029 ../plug-ins/common/raw.c:1117
+#: ../plug-ins/common/raw.c:1033 ../plug-ins/common/raw.c:1121
 msgid "R, G, B (normal)"
 msgstr ""
 
-#: ../plug-ins/common/raw.c:1030 ../plug-ins/common/raw.c:1119
+#: ../plug-ins/common/raw.c:1034 ../plug-ins/common/raw.c:1123
 msgid "B, G, R, X (bmp style)"
 msgstr ""
 
-#: ../plug-ins/common/raw.c:1035
+#: ../plug-ins/common/raw.c:1039
 msgid "_Palette Type:"
 msgstr ""
 
-#: ../plug-ins/common/raw.c:1046
+#: ../plug-ins/common/raw.c:1050
 msgid "Off_set:"
 msgstr "_Nihe:"
 
-#: ../plug-ins/common/raw.c:1058
+#: ../plug-ins/common/raw.c:1062
 msgid "Select Palette File to Load"
 msgstr ""
 
-#: ../plug-ins/common/raw.c:1061
+#: ../plug-ins/common/raw.c:1065
 msgid "Pal_ette File:"
 msgstr ""
 
-#: ../plug-ins/common/raw.c:1089
+#: ../plug-ins/common/raw.c:1093
 msgid "Raw Image Save"
 msgstr ""
 
-#: ../plug-ins/common/raw.c:1103
+#: ../plug-ins/common/raw.c:1107
 msgid "RGB Save Type"
 msgstr ""
 
-#: ../plug-ins/common/raw.c:1107
+#: ../plug-ins/common/raw.c:1111
 msgid "Standard (R,G,B)"
 msgstr ""
 
-#: ../plug-ins/common/raw.c:1108
+#: ../plug-ins/common/raw.c:1112
 msgid "Planar (RRR,GGG,BBB)"
 msgstr ""
 
-#: ../plug-ins/common/raw.c:1113
+#: ../plug-ins/common/raw.c:1117
 msgid "Indexed Palette Type"
 msgstr ""
 
@@ -6094,172 +6098,179 @@ msgstr "Vabandust, kanaleid ja maske ei saa pöörata."
 msgid "Rotating..."
 msgstr "Pööramine..."
 
-#: ../plug-ins/common/sample_colorize.c:295
+#: ../plug-ins/common/sample_colorize.c:304
 msgid "_Sample Colorize..."
 msgstr ""
 
-#: ../plug-ins/common/sample_colorize.c:1309
+#: ../plug-ins/common/sample_colorize.c:1315
 msgid "Sample Colorize"
 msgstr ""
 
-#: ../plug-ins/common/sample_colorize.c:1314
+#: ../plug-ins/common/sample_colorize.c:1320
 msgid "Get sample colors"
 msgstr ""
 
-#: ../plug-ins/common/sample_colorize.c:1316
+#: ../plug-ins/common/sample_colorize.c:1322
 msgid "Apply"
 msgstr "Rakenda"
 
 #. layer combo_box (Dst)
-#: ../plug-ins/common/sample_colorize.c:1341
+#: ../plug-ins/common/sample_colorize.c:1347
 msgid "Destination:"
 msgstr "Sihtkoht:"
 
 #. layer combo_box (Sample)
-#: ../plug-ins/common/sample_colorize.c:1357
+#: ../plug-ins/common/sample_colorize.c:1363
 msgid "Sample:"
 msgstr "Näide:"
 
-#: ../plug-ins/common/sample_colorize.c:1367
+#: ../plug-ins/common/sample_colorize.c:1373
 msgid "From reverse gradient"
 msgstr ""
 
-#: ../plug-ins/common/sample_colorize.c:1372
+#: ../plug-ins/common/sample_colorize.c:1378
 msgid "From gradient"
 msgstr "Spektrikomplektist"
 
 #. check button
-#: ../plug-ins/common/sample_colorize.c:1393
-#: ../plug-ins/common/sample_colorize.c:1420
+#: ../plug-ins/common/sample_colorize.c:1399
+#: ../plug-ins/common/sample_colorize.c:1426
 msgid "Show selection"
 msgstr "Näita valikut"
 
 #. check button
-#: ../plug-ins/common/sample_colorize.c:1404
-#: ../plug-ins/common/sample_colorize.c:1431
+#: ../plug-ins/common/sample_colorize.c:1410
+#: ../plug-ins/common/sample_colorize.c:1437
 msgid "Show color"
 msgstr "Näita värvi"
 
-#: ../plug-ins/common/sample_colorize.c:1544
+#: ../plug-ins/common/sample_colorize.c:1550
 msgid "Input levels:"
 msgstr ""
 
-#: ../plug-ins/common/sample_colorize.c:1594
+#: ../plug-ins/common/sample_colorize.c:1600
 msgid "Output Levels:"
 msgstr ""
 
 #. check button
-#: ../plug-ins/common/sample_colorize.c:1634
+#: ../plug-ins/common/sample_colorize.c:1640
 msgid "Hold intensity"
 msgstr ""
 
 #. check button
-#: ../plug-ins/common/sample_colorize.c:1645
+#: ../plug-ins/common/sample_colorize.c:1651
 msgid "Original intensity"
 msgstr ""
 
 #. check button
-#: ../plug-ins/common/sample_colorize.c:1663
+#: ../plug-ins/common/sample_colorize.c:1669
 msgid "Use subcolors"
 msgstr ""
 
 #. check button
-#: ../plug-ins/common/sample_colorize.c:1674
+#: ../plug-ins/common/sample_colorize.c:1680
 msgid "Smooth samples"
 msgstr ""
 
-#: ../plug-ins/common/sample_colorize.c:2638
+#: ../plug-ins/common/sample_colorize.c:2652
 msgid "Sample Analyze..."
 msgstr ""
 
-#: ../plug-ins/common/sample_colorize.c:3008
+#: ../plug-ins/common/sample_colorize.c:3030
 msgid "Remap Colorized..."
 msgstr ""
 
 #: ../plug-ins/common/scatter_hsv.c:109
-msgid "S_catter HSV..."
+msgid "HSV Noise..."
 msgstr ""
 
-#: ../plug-ins/common/scatter_hsv.c:204
+#: ../plug-ins/common/scatter_hsv.c:217
 msgid "Scattering HSV..."
 msgstr ""
 
-#: ../plug-ins/common/scatter_hsv.c:340
+#: ../plug-ins/common/scatter_hsv.c:353
 msgid "Scatter HSV"
 msgstr ""
 
-#: ../plug-ins/common/scatter_hsv.c:373
+#: ../plug-ins/common/scatter_hsv.c:386
 msgid "_Holdness:"
 msgstr ""
 
-#: ../plug-ins/common/scatter_hsv.c:385
+#: ../plug-ins/common/scatter_hsv.c:398
 msgid "H_ue:"
 msgstr ""
 
-#: ../plug-ins/common/scatter_hsv.c:397
+#: ../plug-ins/common/scatter_hsv.c:410
 msgid "_Saturation:"
 msgstr ""
 
-#: ../plug-ins/common/scatter_hsv.c:409
+#: ../plug-ins/common/scatter_hsv.c:422
 msgid "_Value:"
-msgstr ""
+msgstr "_Väärtus:"
 
-#: ../plug-ins/common/screenshot.c:238 ../plug-ins/winsnap/winsnap.c:994
-msgid "_Screen Shot..."
+#: ../plug-ins/common/screenshot.c:239
+msgid "_Screenshot..."
 msgstr "_Pilt ekraanilt..."
 
-#: ../plug-ins/common/screenshot.c:422
+#: ../plug-ins/common/screenshot.c:423
 msgid "Error grabbing the pointer"
 msgstr "Viga hiirekursori krabamisel"
 
-#: ../plug-ins/common/screenshot.c:601
-msgid "Loading Screen Shot..."
-msgstr "Laadin ekraanilt tehtud pilti..."
+#: ../plug-ins/common/screenshot.c:602
+msgid "Loading Screenshot..."
+msgstr "Laen ekraanilt tehtud pilti..."
 
-#: ../plug-ins/common/screenshot.c:608 ../plug-ins/common/screenshot.c:775
-msgid "Screen Shot"
+#: ../plug-ins/common/screenshot.c:609 ../plug-ins/common/screenshot.c:781
+msgid "Screenshot"
 msgstr "Pilt ekraanilt"
 
-#: ../plug-ins/common/screenshot.c:716
+#: ../plug-ins/common/screenshot.c:717
 msgid "Specified window not found"
 msgstr "Ei leidnud akent, mida pildistada"
 
-#: ../plug-ins/common/screenshot.c:743
-msgid "Error obtaining Screen shot"
-msgstr "Ekraanipildist koopia tegemine ebaõnnestus"
+#: ../plug-ins/common/screenshot.c:744
+msgid "There was an error taking the screenshot."
+msgstr "Viga kuvatõmmise tegemisel."
 
-#: ../plug-ins/common/screenshot.c:784
+#: ../plug-ins/common/screenshot.c:790
 msgid "_Grab"
 msgstr "_Kraba"
 
-#. single window
-#: ../plug-ins/common/screenshot.c:810 ../plug-ins/winsnap/winsnap.c:865
-msgid "Grab"
-msgstr "Kraba"
+#: ../plug-ins/common/screenshot.c:812
+msgid "Take a screenshot of a single _window"
+msgstr "Tee kuvatõmmis üksikust _aknast"
 
-#: ../plug-ins/common/screenshot.c:817
-msgid "a single _window"
-msgstr "üksik _aken"
-
-#: ../plug-ins/common/screenshot.c:837
+#: ../plug-ins/common/screenshot.c:833
 msgid "Include window decoration"
 msgstr "Koos akna dekoratsioonidega"
 
-#: ../plug-ins/common/screenshot.c:852
-msgid "the selected _region"
-msgstr "_Valitud ala"
+#: ../plug-ins/common/screenshot.c:848
+msgid "Take a screenshot of your _desktop"
+msgstr "Tee kuvatõmmis _töölauast"
 
 #: ../plug-ins/common/screenshot.c:869
-msgid "the whole _screen"
-msgstr "kogu _ekraan"
+msgid "Select a region"
+msgstr "Vali regioon"
 
-#: ../plug-ins/common/screenshot.c:892
-msgid "W_ait for"
+#: ../plug-ins/common/screenshot.c:874
+msgid ""
+"If enabled, you can use the mouse to select a rectangular region of the "
+"screen."
+msgstr ""
+
+#: ../plug-ins/common/screenshot.c:889
+msgid "W_ait"
 msgstr "_Oota"
 
-#: ../plug-ins/common/screenshot.c:907
-msgid "seconds"
-msgstr "sekundit"
+#: ../plug-ins/common/screenshot.c:904
+msgid "seconds before grabbing"
+msgstr ""
+
+#: ../plug-ins/common/screenshot.c:908
+msgid ""
+"The number of seconds to wait after selecting the window or region and "
+"actually taking the screenshot."
+msgstr ""
 
 #: ../plug-ins/common/sel_gauss.c:105
 msgid "_Selective Gaussian Blur..."
@@ -6312,19 +6323,19 @@ msgstr ""
 msgid "Shifting..."
 msgstr ""
 
-#: ../plug-ins/common/shift.c:344
+#: ../plug-ins/common/shift.c:355
 msgid "Shift"
 msgstr ""
 
-#: ../plug-ins/common/shift.c:373
+#: ../plug-ins/common/shift.c:384
 msgid "Shift _horizontally"
 msgstr ""
 
-#: ../plug-ins/common/shift.c:374
+#: ../plug-ins/common/shift.c:387
 msgid "Shift _vertically"
 msgstr ""
 
-#: ../plug-ins/common/shift.c:404
+#: ../plug-ins/common/shift.c:418
 msgid "Shift _amount:"
 msgstr ""
 
@@ -6913,7 +6924,7 @@ msgstr ""
 #: ../plug-ins/common/sunras.c:1194 ../plug-ins/common/sunras.c:1289
 #: ../plug-ins/common/xwd.c:1298 ../plug-ins/common/xwd.c:1399
 #: ../plug-ins/common/xwd.c:1557 ../plug-ins/common/xwd.c:1757
-#: ../plug-ins/common/xwd.c:2014 ../plug-ins/fits/fits.c:667
+#: ../plug-ins/common/xwd.c:2014 ../plug-ins/fits/fits.c:676
 msgid "EOF encountered on reading"
 msgstr ""
 
@@ -6934,7 +6945,7 @@ msgstr ""
 msgid "Scalable SVG image"
 msgstr ""
 
-#: ../plug-ins/common/svg.c:311 ../plug-ins/common/svg.c:694
+#: ../plug-ins/common/svg.c:311 ../plug-ins/common/svg.c:696
 msgid "Unknown reason"
 msgstr "Teadmata põhjusel"
 
@@ -6946,56 +6957,56 @@ msgstr ""
 msgid "Rendered SVG"
 msgstr ""
 
-#: ../plug-ins/common/svg.c:490
+#: ../plug-ins/common/svg.c:491
 msgid ""
 "SVG file does not\n"
 "specify a size!"
 msgstr ""
 
-#: ../plug-ins/common/svg.c:496 ../plug-ins/common/wmf.c:336
+#: ../plug-ins/common/svg.c:497 ../plug-ins/common/wmf.c:336
 #, c-format
 msgid "%d x %d"
 msgstr ""
 
 #. Scalable Vector Graphics is SVG, should perhaps not be translated
-#: ../plug-ins/common/svg.c:701
+#: ../plug-ins/common/svg.c:703
 msgid "Render Scalable Vector Graphics"
 msgstr ""
 
-#: ../plug-ins/common/svg.c:770 ../plug-ins/common/wmf.c:553
+#: ../plug-ins/common/svg.c:772 ../plug-ins/common/wmf.c:553
 #: ../plug-ins/print/gimp_main_window.c:1023
 #: ../plug-ins/print/gimp_main_window.c:1226
 msgid "Height:"
 msgstr ""
 
-#: ../plug-ins/common/svg.c:844 ../plug-ins/common/wmf.c:627
+#: ../plug-ins/common/svg.c:846 ../plug-ins/common/wmf.c:627
 msgid "_X ratio:"
 msgstr ""
 
-#: ../plug-ins/common/svg.c:866 ../plug-ins/common/wmf.c:649
+#: ../plug-ins/common/svg.c:868 ../plug-ins/common/wmf.c:649
 msgid "_Y ratio:"
 msgstr ""
 
-#: ../plug-ins/common/svg.c:880 ../plug-ins/common/wmf.c:663
+#: ../plug-ins/common/svg.c:882 ../plug-ins/common/wmf.c:663
 msgid "Constrain aspect ratio"
 msgstr ""
 
-#: ../plug-ins/common/svg.c:891 ../plug-ins/common/wmf.c:674
+#: ../plug-ins/common/svg.c:893 ../plug-ins/common/wmf.c:674
 #, c-format
 msgid "pixels/%a"
 msgstr ""
 
 #. Path Import
-#: ../plug-ins/common/svg.c:911
+#: ../plug-ins/common/svg.c:913
 msgid "Import _paths"
 msgstr ""
 
-#: ../plug-ins/common/svg.c:917
+#: ../plug-ins/common/svg.c:919
 msgid ""
 "Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr ""
 
-#: ../plug-ins/common/svg.c:930
+#: ../plug-ins/common/svg.c:932
 msgid "Merge imported paths"
 msgstr ""
 
@@ -7032,8 +7043,8 @@ msgid "_Threshold Alpha..."
 msgstr ""
 
 #: ../plug-ins/common/threshold_alpha.c:129
-msgid "The layer preserves transparency."
-msgstr ""
+msgid "The layer has its alpha channel locked."
+msgstr "Kihi alfakanal on lukustatud."
 
 #: ../plug-ins/common/threshold_alpha.c:135
 msgid "RGBA/GRAYA drawable is not selected."
@@ -7054,18 +7065,18 @@ msgstr ""
 #: ../plug-ins/common/tiff.c:225 ../plug-ins/common/tiff.c:246
 #: ../plug-ins/common/tiff.c:263
 msgid "TIFF image"
-msgstr ""
+msgstr "TIFF pilt"
 
-#: ../plug-ins/common/tiff.c:897
+#: ../plug-ins/common/tiff.c:883
 #, c-format
 msgid "Page %d"
-msgstr ""
+msgstr "Lehekülg %d"
 
-#: ../plug-ins/common/tiff.c:913
+#: ../plug-ins/common/tiff.c:899
 msgid "TIFF Channel"
-msgstr ""
+msgstr "TIFF kanal"
 
-#: ../plug-ins/common/tiff.c:922
+#: ../plug-ins/common/tiff.c:908
 msgid ""
 "Warning:\n"
 "The image you are loading has 16 bits per channel. GIMP can only handle 8 "
@@ -7073,48 +7084,48 @@ msgid ""
 "this conversion."
 msgstr ""
 
-#: ../plug-ins/common/tiff.c:2095
+#: ../plug-ins/common/tiff.c:2081
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
 msgstr ""
 
-#: ../plug-ins/common/tiff.c:2258
+#: ../plug-ins/common/tiff.c:2244
 msgid "Save as TIFF"
-msgstr ""
+msgstr "Salvesta TIFF failina"
 
 #. compression
-#: ../plug-ins/common/tiff.c:2277
+#: ../plug-ins/common/tiff.c:2263
 msgid "Compression"
 msgstr ""
 
-#: ../plug-ins/common/tiff.c:2281
+#: ../plug-ins/common/tiff.c:2267
 msgid "_None"
-msgstr ""
+msgstr "_Puudub"
 
-#: ../plug-ins/common/tiff.c:2282
+#: ../plug-ins/common/tiff.c:2268
 msgid "_LZW"
-msgstr ""
+msgstr "_LZW"
 
-#: ../plug-ins/common/tiff.c:2283
+#: ../plug-ins/common/tiff.c:2269
 msgid "_Pack Bits"
 msgstr ""
 
-#: ../plug-ins/common/tiff.c:2284
+#: ../plug-ins/common/tiff.c:2270
 msgid "_Deflate"
 msgstr ""
 
-#: ../plug-ins/common/tiff.c:2285
+#: ../plug-ins/common/tiff.c:2271
 msgid "_JPEG"
-msgstr ""
+msgstr "_JPEG"
 
-#: ../plug-ins/common/tiff.c:2294
+#: ../plug-ins/common/tiff.c:2280
 msgid "Save _color values from transparent pixels"
 msgstr ""
 
-#: ../plug-ins/common/tiff.c:2310 ../plug-ins/common/xbm.c:1201
+#: ../plug-ins/common/tiff.c:2296 ../plug-ins/common/xbm.c:1208
 msgid "Comment:"
-msgstr ""
+msgstr "Kommentaar:"
 
 #: ../plug-ins/common/tile.c:108
 msgid "_Tile..."
@@ -7135,7 +7146,7 @@ msgstr ""
 
 #: ../plug-ins/common/tile.c:431
 msgid "C_reate New Image"
-msgstr ""
+msgstr "_Loo uus pilt"
 
 #: ../plug-ins/common/tileit.c:220
 msgid "_Small Tiles..."
@@ -7195,7 +7206,7 @@ msgstr ""
 
 #: ../plug-ins/common/uniteditor.c:92
 msgid "Saved"
-msgstr ""
+msgstr "Salvestatud"
 
 #: ../plug-ins/common/uniteditor.c:92
 msgid ""
@@ -7205,7 +7216,7 @@ msgstr ""
 
 #: ../plug-ins/common/uniteditor.c:94
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: ../plug-ins/common/uniteditor.c:94
 msgid ""
@@ -7251,7 +7262,7 @@ msgstr ""
 
 #: ../plug-ins/common/uniteditor.c:107
 msgid "Singular"
-msgstr ""
+msgstr "Ainsuses"
 
 #: ../plug-ins/common/uniteditor.c:107
 msgid "The unit's singular form."
@@ -7259,7 +7270,7 @@ msgstr ""
 
 #: ../plug-ins/common/uniteditor.c:108
 msgid "Plural"
-msgstr ""
+msgstr "Mitmuses"
 
 #: ../plug-ins/common/uniteditor.c:108
 msgid "The unit's plural form."
@@ -7277,47 +7288,47 @@ msgstr ""
 msgid "_Unit Editor"
 msgstr "_Mõõtühiku redaktor"
 
-#: ../plug-ins/common/uniteditor.c:208
+#: ../plug-ins/common/uniteditor.c:209
 msgid "New Unit"
 msgstr "Uus mõõtühik"
 
-#: ../plug-ins/common/uniteditor.c:237
+#: ../plug-ins/common/uniteditor.c:238
 msgid "_ID:"
 msgstr "_ID:"
 
-#: ../plug-ins/common/uniteditor.c:248
+#: ../plug-ins/common/uniteditor.c:249
 msgid "_Factor:"
 msgstr "_Faktor:"
 
-#: ../plug-ins/common/uniteditor.c:258
+#: ../plug-ins/common/uniteditor.c:259
 msgid "_Digits:"
 msgstr ""
 
-#: ../plug-ins/common/uniteditor.c:270
+#: ../plug-ins/common/uniteditor.c:271
 msgid "_Symbol:"
 msgstr "_Sümbol:"
 
-#: ../plug-ins/common/uniteditor.c:282
+#: ../plug-ins/common/uniteditor.c:283
 msgid "_Abbreviation:"
 msgstr ""
 
-#: ../plug-ins/common/uniteditor.c:294
+#: ../plug-ins/common/uniteditor.c:295
 msgid "Si_ngular:"
 msgstr "_Ainsuses:"
 
-#: ../plug-ins/common/uniteditor.c:306
+#: ../plug-ins/common/uniteditor.c:307
 msgid "_Plural:"
 msgstr "_Mitmuses:"
 
-#: ../plug-ins/common/uniteditor.c:342
+#: ../plug-ins/common/uniteditor.c:343
 msgid "Unit factor must not be 0."
 msgstr ""
 
-#: ../plug-ins/common/uniteditor.c:352
+#: ../plug-ins/common/uniteditor.c:353
 msgid "All text fields must contain a value."
 msgstr ""
 
-#: ../plug-ins/common/uniteditor.c:406
+#: ../plug-ins/common/uniteditor.c:407
 msgid "Unit Editor"
 msgstr "Mõõtühiku redaktor"
 
@@ -7355,7 +7366,7 @@ msgstr ""
 
 #: ../plug-ins/common/video.c:44
 msgid "_3x3"
-msgstr ""
+msgstr "_3x3"
 
 #: ../plug-ins/common/video.c:45
 msgid "Larg_e 3x3"
@@ -7371,7 +7382,7 @@ msgstr ""
 
 #: ../plug-ins/common/video.c:1812
 msgid "Vi_deo..."
-msgstr ""
+msgstr "Vi_deo..."
 
 #: ../plug-ins/common/video.c:1884
 msgid "Video/RGB..."
@@ -7379,7 +7390,7 @@ msgstr ""
 
 #: ../plug-ins/common/video.c:2015
 msgid "Video"
-msgstr ""
+msgstr "Video"
 
 #. frame for the radio buttons
 #: ../plug-ins/common/video.c:2035
@@ -7473,19 +7484,19 @@ msgstr ""
 
 #: ../plug-ins/common/vpropagate.c:1166
 msgid "To l_eft"
-msgstr ""
+msgstr "_Vasakule"
 
 #: ../plug-ins/common/vpropagate.c:1169
 msgid "To _right"
-msgstr ""
+msgstr "_Paremale"
 
 #: ../plug-ins/common/vpropagate.c:1172
 msgid "To _top"
-msgstr ""
+msgstr "Ü_les"
 
 #: ../plug-ins/common/vpropagate.c:1175
 msgid "To _bottom"
-msgstr ""
+msgstr "_Alla"
 
 #: ../plug-ins/common/vpropagate.c:1184
 msgid "Propagating _Alpha Channel"
@@ -7511,7 +7522,7 @@ msgstr ""
 msgid "Step size:"
 msgstr ""
 
-#: ../plug-ins/common/warp.c:445 ../plug-ins/ifscompose/ifscompose.c:1206
+#: ../plug-ins/common/warp.c:445 ../plug-ins/ifscompose/ifscompose.c:1210
 msgid "Iterations:"
 msgstr ""
 
@@ -7534,14 +7545,14 @@ msgstr ""
 msgid "Smear"
 msgstr ""
 
-#: ../plug-ins/common/warp.c:513 ../plug-ins/fits/fits.c:987
-#: ../plug-ins/flame/flame.c:1146 ../plug-ins/gfig/gfig-dialog.c:1420
+#: ../plug-ins/common/warp.c:513 ../plug-ins/fits/fits.c:996
+#: ../plug-ins/flame/flame.c:1145 ../plug-ins/gfig/gfig-dialog.c:1466
 msgid "Black"
-msgstr ""
+msgstr "Must"
 
 #: ../plug-ins/common/warp.c:528
 msgid "FG color"
-msgstr ""
+msgstr "Esiplaani värv"
 
 #. --------------------------------------------------------------------
 #. ---------    The secondary table         --------------------------
@@ -7726,11 +7737,11 @@ msgstr ""
 
 #: ../plug-ins/common/wind.c:946
 msgid "_Left"
-msgstr ""
+msgstr "_Vasak"
 
 #: ../plug-ins/common/wind.c:947
 msgid "_Right"
-msgstr ""
+msgstr "_Parem"
 
 #. ****************************************************
 #. radio buttons for choosing BOTH, LEADING, TRAILING
@@ -7765,7 +7776,7 @@ msgstr ""
 
 #: ../plug-ins/common/winprint.c:224
 msgid "_Print"
-msgstr ""
+msgstr "_Prindi"
 
 #: ../plug-ins/common/winprint.c:236
 msgid "Page Setup"
@@ -7814,7 +7825,7 @@ msgstr ""
 
 #: ../plug-ins/common/wmf.c:125
 msgid "Microsoft WMF file"
-msgstr ""
+msgstr "Microsoft WMF fail"
 
 #: ../plug-ins/common/wmf.c:330
 msgid ""
@@ -7826,7 +7837,7 @@ msgstr ""
 msgid "Render Windows Metafile"
 msgstr ""
 
-#: ../plug-ins/common/wmf.c:945 ../plug-ins/sgi/sgi.c:311
+#: ../plug-ins/common/wmf.c:945 ../plug-ins/sgi/sgi.c:313
 #, c-format
 msgid "Could not open '%s' for reading."
 msgstr ""
@@ -7837,7 +7848,7 @@ msgstr ""
 
 #: ../plug-ins/common/xbm.c:167 ../plug-ins/common/xbm.c:185
 msgid "X BitMap image"
-msgstr ""
+msgstr "X BitMap pilt"
 
 #: ../plug-ins/common/xbm.c:239
 msgid "Created with The GIMP"
@@ -7872,7 +7883,7 @@ msgid ""
 msgstr ""
 
 #. The image is not black-and-white.
-#: ../plug-ins/common/xbm.c:955
+#: ../plug-ins/common/xbm.c:962
 msgid ""
 "The image which you are trying to save as an XBM contains more than two "
 "colors.\n"
@@ -7880,53 +7891,53 @@ msgid ""
 "Please convert it to a black and white (1-bit) indexed image and try again."
 msgstr ""
 
-#: ../plug-ins/common/xbm.c:966
+#: ../plug-ins/common/xbm.c:973
 msgid ""
 "You cannot save a cursor mask for an image\n"
 "which has no alpha channel."
 msgstr ""
 
-#: ../plug-ins/common/xbm.c:1143
+#: ../plug-ins/common/xbm.c:1150
 msgid "Save as XBM"
 msgstr "Salvesta kui XBM"
 
 #. parameter settings
-#: ../plug-ins/common/xbm.c:1158
+#: ../plug-ins/common/xbm.c:1165
 msgid "XBM Options"
 msgstr "XBM võimalused"
 
 #. X10 format
-#: ../plug-ins/common/xbm.c:1167
+#: ../plug-ins/common/xbm.c:1174
 msgid "_X10 format bitmap"
 msgstr ""
 
-#: ../plug-ins/common/xbm.c:1187
+#: ../plug-ins/common/xbm.c:1194
 msgid "_Identifier prefix:"
 msgstr ""
 
 #. hotspot toggle
-#: ../plug-ins/common/xbm.c:1209
+#: ../plug-ins/common/xbm.c:1216
 msgid "_Write hot spot values"
 msgstr ""
 
-#: ../plug-ins/common/xbm.c:1231
+#: ../plug-ins/common/xbm.c:1238
 msgid "Hot spot _X:"
 msgstr ""
 
-#: ../plug-ins/common/xbm.c:1241
+#: ../plug-ins/common/xbm.c:1248
 msgid "Hot spot _Y:"
 msgstr ""
 
 #. mask file
-#: ../plug-ins/common/xbm.c:1248
+#: ../plug-ins/common/xbm.c:1255
 msgid "Mask File"
 msgstr ""
 
-#: ../plug-ins/common/xbm.c:1258
+#: ../plug-ins/common/xbm.c:1265
 msgid "W_rite extra mask file"
 msgstr ""
 
-#: ../plug-ins/common/xbm.c:1271
+#: ../plug-ins/common/xbm.c:1278
 msgid "_Mask file extension:"
 msgstr ""
 
@@ -7995,210 +8006,48 @@ msgstr "ZealousCropping(tm)..."
 msgid "Nothing to crop."
 msgstr "Pole midagi kärpida."
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:131
-msgid "Procedure Browser"
-msgstr "Protseduuride sirvija"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:154
-msgid "by name"
-msgstr "nime järgi"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:155
-msgid "by description"
-msgstr "kirjelduse järgi"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:156
-msgid "by help"
-msgstr "abiinfo järgi"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:157
-msgid "by author"
-msgstr "autori järgi"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:158
-msgid "by copyright"
-msgstr "copyright'i järgi"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:159
-msgid "by date"
-msgstr "kuupäeva järgi"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:160
-msgid "by type"
-msgstr "tüübi järgi"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:331
-#: ../plug-ins/dbbrowser/plugin-browser.c:388
-msgid "Searching by name - please wait"
-msgstr "Nime järgi otsimine - palun oota"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:353
-msgid "Searching by description - please wait"
-msgstr "Kirjelduse järgi otsimine - palun oota"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:361
-msgid "Searching by help - please wait"
-msgstr "Abiinfo järgi otsimine - palun oota"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:369
-msgid "Searching by author - please wait"
-msgstr "Autori järgi otsimine - palun oota"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:377
-msgid "Searching by copyright - please wait"
-msgstr "Copyright'i järgi otsimine - palun oota"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:385
-msgid "Searching by date - please wait"
-msgstr "Kuupäeva järgi otsimine - palun oota"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:393
-msgid "Searching by type - please wait"
-msgstr "Tüübi järgi otsimine - palun oota"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:401
-msgid "Searching - please wait"
-msgstr "Otsimine - palun oota"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:408
-msgid "1 Procedure"
-msgstr "1 protseduur"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:410
-#, c-format
-msgid "%d Procedures"
-msgstr "%d protseduuri"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:462
-#: ../plug-ins/dbbrowser/plugin-browser.c:517
-msgid "No matches"
-msgstr "Selliseid pole"
-
-#.
-#. *  Scales
-#.
-#.
-#. *    Scales
-#.
-#: ../plug-ins/dbbrowser/gimpprocview.c:138 ../plug-ins/gflare/gflare.c:2677
-#: ../plug-ins/gflare/gflare.c:3508 ../plug-ins/gflare/gflare.c:3613
-#: ../plug-ins/gflare/gflare.c:3750
-msgid "Parameters"
-msgstr "Parameetrid"
-
-#: ../plug-ins/dbbrowser/gimpprocview.c:151
-msgid "Return Values"
-msgstr "Tagastatavad väärtused"
-
-#: ../plug-ins/dbbrowser/gimpprocview.c:164
-msgid "Additional Information"
-msgstr "Lisateave"
-
-#: ../plug-ins/dbbrowser/gimpprocview.c:205
-msgid "Author:"
-msgstr "Autor:"
-
-#: ../plug-ins/dbbrowser/gimpprocview.c:217
-msgid "Date:"
-msgstr "Kuupäev:"
-
-#: ../plug-ins/dbbrowser/gimpprocview.c:229
-msgid "Copyright:"
-msgstr "Copyright:"
-
-#: ../plug-ins/dbbrowser/plugin-browser.c:145
-msgid "_Plug-In Browser"
-msgstr "_Pistikute sirvija"
-
-#: ../plug-ins/dbbrowser/plugin-browser.c:401
-msgid "1 Plug-In Interface"
-msgstr ""
-
-#: ../plug-ins/dbbrowser/plugin-browser.c:403
-#, c-format
-msgid "%d Plug-In Interfaces"
-msgstr ""
-
-#: ../plug-ins/dbbrowser/plugin-browser.c:541
-msgid "Plug-In Browser"
-msgstr "Pistikute sirvija"
-
-#: ../plug-ins/dbbrowser/plugin-browser.c:584
-msgid "Name"
-msgstr "Nimi"
-
-#: ../plug-ins/dbbrowser/plugin-browser.c:592
-#: ../plug-ins/dbbrowser/plugin-browser.c:661
-msgid "Insertion Date"
-msgstr "Lisamise kuupäev"
-
-#: ../plug-ins/dbbrowser/plugin-browser.c:600
-msgid "Menu Path"
-msgstr ""
-
-#: ../plug-ins/dbbrowser/plugin-browser.c:608
-#: ../plug-ins/dbbrowser/plugin-browser.c:670
-msgid "Image Types"
-msgstr "Piltide tüübid"
-
-#: ../plug-ins/dbbrowser/plugin-browser.c:632
-msgid "List View"
-msgstr "Nimekirjavaade"
-
-#: ../plug-ins/dbbrowser/plugin-browser.c:652
-msgid "Menu Path/Name"
-msgstr ""
-
-#: ../plug-ins/dbbrowser/plugin-browser.c:693
-msgid "Tree View"
-msgstr "Puuvaade"
-
-#: ../plug-ins/dbbrowser/procedure-browser.c:86
-msgid "Procedure _Browser"
-msgstr "P_rotseduuride sirvija"
-
-#: ../plug-ins/faxg3/faxg3.c:101
+#: ../plug-ins/faxg3/faxg3.c:102
 msgid "G3 fax image"
 msgstr "G3 faksi pilt"
 
-#: ../plug-ins/fits/fits.c:155 ../plug-ins/fits/fits.c:174
+#: ../plug-ins/fits/fits.c:163 ../plug-ins/fits/fits.c:183
 msgid "Flexible Image Transport System"
 msgstr ""
 
-#: ../plug-ins/fits/fits.c:342
+#: ../plug-ins/fits/fits.c:351
 msgid "Error during open of FITS file"
 msgstr "Viga FITS faili avamisel"
 
-#: ../plug-ins/fits/fits.c:347
+#: ../plug-ins/fits/fits.c:356
 msgid "FITS file keeps no displayable images"
 msgstr ""
 
-#: ../plug-ins/fits/fits.c:425
+#: ../plug-ins/fits/fits.c:434
 msgid "FITS save cannot handle images with alpha channels"
 msgstr ""
 
-#: ../plug-ins/fits/fits.c:963
+#: ../plug-ins/fits/fits.c:972
 msgid "Load FITS File"
 msgstr "Laadin FITS fail"
 
-#: ../plug-ins/fits/fits.c:983
+#: ../plug-ins/fits/fits.c:992
 msgid "Replacement for undefined pixels"
 msgstr ""
 
-#: ../plug-ins/fits/fits.c:988 ../plug-ins/gfig/gfig-dialog.c:1287
-#: ../plug-ins/gfig/gfig-dialog.c:1421
+#: ../plug-ins/fits/fits.c:997 ../plug-ins/gfig/gfig-dialog.c:1292
+#: ../plug-ins/gfig/gfig-dialog.c:1467
 msgid "White"
 msgstr "Valge"
 
-#: ../plug-ins/fits/fits.c:995
+#: ../plug-ins/fits/fits.c:1004
 msgid "Pixel value scaling"
 msgstr ""
 
-#: ../plug-ins/fits/fits.c:1000
+#: ../plug-ins/fits/fits.c:1009
 msgid "By DATAMIN/DATAMAX"
 msgstr ""
 
-#: ../plug-ins/fits/fits.c:1007
+#: ../plug-ins/fits/fits.c:1016
 msgid "Image Composing"
 msgstr ""
 
@@ -8206,117 +8055,117 @@ msgstr ""
 msgid "_Flame..."
 msgstr ""
 
-#: ../plug-ins/flame/flame.c:227
+#: ../plug-ins/flame/flame.c:226
 msgid "Drawing Flame..."
 msgstr ""
 
-#: ../plug-ins/flame/flame.c:319
+#: ../plug-ins/flame/flame.c:318
 msgid "Flame works only on RGB drawables."
 msgstr ""
 
-#: ../plug-ins/flame/flame.c:402
+#: ../plug-ins/flame/flame.c:401
 #, c-format
 msgid "'%s' is not a regular file"
 msgstr ""
 
-#: ../plug-ins/flame/flame.c:642
+#: ../plug-ins/flame/flame.c:641
 msgid "Edit Flame"
 msgstr ""
 
-#: ../plug-ins/flame/flame.c:665
+#: ../plug-ins/flame/flame.c:664
 msgid "Directions"
 msgstr ""
 
-#: ../plug-ins/flame/flame.c:701
+#: ../plug-ins/flame/flame.c:700
 msgid "Controls"
 msgstr ""
 
-#: ../plug-ins/flame/flame.c:715
+#: ../plug-ins/flame/flame.c:714
 msgid "_Speed:"
 msgstr "_Kiirus:"
 
-#: ../plug-ins/flame/flame.c:732
+#: ../plug-ins/flame/flame.c:731
 msgid "_Randomize"
 msgstr ""
 
-#: ../plug-ins/flame/flame.c:741
+#: ../plug-ins/flame/flame.c:740
 msgid "Same"
 msgstr ""
 
-#: ../plug-ins/flame/flame.c:742 ../plug-ins/gimpressionist/orientation.c:146
+#: ../plug-ins/flame/flame.c:741 ../plug-ins/gimpressionist/orientation.c:146
 #: ../plug-ins/gimpressionist/size.c:149
 msgid "Random"
 msgstr ""
 
-#: ../plug-ins/flame/flame.c:746
+#: ../plug-ins/flame/flame.c:745
 msgid "Swirl"
 msgstr ""
 
-#: ../plug-ins/flame/flame.c:747
+#: ../plug-ins/flame/flame.c:746
 msgid "Horseshoe"
 msgstr ""
 
-#: ../plug-ins/flame/flame.c:748 ../plug-ins/gfig/gfig-dialog.c:1402
+#: ../plug-ins/flame/flame.c:747 ../plug-ins/gfig/gfig-dialog.c:1448
 msgid "Polar"
 msgstr ""
 
-#: ../plug-ins/flame/flame.c:749
+#: ../plug-ins/flame/flame.c:748
 msgid "Bent"
 msgstr ""
 
-#: ../plug-ins/flame/flame.c:762
+#: ../plug-ins/flame/flame.c:761
 msgid "_Variation:"
 msgstr ""
 
-#: ../plug-ins/flame/flame.c:784
+#: ../plug-ins/flame/flame.c:783
 msgid "Load Flame"
 msgstr ""
 
-#: ../plug-ins/flame/flame.c:799
+#: ../plug-ins/flame/flame.c:798
 msgid "Save Flame"
 msgstr ""
 
-#: ../plug-ins/flame/flame.c:941
+#: ../plug-ins/flame/flame.c:940
 msgid "Flame"
 msgstr ""
 
-#: ../plug-ins/flame/flame.c:1040
+#: ../plug-ins/flame/flame.c:1039
 msgid "_Rendering"
 msgstr ""
 
-#: ../plug-ins/flame/flame.c:1066
+#: ../plug-ins/flame/flame.c:1065
 msgid "Co_ntrast:"
 msgstr "Ko_ntrastsus:"
 
-#: ../plug-ins/flame/flame.c:1080
+#: ../plug-ins/flame/flame.c:1079
 msgid "_Gamma:"
 msgstr "_Gamma:"
 
-#: ../plug-ins/flame/flame.c:1094
+#: ../plug-ins/flame/flame.c:1093
 msgid "Sample _density:"
 msgstr ""
 
-#: ../plug-ins/flame/flame.c:1105
+#: ../plug-ins/flame/flame.c:1104
 msgid "Spa_tial oversample:"
 msgstr ""
 
-#: ../plug-ins/flame/flame.c:1116
+#: ../plug-ins/flame/flame.c:1115
 msgid "Spatial _filter radius:"
 msgstr ""
 
-#: ../plug-ins/flame/flame.c:1135
+#: ../plug-ins/flame/flame.c:1134
 msgid "Color_map:"
 msgstr ""
 
-#: ../plug-ins/flame/flame.c:1177
+#: ../plug-ins/flame/flame.c:1176
 msgid "Custom gradient"
 msgstr "Omatehtud spektrikomplekt"
 
-#: ../plug-ins/flame/flame.c:1203
+#: ../plug-ins/flame/flame.c:1202
 msgid "C_amera"
 msgstr "K_aamera"
 
-#: ../plug-ins/flame/flame.c:1208
+#: ../plug-ins/flame/flame.c:1207
 msgid "_Zoom:"
 msgstr "_Suurendus:"
 
@@ -8337,268 +8186,276 @@ msgid "Draws lines between the control points. Only during curve creation"
 msgstr ""
 
 #. Start building the dialog up
-#: ../plug-ins/gfig/gfig-dialog.c:289
+#: ../plug-ins/gfig/gfig-dialog.c:294
 msgid "Gfig"
 msgstr "Gfig"
 
 #. Tool options notebook
-#: ../plug-ins/gfig/gfig-dialog.c:340
+#: ../plug-ins/gfig/gfig-dialog.c:345
 msgid "Tool options"
 msgstr "Tööriista võimalused"
 
-#: ../plug-ins/gfig/gfig-dialog.c:357
+#: ../plug-ins/gfig/gfig-dialog.c:362
 msgid "_Stroke"
 msgstr "_Pintselda"
 
 #. Fill frame on right side
-#: ../plug-ins/gfig/gfig-dialog.c:404
+#: ../plug-ins/gfig/gfig-dialog.c:409
 msgid "Fill"
 msgstr "Täida"
 
-#: ../plug-ins/gfig/gfig-dialog.c:418
+#: ../plug-ins/gfig/gfig-dialog.c:423
 msgid "No fill"
 msgstr "Ei täida"
 
-#: ../plug-ins/gfig/gfig-dialog.c:419
+#: ../plug-ins/gfig/gfig-dialog.c:424
 msgid "Color fill"
 msgstr "Täida värviga"
 
-#: ../plug-ins/gfig/gfig-dialog.c:420
+#: ../plug-ins/gfig/gfig-dialog.c:425
 msgid "Pattern fill"
 msgstr "Täida mustriga"
 
-#: ../plug-ins/gfig/gfig-dialog.c:421
+#: ../plug-ins/gfig/gfig-dialog.c:426
 msgid "Shape Gradient"
 msgstr "Kujunda spektrikomplekti"
 
-#: ../plug-ins/gfig/gfig-dialog.c:422
+#: ../plug-ins/gfig/gfig-dialog.c:427
 msgid "Vertical Gradient"
 msgstr "Vertikaalne spektrikomplekt"
 
-#: ../plug-ins/gfig/gfig-dialog.c:423
+#: ../plug-ins/gfig/gfig-dialog.c:428
 msgid "Horizontal Gradient"
 msgstr "Horisontaalne spektrikomplekt"
 
 #. "show image" checkbutton at bottom of style frame
-#: ../plug-ins/gfig/gfig-dialog.c:483
+#: ../plug-ins/gfig/gfig-dialog.c:488
 msgid "Show image"
 msgstr "Näita pilti"
 
 #. "show grid" checkbutton at bottom of style frame
-#: ../plug-ins/gfig/gfig-dialog.c:505
+#: ../plug-ins/gfig/gfig-dialog.c:510
 msgid "Show grid"
 msgstr "Näita ruudustikku"
 
-#: ../plug-ins/gfig/gfig-dialog.c:640
+#: ../plug-ins/gfig/gfig-dialog.c:645
 msgid "Load Gfig object collection"
 msgstr "Laadi Gfig objektide kollektsioon"
 
-#: ../plug-ins/gfig/gfig-dialog.c:689
+#: ../plug-ins/gfig/gfig-dialog.c:694
 msgid "Save Gfig Drawing"
 msgstr "Salvesta Gfig joonistus"
 
-#: ../plug-ins/gfig/gfig-dialog.c:832
+#: ../plug-ins/gfig/gfig-dialog.c:837
 msgid "First Gfig"
 msgstr ""
 
-#: ../plug-ins/gfig/gfig-dialog.c:871
+#: ../plug-ins/gfig/gfig-dialog.c:876
 msgid "_Undo"
 msgstr "_Võta tagasi"
 
-#: ../plug-ins/gfig/gfig-dialog.c:875
+#: ../plug-ins/gfig/gfig-dialog.c:880
 msgid "_Clear"
-msgstr ""
+msgstr "_Nulli"
 
-#: ../plug-ins/gfig/gfig-dialog.c:879
+#: ../plug-ins/gfig/gfig-dialog.c:884
 msgid "_Grid"
 msgstr "_Ruudustik"
 
-#: ../plug-ins/gfig/gfig-dialog.c:887
+#: ../plug-ins/gfig/gfig-dialog.c:892
 msgid "Raise selected object"
 msgstr "Tõsta valitud objekti"
 
-#: ../plug-ins/gfig/gfig-dialog.c:891
+#: ../plug-ins/gfig/gfig-dialog.c:896
 msgid "Lower selected object"
 msgstr "Langeta valitud objekti"
 
-#: ../plug-ins/gfig/gfig-dialog.c:895
+#: ../plug-ins/gfig/gfig-dialog.c:900
 msgid "Raise selected object to top"
 msgstr "Tõsta valitud objekt pealmiseks"
 
-#: ../plug-ins/gfig/gfig-dialog.c:899
+#: ../plug-ins/gfig/gfig-dialog.c:904
 msgid "Lower selected object to bottom"
 msgstr "Langeta valitud objekt alumiseks"
 
-#: ../plug-ins/gfig/gfig-dialog.c:903
+#: ../plug-ins/gfig/gfig-dialog.c:908
 msgid "Show previous object"
 msgstr "Näita eelmist objekti"
 
-#: ../plug-ins/gfig/gfig-dialog.c:907
+#: ../plug-ins/gfig/gfig-dialog.c:912
 msgid "Show next object"
 msgstr "Näita järgmist objekti"
 
-#: ../plug-ins/gfig/gfig-dialog.c:911 ../plug-ins/gfig/gfig-stock.c:53
+#: ../plug-ins/gfig/gfig-dialog.c:916 ../plug-ins/gfig/gfig-stock.c:53
 msgid "Show all objects"
 msgstr "Näita kõiki objekte"
 
-#: ../plug-ins/gfig/gfig-dialog.c:917 ../plug-ins/gfig/gfig-stock.c:47
+#: ../plug-ins/gfig/gfig-dialog.c:922 ../plug-ins/gfig/gfig-stock.c:47
 msgid "Create line"
 msgstr "Loo joon"
 
-#: ../plug-ins/gfig/gfig-dialog.c:920 ../plug-ins/gfig/gfig-stock.c:51
+#: ../plug-ins/gfig/gfig-dialog.c:925 ../plug-ins/gfig/gfig-stock.c:51
 msgid "Create rectangle"
 msgstr "Loo ristkülik"
 
-#: ../plug-ins/gfig/gfig-dialog.c:923 ../plug-ins/gfig/gfig-stock.c:42
+#: ../plug-ins/gfig/gfig-dialog.c:928 ../plug-ins/gfig/gfig-stock.c:42
 msgid "Create circle"
 msgstr "Loo ring"
 
-#: ../plug-ins/gfig/gfig-dialog.c:926 ../plug-ins/gfig/gfig-stock.c:46
+#: ../plug-ins/gfig/gfig-dialog.c:931 ../plug-ins/gfig/gfig-stock.c:46
 msgid "Create ellipse"
 msgstr "Loo ellips"
 
-#: ../plug-ins/gfig/gfig-dialog.c:929 ../plug-ins/gfig/gfig-stock.c:44
+#: ../plug-ins/gfig/gfig-dialog.c:934 ../plug-ins/gfig/gfig-stock.c:44
 msgid "Create arc"
 msgstr ""
 
-#: ../plug-ins/gfig/gfig-dialog.c:932 ../plug-ins/gfig/gfig-stock.c:50
+#: ../plug-ins/gfig/gfig-dialog.c:937 ../plug-ins/gfig/gfig-stock.c:50
 msgid "Create reg polygon"
 msgstr ""
 
-#: ../plug-ins/gfig/gfig-dialog.c:935 ../plug-ins/gfig/gfig-stock.c:55
+#: ../plug-ins/gfig/gfig-dialog.c:940 ../plug-ins/gfig/gfig-stock.c:55
 msgid "Create star"
 msgstr "Loo täht"
 
-#: ../plug-ins/gfig/gfig-dialog.c:938 ../plug-ins/gfig/gfig-stock.c:54
+#: ../plug-ins/gfig/gfig-dialog.c:943 ../plug-ins/gfig/gfig-stock.c:54
 msgid "Create spiral"
 msgstr "Loo spiraal"
 
-#: ../plug-ins/gfig/gfig-dialog.c:941
+#: ../plug-ins/gfig/gfig-dialog.c:946
 msgid "Create bezier curve. Shift + Button ends object creation."
 msgstr ""
 
-#: ../plug-ins/gfig/gfig-dialog.c:945 ../plug-ins/gfig/gfig-stock.c:48
+#: ../plug-ins/gfig/gfig-dialog.c:950 ../plug-ins/gfig/gfig-stock.c:48
 msgid "Move an object"
 msgstr "Liiguta objekti"
 
-#: ../plug-ins/gfig/gfig-dialog.c:948 ../plug-ins/gfig/gfig-stock.c:49
+#: ../plug-ins/gfig/gfig-dialog.c:953 ../plug-ins/gfig/gfig-stock.c:49
 msgid "Move a single point"
 msgstr "Liiguta üksikut punkti"
 
-#: ../plug-ins/gfig/gfig-dialog.c:951 ../plug-ins/gfig/gfig-stock.c:43
+#: ../plug-ins/gfig/gfig-dialog.c:956 ../plug-ins/gfig/gfig-stock.c:43
 msgid "Copy an object"
 msgstr "Kopeeri objekt"
 
-#: ../plug-ins/gfig/gfig-dialog.c:954 ../plug-ins/gfig/gfig-stock.c:45
+#: ../plug-ins/gfig/gfig-dialog.c:959 ../plug-ins/gfig/gfig-stock.c:45
 msgid "Delete an object"
 msgstr "Kustuta objekt"
 
-#: ../plug-ins/gfig/gfig-dialog.c:957 ../plug-ins/gfig/gfig-stock.c:52
+#: ../plug-ins/gfig/gfig-dialog.c:962 ../plug-ins/gfig/gfig-stock.c:52
 msgid "Select an object"
 msgstr "Vali objekt"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1039
+#: ../plug-ins/gfig/gfig-dialog.c:1044
 msgid "This tool has no options"
 msgstr "Sellel tööriistal ei ole võimalusi."
 
 #. Put buttons in
-#: ../plug-ins/gfig/gfig-dialog.c:1229
+#: ../plug-ins/gfig/gfig-dialog.c:1234
 msgid "Show position"
 msgstr ""
 
-#: ../plug-ins/gfig/gfig-dialog.c:1241
+#: ../plug-ins/gfig/gfig-dialog.c:1246
 msgid "Show control points"
 msgstr ""
 
-#: ../plug-ins/gfig/gfig-dialog.c:1275
+#: ../plug-ins/gfig/gfig-dialog.c:1280
 msgid "Max undo:"
 msgstr ""
 
-#: ../plug-ins/gfig/gfig-dialog.c:1284
+#: ../plug-ins/gfig/gfig-dialog.c:1289
 #: ../plug-ins/gimpressionist/general.c:166
 msgid "Transparent"
 msgstr "Läbipaistev"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1286
+#: ../plug-ins/gfig/gfig-dialog.c:1291
 msgid "Foreground"
 msgstr "Esiplaan"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1288 ../plug-ins/imagemap/imap_cmd_copy.c:54
+#: ../plug-ins/gfig/gfig-dialog.c:1293 ../plug-ins/imagemap/imap_cmd_copy.c:54
 #: ../plug-ins/imagemap/imap_cmd_copy_object.c:55
 msgid "Copy"
 msgstr "Kopeeri"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1297
+#: ../plug-ins/gfig/gfig-dialog.c:1302
 msgid ""
 "Layer background type. Copy causes the previous layer to be copied before "
 "the draw is performed."
 msgstr ""
 
-#: ../plug-ins/gfig/gfig-dialog.c:1303
+#: ../plug-ins/gfig/gfig-dialog.c:1308
 msgid "Background:"
 msgstr "Tagapõhi:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1306
+#: ../plug-ins/gfig/gfig-dialog.c:1311
 msgid "Feather"
 msgstr "Pehmenda"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1330
+#: ../plug-ins/gfig/gfig-dialog.c:1335
 msgid "Radius:"
 msgstr "Raadius:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1385
+#: ../plug-ins/gfig/gfig-dialog.c:1392
 msgid "Grid spacing:"
 msgstr "Ruudustiku vahemaa:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1401
+#: ../plug-ins/gfig/gfig-dialog.c:1409
+msgid "Polar grid sectors desired:"
+msgstr ""
+
+#: ../plug-ins/gfig/gfig-dialog.c:1431
+msgid "Polar grid radius interval:"
+msgstr ""
+
+#: ../plug-ins/gfig/gfig-dialog.c:1447
 msgid "Rectangle"
 msgstr "Ristkülik"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1403
+#: ../plug-ins/gfig/gfig-dialog.c:1449
 msgid "Isometric"
 msgstr ""
 
-#: ../plug-ins/gfig/gfig-dialog.c:1412
+#: ../plug-ins/gfig/gfig-dialog.c:1458
 msgid "Grid type:"
 msgstr "Ruudustiku tüüp:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1419 ../plug-ins/gflare/gflare.c:558
+#: ../plug-ins/gfig/gfig-dialog.c:1465 ../plug-ins/gflare/gflare.c:556
 msgid "Normal"
 msgstr "Normaalne"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1422
+#: ../plug-ins/gfig/gfig-dialog.c:1468
 msgid "Grey"
 msgstr "Hall"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1423
+#: ../plug-ins/gfig/gfig-dialog.c:1469
 msgid "Darker"
 msgstr "Tumedam"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1424
+#: ../plug-ins/gfig/gfig-dialog.c:1470
 msgid "Lighter"
 msgstr "Heledam"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1425
+#: ../plug-ins/gfig/gfig-dialog.c:1471
 msgid "Very dark"
 msgstr "Väga tume"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1434
+#: ../plug-ins/gfig/gfig-dialog.c:1480
 msgid "Grid color:"
 msgstr "Ruudustiku värv:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1637
+#: ../plug-ins/gfig/gfig-dialog.c:1703
 msgid "Sides:"
 msgstr "Küljed:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1647
+#: ../plug-ins/gfig/gfig-dialog.c:1713
 msgid "Right"
 msgstr "Parem"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1648
+#: ../plug-ins/gfig/gfig-dialog.c:1714
 msgid "Left"
 msgstr "Vasak"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1658
+#: ../plug-ins/gfig/gfig-dialog.c:1724
 #: ../plug-ins/gimpressionist/orientation.c:130
 #: ../plug-ins/print/gimp_main_window.c:508
 msgid "Orientation:"
@@ -8641,52 +8498,52 @@ msgstr ""
 msgid "Create bezier curve"
 msgstr ""
 
-#: ../plug-ins/gfig/gfig.c:130
+#: ../plug-ins/gfig/gfig.c:128
 msgid "_Gfig..."
 msgstr "_Gfig..."
 
-#: ../plug-ins/gfig/gfig.c:726
+#: ../plug-ins/gfig/gfig.c:724
 msgid ""
 "Error trying to save figure as a parasite: can't attach parasite to drawable."
 msgstr ""
 
-#: ../plug-ins/gfig/gfig.c:753
+#: ../plug-ins/gfig/gfig.c:751
 #, c-format
 msgid "Error trying to open temporary file '%s' for parasite loading: %s"
 msgstr ""
 
-#: ../plug-ins/gflare/gflare.c:559
+#: ../plug-ins/gflare/gflare.c:557
 msgid "Addition"
 msgstr ""
 
-#: ../plug-ins/gflare/gflare.c:560
+#: ../plug-ins/gflare/gflare.c:558
 msgid "Overlay"
 msgstr ""
 
-#: ../plug-ins/gflare/gflare.c:820
+#: ../plug-ins/gflare/gflare.c:818
 msgid "_GFlare..."
 msgstr ""
 
-#: ../plug-ins/gflare/gflare.c:959
+#: ../plug-ins/gflare/gflare.c:957
 msgid "Gradient Flare..."
 msgstr ""
 
-#: ../plug-ins/gflare/gflare.c:1261
+#: ../plug-ins/gflare/gflare.c:1259
 #, c-format
 msgid "Failed to open GFlare file '%s': %s"
 msgstr "GFlare faili '%s' avamine ei õnnestunud: %s"
 
-#: ../plug-ins/gflare/gflare.c:1269
+#: ../plug-ins/gflare/gflare.c:1267
 #, c-format
 msgid "'%s' is not a valid GFlare file."
 msgstr "'%s' ei ole sobiv GFlare fail."
 
-#: ../plug-ins/gflare/gflare.c:1323
+#: ../plug-ins/gflare/gflare.c:1321
 #, c-format
 msgid "invalid formatted GFlare file: %s\n"
 msgstr ""
 
-#: ../plug-ins/gflare/gflare.c:1448
+#: ../plug-ins/gflare/gflare.c:1446
 #, c-format
 msgid ""
 "GFlare '%s' is not saved. If you add a new entry in '%s', like:\n"
@@ -8694,7 +8551,7 @@ msgid ""
 "and make a folder '%s', then you can save your own GFlares into that folder."
 msgstr ""
 
-#: ../plug-ins/gflare/gflare.c:1481
+#: ../plug-ins/gflare/gflare.c:1479
 #, c-format
 msgid "Failed to write GFlare file '%s': %s"
 msgstr "GFlare faili '%s' kirjutamine ebaõnnestus: %s"
@@ -8702,231 +8559,242 @@ msgstr "GFlare faili '%s' kirjutamine ebaõnnestus: %s"
 #.
 #. *    Dialog Shell
 #.
-#: ../plug-ins/gflare/gflare.c:2293
+#: ../plug-ins/gflare/gflare.c:2291
 msgid "GFlare"
 msgstr "GFlare"
 
-#: ../plug-ins/gflare/gflare.c:2350
+#: ../plug-ins/gflare/gflare.c:2348
 msgid "A_uto update preview"
 msgstr "_Uuenda eelvaadet automaatselt"
 
-#: ../plug-ins/gflare/gflare.c:2401
+#: ../plug-ins/gflare/gflare.c:2399
 msgid "`Default' is created."
 msgstr ""
 
-#: ../plug-ins/gflare/gflare.c:2402
+#: ../plug-ins/gflare/gflare.c:2400
 msgid "Default"
 msgstr ""
 
-#: ../plug-ins/gflare/gflare.c:2703
+#.
+#. *  Scales
+#.
+#.
+#. *    Scales
+#.
+#: ../plug-ins/gflare/gflare.c:2675 ../plug-ins/gflare/gflare.c:3512
+#: ../plug-ins/gflare/gflare.c:3617 ../plug-ins/gflare/gflare.c:3754
+msgid "Parameters"
+msgstr "Parameetrid"
+
+#: ../plug-ins/gflare/gflare.c:2701
 msgid "Ro_tation:"
 msgstr ""
 
-#: ../plug-ins/gflare/gflare.c:2715
+#: ../plug-ins/gflare/gflare.c:2713
 msgid "_Hue rotation:"
 msgstr ""
 
-#: ../plug-ins/gflare/gflare.c:2727
+#: ../plug-ins/gflare/gflare.c:2725
 msgid "Vector _Angle:"
 msgstr ""
 
-#: ../plug-ins/gflare/gflare.c:2739
+#: ../plug-ins/gflare/gflare.c:2737
 msgid "Vector _Length:"
 msgstr ""
 
-#: ../plug-ins/gflare/gflare.c:2760
+#: ../plug-ins/gflare/gflare.c:2758
 msgid "A_daptive supersampling"
 msgstr ""
 
-#: ../plug-ins/gflare/gflare.c:2779
+#: ../plug-ins/gflare/gflare.c:2777
 msgid "_Max Depth:"
 msgstr ""
 
-#: ../plug-ins/gflare/gflare.c:2789
+#: ../plug-ins/gflare/gflare.c:2787
 msgid "_Threshold"
 msgstr ""
 
-#: ../plug-ins/gflare/gflare.c:2927
+#: ../plug-ins/gflare/gflare.c:2925
 msgid "S_elector"
 msgstr ""
 
-#: ../plug-ins/gflare/gflare.c:2991
+#: ../plug-ins/gflare/gflare.c:2989
 msgid "New GFlare"
 msgstr "Uus GFlare"
 
-#: ../plug-ins/gflare/gflare.c:2994
+#: ../plug-ins/gflare/gflare.c:2992
 msgid "Enter a name for the new GFlare"
 msgstr ""
 
-#: ../plug-ins/gflare/gflare.c:3014
+#: ../plug-ins/gflare/gflare.c:3012
 #, c-format
 msgid "The name '%s' is used already!"
 msgstr ""
 
-#: ../plug-ins/gflare/gflare.c:3070
+#: ../plug-ins/gflare/gflare.c:3068
 msgid "Copy GFlare"
 msgstr "Kopeeri GFlare"
 
-#: ../plug-ins/gflare/gflare.c:3073
+#: ../plug-ins/gflare/gflare.c:3071
 msgid "Enter a name for the copied GFlare"
 msgstr ""
 
-#: ../plug-ins/gflare/gflare.c:3095
+#: ../plug-ins/gflare/gflare.c:3093
 #, c-format
 msgid "The name `%s' is used already!"
 msgstr ""
 
-#: ../plug-ins/gflare/gflare.c:3126
+#: ../plug-ins/gflare/gflare.c:3124
 msgid "Cannot delete!! There must be at least one GFlare."
 msgstr "Ei saa kustutada!! PEab olema vähemalt üks GFlare."
 
-#: ../plug-ins/gflare/gflare.c:3136
+#: ../plug-ins/gflare/gflare.c:3134
 msgid "Delete GFlare"
 msgstr "Kustuta GFlare"
 
-#: ../plug-ins/gflare/gflare.c:3208
+#: ../plug-ins/gflare/gflare.c:3206
 #, c-format
 msgid "not found %s in gflares_list"
 msgstr ""
 
-#: ../plug-ins/gflare/gflare.c:3249
+#: ../plug-ins/gflare/gflare.c:3247
 msgid "GFlare Editor"
 msgstr "GFlare redaktor"
 
-#: ../plug-ins/gflare/gflare.c:3253
+#: ../plug-ins/gflare/gflare.c:3251
 msgid "Rescan Gradients"
 msgstr ""
 
 #. Glow
-#: ../plug-ins/gflare/gflare.c:3372
+#: ../plug-ins/gflare/gflare.c:3376
 msgid "Glow Paint Options"
 msgstr ""
 
-#: ../plug-ins/gflare/gflare.c:3383 ../plug-ins/gflare/gflare.c:3411
-#: ../plug-ins/gflare/gflare.c:3439
+#: ../plug-ins/gflare/gflare.c:3387 ../plug-ins/gflare/gflare.c:3415
+#: ../plug-ins/gflare/gflare.c:3443
 msgid "Opacity:"
 msgstr "Läbipaistmatus:"
 
-#: ../plug-ins/gflare/gflare.c:3396 ../plug-ins/gflare/gflare.c:3424
-#: ../plug-ins/gflare/gflare.c:3452
+#: ../plug-ins/gflare/gflare.c:3400 ../plug-ins/gflare/gflare.c:3428
+#: ../plug-ins/gflare/gflare.c:3456
 msgid "Paint Mode:"
 msgstr ""
 
 #. Rays
-#: ../plug-ins/gflare/gflare.c:3400
+#: ../plug-ins/gflare/gflare.c:3404
 msgid "Rays Paint Options"
 msgstr ""
 
 #. Rays
-#: ../plug-ins/gflare/gflare.c:3428
+#: ../plug-ins/gflare/gflare.c:3432
 msgid "Second Flares Paint Options"
 msgstr ""
 
-#: ../plug-ins/gflare/gflare.c:3455 ../plug-ins/gimpressionist/general.c:115
+#: ../plug-ins/gflare/gflare.c:3459 ../plug-ins/gimpressionist/general.c:115
 msgid "_General"
 msgstr ""
 
 #.
 #. *  Gradient Menus
 #.
-#: ../plug-ins/gflare/gflare.c:3481 ../plug-ins/gflare/gflare.c:3584
-#: ../plug-ins/gflare/gflare.c:3723
+#: ../plug-ins/gflare/gflare.c:3485 ../plug-ins/gflare/gflare.c:3588
+#: ../plug-ins/gflare/gflare.c:3727
 msgid "Gradients"
 msgstr "Spektrikomplektid"
 
-#: ../plug-ins/gflare/gflare.c:3492 ../plug-ins/gflare/gflare.c:3597
-#: ../plug-ins/gflare/gflare.c:3734
+#: ../plug-ins/gflare/gflare.c:3496 ../plug-ins/gflare/gflare.c:3601
+#: ../plug-ins/gflare/gflare.c:3738
 msgid "Radial Gradient:"
 msgstr ""
 
-#: ../plug-ins/gflare/gflare.c:3496 ../plug-ins/gflare/gflare.c:3601
+#: ../plug-ins/gflare/gflare.c:3500 ../plug-ins/gflare/gflare.c:3605
 msgid "Angular Gradient:"
 msgstr ""
 
-#: ../plug-ins/gflare/gflare.c:3500 ../plug-ins/gflare/gflare.c:3605
+#: ../plug-ins/gflare/gflare.c:3504 ../plug-ins/gflare/gflare.c:3609
 msgid "Angular Size Gradient:"
 msgstr ""
 
-#: ../plug-ins/gflare/gflare.c:3520 ../plug-ins/gflare/gflare.c:3625
-#: ../plug-ins/gflare/gflare.c:3762
+#: ../plug-ins/gflare/gflare.c:3524 ../plug-ins/gflare/gflare.c:3629
+#: ../plug-ins/gflare/gflare.c:3766
 msgid "Size (%):"
 msgstr "Suurus (%):"
 
-#: ../plug-ins/gflare/gflare.c:3532 ../plug-ins/gflare/gflare.c:3637
-#: ../plug-ins/gflare/gflare.c:3774
+#: ../plug-ins/gflare/gflare.c:3536 ../plug-ins/gflare/gflare.c:3641
+#: ../plug-ins/gflare/gflare.c:3778
 msgid "Rotation:"
 msgstr "Pööramine:"
 
-#: ../plug-ins/gflare/gflare.c:3544 ../plug-ins/gflare/gflare.c:3650
-#: ../plug-ins/gflare/gflare.c:3787
+#: ../plug-ins/gflare/gflare.c:3548 ../plug-ins/gflare/gflare.c:3654
+#: ../plug-ins/gflare/gflare.c:3791
 msgid "Hue Rotation:"
 msgstr ""
 
-#: ../plug-ins/gflare/gflare.c:3558
+#: ../plug-ins/gflare/gflare.c:3562
 msgid "G_low"
 msgstr ""
 
-#: ../plug-ins/gflare/gflare.c:3662
+#: ../plug-ins/gflare/gflare.c:3666
 msgid "# of Spikes:"
 msgstr ""
 
-#: ../plug-ins/gflare/gflare.c:3674
+#: ../plug-ins/gflare/gflare.c:3678
 msgid "Spike Thickness:"
 msgstr ""
 
-#: ../plug-ins/gflare/gflare.c:3688
+#: ../plug-ins/gflare/gflare.c:3692
 msgid "_Rays"
 msgstr ""
 
-#: ../plug-ins/gflare/gflare.c:3738
+#: ../plug-ins/gflare/gflare.c:3742
 msgid "Size Factor Gradient:"
 msgstr ""
 
-#: ../plug-ins/gflare/gflare.c:3742
+#: ../plug-ins/gflare/gflare.c:3746
 msgid "Probability Gradient:"
 msgstr ""
 
 #.
 #. *    Shape Radio Button Frame
 #.
-#: ../plug-ins/gflare/gflare.c:3804
+#: ../plug-ins/gflare/gflare.c:3808
 msgid "Shape of Second Flares"
 msgstr ""
 
-#: ../plug-ins/gflare/gflare.c:3812
+#: ../plug-ins/gflare/gflare.c:3816
 msgid "Circle"
 msgstr "Ring"
 
-#: ../plug-ins/gflare/gflare.c:3829
+#: ../plug-ins/gflare/gflare.c:3833
 msgid "Polygon"
 msgstr ""
 
-#: ../plug-ins/gflare/gflare.c:3862
+#: ../plug-ins/gflare/gflare.c:3866
 msgid "Random Seed:"
 msgstr "Juhuslikkuse seeme:"
 
-#: ../plug-ins/gflare/gflare.c:3876
+#: ../plug-ins/gflare/gflare.c:3880
 msgid "_Second Flares"
 msgstr ""
 
-#: ../plug-ins/gfli/gfli.c:156 ../plug-ins/gfli/gfli.c:176
+#: ../plug-ins/gfli/gfli.c:162 ../plug-ins/gfli/gfli.c:182
 msgid "AutoDesk FLIC animation"
 msgstr ""
 
-#: ../plug-ins/gfli/gfli.c:523
+#: ../plug-ins/gfli/gfli.c:529
 #, c-format
 msgid "Frame (%i)"
 msgstr ""
 
-#: ../plug-ins/gfli/gfli.c:674
+#: ../plug-ins/gfli/gfli.c:680
 msgid "Sorry, I can save only INDEXED and GRAY images."
 msgstr ""
 
-#: ../plug-ins/gfli/gfli.c:806
+#: ../plug-ins/gfli/gfli.c:812
 msgid "GFLI 1.3 - Load framestack"
 msgstr ""
 
-#: ../plug-ins/gfli/gfli.c:874
+#: ../plug-ins/gfli/gfli.c:880
 msgid "GFLI 1.3 - Save framestack"
 msgstr ""
 
@@ -8940,7 +8808,7 @@ msgstr "Salvesta pintsel"
 
 #: ../plug-ins/gimpressionist/brush.c:488
 msgid "_Brush"
-msgstr ""
+msgstr "_Pintsel"
 
 #: ../plug-ins/gimpressionist/brush.c:525
 #: ../plug-ins/print/gimp_color_window.c:407
@@ -8953,7 +8821,7 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/brush.c:551
 msgid "Select:"
-msgstr ""
+msgstr "Vali:"
 
 #: ../plug-ins/gimpressionist/brush.c:580
 msgid "Aspect ratio:"
@@ -9034,7 +8902,7 @@ msgid "Selects if to place strokes all the way out to the edges of the image"
 msgstr ""
 
 #. Tileable checkbox
-#: ../plug-ins/gimpressionist/general.c:194 ../plug-ins/maze/maze_face.c:269
+#: ../plug-ins/gimpressionist/general.c:194 ../plug-ins/maze/maze_face.c:315
 msgid "Tileable"
 msgstr ""
 
@@ -9068,7 +8936,7 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/general.c:239
 msgid "Shadow depth:"
-msgstr ""
+msgstr "Varju sügavus:"
 
 #: ../plug-ins/gimpressionist/general.c:243
 msgid ""
@@ -9633,127 +9501,127 @@ msgstr ""
 msgid "Full"
 msgstr "Täis"
 
-#: ../plug-ins/ifscompose/ifscompose.c:696
+#: ../plug-ins/ifscompose/ifscompose.c:697
 msgid "IFS Fractal: Red"
 msgstr ""
 
-#: ../plug-ins/ifscompose/ifscompose.c:703
+#: ../plug-ins/ifscompose/ifscompose.c:705
 msgid "IFS Fractal: Green"
 msgstr ""
 
-#: ../plug-ins/ifscompose/ifscompose.c:710
+#: ../plug-ins/ifscompose/ifscompose.c:713
 msgid "IFS Fractal: Blue"
 msgstr ""
 
-#: ../plug-ins/ifscompose/ifscompose.c:717
+#: ../plug-ins/ifscompose/ifscompose.c:721
 msgid "IFS Fractal: Black"
 msgstr ""
 
-#: ../plug-ins/ifscompose/ifscompose.c:767
+#: ../plug-ins/ifscompose/ifscompose.c:771
 msgid "IFS Fractal"
 msgstr ""
 
-#: ../plug-ins/ifscompose/ifscompose.c:863
+#: ../plug-ins/ifscompose/ifscompose.c:867
 msgid "Spatial Transformation"
 msgstr ""
 
-#: ../plug-ins/ifscompose/ifscompose.c:869
+#: ../plug-ins/ifscompose/ifscompose.c:873
 msgid "Color Transformation"
 msgstr ""
 
-#: ../plug-ins/ifscompose/ifscompose.c:879
+#: ../plug-ins/ifscompose/ifscompose.c:883
 msgid "Relative probability:"
 msgstr ""
 
-#: ../plug-ins/ifscompose/ifscompose.c:1054
+#: ../plug-ins/ifscompose/ifscompose.c:1058
 msgid "Select _All"
 msgstr "Vali _kõik"
 
-#: ../plug-ins/ifscompose/ifscompose.c:1058
+#: ../plug-ins/ifscompose/ifscompose.c:1062
 msgid "Re_center"
 msgstr ""
 
-#: ../plug-ins/ifscompose/ifscompose.c:1058
+#: ../plug-ins/ifscompose/ifscompose.c:1062
 msgid "Recompute Center"
 msgstr ""
 
-#: ../plug-ins/ifscompose/ifscompose.c:1062
+#: ../plug-ins/ifscompose/ifscompose.c:1066
 msgid "Render options"
 msgstr ""
 
-#: ../plug-ins/ifscompose/ifscompose.c:1068
+#: ../plug-ins/ifscompose/ifscompose.c:1072
 #: ../plug-ins/imagemap/imap_cmd_move.c:86
 #: ../plug-ins/imagemap/imap_cmd_object_move.c:57
 msgid "Move"
 msgstr "Liiguta"
 
-#: ../plug-ins/ifscompose/ifscompose.c:1071
+#: ../plug-ins/ifscompose/ifscompose.c:1075
 msgid "Rotate"
 msgstr "Pööra"
 
-#: ../plug-ins/ifscompose/ifscompose.c:1071
+#: ../plug-ins/ifscompose/ifscompose.c:1075
 msgid "Rotate / Scale"
 msgstr ""
 
-#: ../plug-ins/ifscompose/ifscompose.c:1074
+#: ../plug-ins/ifscompose/ifscompose.c:1078
 msgid "Stretch"
 msgstr "Venita"
 
-#: ../plug-ins/ifscompose/ifscompose.c:1172
+#: ../plug-ins/ifscompose/ifscompose.c:1176
 msgid "IFS Fractal Render Options"
 msgstr ""
 
-#: ../plug-ins/ifscompose/ifscompose.c:1193
+#: ../plug-ins/ifscompose/ifscompose.c:1197
 msgid "Max. Memory:"
 msgstr ""
 
-#: ../plug-ins/ifscompose/ifscompose.c:1220
+#: ../plug-ins/ifscompose/ifscompose.c:1224
 msgid "Subdivide:"
 msgstr ""
 
-#: ../plug-ins/ifscompose/ifscompose.c:1233
+#: ../plug-ins/ifscompose/ifscompose.c:1237
 msgid "Spot Radius:"
 msgstr ""
 
-#: ../plug-ins/ifscompose/ifscompose.c:1303
+#: ../plug-ins/ifscompose/ifscompose.c:1307
 #, c-format
 msgid "Rendering IFS (%d/%d)..."
 msgstr ""
 
-#: ../plug-ins/ifscompose/ifscompose.c:1321
+#: ../plug-ins/ifscompose/ifscompose.c:1325
 #, c-format
 msgid "Copying IFS to image (%d/%d)..."
 msgstr ""
 
-#: ../plug-ins/ifscompose/ifscompose.c:1477
+#: ../plug-ins/ifscompose/ifscompose.c:1481
 #, c-format
 msgid "Transformation %s"
 msgstr ""
 
-#: ../plug-ins/ifscompose/ifscompose.c:2379
+#: ../plug-ins/ifscompose/ifscompose.c:2394
 #: ../plug-ins/metadata/interface.c:562 ../plug-ins/metadata/interface.c:572
 msgid "Save failed"
 msgstr "Salvestamine ebaõnnestus"
 
-#: ../plug-ins/ifscompose/ifscompose.c:2460
-#: ../plug-ins/ifscompose/ifscompose.c:2473
+#: ../plug-ins/ifscompose/ifscompose.c:2475
+#: ../plug-ins/ifscompose/ifscompose.c:2488
 #: ../plug-ins/metadata/interface.c:461 ../plug-ins/metadata/interface.c:471
 #: ../plug-ins/metadata/interface.c:547
 msgid "Open failed"
 msgstr "Avamine ebaõnnestus"
 
-#: ../plug-ins/ifscompose/ifscompose.c:2468
+#: ../plug-ins/ifscompose/ifscompose.c:2483
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Fractal file."
 msgstr ""
 
-#: ../plug-ins/ifscompose/ifscompose.c:2508
-msgid "Save as IFS Fraktal file"
+#: ../plug-ins/ifscompose/ifscompose.c:2523
+msgid "Save as IFS Fractal file"
 msgstr ""
 
-#: ../plug-ins/ifscompose/ifscompose.c:2543
-msgid "Open IFS Fraktal file"
-msgstr ""
+#: ../plug-ins/ifscompose/ifscompose.c:2558
+msgid "Open IFS Fractal file"
+msgstr "Ava IFS fraktaali fail"
 
 #: ../plug-ins/imagemap/imap_about.c:44
 msgid "Copyright(c) 1999-2005 by Maurits Rijk"
@@ -10050,7 +9918,7 @@ msgstr ""
 msgid "Area #%d Settings"
 msgstr ""
 
-#: ../plug-ins/imagemap/imap_file.c:48 ../plug-ins/imagemap/imap_menu.c:94
+#: ../plug-ins/imagemap/imap_file.c:48 ../plug-ins/imagemap/imap_menu.c:93
 msgid "Error opening file"
 msgstr "Viga faili avamisel"
 
@@ -10165,12 +10033,12 @@ msgstr ""
 msgid "URL: %s"
 msgstr "URL: %s"
 
-#: ../plug-ins/imagemap/imap_menu.c:128
+#: ../plug-ins/imagemap/imap_menu.c:127
 #, c-format
 msgid "_Undo %s"
 msgstr "_Võta tagasi %s"
 
-#: ../plug-ins/imagemap/imap_menu.c:144
+#: ../plug-ins/imagemap/imap_menu.c:143
 #, c-format
 msgid "_Redo %s"
 msgstr "_Tee uuesti %s"
@@ -10344,15 +10212,15 @@ msgstr ""
 msgid "Edit Map Info..."
 msgstr ""
 
-#: ../plug-ins/jpeg/jpeg.c:119 ../plug-ins/jpeg/jpeg.c:157
+#: ../plug-ins/jpeg/jpeg.c:120 ../plug-ins/jpeg/jpeg.c:158
 msgid "JPEG image"
 msgstr "JPEG pilt"
 
-#: ../plug-ins/jpeg/jpeg.c:276
+#: ../plug-ins/jpeg/jpeg.c:277
 msgid "Export Preview"
 msgstr "Ekspordi eelvaade"
 
-#: ../plug-ins/jpeg/jpeg.c:563
+#: ../plug-ins/jpeg/jpeg.c:564
 msgid "EXIF data will be ignored."
 msgstr "EXIF andmeid ignoreeritakse."
 
@@ -10368,104 +10236,104 @@ msgstr ""
 msgid "_Keep Orientation"
 msgstr "Säilita _suund"
 
-#: ../plug-ins/jpeg/jpeg-load.c:217
+#: ../plug-ins/jpeg/jpeg-load.c:232
 msgid "JPEG preview"
 msgstr "JPEG eelvaade"
 
-#: ../plug-ins/jpeg/jpeg-load.c:576 ../plug-ins/winicon/icoload.c:526
+#: ../plug-ins/jpeg/jpeg-load.c:610 ../plug-ins/winicon/icoload.c:526
 #, c-format
 msgid "Opening thumbnail for '%s'..."
 msgstr ""
 
-#: ../plug-ins/jpeg/jpeg-save.c:129
+#: ../plug-ins/jpeg/jpeg-save.c:139
 #, c-format
 msgid "File size: %02.01f kB"
 msgstr "Faili suurus: %02.01f kB"
 
-#: ../plug-ins/jpeg/jpeg-save.c:648 ../plug-ins/jpeg/jpeg-save.c:741
+#: ../plug-ins/jpeg/jpeg-save.c:662 ../plug-ins/jpeg/jpeg-save.c:755
 msgid "File size: unknown"
 msgstr "Faili suurus: teadmata"
 
-#: ../plug-ins/jpeg/jpeg-save.c:701
+#: ../plug-ins/jpeg/jpeg-save.c:715
 msgid "Save as JPEG"
 msgstr "Salvesta kui JPEG"
 
-#: ../plug-ins/jpeg/jpeg-save.c:727
+#: ../plug-ins/jpeg/jpeg-save.c:741
 msgid "_Quality:"
 msgstr "_Kvaliteet:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:731
+#: ../plug-ins/jpeg/jpeg-save.c:745
 msgid "JPEG quality parameter"
 msgstr "JPEG kvaliteedi parameetrid"
 
-#: ../plug-ins/jpeg/jpeg-save.c:750
+#: ../plug-ins/jpeg/jpeg-save.c:764
 msgid "Show _Preview in image window"
 msgstr "Näita pildiaknas _eelvaadet"
 
-#: ../plug-ins/jpeg/jpeg-save.c:762
+#: ../plug-ins/jpeg/jpeg-save.c:776
 msgid "_Advanced Options"
 msgstr "E_rivõimalused"
 
-#: ../plug-ins/jpeg/jpeg-save.c:790
+#: ../plug-ins/jpeg/jpeg-save.c:804
 msgid "_Smoothing:"
 msgstr "_Silumine:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:803
+#: ../plug-ins/jpeg/jpeg-save.c:817
 msgid "Frequency (rows):"
 msgstr "Sagedus (ridades)"
 
-#: ../plug-ins/jpeg/jpeg-save.c:817
+#: ../plug-ins/jpeg/jpeg-save.c:831
 msgid "Use restart markers"
 msgstr "Kasuta restardi markereid"
 
-#: ../plug-ins/jpeg/jpeg-save.c:831 ../plug-ins/xjt/xjt.c:862
+#: ../plug-ins/jpeg/jpeg-save.c:847 ../plug-ins/xjt/xjt.c:865
 msgid "Optimize"
 msgstr "Optimeeri"
 
-#: ../plug-ins/jpeg/jpeg-save.c:844
+#: ../plug-ins/jpeg/jpeg-save.c:860
 msgid "Progressive"
 msgstr ""
 
-#: ../plug-ins/jpeg/jpeg-save.c:858
+#: ../plug-ins/jpeg/jpeg-save.c:874
 msgid "Force baseline JPEG"
 msgstr ""
 
-#: ../plug-ins/jpeg/jpeg-save.c:873
+#: ../plug-ins/jpeg/jpeg-save.c:889
 msgid "Save EXIF data"
 msgstr "Salvesta EXIF andmed"
 
-#: ../plug-ins/jpeg/jpeg-save.c:889
+#: ../plug-ins/jpeg/jpeg-save.c:905
 msgid "Save thumbnail"
 msgstr "Salvesta pisipilt"
 
 #. XMP metadata
-#: ../plug-ins/jpeg/jpeg-save.c:905
+#: ../plug-ins/jpeg/jpeg-save.c:921
 msgid "Save XMP data"
 msgstr "Salvesta XMP andmed"
 
 #. Subsampling
-#: ../plug-ins/jpeg/jpeg-save.c:918
+#: ../plug-ins/jpeg/jpeg-save.c:934
 msgid "Subsampling:"
 msgstr ""
 
 #. DCT method
-#: ../plug-ins/jpeg/jpeg-save.c:945
+#: ../plug-ins/jpeg/jpeg-save.c:961
 msgid "DCT method:"
 msgstr ""
 
-#: ../plug-ins/jpeg/jpeg-save.c:951
+#: ../plug-ins/jpeg/jpeg-save.c:967
 msgid "Fast Integer"
 msgstr "Kiire täisarv"
 
-#: ../plug-ins/jpeg/jpeg-save.c:952
+#: ../plug-ins/jpeg/jpeg-save.c:968
 msgid "Integer"
 msgstr "Täisarv"
 
-#: ../plug-ins/jpeg/jpeg-save.c:953
+#: ../plug-ins/jpeg/jpeg-save.c:969
 msgid "Floating-Point"
 msgstr "Ujukoma"
 
-#: ../plug-ins/jpeg/jpeg-save.c:967
+#: ../plug-ins/jpeg/jpeg-save.c:983
 msgid "Comment"
 msgstr "Kommentaar"
 
@@ -10479,46 +10347,56 @@ msgstr ""
 
 #: ../plug-ins/maze/maze.c:160
 msgid "_Maze..."
-msgstr ""
+msgstr "_Labürint..."
 
 #: ../plug-ins/maze/maze.c:447
 msgid "Drawing Maze..."
-msgstr ""
+msgstr "Labürindi joonistamine..."
 
 #: ../plug-ins/maze/maze.h:2
 msgid "Maze"
-msgstr ""
+msgstr "Labürint"
+
+#. The maze size frame
+#: ../plug-ins/maze/maze_face.c:200
+msgid "Maze Size"
+msgstr "Labürindi suurus"
 
 #. entscale == Entry and Scale pair function found in pixelize.c
-#: ../plug-ins/maze/maze_face.c:207
+#: ../plug-ins/maze/maze_face.c:217
 msgid "Width (pixels):"
 msgstr "Laius (pikslites):"
 
-#: ../plug-ins/maze/maze_face.c:219 ../plug-ins/maze/maze_face.c:235
+#: ../plug-ins/maze/maze_face.c:229 ../plug-ins/maze/maze_face.c:245
 msgid "Pieces:"
-msgstr ""
+msgstr "Tükke:"
 
-#: ../plug-ins/maze/maze_face.c:224
+#: ../plug-ins/maze/maze_face.c:234
 msgid "Height (pixels):"
 msgstr "Kõrgus (pikslites):"
 
-#: ../plug-ins/maze/maze_face.c:247
+#: ../plug-ins/maze/maze_face.c:257
 msgid "Multiple (57):"
 msgstr ""
 
-#: ../plug-ins/maze/maze_face.c:260
+#: ../plug-ins/maze/maze_face.c:270
 msgid "Offset (1):"
 msgstr "Nihe (1):"
 
-#: ../plug-ins/maze/maze_face.c:292
+#. The maze algorithm frame
+#: ../plug-ins/maze/maze_face.c:281
+msgid "Algorithm"
+msgstr "Algoritm"
+
+#: ../plug-ins/maze/maze_face.c:307
 msgid "Depth first"
 msgstr ""
 
-#: ../plug-ins/maze/maze_face.c:293
+#: ../plug-ins/maze/maze_face.c:308
 msgid "Prim's algorithm"
-msgstr ""
+msgstr "Prim'i algoritm"
 
-#: ../plug-ins/maze/maze_face.c:402
+#: ../plug-ins/maze/maze_face.c:426
 msgid ""
 "Selection size is not even.\n"
 "Tileable maze won't work perfectly."
@@ -10626,7 +10504,8 @@ msgstr "Viga real %d märk %d: %s"
 #: ../plug-ins/metadata/xmp-parse.c:272
 #, c-format
 msgid "Expected text or optional element <%s>, found <%s> instead"
-msgstr "Oodati teksti või valikulist elementi <%s>, selle asemel leiti hoopis <%s>"
+msgstr ""
+"Oodati teksti või valikulist elementi <%s>, selle asemel leiti hoopis <%s>"
 
 #: ../plug-ins/metadata/xmp-parse.c:276
 #, c-format
@@ -10814,6 +10693,10 @@ msgstr ""
 #, c-format
 msgid "%s -- Print v%s"
 msgstr ""
+
+#: ../plug-ins/print/gimp_main_window.c:367
+msgid "About"
+msgstr "Teave"
 
 #: ../plug-ins/print/gimp_main_window.c:368
 msgid ""
@@ -11289,7 +11172,7 @@ msgstr "Fail"
 msgid "Colormap _Rotation..."
 msgstr ""
 
-#: ../plug-ins/rcm/rcm.c:267
+#: ../plug-ins/rcm/rcm.c:266
 msgid "Rotating the colormap..."
 msgstr ""
 
@@ -11406,32 +11289,32 @@ msgstr ""
 msgid "Selection To Path Advanced Settings"
 msgstr ""
 
-#: ../plug-ins/sgi/sgi.c:116 ../plug-ins/sgi/sgi.c:136
+#: ../plug-ins/sgi/sgi.c:119 ../plug-ins/sgi/sgi.c:139
 msgid "Silicon Graphics IRIS image"
 msgstr ""
 
-#: ../plug-ins/sgi/sgi.c:531
+#: ../plug-ins/sgi/sgi.c:533
 #, c-format
 msgid "Could not open '%s' for writing."
 msgstr ""
 
-#: ../plug-ins/sgi/sgi.c:612
+#: ../plug-ins/sgi/sgi.c:614
 msgid "Save as SGI"
 msgstr ""
 
-#: ../plug-ins/sgi/sgi.c:626
+#: ../plug-ins/sgi/sgi.c:628
 msgid "Compression type"
 msgstr "Tihenduse tüüp"
 
-#: ../plug-ins/sgi/sgi.c:630
+#: ../plug-ins/sgi/sgi.c:632
 msgid "No compression"
 msgstr "Tihendus puudub"
 
-#: ../plug-ins/sgi/sgi.c:632
+#: ../plug-ins/sgi/sgi.c:634
 msgid "RLE compression"
 msgstr "RLE tihendus"
 
-#: ../plug-ins/sgi/sgi.c:634
+#: ../plug-ins/sgi/sgi.c:636
 msgid ""
 "Aggressive RLE\n"
 "(not supported by SGI)"
@@ -11454,7 +11337,7 @@ msgstr ""
 msgid "Transferring TWAIN data..."
 msgstr ""
 
-#: ../plug-ins/uri/uri.c:112 ../plug-ins/uri/uri.c:133
+#: ../plug-ins/uri/uri.c:116 ../plug-ins/uri/uri.c:137
 msgid "URI"
 msgstr "URI"
 
@@ -11518,7 +11401,7 @@ msgstr "URI avamine..."
 #: ../plug-ins/uri/uri-backend-wget.c:206
 #: ../plug-ins/uri/uri-backend-wget.c:239
 #, c-format
-msgid "A network error occurred: %s"
+msgid "A network error occured: %s"
 msgstr "Tekkis arvutivõrgu viga: %s"
 
 #: ../plug-ins/uri/uri-backend-wget.c:284
@@ -11562,6 +11445,10 @@ msgstr ""
 msgid "Microsoft Windows icon"
 msgstr "Microsoft Windowsi ikoon"
 
+#: ../plug-ins/winsnap/winsnap.c:865
+msgid "Grab"
+msgstr "Kraba"
+
 #: ../plug-ins/winsnap/winsnap.c:881
 msgid "Grab a single window"
 msgstr "Kraba üksik aken"
@@ -11582,74 +11469,186 @@ msgstr "sekundist viivitust"
 msgid "Include decorations"
 msgstr "Koos dekoratsioonidega"
 
+#: ../plug-ins/winsnap/winsnap.c:994
+msgid "_Screen Shot..."
+msgstr "_Pilt ekraanilt..."
+
 #: ../plug-ins/winsnap/winsnap.c:1143
 msgid "No data captured"
 msgstr ""
 
-#: ../plug-ins/xjt/xjt.c:472 ../plug-ins/xjt/xjt.c:490
+#: ../plug-ins/xjt/xjt.c:475 ../plug-ins/xjt/xjt.c:493
 msgid "GIMP compressed XJT image"
 msgstr "GIMP-i tihendatud XJT pilt"
 
-#: ../plug-ins/xjt/xjt.c:711
+#: ../plug-ins/xjt/xjt.c:714
 #, c-format
 msgid "XJT file contains unknown layermode %d"
 msgstr ""
 
-#: ../plug-ins/xjt/xjt.c:748
+#: ../plug-ins/xjt/xjt.c:751
 #, c-format
 msgid "Warning: unsupported layermode %d saved to XJT"
 msgstr ""
 
-#: ../plug-ins/xjt/xjt.c:764
+#: ../plug-ins/xjt/xjt.c:767
 #, c-format
 msgid "XJT file contains unknown pathtype %d"
 msgstr ""
 
-#: ../plug-ins/xjt/xjt.c:780
+#: ../plug-ins/xjt/xjt.c:783
 #, c-format
 msgid "Warning: unsupported pathtype %d saved to XJT"
 msgstr ""
 
-#: ../plug-ins/xjt/xjt.c:799
+#: ../plug-ins/xjt/xjt.c:802
 #, c-format
 msgid "XJT file contains unknown unittype %d"
 msgstr ""
 
-#: ../plug-ins/xjt/xjt.c:820
+#: ../plug-ins/xjt/xjt.c:823
 #, c-format
 msgid "Warning: unsupported unittype %d saved to XJT"
 msgstr ""
 
-#: ../plug-ins/xjt/xjt.c:841
+#: ../plug-ins/xjt/xjt.c:844
 msgid "Save as XJT"
 msgstr "Salvesta kui XJT"
 
-#: ../plug-ins/xjt/xjt.c:872
+#: ../plug-ins/xjt/xjt.c:875
 msgid "Clear transparent"
 msgstr ""
 
-#: ../plug-ins/xjt/xjt.c:884
+#: ../plug-ins/xjt/xjt.c:887
 msgid "Quality:"
 msgstr "Kvaliteet:"
 
-#: ../plug-ins/xjt/xjt.c:893
+#: ../plug-ins/xjt/xjt.c:896
 msgid "Smoothing:"
 msgstr "Silumine:"
 
-#: ../plug-ins/xjt/xjt.c:1691 ../plug-ins/xjt/xjt.c:3318
+#: ../plug-ins/xjt/xjt.c:1694 ../plug-ins/xjt/xjt.c:3321
 #, c-format
 msgid "Could not create working folder '%s': %s"
 msgstr "Ei suutnud luua töökataloogi '%s': %s"
 
-#: ../plug-ins/xjt/xjt.c:3187
+#: ../plug-ins/xjt/xjt.c:3190
 #, c-format
 msgid "Error: Could not read XJT property file '%s'."
 msgstr ""
 
-#: ../plug-ins/xjt/xjt.c:3193
+#: ../plug-ins/xjt/xjt.c:3196
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr ""
+
+#~ msgid "Error obtaining Screen shot"
+#~ msgstr "Ekraanipildist koopia tegemine ebaõnnestus"
+
+#~ msgid "the selected _region"
+#~ msgstr "_Valitud ala"
+
+#~ msgid "the whole _screen"
+#~ msgstr "kogu _ekraan"
+
+#~ msgid "seconds"
+#~ msgstr "sekundit"
+
+#~ msgid "Procedure Browser"
+#~ msgstr "Protseduuride sirvija"
+
+#~ msgid "by name"
+#~ msgstr "nime järgi"
+
+#~ msgid "by description"
+#~ msgstr "kirjelduse järgi"
+
+#~ msgid "by help"
+#~ msgstr "abiinfo järgi"
+
+#~ msgid "by author"
+#~ msgstr "autori järgi"
+
+#~ msgid "by copyright"
+#~ msgstr "copyright'i järgi"
+
+#~ msgid "by date"
+#~ msgstr "kuupäeva järgi"
+
+#~ msgid "by type"
+#~ msgstr "tüübi järgi"
+
+#~ msgid "Searching by name - please wait"
+#~ msgstr "Nime järgi otsimine - palun oota"
+
+#~ msgid "Searching by description - please wait"
+#~ msgstr "Kirjelduse järgi otsimine - palun oota"
+
+#~ msgid "Searching by help - please wait"
+#~ msgstr "Abiinfo järgi otsimine - palun oota"
+
+#~ msgid "Searching by author - please wait"
+#~ msgstr "Autori järgi otsimine - palun oota"
+
+#~ msgid "Searching by copyright - please wait"
+#~ msgstr "Copyright'i järgi otsimine - palun oota"
+
+#~ msgid "Searching by date - please wait"
+#~ msgstr "Kuupäeva järgi otsimine - palun oota"
+
+#~ msgid "Searching by type - please wait"
+#~ msgstr "Tüübi järgi otsimine - palun oota"
+
+#~ msgid "Searching - please wait"
+#~ msgstr "Otsimine - palun oota"
+
+#~ msgid "1 Procedure"
+#~ msgstr "1 protseduur"
+
+#~ msgid "%d Procedures"
+#~ msgstr "%d protseduuri"
+
+#~ msgid "No matches"
+#~ msgstr "Selliseid pole"
+
+#~ msgid "Return Values"
+#~ msgstr "Tagastatavad väärtused"
+
+#~ msgid "Additional Information"
+#~ msgstr "Lisateave"
+
+#~ msgid "Author:"
+#~ msgstr "Autor:"
+
+#~ msgid "Date:"
+#~ msgstr "Kuupäev:"
+
+#~ msgid "Copyright:"
+#~ msgstr "Copyright:"
+
+#~ msgid "_Plug-In Browser"
+#~ msgstr "_Pistikute sirvija"
+
+#~ msgid "Plug-In Browser"
+#~ msgstr "Pistikute sirvija"
+
+#~ msgid "Name"
+#~ msgstr "Nimi"
+
+#~ msgid "Insertion Date"
+#~ msgstr "Lisamise kuupäev"
+
+#~ msgid "Image Types"
+#~ msgstr "Piltide tüübid"
+
+#~ msgid "List View"
+#~ msgstr "Nimekirjavaade"
+
+#~ msgid "Tree View"
+#~ msgstr "Puuvaade"
+
+#~ msgid "Procedure _Browser"
+#~ msgstr "P_rotseduuride sirvija"
 
 #~ msgid "a _Single Window"
 #~ msgstr "Üksik _aken"
