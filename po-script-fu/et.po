@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-11 19:28+0000\n"
+"POT-Creation-Date: 2005-08-13 19:32+0000\n"
 "PO-Revision-Date: 2005-06-25 17:48+0300\n"
 "Last-Translator: Olle Niit olle@paalalinn.com\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
@@ -18,28 +18,20 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Emacs\n"
 
-#: ../plug-ins/script-fu/script-fu-console.c:119
+#: ../plug-ins/script-fu/script-fu-console.c:129
 #: ../plug-ins/script-fu/script-fu-text-console.c:67
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "Script-Fu konsoolirežiim lubab sul ainult interaktiivset anumist"
 
-#: ../plug-ins/script-fu/script-fu-console.c:146
+#: ../plug-ins/script-fu/script-fu-console.c:162
 msgid "Script-Fu Console"
 msgstr "Script-Fu konsool"
 
-#: ../plug-ins/script-fu/script-fu-console.c:173
-msgid "SIOD Output"
-msgstr ""
-
-#: ../plug-ins/script-fu/script-fu-console.c:239
-msgid "Current Command"
-msgstr "Aktiivne käsk"
-
-#: ../plug-ins/script-fu/script-fu-console.c:257
+#: ../plug-ins/script-fu/script-fu-console.c:255
 msgid "_Browse..."
 msgstr "_Sirvi..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:538
+#: ../plug-ins/script-fu/script-fu-console.c:591
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 
@@ -64,78 +56,75 @@ msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
 #. the script arguments frame
-#: ../plug-ins/script-fu/script-fu-interface.c:259
+#: ../plug-ins/script-fu/script-fu-interface.c:255
 msgid "Script Arguments"
 msgstr "Skripti muutujad"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: ../plug-ins/script-fu/script-fu-interface.c:291
+#: ../plug-ins/script-fu/script-fu-interface.c:287
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:334
+#: ../plug-ins/script-fu/script-fu-interface.c:330
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu värvi valik"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:438
+#: ../plug-ins/script-fu/script-fu-interface.c:434
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu faili valik"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:442
+#: ../plug-ins/script-fu/script-fu-interface.c:438
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu kausta valik"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:454
+#: ../plug-ins/script-fu/script-fu-interface.c:450
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu fondi valik"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:462
+#: ../plug-ins/script-fu/script-fu-interface.c:458
 msgid "Script-Fu Palette Selection"
 msgstr "Script-Fu värvipaleti valik"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:470
+#: ../plug-ins/script-fu/script-fu-interface.c:466
 msgid "Script-fu Pattern Selection"
 msgstr "Script-fu mustri valik"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:477
+#: ../plug-ins/script-fu/script-fu-interface.c:473
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu spektrikomplekti valik"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:485
+#: ../plug-ins/script-fu/script-fu-interface.c:481
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu pintsli valik"
 
 #. the script progress frame
-#: ../plug-ins/script-fu/script-fu-interface.c:552
+#: ../plug-ins/script-fu/script-fu-interface.c:548
 msgid "Script Progress"
 msgstr "Skripti edenemine"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:560
+#: ../plug-ins/script-fu/script-fu-interface.c:556
 msgid "(none)"
 msgstr "(puudub)"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1088
-#: ../plug-ins/dbbrowser/gimpprocview.c:205
+#: ../plug-ins/script-fu/script-fu-interface.c:1084
 msgid "Author:"
 msgstr "Autor:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1095
-#: ../plug-ins/dbbrowser/gimpprocview.c:229
+#: ../plug-ins/script-fu/script-fu-interface.c:1091
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1102
-#: ../plug-ins/dbbrowser/gimpprocview.c:217
+#: ../plug-ins/script-fu/script-fu-interface.c:1098
 msgid "Date:"
 msgstr "Kuupäev:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1111
+#: ../plug-ins/script-fu/script-fu-interface.c:1107
 msgid "Image Types:"
 msgstr "Pildi tüübid:"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:660
+#: ../plug-ins/script-fu/script-fu-scripts.c:644
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -150,11 +139,11 @@ msgstr ""
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu serveri võimalused"
 
-#: ../plug-ins/script-fu/script-fu-server.c:681
+#: ../plug-ins/script-fu/script-fu-server.c:686
 msgid "Server Port:"
 msgstr "Serveri port:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:687
+#: ../plug-ins/script-fu/script-fu-server.c:692
 msgid "Server Logfile:"
 msgstr "Serveri logiraamatufail:"
 
@@ -163,7 +152,7 @@ msgid "Script-Fu _Console"
 msgstr "Script-Fu _konsool"
 
 #: ../plug-ins/script-fu/script-fu.c:123 ../plug-ins/script-fu/script-fu.c:152
-#: ../plug-ins/script-fu/script-fu.c:330
+#: ../plug-ins/script-fu/script-fu.c:321
 msgid "<Toolbox>/Xtns/Script-Fu"
 msgstr "<Toolbox>/Xtns/Script-Fu"
 
@@ -171,182 +160,81 @@ msgstr "<Toolbox>/Xtns/Script-Fu"
 msgid "_Start Server..."
 msgstr "_Käivita server..."
 
-#: ../plug-ins/script-fu/script-fu.c:271
+#: ../plug-ins/script-fu/script-fu.c:270
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:273
+#: ../plug-ins/script-fu/script-fu.c:272
 msgid "_Buttons"
 msgstr "_Nupud"
 
-#: ../plug-ins/script-fu/script-fu.c:275
+#: ../plug-ins/script-fu/script-fu.c:274
 msgid "_Logos"
 msgstr "_Logod"
 
-#: ../plug-ins/script-fu/script-fu.c:277
+#: ../plug-ins/script-fu/script-fu.c:276
 msgid "Make Br_ush"
 msgstr "Tee _Pintsel"
 
-#: ../plug-ins/script-fu/script-fu.c:279
+#: ../plug-ins/script-fu/script-fu.c:278
 msgid "_Misc"
 msgstr "_Mitmesugust"
 
-#: ../plug-ins/script-fu/script-fu.c:281
+#: ../plug-ins/script-fu/script-fu.c:280
 msgid "_Patterns"
 msgstr "_Mustrid"
 
-#: ../plug-ins/script-fu/script-fu.c:283
+#: ../plug-ins/script-fu/script-fu.c:282
 msgid "_Test"
 msgstr "_Test"
 
-#: ../plug-ins/script-fu/script-fu.c:285 ../plug-ins/script-fu/script-fu.c:314
+#: ../plug-ins/script-fu/script-fu.c:284
 msgid "_Utils"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu.c:287
+#: ../plug-ins/script-fu/script-fu.c:286
 msgid "_Web Page Themes"
 msgstr "_Veebilehe teemad"
 
-#: ../plug-ins/script-fu/script-fu.c:289
+#: ../plug-ins/script-fu/script-fu.c:288
 msgid "_Alien Glow"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu.c:291
+#: ../plug-ins/script-fu/script-fu.c:290
 msgid "_Beveled Pattern"
 msgstr "_Viltulõigatud muster"
 
-#: ../plug-ins/script-fu/script-fu.c:293
+#: ../plug-ins/script-fu/script-fu.c:292
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
-#: ../plug-ins/script-fu/script-fu.c:296
-msgid "S_cript-Fu"
-msgstr "S_cript-Fu"
-
-#: ../plug-ins/script-fu/script-fu.c:298
-msgid "_Alchemy"
-msgstr "_Alkeemik"
-
-#: ../plug-ins/script-fu/script-fu.c:300
+#: ../plug-ins/script-fu/script-fu.c:295
 msgid "Alpha to _Logo"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu.c:302
+#: ../plug-ins/script-fu/script-fu.c:297
 msgid "A_nimators"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu.c:304
+#: ../plug-ins/script-fu/script-fu.c:299
 msgid "_Decor"
 msgstr "_Dekoratsioon"
 
-#: ../plug-ins/script-fu/script-fu.c:306
+#: ../plug-ins/script-fu/script-fu.c:301
 msgid "_Render"
 msgstr "_Tekita"
 
-#: ../plug-ins/script-fu/script-fu.c:308
+#: ../plug-ins/script-fu/script-fu.c:303
 msgid "_Selection"
 msgstr "_Valik"
 
-#: ../plug-ins/script-fu/script-fu.c:310
-msgid "S_hadow"
-msgstr "V_ari"
-
-#: ../plug-ins/script-fu/script-fu.c:312
+#: ../plug-ins/script-fu/script-fu.c:305
 msgid "Stencil _Ops"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu.c:322
+#: ../plug-ins/script-fu/script-fu.c:313
 msgid "_Refresh Scripts"
 msgstr "_Värskenda skripte"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:131
-msgid "Procedure Browser"
-msgstr "Protseduuride sirvija"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:154
-msgid "by name"
-msgstr "nime järgi"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:155
-msgid "by description"
-msgstr "kirjelduse järgi"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:156
-msgid "by help"
-msgstr "abiinfo järgi"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:157
-msgid "by author"
-msgstr "autori järgi"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:158
-msgid "by copyright"
-msgstr "copyright'i järgi"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:159
-msgid "by date"
-msgstr "kuupäeva järgi"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:160
-msgid "by type"
-msgstr "tüübi järgi"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:331
-msgid "Searching by name - please wait"
-msgstr "Nime järgi otsimine - palun oota"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:353
-msgid "Searching by description - please wait"
-msgstr "Kirjelduse järgi otsimine - palun oota"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:361
-msgid "Searching by help - please wait"
-msgstr "Abiinfo järgi otsimine - palun oota"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:369
-msgid "Searching by author - please wait"
-msgstr "Autori järgi otsimine - palun oota"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:377
-msgid "Searching by copyright - please wait"
-msgstr "Copyright'i järgi otsimine - palun oota"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:385
-msgid "Searching by date - please wait"
-msgstr "Kuupäeva järgi otsimine - palun oota"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:393
-msgid "Searching by type - please wait"
-msgstr "Tüübi järgi otsimine - palun oota"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:401
-msgid "Searching - please wait"
-msgstr "Otsimine - palun oota"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:408
-msgid "1 Procedure"
-msgstr "1 protseduur"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:410
-#, c-format
-msgid "%d Procedures"
-msgstr "%d protseduuri"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:462
-msgid "No matches"
-msgstr "Ei leidnud sobivaid"
-
-#: ../plug-ins/dbbrowser/gimpprocview.c:138
-msgid "Parameters"
-msgstr "Parameetrid"
-
-#: ../plug-ins/dbbrowser/gimpprocview.c:151
-msgid "Return Values"
-msgstr "Tagastatavad väärtused"
-
-#: ../plug-ins/dbbrowser/gimpprocview.c:164
-msgid "Additional Information"
-msgstr "Lisainformatsioon"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "3D _Outline..."
@@ -534,7 +422,6 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:1
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:1
-#: ../plug-ins/script-fu/scripts/image-structure.scm.h:2
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:1
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:1
@@ -1657,50 +1544,6 @@ msgstr ""
 msgid "Imigre-_26..."
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/image-structure.scm.h:1
-msgid "Apply layer mask (or discard)"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/image-structure.scm.h:3
-msgid "Create new image"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/image-structure.scm.h:4
-msgid "Insert layer names"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/image-structure.scm.h:5
-msgid "Make new background"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/image-structure.scm.h:6
-msgid "Outer border"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/image-structure.scm.h:7
-msgid "Pad color"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/image-structure.scm.h:8
-msgid "Pad opacity"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/image-structure.scm.h:9
-msgid "Padding for transparent regions"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/image-structure.scm.h:10
-msgid "Shear length"
-msgstr "Lõike pikkus"
-
-#: ../plug-ins/script-fu/scripts/image-structure.scm.h:11
-msgid "Show Image _Structure..."
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/image-structure.scm.h:12
-msgid "Space between layers"
-msgstr ""
-
 #: ../plug-ins/script-fu/scripts/land.scm.h:5
 msgid "Land height"
 msgstr "Maa kõrgus"
@@ -2330,10 +2173,6 @@ msgstr "Maski läbipaistmatus"
 msgid "Mask size"
 msgstr "Maski suurus"
 
-#: ../plug-ins/script-fu/scripts/unsharp-mask.scm.h:3
-msgid "_Unsharp Mask..."
-msgstr ""
-
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:1
 msgid "Amplitude"
 msgstr ""
@@ -2429,6 +2268,87 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:11
 msgid "_Xach-Effect..."
 msgstr ""
+
+#~ msgid "Current Command"
+#~ msgstr "Aktiivne käsk"
+
+#~ msgid "S_cript-Fu"
+#~ msgstr "S_cript-Fu"
+
+#~ msgid "_Alchemy"
+#~ msgstr "_Alkeemik"
+
+#~ msgid "S_hadow"
+#~ msgstr "V_ari"
+
+#~ msgid "Procedure Browser"
+#~ msgstr "Protseduuride sirvija"
+
+#~ msgid "by name"
+#~ msgstr "nime järgi"
+
+#~ msgid "by description"
+#~ msgstr "kirjelduse järgi"
+
+#~ msgid "by help"
+#~ msgstr "abiinfo järgi"
+
+#~ msgid "by author"
+#~ msgstr "autori järgi"
+
+#~ msgid "by copyright"
+#~ msgstr "copyright'i järgi"
+
+#~ msgid "by date"
+#~ msgstr "kuupäeva järgi"
+
+#~ msgid "by type"
+#~ msgstr "tüübi järgi"
+
+#~ msgid "Searching by name - please wait"
+#~ msgstr "Nime järgi otsimine - palun oota"
+
+#~ msgid "Searching by description - please wait"
+#~ msgstr "Kirjelduse järgi otsimine - palun oota"
+
+#~ msgid "Searching by help - please wait"
+#~ msgstr "Abiinfo järgi otsimine - palun oota"
+
+#~ msgid "Searching by author - please wait"
+#~ msgstr "Autori järgi otsimine - palun oota"
+
+#~ msgid "Searching by copyright - please wait"
+#~ msgstr "Copyright'i järgi otsimine - palun oota"
+
+#~ msgid "Searching by date - please wait"
+#~ msgstr "Kuupäeva järgi otsimine - palun oota"
+
+#~ msgid "Searching by type - please wait"
+#~ msgstr "Tüübi järgi otsimine - palun oota"
+
+#~ msgid "Searching - please wait"
+#~ msgstr "Otsimine - palun oota"
+
+#~ msgid "1 Procedure"
+#~ msgstr "1 protseduur"
+
+#~ msgid "%d Procedures"
+#~ msgstr "%d protseduuri"
+
+#~ msgid "No matches"
+#~ msgstr "Ei leidnud sobivaid"
+
+#~ msgid "Parameters"
+#~ msgstr "Parameetrid"
+
+#~ msgid "Return Values"
+#~ msgstr "Tagastatavad väärtused"
+
+#~ msgid "Additional Information"
+#~ msgstr "Lisainformatsioon"
+
+#~ msgid "Shear length"
+#~ msgstr "Lõike pikkus"
 
 #~ msgid "_Search:"
 #~ msgstr "_Otsi:"
