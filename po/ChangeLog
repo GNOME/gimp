@@ -1,3 +1,7 @@
+2005-09-04  Michael Natterer  <mitch@gimp.org>
+
+	* POTFILES.in: added app/core/gimp-contexts.c
+
 2005-09-04  Ignacio Casal Quinteiro  <nacho.resa@gmail.com>
 
 	* gl.po: Updated Galician Translation.

@@ -75,6 +75,7 @@ app/config/gimprc-blurbs.h
 app/config/gimprc-deserialize.c
 
 app/core/core-enums.c
+app/core/gimp-contexts.c
 app/core/gimp-edit.c
 app/core/gimp-gradients.c
 app/core/gimp-gui.c
