@@ -1,5 +1,11 @@
 2005-09-05  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins: Call gimp_window_set_transient_for_default_display()
+	for most plug-in dialogs. Not yet done are load and save dialogs
+	and dialogs created from language bindings.
+
+2005-09-05  Sven Neumann  <sven@gimp.org>
+
 	Address bug #307971:
 
 	* app/core/gimp-gui.[ch]

@@ -417,6 +417,8 @@ build_dialog (GimpImageBaseType  basetype,
 
   g_free (windowname);
 
+  gimp_window_set_transient_for_default_display (GTK_WINDOW (dlg));
+
   g_signal_connect (dlg, "response",
                     G_CALLBACK (window_response),
                     NULL);

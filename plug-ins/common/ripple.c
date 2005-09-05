@@ -484,6 +484,8 @@ ripple_dialog (GimpDrawable *drawable)
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
+  gimp_window_set_transient_for_default_display (GTK_WINDOW (dialog));
+
   /*  The main vbox  */
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);

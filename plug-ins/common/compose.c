@@ -1288,6 +1288,8 @@ compose_dialog (const gchar *compose_type,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
+  gimp_window_set_transient_for_default_display (GTK_WINDOW (dlg));
+
   /*  parameter settings  */
   hbox = gtk_hbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);

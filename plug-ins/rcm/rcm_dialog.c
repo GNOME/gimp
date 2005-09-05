@@ -665,6 +665,8 @@ rcm_dialog (void)
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
+  gimp_window_set_transient_for_default_display (GTK_WINDOW (dlg));
+
   Current.Bna->dlg = dlg;
 
   /* Create sub-dialogs */

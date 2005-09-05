@@ -1195,6 +1195,8 @@ CML_explorer_dialog (void)
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
+  gimp_window_set_transient_for_default_display (GTK_WINDOW (dlg));
+
   CML_preview_defer = TRUE;
 
   hbox = gtk_hbox_new (FALSE, 12);

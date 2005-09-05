@@ -1193,6 +1193,8 @@ fp_dialog (void)
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
+  gimp_window_set_transient_for_default_display (GTK_WINDOW (dlg));
+
   g_signal_connect (dlg, "response",
                     G_CALLBACK (fp_response),
                     dlg);
@@ -1211,7 +1213,7 @@ fp_dialog (void)
   fp_frames.show         = show         = fp_create_show();
   fp_frames.satur        = satur        = fp_create_msnls();
   fp_frames.pixelsBy     = pixelsBy     = fp_create_pixels_select_by();
-                          control      = fp_create_control();
+                           control      = fp_create_control();
   /********************************************************************/
   /********************   PUT EVERYTHING TOGETHER    ******************/
 

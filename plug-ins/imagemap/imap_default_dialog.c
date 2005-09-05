@@ -109,10 +109,12 @@ make_default_dialog (const gchar *title)
                                      GTK_STOCK_OK, GTK_RESPONSE_OK);
 
    gtk_dialog_set_alternative_button_order (GTK_DIALOG (data->dialog),
-                                              GTK_RESPONSE_OK,
-					      GTK_RESPONSE_APPLY,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                            GTK_RESPONSE_OK,
+                                            GTK_RESPONSE_APPLY,
+                                            GTK_RESPONSE_CANCEL,
+                                            -1);
+
+   gimp_window_set_transient_for_default_display (GTK_WINDOW (data->dialog));
 
    g_signal_connect (data->dialog, "response",
                      G_CALLBACK (dialog_response),

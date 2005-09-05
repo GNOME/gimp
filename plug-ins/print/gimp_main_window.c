@@ -372,15 +372,17 @@ create_top_level_structure(void)
 
                      NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (print_dialog),
-					      RESPONSE_ABOUT,
-					      RESPONSE_SAVE,
-					      RESPONSE_PRINTSAVE,
-					      GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
-
   g_free (plug_in_name);
+
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (print_dialog),
+                                           RESPONSE_ABOUT,
+                                           RESPONSE_SAVE,
+                                           RESPONSE_PRINTSAVE,
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
+  gimp_window_set_transient_for_default_display (GTK_WINDOW (print_dialog));
 
   g_signal_connect (print_dialog, "response",
                     G_CALLBACK (gimp_response_callback),

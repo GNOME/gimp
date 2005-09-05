@@ -551,6 +551,13 @@ explorer_dialog (void)
 
                      NULL);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
+  gimp_window_set_transient_for_default_display (GTK_WINDOW (dialog));
+
   g_signal_connect (dialog, "response",
                     G_CALLBACK (dialog_response),
                     NULL);
@@ -558,11 +565,6 @@ explorer_dialog (void)
   g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
-
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
 
   top_hbox = gtk_hbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (top_hbox), 12);

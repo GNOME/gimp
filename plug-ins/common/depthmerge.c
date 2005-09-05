@@ -609,6 +609,7 @@ DepthMerge_executeRegion (DepthMerge *dm,
 static gboolean
 DepthMerge_dialog (DepthMerge *dm)
 {
+  GtkWidget *dialog;
   GtkWidget *vbox;
   GtkWidget *frame;
   GtkWidget *table;
@@ -623,23 +624,25 @@ DepthMerge_dialog (DepthMerge *dm)
   gimp_ui_init ("depthmerge", TRUE);
 
   dm->interface->dialog =
-    gimp_dialog_new (_("Depth Merge"), "depthmerge",
-                     NULL, 0,
-                     gimp_standard_help_func, HELP_ID,
+    dialog = gimp_dialog_new (_("Depth Merge"), "depthmerge",
+                              NULL, 0,
+                              gimp_standard_help_func, HELP_ID,
 
-                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                     GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                              GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-                     NULL);
+                              NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dm->interface->dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
+  gimp_window_set_transient_for_default_display (GTK_WINDOW (dialog));
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dm->interface->dialog)->vbox),
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
                       vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
