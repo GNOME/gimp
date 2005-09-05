@@ -115,6 +115,9 @@ gimp_run_mode_get_type
 <SECTION>
 <FILE>gimpui</FILE>
 gimp_ui_init
+gimp_ui_get_display_window
+gimp_window_set_transient_for_display
+gimp_window_set_transient_for_default_display
 </SECTION>
 
 <SECTION>
@@ -246,6 +249,7 @@ gimp_image_convert_indexed
 <FILE>gimpdisplay</FILE>
 gimp_display_new
 gimp_display_delete
+gimp_display_get_window_handle
 gimp_displays_flush
 gimp_displays_reconnect
 </SECTION>
@@ -333,6 +337,8 @@ gimp_edit_named_copy
 gimp_edit_named_copy_visible
 gimp_edit_named_paste
 gimp_edit_named_paste_as_new
+gimp_edit_named_delete
+gimp_edit_named_rename
 gimp_edit_clear
 gimp_edit_fill
 gimp_edit_bucket_fill

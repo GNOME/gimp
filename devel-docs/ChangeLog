@@ -1,3 +1,11 @@
+2005-09-05  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-sections.txt: added new functions.
+
+	* libgimp/tmpl/gimpdisplay.sgml
+	* libgimp/tmpl/gimpedit.sgml
+	* libgimp/tmpl/gimpui.sgml: regenerated.
+
 2005-09-03  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-sections.txt: added new functions.
