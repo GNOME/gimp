@@ -1,3 +1,8 @@
+2005-09-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimp-edit.c: don't let named cut/copy affect the global
+	buffer. Fixes bug #315225. Also make "Global Buffer" translatable.
+
 2005-09-05  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimp.[ch]
