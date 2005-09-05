@@ -95,6 +95,7 @@ EXPORTS
 	gimp_destroy_paramdefs
 	gimp_destroy_params
 	gimp_display_delete
+	gimp_display_get_window_handle
 	gimp_display_name
 	gimp_display_new
 	gimp_displays_flush

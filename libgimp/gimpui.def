@@ -44,3 +44,6 @@ EXPORTS
 	gimp_progress_bar_get_type
 	gimp_progress_bar_new
 	gimp_ui_init
+	gimp_ui_get_display_window
+	gimp_window_set_transient_for_display
+	gimp_window_set_transient_for_default_display

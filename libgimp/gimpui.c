@@ -34,9 +34,14 @@
 
 /*  local function prototypes  */
 
-static void  gimp_ui_help_func   (const gchar *help_id,
-                                  gpointer     help_data);
-static void  gimp_ensure_modules (void);
+static void  gimp_ui_help_func              (const gchar *help_id,
+                                             gpointer     help_data);
+static void  gimp_ensure_modules            (void);
+static void  gimp_window_transient_realized (GtkWidget   *window,
+                                             GdkWindow   *parent);
+
+
+static gboolean gimp_ui_initialized = FALSE;
 
 
 /*  public functions  */
@@ -60,8 +65,6 @@ void
 gimp_ui_init (const gchar *prog_name,
 	      gboolean     preview)
 {
-  static gboolean initialized = FALSE;
-
   const gchar  *display_name;
   gint          argc;
   gchar       **argv;
@@ -70,7 +73,7 @@ gimp_ui_init (const gchar *prog_name,
 
   g_return_if_fail (prog_name != NULL);
 
-  if (initialized)
+  if (gimp_ui_initialized)
     return;
 
   display_name = gimp_display_name ();
@@ -116,7 +119,102 @@ gimp_ui_init (const gchar *prog_name,
 
   gimp_dialogs_show_help_button (gimp_show_help_button ());
 
-  initialized = TRUE;
+  gimp_ui_initialized = TRUE;
+}
+
+/**
+ * gimp_ui_get_display_window:
+ *
+ * Returns the #GdkWindow of a display window. The purpose is to allow
+ * to make plug-in dialogs transient to the image display as explained
+ * with gdk_window_set_transient_for().
+ *
+ * You shouldn't have to call this function directly. Use
+ * gimp_window_set_transient_for_display() instead.
+ *
+ * Return value: A reference to a #GdkWindow or %NULL. You should
+ *               unref the window using g_object_unref() as soon as
+ *               you don't need it any longer.
+ *
+ * Since: GIMP 2.4
+ */
+GdkWindow *
+gimp_ui_get_display_window (guint32 gdisp_ID)
+{
+  GdkNativeWindow  window;
+
+  g_return_val_if_fail (gimp_ui_initialized, NULL);
+
+#ifndef GDK_NATIVE_WINDOW_POINTER
+  window = gimp_display_get_window_handle (gdisp_ID);
+  if (window)
+    return gdk_window_foreign_new_for_display (gdk_display_get_default (),
+                                               window);
+#endif
+
+  return NULL;
+}
+
+/**
+ * gimp_window_set_transient_for_display:
+ * @window:   the #GtkWindow that should become transient
+ * @gdisp_ID: display ID of the image window that should become the parent
+ *
+ * Indicates to the window manager that @window is a transient dialog
+ * associated with the GIMP image window that is identified by it's
+ * display ID.  See gdk_window_set_transient_for () for more information.
+ *
+ * Most of the time you will want to use the convenience function
+ * gimp_window_set_transient_for_default_display().
+ *
+ * Since: GIMP 2.4
+ */
+void
+gimp_window_set_transient_for_display (GtkWindow *window,
+                                       guint32    gdisp_ID)
+{
+  GdkWindow *display;
+
+  g_return_if_fail (gimp_ui_initialized);
+  g_return_if_fail (GTK_IS_WINDOW (window));
+
+  gtk_window_set_transient_for (window, NULL);
+
+  g_signal_handlers_disconnect_matched (window, G_SIGNAL_MATCH_FUNC,
+                                        0, 0, NULL,
+                                        gimp_window_transient_realized,
+                                        NULL);
+
+  display = gimp_ui_get_display_window (gdisp_ID);
+  if (! display)
+    return;
+
+  if (GTK_WIDGET_REALIZED (window))
+    gdk_window_set_transient_for (GTK_WIDGET (window)->window, display);
+
+  g_signal_connect_object (window, "realize",
+                           G_CALLBACK (gimp_window_transient_realized),
+                           display, 0);
+  g_object_unref (display);
+}
+
+/**
+ * gimp_window_set_transient_for_default_display:
+ * @window: the #GtkWindow that should become transient
+ *
+ * Indicates to the window manager that @window is a transient dialog
+ * associated with the GIMP image window that the plug-in has been
+ * started from. See also gimp_window_set_transient_for_display().
+ *
+ * Since: GIMP 2.4
+ */
+void
+gimp_window_set_transient_for_default_display (GtkWindow *window)
+{
+  g_return_if_fail (gimp_ui_initialized);
+  g_return_if_fail (GTK_IS_WINDOW (window));
+
+  gimp_window_set_transient_for_display (window, gimp_default_display ());
 }
 
 
@@ -147,4 +245,12 @@ gimp_ensure_modules (void)
       g_free (module_path);
       g_free (load_inhibit);
     }
+}
+
+static void
+gimp_window_transient_realized (GtkWidget *window,
+                                GdkWindow *parent)
+{
+  if (GTK_WIDGET_REALIZED (window))
+    gdk_window_set_transient_for (window->window, parent);
 }

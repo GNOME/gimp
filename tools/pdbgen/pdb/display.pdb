@@ -72,6 +72,33 @@ HELP
     %invoke = ( code => 'gimp_delete_display (gimp, display);' );
 }
 
+sub display_get_window_handle {
+    $blurb = 'Get a handle to the native window for an image display.';
+
+    $help = <<'HELP';
+This procedure returns a handle to the native window for a given image
+display. For example in the X backend of GDK, a native window handle is
+an Xlib XID. A value of 0 is returned for an invalid display or if this
+function is unimplemented for the windowing system that is being used.
+HELP
+
+    $author = $copyright = 'Sven Neumann';
+    $date = '2005';
+    $since = '2.4';
+
+    @inargs = (
+	{ name => 'display', type => 'display',
+	  desc => 'The display to get the window handle from' }
+    );
+
+    @outargs = (
+        { name => 'window', type => 'int32',
+          desc => 'The native window handle or 0', init => 1 }
+    );
+
+    %invoke = ( code => 'window = (gint32) gimp_get_display_window (gimp, display);' );
+}
+
 sub displays_flush {
     $blurb = 'Flush all internal changes to the user interface';
 
@@ -129,7 +156,8 @@ CODE
 
 @headers = qw("core/gimp.h");
 
-@procs = qw(display_new display_delete displays_flush displays_reconnect);
+@procs = qw(display_new display_delete display_get_window_handle
+            displays_flush displays_reconnect);
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Display procedures';

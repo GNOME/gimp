@@ -32,6 +32,7 @@
 
 static ProcRecord display_new_proc;
 static ProcRecord display_delete_proc;
+static ProcRecord display_get_window_handle_proc;
 static ProcRecord displays_flush_proc;
 static ProcRecord displays_reconnect_proc;
 
@@ -40,6 +41,7 @@ register_display_procs (Gimp *gimp)
 {
   procedural_db_register (gimp, &display_new_proc);
   procedural_db_register (gimp, &display_delete_proc);
+  procedural_db_register (gimp, &display_get_window_handle_proc);
   procedural_db_register (gimp, &displays_flush_proc);
   procedural_db_register (gimp, &displays_reconnect_proc);
 }
@@ -158,6 +160,68 @@ static ProcRecord display_delete_proc =
   0,
   NULL,
   { { display_delete_invoker } }
+};
+
+static Argument *
+display_get_window_handle_invoker (Gimp         *gimp,
+                                   GimpContext  *context,
+                                   GimpProgress *progress,
+                                   Argument     *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpObject *display;
+  gint32 window = 0;
+
+  display = gimp_get_display_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_OBJECT (display))
+    success = FALSE;
+
+  if (success)
+    window = (gint32) gimp_get_display_window (gimp, display);
+
+  return_args = procedural_db_return_args (&display_get_window_handle_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = window;
+
+  return return_args;
+}
+
+static ProcArg display_get_window_handle_inargs[] =
+{
+  {
+    GIMP_PDB_DISPLAY,
+    "display",
+    "The display to get the window handle from"
+  }
+};
+
+static ProcArg display_get_window_handle_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "window",
+    "The native window handle or 0"
+  }
+};
+
+static ProcRecord display_get_window_handle_proc =
+{
+  "gimp-display-get-window-handle",
+  "gimp-display-get-window-handle",
+  "Get a handle to the native window for an image display.",
+  "This procedure returns a handle to the native window for a given image display. For example in the X backend of GDK, a native window handle is an Xlib XID. A value of 0 is returned for an invalid display or if this function is unimplemented for the windowing system that is being used.",
+  "Sven Neumann",
+  "Sven Neumann",
+  "2005",
+  NULL,
+  GIMP_INTERNAL,
+  1,
+  display_get_window_handle_inargs,
+  1,
+  display_get_window_handle_outargs,
+  { { display_get_window_handle_invoker } }
 };
 
 static Argument *

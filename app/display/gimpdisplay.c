@@ -20,6 +20,14 @@
 
 #include <gtk/gtk.h>
 
+#ifdef GDK_WINDOWING_WIN32
+#include <gdk/gdkwin32.h>
+#endif
+
+#ifdef GDK_WINDOWING_X11
+#include <gdk/gdkx.h>
+#endif
+
 #include "display-types.h"
 #include "tools/tools-types.h"
 
@@ -436,6 +444,46 @@ gimp_display_get_ID (GimpDisplay *gdisp)
   g_return_val_if_fail (GIMP_IS_DISPLAY (gdisp), -1);
 
   return gdisp->ID;
+}
+
+/**
+ * gimp_display_get_window:
+ * @display: a #GimpDisplayShell
+ *
+ * This function is used to pass a window handle to plug-ins so that
+ * they can set their dialog windows transient to the image display.
+ *
+ * Return value: a native window handle of the display's shell or 0
+ *               if the shell isn't realized yet
+ */
+GdkNativeWindow
+gimp_display_get_window (GimpDisplay *display)
+{
+  GtkWidget *shell;
+
+#ifdef GDK_NATIVE_WINDOW_POINTER
+  g_return_val_if_fail (GIMP_IS_DISPLAY (display), NULL);
+#else
+  g_return_val_if_fail (GIMP_IS_DISPLAY (display), 0);
+#endif
+
+  shell = display->shell;
+
+#ifdef GDK_WINDOWING_WIN32
+  if (shell && GTK_WIDGET_REALIZED (shell))
+    return GDK_WINDOW_HWND (shell->window);
+#endif
+
+#ifdef GDK_WINDOWING_X11
+  if (shell && GTK_WIDGET_REALIZED (shell))
+    return GDK_WINDOW_XID (shell->window);
+#endif
+
+#ifdef GDK_NATIVE_WINDOW_POINTER
+  return NULL;
+#else
+  return 0;
+#endif
 }
 
 GimpDisplay *

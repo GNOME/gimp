@@ -1,5 +1,27 @@
 2005-09-05  Sven Neumann  <sven@gimp.org>
 
+	Address bug #307971:
+
+	* app/core/gimp-gui.[ch]
+	* app/display/gimpdisplay.[ch]
+	* app/gui/gui-vtable.c
+	* tools/pdbgen/pdb/display.pdb: added PDB function to obtain a
+	window handle on an image display.
+
+	* app/pdb/display_cmds.c
+	* app/pdb/internal_procs.c
+	* libgimp/gimpdisplay_pdb.[ch]: regenerated.
+
+	* libgimp/gimpui.[ch]: added functions to set a GtkWindow transient
+	to an image display.
+
+	* plug-ins/common/gauss.c: use the new function exemplarily.
+
+	* libgimp/gimp.def
+	* libgimp/gimpui.def: updated.
+
+2005-09-05  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/edit-actions.c
 	* app/menus/menus.c
 	* app/widgets/gimpundoeditor.c

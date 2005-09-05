@@ -50,6 +50,7 @@ gimp_gui_init (Gimp *gimp)
   gimp->gui.get_theme_dir       = NULL;
   gimp->gui.display_get_by_id   = NULL;
   gimp->gui.display_get_id      = NULL;
+  gimp->gui.display_get_window  = NULL;
   gimp->gui.display_create      = NULL;
   gimp->gui.display_delete      = NULL;
   gimp->gui.displays_reconnect  = NULL;
@@ -231,6 +232,19 @@ gimp_get_display_ID (Gimp       *gimp,
 
   if (gimp->gui.display_get_id)
     return gimp->gui.display_get_id (display);
+
+  return -1;
+}
+
+guint32
+gimp_get_display_window (Gimp       *gimp,
+                         GimpObject *display)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), -1);
+  g_return_val_if_fail (GIMP_IS_OBJECT (display), -1);
+
+  if (gimp->gui.display_get_window)
+    return gimp->gui.display_get_window (display);
 
   return -1;
 }

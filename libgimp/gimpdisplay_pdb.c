@@ -91,6 +91,42 @@ gimp_display_delete (gint32 display_ID)
 }
 
 /**
+ * gimp_display_get_window_handle:
+ * @display_ID: The display to get the window handle from.
+ *
+ * Get a handle to the native window for an image display.
+ *
+ * This procedure returns a handle to the native window for a given
+ * image display. For example in the X backend of GDK, a native window
+ * handle is an Xlib XID. A value of 0 is returned for an invalid
+ * display or if this function is unimplemented for the windowing
+ * system that is being used.
+ *
+ * Returns: The native window handle or 0.
+ *
+ * Since: GIMP 2.4
+ */
+gint
+gimp_display_get_window_handle (gint32 display_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint window = 0;
+
+  return_vals = gimp_run_procedure ("gimp-display-get-window-handle",
+				    &nreturn_vals,
+				    GIMP_PDB_DISPLAY, display_ID,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    window = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return window;
+}
+
+/**
  * gimp_displays_flush:
  *
  * Flush all internal changes to the user interface

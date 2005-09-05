@@ -29,11 +29,12 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gint32   gimp_display_new        (gint32 image_ID);
-gboolean gimp_display_delete     (gint32 display_ID);
-gboolean gimp_displays_flush     (void);
-gboolean gimp_displays_reconnect (gint32 old_image_ID,
-				  gint32 new_image_ID);
+gint32   gimp_display_new               (gint32 image_ID);
+gboolean gimp_display_delete            (gint32 display_ID);
+gint     gimp_display_get_window_handle (gint32 display_ID);
+gboolean gimp_displays_flush            (void);
+gboolean gimp_displays_reconnect        (gint32 old_image_ID,
+					 gint32 new_image_ID);
 
 
 G_END_DECLS

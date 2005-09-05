@@ -46,6 +46,7 @@ struct _GimpGui
   GimpObject   * (* display_get_by_id)   (Gimp          *gimp,
                                           gint           ID);
   gint           (* display_get_id)      (GimpObject    *display);
+  guint32        (* display_get_window)  (GimpObject    *display);
   GimpObject   * (* display_create)      (GimpImage     *gimage,
                                           GimpUnit       unit,
                                           gdouble        scale);
@@ -99,6 +100,8 @@ void           gimp_threads_leave        (Gimp               *gimp);
 GimpObject   * gimp_get_display_by_ID    (Gimp               *gimp,
                                           gint                ID);
 gint           gimp_get_display_ID       (Gimp               *gimp,
+                                          GimpObject         *display);
+guint32        gimp_get_display_window   (Gimp               *gimp,
                                           GimpObject         *display);
 GimpObject   * gimp_create_display       (Gimp               *gimp,
                                           GimpImage          *gimage,

@@ -93,6 +93,7 @@ static const gchar  * gui_get_theme_dir        (Gimp          *gimp);
 static GimpObject   * gui_display_get_by_ID    (Gimp          *gimp,
                                                 gint           ID);
 static gint           gui_display_get_ID       (GimpObject    *display);
+static guint32        gui_display_get_window   (GimpObject    *display);
 static GimpObject   * gui_display_create       (GimpImage     *gimage,
                                                 GimpUnit       unit,
                                                 gdouble        scale);
@@ -152,6 +153,7 @@ gui_vtable_init (Gimp *gimp)
   gimp->gui.get_theme_dir       = gui_get_theme_dir;
   gimp->gui.display_get_by_id   = gui_display_get_by_ID;
   gimp->gui.display_get_id      = gui_display_get_ID;
+  gimp->gui.display_get_window  = gui_display_get_window;
   gimp->gui.display_create      = gui_display_create;
   gimp->gui.display_delete      = gui_display_delete;
   gimp->gui.displays_reconnect  = gui_displays_reconnect;
@@ -326,6 +328,19 @@ static gint
 gui_display_get_ID (GimpObject *display)
 {
   return gimp_display_get_ID (GIMP_DISPLAY (display));
+}
+
+static guint32
+gui_display_get_window (GimpObject *display)
+{
+#ifdef GDK_NATIVE_WINDOW_POINTER
+#ifdef __GNUC__
+#warning gui_display_get_window() unimplementable for the target windowing system
+#endif
+  return 0;
+#else
+  return (guint32) gimp_display_get_window (GIMP_DISPLAY (display));
+#endif
 }
 
 static GimpObject *
