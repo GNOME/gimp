@@ -285,6 +285,8 @@ menus_init (Gimp              *gimp,
   gimp_menu_factory_manager_register (global_menu_factory, "<UndoEditor>",
                                       "edit",
                                       NULL,
+                                      "/undo-editor-popup",
+                                      "undo-editor-menu.xml", NULL,
                                       NULL);
 
   gimp_menu_factory_manager_register (global_menu_factory, "<ErrorConsole>",

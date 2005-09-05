@@ -33,6 +33,7 @@ menudata_DATA = \
 	text-editor-toolbar.xml		\
 	tool-options-menu.xml		\
 	tools-menu.xml			\
+	undo-editor-menu.xml		\
 	vectors-menu.xml
 
 EXTRA_DIST = \

@@ -1,3 +1,11 @@
+2005-09-05  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/edit-actions.c
+	* app/menus/menus.c
+	* app/widgets/gimpundoeditor.c
+	* menus/Makefile.am
+	* menus/undo-editor-menu.xml: added menu for undo editor.
+
 2005-09-05  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/edit.pdb: applied patch from David Gowers which
