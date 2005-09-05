@@ -282,7 +282,6 @@ gimp_init (Gimp *gimp)
   gimp_object_set_name (GIMP_OBJECT (gimp->templates), "templates");
 
   gimp->image_new_last_template = NULL;
-  gimp->have_current_cut_buffer = FALSE;
 
   gimp->context_list        = NULL;
   gimp->default_context     = NULL;
@@ -623,8 +622,6 @@ gimp_real_initialize (Gimp               *gimp,
   gimp->image_new_last_template =
     gimp_config_duplicate (GIMP_CONFIG (gimp->config->default_image));
 
-  gimp->have_current_cut_buffer = FALSE;
-
   /*  create user and default context  */
   gimp_contexts_init (gimp);
 
@@ -932,8 +929,6 @@ gimp_set_global_buffer (Gimp       *gimp,
 
   if (gimp->global_buffer)
     g_object_ref (gimp->global_buffer);
-
-  gimp->have_current_cut_buffer = (buffer != NULL);
 
   g_signal_emit (gimp, gimp_signals[BUFFER_CHANGED], 0);
 }

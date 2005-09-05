@@ -1,5 +1,12 @@
 2005-09-05  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimp.[ch]
+	* app/core/gimpimage-new.c: removed the confusing and redundant
+	feature of having the New Image dialog default to the size of the
+	global buffer. Please use Paste as New instead. Fixes bug #315106.
+
+2005-09-05  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimprectangletool.c: terminate variable argument list.
 	Fixes bug #315255.
 

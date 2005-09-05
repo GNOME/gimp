@@ -25,7 +25,6 @@
 #include "core-types.h"
 
 #include "gimp.h"
-#include "gimpbuffer.h"
 #include "gimpimage.h"
 #include "gimpimage-new.h"
 #include "gimptemplate.h"
@@ -50,14 +49,6 @@ gimp_image_new_get_last_template (Gimp      *gimp,
     gimp_config_sync (G_OBJECT (gimp->image_new_last_template),
                       G_OBJECT (template), 0);
 
-  if (gimp->global_buffer && gimp->have_current_cut_buffer)
-    {
-      g_object_set (template,
-                    "width",  gimp_buffer_get_width (gimp->global_buffer),
-                    "height", gimp_buffer_get_height (gimp->global_buffer),
-                    NULL);
-    }
-
   return template;
 }
 
@@ -70,6 +61,4 @@ gimp_image_new_set_last_template (Gimp         *gimp,
 
   gimp_config_sync (G_OBJECT (template),
                     G_OBJECT (gimp->image_new_last_template), 0);
-
-  gimp->have_current_cut_buffer = FALSE;
 }

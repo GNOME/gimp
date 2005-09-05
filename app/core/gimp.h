@@ -124,7 +124,6 @@ struct _Gimp
   /*  image_new values  */
   GimpContainer          *templates;
   GimpTemplate           *image_new_last_template;
-  gboolean                have_current_cut_buffer;
 
   /*  the list of all contexts  */
   GList                  *context_list;
