@@ -166,6 +166,7 @@
       <menu action="edit-buffer-menu" name="Buffer">
         <menuitem action="edit-named-cut" />
 	<menuitem action="edit-named-copy" />
+	<menuitem action="edit-named-copy-visible" />
 	<menuitem action="edit-named-paste" />
       </menu>
       <separator />

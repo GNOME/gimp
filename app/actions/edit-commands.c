@@ -57,14 +57,17 @@
 
 /*  local function prototypes  */
 
-static void   edit_paste                 (GimpDisplay *gdisp,
-                                          gboolean     paste_into);
-static void   cut_named_buffer_callback  (GtkWidget   *widget,
-                                          const gchar *name,
-                                          gpointer     data);
-static void   copy_named_buffer_callback (GtkWidget   *widget,
-                                          const gchar *name,
-                                          gpointer     data);
+static void   edit_paste                         (GimpDisplay *gdisp,
+                                                  gboolean     paste_into);
+static void   cut_named_buffer_callback          (GtkWidget   *widget,
+                                                  const gchar *name,
+                                                  gpointer     data);
+static void   copy_named_buffer_callback         (GtkWidget   *widget,
+                                                  const gchar *name,
+                                                  gpointer     data);
+static void   copy_named_visible_buffer_callback (GtkWidget   *widget,
+                                                  const gchar *name,
+                                                  gpointer     data);
 
 
 /*  public functions  */
@@ -281,6 +284,26 @@ edit_named_copy_cmd_callback (GtkAction *action,
 }
 
 void
+edit_named_copy_visible_cmd_callback (GtkAction *action,
+                                      gpointer   data)
+{
+  GimpImage *gimage;
+  GtkWidget *widget;
+  GtkWidget *dialog;
+  return_if_no_image (gimage, data);
+  return_if_no_widget (widget, data);
+
+  dialog = gimp_query_string_box (_("Copy Visible Named "), widget,
+                                  gimp_standard_help_func,
+                                  GIMP_HELP_BUFFER_COPY,
+                                  _("Enter a name for this buffer"),
+                                  NULL,
+                                  G_OBJECT (gimage), "disconnect",
+                                  copy_named_visible_buffer_callback, gimage);
+  gtk_widget_show (dialog);
+}
+
+void
 edit_named_paste_cmd_callback (GtkAction *action,
                                gpointer   data)
 {
@@ -417,6 +440,23 @@ copy_named_buffer_callback (GtkWidget   *widget,
 
   if (gimp_edit_named_copy (gimage, name, drawable,
                             gimp_get_user_context (gimage->gimp)))
+    {
+      gimp_image_flush (gimage);
+    }
+}
+
+static void
+copy_named_visible_buffer_callback (GtkWidget   *widget,
+                                    const gchar *name,
+                                    gpointer     data)
+{
+  GimpImage *gimage = GIMP_IMAGE (data);
+
+  if (! (name && strlen (name)))
+    name = _("(Unnamed Buffer)");
+
+  if (gimp_edit_named_copy_visible (gimage, name,
+                                    gimp_get_user_context (gimage->gimp)))
     {
       gimp_image_flush (gimage);
     }

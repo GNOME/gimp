@@ -1,3 +1,11 @@
+2005-09-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/edit-actions.c
+	* app/actions/edit-commands.[ch]
+	* menus/image-menu.xml.in: applied modified patch from David
+	Gowers which adds an "edit-named-copy-visible" actions and its
+	menu item. Addresses bug #315130.
+
 2005-09-04  Karine Delvare  <kdelvare@nerim.net>
 
 	* app/tools/gimprectangleoptions.c: evil => GIMP_MAX_IMAGE_SIZE.

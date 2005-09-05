@@ -20,35 +20,37 @@
 #define __EDIT_COMMANDS_H__
 
 
-void   edit_undo_cmd_callback         (GtkAction *action,
-                                       gpointer   data);
-void   edit_redo_cmd_callback         (GtkAction *action,
-                                       gpointer   data);
-void   edit_undo_clear_cmd_callback   (GtkAction *action,
-                                       gpointer   data);
-void   edit_cut_cmd_callback          (GtkAction *action,
-                                       gpointer   data);
-void   edit_copy_cmd_callback         (GtkAction *action,
-                                       gpointer   data);
-void   edit_copy_visible_cmd_callback (GtkAction *action,
-                                       gpointer   data);
-void   edit_paste_cmd_callback        (GtkAction *action,
-                                       gpointer   data);
-void   edit_paste_into_cmd_callback   (GtkAction *action,
-                                       gpointer   data);
-void   edit_paste_as_new_cmd_callback (GtkAction *action,
-                                       gpointer   data);
-void   edit_named_cut_cmd_callback    (GtkAction *action,
-                                       gpointer   data);
-void   edit_named_copy_cmd_callback   (GtkAction *action,
-                                       gpointer   data);
-void   edit_named_paste_cmd_callback  (GtkAction *action,
-                                       gpointer   data);
-void   edit_clear_cmd_callback        (GtkAction *action,
-                                       gpointer   data);
-void   edit_fill_cmd_callback         (GtkAction *action,
-                                       gint       value,
-                                       gpointer   data);
+void   edit_undo_cmd_callback               (GtkAction *action,
+                                             gpointer   data);
+void   edit_redo_cmd_callback               (GtkAction *action,
+                                             gpointer   data);
+void   edit_undo_clear_cmd_callback         (GtkAction *action,
+                                             gpointer   data);
+void   edit_cut_cmd_callback                (GtkAction *action,
+                                             gpointer   data);
+void   edit_copy_cmd_callback               (GtkAction *action,
+                                             gpointer   data);
+void   edit_copy_visible_cmd_callback       (GtkAction *action,
+                                             gpointer   data);
+void   edit_paste_cmd_callback              (GtkAction *action,
+                                             gpointer   data);
+void   edit_paste_into_cmd_callback         (GtkAction *action,
+                                             gpointer   data);
+void   edit_paste_as_new_cmd_callback       (GtkAction *action,
+                                             gpointer   data);
+void   edit_named_cut_cmd_callback          (GtkAction *action,
+                                             gpointer   data);
+void   edit_named_copy_cmd_callback         (GtkAction *action,
+                                             gpointer   data);
+void   edit_named_copy_visible_cmd_callback (GtkAction *action,
+                                             gpointer   data);
+void   edit_named_paste_cmd_callback        (GtkAction *action,
+                                             gpointer   data);
+void   edit_clear_cmd_callback              (GtkAction *action,
+                                             gpointer   data);
+void   edit_fill_cmd_callback               (GtkAction *action,
+                                             gint       value,
+                                             gpointer   data);
 
 
 #endif /* __EDIT_COMMANDS_H__ */
