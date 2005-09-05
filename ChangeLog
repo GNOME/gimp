@@ -1,3 +1,8 @@
+2005-09-05  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimprectangletool.c: terminate variable argument list.
+	Fixes bug #315255.
+
 2005-09-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/edit-actions.c

@@ -1867,13 +1867,15 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
   if (function == RECT_CREATING)
     {
       if (inc_x < 0 && inc_y < 0)
-        g_object_set (rectangle, "function", RECT_RESIZING_UPPER_LEFT);
+        function = RECT_RESIZING_UPPER_LEFT;
       else if (inc_x < 0 && inc_y > 0)
-        g_object_set (rectangle, "function", RECT_RESIZING_LOWER_LEFT);
+        function = RECT_RESIZING_LOWER_LEFT;
       else if (inc_x > 0 && inc_y < 0)
-        g_object_set (rectangle, "function", RECT_RESIZING_UPPER_RIGHT);
+        function = RECT_RESIZING_UPPER_RIGHT;
       else if (inc_x > 0 && inc_y > 0)
-        g_object_set (rectangle, "function", RECT_RESIZING_LOWER_RIGHT);
+        function = RECT_RESIZING_LOWER_RIGHT;
+
+      g_object_set (rectangle, "function", function, NULL);
     }
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
