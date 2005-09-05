@@ -45,6 +45,9 @@ gint32   gimp_edit_named_paste        (gint32                drawable_ID,
 				       const gchar          *buffer_name,
 				       gboolean              paste_into);
 gint32   gimp_edit_named_paste_as_new (const gchar          *buffer_name);
+gboolean gimp_edit_named_delete       (const gchar          *buffer_name);
+gchar*   gimp_edit_named_rename       (const gchar          *buffer_name,
+				       const gchar          *new_name);
 gboolean gimp_edit_clear              (gint32                drawable_ID);
 gboolean gimp_edit_fill               (gint32                drawable_ID,
 				       GimpFillType          fill_type);

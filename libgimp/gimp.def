@@ -172,8 +172,10 @@ EXPORTS
 	gimp_edit_named_copy
 	gimp_edit_named_copy_visible
 	gimp_edit_named_cut
+	gimp_edit_named_delete
 	gimp_edit_named_paste
 	gimp_edit_named_paste_as_new
+	gimp_edit_named_rename
 	gimp_edit_paste
 	gimp_edit_paste_as_new
 	gimp_edit_stroke

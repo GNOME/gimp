@@ -1,5 +1,17 @@
 2005-09-05  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb/edit.pdb: applied patch from David Gowers which
+	adds "gimp-edit-named-delete". Addresses bug #315130. Added
+	"gimp-edit-named-rename" additionally.
+
+	* libgimp/gimp.def: changed accordingly.
+
+	* app/pdb/edit_cmds.c
+	* app/pdb/internal_procs.c
+	* libgimp/gimpedit_pdb.[ch]: regenerated.
+
+2005-09-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimp-edit.c: don't let named cut/copy affect the global
 	buffer. Fixes bug #315225. Also make "Global Buffer" translatable.
 

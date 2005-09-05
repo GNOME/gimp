@@ -316,6 +316,7 @@ HELP
         { name => 'buffer_name', type => 'string',
           desc => 'The name of the buffer to create' }
     );
+
     @outargs = (
 	{ name => 'real_name', type => 'string', init => 1,
 	  desc => 'The real name given to the buffer' }
@@ -324,15 +325,17 @@ HELP
     %invoke = (
 	code => <<CODE
 {
-   if (strlen (buffer_name) > 0)
-     {
-        real_name = (gchar *) gimp_edit_named_copy_visible (image, buffer_name,
-                                                            context);
+   success = (strlen (buffer_name) > 0);
 
-        if (real_name)
-          real_name = g_strdup (real_name);
-        else
-          success = FALSE;
+   if (success)
+     {
+       real_name = (gchar *) gimp_edit_named_copy_visible (image, buffer_name,
+                                                           context);
+
+       if (real_name)
+         real_name = g_strdup (real_name);
+       else
+         success = FALSE;
      }
 }
 CODE
@@ -425,6 +428,82 @@ HELP
       image = gimp_edit_paste_as_new (gimp, NULL, buffer);
       if (! image)
         success = FALSE;
+    }
+}
+CODE
+    );
+}
+
+sub edit_named_delete {
+    $blurb = 'Deletes a named buffer.';
+
+    $help = <<'HELP';
+This procedure deletes a named buffer.
+HELP
+
+    $author = $copyright = 'David Gowers <neota@softhome.net>';
+    $date   = '2005';
+    $since  = '2.4';
+
+    @inargs = (
+        { name => 'buffer_name', type => 'string',
+          desc => 'The buffer name' }
+    );
+
+    %invoke = (
+	code => <<CODE
+{
+  GimpBuffer *buffer;
+
+  buffer = (GimpBuffer *) 
+    gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
+
+  success = (buffer != NULL);
+
+  if (success)
+    success = gimp_container_remove (gimp->named_buffers, GIMP_OBJECT (buffer));
+}
+CODE
+    );
+}
+
+sub edit_named_rename {
+    $blurb = 'Renames a named buffer.';
+
+    $help = <<'HELP';
+This procedure renames a named buffer.
+HELP
+
+    $author = $copyright = 'Michael Natterer <mitch@gimp.org>';
+    $date   = '2005';
+    $since  = '2.4';
+
+    @inargs = (
+        { name => 'buffer_name', type => 'string',
+          desc => 'The buffer name' },
+        { name => 'new_name', type => 'string',
+          desc => 'The buffer\'s new name' }
+    );
+
+    @outargs = (
+	{ name => 'real_name', type => 'string', init => 1,
+	  desc => 'The real name given to the buffer' }
+    );
+
+    %invoke = (
+	code => <<CODE
+{
+  GimpBuffer *buffer;
+
+  buffer = (GimpBuffer *)
+    gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
+
+  success = (buffer != NULL && strlen (new_name) > 0);
+
+  if (success)
+    {
+      gimp_object_set_name (GIMP_OBJECT (buffer), new_name);
+      real_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (buffer)));
     }
 }
 CODE
@@ -670,6 +749,7 @@ CODE
     );
 }
 
+
 @headers = qw(<string.h> "core/gimp.h" "core/gimp-edit.h"
               "core/gimpcontainer.h" "core/gimpimage.h" "core/gimpprogress.h"
               "gimp-intl.h");
@@ -678,7 +758,8 @@ CODE
             edit_paste edit_paste_as_new
             edit_named_cut edit_named_copy edit_named_copy_visible
             edit_named_paste edit_named_paste_as_new
-            edit_clear edit_fill edit_bucket_fill edit_blend edit_stroke);
+	    edit_named_delete edit_named_rename
+            edit_clear edit_fill edit_bucket_fill edit_blend edit_stroke );
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Edit procedures';

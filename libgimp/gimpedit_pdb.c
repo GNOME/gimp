@@ -398,6 +398,72 @@ gimp_edit_named_paste_as_new (const gchar *buffer_name)
 }
 
 /**
+ * gimp_edit_named_delete:
+ * @buffer_name: The buffer name.
+ *
+ * Deletes a named buffer.
+ *
+ * This procedure deletes a named buffer.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_edit_named_delete (const gchar *buffer_name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-edit-named-delete",
+				    &nreturn_vals,
+				    GIMP_PDB_STRING, buffer_name,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_edit_named_rename:
+ * @buffer_name: The buffer name.
+ * @new_name: The buffer's new name.
+ *
+ * Renames a named buffer.
+ *
+ * This procedure renames a named buffer.
+ *
+ * Returns: The real name given to the buffer.
+ *
+ * Since: GIMP 2.4
+ */
+gchar *
+gimp_edit_named_rename (const gchar *buffer_name,
+			const gchar *new_name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gchar *real_name = NULL;
+
+  return_vals = gimp_run_procedure ("gimp-edit-named-rename",
+				    &nreturn_vals,
+				    GIMP_PDB_STRING, buffer_name,
+				    GIMP_PDB_STRING, new_name,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    real_name = g_strdup (return_vals[1].data.d_string);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return real_name;
+}
+
+/**
  * gimp_edit_clear:
  * @drawable_ID: The drawable to clear from.
  *

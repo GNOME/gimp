@@ -50,6 +50,8 @@ static ProcRecord edit_named_copy_proc;
 static ProcRecord edit_named_copy_visible_proc;
 static ProcRecord edit_named_paste_proc;
 static ProcRecord edit_named_paste_as_new_proc;
+static ProcRecord edit_named_delete_proc;
+static ProcRecord edit_named_rename_proc;
 static ProcRecord edit_clear_proc;
 static ProcRecord edit_fill_proc;
 static ProcRecord edit_bucket_fill_proc;
@@ -69,6 +71,8 @@ register_edit_procs (Gimp *gimp)
   procedural_db_register (gimp, &edit_named_copy_visible_proc);
   procedural_db_register (gimp, &edit_named_paste_proc);
   procedural_db_register (gimp, &edit_named_paste_as_new_proc);
+  procedural_db_register (gimp, &edit_named_delete_proc);
+  procedural_db_register (gimp, &edit_named_rename_proc);
   procedural_db_register (gimp, &edit_clear_proc);
   procedural_db_register (gimp, &edit_fill_proc);
   procedural_db_register (gimp, &edit_bucket_fill_proc);
@@ -616,15 +620,17 @@ edit_named_copy_visible_invoker (Gimp         *gimp,
 
   if (success)
     {
-       if (strlen (buffer_name) > 0)
-         {
-            real_name = (gchar *) gimp_edit_named_copy_visible (image, buffer_name,
-                                                                context);
+       success = (strlen (buffer_name) > 0);
 
-            if (real_name)
-              real_name = g_strdup (real_name);
-            else
-              success = FALSE;
+       if (success)
+         {
+           real_name = (gchar *) gimp_edit_named_copy_visible (image, buffer_name,
+                                                               context);
+
+           if (real_name)
+             real_name = g_strdup (real_name);
+           else
+             success = FALSE;
          }
     }
 
@@ -847,6 +853,147 @@ static ProcRecord edit_named_paste_as_new_proc =
   1,
   edit_named_paste_as_new_outargs,
   { { edit_named_paste_as_new_invoker } }
+};
+
+static Argument *
+edit_named_delete_invoker (Gimp         *gimp,
+                           GimpContext  *context,
+                           GimpProgress *progress,
+                           Argument     *args)
+{
+  gboolean success = TRUE;
+  gchar *buffer_name;
+
+  buffer_name = (gchar *) args[0].value.pdb_pointer;
+  if (buffer_name == NULL || !g_utf8_validate (buffer_name, -1, NULL))
+    success = FALSE;
+
+  if (success)
+    {
+      GimpBuffer *buffer;
+
+      buffer = (GimpBuffer *) 
+        gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
+
+      success = (buffer != NULL);
+
+      if (success)
+        success = gimp_container_remove (gimp->named_buffers, GIMP_OBJECT (buffer));
+    }
+
+  return procedural_db_return_args (&edit_named_delete_proc, success);
+}
+
+static ProcArg edit_named_delete_inargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "buffer-name",
+    "The buffer name"
+  }
+};
+
+static ProcRecord edit_named_delete_proc =
+{
+  "gimp-edit-named-delete",
+  "gimp-edit-named-delete",
+  "Deletes a named buffer.",
+  "This procedure deletes a named buffer.",
+  "David Gowers <neota@softhome.net>",
+  "David Gowers <neota@softhome.net>",
+  "2005",
+  NULL,
+  GIMP_INTERNAL,
+  1,
+  edit_named_delete_inargs,
+  0,
+  NULL,
+  { { edit_named_delete_invoker } }
+};
+
+static Argument *
+edit_named_rename_invoker (Gimp         *gimp,
+                           GimpContext  *context,
+                           GimpProgress *progress,
+                           Argument     *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  gchar *buffer_name;
+  gchar *new_name;
+  gchar *real_name = NULL;
+
+  buffer_name = (gchar *) args[0].value.pdb_pointer;
+  if (buffer_name == NULL || !g_utf8_validate (buffer_name, -1, NULL))
+    success = FALSE;
+
+  new_name = (gchar *) args[1].value.pdb_pointer;
+  if (new_name == NULL || !g_utf8_validate (new_name, -1, NULL))
+    success = FALSE;
+
+  if (success)
+    {
+      GimpBuffer *buffer;
+
+      buffer = (GimpBuffer *)
+        gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
+
+      success = (buffer != NULL && strlen (new_name) > 0);
+
+      if (success)
+        {
+          gimp_object_set_name (GIMP_OBJECT (buffer), new_name);
+          real_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (buffer)));
+        }
+    }
+
+  return_args = procedural_db_return_args (&edit_named_rename_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_pointer = real_name;
+
+  return return_args;
+}
+
+static ProcArg edit_named_rename_inargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "buffer-name",
+    "The buffer name"
+  },
+  {
+    GIMP_PDB_STRING,
+    "new-name",
+    "The buffer's new name"
+  }
+};
+
+static ProcArg edit_named_rename_outargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "real-name",
+    "The real name given to the buffer"
+  }
+};
+
+static ProcRecord edit_named_rename_proc =
+{
+  "gimp-edit-named-rename",
+  "gimp-edit-named-rename",
+  "Renames a named buffer.",
+  "This procedure renames a named buffer.",
+  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer <mitch@gimp.org>",
+  "2005",
+  NULL,
+  GIMP_INTERNAL,
+  2,
+  edit_named_rename_inargs,
+  1,
+  edit_named_rename_outargs,
+  { { edit_named_rename_invoker } }
 };
 
 static Argument *
