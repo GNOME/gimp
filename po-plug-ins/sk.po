@@ -3,12 +3,14 @@
 # Zdenko Podobný <zdpo@mailbox.sk>, 2004.
 # Marcel Telka <marcel@telka.sk>, 2005.
 #
+# $Id$
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-24 00:49+0200\n"
-"PO-Revision-Date: 2005-08-24 01:07+0200\n"
+"POT-Creation-Date: 2005-09-06 22:19+0200\n"
+"PO-Revision-Date: 2005-09-06 22:19+0200\n"
 "Last-Translator: Marcel Telka <marcel@telka.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -30,80 +32,80 @@ msgstr ""
 "(%s \"%s\")\n"
 "do vášho %s súboru."
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:618
+#: ../plug-ins/FractalExplorer/Dialogs.c:620
 msgid "Realtime preview"
 msgstr "Realtime náhľad"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:625
+#: ../plug-ins/FractalExplorer/Dialogs.c:627
 msgid "If you enable this option the preview will be redrawn automatically"
 msgstr "Ak povolíte tú možnosť, potom náhľad bude automaticky prekresľovaný"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:628
+#: ../plug-ins/FractalExplorer/Dialogs.c:630
 msgid "Redraw"
 msgstr "Prekresliť"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:634
+#: ../plug-ins/FractalExplorer/Dialogs.c:636
 msgid "Redraw preview"
 msgstr "Prekresliť náhľad"
 
 #. Zoom Options
-#: ../plug-ins/FractalExplorer/Dialogs.c:637
+#: ../plug-ins/FractalExplorer/Dialogs.c:639
 msgid "Zoom"
 msgstr "Lupa"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:665
+#: ../plug-ins/FractalExplorer/Dialogs.c:667
 msgid "Undo last zoom"
 msgstr "Vrátiť späť poslednú zmenu"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:675
+#: ../plug-ins/FractalExplorer/Dialogs.c:677
 msgid "Redo last zoom"
 msgstr "Zopakovať poslednú zmenu veľkosti"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:690
+#: ../plug-ins/FractalExplorer/Dialogs.c:692
 msgid "_Parameters"
 msgstr "_Parametre"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:693
+#: ../plug-ins/FractalExplorer/Dialogs.c:695
 msgid "Fractal Parameters"
 msgstr "Parametre fraktálu"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:706
+#: ../plug-ins/FractalExplorer/Dialogs.c:708
 msgid "XMIN:"
 msgstr "XMIN:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:709
+#: ../plug-ins/FractalExplorer/Dialogs.c:711
 msgid "Change the first (minimal) x-coordinate delimitation"
 msgstr "Zmena ohraničenia prvej (minimálnej) x súradnice"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:717
+#: ../plug-ins/FractalExplorer/Dialogs.c:719
 msgid "XMAX:"
 msgstr "XMAX:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:720
+#: ../plug-ins/FractalExplorer/Dialogs.c:722
 msgid "Change the second (maximal) x-coordinate delimitation"
 msgstr "Zmena ohraničenia druhej (maximálnej) x súradnice"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:728
+#: ../plug-ins/FractalExplorer/Dialogs.c:730
 msgid "YMIN:"
 msgstr "YMIN:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:731
+#: ../plug-ins/FractalExplorer/Dialogs.c:733
 msgid "Change the first (minimal) y-coordinate delimitation"
 msgstr "Zmena ohraničenia prvej (minimálnej) y súradnice"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:739
+#: ../plug-ins/FractalExplorer/Dialogs.c:741
 msgid "YMAX:"
 msgstr "YMAX:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:742
+#: ../plug-ins/FractalExplorer/Dialogs.c:744
 msgid "Change the second (maximal) y-coordinate delimitation"
 msgstr "Zmena ohraničenia prvej (maximálnej) y súradnice"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:750
+#: ../plug-ins/FractalExplorer/Dialogs.c:752
 msgid "ITER:"
 msgstr "ITER:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:753
+#: ../plug-ins/FractalExplorer/Dialogs.c:755
 msgid ""
 "Change the iteration value. The higher it is, the more details will be "
 "calculated, which will take more time"
@@ -111,11 +113,11 @@ msgstr ""
 "Zmena počtu iterácií. Čím je ich viac, tým viac detailov, ktoré zaberú viac "
 "času, bude počítaných."
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:762
+#: ../plug-ins/FractalExplorer/Dialogs.c:764
 msgid "CX:"
 msgstr "CX:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:765
+#: ../plug-ins/FractalExplorer/Dialogs.c:767
 msgid ""
 "Change the CX value (changes aspect of fractal, active with every fractal "
 "but Mandelbrot and Sierpinski)"
@@ -123,11 +125,11 @@ msgstr ""
 "Zmena CX hodnoty (zmení vzhľad všetkých fraktálov okrem Mandelbrotovho a "
 "Sierpinskeho)"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:774
+#: ../plug-ins/FractalExplorer/Dialogs.c:776
 msgid "CY:"
 msgstr "CY:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:777
+#: ../plug-ins/FractalExplorer/Dialogs.c:779
 msgid ""
 "Change the CY value (changes aspect of fractal, active with every fractal "
 "but Mandelbrot and Sierpinski)"
@@ -135,170 +137,170 @@ msgstr ""
 "Zmena CY hodnoty (zmení vzhľad všetkých fraktálov okrem Mandelbrotovho a "
 "Sierpinskeho)"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:794
+#: ../plug-ins/FractalExplorer/Dialogs.c:796
 msgid "Load a fractal from file"
 msgstr "Načíta fraktál zo súboru"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:802
+#: ../plug-ins/FractalExplorer/Dialogs.c:804
 msgid "Reset parameters to default values"
 msgstr "Nastaví štandardné hodnoty"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:811
+#: ../plug-ins/FractalExplorer/Dialogs.c:813
 msgid "Save active fractal to file"
 msgstr "Uloží aktívny fraktál do súboru"
 
 #. Fractal type toggle box
-#: ../plug-ins/FractalExplorer/Dialogs.c:814
+#: ../plug-ins/FractalExplorer/Dialogs.c:816
 msgid "Fractal Type"
 msgstr "Typ fraktálu"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:827
+#: ../plug-ins/FractalExplorer/Dialogs.c:829
 msgid "Mandelbrot"
 msgstr "Mandelbrot"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:829
+#: ../plug-ins/FractalExplorer/Dialogs.c:831
 msgid "Julia"
 msgstr "Julia"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:831
+#: ../plug-ins/FractalExplorer/Dialogs.c:833
 msgid "Barnsley 1"
 msgstr "Barnsley 1"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:833
+#: ../plug-ins/FractalExplorer/Dialogs.c:835
 msgid "Barnsley 2"
 msgstr "Barnsley 2"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:835
+#: ../plug-ins/FractalExplorer/Dialogs.c:837
 msgid "Barnsley 3"
 msgstr "Barnsley 3"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:837
+#: ../plug-ins/FractalExplorer/Dialogs.c:839
 msgid "Spider"
 msgstr "Spider"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:839
+#: ../plug-ins/FractalExplorer/Dialogs.c:841
 msgid "Man'o'war"
 msgstr "Man'o'war"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:841
+#: ../plug-ins/FractalExplorer/Dialogs.c:843
 msgid "Lambda"
 msgstr "Lambda"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:843
+#: ../plug-ins/FractalExplorer/Dialogs.c:845
 msgid "Sierpinski"
 msgstr "Sierpinski"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:889 ../plug-ins/common/sinus.c:884
+#: ../plug-ins/FractalExplorer/Dialogs.c:891 ../plug-ins/common/sinus.c:886
 msgid "Co_lors"
 msgstr "_Farby"
 
 #. Number of Colors frame
-#: ../plug-ins/FractalExplorer/Dialogs.c:893
-#: ../plug-ins/common/borderaverage.c:413
+#: ../plug-ins/FractalExplorer/Dialogs.c:895
+#: ../plug-ins/common/borderaverage.c:415
 msgid "Number of Colors"
 msgstr "Počet farieb"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:905
+#: ../plug-ins/FractalExplorer/Dialogs.c:907
 msgid "Number of colors:"
 msgstr "Počet farieb:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:908
+#: ../plug-ins/FractalExplorer/Dialogs.c:910
 msgid "Change the number of colors in the mapping"
 msgstr "Zmení počet farieb v mapovaní"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:915
+#: ../plug-ins/FractalExplorer/Dialogs.c:917
 msgid "Use loglog smoothing"
 msgstr "Použiť loglog vyhladzovanie"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:922
+#: ../plug-ins/FractalExplorer/Dialogs.c:924
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
 msgstr ""
 "Na eliminovanie \"páskovania\"\tvo výsledkoch sa použije loglog vyhladzovanie"
 
 #. Color Density frame
-#: ../plug-ins/FractalExplorer/Dialogs.c:926
+#: ../plug-ins/FractalExplorer/Dialogs.c:928
 msgid "Color Density"
 msgstr "Farebná intenzita"
 
 #. These values are translated for the GUI but also used internally
 #. to figure out which button the user pushed, etc.
 #. Not my design, please don't blame me -- njl
-#: ../plug-ins/FractalExplorer/Dialogs.c:938 ../plug-ins/common/compose.c:140
+#: ../plug-ins/FractalExplorer/Dialogs.c:940 ../plug-ins/common/compose.c:140
 #: ../plug-ins/common/compose.c:150 ../plug-ins/common/fp.c:227
 msgid "Red:"
 msgstr "Červená:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:941
+#: ../plug-ins/FractalExplorer/Dialogs.c:943
 msgid "Change the intensity of the red channel"
 msgstr "Zmení intenzitu červeného kanála"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:948 ../plug-ins/common/compose.c:141
+#: ../plug-ins/FractalExplorer/Dialogs.c:950 ../plug-ins/common/compose.c:141
 #: ../plug-ins/common/compose.c:151 ../plug-ins/common/fp.c:228
 msgid "Green:"
 msgstr "Zelená:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:951
+#: ../plug-ins/FractalExplorer/Dialogs.c:953
 msgid "Change the intensity of the green channel"
 msgstr "Zmení intenzitu zeleného kanála"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:958 ../plug-ins/common/compose.c:142
+#: ../plug-ins/FractalExplorer/Dialogs.c:960 ../plug-ins/common/compose.c:142
 #: ../plug-ins/common/compose.c:152 ../plug-ins/common/fp.c:229
 msgid "Blue:"
 msgstr "Modrá:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:961
+#: ../plug-ins/FractalExplorer/Dialogs.c:963
 msgid "Change the intensity of the blue channel"
 msgstr "Zmení intenzitu modrého kanála"
 
 #. Color Function frame
-#: ../plug-ins/FractalExplorer/Dialogs.c:967
+#: ../plug-ins/FractalExplorer/Dialogs.c:969
 msgid "Color Function"
 msgstr "Farebné funkcie"
 
 #. Redmode radio frame
-#: ../plug-ins/FractalExplorer/Dialogs.c:976
-#: ../plug-ins/common/channel_mixer.c:535 ../plug-ins/common/decompose.c:137
+#: ../plug-ins/FractalExplorer/Dialogs.c:978
+#: ../plug-ins/common/channel_mixer.c:537 ../plug-ins/common/decompose.c:137
 msgid "Red"
 msgstr "Červená"
-
-#: ../plug-ins/FractalExplorer/Dialogs.c:980
-#: ../plug-ins/FractalExplorer/Dialogs.c:1021
-#: ../plug-ins/FractalExplorer/Dialogs.c:1062
-msgid "Sine"
-msgstr "Sínus"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:982
 #: ../plug-ins/FractalExplorer/Dialogs.c:1023
 #: ../plug-ins/FractalExplorer/Dialogs.c:1064
-msgid "Cosine"
-msgstr "Kosínus"
+msgid "Sine"
+msgstr "Sínus"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:984
 #: ../plug-ins/FractalExplorer/Dialogs.c:1025
 #: ../plug-ins/FractalExplorer/Dialogs.c:1066
+msgid "Cosine"
+msgstr "Kosínus"
+
+#: ../plug-ins/FractalExplorer/Dialogs.c:986
+#: ../plug-ins/FractalExplorer/Dialogs.c:1027
+#: ../plug-ins/FractalExplorer/Dialogs.c:1068
 #: ../plug-ins/Lighting/lighting_ui.c:399
-#: ../plug-ins/common/CML_explorer.c:166 ../plug-ins/common/align_layers.c:418
-#: ../plug-ins/common/align_layers.c:449 ../plug-ins/common/postscript.c:3164
+#: ../plug-ins/common/CML_explorer.c:166 ../plug-ins/common/align_layers.c:420
+#: ../plug-ins/common/align_layers.c:451 ../plug-ins/common/postscript.c:3164
 #: ../plug-ins/common/postscript.c:3176 ../plug-ins/common/psp.c:419
 #: ../plug-ins/fits/fits.c:1020
 msgid "None"
 msgstr "Žiadna"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:989
-#: ../plug-ins/FractalExplorer/Dialogs.c:1030
-#: ../plug-ins/FractalExplorer/Dialogs.c:1071
+#: ../plug-ins/FractalExplorer/Dialogs.c:991
+#: ../plug-ins/FractalExplorer/Dialogs.c:1032
+#: ../plug-ins/FractalExplorer/Dialogs.c:1073
 msgid "Use sine-function for this color component"
 msgstr "Použije funkciu sínus pre túto farebnú zložku"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:992
-#: ../plug-ins/FractalExplorer/Dialogs.c:1033
-#: ../plug-ins/FractalExplorer/Dialogs.c:1074
+#: ../plug-ins/FractalExplorer/Dialogs.c:994
+#: ../plug-ins/FractalExplorer/Dialogs.c:1035
+#: ../plug-ins/FractalExplorer/Dialogs.c:1076
 msgid "Use cosine-function for this color component"
 msgstr "Použije funkciu kosínus pre túto farebnú zložku"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:995
-#: ../plug-ins/FractalExplorer/Dialogs.c:1036
-#: ../plug-ins/FractalExplorer/Dialogs.c:1077
+#: ../plug-ins/FractalExplorer/Dialogs.c:997
+#: ../plug-ins/FractalExplorer/Dialogs.c:1038
+#: ../plug-ins/FractalExplorer/Dialogs.c:1079
 msgid ""
 "Use linear mapping instead of any trigonometrical function for this color "
 "channel"
@@ -306,15 +308,15 @@ msgstr ""
 "Použije lineárne mapovanie namiesto trigonometrických funkcií pre tento "
 "farebný kanál"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1004
-#: ../plug-ins/FractalExplorer/Dialogs.c:1045
-#: ../plug-ins/FractalExplorer/Dialogs.c:1086
+#: ../plug-ins/FractalExplorer/Dialogs.c:1006
+#: ../plug-ins/FractalExplorer/Dialogs.c:1047
+#: ../plug-ins/FractalExplorer/Dialogs.c:1088
 msgid "Inversion"
 msgstr "Opak"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1012
-#: ../plug-ins/FractalExplorer/Dialogs.c:1053
-#: ../plug-ins/FractalExplorer/Dialogs.c:1094
+#: ../plug-ins/FractalExplorer/Dialogs.c:1014
+#: ../plug-ins/FractalExplorer/Dialogs.c:1055
+#: ../plug-ins/FractalExplorer/Dialogs.c:1096
 msgid ""
 "If you enable this option higher color values will be swapped with lower "
 "ones and vice versa"
@@ -323,27 +325,27 @@ msgstr ""
 "nižšími a naopak"
 
 #. Greenmode radio frame
-#: ../plug-ins/FractalExplorer/Dialogs.c:1017
-#: ../plug-ins/common/channel_mixer.c:540 ../plug-ins/common/decompose.c:138
+#: ../plug-ins/FractalExplorer/Dialogs.c:1019
+#: ../plug-ins/common/channel_mixer.c:542 ../plug-ins/common/decompose.c:138
 msgid "Green"
 msgstr "Zelená"
 
 #. Bluemode radio frame
-#: ../plug-ins/FractalExplorer/Dialogs.c:1058
-#: ../plug-ins/common/channel_mixer.c:545 ../plug-ins/common/decompose.c:143
+#: ../plug-ins/FractalExplorer/Dialogs.c:1060
+#: ../plug-ins/common/channel_mixer.c:547 ../plug-ins/common/decompose.c:143
 msgid "Blue"
 msgstr "Modrá"
 
 #. Colormode toggle box
-#: ../plug-ins/FractalExplorer/Dialogs.c:1099
+#: ../plug-ins/FractalExplorer/Dialogs.c:1101
 msgid "Color Mode"
 msgstr "Farebný režim"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1108
+#: ../plug-ins/FractalExplorer/Dialogs.c:1110
 msgid "As specified above"
 msgstr "Tak, ako je špecifikovaný vyššie"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1120
+#: ../plug-ins/FractalExplorer/Dialogs.c:1122
 msgid ""
 "Create a color-map with the options you specified above (color density/"
 "function). The result is visible in the preview image"
@@ -351,29 +353,29 @@ msgstr ""
 "Vytvorí farebnú mapu s vyššie špecifikovanými vlastnosťami (farebná "
 "intenzita/funkcia). Výsledok je viditeľný na obrázku v náhľade."
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1130
+#: ../plug-ins/FractalExplorer/Dialogs.c:1132
 msgid "Apply active gradient to final image"
 msgstr "Použiť aktívny prechod na finálny obrázok"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1142
+#: ../plug-ins/FractalExplorer/Dialogs.c:1144
 msgid "Create a color-map using a gradient from the gradient editor"
 msgstr "Vytvorí farebnú mapu s použitím prechodu z editora prechodov"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1153
+#: ../plug-ins/FractalExplorer/Dialogs.c:1155
 msgid "FractalExplorer Gradient"
 msgstr "FractalExplorer Prechod"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1183
+#: ../plug-ins/FractalExplorer/Dialogs.c:1185
 msgid "_Fractals"
 msgstr "_Fraktály"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1694
-#: ../plug-ins/Lighting/lighting_ui.c:1158 ../plug-ins/bmp/bmpwrite.c:201
-#: ../plug-ins/common/CEL.c:572 ../plug-ins/common/CML_explorer.c:2009
-#: ../plug-ins/common/channel_mixer.c:1064 ../plug-ins/common/compressor.c:410
+#: ../plug-ins/FractalExplorer/Dialogs.c:1696
+#: ../plug-ins/Lighting/lighting_ui.c:1160 ../plug-ins/bmp/bmpwrite.c:201
+#: ../plug-ins/common/CEL.c:572 ../plug-ins/common/CML_explorer.c:2011
+#: ../plug-ins/common/channel_mixer.c:1066 ../plug-ins/common/compressor.c:410
 #: ../plug-ins/common/compressor.c:541 ../plug-ins/common/curve_bend.c:860
 #: ../plug-ins/common/dicom.c:653 ../plug-ins/common/gbr.c:605
-#: ../plug-ins/common/gif.c:997 ../plug-ins/common/gih.c:1259
+#: ../plug-ins/common/gif.c:1001 ../plug-ins/common/gih.c:1259
 #: ../plug-ins/common/gtm.c:225 ../plug-ins/common/mng.c:561
 #: ../plug-ins/common/mng.c:953 ../plug-ins/common/pat.c:452
 #: ../plug-ins/common/pcx.c:590 ../plug-ins/common/pix.c:509
@@ -385,7 +387,7 @@ msgstr "_Fraktály"
 #: ../plug-ins/common/xbm.c:1003 ../plug-ins/common/xwd.c:567
 #: ../plug-ins/fits/fits.c:454 ../plug-ins/flame/flame.c:442
 #: ../plug-ins/gfig/gfig.c:787 ../plug-ins/gfli/gfli.c:716
-#: ../plug-ins/ifscompose/ifscompose.c:2389 ../plug-ins/jpeg/jpeg-save.c:268
+#: ../plug-ins/ifscompose/ifscompose.c:2391 ../plug-ins/jpeg/jpeg-save.c:268
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:223
 #: ../plug-ins/winicon/icosave.c:244 ../plug-ins/xjt/xjt.c:1268
 #: ../plug-ins/xjt/xjt.c:1703
@@ -393,26 +395,26 @@ msgstr "_Fraktály"
 msgid "Could not open '%s' for writing: %s"
 msgstr "Nie je možné otvoriť '%s' pre zápis: %s"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1708
+#: ../plug-ins/FractalExplorer/Dialogs.c:1710
 #, c-format
 msgid "Could not write '%s': %s"
 msgstr "Nie je možné zapísať '%s': %s"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1761
+#: ../plug-ins/FractalExplorer/Dialogs.c:1763
 msgid "Load Fractal Parameters"
 msgstr "Načítať parametre fraktálu"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1797
+#: ../plug-ins/FractalExplorer/Dialogs.c:1799
 msgid "Save Fractal Parameters"
 msgstr "Uložiť parametre fraktálu"
 
 #. Do not rely on librsvg setting GError on failure!
 #. stat error (file does not exist)
-#: ../plug-ins/FractalExplorer/Dialogs.c:2003
+#: ../plug-ins/FractalExplorer/Dialogs.c:2005
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:917
-#: ../plug-ins/Lighting/lighting_ui.c:1302 ../plug-ins/bmp/bmpread.c:152
-#: ../plug-ins/common/CEL.c:300 ../plug-ins/common/CML_explorer.c:2229
-#: ../plug-ins/common/channel_mixer.c:981 ../plug-ins/common/curve_bend.c:912
+#: ../plug-ins/Lighting/lighting_ui.c:1304 ../plug-ins/bmp/bmpread.c:152
+#: ../plug-ins/common/CEL.c:300 ../plug-ins/common/CML_explorer.c:2231
+#: ../plug-ins/common/channel_mixer.c:983 ../plug-ins/common/curve_bend.c:912
 #: ../plug-ins/common/dicom.c:296 ../plug-ins/common/gbr.c:348
 #: ../plug-ins/common/gifload.c:298 ../plug-ins/common/gih.c:649
 #: ../plug-ins/common/mng.c:1124 ../plug-ins/common/pat.c:321
@@ -422,8 +424,8 @@ msgstr "Uložiť parametre fraktálu"
 #: ../plug-ins/common/postscript.c:2978 ../plug-ins/common/psd.c:1823
 #: ../plug-ins/common/psp.c:1460 ../plug-ins/common/raw.c:242
 #: ../plug-ins/common/raw.c:646 ../plug-ins/common/spheredesigner.c:1998
-#: ../plug-ins/common/sunras.c:379 ../plug-ins/common/svg.c:312
-#: ../plug-ins/common/svg.c:697 ../plug-ins/common/tga.c:414
+#: ../plug-ins/common/sunras.c:379 ../plug-ins/common/svg.c:313
+#: ../plug-ins/common/svg.c:708 ../plug-ins/common/tga.c:414
 #: ../plug-ins/common/tiff.c:530 ../plug-ins/common/xbm.c:720
 #: ../plug-ins/common/xwd.c:420 ../plug-ins/faxg3/faxg3.c:220
 #: ../plug-ins/fits/fits.c:342 ../plug-ins/flame/flame.c:411
@@ -437,12 +439,12 @@ msgstr "Uložiť parametre fraktálu"
 msgid "Could not open '%s' for reading: %s"
 msgstr "Nie je možné otvoriť '%s' pre čítanie: %s"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:2011
+#: ../plug-ins/FractalExplorer/Dialogs.c:2013
 #, c-format
 msgid "'%s' is not a FractalExplorer file"
 msgstr "'%s' nie je FractalExplorer súbor"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:2017
+#: ../plug-ins/FractalExplorer/Dialogs.c:2019
 #, c-format
 msgid "'%s' is corrupt. Line %d Option section incorrect"
 msgstr "'%s' je poškodený. Riadok %d časť Nastavenia je nesprávny"
@@ -577,7 +579,7 @@ msgstr "Svetlo 6"
 
 #. row labels
 #: ../plug-ins/Lighting/lighting_ui.c:388
-#: ../plug-ins/common/spheredesigner.c:2654
+#: ../plug-ins/common/spheredesigner.c:2656
 msgid "Type:"
 msgstr "Typ:"
 
@@ -619,13 +621,13 @@ msgstr "Intenzita svetla"
 #: ../plug-ins/Lighting/lighting_ui.c:447
 #: ../plug-ins/MapObject/mapobject_ui.c:694
 #: ../plug-ins/MapObject/mapobject_ui.c:1021
-#: ../plug-ins/print/gimp_main_window.c:472
+#: ../plug-ins/print/gimp_main_window.c:474
 msgid "Position"
 msgstr "Pozícia"
 
-#: ../plug-ins/Lighting/lighting_ui.c:456 ../plug-ins/common/flarefx.c:762
-#: ../plug-ins/common/mblur.c:990 ../plug-ins/common/nova.c:456
-#: ../plug-ins/common/papertile.c:271 ../plug-ins/flame/flame.c:1221
+#: ../plug-ins/Lighting/lighting_ui.c:456 ../plug-ins/common/flarefx.c:764
+#: ../plug-ins/common/mblur.c:992 ../plug-ins/common/nova.c:458
+#: ../plug-ins/common/papertile.c:273 ../plug-ins/flame/flame.c:1223
 #: ../plug-ins/gflare/gflare.c:2655
 msgid "_X:"
 msgstr "_X:"
@@ -635,9 +637,9 @@ msgstr "_X:"
 msgid "Light source X position in XYZ space"
 msgstr "Poloha X svetelného zdroja v XYZ priestore"
 
-#: ../plug-ins/Lighting/lighting_ui.c:469 ../plug-ins/common/flarefx.c:767
-#: ../plug-ins/common/mblur.c:995 ../plug-ins/common/nova.c:461
-#: ../plug-ins/common/papertile.c:280 ../plug-ins/flame/flame.c:1235
+#: ../plug-ins/Lighting/lighting_ui.c:469 ../plug-ins/common/flarefx.c:769
+#: ../plug-ins/common/mblur.c:997 ../plug-ins/common/nova.c:463
+#: ../plug-ins/common/papertile.c:282 ../plug-ins/flame/flame.c:1237
 #: ../plug-ins/gflare/gflare.c:2659
 msgid "_Y:"
 msgstr "_Y:"
@@ -659,8 +661,8 @@ msgstr "Poloha Z svetelného zdroja v XYZ priestore"
 #. *****************************************************
 #. radio buttons for choosing LEFT or RIGHT
 #. *************************************************
-#: ../plug-ins/Lighting/lighting_ui.c:491 ../plug-ins/common/struc.c:1292
-#: ../plug-ins/common/wind.c:943
+#: ../plug-ins/Lighting/lighting_ui.c:491 ../plug-ins/common/struc.c:1294
+#: ../plug-ins/common/wind.c:945
 msgid "Direction"
 msgstr "Smer"
 
@@ -776,7 +778,7 @@ msgid "Bumpm_ap image:"
 msgstr "O_brázok vyvýšenia:"
 
 #. Map type menu
-#: ../plug-ins/Lighting/lighting_ui.c:788 ../plug-ins/common/bumpmap.c:901
+#: ../plug-ins/Lighting/lighting_ui.c:788 ../plug-ins/common/bumpmap.c:903
 #: ../plug-ins/flame/flame.c:742
 msgid "Linear"
 msgstr "Lineárny"
@@ -785,12 +787,12 @@ msgstr "Lineárny"
 msgid "Logarithmic"
 msgstr "Logaritmická"
 
-#: ../plug-ins/Lighting/lighting_ui.c:790 ../plug-ins/common/bumpmap.c:903
+#: ../plug-ins/Lighting/lighting_ui.c:790 ../plug-ins/common/bumpmap.c:905
 #: ../plug-ins/flame/flame.c:743
 msgid "Sinusoidal"
 msgstr "Sínusoidný"
 
-#: ../plug-ins/Lighting/lighting_ui.c:791 ../plug-ins/common/bumpmap.c:902
+#: ../plug-ins/Lighting/lighting_ui.c:791 ../plug-ins/common/bumpmap.c:904
 #: ../plug-ins/flame/flame.c:744
 msgid "Spherical"
 msgstr "Guľový"
@@ -849,30 +851,30 @@ msgstr "Mapa prostr_edia"
 msgid "Lighting Effects"
 msgstr "Svetelné efekty"
 
-#: ../plug-ins/Lighting/lighting_ui.c:1024
+#: ../plug-ins/Lighting/lighting_ui.c:1026
 #: ../plug-ins/gimpressionist/preview.c:181
 #: ../plug-ins/imagemap/imap_polygon.c:515
 msgid "_Update"
 msgstr "_Obnoviť"
 
-#: ../plug-ins/Lighting/lighting_ui.c:1031
-#: ../plug-ins/MapObject/mapobject_ui.c:1430
+#: ../plug-ins/Lighting/lighting_ui.c:1033
+#: ../plug-ins/MapObject/mapobject_ui.c:1432
 msgid "Recompute preview image"
 msgstr "Prepočítať náhľad"
 
-#: ../plug-ins/Lighting/lighting_ui.c:1033
+#: ../plug-ins/Lighting/lighting_ui.c:1035
 msgid "I_nteractive"
 msgstr "I_nteraktívne"
 
-#: ../plug-ins/Lighting/lighting_ui.c:1047
+#: ../plug-ins/Lighting/lighting_ui.c:1049
 msgid "Enable/disable real time preview of changes"
 msgstr "Povoliť/zakázať náhľad na zmeny v reálnom čase"
 
-#: ../plug-ins/Lighting/lighting_ui.c:1086
+#: ../plug-ins/Lighting/lighting_ui.c:1088
 msgid "Save Lighting Preset"
 msgstr "Uložiť nastavenia osvetlenia"
 
-#: ../plug-ins/Lighting/lighting_ui.c:1228
+#: ../plug-ins/Lighting/lighting_ui.c:1230
 msgid "Load Lighting Preset"
 msgstr "Načítať nastavenia osvetlenia"
 
@@ -958,9 +960,9 @@ msgstr "Povoliť vyhl_adzovanie"
 msgid "Enable/disable jagged edges removal (antialiasing)"
 msgstr "Povoliť/zakázať odstraňovanie zubatých hrán (vyhladzovanie)"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:602 ../plug-ins/common/bumpmap.c:982
-#: ../plug-ins/common/emboss.c:526 ../plug-ins/common/fractaltrace.c:790
-#: ../plug-ins/common/struc.c:1324
+#: ../plug-ins/MapObject/mapobject_ui.c:602 ../plug-ins/common/bumpmap.c:984
+#: ../plug-ins/common/emboss.c:528 ../plug-ins/common/fractaltrace.c:792
+#: ../plug-ins/common/struc.c:1326
 msgid "_Depth:"
 msgstr "_Hĺbka:"
 
@@ -968,8 +970,8 @@ msgstr "_Hĺbka:"
 msgid "Antialiasing quality. Higher is better, but slower"
 msgstr "Kvalita vyhladzovania. Vyššia je lepšia, ale je pomalšia"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:614 ../plug-ins/common/unsharp.c:693
-#: ../plug-ins/common/wind.c:1006 ../plug-ins/imagemap/imap_preferences.c:441
+#: ../plug-ins/MapObject/mapobject_ui.c:614 ../plug-ins/common/unsharp.c:695
+#: ../plug-ins/common/wind.c:1008 ../plug-ins/imagemap/imap_preferences.c:441
 msgid "_Threshold:"
 msgstr "Pra_h:"
 
@@ -1069,22 +1071,22 @@ msgid "Back:"
 msgstr "Vzadu:"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1133
-#: ../plug-ins/print/gimp_main_window.c:531
+#: ../plug-ins/print/gimp_main_window.c:533
 msgid "Top:"
 msgstr "Hore:"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1133
-#: ../plug-ins/print/gimp_main_window.c:572
+#: ../plug-ins/print/gimp_main_window.c:574
 msgid "Bottom:"
 msgstr "Dole:"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1134
-#: ../plug-ins/print/gimp_main_window.c:518
+#: ../plug-ins/print/gimp_main_window.c:520
 msgid "Left:"
 msgstr "Vľavo:"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1134
-#: ../plug-ins/print/gimp_main_window.c:544
+#: ../plug-ins/print/gimp_main_window.c:546
 msgid "Right:"
 msgstr "Vpravo:"
 
@@ -1093,7 +1095,7 @@ msgid "Map Images to Box Faces"
 msgstr "Mapovať obrázok na plochy hranola"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1178
-#: ../plug-ins/common/spheredesigner.c:2749
+#: ../plug-ins/common/spheredesigner.c:2751
 msgid "Scale X:"
 msgstr "Zmena veľkosti X:"
 
@@ -1122,7 +1124,7 @@ msgid "Images for the Cap Faces"
 msgstr "Obrázky pre uzatváracie plochy"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1262
-#: ../plug-ins/print/gimp_main_window.c:1116
+#: ../plug-ins/print/gimp_main_window.c:1118
 msgid "Size"
 msgstr "Veľkosť"
 
@@ -1134,7 +1136,7 @@ msgstr "_Polomer:"
 msgid "Cylinder radius"
 msgstr "Polomer valca"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1287 ../plug-ins/common/mblur.c:1021
+#: ../plug-ins/MapObject/mapobject_ui.c:1287 ../plug-ins/common/mblur.c:1023
 msgid "L_ength:"
 msgstr "D_ĺžka:"
 
@@ -1154,24 +1156,24 @@ msgstr "O_rientácia"
 msgid "Map to Object"
 msgstr "Mapovať a objekt"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1421
-#: ../plug-ins/common/diffraction.c:475
+#: ../plug-ins/MapObject/mapobject_ui.c:1423
+#: ../plug-ins/common/diffraction.c:477
 msgid "_Preview!"
 msgstr "_Náhľad!"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1444
+#: ../plug-ins/MapObject/mapobject_ui.c:1446
 msgid "Zoom out (make image smaller)"
 msgstr "Zmenšiť (obrázok bude menší)"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1458
+#: ../plug-ins/MapObject/mapobject_ui.c:1460
 msgid "Zoom in (make image bigger)"
 msgstr "Zväčšiť (obrázok bude väčší)"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1460
+#: ../plug-ins/MapObject/mapobject_ui.c:1462
 msgid "Show preview _wireframe"
 msgstr "Zobraziť náhľad na _drátový model"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1469
+#: ../plug-ins/MapObject/mapobject_ui.c:1471
 msgid "Show/hide preview wireframe"
 msgstr "Zobraziť/skryť náhľad na drátový model"
 
@@ -1229,7 +1231,7 @@ msgstr "Nepodporovaná alebo neplatná bitová hĺbka."
 #. * Create the "background" layer to hold the image...
 #.
 #: ../plug-ins/bmp/bmpread.c:488 ../plug-ins/common/CEL.c:352
-#: ../plug-ins/common/CEL.c:355 ../plug-ins/common/blinds.c:279
+#: ../plug-ins/common/CEL.c:355 ../plug-ins/common/blinds.c:281
 #: ../plug-ins/common/compose.c:764 ../plug-ins/common/decompose.c:623
 #: ../plug-ins/common/dicom.c:448 ../plug-ins/common/film.c:944
 #: ../plug-ins/common/gifload.c:870 ../plug-ins/common/pcx.c:340
@@ -1263,7 +1265,7 @@ msgstr "Nie je možné použiť alfa kanál nad indexovanými obrázkami."
 #. And let's begin the progress
 #. init the progress meter
 #: ../plug-ins/bmp/bmpwrite.c:212 ../plug-ins/common/CEL.c:577
-#: ../plug-ins/common/gbr.c:611 ../plug-ins/common/gif.c:1004
+#: ../plug-ins/common/gbr.c:611 ../plug-ins/common/gif.c:1008
 #: ../plug-ins/common/gih.c:1264 ../plug-ins/common/gtm.c:246
 #: ../plug-ins/common/pat.c:458 ../plug-ins/common/pcx.c:552
 #: ../plug-ins/common/pix.c:515 ../plug-ins/common/png.c:1230
@@ -1284,8 +1286,8 @@ msgid "Save as BMP"
 msgstr "Uložiť ako BMP"
 
 #: ../plug-ins/bmp/bmpwrite.c:605
-msgid "_RLE encoded"
-msgstr "_RLE kódovanie"
+msgid "_Run-Length Encoded"
+msgstr "Kódované _Run-Length"
 
 #: ../plug-ins/common/AlienMap2.c:142
 msgid "_Modify red channel"
@@ -1371,27 +1373,27 @@ msgstr "Mimozemské mapovanie 2: Transformuje..."
 msgid "AlienMap2"
 msgstr "Mimozemské mapovanie 2"
 
-#: ../plug-ins/common/AlienMap2.c:440 ../plug-ins/common/AlienMap2.c:464
-#: ../plug-ins/common/AlienMap2.c:488
+#: ../plug-ins/common/AlienMap2.c:442 ../plug-ins/common/AlienMap2.c:466
+#: ../plug-ins/common/AlienMap2.c:490
 msgid "Number of cycles covering full value range"
 msgstr "Počet cyklov pokrývajúci celý rozsah hodnôt"
 
-#: ../plug-ins/common/AlienMap2.c:452 ../plug-ins/common/AlienMap2.c:476
-#: ../plug-ins/common/AlienMap2.c:500
+#: ../plug-ins/common/AlienMap2.c:454 ../plug-ins/common/AlienMap2.c:478
+#: ../plug-ins/common/AlienMap2.c:502
 msgid "Phase angle, range 0-360"
 msgstr "Fára uhla, rozsah 0-360"
 
 #. Propagate Mode
-#: ../plug-ins/common/AlienMap2.c:514 ../plug-ins/common/hot.c:593
-#: ../plug-ins/common/vpropagate.c:1084 ../plug-ins/common/waves.c:272
+#: ../plug-ins/common/AlienMap2.c:516 ../plug-ins/common/hot.c:595
+#: ../plug-ins/common/vpropagate.c:1086 ../plug-ins/common/waves.c:274
 msgid "Mode"
 msgstr "Režim"
 
-#: ../plug-ins/common/AlienMap2.c:518
+#: ../plug-ins/common/AlienMap2.c:520
 msgid "_RGB color model"
 msgstr "_RGB farebný model"
 
-#: ../plug-ins/common/AlienMap2.c:519
+#: ../plug-ins/common/AlienMap2.c:521
 msgid "_HSL color model"
 msgstr "_HSL farebný model"
 
@@ -1521,7 +1523,7 @@ msgid "Min (x-d, -), (0.5 < x)"
 msgstr "Min (x-d, -), (0.5 < x)"
 
 #: ../plug-ins/common/CML_explorer.c:200 ../plug-ins/common/sunras.c:1593
-#: ../plug-ins/print/gimp_main_window.c:1665
+#: ../plug-ins/print/gimp_main_window.c:1667
 msgid "Standard"
 msgstr "Štandardný"
 
@@ -1636,64 +1638,64 @@ msgstr "CML_prieskumník: vyvíja sa..."
 msgid "Coupled-Map-Lattice Explorer"
 msgstr "Prieskumník párovanej mapy mriežky"
 
-#: ../plug-ins/common/CML_explorer.c:1228
+#: ../plug-ins/common/CML_explorer.c:1230
 msgid "New Seed"
 msgstr "Nové semeno"
 
-#: ../plug-ins/common/CML_explorer.c:1239
+#: ../plug-ins/common/CML_explorer.c:1241
 msgid "Fix Seed"
 msgstr "Opraviť semeno"
 
-#: ../plug-ins/common/CML_explorer.c:1250
+#: ../plug-ins/common/CML_explorer.c:1252
 msgid "Random Seed"
 msgstr "Náhodné semeno"
 
-#: ../plug-ins/common/CML_explorer.c:1292 ../plug-ins/common/fp.c:697
-#: ../plug-ins/common/lic.c:670
+#: ../plug-ins/common/CML_explorer.c:1294 ../plug-ins/common/fp.c:697
+#: ../plug-ins/common/lic.c:672
 msgid "_Hue"
 msgstr "_Odtieň"
 
-#: ../plug-ins/common/CML_explorer.c:1296
+#: ../plug-ins/common/CML_explorer.c:1298
 msgid "Sat_uration"
 msgstr "Sý_tosť"
 
-#: ../plug-ins/common/CML_explorer.c:1300 ../plug-ins/common/fp.c:705
+#: ../plug-ins/common/CML_explorer.c:1302 ../plug-ins/common/fp.c:705
 msgid "_Value"
 msgstr "_Hodnota"
 
-#: ../plug-ins/common/CML_explorer.c:1304
+#: ../plug-ins/common/CML_explorer.c:1306
 msgid "_Advanced"
 msgstr "_Pokročilé"
 
-#: ../plug-ins/common/CML_explorer.c:1319
+#: ../plug-ins/common/CML_explorer.c:1321
 msgid "Channel Independent Parameters"
 msgstr "Parametre nezávislé od kanálu"
 
-#: ../plug-ins/common/CML_explorer.c:1341
+#: ../plug-ins/common/CML_explorer.c:1343
 msgid "Initial value:"
 msgstr "Počiatočná hodnota:"
 
-#: ../plug-ins/common/CML_explorer.c:1347
+#: ../plug-ins/common/CML_explorer.c:1349
 msgid "Zoom scale:"
 msgstr "Miera zmeny veľkosti:"
 
-#: ../plug-ins/common/CML_explorer.c:1356
+#: ../plug-ins/common/CML_explorer.c:1358
 msgid "Start offset:"
 msgstr "Počiatočný posun:"
 
-#: ../plug-ins/common/CML_explorer.c:1365
+#: ../plug-ins/common/CML_explorer.c:1367
 msgid "Seed of Random (only for \"From Seed\" Modes)"
 msgstr "Hniezdo náhodných čísiel (iba pre režimy \"z hniezda\")"
 
-#: ../plug-ins/common/CML_explorer.c:1376 ../plug-ins/maze/maze_face.c:298
+#: ../plug-ins/common/CML_explorer.c:1378 ../plug-ins/maze/maze_face.c:300
 msgid "Seed:"
 msgstr "Hniezdo:"
 
-#: ../plug-ins/common/CML_explorer.c:1389
+#: ../plug-ins/common/CML_explorer.c:1391
 msgid "Switch to \"From seed\" With the Last Seed"
 msgstr "Prepnúť do režimu \"Zo semena\" s posledným hniezdom"
 
-#: ../plug-ins/common/CML_explorer.c:1401
+#: ../plug-ins/common/CML_explorer.c:1403
 msgid ""
 "\"Fix seed\" button is an alias of me.\n"
 "The same seed produces the same image, if (1) the widths of images are same "
@@ -1701,131 +1703,131 @@ msgid ""
 "(2) all mutation rates equal to zero."
 msgstr ""
 "Tlačítko \"Opraviť semeno\" je odkaz na mňa.\n"
-"Rovnaké semeno vytvára rovnaký obrázok, pokiaľ (1) šírky obrázkov sú "
-"rovnaké (to je dôvod, prečo sú obrázky na obrazovke iné ako v náhľade) a (2) "
-"a všetky miery mutácií sú nulové."
+"Rovnaké semeno vytvára rovnaký obrázok, pokiaľ (1) šírky obrázkov sú rovnaké "
+"(to je dôvod, prečo sú obrázky na obrazovke iné ako v náhľade) a (2) a "
+"všetky miery mutácií sú nulové."
 
-#: ../plug-ins/common/CML_explorer.c:1409
+#: ../plug-ins/common/CML_explorer.c:1411
 msgid "O_thers"
 msgstr "Os_tatné"
 
-#: ../plug-ins/common/CML_explorer.c:1424
+#: ../plug-ins/common/CML_explorer.c:1426
 msgid "Copy Settings"
 msgstr "Kopírovať nastavenia"
 
-#: ../plug-ins/common/CML_explorer.c:1443
+#: ../plug-ins/common/CML_explorer.c:1445
 msgid "Source channel:"
 msgstr "Zdrojový kanál:"
 
-#: ../plug-ins/common/CML_explorer.c:1458
-#: ../plug-ins/common/CML_explorer.c:1506
+#: ../plug-ins/common/CML_explorer.c:1460
+#: ../plug-ins/common/CML_explorer.c:1508
 msgid "Destination channel:"
 msgstr "Cieľový kanál:"
 
-#: ../plug-ins/common/CML_explorer.c:1462
+#: ../plug-ins/common/CML_explorer.c:1464
 msgid "Copy Parameters"
 msgstr "Kopírovať paramete"
 
-#: ../plug-ins/common/CML_explorer.c:1471
+#: ../plug-ins/common/CML_explorer.c:1473
 msgid "Selective Load Settings"
 msgstr "Výberové načítanie nastavení"
 
-#: ../plug-ins/common/CML_explorer.c:1491
+#: ../plug-ins/common/CML_explorer.c:1493
 msgid "Source channel in file:"
 msgstr "Zdrojový kanál v súbore:"
 
-#: ../plug-ins/common/CML_explorer.c:1512
+#: ../plug-ins/common/CML_explorer.c:1514
 msgid "_Misc Ops."
 msgstr "Rôz_ne operácie"
 
-#: ../plug-ins/common/CML_explorer.c:1561
+#: ../plug-ins/common/CML_explorer.c:1563
 msgid "Function type:"
 msgstr "Typ funkcie:"
 
-#: ../plug-ins/common/CML_explorer.c:1577
+#: ../plug-ins/common/CML_explorer.c:1579
 msgid "Composition:"
 msgstr "Kompozícia:"
 
-#: ../plug-ins/common/CML_explorer.c:1591
+#: ../plug-ins/common/CML_explorer.c:1593
 msgid "Misc arrange:"
 msgstr "Rôzne usporiadanie:"
 
-#: ../plug-ins/common/CML_explorer.c:1595
+#: ../plug-ins/common/CML_explorer.c:1597
 msgid "Use cyclic range"
 msgstr "Použiť cyklický rozsah"
 
-#: ../plug-ins/common/CML_explorer.c:1605
+#: ../plug-ins/common/CML_explorer.c:1607
 msgid "Mod. rate:"
 msgstr "Miera mod.:"
 
-#: ../plug-ins/common/CML_explorer.c:1614
+#: ../plug-ins/common/CML_explorer.c:1616
 msgid "Env. sensitivity:"
 msgstr "Citlivosť prost.:"
 
-#: ../plug-ins/common/CML_explorer.c:1623
+#: ../plug-ins/common/CML_explorer.c:1625
 msgid "Diffusion dist.:"
 msgstr "Vzdialenosť rozptylu:"
 
-#: ../plug-ins/common/CML_explorer.c:1632
+#: ../plug-ins/common/CML_explorer.c:1634
 msgid "# of subranges:"
 msgstr "Počet podrozsahov:"
 
-#: ../plug-ins/common/CML_explorer.c:1641
+#: ../plug-ins/common/CML_explorer.c:1643
 msgid "P(ower factor):"
 msgstr "P (faktor mocniny)"
 
-#: ../plug-ins/common/CML_explorer.c:1650
+#: ../plug-ins/common/CML_explorer.c:1652
 msgid "Parameter k:"
 msgstr "Parameter k:"
 
-#: ../plug-ins/common/CML_explorer.c:1659
+#: ../plug-ins/common/CML_explorer.c:1661
 msgid "Range low:"
 msgstr "Dolný rozsah:"
 
-#: ../plug-ins/common/CML_explorer.c:1668
+#: ../plug-ins/common/CML_explorer.c:1670
 msgid "Range high:"
 msgstr "Horný rozsah:"
 
-#: ../plug-ins/common/CML_explorer.c:1680
+#: ../plug-ins/common/CML_explorer.c:1682
 msgid "Plot a Graph of the Settings"
 msgstr "Rysovať graf nastavení"
 
-#: ../plug-ins/common/CML_explorer.c:1725
+#: ../plug-ins/common/CML_explorer.c:1727
 msgid "Ch. sensitivity:"
 msgstr "Zmena citlivosti:"
 
-#: ../plug-ins/common/CML_explorer.c:1735
+#: ../plug-ins/common/CML_explorer.c:1737
 msgid "Mutation rate:"
 msgstr "Miera mutácie:"
 
-#: ../plug-ins/common/CML_explorer.c:1745
+#: ../plug-ins/common/CML_explorer.c:1747
 msgid "Mutation dist.:"
 msgstr "Vzdialenosť mutácie:"
 
-#: ../plug-ins/common/CML_explorer.c:1822
+#: ../plug-ins/common/CML_explorer.c:1824
 msgid "Graph of the Current Settings"
 msgstr "Graf aktuálnych nastavení"
 
-#: ../plug-ins/common/CML_explorer.c:1892
+#: ../plug-ins/common/CML_explorer.c:1894
 msgid "Warning: the source and the destination are the same channel."
 msgstr "Varovanie: zdroj a cieľ je ten istý kanál."
 
-#: ../plug-ins/common/CML_explorer.c:1951
+#: ../plug-ins/common/CML_explorer.c:1953
 msgid "Save Parameters To"
 msgstr "Uložiť parametre do"
 
-#: ../plug-ins/common/CML_explorer.c:2064
-#: ../plug-ins/common/channel_mixer.c:1072
+#: ../plug-ins/common/CML_explorer.c:2066
+#: ../plug-ins/common/channel_mixer.c:1074
 #, c-format
 msgid "Parameters were saved to '%s'"
 msgstr "Parametre boli uložené do '%s'"
 
-#: ../plug-ins/common/CML_explorer.c:2085
+#: ../plug-ins/common/CML_explorer.c:2087
 msgid "CML Explorer: Overwrite File?"
 msgstr "CML prieskumník: Prepísať súbor?"
 
-#: ../plug-ins/common/CML_explorer.c:2099
-#: ../plug-ins/common/channel_mixer.c:1103
+#: ../plug-ins/common/CML_explorer.c:2101
+#: ../plug-ins/common/channel_mixer.c:1105
 #, c-format
 msgid ""
 "File '%s' exists.\n"
@@ -1834,29 +1836,29 @@ msgstr ""
 "Súbor '%s' existuje.\n"
 "Prepísať ho?"
 
-#: ../plug-ins/common/CML_explorer.c:2153
+#: ../plug-ins/common/CML_explorer.c:2155
 msgid "Load Parameters From"
 msgstr "Načítať parametre z"
 
-#: ../plug-ins/common/CML_explorer.c:2155
+#: ../plug-ins/common/CML_explorer.c:2157
 msgid "Selective Load From"
 msgstr "Výberové načítavanie z"
 
-#: ../plug-ins/common/CML_explorer.c:2251
+#: ../plug-ins/common/CML_explorer.c:2253
 msgid "Error: it's not CML parameter file."
 msgstr "Chyba: nejedná sa o CML súbor s parametrami"
 
-#: ../plug-ins/common/CML_explorer.c:2258
+#: ../plug-ins/common/CML_explorer.c:2260
 #, c-format
 msgid "Warning: '%s' is an old format file."
 msgstr "Varovanie: '%s' je súbor so starým formátom."
 
-#: ../plug-ins/common/CML_explorer.c:2261
+#: ../plug-ins/common/CML_explorer.c:2263
 #, c-format
 msgid "Warning: '%s' is a parameter file for newer CML_explorer than me."
 msgstr "Varovanie: '%s' je subor s parametrami pre novší CML_explorer"
 
-#: ../plug-ins/common/CML_explorer.c:2324
+#: ../plug-ins/common/CML_explorer.c:2326
 msgid "Error: failed to load parameters"
 msgstr "Chyba: nepodarilo sa načítať parametre"
 
@@ -1885,78 +1887,78 @@ msgstr "K zarovnaniu nie je dosť vrstiev."
 msgid "Align Visible Layers"
 msgstr "Zarovnanie viditeľných vrstiev"
 
-#: ../plug-ins/common/align_layers.c:419 ../plug-ins/common/align_layers.c:450
+#: ../plug-ins/common/align_layers.c:421 ../plug-ins/common/align_layers.c:452
 msgid "Collect"
 msgstr "Zozbierať"
 
-#: ../plug-ins/common/align_layers.c:420
+#: ../plug-ins/common/align_layers.c:422
 msgid "Fill (left to right)"
 msgstr "Vyplniť (zľava doprava)"
 
-#: ../plug-ins/common/align_layers.c:421
+#: ../plug-ins/common/align_layers.c:423
 msgid "Fill (right to left)"
 msgstr "Vyplniť (zprava doľava)"
 
 #. "snap to grid" checkbutton at bottom of style frame
-#: ../plug-ins/common/align_layers.c:422 ../plug-ins/common/align_layers.c:453
+#: ../plug-ins/common/align_layers.c:424 ../plug-ins/common/align_layers.c:455
 #: ../plug-ins/gfig/gfig-dialog.c:501
 msgid "Snap to grid"
 msgstr "Pritiahnuť k mriežke"
 
-#: ../plug-ins/common/align_layers.c:431
+#: ../plug-ins/common/align_layers.c:433
 msgid "_Horizontal style:"
 msgstr "_Vodorovný štýl:"
 
-#: ../plug-ins/common/align_layers.c:435
+#: ../plug-ins/common/align_layers.c:437
 msgid "Left edge"
 msgstr "Ľavá hrana"
 
-#: ../plug-ins/common/align_layers.c:436 ../plug-ins/common/align_layers.c:466
+#: ../plug-ins/common/align_layers.c:438 ../plug-ins/common/align_layers.c:468
 #: ../plug-ins/gflare/gflare.c:2643
 msgid "Center"
 msgstr "V strede"
 
-#: ../plug-ins/common/align_layers.c:437
+#: ../plug-ins/common/align_layers.c:439
 msgid "Right edge"
 msgstr "Pravá hrana"
 
-#: ../plug-ins/common/align_layers.c:446
+#: ../plug-ins/common/align_layers.c:448
 msgid "Ho_rizontal base:"
 msgstr "Vodo_rovná základňa:"
 
-#: ../plug-ins/common/align_layers.c:451
+#: ../plug-ins/common/align_layers.c:453
 msgid "Fill (top to bottom)"
 msgstr "Vyplniť (Zhora dole)"
 
-#: ../plug-ins/common/align_layers.c:452
+#: ../plug-ins/common/align_layers.c:454
 msgid "Fill (bottom to top)"
 msgstr "Vyplniť (zdola hore)"
 
-#: ../plug-ins/common/align_layers.c:462
+#: ../plug-ins/common/align_layers.c:464
 msgid "_Vertical style:"
 msgstr "Z_vislý štýl:"
 
-#: ../plug-ins/common/align_layers.c:465
+#: ../plug-ins/common/align_layers.c:467
 msgid "Top edge"
 msgstr "Horná hrana"
 
-#: ../plug-ins/common/align_layers.c:467
+#: ../plug-ins/common/align_layers.c:469
 msgid "Bottom edge"
 msgstr "Dolná hrana"
 
-#: ../plug-ins/common/align_layers.c:476
+#: ../plug-ins/common/align_layers.c:478
 msgid "Ver_tical base:"
 msgstr "_Zvislá základňa:"
 
-#: ../plug-ins/common/align_layers.c:480
+#: ../plug-ins/common/align_layers.c:482
 msgid "_Grid size:"
 msgstr "V_eľkosť mriežky:"
 
-#: ../plug-ins/common/align_layers.c:489
+#: ../plug-ins/common/align_layers.c:491
 msgid "_Ignore the bottom layer even if visible"
 msgstr "_Ignorovať spodnú vrstvu, aj keď je viditeľná"
 
-#: ../plug-ins/common/align_layers.c:499
+#: ../plug-ins/common/align_layers.c:501
 msgid "_Use the (invisible) bottom layer as the base"
 msgstr "Po_užiť (neviditeľnú) spodnú vrstvu ako základňu"
 
@@ -1968,23 +1970,23 @@ msgstr "_Prehrávanie..."
 msgid "Animation Playback:"
 msgstr "Prehratie animácie:"
 
-#: ../plug-ins/common/animationplay.c:426
+#: ../plug-ins/common/animationplay.c:428
 msgid "Playback:"
 msgstr "Prehrávanie:"
 
-#: ../plug-ins/common/animationplay.c:452
+#: ../plug-ins/common/animationplay.c:454
 msgid "Play/Stop"
 msgstr "Spustiť/Zastaviť"
 
-#: ../plug-ins/common/animationplay.c:458
+#: ../plug-ins/common/animationplay.c:460
 msgid "Rewind"
 msgstr "Na začiatok"
 
-#: ../plug-ins/common/animationplay.c:464
+#: ../plug-ins/common/animationplay.c:466
 msgid "Step"
 msgstr "Krokovať"
 
-#: ../plug-ins/common/animationplay.c:1127
+#: ../plug-ins/common/animationplay.c:1129
 #, c-format
 msgid "Frame %d of %d"
 msgstr "Snímka %d z %d"
@@ -2037,23 +2039,23 @@ msgstr "Aplikujú sa šošovky..."
 msgid "Lens Effect"
 msgstr "Efekt šošoviek"
 
-#: ../plug-ins/common/apply_lens.c:425
+#: ../plug-ins/common/apply_lens.c:427
 msgid "_Keep original surroundings"
 msgstr "_Ponechať pôvodné okolie"
 
-#: ../plug-ins/common/apply_lens.c:440
+#: ../plug-ins/common/apply_lens.c:442
 msgid "_Set surroundings to index 0"
 msgstr "_Nastaviť index okolia na 0"
 
-#: ../plug-ins/common/apply_lens.c:441
+#: ../plug-ins/common/apply_lens.c:443
 msgid "_Set surroundings to background color"
 msgstr "Nas_taviť okolie na farbu pozadia"
 
-#: ../plug-ins/common/apply_lens.c:456
+#: ../plug-ins/common/apply_lens.c:458
 msgid "_Make surroundings transparent"
 msgstr "_Vytvoriť priesvitné okolie"
 
-#: ../plug-ins/common/apply_lens.c:473
+#: ../plug-ins/common/apply_lens.c:475
 msgid "_Lens refraction index:"
 msgstr "Index re_frakcie šošoviek:"
 
@@ -2094,30 +2096,30 @@ msgid "Blinds"
 msgstr "Pruhy"
 
 #. Orientation toggle box
-#: ../plug-ins/common/blinds.c:261 ../plug-ins/common/ripple.c:541
+#: ../plug-ins/common/blinds.c:263 ../plug-ins/common/ripple.c:543
 msgid "Orientation"
 msgstr "Orientácia"
 
-#: ../plug-ins/common/blinds.c:265 ../plug-ins/common/ripple.c:545
-#: ../plug-ins/common/tileit.c:424 ../plug-ins/pagecurl/pagecurl.c:532
+#: ../plug-ins/common/blinds.c:267 ../plug-ins/common/ripple.c:547
+#: ../plug-ins/common/tileit.c:426 ../plug-ins/pagecurl/pagecurl.c:534
 msgid "_Horizontal"
 msgstr "_Vodorovne"
 
-#: ../plug-ins/common/blinds.c:266 ../plug-ins/common/ripple.c:546
-#: ../plug-ins/common/tileit.c:434 ../plug-ins/pagecurl/pagecurl.c:531
+#: ../plug-ins/common/blinds.c:268 ../plug-ins/common/ripple.c:548
+#: ../plug-ins/common/tileit.c:436 ../plug-ins/pagecurl/pagecurl.c:533
 msgid "_Vertical"
 msgstr "_Zvislo"
 
-#: ../plug-ins/common/blinds.c:283 ../plug-ins/common/fractaltrace.c:732
-#: ../plug-ins/common/papertile.c:362
+#: ../plug-ins/common/blinds.c:285 ../plug-ins/common/fractaltrace.c:734
+#: ../plug-ins/common/papertile.c:364
 msgid "_Transparent"
 msgstr "_Priesvitné"
 
-#: ../plug-ins/common/blinds.c:309
+#: ../plug-ins/common/blinds.c:311
 msgid "_Displacement:"
 msgstr "Vy_tláčanie:"
 
-#: ../plug-ins/common/blinds.c:321
+#: ../plug-ins/common/blinds.c:323
 msgid "_Number of segments:"
 msgstr "Počet segme_ntov:"
 
@@ -2141,15 +2143,15 @@ msgstr "Priemer okraja"
 msgid "Borderaverage"
 msgstr "Priemer okraja"
 
-#: ../plug-ins/common/borderaverage.c:370
+#: ../plug-ins/common/borderaverage.c:372
 msgid "Border Size"
 msgstr "Veľkosť okraja"
 
-#: ../plug-ins/common/borderaverage.c:378
+#: ../plug-ins/common/borderaverage.c:380
 msgid "_Thickness:"
 msgstr "_Hrúbka:"
 
-#: ../plug-ins/common/borderaverage.c:421
+#: ../plug-ins/common/borderaverage.c:423
 msgid "_Bucket size:"
 msgstr "Veľkosť _bloku:"
 
@@ -2165,42 +2167,42 @@ msgstr "Mapuje sa vyvýšenie..."
 msgid "Bump Map"
 msgstr "Mapa vyvýšenia"
 
-#: ../plug-ins/common/bumpmap.c:898
+#: ../plug-ins/common/bumpmap.c:900
 msgid "_Bump map:"
 msgstr "_Mapa vyvýšenia:"
 
-#: ../plug-ins/common/bumpmap.c:910
+#: ../plug-ins/common/bumpmap.c:912
 msgid "_Map type:"
 msgstr "Typ _mapy:"
 
 #. Compensate darkening
-#: ../plug-ins/common/bumpmap.c:915
+#: ../plug-ins/common/bumpmap.c:917
 msgid "Co_mpensate for darkening"
 msgstr "Ko_mpenzovať tmavnutie"
 
 #. Invert bumpmap
-#: ../plug-ins/common/bumpmap.c:929
+#: ../plug-ins/common/bumpmap.c:931
 msgid "I_nvert bumpmap"
 msgstr "I_nvertovať mapu vyvýšenia"
 
 #. Tile bumpmap
-#: ../plug-ins/common/bumpmap.c:943
+#: ../plug-ins/common/bumpmap.c:945
 msgid "_Tile bumpmap"
 msgstr "_Opakovať mapu vyvýšenia"
 
-#: ../plug-ins/common/bumpmap.c:958 ../plug-ins/common/emboss.c:502
+#: ../plug-ins/common/bumpmap.c:960 ../plug-ins/common/emboss.c:504
 msgid "_Azimuth:"
 msgstr "_Azimut:"
 
-#: ../plug-ins/common/bumpmap.c:970
+#: ../plug-ins/common/bumpmap.c:972
 msgid "_Elevation:"
 msgstr "_Vyvýšenie:"
 
-#: ../plug-ins/common/bumpmap.c:996 ../plug-ins/common/postscript.c:3313
+#: ../plug-ins/common/bumpmap.c:998 ../plug-ins/common/postscript.c:3313
 msgid "_X offset:"
 msgstr "_X posun:"
 
-#: ../plug-ins/common/bumpmap.c:999 ../plug-ins/common/bumpmap.c:1013
+#: ../plug-ins/common/bumpmap.c:1001 ../plug-ins/common/bumpmap.c:1015
 msgid ""
 "The offset can be adjusted by dragging the preview using the middle mouse "
 "button."
@@ -2208,15 +2210,15 @@ msgstr ""
 "Posun môže byť upravený pretiahnutím náhľadu pomocou prostredného tlačítka "
 "myši."
 
-#: ../plug-ins/common/bumpmap.c:1010 ../plug-ins/common/postscript.c:3322
+#: ../plug-ins/common/bumpmap.c:1012 ../plug-ins/common/postscript.c:3322
 msgid "_Y offset:"
 msgstr "_Y posun:"
 
-#: ../plug-ins/common/bumpmap.c:1024
+#: ../plug-ins/common/bumpmap.c:1026
 msgid "_Waterlevel:"
 msgstr "_Výška hladiny:"
 
-#: ../plug-ins/common/bumpmap.c:1036
+#: ../plug-ins/common/bumpmap.c:1038
 msgid "A_mbient:"
 msgstr "_Okolie:"
 
@@ -2248,11 +2250,11 @@ msgstr "Nie je možné pracovať na obrázkoch s indexovanými farbami."
 msgid "Cartoon"
 msgstr "Karikatúra"
 
-#: ../plug-ins/common/cartoon.c:846 ../plug-ins/common/photocopy.c:875
+#: ../plug-ins/common/cartoon.c:848 ../plug-ins/common/photocopy.c:877
 msgid "_Mask radius:"
 msgstr "_Maska polomeru:"
 
-#: ../plug-ins/common/cartoon.c:860
+#: ../plug-ins/common/cartoon.c:862
 msgid "_Percent black:"
 msgstr "_Percentá čiernej:"
 
@@ -2269,41 +2271,41 @@ msgid "Colorcube Analysis"
 msgstr "Analýza farebnej kocky"
 
 #. output results
-#: ../plug-ins/common/ccanalyze.c:386
+#: ../plug-ins/common/ccanalyze.c:388
 #: ../plug-ins/imagemap/imap_cmd_guides.c:233
 #, c-format
 msgid "Image dimensions: %d x %d"
 msgstr "Rozmer obrázka: %d x %d"
 
-#: ../plug-ins/common/ccanalyze.c:389
+#: ../plug-ins/common/ccanalyze.c:391
 msgid "No colors"
 msgstr "Bez farieb"
 
-#: ../plug-ins/common/ccanalyze.c:391
+#: ../plug-ins/common/ccanalyze.c:393
 msgid "Only one unique color"
 msgstr "Iba jedna jedinečná farba"
 
-#: ../plug-ins/common/ccanalyze.c:393
+#: ../plug-ins/common/ccanalyze.c:395
 #, c-format
 msgid "Number of unique colors: %d"
 msgstr "Počet jedinečných farieb: %d"
 
-#: ../plug-ins/common/ccanalyze.c:396
+#: ../plug-ins/common/ccanalyze.c:398
 #, c-format
 msgid "Uncompressed size: %s"
 msgstr "Nekomprimovaná veľkosť: %s"
 
-#: ../plug-ins/common/ccanalyze.c:403
+#: ../plug-ins/common/ccanalyze.c:405
 #, c-format
 msgid "Filename: %s"
 msgstr "Názov súboru: %s"
 
-#: ../plug-ins/common/ccanalyze.c:404
+#: ../plug-ins/common/ccanalyze.c:406
 #, c-format
 msgid "Compressed size: %s"
 msgstr "Komprimovaná veľkosť: %s"
 
-#: ../plug-ins/common/ccanalyze.c:405
+#: ../plug-ins/common/ccanalyze.c:407
 #, c-format
 msgid "Compression ratio (approx.): %d to 1"
 msgstr "Pomer kompresie (približne): %d k 1"
@@ -2316,49 +2318,49 @@ msgstr "Mi_xer kanálov"
 msgid "Channel Mixer"
 msgstr "Mixer kanálov"
 
-#: ../plug-ins/common/channel_mixer.c:526
+#: ../plug-ins/common/channel_mixer.c:528
 msgid "O_utput channel:"
 msgstr "Výst_upný kanál:"
 
-#: ../plug-ins/common/channel_mixer.c:580 ../plug-ins/common/diffraction.c:499
-#: ../plug-ins/common/diffraction.c:537 ../plug-ins/common/diffraction.c:575
-#: ../plug-ins/common/exchange.c:397 ../plug-ins/common/noisify.c:528
-#: ../plug-ins/common/noisify.c:535
+#: ../plug-ins/common/channel_mixer.c:582 ../plug-ins/common/diffraction.c:501
+#: ../plug-ins/common/diffraction.c:539 ../plug-ins/common/diffraction.c:577
+#: ../plug-ins/common/exchange.c:399 ../plug-ins/common/noisify.c:530
+#: ../plug-ins/common/noisify.c:537
 msgid "_Red:"
 msgstr "Če_rvená:"
 
-#: ../plug-ins/common/channel_mixer.c:598 ../plug-ins/common/diffraction.c:508
-#: ../plug-ins/common/diffraction.c:546 ../plug-ins/common/diffraction.c:584
-#: ../plug-ins/common/exchange.c:457 ../plug-ins/common/noisify.c:529
-#: ../plug-ins/common/noisify.c:536
+#: ../plug-ins/common/channel_mixer.c:600 ../plug-ins/common/diffraction.c:510
+#: ../plug-ins/common/diffraction.c:548 ../plug-ins/common/diffraction.c:586
+#: ../plug-ins/common/exchange.c:459 ../plug-ins/common/noisify.c:531
+#: ../plug-ins/common/noisify.c:538
 msgid "_Green:"
 msgstr "_Zelená:"
 
-#: ../plug-ins/common/channel_mixer.c:617 ../plug-ins/common/diffraction.c:517
-#: ../plug-ins/common/diffraction.c:555 ../plug-ins/common/diffraction.c:593
-#: ../plug-ins/common/exchange.c:518 ../plug-ins/common/noisify.c:530
-#: ../plug-ins/common/noisify.c:537
+#: ../plug-ins/common/channel_mixer.c:619 ../plug-ins/common/diffraction.c:519
+#: ../plug-ins/common/diffraction.c:557 ../plug-ins/common/diffraction.c:595
+#: ../plug-ins/common/exchange.c:520 ../plug-ins/common/noisify.c:532
+#: ../plug-ins/common/noisify.c:539
 msgid "_Blue:"
 msgstr "_Modrá:"
 
 #. The monochrome toggle
-#: ../plug-ins/common/channel_mixer.c:628
+#: ../plug-ins/common/channel_mixer.c:630
 msgid "_Monochrome"
 msgstr "_Monochromaticky"
 
-#: ../plug-ins/common/channel_mixer.c:640
+#: ../plug-ins/common/channel_mixer.c:642
 msgid "Preserve _luminosity"
 msgstr "Zachovať _svetlosť"
 
-#: ../plug-ins/common/channel_mixer.c:877
+#: ../plug-ins/common/channel_mixer.c:879
 msgid "Load Channel Mixer Settings"
 msgstr "Načítať nastavenia mixéra kanálov"
 
-#: ../plug-ins/common/channel_mixer.c:1004
+#: ../plug-ins/common/channel_mixer.c:1006
 msgid "Save Channel Mixer Settings"
 msgstr "Uložiť nastavenia mixéra kanálov"
 
-#: ../plug-ins/common/channel_mixer.c:1088
+#: ../plug-ins/common/channel_mixer.c:1090
 msgid "Channel Mixer File Operation Warning"
 msgstr "Varovanie súborových operácií Mixéra kanálov"
 
@@ -2374,11 +2376,11 @@ msgstr "Pridávanie šachovnice..."
 msgid "Checkerboard"
 msgstr "Šachovnica"
 
-#: ../plug-ins/common/checkerboard.c:371
+#: ../plug-ins/common/checkerboard.c:373
 msgid "_Psychobilly"
 msgstr "_Psychoplocha"
 
-#: ../plug-ins/common/checkerboard.c:415 ../plug-ins/common/papertile.c:291
+#: ../plug-ins/common/checkerboard.c:417 ../plug-ins/common/papertile.c:293
 #: ../plug-ins/gimpressionist/sizemap.c:493
 msgid "_Size:"
 msgstr "_Veľkosť:"
@@ -2403,11 +2405,11 @@ msgstr "Farbím..."
 msgid "Colorify"
 msgstr "Zafarbenie"
 
-#: ../plug-ins/common/colorify.c:290
+#: ../plug-ins/common/colorify.c:292
 msgid "Custom color:"
 msgstr "Vlastná farba:"
 
-#: ../plug-ins/common/colorify.c:295
+#: ../plug-ins/common/colorify.c:297
 msgid "Colorify Custom Color"
 msgstr "Zafarbenie vlastnou farbou"
 
@@ -2424,17 +2426,17 @@ msgid "Color to Alpha"
 msgstr "Farby do alfy"
 
 #. spinbutton 1
-#: ../plug-ins/common/colortoalpha.c:409 ../plug-ins/common/mapcolor.c:425
+#: ../plug-ins/common/colortoalpha.c:411 ../plug-ins/common/mapcolor.c:427
 #: ../plug-ins/gfli/gfli.c:841 ../plug-ins/gfli/gfli.c:904
 #: ../plug-ins/rcm/rcm_dialog.c:299 ../plug-ins/rcm/rcm_dialog.c:377
 msgid "From:"
 msgstr "Od:"
 
-#: ../plug-ins/common/colortoalpha.c:413
+#: ../plug-ins/common/colortoalpha.c:415
 msgid "Color to Alpha Color Picker"
 msgstr "Farebná pipeta farby do alfy"
 
-#: ../plug-ins/common/colortoalpha.c:428
+#: ../plug-ins/common/colortoalpha.c:430
 msgid "to alpha"
 msgstr "do alfy"
 
@@ -2569,6 +2571,7 @@ msgstr ""
 #: ../plug-ins/common/compose.c:411
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
 msgstr ""
+"Chyba pri analýze parazita 'decompose-data': nájdených príliš málo vrstiev"
 
 #: ../plug-ins/common/compose.c:441
 #, c-format
@@ -2610,7 +2613,7 @@ msgid "Compose"
 msgstr "Skladanie"
 
 #. The left frame keeps the compose type toggles
-#: ../plug-ins/common/compose.c:1298
+#: ../plug-ins/common/compose.c:1300
 msgid "Compose Channels"
 msgstr "Kompozícia kanálov"
 
@@ -2618,7 +2621,7 @@ msgstr "Kompozícia kanálov"
 #. Because the labels within this frame will change when a toggle
 #. in the left frame is changed, fill in the right part first.
 #. Otherwise it can occur, that a non-existing label might be changed.
-#: ../plug-ins/common/compose.c:1309
+#: ../plug-ins/common/compose.c:1311
 msgid "Channel Representations"
 msgstr "Reprezentácia kanálov"
 
@@ -2663,8 +2666,8 @@ msgstr "_Alfa"
 msgid "E_xtend"
 msgstr "Rozšír_iť"
 
-#: ../plug-ins/common/convmatrix.c:87 ../plug-ins/common/displace.c:444
-#: ../plug-ins/common/edge.c:717 ../plug-ins/common/ripple.c:566
+#: ../plug-ins/common/convmatrix.c:87 ../plug-ins/common/displace.c:459
+#: ../plug-ins/common/edge.c:719 ../plug-ins/common/ripple.c:568
 msgid "_Wrap"
 msgstr "_Zalomiť"
 
@@ -2688,32 +2691,32 @@ msgstr "Vykonáva sa konvolúcia"
 msgid "Convolution Matrix"
 msgstr "Konvolučná matica"
 
-#: ../plug-ins/common/convmatrix.c:907
+#: ../plug-ins/common/convmatrix.c:909
 msgid "Matrix"
 msgstr "Matica"
 
-#: ../plug-ins/common/convmatrix.c:944
+#: ../plug-ins/common/convmatrix.c:946
 msgid "D_ivisor:"
 msgstr "Del_iteľ:"
 
-#: ../plug-ins/common/convmatrix.c:968 ../plug-ins/common/depthmerge.c:748
+#: ../plug-ins/common/convmatrix.c:970 ../plug-ins/common/depthmerge.c:751
 #: ../plug-ins/common/raw.c:987
 msgid "O_ffset:"
 msgstr "_Posun:"
 
-#: ../plug-ins/common/convmatrix.c:997
+#: ../plug-ins/common/convmatrix.c:999
 msgid "A_utomatic"
 msgstr "A_utomatické"
 
-#: ../plug-ins/common/convmatrix.c:1009
+#: ../plug-ins/common/convmatrix.c:1011
 msgid "A_lpha-weighting"
 msgstr "Vážená a_lfa"
 
-#: ../plug-ins/common/convmatrix.c:1028
+#: ../plug-ins/common/convmatrix.c:1030
 msgid "Border"
 msgstr "Okraj"
 
-#: ../plug-ins/common/convmatrix.c:1055
+#: ../plug-ins/common/convmatrix.c:1057
 msgid "Channels"
 msgstr "Kanály"
 
@@ -2763,7 +2766,7 @@ msgstr "Použiť _1 bajtové run-length kódovanie"
 msgid "Sa_ve alpha channel (RGBA/RGB)"
 msgstr "_Uložiť alfa kanál (RGBA/RGB)"
 
-#: ../plug-ins/common/csource.c:748 ../plug-ins/common/sparkle.c:453
+#: ../plug-ins/common/csource.c:748 ../plug-ins/common/sparkle.c:455
 msgid "Op_acity:"
 msgstr "_Krytie:"
 
@@ -2775,19 +2778,19 @@ msgstr "_Kubizmus..."
 msgid "Cubism"
 msgstr "Kubizmus"
 
-#: ../plug-ins/common/cubism.c:303
+#: ../plug-ins/common/cubism.c:305
 msgid "_Tile size:"
 msgstr "Veľkos_ť dlaždice:"
 
-#: ../plug-ins/common/cubism.c:316
+#: ../plug-ins/common/cubism.c:318
 msgid "T_ile saturation:"
 msgstr "Sýtosť dlažd_ice:"
 
-#: ../plug-ins/common/cubism.c:327
+#: ../plug-ins/common/cubism.c:329
 msgid "_Use background color"
 msgstr "_Použiť farbu pozadia"
 
-#: ../plug-ins/common/cubism.c:417
+#: ../plug-ins/common/cubism.c:419
 msgid "Cubistic Transformation..."
 msgstr "Kubistická transformácia..."
 
@@ -2814,128 +2817,128 @@ msgid "Curve Bend"
 msgstr "Ohýbanie pomocou krivky"
 
 #. Preview area, top of column
-#: ../plug-ins/common/curve_bend.c:1272
+#: ../plug-ins/common/curve_bend.c:1274
 #: ../plug-ins/gimpressionist/orientmap.c:573
 #: ../plug-ins/gimpressionist/sizemap.c:443
 msgid "Preview"
 msgstr "Náhľad"
 
 #. The preview button
-#: ../plug-ins/common/curve_bend.c:1301
+#: ../plug-ins/common/curve_bend.c:1303
 msgid "_Preview Once"
 msgstr "_Náhľad raz"
 
 #. The preview toggle
-#: ../plug-ins/common/curve_bend.c:1310
+#: ../plug-ins/common/curve_bend.c:1312
 msgid "Automatic pre_view"
 msgstr "Automa_tický náhľad"
 
 #. Options area, bottom of column
 #. the vertical box and its toggle buttons
 #. Options section
-#: ../plug-ins/common/curve_bend.c:1320 ../plug-ins/common/mosaic.c:621
-#: ../plug-ins/common/ripple.c:507 ../plug-ins/gfig/gfig-dialog.c:1213
+#: ../plug-ins/common/curve_bend.c:1322 ../plug-ins/common/mosaic.c:623
+#: ../plug-ins/common/ripple.c:509 ../plug-ins/gfig/gfig-dialog.c:1213
 msgid "Options"
 msgstr "Možnosti"
 
 #. Rotate spinbutton
-#: ../plug-ins/common/curve_bend.c:1334
+#: ../plug-ins/common/curve_bend.c:1336
 msgid "Rotat_e:"
 msgstr "_Otočiť:"
 
 #. The smoothing toggle
-#: ../plug-ins/common/curve_bend.c:1352
+#: ../plug-ins/common/curve_bend.c:1354
 msgid "Smoo_thing"
 msgstr "_Vyhladzovanie"
 
 #. The antialiasing toggle
-#: ../plug-ins/common/curve_bend.c:1362 ../plug-ins/common/gqbist.c:836
-#: ../plug-ins/common/mosaic.c:627 ../plug-ins/common/ripple.c:516
+#: ../plug-ins/common/curve_bend.c:1364 ../plug-ins/common/gqbist.c:838
+#: ../plug-ins/common/mosaic.c:629 ../plug-ins/common/ripple.c:518
 msgid "_Antialiasing"
 msgstr "_Vyhladzovanie"
 
 #. The work_on_copy toggle
-#: ../plug-ins/common/curve_bend.c:1372
+#: ../plug-ins/common/curve_bend.c:1374
 msgid "Work on cop_y"
 msgstr "Pracovať na kóp_ií"
 
 #. The curves graph
-#: ../plug-ins/common/curve_bend.c:1382
+#: ../plug-ins/common/curve_bend.c:1384
 msgid "Modify Curves"
 msgstr "Upraviť krivky"
 
-#: ../plug-ins/common/curve_bend.c:1410
+#: ../plug-ins/common/curve_bend.c:1412
 msgid "Curve for Border"
 msgstr "Krivka pre okraj"
 
-#: ../plug-ins/common/curve_bend.c:1414
+#: ../plug-ins/common/curve_bend.c:1416
 msgid "_Upper"
 msgstr "_Horný"
 
-#: ../plug-ins/common/curve_bend.c:1415
+#: ../plug-ins/common/curve_bend.c:1417
 msgid "_Lower"
 msgstr "_Dolný"
 
-#: ../plug-ins/common/curve_bend.c:1425
+#: ../plug-ins/common/curve_bend.c:1427
 msgid "Curve Type"
 msgstr "Typ krivky"
 
-#: ../plug-ins/common/curve_bend.c:1429
+#: ../plug-ins/common/curve_bend.c:1431
 msgid "Smoot_h"
 msgstr "_Plynulý"
 
-#: ../plug-ins/common/curve_bend.c:1430
+#: ../plug-ins/common/curve_bend.c:1432
 msgid "_Free"
 msgstr "_Voľná"
 
 #. The Copy button
-#: ../plug-ins/common/curve_bend.c:1445
+#: ../plug-ins/common/curve_bend.c:1447
 msgid "_Copy"
 msgstr "_Kopírovať"
 
-#: ../plug-ins/common/curve_bend.c:1450
+#: ../plug-ins/common/curve_bend.c:1452
 msgid "Copy the active curve to the other border"
 msgstr "Kopírovať aktívnu krivku na druhý okraj"
 
 #. The CopyInv button
-#: ../plug-ins/common/curve_bend.c:1457
+#: ../plug-ins/common/curve_bend.c:1459
 msgid "_Mirror"
 msgstr "_Zrkadliť"
 
-#: ../plug-ins/common/curve_bend.c:1462
+#: ../plug-ins/common/curve_bend.c:1464
 msgid "Mirror the active curve to the other border"
 msgstr "Zrkadliť aktívnu krivku na druhý okraj"
 
 #. The Swap button
-#: ../plug-ins/common/curve_bend.c:1470
+#: ../plug-ins/common/curve_bend.c:1472
 msgid "S_wap"
 msgstr "Pre_hodiť"
 
-#: ../plug-ins/common/curve_bend.c:1475
+#: ../plug-ins/common/curve_bend.c:1477
 msgid "Swap the two curves"
 msgstr "Prehodiť dve krivky"
 
-#: ../plug-ins/common/curve_bend.c:1487
+#: ../plug-ins/common/curve_bend.c:1489
 msgid "Reset the active curve"
 msgstr "Obnoviť aktívnu krivku"
 
-#: ../plug-ins/common/curve_bend.c:1504
+#: ../plug-ins/common/curve_bend.c:1506
 msgid "Load the curves from a file"
 msgstr "Načítať krivky zo súboru"
 
-#: ../plug-ins/common/curve_bend.c:1516
+#: ../plug-ins/common/curve_bend.c:1518
 msgid "Save the curves to a file"
 msgstr "Uložiť krivky do súboru"
 
-#: ../plug-ins/common/curve_bend.c:2051
+#: ../plug-ins/common/curve_bend.c:2053
 msgid "Load Curve Points from File"
 msgstr "Načítať body krivky zo súboru"
 
-#: ../plug-ins/common/curve_bend.c:2086
+#: ../plug-ins/common/curve_bend.c:2088
 msgid "Save Curve Points to File"
 msgstr "Uložiť body krivky do súboru"
 
-#: ../plug-ins/common/curve_bend.c:2953
+#: ../plug-ins/common/curve_bend.c:2955
 msgid "Curve Bend..."
 msgstr "Ohýbam..."
 
@@ -3087,11 +3090,11 @@ msgid "Decompose"
 msgstr "Dekompozícia"
 
 #. parameter settings
-#: ../plug-ins/common/decompose.c:1248
+#: ../plug-ins/common/decompose.c:1250
 msgid "Extract Channels"
 msgstr "Extrahovať kanály"
 
-#: ../plug-ins/common/decompose.c:1276
+#: ../plug-ins/common/decompose.c:1278
 msgid "Decompose to _layers"
 msgstr "Dekomponovať do _vrstiev"
 
@@ -3107,11 +3110,11 @@ msgstr "Odstraňujem prekladanie"
 msgid "Deinterlace"
 msgstr "Odstránenie prekladania"
 
-#: ../plug-ins/common/deinterlace.c:357
+#: ../plug-ins/common/deinterlace.c:359
 msgid "Keep o_dd fields"
 msgstr "Nechať nepárne po_lia"
 
-#: ../plug-ins/common/deinterlace.c:358
+#: ../plug-ins/common/deinterlace.c:360
 msgid "Keep _even fields"
 msgstr "Nechať párn_e polia"
 
@@ -3123,31 +3126,31 @@ msgstr "_Zlúčiť hĺbku..."
 msgid "Depth-merging..."
 msgstr "Zlučuje sa hĺbka..."
 
-#: ../plug-ins/common/depthmerge.c:626
+#: ../plug-ins/common/depthmerge.c:627
 msgid "Depth Merge"
 msgstr "Zlučovanie hĺbky"
 
-#: ../plug-ins/common/depthmerge.c:676
+#: ../plug-ins/common/depthmerge.c:679
 msgid "Source 1:"
 msgstr "Zdroj 1"
 
-#: ../plug-ins/common/depthmerge.c:691 ../plug-ins/common/depthmerge.c:721
+#: ../plug-ins/common/depthmerge.c:694 ../plug-ins/common/depthmerge.c:724
 msgid "Depth map:"
 msgstr "Hĺbka mapy:"
 
-#: ../plug-ins/common/depthmerge.c:706
+#: ../plug-ins/common/depthmerge.c:709
 msgid "Source 2:"
 msgstr "Zdroj 2"
 
-#: ../plug-ins/common/depthmerge.c:738
+#: ../plug-ins/common/depthmerge.c:741
 msgid "O_verlap:"
 msgstr "Presah_ovanie:"
 
-#: ../plug-ins/common/depthmerge.c:758
+#: ../plug-ins/common/depthmerge.c:761
 msgid "Sc_ale 1:"
 msgstr "V_eľkosť 1:"
 
-#: ../plug-ins/common/depthmerge.c:768
+#: ../plug-ins/common/depthmerge.c:771
 msgid "Sca_le 2:"
 msgstr "Ve_ľkosť 2:"
 
@@ -3155,34 +3158,34 @@ msgstr "Ve_ľkosť 2:"
 msgid "Des_peckle..."
 msgstr "Vy_čistiť..."
 
-#: ../plug-ins/common/despeckle.c:393 ../plug-ins/common/despeckle.c:616
+#: ../plug-ins/common/despeckle.c:393 ../plug-ins/common/despeckle.c:618
 msgid "Despeckle"
 msgstr "Vyčistenie"
 
-#: ../plug-ins/common/despeckle.c:420
+#: ../plug-ins/common/despeckle.c:422
 msgid "Median"
 msgstr "Medián"
 
-#: ../plug-ins/common/despeckle.c:428
+#: ../plug-ins/common/despeckle.c:430
 msgid "_Adaptive"
 msgstr "_Adaptívne"
 
-#: ../plug-ins/common/despeckle.c:438
+#: ../plug-ins/common/despeckle.c:440
 msgid "R_ecursive"
 msgstr "R_ekurzívne"
 
-#: ../plug-ins/common/despeckle.c:459 ../plug-ins/common/neon.c:737
-#: ../plug-ins/common/nlfilt.c:1089 ../plug-ins/common/nova.c:364
-#: ../plug-ins/common/unsharp.c:667 ../plug-ins/common/whirlpinch.c:588
+#: ../plug-ins/common/despeckle.c:461 ../plug-ins/common/neon.c:739
+#: ../plug-ins/common/nlfilt.c:1091 ../plug-ins/common/nova.c:366
+#: ../plug-ins/common/unsharp.c:669 ../plug-ins/common/whirlpinch.c:590
 #: ../plug-ins/gflare/gflare.c:2688 ../plug-ins/imagemap/imap_circle.c:278
 msgid "_Radius:"
 msgstr "Polome_r:"
 
-#: ../plug-ins/common/despeckle.c:475
+#: ../plug-ins/common/despeckle.c:477
 msgid "_Black level:"
 msgstr "Úro_veň čiernej:"
 
-#: ../plug-ins/common/despeckle.c:491
+#: ../plug-ins/common/despeckle.c:493
 msgid "_White level:"
 msgstr "Úroveň _bielej:"
 
@@ -3198,15 +3201,15 @@ msgstr "Odstraňujú sa pruhy..."
 msgid "Destripe"
 msgstr "Odstraňovanie pruhov"
 
-#: ../plug-ins/common/destripe.c:470 ../plug-ins/common/gtm.c:582
+#: ../plug-ins/common/destripe.c:472 ../plug-ins/common/gtm.c:582
 #: ../plug-ins/common/postscript.c:3089 ../plug-ins/common/postscript.c:3295
-#: ../plug-ins/common/raw.c:1000 ../plug-ins/common/smooth_palette.c:434
-#: ../plug-ins/common/tile.c:422 ../plug-ins/imagemap/imap_cmd_guides.c:167
+#: ../plug-ins/common/raw.c:1000 ../plug-ins/common/smooth_palette.c:436
+#: ../plug-ins/common/tile.c:424 ../plug-ins/imagemap/imap_cmd_guides.c:167
 #: ../plug-ins/imagemap/imap_rectangle.c:403
 msgid "_Width:"
 msgstr "Ší_rka:"
 
-#: ../plug-ins/common/destripe.c:481
+#: ../plug-ins/common/destripe.c:483
 msgid "Create _histogram"
 msgstr "Vytvoriť _histogram"
 
@@ -3245,48 +3248,48 @@ msgstr "Vytváram difrakčné vzorky..."
 msgid "Diffraction Patterns"
 msgstr "Difrakčné vzorky"
 
-#: ../plug-ins/common/diffraction.c:525
+#: ../plug-ins/common/diffraction.c:527
 msgid "Frequencies"
 msgstr "Frekvencie"
 
-#: ../plug-ins/common/diffraction.c:563
+#: ../plug-ins/common/diffraction.c:565
 msgid "Contours"
 msgstr "Obrysy"
 
-#: ../plug-ins/common/diffraction.c:601
+#: ../plug-ins/common/diffraction.c:603
 msgid "Sharp Edges"
 msgstr "Ostré hrany"
 
-#: ../plug-ins/common/diffraction.c:613 ../plug-ins/common/softglow.c:680
-#: ../plug-ins/flame/flame.c:1051
+#: ../plug-ins/common/diffraction.c:615 ../plug-ins/common/softglow.c:682
+#: ../plug-ins/flame/flame.c:1053
 msgid "_Brightness:"
 msgstr "_Jas:"
 
-#: ../plug-ins/common/diffraction.c:622
+#: ../plug-ins/common/diffraction.c:624
 msgid "Sc_attering:"
 msgstr "_Rozptyľovanie:"
 
-#: ../plug-ins/common/diffraction.c:631
+#: ../plug-ins/common/diffraction.c:633
 msgid "Po_larization:"
 msgstr "Po_larizácia:"
 
-#: ../plug-ins/common/diffraction.c:639
+#: ../plug-ins/common/diffraction.c:641
 msgid "Other Options"
 msgstr "Ostatné nastavenia"
 
-#: ../plug-ins/common/displace.c:143
+#: ../plug-ins/common/displace.c:145
 msgid "_X displacement"
 msgstr "_X posunutie"
 
-#: ../plug-ins/common/displace.c:143
+#: ../plug-ins/common/displace.c:145
 msgid "_Pinch"
 msgstr "_Zoškrtenie"
 
-#: ../plug-ins/common/displace.c:144
+#: ../plug-ins/common/displace.c:146
 msgid "_Y displacement"
 msgstr "_Y posunutie"
 
-#: ../plug-ins/common/displace.c:144
+#: ../plug-ins/common/displace.c:146
 msgid "_Whirl"
 msgstr "_Vír"
 
@@ -3294,48 +3297,48 @@ msgstr "_Vír"
 msgid "_Displace..."
 msgstr "_Posunúť..."
 
-#: ../plug-ins/common/displace.c:264
+#: ../plug-ins/common/displace.c:277
 msgid "Displacing..."
 msgstr "Posúvanie...."
 
-#: ../plug-ins/common/displace.c:300
+#: ../plug-ins/common/displace.c:313
 msgid "Displace"
 msgstr "Posunúť"
 
 #. X options
-#: ../plug-ins/common/displace.c:334
+#: ../plug-ins/common/displace.c:349
 msgid "_X displacement:"
 msgstr "_X posunutie:"
 
 #. Y Options
-#: ../plug-ins/common/displace.c:381
+#: ../plug-ins/common/displace.c:396
 msgid "_Y displacement:"
 msgstr "_Y posunutie:"
 
-#: ../plug-ins/common/displace.c:431
+#: ../plug-ins/common/displace.c:446
 msgid "Displacement Mode"
 msgstr "Režim posunutia"
 
-#: ../plug-ins/common/displace.c:434
+#: ../plug-ins/common/displace.c:449
 msgid "_Cartesian"
 msgstr "_Karteziánsky"
 
-#: ../plug-ins/common/displace.c:435
+#: ../plug-ins/common/displace.c:450
 msgid "_Polar"
 msgstr "_Polárny"
 
-#: ../plug-ins/common/displace.c:440
+#: ../plug-ins/common/displace.c:455
 msgid "Edge Behavior"
 msgstr "Správanie hrán"
 
-#: ../plug-ins/common/displace.c:446 ../plug-ins/common/edge.c:730
-#: ../plug-ins/common/ripple.c:567 ../plug-ins/common/waves.c:276
+#: ../plug-ins/common/displace.c:461 ../plug-ins/common/edge.c:732
+#: ../plug-ins/common/ripple.c:569 ../plug-ins/common/waves.c:278
 msgid "_Smear"
 msgstr "Š_kvrna"
 
-#: ../plug-ins/common/displace.c:448 ../plug-ins/common/edge.c:743
-#: ../plug-ins/common/fractaltrace.c:734 ../plug-ins/common/newsprint.c:400
-#: ../plug-ins/common/ripple.c:568
+#: ../plug-ins/common/displace.c:463 ../plug-ins/common/edge.c:745
+#: ../plug-ins/common/fractaltrace.c:736 ../plug-ins/common/newsprint.c:400
+#: ../plug-ins/common/ripple.c:570
 msgid "_Black"
 msgstr "Či_erna"
 
@@ -3347,23 +3350,23 @@ msgstr "Gaussov _rozdiel..."
 msgid "DoG Edge Detect"
 msgstr "DoG detekcia hrán"
 
-#: ../plug-ins/common/dog.c:302
+#: ../plug-ins/common/dog.c:304
 msgid "Smoothing Parameters"
 msgstr "Paramete vyhladenia"
 
-#: ../plug-ins/common/dog.c:316
+#: ../plug-ins/common/dog.c:318
 msgid "_Radius 1:"
 msgstr "Polome_r 1:"
 
-#: ../plug-ins/common/dog.c:320
+#: ../plug-ins/common/dog.c:322
 msgid "R_adius 2:"
 msgstr "_Polomer 2:"
 
-#: ../plug-ins/common/dog.c:332 ../plug-ins/common/normalize.c:90
+#: ../plug-ins/common/dog.c:334 ../plug-ins/common/normalize.c:90
 msgid "_Normalize"
 msgstr "_Normalizovať"
 
-#: ../plug-ins/common/dog.c:343 ../plug-ins/gimpressionist/paper.c:149
+#: ../plug-ins/common/dog.c:345 ../plug-ins/gimpressionist/paper.c:149
 msgid "_Invert"
 msgstr "_Invertovať"
 
@@ -3379,35 +3382,35 @@ msgstr "Detekcia hrán..."
 msgid "Edge Detection"
 msgstr "Detekcia hrán"
 
-#: ../plug-ins/common/edge.c:676
+#: ../plug-ins/common/edge.c:678
 msgid "Sobel"
 msgstr "Sobel"
 
-#: ../plug-ins/common/edge.c:677
+#: ../plug-ins/common/edge.c:679
 msgid "Prewitt"
 msgstr "Prewitt"
 
-#: ../plug-ins/common/edge.c:678 ../plug-ins/common/sinus.c:902
+#: ../plug-ins/common/edge.c:680 ../plug-ins/common/sinus.c:904
 msgid "Gradient"
 msgstr "Prechod"
 
-#: ../plug-ins/common/edge.c:679
+#: ../plug-ins/common/edge.c:681
 msgid "Roberts"
 msgstr "Roberts"
 
-#: ../plug-ins/common/edge.c:680
+#: ../plug-ins/common/edge.c:682
 msgid "Differential"
 msgstr "Diferenciálny"
 
-#: ../plug-ins/common/edge.c:681
+#: ../plug-ins/common/edge.c:683
 msgid "Laplace"
 msgstr "Laplace"
 
-#: ../plug-ins/common/edge.c:690
+#: ../plug-ins/common/edge.c:692
 msgid "_Algorithm:"
 msgstr "_Algoritmus:"
 
-#: ../plug-ins/common/edge.c:698
+#: ../plug-ins/common/edge.c:700
 msgid "A_mount:"
 msgstr "_Miera:"
 
@@ -3419,19 +3422,19 @@ msgstr "R_eliéf..."
 msgid "Emboss"
 msgstr "Reliéf"
 
-#: ../plug-ins/common/emboss.c:477
+#: ../plug-ins/common/emboss.c:479
 msgid "Function"
 msgstr "Funkcia"
 
-#: ../plug-ins/common/emboss.c:481
+#: ../plug-ins/common/emboss.c:483
 msgid "_Bumpmap"
 msgstr "Mapa _vyvýšenia"
 
-#: ../plug-ins/common/emboss.c:482
+#: ../plug-ins/common/emboss.c:484
 msgid "_Emboss"
 msgstr "R_eliéf"
 
-#: ../plug-ins/common/emboss.c:514
+#: ../plug-ins/common/emboss.c:516
 msgid "E_levation:"
 msgstr "_Zdvih:"
 
@@ -3447,16 +3450,16 @@ msgstr "Vytvára sa rytina..."
 msgid "Engrave"
 msgstr "Rytina"
 
-#: ../plug-ins/common/engrave.c:243 ../plug-ins/common/film.c:1201
+#: ../plug-ins/common/engrave.c:245 ../plug-ins/common/film.c:1201
 #: ../plug-ins/common/gtm.c:598 ../plug-ins/common/postscript.c:3098
 #: ../plug-ins/common/postscript.c:3304 ../plug-ins/common/raw.c:1013
-#: ../plug-ins/common/smooth_palette.c:439 ../plug-ins/common/tile.c:426
+#: ../plug-ins/common/smooth_palette.c:441 ../plug-ins/common/tile.c:428
 #: ../plug-ins/imagemap/imap_cmd_guides.c:177
 #: ../plug-ins/imagemap/imap_rectangle.c:410
 msgid "_Height:"
 msgstr "_Výška:"
 
-#: ../plug-ins/common/engrave.c:254
+#: ../plug-ins/common/engrave.c:256
 msgid "_Limit line width"
 msgstr "_Obmedzenie šírky riadku"
 
@@ -3472,40 +3475,39 @@ msgstr "Zamieňajú sa farby..."
 msgid "Color Exchange"
 msgstr "Zámena farieb"
 
-#: ../plug-ins/common/exchange.c:308
-#, fuzzy
+#: ../plug-ins/common/exchange.c:310
 msgid "Middle-Click Inside Preview to Pick \"From Color\""
-msgstr "Vyberiete \"Z farby\" kliknutím prostredného tlačítka"
+msgstr "Vyberiete \"Z farby\" kliknutím prostredného tlačítka vnútri náhľadu"
 
-#: ../plug-ins/common/exchange.c:346
+#: ../plug-ins/common/exchange.c:348
 msgid "To Color"
 msgstr "Na farbu"
 
-#: ../plug-ins/common/exchange.c:346
+#: ../plug-ins/common/exchange.c:348
 msgid "From Color"
 msgstr "Z farby"
 
-#: ../plug-ins/common/exchange.c:364
+#: ../plug-ins/common/exchange.c:366
 msgid "Color Exchange: To Color"
 msgstr "Zámena farieb: na farbu"
 
-#: ../plug-ins/common/exchange.c:365
+#: ../plug-ins/common/exchange.c:367
 msgid "Color Exchange: From Color"
 msgstr "Zámena farieb: z farby"
 
-#: ../plug-ins/common/exchange.c:423
+#: ../plug-ins/common/exchange.c:425
 msgid "R_ed threshold:"
 msgstr "Prah č_ervenej:"
 
-#: ../plug-ins/common/exchange.c:483
+#: ../plug-ins/common/exchange.c:485
 msgid "G_reen threshold:"
 msgstr "Prah ze_lenej:"
 
-#: ../plug-ins/common/exchange.c:544
+#: ../plug-ins/common/exchange.c:546
 msgid "B_lue threshold:"
 msgstr "Prah m_odrej:"
 
-#: ../plug-ins/common/exchange.c:572
+#: ../plug-ins/common/exchange.c:574
 msgid "Lock _thresholds"
 msgstr "_Uzamknúť prahy"
 
@@ -3557,7 +3559,7 @@ msgid "Select Film Color"
 msgstr "Vybete farbu filmu"
 
 #: ../plug-ins/common/film.c:1224 ../plug-ins/common/film.c:1274
-#: ../plug-ins/common/nova.c:351
+#: ../plug-ins/common/nova.c:353
 msgid "Co_lor:"
 msgstr "_Farba:"
 
@@ -3640,11 +3642,11 @@ msgstr "Generuje sa odlesk..."
 msgid "FlareFX"
 msgstr "Dojem odlesku"
 
-#: ../plug-ins/common/flarefx.c:747
+#: ../plug-ins/common/flarefx.c:749
 msgid "Center of Flare Effect"
 msgstr "Stred efektu odlesku"
 
-#: ../plug-ins/common/flarefx.c:783
+#: ../plug-ins/common/flarefx.c:785
 msgid "_Show cursor"
 msgstr "_Zobraziť kurzor"
 
@@ -3716,7 +3718,7 @@ msgstr "Od_lesk"
 msgid "Windows"
 msgstr "Okná"
 
-#: ../plug-ins/common/fp.c:701 ../plug-ins/common/lic.c:671
+#: ../plug-ins/common/fp.c:701 ../plug-ins/common/lic.c:673
 msgid "_Saturation"
 msgstr "_Sýtosť"
 
@@ -3768,31 +3770,31 @@ msgstr "Výber v kon_texte"
 msgid "Filter Pack Simulation"
 msgstr "Simulácia sady filtrov"
 
-#: ../plug-ins/common/fp.c:1296
+#: ../plug-ins/common/fp.c:1298
 msgid "Shadows:"
 msgstr "Tiene:"
 
-#: ../plug-ins/common/fp.c:1297
+#: ../plug-ins/common/fp.c:1299
 msgid "Midtones:"
 msgstr "Stredné tóny:"
 
-#: ../plug-ins/common/fp.c:1298
+#: ../plug-ins/common/fp.c:1300
 msgid "Highlights:"
 msgstr "Odlesk:"
 
-#: ../plug-ins/common/fp.c:1310
+#: ../plug-ins/common/fp.c:1312
 msgid "Advanced Filter Pack Options"
 msgstr "Pokročilé nastavenie sady filtrov"
 
-#: ../plug-ins/common/fp.c:1321
+#: ../plug-ins/common/fp.c:1323
 msgid "Smoothness of Aliasing"
 msgstr "Vyrovnávanie schodíkov"
 
-#: ../plug-ins/common/fp.c:1421
+#: ../plug-ins/common/fp.c:1423
 msgid "Preview as You Drag"
 msgstr "Náhľad pri ťahaní"
 
-#: ../plug-ins/common/fp.c:1425
+#: ../plug-ins/common/fp.c:1427
 msgid "Preview Size"
 msgstr "Veľkosť náhľadu"
 
@@ -3805,35 +3807,35 @@ msgid "Fractal Trace"
 msgstr "Fraktálové trasovanie"
 
 #. Settings
-#: ../plug-ins/common/fractaltrace.c:725
+#: ../plug-ins/common/fractaltrace.c:727
 msgid "Outside Type"
 msgstr "Typ okolia"
 
-#: ../plug-ins/common/fractaltrace.c:730
+#: ../plug-ins/common/fractaltrace.c:732
 msgid "_Warp"
 msgstr "_Ohnutie"
 
-#: ../plug-ins/common/fractaltrace.c:736
+#: ../plug-ins/common/fractaltrace.c:738
 msgid "_White"
 msgstr "_Biela"
 
-#: ../plug-ins/common/fractaltrace.c:743
+#: ../plug-ins/common/fractaltrace.c:745
 msgid "Mandelbrot Parameters"
 msgstr "Mandelbrotove parametre"
 
-#: ../plug-ins/common/fractaltrace.c:754
+#: ../plug-ins/common/fractaltrace.c:756
 msgid "X_1:"
 msgstr "X_1:"
 
-#: ../plug-ins/common/fractaltrace.c:763
+#: ../plug-ins/common/fractaltrace.c:765
 msgid "X_2:"
 msgstr "X_2:"
 
-#: ../plug-ins/common/fractaltrace.c:772
+#: ../plug-ins/common/fractaltrace.c:774
 msgid "Y_1:"
 msgstr "Y_1:"
 
-#: ../plug-ins/common/fractaltrace.c:781
+#: ../plug-ins/common/fractaltrace.c:783
 msgid "Y_2:"
 msgstr "Y_2:"
 
@@ -3850,29 +3852,29 @@ msgid "Gaussian Blur"
 msgstr "Gaussovo rozostrenie"
 
 #. parameter settings
-#: ../plug-ins/common/gauss.c:494
+#: ../plug-ins/common/gauss.c:496
 msgid "Blur Radius"
 msgstr "Polomer rozostrenia"
 
-#: ../plug-ins/common/gauss.c:508 ../plug-ins/common/jigsaw.c:2459
-#: ../plug-ins/common/spread.c:385
+#: ../plug-ins/common/gauss.c:510 ../plug-ins/common/jigsaw.c:2461
+#: ../plug-ins/common/spread.c:387
 msgid "_Horizontal:"
 msgstr "_Vodorovné:"
 
-#: ../plug-ins/common/gauss.c:512 ../plug-ins/common/jigsaw.c:2476
-#: ../plug-ins/common/spread.c:389
+#: ../plug-ins/common/gauss.c:514 ../plug-ins/common/jigsaw.c:2478
+#: ../plug-ins/common/spread.c:391
 msgid "_Vertical:"
 msgstr "_Zvislé:"
 
-#: ../plug-ins/common/gauss.c:535
+#: ../plug-ins/common/gauss.c:537
 msgid "Blur Method"
 msgstr "Metoda rozostrenia"
 
-#: ../plug-ins/common/gauss.c:539
+#: ../plug-ins/common/gauss.c:541
 msgid "_IIR"
 msgstr "_IIR"
 
-#: ../plug-ins/common/gauss.c:540
+#: ../plug-ins/common/gauss.c:542
 msgid "_RLE"
 msgstr "_RLE"
 
@@ -3908,7 +3910,7 @@ msgid "Save as Brush"
 msgstr "Uložiť ako štetec"
 
 #. attach labels
-#: ../plug-ins/common/gbr.c:706 ../plug-ins/common/grid.c:788
+#: ../plug-ins/common/gbr.c:706 ../plug-ins/common/grid.c:790
 msgid "Spacing:"
 msgstr "Rozostup:"
 
@@ -3918,9 +3920,8 @@ msgid "Description:"
 msgstr "Popis:"
 
 #: ../plug-ins/common/gee.c:106 ../plug-ins/common/gee.c:162
-#, fuzzy
 msgid "Gee Slime"
-msgstr "Jéj-_sliz"
+msgstr "Jéj sliz"
 
 #: ../plug-ins/common/gee.c:168 ../plug-ins/common/gee_zoom.c:192
 msgid "Thank You for Choosing GIMP"
@@ -3932,25 +3933,24 @@ msgid "A less obsolete creation by %s"
 msgstr "Menej zastaralý výtvor vytvoril(a) %s"
 
 #: ../plug-ins/common/gee_zoom.c:126 ../plug-ins/common/gee_zoom.c:186
-#, fuzzy
 msgid "Gee Zoom"
-msgstr "Jéj-_Lupa"
+msgstr "Jéj lupa"
 
 #: ../plug-ins/common/gee_zoom.c:200
 #, c-format
 msgid "An obsolete creation by %s"
 msgstr "Zastaralý výtvor vytvoril(a) %s"
 
-#: ../plug-ins/common/gif.c:406 ../plug-ins/common/gifload.c:144
+#: ../plug-ins/common/gif.c:410 ../plug-ins/common/gifload.c:144
 msgid "GIF image"
 msgstr "GIF obrázok"
 
-#: ../plug-ins/common/gif.c:690
+#: ../plug-ins/common/gif.c:694
 msgid "Couldn't simply reduce colors further. Saving as opaque."
 msgstr ""
 "Nie je možné jednoducho ďalej zredukovať farby. Ukladám ako nepriehľadné."
 
-#: ../plug-ins/common/gif.c:912
+#: ../plug-ins/common/gif.c:916
 msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
@@ -3958,14 +3958,14 @@ msgstr ""
 "Formát GIF podporuje iba komentáre v 7 bitovom ASCII kódovaní. Komentár nie "
 "je uložený."
 
-#: ../plug-ins/common/gif.c:973
+#: ../plug-ins/common/gif.c:977
 msgid ""
 "Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "Nie je možné uložiťobrázky v RGB farebnom režime. Skonvertujte ho najskôr na "
 "indexované farby alebo do odtieňov šedej."
 
-#: ../plug-ins/common/gif.c:1116
+#: ../plug-ins/common/gif.c:1120
 msgid ""
 "Warning:\n"
 "Transparent color in written file might be incorrect on viewers which don't "
@@ -3975,15 +3975,15 @@ msgstr ""
 "Priesvitná farba v zapisovanom súbore možno nebude správna v prehliadačoch, "
 "ktoré nepodporujú preisvitnosť."
 
-#: ../plug-ins/common/gif.c:1155
+#: ../plug-ins/common/gif.c:1159
 msgid "Delay inserted to prevent evil CPU-sucking anim."
 msgstr "Aby sa zabránilo škaredej animácii žerúcej CPU, vloží sa omeškanie."
 
-#: ../plug-ins/common/gif.c:1197
+#: ../plug-ins/common/gif.c:1201
 msgid "GIF Warning"
 msgstr "GIF varovanie"
 
-#: ../plug-ins/common/gif.c:1218
+#: ../plug-ins/common/gif.c:1222
 msgid ""
 "The image which you are trying to save as a GIF\n"
 "contains layers which extend beyond the actual\n"
@@ -4001,61 +4001,70 @@ msgstr ""
 "Môžete si vybrať buš orezanie vrstiev, alebo\n"
 "stornovať zápis."
 
-#: ../plug-ins/common/gif.c:1262
+#: ../plug-ins/common/gif.c:1266
 msgid "Save as GIF"
 msgstr "Uložiť ako GIF"
 
 #. regular gif parameter settings
-#: ../plug-ins/common/gif.c:1282
+#: ../plug-ins/common/gif.c:1286
 msgid "GIF Options"
 msgstr "Nastavenie GIFu"
 
-#: ../plug-ins/common/gif.c:1288
-msgid "_Interlace"
-msgstr "_Prekladať"
+#: ../plug-ins/common/gif.c:1292
+msgid "I_nterlace"
+msgstr "P_rekladať"
 
-#: ../plug-ins/common/gif.c:1304
+#: ../plug-ins/common/gif.c:1308
 msgid "_GIF comment:"
 msgstr "_GIF komentár:"
 
 #. additional animated gif parameter settings
-#: ../plug-ins/common/gif.c:1361
+#: ../plug-ins/common/gif.c:1365
 msgid "Animated GIF Options"
 msgstr "Nastavenia GIF animácie"
 
-#: ../plug-ins/common/gif.c:1367
+#: ../plug-ins/common/gif.c:1371
 msgid "_Loop forever"
 msgstr "_Opakovať donekonečna"
 
-#: ../plug-ins/common/gif.c:1380
+#: ../plug-ins/common/gif.c:1384
 msgid "_Delay between frames where unspecified:"
 msgstr "_Pauza medzi snímkami, ak nie je určená:"
 
-#: ../plug-ins/common/gif.c:1393 ../plug-ins/common/mng.c:1540
+#: ../plug-ins/common/gif.c:1399 ../plug-ins/common/mng.c:1540
 msgid "milliseconds"
 msgstr "milisekúnd"
 
-#: ../plug-ins/common/gif.c:1403
-msgid "Frame disposal where unspecified: "
-msgstr "Dispozície snímok, ak nie sú určené: "
+#: ../plug-ins/common/gif.c:1409
+msgid "_Frame disposal where unspecified:"
+msgstr "Dispozície _snímok, ak nie sú určené:"
 
-#: ../plug-ins/common/gif.c:1407
+#: ../plug-ins/common/gif.c:1413
 msgid "I don't care"
 msgstr "Nestarám sa"
 
-#: ../plug-ins/common/gif.c:1409
+#: ../plug-ins/common/gif.c:1415
 msgid "Cumulative layers (combine)"
 msgstr "Súhrné vrsty (kombinácia)"
 
-#: ../plug-ins/common/gif.c:1411
+#: ../plug-ins/common/gif.c:1417
 msgid "One frame per layer (replace)"
 msgstr "Jedna snímka na vrstvu (nahradiť)"
 
-#: ../plug-ins/common/gif.c:2624
+#. The "Always use default values" toggles
+#: ../plug-ins/common/gif.c:1433
+msgid "_Use delay entered above for all frames"
+msgstr "_Použiť pauzu zadanú vyššie pre všetky snímky"
+
+#: ../plug-ins/common/gif.c:1443
+msgid "U_se disposal entered above for all frames"
+msgstr "P_oužiť dispozície zadané vyššie pre všetky snímky"
+
+#: ../plug-ins/common/gif.c:2653
 msgid "Error writing output file."
 msgstr "Chyba pri zápise do výstupného súboru."
 
-#: ../plug-ins/common/gif.c:2694
+#: ../plug-ins/common/gif.c:2723
 #, c-format
 msgid "The default comment is limited to %d characters."
 msgstr "Štandardný komentár je obmedzený na %d znakov."
@@ -4174,11 +4183,11 @@ msgstr "Sklenená dlaždica..."
 msgid "Glass Tile"
 msgstr "Sklenená dlaždica"
 
-#: ../plug-ins/common/glasstile.c:288
+#: ../plug-ins/common/glasstile.c:290
 msgid "Tile _width:"
 msgstr "Šír_ka dlaždice:"
 
-#: ../plug-ins/common/glasstile.c:302 ../plug-ins/common/mosaic.c:741
+#: ../plug-ins/common/glasstile.c:304 ../plug-ins/common/mosaic.c:743
 msgid "Tile _height:"
 msgstr "_Výška dlaždice:"
 
@@ -4231,40 +4240,40 @@ msgid "Grid"
 msgstr "Mriežka"
 
 #. attach labels
-#: ../plug-ins/common/grid.c:715
+#: ../plug-ins/common/grid.c:717
 msgid "Horizontal"
 msgstr "Vodorovné"
 
-#: ../plug-ins/common/grid.c:717
+#: ../plug-ins/common/grid.c:719
 msgid "Vertical"
 msgstr "Zvislé"
 
-#: ../plug-ins/common/grid.c:719
+#: ../plug-ins/common/grid.c:721
 msgid "Intersection"
 msgstr "Prienik"
 
 #. Width and Height
-#: ../plug-ins/common/grid.c:722 ../plug-ins/common/svg.c:769
-#: ../plug-ins/common/wmf.c:549 ../plug-ins/print/gimp_main_window.c:1006
-#: ../plug-ins/print/gimp_main_window.c:1213
+#: ../plug-ins/common/grid.c:724 ../plug-ins/common/svg.c:781
+#: ../plug-ins/common/wmf.c:549 ../plug-ins/print/gimp_main_window.c:1008
+#: ../plug-ins/print/gimp_main_window.c:1215
 msgid "Width:"
 msgstr "Šírka:"
 
 #. attach labels
-#: ../plug-ins/common/grid.c:855
+#: ../plug-ins/common/grid.c:857
 msgid "Offset:"
 msgstr "Posun:"
 
 #. attach color selectors
-#: ../plug-ins/common/grid.c:894
+#: ../plug-ins/common/grid.c:896
 msgid "Horizontal Color"
 msgstr "Vodorovná farba"
 
-#: ../plug-ins/common/grid.c:912
+#: ../plug-ins/common/grid.c:914
 msgid "Vertical Color"
 msgstr "Zvislá farba"
 
-#: ../plug-ins/common/grid.c:930
+#: ../plug-ins/common/grid.c:932
 msgid "Intersection Color"
 msgstr "Farba prieniku"
 
@@ -4273,8 +4282,8 @@ msgid "HTML table"
 msgstr "HTML table"
 
 #: ../plug-ins/common/gtm.c:398
-msgid "GIMP Table Magic"
-msgstr "Čarovná tabuľka GIMP"
+msgid "Save as HTML table"
+msgstr "Uložiť ako HTML tabuľka"
 
 #: ../plug-ins/common/gtm.c:423
 msgid "Warning"
@@ -4419,23 +4428,23 @@ msgstr "Horúce..."
 msgid "Hot"
 msgstr "Horúce"
 
-#: ../plug-ins/common/hot.c:605
+#: ../plug-ins/common/hot.c:607
 msgid "Create _new layer"
 msgstr "Vytvoriť _novú vrstvu"
 
-#: ../plug-ins/common/hot.c:614
+#: ../plug-ins/common/hot.c:616
 msgid "Action"
 msgstr "Akcia"
 
-#: ../plug-ins/common/hot.c:618
+#: ../plug-ins/common/hot.c:620
 msgid "Reduce _Luminance"
 msgstr "Znížiť _svetlosť"
 
-#: ../plug-ins/common/hot.c:619
+#: ../plug-ins/common/hot.c:621
 msgid "Reduce _Saturation"
 msgstr "Znížiť _sýtosť"
 
-#: ../plug-ins/common/hot.c:620 ../plug-ins/common/waves.c:277
+#: ../plug-ins/common/hot.c:622 ../plug-ins/common/waves.c:279
 msgid "_Blacken"
 msgstr "_Stmavnutie"
 
@@ -4451,15 +4460,15 @@ msgstr "Ilúzia..."
 msgid "Illusion"
 msgstr "Ilúzia"
 
-#: ../plug-ins/common/illusion.c:427
+#: ../plug-ins/common/illusion.c:429
 msgid "_Divisions:"
 msgstr "_Delenie:"
 
-#: ../plug-ins/common/illusion.c:437
+#: ../plug-ins/common/illusion.c:439
 msgid "Mode _1"
 msgstr "Režim _1"
 
-#: ../plug-ins/common/illusion.c:452
+#: ../plug-ins/common/illusion.c:454
 msgid "Mode _2"
 msgstr "Režim _2"
 
@@ -4552,7 +4561,7 @@ msgstr "Ma_ximálna hĺbka:"
 msgid "Thresho_ld:"
 msgstr "Pra_h:"
 
-#: ../plug-ins/common/iwarp.c:1133 ../plug-ins/common/sinus.c:769
+#: ../plug-ins/common/iwarp.c:1133 ../plug-ins/common/sinus.c:771
 #: ../plug-ins/gflare/gflare.c:2797
 msgid "_Settings"
 msgstr "Nas_tavenia"
@@ -4561,11 +4570,13 @@ msgstr "Nas_tavenia"
 msgid "IWarp"
 msgstr "Interaktívne ohýbanie"
 
-#: ../plug-ins/common/iwarp.c:1212
+#: ../plug-ins/common/iwarp.c:1214
 msgid ""
 "Click and drag in the preview to define the distortions to apply to the "
 "image."
 msgstr ""
+"Kliknúť a presunúť do náhľadu, aby ste definovali skreslenie, ktoré bude "
+"aplikované na obrázok."
 
 #: ../plug-ins/common/jigsaw.c:363
 msgid "_Jigsaw..."
@@ -4579,56 +4590,56 @@ msgstr "Tvorí sa skladačka..."
 msgid "Jigsaw"
 msgstr "Skladačka"
 
-#: ../plug-ins/common/jigsaw.c:2447
+#: ../plug-ins/common/jigsaw.c:2449
 msgid "Number of Tiles"
 msgstr "Počet dlaždíc"
 
-#: ../plug-ins/common/jigsaw.c:2462
+#: ../plug-ins/common/jigsaw.c:2464
 msgid "Number of pieces going across"
 msgstr "Počet kusov idúcich naprieč"
 
-#: ../plug-ins/common/jigsaw.c:2479
+#: ../plug-ins/common/jigsaw.c:2481
 msgid "Number of pieces going down"
 msgstr "Počet kusov idúcich dole"
 
-#: ../plug-ins/common/jigsaw.c:2493
+#: ../plug-ins/common/jigsaw.c:2495
 msgid "Bevel Edges"
 msgstr "Skúsenie hrán"
 
-#: ../plug-ins/common/jigsaw.c:2503
+#: ../plug-ins/common/jigsaw.c:2505
 msgid "_Bevel width:"
 msgstr "Šírka _skosenia:"
 
-#: ../plug-ins/common/jigsaw.c:2507
+#: ../plug-ins/common/jigsaw.c:2509
 msgid "Degree of slope of each piece's edge"
 msgstr "Stupeň naklonenia na hrane každého kusu"
 
-#: ../plug-ins/common/jigsaw.c:2520
+#: ../plug-ins/common/jigsaw.c:2522
 msgid "H_ighlight:"
 msgstr "_Odlesk:"
 
-#: ../plug-ins/common/jigsaw.c:2524
+#: ../plug-ins/common/jigsaw.c:2526
 msgid "The amount of highlighting on the edges of each piece"
 msgstr "Miera zvýraznenia hrán každého kusu"
 
 #. frame for primitive radio buttons
-#: ../plug-ins/common/jigsaw.c:2541
+#: ../plug-ins/common/jigsaw.c:2543
 msgid "Jigsaw Style"
 msgstr "Štýl skladačky"
 
-#: ../plug-ins/common/jigsaw.c:2545
+#: ../plug-ins/common/jigsaw.c:2547
 msgid "_Square"
 msgstr "Štvor_cový"
 
-#: ../plug-ins/common/jigsaw.c:2546
+#: ../plug-ins/common/jigsaw.c:2548
 msgid "C_urved"
 msgstr "V _krivkách"
 
-#: ../plug-ins/common/jigsaw.c:2550
+#: ../plug-ins/common/jigsaw.c:2552
 msgid "Each piece has straight sides"
 msgstr "Všetky kusy majú rovné strany"
 
-#: ../plug-ins/common/jigsaw.c:2551
+#: ../plug-ins/common/jigsaw.c:2553
 msgid "Each piece has curved sides"
 msgstr "Všetky kusy majú zaoblené strany"
 
@@ -4652,63 +4663,63 @@ msgstr "Van Gogh (LIC)..."
 msgid "Van Gogh (LIC)"
 msgstr "Van Gogh (LIC)"
 
-#: ../plug-ins/common/lic.c:665
+#: ../plug-ins/common/lic.c:667
 msgid "Effect Channel"
 msgstr "Efektový kanál"
 
-#: ../plug-ins/common/lic.c:672
+#: ../plug-ins/common/lic.c:674
 msgid "_Brightness"
 msgstr "_Jas"
 
-#: ../plug-ins/common/lic.c:678
+#: ../plug-ins/common/lic.c:680
 msgid "Effect Operator"
 msgstr "Efektový operátor"
 
-#: ../plug-ins/common/lic.c:683
+#: ../plug-ins/common/lic.c:685
 msgid "_Derivative"
 msgstr "_Derivovať"
 
-#: ../plug-ins/common/lic.c:684
+#: ../plug-ins/common/lic.c:686
 msgid "_Gradient"
 msgstr "_Prechod"
 
-#: ../plug-ins/common/lic.c:690
+#: ../plug-ins/common/lic.c:692
 msgid "Convolve"
 msgstr "Zaostrenie"
 
-#: ../plug-ins/common/lic.c:695
+#: ../plug-ins/common/lic.c:697
 msgid "_With white noise"
 msgstr "S biely_m šumom"
 
-#: ../plug-ins/common/lic.c:696
+#: ../plug-ins/common/lic.c:698
 msgid "W_ith source image"
 msgstr "So _zdrojovým obrázkom"
 
-#: ../plug-ins/common/lic.c:715
+#: ../plug-ins/common/lic.c:717
 msgid "_Effect image:"
 msgstr "_Efektový obrázok:"
 
-#: ../plug-ins/common/lic.c:726
+#: ../plug-ins/common/lic.c:728
 msgid "_Filter length:"
 msgstr "Dĺžka _filtra:"
 
-#: ../plug-ins/common/lic.c:735
+#: ../plug-ins/common/lic.c:737
 msgid "_Noise magnitude:"
 msgstr "St_upeň šumu:"
 
-#: ../plug-ins/common/lic.c:744
+#: ../plug-ins/common/lic.c:746
 msgid "In_tegration steps:"
 msgstr "In_tegračné kroky:"
 
-#: ../plug-ins/common/lic.c:753
+#: ../plug-ins/common/lic.c:755
 msgid "_Minimum value:"
 msgstr "_Minimálna hodnota:"
 
-#: ../plug-ins/common/lic.c:762
+#: ../plug-ins/common/lic.c:764
 msgid "M_aximum value:"
 msgstr "M_aximálna hodnota:"
 
-#: ../plug-ins/common/lic.c:813
+#: ../plug-ins/common/lic.c:815
 msgid "_Van Gogh (LIC)..."
 msgstr "_Van Gogh (LIC)..."
 
@@ -4720,44 +4731,48 @@ msgstr "Poslať obrázok e-_mailom..."
 msgid "Send as Mail"
 msgstr "Poslať ako e-mail"
 
-#: ../plug-ins/common/mail.c:543
+#: ../plug-ins/common/mail.c:513
+msgid "_Send"
+msgstr "Odo_slať"
+
+#: ../plug-ins/common/mail.c:545
 msgid "_Filename:"
 msgstr "Názov _súboru:"
 
 #. Encapsulation label
-#: ../plug-ins/common/mail.c:550
+#: ../plug-ins/common/mail.c:552
 msgid "Encapsulation:"
 msgstr "Zapúzdrenie:"
 
-#: ../plug-ins/common/mail.c:562
+#: ../plug-ins/common/mail.c:564
 msgid "_MIME"
 msgstr "_MIME"
 
-#: ../plug-ins/common/mail.c:563
+#: ../plug-ins/common/mail.c:565
 msgid "_Uuencode"
 msgstr "_Uuencode"
 
-#: ../plug-ins/common/mail.c:577
+#: ../plug-ins/common/mail.c:579
 msgid "_Recipient:"
 msgstr "_Príjemca:"
 
-#: ../plug-ins/common/mail.c:591
+#: ../plug-ins/common/mail.c:593
 msgid "_Sender:"
 msgstr "Odo_sielateľ:"
 
-#: ../plug-ins/common/mail.c:603
+#: ../plug-ins/common/mail.c:605
 msgid "S_ubject:"
 msgstr "_Predmet:"
 
-#: ../plug-ins/common/mail.c:615
+#: ../plug-ins/common/mail.c:617
 msgid "Comm_ent:"
 msgstr "Kom_entár"
 
-#: ../plug-ins/common/mail.c:723
+#: ../plug-ins/common/mail.c:725
 msgid "some sort of error with the file extension or lack thereof"
 msgstr "nejaký typ chyby s príponou súboru alebo jej neprítomnosť"
 
-#: ../plug-ins/common/mail.c:950
+#: ../plug-ins/common/mail.c:952
 #, c-format
 msgid "Could not start sendmail (%s)"
 msgstr "Nepodarilo sa spustiť sendmail (%s)"
@@ -4786,7 +4801,7 @@ msgstr "Up_raviť popredie-pozadie"
 msgid "Color Range _Mapping..."
 msgstr "_Mapovenie rozsahu farieb..."
 
-#: ../plug-ins/common/mapcolor.c:215 ../plug-ins/common/mapcolor.c:508
+#: ../plug-ins/common/mapcolor.c:215 ../plug-ins/common/mapcolor.c:510
 msgid "Cannot operate on gray or indexed color images."
 msgstr ""
 "Nie je možné spracovať obrázky v odtieňoch šedej alebo s indexovanými "
@@ -4804,16 +4819,16 @@ msgstr "Mapovanie farieb..."
 msgid "Map Color Range"
 msgstr "Mapovanie farebného rozsahu"
 
-#: ../plug-ins/common/mapcolor.c:384
+#: ../plug-ins/common/mapcolor.c:386
 msgid "Source Color Range"
 msgstr "Zdrojový farebný rozsah"
 
-#: ../plug-ins/common/mapcolor.c:385
+#: ../plug-ins/common/mapcolor.c:387
 msgid "Destination Color Range"
 msgstr "Cieľový farebný rozsah"
 
 #. spinbutton 2
-#: ../plug-ins/common/mapcolor.c:425 ../plug-ins/gfli/gfli.c:850
+#: ../plug-ins/common/mapcolor.c:427 ../plug-ins/gfli/gfli.c:850
 #: ../plug-ins/gfli/gfli.c:913 ../plug-ins/rcm/rcm_dialog.c:325
 #: ../plug-ins/rcm/rcm_dialog.c:378
 msgid "To:"
@@ -4835,11 +4850,11 @@ msgstr "Max RGB..."
 msgid "Max RGB"
 msgstr "Max RGB"
 
-#: ../plug-ins/common/max_rgb.c:295
+#: ../plug-ins/common/max_rgb.c:297
 msgid "_Hold the maximal channels"
 msgstr "_Podržať maximálne kanály"
 
-#: ../plug-ins/common/max_rgb.c:298
+#: ../plug-ins/common/max_rgb.c:300
 msgid "Ho_ld the minimal channels"
 msgstr "Po_držať minimálne kanály"
 
@@ -4855,35 +4870,35 @@ msgstr "Rozostrenie pohybom..."
 msgid "Motion Blur"
 msgstr "Rozostrenie pohybom"
 
-#: ../plug-ins/common/mblur.c:941
+#: ../plug-ins/common/mblur.c:943
 msgid "Blur Type"
 msgstr "Typ rozostrenia"
 
-#: ../plug-ins/common/mblur.c:945
+#: ../plug-ins/common/mblur.c:947
 msgid "_Linear"
 msgstr "_Lineárny"
 
-#: ../plug-ins/common/mblur.c:946
+#: ../plug-ins/common/mblur.c:948
 msgid "_Radial"
 msgstr "_Radiálny"
 
-#: ../plug-ins/common/mblur.c:947
+#: ../plug-ins/common/mblur.c:949
 msgid "_Zoom"
 msgstr "_Lupa"
 
-#: ../plug-ins/common/mblur.c:954
+#: ../plug-ins/common/mblur.c:956
 msgid "Blur Center"
 msgstr "Stred rozmazania"
 
-#: ../plug-ins/common/mblur.c:997
+#: ../plug-ins/common/mblur.c:999
 msgid "Blur _outward"
-msgstr ""
+msgstr "_Vonkajšok rozmazania"
 
-#: ../plug-ins/common/mblur.c:1010
+#: ../plug-ins/common/mblur.c:1012
 msgid "Blur Parameters"
 msgstr "Parametre rozostrenia"
 
-#: ../plug-ins/common/mblur.c:1034 ../plug-ins/common/newsprint.c:1003
+#: ../plug-ins/common/mblur.c:1036 ../plug-ins/common/newsprint.c:1003
 msgid "_Angle:"
 msgstr "U_hol:"
 
@@ -5012,65 +5027,65 @@ msgstr "Generujem dlaždice..."
 msgid "Mosaic"
 msgstr "Mozaika"
 
-#: ../plug-ins/common/mosaic.c:639
+#: ../plug-ins/common/mosaic.c:641
 msgid "Co_lor averaging"
 msgstr "Priemerované _farby"
 
-#: ../plug-ins/common/mosaic.c:652
+#: ../plug-ins/common/mosaic.c:654
 msgid "Allo_w tile splitting"
 msgstr "Po_voliť delenie dláždic"
 
-#: ../plug-ins/common/mosaic.c:665
+#: ../plug-ins/common/mosaic.c:667
 msgid "_Pitted surfaces"
 msgstr "Nerovný _povrch"
 
-#: ../plug-ins/common/mosaic.c:678
+#: ../plug-ins/common/mosaic.c:680
 msgid "_FG/BG lighting"
 msgstr "Osvetlenie p_opredia/pozadia"
 
 #. tiling primitive
-#: ../plug-ins/common/mosaic.c:695
+#: ../plug-ins/common/mosaic.c:697
 msgid "Tiling Primitives"
 msgstr "Základné dlaždice"
 
-#: ../plug-ins/common/mosaic.c:699
+#: ../plug-ins/common/mosaic.c:701
 msgid "_Squares"
 msgstr "Š_tvorce"
 
-#: ../plug-ins/common/mosaic.c:700
+#: ../plug-ins/common/mosaic.c:702
 msgid "He_xagons"
 msgstr "Šesťu_holník"
 
-#: ../plug-ins/common/mosaic.c:701
+#: ../plug-ins/common/mosaic.c:703
 msgid "Oc_tagons & squares"
 msgstr "Osemuholníky a š_tvorce"
 
 #. parameter settings
-#: ../plug-ins/common/mosaic.c:720
+#: ../plug-ins/common/mosaic.c:722
 msgid "Settings"
 msgstr "Nastavenie"
 
-#: ../plug-ins/common/mosaic.c:729
+#: ../plug-ins/common/mosaic.c:731
 msgid "T_ile size:"
 msgstr "Veľkosť dlažd_ice:"
 
-#: ../plug-ins/common/mosaic.c:753
+#: ../plug-ins/common/mosaic.c:755
 msgid "Til_e spacing:"
 msgstr "Ro_zostup dlaždíc:"
 
-#: ../plug-ins/common/mosaic.c:765
+#: ../plug-ins/common/mosaic.c:767
 msgid "Tile _neatness:"
 msgstr "Vkus_nosť dlaždíc:"
 
-#: ../plug-ins/common/mosaic.c:778
+#: ../plug-ins/common/mosaic.c:780
 msgid "Light _direction:"
 msgstr "Smer svet_la:"
 
-#: ../plug-ins/common/mosaic.c:790
+#: ../plug-ins/common/mosaic.c:792
 msgid "Color _variation:"
 msgstr "Farebná _variácia:"
 
-#: ../plug-ins/common/mosaic.c:2595
+#: ../plug-ins/common/mosaic.c:2597
 msgid "Unable to add additional point.\n"
 msgstr "Nie je možné pridať ďalší bod.\n"
 
@@ -5086,7 +5101,7 @@ msgstr "Neón..."
 msgid "Neon Detection"
 msgstr "Detekcia neónu"
 
-#: ../plug-ins/common/neon.c:752 ../plug-ins/common/unsharp.c:680
+#: ../plug-ins/common/neon.c:754 ../plug-ins/common/unsharp.c:682
 msgid "_Amount:"
 msgstr "Mier_a:"
 
@@ -5151,61 +5166,61 @@ msgid "Newsprint"
 msgstr "Novinová tlač"
 
 #. resolution settings
-#: ../plug-ins/common/newsprint.c:1239
+#: ../plug-ins/common/newsprint.c:1241
 msgid "Resolution"
 msgstr "Rozlíšenie"
 
-#: ../plug-ins/common/newsprint.c:1258
+#: ../plug-ins/common/newsprint.c:1260
 msgid "_Input SPI:"
 msgstr "Vstupné SP_I:"
 
-#: ../plug-ins/common/newsprint.c:1272
+#: ../plug-ins/common/newsprint.c:1274
 msgid "O_utput LPI:"
 msgstr "Výst_upné LPI"
 
-#: ../plug-ins/common/newsprint.c:1285
+#: ../plug-ins/common/newsprint.c:1287
 msgid "C_ell size:"
 msgstr "V_eľkosť bunky:"
 
 #. screen settings
-#: ../plug-ins/common/newsprint.c:1298 ../plug-ins/gflare/gflare.c:559
+#: ../plug-ins/common/newsprint.c:1300 ../plug-ins/gflare/gflare.c:559
 msgid "Screen"
 msgstr "Obrazovka"
 
-#: ../plug-ins/common/newsprint.c:1317
+#: ../plug-ins/common/newsprint.c:1319
 msgid "B_lack pullout (%):"
 msgstr "_Stiahnutie úrovne čiernej (%):"
 
-#: ../plug-ins/common/newsprint.c:1339
+#: ../plug-ins/common/newsprint.c:1341
 msgid "Separate to:"
 msgstr "Oddeliť do:"
 
-#: ../plug-ins/common/newsprint.c:1343
+#: ../plug-ins/common/newsprint.c:1345
 msgid "_RGB"
 msgstr "_RGB"
 
-#: ../plug-ins/common/newsprint.c:1360
+#: ../plug-ins/common/newsprint.c:1362
 msgid "C_MYK"
 msgstr "C_MYK"
 
-#: ../plug-ins/common/newsprint.c:1377
+#: ../plug-ins/common/newsprint.c:1379
 msgid "I_ntensity"
 msgstr "I_ntenzita"
 
-#: ../plug-ins/common/newsprint.c:1402
+#: ../plug-ins/common/newsprint.c:1404
 msgid "_Lock channels"
 msgstr "Uzamknúť kaná_ly"
 
-#: ../plug-ins/common/newsprint.c:1415
+#: ../plug-ins/common/newsprint.c:1417
 msgid "_Factory Defaults"
 msgstr "_Továrenské štandardy"
 
 #. anti-alias control
-#: ../plug-ins/common/newsprint.c:1441 ../plug-ins/gfig/gfig-dialog.c:1262
+#: ../plug-ins/common/newsprint.c:1443 ../plug-ins/gfig/gfig-dialog.c:1262
 msgid "Antialiasing"
 msgstr "Vyhladzovanie"
 
-#: ../plug-ins/common/newsprint.c:1449
+#: ../plug-ins/common/newsprint.c:1451
 msgid "O_versample:"
 msgstr "Pre_vzorkovanie:"
 
@@ -5221,23 +5236,23 @@ msgstr "NL Filter..."
 msgid "NL Filter"
 msgstr "NL Filter"
 
-#: ../plug-ins/common/nlfilt.c:1044
+#: ../plug-ins/common/nlfilt.c:1046
 msgid "Filter"
 msgstr "Filter"
 
-#: ../plug-ins/common/nlfilt.c:1048
+#: ../plug-ins/common/nlfilt.c:1050
 msgid "_Alpha trimmed mean"
 msgstr "_Alfou riadený význam"
 
-#: ../plug-ins/common/nlfilt.c:1050
+#: ../plug-ins/common/nlfilt.c:1052
 msgid "Op_timal estimation"
 msgstr "Op_timálny odhad"
 
-#: ../plug-ins/common/nlfilt.c:1052
+#: ../plug-ins/common/nlfilt.c:1054
 msgid "_Edge enhancement"
 msgstr "Vyl_epšenie hrán"
 
-#: ../plug-ins/common/nlfilt.c:1077
+#: ../plug-ins/common/nlfilt.c:1079
 msgid "A_lpha:"
 msgstr "A_lfa:"
 
@@ -5253,23 +5268,23 @@ msgstr "Pridáva sa šum..."
 msgid "RGB Noise"
 msgstr "RGB šum"
 
-#: ../plug-ins/common/noisify.c:479
+#: ../plug-ins/common/noisify.c:481
 msgid "Co_rrelated noise"
 msgstr "Ko_relačný šum"
 
-#: ../plug-ins/common/noisify.c:494
+#: ../plug-ins/common/noisify.c:496
 msgid "_Independent RGB"
 msgstr "Nezáv_islé RGB"
 
-#: ../plug-ins/common/noisify.c:518 ../plug-ins/common/noisify.c:522
+#: ../plug-ins/common/noisify.c:520 ../plug-ins/common/noisify.c:524
 msgid "_Gray:"
 msgstr "Še_dá:"
 
-#: ../plug-ins/common/noisify.c:523 ../plug-ins/common/noisify.c:538
+#: ../plug-ins/common/noisify.c:525 ../plug-ins/common/noisify.c:540
 msgid "_Alpha:"
 msgstr "_Alfa:"
 
-#: ../plug-ins/common/noisify.c:548
+#: ../plug-ins/common/noisify.c:550
 #, c-format
 msgid "Channel #%d:"
 msgstr "Kanál #%d:"
@@ -5290,23 +5305,23 @@ msgstr "Počíta sa SuperNova..."
 msgid "SuperNova"
 msgstr "SuperNova"
 
-#: ../plug-ins/common/nova.c:347
+#: ../plug-ins/common/nova.c:349
 msgid "SuperNova Color Picker"
 msgstr "SuperNova: Farebná pipeta"
 
-#: ../plug-ins/common/nova.c:376
+#: ../plug-ins/common/nova.c:378
 msgid "_Spokes:"
 msgstr "_Lúče:"
 
-#: ../plug-ins/common/nova.c:391
+#: ../plug-ins/common/nova.c:393
 msgid "R_andom hue:"
 msgstr "_Náhodný odtieň:"
 
-#: ../plug-ins/common/nova.c:443
+#: ../plug-ins/common/nova.c:445
 msgid "Center of SuperNova"
 msgstr "Centrum SuperNovy"
 
-#: ../plug-ins/common/nova.c:477
+#: ../plug-ins/common/nova.c:479
 msgid "S_how cursor"
 msgstr "Zobraziť k_urzor"
 
@@ -5322,11 +5337,11 @@ msgstr "Kreslenie olejomaľbou"
 msgid "Oilify"
 msgstr "Olejomaľba"
 
-#: ../plug-ins/common/oilify.c:507
+#: ../plug-ins/common/oilify.c:509
 msgid "_Mask size:"
 msgstr "Veľkosť _masky:"
 
-#: ../plug-ins/common/oilify.c:518
+#: ../plug-ins/common/oilify.c:520
 msgid "_Use intensity algorithm"
 msgstr "Po_užiť algoritmus intenzity"
 
@@ -5334,79 +5349,79 @@ msgstr "Po_užiť algoritmus intenzity"
 msgid "Paper Tile"
 msgstr "Papierová dlaždica"
 
-#: ../plug-ins/common/papertile.c:258
+#: ../plug-ins/common/papertile.c:260
 msgid "Division"
 msgstr "Delenie"
 
-#: ../plug-ins/common/papertile.c:297
+#: ../plug-ins/common/papertile.c:299
 msgid "Fractional Pixels"
 msgstr "Frakčné body"
 
-#: ../plug-ins/common/papertile.c:302
+#: ../plug-ins/common/papertile.c:304
 msgid "_Background"
 msgstr "_Pozadie"
 
-#: ../plug-ins/common/papertile.c:304
+#: ../plug-ins/common/papertile.c:306
 msgid "_Ignore"
 msgstr "_Ignorovať"
 
-#: ../plug-ins/common/papertile.c:306
+#: ../plug-ins/common/papertile.c:308
 msgid "_Force"
 msgstr "_Vnútiť"
 
-#: ../plug-ins/common/papertile.c:313
+#: ../plug-ins/common/papertile.c:315
 msgid "C_entering"
 msgstr "C_entrovanie"
 
-#: ../plug-ins/common/papertile.c:328
+#: ../plug-ins/common/papertile.c:330
 msgid "Movement"
 msgstr "Pohyb"
 
-#: ../plug-ins/common/papertile.c:341
+#: ../plug-ins/common/papertile.c:343
 msgid "_Max (%):"
 msgstr "_Max (%):"
 
-#: ../plug-ins/common/papertile.c:347
+#: ../plug-ins/common/papertile.c:349
 msgid "_Wrap around"
 msgstr "O_baliť okolo"
 
-#: ../plug-ins/common/papertile.c:357
+#: ../plug-ins/common/papertile.c:359
 msgid "Background Type"
 msgstr "Typ pozadia"
 
-#: ../plug-ins/common/papertile.c:364
+#: ../plug-ins/common/papertile.c:366
 msgid "I_nverted image"
 msgstr "I_nvertovaný obrázok"
 
-#: ../plug-ins/common/papertile.c:366
+#: ../plug-ins/common/papertile.c:368
 msgid "Im_age"
 msgstr "_Obrázok"
 
-#: ../plug-ins/common/papertile.c:368
+#: ../plug-ins/common/papertile.c:370
 msgid "Fo_reground color"
 msgstr "Fa_rba popredia"
 
-#: ../plug-ins/common/papertile.c:370
+#: ../plug-ins/common/papertile.c:372
 msgid "Bac_kground color"
 msgstr "Farba _pozadia"
 
-#: ../plug-ins/common/papertile.c:372
+#: ../plug-ins/common/papertile.c:374
 msgid "S_elect here:"
 msgstr "Tu vybr_ať:"
 
-#: ../plug-ins/common/papertile.c:379
+#: ../plug-ins/common/papertile.c:381
 msgid "Background Color"
 msgstr "Farba pozadia"
 
-#: ../plug-ins/common/papertile.c:531
+#: ../plug-ins/common/papertile.c:533
 msgid "Paper Tile..."
 msgstr "Papierová dlaždica..."
 
-#: ../plug-ins/common/papertile.c:818
+#: ../plug-ins/common/papertile.c:820
 msgid "September 31, 1999"
 msgstr "September 31, 1999"
 
-#: ../plug-ins/common/papertile.c:819
+#: ../plug-ins/common/papertile.c:821
 msgid "_Paper Tile..."
 msgstr "_Papierová dlaždica..."
 
@@ -5449,16 +5464,16 @@ msgstr "_Forokópia..."
 msgid "Photocopy"
 msgstr "Fotokópia"
 
-#: ../plug-ins/common/photocopy.c:889 ../plug-ins/common/sharpen.c:512
-#: ../plug-ins/common/softglow.c:694
+#: ../plug-ins/common/photocopy.c:891 ../plug-ins/common/sharpen.c:514
+#: ../plug-ins/common/softglow.c:696
 msgid "_Sharpness:"
 msgstr "O_strosť:"
 
-#: ../plug-ins/common/photocopy.c:903
+#: ../plug-ins/common/photocopy.c:905
 msgid "Percent _black:"
 msgstr "Percento _čiernej:"
 
-#: ../plug-ins/common/photocopy.c:917
+#: ../plug-ins/common/photocopy.c:919
 msgid "Percent _white:"
 msgstr "Percento _bielej:"
 
@@ -5478,11 +5493,11 @@ msgstr "Pixelizuje sa..."
 msgid "Pixelize"
 msgstr "Pixelizovať"
 
-#: ../plug-ins/common/pixelize.c:348
+#: ../plug-ins/common/pixelize.c:350
 msgid "Pixel _width:"
 msgstr "Ší_rka bodu:"
 
-#: ../plug-ins/common/pixelize.c:353
+#: ../plug-ins/common/pixelize.c:355
 msgid "Pixel _height:"
 msgstr "_Výška bodu:"
 
@@ -5498,11 +5513,11 @@ msgstr "Plazma..."
 msgid "Plasma"
 msgstr "Plazma"
 
-#: ../plug-ins/common/plasma.c:337
+#: ../plug-ins/common/plasma.c:339
 msgid "Random _seed:"
 msgstr "Náhodné _semeno:"
 
-#: ../plug-ins/common/plasma.c:348
+#: ../plug-ins/common/plasma.c:350
 msgid "T_urbulence:"
 msgstr "T_urbulencia:"
 
@@ -5666,29 +5681,29 @@ msgstr "Polarizuje sa..."
 msgid "Polarize"
 msgstr "Polarizácia"
 
-#: ../plug-ins/common/polar.c:619
+#: ../plug-ins/common/polar.c:621
 msgid "Circle _depth in percent:"
 msgstr "Hĺbka _kružnice v percentách:"
 
-#: ../plug-ins/common/polar.c:631
+#: ../plug-ins/common/polar.c:633
 msgid "Offset _angle:"
 msgstr "P_osun uhla:"
 
-#: ../plug-ins/common/polar.c:646
+#: ../plug-ins/common/polar.c:648
 msgid "_Map backwards"
 msgstr "Spätné _mapovanie"
 
-#: ../plug-ins/common/polar.c:652
+#: ../plug-ins/common/polar.c:654
 msgid ""
 "If checked the mapping will begin at the right side, as opposed to beginning "
 "at the left."
 msgstr "Pri zaškrtnutí začne mapovať z pravej strany namiesto z ľavej strany."
 
-#: ../plug-ins/common/polar.c:663
+#: ../plug-ins/common/polar.c:665
 msgid "Map from _top"
 msgstr "Mapovanie _zhora"
 
-#: ../plug-ins/common/polar.c:669
+#: ../plug-ins/common/polar.c:671
 msgid ""
 "If unchecked the mapping will put the bottom row in the middle and the top "
 "row on the outside.  If checked it will be the opposite."
@@ -5696,11 +5711,11 @@ msgstr ""
 "Bez zaškrtnutia začne ukladať dolný riadok do stredu a hornú radu von. Pri "
 "zaškrtnutej voľbe je to naopak."
 
-#: ../plug-ins/common/polar.c:681
+#: ../plug-ins/common/polar.c:683
 msgid "To _polar"
 msgstr "Do _polárnych"
 
-#: ../plug-ins/common/polar.c:687
+#: ../plug-ins/common/polar.c:689
 msgid ""
 "If unchecked the image will be circularly mapped onto a rectangle.  If "
 "checked the image will be mapped onto a circle."
@@ -5715,31 +5730,35 @@ msgstr "Formát prenositeľných dokumentov (PDF)"
 #: ../plug-ins/common/poppler.c:502
 #, c-format
 msgid "%s-%s"
-msgstr ""
+msgstr "%s-%s"
 
 #: ../plug-ins/common/poppler.c:504 ../plug-ins/common/postscript.c:1100
 #, c-format
 msgid "%s-pages"
-msgstr ""
+msgstr "%s-stránky"
 
-#: ../plug-ins/common/poppler.c:693
-msgid "Load PDF"
-msgstr "Načítať PDF"
+#: ../plug-ins/common/poppler.c:699
+msgid "Import from PDF"
+msgstr "Importovať z PDF"
 
-#: ../plug-ins/common/poppler.c:755
+#: ../plug-ins/common/poppler.c:704 ../plug-ins/common/postscript.c:3033
+msgid "_Import"
+msgstr "_Importovať"
+
+#: ../plug-ins/common/poppler.c:761
 msgid "_Width (pixels):"
 msgstr "Ší_rka (body):"
 
-#: ../plug-ins/common/poppler.c:756
+#: ../plug-ins/common/poppler.c:762
 msgid "_Height (pixels):"
 msgstr "_Výška (body):"
 
-#: ../plug-ins/common/poppler.c:759 ../plug-ins/common/poppler.c:760
+#: ../plug-ins/common/poppler.c:765 ../plug-ins/common/poppler.c:766
 msgid "_Resolution:"
 msgstr "_Rozlíšenie:"
 
 #. Antialiasing
-#: ../plug-ins/common/poppler.c:774
+#: ../plug-ins/common/poppler.c:780
 msgid "A_ntialiasing"
 msgstr "Vy_hladzovanie"
 
@@ -5787,8 +5806,8 @@ msgid "Write error occurred"
 msgstr "Vyskytla sa chyba"
 
 #: ../plug-ins/common/postscript.c:3028
-msgid "Load PostScript"
-msgstr "Načítavam PostScript"
+msgid "Import from PostScript"
+msgstr "Importovať z PostScript-u"
 
 #. Rendering
 #: ../plug-ins/common/postscript.c:3064
@@ -5796,8 +5815,8 @@ msgid "Rendering"
 msgstr "Generovanie"
 
 #. Resolution
-#: ../plug-ins/common/postscript.c:3080 ../plug-ins/common/svg.c:890
-#: ../plug-ins/common/wmf.c:670 ../plug-ins/print/gimp_main_window.c:1101
+#: ../plug-ins/common/postscript.c:3080 ../plug-ins/common/svg.c:902
+#: ../plug-ins/common/wmf.c:670 ../plug-ins/print/gimp_main_window.c:1103
 msgid "Resolution:"
 msgstr "Rozlíšenie:"
 
@@ -5841,7 +5860,7 @@ msgstr "Šedá"
 #: ../plug-ins/common/postscript.c:3149 ../plug-ins/common/xpm.c:469
 #: ../plug-ins/gimpressionist/color.c:48
 #: ../plug-ins/gimpressionist/general.c:151
-#: ../plug-ins/print/gimp_main_window.c:1413
+#: ../plug-ins/print/gimp_main_window.c:1415
 msgid "Color"
 msgstr "Farba"
 
@@ -5991,23 +6010,23 @@ msgstr "Vy_brať..."
 msgid "_Slur..."
 msgstr "_Roztrepanie..."
 
-#: ../plug-ins/common/randomize.c:748 ../plug-ins/common/snoise.c:615
+#: ../plug-ins/common/randomize.c:750 ../plug-ins/common/snoise.c:617
 msgid "_Random seed:"
 msgstr "_Náhodné semeno:"
 
-#: ../plug-ins/common/randomize.c:757
+#: ../plug-ins/common/randomize.c:759
 msgid "R_andomization (%):"
 msgstr "_Náhodnosť (%)"
 
-#: ../plug-ins/common/randomize.c:760
+#: ../plug-ins/common/randomize.c:762
 msgid "Percentage of pixels to be filtered"
 msgstr "Percento filtrovaných bodov"
 
-#: ../plug-ins/common/randomize.c:769
+#: ../plug-ins/common/randomize.c:771
 msgid "R_epeat:"
 msgstr "Opakovani_e:"
 
-#: ../plug-ins/common/randomize.c:772
+#: ../plug-ins/common/randomize.c:774
 msgid "Number of times to apply filter"
 msgstr "Počet aplikovania filtra"
 
@@ -6016,8 +6035,8 @@ msgid "Raw Image Data"
 msgstr "Raw Image Data"
 
 #: ../plug-ins/common/raw.c:925
-msgid "Raw Image Loader"
-msgstr "Čitač obrázkov Raw"
+msgid "Load Image from Raw Data"
+msgstr "Načítať obrázok z nespracovaných (raw) dát"
 
 #: ../plug-ins/common/raw.c:958
 msgid "Image"
@@ -6099,35 +6118,35 @@ msgstr "Retinex (4/4): aktualizované..."
 msgid "Retinex Image Enhancement"
 msgstr "Vylepšenie obrázka Retinex"
 
-#: ../plug-ins/common/retinex.c:318
+#: ../plug-ins/common/retinex.c:320
 msgid "Level"
 msgstr "Úroveň"
 
-#: ../plug-ins/common/retinex.c:322
+#: ../plug-ins/common/retinex.c:324
 msgid "_Uniform"
 msgstr "_Rovnomerná"
 
-#: ../plug-ins/common/retinex.c:324
+#: ../plug-ins/common/retinex.c:326
 msgid "_Low"
 msgstr "_Dolná"
 
-#: ../plug-ins/common/retinex.c:326
+#: ../plug-ins/common/retinex.c:328
 msgid "_High"
 msgstr "_Vysoká"
 
-#: ../plug-ins/common/retinex.c:351
+#: ../plug-ins/common/retinex.c:353
 msgid "_Scale:"
 msgstr "_Mierka:"
 
-#: ../plug-ins/common/retinex.c:366
+#: ../plug-ins/common/retinex.c:368
 msgid "_Scale division:"
 msgstr "_Delenie mierky:"
 
-#: ../plug-ins/common/retinex.c:381
+#: ../plug-ins/common/retinex.c:383
 msgid "_Dynamic:"
 msgstr "_Dynamický:"
 
-#: ../plug-ins/common/retinex.c:655
+#: ../plug-ins/common/retinex.c:657
 msgid "Retinex: Filtering..."
 msgstr "Retinex: Filtrovanie ..."
 
@@ -6143,33 +6162,33 @@ msgstr "Vlnenie..."
 msgid "Ripple"
 msgstr "vlnenie"
 
-#: ../plug-ins/common/ripple.c:528
+#: ../plug-ins/common/ripple.c:530
 msgid "_Retain tilability"
 msgstr "_Uchovať dlaždicoviteľnosť"
 
 #. Edges toggle box
-#: ../plug-ins/common/ripple.c:562
+#: ../plug-ins/common/ripple.c:564
 msgid "Edges"
 msgstr "Hrany"
 
 #. Wave toggle box
-#: ../plug-ins/common/ripple.c:590
+#: ../plug-ins/common/ripple.c:592
 msgid "Wave Type"
 msgstr "Typ vlny"
 
-#: ../plug-ins/common/ripple.c:594
+#: ../plug-ins/common/ripple.c:596
 msgid "Saw_tooth"
 msgstr "Pí_lová"
 
-#: ../plug-ins/common/ripple.c:595
+#: ../plug-ins/common/ripple.c:597
 msgid "S_ine"
 msgstr "S_ínus"
 
-#: ../plug-ins/common/ripple.c:618
+#: ../plug-ins/common/ripple.c:620
 msgid "_Period:"
 msgstr "_Perióda:"
 
-#: ../plug-ins/common/ripple.c:631
+#: ../plug-ins/common/ripple.c:633
 msgid "A_mplitude:"
 msgstr "A_mplitúda:"
 
@@ -6202,68 +6221,68 @@ msgid "Get _Sample Colors"
 msgstr "Získať _vzorky farieb"
 
 #. layer combo_box (Dst)
-#: ../plug-ins/common/sample_colorize.c:1347
+#: ../plug-ins/common/sample_colorize.c:1349
 msgid "Destination:"
 msgstr "Cieľ:"
 
 #. layer combo_box (Sample)
-#: ../plug-ins/common/sample_colorize.c:1363
+#: ../plug-ins/common/sample_colorize.c:1365
 msgid "Sample:"
 msgstr "Vzor:"
 
-#: ../plug-ins/common/sample_colorize.c:1373
+#: ../plug-ins/common/sample_colorize.c:1375
 msgid "From reverse gradient"
 msgstr "Z obráteného prechodu"
 
-#: ../plug-ins/common/sample_colorize.c:1378
+#: ../plug-ins/common/sample_colorize.c:1380
 msgid "From gradient"
 msgstr "Z prechodu"
 
 #. check button
-#: ../plug-ins/common/sample_colorize.c:1399
-#: ../plug-ins/common/sample_colorize.c:1426
+#: ../plug-ins/common/sample_colorize.c:1401
+#: ../plug-ins/common/sample_colorize.c:1428
 msgid "Show selection"
 msgstr "Zobraziť výber"
 
 #. check button
-#: ../plug-ins/common/sample_colorize.c:1410
-#: ../plug-ins/common/sample_colorize.c:1437
+#: ../plug-ins/common/sample_colorize.c:1412
+#: ../plug-ins/common/sample_colorize.c:1439
 msgid "Show color"
 msgstr "Zobraziť farbu"
 
-#: ../plug-ins/common/sample_colorize.c:1550
+#: ../plug-ins/common/sample_colorize.c:1552
 msgid "Input levels:"
 msgstr "Vstupné úrovne:"
 
-#: ../plug-ins/common/sample_colorize.c:1600
+#: ../plug-ins/common/sample_colorize.c:1602
 msgid "Output levels:"
 msgstr "Výstupné úrovne:"
 
 #. check button
-#: ../plug-ins/common/sample_colorize.c:1640
+#: ../plug-ins/common/sample_colorize.c:1642
 msgid "Hold intensity"
 msgstr "Dodržať intenzitu"
 
 #. check button
-#: ../plug-ins/common/sample_colorize.c:1651
+#: ../plug-ins/common/sample_colorize.c:1653
 msgid "Original intensity"
 msgstr "Pôvodná intenzita"
 
 #. check button
-#: ../plug-ins/common/sample_colorize.c:1669
+#: ../plug-ins/common/sample_colorize.c:1671
 msgid "Use subcolors"
 msgstr "Použiť podfarby"
 
 #. check button
-#: ../plug-ins/common/sample_colorize.c:1680
+#: ../plug-ins/common/sample_colorize.c:1682
 msgid "Smooth samples"
 msgstr "Plynulé vzorky"
 
-#: ../plug-ins/common/sample_colorize.c:2652
+#: ../plug-ins/common/sample_colorize.c:2654
 msgid "Sample Analyze..."
 msgstr "Analýza vzorkov..."
 
-#: ../plug-ins/common/sample_colorize.c:3030
+#: ../plug-ins/common/sample_colorize.c:3032
 msgid "Remap Colorized..."
 msgstr "Premapovanie vyfarbenia..."
 
@@ -6279,19 +6298,19 @@ msgstr "Rozptýlenie HSV..."
 msgid "Scatter HSV"
 msgstr "Rozptýlenie HSV"
 
-#: ../plug-ins/common/scatter_hsv.c:387
+#: ../plug-ins/common/scatter_hsv.c:389
 msgid "_Holdness:"
 msgstr "_Zadržanie:"
 
-#: ../plug-ins/common/scatter_hsv.c:399
+#: ../plug-ins/common/scatter_hsv.c:401
 msgid "H_ue:"
 msgstr "O_dtieň:"
 
-#: ../plug-ins/common/scatter_hsv.c:411
+#: ../plug-ins/common/scatter_hsv.c:413
 msgid "_Saturation:"
 msgstr "_Sýtosť:"
 
-#: ../plug-ins/common/scatter_hsv.c:423
+#: ../plug-ins/common/scatter_hsv.c:425
 msgid "_Value:"
 msgstr "_Hodnota:"
 
@@ -6374,11 +6393,11 @@ msgstr "Výberové Gaussove rozostrenie..."
 msgid "Selective Gaussian Blur"
 msgstr "Výberové Gaussove rozostrenie"
 
-#: ../plug-ins/common/sel_gauss.c:263
+#: ../plug-ins/common/sel_gauss.c:265
 msgid "_Blur radius:"
 msgstr "Polomer ro_zostrenia:"
 
-#: ../plug-ins/common/sel_gauss.c:273
+#: ../plug-ins/common/sel_gauss.c:275
 msgid "_Max. delta:"
 msgstr "_Max. Delta:"
 
@@ -6417,15 +6436,15 @@ msgstr "Posúva sa..."
 msgid "Shift"
 msgstr "Posun"
 
-#: ../plug-ins/common/shift.c:386
+#: ../plug-ins/common/shift.c:388
 msgid "Shift _horizontally"
 msgstr "Vo_dorovný posun"
 
-#: ../plug-ins/common/shift.c:389
+#: ../plug-ins/common/shift.c:391
 msgid "Shift _vertically"
 msgstr "Z_vislý posun"
 
-#: ../plug-ins/common/shift.c:420
+#: ../plug-ins/common/shift.c:422
 msgid "Shift _amount:"
 msgstr "Mier_a posunu:"
 
@@ -6443,109 +6462,109 @@ msgstr "Sínus: počítam..."
 msgid "Sinus"
 msgstr "Sínus"
 
-#: ../plug-ins/common/sinus.c:688
+#: ../plug-ins/common/sinus.c:690
 msgid "Drawing Settings"
 msgstr "Voľby kresby"
 
-#: ../plug-ins/common/sinus.c:698
+#: ../plug-ins/common/sinus.c:700
 msgid "_X scale:"
 msgstr "Mierka _X:"
 
-#: ../plug-ins/common/sinus.c:707
+#: ../plug-ins/common/sinus.c:709
 msgid "_Y scale:"
 msgstr "Mierka _Y:"
 
-#: ../plug-ins/common/sinus.c:716
+#: ../plug-ins/common/sinus.c:718
 msgid "Co_mplexity:"
 msgstr "Ko_mplexnosť"
 
-#: ../plug-ins/common/sinus.c:726
+#: ../plug-ins/common/sinus.c:728
 msgid "Calculation Settings"
 msgstr "Nastavenie výpočtu"
 
-#: ../plug-ins/common/sinus.c:739
+#: ../plug-ins/common/sinus.c:741
 msgid "R_andom seed:"
 msgstr "Náh_odné semeno:"
 
-#: ../plug-ins/common/sinus.c:748
+#: ../plug-ins/common/sinus.c:750
 msgid "_Force tiling?"
 msgstr "_Vnútiť dláždenie?"
 
-#: ../plug-ins/common/sinus.c:761
+#: ../plug-ins/common/sinus.c:763
 msgid "_Ideal"
 msgstr "_Ideálne"
 
-#: ../plug-ins/common/sinus.c:762
+#: ../plug-ins/common/sinus.c:764
 msgid "_Distorted"
 msgstr "_Skreslený"
 
-#: ../plug-ins/common/sinus.c:780 ../plug-ins/common/sinus.c:796
+#: ../plug-ins/common/sinus.c:782 ../plug-ins/common/sinus.c:798
 #: ../plug-ins/imagemap/imap_preferences.c:422
 msgid "Colors"
 msgstr "Farby"
 
 #. if in grey scale, the colors are necessarily black and white
-#: ../plug-ins/common/sinus.c:789
+#: ../plug-ins/common/sinus.c:791
 msgid "The colors are white and black."
 msgstr "Farby sú biela a čierna."
 
-#: ../plug-ins/common/sinus.c:800
+#: ../plug-ins/common/sinus.c:802
 msgid "Bl_ack & white"
 msgstr "Čierna a bie_la"
 
-#: ../plug-ins/common/sinus.c:802
+#: ../plug-ins/common/sinus.c:804
 msgid "_Foreground & background"
 msgstr "P_opredie a pozadie"
 
-#: ../plug-ins/common/sinus.c:804
+#: ../plug-ins/common/sinus.c:806
 msgid "C_hoose here:"
 msgstr "Zvoľte _tu:"
 
-#: ../plug-ins/common/sinus.c:817
+#: ../plug-ins/common/sinus.c:819
 msgid "First color"
 msgstr "Prvá farba"
 
-#: ../plug-ins/common/sinus.c:827
+#: ../plug-ins/common/sinus.c:829
 msgid "Second color"
 msgstr "Druhá farba"
 
-#: ../plug-ins/common/sinus.c:840
+#: ../plug-ins/common/sinus.c:842
 msgid "Alpha Channels"
 msgstr "Alfa kanály"
 
-#: ../plug-ins/common/sinus.c:853
+#: ../plug-ins/common/sinus.c:855
 msgid "F_irst color:"
 msgstr "_Prvá farba:"
 
-#: ../plug-ins/common/sinus.c:868
+#: ../plug-ins/common/sinus.c:870
 msgid "S_econd color:"
 msgstr "Dr_uhá farba:"
 
-#: ../plug-ins/common/sinus.c:893
+#: ../plug-ins/common/sinus.c:895
 msgid "Blend Settings"
 msgstr "Nastavenie prechodu"
 
-#: ../plug-ins/common/sinus.c:906
+#: ../plug-ins/common/sinus.c:908
 msgid "L_inear"
 msgstr "L_ineárny"
 
-#: ../plug-ins/common/sinus.c:907
+#: ../plug-ins/common/sinus.c:909
 msgid "Bili_near"
 msgstr "Bili_neárny"
 
-#: ../plug-ins/common/sinus.c:908
+#: ../plug-ins/common/sinus.c:910
 msgid "Sin_usoidal"
 msgstr "Sín_usoidný"
 
-#: ../plug-ins/common/sinus.c:920
+#: ../plug-ins/common/sinus.c:922
 msgid "_Exponent:"
 msgstr "_Exponent:"
 
-#: ../plug-ins/common/sinus.c:930
+#: ../plug-ins/common/sinus.c:932
 msgid "_Blend"
 msgstr "_Prechod"
 
-#: ../plug-ins/common/sinus.c:1047
+#: ../plug-ins/common/sinus.c:1049
 msgid "Do _preview"
 msgstr "Vytvoriť _náhľad"
 
@@ -6561,7 +6580,7 @@ msgstr "Odvodzuje sa plynulá paleta..."
 msgid "Smooth Palette"
 msgstr "Plynulá paleta"
 
-#: ../plug-ins/common/smooth_palette.c:450
+#: ../plug-ins/common/smooth_palette.c:452
 msgid "_Search depth:"
 msgstr "_Hĺbka hľadania:"
 
@@ -6578,25 +6597,25 @@ msgstr "Pevný šum..."
 msgid "Solid Noise"
 msgstr "Pevný šum"
 
-#: ../plug-ins/common/snoise.c:628
+#: ../plug-ins/common/snoise.c:630
 msgid "_Detail:"
 msgstr "_Detail:"
 
 #. Turbulent
-#: ../plug-ins/common/snoise.c:638
+#: ../plug-ins/common/snoise.c:640
 msgid "T_urbulent"
 msgstr "T_urbulentný"
 
 #. Tilable
-#: ../plug-ins/common/snoise.c:652
+#: ../plug-ins/common/snoise.c:654
 msgid "T_ilable"
 msgstr "Dlažd_icovateľný"
 
-#: ../plug-ins/common/snoise.c:667
+#: ../plug-ins/common/snoise.c:669
 msgid "_X size:"
 msgstr "_X veľkosť:"
 
-#: ../plug-ins/common/snoise.c:680
+#: ../plug-ins/common/snoise.c:682
 msgid "_Y size:"
 msgstr "_Y veľkosť:"
 
@@ -6608,19 +6627,19 @@ msgstr "_Sobel..."
 msgid "Sobel Edge Detection"
 msgstr "Sobelova detekcia hrán"
 
-#: ../plug-ins/common/sobel.c:256
+#: ../plug-ins/common/sobel.c:258
 msgid "Sobel _horizontally"
 msgstr "Sobel vo_dorovne"
 
-#: ../plug-ins/common/sobel.c:268
+#: ../plug-ins/common/sobel.c:270
 msgid "Sobel _vertically"
 msgstr "Sobel z_visle"
 
-#: ../plug-ins/common/sobel.c:280
+#: ../plug-ins/common/sobel.c:282
 msgid "_Keep sign of result (one direction only)"
 msgstr "Zachovať znamien_ko výsledku (iba jeden smer)"
 
-#: ../plug-ins/common/sobel.c:366
+#: ../plug-ins/common/sobel.c:368
 msgid "Sobel Edge Detecting..."
 msgstr "Sobelova detekcia hrán..."
 
@@ -6632,7 +6651,7 @@ msgstr "_Jemná žiara..."
 msgid "Softglow"
 msgstr "Jemná žiara"
 
-#: ../plug-ins/common/softglow.c:666
+#: ../plug-ins/common/softglow.c:668
 msgid "_Glow radius:"
 msgstr "Polomer _žiarenia:"
 
@@ -6652,119 +6671,119 @@ msgstr "Iskrí sa..."
 msgid "Sparkle"
 msgstr "Iskrenie"
 
-#: ../plug-ins/common/sparkle.c:374
+#: ../plug-ins/common/sparkle.c:376
 msgid "Luminosity _threshold:"
 msgstr "Pra_h svetlosti:"
 
-#: ../plug-ins/common/sparkle.c:377
+#: ../plug-ins/common/sparkle.c:379
 msgid "Adjust the Luminosity Threshold"
 msgstr "Úprava prahu svetlosti"
 
-#: ../plug-ins/common/sparkle.c:387
+#: ../plug-ins/common/sparkle.c:389
 msgid "F_lare intensity:"
 msgstr "_Intenzita žiary:"
 
-#: ../plug-ins/common/sparkle.c:390
+#: ../plug-ins/common/sparkle.c:392
 msgid "Adjust the Flare Intensity"
 msgstr "Nastavenie intenzity žiary"
 
-#: ../plug-ins/common/sparkle.c:400
+#: ../plug-ins/common/sparkle.c:402
 msgid "_Spike length:"
 msgstr "Dĺžka _hrotov:"
 
-#: ../plug-ins/common/sparkle.c:403
+#: ../plug-ins/common/sparkle.c:405
 msgid "Adjust the Spike Length"
 msgstr "Nastavenie dĺžky hrotov"
 
-#: ../plug-ins/common/sparkle.c:413
+#: ../plug-ins/common/sparkle.c:415
 msgid "Sp_ike points:"
 msgstr "_Počet hrotov:"
 
-#: ../plug-ins/common/sparkle.c:416
+#: ../plug-ins/common/sparkle.c:418
 msgid "Adjust the Number of Spikes"
 msgstr "Nastavenie počtu hrotov"
 
-#: ../plug-ins/common/sparkle.c:426
+#: ../plug-ins/common/sparkle.c:428
 msgid "Spi_ke angle (-1: random):"
 msgstr "Uho_l hrotu (-1: náhodný):"
 
-#: ../plug-ins/common/sparkle.c:429
+#: ../plug-ins/common/sparkle.c:431
 msgid "Adjust the Spike Angle (-1 means a Random Angle is chosen)"
 msgstr "Nastavenie uhlu hrotu (-1 znamená, že bude zvolený náhodný uhol)"
 
-#: ../plug-ins/common/sparkle.c:440
+#: ../plug-ins/common/sparkle.c:442
 msgid "Spik_e density:"
 msgstr "Hustot_a hrotov:"
 
-#: ../plug-ins/common/sparkle.c:443
+#: ../plug-ins/common/sparkle.c:445
 msgid "Adjust the Spike Density"
 msgstr "Nastavenie hustoty hrotov"
 
-#: ../plug-ins/common/sparkle.c:456
+#: ../plug-ins/common/sparkle.c:458
 msgid "Adjust the Opacity of the Spikes"
 msgstr "Nastavenie krytia hrotov"
 
-#: ../plug-ins/common/sparkle.c:466
+#: ../plug-ins/common/sparkle.c:468
 msgid "_Random hue:"
 msgstr "Náh_odný odtieň:"
 
-#: ../plug-ins/common/sparkle.c:469
+#: ../plug-ins/common/sparkle.c:471
 msgid "Adjust the Value how much the Hue should be changed randomly"
 msgstr "Úprava hodnoty, o ktorú sa môže odtieň náhodne zmeniť"
 
-#: ../plug-ins/common/sparkle.c:480
+#: ../plug-ins/common/sparkle.c:482
 msgid "Rando_m saturation:"
 msgstr "Náhodná _sýtosť:"
 
-#: ../plug-ins/common/sparkle.c:483
+#: ../plug-ins/common/sparkle.c:485
 msgid "Adjust the Value how much the Saturation should be changed randomly"
 msgstr "Úprava hodnoty, o ktorú sa môže sýtosť náhodne zmeniť"
 
-#: ../plug-ins/common/sparkle.c:500
+#: ../plug-ins/common/sparkle.c:502
 msgid "_Preserve luminosity"
 msgstr "Zachovať svet_losť"
 
-#: ../plug-ins/common/sparkle.c:507
+#: ../plug-ins/common/sparkle.c:509
 msgid "Should the Luminosity be preserved?"
 msgstr "Má sa zachovať svetlosť?"
 
-#: ../plug-ins/common/sparkle.c:516
+#: ../plug-ins/common/sparkle.c:518
 msgid "In_verse"
 msgstr "I_nverzia"
 
-#: ../plug-ins/common/sparkle.c:522
+#: ../plug-ins/common/sparkle.c:524
 msgid "Should an Inverse Effect be done?"
 msgstr "Má sa vykonať inverzný efekt"
 
-#: ../plug-ins/common/sparkle.c:531
+#: ../plug-ins/common/sparkle.c:533
 msgid "A_dd border"
 msgstr "Pri_dať okraj"
 
-#: ../plug-ins/common/sparkle.c:537
+#: ../plug-ins/common/sparkle.c:539
 msgid "Draw a Border of Spikes around the Image"
 msgstr "Kresliť okolo obrázka okraje hrotov"
 
-#: ../plug-ins/common/sparkle.c:551
+#: ../plug-ins/common/sparkle.c:553
 msgid "_Natural color"
 msgstr "Prirodze_ná farba"
 
-#: ../plug-ins/common/sparkle.c:552
+#: ../plug-ins/common/sparkle.c:554
 msgid "_Foreground color"
 msgstr "_Farba popredia"
 
-#: ../plug-ins/common/sparkle.c:553
+#: ../plug-ins/common/sparkle.c:555
 msgid "_Background color"
 msgstr "Farba po_zadia"
 
-#: ../plug-ins/common/sparkle.c:560
+#: ../plug-ins/common/sparkle.c:562
 msgid "Use the color of the image"
 msgstr "Použiť farbu obrázka"
 
-#: ../plug-ins/common/sparkle.c:561
+#: ../plug-ins/common/sparkle.c:563
 msgid "Use the foreground color"
 msgstr "Použiť farbu popredia"
 
-#: ../plug-ins/common/sparkle.c:562
+#: ../plug-ins/common/sparkle.c:564
 msgid "Use the background color"
 msgstr "Použiť farbu pozadia"
 
@@ -6806,7 +6825,7 @@ msgid "Spots"
 msgstr "Bodky"
 
 #: ../plug-ins/common/spheredesigner.c:1750
-#: ../plug-ins/common/spheredesigner.c:2645
+#: ../plug-ins/common/spheredesigner.c:2647
 msgid "Texture"
 msgstr "Textúra"
 
@@ -6815,7 +6834,7 @@ msgid "Bumpmap"
 msgstr "Mapa vyvýšenia"
 
 #: ../plug-ins/common/spheredesigner.c:1754
-#: ../plug-ins/common/spheredesigner.c:2647
+#: ../plug-ins/common/spheredesigner.c:2649
 msgid "Light"
 msgstr "Svetlo"
 
@@ -6836,99 +6855,99 @@ msgstr "Uložiť súbor"
 msgid "Sphere Designer"
 msgstr "Dizajnér gúľ"
 
-#: ../plug-ins/common/spheredesigner.c:2548
+#: ../plug-ins/common/spheredesigner.c:2550
 msgid "Update _Preview"
 msgstr "A_uto aktualizácia náhľadu"
 
-#: ../plug-ins/common/spheredesigner.c:2602
+#: ../plug-ins/common/spheredesigner.c:2604
 msgid "Textures"
 msgstr "Textúry"
 
-#: ../plug-ins/common/spheredesigner.c:2630
+#: ../plug-ins/common/spheredesigner.c:2632
 msgid "Texture Properties"
 msgstr "Nastavenia textúr"
 
-#: ../plug-ins/common/spheredesigner.c:2646
+#: ../plug-ins/common/spheredesigner.c:2648
 msgid "Bump"
 msgstr "Vyvýšenie"
 
-#: ../plug-ins/common/spheredesigner.c:2674
+#: ../plug-ins/common/spheredesigner.c:2676
 msgid "Texture:"
 msgstr "Textúra:"
 
-#: ../plug-ins/common/spheredesigner.c:2679
+#: ../plug-ins/common/spheredesigner.c:2681
 msgid "Colors:"
 msgstr "Farby:"
 
-#: ../plug-ins/common/spheredesigner.c:2682
-#: ../plug-ins/common/spheredesigner.c:2693
+#: ../plug-ins/common/spheredesigner.c:2684
+#: ../plug-ins/common/spheredesigner.c:2695
 msgid "Color Selection Dialog"
 msgstr "Dialóg pre výber farby"
 
 #. Scale
-#: ../plug-ins/common/spheredesigner.c:2704
+#: ../plug-ins/common/spheredesigner.c:2706
 #: ../plug-ins/gimpressionist/paper.c:176
 #: ../plug-ins/ifscompose/ifscompose.c:555
 msgid "Scale:"
 msgstr "Mierka:"
 
-#: ../plug-ins/common/spheredesigner.c:2712
+#: ../plug-ins/common/spheredesigner.c:2714
 msgid "Turbulence:"
 msgstr "Turbulencia"
 
-#: ../plug-ins/common/spheredesigner.c:2719
+#: ../plug-ins/common/spheredesigner.c:2721
 msgid "Amount:"
 msgstr "Miera:"
 
-#: ../plug-ins/common/spheredesigner.c:2726
+#: ../plug-ins/common/spheredesigner.c:2728
 msgid "Exp.:"
 msgstr "Exp:"
 
-#: ../plug-ins/common/spheredesigner.c:2733
+#: ../plug-ins/common/spheredesigner.c:2735
 msgid "Texture Transformations"
 msgstr "Transformácie textúry"
 
-#: ../plug-ins/common/spheredesigner.c:2756
+#: ../plug-ins/common/spheredesigner.c:2758
 msgid "Scale Y:"
 msgstr "Zmena veľkosti Y:"
 
-#: ../plug-ins/common/spheredesigner.c:2762
+#: ../plug-ins/common/spheredesigner.c:2764
 msgid "Scale Z:"
 msgstr "Zmena veľkosti Z:"
 
-#: ../plug-ins/common/spheredesigner.c:2769
+#: ../plug-ins/common/spheredesigner.c:2771
 msgid "Rotate X:"
 msgstr "Otočenie X:"
 
-#: ../plug-ins/common/spheredesigner.c:2776
+#: ../plug-ins/common/spheredesigner.c:2778
 msgid "Rotate Y:"
 msgstr "Otočenie Y:"
 
-#: ../plug-ins/common/spheredesigner.c:2783
+#: ../plug-ins/common/spheredesigner.c:2785
 msgid "Rotate Z:"
 msgstr "Otočenie Z:"
 
-#: ../plug-ins/common/spheredesigner.c:2790
+#: ../plug-ins/common/spheredesigner.c:2792
 msgid "Position X:"
 msgstr "Pozícia X:"
 
-#: ../plug-ins/common/spheredesigner.c:2797
+#: ../plug-ins/common/spheredesigner.c:2799
 msgid "Position Y:"
 msgstr "Pozícia Y:"
 
-#: ../plug-ins/common/spheredesigner.c:2804
+#: ../plug-ins/common/spheredesigner.c:2806
 msgid "Position Z:"
 msgstr "Pozícia Z:"
 
-#: ../plug-ins/common/spheredesigner.c:2952
+#: ../plug-ins/common/spheredesigner.c:2954
 msgid "Rendering Sphere..."
 msgstr "Vykresľuje sa guľa..."
 
-#: ../plug-ins/common/spheredesigner.c:3009
+#: ../plug-ins/common/spheredesigner.c:3011
 msgid "Sphere _Designer..."
 msgstr "_Dizajnér gúľ..."
 
-#: ../plug-ins/common/spheredesigner.c:3065
+#: ../plug-ins/common/spheredesigner.c:3067
 msgid "Region selected for plug-in is empty"
 msgstr "Oblasť zvolená pre zásuvný modul je prázdna"
 
@@ -6944,7 +6963,7 @@ msgstr "Rozptylovanie..."
 msgid "Spread"
 msgstr "Rozptýlenie"
 
-#: ../plug-ins/common/spread.c:370
+#: ../plug-ins/common/spread.c:372
 msgid "Spread Amount"
 msgstr "Miera rozptýlenia"
 
@@ -6960,19 +6979,19 @@ msgstr "Použitie plátna..."
 msgid "Apply Canvas"
 msgstr "Použitie plátna"
 
-#: ../plug-ins/common/struc.c:1296
+#: ../plug-ins/common/struc.c:1298
 msgid "_Top-right"
 msgstr "Hor_e doprava"
 
-#: ../plug-ins/common/struc.c:1297
+#: ../plug-ins/common/struc.c:1299
 msgid "Top-_left"
 msgstr "Hore do_ľava"
 
-#: ../plug-ins/common/struc.c:1298
+#: ../plug-ins/common/struc.c:1300
 msgid "_Bottom-left"
 msgstr "Do_le doľava"
 
-#: ../plug-ins/common/struc.c:1299
+#: ../plug-ins/common/struc.c:1301
 msgid "Bottom-_right"
 msgstr "Dole dop_rava"
 
@@ -7031,23 +7050,23 @@ msgstr "Formátovanie dát"
 msgid "RunLength Encoded"
 msgstr "Kódované RunLength"
 
-#: ../plug-ins/common/svg.c:137
+#: ../plug-ins/common/svg.c:138
 msgid "Scalable SVG image"
 msgstr "Scalable SVG obrázok"
 
-#: ../plug-ins/common/svg.c:314 ../plug-ins/common/svg.c:699
+#: ../plug-ins/common/svg.c:315 ../plug-ins/common/svg.c:710
 msgid "Unknown reason"
 msgstr "Neznámy dôvod"
 
-#: ../plug-ins/common/svg.c:318
+#: ../plug-ins/common/svg.c:319
 msgid "Rendering SVG..."
 msgstr "Generujem SVG..."
 
-#: ../plug-ins/common/svg.c:328
+#: ../plug-ins/common/svg.c:329
 msgid "Rendered SVG"
 msgstr "Generovanie SVG"
 
-#: ../plug-ins/common/svg.c:494
+#: ../plug-ins/common/svg.c:500
 msgid ""
 "SVG file does not\n"
 "specify a size!"
@@ -7055,52 +7074,52 @@ msgstr ""
 "SVG súbor neurčuje\n"
 "veľkosť!"
 
-#: ../plug-ins/common/svg.c:500 ../plug-ins/common/wmf.c:338
+#: ../plug-ins/common/svg.c:506 ../plug-ins/common/wmf.c:338
 #, c-format
 msgid "%d x %d"
 msgstr "%d x %d"
 
 #. Scalable Vector Graphics is SVG, should perhaps not be translated
-#: ../plug-ins/common/svg.c:706
+#: ../plug-ins/common/svg.c:717
 msgid "Render Scalable Vector Graphics"
 msgstr "Generovať Scalable Vector Graphics"
 
-#: ../plug-ins/common/svg.c:775 ../plug-ins/common/wmf.c:555
-#: ../plug-ins/print/gimp_main_window.c:1023
-#: ../plug-ins/print/gimp_main_window.c:1226
+#: ../plug-ins/common/svg.c:787 ../plug-ins/common/wmf.c:555
+#: ../plug-ins/print/gimp_main_window.c:1025
+#: ../plug-ins/print/gimp_main_window.c:1228
 msgid "Height:"
 msgstr "Výška:"
 
-#: ../plug-ins/common/svg.c:849 ../plug-ins/common/wmf.c:629
+#: ../plug-ins/common/svg.c:861 ../plug-ins/common/wmf.c:629
 msgid "_X ratio:"
 msgstr "_X pomer:"
 
-#: ../plug-ins/common/svg.c:871 ../plug-ins/common/wmf.c:651
+#: ../plug-ins/common/svg.c:883 ../plug-ins/common/wmf.c:651
 msgid "_Y ratio:"
 msgstr "_Y pomer:"
 
-#: ../plug-ins/common/svg.c:885 ../plug-ins/common/wmf.c:665
+#: ../plug-ins/common/svg.c:897 ../plug-ins/common/wmf.c:665
 msgid "Constrain aspect ratio"
 msgstr "Vynútiť pomer strán"
 
-#: ../plug-ins/common/svg.c:896 ../plug-ins/common/wmf.c:676
+#: ../plug-ins/common/svg.c:908 ../plug-ins/common/wmf.c:676
 #, c-format
 msgid "pixels/%a"
 msgstr "bodov/%a"
 
 #. Path Import
-#: ../plug-ins/common/svg.c:916
+#: ../plug-ins/common/svg.c:928
 msgid "Import _paths"
 msgstr "Importovať _cesty"
 
-#: ../plug-ins/common/svg.c:922
+#: ../plug-ins/common/svg.c:934
 msgid ""
 "Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr ""
 "Importovať elementy ciest z SVG, aby mohly byť použité s GIMP nástrojom pre "
 "cesty"
 
-#: ../plug-ins/common/svg.c:935
+#: ../plug-ins/common/svg.c:947
 msgid "Merge imported paths"
 msgstr "Splynutie importovaných ciest"
 
@@ -7152,7 +7171,7 @@ msgstr "Prah alfy: Vyfarbovanie priesvitnosti..."
 msgid "Threshold Alpha"
 msgstr "Prah alfy"
 
-#: ../plug-ins/common/threshold_alpha.c:281
+#: ../plug-ins/common/threshold_alpha.c:283
 msgid "Threshold:"
 msgstr "Prah:"
 
@@ -7234,11 +7253,11 @@ msgstr "Dlaždicuje sa"
 msgid "Tile"
 msgstr "Dlaždica"
 
-#: ../plug-ins/common/tile.c:413
+#: ../plug-ins/common/tile.c:415
 msgid "Tile to New Size"
 msgstr "Dlaždica novej veľkosti"
 
-#: ../plug-ins/common/tile.c:435
+#: ../plug-ins/common/tile.c:437
 msgid "C_reate new image"
 msgstr "Vytvo_riť nový obrázok"
 
@@ -7257,36 +7276,36 @@ msgstr "Malé dlaždice"
 
 #. Area for buttons etc
 #. Flip
-#: ../plug-ins/common/tileit.c:412 ../plug-ins/ifscompose/ifscompose.c:611
+#: ../plug-ins/common/tileit.c:414 ../plug-ins/ifscompose/ifscompose.c:611
 msgid "Flip"
 msgstr "Zrkadlenie"
 
-#: ../plug-ins/common/tileit.c:460
+#: ../plug-ins/common/tileit.c:462
 msgid "A_ll tiles"
 msgstr "Všetky d_laždice"
 
-#: ../plug-ins/common/tileit.c:474
+#: ../plug-ins/common/tileit.c:476
 msgid "Al_ternate tiles"
 msgstr "Al_ternatívne dlaždice"
 
-#: ../plug-ins/common/tileit.c:488
+#: ../plug-ins/common/tileit.c:490
 msgid "_Explicit tile"
 msgstr "_Explicitné dlaždice"
 
-#: ../plug-ins/common/tileit.c:494
+#: ../plug-ins/common/tileit.c:496
 msgid "Ro_w:"
 msgstr "_Riadok:"
 
-#: ../plug-ins/common/tileit.c:518
+#: ../plug-ins/common/tileit.c:520
 msgid "Col_umn:"
 msgstr "_Stĺpec:"
 
-#: ../plug-ins/common/tileit.c:570
+#: ../plug-ins/common/tileit.c:572
 msgid "O_pacity:"
 msgstr "_Krytie:"
 
 #. Lower frame saying howmany segments
-#: ../plug-ins/common/tileit.c:579
+#: ../plug-ins/common/tileit.c:581
 msgid "Number of Segments"
 msgstr "Počet segmentov:"
 
@@ -7496,15 +7515,15 @@ msgid "Video"
 msgstr "Video"
 
 #. frame for the radio buttons
-#: ../plug-ins/common/video.c:2037
+#: ../plug-ins/common/video.c:2039
 msgid "Video Pattern"
 msgstr "Video vzorka"
 
-#: ../plug-ins/common/video.c:2081
+#: ../plug-ins/common/video.c:2083
 msgid "_Additive"
 msgstr "_Aditívne"
 
-#: ../plug-ins/common/video.c:2091
+#: ../plug-ins/common/video.c:2093
 msgid "_Rotated"
 msgstr "_Otočené"
 
@@ -7569,43 +7588,43 @@ msgid "Value Propagate"
 msgstr "Rozšírenie hodnoty"
 
 #. Parameter settings
-#: ../plug-ins/common/vpropagate.c:1116
+#: ../plug-ins/common/vpropagate.c:1118
 msgid "Propagate"
 msgstr "Rozšíriť"
 
-#: ../plug-ins/common/vpropagate.c:1129
+#: ../plug-ins/common/vpropagate.c:1131
 msgid "Lower t_hreshold:"
 msgstr "_Dolný prah:"
 
-#: ../plug-ins/common/vpropagate.c:1141
+#: ../plug-ins/common/vpropagate.c:1143
 msgid "_Upper threshold:"
 msgstr "_Horný prah:"
 
-#: ../plug-ins/common/vpropagate.c:1153
+#: ../plug-ins/common/vpropagate.c:1155
 msgid "_Propagating rate:"
 msgstr "Miera _rozšírenia:"
 
-#: ../plug-ins/common/vpropagate.c:1164
+#: ../plug-ins/common/vpropagate.c:1166
 msgid "To l_eft"
 msgstr "Do_ľava"
 
-#: ../plug-ins/common/vpropagate.c:1167
+#: ../plug-ins/common/vpropagate.c:1169
 msgid "To _right"
 msgstr "Dop_rava"
 
-#: ../plug-ins/common/vpropagate.c:1170
+#: ../plug-ins/common/vpropagate.c:1172
 msgid "To _top"
 msgstr "_Hore"
 
-#: ../plug-ins/common/vpropagate.c:1173
+#: ../plug-ins/common/vpropagate.c:1175
 msgid "To _bottom"
 msgstr "_Dole"
 
-#: ../plug-ins/common/vpropagate.c:1182
+#: ../plug-ins/common/vpropagate.c:1184
 msgid "Propagating _alpha channel"
 msgstr "Rozširovanie _alfa kanálu"
 
-#: ../plug-ins/common/vpropagate.c:1193
+#: ../plug-ins/common/vpropagate.c:1195
 msgid "Propagating value channel"
 msgstr "Rozširovanie v kanály hodnôt"
 
@@ -7617,97 +7636,97 @@ msgstr "_Ohnúť..."
 msgid "Warp"
 msgstr "Ohnuté"
 
-#: ../plug-ins/common/warp.c:411
+#: ../plug-ins/common/warp.c:413
 msgid "Basic Options"
 msgstr "Základné nastavenia"
 
-#: ../plug-ins/common/warp.c:433
+#: ../plug-ins/common/warp.c:435
 msgid "Step size:"
 msgstr "Veľkosť kroku:"
 
-#: ../plug-ins/common/warp.c:447 ../plug-ins/ifscompose/ifscompose.c:1210
+#: ../plug-ins/common/warp.c:449 ../plug-ins/ifscompose/ifscompose.c:1212
 msgid "Iterations:"
 msgstr "Iterácie:"
 
 #. Displacement map menu
-#: ../plug-ins/common/warp.c:456
+#: ../plug-ins/common/warp.c:458
 msgid "Displacement map:"
 msgstr "Mapa vytlačovania:"
 
 #. =======================================================================
 #. Displacement Type
-#: ../plug-ins/common/warp.c:474
+#: ../plug-ins/common/warp.c:476
 msgid "On edges:"
 msgstr "Na hranách:"
 
-#: ../plug-ins/common/warp.c:485
+#: ../plug-ins/common/warp.c:487
 msgid "Wrap"
 msgstr "Zalamovať"
 
-#: ../plug-ins/common/warp.c:500
+#: ../plug-ins/common/warp.c:502
 msgid "Smear"
 msgstr "Škvrna"
 
-#: ../plug-ins/common/warp.c:515 ../plug-ins/fits/fits.c:996
-#: ../plug-ins/flame/flame.c:1145 ../plug-ins/gfig/gfig-dialog.c:1466
+#: ../plug-ins/common/warp.c:517 ../plug-ins/fits/fits.c:996
+#: ../plug-ins/flame/flame.c:1147 ../plug-ins/gfig/gfig-dialog.c:1466
 msgid "Black"
 msgstr "Čierna"
 
-#: ../plug-ins/common/warp.c:530
+#: ../plug-ins/common/warp.c:532
 msgid "FG color"
 msgstr "Farba popredia"
 
 #. --------------------------------------------------------------------
 #. ---------    The secondary table         --------------------------
-#: ../plug-ins/common/warp.c:550
+#: ../plug-ins/common/warp.c:552
 msgid "Advanced Options"
 msgstr "Pokročilé nastavenia"
 
-#: ../plug-ins/common/warp.c:566
+#: ../plug-ins/common/warp.c:568
 msgid "Dither size:"
 msgstr "Veľkosť rozptylu:"
 
-#: ../plug-ins/common/warp.c:579
+#: ../plug-ins/common/warp.c:581
 msgid "Rotation angle:"
 msgstr "Uhol otočenia:"
 
-#: ../plug-ins/common/warp.c:592
+#: ../plug-ins/common/warp.c:594
 msgid "Substeps:"
 msgstr "Podkroky:"
 
 #. Magnitude map menu
-#: ../plug-ins/common/warp.c:601
+#: ../plug-ins/common/warp.c:603
 msgid "Magnitude map:"
 msgstr "Mapa zväčšenia:"
 
-#: ../plug-ins/common/warp.c:623
+#: ../plug-ins/common/warp.c:625
 msgid "Use magnitude map"
 msgstr "Použiť mapu zväčšenia:"
 
 #. --------------------------------------------------------------------
 #. ---------    The "other" table         --------------------------
-#: ../plug-ins/common/warp.c:636
+#: ../plug-ins/common/warp.c:638
 msgid "More Advanced Options"
 msgstr "Viac pokročilých nastavení"
 
-#: ../plug-ins/common/warp.c:653
+#: ../plug-ins/common/warp.c:655
 msgid "Gradient scale:"
 msgstr "Mierka prechodu:"
 
-#: ../plug-ins/common/warp.c:676
+#: ../plug-ins/common/warp.c:678
 msgid "Gradient map selection menu"
 msgstr "Ponuka výberu mapy prechodu"
 
-#: ../plug-ins/common/warp.c:686
+#: ../plug-ins/common/warp.c:688
 msgid "Vector mag:"
 msgstr "Vektor zväčšenia:"
 
 #. Angle
-#: ../plug-ins/common/warp.c:701 ../plug-ins/ifscompose/ifscompose.c:569
+#: ../plug-ins/common/warp.c:703 ../plug-ins/ifscompose/ifscompose.c:569
 msgid "Angle:"
 msgstr "Uhol:"
 
-#: ../plug-ins/common/warp.c:724
+#: ../plug-ins/common/warp.c:726
 msgid "Fixed-direction-vector map selection menu"
 msgstr "Ponuka výberu pevného smerového vektoru"
 
@@ -7717,20 +7736,20 @@ msgstr "Ponuka výberu pevného smerového vektoru"
 #. }
 #.
 #. make sure layer is visible
-#: ../plug-ins/common/warp.c:1177
+#: ../plug-ins/common/warp.c:1179
 msgid "Smoothing X gradient..."
 msgstr "Vyhladzuje sa X prechod..."
 
-#: ../plug-ins/common/warp.c:1179
+#: ../plug-ins/common/warp.c:1181
 msgid "Smoothing Y gradient..."
 msgstr "Vyhladzuje sa Y prechod..."
 
 #. calculate new X,Y Displacement image maps
-#: ../plug-ins/common/warp.c:1234
+#: ../plug-ins/common/warp.c:1236
 msgid "Finding XY gradient..."
 msgstr "Hľadá sa XY prechod...."
 
-#: ../plug-ins/common/warp.c:1259
+#: ../plug-ins/common/warp.c:1261
 #, c-format
 msgid "Flow Step %d..."
 msgstr "Krok toku %d..."
@@ -7743,23 +7762,23 @@ msgstr "_Vlny..."
 msgid "Waves"
 msgstr "Vlny"
 
-#: ../plug-ins/common/waves.c:289
+#: ../plug-ins/common/waves.c:291
 msgid "_Reflective"
 msgstr "Z_rkadliace"
 
-#: ../plug-ins/common/waves.c:308
+#: ../plug-ins/common/waves.c:310
 msgid "_Amplitude:"
 msgstr "_Amplitúda:"
 
-#: ../plug-ins/common/waves.c:320
+#: ../plug-ins/common/waves.c:322
 msgid "_Phase:"
 msgstr "_Fáza:"
 
-#: ../plug-ins/common/waves.c:332
+#: ../plug-ins/common/waves.c:334
 msgid "_Wavelength:"
 msgstr "_Vlnová dĺžka:"
 
-#: ../plug-ins/common/waves.c:433
+#: ../plug-ins/common/waves.c:435
 msgid "Waving..."
 msgstr "Vlní sa..."
 
@@ -7805,11 +7824,11 @@ msgstr "Vírenie a zoškrcovanie...."
 msgid "Whirl and Pinch"
 msgstr "Vír a zoškrtenie"
 
-#: ../plug-ins/common/whirlpinch.c:564
+#: ../plug-ins/common/whirlpinch.c:566
 msgid "_Whirl angle:"
 msgstr "Uhol _vírenia:"
 
-#: ../plug-ins/common/whirlpinch.c:576
+#: ../plug-ins/common/whirlpinch.c:578
 msgid "_Pinch amount:"
 msgstr "_Miera škrtenia:"
 
@@ -7832,54 +7851,54 @@ msgstr "Vietor"
 #. ********************************************************
 #. radio buttons for choosing wind rendering algorithm
 #. *****************************************************
-#: ../plug-ins/common/wind.c:919
+#: ../plug-ins/common/wind.c:921
 msgid "Style"
 msgstr "Štýl"
 
-#: ../plug-ins/common/wind.c:923
+#: ../plug-ins/common/wind.c:925
 msgid "_Wind"
 msgstr "_Vietor"
 
-#: ../plug-ins/common/wind.c:924
+#: ../plug-ins/common/wind.c:926
 msgid "_Blast"
 msgstr "Vý_buch"
 
-#: ../plug-ins/common/wind.c:947
+#: ../plug-ins/common/wind.c:949
 msgid "_Left"
 msgstr "Doľa_va"
 
-#: ../plug-ins/common/wind.c:948
+#: ../plug-ins/common/wind.c:950
 msgid "_Right"
 msgstr "Dop_rava"
 
 #. ****************************************************
 #. radio buttons for choosing BOTH, LEADING, TRAILING
 #. **************************************************
-#: ../plug-ins/common/wind.c:967
+#: ../plug-ins/common/wind.c:969
 msgid "Edge Affected"
 msgstr "Ovplyvnenie hrán"
 
-#: ../plug-ins/common/wind.c:971
+#: ../plug-ins/common/wind.c:973
 msgid "L_eading"
 msgstr "Počiat_ok"
 
-#: ../plug-ins/common/wind.c:972
+#: ../plug-ins/common/wind.c:974
 msgid "Tr_ailing"
 msgstr "_Ukončenie"
 
-#: ../plug-ins/common/wind.c:973
+#: ../plug-ins/common/wind.c:975
 msgid "Bot_h"
 msgstr "_Oboje"
 
-#: ../plug-ins/common/wind.c:1010
+#: ../plug-ins/common/wind.c:1012
 msgid "Higher values restrict the effect to fewer areas of the image"
 msgstr "Vyššie hodnoty obmedzujú efekt na menšie oblasti obrázky"
 
-#: ../plug-ins/common/wind.c:1025 ../plug-ins/gimpressionist/orientmap.c:675
+#: ../plug-ins/common/wind.c:1027 ../plug-ins/gimpressionist/orientmap.c:675
 msgid "_Strength:"
 msgstr "_Sila:"
 
-#: ../plug-ins/common/wind.c:1029
+#: ../plug-ins/common/wind.c:1031
 msgid "Higher values increase the magnitude of the effect"
 msgstr "Vyššie hodnoty zosilňujú efekt"
 
@@ -8258,43 +8277,43 @@ msgstr "Uložiť plameň"
 msgid "Flame"
 msgstr "Plameň"
 
-#: ../plug-ins/flame/flame.c:1039
+#: ../plug-ins/flame/flame.c:1041
 msgid "_Rendering"
 msgstr "_Generovanie"
 
-#: ../plug-ins/flame/flame.c:1065
+#: ../plug-ins/flame/flame.c:1067
 msgid "Co_ntrast:"
 msgstr "Ko_ntrast:"
 
-#: ../plug-ins/flame/flame.c:1079
+#: ../plug-ins/flame/flame.c:1081
 msgid "_Gamma:"
 msgstr "_Gama:"
 
-#: ../plug-ins/flame/flame.c:1093
+#: ../plug-ins/flame/flame.c:1095
 msgid "Sample _density:"
 msgstr "H_ustota vzorky:"
 
-#: ../plug-ins/flame/flame.c:1104
+#: ../plug-ins/flame/flame.c:1106
 msgid "Spa_tial oversample:"
 msgstr "Pries_torové prevzorkovanie:"
 
-#: ../plug-ins/flame/flame.c:1115
+#: ../plug-ins/flame/flame.c:1117
 msgid "Spatial _filter radius:"
 msgstr "Polomer priestorového _filtra:"
 
-#: ../plug-ins/flame/flame.c:1134
+#: ../plug-ins/flame/flame.c:1136
 msgid "Color_map:"
 msgstr "Farebná _mapa:"
 
-#: ../plug-ins/flame/flame.c:1176
+#: ../plug-ins/flame/flame.c:1178
 msgid "Custom gradient"
 msgstr "Vlastný prechod"
 
-#: ../plug-ins/flame/flame.c:1202
+#: ../plug-ins/flame/flame.c:1204
 msgid "C_amera"
 msgstr "K_amera"
 
-#: ../plug-ins/flame/flame.c:1207
+#: ../plug-ins/flame/flame.c:1209
 msgid "_Zoom:"
 msgstr "_Lupa:"
 
@@ -8346,9 +8365,8 @@ msgid "Pattern fill"
 msgstr "Vyplnenie vzorkou"
 
 #: ../plug-ins/gfig/gfig-dialog.c:426
-#, fuzzy
 msgid "Shape gradient"
-msgstr "Prechod"
+msgstr "Tvarový prechod"
 
 #: ../plug-ins/gfig/gfig-dialog.c:427
 msgid "Vertical gradient"
@@ -8535,11 +8553,11 @@ msgstr "Rozostup mriežky:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1409
 msgid "Polar grid sectors desired:"
-msgstr ""
+msgstr "Požadované sektory polárnej mriežky:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1431
 msgid "Polar grid radius interval:"
-msgstr ""
+msgstr "Interval polomera polárnej mriežky:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1447
 msgid "Rectangle"
@@ -8591,7 +8609,7 @@ msgstr "Doľava"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1724
 #: ../plug-ins/gimpressionist/orientation.c:130
-#: ../plug-ins/print/gimp_main_window.c:508
+#: ../plug-ins/print/gimp_main_window.c:510
 msgid "Orientation:"
 msgstr "Orientácia:"
 
@@ -8879,7 +8897,6 @@ msgid "# of Spikes:"
 msgstr "Počet hrotov:"
 
 #: ../plug-ins/gflare/gflare.c:3678
-#, fuzzy
 msgid "Spike thickness:"
 msgstr "Hrúbka hrotov:"
 
@@ -9043,7 +9060,7 @@ msgid "Selects if to place strokes all the way out to the edges of the image"
 msgstr "Určuje, či je možné štetcom ťahať štetcom za okraje obrázka"
 
 #. Tileable checkbox
-#: ../plug-ins/gimpressionist/general.c:194 ../plug-ins/maze/maze_face.c:315
+#: ../plug-ins/gimpressionist/general.c:194 ../plug-ins/maze/maze_face.c:317
 msgid "Tileable"
 msgstr "Dlaždicoviteľné"
 
@@ -9668,105 +9685,105 @@ msgstr "IFS Fraktál: Čierna"
 msgid "IFS Fractal"
 msgstr "IFS Fraktál"
 
-#: ../plug-ins/ifscompose/ifscompose.c:867
+#: ../plug-ins/ifscompose/ifscompose.c:869
 msgid "Spatial Transformation"
 msgstr "Priestorová transformácia"
 
-#: ../plug-ins/ifscompose/ifscompose.c:873
+#: ../plug-ins/ifscompose/ifscompose.c:875
 msgid "Color Transformation"
 msgstr "Farebná transformácia"
 
-#: ../plug-ins/ifscompose/ifscompose.c:883
+#: ../plug-ins/ifscompose/ifscompose.c:885
 msgid "Relative probability:"
 msgstr "Relatívna pravdepodobnosť:"
 
-#: ../plug-ins/ifscompose/ifscompose.c:1058
+#: ../plug-ins/ifscompose/ifscompose.c:1060
 msgid "Select _All"
 msgstr "Vybrať _všetko"
 
-#: ../plug-ins/ifscompose/ifscompose.c:1062
+#: ../plug-ins/ifscompose/ifscompose.c:1064
 msgid "Re_center"
 msgstr "Prepočítať _stred"
 
-#: ../plug-ins/ifscompose/ifscompose.c:1062
+#: ../plug-ins/ifscompose/ifscompose.c:1064
 msgid "Recompute Center"
 msgstr "Prepočítať stred"
 
-#: ../plug-ins/ifscompose/ifscompose.c:1066
+#: ../plug-ins/ifscompose/ifscompose.c:1068
 msgid "Render Options"
 msgstr "Nastavenia vykresľovania"
 
-#: ../plug-ins/ifscompose/ifscompose.c:1072
+#: ../plug-ins/ifscompose/ifscompose.c:1074
 #: ../plug-ins/imagemap/imap_cmd_move.c:86
 #: ../plug-ins/imagemap/imap_cmd_object_move.c:57
 msgid "Move"
 msgstr "Presun"
 
-#: ../plug-ins/ifscompose/ifscompose.c:1075
+#: ../plug-ins/ifscompose/ifscompose.c:1077
 msgid "Rotate"
 msgstr "Otočiť"
 
-#: ../plug-ins/ifscompose/ifscompose.c:1075
+#: ../plug-ins/ifscompose/ifscompose.c:1077
 msgid "Rotate / Scale"
 msgstr "Otočiť / Zväčšiť"
 
-#: ../plug-ins/ifscompose/ifscompose.c:1078
+#: ../plug-ins/ifscompose/ifscompose.c:1080
 msgid "Stretch"
 msgstr "Roztiahnutie"
 
-#: ../plug-ins/ifscompose/ifscompose.c:1176
+#: ../plug-ins/ifscompose/ifscompose.c:1178
 msgid "IFS Fractal Render Options"
 msgstr "Nastavenie generovania IFS Fractal"
 
-#: ../plug-ins/ifscompose/ifscompose.c:1197
+#: ../plug-ins/ifscompose/ifscompose.c:1199
 msgid "Max. memory:"
 msgstr "Max. pamäť:"
 
-#: ../plug-ins/ifscompose/ifscompose.c:1224
+#: ../plug-ins/ifscompose/ifscompose.c:1226
 msgid "Subdivide:"
 msgstr "Poddelenie:"
 
-#: ../plug-ins/ifscompose/ifscompose.c:1237
+#: ../plug-ins/ifscompose/ifscompose.c:1239
 msgid "Spot radius:"
 msgstr "Polomer bodu:"
 
-#: ../plug-ins/ifscompose/ifscompose.c:1307
+#: ../plug-ins/ifscompose/ifscompose.c:1309
 #, c-format
 msgid "Rendering IFS (%d/%d)..."
 msgstr "Generujem IFS (%d/%d)..."
 
-#: ../plug-ins/ifscompose/ifscompose.c:1325
+#: ../plug-ins/ifscompose/ifscompose.c:1327
 #, c-format
 msgid "Copying IFS to image (%d/%d)..."
 msgstr "Kopírujem IFS do obrázka (%d/%d)..."
 
-#: ../plug-ins/ifscompose/ifscompose.c:1481
+#: ../plug-ins/ifscompose/ifscompose.c:1483
 #, c-format
 msgid "Transformation %s"
 msgstr "Transformácia %s"
 
-#: ../plug-ins/ifscompose/ifscompose.c:2394
+#: ../plug-ins/ifscompose/ifscompose.c:2396
 #: ../plug-ins/metadata/interface.c:563 ../plug-ins/metadata/interface.c:573
 msgid "Save failed"
 msgstr "Ukladanie zlyhalo"
 
-#: ../plug-ins/ifscompose/ifscompose.c:2475
-#: ../plug-ins/ifscompose/ifscompose.c:2488
+#: ../plug-ins/ifscompose/ifscompose.c:2477
+#: ../plug-ins/ifscompose/ifscompose.c:2490
 #: ../plug-ins/metadata/interface.c:462 ../plug-ins/metadata/interface.c:472
 #: ../plug-ins/metadata/interface.c:548
 msgid "Open failed"
 msgstr "Otváranie zlyhalo"
 
-#: ../plug-ins/ifscompose/ifscompose.c:2483
+#: ../plug-ins/ifscompose/ifscompose.c:2485
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Fractal file."
 msgstr "Súbor '%s' zrejme nie je súbor IFS Fraktál."
 
-#: ../plug-ins/ifscompose/ifscompose.c:2523
+#: ../plug-ins/ifscompose/ifscompose.c:2525
 msgid "Save as IFS Fractal file"
 msgstr "Uložiť ako IFS Fractal súbor"
 
-#: ../plug-ins/ifscompose/ifscompose.c:2558
+#: ../plug-ins/ifscompose/ifscompose.c:2560
 msgid "Open IFS Fractal file"
 msgstr "Otvoriť IFS Fractal súbor"
 
@@ -10510,45 +10527,45 @@ msgid "Maze"
 msgstr "Bludisko"
 
 #. The maze size frame
-#: ../plug-ins/maze/maze_face.c:200
+#: ../plug-ins/maze/maze_face.c:202
 msgid "Maze Size"
 msgstr "Veľkosť bludiska"
 
 #. entscale == Entry and Scale pair function found in pixelize.c
-#: ../plug-ins/maze/maze_face.c:217
+#: ../plug-ins/maze/maze_face.c:219
 msgid "Width (pixels):"
 msgstr "Šírka (body):"
 
-#: ../plug-ins/maze/maze_face.c:229 ../plug-ins/maze/maze_face.c:245
+#: ../plug-ins/maze/maze_face.c:231 ../plug-ins/maze/maze_face.c:247
 msgid "Pieces:"
 msgstr "Kusy:"
 
-#: ../plug-ins/maze/maze_face.c:234
+#: ../plug-ins/maze/maze_face.c:236
 msgid "Height (pixels):"
 msgstr "Výška (bodov):"
 
-#: ../plug-ins/maze/maze_face.c:257
+#: ../plug-ins/maze/maze_face.c:259
 msgid "Multiple (57):"
 msgstr "Násobenie (57)"
 
-#: ../plug-ins/maze/maze_face.c:270
+#: ../plug-ins/maze/maze_face.c:272
 msgid "Offset (1):"
 msgstr "Posun (1):"
 
 #. The maze algorithm frame
-#: ../plug-ins/maze/maze_face.c:281
+#: ../plug-ins/maze/maze_face.c:283
 msgid "Algorithm"
 msgstr "Algoritmus"
 
-#: ../plug-ins/maze/maze_face.c:307
+#: ../plug-ins/maze/maze_face.c:309
 msgid "Depth first"
 msgstr "Prvá hĺbka"
 
-#: ../plug-ins/maze/maze_face.c:308
+#: ../plug-ins/maze/maze_face.c:310
 msgid "Prim's algorithm"
 msgstr "Primov algoritmus"
 
-#: ../plug-ins/maze/maze_face.c:426
+#: ../plug-ins/maze/maze_face.c:428
 msgid ""
 "Selection size is not even.\n"
 "Tileable maze won't work perfectly."
@@ -10717,55 +10734,55 @@ msgstr "_Rozčerenie stránky..."
 msgid "Pagecurl Effect"
 msgstr "Efekt rozčerenia strany"
 
-#: ../plug-ins/pagecurl/pagecurl.c:460
+#: ../plug-ins/pagecurl/pagecurl.c:462
 msgid "Curl Location"
 msgstr "Umiestnenie rozčerenia"
 
-#: ../plug-ins/pagecurl/pagecurl.c:479
+#: ../plug-ins/pagecurl/pagecurl.c:481
 msgid "Lower right"
 msgstr "Zprava zdola"
 
-#: ../plug-ins/pagecurl/pagecurl.c:480
+#: ../plug-ins/pagecurl/pagecurl.c:482
 msgid "Lower left"
 msgstr "Zľava zdola"
 
-#: ../plug-ins/pagecurl/pagecurl.c:481
+#: ../plug-ins/pagecurl/pagecurl.c:483
 msgid "Upper left"
 msgstr "Zľava zhora"
 
-#: ../plug-ins/pagecurl/pagecurl.c:482
+#: ../plug-ins/pagecurl/pagecurl.c:484
 msgid "Upper right"
 msgstr "Zprava zhora"
 
-#: ../plug-ins/pagecurl/pagecurl.c:522
+#: ../plug-ins/pagecurl/pagecurl.c:524
 msgid "Curl Orientation"
 msgstr "Orientácia rozčerenia"
 
-#: ../plug-ins/pagecurl/pagecurl.c:566
+#: ../plug-ins/pagecurl/pagecurl.c:568
 msgid "_Shade under curl"
 msgstr "Tieň pod roz_čerením"
 
-#: ../plug-ins/pagecurl/pagecurl.c:579
+#: ../plug-ins/pagecurl/pagecurl.c:581
 msgid "Current gradient (reversed)"
 msgstr "Aktuálny prechod (obrátený)"
 
-#: ../plug-ins/pagecurl/pagecurl.c:584
+#: ../plug-ins/pagecurl/pagecurl.c:586
 msgid "Current gradient"
 msgstr "Aktuálny prechod"
 
-#: ../plug-ins/pagecurl/pagecurl.c:589
+#: ../plug-ins/pagecurl/pagecurl.c:591
 msgid "Foreground / background colors"
 msgstr "Farba popredia / pozadia"
 
-#: ../plug-ins/pagecurl/pagecurl.c:609
+#: ../plug-ins/pagecurl/pagecurl.c:611
 msgid "_Opacity:"
 msgstr "_Krytie:"
 
-#: ../plug-ins/pagecurl/pagecurl.c:732
+#: ../plug-ins/pagecurl/pagecurl.c:734
 msgid "Curl Layer"
 msgstr "Rozčerenie vrstvy..."
 
-#: ../plug-ins/pagecurl/pagecurl.c:1020
+#: ../plug-ins/pagecurl/pagecurl.c:1022
 msgid "Page Curl..."
 msgstr "Rozčerenie stránky..."
 
@@ -10887,7 +10904,7 @@ msgstr ""
 "Tlačiť\n"
 "a uložiť nastavenia"
 
-#: ../plug-ins/print/gimp_main_window.c:446
+#: ../plug-ins/print/gimp_main_window.c:448
 msgid ""
 "Position the image on the page.\n"
 "Click and drag with the primary button to position the image.\n"
@@ -10911,135 +10928,135 @@ msgstr ""
 "Ak počas ťahania obrázka myšou kliknete iným tlačítkom, obrázok sa vráti na "
 "pôvodnú pozíciu."
 
-#: ../plug-ins/print/gimp_main_window.c:489
+#: ../plug-ins/print/gimp_main_window.c:491
 msgid "Auto"
 msgstr "Automaticky"
 
-#: ../plug-ins/print/gimp_main_window.c:490
+#: ../plug-ins/print/gimp_main_window.c:492
 msgid "Portrait"
 msgstr "Na výšku"
 
-#: ../plug-ins/print/gimp_main_window.c:491
+#: ../plug-ins/print/gimp_main_window.c:493
 msgid "Landscape"
 msgstr "Na šírku"
 
-#: ../plug-ins/print/gimp_main_window.c:492
+#: ../plug-ins/print/gimp_main_window.c:494
 msgid "Upside down"
 msgstr "Hore nohami"
 
-#: ../plug-ins/print/gimp_main_window.c:493
+#: ../plug-ins/print/gimp_main_window.c:495
 msgid "Seascape"
 msgstr "Na šírku"
 
-#: ../plug-ins/print/gimp_main_window.c:503
+#: ../plug-ins/print/gimp_main_window.c:505
 msgid ""
 "Select the orientation: portrait, landscape, upside down, or seascape "
 "(upside down landscape)"
 msgstr ""
 "Zvoľte orientáciu: na výšku, na šírku, hore nohami, na šírku hore nohami "
 
-#: ../plug-ins/print/gimp_main_window.c:522
+#: ../plug-ins/print/gimp_main_window.c:524
 msgid "Distance from the left of the paper to the image"
 msgstr "Vzdialenosť od ľavého okraja papiera k obrázku"
 
-#: ../plug-ins/print/gimp_main_window.c:535
+#: ../plug-ins/print/gimp_main_window.c:537
 msgid "Distance from the top of the paper to the image"
 msgstr "Vzdialenosť od horného okraja papiera k obrázku"
 
-#: ../plug-ins/print/gimp_main_window.c:548
+#: ../plug-ins/print/gimp_main_window.c:550
 msgid "Distance from the left of the paper to the right of the image"
 msgstr "Vzdialenosť od ľavého okraja papiera k pravému okraju obrázka"
 
-#: ../plug-ins/print/gimp_main_window.c:558
+#: ../plug-ins/print/gimp_main_window.c:560
 msgid "Right border:"
 msgstr "Pravý okraj:"
 
-#: ../plug-ins/print/gimp_main_window.c:562
+#: ../plug-ins/print/gimp_main_window.c:564
 msgid "Distance from the right of the paper to the image"
 msgstr "Vzdialenosť od pravého okraja papiera k obrázku"
 
-#: ../plug-ins/print/gimp_main_window.c:576
+#: ../plug-ins/print/gimp_main_window.c:578
 msgid "Distance from the top of the paper to the bottom of the image"
 msgstr "Vzdialenosť od horného okraja papiera k dolnému okraju obrázka"
 
-#: ../plug-ins/print/gimp_main_window.c:586
+#: ../plug-ins/print/gimp_main_window.c:588
 msgid "Bottom border:"
 msgstr "Dolný okraj:"
 
-#: ../plug-ins/print/gimp_main_window.c:590
+#: ../plug-ins/print/gimp_main_window.c:592
 msgid "Distance from the bottom of the paper to the image"
 msgstr "Vzdialenosť od dolného okraja papiera k obrázku"
 
-#: ../plug-ins/print/gimp_main_window.c:603
+#: ../plug-ins/print/gimp_main_window.c:605
 msgid "Center:"
 msgstr "Centrovanie:"
 
-#: ../plug-ins/print/gimp_main_window.c:607
+#: ../plug-ins/print/gimp_main_window.c:609
 msgid "Vertically"
 msgstr "Vertikálne"
 
-#: ../plug-ins/print/gimp_main_window.c:612
+#: ../plug-ins/print/gimp_main_window.c:614
 msgid "Center the image vertically on the paper"
 msgstr "Vycentrovať obrázok zvisle na papiery"
 
-#: ../plug-ins/print/gimp_main_window.c:618
+#: ../plug-ins/print/gimp_main_window.c:620
 msgid "Both"
 msgstr "Obidvoje"
 
-#: ../plug-ins/print/gimp_main_window.c:623
+#: ../plug-ins/print/gimp_main_window.c:625
 msgid "Center the image on the paper"
 msgstr "Vycentrovať obrázok na papiery"
 
-#: ../plug-ins/print/gimp_main_window.c:630
+#: ../plug-ins/print/gimp_main_window.c:632
 msgid "Horizontally"
 msgstr "Vodorovne"
 
-#: ../plug-ins/print/gimp_main_window.c:635
+#: ../plug-ins/print/gimp_main_window.c:637
 msgid "Center the image horizontally on the paper"
 msgstr "Vycentrovať vodorovne obrázok na papiery"
 
-#: ../plug-ins/print/gimp_main_window.c:651
+#: ../plug-ins/print/gimp_main_window.c:653
 msgid "Setup Printer"
 msgstr "Nastaviť tlačiareň"
 
 #.
 #. * Printer driver option menu.
 #.
-#: ../plug-ins/print/gimp_main_window.c:680
+#: ../plug-ins/print/gimp_main_window.c:682
 msgid "Printer Model:"
 msgstr "Model tlačiarne:"
 
-#: ../plug-ins/print/gimp_main_window.c:692
+#: ../plug-ins/print/gimp_main_window.c:694
 msgid "Select your printer model"
 msgstr "Vyberte model vašej tlačiarne"
 
 #.
 #. * PPD file.
 #.
-#: ../plug-ins/print/gimp_main_window.c:731
+#: ../plug-ins/print/gimp_main_window.c:733
 msgid "PPD File:"
 msgstr "PPD súbor:"
 
-#: ../plug-ins/print/gimp_main_window.c:747
+#: ../plug-ins/print/gimp_main_window.c:749
 msgid "Enter the PPD filename for your printer"
 msgstr "Vložte PPD názov súboru pre vašu tlačiareň"
 
-#: ../plug-ins/print/gimp_main_window.c:750
+#: ../plug-ins/print/gimp_main_window.c:752
 msgid "Browse"
 msgstr "Prechádzať"
 
-#: ../plug-ins/print/gimp_main_window.c:756
+#: ../plug-ins/print/gimp_main_window.c:758
 msgid "Choose the PPD file for your printer"
 msgstr "Zvoľte PPD súbor pre vašu tlačiareň"
 
 #.
 #. * Print command.
 #.
-#: ../plug-ins/print/gimp_main_window.c:766
+#: ../plug-ins/print/gimp_main_window.c:768
 msgid "Command:"
 msgstr "Príkaz:"
 
-#: ../plug-ins/print/gimp_main_window.c:779
+#: ../plug-ins/print/gimp_main_window.c:781
 msgid ""
 "Enter the command to print to your printer. Note: Please do not remove the `-"
 "l' or `-oraw' from the command string, or printing will probably fail!"
@@ -11048,32 +11065,32 @@ msgstr ""
 "prosím z reťazca pre tlač prepínače `-l' alebo `-oraw', lebo tlač "
 "pravdepodobne nebude úspešná!"
 
-#: ../plug-ins/print/gimp_main_window.c:789
+#: ../plug-ins/print/gimp_main_window.c:791
 msgid "Choose PPD File"
 msgstr "Vybrať PPD súbor"
 
-#: ../plug-ins/print/gimp_main_window.c:816
+#: ../plug-ins/print/gimp_main_window.c:818
 msgid "Define New Printer"
 msgstr "Definovanie novej tlačiarne"
 
-#: ../plug-ins/print/gimp_main_window.c:839
-#: ../plug-ins/print/gimp_main_window.c:934
+#: ../plug-ins/print/gimp_main_window.c:841
+#: ../plug-ins/print/gimp_main_window.c:936
 msgid "Printer name:"
 msgstr "Názov tlačiarne:"
 
-#: ../plug-ins/print/gimp_main_window.c:843
+#: ../plug-ins/print/gimp_main_window.c:845
 msgid "Enter the name you wish to give this logical printer"
 msgstr "Vložte označenie, ktoré chcete dať tejto logickej tlačiarni"
 
-#: ../plug-ins/print/gimp_main_window.c:856
+#: ../plug-ins/print/gimp_main_window.c:858
 msgid "About Gimp-Print "
 msgstr "O Gimp-Print "
 
-#: ../plug-ins/print/gimp_main_window.c:869
+#: ../plug-ins/print/gimp_main_window.c:871
 msgid "Gimp-Print Version "
 msgstr "Verzia Gimp-Print"
 
-#: ../plug-ins/print/gimp_main_window.c:869
+#: ../plug-ins/print/gimp_main_window.c:871
 msgid ""
 "\n"
 "\n"
@@ -11118,11 +11135,11 @@ msgstr ""
 "Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
 "MA 02111-1307, USA.\n"
 
-#: ../plug-ins/print/gimp_main_window.c:917
+#: ../plug-ins/print/gimp_main_window.c:919
 msgid "Printer Settings"
 msgstr "Nastavenie tlačiarne"
 
-#: ../plug-ins/print/gimp_main_window.c:930
+#: ../plug-ins/print/gimp_main_window.c:932
 msgid ""
 "Select the name of the printer (not the type, or model, of printer) that you "
 "wish to print to"
@@ -11130,18 +11147,18 @@ msgstr ""
 "Zvoľte si názov tlačiarne (nie typ alebo model tlačiarne), na ktorej chcete "
 "tlačiť"
 
-#: ../plug-ins/print/gimp_main_window.c:940
+#: ../plug-ins/print/gimp_main_window.c:942
 msgid "Printer model:"
 msgstr "Model tlačiarne:"
 
 #.
 #. * Setup printer button
 #.
-#: ../plug-ins/print/gimp_main_window.c:951
+#: ../plug-ins/print/gimp_main_window.c:953
 msgid "Setup Printer..."
 msgstr "Nastavenie tlačiarne..."
 
-#: ../plug-ins/print/gimp_main_window.c:953
+#: ../plug-ins/print/gimp_main_window.c:955
 msgid ""
 "Choose the printer model, PPD file, and command that is used to print to "
 "this printer"
@@ -11152,11 +11169,11 @@ msgstr ""
 #.
 #. * New printer button
 #.
-#: ../plug-ins/print/gimp_main_window.c:968
+#: ../plug-ins/print/gimp_main_window.c:970
 msgid "New Printer..."
 msgstr "Nová tlačiareň..."
 
-#: ../plug-ins/print/gimp_main_window.c:970
+#: ../plug-ins/print/gimp_main_window.c:972
 msgid ""
 "Define a new logical printer. This can be used to name a collection of "
 "settings that you wish to remember for future use."
@@ -11164,67 +11181,67 @@ msgstr ""
 "Definovanie novej logickej tlačiarne. Toto môže byť použité na pomenovanie "
 "zbierky nastavení, ktoré si prajete zapamätať a v budúcnosti používať."
 
-#: ../plug-ins/print/gimp_main_window.c:991
+#: ../plug-ins/print/gimp_main_window.c:993
 msgid "Size of paper that you wish to print to"
 msgstr "Veľkosť papiera, na ktorý chcete tlačiť"
 
-#: ../plug-ins/print/gimp_main_window.c:994
+#: ../plug-ins/print/gimp_main_window.c:996
 msgid "Media size:"
 msgstr "Veľkosť média:"
 
-#: ../plug-ins/print/gimp_main_window.c:1003
+#: ../plug-ins/print/gimp_main_window.c:1005
 msgid "Dimensions:"
 msgstr "Rozmery:"
 
-#: ../plug-ins/print/gimp_main_window.c:1017
+#: ../plug-ins/print/gimp_main_window.c:1019
 msgid "Width of the paper that you wish to print to"
 msgstr "Šírka papiera, na ktorý chcete tlačiť"
 
-#: ../plug-ins/print/gimp_main_window.c:1034
+#: ../plug-ins/print/gimp_main_window.c:1036
 msgid "Height of the paper that you wish to print to"
 msgstr "Výška papiera, na ktorý chcete tlačiť"
 
-#: ../plug-ins/print/gimp_main_window.c:1050
+#: ../plug-ins/print/gimp_main_window.c:1052
 msgid "Type of media you're printing to"
 msgstr "Typ média na ktorý bude tlačené"
 
-#: ../plug-ins/print/gimp_main_window.c:1053
+#: ../plug-ins/print/gimp_main_window.c:1055
 msgid "Media type:"
 msgstr "Typ média:"
 
-#: ../plug-ins/print/gimp_main_window.c:1066
+#: ../plug-ins/print/gimp_main_window.c:1068
 msgid "Source (input slot) of media you're printing to"
 msgstr "Zdroj (vstupné miesto) média, na ktoré tlačíte"
 
-#: ../plug-ins/print/gimp_main_window.c:1069
+#: ../plug-ins/print/gimp_main_window.c:1071
 msgid "Media source:"
 msgstr "Zdroj média:"
 
-#: ../plug-ins/print/gimp_main_window.c:1082
+#: ../plug-ins/print/gimp_main_window.c:1084
 msgid "Type of ink in the printer"
 msgstr "Typ atramentu tlačiarne"
 
-#: ../plug-ins/print/gimp_main_window.c:1085
+#: ../plug-ins/print/gimp_main_window.c:1087
 msgid "Ink type:"
 msgstr "Typ atramentu:"
 
-#: ../plug-ins/print/gimp_main_window.c:1098
+#: ../plug-ins/print/gimp_main_window.c:1100
 msgid "Resolution and quality of the print"
 msgstr "Rozlíšenie a kvalita tlače"
 
-#: ../plug-ins/print/gimp_main_window.c:1135
+#: ../plug-ins/print/gimp_main_window.c:1137
 msgid "Scaling:"
 msgstr "Zväčšenie:"
 
-#: ../plug-ins/print/gimp_main_window.c:1141
+#: ../plug-ins/print/gimp_main_window.c:1143
 msgid "Set the scale (size) of the image"
 msgstr "Nastaviť zväčšenie (veľkosť) obrázka"
 
-#: ../plug-ins/print/gimp_main_window.c:1166
+#: ../plug-ins/print/gimp_main_window.c:1168
 msgid "Scale by:"
 msgstr "Zmena veľkosti o:"
 
-#: ../plug-ins/print/gimp_main_window.c:1171
+#: ../plug-ins/print/gimp_main_window.c:1173
 msgid ""
 "Select whether scaling is measured as percent of available page size or "
 "number of output dots per inch"
@@ -11232,58 +11249,58 @@ msgstr ""
 "Zvoľte, či zmena veľkosti bude vyjadrená ako percento dostupnej veľkosti "
 "stránky, alebo ako číslo výstupného DPI"
 
-#: ../plug-ins/print/gimp_main_window.c:1176
+#: ../plug-ins/print/gimp_main_window.c:1178
 msgid "Percent"
 msgstr "Percentá"
 
-#: ../plug-ins/print/gimp_main_window.c:1183
+#: ../plug-ins/print/gimp_main_window.c:1185
 msgid "Scale the print to the size of the page"
 msgstr "Zmeniť veľkosť tlače podľa rozmerov strany"
 
-#: ../plug-ins/print/gimp_main_window.c:1189
+#: ../plug-ins/print/gimp_main_window.c:1191
 msgid "PPI"
 msgstr "PPI"
 
-#: ../plug-ins/print/gimp_main_window.c:1195
+#: ../plug-ins/print/gimp_main_window.c:1197
 msgid "Scale the print to the number of dots per inch"
 msgstr "Zmeniť veľkosť tlače podľa počtu bodov na palec"
 
-#: ../plug-ins/print/gimp_main_window.c:1217
+#: ../plug-ins/print/gimp_main_window.c:1219
 msgid "Set the width of the print"
 msgstr "Nastaviť šírku tlače"
 
-#: ../plug-ins/print/gimp_main_window.c:1230
+#: ../plug-ins/print/gimp_main_window.c:1232
 msgid "Set the height of the print"
 msgstr "Nastaviť výšku tlače"
 
-#: ../plug-ins/print/gimp_main_window.c:1251
+#: ../plug-ins/print/gimp_main_window.c:1253
 msgid "Units:"
 msgstr "Jednotky:"
 
-#: ../plug-ins/print/gimp_main_window.c:1256
+#: ../plug-ins/print/gimp_main_window.c:1258
 msgid "Select the base unit of measurement for printing"
 msgstr "Zvoliť základnú mernú jednotku pre tlač"
 
-#: ../plug-ins/print/gimp_main_window.c:1259
+#: ../plug-ins/print/gimp_main_window.c:1261
 msgid "Inch"
 msgstr "Palec"
 
-#: ../plug-ins/print/gimp_main_window.c:1266
+#: ../plug-ins/print/gimp_main_window.c:1268
 msgid "Set the base unit of measurement to inches"
 msgstr "Nastaviť palce ako základnú mernú jednotku"
 
-#: ../plug-ins/print/gimp_main_window.c:1272
+#: ../plug-ins/print/gimp_main_window.c:1274
 msgid "cm"
 msgstr "cm"
 
-#: ../plug-ins/print/gimp_main_window.c:1278
+#: ../plug-ins/print/gimp_main_window.c:1280
 msgid "Set the base unit of measurement to centimetres"
 msgstr "Nastaviť centimetre ako základnú mernú jednotku"
 
 #.
 #. * The "image size" button
 #.
-#: ../plug-ins/print/gimp_main_window.c:1288
+#: ../plug-ins/print/gimp_main_window.c:1290
 msgid ""
 "Use Original\n"
 "Image Size"
@@ -11291,43 +11308,43 @@ msgstr ""
 "Použiť pôvodnú\n"
 "veľkosť obrázka"
 
-#: ../plug-ins/print/gimp_main_window.c:1294
+#: ../plug-ins/print/gimp_main_window.c:1296
 msgid "Set the print size to the size of the image"
 msgstr "Nastavenie veľkosti tlače na veľkosť obrázka"
 
-#: ../plug-ins/print/gimp_main_window.c:1317
+#: ../plug-ins/print/gimp_main_window.c:1319
 msgid "Image / Output Settings"
 msgstr "Obrázok / Výstupné nastavenia"
 
-#: ../plug-ins/print/gimp_main_window.c:1331
+#: ../plug-ins/print/gimp_main_window.c:1333
 msgid "Image type:"
 msgstr "Typ obrázka:"
 
-#: ../plug-ins/print/gimp_main_window.c:1339
+#: ../plug-ins/print/gimp_main_window.c:1341
 msgid "Optimize the output for the type of image being printed"
 msgstr "Optimalizovať výstup podľa typu tlačeného obrázka"
 
-#: ../plug-ins/print/gimp_main_window.c:1343
+#: ../plug-ins/print/gimp_main_window.c:1345
 msgid "Line art"
 msgstr "Čiarová grafika"
 
-#: ../plug-ins/print/gimp_main_window.c:1350
+#: ../plug-ins/print/gimp_main_window.c:1352
 msgid "Fastest and brightest color for text and line art"
 msgstr "Najrýchlejšie a jasnejšie farby pre text a čiarovú grafiku"
 
-#: ../plug-ins/print/gimp_main_window.c:1357
+#: ../plug-ins/print/gimp_main_window.c:1359
 msgid "Solid colors"
 msgstr "Farebné plochy"
 
-#: ../plug-ins/print/gimp_main_window.c:1364
+#: ../plug-ins/print/gimp_main_window.c:1366
 msgid "Best for images dominated by regions of solid color"
 msgstr "Najlepšie pre obrázky s dominatnými oblasťami jednej farby"
 
-#: ../plug-ins/print/gimp_main_window.c:1372
+#: ../plug-ins/print/gimp_main_window.c:1374
 msgid "Photograph"
 msgstr "Fotografia"
 
-#: ../plug-ins/print/gimp_main_window.c:1380
+#: ../plug-ins/print/gimp_main_window.c:1382
 msgid ""
 "Slowest, but most accurate and smoothest color for continuous tone images "
 "and photographs"
@@ -11335,48 +11352,48 @@ msgstr ""
 "Najpomalšie, ale najpresnejšie a najhladšie farby pre plynulé odtiene "
 "obrázkov a fotografií"
 
-#: ../plug-ins/print/gimp_main_window.c:1403
+#: ../plug-ins/print/gimp_main_window.c:1405
 msgid "Output type:"
 msgstr "Typ výstupu:"
 
-#: ../plug-ins/print/gimp_main_window.c:1410
+#: ../plug-ins/print/gimp_main_window.c:1412
 msgid "Select the desired output type"
 msgstr "Zvoľte vytúžený typ výstupu"
 
-#: ../plug-ins/print/gimp_main_window.c:1419
+#: ../plug-ins/print/gimp_main_window.c:1421
 msgid "Color output"
 msgstr "Farebný výstup"
 
-#: ../plug-ins/print/gimp_main_window.c:1424
+#: ../plug-ins/print/gimp_main_window.c:1426
 msgid "Grayscale"
 msgstr "Odtiene šedej"
 
-#: ../plug-ins/print/gimp_main_window.c:1431
+#: ../plug-ins/print/gimp_main_window.c:1433
 msgid "Print in shades of gray using black ink"
 msgstr "Tlačiť v odtieňoch šedej s použitím čiernej farby"
 
-#: ../plug-ins/print/gimp_main_window.c:1438
+#: ../plug-ins/print/gimp_main_window.c:1440
 msgid "Black and white"
 msgstr "Čierna a biela"
 
-#: ../plug-ins/print/gimp_main_window.c:1445
+#: ../plug-ins/print/gimp_main_window.c:1447
 msgid "Print in black and white (no color, and no shades of gray)"
 msgstr "Tlačiť čiernou a bielou (bez farieb a bez odtieňov šedej)"
 
 #.
 #. *  Color adjust button
 #.
-#: ../plug-ins/print/gimp_main_window.c:1456
+#: ../plug-ins/print/gimp_main_window.c:1458
 msgid "Adjust Output..."
 msgstr "Prispôsobiť výstup..."
 
-#: ../plug-ins/print/gimp_main_window.c:1463
+#: ../plug-ins/print/gimp_main_window.c:1465
 msgid ""
 "Adjust color balance, brightness, contrast, saturation, and dither algorithm"
 msgstr ""
 "Nastavenie farebného vyváženia, kontrastu, sýtosti a algoritmu rozptylu"
 
-#: ../plug-ins/print/gimp_main_window.c:1497
+#: ../plug-ins/print/gimp_main_window.c:1499
 msgid "Print to File"
 msgstr "Tlačiť do súboru"
 
@@ -11441,7 +11458,7 @@ msgid "Gray Threshold"
 msgstr "Prah šedej"
 
 #. * Misc: Used unit selection *
-#: ../plug-ins/rcm/rcm_dialog.c:588 ../plug-ins/rcm/rcm_dialog.c:697
+#: ../plug-ins/rcm/rcm_dialog.c:588 ../plug-ins/rcm/rcm_dialog.c:699
 msgid "Units"
 msgstr "Jednotky"
 
@@ -11463,23 +11480,21 @@ msgstr "Stupne"
 msgid "Colormap Rotation"
 msgstr "Otočenie farebnej mapy"
 
-#: ../plug-ins/rcm/rcm_dialog.c:691
+#: ../plug-ins/rcm/rcm_dialog.c:693
 msgid "Main Options"
 msgstr "Hlavné nastavenia"
 
-#: ../plug-ins/rcm/rcm_dialog.c:694
+#: ../plug-ins/rcm/rcm_dialog.c:696
 msgid "Gray Options"
 msgstr "Nastavenie šedej"
 
 #: ../plug-ins/rcm/rcm_stock.c:35
-#, fuzzy
 msgid "Switch to Clockwise"
-msgstr "Prenúť do smeru hodinových ručičiek"
+msgstr "Prepnúť do smeru hodinových ručičiek"
 
 #: ../plug-ins/rcm/rcm_stock.c:37
-#, fuzzy
 msgid "Switch to C/Clockwise"
-msgstr "Prenúť do protismeru hodinových ručičiek"
+msgstr "Prepnúť do protismeru hodinových ručičiek"
 
 #: ../plug-ins/rcm/rcm_stock.c:39
 msgid "Change Order of Arrows"
@@ -11495,9 +11510,8 @@ msgid "No selection to convert"
 msgstr "Nie je žiadny výber pre konverziu"
 
 #: ../plug-ins/sel2path/sel2path.c:300
-#, fuzzy
 msgid "Selection to Path Advanced Settings"
-msgstr "Rozšírené nastavenie výberu do cesty"
+msgstr "Rozšírené nastavenia výberu do cesty"
 
 #: ../plug-ins/sgi/sgi.c:119 ../plug-ins/sgi/sgi.c:139
 msgid "Silicon Graphics IRIS image"
