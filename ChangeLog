@@ -1,3 +1,8 @@
+2005-09-06  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/stroke-dialog.c (stroke_dialog_new): use
+	gtk_object_sink() to destroy a floating widget.
+
 2005-09-05  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins: Call gimp_window_set_transient_for_default_display()
