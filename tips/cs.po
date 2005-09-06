@@ -162,7 +162,7 @@ msgstr ""
 msgid ""
 "The GIMP can undo most changes to the image, so feel free to experiment."
 msgstr ""
-"GIMP může vrátit zpět většinu změn obráku, takže se nebojte experimentovat."
+"GIMP může vrátit zpět většinu změn obrázku, takže se nebojte experimentovat."
 
 #: tips/gimp-tips.xml.in.h:17
 msgid ""
