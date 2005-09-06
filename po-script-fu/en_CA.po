@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-27 17:29-0400\n"
-"PO-Revision-Date: 2005-08-27 00:14-0400\n"
+"POT-Creation-Date: 2005-09-06 18:18-0400\n"
+"PO-Revision-Date: 2005-09-06 00:14-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -137,6 +137,10 @@ msgstr ""
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu Server Options"
 
+#: plug-ins/script-fu/script-fu-server.c:658
+msgid "_Start Server"
+msgstr "_Start Server"
+
 #: plug-ins/script-fu/script-fu-server.c:686
 msgid "Server port:"
 msgstr "Server port:"
@@ -243,7 +247,7 @@ msgid "Bumpmap (alpha layer) blur radius"
 msgstr "Bumpmap (alpha layer) blur radius"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:3
-#: plug-ins/script-fu/scripts/glossy.scm.h:5
+#: plug-ins/script-fu/scripts/glossy.scm.h:4
 msgid "Default bumpmap settings"
 msgstr "Default bumpmap settings"
 
@@ -268,9 +272,9 @@ msgstr "Default bumpmap settings"
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:3
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
-#: plug-ins/script-fu/scripts/glossy.scm.h:6
+#: plug-ins/script-fu/scripts/glossy.scm.h:5
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:3
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:5
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:4
 #: plug-ins/script-fu/scripts/news-text.scm.h:6
@@ -308,9 +312,9 @@ msgstr "Font"
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:4
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:4
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
-#: plug-ins/script-fu/scripts/glossy.scm.h:7
+#: plug-ins/script-fu/scripts/glossy.scm.h:6
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:4
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:2
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:5
 #: plug-ins/script-fu/scripts/news-text.scm.h:7
@@ -342,13 +346,13 @@ msgid "Pattern"
 msgstr "Pattern"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:8
-#: plug-ins/script-fu/scripts/glossy.scm.h:15
+#: plug-ins/script-fu/scripts/glossy.scm.h:14
 #: plug-ins/script-fu/scripts/round-corners.scm.h:5
 msgid "Shadow X offset"
 msgstr "Shadow X offset"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:9
-#: plug-ins/script-fu/scripts/glossy.scm.h:16
+#: plug-ins/script-fu/scripts/glossy.scm.h:15
 #: plug-ins/script-fu/scripts/round-corners.scm.h:6
 msgid "Shadow Y offset"
 msgstr "Shadow Y offset"
@@ -378,9 +382,9 @@ msgstr "Shadow blur radius"
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:5
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:11
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:13
-#: plug-ins/script-fu/scripts/glossy.scm.h:17
+#: plug-ins/script-fu/scripts/glossy.scm.h:16
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:6
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:9
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:8
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:6
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:8
 #: plug-ins/script-fu/scripts/news-text.scm.h:9
@@ -652,7 +656,7 @@ msgid "B_asic II..."
 msgstr "B_asic II..."
 
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:1
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:1
 msgid "Bevel width"
 msgstr "Bevel width"
@@ -1018,7 +1022,7 @@ msgstr "_Clothify..."
 #: plug-ins/script-fu/scripts/coffee.scm.h:1
 msgid ""
 "Darken only\n"
-"(Better, but only for images with alot of white)"
+"(Better, but only for images with a lot of white)"
 msgstr ""
 "Darken only\n"
 "(Better, but only for images with a lot of white)"
@@ -1040,7 +1044,7 @@ msgid "Outline color"
 msgstr "Outline colour"
 
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:8
-#: plug-ins/script-fu/scripts/glossy.scm.h:10
+#: plug-ins/script-fu/scripts/glossy.scm.h:9
 msgid "Outline size"
 msgstr "Outline size"
 
@@ -1181,8 +1185,8 @@ msgstr "Fade from %"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:7
 #, no-c-format
-msgid "Fade to   %"
-msgstr "Fade to   %"
+msgid "Fade to %"
+msgstr "Fade to %"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:8
 msgid "Use growing selection"
@@ -1354,55 +1358,51 @@ msgid "_Tube Button Label..."
 msgstr "_Tube Button Label..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:2
-msgid "Blend gradient (Text)"
-msgstr "Blend gradient (Text)"
-
-#: plug-ins/script-fu/scripts/glossy.scm.h:3
 msgid "Blend gradient (outline)"
 msgstr "Blend gradient (outline)"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:4
+#: plug-ins/script-fu/scripts/glossy.scm.h:3
 msgid "Blend gradient (text)"
 msgstr "Blend gradient (text)"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:8
+#: plug-ins/script-fu/scripts/glossy.scm.h:7
 msgid "Glo_ssy..."
 msgstr "Glo_ssy..."
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:9
+#: plug-ins/script-fu/scripts/glossy.scm.h:8
 msgid "Outline gradient reverse"
 msgstr "Outline gradient reverse"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:11
+#: plug-ins/script-fu/scripts/glossy.scm.h:10
 msgid "Pattern (outline)"
 msgstr "Pattern (outline)"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:12
+#: plug-ins/script-fu/scripts/glossy.scm.h:11
 msgid "Pattern (overlay)"
 msgstr "Pattern (overlay)"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:13
+#: plug-ins/script-fu/scripts/glossy.scm.h:12
 msgid "Pattern (text)"
 msgstr "Pattern (text)"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:14
+#: plug-ins/script-fu/scripts/glossy.scm.h:13
 #: plug-ins/script-fu/scripts/sphere.scm.h:4
 msgid "Shadow"
 msgstr "Shadow"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:18
+#: plug-ins/script-fu/scripts/glossy.scm.h:17
 msgid "Text gradient reverse"
 msgstr "Text gradient reverse"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:19
+#: plug-ins/script-fu/scripts/glossy.scm.h:18
 msgid "Use pattern for outline instead of gradient"
 msgstr "Use pattern for outline instead of gradient"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:20
+#: plug-ins/script-fu/scripts/glossy.scm.h:19
 msgid "Use pattern for text instead of gradient"
 msgstr "Use pattern for text instead of gradient"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:21
+#: plug-ins/script-fu/scripts/glossy.scm.h:20
 msgid "Use pattern overlay"
 msgstr "Use pattern overlay"
 
@@ -1415,20 +1415,16 @@ msgid "Glo_wing Hot..."
 msgstr "Glo_wing Hot..."
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:2
-msgid "Bevel height (Sharpness)"
-msgstr "Bevel height (Sharpness)"
-
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
 msgid "Bevel height (sharpness)"
 msgstr "Bevel height (sharpness)"
 
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:5
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:3
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:2
 msgid "Border size (pixels)"
 msgstr "Border size (pixels)"
 
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:8
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
 msgid "Gradient Beve_l..."
 msgstr "Gradient Beve_l..."
 
@@ -1802,6 +1798,7 @@ msgid "Brush name"
 msgstr "Brush name"
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:2
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
 msgid "File name"
 msgstr "File name"
 
@@ -1812,10 +1809,6 @@ msgstr "To _Brush..."
 #: plug-ins/script-fu/scripts/select-to-image.scm.h:1
 msgid "To _Image"
 msgstr "To _Image"
-
-#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
-msgid "Filename"
-msgstr "Filename"
 
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:2
 msgid "Pattern name"

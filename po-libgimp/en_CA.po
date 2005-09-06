@@ -8,13 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-27 17:24-0400\n"
-"PO-Revision-Date: 2005-08-27 20:02-0400\n"
+"POT-Creation-Date: 2005-09-06 18:17-0400\n"
+"PO-Revision-Date: 2005-09-06 20:02-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: libgimp/gimpbrushmenu.c:140
 msgid "Brush Selection"
@@ -279,16 +280,14 @@ msgstr "%d Procedures"
 msgid "No matches for your query"
 msgstr "No matches for your query"
 
-#: libgimp/gimpprocbrowserdialog.c:457
-msgid "1 procedure matches your query"
-msgstr "1 procedure matches your query"
-
-#: libgimp/gimpprocbrowserdialog.c:460
+#: libgimp/gimpprocbrowserdialog.c:458
 #, c-format
-msgid "%d procedures match your query"
-msgstr "%d procedures match your query"
+msgid "%d procedure matches your query"
+msgid_plural "%d procedures match your query"
+msgstr[0] "%d procedure matches your query"
+msgstr[1] "%d procedures matches your query"
 
-#: libgimp/gimpprocbrowserdialog.c:508
+#: libgimp/gimpprocbrowserdialog.c:507
 msgid "No matches"
 msgstr "No matches"
 
