@@ -1,3 +1,9 @@
+2005-09-06  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/paint-funcs/paint-funcs-generic.h (blend_pixels): change 
+	variables from unsigned to signed -- fixes problem described
+	in comment 17 of bug #163721.
+	
 2005-09-06  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/stroke-dialog.c (stroke_dialog_new): use

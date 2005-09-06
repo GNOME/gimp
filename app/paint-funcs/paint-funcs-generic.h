@@ -301,9 +301,9 @@ blend_pixels (const guchar *src1,
 
       while (w--)
         {
-          guint a1 = blend1 * src1[c];
-          guint a2 = blend2 * src2[c];
-          guint a  = a1 + a2;
+          gint a1 = blend1 * src1[c];
+          gint a2 = blend2 * src2[c];
+          gint a  = a1 + a2;
 
           if (!a)
             {
