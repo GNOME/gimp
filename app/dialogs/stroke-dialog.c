@@ -135,10 +135,10 @@ stroke_dialog_new (GimpItem    *item,
   libart_radio = g_object_ref (group->next->data);
   gtk_container_remove (GTK_CONTAINER (radio_box), libart_radio);
 
-  paint_radio  = g_object_ref (group->data);
+  paint_radio = g_object_ref (group->data);
   gtk_container_remove (GTK_CONTAINER (radio_box), paint_radio);
 
-  gtk_widget_destroy (radio_box);
+  gtk_object_sink (GTK_OBJECT (radio_box));
 
   {
     PangoFontDescription *font_desc;

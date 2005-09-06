@@ -1,3 +1,10 @@
+2005-09-06  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
+	* app/dialogs/stroke-dialog.c (stroke_dialog_new): use
+	gtk_object_sink() to destroy a floating widget.
+
 2005-09-02  Sven Neumann  <sven@gimp.org>
 
 	* configure.in
@@ -8,9 +15,9 @@
 
 	Merged from HEAD branch:
 
-        * plug-ins/common/svg.c: deal with SVG API change. This is a
-        compile-time check and thus somewhat ugly because it requires a
-        recompile of the plug-in when updating librsvg to 2.11.0 or newer.
+	* plug-ins/common/svg.c: deal with SVG API change. This is a
+	compile-time check and thus somewhat ugly because it requires a
+	recompile of the plug-in when updating librsvg to 2.11.0 or newer.
 	Fixes bug #314400.
 
 2005-08-26  Tor Lillqvist  <tml@novell.com>
