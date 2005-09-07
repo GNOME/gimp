@@ -139,64 +139,16 @@ gimp_error_dialog_response (GtkDialog *dialog,
 }
 
 
-static void
-gimp_error_dialog_set_icon (GtkWidget   *dialog,
-                            const gchar *stock_id)
-{
-  GtkIconSet *icon_set;
-
-  gtk_widget_ensure_style (dialog);
-
-  icon_set = gtk_style_lookup_icon_set (dialog->style, stock_id);
-
-  if (icon_set)
-    {
-      GtkIconSize *sizes;
-      GList       *icons = NULL;
-      gint         i, n_sizes;
-
-      gtk_icon_set_get_sizes (icon_set, &sizes, &n_sizes);
-
-      for (i = 0; i < n_sizes; i++)
-        {
-          if (sizes[i] < GTK_ICON_SIZE_DIALOG)  /* skip the large version */
-            icons = g_list_prepend (icons,
-                                    gtk_widget_render_icon (dialog,
-                                                            stock_id, sizes[i],
-                                                            NULL));
-        }
-
-      g_free (sizes);
-
-      if (icons)
-        {
-          gtk_window_set_icon_list (GTK_WINDOW (dialog), icons);
-
-          g_list_foreach (icons, (GFunc) g_object_unref, NULL);
-          g_list_free (icons);
-        }
-    }
-}
-
-
 /*  public functions  */
 
 GtkWidget *
-gimp_error_dialog_new (const gchar *title,
-                       const gchar *stock_id)
+gimp_error_dialog_new (const gchar *title)
 {
-  GtkWidget *dialog;
-
   g_return_val_if_fail (title != NULL, NULL);
 
-  dialog = g_object_new (GIMP_TYPE_ERROR_DIALOG,
-                         "title", title,
-                         NULL);
-
-  if (stock_id)
-    gimp_error_dialog_set_icon (dialog, stock_id);
-
-  return dialog;
+  return g_object_new (GIMP_TYPE_ERROR_DIALOG,
+                       "title", title,
+                       NULL);
 }
 
 void

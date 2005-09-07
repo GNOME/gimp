@@ -1,3 +1,10 @@
+2005-09-07  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimperrordialog.[ch]: don't set a window icon, the
+	dialog should be transient anyway.
+
+	* app/dialogs/dialogs-constructors.c: changed accordingly.
+
 2005-09-06  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/paint-funcs/paint-funcs-generic.h (blend_pixels): change 

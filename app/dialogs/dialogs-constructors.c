@@ -163,7 +163,7 @@ dialogs_error_get (GimpDialogFactory *factory,
                    GimpContext       *context,
                    gint               preview_size)
 {
-  return gimp_error_dialog_new (_("GIMP Message"), GIMP_STOCK_WARNING);
+  return gimp_error_dialog_new (_("GIMP Message"));
 }
 
 GtkWidget *
