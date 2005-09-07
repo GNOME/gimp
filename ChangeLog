@@ -1,3 +1,7 @@
+2005-09-07  Ankit Patel  <ankit644@yahoo.com>
+
+	* configure.in: Added 'gu' to ALL_LINGUAS.
+
 2005-09-07  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimperrordialog.[ch]: don't set a window icon, the
