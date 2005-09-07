@@ -27,6 +27,7 @@
 #include "base/pixel-processor.h"
 #include "base/pixel-region.h"
 
+#include "gimp-utils.h"
 #include "gimpchannel.h"
 #include "gimpchannel-combine.h"
 
@@ -130,24 +131,16 @@ gimp_channel_combine_rect (GimpChannel    *mask,
 			   gint            w,
 			   gint            h)
 {
-  gint        x2, y2;
   PixelRegion maskPR;
   guchar      color;
 
   g_return_if_fail (GIMP_IS_CHANNEL (mask));
 
-  y2 = y + h;
-  x2 = x + w;
-
-  x  = CLAMP (x,  0, GIMP_ITEM (mask)->width);
-  y  = CLAMP (y,  0, GIMP_ITEM (mask)->height);
-  x2 = CLAMP (x2, 0, GIMP_ITEM (mask)->width);
-  y2 = CLAMP (y2, 0, GIMP_ITEM (mask)->height);
-
-  w = x2 - x;
-  h = y2 - y;
-
-  if (w <= 0 || h <= 0)
+  if (! gimp_rectangle_intersect (x, y, w, h,
+                                  0, 0,
+                                  GIMP_ITEM (mask)->width,
+                                  GIMP_ITEM (mask)->height,
+                                  &x, &y, &w, &h))
     return;
 
   pixel_region_init (&maskPR, GIMP_DRAWABLE (mask)->tiles,
@@ -225,7 +218,11 @@ gimp_channel_combine_ellipse (GimpChannel    *mask,
 
   g_return_if_fail (GIMP_IS_CHANNEL (mask));
 
-  if (!w || !h)
+  if (! gimp_rectangle_intersect (x, y, w, h,
+                                  0, 0,
+                                  GIMP_ITEM (mask)->width,
+                                  GIMP_ITEM (mask)->height,
+                                  NULL, NULL, NULL, NULL))
     return;
 
   a = w / 2.0;
@@ -489,26 +486,24 @@ gimp_channel_combine_mask (GimpChannel    *mask,
 			   gint            off_y)
 {
   PixelRegion srcPR, destPR;
-  gint        x1, y1, x2, y2;
-  gint        w, h;
+  gint        x, y, w, h;
 
   g_return_if_fail (GIMP_IS_CHANNEL (mask));
   g_return_if_fail (GIMP_IS_CHANNEL (add_on));
 
-  x1 = CLAMP (off_x, 0, GIMP_ITEM (mask)->width);
-  y1 = CLAMP (off_y, 0, GIMP_ITEM (mask)->height);
-  x2 = CLAMP (off_x + GIMP_ITEM (add_on)->width, 0,
-	      GIMP_ITEM (mask)->width);
-  y2 = CLAMP (off_y + GIMP_ITEM (add_on)->height, 0,
-	      GIMP_ITEM (mask)->height);
-
-  w = (x2 - x1);
-  h = (y2 - y1);
+  if (! gimp_rectangle_intersect (off_x, off_y,
+                                  GIMP_ITEM (add_on)->width,
+                                  GIMP_ITEM (add_on)->height,
+                                  0, 0,
+                                  GIMP_ITEM (mask)->width,
+                                  GIMP_ITEM (mask)->height,
+                                  &x, &y, &w, &h))
+    return;
 
   pixel_region_init (&srcPR, GIMP_DRAWABLE (add_on)->tiles,
-		     (x1 - off_x), (y1 - off_y), w, h, FALSE);
+		     x - off_x, y - off_y, w, h, FALSE);
   pixel_region_init (&destPR, GIMP_DRAWABLE (mask)->tiles,
-                     x1, y1, w, h, TRUE);
+                     x, y, w, h, TRUE);
 
   switch (op)
     {
@@ -538,5 +533,5 @@ gimp_channel_combine_mask (GimpChannel    *mask,
 
   mask->bounds_known = FALSE;
 
-  gimp_drawable_update (GIMP_DRAWABLE (mask), x1, y2, w, h);
+  gimp_drawable_update (GIMP_DRAWABLE (mask), x, y, w, h);
 }
