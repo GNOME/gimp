@@ -1,3 +1,17 @@
+2005-09-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpchannel-combine.c (gimp_channel_combine_ellipse):
+	use gimp_rectangle_intersect() instead of just looking at the
+	passed in w,h to figure whether nothing needs to be done. While
+	the algorithm does nicely with an entirely out-of-image ellipse,
+	the channel's bounds were set to a rectangle of zero width or
+	height, which caused subsequent calls to gimp_channel_bounds() to
+	return broken bounds. Fixes bug #315417.
+
+	(gimp_channel_combine_rect)
+	(gimp_channel_combine_mask): use gimp_rectangle_intersect() here
+	too instead of the usual unclear CLAMPing on x1,y1,x2,y2.
+
 2005-09-07  Ankit Patel  <ankit644@yahoo.com>
 
 	* configure.in: Added 'gu' to ALL_LINGUAS.
