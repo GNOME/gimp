@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu Gnome HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-04 03:48+0000\n"
-"PO-Revision-Date: 2005-09-04 18:25+0930\n"
+"POT-Creation-Date: 2005-09-08 11:03+0200\n"
+"PO-Revision-Date: 2005-09-08 20:41+0930\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -248,7 +248,7 @@ msgid "Bumpmap (alpha layer) blur radius"
 msgstr "Tia cảnh mờ (lớp anfa) ánh xạ mụn"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:3
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:5
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:4
 msgid "Default bumpmap settings"
 msgstr "Thiết lập ánh xạ mụn mặc định"
 
@@ -273,9 +273,9 @@ msgstr "Thiết lập ánh xạ mụn mặc định"
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:3
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:3
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:2
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:6
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:5
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:3
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:6
@@ -313,9 +313,9 @@ msgstr "Phông chữ"
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:4
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:3
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:7
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:6
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:4
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:2
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:7
@@ -347,13 +347,13 @@ msgid "Pattern"
 msgstr "Mẫu"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:8
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:15
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:14
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:5
 msgid "Shadow X offset"
 msgstr "Hiệu số X bóng"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:9
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:16
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:15
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:6
 msgid "Shadow Y offset"
 msgstr "Hiệu số Y bóng"
@@ -383,9 +383,9 @@ msgstr "Tia cảnh mờ bóng"
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:11
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:13
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:17
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:16
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:9
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:6
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:9
@@ -657,7 +657,7 @@ msgid "B_asic II..."
 msgstr "_Cơ bản 2..."
 
 #: ../plug-ins/script-fu/scripts/beveled-button.scm.h:1
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:1
 msgid "Bevel width"
 msgstr "Độ rộng góc xiên"
@@ -1023,7 +1023,7 @@ msgstr "Tạo hiệu ứng _vải..."
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:1
 msgid ""
 "Darken only\n"
-"(Better, but only for images with alot of white)"
+"(Better, but only for images with a lot of white)"
 msgstr ""
 "Chỉ tối\n"
 "(Tốt hơn, mà chỉ cho ảnh có trắng nhiều)"
@@ -1045,7 +1045,7 @@ msgid "Outline color"
 msgstr "Màu phác họa"
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:10
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:9
 msgid "Outline size"
 msgstr "Cỡ phác họa"
 
@@ -1186,7 +1186,7 @@ msgstr "Mờ dần từ %"
 
 #: ../plug-ins/script-fu/scripts/fade-outline.scm.h:7
 #, no-c-format
-msgid "Fade to   %"
+msgid "Fade to %"
 msgstr "Mờ dần vào %"
 
 #: ../plug-ins/script-fu/scripts/fade-outline.scm.h:8
@@ -1359,55 +1359,51 @@ msgid "_Tube Button Label..."
 msgstr "Nhãn nú_t ống..."
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:2
-msgid "Blend gradient (Text)"
-msgstr "Độ dốc pha trộn (chữ)"
-
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:3
 msgid "Blend gradient (outline)"
 msgstr "Độ dốc pha trộn (phác họa)"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:4
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:3
 msgid "Blend gradient (text)"
 msgstr "Độ dốc pha trộn (chữ)"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:8
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:7
 msgid "Glo_ssy..."
 msgstr "Bóng l_oáng..."
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:9
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:8
 msgid "Outline gradient reverse"
 msgstr "Ngược dốc phác họa"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:11
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:10
 msgid "Pattern (outline)"
 msgstr "Mẫu (phác họa)"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:12
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:11
 msgid "Pattern (overlay)"
 msgstr "Mẫu (phủ)"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:13
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:12
 msgid "Pattern (text)"
 msgstr "Mẫu (chữ)"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:14
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:13
 #: ../plug-ins/script-fu/scripts/sphere.scm.h:4
 msgid "Shadow"
 msgstr "Bóng"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:18
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:17
 msgid "Text gradient reverse"
 msgstr "Ngược dốc chữ"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:19
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:18
 msgid "Use pattern for outline instead of gradient"
 msgstr "Dùng mẫu cho phác họa thay vào độ dốc"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:20
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:19
 msgid "Use pattern for text instead of gradient"
 msgstr "Dùng mẫu cho chữ thay vào độ dốc"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:21
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:20
 msgid "Use pattern overlay"
 msgstr "Dùng mẫu phủ"
 
@@ -1420,20 +1416,16 @@ msgid "Glo_wing Hot..."
 msgstr "Nóng _rực sáng..."
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:2
-msgid "Bevel height (Sharpness)"
-msgstr "Độ cao góc xiên (độ sắc nết)"
-
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
 msgid "Bevel height (sharpness)"
 msgstr "Độ cao góc xiên (độ sắc nết)"
 
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:3
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:2
 msgid "Border size (pixels)"
 msgstr "Cỡ viền (điểm ảnh)"
 
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
 msgid "Gradient Beve_l..."
 msgstr "Góc _xiên dốc..."
 
@@ -1807,6 +1799,7 @@ msgid "Brush name"
 msgstr "Tên bút vẽ"
 
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:2
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
 msgid "File name"
 msgstr "Tên tập tin"
 
@@ -1817,10 +1810,6 @@ msgstr "Đến _bút vẽ..."
 #: ../plug-ins/script-fu/scripts/select-to-image.scm.h:1
 msgid "To _Image"
 msgstr "Đến ản_h"
-
-#: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
-msgid "Filename"
-msgstr "Tên tập tin"
 
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:2
 msgid "Pattern name"
