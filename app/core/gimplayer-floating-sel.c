@@ -524,29 +524,64 @@ floating_sel_boundary (GimpLayer *layer,
 
   if (layer->fs.boundary_known == FALSE)
     {
+      gint width, height;
+      gint off_x, off_y;
+
+      width  = gimp_item_width  (GIMP_ITEM (layer));
+      height = gimp_item_height (GIMP_ITEM (layer));
+      gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
+
       if (layer->fs.segs)
 	g_free (layer->fs.segs);
 
-      /*  find the segments  */
-      pixel_region_init (&bPR, GIMP_DRAWABLE (layer)->tiles,
-			 0, 0,
-			 GIMP_ITEM (layer)->width,
-			 GIMP_ITEM (layer)->height, FALSE);
-      layer->fs.segs = boundary_find (&bPR, BOUNDARY_WITHIN_BOUNDS,
-                                      0, 0,
-                                      GIMP_ITEM (layer)->width,
-                                      GIMP_ITEM (layer)->height,
-                                      BOUNDARY_HALF_WAY,
-                                      &layer->fs.num_segs);
+      if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
+        {
+          /*  find the segments  */
+          pixel_region_init (&bPR, gimp_drawable_data (GIMP_DRAWABLE (layer)),
+                             0, 0, width, height, FALSE);
+          layer->fs.segs = boundary_find (&bPR, BOUNDARY_WITHIN_BOUNDS,
+                                          0, 0, width, height,
+                                          BOUNDARY_HALF_WAY,
+                                          &layer->fs.num_segs);
 
-      /*  offset the segments  */
-      for (i = 0; i < layer->fs.num_segs; i++)
-	{
-	  layer->fs.segs[i].x1 += GIMP_ITEM (layer)->offset_x;
-	  layer->fs.segs[i].y1 += GIMP_ITEM (layer)->offset_y;
-	  layer->fs.segs[i].x2 += GIMP_ITEM (layer)->offset_x;
-	  layer->fs.segs[i].y2 += GIMP_ITEM (layer)->offset_y;
-	}
+          /*  offset the segments  */
+          for (i = 0; i < layer->fs.num_segs; i++)
+            {
+              layer->fs.segs[i].x1 += off_x;
+              layer->fs.segs[i].y1 += off_y;
+              layer->fs.segs[i].x2 += off_x;
+              layer->fs.segs[i].y2 += off_y;
+            }
+        }
+      else
+        {
+          layer->fs.num_segs = 4;
+          layer->fs.segs     = g_new0 (BoundSeg, 4);
+
+          /* top */
+          layer->fs.segs[0].x1 = off_x;
+          layer->fs.segs[0].y1 = off_y;
+          layer->fs.segs[0].x2 = off_x + width;
+          layer->fs.segs[0].y2 = off_y;
+
+          /* left */
+          layer->fs.segs[1].x1 = off_x;
+          layer->fs.segs[1].y1 = off_y;
+          layer->fs.segs[1].x2 = off_x;
+          layer->fs.segs[1].y2 = off_y + height;
+
+          /* right */
+          layer->fs.segs[2].x1 = off_x + width;
+          layer->fs.segs[2].y1 = off_y;
+          layer->fs.segs[2].x2 = off_x + width;
+          layer->fs.segs[2].y2 = off_y + height;
+
+          /* bottom */
+          layer->fs.segs[3].x1 = off_x;
+          layer->fs.segs[3].y1 = off_y + height;
+          layer->fs.segs[3].x2 = off_x + width;
+          layer->fs.segs[3].y2 = off_y + height;
+        }
 
       layer->fs.boundary_known = TRUE;
     }

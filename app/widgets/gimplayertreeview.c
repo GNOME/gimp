@@ -917,17 +917,14 @@ gimp_layer_tree_view_floating_selection_changed (GimpImage         *gimage,
         {
           GimpDrawable *drawable = list->data;
 
-          if (gimp_drawable_has_alpha (drawable))
-            {
-              iter = gimp_container_view_lookup (view,
-                                                 (GimpViewable *) drawable);
+          iter = gimp_container_view_lookup (view, (GimpViewable *) drawable);
 
-              if (iter)
-                gtk_list_store_set (GTK_LIST_STORE (tree_view->model), iter,
-                                    tree_view->model_column_name_attributes,
-                                    NULL,
-                                    -1);
-            }
+          if (iter)
+            gtk_list_store_set (GTK_LIST_STORE (tree_view->model), iter,
+                                tree_view->model_column_name_attributes,
+                                gimp_drawable_has_alpha (drawable) ?
+                                NULL : layer_view->bold_attrs,
+                                -1);
         }
     }
 }

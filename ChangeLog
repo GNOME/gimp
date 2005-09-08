@@ -1,5 +1,18 @@
 2005-09-08  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimplayer-floating-sel.c (floating_sel_boundary): if
+	the floating selection has no alpha, manually create BoundSegs of
+	its outline instead of calling boundary_find() (which creates a
+	boundary of the last channel). Fixes bug #145373.
+
+	* app/widgets/gimplayertreeview.c
+	(gimp_layer_tree_view_floating_selection_changed): update all
+	layer names' text attributes, not only for layers with alpha.
+	Fixes layer name display when making a new layer out of a floating
+	selection without alpha.
+
+2005-09-08  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcontainergridview.c
 	* app/widgets/gimpcontainertreeview.c: allow to popup the context
 	menu from the views' empty area. Fixes bug #314719.
