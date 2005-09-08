@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.gimp-2-0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-01 03:22+0000\n"
-"PO-Revision-Date: 2005-06-24 23:21+0200\n"
+"POT-Creation-Date: 2005-09-03 19:22+0000\n"
+"PO-Revision-Date: 2005-09-08 05:43+0200\n"
 "Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
 "Language-Team: Dutch <nl@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
@@ -52,13 +52,13 @@ msgstr ""
 "Voorkom gegevensverlies en controleer de locatie en rechten van de wisselmap "
 "die in uw Voorkeuren staan ingesteld (momenteel is dit \"%s\")."
 
-#: ../app/app_procs.c:334 ../app/core/gimppalette-import.c:449
+#: ../app/app_procs.c:334 ../app/core/gimppalette-import.c:453
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "Openen van '%s' mislukte: %s"
 
 #: ../app/batch.c:84 ../app/batch.c:101
-#, fuzzy, c-format
+#, c-format
 msgid "The batch interpreter '%s' is not available. Batch mode disabled."
 msgstr ""
 "Het batch interpretatieprogramma '%s' is niet beschikbaar, batch-modus "
@@ -180,7 +180,7 @@ msgstr ""
 
 #. initialize the list of gimp brushes
 #: ../app/actions/actions.c:97 ../app/core/gimp.c:871
-#: ../app/dialogs/dialogs.c:145 ../app/dialogs/preferences-dialog.c:2484
+#: ../app/dialogs/dialogs.c:145 ../app/dialogs/preferences-dialog.c:2505
 #: ../app/pdb/internal_procs.c:93
 msgid "Brushes"
 msgstr "Penselen"
@@ -227,8 +227,8 @@ msgstr "Koppelbaar"
 msgid "Document History"
 msgstr "Documentgeschiedenis"
 
-#: ../app/actions/actions.c:130 ../app/core/core-enums.c:818
-#: ../app/core/core-enums.c:849
+#: ../app/actions/actions.c:130 ../app/core/core-enums.c:819
+#: ../app/core/core-enums.c:850
 msgid "Drawable"
 msgstr "Tekengebied"
 
@@ -246,7 +246,7 @@ msgstr "Bestand"
 
 #. initialize the list of gimp fonts
 #: ../app/actions/actions.c:142 ../app/core/gimp.c:887
-#: ../app/dialogs/dialogs.c:153 ../app/dialogs/preferences-dialog.c:2500
+#: ../app/dialogs/dialogs.c:153 ../app/dialogs/preferences-dialog.c:2521
 #: ../app/pdb/internal_procs.c:129
 msgid "Fonts"
 msgstr "Fonts"
@@ -258,7 +258,7 @@ msgstr "Verloopeditor"
 
 #. initialize the list of gimp gradients
 #: ../app/actions/actions.c:148 ../app/core/gimp.c:883
-#: ../app/dialogs/dialogs.c:149 ../app/dialogs/preferences-dialog.c:2496
+#: ../app/dialogs/dialogs.c:149 ../app/dialogs/preferences-dialog.c:2517
 #: ../app/pdb/internal_procs.c:141
 msgid "Gradients"
 msgstr "Verlopen"
@@ -289,19 +289,19 @@ msgstr "Paleteditor"
 
 #. initialize the list of gimp palettes
 #: ../app/actions/actions.c:166 ../app/core/gimp.c:879
-#: ../app/dialogs/dialogs.c:151 ../app/dialogs/preferences-dialog.c:2492
+#: ../app/dialogs/dialogs.c:151 ../app/dialogs/preferences-dialog.c:2513
 #: ../app/pdb/internal_procs.c:171
 msgid "Palettes"
 msgstr "Paletten"
 
 #. initialize the list of gimp patterns
 #: ../app/actions/actions.c:169 ../app/core/gimp.c:875
-#: ../app/dialogs/dialogs.c:147 ../app/dialogs/preferences-dialog.c:2488
+#: ../app/dialogs/dialogs.c:147 ../app/dialogs/preferences-dialog.c:2509
 #: ../app/pdb/internal_procs.c:186
 msgid "Patterns"
 msgstr "Patronen"
 
-#: ../app/actions/actions.c:172 ../app/dialogs/preferences-dialog.c:2504
+#: ../app/actions/actions.c:172 ../app/dialogs/preferences-dialog.c:2525
 msgid "Plug-Ins"
 msgstr "Plug-ins"
 
@@ -329,7 +329,7 @@ msgid "Text Editor"
 msgstr "Teksteditor"
 
 #: ../app/actions/actions.c:190 ../app/dialogs/dialogs.c:126
-#: ../app/dialogs/preferences-dialog.c:1702 ../app/gui/gui.c:406
+#: ../app/dialogs/preferences-dialog.c:1706 ../app/gui/gui.c:406
 msgid "Tool Options"
 msgstr "Gereedschapsopties"
 
@@ -476,7 +476,7 @@ msgstr "Kanaal dupliceren"
 msgid "_Delete Channel"
 msgstr "Kanaal _verwijderen"
 
-#: ../app/actions/channels-actions.c:73 ../app/core/core-enums.c:869
+#: ../app/actions/channels-actions.c:73 ../app/core/core-enums.c:870
 msgid "Delete channel"
 msgstr "Kanaal verwijderen"
 
@@ -522,7 +522,7 @@ msgstr "Kanaal naar sele_ctie"
 msgid "Channel to selection"
 msgstr "Kanaal naar selectie"
 
-#: ../app/actions/channels-actions.c:111 ../app/actions/layers-actions.c:226
+#: ../app/actions/channels-actions.c:111 ../app/actions/layers-actions.c:229
 #: ../app/actions/vectors-actions.c:173
 msgid "_Add to Selection"
 msgstr "_Aan selectie toevoegen"
@@ -533,8 +533,8 @@ msgid "Add"
 msgstr "Toevoegen"
 
 # afhalen
-#: ../app/actions/channels-actions.c:117 ../app/actions/layers-actions.c:231
-#: ../app/actions/layers-actions.c:254 ../app/actions/vectors-actions.c:179
+#: ../app/actions/channels-actions.c:117 ../app/actions/layers-actions.c:234
+#: ../app/actions/layers-actions.c:257 ../app/actions/vectors-actions.c:179
 msgid "_Subtract from Selection"
 msgstr "Van selectie _aftrekken"
 
@@ -543,8 +543,8 @@ msgstr "Van selectie _aftrekken"
 msgid "Subtract"
 msgstr "Aftrekken"
 
-#: ../app/actions/channels-actions.c:123 ../app/actions/layers-actions.c:236
-#: ../app/actions/layers-actions.c:259 ../app/actions/vectors-actions.c:185
+#: ../app/actions/channels-actions.c:123 ../app/actions/layers-actions.c:239
+#: ../app/actions/layers-actions.c:262 ../app/actions/vectors-actions.c:185
 msgid "_Intersect with Selection"
 msgstr "Met selectie _snijden"
 
@@ -568,7 +568,7 @@ msgstr "Kanaalkleur bewerken"
 #: ../app/actions/channels-commands.c:92
 #: ../app/actions/channels-commands.c:125
 #, fuzzy
-msgid "_Fill Opacity:"
+msgid "_Fill opacity:"
 msgstr "Ondoorzichtigheid van opvullen: "
 
 #: ../app/actions/channels-commands.c:118
@@ -590,13 +590,13 @@ msgstr "Nieuwe kanaalkleur"
 #: ../app/actions/channels-commands.c:245
 #: ../app/display/gimpdisplayshell-dnd.c:496
 #: ../app/widgets/gimpchanneltreeview.c:306
-#: ../app/widgets/gimplayertreeview.c:807 ../app/widgets/gimptoolbox-dnd.c:302
+#: ../app/widgets/gimplayertreeview.c:807 ../app/widgets/gimptoolbox-dnd.c:309
 #, c-format
 msgid "%s Channel Copy"
 msgstr "%s kanaalkopie"
 
 #: ../app/actions/channels-commands.c:310 ../app/core/gimpselection.c:580
-#: ../app/pdb/selection_cmds.c:922 ../app/pdb/selection_cmds.c:1046
+#: ../app/pdb/selection_cmds.c:936 ../app/pdb/selection_cmds.c:1062
 msgid "Channel to Selection"
 msgstr "Kanaal naar selectie"
 
@@ -643,12 +643,11 @@ msgstr "Kleur-paletingang bewerken"
 msgid "_Context"
 msgstr "_Context"
 
-#: ../app/actions/context-actions.c:47 ../app/actions/layers-actions.c:53
-#: ../app/actions/plug-in-actions.c:64
+#: ../app/actions/context-actions.c:47 ../app/actions/image-actions.c:64
 msgid "_Colors"
 msgstr "_Kleuren"
 
-#: ../app/actions/context-actions.c:48 ../app/actions/layers-actions.c:59
+#: ../app/actions/context-actions.c:48 ../app/actions/layers-actions.c:57
 msgid "_Opacity"
 msgstr "_Ondoorzichtigheid"
 
@@ -662,12 +661,12 @@ msgid "_Tool"
 msgstr "_Gereedschap"
 
 #: ../app/actions/context-actions.c:51
-#: ../app/dialogs/preferences-dialog.c:1760
+#: ../app/dialogs/preferences-dialog.c:1766
 msgid "_Brush"
 msgstr "Pe_nseel"
 
-#: ../app/actions/context-actions.c:52 ../app/actions/plug-in-actions.c:77
-#: ../app/dialogs/preferences-dialog.c:1763
+#: ../app/actions/context-actions.c:52 ../app/actions/plug-in-actions.c:75
+#: ../app/dialogs/preferences-dialog.c:1769
 msgid "_Pattern"
 msgstr "_Patroon"
 
@@ -677,7 +676,7 @@ msgstr "Pa_let"
 
 #: ../app/actions/context-actions.c:54
 #: ../app/dialogs/palette-import-dialog.c:226
-#: ../app/dialogs/preferences-dialog.c:1766
+#: ../app/dialogs/preferences-dialog.c:1772
 msgid "_Gradient"
 msgstr "_Verloop"
 
@@ -733,6 +732,7 @@ msgstr "Samengevoegd monsteren"
 
 #: ../app/actions/cursor-info-actions.c:48
 #: ../app/actions/sample-point-editor-actions.c:48
+#: ../app/tools/gimpclonetool.c:344
 #, fuzzy
 msgid "Sample Merged"
 msgstr "Samengevoegd monsteren"
@@ -757,7 +757,7 @@ msgstr ""
 #: ../app/actions/data-commands.c:126 ../app/core/gimpimage.c:1349
 #: ../app/core/gimppalette-import.c:221 ../app/core/gimppalette.c:517
 #: ../app/core/gimppalette.c:627 ../app/dialogs/palette-import-dialog.c:692
-#: ../app/pdb/image_cmds.c:3838 ../app/widgets/gimpdnd-xds.c:83
+#: ../app/pdb/image_cmds.c:3892 ../app/widgets/gimpdnd-xds.c:83
 msgid "Untitled"
 msgstr "Naamloos"
 
@@ -1056,7 +1056,7 @@ msgstr "Locatie openen"
 
 #: ../app/actions/documents-actions.c:65
 msgid "Copy image location to clipboard"
-msgstr ""
+msgstr "Kopieer de locatie van de afbeelding naar het klembord"
 
 #: ../app/actions/documents-actions.c:70
 msgid "Remove _Entry"
@@ -1146,24 +1146,24 @@ msgstr "_Gekoppeld"
 msgid "_Visible"
 msgstr "_Zichtbaar"
 
-#: ../app/actions/drawable-actions.c:88 ../app/actions/image-actions.c:146
+#: ../app/actions/drawable-actions.c:88 ../app/actions/image-actions.c:152
 msgid "Flip _Horizontally"
 msgstr "_Horizontaal spiegelen"
 
-#: ../app/actions/drawable-actions.c:93 ../app/actions/image-actions.c:151
+#: ../app/actions/drawable-actions.c:93 ../app/actions/image-actions.c:157
 msgid "Flip _Vertically"
 msgstr "_Verticaal spiegelen"
 
 #. please use the degree symbol in the translation
-#: ../app/actions/drawable-actions.c:101 ../app/actions/image-actions.c:160
+#: ../app/actions/drawable-actions.c:101 ../app/actions/image-actions.c:166
 msgid "Rotate 90 degrees _CW"
 msgstr "_90 graden draaien MKM"
 
-#: ../app/actions/drawable-actions.c:106 ../app/actions/image-actions.c:165
+#: ../app/actions/drawable-actions.c:106 ../app/actions/image-actions.c:171
 msgid "Rotate _180 degrees"
 msgstr "_180 graden draaien"
 
-#: ../app/actions/drawable-actions.c:111 ../app/actions/image-actions.c:170
+#: ../app/actions/drawable-actions.c:111 ../app/actions/image-actions.c:176
 msgid "Rotate 90 degrees CC_W"
 msgstr "90 graden draaien _TKI"
 
@@ -1297,27 +1297,27 @@ msgstr ""
 "Het wissen van de 'ongedaan maken' buffer voor deze afbeelding zal %s "
 "geheugen vrijmaken."
 
-#: ../app/actions/edit-commands.c:244
+#: ../app/actions/edit-commands.c:253
 msgid "Cut Named"
 msgstr "Benoemde buffer knippen"
 
-#: ../app/actions/edit-commands.c:247 ../app/actions/edit-commands.c:267
+#: ../app/actions/edit-commands.c:256 ../app/actions/edit-commands.c:276
 msgid "Enter a name for this buffer"
 msgstr "Geef een naam voor deze buffer"
 
-#: ../app/actions/edit-commands.c:264
+#: ../app/actions/edit-commands.c:273
 msgid "Copy Named"
 msgstr "Benoemde buffer kopiëren"
 
-#: ../app/actions/edit-commands.c:377
+#: ../app/actions/edit-commands.c:385
 msgid "There is no active layer or channel to cut from."
 msgstr "Er is geen actieve laag of kanaal om van te knippen."
 
-#: ../app/actions/edit-commands.c:389 ../app/actions/edit-commands.c:426
+#: ../app/actions/edit-commands.c:390 ../app/actions/edit-commands.c:416
 msgid "(Unnamed Buffer)"
 msgstr "(Naamloze buffer)"
 
-#: ../app/actions/edit-commands.c:414
+#: ../app/actions/edit-commands.c:411
 msgid "There is no active layer or channel to copy from."
 msgstr "Er is geen actieve laag of kanaal om van te kopiëren."
 
@@ -1411,9 +1411,8 @@ msgid "Save as _Template..."
 msgstr "Opslaan als s_jabloon..."
 
 #: ../app/actions/file-actions.c:106
-#, fuzzy
 msgid "Re_vert"
-msgstr "Terugdraaien"
+msgstr "_Terugdraaien"
 
 #: ../app/actions/file-actions.c:111
 msgid "_Quit"
@@ -1597,7 +1596,7 @@ msgid "(Varies)"
 msgstr "(Varieert)"
 
 #: ../app/actions/gradient-editor-actions.c:277
-#: ../app/actions/image-actions.c:128
+#: ../app/actions/image-actions.c:134
 msgid "_RGB"
 msgstr "_RGB"
 
@@ -1830,7 +1829,7 @@ msgid "Save gradient as POV-Ray"
 msgstr "Verloop opslaan als POV-Ray"
 
 #: ../app/actions/gradients-actions.c:66
-msgid "_Delete Gradient..."
+msgid "_Delete Gradient"
 msgstr "_Verloop verwijderen... "
 
 #: ../app/actions/gradients-actions.c:67
@@ -1878,15 +1877,11 @@ msgstr "Afbeeldingsmenu"
 msgid "_Xtns"
 msgstr "_Xtra"
 
-#: ../app/actions/image-actions.c:59
+#: ../app/actions/image-actions.c:60
 msgid "_Image"
 msgstr "_Afbeelding"
 
-#: ../app/actions/image-actions.c:60
-msgid "_Mode"
-msgstr "_Modus"
-
-#: ../app/actions/image-actions.c:61 ../app/actions/layers-actions.c:57
+#: ../app/actions/image-actions.c:61 ../app/actions/layers-actions.c:55
 msgid "_Transform"
 msgstr "_Transformeren"
 
@@ -1894,103 +1889,120 @@ msgstr "_Transformeren"
 msgid "_Guides"
 msgstr "_Hulplijn"
 
-#: ../app/actions/image-actions.c:65 ../app/actions/image-actions.c:70
+#: ../app/actions/image-actions.c:65
+msgid "_Image Mode"
+msgstr "_Afbeelding-modus"
+
+#: ../app/actions/image-actions.c:66 ../app/tools/gimplevelstool.c:648
+msgid "_Auto"
+msgstr "_Automatisch"
+
+#: ../app/actions/image-actions.c:67
+msgid "Ma_p"
+msgstr "_Projecteren"
+
+# frame for Comment
+#: ../app/actions/image-actions.c:68
+msgid "_Components"
+msgstr "_Componenten"
+
+#: ../app/actions/image-actions.c:71 ../app/actions/image-actions.c:76
 msgid "_New..."
 msgstr "_Nieuw..."
 
-#: ../app/actions/image-actions.c:75
+#: ../app/actions/image-actions.c:81
 msgid "Can_vas Size..."
 msgstr "Can_vasgrootte"
 
-#: ../app/actions/image-actions.c:80
+#: ../app/actions/image-actions.c:86
 msgid "F_it Canvas to Layers"
 msgstr "Canvas laten _passen op lagen"
 
-#: ../app/actions/image-actions.c:85
+#: ../app/actions/image-actions.c:91
 msgid "_Print Size..."
 msgstr "A_fdrukgrootte..."
 
-#: ../app/actions/image-actions.c:90
+#: ../app/actions/image-actions.c:96
 msgid "_Scale Image..."
 msgstr "Afbeelding _schalen..."
 
-#: ../app/actions/image-actions.c:95
+#: ../app/actions/image-actions.c:101
 msgid "_Crop Image"
 msgstr "Afbeelding _snijden"
 
-#: ../app/actions/image-actions.c:100
+#: ../app/actions/image-actions.c:106
 msgid "_Duplicate"
 msgstr "_Dupliceren"
 
-#: ../app/actions/image-actions.c:105
+#: ../app/actions/image-actions.c:111
 msgid "Merge Visible _Layers..."
 msgstr "_Zichtbare lagen samenvoegen..."
 
-#: ../app/actions/image-actions.c:110 ../app/actions/layers-actions.c:138
+#: ../app/actions/image-actions.c:116 ../app/actions/layers-actions.c:136
 msgid "_Flatten Image"
 msgstr "Afbeelding _pletten"
 
-#: ../app/actions/image-actions.c:115
+#: ../app/actions/image-actions.c:121
 msgid "Configure G_rid..."
 msgstr "_Raster instellen..."
 
-#: ../app/actions/image-actions.c:120
+# Image niet meevertalen?
+#: ../app/actions/image-actions.c:126
 #: ../app/dialogs/image-properties-dialog.c:54
 #: ../app/dialogs/image-properties-dialog.c:57
-#, fuzzy
 msgid "Image Properties"
-msgstr "Eigenschappen item"
+msgstr "Afbeelding eigenschappen"
 
-#: ../app/actions/image-actions.c:133
+#: ../app/actions/image-actions.c:139
 msgid "_Grayscale"
 msgstr "_Grijswaarden"
 
-#: ../app/actions/image-actions.c:138
+#: ../app/actions/image-actions.c:144
 msgid "_Indexed..."
 msgstr "Geï_ndexeerd"
 
 # image niet meevertaald
-#: ../app/actions/image-commands.c:194
+#: ../app/actions/image-commands.c:201
 msgid "Set Image Canvas Size"
 msgstr "Canvasgrootte instellen"
 
-#: ../app/actions/image-commands.c:221 ../app/actions/image-commands.c:475
+#: ../app/actions/image-commands.c:228 ../app/actions/image-commands.c:487
 msgid "Resizing..."
 msgstr "Herschalen..."
 
 # image niet meevertaald
-#: ../app/actions/image-commands.c:244
+#: ../app/actions/image-commands.c:251
 msgid "Set Image Print Resolution"
 msgstr "Afdrukresolutie instellen"
 
-#: ../app/actions/image-commands.c:291
+#: ../app/actions/image-commands.c:298
 msgid "Flipping..."
 msgstr "Spiegelen..."
 
-#: ../app/actions/image-commands.c:312
-#: ../app/pdb/drawable_transform_cmds.c:1037
-#: ../app/pdb/drawable_transform_cmds.c:1195
-#: ../app/pdb/transform_tools_cmds.c:341 ../app/tools/gimprotatetool.c:159
+#: ../app/actions/image-commands.c:319
+#: ../app/pdb/drawable_transform_cmds.c:1043
+#: ../app/pdb/drawable_transform_cmds.c:1202
+#: ../app/pdb/transform_tools_cmds.c:343 ../app/tools/gimprotatetool.c:159
 msgid "Rotating..."
 msgstr "Roteren..."
 
-#: ../app/actions/image-commands.c:334 ../app/actions/layers-commands.c:537
+#: ../app/actions/image-commands.c:341 ../app/actions/layers-commands.c:545
 msgid "Cannot crop because the current selection is empty."
 msgstr "Kan niet snijden, omdat de huidige selectie leeg is."
 
-#: ../app/actions/image-commands.c:511
+#: ../app/actions/image-commands.c:523
 msgid "Change Print Size"
 msgstr "Afdrukgrootte wijzigen"
 
-#: ../app/actions/image-commands.c:535 ../app/core/gimpimage-scale.c:72
-#: ../app/dialogs/image-scale-dialog.c:91
+#: ../app/actions/image-commands.c:547 ../app/core/gimpimage-scale.c:72
+#: ../app/dialogs/image-scale-dialog.c:97
 msgid "Scale Image"
 msgstr "Afbeelding schalen"
 
-#: ../app/actions/image-commands.c:548 ../app/actions/layers-commands.c:961
-#: ../app/pdb/drawable_transform_cmds.c:1349
-#: ../app/pdb/drawable_transform_cmds.c:1507
-#: ../app/pdb/transform_tools_cmds.c:461 ../app/tools/gimpscaletool.c:153
+#: ../app/actions/image-commands.c:560 ../app/actions/layers-commands.c:988
+#: ../app/pdb/drawable_transform_cmds.c:1357
+#: ../app/pdb/drawable_transform_cmds.c:1516
+#: ../app/pdb/transform_tools_cmds.c:464 ../app/tools/gimpscaletool.c:153
 msgid "Scaling..."
 msgstr "Schalen..."
 
@@ -2036,252 +2048,249 @@ msgstr "_Laag"
 msgid "Stac_k"
 msgstr "_Stapel"
 
-#: ../app/actions/layers-actions.c:54 ../app/tools/gimplevelstool.c:648
-msgid "_Auto"
-msgstr "_Automatisch"
-
 # maskeren
-#: ../app/actions/layers-actions.c:55
+#: ../app/actions/layers-actions.c:53
 msgid "_Mask"
 msgstr "_Masker"
 
-#: ../app/actions/layers-actions.c:56
+#: ../app/actions/layers-actions.c:54
 msgid "Tr_ansparency"
 msgstr "Tr_ansparantie"
 
-#: ../app/actions/layers-actions.c:58
+#: ../app/actions/layers-actions.c:56
 msgid "_Properties"
 msgstr "_Eigenschappen"
 
-#: ../app/actions/layers-actions.c:60
+#: ../app/actions/layers-actions.c:58
 msgid "Layer _Mode"
 msgstr "Laag_modus"
 
 # Attention! Singular in Dutch!
 # Tool niet meevertaald
-#: ../app/actions/layers-actions.c:63
+#: ../app/actions/layers-actions.c:61
 msgid "Te_xt Tool"
 msgstr "_Tekst"
 
-#: ../app/actions/layers-actions.c:68
+#: ../app/actions/layers-actions.c:66
 msgid "_Edit Layer Attributes..."
 msgstr "Laagattributen be_werken..."
 
-#: ../app/actions/layers-actions.c:69
+#: ../app/actions/layers-actions.c:67
 msgid "Edit layer attributes"
 msgstr "Laagattributen bewerken"
 
-#: ../app/actions/layers-actions.c:74
+#: ../app/actions/layers-actions.c:72
 msgid "_New Layer..."
 msgstr "_Nieuwe laag..."
 
-#: ../app/actions/layers-actions.c:75
+#: ../app/actions/layers-actions.c:73
 msgid "New layer..."
 msgstr "Nieuwe laag..."
 
-#: ../app/actions/layers-actions.c:80
+#: ../app/actions/layers-actions.c:78
 msgid "_New Layer"
 msgstr "_Nieuwe laag"
 
-#: ../app/actions/layers-actions.c:81
+#: ../app/actions/layers-actions.c:79
 msgid "New layer with last values"
 msgstr "Nieuwe laag met laatste waardes"
 
-#: ../app/actions/layers-actions.c:86
+#: ../app/actions/layers-actions.c:84
 msgid "D_uplicate Layer"
 msgstr "Laag d_upliceren"
 
-#: ../app/actions/layers-actions.c:87
+#: ../app/actions/layers-actions.c:85
 msgid "Duplicate layer"
 msgstr "Laag dupliceren"
 
-#: ../app/actions/layers-actions.c:92
+#: ../app/actions/layers-actions.c:90
 msgid "_Delete Layer"
 msgstr "Laag _verwijderen"
 
-#: ../app/actions/layers-actions.c:93 ../app/core/core-enums.c:857
+#: ../app/actions/layers-actions.c:91 ../app/core/core-enums.c:858
 msgid "Delete layer"
 msgstr "Laag verwijderen"
 
-#: ../app/actions/layers-actions.c:98
+#: ../app/actions/layers-actions.c:96
 msgid "_Raise Layer"
 msgstr "Laag om_hoog"
 
-#: ../app/actions/layers-actions.c:99
+#: ../app/actions/layers-actions.c:97
 msgid "Raise layer"
 msgstr "Laag omhoog"
 
-#: ../app/actions/layers-actions.c:104
+#: ../app/actions/layers-actions.c:102
 msgid "Layer to _Top"
 msgstr "Laag _bovenaan"
 
-#: ../app/actions/layers-actions.c:105
+#: ../app/actions/layers-actions.c:103
 msgid "Raise layer to top"
 msgstr "Laag bovenaan zetten"
 
-#: ../app/actions/layers-actions.c:110
+#: ../app/actions/layers-actions.c:108
 msgid "_Lower Layer"
 msgstr "Laag om_laag"
 
-#: ../app/actions/layers-actions.c:111
+#: ../app/actions/layers-actions.c:109
 msgid "Lower layer"
 msgstr "Laag omlaag"
 
-#: ../app/actions/layers-actions.c:116
+#: ../app/actions/layers-actions.c:114
 msgid "Layer to _Bottom"
 msgstr "Laag _onderaan"
 
-#: ../app/actions/layers-actions.c:117
+#: ../app/actions/layers-actions.c:115
 msgid "Lower layer to bottom"
 msgstr "Laag onderaan zetten"
 
-#: ../app/actions/layers-actions.c:122
+#: ../app/actions/layers-actions.c:120
 msgid "_Anchor Layer"
 msgstr "Laag ver_ankeren"
 
-#: ../app/actions/layers-actions.c:123
+#: ../app/actions/layers-actions.c:121
 msgid "Anchor floating layer"
 msgstr "Drijvende laag verankeren"
 
-#: ../app/actions/layers-actions.c:128
+# de N wordt gebruikt voor Nieuwe laag
+#: ../app/actions/layers-actions.c:126
 msgid "Merge Do_wn"
-msgstr "_Neerwaarts samenvoegen"
+msgstr "N_eerwaarts samenvoegen"
 
-#: ../app/actions/layers-actions.c:133
+#: ../app/actions/layers-actions.c:131
 msgid "Merge _Visible Layers..."
 msgstr "_Zichtbare lagen samenvoegen..."
 
-#: ../app/actions/layers-actions.c:143
+#: ../app/actions/layers-actions.c:141
 msgid "_Discard Text Information"
 msgstr "Tekstinformatie weggooien"
 
 # begrenzing/grens
-#: ../app/actions/layers-actions.c:148
+#: ../app/actions/layers-actions.c:146
 msgid "Layer B_oundary Size..."
 msgstr "Laag _grensgrootte..."
 
-#: ../app/actions/layers-actions.c:153
+#: ../app/actions/layers-actions.c:151
 msgid "Layer to _Image Size"
 msgstr "Laag naar _afbeeldingsgrootte"
 
-#: ../app/actions/layers-actions.c:158
+#: ../app/actions/layers-actions.c:156
 msgid "_Scale Layer..."
 msgstr "Laag _schalen..."
 
-#: ../app/actions/layers-actions.c:163
+#: ../app/actions/layers-actions.c:161
 msgid "Cr_op Layer"
 msgstr "Laag s_nijden"
 
-#: ../app/actions/layers-actions.c:168
+#: ../app/actions/layers-actions.c:166
 msgid "Add La_yer Mask..."
 msgstr "Laagmasker _toevoegen..."
 
-#: ../app/actions/layers-actions.c:173
+#: ../app/actions/layers-actions.c:171
 msgid "Add Alpha C_hannel"
 msgstr "Al_phakanaal toevoegen"
 
-#: ../app/actions/layers-actions.c:181
-#, fuzzy
+#: ../app/actions/layers-actions.c:176
+msgid "_Remove Alpha Channel"
+msgstr "_Alphakanaal verwijderen"
+
+#: ../app/actions/layers-actions.c:184
 msgid "Lock Alph_a Channel"
-msgstr "Alphakanaal toevoegen"
+msgstr "Al_phakanaal vergrendelen"
 
-#: ../app/actions/layers-actions.c:187
-#, fuzzy
+#: ../app/actions/layers-actions.c:190
 msgid "_Edit Layer Mask"
-msgstr "Laagmaskter bewerken"
+msgstr "Laagmasker be_werken"
 
-#: ../app/actions/layers-actions.c:193
-#, fuzzy
+#: ../app/actions/layers-actions.c:196
 msgid "S_how Layer Mask"
-msgstr "Laagmasker tonen"
+msgstr "_Laagmasker tonen"
 
-#: ../app/actions/layers-actions.c:199
-#, fuzzy
+#: ../app/actions/layers-actions.c:202
 msgid "_Disable Layer Mask"
-msgstr "Laagmasker uitzetten"
+msgstr "Laagmasker _uitzetten"
 
-#: ../app/actions/layers-actions.c:208
+#: ../app/actions/layers-actions.c:211
 msgid "Apply Layer _Mask"
 msgstr "Laag_masker toepassen"
 
-#: ../app/actions/layers-actions.c:213
+#: ../app/actions/layers-actions.c:216
 msgid "Delete Layer Mas_k"
 msgstr "Laagmasker _verwijderen"
 
-#: ../app/actions/layers-actions.c:221
+#: ../app/actions/layers-actions.c:224
 msgid "_Mask to Selection"
 msgstr "_Masker naar selectie"
 
-#: ../app/actions/layers-actions.c:244
+#: ../app/actions/layers-actions.c:247
 msgid "Al_pha to Selection"
 msgstr "Al_pha naar selectie"
 
 # Bij selectie optellen/toevoegen aan selectie
-#: ../app/actions/layers-actions.c:249
+#: ../app/actions/layers-actions.c:252
 msgid "A_dd to Selection"
 msgstr "_Toevoegan aan selectie"
 
-#: ../app/actions/layers-actions.c:267
+#: ../app/actions/layers-actions.c:270
 msgid "Select _Top Layer"
 msgstr "_Bovenste laag selecteren"
 
-#: ../app/actions/layers-actions.c:272
+#: ../app/actions/layers-actions.c:275
 msgid "Select _Bottom Layer"
 msgstr "O_nderste laag selecteren"
 
-#: ../app/actions/layers-actions.c:277
+#: ../app/actions/layers-actions.c:280
 msgid "Select _Previous Layer"
 msgstr "_Vorige laag selecteren"
 
-#: ../app/actions/layers-actions.c:282
+#: ../app/actions/layers-actions.c:285
 msgid "Select _Next Layer"
 msgstr "V_olgende laag selecteren"
 
-#: ../app/actions/layers-actions.c:290
+#: ../app/actions/layers-actions.c:293
 msgid "Set Opacity"
 msgstr "Ondoorzichtigheid instellen"
 
-#: ../app/actions/layers-commands.c:198
+#: ../app/actions/layers-commands.c:199
 msgid "Layer Attributes"
 msgstr "Laagattributen"
 
-#: ../app/actions/layers-commands.c:201
+#: ../app/actions/layers-commands.c:202
 msgid "Edit Layer Attributes"
 msgstr "Laagattributen bewerken"
 
-#: ../app/actions/layers-commands.c:234 ../app/actions/layers-commands.c:236
-#: ../app/actions/layers-commands.c:293 ../app/actions/layers-commands.c:297
+#: ../app/actions/layers-commands.c:235 ../app/actions/layers-commands.c:237
+#: ../app/actions/layers-commands.c:294 ../app/actions/layers-commands.c:298
 #: ../app/widgets/gimpdrawabletreeview.c:361
 #: ../app/widgets/gimplayertreeview.c:871
 msgid "New Layer"
 msgstr "Nieuwe laag"
 
-#: ../app/actions/layers-commands.c:239
+#: ../app/actions/layers-commands.c:240
 msgid "Create a New Layer"
 msgstr "Maak nieuwe laag aan"
 
-#: ../app/actions/layers-commands.c:472
+#: ../app/actions/layers-commands.c:479
 msgid "Set Layer Boundary Size"
 msgstr "Laaggrensgrootte instellen"
 
-#: ../app/actions/layers-commands.c:514 ../app/core/gimplayer.c:286
+#: ../app/actions/layers-commands.c:522 ../app/core/gimplayer.c:286
 msgid "Scale Layer"
 msgstr "Laag schalen"
 
-#: ../app/actions/layers-commands.c:547
+#: ../app/actions/layers-commands.c:555
 msgid "Crop Layer"
 msgstr "Laag snijden"
 
-#: ../app/actions/layers-commands.c:685
+#: ../app/actions/layers-commands.c:693
 msgid "Layer Mask to Selection"
 msgstr "Laagmasker naar selectie"
 
-#: ../app/actions/layers-commands.c:906 ../app/core/gimplayer.c:1287
+#: ../app/actions/layers-commands.c:929 ../app/core/gimplayer.c:1293
 #: ../app/dialogs/layer-add-mask-dialog.c:61
 msgid "Add Layer Mask"
 msgstr "Laagmaskter toevoegen"
 
-#: ../app/actions/layers-commands.c:977 ../app/actions/layers-commands.c:1010
+#: ../app/actions/layers-commands.c:1004 ../app/actions/layers-commands.c:1042
 msgid "Invalid width or height. Both must be positive."
 msgstr "Ongeldige breedte of hoogte. Beiden moeten positief zijn."
 
@@ -2409,14 +2418,12 @@ msgid "Patterns Menu"
 msgstr "Menu Patronen"
 
 #: ../app/actions/patterns-actions.c:47
-#, fuzzy
 msgid "_Open Pattern as Image"
-msgstr "Afbeelding _pletten"
+msgstr "Patroon _openen als afbeelding"
 
 #: ../app/actions/patterns-actions.c:48
-#, fuzzy
 msgid "Open pattern as image"
-msgstr "Open het patroonkeuzedialoogvenster"
+msgstr "Patroon openen als afbeelding"
 
 #: ../app/actions/patterns-actions.c:53
 msgid "_New Pattern"
@@ -2435,8 +2442,8 @@ msgid "Duplicate pattern"
 msgstr "Patroon dupliceren"
 
 #: ../app/actions/patterns-actions.c:65
-msgid "_Delete Pattern..."
-msgstr "Patroon verwij_deren..."
+msgid "_Delete Pattern"
+msgstr "Patroon verwij_deren"
 
 #: ../app/actions/patterns-actions.c:66
 msgid "Delete pattern"
@@ -2466,95 +2473,91 @@ msgstr "Filte_rs"
 msgid "_Blur"
 msgstr "_Vervagen"
 
-#: ../app/actions/plug-in-actions.c:65
-msgid "Ma_p"
-msgstr "_Projecteren"
-
-#: ../app/actions/plug-in-actions.c:66
+#: ../app/actions/plug-in-actions.c:64
 msgid "_Noise"
 msgstr "_Ruis"
 
-#: ../app/actions/plug-in-actions.c:67
+#: ../app/actions/plug-in-actions.c:65
 msgid "Edge-De_tect"
 msgstr "R_anden"
 
 # verbeteren/versterken/verscherpen
-#: ../app/actions/plug-in-actions.c:68
+#: ../app/actions/plug-in-actions.c:66
 msgid "En_hance"
 msgstr "Ver_sterken"
 
-#: ../app/actions/plug-in-actions.c:69
+#: ../app/actions/plug-in-actions.c:67
 msgid "_Effects"
 msgstr "_Effecten"
 
-#: ../app/actions/plug-in-actions.c:70
+#: ../app/actions/plug-in-actions.c:68
 msgid "_Light and Shadow"
 msgstr "_Licht en schaduw"
 
-#: ../app/actions/plug-in-actions.c:71
+#: ../app/actions/plug-in-actions.c:69
 msgid "_Distorts"
 msgstr "_Vervormingen"
 
-#: ../app/actions/plug-in-actions.c:72
+#: ../app/actions/plug-in-actions.c:70
 msgid "_Artistic"
 msgstr "_Artistiek"
 
-#: ../app/actions/plug-in-actions.c:73
+#: ../app/actions/plug-in-actions.c:71
 msgid "_Map"
 msgstr "Pro_jecties"
 
 # betere vertaling?
-#: ../app/actions/plug-in-actions.c:74
+#: ../app/actions/plug-in-actions.c:72
 msgid "_Render"
 msgstr "_Renderen"
 
-#: ../app/actions/plug-in-actions.c:75
+#: ../app/actions/plug-in-actions.c:73
 msgid "_Clouds"
 msgstr "W_olken"
 
-#: ../app/actions/plug-in-actions.c:76
+#: ../app/actions/plug-in-actions.c:74
 msgid "_Nature"
 msgstr "_Natuur"
 
-#: ../app/actions/plug-in-actions.c:78
+#: ../app/actions/plug-in-actions.c:76
 msgid "_Web"
 msgstr "_Web"
 
-#: ../app/actions/plug-in-actions.c:79
+#: ../app/actions/plug-in-actions.c:77
 msgid "An_imation"
 msgstr "Ani_matie"
 
-#: ../app/actions/plug-in-actions.c:80
+#: ../app/actions/plug-in-actions.c:78
 msgid "C_ombine"
 msgstr "_Combineren"
 
-#: ../app/actions/plug-in-actions.c:83
+#: ../app/actions/plug-in-actions.c:81
 msgid "Reset all _Filters"
 msgstr "Alle _filters herstellen"
 
-#: ../app/actions/plug-in-actions.c:91
+#: ../app/actions/plug-in-actions.c:89
 msgid "Re_peat Last"
 msgstr "L_aatste herhalen"
 
-#: ../app/actions/plug-in-actions.c:96
+#: ../app/actions/plug-in-actions.c:94
 msgid "R_e-Show Last"
 msgstr "Laatste _opnieuw tonen"
 
-#: ../app/actions/plug-in-actions.c:393
+#: ../app/actions/plug-in-actions.c:391
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "\"%s\" _herhalen"
 
-#: ../app/actions/plug-in-actions.c:394
+#: ../app/actions/plug-in-actions.c:392
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "\"%s\" opnieu_w tonen"
 
-#: ../app/actions/plug-in-actions.c:407
+#: ../app/actions/plug-in-actions.c:405
 msgid "Repeat Last"
 msgstr "Laatste herhalen"
 
-#: ../app/actions/plug-in-actions.c:409
+#: ../app/actions/plug-in-actions.c:407
 msgid "Re-Show Last"
 msgstr "Laatste opnieuw tonen"
 
@@ -2602,10 +2605,10 @@ msgstr "Snelmaskerattributen bewerken"
 msgid "Edit Quick Mask Color"
 msgstr "Snelmaskerkleur bewerken"
 
+# maskerondoorzichtigheid/ondoorzichtigheid van masker
 #: ../app/actions/qmask-commands.c:112
-#, fuzzy
-msgid "_Mask Opacity:"
-msgstr "Ondoorzichtigheid van masker:"
+msgid "_Mask opacity:"
+msgstr "Ondoorzichtigheid van _masker:"
 
 #: ../app/actions/sample-point-editor-actions.c:40
 #, fuzzy
@@ -2818,7 +2821,7 @@ msgid "Load text from file"
 msgstr "Tekst uit bestand laden"
 
 # wissen
-#: ../app/actions/text-editor-actions.c:50 ../app/core/gimp-edit.c:342
+#: ../app/actions/text-editor-actions.c:50 ../app/core/gimp-edit.c:432
 msgid "Clear"
 msgstr "Leegmaken"
 
@@ -2852,7 +2855,7 @@ msgstr "Open tekstbestand (UTF-8)"
 #: ../app/core/gimpbrush-load.c:395 ../app/core/gimpbrushgenerated.c:594
 #: ../app/core/gimpbrushpipe.c:331 ../app/core/gimpgradient-load.c:62
 #: ../app/core/gimppalette.c:358 ../app/core/gimppattern.c:297
-#: ../app/tools/gimpimagemaptool.c:614 ../app/xcf/xcf.c:293
+#: ../app/tools/gimpimagemaptool.c:612 ../app/xcf/xcf.c:295
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Kon '%s' niet openen voor lezen: %s"
@@ -2863,11 +2866,12 @@ msgstr "Menu Gereedschapsopties"
 
 # opslaan in/opslaan naar
 #: ../app/actions/tool-options-actions.c:60
-msgid "_Save Options to"
+msgid "_Save Options To"
 msgstr "Opties op_slaan naar"
 
+# vanaf/vanuit/uit
 #: ../app/actions/tool-options-actions.c:64
-msgid "_Restore Options from"
+msgid "_Restore Options From"
 msgstr "Opties he_rstellen uit"
 
 #: ../app/actions/tool-options-actions.c:68
@@ -3154,7 +3158,7 @@ msgstr "Pad e_xporteren..."
 msgid "Path to Sele_ction"
 msgstr "Pad naar sele_ctie"
 
-#: ../app/actions/vectors-actions.c:163 ../app/tools/gimpvectortool.c:1882
+#: ../app/actions/vectors-actions.c:163 ../app/tools/gimpvectortool.c:1905
 msgid "Path to selection"
 msgstr "Pad naar selectie"
 
@@ -3199,12 +3203,12 @@ msgstr "Nieuw pad"
 msgid "New Path Options"
 msgstr "Opties nieuw pad"
 
-#: ../app/actions/vectors-commands.c:299 ../app/pdb/paths_cmds.c:1212
+#: ../app/actions/vectors-commands.c:299 ../app/pdb/paths_cmds.c:1225
 msgid "Path to Selection"
 msgstr "Pad naar selectie"
 
-#: ../app/actions/vectors-commands.c:370 ../app/tools/gimpvectortool.c:1912
-#: ../app/vectors/gimpvectors.c:237
+#: ../app/actions/vectors-commands.c:370 ../app/tools/gimpvectoroptions.c:205
+#: ../app/tools/gimpvectortool.c:1935 ../app/vectors/gimpvectors.c:237
 msgid "Stroke Path"
 msgstr "Pad naar lijn"
 
@@ -3216,10 +3220,9 @@ msgstr "Beel_d"
 msgid "_Zoom"
 msgstr "_Zoomen"
 
-# vorige vertaling Eigen opvulkleur:
 #: ../app/actions/view-actions.c:66
 msgid "_Padding Color"
-msgstr ""
+msgstr "_Opvulkleur"
 
 #: ../app/actions/view-actions.c:68
 msgid "Move to Screen"
@@ -3555,8 +3558,8 @@ msgstr ""
 #: ../app/config/gimpconfig-file.c:66 ../app/core/gimpbrushgenerated.c:254
 #: ../app/core/gimpgradient-save.c:51 ../app/core/gimpgradient-save.c:142
 #: ../app/core/gimppalette.c:561 ../app/gui/themes.c:238
-#: ../app/tools/gimpimagemaptool.c:613 ../app/vectors/gimpvectors-export.c:83
-#: ../app/xcf/xcf.c:350
+#: ../app/tools/gimpimagemaptool.c:611 ../app/vectors/gimpvectors-export.c:83
+#: ../app/xcf/xcf.c:352
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Kon '%s' niet openen voor schrijven: %s"
@@ -3628,7 +3631,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:36
 msgid "Sets the pixel format of cursors the GIMP will use."
-msgstr "Steld het pixelformaat in van de cursors die GIMP gebruikt."
+msgstr "Stelt het pixelformaat in van de cursors die GIMP gebruikt."
 
 #: ../app/config/gimprc-blurbs.h:39
 msgid "Sets the mode of cursor the GIMP will use."
@@ -4157,7 +4160,7 @@ msgstr "waarde voor token %s is geen geldige UTF-8-tekenreeks"
 #. no undo (or redo) steps available
 #: ../app/core/core-enums.c:53 ../app/core/core-enums.c:204
 #: ../app/core/core-enums.c:490 ../app/tools/gimptransformoptions.c:456
-#: ../app/widgets/gimpimagepropview.c:323
+#: ../app/widgets/gimpimagepropview.c:328
 msgid "None"
 msgstr "Geen"
 
@@ -4203,7 +4206,7 @@ msgid "White"
 msgstr "Wit"
 
 #. Transparency
-#: ../app/core/core-enums.c:202 ../app/dialogs/preferences-dialog.c:2113
+#: ../app/core/core-enums.c:202 ../app/dialogs/preferences-dialog.c:2124
 msgid "Transparency"
 msgstr "Transparantie"
 
@@ -4315,11 +4318,11 @@ msgstr "Cirkel"
 msgid "Diamond"
 msgstr "Diamand"
 
-#: ../app/core/core-enums.c:458 ../app/dialogs/preferences-dialog.c:2145
+#: ../app/core/core-enums.c:458 ../app/dialogs/preferences-dialog.c:2156
 msgid "Horizontal"
 msgstr "Horizontaal"
 
-#: ../app/core/core-enums.c:459 ../app/dialogs/preferences-dialog.c:2147
+#: ../app/core/core-enums.c:459 ../app/dialogs/preferences-dialog.c:2158
 msgid "Vertical"
 msgstr "Verticaal"
 
@@ -4392,270 +4395,270 @@ msgstr "Normaal (128×128)"
 msgid "Large (256x256)"
 msgstr "Groot (256×256)"
 
-#: ../app/core/core-enums.c:804
+#: ../app/core/core-enums.c:805
 msgid "<<invalid>>"
 msgstr "<<ongeldig>>"
 
-#: ../app/core/core-enums.c:805
+#: ../app/core/core-enums.c:806
 msgid "Scale image"
 msgstr "Afbeelding schalen"
 
-#: ../app/core/core-enums.c:806
+#: ../app/core/core-enums.c:807
 msgid "Resize image"
 msgstr "Afbeelding herschalen"
 
-#: ../app/core/core-enums.c:807
+#: ../app/core/core-enums.c:808
 msgid "Flip image"
 msgstr "Afbeelding spiegelen"
 
-#: ../app/core/core-enums.c:808
+#: ../app/core/core-enums.c:809
 msgid "Rotate image"
 msgstr "Afbeelding draaien"
 
-#: ../app/core/core-enums.c:809
+#: ../app/core/core-enums.c:810
 msgid "Crop image"
 msgstr "Afbeelding snijden"
 
-#: ../app/core/core-enums.c:810
+#: ../app/core/core-enums.c:811
 msgid "Convert image"
 msgstr "Afbeelding converteren"
 
-#: ../app/core/core-enums.c:811
+#: ../app/core/core-enums.c:812
 msgid "Remove item"
 msgstr "Item verwijderen"
 
-#: ../app/core/core-enums.c:812
+#: ../app/core/core-enums.c:813
 msgid "Merge layers"
 msgstr "Lagen samenvoegen"
 
-#: ../app/core/core-enums.c:813
+#: ../app/core/core-enums.c:814
 msgid "Merge vectors"
 msgstr "Vectoren samenvoegen"
 
-#: ../app/core/core-enums.c:814 ../app/core/gimpchannel.c:404
+#: ../app/core/core-enums.c:815 ../app/core/gimpchannel.c:404
 msgid "Quick Mask"
 msgstr "Snelmasker"
 
-#: ../app/core/core-enums.c:815 ../app/core/core-enums.c:845
+#: ../app/core/core-enums.c:816 ../app/core/core-enums.c:846
 msgid "Guide"
 msgstr "Hulplijn"
 
-#: ../app/core/core-enums.c:816 ../app/core/core-enums.c:846
+#: ../app/core/core-enums.c:817 ../app/core/core-enums.c:847
 #: ../app/core/gimpimage-grid.c:58 ../app/dialogs/grid-dialog.c:149
 #: ../app/tools/tools-enums.c:203
 msgid "Grid"
 msgstr "Raster"
 
-#: ../app/core/core-enums.c:817 ../app/core/core-enums.c:847
+#: ../app/core/core-enums.c:818 ../app/core/core-enums.c:848
 #, fuzzy
 msgid "Sample Point"
 msgstr "Pad schalen"
 
-#: ../app/core/core-enums.c:819 ../app/core/core-enums.c:850
+#: ../app/core/core-enums.c:820 ../app/core/core-enums.c:851
 #, fuzzy
 msgid "Drawable mod"
 msgstr "Tekengebiedaanpassing"
 
-#: ../app/core/core-enums.c:820 ../app/core/core-enums.c:851
+#: ../app/core/core-enums.c:821 ../app/core/core-enums.c:852
 msgid "Selection mask"
 msgstr "Selectiemasker"
 
-#: ../app/core/core-enums.c:821 ../app/core/core-enums.c:854
+#: ../app/core/core-enums.c:822 ../app/core/core-enums.c:855
 msgid "Item visibility"
 msgstr "Zichtbaarheid item"
 
-#: ../app/core/core-enums.c:822
+#: ../app/core/core-enums.c:823
 msgid "Linked item"
 msgstr "Gekoppeld item"
 
-#: ../app/core/core-enums.c:823
+#: ../app/core/core-enums.c:824
 msgid "Item properties"
 msgstr "Eigenschappen item"
 
-#: ../app/core/core-enums.c:824 ../app/core/core-enums.c:853
+#: ../app/core/core-enums.c:825 ../app/core/core-enums.c:854
 msgid "Move item"
 msgstr "Item verplaatsen"
 
-#: ../app/core/core-enums.c:825
+#: ../app/core/core-enums.c:826
 msgid "Scale item"
 msgstr "Item schalen"
 
-#: ../app/core/core-enums.c:826
+#: ../app/core/core-enums.c:827
 msgid "Resize item"
 msgstr "Item herschalen"
 
-#: ../app/core/core-enums.c:827 ../app/core/core-enums.c:864
+#: ../app/core/core-enums.c:828 ../app/core/core-enums.c:865
 msgid "Add layer mask"
 msgstr "Laagmaskter toevoegen"
 
-#: ../app/core/core-enums.c:828 ../app/core/core-enums.c:866
+#: ../app/core/core-enums.c:829 ../app/core/core-enums.c:867
 msgid "Apply layer mask"
 msgstr "Laagmasker toepassen"
 
-#: ../app/core/core-enums.c:829
+#: ../app/core/core-enums.c:830
 msgid "Floating selection to layer"
 msgstr "Drijvende selectie naar laag"
 
-#: ../app/core/core-enums.c:830
+#: ../app/core/core-enums.c:831
 msgid "Float selection"
 msgstr "Drijvende selectie"
 
-#: ../app/core/core-enums.c:831
+#: ../app/core/core-enums.c:832
 msgid "Anchor floating selection"
 msgstr "Drijvende selectie verankeren"
 
-#: ../app/core/core-enums.c:832
+#: ../app/core/core-enums.c:833
 msgid "Remove floating selection"
 msgstr "Drijvende selectie verwijderen"
 
-#: ../app/core/core-enums.c:833 ../app/core/gimp-edit.c:248
+#: ../app/core/core-enums.c:834 ../app/core/gimp-edit.c:248
 msgid "Paste"
 msgstr "Plakken"
 
-#: ../app/core/core-enums.c:834 ../app/core/gimp-edit.c:412
+#: ../app/core/core-enums.c:835 ../app/core/gimp-edit.c:502
 msgid "Cut"
 msgstr "Knippen"
 
-#: ../app/core/core-enums.c:835 ../app/core/core-enums.c:862
+#: ../app/core/core-enums.c:836 ../app/core/core-enums.c:863
 #: ../app/tools/gimptexttool.c:146 ../app/widgets/widgets-enums.c:263
 msgid "Text"
 msgstr "Tekst"
 
-#: ../app/core/core-enums.c:836 ../app/core/core-enums.c:879
+#: ../app/core/core-enums.c:837 ../app/core/core-enums.c:880
 #: ../app/core/gimpdrawable-transform.c:911
 msgid "Transform"
 msgstr "Transformeren"
 
-#: ../app/core/core-enums.c:837 ../app/core/core-enums.c:880
-#: ../app/paint/gimppaintcore.c:345
+#: ../app/core/core-enums.c:838 ../app/core/core-enums.c:881
+#: ../app/paint/gimppaintcore.c:366
 msgid "Paint"
 msgstr "Schilderen"
 
 # aanhangen/vastmaken/bijvoegen
-#: ../app/core/core-enums.c:838 ../app/core/core-enums.c:882
+#: ../app/core/core-enums.c:839 ../app/core/core-enums.c:884
 msgid "Attach parasite"
 msgstr "Parasiet aanhangen"
 
-#: ../app/core/core-enums.c:839 ../app/core/core-enums.c:883
+#: ../app/core/core-enums.c:840 ../app/core/core-enums.c:885
 msgid "Remove parasite"
 msgstr "Parasiet verwijderen"
 
-#: ../app/core/core-enums.c:840
+#: ../app/core/core-enums.c:841
 msgid "Import paths"
 msgstr "Paden importeren"
 
-#: ../app/core/core-enums.c:841 ../app/pdb/drawable_cmds.c:1696
+#: ../app/core/core-enums.c:842 ../app/pdb/drawable_cmds.c:1722
 msgid "Plug-In"
 msgstr "Plug-in"
 
-#: ../app/core/core-enums.c:842
+#: ../app/core/core-enums.c:843
 msgid "Image type"
 msgstr "Afbeeldingstype"
 
-#: ../app/core/core-enums.c:843
+#: ../app/core/core-enums.c:844
 msgid "Image size"
 msgstr "Afbeeldingsgrootte"
 
-#: ../app/core/core-enums.c:844
+#: ../app/core/core-enums.c:845
 msgid "Resolution change"
 msgstr "Resolutiewijziging"
 
-#: ../app/core/core-enums.c:848
+#: ../app/core/core-enums.c:849
 msgid "Change indexed palette"
 msgstr "Geïndexeerd palet wijzigen"
 
-#: ../app/core/core-enums.c:852
+#: ../app/core/core-enums.c:853
 msgid "Rename item"
 msgstr "Item hernoemen"
 
 # item vastkoppelen
-#: ../app/core/core-enums.c:855
+#: ../app/core/core-enums.c:856
 msgid "Set item linked"
 msgstr "Item op vastgekoppeld instellen"
 
-#: ../app/core/core-enums.c:856
+#: ../app/core/core-enums.c:857
 msgid "New layer"
 msgstr "Nieuwe laag"
 
-#: ../app/core/core-enums.c:858
+#: ../app/core/core-enums.c:859
 msgid "Reposition layer"
 msgstr "Laag herpositioneren"
 
-#: ../app/core/core-enums.c:859
+#: ../app/core/core-enums.c:860
 msgid "Set layer mode"
 msgstr "Laagmodus instellen"
 
-#: ../app/core/core-enums.c:860
+#: ../app/core/core-enums.c:861
 msgid "Set layer opacity"
 msgstr "Ondoorzichtigheid laag instellen"
 
-#: ../app/core/core-enums.c:861
+#: ../app/core/core-enums.c:862
 #, fuzzy
 msgid "Lock/Unlock alpha channel"
 msgstr "_Alphakanaal van laag"
 
-#: ../app/core/core-enums.c:863
+#: ../app/core/core-enums.c:864
 msgid "Text modified"
 msgstr "Tekst gewijzigd"
 
-#: ../app/core/core-enums.c:865
+#: ../app/core/core-enums.c:866
 msgid "Delete layer mask"
 msgstr "Laagmasker verwijderen"
 
-#: ../app/core/core-enums.c:867
+#: ../app/core/core-enums.c:868
 msgid "Show layer mask"
 msgstr "Laagmasker tonen"
 
-#: ../app/core/core-enums.c:868
+#: ../app/core/core-enums.c:869
 msgid "New channel"
 msgstr "Nieuw kanaal"
 
-#: ../app/core/core-enums.c:870
+#: ../app/core/core-enums.c:871
 msgid "Reposition channel"
 msgstr "Kanaal herpositioneren"
 
-#: ../app/core/core-enums.c:871
+#: ../app/core/core-enums.c:872
 msgid "Channel color"
 msgstr "Kanaalkleur"
 
-#: ../app/core/core-enums.c:872
+#: ../app/core/core-enums.c:873
 msgid "New vectors"
 msgstr "Nieuwe vectoren"
 
-#: ../app/core/core-enums.c:873
+#: ../app/core/core-enums.c:874
 msgid "Delete vectors"
 msgstr "Vectoren verwijderen"
 
-#: ../app/core/core-enums.c:874
+#: ../app/core/core-enums.c:875
 msgid "Vectors mod"
 msgstr "Vectorwijziging"
 
-#: ../app/core/core-enums.c:875
+#: ../app/core/core-enums.c:876
 msgid "Reposition vectors"
 msgstr "Vectoren herpositioneren"
 
 # FS=?
-#: ../app/core/core-enums.c:876
+#: ../app/core/core-enums.c:877
 #, fuzzy
 msgid "FS to layer"
 msgstr "DS naar laag"
 
-#: ../app/core/core-enums.c:877
+#: ../app/core/core-enums.c:878
 #, fuzzy
 msgid "FS rigor"
 msgstr "DS anker"
 
-#: ../app/core/core-enums.c:878
+#: ../app/core/core-enums.c:879
 #, fuzzy
 msgid "FS relax"
 msgstr "DS drijvend"
 
-#: ../app/core/core-enums.c:881 ../app/paint/gimpink.c:103
+#: ../app/core/core-enums.c:882 ../app/paint/gimpink.c:103
 #: ../app/tools/gimpinktool.c:62
 msgid "Ink"
 msgstr "Inkt"
 
-#: ../app/core/core-enums.c:884
+#: ../app/core/core-enums.c:886
 msgid "EEK: can't undo"
 msgstr "Eek: kan niet ongedaan maken"
 
@@ -4668,23 +4671,23 @@ msgstr ""
 msgid "Pasted Layer"
 msgstr "Geplakte laag"
 
-#: ../app/core/gimp-edit.c:361
+#: ../app/core/gimp-edit.c:451
 msgid "Fill with FG Color"
 msgstr "Vullen met VG-kleur"
 
-#: ../app/core/gimp-edit.c:365 ../app/core/gimp-edit.c:386
+#: ../app/core/gimp-edit.c:455 ../app/core/gimp-edit.c:476
 msgid "Fill with BG Color"
 msgstr "Vullen met AG-kleur"
 
-#: ../app/core/gimp-edit.c:369
+#: ../app/core/gimp-edit.c:459
 msgid "Fill with White"
 msgstr "Met wit vullen"
 
-#: ../app/core/gimp-edit.c:373
+#: ../app/core/gimp-edit.c:463
 msgid "Fill with Transparency"
 msgstr "Met transparantie vullen"
 
-#: ../app/core/gimp-edit.c:377
+#: ../app/core/gimp-edit.c:467
 msgid "Fill with Pattern"
 msgstr "Met patroon vullen"
 
@@ -4737,7 +4740,7 @@ msgid "Documents"
 msgstr "Documenten"
 
 #. initialize the module list
-#: ../app/core/gimp.c:900 ../app/dialogs/preferences-dialog.c:2512
+#: ../app/core/gimp.c:900 ../app/dialogs/preferences-dialog.c:2533
 msgid "Modules"
 msgstr "Modules"
 
@@ -4920,15 +4923,15 @@ msgstr "Kanaal krimpen"
 msgid "Cannot stroke empty channel."
 msgstr "Kan geen lijn tekenen op leeg kanaal."
 
-#: ../app/core/gimpchannel.c:1629
+#: ../app/core/gimpchannel.c:1627
 msgid "Set Channel Color"
 msgstr "Kanaalkleur instellen"
 
-#: ../app/core/gimpchannel.c:1677
+#: ../app/core/gimpchannel.c:1675
 msgid "Set Channel Opacity"
 msgstr "Kanaalondoorzichtigheid instellen"
 
-#: ../app/core/gimpchannel.c:1745 ../app/core/gimpselection.c:548
+#: ../app/core/gimpchannel.c:1743 ../app/core/gimpselection.c:548
 msgid "Selection Mask"
 msgstr "Selectiemasker"
 
@@ -4956,6 +4959,7 @@ msgid "Fuzzy Select"
 msgstr "Vage selectie"
 
 #: ../app/core/gimpchannel-select.c:493
+#: ../app/tools/gimpbycolorselecttool.c:82
 msgid "Select by Color"
 msgstr "Selecteer op kleur"
 
@@ -5000,7 +5004,7 @@ msgstr ""
 msgid "Blend"
 msgstr "Mengen"
 
-#: ../app/core/gimpdrawable-bucket-fill.c:85 ../app/paint/gimpclone.c:183
+#: ../app/core/gimpdrawable-bucket-fill.c:85 ../app/paint/gimpclone.c:185
 msgid "No patterns available for this operation."
 msgstr "Geen patronen beschikbaar voor deze operatie."
 
@@ -5018,7 +5022,7 @@ msgstr "Desatureren"
 msgid "Equalize"
 msgstr "Gelijkmaken"
 
-#: ../app/core/gimpdrawable-foreground-extract.c:67
+#: ../app/core/gimpdrawable-foreground-extract.c:111
 #, fuzzy
 msgid "Foreground Extraction..."
 msgstr "Voorgrondkleur"
@@ -5182,7 +5186,7 @@ msgstr "Naar geïndexeerd omzetten (stap 3)..."
 msgid "Crop Image"
 msgstr "Afbeelding snijden"
 
-#: ../app/core/gimpimage-crop.c:127 ../app/core/gimpimage-resize.c:84
+#: ../app/core/gimpimage-crop.c:127 ../app/core/gimpimage-resize.c:85
 msgid "Resize Image"
 msgstr "Afbeelding herschalen"
 
@@ -5397,7 +5401,7 @@ msgstr "Laag is reeds de onderste."
 msgid "Lower Path to Bottom"
 msgstr "Pad naar bodem"
 
-#: ../app/core/gimpimagefile.c:575 ../app/dialogs/preferences-dialog.c:1589
+#: ../app/core/gimpimagefile.c:575 ../app/dialogs/preferences-dialog.c:1593
 msgid "Folder"
 msgstr "Map"
 
@@ -5427,13 +5431,13 @@ msgstr "Vooruitblik is verouderd"
 msgid "Cannot create preview"
 msgstr "Kan geen vooruitblik aanmaken"
 
+# niet meer recent/verouderd
 #: ../app/core/gimpimagefile.c:632
-#, fuzzy
 msgid "(Preview may be out of date)"
-msgstr "Vooruitblik is verouderd"
+msgstr "(Vooruitblik is mogelijkerwijs verouderd)"
 
 #. pixel size
-#: ../app/core/gimpimagefile.c:638 ../app/widgets/gimpimagepropview.c:349
+#: ../app/core/gimpimagefile.c:638 ../app/widgets/gimpimagepropview.c:354
 #: ../app/widgets/gimpsizebox.c:430 ../app/widgets/gimptemplateeditor.c:633
 #: ../app/widgets/gimptemplateeditor.c:671
 #, c-format
@@ -5464,15 +5468,15 @@ msgstr ""
 msgid "Bad binary format string in interpreter file %s"
 msgstr ""
 
-#: ../app/core/gimpitem.c:1091
+#: ../app/core/gimpitem.c:1094
 msgid "Attach Parasite"
 msgstr "Parasiet aanhangen"
 
-#: ../app/core/gimpitem.c:1101
+#: ../app/core/gimpitem.c:1105
 msgid "Attach Parasite to Item"
 msgstr "Parasiet aan item koppelen"
 
-#: ../app/core/gimpitem.c:1140 ../app/core/gimpitem.c:1147
+#: ../app/core/gimpitem.c:1146 ../app/core/gimpitem.c:1153
 msgid "Remove Parasite from Item"
 msgstr "Parasiet van item verwijderen"
 
@@ -5508,8 +5512,8 @@ msgstr "Laag"
 msgid "Rename Layer"
 msgstr "Laag hernoemen"
 
-#: ../app/core/gimplayer.c:285 ../app/pdb/layer_cmds.c:669
-#: ../app/pdb/layer_cmds.c:742
+#: ../app/core/gimplayer.c:285 ../app/pdb/layer_cmds.c:676
+#: ../app/pdb/layer_cmds.c:750
 msgid "Move Layer"
 msgstr "Laag verplaatsen"
 
@@ -5525,7 +5529,7 @@ msgstr "Laag spiegelen"
 msgid "Rotate Layer"
 msgstr "Laag draaien"
 
-#: ../app/core/gimplayer.c:441 ../app/core/gimplayer.c:1331
+#: ../app/core/gimplayer.c:441 ../app/core/gimplayer.c:1337
 #: ../app/core/gimplayermask.c:237
 #, c-format
 msgid "%s mask"
@@ -5540,43 +5544,47 @@ msgstr ""
 "Drijvende Selectie<\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1257
+#: ../app/core/gimplayer.c:1263
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr ""
 "Kan geen laagmasker toevoegen aan een laag die niet deel is van een "
 "afbeelding."
 
-#: ../app/core/gimplayer.c:1264
+#: ../app/core/gimplayer.c:1270
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Kan geen laagmasker toevoegen, omdat de laag er al een heeft."
 
-#: ../app/core/gimplayer.c:1271
+#: ../app/core/gimplayer.c:1277
 msgid "Cannot add layer mask to a layer with no alpha channel."
 msgstr "Kan geen laagmasker toevoegen aan een laag zonder alphakanaal."
 
-#: ../app/core/gimplayer.c:1281
+#: ../app/core/gimplayer.c:1287
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Kan geen laagmasker toevoegen met andere afmetingen dan de gespecificeerde "
 "laag"
 
-#: ../app/core/gimplayer.c:1385
+#: ../app/core/gimplayer.c:1391
 msgid "Transfer Alpha to Mask"
 msgstr "Alpha naar masker verplaatsen"
 
-#: ../app/core/gimplayer.c:1545 ../app/core/gimplayermask.c:264
+#: ../app/core/gimplayer.c:1551 ../app/core/gimplayermask.c:264
 msgid "Apply Layer Mask"
 msgstr "Laagmasker toepassen"
 
-#: ../app/core/gimplayer.c:1546
+#: ../app/core/gimplayer.c:1552
 msgid "Delete Layer Mask"
 msgstr "Laagmasker verwijderen"
 
-#: ../app/core/gimplayer.c:1647
+#: ../app/core/gimplayer.c:1653
 msgid "Add Alpha Channel"
 msgstr "Alphakanaal toevoegen"
 
-#: ../app/core/gimplayer.c:1669
+#: ../app/core/gimplayer.c:1704
+msgid "Remove Alpha Channel"
+msgstr "Alphakanaal verwijderen"
+
+#: ../app/core/gimplayer.c:1726
 msgid "Layer to Image Size"
 msgstr "Laag naar afbeeldingsgrootte"
 
@@ -5588,12 +5596,16 @@ msgstr "Laagmasker verplaatsen"
 msgid "Show Layer Mask"
 msgstr "Laagmasker tonen"
 
-#: ../app/core/gimppalette-import.c:561
-#, fuzzy, c-format
+# Geïndexeerd
+#: ../app/core/gimppalette-import.c:365
+#, c-format
+msgid "Index %d"
+msgstr "Index %d"
+
+#: ../app/core/gimppalette-import.c:565
+#, c-format
 msgid "Unknown type of palette file: %s"
-msgstr ""
-"Onbekend type van paletbestand:\n"
-"%s"
+msgstr "Onbekend type paletbestand: %s"
 
 #: ../app/core/gimppalette.c:373
 #, c-format
@@ -5714,16 +5726,16 @@ msgstr "Selectie omkeren"
 msgid "No selection to stroke."
 msgstr "Geen selectie om op te tekenen."
 
-#: ../app/core/gimpselection.c:807
+#: ../app/core/gimpselection.c:805
 msgid "Cannot float selection because the selected region is empty."
 msgstr ""
 "Kan selectie niet laten drijven, omdat het geselecteerde gebied leeg is."
 
-#: ../app/core/gimpselection.c:814
+#: ../app/core/gimpselection.c:812
 msgid "Float Selection"
 msgstr "Drijvende selectie"
 
-#: ../app/core/gimpselection.c:831
+#: ../app/core/gimpselection.c:829
 msgid "Floated Layer"
 msgstr "Drijvende laag"
 
@@ -5733,20 +5745,20 @@ msgid ""
 "distance of more than miter-limit * line-width from the actual join point."
 msgstr ""
 
-#: ../app/core/gimptemplate.c:156
+#: ../app/core/gimptemplate.c:157
 msgid "The unit used for coordinate display when not in dot-for-dot mode."
 msgstr ""
 "De eenheid voor coördinatenweergaven in een andere dan stip-voor-stip-stand."
 
-#: ../app/core/gimptemplate.c:163
+#: ../app/core/gimptemplate.c:164
 msgid "The horizontal image resolution."
 msgstr "De horizontale afbeeldingsresolutie."
 
-#: ../app/core/gimptemplate.c:168
+#: ../app/core/gimptemplate.c:169
 msgid "The vertical image resolution."
 msgstr "De verticale afbeeldingsresolutie."
 
-#: ../app/core/gimptemplate.c:448 ../app/widgets/widgets-enums.c:24
+#: ../app/core/gimptemplate.c:449 ../app/widgets/widgets-enums.c:24
 msgid "Background"
 msgstr "Achtergrond"
 
@@ -5803,20 +5815,20 @@ msgstr "picas"
 msgid "percent"
 msgstr "procent"
 
-#: ../app/dialogs/about-dialog.c:45
-#, c-format
-msgid "Version %s brought to you by"
-msgstr "Versie %s, u aangeboden door ..."
+#: ../app/dialogs/about-dialog.c:60 ../desktop/gimp.desktop.in.in.h:2
+msgid "GNU Image Manipulation Program"
+msgstr "GNU Image Manipulation Program"
 
-#: ../app/dialogs/about-dialog.c:51
-msgid "Translation by"
-msgstr "Vertaald door ..."
+#: ../app/dialogs/about-dialog.c:63
+msgid "Visit the GIMP website"
+msgstr "Bezoek de website van GIMP"
 
 #  Translators: insert your names here, separated by newline
 #  we'd prefer just the names, please no email adresses.
-#. Translators: insert your names here, separated by newline
-#. we'd prefer just the names, please no email addresses.
-#: ../app/dialogs/about-dialog.c:54
+#. Translators: insert your names here,
+#. * separated by newline
+#.
+#: ../app/dialogs/about-dialog.c:153
 msgid "translator-credits"
 msgstr ""
 "Tino Meinen\n"
@@ -5826,24 +5838,17 @@ msgstr ""
 "\n"
 "Kijk voor meer info op http://nl.gnome.org/"
 
-#: ../app/dialogs/about-dialog.c:59
-msgid "Contributions by"
-msgstr "Met bijdragen van ..."
-
-#: ../app/dialogs/about-dialog.c:153
-msgid "About The GIMP"
-msgstr "Over de GIMP"
+#: ../app/dialogs/about-dialog.c:689
+msgid "GIMP is brought to you by"
+msgstr "GIMP wordt u aangeboden door"
 
 #: ../app/dialogs/channel-options-dialog.c:144
-#, fuzzy
-msgid "Channel _Name:"
-msgstr "Kanaalnaam:"
+msgid "Channel _name:"
+msgstr "Kanaal_naam:"
 
-# omkeren
 #: ../app/dialogs/channel-options-dialog.c:173
-#, fuzzy
 msgid "Initialize from _selection"
-msgstr "Selectie inverteren"
+msgstr "Initialiseren uit _selectie"
 
 #: ../app/dialogs/convert-dialog.c:119
 msgid "Indexed Color Conversion"
@@ -5852,6 +5857,11 @@ msgstr "Geïndexeerde kleuromzetting"
 #: ../app/dialogs/convert-dialog.c:122
 msgid "Convert Image to Indexed Colors"
 msgstr "Afbeelding naar geïndexeerde kleuren omzetten"
+
+# omzetten
+#: ../app/dialogs/convert-dialog.c:128
+msgid "C_onvert"
+msgstr "C_onverteren"
 
 #: ../app/dialogs/convert-dialog.c:161 ../app/dialogs/dialogs.c:178
 msgid "Colormap"
@@ -5871,15 +5881,15 @@ msgid "Dithering"
 msgstr "Kleurbenadering"
 
 #: ../app/dialogs/convert-dialog.c:230
-#, fuzzy
 msgid "Color _dithering:"
-msgstr "Geen kleurbenadering"
+msgstr "Kle_urbenadering:"
 
+# gebruiken/inschakelen
 #: ../app/dialogs/convert-dialog.c:245
-#, fuzzy
 msgid "Enable dithering of _transparency"
-msgstr "Kleurbenadering van transparantie inschakelen"
+msgstr "Kleurbenadering van _transparantie inschakelen"
 
+# omzetten naar geindexeerd
 #: ../app/dialogs/convert-dialog.c:271
 msgid "Converting to indexed..."
 msgstr "Naar geïndexeerd omzetten..."
@@ -5889,7 +5899,7 @@ msgid "Cannot convert to a palette with more than 256 colors."
 msgstr "Kan een palet met meer dan 256 kleuren niet omzetten."
 
 #: ../app/dialogs/desaturate-dialog.c:61
-msgid "Remove colors"
+msgid "Remove Colors"
 msgstr "Kleuren verwijderen"
 
 #: ../app/dialogs/desaturate-dialog.c:93
@@ -5983,9 +5993,8 @@ msgid ""
 msgstr ""
 
 #: ../app/dialogs/file-save-dialog.c:398
-#, fuzzy
 msgid "Extension Mismatch"
-msgstr "Extensies"
+msgstr "Extensies komen niet overeen"
 
 #: ../app/dialogs/file-save-dialog.c:414
 msgid "The given file extension does not match the chosen file type."
@@ -6012,6 +6021,10 @@ msgstr "Lagen samenvoegen"
 msgid "Layers Merge Options"
 msgstr "Opties voor samenvoegen lagen"
 
+#: ../app/dialogs/image-merge-layers-dialog.c:68
+msgid "_Merge"
+msgstr "_Samevoegen"
+
 #: ../app/dialogs/image-merge-layers-dialog.c:82
 msgid "Final, Merged Layer should be:"
 msgstr "Uiteindelijke, samengevoegde laag moet worden:"
@@ -6033,7 +6046,7 @@ msgid "Create a New Image"
 msgstr "Nieuwe afbeelding maken"
 
 #: ../app/dialogs/image-new-dialog.c:141
-#: ../app/dialogs/preferences-dialog.c:1834
+#: ../app/dialogs/preferences-dialog.c:1845
 msgid "_Template:"
 msgstr "_Sjabloon:"
 
@@ -6042,7 +6055,7 @@ msgid "Confirm Image Size"
 msgstr "Afbeeldingsgrootte bevestigen"
 
 #: ../app/dialogs/image-new-dialog.c:301
-#: ../app/dialogs/image-scale-dialog.c:198
+#: ../app/dialogs/image-scale-dialog.c:208
 #, c-format
 msgid "You are trying to create an image with a size of %s."
 msgstr "U probeert een afbeelding aan te maken met grootte %s."
@@ -6058,11 +6071,11 @@ msgstr ""
 "dialoogvenster Voorkeuren (momenteel %s)."
 
 #  Scaling
-#: ../app/dialogs/image-scale-dialog.c:164
+#: ../app/dialogs/image-scale-dialog.c:174
 msgid "Confirm Scaling"
 msgstr "Schalen bevestigen"
 
-#: ../app/dialogs/image-scale-dialog.c:204
+#: ../app/dialogs/image-scale-dialog.c:214
 #, fuzzy, c-format
 msgid ""
 "Scaling the image to the chosen size will make it use more memory than what "
@@ -6073,7 +6086,7 @@ msgstr ""
 "momenteel als \"Maximale afbeeldingsgrootte\" is geconfigureerd in het "
 "dialoogvenster Voorkeuren (momenteel %s)."
 
-#: ../app/dialogs/image-scale-dialog.c:219
+#: ../app/dialogs/image-scale-dialog.c:229
 #, fuzzy
 msgid ""
 "Scaling the image to the chosen size will shrink some layers completely away."
@@ -6081,14 +6094,14 @@ msgstr ""
 "Door de gekozen afbeeldingsgrootte zullen sommige lagen in het niets "
 "verdwijnen. Wilt u dit?"
 
-#: ../app/dialogs/image-scale-dialog.c:223
+#: ../app/dialogs/image-scale-dialog.c:233
 msgid "Is this what you want to do?"
 msgstr "Is dit wat u wilt doen?"
 
 #. General
-#: ../app/dialogs/info-dialog.c:377 ../app/dialogs/preferences-dialog.c:1660
-#: ../app/dialogs/preferences-dialog.c:1714
-#: ../app/dialogs/preferences-dialog.c:1891
+#: ../app/dialogs/info-dialog.c:377 ../app/dialogs/preferences-dialog.c:1664
+#: ../app/dialogs/preferences-dialog.c:1718
+#: ../app/dialogs/preferences-dialog.c:1902
 #: ../app/widgets/gimpcontrollereditor.c:203
 msgid "General"
 msgstr "Algemeen"
@@ -6102,20 +6115,21 @@ msgid "Initialize Layer Mask to:"
 msgstr "Laagmasker initialiseren naar:"
 
 #: ../app/dialogs/layer-add-mask-dialog.c:100
-msgid "In_vert Mask"
-msgstr "Masker inverteren"
+msgid "In_vert mask"
+msgstr "Masker in_verteren"
 
+# Laagnaam/naam laag
 #: ../app/dialogs/layer-options-dialog.c:119
-msgid "Layer _Name:"
-msgstr "Naam laag:"
+msgid "Layer _name:"
+msgstr "_Naam laag:"
 
 #. The size labels
-#: ../app/dialogs/layer-options-dialog.c:128 ../app/tools/gimpcroptool.c:1050
+#: ../app/dialogs/layer-options-dialog.c:128
 #: ../app/tools/gimpmeasuretool.c:957 ../app/tools/gimpselectionoptions.c:587
 msgid "Width:"
 msgstr "Breedte:"
 
-#: ../app/dialogs/layer-options-dialog.c:134 ../app/tools/gimpcroptool.c:1054
+#: ../app/dialogs/layer-options-dialog.c:134
 #: ../app/tools/gimpmeasuretool.c:983 ../app/tools/gimpscaletool.c:166
 #: ../app/tools/gimpselectionoptions.c:595
 msgid "Height:"
@@ -6125,9 +6139,10 @@ msgstr "Hoogte: "
 msgid "Layer Fill Type"
 msgstr "Vultype laag"
 
+# naam vormen uit tekst/Naam uit tekst instellen
 #: ../app/dialogs/layer-options-dialog.c:206
-msgid "Set Name from _Text"
-msgstr "Naam uit tekst instellen"
+msgid "Set name from _text"
+msgstr "Naam vormen uit _tekst"
 
 #: ../app/dialogs/module-dialog.c:122
 msgid "Module Manager"
@@ -6142,7 +6157,7 @@ msgid "Autoload"
 msgstr "Autoladen"
 
 #: ../app/dialogs/module-dialog.c:175
-msgid "Module path"
+msgid "Module Path"
 msgstr "Modulepad"
 
 #: ../app/dialogs/module-dialog.c:418
@@ -6203,38 +6218,45 @@ msgid "State:"
 msgstr "Staat:"
 
 #: ../app/dialogs/module-dialog.c:506
-msgid "Last Error:"
+msgid "Last error:"
 msgstr "Laatste fout:"
 
+# types/typen/soorten
 #: ../app/dialogs/module-dialog.c:507
-msgid "Available Types:"
+msgid "Available types:"
 msgstr "Beschikbare typen:"
 
+# verschuiven/verspringen
 #: ../app/dialogs/offset-dialog.c:98
 msgid "Offset Layer"
-msgstr "Laag verspringen"
+msgstr "Laag verschuiven"
 
+# verschuiven/verspringen
 #: ../app/dialogs/offset-dialog.c:100
 msgid "Offset Layer Mask"
-msgstr "Laagmasker verspringen"
+msgstr "Laagmasker verschuiven"
 
 #: ../app/dialogs/offset-dialog.c:102
 msgid "Offset Channel"
-msgstr "Kanaal verspringen"
+msgstr "Kanaal verschuiven"
 
 #. The offset frame
 #: ../app/dialogs/offset-dialog.c:108 ../app/dialogs/offset-dialog.c:141
 #: ../app/dialogs/resize-dialog.c:193 ../app/widgets/gimpgrideditor.c:274
 msgid "Offset"
-msgstr "Verspringen"
+msgstr "Verschuiven"
+
+#: ../app/dialogs/offset-dialog.c:116
+msgid "_Offset"
+msgstr "_Verschuiven"
 
 #: ../app/dialogs/offset-dialog.c:173 ../app/dialogs/resize-dialog.c:222
 msgid "_X:"
-msgstr "X:"
+msgstr "_X:"
 
 #: ../app/dialogs/offset-dialog.c:175 ../app/dialogs/resize-dialog.c:223
 msgid "_Y:"
-msgstr "Y:"
+msgstr "_Y:"
 
 #  The by half height and half width option
 #: ../app/dialogs/offset-dialog.c:202
@@ -6243,7 +6265,6 @@ msgstr "Verschuiven met x/_2, y/2"
 
 #. The edge behavior frame
 #: ../app/dialogs/offset-dialog.c:211
-#, fuzzy
 msgid "Edge Behavior"
 msgstr "Randgedrag"
 
@@ -6286,7 +6307,7 @@ msgid "Palette _file"
 msgstr "Palet_bestand"
 
 #: ../app/dialogs/palette-import-dialog.c:280
-msgid "Select palette file"
+msgid "Select Palette File"
 msgstr "Paletbestand selecteren"
 
 #. The "Import" frame
@@ -6298,8 +6319,9 @@ msgstr "Importopties"
 msgid "New import"
 msgstr "Nieuw importeren"
 
+# naam van palet/paletnaam
 #: ../app/dialogs/palette-import-dialog.c:326
-msgid "Palette _Name:"
+msgid "Palette _name:"
 msgstr "Palet_naam:"
 
 #: ../app/dialogs/palette-import-dialog.c:332
@@ -6321,14 +6343,13 @@ msgstr "Vooruitblik"
 
 #: ../app/dialogs/preferences-dialog.c:299
 msgid "You will have to restart GIMP for the following changes to take effect:"
-msgstr "U moet de GIMP herstarten om de volgende veranderingen door te voeren:"
+msgstr "U moet GIMP herstarten om de volgende wijzigingen door te voeren:"
 
 #: ../app/dialogs/preferences-dialog.c:435
-#, fuzzy
 msgid "Configure Input Devices"
-msgstr "_Uitgebreide invoerapparaten configureren..."
+msgstr "Invoerapparaten configureren"
 
-# instellen
+# instellen/configureren
 #: ../app/dialogs/preferences-dialog.c:501
 msgid "Configure Keyboard Shortcuts"
 msgstr "Sneltoetsen configureren"
@@ -6338,7 +6359,7 @@ msgstr "Sneltoetsen configureren"
 msgid ""
 "To edit a shortcut key, click on the corresponding row and type a new "
 "accelerator, or press backspace to clear."
-msgstr "Typ een nieuwe sneltoets, of geeg Backspace om te wissen"
+msgstr "Typ een nieuwe sneltoets, of geef Backspace om te wissen"
 
 #: ../app/dialogs/preferences-dialog.c:598
 msgid ""
@@ -6364,755 +6385,751 @@ msgid ""
 "GIMP."
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1186
+#: ../app/dialogs/preferences-dialog.c:1190
 msgid "Show _menubar"
 msgstr "_Menubalk tonen"
 
-#: ../app/dialogs/preferences-dialog.c:1189
+#: ../app/dialogs/preferences-dialog.c:1193
 msgid "Show _rulers"
 msgstr "_Linealen tonen"
 
-#: ../app/dialogs/preferences-dialog.c:1192
+#: ../app/dialogs/preferences-dialog.c:1196
 msgid "Show scroll_bars"
 msgstr "_Schuifbalken tonen"
 
-#: ../app/dialogs/preferences-dialog.c:1195
+#: ../app/dialogs/preferences-dialog.c:1199
 msgid "Show s_tatusbar"
 msgstr "S_tatusbalk tonen"
 
-#: ../app/dialogs/preferences-dialog.c:1203
+#: ../app/dialogs/preferences-dialog.c:1207
 msgid "Show s_election"
 msgstr "S_electie tonen"
 
-#: ../app/dialogs/preferences-dialog.c:1206
+#: ../app/dialogs/preferences-dialog.c:1210
 msgid "Show _layer boundary"
 msgstr "_Laaggrens tonen"
 
-#: ../app/dialogs/preferences-dialog.c:1209
+#: ../app/dialogs/preferences-dialog.c:1213
 msgid "Show _guides"
 msgstr "_Hulplijnen tonen"
 
-#: ../app/dialogs/preferences-dialog.c:1212
+#: ../app/dialogs/preferences-dialog.c:1216
 msgid "Show gri_d"
 msgstr "_Raster tonen"
 
-#: ../app/dialogs/preferences-dialog.c:1218
-#, fuzzy
+# dit is hoe de venster rond de afbeelding wordt getoond
+# (bv bij uitzoomen als het venster groter is als de afbeelding)
+# mogelijkheden zijn: van thema/lichte vakjes/donkere vakjes/aangepaste kleur)
+#: ../app/dialogs/preferences-dialog.c:1222
 msgid "Canvas _padding mode:"
-msgstr "Canvasopvulstand:"
+msgstr "_Canvasvulling:"
 
-#: ../app/dialogs/preferences-dialog.c:1223
-#, fuzzy
+# aangepaste/zelfgemaakte/eigen
+#: ../app/dialogs/preferences-dialog.c:1227
 msgid "Custom p_adding color:"
-msgstr "Eigen opvulkleur:"
+msgstr "Aangepaste opvul_kleur:"
 
-#: ../app/dialogs/preferences-dialog.c:1224
-#, fuzzy
-msgid "Select custom canvas padding color"
-msgstr "Selecteer eigen opvulkleur voor canvas"
+#: ../app/dialogs/preferences-dialog.c:1228
+msgid "Select Custom Canvas Padding Color"
+msgstr "Selecteer zelf een opvulkleur voor het canvas"
 
-#: ../app/dialogs/preferences-dialog.c:1293
+#: ../app/dialogs/preferences-dialog.c:1297
 msgid "Preferences"
 msgstr "Voorkeuren"
 
-#: ../app/dialogs/preferences-dialog.c:1404
-#: ../app/dialogs/preferences-dialog.c:2520
+#: ../app/dialogs/preferences-dialog.c:1408
+#: ../app/dialogs/preferences-dialog.c:2541
 msgid "Environment"
 msgstr "Omgeving"
 
-#: ../app/dialogs/preferences-dialog.c:1418
+#: ../app/dialogs/preferences-dialog.c:1422
 msgid "Resource Consumption"
 msgstr "Bronverbruik"
 
-#: ../app/dialogs/preferences-dialog.c:1428
+#: ../app/dialogs/preferences-dialog.c:1432
 msgid "Minimal number of _undo levels:"
 msgstr "_Min. aantal niveaus \"Ongedaan maken\":"
 
-#: ../app/dialogs/preferences-dialog.c:1431
+#: ../app/dialogs/preferences-dialog.c:1435
 msgid "Maximum undo _memory:"
 msgstr "Max. _geheugenruimte \"Ongedaan maken\":"
 
-#: ../app/dialogs/preferences-dialog.c:1434
-#, fuzzy
+#: ../app/dialogs/preferences-dialog.c:1438
 msgid "Tile cache _size:"
-msgstr "Groote van de tegelcache"
+msgstr "_Grootte van de tegelcache:"
 
-#: ../app/dialogs/preferences-dialog.c:1437
-#, fuzzy
+#: ../app/dialogs/preferences-dialog.c:1441
 msgid "Maximum _new image size:"
-msgstr "Maximale grootte voor nieuwe afbeelding:"
+msgstr "Ma_ximale grootte voor nieuwe afbeelding:"
 
 # processors/processoren
-#: ../app/dialogs/preferences-dialog.c:1442
+#: ../app/dialogs/preferences-dialog.c:1446
 msgid "Number of _processors to use:"
 msgstr "Aantal processors gebruiken:"
 
 #. Image Thumbnails
-#: ../app/dialogs/preferences-dialog.c:1447
+#: ../app/dialogs/preferences-dialog.c:1451
 msgid "Image Thumbnails"
 msgstr "Miniaturen"
 
-#: ../app/dialogs/preferences-dialog.c:1452
+#: ../app/dialogs/preferences-dialog.c:1456
 msgid "Size of _thumbnails:"
 msgstr "Grootte van _miniaturen:"
 
-#: ../app/dialogs/preferences-dialog.c:1456
+#: ../app/dialogs/preferences-dialog.c:1460
 msgid "Maximum _filesize for thumbnailing:"
 msgstr "Maximale _bestandsgrootte voor miniaturen:"
 
 #. File Saving
-#: ../app/dialogs/preferences-dialog.c:1460
+#: ../app/dialogs/preferences-dialog.c:1464
 msgid "Saving Images"
 msgstr "Afbeeldingen opslaan"
 
-#: ../app/dialogs/preferences-dialog.c:1463
-#, fuzzy
+#: ../app/dialogs/preferences-dialog.c:1467
 msgid "Confirm closing of unsa_ved images"
-msgstr "Sluiten van niet-opgeslagen afbeeldingen bevestigen"
+msgstr "Sluiten van niet-opgeslagen afbeeldingen _bevestigen"
 
-#: ../app/dialogs/preferences-dialog.c:1475
+#: ../app/dialogs/preferences-dialog.c:1479
 msgid "User Interface"
 msgstr "Bediening"
 
-#: ../app/dialogs/preferences-dialog.c:1478
+#: ../app/dialogs/preferences-dialog.c:1482
 msgid "Interface"
 msgstr "Bediening"
 
 #. Previews
-#: ../app/dialogs/preferences-dialog.c:1485
+#: ../app/dialogs/preferences-dialog.c:1489
 msgid "Previews"
 msgstr "Vooruitblikken"
 
-#: ../app/dialogs/preferences-dialog.c:1488
+#: ../app/dialogs/preferences-dialog.c:1492
 msgid "_Enable layer & channel previews"
 msgstr "_Laag- en kanaalvooruitblikken inschakelen"
 
-#: ../app/dialogs/preferences-dialog.c:1494
+#: ../app/dialogs/preferences-dialog.c:1498
 #, fuzzy
 msgid "Default _layer & channel preview size:"
 msgstr "Standaard grootte vooruitblik lagen en kanalen"
 
-#: ../app/dialogs/preferences-dialog.c:1497
+#: ../app/dialogs/preferences-dialog.c:1501
 msgid "Na_vigation preview size:"
 msgstr "_Navigatievooruitblikgrootte:"
 
 #. Keyboard Shortcuts
-#: ../app/dialogs/preferences-dialog.c:1501
+#: ../app/dialogs/preferences-dialog.c:1505
 msgid "Keyboard Shortcuts"
 msgstr "Sneltoetsen"
 
 # menu-toegangstoetsen tonen
 # (dit zijn de onderstreepte letters?)
-#: ../app/dialogs/preferences-dialog.c:1505
+#: ../app/dialogs/preferences-dialog.c:1509
 msgid "Show menu _mnemonics (access keys)"
 msgstr "Menu-sneltoetsen tonen (combinatie-toetsen)"
 
-#: ../app/dialogs/preferences-dialog.c:1508
-#, fuzzy
-msgid "Use _dynamic keyboard shortcuts"
-msgstr "Dynamische sneltoetsen gebruiken"
-
 #: ../app/dialogs/preferences-dialog.c:1512
+msgid "Use _dynamic keyboard shortcuts"
+msgstr "_Dynamische sneltoetsen gebruiken"
+
+#: ../app/dialogs/preferences-dialog.c:1516
 msgid "Configure _Keyboard Shortcuts..."
 msgstr "Sneltoetsen configureren..."
 
-#: ../app/dialogs/preferences-dialog.c:1519
+#: ../app/dialogs/preferences-dialog.c:1523
 msgid "_Save keyboard shortcuts on exit"
 msgstr "_Sneltoetsen opslaan bij verlaten"
 
-#: ../app/dialogs/preferences-dialog.c:1523
+#: ../app/dialogs/preferences-dialog.c:1527
 msgid "Save Keyboard Shortcuts _Now"
 msgstr "Sneltoetsen _nu opslaan"
 
-#: ../app/dialogs/preferences-dialog.c:1530
+#: ../app/dialogs/preferences-dialog.c:1534
 msgid "_Reset Saved Keyboard Shortcuts to Default Values"
-msgstr "Herstel opgeslagen sneltoetsen bij opstarten."
+msgstr "_Opgeslagen sneltoetsen bij opstarten herstellen naar standaard waarden"
 
-#: ../app/dialogs/preferences-dialog.c:1545
-#: ../app/dialogs/preferences-dialog.c:1584
+#: ../app/dialogs/preferences-dialog.c:1549
+#: ../app/dialogs/preferences-dialog.c:1588
 msgid "Theme"
 msgstr "Thema"
 
 #  Themes
-#: ../app/dialogs/preferences-dialog.c:1554
+#: ../app/dialogs/preferences-dialog.c:1558
 msgid "Select Theme"
 msgstr "Thema selecteren"
 
-#: ../app/dialogs/preferences-dialog.c:1636
+#: ../app/dialogs/preferences-dialog.c:1640
 msgid "Reload C_urrent Theme"
 msgstr "Huidig thema herladen"
 
-#: ../app/dialogs/preferences-dialog.c:1648
+#: ../app/dialogs/preferences-dialog.c:1652
 msgid "Help System"
 msgstr "Hulpsysteem"
 
 # What's the Dutch translation for tooltip?
-#: ../app/dialogs/preferences-dialog.c:1663
+# scherminfo/tooltip
+#: ../app/dialogs/preferences-dialog.c:1667
 msgid "Show tool _tips"
 msgstr "_Tooltips tonen"
 
-#: ../app/dialogs/preferences-dialog.c:1666
+#: ../app/dialogs/preferences-dialog.c:1670
 msgid "Show help _buttons"
 msgstr "_Hulpknoppen tonen"
 
-#: ../app/dialogs/preferences-dialog.c:1669
+#: ../app/dialogs/preferences-dialog.c:1673
 msgid "Show tips on _startup"
 msgstr "_Tips tonen bij opstarten"
 
 #. Help Browser
-#: ../app/dialogs/preferences-dialog.c:1673
+#: ../app/dialogs/preferences-dialog.c:1677
 msgid "Help Browser"
 msgstr "Hulpbrowser"
 
-#: ../app/dialogs/preferences-dialog.c:1677
+#: ../app/dialogs/preferences-dialog.c:1681
 msgid "H_elp browser to use:"
 msgstr "Te gebruiken hulpbrowser:"
 
 #  Web Browser
-#: ../app/dialogs/preferences-dialog.c:1682
+#: ../app/dialogs/preferences-dialog.c:1686
 msgid "Web Browser"
 msgstr "Webbrowser"
 
-#: ../app/dialogs/preferences-dialog.c:1686
-msgid "Select web browser"
+#: ../app/dialogs/preferences-dialog.c:1690
+msgid "Select Web Browser"
 msgstr "Webbrowser selecteren"
 
-#: ../app/dialogs/preferences-dialog.c:1689
+#: ../app/dialogs/preferences-dialog.c:1693
 msgid "_Web browser to use:"
 msgstr "Te gebruiken _webbrowser:"
 
-#: ../app/dialogs/preferences-dialog.c:1717
-#, fuzzy
-msgid "_Save tool options on exit"
-msgstr "Vensterposities op_slaan bij verlaten"
-
+# bij het verlaten/afsluiten
 #: ../app/dialogs/preferences-dialog.c:1721
-#, fuzzy
-msgid "Save Tool Options _Now"
-msgstr "Gereedschapsopties opslaan"
+msgid "_Save tool options on exit"
+msgstr "Gereedschapsopties op_slaan bij afsluiten"
 
-#: ../app/dialogs/preferences-dialog.c:1728
+#: ../app/dialogs/preferences-dialog.c:1725
+msgid "Save Tool Options _Now"
+msgstr "Gereedschapsopties _nu opslaan"
+
+#: ../app/dialogs/preferences-dialog.c:1732
 #, fuzzy
 msgid "_Reset Saved Tool Options to Default Values"
 msgstr "_Opgeslagen vensterposities herstellen bij opstarten"
 
 #  Snapping Distance
 #. Snapping Distance
-#: ../app/dialogs/preferences-dialog.c:1739
-msgid "Guide and Grid Snapping"
+#: ../app/dialogs/preferences-dialog.c:1742
+#, fuzzy
+msgid "Guide & Grid Snapping"
 msgstr "Magnetische hulplijnen en raster"
 
-#: ../app/dialogs/preferences-dialog.c:1744
+#: ../app/dialogs/preferences-dialog.c:1747
 msgid "_Snap distance:"
 msgstr "_Magnetische afstand:"
 
 #  Scaling
 #. Scaling
-#: ../app/dialogs/preferences-dialog.c:1748
+#: ../app/dialogs/preferences-dialog.c:1751
 msgid "Scaling"
 msgstr "Schalen"
 
-#: ../app/dialogs/preferences-dialog.c:1752
+#: ../app/dialogs/preferences-dialog.c:1755
 msgid "Default _interpolation:"
 msgstr "Standaard _interpolatie:"
 
 #  Global Brush, Pattern, ...
 #. Global Brush, Pattern, ...
-#: ../app/dialogs/preferences-dialog.c:1756
+#: ../app/dialogs/preferences-dialog.c:1762
 msgid "Paint Options Shared Between Tools"
 msgstr "Schilderopties gedeeld tussen gereedschappen"
 
-#: ../app/dialogs/preferences-dialog.c:1769
+#: ../app/dialogs/preferences-dialog.c:1775
 msgid "Move Tool"
 msgstr "Verplaatsing"
 
-#: ../app/dialogs/preferences-dialog.c:1773
+#: ../app/dialogs/preferences-dialog.c:1779
 msgid "Change current layer or path"
 msgstr "Huidige laag of pad wijzigen"
 
-#: ../app/dialogs/preferences-dialog.c:1786
+#: ../app/dialogs/preferences-dialog.c:1792
 msgid "Toolbox"
 msgstr "Gereedschapskist"
 
 # Verschijning/Weergave/Beeld
 # Dit staat in de titel van het voorkeuren dialoog
 #. Appearance
-#: ../app/dialogs/preferences-dialog.c:1796
-#: ../app/dialogs/preferences-dialog.c:1954
+#: ../app/dialogs/preferences-dialog.c:1804
+#: ../app/dialogs/preferences-dialog.c:1965
 #: ../app/widgets/gimpgrideditor.c:206
 msgid "Appearance"
 msgstr "Weergave"
 
-#: ../app/dialogs/preferences-dialog.c:1800
+#: ../app/dialogs/preferences-dialog.c:1808
 msgid "Show _foreground & background color"
 msgstr "_Voor- en achtergrondkleur tonen"
 
-#: ../app/dialogs/preferences-dialog.c:1804
+#: ../app/dialogs/preferences-dialog.c:1812
 msgid "Show active _brush, pattern & gradient"
 msgstr "Actieve Penselen, Patronen & Verlopen tonen"
 
-#: ../app/dialogs/preferences-dialog.c:1808
+#: ../app/dialogs/preferences-dialog.c:1816
 msgid "Show active _image"
 msgstr "_Actieve afbeelding tonen"
 
-#: ../app/dialogs/preferences-dialog.c:1818
-#, fuzzy
+# Nieuwe standaardafbeelding/Standaard nieuwe afbeelding
+#: ../app/dialogs/preferences-dialog.c:1829
 msgid "Default New Image"
-msgstr "Nieuwe afbeelding maken"
+msgstr "Standaard nieuwe afbeelding"
 
-# image niet meevertaald voor duidelijkheid
-#: ../app/dialogs/preferences-dialog.c:1821
-#, fuzzy
+#: ../app/dialogs/preferences-dialog.c:1832
 msgid "Default Image"
-msgstr "Standaard raster"
+msgstr "Standaardafbeelding"
 
 # image niet meevertaald voor duidelijkheid
-#: ../app/dialogs/preferences-dialog.c:1856
+#: ../app/dialogs/preferences-dialog.c:1867
 msgid "Default Image Grid"
 msgstr "Standaard raster"
 
-#: ../app/dialogs/preferences-dialog.c:1859
+#: ../app/dialogs/preferences-dialog.c:1870
 msgid "Default Grid"
 msgstr "Standaard raster"
 
-#: ../app/dialogs/preferences-dialog.c:1879
+#: ../app/dialogs/preferences-dialog.c:1890
 msgid "Image Windows"
 msgstr "Afbeeldingsvensters"
 
-#: ../app/dialogs/preferences-dialog.c:1894
+#: ../app/dialogs/preferences-dialog.c:1905
 msgid "Use \"_Dot for dot\" by default"
 msgstr "Standaard \"stip voor stip\" gebruiken"
 
-#: ../app/dialogs/preferences-dialog.c:1900
+#: ../app/dialogs/preferences-dialog.c:1911
 msgid "Marching _ants speed:"
 msgstr "Snelheid _marcherende mieren:"
 
 #. Zoom & Resize Behavior
-#: ../app/dialogs/preferences-dialog.c:1904
+#: ../app/dialogs/preferences-dialog.c:1915
 msgid "Zoom & Resize Behavior"
 msgstr "Gedrag zoomen en schalen"
 
-#: ../app/dialogs/preferences-dialog.c:1908
+#: ../app/dialogs/preferences-dialog.c:1919
 msgid "Resize window on _zoom"
 msgstr "Venstergrootte aanpassen bij _zoomen"
 
-#: ../app/dialogs/preferences-dialog.c:1911
+#: ../app/dialogs/preferences-dialog.c:1922
 msgid "Resize window on image _size change"
 msgstr "_Venstergrootte aanpassen bij vergroten/verkleinen afbeelding"
 
-#: ../app/dialogs/preferences-dialog.c:1917
+#: ../app/dialogs/preferences-dialog.c:1928
 msgid "Fit to window"
 msgstr "In venster passen"
 
-#: ../app/dialogs/preferences-dialog.c:1919
+#: ../app/dialogs/preferences-dialog.c:1930
 msgid "Initial zoom _ratio:"
 msgstr "_Aanvankelijke zoomverhouding:"
 
 #. Mouse Cursors
-#: ../app/dialogs/preferences-dialog.c:1923
+#: ../app/dialogs/preferences-dialog.c:1934
 msgid "Mouse Cursors"
 msgstr "Muisaanwijzers"
 
-#: ../app/dialogs/preferences-dialog.c:1927
+#: ../app/dialogs/preferences-dialog.c:1938
 msgid "Show _brush outline"
 msgstr "_Penseelomtrek tonen"
 
-#: ../app/dialogs/preferences-dialog.c:1930
+#: ../app/dialogs/preferences-dialog.c:1941
 msgid "Show paint _tool cursor"
 msgstr "_Tekengereedschap cursor tonen"
 
-#: ../app/dialogs/preferences-dialog.c:1936
+#: ../app/dialogs/preferences-dialog.c:1947
 msgid "Cursor _mode:"
 msgstr "Cursor_modus:"
 
-#: ../app/dialogs/preferences-dialog.c:1939
+#: ../app/dialogs/preferences-dialog.c:1950
 msgid "Cursor re_ndering:"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1951
+#: ../app/dialogs/preferences-dialog.c:1962
 msgid "Image Window Appearance"
 msgstr "Weergave afbeeldingsvensters"
 
-#: ../app/dialogs/preferences-dialog.c:1962
+#: ../app/dialogs/preferences-dialog.c:1973
 msgid "Default Appearance in Normal Mode"
 msgstr "Normale stand"
 
-#: ../app/dialogs/preferences-dialog.c:1967
+#: ../app/dialogs/preferences-dialog.c:1978
 msgid "Default Appearance in Fullscreen Mode"
 msgstr "Volledig scherm"
 
 # image niet meevertaald voor duidelijkheid.
 # formaat/indeling/informatie
-#: ../app/dialogs/preferences-dialog.c:1976
+#: ../app/dialogs/preferences-dialog.c:1987
 msgid "Image Title & Statusbar Format"
 msgstr "Formaat titel en statusbalk"
 
-#: ../app/dialogs/preferences-dialog.c:1979
+#: ../app/dialogs/preferences-dialog.c:1990
 msgid "Title & Status"
-msgstr "Titel & Status"
+msgstr "Titel & status"
 
-#: ../app/dialogs/preferences-dialog.c:1997
-#, fuzzy
+# format/formaat
+#: ../app/dialogs/preferences-dialog.c:2008
 msgid "Current format"
-msgstr "Huidige status"
+msgstr "Huidige formaat"
 
-#: ../app/dialogs/preferences-dialog.c:1998
-#, fuzzy
+# format/formaat
+#: ../app/dialogs/preferences-dialog.c:2009
 msgid "Default format"
-msgstr "Standaard raster"
+msgstr "Standaardformaat"
 
-#: ../app/dialogs/preferences-dialog.c:1999
+#: ../app/dialogs/preferences-dialog.c:2010
 msgid "Show zoom percentage"
 msgstr "Zoompercentage weergeven"
 
-#: ../app/dialogs/preferences-dialog.c:2000
+#: ../app/dialogs/preferences-dialog.c:2011
 msgid "Show zoom ratio"
 msgstr "Zoomverhouding weergeven"
 
-#: ../app/dialogs/preferences-dialog.c:2001
+#: ../app/dialogs/preferences-dialog.c:2012
 msgid "Show image size"
 msgstr "Afbeeldingsgrootte tonen"
 
-#: ../app/dialogs/preferences-dialog.c:2014
+#: ../app/dialogs/preferences-dialog.c:2025
 msgid "Image Title Format"
 msgstr "Formaat titel"
 
-#: ../app/dialogs/preferences-dialog.c:2016
+#: ../app/dialogs/preferences-dialog.c:2027
 msgid "Image Statusbar Format"
 msgstr "Formaat statusbalk"
 
-#: ../app/dialogs/preferences-dialog.c:2101
+#: ../app/dialogs/preferences-dialog.c:2112
 msgid "Display"
 msgstr "Weergave"
 
-#: ../app/dialogs/preferences-dialog.c:2117
-#, fuzzy
-msgid "_Check Style:"
-msgstr "_Hoekstijl:"
+# vakjes
+#: ../app/dialogs/preferences-dialog.c:2128
+msgid "_Check style:"
+msgstr "_Vakjesstijl:"
 
-#: ../app/dialogs/preferences-dialog.c:2120
-#, fuzzy
-msgid "Check _Size:"
-msgstr "Vak_grootte:"
+# grootte van vakjes
+#: ../app/dialogs/preferences-dialog.c:2131
+msgid "Check _size:"
+msgstr "Vakjes_grootte:"
 
-#: ../app/dialogs/preferences-dialog.c:2123
+#: ../app/dialogs/preferences-dialog.c:2134
 msgid "Get Monitor Resolution"
 msgstr "Beeldscherminformatie"
 
 # beeldpunten
-#: ../app/dialogs/preferences-dialog.c:2127
+#: ../app/dialogs/preferences-dialog.c:2138
 #: ../app/widgets/gimpcursorview.c:157 ../app/widgets/gimpgrideditor.c:267
 #: ../app/widgets/gimpgrideditor.c:299
 msgid "Pixels"
 msgstr "Pixels"
 
-#: ../app/dialogs/preferences-dialog.c:2149
+#: ../app/dialogs/preferences-dialog.c:2160
 #: ../app/widgets/gimpimagepropview.c:381
 msgid "dpi"
 msgstr "dpi"
 
-#: ../app/dialogs/preferences-dialog.c:2165
+#: ../app/dialogs/preferences-dialog.c:2176
 #, c-format
 msgid "From _windowing system (currently %d x %d dpi)"
 msgstr "Resolutie aan het venstersysteem vragen (momenteel %d × %d dpi)"
 
-#: ../app/dialogs/preferences-dialog.c:2185
+#: ../app/dialogs/preferences-dialog.c:2196
 msgid "_Manually"
 msgstr "_Handmatig"
 
-#: ../app/dialogs/preferences-dialog.c:2200
+#: ../app/dialogs/preferences-dialog.c:2211
 msgid "C_alibrate..."
 msgstr "_Kalibreren..."
 
-#: ../app/dialogs/preferences-dialog.c:2219
+#: ../app/dialogs/preferences-dialog.c:2233
 msgid "Color Management"
 msgstr "Kleurbeheer"
 
-#: ../app/dialogs/preferences-dialog.c:2239
+#: ../app/dialogs/preferences-dialog.c:2253
 msgid "_RGB profile:"
 msgstr "_RGB-profiel:"
 
-#: ../app/dialogs/preferences-dialog.c:2240
-msgid "Select RGB color profile"
+#: ../app/dialogs/preferences-dialog.c:2254
+msgid "Select RGB Color Profile"
 msgstr "RGB kleurprofiel selecteren"
 
-#: ../app/dialogs/preferences-dialog.c:2241
+#: ../app/dialogs/preferences-dialog.c:2255
 msgid "_CMYK profile:"
 msgstr "_CMYK-profiel:"
 
-#: ../app/dialogs/preferences-dialog.c:2242
-msgid "Select CMYK color profile"
+#: ../app/dialogs/preferences-dialog.c:2256
+msgid "Select CMYK Color Profile"
 msgstr "CMYK kleurprofiel selecteren"
 
 # beeldbuis/beeldscherm/monitor
-#: ../app/dialogs/preferences-dialog.c:2243
+#: ../app/dialogs/preferences-dialog.c:2257
 msgid "_Monitor profile:"
 msgstr "_Beeldscherm-profiel:"
 
-#: ../app/dialogs/preferences-dialog.c:2244
-msgid "Select monitor color profile"
+#: ../app/dialogs/preferences-dialog.c:2258
+msgid "Select Monitor Color Profile"
 msgstr "Beeldscherm kleurprofiel selecteren"
 
-#: ../app/dialogs/preferences-dialog.c:2245
+#: ../app/dialogs/preferences-dialog.c:2259
 #, fuzzy
 msgid "_Print simulation profile:"
 msgstr "_Printer-profiel"
 
-#: ../app/dialogs/preferences-dialog.c:2246
-msgid "Select printer color profile"
+#: ../app/dialogs/preferences-dialog.c:2260
+msgid "Select Printer Color Profile"
 msgstr "Printer kleurprofiel selecteren"
 
-#: ../app/dialogs/preferences-dialog.c:2255
+#: ../app/dialogs/preferences-dialog.c:2269
 msgid "_Mode of operation:"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2258
+#: ../app/dialogs/preferences-dialog.c:2272
 msgid "_Display rendering intent:"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2261
+#: ../app/dialogs/preferences-dialog.c:2275
 msgid "_Softproof rendering intent:"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2283
+#: ../app/dialogs/preferences-dialog.c:2304
 msgid "_Try to obtain the monitor profile from the X server"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2302
+#: ../app/dialogs/preferences-dialog.c:2323
 msgid "Input Devices"
 msgstr "Invoerapparaten"
 
 #  Input Device Settings
 #. Extended Input Devices
-#: ../app/dialogs/preferences-dialog.c:2312
+#: ../app/dialogs/preferences-dialog.c:2333
 msgid "Extended Input Devices"
 msgstr "Uitgebreide invoerapparaten"
 
-#: ../app/dialogs/preferences-dialog.c:2316
+#: ../app/dialogs/preferences-dialog.c:2337
 msgid "Configure E_xtended Input Devices..."
 msgstr "_Uitgebreide invoerapparaten configureren..."
 
-#: ../app/dialogs/preferences-dialog.c:2323
+#: ../app/dialogs/preferences-dialog.c:2344
 msgid "_Save input device settings on exit"
 msgstr "_Apparaatinstellingen opslaan bij verlaten..."
 
-#: ../app/dialogs/preferences-dialog.c:2327
+#: ../app/dialogs/preferences-dialog.c:2348
 msgid "Save Input Device Settings _Now"
 msgstr "Apparaatinstellingen _nu opslaan"
 
-#: ../app/dialogs/preferences-dialog.c:2334
+#: ../app/dialogs/preferences-dialog.c:2355
 #, fuzzy
 msgid "_Reset Saved Input Device Settings to Default Values"
 msgstr "Sla apparaatinstellingen op bij verlaten"
 
-#: ../app/dialogs/preferences-dialog.c:2349
+#: ../app/dialogs/preferences-dialog.c:2370
 msgid "Additional Input Controllers"
 msgstr "Aanvullende invoerapparaten"
 
-#: ../app/dialogs/preferences-dialog.c:2352
+#: ../app/dialogs/preferences-dialog.c:2373
 msgid "Input Controllers"
 msgstr "Invoerapparaten"
 
-#: ../app/dialogs/preferences-dialog.c:2368
+#: ../app/dialogs/preferences-dialog.c:2389
 msgid "Window Management"
 msgstr "Vensterbeheer"
 
-#: ../app/dialogs/preferences-dialog.c:2377
+#: ../app/dialogs/preferences-dialog.c:2398
 msgid "Window Manager Hints"
 msgstr "Vensterbeheer hints"
 
-#: ../app/dialogs/preferences-dialog.c:2383
+#: ../app/dialogs/preferences-dialog.c:2404
 #, fuzzy
 msgid "Hint for the _toolbox:"
 msgstr "Venstertypehint voor de Gereedschappen:"
 
-#: ../app/dialogs/preferences-dialog.c:2387
+#: ../app/dialogs/preferences-dialog.c:2408
 #, fuzzy
 msgid "Hint for other _docks:"
 msgstr "Venstertypehint voor de dokken:"
 
-#: ../app/dialogs/preferences-dialog.c:2391
+#: ../app/dialogs/preferences-dialog.c:2412
 msgid "Toolbox and other docks are transient to the active display"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2395
+#: ../app/dialogs/preferences-dialog.c:2416
 msgid "Focus"
 msgstr "Focus"
 
-#: ../app/dialogs/preferences-dialog.c:2399
+#: ../app/dialogs/preferences-dialog.c:2420
 #, fuzzy
 msgid "Activate the _focused image"
 msgstr "Het huidige venster activeren"
 
 #. Window Positions
-#: ../app/dialogs/preferences-dialog.c:2403
+#: ../app/dialogs/preferences-dialog.c:2424
 msgid "Window Positions"
 msgstr "Vensterposities"
 
-#: ../app/dialogs/preferences-dialog.c:2406
+#: ../app/dialogs/preferences-dialog.c:2427
 msgid "_Save window positions on exit"
 msgstr "Vensterposities op_slaan bij verlaten"
 
-#: ../app/dialogs/preferences-dialog.c:2410
+#: ../app/dialogs/preferences-dialog.c:2431
 msgid "Save Window Positions _Now"
 msgstr "Vensterposities _nu opslaan"
 
-#: ../app/dialogs/preferences-dialog.c:2417
+#: ../app/dialogs/preferences-dialog.c:2438
 msgid "_Reset Saved Window Positions to Default Values"
 msgstr "_Opgeslagen vensterposities herstellen bij opstarten"
 
-#: ../app/dialogs/preferences-dialog.c:2432
+#: ../app/dialogs/preferences-dialog.c:2453
 msgid "Folders"
 msgstr "Mappen"
 
-#: ../app/dialogs/preferences-dialog.c:2450
+#: ../app/dialogs/preferences-dialog.c:2471
 msgid "Temp folder:"
 msgstr "Tijdelijke map:"
 
-#: ../app/dialogs/preferences-dialog.c:2450
+#: ../app/dialogs/preferences-dialog.c:2471
 msgid "Select Temp Folder"
 msgstr "Tijdelijke map selecteren"
 
-#: ../app/dialogs/preferences-dialog.c:2451
+#: ../app/dialogs/preferences-dialog.c:2472
 #: ../app/dialogs/user-install-dialog.c:1420
 msgid "Swap folder:"
 msgstr "Wisselmap:"
 
-#: ../app/dialogs/preferences-dialog.c:2451
+#: ../app/dialogs/preferences-dialog.c:2472
 msgid "Select Swap Folder"
 msgstr "Wisselmap selecteren"
 
-#: ../app/dialogs/preferences-dialog.c:2484
+#: ../app/dialogs/preferences-dialog.c:2505
 msgid "Brush Folders"
 msgstr "Penseelmappen"
 
-#: ../app/dialogs/preferences-dialog.c:2486
+#: ../app/dialogs/preferences-dialog.c:2507
 msgid "Select Brush Folders"
 msgstr "Penseelmappen selecteren"
 
-#: ../app/dialogs/preferences-dialog.c:2488
+#: ../app/dialogs/preferences-dialog.c:2509
 msgid "Pattern Folders"
 msgstr "Patroonmappen"
 
-#: ../app/dialogs/preferences-dialog.c:2490
+#: ../app/dialogs/preferences-dialog.c:2511
 msgid "Select Pattern Folders"
 msgstr "Patroonmappen selecteren"
 
-#: ../app/dialogs/preferences-dialog.c:2492
+#: ../app/dialogs/preferences-dialog.c:2513
 msgid "Palette Folders"
 msgstr "Paletmappen"
 
-#: ../app/dialogs/preferences-dialog.c:2494
+#: ../app/dialogs/preferences-dialog.c:2515
 msgid "Select Palette Folders"
 msgstr "Paletmappen selecteren"
 
-#: ../app/dialogs/preferences-dialog.c:2496
+#: ../app/dialogs/preferences-dialog.c:2517
 msgid "Gradient Folders"
 msgstr "Verloopmappen"
 
-#: ../app/dialogs/preferences-dialog.c:2498
+#: ../app/dialogs/preferences-dialog.c:2519
 msgid "Select Gradient Folders"
 msgstr "Verloopmappen selecteren"
 
-#: ../app/dialogs/preferences-dialog.c:2500
+#: ../app/dialogs/preferences-dialog.c:2521
 msgid "Font Folders"
 msgstr "Fontmappen"
 
-#: ../app/dialogs/preferences-dialog.c:2502
+#: ../app/dialogs/preferences-dialog.c:2523
 msgid "Select Font Folders"
 msgstr "Fontmappen selecteren"
 
-#: ../app/dialogs/preferences-dialog.c:2504
+#: ../app/dialogs/preferences-dialog.c:2525
 msgid "Plug-In Folders"
 msgstr "Plug-inmappen"
 
-#: ../app/dialogs/preferences-dialog.c:2506
+#: ../app/dialogs/preferences-dialog.c:2527
 msgid "Select Plug-In Folders"
 msgstr "Plug-inmappen selecteren"
 
-#: ../app/dialogs/preferences-dialog.c:2508
+#: ../app/dialogs/preferences-dialog.c:2529
 msgid "Scripts"
 msgstr "Scripts"
 
-#: ../app/dialogs/preferences-dialog.c:2508
+#: ../app/dialogs/preferences-dialog.c:2529
 msgid "Script-Fu Folders"
 msgstr "Script-Fu-mappen"
 
-#: ../app/dialogs/preferences-dialog.c:2510
+#: ../app/dialogs/preferences-dialog.c:2531
 msgid "Select Script-Fu Folders"
 msgstr "Script-Fu-mappen selecteren"
 
-#: ../app/dialogs/preferences-dialog.c:2512
+#: ../app/dialogs/preferences-dialog.c:2533
 msgid "Module Folders"
 msgstr "Modulemappen"
 
-#: ../app/dialogs/preferences-dialog.c:2514
+#: ../app/dialogs/preferences-dialog.c:2535
 msgid "Select Module Folders"
 msgstr "Modulemappen selecteren"
 
-#: ../app/dialogs/preferences-dialog.c:2516
+#: ../app/dialogs/preferences-dialog.c:2537
 #, fuzzy
 msgid "Interpreters"
 msgstr "Eigenschappen item"
 
-#: ../app/dialogs/preferences-dialog.c:2516
+#: ../app/dialogs/preferences-dialog.c:2537
 #, fuzzy
 msgid "Interpreter Folders"
 msgstr "Patroonmappen"
 
-#: ../app/dialogs/preferences-dialog.c:2518
+#: ../app/dialogs/preferences-dialog.c:2539
 #, fuzzy
 msgid "Select Interpreter Folders"
 msgstr "Patroonmappen selecteren"
 
-#: ../app/dialogs/preferences-dialog.c:2520
+#: ../app/dialogs/preferences-dialog.c:2541
 msgid "Environment Folders"
 msgstr "Omgevingsmappen"
 
-#: ../app/dialogs/preferences-dialog.c:2522
+#: ../app/dialogs/preferences-dialog.c:2543
 msgid "Select Environment Folders"
 msgstr "Omgevingsmappen selecteren"
 
-#: ../app/dialogs/preferences-dialog.c:2524
+#: ../app/dialogs/preferences-dialog.c:2545
 msgid "Themes"
 msgstr "Thema's"
 
-#: ../app/dialogs/preferences-dialog.c:2524
+#: ../app/dialogs/preferences-dialog.c:2545
 msgid "Theme Folders"
 msgstr "Themamappen"
 
-#: ../app/dialogs/preferences-dialog.c:2526
+#: ../app/dialogs/preferences-dialog.c:2547
 msgid "Select Theme Folders"
 msgstr "Themamappen selecteren"
 
-#: ../app/dialogs/print-size-dialog.c:134
+#: ../app/dialogs/print-size-dialog.c:135
 msgid "Print Size"
 msgstr "Afdrukgrootte"
 
 #. the image size labels
-#: ../app/dialogs/print-size-dialog.c:161 ../app/widgets/gimpsizebox.c:221
+#: ../app/dialogs/print-size-dialog.c:162 ../app/widgets/gimpsizebox.c:221
 #: ../app/widgets/gimptemplateeditor.c:232
 msgid "_Width:"
 msgstr "_Breedte:"
 
 # H, O G en T worden al gebruikt als sneltoets
-#: ../app/dialogs/print-size-dialog.c:168 ../app/widgets/gimpsizebox.c:225
+#: ../app/dialogs/print-size-dialog.c:169 ../app/widgets/gimpsizebox.c:225
 #: ../app/widgets/gimptemplateeditor.c:239
 msgid "H_eight:"
 msgstr "Hoogt_e: "
 
 #. the resolution labels
-#: ../app/dialogs/print-size-dialog.c:216 ../app/widgets/gimpsizebox.c:274
+#: ../app/dialogs/print-size-dialog.c:217 ../app/widgets/gimpsizebox.c:274
 #: ../app/widgets/gimptemplateeditor.c:359
 msgid "_X resolution:"
 msgstr "Resolutie _X:"
 
-#: ../app/dialogs/print-size-dialog.c:223 ../app/widgets/gimpsizebox.c:277
+#: ../app/dialogs/print-size-dialog.c:224 ../app/widgets/gimpsizebox.c:277
 #: ../app/widgets/gimptemplateeditor.c:366
 msgid "_Y resolution:"
 msgstr "Resolutie _Y:"
 
-#: ../app/dialogs/print-size-dialog.c:234 ../app/widgets/gimpsizebox.c:270
+#: ../app/dialogs/print-size-dialog.c:235 ../app/widgets/gimpsizebox.c:270
 #: ../app/widgets/gimptemplateeditor.c:379
 #, c-format
 msgid "pixels/%a"
@@ -7126,16 +7143,14 @@ msgstr "De GIMP afsluiten"
 msgid "If you quit GIMP now, these changes will be lost."
 msgstr "Niet-opgeslagen wijzigingen zullen verloren gaan."
 
-#: ../app/dialogs/quit-dialog.c:177
-msgid "There is one image with unsaved changes:"
-msgstr "Er is een bestand met niet opgeslagen wijzigingen:"
-
-#: ../app/dialogs/quit-dialog.c:180
+#: ../app/dialogs/quit-dialog.c:176
 #, c-format
-msgid "There are %d images with unsaved changes:"
-msgstr "ER zijn %d bestanden met niet opgeslagen wijzigingen:"
+msgid "There is %d image with unsaved changes:"
+msgid_plural "There are %d images with unsaved changes:"
+msgstr[0] "Er is %d bestand met niet opgeslagen wijzigingen:"
+msgstr[1] "Er zijn %d bestanden met niet opgeslagen wijzigingen:"
 
-#: ../app/dialogs/quit-dialog.c:199
+#: ../app/dialogs/quit-dialog.c:198
 msgid "_Discard Changes"
 msgstr "_Wijzigingen verwerpen"
 
@@ -7149,7 +7164,8 @@ msgid "Layer Size"
 msgstr "Laaggrootte"
 
 #: ../app/dialogs/resize-dialog.c:289
-msgid "Resize _Layers:"
+#, fuzzy
+msgid "Resize _layers:"
 msgstr "_Lagen herschalen:"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:70
@@ -7196,7 +7212,8 @@ msgid "Choose Stroke Style"
 msgstr "Kies lijntekenstijl."
 
 #: ../app/dialogs/stroke-dialog.c:212
-msgid "Paint Tool:"
+#, fuzzy
+msgid "Paint tool:"
 msgstr "Tekengereedschap:"
 
 #: ../app/dialogs/tips-dialog.c:89
@@ -7222,12 +7239,12 @@ msgid "Show tip next time GIMP starts"
 msgstr "Toon tip bij het opstarten van GIMP"
 
 #: ../app/dialogs/tips-dialog.c:218
-msgid "_Previous tip"
-msgstr "V_orige tip"
+msgid "_Previous Tip"
+msgstr "Vo_rige tip"
 
 #: ../app/dialogs/tips-dialog.c:227
-msgid "_Next tip"
-msgstr "_Volgende tip"
+msgid "_Next Tip"
+msgstr "V_olgende tip"
 
 #. This is a special string to specify the language identifier to
 #. look for in the gimp-tips.xml file. Please translate the C in it
@@ -7495,9 +7512,10 @@ msgid "Click \"Continue\" to enter the GIMP user installation."
 msgstr "Klik \"Doorgaan\" om de gebruikersinstallatie te starten."
 
 #: ../app/dialogs/user-install-dialog.c:787
+#, fuzzy
 msgid ""
 "<b>The GIMP - GNU Image Manipulation Program</b>\n"
-"Copyright (C) 1995-2004\n"
+"Copyright (C) 1995-2005\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team."
 msgstr ""
 "<b>De GIMP - GNU Image Manipulation Program</b>\n"
@@ -7555,18 +7573,21 @@ msgid "Click \"Continue\" to proceed with the user installation."
 msgstr "Klik \"Doorgaan\" om de gebruikersinstallatie te starten."
 
 #: ../app/dialogs/user-install-dialog.c:826
-#, fuzzy, c-format
+#, c-format
 msgid "It seems you have used GIMP %s before."
-msgstr "Blijkbaar heeft u eerder GIMP 2.0 gebruikt."
+msgstr "Blijkbaar heeft u eerder versie %s van GIMP gebruikt."
 
+# overzetten/overnemen
 #: ../app/dialogs/user-install-dialog.c:828
-#, fuzzy, c-format
+#, c-format
 msgid "_Migrate GIMP %s user settings"
-msgstr "GIMP 2.0 _gebruikersinstellingen overzetten"
+msgstr "_Gebruikersinstellingen van GIMP %s overnemen?"
 
+# verse/nieuwe
+# versie is niet echt mooi/duidelijk hier
 #: ../app/dialogs/user-install-dialog.c:837
 msgid "Do a _fresh user installation"
-msgstr "Een _verse gebruikersinstallatie uitvoeren"
+msgstr "Een _nieuwe gebruikersinstallatie uitvoeren"
 
 #: ../app/dialogs/user-install-dialog.c:868
 msgid "Personal GIMP Folder"
@@ -7660,7 +7681,7 @@ msgstr ""
 "kunnen gebruiken (\"/tmp\" of \"/var/tmp\")."
 
 #: ../app/dialogs/user-install-dialog.c:1415
-msgid "Select swap dir"
+msgid "Select Swap Dir"
 msgstr "Wisselmap selecteren"
 
 #: ../app/dialogs/vectors-export-dialog.c:53
@@ -7672,9 +7693,8 @@ msgid "Export the active path"
 msgstr "Actieve pad exporteren"
 
 #: ../app/dialogs/vectors-export-dialog.c:84
-#, fuzzy
 msgid "Export all paths from this image"
-msgstr "Maak een nieuwe weergave voor deze afbeelding aan"
+msgstr "Alle paden van deze afbeelding exporteren"
 
 #: ../app/dialogs/vectors-import-dialog.c:57
 msgid "Import Paths from SVG"
@@ -7698,7 +7718,7 @@ msgstr "Geïmporteerde paden _schalen naar afbeeldinging"
 
 #  The name entry hbox, label and entry
 #: ../app/dialogs/vectors-options-dialog.c:118
-msgid "Path Name:"
+msgid "Path name:"
 msgstr "Padnaam:"
 
 # werkbalkpictogram
@@ -7714,14 +7734,17 @@ msgstr "Gereedschapspictogram met kruisdraad"
 msgid "Crosshair only"
 msgstr "Alleen kruisdraad"
 
+# dit mag een wat langere tekst zijn
 #: ../app/display/display-enums.c:55
 msgid "From theme"
-msgstr "Van thema"
+msgstr "conform huidige thema"
 
+# BUG? toont lichtgrijze kleur rond afbeelding, geen vakjes?
 #: ../app/display/display-enums.c:56
 msgid "Light check color"
 msgstr "Lichte vakjes"
 
+# BUG? idem, egaal donkergrijs, geen vakjes?
 #: ../app/display/display-enums.c:57
 msgid "Dark check color"
 msgstr "Donkere vakjes"
@@ -7730,11 +7753,11 @@ msgstr "Donkere vakjes"
 msgid "Custom color"
 msgstr "Aangepaste kleur"
 
-#: ../app/display/gimpdisplayshell.c:921
+#: ../app/display/gimpdisplayshell.c:922
 msgid "Zoom image when window size changes"
 msgstr "Afbeelding zoomen als venstergrootte wijzigt"
 
-#: ../app/display/gimpdisplayshell.c:941
+#: ../app/display/gimpdisplayshell.c:942
 msgid "Toggle Quick Mask"
 msgstr "Snelmasker schakelen"
 
@@ -7745,7 +7768,6 @@ msgid "Close %s"
 msgstr "%s sluiten"
 
 #: ../app/display/gimpdisplayshell-close.c:135
-#, fuzzy
 msgid "Do_n't Save"
 msgstr "_Niet opslaan"
 
@@ -7793,7 +7815,7 @@ msgid "Drop New Path"
 msgstr "Nieuw pad verwijderen"
 
 #: ../app/display/gimpdisplayshell-dnd.c:542
-#: ../app/widgets/gimplayertreeview.c:837 ../app/widgets/gimptoolbox-dnd.c:352
+#: ../app/widgets/gimplayertreeview.c:837 ../app/widgets/gimptoolbox-dnd.c:359
 #, fuzzy
 msgid "Dropped Buffer"
 msgstr "Buffer _verwijderen"
@@ -7810,6 +7832,7 @@ msgstr "Kleurweergavefilters instellen"
 msgid "Layer Select"
 msgstr "Laagselectie"
 
+# zoomniveau/zoomverhouding
 #: ../app/display/gimpdisplayshell-scale.c:603
 msgid "Zoom Ratio"
 msgstr "Zoomverhouding"
@@ -7819,7 +7842,7 @@ msgid "Select Zoom Ratio"
 msgstr "Zoomverhouding selecteren"
 
 #: ../app/display/gimpdisplayshell-scale.c:645
-msgid "Zoom Ratio:"
+msgid "Zoom ratio:"
 msgstr "Zoomverhouding:"
 
 # zoomen
@@ -7944,7 +7967,7 @@ msgstr "Verfspuit"
 msgid "No brushes available for use with this tool."
 msgstr "Geen penselen beschikbaar voor dit gereedschap."
 
-#: ../app/paint/gimpclone.c:89 ../app/tools/gimpclonetool.c:93
+#: ../app/paint/gimpclone.c:91 ../app/tools/gimpclonetool.c:93
 msgid "Clone"
 msgstr "Klonen"
 
@@ -7996,62 +8019,62 @@ msgstr "Verscherpen"
 msgid "Brightness-Contrast"
 msgstr "Helderheid-Contrast"
 
-#: ../app/pdb/color_cmds.c:460 ../app/tools/gimpposterizetool.c:78
+#: ../app/pdb/color_cmds.c:464 ../app/tools/gimpposterizetool.c:78
 msgid "Posterize"
 msgstr "Posteriseren"
 
-#: ../app/pdb/color_cmds.c:811 ../app/pdb/color_cmds.c:937
+#: ../app/pdb/color_cmds.c:820 ../app/pdb/color_cmds.c:947
 #: ../app/tools/gimpcurvestool.c:136
 msgid "Curves"
 msgstr "Curves"
 
-#: ../app/pdb/color_cmds.c:1057 ../app/tools/gimpcolorbalancetool.c:95
+#: ../app/pdb/color_cmds.c:1068 ../app/tools/gimpcolorbalancetool.c:95
 msgid "Color Balance"
 msgstr "Kleurbalans"
 
-#: ../app/pdb/color_cmds.c:1177 ../app/tools/gimpcolorizetool.c:96
+#: ../app/pdb/color_cmds.c:1189 ../app/tools/gimpcolorizetool.c:96
 msgid "Colorize"
 msgstr "Verkleuren"
 
-#: ../app/pdb/color_cmds.c:1449 ../app/tools/gimphuesaturationtool.c:115
+#: ../app/pdb/color_cmds.c:1463 ../app/tools/gimphuesaturationtool.c:115
 msgid "Hue-Saturation"
 msgstr "Tint-Verzadiging"
 
-#: ../app/pdb/color_cmds.c:1556 ../app/tools/gimpthresholdtool.c:89
+#: ../app/pdb/color_cmds.c:1571 ../app/tools/gimpthresholdtool.c:89
 msgid "Threshold"
 msgstr "Drempelwaarde"
 
-#: ../app/pdb/drawable_transform_cmds.c:249
-#: ../app/pdb/drawable_transform_cmds.c:404
+#: ../app/pdb/drawable_transform_cmds.c:250
+#: ../app/pdb/drawable_transform_cmds.c:406
 msgid "Flip..."
 msgstr "Spiegelen..."
 
-#: ../app/pdb/drawable_transform_cmds.c:564
-#: ../app/pdb/drawable_transform_cmds.c:748
-#: ../app/pdb/transform_tools_cmds.c:198
+#: ../app/pdb/drawable_transform_cmds.c:567
+#: ../app/pdb/drawable_transform_cmds.c:752
+#: ../app/pdb/transform_tools_cmds.c:199
 #: ../app/tools/gimpperspectivetool.c:141
 msgid "Perspective..."
 msgstr "Perspectief..."
 
-#: ../app/pdb/drawable_transform_cmds.c:1655
-#: ../app/pdb/drawable_transform_cmds.c:1797
-#: ../app/pdb/transform_tools_cmds.c:590 ../app/tools/gimpsheartool.c:158
+#: ../app/pdb/drawable_transform_cmds.c:1665
+#: ../app/pdb/drawable_transform_cmds.c:1808
+#: ../app/pdb/transform_tools_cmds.c:594 ../app/tools/gimpsheartool.c:158
 msgid "Shearing..."
 msgstr "Hellen..."
 
-#: ../app/pdb/drawable_transform_cmds.c:1949
-#: ../app/pdb/drawable_transform_cmds.c:2130
-#: ../app/pdb/drawable_transform_cmds.c:2317
-#: ../app/pdb/drawable_transform_cmds.c:2518
-#: ../app/pdb/transform_tools_cmds.c:723
+#: ../app/pdb/drawable_transform_cmds.c:1961
+#: ../app/pdb/drawable_transform_cmds.c:2143
+#: ../app/pdb/drawable_transform_cmds.c:2331
+#: ../app/pdb/drawable_transform_cmds.c:2533
+#: ../app/pdb/transform_tools_cmds.c:728
 msgid "2D Transform..."
 msgstr "2D transformatie..."
 
-#: ../app/pdb/edit_cmds.c:673 ../app/tools/gimpblendtool.c:243
+#: ../app/pdb/edit_cmds.c:1179 ../app/tools/gimpblendtool.c:243
 msgid "Blending..."
 msgstr "Mengen..."
 
-#: ../app/pdb/image_cmds.c:3975
+#: ../app/pdb/image_cmds.c:4031
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -8200,21 +8223,21 @@ msgstr ""
 "PDB-aanroepfout voor procedure '%s':\n"
 "Argument #%d type past niet (verwachtte %s, kreeg %s)"
 
-#: ../app/pdb/selection_tools_cmds.c:332 ../app/tools/gimpfreeselecttool.c:97
+#: ../app/pdb/selection_tools_cmds.c:334 ../app/tools/gimpfreeselecttool.c:97
 msgid "Free Select"
 msgstr "Vrije selectie"
 
-#: ../app/pdb/vectors_cmds.c:238
+#: ../app/pdb/vectors_cmds.c:240
 #, fuzzy
 msgid "Modify Path"
 msgstr "Pad verplaatsen"
 
-#: ../app/plug-in/plug-in.c:563 ../app/plug-in/plug-in.c:596
+#: ../app/plug-in/plug-in.c:607 ../app/plug-in/plug-in.c:640
 #, c-format
 msgid "Terminating plug-in: '%s'\n"
 msgstr "Plug-in afsluiten: '%s'\n"
 
-#: ../app/plug-in/plug-in.c:749
+#: ../app/plug-in/plug-in.c:793
 #, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"
@@ -8235,12 +8258,12 @@ msgstr ""
 msgid "Skipping '%s': wrong GIMP protocol version."
 msgstr "'%s' wordt overgeslagen: verkeerde GIMP-protocolversie."
 
-#: ../app/plug-in/plug-in-rc.c:446
+#: ../app/plug-in/plug-in-rc.c:450
 #, c-format
 msgid "invalid value '%s' for icon type"
 msgstr "ongeldige waarde '%s' voor pictogramtype"
 
-#: ../app/plug-in/plug-in-rc.c:461
+#: ../app/plug-in/plug-in-rc.c:465
 #, c-format
 msgid "invalid value '%ld' for icon type"
 msgstr "ongeldige waarde '%ld' voor pictogramtype"
@@ -8472,12 +8495,13 @@ msgstr "Druk:"
 
 #: ../app/tools/gimpblendoptions.c:243
 msgid "Offset:"
-msgstr "Verspringing:"
+msgstr "Verschuiving:"
 
 #: ../app/tools/gimpblendoptions.c:252 ../app/widgets/gimpbrusheditor.c:145
 msgid "Shape:"
 msgstr "Vorm:"
 
+# herhalen
 #: ../app/tools/gimpblendoptions.c:258 ../app/tools/gimppaintoptions-gui.c:430
 msgid "Repeat:"
 msgstr "Herhaal:"
@@ -8487,8 +8511,8 @@ msgid "Adaptive supersampling"
 msgstr "Adaptieve overmonstering"
 
 #: ../app/tools/gimpblendoptions.c:294
-msgid "Max Depth:"
-msgstr "Max. Diepte:"
+msgid "Max depth:"
+msgstr "Max. diepte:"
 
 #: ../app/tools/gimpblendoptions.c:301
 #: ../app/tools/gimpbucketfilloptions.c:294
@@ -8597,10 +8621,6 @@ msgstr "Vul met een kleur of patroon"
 msgid "_Bucket Fill"
 msgstr "_Vullen"
 
-#: ../app/tools/gimpbycolorselecttool.c:82
-msgid "Select By Color"
-msgstr "Op kleur selecteren"
-
 #: ../app/tools/gimpbycolorselecttool.c:83
 msgid "Select regions by color"
 msgstr "Gebieden op kleur selecteren"
@@ -8617,16 +8637,16 @@ msgstr "Met patronen of stukken uit een afbeelding schilderen"
 msgid "_Clone"
 msgstr "_Klonen"
 
-#: ../app/tools/gimpclonetool.c:258
+#: ../app/tools/gimpclonetool.c:270
 #, fuzzy
 msgid "Ctrl-Click to set a clone source."
 msgstr "Klik om een nieuw pad aan te maken"
 
-#: ../app/tools/gimpclonetool.c:316
+#: ../app/tools/gimpclonetool.c:329
 msgid "Source"
 msgstr "Bron"
 
-#: ../app/tools/gimpclonetool.c:325
+#: ../app/tools/gimpclonetool.c:338
 msgid "Alignment"
 msgstr "Uitlijning"
 
@@ -8647,12 +8667,13 @@ msgid "Color balance operates only on RGB color layers."
 msgstr "Kleurbalans werkt enkel op RGB-lagen."
 
 #: ../app/tools/gimpcolorbalancetool.c:275
-msgid "Select Range to Modify"
+#, fuzzy
+msgid "Select Range to Adjust"
 msgstr "Selecteer bereik om aan te passen"
 
-#: ../app/tools/gimpcolorbalancetool.c:283
-msgid "Modify Selected Range's Color Levels"
-msgstr "Verander kleurniveau's van het geselecteerde bereik"
+#: ../app/tools/gimpcolorbalancetool.c:283 ../app/tools/gimplevelstool.c:215
+msgid "Adjust Color Levels"
+msgstr "Kleurniveaus aanpassen"
 
 #: ../app/tools/gimpcolorbalancetool.c:300
 msgid "Cyan"
@@ -8779,74 +8800,75 @@ msgstr "_Convolueren"
 msgid "Convolve Type  %s"
 msgstr "Convolutietype %s"
 
+#: ../app/tools/gimpcropoptions.c:172
+#, fuzzy
+msgid "Highlight rectangle"
+msgstr "Lichtere kleuren"
+
+#: ../app/tools/gimpcropoptions.c:177
+msgid "Fixed width"
+msgstr "Vaste breedte"
+
+#: ../app/tools/gimpcropoptions.c:180 ../app/tools/gimprectangleoptions.c:441
+#: ../app/widgets/gimpgrideditor.c:263 ../app/widgets/gimpgrideditor.c:295
+msgid "Width"
+msgstr "Breedte"
+
+#: ../app/tools/gimpcropoptions.c:185
+msgid "Fixed height"
+msgstr "Vaste hoogte"
+
+#: ../app/tools/gimpcropoptions.c:188 ../app/tools/gimprectangleoptions.c:451
+#: ../app/widgets/gimpgrideditor.c:265 ../app/widgets/gimpgrideditor.c:297
+msgid "Height"
+msgstr "Hoogte"
+
+#: ../app/tools/gimpcropoptions.c:193
+msgid "Fixed aspect"
+msgstr "Vaste verhouding"
+
+# aspect/gedeelte/verhouding
+#: ../app/tools/gimpcropoptions.c:196 ../app/tools/gimprectangleoptions.c:461
+msgid "Aspect"
+msgstr "Verhouding"
+
+# vast midden/centrum
+#: ../app/tools/gimpcropoptions.c:201
+msgid "Fixed center"
+msgstr "Vast centrum"
+
+#: ../app/tools/gimpcropoptions.c:204
+msgid "Center X"
+msgstr "Midden X"
+
+#: ../app/tools/gimpcropoptions.c:208
+msgid "Center Y"
+msgstr "Midden Y"
+
 # gereedschap wisselen
 #. tool toggle
-#: ../app/tools/gimpcropoptions.c:186 ../app/tools/gimpmagnifyoptions.c:206
+#: ../app/tools/gimpcropoptions.c:534 ../app/tools/gimpmagnifyoptions.c:206
 #: ../app/tools/gimpmoveoptions.c:215
 #, c-format
 msgid "Tool Toggle  %s"
 msgstr "Wissel gereedschap %s"
 
-#: ../app/tools/gimpcropoptions.c:198
-#, fuzzy
+# enkel huidige laag/alleen de huidige laag
+#: ../app/tools/gimpcropoptions.c:546
 msgid "Current layer only"
-msgstr "Enkel huidige laag"
+msgstr "Alleen de huidige laag"
 
-#. enlarge toggle
-#: ../app/tools/gimpcropoptions.c:203
-#, fuzzy, c-format
-msgid "Allow enlarging  %s"
-msgstr "Sta vergroten toe %s"
-
-#. layer toggle
-#: ../app/tools/gimpcropoptions.c:213
-#, fuzzy, c-format
-msgid "Keep aspect ratio  %s"
-msgstr "Vaste verhouding"
-
-#: ../app/tools/gimpcroptool.c:164
+#: ../app/tools/gimpcroptool.c:159
 msgid "Crop & Resize"
 msgstr "Knippen & herschalen"
 
-#: ../app/tools/gimpcroptool.c:165
+#: ../app/tools/gimpcroptool.c:160
 msgid "Crop or Resize an image"
 msgstr "Afbeelding snijden of schalen"
 
-#: ../app/tools/gimpcroptool.c:166
+#: ../app/tools/gimpcroptool.c:161
 msgid "_Crop & Resize"
 msgstr "_Knippen & herschalen"
-
-# knippen
-#. initialize the statusbar display
-#: ../app/tools/gimpcroptool.c:498 ../app/tools/gimpcroptool.c:982
-msgid "Crop: "
-msgstr "Knip: "
-
-#: ../app/tools/gimpcroptool.c:1009
-msgid "Crop & Resize Information"
-msgstr "Informatie knippen en herschalen"
-
-#: ../app/tools/gimpcroptool.c:1033
-msgid "Origin X:"
-msgstr "Oorsprong X:"
-
-#: ../app/tools/gimpcroptool.c:1037
-msgid "Origin Y:"
-msgstr "Oorsprong Y:"
-
-#: ../app/tools/gimpcroptool.c:1075 ../app/widgets/gimpbrusheditor.c:194
-msgid "Aspect ratio:"
-msgstr "Verhouding:"
-
-# betere vertaling?
-#: ../app/tools/gimpcroptool.c:1086
-msgid "From selection"
-msgstr "Van selectie"
-
-# betere vertaling?
-#: ../app/tools/gimpcroptool.c:1094
-msgid "Auto shrink"
-msgstr "Autokrimpen"
 
 #: ../app/tools/gimpcurvestool.c:137
 msgid "Adjust color curves"
@@ -8882,13 +8904,12 @@ msgid "Curves for indexed layers cannot be adjusted."
 msgstr "Curves voor geïndexeerde lagen kunnen niet worden aangepast."
 
 #: ../app/tools/gimpcurvestool.c:471 ../app/tools/gimplevelstool.c:407
-#, fuzzy
 msgid "Cha_nnel:"
-msgstr "Kanaal:"
+msgstr "_Kanaal:"
 
 # opnieuw instellen/herstellen
-#: ../app/tools/gimpcurvestool.c:493
-msgid "R_eset channel"
+#: ../app/tools/gimpcurvestool.c:493 ../app/tools/gimplevelstool.c:429
+msgid "R_eset Channel"
 msgstr "Kanaal _herstellen"
 
 #. Horizontal button box for load / save
@@ -8984,41 +9005,89 @@ msgstr "Selecteer gebieden met de hand"
 msgid "_Free Select"
 msgstr "_Vrije selectie"
 
-#: ../app/tools/gimpforegroundselectoptions.c:143
+#: ../app/tools/gimpforegroundselectoptions.c:109
+msgid "Size of the brush used for refinements"
+msgstr ""
+
+#: ../app/tools/gimpforegroundselectoptions.c:114
+msgid ""
+"Smaller values give a more accurate selection border but may introduce holes "
+"in the selection"
+msgstr ""
+
+# component niet meevertaald
+#: ../app/tools/gimpforegroundselectoptions.c:121
+msgid "Sensitivity for brightness component"
+msgstr "Gevoeligheid helderheid"
+
+#: ../app/tools/gimpforegroundselectoptions.c:126
+msgid "Sensitivity for red/green component"
+msgstr "Gevoeligheid voor rood/groen"
+
+#: ../app/tools/gimpforegroundselectoptions.c:131
+msgid "Sensitivity for yellow/blue component"
+msgstr "Gevoelgheid voor geel/blauw"
+
+#: ../app/tools/gimpforegroundselectoptions.c:226
 msgid "Interactive refinement"
 msgstr ""
 
-#: ../app/tools/gimpforegroundselectoptions.c:144
+#: ../app/tools/gimpforegroundselectoptions.c:227
 #, fuzzy
 msgid "Mark background"
 msgstr "Achtergrond"
 
-#: ../app/tools/gimpforegroundselectoptions.c:145
+#: ../app/tools/gimpforegroundselectoptions.c:228
 #, fuzzy
 msgid "Mark foreground"
 msgstr "Voorgrond"
 
-#: ../app/tools/gimpforegroundselecttool.c:120
+# dun/klein
+#: ../app/tools/gimpforegroundselectoptions.c:243
+msgid "Small brush"
+msgstr "Dun penseel"
+
+# dik/groot
+#: ../app/tools/gimpforegroundselectoptions.c:251
+msgid "Large brush"
+msgstr "Dik penseel"
+
+# glad
+#: ../app/tools/gimpforegroundselectoptions.c:274
+#, fuzzy
+msgid "Smoothing:"
+msgstr "Geleidelijk"
+
+#. granularity
+#: ../app/tools/gimpforegroundselectoptions.c:277
+msgid "Color Sensitivity"
+msgstr "Kleurgevoeligheid"
+
+#: ../app/tools/gimpforegroundselecttool.c:139
 #, fuzzy
 msgid "Foreground Select"
 msgstr "Voorgrond"
 
-#: ../app/tools/gimpforegroundselecttool.c:121
-msgid "Extract foreground using SIOX algorithm"
+#: ../app/tools/gimpforegroundselecttool.c:140
+msgid "Extract a single foreground object"
 msgstr ""
 
-#: ../app/tools/gimpforegroundselecttool.c:122
+#: ../app/tools/gimpforegroundselecttool.c:141
 #, fuzzy
 msgid "F_oreground Select"
 msgstr "Voorgrond"
 
-#: ../app/tools/gimpforegroundselecttool.c:268
+#: ../app/tools/gimpforegroundselecttool.c:320
 #, fuzzy
-msgid "Press Enter to apply selection"
+msgid "Add more strokes or press Enter to accept the selection"
 msgstr "Pad naar selectie"
 
-#: ../app/tools/gimpforegroundselecttool.c:282
-msgid "Draw a rough outline around the object to extract"
+#: ../app/tools/gimpforegroundselecttool.c:322
+msgid "Mark foreground by painting on the object to extract"
+msgstr ""
+
+#: ../app/tools/gimpforegroundselecttool.c:336
+msgid "Draw a rough circle around the object to extract"
 msgstr ""
 
 #: ../app/tools/gimpfuzzyselecttool.c:98
@@ -9026,13 +9095,12 @@ msgid "Select contiguous regions"
 msgstr "Selecteer aaneengesloten gebieden"
 
 #: ../app/tools/gimpfuzzyselecttool.c:99
-#, fuzzy
 msgid "Fu_zzy Select"
-msgstr "Vage selectie"
+msgstr "Va_ge selectie"
 
 #: ../app/tools/gimpfuzzyselecttool.c:216
 msgid "Move the mouse to change threshold."
-msgstr ""
+msgstr "Beweeg de muis om de drempelwaarde te wijzigen."
 
 #: ../app/tools/gimphistogramoptions.c:152
 msgid "Histogram Scale"
@@ -9043,13 +9111,12 @@ msgid "Adjust hue and saturation"
 msgstr "Kleurtoon en verzadiging aanpassen"
 
 #: ../app/tools/gimphuesaturationtool.c:117
-#, fuzzy
 msgid "Hue-_Saturation..."
-msgstr "Tint-Verzadiging"
+msgstr "_Tint-Verzadiging..."
 
 #: ../app/tools/gimphuesaturationtool.c:171
 #, fuzzy
-msgid "Adjust hue / lightness / saturation"
+msgid "Adjust Hue / Lightness / Saturation"
 msgstr "Regelingen voor Kleurtoon / Lichtheid / Verzadiging"
 
 #: ../app/tools/gimphuesaturationtool.c:215
@@ -9086,24 +9153,26 @@ msgid "_M"
 msgstr "_M"
 
 #: ../app/tools/gimphuesaturationtool.c:279
-msgid "Select Primary Color to Modify"
+#, fuzzy
+msgid "Select Primary Color to Adjust"
 msgstr "Selecteer primaire kleur om aan te passen"
 
 #: ../app/tools/gimphuesaturationtool.c:312
-msgid "Modify all colors"
-msgstr "Pas alle kleuren aan"
+msgid "Adjust all colors"
+msgstr "Alle kleuren aanpassen"
 
+# Overheen leggen/overlapping
 #: ../app/tools/gimphuesaturationtool.c:366
-#, fuzzy
 msgid "_Overlap:"
-msgstr "Overheen leggen"
+msgstr "_Overlapping:"
 
 #: ../app/tools/gimphuesaturationtool.c:384
-msgid "Modify Selected Color"
+#, fuzzy
+msgid "Adjust Selected Color"
 msgstr "Geselecteerde kleur aanpassen"
 
 #: ../app/tools/gimphuesaturationtool.c:458
-msgid "R_eset color"
+msgid "R_eset Color"
 msgstr "Kleur _herstellen"
 
 # miniatuur/vooruitblik
@@ -9111,11 +9180,11 @@ msgstr "Kleur _herstellen"
 msgid "_Preview"
 msgstr "_Vooruitblik"
 
-#: ../app/tools/gimpimagemaptool.c:298
+#: ../app/tools/gimpimagemaptool.c:297
 msgid "Quick Load"
 msgstr "Snel laden"
 
-#: ../app/tools/gimpimagemaptool.c:328
+#: ../app/tools/gimpimagemaptool.c:326
 msgid "Quick Save"
 msgstr "Snel opslaan"
 
@@ -9184,10 +9253,6 @@ msgstr "Kleurniveaus aanpassen"
 msgid "_Levels..."
 msgstr "_Niveaus..."
 
-#: ../app/tools/gimplevelstool.c:215
-msgid "Adjust Color Levels"
-msgstr "Kleurniveaus aanpassen"
-
 #: ../app/tools/gimplevelstool.c:217
 msgid "Load Levels"
 msgstr "Niveaus laden"
@@ -9220,12 +9285,6 @@ msgstr "Grijspunt kiezen"
 #: ../app/tools/gimplevelstool.c:354
 msgid "Pick white point"
 msgstr "Witpunt kiezen"
-
-# opnieuw instellen/herstellen
-#: ../app/tools/gimplevelstool.c:429
-#, fuzzy
-msgid "R_eset Channel"
-msgstr "Kanaal _herstellen"
 
 #. Input levels frame
 #: ../app/tools/gimplevelstool.c:444
@@ -9402,7 +9461,7 @@ msgstr "Gebruik kleur uit verloop"
 
 #: ../app/tools/gimppainttool.c:714
 msgid "Press Shift to draw a straight line."
-msgstr ""
+msgstr "Druk op Shift om een rechte lijn te tekenen."
 
 #: ../app/tools/gimppenciltool.c:52
 msgid "Paint hard edged pixels"
@@ -9452,85 +9511,37 @@ msgstr "Posteriseren werkt niet op geïndexeerde lagen."
 msgid "Posterize _levels:"
 msgstr "Posterisatie_niveaus:"
 
-#: ../app/tools/gimprectangleoptions.c:114
-#, fuzzy
-msgid "Highlight rectangle"
-msgstr "Lichtere kleuren"
-
-#: ../app/tools/gimprectangleoptions.c:119
-msgid "Fixed width"
-msgstr "Vaste breedte"
-
-#: ../app/tools/gimprectangleoptions.c:122
-#: ../app/tools/gimprectangleoptions.c:291 ../app/widgets/gimpgrideditor.c:263
-#: ../app/widgets/gimpgrideditor.c:295
-msgid "Width"
-msgstr "Breedte"
-
-#: ../app/tools/gimprectangleoptions.c:127
-msgid "Fixed height"
-msgstr "Vaste hoogte"
-
-#: ../app/tools/gimprectangleoptions.c:130
-#: ../app/tools/gimprectangleoptions.c:301 ../app/widgets/gimpgrideditor.c:265
-#: ../app/widgets/gimpgrideditor.c:297
-msgid "Height"
-msgstr "Hoogte"
-
-#: ../app/tools/gimprectangleoptions.c:135
-msgid "Fixed aspect"
-msgstr "Vaste verhouding"
-
-# aspect/gedeelte/verhouding
-#: ../app/tools/gimprectangleoptions.c:138
-#: ../app/tools/gimprectangleoptions.c:311
-msgid "Aspect"
-msgstr "Verhouding"
-
-# vast midden/centrum
-#: ../app/tools/gimprectangleoptions.c:143
-msgid "Fixed center"
-msgstr "Vast centrum"
-
-#: ../app/tools/gimprectangleoptions.c:146
-msgid "Center X"
-msgstr "Midden X"
-
-#: ../app/tools/gimprectangleoptions.c:150
-msgid "Center Y"
-msgstr "Midden Y"
-
-#: ../app/tools/gimprectangleoptions.c:274
+#: ../app/tools/gimprectangleoptions.c:424
 #, fuzzy
 msgid "Highlight"
 msgstr "Lichtere kleuren"
 
-#: ../app/tools/gimprectangleoptions.c:286
+#: ../app/tools/gimprectangleoptions.c:436
 msgid "Fix"
 msgstr "Vastzetten"
 
-#: ../app/tools/gimprectangleoptions.c:319
+#: ../app/tools/gimprectangleoptions.c:469
 msgid "Center"
 msgstr "Midden"
 
-#: ../app/tools/gimprectangletool.c:805 ../app/tools/gimprectangletool.c:1178
+#: ../app/tools/gimprectangletool.c:1410 ../app/tools/gimprectangletool.c:1831
 msgid "Rectangle: "
 msgstr "Rechthoek: "
 
-#: ../app/tools/gimprectangletool.c:1577
+#: ../app/tools/gimprectangletool.c:2234
 msgid "1 "
 msgstr "1 "
 
-#: ../app/tools/gimprectangletool.c:1578
+#: ../app/tools/gimprectangletool.c:2235
 msgid "2 "
 msgstr "2 "
 
-#: ../app/tools/gimprectangletool.c:1579 ../app/widgets/gimpcursorview.c:170
+#: ../app/tools/gimprectangletool.c:2236 ../app/widgets/gimpcursorview.c:170
 #: ../app/widgets/gimpcursorview.c:192
 msgid "X"
 msgstr "X"
 
-#: ../app/tools/gimprectangletool.c:1580 ../app/widgets/gimpcursorview.c:176
+#: ../app/tools/gimprectangletool.c:2237 ../app/widgets/gimpcursorview.c:176
 #: ../app/widgets/gimpcursorview.c:198
 msgid "Y"
 msgstr "Y"
@@ -9581,7 +9592,8 @@ msgstr "_Schalen"
 
 # schalingsinfo
 #: ../app/tools/gimpscaletool.c:152
-msgid "Scaling information"
+#, fuzzy
+msgid "Scaling Information"
 msgstr "Schaalinformatie"
 
 #: ../app/tools/gimpscaletool.c:163
@@ -9625,7 +9637,7 @@ msgstr "Selectie baseren op alle zichtbare lagen"
 msgid "Use all visible layers when shrinking the selection"
 msgstr "Gebruik alle zichtbare lagen bij het krimpen van de selectie"
 
-#: ../app/tools/gimpselectionoptions.c:438 ../app/tools/gimptextoptions.c:458
+#: ../app/tools/gimpselectionoptions.c:436 ../app/tools/gimptextoptions.c:458
 msgid "Antialiasing"
 msgstr "Anti-aliasing"
 
@@ -9722,13 +9734,15 @@ msgstr ""
 msgid "Indentation of the first line"
 msgstr "Inspringing van eerste regel"
 
+# rasterlijnafstand/spatiering
 #: ../app/tools/gimptextoptions.c:183
-msgid "Modify line spacing"
-msgstr "Regeltussenruimte aanpassen"
+#, fuzzy
+msgid "Adjust line spacing"
+msgstr "Rasterlijnafstand"
 
 #: ../app/tools/gimptextoptions.c:188
 #, fuzzy
-msgid "Modify letter spacing"
+msgid "Adjust letter spacing"
 msgstr "Regeltussenruimte aanpassen"
 
 #: ../app/tools/gimptextoptions.c:430
@@ -9756,38 +9770,15 @@ msgstr "Kleur:"
 msgid "Justify:"
 msgstr "Uitvullen:"
 
-#: ../app/tools/gimptextoptions.c:480
-msgid "Indent:"
-msgstr "Inspringen:"
-
-# regelafstand/regelhoogte
-#: ../app/tools/gimptextoptions.c:486
-#, fuzzy
-msgid ""
-"Line\n"
-"spacing:"
-msgstr ""
-"Regel-\n"
-"hoogte:"
-
-# regelafstand/regelhoogte
 #: ../app/tools/gimptextoptions.c:493
 #, fuzzy
-msgid ""
-"Letter\n"
-"spacing:"
-msgstr ""
-"Regel-\n"
-"hoogte:"
-
-#: ../app/tools/gimptextoptions.c:496
-#, fuzzy
-msgid "Create path from text"
+msgid "Create Path from Text"
 msgstr "Pad van tekst maken"
 
-#: ../app/tools/gimptextoptions.c:504
-msgid "Text along path"
-msgstr ""
+#: ../app/tools/gimptextoptions.c:501
+#, fuzzy
+msgid "Text along Path"
+msgstr "Naar _pad"
 
 #: ../app/tools/gimptexttool.c:147
 msgid "Add text to the image"
@@ -9918,13 +9909,8 @@ msgstr ""
 
 #: ../app/tools/gimpvectoroptions.c:194
 #, fuzzy
-msgid "Create selection from path"
+msgid "Create Selection from Path"
 msgstr "Selectie uit pad aanmaken"
-
-#: ../app/tools/gimpvectoroptions.c:205
-#, fuzzy
-msgid "Stroke path"
-msgstr "Pad naar lijn"
 
 #: ../app/tools/gimpvectortool.c:155
 msgid "Create and edit paths"
@@ -10042,11 +10028,11 @@ msgstr "Klik om het pad te splitsen."
 msgid "Click to make this node angular."
 msgstr "Klik om dit knooppunt hoekig te maken."
 
-#: ../app/tools/gimpvectortool.c:1740
+#: ../app/tools/gimpvectortool.c:1762
 msgid "Delete Anchors"
 msgstr "Ankers verwijderen"
 
-#: ../app/tools/gimpvectortool.c:1907
+#: ../app/tools/gimpvectortool.c:1930
 msgid "There is no active layer or channel to stroke to"
 msgstr "Er is geen actieve laag of kanaal om op te tekenen"
 
@@ -10165,6 +10151,10 @@ msgstr "Spaken:"
 msgid "Hardness:"
 msgstr "Hardheid:"
 
+#: ../app/widgets/gimpbrusheditor.c:194
+msgid "Aspect ratio:"
+msgstr "Verhouding:"
+
 #: ../app/widgets/gimpbrusheditor.c:220
 #: ../app/widgets/gimpbrushfactoryview.c:114
 msgid "Spacing:"
@@ -10183,7 +10173,7 @@ msgstr "(Geen)"
 #: ../app/widgets/gimpcellrendereraccel.c:234
 #: ../app/widgets/gimpcellrendereraccel.c:459
 msgid "Type a new accelerator, or press Backspace to clear"
-msgstr "Typ een nieuwe sneltoets, of geeg Backspace om te wissen"
+msgstr "Typ een nieuwe sneltoets, of geef Backspace om te wissen"
 
 #: ../app/widgets/gimpcellrendereraccel.c:462
 msgid "Type a new accelerator"
@@ -10337,7 +10327,8 @@ msgid "Event"
 msgstr "Actie"
 
 #: ../app/widgets/gimpcontrollereditor.c:418
-msgid "_Grab Event"
+#, fuzzy
+msgid "_Grab event"
 msgstr "_Grijpactie"
 
 #: ../app/widgets/gimpcontrollereditor.c:428
@@ -10720,15 +10711,15 @@ msgstr "Muiswiel"
 msgid "Mouse Wheel Events"
 msgstr "Muiswielgebeurtenissen"
 
-#: ../app/widgets/gimpdataeditor.c:214
+#: ../app/widgets/gimpdataeditor.c:221
 msgid "Save"
 msgstr "Opslaan"
 
-#: ../app/widgets/gimpdataeditor.c:222
+#: ../app/widgets/gimpdataeditor.c:229
 msgid "Revert"
 msgstr "Terugdraaien"
 
-#: ../app/widgets/gimpdataeditor.c:354
+#: ../app/widgets/gimpdataeditor.c:361
 #, c-format
 msgid "%s (read only)"
 msgstr "%s (alleen lezen)"
@@ -10751,13 +10742,18 @@ msgstr "Achtergrond: %d, %d, %d"
 msgid "The given filename does not have any known file extension."
 msgstr "De opgegeven bestandsnaam heeft geen bekende extensie."
 
-#: ../app/widgets/gimpdock.c:342 ../app/widgets/gimpdock.c:358
-msgid "Close all tabs?"
-msgstr "Alle tabs sluiten?"
+#: ../app/widgets/gimpdock.c:342
+#, fuzzy
+msgid "Close all Tabs?"
+msgstr "Alle tabs sluiten"
 
 #: ../app/widgets/gimpdock.c:348
 msgid "Close all Tabs"
 msgstr "Alle tabs sluiten"
+
+#: ../app/widgets/gimpdock.c:358
+msgid "Close all tabs?"
+msgstr "Alle tabs sluiten?"
 
 #: ../app/widgets/gimpdock.c:360
 #, c-format
@@ -10799,7 +10795,8 @@ msgid "By Extension"
 msgstr "Volgens extensie"
 
 #: ../app/widgets/gimpfiledialog.c:469
-msgid "File exists"
+#, fuzzy
+msgid "File Exists"
 msgstr "Bestand bestaat"
 
 #: ../app/widgets/gimpfiledialog.c:474
@@ -10855,83 +10852,82 @@ msgstr "Tonen [%0.6f, %0.6f]"
 msgid "Position: %0.6f"
 msgstr "Positie: %0.6f"
 
-#: ../app/widgets/gimpgradienteditor.c:946
+#: ../app/widgets/gimpgradienteditor.c:945
 #, c-format
 msgid "RGB (%0.3f, %0.3f, %0.3f)"
 msgstr "RGB (%0.3f, %0.3f, %0.3f)"
 
-#: ../app/widgets/gimpgradienteditor.c:949
+#: ../app/widgets/gimpgradienteditor.c:947
 #, c-format
 msgid "HSV (%0.3f, %0.3f, %0.3f)"
 msgstr "KVW (%0.3f, %0.3f, %0.3f)"
 
-#: ../app/widgets/gimpgradienteditor.c:951
-#, c-format
-msgid "Intensity: %0.3f    Opacity: %0.3f"
+#: ../app/widgets/gimpgradienteditor.c:949
+#, fuzzy, c-format
+msgid "Luminance: %0.3f    Opacity: %0.3f"
 msgstr "Intensiteit: %0.3f   Ondoorzichtigheid: %0.3f"
 
-#: ../app/widgets/gimpgradienteditor.c:984
-#: ../app/widgets/gimpgradienteditor.c:1019
+#: ../app/widgets/gimpgradienteditor.c:982
+#: ../app/widgets/gimpgradienteditor.c:1017
 #, c-format
 msgid "RGB (%d, %d, %d)"
 msgstr "RGB (%d, %d, %d)"
 
-#: ../app/widgets/gimpgradienteditor.c:992
+#: ../app/widgets/gimpgradienteditor.c:990
 msgid "Foreground color set to:"
 msgstr "Voorgrondkleur ingesteld op:"
 
-#: ../app/widgets/gimpgradienteditor.c:1024
+#: ../app/widgets/gimpgradienteditor.c:1022
 #, c-format
 msgid "(%0.3f, %0.3f, %0.3f)"
 msgstr "(%0.3f, %0.3f, %0.3f)"
 
-#: ../app/widgets/gimpgradienteditor.c:1028
+#: ../app/widgets/gimpgradienteditor.c:1026
 msgid "Background color set to:"
 msgstr "Achtergrondkleur ingesteld op:"
 
-#: ../app/widgets/gimpgradienteditor.c:1231
-#: ../app/widgets/gimpgradienteditor.c:1297
+#: ../app/widgets/gimpgradienteditor.c:1229
+#: ../app/widgets/gimpgradienteditor.c:1295
 #, c-format
 msgid "%s%sDrag: move & compress"
 msgstr "%s%sSleep: verplaats & comprimeer"
 
-#: ../app/widgets/gimpgradienteditor.c:1237
+#: ../app/widgets/gimpgradienteditor.c:1235
 msgid "Drag: move"
 msgstr "Slepen: verplaatsen"
 
-#: ../app/widgets/gimpgradienteditor.c:1244
-#: ../app/widgets/gimpgradienteditor.c:1258
-#: ../app/widgets/gimpgradienteditor.c:1272
-#: ../app/widgets/gimpgradienteditor.c:1294
+#: ../app/widgets/gimpgradienteditor.c:1242
+#: ../app/widgets/gimpgradienteditor.c:1256
+#: ../app/widgets/gimpgradienteditor.c:1270
+#: ../app/widgets/gimpgradienteditor.c:1292
 #, c-format
 msgid "%s%sClick: extend selection"
 msgstr "%s%sKlik: Breid selectie uit"
 
-#: ../app/widgets/gimpgradienteditor.c:1250
-#: ../app/widgets/gimpgradienteditor.c:1264
+#: ../app/widgets/gimpgradienteditor.c:1248
+#: ../app/widgets/gimpgradienteditor.c:1262
 msgid "Click: select"
 msgstr "Klik: selecteer"
 
-#: ../app/widgets/gimpgradienteditor.c:1278
-#: ../app/widgets/gimpgradienteditor.c:1302
+#: ../app/widgets/gimpgradienteditor.c:1276
+#: ../app/widgets/gimpgradienteditor.c:1300
 msgid "Click: select    Drag: move"
 msgstr "Klik: selecteer   Sleep: verplaats"
 
-#: ../app/widgets/gimpgradienteditor.c:1524
-#: ../app/widgets/gimpgradienteditor.c:1532
+#: ../app/widgets/gimpgradienteditor.c:1522
+#: ../app/widgets/gimpgradienteditor.c:1530
 #, c-format
 msgid "Handle position: %0.6f"
 msgstr "Handel positie: %0.6f"
 
-#: ../app/widgets/gimpgradienteditor.c:1549
+#: ../app/widgets/gimpgradienteditor.c:1547
 #, c-format
 msgid "Distance: %0.6f"
 msgstr "Afstand: %0.6f"
 
 #: ../app/widgets/gimpgrideditor.c:219
-#, fuzzy
 msgid "Line _style:"
-msgstr "Lijnstijl:"
+msgstr "_Lijnstijl:"
 
 #: ../app/widgets/gimpgrideditor.c:223
 msgid "Change grid foreground color"
@@ -10983,8 +10979,8 @@ msgid "Mean:"
 msgstr "Gemiddelde:"
 
 #: ../app/widgets/gimphistogrameditor.c:130
-msgid "Std Dev:"
-msgstr "Standaard afwijking:"
+msgid "Std dev:"
+msgstr "Standaardafwijking:"
 
 #: ../app/widgets/gimphistogrameditor.c:131
 msgid "Median:"
@@ -11007,50 +11003,50 @@ msgid "Channel:"
 msgstr "Kanaal:"
 
 #  add the information fields
-#: ../app/widgets/gimpimagepropview.c:186
+#: ../app/widgets/gimpimagepropview.c:187
 msgid "Pixel dimensions:"
 msgstr "Pixeldimensies:"
 
-#: ../app/widgets/gimpimagepropview.c:189
+#: ../app/widgets/gimpimagepropview.c:190
 msgid "Print size:"
 msgstr "Afdrukgrootte:"
 
-#: ../app/widgets/gimpimagepropview.c:192
+#: ../app/widgets/gimpimagepropview.c:193
 msgid "Resolution:"
 msgstr "Resolutie:"
 
-#: ../app/widgets/gimpimagepropview.c:195
+#: ../app/widgets/gimpimagepropview.c:196
 msgid "Color space:"
 msgstr "Kleurruimte:"
 
-#: ../app/widgets/gimpimagepropview.c:198
+#: ../app/widgets/gimpimagepropview.c:201
 msgid "Size in memory:"
 msgstr "Grootte in geheugen:"
 
-#: ../app/widgets/gimpimagepropview.c:201
+#: ../app/widgets/gimpimagepropview.c:204
 #, fuzzy
 msgid "Undo steps:"
 msgstr "%s o_ngedaan maken"
 
-#: ../app/widgets/gimpimagepropview.c:204
+#: ../app/widgets/gimpimagepropview.c:207
 #, fuzzy
 msgid "Redo steps:"
 msgstr "%s opnieuw uitvoeren"
 
-#: ../app/widgets/gimpimagepropview.c:207
+#: ../app/widgets/gimpimagepropview.c:212
 #, fuzzy
 msgid "Number of pixels:"
 msgstr "Aantal paden:"
 
-#: ../app/widgets/gimpimagepropview.c:210
+#: ../app/widgets/gimpimagepropview.c:215
 msgid "Number of layers:"
 msgstr "Aantal lagen:"
 
-#: ../app/widgets/gimpimagepropview.c:213
+#: ../app/widgets/gimpimagepropview.c:218
 msgid "Number of channels:"
 msgstr "Aantal kanalen:"
 
-#: ../app/widgets/gimpimagepropview.c:216
+#: ../app/widgets/gimpimagepropview.c:221
 msgid "Number of paths:"
 msgstr "Aantal paden:"
 
@@ -11089,9 +11085,8 @@ msgstr "_Alphakanaal van laag"
 
 # Dokbaar/aanlegbaar/aankoppelbaar
 #: ../app/widgets/gimplayertreeview.c:344
-#, fuzzy
 msgid "Lock:"
-msgstr "Aankoppelen"
+msgstr "Koppelen:"
 
 #: ../app/widgets/gimplayertreeview.c:877
 msgid "Empty Layer"
@@ -11152,7 +11147,7 @@ msgid "%d dpi"
 msgstr "%d dpi"
 
 #: ../app/widgets/gimpstrokeeditor.c:201
-msgid "Line Width:"
+msgid "Line width:"
 msgstr "Lijnbreedte:"
 
 #: ../app/widgets/gimpstrokeeditor.c:212
@@ -11176,9 +11171,8 @@ msgid "Dash pattern:"
 msgstr "Streepjespatroon:"
 
 #: ../app/widgets/gimpstrokeeditor.c:291
-#, fuzzy
 msgid "Dash _preset:"
-msgstr "Streep-voorinstelling:"
+msgstr "_Streep-voorinstelling:"
 
 #: ../app/widgets/gimpstrokeeditor.c:312
 msgid "_Antialiasing"
@@ -11225,9 +11219,8 @@ msgid "%d dpi, %s"
 msgstr "%d dpi, %s"
 
 #: ../app/widgets/gimptexteditor.c:230
-#, fuzzy
 msgid "_Use selected font"
-msgstr "Geselecteerde item openen"
+msgstr "_Geselecteerde lettertype gebruiken"
 
 #: ../app/widgets/gimpthumbbox.c:351
 #, c-format
@@ -11318,15 +11311,15 @@ msgstr "Opties herstellen uit..."
 msgid "Delete saved options..."
 msgstr "Opgeslagen opties verwijderen..."
 
-#: ../app/widgets/gimpuimanager.c:698
+#: ../app/widgets/gimpuimanager.c:701
 msgid "Your GIMP installation is incomplete:"
 msgstr "Uw installatie van GIMP is incompleet"
 
-#: ../app/widgets/gimpuimanager.c:700
+#: ../app/widgets/gimpuimanager.c:703
 msgid "Plase make sure the menu XML files are correctly installed."
 msgstr "Controleer dat de menu XML-bestanden correct zijn geïnstalleerd."
 
-#: ../app/widgets/gimpuimanager.c:705
+#: ../app/widgets/gimpuimanager.c:708
 #, c-format
 msgid "There was an error parsing the menu definition from %s: %s"
 msgstr ""
@@ -11373,12 +11366,12 @@ msgstr "Open het fontkeuzedialoogvenster"
 #. The format string which is used to display modifier names
 #. *  <Shift>, <Ctrl> and <Alt>
 #.
-#: ../app/widgets/gimpwidgets-utils.c:392
+#: ../app/widgets/gimpwidgets-utils.c:382
 #, c-format
 msgid "<%s>"
 msgstr "<%s>"
 
-#: ../app/widgets/gimpwidgets-utils.c:797
+#: ../app/widgets/gimpwidgets-utils.c:787
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Ongeldige UTF-8-gegevens in bestand '%s'."
@@ -11482,7 +11475,7 @@ msgstr "Werktuigvenster"
 msgid "Keep above"
 msgstr "Zichtbaar houden"
 
-#: ../app/xcf/xcf-load.c:297
+#: ../app/xcf/xcf-load.c:302
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -11499,7 +11492,7 @@ msgstr "Ongeldige UTF-8-tekenreeks in XCF-bestand"
 
 #: ../app/xcf/xcf-save.c:157 ../app/xcf/xcf-save.c:167
 #: ../app/xcf/xcf-save.c:177 ../app/xcf/xcf-save.c:187
-#: ../app/xcf/xcf-save.c:211 ../app/xcf/xcf.c:344
+#: ../app/xcf/xcf-save.c:211 ../app/xcf/xcf.c:346
 #, c-format
 msgid "Error saving XCF file: %s"
 msgstr "Fout bij opslaan XCF-bestand: %s"
@@ -11514,23 +11507,18 @@ msgstr "Fout bij schrijven XCF: %s"
 msgid "Could not seek in XCF file: %s"
 msgstr "Kan niet zoeken in XCF-bestand: %s"
 
-#: ../app/xcf/xcf.c:86 ../app/xcf/xcf.c:144
+#: ../app/xcf/xcf.c:86 ../app/xcf/xcf.c:145
 msgid "GIMP XCF image"
 msgstr "GIMP XCF-afbeelding"
 
-#: ../app/xcf/xcf.c:284
+#: ../app/xcf/xcf.c:286
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "XFC-fout: niet ondersteunde XCF-bestandsversie %d tegengekomen"
 
 #: ../desktop/gimp.desktop.in.in.h:1
-#, fuzzy
 msgid "Create images and edit photographs"
 msgstr "Afbeeldingen of foto's aanmaken en bewerken"
-
-#: ../desktop/gimp.desktop.in.in.h:2
-msgid "GNU Image Manipulation Program"
-msgstr "GNU Image Manipulation Program"
 
 #: ../desktop/gimp.desktop.in.in.h:3
 msgid "Image Editor"
@@ -11552,15 +11540,105 @@ msgstr "GIMP opstarten zonder het opstartvenster te tonen"
 msgid "Could not connect to GIMP."
 msgstr "Kon geen verbinding maken met GIMP."
 
+# gereedschapkist/toolset/toolbox
 #: ../tools/gimp-remote.c:198
 msgid "Make sure that the Toolbox is visible!"
-msgstr "Controleer of de werkbalk zichtbaar is!"
+msgstr "Controleer of de gereedschapkist zichtbaar is!"
 
 #. if execv and execvp return, there was an error
 #: ../tools/gimp-remote.c:299
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "Kon '%s' niet opstarten: %s"
+
+#~ msgid "_Mode"
+#~ msgstr "_Modus"
+
+#~ msgid "Translation by"
+#~ msgstr "Vertaald door ..."
+
+#~ msgid "Contributions by"
+#~ msgstr "Met bijdragen van ..."
+
+#~ msgid "About The GIMP"
+#~ msgstr "Over de GIMP"
+
+#, fuzzy
+#~ msgid "Select custom canvas padding color"
+#~ msgstr "Selecteer eigen opvulkleur voor canvas"
+
+#~ msgid "There are %d images with unsaved changes:"
+#~ msgstr "ER zijn %d bestanden met niet opgeslagen wijzigingen:"
+
+#~ msgid "Select By Color"
+#~ msgstr "Op kleur selecteren"
+
+#~ msgid "Modify Selected Range's Color Levels"
+#~ msgstr "Verander kleurniveau's van het geselecteerde bereik"
+
+#, fuzzy
+#~ msgid "Allow enlarging  %s"
+#~ msgstr "Sta vergroten toe %s"
+
+#, fuzzy
+#~ msgid "Keep aspect ratio  %s"
+#~ msgstr "Vaste verhouding"
+
+# knippen
+#~ msgid "Crop: "
+#~ msgstr "Knip: "
+
+#~ msgid "Crop & Resize Information"
+#~ msgstr "Informatie knippen en herschalen"
+
+#~ msgid "Origin X:"
+#~ msgstr "Oorsprong X:"
+
+#~ msgid "Origin Y:"
+#~ msgstr "Oorsprong Y:"
+
+# betere vertaling?
+#~ msgid "From selection"
+#~ msgstr "Van selectie"
+
+# betere vertaling?
+#~ msgid "Auto shrink"
+#~ msgstr "Autokrimpen"
+
+# opnieuw instellen/herstellen
+#~ msgid "R_eset channel"
+#~ msgstr "Kanaal _herstellen"
+
+#~ msgid "Modify all colors"
+#~ msgstr "Pas alle kleuren aan"
+
+#~ msgid "Modify line spacing"
+#~ msgstr "Regeltussenruimte aanpassen"
+
+#~ msgid "Indent:"
+#~ msgstr "Inspringen:"
+
+# regelafstand/regelhoogte
+#, fuzzy
+#~ msgid ""
+#~ "Line\n"
+#~ "spacing:"
+#~ msgstr ""
+#~ "Regel-\n"
+#~ "hoogte:"
+
+# regelafstand/regelhoogte
+#, fuzzy
+#~ msgid ""
+#~ "Letter\n"
+#~ "spacing:"
+#~ msgstr ""
+#~ "Regel-\n"
+#~ "hoogte:"
+
+#, fuzzy
+#~ msgid "Stroke path"
+#~ msgstr "Pad naar lijn"
 
 #, fuzzy
 #~ msgid "Kee_p Transparency"
@@ -11801,9 +11879,6 @@ msgstr "Kon '%s' niet opstarten: %s"
 #~ msgid "Gray"
 #~ msgstr "Grijs"
 
-#~ msgid "Indexed"
-#~ msgstr "Geïndexeerd"
-
 #~ msgid "Bi-linear"
 #~ msgstr "Bilineair"
 
@@ -11872,11 +11947,6 @@ msgstr "Kon '%s' niet opstarten: %s"
 
 #~ msgid "Direct Color"
 #~ msgstr "Directe kleur"
-
-# opmerkingen
-# frame for Comment
-#~ msgid "Comment"
-#~ msgstr "Commentaar"
 
 #~ msgid "Info Window"
 #~ msgstr "Informatievenster"
@@ -12726,9 +12796,6 @@ msgstr "Kon '%s' niet opstarten: %s"
 #~ msgid "/View/Move to Screen..."
 #~ msgstr "/Beeld/Naar scherm..."
 
-#~ msgid "/Image/_Mode"
-#~ msgstr "/Afbeelding/Modus"
-
 #~ msgid "/Image/Mode/_RGB"
 #~ msgstr "/Afbeelding/Modus/RGB"
 
@@ -13001,18 +13068,6 @@ msgstr "Kon '%s' niet opstarten: %s"
 
 #~ msgid "/Filters/_Map"
 #~ msgstr "/Filters/Projecteren"
-
-#~ msgid "/Filters/_Render"
-#~ msgstr "/Filters/Renderen"
-
-#~ msgid "/Filters/Render/_Clouds"
-#~ msgstr "/Filters/Renderen/Wolken"
-
-#~ msgid "/Filters/Render/_Nature"
-#~ msgstr "/Filters/Renderen/Natuur"
-
-#~ msgid "/Filters/Render/_Pattern"
-#~ msgstr "/Filters/Renderen/Patroon"
 
 #~ msgid "/Filters/_Web"
 #~ msgstr "/Filters/Web"
