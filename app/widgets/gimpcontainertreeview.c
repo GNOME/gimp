@@ -1057,6 +1057,18 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
       gtk_tree_path_free (path);
       g_object_unref (renderer);
     }
+  else
+    {
+      switch (bevent->button)
+        {
+        case 3:
+          gimp_editor_popup_menu (GIMP_EDITOR (tree_view), NULL, NULL);
+          break;
+
+        default:
+          break;
+        }
+    }
 
   return TRUE;
 }

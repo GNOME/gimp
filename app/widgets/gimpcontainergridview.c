@@ -95,6 +95,9 @@ static void   gimp_container_grid_view_highlight_item (GimpContainerView      *v
 static void gimp_container_grid_view_viewport_resized (GtkWidget              *widget,
                                                        GtkAllocation          *allocation,
                                                        GimpContainerGridView  *view);
+static gboolean gimp_container_grid_view_button_press (GtkWidget              *widget,
+                                                       GdkEventButton         *bevent,
+                                                       GimpContainerGridView  *view);
 
 
 static GimpContainerBoxClass      *parent_class      = NULL;
@@ -212,6 +215,9 @@ gimp_container_grid_view_init (GimpContainerGridView *grid_view)
 
   g_signal_connect (grid_view->wrap_box->parent, "size-allocate",
                     G_CALLBACK (gimp_container_grid_view_viewport_resized),
+                    grid_view);
+  g_signal_connect (grid_view->wrap_box->parent, "button-press-event",
+                    G_CALLBACK (gimp_container_grid_view_button_press),
                     grid_view);
 
   GTK_WIDGET_SET_FLAGS (grid_view, GTK_CAN_FOCUS);
@@ -717,4 +723,22 @@ gimp_container_grid_view_viewport_resized (GtkWidget             *widget,
                                                    preview);
         }
     }
+}
+
+static gboolean
+gimp_container_grid_view_button_press (GtkWidget              *widget,
+                                       GdkEventButton         *bevent,
+                                       GimpContainerGridView  *view)
+{
+  switch (bevent->button)
+    {
+    case 3:
+      gimp_editor_popup_menu (GIMP_EDITOR (view), NULL, NULL);
+      break;
+
+    default:
+      break;
+    }
+
+  return TRUE;
 }
