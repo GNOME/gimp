@@ -648,6 +648,8 @@ run_save_dialog	(Config *config)
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
+  gimp_window_set_transient (GTK_WINDOW (dialog));
+
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);

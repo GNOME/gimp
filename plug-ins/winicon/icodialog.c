@@ -126,16 +126,20 @@ ico_specs_dialog_new (gint num_layers)
   gint      *icon_depths, i;
 
   dialog = gimp_dialog_new (_("Save as Windows Icon"), "winicon",
-                             NULL, 0,
-                             gimp_standard_help_func, "plug-in-winicon",
-                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                             GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
-                             NULL);
+                            NULL, 0,
+                            gimp_standard_help_func, "plug-in-winicon",
+
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
+
+                            NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
+  gimp_window_set_transient (GTK_WINDOW (dialog));
 
   /* We store an array that holds each icon's requested bit depth
      with the dialog. It's queried when the dialog is closed so the

@@ -847,7 +847,7 @@ dim_callback (GtkAdjustment *adjustment,
 static gboolean
 gih_save_dialog (gint32 image_ID)
 {
-  GtkWidget *dlg;
+  GtkWidget *dialog;
   GtkWidget *table;
   GtkWidget *dimtable;
   GtkWidget *label;
@@ -864,26 +864,28 @@ gih_save_dialog (gint32 image_ID)
   gint32     nlayers;
   gboolean   run;
 
-  dlg = gimp_dialog_new (_("Save as Brush Pipe"), PLUG_IN_BINARY,
-                         NULL, 0,
-			 gimp_standard_help_func, SAVE_PROC,
+  dialog = gimp_dialog_new (_("Save as Brush Pipe"), PLUG_IN_BINARY,
+                            NULL, 0,
+                            gimp_standard_help_func, SAVE_PROC,
 
-			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			 GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
 
-			 NULL);
+                            NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
+
+  gimp_window_set_transient (GTK_WINDOW (dialog));
 
   /* The main table */
   table = gtk_table_new (8, 2, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_container_set_border_width (GTK_CONTAINER (table), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), table, TRUE, TRUE, 0);
   gtk_widget_show (table);
 
   /*
@@ -1076,7 +1078,6 @@ gih_save_dialog (gint32 image_ID)
 	  else
 	    cellw_adjust.rank0 = cellh_adjust.rank0 = NULL;
 	}
-      
 
       cb = gtk_combo_box_new_text ();
 
@@ -1092,7 +1093,6 @@ gih_save_dialog (gint32 image_ID)
               gtk_combo_box_set_active (GTK_COMBO_BOX (cb), j);
               break;
             }
-        
 
       gtk_table_attach (GTK_TABLE (dimtable), cb, 1, 2, i, i + 1,
 			GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
@@ -1115,9 +1115,9 @@ gih_save_dialog (gint32 image_ID)
 			     _("Ranks:"), 0.0, 0.0,
 			     dimtable, 1, FALSE);
 
-  gtk_widget_show (dlg);
+  gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
   if (run)
     {
@@ -1132,7 +1132,7 @@ gih_save_dialog (gint32 image_ID)
 	     num_useable_layers * gihparams.rows * gihparams.cols);
     }
 
-  gtk_widget_destroy (dlg);
+  gtk_widget_destroy (dialog);
 
   for (i = 0; i < cellw_adjust.nguides; i++)
     gimp_image_delete_guide (image_ID, cellw_adjust.guides[i]);

@@ -1,5 +1,31 @@
 2005-09-09  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/common/aa.c
+	* plug-ins/common/csource.c
+	* plug-ins/common/gbr.c
+	* plug-ins/common/gih.c
+	* plug-ins/common/gtm.c
+	* plug-ins/common/mng.c
+	* plug-ins/common/pat.c
+	* plug-ins/common/png.c
+	* plug-ins/common/pnm.c
+	* plug-ins/common/postscript.c
+	* plug-ins/common/psp.c
+	* plug-ins/common/raw.c
+	* plug-ins/common/sunras.c
+	* plug-ins/common/tga.c
+	* plug-ins/common/tiff.c
+	* plug-ins/common/xbm.c
+	* plug-ins/common/xpm.c
+	* plug-ins/gfli/gfli.c
+	* plug-ins/jpeg/jpeg-save.c
+	* plug-ins/sgi/sgi.c
+	* plug-ins/winicon/icodialog.c: actually call
+	gimp_window_set_transient() on save dialogs.
+	Really fixes bug #62988.
+
+2005-09-09  Michael Natterer  <mitch@gimp.org>
+
 	Added parent window API to the GimpProgress interface and to
 	the libgimp progress stuff. Might look strange, but does
 	the right thing in almost all cases (image window, file dialog,

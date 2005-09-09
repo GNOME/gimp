@@ -1302,7 +1302,7 @@ mng_save_image (const gchar *filename,
 static gint
 mng_save_dialog (gint32 image_id)
 {
-  GtkWidget *dlg;
+  GtkWidget *dialog;
   GtkWidget *main_vbox;
   GtkWidget *frame;
   GtkWidget *vbox;
@@ -1319,23 +1319,25 @@ mng_save_dialog (gint32 image_id)
   gboolean   run;
 
 
-  dlg = gimp_dialog_new (_("Save as MNG"), PLUG_IN_BINARY,
-                         NULL, 0,
-                         gimp_standard_help_func, SAVE_PROC,
+  dialog = gimp_dialog_new (_("Save as MNG"), PLUG_IN_BINARY,
+                            NULL, 0,
+                            gimp_standard_help_func, SAVE_PROC,
 
-                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                         GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
 
-                         NULL);
+                            NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
+  gimp_window_set_transient (GTK_WINDOW (dialog));
+
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dlg)->vbox), main_vbox);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
 
   frame = gimp_frame_new (_("MNG Options"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
@@ -1549,11 +1551,11 @@ mng_save_dialog (gint32 image_id)
   gtk_widget_set_sensitive (frame, num_layers > 1);
 
   gtk_widget_show (main_vbox);
-  gtk_widget_show (dlg);
+  gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  gtk_widget_destroy (dlg);
+  gtk_widget_destroy (dialog);
 
   return run;
 }

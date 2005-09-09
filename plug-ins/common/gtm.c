@@ -382,7 +382,7 @@ save_image (const gchar  *filename,
 static gint
 save_dialog (gint32 image_ID)
 {
-  GtkWidget *dlg;
+  GtkWidget *dialog;
   GtkWidget *main_vbox;
   GtkWidget *frame;
   GtkWidget *vbox;
@@ -395,23 +395,25 @@ save_dialog (gint32 image_ID)
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dlg = gimp_dialog_new (_("Save as HTML table"), PLUG_IN_BINARY,
-                         NULL, 0,
-			 gimp_standard_help_func, SAVE_PROC,
+  dialog = gimp_dialog_new (_("Save as HTML table"), PLUG_IN_BINARY,
+                            NULL, 0,
+                            gimp_standard_help_func, SAVE_PROC,
 
-			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			 GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
 
-			 NULL);
+                            NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
+  gimp_window_set_transient (GTK_WINDOW (dialog));
+
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_vbox,
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), main_vbox,
 		      TRUE, TRUE, 0);
 
   if (gimp_image_width (image_ID) * gimp_image_height (image_ID) > 4096)
@@ -636,11 +638,11 @@ save_dialog (gint32 image_ID)
   gtk_widget_show (table);
   gtk_widget_show (frame);
 
-  gtk_widget_show (dlg);
+  gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  gtk_widget_destroy (dlg);
+  gtk_widget_destroy (dialog);
 
   return run;
 }

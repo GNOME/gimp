@@ -1566,23 +1566,25 @@ save_rgb (FILE   *ofp,
 static gboolean
 save_dialog (void)
 {
-  GtkWidget *dlg;
+  GtkWidget *dialog;
   GtkWidget *frame;
   gboolean   run;
 
-  dlg = gimp_dialog_new (_("Save as SUNRAS"), PLUG_IN_BINARY,
-                         NULL, 0,
-			 gimp_standard_help_func, SAVE_PROC,
+  dialog = gimp_dialog_new (_("Save as SUNRAS"), PLUG_IN_BINARY,
+                            NULL, 0,
+                            gimp_standard_help_func, SAVE_PROC,
 
-                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                         GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
 
-                         NULL);
+                            NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
+
+  gimp_window_set_transient (GTK_WINDOW (dialog));
 
   /*  file save type  */
   frame = gimp_int_radio_group_new (TRUE, _("Data Formatting"),
@@ -1595,14 +1597,15 @@ save_dialog (void)
 				    NULL);
 
   gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
+                      frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  gtk_widget_show (dlg);
+  gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  gtk_widget_destroy (dlg);
+  gtk_widget_destroy (dialog);
 
   return run;
 }

@@ -1634,34 +1634,36 @@ save_dialog (gint32    image_ID,
              gboolean  alpha)
 {
   PngSaveGui    pg;
-  GtkWidget    *dlg;
+  GtkWidget    *dialog;
   GtkWidget    *table;
   GtkWidget    *toggle;
   GtkObject    *scale;
   GimpParasite *parasite;
 
-  dlg = gimp_dialog_new (_("Save as PNG"), PLUG_IN_BINARY,
-                         NULL, 0,
-                         gimp_standard_help_func, SAVE_PROC,
+  dialog = gimp_dialog_new (_("Save as PNG"), PLUG_IN_BINARY,
+                            NULL, 0,
+                            gimp_standard_help_func, SAVE_PROC,
 
-                         _("_Load defaults"), RESPONSE_LOAD_DEFAULTS,
-                         _("_Save defaults"), RESPONSE_SAVE_DEFAULTS,
-                         GTK_STOCK_CANCEL,    GTK_RESPONSE_CANCEL,
-                         GTK_STOCK_SAVE,      GTK_RESPONSE_OK,
+                            _("_Load defaults"), RESPONSE_LOAD_DEFAULTS,
+                            _("_Save defaults"), RESPONSE_SAVE_DEFAULTS,
+                            GTK_STOCK_CANCEL,    GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_SAVE,      GTK_RESPONSE_OK,
 
-                         NULL);
+                            NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            RESPONSE_LOAD_DEFAULTS,
                                            RESPONSE_SAVE_DEFAULTS,
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  g_signal_connect (dlg, "response",
+  gimp_window_set_transient (GTK_WINDOW (dialog));
+
+  g_signal_connect (dialog, "response",
                     G_CALLBACK (save_dialog_response),
                     &pg);
-  g_signal_connect (dlg, "destroy",
+  g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -1669,7 +1671,7 @@ save_dialog (gint32    image_ID,
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_container_set_border_width (GTK_CONTAINER (table), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), table, TRUE, TRUE, 0);
   gtk_widget_show (table);
 
   pg.interlaced = toggle =
@@ -1766,7 +1768,7 @@ save_dialog (gint32    image_ID,
                     G_CALLBACK (gimp_int_adjustment_update),
                     &pngvals.compression_level);
 
-  gtk_widget_show (dlg);
+  gtk_widget_show (dialog);
 
   pg.run = FALSE;
 
