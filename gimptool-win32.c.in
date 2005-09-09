@@ -147,7 +147,7 @@ get_prefix (gchar slash)
 	{
 	  *r = '\0';
 	  if (strlen (path) >= 4 &&
-	      g_strcasecmp (r - 4, G_DIR_SEPARATOR_S "bin") == 0)
+	      g_ascii_strcasecmp (r - 4, G_DIR_SEPARATOR_S "bin") == 0)
 	    {
 	      r[-4] = '\0';
 	      prefix = path;
@@ -623,7 +623,7 @@ maybe_append_exe (gchar *what)
 #ifdef G_OS_WIN32
   gchar *p = strrchr (what, '.');
 
-  if (p == NULL || g_strcasecmp (p, ".exe") != 0)
+  if (p == NULL || g_ascii_strcasecmp (p, ".exe") != 0)
     return g_strconcat (what, ".exe");
 #endif
 
