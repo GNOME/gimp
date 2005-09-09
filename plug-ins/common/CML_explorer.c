@@ -1170,7 +1170,7 @@ logistic_function (CML_PARAM *param,
 static gint
 CML_explorer_dialog (void)
 {
-  GtkWidget *dlg;
+  GtkWidget *dialog;
   GtkWidget *hbox;
   GtkWidget *vbox;
   GtkWidget *frame;
@@ -1181,27 +1181,28 @@ CML_explorer_dialog (void)
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dlg = gimp_dialog_new (_("Coupled-Map-Lattice Explorer"), PLUG_IN_BINARY,
-                         NULL, 0,
-                         gimp_standard_help_func, PLUG_IN_PROC,
+  dialog = gimp_dialog_new (_("Coupled-Map-Lattice Explorer"), PLUG_IN_BINARY,
+                            NULL, 0,
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
-                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-                         NULL);
+                            NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_window_set_transient_for_default_display (GTK_WINDOW (dlg));
+  gimp_window_set_transient (GTK_WINDOW (dialog));
 
   CML_preview_defer = TRUE;
 
   hbox = gtk_hbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), hbox,
+                      FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   vbox = gtk_vbox_new (FALSE, 12);
@@ -1520,14 +1521,14 @@ CML_explorer_dialog (void)
   /*  Displaying preview might takes a long time. Thus, first, dialog itself
    *  should be shown before making preview in it.
    */
-  gtk_widget_show (dlg);
+  gtk_widget_show (dialog);
 
   CML_preview_defer = FALSE;
   preview_update ();
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  gtk_widget_destroy (dlg);
+  gtk_widget_destroy (dialog);
 
   return run;
 }
@@ -1817,22 +1818,23 @@ static void
 function_graph_new (GtkWidget *widget,
                     gpointer  *data)
 {
-  GtkWidget *dlg;
+  GtkWidget *dialog;
   GtkWidget *frame;
   GtkWidget *preview;
 
-  dlg = gimp_dialog_new (_("Graph of the Current Settings"), "cml_explorer",
-                         gtk_widget_get_toplevel (widget), 0,
-                         gimp_standard_help_func, PLUG_IN_PROC,
+  dialog = gimp_dialog_new (_("Graph of the Current Settings"), "cml_explorer",
+                            gtk_widget_get_toplevel (widget), 0,
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
-                         GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
+                            GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 
-                         NULL);
+                            NULL);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), frame,
+                      FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   preview = gtk_drawing_area_new ();
@@ -1842,11 +1844,11 @@ function_graph_new (GtkWidget *widget,
   g_signal_connect (preview, "expose-event",
                     G_CALLBACK (function_graph_expose), data);
 
-  gtk_widget_show (dlg);
+  gtk_widget_show (dialog);
 
-  gimp_dialog_run (GIMP_DIALOG (dlg));
+  gimp_dialog_run (GIMP_DIALOG (dialog));
 
-  gtk_widget_destroy (dlg);
+  gtk_widget_destroy (dialog);
 }
 
 static void
@@ -2078,23 +2080,23 @@ static gboolean
 force_overwrite (const gchar *filename,
                  GtkWidget   *parent)
 {
-  GtkWidget *dlg;
+  GtkWidget *dialog;
   GtkWidget *label;
   GtkWidget *hbox;
   gchar     *buffer;
   gboolean   overwrite;
 
-  dlg = gimp_dialog_new (_("CML Explorer: Overwrite File?"), "cml_explorer",
-                         parent, GTK_DIALOG_MODAL,
-                         gimp_standard_help_func, PLUG_IN_PROC,
+  dialog = gimp_dialog_new (_("CML Explorer: Overwrite File?"), "cml_explorer",
+                            parent, GTK_DIALOG_MODAL,
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
-                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-                         NULL);
+                            NULL);
 
   hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox),
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
                       hbox, FALSE, FALSE, 12);
   gtk_widget_show (hbox);
 
@@ -2107,11 +2109,11 @@ force_overwrite (const gchar *filename,
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 12);
   gtk_widget_show (label);
 
-  gtk_widget_show (dlg);
+  gtk_widget_show (dialog);
 
-  overwrite = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
+  overwrite = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  gtk_widget_destroy (dlg);
+  gtk_widget_destroy (dialog);
 
   return overwrite;
 }
@@ -2165,8 +2167,8 @@ CML_load_from_file_callback (GtkWidget *widget,
 
 static void
 CML_load_from_file_response (GtkWidget *dialog,
-                             gint      response_id,
-                             gpointer  data)
+                             gint       response_id,
+                             gpointer   data)
 {
   if (response_id == GTK_RESPONSE_OK)
     {

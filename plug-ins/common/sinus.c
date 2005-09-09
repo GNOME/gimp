@@ -659,7 +659,7 @@ sinus_dialog (void)
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_window_set_transient_for_default_display (GTK_WINDOW (dlg));
+  gimp_window_set_transient (GTK_WINDOW (dlg));
 
   main_hbox = gtk_hbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 12);

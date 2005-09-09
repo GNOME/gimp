@@ -423,7 +423,7 @@ dialog (GimpDrawable *drawable)
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_window_set_transient_for_default_display (GTK_WINDOW (dlg));
+  gimp_window_set_transient (GTK_WINDOW (dlg));
 
   image_id = gimp_drawable_get_image (drawable->drawable_id);
   unit = gimp_image_get_unit (image_id);

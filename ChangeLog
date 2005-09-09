@@ -1,3 +1,65 @@
+2005-09-09  Michael Natterer  <mitch@gimp.org>
+
+	Added parent window API to the GimpProgress interface and to
+	the libgimp progress stuff. Might look strange, but does
+	the right thing in almost all cases (image window, file dialog,
+	script-fu dialog etc). Fixes bug #62988.
+
+	* app/core/gimpprogress.[ch]: added GimpProgress::get_window()
+	which should return a toplevel window ID if the progress is in a
+	window that wants to be the transient parent of plug-in dialogs.
+
+	* app/widgets/gimpwidgets-utils.[ch] (gimp_window_get_native): new
+	function which returns the window handle of a GtkWindow's GdkWindow.
+
+	* app/widgets/gimpfiledialog.c: implement ::get_window().
+
+	* app/display/gimpdisplay.[ch]: ditto. Removed window handle API.
+
+	* app/gui/gui-vtable.c: changed accordingly.
+
+	* libgimpbase/gimpbaseenums.[ch] (enum GimpProgressCommand):
+	added GIMP_PROGRESS_COMMAND_GET_WINDOW.
+
+	* app/plug-in/plug-in-progress.[ch] (plug_in_progress_get_window):
+	new function. Also renamed some functions to match the
+	GimpProgress interface, and not the legacy PDB procedure names.
+
+	* tools/pdbgen/pdb/progress.pdb
+	* app/core/gimppdbprogress.c: implement get_window() on both
+	sides of the wire, keeping backward compatibility (hopefully).
+
+	* libgimp/gimpprogress.[ch]: deprecated gimp_progress_install()
+	and added gimp_progress_install_vtable() which takes a vtable with
+	padding to be extensible. Added get_window() vtable entry and
+	dispatch it accordingly. Also added pulse() which was implemented
+	in a hackish way before. Everything is of course backward
+	compatible.
+
+	* libgimp/gimpprogressbar.c: inmplement the get_window() stuff
+	so a plug-in dialog containing a progress can be the transient
+	parent of another dialog in another plug-in.
+
+	* libgimp/gimpui.[ch] (gimp_ui_get_progress_window): new function
+	which returns a foreign GdkWindow of this plug-ins progress
+	window.
+
+	Renamed gimp_window_set_transient_for_default_display() to
+	gimp_window_set_transient() and make it use the progress' window
+	handle instead of the display's (which is the right thing to do in
+	almost all cases).
+
+	* libgimp/gimp.def
+	* libgimp/gimpui.def: add the new functions.
+
+	* tools/pdbgen/enums.pl
+	* app/pdb/internal_procs.c
+	* app/pdb/progress_cmds.c
+	* libgimp/gimpprogress_pdb.[ch]: regenerated.
+
+	* libgimp/gimpexport.c
+	* plug-ins/*/*.c: follow API change.
+
 2005-09-09  Tor Lillqvist  <tml@novell.com>
 
 	* gimptool-win32.c.in (get_prefix, maybe_append_exe)

@@ -788,7 +788,7 @@ ifs_compose_dialog (GimpDrawable *drawable)
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_window_set_transient_for_default_display (GTK_WINDOW (dialog));
+  gimp_window_set_transient (GTK_WINDOW (dialog));
 
   g_object_add_weak_pointer (G_OBJECT (dialog), (gpointer) &dialog);
 

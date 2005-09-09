@@ -203,6 +203,21 @@ gimp_progress_pulse (GimpProgress *progress)
     progress_iface->pulse (progress);
 }
 
+guint32
+gimp_progress_get_window (GimpProgress *progress)
+{
+  GimpProgressInterface *progress_iface;
+
+  g_return_val_if_fail (GIMP_IS_PROGRESS (progress), 0);
+
+  progress_iface = GIMP_PROGRESS_GET_INTERFACE (progress);
+
+  if (progress_iface->get_window)
+    return progress_iface->get_window (progress);
+
+  return 0;
+}
+
 void
 gimp_progress_message (GimpProgress *progress,
                        Gimp         *gimp,

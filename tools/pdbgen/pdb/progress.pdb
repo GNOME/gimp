@@ -17,7 +17,7 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub pdb_misc {
+sub mitch_pdb_misc {
     $author = 'Michael Natterer  <mitch@gimp.org>';
     $copyright = 'Michael Natterer';
     $date = '2004';
@@ -86,7 +86,7 @@ HELP
   if (gimp->current_plug_in && gimp->current_plug_in->open)
     {
       if (! gimp->no_interface)
-	plug_in_progress_update (gimp->current_plug_in, percentage);
+	plug_in_progress_set_value (gimp->current_plug_in, percentage);
     }
   else
     success = FALSE;
@@ -154,6 +154,34 @@ CODE
     );
 }
 
+sub progress_get_window_handle {
+    $blurb = 'Returns the native window ID of the toplevel window this plug-in\'s progress is displayed in.';
+
+    $help = <<'HELP';
+This function returns the native window ID of the toplevel window this plug-in\'s progress is displayed in.
+HELP
+
+    &mitch_pdb_misc;
+
+    @outargs = (
+	{ name => 'window', type => 'int32', init => 1,
+	  desc => 'The progress bar\'s toplevel window' }
+    );
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp->current_plug_in && gimp->current_plug_in->open)
+    {
+      if (! gimp->no_interface)
+	window = plug_in_progress_get_window (gimp->current_plug_in);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub progress_install {
     $blurb = 'Installs a progress callback for the current plug-in.';
 
@@ -163,7 +191,7 @@ progress calls made by this plug-in and any procedure it calls. Calling
 this function multiple times simply replaces the old progress callbacks.
 HELP
 
-    &pdb_misc;
+    &mitch_pdb_misc;
 
     @inargs = (
 	{ name => 'progress_callback', type => 'string',
@@ -192,7 +220,7 @@ This function uninstalls any progress callback installed with
 gimp_progress_install() before.
 HELP
 
-    &pdb_misc;
+    &mitch_pdb_misc;
 
     @inargs = (
 	{ name => 'progress_callback', type => 'string',
@@ -220,7 +248,7 @@ sub progress_cancel {
 This function cancels the currently running progress.
 HELP
 
-    &pdb_misc;
+    &mitch_pdb_misc;
 
     @inargs = (
 	{ name => 'progress_callback', type => 'string',
@@ -243,6 +271,7 @@ CODE
 @headers = qw("core/gimp.h" "plug-in/plug-in.h" "plug-in/plug-in-progress.h");
 
 @procs = qw(progress_init progress_update progress_pulse progress_set_text
+            progress_get_window_handle
             progress_install progress_uninstall progress_cancel);
 %exports = (app => [@procs], lib => [@procs]);
 

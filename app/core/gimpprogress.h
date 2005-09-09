@@ -36,26 +36,28 @@ struct _GimpProgressInterface
   GTypeInterface base_iface;
 
   /*  virtual functions  */
-  GimpProgress * (* start)     (GimpProgress *progress,
-                                const gchar  *message,
-                                gboolean      cancelable);
-  void           (* end)       (GimpProgress *progress);
-  gboolean       (* is_active) (GimpProgress *progress);
+  GimpProgress * (* start)      (GimpProgress *progress,
+                                 const gchar  *message,
+                                 gboolean      cancelable);
+  void           (* end)        (GimpProgress *progress);
+  gboolean       (* is_active)  (GimpProgress *progress);
 
-  void           (* set_text)  (GimpProgress *progress,
-                                const gchar  *message);
-  void           (* set_value) (GimpProgress *progress,
-                                gdouble       percentage);
-  gdouble        (* get_value) (GimpProgress *progress);
-  void           (* pulse)     (GimpProgress *progress);
+  void           (* set_text)   (GimpProgress *progress,
+                                 const gchar  *message);
+  void           (* set_value)  (GimpProgress *progress,
+                                 gdouble       percentage);
+  gdouble        (* get_value)  (GimpProgress *progress);
+  void           (* pulse)      (GimpProgress *progress);
 
-  void           (* message)   (GimpProgress *progress,
-                                Gimp         *gimp,
-                                const gchar  *domain,
-                                const gchar  *message);
+  guint32        (* get_window) (GimpProgress *progress);
+
+  void           (* message)    (GimpProgress *progress,
+                                 Gimp         *gimp,
+                                 const gchar  *domain,
+                                 const gchar  *message);
 
   /*  signals  */
-  void           (* cancel)    (GimpProgress *progress);
+  void           (* cancel)     (GimpProgress *progress);
 };
 
 
@@ -73,6 +75,8 @@ void           gimp_progress_set_value          (GimpProgress *progress,
                                                  gdouble       percentage);
 gdouble        gimp_progress_get_value          (GimpProgress *progress);
 void           gimp_progress_pulse              (GimpProgress *progress);
+
+guint32        gimp_progress_get_window         (GimpProgress *progress);
 
 void           gimp_progress_message            (GimpProgress *progress,
                                                  Gimp         *gimp,

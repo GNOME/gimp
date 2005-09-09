@@ -638,36 +638,34 @@ rcm_create_units (void)
 gboolean
 rcm_dialog (void)
 {
-  GtkWidget *dlg, *hbox, *notebook;
+  GtkWidget *dialog;
+  GtkWidget *hbox;
+  GtkWidget *notebook;
   GtkWidget *previews;
   gboolean   run;
 
   Current.Bna = g_new (RcmBna, 1);
 
-  /* init GTK and install colormap */
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
-
-  /* init stock icons */
   rcm_stock_init ();
 
-  /* Create dialog */
-  dlg = gimp_dialog_new (_("Colormap Rotation"), PLUG_IN_BINARY,
-                         NULL, 0,
-			 gimp_standard_help_func, PLUG_IN_PROC,
+  dialog = gimp_dialog_new (_("Colormap Rotation"), PLUG_IN_BINARY,
+                            NULL, 0,
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
-			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 NULL);
+                            NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_window_set_transient_for_default_display (GTK_WINDOW (dlg));
+  gimp_window_set_transient (GTK_WINDOW (dialog));
 
-  Current.Bna->dlg = dlg;
+  Current.Bna->dlg = dialog;
 
   /* Create sub-dialogs */
   Current.reduced = rcm_reduce_image (Current.drawable, Current.mask,
@@ -678,7 +676,8 @@ rcm_dialog (void)
   /* H-Box */
   hbox = gtk_hbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), hbox,
+                      TRUE, TRUE, 0);
   gtk_widget_show (hbox);
 
   gtk_box_pack_start (GTK_BOX (hbox), previews, TRUE, TRUE, 0);
@@ -698,15 +697,15 @@ rcm_dialog (void)
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), rcm_create_units (),
 			    gtk_label_new (_("Units")));
 
-  gtk_widget_show (dlg);
+  gtk_widget_show (dialog);
 
   rcm_render_circle (Current.From->preview, SUM, MARGIN);
   rcm_render_circle (Current.To->preview, SUM, MARGIN);
   rcm_render_circle (Current.Gray->preview, GRAY_SUM, GRAY_MARGIN);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  gtk_widget_destroy (dlg);
+  gtk_widget_destroy (dialog);
 
   return run;
 }

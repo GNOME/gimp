@@ -49,15 +49,15 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-void        gimp_ui_init (const gchar *prog_name,
-                          gboolean     preview);
+void        gimp_ui_init                          (const gchar *prog_name,
+                                                   gboolean     preview);
 
-GdkWindow * gimp_ui_get_display_window                    (guint32    gdisp_ID);
+GdkWindow * gimp_ui_get_display_window            (guint32      gdisp_ID);
+GdkWindow * gimp_ui_get_progress_window           (void);
 
-void        gimp_window_set_transient_for_display         (GtkWindow *window,
-                                                           guint32    gdisp_ID);
-void        gimp_window_set_transient_for_default_display (GtkWindow *window);
-
+void        gimp_window_set_transient_for_display (GtkWindow   *window,
+                                                   guint32      gdisp_ID);
+void        gimp_window_set_transient             (GtkWindow   *window);
 
 G_END_DECLS
 

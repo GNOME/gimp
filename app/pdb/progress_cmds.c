@@ -34,6 +34,7 @@ static ProcRecord progress_init_proc;
 static ProcRecord progress_update_proc;
 static ProcRecord progress_pulse_proc;
 static ProcRecord progress_set_text_proc;
+static ProcRecord progress_get_window_handle_proc;
 static ProcRecord progress_install_proc;
 static ProcRecord progress_uninstall_proc;
 static ProcRecord progress_cancel_proc;
@@ -45,6 +46,7 @@ register_progress_procs (Gimp *gimp)
   procedural_db_register (gimp, &progress_update_proc);
   procedural_db_register (gimp, &progress_pulse_proc);
   procedural_db_register (gimp, &progress_set_text_proc);
+  procedural_db_register (gimp, &progress_get_window_handle_proc);
   procedural_db_register (gimp, &progress_install_proc);
   procedural_db_register (gimp, &progress_uninstall_proc);
   procedural_db_register (gimp, &progress_cancel_proc);
@@ -126,7 +128,7 @@ progress_update_invoker (Gimp         *gimp,
   if (gimp->current_plug_in && gimp->current_plug_in->open)
     {
       if (! gimp->no_interface)
-        plug_in_progress_update (gimp->current_plug_in, percentage);
+        plug_in_progress_set_value (gimp->current_plug_in, percentage);
     }
   else
     success = FALSE;
@@ -248,6 +250,59 @@ static ProcRecord progress_set_text_proc =
   0,
   NULL,
   { { progress_set_text_invoker } }
+};
+
+static Argument *
+progress_get_window_handle_invoker (Gimp         *gimp,
+                                    GimpContext  *context,
+                                    GimpProgress *progress,
+                                    Argument     *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  gint32 window = 0;
+
+  if (gimp->current_plug_in && gimp->current_plug_in->open)
+    {
+      if (! gimp->no_interface)
+        window = plug_in_progress_get_window (gimp->current_plug_in);
+    }
+  else
+    success = FALSE;
+
+  return_args = procedural_db_return_args (&progress_get_window_handle_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = window;
+
+  return return_args;
+}
+
+static ProcArg progress_get_window_handle_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "window",
+    "The progress bar's toplevel window"
+  }
+};
+
+static ProcRecord progress_get_window_handle_proc =
+{
+  "gimp-progress-get-window-handle",
+  "gimp-progress-get-window-handle",
+  "Returns the native window ID of the toplevel window this plug-in's progress is displayed in.",
+  "This function returns the native window ID of the toplevel window this plug-in\'s progress is displayed in.",
+  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer",
+  "2004",
+  NULL,
+  GIMP_INTERNAL,
+  0,
+  NULL,
+  1,
+  progress_get_window_handle_outargs,
+  { { progress_get_window_handle_invoker } }
 };
 
 static Argument *

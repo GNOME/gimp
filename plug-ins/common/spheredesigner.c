@@ -2519,7 +2519,7 @@ makewindow (void)
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_window_set_transient_for_default_display (GTK_WINDOW (window));
+  gimp_window_set_transient (GTK_WINDOW (window));
 
   g_signal_connect (window, "response",
                     G_CALLBACK (sphere_response),

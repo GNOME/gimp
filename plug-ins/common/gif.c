@@ -1193,30 +1193,33 @@ save_image (const gchar *filename,
 static gboolean
 badbounds_dialog (void)
 {
-  GtkWidget *dlg;
+  GtkWidget *dialog;
   GtkWidget *label;
   GtkWidget *vbox;
   gboolean   crop;
 
-  dlg = gimp_dialog_new (_("GIF Warning"), "gif_warning",
-                         NULL, 0,
-			 gimp_standard_help_func, "file-gif-save",
+  dialog = gimp_dialog_new (_("GIF Warning"), "gif_warning",
+                            NULL, 0,
+                            gimp_standard_help_func, "file-gif-save",
 
-			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 NULL);
+                            NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
+
+  gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+  gimp_window_set_transient (GTK_WINDOW (dialog));
 
   /*  the warning message  */
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
   label= gtk_label_new (_("The image which you are trying to save as a GIF\n"
@@ -1228,11 +1231,11 @@ badbounds_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, TRUE, 0);
   gtk_widget_show (label);
 
-  gtk_widget_show (dlg);
+  gtk_widget_show (dialog);
 
-  crop = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
+  crop = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  gtk_widget_destroy (dlg);
+  gtk_widget_destroy (dialog);
 
   return crop;
 }
@@ -1241,7 +1244,7 @@ badbounds_dialog (void)
 static gint
 save_dialog (gint32 image_ID)
 {
-  GtkWidget     *dlg;
+  GtkWidget     *dialog;
   GtkWidget     *main_vbox;
   GtkWidget     *toggle;
   GtkWidget     *label;
@@ -1263,23 +1266,25 @@ save_dialog (gint32 image_ID)
 
   gimp_image_get_layers (image_ID, &nlayers);
 
-  dlg = gimp_dialog_new (_("Save as GIF"), PLUG_IN_BINARY,
-                         NULL, 0,
-			 gimp_standard_help_func, SAVE_PROC,
+  dialog = gimp_dialog_new (_("Save as GIF"), PLUG_IN_BINARY,
+                            NULL, 0,
+                            gimp_standard_help_func, SAVE_PROC,
 
-			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			 GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
 
-			 NULL);
+                            NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
+  gimp_window_set_transient (GTK_WINDOW (dialog));
+
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dlg)->vbox), main_vbox);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
   /*  regular gif parameter settings  */
@@ -1460,11 +1465,11 @@ save_dialog (gint32 image_ID)
     gtk_widget_set_sensitive (frame, FALSE);
 
   gtk_widget_show (frame);
-  gtk_widget_show (dlg);
+  gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  gtk_widget_destroy (dlg);
+  gtk_widget_destroy (dialog);
 
   return run;
 }

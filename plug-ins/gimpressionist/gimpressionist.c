@@ -28,7 +28,7 @@
 #define RESPONSE_ABOUT 1
 
 
-static GtkWidget *dlg = NULL;
+static GtkWidget *dialog = NULL;
 
 void
 store_values (void)
@@ -193,34 +193,34 @@ create_dialog (void)
 
   gimp_ui_init ("gimpressionist", TRUE);
 
-  dlg = gimp_dialog_new (_("Gimpressionist"), "gimpressionist",
-                         NULL, 0,
-                         gimp_standard_help_func, HELP_ID,
+  dialog = gimp_dialog_new (_("Gimpressionist"), "gimpressionist",
+                            NULL, 0,
+                            gimp_standard_help_func, HELP_ID,
 
-                         _("A_bout"),      RESPONSE_ABOUT,
-                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            _("A_bout"),      RESPONSE_ABOUT,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-                         NULL);
+                            NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            RESPONSE_ABOUT,
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_window_set_transient_for_default_display (GTK_WINDOW (dlg));
+  gimp_window_set_transient (GTK_WINDOW (dialog));
 
-  g_signal_connect (dlg, "response",
+  g_signal_connect (dialog, "response",
                     G_CALLBACK (dialog_response),
                     NULL);
-  g_signal_connect (dlg, "destroy",
+  g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
   hbox = gtk_hbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dlg)->vbox), hbox);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), hbox);
   gtk_widget_show (hbox);
 
   preview_box = create_preview ();
@@ -248,9 +248,9 @@ create_dialog (void)
    * */
   restore_values ();
 
-  gtk_widget_show (dlg);
+  gtk_widget_show (dialog);
 
-  return dlg;
+  return dialog;
 }
 
 gint

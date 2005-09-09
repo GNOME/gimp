@@ -20,14 +20,6 @@
 
 #include <gtk/gtk.h>
 
-#ifdef GDK_WINDOWING_WIN32
-#include <gdk/gdkwin32.h>
-#endif
-
-#ifdef GDK_WINDOWING_X11
-#include <gdk/gdkx.h>
-#endif
-
 #include "display-types.h"
 #include "tools/tools-types.h"
 
@@ -36,6 +28,8 @@
 #include "core/gimpimage.h"
 #include "core/gimplist.h"
 #include "core/gimpprogress.h"
+
+#include "widgets/gimpwidgets-utils.h"
 
 #include "tools/gimptool.h"
 #include "tools/tool_manager.h"
@@ -64,37 +58,38 @@ static void     gimp_display_class_init          (GimpDisplayClass *klass);
 static void     gimp_display_init                (GimpDisplay      *gdisp);
 static void     gimp_display_progress_iface_init (GimpProgressInterface *progress_iface);
 
-static void     gimp_display_set_property       (GObject       *object,
-                                                 guint          property_id,
-                                                 const GValue  *value,
-                                                 GParamSpec    *pspec);
-static void     gimp_display_get_property       (GObject       *object,
-                                                 guint          property_id,
-                                                 GValue        *value,
-                                                 GParamSpec    *pspec);
+static void     gimp_display_set_property        (GObject       *object,
+                                                  guint          property_id,
+                                                  const GValue  *value,
+                                                  GParamSpec    *pspec);
+static void     gimp_display_get_property        (GObject       *object,
+                                                  guint          property_id,
+                                                  GValue        *value,
+                                                  GParamSpec    *pspec);
 
 static GimpProgress *
-                gimp_display_progress_start     (GimpProgress  *progress,
-                                                 const gchar   *message,
-                                                 gboolean       cancelable);
-static void     gimp_display_progress_end       (GimpProgress  *progress);
-static gboolean gimp_display_progress_is_active (GimpProgress  *progress);
-static void     gimp_display_progress_set_text  (GimpProgress  *progress,
-                                                 const gchar   *message);
-static void     gimp_display_progress_set_value (GimpProgress  *progress,
-                                                 gdouble        percentage);
-static gdouble  gimp_display_progress_get_value (GimpProgress  *progress);
-static void     gimp_display_progress_pulse     (GimpProgress  *progress);
-static void     gimp_display_progress_canceled  (GimpProgress  *progress,
-                                                 GimpDisplay   *display);
+                gimp_display_progress_start      (GimpProgress  *progress,
+                                                  const gchar   *message,
+                                                  gboolean       cancelable);
+static void     gimp_display_progress_end        (GimpProgress  *progress);
+static gboolean gimp_display_progress_is_active  (GimpProgress  *progress);
+static void     gimp_display_progress_set_text   (GimpProgress  *progress,
+                                                  const gchar   *message);
+static void     gimp_display_progress_set_value  (GimpProgress  *progress,
+                                                  gdouble        percentage);
+static gdouble  gimp_display_progress_get_value  (GimpProgress  *progress);
+static void     gimp_display_progress_pulse      (GimpProgress  *progress);
+static guint32  gimp_display_progress_get_window (GimpProgress  *progress);
+static void     gimp_display_progress_canceled   (GimpProgress  *progress,
+                                                  GimpDisplay   *display);
 
-static void     gimp_display_flush_whenever     (GimpDisplay   *gdisp,
-                                                 gboolean       now);
-static void     gimp_display_paint_area         (GimpDisplay   *gdisp,
-                                                 gint           x,
-                                                 gint           y,
-                                                 gint           w,
-                                                 gint           h);
+static void     gimp_display_flush_whenever      (GimpDisplay   *gdisp,
+                                                  gboolean       now);
+static void     gimp_display_paint_area          (GimpDisplay   *gdisp,
+                                                  gint           x,
+                                                  gint           y,
+                                                  gint           w,
+                                                  gint           h);
 
 
 static GimpObjectClass *parent_class = NULL;
@@ -184,13 +179,14 @@ gimp_display_init (GimpDisplay *gdisp)
 static void
 gimp_display_progress_iface_init (GimpProgressInterface *progress_iface)
 {
-  progress_iface->start     = gimp_display_progress_start;
-  progress_iface->end       = gimp_display_progress_end;
-  progress_iface->is_active = gimp_display_progress_is_active;
-  progress_iface->set_text  = gimp_display_progress_set_text;
-  progress_iface->set_value = gimp_display_progress_set_value;
-  progress_iface->get_value = gimp_display_progress_get_value;
-  progress_iface->pulse     = gimp_display_progress_pulse;
+  progress_iface->start      = gimp_display_progress_start;
+  progress_iface->end        = gimp_display_progress_end;
+  progress_iface->is_active  = gimp_display_progress_is_active;
+  progress_iface->set_text   = gimp_display_progress_set_text;
+  progress_iface->set_value  = gimp_display_progress_set_value;
+  progress_iface->get_value  = gimp_display_progress_get_value;
+  progress_iface->pulse      = gimp_display_progress_pulse;
+  progress_iface->get_window = gimp_display_progress_get_window;
 }
 
 static void
@@ -344,6 +340,17 @@ gimp_display_progress_pulse (GimpProgress *progress)
   gimp_progress_pulse (GIMP_PROGRESS (shell->statusbar));
 }
 
+static guint32
+gimp_display_progress_get_window (GimpProgress *progress)
+{
+  GimpDisplay *display = GIMP_DISPLAY (progress);
+
+  if (! display->shell)
+    return 0;
+
+  return (guint32) gimp_window_get_native (GTK_WINDOW (display->shell));
+}
+
 static void
 gimp_display_progress_canceled (GimpProgress *progress,
                                 GimpDisplay  *display)
@@ -444,46 +451,6 @@ gimp_display_get_ID (GimpDisplay *gdisp)
   g_return_val_if_fail (GIMP_IS_DISPLAY (gdisp), -1);
 
   return gdisp->ID;
-}
-
-/**
- * gimp_display_get_window:
- * @display: a #GimpDisplayShell
- *
- * This function is used to pass a window handle to plug-ins so that
- * they can set their dialog windows transient to the image display.
- *
- * Return value: a native window handle of the display's shell or 0
- *               if the shell isn't realized yet
- */
-GdkNativeWindow
-gimp_display_get_window (GimpDisplay *display)
-{
-  GtkWidget *shell;
-
-#ifdef GDK_NATIVE_WINDOW_POINTER
-  g_return_val_if_fail (GIMP_IS_DISPLAY (display), NULL);
-#else
-  g_return_val_if_fail (GIMP_IS_DISPLAY (display), 0);
-#endif
-
-  shell = display->shell;
-
-#ifdef GDK_WINDOWING_WIN32
-  if (shell && GTK_WIDGET_REALIZED (shell))
-    return GDK_WINDOW_HWND (shell->window);
-#endif
-
-#ifdef GDK_WINDOWING_X11
-  if (shell && GTK_WIDGET_REALIZED (shell))
-    return GDK_WINDOW_XID (shell->window);
-#endif
-
-#ifdef GDK_NATIVE_WINDOW_POINTER
-  return NULL;
-#else
-  return 0;
-#endif
 }
 
 GimpDisplay *

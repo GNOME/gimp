@@ -74,7 +74,8 @@ static void              align_layers_get_align_offsets (gint32  drawable_id,
                                                          gint   *x,
                                                          gint   *y);
 
-static gint align_layers_dialog      (void);
+static gint              align_layers_dialog             (void);
+
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -384,7 +385,7 @@ align_layers_get_align_offsets (gint32  drawable_id,
 static int
 align_layers_dialog (void)
 {
-  GtkWidget *dlg;
+  GtkWidget *dialog;
   GtkWidget *table;
   GtkWidget *combo;
   GtkWidget *toggle;
@@ -393,27 +394,27 @@ align_layers_dialog (void)
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dlg = gimp_dialog_new (_("Align Visible Layers"), PLUG_IN_BINARY,
-                         NULL, 0,
-                         gimp_standard_help_func, PLUG_IN_PROC,
+  dialog = gimp_dialog_new (_("Align Visible Layers"), PLUG_IN_BINARY,
+                            NULL, 0,
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
-                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-                         NULL);
+                            NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_window_set_transient_for_default_display (GTK_WINDOW (dlg));
+  gimp_window_set_transient (GTK_WINDOW (dialog));
 
   table = gtk_table_new (7, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_container_set_border_width (GTK_CONTAINER (table), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table,
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), table,
                       FALSE, FALSE, 0);
   gtk_widget_show (table);
 
@@ -508,11 +509,11 @@ align_layers_dialog (void)
                     G_CALLBACK (gimp_toggle_button_update),
                     &VALS.base_is_bottom_layer);
 
-  gtk_widget_show (dlg);
+  gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  gtk_widget_destroy (dlg);
+  gtk_widget_destroy (dialog);
 
   return run;
 }

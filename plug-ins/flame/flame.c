@@ -70,7 +70,7 @@ static void      run               (const gchar      *name,
                                     GimpParam       **return_vals);
 static void      flame             (GimpDrawable     *drawable);
 
-static gboolean  dialog            (void);
+static gboolean  flame_dialog      (void);
 static void      set_flame_preview (void);
 static void      load_callback     (GtkWidget        *widget,
                                     gpointer          data);
@@ -86,13 +86,13 @@ static gchar      buffer[BUFFER_SIZE];
 static GtkWidget *cmap_preview;
 static GtkWidget *flame_preview;
 static gint       preview_width, preview_height;
-static GtkWidget *dlg;
+static GtkWidget *dialog;
 static GtkWidget *load_button = NULL;
 static GtkWidget *save_button = NULL;
-static GtkWidget *file_dlg = NULL;
+static GtkWidget *file_dialog = NULL;
 static gint       load_save;
 
-static GtkWidget *edit_dlg = NULL;
+static GtkWidget *edit_dialog = NULL;
 
 static control_point  edit_cp;
 static control_point  mutants[NMUTANTS];
@@ -203,7 +203,7 @@ run (const gchar      *name,
 
       if (run_mode == GIMP_RUN_INTERACTIVE)
         {
-          if (! dialog ())
+          if (! flame_dialog ())
             {
               gimp_drawable_detach (drawable);
 
@@ -429,7 +429,7 @@ file_response_callback (GtkFileChooser *chooser,
           /* i want to update the existing dialogue, but it's
              too painful */
           gimp_set_data ("plug_in_flame", &config, sizeof (config));
-          /* gtk_widget_destroy(dlg); */
+          /* gtk_widget_destroy(dialog); */
           set_flame_preview ();
           set_edit_preview ();
         }
@@ -462,35 +462,35 @@ file_response_callback (GtkFileChooser *chooser,
 }
 
 static void
-make_file_dlg (const gchar *title,
-               GtkWidget   *parent)
+make_file_dialog (const gchar *title,
+                  GtkWidget   *parent)
 {
-  file_dlg = gtk_file_chooser_dialog_new (title, GTK_WINDOW (parent),
-                                          load_save ?
-                                          GTK_FILE_CHOOSER_ACTION_OPEN :
-                                          GTK_FILE_CHOOSER_ACTION_SAVE,
+  file_dialog = gtk_file_chooser_dialog_new (title, GTK_WINDOW (parent),
+                                             load_save ?
+                                             GTK_FILE_CHOOSER_ACTION_OPEN :
+                                             GTK_FILE_CHOOSER_ACTION_SAVE,
 
-                                          GTK_STOCK_CANCEL, GTK_STOCK_CANCEL,
-                                          load_save ?
-                                          GTK_STOCK_OPEN : GTK_STOCK_SAVE,
-                                          GTK_RESPONSE_OK,
+                                             GTK_STOCK_CANCEL, GTK_STOCK_CANCEL,
+                                             load_save ?
+                                             GTK_STOCK_OPEN : GTK_STOCK_SAVE,
+                                             GTK_RESPONSE_OK,
 
-                                          NULL);
+                                             NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (file_dlg),
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (file_dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  g_object_add_weak_pointer (G_OBJECT (file_dlg), (gpointer) &file_dlg);
+  g_object_add_weak_pointer (G_OBJECT (file_dialog), (gpointer) &file_dialog);
 
-  gtk_dialog_set_default_response (GTK_DIALOG (file_dlg), GTK_RESPONSE_OK);
-  gtk_window_set_destroy_with_parent (GTK_WINDOW (file_dlg), TRUE);
+  gtk_dialog_set_default_response (GTK_DIALOG (file_dialog), GTK_RESPONSE_OK);
+  gtk_window_set_destroy_with_parent (GTK_WINDOW (file_dialog), TRUE);
 
-  g_signal_connect (file_dlg, "delete-event",
+  g_signal_connect (file_dialog, "delete-event",
                     G_CALLBACK (gtk_true),
                     NULL);
-  g_signal_connect (file_dlg, "response",
+  g_signal_connect (file_dialog, "response",
                     G_CALLBACK (file_response_callback),
                     NULL);
 }
@@ -625,7 +625,7 @@ edit_callback (GtkWidget *widget,
 {
   edit_cp = config.cp;
 
-  if (edit_dlg == NULL)
+  if (edit_dialog == NULL)
     {
       GtkWidget *main_vbox;
       GtkWidget *frame;
@@ -638,27 +638,27 @@ edit_callback (GtkWidget *widget,
       GtkObject *adj;
       gint       i, j;
 
-      edit_dlg = gimp_dialog_new (_("Edit Flame"), "flame",
-                                  parent, GTK_DIALOG_DESTROY_WITH_PARENT,
-                                  gimp_standard_help_func, PLUG_IN_PROC,
+      edit_dialog = gimp_dialog_new (_("Edit Flame"), "flame",
+                                     parent, GTK_DIALOG_DESTROY_WITH_PARENT,
+                                     gimp_standard_help_func, PLUG_IN_PROC,
 
-                                  GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                  GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                     GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-                                  NULL);
+                                     NULL);
 
-      gtk_dialog_set_alternative_button_order (GTK_DIALOG (edit_dlg),
+      gtk_dialog_set_alternative_button_order (GTK_DIALOG (edit_dialog),
                                                GTK_RESPONSE_OK,
                                                GTK_RESPONSE_CANCEL,
                                                -1);
 
-      g_signal_connect (edit_dlg, "response",
+      g_signal_connect (edit_dialog, "response",
                         G_CALLBACK (edit_response),
-                        edit_dlg);
+                        edit_dialog);
 
       main_vbox = gtk_vbox_new (FALSE, 12);
       gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-      gtk_box_pack_start (GTK_BOX (GTK_DIALOG (edit_dlg)->vbox), main_vbox,
+      gtk_box_pack_start (GTK_BOX (GTK_DIALOG (edit_dialog)->vbox), main_vbox,
                           FALSE, FALSE, 0);
 
       frame = gimp_frame_new (_("Directions"));
@@ -770,37 +770,37 @@ edit_callback (GtkWidget *widget,
 
   set_edit_preview ();
 
-  gtk_window_present (GTK_WINDOW (edit_dlg));
+  gtk_window_present (GTK_WINDOW (edit_dialog));
 }
 
 static void
 load_callback (GtkWidget *widget,
                gpointer   data)
 {
-  if (! file_dlg)
+  if (! file_dialog)
     {
       load_save = 1;
-      make_file_dlg (_("Load Flame"), gtk_widget_get_toplevel (widget));
+      make_file_dialog (_("Load Flame"), gtk_widget_get_toplevel (widget));
 
       gtk_widget_set_sensitive (save_button, FALSE);
     }
 
-  gtk_window_present (GTK_WINDOW (file_dlg));
+  gtk_window_present (GTK_WINDOW (file_dialog));
 }
 
 static void
 save_callback (GtkWidget *widget,
                gpointer   data)
 {
-  if (! file_dlg)
+  if (! file_dialog)
     {
       load_save = 0;
-      make_file_dlg (_("Save Flame"), gtk_widget_get_toplevel (widget));
+      make_file_dialog (_("Save Flame"), gtk_widget_get_toplevel (widget));
 
       gtk_widget_set_sensitive (load_button, FALSE);
     }
 
-  gtk_window_present (GTK_WINDOW (file_dlg));
+  gtk_window_present (GTK_WINDOW (file_dialog));
 }
 
 static void
@@ -922,7 +922,7 @@ cmap_constrain (gint32   image_id,
 
 
 static gboolean
-dialog (void)
+flame_dialog (void)
 {
   GtkWidget *main_vbox;
   GtkWidget *notebook;
@@ -937,25 +937,25 @@ dialog (void)
 
   gimp_ui_init ("flame", TRUE);
 
-  dlg = gimp_dialog_new (_("Flame"), "flame",
-                         NULL, 0,
-                         gimp_standard_help_func, PLUG_IN_PROC,
+  dialog = gimp_dialog_new (_("Flame"), "flame",
+                            NULL, 0,
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
-                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-                         NULL);
+                            NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_window_set_transient_for_default_display (GTK_WINDOW (dlg));
+  gimp_window_set_transient (GTK_WINDOW (dialog));
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_vbox,
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), main_vbox,
                       FALSE, FALSE, 0);
   gtk_widget_show (main_vbox);
 
@@ -1013,7 +1013,7 @@ dialog (void)
 
     g_signal_connect (button, "clicked",
                       G_CALLBACK (edit_callback),
-                      dlg);
+                      dialog);
 
     load_button = button = gtk_button_new_from_stock (GTK_STOCK_OPEN);
     gtk_box_pack_start (GTK_BOX (vbbox), button, FALSE, FALSE, 0);
@@ -1249,11 +1249,11 @@ dialog (void)
 
   set_flame_preview ();
 
-  gtk_widget_show (dlg);
+  gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  gtk_widget_destroy (dlg);
+  gtk_widget_destroy (dialog);
 
   return run;
 }

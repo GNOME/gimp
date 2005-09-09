@@ -58,6 +58,7 @@
 #include "widgets/gimppatternselect.h"
 #include "widgets/gimpprogressdialog.h"
 #include "widgets/gimpuimanager.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
@@ -333,14 +334,12 @@ gui_display_get_ID (GimpObject *display)
 static guint32
 gui_display_get_window (GimpObject *display)
 {
-#ifdef GDK_NATIVE_WINDOW_POINTER
-#ifdef __GNUC__
-#warning gui_display_get_window() unimplementable for the target windowing system
-#endif
+  GimpDisplay *disp = GIMP_DISPLAY (display);
+
+  if (disp->shell)
+    return (guint32) gimp_window_get_native (GTK_WINDOW (disp->shell));
+
   return 0;
-#else
-  return (guint32) gimp_display_get_window (GIMP_DISPLAY (display));
-#endif
 }
 
 static GimpObject *

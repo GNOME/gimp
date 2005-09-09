@@ -1164,7 +1164,7 @@ iwarp_dialog (void)
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_window_set_transient_for_default_display (GTK_WINDOW (dlg));
+  gimp_window_set_transient (GTK_WINDOW (dlg));
 
   g_signal_connect (dlg, "response",
                     G_CALLBACK (iwarp_response),

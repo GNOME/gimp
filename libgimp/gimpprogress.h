@@ -25,6 +25,34 @@
 G_BEGIN_DECLS
 
 
+typedef struct _GimpProgressVtable GimpProgressVtable;
+
+struct _GimpProgressVtable
+{
+  void    (* start)        (const gchar *message,
+                            gboolean     cancelable,
+                            gpointer     user_data);
+  void    (* end)          (gpointer     user_data);
+  void    (* set_text)     (const gchar *message,
+                            gpointer     user_data);
+  void    (* set_value)    (gdouble      percentage,
+                            gpointer     user_data);
+  void    (* pulse)        (gpointer     user_data);
+
+  guint32 (* get_window)   (gpointer     user_data);
+
+  /* Padding for future expansion. Must be initialized with NULL! */
+  void (* _gimp_reserved1) (void);
+  void (* _gimp_reserved2) (void);
+  void (* _gimp_reserved3) (void);
+  void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
+};
+
+#ifndef GIMP_DISABLE_DEPRECATED
 typedef void (* GimpProgressStartCallback) (const gchar *message,
                                             gboolean     cancelable,
                                             gpointer     user_data);
@@ -35,15 +63,19 @@ typedef void (* GimpProgressValueCallback) (gdouble      percentage,
                                             gpointer     user_data);
 
 
-const gchar * gimp_progress_install   (GimpProgressStartCallback start_callback,
-                                       GimpProgressEndCallback   end_callback,
-                                       GimpProgressTextCallback  text_callback,
-                                       GimpProgressValueCallback value_callback,
-                                       gpointer                  user_data);
-gpointer      gimp_progress_uninstall (const gchar              *progress_callback);
+const gchar * gimp_progress_install       (GimpProgressStartCallback  start_callback,
+                                           GimpProgressEndCallback    end_callback,
+                                           GimpProgressTextCallback   text_callback,
+                                           GimpProgressValueCallback  value_callback,
+                                           gpointer                   user_data);
+#endif /* GIMP_DISABLE_DEPRECATED */
 
-gboolean      gimp_progress_set_text  (const gchar              *format,
-                                       ...) G_GNUC_PRINTF (1, 2);
+const gchar * gimp_progress_install_vtable (const GimpProgressVtable *funcs,
+                                            gpointer                  user_data);
+gpointer      gimp_progress_uninstall      (const gchar              *progress_callback);
+
+gboolean      gimp_progress_set_text       (const gchar              *format,
+                                            ...) G_GNUC_PRINTF (1, 2);
 
 
 G_END_DECLS

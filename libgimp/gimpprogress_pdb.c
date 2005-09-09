@@ -154,6 +154,38 @@ _gimp_progress_set_text (const gchar *message)
 }
 
 /**
+ * gimp_progress_get_window_handle:
+ *
+ * Returns the native window ID of the toplevel window this plug-in's
+ * progress is displayed in.
+ *
+ * This function returns the native window ID of the toplevel window
+ * this plug-in\'s progress is displayed in.
+ *
+ * Returns: The progress bar's toplevel window.
+ *
+ * Since: GIMP 2.2
+ */
+gint
+gimp_progress_get_window_handle (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint window = 0;
+
+  return_vals = gimp_run_procedure ("gimp-progress-get-window-handle",
+				    &nreturn_vals,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    window = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return window;
+}
+
+/**
  * _gimp_progress_install:
  * @progress_callback: The callback PDB proc to call.
  *

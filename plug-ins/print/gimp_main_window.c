@@ -382,7 +382,7 @@ create_top_level_structure(void)
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_window_set_transient_for_default_display (GTK_WINDOW (print_dialog));
+  gimp_window_set_transient (GTK_WINDOW (print_dialog));
 
   g_signal_connect (print_dialog, "response",
                     G_CALLBACK (gimp_response_callback),

@@ -1201,7 +1201,7 @@ newsprint_dialog (GimpDrawable *drawable)
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_window_set_transient_for_default_display (GTK_WINDOW (dialog));
+  gimp_window_set_transient (GTK_WINDOW (dialog));
 
   paned = gtk_hpaned_new ();
   gtk_container_set_border_width (GTK_CONTAINER (paned), 12);

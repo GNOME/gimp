@@ -91,8 +91,52 @@ plug_in_progress_start (PlugIn      *plug_in,
 }
 
 void
-plug_in_progress_update (PlugIn  *plug_in,
-			 gdouble  percentage)
+plug_in_progress_end (PlugIn *plug_in)
+{
+  PlugInProcFrame *proc_frame;
+
+  g_return_if_fail (plug_in != NULL);
+
+  proc_frame = plug_in_get_proc_frame (plug_in);
+
+  if (proc_frame->progress)
+    {
+      if (proc_frame->progress_cancel_id)
+        {
+          g_signal_handler_disconnect (proc_frame->progress,
+                                       proc_frame->progress_cancel_id);
+          proc_frame->progress_cancel_id = 0;
+        }
+
+      if (gimp_progress_is_active (proc_frame->progress))
+        gimp_progress_end (proc_frame->progress);
+
+      if (proc_frame->progress_created)
+        {
+          gimp_free_progress (plug_in->gimp, proc_frame->progress);
+          g_object_unref (proc_frame->progress);
+          proc_frame->progress = NULL;
+        }
+    }
+}
+
+void
+plug_in_progress_set_text (PlugIn      *plug_in,
+                           const gchar *message)
+{
+  PlugInProcFrame *proc_frame;
+
+  g_return_if_fail (plug_in != NULL);
+
+  proc_frame = plug_in_get_proc_frame (plug_in);
+
+  if (proc_frame->progress)
+    gimp_progress_set_text (proc_frame->progress, message);
+}
+
+void
+plug_in_progress_set_value (PlugIn  *plug_in,
+                            gdouble  percentage)
 {
   PlugInProcFrame *proc_frame;
 
@@ -131,48 +175,19 @@ plug_in_progress_pulse (PlugIn  *plug_in)
     gimp_progress_pulse (proc_frame->progress);
 }
 
-void
-plug_in_progress_set_text (PlugIn      *plug_in,
-                           const gchar *message)
+guint32
+plug_in_progress_get_window (PlugIn *plug_in)
 {
   PlugInProcFrame *proc_frame;
 
-  g_return_if_fail (plug_in != NULL);
+  g_return_val_if_fail (plug_in != NULL, 0);
 
   proc_frame = plug_in_get_proc_frame (plug_in);
 
   if (proc_frame->progress)
-    gimp_progress_set_text (proc_frame->progress, message);
-}
+    return gimp_progress_get_window (proc_frame->progress);
 
-void
-plug_in_progress_end (PlugIn *plug_in)
-{
-  PlugInProcFrame *proc_frame;
-
-  g_return_if_fail (plug_in != NULL);
-
-  proc_frame = plug_in_get_proc_frame (plug_in);
-
-  if (proc_frame->progress)
-    {
-      if (proc_frame->progress_cancel_id)
-        {
-          g_signal_handler_disconnect (proc_frame->progress,
-                                       proc_frame->progress_cancel_id);
-          proc_frame->progress_cancel_id = 0;
-        }
-
-      if (gimp_progress_is_active (proc_frame->progress))
-        gimp_progress_end (proc_frame->progress);
-
-      if (proc_frame->progress_created)
-        {
-          gimp_free_progress (plug_in->gimp, proc_frame->progress);
-          g_object_unref (proc_frame->progress);
-          proc_frame->progress = NULL;
-        }
-    }
+  return 0;
 }
 
 gboolean

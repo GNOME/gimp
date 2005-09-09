@@ -21,6 +21,12 @@
 
 #include "config.h"
 
+#include <glib-object.h>
+
+#undef GIMP_DISABLE_DEPRECATED
+#include "gimpprogress.h"
+#define GIMP_DISABLE_DEPRECATED
+
 #include "gimp.h"
 
 
@@ -28,25 +34,19 @@ typedef struct _GimpProgressData GimpProgressData;
 
 struct _GimpProgressData
 {
-  gchar                     *progress_callback;
-  GimpProgressStartCallback  start_callback;
-  GimpProgressEndCallback    end_callback;
-  GimpProgressTextCallback   text_callback;
-  GimpProgressValueCallback  value_callback;
-  gpointer                   data;
+  gchar              *progress_callback;
+  GimpProgressVtable  vtable;
+  gpointer            data;
 };
 
 
 /*  local function prototypes  */
 
-static void      gimp_temp_progress_run      (const gchar       *name,
-                                              gint               nparams,
-                                              const GimpParam   *param,
-                                              gint              *nreturn_vals,
-                                              GimpParam        **return_vals);
-#if 0
-static gboolean  gimp_temp_progress_run_idle (GimpProgressData  *progress_data);
-#endif
+static void   gimp_temp_progress_run (const gchar      *name,
+                                      gint              nparams,
+                                      const GimpParam  *param,
+                                      gint             *nreturn_vals,
+                                      GimpParam       **return_vals);
 
 
 /*  private variables  */
@@ -80,6 +80,34 @@ gimp_progress_install (GimpProgressStartCallback start_callback,
                        GimpProgressValueCallback value_callback,
                        gpointer                  user_data)
 {
+  GimpProgressVtable vtable = { 0, };
+
+  g_return_val_if_fail (start_callback != NULL, NULL);
+  g_return_val_if_fail (end_callback != NULL, NULL);
+  g_return_val_if_fail (text_callback != NULL, NULL);
+  g_return_val_if_fail (value_callback != NULL, NULL);
+
+  vtable.start     = start_callback;
+  vtable.end       = end_callback;
+  vtable.set_text  = text_callback;
+  vtable.set_value = value_callback;
+
+  return gimp_progress_install_vtable (&vtable, user_data);
+}
+
+/**
+ * gimp_progress_install_vtable:
+ * @vtable:    a pointer to a @GimpProgressVtable.
+ * @user_data: a pointer that is passed as user_data to all vtable functions.
+ *
+ * Return value: the name of the temporary procedure that's been installed
+ *
+ * Since: GIMP 2.4
+ **/
+const gchar *
+gimp_progress_install_vtable (const GimpProgressVtable *vtable,
+                              gpointer                  user_data)
+{
   static const GimpParamDef args[] =
   {
     { GIMP_PDB_INT32,  "command", "" },
@@ -87,12 +115,18 @@ gimp_progress_install (GimpProgressStartCallback start_callback,
     { GIMP_PDB_FLOAT,  "value",   "" }
   };
 
+  static const GimpParamDef values[] =
+  {
+    { GIMP_PDB_FLOAT,  "value",   "" }
+  };
+
   gchar *progress_callback;
 
-  g_return_val_if_fail (start_callback != NULL, NULL);
-  g_return_val_if_fail (end_callback != NULL, NULL);
-  g_return_val_if_fail (text_callback != NULL, NULL);
-  g_return_val_if_fail (value_callback != NULL, NULL);
+  g_return_val_if_fail (vtable != NULL, NULL);
+  g_return_val_if_fail (vtable->start != NULL, NULL);
+  g_return_val_if_fail (vtable->end != NULL, NULL);
+  g_return_val_if_fail (vtable->set_text != NULL, NULL);
+  g_return_val_if_fail (vtable->set_value != NULL, NULL);
 
   progress_callback = gimp_procedural_db_temp_name ();
 
@@ -105,8 +139,8 @@ gimp_progress_install (GimpProgressStartCallback start_callback,
 			  NULL,
 			  "RGB*, GRAY*, INDEXED*",
 			  GIMP_TEMPORARY,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL,
+			  G_N_ELEMENTS (args), G_N_ELEMENTS (values),
+			  args, values,
 			  gimp_temp_progress_run);
 
   if (_gimp_progress_install (progress_callback))
@@ -123,10 +157,12 @@ gimp_progress_install (GimpProgressStartCallback start_callback,
       progress_data = g_new0 (GimpProgressData, 1);
 
       progress_data->progress_callback = progress_callback;
-      progress_data->start_callback    = start_callback;
-      progress_data->end_callback      = end_callback;
-      progress_data->text_callback     = text_callback;
-      progress_data->value_callback    = value_callback;
+      progress_data->vtable.start      = vtable->start;
+      progress_data->vtable.end        = vtable->end;
+      progress_data->vtable.set_text   = vtable->set_text;
+      progress_data->vtable.set_value  = vtable->set_value;
+      progress_data->vtable.pulse      = vtable->pulse;
+      progress_data->vtable.get_window = vtable->get_window;
       progress_data->data              = user_data;
 
       g_hash_table_insert (gimp_progress_ht, progress_callback, progress_data);
@@ -224,14 +260,22 @@ gimp_temp_progress_run (const gchar      *name,
                         gint             *nreturn_vals,
                         GimpParam       **return_vals)
 {
-  static GimpParam  values[1];
+  static GimpParam  values[2];
   GimpProgressData *progress_data;
+
+  *nreturn_vals = 1;
+  *return_vals  = values;
+
+  values[0].type          = GIMP_PDB_STATUS;
+  values[0].data.d_status = GIMP_PDB_SUCCESS;
 
   progress_data = g_hash_table_lookup (gimp_progress_ht, name);
 
   if (! progress_data)
     {
       g_warning ("Can't find internal progress data");
+
+      values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
     }
   else
     {
@@ -240,39 +284,46 @@ gimp_temp_progress_run (const gchar      *name,
       switch (command)
         {
         case GIMP_PROGRESS_COMMAND_START:
-          progress_data->start_callback (param[1].data.d_string,
-                                         param[2].data.d_float != 0.0,
-                                         progress_data->data);
+          progress_data->vtable.start (param[1].data.d_string,
+                                       param[2].data.d_float != 0.0,
+                                       progress_data->data);
           break;
 
         case GIMP_PROGRESS_COMMAND_END:
-          progress_data->end_callback (progress_data->data);
+          progress_data->vtable.end (progress_data->data);
           break;
 
         case GIMP_PROGRESS_COMMAND_SET_TEXT:
-          progress_data->text_callback (param[1].data.d_string,
-                                        progress_data->data);
+          progress_data->vtable.set_text (param[1].data.d_string,
+                                          progress_data->data);
           break;
 
         case GIMP_PROGRESS_COMMAND_SET_VALUE:
-          progress_data->value_callback (param[2].data.d_float,
-                                         progress_data->data);
+          progress_data->vtable.set_value (param[2].data.d_float,
+                                           progress_data->data);
           break;
 
         case GIMP_PROGRESS_COMMAND_PULSE:
-          progress_data->value_callback (-1.0,
-                                         progress_data->data);
+          if (progress_data->vtable.pulse)
+            progress_data->vtable.pulse (progress_data->data);
+          else
+            progress_data->vtable.set_value (-1, progress_data->data);
+          break;
+
+        case GIMP_PROGRESS_COMMAND_GET_WINDOW:
+          *nreturn_vals  = 2;
+          values[1].type = GIMP_PDB_FLOAT;
+
+          if (progress_data->vtable.get_window)
+            values[1].data.d_float =
+              (gdouble) progress_data->vtable.get_window (progress_data->data);
+          else
+            values[1].data.d_float = 0;
           break;
 
         default:
-          g_warning ("Unknown command passed to progress callback");
+          values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
           break;
         }
     }
-
-  *nreturn_vals = 1;
-  *return_vals  = values;
-
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = GIMP_PDB_SUCCESS;
 }

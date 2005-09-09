@@ -75,6 +75,7 @@ static void     gimp_file_dialog_progress_set_value (GimpProgress     *progress,
                                                      gdouble           percentage);
 static gdouble  gimp_file_dialog_progress_get_value (GimpProgress     *progress);
 static void     gimp_file_dialog_progress_pulse     (GimpProgress     *progress);
+static guint32  gimp_file_dialog_progress_get_window(GimpProgress     *progress);
 
 static void     gimp_file_dialog_add_preview        (GimpFileDialog   *dialog,
                                                      Gimp             *gimp);
@@ -155,13 +156,14 @@ gimp_file_dialog_class_init (GimpFileDialogClass *klass)
 static void
 gimp_file_dialog_progress_iface_init (GimpProgressInterface *progress_iface)
 {
-  progress_iface->start     = gimp_file_dialog_progress_start;
-  progress_iface->end       = gimp_file_dialog_progress_end;
-  progress_iface->is_active = gimp_file_dialog_progress_is_active;
-  progress_iface->set_text  = gimp_file_dialog_progress_set_text;
-  progress_iface->set_value = gimp_file_dialog_progress_set_value;
-  progress_iface->get_value = gimp_file_dialog_progress_get_value;
-  progress_iface->pulse     = gimp_file_dialog_progress_pulse;
+  progress_iface->start      = gimp_file_dialog_progress_start;
+  progress_iface->end        = gimp_file_dialog_progress_end;
+  progress_iface->is_active  = gimp_file_dialog_progress_is_active;
+  progress_iface->set_text   = gimp_file_dialog_progress_set_text;
+  progress_iface->set_value  = gimp_file_dialog_progress_set_value;
+  progress_iface->get_value  = gimp_file_dialog_progress_get_value;
+  progress_iface->pulse      = gimp_file_dialog_progress_pulse;
+  progress_iface->get_window = gimp_file_dialog_progress_get_window;
 }
 
 static gboolean
@@ -292,6 +294,14 @@ gimp_file_dialog_progress_pulse (GimpProgress *progress)
 
       gtk_progress_bar_pulse (bar);
     }
+}
+
+static guint32
+gimp_file_dialog_progress_get_window (GimpProgress *progress)
+{
+  GimpFileDialog *dialog = GIMP_FILE_DIALOG (progress);
+
+  return (guint32) gimp_window_get_native (GTK_WINDOW (dialog));
 }
 
 

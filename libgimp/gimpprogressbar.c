@@ -24,6 +24,14 @@
 
 #include <gtk/gtk.h>
 
+#ifdef GDK_WINDOWING_WIN32
+#include <gdk/gdkwin32.h>
+#endif
+
+#ifdef GDK_WINDOWING_X11
+#include <gdk/gdkx.h>
+#endif
+
 #include "gimpuitypes.h"
 
 #include "gimp.h"
@@ -31,19 +39,21 @@
 #include "gimpprogressbar.h"
 
 
-static void   gimp_progress_bar_class_init (GimpProgressBarClass *klass);
-static void   gimp_progress_bar_init       (GimpProgressBar      *bar);
+static void    gimp_progress_bar_class_init (GimpProgressBarClass *klass);
+static void    gimp_progress_bar_init       (GimpProgressBar      *bar);
 
-static void   gimp_progress_bar_destroy    (GtkObject            *object);
+static void    gimp_progress_bar_destroy    (GtkObject            *object);
 
-static void   gimp_progress_bar_start      (const gchar          *message,
-                                            gboolean              cancelable,
-                                            gpointer              user_data);
-static void   gimp_progress_bar_end        (gpointer              user_data);
-static void   gimp_progress_bar_set_text   (const gchar          *message,
-                                            gpointer              user_data);
-static void   gimp_progress_bar_set_value  (gdouble               percentage,
-                                            gpointer              user_data);
+static void    gimp_progress_bar_start      (const gchar          *message,
+                                             gboolean              cancelable,
+                                             gpointer              user_data);
+static void    gimp_progress_bar_end        (gpointer              user_data);
+static void    gimp_progress_bar_set_text   (const gchar          *message,
+                                             gpointer              user_data);
+static void    gimp_progress_bar_set_value  (gdouble               percentage,
+                                             gpointer              user_data);
+static void    gimp_progress_bar_pulse      (gpointer              user_data);
+static guint32 gimp_progress_bar_get_window (gpointer              user_data);
 
 
 static GtkProgressBarClass *parent_class = NULL;
@@ -90,13 +100,18 @@ gimp_progress_bar_class_init (GimpProgressBarClass *klass)
 static void
 gimp_progress_bar_init (GimpProgressBar *bar)
 {
+  GimpProgressVtable vtable = { 0, };
+
   gtk_progress_bar_set_text (GTK_PROGRESS_BAR (bar), " ");
 
-  bar->progress_callback = gimp_progress_install (gimp_progress_bar_start,
-                                                  gimp_progress_bar_end,
-                                                  gimp_progress_bar_set_text,
-                                                  gimp_progress_bar_set_value,
-                                                  bar);
+  vtable.start      = gimp_progress_bar_start;
+  vtable.end        = gimp_progress_bar_end;
+  vtable.set_text   = gimp_progress_bar_set_text;
+  vtable.set_value  = gimp_progress_bar_set_value;
+  vtable.pulse      = gimp_progress_bar_pulse;
+  vtable.get_window = gimp_progress_bar_get_window;
+
+  bar->progress_callback = gimp_progress_install_vtable (&vtable, bar);
 }
 
 static void
@@ -168,6 +183,56 @@ gimp_progress_bar_set_value (gdouble  percentage,
   if (GTK_WIDGET_DRAWABLE (bar))
     while (g_main_context_pending (NULL))
       g_main_context_iteration (NULL, TRUE);
+}
+
+static void
+gimp_progress_bar_pulse (gpointer user_data)
+{
+  GimpProgressBar *bar = GIMP_PROGRESS_BAR (user_data);
+
+  gtk_progress_bar_pulse (GTK_PROGRESS_BAR (bar));
+
+  if (GTK_WIDGET_DRAWABLE (bar))
+    while (g_main_context_pending (NULL))
+      g_main_context_iteration (NULL, TRUE);
+}
+
+static GdkNativeWindow
+gimp_window_get_native (GtkWindow *window)
+{
+  g_return_val_if_fail (GTK_IS_WINDOW (window), 0);
+
+#ifdef GDK_NATIVE_WINDOW_POINTER
+#ifdef __GNUC__
+#warning gimp_window_get_native() unimplementable for the target windowing system
+#endif
+#endif
+
+#ifdef GDK_WINDOWING_WIN32
+  if (window && GTK_WIDGET_REALIZED (window))
+    return GDK_WINDOW_HWND (GTK_WIDGET (window)->window);
+#endif
+
+#ifdef GDK_WINDOWING_X11
+  if (window && GTK_WIDGET_REALIZED (window))
+    return GDK_WINDOW_XID (GTK_WIDGET (window)->window);
+#endif
+
+  return 0;
+}
+
+static guint32
+gimp_progress_bar_get_window (gpointer user_data)
+{
+  GimpProgressBar *bar = GIMP_PROGRESS_BAR (user_data);
+  GtkWidget       *toplevel;
+
+  toplevel = gtk_widget_get_toplevel (GTK_WIDGET (bar));
+
+  if (GTK_IS_WINDOW (toplevel))
+    return (guint32) gimp_window_get_native (GTK_WINDOW (toplevel));
+
+  return 0;
 }
 
 /**

@@ -40,6 +40,14 @@
 
 #include <gtk/gtk.h>
 
+#ifdef GDK_WINDOWING_WIN32
+#include <gdk/gdkwin32.h>
+#endif
+
+#ifdef GDK_WINDOWING_X11
+#include <gdk/gdkx.h>
+#endif
+
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
@@ -708,6 +716,40 @@ gimp_window_set_hint (GtkWindow      *window,
     }
 }
 
+/**
+ * gimp_window_get_native:
+ * @window: a #GtkWindow
+ *
+ * This function is used to pass a window handle to plug-ins so that
+ * they can set their dialog windows transient to the parent window.
+ *
+ * Return value: a native window handle of the window's #GdkWindow or 0
+ *               if the window isn't realized yet
+ */
+GdkNativeWindow
+gimp_window_get_native (GtkWindow *window)
+{
+  g_return_val_if_fail (GTK_IS_WINDOW (window), 0);
+
+#ifdef GDK_NATIVE_WINDOW_POINTER
+#ifdef __GNUC__
+#warning gimp_window_get_native() unimplementable for the target windowing system
+#endif
+#endif
+
+#ifdef GDK_WINDOWING_WIN32
+  if (window && GTK_WIDGET_REALIZED (window))
+    return GDK_WINDOW_HWND (GTK_WIDGET (window)->window);
+#endif
+
+#ifdef GDK_WINDOWING_X11
+  if (window && GTK_WIDGET_REALIZED (window))
+    return GDK_WINDOW_XID (GTK_WIDGET (window)->window);
+#endif
+
+  return 0;
+}
+
 void
 gimp_dialog_set_sensitive (GtkDialog *dialog,
                            gboolean   sensitive)
@@ -864,7 +906,7 @@ gimp_toggle_button_set_visible (GtkToggleButton *toggle,
 }
 
 #ifdef __GNUC__
-#warning FIXME: remove this function as soon as bug #141750 is fixed.
+#warning FIXME: remove this function as soon as we depend on GTK >= 2.8
 #endif
 GClosure *
 gimp_action_get_accel_closure (GtkAction *action)

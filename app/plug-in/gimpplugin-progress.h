@@ -22,25 +22,26 @@
 #define __PLUG_IN_PROGRESS_H__
 
 
-void       plug_in_progress_start     (PlugIn      *plug_in,
-                                       const gchar *message,
-                                       gint         display_ID);
-void       plug_in_progress_update    (PlugIn      *plug_in,
-                                       gdouble      percentage);
-void       plug_in_progress_pulse     (PlugIn      *plug_in);
-void       plug_in_progress_set_text  (PlugIn      *plug_in,
-                                       const gchar *message);
-void       plug_in_progress_end       (PlugIn      *plug_in);
+void       plug_in_progress_start      (PlugIn      *plug_in,
+                                        const gchar *message,
+                                        gint         display_ID);
+void       plug_in_progress_end        (PlugIn      *plug_in);
+void       plug_in_progress_set_text   (PlugIn      *plug_in,
+                                        const gchar *message);
+void       plug_in_progress_set_value  (PlugIn      *plug_in,
+                                        gdouble      percentage);
+void       plug_in_progress_pulse      (PlugIn      *plug_in);
+guint32    plug_in_progress_get_window (PlugIn      *plug_in);
 
-gboolean   plug_in_progress_install   (PlugIn      *plug_in,
-                                       const gchar *progress_callback);
-gboolean   plug_in_progress_uninstall (PlugIn      *plug_in,
-                                       const gchar *progress_callback);
-gboolean   plug_in_progress_cancel    (PlugIn      *plug_in,
-                                       const gchar *progress_callback);
+gboolean   plug_in_progress_install    (PlugIn      *plug_in,
+                                        const gchar *progress_callback);
+gboolean   plug_in_progress_uninstall  (PlugIn      *plug_in,
+                                        const gchar *progress_callback);
+gboolean   plug_in_progress_cancel     (PlugIn      *plug_in,
+                                        const gchar *progress_callback);
 
-void       plug_in_progress_message   (PlugIn      *plug_in,
-                                       const gchar *message);
+void       plug_in_progress_message    (PlugIn      *plug_in,
+                                        const gchar *message);
 
 
 #endif /* __PLUG_IN_PROGRESS_H__ */

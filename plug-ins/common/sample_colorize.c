@@ -1330,7 +1330,7 @@ smp_dialog (void)
                                            GTK_RESPONSE_CLOSE,
                                            -1);
 
-  gimp_window_set_transient_for_default_display (GTK_WINDOW (dialog));
+  gimp_window_set_transient (GTK_WINDOW (dialog));
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (smp_response_callback),

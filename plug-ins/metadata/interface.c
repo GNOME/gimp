@@ -677,7 +677,7 @@ metadata_dialog (gint32    image_ID,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_window_set_transient_for_default_display (GTK_WINDOW (mgui.dlg));
+  gimp_window_set_transient (GTK_WINDOW (mgui.dlg));
 
   g_signal_connect (mgui.dlg, "response",
                     G_CALLBACK (metadata_dialog_response),
