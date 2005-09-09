@@ -890,11 +890,11 @@ printrc_load (void)
 #ifdef DEBUG
         printf("Keyword = `%s', value = `%s'\n", keyword, value);
 #endif
-	if (strcasecmp("current-printer", keyword) == 0) {
+	if (g_ascii_strcasecmp("current-printer", keyword) == 0) {
 	  if (current_printer)
 	    g_free (current_printer);
 	  current_printer = g_strdup(value);
-	} else if (strcasecmp("printer", keyword) == 0) {
+	} else if (g_ascii_strcasecmp("printer", keyword) == 0) {
 	  /* Switch to printer named VALUE */
 	  add_printer(&key, 0);
 #ifdef DEBUG
@@ -903,59 +903,59 @@ printrc_load (void)
 
 	  initialize_printer(&key);
 	  strncpy(key.name, value, 127);
-	} else if (strcasecmp("destination", keyword) == 0) {
+	} else if (g_ascii_strcasecmp("destination", keyword) == 0) {
 	  stp_set_output_to(key.v, value);
-	} else if (strcasecmp("driver", keyword) == 0) {
+	} else if (g_ascii_strcasecmp("driver", keyword) == 0) {
 	  stp_set_driver(key.v, value);
-	} else if (strcasecmp("ppd-file", keyword) == 0) {
+	} else if (g_ascii_strcasecmp("ppd-file", keyword) == 0) {
 	  stp_set_ppd_file(key.v, value);
-	} else if (strcasecmp("output-type", keyword) == 0) {
+	} else if (g_ascii_strcasecmp("output-type", keyword) == 0) {
 	  stp_set_output_type(key.v, atoi(value));
-	} else if (strcasecmp("resolution", keyword) == 0) {
+	} else if (g_ascii_strcasecmp("resolution", keyword) == 0) {
 	  stp_set_resolution(key.v, value);
-	} else if (strcasecmp("media-size", keyword) == 0) {
+	} else if (g_ascii_strcasecmp("media-size", keyword) == 0) {
 	  stp_set_media_size(key.v, value);
-	} else if (strcasecmp("media-type", keyword) == 0) {
+	} else if (g_ascii_strcasecmp("media-type", keyword) == 0) {
 	  stp_set_media_type(key.v, value);
-	} else if (strcasecmp("media-source", keyword) == 0) {
+	} else if (g_ascii_strcasecmp("media-source", keyword) == 0) {
 	  stp_set_media_source(key.v, value);
-	} else if (strcasecmp("brightness", keyword) == 0) {
+	} else if (g_ascii_strcasecmp("brightness", keyword) == 0) {
 	  stp_set_brightness(key.v, atof(value));
-	} else if (strcasecmp("scaling", keyword) == 0) {
+	} else if (g_ascii_strcasecmp("scaling", keyword) == 0) {
 	  stp_set_scaling(key.v, atof(value));
-	} else if (strcasecmp("orientation", keyword) == 0) {
+	} else if (g_ascii_strcasecmp("orientation", keyword) == 0) {
 	  stp_set_orientation(key.v, atoi(value));
-	} else if (strcasecmp("left", keyword) == 0) {
+	} else if (g_ascii_strcasecmp("left", keyword) == 0) {
 	  stp_set_left(key.v, atoi(value));
-	} else if (strcasecmp("top", keyword) == 0) {
+	} else if (g_ascii_strcasecmp("top", keyword) == 0) {
 	  stp_set_top(key.v, atoi(value));
-	} else if (strcasecmp("gamma", keyword) == 0) {
+	} else if (g_ascii_strcasecmp("gamma", keyword) == 0) {
 	  stp_set_gamma(key.v, atof(value));
-	} else if (strcasecmp("contrast", keyword) == 0) {
+	} else if (g_ascii_strcasecmp("contrast", keyword) == 0) {
 	  stp_set_contrast(key.v, atof(value));
-	} else if (strcasecmp("cyan", keyword) == 0) {
+	} else if (g_ascii_strcasecmp("cyan", keyword) == 0) {
 	  stp_set_cyan(key.v, atof(value));
-	} else if (strcasecmp("magenta", keyword) == 0) {
+	} else if (g_ascii_strcasecmp("magenta", keyword) == 0) {
 	  stp_set_magenta(key.v, atof(value));
-	} else if (strcasecmp("yellow", keyword) == 0) {
+	} else if (g_ascii_strcasecmp("yellow", keyword) == 0) {
 	  stp_set_yellow(key.v, atof(value));
-	} else if (strcasecmp("linear", keyword) == 0) {
+	} else if (g_ascii_strcasecmp("linear", keyword) == 0) {
 	  /* Ignore linear */
-	} else if (strcasecmp("image-type", keyword) == 0) {
+	} else if (g_ascii_strcasecmp("image-type", keyword) == 0) {
 	  stp_set_image_type(key.v, atoi(value));
-	} else if (strcasecmp("saturation", keyword) == 0) {
+	} else if (g_ascii_strcasecmp("saturation", keyword) == 0) {
 	  stp_set_saturation(key.v, atof(value));
-	} else if (strcasecmp("density", keyword) == 0) {
+	} else if (g_ascii_strcasecmp("density", keyword) == 0) {
 	  stp_set_density(key.v, atof(value));
-	} else if (strcasecmp("ink-type", keyword) == 0) {
+	} else if (g_ascii_strcasecmp("ink-type", keyword) == 0) {
 	  stp_set_ink_type(key.v, value);
-	} else if (strcasecmp("dither-algorithm", keyword) == 0) {
+	} else if (g_ascii_strcasecmp("dither-algorithm", keyword) == 0) {
 	  stp_set_dither_algorithm(key.v, value);
-	} else if (strcasecmp("unit", keyword) == 0) {
+	} else if (g_ascii_strcasecmp("unit", keyword) == 0) {
 	  stp_set_unit(key.v, atoi(value));
-	} else if (strcasecmp("custom-page-width", keyword) == 0) {
+	} else if (g_ascii_strcasecmp("custom-page-width", keyword) == 0) {
 	  stp_set_page_width(key.v, atoi(value));
-	} else if (strcasecmp("custom-page-height", keyword) == 0) {
+	} else if (g_ascii_strcasecmp("custom-page-height", keyword) == 0) {
 	  stp_set_page_height(key.v, atoi(value));
 	} else {
 	  /* Unrecognised keyword; ignore it... */
