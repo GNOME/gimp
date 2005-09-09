@@ -77,7 +77,7 @@ is_script (const gchar *filename)
   i = 0;
   while (exts[i] != NULL)
     {
-      if (g_strcasecmp (ext, exts[i]) == 0)
+      if (g_ascii_strcasecmp (ext, exts[i]) == 0)
 	return TRUE;
       i++;
     }
