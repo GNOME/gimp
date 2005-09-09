@@ -5,19 +5,20 @@
 # Punjab Linux Technology <punjablinux@netscape.net>, 2004.
 # Amanpreet Singh Alam <aalam@redhat.com>, 2004.
 # Amanpreet Singh Alam <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Brar <amanpreetalam@yahoo.com>, 2005.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-06 03:20+0000\n"
-"PO-Revision-Date: 2005-09-06 16:37+0530\n"
-"Last-Translator: Amanpreet Singh Alam <amanpreetalam@yahoo.com>\n"
+"POT-Creation-Date: 2005-09-09 02:39+0200\n"
+"PO-Revision-Date: 2005-09-09 13:30+0530\n"
+"Last-Translator: Amanpreet Singh Brar <amanpreetalam@yahoo.com>\n"
 "Language-Team: Punjabi <fedora-trans-pa@redhat.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.10.2\n"
+"X-Generator: KBabel 1.9.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../app/app_procs.c:134
@@ -44,8 +45,8 @@ msgid ""
 msgstr ""
 "ਜਾਂਚ ਸਵੈਪ ਫਾਇਲ ਖੋਲਣ ਵਿੱਚ ਅਸਫਲ ਹੈ।\n"
 "\n"
-"ਡਾਟਾ ਗੁਆਉਣ ਤੋ ਬਚਣ ਲਈ ਕਿਰਪਾ ਕਰਕੇ ਆਪਣੀ ਪਸੰਦ ਵਿੱਚ "
-"ਨਿਰਧਾਰਿਤ ਕੀਤੀ ਸਵੈਪ ਡਾਇਰੈਕਟਰੀ ਦੀ ਸਥਿਤੀ ਅਤੇ ਅਧਿਕਾਰ ਵੇਖ ਲਵੋ (ਮੌਜੂਦਾ \"%s\")"
+"ਡਾਟਾ ਗੁਆਉਣ ਤੋ ਬਚਣ ਲਈ ਕਿਰਪਾ ਕਰਕੇ ਆਪਣੀ ਪਸੰਦ ਵਿੱਚ ਨਿਰਧਾਰਿਤ ਕੀਤੀ ਸਵੈਪ ਡਾਇਰੈਕਟਰੀ ਦੀ "
+"ਸਥਿਤੀ ਅਤੇ ਅਧਿਕਾਰ ਵੇਖ ਲਵੋ (ਮੌਜੂਦਾ \"%s\")"
 
 #: ../app/app_procs.c:334 ../app/core/gimppalette-import.c:453
 #, c-format
@@ -3003,100 +3004,80 @@ msgid "_Lower Path"
 msgstr "ਹੇਠਾਂ ਮਾਰਗ(_L)"
 
 #: ../app/actions/vectors-actions.c:101
-#, fuzzy
 msgid "Lower path"
-msgstr "ਰਸਤਾ ਹੇਠ"
+msgstr "ਹੇਠਲਾ ਮਾਰਗ"
 
 #: ../app/actions/vectors-actions.c:106
-#, fuzzy
 msgid "Lower Path to _Bottom"
-msgstr "ਰਸਤੇ ਨੂੰ ਹੇਠ ਵੱਲ ਨਿਵਾਉ"
+msgstr "ਤਲੇ ਲਈ ਹੇਠਲਾ ਮਾਰਗ(_B)"
 
 #: ../app/actions/vectors-actions.c:107
-#, fuzzy
 msgid "Lower path to bottom"
-msgstr "ਰਸਤੇ ਨੂੰ ਹੇਠ ਵੱਲ ਨਿਵਾਉ"
+msgstr "ਤਲੇ ਲਈ ਹੇਠਾਂ ਮਾਰਗ"
 
 #: ../app/actions/vectors-actions.c:112
-#, fuzzy
 msgid "Stro_ke Path..."
-msgstr "/ਛੋਹ ਰਸਤਾ..."
+msgstr "ਛੋਹ ਮਾਰਗ(_k)..."
 
 #: ../app/actions/vectors-actions.c:113
-#, fuzzy
 msgid "Stroke path..."
-msgstr "/ਛੋਹ ਰਸਤਾ..."
+msgstr "ਛੋਹ ਮਾਰਗ..."
 
 #: ../app/actions/vectors-actions.c:118
-#, fuzzy
 msgid "Stro_ke Path"
-msgstr "ਛੋਹ ਰਸਤਾ"
+msgstr "ਛੋਹ ਮਾਰਗ(_k)"
 
 #: ../app/actions/vectors-actions.c:119
 msgid "Stroke path with last values"
-msgstr ""
+msgstr "ਆਖਰੀ ਮੁੱਲਾਂ ਨਾਲ ਛੋਹ ਮਾਰਗ"
 
 #: ../app/actions/vectors-actions.c:124
-#, fuzzy
 msgid "Co_py Path"
-msgstr "/ਨਕਲ ਰਸਤਾ"
+msgstr "ਨਕਲ ਮਾਰਗ(_p)"
 
 #: ../app/actions/vectors-actions.c:129
-#, fuzzy
 msgid "Paste Pat_h"
-msgstr "/ਚਿਪਕਾਉਣ ਰਸਤਾ"
+msgstr "ਚੇਪਣ ਮਾਰਗ(_h)"
 
 #: ../app/actions/vectors-actions.c:134
-#, fuzzy
 msgid "I_mport Path..."
-msgstr "/ਲਿਆਉਣ ਲਈ ਰਸਤਾ..."
+msgstr "ਅਯਾਤ ਮਾਰਗ(_m)..."
 
 #: ../app/actions/vectors-actions.c:139
-#, fuzzy
 msgid "E_xport Path..."
-msgstr "/ਭੇਜਣ ਲਈ ਰਸਤਾ..."
+msgstr "ਨਿਰਯਾਤ ਮਾਰਗ(_x)..."
 
 #: ../app/actions/vectors-actions.c:162
-#, fuzzy
 msgid "Path to Sele_ction"
-msgstr "/ਚੋਣ ਲਈ ਰਸਤਾ"
+msgstr "ਚੋਣ ਲਈ ਮਾਰਗ(_c)"
 
 #: ../app/actions/vectors-actions.c:163 ../app/tools/gimpvectortool.c:1905
-#, fuzzy
 msgid "Path to selection"
-msgstr "ਚੋਣ ਲਈ ਰਸਤਾ"
+msgstr "ਚੋਣ ਲਈ ਮਾਰਗ"
 
 #: ../app/actions/vectors-actions.c:168
-#, fuzzy
 msgid "Fr_om Path"
-msgstr "/ਚੋਣ/ਰਸਤੇ ਤੋ"
+msgstr "ਇਸ ਤੋਂ ਮਾਰਗ(_o)"
 
 #: ../app/actions/vectors-actions.c:194
-#, fuzzy
 msgid "Selecti_on to Path"
-msgstr "/ਰਸਤੇ ਲਈ ਚੋਣ"
+msgstr "ਮਾਰਗ ਲਈ ਚੋਣ(_o)"
 
 #: ../app/actions/vectors-actions.c:195
-#, fuzzy
 msgid "Selection to path"
-msgstr "/ਰਸਤੇ ਲਈ ਚੋਣ"
+msgstr "ਮਾਰਗ ਲਈ ਚੋਣ"
 
 #: ../app/actions/vectors-actions.c:200
-#, fuzzy
 msgid "To _Path"
-msgstr "ਰਸਤਾਂ ਏਧਰ-ਓਧਰ"
+msgstr "ਵੱਲ ਮਾਰਗ(_P)"
 
 #: ../app/actions/vectors-actions.c:205
-#, fuzzy
 msgid "Selection to Path (_Advanced)"
-msgstr ""
-"ਰਸਤਾ ਚੋਣ ਲਈ\n"
-"%s ਤਕਨੀਕੀ ਚੋਣ"
+msgstr "ਮਾਰਗ ਲਈ ਚੋਣ (ਤਕਨੀਕੀ)(_A)"
 
 #: ../app/actions/vectors-actions.c:206
-#, fuzzy
 msgid "Advanced options"
-msgstr "ਸੰਭਾਲੀ ਚੋਣ"
+msgstr "ਤਕਨੀਕੀ ਚੋਣ"
 
 #: ../app/actions/vectors-commands.c:140
 msgid "Path Attributes"
@@ -3125,223 +3106,185 @@ msgid "Stroke Path"
 msgstr "ਛੋਹ ਰਸਤਾ"
 
 #: ../app/actions/view-actions.c:64
-#, fuzzy
 msgid "_View"
-msgstr "/ਵੇਖੋ"
+msgstr "ਵੇਖੋ(_V)"
 
 #: ../app/actions/view-actions.c:65
-#, fuzzy
 msgid "_Zoom"
-msgstr "ਆਕਾਰ:"
+msgstr "ਜ਼ੂਮ(_Z)"
 
 #: ../app/actions/view-actions.c:66
-#, fuzzy
 msgid "_Padding Color"
-msgstr "ਰੰਗ ਸੋਧ"
+msgstr "ਚਿਣੇ ਰੰਗ(_P)"
 
 #: ../app/actions/view-actions.c:68
-#, fuzzy
 msgid "Move to Screen"
-msgstr "/ਪਰਦੇ ਤੇ ਜਾਉ..."
+msgstr "ਪਰਦੇ 'ਤੇ ਜਾਓ"
 
 #: ../app/actions/view-actions.c:77
-#, fuzzy
 msgid "_Close"
-msgstr "ਸਮਰੂਪ"
+msgstr "ਬੰਦ ਕਰੋ(_C)"
 
 #: ../app/actions/view-actions.c:82
-#, fuzzy
 msgid "_Fit Image in Window"
-msgstr "ਚਿੱਤਰ ਝਰੋਖੇ"
+msgstr "ਝਰੋਖੇ ਵਿੱਚ ਚਿੱਤਰ ਫਿੱਟ(_F)"
 
 #: ../app/actions/view-actions.c:83
-#, fuzzy
 msgid "Fit image in window"
-msgstr "ਚਿੱਤਰ ਝਰੋਖੇ"
+msgstr "ਝਰੋਖੇ ਵਿੱਚ ਚਿੱਤਰ ਫਿੱਟ"
 
 #: ../app/actions/view-actions.c:88
-#, fuzzy
 msgid "Fit Image _to Window"
-msgstr "ਝਰੋਖੇ ਦੇ ਅਨੁਕੂਲ"
+msgstr "ਚਿੱਤਰ ਨੂੰ ਝਰੋਖੇ ਵਿੱਚ ਫਿੱਟ(_t)"
 
 #: ../app/actions/view-actions.c:89
-#, fuzzy
 msgid "Fit image to window"
-msgstr "ਝਰੋਖੇ ਦੇ ਅਨੁਕੂਲ"
+msgstr "ਚਿੱਤਰ ਨੂੰ ਝਰੋਖੇ ਵਿੱਚ ਫਿੱਟ"
 
 #: ../app/actions/view-actions.c:94
-#, fuzzy
 msgid "Na_vigation Window"
-msgstr "ਝਰੋਖੇ ਦੇ ਅਨੁਕੂਲ"
+msgstr "ਏਧਰ-ਓਧਰ ਝਰੋਖਾ(_v)"
 
 #: ../app/actions/view-actions.c:99
-#, fuzzy
 msgid "Display _Filters..."
-msgstr "/ਵੇਖੋ/ਦਰਿਸ਼ ਫਿਲਟਰ..."
+msgstr "ਵੇਖਣ ਫਿਲਟਰ(_F)..."
 
 #: ../app/actions/view-actions.c:104
-#, fuzzy
 msgid "Shrink _Wrap"
-msgstr "ਸੁੰਘੜ੍ਹੋ ਚੈਨਲ"
+msgstr ""
 
 #: ../app/actions/view-actions.c:105
-#, fuzzy
 msgid "Shrink wrap"
-msgstr "ਸੁੰਘੜ੍ਹੋ ਚੈਨਲ"
+msgstr ""
 
 #: ../app/actions/view-actions.c:113
-#, fuzzy
 msgid "_Dot for Dot"
-msgstr "/ਵੇਖੋ/ਬਿੰਦੂ ਤੋ ਬਿੰਦੂ"
+msgstr "ਬਿੰਦੀ ਲਈ ਬਿੰਦੀ(_D)"
 
 #: ../app/actions/view-actions.c:119
-#, fuzzy
 msgid "Show _Selection"
-msgstr "ਚੋਣ ਵੇਖਾਓ"
+msgstr "ਚੋਣ ਵੇਖਾਓ(_S)"
 
 #: ../app/actions/view-actions.c:125
 msgid "Show _Layer Boundary"
-msgstr "ਪਰਤ-ਹਾਸ਼ੀਆ ਵੇਖਾਓ"
+msgstr "ਪਰਤ ਹਾਸ਼ੀਆ ਵੇਖਾਓ(_L)"
 
 #: ../app/actions/view-actions.c:131
 msgid "Show _Guides"
 msgstr "ਸੰਕੇਤ ਵਿਖਾਓ"
 
 #: ../app/actions/view-actions.c:137
-#, fuzzy
 msgid "S_how Grid"
-msgstr "ਗਰਿੱਡ ਵੇਖਾਓ"
+msgstr "ਗਰਿੱਡ ਵੇਖਾਓ(_h)"
 
 #: ../app/actions/view-actions.c:143
-#, fuzzy
 msgid "Show Sample Points"
-msgstr "ਚੋਣ ਵੇਖਾਓ"
+msgstr "ਸਧਾਰਨ ਬਿੰਦੂ ਵੇਖਾਓ"
 
 #: ../app/actions/view-actions.c:149
-#, fuzzy
 msgid "Sn_ap to Guides"
-msgstr "ਸੰਕੇਤ ਵਿਖਾਓ"
+msgstr "ਗਾਈਡ ਲਈ ਫਿੱਟ(_a)"
 
 #: ../app/actions/view-actions.c:155
-#, fuzzy
 msgid "Sna_p to Grid"
-msgstr "ਗਰਿੱਡ ਵੇਖਾਓ"
+msgstr ""
 
 #: ../app/actions/view-actions.c:161
-#, fuzzy
 msgid "Snap to _Canvas Edges"
-msgstr "ਸੰਕੇਤ ਵਿਖਾਓ"
+msgstr ""
 
 #: ../app/actions/view-actions.c:167
-#, fuzzy
 msgid "Snap t_o Active Path"
-msgstr "ਮੌਜੂਦਾ ਰਸਤਾ ਏਧਰ-ਓਧਰ"
+msgstr ""
 
 #: ../app/actions/view-actions.c:173
 msgid "Show _Menubar"
 msgstr "ਮੇਨੂ-ਪੱਟੀ ਵੇਖਾਉ"
 
 #: ../app/actions/view-actions.c:179
-#, fuzzy
 msgid "Show R_ulers"
-msgstr "ਪੈਮਾਨਾ ਵੇਖਾਓ"
+msgstr "ਪੈਮਾਨੇ ਵੇਖਾਓ(_u)"
 
 #: ../app/actions/view-actions.c:185
 msgid "Show Scroll_bars"
-msgstr "ਸਕਰੋਲ-ਪੱਟੀ ਵੇਖਾਓ"
+msgstr "ਸਕਰੋਲ ਪੱਟੀ ਵੇਖਾਓ(_b)"
 
 #: ../app/actions/view-actions.c:191
 msgid "Show S_tatusbar"
-msgstr "ਸਥਿਤੀ-ਪੱਟੀ ਵੇਖਾਓ"
+msgstr "ਹਾਲਤ-ਪੱਟੀ ਵੇਖਾਓ(_t)"
 
 #: ../app/actions/view-actions.c:197
-#, fuzzy
 msgid "Fullscr_een"
-msgstr "/ਵੇਖੋ/ਪੂਰੇ ਪਰਦੇ ਤੇ"
+msgstr "ਪੂਰੇ ਪਰਦੇ ਉੱਤੇ(_e)"
 
 #: ../app/actions/view-actions.c:246
-#, fuzzy
 msgid "1_6:1  (1600%)"
-msgstr "/ਵੇਖੋ/ਆਕਾਰ/ 16:1   (1600%)"
+msgstr "1_6:1  (1600%)"
 
 #: ../app/actions/view-actions.c:251
-#, fuzzy
 msgid "_8:1  (800%)"
-msgstr "/ਵੇਖੋ/ਆਕਾਰ/8:1  (800%)"
+msgstr "_8:1  (800%)"
 
 #: ../app/actions/view-actions.c:256
-#, fuzzy
 msgid "_4:1  (400%)"
-msgstr "/ਵੇਖੋ/ਆਕਾਰ/4:1  (400%)"
+msgstr "_4:1  (400%)"
 
 #: ../app/actions/view-actions.c:261
-#, fuzzy
 msgid "_2:1  (200%)"
-msgstr "/ਵੇਖੋ/ਆਕਾਰ/2:1  (200%)"
+msgstr "_2:1  (200%)"
 
 #: ../app/actions/view-actions.c:266
-#, fuzzy
 msgid "_1:1  (100%)"
-msgstr "/ਵੇਖੋ/ਆਕਾਰ/1:1  (100%)"
+msgstr "_1:1  (100%)"
 
 #: ../app/actions/view-actions.c:267
 msgid "Zoom 1:1"
-msgstr "ਆਕਾਰ 1:1"
+msgstr "ਜ਼ੂਮ 1:1"
 
 #: ../app/actions/view-actions.c:272
-#, fuzzy
 msgid "1:_2  (50%)"
-msgstr "/ਵੇਖੋ/ਆਕਾਰ/1:2  (50%)"
+msgstr "1:_2  (50%)"
 
 #: ../app/actions/view-actions.c:277
-#, fuzzy
 msgid "1:_4  (25%)"
-msgstr "/ਵੇਖੋ/ਆਕਾਰ/1:4  (25%)"
+msgstr "1:_4  (25%)"
 
 #: ../app/actions/view-actions.c:282
-#, fuzzy
 msgid "1:_8  (12.5%)"
-msgstr "/ਵੇਖੋ/ਆਕਾਰ/1:8  (12.5%)"
+msgstr "1:_8  (12.5%)"
 
 #: ../app/actions/view-actions.c:287
-#, fuzzy
 msgid "1:1_6  (6.25%)"
-msgstr "/ਵੇਖੋ/ਆਕਾਰ/1:16  (6.25%)"
+msgstr "1:1_6  (6.25%)"
 
 #: ../app/actions/view-actions.c:292
-#, fuzzy
 msgid "Othe_r..."
-msgstr "ਹੋਰ (%s) ..."
+msgstr "ਹੋਰ(_)..."
 
 #: ../app/actions/view-actions.c:300
-#, fuzzy
 msgid "From _Theme"
-msgstr "/ਸਰੂਪ ਤੋ"
+msgstr "ਸਰੂਪ ਤੋਂ(_T)"
 
 #: ../app/actions/view-actions.c:305
-#, fuzzy
 msgid "_Light Check Color"
-msgstr "/ਫਿੱਕੇ ਜਾਂਚ ਰੰਗ"
+msgstr ""
 
 #: ../app/actions/view-actions.c:310
-#, fuzzy
 msgid "_Dark Check Color"
-msgstr "/ਗੂੜ੍ਹੇ ਜਾਂਚ ਰੰਗ"
+msgstr ""
 
 #: ../app/actions/view-actions.c:315
-#, fuzzy
 msgid "Select _Custom Color..."
-msgstr "/ਪਸੰਦੀਦਾ ਰੰਗ ਵਰਤੋਂ..."
+msgstr "ਪਸੰਦੀਦਾ ਰੰਗ ਚੁਣੋ(_C)..."
 
 #: ../app/actions/view-actions.c:320
-#, fuzzy
 msgid "As in _Preferences"
-msgstr "/ਜਿਵੇ ਕਿ ਪਸੰਦ ਵਿੱਚ"
+msgstr "ਮੇਰੀ ਪਸੰਦ ਵਾਂਗ(_P)"
 
 #: ../app/actions/view-actions.c:607
-#, fuzzy, c-format
+#, c-format
 msgid "Othe_r (%s) ..."
-msgstr "ਹੋਰ (%s) ..."
+msgstr "ਹੋਰ(_r) (%s) ..."
 
 #: ../app/actions/view-actions.c:616
 #, c-format
@@ -3353,14 +3296,13 @@ msgid "Set Canvas Padding Color"
 msgstr ""
 
 #: ../app/actions/view-commands.c:586
-#, fuzzy
 msgid "Set Custom Canvas Padding Color"
-msgstr "ਸੋਧ ਰੰਗ"
+msgstr ""
 
 #: ../app/actions/window-actions.c:65
-#, fuzzy, c-format
+#, c-format
 msgid "Screen %d (%s)"
-msgstr "ਪਰਦਾ"
+msgstr "ਪਰਦਾ %d (%s)"
 
 #: ../app/base/base-enums.c:23
 msgid "Smooth"
@@ -3556,9 +3498,8 @@ msgid "Ask for confirmation before closing an image without saving."
 msgstr "ਬਿਨਾਂ ਸੰਭਾਲੇ ਚਿੱਤਰ ਨੂੰ ਬੰਦ ਕਰਨ ਤੋ ਪਹਿਲ਼ਾਂ ਪੁੱਛੋ।"
 
 #: ../app/config/gimprc-blurbs.h:36
-#, fuzzy
 msgid "Sets the pixel format of cursors the GIMP will use."
-msgstr "ਕਰਸਰ ਦਾ ਮੋਡ ਨਿਰਧਾਰਿਤ ਕਰੋ ਜੋਕਿ ਜੈਮਪ ਵਰਤੇਗਾ।"
+msgstr "ਕਰਸਰ ਲਈ ਪਿਕਸਲ ਫਾਰਮਿਟ ਦਿਓ, ਜੋ ਕਿ ਜੈਮਪ ਵਰਤੇਗਾ।"
 
 #: ../app/config/gimprc-blurbs.h:39
 msgid "Sets the mode of cursor the GIMP will use."
@@ -3630,9 +3571,8 @@ msgstr ""
 "।"
 
 #: ../app/config/gimprc-blurbs.h:165
-#, fuzzy
 msgid "Install a private colormap; might be useful on 8-bit (256 colors) displays."
-msgstr "ਇੱਕ ਨਿੱਜੀ ਰੰਗ-ਖਾਕਾ ਇੰਸਟਾਲ ਕਰੋ,  ਜੋ ਕਿ ਫਰਜ਼ੀ-ਰੰਗ ਦਿੱਖ ਲਈ ਬਹੁਤ ਜ਼ਰੂਰੀ ਹੈ"
+msgstr "ਇੱਕ ਨਿੱਜੀ ਰੰਗ-ਖਾਕਾ ਇੰਸਟਾਲ ਕਰੋ, ਜੋ ਕਿ 8-ਬਿੱਟ (256 ਰੰਗ) ਦਿੱਖ ਲਈ ਬਹੁਤ ਜ਼ਰੂਰੀ ਹੈ।"
 
 #: ../app/config/gimprc-blurbs.h:168
 msgid "Sets the level of interpolation used for scaling and other transformations."
@@ -3657,9 +3597,8 @@ msgstr ""
 "ਥਾਂ ਵਰਤੇਗਾ।"
 
 #: ../app/config/gimprc-blurbs.h:186
-#, fuzzy
 msgid "When enabled, GIMP will show mnemonics in menus."
-msgstr "ਜਦੋ ਨਿਰਧਾਰਿਤ ਕੀਤਾ ਤਾਂ, ਜੈਮਪ ਹਰੇਕ ਚਿੱਤਰ ਲਈ ਵੱਖਰਾ ਜਾਣਕਾਰੀ ਝਰੋਖਾ ਵਰਤੇਗਾ।"
+msgstr "ਜੇਕਰ ਯੋਗ ਕੀਤਾ ਤਾਂ ਜੈਮਪ ਮੇਨੂ ਵਿੱਚ ਮੀਨਮੋਨਸ ਵੇਖਾਏਗਾ।"
 
 #: ../app/config/gimprc-blurbs.h:189
 msgid ""
@@ -3719,27 +3658,24 @@ msgid ""
 msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:251
-#, fuzzy
 msgid ""
 "Sets the preview size used for layers and channel previews in newly created "
 "dialogs."
-msgstr "ਪਰਤਾਂ ਅਤੇ ਚੈਨਲਾਂ ਦਾ ਮੂਲ ਨਮੂਨਾ ਅਕਾਰ ਨਿਰਧਾਰਿਤ ਕਰੋ।"
+msgstr "ਨਵੇਂ ਬਣਾਏ ਵਾਰਤਲਾਪ ਵਿੱਚ ਪਰਤਾਂ ਅਤੇ ਚੈਨਲ ਝਲਕ ਲਈ ਵਰਤਣ ਸਮੇਂ ਝਲਕ ਅਕਾਰ ਦਿਓ।"
 
 #: ../app/config/gimprc-blurbs.h:255
-#, fuzzy
 msgid ""
 "When enabled, the image window will automatically resize itself whenever the "
 "physical image size changes."
 msgstr ""
-"ਜਦੋ ਨਿਰਧਾਰਿਤ ਕੀਤਾ ਤਾਂ, ਚਿੱਤਰ ਝਰੋਖਾ ਵਾਸਵਤਿਕ ਚਿੱਤਰ ਦੇ ਅਕਾਰ ਵਿੱਚ ਤਬਦੀਲੀ ਅਨੁਸਾਰ ਆਪਣੇ ਆਪ ਨੂੰ "
+"ਜਦੋ ਨਿਰਧਾਰਿਤ ਕੀਤਾ ਤਾਂ, ਚਿੱਤਰ ਝਰੋਖਾ ਭੌਤਿਕ ਚਿੱਤਰ ਦੇ ਅਕਾਰ ਵਿੱਚ ਤਬਦੀਲੀ ਅਨੁਸਾਰ ਆਪਣੇ ਆਪ ਨੂੰ "
 "ਤਬਦੀਲ ਕਰ ਲਵੇਗਾ।"
 
 #: ../app/config/gimprc-blurbs.h:259
-#, fuzzy
 msgid ""
 "When enabled, the image window will automatically resize itself when zooming "
 "into and out of images."
-msgstr "ਜਦੋ ਨਿਰਧਾਰਿਤ ਕੀਤਾ ਤਾਂ, ਚਿੱਤਰ ਝਰੋਖਾ ਅਕਾਰ ਦੇ ਵਾਧੇ ਅਤੇ ਘਟਾ ਸਾਰਆਪਣੇ ਆਪ ਨੂੰ ਤਬਦੀਲ ਕਰ ਲਵੇਗਾ।"
+msgstr "ਜਦੋ ਨਿਰਧਾਰਿਤ ਕੀਤਾ ਤਾਂ, ਚਿੱਤਰ ਝਰੋਖਾ ਜ਼ੂਮ ਦੇ ਵਾਧੇ ਅਤੇ ਘਾਟੇ ਅਨੁਸਾਰ ਆਪਣੇ ਆਪ ਨੂੰ ਤਬਦੀਲ ਕਰ ਲਵੇਗਾ।"
 
 #: ../app/config/gimprc-blurbs.h:263
 msgid "Let GIMP try to restore your last saved session on each startup."
@@ -3754,9 +3690,8 @@ msgid "Save the positions and sizes of the main dialogs when the GIMP exits."
 msgstr "ਜਦੋ ਵੀ ਜੈਮਪ ਬੰਦ ਹੋਵੇ ਤਾਂ, ਮੁੱਖ ਤਖਤੀਆ ਦਾ ਅਕਾਰ ਤੇ ਸਥਿਤੀਆਂ ਨੂੰ ਸੰਭਾਲ ਲਵੇ।"
 
 #: ../app/config/gimprc-blurbs.h:273
-#, fuzzy
 msgid "Save the tool options when the GIMP exits."
-msgstr "ਜਦੋ ਵੀ ਜੈਮਪ ਬੰਦ ਹੋਵੇ ਤਾਂ, ਕੀ-ਬੋਰਡ ਸ਼ਾਰਟਕੱਟ ਵਿੱਚ ਤਬਦੀਲੀਆ ਨੂੰ ਸੰਭਾਲ ਲਵੇ।"
+msgstr "ਜਦੋਂ ਜੈਮਪ ਬੰਦ ਹੋਵੇ ਤਾਂ ਸੰਦ ਚੋਣ ਸੰਭਾਲੋ।"
 
 #: ../app/config/gimprc-blurbs.h:279
 msgid ""
@@ -3772,11 +3707,12 @@ msgid ""
 msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:288
-#, fuzzy
 msgid ""
 "When enabled, the cursor will be shown over the image while using a paint "
 "tool."
-msgstr "ਜਦੋ ਚੁਣਿਆ ਗਿਆ ਤਾਂ, ਚੁਣਿਆ ਬੁਰਸ਼ ਸਭ ਸੰਦਾਂ ਲਈ ਵਰਤਿਆ ਜਾਵੇਗਾ।"
+msgstr ""
+"ਜਦੋ ਚੁਣਿਆ ਗਿਆ ਤਾਂ, ਇੱਕ ਪੇਂਟ ਸੰਦ ਦੀ ਵਰਤੋਂ ਦੌਰਾਨ ਕਰਸਰ ਨੂੰ ਚਿੱਤਰ ਉੱਪਰ ਵੇਖਾਇਆ "
+"ਜਾਵੇਗਾ।"
 
 #: ../app/config/gimprc-blurbs.h:292
 msgid ""
@@ -3833,14 +3769,12 @@ msgid ""
 msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:328
-#, fuzzy
 msgid "Enable displaying a handy GIMP tip on startup."
-msgstr "ਸ਼ੁਰੂ ਵੇਲੇ ਜੈਮਪ ਸੰਕੇਤ ਨੂੰ ਵੇਖਾਉ ਯੋਗ ਕਰੋ"
+msgstr "ਸ਼ੁਰੂ ਵੇਲੇ ਇੱਕ ਹੱਥਲੀ ਜੈਮਪ ਵੇਖਾਉਣਾ ਯੋਗ ਕਰੋ।"
 
 #: ../app/config/gimprc-blurbs.h:331
-#, fuzzy
 msgid "Enable tooltips display."
-msgstr "ਸੰਕੇਤ ਨੂੰ ਵੇਖਾਉ ਯੋਗ ਕਰੋ"
+msgstr "ਸੰਦ-ਸੰਕੇਤ ਵੇਖਾਓ।"
 
 #: ../app/config/gimprc-blurbs.h:334
 msgid ""
@@ -3920,11 +3854,12 @@ msgid "Sets the size of the checkerboard used to display transparency."
 msgstr "ਪਾਰਦਰਸ਼ਤਾ ਵੇਖਾਉਣ ਲਈ ਡੱਬੀਦਾਰ-ਖਾਕੇ ਦਾ ਅਕਾਰ ਨਿਰਧਾਰਿਤ ਕਰੋ।"
 
 #: ../app/config/gimprc-blurbs.h:403
-#, fuzzy
 msgid ""
 "When enabled, the GIMP will not save an image if it has not been changed "
 "since it was opened."
-msgstr "ਜਦੋ ਨਿਰਧਾਰਿਤ ਕੀਤਾ ਤਾਂ, ਜੈਮਪ ਹਰੇਕ ਚਿੱਤਰ ਲਈ ਵੱਖਰਾ ਜਾਣਕਾਰੀ ਝਰੋਖਾ ਵਰਤੇਗਾ।"
+msgstr ""
+"ਜਦੋਂ ਯੋਗ ਕੀਤਾ ਤਾਂ ਜੈਮਪ ਉਸ ਨੂੰ ਚਿੱਤਰ ਨੂੰ ਸੰਭਾਲੇਗਾ ਨਹੀਂ, ਜਿਸ ਵਿੱਚ ਖੋਲਣ ਉਪਰੰਤ ਕੋਈ ਤਬਦੀਲੀ "
+"ਨਹੀਂ ਹੋਈ ਹੈ।"
 
 #: ../app/config/gimprc-blurbs.h:407
 msgid ""
@@ -3983,38 +3918,32 @@ msgid "Floyd-Steinberg (reduced color bleeding)"
 msgstr ""
 
 #: ../app/core/core-enums.c:56
-#, fuzzy
 msgid "Positioned"
-msgstr "ਸਥਿਤੀ: %0.6f"
+msgstr "ਸਥਿਤ"
 
 #: ../app/core/core-enums.c:85
-#, fuzzy
 msgid "Generate optimum palette"
-msgstr "/ਰੰਗ-ਪੱਟੀ ਹਟਾਓ"
+msgstr "ਅਨੁਕੂਲ ਰੰਗ-ਪੱਟੀ ਬਣਾਓ"
 
 #: ../app/core/core-enums.c:86
-#, fuzzy
 msgid "Use web-optimized palette"
-msgstr "/ਰੰਗ-ਪੱਟੀ ਹਟਾਓ"
+msgstr "ਵੈਬ-ਅਨੁਕੂਲ ਰੰਗ-ਪੱਟੀ ਵਰਤੋਂ"
 
 #: ../app/core/core-enums.c:87
 msgid "Use black and white (1-bit) palette"
-msgstr ""
+msgstr "ਕਾਲੀ ਚਿੱਟੀ (1-ਬਿੱਟ) ਰੰਗ-ਪੱਟੀ ਵਰਤੋਂ"
 
 #: ../app/core/core-enums.c:88
-#, fuzzy
 msgid "Use custom palette"
-msgstr "/ਰੰਗ-ਪੱਟੀ ਹਟਾਓ"
+msgstr "ਪਸੰਦੀਦਾ ਰੰਗ-ਪੱਟੀ ਵਰਤੋਂ"
 
 #: ../app/core/core-enums.c:199
-#, fuzzy
 msgid "Foreground color"
-msgstr "ਮੁੱਖ-ਭੂਮੀ ਰੰਗ:"
+msgstr "ਮੁੱਖ-ਭੂਮੀ ਰੰਗ"
 
 #: ../app/core/core-enums.c:200
-#, fuzzy
 msgid "Background color"
-msgstr "ਪਿੱਠਭੂਮੀ ਰੰਗ:"
+msgstr "ਪਿੱਠਭੂਮੀ ਰੰਗ"
 
 #: ../app/core/core-enums.c:201
 msgid "White"
@@ -4043,18 +3972,16 @@ msgid "Dashed"
 msgstr "ਧਾਰੀਦਾਰ"
 
 #: ../app/core/core-enums.c:237
-#, fuzzy
 msgid "Double dashed"
-msgstr "ਦੂਹਰੀ-ਧਾਰੀਦਾਰ"
+msgstr "ਦੂਹਰਾ ਧਾਰੀਦਾਰ"
 
 #: ../app/core/core-enums.c:238 ../app/core/core-enums.c:293
 msgid "Solid"
 msgstr "ਇੱਕ"
 
 #: ../app/core/core-enums.c:265
-#, fuzzy
 msgid "Stroke line"
-msgstr "ਝਟਕਾ ਚੋਣ"
+msgstr "ਛੋਹ ਰੇਖਾ"
 
 #: ../app/core/core-enums.c:266
 msgid "Stroke with a paint tool"
@@ -4089,56 +4016,48 @@ msgid "Line"
 msgstr "ਰੇਖਾ"
 
 #: ../app/core/core-enums.c:392
-#, fuzzy
 msgid "Long dashes"
-msgstr "ਲੰਬੀਆਂ ਧਾਰੀਆਂ"
+msgstr "ਲੰਮੀ ਧਾਰੀ"
 
 #: ../app/core/core-enums.c:393
-#, fuzzy
 msgid "Medium dashes"
-msgstr "ਮੱਧਮ ਧਾਰੀਆਂ"
+msgstr "ਮੱਧਮ ਧਾਰੀ"
 
 #: ../app/core/core-enums.c:394
-#, fuzzy
 msgid "Short dashes"
-msgstr "ਛੋਟੀਆਂ ਧਾਰੀਆਂ"
+msgstr "ਛੋਟੀ ਧਾਰੀ"
 
 #: ../app/core/core-enums.c:395
-#, fuzzy
 msgid "Sparse dots"
 msgstr "ਵਿਰਲੇ ਬਿੰਦੂ"
 
 #: ../app/core/core-enums.c:396
-#, fuzzy
 msgid "Normal dots"
 msgstr "ਸਧਾਰਨ ਬਿੰਦੂ"
 
 #: ../app/core/core-enums.c:397
-#, fuzzy
 msgid "Dense dots"
-msgstr "ਘਣੇ ਬਿੰਦੂ"
+msgstr "ਸੰਘਣੇ ਬਿੰਦੂ"
 
 #: ../app/core/core-enums.c:398
 msgid "Stipples"
 msgstr "ਬਿੰਦੀਕਾਰੀ"
 
 #: ../app/core/core-enums.c:399
-#, fuzzy
 msgid "Dash, dot"
-msgstr "ਧਾਰੀਦਾਰ ਬਿੰਦੂ..."
+msgstr "ਧਾਰੀ, ਬਿੰਦੂ"
 
 #: ../app/core/core-enums.c:400
-#, fuzzy
 msgid "Dash, dot, dot"
-msgstr "ਧਾਰੀਦਾਰ ਬਿੰਦੂ ਬਿੰਦੂ..."
+msgstr "ਧਾਰੀ, ਬਿੰਦੂ, ਬਿੰਦੂ"
 
 #: ../app/core/core-enums.c:428
 msgid "Circle"
-msgstr ""
+msgstr "ਚੱਕਰ"
 
 #: ../app/core/core-enums.c:430
 msgid "Diamond"
-msgstr ""
+msgstr "ਹੀਰਾ"
 
 #: ../app/core/core-enums.c:458 ../app/dialogs/preferences-dialog.c:2156
 msgid "Horizontal"
@@ -4153,31 +4072,26 @@ msgid "Unknown"
 msgstr "ਅਣਪਛਾਤਾ"
 
 #: ../app/core/core-enums.c:491
-#, fuzzy
 msgid "Image-sized layers"
-msgstr "ਪਰਤ ਮੁਡ਼-ਅਕਾਰ"
+msgstr "ਚਿੱਤਰ-ਅਕਾਰ ਪਰਤ"
 
 #: ../app/core/core-enums.c:492
-#, fuzzy
 msgid "All visible layers"
-msgstr "ਦਿੱਸ ਰਹੀਆਂ ਪਰਤਾਂ ਨੂੰ ਵਿਲੀਨ ਕਰੋ"
+msgstr "ਸਭ ਦਿੱਖ ਪਰਤਾਂ"
 
 #: ../app/core/core-enums.c:493
-#, fuzzy
 msgid "All linked layers"
-msgstr "%d ਪਰਤਾਂ"
+msgstr "ਸਭ ਸਬੰਧਤ ਪਰਤਾਂ"
 
 #: ../app/core/core-enums.c:494
-#, fuzzy
 msgid "All layers"
-msgstr "ਸਭ ਫਾਇਲਾਂ"
+msgstr "ਸਭ ਪਰਤਾਂ"
 
 #: ../app/core/core-enums.c:558
 msgid "Tiny"
 msgstr "ਬਾਰੀਕ"
 
 #: ../app/core/core-enums.c:559
-#, fuzzy
 msgid "Very small"
 msgstr "ਬਹੁਤ ਛੋਟਾ"
 
@@ -4194,7 +4108,6 @@ msgid "Large"
 msgstr "ਵੱਡਾ"
 
 #: ../app/core/core-enums.c:563
-#, fuzzy
 msgid "Very large"
 msgstr "ਬਹੁਤ ਵੱਡਾ"
 
@@ -4211,9 +4124,8 @@ msgid "Gigantic"
 msgstr "ਵਿਰਾਟ"
 
 #: ../app/core/core-enums.c:628
-#, fuzzy
 msgid "No thumbnails"
-msgstr "ਕੋਈ ਥੰਮਨੇਲ ਨਹੀ"
+msgstr "ਕੋਈ ਥੰਮਨੇਲ ਨਹੀਂ"
 
 #: ../app/core/core-enums.c:629
 msgid "Normal (128x128)"
@@ -4228,54 +4140,44 @@ msgid "<<invalid>>"
 msgstr "<<ਗਲਤ>>"
 
 #: ../app/core/core-enums.c:806
-#, fuzzy
 msgid "Scale image"
 msgstr "ਚਿੱਤਰ ਪੈਮਾਨਾ"
 
 #: ../app/core/core-enums.c:807
-#, fuzzy
 msgid "Resize image"
 msgstr "ਚਿੱਤਰ ਮੁਡ਼-ਅਕਾਰ"
 
 #: ../app/core/core-enums.c:808
-#, fuzzy
 msgid "Flip image"
 msgstr "ਚਿੱਤਰ ਝਟਕੋ"
 
 #: ../app/core/core-enums.c:809
-#, fuzzy
 msgid "Rotate image"
-msgstr "ਚਿੱਤਰ ਘੁੰਮਾਉ"
+msgstr "ਚਿੱਤਰ ਘੁੰਮਾਓ"
 
 #: ../app/core/core-enums.c:810
-#, fuzzy
 msgid "Crop image"
-msgstr "ਚਿੱਤਰ ਫੈਲਾਉ"
+msgstr "ਚਿੱਤਰ ਫੈਲਾਓ"
 
 #: ../app/core/core-enums.c:811
-#, fuzzy
 msgid "Convert image"
 msgstr "ਚਿੱਤਰ ਤਬਦੀਲ"
 
 #: ../app/core/core-enums.c:812
-#, fuzzy
 msgid "Remove item"
-msgstr "ਇਕਾਈ ਦਾ ਨਾਂ-ਤਬਦੀਲ"
+msgstr "ਇਕਾਈ ਹਟਾਓ"
 
 #: ../app/core/core-enums.c:813
-#, fuzzy
 msgid "Merge layers"
-msgstr "ਪਰਤਾਂ ਨੂੰ ਵਿਲੀਨ ਕਰੋ"
+msgstr "ਪਰਤਾਂ ਵਿਲੀਨ"
 
 #: ../app/core/core-enums.c:814
-#, fuzzy
 msgid "Merge vectors"
-msgstr "ਵੈਕਟਰਾਂ ਨੂੰ ਵਿਲੀਨ ਕਰੋ"
+msgstr "ਵੈਕਟਰ ਵਿਲੀਨ"
 
 #: ../app/core/core-enums.c:815 ../app/core/gimpchannel.c:404
-#, fuzzy
 msgid "Quick Mask"
-msgstr "ਤੇਜ਼ ਮਖੌਟਾ"
+msgstr "ਚੁਸਤ ਮਖੌਟਾ"
 
 #: ../app/core/core-enums.c:816 ../app/core/core-enums.c:846
 msgid "Guide"
@@ -4288,79 +4190,64 @@ msgid "Grid"
 msgstr "ਗਰਿੱਡ"
 
 #: ../app/core/core-enums.c:818 ../app/core/core-enums.c:848
-#, fuzzy
 msgid "Sample Point"
-msgstr "ਰਸਤਾ ਪੈਮਾਨਾ"
+msgstr "ਨਮੂਨਾ ਬਿੰਦੂ"
 
 #: ../app/core/core-enums.c:820 ../app/core/core-enums.c:851
-#, fuzzy
 msgid "Drawable mod"
-msgstr "ਉਲੀਕਣਯੋਗ ਮੋਡ"
+msgstr "ਉਲੀਕਣਯੋਗ ਢੰਗ"
 
 #: ../app/core/core-enums.c:821 ../app/core/core-enums.c:852
-#, fuzzy
 msgid "Selection mask"
-msgstr "ਮਖੋਟਾ ਚੋਣ"
+msgstr "ਮਖੌਟਾ ਚੋਣ"
 
 #: ../app/core/core-enums.c:822 ../app/core/core-enums.c:855
-#, fuzzy
 msgid "Item visibility"
 msgstr "ਇਕਾਈ ਦਿੱਖ"
 
 #: ../app/core/core-enums.c:823
-#, fuzzy
 msgid "Linked item"
-msgstr "ਸੰਬੰਧਿਤ ਇਕਾਈ"
+msgstr "ਸਬੰਧਤ ਇਕਾਈ"
 
 #: ../app/core/core-enums.c:824
-#, fuzzy
 msgid "Item properties"
 msgstr "ਇਕਾਈ ਵਿਸ਼ੇਸਤਾ"
 
 #: ../app/core/core-enums.c:825 ../app/core/core-enums.c:854
-#, fuzzy
 msgid "Move item"
 msgstr "ਇਕਾਈ ਏਧਰ-ਓਧਰ"
 
 #: ../app/core/core-enums.c:826
-#, fuzzy
 msgid "Scale item"
-msgstr "ਰਸਤਾ ਪੈਮਾਨਾ"
+msgstr "ਇਕਾਈ ਪੈਮਾਨਾ"
 
 #: ../app/core/core-enums.c:827
-#, fuzzy
 msgid "Resize item"
-msgstr "ਰਸਤਾ ਨੂੰ ਮੁਡ਼-ਅਕਾਰ ਦਿਉ"
+msgstr "ਇਕਾਈ ਮੁੜ-ਅਕਾਰ"
 
 #: ../app/core/core-enums.c:828 ../app/core/core-enums.c:865
-#, fuzzy
 msgid "Add layer mask"
-msgstr "ਪਰਤ ਮਖੋਟਾ ਜੋੜ੍ਹੋ"
+msgstr "ਪਰਤ ਮਖੌਟਾ ਸ਼ਾਮਲ"
 
 #: ../app/core/core-enums.c:829 ../app/core/core-enums.c:867
-#, fuzzy
 msgid "Apply layer mask"
-msgstr "ਪਰਤ ਮਖੌਟਾ ਲਾਗੂ ਕਰੋ"
+msgstr "ਪਰਤ ਮਖੌਟਾ ਲਾਗੂ"
 
 #: ../app/core/core-enums.c:830
-#, fuzzy
 msgid "Floating selection to layer"
 msgstr "ਪਰਤ ਲਈ ਤਰਦੀ ਚੋਣ"
 
 #: ../app/core/core-enums.c:831
-#, fuzzy
 msgid "Float selection"
 msgstr "ਤਰਦੀ ਚੋਣ"
 
 #: ../app/core/core-enums.c:832
-#, fuzzy
 msgid "Anchor floating selection"
 msgstr "ਸਹਾਰਾ ਤਰਦੀ ਚੋਣ"
 
 #: ../app/core/core-enums.c:833
-#, fuzzy
 msgid "Remove floating selection"
-msgstr "ਅਸਥਿਰ ਚੋਣ ਹਟਾਉ"
+msgstr "ਅਸਥਿਰ ਚੋਣ ਹਟਾਓ"
 
 #: ../app/core/core-enums.c:834 ../app/core/gimp-edit.c:253
 msgid "Paste"
@@ -4390,135 +4277,112 @@ msgid "Attach parasite"
 msgstr ""
 
 #: ../app/core/core-enums.c:840 ../app/core/core-enums.c:885
-#, fuzzy
 msgid "Remove parasite"
-msgstr "ਰਸਤਾ ਹਟਾਉ"
+msgstr "ਪਿਛਲੱਗ ਹਟਾਓ"
 
 #: ../app/core/core-enums.c:841
-#, fuzzy
 msgid "Import paths"
-msgstr "ਰਸਤਾ ਲਿਆਉ"
+msgstr "ਮਾਰਗ ਅਯਾਤ"
 
 #: ../app/core/core-enums.c:842 ../app/pdb/drawable_cmds.c:1722
 msgid "Plug-In"
 msgstr "ਪਲੱਗਇੰਨ"
 
 #: ../app/core/core-enums.c:843
-#, fuzzy
 msgid "Image type"
 msgstr "ਚਿੱਤਰ ਕਿਸਮ"
 
 #: ../app/core/core-enums.c:844
-#, fuzzy
 msgid "Image size"
-msgstr "ਚਿੱਤਰ ਕਿਸਮ"
+msgstr "ਚਿੱਤਰ ਅਕਾਰ"
 
 #: ../app/core/core-enums.c:845
-#, fuzzy
 msgid "Resolution change"
 msgstr "ਰੈਜ਼ੋਲੇਸ਼ਨ ਤਬਦੀਲ"
 
 #: ../app/core/core-enums.c:849
-#, fuzzy
 msgid "Change indexed palette"
 msgstr "ਤਤਕਰਾ ਰੰਗ-ਪੱਟੀ ਤਬਦੀਲ"
 
 #: ../app/core/core-enums.c:853
-#, fuzzy
 msgid "Rename item"
-msgstr "ਇਕਾਈ ਦਾ ਨਾਂ-ਤਬਦੀਲ"
+msgstr "ਇਕਾਈ ਨਾਂ-ਤਬਦੀਲ"
 
 #: ../app/core/core-enums.c:856
-#, fuzzy
 msgid "Set item linked"
-msgstr "ਇਕਾਈ ਸੰਬੰਧ ਨਿਰਧਾਰਨ"
+msgstr "ਇਕਾਈ ਸਬੰਧ ਦਿਓ"
 
 #: ../app/core/core-enums.c:857
-#, fuzzy
 msgid "New layer"
-msgstr "ਨਵੀ ਪਰਤ"
+msgstr "ਨਵੀਂ ਪਰਤ"
 
 #: ../app/core/core-enums.c:859
-#, fuzzy
 msgid "Reposition layer"
-msgstr "ਪਰਤ ਨੂੰ ਮੁਡ਼-ਸਥਾਪਿਤ ਕਰੋ"
+msgstr "ਪਰਤ ਮੁੜ-ਸਥਾਪਤ"
 
 #: ../app/core/core-enums.c:860
-#, fuzzy
 msgid "Set layer mode"
-msgstr "ਪਰਤ ਮੋਡ ਨਿਰਧਾਰਿਤ ਕਰੋ"
+msgstr "ਪਰਤ ਢੰਗ ਦਿਓ"
 
 #: ../app/core/core-enums.c:861
-#, fuzzy
 msgid "Set layer opacity"
-msgstr "ਪਰਤ ਧੁੰਦਲਾਪਨ ਨਿਧਾਰਿਤ ਕਰੋ"
+msgstr "ਪਰਤ ਧੁੰਦਲਾਪਨ ਦਿਓ"
 
 #: ../app/core/core-enums.c:862
-#, fuzzy
 msgid "Lock/Unlock alpha channel"
-msgstr "ਪਰਤ ਦਾ ਐਲਫਾ ਚੈਨਲ "
+msgstr "ਐਲਫਾ ਚੈਨਲ ਤਾਲਾ-ਬੰਦ/ਖੋਲੋ"
 
 #: ../app/core/core-enums.c:864
 msgid "Text modified"
-msgstr ""
+msgstr "ਪਾਠ ਸੋਧਿਆ"
 
 #: ../app/core/core-enums.c:866
-#, fuzzy
 msgid "Delete layer mask"
-msgstr "ਪਰਤ ਮਖੌਟਾ ਹਟਾਉ"
+msgstr "ਪਰਤ ਮਖੌਟਾ ਹਟਾਓ"
 
 #: ../app/core/core-enums.c:868
-#, fuzzy
 msgid "Show layer mask"
-msgstr "ਪਰਤ-ਮਖੌਟਾ ਏਧਰ-ਓਧਰ"
+msgstr "ਪਰਤ ਮਖੌਟਾ ਵੇਖਾਓ"
 
 #: ../app/core/core-enums.c:869
-#, fuzzy
 msgid "New channel"
 msgstr "ਨਵਾਂ ਚੈਨਲ"
 
 #: ../app/core/core-enums.c:871
-#, fuzzy
 msgid "Reposition channel"
-msgstr "ਚੈਨਲ ਨੂੰ ਮੁਡ਼-ਸਥਾਪਿਤ ਕਰੋ"
+msgstr "ਚੈਨਲ ਮੁਡ਼-ਸਥਾਪਤ"
 
 #: ../app/core/core-enums.c:872
-#, fuzzy
 msgid "Channel color"
 msgstr "ਚੈਨਲ ਰੰਗ"
 
 #: ../app/core/core-enums.c:873
-#, fuzzy
 msgid "New vectors"
-msgstr "ਨਵੈ ਵੈਕਟਰ"
+msgstr "ਨਵੇਂ ਵੈਕਟਰ"
 
 #: ../app/core/core-enums.c:874
-#, fuzzy
 msgid "Delete vectors"
-msgstr "ਵੈਕਟਰ ਹਟਾਉ"
+msgstr "ਵੈਕਟਰ ਹਟਾਓ"
 
 #: ../app/core/core-enums.c:875
-#, fuzzy
 msgid "Vectors mod"
-msgstr "ਵੈਕਟਰ ਹਟਾਉ"
+msgstr "ਵੈਕਟਰ ਢੰਗ"
 
 #: ../app/core/core-enums.c:876
-#, fuzzy
 msgid "Reposition vectors"
-msgstr "ਵੈਕਟਰਾਂ ਨੂੰ ਮੁਡ਼-ਸਥਾਪਿਤ ਕਰੋ"
+msgstr "ਵੈਕਟਰਾਂ ਮੁਡ਼-ਸਥਾਪਤ"
 
 #: ../app/core/core-enums.c:877
-#, fuzzy
 msgid "FS to layer"
-msgstr "FS ਤੋ ਪਰਤ"
+msgstr "FS ਤੋਂ ਪਰਤ"
 
 #: ../app/core/core-enums.c:878
 msgid "FS rigor"
-msgstr ""
+msgstr "FS ਕਾਂਬਾ"
 
 #: ../app/core/core-enums.c:879
 msgid "FS relax"
-msgstr ""
+msgstr "FS ਸਿਥਲ"
 
 #: ../app/core/core-enums.c:882 ../app/paint/gimpink.c:103
 #: ../app/tools/gimpinktool.c:62
@@ -4532,13 +4396,13 @@ msgstr "EEK: ਮੁਡ਼ ਪਹਿਲਾਂ ਨਹੀ ਕਰ ਸਕਿਆ"
 #: ../app/core/gimp-contexts.c:135 ../app/gui/session.c:246
 #: ../app/menus/menus.c:391 ../app/tools/gimp-tools.c:418
 #: ../app/widgets/gimpdevices.c:229
-#, fuzzy, c-format
+#, c-format
 msgid "Deleting \"%s\" failed: %s"
-msgstr "'%s' ਨੂੰ ਖੋਲਣਾ ਅਸਫਲ: %s"
+msgstr "\"%s\" ਹਟਾਉਣਾ ਅਸਫ਼ਲ: %s"
 
 #: ../app/core/gimp-edit.c:181 ../app/core/gimp-edit.c:315
 msgid "Pasted Layer"
-msgstr "ਚਿਪਕਾਈ ਪਰਤ"
+msgstr "ਚੇਪੀ ਪਰਤ"
 
 #: ../app/core/gimp-edit.c:444
 msgid "Fill with FG Color"
@@ -4565,9 +4429,8 @@ msgid "Unable to cut or copy because the selected region is empty."
 msgstr ""
 
 #: ../app/core/gimp-edit.c:565
-#, fuzzy
 msgid "Global Buffer"
-msgstr "ਬਫਰ ਚਿਪਕਾਉ(_P)"
+msgstr "ਗਲੋਬਲ ਬਫ਼ਰ"
 
 #: ../app/core/gimp-gradients.c:68
 msgid "FG to BG (RGB)"
@@ -4595,13 +4458,12 @@ msgid "Procedural Database"
 msgstr ""
 
 #: ../app/core/gimp.c:635
-#, fuzzy
 msgid "Plug-In Interpreters"
-msgstr "ਪਲੱਗ-ਇਨ ਫੋਲਡਰ"
+msgstr "ਪਲੱਗਿੰਨ ਇੰਟਰਪਰੇਟਰ"
 
 #: ../app/core/gimp.c:641
 msgid "Plug-In Environment"
-msgstr "ਪਲੱਗ-ਇੰਨ ਵਾਤਾਵਰਣ"
+msgstr "ਪਲੱਗਿੰਨ ਵਾਤਾਵਰਣ"
 
 #. initialize  the global parasite table
 #: ../app/core/gimp.c:852
@@ -4628,19 +4490,19 @@ msgid "Could not read %d bytes from '%s': %s"
 msgstr " %d ਬਾਈਟ'%s' ਤੋ ਪੜ੍ਹੇ ਨਹੀ ਜਾ ਸਕੇ ਹਨ: %s"
 
 #: ../app/core/gimpbrush-load.c:172
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in brush file '%s': Width = 0."
-msgstr "ਬੁਰਸ਼ ਫਾਇਲ '%s' ਵਿੱਚ ਘਾਤਕ ਗਲਤੀ: ਫਾਇਲ ਨਕਾਰਾ ਹੈ।"
+msgstr "ਬੁਰਸ਼ ਫਾਇਲ '%s' ਵਿੱਚ ਘਾਤਕ ਪਾਰਸ ਗਲਤੀ: ਚੌੜਾਈ = 0"
 
 #: ../app/core/gimpbrush-load.c:181
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in brush file '%s': Height = 0."
-msgstr "ਬੁਰਸ਼ ਫਾਇਲ '%s' ਵਿੱਚ ਘਾਤਕ ਗਲਤੀ: ਫਾਇਲ ਨਕਾਰਾ ਹੈ।"
+msgstr "ਬੁਰਸ਼ ਫਾਇਲ '%s' ਵਿੱਚ ਘਾਤਕ ਪਾਰਸ ਗਲਤੀ: ਉਚਾਈ = 0"
 
 #: ../app/core/gimpbrush-load.c:190
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in brush file '%s': Bytes = 0."
-msgstr "ਬੁਰਸ਼ ਫਾਇਲ '%s' ਵਿੱਚ ਘਾਤਕ ਗਲਤੀ: ਫਾਇਲ ਨਕਾਰਾ ਹੈ।"
+msgstr "ਬੁਰਸ਼ ਫਾਇਲ '%s' ਵਿੱਚ ਘਾਤਕ ਪਾਰਸ ਗਲਤੀ: ਬਾਈਟ = 0"
 
 #: ../app/core/gimpbrush-load.c:214
 #, c-format
@@ -4680,14 +4542,14 @@ msgstr ""
 "ਜ਼ਰੂਰ ਹਨ।"
 
 #: ../app/core/gimpbrush-load.c:408
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in brush file '%s': unable to decode abr format version %d."
-msgstr "ਬੁਰਸ਼ ਫਾਇਲ '%s' ਵਿੱਚ ਘਾਤਕ ਗਲਤੀ: ਅਣਪਛਾਤਾ ਵਰਜਨ %d।"
+msgstr "ਬੁਰਸ਼ ਫਾਇਲ '%s' ਵਿੱਚ ਘਾਤਕ ਗਲਤੀ: abr ਫਾਰਮਿਟ ਵਰਜਨ %d ਨੂੰ ਡੀਕੋਡ ਕਰਨ ਲਈ ਅਸਫ਼ਲ ਹੈ।"
 
 #: ../app/core/gimpbrush-load.c:425
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in brush file '%s'"
-msgstr "ਬੁਰਸ਼ ਫਾਇਲ '%s' ਵਿੱਚ ਘਾਤਕ ਗਲਤੀ: ਫਾਇਲ ਨਕਾਰਾ ਹੈ।"
+msgstr "ਬੁਰਸ਼ ਫਾਇਲ '%s' ਵਿੱਚ ਘਾਤਕ ਗਲਤੀ"
 
 #: ../app/core/gimpbrushgenerated.c:607
 #, c-format
@@ -4700,14 +4562,14 @@ msgid "Fatal parse error in brush file '%s': Unknown GIMP brush version."
 msgstr "ਬੁਰਸ਼ ਫਾਇਲ '%s' ਵਿੱਚ ਘਾਤਕ ਗਲਤੀ: ਅਣਪਛਾਤਾ ਜੈਮਪ ਬੁਰਸ਼ ਵਰਜਨ "
 
 #: ../app/core/gimpbrushgenerated.c:662
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in brush file '%s': Unknown GIMP brush shape."
-msgstr "ਬੁਰਸ਼ ਫਾਇਲ '%s' ਵਿੱਚ ਘਾਤਕ ਗਲਤੀ: ਅਣਪਛਾਤਾ ਜੈਮਪ ਬੁਰਸ਼ ਵਰਜਨ "
+msgstr "ਬੁਰਸ਼ ਫਾਇਲ '%s' ਵਿੱਚ ਘਾਤਕ ਗਲਤੀ: ਅਣਜਾਣੀ ਜੈਮਪ ਬੁਰਸ਼ ਸ਼ਕਲ ਹੈ।"
 
 #: ../app/core/gimpbrushgenerated.c:740
-#, fuzzy, c-format
+#, c-format
 msgid "Error while reading brush file '%s': %s"
-msgstr "ਗਲਤੀ, '%s' ਨੂੰ ਪੜ੍ਹਨ ਦੌਰਾਨ: %s"
+msgstr "ਗਲਤੀ, ਬੁਰਸ਼ ਫਾਇਲ '%s' ਪੜ੍ਹਨ ਦੌਰਾਨ: %s"
 
 #: ../app/core/gimpbrushgenerated.c:742
 msgid "File is truncated"
@@ -4752,9 +4614,8 @@ msgid "Transform Channel"
 msgstr "ਤਬਦੀਲ ਚੈਨਲ"
 
 #: ../app/core/gimpchannel.c:304
-#, fuzzy
 msgid "Stroke Channel"
-msgstr "ਸੁੰਘੜ੍ਹੋ ਚੈਨਲ"
+msgstr "ਛੋਹ ਚੈਨਲ"
 
 #: ../app/core/gimpchannel.c:325
 msgid "Feather Channel"
@@ -4837,13 +4698,14 @@ msgid "Could not delete '%s': %s"
 msgstr "'%s' ਨੂੰ ਹਟਾਇਆ ਨਹੀ ਜਾ ਸਕਿਆ: %s"
 
 #: ../app/core/gimpdatafactory.c:322 ../app/core/gimpdatafactory.c:532
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning: Failed to save data:\n"
 "\n"
 "%s"
 msgstr ""
 "ਚੇਤਵਾਨੀ: ਡਾਟਾ ਸੰਭਾਲਣ ਵਿੱਚ ਅਸਮੱਰਥ:\n"
+"\n"
 "%s"
 
 #: ../app/core/gimpdatafactory.c:434 ../app/core/gimpdatafactory.c:437
@@ -4857,13 +4719,14 @@ msgid "%s copy"
 msgstr "%s ਨਕਲ"
 
 #: ../app/core/gimpdatafactory.c:628
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning: Failed to load data:\n"
 "\n"
 "%s"
 msgstr ""
 "ਚੇਤਾਵਨੀ: ਡਾਟਾ ਸੰਭਾਲਣ ਵਿੱਚ ਅਸਫਲ:\n"
+"\n"
 "%s"
 
 #: ../app/core/gimpdrawable-blend.c:246 ../app/tools/gimpblendtool.c:101
@@ -4889,9 +4752,8 @@ msgid "Equalize"
 msgstr "ਸਮਰੂਪ"
 
 #: ../app/core/gimpdrawable-foreground-extract.c:111
-#, fuzzy
 msgid "Foreground Extraction..."
-msgstr "ਮੁੱਖ-ਭੂਮੀ ਰੰਗ:"
+msgstr "ਮੁੱਖ-ਭੂਮੀ ਖੋਲੋ..."
 
 #: ../app/core/gimpdrawable-invert.c:61
 msgid "Invert"
@@ -4964,14 +4826,14 @@ msgid "Gradient file '%s' is corrupt: Segments do not span the range 0-1."
 msgstr ""
 
 #: ../app/core/gimpgradient-load.c:275
-#, fuzzy, c-format
+#, c-format
 msgid "No linear gradients found in '%s'"
-msgstr "'%s' ਵਿੱਚ ਕੋਈ ਰਸਤਾ ਨਹੀ ਲੱਭਿਆ"
+msgstr "'%s' ਵਿੱਚ ਕੋਈ ਰੇਖਿਕ ਢਾਲਵਾਂ ਨਹੀਂ ਲੱਭਿਆ"
 
 #: ../app/core/gimpgradient-load.c:285
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to import gradients from '%s': %s"
-msgstr "'%s' ਤੋ ਰਸਤਾ ਲਿਆਉਣ ਵਿੱਚ ਅਸਫਲ: %s"
+msgstr "'%s' ਤੋਂ ਮਾਰਗ ਲਿਆਉਣ ਵਿੱਚ ਅਸਫਲ: %s"
 
 #: ../app/core/gimpgrid.c:126
 msgid "Line style used for the grid."
@@ -5002,19 +4864,16 @@ msgid "Vertical offset of the first grid line; this may be a negative number."
 msgstr ""
 
 #: ../app/core/gimpimage-colormap.c:63
-#, fuzzy
 msgid "Set Colormap"
-msgstr "ਰੰਗ-ਖਾਕਾ"
+msgstr "ਰੰਗ-ਖਾਕਾ ਦਿਓ"
 
 #: ../app/core/gimpimage-colormap.c:115
-#, fuzzy
 msgid "Change Colormap entry"
-msgstr "ਚਿੱਤਰ ਦੀ ਇਕਾਈ ਤਬਦੀਲ ਕਰੋ"
+msgstr "ਰੰਗ-ਖਾਕਾ ਇੰਦਰਾਜ਼ ਤਬਦੀਲ"
 
 #: ../app/core/gimpimage-colormap.c:135
-#, fuzzy
 msgid "Add Color to Colormap"
-msgstr "/FG ਤੋ ਰੰਗ ਜੋੜ੍ਹੋ"
+msgstr "ਰੰਗ-ਖਾਕੇ ਵਿੱਚ ਰੰਗ ਸ਼ਾਮਲ"
 
 #: ../app/core/gimpimage-convert.c:810
 msgid "Cannot convert image: palette is empty."
@@ -5033,14 +4892,12 @@ msgid "Convert Image to Indexed"
 msgstr "ਚਿੱਤਰ ਨੂੰ ਤਤਕਰਾ ਵਿੱਚ ਤਬਦੀਲ ਕਰੋ"
 
 #: ../app/core/gimpimage-convert.c:914
-#, fuzzy
 msgid "Converting to indexed (stage 2)..."
-msgstr "ਚਿੱਤਰ ਨੂੰ ਤਤਕਰਾ ਵਿੱਚ ਤਬਦੀਲ ਕਰੋ"
+msgstr "ਤਤਕਰਾ ਬਦਲਿਆ ਜਾ ਰਿਹਾ ਹੈ (ਸਟੇਜ 2)..."
 
 #: ../app/core/gimpimage-convert.c:959
-#, fuzzy
 msgid "Converting to indexed (stage 3)..."
-msgstr "ਚਿੱਤਰ ਨੂੰ ਤਤਕਰਾ ਵਿੱਚ ਤਬਦੀਲ ਕਰੋ"
+msgstr "ਤਤਕਰਾ ਬਦਲਿਆ ਜਾ ਰਿਹਾ ਹੈ (ਸਟੇਜ 3)..."
 
 #: ../app/core/gimpimage-crop.c:124
 msgid "Crop Image"
@@ -5095,28 +4952,24 @@ msgid "Not enough visible paths for a merge. There must be at least two."
 msgstr "ਦਿੱਖ ਰਸਤੇ ਨੂੰ ਵਿਲੀਨ ਕਰਨ ਲਈ ਲੋਡ਼ੀਦੇ ਉਪਲੱਬਧ ਰਸਤੇ ਨਹੀ ਹਨ। ਘੱਟੋ-ਘੱਟ ਦੋ ਰਸਤੇ ਲੋਡ਼ੀਦੇ ਹਨ।"
 
 #: ../app/core/gimpimage-qmask.c:67
-#, fuzzy
 msgid "Enable Quick Mask"
-msgstr "ਤੇਜ਼ ਮਖੌਟਾ"
+msgstr "ਤੇਜ਼ ਮਖੌਟਾ ਯੋਗ"
 
 #: ../app/core/gimpimage-qmask.c:117
-#, fuzzy
 msgid "Disable Quick Mask"
-msgstr "ਪਰਤ ਮਖੌਟਾ ਹਟਾਉ"
+msgstr "ਪਰਤ ਮਖੌਟਾ ਹਟਾਓ"
 
 #: ../app/core/gimpimage-sample-points.c:55
 msgid "Add Sample_Point"
 msgstr ""
 
 #: ../app/core/gimpimage-sample-points.c:121 ../app/tools/gimpcolortool.c:439
-#, fuzzy
 msgid "Remove Sample Point"
-msgstr "ਰਸਤਾ ਹਟਾਉ"
+msgstr "ਨਮੂਨਾ ਬਿੰਦੂ ਹਟਾਓ"
 
 #: ../app/core/gimpimage-sample-points.c:158
-#, fuzzy
 msgid "Move Sample Point"
-msgstr "ਚੁਣਿਆ ਏਧਰ-ਓਧਰ"
+msgstr "ਨਮੂਨਾ ਬਿੰਦੂ ਏਧਰ ਓਧਰ"
 
 #: ../app/core/gimpimage-undo-push.c:3298
 #, c-format
@@ -5196,9 +5049,8 @@ msgid "Raise Channel"
 msgstr "ਚੈਨਲ ਉਠਾਉ"
 
 #: ../app/core/gimpimage.c:3199
-#, fuzzy
 msgid "Channel is already on top."
-msgstr "ਪਰਤ ਪਹਿਲਾਂ ਹੀ ਸਭ ਤੋ ਉਪੱਰ ਹੈ"
+msgstr "ਚੈਨਲ ਪਹਿਲਾਂ ਹੀ ਉੱਪਰ ਹੈ।"
 
 #: ../app/core/gimpimage.c:3204
 msgid "Raise Channel to Top"
@@ -5213,9 +5065,8 @@ msgid "Lower Channel"
 msgstr "ਚੈਨਲ ਹੇਠ ਕਰੋ"
 
 #: ../app/core/gimpimage.c:3246
-#, fuzzy
 msgid "Channel is already on the bottom."
-msgstr "ਪਰਤ ਪਹਿਲਾਂ ਹੀ ਹੇਠਾਂ ਹੈ"
+msgstr "ਚੈਨਲ ਪਹਿਲਾਂ ਹੀ ਤਲ ਉੱਤੇ ਹੈ।"
 
 #: ../app/core/gimpimage.c:3251
 msgid "Lower Channel to Bottom"
@@ -5238,13 +5089,12 @@ msgid "Raise Path"
 msgstr "ਰਸਤਾ ਉਠਾਉ"
 
 #: ../app/core/gimpimage.c:3437
-#, fuzzy
 msgid "Path is already on top."
-msgstr "ਪਰਤ ਪਹਿਲਾਂ ਹੀ ਸਭ ਤੋ ਉਪੱਰ ਹੈ"
+msgstr "ਮਾਰਗ ਪਹਿਲਾਂ ਹੀ ਉੱਤੇ ਹੈ।"
 
 #: ../app/core/gimpimage.c:3442
 msgid "Raise Path to Top"
-msgstr "ਰਸਤੇ ਨੂੰ ਉਪਰ ਵੱਲ ਉਠਾਉ"
+msgstr "ਮਾਰਗ ਨੂੰ ਉੱਤੇ ਲਿਆਓ"
 
 #: ../app/core/gimpimage.c:3459
 msgid "Path cannot be lowered more."
@@ -5255,9 +5105,8 @@ msgid "Lower Path"
 msgstr "ਰਸਤਾ ਹੇਠ"
 
 #: ../app/core/gimpimage.c:3484
-#, fuzzy
 msgid "Path is already on the bottom."
-msgstr "ਪਰਤ ਪਹਿਲਾਂ ਹੀ ਹੇਠਾਂ ਹੈ"
+msgstr "ਮਾਰਗ ਪਹਿਲਾਂ ਹੀ ਤਲ ਉੱਤੇ ਹੈ।"
 
 #: ../app/core/gimpimage.c:3489
 msgid "Lower Path to Bottom"
@@ -5272,14 +5121,12 @@ msgid "Special File"
 msgstr "ਖਾਸ ਫਾਇਲ"
 
 #: ../app/core/gimpimagefile.c:596
-#, fuzzy
 msgid "Remote File"
-msgstr "ਰਿਮੋਟ ਚਿੱਤਰ"
+msgstr "ਰਿਮੋਟ ਫਾਇਲ"
 
 #: ../app/core/gimpimagefile.c:613
-#, fuzzy
 msgid "Click to create preview"
-msgstr "ਦਰਿਸ਼ ਨਹੀ ਬਣ ਸਕਿਆ"
+msgstr "ਝਲਕ ਬਣਾਉਣ ਲਈ ਦਬਾਓ"
 
 #: ../app/core/gimpimagefile.c:617
 msgid "Loading preview ..."
@@ -5294,9 +5141,8 @@ msgid "Cannot create preview"
 msgstr "ਦਰਿਸ਼ ਨਹੀ ਬਣ ਸਕਿਆ"
 
 #: ../app/core/gimpimagefile.c:632
-#, fuzzy
 msgid "(Preview may be out of date)"
-msgstr "ਦਰਿਸ਼ ਪੁਰਾਣਾ ਹੋ ਗਿਆ ਹੈ"
+msgstr "(ਝਲਕ ਪੁਰਾਣੀ ਹੋ ਸਕਦੀ ਹੈ)"
 
 #. pixel size
 #: ../app/core/gimpimagefile.c:638 ../app/widgets/gimpimagepropview.c:354
@@ -5396,11 +5242,13 @@ msgid "%s mask"
 msgstr "%s ਮਖੌਟਾ"
 
 #: ../app/core/gimplayer.c:487
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Floating Selection\n"
 "(%s)"
-msgstr "ਤਰਦੀ ਚੋਣ"
+msgstr ""
+"ਤਰਦੀ ਚੋਣ\n"
+"(%s)"
 
 #: ../app/core/gimplayer.c:1263
 msgid "Cannot add layer mask to layer which is not part of an image."
@@ -5435,9 +5283,8 @@ msgid "Add Alpha Channel"
 msgstr "ਐਲਫਾ ਚੈਨਲ ਜੋੜ੍ਹੋ"
 
 #: ../app/core/gimplayer.c:1704
-#, fuzzy
 msgid "Remove Alpha Channel"
-msgstr "ਚੈਨਲ ਹਟਾਉ"
+msgstr "ਐਲਫ਼ਾ ਚੈਨਲ ਹਟਾਓ"
 
 #: ../app/core/gimplayer.c:1726
 msgid "Layer to Image Size"
@@ -5448,19 +5295,18 @@ msgid "Move Layer Mask"
 msgstr "ਪਰਤ-ਮਖੌਟਾ ਏਧਰ-ਓਧਰ"
 
 #: ../app/core/gimplayermask.c:325
-#, fuzzy
 msgid "Show Layer Mask"
-msgstr "ਪਰਤ-ਮਖੌਟਾ ਏਧਰ-ਓਧਰ"
+msgstr "ਪਰਤ-ਮਖੌਟਾ ਵੇਖਾਓ"
 
 #: ../app/core/gimppalette-import.c:365
-#, fuzzy, c-format
+#, c-format
 msgid "Index %d"
-msgstr "ਤਤਕਰਾ"
+msgstr "ਤਤਕਰਾ %d"
 
 #: ../app/core/gimppalette-import.c:565
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown type of palette file: %s"
-msgstr "/ਟੈਬ ਜੋੜ੍ਹੋ/ਰੰਗ-ਪੱਟੀ"
+msgstr "ਰੰਗ-ਪੱਟੀ ਫਾਇਲ ਦੀ ਅਣਜਾਣੀ ਕਿਸਮ: %s"
 
 #: ../app/core/gimppalette.c:373
 #, c-format
@@ -5580,9 +5426,8 @@ msgid "Float Selection"
 msgstr "ਤਰਦੀ ਚੋਣ"
 
 #: ../app/core/gimpselection.c:829
-#, fuzzy
 msgid "Floated Layer"
-msgstr "ਪਰਤ ਘੁੰਮਾਉ"
+msgstr "ਤਰਦੀ ਪਰਤ"
 
 #: ../app/core/gimpstrokeoptions.c:151
 msgid ""
@@ -5595,9 +5440,8 @@ msgid "The unit used for coordinate display when not in dot-for-dot mode."
 msgstr ""
 
 #: ../app/core/gimptemplate.c:164
-#, fuzzy
 msgid "The horizontal image resolution."
-msgstr "ਖਿਤਿਜੀ ਚਿੱਤਰ ਰੈਜ਼ੋਲੇਸ਼ਨ"
+msgstr "ਖਿਤਿਜੀ ਚਿੱਤਰ ਰੈਜ਼ੋਲੇਸ਼ਨ ਹੈ।"
 
 #: ../app/core/gimptemplate.c:169
 msgid "The vertical image resolution."
@@ -5672,19 +5516,16 @@ msgid "translator-credits"
 msgstr "ਅਮਨਪਰੀਤ ਸਿੰਘ ਆਲਮ (amanlinux@netscape.net)"
 
 #: ../app/dialogs/about-dialog.c:689
-#, fuzzy
 msgid "GIMP is brought to you by"
-msgstr "ਵਰਜਨ %s ਤੁਹਾਡੇ ਲਈ ਲੈਕੇ ਆਏ ਹਨ"
+msgstr "ਜੈਪਮ ਨੂੰ ਤੁਹਾਡੇ ਲਈ ਲੈ ਕੇ ਆਏ ਹਨ"
 
 #: ../app/dialogs/channel-options-dialog.c:144
-#, fuzzy
 msgid "Channel _name:"
-msgstr "ਚੈਨਲ ਨਾਂ:"
+msgstr "ਚੈਨਲ ਨਾਂ(_n):"
 
 #: ../app/dialogs/channel-options-dialog.c:173
-#, fuzzy
 msgid "Initialize from _selection"
-msgstr "ਉਲਟ ਚੋਣ"
+msgstr "ਚੋਣ ਤੋਂ ਸ਼ੁਰੂ(_s)"
 
 #: ../app/dialogs/convert-dialog.c:119
 msgid "Indexed Color Conversion"
@@ -5695,18 +5536,16 @@ msgid "Convert Image to Indexed Colors"
 msgstr ""
 
 #: ../app/dialogs/convert-dialog.c:128
-#, fuzzy
 msgid "C_onvert"
-msgstr "ਤਬਦੀਲ"
+msgstr "ਤਬਦੀਲ(_o)"
 
 #: ../app/dialogs/convert-dialog.c:161 ../app/dialogs/dialogs.c:178
 msgid "Colormap"
 msgstr "ਰੰਗ-ਖਾਕਾ"
 
 #: ../app/dialogs/convert-dialog.c:176
-#, fuzzy
 msgid "_Maximum number of colors:"
-msgstr "ਰੰਗਾਂ ਦੀ ਅਧਿਕਤਮ ਗਿਣਤੀ:"
+msgstr "ਰੰਗਾਂ ਦੀ ਵੱਧੋ ਵੱਧ ਗਿਣਤੀ(_M):"
 
 #: ../app/dialogs/convert-dialog.c:203
 msgid "_Remove unused colors from final palette"
@@ -5718,28 +5557,24 @@ msgid "Dithering"
 msgstr ""
 
 #: ../app/dialogs/convert-dialog.c:230
-#, fuzzy
 msgid "Color _dithering:"
-msgstr "ਕੋਈ ਰੰਗ ਵਿਚਲਨ ਨਹੀ"
+msgstr "ਰੰਗ ਵਿਚਲਨ(_d):"
 
 #: ../app/dialogs/convert-dialog.c:245
-#, fuzzy
 msgid "Enable dithering of _transparency"
-msgstr "ਪਿੱਠਭੂਮੀ ਜਾਂ ਪਾਰਦਰਸ਼ਤਾ ਨੂੰ ਮੇਟਾਉ"
+msgstr "ਪਾਰਦਰਸ਼ਤਾ ਵਿਚਲਨ ਯੋਗ(_t)"
 
 #: ../app/dialogs/convert-dialog.c:271
-#, fuzzy
 msgid "Converting to indexed..."
-msgstr "ਚਿੱਤਰ ਨੂੰ ਤਤਕਰਾ ਵਿੱਚ ਤਬਦੀਲ ਕਰੋ"
+msgstr "ਤਤਕਰਾ ਵਿੱਚ ਤਬਦੀਲ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ..."
 
 #: ../app/dialogs/convert-dialog.c:386
 msgid "Cannot convert to a palette with more than 256 colors."
 msgstr ""
 
 #: ../app/dialogs/desaturate-dialog.c:61
-#, fuzzy
 msgid "Remove Colors"
-msgstr "ਚੈਨਲ ਹਟਾਉ"
+msgstr "ਰੰਗ ਹਟਾਓ"
 
 #: ../app/dialogs/desaturate-dialog.c:93
 msgid "Choose shade of gray based on:"
@@ -5762,9 +5597,8 @@ msgid "Errors"
 msgstr "ਗਲਤੀਆਂ"
 
 #: ../app/dialogs/dialogs.c:138
-#, fuzzy
 msgid "Cursor"
-msgstr "ਸੋਧ"
+msgstr "ਕਰਸਰ"
 
 #: ../app/dialogs/dialogs.c:159
 msgid "History"
@@ -5791,14 +5625,12 @@ msgid "Undo History"
 msgstr "ਮੁਡ਼ ਕਰੋ ਦਾ ਅਤੀਤ"
 
 #: ../app/dialogs/dialogs.c:200
-#, fuzzy
 msgid "Navigation"
-msgstr "/ਫਾਇਲ/ਤਖਤੀ/ਏਧਰ-ਓਧਰ"
+msgstr "ਏਧਰ-ਓਧਰ"
 
 #: ../app/dialogs/dialogs.c:200
-#, fuzzy
 msgid "Display Navigation"
-msgstr "/ਫਾਇਲ/ਤਖਤੀ/ਏਧਰ-ਓਧਰ"
+msgstr "ਏਧਰ-ਓਧਰ ਵੇਖਾਓ"
 
 #: ../app/dialogs/dialogs.c:206
 msgid "FG/BG"
@@ -5813,9 +5645,8 @@ msgid "Brush Editor"
 msgstr "ਬੁਰਸ਼ ਸੋਧਕ"
 
 #: ../app/dialogs/file-open-location-dialog.c:71
-#, fuzzy
 msgid "Open Location"
-msgstr "ਥਾਂ:"
+msgstr "ਟਿਕਾਣਾ ਖੋਲੋ"
 
 #: ../app/dialogs/file-open-location-dialog.c:109
 msgid "Enter location (URI):"
@@ -5836,9 +5667,8 @@ msgid ""
 msgstr ""
 
 #: ../app/dialogs/file-save-dialog.c:398
-#, fuzzy
 msgid "Extension Mismatch"
-msgstr "ਐਕਸ਼ਟੇਸ਼ਨ"
+msgstr "ਐਕਸ਼ਟੇਸ਼ਨ ਮਿਲਾਨ ਨਹੀਂ"
 
 #: ../app/dialogs/file-save-dialog.c:414
 msgid "The given file extension does not match the chosen file type."
@@ -5865,9 +5695,8 @@ msgid "Layers Merge Options"
 msgstr ""
 
 #: ../app/dialogs/image-merge-layers-dialog.c:68
-#, fuzzy
 msgid "_Merge"
-msgstr "ਮਾਪ"
+msgstr "ਵਿਲੀਨ(_M)"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:82
 msgid "Final, Merged Layer should be:"
@@ -5891,9 +5720,8 @@ msgstr "ਨਵਾਂ ਚਿੱਤਰ ਬਣਾਉ"
 
 #: ../app/dialogs/image-new-dialog.c:141
 #: ../app/dialogs/preferences-dialog.c:1845
-#, fuzzy
 msgid "_Template:"
-msgstr "ਨਮੂਨੇ"
+msgstr "ਨਮੂਨਾ(_T):"
 
 #: ../app/dialogs/image-new-dialog.c:279
 msgid "Confirm Image Size"
@@ -5913,9 +5741,8 @@ msgid ""
 msgstr ""
 
 #: ../app/dialogs/image-scale-dialog.c:174
-#, fuzzy
 msgid "Confirm Scaling"
-msgstr "ਪਾਠ ਸੋਧ ਦੀ ਪੁਸ਼ਟੀ"
+msgstr "ਪੈਮਾਨਾ ਪੁਸ਼ਟੀ"
 
 #: ../app/dialogs/image-scale-dialog.c:214
 #, c-format
@@ -5950,14 +5777,12 @@ msgid "Initialize Layer Mask to:"
 msgstr ""
 
 #: ../app/dialogs/layer-add-mask-dialog.c:100
-#, fuzzy
 msgid "In_vert mask"
-msgstr "ਉਲਟ(_v)"
+msgstr "ਉਲਟ ਮਖੌਟਾ(_v)"
 
 #: ../app/dialogs/layer-options-dialog.c:119
-#, fuzzy
 msgid "Layer _name:"
-msgstr "ਪਰਤ ਨਾਂ:"
+msgstr "ਪਰਤ ਨਾਂ(_n):"
 
 #. The size labels
 #: ../app/dialogs/layer-options-dialog.c:128
@@ -5976,9 +5801,8 @@ msgid "Layer Fill Type"
 msgstr "ਪਰਤ ਭਰਨ ਦੀ ਕਿਸਮ"
 
 #: ../app/dialogs/layer-options-dialog.c:206
-#, fuzzy
 msgid "Set name from _text"
-msgstr "ਪਾਠ ਤੋ ਰਸਤਾ ਬਣਾਉ"
+msgstr "ਪਾਠ ਤੋਂ ਨਾਂ ਦਿਓ(_t)"
 
 #: ../app/dialogs/module-dialog.c:122
 msgid "Module Manager"
@@ -5993,9 +5817,8 @@ msgid "Autoload"
 msgstr "ਸਵੈ-ਲੋਡ"
 
 #: ../app/dialogs/module-dialog.c:175
-#, fuzzy
 msgid "Module Path"
-msgstr "ਮੈਡੀਊਲ ਰਸਤਾ"
+msgstr "ਮੈਡੀਊਲ ਮਾਰਗ"
 
 #: ../app/dialogs/module-dialog.c:418
 msgid "<No modules>"
@@ -6055,12 +5878,10 @@ msgid "State:"
 msgstr "ਸਥਿਤੀ:"
 
 #: ../app/dialogs/module-dialog.c:506
-#, fuzzy
 msgid "Last error:"
-msgstr "ਅਖੀਰੀ ਗਲਤੀ:"
+msgstr "ਆਖਰੀ ਗਲਤੀ:"
 
 #: ../app/dialogs/module-dialog.c:507
-#, fuzzy
 msgid "Available types:"
 msgstr "ਉਪਲੱਬਧ ਕਿਸਮਾਂ:"
 
@@ -6100,24 +5921,20 @@ msgstr ""
 
 #. The edge behavior frame
 #: ../app/dialogs/offset-dialog.c:211
-#, fuzzy
 msgid "Edge Behavior"
-msgstr "ਤਖਤੀ ਵਿਵਹਾਰ"
+msgstr "ਕੰਢਾ ਵਤੀਰਾ"
 
 #: ../app/dialogs/offset-dialog.c:215
-#, fuzzy
 msgid "_Wrap around"
-msgstr "ਪਿੱਠਭੂਮੀ"
+msgstr "ਪਾਸਿਓ ਸਮੇਟੋ(_W)"
 
 #: ../app/dialogs/offset-dialog.c:218
-#, fuzzy
 msgid "Fill with _background color"
-msgstr "ਪਿੱਠਭੂਮੀ ਰੰਗ ਸੋਧ"
+msgstr "ਪਿੱਠਭੂਮੀ ਰੰਗ ਨਾਲ ਭਰੋ(_b)"
 
 #: ../app/dialogs/offset-dialog.c:221
-#, fuzzy
 msgid "Make _transparent"
-msgstr "ਪਾਰਦਰਸ਼ੀ"
+msgstr "ਪਾਰਦਰਸ਼ੀ ਬਣਾਓ(_t)"
 
 #: ../app/dialogs/palette-import-dialog.c:173
 msgid "Import Palette"
@@ -6141,14 +5958,12 @@ msgid "I_mage"
 msgstr "ਚਿੱਤਰ"
 
 #: ../app/dialogs/palette-import-dialog.c:253
-#, fuzzy
 msgid "Palette _file"
-msgstr "ਰੰਗ-ਪੱਟੀ ਨਾਮ:"
+msgstr "ਰੰਗ-ਪੱਟੀ ਫਾਇਲ(_f)"
 
 #: ../app/dialogs/palette-import-dialog.c:280
-#, fuzzy
 msgid "Select Palette File"
-msgstr "ਰੰਗ-ਪੱਟੀ ਫੋਲਡਰ ਚੁਣੋ"
+msgstr "ਰੰਗ-ਪੱਟੀ ਫਾਇਲ ਚੁਣ"
 
 #. The "Import" frame
 #: ../app/dialogs/palette-import-dialog.c:311
@@ -6156,19 +5971,16 @@ msgid "Import Options"
 msgstr "ਲਿਆਉ ਚੋਣ"
 
 #: ../app/dialogs/palette-import-dialog.c:324
-#, fuzzy
 msgid "New import"
-msgstr "ਨਵੀ ਆਯਾਤ"
+msgstr "ਨਵਾਂ ਅਯਾਤ"
 
 #: ../app/dialogs/palette-import-dialog.c:326
-#, fuzzy
 msgid "Palette _name:"
-msgstr "ਰੰਗ-ਪੱਟੀ ਨਾਮ:"
+msgstr "ਰੰਗ-ਪੱਟੀ ਨਾਂ(_n):"
 
 #: ../app/dialogs/palette-import-dialog.c:332
-#, fuzzy
 msgid "N_umber of colors:"
-msgstr "ਰੰਗਾਂ ਦੀ ਗਿਣਤੀ:"
+msgstr "ਰੰਗਾਂ ਦੀ ਗਿਣਤੀ(_u):"
 
 #: ../app/dialogs/palette-import-dialog.c:345
 msgid "C_olumns:"
@@ -6188,14 +6000,12 @@ msgid "You will have to restart GIMP for the following changes to take effect:"
 msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:435
-#, fuzzy
 msgid "Configure Input Devices"
-msgstr "ਇੰਨਪੁੱਟ ਯੰਤਰ ਦੀ ਸੰਰਚਨਾ"
+msgstr "ਇੰਪੁੱਟ ਜੰਤਰ ਸੰਰਚਨਾ"
 
 #: ../app/dialogs/preferences-dialog.c:501
-#, fuzzy
 msgid "Configure Keyboard Shortcuts"
-msgstr "ਕੀ-ਬੋਰਡ ਸ਼ਾਰਟਕੱਟ"
+msgstr "ਕੀ-ਬੋਰਡ ਸ਼ਾਰਟਕੱਟ ਸੰਰਚਨਾ"
 
 #: ../app/dialogs/preferences-dialog.c:551
 msgid ""
@@ -6228,59 +6038,48 @@ msgid ""
 msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1190
-#, fuzzy
 msgid "Show _menubar"
-msgstr "ਮੇਨੂ-ਪੱਟੀ ਵੇਖਾਉ"
+msgstr "ਮੇਨੂ-ਪੱਟੀ ਵੇਖਾਓ(_m)"
 
 #: ../app/dialogs/preferences-dialog.c:1193
-#, fuzzy
 msgid "Show _rulers"
-msgstr "ਪੈਮਾਨਾ ਵੇਖਾਓ"
+msgstr "ਪੈਮਾਨਾ ਵੇਖਾਓ(_r)"
 
 #: ../app/dialogs/preferences-dialog.c:1196
-#, fuzzy
 msgid "Show scroll_bars"
-msgstr "ਸਕਰੋਲ-ਪੱਟੀ ਵੇਖਾਓ"
+msgstr "ਸਕਰੋਲ-ਪੱਟੀ ਵੇਖਾਓ(_b)"
 
 #: ../app/dialogs/preferences-dialog.c:1199
-#, fuzzy
 msgid "Show s_tatusbar"
-msgstr "ਸਥਿਤੀ-ਪੱਟੀ ਵੇਖਾਓ"
+msgstr "ਹਾਲਤ-ਪੱਟੀ ਵੇਖਾਓ(_t)"
 
 #: ../app/dialogs/preferences-dialog.c:1207
-#, fuzzy
 msgid "Show s_election"
-msgstr "ਚੋਣ ਵੇਖਾਓ"
+msgstr "ਚੋਣ ਵੇਖਾਓ(_e)"
 
 #: ../app/dialogs/preferences-dialog.c:1210
-#, fuzzy
 msgid "Show _layer boundary"
-msgstr "ਪਰਤ-ਹਾਸ਼ੀਆ ਵੇਖਾਓ"
+msgstr "ਪਰਤ-ਹਾਸ਼ੀਆ ਵੇਖਾਓ(_l)"
 
 #: ../app/dialogs/preferences-dialog.c:1213
-#, fuzzy
 msgid "Show _guides"
-msgstr "ਸੰਕੇਤ ਵਿਖਾਓ"
+msgstr "ਸੰਕੇਤ ਵੇਖਾਓ(_g)"
 
 #: ../app/dialogs/preferences-dialog.c:1216
-#, fuzzy
 msgid "Show gri_d"
-msgstr "ਗਰਿੱਡ ਵੇਖਾਓ"
+msgstr "ਗਰਿੱਡ ਵੇਖਾਓ(_d)"
 
 #: ../app/dialogs/preferences-dialog.c:1222
-#, fuzzy
 msgid "Canvas _padding mode:"
-msgstr "ਸੋਧ ਰੰਗ"
+msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1227
-#, fuzzy
 msgid "Custom p_adding color:"
-msgstr "ਸੋਧ ਰੰਗ"
+msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1228
-#, fuzzy
 msgid "Select Custom Canvas Padding Color"
-msgstr "ਸੋਧ ਰੰਗ"
+msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1297
 msgid "Preferences"
@@ -6296,39 +6095,33 @@ msgid "Resource Consumption"
 msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1432
-#, fuzzy
 msgid "Minimal number of _undo levels:"
-msgstr "ਨਿਊਨਤਮ ਰੰਗਾਂ ਦੀ ਗਿਣਤੀ:"
+msgstr "ਵਾਪਸ ਪੱਧਰ ਦੀ ਘੱਟੋ-ਘੱਟ ਗਿਣਤੀ(_u):"
 
 #: ../app/dialogs/preferences-dialog.c:1435
-#, fuzzy
 msgid "Maximum undo _memory:"
-msgstr "ਮੈਮੋਰੀ ਵਿੱਚ ਅਕਾਰ:"
+msgstr "ਵੱਧੋ-ਵੱਧ ਵਾਪਸੀ ਮੈਮੋਰੀ(_m):"
 
 #: ../app/dialogs/preferences-dialog.c:1438
 msgid "Tile cache _size:"
 msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1441
-#, fuzzy
 msgid "Maximum _new image size:"
-msgstr "ਨਵੇ ਚਿੱਤਰ ਦਾ ਅਧਿਕਤਮ ਅਕਾਰ:"
+msgstr "ਨਵੇਂ ਚਿੱਤਰ ਦਾ ਵੱਧੋ-ਵੱਧ ਅਕਾਰ(_n):"
 
 #: ../app/dialogs/preferences-dialog.c:1446
-#, fuzzy
 msgid "Number of _processors to use:"
-msgstr "ਰੰਗਾਂ ਦੀ ਗਿਣਤੀ:"
+msgstr "ਵਰਤਣ ਲਈ ਪਰੋਸੈਸਰਾਂ ਦੀ ਗਿਣਤੀ(_p):"
 
 #. Image Thumbnails
 #: ../app/dialogs/preferences-dialog.c:1451
-#, fuzzy
 msgid "Image Thumbnails"
-msgstr "ਚਿੱਤਰ ਮਖੌਟਾ"
+msgstr "ਚਿੱਤਰ ਥੰਮਨੇਲ"
 
 #: ../app/dialogs/preferences-dialog.c:1456
-#, fuzzy
 msgid "Size of _thumbnails:"
-msgstr "ਕੋਈ ਥੰਮਨੇਲ ਨਹੀ"
+msgstr "ਥੰਮਨੇਲ ਅਕਾਰ(_t):"
 
 #: ../app/dialogs/preferences-dialog.c:1460
 msgid "Maximum _filesize for thumbnailing:"
@@ -6336,9 +6129,8 @@ msgstr ""
 
 #. File Saving
 #: ../app/dialogs/preferences-dialog.c:1464
-#, fuzzy
 msgid "Saving Images"
-msgstr "ਚਿੱਤਰ ਸੰਭਾਲੋ"
+msgstr "ਚਿੱਤਰ ਸੰਭਾਲੇ ਜਾ ਰਹੇ ਹਨ"
 
 #: ../app/dialogs/preferences-dialog.c:1467
 msgid "Confirm closing of unsa_ved images"
@@ -6379,29 +6171,24 @@ msgid "Show menu _mnemonics (access keys)"
 msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1512
-#, fuzzy
 msgid "Use _dynamic keyboard shortcuts"
-msgstr "ਕੀ-ਬੋਰਡ ਸ਼ਾਰਟਕੱਟ"
+msgstr "ਸਫ਼ਰੀ ਕੀ-ਬੋਰਡ ਸ਼ਾਰਟਕੱਟ ਵਰਤੋਂ(_d)"
 
 #: ../app/dialogs/preferences-dialog.c:1516
-#, fuzzy
 msgid "Configure _Keyboard Shortcuts..."
-msgstr "ਕੀ-ਬੋਰਡ ਸ਼ਾਰਟਕੱਟ"
+msgstr "ਕੀ-ਬੋਰਡ ਸ਼ਾਰਟਕੱਟ ਸੰਰਚਨਾ(_K)..."
 
 #: ../app/dialogs/preferences-dialog.c:1523
-#, fuzzy
 msgid "_Save keyboard shortcuts on exit"
-msgstr "ਜਦੋ ਵੀ ਜੈਮਪ ਬੰਦ ਹੋਵੇ ਤਾਂ, ਕੀ-ਬੋਰਡ ਸ਼ਾਰਟਕੱਟ ਵਿੱਚ ਤਬਦੀਲੀਆ ਨੂੰ ਸੰਭਾਲ ਲਵੇ।"
+msgstr "ਬੰਦ ਕਰਨ ਸਮੇਂ ਕੀ-ਬੋਰਡ ਸ਼ਾਰਟਕੱਟ ਸੰਭਾਲੋ(_S)"
 
 #: ../app/dialogs/preferences-dialog.c:1527
-#, fuzzy
 msgid "Save Keyboard Shortcuts _Now"
-msgstr "ਕੀ-ਬੋਰਡ ਸ਼ਾਰਟਕੱਟ"
+msgstr "ਕੀ-ਬੋਰਡ ਸ਼ਾਰਟਕੱਟ ਹੁਣੇ ਸੰਭਾਲੋ(_N)"
 
 #: ../app/dialogs/preferences-dialog.c:1534
-#, fuzzy
 msgid "_Reset Saved Keyboard Shortcuts to Default Values"
-msgstr "ਹਰੇਕ ਜੈਮਪ ਸ਼ੁਰੂ ਕਰਨ ਸਮੇਂ ਸੰਭਾਲੇ ਕੀ-ਬੋਰਡ ਸ਼ਾਰਟਕੱਟ ਪੁਨਰ-ਪ੍ਰਾਪਤ ਕਰੋ।"
+msgstr "ਸੰਭਾਲੇ ਕੀ-ਬੋਰਡ ਸ਼ਾਰਟਕੱਟ ਦੇ ਮੁੱਲ ਮੁੱਢਲੇ ਦਿਓ(_R)"
 
 #: ../app/dialogs/preferences-dialog.c:1549
 #: ../app/dialogs/preferences-dialog.c:1588
@@ -6421,19 +6208,16 @@ msgid "Help System"
 msgstr "ਸਹਾਇਤਾ ਸਿਸਟਮ"
 
 #: ../app/dialogs/preferences-dialog.c:1667
-#, fuzzy
 msgid "Show tool _tips"
-msgstr "ਸੰਦ-ਸੰਕੇਤ ਵੇਖਾਓ"
+msgstr "ਸੰਦ-ਸੰਕੇਤ ਵੇਖਾਓ(_t)"
 
 #: ../app/dialogs/preferences-dialog.c:1670
-#, fuzzy
 msgid "Show help _buttons"
-msgstr "ਚੋਣ ਵੇਖਾਓ"
+msgstr "ਸਹਾਇਤਾ ਬਟਨ ਵੇਖਾਓ(_b)"
 
 #: ../app/dialogs/preferences-dialog.c:1673
-#, fuzzy
 msgid "Show tips on _startup"
-msgstr "ਅਗਲੀ ਵਾਰ ਜੈਮਪ ਚੱਲਣ ਤੇ ਇਸ਼ਾਰਾ ਵਿਖਾਓ"
+msgstr "ਸ਼ੁਰੂ ਵੇਲੇ ਇਸ਼ਾਰੇ ਵੇਖਾਓ(_s)"
 
 #. Help Browser
 #: ../app/dialogs/preferences-dialog.c:1677
@@ -6441,38 +6225,32 @@ msgid "Help Browser"
 msgstr "ਸਹਾਇਤਾ ਝਲਕਾਰਾ"
 
 #: ../app/dialogs/preferences-dialog.c:1681
-#, fuzzy
 msgid "H_elp browser to use:"
-msgstr "ਵਰਤਣ ਲਈ ਸਹਾਇਤਾ ਝਲਕਾਰਾ:"
+msgstr "ਵਰਤਣ ਲਈ ਸਹਾਇਤਾ ਝਲਕਾਰਾ(_e):"
 
 #: ../app/dialogs/preferences-dialog.c:1686
 msgid "Web Browser"
 msgstr "ਵੈਬ ਬਰਾਊਜ਼ਰ"
 
 #: ../app/dialogs/preferences-dialog.c:1690
-#, fuzzy
 msgid "Select Web Browser"
-msgstr "ਵੈਬ ਬਰਾਊਜ਼ਰ ਚੁਣੋ"
+msgstr "ਵੈਬ ਝਲਕਾਰਾ ਚੁਣੋ"
 
 #: ../app/dialogs/preferences-dialog.c:1693
-#, fuzzy
 msgid "_Web browser to use:"
-msgstr "ਵਰਤਣ ਲਈ ਵੈਬ ਬਰਾਊਜ਼ਰ:"
+msgstr "ਵਰਤਣ ਲਈ ਵੈੱਬ ਝਲਕਾਰਾ(_W):"
 
 #: ../app/dialogs/preferences-dialog.c:1721
-#, fuzzy
 msgid "_Save tool options on exit"
-msgstr "ਝਰੋਖਾ ਸਥਿਤੀ"
+msgstr "ਬੰਧ ਕਰਨ ਸਮੇਂ ਸੰਦ ਚੋਣਾਂ ਸੰਭਾਲੋ(_S)"
 
 #: ../app/dialogs/preferences-dialog.c:1725
-#, fuzzy
 msgid "Save Tool Options _Now"
-msgstr "ਸੰਦ ਚੋਣ ਸੰਭਾਲੋ"
+msgstr "ਹੁਣੇ ਸੰਦ ਚੋਣ ਸੰਭਾਲੋ(_N)"
 
 #: ../app/dialogs/preferences-dialog.c:1732
-#, fuzzy
 msgid "_Reset Saved Tool Options to Default Values"
-msgstr "ਚੁਣੇ ਫਿਲਟਰ ਦਾ ਮੁੱਲ ਮੁਡ਼ ਨਿਰਧਾਰਿਤ ਕਰੋ"
+msgstr "ਸੰਦ ਚੋਣਾਂ ਨੂੰ ਉਹਨਾਂ ਦੇ ਮੁੱਢਲੇ ਮੁੱਲ ਦਿਓ(_R)"
 
 #. Snapping Distance
 #: ../app/dialogs/preferences-dialog.c:1742
@@ -6480,9 +6258,8 @@ msgid "Guide & Grid Snapping"
 msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1747
-#, fuzzy
 msgid "_Snap distance:"
-msgstr "ਦੂਰੀ:"
+msgstr ""
 
 #. Scaling
 #: ../app/dialogs/preferences-dialog.c:1751
@@ -6499,19 +6276,16 @@ msgid "Paint Options Shared Between Tools"
 msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1775
-#, fuzzy
 msgid "Move Tool"
-msgstr "ਭੇਜੋ:"
+msgstr "ਸੰਦੇ ਭੇਜੋ"
 
 #: ../app/dialogs/preferences-dialog.c:1779
-#, fuzzy
 msgid "Change current layer or path"
-msgstr "ਸਿਰਫ਼ ਮੌਜੂਦਾ ਪਰਤ ਲਈ"
+msgstr "ਮੌਜੂਦਾ ਪਰਤ ਜਾਂ ਮਾਰਗ ਤਬਦੀਲ"
 
 #: ../app/dialogs/preferences-dialog.c:1792
-#, fuzzy
 msgid "Toolbox"
-msgstr "ਸੰਦਪੱਟੀ ਮੇਨੂ"
+msgstr "ਸੰਦ-ਬਕਸਾ"
 
 #. Appearance
 #: ../app/dialogs/preferences-dialog.c:1804
@@ -6521,29 +6295,24 @@ msgid "Appearance"
 msgstr "ਦਿੱਖ"
 
 #: ../app/dialogs/preferences-dialog.c:1808
-#, fuzzy
 msgid "Show _foreground & background color"
-msgstr "ਪਿੱਠਭੂਮੀ ਰੰਗ ਨਿਰਧਾਰਿਤ ਕਰੋ"
+msgstr "ਮੁੱਖ-ਭੂਮੀ ਅਤੇ ਪਿੱਠਭੂਮੀ ਰੰਗ ਵੇਖਾਓ(_f)"
 
 #: ../app/dialogs/preferences-dialog.c:1812
-#, fuzzy
 msgid "Show active _brush, pattern & gradient"
-msgstr "/ਤਖਤੀ/ਨਵਾਂ ਤਰਦਾ ਬਣਾਓ/ਬੁਰਸ਼, ਤਰਤੀਬਾਂ ਤੇ ਢਾਲੂ"
+msgstr "ਸਰਗਰਮ ਬੁਰਸ਼, ਤਰਤੀਬਾਂ ਅਤੇ ਢਾਂਲੂ ਵੇਖਾਓ(_b)"
 
 #: ../app/dialogs/preferences-dialog.c:1816
-#, fuzzy
 msgid "Show active _image"
-msgstr "ਚਿੱਤਰ ਸੰਭਾਲੋ"
+msgstr "ਸਰਗਰਮ ਚਿੱਤਰ ਵੇਖਾਓ(_i)"
 
 #: ../app/dialogs/preferences-dialog.c:1829
-#, fuzzy
 msgid "Default New Image"
-msgstr "ਨਵਾਂ ਚਿੱਤਰ ਬਣਾਉ"
+msgstr "ਮੂਲ ਨਵਾਂ ਚਿੱਤਰ"
 
 #: ../app/dialogs/preferences-dialog.c:1832
-#, fuzzy
 msgid "Default Image"
-msgstr "ਮੂਲ ਚਿੱਤਰ ਗਰਿੱਡ"
+msgstr "ਮੂਲ ਚਿੱਤਰ"
 
 #: ../app/dialogs/preferences-dialog.c:1867
 msgid "Default Image Grid"
@@ -6579,14 +6348,12 @@ msgid "Resize window on image _size change"
 msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1928
-#, fuzzy
 msgid "Fit to window"
-msgstr "ਝਰੋਖੇ ਦੇ ਅਨੁਕੂਲ"
+msgstr "ਝਰੋਖੇ ਵਿੱਚ ਫਿੱਟ"
 
 #: ../app/dialogs/preferences-dialog.c:1930
-#, fuzzy
 msgid "Initial zoom _ratio:"
-msgstr "ਸ਼ੁਰੂਆਤੀ ਆਕਾਰ ਅਨੁਪਾਤ:"
+msgstr "ਸ਼ੁਰੂਆਤੀ ਜ਼ੂਮ ਅਨੁਪਾਤ(_r):"
 
 #. Mouse Cursors
 #: ../app/dialogs/preferences-dialog.c:1934
@@ -6602,14 +6369,12 @@ msgid "Show paint _tool cursor"
 msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1947
-#, fuzzy
 msgid "Cursor _mode:"
-msgstr "ਕਰਸਰ ਮੋਡ:"
+msgstr "ਕਰਸਰ ਢੰਗ(_m):"
 
 #: ../app/dialogs/preferences-dialog.c:1950
-#, fuzzy
 msgid "Cursor re_ndering:"
-msgstr "ਕਰਸਰ ਮੋਡ:"
+msgstr "ਕਰਸਰ ਪੇਸ਼ਕਾਰੀ(_n):"
 
 #: ../app/dialogs/preferences-dialog.c:1962
 msgid "Image Window Appearance"
@@ -6632,14 +6397,12 @@ msgid "Title & Status"
 msgstr "ਸਿਰਲੇਖ ਤੇ ਸਥਿਤੀ"
 
 #: ../app/dialogs/preferences-dialog.c:2008
-#, fuzzy
 msgid "Current format"
-msgstr "ਮੌਜੂਦਾ ਸਥਿਤੀ"
+msgstr "ਮੌਜੂਦਾ ਫਾਰਮਿਟ"
 
 #: ../app/dialogs/preferences-dialog.c:2009
-#, fuzzy
 msgid "Default format"
-msgstr "ਮੂਲ ਗਰਿੱਡ"
+msgstr "ਮੂਲ ਫਾਰਮਿਟ"
 
 #: ../app/dialogs/preferences-dialog.c:2010
 msgid "Show zoom percentage"
@@ -6650,9 +6413,8 @@ msgid "Show zoom ratio"
 msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2012
-#, fuzzy
 msgid "Show image size"
-msgstr "/ਚਿੱਤਰ ਮੇਨੂ ਵੇਖਾਉ"
+msgstr "ਚਿੱਤਰ ਅਕਾਰ ਵੇਖਾਓ"
 
 #: ../app/dialogs/preferences-dialog.c:2025
 msgid "Image Title Format"
@@ -6667,9 +6429,8 @@ msgid "Display"
 msgstr "ਦਰਿਸ਼"
 
 #: ../app/dialogs/preferences-dialog.c:2128
-#, fuzzy
 msgid "_Check style:"
-msgstr "ਕੈਪ ਸ਼ੈਲੀ:"
+msgstr "ਡੱਬੀਦਾਰ ਸ਼ੈਲੀ(_C):"
 
 #: ../app/dialogs/preferences-dialog.c:2131
 msgid "Check _size:"
@@ -6691,9 +6452,9 @@ msgid "dpi"
 msgstr "ਡੀਪੀਆਈ"
 
 #: ../app/dialogs/preferences-dialog.c:2176
-#, fuzzy, c-format
+#, c-format
 msgid "From _windowing system (currently %d x %d dpi)"
-msgstr "ਮੌਜੂਦਾ ਝਰੋਖਾ ਸਿਸਟਮ(ਮੌਜੂਦਾ %d x %d ਡੀਪੀਆਈ) ਤੋ ਰੈਜ਼ੋਲੇਸ਼ਨ ਪ੍ਰਾਪਤ ਕਰੋ"
+msgstr "ਮੌਜੂਦਾ ਝਰੋਖਾ ਸਿਸਟਮ ਤੋਂ(ਮੌਜੂਦਾ %d x %d dpi)"
 
 #: ../app/dialogs/preferences-dialog.c:2196
 msgid "_Manually"
@@ -6704,45 +6465,40 @@ msgid "C_alibrate..."
 msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2233
-#, fuzzy
 msgid "Color Management"
-msgstr "ਝਰੋਖਾ ਪ੍ਰਬੰਧਨ"
+msgstr "ਰੰਗ ਪਰਬੰਧਨ"
 
 #: ../app/dialogs/preferences-dialog.c:2253
 msgid "_RGB profile:"
-msgstr ""
+msgstr "_RGB ਪਰੋਫਾਇਲ:"
 
 #: ../app/dialogs/preferences-dialog.c:2254
-#, fuzzy
 msgid "Select RGB Color Profile"
-msgstr "ਰੰਗ ਅਨੁਸਾਰ ਚੁਣੋ"
+msgstr "RGB ਰੰਗ ਪਰੋਫਾਇਲ ਚੁਣੋ"
 
 #: ../app/dialogs/preferences-dialog.c:2255
 msgid "_CMYK profile:"
-msgstr ""
+msgstr "_CMYK ਪਰੋਫਾਇਲ:"
 
 #: ../app/dialogs/preferences-dialog.c:2256
-#, fuzzy
 msgid "Select CMYK Color Profile"
-msgstr "ਰੰਗ ਨਾਲ ਚੁਣੋ"
+msgstr "CMYK ਰੰਗ ਪਰੋਫਾਇਲ ਚੁਣੋ"
 
 #: ../app/dialogs/preferences-dialog.c:2257
 msgid "_Monitor profile:"
-msgstr ""
+msgstr "ਮਾਨੀਟਰ ਪਰੋਫਾਇਲ(_M):"
 
 #: ../app/dialogs/preferences-dialog.c:2258
-#, fuzzy
 msgid "Select Monitor Color Profile"
-msgstr "ਮੁੱਖ ਰੰਗ ਨੂੰ ਸੋਧ ਲਈ ਚੁਣੋ"
+msgstr "ਮਾਨੀਟਰ ਰੰਗ ਪਰੋਫਾਇਲ ਚੁਣੋ"
 
 #: ../app/dialogs/preferences-dialog.c:2259
 msgid "_Print simulation profile:"
-msgstr ""
+msgstr "ਪਰਿੰਟਰ ਸਮਰੂਪ ਪਰੋਫਾਇਲ(_P):"
 
 #: ../app/dialogs/preferences-dialog.c:2260
-#, fuzzy
 msgid "Select Printer Color Profile"
-msgstr "ਮੁੱਖ ਰੰਗ ਨੂੰ ਸੋਧ ਲਈ ਚੁਣੋ"
+msgstr "ਪਰਿੰਟਰ ਰੰਗ ਪਰੋਫਾਇਲ ਚੁਣੋ"
 
 #: ../app/dialogs/preferences-dialog.c:2269
 msgid "_Mode of operation:"
@@ -6770,24 +6526,20 @@ msgid "Extended Input Devices"
 msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2337
-#, fuzzy
 msgid "Configure E_xtended Input Devices..."
-msgstr "ਇੰਨਪੁੱਟ ਯੰਤਰ ਦੀ ਸੰਰਚਨਾ"
+msgstr "ਸਹਾਇਕ ਇੰਪੁੱਟ ਜੰਤਰ ਸੰਰਚਨਾ(_x)..."
 
 #: ../app/dialogs/preferences-dialog.c:2344
-#, fuzzy
 msgid "_Save input device settings on exit"
-msgstr "ਪੱਧਰ ਵਿਵਸਥਾਂ ਨੂੰ ਫਾਇਲ ਵਿੱਚ ਸੰਭਾਲੋ"
+msgstr "ਬੰਦ ਕਰਨ ਉੱਤੇ ਇੰਪੁੱਟ ਜੰਤਰ ਸੰਭਾਲੋ(_S)"
 
 #: ../app/dialogs/preferences-dialog.c:2348
-#, fuzzy
 msgid "Save Input Device Settings _Now"
-msgstr "ਗੋਲਾਈ ਵਿਵਸਥਾਂ ਨੂੰ ਫਾਇਲ ਵਿੱਚ ਸੰਭਾਲੋ"
+msgstr "ਹੁਣੇ ਇੰਪੁੱਟ ਜੰਤਰ ਸੰਭਾਲੋ(_N)"
 
 #: ../app/dialogs/preferences-dialog.c:2355
-#, fuzzy
 msgid "_Reset Saved Input Device Settings to Default Values"
-msgstr "ਚੁਣੇ ਫਿਲਟਰ ਦਾ ਮੁੱਲ ਮੁਡ਼ ਨਿਰਧਾਰਿਤ ਕਰੋ"
+msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2370
 msgid "Additional Input Controllers"
@@ -6802,19 +6554,16 @@ msgid "Window Management"
 msgstr "ਝਰੋਖਾ ਪ੍ਰਬੰਧਨ"
 
 #: ../app/dialogs/preferences-dialog.c:2398
-#, fuzzy
 msgid "Window Manager Hints"
-msgstr "ਝਰੋਖਾ ਪ੍ਰਬੰਧਨ"
+msgstr "ਝਰੋਖਾ ਪਰਬੰਧਕ ਇਸ਼ਾਰਾ"
 
 #: ../app/dialogs/preferences-dialog.c:2404
-#, fuzzy
 msgid "Hint for the _toolbox:"
-msgstr "ਸੰਦਖਾਨੇ ਲਈ ਝਰੋਖਾ ਕਿਸਮ ਸੰਕੇਤ:"
+msgstr "ਸੰਦ-ਬਕਸਾ ਲਈ ਇਸ਼ਾਰਾ(_t):"
 
 #: ../app/dialogs/preferences-dialog.c:2408
-#, fuzzy
 msgid "Hint for other _docks:"
-msgstr "ਡੌਕ ਲਈ ਝਰੋਖਾ ਕਿਸਮ ਸੰਕੇਤ:"
+msgstr "ਹੋਰ ਡਾਕ ਲਈ ਇਸ਼ਾਰਾ(_d):"
 
 #: ../app/dialogs/preferences-dialog.c:2412
 msgid "Toolbox and other docks are transient to the active display"
@@ -6834,14 +6583,12 @@ msgid "Window Positions"
 msgstr "ਝਰੋਖਾ ਸਥਿਤੀ"
 
 #: ../app/dialogs/preferences-dialog.c:2427
-#, fuzzy
 msgid "_Save window positions on exit"
-msgstr "ਝਰੋਖਾ ਸਥਿਤੀ"
+msgstr "ਬੰਦ ਕਰਨ ਸਮੇਂ ਝਰੋਖਾ ਟਿਕਾਣਾ ਸੰਭਾਲੋ(_S)"
 
 #: ../app/dialogs/preferences-dialog.c:2431
-#, fuzzy
 msgid "Save Window Positions _Now"
-msgstr "ਝਰੋਖਾ ਸਥਿਤੀ"
+msgstr "ਹੁਣੇ ਝਰੋਖਾ ਟਿਕਾਣਾ ਸੰਭਾਲੋ(_N)"
 
 #: ../app/dialogs/preferences-dialog.c:2438
 #, fuzzy
@@ -6853,25 +6600,21 @@ msgid "Folders"
 msgstr "ਫੋਲਡਰ"
 
 #: ../app/dialogs/preferences-dialog.c:2471
-#, fuzzy
 msgid "Temp folder:"
-msgstr "ਸਰੂਪ ਫੋਲਡਰ"
+msgstr "ਆਰਜ਼ੀ ਫੋਲਡਰ:"
 
 #: ../app/dialogs/preferences-dialog.c:2471
-#, fuzzy
 msgid "Select Temp Folder"
-msgstr "ਸਰੂਪ ਫੋਲਡਰ ਚੁਣੋ"
+msgstr "ਆਰਜ਼ੀ ਫੋਲ ਚੁਣੋ"
 
 #: ../app/dialogs/preferences-dialog.c:2472
 #: ../app/dialogs/user-install-dialog.c:1420
-#, fuzzy
 msgid "Swap folder:"
 msgstr "ਸਵੈਪ ਫੋਲਡਰ:"
 
 #: ../app/dialogs/preferences-dialog.c:2472
-#, fuzzy
 msgid "Select Swap Folder"
-msgstr "ਸਵੈਪ ਡਾਇ ਚੁਣੋ"
+msgstr "ਸਵੈਪ ਫੋਲਡਰ ਚੁਣੋ"
 
 #: ../app/dialogs/preferences-dialog.c:2505
 msgid "Brush Folders"
@@ -6942,19 +6685,16 @@ msgid "Select Module Folders"
 msgstr "ਮੈਡੀਊਲ ਫੋਲਡਰ ਚੁਣੋ"
 
 #: ../app/dialogs/preferences-dialog.c:2537
-#, fuzzy
 msgid "Interpreters"
-msgstr "ਇਕਾਈ ਵਿਸ਼ੇਸਤਾ"
+msgstr "ਇੰਟਰਪਰੇਟਰ"
 
 #: ../app/dialogs/preferences-dialog.c:2537
-#, fuzzy
 msgid "Interpreter Folders"
-msgstr "ਤਰਤੀਬ ਫੋਲਡਰ"
+msgstr "ਇੰਟਰਪਰੇਟਰ ਫੋਲਡਰ"
 
 #: ../app/dialogs/preferences-dialog.c:2539
-#, fuzzy
 msgid "Select Interpreter Folders"
-msgstr "ਤਰਤੀਬ ਫੋਲਡਰ ਚੁਣੋ"
+msgstr "ਇੰਟਰਪਰੇਟਰ ਫੋਲਡਰ ਚੁਣੋ"
 
 #: ../app/dialogs/preferences-dialog.c:2541
 msgid "Environment Folders"
@@ -6977,35 +6717,30 @@ msgid "Select Theme Folders"
 msgstr "ਸਰੂਪ ਫੋਲਡਰ ਚੁਣੋ"
 
 #: ../app/dialogs/print-size-dialog.c:135
-#, fuzzy
 msgid "Print Size"
-msgstr "ਛਾਪਣ ਦਾ ਅਕਾਰ:"
+msgstr "ਛਪਾਈ ਅਕਾਰ"
 
 #. the image size labels
 #: ../app/dialogs/print-size-dialog.c:162 ../app/widgets/gimpsizebox.c:221
 #: ../app/widgets/gimptemplateeditor.c:232
-#, fuzzy
 msgid "_Width:"
-msgstr "ਚੌਡ਼ਾਈ:"
+msgstr "ਚੌੜਾਈ(_W):"
 
 #: ../app/dialogs/print-size-dialog.c:169 ../app/widgets/gimpsizebox.c:225
 #: ../app/widgets/gimptemplateeditor.c:239
-#, fuzzy
 msgid "H_eight:"
-msgstr "ਉਚਾਈ:"
+msgstr "ਉਚਾਈ(_e):"
 
 #. the resolution labels
 #: ../app/dialogs/print-size-dialog.c:217 ../app/widgets/gimpsizebox.c:274
 #: ../app/widgets/gimptemplateeditor.c:359
-#, fuzzy
 msgid "_X resolution:"
-msgstr "ਰੈਜ਼ੋਲੇਸ਼ਨ:"
+msgstr "_X ਰੈਜ਼ੋਲੇਸ਼ਨ:"
 
 #: ../app/dialogs/print-size-dialog.c:224 ../app/widgets/gimpsizebox.c:277
 #: ../app/widgets/gimptemplateeditor.c:366
-#, fuzzy
 msgid "_Y resolution:"
-msgstr "ਰੈਜ਼ੋਲੇਸ਼ਨ:"
+msgstr "_Y ਰੈਜ਼ੋਲੇਸ਼ਨ:"
 
 #: ../app/dialogs/print-size-dialog.c:235 ../app/widgets/gimpsizebox.c:270
 #: ../app/widgets/gimptemplateeditor.c:379
@@ -7014,14 +6749,12 @@ msgid "pixels/%a"
 msgstr "ਪਿਕਸਲ/%a"
 
 #: ../app/dialogs/quit-dialog.c:87
-#, fuzzy
 msgid "Quit The GIMP"
-msgstr "ਜੈਮਪ ਵਿੱਚੋ ਬਾਹਰ ਜਾਣਾ ਹੈ?"
+msgstr "ਜੈਮਪ ਬੰਦ ਕਰੋ"
 
 #: ../app/dialogs/quit-dialog.c:139
-#, fuzzy
 msgid "If you quit GIMP now, these changes will be lost."
-msgstr "ਅਣ-ਸੰਭਾਲਿਆ ਡਾਟਾ ਖਤਮ ਹੋ ਜਾਵੇਗਾ।"
+msgstr "ਜੇਕਰ ਤੁਸੀਂ ਜੈਮਪ ਨੂੰ ਹੁਣੇ ਬੰਦ ਕਰ ਦਿੱਤਾ, ਇਹ ਤਬਦੀਲੀਆਂ ਖਤਮ ਹੋ ਜਾਣਗੀਆਂ।"
 
 #: ../app/dialogs/quit-dialog.c:176
 #, c-format
@@ -7040,14 +6773,12 @@ msgid "Canvas Size"
 msgstr ""
 
 #: ../app/dialogs/resize-dialog.c:127 ../app/dialogs/scale-dialog.c:107
-#, fuzzy
 msgid "Layer Size"
-msgstr "ਪਰਤ ਚੋਣ"
+msgstr "ਪਰਤ ਅਕਾਰ"
 
 #: ../app/dialogs/resize-dialog.c:289
-#, fuzzy
 msgid "Resize _layers:"
-msgstr "ਪਰਤ ਮੁਡ਼-ਅਕਾਰ"
+msgstr "ਪਰਤ ਮੁਡ਼-ਅਕਾਰ(_L):"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:70
 msgid "Calibrate Monitor Resolution"
@@ -7071,9 +6802,8 @@ msgid "Image Size"
 msgstr "ਚਿੱਤਰ ਕਿਸਮ"
 
 #: ../app/dialogs/scale-dialog.c:172
-#, fuzzy
 msgid "Quality"
-msgstr "/ਫਾਇਲ/ਬਾਹਰ"
+msgstr "ਗੁਣਵੱਤਾ"
 
 #: ../app/dialogs/scale-dialog.c:184
 #, fuzzy
@@ -7091,9 +6821,8 @@ msgid "Choose Stroke Style"
 msgstr ""
 
 #: ../app/dialogs/stroke-dialog.c:212
-#, fuzzy
 msgid "Paint tool:"
-msgstr "ਪੇਟ ਸੰਦ:"
+msgstr "ਪੇਂਟ ਸੰਦ:"
 
 #: ../app/dialogs/tips-dialog.c:89
 msgid "<b>Your GIMP tips file appears to be missing!</b>"
@@ -7117,14 +6846,12 @@ msgid "Show tip next time GIMP starts"
 msgstr "ਅਗਲੀ ਵਾਰ ਜੈਮਪ ਚੱਲਣ ਤੇ ਇਸ਼ਾਰਾ ਵਿਖਾਓ"
 
 #: ../app/dialogs/tips-dialog.c:218
-#, fuzzy
 msgid "_Previous Tip"
-msgstr "ਪਿਛਲਾ ਇਸ਼ਾਰਾ"
+msgstr "ਇਸ਼ਾਰਾ ਪਿੱਛੇ(_P)"
 
 #: ../app/dialogs/tips-dialog.c:227
-#, fuzzy
 msgid "_Next Tip"
-msgstr "ਅਗਲਾ ਇਸ਼ਾਰਾ"
+msgstr "ਇਸ਼ਾਰਾ ਅੱਗੇ(_N)"
 
 #. This is a special string to specify the language identifier to
 #. look for in the gimp-tips.xml file. Please translate the C in it
@@ -7297,27 +7024,26 @@ msgstr "ਜਾਰੀ ਰੱਖੋ"
 #. GPL_PAGE
 #. version number
 #: ../app/dialogs/user-install-dialog.c:774
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Welcome to\n"
 "The GIMP %d.%d User Installation"
 msgstr ""
 "ਜੀ ਆਇਆਂ ਨੂੰ\n"
-"ਜੈਮਪ ਉਪਭੋਗੀ ਇੰਸਟਾਲੇਸ਼ਨ ਤੇ ਸਵਾਗਤ ਹੈ"
+"ਜੈਮਪ %d.%d ਉਪਭੋਗੀ ਇੰਸਟਾਲੇਸ਼ਨ ਵਲੋਂ ਸਵਾਗਤ ਹੈ"
 
 #: ../app/dialogs/user-install-dialog.c:780
 msgid "Click \"Continue\" to enter the GIMP user installation."
 msgstr ""
 
 #: ../app/dialogs/user-install-dialog.c:787
-#, fuzzy
 msgid ""
 "<b>The GIMP - GNU Image Manipulation Program</b>\n"
 "Copyright (C) 1995-2005\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team."
 msgstr ""
 "<b>ਜੈਮਪ(GIMP) - GNU ਚਿੱਤਰਾਂ ਲਈ ਇਸਤੇਮਾਲ ਕਰਨ ਵਾਲਾ ਕਾਰਜ</b>\n"
-"ਹੱਕ ਰਾਖਵੇ ਹਨ (C) ੧੯੯੫-੨੦੦੪\n"
+"ਹੱਕ ਰਾਖਵੇ ਹਨ (C) ੧੯੯੫-੨੦੦੫\n"
 "ਸਪੈਨਸਰ ਕਿਮਬਿਲ, ਪੀਟਰ ਮਟੀਟੀਸ ਅਤੇ ਗਨੋਮ ਵਿਕਾਸ ਟੀਮ।"
 
 #: ../app/dialogs/user-install-dialog.c:797
@@ -7443,7 +7169,6 @@ msgid ""
 msgstr ""
 
 #: ../app/dialogs/user-install-dialog.c:1415
-#, fuzzy
 msgid "Select Swap Dir"
 msgstr "ਸਵੈਪ ਡਾਇ ਚੁਣੋ"
 
@@ -7483,12 +7208,10 @@ msgid "_Scale imported paths to fit image"
 msgstr ""
 
 #: ../app/dialogs/vectors-options-dialog.c:118
-#, fuzzy
 msgid "Path name:"
-msgstr "ਰਸਤਾ ਨਾਂ:"
+msgstr "ਮਾਰਗ ਨਾਂ:"
 
 #: ../app/display/display-enums.c:24
-#, fuzzy
 msgid "Tool icon"
 msgstr "ਸੰਦ ਆਈਕਾਨ"
 
@@ -7501,9 +7224,8 @@ msgid "Crosshair only"
 msgstr ""
 
 #: ../app/display/display-enums.c:55
-#, fuzzy
 msgid "From theme"
-msgstr "ਸਰੂਪ ਤੋ"
+msgstr "ਸਰੂਪ ਤੋਂ"
 
 #: ../app/display/display-enums.c:56
 #, fuzzy
@@ -7531,14 +7253,13 @@ msgstr "ਤੇਜ਼ ਮਖੌਟਾ"
 
 #: ../app/display/gimpdisplayshell-close.c:123
 #: ../app/display/gimpdisplayshell-close.c:198
-#, fuzzy, c-format
+#, c-format
 msgid "Close %s"
-msgstr " %s ਨੂੰ ਬੰਦ ਕਰਨਾ ਹੈ ?"
+msgstr " %s ਬੰਦ ਕਰੋ"
 
 #: ../app/display/gimpdisplayshell-close.c:135
-#, fuzzy
 msgid "Do_n't Save"
-msgstr "ਸੰਭਾਲੋ(_S)"
+msgstr "ਨਾ ਸੰਭਾਲੋ(_n)"
 
 #: ../app/display/gimpdisplayshell-close.c:205
 #, c-format
@@ -7552,9 +7273,8 @@ msgstr "ਅਣ-ਸੰਭਾਲਿਆ ਡਾਟਾ ਖਤਮ ਹੋ ਜਾਵੇ�
 
 #. one second, the time period
 #: ../app/display/gimpdisplayshell-close.c:279
-#, fuzzy
 msgid "second"
-msgstr "ਆਈਕਾਨ"
+msgstr "ਦੂਜਾ"
 
 #: ../app/display/gimpdisplayshell-close.c:282
 #, c-format
@@ -7562,9 +7282,8 @@ msgid "%d seconds"
 msgstr ""
 
 #: ../app/display/gimpdisplayshell-close.c:288
-#, fuzzy
 msgid "minute"
-msgstr "ਰੇਖਾ"
+msgstr "ਮਿੰਟ"
 
 #: ../app/display/gimpdisplayshell-close.c:290
 #, c-format
@@ -7608,13 +7327,12 @@ msgid "Select Zoom Ratio"
 msgstr "ਆਕਾਰ ਅਨੁਪਾਤ ਚੁਣੋ"
 
 #: ../app/display/gimpdisplayshell-scale.c:645
-#, fuzzy
 msgid "Zoom ratio:"
-msgstr "ਆਕਾਰ ਅਨੁਪਾਤ:"
+msgstr "ਜ਼ੂਮ ਅਨੁਪਾਤ:"
 
 #: ../app/display/gimpdisplayshell-scale.c:672
 msgid "Zoom:"
-msgstr "ਆਕਾਰ:"
+msgstr "ਜ਼ੂਮ:"
 
 #: ../app/display/gimpdisplayshell-title.c:223
 msgid "RGB-empty"
@@ -7660,9 +7378,8 @@ msgid "(none)"
 msgstr "(ਕੋਈ ਨਹੀ)"
 
 #: ../app/display/gimpstatusbar.c:146
-#, fuzzy
 msgid "Shadow type"
-msgstr "ਪ੍ਛਾਵਾਂ"
+msgstr "ਛਾਂ ਕਿਸਮ"
 
 #: ../app/display/gimpstatusbar.c:147
 msgid "Style of bevel around the statusbar text"
@@ -7673,13 +7390,12 @@ msgid "Cancel"
 msgstr "ਰੱਦ"
 
 #: ../app/display/gimpstatusbar.c:452
-#, fuzzy
 msgid "Other..."
-msgstr "ਹੋਰ (%s) ..."
+msgstr "ਹੋਰ..."
 
 #: ../app/file/file-open.c:105
 msgid "Unknown file type"
-msgstr "ਅਣਪਛਾਤੀ ਫਾਇਲ ਕਿਸਮ"
+msgstr "ਅਣਜਾਣ ਫਾਇਲ ਕਿਸਮ"
 
 #: ../app/file/file-open.c:120 ../app/file/file-save.c:108
 msgid "Not a regular file"
@@ -7807,9 +7523,8 @@ msgstr "ਮੁੱਢਲਾ ਮੁੱਲ"
 
 #: ../app/pdb/drawable_transform_cmds.c:250
 #: ../app/pdb/drawable_transform_cmds.c:406
-#, fuzzy
 msgid "Flip..."
-msgstr "ਝਟਕਾ"
+msgstr "ਝਟਕੋ..."
 
 #: ../app/pdb/drawable_transform_cmds.c:567
 #: ../app/pdb/drawable_transform_cmds.c:752
@@ -7846,9 +7561,8 @@ msgid "Internal Procedures"
 msgstr "ਅੰਦਰੂਨੀ ਕਾਰਵਾਈ"
 
 #: ../app/pdb/internal_procs.c:87
-#, fuzzy
 msgid "Brush"
-msgstr "ਬੁਰਸ਼:"
+msgstr "ਬੁਰਸ਼"
 
 #: ../app/pdb/internal_procs.c:90
 msgid "Brush UI"
@@ -7892,9 +7606,8 @@ msgid "Gimprc procedures"
 msgstr ""
 
 #: ../app/pdb/internal_procs.c:135
-#, fuzzy
 msgid "Gradient"
-msgstr "ਢਾਲਵਾਂ:"
+msgstr "ਢਾਲਵਾਂ"
 
 #: ../app/pdb/internal_procs.c:138
 msgid "Gradient UI"
@@ -7989,9 +7702,8 @@ msgid "Free Select"
 msgstr "ਮੁਕਤ ਚੋਣ"
 
 #: ../app/pdb/vectors_cmds.c:240
-#, fuzzy
 msgid "Modify Path"
-msgstr "ਰਸਤਾਂ ਏਧਰ-ਓਧਰ"
+msgstr "ਮਾਰਗ ਸੋਧ"
 
 #: ../app/plug-in/plug-in.c:607 ../app/plug-in/plug-in.c:640
 #, fuzzy, c-format
@@ -10497,16 +10209,16 @@ msgstr "ਤੁਸੀ ਡੋਕਬਲ ਤਖਤੀਆਂ ਇਥੇ ਰੱਖ ਸ�
 msgid "Configure this tab"
 msgstr "ਇਸ ਟੈਬ ਦੀ ਸੰਰਚਨਾ"
 
-#: ../app/widgets/gimperrorconsole.c:235 ../app/widgets/gimperrordialog.c:252
+#: ../app/widgets/gimperrorconsole.c:235 ../app/widgets/gimperrordialog.c:204
 #, c-format
 msgid "%s Message"
 msgstr "%s ਸੁਨੇਹਾ"
 
-#: ../app/widgets/gimperrordialog.c:229
+#: ../app/widgets/gimperrordialog.c:181
 msgid "Too many error messages!"
 msgstr "ਕਈ ਗਲਤੀਆਂ ਲੱਭੀਆਂ ਹਨ!"
 
-#: ../app/widgets/gimperrordialog.c:230
+#: ../app/widgets/gimperrordialog.c:182
 msgid "Messages are redirected to stderr."
 msgstr ""
 
