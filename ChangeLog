@@ -1,8 +1,8 @@
 2005-09-09  Tor Lillqvist  <tml@novell.com>
 
-	* gimptool-win32.c.in (get_prefix, maybe_append_exe): Practice
-	what I preach and use g_ascii_strcasecmp() instead of
-	g_strcasecmp().
+	* gimptool-win32.c.in (get_prefix, maybe_append_exe)
+	* libgimpbase/gimpdatafiles.c (is_script): Practice what I preach
+	and use g_ascii_strcasecmp() instead of g_strcasecmp().
 
 2005-09-09  Sven Neumann  <sven@gimp.org>
 
