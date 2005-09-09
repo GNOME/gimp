@@ -1,3 +1,7 @@
+2005-09-09  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: Removed 'hi' again until all po files are there.
+
 2005-09-09  Rajesh Ranjan  <rajeshkajha@yahoo.com>
 
 	* configure.in: Added 'hi' to ALL_LINGUAS.
