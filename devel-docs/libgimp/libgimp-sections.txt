@@ -116,8 +116,9 @@ gimp_run_mode_get_type
 <FILE>gimpui</FILE>
 gimp_ui_init
 gimp_ui_get_display_window
+gimp_ui_get_progress_window
+gimp_window_set_transient
 gimp_window_set_transient_for_display
-gimp_window_set_transient_for_default_display
 </SECTION>
 
 <SECTION>
@@ -736,17 +737,20 @@ gimp_procedural_db_get_data_size
 
 <SECTION>
 <FILE>gimpprogress</FILE>
-GimpProgressStartCallback
-GimpProgressEndCallback
-GimpProgressTextCallback
-GimpProgressValueCallback
+GimpProgressVtable
 gimp_progress_init
 gimp_progress_update
 gimp_progress_pulse
 gimp_progress_set_text
-gimp_progress_install
 gimp_progress_uninstall
 gimp_progress_cancel
+gimp_progress_get_window_handle
+GimpProgressStartCallback
+GimpProgressEndCallback
+GimpProgressTextCallback
+GimpProgressValueCallback
+gimp_progress_install_vtable
+gimp_progress_install
 </SECTION>
 
 <SECTION>

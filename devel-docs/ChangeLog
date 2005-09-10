@@ -1,3 +1,11 @@
+2005-09-10  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-sections.txt: updated.
+
+	* libgimp/tmpl/gimpprogress.sgml
+	* libgimp/tmpl/gimpui.sgml
+	* libgimpbase/tmpl/gimpbaseenums.sgml: regenerated.
+
 2005-09-05  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-sections.txt: added new functions.

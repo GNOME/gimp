@@ -41,6 +41,22 @@ gtk_preview_set_gamma().
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_ui_get_progress_window ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_window_set_transient ##### -->
+<para>
+
+</para>
+
+@window: 
+
+
 <!-- ##### FUNCTION gimp_window_set_transient_for_display ##### -->
 <para>
 
@@ -48,13 +64,5 @@ gtk_preview_set_gamma().
 
 @window: 
 @gdisp_ID: 
-
-
-<!-- ##### FUNCTION gimp_window_set_transient_for_default_display ##### -->
-<para>
-
-</para>
-
-@window: 
 
 
