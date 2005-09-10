@@ -1,5 +1,13 @@
 2005-09-10  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpviewablebox.c: factored out common code in
+	preparation of fixing bug #315443.
+
+	* app/widgets/gimpviewablebutton.h (struct GimpViewableButton):
+	"popup_preview_size" is a gint, not a GimpViewType.
+
+2005-09-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpiscissorstool.c	(gimp_iscissors_tool_button_release):
 	use gimp_draw_tool_on_handle() to figure if we need to close the
 	path. Makes sure that the anchor's sensitive area matches its size

@@ -42,9 +42,16 @@
 
 /*  local function prototypes  */
 
-static void gimp_gradient_box_reverse_notify (GObject    *object,
-                                              GParamSpec *pspec,
-                                              GimpView   *view);
+static GtkWidget      * gimp_viewable_box_new  (GimpContainer *container,
+                                                GimpContext   *context,
+                                                gint           spacing,
+                                                GimpViewSize   view_size,
+                                                const gchar   *dialog_identifier,
+                                                const gchar   *dialog_stock_id,
+                                                const gchar   *dialog_tooltip);
+static void   gimp_gradient_box_reverse_notify (GObject       *object,
+                                                GParamSpec    *pspec,
+                                                GimpView      *view);
 
 
 /*  public functions  */
@@ -54,39 +61,18 @@ gimp_brush_box_new (GimpContainer *container,
                     GimpContext   *context,
                     gint           spacing)
 {
-  GtkWidget *hbox;
-  GtkWidget *button;
-  GtkWidget *entry;
-
-  g_return_val_if_fail (container == NULL ||
-                        GIMP_IS_CONTAINER (container), NULL);
+  g_return_val_if_fail (container == NULL || GIMP_IS_CONTAINER (container),
+                        NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   if (! container)
     container = context->gimp->brush_factory->container;
 
-  hbox = gtk_hbox_new (FALSE, spacing);
-
-  button = gimp_viewable_button_new (container, context,
-                                     GIMP_VIEW_SIZE_SMALL, 1,
-                                     gimp_dialog_factory_from_name ("dock"),
-                                     "gimp-brush-grid|gimp-brush-list",
-                                     GIMP_STOCK_BRUSH,
-                                     _("Open the brush selection dialog"));
-
-  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  entry = gimp_container_entry_new (container, context,
-                                    GIMP_VIEW_SIZE_SMALL, 1);
-  /*  set a silly smally size request on the entry to disable
-   *  GtkEntry's minimal width of 150 pixels.
-   */
-  gtk_widget_set_size_request (entry, 10, -1);
-  gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
-  gtk_widget_show (entry);
-
-  return hbox;
+  return gimp_viewable_box_new (container, context, spacing,
+                                GIMP_VIEW_SIZE_SMALL,
+                                "gimp-brush-grid|gimp-brush-list",
+                                GIMP_STOCK_BRUSH,
+                                _("Open the brush selection dialog"));
 }
 
 GtkWidget *
@@ -94,39 +80,18 @@ gimp_pattern_box_new (GimpContainer *container,
                       GimpContext   *context,
                       gint           spacing)
 {
-  GtkWidget *hbox;
-  GtkWidget *button;
-  GtkWidget *entry;
-
-  g_return_val_if_fail (container == NULL ||
-                        GIMP_IS_CONTAINER (container), NULL);
+  g_return_val_if_fail (container == NULL || GIMP_IS_CONTAINER (container),
+                        NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   if (! container)
     container = context->gimp->pattern_factory->container;
 
-  hbox = gtk_hbox_new (FALSE, spacing);
-
-  button = gimp_viewable_button_new (container, context,
-                                     GIMP_VIEW_SIZE_SMALL, 1,
-                                     gimp_dialog_factory_from_name ("dock"),
-                                     "gimp-pattern-grid|gimp-pattern-list",
-                                     GIMP_STOCK_PATTERN,
-                                     _("Open the pattern selection dialog"));
-
-  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  entry = gimp_container_entry_new (container, context,
-                                    GIMP_VIEW_SIZE_SMALL, 1);
-  /*  set a silly smally size request on the entry to disable
-   *  GtkEntry's minimal width of 150 pixels.
-   */
-  gtk_widget_set_size_request (entry, 10, -1);
-  gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
-  gtk_widget_show (entry);
-
-  return hbox;
+  return gimp_viewable_box_new (container, context, spacing,
+                                GIMP_VIEW_SIZE_SMALL,
+                                "gimp-pattern-grid|gimp-pattern-list",
+                                GIMP_STOCK_PATTERN,
+                                _("Open the pattern selection dialog"));
 }
 
 GtkWidget *
@@ -138,8 +103,8 @@ gimp_gradient_box_new (GimpContainer *container,
   GtkWidget *hbox;
   GtkWidget *button;
 
-  g_return_val_if_fail (container == NULL ||
-                        GIMP_IS_CONTAINER (container), NULL);
+  g_return_val_if_fail (container == NULL || GIMP_IS_CONTAINER (container),
+                        NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   if (! container)
@@ -189,39 +154,18 @@ gimp_palette_box_new (GimpContainer *container,
                       GimpContext   *context,
                       gint           spacing)
 {
-  GtkWidget *hbox;
-  GtkWidget *button;
-  GtkWidget *entry;
-
-  g_return_val_if_fail (container == NULL ||
-                        GIMP_IS_CONTAINER (container), NULL);
+  g_return_val_if_fail (container == NULL || GIMP_IS_CONTAINER (container),
+                        NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   if (! container)
     container = context->gimp->palette_factory->container;
 
-  hbox = gtk_hbox_new (FALSE, spacing);
-
-  button = gimp_viewable_button_new (container, context,
-                                     GIMP_VIEW_SIZE_MEDIUM, 1,
-                                     gimp_dialog_factory_from_name ("dock"),
-                                     "gimp-palette-list|gimp-palette-grid",
-                                     GIMP_STOCK_PALETTE,
-                                     _("Open the palette selection dialog"));
-
-  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  entry = gimp_container_entry_new (container, context,
-                                    GIMP_VIEW_SIZE_MEDIUM, 1);
-  /*  set a silly smally size request on the entry to disable
-   *  GtkEntry's minimal width of 150 pixels.
-   */
-  gtk_widget_set_size_request (entry, 10, -1);
-  gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
-  gtk_widget_show (entry);
-
-  return hbox;
+  return gimp_viewable_box_new (container, context, spacing,
+                                GIMP_VIEW_SIZE_MEDIUM,
+                                "gimp-palette-list|gimp-palette-grid",
+                                GIMP_STOCK_PALETTE,
+                                _("Open the palette selection dialog"));
 }
 
 GtkWidget *
@@ -229,30 +173,50 @@ gimp_font_box_new (GimpContainer *container,
                    GimpContext   *context,
                    gint           spacing)
 {
-  GtkWidget *hbox;
-  GtkWidget *button;
-  GtkWidget *entry;
-
-  g_return_val_if_fail (container == NULL ||
-                        GIMP_IS_CONTAINER (container), NULL);
+  g_return_val_if_fail (container == NULL || GIMP_IS_CONTAINER (container),
+                        NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   if (! container)
     container = context->gimp->fonts;
 
+  return gimp_viewable_box_new (container, context, spacing,
+                                GIMP_VIEW_SIZE_SMALL,
+                                "gimp-font-list|gimp-font-grid",
+                                GIMP_STOCK_FONT,
+                                _("Open the font selection dialog"));
+}
+
+
+/*  private functions  */
+
+static GtkWidget *
+gimp_viewable_box_new (GimpContainer *container,
+                       GimpContext   *context,
+                       gint           spacing,
+                       GimpViewSize   view_size,
+                       const gchar   *dialog_identifier,
+                       const gchar   *dialog_stock_id,
+                       const gchar   *dialog_tooltip)
+{
+  GtkWidget *hbox;
+  GtkWidget *button;
+  GtkWidget *entry;
+
   hbox = gtk_hbox_new (FALSE, spacing);
 
   button = gimp_viewable_button_new (container, context,
-                                     GIMP_VIEW_SIZE_SMALL, 1,
+                                     view_size, 1,
                                      gimp_dialog_factory_from_name ("dock"),
-                                     "gimp-font-list|gimp-font-grid",
-                                     GIMP_STOCK_FONT,
-                                     _("Open the font selection dialog"));
+                                     dialog_identifier,
+                                     dialog_stock_id,
+                                     dialog_tooltip);
+
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  entry = gimp_container_entry_new (container, context,
-                                    GIMP_VIEW_SIZE_SMALL, 1);
+  entry = gimp_container_entry_new (container, context, view_size, 1);
+
   /*  set a silly smally size request on the entry to disable
    *  GtkEntry's minimal width of 150 pixels.
    */
@@ -262,9 +226,6 @@ gimp_font_box_new (GimpContainer *container,
 
   return hbox;
 }
-
-
-/*  private functions  */
 
 static void
 gimp_gradient_box_reverse_notify (GObject    *object,
