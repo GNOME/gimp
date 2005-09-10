@@ -365,7 +365,7 @@ gimp_main (const GimpPlugInInfo *info,
 
   /*  initialize units  */
   {
-    GimpUnitVTable vtable;
+    GimpUnitVtable vtable;
 
     vtable.unit_get_number_of_units = _gimp_unit_cache_get_number_of_units;
     vtable.unit_get_number_of_built_in_units =

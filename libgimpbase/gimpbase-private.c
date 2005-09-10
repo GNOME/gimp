@@ -31,11 +31,11 @@
 #include "gimpbase-private.h"
 
 
-GimpUnitVTable _gimp_unit_vtable = { NULL, };
+GimpUnitVtable _gimp_unit_vtable = { NULL, };
 
 
 void
-gimp_base_init (GimpUnitVTable *vtable)
+gimp_base_init (GimpUnitVtable *vtable)
 {
   static gboolean gimp_base_initialized = FALSE;
 

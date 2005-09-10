@@ -24,9 +24,9 @@
 #define __GIMP_BASE_PRIVATE_H__
 
 
-typedef struct _GimpUnitVTable GimpUnitVTable;
+typedef struct _GimpUnitVtable GimpUnitVtable;
 
-struct _GimpUnitVTable
+struct _GimpUnitVtable
 {
   gint          (* unit_get_number_of_units)          (void);
   gint          (* unit_get_number_of_built_in_units) (void);
@@ -57,12 +57,12 @@ struct _GimpUnitVTable
 };
 
 
-extern GimpUnitVTable _gimp_unit_vtable;
+extern GimpUnitVtable _gimp_unit_vtable;
 
 
 G_BEGIN_DECLS
 
-void  gimp_base_init (GimpUnitVTable *vtable);
+void  gimp_base_init (GimpUnitVtable *vtable);
 
 G_END_DECLS
 

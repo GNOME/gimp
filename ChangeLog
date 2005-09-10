@@ -1,5 +1,13 @@
 2005-09-10  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpbase/gimpbase-private.h: GimpUnitVTable -> GimpUnitVtable
+
+	* libgimpbase/gimpbase-private.c
+	* libgimp/gimp.c (gimp_main)
+	* app/units.c (units_init): changed accordingly.
+
+2005-09-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpclonetool.c (gimp_clone_options_gui): moved the
 	"Sample merged" toggle below the "Image source" radio button.
 	Also fixed capitalization of "Sample merged".

@@ -123,7 +123,7 @@ units_unit_get_plural (GimpUnit unit)
 void
 units_init (Gimp *gimp)
 {
-  GimpUnitVTable vtable;
+  GimpUnitVtable vtable;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (the_unit_gimp == NULL);
