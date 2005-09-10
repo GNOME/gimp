@@ -203,6 +203,8 @@ gimp_container_grid_view_init (GimpContainerGridView *grid_view)
   grid_view->visible_rows  = 0;
   grid_view->selected_item = NULL;
 
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (box->scrolled_win),
+                                       GTK_SHADOW_IN);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (box->scrolled_win),
                                   GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
 
@@ -211,6 +213,8 @@ gimp_container_grid_view_init (GimpContainerGridView *grid_view)
   grid_view->wrap_box = gtk_hwrap_box_new (FALSE);
   gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (box->scrolled_win),
                                          grid_view->wrap_box);
+  gtk_viewport_set_shadow_type (GTK_VIEWPORT (grid_view->wrap_box->parent),
+                                GTK_SHADOW_NONE);
   gtk_widget_show (grid_view->wrap_box);
 
   g_signal_connect (grid_view->wrap_box->parent, "size-allocate",

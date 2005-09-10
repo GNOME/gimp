@@ -1,3 +1,22 @@
+2005-09-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcontainerbox.c
+	(gimp_container_box_set_size_request): take the container's
+	border_width into account.
+
+	* app/widgets/gimpcontainergridview.c
+	(gimp_container_grid_view_init): make sure GTK_SHADOW_IN is set on
+	the scrolled window, not on the viewport, so we get the same
+	results for list and grid views when using
+	gimp_container_box_set_size_request().
+
+	* app/widgets/gimpcontainerpopup.[ch]: added setters and getters
+	for view_type and preview_size, don't allow the preview to grow
+	larger than the popup.
+
+	* app/widgets/gimpviewablebutton.[ch]: added "popup-view-type" and
+	"popup-preview-size" properties and setters/getters.
+
 2005-09-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpviewablebox.c: factored out common code in

@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpviewablebutton.h
- * Copyright (C) 2003 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2003-2005 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -73,8 +73,14 @@ GtkWidget * gimp_viewable_button_new      (GimpContainer      *container,
                                            const gchar        *dialog_identifier,
                                            const gchar        *dialog_stock_id,
                                            const gchar        *dialog_tooltip);
-void   gimp_viewable_button_set_view_type (GimpViewableButton *button,
-                                           GimpViewType        view_type);
+
+GimpViewType gimp_viewable_button_get_view_type (GimpViewableButton *button);
+void         gimp_viewable_button_set_view_type (GimpViewableButton *button,
+                                                 GimpViewType        view_type);
+
+gint      gimp_viewable_button_get_preview_size (GimpViewableButton *button);
+void      gimp_viewable_button_set_preview_size (GimpViewableButton *button,
+                                                 gint                preview_size);
 
 
 G_END_DECLS

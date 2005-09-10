@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpviewablebutton.c
- * Copyright (C) 2003 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2003-2005 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,10 +40,26 @@
 #include "gimp-intl.h"
 
 
+enum
+{
+  PROP_0,
+  PROP_POPUP_VIEW_TYPE,
+  PROP_POPUP_PREVIEW_SIZE
+};
+
+
 static void     gimp_viewable_button_class_init   (GimpViewableButtonClass *klass);
 static void     gimp_viewable_button_init         (GimpViewableButton      *button);
 
-static void     gimp_viewable_button_destroy      (GtkObject          *object);
+static void     gimp_viewable_button_finalize     (GObject            *object);
+static void     gimp_viewable_button_set_property (GObject            *object,
+                                                   guint               property_id,
+                                                   const GValue       *value,
+                                                   GParamSpec         *pspec);
+static void     gimp_viewable_button_get_property (GObject            *object,
+                                                   guint               property_id,
+                                                   GValue             *value,
+                                                   GParamSpec         *pspec);
 static gboolean gimp_viewable_button_scroll_event (GtkWidget          *widget,
                                                    GdkEventScroll     *sevent);
 static void     gimp_viewable_button_clicked      (GtkButton          *button);
@@ -86,19 +102,34 @@ gimp_viewable_button_get_type (void)
 static void
 gimp_viewable_button_class_init (GimpViewableButtonClass *klass)
 {
-  GtkObjectClass *object_class;
-  GtkWidgetClass *widget_class;
-  GtkButtonClass *button_class;
-
-  object_class = GTK_OBJECT_CLASS (klass);
-  widget_class = GTK_WIDGET_CLASS (klass);
-  button_class = GTK_BUTTON_CLASS (klass);
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+  GtkButtonClass *button_class = GTK_BUTTON_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->destroy      = gimp_viewable_button_destroy;
+  object_class->finalize     = gimp_viewable_button_finalize;
+  object_class->get_property = gimp_viewable_button_get_property;
+  object_class->set_property = gimp_viewable_button_set_property;
+
   widget_class->scroll_event = gimp_viewable_button_scroll_event;
+
   button_class->clicked      = gimp_viewable_button_clicked;
+
+  g_object_class_install_property (object_class, PROP_POPUP_VIEW_TYPE,
+                                   g_param_spec_enum ("popup-view-type",
+                                                      NULL, NULL,
+                                                      GIMP_TYPE_VIEW_TYPE,
+                                                      GIMP_VIEW_TYPE_LIST,
+                                                      G_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_POPUP_PREVIEW_SIZE,
+                                   g_param_spec_int ("popup-preview-size",
+                                                     NULL, NULL,
+                                                     GIMP_VIEW_SIZE_TINY,
+                                                     GIMP_VIEW_SIZE_GIGANTIC,
+                                                     GIMP_VIEW_SIZE_SMALL,
+                                                     G_PARAM_READWRITE));
 }
 
 static void
@@ -112,7 +143,7 @@ gimp_viewable_button_init (GimpViewableButton *button)
 }
 
 static void
-gimp_viewable_button_destroy (GtkObject *object)
+gimp_viewable_button_finalize (GObject *object)
 {
   GimpViewableButton *button = GIMP_VIEWABLE_BUTTON (object);
 
@@ -134,7 +165,51 @@ gimp_viewable_button_destroy (GtkObject *object)
       button->dialog_tooltip = NULL;
     }
 
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_viewable_button_set_property (GObject      *object,
+                                   guint         property_id,
+                                   const GValue *value,
+                                   GParamSpec   *pspec)
+{
+  GimpViewableButton *button = GIMP_VIEWABLE_BUTTON (object);
+
+  switch (property_id)
+    {
+    case PROP_POPUP_VIEW_TYPE:
+      gimp_viewable_button_set_view_type (button, g_value_get_enum (value));
+      break;
+    case PROP_POPUP_PREVIEW_SIZE:
+      gimp_viewable_button_set_preview_size (button, g_value_get_int (value));
+      break;
+   default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_viewable_button_get_property (GObject    *object,
+                                   guint       property_id,
+                                   GValue     *value,
+                                   GParamSpec *pspec)
+{
+  GimpViewableButton *button = GIMP_VIEWABLE_BUTTON (object);
+
+  switch (property_id)
+    {
+    case PROP_POPUP_VIEW_TYPE:
+      g_value_set_enum (value, button->popup_view_type);
+      break;
+    case PROP_POPUP_PREVIEW_SIZE:
+      g_value_set_int (value, button->popup_preview_size);
+      break;
+   default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 static gboolean
@@ -218,8 +293,10 @@ static void
 gimp_viewable_button_popup_closed (GimpContainerPopup *popup,
                                    GimpViewableButton *button)
 {
-  button->popup_view_type    = popup->view_type;
-  button->popup_preview_size = popup->preview_size;
+  gimp_viewable_button_set_view_type (button,
+                                      gimp_container_popup_get_view_type (popup));
+  gimp_viewable_button_set_preview_size (button,
+                                         gimp_container_popup_get_preview_size (popup));
 }
 
 
@@ -281,11 +358,46 @@ gimp_viewable_button_new (GimpContainer     *container,
   return GTK_WIDGET (button);
 }
 
+GimpViewType
+gimp_viewable_button_get_view_type (GimpViewableButton *button)
+{
+  g_return_val_if_fail (GIMP_IS_VIEWABLE_BUTTON (button), GIMP_VIEW_TYPE_LIST);
+
+  return button->popup_view_type;
+}
+
 void
 gimp_viewable_button_set_view_type (GimpViewableButton *button,
                                     GimpViewType        view_type)
 {
   g_return_if_fail (GIMP_IS_VIEWABLE_BUTTON (button));
 
-  button->popup_view_type = view_type;
+  if (view_type != button->popup_view_type)
+    {
+      button->popup_view_type = view_type;
+
+      g_object_notify (G_OBJECT (button), "popup-view-type");
+    }
+}
+
+gint
+gimp_viewable_button_get_preview_size (GimpViewableButton *button)
+{
+  g_return_val_if_fail (GIMP_IS_VIEWABLE_BUTTON (button), GIMP_VIEW_SIZE_SMALL);
+
+  return button->popup_preview_size;
+}
+
+void
+gimp_viewable_button_set_preview_size (GimpViewableButton *button,
+                                       gint                preview_size)
+{
+  g_return_if_fail (GIMP_IS_VIEWABLE_BUTTON (button));
+
+  if (preview_size != button->popup_preview_size)
+    {
+      button->popup_preview_size = preview_size;
+
+      g_object_notify (G_OBJECT (button), "popup-preview-size");
+    }
 }

@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpcontainerpopup.h
- * Copyright (C) 2003 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2003-2005 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -81,6 +81,14 @@ GtkWidget * gimp_container_popup_new      (GimpContainer      *container,
                                            const gchar        *dialog_tooltip);
 void        gimp_container_popup_show     (GimpContainerPopup *popup,
                                            GtkWidget          *widget);
+
+GimpViewType gimp_container_popup_get_view_type (GimpContainerPopup *popup);
+void         gimp_container_popup_set_view_type (GimpContainerPopup *popup,
+                                                 GimpViewType        view_type);
+
+gint      gimp_container_popup_get_preview_size (GimpContainerPopup *popup);
+void      gimp_container_popup_set_preview_size (GimpContainerPopup *popup,
+                                                 gint                preview_size);
 
 
 #endif  /*  __GIMP_CONTAINER_POPUP_H__  */
