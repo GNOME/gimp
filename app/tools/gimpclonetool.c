@@ -331,6 +331,10 @@ gimp_clone_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
+  button = gimp_prop_check_button_new (config, "sample-merged",
+                                       _("Sample Merged"));
+  gimp_enum_radio_frame_add (GTK_FRAME (frame), button, GIMP_IMAGE_CLONE);
+
   hbox = gimp_pattern_box_new (NULL, GIMP_CONTEXT (tool_options), 2);
   gimp_enum_radio_frame_add (GTK_FRAME (frame), hbox, GIMP_PATTERN_CLONE);
 
@@ -339,11 +343,6 @@ gimp_clone_options_gui (GimpToolOptions *tool_options)
                                           0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
-
-  button = gimp_prop_check_button_new (config, "sample-merged",
-                                       _("Sample Merged"));
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   return vbox;
 }
