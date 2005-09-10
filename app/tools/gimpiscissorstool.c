@@ -624,8 +624,13 @@ gimp_iscissors_tool_button_release (GimpTool        *tool,
 		{
 		  curve = (ICurve *) iscissors->curves->data;
 
-		  if (abs (iscissors->x - curve->x1) < POINT_HALFWIDTH &&
-		      abs (iscissors->y - curve->y1) < POINT_HALFWIDTH)
+		  if (gimp_draw_tool_on_handle (GIMP_DRAW_TOOL (tool), gdisp,
+                                                iscissors->x, iscissors->y,
+                                                GIMP_HANDLE_CIRCLE,
+                                                curve->x1, curve->y1,
+                                                POINT_WIDTH, POINT_WIDTH,
+                                                GTK_ANCHOR_CENTER,
+                                                FALSE))
 		    {
 		      iscissors->x = curve->x1;
 		      iscissors->y = curve->y1;
