@@ -85,7 +85,7 @@ units_unit_get_plural (GimpUnit unit)
 void
 units_init (void)
 {
-  GimpUnitVTable vtable;
+  GimpUnitVtable vtable;
 
   vtable.unit_get_number_of_units          = units_get_number_of_units;
   vtable.unit_get_number_of_built_in_units = units_get_number_of_built_in_units;
