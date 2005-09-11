@@ -1,5 +1,11 @@
 2005-09-11  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/script-fu/script-fu-interface.c (script_fu_response):
+	bail out if the action_area is insensitive. Ignores attempts to
+	close the window while the script is running. Fixes bug #308662.
+
+2005-09-11  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcontainerbox.c
 	(gimp_container_box_set_size_request): take the container's
 	border_width into account.
