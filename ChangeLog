@@ -1,5 +1,12 @@
 2005-09-11  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/core-enums.h (enum GimpUndoType): replaced lots of
+	bogus strings by properly translatable ones. Many of them are
+	fallbacks anyway, but they should be presentable to the user.
+	Fixes bug #315964.
+
+2005-09-11  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpstatusbar.c: don't include "core/gimpmarshal.h",
 	replaced '_' by '-' in property name.
 
