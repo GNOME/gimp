@@ -1,3 +1,8 @@
+2005-09-12  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimptoolbox.c: set the label style italic. Moved
+	separator code into utility functions.
+
 2005-09-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimptoolbox.c (gimp_toolbox_book_added)
