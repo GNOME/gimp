@@ -1,5 +1,10 @@
 2005-09-11  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpstatusbar.c: don't include "core/gimpmarshal.h",
+	replaced '_' by '-' in property name.
+
+2005-09-11  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/script-fu/script-fu-interface.c (script_fu_response):
 	bail out if the action_area is insensitive. Ignores attempts to
 	close the window while the script is running. Fixes bug #308662.

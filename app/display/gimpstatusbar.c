@@ -28,7 +28,6 @@
 
 #include "core/gimpimage.h"
 #include "core/gimpunit.h"
-#include "core/gimpmarshal.h"
 #include "core/gimpprogress.h"
 
 #include "widgets/gimpuimanager.h"
@@ -142,7 +141,7 @@ gimp_statusbar_class_init (GimpStatusbarClass *klass)
   object_class->destroy = gimp_statusbar_destroy;
 
   gtk_widget_class_install_style_property (widget_class,
-                                           g_param_spec_enum ("shadow_type",
+                                           g_param_spec_enum ("shadow-type",
                                            _("Shadow type"),
                                            _("Style of bevel around the statusbar text"),
                                            GTK_TYPE_SHADOW_TYPE,
