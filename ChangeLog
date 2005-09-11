@@ -1,5 +1,12 @@
 2005-09-11  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimptoolbox.c (gimp_toolbox_book_added)
+	(gimp_toolbox_book_removed): if there is no dockbook added, expand
+	the separator and add a label telling the user that she can drop
+	dockables there. Fixes bug #150593.
+
+2005-09-11  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/core-enums.[ch] (enum GimpUndoType): replaced lots of
 	bogus strings by properly translatable ones. Many of them are
 	fallbacks anyway, but they should be presentable to the user.

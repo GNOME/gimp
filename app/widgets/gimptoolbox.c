@@ -494,7 +494,24 @@ gimp_toolbox_book_added (GimpDock     *dock,
                          GimpDockbook *dockbook)
 {
   if (g_list_length (dock->dockbooks) == 1)
-    gimp_toolbox_set_geometry (GIMP_TOOLBOX (dock));
+    {
+      GList     *children;
+      GtkWidget *separator;
+      GtkWidget *frame;
+
+      gimp_toolbox_set_geometry (GIMP_TOOLBOX (dock));
+
+      children = gtk_container_get_children (GTK_CONTAINER (dock->vbox));
+      separator = children->data;
+      g_list_free (children);
+
+      gtk_box_set_child_packing (GTK_BOX (dock->vbox), separator,
+                                 FALSE, FALSE, 0, GTK_PACK_START);
+
+      frame = GTK_BIN (separator)->child;
+      if (GTK_BIN (frame)->child)
+        gtk_container_remove (GTK_CONTAINER (frame), GTK_BIN (frame)->child);
+    }
 }
 
 static void
@@ -503,7 +520,27 @@ gimp_toolbox_book_removed (GimpDock     *dock,
 {
   if (dock->dockbooks == NULL &&
       ! (GTK_OBJECT_FLAGS (dock) & GTK_IN_DESTRUCTION))
-    gimp_toolbox_set_geometry (GIMP_TOOLBOX (dock));
+    {
+      GList     *children;
+      GtkWidget *separator;
+      GtkWidget *frame;
+      GtkWidget *label;
+
+      gimp_toolbox_set_geometry (GIMP_TOOLBOX (dock));
+
+      children = gtk_container_get_children (GTK_CONTAINER (dock->vbox));
+      separator = children->data;
+      g_list_free (children);
+
+      gtk_box_set_child_packing (GTK_BOX (dock->vbox), separator,
+                                 TRUE, TRUE, 0, GTK_PACK_START);
+
+      label = gtk_label_new (_("You can drop dockable dialogs here."));
+      gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+      frame = GTK_BIN (separator)->child;
+      gtk_container_add (GTK_CONTAINER (frame), label);
+      gtk_widget_show (label);
+    }
 }
 
 static void
@@ -767,10 +804,10 @@ toolbox_create_tools (GimpToolbox *toolbox,
 
           action = gimp_ui_manager_find_action (GIMP_IMAGE_DOCK (toolbox)->ui_manager,
                                                 "tools", name);
-
           g_free (name);
 
-          accel_closure = gimp_action_get_accel_closure (action);
+          if (action)
+            accel_closure = gimp_action_get_accel_closure (action);
 
           if (accel_closure)
             {
