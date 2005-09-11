@@ -703,6 +703,9 @@ script_fu_response (GtkWidget *widget,
                     gint       response_id,
                     SFScript  *script)
 {
+  if (! GTK_WIDGET_SENSITIVE (GTK_DIALOG (sf_interface->dialog)->action_area))
+    return;
+
   switch (response_id)
     {
     case GTK_RESPONSE_HELP:
