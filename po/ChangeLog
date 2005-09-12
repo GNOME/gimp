@@ -1,3 +1,7 @@
+2005-09-12  Michael Natterer  <mitch@gimp.org>
+
+	* POTFILES.in: added app/widgets/gimpdockseparator.c
+
 2005-09-09  Rajesh Ranjan  <rajeshkajha@yahoo.com>
 
 	* hi.po: Added Hindi Translation.
