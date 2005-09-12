@@ -1,3 +1,10 @@
+2005-09-12  Akkana Peck  <akkana@cvs.gnome.org>
+
+	* menus/image-menu.xml.in
+	* app/actions/image-actions.c: Move Mode menu from Colors
+	back to Image, and rename it back to Mode, as per consensus
+	on #gimp.
+
 2005-09-12  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimptoolbox.c: set the label style italic. Moved

@@ -269,6 +269,11 @@
       <placeholder name="New">
         <menuitem action="image-duplicate" />
       </placeholder>
+      <menu action="image-mode-menu" name="Mode">
+        <menuitem action="image-convert-rgb" />
+        <menuitem action="image-convert-grayscale" />
+        <menuitem action="image-convert-indexed" />
+      </menu>
       <menu action="image-transform-menu" name="Transform">
         <placeholder name="Flip">
           <menuitem action="image-flip-horizontal" />
@@ -424,12 +429,6 @@
     </menu>
 
     <menu action="colors-menu" name="Colors">
-      <menu action="colors-image-mode-menu" name="Image Mode">
-        <menuitem action="image-convert-rgb" />
-        <menuitem action="image-convert-grayscale" />
-        <menuitem action="image-convert-indexed" />
-      </menu>
-      <separator />
       <menuitem action="tools-color-balance" />
       <menuitem action="tools-hue-saturation" />
       <menuitem action="tools-colorize" />

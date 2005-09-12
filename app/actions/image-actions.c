@@ -58,11 +58,11 @@ static GimpActionEntry image_actions[] =
   { "extensions-menu",        NULL, N_("_Xtns")       },
 
   { "image-menu",             NULL, N_("_Image")      },
+  { "image-mode-menu",        NULL, N_("_Mode") },
   { "image-transform-menu",   NULL, N_("_Transform")  },
   { "image-guides-menu",      NULL, N_("_Guides")     },
 
   { "colors-menu",            NULL, N_("_Colors")     },
-  { "colors-image-mode-menu", NULL, N_("_Image Mode") },
   { "colors-auto-menu",       NULL, N_("_Auto")       },
   { "colors-map-menu",        NULL, N_("Ma_p")        },
   { "colors-components-menu", NULL, N_("_Components") },
