@@ -1,3 +1,22 @@
+2005-09-12  Michael Natterer  <mitch@gimp.org>
+
+	Really fix bug #150593:
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpdockseparator.[ch]: new widget implementing the
+	droppable separator bar in docks.
+
+	* app/widgets/gimpdock.c: use it and removed local separator
+	utility functions.
+
+	* app/widgets/gimptoolbox.c: use GimpDockSeparator API to show/hide
+	the label. Expand the separator initially.
+
+	* themes/Default/gtkrc
+	* themes/Small/gtkrc: the separator height style property moved
+	from GimpDock to GimpDockSeparator.
+
 2005-09-12  Akkana Peck  <akkana@cvs.gnome.org>
 
 	* menus/image-menu.xml.in

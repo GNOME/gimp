@@ -38,6 +38,7 @@
 #include "gimpdock.h"
 #include "gimpdockable.h"
 #include "gimpdockbook.h"
+#include "gimpdockseparator.h"
 #include "gimphelp-ids.h"
 #include "gimpmessagebox.h"
 #include "gimpmessagedialog.h"
@@ -46,8 +47,8 @@
 #include "gimp-intl.h"
 
 
-#define DEFAULT_DOCK_HEIGHT       300
-#define DEFAULT_SEPARATOR_HEIGHT  6
+#define DEFAULT_DOCK_HEIGHT 300
+
 
 enum
 {
@@ -94,28 +95,9 @@ static void        gimp_dock_real_book_added   (GimpDock              *dock,
 static void        gimp_dock_real_book_removed (GimpDock              *dock,
                                                 GimpDockbook          *dockbook);
 
-static GtkWidget * gimp_dock_separator_new            (GimpDock       *dock);
-static void        gimp_dock_separator_drag_leave     (GtkWidget      *widget,
-                                                       GdkDragContext *context,
-                                                       guint           time,
-                                                       gpointer        data);
-static gboolean    gimp_dock_separator_drag_motion    (GtkWidget      *widget,
-                                                       GdkDragContext *context,
-                                                       gint            x,
-                                                       gint            y,
-                                                       guint           time,
-                                                       gpointer        data);
-static gboolean    gimp_dock_separator_drag_drop      (GtkWidget      *widget,
-						       GdkDragContext *context,
-						       gint            x,
-						       gint            y,
-						       guint           time,
-						       GimpDock       *dock);
-
 
 static GtkWindowClass *parent_class              = NULL;
 static guint           dock_signals[LAST_SIGNAL] = { 0 };
-static GtkTargetEntry  dialog_target_table[]     = { GIMP_TARGET_DIALOG };
 
 
 GType
@@ -206,13 +188,6 @@ gimp_dock_class_init (GimpDockClass *klass)
                                                              -1,
                                                              G_MAXINT,
                                                              DEFAULT_DOCK_HEIGHT,
-                                                             G_PARAM_READABLE));
-  gtk_widget_class_install_style_property (widget_class,
-                                           g_param_spec_int ("separator-height",
-                                                             NULL, NULL,
-                                                             0,
-                                                             G_MAXINT,
-                                                             DEFAULT_SEPARATOR_HEIGHT,
                                                              G_PARAM_READABLE));
 }
 
@@ -403,32 +378,14 @@ static void
 gimp_dock_style_set (GtkWidget *widget,
                      GtkStyle  *prev_style)
 {
-  GimpDock *dock = GIMP_DOCK (widget);
-  GList    *children;
-  GList    *list;
-  gint      default_height;
-  gint      separator_height;
+  gint default_height;
 
   if (GTK_WIDGET_CLASS (parent_class)->style_set)
     GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 
-  gtk_widget_style_get (widget,
-                        "default-height",   &default_height,
-                        "separator-height", &separator_height,
-                        NULL);
+  gtk_widget_style_get (widget, "default-height", &default_height, NULL);
 
   gtk_window_set_default_size (GTK_WINDOW (widget), -1, default_height);
-
-  children = gtk_container_get_children (GTK_CONTAINER (dock->vbox));
-
-  for (list = children; list; list = g_list_next (list))
-    {
-      if (GTK_IS_EVENT_BOX (list->data))
-        gtk_widget_set_size_request (GTK_WIDGET (list->data),
-                                     -1, separator_height);
-    }
-
-  g_list_free (children);
 }
 
 static void
@@ -664,150 +621,4 @@ gimp_dock_remove_book (GimpDock     *dock,
   g_signal_emit (dock, dock_signals[BOOK_REMOVED], 0, dockbook);
 
   g_object_unref (dockbook);
-}
-
-
-/*  private functions  */
-
-static GtkWidget *
-gimp_dock_separator_new (GimpDock *dock)
-{
-  GtkWidget  *event_box;
-  GtkWidget  *frame;
-  gint        separator_height;
-
-  event_box = gtk_event_box_new ();
-
-  gtk_widget_set_name (event_box, "gimp-dock-separator");
-
-  gtk_widget_style_get (GTK_WIDGET (dock),
-                        "separator-height", &separator_height,
-                        NULL);
-
-  gtk_widget_set_size_request (event_box, -1, separator_height);
-
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
-  gtk_container_add (GTK_CONTAINER (event_box), frame);
-  gtk_widget_show (frame);
-
-  gimp_help_set_help_data (event_box,
-                           _("You can drop dockable dialogs here."),
-                           GIMP_HELP_DOCK_SEPARATOR);
-
-  gtk_drag_dest_set (GTK_WIDGET (event_box),
-                     GTK_DEST_DEFAULT_ALL,
-                     dialog_target_table, G_N_ELEMENTS (dialog_target_table),
-                     GDK_ACTION_MOVE);
-
-  g_signal_connect (event_box, "drag-leave",
-		    G_CALLBACK (gimp_dock_separator_drag_leave),
-		    NULL);
-  g_signal_connect (event_box, "drag-motion",
-		    G_CALLBACK (gimp_dock_separator_drag_motion),
-		    NULL);
-  g_signal_connect (event_box, "drag-drop",
-		    G_CALLBACK (gimp_dock_separator_drag_drop),
-		    dock);
-
-  return event_box;
-}
-
-static void
-gimp_dock_separator_drag_leave (GtkWidget      *widget,
-                                GdkDragContext *context,
-                                guint           time,
-                                gpointer        data)
-{
-  gtk_widget_modify_bg (widget, GTK_STATE_NORMAL, NULL);
-}
-
-static gboolean
-gimp_dock_separator_drag_motion (GtkWidget      *widget,
-                                 GdkDragContext *context,
-                                 gint            x,
-                                 gint            y,
-                                 guint           time,
-                                 gpointer        data)
-{
-  GdkColor *color = gtk_widget_get_style (widget)->bg + GTK_STATE_SELECTED;
-
-  gtk_widget_modify_bg (widget, GTK_STATE_NORMAL, color);
-
-  return FALSE;
-}
-
-static gboolean
-gimp_dock_separator_drag_drop (GtkWidget      *widget,
-			       GdkDragContext *context,
-			       gint            x,
-			       gint            y,
-			       guint           time,
-			       GimpDock       *dock)
-{
-  GtkWidget *source = gtk_drag_get_source_widget (context);
-
-  if (source)
-    {
-      GimpDockable *dockable;
-
-      if (GIMP_IS_DOCKABLE (source))
-        dockable = GIMP_DOCKABLE (source);
-      else
-        dockable = (GimpDockable *) g_object_get_data (G_OBJECT (source),
-                                                       "gimp-dockable");
-
-      if (dockable)
-	{
-	  GtkWidget *dockbook;
-	  GList     *children;
-	  gint       index;
-
-	  g_object_set_data (G_OBJECT (dockable),
-                             "gimp-dock-drag-widget", NULL);
-
-	  children = gtk_container_get_children (GTK_CONTAINER (widget->parent));
-	  index = g_list_index (children, widget);
-          g_list_free (children);
-
-          if (index == 0)
-            index = 0;
-          else if (index == 2)
-            index = -1;
-
-          /*  if dropping to the same dock, take care that we don't try
-           *  to reorder the *only* dockable in the dock
-           */
-          if (dockable->dockbook->dock == dock)
-            {
-              gint n_books;
-              gint n_dockables;
-
-              n_books = g_list_length (dock->dockbooks);
-
-              children =
-                gtk_container_get_children (GTK_CONTAINER (dockable->dockbook));
-              n_dockables = g_list_length (children);
-              g_list_free (children);
-
-              if (n_books == 1 && n_dockables == 1)
-                return TRUE; /* successfully do nothing */
-            }
-
-	  g_object_ref (dockable);
-
-	  gimp_dockbook_remove (dockable->dockbook, dockable);
-
-	  dockbook = gimp_dockbook_new (dock->dialog_factory->menu_factory);
-	  gimp_dock_add_book (dock, GIMP_DOCKBOOK (dockbook), index);
-
-	  gimp_dockbook_add (GIMP_DOCKBOOK (dockbook), dockable, -1);
-
-	  g_object_unref (dockable);
-
-	  return TRUE;
-	}
-    }
-
-  return FALSE;
 }

@@ -39,6 +39,7 @@
 
 #include "gimpdevices.h"
 #include "gimpdialogfactory.h"
+#include "gimpdockseparator.h"
 #include "gimphelp-ids.h"
 #include "gimptoolbox.h"
 #include "gimptoolbox-color-area.h"
@@ -325,6 +326,8 @@ gimp_toolbox_constructor (GType                  type,
 
   gimp_toolbox_style_set (GTK_WIDGET (toolbox), GTK_WIDGET (toolbox)->style);
 
+  toolbox_separator_expand (toolbox);
+
   return object;
 }
 
@@ -497,6 +500,7 @@ gimp_toolbox_book_added (GimpDock     *dock,
 {
   if (g_list_length (dock->dockbooks) == 1)
     {
+      gimp_toolbox_set_geometry (GIMP_TOOLBOX (dock));
       toolbox_separator_collapse (GIMP_TOOLBOX (dock));
     }
 }
@@ -508,6 +512,7 @@ gimp_toolbox_book_removed (GimpDock     *dock,
   if (g_list_length (dock->dockbooks) == 0 &&
       ! (GTK_OBJECT_FLAGS (dock) & GTK_IN_DESTRUCTION))
     {
+      gimp_toolbox_set_geometry (GIMP_TOOLBOX (dock));
       toolbox_separator_expand (GIMP_TOOLBOX (dock));
     }
 }
@@ -708,10 +713,6 @@ toolbox_separator_expand (GimpToolbox *toolbox)
   GimpDock  *dock = GIMP_DOCK (toolbox);
   GList     *children;
   GtkWidget *separator;
-  GtkWidget *frame;
-  GtkWidget *label;
-
-  gimp_toolbox_set_geometry (toolbox);
 
   children = gtk_container_get_children (GTK_CONTAINER (dock->vbox));
   separator = children->data;
@@ -719,15 +720,7 @@ toolbox_separator_expand (GimpToolbox *toolbox)
 
   gtk_box_set_child_packing (GTK_BOX (dock->vbox), separator,
                              TRUE, TRUE, 0, GTK_PACK_START);
-
-  label = gtk_label_new (_("You can drop dockable dialogs here."));
-  gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-  gimp_label_set_attributes (GTK_LABEL (label),
-                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
-                             -1);
-  frame = GTK_BIN (separator)->child;
-  gtk_container_add (GTK_CONTAINER (frame), label);
-  gtk_widget_show (label);
+  gimp_dock_separator_set_show_label (GIMP_DOCK_SEPARATOR (separator), TRUE);
 }
 
 static void
@@ -736,9 +729,6 @@ toolbox_separator_collapse (GimpToolbox *toolbox)
   GimpDock  *dock = GIMP_DOCK (toolbox);
   GList     *children;
   GtkWidget *separator;
-  GtkWidget *frame;
-
-  gimp_toolbox_set_geometry (GIMP_TOOLBOX (dock));
 
   children = gtk_container_get_children (GTK_CONTAINER (dock->vbox));
   separator = children->data;
@@ -746,10 +736,7 @@ toolbox_separator_collapse (GimpToolbox *toolbox)
 
   gtk_box_set_child_packing (GTK_BOX (dock->vbox), separator,
                              FALSE, FALSE, 0, GTK_PACK_START);
-
-  frame = GTK_BIN (separator)->child;
-  if (GTK_BIN (frame)->child)
-    gtk_container_remove (GTK_CONTAINER (frame), GTK_BIN (frame)->child);
+  gimp_dock_separator_set_show_label (GIMP_DOCK_SEPARATOR (separator), FALSE);
 }
 
 static void
