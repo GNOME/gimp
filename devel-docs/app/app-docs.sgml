@@ -148,6 +148,7 @@
     <chapter id="app-core-gimp">
       <title>The GIMP Application Instance Object</title>
       <xi:include href="xml/gimp.xml" />
+      <xi:include href="xml/gimp-contexts.xml" />
       <xi:include href="xml/gimp-documents.xml" />
       <xi:include href="xml/gimp-edit.xml" />
       <xi:include href="xml/gimp-gradients.xml" />
@@ -650,6 +651,7 @@
       <xi:include href="xml/gimptoolbox-color-area.xml" />
       <xi:include href="xml/gimptoolbox-image-area.xml" />
       <xi:include href="xml/gimptoolbox-indicator-area.xml" />
+      <xi:include href="xml/gimpdockseparator.xml" />
       <xi:include href="xml/gimpdockbook.xml" />
       <xi:include href="xml/gimpdockable.xml" />
       <xi:include href="xml/gimpdocked.xml" />

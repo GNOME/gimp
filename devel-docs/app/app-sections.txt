@@ -137,6 +137,16 @@ GIMP_IS_GIMP_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimp-contexts</FILE>
+<TITLE>Gimp-contexts</TITLE>
+gimp_contexts_init
+gimp_contexts_exit
+gimp_contexts_load
+gimp_contexts_save
+gimp_contexts_clear
+</SECTION>
+
+<SECTION>
 <FILE>gimp-gui</FILE>
 <TITLE>Gimp-gui</TITLE>
 GimpGui
@@ -183,6 +193,9 @@ gimp_edit_copy
 gimp_edit_copy_visible
 gimp_edit_paste
 gimp_edit_paste_as_new
+gimp_edit_named_cut
+gimp_edit_named_copy
+gimp_edit_named_copy_visible
 gimp_edit_clear
 gimp_edit_fill
 </SECTION>
@@ -1309,13 +1322,14 @@ GIMP_PDB_PROGRESS_GET_CLASS
 GimpProgress
 gimp_progress_start
 gimp_progress_end
+gimp_progress_is_active
 gimp_progress_set_text
 gimp_progress_set_value
 gimp_progress_get_value
-gimp_progress_cancel
-gimp_progress_is_active
-gimp_progress_update_and_flush
+gimp_progress_get_window
 gimp_progress_message
+gimp_progress_cancel
+gimp_progress_update_and_flush
 <SUBSECTION Standard>
 GimpProgressInterface
 GIMP_PROGRESS
@@ -2106,10 +2120,12 @@ gimp_paint_core_cleanup
 gimp_paint_core_interpolate
 gimp_paint_core_get_paint_area
 gimp_paint_core_get_orig_image
+gimp_paint_core_get_orig_proj
 gimp_paint_core_paste
 gimp_paint_core_replace
 gimp_paint_core_validate_undo_tiles
 gimp_paint_core_validate_canvas_tiles
+gimp_paint_core_validate_saved_proj_tiles
 <SUBSECTION Standard>
 GIMP_PAINT_CORE
 GIMP_IS_PAINT_CORE
@@ -4213,6 +4229,10 @@ GIMP_CONTAINER_GRID_VIEW_GET_CLASS
 GimpContainerPopup
 gimp_container_popup_new
 gimp_container_popup_show
+gimp_container_popup_get_view_type
+gimp_container_popup_set_view_type
+gimp_container_popup_get_preview_size
+gimp_container_popup_set_preview_size
 <SUBSECTION Standard>
 GimpContainerPopupClass
 GIMP_CONTAINER_POPUP
@@ -4558,6 +4578,23 @@ gimp_dock_get_type
 GIMP_DOCK_CLASS
 GIMP_IS_DOCK_CLASS
 GIMP_DOCK_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpdockseparator</FILE>
+<TITLE>GimpDockSeparator</TITLE>
+GimpDockSeparator
+gimp_dock_separator_new
+gimp_dock_separator_set_show_label
+<SUBSECTION Standard>
+GimpDockSeparatorClass
+GIMP_DOCK_SEPARATOR
+GIMP_IS_DOCK_SEPARATOR
+GIMP_TYPE_DOCK_SEPARATOR
+gimp_dock_separator_get_type
+GIMP_DOCK_SEPARATOR_CLASS
+GIMP_IS_DOCK_SEPARATOR_CLASS
+GIMP_DOCK_SEPARATOR_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -5869,7 +5906,10 @@ GIMP_VECTORS_TREE_VIEW_GET_CLASS
 <TITLE>GimpViewableButton</TITLE>
 GimpViewableButton
 gimp_viewable_button_new
+gimp_viewable_button_get_view_type
 gimp_viewable_button_set_view_type
+gimp_viewable_button_set_preview_size
+gimp_viewable_button_get_preview_size
 <SUBSECTION Standard>
 GimpViewableButtonClass
 GIMP_VIEWABLE_BUTTON
@@ -6185,6 +6225,8 @@ PixelRegion
 PixelRegionHolder
 PixelRegionIterator
 pixel_region_init
+pixel_region_init_temp_buf
+pixel_region_init_data
 pixel_region_resize
 pixel_region_get_async
 pixel_region_get_row
@@ -7631,9 +7673,10 @@ plug_in_context_pop
 <TITLE>PlugIn-progress</TITLE>
 plug_in_progress_start
 plug_in_progress_end
-plug_in_progress_pulse
-plug_in_progress_update
 plug_in_progress_set_text
+plug_in_progress_set_value
+plug_in_progress_pulse
+plug_in_progress_get_window
 plug_in_progress_install
 plug_in_progress_uninstall
 plug_in_progress_cancel
@@ -8045,6 +8088,7 @@ gimp_get_screen_resolution
 gimp_rgb_get_gdk_color
 gimp_rgb_set_gdk_color
 gimp_window_set_hint
+gimp_window_get_native
 gimp_dialog_set_sensitive
 gimp_text_buffer_load
 gimp_text_buffer_save

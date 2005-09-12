@@ -86,6 +86,7 @@ gimp_display_options_fullscreen_get_type
 gimp_display_options_get_type
 gimp_display_shell_get_type
 gimp_dock_get_type
+gimp_dock_separator_get_type
 gimp_dockable_get_type
 gimp_dockbook_get_type
 gimp_docked_interface_get_type
