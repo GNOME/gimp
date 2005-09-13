@@ -1,3 +1,8 @@
+2005-09-13  Karine Delvare  <kdelvare@nerim.net>
+
+	* app/tools/gimprectangletool.c: don't modify the rectangle while
+	moving, and stick to edges when going out of image boundaries.
+
 2005-09-13  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/edit-actions.c: use "Undo History" instead of "Undo
