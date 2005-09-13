@@ -1,3 +1,10 @@
+2005-09-13  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-title.c
+	(gimp_display_shell_format_title): use ngettext for plural form.
+
+	* app/dialogs/user-install-dialog.c: string fix (bug #316148).
+
 2005-09-12  Michael Natterer  <mitch@gimp.org>
 
 	Really fix bug #150593:

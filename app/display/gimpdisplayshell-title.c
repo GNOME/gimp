@@ -311,7 +311,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
                 gint num = gimp_container_num_children (image->layers);
 
                 i += print (title, title_len, i,
-                            num == 1 ? _("1 layer") : _("%d layers"), num);
+                            ngettext ("%d layer", "%d layers", num), num);
               }
               break;
 

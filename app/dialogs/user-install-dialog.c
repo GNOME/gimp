@@ -152,7 +152,7 @@ tree_items[] =
   {
     FALSE, "menurc",
     N_("Key shortcuts can be dynamically redefined. "
-       "The menurc is a dump of your configuration so it can. "
+       "The menurc is a dump of your configuration so it can "
        "be remembered for the next session.  You may edit this "
        "file if you wish, but it is much easier to define the "
        "keys from within GIMP.  Deleting this file will "
