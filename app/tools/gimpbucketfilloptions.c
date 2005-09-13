@@ -253,6 +253,9 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
                                              _("Fill whole selection"),
                                              _("Fill similar colors"));
   g_free (str);
+  gtk_box_reorder_child (GTK_BOX (gtk_bin_get_child (GTK_BIN (frame))),
+                         g_object_get_data (G_OBJECT (frame), "radio-button"),
+                         1);
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);

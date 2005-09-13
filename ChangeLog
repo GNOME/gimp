@@ -1,5 +1,10 @@
 2005-09-13  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpbucketfilloptions.c: reorder options as suggested
+	in bug #316150.
+
+2005-09-13  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-title.c
 	(gimp_display_shell_format_title): use ngettext for plural form.
 
