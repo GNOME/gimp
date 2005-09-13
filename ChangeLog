@@ -1,5 +1,10 @@
 2005-09-13  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimppalette-import.c (gimp_palette_import_from_image):
+	ignore transparent pixels as suggested in bug #316212.
+
+2005-09-13  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpbucketfilloptions.c: reorder options as suggested
 	in bug #316150.
 

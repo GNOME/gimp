@@ -213,7 +213,7 @@ gimp_palette_import_create_image_palette (gpointer data,
   color_tab = (ImgColors *) data;
 
   n_colors = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (palette),
-						 "import_n_colors"));
+						 "import-n-colors"));
 
   if (palette->n_colors >= n_colors)
     return;
@@ -247,13 +247,13 @@ gimp_palette_import_image_make_palette (GHashTable  *h_array,
 
   palette = GIMP_PALETTE (gimp_palette_new (palette_name));
 
-  g_object_set_data (G_OBJECT (palette), "import_n_colors",
+  g_object_set_data (G_OBJECT (palette), "import-n-colors",
 		     GINT_TO_POINTER (n_colors));
 
   g_slist_foreach (sorted_list, gimp_palette_import_create_image_palette,
 		   palette);
 
-  g_object_set_data (G_OBJECT (palette), "import_n_colors", NULL);
+  g_object_set_data (G_OBJECT (palette), "import-n-colors", NULL);
 
   /*  Free up used memory
    *  Note the same structure is on both the hash list and the sorted
@@ -277,8 +277,7 @@ gimp_palette_import_from_image (GimpImage   *gimage,
   PixelRegion    imagePR;
   guchar        *image_data;
   guchar        *idata;
-  guchar         rgb[MAX_CHANNELS];
-  guchar         rgb_real[MAX_CHANNELS];
+  guchar         rgba[MAX_CHANNELS];
   gboolean       has_alpha, indexed;
   gint           width, height;
   gint           bytes, alpha;
@@ -292,7 +291,6 @@ gimp_palette_import_from_image (GimpImage   *gimage,
   g_return_val_if_fail (n_colors > 1, NULL);
   g_return_val_if_fail (threshold > 0, NULL);
 
-  /*  Get the image information  */
   d_type    = gimp_projection_get_image_type (gimage->projection);
   bytes     = gimp_projection_get_bytes (gimage->projection);
   has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (d_type);
@@ -318,17 +316,24 @@ gimp_palette_import_from_image (GimpImage   *gimage,
 
 	  for (j = 0; j < imagePR.w; j++)
 	    {
-	      /*  Get the rgb values for the color  */
-	      gimp_image_get_color (gimage, d_type, idata, rgb);
-	      memcpy (rgb_real, rgb, MAX_CHANNELS); /* Structure copy */
+	      gimp_image_get_color (gimage, d_type, idata, rgba);
 
-	      rgb[0] = (rgb[0] / threshold) * threshold;
-	      rgb[1] = (rgb[1] / threshold) * threshold;
-	      rgb[2] = (rgb[2] / threshold) * threshold;
+              /*  ignore completely transparent pixels  */
+              if (rgba[ALPHA_PIX])
+                {
+                  guchar rgb_real[MAX_CHANNELS];
 
-	      store_array =
-		gimp_palette_import_store_colors (store_array, rgb, rgb_real,
-						  n_colors);
+                  memcpy (rgb_real, rgba, MAX_CHANNELS);
+
+                  rgba[0] = (rgba[0] / threshold) * threshold;
+                  rgba[1] = (rgba[1] / threshold) * threshold;
+                  rgba[2] = (rgba[2] / threshold) * threshold;
+
+                  store_array =
+                    gimp_palette_import_store_colors (store_array,
+                                                      rgba, rgb_real,
+                                                      n_colors);
+                }
 
 	      idata += bytes;
 	    }
