@@ -1,5 +1,14 @@
 2005-09-13  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/edit-actions.c: use "Undo History" instead of "Undo
+	Editor" in user-visible string. Removed wrongly used ellipsis.
+
+	* app/dialogs/offset-dialog.c: added translator comment.
+
+	* app/dialogs/quit-dialog.c: string change.
+
+2005-09-13  Sven Neumann  <sven@gimp.org>
+
 	* INSTALL
 	* configure.in: allow to disable build of the poppler plug-in.
 

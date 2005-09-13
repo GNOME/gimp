@@ -61,7 +61,7 @@ static GimpActionEntry edit_actions[] =
   { "edit-menu",        NULL, N_("_Edit")   },
   { "edit-buffer-menu", NULL, N_("_Buffer") },
   { "undo-editor-popup",
-    GTK_STOCK_UNDO, N_("Undo Editor Menu"), NULL, NULL, NULL,
+    GTK_STOCK_UNDO, N_("Undo History Menu"), NULL, NULL, NULL,
     GIMP_HELP_UNDO_DIALOG },
 
   { "edit-undo", GTK_STOCK_UNDO,
@@ -78,7 +78,7 @@ static GimpActionEntry edit_actions[] =
 
   { "edit-undo-clear", GTK_STOCK_CLEAR,
     N_("_Clear Undo History"), "",
-    N_("Clear undo history..."),
+    N_("Clear undo history"),
     G_CALLBACK (edit_undo_clear_cmd_callback),
     GIMP_HELP_EDIT_UNDO_CLEAR },
 

@@ -173,7 +173,7 @@ quit_dialog_container_changed (GimpContainer  *images,
   GtkWidget *dialog     = gtk_widget_get_toplevel (button);
   gchar     *text;
 
-  text = g_strdup_printf (ngettext ("There is %d image with unsaved changes:",
+  text = g_strdup_printf (ngettext ("There is one image with unsaved changes:",
                                     "There are %d images with unsaved changes:",
                                     num_images), num_images);
   gimp_message_box_set_primary_text (box, text);
