@@ -274,18 +274,12 @@ gimp_time_since (guint  then)
 
   g_return_val_if_fail (now >= then, NULL);
 
-  if (diff == 1)
-    /* one second, the time period  */
-    return g_strdup (_("second"));
-
+  /* one second, the time period  */
   if (diff < 60)
-    return g_strdup_printf (_("%d seconds"), diff);
+    return g_strdup_printf (ngettext ("second", "%d seconds", diff), diff);
 
   /*  round to the nearest minute  */
   diff = (diff + 30) / 60;
 
-  if (diff == 1)
-    return g_strdup (_("minute"));
-
-  return g_strdup_printf (_("%d minutes"), diff);
+  return g_strdup_printf (ngettext ("minute", "%d minutes", diff), diff);
 }

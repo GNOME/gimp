@@ -1,5 +1,10 @@
 2005-09-13  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-close.c (gimp_time_since): use
+	ngettext for plural forms.
+
+2005-09-13  Sven Neumann  <sven@gimp.org>
+
 	* modules/colorsel_cmyk.c: added comments for translators.
 
 2005-09-13  Sven Neumann  <sven@gimp.org>
