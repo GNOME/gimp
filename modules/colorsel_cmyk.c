@@ -144,9 +144,13 @@ colorsel_cmyk_init (ColorselCmyk *module)
 
   static const gchar *cmyk_labels[] =
   {
+    /* Cyan        */
     N_("_C"),
+    /* Magenta     */
     N_("_M"),
+    /* Yellow      */
     N_("_Y"),
+    /* Key (Black) */
     N_("_K")
   };
   static const gchar *cmyk_tips[] =

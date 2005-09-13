@@ -1,5 +1,9 @@
 2005-09-13  Sven Neumann  <sven@gimp.org>
 
+	* modules/colorsel_cmyk.c: added comments for translators.
+
+2005-09-13  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimppalette-import.c (gimp_palette_import_from_image):
 	ignore transparent pixels as suggested in bug #316212.
 
