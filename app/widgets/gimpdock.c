@@ -34,12 +34,10 @@
 #include "core/gimpmarshal.h"
 
 #include "gimpdialogfactory.h"
-#include "gimpdnd.h"
 #include "gimpdock.h"
 #include "gimpdockable.h"
 #include "gimpdockbook.h"
 #include "gimpdockseparator.h"
-#include "gimphelp-ids.h"
 #include "gimpmessagebox.h"
 #include "gimpmessagedialog.h"
 #include "gimpwidgets-utils.h"
@@ -65,35 +63,35 @@ enum
 };
 
 
-static void        gimp_dock_class_init        (GimpDockClass         *klass);
-static void        gimp_dock_init              (GimpDock              *dock);
+static void      gimp_dock_class_init        (GimpDockClass         *klass);
+static void      gimp_dock_init              (GimpDock              *dock);
 
-static GObject   * gimp_dock_constructor       (GType                  type,
-                                                guint                  n_params,
-                                                GObjectConstructParam *params);
-static void        gimp_dock_set_property      (GObject               *object,
-                                                guint                  property_id,
-                                                const GValue          *value,
-                                                GParamSpec            *pspec);
-static void        gimp_dock_get_property      (GObject               *object,
-                                                guint                  property_id,
-                                                GValue                *value,
-                                                GParamSpec            *pspec);
+static GObject * gimp_dock_constructor       (GType                  type,
+                                              guint                  n_params,
+                                              GObjectConstructParam *params);
+static void      gimp_dock_set_property      (GObject               *object,
+                                              guint                  property_id,
+                                              const GValue          *value,
+                                              GParamSpec            *pspec);
+static void      gimp_dock_get_property      (GObject               *object,
+                                              guint                  property_id,
+                                              GValue                *value,
+                                              GParamSpec            *pspec);
 
-static void        gimp_dock_destroy           (GtkObject             *object);
+static void      gimp_dock_destroy           (GtkObject             *object);
 
-static gboolean    gimp_dock_delete_event      (GtkWidget             *widget,
-                                                GdkEventAny	      *event);
-static gboolean    gimp_dock_key_press_event   (GtkWidget             *widget,
-                                                GdkEventKey           *kevent);
+static gboolean  gimp_dock_delete_event      (GtkWidget             *widget,
+                                              GdkEventAny	      *event);
+static gboolean  gimp_dock_key_press_event   (GtkWidget             *widget,
+                                              GdkEventKey           *kevent);
 
-static void        gimp_dock_style_set         (GtkWidget             *widget,
-                                                GtkStyle              *prev_style);
+static void      gimp_dock_style_set         (GtkWidget             *widget,
+                                              GtkStyle              *prev_style);
 
-static void        gimp_dock_real_book_added   (GimpDock              *dock,
-                                                GimpDockbook          *dockbook);
-static void        gimp_dock_real_book_removed (GimpDock              *dock,
-                                                GimpDockbook          *dockbook);
+static void      gimp_dock_real_book_added   (GimpDock              *dock,
+                                              GimpDockbook          *dockbook);
+static void      gimp_dock_real_book_removed (GimpDock              *dock,
+                                              GimpDockbook          *dockbook);
 
 
 static GtkWindowClass *parent_class              = NULL;
@@ -176,8 +174,10 @@ gimp_dock_class_init (GimpDockClass *klass)
                                                         GIMP_TYPE_CONTEXT,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
+
   g_object_class_install_property (object_class, PROP_DIALOG_FACTORY,
-                                   g_param_spec_object ("dialog-factory", NULL, NULL,
+                                   g_param_spec_object ("dialog-factory",
+                                                        NULL, NULL,
                                                         GIMP_TYPE_DIALOG_FACTORY,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
@@ -185,8 +185,7 @@ gimp_dock_class_init (GimpDockClass *klass)
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_int ("default-height",
                                                              NULL, NULL,
-                                                             -1,
-                                                             G_MAXINT,
+                                                             -1, G_MAXINT,
                                                              DEFAULT_DOCK_HEIGHT,
                                                              G_PARAM_READABLE));
 }
@@ -198,6 +197,7 @@ gimp_dock_init (GimpDock *dock)
 
   dock->context        = NULL;
   dock->dialog_factory = NULL;
+  dock->dockbooks      = NULL;
 
   gtk_window_set_role (GTK_WINDOW (dock), "gimp-dock");
   gtk_window_set_resizable (GTK_WINDOW (dock), TRUE);

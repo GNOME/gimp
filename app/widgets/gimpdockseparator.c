@@ -42,8 +42,8 @@
 #define LABEL_PADDING  4
 
 
-static void     gimp_dock_separator_class_init  (GimpDockSeparatorClass *klass);
-static void     gimp_dock_separator_init        (GimpDockSeparator      *separator);
+static void     gimp_dock_separator_class_init (GimpDockSeparatorClass *klass);
+static void     gimp_dock_separator_init       (GimpDockSeparator      *separator);
 
 static void     gimp_dock_separator_style_set     (GtkWidget      *widget,
                                                    GtkStyle       *prev_style);
@@ -112,8 +112,7 @@ gimp_dock_separator_class_init (GimpDockSeparatorClass *klass)
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_int ("height",
                                                              NULL, NULL,
-                                                             0,
-                                                             G_MAXINT,
+                                                             0, G_MAXINT,
                                                              DEFAULT_HEIGHT,
                                                              G_PARAM_READABLE));
 }
@@ -121,12 +120,13 @@ gimp_dock_separator_class_init (GimpDockSeparatorClass *klass)
 static void
 gimp_dock_separator_init (GimpDockSeparator *separator)
 {
-  GtkWidget *frame;
+  separator->dock  = NULL;
+  separator->label = NULL;
 
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
-  gtk_container_add (GTK_CONTAINER (separator), frame);
-  gtk_widget_show (frame);
+  separator->frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (separator->frame), GTK_SHADOW_OUT);
+  gtk_container_add (GTK_CONTAINER (separator), separator->frame);
+  gtk_widget_show (separator->frame);
 
   gimp_help_set_help_data (GTK_WIDGET (separator),
                            _("You can drop dockable dialogs here."),
@@ -162,8 +162,7 @@ gimp_dock_separator_size_allocate (GtkWidget     *widget,
 
   if (separator->label)
     {
-      GtkWidget *frame = GTK_BIN (separator)->child;
-      gint       width = frame->allocation.width - 2 * LABEL_PADDING;
+      gint width = separator->frame->allocation.width - 2 * LABEL_PADDING;
 
       gtk_widget_set_size_request (separator->label, width, -1);
     }
@@ -222,8 +221,7 @@ gimp_dock_separator_drag_drop (GtkWidget      *widget,
       if (GIMP_IS_DOCKABLE (source))
         dockable = GIMP_DOCKABLE (source);
       else
-        dockable = (GimpDockable *) g_object_get_data (G_OBJECT (source),
-                                                       "gimp-dockable");
+        dockable = g_object_get_data (G_OBJECT (source), "gimp-dockable");
 
       if (dockable)
 	{
@@ -288,6 +286,8 @@ gimp_dock_separator_new (GimpDock *dock)
 {
   GimpDockSeparator *separator;
 
+  g_return_val_if_fail (GIMP_IS_DOCK (dock), NULL);
+
   separator = g_object_new (GIMP_TYPE_DOCK_SEPARATOR, NULL);
 
   separator->dock = dock;
@@ -299,11 +299,7 @@ void
 gimp_dock_separator_set_show_label (GimpDockSeparator *separator,
                                     gboolean           show)
 {
-  GtkWidget *frame;
-
   g_return_if_fail (GIMP_IS_DOCK_SEPARATOR (separator));
-
-  frame = GTK_BIN (separator)->child;
 
   if (show && ! separator->label)
     {
@@ -316,12 +312,12 @@ gimp_dock_separator_set_show_label (GimpDockSeparator *separator,
       gimp_label_set_attributes (GTK_LABEL (separator->label),
                                  PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                                  -1);
-      gtk_container_add (GTK_CONTAINER (frame), separator->label);
+      gtk_container_add (GTK_CONTAINER (separator->frame), separator->label);
       gtk_widget_show (separator->label);
     }
   else if (! show && separator->label)
     {
-      gtk_container_remove (GTK_CONTAINER (frame), separator->label);
+      gtk_container_remove (GTK_CONTAINER (separator->frame), separator->label);
       separator->label = NULL;
     }
 }

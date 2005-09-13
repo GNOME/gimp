@@ -1,3 +1,12 @@
+2005-09-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/dockable-actions.c (dockable_actions_update): don't
+	make "Detach Tab" insensitive if there are other dockbooks in the
+	dock.
+
+	* app/widgets/gimpdock.[ch]
+	* app/widgets/gimpdockseparator.[ch]: cleanup.
+
 2005-09-13  Karine Delvare  <kdelvare@nerim.net>
 
 	* app/tools/gimprectangletool.c: don't modify the rectangle while

@@ -41,6 +41,8 @@ struct _GimpDockSeparator
   GtkEventBox  parent_instance;
 
   GimpDock    *dock;
+
+  GtkWidget   *frame;
   GtkWidget   *label;
 };
 

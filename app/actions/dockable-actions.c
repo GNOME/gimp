@@ -175,6 +175,7 @@ dockable_actions_update (GimpActionGroup *group,
   GimpViewSize            preview_size        = -1;
   GimpTabStyle            tab_style           = -1;
   gint                    n_pages             = 0;
+  gint                    n_books             = 0;
 
   if (GIMP_IS_DOCKBOOK (data))
     {
@@ -237,6 +238,7 @@ dockable_actions_update (GimpActionGroup *group,
   tab_style = dockable->tab_style;
 
   n_pages = gtk_notebook_get_n_pages (GTK_NOTEBOOK (dockbook));
+  n_books = g_list_length (dockbook->dock->dockbooks);
 
 #define SET_ACTIVE(action,active) \
         gimp_action_group_set_action_active (group, action, (active) != 0)
@@ -245,7 +247,7 @@ dockable_actions_update (GimpActionGroup *group,
 #define SET_SENSITIVE(action,sensitive) \
         gimp_action_group_set_action_sensitive (group, action, (sensitive) != 0)
 
-  SET_SENSITIVE ("dockable-detach-tab", n_pages > 1);
+  SET_SENSITIVE ("dockable-detach-tab", n_pages > 1 || n_books > 1);
 
   SET_VISIBLE ("dockable-preview-size-menu", preview_size != -1);
 
@@ -293,9 +295,7 @@ dockable_actions_update (GimpActionGroup *group,
 
   if (n_pages > 1)
     {
-      GimpDockedInterface *docked_iface;
-
-      docked_iface = GIMP_DOCKED_GET_INTERFACE (docked);
+      GimpDockedInterface *docked_iface = GIMP_DOCKED_GET_INTERFACE (docked);
 
       if (tab_style == GIMP_TAB_STYLE_ICON)
         SET_ACTIVE ("dockable-tab-style-icon", TRUE);
