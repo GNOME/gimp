@@ -47,10 +47,11 @@ header files installed.
      fetch the tarball from
      ftp://ftp.gnome.org/pub/gnome/sources/libart_lgpl/
 
-  5. You may want to install other third party libraries or programs that
-     are needed for some of the available plugins. We recommend to check
-     that the following libraries are installed: libpng, libjpeg,
-     libtiff, gimp-print (4.2.x), gtkhtml-2, libmng, librsvg, libwmf.
+  5. You may want to install other third party libraries or programs
+     that are needed for some of the available plugins. We recommend
+     to check that the following libraries are installed: libpng,
+     libjpeg, libpoppler, libtiff, gimp-print (4.2.x), gtkhtml-2,
+     libmng, librsvg, libwmf.
 
   6. Configure the GIMP by running the `configure' script. You may want
      to pass some options to it, see below.
@@ -135,6 +136,9 @@ These are:
 
   --without-lcms.  If for some reason you want to build GIMP without
      using lcms for color support, you can build with --without-lcms.
+
+  --without-poppler.  If for some reason you don't want to build the PDF
+     import plug-in that uses libpoppler, you can use --without-poppler.
 
   --with-gif-compression=[lzw|rle|none].  Allows to tune the compression
      algorithm used by the GIF plug-in. If you are afraid of Unisys' LZW

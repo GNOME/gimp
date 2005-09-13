@@ -1187,25 +1187,35 @@ AC_SUBST(LIBSVG)
 # Check for libpoppler
 ######################
 
-PKG_CHECK_MODULES(POPPLER, poppler-glib >= poppler_required_version gthread-2.0,
-  POPPLER='poppler$(EXEEXT)'
-  LIBPOPPLER=$POPPLER_LIBS
-  AC_DEFINE(HAVE_POPPLER, 1, [Define to 1 if libpoppler is available])
-  have_poppler=yes,
-  AC_MSG_WARN([*** PDF import will be by the postscript plugin (poppler or gthread not found) ***]))
+AC_ARG_WITH(poppler,[  --without-poppler       build without poppler support])
+
+if test "x$with_poppler" != xno; then
+  PKG_CHECK_MODULES(POPPLER,
+    poppler-glib >= poppler_required_version gthread-2.0,
+    POPPLER='poppler$(EXEEXT)'
+    LIBPOPPLER=$POPPLER_LIBS
+    AC_DEFINE(HAVE_POPPLER, 1, [Define to 1 if libpoppler is available])
+    have_poppler=yes,
+    AC_MSG_WARN([*** PDF will be imported by the postscript plugin (libpoppler not found) ***]))
+else
+  AC_MSG_WARN([*** PDF will be imported by the postscript plugin (libpoppler support disabled)])
+fi
 
 AC_SUBST(POPPLER)
 AC_SUBST(LIBPOPPLER)
 
-if $PKG_CONFIG --atleast-version=0.4 poppler-glib; then
-  AC_DEFINE(HAVE_POPPLER_0_4, 1,
-            [Define to 1 if libpoppler >= 0.4 is available])
+if test "x$have_poppler" = xyes; then
+  if $PKG_CONFIG --atleast-version=0.4 poppler-glib; then
+    AC_DEFINE(HAVE_POPPLER_0_4, 1,
+              [Define to 1 if libpoppler >= 0.4 is available])
+  fi
+
+  if $PKG_CONFIG --atleast-version=0.4.1 poppler-glib; then
+    AC_DEFINE(HAVE_POPPLER_0_4_1, 1,
+              [Define to 1 if libpoppler >= 0.4.1 is available])
+  fi
 fi
 
-if $PKG_CONFIG --atleast-version=0.4.1 poppler-glib; then
-  AC_DEFINE(HAVE_POPPLER_0_4_1, 1,
-            [Define to 1 if libpoppler >= 0.4.1 is available])
-fi
 
 #################################################
 # Check for gnome-vfs (and optionally libgnomeui)
