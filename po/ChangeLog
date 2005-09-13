@@ -1,3 +1,7 @@
+2005-09-13  Clytie Siddall <clytie@riverland.net.au>
+
+        * vi.po: Updated Vietnamese translation.
+
 2005-09-12  Michael Natterer  <mitch@gimp.org>
 
 	* POTFILES.in: added app/widgets/gimpdockseparator.c
