@@ -1,5 +1,10 @@
 2005-09-14  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimptoolbox.c (gimp_toolbox_substitute_underscores):
+	removed.
+
+2005-09-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpwidgets-utils.c (gimp_get_mod_name_*): removed
 	"<>" around modifiers.
 
