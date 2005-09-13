@@ -218,7 +218,7 @@ gimp_crop_options_gui (GimpToolOptions *tool_options)
   vbox = gimp_tool_options_gui (tool_options);
 
   /*  tool toggle  */
-  str = g_strdup_printf (_("Tool Toggle  %s"),
+  str = g_strdup_printf (_("Tool Toggle  (%s)"),
                          gimp_get_mod_string (GDK_CONTROL_MASK));
 
   frame = gimp_prop_enum_radio_frame_new (config, "crop-mode",

@@ -408,7 +408,7 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
 
         if (data && data->tip_text)
           {
-            gchar *tip = g_strdup_printf ("%s  %s", data->tip_text, modifier);
+            gchar *tip = g_strdup_printf ("%s  (%s)", data->tip_text, modifier);
 
             gimp_help_set_help_data (button, tip, NULL);
             g_free (tip);

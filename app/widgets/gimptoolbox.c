@@ -631,70 +631,11 @@ gimp_toolbox_button_accel_changed (GtkAccelGroup   *accel_group,
           accel_key->accel_key &&
           accel_key->accel_flags & GTK_ACCEL_VISIBLE)
         {
-          /*  mostly taken from gtk-2-0/gtk/gtkaccellabel.c:1.46
-           */
-          GtkAccelLabelClass *accel_label_class;
-          GString            *gstring;
-          gboolean            seen_mod = FALSE;
-          gunichar            ch;
-
-          accel_label_class = g_type_class_peek (GTK_TYPE_ACCEL_LABEL);
-
-          gstring = g_string_new (tool_info->help);
-          g_string_append (gstring, "     ");
-
-          if (accel_key->accel_mods & GDK_SHIFT_MASK)
-            {
-              g_string_append (gstring, accel_label_class->mod_name_shift);
-              seen_mod = TRUE;
-            }
-          if (accel_key->accel_mods & GDK_CONTROL_MASK)
-            {
-              if (seen_mod)
-                g_string_append (gstring, accel_label_class->mod_separator);
-              g_string_append (gstring, accel_label_class->mod_name_control);
-              seen_mod = TRUE;
-            }
-          if (accel_key->accel_mods & GDK_MOD1_MASK)
-            {
-              if (seen_mod)
-                g_string_append (gstring, accel_label_class->mod_separator);
-              g_string_append (gstring, accel_label_class->mod_name_alt);
-              seen_mod = TRUE;
-            }
-          if (seen_mod)
-            g_string_append (gstring, accel_label_class->mod_separator);
-
-          ch = gdk_keyval_to_unicode (accel_key->accel_key);
-          if (ch && (g_unichar_isgraph (ch) || ch == ' ') &&
-              (ch < 0x80 || accel_label_class->latin1_to_char))
-            {
-              switch (ch)
-                {
-                case ' ':
-                  g_string_append (gstring, "Space");
-                  break;
-                case '\\':
-                  g_string_append (gstring, "Backslash");
-                  break;
-                default:
-                  g_string_append_unichar (gstring, g_unichar_toupper (ch));
-                  break;
-                }
-            }
-          else
-            {
-              gchar *tmp;
-
-              tmp = gtk_accelerator_name (accel_key->accel_key, 0);
-              if (tmp[0] != 0 && tmp[1] == 0)
-                tmp[0] = g_ascii_toupper (tmp[0]);
-              gimp_toolbox_substitute_underscores (tmp);
-              g_string_append (gstring, tmp);
-              g_free (tmp);
-            }
-
-          tooltip = g_string_free (gstring, FALSE);
+          tooltip = g_strconcat (tool_info->help,
+                                 "     ",
+                                 gimp_get_accel_string (accel_key->accel_key,
+                                                        accel_key->accel_mods),
+                                 NULL);
         }
       else
         {

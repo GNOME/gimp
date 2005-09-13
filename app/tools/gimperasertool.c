@@ -179,7 +179,7 @@ gimp_eraser_options_gui (GimpToolOptions *tool_options)
   vbox = gimp_paint_options_gui (tool_options);
 
   /* the anti_erase toggle */
-  str = g_strdup_printf (_("Anti erase  %s"),
+  str = g_strdup_printf (_("Anti erase  (%s)"),
                          gimp_get_mod_string (GDK_MOD1_MASK));
 
   button = gimp_prop_check_button_new (config, "anti-erase", str);

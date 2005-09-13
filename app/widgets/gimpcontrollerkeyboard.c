@@ -31,6 +31,7 @@
 
 #include "gimpcontrollerkeyboard.h"
 #include "gimphelp-ids.h"
+#include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
 
@@ -42,7 +43,7 @@ struct _KeyboardEvent
   guint            keyval;
   GdkModifierType  modifiers;
   const gchar     *name;
-  const gchar     *blurb;
+  gchar           *blurb;
 };
 
 
@@ -62,104 +63,104 @@ static const gchar * gimp_controller_keyboard_get_event_blurb (GimpController *c
 
 static GimpControllerClass *parent_class = NULL;
 
-static const KeyboardEvent keyboard_events[] =
+static KeyboardEvent keyboard_events[] =
 {
   { GDK_Up, GDK_MOD1_MASK | GDK_CONTROL_MASK | GDK_SHIFT_MASK,
     "key-up-shift-control-alt",
-    N_("Cursor Up (Shift + Control + Alt)") },
+    N_("Cursor Up") },
   { GDK_Up, GDK_MOD1_MASK | GDK_CONTROL_MASK,
     "key-up-control-alt",
-    N_("Cursor Up (Control + Alt)") },
+    N_("Cursor Up") },
   { GDK_Up, GDK_MOD1_MASK | GDK_SHIFT_MASK,
     "key-up-shift-alt",
-    N_("Cursor Up (Shift + Alt)") },
+    N_("Cursor Up") },
   { GDK_Up, GDK_CONTROL_MASK | GDK_SHIFT_MASK,
     "key-up-shift-control",
-    N_("Cursor Up (Shift + Control)") },
+    N_("Cursor Up") },
   { GDK_Up, GDK_MOD1_MASK,
     "key-up-alt",
-    N_("Cursor Up (Alt)") },
+    N_("Cursor Up") },
   { GDK_Up, GDK_CONTROL_MASK,
     "key-up-control",
-    N_("Cursor Up (Control)") },
+    N_("Cursor Up") },
   { GDK_Up, GDK_SHIFT_MASK,
     "key-up-shift",
-    N_("Cursor Up (Shift)") },
+    N_("Cursor Up") },
   { GDK_Up, 0,
     "key-up",
     N_("Cursor Up") },
 
   { GDK_Down, GDK_MOD1_MASK | GDK_CONTROL_MASK | GDK_SHIFT_MASK,
     "key-down-shift-control-alt",
-    N_("Cursor Down (Shift + Control + Alt)") },
+    N_("Cursor Down") },
   { GDK_Down, GDK_MOD1_MASK | GDK_CONTROL_MASK,
     "key-down-control-alt",
-    N_("Cursor Down (Control + Alt)") },
+    N_("Cursor Down") },
   { GDK_Down, GDK_MOD1_MASK | GDK_SHIFT_MASK,
     "key-down-shift-alt",
-    N_("Cursor Down (Shift + Alt)") },
+    N_("Cursor Down") },
   { GDK_Down, GDK_CONTROL_MASK | GDK_SHIFT_MASK,
     "key-down-shift-control",
-    N_("Cursor Down (Shift + Control)") },
+    N_("Cursor Down") },
   { GDK_Down, GDK_MOD1_MASK,
     "key-down-alt",
-    N_("Cursor Down (Alt)") },
+    N_("Cursor Down") },
   { GDK_Down, GDK_CONTROL_MASK,
     "key-down-control",
-    N_("Cursor Down (Control)") },
+    N_("Cursor Down") },
   { GDK_Down, GDK_SHIFT_MASK,
     "key-down-shift",
-    N_("Cursor Down (Shift)") },
+    N_("Cursor Down") },
   { GDK_Down, 0,
     "key-down",
     N_("Cursor Down") },
 
   { GDK_Left, GDK_MOD1_MASK | GDK_CONTROL_MASK | GDK_SHIFT_MASK,
     "key-left-shift-control-alt",
-    N_("Cursor Left (Shift + Control + Alt)") },
+    N_("Cursor Left") },
   { GDK_Left, GDK_MOD1_MASK | GDK_CONTROL_MASK,
     "key-left-control-alt",
-    N_("Cursor Left (Control + Alt)") },
+    N_("Cursor Left") },
   { GDK_Left, GDK_MOD1_MASK | GDK_SHIFT_MASK,
     "key-left-shift-alt",
-    N_("Cursor Left (Shift + Alt)") },
+    N_("Cursor Left") },
   { GDK_Left, GDK_CONTROL_MASK | GDK_SHIFT_MASK,
     "key-left-shift-control",
-    N_("Cursor Left (Shift + Control)") },
+    N_("Cursor Left") },
   { GDK_Left, GDK_MOD1_MASK,
     "key-left-alt",
-    N_("Cursor Left (Alt)") },
+    N_("Cursor Left") },
   { GDK_Left, GDK_CONTROL_MASK,
     "key-left-control",
-    N_("Cursor Left (Control)") },
+    N_("Cursor Left") },
   { GDK_Left, GDK_SHIFT_MASK,
     "key-left-shift",
-    N_("Cursor Left (Shift)") },
+    N_("Cursor Left") },
   { GDK_Left, 0,
     "key-left",
     N_("Cursor Left") },
 
   { GDK_Right, GDK_MOD1_MASK | GDK_CONTROL_MASK | GDK_SHIFT_MASK,
     "key-right-shift-control-alt",
-    N_("Cursor Right (Shift + Control + Alt)") },
+    N_("Cursor Right") },
   { GDK_Right, GDK_MOD1_MASK | GDK_CONTROL_MASK,
     "key-right-control-alt",
-    N_("Cursor Right (Control + Alt)") },
+    N_("Cursor Right") },
   { GDK_Right, GDK_MOD1_MASK | GDK_SHIFT_MASK,
     "key-right-shift-alt",
-    N_("Cursor Right (Shift + Alt)") },
+    N_("Cursor Right") },
   { GDK_Right, GDK_CONTROL_MASK | GDK_SHIFT_MASK,
     "key-right-shift-control",
-    N_("Cursor Right (Shift + Control)") },
+    N_("Cursor Right") },
   { GDK_Right, GDK_MOD1_MASK,
     "key-right-alt",
-    N_("Cursor Right (Alt)") },
+    N_("Cursor Right") },
   { GDK_Right, GDK_CONTROL_MASK,
     "key-right-control",
-    N_("Cursor Right (Control)") },
+    N_("Cursor Right") },
   { GDK_Right, GDK_SHIFT_MASK,
     "key-right-shift",
-    N_("Cursor Right (Shift)") },
+    N_("Cursor Right") },
   { GDK_Right, 0,
     "key-right",
     N_("Cursor Right") }
@@ -215,6 +216,26 @@ gimp_controller_keyboard_class_init (GimpControllerKeyboardClass *klass)
 static void
 gimp_controller_keyboard_init (GimpControllerKeyboard *keyboard)
 {
+  static gboolean event_names_initialized = FALSE;
+
+  if (! event_names_initialized)
+    {
+      gint i;
+
+      for (i = 0; i < G_N_ELEMENTS (keyboard_events); i++)
+        {
+          KeyboardEvent *kevent = &keyboard_events[i];
+
+          if (kevent->modifiers != 0)
+            {
+              kevent->blurb =
+                g_strdup_printf ("%s (%s)", gettext (kevent->blurb),
+                                 gimp_get_mod_string (kevent->modifiers));
+            }
+        }
+
+      event_names_initialized = TRUE;
+    }
 }
 
 static GObject *

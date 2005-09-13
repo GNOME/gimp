@@ -162,7 +162,7 @@ gimp_flip_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (label);
 
   /*  tool toggle  */
-  str = g_strdup_printf (_("Flip Type  %s"),
+  str = g_strdup_printf (_("Flip Type  (%s)"),
                          gimp_get_mod_string (GDK_CONTROL_MASK));
 
   frame = gimp_prop_enum_radio_frame_new (config, "flip-type",

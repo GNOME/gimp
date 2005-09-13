@@ -188,7 +188,7 @@ gimp_dodge_burn_options_gui (GimpToolOptions *tool_options)
   vbox = gimp_paint_options_gui (tool_options);
 
   /* the type (dodge or burn) */
-  str = g_strdup_printf (_("Type  %s"),
+  str = g_strdup_printf (_("Type  (%s)"),
                          gimp_get_mod_string (GDK_CONTROL_MASK));
 
   frame = gimp_prop_enum_radio_frame_new (config, "type",

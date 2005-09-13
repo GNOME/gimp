@@ -421,7 +421,7 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
         {
           gchar *str;
 
-          str = g_strdup_printf (_("15 degrees  %s"),
+          str = g_strdup_printf (_("15 degrees  (%s)"),
                                  gimp_get_mod_string (GDK_CONTROL_MASK));
 
           button = gimp_prop_check_button_new (config, "constrain-1", str);
@@ -441,11 +441,11 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
           initial = ((options->constrain_1 ? 1 : 0) +
                      (options->constrain_2 ? 2 : 0));
 
-          str1 = g_strdup_printf (_("Keep height  %s"),
+          str1 = g_strdup_printf (_("Keep height  (%s)"),
                                   gimp_get_mod_string (GDK_CONTROL_MASK));
-          str2 = g_strdup_printf (_("Keep width  %s"),
+          str2 = g_strdup_printf (_("Keep width  (%s)"),
                                   gimp_get_mod_string (GDK_MOD1_MASK));
-          str3 = g_strdup_printf (_("Keep aspect  %s"),
+          str3 = g_strdup_printf (_("Keep aspect  (%s)"),
                                   gimp_get_mod_string (GDK_CONTROL_MASK |
                                                        GDK_MOD1_MASK));
 

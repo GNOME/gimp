@@ -291,7 +291,7 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
           if (klass->load_button_tip)
             {
               gchar *str = g_strdup_printf ("%s\n"
-                                            "%s  %s",
+                                            "(%s)  %s",
                                             klass->load_button_tip,
                                             gimp_get_mod_string (GDK_SHIFT_MASK),
                                             _("Quick Load"));
@@ -320,7 +320,7 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
           if (klass->save_button_tip)
             {
               gchar *str = g_strdup_printf ("%s\n"
-                                            "%s  %s",
+                                            "(%s)  %s",
                                             klass->save_button_tip,
                                             gimp_get_mod_string (GDK_SHIFT_MASK),
                                             _("Quick Save"));

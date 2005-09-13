@@ -179,7 +179,7 @@ gimp_color_picker_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (button);
 
   /*  the pick FG/BG frame  */
-  str = g_strdup_printf (_("Pick Mode  %s"),
+  str = g_strdup_printf (_("Pick Mode  (%s)"),
                          gimp_get_mod_string (GDK_CONTROL_MASK));
   frame = gimp_prop_enum_radio_frame_new (config, "pick-mode", str, -1, -1);
   g_free (str);
@@ -188,7 +188,7 @@ gimp_color_picker_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (frame);
 
   /*  the add to palette toggle  */
-  str = g_strdup_printf (_("Add to palette  %s"),
+  str = g_strdup_printf (_("Add to palette  (%s)"),
                          gimp_get_mod_string (GDK_SHIFT_MASK));
   button = gimp_prop_check_button_new (config, "add-to-palette", str);
   g_free (str);
