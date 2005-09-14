@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-13 20:09+0200\n"
-"PO-Revision-Date: 2005-09-13 20:16+0200\n"
+"POT-Creation-Date: 2005-09-14 03:57+0200\n"
+"PO-Revision-Date: 2005-09-14 03:57+0200\n"
 "Last-Translator: Jens Seidel <jseidel@cvs.gnome.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -738,7 +738,7 @@ msgstr "Vereinigung prüfen"
 #: ../app/dialogs/file-open-location-dialog.c:201
 #: ../app/display/gimpdisplayshell-dnd.c:448
 #: ../app/widgets/gimplayertreeview.c:764 ../app/widgets/gimptoolbox-dnd.c:157
-#: ../app/widgets/gimptoolbox.c:1089
+#: ../app/widgets/gimptoolbox.c:1020
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -4409,9 +4409,8 @@ msgid "Item visibility"
 msgstr "Sichtbarkeit des Objekts"
 
 #: ../app/core/core-enums.c:823 ../app/core/core-enums.c:856
-#, fuzzy
 msgid "Link/Unlink item"
-msgstr "Verknüpftes Objekt"
+msgstr "Objectverknüpfung"
 
 #: ../app/core/core-enums.c:824
 msgid "Item properties"
@@ -4994,7 +4993,7 @@ msgstr "Farbwerte"
 msgid "Offset Drawable"
 msgstr "Ebene verschieben"
 
-#: ../app/core/gimpdrawable-stroke.c:319
+#: ../app/core/gimpdrawable-stroke.c:326
 msgid "Render Stroke"
 msgstr "Nachziehen"
 
@@ -6197,41 +6196,42 @@ msgid "Offset Channel"
 msgstr "Kanal verschieben"
 
 #. The offset frame
-#: ../app/dialogs/offset-dialog.c:108 ../app/dialogs/offset-dialog.c:141
+#: ../app/dialogs/offset-dialog.c:108 ../app/dialogs/offset-dialog.c:142
 #: ../app/dialogs/resize-dialog.c:193 ../app/widgets/gimpgrideditor.c:274
 msgid "Offset"
 msgstr "Versatz"
 
-#: ../app/dialogs/offset-dialog.c:116
+#. offset, used as a verb
+#: ../app/dialogs/offset-dialog.c:117
 msgid "_Offset"
 msgstr "_Versetzen"
 
-#: ../app/dialogs/offset-dialog.c:173 ../app/dialogs/resize-dialog.c:222
+#: ../app/dialogs/offset-dialog.c:174 ../app/dialogs/resize-dialog.c:222
 msgid "_X:"
 msgstr "_X:"
 
-#: ../app/dialogs/offset-dialog.c:175 ../app/dialogs/resize-dialog.c:223
+#: ../app/dialogs/offset-dialog.c:176 ../app/dialogs/resize-dialog.c:223
 msgid "_Y:"
 msgstr "_Y:"
 
-#: ../app/dialogs/offset-dialog.c:202
+#: ../app/dialogs/offset-dialog.c:203
 msgid "Offset by  x/_2, y/2"
 msgstr "Versatz um (x/_2),(y/2)"
 
 #. The edge behavior frame
-#: ../app/dialogs/offset-dialog.c:211
+#: ../app/dialogs/offset-dialog.c:212
 msgid "Edge Behavior"
 msgstr "Kantenverhalten"
 
-#: ../app/dialogs/offset-dialog.c:215
+#: ../app/dialogs/offset-dialog.c:216
 msgid "_Wrap around"
 msgstr "_Falten"
 
-#: ../app/dialogs/offset-dialog.c:218
+#: ../app/dialogs/offset-dialog.c:219
 msgid "Fill with _background color"
 msgstr "Mit _Hintergrundfarbe auffüllen"
 
-#: ../app/dialogs/offset-dialog.c:221
+#: ../app/dialogs/offset-dialog.c:222
 msgid "Make _transparent"
 msgstr "_Transparent machen"
 
@@ -8442,14 +8442,14 @@ msgstr "Maximale Farbdifferenz"
 #. fill type
 #: ../app/tools/gimpbucketfilloptions.c:237
 #, c-format
-msgid "Fill Type  %s"
-msgstr "Füllart  %s"
+msgid "Fill Type  (%s)"
+msgstr "Füllart  (%s)"
 
 #. fill selection
 #: ../app/tools/gimpbucketfilloptions.c:249
 #, c-format
-msgid "Affected Area  %s"
-msgstr "Beeinflusster Bereich %s"
+msgid "Affected Area  (%s)"
+msgstr "Beeinflusster Bereich (%s)"
 
 #: ../app/tools/gimpbucketfilloptions.c:253
 msgid "Fill whole selection"
@@ -8602,14 +8602,14 @@ msgstr "Radius:"
 #. the pick FG/BG frame
 #: ../app/tools/gimpcolorpickeroptions.c:182
 #, c-format
-msgid "Pick Mode  %s"
-msgstr "Auswahlmodus  %s"
+msgid "Pick Mode  (%s)"
+msgstr "Auswahlmodus  (%s)"
 
 #. the add to palette toggle
 #: ../app/tools/gimpcolorpickeroptions.c:191
 #, c-format
-msgid "Add to palette  %s"
-msgstr "Zur Farbpalette hinzufügen %s"
+msgid "Add to palette  (%s)"
+msgstr "Zur Palette hinzufügen  (%s)"
 
 #: ../app/tools/gimpcolorpickertool.c:101
 msgid "Color Picker"
@@ -8651,15 +8651,15 @@ msgstr "_Verknüpfen"
 #. the type radio box
 #: ../app/tools/gimpconvolvetool.c:190
 #, c-format
-msgid "Convolve Type  %s"
-msgstr "Verknüpfungsart  %s"
+msgid "Convolve Type  (%s)"
+msgstr "Verknüpfungsart  (%s)"
 
 #. tool toggle
 #: ../app/tools/gimpcropoptions.c:221 ../app/tools/gimpmagnifyoptions.c:206
 #: ../app/tools/gimpmoveoptions.c:215
 #, c-format
-msgid "Tool Toggle  %s"
-msgstr "Werkzeug-Modus  %s"
+msgid "Tool Toggle  (%s)"
+msgstr "Werkzeug-Modus (%s)"
 
 #: ../app/tools/gimpcropoptions.c:233
 msgid "Current layer only"
@@ -8738,8 +8738,8 @@ msgstr "Ab_wedeln bzw. Nachbelichten"
 #. the type (dodge or burn)
 #: ../app/tools/gimpdodgeburntool.c:191
 #, c-format
-msgid "Type  %s"
-msgstr "Typ  %s"
+msgid "Type  (%s)"
+msgstr "Typ  (%s)"
 
 #: ../app/tools/gimpdodgeburntool.c:203
 msgid "Mode"
@@ -8778,8 +8778,8 @@ msgstr "_Radierer"
 #. the anti_erase toggle
 #: ../app/tools/gimperasertool.c:182
 #, c-format
-msgid "Anti erase  %s"
-msgstr "Un-Radieren  %s"
+msgid "Anti erase  (%s)"
+msgstr "Un-Radieren  (%s)"
 
 #: ../app/tools/gimpflipoptions.c:159 ../app/tools/gimpmoveoptions.c:209
 #: ../app/tools/gimptransformoptions.c:322
@@ -8789,8 +8789,8 @@ msgstr "Wirkt auf:"
 #. tool toggle
 #: ../app/tools/gimpflipoptions.c:165
 #, c-format
-msgid "Flip Type  %s"
-msgstr "Spiegeltyp  %s"
+msgid "Flip Type  (%s)"
+msgstr "Richtung  (%s)"
 
 #: ../app/tools/gimpfliptool.c:82
 msgid "Flip the layer or selection"
@@ -8872,17 +8872,14 @@ msgid "F_oreground Select"
 msgstr "_Vordergrundauswahl"
 
 #: ../app/tools/gimpforegroundselecttool.c:320
-#, fuzzy
 msgid "Add more strokes or press Enter to accept the selection"
-msgstr "Auswahl mit Enter-Taste übernehmen"
+msgstr "Mehr Flächen markieren oder Auswahl mit Enter-Taste übernehmen"
 
 #: ../app/tools/gimpforegroundselecttool.c:322
-#, fuzzy
 msgid "Mark foreground by painting on the object to extract"
-msgstr "Ziehen Sie eine grobe Auswahl um das zu extrahierende Objekt"
+msgstr ""
 
 #: ../app/tools/gimpforegroundselecttool.c:336
-#, fuzzy
 msgid "Draw a rough circle around the object to extract"
 msgstr "Ziehen Sie eine grobe Auswahl um das zu extrahierende Objekt"
 
@@ -8951,16 +8948,14 @@ msgid "Select Primary Color to Adjust"
 msgstr "Zu bearbeitende Primärfarbe auswählen"
 
 #: ../app/tools/gimphuesaturationtool.c:312
-#, fuzzy
 msgid "Adjust all colors"
-msgstr "Farbwerte anpassen"
+msgstr "Alle Farben bearbeiten"
 
 #: ../app/tools/gimphuesaturationtool.c:366
 msgid "_Overlap:"
 msgstr "_Überlagern:"
 
 #: ../app/tools/gimphuesaturationtool.c:384
-#, fuzzy
 msgid "Adjust Selected Color"
 msgstr "Gewählte Farbe bearbeiten"
 
@@ -8968,7 +8963,7 @@ msgstr "Gewählte Farbe bearbeiten"
 msgid "R_eset Color"
 msgstr "Farbe _zurücksetzen"
 
-#: ../app/tools/gimpimagemaptool.c:265 ../app/widgets/gimpthumbbox.c:368
+#: ../app/tools/gimpimagemaptool.c:265 ../app/widgets/gimpthumbbox.c:369
 msgid "_Preview"
 msgstr "_Vorschau"
 
@@ -9328,24 +9323,24 @@ msgstr "Perspektive"
 msgid "Center"
 msgstr "Zentriert"
 
-#: ../app/tools/gimprectangletool.c:1861 ../app/tools/gimprectangletool.c:2288
+#: ../app/tools/gimprectangletool.c:1899 ../app/tools/gimprectangletool.c:2326
 msgid "Rectangle: "
 msgstr "Rechteck: "
 
-#: ../app/tools/gimprectangletool.c:2707
+#: ../app/tools/gimprectangletool.c:2745
 msgid "1 "
 msgstr "1 "
 
-#: ../app/tools/gimprectangletool.c:2708
+#: ../app/tools/gimprectangletool.c:2746
 msgid "2 "
 msgstr "2 "
 
-#: ../app/tools/gimprectangletool.c:2709 ../app/widgets/gimpcursorview.c:170
+#: ../app/tools/gimprectangletool.c:2747 ../app/widgets/gimpcursorview.c:170
 #: ../app/widgets/gimpcursorview.c:192
 msgid "X"
 msgstr "X"
 
-#: ../app/tools/gimprectangletool.c:2710 ../app/widgets/gimpcursorview.c:176
+#: ../app/tools/gimprectangletool.c:2748 ../app/widgets/gimpcursorview.c:176
 #: ../app/widgets/gimpcursorview.c:198
 msgid "Y"
 msgstr "Y"
@@ -9640,23 +9635,23 @@ msgstr "Einschränkungen"
 
 #: ../app/tools/gimptransformoptions.c:424
 #, c-format
-msgid "15 degrees  %s"
-msgstr "15 Grad  %s"
+msgid "15 degrees  (%s)"
+msgstr "15 Grad  (%s)"
 
 #: ../app/tools/gimptransformoptions.c:444
 #, c-format
-msgid "Keep height  %s"
-msgstr "Höhe beibehalten  %s"
+msgid "Keep height  (%s)"
+msgstr "Höhe beibehalten  (%s)"
 
 #: ../app/tools/gimptransformoptions.c:446
 #, c-format
-msgid "Keep width  %s"
-msgstr "Breite beibehalten  %s"
+msgid "Keep width  (%s)"
+msgstr "Breite beibehalten  (%s)"
 
 #: ../app/tools/gimptransformoptions.c:448
 #, c-format
-msgid "Keep aspect  %s"
-msgstr "Verhältnis von %s beibehalten"
+msgid "Keep aspect  (%s)"
+msgstr "Verhältnis beibehalten  (%s)"
 
 #: ../app/tools/gimptransformtool.c:255
 msgid "Transforming..."
@@ -10110,7 +10105,6 @@ msgid "Event"
 msgstr "Ereignis"
 
 #: ../app/widgets/gimpcontrollereditor.c:418
-#, fuzzy
 msgid "_Grab event"
 msgstr "E_reignis abfangen"
 
@@ -10131,143 +10125,59 @@ msgstr "Die verbundene Aktion vom gewählten Ereignis entfernen"
 msgid "Select Controller Event Action"
 msgstr "Ereigniskontrolleuraktion auswählen"
 
-#: ../app/widgets/gimpcontrollerkeyboard.c:69
-msgid "Cursor Up (Shift + Control + Alt)"
-msgstr "Zeiger hoch (Shift + Strg + Alt)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:72
-msgid "Cursor Up (Control + Alt)"
-msgstr "Zeiger hoch (Strg + Alt)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:75
-msgid "Cursor Up (Shift + Alt)"
-msgstr "Zeiger hoch (Shift + Alt)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:78
-msgid "Cursor Up (Shift + Control)"
-msgstr "Zeiger hoch (Shift + Strg)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:81
-msgid "Cursor Up (Alt)"
-msgstr "Zeiger hoch (Alt)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:84
-msgid "Cursor Up (Control)"
-msgstr "Zeiger hoch (Strg)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:87
-msgid "Cursor Up (Shift)"
-msgstr "Zeiger hoch (Shift)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:90
+#: ../app/widgets/gimpcontrollerkeyboard.c:70
+#: ../app/widgets/gimpcontrollerkeyboard.c:73
+#: ../app/widgets/gimpcontrollerkeyboard.c:76
+#: ../app/widgets/gimpcontrollerkeyboard.c:79
+#: ../app/widgets/gimpcontrollerkeyboard.c:82
+#: ../app/widgets/gimpcontrollerkeyboard.c:85
+#: ../app/widgets/gimpcontrollerkeyboard.c:88
+#: ../app/widgets/gimpcontrollerkeyboard.c:91
 msgid "Cursor Up"
 msgstr "Zeiger hoch"
 
-#: ../app/widgets/gimpcontrollerkeyboard.c:94
-msgid "Cursor Down (Shift + Control + Alt)"
-msgstr "Zeiger runter (Shift + Strg + Alt)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:97
-msgid "Cursor Down (Control + Alt)"
-msgstr "Zeiger runter  (Strg + Alt)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:100
-msgid "Cursor Down (Shift + Alt)"
-msgstr "Zeiger runter  (Shift + Alt)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:103
-msgid "Cursor Down (Shift + Control)"
-msgstr "Zeiger runter  (Shift + Strg)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:106
-msgid "Cursor Down (Alt)"
-msgstr "Zeiger runter  (Alt)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:109
-msgid "Cursor Down (Control)"
-msgstr "Zeiger runter  (Strg)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:112
-msgid "Cursor Down (Shift)"
-msgstr "Zeiger runter  (Shift)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:115
+#: ../app/widgets/gimpcontrollerkeyboard.c:95
+#: ../app/widgets/gimpcontrollerkeyboard.c:98
+#: ../app/widgets/gimpcontrollerkeyboard.c:101
+#: ../app/widgets/gimpcontrollerkeyboard.c:104
+#: ../app/widgets/gimpcontrollerkeyboard.c:107
+#: ../app/widgets/gimpcontrollerkeyboard.c:110
+#: ../app/widgets/gimpcontrollerkeyboard.c:113
+#: ../app/widgets/gimpcontrollerkeyboard.c:116
 msgid "Cursor Down"
 msgstr "Zeiger runter"
 
-#: ../app/widgets/gimpcontrollerkeyboard.c:119
-msgid "Cursor Left (Shift + Control + Alt)"
-msgstr "Zeiger links (Shift + Strg + Alt)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:122
-msgid "Cursor Left (Control + Alt)"
-msgstr "Zeiger links (Strg + Alt)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:125
-msgid "Cursor Left (Shift + Alt)"
-msgstr "Zeiger links (Shift + Alt)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:128
-msgid "Cursor Left (Shift + Control)"
-msgstr "Zeiger links (Shift + Strg)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:131
-msgid "Cursor Left (Alt)"
-msgstr "Zeiger links (Alt)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:134
-msgid "Cursor Left (Control)"
-msgstr "Zeiger links (Strg)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:137
-msgid "Cursor Left (Shift)"
-msgstr "Zeiger links (Shift)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:140
+#: ../app/widgets/gimpcontrollerkeyboard.c:120
+#: ../app/widgets/gimpcontrollerkeyboard.c:123
+#: ../app/widgets/gimpcontrollerkeyboard.c:126
+#: ../app/widgets/gimpcontrollerkeyboard.c:129
+#: ../app/widgets/gimpcontrollerkeyboard.c:132
+#: ../app/widgets/gimpcontrollerkeyboard.c:135
+#: ../app/widgets/gimpcontrollerkeyboard.c:138
+#: ../app/widgets/gimpcontrollerkeyboard.c:141
 msgid "Cursor Left"
 msgstr "Zeiger links"
 
-#: ../app/widgets/gimpcontrollerkeyboard.c:144
-msgid "Cursor Right (Shift + Control + Alt)"
-msgstr "Zeiger rechts (Shift + Strg + Alt)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:147
-msgid "Cursor Right (Control + Alt)"
-msgstr "Zeiger rechts (Strg + Alt)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:150
-msgid "Cursor Right (Shift + Alt)"
-msgstr "Zeiger rechts (Shift + Alt)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:153
-msgid "Cursor Right (Shift + Control)"
-msgstr "Zeiger rechts (Shift + Strg)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:156
-msgid "Cursor Right (Alt)"
-msgstr "Zeiger rechts (Alt)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:159
-msgid "Cursor Right (Control)"
-msgstr "Zeiger rechts (Strg)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:162
-msgid "Cursor Right (Shift)"
-msgstr "Zeiger rechts (Shift)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:165
+#: ../app/widgets/gimpcontrollerkeyboard.c:145
+#: ../app/widgets/gimpcontrollerkeyboard.c:148
+#: ../app/widgets/gimpcontrollerkeyboard.c:151
+#: ../app/widgets/gimpcontrollerkeyboard.c:154
+#: ../app/widgets/gimpcontrollerkeyboard.c:157
+#: ../app/widgets/gimpcontrollerkeyboard.c:160
+#: ../app/widgets/gimpcontrollerkeyboard.c:163
+#: ../app/widgets/gimpcontrollerkeyboard.c:166
 msgid "Cursor Right"
 msgstr "Zeiger rechts"
 
-#: ../app/widgets/gimpcontrollerkeyboard.c:207
+#: ../app/widgets/gimpcontrollerkeyboard.c:208
 msgid "Keyboard"
 msgstr "Tastatur"
 
-#: ../app/widgets/gimpcontrollerkeyboard.c:230
+#: ../app/widgets/gimpcontrollerkeyboard.c:251
 msgid "Keyboard Events"
 msgstr "Tastaturereignisse"
 
-#: ../app/widgets/gimpcontrollerkeyboard.c:231
+#: ../app/widgets/gimpcontrollerkeyboard.c:252
 #: ../app/widgets/gimpcontrollerwheel.c:230
 msgid "Ready"
 msgstr "Bereit"
@@ -10552,7 +10462,7 @@ msgid "Configure this tab"
 msgstr "Diesen Reiter konfigurieren"
 
 #: ../app/widgets/gimpdockseparator.c:132
-#: ../app/widgets/gimpdockseparator.c:311
+#: ../app/widgets/gimpdockseparator.c:307
 msgid "You can drop dockable dialogs here."
 msgstr "Hier können Dialoge angedockt werden."
 
@@ -11002,21 +10912,21 @@ msgstr "Ausgewählte _Schriftart verwenden"
 #, c-format
 msgid ""
 "Click to update preview\n"
-"%s  Click to force update even if preview is up-to-date"
+"%s%sClick to force update even if preview is up-to-date"
 msgstr ""
 "Klick erneuert die Vorschau\n"
-"%s  Klick erzwingt eine neue Vorschau"
+"%s%sKlick erzwingt eine neue Vorschau"
 
-#: ../app/widgets/gimpthumbbox.c:421 ../app/widgets/gimpthumbbox.c:491
+#: ../app/widgets/gimpthumbbox.c:422 ../app/widgets/gimpthumbbox.c:492
 msgid "No selection"
 msgstr "Keine Auswahl"
 
-#: ../app/widgets/gimpthumbbox.c:619 ../app/widgets/gimpthumbbox.c:643
+#: ../app/widgets/gimpthumbbox.c:620 ../app/widgets/gimpthumbbox.c:644
 #, c-format
 msgid "Thumbnail %d of %d"
 msgstr "Vorschau %d von %d"
 
-#: ../app/widgets/gimpthumbbox.c:756 ../app/widgets/gimpthumbbox.c:766
+#: ../app/widgets/gimpthumbbox.c:757 ../app/widgets/gimpthumbbox.c:767
 msgid "Creating Preview ..."
 msgstr "Vorschau wird erzeugt..."
 
@@ -11067,7 +10977,7 @@ msgstr ""
 "Der aktive Farbverlauf.\n"
 "Klick öffnet die Farbverlaufsauswahl."
 
-#: ../app/widgets/gimptoolbox.c:873
+#: ../app/widgets/gimptoolbox.c:804
 msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Click to open the color selection dialog."
@@ -11140,15 +11050,7 @@ msgstr "Den Dialog zur Palettenauswahl öffnen"
 msgid "Open the font selection dialog"
 msgstr "Den Dialog zur Schriftauswahl öffnen"
 
-#. The format string which is used to display modifier names
-#. *  <Shift>, <Ctrl> and <Alt>
-#.
-#: ../app/widgets/gimpwidgets-utils.c:390
-#, c-format
-msgid "<%s>"
-msgstr "<%s>"
-
-#: ../app/widgets/gimpwidgets-utils.c:829
+#: ../app/widgets/gimpwidgets-utils.c:820
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Ungültige UTF-8-Daten in Datei »%s«."
@@ -11322,6 +11224,93 @@ msgstr "Bitte stellen Sie sicher, dass das Werkzeugefenster sichtbar ist!"
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "»%s« konnte nicht gestartet werden: %s"
+
+#~ msgid "Cursor Up (Shift + Control + Alt)"
+#~ msgstr "Zeiger hoch (Shift + Strg + Alt)"
+
+#~ msgid "Cursor Up (Control + Alt)"
+#~ msgstr "Zeiger hoch (Strg + Alt)"
+
+#~ msgid "Cursor Up (Shift + Alt)"
+#~ msgstr "Zeiger hoch (Shift + Alt)"
+
+#~ msgid "Cursor Up (Shift + Control)"
+#~ msgstr "Zeiger hoch (Shift + Strg)"
+
+#~ msgid "Cursor Up (Alt)"
+#~ msgstr "Zeiger hoch (Alt)"
+
+#~ msgid "Cursor Up (Control)"
+#~ msgstr "Zeiger hoch (Strg)"
+
+#~ msgid "Cursor Up (Shift)"
+#~ msgstr "Zeiger hoch (Shift)"
+
+#~ msgid "Cursor Down (Shift + Control + Alt)"
+#~ msgstr "Zeiger runter (Shift + Strg + Alt)"
+
+#~ msgid "Cursor Down (Control + Alt)"
+#~ msgstr "Zeiger runter  (Strg + Alt)"
+
+#~ msgid "Cursor Down (Shift + Alt)"
+#~ msgstr "Zeiger runter  (Shift + Alt)"
+
+#~ msgid "Cursor Down (Shift + Control)"
+#~ msgstr "Zeiger runter  (Shift + Strg)"
+
+#~ msgid "Cursor Down (Alt)"
+#~ msgstr "Zeiger runter  (Alt)"
+
+#~ msgid "Cursor Down (Control)"
+#~ msgstr "Zeiger runter  (Strg)"
+
+#~ msgid "Cursor Down (Shift)"
+#~ msgstr "Zeiger runter  (Shift)"
+
+#~ msgid "Cursor Left (Shift + Control + Alt)"
+#~ msgstr "Zeiger links (Shift + Strg + Alt)"
+
+#~ msgid "Cursor Left (Control + Alt)"
+#~ msgstr "Zeiger links (Strg + Alt)"
+
+#~ msgid "Cursor Left (Shift + Alt)"
+#~ msgstr "Zeiger links (Shift + Alt)"
+
+#~ msgid "Cursor Left (Shift + Control)"
+#~ msgstr "Zeiger links (Shift + Strg)"
+
+#~ msgid "Cursor Left (Alt)"
+#~ msgstr "Zeiger links (Alt)"
+
+#~ msgid "Cursor Left (Control)"
+#~ msgstr "Zeiger links (Strg)"
+
+#~ msgid "Cursor Left (Shift)"
+#~ msgstr "Zeiger links (Shift)"
+
+#~ msgid "Cursor Right (Shift + Control + Alt)"
+#~ msgstr "Zeiger rechts (Shift + Strg + Alt)"
+
+#~ msgid "Cursor Right (Control + Alt)"
+#~ msgstr "Zeiger rechts (Strg + Alt)"
+
+#~ msgid "Cursor Right (Shift + Alt)"
+#~ msgstr "Zeiger rechts (Shift + Alt)"
+
+#~ msgid "Cursor Right (Shift + Control)"
+#~ msgstr "Zeiger rechts (Shift + Strg)"
+
+#~ msgid "Cursor Right (Alt)"
+#~ msgstr "Zeiger rechts (Alt)"
+
+#~ msgid "Cursor Right (Control)"
+#~ msgstr "Zeiger rechts (Strg)"
+
+#~ msgid "Cursor Right (Shift)"
+#~ msgstr "Zeiger rechts (Shift)"
+
+#~ msgid "<%s>"
+#~ msgstr "<%s>"
 
 #~ msgid "_Image Mode"
 #~ msgstr "_Bildmenü"
