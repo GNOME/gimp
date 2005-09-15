@@ -195,25 +195,25 @@ gimp_rectangle_tool_iface_base_init (GimpRectangleToolInterface *tool_iface)
       g_object_interface_install_property (tool_iface,
         g_param_spec_int ("x1",
                           NULL, NULL,
-                          0, GIMP_MAX_IMAGE_SIZE,
+                          -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
                           0,
                           G_PARAM_READWRITE));
       g_object_interface_install_property (tool_iface,
         g_param_spec_int ("y1",
                           NULL, NULL,
-                          0, GIMP_MAX_IMAGE_SIZE,
+                          -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
                           0,
                           G_PARAM_READWRITE));
       g_object_interface_install_property (tool_iface,
         g_param_spec_int ("x2",
                           NULL, NULL,
-                          0, GIMP_MAX_IMAGE_SIZE,
+                          -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
                           0,
                           G_PARAM_READWRITE));
       g_object_interface_install_property (tool_iface,
         g_param_spec_int ("y2",
                           NULL, NULL,
-                          0, GIMP_MAX_IMAGE_SIZE,
+                          -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
                           0,
                           G_PARAM_READWRITE));
 
@@ -227,25 +227,25 @@ gimp_rectangle_tool_iface_base_init (GimpRectangleToolInterface *tool_iface)
       g_object_interface_install_property (tool_iface,
         g_param_spec_int ("dx1",
                           NULL, NULL,
-                          0, GIMP_MAX_IMAGE_SIZE,
+                          -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
                           0,
                           G_PARAM_READWRITE));
       g_object_interface_install_property (tool_iface,
         g_param_spec_int ("dy1",
                           NULL, NULL,
-                          0, GIMP_MAX_IMAGE_SIZE,
+                          -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
                           0,
                           G_PARAM_READWRITE));
       g_object_interface_install_property (tool_iface,
         g_param_spec_int ("dx2",
                           NULL, NULL,
-                          0, GIMP_MAX_IMAGE_SIZE,
+                          -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
                           0,
                           G_PARAM_READWRITE));
       g_object_interface_install_property (tool_iface,
         g_param_spec_int ("dy2",
                           NULL, NULL,
-                          0, GIMP_MAX_IMAGE_SIZE,
+                          -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
                           0,
                           G_PARAM_READWRITE));
 
@@ -265,13 +265,13 @@ gimp_rectangle_tool_iface_base_init (GimpRectangleToolInterface *tool_iface)
       g_object_interface_install_property (tool_iface,
         g_param_spec_double ("origx",
                              NULL, NULL,
-                             0.0, GIMP_MAX_IMAGE_SIZE,
+                             -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
                              0.0,
                              G_PARAM_READWRITE));
       g_object_interface_install_property (tool_iface,
         g_param_spec_double ("origy",
                              NULL, NULL,
-                             0.0, GIMP_MAX_IMAGE_SIZE,
+                             -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
                              0.0,
                              G_PARAM_READWRITE));
       g_object_interface_install_property (tool_iface,
@@ -1444,19 +1444,12 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
   switch (function)
     {
     case RECT_CREATING:
-      if (x1 < 0)
-        x1 = 0;
-      if (x2 > max_x)
-        x2 = max_x;
       break;
 
     case RECT_RESIZING_UPPER_LEFT:
     case RECT_RESIZING_LOWER_LEFT:
     case RECT_RESIZING_LEFT:
-      if (x1 < 0 && x1 + inc_x < 0)
-        x1 = 0;
-      else
-        x1 = rx1 + inc_x;
+      x1 = rx1 + inc_x;
       if (fixed_width)
         {
           x2 = x1 + width;
@@ -1488,8 +1481,6 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
       else
         {
           x2 = MAX (x1, rx2);
-          if (x1 < 0)
-            x1 = 0;
         }
       g_object_set (rectangle, "startx", curx, NULL);
       break;
@@ -1497,10 +1488,7 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
     case RECT_RESIZING_UPPER_RIGHT:
     case RECT_RESIZING_LOWER_RIGHT:
     case RECT_RESIZING_RIGHT:
-      if (x2 > max_x && x2 + inc_x > max_x)
-        x2 = max_x;
-      else
-        x2 = rx2 + inc_x;
+      x2 = rx2 + inc_x;
       if (fixed_width)
         {
           x1 = x2 - width;
@@ -1532,8 +1520,6 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
       else
         {
           x1 = MIN (rx1, x2);
-          if (x2 > max_x)
-            x2 = max_x;
         }
       g_object_set (rectangle, "startx", curx, NULL);
       break;
@@ -1546,30 +1532,8 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
       break;
 
     case RECT_MOVING:
-      // are we getting out of the image?
-      if (rx1 + inc_x < 0)
-        {
-          x1 = 0;
-          x2 = rx2 - rx1;
-        }
-      else if (rx2 + inc_x > max_x)
-        {
-          x1 = rx1 + max_x - rx2;
-          x2 = max_x;
-        }
-      // are we staying out of the image?
-      else if ((x1 < 0 && x1 + inc_x < 0) ||
-               (x2 > max_x && x2 + inc_x > max_x))
-        {
-          x1 = rx1;
-          x2 = rx2;
-        }
-      else
-        {
-          x1 = rx1 + inc_x;
-          x2 = rx2 + inc_x;
-        }
-
+      x1 = rx1 + inc_x;
+      x2 = rx2 + inc_x;
       g_object_set (rectangle, "startx", curx, NULL);
       break;
     }
@@ -1577,19 +1541,12 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
   switch (function)
     {
     case RECT_CREATING:
-      if (y1 < 0)
-        y1 = 0;
-      if (y2 > max_y)
-        y2 = max_y;
       break;
 
     case RECT_RESIZING_UPPER_LEFT:
     case RECT_RESIZING_UPPER_RIGHT:
     case RECT_RESIZING_TOP:
-      if (y1 < 0 && y1 + inc_y < 0)
-        y1 = 0;
-      else
-        y1 = ry1 + inc_y;
+      y1 = ry1 + inc_y;
       if (fixed_height)
         {
           y2 = y1 + height;
@@ -1621,8 +1578,6 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
       else
         {
           y2 = MAX (y1, ry2);
-          if (y1 < 0)
-            y1 = 0;
         }
       g_object_set (rectangle, "starty", cury, NULL);
       break;
@@ -1630,10 +1585,7 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
     case RECT_RESIZING_LOWER_LEFT:
     case RECT_RESIZING_LOWER_RIGHT:
     case RECT_RESIZING_BOTTOM:
-      if (y2 > max_y && y2 + inc_y > max_y)
-        y2 = max_y;
-      else
-        y2 = ry2 + inc_y;
+      y2 = ry2 + inc_y;
       if (fixed_height)
         {
           y1 = y2 - height;
@@ -1665,8 +1617,6 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
       else
         {
           y1 = MIN (ry1, y2);
-          if (y2 > max_y)
-            y2 = max_y;
         }
       g_object_set (rectangle, "starty", cury, NULL);
       break;
@@ -1679,30 +1629,8 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
       break;
 
     case RECT_MOVING:
-      // are we getting out of the image?
-      if (ry1 + inc_y < 0)
-        {
-          y1 = 0;
-          y2 = ry2 - ry1;
-        }
-      else if (ry2 + inc_y > max_y)
-        {
-          y1 = ry1 + max_y - ry2;
-          y2 = max_y;
-        }
-      // are we staying out of the image?
-      else if ((y1 < 0 && y1 + inc_y < 0) ||
-               (y2 > max_y && y2 + inc_y > max_y))
-        {
-          y1 = ry1;
-          y2 = ry2;
-        }
-      else
-        {
-          y1 = ry1 + inc_y;
-          y2 = ry2 + inc_y;
-        }
-
+      y1 = ry1 + inc_y;
+      y2 = ry2 + inc_y;
       g_object_set (rectangle, "starty", cury, NULL);
       break;
     }

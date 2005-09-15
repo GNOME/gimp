@@ -241,6 +241,7 @@ gimp_new_rect_select_tool_execute (GimpRectangleTool  *rectangle,
   GimpTool             *tool     = GIMP_TOOL (rectangle);
   GimpSelectionOptions *options;
   GimpImage            *gimage;
+  gint                  max_x, max_y;
   gboolean              rectangle_exists;
   gboolean              selected;
   gint                  val;
@@ -251,9 +252,27 @@ gimp_new_rect_select_tool_execute (GimpRectangleTool  *rectangle,
   options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   gimage = tool->gdisp->gimage;
+  max_x = gimage->width;
+  max_y = gimage->height;
   selection_mask = gimp_image_get_mask (gimage);
 
-  rectangle_exists = (w > 0 && h > 0);
+  rectangle_exists == (x <= max_x && y <= max_y
+                       && x + w >= 0 && y + h >= 0
+                       && w > 0 && h > 0);
+  if (x < 0)
+    {
+      w += x;
+      x = 0;
+    }
+  if (y < 0)
+    {
+      h += y;
+      y = 0;
+    }
+  if (x + w > max_x)
+    w = max_x - x;
+  if (y + h > max_y)
+    h = max_y - y;
 
   /*  If there is a floating selection, anchor it  */
   if (gimp_image_floating_sel (gimage))
