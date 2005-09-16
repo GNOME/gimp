@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gimp-libgimp Gnome HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-09-04 03:43+0000\n"
-"PO-Revision-Date: 2005-09-04 18:23+0930\n"
+"PO-Revision-Date: 2005-09-16 16:18+0930\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -905,7 +905,7 @@ msgstr ""
 #: ../libgimpthumb/gimpthumb-utils.c:249 ../libgimpthumb/gimpthumb-utils.c:317
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
-msgstr "Lỗi tạo danh mục hình thu nhỏ « %s »."
+msgstr "Lỗi tạo thư mục hình thu nhỏ « %s »."
 
 #: ../libgimpthumb/gimpthumbnail.c:919
 #, c-format
@@ -954,7 +954,7 @@ msgstr "Cách _ghi HTML:"
 
 #: ../libgimpwidgets/gimpfileentry.c:351
 msgid "Select Folder"
-msgstr "Chọn danh mục"
+msgstr "Chọn thư mục"
 
 #: ../libgimpwidgets/gimpfileentry.c:353
 msgid "Select File"
@@ -978,7 +978,7 @@ msgstr "Có thể ghi"
 
 #: ../libgimpwidgets/gimppatheditor.c:252
 msgid "Folder"
-msgstr "Danh mục"
+msgstr "Thư mục"
 
 #: ../libgimpwidgets/gimppickbutton.c:138
 msgid ""

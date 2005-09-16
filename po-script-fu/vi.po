@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp-script-fu Gnome HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-09-08 11:03+0200\n"
-"PO-Revision-Date: 2005-09-08 20:41+0930\n"
+"PO-Revision-Date: 2005-09-16 16:20+0930\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -41,7 +41,7 @@ msgstr "Script-Fu không thể xử lý hai tập lệnh cùng lúc."
 #: ../plug-ins/script-fu/script-fu-interface.c:177
 #, c-format
 msgid "You are already running the \"%s\" script."
-msgstr "Bạn đang chạy tập lệnh « %s » rồi."
+msgstr "Bạn đang chạy tập lệnh « %s »."
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
 #: ../plug-ins/script-fu/script-fu-interface.c:200
@@ -76,7 +76,7 @@ msgstr "Chọn tập tin của Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:438
 msgid "Script-Fu Folder Selection"
-msgstr "Chọn danh mục của Script-Fu"
+msgstr "Chọn thư mục của Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:450
 msgid "Script-Fu Font Selection"
