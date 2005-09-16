@@ -1,3 +1,9 @@
+2005-09-16  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpimagemaptool.c (gimp_image_map_tool_initialize):
+	set the imagemap tool dialogs transient to the image window. See
+	comments in bug #316521.
+
 2005-09-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpwidgets-utils.[ch] (gimp_widget_set_accel_help):
