@@ -85,5 +85,8 @@ void          gimp_toggle_button_set_visible (GtkToggleButton *toggle,
 
 GClosure     * gimp_action_get_accel_closure (GtkAction       *action);
 
+void              gimp_widget_set_accel_help (GtkWidget       *widget,
+                                              GtkAction       *action);
+
 
 #endif /* __GIMP_WIDGETS_UTILS_H__ */

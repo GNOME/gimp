@@ -1,3 +1,15 @@
+2005-09-16  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpwidgets-utils.[ch] (gimp_widget_set_accel_help):
+	mis-named and mis-placed function that sets a widget's tooltip to
+	the action's tooltip plus the action's keyboard shortcut.
+
+	* app/widgets/gimptoolbox.c: at least the code is not here any
+	more.
+
+	* app/actions/tools-actions.c: use tool_info->help, not ->blurb
+	as the action's tooltip so the above works.
+
 2005-09-13  Karine Delvare  <kdelvare@nerim.net>
 
 	* app/tools/gimpcroptool.c

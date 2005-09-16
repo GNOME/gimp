@@ -925,3 +925,103 @@ gimp_action_get_accel_closure (GtkAction *action)
 
   return closure;
 }
+
+static gboolean
+gimp_widget_accel_find_func (GtkAccelKey *key,
+                             GClosure    *closure,
+                             gpointer     data)
+{
+  return (GClosure *) data == closure;
+}
+
+static void
+gimp_widget_accel_changed (GtkAccelGroup   *accel_group,
+                           guint            unused1,
+                           GdkModifierType  unused2,
+                           GClosure        *accel_closure,
+                           GtkWidget       *widget)
+{
+  GClosure *widget_closure;
+
+  widget_closure = g_object_get_data (G_OBJECT (widget), "gimp-accel-closure");
+
+  if (accel_closure == widget_closure)
+    {
+      GtkAction   *action;
+      GtkAccelKey *accel_key;
+      gchar       *orig_tooltip;
+      gchar       *tooltip;
+      const gchar *help_id;
+
+      action = g_object_get_data (G_OBJECT (widget), "gimp-accel-action");
+
+      g_object_get (action, "tooltip", &orig_tooltip, NULL);
+      help_id = g_object_get_qdata (G_OBJECT (action), GIMP_HELP_ID);
+
+      accel_key = gtk_accel_group_find (accel_group,
+                                        gimp_widget_accel_find_func,
+                                        accel_closure);
+
+      if (accel_key            &&
+          accel_key->accel_key &&
+          accel_key->accel_flags & GTK_ACCEL_VISIBLE)
+        {
+          tooltip = g_strconcat (orig_tooltip,
+                                 "     ",
+                                 gimp_get_accel_string (accel_key->accel_key,
+                                                        accel_key->accel_mods),
+                                 NULL);
+        }
+      else
+        {
+          tooltip = g_strdup (orig_tooltip);
+        }
+
+      gimp_help_set_help_data (widget, tooltip, help_id);
+
+      g_free (tooltip);
+      g_free (orig_tooltip);
+    }
+}
+
+void
+gimp_widget_set_accel_help (GtkWidget *widget,
+                            GtkAction *action)
+{
+  GClosure *accel_closure = NULL;
+
+  accel_closure = gimp_action_get_accel_closure (action);
+
+  if (accel_closure)
+    {
+      GtkAccelGroup *accel_group;
+
+      g_object_set_data (G_OBJECT (widget), "gimp-accel-closure",
+                         accel_closure);
+      g_object_set_data (G_OBJECT (widget), "gimp-accel-action",
+                         action);
+
+      accel_group = gtk_accel_group_from_accel_closure (accel_closure);
+
+      g_signal_connect_object (accel_group, "accel-changed",
+                               G_CALLBACK (gimp_widget_accel_changed),
+                               widget, 0);
+
+      gimp_widget_accel_changed (accel_group,
+                                 0, 0,
+                                 accel_closure,
+                                 widget);
+    }
+  else
+    {
+      gchar *tooltip;
+      gchar *help_id;
+
+      g_object_get (action, "tooltip", &tooltip, NULL);
+      help_id = g_object_get_qdata (G_OBJECT (tooltip), GIMP_HELP_ID);
+
+      gimp_help_set_help_data (widget, tooltip, help_id);
+
+      g_free (tooltip);
+    }
+}

@@ -510,7 +510,7 @@ tools_actions_setup (GimpActionGroup *group)
           entry.stock_id    = stock_id;
           entry.label       = tool_info->menu_path;
           entry.accelerator = tool_info->menu_accel;
-          entry.tooltip     = tool_info->blurb;
+          entry.tooltip     = tool_info->help;
           entry.help_id     = tool_info->help_id;
           entry.value       = identifier;
 

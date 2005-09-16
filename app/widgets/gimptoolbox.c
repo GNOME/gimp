@@ -585,59 +585,6 @@ gimp_toolbox_new (GimpDialogFactory *dialog_factory,
 
 /*  private functions  */
 
-static gboolean
-gimp_toolbox_button_accel_find_func (GtkAccelKey *key,
-                                     GClosure    *closure,
-                                     gpointer     data)
-{
-  return (GClosure *) data == closure;
-}
-
-static void
-gimp_toolbox_button_accel_changed (GtkAccelGroup   *accel_group,
-                                   guint            unused1,
-                                   GdkModifierType  unused2,
-                                   GClosure        *accel_closure,
-                                   GtkWidget       *tool_button)
-{
-  GClosure *button_closure;
-
-  button_closure = g_object_get_data (G_OBJECT (tool_button),
-                                      "toolbox-accel-closure");
-
-  if (accel_closure == button_closure)
-    {
-      GimpToolInfo *tool_info;
-      GtkAccelKey  *accel_key;
-      gchar        *tooltip;
-
-      tool_info = g_object_get_data (G_OBJECT (tool_button), TOOL_INFO_DATA_KEY);
-
-      accel_key = gtk_accel_group_find (accel_group,
-                                        gimp_toolbox_button_accel_find_func,
-                                        accel_closure);
-
-      if (accel_key            &&
-          accel_key->accel_key &&
-          accel_key->accel_flags & GTK_ACCEL_VISIBLE)
-        {
-          tooltip = g_strconcat (tool_info->help,
-                                 "     ",
-                                 gimp_get_accel_string (accel_key->accel_key,
-                                                        accel_key->accel_mods),
-                                 NULL);
-        }
-      else
-        {
-          tooltip = g_strdup (tool_info->help);
-        }
-
-      gimp_help_set_help_data (tool_button, tooltip, tool_info->help_id);
-
-      g_free (tooltip);
-    }
-}
-
 static void
 toolbox_separator_expand (GimpToolbox *toolbox)
 {
@@ -730,7 +677,6 @@ toolbox_create_tools (GimpToolbox *toolbox,
           const gchar *identifier;
           gchar       *tmp;
           gchar       *name;
-          GClosure    *accel_closure = NULL;
 
           identifier = gimp_object_get_name (GIMP_OBJECT (tool_info));
 
@@ -744,32 +690,10 @@ toolbox_create_tools (GimpToolbox *toolbox,
           g_free (name);
 
           if (action)
-            accel_closure = gimp_action_get_accel_closure (action);
-
-          if (accel_closure)
-            {
-              GtkAccelGroup *accel_group;
-
-              g_object_set_data (G_OBJECT (button), "toolbox-accel-closure",
-                                 accel_closure);
-
-              accel_group =
-                gtk_accel_group_from_accel_closure (accel_closure);
-
-              g_signal_connect_object (accel_group, "accel-changed",
-                                       G_CALLBACK (gimp_toolbox_button_accel_changed),
-                                       button, 0);
-
-              gimp_toolbox_button_accel_changed (accel_group,
-                                                 0, 0,
-                                                 accel_closure,
-                                                 button);
-            }
+            gimp_widget_set_accel_help (button, action);
           else
-            {
-              gimp_help_set_help_data (button,
-                                       tool_info->help, tool_info->help_id);
-            }
+            gimp_help_set_help_data (button,
+                                     tool_info->help, tool_info->help_id);
         }
     }
 
