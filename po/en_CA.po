@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-06 18:13-0400\n"
+"POT-Creation-Date: 2005-09-17 13:26-0400\n"
 "PO-Revision-Date: 2005-09-06 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
@@ -44,7 +44,7 @@ msgstr ""
 "To avoid data loss, please check the location and permissions of the swap "
 "directory defined in your Preferences (currently \"%s\")."
 
-#: app/app_procs.c:334 app/core/gimppalette-import.c:453
+#: app/app_procs.c:334 app/core/gimppalette-import.c:458
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "Opening '%s' failed: %s"
@@ -132,7 +132,7 @@ msgstr "Make all warnings fatal"
 msgid "Output a gimprc file with default settings"
 msgstr "Output a gimprc file with default settings"
 
-#: app/main.c:248 app/widgets/gimptoolbox.c:566
+#: app/main.c:248 app/widgets/gimptoolbox.c:577
 msgid "The GIMP"
 msgstr "The GIMP"
 
@@ -223,8 +223,7 @@ msgstr "Dockable"
 msgid "Document History"
 msgstr "Document History"
 
-#: app/actions/actions.c:130 app/core/core-enums.c:819
-#: app/core/core-enums.c:850
+#: app/actions/actions.c:130
 msgid "Drawable"
 msgstr "Drawable"
 
@@ -622,7 +621,7 @@ msgstr "Edit Colourmap Entry"
 msgid "_Context"
 msgstr "_Context"
 
-#: app/actions/context-actions.c:47 app/actions/image-actions.c:64
+#: app/actions/context-actions.c:47 app/actions/image-actions.c:65
 msgid "_Colors"
 msgstr "_Colours"
 
@@ -703,7 +702,7 @@ msgid "_Sample Merged"
 msgstr "_Sample Merged"
 
 #: app/actions/cursor-info-actions.c:48
-#: app/actions/sample-point-editor-actions.c:48 app/tools/gimpclonetool.c:344
+#: app/actions/sample-point-editor-actions.c:48
 msgid "Sample Merged"
 msgstr "Sample Merged"
 
@@ -712,7 +711,7 @@ msgstr "Sample Merged"
 #: app/dialogs/file-open-dialog.c:259
 #: app/dialogs/file-open-location-dialog.c:201
 #: app/display/gimpdisplayshell-dnd.c:448 app/widgets/gimplayertreeview.c:764
-#: app/widgets/gimptoolbox-dnd.c:157 app/widgets/gimptoolbox.c:1046
+#: app/widgets/gimptoolbox-dnd.c:157 app/widgets/gimptoolbox.c:944
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -1149,8 +1148,8 @@ msgid "_Buffer"
 msgstr "_Buffer"
 
 #: app/actions/edit-actions.c:64
-msgid "Undo Editor Menu"
-msgstr "Undo Editor Menu"
+msgid "Undo History Menu"
+msgstr "Undo History Menu"
 
 #: app/actions/edit-actions.c:68 app/actions/edit-actions.c:238
 msgid "_Undo"
@@ -1174,8 +1173,8 @@ msgid "_Clear Undo History"
 msgstr "_Clear Undo History"
 
 #: app/actions/edit-actions.c:81
-msgid "Clear undo history..."
-msgstr "Clear undo history..."
+msgid "Clear undo history"
+msgstr "Clear undo history"
 
 #: app/actions/edit-actions.c:86
 msgid "Cu_t"
@@ -1834,17 +1833,17 @@ msgstr "_Xtns"
 msgid "_Image"
 msgstr "_Image"
 
-#: app/actions/image-actions.c:61 app/actions/layers-actions.c:55
+#: app/actions/image-actions.c:61
+msgid "_Mode"
+msgstr "_Mode"
+
+#: app/actions/image-actions.c:62 app/actions/layers-actions.c:55
 msgid "_Transform"
 msgstr "_Transform"
 
-#: app/actions/image-actions.c:62
+#: app/actions/image-actions.c:63
 msgid "_Guides"
 msgstr "_Guides"
-
-#: app/actions/image-actions.c:65
-msgid "_Image Mode"
-msgstr "_Image Mode"
 
 #: app/actions/image-actions.c:66 app/tools/gimplevelstool.c:648
 msgid "_Auto"
@@ -2975,7 +2974,7 @@ msgstr "Duplicate path"
 msgid "_Delete Path"
 msgstr "_Delete Path"
 
-#: app/actions/vectors-actions.c:78
+#: app/actions/vectors-actions.c:78 app/core/core-enums.c:874
 msgid "Delete path"
 msgstr "Delete path"
 
@@ -4279,8 +4278,8 @@ msgid "Merge layers"
 msgstr "Merge layers"
 
 #: app/core/core-enums.c:814
-msgid "Merge vectors"
-msgstr "Merge vectors"
+msgid "Merge paths"
+msgstr "Merge paths"
 
 #: app/core/core-enums.c:815 app/core/gimpchannel.c:404
 msgid "Quick Mask"
@@ -4300,9 +4299,13 @@ msgstr "Grid"
 msgid "Sample Point"
 msgstr "Sample Point"
 
+#: app/core/core-enums.c:819 app/core/core-enums.c:850
+msgid "Layer/Channel"
+msgstr "Layer/Channel"
+
 #: app/core/core-enums.c:820 app/core/core-enums.c:851
-msgid "Drawable mod"
-msgstr "Drawable mod"
+msgid "Layer/Channel modification"
+msgstr "Layer/Channel modification"
 
 #: app/core/core-enums.c:821 app/core/core-enums.c:852
 msgid "Selection mask"
@@ -4312,9 +4315,9 @@ msgstr "Selection mask"
 msgid "Item visibility"
 msgstr "Item visibility"
 
-#: app/core/core-enums.c:823
-msgid "Linked item"
-msgstr "Linked item"
+#: app/core/core-enums.c:823 app/core/core-enums.c:856
+msgid "Link/Unlink item"
+msgstr "Link/Unlink item"
 
 #: app/core/core-enums.c:824
 msgid "Item properties"
@@ -4340,7 +4343,7 @@ msgstr "Add layer mask"
 msgid "Apply layer mask"
 msgstr "Apply layer mask"
 
-#: app/core/core-enums.c:830
+#: app/core/core-enums.c:830 app/core/core-enums.c:877
 msgid "Floating selection to layer"
 msgstr "Floating selection to layer"
 
@@ -4364,8 +4367,8 @@ msgstr "Paste"
 msgid "Cut"
 msgstr "Cut"
 
-#: app/core/core-enums.c:836 app/core/core-enums.c:863
-#: app/tools/gimptexttool.c:146 app/widgets/widgets-enums.c:263
+#: app/core/core-enums.c:836 app/tools/gimptexttool.c:146
+#: app/widgets/widgets-enums.c:263
 msgid "Text"
 msgstr "Text"
 
@@ -4404,8 +4407,8 @@ msgid "Image size"
 msgstr "Image size"
 
 #: app/core/core-enums.c:845
-msgid "Resolution change"
-msgstr "Resolution change"
+msgid "Image resolution change"
+msgstr "Image resolution change"
 
 #: app/core/core-enums.c:849
 msgid "Change indexed palette"
@@ -4414,10 +4417,6 @@ msgstr "Change indexed palette"
 #: app/core/core-enums.c:853
 msgid "Rename item"
 msgstr "Rename item"
-
-#: app/core/core-enums.c:856
-msgid "Set item linked"
-msgstr "Set item linked"
 
 #: app/core/core-enums.c:857
 msgid "New layer"
@@ -4439,9 +4438,13 @@ msgstr "Set layer opacity"
 msgid "Lock/Unlock alpha channel"
 msgstr "Lock/Unlock alpha channel"
 
+#: app/core/core-enums.c:863
+msgid "Text layer"
+msgstr "Text layer"
+
 #: app/core/core-enums.c:864
-msgid "Text modified"
-msgstr "Text modified"
+msgid "Text layer modification"
+msgstr "Text layer modification"
 
 #: app/core/core-enums.c:866
 msgid "Delete layer mask"
@@ -4464,24 +4467,16 @@ msgid "Channel color"
 msgstr "Channel colour"
 
 #: app/core/core-enums.c:873
-msgid "New vectors"
-msgstr "New vectors"
-
-#: app/core/core-enums.c:874
-msgid "Delete vectors"
-msgstr "Delete vectors"
+msgid "New path"
+msgstr "New path"
 
 #: app/core/core-enums.c:875
-msgid "Vectors mod"
-msgstr "Vectors mod"
+msgid "Path modification"
+msgstr "Path modification"
 
 #: app/core/core-enums.c:876
-msgid "Reposition vectors"
-msgstr "Reposition vectors"
-
-#: app/core/core-enums.c:877
-msgid "FS to layer"
-msgstr "FS to layer"
+msgid "Reposition path"
+msgstr "Reposition path"
 
 #: app/core/core-enums.c:878
 msgid "FS rigor"
@@ -4495,6 +4490,10 @@ msgstr "FS relax"
 #: app/tools/gimpinktool.c:62
 msgid "Ink"
 msgstr "Ink"
+
+#: app/core/core-enums.c:883
+msgid "Select foreground"
+msgstr "Select foreground"
 
 #: app/core/core-enums.c:886
 msgid "EEK: can't undo"
@@ -5407,12 +5406,12 @@ msgstr "Move Layer Mask"
 msgid "Show Layer Mask"
 msgstr "Show Layer Mask"
 
-#: app/core/gimppalette-import.c:365
+#: app/core/gimppalette-import.c:370
 #, c-format
 msgid "Index %d"
 msgstr "Index %d"
 
-#: app/core/gimppalette-import.c:565
+#: app/core/gimppalette-import.c:570
 #, c-format
 msgid "Unknown type of palette file: %s"
 msgstr "Unknown type of palette file: %s"
@@ -5499,7 +5498,7 @@ msgstr ""
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Invalid UTF-8 string in pattern file '%s'."
 
-#: app/core/gimppdbprogress.c:261 app/widgets/gimppdbdialog.c:320
+#: app/core/gimppdbprogress.c:264 app/widgets/gimppdbdialog.c:320
 #, c-format
 msgid "Unable to run %s callback. The corresponding plug-in may have crashed."
 msgstr "Unable to run %s callback. The corresponding plug-in may have crashed."
@@ -6022,41 +6021,42 @@ msgid "Offset Channel"
 msgstr "Offset Channel"
 
 #. The offset frame
-#: app/dialogs/offset-dialog.c:108 app/dialogs/offset-dialog.c:141
+#: app/dialogs/offset-dialog.c:108 app/dialogs/offset-dialog.c:142
 #: app/dialogs/resize-dialog.c:193 app/widgets/gimpgrideditor.c:274
 msgid "Offset"
 msgstr "Offset"
 
-#: app/dialogs/offset-dialog.c:116
+#. offset, used as a verb
+#: app/dialogs/offset-dialog.c:117
 msgid "_Offset"
 msgstr "_Offset"
 
-#: app/dialogs/offset-dialog.c:173 app/dialogs/resize-dialog.c:222
+#: app/dialogs/offset-dialog.c:174 app/dialogs/resize-dialog.c:222
 msgid "_X:"
 msgstr "_X:"
 
-#: app/dialogs/offset-dialog.c:175 app/dialogs/resize-dialog.c:223
+#: app/dialogs/offset-dialog.c:176 app/dialogs/resize-dialog.c:223
 msgid "_Y:"
 msgstr "_Y:"
 
-#: app/dialogs/offset-dialog.c:202
+#: app/dialogs/offset-dialog.c:203
 msgid "Offset by  x/_2, y/2"
 msgstr "Offset by  x/_2, y/2"
 
 #. The edge behavior frame
-#: app/dialogs/offset-dialog.c:211
+#: app/dialogs/offset-dialog.c:212
 msgid "Edge Behavior"
 msgstr "Edge Behaviour"
 
-#: app/dialogs/offset-dialog.c:215
+#: app/dialogs/offset-dialog.c:216
 msgid "_Wrap around"
 msgstr "_Wrap around"
 
-#: app/dialogs/offset-dialog.c:218
+#: app/dialogs/offset-dialog.c:219
 msgid "Fill with _background color"
 msgstr "Fill with _background colour"
 
-#: app/dialogs/offset-dialog.c:221
+#: app/dialogs/offset-dialog.c:222
 msgid "Make _transparent"
 msgstr "Make _transparent"
 
@@ -6887,9 +6887,9 @@ msgstr "If you quit GIMP now, these changes will be lost."
 
 #: app/dialogs/quit-dialog.c:176
 #, c-format
-msgid "There is %d image with unsaved changes:"
+msgid "There is one image with unsaved changes:"
 msgid_plural "There are %d images with unsaved changes:"
-msgstr[0] "There is %d image with unsaved changes:"
+msgstr[0] "There is one image with unsaved changes:"
 msgstr[1] "There are %d images with unsaved changes:"
 
 #: app/dialogs/quit-dialog.c:198
@@ -7024,7 +7024,7 @@ msgstr ""
 #: app/dialogs/user-install-dialog.c:154
 msgid ""
 "Key shortcuts can be dynamically redefined. The menurc is a dump of your "
-"configuration so it can. be remembered for the next session.  You may edit "
+"configuration so it can be remembered for the next session.  You may edit "
 "this file if you wish, but it is much easier to define the keys from within "
 "GIMP.  Deleting this file will restore the default shortcuts."
 msgstr ""
@@ -7466,24 +7466,19 @@ msgstr "Save the changes to image '%s' before closing?"
 msgid "If you don't save the image, changes from the last %s will be lost."
 msgstr "If you don't save the image, changes from the last %s will be lost."
 
-#. one second, the time period
 #: app/display/gimpdisplayshell-close.c:279
+#, c-format
 msgid "second"
-msgstr "second"
+msgid_plural "%d seconds"
+msgstr[0] "second"
+msgstr[1] "%d seconds"
 
-#: app/display/gimpdisplayshell-close.c:282
+#: app/display/gimpdisplayshell-close.c:284
 #, c-format
-msgid "%d seconds"
-msgstr "%d seconds"
-
-#: app/display/gimpdisplayshell-close.c:288
 msgid "minute"
-msgstr "minute"
-
-#: app/display/gimpdisplayshell-close.c:290
-#, c-format
-msgid "%d minutes"
-msgstr "%d minutes"
+msgid_plural "%d minutes"
+msgstr[0] "minute"
+msgstr[1] "%d minutes"
 
 #: app/display/gimpdisplayshell-dnd.c:200
 #: app/display/gimpdisplayshell-dnd.c:501
@@ -7557,32 +7552,30 @@ msgid "(clean)"
 msgstr "(clean)"
 
 #: app/display/gimpdisplayshell-title.c:314
-msgid "1 layer"
-msgstr "1 layer"
-
-#: app/display/gimpdisplayshell-title.c:314
 #, c-format
-msgid "%d layers"
-msgstr "%d layers"
+msgid "%d layer"
+msgid_plural "%d layers"
+msgstr[0] "%d layer"
+msgstr[1] "%d layers"
 
 #: app/display/gimpdisplayshell-title.c:326
 #: app/display/gimpdisplayshell-title.c:338 app/widgets/gimpactiongroup.c:806
 msgid "(none)"
 msgstr "(none)"
 
-#: app/display/gimpstatusbar.c:146
+#: app/display/gimpstatusbar.c:145
 msgid "Shadow type"
 msgstr "Shadow type"
 
-#: app/display/gimpstatusbar.c:147
+#: app/display/gimpstatusbar.c:146
 msgid "Style of bevel around the statusbar text"
 msgstr "Style of bevel around the statusbar text"
 
-#: app/display/gimpstatusbar.c:228
+#: app/display/gimpstatusbar.c:227
 msgid "Cancel"
 msgstr "Cancel"
 
-#: app/display/gimpstatusbar.c:452
+#: app/display/gimpstatusbar.c:451
 msgid "Other..."
 msgstr "Other..."
 
@@ -8171,7 +8164,7 @@ msgstr "Adaptive supersampling"
 msgid "Max depth:"
 msgstr "Max depth:"
 
-#: app/tools/gimpblendoptions.c:301 app/tools/gimpbucketfilloptions.c:294
+#: app/tools/gimpblendoptions.c:301 app/tools/gimpbucketfilloptions.c:297
 #: app/tools/gimpselectionoptions.c:524
 msgid "Threshold:"
 msgstr "Threshold:"
@@ -8232,14 +8225,14 @@ msgstr "Maximum colour difference"
 #. fill type
 #: app/tools/gimpbucketfilloptions.c:237
 #, c-format
-msgid "Fill Type  %s"
-msgstr "Fill Type  %s"
+msgid "Fill Type  (%s)"
+msgstr "Fill Type  (%s)"
 
 #. fill selection
 #: app/tools/gimpbucketfilloptions.c:249
 #, c-format
-msgid "Affected Area  %s"
-msgstr "Affected Area  %s"
+msgid "Affected Area  (%s)"
+msgstr "Affected Area  (%s)"
 
 #: app/tools/gimpbucketfilloptions.c:253
 msgid "Fill whole selection"
@@ -8249,15 +8242,15 @@ msgstr "Fill whole selection"
 msgid "Fill similar colors"
 msgstr "Fill similar colours"
 
-#: app/tools/gimpbucketfilloptions.c:260 app/tools/gimpselectionoptions.c:496
+#: app/tools/gimpbucketfilloptions.c:263 app/tools/gimpselectionoptions.c:496
 msgid "Finding Similar Colors"
 msgstr "Finding Similar Colours"
 
-#: app/tools/gimpbucketfilloptions.c:276
+#: app/tools/gimpbucketfilloptions.c:279
 msgid "Fill transparent areas"
 msgstr "Fill transparent areas"
 
-#: app/tools/gimpbucketfilloptions.c:282
+#: app/tools/gimpbucketfilloptions.c:285 app/tools/gimpclonetool.c:335
 #: app/tools/gimpcolorpickeroptions.c:177 app/tools/gimpselectionoptions.c:512
 #: app/tools/gimpselectionoptions.c:560
 msgid "Sample merged"
@@ -8295,7 +8288,7 @@ msgstr "Ctrl-Click to set a clone source."
 msgid "Source"
 msgstr "Source"
 
-#: app/tools/gimpclonetool.c:338
+#: app/tools/gimpclonetool.c:342
 msgid "Alignment"
 msgstr "Alignment"
 
@@ -8387,14 +8380,14 @@ msgstr "Radius:"
 #. the pick FG/BG frame
 #: app/tools/gimpcolorpickeroptions.c:182
 #, c-format
-msgid "Pick Mode  %s"
-msgstr "Pick Mode  %s"
+msgid "Pick Mode  (%s)"
+msgstr "Pick Mode  (%s)"
 
 #. the add to palette toggle
 #: app/tools/gimpcolorpickeroptions.c:191
 #, c-format
-msgid "Add to palette  %s"
-msgstr "Add to palette  %s"
+msgid "Add to palette  (%s)"
+msgstr "Add to palette  (%s)"
 
 #: app/tools/gimpcolorpickertool.c:101
 msgid "Color Picker"
@@ -8436,15 +8429,15 @@ msgstr "Con_volve"
 #. the type radio box
 #: app/tools/gimpconvolvetool.c:190
 #, c-format
-msgid "Convolve Type  %s"
-msgstr "Convolve Type  %s"
+msgid "Convolve Type  (%s)"
+msgstr "Convolve Type  (%s)"
 
 #. tool toggle
 #: app/tools/gimpcropoptions.c:221 app/tools/gimpmagnifyoptions.c:206
 #: app/tools/gimpmoveoptions.c:215
 #, c-format
-msgid "Tool Toggle  %s"
-msgstr "Tool Toggle  %s"
+msgid "Tool Toggle  (%s)"
+msgstr "Tool Toggle  (%s)"
 
 #: app/tools/gimpcropoptions.c:233
 msgid "Current layer only"
@@ -8523,8 +8516,8 @@ msgstr "Dod_geBurn"
 #. the type (dodge or burn)
 #: app/tools/gimpdodgeburntool.c:191
 #, c-format
-msgid "Type  %s"
-msgstr "Type  %s"
+msgid "Type  (%s)"
+msgstr "Type  (%s)"
 
 #: app/tools/gimpdodgeburntool.c:203
 msgid "Mode"
@@ -8562,8 +8555,8 @@ msgstr "_Eraser"
 #. the anti_erase toggle
 #: app/tools/gimperasertool.c:182
 #, c-format
-msgid "Anti erase  %s"
-msgstr "Anti erase  %s"
+msgid "Anti erase  (%s)"
+msgstr "Anti erase  (%s)"
 
 #: app/tools/gimpflipoptions.c:159 app/tools/gimpmoveoptions.c:209
 #: app/tools/gimptransformoptions.c:322
@@ -8573,8 +8566,8 @@ msgstr "Affect:"
 #. tool toggle
 #: app/tools/gimpflipoptions.c:165
 #, c-format
-msgid "Flip Type  %s"
-msgstr "Flip Type  %s"
+msgid "Flip Type  (%s)"
+msgstr "Flip Type  (%s)"
 
 #: app/tools/gimpfliptool.c:82
 msgid "Flip the layer or selection"
@@ -8749,7 +8742,7 @@ msgstr "Adjust Selected Colour"
 msgid "R_eset Color"
 msgstr "R_eset Colour"
 
-#: app/tools/gimpimagemaptool.c:265 app/widgets/gimpthumbbox.c:368
+#: app/tools/gimpimagemaptool.c:265 app/widgets/gimpthumbbox.c:369
 msgid "_Preview"
 msgstr "_Preview"
 
@@ -9105,24 +9098,24 @@ msgstr "Aspect"
 msgid "Center"
 msgstr "Centre"
 
-#: app/tools/gimprectangletool.c:1861 app/tools/gimprectangletool.c:2288
+#: app/tools/gimprectangletool.c:1827 app/tools/gimprectangletool.c:2254
 msgid "Rectangle: "
 msgstr "Rectangle: "
 
-#: app/tools/gimprectangletool.c:2707
+#: app/tools/gimprectangletool.c:2673
 msgid "1 "
 msgstr "1 "
 
-#: app/tools/gimprectangletool.c:2708
+#: app/tools/gimprectangletool.c:2674
 msgid "2 "
 msgstr "2 "
 
-#: app/tools/gimprectangletool.c:2709 app/widgets/gimpcursorview.c:170
+#: app/tools/gimprectangletool.c:2675 app/widgets/gimpcursorview.c:170
 #: app/widgets/gimpcursorview.c:192
 msgid "X"
 msgstr "X"
 
-#: app/tools/gimprectangletool.c:2710 app/widgets/gimpcursorview.c:176
+#: app/tools/gimprectangletool.c:2676 app/widgets/gimpcursorview.c:176
 #: app/widgets/gimpcursorview.c:198
 msgid "Y"
 msgstr "Y"
@@ -9415,23 +9408,23 @@ msgstr "Constraints"
 
 #: app/tools/gimptransformoptions.c:424
 #, c-format
-msgid "15 degrees  %s"
-msgstr "15 degrees  %s"
+msgid "15 degrees  (%s)"
+msgstr "15 degrees  (%s)"
 
 #: app/tools/gimptransformoptions.c:444
 #, c-format
-msgid "Keep height  %s"
-msgstr "Keep height  %s"
+msgid "Keep height  (%s)"
+msgstr "Keep height  (%s)"
 
 #: app/tools/gimptransformoptions.c:446
 #, c-format
-msgid "Keep width  %s"
-msgstr "Keep width  %s"
+msgid "Keep width  (%s)"
+msgstr "Keep width  (%s)"
 
 #: app/tools/gimptransformoptions.c:448
 #, c-format
-msgid "Keep aspect  %s"
-msgstr "Keep aspect  %s"
+msgid "Keep aspect  (%s)"
+msgstr "Keep aspect  (%s)"
 
 #: app/tools/gimptransformtool.c:255
 msgid "Transforming..."
@@ -9850,11 +9843,11 @@ msgstr "Colour index:"
 msgid "HTML notation:"
 msgstr "HTML notation:"
 
-#: app/widgets/gimpcontainerpopup.c:502
+#: app/widgets/gimpcontainerpopup.c:564
 msgid "Smaller Previews"
 msgstr "Smaller Previews"
 
-#: app/widgets/gimpcontainerpopup.c:507
+#: app/widgets/gimpcontainerpopup.c:569
 msgid "Larger Previews"
 msgstr "Larger Previews"
 
@@ -9895,143 +9888,59 @@ msgstr "Remove the action from the selected event"
 msgid "Select Controller Event Action"
 msgstr "Select Controller Event Action"
 
-#: app/widgets/gimpcontrollerkeyboard.c:69
-msgid "Cursor Up (Shift + Control + Alt)"
-msgstr "Cursor Up (Shift + Control + Alt)"
-
-#: app/widgets/gimpcontrollerkeyboard.c:72
-msgid "Cursor Up (Control + Alt)"
-msgstr "Cursor Up (Control + Alt)"
-
-#: app/widgets/gimpcontrollerkeyboard.c:75
-msgid "Cursor Up (Shift + Alt)"
-msgstr "Cursor Up (Shift + Alt)"
-
-#: app/widgets/gimpcontrollerkeyboard.c:78
-msgid "Cursor Up (Shift + Control)"
-msgstr "Cursor Up (Shift + Control)"
-
-#: app/widgets/gimpcontrollerkeyboard.c:81
-msgid "Cursor Up (Alt)"
-msgstr "Cursor Up (Alt)"
-
-#: app/widgets/gimpcontrollerkeyboard.c:84
-msgid "Cursor Up (Control)"
-msgstr "Cursor Up (Control)"
-
-#: app/widgets/gimpcontrollerkeyboard.c:87
-msgid "Cursor Up (Shift)"
-msgstr "Cursor Up (Shift)"
-
-#: app/widgets/gimpcontrollerkeyboard.c:90
+#: app/widgets/gimpcontrollerkeyboard.c:70
+#: app/widgets/gimpcontrollerkeyboard.c:73
+#: app/widgets/gimpcontrollerkeyboard.c:76
+#: app/widgets/gimpcontrollerkeyboard.c:79
+#: app/widgets/gimpcontrollerkeyboard.c:82
+#: app/widgets/gimpcontrollerkeyboard.c:85
+#: app/widgets/gimpcontrollerkeyboard.c:88
+#: app/widgets/gimpcontrollerkeyboard.c:91
 msgid "Cursor Up"
 msgstr "Cursor Up"
 
-#: app/widgets/gimpcontrollerkeyboard.c:94
-msgid "Cursor Down (Shift + Control + Alt)"
-msgstr "Cursor Down (Shift + Control + Alt)"
-
-#: app/widgets/gimpcontrollerkeyboard.c:97
-msgid "Cursor Down (Control + Alt)"
-msgstr "Cursor Down (Control + Alt)"
-
-#: app/widgets/gimpcontrollerkeyboard.c:100
-msgid "Cursor Down (Shift + Alt)"
-msgstr "Cursor Down (Shift + Alt)"
-
-#: app/widgets/gimpcontrollerkeyboard.c:103
-msgid "Cursor Down (Shift + Control)"
-msgstr "Cursor Down (Shift + Control)"
-
-#: app/widgets/gimpcontrollerkeyboard.c:106
-msgid "Cursor Down (Alt)"
-msgstr "Cursor Down (Alt)"
-
-#: app/widgets/gimpcontrollerkeyboard.c:109
-msgid "Cursor Down (Control)"
-msgstr "Cursor Down (Control)"
-
-#: app/widgets/gimpcontrollerkeyboard.c:112
-msgid "Cursor Down (Shift)"
-msgstr "Cursor Down (Shift)"
-
-#: app/widgets/gimpcontrollerkeyboard.c:115
+#: app/widgets/gimpcontrollerkeyboard.c:95
+#: app/widgets/gimpcontrollerkeyboard.c:98
+#: app/widgets/gimpcontrollerkeyboard.c:101
+#: app/widgets/gimpcontrollerkeyboard.c:104
+#: app/widgets/gimpcontrollerkeyboard.c:107
+#: app/widgets/gimpcontrollerkeyboard.c:110
+#: app/widgets/gimpcontrollerkeyboard.c:113
+#: app/widgets/gimpcontrollerkeyboard.c:116
 msgid "Cursor Down"
 msgstr "Cursor Down"
 
-#: app/widgets/gimpcontrollerkeyboard.c:119
-msgid "Cursor Left (Shift + Control + Alt)"
-msgstr "Cursor Left (Shift + Control + Alt)"
-
-#: app/widgets/gimpcontrollerkeyboard.c:122
-msgid "Cursor Left (Control + Alt)"
-msgstr "Cursor Left (Control + Alt)"
-
-#: app/widgets/gimpcontrollerkeyboard.c:125
-msgid "Cursor Left (Shift + Alt)"
-msgstr "Cursor Left (Shift + Alt)"
-
-#: app/widgets/gimpcontrollerkeyboard.c:128
-msgid "Cursor Left (Shift + Control)"
-msgstr "Cursor Left (Shift + Control)"
-
-#: app/widgets/gimpcontrollerkeyboard.c:131
-msgid "Cursor Left (Alt)"
-msgstr "Cursor Left (Alt)"
-
-#: app/widgets/gimpcontrollerkeyboard.c:134
-msgid "Cursor Left (Control)"
-msgstr "Cursor Left (Control)"
-
-#: app/widgets/gimpcontrollerkeyboard.c:137
-msgid "Cursor Left (Shift)"
-msgstr "Cursor Left (Shift)"
-
-#: app/widgets/gimpcontrollerkeyboard.c:140
+#: app/widgets/gimpcontrollerkeyboard.c:120
+#: app/widgets/gimpcontrollerkeyboard.c:123
+#: app/widgets/gimpcontrollerkeyboard.c:126
+#: app/widgets/gimpcontrollerkeyboard.c:129
+#: app/widgets/gimpcontrollerkeyboard.c:132
+#: app/widgets/gimpcontrollerkeyboard.c:135
+#: app/widgets/gimpcontrollerkeyboard.c:138
+#: app/widgets/gimpcontrollerkeyboard.c:141
 msgid "Cursor Left"
 msgstr "Cursor Left"
 
-#: app/widgets/gimpcontrollerkeyboard.c:144
-msgid "Cursor Right (Shift + Control + Alt)"
-msgstr "Cursor Right (Shift + Control + Alt)"
-
-#: app/widgets/gimpcontrollerkeyboard.c:147
-msgid "Cursor Right (Control + Alt)"
-msgstr "Cursor Right (Control + Alt)"
-
-#: app/widgets/gimpcontrollerkeyboard.c:150
-msgid "Cursor Right (Shift + Alt)"
-msgstr "Cursor Right (Shift + Alt)"
-
-#: app/widgets/gimpcontrollerkeyboard.c:153
-msgid "Cursor Right (Shift + Control)"
-msgstr "Cursor Right (Shift + Control)"
-
-#: app/widgets/gimpcontrollerkeyboard.c:156
-msgid "Cursor Right (Alt)"
-msgstr "Cursor Right (Alt)"
-
-#: app/widgets/gimpcontrollerkeyboard.c:159
-msgid "Cursor Right (Control)"
-msgstr "Cursor Right (Control)"
-
-#: app/widgets/gimpcontrollerkeyboard.c:162
-msgid "Cursor Right (Shift)"
-msgstr "Cursor Right (Shift)"
-
-#: app/widgets/gimpcontrollerkeyboard.c:165
+#: app/widgets/gimpcontrollerkeyboard.c:145
+#: app/widgets/gimpcontrollerkeyboard.c:148
+#: app/widgets/gimpcontrollerkeyboard.c:151
+#: app/widgets/gimpcontrollerkeyboard.c:154
+#: app/widgets/gimpcontrollerkeyboard.c:157
+#: app/widgets/gimpcontrollerkeyboard.c:160
+#: app/widgets/gimpcontrollerkeyboard.c:163
+#: app/widgets/gimpcontrollerkeyboard.c:166
 msgid "Cursor Right"
 msgstr "Cursor Right"
 
-#: app/widgets/gimpcontrollerkeyboard.c:207
+#: app/widgets/gimpcontrollerkeyboard.c:208
 msgid "Keyboard"
 msgstr "Keyboard"
 
-#: app/widgets/gimpcontrollerkeyboard.c:230
+#: app/widgets/gimpcontrollerkeyboard.c:251
 msgid "Keyboard Events"
 msgstr "Keyboard Events"
 
-#: app/widgets/gimpcontrollerkeyboard.c:231
+#: app/widgets/gimpcontrollerkeyboard.c:252
 #: app/widgets/gimpcontrollerwheel.c:230
 msgid "Ready"
 msgstr "Ready"
@@ -10286,19 +10195,19 @@ msgstr "Background: %d, %d, %d"
 msgid "The given filename does not have any known file extension."
 msgstr "The given filename does not have any known file extension."
 
-#: app/widgets/gimpdock.c:342
+#: app/widgets/gimpdock.c:317
 msgid "Close all Tabs?"
 msgstr "Close all Tabs?"
 
-#: app/widgets/gimpdock.c:348
+#: app/widgets/gimpdock.c:323
 msgid "Close all Tabs"
 msgstr "Close all Tabs"
 
-#: app/widgets/gimpdock.c:358
+#: app/widgets/gimpdock.c:333
 msgid "Close all tabs?"
 msgstr "Close all tabs?"
 
-#: app/widgets/gimpdock.c:360
+#: app/widgets/gimpdock.c:335
 #, c-format
 msgid ""
 "This window has %d tabs open. Closing the window will also close all its "
@@ -10307,61 +10216,61 @@ msgstr ""
 "This window has %d tabs open. Closing the window will also close all its "
 "tabs."
 
-#: app/widgets/gimpdock.c:695
-msgid "You can drop dockable dialogs here."
-msgstr "You can drop dockable dialogues here."
-
 #: app/widgets/gimpdockable.c:195
 msgid "Configure this tab"
 msgstr "Configure this tab"
 
-#: app/widgets/gimperrorconsole.c:235 app/widgets/gimperrordialog.c:252
+#: app/widgets/gimpdockseparator.c:132 app/widgets/gimpdockseparator.c:307
+msgid "You can drop dockable dialogs here."
+msgstr "You can drop dockable dialogues here."
+
+#: app/widgets/gimperrorconsole.c:235 app/widgets/gimperrordialog.c:204
 #, c-format
 msgid "%s Message"
 msgstr "%s Message"
 
-#: app/widgets/gimperrordialog.c:229
+#: app/widgets/gimperrordialog.c:181
 msgid "Too many error messages!"
 msgstr "Too many error messages!"
 
-#: app/widgets/gimperrordialog.c:230
+#: app/widgets/gimperrordialog.c:182
 msgid "Messages are redirected to stderr."
 msgstr "Messages are redirected to stderr."
 
-#: app/widgets/gimpfiledialog.c:324
+#: app/widgets/gimpfiledialog.c:334
 msgid "Automatically Detected"
 msgstr "Automatically Detected"
 
-#: app/widgets/gimpfiledialog.c:333
+#: app/widgets/gimpfiledialog.c:343
 msgid "By Extension"
 msgstr "By Extension"
 
-#: app/widgets/gimpfiledialog.c:469
+#: app/widgets/gimpfiledialog.c:479
 msgid "File Exists"
 msgstr "File Exists"
 
-#: app/widgets/gimpfiledialog.c:474
+#: app/widgets/gimpfiledialog.c:484
 msgid "_Replace"
 msgstr "_Replace"
 
-#: app/widgets/gimpfiledialog.c:485
+#: app/widgets/gimpfiledialog.c:495
 #, c-format
 msgid "A file named '%s' already exists."
 msgstr "A file named '%s' already exists."
 
-#: app/widgets/gimpfiledialog.c:490
+#: app/widgets/gimpfiledialog.c:500
 msgid "Do you want to replace it with the image you are saving?"
 msgstr "Do you want to replace it with the image you are saving?"
 
-#: app/widgets/gimpfiledialog.c:550
+#: app/widgets/gimpfiledialog.c:560
 msgid "All Files"
 msgstr "All Files"
 
-#: app/widgets/gimpfiledialog.c:555
+#: app/widgets/gimpfiledialog.c:565
 msgid "All Images"
 msgstr "All Images"
 
-#: app/widgets/gimpfiledialog.c:694
+#: app/widgets/gimpfiledialog.c:704
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Select File _Type (%s)"
@@ -10751,21 +10660,21 @@ msgstr "_Use selected font"
 #, c-format
 msgid ""
 "Click to update preview\n"
-"%s  Click to force update even if preview is up-to-date"
+"%s%sClick to force update even if preview is up-to-date"
 msgstr ""
 "Click to update preview\n"
-"%s  Click to force update even if preview is up-to-date"
+"%s%sClick to force update even if preview is up-to-date"
 
-#: app/widgets/gimpthumbbox.c:421 app/widgets/gimpthumbbox.c:491
+#: app/widgets/gimpthumbbox.c:422 app/widgets/gimpthumbbox.c:492
 msgid "No selection"
 msgstr "No selection"
 
-#: app/widgets/gimpthumbbox.c:619 app/widgets/gimpthumbbox.c:643
+#: app/widgets/gimpthumbbox.c:620 app/widgets/gimpthumbbox.c:644
 #, c-format
 msgid "Thumbnail %d of %d"
 msgstr "Thumbnail %d of %d"
 
-#: app/widgets/gimpthumbbox.c:756 app/widgets/gimpthumbbox.c:766
+#: app/widgets/gimpthumbbox.c:757 app/widgets/gimpthumbbox.c:767
 msgid "Creating Preview ..."
 msgstr "Creating Preview ..."
 
@@ -10814,7 +10723,7 @@ msgstr ""
 "The active gradient.\n"
 "Click to open the Gradient Dialogue."
 
-#: app/widgets/gimptoolbox.c:830
+#: app/widgets/gimptoolbox.c:728
 msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Click to open the color selection dialog."
@@ -10864,35 +10773,27 @@ msgstr "Empty Path"
 msgid "Open the brush selection dialog"
 msgstr "Open the brush selection dialogue"
 
-#: app/widgets/gimpviewablebox.c:115
+#: app/widgets/gimpviewablebox.c:94
 msgid "Open the pattern selection dialog"
 msgstr "Open the pattern selection dialogue"
 
-#: app/widgets/gimpviewablebox.c:155
+#: app/widgets/gimpviewablebox.c:120
 msgid "Open the gradient selection dialog"
 msgstr "Open the gradient selection dialogue"
 
-#: app/widgets/gimpviewablebox.c:167
+#: app/widgets/gimpviewablebox.c:132
 msgid "Reverse"
 msgstr "Reverse"
 
-#: app/widgets/gimpviewablebox.c:210
+#: app/widgets/gimpviewablebox.c:168
 msgid "Open the palette selection dialog"
 msgstr "Open the palette selection dialogue"
 
-#: app/widgets/gimpviewablebox.c:250
+#: app/widgets/gimpviewablebox.c:187
 msgid "Open the font selection dialog"
 msgstr "Open the font selection dialogue"
 
-#. The format string which is used to display modifier names
-#. *  <Shift>, <Ctrl> and <Alt>
-#.
-#: app/widgets/gimpwidgets-utils.c:382
-#, c-format
-msgid "<%s>"
-msgstr "<%s>"
-
-#: app/widgets/gimpwidgets-utils.c:787
+#: app/widgets/gimpwidgets-utils.c:820
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Invalid UTF-8 data in file '%s'."
