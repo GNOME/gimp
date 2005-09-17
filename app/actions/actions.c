@@ -163,7 +163,7 @@ static GimpActionFactoryEntry action_groups[] =
   { "plug-in", N_("Plug-Ins"), GIMP_STOCK_PLUGIN,
     plug_in_actions_setup,
     plug_in_actions_update },
-  { "qmask", N_("QuickMask"), GIMP_STOCK_QMASK_ON,
+  { "qmask", N_("Quick Mask"), GIMP_STOCK_QMASK_ON,
     qmask_actions_setup,
     qmask_actions_update },
   { "select", N_("Select"), GIMP_STOCK_SELECTION,
