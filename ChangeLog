@@ -1,11 +1,13 @@
 2005-09-17  Michael Natterer  <mitch@gimp.org>
 
-	We don't need two labels for "Toggle QuickMask".
-	Fixes bug #316569.
+	We don't need two labels for "Toggle Quick Mask":
 
 	* app/actions/qmask-actions.c: removed "qmask-active" action.
 
 	* menus/qmask-menu.xml: use "qmask-toggle" instead.
+
+	* app/actions/actions.c (action_groups): s/QuickMask/Quick Mask/
+	Fixes bug #316569.
 
 2005-09-17  Michael Natterer  <mitch@gimp.org>
 
