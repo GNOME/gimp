@@ -1,3 +1,23 @@
+2005-09-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpactionview.c (gimp_action_view_new): skip
+	actions if their name starts with '<' (menu actions created by
+	plug-ins have names like "<Image>/Foo/Bar"). Scroll the
+	pre-selected action to the center of the view, not to the top.
+
+	* app/widgets/gimpcontrollereditor.c
+	(gimp_controller_editor_edit_clicked): make the action editor
+	transient to the controller editor. Show the edited event's name
+	in the controller editor's header.
+
+	* app/widgets/gimpcontrollerwheel.c: use gimp_get_mod_string()
+	instead of hardcoding the modifiers in tons of translatable
+	strings. Don't call gettext() in GimpController::get_blurb(),
+	the strings are already translated.
+
+	* app/widgets/gimpcontrollerkeyboard.c: removed call to gettext()
+	here too.
+
 2005-09-16  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpimagemaptool.c (gimp_image_map_tool_initialize):

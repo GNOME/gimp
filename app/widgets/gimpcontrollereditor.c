@@ -665,6 +665,7 @@ gimp_controller_editor_edit_clicked (GtkWidget            *button,
   GtkTreeModel *model;
   GtkTreeIter   iter;
   gchar        *event_name  = NULL;
+  gchar        *event_blurb = NULL;
   gchar        *action_name = NULL;
 
   gimp_controller_info_set_event_snooper (editor->info, NULL, NULL);
@@ -672,6 +673,7 @@ gimp_controller_editor_edit_clicked (GtkWidget            *button,
   if (gtk_tree_selection_get_selected (editor->sel, &model, &iter))
     gtk_tree_model_get (model, &iter,
                         COLUMN_EVENT,  &event_name,
+                        COLUMN_BLURB,  &event_blurb,
                         COLUMN_ACTION, &action_name,
                         -1);
 
@@ -679,14 +681,18 @@ gimp_controller_editor_edit_clicked (GtkWidget            *button,
     {
       GtkWidget *scrolled_window;
       GtkWidget *view;
+      gchar     *title;
+
+      title = g_strdup_printf (_("Select Action for Event '%s'"),
+                               event_blurb);
 
       editor->edit_dialog =
         gimp_viewable_dialog_new (GIMP_VIEWABLE (editor->info),
                                   _("Select Controller Event Action"),
                                   "gimp-controller-action-dialog",
                                   GIMP_STOCK_EDIT,
-                                  _("Select Controller Event Action"),
-                                  GTK_WIDGET (editor),
+                                  title,
+                                  gtk_widget_get_toplevel (GTK_WIDGET (editor)),
                                   gimp_standard_help_func,
                                   GIMP_HELP_PREFS_INPUT_CONTROLLERS,
 
@@ -694,6 +700,8 @@ gimp_controller_editor_edit_clicked (GtkWidget            *button,
                                   GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
                                   NULL);
+
+      g_free (title);
 
       gtk_dialog_set_alternative_button_order (GTK_DIALOG (editor->edit_dialog),
                                                GTK_RESPONSE_OK,

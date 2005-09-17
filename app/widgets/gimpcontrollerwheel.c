@@ -30,6 +30,7 @@
 
 #include "gimpcontrollerwheel.h"
 #include "gimphelp-ids.h"
+#include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
 
@@ -41,7 +42,7 @@ struct _WheelEvent
   GdkScrollDirection  direction;
   GdkModifierType     modifiers;
   const gchar        *name;
-  const gchar        *blurb;
+  gchar              *blurb;
 };
 
 
@@ -61,104 +62,104 @@ static const gchar * gimp_controller_wheel_get_event_blurb (GimpController *cont
 
 static GimpControllerClass *parent_class = NULL;
 
-static const WheelEvent wheel_events[] =
+static WheelEvent wheel_events[] =
 {
   { GDK_SCROLL_UP, GDK_MOD1_MASK | GDK_CONTROL_MASK | GDK_SHIFT_MASK,
     "scroll-up-shift-control-alt",
-    N_("Scroll Up (Shift + Control + Alt)") },
+    N_("Scroll Up") },
   { GDK_SCROLL_UP, GDK_MOD1_MASK | GDK_CONTROL_MASK,
     "scroll-up-control-alt",
-    N_("Scroll Up (Control + Alt)") },
+    N_("Scroll Up") },
   { GDK_SCROLL_UP, GDK_MOD1_MASK | GDK_SHIFT_MASK,
     "scroll-up-shift-alt",
-    N_("Scroll Up (Shift + Alt)") },
+    N_("Scroll Up") },
   { GDK_SCROLL_UP, GDK_CONTROL_MASK | GDK_SHIFT_MASK,
     "scroll-up-shift-control",
-    N_("Scroll Up (Shift + Control)") },
+    N_("Scroll Up") },
   { GDK_SCROLL_UP, GDK_MOD1_MASK,
     "scroll-up-alt",
-    N_("Scroll Up (Alt)") },
+    N_("Scroll Up") },
   { GDK_SCROLL_UP, GDK_CONTROL_MASK,
     "scroll-up-control",
-    N_("Scroll Up (Control)") },
+    N_("Scroll Up") },
   { GDK_SCROLL_UP, GDK_SHIFT_MASK,
     "scroll-up-shift",
-    N_("Scroll Up (Shift)") },
+    N_("Scroll Up") },
   { GDK_SCROLL_UP, 0,
     "scroll-up",
     N_("Scroll Up") },
 
   { GDK_SCROLL_DOWN, GDK_MOD1_MASK | GDK_CONTROL_MASK | GDK_SHIFT_MASK,
     "scroll-down-shift-control-alt",
-    N_("Scroll Down (Shift + Control + Alt)") },
+    N_("Scroll Down") },
   { GDK_SCROLL_DOWN, GDK_MOD1_MASK | GDK_CONTROL_MASK,
     "scroll-down-control-alt",
-    N_("Scroll Down (Control + Alt)") },
+    N_("Scroll Down") },
   { GDK_SCROLL_DOWN, GDK_MOD1_MASK | GDK_SHIFT_MASK,
     "scroll-down-shift-alt",
-    N_("Scroll Down (Shift + Alt)") },
+    N_("Scroll Down") },
   { GDK_SCROLL_DOWN, GDK_CONTROL_MASK | GDK_SHIFT_MASK,
     "scroll-down-shift-control",
-    N_("Scroll Down (Shift + Control)") },
+    N_("Scroll Down") },
   { GDK_SCROLL_DOWN, GDK_MOD1_MASK,
     "scroll-down-alt",
-    N_("Scroll Down (Alt)") },
+    N_("Scroll Down") },
   { GDK_SCROLL_DOWN, GDK_CONTROL_MASK,
     "scroll-down-control",
-    N_("Scroll Down (Control)") },
+    N_("Scroll Down") },
   { GDK_SCROLL_DOWN, GDK_SHIFT_MASK,
     "scroll-down-shift",
-    N_("Scroll Down (Shift)") },
+    N_("Scroll Down") },
   { GDK_SCROLL_DOWN, 0,
     "scroll-down",
     N_("Scroll Down") },
 
   { GDK_SCROLL_LEFT, GDK_MOD1_MASK | GDK_CONTROL_MASK | GDK_SHIFT_MASK,
     "scroll-left-shift-control-alt",
-    N_("Scroll Left (Shift + Control + Alt)") },
+    N_("Scroll Left") },
   { GDK_SCROLL_LEFT, GDK_MOD1_MASK | GDK_CONTROL_MASK,
     "scroll-left-control-alt",
-    N_("Scroll Left (Control + Alt)") },
+    N_("Scroll Left") },
   { GDK_SCROLL_LEFT, GDK_MOD1_MASK | GDK_SHIFT_MASK,
     "scroll-left-shift-alt",
-    N_("Scroll Left (Shift + Alt)") },
+    N_("Scroll Left") },
   { GDK_SCROLL_LEFT, GDK_CONTROL_MASK | GDK_SHIFT_MASK,
     "scroll-left-shift-control",
-    N_("Scroll Left (Shift + Control)") },
+    N_("Scroll Left") },
   { GDK_SCROLL_LEFT, GDK_MOD1_MASK,
     "scroll-left-alt",
-    N_("Scroll Left (Alt)") },
+    N_("Scroll Left") },
   { GDK_SCROLL_LEFT, GDK_CONTROL_MASK,
     "scroll-left-control",
-    N_("Scroll Left (Control)") },
+    N_("Scroll Left") },
   { GDK_SCROLL_LEFT, GDK_SHIFT_MASK,
     "scroll-left-shift",
-    N_("Scroll Left (Shift)") },
+    N_("Scroll Left") },
   { GDK_SCROLL_LEFT, 0,
     "scroll-left",
     N_("Scroll Left") },
 
   { GDK_SCROLL_RIGHT, GDK_MOD1_MASK | GDK_CONTROL_MASK | GDK_SHIFT_MASK,
     "scroll-right-shift-control-alt",
-    N_("Scroll Right (Shift + Control + Alt)") },
+    N_("Scroll Right") },
   { GDK_SCROLL_RIGHT, GDK_MOD1_MASK | GDK_CONTROL_MASK,
     "scroll-right-control-alt",
-    N_("Scroll Right (Control + Alt)") },
+    N_("Scroll Right") },
   { GDK_SCROLL_RIGHT, GDK_MOD1_MASK | GDK_SHIFT_MASK,
     "scroll-right-shift-alt",
-    N_("Scroll Right (Shift + Alt)") },
+    N_("Scroll Right") },
   { GDK_SCROLL_RIGHT, GDK_CONTROL_MASK | GDK_SHIFT_MASK,
     "scroll-right-shift-control",
-    N_("Scroll Right (Shift + Control)") },
+    N_("Scroll Right") },
   { GDK_SCROLL_RIGHT, GDK_MOD1_MASK,
     "scroll-right-alt",
-    N_("Scroll Right (Alt)") },
+    N_("Scroll Right") },
   { GDK_SCROLL_RIGHT, GDK_CONTROL_MASK,
     "scroll-right-control",
-    N_("Scroll Right (Control)") },
+    N_("Scroll Right") },
   { GDK_SCROLL_RIGHT, GDK_SHIFT_MASK,
     "scroll-right-shift",
-    N_("Scroll Right (Shift)") },
+    N_("Scroll Right") },
   { GDK_SCROLL_RIGHT, 0,
     "scroll-right",
     N_("Scroll Right") }
@@ -214,6 +215,26 @@ gimp_controller_wheel_class_init (GimpControllerWheelClass *klass)
 static void
 gimp_controller_wheel_init (GimpControllerWheel *wheel)
 {
+  static gboolean event_names_initialized = FALSE;
+
+  if (! event_names_initialized)
+    {
+      gint i;
+
+      for (i = 0; i < G_N_ELEMENTS (wheel_events); i++)
+        {
+          WheelEvent *wevent = &wheel_events[i];
+
+          if (wevent->modifiers != 0)
+            {
+              wevent->blurb =
+                g_strdup_printf ("%s (%s)", gettext (wevent->blurb),
+                                 gimp_get_mod_string (wevent->modifiers));
+            }
+        }
+
+      event_names_initialized = TRUE;
+    }
 }
 
 static GObject *
@@ -256,7 +277,7 @@ gimp_controller_wheel_get_event_blurb (GimpController *controller,
   if (event_id < 0 || event_id >= G_N_ELEMENTS (wheel_events))
     return NULL;
 
-  return gettext (wheel_events[event_id].blurb);
+  return wheel_events[event_id].blurb;
 }
 
 gboolean

@@ -278,7 +278,7 @@ gimp_controller_keyboard_get_event_blurb (GimpController *controller,
   if (event_id < 0 || event_id >= G_N_ELEMENTS (keyboard_events))
     return NULL;
 
-  return gettext (keyboard_events[event_id].blurb);
+  return keyboard_events[event_id].blurb;
 }
 
 gboolean

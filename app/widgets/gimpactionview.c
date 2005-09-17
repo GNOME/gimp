@@ -256,7 +256,9 @@ gimp_action_view_new (GimpUIManager *manager,
           GClosure        *accel_closure = NULL;
           GtkTreeIter      action_iter;
 
-          if (strstr (name, "-menu") || strstr (name, "-popup"))
+          if (strstr (name, "-menu")  ||
+              strstr (name, "-popup") ||
+              name[0] == '<')
             continue;
 
           g_object_get (action,
@@ -403,7 +405,7 @@ gimp_action_view_new (GimpUIManager *manager,
       gtk_tree_selection_select_path (sel, select_path);
 
       gtk_tree_view_scroll_to_cell (view, select_path, NULL,
-                                    FALSE, 0.0, 0.0);
+                                    TRUE, 0.5, 0.0);
 
       gtk_tree_path_free (select_path);
       gtk_tree_path_free (expand);
