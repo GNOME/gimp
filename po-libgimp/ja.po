@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp gimp-2-2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-05-08 12:28+0200\n"
-"PO-Revision-Date: 2005-02-17 12:25+0900\n"
-"Last-Translator: Tadashi Jokagi <elf2000@users.sourceforge.net>\n"
+"POT-Creation-Date: 2005-09-17 19:54+0900\n"
+"PO-Revision-Date: 2005-09-10 19:00+0900\n"
+"Last-Translator: <kano@na.rim.or.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -38,7 +38,7 @@ msgstr "可視レイヤーの結合"
 #: ../libgimp/gimpexport.c:224
 #, c-format
 msgid "%s can't handle layer offsets, size or opacity"
-msgstr "%s はレイヤーのオフセット, サイズ, 透明度を扱えません"
+msgstr "%s はレイヤーのオフセット、サイズ、透明度を扱えません"
 
 #: ../libgimp/gimpexport.c:233 ../libgimp/gimpexport.c:242
 #, c-format
@@ -171,7 +171,7 @@ msgstr ""
 #. the footline
 #: ../libgimp/gimpexport.c:553
 msgid "The export conversion won't modify your original image."
-msgstr "エクスポート変換は元画像には影響を与えません."
+msgstr "エクスポート変換は元画像には影響を与えません。"
 
 #: ../libgimp/gimpexport.c:653
 #, c-format
@@ -179,8 +179,8 @@ msgid ""
 "You are about to save a layer mask as %s.\n"
 "This will not save the visible layers."
 msgstr ""
-"レイヤーマスクを %s として保存しようとしています.\n"
-"この操作では, 可視レイヤーは保存されません."
+"レイヤーマスクを %s として保存しようとしています。\n"
+"この操作では、可視レイヤーは保存されません。"
 
 #: ../libgimp/gimpexport.c:659
 #, c-format
@@ -188,8 +188,8 @@ msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
 "This will not save the visible layers."
 msgstr ""
-"チャンネル (保存済みの選択領域) を %s として保存しようとしています.\n"
-"この操作では, 可視レイヤーは保存されません."
+"チャンネル (保存済みの選択領域) を %s として保存しようとしています。\n"
+"この操作では、可視レイヤーは保存されません。"
 
 #: ../libgimp/gimpfontmenu.c:89
 msgid "Font Selection"
@@ -376,11 +376,13 @@ msgid ""
 "Cannot determine a valid home directory.\n"
 "Thumbnails will be stored in the folder for temporary files (%s) instead."
 msgstr ""
+"ホームディレクトリが特定できませんでした。\n"
+"サムネイルは一時ファイル用のディレクトリ (%s) に置かれます。"
 
 #: ../libgimpthumb/gimpthumb-utils.c:249 ../libgimpthumb/gimpthumb-utils.c:317
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
-msgstr "サムネイルフォルダ '%s' 作成失敗."
+msgstr "サムネイルフォルダ '%s' 作成失敗。"
 
 #: ../libgimpthumb/gimpthumbnail.c:919
 #, c-format
@@ -526,8 +528,8 @@ msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
 msgstr ""
-"eyedropper をクリックし, スクリーン上のどこかをクリックしてその場所の色を選択"
-"します."
+"eyedropper をクリックし、スクリーン上のどこかをクリックしてその場所の色を選択"
+"します。"
 
 #: ../libgimpwidgets/gimppreviewarea.c:126
 msgid "Check Size"
@@ -604,7 +606,7 @@ msgstr "切り抜き"
 
 #: ../libgimpwidgets/gimpstock.c:288
 msgid "_Transform"
-msgstr "変換"
+msgstr "変換(_T)"
 
 #: ../libgimpwidgets/gimpstock.c:291
 msgid "_Rotate"
@@ -635,7 +637,7 @@ msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
-"この値を乱数の種として用います - そうすることで, 特定の \"乱数\" 操作を行うこ"
+"この値を乱数の種として用います - そうすることで、特定の \"乱数\" 操作を行うこ"
 "とができます"
 
 #: ../libgimpwidgets/gimpwidgets.c:1005
@@ -672,7 +674,7 @@ msgstr "色覚障害の視覚"
 
 #: ../modules/cdisplay_colorblind.c:540
 msgid "Color _Deficiency Type:"
-msgstr "色覚障害のタイプ:"
+msgstr "色覚障害のタイプ(_D):"
 
 #: ../modules/cdisplay_gamma.c:105
 msgid "Gamma color display filter"
