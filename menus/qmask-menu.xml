@@ -3,7 +3,7 @@
 
 <ui>
   <popup action="qmask-popup">
-    <menuitem action="qmask-active" />
+    <menuitem action="qmask-toggle" />
     <separator />
     <menuitem action="qmask-invert-on" />
     <menuitem action="qmask-invert-off" />

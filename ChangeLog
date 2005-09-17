@@ -1,5 +1,14 @@
 2005-09-17  Michael Natterer  <mitch@gimp.org>
 
+	We don't need two labels for "Toggle QuickMask".
+	Fixes bug #316569.
+
+	* app/actions/qmask-actions.c: removed "qmask-active" action.
+
+	* menus/qmask-menu.xml: use "qmask-toggle" instead.
+
+2005-09-17  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpactionview.c (gimp_action_view_new): skip
 	actions if their name starts with '<' (menu actions created by
 	plug-ins have names like "<Image>/Foo/Bar"). Scroll the
