@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-17 13:26-0400\n"
+"POT-Creation-Date: 2005-09-18 00:33-0400\n"
 "PO-Revision-Date: 2005-09-06 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
@@ -296,9 +296,10 @@ msgstr "Patterns"
 msgid "Plug-Ins"
 msgstr "Plug-Ins"
 
-#: app/actions/actions.c:175
-msgid "QuickMask"
-msgstr "QuickMask"
+#: app/actions/actions.c:175 app/core/core-enums.c:815
+#: app/core/gimpchannel.c:404
+msgid "Quick Mask"
+msgstr "Quick Mask"
 
 #: app/actions/actions.c:178 app/dialogs/dialogs.c:194
 msgid "Sample Points"
@@ -2510,18 +2511,14 @@ msgid "_Configure Color and Opacity..."
 msgstr "_Configure Colour and Opacity..."
 
 #: app/actions/qmask-actions.c:54
-msgid "_Quick Mask Active"
-msgstr "_Quick Mask Active"
-
-#: app/actions/qmask-actions.c:60
 msgid "Toggle _Quick Mask"
 msgstr "Toggle _Quick Mask"
 
-#: app/actions/qmask-actions.c:70
+#: app/actions/qmask-actions.c:63
 msgid "Mask _Selected Areas"
 msgstr "Mask _Selected Areas"
 
-#: app/actions/qmask-actions.c:75
+#: app/actions/qmask-actions.c:68
 msgid "Mask _Unselected Areas"
 msgstr "Mask _Unselected Areas"
 
@@ -4280,10 +4277,6 @@ msgstr "Merge layers"
 #: app/core/core-enums.c:814
 msgid "Merge paths"
 msgstr "Merge paths"
-
-#: app/core/core-enums.c:815 app/core/gimpchannel.c:404
-msgid "Quick Mask"
-msgstr "Quick Mask"
 
 #: app/core/core-enums.c:816 app/core/core-enums.c:846
 msgid "Guide"
@@ -9646,45 +9639,45 @@ msgstr "Failed to import paths from '%s': %s"
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: app/widgets/gimpactionview.c:331 app/widgets/gimpcontrollereditor.c:399
+#: app/widgets/gimpactionview.c:333 app/widgets/gimpcontrollereditor.c:399
 msgid "Action"
 msgstr "Action"
 
-#: app/widgets/gimpactionview.c:360
+#: app/widgets/gimpactionview.c:362
 msgid "Shortcut"
 msgstr "Shortcut"
 
-#: app/widgets/gimpactionview.c:382
+#: app/widgets/gimpactionview.c:384
 msgid "Name"
 msgstr "Name"
 
-#: app/widgets/gimpactionview.c:512 app/widgets/gimpactionview.c:694
+#: app/widgets/gimpactionview.c:514 app/widgets/gimpactionview.c:696
 msgid "Changing shortcut failed."
 msgstr "Changing shortcut failed."
 
-#: app/widgets/gimpactionview.c:552
+#: app/widgets/gimpactionview.c:554
 msgid "Conflicting Shortcuts"
 msgstr "Conflicting Shortcuts"
 
-#: app/widgets/gimpactionview.c:558
+#: app/widgets/gimpactionview.c:560
 msgid "_Reassign shortcut"
 msgstr "_Reassign shortcut"
 
-#: app/widgets/gimpactionview.c:569
+#: app/widgets/gimpactionview.c:571
 #, c-format
 msgid "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
 msgstr "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
 
-#: app/widgets/gimpactionview.c:573
+#: app/widgets/gimpactionview.c:575
 #, c-format
 msgid "Reassigning the shortcut will cause it to be removed from \"%s\"."
 msgstr "Reassigning the shortcut will cause it to be removed from \"%s\"."
 
-#: app/widgets/gimpactionview.c:630
+#: app/widgets/gimpactionview.c:632
 msgid "Removing shortcut failed."
 msgstr "Removing shortcut failed."
 
-#: app/widgets/gimpactionview.c:635
+#: app/widgets/gimpactionview.c:637
 msgid "Invalid shortcut."
 msgstr "Invalid shortcut."
 
@@ -9883,8 +9876,12 @@ msgstr "Assign an action to the selected event"
 msgid "Remove the action from the selected event"
 msgstr "Remove the action from the selected event"
 
-#: app/widgets/gimpcontrollereditor.c:685
-#: app/widgets/gimpcontrollereditor.c:688
+#: app/widgets/gimpcontrollereditor.c:686
+#, c-format
+msgid "Select Action for Event '%s'"
+msgstr "Select Action for Event '%s'"
+
+#: app/widgets/gimpcontrollereditor.c:691
 msgid "Select Controller Event Action"
 msgstr "Select Controller Event Action"
 
@@ -9941,7 +9938,7 @@ msgid "Keyboard Events"
 msgstr "Keyboard Events"
 
 #: app/widgets/gimpcontrollerkeyboard.c:252
-#: app/widgets/gimpcontrollerwheel.c:230
+#: app/widgets/gimpcontrollerwheel.c:251
 msgid "Ready"
 msgstr "Ready"
 
@@ -10028,139 +10025,39 @@ msgstr "Configure Controller"
 msgid "Configure Input Controller"
 msgstr "Configure Input Controller"
 
-#: app/widgets/gimpcontrollerwheel.c:68
-msgid "Scroll Up (Shift + Control + Alt)"
-msgstr "Scroll Up (Shift + Control + Alt)"
-
-#: app/widgets/gimpcontrollerwheel.c:71
-msgid "Scroll Up (Control + Alt)"
-msgstr "Scroll Up (Control + Alt)"
-
-#: app/widgets/gimpcontrollerwheel.c:74
-msgid "Scroll Up (Shift + Alt)"
-msgstr "Scroll Up (Shift + Alt)"
-
-#: app/widgets/gimpcontrollerwheel.c:77
-msgid "Scroll Up (Shift + Control)"
-msgstr "Scroll Up (Shift + Control)"
-
-#: app/widgets/gimpcontrollerwheel.c:80
-msgid "Scroll Up (Alt)"
-msgstr "Scroll Up (Alt)"
-
-#: app/widgets/gimpcontrollerwheel.c:83
-msgid "Scroll Up (Control)"
-msgstr "Scroll Up (Control)"
-
-#: app/widgets/gimpcontrollerwheel.c:86
-msgid "Scroll Up (Shift)"
-msgstr "Scroll Up (Shift)"
-
-#: app/widgets/gimpcontrollerwheel.c:89
+#: app/widgets/gimpcontrollerwheel.c:69 app/widgets/gimpcontrollerwheel.c:72
+#: app/widgets/gimpcontrollerwheel.c:75 app/widgets/gimpcontrollerwheel.c:78
+#: app/widgets/gimpcontrollerwheel.c:81 app/widgets/gimpcontrollerwheel.c:84
+#: app/widgets/gimpcontrollerwheel.c:87 app/widgets/gimpcontrollerwheel.c:90
 msgid "Scroll Up"
 msgstr "Scroll Up"
 
-#: app/widgets/gimpcontrollerwheel.c:93
-msgid "Scroll Down (Shift + Control + Alt)"
-msgstr "Scroll Down (Shift + Control + Alt)"
-
-#: app/widgets/gimpcontrollerwheel.c:96
-msgid "Scroll Down (Control + Alt)"
-msgstr "Scroll Down (Control + Alt)"
-
-#: app/widgets/gimpcontrollerwheel.c:99
-msgid "Scroll Down (Shift + Alt)"
-msgstr "Scroll Down (Shift + Alt)"
-
-#: app/widgets/gimpcontrollerwheel.c:102
-msgid "Scroll Down (Shift + Control)"
-msgstr "Scroll Down (Shift + Control)"
-
-#: app/widgets/gimpcontrollerwheel.c:105
-msgid "Scroll Down (Alt)"
-msgstr "Scroll Down (Alt)"
-
-#: app/widgets/gimpcontrollerwheel.c:108
-msgid "Scroll Down (Control)"
-msgstr "Scroll Down (Control)"
-
-#: app/widgets/gimpcontrollerwheel.c:111
-msgid "Scroll Down (Shift)"
-msgstr "Scroll Down (Shift)"
-
-#: app/widgets/gimpcontrollerwheel.c:114
+#: app/widgets/gimpcontrollerwheel.c:94 app/widgets/gimpcontrollerwheel.c:97
+#: app/widgets/gimpcontrollerwheel.c:100 app/widgets/gimpcontrollerwheel.c:103
+#: app/widgets/gimpcontrollerwheel.c:106 app/widgets/gimpcontrollerwheel.c:109
+#: app/widgets/gimpcontrollerwheel.c:112 app/widgets/gimpcontrollerwheel.c:115
 msgid "Scroll Down"
 msgstr "Scroll Down"
 
-#: app/widgets/gimpcontrollerwheel.c:118
-msgid "Scroll Left (Shift + Control + Alt)"
-msgstr "Scroll Left (Shift + Control + Alt)"
-
-#: app/widgets/gimpcontrollerwheel.c:121
-msgid "Scroll Left (Control + Alt)"
-msgstr "Scroll Left (Control + Alt)"
-
-#: app/widgets/gimpcontrollerwheel.c:124
-msgid "Scroll Left (Shift + Alt)"
-msgstr "Scroll Left (Shift + Alt)"
-
-#: app/widgets/gimpcontrollerwheel.c:127
-msgid "Scroll Left (Shift + Control)"
-msgstr "Scroll Left (Shift + Control)"
-
-#: app/widgets/gimpcontrollerwheel.c:130
-msgid "Scroll Left (Alt)"
-msgstr "Scroll Left (Alt)"
-
-#: app/widgets/gimpcontrollerwheel.c:133
-msgid "Scroll Left (Control)"
-msgstr "Scroll Left (Control)"
-
-#: app/widgets/gimpcontrollerwheel.c:136
-msgid "Scroll Left (Shift)"
-msgstr "Scroll Left (Shift)"
-
-#: app/widgets/gimpcontrollerwheel.c:139
+#: app/widgets/gimpcontrollerwheel.c:119 app/widgets/gimpcontrollerwheel.c:122
+#: app/widgets/gimpcontrollerwheel.c:125 app/widgets/gimpcontrollerwheel.c:128
+#: app/widgets/gimpcontrollerwheel.c:131 app/widgets/gimpcontrollerwheel.c:134
+#: app/widgets/gimpcontrollerwheel.c:137 app/widgets/gimpcontrollerwheel.c:140
 msgid "Scroll Left"
 msgstr "Scroll Left"
 
-#: app/widgets/gimpcontrollerwheel.c:143
-msgid "Scroll Right (Shift + Control + Alt)"
-msgstr "Scroll Right (Shift + Control + Alt)"
-
-#: app/widgets/gimpcontrollerwheel.c:146
-msgid "Scroll Right (Control + Alt)"
-msgstr "Scroll Right (Control + Alt)"
-
-#: app/widgets/gimpcontrollerwheel.c:149
-msgid "Scroll Right (Shift + Alt)"
-msgstr "Scroll Right (Shift + Alt)"
-
-#: app/widgets/gimpcontrollerwheel.c:152
-msgid "Scroll Right (Shift + Control)"
-msgstr "Scroll Right (Shift + Control)"
-
-#: app/widgets/gimpcontrollerwheel.c:155
-msgid "Scroll Right (Alt)"
-msgstr "Scroll Right (Alt)"
-
-#: app/widgets/gimpcontrollerwheel.c:158
-msgid "Scroll Right (Control)"
-msgstr "Scroll Right (Control)"
-
-#: app/widgets/gimpcontrollerwheel.c:161
-msgid "Scroll Right (Shift)"
-msgstr "Scroll Right (Shift)"
-
-#: app/widgets/gimpcontrollerwheel.c:164
+#: app/widgets/gimpcontrollerwheel.c:144 app/widgets/gimpcontrollerwheel.c:147
+#: app/widgets/gimpcontrollerwheel.c:150 app/widgets/gimpcontrollerwheel.c:153
+#: app/widgets/gimpcontrollerwheel.c:156 app/widgets/gimpcontrollerwheel.c:159
+#: app/widgets/gimpcontrollerwheel.c:162 app/widgets/gimpcontrollerwheel.c:165
 msgid "Scroll Right"
 msgstr "Scroll Right"
 
-#: app/widgets/gimpcontrollerwheel.c:206
+#: app/widgets/gimpcontrollerwheel.c:207
 msgid "Mouse Wheel"
 msgstr "Mouse Wheel"
 
-#: app/widgets/gimpcontrollerwheel.c:229
+#: app/widgets/gimpcontrollerwheel.c:250
 msgid "Mouse Wheel Events"
 msgstr "Mouse Wheel Events"
 
