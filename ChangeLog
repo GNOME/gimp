@@ -1,3 +1,11 @@
+2005-09-18  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/view-actions.c (view_zoom_actions): added stock IDs
+	and help IDs to the new zoom actions.
+
+	* menus/image-menu.xml.in: removed the <accelerator .../> lines
+	again. Actions don't need a visible proxy to be activatable.
+
 2005-09-18  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/view-actions.c (view_zoom_actions): 
