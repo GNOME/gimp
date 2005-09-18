@@ -558,4 +558,7 @@
 
   </menubar-and-popup>
 
+  <accelerator action="view-zoom-in-accel"/>
+  <accelerator action="view-zoom-out-accel"/>
+
 </ui>

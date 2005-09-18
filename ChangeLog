@@ -1,3 +1,9 @@
+2005-09-18  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/view-actions.c (view_zoom_actions): 
+	* menus/image-menu.xml.in: added extra Zoom In/Out actions and
+	bind them to the Add/Subtract keys on the keypad (bug #316555).
+
 2005-09-17  Michael Natterer  <mitch@gimp.org>
 
 	We don't need two labels for "Toggle Quick Mask":

@@ -229,6 +229,18 @@ static GimpEnumActionEntry view_zoom_actions[] =
     GIMP_ACTION_SELECT_NEXT, FALSE,
     GIMP_HELP_VIEW_ZOOM_IN },
 
+  { "view-zoom-out-accel", NULL,
+    N_("Zoom Out"), "KP_Subtract",
+    N_("Zoom out"),
+    GIMP_ACTION_SELECT_PREVIOUS, FALSE,
+    NULL },
+
+  { "view-zoom-in-accel", NULL,
+    N_("Zoom in"), "KP_Add",
+    N_("Zoom in"),
+    GIMP_ACTION_SELECT_NEXT, FALSE,
+    NULL },
+
   { "view-zoom-out-skip", GTK_STOCK_ZOOM_OUT,
     "Zoom out a lot", NULL, NULL,
     GIMP_ACTION_SELECT_SKIP_PREVIOUS, FALSE,
