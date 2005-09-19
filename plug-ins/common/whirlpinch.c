@@ -69,7 +69,6 @@ typedef struct
   gdouble  whirl;
   gdouble  pinch;
   gdouble  radius;
-  gboolean preview;
 } whirl_pinch_vals_t;
 
 /***** Prototypes *****/
@@ -108,8 +107,7 @@ static whirl_pinch_vals_t wpvals =
 {
   90.0, /* whirl   */
   0.0,  /* pinch   */
-  1.0,  /* radius  */
-  TRUE  /* preview */
+  1.0   /* radius  */
 };
 
 static gint img_bpp, img_has_alpha;
@@ -548,7 +546,7 @@ whirl_pinch_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_aspect_preview_new (drawable, &wpvals.preview);
+  preview = gimp_zoom_preview_new (drawable);
   gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
   gtk_widget_show (preview);
   g_signal_connect_swapped (preview, "invalidated",
@@ -660,9 +658,8 @@ dialog_update_preview (GimpDrawable *drawable,
   bottom = sel_y2 - 1;
   top    = sel_y1;
 
-  gimp_preview_get_size (preview, &width, &height);
-  src = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
-                                          &width, &height, &img_bpp);
+  src = gimp_zoom_preview_get_data (GIMP_ZOOM_PREVIEW (preview),
+                                    &width, &height, &img_bpp);
   dest = g_new (guchar, width * height * img_bpp);
 
   dx = (right - left) / (width - 1);

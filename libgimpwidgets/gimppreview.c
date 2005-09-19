@@ -240,7 +240,7 @@ gimp_preview_init (GimpPreview *preview)
   preview->toggle = gtk_check_button_new_with_mnemonic (_("_Preview"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (preview->toggle),
                                 preview->update_preview);
-  gtk_box_pack_start (GTK_BOX (preview), preview->toggle, FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (preview), preview->toggle, FALSE, FALSE, 0);
   gtk_widget_show (preview->toggle);
 
   g_signal_connect (preview->toggle, "toggled",

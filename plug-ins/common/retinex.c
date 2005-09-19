@@ -41,7 +41,6 @@ typedef struct
   gint     nscales;
   gint     scales_mode;
   gfloat   cvar;
-  gboolean preview;
 } RetinexParams;
 
 typedef enum
@@ -126,8 +125,7 @@ static RetinexParams rvals =
   240,             /* Scale */
   3,               /* Scales */
   RETINEX_UNIFORM, /* Echelles reparties uniformement */
-  1.2,             /* A voir */
-  TRUE             /* default is to update the preview */
+  1.2              /* A voir */
 };
 
 static GimpPlugInInfo PLUG_IN_INFO =
@@ -309,7 +307,7 @@ retinex_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_aspect_preview_new (drawable, &rvals.preview);
+  preview = gimp_zoom_preview_new (drawable);
   gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
   gtk_widget_show (preview);
 
@@ -422,9 +420,8 @@ retinex (GimpDrawable *drawable,
    */
   if (preview)
     {
-      gimp_preview_get_size (preview, &width, &height);
-      src = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
-                                              &width, &height, &bytes);
+      src = gimp_zoom_preview_get_data (GIMP_ZOOM_PREVIEW (preview),
+                                        &width, &height, &bytes);
     }
   else
     {

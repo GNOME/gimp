@@ -65,14 +65,12 @@ enum
 
 typedef struct
 {
-  gint     max_p;
-  gboolean preview;
+  gint max_p;
 } ValueType;
 
 static ValueType pvals =
 {
-  MAX_CHANNELS,
-  TRUE
+  MAX_CHANNELS
 };
 
 MAIN ()
@@ -217,9 +215,8 @@ main_function (GimpDrawable *drawable,
       guchar *src;
       gint    width, height, bpp;
 
-      gimp_preview_get_size (preview, &width, &height);
-      src = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
-                                              &width, &height, &bpp);
+      src = gimp_zoom_preview_get_data (GIMP_ZOOM_PREVIEW (preview),
+                                        &width, &height, &bpp);
 
       buffer = g_new (guchar, width * height * bpp);
 
@@ -283,7 +280,7 @@ max_rgb_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_aspect_preview_new (drawable, &pvals.preview);
+  preview = gimp_zoom_preview_new (drawable);
   gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
   gtk_widget_show (preview);
   g_signal_connect_swapped (preview, "invalidated",

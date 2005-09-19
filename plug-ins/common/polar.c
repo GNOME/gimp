@@ -84,7 +84,6 @@ typedef struct
   gboolean backwards;
   gboolean inverse;
   gboolean polrec;
-  gboolean preview;
 } polarize_vals_t;
 
 /***** Prototypes *****/
@@ -122,8 +121,7 @@ static polarize_vals_t pcvals =
   0.0,   /* angle */
   FALSE, /* backwards */
   TRUE,  /* inverse */
-  TRUE,  /* polar to rectangular? */
-  TRUE   /* preview */
+  TRUE   /* polar to rectangular? */
 };
 
 static gint img_width, img_height, img_has_alpha;
@@ -602,7 +600,7 @@ polarize_dialog (GimpDrawable *drawable)
   gtk_widget_show (main_vbox);
 
   /* Preview */
-  preview = gimp_aspect_preview_new (drawable, &pcvals.preview);
+  preview = gimp_zoom_preview_new (drawable);
   gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
   gtk_widget_show (preview);
   g_signal_connect_swapped (preview, "invalidated",
@@ -738,10 +736,8 @@ dialog_update_preview (GimpDrawable *drawable,
   bottom = sel_y2 - 1;
   top    = sel_y1;
 
-  gimp_preview_get_size (preview, &width, &height);
-  bpp = gimp_drawable_bpp (drawable->drawable_id);
-  preview_cache = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
-                                                    &width, &height, &bpp);
+  preview_cache = gimp_zoom_preview_get_data (GIMP_ZOOM_PREVIEW (preview),
+                                              &width, &height, &bpp);
   dx = (right - left) / (width - 1);
   dy = (bottom - top) / (height - 1);
 

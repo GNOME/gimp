@@ -42,7 +42,7 @@
 #include <libgimp/gimpdrawablecombobox.h>
 #include <libgimp/gimpimagecombobox.h>
 #include <libgimp/gimpfontselectbutton.h>
-
+#include <libgimp/gimpzoompreview.h>
 
 G_BEGIN_DECLS
 

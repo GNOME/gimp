@@ -33,6 +33,7 @@ typedef struct _GimpAspectPreview        GimpAspectPreview;
 typedef struct _GimpDrawablePreview      GimpDrawablePreview;
 typedef struct _GimpProcBrowserDialog    GimpProcBrowserDialog;
 typedef struct _GimpProgressBar          GimpProgressBar;
+typedef struct _GimpZoomPreview          GimpZoomPreview;
 
 typedef struct _GimpDrawableComboBox     GimpDrawableComboBox;
 typedef struct _GimpChannelComboBox      GimpChannelComboBox;

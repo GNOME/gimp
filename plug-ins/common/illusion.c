@@ -56,7 +56,6 @@ typedef struct
   gint32   division;
   gboolean type1;
   gboolean type2;
-  gboolean preview;
 } IllValues;
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -71,8 +70,7 @@ static IllValues parameters =
 {
   8,     /* division */
   TRUE,  /* type 1 */
-  FALSE, /* type 2 */
-  TRUE   /* preview */
+  FALSE  /* type 2 */
 };
 
 MAIN ()
@@ -293,12 +291,8 @@ illusion_preview (GimpPreview  *preview,
   gint      yy = 0;
   gdouble   scale, radius, cx, cy, angle, offset;
 
-  gimp_preview_get_size (preview, &width, &height);
-  bpp = gimp_drawable_bpp (drawable->drawable_id);
-  preview_cache = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
-                                                    &width,
-                                                    &height,
-                                                    &bpp);
+  preview_cache = gimp_zoom_preview_get_data (GIMP_ZOOM_PREVIEW (preview),
+                                              &width, &height, &bpp);
   center_x      = (gdouble)width  / 2.0;
   center_y      = (gdouble)height / 2.0;
 
@@ -409,7 +403,7 @@ illusion_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_aspect_preview_new (drawable, &parameters.preview);
+  preview = gimp_zoom_preview_new (drawable);
   gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
   gtk_widget_show (preview);
 

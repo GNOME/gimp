@@ -314,10 +314,8 @@ update_img_preview (GimpDrawable *drawable,
                plvals.map_mode,
                redmap, greenmap, bluemap);
 
-  gimp_preview_get_size (preview, &width, &height);
-  bpp = gimp_drawable_bpp (drawable->drawable_id);
-  src = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
-                                          &width, &height, &bpp);
+  src = gimp_zoom_preview_get_data (GIMP_ZOOM_PREVIEW (preview),
+                                    &width, &height, &bpp);
   has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
   j = width * height;
@@ -373,7 +371,7 @@ mapcolor_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_aspect_preview_new (drawable, NULL);
+  preview = gimp_zoom_preview_new (drawable);
   gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
   gtk_widget_show (preview);
   g_signal_connect_swapped (preview, "invalidated",

@@ -48,7 +48,6 @@ typedef struct
   gdouble  wavelength;
   gint32   type;
   gboolean reflective;
-  gboolean preview;
 } piArgs;
 
 static piArgs wvals =
@@ -57,8 +56,7 @@ static piArgs wvals =
   0.0,        /* phase      */
   10.0,       /* wavelength */
   MODE_SMEAR, /* type       */
-  FALSE,      /* reflective */
-  TRUE        /* preview    */
+  FALSE       /* reflective */
 };
 
 static void query (void);
@@ -264,7 +262,7 @@ waves_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_aspect_preview_new (drawable, &wvals.preview);
+  preview = gimp_zoom_preview_new (drawable);
   gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
   gtk_widget_show (preview);
   g_signal_connect_swapped (preview, "invalidated",
@@ -359,9 +357,8 @@ waves_preview (GimpDrawable *drawable,
   gint    width, height;
   gint    bpp;
 
-  gimp_preview_get_size (preview, &width, &height);
-  src = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
-                                          &width, &height, &bpp);
+  src = gimp_zoom_preview_get_data (GIMP_ZOOM_PREVIEW (preview),
+                                    &width, &height, &bpp);
   dest = g_new (guchar, width * height * bpp);
 
   wave (src, dest, width, height, bpp,

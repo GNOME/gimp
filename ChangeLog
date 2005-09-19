@@ -1,3 +1,45 @@
+2005-09-20  DindinX  <dindinx@gimp.org>
+
+	* libgimpwidgets/gimpzoommodel.[ch]: New object to handle zoom
+	factor, and create widgets to control or view this value.
+
+	* libgimpwidgets/Makefile.am
+	* libgimpwidgets/gimpwidgets.h: Added gimpzoommodel.[ch].
+
+	* libgimpwidgets/gimpwidgetsenums.h: new enum: GimpZoomWidgetType.
+	This enumerate which knid of widget you can created from the zoom
+	model.
+
+	* libgimpwidgets/gimpwidgetsenums.c
+	* libgimpwidgets/gimpwidgetstypes.h: regenerated.
+
+	* libgimpwidgets/gimppreview.c: move the update toggle to the bottom
+	of the box.
+
+	* libgimp/Makefile.am
+	* libgimp/gimpui.h
+	* libgimp/gimpuitypes.h
+	* libgimp/gimpzoompreview.[ch]: New widget, derivated from
+	GimpScrolledPreview, which offer the same functionnalities as the
+	GimpAspectPreview widget plus zoom facilities.
+
+	* plug-ins/common/AlienMap2.c
+	* plug-ins/common/apply_lens.c
+	* plug-ins/common/blinds.c
+	* plug-ins/common/channel_mixer.c
+	* plug-ins/common/colorify.c
+	* plug-ins/common/flarefx.c
+	* plug-ins/common/illusion.c
+	* plug-ins/common/jigsaw.c
+	* plug-ins/common/mapcolor.c
+	* plug-ins/common/max_rgb.c
+	* plug-ins/common/nova.c
+	* plug-ins/common/polar.c
+	* plug-ins/common/retinex.c
+	* plug-ins/common/waves.c
+	* plug-ins/common/whirlpinch.c: use a GimpZoomPreview instead of a
+	GimpAspectPreview.
+
 2005-09-19  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpclipboard.[ch]: added new public function

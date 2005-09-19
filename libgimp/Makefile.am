@@ -264,7 +264,9 @@ libgimpui_2_0_la_sources = \
 	gimpprocview.c		\
 	gimpprocview.h		\
 	gimpprogressbar.c	\
-	gimpprogressbar.h
+	gimpprogressbar.h	\
+	gimpzoompreview.c	\
+	gimpzoompreview.h
 
 libgimpui_2_0_la_built_sources = \
 	gimpuimarshal.c			\
@@ -323,7 +325,8 @@ gimpinclude_HEADERS = \
 	gimppixbuf.h		\
 	gimpprocbrowserdialog.h	\
 	gimpprocview.h		\
-	gimpprogressbar.h
+	gimpprogressbar.h	\
+	gimpzoompreview.h
 
 libgimp_2_0_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\

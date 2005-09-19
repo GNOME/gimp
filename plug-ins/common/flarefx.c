@@ -61,7 +61,6 @@ typedef struct
 {
   gint     posx;
   gint     posy;
-  gboolean preview;
 } FlareValues;
 
 typedef struct REFLECT
@@ -327,7 +326,7 @@ flare_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_aspect_preview_new (drawable, &fvals.preview);
+  preview = gimp_zoom_preview_new (drawable);
   gtk_widget_add_events (GIMP_PREVIEW (preview)->area,
                          GDK_POINTER_MOTION_MASK);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
@@ -369,9 +368,8 @@ FlareFX (GimpDrawable *drawable,
   bytes  = drawable->bpp;
   if (preview)
     {
-      gimp_preview_get_size (preview, &width, &height);
-      src = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
-                                              &width, &height, &bytes);
+      src = gimp_zoom_preview_get_data (GIMP_ZOOM_PREVIEW (preview),
+                                        &width, &height, &bytes);
 
       xs = (gdouble)fvals.posx * width  / drawable->width;
       ys = (gdouble)fvals.posy * height / drawable->height;

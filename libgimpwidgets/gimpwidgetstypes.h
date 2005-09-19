@@ -68,6 +68,7 @@ typedef struct _GimpResolutionEntry    GimpResolutionEntry;
 typedef struct _GimpScrolledPreview    GimpScrolledPreview;
 typedef struct _GimpSizeEntry          GimpSizeEntry;
 typedef struct _GimpUnitMenu           GimpUnitMenu;
+typedef struct _GimpZoomModel          GimpZoomModel;
 
 
 typedef void (* GimpHelpFunc) (const gchar *help_id,

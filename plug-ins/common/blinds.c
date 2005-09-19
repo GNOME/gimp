@@ -58,7 +58,6 @@ typedef struct data
   gint     numsegs;
   gint     orientation;
   gboolean bg_trans;
-  gboolean preview;
 } BlindVals;
 
 /* Array to hold each size of fans. And no there are not each the
@@ -94,8 +93,7 @@ static BlindVals bvals =
   30,
   3,
   HORIZONTAL, /* orientation */
-  FALSE,
-  TRUE        /* preview     */
+  FALSE
 };
 
 MAIN ()
@@ -248,7 +246,7 @@ blinds_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_aspect_preview_new (drawable, &bvals.preview);
+  preview = gimp_zoom_preview_new (drawable);
   gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
   gtk_widget_show (preview);
   g_signal_connect_swapped (preview, "invalidated",
@@ -455,10 +453,8 @@ dialog_update_preview (GimpDrawable *drawable,
   guchar   bg[4];
   gint     width, height, bpp;
 
-  gimp_preview_get_size (preview, &width, &height);
-  bpp = gimp_drawable_bpp (drawable->drawable_id);
-  cache = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
-                                            &width, &height, &bpp);
+  cache = gimp_zoom_preview_get_data (GIMP_ZOOM_PREVIEW (preview),
+                                      &width, &height, &bpp);
 
   p = cache;
 

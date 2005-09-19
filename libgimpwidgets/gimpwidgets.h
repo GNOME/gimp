@@ -67,6 +67,7 @@
 #include <libgimpwidgets/gimpsizeentry.h>
 #include <libgimpwidgets/gimpstock.h>
 #include <libgimpwidgets/gimpunitmenu.h>
+#include <libgimpwidgets/gimpzoommodel.h>
 
 #include <libgimpwidgets/gimpoldwidgets.h>
 

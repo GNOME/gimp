@@ -58,7 +58,6 @@ typedef struct
   gboolean   redmode;
   gboolean   greenmode;
   gboolean   bluemode;
-  gboolean   preview;
 } alienmap2_vals_t;
 
 /* Declare local functions. */
@@ -413,7 +412,7 @@ alienmap2_dialog (void)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_aspect_preview_new (drawable, &wvals.preview);
+  preview = gimp_zoom_preview_new (drawable);
   gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
   gtk_widget_show (preview);
   g_signal_connect_swapped (preview, "invalidated",
@@ -577,9 +576,8 @@ dialog_update_preview (GimpDrawable *drawable,
   gint    width, height, bpp;
   gint    i;
 
-  gimp_preview_get_size (preview, &width, &height);
-  src = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
-                                          &width, &height, &bpp);
+  src = gimp_zoom_preview_get_data (GIMP_ZOOM_PREVIEW (preview),
+                                    &width, &height, &bpp);
   dest = g_new (guchar, width * height * bpp);
 
   for (i = 0 ; i < width * height ; i++)

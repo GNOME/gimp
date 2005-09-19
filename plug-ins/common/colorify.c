@@ -49,13 +49,11 @@ static void      predefined_color_callback (GtkWidget    *widget,
 typedef struct
 {
   GimpRGB  color;
-  gboolean preview;
 } ColorifyVals;
 
 static ColorifyVals cvals =
 {
-  { 1.0, 1.0, 1.0, 1.0 },
-  TRUE
+  { 1.0, 1.0, 1.0, 1.0 }
 };
 
 static GimpRGB button_color[] =
@@ -225,9 +223,8 @@ colorify (GimpDrawable *drawable,
       gint    width, height, bytes;
       guchar *src;
 
-      gimp_preview_get_size (preview, &width, &height);
-      src = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
-                                              &width, &height, &bytes);
+      src = gimp_zoom_preview_get_data (GIMP_ZOOM_PREVIEW (preview),
+                                        &width, &height, &bytes);
       for (i = 0; i < width * height; i++)
         colorify_func (src + i * bytes, src + i * bytes, bytes, NULL);
 
@@ -276,7 +273,7 @@ colorify_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_aspect_preview_new (drawable, &cvals.preview);
+  preview = gimp_zoom_preview_new (drawable);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
   g_signal_connect_swapped (preview, "invalidated",

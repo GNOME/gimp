@@ -82,7 +82,6 @@ typedef struct
   gint     radius;
   gint     nspoke;
   gint     randomhue;
-  gboolean preview;
 } NovaValues;
 
 typedef struct
@@ -140,8 +139,7 @@ static NovaValues pvals =
   { 0.35, 0.39, 1.0, 1.0 }, /* color */
   20,                       /* radius */
   100,                      /* nspoke */
-  0,                        /* random hue */
-  TRUE                      /* preview */
+  0                         /* random hue */
 };
 
 static gboolean show_cursor = TRUE;
@@ -323,7 +321,7 @@ nova_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_aspect_preview_new (drawable, &pvals.preview);
+  preview = gimp_zoom_preview_new (drawable);
   gtk_widget_add_events (GIMP_PREVIEW (preview)->area,
                          GDK_POINTER_MOTION_MASK);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
@@ -739,10 +737,8 @@ nova (GimpDrawable *drawable,
 
    if (preview)
      {
-       gimp_preview_get_size (preview, &width, &height);
-       bpp = gimp_drawable_bpp (drawable->drawable_id);
-       cache = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
-                                                 &width, &height, &bpp);
+       cache = gimp_zoom_preview_get_data (GIMP_ZOOM_PREVIEW (preview),
+                                           &width, &height, &bpp);
        xc = (gdouble) pvals.xcenter * width  / drawable->width;
        yc = (gdouble) pvals.ycenter * height / drawable->height;
 

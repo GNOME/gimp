@@ -150,6 +150,8 @@ libgimpwidgets_2_0_la_sources = \
 	gimpstock.h		\
 	gimpunitmenu.c		\
 	gimpunitmenu.h		\
+	gimpzoommodel.c		\
+	gimpzoommodel.h		\
 	gimpwidgets-private.c	\
 	gimpwidgets-private.h
 
@@ -215,7 +217,8 @@ libgimpwidgetsinclude_HEADERS = \
 	gimpscrolledpreview.h	\
 	gimpsizeentry.h		\
 	gimpstock.h		\
-	gimpunitmenu.h
+	gimpunitmenu.h		\
+	gimpzoommodel.h
 
 libgimpwidgets_2_0_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\

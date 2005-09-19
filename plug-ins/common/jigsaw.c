@@ -298,7 +298,6 @@ struct config_tag
   style_t  style;
   gint     blend_lines;
   gdouble  blend_amount;
-  gboolean preview;
 };
 
 
@@ -310,8 +309,7 @@ static config_t config =
   5,
   BEZIER_1,
   3,
-  0.5,
-  TRUE
+  0.5
 };
 
 struct globals_tag
@@ -447,9 +445,8 @@ jigsaw (GimpDrawable *drawable,
 
   if (preview)
     {
-      gimp_preview_get_size (preview, &width, &height);
-      src = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
-                                              &width, &height, &bytes);
+      src = gimp_zoom_preview_get_data (GIMP_ZOOM_PREVIEW (preview),
+                                        &width, &height, &bytes);
     }
   else
     {
@@ -2439,7 +2436,7 @@ jigsaw_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_aspect_preview_new (drawable, &config.preview);
+  preview = gimp_zoom_preview_new (drawable);
   gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
   gtk_widget_show (preview);
   g_signal_connect_swapped (preview, "invalidated",
