@@ -1,5 +1,12 @@
 2005-09-20  DindinX  <dindinx@gimp.org>
 
+	* libgimp/gimpui.def: added the functions from gimpzoompreview.h
+
+	* libgimpwidgets/gimpwidgets.def: added the functions from
+	gimpzoommodel.h
+
+2005-09-20  DindinX  <dindinx@gimp.org>
+
 	* libgimpwidgets/gimpzoommodel.[ch]: New object to handle zoom
 	factor, and create widgets to control or view this value.
 
