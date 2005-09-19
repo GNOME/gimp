@@ -486,7 +486,7 @@ gimp_imagefile_get_new_pixbuf (GimpViewable *viewable,
       break;
 
     case GIMP_THUMB_STATE_FOLDER:
-      stock_id = "gtk-open";
+      stock_id = "gtk-directory";
       break;
 
     case GIMP_THUMB_STATE_SPECIAL:
