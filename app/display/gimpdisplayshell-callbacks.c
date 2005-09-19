@@ -37,7 +37,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage-sample-points.h"
-#include "core/gimpimage-qmask.h"
+#include "core/gimpimage-quick-mask.h"
 #include "core/gimplayer.h"
 #include "core/gimptoolinfo.h"
 
@@ -1453,13 +1453,13 @@ gimp_display_shell_origin_button_press (GtkWidget        *widget,
 }
 
 gboolean
-gimp_display_shell_qmask_button_press (GtkWidget        *widget,
-                                       GdkEventButton   *bevent,
-                                       GimpDisplayShell *shell)
+gimp_display_shell_quick_mask_button_press (GtkWidget        *widget,
+                                            GdkEventButton   *bevent,
+                                            GimpDisplayShell *shell)
 {
   if ((bevent->type == GDK_BUTTON_PRESS) && (bevent->button == 3))
     {
-      gimp_ui_manager_ui_popup (shell->menubar_manager, "/qmask-popup",
+      gimp_ui_manager_ui_popup (shell->menubar_manager, "/quick-mask-popup",
                                 GTK_WIDGET (shell),
                                 NULL, NULL, NULL, NULL);
 
@@ -1470,14 +1470,14 @@ gimp_display_shell_qmask_button_press (GtkWidget        *widget,
 }
 
 void
-gimp_display_shell_qmask_toggled (GtkWidget        *widget,
-                                  GimpDisplayShell *shell)
+gimp_display_shell_quick_mask_toggled (GtkWidget        *widget,
+                                       GimpDisplayShell *shell)
 {
   if (GTK_TOGGLE_BUTTON (widget)->active !=
-      gimp_image_get_qmask_state (shell->gdisp->gimage))
+      gimp_image_get_quick_mask_state (shell->gdisp->gimage))
     {
-      gimp_image_set_qmask_state (shell->gdisp->gimage,
-                                  GTK_TOGGLE_BUTTON (widget)->active);
+      gimp_image_set_quick_mask_state (shell->gdisp->gimage,
+                                       GTK_TOGGLE_BUTTON (widget)->active);
 
       gimp_image_flush (shell->gdisp->gimage);
     }

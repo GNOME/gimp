@@ -29,7 +29,7 @@ struct _GimpUndoAccumulator
   gboolean size_changed;
   gboolean resolution_changed;
   gboolean unit_changed;
-  gboolean qmask_changed;
+  gboolean quick_mask_changed;
   gboolean alpha_changed;
 };
 

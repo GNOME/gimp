@@ -46,7 +46,7 @@
 #include "gimpimage-guides.h"
 #include "gimpimage-sample-points.h"
 #include "gimpimage-preview.h"
-#include "gimpimage-qmask.h"
+#include "gimpimage-quick-mask.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimplayer.h"
@@ -88,7 +88,7 @@ enum
   MASK_CHANGED,
   RESOLUTION_CHANGED,
   UNIT_CHANGED,
-  QMASK_CHANGED,
+  QUICK_MASK_CHANGED,
   SELECTION_CONTROL,
   CLEAN,
   DIRTY,
@@ -344,11 +344,11 @@ gimp_image_class_init (GimpImageClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
-  gimp_image_signals[QMASK_CHANGED] =
-    g_signal_new ("qmask-changed",
+  gimp_image_signals[QUICK_MASK_CHANGED] =
+    g_signal_new ("quick-mask-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, qmask_changed),
+                  G_STRUCT_OFFSET (GimpImageClass, quick_mask_changed),
                   NULL, NULL,
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
@@ -639,9 +639,9 @@ gimp_image_init (GimpImage *gimage)
       gimage->active[i]  = TRUE;
     }
 
-  gimage->qmask_state           = FALSE;
-  gimage->qmask_inverted        = FALSE;
-  gimp_rgba_set (&gimage->qmask_color, 1.0, 0.0, 0.0, 0.5);
+  gimage->quick_mask_state      = FALSE;
+  gimage->quick_mask_inverted   = FALSE;
+  gimp_rgba_set (&gimage->quick_mask_color, 1.0, 0.0, 0.0, 0.5);
 
   gimage->undo_stack            = gimp_undo_stack_new (gimage);
   gimage->redo_stack            = gimp_undo_stack_new (gimage);
@@ -1204,10 +1204,10 @@ gimp_image_channel_add (GimpContainer *container,
   if (gimp_item_get_visible (item))
     gimp_image_drawable_visibility (item, gimage);
 
-  if (! strcmp (GIMP_IMAGE_QMASK_NAME,
+  if (! strcmp (GIMP_IMAGE_QUICK_MASK_NAME,
                 gimp_object_get_name (GIMP_OBJECT (channel))))
     {
-      gimp_image_set_qmask_state (gimage, TRUE);
+      gimp_image_set_quick_mask_state (gimage, TRUE);
     }
 }
 
@@ -1221,10 +1221,10 @@ gimp_image_channel_remove (GimpContainer *container,
   if (gimp_item_get_visible (item))
     gimp_image_drawable_visibility (item, gimage);
 
-  if (! strcmp (GIMP_IMAGE_QMASK_NAME,
+  if (! strcmp (GIMP_IMAGE_QUICK_MASK_NAME,
                 gimp_object_get_name (GIMP_OBJECT (channel))))
     {
-      gimp_image_set_qmask_state (gimage, FALSE);
+      gimp_image_set_quick_mask_state (gimage, FALSE);
     }
 }
 
@@ -1232,15 +1232,15 @@ static void
 gimp_image_channel_name_changed (GimpChannel *channel,
                                  GimpImage   *gimage)
 {
-  if (! strcmp (GIMP_IMAGE_QMASK_NAME,
+  if (! strcmp (GIMP_IMAGE_QUICK_MASK_NAME,
                 gimp_object_get_name (GIMP_OBJECT (channel))))
     {
-      gimp_image_set_qmask_state (gimage, TRUE);
+      gimp_image_set_quick_mask_state (gimage, TRUE);
     }
-  else if (gimp_image_get_qmask_state (gimage) &&
-           ! gimp_image_get_qmask (gimage))
+  else if (gimp_image_get_quick_mask_state (gimage) &&
+           ! gimp_image_get_quick_mask (gimage))
     {
-      gimp_image_set_qmask_state (gimage, FALSE);
+      gimp_image_set_quick_mask_state (gimage, FALSE);
     }
 }
 
@@ -1248,10 +1248,10 @@ static void
 gimp_image_channel_color_changed (GimpChannel *channel,
                                   GimpImage   *gimage)
 {
-  if (! strcmp (GIMP_IMAGE_QMASK_NAME,
+  if (! strcmp (GIMP_IMAGE_QUICK_MASK_NAME,
                 gimp_object_get_name (GIMP_OBJECT (channel))))
     {
-      gimage->qmask_color = channel->color;
+      gimage->quick_mask_color = channel->color;
     }
 }
 
@@ -1752,11 +1752,11 @@ gimp_image_selection_control (GimpImage            *gimage,
 }
 
 void
-gimp_image_qmask_changed (GimpImage *gimage)
+gimp_image_quick_mask_changed (GimpImage *gimage)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  g_signal_emit (gimage, gimp_image_signals[QMASK_CHANGED], 0);
+  g_signal_emit (gimage, gimp_image_signals[QUICK_MASK_CHANGED], 0);
 }
 
 

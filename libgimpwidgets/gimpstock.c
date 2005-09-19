@@ -231,8 +231,10 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_SELECTION_BORDER,         NULL,        0, 0, LIBGIMP_DOMAIN },
 
   { GIMP_STOCK_NAVIGATION,               NULL,        0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_QMASK_OFF,                NULL,        0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_QMASK_ON,                 NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_QUICK_MASK_OFF,           NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_QUICK_MASK_ON,            NULL,        0, 0, LIBGIMP_DOMAIN },
+  { "gimp-qmask-off", /* compat */       NULL,        0, 0, LIBGIMP_DOMAIN },
+  { "gimp-qmask-on",  /* compat */       NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_LIST,                     NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_GRID,                     NULL,        0, 0, LIBGIMP_DOMAIN },
 
@@ -512,8 +514,10 @@ gimp_stock_menu_pixbufs[] =
   { GIMP_STOCK_SELECTION_BORDER,         stock_selection_border_16         },
 
   { GIMP_STOCK_NAVIGATION,               stock_navigation_16               },
-  { GIMP_STOCK_QMASK_OFF,                stock_qmask_off_16                },
-  { GIMP_STOCK_QMASK_ON,                 stock_qmask_on_16                 },
+  { GIMP_STOCK_QUICK_MASK_OFF,           stock_quick_mask_off_16           },
+  { GIMP_STOCK_QUICK_MASK_ON,            stock_quick_mask_on_16            },
+  { "gimp-qmask-off", /* compat */       stock_quick_mask_off_16           },
+  { "gimp-qmask-on",  /* compat */       stock_quick_mask_on_16            },
 
   { GIMP_STOCK_LIST,                     stock_list_16                     },
   { GIMP_STOCK_GRID,                     stock_grid_16                     },

@@ -44,7 +44,7 @@
 #include "gimpcontainer.h"
 #include "gimpdrawable-convert.h"
 #include "gimpimage.h"
-#include "gimpimage-qmask.h"
+#include "gimpimage-quick-mask.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimpchannel.h"
@@ -395,7 +395,7 @@ static gchar *
 gimp_channel_get_description (GimpViewable  *viewable,
                               gchar        **tooltip)
 {
-  if (! strcmp (GIMP_IMAGE_QMASK_NAME,
+  if (! strcmp (GIMP_IMAGE_QUICK_MASK_NAME,
                 gimp_object_get_name (GIMP_OBJECT (viewable))))
     {
       if (tooltip)

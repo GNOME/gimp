@@ -68,7 +68,7 @@ static void   gimp_display_shell_size_changed_handler       (GimpImage        *g
                                                              GimpDisplayShell *shell);
 static void   gimp_display_shell_resolution_changed_handler (GimpImage        *gimage,
                                                              GimpDisplayShell *shell);
-static void   gimp_display_shell_qmask_changed_handler      (GimpImage        *gimage,
+static void   gimp_display_shell_quick_mask_changed_handler (GimpImage        *gimage,
                                                              GimpDisplayShell *shell);
 static void   gimp_display_shell_update_guide_handler       (GimpImage        *gimage,
                                                              GimpGuide        *guide,
@@ -154,8 +154,8 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
   g_signal_connect (gimage, "resolution-changed",
                     G_CALLBACK (gimp_display_shell_resolution_changed_handler),
                     shell);
-  g_signal_connect (gimage, "qmask-changed",
-                    G_CALLBACK (gimp_display_shell_qmask_changed_handler),
+  g_signal_connect (gimage, "quick-mask-changed",
+                    G_CALLBACK (gimp_display_shell_quick_mask_changed_handler),
                     shell);
   g_signal_connect (gimage, "update-guide",
                     G_CALLBACK (gimp_display_shell_update_guide_handler),
@@ -244,7 +244,7 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
                     shell);
 
   gimp_display_shell_invalidate_preview_handler (gimage, shell);
-  gimp_display_shell_qmask_changed_handler (gimage, shell);
+  gimp_display_shell_quick_mask_changed_handler (gimage, shell);
 }
 
 void
@@ -325,7 +325,7 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
                                         gimp_display_shell_update_sample_point_handler,
                                         shell);
   g_signal_handlers_disconnect_by_func (gimage,
-                                        gimp_display_shell_qmask_changed_handler,
+                                        gimp_display_shell_quick_mask_changed_handler,
                                         shell);
   g_signal_handlers_disconnect_by_func (gimage,
                                         gimp_display_shell_resolution_changed_handler,
@@ -427,27 +427,29 @@ gimp_display_shell_resolution_changed_handler (GimpImage        *gimage,
 }
 
 static void
-gimp_display_shell_qmask_changed_handler (GimpImage        *gimage,
-                                          GimpDisplayShell *shell)
+gimp_display_shell_quick_mask_changed_handler (GimpImage        *gimage,
+                                               GimpDisplayShell *shell)
 {
   GtkImage *image;
 
-  image = GTK_IMAGE (GTK_BIN (shell->qmask_button)->child);
+  image = GTK_IMAGE (GTK_BIN (shell->quick_mask_button)->child);
 
-  g_signal_handlers_block_by_func (shell->qmask_button,
-                                   gimp_display_shell_qmask_toggled,
+  g_signal_handlers_block_by_func (shell->quick_mask_button,
+                                   gimp_display_shell_quick_mask_toggled,
                                    shell);
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (shell->qmask_button),
-                                shell->gdisp->gimage->qmask_state);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (shell->quick_mask_button),
+                                shell->gdisp->gimage->quick_mask_state);
 
-  if (shell->gdisp->gimage->qmask_state)
-    gtk_image_set_from_stock (image, GIMP_STOCK_QMASK_ON, GTK_ICON_SIZE_MENU);
+  if (shell->gdisp->gimage->quick_mask_state)
+    gtk_image_set_from_stock (image, GIMP_STOCK_QUICK_MASK_ON,
+                              GTK_ICON_SIZE_MENU);
   else
-    gtk_image_set_from_stock (image, GIMP_STOCK_QMASK_OFF, GTK_ICON_SIZE_MENU);
+    gtk_image_set_from_stock (image, GIMP_STOCK_QUICK_MASK_OFF,
+                              GTK_ICON_SIZE_MENU);
 
-  g_signal_handlers_unblock_by_func (shell->qmask_button,
-                                     gimp_display_shell_qmask_toggled,
+  g_signal_handlers_unblock_by_func (shell->quick_mask_button,
+                                     gimp_display_shell_quick_mask_toggled,
                                      shell);
 }
 

@@ -265,7 +265,7 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->vrule                  = NULL;
 
   shell->origin_button          = NULL;
-  shell->qmask_button           = NULL;
+  shell->quick_mask_button      = NULL;
   shell->zoom_button            = NULL;
   shell->nav_ebox               = NULL;
 
@@ -718,7 +718,7 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
    *     |      |
    *     |      +-- lower_hbox
    *     |             |
-   *     |             +-- qmask
+   *     |             +-- quick_mask
    *     |             +-- hscrollbar
    *     |             +-- navbutton
    *     |
@@ -786,7 +786,7 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
   gtk_box_pack_start (GTK_BOX (upper_hbox), right_vbox, FALSE, FALSE, 0);
   gtk_widget_show (right_vbox);
 
-  /*  the hbox containing qmask button, vertical scrollbar and nav button  */
+  /*  the hbox containing quickmask button, vertical scrollbar and nav button  */
   lower_hbox = gtk_hbox_new (FALSE, 1);
   gtk_box_pack_start (GTK_BOX (disp_vbox), lower_hbox, FALSE, FALSE, 0);
   gtk_widget_show (lower_hbox);
@@ -928,25 +928,27 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
 
   /*  create the contents of the lower_hbox  *********************************/
 
-  /*  the qmask button  */
-  shell->qmask_button = gtk_check_button_new ();
-  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (shell->qmask_button), FALSE);
-  gtk_widget_set_size_request (GTK_WIDGET (shell->qmask_button), 16, 16);
-  GTK_WIDGET_UNSET_FLAGS (shell->qmask_button, GTK_CAN_FOCUS);
+  /*  the quick mask button  */
+  shell->quick_mask_button = gtk_check_button_new ();
+  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (shell->quick_mask_button),
+                              FALSE);
+  gtk_widget_set_size_request (GTK_WIDGET (shell->quick_mask_button), 16, 16);
+  GTK_WIDGET_UNSET_FLAGS (shell->quick_mask_button, GTK_CAN_FOCUS);
 
-  image = gtk_image_new_from_stock (GIMP_STOCK_QMASK_OFF, GTK_ICON_SIZE_MENU);
-  gtk_container_add (GTK_CONTAINER (shell->qmask_button), image);
+  image = gtk_image_new_from_stock (GIMP_STOCK_QUICK_MASK_OFF,
+                                    GTK_ICON_SIZE_MENU);
+  gtk_container_add (GTK_CONTAINER (shell->quick_mask_button), image);
   gtk_widget_show (image);
 
-  gimp_help_set_help_data (shell->qmask_button,
+  gimp_help_set_help_data (shell->quick_mask_button,
                            _("Toggle Quick Mask"),
-                           GIMP_HELP_IMAGE_WINDOW_QMASK_BUTTON);
+                           GIMP_HELP_IMAGE_WINDOW_QUICK_MASK_BUTTON);
 
-  g_signal_connect (shell->qmask_button, "toggled",
-                    G_CALLBACK (gimp_display_shell_qmask_toggled),
+  g_signal_connect (shell->quick_mask_button, "toggled",
+                    G_CALLBACK (gimp_display_shell_quick_mask_toggled),
                     shell);
-  g_signal_connect (shell->qmask_button, "button-press-event",
-                    G_CALLBACK (gimp_display_shell_qmask_button_press),
+  g_signal_connect (shell->quick_mask_button, "button-press-event",
+                    G_CALLBACK (gimp_display_shell_quick_mask_button_press),
                     shell);
 
   /*  the navigation window button  */
@@ -988,7 +990,7 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
   gtk_box_pack_start (GTK_BOX (right_vbox), shell->vsb, TRUE, TRUE, 0);
 
   /*  fill the lower_hbox  */
-  gtk_box_pack_start (GTK_BOX (lower_hbox), shell->qmask_button, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (lower_hbox), shell->quick_mask_button, FALSE, FALSE, 0);
   gtk_box_pack_start (GTK_BOX (lower_hbox), shell->hsb, TRUE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (lower_hbox), shell->nav_ebox, FALSE, FALSE, 0);
 
@@ -1010,7 +1012,7 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
       gtk_widget_show (shell->vsb);
       gtk_widget_show (shell->hsb);
       gtk_widget_show (shell->zoom_button);
-      gtk_widget_show (shell->qmask_button);
+      gtk_widget_show (shell->quick_mask_button);
       gtk_widget_show (shell->nav_ebox);
     }
 

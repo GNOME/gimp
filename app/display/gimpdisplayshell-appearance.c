@@ -190,7 +190,7 @@ gimp_display_shell_set_show_scrollbars (GimpDisplayShell *shell,
       gtk_widget_show (shell->nav_ebox);
       gtk_widget_show (shell->hsb);
       gtk_widget_show (shell->vsb);
-      gtk_widget_show (shell->qmask_button);
+      gtk_widget_show (shell->quick_mask_button);
       gtk_widget_show (shell->zoom_button);
 
       gtk_box_set_spacing (hbox, 1);
@@ -201,7 +201,7 @@ gimp_display_shell_set_show_scrollbars (GimpDisplayShell *shell,
       gtk_widget_hide (shell->nav_ebox);
       gtk_widget_hide (shell->hsb);
       gtk_widget_hide (shell->vsb);
-      gtk_widget_hide (shell->qmask_button);
+      gtk_widget_hide (shell->quick_mask_button);
       gtk_widget_hide (shell->zoom_button);
 
       gtk_box_set_spacing (hbox, 0);

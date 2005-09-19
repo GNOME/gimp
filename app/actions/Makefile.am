@@ -109,10 +109,10 @@ libappactions_a_SOURCES = \
 	plug-in-actions.h		\
 	plug-in-commands.c		\
 	plug-in-commands.h		\
-	qmask-actions.c			\
-	qmask-actions.h			\
-	qmask-commands.c		\
-	qmask-commands.h		\
+	quick-mask-actions.c		\
+	quick-mask-actions.h		\
+	quick-mask-commands.c		\
+	quick-mask-commands.h		\
 	sample-point-editor-actions.c	\
 	sample-point-editor-actions.h	\
 	sample-point-editor-commands.c	\

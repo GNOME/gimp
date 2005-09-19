@@ -95,8 +95,8 @@ STOCK_MENU_IMAGES = \
 	stock-plugin-16.png				\
 	stock-portrait-16.png				\
 	stock-print-resolution-16.png			\
-	stock-qmask-off-16.png				\
-	stock-qmask-on-16.png				\
+	stock-quick-mask-off-16.png			\
+	stock-quick-mask-on-16.png			\
 	stock-reshow-filter-16.png			\
 	stock-resize-16.png				\
 	stock-rotate-180-16.png				\

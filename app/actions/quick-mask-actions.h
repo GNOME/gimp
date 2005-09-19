@@ -16,13 +16,13 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __QMASK_ACTIONS_H__
-#define __QMASK_ACTIONS_H__
+#ifndef __QUICK_MASK_ACTIONS_H__
+#define __QUICK_MASK_ACTIONS_H__
 
 
-void   qmask_actions_setup  (GimpActionGroup *group);
-void   qmask_actions_update (GimpActionGroup *group,
-                             gpointer         data);
+void   quick_mask_actions_setup  (GimpActionGroup *group);
+void   quick_mask_actions_update (GimpActionGroup *group,
+                                  gpointer         data);
 
 
-#endif /* __QMASK_ACTIONS_H__ */
+#endif /* __QUICK_MASK_ACTIONS_H__ */

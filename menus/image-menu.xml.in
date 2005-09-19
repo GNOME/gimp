@@ -204,7 +204,7 @@
         <menuitem action="select-border" />
       </placeholder>
       <separator />
-      <menuitem action="qmask-toggle" />
+      <menuitem action="quick-mask-toggle" />
       <menuitem action="select-save" />
       <menuitem action="vectors-selection-to-vectors-short" />
       <separator />

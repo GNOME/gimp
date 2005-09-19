@@ -28,30 +28,30 @@
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-qmask.h"
+#include "core/gimpimage-quick-mask.h"
 
 #include "widgets/gimphelp-ids.h"
 
 #include "dialogs/channel-options-dialog.h"
 
 #include "actions.h"
-#include "qmask-commands.h"
+#include "quick-mask-commands.h"
 
 #include "gimp-intl.h"
 
 
 /*  local function prototypes  */
 
-static void   qmask_configure_response (GtkWidget            *widget,
-                                        gint                  response_id,
-                                        ChannelOptionsDialog *options);
+static void   quick_mask_configure_response (GtkWidget            *widget,
+                                             gint                  response_id,
+                                             ChannelOptionsDialog *options);
 
 
 /*  public functionss */
 
 void
-qmask_toggle_cmd_callback (GtkAction *action,
-                           gpointer   data)
+quick_mask_toggle_cmd_callback (GtkAction *action,
+                                gpointer   data)
 {
   GimpImage *gimage;
   gboolean   active;
@@ -59,17 +59,17 @@ qmask_toggle_cmd_callback (GtkAction *action,
 
   active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
-  if (active != gimp_image_get_qmask_state (gimage))
+  if (active != gimp_image_get_quick_mask_state (gimage))
     {
-      gimp_image_set_qmask_state (gimage, active);
+      gimp_image_set_quick_mask_state (gimage, active);
       gimp_image_flush (gimage);
     }
 }
 
 void
-qmask_invert_cmd_callback (GtkAction *action,
-                           GtkAction *current,
-                           gpointer   data)
+quick_mask_invert_cmd_callback (GtkAction *action,
+                                GtkAction *current,
+                                gpointer   data)
 {
   GimpImage *gimage;
   gint       value;
@@ -77,16 +77,16 @@ qmask_invert_cmd_callback (GtkAction *action,
 
   value = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
 
-  if (value != gimage->qmask_inverted)
+  if (value != gimage->quick_mask_inverted)
     {
-      gimp_image_qmask_invert (gimage);
+      gimp_image_quick_mask_invert (gimage);
       gimp_image_flush (gimage);
     }
 }
 
 void
-qmask_configure_cmd_callback (GtkAction *action,
-                              gpointer   data)
+quick_mask_configure_cmd_callback (GtkAction *action,
+                                   gpointer   data)
 {
   ChannelOptionsDialog *options;
   GimpImage            *gimage;
@@ -95,7 +95,7 @@ qmask_configure_cmd_callback (GtkAction *action,
   return_if_no_image (gimage, data);
   return_if_no_widget (widget, data);
 
-  gimp_image_get_qmask_color (gimage, &color);
+  gimp_image_get_quick_mask_color (gimage, &color);
 
   options = channel_options_dialog_new (gimage,
                                         action_data_get_context (data),
@@ -104,16 +104,16 @@ qmask_configure_cmd_callback (GtkAction *action,
                                         &color,
                                         NULL,
                                         _("Quick Mask Attributes"),
-                                        "gimp-qmask-edit",
-                                        GIMP_STOCK_QMASK_ON,
+                                        "gimp-quick-mask-edit",
+                                        GIMP_STOCK_QUICK_MASK_ON,
                                         _("Edit Quick Mask Attributes"),
-                                        GIMP_HELP_QMASK_EDIT,
+                                        GIMP_HELP_QUICK_MASK_EDIT,
                                         _("Edit Quick Mask Color"),
                                         _("_Mask opacity:"),
 					FALSE);
 
   g_signal_connect (options->dialog, "response",
-                    G_CALLBACK (qmask_configure_response),
+                    G_CALLBACK (quick_mask_configure_response),
                     options);
 
   gtk_widget_show (options->dialog);
@@ -123,22 +123,22 @@ qmask_configure_cmd_callback (GtkAction *action,
 /*  private functions  */
 
 static void
-qmask_configure_response (GtkWidget            *widget,
-                          gint                  response_id,
-                          ChannelOptionsDialog *options)
+quick_mask_configure_response (GtkWidget            *widget,
+                               gint                  response_id,
+                               ChannelOptionsDialog *options)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
       GimpRGB old_color;
       GimpRGB new_color;
 
-      gimp_image_get_qmask_color (options->gimage, &old_color);
+      gimp_image_get_quick_mask_color (options->gimage, &old_color);
       gimp_color_button_get_color (GIMP_COLOR_BUTTON (options->color_panel),
                                    &new_color);
 
       if (gimp_rgba_distance (&old_color, &new_color) > 0.0001)
         {
-          gimp_image_set_qmask_color (options->gimage, &new_color);
+          gimp_image_set_quick_mask_color (options->gimage, &new_color);
 
           gimp_image_flush (options->gimage);
         }

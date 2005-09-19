@@ -16,28 +16,28 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_IMAGE_QMASK_H__
-#define __GIMP_IMAGE_QMASK_H__
+#ifndef __GIMP_IMAGE_QUICK_MASK_H__
+#define __GIMP_IMAGE_QUICK_MASK_H__
 
 
 /*  don't change this string, it's used to identify the Quick Mask
  *  when opening files.
  */
-#define GIMP_IMAGE_QMASK_NAME "Qmask"
+#define GIMP_IMAGE_QUICK_MASK_NAME "Qmask"
 
 
-void          gimp_image_set_qmask_state (GimpImage       *gimage,
-                                          gboolean         qmask_state);
-gboolean      gimp_image_get_qmask_state (const GimpImage *gimage);
+void          gimp_image_set_quick_mask_state (GimpImage       *gimage,
+                                               gboolean         quick_mask_state);
+gboolean      gimp_image_get_quick_mask_state (const GimpImage *gimage);
 
-void          gimp_image_set_qmask_color (GimpImage       *gimage,
-                                          const GimpRGB   *color);
-void          gimp_image_get_qmask_color (const GimpImage *gimage,
-                                          GimpRGB         *color);
+void          gimp_image_set_quick_mask_color (GimpImage       *gimage,
+                                               const GimpRGB   *color);
+void          gimp_image_get_quick_mask_color (const GimpImage *gimage,
+                                               GimpRGB         *color);
 
-GimpChannel * gimp_image_get_qmask       (const GimpImage *gimage);
+GimpChannel * gimp_image_get_quick_mask       (const GimpImage *gimage);
 
-void          gimp_image_qmask_invert    (GimpImage       *gimage);
+void          gimp_image_quick_mask_invert    (GimpImage       *gimage);
 
 
-#endif /* __GIMP_IMAGE_QMASK_H__ */
+#endif /* __GIMP_IMAGE_QUICK_MASK_H__ */

@@ -251,9 +251,10 @@ gimp_image_duplicate (GimpImage *gimage)
   if (gimage->grid)
     gimp_image_set_grid (new_gimage, gimage->grid, FALSE);
 
-  /*  Copy the qmask info  */
-  new_gimage->qmask_state = gimage->qmask_state;
-  new_gimage->qmask_color = gimage->qmask_color;
+  /*  Copy the quick mask info  */
+  new_gimage->quick_mask_state    = gimage->quick_mask_state;
+  new_gimage->quick_mask_inverted = gimage->quick_mask_inverted;
+  new_gimage->quick_mask_color    = gimage->quick_mask_color;
 
   /*  Copy parasites  */
   if (gimage->parasites)

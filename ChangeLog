@@ -1,3 +1,41 @@
+2005-09-19  Michael Natterer  <mitch@gimp.org>
+
+	Did a global s/qmask/quick-mask/:
+
+	* app/actions/qmask-actions.[ch]
+	* app/actions/qmask-commands.[ch]
+	* app/core/gimpimage-qmask.[ch]
+	* menus/qmask-menu.xml
+	* themes/Default/images/stock-qmask-off-16.png
+	* themes/Default/images/stock-qmask-on-16.png: removed.
+
+	* app/actions/quick-mask-actions.[ch]
+	* app/actions/quick-mask-commands.[ch]
+	* app/core/gimpimage-quick-mask.[ch]
+	* menus/quick-mask-menu.xml
+	* themes/Default/images/stock-quick-mask-off-16.png
+	* themes/Default/images/stock-quick-mask-on-16.png: added.
+
+	* app/actions/Makefile.am
+	* app/actions/actions.c
+	* app/core/Makefile.am
+	* app/core/core-enums.[ch]
+	* app/core/gimpchannel.c
+	* app/core/gimpimage-duplicate.c
+	* app/core/gimpimage-undo.c
+	* app/core/gimpimage.[ch]
+	* app/core/gimpundo.[ch]
+	* app/display/gimpdisplayshell-appearance.c
+	* app/display/gimpdisplayshell-callbacks.[ch]
+	* app/display/gimpdisplayshell-handlers.c
+	* app/display/gimpdisplayshell.[ch]
+	* app/menus/menus.c
+	* app/widgets/gimphelp-ids.h
+	* libgimpwidgets/gimpstock.[ch]
+	* menus/Makefile.am
+	* menus/image-menu.xml.in
+	* themes/Default/images/Makefile.am: changed accordingly.
+
 2005-09-19  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimagefile.c (gimp_imagefile_get_new_pixbuf): use

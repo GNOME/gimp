@@ -16,17 +16,17 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __QMASK_COMMANDS_H__
-#define __QMASK_COMMANDS_H__
+#ifndef __QUICK_MASK_COMMANDS_H__
+#define __QUICK_MASK_COMMANDS_H__
 
 
-void   qmask_toggle_cmd_callback    (GtkAction *action,
-                                     gpointer   data);
-void   qmask_invert_cmd_callback    (GtkAction *action,
-                                     GtkAction *current,
-                                     gpointer   data);
-void   qmask_configure_cmd_callback (GtkAction *action,
-                                     gpointer   data);
+void   quick_mask_toggle_cmd_callback    (GtkAction *action,
+                                          gpointer   data);
+void   quick_mask_invert_cmd_callback    (GtkAction *action,
+                                          GtkAction *current,
+                                          gpointer   data);
+void   quick_mask_configure_cmd_callback (GtkAction *action,
+                                          gpointer   data);
 
 
-#endif /* __QMASK_COMMANDS_H__ */
+#endif /* __QUICK_MASK_COMMANDS_H__ */

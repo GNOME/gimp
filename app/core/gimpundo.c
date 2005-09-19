@@ -484,15 +484,15 @@ gimp_undo_create_preview_idle (gpointer data)
 static void
 gimp_undo_create_preview_private (GimpUndo *undo)
 {
-  GimpImage       *image = undo->gimage;
-  GimpViewable    *preview_viewable;
-  GimpViewSize     preview_size;
-  gint             width;
-  gint             height;
+  GimpImage    *image = undo->gimage;
+  GimpViewable *preview_viewable;
+  GimpViewSize  preview_size;
+  gint          width;
+  gint          height;
 
   switch (undo->undo_type)
     {
-    case GIMP_UNDO_GROUP_IMAGE_QMASK:
+    case GIMP_UNDO_GROUP_IMAGE_QUICK_MASK:
     case GIMP_UNDO_GROUP_MASK:
     case GIMP_UNDO_MASK:
       preview_viewable = GIMP_VIEWABLE (gimp_image_get_mask (image));

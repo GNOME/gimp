@@ -185,8 +185,13 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_SELECTION_BORDER         "gimp-selection-border"
 
 #define GIMP_STOCK_NAVIGATION               "gimp-navigation"
-#define GIMP_STOCK_QMASK_OFF                "gimp-qmask-off"
-#define GIMP_STOCK_QMASK_ON                 "gimp-qmask-on"
+#define GIMP_STOCK_QUICK_MASK_OFF           "gimp-quick-mask-off"
+#define GIMP_STOCK_QUICK_MASK_ON            "gimp-quick-mask-on"
+
+#ifndef GIMP_DISABLE_DEPRECATED
+#define GIMP_STOCK_QMASK_OFF                "gimp-quick-mask-off"
+#define GIMP_STOCK_QMASK_ON                 "gimp-quick-mask-on"
+#endif /* GIMP_DISABLE_DEPRECATED */
 
 #define GIMP_STOCK_HISTOGRAM                "gimp-histogram"
 #define GIMP_STOCK_HISTOGRAM_LINEAR         "gimp-histogram-linear"

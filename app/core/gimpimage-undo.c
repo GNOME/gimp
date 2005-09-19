@@ -339,8 +339,8 @@ gimp_image_undo_pop_stack (GimpImage     *gimage,
       if (accum.unit_changed)
         gimp_image_unit_changed (gimage);
 
-      if (accum.qmask_changed)
-        gimp_image_qmask_changed (gimage);
+      if (accum.quick_mask_changed)
+        gimp_image_quick_mask_changed (gimage);
 
       if (accum.alpha_changed)
         gimp_image_alpha_changed (gimage);
@@ -453,7 +453,7 @@ gimp_image_undo_dirty_from_type (GimpUndoType undo_type)
     case GIMP_UNDO_GROUP_IMAGE_VECTORS_MERGE:
       return GIMP_DIRTY_IMAGE_STRUCTURE | GIMP_DIRTY_VECTORS;
 
-    case GIMP_UNDO_GROUP_IMAGE_QMASK: /* FIXME */
+    case GIMP_UNDO_GROUP_IMAGE_QUICK_MASK: /* FIXME */
       return GIMP_DIRTY_IMAGE_STRUCTURE | GIMP_DIRTY_SELECTION;
 
     case GIMP_UNDO_GROUP_IMAGE_GRID:

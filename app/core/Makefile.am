@@ -147,8 +147,8 @@ libappcore_a_sources = \
 	gimpimage-pick-color.h		\
 	gimpimage-preview.c		\
 	gimpimage-preview.h		\
-	gimpimage-qmask.c		\
-	gimpimage-qmask.h		\
+	gimpimage-quick-mask.c		\
+	gimpimage-quick-mask.h		\
 	gimpimage-resize.c		\
 	gimpimage-resize.h		\
 	gimpimage-rotate.c		\

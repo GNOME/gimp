@@ -34,42 +34,42 @@
                                               GDK_PROXIMITY_OUT_MASK)
 
 
-gboolean   gimp_display_shell_events               (GtkWidget         *widget,
-                                                    GdkEvent          *event,
-                                                    GimpDisplayShell  *shell);
+gboolean   gimp_display_shell_events                  (GtkWidget        *widget,
+                                                       GdkEvent         *event,
+                                                       GimpDisplayShell *shell);
 
-void       gimp_display_shell_canvas_realize       (GtkWidget         *widget,
-                                                    GimpDisplayShell  *shell);
-void       gimp_display_shell_canvas_size_allocate (GtkWidget         *widget,
-                                                    GtkAllocation     *alloc,
-                                                    GimpDisplayShell  *shell);
-gboolean   gimp_display_shell_canvas_expose        (GtkWidget         *widget,
-                                                    GdkEventExpose    *eevent,
-                                                    GimpDisplayShell  *shell);
-gboolean   gimp_display_shell_canvas_tool_events   (GtkWidget         *widget,
-                                                    GdkEvent          *event,
-                                                    GimpDisplayShell  *shell);
+void       gimp_display_shell_canvas_realize          (GtkWidget        *widget,
+                                                       GimpDisplayShell *shell);
+void       gimp_display_shell_canvas_size_allocate    (GtkWidget        *widget,
+                                                       GtkAllocation    *alloc,
+                                                       GimpDisplayShell *shell);
+gboolean   gimp_display_shell_canvas_expose           (GtkWidget        *widget,
+                                                       GdkEventExpose   *eevent,
+                                                       GimpDisplayShell *shell);
+gboolean   gimp_display_shell_canvas_tool_events      (GtkWidget        *widget,
+                                                       GdkEvent         *event,
+                                                       GimpDisplayShell *shell);
 
-gboolean   gimp_display_shell_hruler_button_press  (GtkWidget         *widget,
-                                                    GdkEventButton    *bevent,
-                                                    GimpDisplayShell  *shell);
-gboolean   gimp_display_shell_vruler_button_press  (GtkWidget         *widget,
-                                                    GdkEventButton    *bevent,
-                                                    GimpDisplayShell  *shell);
+gboolean   gimp_display_shell_hruler_button_press     (GtkWidget        *widget,
+                                                       GdkEventButton   *bevent,
+                                                       GimpDisplayShell *shell);
+gboolean   gimp_display_shell_vruler_button_press     (GtkWidget        *widget,
+                                                       GdkEventButton   *bevent,
+                                                       GimpDisplayShell *shell);
 
-gboolean   gimp_display_shell_origin_button_press  (GtkWidget         *widget,
-                                                    GdkEventButton    *bevent,
-                                                    GimpDisplayShell  *shell);
+gboolean   gimp_display_shell_origin_button_press     (GtkWidget        *widget,
+                                                       GdkEventButton   *bevent,
+                                                       GimpDisplayShell *shell);
 
-gboolean   gimp_display_shell_qmask_button_press   (GtkWidget         *widget,
-                                                    GdkEventButton    *bevent,
-                                                    GimpDisplayShell  *shell);
-void       gimp_display_shell_qmask_toggled        (GtkWidget         *widget,
-                                                    GimpDisplayShell  *shell);
+gboolean   gimp_display_shell_quick_mask_button_press (GtkWidget        *widget,
+                                                       GdkEventButton   *bevent,
+                                                       GimpDisplayShell *shell);
+void       gimp_display_shell_quick_mask_toggled      (GtkWidget        *widget,
+                                                       GimpDisplayShell *shell);
 
-gboolean   gimp_display_shell_nav_button_press     (GtkWidget         *widget,
-                                                    GdkEventButton    *bevent,
-                                                    GimpDisplayShell  *shell);
+gboolean   gimp_display_shell_nav_button_press        (GtkWidget        *widget,
+                                                       GdkEventButton   *bevent,
+                                                       GimpDisplayShell *shell);
 
 
 #endif /* __GIMP_DISPLAY_SHELL_CALLBACKS_H__ */

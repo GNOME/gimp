@@ -98,7 +98,7 @@
 #define GIMP_HELP_IMAGE_WINDOW_ORIGIN_BUTTON      "gimp-image-window-origin-button"
 #define GIMP_HELP_IMAGE_WINDOW_PADDING_BUTTON     "gimp-image-window-padding-button"
 #define GIMP_HELP_IMAGE_WINDOW_ZOOM_FOLLOW_BUTTON "gimp-image-window-zoom-follow-button"
-#define GIMP_HELP_IMAGE_WINDOW_QMASK_BUTTON       "gimp-image-window-qmask-button"
+#define GIMP_HELP_IMAGE_WINDOW_QUICK_MASK_BUTTON  "gimp-image-window-quick-mask-button"
 #define GIMP_HELP_IMAGE_WINDOW_NAV_BUTTON         "gimp-image-window-nav-button"
 #define GIMP_HELP_IMAGE_WINDOW_RULER              "gimp-image-window-ruler"
 #define GIMP_HELP_IMAGE_WINDOW_STATUS_BAR         "gimp-image-window-status-bar"
@@ -195,10 +195,10 @@
 #define GIMP_HELP_CHANNEL_SELECTION_INTERSECT     "gimp-channel-selection-intersect"
 #define GIMP_HELP_CHANNEL_EDIT                    "gimp-channel-edit"
 
-#define GIMP_HELP_QMASK                           "gimp-qmask"
-#define GIMP_HELP_QMASK_TOGGLE                    "gimp-qmask-toggle"
-#define GIMP_HELP_QMASK_INVERT                    "gimp-qmask-invert"
-#define GIMP_HELP_QMASK_EDIT                      "gimp-qmask-edit"
+#define GIMP_HELP_QUICK_MASK                      "gimp-quick-mask"
+#define GIMP_HELP_QUICK_MASK_TOGGLE               "gimp-quick-mask-toggle"
+#define GIMP_HELP_QUICK_MASK_INVERT               "gimp-quick-mask-invert"
+#define GIMP_HELP_QUICK_MASK_EDIT                 "gimp-quick-mask-edit"
 
 #define GIMP_HELP_PATH_DIALOG                     "gimp-path-dialog"
 #define GIMP_HELP_PATH_NEW                        "gimp-path-new"
