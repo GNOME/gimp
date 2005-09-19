@@ -80,11 +80,11 @@ static void do_playback                (void);
 static void window_response            (GtkWidget      *widget,
                                         gint            response_id,
                                         gpointer        data);
-static void playstop_callback          (GtkWidget      *widget,
+static void play_callback              (GtkAction      *action,
                                         gpointer        data);
-static void rewind_callback            (GtkWidget      *widget,
+static void step_callback              (GtkAction      *action,
                                         gpointer        data);
-static void step_callback              (GtkWidget      *widget,
+static void rewind_callback            (GtkAction      *action,
                                         gpointer        data);
 static gboolean repaint_sda            (GtkWidget      *darea,
                                         GdkEventExpose *event,
@@ -122,7 +122,8 @@ GimpPlugInInfo PLUG_IN_INFO =
 
 
 /* Global widgets'n'stuff */
-static GtkWidget         *dlg = NULL;
+static GtkWidget         *dlg          = NULL;
+static GtkUIManager      *ui_manager   = NULL;
 static guchar            *preview_data = NULL;
 static GtkWidget         *drawing_area = NULL;
 static GtkWidget         *shape_drawing_area = NULL;
@@ -142,7 +143,6 @@ static guint              timer = 0;
 static GimpImageBaseType  imagetype;
 static guchar            *palette;
 static gint               ncolours;
-static GtkWidget         *psbutton;
 
 /* for shaping */
 typedef struct
@@ -388,26 +388,75 @@ preview_pressed (GtkWidget      *widget,
   return shape_pressed (shape_window, event);
 }
 
+static GtkUIManager *
+ui_manager_new (GtkWidget *window)
+{
+  static GtkActionEntry actions[] =
+  {
+    { "play", GTK_STOCK_MEDIA_PLAY,
+      NULL, NULL, N_("Start/Stop playback"),
+      G_CALLBACK (play_callback) },
+
+    { "step", GTK_STOCK_MEDIA_NEXT,
+      N_("_Step"), NULL, N_("Step to next frame"),
+      G_CALLBACK (step_callback) },
+
+    { "rewind", GTK_STOCK_MEDIA_REWIND,
+      NULL, NULL, N_("Rewind animation"),
+      G_CALLBACK (rewind_callback) }
+  };
+
+  GtkUIManager   *ui_manager = gtk_ui_manager_new ();
+  GtkActionGroup *group      = gtk_action_group_new ("Actions");
+  GError         *error      = NULL;
+
+  gtk_action_group_set_translation_domain (group, NULL);
+  gtk_action_group_add_actions (group, actions, G_N_ELEMENTS (actions), NULL);
+
+  gtk_window_add_accel_group (GTK_WINDOW (window),
+                              gtk_ui_manager_get_accel_group (ui_manager));
+  gtk_accel_group_lock (gtk_ui_manager_get_accel_group (ui_manager));
+
+  gtk_ui_manager_insert_action_group (ui_manager, group, -1);
+  g_object_unref (group);
+
+  gtk_ui_manager_add_ui_from_string (ui_manager,
+                                     "<ui>"
+                                     "  <toolbar name=\"anim-play-toolbar\">"
+                                     "    <toolitem action=\"play\" />"
+                                     "    <toolitem action=\"step\" />"
+                                     "    <toolitem action=\"rewind\" />"
+                                     "  </toolbar>"
+                                     "</ui>",
+                                     -1, &error);
+
+  if (error)
+    {
+      g_warning ("error parsing ui: %s", error->message);
+      g_clear_error (&error);
+    }
+
+  return ui_manager;
+}
+
 static void
 build_dialog (GimpImageBaseType  basetype,
               gchar             *imagename)
 {
-  gchar        *windowname;
   CursorOffset *icon_pos;
-  GtkWidget    *button;
+  GtkWidget    *toolbar;
   GtkWidget    *frame;
-  GtkWidget    *frame2;
   GtkWidget    *vbox;
-  GtkWidget    *hbox;
-  GtkWidget    *hbox2;
+  GtkWidget    *abox;
   GtkWidget    *eventbox;
   GdkCursor    *cursor;
+  gchar        *name;
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  windowname = g_strconcat (_("Animation Playback:"), " ", imagename, NULL);
+  name = g_strconcat (_("Animation Playback:"), " ", imagename, NULL);
 
-  dlg = gimp_dialog_new (windowname, PLUG_IN_BINARY,
+  dlg = gimp_dialog_new (name, PLUG_IN_BINARY,
                          NULL, 0,
                          gimp_standard_help_func, PLUG_IN_PROC,
 
@@ -415,7 +464,7 @@ build_dialog (GimpImageBaseType  basetype,
 
                          NULL);
 
-  g_free (windowname);
+  g_free (name);
 
   gimp_window_set_transient (GTK_WINDOW (dlg));
 
@@ -423,64 +472,29 @@ build_dialog (GimpImageBaseType  basetype,
                     G_CALLBACK (window_response),
                     NULL);
 
-  /* The 'playback' half of the dialog */
-  if (total_frames > 1)
-    windowname = g_strconcat (_("Playback:"), " ",imagename, NULL);
-  else
-    windowname = g_strdup (imagename);
-
-  frame = gimp_frame_new (windowname);
-
-  g_free (windowname);
-
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox),
-                        frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
-
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_container_add (GTK_CONTAINER (frame), hbox);
-  gtk_widget_show (hbox);
-
   vbox = gtk_vbox_new (FALSE, 6);
-  gtk_container_add (GTK_CONTAINER (hbox), vbox);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  hbox2 = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox2, TRUE, TRUE, 0);
-  if (total_frames > 1)
-    gtk_widget_show (hbox2);
+  ui_manager = ui_manager_new (dlg);
 
-  psbutton = gtk_toggle_button_new_with_label ( _("Play/Stop"));
-  g_signal_connect (psbutton, "toggled",
-                    G_CALLBACK (playstop_callback), NULL);
-  gtk_box_pack_start (GTK_BOX (hbox2), psbutton, TRUE, TRUE, 0);
-  gtk_widget_show (psbutton);
+  toolbar = gtk_ui_manager_get_widget (ui_manager, "/anim-play-toolbar");
+  gtk_box_pack_start (GTK_BOX (vbox), toolbar, FALSE, FALSE, 0);
+  gtk_widget_show (toolbar);
 
-  button = gtk_button_new_with_label ( _("Rewind"));
-  g_signal_connect (button, "clicked",
-                      G_CALLBACK (rewind_callback), NULL);
-  gtk_box_pack_start (GTK_BOX (hbox2), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
+  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+  gtk_box_pack_start (GTK_BOX (vbox), abox, TRUE, TRUE, 0);
+  gtk_widget_show (abox);
 
-  button = gtk_button_new_with_label ( _("Step"));
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (step_callback), NULL);
-  gtk_box_pack_start (GTK_BOX (hbox2), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
-
-  hbox2 = gtk_hbox_new (TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox2, FALSE, FALSE, 0);
-  gtk_widget_show (hbox2);
-
-  frame2 = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame2), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (hbox2), frame2, FALSE, FALSE, 0);
-  gtk_widget_show (frame2);
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_container_add (GTK_CONTAINER (abox), frame);
+  gtk_widget_show (frame);
 
   eventbox = gtk_event_box_new();
   gtk_widget_add_events (eventbox, GDK_BUTTON_PRESS_MASK);
-  gtk_container_add (GTK_CONTAINER (frame2), GTK_WIDGET (eventbox));
+  gtk_container_add (GTK_CONTAINER (frame), GTK_WIDGET (eventbox));
   gtk_widget_show (eventbox);
 
   drawing_area = gtk_drawing_area_new ();
@@ -489,9 +503,25 @@ build_dialog (GimpImageBaseType  basetype,
   gtk_widget_show (drawing_area);
 
   progress = GTK_PROGRESS_BAR (gtk_progress_bar_new ());
-  gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET (progress), TRUE, TRUE, 0);
-  if (total_frames > 1)
-    gtk_widget_show (GTK_WIDGET (progress));
+  gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET (progress), FALSE, FALSE, 0);
+  gtk_widget_show (GTK_WIDGET (progress));
+
+  if (total_frames < 2)
+    {
+      GtkAction *action;
+
+      action = gtk_ui_manager_get_action (ui_manager,
+                                          "/ui/anim-play-toolbar/play");
+      gtk_action_set_sensitive (action, FALSE);
+
+      action = gtk_ui_manager_get_action (ui_manager,
+                                          "/ui/anim-play-toolbar/step");
+      gtk_action_set_sensitive (action, FALSE);
+
+      action = gtk_ui_manager_get_action (ui_manager,
+                                          "/ui/anim-play-toolbar/rewind");
+      gtk_action_set_sensitive (action, FALSE);
+    }
 
   gtk_widget_show (dlg);
 
@@ -1218,7 +1248,7 @@ window_response (GtkWidget *widget,
   gtk_widget_destroy (widget);
 
   if (playing)
-    playstop_callback (NULL, NULL);
+    remove_timer ();
 
   if (shape_window)
     gtk_widget_destroy (GTK_WIDGET (shape_window));
@@ -1242,53 +1272,53 @@ advance_frame_callback (gpointer data)
 }
 
 static void
-playstop_callback (GtkWidget *widget,
-                   gpointer   data)
+play_callback (GtkAction *action,
+               gpointer   data)
 {
-  if (!playing)
-    { /* START PLAYING */
+  GtkWidget *widget;
+
+  if (playing)
+    {
+      playing = FALSE;
+      remove_timer ();
+    }
+  else
+    {
       playing = TRUE;
       timer = g_timeout_add (get_frame_duration (frame_number),
                              advance_frame_callback, NULL);
     }
-  else
-    { /* STOP PLAYING */
-      playing = FALSE;
-      remove_timer ();
-    }
+
+  widget = gtk_ui_manager_get_widget (ui_manager, "/anim-play-toolbar/play");
+  g_object_set (widget,
+                "label",        NULL,
+                "label-widget", NULL,
+                "stock-id",     (playing ?
+                                 GTK_STOCK_MEDIA_PAUSE : GTK_STOCK_MEDIA_PLAY),
+                NULL);
 }
 
 static void
-rewind_callback (GtkWidget *widget,
-                 gpointer   data)
-{
-  if (playing)
-    {
-      playstop_callback (NULL, NULL); /* GTK weirdness workaround */
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (psbutton), FALSE);
-      playing = FALSE;
-      remove_timer ();
-    }
-
-  frame_number = 0;
-  render_frame (frame_number);
-  show_frame ();
-}
-
-static void
-step_callback (GtkWidget *widget,
+step_callback (GtkAction *action,
                gpointer   data)
 {
   if (playing)
-    {
-      playstop_callback(NULL, NULL); /* GTK weirdness workaround */
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (psbutton), FALSE);
-      playing = FALSE;
-      remove_timer();
-    }
-
+    gtk_action_activate (gtk_ui_manager_get_action (ui_manager,
+                                                    "/anim-play-toolbar/play"));
   do_step();
   show_frame();
+}
+
+static void
+rewind_callback (GtkAction *action,
+                 gpointer   data)
+{
+  if (playing)
+    gtk_action_activate (gtk_ui_manager_get_action (ui_manager,
+                                                    "/anim-play-toolbar/play"));
+  frame_number = 0;
+  render_frame (frame_number);
+  show_frame ();
 }
 
 /* tag util. */
