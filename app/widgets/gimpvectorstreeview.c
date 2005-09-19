@@ -316,7 +316,7 @@ gimp_vectors_tree_view_drag_svg (GtkWidget *widget,
       svg_data = gimp_vectors_export_string (gimage, GIMP_VECTORS (item));
 
       if (svg_data)
-        *svg_data_len = strlen (svg_data) + 1;
+        *svg_data_len = strlen (svg_data);
     }
 
   return (guchar *) svg_data;

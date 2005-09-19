@@ -30,5 +30,8 @@ gboolean     gimp_clipboard_has_svg    (Gimp  *gimp);
 gchar      * gimp_clipboard_get_svg    (Gimp  *gimp,
                                         gsize *svg_length);
 
+void         gimp_clipboard_set_svg    (Gimp  *gimp,
+                                        gchar *svg);
+
 
 #endif /* __GIMP_CLIPBOARD_H__ */

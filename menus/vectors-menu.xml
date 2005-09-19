@@ -22,7 +22,7 @@
     <separator />
     <menuitem action="vectors-copy" />
     <menuitem action="vectors-paste" />
-    <menuitem action="vectors-import" />
     <menuitem action="vectors-export" />
+    <menuitem action="vectors-import" />
   </popup>
 </ui>

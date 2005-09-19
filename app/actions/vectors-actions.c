@@ -130,15 +130,15 @@ static GimpActionEntry vectors_actions[] =
     G_CALLBACK (vectors_paste_cmd_callback),
     GIMP_HELP_PATH_PASTE },
 
-  { "vectors-import", GTK_STOCK_OPEN,
-    N_("I_mport Path..."), "", NULL,
-    G_CALLBACK (vectors_import_cmd_callback),
-    GIMP_HELP_PATH_IMPORT },
-
   { "vectors-export", GTK_STOCK_SAVE,
     N_("E_xport Path..."), "", NULL,
     G_CALLBACK (vectors_export_cmd_callback),
-    GIMP_HELP_PATH_EXPORT }
+    GIMP_HELP_PATH_EXPORT },
+
+  { "vectors-import", GTK_STOCK_OPEN,
+    N_("I_mport Path..."), "", NULL,
+    G_CALLBACK (vectors_import_cmd_callback),
+    GIMP_HELP_PATH_IMPORT }
 };
 
 static GimpToggleActionEntry vectors_toggle_actions[] =
@@ -291,9 +291,9 @@ vectors_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("vectors-lower-to-bottom", vectors && next);
 
   SET_SENSITIVE ("vectors-copy",   vectors);
-  SET_SENSITIVE ("vectors-paste",  global_buf);
-  SET_SENSITIVE ("vectors-import", gimage);
+  SET_SENSITIVE ("vectors-paste",  gimage);
   SET_SENSITIVE ("vectors-export", vectors);
+  SET_SENSITIVE ("vectors-import", gimage);
 
   SET_SENSITIVE ("vectors-visible", vectors);
   SET_SENSITIVE ("vectors-linked",  vectors);

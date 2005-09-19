@@ -48,6 +48,7 @@
 #include "vectors/gimpvectors-import.h"
 
 #include "widgets/gimpaction.h"
+#include "widgets/gimpclipboard.h"
 #include "widgets/gimphelp-ids.h"
 
 #include "display/gimpdisplay.h"
@@ -415,11 +416,16 @@ vectors_copy_cmd_callback (GtkAction *action,
 {
   GimpImage   *gimage;
   GimpVectors *vectors;
+  gchar       *svg;
   return_if_no_vectors (gimage, vectors, data);
 
-#ifdef __GNUC__
-#warning FIXME: need vectors clipboard
-#endif
+  svg = gimp_vectors_export_string (gimage, vectors);
+
+  if (svg)
+    {
+      gimp_clipboard_set_svg (gimage->gimp, svg);
+      g_free (svg);
+    }
 }
 
 void
@@ -427,32 +433,29 @@ vectors_paste_cmd_callback (GtkAction *action,
                             gpointer   data)
 {
   GimpImage *gimage;
+  gchar     *svg;
+  gsize      svg_size;
   return_if_no_image (gimage, data);
 
-#ifdef __GNUC__
-#warning FIXME: need vectors clipboard
-#endif
-}
+  svg = gimp_clipboard_get_svg (gimage->gimp, &svg_size);
 
-void
-vectors_import_cmd_callback (GtkAction *action,
-                             gpointer   data)
-{
-  VectorsImportDialog *dialog;
-  GimpImage           *gimage;
-  GtkWidget           *widget;
-  return_if_no_image (gimage, data);
-  return_if_no_widget (widget, data);
+  if (svg)
+    {
+      GError *error = NULL;
 
-  dialog = vectors_import_dialog_new (gimage, widget,
-                                      vectors_import_merge,
-                                      vectors_import_scale);
+      if (! gimp_vectors_import_buffer (gimage, svg, svg_size,
+                                        TRUE, TRUE, -1, &error))
+        {
+          g_message (error->message);
+          g_clear_error (&error);
+        }
+      else
+        {
+          gimp_image_flush (gimage);
+        }
 
-  g_signal_connect (dialog->dialog, "response",
-                    G_CALLBACK (vectors_import_response),
-                    dialog);
-
-  gtk_widget_show (dialog->dialog);
+      g_free (svg);
+    }
 }
 
 void
@@ -471,6 +474,27 @@ vectors_export_cmd_callback (GtkAction *action,
 
   g_signal_connect (dialog->dialog, "response",
                     G_CALLBACK (vectors_export_response),
+                    dialog);
+
+  gtk_widget_show (dialog->dialog);
+}
+
+void
+vectors_import_cmd_callback (GtkAction *action,
+                             gpointer   data)
+{
+  VectorsImportDialog *dialog;
+  GimpImage           *gimage;
+  GtkWidget           *widget;
+  return_if_no_image (gimage, data);
+  return_if_no_widget (widget, data);
+
+  dialog = vectors_import_dialog_new (gimage, widget,
+                                      vectors_import_merge,
+                                      vectors_import_scale);
+
+  g_signal_connect (dialog->dialog, "response",
+                    G_CALLBACK (vectors_import_response),
                     dialog);
 
   gtk_widget_show (dialog->dialog);

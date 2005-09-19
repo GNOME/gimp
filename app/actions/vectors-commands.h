@@ -59,9 +59,9 @@ void   vectors_copy_cmd_callback                 (GtkAction   *action,
                                                   gpointer     data);
 void   vectors_paste_cmd_callback                (GtkAction   *action,
                                                   gpointer     data);
-void   vectors_import_cmd_callback               (GtkAction   *action,
-                                                  gpointer     data);
 void   vectors_export_cmd_callback               (GtkAction   *action,
+                                                  gpointer     data);
+void   vectors_import_cmd_callback               (GtkAction   *action,
                                                   gpointer     data);
 
 void   vectors_visible_cmd_callback              (GtkAction   *action,

@@ -1,3 +1,23 @@
+2005-09-19  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpclipboard.[ch]: added new public function
+	gimp_clipboard_set_svg() and internal stuff to offer and transfer
+	the svg data to the clipboard.
+
+	* app/actions/vectors-commands.c (vectors_copy_cmd_callback)
+	(vectors_paste_cmd_callback): implement copy/paste of vectors as
+	SVG. Fixes bug #316547.
+
+	* app/widgets/gimpvectorstreeview.c
+	(gimp_vectors_tree_view_drag_svg): don't add the terminating
+	nul-byte of the svg string to svg_data_length, it confuses the XML
+	parser.
+
+	* app/actions/vectors-actions.c
+	* app/actions/vectors-commands.[ch]
+	* menus/vectors-menu.xml: reordered export/import so they are in
+	the same order as copy/paste.
+
 2005-09-19  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/animationplay.c: moved toolbar out of main vbox.
