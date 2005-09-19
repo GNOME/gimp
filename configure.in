@@ -37,7 +37,7 @@ m4_define([gimp_unstable],
 m4_define([gimp_stable],
           m4_if(m4_eval(gimp_minor_version % 2), [0], [yes], [no]))
 
-m4_define([gimp_full_name], [The GIMP])
+m4_define([gimp_full_name], [GNU Image Manipulation Program])
 
 # required versions of other packages
 m4_define([glib_required_version], [2.6.0])

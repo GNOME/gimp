@@ -245,7 +245,7 @@ main (int    argc,
 
   gimp_init_i18n ();
 
-  g_set_application_name (_("The GIMP"));
+  g_set_application_name (_("GNU Image Manipulation Program"));
 
   basename = g_path_get_basename (argv[0]);
   g_set_prgname (basename);

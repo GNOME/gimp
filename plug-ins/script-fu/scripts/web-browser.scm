@@ -38,7 +38,7 @@
 		    "")
 
 (script-fu-menu-register "gimp-online-main-web-site"
-			 "<Toolbox>/Help/The GIMP Online")
+			 "<Toolbox>/Help/GIMP Online")
 
 
 (script-fu-register "gimp-online-developer-web-site"
@@ -50,7 +50,7 @@
 		    "")
 
 (script-fu-menu-register "gimp-online-developer-web-site"
-			 "<Toolbox>/Help/The GIMP Online")
+			 "<Toolbox>/Help/GIMP Online")
 
 
 (script-fu-register "gimp-online-plug-in-web-site"
@@ -62,4 +62,4 @@
 		    "")
 
 (script-fu-menu-register "gimp-online-plug-in-web-site"
-			 "<Toolbox>/Help/The GIMP Online")
+			 "<Toolbox>/Help/GIMP Online")

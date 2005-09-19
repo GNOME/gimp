@@ -1,5 +1,14 @@
 2005-09-19  Sven Neumann  <sven@gimp.org>
 
+	* autogen.sh
+	* configure.in
+	* app/main.c
+	* app/widgets/gimptoolbox.c
+	* plug-ins/script-fu/scripts/web-browser.scm: changed "The GIMP"
+	to "GNU Image Manipulation Program" or just "GIMP".
+
+2005-09-19  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/actions.c: use GTK_STOCK_FILE for File actions.
 
 	* app/actions/dialogs-actions.c

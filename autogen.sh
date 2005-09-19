@@ -10,7 +10,7 @@
 # directly.
 
 
-PROJECT="The GIMP"
+PROJECT="GNU Image Manipulation Program"
 TEST_TYPE=-d
 FILE=plug-ins
 
@@ -280,4 +280,4 @@ if test $RC -ne 0; then
 fi
 
 echo
-echo "Now type 'make' to compile $PROJECT."
+echo "Now type 'make' to compile the $PROJECT."
