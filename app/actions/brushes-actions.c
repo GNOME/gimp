@@ -76,7 +76,7 @@ static GimpActionEntry brushes_actions[] =
 
 static GimpStringActionEntry brushes_edit_actions[] =
 {
-  { "brushes-edit", GIMP_STOCK_EDIT,
+  { "brushes-edit", GTK_STOCK_EDIT,
     N_("_Edit Brush..."), NULL,
     N_("Edit brush"),
     "gimp-brush-editor",

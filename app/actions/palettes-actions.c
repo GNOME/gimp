@@ -83,7 +83,7 @@ static GimpActionEntry palettes_actions[] =
 
 static GimpStringActionEntry palettes_edit_actions[] =
 {
-  { "palettes-edit", GIMP_STOCK_EDIT,
+  { "palettes-edit", GTK_STOCK_EDIT,
     N_("_Edit Palette..."), NULL,
     N_("Edit palette"),
     "gimp-palette-editor",

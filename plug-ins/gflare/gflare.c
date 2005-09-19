@@ -2853,7 +2853,7 @@ dlg_make_page_selector (GFlareDialog *dlg,
   buttons[] =
   {
     { GTK_STOCK_NEW,    G_CALLBACK (dlg_selector_new_callback)    },
-    { GIMP_STOCK_EDIT,  G_CALLBACK (dlg_selector_edit_callback)   },
+    { GTK_STOCK_EDIT,   G_CALLBACK (dlg_selector_edit_callback)   },
     { GTK_STOCK_COPY,   G_CALLBACK (dlg_selector_copy_callback)   },
     { GTK_STOCK_DELETE, G_CALLBACK (dlg_selector_delete_callback) }
   };

@@ -183,7 +183,7 @@ templates_edit_cmd_callback (GtkAction *action,
                                              GTK_WIDGET (editor),
                                              _("Edit Template"),
                                              "gimp-template-edit",
-                                             GIMP_STOCK_EDIT,
+                                             GTK_STOCK_EDIT,
                                              _("Edit Template"),
                                              GIMP_HELP_TEMPLATE_EDIT);
 

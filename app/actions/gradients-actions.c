@@ -77,7 +77,7 @@ static GimpActionEntry gradients_actions[] =
 
 static GimpStringActionEntry gradients_edit_actions[] =
 {
-  { "gradients-edit", GIMP_STOCK_EDIT,
+  { "gradients-edit", GTK_STOCK_EDIT,
     N_("_Edit Gradient..."), NULL,
     N_("Edit gradient"),
     "gimp-gradient-editor",

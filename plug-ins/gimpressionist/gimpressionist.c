@@ -197,7 +197,7 @@ create_dialog (void)
                             NULL, 0,
                             gimp_standard_help_func, HELP_ID,
 
-                            _("A_bout"),      RESPONSE_ABOUT,
+                            GTK_STOCK_ABOUT,  RESPONSE_ABOUT,
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
 

@@ -49,7 +49,7 @@ static GimpActionEntry vectors_actions[] =
     G_CALLBACK (vectors_vectors_tool_cmd_callback),
     GIMP_HELP_TOOL_VECTORS },
 
-  { "vectors-edit-attributes", GIMP_STOCK_EDIT,
+  { "vectors-edit-attributes", GTK_STOCK_EDIT,
     N_("_Edit Path Attributes..."), NULL,
     N_("Edit path attributes"),
     G_CALLBACK (vectors_edit_attributes_cmd_callback),

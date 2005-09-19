@@ -325,7 +325,7 @@ gimp_controller_list_init (GimpControllerList *list)
 
   list->edit_button =
     gimp_editor_add_button (GIMP_EDITOR (list->dest),
-                            GIMP_STOCK_EDIT,
+                            GTK_STOCK_EDIT,
                             _("Configure the selected controller"),
                             NULL,
                             G_CALLBACK (gimp_controller_list_edit_clicked),
@@ -633,7 +633,7 @@ gimp_controller_list_edit_clicked (GtkWidget          *button,
   dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (list->dest_info),
                                      _("Configure Controller"),
                                      "gimp-controller-editor-dialog",
-                                     GIMP_STOCK_EDIT,
+                                     GTK_STOCK_EDIT,
                                      _("Configure Input Controller"),
                                      GTK_WIDGET (list),
                                      gimp_standard_help_func,

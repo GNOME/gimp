@@ -201,7 +201,7 @@ static GimpStringActionEntry dialogs_toplevel_actions[] =
     "gimp-tips-dialog",
     GIMP_HELP_TIPS_DIALOG },
 
-  { "dialogs-about", GIMP_STOCK_WILBER,
+  { "dialogs-about", GTK_STOCK_ABOUT,
     N_("_About"), NULL, NULL,
     "gimp-about-dialog",
     GIMP_HELP_ABOUT_DIALOG }

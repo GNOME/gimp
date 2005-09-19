@@ -44,7 +44,7 @@ static GimpActionEntry channels_actions[] =
     N_("Channels Menu"), NULL, NULL, NULL,
     GIMP_HELP_CHANNEL_DIALOG },
 
-  { "channels-edit-attributes", GIMP_STOCK_EDIT,
+  { "channels-edit-attributes", GTK_STOCK_EDIT,
     N_("_Edit Channel Attributes..."), NULL,
     N_("Edit channel attributes"),
     G_CALLBACK (channels_edit_attributes_cmd_callback),

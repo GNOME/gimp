@@ -76,7 +76,7 @@ static GimpActionEntry patterns_actions[] =
 
 static GimpStringActionEntry patterns_edit_actions[] =
 {
-  { "patterns-edit", GIMP_STOCK_EDIT,
+  { "patterns-edit", GTK_STOCK_EDIT,
     N_("_Edit Pattern..."), NULL,
     N_("Edit pattern"),
     "gimp-pattern-editor",

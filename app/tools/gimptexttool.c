@@ -910,7 +910,7 @@ gimp_text_tool_confirm_dialog (GimpTextTool *text_tool)
                                      tool->tool_info->help_id,
                                      GTK_STOCK_NEW,    RESPONSE_NEW,
                                      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                     GIMP_STOCK_EDIT,  GTK_RESPONSE_OK,
+                                     GTK_STOCK_EDIT,   GTK_RESPONSE_OK,
                                      NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),

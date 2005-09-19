@@ -429,7 +429,7 @@ gimp_controller_editor_constructor (GType                  type,
                              "the controller"),
                            NULL);
 
-  editor->edit_button = gtk_button_new_from_stock (GIMP_STOCK_EDIT);
+  editor->edit_button = gtk_button_new_from_stock (GTK_STOCK_EDIT);
   gtk_box_pack_start (GTK_BOX (hbox), editor->edit_button, TRUE, TRUE, 0);
   gtk_widget_show (editor->edit_button);
 
@@ -690,7 +690,7 @@ gimp_controller_editor_edit_clicked (GtkWidget            *button,
         gimp_viewable_dialog_new (GIMP_VIEWABLE (editor->info),
                                   _("Select Controller Event Action"),
                                   "gimp-controller-action-dialog",
-                                  GIMP_STOCK_EDIT,
+                                  GTK_STOCK_EDIT,
                                   title,
                                   gtk_widget_get_toplevel (GTK_WIDGET (editor)),
                                   gimp_standard_help_func,

@@ -693,7 +693,7 @@ metadata_dialog (gint32    image_ID,
   gtk_widget_show (notebook);
 
   mgui.xmp_model = xmp_model;
-  mgui.edit_icon = gtk_widget_render_icon (mgui.dlg, GIMP_STOCK_EDIT,
+  mgui.edit_icon = gtk_widget_render_icon (mgui.dlg, GTK_STOCK_EDIT,
                                            GTK_ICON_SIZE_MENU, NULL);
   mgui.auto_icon = gtk_widget_render_icon (mgui.dlg, GIMP_STOCK_WILBER,
                                            GTK_ICON_SIZE_MENU, NULL);

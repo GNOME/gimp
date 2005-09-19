@@ -1,3 +1,38 @@
+2005-09-19  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/actions.c: use GTK_STOCK_FILE for File actions.
+
+	* app/actions/dialogs-actions.c
+	* plug-ins/gimpressionist/gimpressionist.c
+	* plug-ins/print/gimp_main_window.c: use GTK_STOCK_ABOUT for About
+	dialogs.
+
+	* app/actions/actions.c
+	* app/actions/brushes-actions.c
+	* app/actions/channels-actions.c
+	* app/actions/channels-commands.c
+	* app/actions/colormap-editor-actions.c
+	* app/actions/gradients-actions.c
+	* app/actions/layers-actions.c
+	* app/actions/layers-commands.c
+	* app/actions/palette-editor-actions.c
+	* app/actions/palettes-actions.c
+	* app/actions/patterns-actions.c
+	* app/actions/templates-actions.c
+	* app/actions/templates-commands.c
+	* app/actions/text-editor-actions.c
+	* app/actions/tool-options-actions.c
+	* app/actions/vectors-actions.c
+	* app/actions/vectors-commands.c
+	* app/tools/gimptexttool.c
+	* app/widgets/gimpcontrollereditor.c
+	* app/widgets/gimpcontrollerlist.c
+	* plug-ins/flame/flame.c
+	* plug-ins/gflare/gflare.c
+	* plug-ins/gimpressionist/orientation.c
+	* plug-ins/gimpressionist/size.c
+	* plug-ins/metadata/interface.c: s/GIMP_STOCK_EDIT/GTK_STOCK_EDIT/
+
 2005-09-19  Michael Natterer  <mitch@gimp.org>
 
 	Did a global s/qmask/quick-mask/:

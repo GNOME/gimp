@@ -43,7 +43,7 @@ static GimpActionEntry colormap_editor_actions[] =
     N_("Colormap Menu"), NULL, NULL, NULL,
     GIMP_HELP_INDEXED_PALETTE_DIALOG },
 
-  { "colormap-editor-edit-color", GIMP_STOCK_EDIT,
+  { "colormap-editor-edit-color", GTK_STOCK_EDIT,
     N_("_Edit Color..."), NULL,
     N_("Edit color"),
     G_CALLBACK (colormap_editor_edit_color_cmd_callback),

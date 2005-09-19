@@ -43,7 +43,7 @@ static GimpActionEntry palette_editor_actions[] =
     N_("Palette Editor Menu"), NULL, NULL, NULL,
     GIMP_HELP_PALETTE_EDITOR_DIALOG },
 
-  { "palette-editor-edit-color", GIMP_STOCK_EDIT,
+  { "palette-editor-edit-color", GTK_STOCK_EDIT,
     N_("_Edit Color..."), "",
     N_("Edit color"),
     G_CALLBACK (palette_editor_edit_color_cmd_callback),

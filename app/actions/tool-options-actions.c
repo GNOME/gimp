@@ -64,7 +64,7 @@ static GimpActionEntry tool_options_actions[] =
     N_("_Restore Options From"), "", NULL, NULL,
     GIMP_HELP_TOOL_OPTIONS_RESTORE },
 
-  { "tool-options-rename-menu", GIMP_STOCK_EDIT,
+  { "tool-options-rename-menu", GTK_STOCK_EDIT,
     N_("Re_name Saved Options"), NULL, NULL, NULL,
     GIMP_HELP_TOOL_OPTIONS_RENAME },
 
@@ -136,7 +136,7 @@ tool_options_actions_update (GimpActionGroup *group,
 
   tool_options_actions_update_presets (group, "tool-options-rename-",
                                        G_CALLBACK (tool_options_rename_saved_cmd_callback),
-                                       GIMP_STOCK_EDIT,
+                                       GTK_STOCK_EDIT,
                                        GIMP_HELP_TOOL_OPTIONS_RENAME,
                                        tool_info->options_presets);
 

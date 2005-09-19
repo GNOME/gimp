@@ -36,7 +36,7 @@
 
 static GimpActionEntry text_editor_actions[] =
 {
-  { "text-editor-toolbar", GIMP_STOCK_EDIT,
+  { "text-editor-toolbar", GTK_STOCK_EDIT,
     "Text Editor Toolbar", NULL, NULL, NULL,
     GIMP_HELP_TEXT_EDITOR_DIALOG },
 

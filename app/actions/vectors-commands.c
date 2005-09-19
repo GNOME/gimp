@@ -139,7 +139,7 @@ vectors_edit_attributes_cmd_callback (GtkAction *action,
                                         gimp_object_get_name (GIMP_OBJECT (vectors)),
                                         _("Path Attributes"),
                                         "gimp-vectors-edit",
-                                        GIMP_STOCK_EDIT,
+                                        GTK_STOCK_EDIT,
                                         _("Edit Path Attributes"),
                                         GIMP_HELP_PATH_EDIT);
 
