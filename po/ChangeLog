@@ -1,3 +1,7 @@
+2005-09-19  Michael Natterer  <mitch@gimp.org>
+
+	* POTFILES.in: qmask -> quick-mask.
+
 2005-09-18  Adam Weinberger  <adamw@gnome.org>
 
 	* en_CA.po: Updated Canadian English translation.

@@ -48,8 +48,8 @@ app/actions/palettes-commands.c
 app/actions/patterns-actions.c
 app/actions/plug-in-actions.c
 app/actions/plug-in-commands.c
-app/actions/qmask-actions.c
-app/actions/qmask-commands.c
+app/actions/quick-mask-actions.c
+app/actions/quick-mask-commands.c
 app/actions/sample-point-editor-actions.c
 app/actions/select-actions.c
 app/actions/select-commands.c
@@ -113,7 +113,7 @@ app/core/gimpimage-grid.c
 app/core/gimpimage-guides.c
 app/core/gimpimage-merge.c
 app/core/gimpimage-new.c
-app/core/gimpimage-qmask.c
+app/core/gimpimage-quick-mask.c
 app/core/gimpimage-resize.c
 app/core/gimpimage-sample-points.c
 app/core/gimpimage-scale.c
