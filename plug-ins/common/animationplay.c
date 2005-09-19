@@ -472,16 +472,17 @@ build_dialog (GimpImageBaseType  basetype,
                     G_CALLBACK (window_response),
                     NULL);
 
+  ui_manager = ui_manager_new (dlg);
+
+  toolbar = gtk_ui_manager_get_widget (ui_manager, "/anim-play-toolbar");
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), toolbar,
+                      FALSE, FALSE, 0);
+  gtk_widget_show (toolbar);
+
   vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
-
-  ui_manager = ui_manager_new (dlg);
-
-  toolbar = gtk_ui_manager_get_widget (ui_manager, "/anim-play-toolbar");
-  gtk_box_pack_start (GTK_BOX (vbox), toolbar, FALSE, FALSE, 0);
-  gtk_widget_show (toolbar);
 
   abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), abox, TRUE, TRUE, 0);
