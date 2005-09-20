@@ -650,8 +650,8 @@ gimp_imagefile_get_desc_string (GimpImagefile *imagefile)
                     g_string_append_len (str, ", ", 2);
 
                   g_string_append_printf (str,
-                                          ngettext ("%d Layer",
-                                                    "%d Layers",
+                                          ngettext ("%d layer",
+                                                    "%d layers",
                                                     thumbnail->image_num_layers),
                                           thumbnail->image_num_layers);
                 }

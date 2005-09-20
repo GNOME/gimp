@@ -1,5 +1,9 @@
 2005-09-21  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpimagefile.c: use ngettext for plural forms.
+
+2005-09-21  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/cubism.c: initialize variables.
 
 	* plug-ins/common/depthmerge.c: declare all functions as static.

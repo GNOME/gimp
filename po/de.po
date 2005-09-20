@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-14 03:57+0200\n"
-"PO-Revision-Date: 2005-09-14 03:57+0200\n"
+"POT-Creation-Date: 2005-09-21 01:08+0200\n"
+"PO-Revision-Date: 2005-09-21 01:09+0200\n"
 "Last-Translator: Jens Seidel <jseidel@cvs.gnome.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -144,9 +144,10 @@ msgstr "Alle Warnungen als kritisch einstufen"
 msgid "Output a gimprc file with default settings"
 msgstr "Eine gimprc-Datei mit Vorgabeeinstellungen ausgeben"
 
-#: ../app/main.c:248 ../app/widgets/gimptoolbox.c:577
-msgid "The GIMP"
-msgstr "GIMP"
+#: ../app/main.c:248 ../app/dialogs/about-dialog.c:60
+#: ../desktop/gimp.desktop.in.in.h:2
+msgid "GNU Image Manipulation Program"
+msgstr "GNU Image Manipulation Program"
 
 #: ../app/main.c:292
 msgid ""
@@ -314,9 +315,10 @@ msgstr "Muster"
 msgid "Plug-Ins"
 msgstr "Plugins"
 
-#: ../app/actions/actions.c:175
-msgid "QuickMask"
-msgstr "QuickMask"
+#: ../app/actions/actions.c:175 ../app/core/core-enums.c:815
+#: ../app/core/gimpchannel.c:404
+msgid "Quick Mask"
+msgstr "Schnelle Maske"
 
 #: ../app/actions/actions.c:178 ../app/dialogs/dialogs.c:194
 msgid "Sample Points"
@@ -738,7 +740,7 @@ msgstr "Vereinigung prüfen"
 #: ../app/dialogs/file-open-location-dialog.c:201
 #: ../app/display/gimpdisplayshell-dnd.c:448
 #: ../app/widgets/gimplayertreeview.c:764 ../app/widgets/gimptoolbox-dnd.c:157
-#: ../app/widgets/gimptoolbox.c:1020
+#: ../app/widgets/gimptoolbox.c:944
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -1605,17 +1607,20 @@ msgstr "Hineinzoomen"
 
 #: ../app/actions/gradient-editor-actions.c:301
 #: ../app/actions/palette-editor-actions.c:78
-#: ../app/actions/view-actions.c:228 ../app/widgets/widgets-enums.c:353
+#: ../app/actions/view-actions.c:228 ../app/actions/view-actions.c:239
+#: ../app/actions/view-actions.c:240 ../app/widgets/widgets-enums.c:353
 msgid "Zoom in"
 msgstr "Hineinzoomen"
 
 #: ../app/actions/gradient-editor-actions.c:306
+#: ../app/actions/view-actions.c:233
 msgid "Zoom Out"
 msgstr "Herauszoomen"
 
 #: ../app/actions/gradient-editor-actions.c:307
 #: ../app/actions/palette-editor-actions.c:84
-#: ../app/actions/view-actions.c:222 ../app/widgets/widgets-enums.c:354
+#: ../app/actions/view-actions.c:222 ../app/actions/view-actions.c:234
+#: ../app/widgets/widgets-enums.c:354
 msgid "Zoom out"
 msgstr "Herauszoomen"
 
@@ -2546,43 +2551,39 @@ msgstr ""
 "Möchten sie alle Filter auf Vorgabeeinstellungen zurücksetzen?Wollen Sie "
 "wirklich alle Werkzeugeinstellungen auf Vorgabewerte zurüchsetzen?"
 
-#: ../app/actions/qmask-actions.c:42
+#: ../app/actions/quick-mask-actions.c:42
 msgid "Quick Mask Menu"
 msgstr "Schnelle Maske Menü"
 
-#: ../app/actions/qmask-actions.c:46
+#: ../app/actions/quick-mask-actions.c:46
 msgid "_Configure Color and Opacity..."
 msgstr "Farbe und Deckkraft _festlegen..."
 
-#: ../app/actions/qmask-actions.c:54
-msgid "_Quick Mask Active"
-msgstr "_Schnelle Maske aktiv"
-
-#: ../app/actions/qmask-actions.c:60
+#: ../app/actions/quick-mask-actions.c:54
 msgid "Toggle _Quick Mask"
 msgstr "_Schnelle Maske aktivieren/deaktivieren"
 
-#: ../app/actions/qmask-actions.c:70
+#: ../app/actions/quick-mask-actions.c:63
 msgid "Mask _Selected Areas"
 msgstr "Maske aus _Auswahl"
 
-#: ../app/actions/qmask-actions.c:75
+#: ../app/actions/quick-mask-actions.c:68
 msgid "Mask _Unselected Areas"
 msgstr "Maske aus _invertierter Auswahl"
 
-#: ../app/actions/qmask-commands.c:106
+#: ../app/actions/quick-mask-commands.c:106
 msgid "Quick Mask Attributes"
 msgstr "Attribute der schnellen Maske"
 
-#: ../app/actions/qmask-commands.c:109
+#: ../app/actions/quick-mask-commands.c:109
 msgid "Edit Quick Mask Attributes"
 msgstr "Attribute der schnellen Maske bearbeiten"
 
-#: ../app/actions/qmask-commands.c:111
+#: ../app/actions/quick-mask-commands.c:111
 msgid "Edit Quick Mask Color"
 msgstr "Farbe der schnellen Maske bearbeiten"
 
-#: ../app/actions/qmask-commands.c:112
+#: ../app/actions/quick-mask-commands.c:112
 msgid "_Mask opacity:"
 msgstr "_Maskendeckkraft:"
 
@@ -2707,7 +2708,7 @@ msgid "Border selection by"
 msgstr "Neue Auswahl größer um"
 
 #: ../app/actions/select-commands.c:275 ../app/actions/select-commands.c:301
-#: ../app/actions/vectors-commands.c:365 ../app/actions/vectors-commands.c:392
+#: ../app/actions/vectors-commands.c:366 ../app/actions/vectors-commands.c:393
 #: ../app/dialogs/stroke-dialog.c:278
 msgid "There is no active layer or channel to stroke to."
 msgstr ""
@@ -3088,12 +3089,12 @@ msgid "Paste Pat_h"
 msgstr "Pfad e_infügen"
 
 #: ../app/actions/vectors-actions.c:134
-msgid "I_mport Path..."
-msgstr "Pfad i_mportieren..."
-
-#: ../app/actions/vectors-actions.c:139
 msgid "E_xport Path..."
 msgstr "Pfad e_xportieren..."
+
+#: ../app/actions/vectors-actions.c:139
+msgid "I_mport Path..."
+msgstr "Pfad i_mportieren..."
 
 #: ../app/actions/vectors-actions.c:162
 msgid "Path to Sele_ction"
@@ -3130,28 +3131,28 @@ msgstr ""
 msgid "Advanced options"
 msgstr "Erweiterte Einstellungen"
 
-#: ../app/actions/vectors-commands.c:140
+#: ../app/actions/vectors-commands.c:141
 msgid "Path Attributes"
 msgstr "Pfadeigenschaften"
 
-#: ../app/actions/vectors-commands.c:143
+#: ../app/actions/vectors-commands.c:144
 msgid "Edit Path Attributes"
 msgstr "Pfadeigenschaften"
 
-#: ../app/actions/vectors-commands.c:167 ../app/actions/vectors-commands.c:168
-#: ../app/actions/vectors-commands.c:190
+#: ../app/actions/vectors-commands.c:168 ../app/actions/vectors-commands.c:169
+#: ../app/actions/vectors-commands.c:191
 msgid "New Path"
 msgstr "Neuer Pfad"
 
-#: ../app/actions/vectors-commands.c:171
+#: ../app/actions/vectors-commands.c:172
 msgid "New Path Options"
 msgstr "Einstellungen des hinzuzufügenden Pfades"
 
-#: ../app/actions/vectors-commands.c:299 ../app/pdb/paths_cmds.c:1225
+#: ../app/actions/vectors-commands.c:300 ../app/pdb/paths_cmds.c:1225
 msgid "Path to Selection"
 msgstr "Auswahl aus Pfad"
 
-#: ../app/actions/vectors-commands.c:370 ../app/tools/gimpvectoroptions.c:205
+#: ../app/actions/vectors-commands.c:371 ../app/tools/gimpvectoroptions.c:205
 #: ../app/tools/gimpvectortool.c:1935 ../app/vectors/gimpvectors.c:237
 msgid "Stroke Path"
 msgstr "Pfad nachziehen"
@@ -3268,76 +3269,76 @@ msgstr "_Statusleiste anzeigen"
 msgid "Fullscr_een"
 msgstr "_Vollbild"
 
-#: ../app/actions/view-actions.c:246
+#: ../app/actions/view-actions.c:258
 msgid "1_6:1  (1600%)"
 msgstr "1_6:1  (1600%)"
 
-#: ../app/actions/view-actions.c:251
+#: ../app/actions/view-actions.c:263
 msgid "_8:1  (800%)"
 msgstr "_8:1  (800%)"
 
-#: ../app/actions/view-actions.c:256
+#: ../app/actions/view-actions.c:268
 msgid "_4:1  (400%)"
 msgstr "_4:1  (400%)"
 
-#: ../app/actions/view-actions.c:261
+#: ../app/actions/view-actions.c:273
 msgid "_2:1  (200%)"
 msgstr "_2:1  (200%)"
 
-#: ../app/actions/view-actions.c:266
+#: ../app/actions/view-actions.c:278
 msgid "_1:1  (100%)"
 msgstr "_1:1  (100%)"
 
-#: ../app/actions/view-actions.c:267
+#: ../app/actions/view-actions.c:279
 msgid "Zoom 1:1"
 msgstr "Maßstab 1:1"
 
-#: ../app/actions/view-actions.c:272
+#: ../app/actions/view-actions.c:284
 msgid "1:_2  (50%)"
 msgstr "1:_2  (50%)"
 
-#: ../app/actions/view-actions.c:277
+#: ../app/actions/view-actions.c:289
 msgid "1:_4  (25%)"
 msgstr "1:_4  (25%)"
 
-#: ../app/actions/view-actions.c:282
+#: ../app/actions/view-actions.c:294
 msgid "1:_8  (12.5%)"
 msgstr "1:_8  (12.5%)"
 
-#: ../app/actions/view-actions.c:287
+#: ../app/actions/view-actions.c:299
 msgid "1:1_6  (6.25%)"
 msgstr "1:1_6  (6.25%)"
 
-#: ../app/actions/view-actions.c:292
+#: ../app/actions/view-actions.c:304
 msgid "Othe_r..."
 msgstr "A_nders..."
 
-#: ../app/actions/view-actions.c:300
+#: ../app/actions/view-actions.c:312
 msgid "From _Theme"
 msgstr "Dem _Thema entsprechend"
 
-#: ../app/actions/view-actions.c:305
+#: ../app/actions/view-actions.c:317
 msgid "_Light Check Color"
 msgstr "H_elle Schachbrett-Farbe"
 
-#: ../app/actions/view-actions.c:310
+#: ../app/actions/view-actions.c:322
 msgid "_Dark Check Color"
 msgstr "_Dunkle Schachbrett-Farbe"
 
-#: ../app/actions/view-actions.c:315
+#: ../app/actions/view-actions.c:327
 msgid "Select _Custom Color..."
 msgstr "_Benutzerdefinierte Farbe wählen..."
 
-#: ../app/actions/view-actions.c:320
+#: ../app/actions/view-actions.c:332
 msgid "As in _Preferences"
 msgstr "Den _Einstellungen entsprechend"
 
-#: ../app/actions/view-actions.c:607
+#: ../app/actions/view-actions.c:619
 #, c-format
 msgid "Othe_r (%s) ..."
 msgstr "A_nders (%s)..."
 
-#: ../app/actions/view-actions.c:616
+#: ../app/actions/view-actions.c:628
 #, c-format
 msgid "_Zoom (%s)"
 msgstr "_Zoom (%s)"
@@ -4374,10 +4375,6 @@ msgstr "Ebenen vereinen"
 msgid "Merge paths"
 msgstr "Pfade vereinen"
 
-#: ../app/core/core-enums.c:815 ../app/core/gimpchannel.c:404
-msgid "Quick Mask"
-msgstr "Schnelle Maske"
-
 #: ../app/core/core-enums.c:816 ../app/core/core-enums.c:846
 msgid "Guide"
 msgstr "Hilfslinie"
@@ -4649,7 +4646,7 @@ msgstr "VG nach HG (HSV-Farbton im Uhrzeigersinn)"
 msgid "FG to Transparent"
 msgstr "VG nach Transparent"
 
-#: ../app/core/gimp-gui.c:155
+#: ../app/core/gimp-gui.c:155 ../app/widgets/gimptoolbox.c:577
 msgid "GIMP"
 msgstr "GIMP"
 
@@ -4737,7 +4734,7 @@ msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Ungültiger UTF-8 Text in Pinseldatei »%s«."
 
 #: ../app/core/gimpbrush-load.c:258 ../app/core/gimpcontext.c:1294
-#: ../app/core/gimpitem.c:475 ../app/core/gimppattern.c:369
+#: ../app/core/gimpitem.c:560 ../app/core/gimppattern.c:369
 #: ../app/dialogs/template-options-dialog.c:80
 #: ../app/tools/gimpvectortool.c:334
 msgid "Unnamed"
@@ -4935,11 +4932,11 @@ msgstr ""
 "%s"
 
 #: ../app/core/gimpdatafactory.c:434 ../app/core/gimpdatafactory.c:437
-#: ../app/core/gimpitem.c:272 ../app/core/gimpitem.c:275
+#: ../app/core/gimpitem.c:344 ../app/core/gimpitem.c:347
 msgid "copy"
 msgstr "Kopie"
 
-#: ../app/core/gimpdatafactory.c:446 ../app/core/gimpitem.c:284
+#: ../app/core/gimpdatafactory.c:446 ../app/core/gimpitem.c:356
 #, c-format
 msgid "%s copy"
 msgstr "%s-Kopie"
@@ -5194,11 +5191,11 @@ msgstr ""
 "Es sind nicht genügend Pfade als »Sichtbar« markiert, um den Vorgang "
 "»Sichtbare Pfade vereinen« auszuführen. Es müssen mindestens zwei sein."
 
-#: ../app/core/gimpimage-qmask.c:67
+#: ../app/core/gimpimage-quick-mask.c:67
 msgid "Enable Quick Mask"
 msgstr "Schnelle Maske aktivieren"
 
-#: ../app/core/gimpimage-qmask.c:117
+#: ../app/core/gimpimage-quick-mask.c:117
 msgid "Disable Quick Mask"
 msgstr "Schnelle Maske deaktivieren"
 
@@ -5395,14 +5392,12 @@ msgstr "(Vorschau könnte veraltet sein)"
 msgid "%d x %d pixels"
 msgstr "%d x %d Pixel"
 
-#: ../app/core/gimpimagefile.c:653
-msgid "1 Layer"
-msgstr "1 Ebene"
-
-#: ../app/core/gimpimagefile.c:655
+#: ../app/core/gimpimagefile.c:653 ../app/display/gimpdisplayshell-title.c:314
 #, c-format
-msgid "%d Layers"
-msgstr "%d Ebenen"
+msgid "%d layer"
+msgid_plural "%d layers"
+msgstr[0] "%d Ebene"
+msgstr[1] "%d Ebenen"
 
 #: ../app/core/gimpimagefile.c:699
 #, c-format
@@ -5419,15 +5414,15 @@ msgstr "Ungültiger Interpreterverweis in Interpreterdatei %s: %s"
 msgid "Bad binary format string in interpreter file %s"
 msgstr "Ungültige binäre Formatzeichenkette in Interpreterdatei %s"
 
-#: ../app/core/gimpitem.c:1094
+#: ../app/core/gimpitem.c:1181
 msgid "Attach Parasite"
 msgstr "Parasit zuweisen"
 
-#: ../app/core/gimpitem.c:1105
+#: ../app/core/gimpitem.c:1192
 msgid "Attach Parasite to Item"
 msgstr "Parasit zuweisen"
 
-#: ../app/core/gimpitem.c:1146 ../app/core/gimpitem.c:1153
+#: ../app/core/gimpitem.c:1233 ../app/core/gimpitem.c:1240
 msgid "Remove Parasite from Item"
 msgstr "Parasit entfernen"
 
@@ -5773,10 +5768,6 @@ msgstr "Pica"
 #: ../app/core/gimpunit.c:70
 msgid "percent"
 msgstr "Prozent"
-
-#: ../app/dialogs/about-dialog.c:60 ../desktop/gimp.desktop.in.in.h:2
-msgid "GNU Image Manipulation Program"
-msgstr "GNU Image Manipulation Program"
 
 #: ../app/dialogs/about-dialog.c:63
 msgid "Visit the GIMP website"
@@ -7648,7 +7639,7 @@ msgstr "Benutzerdefinierte Farbe"
 msgid "Zoom image when window size changes"
 msgstr "Bild zoomen, wenn die Fenstergröße sich ändert"
 
-#: ../app/display/gimpdisplayshell.c:942
+#: ../app/display/gimpdisplayshell.c:944
 msgid "Toggle Quick Mask"
 msgstr "Schnelle Maske aktivieren/deaktivieren"
 
@@ -7758,13 +7749,6 @@ msgstr "(verändert)"
 #: ../app/display/gimpdisplayshell-title.c:287
 msgid "(clean)"
 msgstr "(bereinigt)"
-
-#: ../app/display/gimpdisplayshell-title.c:314
-#, c-format
-msgid "%d layer"
-msgid_plural "%d layers"
-msgstr[0] "%d Ebene"
-msgstr[1] "%d Ebenen"
 
 #: ../app/display/gimpdisplayshell-title.c:326
 #: ../app/display/gimpdisplayshell-title.c:338
@@ -9323,24 +9307,24 @@ msgstr "Perspektive"
 msgid "Center"
 msgstr "Zentriert"
 
-#: ../app/tools/gimprectangletool.c:1899 ../app/tools/gimprectangletool.c:2326
+#: ../app/tools/gimprectangletool.c:1827 ../app/tools/gimprectangletool.c:2254
 msgid "Rectangle: "
 msgstr "Rechteck: "
 
-#: ../app/tools/gimprectangletool.c:2745
+#: ../app/tools/gimprectangletool.c:2673
 msgid "1 "
 msgstr "1 "
 
-#: ../app/tools/gimprectangletool.c:2746
+#: ../app/tools/gimprectangletool.c:2674
 msgid "2 "
 msgstr "2 "
 
-#: ../app/tools/gimprectangletool.c:2747 ../app/widgets/gimpcursorview.c:170
+#: ../app/tools/gimprectangletool.c:2675 ../app/widgets/gimpcursorview.c:170
 #: ../app/widgets/gimpcursorview.c:192
 msgid "X"
 msgstr "X"
 
-#: ../app/tools/gimprectangletool.c:2748 ../app/widgets/gimpcursorview.c:176
+#: ../app/tools/gimprectangletool.c:2676 ../app/widgets/gimpcursorview.c:176
 #: ../app/widgets/gimpcursorview.c:198
 msgid "Y"
 msgstr "Y"
@@ -9878,47 +9862,47 @@ msgstr "Fehler beim Pfad-Import aus »%s«: %s"
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: ../app/widgets/gimpactionview.c:331
+#: ../app/widgets/gimpactionview.c:333
 #: ../app/widgets/gimpcontrollereditor.c:399
 msgid "Action"
 msgstr "Aktion"
 
-#: ../app/widgets/gimpactionview.c:360
+#: ../app/widgets/gimpactionview.c:362
 msgid "Shortcut"
 msgstr "Tastenkürzel"
 
-#: ../app/widgets/gimpactionview.c:382
+#: ../app/widgets/gimpactionview.c:384
 msgid "Name"
 msgstr "Name"
 
-#: ../app/widgets/gimpactionview.c:512 ../app/widgets/gimpactionview.c:694
+#: ../app/widgets/gimpactionview.c:514 ../app/widgets/gimpactionview.c:696
 msgid "Changing shortcut failed."
 msgstr "Wechseln des Tastenkürzels fehlgeschlagen."
 
-#: ../app/widgets/gimpactionview.c:552
+#: ../app/widgets/gimpactionview.c:554
 msgid "Conflicting Shortcuts"
 msgstr "Kollidierende Tastenkürzel"
 
-#: ../app/widgets/gimpactionview.c:558
+#: ../app/widgets/gimpactionview.c:560
 msgid "_Reassign shortcut"
 msgstr "_Tastenkürzel neu zuweisen"
 
-#: ../app/widgets/gimpactionview.c:569
+#: ../app/widgets/gimpactionview.c:571
 #, c-format
 msgid "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
 msgstr ""
 "Das Tastenkürzel »%s« wird bereits von »%s« aus der Gruppe »%s« verwendet."
 
-#: ../app/widgets/gimpactionview.c:573
+#: ../app/widgets/gimpactionview.c:575
 #, c-format
 msgid "Reassigning the shortcut will cause it to be removed from \"%s\"."
 msgstr "Die Neuzuweisung dieses Tastenkürzels wird es von »%s« entfernen."
 
-#: ../app/widgets/gimpactionview.c:630
+#: ../app/widgets/gimpactionview.c:632
 msgid "Removing shortcut failed."
 msgstr "Entfernen des Tastenkürzels fehlgeschlagen."
 
-#: ../app/widgets/gimpactionview.c:635
+#: ../app/widgets/gimpactionview.c:637
 msgid "Invalid shortcut."
 msgstr "Falscher Tastenkürzel."
 
@@ -9967,7 +9951,7 @@ msgstr "Kanalreihenfolge ändern"
 msgid "Empty Channel"
 msgstr "Leerer Kanal"
 
-#: ../app/widgets/gimpclipboard.c:258
+#: ../app/widgets/gimpclipboard.c:279
 msgid "Clipboard"
 msgstr "Zwischenablage"
 
@@ -10120,10 +10104,14 @@ msgstr "Eine Aktion mit dem ausgewählten Ereignis verbinden"
 msgid "Remove the action from the selected event"
 msgstr "Die verbundene Aktion vom gewählten Ereignis entfernen"
 
-#: ../app/widgets/gimpcontrollereditor.c:685
-#: ../app/widgets/gimpcontrollereditor.c:688
+#: ../app/widgets/gimpcontrollereditor.c:686
+#, c-format
+msgid "Select Action for Event '%s'"
+msgstr "Aktion für Ereignis '%s' auswählen"
+
+#: ../app/widgets/gimpcontrollereditor.c:691
 msgid "Select Controller Event Action"
-msgstr "Ereigniskontrolleuraktion auswählen"
+msgstr "Aktion für Ereignis auswählen"
 
 #: ../app/widgets/gimpcontrollerkeyboard.c:70
 #: ../app/widgets/gimpcontrollerkeyboard.c:73
@@ -10178,7 +10166,7 @@ msgid "Keyboard Events"
 msgstr "Tastaturereignisse"
 
 #: ../app/widgets/gimpcontrollerkeyboard.c:252
-#: ../app/widgets/gimpcontrollerwheel.c:230
+#: ../app/widgets/gimpcontrollerwheel.c:251
 msgid "Ready"
 msgstr "Bereit"
 
@@ -10268,139 +10256,55 @@ msgstr "Steuerung einstellen"
 msgid "Configure Input Controller"
 msgstr "Eingabesteuerung einstellen"
 
-#: ../app/widgets/gimpcontrollerwheel.c:68
-msgid "Scroll Up (Shift + Control + Alt)"
-msgstr "Hochscrollen (Shift + Strg + Alt)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:71
-msgid "Scroll Up (Control + Alt)"
-msgstr "Hochscrollen (Strg + Alt)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:74
-msgid "Scroll Up (Shift + Alt)"
-msgstr "Hochscrollen (Shift + Alt)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:77
-msgid "Scroll Up (Shift + Control)"
-msgstr "Hochscrollen (Shift + Strg)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:80
-msgid "Scroll Up (Alt)"
-msgstr "Hochscrollen (Alt)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:83
-msgid "Scroll Up (Control)"
-msgstr "Hochscrollen (Strg)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:86
-msgid "Scroll Up (Shift)"
-msgstr "Hochscrollen (Shift)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:89
+#: ../app/widgets/gimpcontrollerwheel.c:69
+#: ../app/widgets/gimpcontrollerwheel.c:72
+#: ../app/widgets/gimpcontrollerwheel.c:75
+#: ../app/widgets/gimpcontrollerwheel.c:78
+#: ../app/widgets/gimpcontrollerwheel.c:81
+#: ../app/widgets/gimpcontrollerwheel.c:84
+#: ../app/widgets/gimpcontrollerwheel.c:87
+#: ../app/widgets/gimpcontrollerwheel.c:90
 msgid "Scroll Up"
 msgstr "Hochscrollen"
 
-#: ../app/widgets/gimpcontrollerwheel.c:93
-msgid "Scroll Down (Shift + Control + Alt)"
-msgstr "Runterscrollen (Shift + Strg + Alt)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:96
-msgid "Scroll Down (Control + Alt)"
-msgstr "Runterscrollen (Strg + Alt)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:99
-msgid "Scroll Down (Shift + Alt)"
-msgstr "Runterscrollen (Shift + Alt)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:102
-msgid "Scroll Down (Shift + Control)"
-msgstr "Runterscrollen (Shift + Strg)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:105
-msgid "Scroll Down (Alt)"
-msgstr "Runterscrollen (Alt)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:108
-msgid "Scroll Down (Control)"
-msgstr "Runterscrollen (Strg)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:111
-msgid "Scroll Down (Shift)"
-msgstr "Runterscrollen (Shift)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:114
+#: ../app/widgets/gimpcontrollerwheel.c:94
+#: ../app/widgets/gimpcontrollerwheel.c:97
+#: ../app/widgets/gimpcontrollerwheel.c:100
+#: ../app/widgets/gimpcontrollerwheel.c:103
+#: ../app/widgets/gimpcontrollerwheel.c:106
+#: ../app/widgets/gimpcontrollerwheel.c:109
+#: ../app/widgets/gimpcontrollerwheel.c:112
+#: ../app/widgets/gimpcontrollerwheel.c:115
 msgid "Scroll Down"
 msgstr "Runterscrollen"
 
-#: ../app/widgets/gimpcontrollerwheel.c:118
-msgid "Scroll Left (Shift + Control + Alt)"
-msgstr "Links Scrollen (Shift + Strg + Alt)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:121
-msgid "Scroll Left (Control + Alt)"
-msgstr "Links Scrollen (Strg + Alt)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:124
-msgid "Scroll Left (Shift + Alt)"
-msgstr "Links Scrollen (Shift + Alt)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:127
-msgid "Scroll Left (Shift + Control)"
-msgstr "Links Scrollen (Shift + Strg)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:130
-msgid "Scroll Left (Alt)"
-msgstr "Links Scrollen (Alt)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:133
-msgid "Scroll Left (Control)"
-msgstr "Links Scrollen (Strg)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:136
-msgid "Scroll Left (Shift)"
-msgstr "Links Scrollen (Shift)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:139
+#: ../app/widgets/gimpcontrollerwheel.c:119
+#: ../app/widgets/gimpcontrollerwheel.c:122
+#: ../app/widgets/gimpcontrollerwheel.c:125
+#: ../app/widgets/gimpcontrollerwheel.c:128
+#: ../app/widgets/gimpcontrollerwheel.c:131
+#: ../app/widgets/gimpcontrollerwheel.c:134
+#: ../app/widgets/gimpcontrollerwheel.c:137
+#: ../app/widgets/gimpcontrollerwheel.c:140
 msgid "Scroll Left"
 msgstr "Links Scrollen"
 
-#: ../app/widgets/gimpcontrollerwheel.c:143
-msgid "Scroll Right (Shift + Control + Alt)"
-msgstr "Rechts Scrollen (Shift + Strg + Alt)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:146
-msgid "Scroll Right (Control + Alt)"
-msgstr "Rechts Scrollen (Strg + Alt)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:149
-msgid "Scroll Right (Shift + Alt)"
-msgstr "Rechts Scrollen (Shift + Alt)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:152
-msgid "Scroll Right (Shift + Control)"
-msgstr "Rechts Scrollen (Shift + Strg)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:155
-msgid "Scroll Right (Alt)"
-msgstr "Rechts Scrollen (Alt)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:158
-msgid "Scroll Right (Control)"
-msgstr "Rechts Scrollen (Strg)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:161
-msgid "Scroll Right (Shift)"
-msgstr "Rechts Scrollen (Shift)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:164
+#: ../app/widgets/gimpcontrollerwheel.c:144
+#: ../app/widgets/gimpcontrollerwheel.c:147
+#: ../app/widgets/gimpcontrollerwheel.c:150
+#: ../app/widgets/gimpcontrollerwheel.c:153
+#: ../app/widgets/gimpcontrollerwheel.c:156
+#: ../app/widgets/gimpcontrollerwheel.c:159
+#: ../app/widgets/gimpcontrollerwheel.c:162
+#: ../app/widgets/gimpcontrollerwheel.c:165
 msgid "Scroll Right"
 msgstr "Rechts Scrollen"
 
-#: ../app/widgets/gimpcontrollerwheel.c:206
+#: ../app/widgets/gimpcontrollerwheel.c:207
 msgid "Mouse Wheel"
 msgstr "Mausrad"
 
-#: ../app/widgets/gimpcontrollerwheel.c:229
+#: ../app/widgets/gimpcontrollerwheel.c:250
 msgid "Mouse Wheel Events"
 msgstr "Mausradereignisse"
 
@@ -10977,7 +10881,7 @@ msgstr ""
 "Der aktive Farbverlauf.\n"
 "Klick öffnet die Farbverlaufsauswahl."
 
-#: ../app/widgets/gimptoolbox.c:804
+#: ../app/widgets/gimptoolbox.c:728
 msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Click to open the color selection dialog."
@@ -11224,231 +11128,3 @@ msgstr "Bitte stellen Sie sicher, dass das Werkzeugefenster sichtbar ist!"
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "»%s« konnte nicht gestartet werden: %s"
-
-#~ msgid "Cursor Up (Shift + Control + Alt)"
-#~ msgstr "Zeiger hoch (Shift + Strg + Alt)"
-
-#~ msgid "Cursor Up (Control + Alt)"
-#~ msgstr "Zeiger hoch (Strg + Alt)"
-
-#~ msgid "Cursor Up (Shift + Alt)"
-#~ msgstr "Zeiger hoch (Shift + Alt)"
-
-#~ msgid "Cursor Up (Shift + Control)"
-#~ msgstr "Zeiger hoch (Shift + Strg)"
-
-#~ msgid "Cursor Up (Alt)"
-#~ msgstr "Zeiger hoch (Alt)"
-
-#~ msgid "Cursor Up (Control)"
-#~ msgstr "Zeiger hoch (Strg)"
-
-#~ msgid "Cursor Up (Shift)"
-#~ msgstr "Zeiger hoch (Shift)"
-
-#~ msgid "Cursor Down (Shift + Control + Alt)"
-#~ msgstr "Zeiger runter (Shift + Strg + Alt)"
-
-#~ msgid "Cursor Down (Control + Alt)"
-#~ msgstr "Zeiger runter  (Strg + Alt)"
-
-#~ msgid "Cursor Down (Shift + Alt)"
-#~ msgstr "Zeiger runter  (Shift + Alt)"
-
-#~ msgid "Cursor Down (Shift + Control)"
-#~ msgstr "Zeiger runter  (Shift + Strg)"
-
-#~ msgid "Cursor Down (Alt)"
-#~ msgstr "Zeiger runter  (Alt)"
-
-#~ msgid "Cursor Down (Control)"
-#~ msgstr "Zeiger runter  (Strg)"
-
-#~ msgid "Cursor Down (Shift)"
-#~ msgstr "Zeiger runter  (Shift)"
-
-#~ msgid "Cursor Left (Shift + Control + Alt)"
-#~ msgstr "Zeiger links (Shift + Strg + Alt)"
-
-#~ msgid "Cursor Left (Control + Alt)"
-#~ msgstr "Zeiger links (Strg + Alt)"
-
-#~ msgid "Cursor Left (Shift + Alt)"
-#~ msgstr "Zeiger links (Shift + Alt)"
-
-#~ msgid "Cursor Left (Shift + Control)"
-#~ msgstr "Zeiger links (Shift + Strg)"
-
-#~ msgid "Cursor Left (Alt)"
-#~ msgstr "Zeiger links (Alt)"
-
-#~ msgid "Cursor Left (Control)"
-#~ msgstr "Zeiger links (Strg)"
-
-#~ msgid "Cursor Left (Shift)"
-#~ msgstr "Zeiger links (Shift)"
-
-#~ msgid "Cursor Right (Shift + Control + Alt)"
-#~ msgstr "Zeiger rechts (Shift + Strg + Alt)"
-
-#~ msgid "Cursor Right (Control + Alt)"
-#~ msgstr "Zeiger rechts (Strg + Alt)"
-
-#~ msgid "Cursor Right (Shift + Alt)"
-#~ msgstr "Zeiger rechts (Shift + Alt)"
-
-#~ msgid "Cursor Right (Shift + Control)"
-#~ msgstr "Zeiger rechts (Shift + Strg)"
-
-#~ msgid "Cursor Right (Alt)"
-#~ msgstr "Zeiger rechts (Alt)"
-
-#~ msgid "Cursor Right (Control)"
-#~ msgstr "Zeiger rechts (Strg)"
-
-#~ msgid "Cursor Right (Shift)"
-#~ msgstr "Zeiger rechts (Shift)"
-
-#~ msgid "<%s>"
-#~ msgstr "<%s>"
-
-#~ msgid "_Image Mode"
-#~ msgstr "_Bildmenü"
-
-#~ msgid "Merge vectors"
-#~ msgstr "Pfade vereinen"
-
-#~ msgid "Drawable mod"
-#~ msgstr "Bild-Prozeduren"
-
-#~ msgid "Set item linked"
-#~ msgstr "Objekt verknüpfen"
-
-#~ msgid "Text modified"
-#~ msgstr "Text verändert"
-
-#~ msgid "New vectors"
-#~ msgstr "Neue Vektoren"
-
-#~ msgid "Delete vectors"
-#~ msgstr "Vektoren löschen"
-
-#~ msgid "Vectors mod"
-#~ msgstr "Vektormodus"
-
-#~ msgid "Reposition vectors"
-#~ msgstr "Vektoren zurücksetzen"
-
-#~ msgid "FS to layer"
-#~ msgstr "Ebene aus Schwebender Auswahl"
-
-#~ msgid "%d seconds"
-#~ msgstr "%d Sekunden"
-
-#~ msgid "%d minutes"
-#~ msgstr "%d Minuten"
-
-#~ msgid "1 layer"
-#~ msgstr "1 Ebene"
-
-#~ msgid "Modify Selected Range's Color Levels"
-#~ msgstr "Die Farbwerte des gewählten Bereichs bearbeiten"
-
-#~ msgid "Highlight rectangle"
-#~ msgstr "Rechteck hervorheben"
-
-#~ msgid "Fixed width"
-#~ msgstr "Feste Breite"
-
-#~ msgid "Fixed height"
-#~ msgstr "Feste Höhe"
-
-#~ msgid "Fixed aspect"
-#~ msgstr "Festes Seitenverhältnis"
-
-#~ msgid "Fixed center"
-#~ msgstr "Feste Mitte"
-
-#~ msgid "Center X"
-#~ msgstr "X zentriert:"
-
-#~ msgid "Center Y"
-#~ msgstr "Y zentriert:"
-
-#~ msgid "Modify all colors"
-#~ msgstr "Alle Farben bearbeiten"
-
-#~ msgid "Modify line spacing"
-#~ msgstr "Zeilenabstand verändern"
-
-#~ msgid "Indent:"
-#~ msgstr "Einzug:"
-
-#~ msgid ""
-#~ "Line\n"
-#~ "spacing:"
-#~ msgstr ""
-#~ "Zeilen-\n"
-#~ "abstand:"
-
-#~ msgid ""
-#~ "Letter\n"
-#~ "spacing:"
-#~ msgstr ""
-#~ "Zeichen-\n"
-#~ "abstand:"
-
-#~ msgid "Translation by"
-#~ msgstr "Übersetzung von"
-
-# CHECK
-#~ msgid "Contributions by"
-#~ msgstr "Mitwirkende"
-
-#~ msgid "About The GIMP"
-#~ msgstr "Info zu GIMP"
-
-#~ msgid "Select custom canvas padding color"
-#~ msgstr "Benutzerdefinierte Farbe für Leinwandrahmen festlegen"
-
-#~ msgid "There are %d images with unsaved changes:"
-#~ msgstr "Es sind %d Bilder mit ungespeicherten Änderungen geöffnet:"
-
-#~ msgid "Select By Color"
-#~ msgstr "Nach Farbe auswählen"
-
-#~ msgid "Allow enlarging  %s"
-#~ msgstr "Vergrößern zulassen  %s"
-
-#~ msgid "Keep aspect ratio  %s"
-#~ msgstr "Seitenverhältnis von %s beibehalten"
-
-#~ msgid "Crop: "
-#~ msgstr "Zuschneiden: "
-
-#~ msgid "Crop & Resize Information"
-#~ msgstr "Zuschneideinformationen"
-
-#~ msgid "Origin X:"
-#~ msgstr "Ursprung X:"
-
-#~ msgid "Origin Y:"
-#~ msgstr "Ursprung Y:"
-
-#~ msgid "From selection"
-#~ msgstr "Aus Auswahl"
-
-#~ msgid "Auto shrink"
-#~ msgstr "Automatisch schrumpfen"
-
-#~ msgid "R_eset channel"
-#~ msgstr "Kanal _zurücksetzen"
-
-#~ msgid "Extract foreground using SIOX algorithm"
-#~ msgstr "Vordergrund freistellen mittels SIOX Algorithmus"
-
-#~ msgid "Stroke path"
-#~ msgstr "Pfad nachziehen"
-
-#~ msgid "_Foreground Select"
-#~ msgstr "_Vordergroundauswahl"
