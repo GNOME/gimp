@@ -97,44 +97,44 @@ typedef struct _DepthMerge
   gint                 resultHasAlpha;
 } DepthMerge;
 
-void   DepthMerge_initParams             (DepthMerge *dm);
-void   DepthMerge_construct              (DepthMerge *dm);
-void   DepthMerge_destroy                (DepthMerge *dm);
-gint32 DepthMerge_execute                (DepthMerge *dm);
-void   DepthMerge_executeRegion          (DepthMerge *dm,
-                                          guchar *source1Row,
-                                          guchar *source2Row,
-                                          guchar *depthMap1Row,
-                                          guchar *depthMap2Row,
-                                          guchar *resultRow,
-                                          gint    length);
-static  gboolean  DepthMerge_dialog      (DepthMerge *dm);
-void   DepthMerge_buildPreviewSourceImage(DepthMerge *dm);
-void   DepthMerge_updatePreview          (DepthMerge *dm);
+static void      DepthMerge_initParams             (DepthMerge *dm);
+static void      DepthMerge_construct              (DepthMerge *dm);
+static void      DepthMerge_destroy                (DepthMerge *dm);
+static gint32    DepthMerge_execute                (DepthMerge *dm);
+static void      DepthMerge_executeRegion          (DepthMerge *dm,
+                                                    guchar     *source1Row,
+                                                    guchar     *source2Row,
+                                                    guchar     *depthMap1Row,
+                                                    guchar     *depthMap2Row,
+                                                    guchar     *resultRow,
+                                                    gint        length);
+static gboolean  DepthMerge_dialog                 (DepthMerge *dm);
+static void      DepthMerge_buildPreviewSourceImage(DepthMerge *dm);
+static void      DepthMerge_updatePreview          (DepthMerge *dm);
 
 
-static gboolean  dm_constraint (gint32    imageId,
-                                gint32    drawableId,
-                                gpointer  data);
+static gboolean  dm_constraint                     (gint32      imageId,
+                                                    gint32      drawableId,
+                                                    gpointer    data);
 
 static void dialogSource1ChangedCallback   (GtkWidget *widget, DepthMerge *dm);
 static void dialogSource2ChangedCallback   (GtkWidget *widget, DepthMerge *dm);
 static void dialogDepthMap1ChangedCallback (GtkWidget *widget, DepthMerge *dm);
 static void dialogDepthMap2ChangedCallback (GtkWidget *widget, DepthMerge *dm);
 
-void dialogValueScaleUpdateCallback (GtkAdjustment *adjustment, gpointer data);
-void dialogValueEntryUpdateCallback (GtkWidget *widget, gpointer data);
+static void dialogValueScaleUpdateCallback (GtkAdjustment *adjustment,
+                                            gpointer       data);
 
-void util_fillReducedBuffer (guchar *dest, gint destWidth, gint destHeight,
-                             gint destBPP, gint destHasAlpha,
-                             GimpDrawable *sourceDrawable,
-                             gint x0, gint y0,
-                             gint sourceWidth, gint sourceHeight);
-void util_convertColorspace (guchar *dest,
-                             gint destBPP,   gint destHasAlpha,
-                             guchar *source,
-                             gint sourceBPP, gint sourceHasAlpha,
-                             gint length);
+static void util_fillReducedBuffer (guchar *dest, gint destWidth, gint destHeight,
+                                    gint destBPP, gint destHasAlpha,
+                                    GimpDrawable *sourceDrawable,
+                                    gint x0, gint y0,
+                                    gint sourceWidth, gint sourceHeight);
+static void util_convertColorspace (guchar *dest,
+                                    gint destBPP,   gint destHasAlpha,
+                                    guchar *source,
+                                    gint sourceBPP, gint sourceHasAlpha,
+                                    gint length);
 
 /* ----- plug-in entry points ----- */
 
@@ -281,7 +281,7 @@ run (const gchar      *name,
 
 /* ----- DepthMerge ----- */
 
-void
+static void
 DepthMerge_initParams (DepthMerge *dm)
 {
   dm->params.result    = -1;
@@ -295,7 +295,7 @@ DepthMerge_initParams (DepthMerge *dm)
   dm->params.scale2    =  1;
 }
 
-void
+static void
 DepthMerge_construct (DepthMerge *dm)
 {
   dm->interface = NULL;
@@ -328,7 +328,7 @@ DepthMerge_construct (DepthMerge *dm)
   dm->params.scale2  = CLAMP (dm->params.scale2, -1, 1);
 }
 
-void
+static void
 DepthMerge_destroy (DepthMerge *dm)
 {
   if (dm->interface != NULL)
@@ -355,7 +355,7 @@ DepthMerge_destroy (DepthMerge *dm)
     gimp_drawable_detach (dm->depthMap2Drawable);
 }
 
-gint32
+static gint32
 DepthMerge_execute (DepthMerge *dm)
 {
   int       x, y;
@@ -519,7 +519,7 @@ DepthMerge_execute (DepthMerge *dm)
   return TRUE;
 }
 
-void
+static void
 DepthMerge_executeRegion (DepthMerge *dm,
                           guchar     *source1Row,
                           guchar     *source2Row,
@@ -528,10 +528,10 @@ DepthMerge_executeRegion (DepthMerge *dm,
                           guchar     *resultRow,
                           gint        length)
 {
-  float          scale1, scale2, offset255, invOverlap255;
-  float          frac, depth1, depth2;
-  unsigned short c1[4], c2[4], cR1[4], cR2[4], cR[4], temp;
-  int            i, tempInt;
+  gfloat  scale1, scale2, offset255, invOverlap255;
+  gfloat  frac, depth1, depth2;
+  gushort c1[4], c2[4], cR1[4], cR2[4], cR[4], temp;
+  gint    i, tempInt;
 
   invOverlap255 = 1.0 / (MAX (dm->params.overlap, 0.001) * 255);
   offset255     = dm->params.offset * 255;
@@ -540,8 +540,8 @@ DepthMerge_executeRegion (DepthMerge *dm,
 
   for (i = 0; i < length; i++)
     {
-      depth1 = (float)depthMap1Row[i];
-      depth2 = (float)depthMap2Row[i];
+      depth1 = (gfloat) depthMap1Row[i];
+      depth2 = (gfloat) depthMap2Row[i];
 
       frac = (depth2*scale2 - (depth1*scale1 + offset255)) * invOverlap255;
       frac = 0.5 * (frac+1.0);
@@ -790,7 +790,7 @@ DepthMerge_dialog (DepthMerge *dm)
   return run;
 }
 
-void
+static void
 DepthMerge_buildPreviewSourceImage (DepthMerge *dm)
 {
   dm->interface->previewSource1   =
@@ -835,7 +835,7 @@ DepthMerge_buildPreviewSourceImage (DepthMerge *dm)
                          dm->selectionWidth, dm->selectionHeight);
 }
 
-void
+static void
 DepthMerge_updatePreview (DepthMerge *dm)
 {
   gint    y;
@@ -994,7 +994,7 @@ dialogDepthMap2ChangedCallback (GtkWidget  *widget,
   DepthMerge_updatePreview (dm);
 }
 
-void
+static void
 dialogValueScaleUpdateCallback (GtkAdjustment *adjustment,
                                 gpointer       data)
 {
@@ -1007,7 +1007,7 @@ dialogValueScaleUpdateCallback (GtkAdjustment *adjustment,
 
 /* ----- Utility routines ----- */
 
-void
+static void
 util_fillReducedBuffer (guchar    *dest,
                         gint       destWidth,
                         gint       destHeight,
@@ -1073,7 +1073,7 @@ util_fillReducedBuffer (guchar    *dest,
 /* Utterly pathetic kludge to convert between color spaces;
    likes gray and rgb best, of course.  Others will be creatively mutilated,
    and even rgb->gray is pretty bad */
-void
+static void
 util_convertColorspace (guchar *dest,
                         gint    destBPP,
                         gint    destHasAlpha,

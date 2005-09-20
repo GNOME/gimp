@@ -532,8 +532,10 @@ fill_poly_color (Polygon      *poly,
                  guchar       *dest)
 {
   GimpPixelRgn  src_rgn;
-  gdouble       dmin_x, dmin_y;
-  gdouble       dmax_x, dmax_y;
+  gdouble       dmin_x = 0.0;
+  gdouble       dmin_y = 0.0;
+  gdouble       dmax_x = 0.0;
+  gdouble       dmax_y = 0.0;
   gint          xs, ys;
   gint          xe, ye;
   gint          min_x, min_y;
@@ -564,12 +566,16 @@ fill_poly_color (Polygon      *poly,
   dist = sqrt (SQR (ex - sx) + SQR (ey - sy));
   if (dist > 0.0)
     {
-      one_over_dist = 1/dist;
+      one_over_dist = 1.0 / dist;
       vec[0] = (ex - sx) * one_over_dist;
       vec[1] = (ey - sy) * one_over_dist;
     }
   else
-    one_over_dist = 0.0;
+    {
+      one_over_dist = 0.0;
+      vec[0] = 0.0;
+      vec[1] = 0.0;
+    }
 
   if (preview)
     {

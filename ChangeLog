@@ -1,11 +1,18 @@
+2005-09-21  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/cubism.c: initialize variables.
+
+	* plug-ins/common/depthmerge.c: declare all functions as static.
+
 2005-09-20  DindinX  <dindinx@gimp.org>
 
-	* libgimp/gimpzoompreview.[ch]: make use of private data instead of
-	struct members. Added a gimp_zoom_preview_get_drawable so we can still
-	get the drawable from a preview in plug-ins.
+	* libgimp/gimpzoompreview.[ch]: make use of private data instead
+	of struct members. Added a gimp_zoom_preview_get_drawable so we
+	can still get the drawable from a preview in plug-ins.
 
-	Also changed gimp_zoom_preview_get_data to
-	gimp_zoom_preview_get_source, to make it more obvious what it returns.
+	Also changed gimp_zoom_preview_get_data() to
+	gimp_zoom_preview_get_source(), to make it more obvious what it
+	returns.
 
 	* libgimp/gimpui.def
 	* plug-ins/common/AlienMap2.c
