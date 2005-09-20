@@ -291,8 +291,8 @@ illusion_preview (GimpPreview  *preview,
   gint      yy = 0;
   gdouble   scale, radius, cx, cy, angle, offset;
 
-  preview_cache = gimp_zoom_preview_get_data (GIMP_ZOOM_PREVIEW (preview),
-                                              &width, &height, &bpp);
+  preview_cache = gimp_zoom_preview_get_source (GIMP_ZOOM_PREVIEW (preview),
+                                                &width, &height, &bpp);
   center_x      = (gdouble)width  / 2.0;
   center_y      = (gdouble)height / 2.0;
 

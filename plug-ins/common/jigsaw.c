@@ -445,8 +445,8 @@ jigsaw (GimpDrawable *drawable,
 
   if (preview)
     {
-      src = gimp_zoom_preview_get_data (GIMP_ZOOM_PREVIEW (preview),
-                                        &width, &height, &bytes);
+      src = gimp_zoom_preview_get_source (GIMP_ZOOM_PREVIEW (preview),
+                                          &width, &height, &bytes);
     }
   else
     {

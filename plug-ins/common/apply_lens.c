@@ -251,8 +251,8 @@ drawlens (GimpDrawable *drawable,
 
   if (preview)
     {
-      src = gimp_zoom_preview_get_data (GIMP_ZOOM_PREVIEW (preview),
-                                        &width, &height, &bytes);
+      src = gimp_zoom_preview_get_source (GIMP_ZOOM_PREVIEW (preview),
+                                          &width, &height, &bytes);
       gimp_preview_get_position (preview, &x1, &y1);
       x2 = x1 + width;
       y2 = y1 + height;

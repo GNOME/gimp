@@ -111,7 +111,6 @@ static alienmap2_vals_t wvals =
   RGB_MODEL,
   TRUE,
   TRUE,
-  TRUE,
   TRUE
 };
 
@@ -576,8 +575,8 @@ dialog_update_preview (GimpDrawable *drawable,
   gint    width, height, bpp;
   gint    i;
 
-  src = gimp_zoom_preview_get_data (GIMP_ZOOM_PREVIEW (preview),
-                                    &width, &height, &bpp);
+  src = gimp_zoom_preview_get_source (GIMP_ZOOM_PREVIEW (preview),
+                                      &width, &height, &bpp);
   dest = g_new (guchar, width * height * bpp);
 
   for (i = 0 ; i < width * height ; i++)

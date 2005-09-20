@@ -43,11 +43,6 @@ typedef struct _GimpZoomPreviewClass  GimpZoomPreviewClass;
 struct _GimpZoomPreview
 {
   GimpScrolledPreview  parent_instance;
-
-  /*< private >*/
-  GimpDrawable        *drawable;
-  GimpZoomModel       *zoom;
-  GdkRectangle         extents;
 };
 
 struct _GimpZoomPreviewClass
@@ -62,13 +57,14 @@ struct _GimpZoomPreviewClass
 };
 
 
-GType       gimp_zoom_preview_get_type (void) G_GNUC_CONST;
+GType          gimp_zoom_preview_get_type     (void) G_GNUC_CONST;
 
-GtkWidget * gimp_zoom_preview_new      (GimpDrawable    *drawable);
-guchar    * gimp_zoom_preview_get_data (GimpZoomPreview *preview,
-                                        gint            *width,
-                                        gint            *height,
-                                        gint            *bpp);
+GtkWidget    * gimp_zoom_preview_new          (GimpDrawable    *drawable);
+guchar       * gimp_zoom_preview_get_source   (GimpZoomPreview *preview,
+                                               gint            *width,
+                                               gint            *height,
+                                               gint            *bpp);
+GimpDrawable * gimp_zoom_preview_get_drawable (GimpZoomPreview *preview);
 
 G_END_DECLS
 

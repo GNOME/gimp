@@ -736,8 +736,8 @@ dialog_update_preview (GimpDrawable *drawable,
   bottom = sel_y2 - 1;
   top    = sel_y1;
 
-  preview_cache = gimp_zoom_preview_get_data (GIMP_ZOOM_PREVIEW (preview),
-                                              &width, &height, &bpp);
+  preview_cache = gimp_zoom_preview_get_source (GIMP_ZOOM_PREVIEW (preview),
+                                                &width, &height, &bpp);
   dx = (right - left) / (width - 1);
   dy = (bottom - top) / (height - 1);
 

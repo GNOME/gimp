@@ -223,7 +223,7 @@ colorify (GimpDrawable *drawable,
       gint    width, height, bytes;
       guchar *src;
 
-      src = gimp_zoom_preview_get_data (GIMP_ZOOM_PREVIEW (preview),
+      src = gimp_zoom_preview_get_source (GIMP_ZOOM_PREVIEW (preview),
                                         &width, &height, &bytes);
       for (i = 0; i < width * height; i++)
         colorify_func (src + i * bytes, src + i * bytes, bytes, NULL);

@@ -48,6 +48,7 @@ EXPORTS
 	gimp_ui_get_progress_window
 	gimp_window_set_transient
 	gimp_window_set_transient_for_display
-	gimp_zoom_preview_get_data
+	gimp_zoom_preview_get_drawable
+	gimp_zoom_preview_get_source
 	gimp_zoom_preview_get_type
 	gimp_zoom_preview_new

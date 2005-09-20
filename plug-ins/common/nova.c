@@ -737,8 +737,8 @@ nova (GimpDrawable *drawable,
 
    if (preview)
      {
-       cache = gimp_zoom_preview_get_data (GIMP_ZOOM_PREVIEW (preview),
-                                           &width, &height, &bpp);
+       cache = gimp_zoom_preview_get_source (GIMP_ZOOM_PREVIEW (preview),
+                                             &width, &height, &bpp);
        xc = (gdouble) pvals.xcenter * width  / drawable->width;
        yc = (gdouble) pvals.ycenter * height / drawable->height;
 

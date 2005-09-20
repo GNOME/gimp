@@ -314,8 +314,8 @@ update_img_preview (GimpDrawable *drawable,
                plvals.map_mode,
                redmap, greenmap, bluemap);
 
-  src = gimp_zoom_preview_get_data (GIMP_ZOOM_PREVIEW (preview),
-                                    &width, &height, &bpp);
+  src = gimp_zoom_preview_get_source (GIMP_ZOOM_PREVIEW (preview),
+                                      &width, &height, &bpp);
   has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
   j = width * height;

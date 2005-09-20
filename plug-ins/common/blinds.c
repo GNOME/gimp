@@ -453,8 +453,8 @@ dialog_update_preview (GimpDrawable *drawable,
   guchar   bg[4];
   gint     width, height, bpp;
 
-  cache = gimp_zoom_preview_get_data (GIMP_ZOOM_PREVIEW (preview),
-                                      &width, &height, &bpp);
+  cache = gimp_zoom_preview_get_source (GIMP_ZOOM_PREVIEW (preview),
+                                        &width, &height, &bpp);
 
   p = cache;
 

@@ -768,15 +768,17 @@ cm_preview (CmParamsType *mix,
   gint          offset, rowsize;
   gdouble       red_norm, green_norm, blue_norm, black_norm;
   gint          width, height, bpp;
-  GimpDrawable *drawable = GIMP_ZOOM_PREVIEW (preview)->drawable;
+  GimpDrawable *drawable;
+
+  drawable = gimp_zoom_preview_get_drawable (GIMP_ZOOM_PREVIEW (preview));
 
   red_norm   = cm_calculate_norm (mix, &mix->red);
   green_norm = cm_calculate_norm (mix, &mix->green);
   blue_norm  = cm_calculate_norm (mix, &mix->blue);
   black_norm = cm_calculate_norm (mix, &mix->black);
 
-  src = gimp_zoom_preview_get_data (GIMP_ZOOM_PREVIEW (preview),
-                                    &width, &height, &bpp);
+  src = gimp_zoom_preview_get_source (GIMP_ZOOM_PREVIEW (preview),
+                                      &width, &height, &bpp);
 
   rowsize = width * bpp;
   dst = g_new (guchar, rowsize * height);

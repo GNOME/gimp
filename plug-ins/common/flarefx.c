@@ -157,8 +157,7 @@ GimpPlugInInfo PLUG_IN_INFO =
 
 static FlareValues fvals =
 {
-  128, 128,   /* posx, posy */
-  TRUE        /* preview    */
+  128, 128   /* posx, posy */
 };
 
 static gfloat     scolor, sglow, sinner, souter; /* size     */
@@ -368,8 +367,8 @@ FlareFX (GimpDrawable *drawable,
   bytes  = drawable->bpp;
   if (preview)
     {
-      src = gimp_zoom_preview_get_data (GIMP_ZOOM_PREVIEW (preview),
-                                        &width, &height, &bytes);
+      src = gimp_zoom_preview_get_source (GIMP_ZOOM_PREVIEW (preview),
+                                          &width, &height, &bytes);
 
       xs = (gdouble)fvals.posx * width  / drawable->width;
       ys = (gdouble)fvals.posy * height / drawable->height;

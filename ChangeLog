@@ -1,5 +1,31 @@
 2005-09-20  DindinX  <dindinx@gimp.org>
 
+	* libgimp/gimpzoompreview.[ch]: make use of private data instead of
+	struct members. Added a gimp_zoom_preview_get_drawable so we can still
+	get the drawable from a preview in plug-ins.
+
+	Also changed gimp_zoom_preview_get_data to
+	gimp_zoom_preview_get_source, to make it more obvious what it returns.
+
+	* libgimp/gimpui.def
+	* plug-ins/common/AlienMap2.c
+	* plug-ins/common/apply_lens.c
+	* plug-ins/common/blinds.c
+	* plug-ins/common/channel_mixer.c
+	* plug-ins/common/colorify.c
+	* plug-ins/common/flarefx.c
+	* plug-ins/common/illusion.c
+	* plug-ins/common/jigsaw.c
+	* plug-ins/common/mapcolor.c
+	* plug-ins/common/max_rgb.c
+	* plug-ins/common/nova.c
+	* plug-ins/common/polar.c
+	* plug-ins/common/retinex.c
+	* plug-ins/common/waves.c
+	* plug-ins/common/whirlpinch.c: changed accordingly.
+
+2005-09-20  DindinX  <dindinx@gimp.org>
+
 	* libgimpwidgets/gimpzoommodel.[ch]: use private data instead of
 	struct members. Added min-factor and max-factor properties so we can
 	set the zoom range. These can be set by a new utility function:
