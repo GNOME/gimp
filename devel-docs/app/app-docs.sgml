@@ -239,7 +239,7 @@
       <xi:include href="xml/gimpimage-new.xml" />
       <xi:include href="xml/gimpimage-pick-color.xml" />
       <xi:include href="xml/gimpimage-preview.xml" />
-      <xi:include href="xml/gimpimage-qmask.xml" />
+      <xi:include href="xml/gimpimage-quick-mask.xml" />
       <xi:include href="xml/gimpimage-resize.xml" />
       <xi:include href="xml/gimpimage-rotate.xml" />
       <xi:include href="xml/gimpimage-scale.xml" />
@@ -879,8 +879,8 @@
       <xi:include href="xml/layers-commands.xml" />
       <xi:include href="xml/plug-in-actions.xml" />
       <xi:include href="xml/plug-in-commands.xml" />
-      <xi:include href="xml/qmask-actions.xml" />
-      <xi:include href="xml/qmask-commands.xml" />
+      <xi:include href="xml/quick-mask-actions.xml" />
+      <xi:include href="xml/quick-mask-commands.xml" />
       <xi:include href="xml/select-actions.xml" />
       <xi:include href="xml/select-commands.xml" />
       <xi:include href="xml/tools-actions.xml" />

@@ -874,7 +874,7 @@ gimp_image_sample_point_added
 gimp_image_sample_point_removed
 gimp_image_colormap_changed
 gimp_image_selection_control
-gimp_image_qmask_changed
+gimp_image_quick_mask_changed
 gimp_image_undo_is_enabled
 gimp_image_undo_can_compress
 gimp_image_undo_enable
@@ -1739,8 +1739,8 @@ gimp_display_shell_canvas_tool_events
 gimp_display_shell_hruler_button_press
 gimp_display_shell_vruler_button_press
 gimp_display_shell_origin_button_press
-gimp_display_shell_qmask_button_press
-gimp_display_shell_qmask_toggled
+gimp_display_shell_quick_mask_button_press
+gimp_display_shell_quick_mask_toggled
 gimp_display_shell_nav_button_press
 </SECTION>
 
@@ -6803,15 +6803,15 @@ gimp_image_get_new_preview
 </SECTION>
 
 <SECTION>
-<FILE>gimpimage-qmask</FILE>
-<TITLE>GimpImage-qmask</TITLE>
-GIMP_IMAGE_QMASK_NAME
-gimp_image_set_qmask_state
-gimp_image_get_qmask_state
-gimp_image_set_qmask_color
-gimp_image_get_qmask_color
-gimp_image_get_qmask
-gimp_image_qmask_invert
+<FILE>gimpimage-quick-mask</FILE>
+<TITLE>GimpImage-quick-mask</TITLE>
+GIMP_IMAGE_QUICK_MASK_NAME
+gimp_image_set_quick_mask_state
+gimp_image_get_quick_mask_state
+gimp_image_set_quick_mask_color
+gimp_image_get_quick_mask_color
+gimp_image_get_quick_mask
+gimp_image_quick_mask_invert
 </SECTION>
 
 <SECTION>
@@ -6998,6 +6998,7 @@ gimp_scan_convert_free
 gimp_scan_convert_set_pixel_ratio
 gimp_scan_convert_add_points
 gimp_scan_convert_add_polyline
+gimp_scan_convert_set_clip_rectangle
 gimp_scan_convert_render
 gimp_scan_convert_render_value
 gimp_scan_convert_stroke
@@ -8384,9 +8385,9 @@ plug_in_actions_add_branch
 </SECTION>
 
 <SECTION>
-<FILE>qmask-actions</FILE>
-qmask_actions_setup
-qmask_actions_update
+<FILE>quick-mask-actions</FILE>
+quick_mask_actions_setup
+quick_mask_actions_update
 </SECTION>
 
 <SECTION>
@@ -8601,6 +8602,7 @@ edit_paste_into_cmd_callback
 edit_paste_as_new_cmd_callback
 edit_named_cut_cmd_callback
 edit_named_copy_cmd_callback
+edit_named_copy_visible_cmd_callback
 edit_named_paste_cmd_callback
 edit_clear_cmd_callback
 edit_fill_cmd_callback
@@ -8747,10 +8749,10 @@ plug_in_reset_all_cmd_callback
 </SECTION>
 
 <SECTION>
-<FILE>qmask-commands</FILE>
-qmask_toggle_cmd_callback
-qmask_invert_cmd_callback
-qmask_configure_cmd_callback
+<FILE>quick-mask-commands</FILE>
+quick_mask_toggle_cmd_callback
+quick_mask_invert_cmd_callback
+quick_mask_configure_cmd_callback
 </SECTION>
 
 <SECTION>

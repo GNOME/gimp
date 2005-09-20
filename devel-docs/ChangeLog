@@ -1,3 +1,8 @@
+2005-09-20  Sven Neumann  <sven@gimp.org>
+
+	* app/app-docs.sgml: 
+	* app/app-sections.txt: qmask became quick-mask.
+
 2005-09-12  Michael Natterer  <mitch@gimp.org>
 
 	* app/app-docs.sgml
