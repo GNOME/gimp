@@ -1,5 +1,9 @@
 2005-09-20  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/svg.c: corrected version check (bug #314400).
+
+2005-09-20  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpcolorscale.c: invalidate the buffer when the
 	widget's sensitivity changes. Draw a stipple pattern on the
 	insensitive color scale.
