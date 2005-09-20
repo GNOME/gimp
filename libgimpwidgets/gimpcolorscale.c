@@ -40,14 +40,17 @@
 static void     gimp_color_scale_class_init (GimpColorScaleClass *klass);
 static void     gimp_color_scale_init       (GimpColorScale      *scale);
 
-static void     gimp_color_scale_destroy       (GtkObject        *object);
-static void     gimp_color_scale_size_allocate (GtkWidget        *widget,
-                                                GtkAllocation    *allocation);
-static gboolean gimp_color_scale_expose        (GtkWidget        *widget,
-                                                GdkEventExpose   *event);
+static void     gimp_color_scale_destroy        (GtkObject       *object);
+static void     gimp_color_scale_size_allocate  (GtkWidget       *widget,
+                                                 GtkAllocation   *allocation);
+static void     gimp_color_scale_state_changed  (GtkWidget       *widget,
+                                                 GtkStateType     previous_state);
+static gboolean gimp_color_scale_expose         (GtkWidget       *widget,
+                                                 GdkEventExpose  *event);
 
-static void     gimp_color_scale_render        (GimpColorScale   *scale);
-static void     gimp_color_scale_render_alpha  (GimpColorScale   *scale);
+static void     gimp_color_scale_render         (GimpColorScale  *scale);
+static void     gimp_color_scale_render_alpha   (GimpColorScale  *scale);
+static void     gimp_color_scale_render_stipple (GimpColorScale  *scale);
 
 
 static GtkScaleClass * parent_class = NULL;
@@ -91,6 +94,7 @@ gimp_color_scale_class_init (GimpColorScaleClass *klass)
   object_class->destroy = gimp_color_scale_destroy;
 
   widget_class->size_allocate = gimp_color_scale_size_allocate;
+  widget_class->state_changed = gimp_color_scale_state_changed;
   widget_class->expose_event  = gimp_color_scale_expose;
 }
 
@@ -187,6 +191,20 @@ gimp_color_scale_size_allocate (GtkWidget     *widget,
     }
 }
 
+static void
+gimp_color_scale_state_changed (GtkWidget    *widget,
+                                GtkStateType  previous_state)
+{
+  if (widget->state == GTK_STATE_INSENSITIVE ||
+      previous_state == GTK_STATE_INSENSITIVE)
+    {
+      GIMP_COLOR_SCALE (widget)->needs_render = TRUE;
+    }
+
+  if (GTK_WIDGET_CLASS (parent_class)->state_changed)
+    GTK_WIDGET_CLASS (parent_class)->state_changed (widget, previous_state);
+}
+
 static gboolean
 gimp_color_scale_expose (GtkWidget      *widget,
                          GdkEventExpose *event)
@@ -241,18 +259,20 @@ gimp_color_scale_expose (GtkWidget      *widget,
 
   if (gdk_rectangle_intersect (&expose_area, &range->range_rect, &area))
     {
-      gboolean sensitive;
+      gboolean sensitive = (GTK_WIDGET_STATE (widget) != GTK_STATE_INSENSITIVE);
 
       if (scale->needs_render)
         {
           gimp_color_scale_render (scale);
+
+          if (! sensitive)
+            gimp_color_scale_render_stipple (scale);
+
           scale->needs_render = FALSE;
         }
 
       area.x += widget->allocation.x;
       area.y += widget->allocation.y;
-
-      sensitive = GTK_WIDGET_STATE (widget) != GTK_STATE_INSENSITIVE;
 
       gtk_paint_box (widget->style, widget->window,
                      sensitive ? GTK_STATE_ACTIVE : GTK_STATE_INSENSITIVE,
@@ -321,41 +341,47 @@ gimp_color_scale_expose (GtkWidget      *widget,
 
   if (gdk_rectangle_intersect (&event->area, &area, &expose_area))
     {
-      gdk_gc_set_clip_rectangle (widget->style->black_gc, &expose_area);
+      GdkGC *gc;
+
+      gc = (GTK_WIDGET_IS_SENSITIVE (widget) ?
+            widget->style->black_gc :
+            widget->style->mid_gc[GTK_STATE_INSENSITIVE]);
+
+      gdk_gc_set_clip_rectangle (gc, &expose_area);
       switch (range->orientation)
         {
         case GTK_ORIENTATION_HORIZONTAL:
           for (w = area.width, x = area.x, y = area.y;
                w > 0; w -= 2, x++, y++)
-            gdk_draw_line (widget->window, widget->style->black_gc,
-                           x, y, x + w - 1, y);
+            gdk_draw_line (widget->window, gc, x, y, x + w - 1, y);
           break;
         case GTK_ORIENTATION_VERTICAL:
           for (h = area.height, x = area.x, y = area.y;
                h > 0; h -= 2, x++, y++)
-            gdk_draw_line (widget->window, widget->style->black_gc,
-                           x, y, x, y + h - 1);
+            gdk_draw_line (widget->window, gc, x, y, x, y + h - 1);
           break;
         }
-      gdk_gc_set_clip_rectangle (widget->style->black_gc, NULL);
+      gdk_gc_set_clip_rectangle (gc, NULL);
 
-      gdk_gc_set_clip_rectangle (widget->style->white_gc, &expose_area);
+      gc = (GTK_WIDGET_IS_SENSITIVE (widget) ?
+            widget->style->white_gc :
+            widget->style->mid_gc[GTK_STATE_INSENSITIVE]);
+
+      gdk_gc_set_clip_rectangle (gc, &expose_area);
       switch (range->orientation)
         {
         case GTK_ORIENTATION_HORIZONTAL:
           for (w = area.width, x = area.x, y = area.y + area.height - 1;
                w > 0; w -= 2, x++, y--)
-            gdk_draw_line (widget->window, widget->style->white_gc,
-                           x, y, x + w - 1, y);
+            gdk_draw_line (widget->window, gc, x, y, x + w - 1, y);
           break;
         case GTK_ORIENTATION_VERTICAL:
           for (h = area.height, x = area.x + area.width - 1, y = area.y;
                h > 0; h -= 2, x--, y++)
-            gdk_draw_line (widget->window, widget->style->white_gc,
-                           x, y, x, y + h - 1);
+            gdk_draw_line (widget->window, gc, x, y, x, y + h - 1);
           break;
         }
-      gdk_gc_set_clip_rectangle (widget->style->white_gc, NULL);
+      gdk_gc_set_clip_rectangle (gc, NULL);
     }
 
   return FALSE;
@@ -672,5 +698,37 @@ gimp_color_scale_render_alpha (GimpColorScale *scale)
           }
       }
       break;
+    }
+}
+
+/*
+ * This could be integrated into the render functions which might be
+ * slightly faster. But we trade speed for keeping the code simple.
+ */
+static void
+gimp_color_scale_render_stipple (GimpColorScale *scale)
+{
+  GtkWidget *widget = GTK_WIDGET (scale);
+  guchar    *buf;
+  guchar     insensitive[3];
+  guint      x, y;
+
+  if ((buf = scale->buf) == NULL)
+    return;
+
+  insensitive[0] = widget->style->bg[GTK_STATE_INSENSITIVE].red   >> 8;
+  insensitive[1] = widget->style->bg[GTK_STATE_INSENSITIVE].green >> 8;
+  insensitive[2] = widget->style->bg[GTK_STATE_INSENSITIVE].blue  >> 8;
+
+  for (y = 0; y < scale->height; y++, buf += scale->rowstride)
+    {
+      guchar *d = buf + 3 * (y % 2);
+
+      for (x = 0; x < scale->width; x += 2, d += 6)
+        {
+          d[0] = insensitive[0];
+          d[1] = insensitive[1];
+          d[2] = insensitive[2];
+        }
     }
 }
