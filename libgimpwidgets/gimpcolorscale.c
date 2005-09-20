@@ -345,7 +345,7 @@ gimp_color_scale_expose (GtkWidget      *widget,
 
       gc = (GTK_WIDGET_IS_SENSITIVE (widget) ?
             widget->style->black_gc :
-            widget->style->mid_gc[GTK_STATE_INSENSITIVE]);
+            widget->style->dark_gc[GTK_STATE_INSENSITIVE]);
 
       gdk_gc_set_clip_rectangle (gc, &expose_area);
       switch (range->orientation)
@@ -365,7 +365,7 @@ gimp_color_scale_expose (GtkWidget      *widget,
 
       gc = (GTK_WIDGET_IS_SENSITIVE (widget) ?
             widget->style->white_gc :
-            widget->style->mid_gc[GTK_STATE_INSENSITIVE]);
+            widget->style->light_gc[GTK_STATE_INSENSITIVE]);
 
       gdk_gc_set_clip_rectangle (gc, &expose_area);
       switch (range->orientation)
