@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-05 00:29+0200\n"
-"PO-Revision-Date: 2005-07-05 01:25+0200\n"
+"POT-Creation-Date: 2005-09-20 15:49+0200\n"
+"PO-Revision-Date: 2005-09-20 15:48+0200\n"
 "Last-Translator: Hendrik Richter <hendi@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -4889,7 +4889,7 @@ msgstr "Zauberstab"
 msgid "Select by Color"
 msgstr "Nach Farbe auswählen"
 
-#: ../app/core/gimpdata.c:314
+#: ../app/core/gimpdata.c:320
 #, c-format
 msgid "Could not delete '%s': %s"
 msgstr "»%s« konnte nicht gelöscht werden: %s"
@@ -6315,7 +6315,8 @@ msgstr "Vorschau"
 
 #: ../app/dialogs/preferences-dialog.c:294
 msgid "You will have to restart GIMP for the following changes to take effect:"
-msgstr "Sie müssen GIMP neu starten, damit die folgenden Änderungen aktiv werden:"
+msgstr ""
+"Sie müssen GIMP neu starten, damit die folgenden Änderungen aktiv werden:"
 
 #: ../app/dialogs/preferences-dialog.c:501
 msgid "Configure Keyboard Shortcuts"
@@ -8070,12 +8071,12 @@ msgstr "Vorläufige Prozedur"
 msgid "Free Select"
 msgstr "Freie Auswahl"
 
-#: ../app/plug-in/plug-in.c:544 ../app/plug-in/plug-in.c:574
+#: ../app/plug-in/plug-in.c:551 ../app/plug-in/plug-in.c:581
 #, c-format
 msgid "Terminating plug-in: '%s'\n"
 msgstr "Plugin wird abgebrochen: »%s«\n"
 
-#: ../app/plug-in/plug-in.c:730
+#: ../app/plug-in/plug-in.c:737
 #, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"
@@ -9543,7 +9544,7 @@ msgstr ""
 
 #: ../app/tools/gimpvectoroptions.c:196
 msgid "Create selection from path"
-msgstr "Pfad aus Auswahl"
+msgstr "Auswahl aus Pfad erzeugen"
 
 #: ../app/tools/gimpvectoroptions.c:207
 msgid "Stroke path"
