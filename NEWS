@@ -7,6 +7,35 @@ This is the development branch of The GIMP. Here's where all the shiny
 new stuff is being done that will one day be released as GIMP 2.4.
 
 
+Changes in GIMP 2.3.4
+=====================
+
+- added a zoomable preview widget for plug-ins
+- implement copy and paste of paths as SVG 
+- use new stock icons introduced with GTK+ 2.6
+- allow to zoom in/out using the +/- keys on the numerical keypad
+- make it easier to drop dockables below the toolbox
+- set plug-in dialogs transient to the window they have been called from
+- added PDB function to obtain handles to the image and progress windows
+- export named buffers to the PDB
+- easier access to the popup menu in empty container views
+- use ngettext for plural forms
+- implement "Sample Merged" for the Clone tool
+- various Win32 fixes
+- fixed capitalization for better HIG compliance
+- use a descriptive verb instead of "OK" as button label in most dialogs
+- redone About dialog to be more informative
+- take the default unit from the locale settings
+- moved color-related tools and plug-ins to a new toplevel Colors menu
+- let the gnomevfs plug-in use GNOME authentication manager if available
+- rewritten Crop tool (work in progress)
+- added page selector to the Postscript Import plug-in
+- added preview to Checkerboard and Threshold Alpha plug-ins
+- more PDB procedure and parameter name canonicalization
+- touched up new path tool cursors and added one for the Join operation
+- bug fixes and code cleanup
+
+
 Changes in GIMP 2.3.3
 =====================
 
