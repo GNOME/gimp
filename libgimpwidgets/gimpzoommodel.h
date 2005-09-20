@@ -39,9 +39,6 @@ typedef struct _GimpZoomModelClass  GimpZoomModelClass;
 struct _GimpZoomModel
 {
   GObject  parent_instance;
-
-  gdouble  zoom_factor;
-  gdouble  step_size;
 };
 
 struct _GimpZoomModelClass
@@ -67,6 +64,9 @@ gdouble        gimp_zoom_model_get_factor   (GimpZoomModel      *zoom_model);
 void           gimp_zoom_model_get_fraction (gdouble             zoom_factor,
                                              gint               *numerator,
                                              gint               *denominator);
+void           gimp_zoom_model_set_range    (GimpZoomModel *zoom_model,
+                                             gdouble        min,
+                                             gdouble        max);
 
 G_END_DECLS
 

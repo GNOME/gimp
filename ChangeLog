@@ -1,3 +1,15 @@
+2005-09-20  DindinX  <dindinx@gimp.org>
+
+	* libgimpwidgets/gimpzoommodel.[ch]: use private data instead of
+	struct members. Added min-factor and max-factor properties so we can
+	set the zoom range. These can be set by a new utility function:
+	gimp_zoom_model_set_range.
+
+	* libgimpwidgets/gimpwidgets.def: added gimp_zoom_model_set_range.
+
+	* libgimp/gimpzoompreview.c: use gimp_zoom_model_set_range so we can
+	only zoom in.
+
 2005-09-20  Sven Neumann  <sven@gimp.org>
 
 	* app/paint-funcs/paint-funcs.c (erode_region, dilate_region):

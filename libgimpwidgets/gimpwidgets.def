@@ -332,4 +332,5 @@ EXPORTS
 	gimp_zoom_model_get_fraction
 	gimp_zoom_model_get_type
 	gimp_zoom_model_new
+	gimp_zoom_model_set_range
 	gimp_zoom_widget_new

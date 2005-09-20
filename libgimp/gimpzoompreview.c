@@ -83,6 +83,7 @@ gimp_zoom_preview_init (GimpZoomPreview *preview)
   GtkWidget *label;
 
   preview->zoom = gimp_zoom_model_new (1.1);
+  gimp_zoom_model_set_range (GIMP_ZOOM_MODEL (preview->zoom), 1.0, 256.0);
   g_signal_connect_swapped (preview->zoom, "notify::zoom-factor",
                             G_CALLBACK (gimp_zoom_preview_set_adjustments),
                             preview);
