@@ -649,11 +649,11 @@ gimp_imagefile_get_desc_string (GimpImagefile *imagefile)
                   if (thumbnail->image_type)
                     g_string_append_len (str, ", ", 2);
 
-                  if (thumbnail->image_num_layers == 1)
-                    g_string_append (str, _("1 Layer"));
-                  else
-                    g_string_append_printf (str, _("%d Layers"),
-                                            thumbnail->image_num_layers);
+                  g_string_append_printf (str,
+                                          ngettext ("%d Layer",
+                                                    "%d Layers",
+                                                    thumbnail->image_num_layers),
+                                          thumbnail->image_num_layers);
                 }
             }
             break;
