@@ -1,3 +1,9 @@
+2005-09-20  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/compose.c: applied patch from Sylvain Foret
+	which allows to use fixed greyscale values instead of drawables
+	for color components. Fixes bug #309112.
+
 2005-09-20  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpitem.c: added read-only properties for id, width
