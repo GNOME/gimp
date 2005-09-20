@@ -1,5 +1,10 @@
 2005-09-20  Sven Neumann  <sven@gimp.org>
 
+	* app/paint-funcs/paint-funcs.c (erode_region, dilate_region):
+	fixed bug in buffer initialization, spotted by Tobias Lenz.
+	
+2005-09-20  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/svg.c: corrected version check (bug #314400).
 
 2005-09-20  Sven Neumann  <sven@gimp.org>

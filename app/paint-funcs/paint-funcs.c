@@ -3395,7 +3395,7 @@ erode_region (PixelRegion *region)
   buf[0][0]         = buf[0][1];
   buf[0][width + 1] = buf[0][width];
 
-  memcpy (buf[1], buf[2], width + 2);
+  memcpy (buf[1], buf[0], width + 2);
 
   for (y = 0; y < region->h; y++)
     {
@@ -3459,7 +3459,7 @@ dilate_region (PixelRegion *region)
   buf[0][0]         = buf[0][1];
   buf[0][width + 1] = buf[0][width];
 
-  memcpy (buf[1], buf[2], width + 2);
+  memcpy (buf[1], buf[0], width + 2);
 
   for (y = 0; y < region->h; y++)
     {
