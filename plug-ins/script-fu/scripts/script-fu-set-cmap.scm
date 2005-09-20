@@ -63,4 +63,4 @@
 )
 
 (tiny-fu-menu-register "tiny-fu-set-cmap"
-                      _"<Image>/Tiny-Fu/Utils")
+                       "<Image>/Tiny-Fu/Utils")
