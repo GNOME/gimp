@@ -1,3 +1,8 @@
+2005-09-20  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpitem.c: added read-only properties for id, width
+	and height.
+
 2005-09-20  DindinX  <dindinx@gimp.org>
 
 	* libgimp/gimpui.def: added the functions from gimpzoompreview.h

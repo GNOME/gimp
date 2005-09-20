@@ -52,12 +52,28 @@ enum
   LAST_SIGNAL
 };
 
+enum
+{
+  PROP_0,
+  PROP_ID,
+  PROP_WIDTH,
+  PROP_HEIGHT
+};
+
 
 /*  local function prototypes  */
 
 static void       gimp_item_class_init        (GimpItemClass *klass);
 static void       gimp_item_init              (GimpItem      *item);
 
+static void       gimp_item_set_property      (GObject       *object,
+                                               guint          property_id,
+                                               const GValue  *value,
+                                               GParamSpec    *pspec);
+static void       gimp_item_get_property      (GObject       *object,
+                                               guint          property_id,
+                                               GValue        *value,
+                                               GParamSpec    *pspec);
 static void       gimp_item_finalize          (GObject       *object);
 
 static gint64     gimp_item_get_memsize       (GimpObject    *object,
@@ -161,6 +177,8 @@ gimp_item_class_init (GimpItemClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
+  object_class->set_property       = gimp_item_set_property;
+  object_class->get_property       = gimp_item_get_property;
   object_class->finalize           = gimp_item_finalize;
 
   gimp_object_class->get_memsize   = gimp_item_get_memsize;
@@ -192,6 +210,21 @@ gimp_item_class_init (GimpItemClass *klass)
   klass->flip_desc                 = NULL;
   klass->rotate_desc               = NULL;
   klass->transform_desc            = NULL;
+
+  g_object_class_install_property (object_class, PROP_ID,
+                                   g_param_spec_int ("id", NULL, NULL,
+                                                     0, G_MAXINT, 0,
+                                                     G_PARAM_READABLE));
+
+  g_object_class_install_property (object_class, PROP_WIDTH,
+                                   g_param_spec_int ("width", NULL, NULL,
+                                                     1, GIMP_MAX_IMAGE_SIZE, 1,
+                                                     G_PARAM_READABLE));
+
+  g_object_class_install_property (object_class, PROP_HEIGHT,
+                                   g_param_spec_int ("height", NULL, NULL,
+                                                     1, GIMP_MAX_IMAGE_SIZE, 1,
+                                                     G_PARAM_READABLE));
 }
 
 static void
@@ -209,6 +242,45 @@ gimp_item_init (GimpItem *item)
   item->linked    = FALSE;
   item->floating  = TRUE;
   item->removed   = FALSE;
+}
+
+static void
+gimp_item_set_property (GObject      *object,
+                        guint         property_id,
+                        const GValue *value,
+                        GParamSpec   *pspec)
+{
+  switch (property_id)
+    {
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_item_get_property (GObject    *object,
+                        guint       property_id,
+                        GValue     *value,
+                        GParamSpec *pspec)
+{
+  GimpItem *item = GIMP_ITEM (object);
+
+  switch (property_id)
+    {
+    case PROP_ID:
+      g_value_set_int (value, item->ID);
+      break;
+    case PROP_WIDTH:
+      g_value_set_int (value, item->width);
+      break;
+    case PROP_HEIGHT:
+      g_value_set_int (value, item->height);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 static void
@@ -342,10 +414,13 @@ gimp_item_real_scale (GimpItem              *item,
                       GimpInterpolationType  interpolation,
                       GimpProgress          *progress)
 {
-  item->width     = new_width;
-  item->height    = new_height;
-  item->offset_x  = new_offset_x;
-  item->offset_y  = new_offset_y;
+  item->width    = new_width;
+  item->height   = new_height;
+  item->offset_x = new_offset_x;
+  item->offset_y = new_offset_y;
+
+  g_object_notify (G_OBJECT (item), "width");
+  g_object_notify (G_OBJECT (item), "height");
 }
 
 static void
@@ -360,6 +435,9 @@ gimp_item_real_resize (GimpItem    *item,
   item->offset_y = item->offset_y - offset_y;
   item->width    = new_width;
   item->height   = new_height;
+
+  g_object_notify (G_OBJECT (item), "width");
+  g_object_notify (G_OBJECT (item), "height");
 }
 
 /**
@@ -456,6 +534,8 @@ gimp_item_configure (GimpItem    *item,
   g_return_if_fail (GIMP_IS_ITEM (item));
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
+  g_object_freeze_notify (G_OBJECT (item));
+
   if (item->ID == 0)
     {
       item->ID = gimage->gimp->next_item_ID++;
@@ -465,6 +545,8 @@ gimp_item_configure (GimpItem    *item,
                            item);
 
       gimp_item_set_image (item, gimage);
+
+      g_object_notify (G_OBJECT (item), "id");
     }
 
   item->width    = width;
@@ -472,7 +554,12 @@ gimp_item_configure (GimpItem    *item,
   item->offset_x = offset_x;
   item->offset_y = offset_y;
 
+  g_object_notify (G_OBJECT (item), "width");
+  g_object_notify (G_OBJECT (item), "height");
+
   gimp_object_set_name (GIMP_OBJECT (item), name ? name : _("Unnamed"));
+
+  g_object_thaw_notify (G_OBJECT (item));
 }
 
 /**
@@ -1255,4 +1342,3 @@ gimp_item_get_linked (const GimpItem *item)
 
   return item->linked;
 }
-
