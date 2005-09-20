@@ -175,7 +175,7 @@ query (void)
                           "timecop, pg@futureware.at",
                           "timecop, pg@futureware.at",
                           "Aug 2004",
-                          N_("Raw Image Data"),
+                          N_("Raw image data"),
                           NULL,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (load_args),
@@ -190,7 +190,7 @@ query (void)
                           "timecop, pg@futureware.at",
                           "timecop, pg@futureware.at",
                           "Aug 2004",
-                          N_("Raw Image Data"),
+                          N_("Raw image data"),
                           "INDEXED, GRAY, RGB, RGBA",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
@@ -293,7 +293,8 @@ run (const gchar      *name,
             {
               status = GIMP_PDB_CALLING_ERROR;
             }
-          else if (! save_dialog (param[3].data.d_string, image_id, drawable_id))
+          else if (! save_dialog (param[3].data.d_string,
+                                  image_id, drawable_id))
             {
               status = GIMP_PDB_CANCEL;
             }
@@ -348,7 +349,7 @@ raw_read_row (FILE   *fp,
  * to do with mmap, by the way
  */
 static gint
-mmap_read (int     fd,
+mmap_read (gint    fd,
            void   *buf,
            gint32  len,
            gint32  pos,
@@ -457,7 +458,7 @@ raw_load_palette (RawGimpData *data,
             {
               data->cmap[j++] = temp[i * 4 + 2];
               data->cmap[j++] = temp[i * 4 + 1];
-              data->cmap[j++] = temp[i * 4];
+              data->cmap[j++] = temp[i * 4 + 0];
             }
           break;
         }
@@ -572,7 +573,7 @@ save_image (gchar  *filename,
                 {
                   temp[j++] = cmap[i + 2];
                   temp[j++] = cmap[i + 1];
-                  temp[j++] = cmap[i];
+                  temp[j++] = cmap[i + 0];
                   temp[j++] = 0;
                 }
               if (!fwrite (temp, palsize * 4, 1, fp))
@@ -593,7 +594,7 @@ save_image (gchar  *filename,
 
       for (i = 0; i < width * height * bpp; i += bpp)
         {
-          red[j]   = buf[i];
+          red[j]   = buf[i + 0];
           green[j] = buf[i + 1];
           blue[j]  = buf[i + 2];
           if (have_alpha)
@@ -874,14 +875,14 @@ preview_update (GimpPreviewArea *preview)
                 switch (runtime->palette_type)
                   {
                   case RAW_PALETTE_RGB:
-                    *p++ = preview_cmap[index[x] * 3];
+                    *p++ = preview_cmap[index[x] * 3 + 0];
                     *p++ = preview_cmap[index[x] * 3 + 1];
                     *p++ = preview_cmap[index[x] * 3 + 2];
                     break;
                   case RAW_PALETTE_BGR:
                     *p++ = preview_cmap[index[x] * 4 + 2];
                     *p++ = preview_cmap[index[x] * 4 + 1];
-                    *p++ = preview_cmap[index[x] * 4];
+                    *p++ = preview_cmap[index[x] * 4 + 0];
                     break;
                   }
               }
@@ -1034,7 +1035,7 @@ load_dialog (gchar *filename)
   gtk_widget_show (table);
 
   combo = gimp_int_combo_box_new (_("R, G, B (normal)"),       RAW_PALETTE_RGB,
-                                  _("B, G, R, X (bmp style)"), RAW_PALETTE_BGR,
+                                  _("B, G, R, X (BMP style)"), RAW_PALETTE_BGR,
                                   NULL);
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
                                  runtime->palette_type);
@@ -1131,7 +1132,7 @@ save_dialog (gchar * filename,
                                     runtime->palette_type,
                                     _("R, G, B (normal)"),
                                     RAW_PALETTE_RGB, NULL,
-                                    _("B, G, R, X (bmp style)"),
+                                    _("B, G, R, X (BMP style)"),
                                     RAW_PALETTE_BGR, NULL,
                                     NULL);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
