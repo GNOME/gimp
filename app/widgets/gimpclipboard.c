@@ -49,6 +49,7 @@ struct _GimpClipboard
   GtkTargetEntry *svg_target_entries;
   gint            n_svg_target_entries;
 
+  GimpBuffer     *buffer;
   gchar          *svg;
 };
 
@@ -56,9 +57,9 @@ struct _GimpClipboard
 static GimpClipboard * gimp_clipboard_get        (Gimp             *gimp);
 static void            gimp_clipboard_free       (GimpClipboard    *gimp_clip);
 
-static void      gimp_clipboard_buffer_changed   (Gimp             *gimp);
-static void      gimp_clipboard_set_buffer       (Gimp             *gimp,
-                                                  GimpBuffer       *buffer);
+static GdkAtom * gimp_clipboard_wait_for_targets (gint             *n_targets);
+static GdkAtom   gimp_clipboard_wait_for_buffer  (Gimp             *gimp);
+static GdkAtom   gimp_clipboard_wait_for_svg     (Gimp             *gimp);
 
 static void      gimp_clipboard_send_buffer      (GtkClipboard     *clipboard,
                                                   GtkSelectionData *selection_data,
@@ -69,10 +70,8 @@ static void      gimp_clipboard_send_svg         (GtkClipboard     *clipboard,
                                                   guint             info,
                                                   Gimp             *gimp);
 
-static GdkAtom * gimp_clipboard_wait_for_targets (gint             *n_targets);
-static GdkAtom   gimp_clipboard_wait_for_buffer  (Gimp             *gimp);
-static GdkAtom   gimp_clipboard_wait_for_svg     (Gimp             *gimp);
 
+/*  public functions  */
 
 void
 gimp_clipboard_init (Gimp *gimp)
@@ -90,12 +89,6 @@ gimp_clipboard_init (Gimp *gimp)
 
   g_object_set_data_full (G_OBJECT (gimp), GIMP_CLIPBOARD_KEY,
                           gimp_clip, (GDestroyNotify) gimp_clipboard_free);
-
-  gimp_clipboard_set_buffer (gimp, gimp->global_buffer);
-
-  g_signal_connect_object (gimp, "buffer-changed",
-                           G_CALLBACK (gimp_clipboard_buffer_changed),
-                           NULL, 0);
 
   gimp_clip->pixbuf_formats = gimp_pixbuf_get_formats ();
 
@@ -183,12 +176,6 @@ gimp_clipboard_exit (Gimp *gimp)
   if (clipboard && gtk_clipboard_get_owner (clipboard) == G_OBJECT (gimp))
     gtk_clipboard_store (clipboard);
 
-  g_signal_handlers_disconnect_by_func (gimp,
-                                        G_CALLBACK (gimp_clipboard_buffer_changed),
-                                        NULL);
-  gimp_clipboard_set_buffer (gimp, NULL);
-  gimp_clipboard_set_svg (gimp, NULL);
-
   g_object_set_data (G_OBJECT (gimp), GIMP_CLIPBOARD_KEY, NULL);
 }
 
@@ -207,12 +194,23 @@ gimp_clipboard_exit (Gimp *gimp)
 gboolean
 gimp_clipboard_has_buffer (Gimp *gimp)
 {
+  GimpClipboard *gimp_clip;
+  GtkClipboard  *clipboard;
+
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
 
-  if (gimp->global_buffer)
-    return TRUE;
+  gimp_clip = gimp_clipboard_get (gimp);
+  clipboard = gtk_clipboard_get_for_display (gdk_display_get_default (),
+                                             GDK_SELECTION_CLIPBOARD);
 
-  return (gimp_clipboard_wait_for_buffer (gimp) != GDK_NONE);
+  if (clipboard                                                &&
+      gtk_clipboard_get_owner (clipboard)   != G_OBJECT (gimp) &&
+      gimp_clipboard_wait_for_buffer (gimp) != GDK_NONE)
+    {
+      return TRUE;
+    }
+
+  return (gimp_clip->buffer != NULL);
 }
 
 /**
@@ -228,9 +226,23 @@ gimp_clipboard_has_buffer (Gimp *gimp)
 gboolean
 gimp_clipboard_has_svg (Gimp *gimp)
 {
+  GimpClipboard *gimp_clip;
+  GtkClipboard  *clipboard;
+
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
 
-  return (gimp_clipboard_wait_for_svg (gimp) != GDK_NONE);
+  gimp_clip = gimp_clipboard_get (gimp);
+  clipboard = gtk_clipboard_get_for_display (gdk_display_get_default (),
+                                             GDK_SELECTION_CLIPBOARD);
+
+  if (clipboard                                              &&
+      gtk_clipboard_get_owner (clipboard) != G_OBJECT (gimp) &&
+      gimp_clipboard_wait_for_svg (gimp)  != GDK_NONE)
+    {
+      return TRUE;
+    }
+
+  return (gimp_clip->svg != NULL);
 }
 
 /**
@@ -249,12 +261,14 @@ gimp_clipboard_has_svg (Gimp *gimp)
 GimpBuffer *
 gimp_clipboard_get_buffer (Gimp *gimp)
 {
-  GimpBuffer   *buffer = NULL;
-  GtkClipboard *clipboard;
-  GdkAtom       atom;
+  GimpClipboard *gimp_clip;
+  GtkClipboard  *clipboard;
+  GdkAtom        atom;
+  GimpBuffer    *buffer = NULL;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
+  gimp_clip = gimp_clipboard_get (gimp);
   clipboard = gtk_clipboard_get_for_display (gdk_display_get_default (),
                                              GDK_SELECTION_CLIPBOARD);
 
@@ -284,8 +298,8 @@ gimp_clipboard_get_buffer (Gimp *gimp)
       gimp_unset_busy (gimp);
     }
 
-  if (! buffer && gimp->global_buffer)
-    buffer = g_object_ref (gimp->global_buffer);
+  if (! buffer && gimp_clip->buffer)
+    buffer = g_object_ref (gimp_clip->buffer);
 
   return buffer;
 }
@@ -295,7 +309,8 @@ gimp_clipboard_get_buffer (Gimp *gimp)
  * @gimp: pointer to #Gimp
  * @svg_length: returns the size of the SVG stream in bytes
  *
- * Retrieves SVG data from %GDK_SELECTION_CLIPBOARD.
+ * Retrieves SVG data from %GDK_SELECTION_CLIPBOARD or from the global
+ * SVG buffer of @gimp.
  *
  * The returned data needs to be freed when it's no longer needed.
  *
@@ -306,26 +321,31 @@ gchar *
 gimp_clipboard_get_svg (Gimp  *gimp,
                         gsize *svg_length)
 {
-  GtkClipboard *clipboard;
-  GdkAtom       atom;
+  GimpClipboard *gimp_clip;
+  GtkClipboard  *clipboard;
+  GdkAtom        atom;
+  gchar         *svg = NULL;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (svg_length != NULL, NULL);
 
+  gimp_clip = gimp_clipboard_get (gimp);
   clipboard = gtk_clipboard_get_for_display (gdk_display_get_default (),
                                              GDK_SELECTION_CLIPBOARD);
 
-  if (clipboard &&
+  if (clipboard                                                      &&
+      gtk_clipboard_get_owner (clipboard)         != G_OBJECT (gimp) &&
       (atom = gimp_clipboard_wait_for_svg (gimp)) != GDK_NONE)
     {
       GtkSelectionData *data;
+
+      gimp_set_busy (gimp);
 
       data = gtk_clipboard_wait_for_contents (clipboard, atom);
 
       if (data)
         {
           const guchar *stream;
-          gchar        *svg = NULL;
 
           stream = gimp_selection_data_get_stream (data, svg_length);
 
@@ -333,12 +353,73 @@ gimp_clipboard_get_svg (Gimp  *gimp,
             svg = g_memdup (stream, *svg_length);
 
           gtk_selection_data_free (data);
-
-          return svg;
         }
+
+      gimp_unset_busy (gimp);
     }
 
-  return NULL;
+  if (! svg && gimp_clip->svg)
+    {
+      svg = g_strdup (gimp_clip->svg);
+      *svg_length = strlen (svg);
+    }
+
+  return svg;
+}
+
+/**
+ * gimp_clipboard_set_buffer:
+ * @gimp: pointer to #Gimp
+ * @svg:  a #GimpBuffer, or %NULL.
+ *
+ * Offers the buffer in %GDK_SELECTION_CLIPBOARD.
+ **/
+void
+gimp_clipboard_set_buffer (Gimp       *gimp,
+                           GimpBuffer *buffer)
+{
+  GimpClipboard *gimp_clip;
+  GtkClipboard  *clipboard;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (buffer == NULL || GIMP_IS_BUFFER (buffer));
+
+  gimp_clip = gimp_clipboard_get (gimp);
+  clipboard = gtk_clipboard_get_for_display (gdk_display_get_default (),
+                                             GDK_SELECTION_CLIPBOARD);
+  if (! clipboard)
+    return;
+
+  if (gimp_clip->buffer)
+    {
+      g_object_unref (gimp_clip->buffer);
+      gimp_clip->buffer = NULL;
+    }
+
+  if (gimp_clip->svg)
+    {
+      g_free (gimp_clip->svg);
+      gimp_clip->svg = NULL;
+    }
+
+  if (buffer)
+    {
+      gimp_clip->buffer = g_object_ref (buffer);
+
+      gtk_clipboard_set_with_owner (clipboard,
+                                    gimp_clip->target_entries,
+                                    gimp_clip->n_target_entries,
+                                    (GtkClipboardGetFunc) gimp_clipboard_send_buffer,
+                                    (GtkClipboardClearFunc) NULL,
+                                    G_OBJECT (gimp));
+
+      /*  mark the first entry (image/png) as suitable for storing  */
+      gtk_clipboard_set_can_store (clipboard, gimp_clip->target_entries, 1);
+    }
+  else if (gtk_clipboard_get_owner (clipboard) == G_OBJECT (gimp))
+    {
+      gtk_clipboard_clear (clipboard);
+    }
 }
 
 /**
@@ -352,15 +433,22 @@ void
 gimp_clipboard_set_svg (Gimp  *gimp,
                         gchar *svg)
 {
-  GimpClipboard *gimp_clip = gimp_clipboard_get (gimp);
+  GimpClipboard *gimp_clip;
   GtkClipboard  *clipboard;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
+  gimp_clip = gimp_clipboard_get (gimp);
   clipboard = gtk_clipboard_get_for_display (gdk_display_get_default (),
                                              GDK_SELECTION_CLIPBOARD);
   if (! clipboard)
     return;
+
+  if (gimp_clip->buffer)
+    {
+      g_object_unref (gimp_clip->buffer);
+      gimp_clip->buffer = NULL;
+    }
 
   if (gimp_clip->svg)
     {
@@ -414,49 +502,13 @@ gimp_clipboard_free (GimpClipboard *gimp_clip)
 
   g_free (gimp_clip->svg_target_entries);
 
-  g_free (gimp_clip);
-}
-
-static void
-gimp_clipboard_buffer_changed (Gimp *gimp)
-{
-  gimp_clipboard_set_buffer (gimp, gimp->global_buffer);
-}
-
-static void
-gimp_clipboard_set_buffer (Gimp       *gimp,
-                           GimpBuffer *buffer)
-{
-  GimpClipboard *gimp_clip = gimp_clipboard_get (gimp);
-  GtkClipboard  *clipboard;
-
-  clipboard = gtk_clipboard_get_for_display (gdk_display_get_default (),
-                                             GDK_SELECTION_CLIPBOARD);
-  if (! clipboard)
-    return;
+  if (gimp_clip->buffer)
+    g_object_unref (gimp_clip->buffer);
 
   if (gimp_clip->svg)
-    {
-      g_free (gimp_clip->svg);
-      gimp_clip->svg = NULL;
-    }
+    g_free (gimp_clip->svg);
 
-  if (buffer)
-    {
-      gtk_clipboard_set_with_owner (clipboard,
-                                    gimp_clip->target_entries,
-                                    gimp_clip->n_target_entries,
-                                    (GtkClipboardGetFunc) gimp_clipboard_send_buffer,
-                                    (GtkClipboardClearFunc) NULL,
-                                    G_OBJECT (gimp));
-
-      /*  mark the first entry (image/png) as suitable for storing  */
-      gtk_clipboard_set_can_store (clipboard, gimp_clip->target_entries, 1);
-    }
-  else if (gtk_clipboard_get_owner (clipboard) == G_OBJECT (gimp))
-    {
-      gtk_clipboard_clear (clipboard);
-    }
+  g_free (gimp_clip);
 }
 
 static GdkAtom *
@@ -600,14 +652,13 @@ gimp_clipboard_send_buffer (GtkClipboard     *clipboard,
                             Gimp             *gimp)
 {
   GimpClipboard *gimp_clip = gimp_clipboard_get (gimp);
-  GimpBuffer    *buffer    = gimp->global_buffer;
   GdkPixbuf     *pixbuf;
 
   gimp_set_busy (gimp);
 
-  pixbuf = gimp_viewable_get_pixbuf (GIMP_VIEWABLE (buffer),
-                                     gimp_buffer_get_width (buffer),
-                                     gimp_buffer_get_height (buffer));
+  pixbuf = gimp_viewable_get_pixbuf (GIMP_VIEWABLE (gimp_clip->buffer),
+                                     gimp_buffer_get_width (gimp_clip->buffer),
+                                     gimp_buffer_get_height (gimp_clip->buffer));
 
   if (pixbuf)
     {

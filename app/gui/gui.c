@@ -109,6 +109,8 @@ static void       gui_tearoff_menus_notify      (GimpGuiConfig      *gui_config,
                                                  GtkUIManager       *manager);
 static void       gui_device_change_notify      (Gimp               *gimp);
 
+static void       gui_global_buffer_changed     (Gimp               *gimp);
+
 static void       gui_display_changed           (GimpContext        *context,
                                                  GimpDisplay        *display,
                                                  Gimp               *gimp);
@@ -399,6 +401,12 @@ gui_restore_callback (Gimp               *gimp,
   dialogs_init (gimp, global_menu_factory);
 
   gimp_clipboard_init (gimp);
+  gimp_clipboard_set_buffer (gimp, gimp->global_buffer);
+
+  g_signal_connect (gimp, "buffer-changed",
+                    G_CALLBACK (gui_global_buffer_changed),
+                    NULL);
+
   gimp_devices_init (gimp, gui_device_change_notify);
   gimp_controllers_init (gimp);
   session_init (gimp);
@@ -516,6 +524,10 @@ gui_exit_after_callback (Gimp     *gimp,
   dialogs_exit (gimp);
   gimp_controllers_exit (gimp);
   gimp_devices_exit (gimp);
+
+  g_signal_handlers_disconnect_by_func (gimp,
+                                        G_CALLBACK (gui_global_buffer_changed),
+                                        NULL);
   gimp_clipboard_exit (gimp);
 
   themes_exit (gimp);
@@ -569,6 +581,12 @@ gui_device_change_notify (Gimp *gimp)
 
       gimp_device_status_update (GIMP_DEVICE_STATUS (device_status));
     }
+}
+
+static void
+gui_global_buffer_changed (Gimp *gimp)
+{
+  gimp_clipboard_set_buffer (gimp, gimp->global_buffer);
 }
 
 static void

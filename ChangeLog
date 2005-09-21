@@ -1,3 +1,17 @@
+2005-09-21  Michael Natterer  <mitch@gimp.org>
+
+	Separated the global buffer logic from the clipboard
+	implementation:
+
+	* app/widgets/gimpclipboard.[ch]: removed all knowledge about
+	gimp->global_buffer. Removed the Gimp::buffer-changed callback.
+	Made gimp_clipboard_set_buffer() public and remember the set
+	buffer in the GimpClipboard struct. Fixed the has_buffer() and
+	has_svg() functions.
+
+	* app/gui/gui.c: connect to Gimp::buffer-changed here and call
+	gimp_clipboard_set_buffer() from the callback.
+
 2005-09-21  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimagefile.c: use ngettext for plural forms.
