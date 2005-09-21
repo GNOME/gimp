@@ -1,5 +1,9 @@
 2005-09-21  Sven Neumann  <sven@gimp.org>
 
+	* HACKING: minor update.
+
+2005-09-21  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/spheredesigner.c: update the preview from an
 	idle handler. Removed obsolete "Update Preview" button.
 

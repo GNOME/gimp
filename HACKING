@@ -5,7 +5,7 @@ to have the following packages (or newer versions) installed:
 
     * GNU autoconf 2.54
         - ftp://ftp.gnu.org/gnu/autoconf/
-    * GNU automake 1.8 (automake 1.9 should work as well)
+    * GNU automake 1.9 (automake 1.8 should also work)
         - ftp://ftp.gnu.org/gnu/automake/
     * GNU libtool 1.4  (libtool 1.5 if you are compiling on Win32)
         - ftp://ftp.gnu.org/gnu/libtool/
@@ -13,7 +13,7 @@ to have the following packages (or newer versions) installed:
 Fine GNU mirrors are listed at http://www.gnu.org/prep/ftp.html
 Beta software can be found at alpha.gnu.org.
 
-    * pkg-config 0.7.0 (or preferably a newer version)
+    * pkg-config 0.15.0 (or preferably a newer version)
         - http://www.freedesktop.org/software/pkgconfig/
 
     * intltoolize 0.31.1 (or preferably a newer version)
@@ -39,7 +39,7 @@ by running:
 
 Basically this does the following for you:
 
-    cvsroot/gimp$ aclocal-1.7; libtoolize; automake-1.7 -a;
+    cvsroot/gimp$ aclocal-1.9; libtoolize; automake-1.9 -a;
     cvsroot/gimp$ autoconf; glib-gettextize; intltoolize
 
 The above commands create the "configure" script.  Now you can run the
