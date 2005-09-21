@@ -1,16 +1,20 @@
+# translation of gimp.HEAD.gu.po to Gujarati
 # translation of gimp.HEAD.po to Gujarati
 # Ankit Patel <ankit644@yahoo.com>, 2005.
 msgid ""
 msgstr ""
+"Project-Id-Version: gimp.HEAD.gu\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-09-21 02:40+0200\n"
+"PO-Revision-Date: 2005-09-21 09:56+0530\n"
 "Last-Translator: Ankit Patel <ankit644@yahoo.com>\n"
-"PO-Revision-Date: 2005-09-20 14:45+0530\n"
-"Project-Id-Version: gimp.HEAD\n"
 "Language-Team: Gujarati <indianoss-gujarati@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9.1\n"
-"MIME-Version: 1.0\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n\n"
+"\n"
 
 #: ../app/app_procs.c:134
 msgid "(This console window will close in ten seconds)\n"
@@ -39,7 +43,7 @@ msgstr ""
 "To avoid data loss, please check the location and permissions of the swap "
 "directory defined in your Preferences (currently \"%s\")."
 
-#: ../app/app_procs.c:334 ../app/core/gimppalette-import.c:453
+#: ../app/app_procs.c:334 ../app/core/gimppalette-import.c:458
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "'%s' ખોલવામાં નિષ્ફળ: %s"
@@ -127,9 +131,10 @@ msgstr "બધી ચેતવણીઓ ઘાતક બનાવો"
 msgid "Output a gimprc file with default settings"
 msgstr "મૂળભૂત સુયોજનો સાથે gimprc ફાઈલ આઉટપુટ કરો"
 
-#: ../app/main.c:248 ../app/widgets/gimptoolbox.c:566
-msgid "The GIMP"
-msgstr "GIMP"
+#: ../app/main.c:248 ../app/dialogs/about-dialog.c:60
+#: ../desktop/gimp.desktop.in.in.h:2
+msgid "GNU Image Manipulation Program"
+msgstr "GNU ચિત્ર જાળવણી કાર્યક્રમ"
 
 #: ../app/main.c:292
 msgid ""
@@ -167,10 +172,11 @@ msgid ""
 msgstr ""
 "GIMP વપરાશકર્તા રૂપરેખાંકન સાચવી રહેલ ડિરેક્ટરીનું નામ UTF-8 માં ફેરવી શકાતું નથી: %s\n"
 "\n"
-"તમારી ફાઈલસિસ્ટમ કદાચ UTF-8 સિવાયની સંગ્રહપદ્ધતિમાં ફાઈલો સંગ્રહે છે અને તમે GLib ને તેના વિશે કહ્યું નહિં હોય. મહેરબાની કરીને પર્યાવરણીય ચલ G_FILENAME_ENCODING ને સુયોજિત કરો."
+"તમારી ફાઈલસિસ્ટમ કદાચ UTF-8 સિવાયની સંગ્રહપદ્ધતિમાં ફાઈલો સંગ્રહે છે અને તમે GLib ને તેના "
+"વિશે કહ્યું નહિં હોય. મહેરબાની કરીને પર્યાવરણીય ચલ G_FILENAME_ENCODING ને સુયોજિત કરો."
 
 #. initialize the list of gimp brushes
-#: ../app/actions/actions.c:97 ../app/core/gimp.c:871
+#: ../app/actions/actions.c:97 ../app/core/gimp.c:856
 #: ../app/dialogs/dialogs.c:145 ../app/dialogs/preferences-dialog.c:2505
 #: ../app/pdb/internal_procs.c:93
 msgid "Brushes"
@@ -216,8 +222,7 @@ msgstr "ડોક કરી શકાય તેવું"
 msgid "Document History"
 msgstr "દસ્તાવેજ ઈતિહાસ"
 
-#: ../app/actions/actions.c:130 ../app/core/core-enums.c:819
-#: ../app/core/core-enums.c:850
+#: ../app/actions/actions.c:130
 msgid "Drawable"
 msgstr "દોરી શકાય તેવું"
 
@@ -234,7 +239,7 @@ msgid "File"
 msgstr "ફાઇલ"
 
 #. initialize the list of gimp fonts
-#: ../app/actions/actions.c:142 ../app/core/gimp.c:887
+#: ../app/actions/actions.c:142 ../app/core/gimp.c:872
 #: ../app/dialogs/dialogs.c:153 ../app/dialogs/preferences-dialog.c:2521
 #: ../app/pdb/internal_procs.c:129
 msgid "Fonts"
@@ -246,7 +251,7 @@ msgid "Gradient Editor"
 msgstr "ઢાળ સંપાદક"
 
 #. initialize the list of gimp gradients
-#: ../app/actions/actions.c:148 ../app/core/gimp.c:883
+#: ../app/actions/actions.c:148 ../app/core/gimp.c:868
 #: ../app/dialogs/dialogs.c:149 ../app/dialogs/preferences-dialog.c:2517
 #: ../app/pdb/internal_procs.c:141
 msgid "Gradients"
@@ -277,14 +282,14 @@ msgid "Palette Editor"
 msgstr "તકતી સંપાદક"
 
 #. initialize the list of gimp palettes
-#: ../app/actions/actions.c:166 ../app/core/gimp.c:879
+#: ../app/actions/actions.c:166 ../app/core/gimp.c:864
 #: ../app/dialogs/dialogs.c:151 ../app/dialogs/preferences-dialog.c:2513
 #: ../app/pdb/internal_procs.c:171
 msgid "Palettes"
 msgstr "તકતીઓ"
 
 #. initialize the list of gimp patterns
-#: ../app/actions/actions.c:169 ../app/core/gimp.c:875
+#: ../app/actions/actions.c:169 ../app/core/gimp.c:860
 #: ../app/dialogs/dialogs.c:147 ../app/dialogs/preferences-dialog.c:2509
 #: ../app/pdb/internal_procs.c:186
 msgid "Patterns"
@@ -294,9 +299,10 @@ msgstr "ભાતો"
 msgid "Plug-Ins"
 msgstr "પ્લગ-ઈનો"
 
-#: ../app/actions/actions.c:175
-msgid "QuickMask"
-msgstr "QuickMask"
+#: ../app/actions/actions.c:175 ../app/core/core-enums.c:815
+#: ../app/core/gimpchannel.c:404
+msgid "Quick Mask"
+msgstr "ઝડપી માસ્ક"
 
 #: ../app/actions/actions.c:178 ../app/dialogs/dialogs.c:194
 msgid "Sample Points"
@@ -307,7 +313,7 @@ msgid "Select"
 msgstr "પસંદ કરો"
 
 #. initialize the template list
-#: ../app/actions/actions.c:184 ../app/core/gimp.c:896
+#: ../app/actions/actions.c:184 ../app/core/gimp.c:881
 #: ../app/dialogs/dialogs.c:161
 msgid "Templates"
 msgstr "ટેમ્પલેટો"
@@ -572,7 +578,7 @@ msgstr "નવો ચેનલ રંગ"
 #: ../app/actions/channels-commands.c:245
 #: ../app/display/gimpdisplayshell-dnd.c:496
 #: ../app/widgets/gimpchanneltreeview.c:306
-#: ../app/widgets/gimplayertreeview.c:807 ../app/widgets/gimptoolbox-dnd.c:302
+#: ../app/widgets/gimplayertreeview.c:807 ../app/widgets/gimptoolbox-dnd.c:309
 #, c-format
 msgid "%s Channel Copy"
 msgstr "%s ચેનલ નકલ"
@@ -625,7 +631,7 @@ msgstr "રંગનકશા પ્રવેશમાં ફેરફાર ક
 msgid "_Context"
 msgstr "સંદર્ભ (_C)"
 
-#: ../app/actions/context-actions.c:47 ../app/actions/image-actions.c:64
+#: ../app/actions/context-actions.c:47 ../app/actions/image-actions.c:65
 msgid "_Colors"
 msgstr "રંગો (_C)"
 
@@ -709,7 +715,6 @@ msgstr "નમૂના ભેગા થયેલ (_S)"
 
 #: ../app/actions/cursor-info-actions.c:48
 #: ../app/actions/sample-point-editor-actions.c:48
-#: ../app/tools/gimpclonetool.c:344
 msgid "Sample Merged"
 msgstr "નમૂના ભેગા થયેલ"
 
@@ -719,7 +724,7 @@ msgstr "નમૂના ભેગા થયેલ"
 #: ../app/dialogs/file-open-location-dialog.c:201
 #: ../app/display/gimpdisplayshell-dnd.c:448
 #: ../app/widgets/gimplayertreeview.c:764 ../app/widgets/gimptoolbox-dnd.c:157
-#: ../app/widgets/gimptoolbox.c:1046
+#: ../app/widgets/gimptoolbox.c:944
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -1153,128 +1158,143 @@ msgstr "ફેરફાર કરો (_E)"
 msgid "_Buffer"
 msgstr "બફર (_B)"
 
-#: ../app/actions/edit-actions.c:65 ../app/actions/edit-actions.c:230
+#: ../app/actions/edit-actions.c:64
+msgid "Undo History Menu"
+msgstr "છેલ્લુ રદ કરવાનો ઈતિહાસ મેનું"
+
+#: ../app/actions/edit-actions.c:68 ../app/actions/edit-actions.c:238
 msgid "_Undo"
 msgstr "છેલ્લી ક્રિયા રદ કરો (_U)"
 
-#: ../app/actions/edit-actions.c:66 ../app/dialogs/dialogs.c:190
+#: ../app/actions/edit-actions.c:69 ../app/dialogs/dialogs.c:190
 #: ../app/pdb/internal_procs.c:210
 msgid "Undo"
 msgstr "છેલ્લી ક્રિયા રદ કરો"
 
-#: ../app/actions/edit-actions.c:71 ../app/actions/edit-actions.c:231
+#: ../app/actions/edit-actions.c:74 ../app/actions/edit-actions.c:239
 msgid "_Redo"
 msgstr "ફરીથી કરો (_R)"
 
-#: ../app/actions/edit-actions.c:72
+#: ../app/actions/edit-actions.c:75
 msgid "Redo"
 msgstr "ફરીથી કરો"
 
-#: ../app/actions/edit-actions.c:77
+#: ../app/actions/edit-actions.c:80
 msgid "_Clear Undo History"
 msgstr "છેલ્લો રદ કરેલ ઈતિહાસ સાફ કરો (_C)"
 
-#: ../app/actions/edit-actions.c:78
-msgid "Clear undo history..."
-msgstr "છેલ્લો રદ કરવાનો ઈતિહાસ સાફ કરો..."
+#: ../app/actions/edit-actions.c:81
+msgid "Clear undo history"
+msgstr "છેલ્લો રદ કરવાનો ઈતિહાસ સાફ કરો"
 
-#: ../app/actions/edit-actions.c:83
+#: ../app/actions/edit-actions.c:86
 msgid "Cu_t"
 msgstr "કાપો (_t)"
 
-#: ../app/actions/edit-actions.c:88
+#: ../app/actions/edit-actions.c:91
 msgid "_Copy"
 msgstr "નકલ કરો (_C)"
 
 #. GIMP_STOCK_COPY_VISIBLE,
-#: ../app/actions/edit-actions.c:93
+#: ../app/actions/edit-actions.c:96
 msgid "Copy _Visible"
 msgstr "દૃશ્યમાન નકલ કરો (_V)"
 
-#: ../app/actions/edit-actions.c:98
+#: ../app/actions/edit-actions.c:101
 msgid "_Paste"
 msgstr "ચોંટાડો (_P)"
 
-#: ../app/actions/edit-actions.c:103
+#: ../app/actions/edit-actions.c:106
 msgid "Paste _Into"
 msgstr "આમાં ચોંટાડો (_I)"
 
-#: ../app/actions/edit-actions.c:108
+#: ../app/actions/edit-actions.c:111
 msgid "Paste as _New"
 msgstr "નવા તરીકે ચોંટાડો (_N)"
 
-#: ../app/actions/edit-actions.c:113
+#: ../app/actions/edit-actions.c:116
 msgid "Cu_t Named..."
 msgstr "કાપો નામવાળું (_t)..."
 
-#: ../app/actions/edit-actions.c:118
+#: ../app/actions/edit-actions.c:121
 msgid "_Copy Named..."
 msgstr "નકલ કરો નામવાળું (_C)..."
 
-#: ../app/actions/edit-actions.c:123
+#. GIMP_STOCK_COPY_VISIBLE,
+#: ../app/actions/edit-actions.c:126
+msgid "Copy _Visible Named..."
+msgstr "દૃશ્યમાન નામવાળું નકલ કરો (_V)..."
+
+#: ../app/actions/edit-actions.c:131
 msgid "_Paste Named..."
 msgstr "ચોંટાડો નામવાળું (_P)..."
 
-#: ../app/actions/edit-actions.c:128
+#: ../app/actions/edit-actions.c:136
 msgid "Cl_ear"
 msgstr "સાફ કરો (_e)"
 
-#: ../app/actions/edit-actions.c:136
+#: ../app/actions/edit-actions.c:144
 msgid "Fill with _FG Color"
 msgstr "_FG રંગ સાથે ભરો"
 
-#: ../app/actions/edit-actions.c:141
+#: ../app/actions/edit-actions.c:149
 msgid "Fill with B_G Color"
 msgstr "B_G રંગ સાથે ભરો"
 
-#: ../app/actions/edit-actions.c:146
+#: ../app/actions/edit-actions.c:154
 msgid "Fill with P_attern"
 msgstr "ભાત સાથે ભરો (_a)"
 
-#: ../app/actions/edit-actions.c:214
+#: ../app/actions/edit-actions.c:222
 #, c-format
 msgid "_Undo %s"
 msgstr "%s રદ કરો (_U)"
 
-#: ../app/actions/edit-actions.c:219
+#: ../app/actions/edit-actions.c:227
 #, c-format
 msgid "_Redo %s"
 msgstr "%s ફરી કરો (_R)"
 
-#: ../app/actions/edit-commands.c:107
+#: ../app/actions/edit-commands.c:110
 msgid "Clear Undo History"
 msgstr "રદ કરેલનો ઈતિહાસ સાફ કરો"
 
-#: ../app/actions/edit-commands.c:133
+#: ../app/actions/edit-commands.c:136
 msgid "Really clear image's undo history?"
 msgstr "શું ખરેખર ચિત્રનો રદ કરેલનો ઈતિહાસ સાફ કરવા માંગો છો?"
 
-#: ../app/actions/edit-commands.c:145
+#: ../app/actions/edit-commands.c:148
 #, c-format
 msgid "Clearing the undo history of this image will gain %s of memory."
 msgstr "આ ચિત્રનો રદ કરવાનો ઈતિહાસ સાફ કરવાનું %s જેટલી મેમરી મેળવશે."
 
-#: ../app/actions/edit-commands.c:244
+#: ../app/actions/edit-commands.c:256
 msgid "Cut Named"
 msgstr "કાપો નામવાળું"
 
-#: ../app/actions/edit-commands.c:247 ../app/actions/edit-commands.c:267
+#: ../app/actions/edit-commands.c:259 ../app/actions/edit-commands.c:279
+#: ../app/actions/edit-commands.c:299
 msgid "Enter a name for this buffer"
 msgstr "આ બફર માટે નામ દાખલ કરો"
 
-#: ../app/actions/edit-commands.c:264
+#: ../app/actions/edit-commands.c:276
 msgid "Copy Named"
 msgstr "નકલ કરો નામવાળું"
 
-#: ../app/actions/edit-commands.c:377
+#: ../app/actions/edit-commands.c:296
+msgid "Copy Visible Named "
+msgstr "દૃશ્યમાન નામવાળું નકલ કરો (_V) "
+
+#: ../app/actions/edit-commands.c:408
 msgid "There is no active layer or channel to cut from."
 msgstr "ત્યાં તેમાંથી કોઈ સક્રિય સ્તર અથવા ચેનલ કાપવા માટે નથી."
 
-#: ../app/actions/edit-commands.c:389 ../app/actions/edit-commands.c:426
+#: ../app/actions/edit-commands.c:413 ../app/actions/edit-commands.c:439
+#: ../app/actions/edit-commands.c:456
 msgid "(Unnamed Buffer)"
 msgstr "(નામવિહીન બફર)"
 
-#: ../app/actions/edit-commands.c:414
+#: ../app/actions/edit-commands.c:434
 msgid "There is no active layer or channel to copy from."
 msgstr "ત્યાં તેમાંથી નકલ કરવા માટે કોઈ સક્રિય સ્તર અથવા ચેનલ નથી."
 
@@ -1416,7 +1436,9 @@ msgstr "શું '%s' ને '%s' માં ઉલટાવવું છે?"
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
-msgstr "ચિત્રને ડિસ્ક પર સંગ્રહાયેલ સ્થિતિમાં ઉલટાવીને, તમે બધા ફેરફારો ગુમાવી બેસશો, બધી રદ કરવાની જાણકારીને સમાવીને."
+msgstr ""
+"ચિત્રને ડિસ્ક પર સંગ્રહાયેલ સ્થિતિમાં ઉલટાવીને, તમે બધા ફેરફારો ગુમાવી બેસશો, બધી રદ "
+"કરવાની જાણકારીને સમાવીને."
 
 #: ../app/actions/file-commands.c:401
 msgid "Open Image as Layer"
@@ -1559,17 +1581,20 @@ msgstr "મોટું કરો"
 
 #: ../app/actions/gradient-editor-actions.c:301
 #: ../app/actions/palette-editor-actions.c:78
-#: ../app/actions/view-actions.c:228 ../app/widgets/widgets-enums.c:353
+#: ../app/actions/view-actions.c:228 ../app/actions/view-actions.c:239
+#: ../app/actions/view-actions.c:240 ../app/widgets/widgets-enums.c:353
 msgid "Zoom in"
 msgstr "મોટું કરો"
 
 #: ../app/actions/gradient-editor-actions.c:306
+#: ../app/actions/view-actions.c:233
 msgid "Zoom Out"
 msgstr "નાનું કરો"
 
 #: ../app/actions/gradient-editor-actions.c:307
 #: ../app/actions/palette-editor-actions.c:84
-#: ../app/actions/view-actions.c:222 ../app/widgets/widgets-enums.c:354
+#: ../app/actions/view-actions.c:222 ../app/actions/view-actions.c:234
+#: ../app/widgets/widgets-enums.c:354
 msgid "Zoom out"
 msgstr "નાનું કરો"
 
@@ -1823,17 +1848,17 @@ msgstr "_Xtns"
 msgid "_Image"
 msgstr "ચિત્ર (_I)"
 
-#: ../app/actions/image-actions.c:61 ../app/actions/layers-actions.c:55
+#: ../app/actions/image-actions.c:61
+msgid "_Mode"
+msgstr "સ્થિતિ (_M)"
+
+#: ../app/actions/image-actions.c:62 ../app/actions/layers-actions.c:55
 msgid "_Transform"
 msgstr "રૂપાંતરણ (_T)"
 
-#: ../app/actions/image-actions.c:62
+#: ../app/actions/image-actions.c:63
 msgid "_Guides"
 msgstr "માર્ગદર્શનો (_G)"
-
-#: ../app/actions/image-actions.c:65
-msgid "_Image Mode"
-msgstr "ચિત્ર સ્થિતિ (_I)"
 
 #: ../app/actions/image-actions.c:66 ../app/tools/gimplevelstool.c:648
 msgid "_Auto"
@@ -2215,7 +2240,7 @@ msgstr "સ્તર કાપો"
 msgid "Layer Mask to Selection"
 msgstr "પસંદગી પ્રતિ સ્તર માસ્ક"
 
-#: ../app/actions/layers-commands.c:929 ../app/core/gimplayer.c:1294
+#: ../app/actions/layers-commands.c:929 ../app/core/gimplayer.c:1293
 #: ../app/dialogs/layer-add-mask-dialog.c:61
 msgid "Add Layer Mask"
 msgstr "સ્તર માસ્ક ઉમેરો"
@@ -2496,43 +2521,39 @@ msgstr "બધા ગાળકો પુનઃસુયોજિત કરો"
 msgid "Do you really want to reset all filters to default values?"
 msgstr "શું તમે ખરેખર બધા ગાળકોને મૂળભૂત કિંમતો પુનઃસુયોજિત કરવા માંગો છો?"
 
-#: ../app/actions/qmask-actions.c:42
+#: ../app/actions/quick-mask-actions.c:42
 msgid "Quick Mask Menu"
 msgstr "ઝડપી માસ્ક મેનુ"
 
-#: ../app/actions/qmask-actions.c:46
+#: ../app/actions/quick-mask-actions.c:46
 msgid "_Configure Color and Opacity..."
 msgstr "રંગ અને અપારદર્શકતા રૂપરેખાંકિત કરો (_C)..."
 
-#: ../app/actions/qmask-actions.c:54
-msgid "_Quick Mask Active"
-msgstr "ઝડપી માસ્ક સક્રિય (_Q)"
-
-#: ../app/actions/qmask-actions.c:60
+#: ../app/actions/quick-mask-actions.c:54
 msgid "Toggle _Quick Mask"
 msgstr "ઝડપી માસ્ક બદલો (_Q)"
 
-#: ../app/actions/qmask-actions.c:70
+#: ../app/actions/quick-mask-actions.c:63
 msgid "Mask _Selected Areas"
 msgstr "પસંદિત વિસ્તારો માસ્ક કરો (_S)"
 
-#: ../app/actions/qmask-actions.c:75
+#: ../app/actions/quick-mask-actions.c:68
 msgid "Mask _Unselected Areas"
 msgstr "નહિં પસંદ થયેલ વિસ્તારો માસ્ક કરો (_U)"
 
-#: ../app/actions/qmask-commands.c:106
+#: ../app/actions/quick-mask-commands.c:106
 msgid "Quick Mask Attributes"
 msgstr "ઝડપી માસ્ક લક્ષણો"
 
-#: ../app/actions/qmask-commands.c:109
+#: ../app/actions/quick-mask-commands.c:109
 msgid "Edit Quick Mask Attributes"
 msgstr "ઝડપી માસ્ક લક્ષણોમાં ફેરફાર કરો"
 
-#: ../app/actions/qmask-commands.c:111
+#: ../app/actions/quick-mask-commands.c:111
 msgid "Edit Quick Mask Color"
 msgstr "ઝડપી માસ્ક રંગમાં ફેરફાર કરો"
 
-#: ../app/actions/qmask-commands.c:112
+#: ../app/actions/quick-mask-commands.c:112
 msgid "_Mask opacity:"
 msgstr "માસ્ક અપારદર્શકતા (_M):"
 
@@ -2657,7 +2678,7 @@ msgid "Border selection by"
 msgstr "આના દ્વારા કિનારી પસંદગી"
 
 #: ../app/actions/select-commands.c:275 ../app/actions/select-commands.c:301
-#: ../app/actions/vectors-commands.c:365 ../app/actions/vectors-commands.c:392
+#: ../app/actions/vectors-commands.c:366 ../app/actions/vectors-commands.c:393
 #: ../app/dialogs/stroke-dialog.c:278
 msgid "There is no active layer or channel to stroke to."
 msgstr "ત્યાં કોઈ સક્રિય સ્તર અથવા ચેનલ સ્ટ્રોક કરવા માટે નથી."
@@ -2740,7 +2761,7 @@ msgstr "ખોલો"
 msgid "Load text from file"
 msgstr "ફાઈલમાંથી લખાણ લાવો"
 
-#: ../app/actions/text-editor-actions.c:50 ../app/core/gimp-edit.c:342
+#: ../app/actions/text-editor-actions.c:50 ../app/core/gimp-edit.c:425
 msgid "Clear"
 msgstr "સાફ"
 
@@ -2968,7 +2989,7 @@ msgstr "નકલી પાથ"
 msgid "_Delete Path"
 msgstr "પાથ કાઢી નાંખો (_D)"
 
-#: ../app/actions/vectors-actions.c:78
+#: ../app/actions/vectors-actions.c:78 ../app/core/core-enums.c:874
 msgid "Delete path"
 msgstr "પાથ કાઢી નાંખો"
 
@@ -3033,12 +3054,12 @@ msgid "Paste Pat_h"
 msgstr "પાથ ચોંટાડો (_h)"
 
 #: ../app/actions/vectors-actions.c:134
-msgid "I_mport Path..."
-msgstr "પાથ આયાત કરો (_m)..."
-
-#: ../app/actions/vectors-actions.c:139
 msgid "E_xport Path..."
 msgstr "પાથની નિકાસ કરો (_x)..."
+
+#: ../app/actions/vectors-actions.c:139
+msgid "I_mport Path..."
+msgstr "પાથ આયાત કરો (_m)..."
 
 #: ../app/actions/vectors-actions.c:162
 msgid "Path to Sele_ction"
@@ -3072,28 +3093,28 @@ msgstr "પાથ પ્રતિ પસંદગી (અદ્યતન) (_A)"
 msgid "Advanced options"
 msgstr "અદ્યતન વિકલ્પો"
 
-#: ../app/actions/vectors-commands.c:140
+#: ../app/actions/vectors-commands.c:141
 msgid "Path Attributes"
 msgstr "પાથ લક્ષણો"
 
-#: ../app/actions/vectors-commands.c:143
+#: ../app/actions/vectors-commands.c:144
 msgid "Edit Path Attributes"
 msgstr "પાથ લક્ષણોમાં ફેરફાર કરો"
 
-#: ../app/actions/vectors-commands.c:167 ../app/actions/vectors-commands.c:168
-#: ../app/actions/vectors-commands.c:190
+#: ../app/actions/vectors-commands.c:168 ../app/actions/vectors-commands.c:169
+#: ../app/actions/vectors-commands.c:191
 msgid "New Path"
 msgstr "નવો પાથ"
 
-#: ../app/actions/vectors-commands.c:171
+#: ../app/actions/vectors-commands.c:172
 msgid "New Path Options"
 msgstr "નવા પાથ વિકલ્પો"
 
-#: ../app/actions/vectors-commands.c:299 ../app/pdb/paths_cmds.c:1225
+#: ../app/actions/vectors-commands.c:300 ../app/pdb/paths_cmds.c:1225
 msgid "Path to Selection"
 msgstr "પસંદગી પ્રતિ પાથ"
 
-#: ../app/actions/vectors-commands.c:370 ../app/tools/gimpvectoroptions.c:205
+#: ../app/actions/vectors-commands.c:371 ../app/tools/gimpvectoroptions.c:205
 #: ../app/tools/gimpvectortool.c:1935 ../app/vectors/gimpvectors.c:237
 msgid "Stroke Path"
 msgstr "સ્ટ્રોક પાથ"
@@ -3210,76 +3231,76 @@ msgstr "પરિસ્થિતિદર્શકપટ્ટી બતાવ�
 msgid "Fullscr_een"
 msgstr "પૂર્ણ સ્ક્રીન (_e)"
 
-#: ../app/actions/view-actions.c:246
+#: ../app/actions/view-actions.c:258
 msgid "1_6:1  (1600%)"
 msgstr "1_6:1  (1600%)"
 
-#: ../app/actions/view-actions.c:251
+#: ../app/actions/view-actions.c:263
 msgid "_8:1  (800%)"
 msgstr "_8:1  (800%)"
 
-#: ../app/actions/view-actions.c:256
+#: ../app/actions/view-actions.c:268
 msgid "_4:1  (400%)"
 msgstr "_4:1  (400%)"
 
-#: ../app/actions/view-actions.c:261
+#: ../app/actions/view-actions.c:273
 msgid "_2:1  (200%)"
 msgstr "_2:1  (200%)"
 
-#: ../app/actions/view-actions.c:266
+#: ../app/actions/view-actions.c:278
 msgid "_1:1  (100%)"
 msgstr "_1:1  (100%)"
 
-#: ../app/actions/view-actions.c:267
+#: ../app/actions/view-actions.c:279
 msgid "Zoom 1:1"
 msgstr "1:1 પ્રમાણમાં નાનુમોટુ કરો"
 
-#: ../app/actions/view-actions.c:272
+#: ../app/actions/view-actions.c:284
 msgid "1:_2  (50%)"
 msgstr "1:_2  (50%)"
 
-#: ../app/actions/view-actions.c:277
+#: ../app/actions/view-actions.c:289
 msgid "1:_4  (25%)"
 msgstr "1:_4  (25%)"
 
-#: ../app/actions/view-actions.c:282
+#: ../app/actions/view-actions.c:294
 msgid "1:_8  (12.5%)"
 msgstr "1:_8  (12.5%)"
 
-#: ../app/actions/view-actions.c:287
+#: ../app/actions/view-actions.c:299
 msgid "1:1_6  (6.25%)"
 msgstr "1:1_6  (6.25%)"
 
-#: ../app/actions/view-actions.c:292
+#: ../app/actions/view-actions.c:304
 msgid "Othe_r..."
 msgstr "અન્ય (_r)..."
 
-#: ../app/actions/view-actions.c:300
+#: ../app/actions/view-actions.c:312
 msgid "From _Theme"
 msgstr "થીમમાંથી (_T)"
 
-#: ../app/actions/view-actions.c:305
+#: ../app/actions/view-actions.c:317
 msgid "_Light Check Color"
 msgstr "આછો ચકાસણી રંગ (_L)"
 
-#: ../app/actions/view-actions.c:310
+#: ../app/actions/view-actions.c:322
 msgid "_Dark Check Color"
 msgstr "ઘાટો ચકાસણી રંગ (_D)"
 
-#: ../app/actions/view-actions.c:315
+#: ../app/actions/view-actions.c:327
 msgid "Select _Custom Color..."
 msgstr "વૈવિધ્યપૂર્ણ રંગ પસંદ કરો (_C)..."
 
-#: ../app/actions/view-actions.c:320
+#: ../app/actions/view-actions.c:332
 msgid "As in _Preferences"
 msgstr "પસંદગીઓ પ્રમાણે (_P)"
 
-#: ../app/actions/view-actions.c:607
+#: ../app/actions/view-actions.c:619
 #, c-format
 msgid "Othe_r (%s) ..."
 msgstr "અન્ય (%s) (_r) ..."
 
-#: ../app/actions/view-actions.c:616
+#: ../app/actions/view-actions.c:628
 #, c-format
 msgid "_Zoom (%s)"
 msgstr "નાનુંમોટું (%s) (_Z)"
@@ -3421,7 +3442,11 @@ msgid ""
 "swap file. Some parts of your images may be corrupted. Try to save your work "
 "using different filenames, restart the Gimp and check the location of the "
 "swap directory in your Preferences."
-msgstr "સ્વેપ ફાઈલ ખોલવામાં અસમર્થ. Gimp એ મેમરીની મર્યાદા બહાર ચાલી રહ્યું છે અને તે સ્વેપ ફાઈલ વાપરી શકતું નથી. તમારા ચિત્રોના અમુક ભાગો બગડી ગયેલા છે. અલગ ફાઈલનામોની મદદથી તમારું કામ સંગ્રહવાનો પ્રયત્ન કરો, Gimp ફરી શરૂ કરો અને તમારી પસંદગીઓમાં સ્વેપ ડિરેક્ટરીનું સ્થાન ચકાસો."
+msgstr ""
+"સ્વેપ ફાઈલ ખોલવામાં અસમર્થ. Gimp એ મેમરીની મર્યાદા બહાર ચાલી રહ્યું છે અને તે સ્વેપ ફાઈલ "
+"વાપરી શકતું નથી. તમારા ચિત્રોના અમુક ભાગો બગડી ગયેલા છે. અલગ ફાઈલનામોની મદદથી તમારું "
+"કામ સંગ્રહવાનો પ્રયત્ન કરો, Gimp ફરી શરૂ કરો અને તમારી પસંદગીઓમાં સ્વેપ ડિરેક્ટરીનું સ્થાન "
+"ચકાસો."
 
 #: ../app/config/gimpconfig-file.c:66 ../app/core/gimpbrushgenerated.c:254
 #: ../app/core/gimpgradient-save.c:51 ../app/core/gimpgradient-save.c:142
@@ -3448,7 +3473,9 @@ msgstr "'%s' વાંચતી વખતે ભૂલ: %s"
 msgid ""
 "There was an error parsing your '%s' file. Default values will be used. A "
 "backup of your configuration has been created at '%s'."
-msgstr "તમારી '%s' ફાઈલનું પદચ્છેદન કરવામાં ભૂલ હતી. મૂળભૂત કિંમતો વપરાશે. તમારા રૂપરેખાંકનનું બેકઅપ '%s' આગળ બન્યું છે."
+msgstr ""
+"તમારી '%s' ફાઈલનું પદચ્છેદન કરવામાં ભૂલ હતી. મૂળભૂત કિંમતો વપરાશે. તમારા રૂપરેખાંકનનું બેકઅપ "
+"'%s' આગળ બન્યું છે."
 
 #: ../app/config/gimprc.c:296 ../app/config/gimprc.c:309
 #, c-format
@@ -3469,7 +3496,9 @@ msgid ""
 "When enabled, an image will become the active image when its image window "
 "receives the focus. This is useful for window managers using \"click to focus"
 "\"."
-msgstr "જ્યારે સક્રિય કરેલ હોય, ત્યારે ચિત્ર સક્રિય ચિત્ર બનશે જ્યારે તેની ચિત્ર વિન્ડો ફોકસ મેળવે. આ વિન્ડો વ્યવસ્થાપકો માટે \"ફોકસ કરવા માટે ક્લિક કરો\" ની મદદથી ઉપયોગી છે."
+msgstr ""
+"જ્યારે સક્રિય કરેલ હોય, ત્યારે ચિત્ર સક્રિય ચિત્ર બનશે જ્યારે તેની ચિત્ર વિન્ડો ફોકસ મેળવે. આ "
+"વિન્ડો વ્યવસ્થાપકો માટે \"ફોકસ કરવા માટે ક્લિક કરો\" ની મદદથી ઉપયોગી છે."
 
 #: ../app/config/gimprc-blurbs.h:23
 msgid "Specifies how the area around the image should be drawn."
@@ -3497,13 +3526,17 @@ msgstr "કર્સરની સ્થિતિ સુયોજિત કરે
 msgid ""
 "Context-dependent cursors are cool.  They are enabled by default. However, "
 "they require overhead that you may want to do without."
-msgstr "સંદર્ભ-આધારિત કર્સરો સારા છે.  તેઓ મૂળભૂત રીતે સક્રિય થયેલ છે. તેમછતાં પણ, તેઓ માટે ઓવરહેડ જરૂરી છે કે જે તમે તેના વિના કરવા માંગો છો."
+msgstr ""
+"સંદર્ભ-આધારિત કર્સરો સારા છે.  તેઓ મૂળભૂત રીતે સક્રિય થયેલ છે. તેમછતાં પણ, તેઓ માટે ઓવરહેડ "
+"જરૂરી છે કે જે તમે તેના વિના કરવા માંગો છો."
 
 #: ../app/config/gimprc-blurbs.h:50
 msgid ""
 "When enabled, this will ensure that each pixel of an image gets mapped to a "
 "pixel on the screen."
-msgstr "જ્યારે સક્રિય કરેલ હોય, ત્યારે આ ખાતરી કરશે કે ચિત્રનો દરેક પિક્સેલ સ્ક્રીન પરના પિક્સેલ સાથે જોડાયેલ મેળવે."
+msgstr ""
+"જ્યારે સક્રિય કરેલ હોય, ત્યારે આ ખાતરી કરશે કે ચિત્રનો દરેક પિક્સેલ સ્ક્રીન પરના પિક્સેલ સાથે "
+"જોડાયેલ મેળવે."
 
 #: ../app/config/gimprc-blurbs.h:76
 msgid "This is the distance in pixels where Guide and Grid snapping activates."
@@ -3516,13 +3549,18 @@ msgid ""
 "progresses in all directions until the difference of pixel intensity from "
 "the original is greater than a specified threshold. This value represents "
 "the default threshold."
-msgstr "સાધનો જેમ કે અડધા-પસંદ અને બાદલી ભરો સીડ-ભરો અલગોરીધમ પર આધારિત વિસ્તારો શોધે છે.  સીડ ભરો શરૂઆતમાં પસંદ કરેલ પિક્સેલથી શરૂ કરે છે અને દિશાઓમાં પ્રગતિ કરે છે જ્યાં સુધી પિક્સેલ તીવ્રતાના તફાવતથી મૂળ મોટું હોય સ્પષ્ટ કરેલ થ્રેશોલ્ડ કરતાં. આ કિંમત મૂળભૂત થ્રેશોલ્ડ રજૂ કરે છે."
+msgstr ""
+"સાધનો જેમ કે અડધા-પસંદ અને બાદલી ભરો સીડ-ભરો અલગોરીધમ પર આધારિત વિસ્તારો શોધે છે.  "
+"સીડ ભરો શરૂઆતમાં પસંદ કરેલ પિક્સેલથી શરૂ કરે છે અને દિશાઓમાં પ્રગતિ કરે છે જ્યાં સુધી પિક્સેલ "
+"તીવ્રતાના તફાવતથી મૂળ મોટું હોય સ્પષ્ટ કરેલ થ્રેશોલ્ડ કરતાં. આ કિંમત મૂળભૂત થ્રેશોલ્ડ રજૂ કરે છે."
 
 #: ../app/config/gimprc-blurbs.h:93
 msgid ""
 "The window type hint that is set on dock windows. This may affect the way "
 "your window manager decorates and handles dock windows."
-msgstr "વિન્ડો પ્રકાર સંકેત કે જે ડોક વિન્ડોઝ પર સુયોજિત થયેલ છે. આ તમારું વિન્ડો વ્યવસ્થાપક ડોક વિન્ડોને સુશોભિત કરે અને નિયંત્રિત કરે તેના માર્ગને અસર કરશે."
+msgstr ""
+"વિન્ડો પ્રકાર સંકેત કે જે ડોક વિન્ડોઝ પર સુયોજિત થયેલ છે. આ તમારું વિન્ડો વ્યવસ્થાપક ડોક "
+"વિન્ડોને સુશોભિત કરે અને નિયંત્રિત કરે તેના માર્ગને અસર કરશે."
 
 #: ../app/config/gimprc-blurbs.h:124
 msgid "When enabled, the selected brush will be used for all tools."
@@ -3552,7 +3590,9 @@ msgstr "ચિત્ર વિન્ડો તકતીઓમાં દેખા
 msgid ""
 "When enabled, this will ensure that the full image is visible after a file "
 "is opened, otherwise it will be displayed with a scale of 1:1."
-msgstr "જ્યારે સક્રિય કરેલ હોય, ત્યારે આ ખાતરી કરે છે કે પૂર્ણ ચિત્ર એ ફાઈલ ખૂલેલી હોય પછી દેખાય, નહિંતર તે ૧:૧ ના માપન સાથે દર્શાવવામાં આવશે."
+msgstr ""
+"જ્યારે સક્રિય કરેલ હોય, ત્યારે આ ખાતરી કરે છે કે પૂર્ણ ચિત્ર એ ફાઈલ ખૂલેલી હોય પછી દેખાય, "
+"નહિંતર તે ૧:૧ ના માપન સાથે દર્શાવવામાં આવશે."
 
 #: ../app/config/gimprc-blurbs.h:165
 msgid "Install a private colormap; might be useful on 8-bit (256 colors) displays."
@@ -3570,13 +3610,17 @@ msgstr "કેટલા છેલ્લે ખૂલેલા ચિત્ર �
 msgid ""
 "Speed of marching ants in the selection outline.  This value is in "
 "milliseconds (less time indicates faster marching)."
-msgstr "પસંદગી આઉટલાઈનમાં marching ants ની ઝડપ.  આ કિંમત એ મિલિસેકન્ડોમાં છે (ઓછો સમય ઝડપી marching સૂચવે છે)."
+msgstr ""
+"પસંદગી આઉટલાઈનમાં marching ants ની ઝડપ.  આ કિંમત એ મિલિસેકન્ડોમાં છે (ઓછો સમય ઝડપી "
+"marching સૂચવે છે)."
 
 #: ../app/config/gimprc-blurbs.h:182
 msgid ""
 "GIMP will warn the user if an attempt is made to create an image that would "
 "take more memory than the size specified here."
-msgstr "GIMP વપરાશકર્તાને ચેતવશે જો વારો ચિત્ર બનાવવા માટે કરવામાં આવે કે જે અંહિ સ્પષ્ટ થયેલ માપ કરતાં વધુ મેમરી લેશે."
+msgstr ""
+"GIMP વપરાશકર્તાને ચેતવશે જો વારો ચિત્ર બનાવવા માટે કરવામાં આવે કે જે અંહિ સ્પષ્ટ થયેલ માપ "
+"કરતાં વધુ મેમરી લેશે."
 
 #: ../app/config/gimprc-blurbs.h:186
 msgid "When enabled, GIMP will show mnemonics in menus."
@@ -3586,28 +3630,36 @@ msgstr "જ્યારે સક્રિય હોય, ત્યારે GIMP
 msgid ""
 "Generally only a concern for 8-bit displays, this sets the minimum number of "
 "system colors allocated for the GIMP."
-msgstr "સામાન્ય રીતે માત્ર 8-bit ડિસ્પ્લે માટે જ ધ્યાનમાં લે છે, આ GIMP માટે સોંપાયેલ ન્યૂનતમ સંખ્યાના રંગો સુયોજિત કરે છે."
+msgstr ""
+"સામાન્ય રીતે માત્ર 8-bit ડિસ્પ્લે માટે જ ધ્યાનમાં લે છે, આ GIMP માટે સોંપાયેલ ન્યૂનતમ સંખ્યાના "
+"રંગો સુયોજિત કરે છે."
 
 #: ../app/config/gimprc-blurbs.h:200
 msgid ""
 "Sets the monitor's horizontal resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
-msgstr "મોનીટરનું આડું રીઝોલ્યુશન સુયોજિત કરે છે, ડોટ પ્રતિ ઈંચમાં.  જો ૦ સુયોજિત હોય, તો X સર્વરને બંને આડા અને ઊભા રીઝોલ્યુશન જાણકારી માટે પ્રશ્ન પૂછવા માટે દબાણ કરે છે."
+msgstr ""
+"મોનીટરનું આડું રીઝોલ્યુશન સુયોજિત કરે છે, ડોટ પ્રતિ ઈંચમાં.  જો ૦ સુયોજિત હોય, તો X સર્વરને "
+"બંને આડા અને ઊભા રીઝોલ્યુશન જાણકારી માટે પ્રશ્ન પૂછવા માટે દબાણ કરે છે."
 
 #: ../app/config/gimprc-blurbs.h:205
 msgid ""
 "Sets the monitor's vertical resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
-msgstr "મોનીટરનું ઊભું રીઝોલ્યુશન સુયોજિત કરે છે, ડોટ પ્રતિ ઈંચમાં.  જો ૦ સુયોજિત હોય, તો X સર્વરને બંને આડા અને ઊભા રીઝોલ્યુશન જાણકારી માટે પ્રશ્ન પૂછવા માટે દબાણ કરે છે."
+msgstr ""
+"મોનીટરનું ઊભું રીઝોલ્યુશન સુયોજિત કરે છે, ડોટ પ્રતિ ઈંચમાં.  જો ૦ સુયોજિત હોય, તો X સર્વરને "
+"બંને આડા અને ઊભા રીઝોલ્યુશન જાણકારી માટે પ્રશ્ન પૂછવા માટે દબાણ કરે છે."
 
 #: ../app/config/gimprc-blurbs.h:210
 msgid ""
 "If enabled, the move tool changes the active layer or path when a layer or "
 "path is being picked. This used to be the default behaviour in older "
 "versions."
-msgstr "જો સક્રિય હોય, તો ખસેડો સાધન સક્રિય સ્તર અથવા પાથ બદલે છે જ્યારે સ્તર અથવા પાથ લેવાઈ ગયેલ હોય. આ જૂની આવૃત્તિઓમાં મૂળભૂત વર્તણૂક તરીકે વપરાય છે."
+msgstr ""
+"જો સક્રિય હોય, તો ખસેડો સાધન સક્રિય સ્તર અથવા પાથ બદલે છે જ્યારે સ્તર અથવા પાથ લેવાઈ "
+"ગયેલ હોય. આ જૂની આવૃત્તિઓમાં મૂળભૂત વર્તણૂક તરીકે વપરાય છે."
 
 #: ../app/config/gimprc-blurbs.h:215
 msgid ""
@@ -3619,7 +3671,9 @@ msgstr "ચિત્ર વિન્ડોના તળિયે જમણા �
 msgid ""
 "On multiprocessor machines, if GIMP has been compiled with --enable-mp this "
 "sets how many processors GIMP should use simultaneously."
-msgstr "મલ્ટીપ્રોસેસર મશીનો પર, જો GIMP એ --enable-mp સાથે કમ્પાઈલ થયેલ હોય તો આ કેટલા પ્રોસેસરો GIMP એ વારાફરતી વાપરવા જોઈએ તે સુયોજિત કરે છે."
+msgstr ""
+"મલ્ટીપ્રોસેસર મશીનો પર, જો GIMP એ --enable-mp સાથે કમ્પાઈલ થયેલ હોય તો આ કેટલા "
+"પ્રોસેસરો GIMP એ વારાફરતી વાપરવા જોઈએ તે સુયોજિત કરે છે."
 
 #: ../app/config/gimprc-blurbs.h:233
 msgid ""
@@ -3628,14 +3682,21 @@ msgid ""
 "painting with large brushes should be more accurate, but it may be slower.  "
 "Perversely, on some X servers enabling this option results in faster "
 "painting."
-msgstr "જ્યારે સક્રિય હોય, ત્યારે માઉસની દરેક ગતિ ઘટના પર X સર્વરને પૂછવામાં આવે છે, સ્થાનની હીંટ પર આધાર રાખવાની જગ્યાએ.  આનો અર્થ એ થાય કે મોટા બ્રશો સાથે રંગકામ કરવાનું વધુ ચોક્કસ હોવું જોઈએ, પરંતુ તે ધીમું હશે.  પહેલાં, અમુક X સર્વરો પર આ વિકલ્પ સક્રિય કરવાનું ઝડપી રંગકામમાં પરિણમે છે."
+msgstr ""
+"જ્યારે સક્રિય હોય, ત્યારે માઉસની દરેક ગતિ ઘટના પર X સર્વરને પૂછવામાં આવે છે, સ્થાનની હીંટ "
+"પર આધાર રાખવાની જગ્યાએ.  આનો અર્થ એ થાય કે મોટા બ્રશો સાથે રંગકામ કરવાનું વધુ ચોક્કસ "
+"હોવું જોઈએ, પરંતુ તે ધીમું હશે.  પહેલાં, અમુક X સર્વરો પર આ વિકલ્પ સક્રિય કરવાનું ઝડપી "
+"રંગકામમાં પરિણમે છે."
 
 #: ../app/config/gimprc-blurbs.h:246
 msgid ""
 "Sets whether GIMP should create previews of layers and channels. Previews in "
 "the layers and channels dialog are nice to have but they can slow things "
 "down when working with large images."
-msgstr "શું GIMP એ સ્તરો અને ચેનલોનું પૂર્વદર્શન બનાવવું જોઈએ તે સુયોજિત કરો. સ્તરો અને ચેનલો સંવાદમાં પૂર્વદર્શનો હોય એ સારું છે પરંતુ તેઓ વસ્તુઓ ધીમી બનાવે છે જ્યારે મોટા ચિત્રો સાથે કામ કરી રહ્યા હોય."
+msgstr ""
+"શું GIMP એ સ્તરો અને ચેનલોનું પૂર્વદર્શન બનાવવું જોઈએ તે સુયોજિત કરો. સ્તરો અને ચેનલો સંવાદમાં "
+"પૂર્વદર્શનો હોય એ સારું છે પરંતુ તેઓ વસ્તુઓ ધીમી બનાવે છે જ્યારે મોટા ચિત્રો સાથે કામ કરી "
+"રહ્યા હોય."
 
 #: ../app/config/gimprc-blurbs.h:251
 msgid ""
@@ -3647,13 +3708,17 @@ msgstr "નવા બનેલ સંવાદોમાં સ્તરો અ�
 msgid ""
 "When enabled, the image window will automatically resize itself whenever the "
 "physical image size changes."
-msgstr "જ્યારે સક્રિય કરેલ હોય, ત્યારે ચિત્ર વિન્ડો આપોઆપ માપ બદલશે જ્યારે તે પોત ભૌતિક રીતે ચિત્ર માપ બદલે."
+msgstr ""
+"જ્યારે સક્રિય કરેલ હોય, ત્યારે ચિત્ર વિન્ડો આપોઆપ માપ બદલશે જ્યારે તે પોત ભૌતિક રીતે ચિત્ર "
+"માપ બદલે."
 
 #: ../app/config/gimprc-blurbs.h:259
 msgid ""
 "When enabled, the image window will automatically resize itself when zooming "
 "into and out of images."
-msgstr "જ્યારે સક્રિય કરેલ હોય, ત્યારે ચિત્ર વિન્ડો પોતાનું માપ આપોઆપ બદલશે જ્યારે ચિત્રોમાં નાનું અને મોટું કરી રહ્યા હોય."
+msgstr ""
+"જ્યારે સક્રિય કરેલ હોય, ત્યારે ચિત્ર વિન્ડો પોતાનું માપ આપોઆપ બદલશે જ્યારે ચિત્રોમાં નાનું અને "
+"મોટું કરી રહ્યા હોય."
 
 #: ../app/config/gimprc-blurbs.h:263
 msgid "Let GIMP try to restore your last saved session on each startup."
@@ -3682,7 +3747,9 @@ msgid ""
 "When enabled, dialogs will show a help button that gives access to the "
 "related help page.  Without this button, the help page can still be reached "
 "by pressing F1."
-msgstr "જ્યારે સક્રિય કરેલ હોય, ત્યારે સંવાદો મદદ બટન બતાવશે કે જે સંબંધિત મદદ પાનાંઓને વપરાશ આપે છે.  આ બટન વિના, મદદ પાનું હજુ પણ F1 બટન દબાવીને પહોંચી શકાશે."
+msgstr ""
+"જ્યારે સક્રિય કરેલ હોય, ત્યારે સંવાદો મદદ બટન બતાવશે કે જે સંબંધિત મદદ પાનાંઓને વપરાશ આપે "
+"છે.  આ બટન વિના, મદદ પાનું હજુ પણ F1 બટન દબાવીને પહોંચી શકાશે."
 
 #: ../app/config/gimprc-blurbs.h:288
 msgid ""
@@ -3694,55 +3761,73 @@ msgstr "જ્યારે સક્રિય કરેલ હોય, ત્ય�
 msgid ""
 "When enabled, the menubar is visible by default. This can also be toggled "
 "with the \"View->Show Menubar\" command."
-msgstr "જ્યારે સક્રિય કરેલ હોય, ત્યારે મેનુબાર મૂળભૂત રીતે દૃશ્યમાન થાય છે. આ \"જુઓ->મેનુબાર બતાવો\" આદેશની મદદથી પણ બદલી શકાશે."
+msgstr ""
+"જ્યારે સક્રિય કરેલ હોય, ત્યારે મેનુબાર મૂળભૂત રીતે દૃશ્યમાન થાય છે. આ \"જુઓ->મેનુબાર બતાવો\" "
+"આદેશની મદદથી પણ બદલી શકાશે."
 
 #: ../app/config/gimprc-blurbs.h:296
 msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
-msgstr "જ્યારે સક્રિય કરેલ હોય, ત્યારે માપપટ્ટીઓ મૂળભૂત રીતે દૃશ્યમાન થાય છે. આ \"જુઓ->માપપટ્ટીઓ બતાવો\" આદેશની મદદથી પણ બદલી શકાશે."
+msgstr ""
+"જ્યારે સક્રિય કરેલ હોય, ત્યારે માપપટ્ટીઓ મૂળભૂત રીતે દૃશ્યમાન થાય છે. આ \"જુઓ->માપપટ્ટીઓ "
+"બતાવો\" આદેશની મદદથી પણ બદલી શકાશે."
 
 #: ../app/config/gimprc-blurbs.h:300
 msgid ""
 "When enabled, the scrollbars are visible by default. This can also be "
 "toggled with the \"View->Show Scrollbars\" command."
-msgstr "જ્યારે સક્રિય કરેલ હોય, ત્યારે સરકપટ્ટી મૂળભૂત રીતે દૃશ્યમાન થાય છે. આ \"જુઓ->સરકપટ્ટી બતાવો\" આદેશની મદદથી પણ બદલી શકાશે."
+msgstr ""
+"જ્યારે સક્રિય કરેલ હોય, ત્યારે સરકપટ્ટી મૂળભૂત રીતે દૃશ્યમાન થાય છે. આ \"જુઓ->સરકપટ્ટી બતાવો"
+"\" આદેશની મદદથી પણ બદલી શકાશે."
 
 #: ../app/config/gimprc-blurbs.h:304
 msgid ""
 "When enabled, the statusbar is visible by default. This can also be toggled "
 "with the \"View->Show Statusbar\" command."
-msgstr "જ્યારે સક્રિય કરેલ હોય, ત્યારે પરિસ્થિતિપટ્ટી મૂળભૂત રીતે દૃશ્યમાન થાય છે. આ \"જુઓ->પરિસ્થિતિપટ્ટી બતાવો\" આદેશની મદદથી પણ બદલી શકાશે."
+msgstr ""
+"જ્યારે સક્રિય કરેલ હોય, ત્યારે પરિસ્થિતિપટ્ટી મૂળભૂત રીતે દૃશ્યમાન થાય છે. આ \"જુઓ-"
+">પરિસ્થિતિપટ્ટી બતાવો\" આદેશની મદદથી પણ બદલી શકાશે."
 
 #: ../app/config/gimprc-blurbs.h:308
 msgid ""
 "When enabled, the selection is visible by default. This can also be toggled "
 "with the \"View->Show Selection\" command."
-msgstr "જ્યારે સક્રિય કરેલ હોય, ત્યારે પસંદગી મૂળભૂત રીતે દૃશ્યમાન થાય છે. આ \"જુઓ->પસંદગી બતાવો\" આદેશની મદદથી પણ બદલી શકાશે."
+msgstr ""
+"જ્યારે સક્રિય કરેલ હોય, ત્યારે પસંદગી મૂળભૂત રીતે દૃશ્યમાન થાય છે. આ \"જુઓ->પસંદગી બતાવો\" "
+"આદેશની મદદથી પણ બદલી શકાશે."
 
 #: ../app/config/gimprc-blurbs.h:312
 msgid ""
 "When enabled, the layer boundary is visible by default. This can also be "
 "toggled with the \"View->Show Layer Boundary\" command."
-msgstr "જ્યારે સક્રિય કરેલ હોય, ત્યારે સ્તર કિનારી મૂળભૂત રીતે દૃશ્યમાન થાય છે. આ \"જુઓ->સ્તર કિનારી બતાવો\" આદેશની મદદથી પણ બદલી શકાશે."
+msgstr ""
+"જ્યારે સક્રિય કરેલ હોય, ત્યારે સ્તર કિનારી મૂળભૂત રીતે દૃશ્યમાન થાય છે. આ \"જુઓ->સ્તર "
+"કિનારી બતાવો\" આદેશની મદદથી પણ બદલી શકાશે."
 
 #: ../app/config/gimprc-blurbs.h:316
 msgid ""
 "When enabled, the guides are visible by default. This can also be toggled "
 "with the \"View->Show Guides\" command."
-msgstr "જ્યારે સક્રિય કરેલ હોય, ત્યારે માર્ગદર્શનો મૂળભૂત રીતે દૃશ્યમાન થાય છે. આ \"જુઓ->માર્ગદર્શનો બતાવો\" આદેશની મદદથી પણ બદલી શકાશે."
+msgstr ""
+"જ્યારે સક્રિય કરેલ હોય, ત્યારે માર્ગદર્શનો મૂળભૂત રીતે દૃશ્યમાન થાય છે. આ \"જુઓ->માર્ગદર્શનો "
+"બતાવો\" આદેશની મદદથી પણ બદલી શકાશે."
 
 #: ../app/config/gimprc-blurbs.h:320
 msgid ""
 "When enabled, the grid is visible by default. This can also be toggled with "
 "the \"View->Show Grid\" command."
-msgstr "જ્યારે સક્રિય કરેલ હોય, ત્યારે જાળી મૂળભૂત રીતે દૃશ્યમાન થાય છે. આ \"જુઓ->જાળી બતાવો\" આદેશની મદદથી પણ બદલી શકાશે."
+msgstr ""
+"જ્યારે સક્રિય કરેલ હોય, ત્યારે જાળી મૂળભૂત રીતે દૃશ્યમાન થાય છે. આ \"જુઓ->જાળી બતાવો\" "
+"આદેશની મદદથી પણ બદલી શકાશે."
 
 #: ../app/config/gimprc-blurbs.h:324
 msgid ""
 "When enabled, the sample points are visible by default. This can also be "
 "toggled with the \"View->Show Sample Points\" command."
-msgstr "જ્યારે સક્રિય કરેલ હોય, ત્યારે નમૂના બિંદુઓ મૂળભૂત રીતે દૃશ્યમાન થાય છે. આ \"જુઓ->નમૂના બિંદુઓ બતાવો\" આદેશની મદદથી પણ બદલી શકાશે."
+msgstr ""
+"જ્યારે સક્રિય કરેલ હોય, ત્યારે નમૂના બિંદુઓ મૂળભૂત રીતે દૃશ્યમાન થાય છે. આ \"જુઓ->નમૂના બિંદુઓ "
+"બતાવો\" આદેશની મદદથી પણ બદલી શકાશે."
 
 #: ../app/config/gimprc-blurbs.h:328
 msgid "Enable displaying a handy GIMP tip on startup."
@@ -3760,7 +3845,12 @@ msgid ""
 "GIMP is used with large images. Also, things can get horribly slow if the "
 "swap file is created on a directory that is mounted over NFS.  For these "
 "reasons, it may be desirable to put your swap file in \"/tmp\"."
-msgstr "સ્વેપ ફાઈલ સ્થાન સુયોજિત કરે છે. GIMP તકતી આધારિત મેમરી સોંપણી પદ્ધતિ વાપરે છે. સ્વેપ ફાઈલ ડિસ્ક બહાર અને પાછી અંદર તકતીઓ ઝડપથી અને સરળતાથી બદલવા માટે વપરાય છે. પરિચિત બનો કે સ્વેપ ફાઈલ પોતે સરળતાથી જ મોટી બની જાય છે જો GIMP એ મોટા ચિત્રો સાથે વપરાય. અને, વસ્તુઓ ભયાનક રીતે ધીમી થઈ જાય છે જો સ્વેપ ફાઈલ ડિરેક્ટરી પર બને કે જે NFS પર માઉન્ટ થયેલ હોય.  આ કારણોસર, તમારી સ્વેપ ફાઈલને \"/tmp\" ડિરેક્ટરીમાં મૂકવાનું જરૂરી રહેશે."
+msgstr ""
+"સ્વેપ ફાઈલ સ્થાન સુયોજિત કરે છે. GIMP તકતી આધારિત મેમરી સોંપણી પદ્ધતિ વાપરે છે. સ્વેપ "
+"ફાઈલ ડિસ્ક બહાર અને પાછી અંદર તકતીઓ ઝડપથી અને સરળતાથી બદલવા માટે વપરાય છે. પરિચિત "
+"બનો કે સ્વેપ ફાઈલ પોતે સરળતાથી જ મોટી બની જાય છે જો GIMP એ મોટા ચિત્રો સાથે વપરાય. "
+"અને, વસ્તુઓ ભયાનક રીતે ધીમી થઈ જાય છે જો સ્વેપ ફાઈલ ડિરેક્ટરી પર બને કે જે NFS પર માઉન્ટ "
+"થયેલ હોય.  આ કારણોસર, તમારી સ્વેપ ફાઈલને \"/tmp\" ડિરેક્ટરીમાં મૂકવાનું જરૂરી રહેશે."
 
 #: ../app/config/gimprc-blurbs.h:343
 msgid "When enabled, menus can be torn off."
@@ -3771,13 +3861,18 @@ msgid ""
 "When enabled, dock windows (the toolbox and palettes) are set to be "
 "transient to the active image window. Most window managers will keep the "
 "dock windows above the image window then, but it may also have other effects."
-msgstr "જ્યારે સક્રિય કરેલ હોય, ત્યારે ડોક વિન્ડો (સાધનબોક્સ અને તકતીઓ) સક્રિય ચિત્ર વન્ડો પ્રતિ શાંત તરીકે સુયોજિત થઈ જાય છે. મોટા ભાગના વિન્ડો વ્યવસ્થાપકો ડોક વિન્ડોને ચિત્ર વિન્ડોની ઉપર રાખે છે પછી, પરંતુ તેને અન્ય અસરો પણ હશે."
+msgstr ""
+"જ્યારે સક્રિય કરેલ હોય, ત્યારે ડોક વિન્ડો (સાધનબોક્સ અને તકતીઓ) સક્રિય ચિત્ર વન્ડો પ્રતિ "
+"શાંત તરીકે સુયોજિત થઈ જાય છે. મોટા ભાગના વિન્ડો વ્યવસ્થાપકો ડોક વિન્ડોને ચિત્ર વિન્ડોની "
+"ઉપર રાખે છે પછી, પરંતુ તેને અન્ય અસરો પણ હશે."
 
 #: ../app/config/gimprc-blurbs.h:352
 msgid ""
 "When enabled, you can change keyboard shortcuts for menu items by hitting a "
 "key combination while the menu item is highlighted."
-msgstr "જ્યારે સક્રિય કરેલ હોય, ત્યારે તમે મેનુ વસ્તુઓ માટે કીબોર્ડ ટુંકાણો બદલી શકો છો જ્યારે મેનુ વસ્તુ પ્રકાશિત થયેલ હોય ત્યારે કી જોડાણ દબાવીને."
+msgstr ""
+"જ્યારે સક્રિય કરેલ હોય, ત્યારે તમે મેનુ વસ્તુઓ માટે કીબોર્ડ ટુંકાણો બદલી શકો છો જ્યારે મેનુ વસ્તુ "
+"પ્રકાશિત થયેલ હોય ત્યારે કી જોડાણ દબાવીને."
 
 #: ../app/config/gimprc-blurbs.h:356
 msgid "Save changed keyboard shortcuts when the GIMP exits."
@@ -3793,19 +3888,27 @@ msgid ""
 "course of running the GIMP.  Most files will disappear when the GIMP exits, "
 "but some files are likely to remain, so it is best if this directory not be "
 "one that is shared by other users."
-msgstr "કામચલાઉ સંગ્રહસ્થાન ડિરેક્ટરી સુયોજિત કરે છે. GIMP ચલાવવાની ક્રિયા દરમ્યાન ફાઈલો અંહિ દેખાશે.  મોટા ભાગની ફાઈલો અદૃશ્ય થઈ જશે જ્યારે GIMP બંધ થાય, પરંતુ અમુક ફાઈલો બાકી રહેવા જેવી રહેશે, તેથી એ શ્રેષ્ઠ છે કે જો આ ડિરેક્ટરી એક નહિં હોય કે જે અન્ય વપરાશકર્તાઓ દ્વારા વહેંચાય."
+msgstr ""
+"કામચલાઉ સંગ્રહસ્થાન ડિરેક્ટરી સુયોજિત કરે છે. GIMP ચલાવવાની ક્રિયા દરમ્યાન ફાઈલો અંહિ "
+"દેખાશે.  મોટા ભાગની ફાઈલો અદૃશ્ય થઈ જશે જ્યારે GIMP બંધ થાય, પરંતુ અમુક ફાઈલો બાકી રહેવા "
+"જેવી રહેશે, તેથી એ શ્રેષ્ઠ છે કે જો આ ડિરેક્ટરી એક નહિં હોય કે જે અન્ય વપરાશકર્તાઓ દ્વારા "
+"વહેંચાય."
 
 #: ../app/config/gimprc-blurbs.h:374
 msgid ""
 "Sets the size of the thumbnail shown in the Open dialog. Note that GIMP can "
 "not create thumbnails if layer previews are disabled."
-msgstr "ખોલો સંવાદમાં બતાવેલ થમ્બનેઈલનું માપ સુયોજિત કરે છે. નોંધ કરો કે GIMP થમ્બનેઈલો બનાવી શકે છે જો સ્તર પૂર્વદર્શનો નિષ્ક્રિય કરેલ હોય."
+msgstr ""
+"ખોલો સંવાદમાં બતાવેલ થમ્બનેઈલનું માપ સુયોજિત કરે છે. નોંધ કરો કે GIMP થમ્બનેઈલો બનાવી શકે છે "
+"જો સ્તર પૂર્વદર્શનો નિષ્ક્રિય કરેલ હોય."
 
 #: ../app/config/gimprc-blurbs.h:378
 msgid ""
 "The thumbnail in the Open dialog will be automatically updated if the file "
 "being previewed is smaller than the size set here."
-msgstr "ખોલો સંવાદમાંના થમ્બનેઈલ આપોઆપ સુધારાઈ જશે જો પૂર્વદર્શન થયેલ ફાઈલ અંહિ સુયોજિત થયેલ માપ કરતાં નાની હોય."
+msgstr ""
+"ખોલો સંવાદમાંના થમ્બનેઈલ આપોઆપ સુધારાઈ જશે જો પૂર્વદર્શન થયેલ ફાઈલ અંહિ સુયોજિત થયેલ માપ "
+"કરતાં નાની હોય."
 
 #: ../app/config/gimprc-blurbs.h:382
 msgid ""
@@ -3813,13 +3916,18 @@ msgid ""
 "memory and disk. Setting this value higher will cause the GIMP to use less "
 "swap space, but will also cause the GIMP to use more memory. Conversely, a "
 "smaller cache size causes the GIMP to use more swap space and less memory."
-msgstr "તકતી કેશ એ GIMP તકતીઓને મેમરી અને ડિસ્ક વચ્ચે ભાંગતું નથી તેની ખાતરી કરવા માટે વપરાય છે. આ કિંમતને ઊંચી સુયોજિત કરવાનું GIMP ને ઓછી સ્વેપ જગ્યા વાપરવા માટેનું કારણ બનશે. ઉલટી રીતે, નાનું કેશ માપ GIMP ને વધુ સ્વેપ જગ્યા અને ઓછી મેમરી વાપરવા માટેનું કારણ બને છે."
+msgstr ""
+"તકતી કેશ એ GIMP તકતીઓને મેમરી અને ડિસ્ક વચ્ચે ભાંગતું નથી તેની ખાતરી કરવા માટે વપરાય છે. "
+"આ કિંમતને ઊંચી સુયોજિત કરવાનું GIMP ને ઓછી સ્વેપ જગ્યા વાપરવા માટેનું કારણ બનશે. ઉલટી રીતે, "
+"નાનું કેશ માપ GIMP ને વધુ સ્વેપ જગ્યા અને ઓછી મેમરી વાપરવા માટેનું કારણ બને છે."
 
 #: ../app/config/gimprc-blurbs.h:393
 msgid ""
 "The window type hint that is set on the toolbox. This may affect how your "
 "window manager decorates and handles the toolbox window."
-msgstr "વિન્ડો પ્રકાર હિંટ કે જે સાધનબોક્સ પર સુયોજિત છે. આ કેવી રીતે તમારું વિન્ડો વ્યવસ્થાપક સાધનબોક્સ વિન્ડોને કેવી રીતે સુશોભિત અને નિયંત્રિત કરે છે તેને અસર કરશે."
+msgstr ""
+"વિન્ડો પ્રકાર હિંટ કે જે સાધનબોક્સ પર સુયોજિત છે. આ કેવી રીતે તમારું વિન્ડો વ્યવસ્થાપક "
+"સાધનબોક્સ વિન્ડોને કેવી રીતે સુશોભિત અને નિયંત્રિત કરે છે તેને અસર કરશે."
 
 #: ../app/config/gimprc-blurbs.h:397
 msgid "Sets the manner in which transparency is displayed in images."
@@ -3833,20 +3941,27 @@ msgstr "ચેકરબોર્ડનું માપ સુયોજિત ક
 msgid ""
 "When enabled, the GIMP will not save an image if it has not been changed "
 "since it was opened."
-msgstr "જ્યારે સક્રિય થયેલ હોય, ત્યારે GIMP ચિત્રનો સંગ્રહ કરશે નહિં જો તે જ્યારથી તે ખૂલ્યું હતું ત્યારથી બદલાયેલ નથી."
+msgstr ""
+"જ્યારે સક્રિય થયેલ હોય, ત્યારે GIMP ચિત્રનો સંગ્રહ કરશે નહિં જો તે જ્યારથી તે ખૂલ્યું હતું "
+"ત્યારથી બદલાયેલ નથી."
 
 #: ../app/config/gimprc-blurbs.h:407
 msgid ""
 "Sets the minimal number of operations that can be undone. More undo levels "
 "are kept available until the undo-size limit is reached."
-msgstr "ન્યૂનતમ સંખ્યાની પ્રક્રિયાઓ સુયોજિત કરે છે કે જે પાછી ઉલટાવી શકાતી નથી. વધુ રદ કરવાના સ્તરો ઉપલબ્ધ સચવાયેલા છે જ્યાં સુધી રદ કરવાનું-માપ મર્યાદા પહોંચાય નહિં."
+msgstr ""
+"ન્યૂનતમ સંખ્યાની પ્રક્રિયાઓ સુયોજિત કરે છે કે જે પાછી ઉલટાવી શકાતી નથી. વધુ રદ કરવાના "
+"સ્તરો ઉપલબ્ધ સચવાયેલા છે જ્યાં સુધી રદ કરવાનું-માપ મર્યાદા પહોંચાય નહિં."
 
 #: ../app/config/gimprc-blurbs.h:411
 msgid ""
 "Sets an upper limit to the memory that is used per image to keep operations "
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
 "as configured can be undone."
-msgstr "મેમરીની ઉપલી મર્યાદા સુયોજિત કરે છે કે જે રદ કરવાના સ્ટેક પર પ્રક્રિયાઓ સાચવવા માટે વપરાય છે. આ સુયોજનોને સંબંધિત રીતે, ઓછામાં ઓછા રદ કરવાના-સ્તરો રૂપરેખાંકિત થયા અનુસાર પાછા રદ કરી શકાતા નથી."
+msgstr ""
+"મેમરીની ઉપલી મર્યાદા સુયોજિત કરે છે કે જે રદ કરવાના સ્ટેક પર પ્રક્રિયાઓ સાચવવા માટે "
+"વપરાય છે. આ સુયોજનોને સંબંધિત રીતે, ઓછામાં ઓછા રદ કરવાના-સ્તરો રૂપરેખાંકિત થયા અનુસાર "
+"પાછા રદ કરી શકાતા નથી."
 
 #: ../app/config/gimprc-blurbs.h:416
 msgid "Sets the size of the previews in the Undo History."
@@ -3863,7 +3978,10 @@ msgid ""
 "the name of an executable to search for in the user's PATH. If the command "
 "contains '%s' it will be replaced with the URL, else the URL will be "
 "appended to the command with a space separating the two."
-msgstr "વાપરવા માટેનું બાહ્ય વેબ બ્રાઉઝર સુયોજિત કરે છે.  આ ચોક્કસ પાથ હોઈ શકે અથવા વપરાશકર્તાના PATH માં શોધવા માટેની એક્ઝેક્યુટેબલનું નામ હોઈ શકે. જો આદેશ '%s' સમાવે તો તે URL થી બદલાઈ જશે, નહિંતર URL એ આદેશમાં જગ્યા સાથે બેથી અલગ પાડીને ઉમેરવામાં આવશે."
+msgstr ""
+"વાપરવા માટેનું બાહ્ય વેબ બ્રાઉઝર સુયોજિત કરે છે.  આ ચોક્કસ પાથ હોઈ શકે અથવા વપરાશકર્તાના "
+"PATH માં શોધવા માટેની એક્ઝેક્યુટેબલનું નામ હોઈ શકે. જો આદેશ '%s' સમાવે તો તે URL થી બદલાઈ "
+"જશે, નહિંતર URL એ આદેશમાં જગ્યા સાથે બેથી અલગ પાડીને ઉમેરવામાં આવશે."
 
 #: ../app/config/gimprc-deserialize.c:135 ../app/core/gimp-modules.c:130
 #: ../app/core/gimp-units.c:160 ../app/gui/session.c:157
@@ -4146,12 +4264,8 @@ msgid "Merge layers"
 msgstr "સ્તરો ભેગા કરો"
 
 #: ../app/core/core-enums.c:814
-msgid "Merge vectors"
-msgstr "અદિશો ભેગા કરો"
-
-#: ../app/core/core-enums.c:815 ../app/core/gimpchannel.c:404
-msgid "Quick Mask"
-msgstr "ઝડપી માસ્ક"
+msgid "Merge paths"
+msgstr "પાથે ભેગા કરો"
 
 #: ../app/core/core-enums.c:816 ../app/core/core-enums.c:846
 msgid "Guide"
@@ -4167,9 +4281,13 @@ msgstr "જાળી"
 msgid "Sample Point"
 msgstr "નમૂના બિંદુ"
 
+#: ../app/core/core-enums.c:819 ../app/core/core-enums.c:850
+msgid "Layer/Channel"
+msgstr "સ્તર/ચેનલ"
+
 #: ../app/core/core-enums.c:820 ../app/core/core-enums.c:851
-msgid "Drawable mod"
-msgstr "દોરી શકાય તેવી સ્થિતિ"
+msgid "Layer/Channel modification"
+msgstr "સ્તર/ચેનલ સુધારો"
 
 #: ../app/core/core-enums.c:821 ../app/core/core-enums.c:852
 msgid "Selection mask"
@@ -4179,9 +4297,9 @@ msgstr "પસંદગી માસ્ક"
 msgid "Item visibility"
 msgstr "વસ્તુ દૃશ્યતા"
 
-#: ../app/core/core-enums.c:823
-msgid "Linked item"
-msgstr "કડી થયેલ વસ્તુ"
+#: ../app/core/core-enums.c:823 ../app/core/core-enums.c:856
+msgid "Link/Unlink item"
+msgstr "કડી થયેલ/નહિં થયેલ વસ્તુ"
 
 #: ../app/core/core-enums.c:824
 msgid "Item properties"
@@ -4207,7 +4325,7 @@ msgstr "સ્તર માસ્ક ઉમેરો"
 msgid "Apply layer mask"
 msgstr "સ્તર માસ્ક લાગુ કરો"
 
-#: ../app/core/core-enums.c:830
+#: ../app/core/core-enums.c:830 ../app/core/core-enums.c:877
 msgid "Floating selection to layer"
 msgstr "સ્તર પ્રતિ તરતી પસંદગી"
 
@@ -4223,16 +4341,16 @@ msgstr "એન્કર તરતી પસંદગી"
 msgid "Remove floating selection"
 msgstr "તરતી પસંદગી દૂર કરો"
 
-#: ../app/core/core-enums.c:834 ../app/core/gimp-edit.c:248
+#: ../app/core/core-enums.c:834 ../app/core/gimp-edit.c:253
 msgid "Paste"
 msgstr "ચોંટાડો"
 
-#: ../app/core/core-enums.c:835 ../app/core/gimp-edit.c:412
+#: ../app/core/core-enums.c:835 ../app/core/gimp-edit.c:495
 msgid "Cut"
 msgstr "કાપો"
 
-#: ../app/core/core-enums.c:836 ../app/core/core-enums.c:863
-#: ../app/tools/gimptexttool.c:146 ../app/widgets/widgets-enums.c:263
+#: ../app/core/core-enums.c:836 ../app/tools/gimptexttool.c:146
+#: ../app/widgets/widgets-enums.c:263
 msgid "Text"
 msgstr "લખાણ"
 
@@ -4271,8 +4389,8 @@ msgid "Image size"
 msgstr "ચિત્રનું માપ"
 
 #: ../app/core/core-enums.c:845
-msgid "Resolution change"
-msgstr "રીઝોલ્યુશન બદલો"
+msgid "Image resolution change"
+msgstr "ચિત્ર રીઝોલ્યુશન બદલો"
 
 #: ../app/core/core-enums.c:849
 msgid "Change indexed palette"
@@ -4281,10 +4399,6 @@ msgstr "અનુક્રમિત તકતી બદલો"
 #: ../app/core/core-enums.c:853
 msgid "Rename item"
 msgstr "વસ્તુનું નામ બદલો"
-
-#: ../app/core/core-enums.c:856
-msgid "Set item linked"
-msgstr "વસ્તુ કડી થયેલ સુયોજિત કરો"
 
 #: ../app/core/core-enums.c:857
 msgid "New layer"
@@ -4306,9 +4420,13 @@ msgstr "સ્તર અપારદર્શકતા સુયોજિત ક
 msgid "Lock/Unlock alpha channel"
 msgstr "આલ્ફા ચેનલને તાળું મારો/ખોલો"
 
+#: ../app/core/core-enums.c:863
+msgid "Text layer"
+msgstr "લખાણ સ્તર"
+
 #: ../app/core/core-enums.c:864
-msgid "Text modified"
-msgstr "બદલાયેલુ લખાણ"
+msgid "Text layer modification"
+msgstr "લખાણ સ્તર સુધારો"
 
 #: ../app/core/core-enums.c:866
 msgid "Delete layer mask"
@@ -4331,24 +4449,16 @@ msgid "Channel color"
 msgstr "ચેનલ રંગ"
 
 #: ../app/core/core-enums.c:873
-msgid "New vectors"
-msgstr "નવા અદિશો"
-
-#: ../app/core/core-enums.c:874
-msgid "Delete vectors"
-msgstr "અદિશો કાઢી નાંખો"
+msgid "New path"
+msgstr "નવો પાથ"
 
 #: ../app/core/core-enums.c:875
-msgid "Vectors mod"
-msgstr "અદિશોની સ્થિતિ"
+msgid "Path modification"
+msgstr "પાથ સુધારો"
 
 #: ../app/core/core-enums.c:876
-msgid "Reposition vectors"
-msgstr "અદિશોનું સ્થાન બદલો"
-
-#: ../app/core/core-enums.c:877
-msgid "FS to layer"
-msgstr "સ્તર પ્રતિ FS"
+msgid "Reposition path"
+msgstr "પાથનું સ્થાન બદલો"
 
 #: ../app/core/core-enums.c:878
 msgid "FS rigor"
@@ -4363,37 +4473,52 @@ msgstr "FS રાહત"
 msgid "Ink"
 msgstr "શાહી"
 
+#: ../app/core/core-enums.c:883
+msgid "Select foreground"
+msgstr "અગ્ર ભાગ પસંદ કરો"
+
 #: ../app/core/core-enums.c:886
 msgid "EEK: can't undo"
 msgstr "EEK: રદ કરી શકતા નથી"
 
-#: ../app/core/gimp-edit.c:114 ../app/core/gimpselection.c:653
-msgid "Unable to cut or copy because the selected region is empty."
-msgstr "કાપવા અથવા નકલ કરવામાં અસમર્થ કારણ કે પસંદ થયેલ વિસ્તાર ખાલી છે."
+#: ../app/core/gimp-contexts.c:135 ../app/gui/session.c:246
+#: ../app/menus/menus.c:391 ../app/tools/gimp-tools.c:418
+#: ../app/widgets/gimpdevices.c:229
+#, c-format
+msgid "Deleting \"%s\" failed: %s"
+msgstr "\"%s\" કાઢી નાંખવામાં નિષ્ફળ: %s"
 
-#: ../app/core/gimp-edit.c:176 ../app/core/gimp-edit.c:310
+#: ../app/core/gimp-edit.c:181 ../app/core/gimp-edit.c:315
 msgid "Pasted Layer"
 msgstr "ચોંટાડાયેલ સ્તર"
 
-#: ../app/core/gimp-edit.c:361
+#: ../app/core/gimp-edit.c:444
 msgid "Fill with FG Color"
 msgstr "FG રંગ સાથે ભરો"
 
-#: ../app/core/gimp-edit.c:365 ../app/core/gimp-edit.c:386
+#: ../app/core/gimp-edit.c:448 ../app/core/gimp-edit.c:469
 msgid "Fill with BG Color"
 msgstr "BG રંગ સાથે ભરો"
 
-#: ../app/core/gimp-edit.c:369
+#: ../app/core/gimp-edit.c:452
 msgid "Fill with White"
 msgstr "સફેદ સાથે ભરો"
 
-#: ../app/core/gimp-edit.c:373
+#: ../app/core/gimp-edit.c:456
 msgid "Fill with Transparency"
 msgstr "પારદર્શકતા સાથે ભરો"
 
-#: ../app/core/gimp-edit.c:377
+#: ../app/core/gimp-edit.c:460
 msgid "Fill with Pattern"
 msgstr "ભાત સાથે ભરો"
+
+#: ../app/core/gimp-edit.c:520 ../app/core/gimpselection.c:653
+msgid "Unable to cut or copy because the selected region is empty."
+msgstr "કાપવા અથવા નકલ કરવામાં અસમર્થ કારણ કે પસંદ થયેલ વિસ્તાર ખાલી છે."
+
+#: ../app/core/gimp-edit.c:565
+msgid "Global Buffer"
+msgstr "વૈશ્વિક બફર"
 
 #: ../app/core/gimp-gradients.c:68
 msgid "FG to BG (RGB)"
@@ -4411,39 +4536,39 @@ msgstr "FG થી BG (HSV સમઘડી હ્યુ)"
 msgid "FG to Transparent"
 msgstr "FG થી પારદર્શક"
 
-#: ../app/core/gimp-gui.c:154
+#: ../app/core/gimp-gui.c:155 ../app/widgets/gimptoolbox.c:577
 msgid "GIMP"
 msgstr "GIMP"
 
 #. register all internal procedures
-#: ../app/core/gimp.c:647
+#: ../app/core/gimp.c:632
 msgid "Procedural Database"
 msgstr "પ્રક્રિયાવાળો ડેટાબેઝ"
 
-#: ../app/core/gimp.c:650
+#: ../app/core/gimp.c:635
 msgid "Plug-In Interpreters"
 msgstr "પ્લગ-ઈન ઈન્ટરપ્રીટરો"
 
-#: ../app/core/gimp.c:656
+#: ../app/core/gimp.c:641
 msgid "Plug-In Environment"
 msgstr "પ્લગ-ઈન પર્યાવરણ"
 
 #. initialize  the global parasite table
-#: ../app/core/gimp.c:867
+#: ../app/core/gimp.c:852
 msgid "Looking for data files"
 msgstr "માહિતી ફાઈલો માટે જોઈ રહ્યા છીએ"
 
-#: ../app/core/gimp.c:867
+#: ../app/core/gimp.c:852
 msgid "Parasites"
 msgstr "પેરાસાઈટો"
 
 #. initialize the document history
-#: ../app/core/gimp.c:892
+#: ../app/core/gimp.c:877
 msgid "Documents"
 msgstr "દસ્તાવેજો"
 
 #. initialize the module list
-#: ../app/core/gimp.c:900 ../app/dialogs/preferences-dialog.c:2533
+#: ../app/core/gimp.c:885 ../app/dialogs/preferences-dialog.c:2533
 msgid "Modules"
 msgstr "મોડ્યુલો"
 
@@ -4489,7 +4614,7 @@ msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "બ્રશ ફાઈલ '%s' માં અયોગ્ય UTF-8 શબ્દમાળા."
 
 #: ../app/core/gimpbrush-load.c:258 ../app/core/gimpcontext.c:1294
-#: ../app/core/gimpitem.c:475 ../app/core/gimppattern.c:369
+#: ../app/core/gimpitem.c:560 ../app/core/gimppattern.c:369
 #: ../app/dialogs/template-options-dialog.c:80
 #: ../app/tools/gimpvectortool.c:334
 msgid "Unnamed"
@@ -4672,11 +4797,11 @@ msgstr ""
 "%s"
 
 #: ../app/core/gimpdatafactory.c:434 ../app/core/gimpdatafactory.c:437
-#: ../app/core/gimpitem.c:272 ../app/core/gimpitem.c:275
+#: ../app/core/gimpitem.c:344 ../app/core/gimpitem.c:347
 msgid "copy"
 msgstr "નકલ કરો"
 
-#: ../app/core/gimpdatafactory.c:446 ../app/core/gimpitem.c:284
+#: ../app/core/gimpdatafactory.c:446 ../app/core/gimpitem.c:356
 #, c-format
 msgid "%s copy"
 msgstr "%s નકલ"
@@ -4914,11 +5039,11 @@ msgstr "દૃશ્ય પાથો ભેગા કરો"
 msgid "Not enough visible paths for a merge. There must be at least two."
 msgstr "ભેગા કરવા માટે પૂરતા દૃશ્ય પાથો નથી. ત્યાં ઓછામાં ઓછા બે હોવા જ જોઈએ."
 
-#: ../app/core/gimpimage-qmask.c:67
+#: ../app/core/gimpimage-quick-mask.c:67
 msgid "Enable Quick Mask"
 msgstr "ઝડપી માસ્ક સક્રિય કરો"
 
-#: ../app/core/gimpimage-qmask.c:117
+#: ../app/core/gimpimage-quick-mask.c:117
 msgid "Disable Quick Mask"
 msgstr "ઝડપી માસ્ક નિષ્ક્રિય કરો"
 
@@ -5115,14 +5240,12 @@ msgstr "(પૂર્વદર્શનની તારીખ મર્યાદ
 msgid "%d x %d pixels"
 msgstr "%d x %d પિક્સેલો"
 
-#: ../app/core/gimpimagefile.c:653
-msgid "1 Layer"
-msgstr "૧ સ્તર"
-
-#: ../app/core/gimpimagefile.c:655
+#: ../app/core/gimpimagefile.c:653 ../app/display/gimpdisplayshell-title.c:314
 #, c-format
-msgid "%d Layers"
-msgstr "%d સ્તરો"
+msgid "%d layer"
+msgid_plural "%d layers"
+msgstr[0] "%d સ્તર"
+msgstr[1] "%d સ્તરો"
 
 #: ../app/core/gimpimagefile.c:699
 #, c-format
@@ -5139,15 +5262,15 @@ msgstr "ઈન્ટરપ્રીટર ફાઈલ %s માં ખરાબ
 msgid "Bad binary format string in interpreter file %s"
 msgstr "ઈન્ટરપ્રીટર ફાઈલ %s માં ખરાબ બાઈનરી બંધારણ શબ્દમાળા"
 
-#: ../app/core/gimpitem.c:1094
+#: ../app/core/gimpitem.c:1181
 msgid "Attach Parasite"
 msgstr "પેરાસાઈટ જોડો"
 
-#: ../app/core/gimpitem.c:1105
+#: ../app/core/gimpitem.c:1192
 msgid "Attach Parasite to Item"
 msgstr "વસ્તુમાં પેરાસાઈટ જોડો"
 
-#: ../app/core/gimpitem.c:1146 ../app/core/gimpitem.c:1153
+#: ../app/core/gimpitem.c:1233 ../app/core/gimpitem.c:1240
 msgid "Remove Parasite from Item"
 msgstr "વસ્તુમાંથી પેરાસાઈટ દૂર કરો"
 
@@ -5198,7 +5321,7 @@ msgstr "સ્તર પલટાવો"
 msgid "Rotate Layer"
 msgstr "સ્તર ફેરવો"
 
-#: ../app/core/gimplayer.c:441 ../app/core/gimplayer.c:1338
+#: ../app/core/gimplayer.c:441 ../app/core/gimplayer.c:1337
 #: ../app/core/gimplayermask.c:237
 #, c-format
 msgid "%s mask"
@@ -5213,43 +5336,43 @@ msgstr ""
 "તરતી પસંદગી\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1264
+#: ../app/core/gimplayer.c:1263
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr "સ્તરમાં સ્તર માસ્ક ઉમેરી શકતા નથી કે જે ચિત્રનો ભાગ નથી."
 
-#: ../app/core/gimplayer.c:1271
+#: ../app/core/gimplayer.c:1270
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "સ્તર માસ્ક ઉમેરવામાં અસમર્થ કારણ કે સ્તર પાસે પહેલાથી જ એક છે."
 
-#: ../app/core/gimplayer.c:1278
+#: ../app/core/gimplayer.c:1277
 msgid "Cannot add layer mask to a layer with no alpha channel."
 msgstr "સ્તરમાં આલ્ફા ચેનલ સાથે સ્તર માસ્ક ઉમેરી શકતા નથી."
 
-#: ../app/core/gimplayer.c:1288
+#: ../app/core/gimplayer.c:1287
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "સ્પષ્ટ કરેલ સ્તર કરતાં વિવિધ પરિમાણોના સ્તર માસ્ક ઉમેરી શકતા નથી."
 
-#: ../app/core/gimplayer.c:1392
+#: ../app/core/gimplayer.c:1391
 msgid "Transfer Alpha to Mask"
 msgstr "આલ્ફાને માસ્ક પ્રતિ પરિવહન કરો"
 
-#: ../app/core/gimplayer.c:1552 ../app/core/gimplayermask.c:264
+#: ../app/core/gimplayer.c:1551 ../app/core/gimplayermask.c:264
 msgid "Apply Layer Mask"
 msgstr "સ્તર માસ્ક લાગુ કરો"
 
-#: ../app/core/gimplayer.c:1553
+#: ../app/core/gimplayer.c:1552
 msgid "Delete Layer Mask"
 msgstr "સ્તર માસ્ક કાઢી નાંખો"
 
-#: ../app/core/gimplayer.c:1654
+#: ../app/core/gimplayer.c:1653
 msgid "Add Alpha Channel"
 msgstr "આલ્ફા ચેનલ ઉમેરો"
 
-#: ../app/core/gimplayer.c:1705
+#: ../app/core/gimplayer.c:1704
 msgid "Remove Alpha Channel"
 msgstr "આલ્ફા ચેનલ દૂર કરો"
 
-#: ../app/core/gimplayer.c:1727
+#: ../app/core/gimplayer.c:1726
 msgid "Layer to Image Size"
 msgstr "ચિત્ર માપ પ્રતિ સ્તર"
 
@@ -5261,12 +5384,12 @@ msgstr "સ્તર માસ્ક ખસેડો"
 msgid "Show Layer Mask"
 msgstr "સ્તર માસ્ક બતાવો"
 
-#: ../app/core/gimppalette-import.c:365
+#: ../app/core/gimppalette-import.c:370
 #, c-format
 msgid "Index %d"
 msgstr "અનુક્રમ %d"
 
-#: ../app/core/gimppalette-import.c:565
+#: ../app/core/gimppalette-import.c:570
 #, c-format
 msgid "Unknown type of palette file: %s"
 msgstr "તકતી ફાઈલનો અજ્ઞાત પ્રકાર: %s"
@@ -5301,7 +5424,9 @@ msgstr "તકતી ફાઈલ '%s' માં અયોગ્ય UTF-8 શબ
 msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
 "default value."
-msgstr "પરિમાણ ફાઈલ '%s' વાંચી રહ્યા છીએ: લીટી %d માં અયોગ્ય સંખ્યાના સ્તંભો. મૂળભૂત કિંમત વાપરી રહ્યા છીએ."
+msgstr ""
+"પરિમાણ ફાઈલ '%s' વાંચી રહ્યા છીએ: લીટી %d માં અયોગ્ય સંખ્યાના સ્તંભો. મૂળભૂત કિંમત "
+"વાપરી રહ્યા છીએ."
 
 #. maybe we should just abort?
 #: ../app/core/gimppalette.c:478
@@ -5349,7 +5474,7 @@ msgstr ""
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "તકતી ફાઈલ '%s' માં અયોગ્ય UTF-8 શબ્દમાળા:"
 
-#: ../app/core/gimppdbprogress.c:261 ../app/widgets/gimppdbdialog.c:320
+#: ../app/core/gimppdbprogress.c:264 ../app/widgets/gimppdbdialog.c:320
 #, c-format
 msgid "Unable to run %s callback. The corresponding plug-in may have crashed."
 msgstr "%s કોલબેક ચલાવવામાં અસમર્થ. લગતું પ્લગ-ઈન ભાંગી ગયું હશે."
@@ -5467,10 +5592,6 @@ msgstr "પીકાઓ"
 msgid "percent"
 msgstr "ટકા"
 
-#: ../app/dialogs/about-dialog.c:60 ../desktop/gimp.desktop.in.in.h:2
-msgid "GNU Image Manipulation Program"
-msgstr "GNU ચિત્ર જાળવણી કાર્યક્રમ"
-
 #: ../app/dialogs/about-dialog.c:63
 msgid "Visit the GIMP website"
 msgstr "GIMP વેબસાઈટની મુલાકાત લો"
@@ -5501,6 +5622,10 @@ msgstr "અનુક્રમિત રંગ રૂપાંતરણ"
 #: ../app/dialogs/convert-dialog.c:122
 msgid "Convert Image to Indexed Colors"
 msgstr "ચિત્રને અનુક્રમિત રંગોમાં રૂપાંતરિત કરો"
+
+#: ../app/dialogs/convert-dialog.c:128
+msgid "C_onvert"
+msgstr "ફેરવો (_o)"
 
 #: ../app/dialogs/convert-dialog.c:161 ../app/dialogs/dialogs.c:178
 msgid "Colormap"
@@ -5619,7 +5744,9 @@ msgstr "સ્થાન દાખલ કરો (URI):"
 msgid ""
 "The given filename does not have any known file extension. Please enter a "
 "known file extension or select a file format from the file format list."
-msgstr "આપેલ ફાઈલનામને કોઈ જાણીતું ફાઈલ એક્સટેન્સન નથી. મહેરબાની કરીને જાણીતું ફાઈલ એક્સટેન્સન દાખલ કરો અથવા ફાઈલ બંધારણ યાદીમાંથી ફાઈલ બંધારણ પસંદ કરો."
+msgstr ""
+"આપેલ ફાઈલનામને કોઈ જાણીતું ફાઈલ એક્સટેન્સન નથી. મહેરબાની કરીને જાણીતું ફાઈલ એક્સટેન્સન "
+"દાખલ કરો અથવા ફાઈલ બંધારણ યાદીમાંથી ફાઈલ બંધારણ પસંદ કરો."
 
 #. remote URI
 #: ../app/dialogs/file-save-dialog.c:328
@@ -5627,7 +5754,10 @@ msgid ""
 "Saving remote files needs to determine the file format from the file "
 "extension. Please enter a file extension that matches the selected file "
 "format or enter no file extension at all."
-msgstr "દૂરસ્થ ફાઈલો સંગ્રહવા માટે ફાઈલ એક્સટેન્સનમાંથી ફાઈલ બંધારણ નક્કી કરવાની જરૂર છે. મહેરબાની કરીને ફાઈલ એક્સટેન્સન દાખલ કરો કે જે પસંદ કરેલ ફાઈલ બંધારણ સાથે બંધબેસે અથવા કોઈ ફાઈલ એક્સટેન્સન દાખલ કરો નહિં."
+msgstr ""
+"દૂરસ્થ ફાઈલો સંગ્રહવા માટે ફાઈલ એક્સટેન્સનમાંથી ફાઈલ બંધારણ નક્કી કરવાની જરૂર છે. મહેરબાની "
+"કરીને ફાઈલ એક્સટેન્સન દાખલ કરો કે જે પસંદ કરેલ ફાઈલ બંધારણ સાથે બંધબેસે અથવા કોઈ ફાઈલ "
+"એક્સટેન્સન દાખલ કરો નહિં."
 
 #: ../app/dialogs/file-save-dialog.c:398
 msgid "Extension Mismatch"
@@ -5656,6 +5786,10 @@ msgstr "સ્તરો ભેગા કરો"
 #: ../app/dialogs/image-merge-layers-dialog.c:62
 msgid "Layers Merge Options"
 msgstr "સ્તરો ભેગા કરવાના વિકલ્પો"
+
+#: ../app/dialogs/image-merge-layers-dialog.c:68
+msgid "_Merge"
+msgstr "ભેગું કરો (_M)"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:82
 msgid "Final, Merged Layer should be:"
@@ -5697,7 +5831,9 @@ msgstr "શું તમે %s માપ સાથેનું ચિત્ર �
 msgid ""
 "An image of the chosen size will use more memory than what is configured as "
 "\"Maximum Image Size\" in the Preferences dialog (currently %s)."
-msgstr "પસંદ કરેલ માપનું ચિત્ર પસંદગીઓ સંવાદમાં \"મહત્તમ ચિત્ર માપ\" તરીકે રૂપરેખાંકિત થયા અનુસાર કરતાં અલગ વાપરશે (વર્તમાનમાં %s)."
+msgstr ""
+"પસંદ કરેલ માપનું ચિત્ર પસંદગીઓ સંવાદમાં \"મહત્તમ ચિત્ર માપ\" તરીકે રૂપરેખાંકિત થયા અનુસાર "
+"કરતાં અલગ વાપરશે (વર્તમાનમાં %s)."
 
 #: ../app/dialogs/image-scale-dialog.c:174
 msgid "Confirm Scaling"
@@ -5709,7 +5845,9 @@ msgid ""
 "Scaling the image to the chosen size will make it use more memory than what "
 "is configured as \"Maximum Image Size\" in the Preferences dialog (currently "
 "%s)."
-msgstr "પસંદ કરેલ માપમાં ચિત્રને ખેંચવાનું તેને પસંદગીઓ સંવાદમાં \"મહત્તમ ચિત્ર માપ\" તરીકે રૂપરેખાંકિત થયા કરતાં વધુ વાપરવા માટે બનાવશે (વર્તમાનમાં %s)."
+msgstr ""
+"પસંદ કરેલ માપમાં ચિત્રને ખેંચવાનું તેને પસંદગીઓ સંવાદમાં \"મહત્તમ ચિત્ર માપ\" તરીકે રૂપરેખાંકિત "
+"થયા કરતાં વધુ વાપરવા માટે બનાવશે (વર્તમાનમાં %s)."
 
 #: ../app/dialogs/image-scale-dialog.c:229
 msgid "Scaling the image to the chosen size will shrink some layers completely away."
@@ -5857,37 +5995,42 @@ msgid "Offset Channel"
 msgstr "ઓફસેટ ચેનલ"
 
 #. The offset frame
-#: ../app/dialogs/offset-dialog.c:108 ../app/dialogs/offset-dialog.c:141
+#: ../app/dialogs/offset-dialog.c:108 ../app/dialogs/offset-dialog.c:142
 #: ../app/dialogs/resize-dialog.c:193 ../app/widgets/gimpgrideditor.c:274
 msgid "Offset"
 msgstr "ઓફસેટ"
 
-#: ../app/dialogs/offset-dialog.c:173 ../app/dialogs/resize-dialog.c:222
+#. offset, used as a verb
+#: ../app/dialogs/offset-dialog.c:117
+msgid "_Offset"
+msgstr "ઓફસેટ (_O)"
+
+#: ../app/dialogs/offset-dialog.c:174 ../app/dialogs/resize-dialog.c:222
 msgid "_X:"
 msgstr "_X:"
 
-#: ../app/dialogs/offset-dialog.c:175 ../app/dialogs/resize-dialog.c:223
+#: ../app/dialogs/offset-dialog.c:176 ../app/dialogs/resize-dialog.c:223
 msgid "_Y:"
 msgstr "_Y:"
 
-#: ../app/dialogs/offset-dialog.c:202
+#: ../app/dialogs/offset-dialog.c:203
 msgid "Offset by  x/_2, y/2"
 msgstr "x/_2, y/2 અનુસાર ઓફસેટ"
 
 #. The edge behavior frame
-#: ../app/dialogs/offset-dialog.c:211
+#: ../app/dialogs/offset-dialog.c:212
 msgid "Edge Behavior"
 msgstr "બાજુ વર્તણૂક"
 
-#: ../app/dialogs/offset-dialog.c:215
+#: ../app/dialogs/offset-dialog.c:216
 msgid "_Wrap around"
 msgstr "ની ફરતે લપેટો (_W)"
 
-#: ../app/dialogs/offset-dialog.c:218
+#: ../app/dialogs/offset-dialog.c:219
 msgid "Fill with _background color"
 msgstr "પાશ્વ ભાગના રંગ સાથે ભરો (_b)"
 
-#: ../app/dialogs/offset-dialog.c:221
+#: ../app/dialogs/offset-dialog.c:222
 msgid "Make _transparent"
 msgstr "પારદર્શક બનાવો (_t)"
 
@@ -6714,7 +6857,7 @@ msgstr "જો તમે GIMP માંથી હમણાં જ બહાર �
 
 #: ../app/dialogs/quit-dialog.c:176
 #, c-format
-msgid "There is %d image with unsaved changes:"
+msgid "There is one image with unsaved changes:"
 msgid_plural "There are %d images with unsaved changes:"
 msgstr[0] "ત્યાં %d ચિત્ર નહિં સંગ્રહાયેલ ફેરફારો સાથે છે:"
 msgstr[1] "ત્યાં %d ચિત્રો નહિં સંગ્રહાયેલ ફેરફારો સાથે છે:"
@@ -6768,7 +6911,9 @@ msgstr "ઈન્ટરપોલેશન (_n):"
 msgid ""
 "Indexed color layers are always scaled without interpolation. The chosen "
 "interpolation type will affect channels and masks only."
-msgstr "અનુક્રમિત રંગ સ્તરો હંમેશા ઈન્ટરપોલેશન વિના ખેંચાય છે. પસંદ થયેલ ઈન્ટરપોલેશન પ્રકાર ચેનલો અને માસ્કોને જ માત્ર અસર કરશે."
+msgstr ""
+"અનુક્રમિત રંગ સ્તરો હંમેશા ઈન્ટરપોલેશન વિના ખેંચાય છે. પસંદ થયેલ ઈન્ટરપોલેશન પ્રકાર ચેનલો અને "
+"માસ્કોને જ માત્ર અસર કરશે."
 
 #: ../app/dialogs/stroke-dialog.c:101
 msgid "Choose Stroke Style"
@@ -6821,13 +6966,18 @@ msgid ""
 "The gimprc is used to store personal preferences that affect GIMP's default "
 "behavior.  Paths to search for brushes, palettes, gradients, patterns, plug-"
 "ins and modules can also configured here."
-msgstr "gimprc એ વ્યક્તિગત પસંદગીઓ સંગ્રહવા માટે વપરાય છે કે જે GIMP ની મૂળભૂત વર્તણૂકને અસર કરે છે.  બ્રશો, તકતીઓ, ઢાળો, પ્લગ-ઈનો અને મોડ્યુલો માટે શોધવા માટેના પાથો અંહિ પણ રૂપરેખાંકિત કરી શકાય છે."
+msgstr ""
+"gimprc એ વ્યક્તિગત પસંદગીઓ સંગ્રહવા માટે વપરાય છે કે જે GIMP ની મૂળભૂત વર્તણૂકને અસર કરે "
+"છે.  બ્રશો, તકતીઓ, ઢાળો, પ્લગ-ઈનો અને મોડ્યુલો માટે શોધવા માટેના પાથો અંહિ પણ "
+"રૂપરેખાંકિત કરી શકાય છે."
 
 #: ../app/dialogs/user-install-dialog.c:138
 msgid ""
 "GIMP uses an additional gtkrc file so you can configure it to look "
 "differently than other GTK apps."
-msgstr "GIMP એ વધારાની gtkrc ફાઈલ વાપરે છે કે જેથી તમે તેને અન્ય GTK કાર્યક્રમો કરતાં અલગ રીતે દેખાવ આપવા માટે પણ રૂપરેખાંકિત કરી શકો છો."
+msgstr ""
+"GIMP એ વધારાની gtkrc ફાઈલ વાપરે છે કે જેથી તમે તેને અન્ય GTK કાર્યક્રમો કરતાં અલગ રીતે "
+"દેખાવ આપવા માટે પણ રૂપરેખાંકિત કરી શકો છો."
 
 #: ../app/dialogs/user-install-dialog.c:144
 msgid ""
@@ -6835,22 +6985,28 @@ msgid ""
 "functionality to GIMP.  These programs are searched for at run-time and "
 "information about their functionality is cached in this file.  This file is "
 "intended to be written to by GIMP only, and should not be edited."
-msgstr "પ્લગ-ઈનો અને એક્સટેન્સનો બાહ્ય કાર્યક્રમો છે કે જે GIMP ને વધારાના વિધેયો પૂરા પાડે છે.  આ કાર્યક્રમો રન-ટાઈમ સમયે શોધવા માટે વપરાય છે અને આ ફાઈલમાં કેશ થયેલ તેમના વિધેયો વિશે જાણકારી મેળવવા માટે પણ.  આ ફાઈલ માત્ર GIMP દ્વારા વાપરવા માટે જ લખાયેલ છે, અને તેમાં ફેરફાર થવો જોઈએ નહિં."
+msgstr ""
+"પ્લગ-ઈનો અને એક્સટેન્સનો બાહ્ય કાર્યક્રમો છે કે જે GIMP ને વધારાના વિધેયો પૂરા પાડે છે.  આ "
+"કાર્યક્રમો રન-ટાઈમ સમયે શોધવા માટે વપરાય છે અને આ ફાઈલમાં કેશ થયેલ તેમના વિધેયો વિશે "
+"જાણકારી મેળવવા માટે પણ.  આ ફાઈલ માત્ર GIMP દ્વારા વાપરવા માટે જ લખાયેલ છે, અને તેમાં "
+"ફેરફાર થવો જોઈએ નહિં."
 
 #: ../app/dialogs/user-install-dialog.c:154
 msgid ""
 "Key shortcuts can be dynamically redefined. The menurc is a dump of your "
-"configuration so it can. be remembered for the next session.  You may edit "
+"configuration so it can be remembered for the next session.  You may edit "
 "this file if you wish, but it is much easier to define the keys from within "
 "GIMP.  Deleting this file will restore the default shortcuts."
-msgstr "કી ટુંકાણો વૈશ્વિકરીતે ફરી વ્યાખ્યાયિત કરી શકાય છે. menurc એ તમારા રૂપરેખાંકનનો ડમ્પ છે કે જે તે આગળના સત્ર માટે યાદ રાખી શકાય.  જો તમારી ઈચ્છા હોય તો તમે આ ફાઈલમાં ફેરફાર કરી શકો, પરંતુ GIMP માં કીઓ વ્યાખ્યાયિત કરવાનું વધુ સરળ છે.  આ ફાઈલ કાઢી નાંખવાનું મૂળભૂત ટુંકાણો ફરી સંગ્રહિત કરશે."
+msgstr "કી ટુંકાણો વૈશ્વિક રીતે ફરી વ્યાખ્યાયિત કરી શકાય છે. menurc એ તમારા રૂપરેખાંકનનો ડમ્પ છે કે જે તે આગળના સત્ર માટે યાદ રાખી શકાય.  જો તમારી ઈચ્છા હોય તો તમે આ ફાઈલમાં ફેરફાર કરી શકો, પરંતુ GIMP માં કીઓ વ્યાખ્યાયિત કરવાનું વધુ સરળ છે.  આ ફાઈલ કાઢી નાંખવાનું મૂળભૂત ટુંકાણો ફરી સંગ્રહિત કરશે."
 
 #: ../app/dialogs/user-install-dialog.c:164
 msgid ""
 "The sessionrc is used to store what dialog windows were open the last time "
 "you quit GIMP.  You can configure GIMP to reopen these dialogs at the saved "
 "position."
-msgstr "sessionrc એ કઈ સંવાદ વિન્ડો છેલ્લે જ્યારે તમે GIMP બંધ કર્યું ત્યારે ખૂલેલી હતી તે સંગ્રહવા માટે વપરાય છે.  તમે આ સંવાદોને સંગ્રહાયેલ સ્થાને ફરી ખોલવા માટે GIMP ને રૂપરેખાંકિત કરી શકો છો."
+msgstr ""
+"sessionrc એ કઈ સંવાદ વિન્ડો છેલ્લે જ્યારે તમે GIMP બંધ કર્યું ત્યારે ખૂલેલી હતી તે સંગ્રહવા માટે "
+"વપરાય છે.  તમે આ સંવાદોને સંગ્રહાયેલ સ્થાને ફરી ખોલવા માટે GIMP ને રૂપરેખાંકિત કરી શકો છો."
 
 #: ../app/dialogs/user-install-dialog.c:171
 msgid ""
@@ -6864,13 +7020,19 @@ msgid ""
 "additional units and use them just like you use the built-in units inches, "
 "millimeters, points and picas.  This file is overwritten each time you quit "
 "the GIMP."
-msgstr "unitrc એ તમારો વપરાશકર્તા એકમોનો ડેટાબેઝ વાપરવા માટે વપરાય છે.  તમે વધારાના એકમો વ્યાખ્યાયિત કરી શકો છો અને તેમને તમે આંતરિક એકમો જેવા કે ઈંચો, મિલિમીટરો, બિંદુઓ, અને પિકાઓ વાપરો તેમ વાપરી શકો છો.  આ ફાઈલ પર દર વખતે ફરીથી લખાઈ જશે જ્યારે પણ તમે GIMP બંધ કરો."
+msgstr ""
+"unitrc એ તમારો વપરાશકર્તા એકમોનો ડેટાબેઝ વાપરવા માટે વપરાય છે.  તમે વધારાના એકમો "
+"વ્યાખ્યાયિત કરી શકો છો અને તેમને તમે આંતરિક એકમો જેવા કે ઈંચો, મિલિમીટરો, બિંદુઓ, અને "
+"પિકાઓ વાપરો તેમ વાપરી શકો છો.  આ ફાઈલ પર દર વખતે ફરીથી લખાઈ જશે જ્યારે પણ તમે GIMP "
+"બંધ કરો."
 
 #: ../app/dialogs/user-install-dialog.c:186
 msgid ""
 "This folder is used to store user defined brushes. GIMP checks this folder "
 "in addition to the system-wide brushes installation."
-msgstr "આ ફોલ્ડર એ વપરાશકર્તા વ્યાખ્યાયિત બ્રશો સંગ્રહિત કરવા માટે વપરાય છે. GIMP આ ફોલ્ડરને સિસ્ટમ-લગતા બ્રશો સ્થાપન માટે વાપરવા માટે ચકાસે છે."
+msgstr ""
+"આ ફોલ્ડર એ વપરાશકર્તા વ્યાખ્યાયિત બ્રશો સંગ્રહિત કરવા માટે વપરાય છે. GIMP આ ફોલ્ડરને "
+"સિસ્ટમ-લગતા બ્રશો સ્થાપન માટે વાપરવા માટે ચકાસે છે."
 
 #: ../app/dialogs/user-install-dialog.c:193
 msgid ""
@@ -6878,40 +7040,53 @@ msgid ""
 "checks this folder in addition to the system-wide fonts installation. Use "
 "this only if you really want to have fonts available in GIMP only, otherwise "
 "put them in your global font directory."
-msgstr "આ ફોલ્ડર એ ફોન્ટ સંગ્રહવા માટે વપરાય છે કે જેને તમે માત્ર GIMP માં જ દૃશ્યમાન જોવા માંગો. GIMP આ ફોલ્ડરને સિસ્ટમ-લગતા ફોન્ટ સ્થાપન માટે ચકાસે છે. જો તમે ખરખર માત્ર GIMP માં જ ફોન્ટ ઉપલબ્ધ રાખવા માંગો તો આ વાપરો, નહિંતર તેમને તમારી વૈશ્વિક ફોન્ટ ડિરેક્ટરીમાં મૂકો."
+msgstr ""
+"આ ફોલ્ડર એ ફોન્ટ સંગ્રહવા માટે વપરાય છે કે જેને તમે માત્ર GIMP માં જ દૃશ્યમાન જોવા માંગો. "
+"GIMP આ ફોલ્ડરને સિસ્ટમ-લગતા ફોન્ટ સ્થાપન માટે ચકાસે છે. જો તમે ખરખર માત્ર GIMP માં જ "
+"ફોન્ટ ઉપલબ્ધ રાખવા માંગો તો આ વાપરો, નહિંતર તેમને તમારી વૈશ્વિક ફોન્ટ ડિરેક્ટરીમાં મૂકો."
 
 #: ../app/dialogs/user-install-dialog.c:202
 msgid ""
 "This folder is used to store user defined gradients.  GIMP checks this "
 "folder in addition to the system-wide gradients installation."
-msgstr "આ ફોલ્ડર એ વપરાશકર્તા વ્યાખ્યાયિત ઢાળો સંગ્રહવા માટે વપરાય છે.  GIMP આ ફોલ્ડરને સિસ્ટમ-લગતા ઢાળોના સ્થાપન સાથે વધુમાં ચકાસે છે."
+msgstr ""
+"આ ફોલ્ડર એ વપરાશકર્તા વ્યાખ્યાયિત ઢાળો સંગ્રહવા માટે વપરાય છે.  GIMP આ ફોલ્ડરને સિસ્ટમ-"
+"લગતા ઢાળોના સ્થાપન સાથે વધુમાં ચકાસે છે."
 
 #: ../app/dialogs/user-install-dialog.c:209
 msgid ""
 "This folder is used to store user defined palettes.  GIMP checks this folder "
 "in addition to the system-wide palettes installation."
-msgstr "આ ફોલ્ડર એ વપરાશકર્તા વ્યાખ્યાયિત તકતીઓ સંગ્રહવા માટે વપરાય છે.  GIMP આ ફોલ્ડરને સિસ્ટમ-લગતા તકતીઓના સ્થાપન સાથે વધુમાં ચકાસે છે."
+msgstr ""
+"આ ફોલ્ડર એ વપરાશકર્તા વ્યાખ્યાયિત તકતીઓ સંગ્રહવા માટે વપરાય છે.  GIMP આ ફોલ્ડરને સિસ્ટમ-"
+"લગતા તકતીઓના સ્થાપન સાથે વધુમાં ચકાસે છે."
 
 #: ../app/dialogs/user-install-dialog.c:216
 msgid ""
 "This folder is used to store user defined patterns.  GIMP checks this folder "
 "in addition to the system-wide patterns installation when searching for "
 "patterns."
-msgstr "આ ફોલ્ડર વપરાશકર્તા વ્યાખ્યાયિત ભાતો સંગ્રહવા માટે વપરાય છે.  GIMP આ ફોલ્ડરને સિસ્ટમ-લગતી ભાતોના સ્થાપન સાથે વધુમાં ચકાસે છે જ્યારે ભાતો માટે શોધી રહ્યા હોય."
+msgstr ""
+"આ ફોલ્ડર વપરાશકર્તા વ્યાખ્યાયિત ભાતો સંગ્રહવા માટે વપરાય છે.  GIMP આ ફોલ્ડરને સિસ્ટમ-"
+"લગતી ભાતોના સ્થાપન સાથે વધુમાં ચકાસે છે જ્યારે ભાતો માટે શોધી રહ્યા હોય."
 
 #: ../app/dialogs/user-install-dialog.c:223
 msgid ""
 "This folder is used to store user created, temporary, or otherwise non-"
 "system-supported plug-ins.  GIMP checks this folder in addition to the "
 "system-wide plug-in folder."
-msgstr "આ ફોલ્ડર એ વપરાશકર્તાએ બનાવેલ, કામચલાઉ અથવા બિન-સિસ્ટમ-આધારભૂત પ્લગ-ઈનો સંગ્રહવા માટે વપરાય છે.  GIMP આ ફોલ્ડરને સિસ્ટમ-લગતા પ્લગ-ઈન ફોલ્ડર સાથે વધુમાં ચકાસે છે."
+msgstr ""
+"આ ફોલ્ડર એ વપરાશકર્તાએ બનાવેલ, કામચલાઉ અથવા બિન-સિસ્ટમ-આધારભૂત પ્લગ-ઈનો સંગ્રહવા માટે "
+"વપરાય છે.  GIMP આ ફોલ્ડરને સિસ્ટમ-લગતા પ્લગ-ઈન ફોલ્ડર સાથે વધુમાં ચકાસે છે."
 
 #: ../app/dialogs/user-install-dialog.c:231
 msgid ""
 "This folder is used to store user created, temporary, or otherwise non-"
 "system-supported DLL modules.  GIMP checks this folder in addition to the "
 "system-wide module folder."
-msgstr "આ ફોલ્ડર વપરાશકર્તાએ બનાવેલ, કામચલાઉ, અથવા બિન-સિસ્ટમ-આધારભૂત DLL મોડ્યુલો સંગ્રહવા માટે વપરાય છે.  GIMP આ ફોલ્ડરને સિસ્ટમ-લગતા મોડ્યુલ ફોલ્ડર માટે ચકાસે છે."
+msgstr ""
+"આ ફોલ્ડર વપરાશકર્તાએ બનાવેલ, કામચલાઉ, અથવા બિન-સિસ્ટમ-આધારભૂત DLL મોડ્યુલો સંગ્રહવા "
+"માટે વપરાય છે.  GIMP આ ફોલ્ડરને સિસ્ટમ-લગતા મોડ્યુલ ફોલ્ડર માટે ચકાસે છે."
 
 #: ../app/dialogs/user-install-dialog.c:239
 msgid ""
@@ -6919,7 +7094,10 @@ msgid ""
 "otherwise non-system-supported plug-in interpreters.  GIMP checks this "
 "folder in addition to the system-wide GIMP interpreters folder when "
 "searching for plug-in interpreter configuration files."
-msgstr "આ ફોલ્ડર એ વપરાશકર્તાએ બનાવેલ, કામચલાઉ, અથવા બિન-સિસ્ટમ-આધારભૂત પ્લગ-ઈન ઈન્ટરપ્રીટરો સંગ્રહવા માટે વપરાય છે.  GIMP આ ફોલ્ડરને સિસ્ટમ-લગતા GIMP ઈન્ટરપ્રીટરો ફોલ્ડર સાથે વધુમાં ચકાસે છે પ્લગ-ઈન ઈન્ટરપ્રીટર રૂપરેખાંકન ફાઈલો માટે."
+msgstr ""
+"આ ફોલ્ડર એ વપરાશકર્તાએ બનાવેલ, કામચલાઉ, અથવા બિન-સિસ્ટમ-આધારભૂત પ્લગ-ઈન ઈન્ટરપ્રીટરો "
+"સંગ્રહવા માટે વપરાય છે.  GIMP આ ફોલ્ડરને સિસ્ટમ-લગતા GIMP ઈન્ટરપ્રીટરો ફોલ્ડર સાથે વધુમાં "
+"ચકાસે છે પ્લગ-ઈન ઈન્ટરપ્રીટર રૂપરેખાંકન ફાઈલો માટે."
 
 #: ../app/dialogs/user-install-dialog.c:249
 msgid ""
@@ -6927,13 +7105,18 @@ msgid ""
 "system-supported additions to the plug-in environment.  GIMP checks this "
 "folder in addition to the system-wide GIMP environment folder when searching "
 "for plug-in environment modification files."
-msgstr "આ ફોલ્ડર વપરાશકર્તાએ બનાવેલ, કામચલાઉ, અથવા પ્લગ-ઈન પર્યાવરણમાં બિન-સિસ્ટમ-આધારભૂત ઉમેરાઓ સંગ્રહવા માટે વપરાય છે.  GIMP આ ફોલ્ડરને સિસ્ટમ-લગતા GIMP પર્યાવરણ ફોલ્ડર સાથે વધુમાં ચકાસે છે જ્યારે પ્લગ-ઈન પર્યાવરણ સુધારા ફાઈલો માટે શોધી રહ્યા હોય."
+msgstr ""
+"આ ફોલ્ડર વપરાશકર્તાએ બનાવેલ, કામચલાઉ, અથવા પ્લગ-ઈન પર્યાવરણમાં બિન-સિસ્ટમ-આધારભૂત "
+"ઉમેરાઓ સંગ્રહવા માટે વપરાય છે.  GIMP આ ફોલ્ડરને સિસ્ટમ-લગતા GIMP પર્યાવરણ ફોલ્ડર સાથે "
+"વધુમાં ચકાસે છે જ્યારે પ્લગ-ઈન પર્યાવરણ સુધારા ફાઈલો માટે શોધી રહ્યા હોય."
 
 #: ../app/dialogs/user-install-dialog.c:259
 msgid ""
 "This folder is used to store user created and installed scripts.  GIMP "
 "checks this folder in addition to the systemwide scripts folder."
-msgstr "આ ફોલ્ડર વપરાશકર્તાએ બનાવેલ અને સ્થાપિત કરેલ સ્ક્રિપ્ટો સંગ્રહવા માટે વપરાય છે.  GIMP આ ફોલ્ડરને સિસ્ટમલગતા સ્ક્રિપ્ટો ફોલ્ડર સાથે વધુમાં ચકાસે છે."
+msgstr ""
+"આ ફોલ્ડર વપરાશકર્તાએ બનાવેલ અને સ્થાપિત કરેલ સ્ક્રિપ્ટો સંગ્રહવા માટે વપરાય છે.  GIMP આ "
+"ફોલ્ડરને સિસ્ટમલગતા સ્ક્રિપ્ટો ફોલ્ડર સાથે વધુમાં ચકાસે છે."
 
 #: ../app/dialogs/user-install-dialog.c:266
 msgid "This folder is searched for image templates."
@@ -7075,7 +7258,9 @@ msgstr "યોગ્ય GIMP સ્થાપન માટે, '<b>%s</b>' ના
 msgid ""
 "This folder will contain a number of important files.  Click on one of the "
 "files or folders in the tree to get more information about the selected item."
-msgstr "આ ફોલ્ડર મહત્વની ફાઈલો સમાવતું હશે.  પસંદ કરેલ વસ્તુ વિશે વધુ જાણકારી મેળવવા માટે ફાઈલો અથવા ફોલ્ડરોમાંના કોઈ પર ક્લિક કરો."
+msgstr ""
+"આ ફોલ્ડર મહત્વની ફાઈલો સમાવતું હશે.  પસંદ કરેલ વસ્તુ વિશે વધુ જાણકારી મેળવવા માટે ફાઈલો "
+"અથવા ફોલ્ડરોમાંના કોઈ પર ક્લિક કરો."
 
 #: ../app/dialogs/user-install-dialog.c:1008
 msgid "User Installation Log"
@@ -7117,7 +7302,10 @@ msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called "
 "\"Tile Cache\".  You should adjust its size to fit into memory.  Consider "
 "the amount of memory used by other running processes."
-msgstr "ચિત્ર માહિતી સંગ્રહવા માટે GIMP મર્યાદિત જથ્થાની મેમરી વાપરે છે, તેથી \"તકતી કેશ\" તરીકે ઓળખાય છે.  તમારે એનું માપ મેમરીમાં બંધબેસે તેમ સંતુલિત કરવું જોઈએ.  અન્ય ચાલી રહેલી પ્રક્રિયા માટે વપરાતી મેમરીનો જથ્થો ધ્યાનમાં રાખો."
+msgstr ""
+"ચિત્ર માહિતી સંગ્રહવા માટે GIMP મર્યાદિત જથ્થાની મેમરી વાપરે છે, તેથી \"તકતી કેશ\" તરીકે "
+"ઓળખાય છે.  તમારે એનું માપ મેમરીમાં બંધબેસે તેમ સંતુલિત કરવું જોઈએ.  અન્ય ચાલી રહેલી પ્રક્રિયા "
+"માટે વપરાતી મેમરીનો જથ્થો ધ્યાનમાં રાખો."
 
 #: ../app/dialogs/user-install-dialog.c:1392
 msgid "Tile cache size:"
@@ -7129,7 +7317,11 @@ msgid ""
 "written to a swap file.  This file should be located on a local filesystem "
 "with enough free space (several hundred MB). On a UNIX system, you may want "
 "to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
-msgstr "બધા ચિત્ર અને રદ કરેલ માહિતી કે જે તકતી કેશમાં બંધબેસતા નથી તે સ્વેપ ફાઈલમાં લખાઈ જશે.  આ ફાઈલ સ્થાનિક ફાઈલ સિસ્ટમ પર પૂરતી મુક્ત જગ્યા (ખૂબ ઘણા MB) સાથે સ્થિત થયેલ હોવી જોઈએ. UNIX સિસ્મ પર, તમે system-wide temp-dir (\"/tmp\" અથવા \"/var/tmp\") વાપરી શકશો."
+msgstr ""
+"બધા ચિત્ર અને રદ કરેલ માહિતી કે જે તકતી કેશમાં બંધબેસતા નથી તે સ્વેપ ફાઈલમાં લખાઈ જશે.  આ "
+"ફાઈલ સ્થાનિક ફાઈલ સિસ્ટમ પર પૂરતી મુક્ત જગ્યા (ખૂબ ઘણા MB) સાથે સ્થિત થયેલ હોવી જોઈએ. "
+"UNIX સિસ્મ પર, તમે system-wide temp-dir (\"/tmp\" અથવા \"/var/tmp\") વાપરી "
+"શકશો."
 
 #: ../app/dialogs/user-install-dialog.c:1415
 msgid "Select Swap Dir"
@@ -7203,7 +7395,7 @@ msgstr "વૈવિધ્યપૂર્ણ રંગ"
 msgid "Zoom image when window size changes"
 msgstr "જ્યારે વિન્ડો માપ બદલાય ત્યારે ચિત્ર નાનુંમોટું કરો"
 
-#: ../app/display/gimpdisplayshell.c:942
+#: ../app/display/gimpdisplayshell.c:944
 msgid "Toggle Quick Mask"
 msgstr "ઝડપી માસ્ક બદલો"
 
@@ -7227,24 +7419,19 @@ msgstr "શું બંધ કરવા પહેલાં ચિત્ર '%s'
 msgid "If you don't save the image, changes from the last %s will be lost."
 msgstr "જો તમે ચિત્ર સંગ્રહો નહિં, તો છેલ્લા %s પછીના ફેરફારો નષ્ટ થઈ જશે."
 
-#. one second, the time period
 #: ../app/display/gimpdisplayshell-close.c:279
+#, c-format
 msgid "second"
-msgstr "સેકન્ડ"
+msgid_plural "%d seconds"
+msgstr[0] "સેકન્ડ"
+msgstr[1] "%d સેકન્ડો"
 
-#: ../app/display/gimpdisplayshell-close.c:282
+#: ../app/display/gimpdisplayshell-close.c:284
 #, c-format
-msgid "%d seconds"
-msgstr "%d સેકન્ડો"
-
-#: ../app/display/gimpdisplayshell-close.c:288
 msgid "minute"
-msgstr "મિનિટ"
-
-#: ../app/display/gimpdisplayshell-close.c:290
-#, c-format
-msgid "%d minutes"
-msgstr "%d મિનિટો"
+msgid_plural "%d minutes"
+msgstr[0] "મિનિટ"
+msgstr[1] "%d મિનિટો"
 
 #: ../app/display/gimpdisplayshell-dnd.c:200
 #: ../app/display/gimpdisplayshell-dnd.c:501
@@ -7257,7 +7444,7 @@ msgid "Drop New Path"
 msgstr "નવો પાથ મૂકો"
 
 #: ../app/display/gimpdisplayshell-dnd.c:542
-#: ../app/widgets/gimplayertreeview.c:837 ../app/widgets/gimptoolbox-dnd.c:352
+#: ../app/widgets/gimplayertreeview.c:837 ../app/widgets/gimptoolbox-dnd.c:359
 msgid "Dropped Buffer"
 msgstr "મૂકાયેલ બફર"
 
@@ -7317,34 +7504,25 @@ msgstr "(સુધારાયેલ)"
 msgid "(clean)"
 msgstr "(સ્વચ્છ)"
 
-#: ../app/display/gimpdisplayshell-title.c:314
-msgid "1 layer"
-msgstr "૧ સ્તર"
-
-#: ../app/display/gimpdisplayshell-title.c:314
-#, c-format
-msgid "%d layers"
-msgstr "%d સ્તરો"
-
 #: ../app/display/gimpdisplayshell-title.c:326
 #: ../app/display/gimpdisplayshell-title.c:338
 #: ../app/widgets/gimpactiongroup.c:806
 msgid "(none)"
 msgstr "(કંઇ નહી)"
 
-#: ../app/display/gimpstatusbar.c:146
+#: ../app/display/gimpstatusbar.c:145
 msgid "Shadow type"
 msgstr "પડછાયાનો પ્રકાર"
 
-#: ../app/display/gimpstatusbar.c:147
+#: ../app/display/gimpstatusbar.c:146
 msgid "Style of bevel around the statusbar text"
 msgstr "સ્થિતિ દર્શક પટ્ટીના લેખનની આજુબાજુના ઉઠાવનો પ્રકાર"
 
-#: ../app/display/gimpstatusbar.c:228
+#: ../app/display/gimpstatusbar.c:227
 msgid "Cancel"
 msgstr "રદ કરો"
 
-#: ../app/display/gimpstatusbar.c:452
+#: ../app/display/gimpstatusbar.c:451
 msgid "Other..."
 msgstr "અન્ય..."
 
@@ -7375,12 +7553,6 @@ msgstr "પ્લગ-ઈન ચિત્ર સંગ્રહી શક્ય�
 #: ../app/file/file-utils.c:107
 msgid "Invalid character sequence in URI"
 msgstr "URI માં અયોગ્ય અક્ષર માળા"
-
-#: ../app/gui/session.c:246 ../app/menus/menus.c:389
-#: ../app/tools/gimp-tools.c:403 ../app/widgets/gimpdevices.c:218
-#, c-format
-msgid "Deleting \"%s\" failed: %s"
-msgstr "\"%s\" કાઢી નાંખવામાં નિષ્ફળ: %s"
 
 #: ../app/gui/splash.c:118
 msgid "GIMP Startup"
@@ -7507,7 +7679,7 @@ msgstr "સંકુચિત કરવાનું..."
 msgid "2D Transform..."
 msgstr "2D રૂપાંતરણ..."
 
-#: ../app/pdb/edit_cmds.c:680 ../app/tools/gimpblendtool.c:243
+#: ../app/pdb/edit_cmds.c:1326 ../app/tools/gimpblendtool.c:243
 msgid "Blending..."
 msgstr "બ્લેન્ડીંગ..."
 
@@ -7682,7 +7854,8 @@ msgstr ""
 "પ્લગ-ઈન ભાંગી ગયું: \"%s\"\n"
 "(%s)\n"
 "\n"
-"મરી રહેલું પ્લગ-ઈન એ GIMP ની આંતરિક સ્થિતિ સાથે ભેગું થઈ ગયું છે. તમે તમારા ચિત્રો સંગ્રહવા માંગતા હશો અને GIMP ને સુરક્ષિત બાજુએ રાખવા માટે પુનઃશરૂ કરી શકશો."
+"મરી રહેલું પ્લગ-ઈન એ GIMP ની આંતરિક સ્થિતિ સાથે ભેગું થઈ ગયું છે. તમે તમારા ચિત્રો સંગ્રહવા "
+"માંગતા હશો અને GIMP ને સુરક્ષિત બાજુએ રાખવા માટે પુનઃશરૂ કરી શકશો."
 
 #: ../app/plug-in/plug-in-rc.c:197
 #, c-format
@@ -7824,7 +7997,8 @@ msgstr ""
 "સ્તર '%s' માટે લખાણ પેરાસાઈટનું પદચ્છેદન કરવામાં સમસ્યા:\n"
 "%s\n"
 "\n"
-"અમુક લખાણ ગુણધર્મો ખોટા હોઈ શકે. જ્યાં સુધી તમે લખાણ સ્તરમાં ફેરફાર નહિં કરવા માંગો, ત્યાં સુધી તમારે આના વિશે ચિંતા કરવાની જરૂર નથી."
+"અમુક લખાણ ગુણધર્મો ખોટા હોઈ શકે. જ્યાં સુધી તમે લખાણ સ્તરમાં ફેરફાર નહિં કરવા માંગો, ત્યાં "
+"સુધી તમારે આના વિશે ચિંતા કરવાની જરૂર નથી."
 
 #: ../app/tools/tools-enums.c:25
 msgid "Pick only"
@@ -7898,7 +8072,7 @@ msgstr "જાળી લીટીઓની સંખ્યા"
 msgid "Grid line spacing"
 msgstr "જાળી લીટી જગ્યા"
 
-#: ../app/tools/gimp-tools.c:300
+#: ../app/tools/gimp-tools.c:312
 msgid "This tool has no options."
 msgstr "આ સાધનને કોઈ વિકલ્પો નથી."
 
@@ -7940,7 +8114,7 @@ msgid "Max depth:"
 msgstr "મહત્તમ ઊંડાઈ:"
 
 #: ../app/tools/gimpblendoptions.c:301
-#: ../app/tools/gimpbucketfilloptions.c:294
+#: ../app/tools/gimpbucketfilloptions.c:297
 #: ../app/tools/gimpselectionoptions.c:524
 msgid "Threshold:"
 msgstr "થ્રેશોલ્ડ:"
@@ -8002,14 +8176,14 @@ msgstr "મહત્તમ રંગ ભેદ"
 #. fill type
 #: ../app/tools/gimpbucketfilloptions.c:237
 #, c-format
-msgid "Fill Type  %s"
-msgstr "ભરવાનો પ્રકાર  %s"
+msgid "Fill Type  (%s)"
+msgstr "ભરવાનો પ્રકાર  (%s)"
 
 #. fill selection
 #: ../app/tools/gimpbucketfilloptions.c:249
 #, c-format
-msgid "Affected Area  %s"
-msgstr "અસરગ્રસ્ત વિસ્તાર  %s"
+msgid "Affected Area  (%s)"
+msgstr "અસરગ્રસ્ત વિસ્તાર  (%s)"
 
 #: ../app/tools/gimpbucketfilloptions.c:253
 msgid "Fill whole selection"
@@ -8019,16 +8193,16 @@ msgstr "આખી પસંદગી ભરો"
 msgid "Fill similar colors"
 msgstr "આવા જ રંગો ભરો"
 
-#: ../app/tools/gimpbucketfilloptions.c:260
+#: ../app/tools/gimpbucketfilloptions.c:263
 #: ../app/tools/gimpselectionoptions.c:496
 msgid "Finding Similar Colors"
 msgstr "સરખા રંગો શોધી રહ્યા છીએ"
 
-#: ../app/tools/gimpbucketfilloptions.c:276
+#: ../app/tools/gimpbucketfilloptions.c:279
 msgid "Fill transparent areas"
 msgstr "પારદર્શક વિસ્તારો ભરો"
 
-#: ../app/tools/gimpbucketfilloptions.c:282
+#: ../app/tools/gimpbucketfilloptions.c:285 ../app/tools/gimpclonetool.c:335
 #: ../app/tools/gimpcolorpickeroptions.c:177
 #: ../app/tools/gimpselectionoptions.c:512
 #: ../app/tools/gimpselectionoptions.c:560
@@ -8067,7 +8241,7 @@ msgstr "ક્લોન સ્રોત સુયોજિત કરવા મ�
 msgid "Source"
 msgstr "સ્રોત"
 
-#: ../app/tools/gimpclonetool.c:338
+#: ../app/tools/gimpclonetool.c:342
 msgid "Alignment"
 msgstr "ગોઠવણી"
 
@@ -8088,12 +8262,12 @@ msgid "Color balance operates only on RGB color layers."
 msgstr "રંગ સંતુલન માત્ર RGB રંગ સ્તરો પર જ કામ કરે છે."
 
 #: ../app/tools/gimpcolorbalancetool.c:275
-msgid "Select Range to Modify"
-msgstr "સુધારવા માટે વિસ્તાર પસંદ કરો"
+msgid "Select Range to Adjust"
+msgstr "સંતુલિત કરવા માટે વિસ્તાર પસંદ કરો"
 
-#: ../app/tools/gimpcolorbalancetool.c:283
-msgid "Modify Selected Range's Color Levels"
-msgstr "પસંદ કરેલ વિસ્તારના રંગ સ્તરો સુધારો"
+#: ../app/tools/gimpcolorbalancetool.c:283 ../app/tools/gimplevelstool.c:215
+msgid "Adjust Color Levels"
+msgstr "રંગ સ્તરો સંતુલિત કરો"
 
 #: ../app/tools/gimpcolorbalancetool.c:300
 msgid "Cyan"
@@ -8162,14 +8336,14 @@ msgstr "ત્રિજ્યા:"
 #. the pick FG/BG frame
 #: ../app/tools/gimpcolorpickeroptions.c:182
 #, c-format
-msgid "Pick Mode  %s"
-msgstr "પકડવાની સ્થિતિ  %s"
+msgid "Pick Mode  (%s)"
+msgstr "પકડવાની સ્થિતિ  (%s)"
 
 #. the add to palette toggle
 #: ../app/tools/gimpcolorpickeroptions.c:191
 #, c-format
-msgid "Add to palette  %s"
-msgstr "તકતીમાં ઉમેરો  %s"
+msgid "Add to palette  (%s)"
+msgstr "તકતીમાં ઉમેરો  (%s)"
 
 #: ../app/tools/gimpcolorpickertool.c:101
 msgid "Color Picker"
@@ -8211,71 +8385,29 @@ msgstr "કોન્વોલ્વ (_v)"
 #. the type radio box
 #: ../app/tools/gimpconvolvetool.c:190
 #, c-format
-msgid "Convolve Type  %s"
-msgstr "કોન્વોલ્વ પ્રકાર  %s"
-
-#: ../app/tools/gimpcropoptions.c:172
-msgid "Highlight rectangle"
-msgstr "લંબચોરસ પ્રકાશિત કરો"
-
-#: ../app/tools/gimpcropoptions.c:177
-msgid "Fixed width"
-msgstr "ચોક્કસ પહોળાઈ"
-
-#: ../app/tools/gimpcropoptions.c:180 ../app/tools/gimprectangleoptions.c:441
-#: ../app/widgets/gimpgrideditor.c:263 ../app/widgets/gimpgrideditor.c:295
-msgid "Width"
-msgstr "પહોળાઈ"
-
-#: ../app/tools/gimpcropoptions.c:185
-msgid "Fixed height"
-msgstr "ચોક્કસ ઊંચાઈ"
-
-#: ../app/tools/gimpcropoptions.c:188 ../app/tools/gimprectangleoptions.c:451
-#: ../app/widgets/gimpgrideditor.c:265 ../app/widgets/gimpgrideditor.c:297
-msgid "Height"
-msgstr "ઊંચાઈ"
-
-#: ../app/tools/gimpcropoptions.c:193
-msgid "Fixed aspect"
-msgstr "ચોક્કસ એસ્પેક્ટ"
-
-#: ../app/tools/gimpcropoptions.c:196 ../app/tools/gimprectangleoptions.c:461
-msgid "Aspect"
-msgstr "એસ્પેક્ટ"
-
-#: ../app/tools/gimpcropoptions.c:201
-msgid "Fixed center"
-msgstr "ચોક્કસ કેન્દ્ર"
-
-#: ../app/tools/gimpcropoptions.c:204
-msgid "Center X"
-msgstr "કેન્દ્ર X"
-
-#: ../app/tools/gimpcropoptions.c:208
-msgid "Center Y"
-msgstr "કેન્દ્ર Y"
+msgid "Convolve Type  (%s)"
+msgstr "કોન્વોલ્વ પ્રકાર  (%s)"
 
 #. tool toggle
-#: ../app/tools/gimpcropoptions.c:534 ../app/tools/gimpmagnifyoptions.c:206
+#: ../app/tools/gimpcropoptions.c:221 ../app/tools/gimpmagnifyoptions.c:206
 #: ../app/tools/gimpmoveoptions.c:215
 #, c-format
-msgid "Tool Toggle  %s"
-msgstr "સાધન બદલો  %s"
+msgid "Tool Toggle  (%s)"
+msgstr "સાધન બદલો  (%s)"
 
-#: ../app/tools/gimpcropoptions.c:546
+#: ../app/tools/gimpcropoptions.c:233
 msgid "Current layer only"
 msgstr "માત્ર વર્તમાન સ્તર"
 
-#: ../app/tools/gimpcroptool.c:159
+#: ../app/tools/gimpcroptool.c:81
 msgid "Crop & Resize"
 msgstr "કાપો & માપ બદલો"
 
-#: ../app/tools/gimpcroptool.c:160
+#: ../app/tools/gimpcroptool.c:82
 msgid "Crop or Resize an image"
 msgstr "ચિત્રને કાપો અથવા માપ બદલો"
 
-#: ../app/tools/gimpcroptool.c:161
+#: ../app/tools/gimpcroptool.c:83
 msgid "_Crop & Resize"
 msgstr "કાપો & માપ બદલો (_C)"
 
@@ -8340,8 +8472,8 @@ msgstr "Dod_geBurn"
 #. the type (dodge or burn)
 #: ../app/tools/gimpdodgeburntool.c:191
 #, c-format
-msgid "Type  %s"
-msgstr "પ્રકાર  %s"
+msgid "Type  (%s)"
+msgstr "પ્રકાર  (%s)"
 
 #: ../app/tools/gimpdodgeburntool.c:203
 msgid "Mode"
@@ -8380,8 +8512,8 @@ msgstr "ભૂંસનાર (_E)"
 #. the anti_erase toggle
 #: ../app/tools/gimperasertool.c:182
 #, c-format
-msgid "Anti erase  %s"
-msgstr "ભૂંસવા વિરોધી  %s"
+msgid "Anti erase  (%s)"
+msgstr "ભૂંસવા વિરોધી  (%s)"
 
 #: ../app/tools/gimpflipoptions.c:159 ../app/tools/gimpmoveoptions.c:209
 #: ../app/tools/gimptransformoptions.c:322
@@ -8391,8 +8523,8 @@ msgstr "અસર:"
 #. tool toggle
 #: ../app/tools/gimpflipoptions.c:165
 #, c-format
-msgid "Flip Type  %s"
-msgstr "પલટાવવાનો પ્રકાર  %s"
+msgid "Flip Type  (%s)"
+msgstr "પલટાવવાનો પ્રકાર  (%s)"
 
 #: ../app/tools/gimpfliptool.c:82
 msgid "Flip the layer or selection"
@@ -8546,26 +8678,26 @@ msgid "_M"
 msgstr "_M"
 
 #: ../app/tools/gimphuesaturationtool.c:279
-msgid "Select Primary Color to Modify"
-msgstr "સુધારવા માટે પ્રાથમિક રંગ પસંદ કરો"
+msgid "Select Primary Color to Adjust"
+msgstr "સંતુલિત કરવા માટે પ્રાથમિક રંગ પસંદ કરો"
 
 #: ../app/tools/gimphuesaturationtool.c:312
-msgid "Modify all colors"
-msgstr "બધા રંગો સુધારો"
+msgid "Adjust all colors"
+msgstr "બધા રંગો સંતુલિત કરો"
 
 #: ../app/tools/gimphuesaturationtool.c:366
 msgid "_Overlap:"
 msgstr "ઉપલ લપેટો (_O):"
 
 #: ../app/tools/gimphuesaturationtool.c:384
-msgid "Modify Selected Color"
-msgstr "પસંદ કરેલ રંગ સુધારો"
+msgid "Adjust Selected Color"
+msgstr "પસંદ કરેલ રંગ સંતુલિત કરો"
 
 #: ../app/tools/gimphuesaturationtool.c:458
 msgid "R_eset Color"
 msgstr "રંગ પુનઃસુયોજિત કરો (_e)"
 
-#: ../app/tools/gimpimagemaptool.c:265 ../app/widgets/gimpthumbbox.c:368
+#: ../app/tools/gimpimagemaptool.c:265 ../app/widgets/gimpthumbbox.c:369
 msgid "_Preview"
 msgstr "પૂર્વદર્શન (_P)"
 
@@ -8641,10 +8773,6 @@ msgstr "રંગ સ્તરો સંતુલિત કરો"
 #: ../app/tools/gimplevelstool.c:157
 msgid "_Levels..."
 msgstr "સ્તરો (_L)..."
-
-#: ../app/tools/gimplevelstool.c:215
-msgid "Adjust Color Levels"
-msgstr "રંગ સ્તરો સંતુલિત કરો"
 
 #: ../app/tools/gimplevelstool.c:217
 msgid "Load Levels"
@@ -8903,36 +9031,50 @@ msgstr "પોસ્ટરવાળું કરવાનું અનુક્�
 msgid "Posterize _levels:"
 msgstr "સ્તરો પોસ્ટવાળા કરો (_l):"
 
-#: ../app/tools/gimprectangleoptions.c:424
+#: ../app/tools/gimprectangleoptions.c:660
 msgid "Highlight"
 msgstr "પ્રકાશિત કરો"
 
-#: ../app/tools/gimprectangleoptions.c:436
+#: ../app/tools/gimprectangleoptions.c:672
 msgid "Fix"
 msgstr "ચોક્કસ"
 
-#: ../app/tools/gimprectangleoptions.c:469
+#: ../app/tools/gimprectangleoptions.c:677 ../app/widgets/gimpgrideditor.c:263
+#: ../app/widgets/gimpgrideditor.c:295
+msgid "Width"
+msgstr "પહોળાઈ"
+
+#: ../app/tools/gimprectangleoptions.c:687 ../app/widgets/gimpgrideditor.c:265
+#: ../app/widgets/gimpgrideditor.c:297
+msgid "Height"
+msgstr "ઊંચાઈ"
+
+#: ../app/tools/gimprectangleoptions.c:697
+msgid "Aspect"
+msgstr "એસ્પેક્ટ"
+
+#: ../app/tools/gimprectangleoptions.c:705
 msgid "Center"
 msgstr "કેન્દ્ર"
 
-#: ../app/tools/gimprectangletool.c:1410 ../app/tools/gimprectangletool.c:1831
+#: ../app/tools/gimprectangletool.c:1827 ../app/tools/gimprectangletool.c:2254
 msgid "Rectangle: "
 msgstr "લંબચોરસ: "
 
-#: ../app/tools/gimprectangletool.c:2234
+#: ../app/tools/gimprectangletool.c:2673
 msgid "1 "
 msgstr "1 "
 
-#: ../app/tools/gimprectangletool.c:2235
+#: ../app/tools/gimprectangletool.c:2674
 msgid "2 "
 msgstr "2 "
 
-#: ../app/tools/gimprectangletool.c:2236 ../app/widgets/gimpcursorview.c:170
+#: ../app/tools/gimprectangletool.c:2675 ../app/widgets/gimpcursorview.c:170
 #: ../app/widgets/gimpcursorview.c:192
 msgid "X"
 msgstr "X"
 
-#: ../app/tools/gimprectangletool.c:2237 ../app/widgets/gimpcursorview.c:176
+#: ../app/tools/gimprectangletool.c:2676 ../app/widgets/gimpcursorview.c:176
 #: ../app/widgets/gimpcursorview.c:198
 msgid "Y"
 msgstr "Y"
@@ -9108,12 +9250,12 @@ msgid "Indentation of the first line"
 msgstr "પ્રથમ લીટીની ગોઠવણી"
 
 #: ../app/tools/gimptextoptions.c:183
-msgid "Modify line spacing"
-msgstr "લીટી જગ્યા સુધારો"
+msgid "Adjust line spacing"
+msgstr "લીટી જગ્યા સંતુલિત કરો"
 
 #: ../app/tools/gimptextoptions.c:188
-msgid "Modify letter spacing"
-msgstr "અક્ષર જગ્યા સુધારો"
+msgid "Adjust letter spacing"
+msgstr "અક્ષર જગ્યા સંતુલિત કરો"
 
 #: ../app/tools/gimptextoptions.c:430
 msgid "Font:"
@@ -9139,31 +9281,11 @@ msgstr "રંગ:"
 msgid "Justify:"
 msgstr "સમર્થન:"
 
-#: ../app/tools/gimptextoptions.c:480
-msgid "Indent:"
-msgstr "હાંસિયાથી અંતર:"
-
-#: ../app/tools/gimptextoptions.c:486
-msgid ""
-"Line\n"
-"spacing:"
-msgstr ""
-"લીટી\n"
-"જગ્યા:"
-
 #: ../app/tools/gimptextoptions.c:493
-msgid ""
-"Letter\n"
-"spacing:"
-msgstr ""
-"અક્ષર\n"
-"જગ્યા:"
-
-#: ../app/tools/gimptextoptions.c:496
 msgid "Create Path from Text"
 msgstr "લખાણમાંથી પાથ બનાવો"
 
-#: ../app/tools/gimptextoptions.c:504
+#: ../app/tools/gimptextoptions.c:501
 msgid "Text along Path"
 msgstr "પાથ સાથે લખાણ"
 
@@ -9191,7 +9313,8 @@ msgid ""
 "\n"
 "You can edit the layer or create a new text layer from its text attributes."
 msgstr ""
-"તમે પસંદ કરેલ સ્તર એ લખાણ સ્તર છે પરંતુ તે અન્ય સાધનો દ્વારા સુધારાઈ ગયેલ છે. લખાણ સાધન સાથે સ્તરમાં ફેરફાર કરવાનું આ સુધારાઓ અવગણી કાઢશે.\n"
+"તમે પસંદ કરેલ સ્તર એ લખાણ સ્તર છે પરંતુ તે અન્ય સાધનો દ્વારા સુધારાઈ ગયેલ છે. લખાણ સાધન "
+"સાથે સ્તરમાં ફેરફાર કરવાનું આ સુધારાઓ અવગણી કાઢશે.\n"
 "\n"
 "તમે સ્તરમાં ફેરફાર કરી શકો છો અથવા તેના લખાણ લક્ષણોમાંથી નવું લખાણ સ્તર બનાવી શકો છો."
 
@@ -9239,23 +9362,23 @@ msgstr "પરિમાણો"
 
 #: ../app/tools/gimptransformoptions.c:424
 #, c-format
-msgid "15 degrees  %s"
-msgstr "૧૫ ડિગ્રીઓ  %s"
+msgid "15 degrees  (%s)"
+msgstr "૧૫ ડિગ્રીઓ  (%s)"
 
 #: ../app/tools/gimptransformoptions.c:444
 #, c-format
-msgid "Keep height  %s"
-msgstr "ઊંચાઈ જાળવો  %s"
+msgid "Keep height  (%s)"
+msgstr "ઊંચાઈ જાળવો  (%s)"
 
 #: ../app/tools/gimptransformoptions.c:446
 #, c-format
-msgid "Keep width  %s"
-msgstr "પહોળાઈ જાળવો  %s"
+msgid "Keep width  (%s)"
+msgstr "પહોળાઈ જાળવો  (%s)"
 
 #: ../app/tools/gimptransformoptions.c:448
 #, c-format
-msgid "Keep aspect  %s"
-msgstr "એસ્પેક્ટ જાળવો  %s"
+msgid "Keep aspect  (%s)"
+msgstr "એસ્પેક્ટ જાળવો  (%s)"
 
 #: ../app/tools/gimptransformtool.c:255
 msgid "Transforming..."
@@ -9477,46 +9600,46 @@ msgstr "'%s' માંથી પાથની આયાત કરવામાં 
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: ../app/widgets/gimpactionview.c:331
+#: ../app/widgets/gimpactionview.c:333
 #: ../app/widgets/gimpcontrollereditor.c:399
 msgid "Action"
 msgstr "ક્રિયા"
 
-#: ../app/widgets/gimpactionview.c:360
+#: ../app/widgets/gimpactionview.c:362
 msgid "Shortcut"
 msgstr "ટુંકાણ"
 
-#: ../app/widgets/gimpactionview.c:382
+#: ../app/widgets/gimpactionview.c:384
 msgid "Name"
 msgstr "નામ"
 
-#: ../app/widgets/gimpactionview.c:512 ../app/widgets/gimpactionview.c:694
+#: ../app/widgets/gimpactionview.c:514 ../app/widgets/gimpactionview.c:696
 msgid "Changing shortcut failed."
 msgstr "ટુંકાણ બદલવામાં નિષ્ફળ."
 
-#: ../app/widgets/gimpactionview.c:552
+#: ../app/widgets/gimpactionview.c:554
 msgid "Conflicting Shortcuts"
 msgstr "ટુંકાણો તકરાઈ રહ્યા છે"
 
-#: ../app/widgets/gimpactionview.c:558
+#: ../app/widgets/gimpactionview.c:560
 msgid "_Reassign shortcut"
 msgstr "ટુંકાણ ફરી સોંપો (_R)"
 
-#: ../app/widgets/gimpactionview.c:569
+#: ../app/widgets/gimpactionview.c:571
 #, c-format
 msgid "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
 msgstr "ટુંકાણ \"%s\" એ પહેલાથી જ \"%s\" દ્વારા \"%s\" જૂથમાંથી લેવાઈ ગયેલ છે."
 
-#: ../app/widgets/gimpactionview.c:573
+#: ../app/widgets/gimpactionview.c:575
 #, c-format
 msgid "Reassigning the shortcut will cause it to be removed from \"%s\"."
 msgstr "ટુંકાણ ફરી સોંપવાનું તેને \"%s\" માંથી દૂર કરવાનું કારણ બનશે."
 
-#: ../app/widgets/gimpactionview.c:630
+#: ../app/widgets/gimpactionview.c:632
 msgid "Removing shortcut failed."
 msgstr "ટુંકાણ દૂર કરવામાં નિષ્ફળ."
 
-#: ../app/widgets/gimpactionview.c:635
+#: ../app/widgets/gimpactionview.c:637
 msgid "Invalid shortcut."
 msgstr "અયોગ્ય ટુંકાણ."
 
@@ -9564,7 +9687,7 @@ msgstr "ચેનલનો ક્રમ ફરી આપો"
 msgid "Empty Channel"
 msgstr "ખાલી ચેનલ"
 
-#: ../app/widgets/gimpclipboard.c:258
+#: ../app/widgets/gimpclipboard.c:279
 msgid "Clipboard"
 msgstr "ક્લિપબોર્ડ"
 
@@ -9677,11 +9800,11 @@ msgstr "રંગ અનુક્રમ:"
 msgid "HTML notation:"
 msgstr "HTML નોટેશન:"
 
-#: ../app/widgets/gimpcontainerpopup.c:502
+#: ../app/widgets/gimpcontainerpopup.c:564
 msgid "Smaller Previews"
 msgstr "નાના પૂર્વદર્શનો"
 
-#: ../app/widgets/gimpcontainerpopup.c:507
+#: ../app/widgets/gimpcontainerpopup.c:569
 msgid "Larger Previews"
 msgstr "મોટા પૂર્વદર્શનો"
 
@@ -9717,149 +9840,69 @@ msgstr "પસંદ કરેલ ઘટના પ્રતિ ક્રિય�
 msgid "Remove the action from the selected event"
 msgstr "પસંદ કરેલ ઘટનામાંથી ક્રિયા દૂર કરો"
 
-#: ../app/widgets/gimpcontrollereditor.c:685
-#: ../app/widgets/gimpcontrollereditor.c:688
+#: ../app/widgets/gimpcontrollereditor.c:686
+#, c-format
+msgid "Select Action for Event '%s'"
+msgstr "ઘટના '%s' માટે ક્રિયા પસંદ કરો"
+
+#: ../app/widgets/gimpcontrollereditor.c:691
 msgid "Select Controller Event Action"
 msgstr "નિયંત્રક ઘટના ક્રિયા પસંદ કરો"
 
-#: ../app/widgets/gimpcontrollerkeyboard.c:69
-msgid "Cursor Up (Shift + Control + Alt)"
-msgstr "કર્સર ઉપર (Shift + Control + Alt)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:72
-msgid "Cursor Up (Control + Alt)"
-msgstr "કર્સર ઉપર (Control + Alt)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:75
-msgid "Cursor Up (Shift + Alt)"
-msgstr "કર્સર ઉપર (Shift + Alt)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:78
-msgid "Cursor Up (Shift + Control)"
-msgstr "કર્સર ઉપર (Shift + Control)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:81
-msgid "Cursor Up (Alt)"
-msgstr "કર્સર ઉપર (Alt)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:84
-msgid "Cursor Up (Control)"
-msgstr "કર્સર ઉપર (Control)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:87
-msgid "Cursor Up (Shift)"
-msgstr "કર્સર ઉપર (Shift)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:90
+#: ../app/widgets/gimpcontrollerkeyboard.c:70
+#: ../app/widgets/gimpcontrollerkeyboard.c:73
+#: ../app/widgets/gimpcontrollerkeyboard.c:76
+#: ../app/widgets/gimpcontrollerkeyboard.c:79
+#: ../app/widgets/gimpcontrollerkeyboard.c:82
+#: ../app/widgets/gimpcontrollerkeyboard.c:85
+#: ../app/widgets/gimpcontrollerkeyboard.c:88
+#: ../app/widgets/gimpcontrollerkeyboard.c:91
 msgid "Cursor Up"
 msgstr "કર્સર ઉપર"
 
-#: ../app/widgets/gimpcontrollerkeyboard.c:94
-msgid "Cursor Down (Shift + Control + Alt)"
-msgstr "કર્સર નીચે (Shift + Control + Alt)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:97
-msgid "Cursor Down (Control + Alt)"
-msgstr "કર્સર નીચે (Control + Alt)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:100
-msgid "Cursor Down (Shift + Alt)"
-msgstr "કર્સર નીચે (Shift + Alt)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:103
-msgid "Cursor Down (Shift + Control)"
-msgstr "કર્સર નીચે (Shift + Control)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:106
-msgid "Cursor Down (Alt)"
-msgstr "કર્સર નીચે (Alt)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:109
-msgid "Cursor Down (Control)"
-msgstr "કર્સર નીચે (Control)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:112
-msgid "Cursor Down (Shift)"
-msgstr "કર્સર નીચે (Shift)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:115
+#: ../app/widgets/gimpcontrollerkeyboard.c:95
+#: ../app/widgets/gimpcontrollerkeyboard.c:98
+#: ../app/widgets/gimpcontrollerkeyboard.c:101
+#: ../app/widgets/gimpcontrollerkeyboard.c:104
+#: ../app/widgets/gimpcontrollerkeyboard.c:107
+#: ../app/widgets/gimpcontrollerkeyboard.c:110
+#: ../app/widgets/gimpcontrollerkeyboard.c:113
+#: ../app/widgets/gimpcontrollerkeyboard.c:116
 msgid "Cursor Down"
 msgstr "કર્સર નીચે"
 
-#: ../app/widgets/gimpcontrollerkeyboard.c:119
-msgid "Cursor Left (Shift + Control + Alt)"
-msgstr "કર્સર ડાબું (Shift + Control + Alt)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:122
-msgid "Cursor Left (Control + Alt)"
-msgstr "કર્સર ડાબું (Control + Alt)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:125
-msgid "Cursor Left (Shift + Alt)"
-msgstr "કર્સર ડાબું (Shift + Alt)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:128
-msgid "Cursor Left (Shift + Control)"
-msgstr "કર્સર ડાબું (Shift + Control)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:131
-msgid "Cursor Left (Alt)"
-msgstr "કર્સર ડાબું (Alt)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:134
-msgid "Cursor Left (Control)"
-msgstr "કર્સર ડાબું (Control)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:137
-msgid "Cursor Left (Shift)"
-msgstr "કર્સર ડાબું (Shift)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:140
+#: ../app/widgets/gimpcontrollerkeyboard.c:120
+#: ../app/widgets/gimpcontrollerkeyboard.c:123
+#: ../app/widgets/gimpcontrollerkeyboard.c:126
+#: ../app/widgets/gimpcontrollerkeyboard.c:129
+#: ../app/widgets/gimpcontrollerkeyboard.c:132
+#: ../app/widgets/gimpcontrollerkeyboard.c:135
+#: ../app/widgets/gimpcontrollerkeyboard.c:138
+#: ../app/widgets/gimpcontrollerkeyboard.c:141
 msgid "Cursor Left"
 msgstr "કર્સર ડાબું"
 
-#: ../app/widgets/gimpcontrollerkeyboard.c:144
-msgid "Cursor Right (Shift + Control + Alt)"
-msgstr "કર્સર જમણું (Shift + Control + Alt)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:147
-msgid "Cursor Right (Control + Alt)"
-msgstr "કર્સર જમણું (Control + Alt)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:150
-msgid "Cursor Right (Shift + Alt)"
-msgstr "કર્સર જમણું (Shift + Alt)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:153
-msgid "Cursor Right (Shift + Control)"
-msgstr "કર્સર જમણું (Shift + Control)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:156
-msgid "Cursor Right (Alt)"
-msgstr "કર્સર જમણું (Alt)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:159
-msgid "Cursor Right (Control)"
-msgstr "કર્સર જમણું (Control)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:162
-msgid "Cursor Right (Shift)"
-msgstr "કર્સર જમણું (Shift)"
-
-#: ../app/widgets/gimpcontrollerkeyboard.c:165
+#: ../app/widgets/gimpcontrollerkeyboard.c:145
+#: ../app/widgets/gimpcontrollerkeyboard.c:148
+#: ../app/widgets/gimpcontrollerkeyboard.c:151
+#: ../app/widgets/gimpcontrollerkeyboard.c:154
+#: ../app/widgets/gimpcontrollerkeyboard.c:157
+#: ../app/widgets/gimpcontrollerkeyboard.c:160
+#: ../app/widgets/gimpcontrollerkeyboard.c:163
+#: ../app/widgets/gimpcontrollerkeyboard.c:166
 msgid "Cursor Right"
 msgstr "કર્સર જમણું"
 
-#: ../app/widgets/gimpcontrollerkeyboard.c:207
+#: ../app/widgets/gimpcontrollerkeyboard.c:208
 msgid "Keyboard"
 msgstr "કીબોર્ડ"
 
-#: ../app/widgets/gimpcontrollerkeyboard.c:230
+#: ../app/widgets/gimpcontrollerkeyboard.c:251
 msgid "Keyboard Events"
 msgstr "કીબોર્ડ ઘટનાઓ"
 
-#: ../app/widgets/gimpcontrollerkeyboard.c:231
-#: ../app/widgets/gimpcontrollerwheel.c:230
+#: ../app/widgets/gimpcontrollerkeyboard.c:252
+#: ../app/widgets/gimpcontrollerwheel.c:251
 msgid "Ready"
 msgstr "તૈયાર"
 
@@ -9932,7 +9975,8 @@ msgid ""
 "Selecting \"Disable Controller\" will disable the controller without "
 "removing it."
 msgstr ""
-"સક્રિય નિયંત્રકોની યાદીમાંથી આ નિયંત્રકને દૂર કરવાનું કાયમ માટે બધા ઘટના સુયોજનોને કાઢી નાંખશે જે તમે રૂપરેખાંકિત કરેલ છે.\n"
+"સક્રિય નિયંત્રકોની યાદીમાંથી આ નિયંત્રકને દૂર કરવાનું કાયમ માટે બધા ઘટના સુયોજનોને કાઢી "
+"નાંખશે જે તમે રૂપરેખાંકિત કરેલ છે.\n"
 "\n"
 "\"નિયંત્રક નિષ્ક્રિય કરો\" પસંદ કરવાનું નિયંત્રકને દૂર કર્યા વિના નિષ્ક્રિય કરી નાંખશે."
 
@@ -9944,139 +9988,55 @@ msgstr "નિયંત્રક રૂપરેખાંકિત કરો"
 msgid "Configure Input Controller"
 msgstr "ઈનપુટ નિયંત્રક રૂપરેખાંકિત કરો"
 
-#: ../app/widgets/gimpcontrollerwheel.c:68
-msgid "Scroll Up (Shift + Control + Alt)"
-msgstr "ઉપર સરકાવો (Shift + Control + Alt)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:71
-msgid "Scroll Up (Control + Alt)"
-msgstr "ઉપર સરકાવો (Control + Alt)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:74
-msgid "Scroll Up (Shift + Alt)"
-msgstr "ઉપર સરકાવો (Shift + Alt)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:77
-msgid "Scroll Up (Shift + Control)"
-msgstr "ઉપર સરકાવો (Shift + Control)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:80
-msgid "Scroll Up (Alt)"
-msgstr "ઉપર સરકાવો (Alt)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:83
-msgid "Scroll Up (Control)"
-msgstr "ઉપર સરકાવો (Control)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:86
-msgid "Scroll Up (Shift)"
-msgstr "ઉપર સરકાવો (Shift)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:89
+#: ../app/widgets/gimpcontrollerwheel.c:69
+#: ../app/widgets/gimpcontrollerwheel.c:72
+#: ../app/widgets/gimpcontrollerwheel.c:75
+#: ../app/widgets/gimpcontrollerwheel.c:78
+#: ../app/widgets/gimpcontrollerwheel.c:81
+#: ../app/widgets/gimpcontrollerwheel.c:84
+#: ../app/widgets/gimpcontrollerwheel.c:87
+#: ../app/widgets/gimpcontrollerwheel.c:90
 msgid "Scroll Up"
 msgstr "ઉપર સરકાવો"
 
-#: ../app/widgets/gimpcontrollerwheel.c:93
-msgid "Scroll Down (Shift + Control + Alt)"
-msgstr "નીચે સરકાવો (Shift + Control + Alt)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:96
-msgid "Scroll Down (Control + Alt)"
-msgstr "નીચે સરકાવો (Control + Alt)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:99
-msgid "Scroll Down (Shift + Alt)"
-msgstr "નીચે સરકાવો (Shift + Alt)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:102
-msgid "Scroll Down (Shift + Control)"
-msgstr "નીચે સરકાવો (Shift + Control)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:105
-msgid "Scroll Down (Alt)"
-msgstr "નીચે સરકાવો (Alt)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:108
-msgid "Scroll Down (Control)"
-msgstr "નીચે સરકાવો (Control)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:111
-msgid "Scroll Down (Shift)"
-msgstr "નીચે સરકાવો (Shift)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:114
+#: ../app/widgets/gimpcontrollerwheel.c:94
+#: ../app/widgets/gimpcontrollerwheel.c:97
+#: ../app/widgets/gimpcontrollerwheel.c:100
+#: ../app/widgets/gimpcontrollerwheel.c:103
+#: ../app/widgets/gimpcontrollerwheel.c:106
+#: ../app/widgets/gimpcontrollerwheel.c:109
+#: ../app/widgets/gimpcontrollerwheel.c:112
+#: ../app/widgets/gimpcontrollerwheel.c:115
 msgid "Scroll Down"
 msgstr "નીચે સરકાવો"
 
-#: ../app/widgets/gimpcontrollerwheel.c:118
-msgid "Scroll Left (Shift + Control + Alt)"
-msgstr "ડાબે સરકાવો (Shift + Control + Alt)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:121
-msgid "Scroll Left (Control + Alt)"
-msgstr "ડાબે સરકાવો (Control + Alt)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:124
-msgid "Scroll Left (Shift + Alt)"
-msgstr "ડાબે સરકાવો (Shift + Alt)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:127
-msgid "Scroll Left (Shift + Control)"
-msgstr "ડાબે સરકાવો (Shift + Control)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:130
-msgid "Scroll Left (Alt)"
-msgstr "ડાબે સરકાવો (Alt)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:133
-msgid "Scroll Left (Control)"
-msgstr "ડાબે સરકાવો (Control)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:136
-msgid "Scroll Left (Shift)"
-msgstr "ડાબે સરકાવો (Shift)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:139
+#: ../app/widgets/gimpcontrollerwheel.c:119
+#: ../app/widgets/gimpcontrollerwheel.c:122
+#: ../app/widgets/gimpcontrollerwheel.c:125
+#: ../app/widgets/gimpcontrollerwheel.c:128
+#: ../app/widgets/gimpcontrollerwheel.c:131
+#: ../app/widgets/gimpcontrollerwheel.c:134
+#: ../app/widgets/gimpcontrollerwheel.c:137
+#: ../app/widgets/gimpcontrollerwheel.c:140
 msgid "Scroll Left"
 msgstr "ડાબે સરકાવો"
 
-#: ../app/widgets/gimpcontrollerwheel.c:143
-msgid "Scroll Right (Shift + Control + Alt)"
-msgstr "જમણે સરકાવો (Shift + Control + Alt)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:146
-msgid "Scroll Right (Control + Alt)"
-msgstr "જમણે સરકાવો (Control + Alt)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:149
-msgid "Scroll Right (Shift + Alt)"
-msgstr "જમણે સરકાવો (Shift + Alt)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:152
-msgid "Scroll Right (Shift + Control)"
-msgstr "જમણે સરકાવો (Shift + Control)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:155
-msgid "Scroll Right (Alt)"
-msgstr "જમણે સરકાવો (Alt)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:158
-msgid "Scroll Right (Control)"
-msgstr "જમણે સરકાવો (Control)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:161
-msgid "Scroll Right (Shift)"
-msgstr "જમણે સરકાવો (Shift)"
-
-#: ../app/widgets/gimpcontrollerwheel.c:164
+#: ../app/widgets/gimpcontrollerwheel.c:144
+#: ../app/widgets/gimpcontrollerwheel.c:147
+#: ../app/widgets/gimpcontrollerwheel.c:150
+#: ../app/widgets/gimpcontrollerwheel.c:153
+#: ../app/widgets/gimpcontrollerwheel.c:156
+#: ../app/widgets/gimpcontrollerwheel.c:159
+#: ../app/widgets/gimpcontrollerwheel.c:162
+#: ../app/widgets/gimpcontrollerwheel.c:165
 msgid "Scroll Right"
 msgstr "જમણે સરકાવો"
 
-#: ../app/widgets/gimpcontrollerwheel.c:206
+#: ../app/widgets/gimpcontrollerwheel.c:207
 msgid "Mouse Wheel"
 msgstr "માઉસ વ્હીલ"
 
-#: ../app/widgets/gimpcontrollerwheel.c:229
+#: ../app/widgets/gimpcontrollerwheel.c:250
 msgid "Mouse Wheel Events"
 msgstr "માઉસ વ્હીલ ઘટનાઓ"
 
@@ -10111,80 +10071,81 @@ msgstr "પાશ્વ ભાગ: %d, %d, %d"
 msgid "The given filename does not have any known file extension."
 msgstr "આપેલ ફાઈલનામને કોઈ જાણીતું ફાઈલ એક્સટેન્સન થી."
 
-#: ../app/widgets/gimpdock.c:342
+#: ../app/widgets/gimpdock.c:317
 msgid "Close all Tabs?"
 msgstr "શું બધી ટેબો બંધ કરવી છે?"
 
-#: ../app/widgets/gimpdock.c:348
+#: ../app/widgets/gimpdock.c:323
 msgid "Close all Tabs"
 msgstr "બધી ટેબો બંધ કરો"
 
-#: ../app/widgets/gimpdock.c:358
+#: ../app/widgets/gimpdock.c:333
 msgid "Close all tabs?"
 msgstr "બધી ટેબો બંધ કરવી છે?"
 
-#: ../app/widgets/gimpdock.c:360
+#: ../app/widgets/gimpdock.c:335
 #, c-format
 msgid ""
 "This window has %d tabs open. Closing the window will also close all its "
 "tabs."
 msgstr "આ વિન્ડોને %d ટેબો ખૂલેલી છે. વિન્ડો બંધ કરવાનું તેની બધી ટેબો પણ બંધ કરશે."
 
-#: ../app/widgets/gimpdock.c:695
-msgid "You can drop dockable dialogs here."
-msgstr "તમે ડોક કરી શકાય તેવા સંવાદો અંહિ મૂકી શકો છો."
-
 #: ../app/widgets/gimpdockable.c:195
 msgid "Configure this tab"
 msgstr "આ ટેબ રૂપરેખાંકિત કરો"
 
-#: ../app/widgets/gimperrorconsole.c:235 ../app/widgets/gimperrordialog.c:252
+#: ../app/widgets/gimpdockseparator.c:132
+#: ../app/widgets/gimpdockseparator.c:307
+msgid "You can drop dockable dialogs here."
+msgstr "તમે ડોક કરી શકાય તેવા સંવાદો અંહિ મૂકી શકો છો."
+
+#: ../app/widgets/gimperrorconsole.c:235 ../app/widgets/gimperrordialog.c:204
 #, c-format
 msgid "%s Message"
 msgstr "%s સંદેશો"
 
-#: ../app/widgets/gimperrordialog.c:229
+#: ../app/widgets/gimperrordialog.c:181
 msgid "Too many error messages!"
 msgstr "ઘણા બધા ભૂલ સંદેશાઓ!"
 
-#: ../app/widgets/gimperrordialog.c:230
+#: ../app/widgets/gimperrordialog.c:182
 msgid "Messages are redirected to stderr."
 msgstr "સંદેશાઓ stderr માં પુનઃદિશામાન થઈ ગયા છે."
 
-#: ../app/widgets/gimpfiledialog.c:324
+#: ../app/widgets/gimpfiledialog.c:334
 msgid "Automatically Detected"
 msgstr "આપોઆપ શોધાયેલ"
 
-#: ../app/widgets/gimpfiledialog.c:333
+#: ../app/widgets/gimpfiledialog.c:343
 msgid "By Extension"
 msgstr "એક્સટેન્સન અનુસાર"
 
-#: ../app/widgets/gimpfiledialog.c:469
+#: ../app/widgets/gimpfiledialog.c:479
 msgid "File Exists"
 msgstr "ફાઈલ અસ્તિત્વમાં છે"
 
-#: ../app/widgets/gimpfiledialog.c:474
+#: ../app/widgets/gimpfiledialog.c:484
 msgid "_Replace"
 msgstr "બદલો (_R)"
 
-#: ../app/widgets/gimpfiledialog.c:485
+#: ../app/widgets/gimpfiledialog.c:495
 #, c-format
 msgid "A file named '%s' already exists."
 msgstr "'%s' નામવાળી ફાઈલ પહેલાથી જ હાજર છે."
 
-#: ../app/widgets/gimpfiledialog.c:490
+#: ../app/widgets/gimpfiledialog.c:500
 msgid "Do you want to replace it with the image you are saving?"
 msgstr "શું તમે તેને જે ચિત્ર સંગ્રહી રહ્યા છો તેનાથી બદલવા માંગો છો?"
 
-#: ../app/widgets/gimpfiledialog.c:550
+#: ../app/widgets/gimpfiledialog.c:560
 msgid "All Files"
 msgstr "બધી ફાઈલો"
 
-#: ../app/widgets/gimpfiledialog.c:555
+#: ../app/widgets/gimpfiledialog.c:565
 msgid "All Images"
 msgstr "બધા ચિત્રો"
 
-#: ../app/widgets/gimpfiledialog.c:694
+#: ../app/widgets/gimpfiledialog.c:704
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "ફાઈલ પ્રકાર પસંદ કરો (%s) (_T)"
@@ -10577,21 +10538,21 @@ msgstr "પસંદિત ફોન્ટ વાપરો (_U)"
 #, c-format
 msgid ""
 "Click to update preview\n"
-"%s  Click to force update even if preview is up-to-date"
+"%s%sClick to force update even if preview is up-to-date"
 msgstr ""
 "પૂર્વદર્શન સુધારવા માટે ક્લિક કરો\n"
-"%s  સુધારા પર દબાણ કરવા માટે ક્લિક કરો પૂર્વદર્શન પરિપૂર્ણ હોય છતાં પણ"
+"%s%sપૂર્વદર્શન પરિપૂર્ણ હોય છતાં પણ સુધારા પર દબાણ કરવા માટે ક્લિક કરો"
 
-#: ../app/widgets/gimpthumbbox.c:421 ../app/widgets/gimpthumbbox.c:491
+#: ../app/widgets/gimpthumbbox.c:422 ../app/widgets/gimpthumbbox.c:492
 msgid "No selection"
 msgstr "કોઈ પસંદગી નથી"
 
-#: ../app/widgets/gimpthumbbox.c:619 ../app/widgets/gimpthumbbox.c:643
+#: ../app/widgets/gimpthumbbox.c:620 ../app/widgets/gimpthumbbox.c:644
 #, c-format
 msgid "Thumbnail %d of %d"
 msgstr "થમ્બનેઈલ %d એ %d નો"
 
-#: ../app/widgets/gimpthumbbox.c:756 ../app/widgets/gimpthumbbox.c:766
+#: ../app/widgets/gimpthumbbox.c:757 ../app/widgets/gimpthumbbox.c:767
 msgid "Creating Preview ..."
 msgstr "પૂર્વદર્શન બનાવી રહ્યા છીએ ..."
 
@@ -10640,11 +10601,13 @@ msgstr ""
 "સક્રિય ઢાળ.\n"
 "ઢાળ સંવાદ ખોલવા માટે ક્લિક કરો."
 
-#: ../app/widgets/gimptoolbox.c:830
+#: ../app/widgets/gimptoolbox.c:728
 msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Click to open the color selection dialog."
-msgstr "અગ્ર ભાગ અને પાશ્વ ભાગ રંગો.  કાળા અને સફેદ ચોરસો રંગો પુનઃસુયોજિત કરે છે.  તીરો રંગ બદલે છે. રંગ પસંદગી સંવાદ ખોલવા માટે ક્લિક કરો."
+msgstr ""
+"અગ્ર ભાગ અને પાશ્વ ભાગ રંગો.  કાળા અને સફેદ ચોરસો રંગો પુનઃસુયોજિત કરે છે.  તીરો રંગ બદલે "
+"છે. રંગ પસંદગી સંવાદ ખોલવા માટે ક્લિક કરો."
 
 #: ../app/widgets/gimptooloptionseditor.c:187
 msgid "Save options to..."
@@ -10671,7 +10634,7 @@ msgstr "મહેરબાની કરીને ખાતરી કરો ક�
 msgid "There was an error parsing the menu definition from %s: %s"
 msgstr "%s માંથી મેનુ વ્યાખ્યાનું પદચ્છેદન કરવામાં ભૂલ હતી: %s"
 
-#: ../app/widgets/gimpundoeditor.c:255
+#: ../app/widgets/gimpundoeditor.c:256
 msgid "[ Base Image ]"
 msgstr "[ આધાર ચિત્ર ]"
 
@@ -10687,35 +10650,27 @@ msgstr "ખાલી પાથ"
 msgid "Open the brush selection dialog"
 msgstr "બ્રશ પસંદગી સંવાદ ખોલો"
 
-#: ../app/widgets/gimpviewablebox.c:115
+#: ../app/widgets/gimpviewablebox.c:94
 msgid "Open the pattern selection dialog"
 msgstr "ભાત પસંદગી સંવાદ ખોલો"
 
-#: ../app/widgets/gimpviewablebox.c:155
+#: ../app/widgets/gimpviewablebox.c:120
 msgid "Open the gradient selection dialog"
 msgstr "ઢાળ પસંદગી સંવાદ ખોલો"
 
-#: ../app/widgets/gimpviewablebox.c:167
+#: ../app/widgets/gimpviewablebox.c:132
 msgid "Reverse"
 msgstr "ઊલટું"
 
-#: ../app/widgets/gimpviewablebox.c:210
+#: ../app/widgets/gimpviewablebox.c:168
 msgid "Open the palette selection dialog"
 msgstr "તકતી પસંદગી સંવાદ ખોલો"
 
-#: ../app/widgets/gimpviewablebox.c:250
+#: ../app/widgets/gimpviewablebox.c:187
 msgid "Open the font selection dialog"
 msgstr "ફોન્ટ પસંદગી સંવાદ ખોલો"
 
-#. The format string which is used to display modifier names
-#. *  <Shift>, <Ctrl> and <Alt>
-#.
-#: ../app/widgets/gimpwidgets-utils.c:392
-#, c-format
-msgid "<%s>"
-msgstr "<%s>"
-
-#: ../app/widgets/gimpwidgets-utils.c:797
+#: ../app/widgets/gimpwidgets-utils.c:820
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "અયોગ્ય UTF-8 માહિતી ફાઈલ '%s' માં."
