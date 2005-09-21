@@ -1929,9 +1929,12 @@ duptexture (void)
 static void
 rebuildlist (void)
 {
-  GtkListStore *list_store;
-  GtkTreeIter   iter;
-  gint          n;
+  GtkListStore     *list_store;
+  GtkTreeSelection *sel;
+  GtkTreeIter       iter;
+  gint              n;
+
+  sel = gtk_tree_view_get_selection (texturelist);
 
   for (n = 0; n < s.com.numtexture; n++)
     {
@@ -1957,6 +1960,10 @@ rebuildlist (void)
                           TEXTURE, &s.com.texture[n],
                           -1);
     }
+
+  if (gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter))
+    gtk_tree_selection_select_iter (sel, &iter);
+
   restartrender ();
 }
 
@@ -2492,8 +2499,10 @@ makewindow (void)
 {
   GtkListStore      *store;
   GtkTreeViewColumn *col;
+  GtkTreeSelection  *selection;
   GtkWidget  *window;
   GtkWidget  *main_hbox;
+  GtkWidget  *main_vbox;
   GtkWidget  *table;
   GtkWidget  *frame;
   GtkWidget  *scrolled;
@@ -2501,7 +2510,7 @@ makewindow (void)
   GtkWidget  *vbox;
   GtkWidget  *button;
   GtkWidget  *list;
-  GimpRGB     rgb;
+  GimpRGB     rgb = { 0, 0, 0, 0 };
 
   window = gimp_dialog_new (_("Sphere Designer"), PLUG_IN_BINARY,
                             NULL, 0,
@@ -2525,9 +2534,13 @@ makewindow (void)
                     G_CALLBACK (sphere_response),
                     NULL);
 
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (window)->vbox), main_vbox);
+  gtk_widget_show (main_vbox);
+
   main_hbox = gtk_hbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (window)->vbox), main_hbox);
+  gtk_box_pack_start (GTK_BOX (main_vbox), main_hbox, TRUE, TRUE, 0);
   gtk_widget_show (main_hbox);
 
   vbox = gtk_vbox_new (FALSE, 6);
@@ -2575,7 +2588,7 @@ makewindow (void)
                     window);
 
   vbox = gtk_vbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (main_hbox), vbox, FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (main_hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
   scrolled = gtk_scrolled_window_new (NULL, NULL);
@@ -2593,7 +2606,11 @@ makewindow (void)
 
   texturelist = GTK_TREE_VIEW (list);
 
-  g_signal_connect (gtk_tree_view_get_selection (texturelist), "changed",
+  selection = gtk_tree_view_get_selection (texturelist);
+
+  gtk_tree_selection_set_mode (selection, GTK_SELECTION_BROWSE);
+
+  g_signal_connect (selection, "changed",
                     G_CALLBACK (selectitem),
                     NULL);
 
@@ -2601,7 +2618,7 @@ makewindow (void)
   gtk_container_add (GTK_CONTAINER (scrolled), list);
   gtk_widget_show (list);
 
-  col = gtk_tree_view_column_new_with_attributes (_("Textures"),
+  col = gtk_tree_view_column_new_with_attributes (_("Layers"),
                                                   gtk_cell_renderer_text_new (),
                                                   "text", TYPE,
                                                   NULL);
@@ -2629,7 +2646,11 @@ makewindow (void)
                             G_CALLBACK (deltexture), NULL);
   gtk_widget_show (button);
 
-  frame = gimp_frame_new (_("Texture Properties"));
+  main_hbox = gtk_hbox_new (FALSE, 12);
+  gtk_box_pack_start (GTK_BOX (main_vbox), main_hbox, FALSE, FALSE, 0);
+  gtk_widget_show (main_hbox);
+
+  frame = gimp_frame_new (_("Properties"));
   gtk_box_pack_start (GTK_BOX (main_hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
@@ -2732,7 +2753,7 @@ makewindow (void)
                     G_CALLBACK (getscales),
                     NULL);
 
-  frame = gimp_frame_new (_("Texture Transformations"));
+  frame = gimp_frame_new (_("Transformations"));
   gtk_box_pack_start (GTK_BOX (main_hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 

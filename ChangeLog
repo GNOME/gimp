@@ -1,3 +1,9 @@
+2005-09-21  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/spheredesigner.c: more compact dialog layout,
+	renamed "Textures" to "Layers" and make sure that one is always
+	selected.
+
 2005-09-21  Michael Natterer  <mitch@gimp.org>
 
 	Separated the global buffer logic from the clipboard
