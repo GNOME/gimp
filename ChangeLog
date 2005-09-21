@@ -1,5 +1,10 @@
 2005-09-21  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/spheredesigner.c: update the preview from an
+	idle handler. Removed obsolete "Update Preview" button.
+
+2005-09-21  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/spheredesigner.c: more compact dialog layout,
 	renamed "Textures" to "Layers" and make sure that one is always
 	selected.
