@@ -1,3 +1,10 @@
+2005-09-22  DindinX  <dindinx@gimp.org>
+
+	* libgimpwidgets/gimpzoommodel.c: renamed the properties "value",
+	"minimum" and "maximum".
+
+	* libgimp/gimpzoompreview.c: modified accordingly.
+
 2005-09-22  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/print/print.c: canonicalize procedure name and parameters.

@@ -37,20 +37,20 @@
 enum
 {
   PROP_0,
-  PROP_ZOOM_FACTOR,
+  PROP_VALUE,
   PROP_STEP_SIZE,
-  PROP_MIN_FACTOR,
-  PROP_MAX_FACTOR
+  PROP_MINIMUM,
+  PROP_MAXIMUM
 };
 
 typedef struct _GimpZoomModelPrivate GimpZoomModelPrivate;
 
 struct _GimpZoomModelPrivate
 {
-  gdouble  zoom_factor;
+  gdouble  value;
   gdouble  step_size;
-  gdouble  min_factor;
-  gdouble  max_factor;
+  gdouble  minimum;
+  gdouble  maximum;
 };
 
 #define GIMP_ZOOM_MODEL_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), GIMP_TYPE_ZOOM_MODEL, GimpZoomModelPrivate))
@@ -74,31 +74,31 @@ gimp_zoom_model_class_init (GimpZoomModelClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->set_property  = gimp_zoom_model_set_property;
-  object_class->get_property  = gimp_zoom_model_get_property;
+  object_class->set_property = gimp_zoom_model_set_property;
+  object_class->get_property = gimp_zoom_model_get_property;
 
-  g_object_class_install_property (object_class, PROP_ZOOM_FACTOR,
-                                   g_param_spec_double ("zoom-factor",
-                                                        _("Zoom factor"), NULL,
+  g_object_class_install_property (object_class, PROP_VALUE,
+                                   g_param_spec_double ("value",
+                                                        "Value", NULL,
                                                         1.0 / 256.0, 256.0,
                                                         1.0,
                                                         G_PARAM_READWRITE|G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class, PROP_STEP_SIZE,
                                    g_param_spec_double ("step-size",
-                                                        _("Step size"), NULL,
+                                                        "Step size", NULL,
                                                         1.01, 10.0,
                                                         1.1,
                                                         G_PARAM_READWRITE|G_PARAM_CONSTRUCT));
 
-  g_object_class_install_property (object_class, PROP_MIN_FACTOR,
-                                   g_param_spec_double ("min-factor",
-                                                        _("Min factor"), NULL,
+  g_object_class_install_property (object_class, PROP_MINIMUM,
+                                   g_param_spec_double ("minimum",
+                                                        "Minimum", NULL,
                                                         1.0 / 256.0, 256.0,
                                                         1.0 / 256.0,
                                                         G_PARAM_READWRITE));
-  g_object_class_install_property (object_class, PROP_MAX_FACTOR,
-                                   g_param_spec_double ("max-factor",
-                                                        _("Max factor"), NULL,
+  g_object_class_install_property (object_class, PROP_MAXIMUM,
+                                   g_param_spec_double ("maximum",
+                                                        "Maximum", NULL,
                                                         1.0 / 256.0, 256.0,
                                                         256.0,
                                                         G_PARAM_READWRITE));
@@ -107,12 +107,12 @@ gimp_zoom_model_class_init (GimpZoomModelClass *klass)
 }
 
 static void
-gimp_zoom_model_init (GimpZoomModel *zoom_model)
+gimp_zoom_model_init (GimpZoomModel *model)
 {
-  GimpZoomModelPrivate *priv = GIMP_ZOOM_MODEL_GET_PRIVATE (zoom_model);
+  GimpZoomModelPrivate *priv = GIMP_ZOOM_MODEL_GET_PRIVATE (model);
 
-  priv->min_factor = 1.0 / 256.0;
-  priv->max_factor = 256.0;
+  priv->minimum = 1.0 / 256.0;
+  priv->maximum = 256.0;
 }
 
 static void
@@ -125,21 +125,21 @@ gimp_zoom_model_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_ZOOM_FACTOR:
-      priv->zoom_factor = g_value_get_double (value);
-      g_object_notify (object, "zoom-factor");
+    case PROP_VALUE:
+      priv->value = g_value_get_double (value);
+      g_object_notify (object, "value");
       break;
 
     case PROP_STEP_SIZE:
       priv->step_size = g_value_get_double (value);
       break;
 
-    case PROP_MIN_FACTOR:
-      priv->min_factor = MIN (g_value_get_double (value), priv->max_factor);
+    case PROP_MINIMUM:
+      priv->minimum = MIN (g_value_get_double (value), priv->maximum);
       break;
 
-    case PROP_MAX_FACTOR:
-      priv->max_factor = MAX (g_value_get_double (value), priv->min_factor);
+    case PROP_MAXIMUM:
+      priv->maximum = MAX (g_value_get_double (value), priv->minimum);
       break;
 
     default:
@@ -147,13 +147,10 @@ gimp_zoom_model_set_property (GObject      *object,
       break;
     }
 
-  if (priv->zoom_factor > priv->max_factor ||
-      priv->zoom_factor < priv->min_factor)
+  if (priv->value > priv->maximum || priv->value < priv->minimum)
     {
-      priv->zoom_factor = CLAMP (priv->zoom_factor,
-                                 priv->min_factor,
-                                 priv->max_factor);
-      g_object_notify (object, "zoom-factor");
+      priv->value = CLAMP (priv->value, priv->minimum, priv->maximum);
+      g_object_notify (object, "value");
     }
 }
 
@@ -167,20 +164,20 @@ gimp_zoom_model_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_ZOOM_FACTOR:
-      g_value_set_double (value, priv->zoom_factor);
+    case PROP_VALUE:
+      g_value_set_double (value, priv->value);
       break;
 
     case PROP_STEP_SIZE:
       g_value_set_double (value, priv->step_size);
       break;
 
-    case PROP_MIN_FACTOR:
-      g_value_set_double (value, priv->min_factor);
+    case PROP_MINIMUM:
+      g_value_set_double (value, priv->minimum);
       break;
 
-    case PROP_MAX_FACTOR:
-      g_value_set_double (value, priv->max_factor);
+    case PROP_MAXIMUM:
+      g_value_set_double (value, priv->maximum);
       break;
 
     default:
@@ -190,47 +187,47 @@ gimp_zoom_model_get_property (GObject    *object,
 }
 
 static void
-gimp_zoom_model_zoom_in (GimpZoomModel *zoom_model)
+gimp_zoom_model_zoom_in (GimpZoomModel *model)
 {
-  GimpZoomModelPrivate *priv = GIMP_ZOOM_MODEL_GET_PRIVATE (zoom_model);
+  GimpZoomModelPrivate *priv = GIMP_ZOOM_MODEL_GET_PRIVATE (model);
 
-  g_return_if_fail (GIMP_IS_ZOOM_MODEL (zoom_model));
+  g_return_if_fail (GIMP_IS_ZOOM_MODEL (model));
 
-  if (priv->zoom_factor < priv->max_factor);
+  if (priv->value < priv->maximum);
     {
-      priv->zoom_factor *= priv->step_size;
-      g_object_notify (G_OBJECT (zoom_model), "zoom-factor");
+      priv->value *= priv->step_size;
+      g_object_notify (G_OBJECT (model), "value");
     }
 }
 
 static void
-gimp_zoom_model_zoom_out (GimpZoomModel *zoom_model)
+gimp_zoom_model_zoom_out (GimpZoomModel *model)
 {
-  GimpZoomModelPrivate *priv = GIMP_ZOOM_MODEL_GET_PRIVATE (zoom_model);
+  GimpZoomModelPrivate *priv = GIMP_ZOOM_MODEL_GET_PRIVATE (model);
 
-  g_return_if_fail (GIMP_IS_ZOOM_MODEL (zoom_model));
+  g_return_if_fail (GIMP_IS_ZOOM_MODEL (model));
 
-  if (priv->zoom_factor > priv->min_factor)
+  if (priv->value > priv->minimum)
     {
-      priv->zoom_factor /= priv->step_size;
-      g_object_notify (G_OBJECT (zoom_model), "zoom-factor");
+      priv->value /= priv->step_size;
+      g_object_notify (G_OBJECT (model), "value");
     }
 }
 
 static void
-gimp_zoom_model_update_label (GimpZoomModel *zoom_model,
+gimp_zoom_model_update_label (GimpZoomModel *model,
                               GParamSpec    *pspec,
                               GtkLabel      *label)
 {
   gint                  numerator;
   gint                  denominator;
   gchar                *txt;
-  GimpZoomModelPrivate *priv  = GIMP_ZOOM_MODEL_GET_PRIVATE (zoom_model);
+  GimpZoomModelPrivate *priv  = GIMP_ZOOM_MODEL_GET_PRIVATE (model);
 
-  g_return_if_fail (GIMP_IS_ZOOM_MODEL (zoom_model));
+  g_return_if_fail (GIMP_IS_ZOOM_MODEL (model));
   g_return_if_fail (GTK_IS_LABEL (label));
 
-  gimp_zoom_model_get_fraction (priv->zoom_factor,
+  gimp_zoom_model_get_fraction (priv->value,
                                 &numerator,
                                 &denominator);
   txt = g_strdup_printf (_("zoom factor %d:%d"), numerator, denominator);
@@ -329,20 +326,20 @@ gimp_zoom_model_get_fraction (gdouble  zoom_factor,
 GimpZoomModel *
 gimp_zoom_model_new (gdouble step_size)
 {
-  GimpZoomModel *zoom_model;
+  GimpZoomModel *model;
 
-  zoom_model = g_object_new (GIMP_TYPE_ZOOM_MODEL,
-                             "step-size", step_size,
-                             "zoom-factor", 1.0,
-                             NULL);
-  return zoom_model;
+  model = g_object_new (GIMP_TYPE_ZOOM_MODEL,
+                        "step-size", step_size,
+                        "value", 1.0,
+                        NULL);
+  return model;
 }
 
 /**
  * gimp_zoom_widget_new:
  *
  * Creates a new widget to interact with the #GimpZoomModel.
- * @zoom_model:
+ * @model:
  * @widget:
  *
  * Return value: a new #GtkWidget.
@@ -350,7 +347,7 @@ gimp_zoom_model_new (gdouble step_size)
  * Since GIMP 2.4
  **/
 GtkWidget *
-gimp_zoom_widget_new (GimpZoomModel      *zoom_model,
+gimp_zoom_widget_new (GimpZoomModel      *model,
                       GimpZoomWidgetType  widget)
 {
   GtkWidget            *button;
@@ -359,9 +356,9 @@ gimp_zoom_widget_new (GimpZoomModel      *zoom_model,
   gint                  numerator;
   gint                  denominator;
   gchar                *txt;
-  GimpZoomModelPrivate *priv = GIMP_ZOOM_MODEL_GET_PRIVATE (zoom_model);
+  GimpZoomModelPrivate *priv = GIMP_ZOOM_MODEL_GET_PRIVATE (model);
 
-  g_return_val_if_fail (GIMP_IS_ZOOM_MODEL (zoom_model), NULL);
+  g_return_val_if_fail (GIMP_IS_ZOOM_MODEL (model), NULL);
 
   switch (widget)
     {
@@ -373,7 +370,7 @@ gimp_zoom_widget_new (GimpZoomModel      *zoom_model,
       gtk_widget_show (image);
       g_signal_connect_swapped (button, "clicked",
                                 G_CALLBACK (gimp_zoom_model_zoom_in),
-                                zoom_model);
+                                model);
       return button;
 
     case GIMP_ZOOM_OUT_BUTTON:
@@ -384,18 +381,18 @@ gimp_zoom_widget_new (GimpZoomModel      *zoom_model,
       gtk_widget_show (image);
       g_signal_connect_swapped (button, "clicked",
                                 G_CALLBACK (gimp_zoom_model_zoom_out),
-                                zoom_model);
+                                model);
       return button;
 
     case GIMP_ZOOM_LABEL:
-      gimp_zoom_model_get_fraction (priv->zoom_factor,
+      gimp_zoom_model_get_fraction (priv->value,
                                     &numerator,
                                     &denominator);
       txt = g_strdup_printf (_("zoom factor %d:%d"), numerator, denominator);
       label = gtk_label_new (txt);
       g_free (txt);
       gtk_misc_set_padding (GTK_MISC (label), 6, 6);
-      g_signal_connect (zoom_model, "notify::zoom-factor",
+      g_signal_connect (model, "notify::value",
                         G_CALLBACK (gimp_zoom_model_update_label),
                         label);
       return label;
@@ -404,36 +401,24 @@ gimp_zoom_widget_new (GimpZoomModel      *zoom_model,
 }
 
 gdouble
-gimp_zoom_model_get_factor (GimpZoomModel *zoom_model)
+gimp_zoom_model_get_factor (GimpZoomModel *model)
 {
-  GimpZoomModelPrivate *priv = GIMP_ZOOM_MODEL_GET_PRIVATE (zoom_model);
+  GimpZoomModelPrivate *priv = GIMP_ZOOM_MODEL_GET_PRIVATE (model);
 
-  g_return_val_if_fail (GIMP_IS_ZOOM_MODEL (zoom_model), 1.0);
+  g_return_val_if_fail (GIMP_IS_ZOOM_MODEL (model), 1.0);
 
-  return priv->zoom_factor;
+  return priv->value;
 }
 
 void
-gimp_zoom_model_set_range (GimpZoomModel *zoom_model,
+gimp_zoom_model_set_range (GimpZoomModel *model,
                            gdouble        min,
                            gdouble        max)
 {
-  GimpZoomModelPrivate *priv = GIMP_ZOOM_MODEL_GET_PRIVATE (zoom_model);
-
   g_return_if_fail (min < max);
   g_return_if_fail (min >= 1.0 / 256.0);
   g_return_if_fail (max <= 256.0);
 
-  priv->min_factor = min;
-  priv->max_factor = max;
-
-  if (priv->zoom_factor > priv->max_factor ||
-      priv->zoom_factor < priv->min_factor)
-    {
-      priv->zoom_factor = CLAMP (priv->zoom_factor,
-                                 priv->min_factor,
-                                 priv->max_factor);
-      g_object_notify (G_OBJECT (zoom_model), "zoom-factor");
-    }
+  g_object_set (model, "minimum", min, "maximum", max, NULL);
 }
 
