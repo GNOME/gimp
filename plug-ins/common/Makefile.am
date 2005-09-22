@@ -88,6 +88,7 @@ libexec_PROGRAMS = \
 	gih \
 	glasstile \
 	glob \
+	$(GNOMEPRINT) \
 	gqbist \
 	gradmap \
 	grid \
@@ -178,6 +179,7 @@ libexec_PROGRAMS = \
 
 EXTRA_PROGRAMS = \
 	aa \
+	gnomeprint \
 	mail \
 	mng \
 	png \
@@ -936,7 +938,7 @@ gifload_LDADD = \
 	$(libgimp)		\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
-	$(GTK_LIBS)		\
+	$(GLIB_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
@@ -978,6 +980,24 @@ glob_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GLIB_LIBS)		\
+	$(RT_LIBS)		\
+	$(INTLLIBS)
+
+gnomeprint_CFLAGS = $(GNOMEPRINT_CFLAGS)
+
+gnomeprint_SOURCES = \
+	gnomeprint.c
+
+gnomeprint_LDADD = \
+	$(libgimpui)		\
+	$(libgimpconfig)	\
+	$(libgimpwidgets)	\
+	$(libgimp)		\
+	$(libgimpcolor)		\
+	$(libgimpmath)		\
+	$(libgimpbase)		\
+	$(LIBGNOMEPRINT)		\
+	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 

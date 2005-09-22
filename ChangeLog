@@ -1,3 +1,15 @@
+2005-09-22  Sven Neumann  <sven@gimp.org>
+
+	* INSTALL
+	* configure.in: added a check for libgnomeprintui.
+
+	* plug-ins/common/gnomeprint.c: added a simple Print plug-in that
+	uses libgnomeprint and libgnomeprintui. Needs more work.
+
+	* plug-ins/common/plugin-defs.pl: added the new plug-in.
+
+	* plug-ins/common/Makefile.am: regenerated.
+
 2005-09-22  DindinX  <dindinx@gimp.org>
 
 	* libgimpwidgets/gimpzoommodel.c: renamed the properties "value",
