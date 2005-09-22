@@ -1252,7 +1252,8 @@ AC_ARG_WITH(gnomeprint,[  --without-gnomeprint    disable build of gnomeprint pl
 if test "x$with_gnomeprint" != xno; then
   PKG_CHECK_MODULES(GNOMEPRINT,
     libgnomeprintui-2.2 >= gnome_print_required_version,
-    have_gnomeprint=yes)
+    have_gnomeprint=yes,
+    AC_MSG_WARN([libgnomeprintui not found!]))
 fi
 
 AM_CONDITIONAL(HAVE_GNOMEPRINT, test x$have_gnomeprint = xyes)
