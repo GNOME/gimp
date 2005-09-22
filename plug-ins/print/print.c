@@ -45,6 +45,10 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
+#define PROC_NAME    "file-print-gimp"
+
+
 /*
  * Local functions...
  */
@@ -129,14 +133,14 @@ query (void)
     { GIMP_PDB_INT32,	"run_mode",	"Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,	"image",	"Input image" },
     { GIMP_PDB_DRAWABLE,	"drawable",	"Input drawable" },
-    { GIMP_PDB_STRING,	"output_to",	"Print command or filename (| to pipe to command)" },
+    { GIMP_PDB_STRING,	"output-to",	"Print command or filename (| to pipe to command)" },
     { GIMP_PDB_STRING,	"driver",	"Printer driver short name" },
-    { GIMP_PDB_STRING,	"ppd_file",	"PPD file" },
-    { GIMP_PDB_INT32,	"output_type",	"Output type (0 = gray, 1 = color)" },
+    { GIMP_PDB_STRING,	"ppd-file",	"PPD file" },
+    { GIMP_PDB_INT32,	"output-type",	"Output type (0 = gray, 1 = color)" },
     { GIMP_PDB_STRING,	"resolution",	"Resolution (\"300\", \"720\", etc.)" },
-    { GIMP_PDB_STRING,	"media_size",	"Media size (\"Letter\", \"A4\", etc.)" },
-    { GIMP_PDB_STRING,	"media_type",	"Media type (\"Plain\", \"Glossy\", etc.)" },
-    { GIMP_PDB_STRING,	"media_source",	"Media source (\"Tray1\", \"Manual\", etc.)" },
+    { GIMP_PDB_STRING,	"media-size",	"Media size (\"Letter\", \"A4\", etc.)" },
+    { GIMP_PDB_STRING,	"media-type",	"Media type (\"Plain\", \"Glossy\", etc.)" },
+    { GIMP_PDB_STRING,	"media-source",	"Media source (\"Tray1\", \"Manual\", etc.)" },
     { GIMP_PDB_FLOAT,	"brightness",	"Brightness (0-400%)" },
     { GIMP_PDB_FLOAT,	"scaling",	"Output scaling (0-100%, -PPI)" },
     { GIMP_PDB_INT32,	"orientation",	"Output orientation (-1 = auto, 0 = portrait, 1 = landscape)" },
@@ -148,11 +152,11 @@ query (void)
     { GIMP_PDB_FLOAT,	"magenta",	"Magenta level" },
     { GIMP_PDB_FLOAT,	"yellow",		"Yellow level" },
     { GIMP_PDB_INT32,	"linear",	"Linear output (0 = normal, 1 = linear)" },
-    { GIMP_PDB_INT32,	"image_type",	"Image type (0 = line art, 1 = solid tones, 2 = continuous tone, 3 = monochrome)"},
+    { GIMP_PDB_INT32,	"image-type",	"Image type (0 = line art, 1 = solid tones, 2 = continuous tone, 3 = monochrome)"},
     { GIMP_PDB_FLOAT,	"saturation",	"Saturation (0-1000%)" },
     { GIMP_PDB_FLOAT,	"density",	"Density (0-200%)" },
-    { GIMP_PDB_STRING,	"ink_type",	"Type of ink or cartridge" },
-    { GIMP_PDB_STRING,	"dither_algorithm", "Dither algorithm" },
+    { GIMP_PDB_STRING,	"ink-type",	"Type of ink or cartridge" },
+    { GIMP_PDB_STRING,	"dither-algorithm", "Dither algorithm" },
     { GIMP_PDB_INT32,	"unit",		"Unit 0=Inches 1=Metric" },
   };
 
@@ -162,7 +166,7 @@ query (void)
   static gchar *copy  = "Copyright 1997-2000 by Michael Sweet and Robert Krawitz";
   static gchar *types = "RGB*,GRAY*,INDEXED*";
 
-  gimp_install_procedure ("file_print_gimp",
+  gimp_install_procedure (PROC_NAME,
 			  blurb, help, auth, copy,
 			  PLUG_IN_VERSION,
 			  N_("_Print..."),
@@ -171,8 +175,8 @@ query (void)
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 
-  gimp_plugin_menu_register ("file_print_gimp", "<Image>/File/Send");
-  gimp_plugin_icon_register ("file_print_gimp",
+  gimp_plugin_menu_register (PROC_NAME, "<Image>/File/Send");
+  gimp_plugin_icon_register (PROC_NAME,
                              GIMP_ICON_TYPE_STOCK_ID, GTK_STOCK_PRINT);
 }
 
