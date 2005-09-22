@@ -1,3 +1,8 @@
+2005-09-22  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/psd.c
+	* plug-ins/common/psd_save.c: don't hardcode unit conversion factors.
+
 2005-09-21  Jay Cox  <jaycox@gimp.org>
 
 	* plug-ins/common/psd.c: Load the resolution properly when it is

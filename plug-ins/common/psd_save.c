@@ -784,12 +784,16 @@ save_resources (FILE *fd, gint32 image_id)
     GimpUnit g_unit;
     gshort psd_unit;
 
-    g_unit = gimp_image_get_unit(image_id);
-    gimp_image_get_resolution(image_id, &xres, &yres);
+    g_unit = gimp_image_get_unit (image_id);
+    gimp_image_get_resolution (image_id, &xres, &yres);
 
     if (g_unit == GIMP_UNIT_MM)
       {
-	xres /= 2.54; yres /= 2.54;
+        gdouble factor = gimp_unit_get_factor (g_unit) / 10.0;
+
+	xres /= factor;
+        yres /= factor;
+
 	psd_unit = PSD_UNIT_CM;
       }
     else
