@@ -1,3 +1,10 @@
+2005-09-21  Jay Cox  <jaycox@gimp.org>
+
+	* plug-ins/common/psd.c: Load the resolution properly when it is
+	specified in px/cm.
+	* plug-ins/common/psd_save.c: Save the resolution of the image in
+	the file.  Fixes bug #310426
+	
 2005-09-21  Sven Neumann  <sven@gimp.org>
 
 	* HACKING: minor update.

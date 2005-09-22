@@ -1843,6 +1843,11 @@ load_image (const gchar *name)
 
       if (psd_image.resolution_is_set)
 	{
+	  if (psd_image.resolution.widthUnit == 2)  /* px/cm */
+	  {
+	    psd_image.resolution.hRes *= 2.54;
+	    psd_image.resolution.vRes *= 2.54;
+	  }
 	  gimp_image_set_resolution(image_ID,
 				    psd_image.resolution.hRes / 65536.0,
 				    psd_image.resolution.vRes / 65536.0);
