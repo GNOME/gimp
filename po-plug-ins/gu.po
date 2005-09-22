@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.HEAD.gu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-21 02:52+0200\n"
-"PO-Revision-Date: 2005-09-21 09:49+0530\n"
+"POT-Creation-Date: 2005-09-22 02:54+0200\n"
+"PO-Revision-Date: 2005-09-22 10:16+0530\n"
 "Last-Translator: Ankit Patel <ankit644@yahoo.com>\n"
 "Language-Team: Gujarati <indianoss-gujarati@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -18,6 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9.1\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n\n"
+"\n"
 "\n"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:529
@@ -380,7 +381,7 @@ msgstr "ખંડો (_F)"
 #: ../plug-ins/common/png.c:1222 ../plug-ins/common/pnm.c:819
 #: ../plug-ins/common/postscript.c:1185 ../plug-ins/common/psd_save.c:1307
 #: ../plug-ins/common/raw.c:530 ../plug-ins/common/raw.c:557
-#: ../plug-ins/common/spheredesigner.c:2108 ../plug-ins/common/sunras.c:508
+#: ../plug-ins/common/spheredesigner.c:2119 ../plug-ins/common/sunras.c:508
 #: ../plug-ins/common/tga.c:1027 ../plug-ins/common/tiff.c:1921
 #: ../plug-ins/common/xbm.c:1003 ../plug-ins/common/xwd.c:567
 #: ../plug-ins/fits/fits.c:454 ../plug-ins/flame/flame.c:442
@@ -421,7 +422,7 @@ msgstr "ખંડ પરિમાણો સંગ્રહો"
 #: ../plug-ins/common/poppler.c:366 ../plug-ins/common/postscript.c:1011
 #: ../plug-ins/common/postscript.c:2978 ../plug-ins/common/psd.c:1823
 #: ../plug-ins/common/psp.c:1463 ../plug-ins/common/raw.c:242
-#: ../plug-ins/common/raw.c:647 ../plug-ins/common/spheredesigner.c:1998
+#: ../plug-ins/common/raw.c:647 ../plug-ins/common/spheredesigner.c:2009
 #: ../plug-ins/common/sunras.c:379 ../plug-ins/common/svg.c:313
 #: ../plug-ins/common/svg.c:708 ../plug-ins/common/tga.c:414
 #: ../plug-ins/common/tiff.c:530 ../plug-ins/common/xbm.c:720
@@ -577,7 +578,7 @@ msgstr "પ્રકાશ ૬"
 
 #. row labels
 #: ../plug-ins/Lighting/lighting_ui.c:388
-#: ../plug-ins/common/spheredesigner.c:2656
+#: ../plug-ins/common/spheredesigner.c:2677
 msgid "Type:"
 msgstr "પ્રકાર:"
 
@@ -1092,7 +1093,7 @@ msgid "Map Images to Box Faces"
 msgstr "બોક્સ ચહેરાઓ પ્રતિ ચિત્રો જોડો"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1178
-#: ../plug-ins/common/spheredesigner.c:2751
+#: ../plug-ins/common/spheredesigner.c:2772
 msgid "Scale X:"
 msgstr "માપ X:"
 
@@ -5820,6 +5821,7 @@ msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr "લાવવા માટેનાં પાનાંઓ (દા.ત.: ૧-૪ અથવા ૧,૩,૫-૭)"
 
 #: ../plug-ins/common/postscript.c:3121
+#: ../plug-ins/common/spheredesigner.c:2621
 msgid "Layers"
 msgstr "સ્તરો"
 
@@ -6813,7 +6815,7 @@ msgid "Spots"
 msgstr "ટપકાં"
 
 #: ../plug-ins/common/spheredesigner.c:1750
-#: ../plug-ins/common/spheredesigner.c:2647
+#: ../plug-ins/common/spheredesigner.c:2668
 msgid "Texture"
 msgstr "લખાણવાળુ"
 
@@ -6822,120 +6824,112 @@ msgid "Bumpmap"
 msgstr "બમ્પમેપ"
 
 #: ../plug-ins/common/spheredesigner.c:1754
-#: ../plug-ins/common/spheredesigner.c:2649
+#: ../plug-ins/common/spheredesigner.c:2670
 msgid "Light"
 msgstr "ઝાંખા"
 
-#: ../plug-ins/common/spheredesigner.c:2005
+#: ../plug-ins/common/spheredesigner.c:2016
 #, c-format
 msgid "File '%s' is not a valid save file."
 msgstr "ફાઈલ '%s' એ માન્ય સંગ્રહ ફાઈલ નથી."
 
-#: ../plug-ins/common/spheredesigner.c:2184
+#: ../plug-ins/common/spheredesigner.c:2195
 msgid "Open File"
 msgstr "ફાઈલ ખોલો"
 
-#: ../plug-ins/common/spheredesigner.c:2184
+#: ../plug-ins/common/spheredesigner.c:2195
 msgid "Save File"
 msgstr "ફાઈલ સંગ્રહો"
 
-#: ../plug-ins/common/spheredesigner.c:2506
+#: ../plug-ins/common/spheredesigner.c:2522
 msgid "Sphere Designer"
 msgstr "અર્ધગોળો દોરનાર"
 
-#: ../plug-ins/common/spheredesigner.c:2550
-msgid "Update _Preview"
-msgstr "પૂર્વદર્શન સુધારો (_P)"
+#: ../plug-ins/common/spheredesigner.c:2653
+msgid "Properties"
+msgstr "ગુણધર્મો"
 
-#: ../plug-ins/common/spheredesigner.c:2604
-msgid "Textures"
-msgstr "લખાણવાળું"
-
-#: ../plug-ins/common/spheredesigner.c:2632
-msgid "Texture Properties"
-msgstr "લખાણવાળાના ગુણધર્મો"
-
-#: ../plug-ins/common/spheredesigner.c:2648
+#: ../plug-ins/common/spheredesigner.c:2669
 msgid "Bump"
 msgstr "બમ્પ"
 
-#: ../plug-ins/common/spheredesigner.c:2676
+#: ../plug-ins/common/spheredesigner.c:2697
 msgid "Texture:"
 msgstr "લખાણવાળું:"
 
-#: ../plug-ins/common/spheredesigner.c:2681
+#: ../plug-ins/common/spheredesigner.c:2702
 msgid "Colors:"
 msgstr "રંગો:"
 
-#: ../plug-ins/common/spheredesigner.c:2684
-#: ../plug-ins/common/spheredesigner.c:2695
+#: ../plug-ins/common/spheredesigner.c:2705
+#: ../plug-ins/common/spheredesigner.c:2716
 msgid "Color Selection Dialog"
 msgstr "રંગ પસંદગી સંવાદ"
 
 #. Scale
-#: ../plug-ins/common/spheredesigner.c:2706
+#: ../plug-ins/common/spheredesigner.c:2727
 #: ../plug-ins/gimpressionist/paper.c:176
 #: ../plug-ins/ifscompose/ifscompose.c:555
 msgid "Scale:"
 msgstr "માપદંડ:"
 
-#: ../plug-ins/common/spheredesigner.c:2714
+#: ../plug-ins/common/spheredesigner.c:2735
 msgid "Turbulence:"
 msgstr "ટર્બ્યુલન્સ:"
 
-#: ../plug-ins/common/spheredesigner.c:2721
+#: ../plug-ins/common/spheredesigner.c:2742
 msgid "Amount:"
 msgstr "જથ્થો:"
 
-#: ../plug-ins/common/spheredesigner.c:2728
+#: ../plug-ins/common/spheredesigner.c:2749
 msgid "Exp.:"
 msgstr "Exp.:"
 
-#: ../plug-ins/common/spheredesigner.c:2735
-msgid "Texture Transformations"
-msgstr "લખાણવાળાનાં રૂપાંતરણો"
+#: ../plug-ins/common/spheredesigner.c:2756
+msgid "Transformations"
+msgstr "રૂપાંતરણો"
 
-#: ../plug-ins/common/spheredesigner.c:2758
+#: ../plug-ins/common/spheredesigner.c:2779
 msgid "Scale Y:"
 msgstr "માપદંડ Y:"
 
-#: ../plug-ins/common/spheredesigner.c:2764
+#: ../plug-ins/common/spheredesigner.c:2785
 msgid "Scale Z:"
 msgstr "માપદંડ Z:"
 
-#: ../plug-ins/common/spheredesigner.c:2771
+#: ../plug-ins/common/spheredesigner.c:2792
 msgid "Rotate X:"
 msgstr "X ફેરવો:"
 
-#: ../plug-ins/common/spheredesigner.c:2778
+#: ../plug-ins/common/spheredesigner.c:2799
 msgid "Rotate Y:"
 msgstr "Y ફેરવો:"
 
-#: ../plug-ins/common/spheredesigner.c:2785
+#: ../plug-ins/common/spheredesigner.c:2806
 msgid "Rotate Z:"
 msgstr "Z ફેરવો:"
 
-#: ../plug-ins/common/spheredesigner.c:2792
+#: ../plug-ins/common/spheredesigner.c:2813
 msgid "Position X:"
 msgstr "સ્થાન X:"
 
-#: ../plug-ins/common/spheredesigner.c:2799
+#: ../plug-ins/common/spheredesigner.c:2820
 msgid "Position Y:"
 msgstr "સ્થાન Y:"
 
-#: ../plug-ins/common/spheredesigner.c:2806
+#: ../plug-ins/common/spheredesigner.c:2827
 msgid "Position Z:"
 msgstr "સ્થાન Z:"
 
-#: ../plug-ins/common/spheredesigner.c:2954
+#: ../plug-ins/common/spheredesigner.c:2942
 msgid "Rendering Sphere..."
 msgstr "અર્ધગોળાને ઘાટ આપી રહ્યા છીએ..."
 
-#: ../plug-ins/common/spheredesigner.c:3011
+#: ../plug-ins/common/spheredesigner.c:2999
 msgid "Sphere _Designer..."
 msgstr "અર્ધગોળો દોરનાર (_D)..."
 
-#: ../plug-ins/common/spheredesigner.c:3067
+#: ../plug-ins/common/spheredesigner.c:3053
 msgid "Region selected for plug-in is empty"
 msgstr "પ્લગ-ઈન માટે પસંદ કરેલ વિસ્તાર ખાલી છે"
 
