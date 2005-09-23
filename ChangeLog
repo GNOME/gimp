@@ -1,3 +1,15 @@
+2005-09-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpactiongroup.c
+	(gimp_action_group_set_action_hide_empty): renamed from
+	set_action_important(). Set the "hide-if-empty" property so
+	showing an insensitive "Empty" item instead of hiding the submenu
+	works again (did this ever work?).
+
+	* app/actions/tool-options-actions.c (tool_options_actions_setup):
+	changed accordingly. Keeps the tool options submenus from
+	disappearing.
+
 2005-09-23  Michael Natterer  <mitch@gimp.org>
 
 	* menus/image-menu.xml.in: reordered submenus and placeholders

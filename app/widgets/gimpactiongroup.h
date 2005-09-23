@@ -190,7 +190,7 @@ void   gimp_action_group_set_action_color     (GimpActionGroup     *group,
 void   gimp_action_group_set_action_viewable  (GimpActionGroup     *group,
                                                const gchar         *action_name,
                                                GimpViewable        *viewable);
-void   gimp_action_group_set_action_important (GimpActionGroup     *group,
+void   gimp_action_group_set_action_hide_empty(GimpActionGroup     *group,
                                                const gchar         *action_name,
                                                gboolean             is_important);
 

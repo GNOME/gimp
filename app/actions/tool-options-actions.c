@@ -95,8 +95,8 @@ static GimpActionEntry tool_options_actions[] =
 
 #define SET_VISIBLE(action,condition) \
         gimp_action_group_set_action_visible (group, action, (condition) != 0)
-#define SET_IMPORTANT(action,condition) \
-        gimp_action_group_set_action_important (group, action, (condition) != 0)
+#define SET_HIDE_EMPTY(action,condition) \
+        gimp_action_group_set_action_hide_empty (group, action, (condition) != 0)
 
 void
 tool_options_actions_setup (GimpActionGroup *group)
@@ -105,9 +105,9 @@ tool_options_actions_setup (GimpActionGroup *group)
                                  tool_options_actions,
                                  G_N_ELEMENTS (tool_options_actions));
 
-  SET_IMPORTANT ("tool-options-restore-menu", TRUE);
-  SET_IMPORTANT ("tool-options-rename-menu",  TRUE);
-  SET_IMPORTANT ("tool-options-delete-menu",  TRUE);
+  SET_HIDE_EMPTY ("tool-options-restore-menu", FALSE);
+  SET_HIDE_EMPTY ("tool-options-rename-menu",  FALSE);
+  SET_HIDE_EMPTY ("tool-options-delete-menu",  FALSE);
 }
 
 void
@@ -212,4 +212,4 @@ tool_options_actions_update_presets (GimpActionGroup *group,
 }
 
 #undef SET_VISIBLE
-#undef SET_IMPORTANT
+#undef SET_HIDE_EMPTY

@@ -850,9 +850,9 @@ gimp_action_group_set_action_viewable (GimpActionGroup *group,
 }
 
 void
-gimp_action_group_set_action_important (GimpActionGroup *group,
-                                        const gchar     *action_name,
-                                        gboolean         is_important)
+gimp_action_group_set_action_hide_empty (GimpActionGroup *group,
+                                         const gchar     *action_name,
+                                         gboolean         hide_empty)
 {
   GtkAction *action;
 
@@ -863,11 +863,11 @@ gimp_action_group_set_action_important (GimpActionGroup *group,
 
   if (! action)
     {
-      g_warning ("%s: Unable to set \"is-important\" of action "
+      g_warning ("%s: Unable to set \"hide-if-empty\" of action "
                  "which doesn't exist: %s",
                  G_STRFUNC, action_name);
       return;
     }
 
-  g_object_set (action, "is-important", is_important ? TRUE : FALSE, NULL);
+  g_object_set (action, "hide-if-empty", hide_empty ? TRUE : FALSE, NULL);
 }
