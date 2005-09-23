@@ -660,10 +660,9 @@ make_preview (void)
   else
     {
       gtk_label_set_text (GTK_LABEL (preview_size), _("File size: unknown"));
+
       gimp_displays_flush ();
     }
-
-  gtk_widget_set_sensitive (preview_size, jsvals.preview);
 }
 
 void
@@ -702,6 +701,7 @@ save_dialog (void)
   GtkWidget     *toggle;
   GtkWidget     *spinbutton;
   GtkObject     *scale_data;
+  GtkWidget     *ebox;
   GtkWidget     *label;
   GtkWidget     *combo;
   GtkWidget     *text_view;
@@ -753,12 +753,19 @@ save_dialog (void)
                     G_CALLBACK (make_preview),
                     NULL);
 
+  ebox = gtk_event_box_new ();
+  gtk_box_pack_start (GTK_BOX (vbox), ebox, FALSE, FALSE, 0);
+  gtk_widget_show (ebox);
+
+  gimp_help_set_help_data (ebox,
+                           _("Enable preview to obtain the file size."), NULL);
+
   preview_size = gtk_label_new (_("File size: unknown"));
   gtk_misc_set_alignment (GTK_MISC (preview_size), 0.0, 0.5);
   gimp_label_set_attributes (GTK_LABEL (preview_size),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
-  gtk_box_pack_start (GTK_BOX (vbox), preview_size, FALSE, FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (ebox), preview_size);
   gtk_widget_show (preview_size);
 
   toggle =

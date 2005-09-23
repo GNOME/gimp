@@ -1,3 +1,8 @@
+2005-09-23  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/jpeg/jpeg-save.c: added a tooltip that explains how to
+	obtain the file size.
+
 2005-09-22  Sven Neumann  <sven@gimp.org>
 
 	* INSTALL
