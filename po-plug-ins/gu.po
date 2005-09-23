@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.HEAD.gu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-22 02:54+0200\n"
-"PO-Revision-Date: 2005-09-22 10:16+0530\n"
+"POT-Creation-Date: 2005-09-23 02:49+0200\n"
+"PO-Revision-Date: 2005-09-23 09:56+0530\n"
 "Last-Translator: Ankit Patel <ankit644@yahoo.com>\n"
 "Language-Team: Gujarati <indianoss-gujarati@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -18,6 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9.1\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n\n"
+"\n"
 "\n"
 "\n"
 
@@ -226,8 +227,7 @@ msgstr "રંગ ઘનતા"
 #. These values are translated for the GUI but also used internally
 #. to figure out which button the user pushed, etc.
 #. Not my design, please don't blame me -- njl
-#: ../plug-ins/FractalExplorer/Dialogs.c:940 ../plug-ins/common/compose.c:164
-#: ../plug-ins/common/compose.c:174 ../plug-ins/common/fp.c:227
+#: ../plug-ins/FractalExplorer/Dialogs.c:940 ../plug-ins/common/fp.c:227
 msgid "Red:"
 msgstr "લાલ:"
 
@@ -235,8 +235,7 @@ msgstr "લાલ:"
 msgid "Change the intensity of the red channel"
 msgstr "લાલ ચેનલી તીવ્રતા બદલો"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:950 ../plug-ins/common/compose.c:165
-#: ../plug-ins/common/compose.c:175 ../plug-ins/common/fp.c:228
+#: ../plug-ins/FractalExplorer/Dialogs.c:950 ../plug-ins/common/fp.c:228
 msgid "Green:"
 msgstr "લીલો:"
 
@@ -244,8 +243,7 @@ msgstr "લીલો:"
 msgid "Change the intensity of the green channel"
 msgstr "લીલી ચેનલની તીવ્રતા બદલો"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:960 ../plug-ins/common/compose.c:166
-#: ../plug-ins/common/compose.c:176 ../plug-ins/common/fp.c:229
+#: ../plug-ins/FractalExplorer/Dialogs.c:960 ../plug-ins/common/fp.c:229
 msgid "Blue:"
 msgstr "ભૂરો:"
 
@@ -379,7 +377,7 @@ msgstr "ખંડો (_F)"
 #: ../plug-ins/common/mng.c:953 ../plug-ins/common/pat.c:452
 #: ../plug-ins/common/pcx.c:590 ../plug-ins/common/pix.c:509
 #: ../plug-ins/common/png.c:1222 ../plug-ins/common/pnm.c:819
-#: ../plug-ins/common/postscript.c:1185 ../plug-ins/common/psd_save.c:1307
+#: ../plug-ins/common/postscript.c:1185 ../plug-ins/common/psd_save.c:1349
 #: ../plug-ins/common/raw.c:530 ../plug-ins/common/raw.c:557
 #: ../plug-ins/common/spheredesigner.c:2119 ../plug-ins/common/sunras.c:508
 #: ../plug-ins/common/tga.c:1027 ../plug-ins/common/tiff.c:1921
@@ -1230,12 +1228,12 @@ msgstr "બિનઆધારભૂત અથવા અયોગ્ય બીટ
 #.
 #: ../plug-ins/bmp/bmpread.c:488 ../plug-ins/common/CEL.c:352
 #: ../plug-ins/common/CEL.c:355 ../plug-ins/common/blinds.c:279
-#: ../plug-ins/common/compose.c:866 ../plug-ins/common/decompose.c:623
+#: ../plug-ins/common/compose.c:887 ../plug-ins/common/decompose.c:623
 #: ../plug-ins/common/dicom.c:448 ../plug-ins/common/film.c:944
 #: ../plug-ins/common/gifload.c:870 ../plug-ins/common/pcx.c:340
 #: ../plug-ins/common/pcx.c:346 ../plug-ins/common/pix.c:369
 #: ../plug-ins/common/png.c:853 ../plug-ins/common/pnm.c:527
-#: ../plug-ins/common/psd.c:2237 ../plug-ins/common/raw.c:688
+#: ../plug-ins/common/psd.c:2246 ../plug-ins/common/raw.c:688
 #: ../plug-ins/common/smooth_palette.c:257 ../plug-ins/common/sunras.c:919
 #: ../plug-ins/common/tga.c:927 ../plug-ins/common/tiff.c:887
 #: ../plug-ins/common/tile.c:266 ../plug-ins/common/xbm.c:867
@@ -1268,7 +1266,7 @@ msgstr "અનુક્રમિત ચિત્રો પર આલ્ફા �
 #: ../plug-ins/common/pat.c:458 ../plug-ins/common/pcx.c:552
 #: ../plug-ins/common/pix.c:515 ../plug-ins/common/png.c:1230
 #: ../plug-ins/common/pnm.c:824 ../plug-ins/common/postscript.c:1191
-#: ../plug-ins/common/psd_save.c:1313 ../plug-ins/common/sunras.c:514
+#: ../plug-ins/common/psd_save.c:1355 ../plug-ins/common/sunras.c:514
 #: ../plug-ins/common/tga.c:1033 ../plug-ins/common/tiff.c:1927
 #: ../plug-ins/common/xbm.c:1008 ../plug-ins/common/xpm.c:625
 #: ../plug-ins/common/xwd.c:572 ../plug-ins/fits/fits.c:460
@@ -1293,7 +1291,7 @@ msgstr "લાલ ચેનલ સુધારો (_M)"
 
 #: ../plug-ins/common/AlienMap2.c:140
 msgid "_Modify hue channel"
-msgstr "હ્યુ ચેનલ સુધારો (_M)"
+msgstr "વર્ણ ચેનલ સુધારો (_M)"
 
 #: ../plug-ins/common/AlienMap2.c:141
 msgid "Mo_dify green channel"
@@ -1317,7 +1315,7 @@ msgstr "લાલ આવૃત્તિ (_f):"
 
 #: ../plug-ins/common/AlienMap2.c:147
 msgid "Hue _frequency:"
-msgstr "હ્યુ આવૃત્તિ (_f):"
+msgstr "વર્ણ આવૃત્તિ (_f):"
 
 #: ../plug-ins/common/AlienMap2.c:148
 msgid "Green fr_equency:"
@@ -1341,7 +1339,7 @@ msgstr "લાલ _phaseshift:"
 
 #: ../plug-ins/common/AlienMap2.c:151
 msgid "Hue _phaseshift:"
-msgstr "હ્યુ _phaseshift:"
+msgstr "વર્ણ _phaseshift:"
 
 #: ../plug-ins/common/AlienMap2.c:152
 msgid "Green ph_aseshift:"
@@ -1606,7 +1604,7 @@ msgstr "રેન્ડમ સીડમાંથી (વહેંચાયેલ
 #: ../plug-ins/gimpressionist/orientation.c:162
 #: ../plug-ins/gimpressionist/size.c:165
 msgid "Hue"
-msgstr "હ્યુ"
+msgstr "વર્ણ"
 
 #: ../plug-ins/common/CML_explorer.c:301 ../plug-ins/common/CML_explorer.c:309
 #: ../plug-ins/common/decompose.c:148
@@ -1651,7 +1649,7 @@ msgstr "રેન્ડમ સીડ"
 #: ../plug-ins/common/CML_explorer.c:1295 ../plug-ins/common/fp.c:697
 #: ../plug-ins/common/lic.c:672
 msgid "_Hue"
-msgstr "હ્યુ (_H)"
+msgstr "વર્ણ (_H)"
 
 #: ../plug-ins/common/CML_explorer.c:1299
 msgid "Sat_uration"
@@ -2317,21 +2315,24 @@ msgstr "ચેનલ મિશ્રણ"
 msgid "O_utput channel:"
 msgstr "આઉટપુટ ચેનલ (_u):"
 
-#: ../plug-ins/common/channel_mixer.c:582 ../plug-ins/common/diffraction.c:501
+#: ../plug-ins/common/channel_mixer.c:582 ../plug-ins/common/compose.c:184
+#: ../plug-ins/common/compose.c:194 ../plug-ins/common/diffraction.c:501
 #: ../plug-ins/common/diffraction.c:539 ../plug-ins/common/diffraction.c:577
 #: ../plug-ins/common/exchange.c:399 ../plug-ins/common/noisify.c:530
 #: ../plug-ins/common/noisify.c:537
 msgid "_Red:"
 msgstr "લાલ (_R):"
 
-#: ../plug-ins/common/channel_mixer.c:600 ../plug-ins/common/diffraction.c:510
+#: ../plug-ins/common/channel_mixer.c:600 ../plug-ins/common/compose.c:185
+#: ../plug-ins/common/compose.c:195 ../plug-ins/common/diffraction.c:510
 #: ../plug-ins/common/diffraction.c:548 ../plug-ins/common/diffraction.c:586
 #: ../plug-ins/common/exchange.c:459 ../plug-ins/common/noisify.c:531
 #: ../plug-ins/common/noisify.c:538
 msgid "_Green:"
 msgstr "લીલું (_G):"
 
-#: ../plug-ins/common/channel_mixer.c:619 ../plug-ins/common/diffraction.c:519
+#: ../plug-ins/common/channel_mixer.c:619 ../plug-ins/common/compose.c:186
+#: ../plug-ins/common/compose.c:196 ../plug-ins/common/diffraction.c:519
 #: ../plug-ins/common/diffraction.c:557 ../plug-ins/common/diffraction.c:595
 #: ../plug-ins/common/exchange.c:520 ../plug-ins/common/noisify.c:532
 #: ../plug-ins/common/noisify.c:539
@@ -2435,127 +2436,122 @@ msgstr "આલ્ફ રંગ પકડનાર પ્રતિ રંગ"
 msgid "to alpha"
 msgstr "આલ્ફા પ્રતિ"
 
-#: ../plug-ins/common/compose.c:163 ../plug-ins/common/decompose.c:134
+#: ../plug-ins/common/compose.c:183 ../plug-ins/common/decompose.c:134
 #: ../plug-ins/common/raw.c:969
 msgid "RGB"
 msgstr "RGB"
 
-#: ../plug-ins/common/compose.c:173 ../plug-ins/common/decompose.c:139
+#: ../plug-ins/common/compose.c:193 ../plug-ins/common/decompose.c:139
 #: ../plug-ins/common/raw.c:970
 msgid "RGBA"
 msgstr "RGBA"
 
-#: ../plug-ins/common/compose.c:177
-msgid "Alpha:"
-msgstr "આલ્ફા:"
+#: ../plug-ins/common/compose.c:197 ../plug-ins/common/noisify.c:525
+#: ../plug-ins/common/noisify.c:540
+msgid "_Alpha:"
+msgstr "આલ્ફા (_A):"
 
-#: ../plug-ins/common/compose.c:183 ../plug-ins/common/decompose.c:144
+#: ../plug-ins/common/compose.c:203 ../plug-ins/common/decompose.c:144
 msgid "HSV"
 msgstr "HSV"
 
-#. Gray: Circle: Spinbutton 1
-#: ../plug-ins/common/compose.c:184 ../plug-ins/rcm/rcm_dialog.c:467
-msgid "Hue:"
-msgstr "હ્યુ:"
+#: ../plug-ins/common/compose.c:204
+msgid "_Hue:"
+msgstr "વર્ણ (_H):"
 
-#. Gray: Circle: Spinbutton 2
-#: ../plug-ins/common/compose.c:185 ../plug-ins/print/gimp_color_window.c:364
-#: ../plug-ins/rcm/rcm_dialog.c:494 ../plug-ins/rcm/rcm_dialog.c:556
-msgid "Saturation:"
-msgstr "સંતુલન:"
+#: ../plug-ins/common/compose.c:205 ../plug-ins/common/scatter_hsv.c:413
+msgid "_Saturation:"
+msgstr "સંતૃપ્તીકરણ (_S):"
 
-#: ../plug-ins/common/compose.c:186
-msgid "Value:"
-msgstr "કિંમત:"
+#: ../plug-ins/common/compose.c:206 ../plug-ins/common/scatter_hsv.c:425
+msgid "_Value:"
+msgstr "કિંમત (_V):"
 
-#: ../plug-ins/common/compose.c:190 ../plug-ins/common/decompose.c:150
+#: ../plug-ins/common/compose.c:210 ../plug-ins/common/decompose.c:150
 msgid "CMY"
 msgstr "CMY"
 
-#: ../plug-ins/common/compose.c:191 ../plug-ins/common/compose.c:198
-#: ../plug-ins/common/fp.c:230 ../plug-ins/print/gimp_color_window.c:307
-msgid "Cyan:"
-msgstr "મોરપીંછ:"
+#: ../plug-ins/common/compose.c:211 ../plug-ins/common/compose.c:218
+msgid "_Cyan:"
+msgstr "મોરપીંછ (_C):"
 
-#: ../plug-ins/common/compose.c:192 ../plug-ins/common/compose.c:199
-#: ../plug-ins/common/fp.c:232 ../plug-ins/print/gimp_color_window.c:326
-msgid "Magenta:"
-msgstr "જાંબલી:"
+#: ../plug-ins/common/compose.c:212 ../plug-ins/common/compose.c:219
+msgid "_Magenta:"
+msgstr "જાંબલી (_M):"
 
-#: ../plug-ins/common/compose.c:193 ../plug-ins/common/compose.c:200
-#: ../plug-ins/common/fp.c:231 ../plug-ins/print/gimp_color_window.c:345
-msgid "Yellow:"
-msgstr "પીળો:"
+#: ../plug-ins/common/compose.c:213 ../plug-ins/common/compose.c:220
+msgid "_Yellow:"
+msgstr "પીળો (_Y):"
 
-#: ../plug-ins/common/compose.c:197 ../plug-ins/common/decompose.c:156
+#: ../plug-ins/common/compose.c:217 ../plug-ins/common/decompose.c:156
 msgid "CMYK"
 msgstr "CMYK"
 
-#: ../plug-ins/common/compose.c:201
-msgid "Black:"
-msgstr "કાળો:"
+#: ../plug-ins/common/compose.c:221
+msgid "_Black:"
+msgstr "કાળો (_B):"
 
-#: ../plug-ins/common/compose.c:204 ../plug-ins/common/decompose.c:165
+#: ../plug-ins/common/compose.c:224 ../plug-ins/common/decompose.c:165
 msgid "LAB"
 msgstr "LAB"
 
-#: ../plug-ins/common/compose.c:212
-msgid "Luma_y470:"
-msgstr "Luma_y470:"
-
-#: ../plug-ins/common/compose.c:213
-msgid "Blueness_cb470:"
-msgstr "Blueness_cb470:"
-
-#: ../plug-ins/common/compose.c:214
-msgid "Redness_cr470:"
-msgstr "Redness_cr470:"
-
-#: ../plug-ins/common/compose.c:219
-msgid "Luma_y709:"
-msgstr "Luma_y709:"
-
-#: ../plug-ins/common/compose.c:220
-msgid "Blueness_cb709:"
-msgstr "Blueness_cb709:"
-
-#: ../plug-ins/common/compose.c:221
-msgid "Redness_cr709:"
-msgstr "Redness_cr709:"
-
-#: ../plug-ins/common/compose.c:226
-msgid "Luma_y470f:"
-msgstr "Luma_y470f:"
-
-#: ../plug-ins/common/compose.c:227
-msgid "Blueness_cb470f:"
-msgstr "Blueness_cb470f:"
-
-#: ../plug-ins/common/compose.c:228
-msgid "Redness_cr470f:"
-msgstr "Redness_cr470f:"
+#: ../plug-ins/common/compose.c:232
+msgid "_Luma y470:"
+msgstr "_Luma y470:"
 
 #: ../plug-ins/common/compose.c:233
-msgid "Luma_y709f:"
-msgstr "Luma_y709f:"
+msgid "_Blueness cb470:"
+msgstr "_Blueness cb470:"
 
 #: ../plug-ins/common/compose.c:234
-msgid "Blueness_cb709f:"
-msgstr "Blueness_cb709f:"
+msgid "_Redness cr470:"
+msgstr "_Redness cr470:"
 
-#: ../plug-ins/common/compose.c:235
-msgid "Redness_cr709f:"
-msgstr "Redness_cr709f:"
+#: ../plug-ins/common/compose.c:239
+msgid "_Luma y709:"
+msgstr "_Luma y709:"
 
-#: ../plug-ins/common/compose.c:355
+#: ../plug-ins/common/compose.c:240
+msgid "_Blueness cb709:"
+msgstr "_Blueness cb709:"
+
+#: ../plug-ins/common/compose.c:241
+msgid "_Redness cr709:"
+msgstr "_Redness cr709:"
+
+#: ../plug-ins/common/compose.c:246
+msgid "_Luma y470f:"
+msgstr "_Luma y470f:"
+
+#: ../plug-ins/common/compose.c:247
+msgid "_Blueness cb470f:"
+msgstr "_Blueness cb470f:"
+
+#: ../plug-ins/common/compose.c:248
+msgid "_Redness cr470f:"
+msgstr "_Redness cr470f:"
+
+#: ../plug-ins/common/compose.c:253
+msgid "_Luma y709f:"
+msgstr "_Luma y709f:"
+
+#: ../plug-ins/common/compose.c:254
+msgid "_Blueness cb709f:"
+msgstr "_Blueness cb709f:"
+
+#: ../plug-ins/common/compose.c:255
+msgid "_Redness cr709f:"
+msgstr "_Redness cr709f:"
+
+#: ../plug-ins/common/compose.c:376
 msgid "C_ompose..."
 msgstr "બનાવો (_o)..."
 
-#: ../plug-ins/common/compose.c:387
+#: ../plug-ins/common/compose.c:408
 msgid "R_ecompose"
 msgstr "ફરી બનાવો (_e)"
 
-#: ../plug-ins/common/compose.c:433
+#: ../plug-ins/common/compose.c:454
 msgid ""
 "You can only run 'Recompose' if the active image was originally produced by "
 "'Decompose'."
@@ -2563,69 +2559,70 @@ msgstr ""
 "તમે માત્ર 'ફરી બનાવો' ચલાવી શકો જો સક્રિય ચિત્ર મૂળમાં 'બનાવો નહિં' દ્વારા પેદા થયેલ "
 "હતું."
 
-#: ../plug-ins/common/compose.c:450
+#: ../plug-ins/common/compose.c:471
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
 msgstr "'decompose-data' પેરાસાઈટ સ્કેન કરવામાં ભૂલ: ખૂબ ઓછા સ્તરો મળ્યા"
 
-#: ../plug-ins/common/compose.c:480
+#: ../plug-ins/common/compose.c:501
 #, c-format
 msgid "Could not get layers for image %d"
 msgstr "ચિત્ર %d માટે સ્તરો મેળવી શક્યા નહિં"
 
-#: ../plug-ins/common/compose.c:549
+#: ../plug-ins/common/compose.c:570
 msgid "Composing..."
 msgstr "બનાવી રહ્યા છીએ..."
 
-#: ../plug-ins/common/compose.c:631 ../plug-ins/common/compose.c:1616
+#: ../plug-ins/common/compose.c:652 ../plug-ins/common/compose.c:1637
 msgid "At least one image is needed to compose"
 msgstr "ઓછામાં ઓછું એક ચિત્ર બનાવવા માટે જરૂરી છે"
 
-#: ../plug-ins/common/compose.c:642 ../plug-ins/common/compose.c:655
+#: ../plug-ins/common/compose.c:663 ../plug-ins/common/compose.c:676
 #, c-format
 msgid "Specified layer %d not found"
 msgstr "સ્પષ્ટ થયેલ સ્તર %d મળ્યું નહિં"
 
-#: ../plug-ins/common/compose.c:662
+#: ../plug-ins/common/compose.c:683
 msgid "Drawables have different size"
 msgstr "દોરી શકાય તેવાને અલગ માપ છે"
 
-#: ../plug-ins/common/compose.c:687
+#: ../plug-ins/common/compose.c:708
 msgid "Images have different size"
 msgstr "ચિત્રો પાસે અલગ માપ છે"
 
-#: ../plug-ins/common/compose.c:704
+#: ../plug-ins/common/compose.c:725
 msgid "Error in getting layer IDs"
 msgstr "સ્તર ID મેળવવામાં ભૂલ"
 
-#: ../plug-ins/common/compose.c:725
+#: ../plug-ins/common/compose.c:746
 #, c-format
 msgid "Image is not a gray image (bpp=%d)"
 msgstr "ચિત્ર એ રાખોડી ચિત્ર નથી (bpp=%d)"
 
-#: ../plug-ins/common/compose.c:752
+#: ../plug-ins/common/compose.c:773
 msgid "Unable to recompose, source layer not found"
 msgstr "ફરી બનાવવામાં અસમર્થ, સ્રોત સ્તર મળ્યું નહિં"
 
-#: ../plug-ins/common/compose.c:1382
+#: ../plug-ins/common/compose.c:1405
 msgid "Compose"
 msgstr "બનાવો"
 
-#. The left frame keeps the compose type toggles
-#: ../plug-ins/common/compose.c:1409
+#. Compose type combo
+#: ../plug-ins/common/compose.c:1432
 msgid "Compose Channels"
 msgstr "ચેનલો બનાવો"
 
-#. The right frame keeps the selection menues for images.
-#. Because the labels within this frame will change when a toggle
-#. in the left frame is changed, fill in the right part first.
-#. Otherwise it can occur, that a non-existing label might be changed.
-#: ../plug-ins/common/compose.c:1422
+#: ../plug-ins/common/compose.c:1442
+msgid "Color _Model:"
+msgstr "રંગ નમૂનો (_M):"
+
+#. Channel representation table
+#: ../plug-ins/common/compose.c:1467
 msgid "Channel Representations"
 msgstr "ચેનલ રજૂઆતો"
 
-#: ../plug-ins/common/compose.c:1476
-msgid "Mask value ..."
-msgstr "માસ્ક કિંમત ..."
+#: ../plug-ins/common/compose.c:1523
+msgid "Mask value"
+msgstr "માસ્ક કિંમત"
 
 #: ../plug-ins/common/compressor.c:158
 msgid "gzip archive"
@@ -2964,7 +2961,7 @@ msgstr "આલ્ફા"
 
 #: ../plug-ins/common/decompose.c:144 ../plug-ins/common/decompose.c:147
 msgid "hue"
-msgstr "હ્યુ"
+msgstr "વર્ણ"
 
 #: ../plug-ins/common/decompose.c:145 ../plug-ins/common/decompose.c:148
 msgid "saturation"
@@ -2980,7 +2977,7 @@ msgstr "મોરપીંછ"
 
 #: ../plug-ins/common/decompose.c:151 ../plug-ins/common/decompose.c:154
 msgid "magenta"
-msgstr "ગુલાબી"
+msgstr "જાંબલી"
 
 #: ../plug-ins/common/decompose.c:152 ../plug-ins/common/decompose.c:155
 msgid "yellow"
@@ -2992,7 +2989,7 @@ msgstr "મોરપીંછ"
 
 #: ../plug-ins/common/decompose.c:154
 msgid "Magenta"
-msgstr "ગુલાબી"
+msgstr "જાંબલી"
 
 #: ../plug-ins/common/decompose.c:155
 msgid "Yellow"
@@ -3004,7 +3001,7 @@ msgstr "મોરપીંછ (_k)"
 
 #: ../plug-ins/common/decompose.c:157 ../plug-ins/common/decompose.c:161
 msgid "magenta_k"
-msgstr "ગુલાબી (_k)"
+msgstr "જાંબલી (_k)"
 
 #: ../plug-ins/common/decompose.c:158 ../plug-ins/common/decompose.c:162
 msgid "yellow_k"
@@ -3020,7 +3017,7 @@ msgstr "મોરપીંછ (_K)"
 
 #: ../plug-ins/common/decompose.c:161
 msgid "Magenta_K"
-msgstr "ગુલાબી (_K)"
+msgstr "જાંબલી (_K)"
 
 #: ../plug-ins/common/decompose.c:162
 msgid "Yellow_K"
@@ -3651,6 +3648,18 @@ msgstr "ફ્લેર અસરનું કેન્દ્ર"
 msgid "_Show cursor"
 msgstr "કર્સર બતાવો (_S)"
 
+#: ../plug-ins/common/fp.c:230 ../plug-ins/print/gimp_color_window.c:307
+msgid "Cyan:"
+msgstr "મોરપીંછ:"
+
+#: ../plug-ins/common/fp.c:231 ../plug-ins/print/gimp_color_window.c:345
+msgid "Yellow:"
+msgstr "પીળો:"
+
+#: ../plug-ins/common/fp.c:232 ../plug-ins/print/gimp_color_window.c:326
+msgid "Magenta:"
+msgstr "જાંબલી:"
+
 #: ../plug-ins/common/fp.c:234
 msgid "Darker:"
 msgstr "ઘાટું:"
@@ -3693,7 +3702,7 @@ msgstr "મૂળ:"
 
 #: ../plug-ins/common/fp.c:574
 msgid "Hue Variations"
-msgstr "હ્યુ બદલાવો"
+msgstr "વર્ણ બદલાવો"
 
 #: ../plug-ins/common/fp.c:628
 msgid "Roughness"
@@ -3741,7 +3750,7 @@ msgstr "પિક્સેલો આના પ્રમાણે પસંદ �
 
 #: ../plug-ins/common/fp.c:830
 msgid "H_ue"
-msgstr "હ્યુ (_u)"
+msgstr "વર્ણ (_u)"
 
 #: ../plug-ins/common/fp.c:831
 msgid "Satu_ration"
@@ -5131,7 +5140,7 @@ msgstr "મોરપીંછ (_y)"
 
 #: ../plug-ins/common/newsprint.c:384
 msgid "Magen_ta"
-msgstr "ગુલાબી (_t)"
+msgstr "જાંબલી (_t)"
 
 #: ../plug-ins/common/newsprint.c:392
 msgid "_Yellow"
@@ -5272,10 +5281,6 @@ msgstr "સ્વતંત્ર RGB (_I)"
 msgid "_Gray:"
 msgstr "રાખોડી (_G):"
 
-#: ../plug-ins/common/noisify.c:525 ../plug-ins/common/noisify.c:540
-msgid "_Alpha:"
-msgstr "આલ્ફા (_A):"
-
 #: ../plug-ins/common/noisify.c:550
 #, c-format
 msgid "Channel #%d:"
@@ -5307,7 +5312,7 @@ msgstr "સ્પોક (_S):"
 
 #: ../plug-ins/common/nova.c:391
 msgid "R_andom hue:"
-msgstr "રેન્ડમ હ્યુ (_a):"
+msgstr "રેન્ડમ વર્ણ (_a):"
 
 #: ../plug-ins/common/nova.c:443
 msgid "Center of SuperNova"
@@ -5934,11 +5939,11 @@ msgstr "પૂર્વદર્શન માપ (_s):"
 msgid "Invalid UTF-8 string in PSD file"
 msgstr "અયોગ્ય UTF-8 શબ્દમાળા એ PSD ફાઈલમાં"
 
-#: ../plug-ins/common/psd_save.c:188
+#: ../plug-ins/common/psd_save.c:192
 msgid "Photoshop image"
 msgstr "ફોટોશોપ ચિત્ર"
 
-#: ../plug-ins/common/psd_save.c:1283
+#: ../plug-ins/common/psd_save.c:1325
 #, c-format
 msgid ""
 "Unable to save '%s'.  The psd file format does not support images that are "
@@ -5947,7 +5952,7 @@ msgstr ""
 "'%s' સંગ્રહવામાં અસમર્થ.  psd ફાઈલ બંધારણ ચિત્રોને આધાર આપતું નથી કે જેઓ ૩૦૦૦૦ પિક્સેલ "
 "પહોળાઈ અથવા ઊંચાઈ કરતાં વધુ હોય."
 
-#: ../plug-ins/common/psd_save.c:1295
+#: ../plug-ins/common/psd_save.c:1337
 #, c-format
 msgid ""
 "Unable to save '%s'.  The psd file format does not support images with "
@@ -6295,15 +6300,7 @@ msgstr "પકડ (_H):"
 
 #: ../plug-ins/common/scatter_hsv.c:401
 msgid "H_ue:"
-msgstr "હ્યુ (_u):"
-
-#: ../plug-ins/common/scatter_hsv.c:413
-msgid "_Saturation:"
-msgstr "સંતૃપ્તીકરણ (_S):"
-
-#: ../plug-ins/common/scatter_hsv.c:425
-msgid "_Value:"
-msgstr "કિંમત (_V):"
+msgstr "વર્ણ (_u):"
 
 #: ../plug-ins/common/screenshot.c:239
 msgid "_Screenshot..."
@@ -6715,11 +6712,11 @@ msgstr "સ્પાઈકની અપારદર્શકતા સંતુ�
 
 #: ../plug-ins/common/sparkle.c:468
 msgid "_Random hue:"
-msgstr "રેન્ડમ હ્યુ (_R):"
+msgstr "રેન્ડમ વર્ણ (_R):"
 
 #: ../plug-ins/common/sparkle.c:471
 msgid "Adjust the Value how much the Hue should be changed randomly"
-msgstr "કેટલી હ્યુ રેન્ડમ રીતે બદલાવી જોઈએ તે કિંમત સંતુલિત કરો"
+msgstr "કેટલી વર્ણ રેન્ડમ રીતે બદલાવી જોઈએ તે કિંમત સંતુલિત કરો"
 
 #: ../plug-ins/common/sparkle.c:482
 msgid "Rando_m saturation:"
@@ -8719,7 +8716,7 @@ msgstr "ફેરવવાનું (_t):"
 
 #: ../plug-ins/gflare/gflare.c:2713
 msgid "_Hue rotation:"
-msgstr "હ્યુ ફેરવવાનું (_H):"
+msgstr "વર્ણ ફેરવવાનું (_H):"
 
 #: ../plug-ins/gflare/gflare.c:2725
 msgid "Vector _angle:"
@@ -8855,7 +8852,7 @@ msgstr "ફેરવવાનું:"
 #: ../plug-ins/gflare/gflare.c:3548 ../plug-ins/gflare/gflare.c:3654
 #: ../plug-ins/gflare/gflare.c:3791
 msgid "Hue rotation:"
-msgstr "હ્યુ ફેરવવાનું:"
+msgstr "વર્ણ ફેરવવાનું:"
 
 #: ../plug-ins/gflare/gflare.c:3562
 msgid "G_low"
@@ -9171,7 +9168,7 @@ msgstr "સ્ટ્રોક \"વહેતો\" ભાતને અનુસ�
 
 #: ../plug-ins/gimpressionist/orientation.c:163
 msgid "The hue of the region determines the direction of the stroke"
-msgstr "વિસ્તારની હ્યુ સ્ટ્રોકની દિશા નક્કી કરે છે"
+msgstr "વિસ્તારની વર્ણ સ્ટ્રોકની દિશા નક્કી કરે છે"
 
 #: ../plug-ins/gimpressionist/orientation.c:166
 #: ../plug-ins/gimpressionist/size.c:169
@@ -9465,7 +9462,7 @@ msgstr "કેન્દ્રથી અંતરને સ્ટ્રોકન�
 
 #: ../plug-ins/gimpressionist/size.c:166
 msgid "The hue of the region determines the size of the stroke"
-msgstr "વિસ્તારનું હ્યુ સ્ટ્રોકનું માપ નક્કી કરે છે"
+msgstr "વિસ્તારનું વર્ણ સ્ટ્રોકનું માપ નક્કી કરે છે"
 
 #: ../plug-ins/gimpressionist/size.c:170
 msgid "The brush-size that matches the original image the closest is selected"
@@ -9616,7 +9613,7 @@ msgstr "IFS ખંડ: લક્ષ્ય"
 
 #: ../plug-ins/ifscompose/ifscompose.c:657
 msgid "Scale hue by:"
-msgstr "હ્યુ આના દ્વારા ખેંચો:"
+msgstr "વર્ણ આના દ્વારા ખેંચો:"
 
 #: ../plug-ins/ifscompose/ifscompose.c:672
 msgid "Scale value by:"
@@ -10775,11 +10772,17 @@ msgstr "છાપનની મોરપીંછ સંતુલન સુયો
 
 #: ../plug-ins/print/gimp_color_window.c:334
 msgid "Adjust the magenta balance of the print"
-msgstr "છાપનની ગુલાબી સંતુલન સુયોજિત કરો"
+msgstr "છાપનની જાંબલી સંતુલન સુયોજિત કરો"
 
 #: ../plug-ins/print/gimp_color_window.c:353
 msgid "Adjust the yellow balance of the print"
 msgstr "છાપનની પીળુ સંતુલન સુયોજિત કરો"
+
+#. Gray: Circle: Spinbutton 2
+#: ../plug-ins/print/gimp_color_window.c:364 ../plug-ins/rcm/rcm_dialog.c:494
+#: ../plug-ins/rcm/rcm_dialog.c:556
+msgid "Saturation:"
+msgstr "સંતુલન:"
 
 #: ../plug-ins/print/gimp_color_window.c:372
 msgid ""
@@ -11336,12 +11339,12 @@ msgstr "રંગ સંતુલન, તેજસ્વીતા, વિરો�
 msgid "Print to File"
 msgstr "ફાઈલમાં છાપો"
 
-#: ../plug-ins/print/print.c:168
+#: ../plug-ins/print/print.c:172
 msgid "_Print..."
 msgstr "છાપો (_P)..."
 
-#: ../plug-ins/print/print.c:698 ../plug-ins/print/print.c:699
-#: ../plug-ins/print/print.c:789 ../plug-ins/print/print.c:1128
+#: ../plug-ins/print/print.c:702 ../plug-ins/print/print.c:703
+#: ../plug-ins/print/print.c:793 ../plug-ins/print/print.c:1132
 msgid "File"
 msgstr "ફાઇલ"
 
@@ -11376,6 +11379,11 @@ msgstr "વર્તમાન સ્તર"
 #: ../plug-ins/rcm/rcm_dialog.c:174
 msgid "Context"
 msgstr "સંદર્ભ"
+
+#. Gray: Circle: Spinbutton 1
+#: ../plug-ins/rcm/rcm_dialog.c:467
+msgid "Hue:"
+msgstr "વર્ણ:"
 
 #. * Gray: Operation-Mode *
 #: ../plug-ins/rcm/rcm_dialog.c:514
