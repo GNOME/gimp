@@ -178,6 +178,7 @@ print_image (gint32    image_ID,
                   done = print_job_do (job, drawable_ID);
 
                 preview = gnome_print_job_preview_new (job,
+                                                       (const guchar *)
                                                        _("Print Preview"));
                 gtk_window_set_transient_for (GTK_WINDOW (preview),
                                               GTK_WINDOW (dialog));
@@ -332,8 +333,7 @@ print_fit_size (GnomePrintConfig *config,
                 gdouble          *trans_y)
 {
   const GnomePrintUnit *base;
-  GnomePrintUnit       *unit;
-
+  const GnomePrintUnit *unit;
   gdouble  paper_width;
   gdouble  paper_height;
   gdouble  margin_bottom;
@@ -341,39 +341,44 @@ print_fit_size (GnomePrintConfig *config,
   gdouble  margin_left;
   gdouble  margin_top;
 
+
   base = gnome_print_unit_get_identity (GNOME_PRINT_UNIT_DIMENSIONLESS);
 
-  gnome_print_config_get_length (config, GNOME_PRINT_KEY_PAPER_WIDTH,
+  gnome_print_config_get_length (config,
+                                 (const guchar *) GNOME_PRINT_KEY_PAPER_WIDTH,
                                  &paper_width, &unit);
   gnome_print_convert_distance (&paper_width, unit, base);
 
-  gnome_print_config_get_length (config, GNOME_PRINT_KEY_PAPER_HEIGHT,
+  gnome_print_config_get_length (config,
+                                 (const guchar *) GNOME_PRINT_KEY_PAPER_HEIGHT,
                                  &paper_height, &unit);
   gnome_print_convert_distance (&paper_height, unit, base);
 
-  gnome_print_config_get_length (config, GNOME_PRINT_KEY_PAPER_MARGIN_BOTTOM,
+  gnome_print_config_get_length (config,
+                                 (const guchar *) GNOME_PRINT_KEY_PAPER_MARGIN_BOTTOM,
                                  &margin_bottom, &unit);
   gnome_print_convert_distance (&margin_bottom, unit, base);
 
-  gnome_print_config_get_length (config, GNOME_PRINT_KEY_PAPER_MARGIN_TOP,
+  gnome_print_config_get_length (config,
+                                 (const guchar *) GNOME_PRINT_KEY_PAPER_MARGIN_TOP,
                                  &margin_top, &unit);
   gnome_print_convert_distance (&margin_top, unit, base);
 
-  gnome_print_config_get_length (config, GNOME_PRINT_KEY_PAPER_MARGIN_LEFT,
+  gnome_print_config_get_length (config,
+                                 (const guchar *) GNOME_PRINT_KEY_PAPER_MARGIN_LEFT,
                                  &margin_left, &unit);
   gnome_print_convert_distance (&margin_left, unit, base);
 
-  gnome_print_config_get_length (config, GNOME_PRINT_KEY_PAPER_MARGIN_RIGHT,
+  gnome_print_config_get_length (config,
+                                 (const guchar *) GNOME_PRINT_KEY_PAPER_MARGIN_RIGHT,
                                  &margin_right, &unit);
   gnome_print_convert_distance (&margin_right, unit, base);
 
-#if 0
-  g_printerr ("margins: %g %g %g %g\n",
-              margin_left, margin_bottom, margin_right, margin_top);
-#endif
+  paper_width -= margin_left + margin_right;
+  paper_height -= margin_top + margin_left;
 
-  *scale_x = paper_width - margin_left - margin_right;
-  *scale_y = paper_height - margin_top - margin_bottom;
+  *scale_x = paper_width;
+  *scale_y = paper_height;
   *trans_x = margin_left;
   *trans_y = margin_bottom;
 }
