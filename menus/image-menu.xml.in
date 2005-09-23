@@ -438,21 +438,21 @@
       <menuitem action="tools-curves" />
       <menuitem action="tools-posterize" />
       <separator />
-      <menuitem action="drawable-desaturate" />
-      <placeholder name="Invert">
-        <menuitem action="drawable-invert" />
-      </placeholder>
-      <menu action="colors-auto-menu" name="Auto">
-        <menuitem action="drawable-equalize" />
-        <menuitem action="drawable-levels-stretch" />
-      </menu>
-      <separator />
       <placeholder name="Info">
         <menuitem action="dialogs-histogram" />
       </placeholder>
       <separator />
-      <menu action="colors-map-menu" name="Map" />
+      <menu action="colors-auto-menu" name="Auto">
+        <menuitem action="drawable-equalize" />
+        <menuitem action="drawable-levels-stretch" />
+      </menu>
       <menu action="colors-components-menu" name="Components" />
+      <menu action="colors-map-menu" name="Map" />
+      <separator />
+      <menuitem action="drawable-desaturate" />
+      <placeholder name="Invert">
+        <menuitem action="drawable-invert" />
+      </placeholder>
       <separator />
     </menu>
 
