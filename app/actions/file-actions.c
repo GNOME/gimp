@@ -54,6 +54,9 @@ static void   file_actions_last_opened_reorder (GimpContainer   *container,
                                                 GimpImagefile   *unused1,
                                                 gint             unused2,
                                                 GimpActionGroup *group);
+static void   file_actions_close_all_update    (GimpContainer   *container,
+                                                GimpObject      *unused,
+                                                GimpActionGroup *group);
 
 
 static GimpActionEntry file_actions[] =
@@ -184,6 +187,15 @@ file_actions_setup (GimpActionGroup *group)
                            group, 0);
 
   file_actions_last_opened_update (group->gimp->documents, NULL, group);
+
+  g_signal_connect_object (group->gimp->displays, "add",
+                           G_CALLBACK (file_actions_close_all_update),
+                           group, 0);
+  g_signal_connect_object (group->gimp->displays, "remove",
+                           G_CALLBACK (file_actions_close_all_update),
+                           group, 0);
+
+  file_actions_close_all_update (group->gimp->displays, NULL, group);
 }
 
 void
@@ -281,4 +293,15 @@ file_actions_last_opened_reorder (GimpContainer   *container,
                                   GimpActionGroup *group)
 {
   file_actions_last_opened_update (container, unused1, group);
+}
+
+static void
+file_actions_close_all_update (GimpContainer   *container,
+                               GimpObject      *unused,
+                               GimpActionGroup *group)
+{
+  gint n_displays = gimp_container_num_children (container);
+
+  gimp_action_group_set_action_sensitive (group, "file-close-all",
+                                          n_displays > 0);
 }

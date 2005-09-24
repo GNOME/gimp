@@ -1,5 +1,10 @@
 2005-09-24  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/file-actions.c: set "Close all" insensitive when
+	there are no displays.
+
+2005-09-24  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/view-actions.c
 	* app/actions/view-commands.[ch]: de-uglify callback names for
 	"new" and "close".
