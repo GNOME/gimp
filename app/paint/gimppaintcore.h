@@ -62,7 +62,6 @@ struct _GimpPaintCore
   TempBuf     *orig_buf;         /*  the unmodified drawable pixels      */
   TempBuf     *orig_proj_buf;    /*  the unmodified projection pixels    */
   TempBuf     *canvas_buf;       /*  the buffer to paint pixels to       */
-
 };
 
 struct _GimpPaintCoreClass
@@ -106,79 +105,79 @@ struct _GimpPaintCoreClass
 };
 
 
-GType     gimp_paint_core_get_type       (void) G_GNUC_CONST;
+GType     gimp_paint_core_get_type                  (void) G_GNUC_CONST;
 
-void      gimp_paint_core_paint          (GimpPaintCore      *core,
-                                          GimpDrawable       *drawable,
-                                          GimpPaintOptions   *paint_options,
-                                          GimpPaintState      state,
-                                          guint32             time);
+void      gimp_paint_core_paint                     (GimpPaintCore    *core,
+                                                     GimpDrawable     *drawable,
+                                                     GimpPaintOptions *paint_options,
+                                                     GimpPaintState    state,
+                                                     guint32           time);
 
-gboolean  gimp_paint_core_start          (GimpPaintCore      *core,
-                                          GimpDrawable       *drawable,
-                                          GimpPaintOptions   *paint_options,
-                                          GimpCoords         *coords);
-void      gimp_paint_core_finish         (GimpPaintCore      *core,
-                                          GimpDrawable       *drawable);
-void      gimp_paint_core_cancel         (GimpPaintCore      *core,
-                                          GimpDrawable       *drawable);
-void      gimp_paint_core_cleanup        (GimpPaintCore      *core);
+gboolean  gimp_paint_core_start                     (GimpPaintCore    *core,
+                                                     GimpDrawable     *drawable,
+                                                     GimpPaintOptions *paint_options,
+                                                     GimpCoords       *coords);
+void      gimp_paint_core_finish                    (GimpPaintCore    *core,
+                                                     GimpDrawable     *drawable);
+void      gimp_paint_core_cancel                    (GimpPaintCore    *core,
+                                                     GimpDrawable     *drawable);
+void      gimp_paint_core_cleanup                   (GimpPaintCore    *core);
 
-void      gimp_paint_core_interpolate    (GimpPaintCore      *core,
-                                          GimpDrawable       *drawable,
-                                          GimpPaintOptions   *paint_options,
-                                          guint32             time);
+void      gimp_paint_core_interpolate               (GimpPaintCore    *core,
+                                                     GimpDrawable     *drawable,
+                                                     GimpPaintOptions *paint_options,
+                                                     guint32           time);
 
 
 /*  protected functions  */
 
-TempBuf * gimp_paint_core_get_paint_area (GimpPaintCore      *core,
-                                          GimpDrawable       *drawable,
-                                          GimpPaintOptions   *options);
-TempBuf * gimp_paint_core_get_orig_image (GimpPaintCore      *core,
-                                          GimpDrawable       *drawable,
-                                          gint                x1,
-                                          gint                y1,
-                                          gint                x2,
-                                          gint                y2);
-TempBuf * gimp_paint_core_get_orig_proj  (GimpPaintCore      *core,
-                                          GimpPickable       *pickable,
-                                          gint                x1,
-                                          gint                y1,
-                                          gint                x2,
-                                          gint                y2);
+TempBuf * gimp_paint_core_get_paint_area            (GimpPaintCore    *core,
+                                                     GimpDrawable     *drawable,
+                                                     GimpPaintOptions *options);
+TempBuf * gimp_paint_core_get_orig_image            (GimpPaintCore    *core,
+                                                     GimpDrawable     *drawable,
+                                                     gint              x1,
+                                                     gint              y1,
+                                                     gint              x2,
+                                                     gint              y2);
+TempBuf * gimp_paint_core_get_orig_proj             (GimpPaintCore    *core,
+                                                     GimpPickable     *pickable,
+                                                     gint              x1,
+                                                     gint              y1,
+                                                     gint              x2,
+                                                     gint              y2);
 
-void      gimp_paint_core_paste    (GimpPaintCore            *core,
-                                    PixelRegion              *paint_maskPR,
-                                    GimpDrawable             *drawable,
-                                    gdouble	              paint_opacity,
-                                    gdouble	              image_opacity,
-                                    GimpLayerModeEffects      paint_mode,
-                                    GimpPaintApplicationMode  mode);
-void      gimp_paint_core_replace  (GimpPaintCore            *core,
-                                    PixelRegion              *paint_maskPR,
-                                    GimpDrawable             *drawable,
-                                    gdouble	              paint_opacity,
-                                    gdouble                   image_opacity,
-                                    GimpPaintApplicationMode  mode);
+void      gimp_paint_core_paste             (GimpPaintCore            *core,
+                                             PixelRegion              *paint_maskPR,
+                                             GimpDrawable             *drawable,
+                                             gdouble	               paint_opacity,
+                                             gdouble	               image_opacity,
+                                             GimpLayerModeEffects      paint_mode,
+                                             GimpPaintApplicationMode  mode);
+void      gimp_paint_core_replace           (GimpPaintCore            *core,
+                                             PixelRegion              *paint_maskPR,
+                                             GimpDrawable             *drawable,
+                                             gdouble	               paint_opacity,
+                                             gdouble                   image_opacity,
+                                             GimpPaintApplicationMode  mode);
 
-void    gimp_paint_core_validate_undo_tiles       (GimpPaintCore *core,
-                                                   GimpDrawable  *drawable,
-                                                   gint           x,
-                                                   gint           y,
-                                                   gint           w,
-                                                   gint           h);
-void    gimp_paint_core_validate_saved_proj_tiles (GimpPaintCore *core,
-                                                   GimpPickable  *pickable,
-                                                   gint           x,
-                                                   gint           y,
-                                                   gint           w,
-                                                   gint           h);
-void    gimp_paint_core_validate_canvas_tiles     (GimpPaintCore *core,
-                                                   gint           x,
-                                                   gint           y,
-                                                   gint           w,
-                                                   gint           h);
+void      gimp_paint_core_validate_undo_tiles       (GimpPaintCore    *core,
+                                                     GimpDrawable     *drawable,
+                                                     gint              x,
+                                                     gint              y,
+                                                     gint              w,
+                                                     gint              h);
+void      gimp_paint_core_validate_saved_proj_tiles (GimpPaintCore    *core,
+                                                     GimpPickable     *pickable,
+                                                     gint              x,
+                                                     gint              y,
+                                                     gint              w,
+                                                     gint              h);
+void      gimp_paint_core_validate_canvas_tiles     (GimpPaintCore    *core,
+                                                     gint              x,
+                                                     gint              y,
+                                                     gint              w,
+                                                     gint              h);
 
 
 #endif  /*  __GIMP_PAINT_CORE_H__  */

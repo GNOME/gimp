@@ -1,5 +1,11 @@
 2005-09-24  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint/gimppaintcore.h
+	* app/tools/gimpimagemaptool.c
+	* tools/test-clipboard.c: indentation fixes.
+
+2005-09-24  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpactiongroup.c
 	(gimp_action_group_set_action_hide_empty): renamed from
 	set_action_important(). Set the "hide-if-empty" property so

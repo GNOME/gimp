@@ -357,8 +357,8 @@ test_clipboard_store (GtkClipboard *clipboard,
 
 static gboolean
 test_clipboard_paste (GtkClipboard *clipboard,
-                     const gchar  *target,
-                     const gchar  *filename)
+                      const gchar  *target,
+                      const gchar  *filename)
 {
   GtkSelectionData *data;
 
