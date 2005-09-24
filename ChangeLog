@@ -1,5 +1,11 @@
 2005-09-24  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_scale_dialog): set "activates-default" on all
+	spinbuttons.
+
+2005-09-24  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/common/compose.c: fixed some brokenness caused by my
 	last "cleanup". Should work as before now.
 
@@ -60,7 +66,7 @@
 2005-09-23  Michael Natterer  <mitch@gimp.org>
 
 	* menus/image-menu.xml.in: reordered submenus and placeholders
-	so stuff not grouped that randomly any longer.
+	so stuff is not grouped that randomly any longer.
 
 	* plug-ins/script-fu/scripts/hsv-graph.scm: move it to the "Info"
 	placeholder so it is next to histogram and ccanalyze.
