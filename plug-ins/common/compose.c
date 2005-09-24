@@ -168,7 +168,8 @@ typedef struct
   const gchar  *channel_name[MAX_COMPOSE_IMAGES];
   const gchar  *channel_icon[MAX_COMPOSE_IMAGES];
   const gchar  *filename;      /*  Name of new image                        */
-                               /*  Compose functon                          */
+
+  /*  Compose functon  */
   void  (* compose_fun) (guchar **src,
 			 gint    *incr_src,
 			 gint     numpix,
@@ -190,6 +191,7 @@ static COMPOSE_DSC compose_dsc[] =
       GIMP_STOCK_CHANNEL_BLUE,
       NULL },
     "rgb-compose",  compose_rgb },
+
   { N_("RGBA"), 4,
     { N_("_Red:"),
       N_("_Green:"),
@@ -200,20 +202,23 @@ static COMPOSE_DSC compose_dsc[] =
       GIMP_STOCK_CHANNEL_BLUE,
       GIMP_STOCK_CHANNEL_ALPHA },
     "rgba-compose",  compose_rgba },
-  { N_("HSV"),  3,
+
+  { N_("HSV"), 3,
     { N_("_Hue:"),
       N_("_Saturation:"),
       N_("_Value:"),
       NULL },
     { NULL, NULL, NULL, NULL },
     "hsv-compose",  compose_hsv },
-  { N_("CMY"),  3,
+
+  { N_("CMY"), 3,
     { N_("_Cyan:"),
       N_("_Magenta:"),
       N_("_Yellow:"),
       NULL },
     { NULL, NULL, NULL, NULL },
     "cmy-compose",  compose_cmy },
+
   { N_("CMYK"), 4,
     { N_("_Cyan:"),
       N_("_Magenta:"),
@@ -221,6 +226,7 @@ static COMPOSE_DSC compose_dsc[] =
       N_("_Black:") },
     { NULL, NULL, NULL, NULL },
     "cmyk-compose", compose_cmyk },
+
   { N_("LAB"), 3,
     { "_L:",
       "_A:",
@@ -228,28 +234,32 @@ static COMPOSE_DSC compose_dsc[] =
       NULL },
     { NULL, NULL, NULL, NULL },
     "lab-compose", compose_lab },
-  { "YCbCr ITU R470", 3,
+
+  { "YCbCr_ITU_R470", 3,
     { N_("_Luma y470:"),
       N_("_Blueness cb470:"),
       N_("_Redness cr470:"),
       NULL },
     { NULL, NULL, NULL, NULL },
     "ycbcr470-compose",  compose_ycbcr470 },
-  { "YCbCr ITU R709", 3,
+
+  { "YCbCr_ITU_R709", 3,
     { N_("_Luma y709:"),
       N_("_Blueness cb709:"),
       N_("_Redness cr709:"),
       NULL },
     { NULL, NULL, NULL, NULL },
     "ycbcr709-compose", compose_ycbcr709 },
-  { "YCbCr ITU R470 256", 3,
+
+  { "YCbCr_ITU_R470_256", 3,
     { N_("_Luma y470f:"),
       N_("_Blueness cb470f:"),
       N_("_Redness cr470f:"),
       NULL },
     { NULL, NULL, NULL, NULL },
     "ycbcr470F-compose",  compose_ycbcr470f },
-  { "YCbCr ITU R709 256", 3,
+
+  { "YCbCr_ITU_R709_256", 3,
     { N_("_Luma y709f:"),
       N_("_Blueness cb709f:"),
       N_("_Redness cr709f:"),
@@ -280,7 +290,7 @@ typedef struct
 
   ComposeInput  selected[MAX_COMPOSE_IMAGES];             /* Image Ids or mask values from menus */
 
-  gint          compose_type;                             /* Compose type */
+  gint          compose_idx;                              /* Compose type */
 } ComposeInterface;
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -546,11 +556,13 @@ run (const gchar      *name,
                           status = GIMP_PDB_CALLING_ERROR;
                           break;
                         }
-                      composevals.inputs[i].is_ID = FALSE;
+                      composevals.inputs[i].is_ID    = FALSE;
                       composevals.inputs[i].comp.val = param[7 + i].data.d_int8;
                     }
                   else
-                    composevals.inputs[i].is_ID = TRUE;
+                    {
+                      composevals.inputs[i].is_ID = TRUE;
+                    }
                 }
             }
           break;
@@ -677,8 +689,8 @@ compose (const gchar  *compose_type,
                   return -1;
                 }
 
-              if ((width != (gint)gimp_drawable_width (inputs[j].comp.ID)) ||
-                  (height != (gint)gimp_drawable_height (inputs[j].comp.ID)))
+              if ((width  != gimp_drawable_width  (inputs[j].comp.ID)) ||
+                  (height != gimp_drawable_height (inputs[j].comp.ID)))
                 {
                   g_message (_("Drawables have different size"));
                   return -1;
@@ -695,7 +707,7 @@ compose (const gchar  *compose_type,
     }
   else    /* Compose by image ID */
     {
-      width  = gimp_image_width (inputs[first_ID].comp.ID);
+      width  = gimp_image_width  (inputs[first_ID].comp.ID);
       height = gimp_image_height (inputs[first_ID].comp.ID);
 
       for (j = first_ID + 1; j < num_images; j++)
@@ -784,7 +796,6 @@ compose (const gchar  *compose_type,
                            drawable_dst->height,
                            FALSE, FALSE);
       image_ID_dst = gimp_drawable_get_image (layer_ID_dst);
-
     }
   else
     {
@@ -1377,21 +1388,18 @@ compose_dialog (const gchar *compose_type,
   gint32       *layer_list;
   gint          nlayers;
   gint          j;
-  gint          compose_idx;
   gboolean      run;
 
   /* Check default compose type */
-  composeint.compose_type = 0;
+  composeint.compose_idx = 0;
   for (j = 0; j < G_N_ELEMENTS (compose_dsc); j++)
     {
       if (g_ascii_strcasecmp (compose_type, compose_dsc[j].compose_type) == 0)
         {
-          composeint.compose_type = j;
+          composeint.compose_idx = j;
           break;
         }
     }
-
-  compose_idx = composeint.compose_type;
 
   /* Save original image width/height */
   composeint.width  = gimp_drawable_width (drawable_ID);
@@ -1439,7 +1447,7 @@ compose_dialog (const gchar *compose_type,
 
   size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
-  label = gtk_label_new_with_mnemonic (_("Color _Model:"));
+  label = gtk_label_new_with_mnemonic (_("Color _model:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
@@ -1450,12 +1458,18 @@ compose_dialog (const gchar *compose_type,
   combo = gimp_int_combo_box_new (NULL, 0);
   for (j = 0; j < G_N_ELEMENTS (compose_dsc); j++)
     {
+      gchar *label = g_strdup (gettext (compose_dsc[j].compose_type));
+      gchar *l;
+
+      for (l = label; *l; l++)
+        if (*l == '-' || *l == '_')
+          *l = ' ';
+
       gimp_int_combo_box_append (GIMP_INT_COMBO_BOX (combo),
-                                 GIMP_INT_STORE_LABEL,
-                                 gettext (compose_dsc[j].compose_type),
-                                 GIMP_INT_STORE_VALUE,
-                                 j,
+                                 GIMP_INT_STORE_LABEL, label,
+                                 GIMP_INT_STORE_VALUE, j,
                                  -1);
+      g_free (label);
     }
   gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
   gtk_widget_show (combo);
@@ -1504,7 +1518,7 @@ compose_dialog (const gchar *compose_type,
       gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
       gtk_widget_show (label);
 
-      if (nlayers >= compose_dsc[compose_idx].num_images)
+      if (nlayers >= compose_dsc[composeint.compose_idx].num_images)
         composeint.selected[j].comp.ID = layer_list[nlayers - (j + 1)];
       else
         composeint.selected[j].comp.ID = drawable_ID;
@@ -1557,7 +1571,7 @@ compose_dialog (const gchar *compose_type,
 
   /* Calls the combo callback and sets icons, labels and sensitivity */
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
-                              composeint.compose_type,
+                              composeint.compose_idx,
                               G_CALLBACK (type_combo_callback),
                               NULL);
 
@@ -1581,7 +1595,8 @@ compose_dialog (const gchar *compose_type,
             composevals.inputs[j].comp.val = composeint.selected[j].comp.val;
         }
 
-      strcpy (composevals.compose_type, compose_dsc[compose_idx].compose_type);
+      strcpy (composevals.compose_type,
+              compose_dsc[composeint.compose_idx].compose_type);
     }
 
   return run;
@@ -1613,7 +1628,7 @@ check_response (GtkWidget *dialog,
         gint     nb = 0;
         gboolean has_image = FALSE;
 
-        nb = compose_dsc[composeint.compose_type].num_images;
+        nb = compose_dsc[composeint.compose_idx].num_images;
 
         for (i = 0; i < nb; i++)
           {
@@ -1687,14 +1702,14 @@ static void
 type_combo_callback (GimpIntComboBox *combo,
                      gpointer         data)
 {
-  if (gimp_int_combo_box_get_active (combo, &composeint.compose_type))
+  if (gimp_int_combo_box_get_active (combo, &composeint.compose_idx))
     {
       const gchar *text;
       gboolean     combo4;
       gboolean     scale4;
       gint         compose_idx, j;
 
-      compose_idx = composeint.compose_type;
+      compose_idx = composeint.compose_idx;
 
       for (j = 0; j < MAX_COMPOSE_IMAGES; j++)
         {

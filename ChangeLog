@@ -1,3 +1,10 @@
+2005-09-24  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/compose.c: fixed some brokenness caused by my
+	last "cleanup". Should work as before now.
+
+	* plug-ins/common/decompose.c: cleaned up GUI and code.
+
 2005-09-24  DindinX  <dindinx@gimp.org>
 
 	* app/widgets/widgets-enums.h: Moved the GimpZoomType enum from
