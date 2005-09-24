@@ -1,3 +1,8 @@
+2005-09-24  DindinX  <dindinx@gimp.org>
+
+	* app/app-sections.txt: removed	gimp_display_shell_scale_zoom_step and
+	gimp_display_shell_scale_get_fraction.
+
 2005-09-20  Sven Neumann  <sven@gimp.org>
 
 	* app/app-docs.sgml: 

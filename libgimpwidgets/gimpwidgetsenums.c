@@ -178,7 +178,6 @@ gimp_zoom_widget_type_get_type (void)
   {
     { GIMP_ZOOM_IN_BUTTON, "GIMP_ZOOM_IN_BUTTON", "in-button" },
     { GIMP_ZOOM_OUT_BUTTON, "GIMP_ZOOM_OUT_BUTTON", "out-button" },
-    { GIMP_ZOOM_LABEL, "GIMP_ZOOM_LABEL", "label" },
     { 0, NULL, NULL }
   };
 
@@ -186,7 +185,6 @@ gimp_zoom_widget_type_get_type (void)
   {
     { GIMP_ZOOM_IN_BUTTON, "GIMP_ZOOM_IN_BUTTON", NULL },
     { GIMP_ZOOM_OUT_BUTTON, "GIMP_ZOOM_OUT_BUTTON", NULL },
-    { GIMP_ZOOM_LABEL, "GIMP_ZOOM_LABEL", NULL },
     { 0, NULL, NULL }
   };
 

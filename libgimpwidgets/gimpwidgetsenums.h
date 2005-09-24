@@ -97,8 +97,7 @@ GType gimp_zoom_widget_type_get_type (void) G_GNUC_CONST;
 typedef enum
 {
   GIMP_ZOOM_IN_BUTTON,
-  GIMP_ZOOM_OUT_BUTTON,
-  GIMP_ZOOM_LABEL
+  GIMP_ZOOM_OUT_BUTTON
 } GimpZoomWidgetType;
 
 #define GIMP_TYPE_ZOOM_TYPE (gimp_zoom_type_get_type ())

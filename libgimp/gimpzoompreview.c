@@ -120,7 +120,8 @@ gimp_zoom_preview_init (GimpZoomPreview *preview)
   gtk_widget_show (button);
 
   /* label */
-  label = gimp_zoom_widget_new (priv->zoom, GIMP_ZOOM_LABEL);
+  label = gimp_prop_label_new (G_OBJECT (priv->zoom), "fraction");
+  gtk_misc_set_padding (GTK_MISC (label), 6, 6);
   gtk_box_pack_start (GTK_BOX (button_bar), label,
                       FALSE, FALSE, 0);
   gtk_widget_show (label);

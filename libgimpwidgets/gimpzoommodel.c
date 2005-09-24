@@ -39,7 +39,9 @@ enum
   PROP_0,
   PROP_VALUE,
   PROP_MINIMUM,
-  PROP_MAXIMUM
+  PROP_MAXIMUM,
+  PROP_FRACTION,
+  PROP_PERCENTAGE
 };
 
 typedef struct _GimpZoomModelPrivate GimpZoomModelPrivate;
@@ -95,6 +97,17 @@ gimp_zoom_model_class_init (GimpZoomModelClass *klass)
                                                         256.0,
                                                         G_PARAM_READWRITE));
 
+  g_object_class_install_property (object_class, PROP_FRACTION,
+                                   g_param_spec_string ("fraction",
+                                                        "Fraction", NULL,
+                                                        "1:1",
+                                                        G_PARAM_READABLE));
+  g_object_class_install_property (object_class, PROP_PERCENTAGE,
+                                   g_param_spec_string ("percentage",
+                                                        "Percentage", NULL,
+                                                        "100%",
+                                                        G_PARAM_READABLE));
+
   g_type_class_add_private (object_class, sizeof (GimpZoomModelPrivate));
 }
 
@@ -120,6 +133,8 @@ gimp_zoom_model_set_property (GObject      *object,
     case PROP_VALUE:
       priv->value = g_value_get_double (value);
       g_object_notify (object, "value");
+      g_object_notify (object, "fraction");
+      g_object_notify (object, "percentage");
       break;
 
     case PROP_MINIMUM:
@@ -139,6 +154,8 @@ gimp_zoom_model_set_property (GObject      *object,
     {
       priv->value = CLAMP (priv->value, priv->minimum, priv->maximum);
       g_object_notify (object, "value");
+      g_object_notify (object, "fraction");
+      g_object_notify (object, "percentage");
     }
 }
 
@@ -149,6 +166,9 @@ gimp_zoom_model_get_property (GObject    *object,
                               GParamSpec *pspec)
 {
   GimpZoomModelPrivate *priv  = GIMP_ZOOM_MODEL_GET_PRIVATE (object);
+  gint                  numerator;
+  gint                  denominator;
+  gchar                *tmp;
 
   switch (property_id)
     {
@@ -162,6 +182,19 @@ gimp_zoom_model_get_property (GObject    *object,
 
     case PROP_MAXIMUM:
       g_value_set_double (value, priv->maximum);
+      break;
+
+    case PROP_FRACTION:
+      gimp_zoom_model_get_fraction (priv->value, &numerator, &denominator);
+      tmp = g_strdup_printf (_("%d:%d"), numerator, denominator);
+      g_value_set_string (value, tmp);
+      g_free (tmp);
+      break;
+
+    case PROP_PERCENTAGE:
+      tmp = g_strdup_printf (_("%d%%"), (gint)(priv->value * 100.0));
+      g_value_set_string (value, tmp);
+      g_free (tmp);
       break;
 
     default:
@@ -182,6 +215,8 @@ gimp_zoom_model_zoom_in (GimpZoomModel *model)
       priv->value = gimp_zoom_model_zoom_step (GIMP_ZOOM_IN,
                                                priv->value);
       g_object_notify (G_OBJECT (model), "value");
+      g_object_notify (G_OBJECT (model), "fraction");
+      g_object_notify (G_OBJECT (model), "percentage");
     }
 }
 
@@ -197,28 +232,9 @@ gimp_zoom_model_zoom_out (GimpZoomModel *model)
       priv->value = gimp_zoom_model_zoom_step (GIMP_ZOOM_OUT,
                                                priv->value);
       g_object_notify (G_OBJECT (model), "value");
+      g_object_notify (G_OBJECT (model), "fraction");
+      g_object_notify (G_OBJECT (model), "percentage");
     }
-}
-
-static void
-gimp_zoom_model_update_label (GimpZoomModel *model,
-                              GParamSpec    *pspec,
-                              GtkLabel      *label)
-{
-  gint                  numerator;
-  gint                  denominator;
-  gchar                *txt;
-  GimpZoomModelPrivate *priv  = GIMP_ZOOM_MODEL_GET_PRIVATE (model);
-
-  g_return_if_fail (GIMP_IS_ZOOM_MODEL (model));
-  g_return_if_fail (GTK_IS_LABEL (label));
-
-  gimp_zoom_model_get_fraction (priv->value,
-                                &numerator,
-                                &denominator);
-  txt = g_strdup_printf (_("zoom factor %d:%d"), numerator, denominator);
-  gtk_label_set_text (label, txt);
-  g_free (txt);
 }
 
 void
@@ -404,11 +420,6 @@ gimp_zoom_widget_new (GimpZoomModel      *model,
 {
   GtkWidget            *button;
   GtkWidget            *image;
-  GtkWidget            *label;
-  gint                  numerator;
-  gint                  denominator;
-  gchar                *txt;
-  GimpZoomModelPrivate *priv = GIMP_ZOOM_MODEL_GET_PRIVATE (model);
 
   g_return_val_if_fail (GIMP_IS_ZOOM_MODEL (model), NULL);
 
@@ -435,19 +446,6 @@ gimp_zoom_widget_new (GimpZoomModel      *model,
                                 G_CALLBACK (gimp_zoom_model_zoom_out),
                                 model);
       return button;
-
-    case GIMP_ZOOM_LABEL:
-      gimp_zoom_model_get_fraction (priv->value,
-                                    &numerator,
-                                    &denominator);
-      txt = g_strdup_printf (_("zoom factor %d:%d"), numerator, denominator);
-      label = gtk_label_new (txt);
-      g_free (txt);
-      gtk_misc_set_padding (GTK_MISC (label), 6, 6);
-      g_signal_connect (model, "notify::value",
-                        G_CALLBACK (gimp_zoom_model_update_label),
-                        label);
-      return label;
     }
   return NULL;
 }

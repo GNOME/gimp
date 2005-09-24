@@ -1,3 +1,16 @@
+2005-09-24  DindinX  <dindinx@gimp.org>
+
+	* libgimpwidgets/gimpwidgetsenums.h: remove the GIMP_ZOOM_LABEL value
+	from GimpZoomWidgetType.
+
+	* libgimpwidgets/gimpwidgetsenums.c: regenerated.
+
+	* libgimp/gimpzoompreview.c: provides two read only properties,
+	"fraction" and "percentage" to be used with prop widgets.
+
+	* libgimpwidgets/gimpzoommodel.c: use a gimp_prop_label to show the
+	zoom fraction.
+
 2005-09-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/file-actions.c: set "Close all" insensitive when
@@ -70,10 +83,6 @@
 
 	* libgimpwidgets/gimpwidgets.def: added gimp_zoom_model_zoom_step
 	(gimp_zoom_model_get_fraction was already there)
-
-	* devel-docs/app/app-sections.txt: removed
-	gimp_display_shell_scale_zoom_step and
-	gimp_display_shell_scale_get_fraction.
 
 2005-09-24  Michael Natterer  <mitch@gimp.org>
 
