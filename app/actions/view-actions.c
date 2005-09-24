@@ -70,12 +70,12 @@ static GimpActionEntry view_actions[] =
 
   { "view-new", GTK_STOCK_NEW,
     N_("_New View"), "", NULL,
-    G_CALLBACK (view_new_view_cmd_callback),
+    G_CALLBACK (view_new_cmd_callback),
     GIMP_HELP_VIEW_NEW },
 
   { "view-close", GTK_STOCK_CLOSE,
     N_( "_Close"), "<control>W", NULL,
-    G_CALLBACK (view_close_view_cmd_callback),
+    G_CALLBACK (view_close_cmd_callback),
     GIMP_HELP_FILE_CLOSE },
 
   { "view-zoom-fit-in", GTK_STOCK_ZOOM_FIT,

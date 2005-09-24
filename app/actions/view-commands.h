@@ -20,9 +20,9 @@
 #define __VIEW_COMMANDS_H__
 
 
-void   view_new_view_cmd_callback              (GtkAction *action,
+void   view_new_cmd_callback                   (GtkAction *action,
                                                 gpointer   data);
-void   view_close_view_cmd_callback            (GtkAction *action,
+void   view_close_cmd_callback                 (GtkAction *action,
                                                 gpointer   data);
 
 void   view_zoom_fit_in_cmd_callback           (GtkAction *action,

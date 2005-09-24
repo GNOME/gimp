@@ -74,8 +74,8 @@ static void   view_padding_color_dialog_update (GimpColorDialog      *dialog,
 /*  public functions  */
 
 void
-view_new_view_cmd_callback (GtkAction *action,
-                            gpointer   data)
+view_new_cmd_callback (GtkAction *action,
+                       gpointer   data)
 {
   GimpDisplay      *gdisp;
   GimpDisplayShell *shell;
@@ -89,8 +89,8 @@ view_new_view_cmd_callback (GtkAction *action,
 }
 
 void
-view_close_view_cmd_callback (GtkAction *action,
-                              gpointer   data)
+view_close_cmd_callback (GtkAction *action,
+                         gpointer   data)
 {
   GimpDisplay *gdisp;
   return_if_no_display (gdisp, data);

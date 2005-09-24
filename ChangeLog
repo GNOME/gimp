@@ -1,5 +1,11 @@
 2005-09-24  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/view-actions.c
+	* app/actions/view-commands.[ch]: de-uglify callback names for
+	"new" and "close".
+
+2005-09-24  Michael Natterer  <mitch@gimp.org>
+
 	Applied (slightly modified) patch from Sylvain Foret which adds
 	"Close All" menu entries and dialog. Fixes bug #163532.
 
