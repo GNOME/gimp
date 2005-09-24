@@ -39,6 +39,7 @@
       </menu>
 
       <separator />
+      <menuitem action="file-close-all" />
       <menuitem action="file-quit" />
     </menu>
 

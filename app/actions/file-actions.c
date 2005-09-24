@@ -107,6 +107,11 @@ static GimpActionEntry file_actions[] =
     G_CALLBACK (file_revert_cmd_callback),
     GIMP_HELP_FILE_REVERT },
 
+  { "file-close-all", GTK_STOCK_CLOSE,
+    N_("Close all"), NULL, NULL,
+    G_CALLBACK (file_close_all_cmd_callback),
+    GIMP_HELP_FILE_CLOSE_ALL },
+
   { "file-quit", GTK_STOCK_QUIT,
     N_("_Quit"), "<control>Q", NULL,
     G_CALLBACK (file_quit_cmd_callback),

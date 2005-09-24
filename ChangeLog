@@ -1,5 +1,24 @@
 2005-09-24  Michael Natterer  <mitch@gimp.org>
 
+	Applied (slightly modified) patch from Sylvain Foret which adds
+	"Close All" menu entries and dialog. Fixes bug #163532.
+
+	* app/actions/file-actions.c
+	* app/actions/file-commands.[ch]: added "file-close-all" action
+	and callback.
+
+	* app/dialogs/dialogs-constructors.[ch]
+	* app/dialogs/dialogs.c
+	* app/dialogs/quit-dialog.[ch]: added close all dialog which is a
+	modified quit dialog.
+
+	* app/widgets/gimphelp-ids.h: added help ID.
+
+	* menus/image-menu.xml.in
+	* menus/toolbox-menu.xml.in: add close all next to quit.
+
+2005-09-24  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell-scale.c
 	(gimp_display_shell_scale_dialog): set "activates-default" on all
 	spinbuttons.

@@ -33,6 +33,7 @@
       <placeholder name="Info" />
       <separator />
       <menuitem action="view-close" />
+      <menuitem action="file-close-all" />
       <menuitem action="file-quit" />
     </menu>
 

@@ -359,6 +359,28 @@ file_revert_cmd_callback (GtkAction *action,
 }
 
 void
+file_close_all_cmd_callback (GtkAction *action,
+                             gpointer   data)
+{
+  Gimp *gimp;
+  return_if_no_gimp (gimp, data);
+
+  if (! gimp_displays_dirty (gimp))
+    {
+      gimp_displays_delete (gimp);
+    }
+  else
+    {
+      GtkWidget *widget;
+      return_if_no_widget (widget, data);
+
+      gimp_dialog_factory_dialog_raise (global_dialog_factory,
+                                        gtk_widget_get_screen (widget),
+                                        "gimp-close-all-dialog", -1);
+    }
+}
+
+void
 file_quit_cmd_callback (GtkAction *action,
                         gpointer   data)
 {

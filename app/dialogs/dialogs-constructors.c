@@ -167,6 +167,14 @@ dialogs_error_get (GimpDialogFactory *factory,
 }
 
 GtkWidget *
+dialogs_close_all_get (GimpDialogFactory *factory,
+                       GimpContext       *context,
+                       gint               preview_size)
+{
+  return close_all_dialog_new (context->gimp);
+}
+
+GtkWidget *
 dialogs_quit_get (GimpDialogFactory *factory,
                   GimpContext       *context,
                   gint               preview_size)
