@@ -97,7 +97,7 @@ gimp_zoom_preview_init (GimpZoomPreview *preview)
   GtkWidget              *label;
   GimpZoomPreviewPrivate *priv = GIMP_ZOOM_PREVIEW_GET_PRIVATE (preview);
 
-  priv->zoom = gimp_zoom_model_new (1.1);
+  priv->zoom = gimp_zoom_model_new ();
   gimp_zoom_model_set_range (GIMP_ZOOM_MODEL (priv->zoom), 1.0, 256.0);
   g_signal_connect_swapped (priv->zoom, "notify::value",
                             G_CALLBACK (gimp_zoom_preview_set_adjustments),

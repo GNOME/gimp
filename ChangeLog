@@ -1,3 +1,37 @@
+2005-09-24  DindinX  <dindinx@gimp.org>
+
+	* app/widgets/widgets-enums.h: Moved the GimpZoomType enum from
+	here...
+
+	* libgimpwidgets/gimpwidgetsenums.h: ...to here.
+
+	* app/widgets/widgets-enums.c
+	* libgimpwidgets/gimpwidgetsenums.c: regenerated.
+
+	* app/display/gimpdisplayshell-scale.[ch]: removed
+	gimp_display_shell_scale_zoom_step and
+	gimp_display_shell_scale_get_fraction from here...
+
+	* libgimpwidgets/gimpzoommodel.[ch]: ... to here so we can use these
+	utility functions in plug-ins and in the core.
+	Also removed the step-size property since the zoom-model now use
+	gimp_zoom_model_zoom_step.
+
+	* app/actions/view-commands.c
+	* app/display/gimpdisplayshell-title.c
+	* app/display/gimpdisplayshell.c
+	* app/tools/gimpmagnifytool.c: modified accordingly.
+
+	* libgimp/gimpzoompreview.c: don't pass any argument to the
+	gimp_zoom_model_new function.
+
+	* libgimpwidgets/gimpwidgets.def: added gimp_zoom_model_zoom_step
+	(gimp_zoom_model_get_fraction was already there)
+
+	* devel-docs/app/app-sections.txt: removed
+	gimp_display_shell_scale_zoom_step and
+	gimp_display_shell_scale_get_fraction.
+
 2005-09-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint/gimppaintcore.h

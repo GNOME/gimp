@@ -38,7 +38,6 @@ enum
 {
   PROP_0,
   PROP_VALUE,
-  PROP_STEP_SIZE,
   PROP_MINIMUM,
   PROP_MAXIMUM
 };
@@ -48,7 +47,6 @@ typedef struct _GimpZoomModelPrivate GimpZoomModelPrivate;
 struct _GimpZoomModelPrivate
 {
   gdouble  value;
-  gdouble  step_size;
   gdouble  minimum;
   gdouble  maximum;
 };
@@ -82,12 +80,6 @@ gimp_zoom_model_class_init (GimpZoomModelClass *klass)
                                                         "Value", NULL,
                                                         1.0 / 256.0, 256.0,
                                                         1.0,
-                                                        G_PARAM_READWRITE|G_PARAM_CONSTRUCT));
-  g_object_class_install_property (object_class, PROP_STEP_SIZE,
-                                   g_param_spec_double ("step-size",
-                                                        "Step size", NULL,
-                                                        1.01, 10.0,
-                                                        1.1,
                                                         G_PARAM_READWRITE|G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_MINIMUM,
@@ -130,10 +122,6 @@ gimp_zoom_model_set_property (GObject      *object,
       g_object_notify (object, "value");
       break;
 
-    case PROP_STEP_SIZE:
-      priv->step_size = g_value_get_double (value);
-      break;
-
     case PROP_MINIMUM:
       priv->minimum = MIN (g_value_get_double (value), priv->maximum);
       break;
@@ -168,10 +156,6 @@ gimp_zoom_model_get_property (GObject    *object,
       g_value_set_double (value, priv->value);
       break;
 
-    case PROP_STEP_SIZE:
-      g_value_set_double (value, priv->step_size);
-      break;
-
     case PROP_MINIMUM:
       g_value_set_double (value, priv->minimum);
       break;
@@ -195,7 +179,8 @@ gimp_zoom_model_zoom_in (GimpZoomModel *model)
 
   if (priv->value < priv->maximum);
     {
-      priv->value *= priv->step_size;
+      priv->value = gimp_zoom_model_zoom_step (GIMP_ZOOM_IN,
+                                               priv->value);
       g_object_notify (G_OBJECT (model), "value");
     }
 }
@@ -209,7 +194,8 @@ gimp_zoom_model_zoom_out (GimpZoomModel *model)
 
   if (priv->value > priv->minimum)
     {
-      priv->value /= priv->step_size;
+      priv->value = gimp_zoom_model_zoom_step (GIMP_ZOOM_OUT,
+                                               priv->value);
       g_object_notify (G_OBJECT (model), "value");
     }
 }
@@ -314,6 +300,73 @@ gimp_zoom_model_get_fraction (gdouble  zoom_factor,
     }
 }
 
+gdouble
+gimp_zoom_model_zoom_step (GimpZoomType zoom_type,
+                           gdouble      scale)
+{
+  gint    i, n_presets;
+  gdouble new_scale = 1.0;
+
+  /* This table is constructed to have fractions, that approximate
+   * sqrt(2)^k. This gives a smooth feeling regardless of the starting
+   * zoom level.
+   *
+   * Zooming in/out always jumps to a zoom step from the list above.
+   * However, we try to guarantee a certain size of the step, to
+   * avoid silly jumps from 101% to 100%.
+   * The factor 1.1 is chosen a bit arbitrary, but feels better
+   * than the geometric median of the zoom steps (2^(1/4)).
+   */
+
+#define ZOOM_MIN_STEP 1.1
+
+  gdouble presets[] = {
+    1.0 / 256, 1.0 / 180, 1.0 / 128, 1.0 / 90,
+    1.0 / 64,  1.0 / 45,  1.0 / 32,  1.0 / 23,
+    1.0 / 16,  1.0 / 11,  1.0 / 8,   2.0 / 11,
+    1.0 / 4,   1.0 / 3,   1.0 / 2,   2.0 / 3,
+      1.0,
+               3.0 / 2,      2.0,      3.0,
+      4.0,    11.0 / 2,      8.0,     11.0,
+      16.0,     23.0,       32.0,     45.0,
+      64.0,     90.0,      128.0,    180.0,
+      256.0,
+  };
+
+  n_presets = G_N_ELEMENTS (presets);
+
+  switch (zoom_type)
+    {
+    case GIMP_ZOOM_IN:
+      scale *= ZOOM_MIN_STEP;
+
+      new_scale = presets[n_presets-1];
+
+      for (i = n_presets - 1; i >= 0 && presets[i] > scale; i--)
+        new_scale = presets[i];
+
+      break;
+
+    case GIMP_ZOOM_OUT:
+      scale /= ZOOM_MIN_STEP;
+
+      new_scale = presets[0];
+
+      for (i = 0; i < n_presets && presets[i] < scale; i++)
+        new_scale = presets[i];
+
+      break;
+
+    case GIMP_ZOOM_TO:
+      new_scale = scale;
+      break;
+    }
+
+  return CLAMP (new_scale, 1.0/256.0, 256.0);
+
+#undef ZOOM_MIN_STEP
+}
+
 /**
  * gimp_zoom_model_new:
  *
@@ -324,12 +377,11 @@ gimp_zoom_model_get_fraction (gdouble  zoom_factor,
  * Since GIMP 2.4
  **/
 GimpZoomModel *
-gimp_zoom_model_new (gdouble step_size)
+gimp_zoom_model_new (void)
 {
   GimpZoomModel *model;
 
   model = g_object_new (GIMP_TYPE_ZOOM_MODEL,
-                        "step-size", step_size,
                         "value", 1.0,
                         NULL);
   return model;

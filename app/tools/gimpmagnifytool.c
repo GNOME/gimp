@@ -233,8 +233,8 @@ gimp_magnify_tool_button_release (GimpTool        *tool,
       if ((SCALEX (shell, w) < options->threshold) ||
           (SCALEY (shell, h) < options->threshold))
         {
-          new_scale = gimp_display_shell_scale_zoom_step (options->zoom_type,
-                                                          shell->scale);
+          new_scale = gimp_zoom_model_zoom_step (options->zoom_type,
+                                                 shell->scale);
         }
       else
         {

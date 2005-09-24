@@ -151,16 +151,16 @@ view_zoom_cmd_callback (GtkAction *action,
       break;
 
     case GIMP_ACTION_SELECT_SKIP_PREVIOUS:
-      scale = gimp_display_shell_scale_zoom_step (GIMP_ZOOM_OUT, scale);
-      scale = gimp_display_shell_scale_zoom_step (GIMP_ZOOM_OUT, scale);
-      scale = gimp_display_shell_scale_zoom_step (GIMP_ZOOM_OUT, scale);
+      scale = gimp_zoom_model_zoom_step (GIMP_ZOOM_OUT, scale);
+      scale = gimp_zoom_model_zoom_step (GIMP_ZOOM_OUT, scale);
+      scale = gimp_zoom_model_zoom_step (GIMP_ZOOM_OUT, scale);
       gimp_display_shell_scale (shell, GIMP_ZOOM_TO, scale);
       break;
 
     case GIMP_ACTION_SELECT_SKIP_NEXT:
-      scale = gimp_display_shell_scale_zoom_step (GIMP_ZOOM_IN, scale);
-      scale = gimp_display_shell_scale_zoom_step (GIMP_ZOOM_IN, scale);
-      scale = gimp_display_shell_scale_zoom_step (GIMP_ZOOM_IN, scale);
+      scale = gimp_zoom_model_zoom_step (GIMP_ZOOM_IN, scale);
+      scale = gimp_zoom_model_zoom_step (GIMP_ZOOM_IN, scale);
+      scale = gimp_zoom_model_zoom_step (GIMP_ZOOM_IN, scale);
       gimp_display_shell_scale (shell, GIMP_ZOOM_TO, scale);
       break;
 

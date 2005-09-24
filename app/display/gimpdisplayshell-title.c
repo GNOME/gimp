@@ -22,6 +22,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "libgimpbase/gimpbase.h"
 
 #include "display-types.h"
@@ -38,7 +40,6 @@
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
-#include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-title.h"
 #include "gimpstatusbar.h"
 
@@ -161,7 +162,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
   image = shell->gdisp->gimage;
   gimp  = image->gimp;
 
-  gimp_display_shell_scale_get_fraction (shell->scale, &num, &denom);
+  gimp_zoom_model_get_fraction (shell->scale, &num, &denom);
 
   while (i < title_len && *format)
     {

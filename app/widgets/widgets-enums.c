@@ -338,34 +338,6 @@ gimp_window_hint_get_type (void)
   return type;
 }
 
-GType
-gimp_zoom_type_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_ZOOM_IN, "GIMP_ZOOM_IN", "in" },
-    { GIMP_ZOOM_OUT, "GIMP_ZOOM_OUT", "out" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_ZOOM_IN, N_("Zoom in"), NULL },
-    { GIMP_ZOOM_OUT, N_("Zoom out"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (! type)
-    {
-      type = g_enum_register_static ("GimpZoomType", values);
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
 
 /* Generated data ends here */
 

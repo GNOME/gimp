@@ -650,13 +650,13 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
           new_scale = shell->scale * MIN (((gdouble) s_height) / n_height,
                                           ((gdouble) s_width) / n_width);
 
-          new_scale = gimp_display_shell_scale_zoom_step (GIMP_ZOOM_OUT,
-                                                          new_scale);
+          new_scale = gimp_zoom_model_zoom_step (GIMP_ZOOM_OUT,
+                                                 new_scale);
 
           /* since zooming out might skip a zoom step we zoom in again
            * and test if we are small enough. */
-          shell->scale = gimp_display_shell_scale_zoom_step (GIMP_ZOOM_IN,
-                                                             new_scale);
+          shell->scale = gimp_zoom_model_zoom_step (GIMP_ZOOM_IN,
+                                                    new_scale);
 
           if (SCALEX (shell, image_width) > s_width ||
               SCALEY (shell, image_height) > s_height)

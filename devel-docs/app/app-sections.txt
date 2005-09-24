@@ -1834,8 +1834,6 @@ gimp_display_shell_render
 <SECTION>
 <FILE>gimpdisplayshell-scale</FILE>
 <TITLE>GimpDisplayShell-scale</TITLE>
-gimp_display_shell_scale_zoom_step
-gimp_display_shell_scale_get_fraction
 gimp_display_shell_scale_setup
 gimp_display_shell_scale_set_dot_for_dot
 gimp_display_shell_scale

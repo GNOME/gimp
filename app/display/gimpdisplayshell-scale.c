@@ -69,152 +69,6 @@ static gdouble img2real                              (GimpDisplayShell *shell,
 
 /*  public functions  */
 
-gdouble
-gimp_display_shell_scale_zoom_step (GimpZoomType zoom_type,
-                                    gdouble      scale)
-{
-  gint    i, n_presets;
-  gdouble new_scale = 1.0;
-
-  /* This table is constructed to have fractions, that approximate
-   * sqrt(2)^k. This gives a smooth feeling regardless of the starting
-   * zoom level.
-   *
-   * Zooming in/out always jumps to a zoom step from the list above.
-   * However, we try to guarantee a certain size of the step, to
-   * avoid silly jumps from 101% to 100%.
-   * The factor 1.1 is chosen a bit arbitrary, but feels better
-   * than the geometric median of the zoom steps (2^(1/4)).
-   */
-
-#define ZOOM_MIN_STEP 1.1
-
-  gdouble presets[] = {
-    1.0 / 256, 1.0 / 180, 1.0 / 128, 1.0 / 90,
-    1.0 / 64,  1.0 / 45,  1.0 / 32,  1.0 / 23,
-    1.0 / 16,  1.0 / 11,  1.0 / 8,   2.0 / 11,
-    1.0 / 4,   1.0 / 3,   1.0 / 2,   2.0 / 3,
-      1.0,
-               3.0 / 2,      2.0,      3.0,
-      4.0,    11.0 / 2,      8.0,     11.0,
-      16.0,     23.0,       32.0,     45.0,
-      64.0,     90.0,      128.0,    180.0,
-      256.0,
-  };
-
-  n_presets = G_N_ELEMENTS (presets);
-
-  switch (zoom_type)
-    {
-    case GIMP_ZOOM_IN:
-      scale *= ZOOM_MIN_STEP;
-
-      new_scale = presets[n_presets-1];
-
-      for (i = n_presets - 1; i >= 0 && presets[i] > scale; i--)
-        new_scale = presets[i];
-
-      break;
-
-    case GIMP_ZOOM_OUT:
-      scale /= ZOOM_MIN_STEP;
-
-      new_scale = presets[0];
-
-      for (i = 0; i < n_presets && presets[i] < scale; i++)
-        new_scale = presets[i];
-
-      break;
-
-    case GIMP_ZOOM_TO:
-      new_scale = scale;
-      break;
-    }
-
-  return CLAMP (new_scale, 1.0/256.0, 256.0);
-
-#undef ZOOM_MIN_STEP
-}
-
-void
-gimp_display_shell_scale_get_fraction (gdouble  zoom_factor,
-                                       gint    *numerator,
-                                       gint    *denominator)
-{
-  gint     p0, p1, p2;
-  gint     q0, q1, q2;
-  gdouble  remainder, next_cf;
-  gboolean swapped = FALSE;
-
-  g_return_if_fail (numerator != NULL && denominator != NULL);
-
-  /* make sure that zooming behaves symmetrically */
-  if (zoom_factor < 1.0)
-    {
-      zoom_factor = 1.0 / zoom_factor;
-      swapped = TRUE;
-    }
-
-  /* calculate the continued fraction for the desired zoom factor */
-
-  p0 = 1;
-  q0 = 0;
-  p1 = floor (zoom_factor);
-  q1 = 1;
-
-  remainder = zoom_factor - p1;
-
-  while (fabs (remainder) >= 0.0001 &&
-         fabs (((gdouble) p1 / q1) - zoom_factor) > 0.0001)
-    {
-      remainder = 1.0 / remainder;
-
-      next_cf = floor (remainder);
-
-      p2 = next_cf * p1 + p0;
-      q2 = next_cf * q1 + q0;
-
-      /* Numerator and Denominator are limited by 256 */
-      /* also absurd ratios like 170:171 are excluded */
-      if (p2 > 256 || q2 > 256 || (p2 > 1 && q2 > 1 && p2 * q2 > 200))
-        break;
-
-      /* remember the last two fractions */
-      p0 = p1;
-      p1 = p2;
-      q0 = q1;
-      q1 = q2;
-
-      remainder = remainder - next_cf;
-    }
-
-  zoom_factor = (gdouble) p1 / q1;
-
-  /* hard upper and lower bounds for zoom ratio */
-
-  if (zoom_factor > 256.0)
-    {
-      p1 = 256;
-      q1 = 1;
-    }
-  else if (zoom_factor < 1.0 / 256.0)
-    {
-      p1 = 1;
-      q1 = 256;
-    }
-
-  if (swapped)
-    {
-      *numerator = q1;
-      *denominator = p1;
-    }
-  else
-    {
-      *numerator = p1;
-      *denominator = q1;
-    }
-}
-
 void
 gimp_display_shell_scale_setup (GimpDisplayShell *shell)
 {
@@ -441,7 +295,7 @@ gimp_display_shell_scale_to (GimpDisplayShell *shell,
   offset_y /= shell->scale;
 
   if (zoom_type != GIMP_ZOOM_TO)
-    scale = gimp_display_shell_scale_zoom_step (zoom_type, shell->scale);
+    scale = gimp_zoom_model_zoom_step (zoom_type, shell->scale);
 
   offset_x *= scale;
   offset_y *= scale;
@@ -648,8 +502,8 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
   if (fabs (shell->other_scale) <= 0.0001)
     shell->other_scale = shell->scale;   /* other_scale not yet initialized */
 
-  gimp_display_shell_scale_get_fraction (fabs (shell->other_scale),
-                                         &num, &denom);
+  gimp_zoom_model_get_fraction (fabs (shell->other_scale),
+                                &num, &denom);
 
   spin = gimp_spin_button_new (&data->num_adj,
                                num, 1, 256,
@@ -744,7 +598,7 @@ update_zoom_values (GtkAdjustment   *adj,
     {
       scale = gtk_adjustment_get_value (GTK_ADJUSTMENT (dialog->scale_adj));
 
-      gimp_display_shell_scale_get_fraction (scale / 100.0, &num, &denom);
+      gimp_zoom_model_get_fraction (scale / 100.0, &num, &denom);
 
       gtk_adjustment_set_value (GTK_ADJUSTMENT (dialog->num_adj), num);
       gtk_adjustment_set_value (GTK_ADJUSTMENT (dialog->denom_adj), denom);
