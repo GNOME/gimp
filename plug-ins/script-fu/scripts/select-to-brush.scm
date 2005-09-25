@@ -123,6 +123,3 @@
 		    SF-STRING     _"Brush name"  "My Brush"
 		    SF-STRING     _"File name"   "mybrush"
 		    SF-ADJUSTMENT _"Spacing"     '(25 0 1000 1 1 1 0))
-
-(script-fu-menu-register "script-fu-selection-to-brush"
-			 "<Image>/Filters/Selection")

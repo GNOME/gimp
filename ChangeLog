@@ -1,3 +1,19 @@
+2005-09-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/edit-actions.c
+	* menus/image-menu.xml.in: added "Edit/Paste as" submenu and moved
+	"Paste as new" there (renamed to "New Image").
+
+	* plug-ins/script-fu/scripts/Makefile.am
+	* plug-ins/script-fu/scripts/paste-as-brush.scm
+	* plug-ins/script-fu/scripts/paste-as-pattern.scm: new scripts
+	roughly derived from select-to-brush and select-to-pattern.
+
+	* plug-ins/script-fu/scripts/select-to-brush.scm
+	* plug-ins/script-fu/scripts/select-to-image.scm
+	* plug-ins/script-fu/scripts/select-to-pattern.scm: don't register
+	menu entries.
+
 2005-09-25  Sven Neumann  <sven@gimp.org>
 
 	* app/base/siox.[ch]: applied patch from Gerald Friedland and

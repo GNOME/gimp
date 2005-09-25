@@ -58,8 +58,10 @@ static void   edit_actions_pattern_changed    (GimpContext     *context,
 
 static GimpActionEntry edit_actions[] =
 {
-  { "edit-menu",        NULL, N_("_Edit")   },
-  { "edit-buffer-menu", NULL, N_("_Buffer") },
+  { "edit-menu",          NULL, N_("_Edit")     },
+  { "edit-paste-as-menu", NULL, N_("_Paste as") },
+  { "edit-buffer-menu",   NULL, N_("_Buffer")   },
+
   { "undo-editor-popup",
     GTK_STOCK_UNDO, N_("Undo History Menu"), NULL, NULL, NULL,
     GIMP_HELP_UNDO_DIALOG },
@@ -108,7 +110,7 @@ static GimpActionEntry edit_actions[] =
     GIMP_HELP_EDIT_PASTE_INTO },
 
   { "edit-paste-as-new", GIMP_STOCK_PASTE_AS_NEW,
-    N_("Paste as _New"), NULL, NULL,
+    N_("_New Image"), NULL, NULL,
     G_CALLBACK (edit_paste_as_new_cmd_callback),
     GIMP_HELP_EDIT_PASTE_AS_NEW },
 

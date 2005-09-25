@@ -69,6 +69,8 @@ scripts = \
 	mkbrush.scm			\
 	neon-logo.scm			\
 	news-text.scm			\
+	paste-as-brush.scm		\
+	paste-as-pattern.scm		\
 	perspective-shadow.scm		\
 	predator.scm			\
 	pupi-button.scm			\

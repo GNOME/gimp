@@ -162,8 +162,10 @@
       <placeholder name="Paste">
 	<menuitem action="edit-paste" />
 	<menuitem action="edit-paste-into" />
-	<menuitem action="edit-paste-as-new" />
       </placeholder>
+      <menu action="edit-paste-as-menu" name="Paste as">
+	<menuitem action="edit-paste-as-new" />
+      </menu>
       <menu action="edit-buffer-menu" name="Buffer">
         <menuitem action="edit-named-cut" />
 	<menuitem action="edit-named-copy" />
