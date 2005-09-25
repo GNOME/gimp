@@ -89,6 +89,7 @@ convert_dialog_new (GimpImage    *gimage,
                     GimpProgress *progress)
 {
   IndexedDialog *dialog;
+  GtkWidget     *button;
   GtkWidget     *main_vbox;
   GtkWidget     *vbox;
   GtkWidget     *hbox;
@@ -125,9 +126,14 @@ convert_dialog_new (GimpImage    *gimage,
                               GIMP_HELP_IMAGE_CONVERT_INDEXED,
 
                               GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                              _("C_onvert"),    GTK_RESPONSE_OK,
 
                               NULL);
+
+  button = gtk_dialog_add_button (GTK_DIALOG (dialog->dialog),
+                                  _("C_onvert"), GTK_RESPONSE_OK);
+  gtk_button_set_image (GTK_BUTTON (button),
+                        gtk_image_new_from_stock (GIMP_STOCK_CONVERT_INDEXED,
+                                                  GTK_ICON_SIZE_BUTTON));
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog->dialog),
                                            GTK_RESPONSE_OK,

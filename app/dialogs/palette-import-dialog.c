@@ -154,6 +154,7 @@ palette_import_dialog_new (Gimp *gimp)
 {
   ImportDialog *import_dialog;
   GimpGradient *gradient;
+  GtkWidget    *button;
   GtkWidget    *main_hbox;
   GtkWidget    *frame;
   GtkWidget    *vbox;
@@ -178,9 +179,14 @@ palette_import_dialog_new (Gimp *gimp)
                               GIMP_HELP_PALETTE_IMPORT,
 
                               GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                              _("_Import"),     GTK_RESPONSE_OK,
 
                               NULL);
+
+  button = gtk_dialog_add_button (GTK_DIALOG (import_dialog->dialog),
+                                  _("_Import"), GTK_RESPONSE_OK);
+  gtk_button_set_image (GTK_BUTTON (button),
+                        gtk_image_new_from_stock (GTK_STOCK_CONVERT,
+                                                  GTK_ICON_SIZE_BUTTON));
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (import_dialog->dialog),
                                            GTK_RESPONSE_OK,
