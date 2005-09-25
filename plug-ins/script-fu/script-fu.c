@@ -299,10 +299,6 @@ script_fu_extension_init (void)
                                     N_("_Decor"));
   gimp_plugin_menu_branch_register ("<Image>/Filters",
                                     N_("_Render"));
-  gimp_plugin_menu_branch_register ("<Image>/Filters",
-                                    N_("_Selection"));
-  gimp_plugin_menu_branch_register ("<Image>/Filters/Decor",
-                                    N_("Stencil _Ops"));
 
   gimp_install_temp_proc ("script-fu-refresh",
 			  "Re-read all available scripts",

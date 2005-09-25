@@ -174,7 +174,7 @@
     (gimp-context-pop)))
 
 (script-fu-register "script-fu-carve-it"
-		    _"C_arve-It..."
+		    _"Stencil C_arve..."
 		    "Use the specified [GRAY] drawable as a stencil to carve from the specified image. The specified image must be either RGB colour or grayscale, not indexed."
 		    "Spencer Kimball"
 		    "Spencer Kimball"
@@ -186,4 +186,4 @@
 		    SF-TOGGLE   _"Carve white areas" TRUE)
 
 (script-fu-menu-register "script-fu-carve-it"
-			 "<Image>/Filters/Decor/Stencil Ops")
+			 "<Image>/Filters/Decor")

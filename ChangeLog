@@ -1,3 +1,12 @@
+2005-09-26  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/script-fu/scripts/carve-it.scm
+	* plug-ins/script-fu/scripts/chrome-it.scm: renamed to "Stencil Carve"
+	and "Stencil Chrome" and moved to Filters/Decor.
+
+	* plug-ins/script-fu/script-fu.c: don't register menu branches
+	"Filters/Selection" and "Filters/Decor/Stencil Ops".
+
 2005-09-25  Carol Spears  <carol@gimp.org>
 
 	* plug-ins/common/max_rgb.c moved menu entry from Colors to
