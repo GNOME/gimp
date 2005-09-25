@@ -31,6 +31,9 @@
 #include "gimpzoommodel.h"
 
 
+#define ZOOM_MIN  (1.0 / 256.0)
+#define ZOOM_MAX  (256.0)
+
 enum
 {
   PROP_0,
@@ -77,21 +80,20 @@ gimp_zoom_model_class_init (GimpZoomModelClass *klass)
   g_object_class_install_property (object_class, PROP_VALUE,
                                    g_param_spec_double ("value",
                                                         "Value", NULL,
-                                                        1.0 / 256.0, 256.0,
+                                                        ZOOM_MIN, ZOOM_MAX,
                                                         1.0,
-                                                        G_PARAM_READWRITE|G_PARAM_CONSTRUCT));
-
+                                                        G_PARAM_READWRITE));
   g_object_class_install_property (object_class, PROP_MINIMUM,
                                    g_param_spec_double ("minimum",
                                                         "Minimum", NULL,
-                                                        1.0 / 256.0, 256.0,
-                                                        1.0 / 256.0,
+                                                        ZOOM_MIN, ZOOM_MAX,
+                                                        ZOOM_MIN,
                                                         G_PARAM_READWRITE));
   g_object_class_install_property (object_class, PROP_MAXIMUM,
                                    g_param_spec_double ("maximum",
                                                         "Maximum", NULL,
-                                                        1.0 / 256.0, 256.0,
-                                                        256.0,
+                                                        ZOOM_MIN, ZOOM_MAX,
+                                                        ZOOM_MAX,
                                                         G_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_FRACTION,
@@ -216,8 +218,9 @@ gimp_zoom_model_zoom_in (GimpZoomModel *model)
 
   if (priv->value < priv->maximum);
     {
-      priv->value = gimp_zoom_model_zoom_step (GIMP_ZOOM_IN,
-                                               priv->value);
+      gdouble scale = gimp_zoom_model_zoom_step (GIMP_ZOOM_IN, priv->value);
+
+      priv->value = CLAMP (scale, priv->minimum, priv->maximum);
 
       g_object_notify (G_OBJECT (model), "value");
       g_object_notify (G_OBJECT (model), "fraction");
@@ -234,8 +237,10 @@ gimp_zoom_model_zoom_out (GimpZoomModel *model)
 
   if (priv->value > priv->minimum)
     {
-      priv->value = gimp_zoom_model_zoom_step (GIMP_ZOOM_OUT,
-                                               priv->value);
+      gdouble scale = gimp_zoom_model_zoom_step (GIMP_ZOOM_OUT, priv->value);
+
+      priv->value = CLAMP (scale, priv->minimum, priv->maximum);
+
       g_object_notify (G_OBJECT (model), "value");
       g_object_notify (G_OBJECT (model), "fraction");
       g_object_notify (G_OBJECT (model), "percentage");
@@ -274,8 +279,8 @@ gimp_zoom_model_set_range (GimpZoomModel *model,
                            gdouble        max)
 {
   g_return_if_fail (min < max);
-  g_return_if_fail (min >= 1.0 / 256.0);
-  g_return_if_fail (max <= 256.0);
+  g_return_if_fail (min >= ZOOM_MIN);
+  g_return_if_fail (max <= ZOOM_MAX);
 
   g_object_set (model,
 		"minimum", min,
@@ -443,7 +448,7 @@ gimp_zoom_model_get_fraction (gdouble  zoom_factor,
 /**
  * gimp_zoom_model_zoom_step:
  * @zoom_type:
- * @scale:
+ * @scale: ignored unless @zoom_type == %GIMP_ZOOM_TO
  *
  * Utility function to calculate a new scale factor.
  *
@@ -508,12 +513,34 @@ gimp_zoom_model_zoom_step (GimpZoomType zoom_type,
 
       break;
 
+    case GIMP_ZOOM_IN_MORE:
+      scale = gimp_zoom_model_zoom_step (GIMP_ZOOM_IN, scale);
+      scale = gimp_zoom_model_zoom_step (GIMP_ZOOM_IN, scale);
+      scale = gimp_zoom_model_zoom_step (GIMP_ZOOM_IN, scale);
+      new_scale = scale;
+      break;
+
+    case GIMP_ZOOM_OUT_MORE:
+      scale = gimp_zoom_model_zoom_step (GIMP_ZOOM_IN, scale);
+      scale = gimp_zoom_model_zoom_step (GIMP_ZOOM_IN, scale);
+      scale = gimp_zoom_model_zoom_step (GIMP_ZOOM_IN, scale);
+      new_scale = scale;
+      break;
+
+    case GIMP_ZOOM_IN_MAX:
+      new_scale = ZOOM_MAX;
+      break;
+
+    case GIMP_ZOOM_OUT_MAX:
+      new_scale = ZOOM_MIN;
+      break;
+
     case GIMP_ZOOM_TO:
       new_scale = scale;
       break;
     }
 
-  return CLAMP (new_scale, 1.0/256.0, 256.0);
+  return CLAMP (new_scale, ZOOM_MIN, ZOOM_MAX);
 
 #undef ZOOM_MIN_STEP
 }

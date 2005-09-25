@@ -1,5 +1,18 @@
 2005-09-25  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpwidgetsenums.h: added more values to the
+	GimpZoomType enum.
+
+	* libgimpwidgets/gimpzoommodel.c (gimp_zoom_model_zoom_step):
+	handle the new enum values.
+
+	* app/actions/view-commands.c (view_zoom_cmd_callback) use the new
+	values.
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_new): cosmetics. 
+
+2005-09-25  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpzoommodel.[ch]: minor cleanup, documentation.
 
 2005-09-25  Michael Natterer  <mitch@gimp.org>
