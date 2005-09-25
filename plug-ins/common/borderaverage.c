@@ -92,7 +92,7 @@ query (void)
   };
   static GimpParamDef return_vals[] =
   {
-    { GIMP_PDB_COLOR,    "borderaverage",   "The average color of the specified border" },
+    { GIMP_PDB_COLOR,    "borderaverage",   "Sends the average color of the specified border to the Toolbox foreground." },
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
@@ -108,7 +108,7 @@ query (void)
                           G_N_ELEMENTS (return_vals),
                           args, return_vals);
 
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Colors");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Colors/Info");
 }
 
 static void

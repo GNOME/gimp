@@ -1,3 +1,24 @@
+2005-09-25  Carol Spears  <carol@gimp.org>
+
+	* plug-ins/common/max_rgb.c moved menu entry from Colors to
+        Colors/Modify.
+
+	* plug-ins/common/borderaverage.c moved menu entry from Colors to
+        Colors/Info and added some vital information to the registration
+        information.
+
+	* plug-ins/common/channel_mixer.c moved menu entry from Colors to
+        Colors/Modify.
+
+	* plug-ins/common/colorify.c moved menu entry from Colors to
+        Colors/Modify.
+
+	* plug-ins/common/fp.c moved menu entry from Colors to
+        Colors/Modify.
+
+	* plug-ins/common/retinex.c moved menu entry from Colors to
+        Colors/Modify.
+
 2005-09-26  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/script-fu/scripts/fade-outline.scm: renamed to
