@@ -454,40 +454,45 @@ run (const gchar      *name,
 
   if (strcmp (name, RECOMPOSE_PROC) == 0)
     {
-      gint          nlayers;
-      gint          nret;
       GimpParasite *parasite = gimp_image_parasite_find (param[1].data.d_image,
                                                          "decompose-data");
 
       if (! parasite)
         {
-          g_message (_("You can only run 'Recompose' if the active image"
-                       " was originally produced by 'Decompose'."));
-          return;
+          g_message (_("You can only run 'Recompose' if the active image "
+                       "was originally produced by 'Decompose'."));
+          status = GIMP_PDB_EXECUTION_ERROR;
         }
-
-      nret = sscanf (parasite->data, "source=%d type=%s %d %d %d %d",
-                     &composevals.source_layer_ID,
-                     composevals.compose_type,
-                     &composevals.inputs[0].comp.ID,
-                     &composevals.inputs[1].comp.ID,
-                     &composevals.inputs[2].comp.ID,
-                     &composevals.inputs[3].comp.ID);
-      for (i = 0; i < MAX_COMPOSE_IMAGES; i++)
-        composevals.inputs[i].is_ID = FALSE;
-
-      if (nret < 5)
+      else
         {
-          g_message (_("Error scanning 'decompose-data' parasite: "
-                       "too few layers found"));
-          return;
+          gint nret;
+
+          nret = sscanf (gimp_parasite_data (parasite),
+                         "source=%d type=%s %d %d %d %d",
+                         &composevals.source_layer_ID,
+                         composevals.compose_type,
+                         &composevals.inputs[0].comp.ID,
+                         &composevals.inputs[1].comp.ID,
+                         &composevals.inputs[2].comp.ID,
+                         &composevals.inputs[3].comp.ID);
+
+          gimp_parasite_free (parasite);
+
+          for (i = 0; i < MAX_COMPOSE_IMAGES; i++)
+            composevals.inputs[i].is_ID = TRUE;
+
+          if (nret < 5)
+            {
+              g_message (_("Error scanning 'decompose-data' parasite: "
+                           "too few layers found"));
+              status = GIMP_PDB_EXECUTION_ERROR;
+            }
+          else
+            {
+              composevals.do_recompose = TRUE;
+              compose_by_drawable = TRUE;
+            }
         }
-      nlayers = nret - 2;
-
-      composevals.do_recompose = TRUE;
-      compose_by_drawable = TRUE;
-
-
     }
   else
     {
@@ -497,15 +502,16 @@ run (const gchar      *name,
         {
         case GIMP_RUN_INTERACTIVE:
           /*  Possibly retrieve data  */
-          gimp_get_data (name , &composevals);
+          gimp_get_data (name, &composevals);
 
           /* The dialog is now drawable based. Get a drawable-ID of the image */
           if (strcmp (name, COMPOSE_PROC) == 0)
             {
               gint32 *layer_list;
-              gint nlayers;
+              gint    nlayers;
 
-              layer_list = gimp_image_get_layers (param[1].data.d_int32, &nlayers);
+              layer_list = gimp_image_get_layers (param[1].data.d_int32,
+                                                  &nlayers);
               if ((layer_list == NULL) || (nlayers <= 0))
                 {
                   g_message (_("Could not get layers for image %d"),
