@@ -1,0 +1,107 @@
+<!-- ##### SECTION Title ##### -->
+GimpZoomModel
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GimpZoomModel ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### ARG GimpZoomModel:fraction ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GimpZoomModel:maximum ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GimpZoomModel:minimum ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GimpZoomModel:percentage ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GimpZoomModel:value ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION gimp_zoom_model_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_zoom_model_set_range ##### -->
+<para>
+
+</para>
+
+@model: 
+@min: 
+@max: 
+
+
+<!-- ##### FUNCTION gimp_zoom_model_get_factor ##### -->
+<para>
+
+</para>
+
+@model: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_zoom_model_get_fraction ##### -->
+<para>
+
+</para>
+
+@zoom_factor: 
+@numerator: 
+@denominator: 
+
+
+<!-- ##### FUNCTION gimp_zoom_widget_new ##### -->
+<para>
+
+</para>
+
+@model: 
+@type: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_zoom_model_zoom_step ##### -->
+<para>
+
+</para>
+
+@zoom_type: 
+@scale: 
+@Returns: 
+
+

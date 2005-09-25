@@ -1,3 +1,7 @@
+2005-09-25  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpzoommodel.[ch]: minor cleanup, documentation.
+
 2005-09-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/dialogs/quit-dialog.c (quit_close_all_dialog_new): another

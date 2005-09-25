@@ -22,17 +22,14 @@
 
 #include "config.h"
 
-#include <math.h>
-
 #include <gtk/gtk.h>
-
-#include "libgimpbase/gimpbase.h"
 
 #include "gimpwidgetstypes.h"
 
+#include "libgimpmath/gimpmath.h"
+
 #include "gimpzoommodel.h"
 
-#include "libgimp/libgimp-intl.h"
 
 enum
 {
@@ -116,6 +113,7 @@ gimp_zoom_model_init (GimpZoomModel *model)
 {
   GimpZoomModelPrivate *priv = GIMP_ZOOM_MODEL_GET_PRIVATE (model);
 
+  priv->value   = 1.0;
   priv->minimum = 1.0 / 256.0;
   priv->maximum = 256.0;
 }
@@ -128,11 +126,13 @@ gimp_zoom_model_set_property (GObject      *object,
 {
   GimpZoomModelPrivate *priv  = GIMP_ZOOM_MODEL_GET_PRIVATE (object);
 
+  g_object_freeze_notify (object);
+
   switch (property_id)
     {
     case PROP_VALUE:
       priv->value = g_value_get_double (value);
-      g_object_notify (object, "value");
+
       g_object_notify (object, "fraction");
       g_object_notify (object, "percentage");
       break;
@@ -153,10 +153,13 @@ gimp_zoom_model_set_property (GObject      *object,
   if (priv->value > priv->maximum || priv->value < priv->minimum)
     {
       priv->value = CLAMP (priv->value, priv->minimum, priv->maximum);
+
       g_object_notify (object, "value");
       g_object_notify (object, "fraction");
       g_object_notify (object, "percentage");
     }
+
+  g_object_thaw_notify (object);
 }
 
 static void
@@ -186,13 +189,14 @@ gimp_zoom_model_get_property (GObject    *object,
 
     case PROP_FRACTION:
       gimp_zoom_model_get_fraction (priv->value, &numerator, &denominator);
-      tmp = g_strdup_printf (_("%d:%d"), numerator, denominator);
+
+      tmp = g_strdup_printf ("%d:%d", numerator, denominator);
       g_value_set_string (value, tmp);
       g_free (tmp);
       break;
 
     case PROP_PERCENTAGE:
-      tmp = g_strdup_printf (_("%d%%"), (gint)(priv->value * 100.0));
+      tmp = g_strdup_printf ("%d%%", (gint) (priv->value * 100.0));
       g_value_set_string (value, tmp);
       g_free (tmp);
       break;
@@ -214,6 +218,7 @@ gimp_zoom_model_zoom_in (GimpZoomModel *model)
     {
       priv->value = gimp_zoom_model_zoom_step (GIMP_ZOOM_IN,
                                                priv->value);
+
       g_object_notify (G_OBJECT (model), "value");
       g_object_notify (G_OBJECT (model), "fraction");
       g_object_notify (G_OBJECT (model), "percentage");
@@ -237,6 +242,125 @@ gimp_zoom_model_zoom_out (GimpZoomModel *model)
     }
 }
 
+/**
+ * gimp_zoom_model_new:
+ *
+ * Creates a new #GimpZoomModel.
+ *
+ * Return value: a new #GimpZoomModel.
+ *
+ * Since GIMP 2.4
+ **/
+GimpZoomModel *
+gimp_zoom_model_new (void)
+{
+  return g_object_new (GIMP_TYPE_ZOOM_MODEL, NULL);
+}
+
+
+/**
+ * gimp_zoom_model_set_range:
+ * @model: a #GimpZoomModel
+ * @min: new lower limit for zoom factor
+ * @max: new upper limit for zoom factor
+ *
+ * Sets the allowed range of the @model.
+ *
+ * Since GIMP 2.4
+ **/
+void
+gimp_zoom_model_set_range (GimpZoomModel *model,
+                           gdouble        min,
+                           gdouble        max)
+{
+  g_return_if_fail (min < max);
+  g_return_if_fail (min >= 1.0 / 256.0);
+  g_return_if_fail (max <= 256.0);
+
+  g_object_set (model,
+		"minimum", min,
+		"maximum", max,
+		NULL);
+}
+
+/**
+ * gimp_zoom_model_get_factor:
+ * @model: a #GimpZoomModel
+ *
+ * Retrieve the current zoom factor of @model.
+ *
+ * Return value: the current scale factor
+ *
+ * Since GIMP 2.4
+ **/
+gdouble
+gimp_zoom_model_get_factor (GimpZoomModel *model)
+{
+  GimpZoomModelPrivate *priv = GIMP_ZOOM_MODEL_GET_PRIVATE (model);
+
+  g_return_val_if_fail (GIMP_IS_ZOOM_MODEL (model), 1.0);
+
+  return priv->value;
+}
+
+/**
+ * gimp_zoom_widget_new:
+ * @model: a #GimpZoomModel
+ * @type: the type of widget to create
+ *
+ * Creates a new widget to interact with the #GimpZoomModel.
+ *
+ * Return value: a new #GtkWidget.
+ *
+ * Since GIMP 2.4
+ **/
+GtkWidget *
+gimp_zoom_widget_new (GimpZoomModel      *model,
+                      GimpZoomWidgetType  type)
+{
+  GtkWidget *button;
+  GtkWidget *image;
+
+  g_return_val_if_fail (GIMP_IS_ZOOM_MODEL (model), NULL);
+
+  switch (type)
+    {
+    case GIMP_ZOOM_IN_BUTTON:
+      button = gtk_button_new ();
+      image = gtk_image_new_from_stock (GTK_STOCK_ZOOM_IN,
+                                        GTK_ICON_SIZE_SMALL_TOOLBAR);
+      gtk_container_add (GTK_CONTAINER (button), image);
+      gtk_widget_show (image);
+      g_signal_connect_swapped (button, "clicked",
+                                G_CALLBACK (gimp_zoom_model_zoom_in),
+                                model);
+      return button;
+
+    case GIMP_ZOOM_OUT_BUTTON:
+      button = gtk_button_new ();
+      image = gtk_image_new_from_stock (GTK_STOCK_ZOOM_OUT,
+                                        GTK_ICON_SIZE_SMALL_TOOLBAR);
+      gtk_container_add (GTK_CONTAINER (button), image);
+      gtk_widget_show (image);
+      g_signal_connect_swapped (button, "clicked",
+                                G_CALLBACK (gimp_zoom_model_zoom_out),
+                                model);
+      return button;
+    }
+
+  return NULL;
+}
+
+/**
+ * gimp_zoom_model_get_fraction
+ * @zoom_factor: a scale factor
+ * @numerator: return location for numerator
+ * @denominator: return location for denominator
+ *
+ * Utility function that expresses @zoom_factor as a fraction.
+ *
+ * Since GIMP 2.4
+ **/
 void
 gimp_zoom_model_get_fraction (gdouble  zoom_factor,
                               gint    *numerator,
@@ -316,6 +440,17 @@ gimp_zoom_model_get_fraction (gdouble  zoom_factor,
     }
 }
 
+/**
+ * gimp_zoom_model_zoom_step:
+ * @zoom_type:
+ * @scale:
+ *
+ * Utility function to calculate a new scale factor.
+ *
+ * Return value: the new scale factor
+ *
+ * Since GIMP 2.4
+ **/
 gdouble
 gimp_zoom_model_zoom_step (GimpZoomType zoom_type,
                            gdouble      scale)
@@ -382,93 +517,3 @@ gimp_zoom_model_zoom_step (GimpZoomType zoom_type,
 
 #undef ZOOM_MIN_STEP
 }
-
-/**
- * gimp_zoom_model_new:
- *
- * Creates a new #GimpZoomModel.
- *
- * Return value: a new #GimpZoomModel.
- *
- * Since GIMP 2.4
- **/
-GimpZoomModel *
-gimp_zoom_model_new (void)
-{
-  GimpZoomModel *model;
-
-  model = g_object_new (GIMP_TYPE_ZOOM_MODEL,
-                        "value", 1.0,
-                        NULL);
-  return model;
-}
-
-/**
- * gimp_zoom_widget_new:
- *
- * Creates a new widget to interact with the #GimpZoomModel.
- * @model:
- * @widget:
- *
- * Return value: a new #GtkWidget.
- *
- * Since GIMP 2.4
- **/
-GtkWidget *
-gimp_zoom_widget_new (GimpZoomModel      *model,
-                      GimpZoomWidgetType  widget)
-{
-  GtkWidget            *button;
-  GtkWidget            *image;
-
-  g_return_val_if_fail (GIMP_IS_ZOOM_MODEL (model), NULL);
-
-  switch (widget)
-    {
-    case GIMP_ZOOM_IN_BUTTON:
-      button = gtk_button_new ();
-      image = gtk_image_new_from_stock (GTK_STOCK_ZOOM_IN,
-                                        GTK_ICON_SIZE_SMALL_TOOLBAR);
-      gtk_container_add (GTK_CONTAINER (button), image);
-      gtk_widget_show (image);
-      g_signal_connect_swapped (button, "clicked",
-                                G_CALLBACK (gimp_zoom_model_zoom_in),
-                                model);
-      return button;
-
-    case GIMP_ZOOM_OUT_BUTTON:
-      button = gtk_button_new ();
-      image = gtk_image_new_from_stock (GTK_STOCK_ZOOM_OUT,
-                                        GTK_ICON_SIZE_SMALL_TOOLBAR);
-      gtk_container_add (GTK_CONTAINER (button), image);
-      gtk_widget_show (image);
-      g_signal_connect_swapped (button, "clicked",
-                                G_CALLBACK (gimp_zoom_model_zoom_out),
-                                model);
-      return button;
-    }
-  return NULL;
-}
-
-gdouble
-gimp_zoom_model_get_factor (GimpZoomModel *model)
-{
-  GimpZoomModelPrivate *priv = GIMP_ZOOM_MODEL_GET_PRIVATE (model);
-
-  g_return_val_if_fail (GIMP_IS_ZOOM_MODEL (model), 1.0);
-
-  return priv->value;
-}
-
-void
-gimp_zoom_model_set_range (GimpZoomModel *model,
-                           gdouble        min,
-                           gdouble        max)
-{
-  g_return_if_fail (min < max);
-  g_return_if_fail (min >= 1.0 / 256.0);
-  g_return_if_fail (max <= 256.0);
-
-  g_object_set (model, "minimum", min, "maximum", max, NULL);
-}
-

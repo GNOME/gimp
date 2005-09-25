@@ -1015,6 +1015,27 @@ GIMP_SCROLLED_PREVIEW_GET_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimpzoommodel</FILE>
+<TITLE>GimpZoomModel</TITLE>
+GimpZoomModel
+gimp_zoom_model_new
+gimp_zoom_model_set_range
+gimp_zoom_model_get_factor
+gimp_zoom_model_get_fraction
+gimp_zoom_widget_new
+gimp_zoom_model_zoom_step
+<SUBSECTION Standard>
+GimpZoomModelClass
+GIMP_ZOOM_MODEL
+GIMP_IS_ZOOM_MODEL
+GIMP_TYPE_ZOOM_MODEL
+gimp_zoom_model_get_type
+GIMP_ZOOM_MODEL_CLASS
+GIMP_IS_ZOOM_MODEL_CLASS
+GIMP_ZOOM_MODEL_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimpoldwidgets</FILE>
 gimp_int_option_menu_new
 gimp_int_option_menu_set_history

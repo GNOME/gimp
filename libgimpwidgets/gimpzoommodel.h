@@ -56,13 +56,13 @@ struct _GimpZoomModelClass
 GType          gimp_zoom_model_get_type     (void) G_GNUC_CONST;
 
 GimpZoomModel *gimp_zoom_model_new          (void);
-
-GtkWidget     *gimp_zoom_widget_new         (GimpZoomModel      *model,
-                                             GimpZoomWidgetType  widget);
-gdouble        gimp_zoom_model_get_factor   (GimpZoomModel      *model);
 void           gimp_zoom_model_set_range    (GimpZoomModel      *model,
                                              gdouble             min,
                                              gdouble             max);
+gdouble        gimp_zoom_model_get_factor   (GimpZoomModel      *model);
+
+GtkWidget     *gimp_zoom_widget_new         (GimpZoomModel      *model,
+                                             GimpZoomWidgetType  type);
 
 void           gimp_zoom_model_get_fraction (gdouble             zoom_factor,
                                              gint               *numerator,
