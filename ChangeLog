@@ -1,5 +1,12 @@
 2005-09-25  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/common/psd.c: massively indented and de-uglyfied,
+	(not many lines unmodified). Still not the incarnation of
+	beautiful code, but more readable for an eye used to Gimp code.
+	No logic changes, just formatting.
+
+2005-09-25  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/common/compose.c (run): set "is_ID" to TRUE, not FALSE
 	when decoding the "compose-data" parasite. Fixes Recompose.
 	Return error, not success if recomposing fails. Misc cleanups.
