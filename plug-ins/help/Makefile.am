@@ -48,4 +48,6 @@ gimp_help_lookup_SOURCES = \
 	help.h		\
 	gimp-help-lookup.c
 
-gimp_help_lookup_LDADD = $(GLIB_LIBS)
+gimp_help_lookup_LDADD = \
+	$(libgimpbase)	\
+	$(GLIB_LIBS)

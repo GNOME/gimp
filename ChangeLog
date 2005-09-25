@@ -1,5 +1,10 @@
 2005-09-25  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/help/Makefile.am (gimp_help_lookup_LDADD): link
+	against libgimpbase now that we use gimp_data_directory().
+
+2005-09-25  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/script-fu/scripts/distress-selection.scm: renamed to
 	"Distort..." and moved to Select/Modify.
 
