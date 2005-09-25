@@ -1,4 +1,11 @@
-2005-09-25  Sven Neumann  <sven@gimp.org>
+2005-09-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_canvas_tool_events): reordered checks for
+	the modifiers pressed on <Tab> so NumLock and friends don't
+	interfere. Fixes bug #317118.
+
+cd2005-09-25  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpwidgetsenums.h: added more values to the
 	GimpZoomType enum.
