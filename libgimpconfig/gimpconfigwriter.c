@@ -140,7 +140,7 @@ gimp_config_writer_new_file (const gchar  *filename,
     }
   else
     {
-      fd = creat (filename, 0644);
+      fd = g_creat (filename, 0644);
 
       if (fd == -1)
 	{

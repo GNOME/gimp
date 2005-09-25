@@ -39,9 +39,8 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-#include <glib/gstdio.h>
-
 #include <glib-object.h>
+#include <glib/gstdio.h>
 
 #ifndef G_OS_WIN32  /* This code doesn't compile on win32 and the use of
                      * the freedesktop standard doesn't make much sense
@@ -544,7 +543,7 @@ gimp_recent_list_add_item (GimpRecentItem *item)
 
   if (fd < 0)
     {
-      fd = creat (filename, S_IRUSR | S_IWUSR);
+      fd = g_creat (filename, S_IRUSR | S_IWUSR);
       created = TRUE;
     }
 

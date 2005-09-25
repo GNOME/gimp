@@ -22,22 +22,23 @@
 #include "config.h"
 
 #include <errno.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #ifdef HAVE_SYS_PARAM_H
 #include <sys/param.h>
 #endif
+
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
 
 #include <glib-object.h>
+#include <glib/gstdio.h>
 
 #ifdef G_OS_WIN32
 #include <io.h>
 #define R_OK 4
-#define access(f,p) _access(f,p)
 #endif
 
 #include "core/core-types.h"
@@ -121,7 +122,7 @@ file_open_image (Gimp               *gimp,
               return NULL;
             }
 
-          if (access (filename, R_OK) != 0)
+          if (g_access (filename, R_OK) != 0)
             {
               g_free (filename);
               g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_ACCES,

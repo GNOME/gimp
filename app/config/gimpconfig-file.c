@@ -104,7 +104,7 @@ gimp_config_file_copy (const gchar  *source,
 
   if (g_stat (source, &stat_buf) == 0)
     {
-      chmod (dest, stat_buf.st_mode);
+      g_chmod (dest, stat_buf.st_mode);
     }
 
   return TRUE;

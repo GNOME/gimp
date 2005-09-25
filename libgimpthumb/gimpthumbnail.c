@@ -929,7 +929,7 @@ gimp_thumbnail_save (GimpThumbnail  *thumbnail,
       g_printerr ("temporary thumbnail file renamed to %s\n", filename);
 #endif
 
-      success = (chmod (filename, 0600) == 0);
+      success = (g_chmod (filename, 0600) == 0);
 
       if (! success)
         g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
@@ -1300,7 +1300,7 @@ gimp_thumbnail_save_failure (GimpThumbnail  *thumbnail,
                              NULL);
   if (success)
     {
-      success = (chmod (name, 0600) == 0);
+      success = (g_chmod (name, 0600) == 0);
 
       if (success)
         gimp_thumbnail_update_thumb (thumbnail, GIMP_THUMB_SIZE_NORMAL);

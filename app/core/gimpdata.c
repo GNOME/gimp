@@ -481,10 +481,10 @@ gimp_data_set_filename (GimpData    *data,
     {
       gchar *dirname = g_path_get_dirname (filename);
 
-      if ((access (filename, F_OK) == 0 &&  /* check if the file exists    */
-           access (filename, W_OK) == 0) || /* and is writable             */
-          (access (filename, F_OK) != 0 &&  /* OR doesn't exist            */
-           access (dirname,  W_OK) == 0))   /* and we can write to its dir */
+      if ((g_access (filename, F_OK) == 0 &&  /* check if the file exists    */
+           g_access (filename, W_OK) == 0) || /* and is writable             */
+          (g_access (filename, F_OK) != 0 &&  /* OR doesn't exist            */
+           g_access (dirname,  W_OK) == 0))   /* and we can write to its dir */
         {
           data->writable  = writable  ? TRUE : FALSE;
           data->deletable = deletable ? TRUE : FALSE;

@@ -1,3 +1,15 @@
+2005-09-26  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpdata.c
+	* app/file/file-save.c
+	* app/file/file-open.c: use g_access() from gstdio.h.
+
+	* app/config/gimpconfig-file.c (gimp_config_file_copy)
+	* libgimpthumb/gimpthumbnail.c: use g_chmod() from gstdio.h.
+
+	* app/file/gimprecentlist.c
+	* libgimpconfig/gimpconfigwriter.c: use g_creat() from gstdio.h.
+
 2005-09-26  Michael Natterer  <mitch@gimp.org>
 
 	* menus/image-menu.xml.in: added Colors/Modify placeholder.
