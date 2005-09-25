@@ -1240,18 +1240,9 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
           case GDK_Tab:
           case GDK_ISO_Left_Tab:
-            if (! state)
+            if (state & GDK_CONTROL_MASK)
               {
-                GimpDialogFactory *dialog_factory;
-
-                dialog_factory = gimp_dialog_factory_from_name ("toolbox");
-
-                /*  Hide or show all dialogs  */
-                gimp_dialog_factories_toggle (dialog_factory, FALSE);
-              }
-            else if (! gimp_image_is_empty (gimage))
-              {
-                if (state & GDK_CONTROL_MASK)
+                if (! gimp_image_is_empty (gimage))
                   {
                     if (kevent->keyval == GDK_Tab)
                       gimp_display_shell_layer_select_init (shell,
@@ -1260,6 +1251,15 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                       gimp_display_shell_layer_select_init (shell,
                                                             -1, kevent->time);
                   }
+              }
+            else
+              {
+                GimpDialogFactory *dialog_factory;
+
+                dialog_factory = gimp_dialog_factory_from_name ("toolbox");
+
+                /*  Hide or show all dialogs  */
+                gimp_dialog_factories_toggle (dialog_factory, FALSE);
               }
 
             return_val = TRUE;
