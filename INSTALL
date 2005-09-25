@@ -29,11 +29,11 @@ header files installed.
      from http://www.freedesktop.org/software/pkgconfig/.  
 
   2. You need to have installed GTK+ version 2.6.0 or newer. Do not
-     try to use an older GTK+ version (1.2.x), it will not work.
-     GTK+ itself needs recent versions of GLib (>= 2.6.0),
-     Pango (>= 1.8.0) and ATK. Sources for these can be grabbed from
-     ftp://ftp.gtk.org/. GTK+-2.x and friends can be installed side
-     by side with GTK+-1.2.
+     try to use an older GTK+ version (1.2.x), it will not work.  GIMP
+     needs an even more recent version of GLib (>= 2.8.0). It also
+     wants Pango (>= 1.8.0) and ATK. Sources for these can be grabbed
+     from ftp://ftp.gtk.org/. GTK+-2.x and friends can be installed
+     side by side with GTK+-1.2.
 
   3. We require PangoFT2, a Pango backend that uses FreeType2. Make
      sure you have FreeType2 and fontconfig installed before you

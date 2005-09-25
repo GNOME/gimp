@@ -85,38 +85,38 @@ static void      gimp_sigfatal_handler        (gint sig_num) G_GNUC_NORETURN;
 #endif
 
 
-static const gchar        *system_gimprc      = NULL;
-static const gchar        *user_gimprc        = NULL;
-static const gchar        *session_name       = NULL;
-static const gchar        *batch_interpreter  = NULL;
-static const gchar       **batch_commands     = NULL;
-static const gchar       **filenames          = NULL;
-static gboolean            no_interface       = FALSE;
-static gboolean            no_data            = FALSE;
-static gboolean            no_fonts           = FALSE;
-static gboolean            no_splash          = FALSE;
-static gboolean            be_verbose         = FALSE;
+static const gchar        *system_gimprc     = NULL;
+static const gchar        *user_gimprc       = NULL;
+static const gchar        *session_name      = NULL;
+static const gchar        *batch_interpreter = NULL;
+static const gchar       **batch_commands    = NULL;
+static const gchar       **filenames         = NULL;
+static gboolean            no_interface      = FALSE;
+static gboolean            no_data           = FALSE;
+static gboolean            no_fonts          = FALSE;
+static gboolean            no_splash         = FALSE;
+static gboolean            be_verbose        = FALSE;
 #if defined (USE_SYSV_SHM) || defined (USE_POSIX_SHM) || defined (G_OS_WIN32)
-static gboolean            use_shm            = TRUE;
+static gboolean            use_shm           = TRUE;
 #else
-static gboolean            use_shm            = FALSE;
+static gboolean            use_shm           = FALSE;
 #endif
-static gboolean            use_cpu_accel      = TRUE;
-static gboolean            console_messages   = FALSE;
-static gboolean            use_debug_handler  = FALSE;
+static gboolean            use_cpu_accel     = TRUE;
+static gboolean            console_messages  = FALSE;
+static gboolean            use_debug_handler = FALSE;
 
 #ifdef GIMP_UNSTABLE
-static GimpStackTraceMode  stack_trace_mode = GIMP_STACK_TRACE_QUERY;
-static GimpPDBCompatMode   pdb_compat_mode  = GIMP_PDB_COMPAT_WARN;
+static GimpStackTraceMode  stack_trace_mode  = GIMP_STACK_TRACE_QUERY;
+static GimpPDBCompatMode   pdb_compat_mode   = GIMP_PDB_COMPAT_WARN;
 #else
-static GimpStackTraceMode  stack_trace_mode = GIMP_STACK_TRACE_NEVER;
-static GimpPDBCompatMode   pdb_compat_mode  = GIMP_PDB_COMPAT_ON;
+static GimpStackTraceMode  stack_trace_mode  = GIMP_STACK_TRACE_NEVER;
+static GimpPDBCompatMode   pdb_compat_mode   = GIMP_PDB_COMPAT_ON;
 #endif
 
 
 static const GOptionEntry main_entries[] =
 {
-  { "version", 'v', 0,
+  { "version", 'v', G_OPTION_FLAG_NO_ARG,
     G_OPTION_ARG_CALLBACK, (GOptionArgFunc) gimp_show_version,
     N_("Show version information and exit"), NULL
   },
@@ -198,27 +198,27 @@ static const GOptionEntry main_entries[] =
     N_("Debug in case of a crash (never|query|always)"), "<mode>"
   },
   {
-    "debug-handlers", 0, 0,
+    "debug-handlers", 0, G_OPTION_FLAG_NO_ARG,
     G_OPTION_ARG_NONE, &use_debug_handler,
     N_("Enable non-fatal debugging signal handlers"), NULL
   },
   {
-    "g-fatal-warnings", 0, 0,
+    "g-fatal-warnings", 0, G_OPTION_FLAG_NO_ARG,
     G_OPTION_ARG_CALLBACK, gimp_option_fatal_warnings,
     N_("Make all warnings fatal"), NULL
   },
   {
-    "dump-gimprc", 0, 0,
+    "dump-gimprc", 0, G_OPTION_FLAG_NO_ARG,
     G_OPTION_ARG_CALLBACK, gimp_option_dump_gimprc,
     N_("Output a gimprc file with default settings"), NULL
   },
   {
-    "dump-gimprc-system", 0, G_OPTION_FLAG_HIDDEN,
+    "dump-gimprc-system", 0, G_OPTION_FLAG_NO_ARG | G_OPTION_FLAG_HIDDEN,
     G_OPTION_ARG_CALLBACK, gimp_option_dump_gimprc,
     NULL, NULL
   },
   {
-    "dump-gimprc-manpage", 0, G_OPTION_FLAG_HIDDEN,
+    "dump-gimprc-manpage", 0, G_OPTION_FLAG_NO_ARG | G_OPTION_FLAG_HIDDEN,
     G_OPTION_ARG_CALLBACK, gimp_option_dump_gimprc,
     NULL, NULL
   },

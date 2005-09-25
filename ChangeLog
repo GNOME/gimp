@@ -1,3 +1,12 @@
+2005-09-26  Sven Neumann  <sven@gimp.org>
+
+	* INSTALL
+	* configure.in: bumped the required version of glib to 2.8.
+
+	* app/main.c: use G_OPTION_ARG_NONE flag with callback options
+	that take no argument. Fixes command-line options needed for 'make
+	dist', such as '--dump-gimprc'
+
 2005-09-26  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/script-fu/scripts/carve-it.scm
