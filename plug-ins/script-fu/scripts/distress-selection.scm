@@ -83,7 +83,7 @@
 
 
 (script-fu-register "script-fu-distress-selection"
-		    _"_Distress Selection..."
+		    _"_Distress..."
 		    "No description"
 		    "Chris Gutteridge"
 		    "1998, Chris Gutteridge / ECS dept, University of Southampton, England."
@@ -99,4 +99,4 @@
 		    SF-TOGGLE     _"Smooth vertically"      TRUE)
 
 (script-fu-menu-register "script-fu-distress-selection"
-			 "<Image>/Filters/Selection")
+			 "<Image>/Select/Modify")

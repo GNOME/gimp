@@ -1,3 +1,8 @@
+2005-09-25  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/script-fu/scripts/distress-selection.scm: renamed to
+	"Distress..." and moved to Select/Modify.
+
 2005-09-24  Hans Breuer  <hans@breuer.org>
 
 	* **makefile.msc : updated
