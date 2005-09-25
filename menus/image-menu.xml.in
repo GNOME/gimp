@@ -452,9 +452,11 @@
       <menu action="colors-components-menu" name="Components" />
       <menu action="colors-map-menu" name="Map" />
       <separator />
-      <menuitem action="drawable-desaturate" />
-      <placeholder name="Invert">
-        <menuitem action="drawable-invert" />
+      <placeholder name="Modify">
+        <menuitem action="drawable-desaturate" />
+        <placeholder name="Invert">
+          <menuitem action="drawable-invert" />
+        </placeholder>
       </placeholder>
       <separator />
     </menu>
