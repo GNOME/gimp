@@ -1,5 +1,10 @@
 2005-09-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/file-actions.c (file_actions): made Shift+Ctrl+W the
+	shortcut for "Close all".
+
+2005-09-25  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/common/psd.c: massively indented and de-uglyfied,
 	(not many lines unmodified). Still not the incarnation of
 	beautiful code, but more readable for an eye used to Gimp code.
