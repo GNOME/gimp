@@ -1,3 +1,10 @@
+2005-09-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/dialogs/quit-dialog.c (quit_close_all_dialog_new): another
+	patch from Sylvain Foret that fixes the dialog title for the close
+	all dialog. Fixes bug #317137. Also pass the right help IDs to
+	gimp_message_dialog_new().
+
 2005-09-24  DindinX  <dindinx@gimp.org>
 
 	* libgimpwidgets/gimpwidgetsenums.h: remove the GIMP_ZOOM_LABEL value

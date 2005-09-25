@@ -98,9 +98,13 @@ quit_close_all_dialog_new (Gimp     *gimp,
   g_return_val_if_fail (images != NULL, NULL);
 
   dialog =
-    gimp_message_dialog_new (_("Quit The GIMP"), GIMP_STOCK_WILBER_EEK,
+    gimp_message_dialog_new (do_quit ?
+                             _("Quit The GIMP") : _("Close All Images"),
+                             GIMP_STOCK_WILBER_EEK,
                              NULL, 0,
-                             gimp_standard_help_func, NULL,
+                             gimp_standard_help_func,
+                             do_quit ?
+                             GIMP_HELP_FILE_QUIT : GIMP_HELP_FILE_CLOSE_ALL,
 
                              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 
