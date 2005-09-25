@@ -229,13 +229,13 @@ static GimpEnumActionEntry view_zoom_actions[] =
     GIMP_ACTION_SELECT_NEXT, FALSE,
     GIMP_HELP_VIEW_ZOOM_IN },
 
-  { "view-zoom-out-accel", GTK_STOCK_ZOOM_OUT,
+  { "view-zoom-out-accel", GIMP_STOCK_CHAR_PICKER,
     N_("Zoom Out"), "KP_Subtract",
     N_("Zoom out"),
     GIMP_ACTION_SELECT_PREVIOUS, FALSE,
     GIMP_HELP_VIEW_ZOOM_OUT },
 
-  { "view-zoom-in-accel", GTK_STOCK_ZOOM_IN,
+  { "view-zoom-in-accel", GIMP_STOCK_CHAR_PICKER,
     N_("Zoom in"), "KP_Add",
     N_("Zoom in"),
     GIMP_ACTION_SELECT_NEXT, FALSE,

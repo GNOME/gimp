@@ -1,5 +1,11 @@
 2005-09-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/view-actions.c (view_zoom_actions): use
+	GIMP_STOCK_CHAR_PICKER for the actions which are only there for
+	keyboard shortcuts. Not perfect but better than before.
+
+2005-09-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/file-actions.c (file_actions): made Shift+Ctrl+W the
 	shortcut for "Close all".
 
