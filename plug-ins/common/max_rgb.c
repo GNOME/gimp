@@ -91,17 +91,17 @@ query (void)
                           "the channel that has the maximum value in three "
                           "(red, green, blue) channels, and other channels "
                           "are zero-cleared",
-                          "the help is not yet written for this plug-in since none is needed.",
+                          "There's no help yet.",
                           "Shuji Narazaki (narazaki@InetQ.or.jp)",
                           "Shuji Narazaki",
                           "May 2000",
-                          N_("_Max RGB..."),
+                          N_("_Maximum RGB..."),
                           "RGB*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Colors/Info");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Colors");
 }
 
 static void
@@ -259,7 +259,7 @@ max_rgb_dialog (GimpDrawable *drawable)
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Max RGB"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Maximum RGB Value"), PLUG_IN_BINARY,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

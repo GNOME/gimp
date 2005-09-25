@@ -1,3 +1,8 @@
+2005-09-25  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/max_rgb.c: moved it back, the plug-in changes
+	the image. Renamed to "Maximum RGB".
+
 2005-09-25  Carol Spears  <carol@gimp.org>
 
 	* plug-ins/common/max_rgb.c moved menu entry from Colors to
@@ -10,8 +15,7 @@
         added it to Filters/Web
 
 	* plug-ins/pygimp/plug-ins/py-slice.py added the patch from
-        Joao S. O. Bueno Calligaris that was attached to 
-        http://bugzilla.gnome.org/show_bug.cgi?id=159564
+        Joao S. O. Bueno Calligaris that was attached to bug #159564.
 
 2005-09-25  Michael Natterer  <mitch@gimp.org>
 
