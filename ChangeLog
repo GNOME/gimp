@@ -1,3 +1,8 @@
+2005-09-25  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpnewrectselecttool.c: fixed assignment of local
+	variable "rectangle_exists".
+
 2005-09-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell-callbacks.c
@@ -5,7 +10,7 @@
 	the modifiers pressed on <Tab> so NumLock and friends don't
 	interfere. Fixes bug #317118.
 
-cd2005-09-25  Sven Neumann  <sven@gimp.org>
+2005-09-25  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpwidgetsenums.h: added more values to the
 	GimpZoomType enum.
