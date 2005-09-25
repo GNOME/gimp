@@ -265,8 +265,8 @@ query (void)
                           args, NULL);
 
   gimp_plugin_menu_register (VPROPAGATE_PROC, "<Image>/Filters/Distorts");
-  gimp_plugin_menu_register (ERODE_PROC,      "<Image>/Filters/Effects/Generic");
-  gimp_plugin_menu_register (DILATE_PROC,     "<Image>/Filters/Effects/Generic");
+  gimp_plugin_menu_register (ERODE_PROC,      "<Image>/Filters/Generic");
+  gimp_plugin_menu_register (DILATE_PROC,     "<Image>/Filters/Generic");
 }
 
 static void

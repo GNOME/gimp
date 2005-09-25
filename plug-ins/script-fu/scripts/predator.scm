@@ -122,4 +122,4 @@
 		    SF-TOGGLE     _"Separate layer" TRUE)
 
 (script-fu-menu-register "script-fu-predator"
-			 "<Image>/Filters/Effects/Alchemy")
+			 "<Image>/Filters/Artistic")

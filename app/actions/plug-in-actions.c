@@ -64,7 +64,8 @@ static GimpActionEntry plug_in_actions[] =
   { "plug-in-noise-menu",             NULL, N_("_Noise")            },
   { "plug-in-edge-detect-menu",       NULL, N_("Edge-De_tect")      },
   { "plug-in-enhance-menu",           NULL, N_("En_hance")          },
-  { "plug-in-effects-menu",           NULL, N_("_Effects")          },
+  { "plug-in-combine-menu",           NULL, N_("C_ombine")          },
+  { "plug-in-generic-menu",           NULL, N_("_Generic")          },
   { "plug-in-light-shadow-menu",      NULL, N_("_Light and Shadow") },
   { "plug-in-distorts-menu",          NULL, N_("_Distorts")         },
   { "plug-in-artistic-menu",          NULL, N_("_Artistic")         },
@@ -75,7 +76,6 @@ static GimpActionEntry plug_in_actions[] =
   { "plug-in-render-pattern-menu",    NULL, N_("_Pattern")          },
   { "plug-in-web-menu",               NULL, N_("_Web")              },
   { "plug-in-animation-menu",         NULL, N_("An_imation")        },
-  { "plug-in-combine-menu",           NULL, N_("C_ombine")          },
 
   { "plug-in-reset-all", GIMP_STOCK_RESET,
     N_("Reset all _Filters"), NULL, NULL,

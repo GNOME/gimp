@@ -536,13 +536,8 @@
       </menu>
       <menu action="plug-in-noise-menu" name="Noise" />
       <menu action="plug-in-edge-detect-menu" name="Edge-Detect" />
-      <menu action="plug-in-effects-menu" name="Effects">
-        <placeholder name="Generic" />
-	<separator />
-        <placeholder name="Alchemy" />
-	<separator />
-        <placeholder name="Combine" />
-      </menu>
+      <menu action="plug-in-generic-menu" name="Generic" />
+      <menu action="plug-in-combine-menu" name="Combine" />
       <separator />
       <menu action="plug-in-artistic-menu" name="Artistic" />
       <menu action="plug-in-map-menu" name="Map" />

@@ -242,7 +242,7 @@ query (void)
                           G_N_ELEMENTS (return_vals),
 			  args, return_vals);
 
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Effects/Combine");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Combine");
 }
 
 static void
