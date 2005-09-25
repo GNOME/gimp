@@ -10,6 +10,12 @@ new stuff is being done that will one day be released as GIMP 2.4.
 Changes in GIMP 2.3.4
 =====================
 
+- replaced Selection to Brush/Pattern scripts with scripts that paste
+  a new brush/pattern from the clipboard content
+- allow to easily close all opened images
+- added a first version of a Print plug-in using libgnomeprint
+- improved Sphere Designer plug-in
+- improved Compose plug-in
 - added a zoomable preview widget for plug-ins
 - implement copy and paste of paths as SVG 
 - use new stock icons introduced with GTK+ 2.6
