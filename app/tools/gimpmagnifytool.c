@@ -202,6 +202,7 @@ gimp_magnify_tool_button_release (GimpTool        *tool,
   GimpMagnifyTool    *magnify = GIMP_MAGNIFY_TOOL (tool);
   GimpMagnifyOptions *options;
   GimpDisplayShell   *shell;
+  gdouble             current;
 
   options = GIMP_MAGNIFY_OPTIONS (tool->tool_info->tool_options);
 
@@ -229,12 +230,13 @@ gimp_magnify_tool_button_release (GimpTool        *tool,
       win_width  = shell->disp_width;
       win_height = shell->disp_height;
 
+      current = gimp_zoom_model_get_factor (shell->zoom);
+
       /* we need to compute the mouse movement in screen coordinates */
       if ((SCALEX (shell, w) < options->threshold) ||
           (SCALEY (shell, h) < options->threshold))
         {
-          new_scale = gimp_zoom_model_zoom_step (options->zoom_type,
-                                                 shell->scale);
+          new_scale = gimp_zoom_model_zoom_step (options->zoom_type, current);
         }
       else
         {
@@ -256,11 +258,11 @@ gimp_magnify_tool_button_release (GimpTool        *tool,
                            ((gdouble) h / (gdouble) height));
               break;
 
-            case GIMP_ZOOM_TO:
+            default:
               break;
             }
 
-          new_scale = shell->scale * scale;
+          new_scale = current * scale;
         }
 
       offset_x = (new_scale * ((x1 + x2) / 2)

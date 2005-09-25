@@ -79,31 +79,31 @@ gimp_zoom_model_class_init (GimpZoomModelClass *klass)
 
   g_object_class_install_property (object_class, PROP_VALUE,
                                    g_param_spec_double ("value",
-                                                        "Value", NULL,
+                                                        "Zoom factor", NULL,
                                                         ZOOM_MIN, ZOOM_MAX,
                                                         1.0,
                                                         G_PARAM_READWRITE));
   g_object_class_install_property (object_class, PROP_MINIMUM,
                                    g_param_spec_double ("minimum",
-                                                        "Minimum", NULL,
+                                                        "Lower limit for the zoom factor", NULL,
                                                         ZOOM_MIN, ZOOM_MAX,
                                                         ZOOM_MIN,
                                                         G_PARAM_READWRITE));
   g_object_class_install_property (object_class, PROP_MAXIMUM,
                                    g_param_spec_double ("maximum",
-                                                        "Maximum", NULL,
+                                                        "Upper limit for the zoom factor", NULL,
                                                         ZOOM_MIN, ZOOM_MAX,
                                                         ZOOM_MAX,
                                                         G_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_FRACTION,
                                    g_param_spec_string ("fraction",
-                                                        "Fraction", NULL,
+                                                        "The zoom factor expressed as a fraction", NULL,
                                                         "1:1",
                                                         G_PARAM_READABLE));
   g_object_class_install_property (object_class, PROP_PERCENTAGE,
                                    g_param_spec_string ("percentage",
-                                                        "Percentage", NULL,
+                                                        "The zoom factor expressed as a percentage", NULL,
                                                         "100%",
                                                         G_PARAM_READABLE));
 
@@ -116,8 +116,8 @@ gimp_zoom_model_init (GimpZoomModel *model)
   GimpZoomModelPrivate *priv = GIMP_ZOOM_MODEL_GET_PRIVATE (model);
 
   priv->value   = 1.0;
-  priv->minimum = 1.0 / 256.0;
-  priv->maximum = 256.0;
+  priv->minimum = ZOOM_MIN;
+  priv->maximum = ZOOM_MAX;
 }
 
 static void
@@ -171,8 +171,6 @@ gimp_zoom_model_get_property (GObject    *object,
                               GParamSpec *pspec)
 {
   GimpZoomModelPrivate *priv  = GIMP_ZOOM_MODEL_GET_PRIVATE (object);
-  gint                  numerator;
-  gint                  denominator;
   gchar                *tmp;
 
   switch (property_id)
@@ -190,15 +188,22 @@ gimp_zoom_model_get_property (GObject    *object,
       break;
 
     case PROP_FRACTION:
-      gimp_zoom_model_get_fraction (priv->value, &numerator, &denominator);
+      {
+        gint  numerator;
+        gint  denominator;
 
-      tmp = g_strdup_printf ("%d:%d", numerator, denominator);
-      g_value_set_string (value, tmp);
-      g_free (tmp);
+        gimp_zoom_model_get_fraction (GIMP_ZOOM_MODEL (object),
+                                      &numerator, &denominator);
+
+        tmp = g_strdup_printf ("%d:%d", numerator, denominator);
+        g_value_set_string (value, tmp);
+        g_free (tmp);
+      }
       break;
 
     case PROP_PERCENTAGE:
-      tmp = g_strdup_printf ("%d%%", (gint) (priv->value * 100.0));
+      tmp = g_strdup_printf (priv->value >= 0.15 ? "%.0f%%" : "%.2f%%",
+                             priv->value * 100.0);
       g_value_set_string (value, tmp);
       g_free (tmp);
       break;
@@ -214,18 +219,8 @@ gimp_zoom_model_zoom_in (GimpZoomModel *model)
 {
   GimpZoomModelPrivate *priv = GIMP_ZOOM_MODEL_GET_PRIVATE (model);
 
-  g_return_if_fail (GIMP_IS_ZOOM_MODEL (model));
-
-  if (priv->value < priv->maximum);
-    {
-      gdouble scale = gimp_zoom_model_zoom_step (GIMP_ZOOM_IN, priv->value);
-
-      priv->value = CLAMP (scale, priv->minimum, priv->maximum);
-
-      g_object_notify (G_OBJECT (model), "value");
-      g_object_notify (G_OBJECT (model), "fraction");
-      g_object_notify (G_OBJECT (model), "percentage");
-    }
+  if (priv->value < priv->maximum)
+    gimp_zoom_model_zoom (model, GIMP_ZOOM_IN, 0.0);
 }
 
 static void
@@ -233,18 +228,8 @@ gimp_zoom_model_zoom_out (GimpZoomModel *model)
 {
   GimpZoomModelPrivate *priv = GIMP_ZOOM_MODEL_GET_PRIVATE (model);
 
-  g_return_if_fail (GIMP_IS_ZOOM_MODEL (model));
-
   if (priv->value > priv->minimum)
-    {
-      gdouble scale = gimp_zoom_model_zoom_step (GIMP_ZOOM_OUT, priv->value);
-
-      priv->value = CLAMP (scale, priv->minimum, priv->maximum);
-
-      g_object_notify (G_OBJECT (model), "value");
-      g_object_notify (G_OBJECT (model), "fraction");
-      g_object_notify (G_OBJECT (model), "percentage");
-    }
+    gimp_zoom_model_zoom (model, GIMP_ZOOM_OUT, 0.0);
 }
 
 /**
@@ -278,6 +263,7 @@ gimp_zoom_model_set_range (GimpZoomModel *model,
                            gdouble        min,
                            gdouble        max)
 {
+  g_return_if_fail (GIMP_IS_ZOOM_MODEL (model));
   g_return_if_fail (min < max);
   g_return_if_fail (min >= ZOOM_MIN);
   g_return_if_fail (max <= ZOOM_MAX);
@@ -289,10 +275,33 @@ gimp_zoom_model_set_range (GimpZoomModel *model,
 }
 
 /**
+ * gimp_zoom_model_zoom:
+ * @model:     a #GimpZoomModel
+ * @zoom_type: the #GimpZoomType
+ * @scale:     ignored unless @zoom_type == %GIMP_ZOOM_TO
+ *
+ * Since GIMP 2.4
+ **/
+void
+gimp_zoom_model_zoom (GimpZoomModel *model,
+                      GimpZoomType   zoom_type,
+                      gdouble        scale)
+{
+  g_return_if_fail (GIMP_IS_ZOOM_MODEL (model));
+
+  if (zoom_type != GIMP_ZOOM_TO)
+    scale = gimp_zoom_model_get_factor (model);
+
+  g_object_set (model,
+                "value", gimp_zoom_model_zoom_step (zoom_type, scale),
+                NULL);
+}
+
+/**
  * gimp_zoom_model_get_factor:
  * @model: a #GimpZoomModel
  *
- * Retrieve the current zoom factor of @model.
+ * Retrieves the current zoom factor of @model.
  *
  * Return value: the current scale factor
  *
@@ -301,82 +310,37 @@ gimp_zoom_model_set_range (GimpZoomModel *model,
 gdouble
 gimp_zoom_model_get_factor (GimpZoomModel *model)
 {
-  GimpZoomModelPrivate *priv = GIMP_ZOOM_MODEL_GET_PRIVATE (model);
-
   g_return_val_if_fail (GIMP_IS_ZOOM_MODEL (model), 1.0);
 
-  return priv->value;
+  return GIMP_ZOOM_MODEL_GET_PRIVATE (model)->value;
 }
 
-/**
- * gimp_zoom_widget_new:
- * @model: a #GimpZoomModel
- * @type: the type of widget to create
- *
- * Creates a new widget to interact with the #GimpZoomModel.
- *
- * Return value: a new #GtkWidget.
- *
- * Since GIMP 2.4
- **/
-GtkWidget *
-gimp_zoom_widget_new (GimpZoomModel      *model,
-                      GimpZoomWidgetType  type)
-{
-  GtkWidget *button;
-  GtkWidget *image;
-
-  g_return_val_if_fail (GIMP_IS_ZOOM_MODEL (model), NULL);
-
-  switch (type)
-    {
-    case GIMP_ZOOM_IN_BUTTON:
-      button = gtk_button_new ();
-      image = gtk_image_new_from_stock (GTK_STOCK_ZOOM_IN,
-                                        GTK_ICON_SIZE_SMALL_TOOLBAR);
-      gtk_container_add (GTK_CONTAINER (button), image);
-      gtk_widget_show (image);
-      g_signal_connect_swapped (button, "clicked",
-                                G_CALLBACK (gimp_zoom_model_zoom_in),
-                                model);
-      return button;
-
-    case GIMP_ZOOM_OUT_BUTTON:
-      button = gtk_button_new ();
-      image = gtk_image_new_from_stock (GTK_STOCK_ZOOM_OUT,
-                                        GTK_ICON_SIZE_SMALL_TOOLBAR);
-      gtk_container_add (GTK_CONTAINER (button), image);
-      gtk_widget_show (image);
-      g_signal_connect_swapped (button, "clicked",
-                                G_CALLBACK (gimp_zoom_model_zoom_out),
-                                model);
-      return button;
-    }
-
-  return NULL;
-}
 
 /**
  * gimp_zoom_model_get_fraction
- * @zoom_factor: a scale factor
- * @numerator: return location for numerator
+ * @model:       a #GimpZoomModel
+ * @numerator:   return location for numerator
  * @denominator: return location for denominator
  *
- * Utility function that expresses @zoom_factor as a fraction.
+ * Retrieves the current zoom factor of @model as a fraction.
  *
  * Since GIMP 2.4
  **/
 void
-gimp_zoom_model_get_fraction (gdouble  zoom_factor,
-                              gint    *numerator,
-                              gint    *denominator)
+gimp_zoom_model_get_fraction (GimpZoomModel *model,
+                              gint          *numerator,
+                              gint          *denominator)
 {
   gint     p0, p1, p2;
   gint     q0, q1, q2;
+  gdouble  zoom_factor;
   gdouble  remainder, next_cf;
   gboolean swapped = FALSE;
 
+  g_return_if_fail (GIMP_IS_ZOOM_MODEL (model));
   g_return_if_fail (numerator != NULL && denominator != NULL);
+
+  zoom_factor = gimp_zoom_model_get_factor (model);
 
   /* make sure that zooming behaves symmetrically */
   if (zoom_factor < 1.0)
@@ -446,6 +410,54 @@ gimp_zoom_model_get_fraction (gdouble  zoom_factor,
 }
 
 /**
+ * gimp_zoom_widget_new:
+ * @model: a #GimpZoomModel
+ * @type: the type of widget to create
+ *
+ * Creates a new widget to interact with the #GimpZoomModel.
+ *
+ * Return value: a new #GtkWidget.
+ *
+ * Since GIMP 2.4
+ **/
+GtkWidget *
+gimp_zoom_widget_new (GimpZoomModel      *model,
+                      GimpZoomWidgetType  type)
+{
+  GtkWidget *button;
+  GtkWidget *image;
+
+  g_return_val_if_fail (GIMP_IS_ZOOM_MODEL (model), NULL);
+
+  switch (type)
+    {
+    case GIMP_ZOOM_IN_BUTTON:
+      button = gtk_button_new ();
+      image = gtk_image_new_from_stock (GTK_STOCK_ZOOM_IN,
+                                        GTK_ICON_SIZE_SMALL_TOOLBAR);
+      gtk_container_add (GTK_CONTAINER (button), image);
+      gtk_widget_show (image);
+      g_signal_connect_swapped (button, "clicked",
+                                G_CALLBACK (gimp_zoom_model_zoom_in),
+                                model);
+      return button;
+
+    case GIMP_ZOOM_OUT_BUTTON:
+      button = gtk_button_new ();
+      image = gtk_image_new_from_stock (GTK_STOCK_ZOOM_OUT,
+                                        GTK_ICON_SIZE_SMALL_TOOLBAR);
+      gtk_container_add (GTK_CONTAINER (button), image);
+      gtk_widget_show (image);
+      g_signal_connect_swapped (button, "clicked",
+                                G_CALLBACK (gimp_zoom_model_zoom_out),
+                                model);
+      return button;
+    }
+
+  return NULL;
+}
+
+/**
  * gimp_zoom_model_zoom_step:
  * @zoom_type:
  * @scale: ignored unless @zoom_type == %GIMP_ZOOM_TO
@@ -467,9 +479,10 @@ gimp_zoom_model_zoom_step (GimpZoomType zoom_type,
    * sqrt(2)^k. This gives a smooth feeling regardless of the starting
    * zoom level.
    *
-   * Zooming in/out always jumps to a zoom step from the list above.
+   * Zooming in/out always jumps to a zoom step from the list below.
    * However, we try to guarantee a certain size of the step, to
    * avoid silly jumps from 101% to 100%.
+   *
    * The factor 1.1 is chosen a bit arbitrary, but feels better
    * than the geometric median of the zoom steps (2^(1/4)).
    */
@@ -496,8 +509,7 @@ gimp_zoom_model_zoom_step (GimpZoomType zoom_type,
     case GIMP_ZOOM_IN:
       scale *= ZOOM_MIN_STEP;
 
-      new_scale = presets[n_presets-1];
-
+      new_scale = presets[n_presets - 1];
       for (i = n_presets - 1; i >= 0 && presets[i] > scale; i--)
         new_scale = presets[i];
 
@@ -507,7 +519,6 @@ gimp_zoom_model_zoom_step (GimpZoomType zoom_type,
       scale /= ZOOM_MIN_STEP;
 
       new_scale = presets[0];
-
       for (i = 0; i < n_presets && presets[i] < scale; i++)
         new_scale = presets[i];
 

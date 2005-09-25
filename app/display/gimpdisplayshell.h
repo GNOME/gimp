@@ -22,32 +22,34 @@
 
 #include <gtk/gtkwindow.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 
 /* Apply to a float the same rounding mode used in the renderer */
 #define  PROJ_ROUND(coord) ((gint) ceil (coord))
 
 /* finding the effective screen resolution (double) */
-#define  SCREEN_XRES(s)   (s->dot_for_dot ? \
-                           s->gdisp->gimage->xresolution : s->monitor_xres)
-#define  SCREEN_YRES(s)   (s->dot_for_dot ? \
-                           s->gdisp->gimage->yresolution : s->monitor_yres)
+#define  SCREEN_XRES(s)   ((s)->dot_for_dot ? \
+                           (s)->gdisp->gimage->xresolution : (s)->monitor_xres)
+#define  SCREEN_YRES(s)   ((s)->dot_for_dot ? \
+                           (s)->gdisp->gimage->yresolution : (s)->monitor_yres)
 
 /* calculate scale factors (double) */
-#define  SCALEFACTOR_X(s) (s->scale * SCREEN_XRES(s) / \
-			   s->gdisp->gimage->xresolution)
-#define  SCALEFACTOR_Y(s) (s->scale * SCREEN_YRES(s) / \
-			   s->gdisp->gimage->yresolution)
+#define  SCALEFACTOR_X(s) (gimp_zoom_model_get_factor ((s)->zoom) \
+                           * SCREEN_XRES(s) / (s)->gdisp->gimage->xresolution)
+#define  SCALEFACTOR_Y(s) (gimp_zoom_model_get_factor ((s)->zoom) \
+                           * SCREEN_YRES(s) / (s)->gdisp->gimage->yresolution)
 
 /* scale values */
-#define  SCALEX(s,x)      PROJ_ROUND (x * SCALEFACTOR_X(s))
-#define  SCALEY(s,y)      PROJ_ROUND (y * SCALEFACTOR_Y(s))
+#define  SCALEX(s,x)      PROJ_ROUND ((x) * SCALEFACTOR_X(s))
+#define  SCALEY(s,y)      PROJ_ROUND ((y) * SCALEFACTOR_Y(s))
 
 /* unscale values */
-#define  UNSCALEX(s,x)    ((gint) (x / SCALEFACTOR_X(s)))
-#define  UNSCALEY(s,y)    ((gint) (y / SCALEFACTOR_Y(s)))
+#define  UNSCALEX(s,x)    ((gint) ((x) / SCALEFACTOR_X(s)))
+#define  UNSCALEY(s,y)    ((gint) ((y) / SCALEFACTOR_Y(s)))
 /* (and float-returning versions) */
-#define  FUNSCALEX(s,x)   (x / SCALEFACTOR_X(s))
-#define  FUNSCALEY(s,y)   (y / SCALEFACTOR_Y(s))
+#define  FUNSCALEX(s,x)   ((x) / SCALEFACTOR_X(s))
+#define  FUNSCALEY(s,y)   ((y) / SCALEFACTOR_Y(s))
 
 
 #define GIMP_TYPE_DISPLAY_SHELL            (gimp_display_shell_get_type ())
@@ -74,7 +76,7 @@ struct _GimpDisplayShell
 
   GimpUnit          unit;
 
-  gdouble           scale;             /*  scale factor from original raw image    */
+  GimpZoomModel    *zoom;
   gdouble           other_scale;       /*  scale factor entered in Zoom->Other     */
   gboolean          dot_for_dot;       /*  is monitor resolution being ignored?    */
 

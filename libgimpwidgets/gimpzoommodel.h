@@ -53,22 +53,25 @@ struct _GimpZoomModelClass
 };
 
 
-GType          gimp_zoom_model_get_type     (void) G_GNUC_CONST;
+GType           gimp_zoom_model_get_type     (void) G_GNUC_CONST;
 
-GimpZoomModel *gimp_zoom_model_new          (void);
-void           gimp_zoom_model_set_range    (GimpZoomModel      *model,
-                                             gdouble             min,
-                                             gdouble             max);
-gdouble        gimp_zoom_model_get_factor   (GimpZoomModel      *model);
+GimpZoomModel * gimp_zoom_model_new          (void);
+void            gimp_zoom_model_set_range    (GimpZoomModel      *model,
+                                              gdouble             min,
+                                              gdouble             max);
+void            gimp_zoom_model_zoom         (GimpZoomModel      *model,
+                                              GimpZoomType        zoom_type,
+                                              gdouble             scale);
+gdouble         gimp_zoom_model_get_factor   (GimpZoomModel      *model);
+void            gimp_zoom_model_get_fraction (GimpZoomModel      *model,
+                                              gint               *numerator,
+                                              gint               *denominator);
 
-GtkWidget     *gimp_zoom_widget_new         (GimpZoomModel      *model,
-                                             GimpZoomWidgetType  type);
+GtkWidget     * gimp_zoom_widget_new         (GimpZoomModel      *model,
+                                              GimpZoomWidgetType  type);
 
-void           gimp_zoom_model_get_fraction (gdouble             zoom_factor,
-                                             gint               *numerator,
-                                             gint               *denominator);
-gdouble        gimp_zoom_model_zoom_step    (GimpZoomType        zoom_type,
-                                             gdouble             scale);
+gdouble         gimp_zoom_model_zoom_step    (GimpZoomType        zoom_type,
+                                              gdouble             scale);
 
 G_END_DECLS
 

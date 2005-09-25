@@ -26,6 +26,7 @@
 
 #include "libgimpmath/gimpmath.h"
 #include "libgimpbase/gimpbase.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
 
@@ -1048,8 +1049,9 @@ gimp_edit_selection_tool_key_press (GimpTool    *tool,
     return FALSE;
 
   /*  adapt arrow velocity to the zoom factor  */
-  velocity = ARROW_VELOCITY / GIMP_DISPLAY_SHELL (gdisp->shell)->scale;
-  velocity = MAX (1, velocity);
+  velocity = (ARROW_VELOCITY /
+              gimp_zoom_model_get_factor (GIMP_DISPLAY_SHELL (gdisp->shell)->zoom));
+  velocity = MAX (1.0, velocity);
 
   /*  check for mask translation first because the translate_layer
    *  modifiers match the translate_mask ones...

@@ -588,11 +588,15 @@ view_actions_set_zoom (GimpActionGroup  *group,
                        GimpDisplayShell *shell)
 {
   const gchar *action = NULL;
-  guint        scale;
-  gchar        buf[16];
+  gchar       *str;
   gchar       *label;
+  guint        scale;
 
-  scale = ROUND (shell->scale * 1000);
+  g_object_get (shell->zoom,
+                "percentage", &str,
+                NULL);
+
+  scale = ROUND (gimp_zoom_model_get_factor (shell->zoom) * 1000);
 
   switch (scale)
     {
@@ -608,29 +612,27 @@ view_actions_set_zoom (GimpActionGroup  *group,
     case    62:  action = "view-zoom-1-16";  break;
     }
 
-  g_snprintf (buf, sizeof (buf),
-              shell->scale >= 0.15 ? "%.0f%%" : "%.2f%%",
-              shell->scale * 100.0);
-
-  if (!action)
+  if (! action)
     {
       action = "view-zoom-other";
 
-      label = g_strdup_printf (_("Othe_r (%s) ..."), buf);
+      label = g_strdup_printf (_("Othe_r (%s) ..."), str);
       gimp_action_group_set_action_label (group, action, label);
       g_free (label);
 
-      shell->other_scale = shell->scale;
+      shell->other_scale = gimp_zoom_model_get_factor (shell->zoom);
     }
 
   gimp_action_group_set_action_active (group, action, TRUE);
 
-  label = g_strdup_printf (_("_Zoom (%s)"), buf);
+  label = g_strdup_printf (_("_Zoom (%s)"), str);
   gimp_action_group_set_action_label (group, "view-zoom-menu", label);
   g_free (label);
 
   /* flag as dirty */
   shell->other_scale = - fabs (shell->other_scale);
+
+  g_free (str);
 }
 
 static void

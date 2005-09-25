@@ -746,7 +746,7 @@ gimp_statusbar_shell_scaled (GimpDisplayShell *shell,
   g_signal_handlers_block_by_func (statusbar->scale_combo,
                                    gimp_statusbar_scale_changed, statusbar);
   gimp_scale_combo_box_set_scale (GIMP_SCALE_COMBO_BOX (statusbar->scale_combo),
-                                  shell->scale);
+                                  gimp_zoom_model_get_factor (shell->zoom));
   g_signal_handlers_unblock_by_func (statusbar->scale_combo,
                                      gimp_statusbar_scale_changed, statusbar);
 

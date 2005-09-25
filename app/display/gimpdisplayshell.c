@@ -74,7 +74,6 @@
 enum
 {
   PROP_0,
-  PROP_SCALE,
   PROP_UNIT
 };
 
@@ -208,11 +207,6 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
   klass->scrolled              = NULL;
   klass->reconnect             = NULL;
 
-  g_object_class_install_property (object_class, PROP_SCALE,
-                                   g_param_spec_double ("scale", NULL, NULL,
-                                                        1.0 / 256, 256, 1.0,
-                                                        G_PARAM_READWRITE));
-
   g_object_class_install_property (object_class, PROP_UNIT,
                                    gimp_param_spec_unit ("unit", NULL, NULL,
                                                          TRUE, FALSE,
@@ -232,7 +226,7 @@ gimp_display_shell_init (GimpDisplayShell *shell)
 
   shell->unit                   = GIMP_UNIT_PIXEL;
 
-  shell->scale                  = 1.0;
+  shell->zoom                   = gimp_zoom_model_new ();
   shell->other_scale            = 0.0;
   shell->dot_for_dot            = TRUE;
 
@@ -358,6 +352,8 @@ gimp_display_shell_finalize (GObject *object)
 {
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (object);
 
+  g_object_unref (shell->zoom);
+
   if (shell->options)
     g_object_unref (shell->options);
 
@@ -449,16 +445,10 @@ gimp_display_shell_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_SCALE:
-      if (shell->canvas)
-        gimp_display_shell_scale (shell,
-                                  GIMP_ZOOM_TO, g_value_get_double (value));
-      else
-        shell->scale = g_value_get_double (value);
-      break;
     case PROP_UNIT:
       gimp_display_shell_set_unit (shell, g_value_get_int (value));
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -475,12 +465,10 @@ gimp_display_shell_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_SCALE:
-      g_value_set_double (value, shell->scale);
-      break;
     case PROP_UNIT:
       g_value_set_int (value, shell->unit);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -602,8 +590,9 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
   shell = g_object_new (GIMP_TYPE_DISPLAY_SHELL,
                         "gravity", GDK_GRAVITY_CENTER,
                         "unit",    unit,
-                        "scale",   scale,
                         NULL);
+
+  gimp_zoom_model_zoom (shell->zoom, GIMP_ZOOM_TO, scale);
 
   shell->gdisp = gdisp;
 
@@ -647,18 +636,23 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
       /*  Limit to the size of the screen...  */
       if (n_width > s_width || n_height > s_height)
         {
-          new_scale = shell->scale * MIN (((gdouble) s_height) / n_height,
-                                          ((gdouble) s_width) / n_width);
+          gdouble current = gimp_zoom_model_get_factor (shell->zoom);
+
+          new_scale = current * MIN (((gdouble) s_height) / n_height,
+                                     ((gdouble) s_width) / n_width);
 
           new_scale = gimp_zoom_model_zoom_step (GIMP_ZOOM_OUT, new_scale);
 
-          /* since zooming out might skip a zoom step we zoom in again
-           * and test if we are small enough. */
-          shell->scale = gimp_zoom_model_zoom_step (GIMP_ZOOM_IN, new_scale);
+          /* Since zooming out might skip a zoom step we zoom in again
+           * and test if we are small enough.
+           */
+          gimp_zoom_model_zoom (shell->zoom, GIMP_ZOOM_TO,
+                                gimp_zoom_model_zoom_step (GIMP_ZOOM_IN,
+                                                           new_scale));
 
           if (SCALEX (shell, image_width) > s_width ||
               SCALEY (shell, image_height) > s_height)
-            shell->scale = new_scale;
+            gimp_zoom_model_zoom (shell->zoom, GIMP_ZOOM_TO, new_scale);
 
           n_width  = SCALEX (shell, image_width);
           n_height = SCALEY (shell, image_height);

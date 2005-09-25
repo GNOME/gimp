@@ -162,7 +162,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
   image = shell->gdisp->gimage;
   gimp  = image->gimp;
 
-  gimp_zoom_model_get_fraction (shell->scale, &num, &denom);
+  gimp_zoom_model_get_fraction (shell->zoom, &num, &denom);
 
   while (i < title_len && *format)
     {
@@ -247,9 +247,12 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 	      break;
 
 	    case 'z': /* user zoom factor (percentage) */
-	      i += print (title, title_len, i,
-                          shell->scale >= 0.15 ? "%.0f" : "%.2f",
-                          100 * shell->scale);
+              {
+                gdouble  scale = gimp_zoom_model_get_factor (shell->zoom);
+
+                i += print (title, title_len, i,
+                            scale >= 0.15 ? "%.0f" : "%.2f", 100.0 * scale);
+              }
 	      break;
 
 	    case 'D': /* dirty flag */
@@ -278,14 +281,12 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 
 	    case 'B': /* dirty flag (long) */
 	      if (image->dirty)
-                i += print (title, title_len, i, "%s",
-                            _("(modified)"));
+                i += print (title, title_len, i, "%s", _("(modified)"));
 	      break;
 
 	    case 'A': /* clean flag (long) */
 	      if (! image->dirty)
-                i += print (title, title_len, i, "%s",
-                            _("(clean)"));
+                i += print (title, title_len, i, "%s", _("(clean)"));
 	      break;
 
             case 'm': /* memory used by image */

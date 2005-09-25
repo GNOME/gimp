@@ -1,3 +1,24 @@
+2005-09-25  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpwidgets.def
+	* libgimpwidgets/gimpzoommodel.[ch]: added gimp_zoom_model_zoom()
+	and changed gimp_zoom_model_get_fraction() to take a model instead
+	of the zoom factor.
+
+	* app/display/gimpdisplayshell.[ch]: use a GimpZoomModel for the
+	display scale factor.
+
+	* app/actions/image-commands.c
+	* app/actions/view-actions.c
+	* app/actions/view-commands.c
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell-scale.c
+	* app/display/gimpdisplayshell-title.c
+	* app/display/gimpnavigationeditor.c
+	* app/display/gimpstatusbar.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimpmagnifytool.c: changed accordingly.
+
 2005-09-25  Karine Delvare  <kdelvare@nerim.net>
 
 	* app/tools/gimpcroptool.c: fixed assignment of local variable

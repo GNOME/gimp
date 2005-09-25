@@ -362,7 +362,8 @@ image_duplicate_cmd_callback (GtkAction *action,
 
   gimp_create_display (new_gimage->gimp,
                        new_gimage,
-                       shell->unit, shell->scale);
+                       shell->unit,
+                       gimp_zoom_model_get_factor (shell->zoom));
 
   g_object_unref (new_gimage);
 }

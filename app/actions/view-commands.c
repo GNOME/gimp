@@ -85,7 +85,7 @@ view_new_cmd_callback (GtkAction *action,
 
   gimp_create_display (gdisp->gimage->gimp,
                        gdisp->gimage,
-                       shell->unit, shell->scale);
+                       shell->unit, gimp_zoom_model_get_factor (shell->zoom));
 }
 
 void
@@ -125,12 +125,9 @@ view_zoom_cmd_callback (GtkAction *action,
 {
   GimpDisplay      *gdisp;
   GimpDisplayShell *shell;
-  gdouble           scale;
   return_if_no_display (gdisp, data);
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
-  scale = shell->scale;
 
   switch ((GimpActionSelectType) value)
     {
@@ -159,18 +156,22 @@ view_zoom_cmd_callback (GtkAction *action,
       break;
 
     default:
-      scale = action_select_value ((GimpActionSelectType) value,
-                                   scale,
-                                   0.0, 512.0,
-                                   1.0, 16.0,
-                                   FALSE);
+      {
+        gdouble scale = gimp_zoom_model_get_factor (shell->zoom);
 
-      /* min = 1.0 / 256,  max = 256.0                */
-      /* scale = min *  (max / min)**(i/n), i = 0..n  */
-      scale = pow (65536.0, scale / 512.0) / 256.0;
+        scale = action_select_value ((GimpActionSelectType) value,
+                                     scale,
+                                     0.0, 512.0,
+                                     1.0, 16.0,
+                                     FALSE);
 
-      gimp_display_shell_scale (shell, GIMP_ZOOM_TO, scale);
-      break;
+        /* min = 1.0 / 256,  max = 256.0                */
+        /* scale = min *  (max / min)**(i/n), i = 0..n  */
+        scale = pow (65536.0, scale / 512.0) / 256.0;
+
+        gimp_display_shell_scale (shell, GIMP_ZOOM_TO, scale);
+        break;
+      }
     }
 }
 
@@ -190,7 +191,7 @@ view_zoom_explicit_cmd_callback (GtkAction *action,
 
   if (value != 0 /* not Other... */)
     {
-      if (fabs (value - shell->scale) > 0.0001)
+      if (fabs (value - gimp_zoom_model_get_factor (shell->zoom)) > 0.0001)
         gimp_display_shell_scale (shell, GIMP_ZOOM_TO, (gdouble) value / 10000);
     }
 }
@@ -209,7 +210,7 @@ view_zoom_other_cmd_callback (GtkAction *action,
    * view_actions_set_zoom()
    */
   if (gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action)) &&
-      shell->scale != shell->other_scale)
+      shell->other_scale != gimp_zoom_model_get_factor (shell->zoom))
     {
       gimp_display_shell_scale_dialog (shell);
     }

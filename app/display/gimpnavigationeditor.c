@@ -605,8 +605,7 @@ static void
 gimp_navigation_editor_zoom_adj_changed (GtkAdjustment        *adj,
                                          GimpNavigationEditor *editor)
 {
-  gimp_display_shell_scale (editor->shell, GIMP_ZOOM_TO,
-                            pow (2.0, adj->value));
+  gimp_display_shell_scale (editor->shell, GIMP_ZOOM_TO, pow (2.0, adj->value));
 }
 
 static void
@@ -615,21 +614,20 @@ gimp_navigation_editor_shell_scaled (GimpDisplayShell     *shell,
 {
   if (editor->zoom_label)
     {
-      gchar scale_str[MAX_SCALE_BUF];
+      gchar *str;
 
-      /* Update the zoom scale string */
-      g_snprintf (scale_str, sizeof (scale_str),
-                  shell->scale >= 0.15 ? "%.0f%%" : "%.2f%%",
-                  editor->shell->scale * 100);
-
-      gtk_label_set_text (GTK_LABEL (editor->zoom_label), scale_str);
+      g_object_get (shell->zoom,
+                    "percentage", &str,
+                    NULL);
+      gtk_label_set_text (GTK_LABEL (editor->zoom_label), str);
+      g_free (str);
     }
 
   if (editor->zoom_adjustment)
     {
       gdouble val;
 
-      val = log (CLAMP (editor->shell->scale, 1.0 / 256, 256.0) ) / G_LN2;
+      val = log (gimp_zoom_model_get_factor (shell->zoom)) / G_LN2;
 
       g_signal_handlers_block_by_func (editor->zoom_adjustment,
                                        gimp_navigation_editor_zoom_adj_changed,

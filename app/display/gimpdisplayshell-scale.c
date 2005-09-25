@@ -49,6 +49,7 @@ typedef struct _ScaleDialogData ScaleDialogData;
 struct _ScaleDialogData
 {
   GimpDisplayShell *shell;
+  GimpZoomModel    *model;
   GtkObject        *scale_adj;
   GtkObject        *num_adj;
   GtkObject        *denom_adj;
@@ -280,6 +281,7 @@ gimp_display_shell_scale_to (GimpDisplayShell *shell,
                              gdouble           y)
 {
   GimpDisplayConfig *config;
+  gdouble            current;
   gdouble            offset_x;
   gdouble            offset_y;
 
@@ -288,14 +290,16 @@ gimp_display_shell_scale_to (GimpDisplayShell *shell,
   if (! shell->gdisp)
     return;
 
+  current = gimp_zoom_model_get_factor (shell->zoom);
+
   offset_x = shell->offset_x + x;
   offset_y = shell->offset_y + y;
 
-  offset_x /= shell->scale;
-  offset_y /= shell->scale;
+  offset_x /= current;
+  offset_y /= current;
 
   if (zoom_type != GIMP_ZOOM_TO)
-    scale = gimp_zoom_model_zoom_step (zoom_type, shell->scale);
+    scale = gimp_zoom_model_zoom_step (zoom_type, current);
 
   offset_x *= scale;
   offset_y *= scale;
@@ -377,15 +381,16 @@ gimp_display_shell_scale_by_values (GimpDisplayShell *shell,
   /*  Abort early if the values are all setup already. We don't
    *  want to inadvertently resize the window (bug #164281).
    */
-  if (shell->scale    == scale    &&
-      shell->offset_x == offset_x &&
+  if (gimp_zoom_model_get_factor (shell->zoom) == scale &&
+      shell->offset_x == offset_x                       &&
       shell->offset_y == offset_y)
     return;
 
   /* freeze the active tool */
   gimp_display_shell_pause (shell);
 
-  shell->scale    = scale;
+  gimp_zoom_model_zoom (shell->zoom, GIMP_ZOOM_TO, scale);
+
   shell->offset_x = offset_x;
   shell->offset_y = offset_y;
 
@@ -449,8 +454,18 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
       return;
     }
 
+  if (fabs (shell->other_scale) <= 0.0001)
+    {
+      /* other_scale not yet initialized */
+      shell->other_scale = gimp_zoom_model_get_factor (shell->zoom);
+    }
+
   data = g_new (ScaleDialogData, 1);
+
   data->shell = shell;
+  data->model = g_object_new (GIMP_TYPE_ZOOM_MODEL,
+                              "value", fabs (shell->other_scale),
+                              NULL);
 
   shell->scale_dialog =
     gimp_viewable_dialog_new (GIMP_VIEWABLE (shell->gdisp->gimage),
@@ -473,6 +488,9 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
 
   g_object_weak_ref (G_OBJECT (shell->scale_dialog),
                      (GWeakNotify) g_free, data);
+  g_object_weak_ref (G_OBJECT (shell->scale_dialog),
+                     (GWeakNotify) g_object_unref, data->model);
+
   g_object_add_weak_pointer (G_OBJECT (shell->scale_dialog),
                              (gpointer *) &shell->scale_dialog);
 
@@ -499,11 +517,7 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
                              _("Zoom ratio:"), 0.0, 0.5,
                              hbox, 1, FALSE);
 
-  if (fabs (shell->other_scale) <= 0.0001)
-    shell->other_scale = shell->scale;   /* other_scale not yet initialized */
-
-  gimp_zoom_model_get_fraction (fabs (shell->other_scale),
-                                &num, &denom);
+  gimp_zoom_model_get_fraction (data->model, &num, &denom);
 
   spin = gimp_spin_button_new (&data->num_adj,
                                num, 1, 256,
@@ -582,7 +596,7 @@ static void
 update_zoom_values (GtkAdjustment   *adj,
                     ScaleDialogData *dialog)
 {
-  gint num, denom;
+  gint    num, denom;
   gdouble scale;
 
   g_signal_handlers_block_by_func (GTK_ADJUSTMENT (dialog->scale_adj),
@@ -601,7 +615,8 @@ update_zoom_values (GtkAdjustment   *adj,
     {
       scale = gtk_adjustment_get_value (GTK_ADJUSTMENT (dialog->scale_adj));
 
-      gimp_zoom_model_get_fraction (scale / 100.0, &num, &denom);
+      gimp_zoom_model_zoom (dialog->model, GIMP_ZOOM_TO, scale / 100.0);
+      gimp_zoom_model_get_fraction (dialog->model, &num, &denom);
 
       gtk_adjustment_set_value (GTK_ADJUSTMENT (dialog->num_adj), num);
       gtk_adjustment_set_value (GTK_ADJUSTMENT (dialog->denom_adj), denom);

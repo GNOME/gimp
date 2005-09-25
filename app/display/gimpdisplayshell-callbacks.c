@@ -321,7 +321,7 @@ gimp_display_shell_canvas_size_allocate (GtkWidget        *widget,
           allocation->width  > 64 &&
           allocation->height > 64)
         {
-          gdouble scale = shell->scale;
+          gdouble scale = gimp_zoom_model_get_factor (shell->zoom);
           gint    offset_x;
           gint    offset_y;
 
@@ -336,7 +336,8 @@ gimp_display_shell_canvas_size_allocate (GtkWidget        *widget,
           offset_x = UNSCALEX (shell, shell->offset_x);
           offset_y = UNSCALEX (shell, shell->offset_y);
 
-          shell->scale    = scale;
+          gimp_zoom_model_zoom (shell->zoom, GIMP_ZOOM_TO, scale);
+
           shell->offset_x = SCALEX (shell, offset_x);
           shell->offset_y = SCALEY (shell, offset_y);
         }

@@ -333,5 +333,6 @@ EXPORTS
 	gimp_zoom_model_get_type
 	gimp_zoom_model_new
 	gimp_zoom_model_set_range
+	gimp_zoom_model_zoom
 	gimp_zoom_model_zoom_step
 	gimp_zoom_widget_new
