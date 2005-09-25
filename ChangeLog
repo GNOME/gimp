@@ -1,3 +1,18 @@
+2005-09-25  Carol Spears  <carol@gimp.org>
+
+	* plug-ins/common/max_rgb.c moved menu entry from Colors to
+        Colors/Info.
+
+	* plug-ins/common/smooth_palette.c moved menu entry from Colors to
+        Colors/Info.
+
+	* plug-ins/common/semiflatten.c removed menu entry from Colors and
+        added it to Filters/Web
+
+	* plug-ins/pygimp/plug-ins/py-slice.py added the patch from
+        Joao S. O. Bueno Calligaris that was attached to 
+        http://bugzilla.gnome.org/show_bug.cgi?id=159564
+
 2005-09-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/edit-actions.c
@@ -24,6 +39,7 @@
 	* app/tools/gimpforegroundselecttool.c: changed tooltip, the tool
 	doesn't any longer extract single objects only.
 	
+>>>>>>> 1.11734
 2005-09-25  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpwidgetsenums.[ch]: removed GimpZoomWidgetType.
