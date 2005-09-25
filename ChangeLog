@@ -1,3 +1,8 @@
+2005-09-26  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/script-fu/scripts/fade-outline.scm: renamed to
+	"Fade to Layer Mask..." and moved to the Select menu.
+
 2005-09-25  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/max_rgb.c: moved it back, the plug-in changes

@@ -154,7 +154,7 @@
 
 
 (script-fu-register "script-fu-fade-outline"
-		    _"_Fade Outline..."
+		    _"_Fade to Layer Mask..."
 		    "Blend the Layers outline border from one alpha value (opaque) to another (transparent) by generating a Layermask"
 		    "Wolfgang Hofer <hof@hotbot.com>"
 		    "Wolfgang Hofer"
@@ -170,4 +170,4 @@
 		    SF-TOGGLE     _"Clear unselected maskarea" TRUE)
 
 (script-fu-menu-register "script-fu-fade-outline"
-			 "<Image>/Filters/Selection")
+			 "<Image>/Select")
