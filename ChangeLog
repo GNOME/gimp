@@ -38,8 +38,7 @@
 
 	* app/tools/gimpforegroundselecttool.c: changed tooltip, the tool
 	doesn't any longer extract single objects only.
-	
->>>>>>> 1.11734
+
 2005-09-25  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpwidgetsenums.[ch]: removed GimpZoomWidgetType.
