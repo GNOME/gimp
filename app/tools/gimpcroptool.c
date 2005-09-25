@@ -227,21 +227,25 @@ gimp_crop_tool_execute (GimpRectangleTool  *rectangle,
   max_x = gimage->width;
   max_y = gimage->height;
 
-  rectangle_exists == (x <= max_x && y <= max_y
-                       && x + w >= 0 && y + h >= 0
-                       && w > 0 && h > 0);
+  rectangle_exists = (x <= max_x && y <= max_y &&
+                      x + w >= 0 && y + h >= 0 &&
+                      w > 0 && h > 0);
+
   if (x < 0)
     {
       w += x;
       x = 0;
     }
+
   if (y < 0)
     {
       h += y;
       y = 0;
     }
+
   if (x + w > max_x)
     w = max_x - x;
+
   if (y + h > max_y)
     h = max_y - y;
 
