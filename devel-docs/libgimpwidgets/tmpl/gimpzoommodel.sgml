@@ -48,6 +48,19 @@ GimpZoomModel
 
 </para>
 
+<!-- ##### ENUM GimpZoomType ##### -->
+<para>
+
+</para>
+
+@GIMP_ZOOM_IN: 
+@GIMP_ZOOM_OUT: 
+@GIMP_ZOOM_IN_MORE: 
+@GIMP_ZOOM_OUT_MORE: 
+@GIMP_ZOOM_IN_MAX: 
+@GIMP_ZOOM_OUT_MAX: 
+@GIMP_ZOOM_TO: 
+
 <!-- ##### FUNCTION gimp_zoom_model_new ##### -->
 <para>
 
@@ -66,6 +79,16 @@ GimpZoomModel
 @max: 
 
 
+<!-- ##### FUNCTION gimp_zoom_model_zoom ##### -->
+<para>
+
+</para>
+
+@model: 
+@zoom_type: 
+@scale: 
+
+
 <!-- ##### FUNCTION gimp_zoom_model_get_factor ##### -->
 <para>
 
@@ -80,18 +103,19 @@ GimpZoomModel
 
 </para>
 
-@zoom_factor: 
+@model: 
 @numerator: 
 @denominator: 
 
 
-<!-- ##### FUNCTION gimp_zoom_widget_new ##### -->
+<!-- ##### FUNCTION gimp_zoom_button_new ##### -->
 <para>
 
 </para>
 
 @model: 
-@type: 
+@zoom_type: 
+@icon_size: 
 @Returns: 
 
 

@@ -7,6 +7,7 @@
 #include <string.h>
 
 #include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #include "mapobject_apply.h"
 #include "mapobject_main.h"

@@ -90,16 +90,6 @@ typedef enum
 } GimpSizeEntryUpdatePolicy;
 
 
-#define GIMP_TYPE_ZOOM_WIDGET_TYPE (gimp_zoom_model_widget_type_get_type ())
-
-GType gimp_zoom_widget_type_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_ZOOM_IN_BUTTON,
-  GIMP_ZOOM_OUT_BUTTON
-} GimpZoomWidgetType;
-
 #define GIMP_TYPE_ZOOM_TYPE (gimp_zoom_type_get_type ())
 
 GType gimp_zoom_type_get_type (void) G_GNUC_CONST;

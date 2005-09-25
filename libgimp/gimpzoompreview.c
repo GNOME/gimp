@@ -108,15 +108,15 @@ gimp_zoom_preview_init (GimpZoomPreview *preview)
   gtk_widget_show (button_bar);
 
   /* zoom out */
-  button = gimp_zoom_widget_new (priv->zoom, GIMP_ZOOM_OUT_BUTTON);
-  gtk_box_pack_start (GTK_BOX (button_bar), button,
-                      FALSE, FALSE, 0);
+  button = gimp_zoom_button_new (priv->zoom,
+                                 GIMP_ZOOM_OUT, GTK_ICON_SIZE_SMALL_TOOLBAR);
+  gtk_box_pack_start (GTK_BOX (button_bar), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   /* zoom in */
-  button = gimp_zoom_widget_new (priv->zoom, GIMP_ZOOM_IN_BUTTON);
-  gtk_box_pack_start (GTK_BOX (button_bar), button,
-                      FALSE, FALSE, 0);
+  button = gimp_zoom_button_new (priv->zoom,
+                                 GIMP_ZOOM_IN, GTK_ICON_SIZE_SMALL_TOOLBAR);
+  gtk_box_pack_start (GTK_BOX (button_bar), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   /* label */

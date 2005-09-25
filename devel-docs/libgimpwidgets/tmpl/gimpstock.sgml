@@ -156,16 +156,16 @@ RTL variant
 
 
 
-<!-- ##### MACRO GIMP_STOCK_QMASK_OFF ##### -->
+<!-- ##### MACRO GIMP_STOCK_QUICK_MASK_OFF ##### -->
 <para xml:base="../../gimpstock.xml">
-<inlinegraphic fileref="stock-qmask-off-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-quick-mask-off-16.png" format="png"></inlinegraphic>
 </para>
 
 
 
-<!-- ##### MACRO GIMP_STOCK_QMASK_ON ##### -->
+<!-- ##### MACRO GIMP_STOCK_QUICK_MASK_ON ##### -->
 <para xml:base="../../gimpstock.xml">
-<inlinegraphic fileref="stock-qmask-on-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-quick-mask-on-16.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -1098,6 +1098,14 @@ RTL variant
 <para xml:base="../../gimpstock.xml">
 <inlinegraphic fileref="stock-tool-flip-22.png" format="png"></inlinegraphic>
 <inlinegraphic fileref="stock-tool-flip-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_FOREGROUND_SELECT ##### -->
+<para xml:base="../../gimpstock.xml">
+<inlinegraphic fileref="stock-tool-foreground-select-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-tool-foreground-select-16.png" format="png"></inlinegraphic>
 </para>
 
 

@@ -2,7 +2,7 @@
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpzoommodel.h
- * Copyright (C) 2005  David Odin <dindinx@gimp.org> 
+ * Copyright (C) 2005  David Odin <dindinx@gimp.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -67,8 +67,9 @@ void            gimp_zoom_model_get_fraction (GimpZoomModel      *model,
                                               gint               *numerator,
                                               gint               *denominator);
 
-GtkWidget     * gimp_zoom_widget_new         (GimpZoomModel      *model,
-                                              GimpZoomWidgetType  type);
+GtkWidget     * gimp_zoom_button_new         (GimpZoomModel      *model,
+                                              GimpZoomType        zoom_type,
+                                              GtkIconSize         icon_size);
 
 gdouble         gimp_zoom_model_zoom_step    (GimpZoomType        zoom_type,
                                               gdouble             scale);

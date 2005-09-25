@@ -1,6 +1,12 @@
 2005-09-25  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/tmpl/gimpstock.sgml
+	* libgimpwidgets/tmpl/gimpzoommodel.sgml: updated.
+
+2005-09-25  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/libgimpwidgets-sections.txt
 	* libgimpwidgets/libgimpwidgets.types
 	* libgimpwidgets/tmpl/gimpzoommodel.sgml: added API docs for
 	GimpZoomModel.

@@ -1,3 +1,23 @@
+2005-09-25  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpwidgetsenums.[ch]: removed GimpZoomWidgetType.
+
+	* libgimpwidgets/gimpzoommodel.[ch]: removed gimp_zoom_widget_new()
+	in favor of gimp_zoom_button_new().
+
+	* libgimp/gimpzoompreview.c: changed accordingly.
+
+	* libgimpwidgets/gimpwidgets.def: updated.
+
+	* plug-ins/MapObject/mapobject_main.[ch]
+	* plug-ins/MapObject/mapobject_preview.c
+	* plug-ins/MapObject/mapobject_ui.c: use a GimpZoomModel and let
+	it create the zoom buttons.
+
+	* plug-ins/MapObject/mapobject_apply.c
+	* plug-ins/MapObject/mapobject_image.c
+	* plug-ins/MapObject/mapobject_shade.c: include "gimp/gimpui.h".
+
 2005-09-25  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/help/Makefile.am (gimp_help_lookup_LDADD): link

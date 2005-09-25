@@ -7,6 +7,7 @@
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #include "mapobject_main.h"
 #include "mapobject_ui.h"
@@ -394,12 +395,13 @@ void
 update_light (gint xpos,
 	      gint ypos)
 {
-  gint startx, starty, pw, ph;
+  gint    startx, starty, pw, ph;
+  gdouble zoom = gimp_zoom_model_get_factor (mapvals.zoom_model);
 
-  pw     = PREVIEW_WIDTH  >> mapvals.preview_zoom_factor;
-  ph     = PREVIEW_HEIGHT >> mapvals.preview_zoom_factor;
-  startx = (PREVIEW_WIDTH  - pw) >> 1;
-  starty = (PREVIEW_HEIGHT - ph) >> 1;
+  pw     = PREVIEW_WIDTH * zoom;
+  ph     = PREVIEW_HEIGHT * zoom;
+  startx = (PREVIEW_WIDTH  - pw) / 2;
+  starty = (PREVIEW_HEIGHT - ph) / 2;
 
   gimp_vector_2d_to_3d (startx, starty, pw, ph, xpos, ypos,
 			&mapvals.viewpoint, &mapvals.lightsource.position);
@@ -414,6 +416,7 @@ void
 draw_preview_image (gint docompute)
 {
   gint startx, starty, pw, ph;
+  gdouble   zoom;
   GdkColor  color;
 
   color.red   = 0x0;
@@ -429,10 +432,12 @@ draw_preview_image (gint docompute)
   gdk_gc_set_function (gc, GDK_COPY);
   linetab[0].x1 = -1;
 
-  pw = PREVIEW_WIDTH >> mapvals.preview_zoom_factor;
-  ph = PREVIEW_HEIGHT >> mapvals.preview_zoom_factor;
-  startx = (PREVIEW_WIDTH - pw) >> 1;
-  starty = (PREVIEW_HEIGHT - ph) >> 1;
+  zoom = gimp_zoom_model_get_factor (mapvals.zoom_model);
+
+  pw = PREVIEW_WIDTH * zoom;
+  ph = PREVIEW_HEIGHT * zoom;
+  startx = (PREVIEW_WIDTH - pw) / 2;
+  starty = (PREVIEW_HEIGHT - ph) / 2;
 
   if (docompute == TRUE)
     {
@@ -471,6 +476,7 @@ void
 draw_preview_wireframe (void)
 {
   gint startx, starty, pw, ph;
+  gdouble   zoom;
   GdkColor  color;
 
   color.red   = 0x0;
@@ -485,10 +491,12 @@ draw_preview_wireframe (void)
 
   gdk_gc_set_function (gc, GDK_INVERT);
 
-  pw     = PREVIEW_WIDTH  >> mapvals.preview_zoom_factor;
-  ph     = PREVIEW_HEIGHT >> mapvals.preview_zoom_factor;
-  startx = (PREVIEW_WIDTH  - pw) >> 1;
-  starty = (PREVIEW_HEIGHT - ph) >> 1;
+  zoom = gimp_zoom_model_get_factor (mapvals.zoom_model);
+
+  pw     = PREVIEW_WIDTH  * zoom;
+  ph     = PREVIEW_HEIGHT * zoom;
+  startx = (PREVIEW_WIDTH  - pw) / 2;
+  starty = (PREVIEW_HEIGHT - ph) / 2;
 
   clear_wireframe ();
   draw_wireframe (startx, starty, pw, ph);

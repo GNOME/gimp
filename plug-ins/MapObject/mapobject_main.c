@@ -74,7 +74,8 @@ set_default_settings (void)
   mapvals.cylinder_radius = 0.25;
   mapvals.cylinder_length = 1.0;
 
-  mapvals.preview_zoom_factor = 0;
+  mapvals.zoom_model = gimp_zoom_model_new ();
+  gimp_zoom_model_set_range (mapvals.zoom_model, 0.25, 1.0);
 
   mapvals.lightsource.type = POINT_LIGHT;
 

@@ -328,6 +328,7 @@ EXPORTS
 	gimp_unit_menu_set_unit
 	gimp_unit_menu_update
 	gimp_widgets_init
+	gimp_zoom_button_new
 	gimp_zoom_model_get_factor
 	gimp_zoom_model_get_fraction
 	gimp_zoom_model_get_type
@@ -335,6 +336,5 @@ EXPORTS
 	gimp_zoom_model_set_range
 	gimp_zoom_model_zoom
 	gimp_zoom_model_zoom_step
-	gimp_zoom_widget_new
 	gimp_zoom_type_get_type
 

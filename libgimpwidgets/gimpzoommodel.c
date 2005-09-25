@@ -409,58 +409,76 @@ gimp_zoom_model_get_fraction (GimpZoomModel *model,
     }
 }
 
+static GtkWidget *
+zoom_button_new (const gchar *stock_id,
+                 GtkIconSize  icon_size)
+{
+  GtkWidget *button;
+
+  if (icon_size > 0)
+    {
+      GtkWidget *image;
+
+      button = gtk_button_new ();
+      image = gtk_image_new_from_stock (stock_id, icon_size);
+      gtk_container_add (GTK_CONTAINER (button), image);
+      gtk_widget_show (image);
+    }
+  else
+    {
+      button = gtk_button_new_from_stock (stock_id);
+    }
+
+  return button;
+}
+
 /**
- * gimp_zoom_widget_new:
- * @model: a #GimpZoomModel
- * @type: the type of widget to create
+ * gimp_zoom_button_new:
+ * @model:     a #GimpZoomModel
+ * @zoom_type:
+ * @icon_size: use 0 for a button with text labels
  *
- * Creates a new widget to interact with the #GimpZoomModel.
- *
- * Return value: a new #GtkWidget.
+ * Return value: a newly created GtkButton
  *
  * Since GIMP 2.4
  **/
 GtkWidget *
-gimp_zoom_widget_new (GimpZoomModel      *model,
-                      GimpZoomWidgetType  type)
+gimp_zoom_button_new (GimpZoomModel *model,
+                      GimpZoomType   zoom_type,
+                      GtkIconSize    icon_size)
 {
-  GtkWidget *button;
-  GtkWidget *image;
+  GtkWidget *button = NULL;
 
   g_return_val_if_fail (GIMP_IS_ZOOM_MODEL (model), NULL);
 
-  switch (type)
+  switch (zoom_type)
     {
-    case GIMP_ZOOM_IN_BUTTON:
-      button = gtk_button_new ();
-      image = gtk_image_new_from_stock (GTK_STOCK_ZOOM_IN,
-                                        GTK_ICON_SIZE_SMALL_TOOLBAR);
-      gtk_container_add (GTK_CONTAINER (button), image);
-      gtk_widget_show (image);
+    case GIMP_ZOOM_IN:
+      button = zoom_button_new (GTK_STOCK_ZOOM_IN, icon_size);
       g_signal_connect_swapped (button, "clicked",
                                 G_CALLBACK (gimp_zoom_model_zoom_in),
                                 model);
-      return button;
+      break;
 
-    case GIMP_ZOOM_OUT_BUTTON:
-      button = gtk_button_new ();
-      image = gtk_image_new_from_stock (GTK_STOCK_ZOOM_OUT,
-                                        GTK_ICON_SIZE_SMALL_TOOLBAR);
-      gtk_container_add (GTK_CONTAINER (button), image);
-      gtk_widget_show (image);
+    case GIMP_ZOOM_OUT:
+      button = zoom_button_new (GTK_STOCK_ZOOM_OUT, icon_size);
       g_signal_connect_swapped (button, "clicked",
                                 G_CALLBACK (gimp_zoom_model_zoom_out),
                                 model);
-      return button;
+      break;
+
+    default:
+      g_warning ("sorry, no button for this zoom type (%d)", zoom_type);
+      break;
     }
 
-  return NULL;
+  return button;
 }
 
 /**
  * gimp_zoom_model_zoom_step:
  * @zoom_type:
- * @scale: ignored unless @zoom_type == %GIMP_ZOOM_TO
+ * @scale:     ignored unless @zoom_type == %GIMP_ZOOM_TO
  *
  * Utility function to calculate a new scale factor.
  *

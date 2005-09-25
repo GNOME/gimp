@@ -9,6 +9,7 @@
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #include "mapobject_main.h"
 #include "mapobject_image.h"
