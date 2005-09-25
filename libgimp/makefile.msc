@@ -157,9 +157,12 @@ gimpui_OBJECTS = \
 	gimppalettemenu.obj \
 	gimppatternmenu.obj \
 	gimppixbuf.obj \
+	gimpprocbrowserdialog.obj \
+	gimpprocview.obj \
 	gimpprogressbar.obj \
 	gimpui.obj \
 	gimpuimarshal.obj \
+	gimpzoompreview.obj \
 
 gimpuimarshal.h : gimpuimarshal.list
 	$(GLIB)\gobject\glib-genmarshal --prefix=_gimpui_marshal gimpuimarshal.list --header >gimpuimarshal.h

@@ -27,6 +27,7 @@
 #include <glib.h>
 
 #include "libgimpbase/gimpversion.h"
+#include "libgimpbase/gimpenv.h"
 
 #include "domain.h"
 #include "help.h"
@@ -41,7 +42,7 @@ static gchar * lookup       (const gchar *help_domain,
 
 
 static const gchar  *help_base    = NULL;
-static const gchar  *help_root    = NULL;
+static       gchar  *help_root    = NULL;
 static const gchar  *help_locales = NULL;
 static const gchar **help_ids     = NULL;
 
@@ -82,7 +83,7 @@ main (gint   argc,
   GError         *error = NULL;
 
   help_base = g_getenv (GIMP_HELP_ENV_URI);
-  help_root = DATADIR G_DIR_SEPARATOR_S GIMP_HELP_PREFIX;
+  help_root = g_build_path (G_DIR_SEPARATOR_S, gimp_data_directory (), GIMP_HELP_PREFIX, NULL);
 
   context = g_option_context_new ("HELP-ID");
   g_option_context_add_main_entries (context, entries, NULL);
@@ -112,6 +113,7 @@ main (gint   argc,
     }
 
   g_option_context_free (context);
+  g_free (help_root);
 
   return uri ? EXIT_SUCCESS : EXIT_FAILURE;
 }

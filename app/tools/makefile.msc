@@ -53,6 +53,8 @@ OBJECTS = \
 	gimperasertool.obj \
 	gimpflipoptions.obj \
 	gimpfliptool.obj \
+	gimpforegroundselectoptions.obj \
+	gimpforegroundselecttool.obj \
 	gimpfreeselecttool.obj \
 	gimpfuzzyselecttool.obj \
 	gimphistogramoptions.obj \
@@ -69,6 +71,7 @@ OBJECTS = \
 	gimpmeasuretool.obj \
 	gimpmoveoptions.obj \
 	gimpmovetool.obj \
+	gimpnewrectselectoptions.obj \
 	gimpnewrectselecttool.obj \
 	gimppaintbrushtool.obj \
 	gimppaintoptions-gui.obj \

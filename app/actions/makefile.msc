@@ -76,8 +76,8 @@ OBJECTS = \
 	patterns-actions.obj \
 	plug-in-actions.obj \
 	plug-in-commands.obj \
-	qmask-actions.obj \
-	qmask-commands.obj \
+	quick-mask-actions.obj \
+	quick-mask-commands.obj \
 	sample-point-editor-actions.obj \
 	sample-point-editor-commands.obj \
 	select-actions.obj \

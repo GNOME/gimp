@@ -23,6 +23,7 @@ OBJECTS = \
 	brush-scale.obj \
 	color-balance.obj \
 	colorize.obj \
+	cpercep.obj \
 	curves.obj \
 	gimphistogram.obj \
 	gimplut.obj \
@@ -32,7 +33,7 @@ OBJECTS = \
 	pixel-processor.obj \
 	pixel-region.obj \
 	pixel-surround.obj \
-	segmentator.obj \
+	siox.obj \
 	temp-buf.obj \
 	threshold.obj \
 	tile.obj \

@@ -1,3 +1,25 @@
+2005-09-24  Hans Breuer  <hans@breuer.org>
+
+	* **makefile.msc : updated
+	
+	* app/dialogs/user-install-dialog.c : only add the migrate page if
+	there is something to migrate from. Avoids on version being NULL.
+	
+	* app/dialogs/file-save-dialog.c : the g_print() output was crashing
+	on the assumption that ->menu_label != NULL. It is for colorhtml.py.
+	
+	* app/widgets/gimpselectiondata.c : use HAVE_UNISTD_H and move 
+	* process.h definition by G_OS_WIN32 below it being defined
+	* app/widgets/gimpwidgets-utils.c(gimp_window_get_native) : cast
+	return value to (GdkNativeWindow) it is not necessary an int.
+	
+	* libgimpwidgets/gimpwidgets.def : added gimp_zoom_type_get_type
+	
+	* plug-ins/help/gimp-help-lookup.c : dynamic lookup of help_root
+	instead of hard-coding DATADIR/GIMP_HELP_PREFIX
+	
+	* plug-ins/xjt/xjt.c : there is no pid_t with msvc, typedef one.
+	
 2005-09-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/plug-in-actions.c

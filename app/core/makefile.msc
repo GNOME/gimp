@@ -33,8 +33,8 @@ PKG_LINK = \
 OBJECTS = \
 #	..\undo.obj \
 	core-enums.obj \
-	cpercep.obj \
 	gimp.obj \
+	gimp-contexts.obj \
 	gimp-edit.obj \
 	gimp-gui.obj \
 	gimp-units.obj \
@@ -92,7 +92,7 @@ OBJECTS = \
 	gimpimage-new.obj \
 	gimpimage-pick-color.obj \
 	gimpimage-preview.obj \
-	gimpimage-qmask.obj \
+	gimpimage-quick-mask.obj \
 	gimpimage-resize.obj \
 	gimpimage-rotate.obj \
 	gimpimage-sample-points.obj \

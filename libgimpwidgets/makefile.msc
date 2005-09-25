@@ -70,10 +70,12 @@ OBJECTS = \
 	gimppropwidgets.obj \
 	gimpscrolledpreview.obj \
 	gimpquerybox.obj \
+	gimpresolutionentry.obj \
 	gimpsizeentry.obj \
 	gimpstock.obj \
 	gimpunitmenu.obj \
 	gimpwidgets.obj \
+	gimpzoommodel.obj \
 	gimpwidgets-private.obj \
 	gimpwidgetsenums.obj \
 	gimpwidgetsmarshal.obj \

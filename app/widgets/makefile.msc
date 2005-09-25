@@ -79,6 +79,7 @@ OBJECTS = \
 	gimpdockable.obj \
 	gimpdockbook.obj \
 	gimpdocked.obj \
+	gimpdockseparator.obj \
 	gimpdocumentview.obj \
 	gimpdrawabletreeview.obj \
 	gimpeditor.obj \
@@ -111,6 +112,7 @@ OBJECTS = \
 	gimpnavigationview.obj \
 	gimppaletteeditor.obj \
 	gimppaletteselect.obj \
+	gimppaletteview.obj \
 	gimppatternfactoryview.obj \
 	gimppatternselect.obj \
 	gimppdbdialog.obj \
@@ -119,6 +121,7 @@ OBJECTS = \
 	gimpprogressbox.obj \
 	gimpprogressdialog.obj \
 	gimppropwidgets.obj \
+	gimprender.obj \
 	gimpsamplepointeditor.obj \
 	gimpselectiondata.obj \
 	gimpselectioneditor.obj \
@@ -155,6 +158,7 @@ OBJECTS = \
 	gimpviewrendererbuffer.obj \
  	gimpviewrendererdrawable.obj \
  	gimpviewrenderergradient.obj \
+	gimpviewrendererpalette.obj \
 	gimpviewrendererimage.obj \
 	gimpviewrendererimagefile.obj \
 	gimpviewrendererlayer.obj \

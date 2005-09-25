@@ -49,13 +49,6 @@ GIMP_CORE_OBJECTS = \
 	xcf/xcf.lib \
 
 PKG_LINK = \
-	actions/appactions.lib \
-	menus/appmenus.lib \
-	tools/apptools.lib \
-	gui/appgui.lib \
-	dialogs/appdialogs.lib \
-	widgets/appwidgets.lib \
-	display/appdisplay.lib \
 	$(PRJ_TOP)/regexrepl/regexrepl.lib \
 	\
 	$(top_builddir)/libgimpbase/gimpbase-$(LT_RELEASE).lib \
@@ -99,6 +92,14 @@ OBJECTS = \
 	errors.obj \
 	sanity.obj \
 	units.obj \
+	\
+	actions/appactions.lib \
+	menus/appmenus.lib \
+	tools/apptools.lib \
+	gui/appgui.lib \
+	dialogs/appdialogs.lib \
+	widgets/appwidgets.lib \
+	display/appdisplay.lib \
 
 app_procs_console.obj : app_procs.c
 	$(CC) $(CFLAGS) -DGIMP_CONSOLE_COMPILATION -GD -c $(PKG_CFLAGS) -Foapp_procs_console.obj app_procs.c

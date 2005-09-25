@@ -812,6 +812,7 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
        "MA 02111-1307, USA."));
 
   /*  MIGRATION_PAGE  */
+  if (version && migrate)
   {
     GtkWidget *box;
     gchar     *title;

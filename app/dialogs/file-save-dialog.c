@@ -185,11 +185,11 @@ file_save_dialog_check_uri (GtkWidget      *save_dialog,
   g_print ("%s: basename = %s\n",
            G_STRFUNC, basename);
   g_print ("%s: selected save_proc: %s\n",
-           G_STRFUNC, save_proc ? save_proc->menu_label : "NULL");
+           G_STRFUNC, save_proc && save_proc->menu_label ? save_proc->menu_label : "NULL");
   g_print ("%s: URI save_proc: %s\n",
            G_STRFUNC, uri_proc ? uri_proc->menu_label : "NULL");
   g_print ("%s: basename save_proc: %s\n\n",
-           G_STRFUNC, basename_proc ? basename_proc->menu_label : "NULL");
+           G_STRFUNC, basename_proc && basename_proc->menu_label ? basename_proc->menu_label : "NULL");
 
 
   /*  first check if the user entered an extension at all  */
@@ -302,7 +302,7 @@ file_save_dialog_check_uri (GtkWidget      *save_dialog,
         }
 
       g_print ("%s: use URI's proc '%s' so indirect saving works\n",
-               G_STRFUNC, uri_proc->menu_label);
+               G_STRFUNC, uri_proc->menu_label ? uri_proc->menu_label : "?");
 
       /*  use the URI's proc if no save proc was selected  */
       save_proc = uri_proc;

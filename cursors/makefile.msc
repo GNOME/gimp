@@ -12,6 +12,7 @@ CURSOR_LIST = \
 	modifier_control		modifier-control.png \
 	modifier_foreground		modifier-foreground.png \
 	modifier_intersect		modifier-intersect.png \
+	modifier_join		modifier-join.png \
 	modifier_minus		modifier-minus.png \
 	modifier_move		modifier-move.png \
 	modifier_pattern		modifier-pattern.png \
@@ -40,6 +41,9 @@ CURSOR_LIST = \
 	tool_move		tool-move.png \
 	tool_paintbrush		tool-paintbrush.png \
 	tool_paths		tool-paths.png \
+	tool_paths_anchor	tool-paths-anchor.png \
+	tool_paths_control	tool-paths-control.png \
+	tool_paths_segment	tool-paths-segment.png \
 	tool_pencil		tool-pencil.png \
 	tool_perspective		tool-perspective.png \
 	tool_rect_select		tool-rect-select.png \

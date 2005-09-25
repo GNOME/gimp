@@ -36,7 +36,6 @@ EXPORTS
 	file_utils_filename_to_uri
 	file_utils_uri_to_utf8_basename
 	file_utils_uri_to_utf8_filename
-	find_mask_boundary
 	floating_sel_anchor
 	floating_sel_remove
 	floating_sel_to_layer
@@ -103,7 +102,7 @@ EXPORTS
 	gimp_channel_sharpen
 	gimp_channel_shrink
 	gimp_channel_type_get_type
-	gimp_channel_value
+;	gimp_channel_value
 	gimp_clone_get_type
 	gimp_clone_options_get_type
 	gimp_config_connect
@@ -308,8 +307,8 @@ EXPORTS
 	gimp_image_get_layer_index
 	gimp_image_get_layers
 	gimp_image_get_mask
-	gimp_image_get_qmask_color
-	gimp_image_get_qmask_state
+	gimp_image_get_quick_mask_color
+	gimp_image_get_quick_mask_state
 	gimp_image_get_type
 	gimp_image_get_uri
 	gimp_image_get_vectors
@@ -340,7 +339,7 @@ EXPORTS
 	gimp_image_position_channel
 	gimp_image_position_layer
 	gimp_image_position_vectors
-	gimp_image_qmask_invert
+	gimp_image_quick_mask_invert
 	gimp_image_raise_channel
 	gimp_image_raise_channel_to_top
 	gimp_image_raise_layer
@@ -365,8 +364,8 @@ EXPORTS
 	gimp_image_set_component_active
 	gimp_image_set_component_visible
 	gimp_image_set_grid
-	gimp_image_set_qmask_color
-	gimp_image_set_qmask_state
+	gimp_image_set_quick_mask_color
+	gimp_image_set_quick_mask_state
 	gimp_image_set_resolution
 	gimp_image_set_unit
 	gimp_image_snap_point
@@ -431,7 +430,7 @@ EXPORTS
 	gimp_layer_get_mask
 	gimp_layer_get_mode
 	gimp_layer_get_opacity
-	gimp_layer_get_preserve_trans
+;	gimp_layer_get_preserve_trans
 	gimp_layer_get_type
 	gimp_layer_is_floating_sel
 	gimp_layer_mask_get_apply
@@ -447,7 +446,7 @@ EXPORTS
 	gimp_layer_resize_to_image
 	gimp_layer_set_mode
 	gimp_layer_set_opacity
-	gimp_layer_set_preserve_trans
+;	gimp_layer_set_preserve_trans
 	gimp_list_get_type
 	gimp_list_new
 	gimp_list_new_weak
@@ -469,6 +468,8 @@ EXPORTS
 	gimp_marshal_VOID__OBJECT_OBJECT
 	gimp_marshal_VOID__OBJECT_POINTER
 	gimp_marshal_VOID__POINTER
+	gimp_marshal_VOID__POINTER_BOXED
+	gimp_marshal_VOID__POINTER_ENUM 
 	gimp_marshal_VOID__STRING
 	gimp_marshal_VOID__STRING_BOOLEAN_UINT_FLAGS
 	gimp_marshal_VOID__STRING_FLAGS
@@ -683,7 +684,7 @@ EXPORTS
 	gimp_histogram_scale_get_type
 	gimp_tab_style_get_type
 	gimp_view_type_get_type
-	gimp_zoom_type_get_type
+;	gimp_zoom_type_get_type
 ; gimpdisplayoptions.obj
 	gimp_display_options_fullscreen_get_type
 	gimp_display_options_get_type
@@ -699,11 +700,6 @@ gimp_image_parasite_find
 gimp_image_resize_to_layers
 gimp_imagefile_create_thumbnail_weak
 gimp_marshal_VOID__BOXED_ENUM
-gimp_navigation_editor_get_type
-gimp_navigation_editor_new
-gimp_navigation_editor_popup
-gimp_progress_box_get_type
-gimp_progress_box_new
 gimp_progress_cancel
 gimp_progress_end
 gimp_progress_get_value
@@ -713,11 +709,6 @@ gimp_progress_set_text
 gimp_progress_set_value
 gimp_progress_start
 gimp_stroke_desc_new
-gimp_tool_motion_constrain
-gimp_view_renderer_image_get_type
-gimp_view_renderer_imagefile_get_type
-gimp_view_renderer_layer_get_type
-gimp_view_renderer_vectors_get_type
 gimp_view_size_get_type
 levels_stretch
 plug_in_proc_def_get_sensitive
@@ -759,5 +750,24 @@ gimp_dash_pattern_segments_set
 gimp_dash_pattern_from_segments
 gimp_item_align
 gimp_stroke_options_set_dash_pattern
-sort_boundary
-
+boundary_find
+boundary_sort
+gimp_contexts_clear
+gimp_contexts_load
+gimp_contexts_save
+gimp_edit_named_copy
+gimp_edit_named_copy_visible
+gimp_edit_named_cut
+gimp_get_default_unit
+gimp_layer_flatten
+gimp_layer_get_lock_alpha
+gimp_layer_set_lock_alpha
+gimp_pickable_get_opacity_at
+gimp_undo_stack_get_depth
+pixel_region_init_data
+pixel_region_init_temp_buf
+gimp_drawable_foreground_extract_siox
+gimp_scan_convert_add_polyline
+gimp_scan_convert_compose
+gimp_scan_convert_render_value
+gimp_scan_convert_stroke

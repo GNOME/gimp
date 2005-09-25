@@ -32,6 +32,7 @@ FROMPLUGINSDIR=YES		# Used to bypass other parts below
 # List plug-ins. We must use several lists to work around nmake's limits
 
 # The COMMON* ones are in the common subdirectory
+COMMON0 = plugin_browser procedure_browser gnomeprint
 COMMON1 = AlienMap2 ccanalyze CEL channel_mixer CML_explorer align_layers animationplay animoptimize apply_lens autocrop autostretch_hsv blinds blur borderaverage bumpmap c_astretch cartoon checkerboard color_enhance colorify colortoalpha compose compressor convmatrix csource cubism curve_bend
 COMMON2 = decompose deinterlace depthmerge despeckle destripe dicom diffraction displace dog edge emboss engrave exchange film flarefx fp fractaltrace
 COMMON3 = gauss gbr gee gee_zoom gif gifload gih glasstile glob gqbist gradmap grid gtm guillotine header hot illusion iwarp jigsaw laplace lic
@@ -42,7 +43,7 @@ COMMON6 = warp waves webbrowser whirlpinch winclipboard wind winprint wiredebug 
 NOTNOW = wmf svg
 
 # These have own subdirectories each
-SEPARATE = FractalExplorer Lighting MapObject bmp dbbrowser faxg3 fits flame fp gfig gflare gfli gimpressionist helpbrowser ifscompose imagemap jpeg maze mosaic pagecurl rcm sel2path sgi twain winicon winsnap xjt
+SEPARATE = FractalExplorer Lighting MapObject bmp faxg3 fits flame gfig gflare gfli gimpressionist help helpbrowser ifscompose imagemap jpeg maze metadata pagecurl rcm sel2path sgi twain winicon winsnap xjt
 
 # These are unofficial, ie not in the CVS. To build these, you should
 # get tml's source snapshot and copy this makefile to the
@@ -92,6 +93,7 @@ common-plugins-clean :
 
 
 sub-common-plugins :
+	for %d in ($(COMMON0)) do nmake -nologo -f makefile.msc sub-one-common DIR=%d TARGET=$(TARGET)
 	for %d in ($(COMMON1)) do nmake -nologo -f makefile.msc sub-one-common DIR=%d TARGET=$(TARGET)
 	for %d in ($(COMMON2)) do nmake -nologo -f makefile.msc sub-one-common DIR=%d TARGET=$(TARGET)
 	for %d in ($(COMMON3)) do nmake -nologo -f makefile.msc sub-one-common DIR=%d TARGET=$(TARGET)
@@ -227,11 +229,13 @@ OBJECTS = \
 	bmpwrite.obj
 !ENDIF
 
-!IFDEF EXTRA_dbbrowser
+!IFDEF EXTRA_plugin_browser
 OBJECTS = \
-#	gimpprocbox.obj \
-	gimpprocbrowser.obj \
-	gimpprocview.obj \
+	plugin-browser.obj
+!ENDIF
+
+!IFDEF EXTRA_procedure_browser
+OBJECTS = \
 	procedure-browser.obj
 !ENDIF
 
@@ -465,6 +469,17 @@ EXTRACFLAGS = -I$(MPEG)
 EXTRALIBS = $(MPEG)\release\libmpeg.lib
 !ENDIF
 
+!IFDEF EXTRA_metadata
+OBJECTS = \
+	base64.obj \
+	interface.obj \
+	metadata.obj \
+	xmp-encode.obj \
+	xmp-model.obj \
+	xmp-parse.obj \
+	xmp-schemas.obj
+!ENDIF
+
 !IFDEF EXTRA_pagecurl
 STOCK_VARS = \
         curl0 curl0.png \
@@ -505,6 +520,11 @@ OBJECTS = \
 	print-pcl.obj \
 	print-ps.obj \
 	print-util.obj
+!ENDIF
+
+!IFDEF EXTRA_gnomeprint
+EXTRACFLAGS = $(GNOMEPRINT_CFLAGS) $(LIBART_CFLAGS) $(GNOMECANVAS_CFLAGS) $(GNOMEPRINTUI_CFLAGS)
+EXTRALIBS = $(GNOMEPRINT_LIBS) $(GNOMEPRINTUI_LIBS)
 !ENDIF
 
 !IFDEF EXTRA_psp
@@ -548,10 +568,8 @@ OBJECTS = \
 	script-fu-scripts.obj \
 	script-fu-text-console.obj \
 	script-fu-interface.obj \
-	script-fu-server.obj \
-	..\dbbrowser\gimpprocbrowser.obj \
-	..\dbbrowser\gimpprocbox.obj \
-	..\dbbrowser\gimpprocview.obj
+	script-fu-server.obj
+
 EXTRALIBS = ..\..\regexrepl\regexrepl.lib siod\siod.lib kernel32.lib wsock32.lib
 EXTRACFLAGS = -DREGEX_MALLOC
 HAVE_RESOURCE = YES
@@ -622,6 +640,15 @@ OBJECTS = \
 	size.obj \
 	sizemap.obj \
 	utils.obj
+!ENDIF
+
+!IFDEF EXTRA_help
+OBJECTS = \
+	locales.obj \
+	domain.obj \
+	help.obj
+TEST_OBJECTS = \
+	gimp-help-lookup.obj
 !ENDIF
 
 !IFDEF EXTRA_helpbrowser
@@ -822,12 +849,12 @@ install : all
 OBJECTS = $(MODULE).obj
 !ENDIF
 
-$(MODULE).$(MODULE_EXT) : $(OBJECTS) $(MODULE).def
+$(MODULE).$(MODULE_EXT) : $(OBJECTS)
 	$(CC) $(CFLAGS) -LD -Fe$@ $(OBJECTS) $(LDFLAGS) $(EXTRALIBS) \
 	..\..\libgimp\gimp-$(GIMP_VER).lib ..\..\libgimp\gimpui-$(GIMP_VER).lib \
 	..\..\libgimpcolor\gimpcolor-$(GIMP_VER).lib \
 	..\..\libgimpbase\gimpbase-$(GIMP_VER).lib \
-	$(GLIB_LIBS) $(GTK2_LIBS) /def:$(MODULE).def
+	$(GLIB_LIBS) $(GTK2_LIBS) /export:init$(MODULE)
 !ENDIF
 
 .c.obj :

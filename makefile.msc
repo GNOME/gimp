@@ -38,6 +38,9 @@ sub-clean:
 	for %d in ($(SUBDIRS)) do nmake -nologo -f makefile.msc sub-one THIS=%d TARGET=clean
 
 sub-themes:
+	cd cursors
+	nmake -nologo -f makefile.msc
+	cd ..
 	cd themes\Default\images
 	nmake -nologo -f makefile.msc
 	cd ..\..\..

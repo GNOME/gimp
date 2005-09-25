@@ -82,6 +82,10 @@
 #define LOAD_PROC      "file-xjt-load"
 #define SAVE_PROC      "file-xjt-save"
 
+#ifdef _MSC_VER
+typedef int pid_t;
+#endif
+
 #define GIMP_XJ_IMAGE  "GIMP_XJ_IMAGE"
 
 #define SCALE_WIDTH 125

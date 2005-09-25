@@ -1,7 +1,22 @@
-MODULE = gimp
+!IFNDEF MODULE
+
+MODULES = gimp _gimpenums gimpcolor gimpprocbrowser
+
+all : sub-all
+
+sub-all:
+	for %d in ($(MODULES)) do @nmake -nologo -f makefile.msc sub-one THIS=%d
+
+sub-one:
+	nmake -nologo -f makefile.msc all MODULE=$(THIS) OBJ_$(THIS)=1
+
+!ELSE
+
+MODULE=$(MODULE)
 #OPTIMIZE = -Od -Op
 #DEBUG=1
 
+!IFDEF OBJ_gimp
 OBJECTS = \
   gimpmodule.obj \
   pygimp-image.obj \
@@ -10,6 +25,23 @@ OBJECTS = \
   pygimp-display.obj \
   pygimp-parasite.obj \
   pygimp-pdb.obj
+!ENDIF
+
+!IFDEF OBJ__gimpenums
+OBJECTS = \
+  gimpenumsmodule.obj
+!ENDIF
+
+!IFDEF OBJ_gimpcolor
+OBJECTS = \
+	gimpcolormodule.obj \
+	pygimp-rgb.obj
+!ENDIF
+
+!IFDEF OBJ_gimpprocbrowser
+OBJECTS = \
+	procbrowser.obj
+!ENDIF
 
 PYTHON = ..\..\..\..\python23
 !IFNDEF DEBUG
@@ -18,10 +50,12 @@ EXTRALIBS = $(PYTHON)\libs\python23.lib user32.lib
 EXTRALIBS = $(PYTHON)\libs\python23_d.lib user32.lib
 !ENDIF
 
-EXTRACFLAGS = -I$(PYTHON)\include
+EXTRACFLAGS = -I$(PYTHON)\include -I $(TOP)\gnome-python\pygtk\gobject
 GIMPTOP=..\.. 
 
 # Lib Extension is
 MODULE_EXT = pyd
 
 !include ..\makefile.msc
+
+!ENDIF
