@@ -1,5 +1,15 @@
 2005-09-25  Sven Neumann  <sven@gimp.org>
 
+	* app/base/siox.[ch]: applied patch from Gerald Friedland and
+	Tobias Lenz. Introduces a hash table to speed up the algorithm
+	and changes the post-processing so that multiple disjunct objects
+	can be selected.
+
+	* app/tools/gimpforegroundselecttool.c: changed tooltip, the tool
+	doesn't any longer extract single objects only.
+	
+2005-09-25  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpwidgetsenums.[ch]: removed GimpZoomWidgetType.
 
 	* libgimpwidgets/gimpzoommodel.[ch]: removed gimp_zoom_widget_new()

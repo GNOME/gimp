@@ -14,7 +14,8 @@
  * Algorithm idea by Gerald Friedland.
  * This implementation is Copyright (C) 2005
  * by Gerald Friedland <fland@inf.fu-berlin.de>
- * and Kristian Jantz <jantz@inf.fu-berlin.de>.
+ * and Kristian Jantz <jantz@inf.fu-berlin.de>
+ * and Tobias Lenz <tlenz@inf.fu-berlin.de>.
  *
  * Adapted for GIMP by Sven Neumann <sven@gimp.org>
  *
@@ -62,7 +63,21 @@
 #define SIOX_HIGH 254
 
 
+/*  FIXME: turn this into an enum  */
+#define SIOX_DRB_ADD       0
+#define SIOX_DRB_SUBTRACT  1
+
+
 /* #define SIOX_DEBUG */
+
+
+/* A struct that holds the classification result */
+
+typedef struct
+{
+  gfloat bgdist;
+  gfloat fgdist;
+} classresult;
 
 
 /* Simulate a java.util.ArrayList */
@@ -308,7 +323,7 @@ stageone (lab          *points,
 
 /* Stage two of modified KD-Tree algorithm */
 
-/* This is very similar to stageone... but in future there will be more
+/* This is very similar to stageone... but in future there may be more
  * differences => not integrated into method stageone()
  */
 static void
@@ -356,7 +371,7 @@ stagetwo (lab          *points,
       gfloat  pivot   = (min + max) / 2.0;
 
 #ifdef SIOX_DEBUG
-      g_printerr ("max=%f min=%f pivot=%f\n", max, min, pivot);
+      g_printerr ("siox.c: max=%f min=%f pivot=%f\n", max, min, pivot);
 #endif
 
       for (i = 0; i < length; i++)
@@ -418,8 +433,8 @@ stagetwo (lab          *points,
           point->b /= length;
 
 #ifdef SIOX_DEBUG
-          g_printerr ("cluster=%f, %f, %f sum=%d\n",
-                      point->l, point->a, point->b, sum);
+          g_printerr ("siox.c: cluster=%f, %f, %f sum=%d\n",
+                     point->l, point->a, point->b, sum);
 #endif
 
           add_to_list (clusters, point, 1, TRUE);
@@ -500,7 +515,7 @@ create_signature (lab          *input,
     }
 
 #ifdef SIOX_DEBUG
-  g_printerr ("step #1 -> %d clusters\n", size);
+  g_printerr ("siox.c: step #1 -> %d clusters\n", size);
 #endif
 
   free_list (clusters);
@@ -516,7 +531,7 @@ create_signature (lab          *input,
   free_list (clusters);
 
 #ifdef SIOX_DEBUG
-  g_printerr ("step #2 -> %d clusters\n", returnlength[0]);
+  g_printerr ("siox.c: step #2 -> %d clusters\n", returnlength[0]);
 #endif
 
   return rval;
@@ -565,10 +580,16 @@ dilate_mask (TileManager *mask,
 }
 
 
-static void
+/* Do not change these defines! They contain some magic!
+ * Must all be non-zero and FINAL must be 0xFF!
+ */
+#define FIND_BLOB_SELECTED  0x1
+#define FIND_BLOB_FORCEFG   0x3
+#define FIND_BLOB_VISITED   0x7
+#define FIND_BLOB_FINAL     0xFF
+
+static inline void
 threshold_mask (TileManager *mask,
-		guchar 	     maskval,
-		guchar       newval,
                 gint         x,
                 gint         y,
                 gint         width,
@@ -581,23 +602,36 @@ threshold_mask (TileManager *mask,
   pixel_region_init (&region, mask, x, y, width, height, TRUE);
 
   for (pr = pixel_regions_register (1, &region);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
+       pr != NULL; pr = pixel_regions_process (pr))
     {
       guchar *data = region.data;
 
       for (row = 0; row < region.h; row++)
         {
-	  guchar *d = data;
+          guchar *d = data;
 
-	  /* everything that fits the mask is in the image*/
+          /* everything that fits the mask is in the image */
           for (col = 0; col < region.w; col++, d++)
-	    *d = (*d & maskval) ? newval: 0;
+            {
+              if (*d > SIOX_HIGH)
+                *d = FIND_BLOB_FORCEFG;
+              else if (*d >= 0x80)
+                *d = FIND_BLOB_SELECTED;
+              else
+                *d = 0;
+            }
 
           data += region.rowstride;
-	}
+        }
     }
 }
+
+struct blob
+{
+  gint seedx, seedy;
+  gint size;
+  gboolean mustkeep;
+};
 
 /* This method checks out the neighbourhood of the pixel at position
  * (pos_x,pos_y) in the TileManager mask, it adds the sourrounding
@@ -606,103 +640,60 @@ threshold_mask (TileManager *mask,
  * are passed from above.
  */
 static void
-process_neighbours (GQueue      *q,
-                    gint         pos_x,
-                    gint         pos_y,
-                    TileManager *mask,
-                    guchar       maskval,
-                    gint         x,
-                    gint         y,
-                    gint         width,
-                    gint         height)
+depth_first_search (TileManager *mask,
+                    gint 	 x,
+                    gint 	 y,
+                    gint 	 xwidth,
+		    gint 	 yheight,
+		    struct blob *b,
+		    guchar 	 mark)
 {
+  gint   xx, yy;
   guchar val;
 
-  if (pos_x + 1 < x + width)
+  GSList *stack =
+    g_slist_prepend (g_slist_prepend (NULL, GINT_TO_POINTER (b->seedy)),
+                     GINT_TO_POINTER (b->seedx));
+
+  while (stack != NULL)
     {
-      read_pixel_data_1 (mask, pos_x + 1, pos_y, &val);
+      xx    = GPOINTER_TO_INT (stack->data);
+      stack = g_slist_delete_link (stack, stack);
+      yy    = GPOINTER_TO_INT (stack->data);
+      stack = g_slist_delete_link (stack, stack);
 
-      if (!(val & maskval))
-	{
-	  g_queue_push_tail (q, GINT_TO_POINTER (pos_x + 1));
-	  g_queue_push_tail (q, GINT_TO_POINTER (pos_y));
-	}
-    }
-
-  if (pos_x > x)
-    {
-      read_pixel_data_1 (mask, pos_x - 1, pos_y, &val);
-
-      if (!(val & maskval))
+      read_pixel_data_1 (mask, xx, yy, &val);
+      if (val && (val != mark))
         {
-          g_queue_push_tail (q, GINT_TO_POINTER (pos_x - 1));
-          g_queue_push_tail (q, GINT_TO_POINTER (pos_y));
+          if (mark == FIND_BLOB_VISITED)
+            {
+              ++(b->size);
+              if (val == FIND_BLOB_FORCEFG)
+                b->mustkeep = TRUE;
+            }
+
+          write_pixel_data_1 (mask, xx, yy, &mark);
+
+          if (xx > x)
+            stack =
+              g_slist_prepend (g_slist_prepend (stack, GINT_TO_POINTER (yy)),
+                               GINT_TO_POINTER (xx - 1));
+          if (xx + 1 < xwidth)
+            stack =
+              g_slist_prepend (g_slist_prepend (stack, GINT_TO_POINTER (yy)),
+                               GINT_TO_POINTER (xx + 1));
+          if (yy > y)
+            stack =
+              g_slist_prepend (g_slist_prepend
+                               (stack, GINT_TO_POINTER (yy - 1)),
+                               GINT_TO_POINTER (xx));
+          if (yy + 1 < yheight)
+            stack =
+              g_slist_prepend (g_slist_prepend
+                               (stack, GINT_TO_POINTER (yy + 1)),
+                               GINT_TO_POINTER (xx));
         }
     }
-
-  if (pos_y + 1 < y + height)
-    {
-      read_pixel_data_1 (mask, pos_x, pos_y + 1, &val);
-
-      if (!(val & maskval))
-	{
-	  g_queue_push_tail (q, GINT_TO_POINTER (pos_x));
-	  g_queue_push_tail (q, GINT_TO_POINTER (pos_y + 1));
-	}
-    }
-
-  if (pos_y > y)
-    {
-      read_pixel_data_1 (mask, pos_x , pos_y - 1, &val);
-
-      if (!(val & maskval))
-	{
-	  g_queue_push_tail (q, GINT_TO_POINTER (pos_x));
-	  g_queue_push_tail (q, GINT_TO_POINTER (pos_y - 1));
-	}
-    }
-}
-
-
-/* This method processes every position in the queue, it finishes when
- * the queeue is empty and no further pixels kann be visited.
- */
-static gint
-process_queue (GQueue      *q,
-               TileManager *mask,
-               guchar       maskval,
-               gint         x,
-               gint         y,
-               gint         width,
-               gint         height)
-{
-  gint regioncount = 0;
-
-  while (! g_queue_is_empty (q))
-    {
-      gint   pos_x = GPOINTER_TO_INT (g_queue_pop_head (q));
-      gint   pos_y = GPOINTER_TO_INT (g_queue_pop_head (q));
-      guchar val;
-
-      read_pixel_data_1 (mask, pos_x, pos_y, &val);
-
-      if (val & maskval)
-	continue;
-
-      /* pixel is set in original selection */
-      if (val & 0x1)
-	{
-          val |= maskval;
-	  write_pixel_data_1 (mask, pos_x, pos_y, &val);
-
-	  regioncount++;
-
-	  process_neighbours (q, pos_x, pos_y,
-                              mask, maskval, x, y, width, height);
-	}
-    }
-
-  return regioncount;
 }
 
 /*
@@ -719,6 +710,7 @@ process_queue (GQueue      *q,
  * into mask, all pixels that belong to the biggest component, are set
  * to 255 any other to 0.
  */
+
 static void
 find_max_blob (TileManager *mask,
                gint         x,
@@ -726,95 +718,92 @@ find_max_blob (TileManager *mask,
                gint         width,
                gint         height)
 {
-  GQueue      *q;
-  PixelRegion  region;
-  gpointer     pr;
-  gint         row, col;
-  gint         half      = (width * height) / 2;
-  gint         maxblob_x = 0;
-  gint         maxblob_y = 0;
-  gint         maxregion = 0;
-  guchar       val;
+  GSList     *list = NULL;
+  PixelRegion region;
+  gpointer    pr;
+  gint        row, col;
+  gint        maxsize = 0;
+  guchar      val;
 
-  /* this mask is used to flag a pixel as visited in the first pass */
-  const guchar visited   = 0x40;
-  /* this mask is used to mark a pixel in the second pass           */
-  const guchar contained = 0x80;
-
-  threshold_mask (mask, 0x80, 0x1, x, y, width, height);
-
-  q = g_queue_new ();
+  threshold_mask (mask, x, y, width, height);
 
   pixel_region_init (&region, mask, x, y, width, height, TRUE);
 
   for (pr = pixel_regions_register (1, &region);
-       pr != NULL && maxregion < half;
-       pr = pixel_regions_process (pr))
+       pr != NULL; pr = pixel_regions_process (pr))
     {
-      const guchar *data  = region.data;
-      gint          pos_y = region.y;
+      gint pos_y = region.y;
 
       for (row = 0; row < region.h; row++, pos_y++)
         {
-          gint          pos_x    = region.x;
-          const guchar *d        = data;
+          gint pos_x = region.x;
 
-          for (col = 0; col < region.w; col++, d++, pos_x++)
+          for (col = 0; col < region.w; col++, pos_x++)
             {
-              gint regioncount;
+              read_pixel_data_1 (mask, pos_x, pos_y, &val);
 
-	      read_pixel_data_1 (mask, pos_x, pos_y, &val);
-
-	      if (val & visited)
-                continue;
-
-	      /* mark current pixel as visited */
-	      val |= visited;
-	      write_pixel_data_1 (mask, pos_x, pos_y, &val);
-
-	      /* if this pixel is not marked as selection in original image,
-               * skip it
-               */
-	      if (!(val & 0x1))
-		continue;
-
-	      /* check out neighbourhood */
-	      process_neighbours (q, pos_x, pos_y,
-                                  mask, visited, x, y, width, height);
-
-              regioncount = 1 + process_queue (q, mask, visited,
-                                               x, y, width, height);
-
-	      /* remember bigest regions size and coords of an element */
-              if (regioncount > maxregion)
+              if (val && (val != FIND_BLOB_VISITED))
                 {
-                  maxregion = regioncount;
-		  maxblob_x = pos_x;
-		  maxblob_y = pos_y;
+                  struct blob *b = g_new (struct blob, 1);
+
+                  b->seedx    = pos_x;
+                  b->seedy    = pos_y;
+                  b->size     = 0;
+                  b->mustkeep = FALSE;
+
+                  depth_first_search (mask,
+                                      x, y, x + width, y + height,
+                                      b, FIND_BLOB_VISITED);
+
+                  list = g_slist_prepend (list, b);
+
+                  if (b->size > maxsize)
+                    maxsize = b->size;
                 }
             }
-
-          data += region.rowstride;
         }
     }
 
-  /* now push maxblob coords to the queue and find maxblob again,
-   * so that it can be set as the resulting mask
-   */
+  while (list != NULL)
+    {
+      struct blob *b = list->data;
 
-  /* mark startpixel as visited */
-  read_pixel_data_1 (mask, maxblob_x, maxblob_y, &val);
-  val |= contained;
-  write_pixel_data_1 (mask, maxblob_x, maxblob_y, &val);
+      list = g_slist_delete_link (list, list);
 
-  process_neighbours (q, maxblob_x, maxblob_y,
-                      mask, contained, x, y, width, height);
-  maxregion = process_queue (q, mask, contained, x, y, width, height);
+      depth_first_search (mask, x, y, x + width, y + height, b,
+                          (b->mustkeep
+                           || (b->size * 4 > maxsize)) ? FIND_BLOB_FINAL : 0);
+      g_free (b);
+    }
+}
 
-  g_queue_free (q);
-
-  /* set found pixel to 255 in the mask */
-  threshold_mask (mask, contained, 0xFF, x, y, width, height);
+/* Creates a key for the hashtable from a given pixel color value */
+static inline gint
+create_key (const guchar *src,
+            gint 	  bpp,
+            const guchar *colormap)
+{
+  switch (bpp)
+    {
+    case 3:                     /* RGB  */
+    case 4:                     /* RGBA */
+      return (src[RED_PIX] << 16 | src[GREEN_PIX] << 8 | src[BLUE_PIX]);
+    case 2:
+    case 1:
+      if (colormap)             /* INDEXED(A) */
+        {
+          gint i = *src * 3;
+          return (colormap[i + RED_PIX]   << 16 |
+                  colormap[i + GREEN_PIX] << 8  |
+                  colormap[i + BLUE_PIX]);
+        }
+      else                      /* GRAY(A) */
+        {
+          return *src;
+        }
+    default:
+      return 0;
+    }
 }
 
 static inline void
@@ -825,6 +814,7 @@ siox_progress_update (SioxProgressFunc  progress_callback,
   if (progress_data)
     progress_callback (progress_data, value);
 }
+
 
 /**
  * siox_foreground_extract:
@@ -839,7 +829,7 @@ siox_progress_update (SioxProgressFunc  progress_callback,
  * @width:       width of working area on mask
  * @height:      height of working area on mask
  * @sensitivity: a double array with three entries specifing the accuracy,
- *               a good value is: { 0.66, 1.25, 2.5 }
+ *               a good value is: { 0.64, 1.28, 2.56 }
  * @smoothness:  boundary smoothness (a good value is 3)
  *
  * Writes the resulting segmentation into @mask.
@@ -874,6 +864,7 @@ siox_foreground_extract (TileManager      *pixels,
   lab         *bgsig;
   lab         *fgsig;
   gfloat       limits[3];
+  GHashTable  *pixtoclassresult;
 
   g_return_if_fail (pixels != NULL);
   g_return_if_fail (mask != NULL && tile_manager_bpp (mask) == 1);
@@ -886,7 +877,11 @@ siox_foreground_extract (TileManager      *pixels,
 
   cpercep_init ();
 
+  pixtoclassresult = g_hash_table_new_full (g_direct_hash, g_direct_equal,
+                                            NULL, g_free);
+
   siox_progress_update (progress_callback, progress_data, 0.0);
+
 
   limits[0] = sensitivity[0];
   limits[1] = sensitivity[1];
@@ -898,8 +893,7 @@ siox_foreground_extract (TileManager      *pixels,
   pixel_region_init (&mapPR, mask, x, y, width, height, FALSE);
 
   for (pr = pixel_regions_register (1, &mapPR);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
+       pr != NULL; pr = pixel_regions_process (pr))
     {
       const guchar *map = mapPR.data;
 
@@ -935,8 +929,7 @@ siox_foreground_extract (TileManager      *pixels,
   pixel_region_init (&mapPR, mask, x, y, width, height, FALSE);
 
   for (pr = pixel_regions_register (2, &srcPR, &mapPR);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
+       pr != NULL; pr = pixel_regions_process (pr))
     {
       const guchar *src = srcPR.data;
       const guchar *map = mapPR.data;
@@ -985,14 +978,19 @@ siox_foreground_extract (TileManager      *pixels,
 
   siox_progress_update (progress_callback, progress_data, 0.4);
 
-  /* Classify - the slow way....Better: Tree traversation */
+  /* Classify - the cached way....Better: Tree traversation? */
+
+#ifdef SIOX_DEBUG
+  gint hits = 0;
+  gint miss = 0;
+#endif
+
   pixel_region_init (&srcPR, pixels,
                      x - offset_x, y - offset_y, width, height, FALSE);
   pixel_region_init (&mapPR, mask, x, y, width, height, TRUE);
 
   for (pr = pixel_regions_register (2, &srcPR, &mapPR);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
+       pr != NULL; pr = pixel_regions_process (pr))
     {
       const guchar *src = srcPR.data;
       guchar       *map = mapPR.data;
@@ -1004,56 +1002,99 @@ siox_foreground_extract (TileManager      *pixels,
 
           for (col = 0; col < srcPR.w; col++, m++, s += bpp)
             {
-              lab       labpixel;
-              gboolean  background;
-              gfloat    min, d;
+              lab          labpixel;
+              gfloat       minbg, minfg, d;
+              classresult *cr;
+              gint         key;
 
               if (*m < SIOX_LOW || *m > SIOX_HIGH)
                 continue;
 
+              key = create_key (s, bpp, colormap);
+
+              /* FIXME: Do not create HashTable in here, do it globally */
+              cr = g_hash_table_lookup (pixtoclassresult,
+                                        GINT_TO_POINTER (key));
+
+              if (cr)
+                {
+                  *m = (cr->bgdist >= cr->fgdist) ? 254 : 0;
+
+#ifdef SIOX_DEBUG
+                  ++hits;
+#endif
+                  continue;
+                }
+
+#ifdef SIOX_DEBUG
+              ++miss;
+#endif
+              cr = g_new0 (classresult, 1);
               calc_lab (s, bpp, colormap, &labpixel);
 
-              min = euklid (&labpixel, bgsig + 0);
+              minbg = euklid (&labpixel, bgsig + 0);
 
               for (i = 1; i < bgsiglen; i++)
                 {
                   d = euklid (&labpixel, bgsig + i);
 
-                  if (d < min)
-                    min = d;
+                  if (d < minbg)
+                    minbg = d;
                 }
+
+              cr->bgdist = minbg;
 
               if (fgsiglen == 0)
                 {
-                  background = (min < clustersize);
+                  if (minbg < clustersize)
+                    minfg = minbg + clustersize;
+                  else
+                    minfg = 0.00001; /* This is a guess -
+                                        now we actually require a foreground
+                                        signature, !=0 to avoid div by zero
+                                      */
                 }
               else
                 {
-                  background = TRUE;
+                  minfg = euklid (&labpixel, fgsig + 0);
 
-                  for (i = 0; i < fgsiglen; i++)
+                  for (i = 1; i < fgsiglen; i++)
                     {
                       d = euklid (&labpixel, fgsig + i);
 
-                      if (d < min)
+                      if (d < minfg)
                         {
-                          min = d;
-                          background = FALSE;
-                          break;
+                          minfg = d;
                         }
                     }
                 }
 
-              *m = background ? 0 : 255;
-            }
+              cr->bgdist = minbg;
+              cr->fgdist = minfg;
+
+              g_hash_table_insert (pixtoclassresult, GINT_TO_POINTER (key), cr);
+
+              *m = minbg >= minfg ? 254 : 0;
+           }
 
           src += srcPR.rowstride;
           map += mapPR.rowstride;
         }
     }
 
+#ifdef SIOX_DEBUG
+  g_printerr ("siox.c: Hashtable size %d, misses=%d, hits=%d, ratio=%f\n",
+              g_hash_table_size (pixtoclassresult),
+	      miss,
+	      hits,
+              ((gfloat) hits) / miss);
+#endif
+
   g_free (fgsig);
   g_free (bgsig);
+
+  /* FIXME: Do not free memory in here - do it globally */
+  g_hash_table_destroy (pixtoclassresult);
 
   siox_progress_update (progress_callback, progress_data, 0.8);
 
@@ -1081,4 +1122,128 @@ siox_foreground_extract (TileManager      *pixels,
   dilate_mask (mask, x, y, width, height);
 
   siox_progress_update (progress_callback, progress_data, 1.0);
+}
+
+
+/**
+ * siox_drb:
+ * @pixels:       the rgb tiles to work on (read)
+ * @colormap:     colormap in case @pixels are indexed, %NULL otherwise
+ * @mask:         the alpha tiles to work on (write)
+ * @x:            horizontal offset into the mask
+ * @y:            vertical offset into the mask
+ * @pixtoclassresult: the hashtable as generated by siox_foreground_extract
+ * @brushmode:    at this time either SIOX_DRB_ADD or SIOX_DRB_SUBTRACT
+ * @brushradius:  the radius of the brush
+ * @threshold:    a threshold to be defined by the user.
+ *                Range for SIOX_DRB_ADD: ]0..1] default: 1.0,
+ *                range for for SIOX_DRB_SUBTRACT: [0..1[, default: 0.0
+ *
+ * drb - detail refinement brush, a brush mask for subpixel classification.
+ *
+ * FIXME: Now it is assumed that the brush is a square. Should be able
+ * to be whatever GIMP offers...  TODO: This is still an experimental
+ * method. There are more tests needed to evaluate performance of
+ * this!
+ */
+void
+siox_drb (TileManager  *pixels,
+          const guchar *colormap,
+          TileManager  *mask,
+          gint          x,
+          gint          y,
+          GHashTable   *pixtoclassresult,
+          gint          brushmode,
+          gint          brushradius,
+          gfloat        threshold)
+{
+  PixelRegion srcPR;
+  PixelRegion mapPR;
+  gpointer    pr;
+  gint        bpp;
+  gint        row, col;
+
+  bpp = tile_manager_bpp (pixels);
+
+  pixel_region_init (&srcPR, pixels,
+                     x - brushradius, y - brushradius, brushradius * 2,
+                     brushradius * 2, FALSE);
+  pixel_region_init (&mapPR, mask, x - brushradius, y - brushradius,
+                     brushradius * 2, brushradius * 2, TRUE);
+
+  for (pr = pixel_regions_register (2, &srcPR, &mapPR);
+       pr != NULL; pr = pixel_regions_process (pr))
+    {
+      const guchar *src = srcPR.data;
+      guchar       *map = mapPR.data;
+
+      for (row = 0; row < srcPR.h; row++)
+        {
+          const guchar *s = src;
+          guchar       *m = map;
+
+          for (col = 0; col < srcPR.w; col++, m++, s += bpp)
+            {
+              gint         key;
+              classresult *cr;
+
+              key = create_key (s, bpp, colormap);
+              cr  = g_hash_table_lookup (pixtoclassresult,
+                                         GINT_TO_POINTER (key));
+
+              if (! cr)
+                continue; /* Unknown color -
+                             can only be sure background or sure forground */
+
+              gfloat mindistbg = (gfloat) sqrt (cr->bgdist);
+              gfloat mindistfg = (gfloat) sqrt (cr->fgdist);
+
+              if (brushmode == SIOX_DRB_ADD)
+                {
+                  gfloat alpha;
+
+                  if (*m > SIOX_HIGH)
+                    continue;
+
+                  if (mindistfg == 0.0)
+                    alpha = 1.0; /* avoid div by zero */
+                  else
+                    alpha = MIN (mindistbg / mindistfg, 1.0);
+
+                  if (alpha < threshold)
+                    {
+                      /* background with a certain confidence
+                       * to be decided by user.
+                       */
+                      alpha = 0.0;
+                    }
+
+                  *m = (gint) 255 *alpha;
+                }
+              else if (brushmode == SIOX_DRB_SUBTRACT)
+                {
+                  gfloat alpha;
+
+                  if (*m < SIOX_HIGH)
+                    continue;
+
+                  if (mindistbg == 0.0)
+                    alpha = 0.0; /* avoid div by zero */
+                  else
+                    alpha = 1.0 - MIN (mindistfg / mindistbg, 1.0);
+
+                  if (alpha < threshold)
+                    {
+                      alpha = 0.0;
+                    }
+
+                  *m = (gint) 255 *alpha;
+                }
+            }
+
+          src += srcPR.rowstride;
+          map += mapPR.rowstride;
+
+        }
+    }
 }

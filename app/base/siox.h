@@ -39,9 +39,9 @@
 
 #define SIOX_DEFAULT_SMOOTHNESS     3
 
-#define SIOX_DEFAULT_SENSITIVITY_L  0.66
-#define SIOX_DEFAULT_SENSITIVITY_A  1.25
-#define SIOX_DEFAULT_SENSITIVITY_B  2.5
+#define SIOX_DEFAULT_SENSITIVITY_L  0.64
+#define SIOX_DEFAULT_SENSITIVITY_A  1.28
+#define SIOX_DEFAULT_SENSITIVITY_B  2.56
 
 
 typedef void (* SioxProgressFunc) (gpointer  progress_data,
