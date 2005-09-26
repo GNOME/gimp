@@ -1,3 +1,8 @@
+2005-09-26  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/script-fu-interface.c: removed some frames
+	from the Script-Fu dialogs.
+
 2005-09-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/debug-commands.c (debug_dump_menus_cmd_callback)
