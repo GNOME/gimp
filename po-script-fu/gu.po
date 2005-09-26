@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.HEAD.gu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-21 02:57+0200\n"
-"PO-Revision-Date: 2005-09-21 09:47+0530\n"
+"POT-Creation-Date: 2005-09-26 02:57+0200\n"
+"PO-Revision-Date: 2005-09-26 09:53+0530\n"
 "Last-Translator: Ankit Patel <ankit644@yahoo.com>\n"
 "Language-Team: Gujarati <indianoss-gujarati@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -14,6 +14,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9.1\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n\n"
+"\n"
 "\n"
 
 #: ../plug-ins/script-fu/script-fu-console.c:130
@@ -154,7 +155,7 @@ msgid "Script-Fu _Console"
 msgstr "Script-Fu કન્સોલ (_C)"
 
 #: ../plug-ins/script-fu/script-fu.c:123 ../plug-ins/script-fu/script-fu.c:152
-#: ../plug-ins/script-fu/script-fu.c:321
+#: ../plug-ins/script-fu/script-fu.c:317
 msgid "<Toolbox>/Xtns/Script-Fu"
 msgstr "<Toolbox>/Xtns/Script-Fu"
 
@@ -226,15 +227,7 @@ msgstr "સુશોભિત કરો (_D)"
 msgid "_Render"
 msgstr "ઘાટ આપો (_R)"
 
-#: ../plug-ins/script-fu/script-fu.c:303
-msgid "_Selection"
-msgstr "પસંદગી (_S)"
-
-#: ../plug-ins/script-fu/script-fu.c:305
-msgid "Stencil _Ops"
-msgstr "સ્ટેન્સિલ ઓપ્સ (_O)"
-
-#: ../plug-ins/script-fu/script-fu.c:313
+#: ../plug-ins/script-fu/script-fu.c:309
 msgid "_Refresh Scripts"
 msgstr "સ્ક્રિપ્ટો પુનઃતાજી કરો (_R)"
 
@@ -851,16 +844,16 @@ msgid "_Camouflage..."
 msgstr "કેમોફ્લેજ (_C)..."
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:1
-msgid "C_arve-It..."
-msgstr "કાર્વ-It (_a)..."
-
-#: ../plug-ins/script-fu/scripts/carve-it.scm.h:2
 msgid "Carve white areas"
 msgstr "સફેદ વિસ્તારો કાર્વ કરો"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm.h:3
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:2
 msgid "Image to carve"
 msgstr "કાર્વ કરવાનું ચિત્ર"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:3
+msgid "Stencil C_arve..."
+msgstr "સ્ટેન્સિલ કાર્વ (_o)..."
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:1
@@ -916,44 +909,44 @@ msgid "Keep background"
 msgstr "પાશ્વ ભાગ સાચવી રાખો"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:1
-msgid "C_hrome-It..."
-msgstr "ક્રોમ-lt (_h)..."
-
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:2
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:1
 msgid "Chrome balance"
 msgstr "ક્રોમ સંતુલન"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:3
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:2
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:2
 msgid "Chrome factor"
 msgstr "ક્રોમ અવયવ"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:4
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:3
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:3
 msgid "Chrome lightness"
 msgstr "ક્રોમ પ્રકાશપણું"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:5
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:4
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:4
 msgid "Chrome saturation"
 msgstr "ક્રોમ મર્યાદા"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:6
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:5
 msgid "Chrome white areas"
 msgstr "ક્રોમ સફેદ વિસ્તારો"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:7
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:6
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:5
 msgid "Environment map"
 msgstr "પર્યાવરણ નકશો"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:8
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:7
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:8
 msgid "Highlight balance"
 msgstr "સંતુલન પ્રકાશિત કરો"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:8
+msgid "Stencil C_hrome-..."
+msgstr "સ્ટેન્સિલ ક્રોમ- (_h)..."
 
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:2
 msgid "C_hrome..."
@@ -1082,8 +1075,8 @@ msgid "Threshold (bigger 1<-->255 smaller)"
 msgstr "થ્રેશોલ્ડ (મોટું 1<-->255 નાનું)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:7
-msgid "_Distress Selection..."
-msgstr "પસંદગી ડિસ્ટ્રેસ કરો (_D)..."
+msgid "_Distort..."
+msgstr "બગાડો (_D)..."
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:1
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:1
@@ -1193,8 +1186,8 @@ msgid "Use growing selection"
 msgstr "વધતી પસંદગી વાપરો"
 
 #: ../plug-ins/script-fu/scripts/fade-outline.scm.h:9
-msgid "_Fade Outline..."
-msgstr "કિનારી ઘાટી કરો (_F)..."
+msgid "_Fade to Layer Mask..."
+msgstr "સ્તર માસ્કને આછું કરો (_F)..."
 
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:1
 #: ../plug-ins/script-fu/scripts/land.scm.h:1
@@ -1598,6 +1591,7 @@ msgid "Re_ctangular, Feathered..."
 msgstr "લંબચોરસીય (_c), પીંછાવાળું..."
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:6
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:4
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:3
 msgid "Spacing"
 msgstr "જગ્યા"
@@ -1651,6 +1645,31 @@ msgstr "સેપીયા"
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:6
 msgid "_Old Photo..."
 msgstr "જૂનો ફોટો (_O)..."
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:1
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:1
+msgid "Brush name"
+msgstr "બ્રશ નામ"
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:2
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:1
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:2
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
+msgid "File name"
+msgstr "ફાઈલનું નામ"
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:3
+msgid "New _Brush..."
+msgstr "નવું બ્રશ (_B)..."
+
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:2
+msgid "New _Pattern..."
+msgstr "નવી ભાત (_P)..."
+
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:3
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:2
+msgid "Pattern name"
+msgstr "ભાત નામ"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:2
 msgid "Angle"
@@ -1793,15 +1812,6 @@ msgstr "બાજુની ત્રિજ્યા"
 msgid "_Round Corners..."
 msgstr "વળાંકવાળી કિનારીઓ (_R)..."
 
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:1
-msgid "Brush name"
-msgstr "બ્રશ નામ"
-
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:2
-#: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
-msgid "File name"
-msgstr "ફાઈલનું નામ"
-
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:4
 msgid "To _Brush..."
 msgstr "બ્રશ પ્રતિ (_B)..."
@@ -1809,10 +1819,6 @@ msgstr "બ્રશ પ્રતિ (_B)..."
 #: ../plug-ins/script-fu/scripts/select-to-image.scm.h:1
 msgid "To _Image"
 msgstr "ચિત્ર પ્રતિ (_I)"
-
-#: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:2
-msgid "Pattern name"
-msgstr "ભાત નામ"
 
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:3
 msgid "To _Pattern..."

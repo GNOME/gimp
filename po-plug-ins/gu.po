@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.HEAD.gu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-23 02:49+0200\n"
-"PO-Revision-Date: 2005-09-23 09:56+0530\n"
+"POT-Creation-Date: 2005-09-26 02:52+0200\n"
+"PO-Revision-Date: 2005-09-26 09:53+0530\n"
 "Last-Translator: Ankit Patel <ankit644@yahoo.com>\n"
 "Language-Team: Gujarati <indianoss-gujarati@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -18,6 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9.1\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n\n"
+"\n"
 "\n"
 "\n"
 "\n"
@@ -258,7 +259,7 @@ msgstr "રંગ વિધેય"
 
 #. Redmode radio frame
 #: ../plug-ins/FractalExplorer/Dialogs.c:978
-#: ../plug-ins/common/channel_mixer.c:537 ../plug-ins/common/decompose.c:137
+#: ../plug-ins/common/channel_mixer.c:537 ../plug-ins/common/decompose.c:138
 msgid "Red"
 msgstr "લાલ"
 
@@ -323,13 +324,13 @@ msgstr ""
 
 #. Greenmode radio frame
 #: ../plug-ins/FractalExplorer/Dialogs.c:1019
-#: ../plug-ins/common/channel_mixer.c:542 ../plug-ins/common/decompose.c:138
+#: ../plug-ins/common/channel_mixer.c:542 ../plug-ins/common/decompose.c:139
 msgid "Green"
 msgstr "લીલો"
 
 #. Bluemode radio frame
 #: ../plug-ins/FractalExplorer/Dialogs.c:1060
-#: ../plug-ins/common/channel_mixer.c:547 ../plug-ins/common/decompose.c:143
+#: ../plug-ins/common/channel_mixer.c:547 ../plug-ins/common/decompose.c:140
 msgid "Blue"
 msgstr "ભૂરો"
 
@@ -386,8 +387,8 @@ msgstr "ખંડો (_F)"
 #: ../plug-ins/gfig/gfig.c:787 ../plug-ins/gfli/gfli.c:716
 #: ../plug-ins/ifscompose/ifscompose.c:2391 ../plug-ins/jpeg/jpeg-save.c:268
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:223
-#: ../plug-ins/winicon/icosave.c:244 ../plug-ins/xjt/xjt.c:1268
-#: ../plug-ins/xjt/xjt.c:1703
+#: ../plug-ins/winicon/icosave.c:244 ../plug-ins/xjt/xjt.c:1272
+#: ../plug-ins/xjt/xjt.c:1707
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "'%s' ને લખવા માટે ખોલી શક્યા નહિં: %s"
@@ -418,7 +419,7 @@ msgstr "ખંડ પરિમાણો સંગ્રહો"
 #: ../plug-ins/common/pcx.c:309 ../plug-ins/common/pix.c:329
 #: ../plug-ins/common/png.c:720 ../plug-ins/common/pnm.c:442
 #: ../plug-ins/common/poppler.c:366 ../plug-ins/common/postscript.c:1011
-#: ../plug-ins/common/postscript.c:2978 ../plug-ins/common/psd.c:1823
+#: ../plug-ins/common/postscript.c:2978 ../plug-ins/common/psd.c:1880
 #: ../plug-ins/common/psp.c:1463 ../plug-ins/common/raw.c:242
 #: ../plug-ins/common/raw.c:647 ../plug-ins/common/spheredesigner.c:2009
 #: ../plug-ins/common/sunras.c:379 ../plug-ins/common/svg.c:313
@@ -430,8 +431,8 @@ msgstr "ખંડ પરિમાણો સંગ્રહો"
 #: ../plug-ins/gfli/gfli.c:463 ../plug-ins/help/domain.c:423
 #: ../plug-ins/jpeg/jpeg-load.c:85 ../plug-ins/jpeg/jpeg-load.c:875
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:212
-#: ../plug-ins/winicon/icoload.c:135 ../plug-ins/xjt/xjt.c:2527
-#: ../plug-ins/xjt/xjt.c:2535
+#: ../plug-ins/winicon/icoload.c:135 ../plug-ins/xjt/xjt.c:2531
+#: ../plug-ins/xjt/xjt.c:2539
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "'%s' ને વાંચવા માટે ખોલી શક્યા નહિં: %s"
@@ -512,7 +513,7 @@ msgstr "પ્રકાશન અસરો (_L)..."
 
 #. General options
 #: ../plug-ins/Lighting/lighting_ui.c:277
-#: ../plug-ins/MapObject/mapobject_ui.c:496
+#: ../plug-ins/MapObject/mapobject_ui.c:470
 msgid "General Options"
 msgstr "સામાન્ય વિકલ્પો"
 
@@ -529,7 +530,7 @@ msgid "Cre_ate new image"
 msgstr "નવું ચિત્ર બનાવો (_a)"
 
 #: ../plug-ins/Lighting/lighting_ui.c:308
-#: ../plug-ins/MapObject/mapobject_ui.c:570
+#: ../plug-ins/MapObject/mapobject_ui.c:544
 msgid "Create a new image when applying filter"
 msgstr "જ્યારે ગાળક લાગુ કરી રહ્યા હોય ત્યારે નવું ચિત્ર બનાવો"
 
@@ -546,7 +547,7 @@ msgid "Distance:"
 msgstr "અંતર:"
 
 #: ../plug-ins/Lighting/lighting_ui.c:361
-#: ../plug-ins/MapObject/mapobject_ui.c:649
+#: ../plug-ins/MapObject/mapobject_ui.c:623
 msgid "Light Settings"
 msgstr "પ્રકાશ સુયોજનો"
 
@@ -593,17 +594,17 @@ msgid "Point"
 msgstr "બિંદુ"
 
 #: ../plug-ins/Lighting/lighting_ui.c:416
-#: ../plug-ins/MapObject/mapobject_ui.c:677
+#: ../plug-ins/MapObject/mapobject_ui.c:651
 msgid "Type of light source to apply"
 msgstr "લાગુ કરવાના પ્રકાશ સ્રોતનો પ્રકાર"
 
 #: ../plug-ins/Lighting/lighting_ui.c:418
-#: ../plug-ins/MapObject/mapobject_ui.c:679
+#: ../plug-ins/MapObject/mapobject_ui.c:653
 msgid "Select lightsource color"
 msgstr "પ્રકાશસ્રોત રંગ પસંદ કરો"
 
 #: ../plug-ins/Lighting/lighting_ui.c:430
-#: ../plug-ins/MapObject/mapobject_ui.c:692
+#: ../plug-ins/MapObject/mapobject_ui.c:666
 msgid "Set light source color"
 msgstr "પ્રકાશ સ્રોત રંગ સુયોજિત કરો"
 
@@ -616,8 +617,8 @@ msgid "Light intensity"
 msgstr "પ્રકાશ તીવ્રતા"
 
 #: ../plug-ins/Lighting/lighting_ui.c:447
-#: ../plug-ins/MapObject/mapobject_ui.c:694
-#: ../plug-ins/MapObject/mapobject_ui.c:1021
+#: ../plug-ins/MapObject/mapobject_ui.c:668
+#: ../plug-ins/MapObject/mapobject_ui.c:995
 #: ../plug-ins/print/gimp_main_window.c:475
 msgid "Position"
 msgstr "જગ્યા"
@@ -630,7 +631,7 @@ msgid "_X:"
 msgstr "_X:"
 
 #: ../plug-ins/Lighting/lighting_ui.c:462
-#: ../plug-ins/MapObject/mapobject_ui.c:718
+#: ../plug-ins/MapObject/mapobject_ui.c:692
 msgid "Light source X position in XYZ space"
 msgstr "પ્રકાશ સ્રોત X સ્થાન એ XYZ જગ્યામાં"
 
@@ -642,7 +643,7 @@ msgid "_Y:"
 msgstr "_Y:"
 
 #: ../plug-ins/Lighting/lighting_ui.c:475
-#: ../plug-ins/MapObject/mapobject_ui.c:732
+#: ../plug-ins/MapObject/mapobject_ui.c:706
 msgid "Light source Y position in XYZ space"
 msgstr "પ્રકાશ સ્રોત Y સ્થાન એ XYZ જગ્યામાં"
 
@@ -651,7 +652,7 @@ msgid "_Z:"
 msgstr "_Z:"
 
 #: ../plug-ins/Lighting/lighting_ui.c:488
-#: ../plug-ins/MapObject/mapobject_ui.c:746
+#: ../plug-ins/MapObject/mapobject_ui.c:720
 msgid "Light source Z position in XYZ space"
 msgstr "પ્રકાશ સ્રોત Z સ્થાન એ XYZ જગ્યામાં"
 
@@ -665,46 +666,46 @@ msgstr "દિશા"
 
 #. X
 #: ../plug-ins/Lighting/lighting_ui.c:499
-#: ../plug-ins/MapObject/mapobject_ui.c:710
-#: ../plug-ins/MapObject/mapobject_ui.c:764
-#: ../plug-ins/MapObject/mapobject_ui.c:1032
-#: ../plug-ins/MapObject/mapobject_ui.c:1081
+#: ../plug-ins/MapObject/mapobject_ui.c:684
+#: ../plug-ins/MapObject/mapobject_ui.c:738
+#: ../plug-ins/MapObject/mapobject_ui.c:1006
+#: ../plug-ins/MapObject/mapobject_ui.c:1055
 #: ../plug-ins/ifscompose/ifscompose.c:527
 msgid "X:"
 msgstr "X:"
 
 #: ../plug-ins/Lighting/lighting_ui.c:505
-#: ../plug-ins/MapObject/mapobject_ui.c:772
+#: ../plug-ins/MapObject/mapobject_ui.c:746
 msgid "Light source X direction in XYZ space"
 msgstr "પ્રકાશ સ્રોત X દિશા એ XYZ જગ્યામાં"
 
 #. Y
 #: ../plug-ins/Lighting/lighting_ui.c:511
-#: ../plug-ins/MapObject/mapobject_ui.c:724
-#: ../plug-ins/MapObject/mapobject_ui.c:777
-#: ../plug-ins/MapObject/mapobject_ui.c:1045
-#: ../plug-ins/MapObject/mapobject_ui.c:1092
-#: ../plug-ins/MapObject/mapobject_ui.c:1190
+#: ../plug-ins/MapObject/mapobject_ui.c:698
+#: ../plug-ins/MapObject/mapobject_ui.c:751
+#: ../plug-ins/MapObject/mapobject_ui.c:1019
+#: ../plug-ins/MapObject/mapobject_ui.c:1066
+#: ../plug-ins/MapObject/mapobject_ui.c:1164
 #: ../plug-ins/ifscompose/ifscompose.c:541
 msgid "Y:"
 msgstr "Y:"
 
 #: ../plug-ins/Lighting/lighting_ui.c:517
-#: ../plug-ins/MapObject/mapobject_ui.c:785
+#: ../plug-ins/MapObject/mapobject_ui.c:759
 msgid "Light source Y direction in XYZ space"
 msgstr "પ્રકાશ સ્રોત Y દિશા એ XYZ જગ્યામાં"
 
 #: ../plug-ins/Lighting/lighting_ui.c:523
-#: ../plug-ins/MapObject/mapobject_ui.c:738
-#: ../plug-ins/MapObject/mapobject_ui.c:790
-#: ../plug-ins/MapObject/mapobject_ui.c:1058
-#: ../plug-ins/MapObject/mapobject_ui.c:1103
-#: ../plug-ins/MapObject/mapobject_ui.c:1202
+#: ../plug-ins/MapObject/mapobject_ui.c:712
+#: ../plug-ins/MapObject/mapobject_ui.c:764
+#: ../plug-ins/MapObject/mapobject_ui.c:1032
+#: ../plug-ins/MapObject/mapobject_ui.c:1077
+#: ../plug-ins/MapObject/mapobject_ui.c:1176
 msgid "Z:"
 msgstr "Z:"
 
 #: ../plug-ins/Lighting/lighting_ui.c:529
-#: ../plug-ins/MapObject/mapobject_ui.c:798
+#: ../plug-ins/MapObject/mapobject_ui.c:772
 msgid "Light source Z direction in XYZ space"
 msgstr "પ્રકાશ સ્રોત Z દિશા એ XYZ જગ્યામાં"
 
@@ -725,7 +726,7 @@ msgid "_Glowing:"
 msgstr "ચમકતું (_G):"
 
 #: ../plug-ins/Lighting/lighting_ui.c:622
-#: ../plug-ins/MapObject/mapobject_ui.c:859
+#: ../plug-ins/MapObject/mapobject_ui.c:833
 msgid "Amount of original color to show where no direct light falls"
 msgstr "બતાવવા માટેના મૂળ રંગનો જથ્થો કે જ્યાં કોઈ સીધા પ્રકાશ ધોધ નથી"
 
@@ -734,7 +735,7 @@ msgid "_Bright:"
 msgstr "તેજસ્વી (_B):"
 
 #: ../plug-ins/Lighting/lighting_ui.c:651
-#: ../plug-ins/MapObject/mapobject_ui.c:888
+#: ../plug-ins/MapObject/mapobject_ui.c:862
 msgid "Intensity of original color when lit by a light source"
 msgstr "મૂળ રંગની તીવ્રતા કે જ્યાં લીટ એ પ્રકાશ સ્રોત અનુસાર"
 
@@ -743,7 +744,7 @@ msgid "_Shiny:"
 msgstr "ચમકતું (_S):"
 
 #: ../plug-ins/Lighting/lighting_ui.c:680
-#: ../plug-ins/MapObject/mapobject_ui.c:960
+#: ../plug-ins/MapObject/mapobject_ui.c:934
 msgid "Controls how intense the highlights will be"
 msgstr "પ્રકાશિતપણાની તીવ્રતા કેવી હોવી જોઈએ તે નિયંત્રિત કરે છે"
 
@@ -752,7 +753,7 @@ msgid "_Polished:"
 msgstr "પોલીશ કરેલું (_P):"
 
 #: ../plug-ins/Lighting/lighting_ui.c:708
-#: ../plug-ins/MapObject/mapobject_ui.c:989
+#: ../plug-ins/MapObject/mapobject_ui.c:963
 msgid "Higher values makes the highlights more focused"
 msgstr "ઊંચી કિંમતો વધુ ફોકસવાળા પ્રકાશનો કરે છે"
 
@@ -826,12 +827,12 @@ msgid "Op_tions"
 msgstr "વિકલ્પો (_t)"
 
 #: ../plug-ins/Lighting/lighting_ui.c:905
-#: ../plug-ins/MapObject/mapobject_ui.c:1326
+#: ../plug-ins/MapObject/mapobject_ui.c:1300
 msgid "_Light"
 msgstr "પ્રકાશ (_L)"
 
 #: ../plug-ins/Lighting/lighting_ui.c:909
-#: ../plug-ins/MapObject/mapobject_ui.c:1330
+#: ../plug-ins/MapObject/mapobject_ui.c:1304
 msgid "_Material"
 msgstr "મટીરીયલ (_M)"
 
@@ -854,7 +855,7 @@ msgid "_Update"
 msgstr "સુધારો (_U)"
 
 #: ../plug-ins/Lighting/lighting_ui.c:1033
-#: ../plug-ins/MapObject/mapobject_ui.c:1432
+#: ../plug-ins/MapObject/mapobject_ui.c:1405
 msgid "Recompute preview image"
 msgstr "પૂર્વદર્શન ચિત્ર ફરીથી ગણો"
 
@@ -874,304 +875,292 @@ msgstr "પ્રકાશન પૂર્વસુયોજન સંગ્ર�
 msgid "Load Lighting Preset"
 msgstr "પ્રકાશન પૂર્વસુયોજન લાવો"
 
-#: ../plug-ins/MapObject/mapobject_apply.c:273
+#: ../plug-ins/MapObject/mapobject_apply.c:274
 msgid "Map to Plane..."
 msgstr "સાદાનો નકશો..."
 
-#: ../plug-ins/MapObject/mapobject_apply.c:276
+#: ../plug-ins/MapObject/mapobject_apply.c:277
 msgid "Map to Sphere..."
 msgstr "ગોળાનો નકશો..."
 
-#: ../plug-ins/MapObject/mapobject_apply.c:279
+#: ../plug-ins/MapObject/mapobject_apply.c:280
 msgid "Map to Box..."
 msgstr "બોક્સનો નકશો..."
 
-#: ../plug-ins/MapObject/mapobject_apply.c:282
+#: ../plug-ins/MapObject/mapobject_apply.c:283
 msgid "Map to Cylinder..."
 msgstr "નળાકારનો નકશો..."
 
-#: ../plug-ins/MapObject/mapobject_main.c:199
+#: ../plug-ins/MapObject/mapobject_main.c:200
 msgid "Map _Object..."
 msgstr "ઓબ્જેક્ટનો નકશો (_O)..."
 
 #: ../plug-ins/MapObject/mapobject_ui.c:248
-#: ../plug-ins/MapObject/mapobject_ui.c:1340
+#: ../plug-ins/MapObject/mapobject_ui.c:1314
 msgid "_Box"
 msgstr "બોક્સ (_B)"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:266
-#: ../plug-ins/MapObject/mapobject_ui.c:1346
+#: ../plug-ins/MapObject/mapobject_ui.c:1320
 msgid "C_ylinder"
 msgstr "નળાકાર (_y)"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:508
+#: ../plug-ins/MapObject/mapobject_ui.c:482
 msgid "Map to:"
 msgstr "આના પ્રતિ નકશો:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:512
+#: ../plug-ins/MapObject/mapobject_ui.c:486
 msgid "Plane"
 msgstr "સાદું"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:513
+#: ../plug-ins/MapObject/mapobject_ui.c:487
 msgid "Sphere"
 msgstr "ગોળો"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:514
+#: ../plug-ins/MapObject/mapobject_ui.c:488
 msgid "Box"
 msgstr "બોક્સ"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:515
+#: ../plug-ins/MapObject/mapobject_ui.c:489
 msgid "Cylinder"
 msgstr "નળાકાર"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:530
+#: ../plug-ins/MapObject/mapobject_ui.c:504
 msgid "Type of object to map to"
 msgstr "આના પ્રતિ નકશો કરવા માટેના ઓબ્જેક્ટનો પ્રકાર"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:532
+#: ../plug-ins/MapObject/mapobject_ui.c:506
 msgid "Transparent background"
 msgstr "પારદર્શક પાશ્વભાગ"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:543
+#: ../plug-ins/MapObject/mapobject_ui.c:517
 msgid "Make image transparent outside object"
 msgstr "ઓબ્જેક્ટની બહાર ચિત્ર પારદર્શક બનાવો"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:545
+#: ../plug-ins/MapObject/mapobject_ui.c:519
 msgid "Tile source image"
 msgstr "તકતી સ્રોત ચિત્ર"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:556
+#: ../plug-ins/MapObject/mapobject_ui.c:530
 msgid "Tile source image: useful for infinite planes"
 msgstr "તકતી સ્રોત ચિત્ર: અનંત સાદા માટે ઉપયોગી છે"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:559
+#: ../plug-ins/MapObject/mapobject_ui.c:533
 msgid "Create new image"
 msgstr "નવું ચિત્ર બનાવો"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:578
+#: ../plug-ins/MapObject/mapobject_ui.c:552
 msgid "Enable _antialiasing"
 msgstr "એન્ટીએલિઆઝીંગ સક્રિય કરો (_a)"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:585
+#: ../plug-ins/MapObject/mapobject_ui.c:559
 msgid "Enable/disable jagged edges removal (antialiasing)"
 msgstr "જેગવાળી બાજુઓનું નિરાકરણ સક્રિય/નિષ્ક્રિય કરો (એન્ટીએલિઆઝીંગ)"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:602 ../plug-ins/common/bumpmap.c:984
+#: ../plug-ins/MapObject/mapobject_ui.c:576 ../plug-ins/common/bumpmap.c:984
 #: ../plug-ins/common/emboss.c:528 ../plug-ins/common/fractaltrace.c:792
 #: ../plug-ins/common/struc.c:1326
 msgid "_Depth:"
 msgstr "ઊંડાઈ (_D):"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:605
+#: ../plug-ins/MapObject/mapobject_ui.c:579
 msgid "Antialiasing quality. Higher is better, but slower"
 msgstr "એન્ટીએલિઆઝીંગ ગુણવત્તા. ઊંચી એ સારી છે, પરંતુ ધીમી"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:614 ../plug-ins/common/unsharp.c:695
+#: ../plug-ins/MapObject/mapobject_ui.c:588 ../plug-ins/common/unsharp.c:695
 #: ../plug-ins/common/wind.c:1008 ../plug-ins/imagemap/imap_preferences.c:441
 msgid "_Threshold:"
 msgstr "થ્રેશોલ્ડ (_T):"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:622
+#: ../plug-ins/MapObject/mapobject_ui.c:596
 msgid "Stop when pixel differences are smaller than this value"
 msgstr "જ્યારે પિક્સેલ તફાવતો આ કિંમત કરતાં નાના હોય ત્યારે અટકાવો"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:658
+#: ../plug-ins/MapObject/mapobject_ui.c:632
 msgid "Point light"
 msgstr "બિંદુ પ્રકાશ"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:659
+#: ../plug-ins/MapObject/mapobject_ui.c:633
 msgid "Directional light"
 msgstr "દિશાકીય પ્રકાશ"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:660
+#: ../plug-ins/MapObject/mapobject_ui.c:634
 msgid "No light"
 msgstr "કોઈ પ્રકાશ નથી"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:674
+#: ../plug-ins/MapObject/mapobject_ui.c:648
 msgid "Lightsource type:"
 msgstr "પ્રકાશસ્રોત પ્રકાર:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:684
+#: ../plug-ins/MapObject/mapobject_ui.c:658
 msgid "Lightsource color:"
 msgstr "પ્રકાશસ્રોત રંગ:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:749
+#: ../plug-ins/MapObject/mapobject_ui.c:723
 msgid "Direction Vector"
 msgstr "દિશા અદિશ"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:825
+#: ../plug-ins/MapObject/mapobject_ui.c:799
 msgid "Intensity Levels"
 msgstr "તીવ્રતા સ્તરો"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:844
+#: ../plug-ins/MapObject/mapobject_ui.c:818
 msgid "Ambient:"
 msgstr "ઘેરાયેલ:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:873
-#: ../plug-ins/MapObject/mapobject_ui.c:916
+#: ../plug-ins/MapObject/mapobject_ui.c:847
+#: ../plug-ins/MapObject/mapobject_ui.c:890
 msgid "Diffuse:"
 msgstr "નિષ્ક્રિય કરવું:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:897
+#: ../plug-ins/MapObject/mapobject_ui.c:871
 msgid "Reflectivity"
 msgstr "પરાવર્તનપણું"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:931
+#: ../plug-ins/MapObject/mapobject_ui.c:905
 msgid "Higher values makes the object reflect more light (appear lighter)"
 msgstr "ઊંચી કિંમતો ઓબ્જેક્ટને વધુ પ્રકાશ પરાવર્તિત કરવા માટે બનાવે છે (પ્રકાશિત દેખાય છે)"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:945
+#: ../plug-ins/MapObject/mapobject_ui.c:919
 msgid "Specular:"
 msgstr "સ્પેક્યુલર:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:974
+#: ../plug-ins/MapObject/mapobject_ui.c:948
 msgid "Highlight:"
 msgstr "પ્રકાશિત કરો:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1035
+#: ../plug-ins/MapObject/mapobject_ui.c:1009
 msgid "Object X position in XYZ space"
 msgstr "ઓબ્જેક્ટ X સ્થાન એ XYZ જગ્યામાં"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1048
+#: ../plug-ins/MapObject/mapobject_ui.c:1022
 msgid "Object Y position in XYZ space"
 msgstr "ઓબ્જેક્ટ Y સ્થાન એ XYZ જગ્યામાં"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1061
+#: ../plug-ins/MapObject/mapobject_ui.c:1035
 msgid "Object Z position in XYZ space"
 msgstr "ઓબ્જેક્ટ Y સ્થાન એ XYZ જગ્યામાં"
 
 #. Rotation
-#: ../plug-ins/MapObject/mapobject_ui.c:1070
+#: ../plug-ins/MapObject/mapobject_ui.c:1044
 #: ../plug-ins/common/postscript.c:3361
 msgid "Rotation"
 msgstr "ફેરવો"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1084
+#: ../plug-ins/MapObject/mapobject_ui.c:1058
 msgid "Rotation angle about X axis"
 msgstr "ફેરવવાનો કોણ X અક્ષ બાજુ"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1095
+#: ../plug-ins/MapObject/mapobject_ui.c:1069
 msgid "Rotation angle about Y axis"
 msgstr "ફેરવવાનો કોણ Y અક્ષ બાજુ"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1106
+#: ../plug-ins/MapObject/mapobject_ui.c:1080
 msgid "Rotation angle about Z axis"
 msgstr "ફેરવવાનો કોણ Z અક્ષ બાજુ"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1132
+#: ../plug-ins/MapObject/mapobject_ui.c:1106
 msgid "Front:"
 msgstr "અગ્ર:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1132
+#: ../plug-ins/MapObject/mapobject_ui.c:1106
 msgid "Back:"
 msgstr "પાશ્વ:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1133
+#: ../plug-ins/MapObject/mapobject_ui.c:1107
 #: ../plug-ins/print/gimp_main_window.c:534
 msgid "Top:"
 msgstr "ટોચ:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1133
+#: ../plug-ins/MapObject/mapobject_ui.c:1107
 #: ../plug-ins/print/gimp_main_window.c:575
 msgid "Bottom:"
 msgstr "નીચે:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1134
+#: ../plug-ins/MapObject/mapobject_ui.c:1108
 #: ../plug-ins/print/gimp_main_window.c:521
 msgid "Left:"
 msgstr "ડાબુ:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1134
+#: ../plug-ins/MapObject/mapobject_ui.c:1108
 #: ../plug-ins/print/gimp_main_window.c:547
 msgid "Right:"
 msgstr "જમણુ:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1140
+#: ../plug-ins/MapObject/mapobject_ui.c:1114
 msgid "Map Images to Box Faces"
 msgstr "બોક્સ ચહેરાઓ પ્રતિ ચિત્રો જોડો"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1178
+#: ../plug-ins/MapObject/mapobject_ui.c:1152
 #: ../plug-ins/common/spheredesigner.c:2772
 msgid "Scale X:"
 msgstr "માપ X:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1181
+#: ../plug-ins/MapObject/mapobject_ui.c:1155
 msgid "X scale (size)"
 msgstr "X ખેંચો (માપ)"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1193
+#: ../plug-ins/MapObject/mapobject_ui.c:1167
 msgid "Y scale (size)"
 msgstr "Y ખેંચો (માપ)"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1205
+#: ../plug-ins/MapObject/mapobject_ui.c:1179
 msgid "Z scale (size)"
 msgstr "Z ખેંચો (માપ)"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1228
+#: ../plug-ins/MapObject/mapobject_ui.c:1202
 msgid "_Top:"
 msgstr "ટોચ (_T):"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1228
+#: ../plug-ins/MapObject/mapobject_ui.c:1202
 msgid "_Bottom:"
 msgstr "તળીયું (_B):"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1233
+#: ../plug-ins/MapObject/mapobject_ui.c:1207
 msgid "Images for the Cap Faces"
 msgstr "કેપ ચહેરાઓ માટે ચિત્રો"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1262
+#: ../plug-ins/MapObject/mapobject_ui.c:1236
 #: ../plug-ins/print/gimp_main_window.c:1119
 msgid "Size"
 msgstr "માપ"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1273
+#: ../plug-ins/MapObject/mapobject_ui.c:1247
 msgid "R_adius:"
 msgstr "ત્રિજ્યા (_a):"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1277
+#: ../plug-ins/MapObject/mapobject_ui.c:1251
 msgid "Cylinder radius"
 msgstr "નળાકાર ત્રિજ્યા"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1287 ../plug-ins/common/mblur.c:1023
+#: ../plug-ins/MapObject/mapobject_ui.c:1261 ../plug-ins/common/mblur.c:1023
 msgid "L_ength:"
 msgstr "લંબાઈ (_e):"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1291
+#: ../plug-ins/MapObject/mapobject_ui.c:1265
 msgid "Cylinder length"
 msgstr "નળાકાર લંબાઈ"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1322
+#: ../plug-ins/MapObject/mapobject_ui.c:1296
 msgid "O_ptions"
 msgstr "વિકલ્પો (_p)"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1334
+#: ../plug-ins/MapObject/mapobject_ui.c:1308
 msgid "O_rientation"
 msgstr "દિશા (_r)"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1370
+#: ../plug-ins/MapObject/mapobject_ui.c:1343
 msgid "Map to Object"
 msgstr "ઓબ્જેક્ટ પ્રતિ જોડો"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1423
+#: ../plug-ins/MapObject/mapobject_ui.c:1396
 #: ../plug-ins/common/diffraction.c:477
 msgid "_Preview!"
 msgstr "પૂર્વદર્શન (_P)!"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1446
-msgid "Zoom out (make image smaller)"
-msgstr "નાનું કરો (ચિત્ર નાનું બનાવો)"
-
-#: ../plug-ins/MapObject/mapobject_ui.c:1460
-msgid "Zoom in (make image bigger)"
-msgstr "મોટું કરો (ચિત્ર મોટું બનાવો)"
-
-#: ../plug-ins/MapObject/mapobject_ui.c:1462
+#: ../plug-ins/MapObject/mapobject_ui.c:1421
 msgid "Show preview _wireframe"
 msgstr "પૂર્વદર્શન વાયરફ્રેમ બતાવો (_w)"
-
-#: ../plug-ins/MapObject/mapobject_ui.c:1471
-msgid "Show/hide preview wireframe"
-msgstr "પૂર્વદર્શન વાયરફ્રેમ બતાવો/છુપાવો"
 
 #: ../plug-ins/bmp/bmp.c:122 ../plug-ins/bmp/bmp.c:141
 msgid "Windows BMP image"
@@ -1187,14 +1176,14 @@ msgstr "ખરાબ રંગનકશો"
 #: ../plug-ins/common/pat.c:327 ../plug-ins/common/pcx.c:315
 #: ../plug-ins/common/pix.c:335 ../plug-ins/common/png.c:728
 #: ../plug-ins/common/pnm.c:448 ../plug-ins/common/poppler.c:464
-#: ../plug-ins/common/postscript.c:1018 ../plug-ins/common/psd.c:1829
+#: ../plug-ins/common/postscript.c:1018 ../plug-ins/common/psd.c:1886
 #: ../plug-ins/common/raw.c:653 ../plug-ins/common/sunras.c:434
 #: ../plug-ins/common/tga.c:420 ../plug-ins/common/tiff.c:536
 #: ../plug-ins/common/wmf.c:953 ../plug-ins/common/xbm.c:726
 #: ../plug-ins/common/xpm.c:344 ../plug-ins/common/xwd.c:474
 #: ../plug-ins/faxg3/faxg3.c:205 ../plug-ins/gfli/gfli.c:469
 #: ../plug-ins/jpeg/jpeg-load.c:93 ../plug-ins/sgi/sgi.c:319
-#: ../plug-ins/winicon/icoload.c:461 ../plug-ins/xjt/xjt.c:3312
+#: ../plug-ins/winicon/icoload.c:461 ../plug-ins/xjt/xjt.c:3316
 #, c-format
 msgid "Opening '%s'..."
 msgstr "'%s' ખોલી રહ્યા છીએ..."
@@ -1228,12 +1217,12 @@ msgstr "બિનઆધારભૂત અથવા અયોગ્ય બીટ
 #.
 #: ../plug-ins/bmp/bmpread.c:488 ../plug-ins/common/CEL.c:352
 #: ../plug-ins/common/CEL.c:355 ../plug-ins/common/blinds.c:279
-#: ../plug-ins/common/compose.c:887 ../plug-ins/common/decompose.c:623
+#: ../plug-ins/common/compose.c:904 ../plug-ins/common/decompose.c:630
 #: ../plug-ins/common/dicom.c:448 ../plug-ins/common/film.c:944
 #: ../plug-ins/common/gifload.c:870 ../plug-ins/common/pcx.c:340
 #: ../plug-ins/common/pcx.c:346 ../plug-ins/common/pix.c:369
 #: ../plug-ins/common/png.c:853 ../plug-ins/common/pnm.c:527
-#: ../plug-ins/common/psd.c:2246 ../plug-ins/common/raw.c:688
+#: ../plug-ins/common/psd.c:2292 ../plug-ins/common/raw.c:688
 #: ../plug-ins/common/smooth_palette.c:257 ../plug-ins/common/sunras.c:919
 #: ../plug-ins/common/tga.c:927 ../plug-ins/common/tiff.c:887
 #: ../plug-ins/common/tile.c:266 ../plug-ins/common/xbm.c:867
@@ -1241,7 +1230,7 @@ msgstr "બિનઆધારભૂત અથવા અયોગ્ય બીટ
 #: ../plug-ins/gfig/gfig-dialog.c:1290
 #: ../plug-ins/gimpressionist/general.c:121 ../plug-ins/jpeg/jpeg-load.c:239
 #: ../plug-ins/jpeg/jpeg-load.c:742 ../plug-ins/sgi/sgi.c:370
-#: ../plug-ins/twain/twain.c:571 ../plug-ins/winsnap/winsnap.c:1156
+#: ../plug-ins/twain/twain.c:574 ../plug-ins/winsnap/winsnap.c:1156
 msgid "Background"
 msgstr "પાશ્વ ભાગ"
 
@@ -1272,7 +1261,7 @@ msgstr "અનુક્રમિત ચિત્રો પર આલ્ફા �
 #: ../plug-ins/common/xwd.c:572 ../plug-ins/fits/fits.c:460
 #: ../plug-ins/gfli/gfli.c:685 ../plug-ins/jpeg/jpeg-save.c:225
 #: ../plug-ins/sgi/sgi.c:539 ../plug-ins/winicon/icosave.c:978
-#: ../plug-ins/xjt/xjt.c:1686
+#: ../plug-ins/xjt/xjt.c:1690
 #, c-format
 msgid "Saving '%s'..."
 msgstr "'%s' સંગ્રહી રહ્યા છીએ..."
@@ -1600,19 +1589,19 @@ msgid "Randoms from seed (shared)"
 msgstr "રેન્ડમ સીડમાંથી (વહેંચાયેલ)"
 
 #: ../plug-ins/common/CML_explorer.c:300 ../plug-ins/common/CML_explorer.c:308
-#: ../plug-ins/common/decompose.c:147
+#: ../plug-ins/common/decompose.c:152
 #: ../plug-ins/gimpressionist/orientation.c:162
 #: ../plug-ins/gimpressionist/size.c:165
 msgid "Hue"
 msgstr "વર્ણ"
 
 #: ../plug-ins/common/CML_explorer.c:301 ../plug-ins/common/CML_explorer.c:309
-#: ../plug-ins/common/decompose.c:148
+#: ../plug-ins/common/decompose.c:153
 msgid "Saturation"
 msgstr "સંતુલન"
 
 #: ../plug-ins/common/CML_explorer.c:302 ../plug-ins/common/CML_explorer.c:310
-#: ../plug-ins/common/decompose.c:149
+#: ../plug-ins/common/decompose.c:154
 #: ../plug-ins/gimpressionist/orientation.c:138
 #: ../plug-ins/gimpressionist/size.c:141 ../plug-ins/metadata/interface.c:142
 msgid "Value"
@@ -2235,7 +2224,7 @@ msgstr "કાર્ટુન (_r)..."
 #: ../plug-ins/common/gauss.c:435 ../plug-ins/common/neon.c:225
 #: ../plug-ins/common/photocopy.c:244 ../plug-ins/common/sel_gauss.c:205
 #: ../plug-ins/common/softglow.c:222 ../plug-ins/gflare/gflare.c:969
-#: ../plug-ins/sgi/sgi.c:521 ../plug-ins/xjt/xjt.c:1676
+#: ../plug-ins/sgi/sgi.c:521 ../plug-ins/xjt/xjt.c:1680
 msgid "Cannot operate on indexed color images."
 msgstr "અનુક્રમિત રંગ ચિત્રો પર પ્રક્રિયા કરી શકતા નથી."
 
@@ -2315,24 +2304,24 @@ msgstr "ચેનલ મિશ્રણ"
 msgid "O_utput channel:"
 msgstr "આઉટપુટ ચેનલ (_u):"
 
-#: ../plug-ins/common/channel_mixer.c:582 ../plug-ins/common/compose.c:184
-#: ../plug-ins/common/compose.c:194 ../plug-ins/common/diffraction.c:501
+#: ../plug-ins/common/channel_mixer.c:582 ../plug-ins/common/compose.c:185
+#: ../plug-ins/common/compose.c:196 ../plug-ins/common/diffraction.c:501
 #: ../plug-ins/common/diffraction.c:539 ../plug-ins/common/diffraction.c:577
 #: ../plug-ins/common/exchange.c:399 ../plug-ins/common/noisify.c:530
 #: ../plug-ins/common/noisify.c:537
 msgid "_Red:"
 msgstr "લાલ (_R):"
 
-#: ../plug-ins/common/channel_mixer.c:600 ../plug-ins/common/compose.c:185
-#: ../plug-ins/common/compose.c:195 ../plug-ins/common/diffraction.c:510
+#: ../plug-ins/common/channel_mixer.c:600 ../plug-ins/common/compose.c:186
+#: ../plug-ins/common/compose.c:197 ../plug-ins/common/diffraction.c:510
 #: ../plug-ins/common/diffraction.c:548 ../plug-ins/common/diffraction.c:586
 #: ../plug-ins/common/exchange.c:459 ../plug-ins/common/noisify.c:531
 #: ../plug-ins/common/noisify.c:538
 msgid "_Green:"
 msgstr "લીલું (_G):"
 
-#: ../plug-ins/common/channel_mixer.c:619 ../plug-ins/common/compose.c:186
-#: ../plug-ins/common/compose.c:196 ../plug-ins/common/diffraction.c:519
+#: ../plug-ins/common/channel_mixer.c:619 ../plug-ins/common/compose.c:187
+#: ../plug-ins/common/compose.c:198 ../plug-ins/common/diffraction.c:519
 #: ../plug-ins/common/diffraction.c:557 ../plug-ins/common/diffraction.c:595
 #: ../plug-ins/common/exchange.c:520 ../plug-ins/common/noisify.c:532
 #: ../plug-ins/common/noisify.c:539
@@ -2436,122 +2425,122 @@ msgstr "આલ્ફ રંગ પકડનાર પ્રતિ રંગ"
 msgid "to alpha"
 msgstr "આલ્ફા પ્રતિ"
 
-#: ../plug-ins/common/compose.c:183 ../plug-ins/common/decompose.c:134
+#: ../plug-ins/common/compose.c:184 ../plug-ins/common/decompose.c:134
 #: ../plug-ins/common/raw.c:969
 msgid "RGB"
 msgstr "RGB"
 
-#: ../plug-ins/common/compose.c:193 ../plug-ins/common/decompose.c:139
+#: ../plug-ins/common/compose.c:195 ../plug-ins/common/decompose.c:142
 #: ../plug-ins/common/raw.c:970
 msgid "RGBA"
 msgstr "RGBA"
 
-#: ../plug-ins/common/compose.c:197 ../plug-ins/common/noisify.c:525
+#: ../plug-ins/common/compose.c:199 ../plug-ins/common/noisify.c:525
 #: ../plug-ins/common/noisify.c:540
 msgid "_Alpha:"
 msgstr "આલ્ફા (_A):"
 
-#: ../plug-ins/common/compose.c:203 ../plug-ins/common/decompose.c:144
+#: ../plug-ins/common/compose.c:206 ../plug-ins/common/decompose.c:148
 msgid "HSV"
 msgstr "HSV"
 
-#: ../plug-ins/common/compose.c:204
+#: ../plug-ins/common/compose.c:207
 msgid "_Hue:"
 msgstr "વર્ણ (_H):"
 
-#: ../plug-ins/common/compose.c:205 ../plug-ins/common/scatter_hsv.c:413
+#: ../plug-ins/common/compose.c:208 ../plug-ins/common/scatter_hsv.c:413
 msgid "_Saturation:"
 msgstr "સંતૃપ્તીકરણ (_S):"
 
-#: ../plug-ins/common/compose.c:206 ../plug-ins/common/scatter_hsv.c:425
+#: ../plug-ins/common/compose.c:209 ../plug-ins/common/scatter_hsv.c:425
 msgid "_Value:"
 msgstr "કિંમત (_V):"
 
-#: ../plug-ins/common/compose.c:210 ../plug-ins/common/decompose.c:150
+#: ../plug-ins/common/compose.c:214 ../plug-ins/common/decompose.c:157
 msgid "CMY"
 msgstr "CMY"
 
-#: ../plug-ins/common/compose.c:211 ../plug-ins/common/compose.c:218
+#: ../plug-ins/common/compose.c:215 ../plug-ins/common/compose.c:223
 msgid "_Cyan:"
 msgstr "મોરપીંછ (_C):"
 
-#: ../plug-ins/common/compose.c:212 ../plug-ins/common/compose.c:219
+#: ../plug-ins/common/compose.c:216 ../plug-ins/common/compose.c:224
 msgid "_Magenta:"
 msgstr "જાંબલી (_M):"
 
-#: ../plug-ins/common/compose.c:213 ../plug-ins/common/compose.c:220
+#: ../plug-ins/common/compose.c:217 ../plug-ins/common/compose.c:225
 msgid "_Yellow:"
 msgstr "પીળો (_Y):"
 
-#: ../plug-ins/common/compose.c:217 ../plug-ins/common/decompose.c:156
+#: ../plug-ins/common/compose.c:222 ../plug-ins/common/decompose.c:166
 msgid "CMYK"
 msgstr "CMYK"
 
-#: ../plug-ins/common/compose.c:221
+#: ../plug-ins/common/compose.c:226
 msgid "_Black:"
 msgstr "કાળો (_B):"
 
-#: ../plug-ins/common/compose.c:224 ../plug-ins/common/decompose.c:165
+#: ../plug-ins/common/compose.c:230 ../plug-ins/common/decompose.c:179
 msgid "LAB"
 msgstr "LAB"
 
-#: ../plug-ins/common/compose.c:232
+#: ../plug-ins/common/compose.c:239
 msgid "_Luma y470:"
 msgstr "_Luma y470:"
 
-#: ../plug-ins/common/compose.c:233
+#: ../plug-ins/common/compose.c:240
 msgid "_Blueness cb470:"
 msgstr "_Blueness cb470:"
 
-#: ../plug-ins/common/compose.c:234
+#: ../plug-ins/common/compose.c:241
 msgid "_Redness cr470:"
 msgstr "_Redness cr470:"
 
-#: ../plug-ins/common/compose.c:239
+#: ../plug-ins/common/compose.c:247
 msgid "_Luma y709:"
 msgstr "_Luma y709:"
 
-#: ../plug-ins/common/compose.c:240
+#: ../plug-ins/common/compose.c:248
 msgid "_Blueness cb709:"
 msgstr "_Blueness cb709:"
 
-#: ../plug-ins/common/compose.c:241
+#: ../plug-ins/common/compose.c:249
 msgid "_Redness cr709:"
 msgstr "_Redness cr709:"
 
-#: ../plug-ins/common/compose.c:246
+#: ../plug-ins/common/compose.c:255
 msgid "_Luma y470f:"
 msgstr "_Luma y470f:"
 
-#: ../plug-ins/common/compose.c:247
+#: ../plug-ins/common/compose.c:256
 msgid "_Blueness cb470f:"
 msgstr "_Blueness cb470f:"
 
-#: ../plug-ins/common/compose.c:248
+#: ../plug-ins/common/compose.c:257
 msgid "_Redness cr470f:"
 msgstr "_Redness cr470f:"
 
-#: ../plug-ins/common/compose.c:253
+#: ../plug-ins/common/compose.c:263
 msgid "_Luma y709f:"
 msgstr "_Luma y709f:"
 
-#: ../plug-ins/common/compose.c:254
+#: ../plug-ins/common/compose.c:264
 msgid "_Blueness cb709f:"
 msgstr "_Blueness cb709f:"
 
-#: ../plug-ins/common/compose.c:255
+#: ../plug-ins/common/compose.c:265
 msgid "_Redness cr709f:"
 msgstr "_Redness cr709f:"
 
-#: ../plug-ins/common/compose.c:376
+#: ../plug-ins/common/compose.c:386
 msgid "C_ompose..."
 msgstr "બનાવો (_o)..."
 
-#: ../plug-ins/common/compose.c:408
+#: ../plug-ins/common/compose.c:418
 msgid "R_ecompose"
 msgstr "ફરી બનાવો (_e)"
 
-#: ../plug-ins/common/compose.c:454
+#: ../plug-ins/common/compose.c:462
 msgid ""
 "You can only run 'Recompose' if the active image was originally produced by "
 "'Decompose'."
@@ -2559,68 +2548,68 @@ msgstr ""
 "તમે માત્ર 'ફરી બનાવો' ચલાવી શકો જો સક્રિય ચિત્ર મૂળમાં 'બનાવો નહિં' દ્વારા પેદા થયેલ "
 "હતું."
 
-#: ../plug-ins/common/compose.c:471
+#: ../plug-ins/common/compose.c:486
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
 msgstr "'decompose-data' પેરાસાઈટ સ્કેન કરવામાં ભૂલ: ખૂબ ઓછા સ્તરો મળ્યા"
 
-#: ../plug-ins/common/compose.c:501
+#: ../plug-ins/common/compose.c:517
 #, c-format
 msgid "Could not get layers for image %d"
 msgstr "ચિત્ર %d માટે સ્તરો મેળવી શક્યા નહિં"
 
-#: ../plug-ins/common/compose.c:570
+#: ../plug-ins/common/compose.c:588
 msgid "Composing..."
 msgstr "બનાવી રહ્યા છીએ..."
 
-#: ../plug-ins/common/compose.c:652 ../plug-ins/common/compose.c:1637
+#: ../plug-ins/common/compose.c:670 ../plug-ins/common/compose.c:1658
 msgid "At least one image is needed to compose"
 msgstr "ઓછામાં ઓછું એક ચિત્ર બનાવવા માટે જરૂરી છે"
 
-#: ../plug-ins/common/compose.c:663 ../plug-ins/common/compose.c:676
+#: ../plug-ins/common/compose.c:681 ../plug-ins/common/compose.c:694
 #, c-format
 msgid "Specified layer %d not found"
 msgstr "સ્પષ્ટ થયેલ સ્તર %d મળ્યું નહિં"
 
-#: ../plug-ins/common/compose.c:683
+#: ../plug-ins/common/compose.c:701
 msgid "Drawables have different size"
 msgstr "દોરી શકાય તેવાને અલગ માપ છે"
 
-#: ../plug-ins/common/compose.c:708
+#: ../plug-ins/common/compose.c:726
 msgid "Images have different size"
 msgstr "ચિત્રો પાસે અલગ માપ છે"
 
-#: ../plug-ins/common/compose.c:725
+#: ../plug-ins/common/compose.c:743
 msgid "Error in getting layer IDs"
 msgstr "સ્તર ID મેળવવામાં ભૂલ"
 
-#: ../plug-ins/common/compose.c:746
+#: ../plug-ins/common/compose.c:764
 #, c-format
 msgid "Image is not a gray image (bpp=%d)"
 msgstr "ચિત્ર એ રાખોડી ચિત્ર નથી (bpp=%d)"
 
-#: ../plug-ins/common/compose.c:773
+#: ../plug-ins/common/compose.c:791
 msgid "Unable to recompose, source layer not found"
 msgstr "ફરી બનાવવામાં અસમર્થ, સ્રોત સ્તર મળ્યું નહિં"
 
-#: ../plug-ins/common/compose.c:1405
+#: ../plug-ins/common/compose.c:1419
 msgid "Compose"
 msgstr "બનાવો"
 
 #. Compose type combo
-#: ../plug-ins/common/compose.c:1432
+#: ../plug-ins/common/compose.c:1446
 msgid "Compose Channels"
 msgstr "ચેનલો બનાવો"
 
-#: ../plug-ins/common/compose.c:1442
-msgid "Color _Model:"
-msgstr "રંગ નમૂનો (_M):"
+#: ../plug-ins/common/compose.c:1456 ../plug-ins/common/decompose.c:1287
+msgid "Color _model:"
+msgstr "રંગ નમૂનો (_m):"
 
 #. Channel representation table
-#: ../plug-ins/common/compose.c:1467
+#: ../plug-ins/common/compose.c:1487
 msgid "Channel Representations"
 msgstr "ચેનલ રજૂઆતો"
 
-#: ../plug-ins/common/compose.c:1523
+#: ../plug-ins/common/compose.c:1543
 msgid "Mask value"
 msgstr "માસ્ક કિંમત"
 
@@ -2940,159 +2929,158 @@ msgstr "વળાંક બિંદુઓ ફાઈલ પ્રતિ સં�
 msgid "Curve Bend..."
 msgstr "વળાંક વાળો..."
 
-#: ../plug-ins/common/decompose.c:134 ../plug-ins/common/decompose.c:137
-#: ../plug-ins/common/decompose.c:139
+#: ../plug-ins/common/decompose.c:134 ../plug-ins/common/decompose.c:138
+#: ../plug-ins/common/decompose.c:142
 msgid "red"
 msgstr "લાલ"
 
-#: ../plug-ins/common/decompose.c:135 ../plug-ins/common/decompose.c:138
-#: ../plug-ins/common/decompose.c:140
+#: ../plug-ins/common/decompose.c:135 ../plug-ins/common/decompose.c:139
+#: ../plug-ins/common/decompose.c:143
 msgid "green"
 msgstr "લીલો"
 
-#: ../plug-ins/common/decompose.c:136 ../plug-ins/common/decompose.c:141
-#: ../plug-ins/common/decompose.c:143
+#: ../plug-ins/common/decompose.c:136 ../plug-ins/common/decompose.c:140
+#: ../plug-ins/common/decompose.c:144
 msgid "blue"
 msgstr "ભૂરો"
 
-#: ../plug-ins/common/decompose.c:142 ../plug-ins/common/decompose.c:163
+#: ../plug-ins/common/decompose.c:145 ../plug-ins/common/decompose.c:176
 msgid "alpha"
 msgstr "આલ્ફા"
 
-#: ../plug-ins/common/decompose.c:144 ../plug-ins/common/decompose.c:147
+#: ../plug-ins/common/decompose.c:148 ../plug-ins/common/decompose.c:152
 msgid "hue"
 msgstr "વર્ણ"
 
-#: ../plug-ins/common/decompose.c:145 ../plug-ins/common/decompose.c:148
+#: ../plug-ins/common/decompose.c:149 ../plug-ins/common/decompose.c:153
 msgid "saturation"
 msgstr "સંતુલન"
 
-#: ../plug-ins/common/decompose.c:146 ../plug-ins/common/decompose.c:149
+#: ../plug-ins/common/decompose.c:150 ../plug-ins/common/decompose.c:154
 msgid "value"
 msgstr "કિંમત"
 
-#: ../plug-ins/common/decompose.c:150 ../plug-ins/common/decompose.c:153
+#: ../plug-ins/common/decompose.c:157 ../plug-ins/common/decompose.c:161
 msgid "cyan"
 msgstr "મોરપીંછ"
 
-#: ../plug-ins/common/decompose.c:151 ../plug-ins/common/decompose.c:154
+#: ../plug-ins/common/decompose.c:158 ../plug-ins/common/decompose.c:162
 msgid "magenta"
 msgstr "જાંબલી"
 
-#: ../plug-ins/common/decompose.c:152 ../plug-ins/common/decompose.c:155
+#: ../plug-ins/common/decompose.c:159 ../plug-ins/common/decompose.c:163
 msgid "yellow"
 msgstr "પીળો"
 
-#: ../plug-ins/common/decompose.c:153
+#: ../plug-ins/common/decompose.c:161
 msgid "Cyan"
 msgstr "મોરપીંછ"
 
-#: ../plug-ins/common/decompose.c:154
+#: ../plug-ins/common/decompose.c:162
 msgid "Magenta"
 msgstr "જાંબલી"
 
-#: ../plug-ins/common/decompose.c:155
+#: ../plug-ins/common/decompose.c:163
 msgid "Yellow"
 msgstr "પીળો"
 
-#: ../plug-ins/common/decompose.c:156 ../plug-ins/common/decompose.c:160
-msgid "cyan_k"
-msgstr "મોરપીંછ (_k)"
+#: ../plug-ins/common/decompose.c:166 ../plug-ins/common/decompose.c:171
+msgid "cyan-k"
+msgstr "મોરપીંછ-k"
 
-#: ../plug-ins/common/decompose.c:157 ../plug-ins/common/decompose.c:161
-msgid "magenta_k"
-msgstr "જાંબલી (_k)"
+#: ../plug-ins/common/decompose.c:167 ../plug-ins/common/decompose.c:172
+msgid "magenta-k"
+msgstr "જાંબલી-k"
 
-#: ../plug-ins/common/decompose.c:158 ../plug-ins/common/decompose.c:162
-msgid "yellow_k"
-msgstr "પીળો (_k)"
+#: ../plug-ins/common/decompose.c:168 ../plug-ins/common/decompose.c:173
+msgid "yellow-k"
+msgstr "પીળો-k"
 
-#: ../plug-ins/common/decompose.c:159
+#: ../plug-ins/common/decompose.c:169
 msgid "black"
 msgstr "કાળો"
 
-#: ../plug-ins/common/decompose.c:160
+#: ../plug-ins/common/decompose.c:171
 msgid "Cyan_K"
 msgstr "મોરપીંછ (_K)"
 
-#: ../plug-ins/common/decompose.c:161
+#: ../plug-ins/common/decompose.c:172
 msgid "Magenta_K"
 msgstr "જાંબલી (_K)"
 
-#: ../plug-ins/common/decompose.c:162
+#: ../plug-ins/common/decompose.c:173
 msgid "Yellow_K"
 msgstr "પીળો (_K)"
 
-#: ../plug-ins/common/decompose.c:163
+#: ../plug-ins/common/decompose.c:176
 msgid "Alpha"
 msgstr "આલ્ફા"
 
-#: ../plug-ins/common/decompose.c:170
-msgid "luma_y470"
-msgstr "luma_y470"
-
-#: ../plug-ins/common/decompose.c:171
-msgid "blueness_cb470"
-msgstr "blueness_cb470"
-
-#: ../plug-ins/common/decompose.c:172
-msgid "redness_cr470"
-msgstr "redness_cr470"
-
-#: ../plug-ins/common/decompose.c:174
-msgid "luma_y709"
-msgstr "luma_y709"
-
-#: ../plug-ins/common/decompose.c:175
-msgid "blueness_cb709"
-msgstr "blueness_cb709"
-
-#: ../plug-ins/common/decompose.c:176
-msgid "redness_cr709"
-msgstr "redness_cr709"
-
-#: ../plug-ins/common/decompose.c:178
-msgid "luma_y470f"
-msgstr "luma_y470f"
-
-#: ../plug-ins/common/decompose.c:179
-msgid "blueness_cb470f"
-msgstr "blueness_cb470f"
-
-#: ../plug-ins/common/decompose.c:180
-msgid "redness_cr470f"
-msgstr "redness_cr470f"
-
-#: ../plug-ins/common/decompose.c:182
-msgid "luma_y709f"
-msgstr "luma_y709f"
-
-#: ../plug-ins/common/decompose.c:183
-msgid "blueness_cb709f"
-msgstr "blueness_cb709f"
-
 #: ../plug-ins/common/decompose.c:184
-msgid "redness_cr709f"
-msgstr "redness_cr709f"
+msgid "luma-y470"
+msgstr "luma-y470"
 
-#: ../plug-ins/common/decompose.c:249
+#: ../plug-ins/common/decompose.c:185
+msgid "blueness-cb470"
+msgstr "blueness-cb470"
+
+#: ../plug-ins/common/decompose.c:186
+msgid "redness-cr470"
+msgstr "redness-cr470"
+
+#: ../plug-ins/common/decompose.c:188
+msgid "luma-y709"
+msgstr "luma-y709"
+
+#: ../plug-ins/common/decompose.c:189
+msgid "blueness-cb709"
+msgstr "blueness-cb709"
+
+#: ../plug-ins/common/decompose.c:190
+msgid "redness-cr709"
+msgstr "redness-cr709"
+
+#: ../plug-ins/common/decompose.c:192
+msgid "luma-y470f"
+msgstr "luma-y470f"
+
+#: ../plug-ins/common/decompose.c:193
+msgid "blueness-cb470f"
+msgstr "blueness-cb470f"
+
+#: ../plug-ins/common/decompose.c:194
+msgid "redness-cr470f"
+msgstr "redness-cr470f"
+
+#: ../plug-ins/common/decompose.c:196
+msgid "luma-y709f"
+msgstr "luma-y709f"
+
+#: ../plug-ins/common/decompose.c:197
+msgid "blueness-cb709f"
+msgstr "blueness-cb709f"
+
+#: ../plug-ins/common/decompose.c:198
+msgid "redness-cr709f"
+msgstr "redness-cr709f"
+
+#: ../plug-ins/common/decompose.c:253
 msgid "_Decompose..."
 msgstr "બનાવો નહિં (_D)..."
 
-#: ../plug-ins/common/decompose.c:337
+#: ../plug-ins/common/decompose.c:342
 msgid "Decomposing..."
 msgstr "બનાવો નહિં..."
 
-#: ../plug-ins/common/decompose.c:1227
+#: ../plug-ins/common/decompose.c:1252
 msgid "Decompose"
 msgstr "બનાવો નહિં"
 
-#. parameter settings
-#: ../plug-ins/common/decompose.c:1250
+#: ../plug-ins/common/decompose.c:1275
 msgid "Extract Channels"
 msgstr "ચેનલોનો અર્ક કાઢો"
 
-#: ../plug-ins/common/decompose.c:1278
+#: ../plug-ins/common/decompose.c:1321
 msgid "Decompose to _layers"
 msgstr "સ્તરોમાં બનાવશો નહિં (_l)"
 
@@ -3230,7 +3218,7 @@ msgstr "ચિત્રોને આલ્ફા ચેનલ સાથે સ�
 
 #: ../plug-ins/common/dicom.c:638 ../plug-ins/common/postscript.c:1176
 #: ../plug-ins/common/xwd.c:558 ../plug-ins/fits/fits.c:445
-#: ../plug-ins/xjt/xjt.c:1680
+#: ../plug-ins/xjt/xjt.c:1684
 msgid "Cannot operate on unknown image types."
 msgstr "અજ્ઞાત ચિત્ર પ્રકારો પર કામ કરી શકતા નથી."
 
@@ -4835,7 +4823,7 @@ msgid "To:"
 msgstr "પ્રતિ:"
 
 #: ../plug-ins/common/max_rgb.c:98
-msgid "_Max RGB..."
+msgid "_Maximum RGB..."
 msgstr "મહત્તમ RGB (_M)..."
 
 #: ../plug-ins/common/max_rgb.c:137
@@ -4847,8 +4835,8 @@ msgid "Max RGB..."
 msgstr "મહત્તમ RGB..."
 
 #: ../plug-ins/common/max_rgb.c:262
-msgid "Max RGB"
-msgstr "મહત્તમ RGB"
+msgid "Maximum RGB Value"
+msgstr "મહત્તમ RGB કિંમત"
 
 #: ../plug-ins/common/max_rgb.c:294
 msgid "_Hold the maximal channels"
@@ -5935,7 +5923,7 @@ msgstr "પૂર્વદર્શન (_r)"
 msgid "Preview _size:"
 msgstr "પૂર્વદર્શન માપ (_s):"
 
-#: ../plug-ins/common/psd.c:493
+#: ../plug-ins/common/psd.c:524
 msgid "Invalid UTF-8 string in PSD file"
 msgstr "અયોગ્ય UTF-8 શબ્દમાળા એ PSD ફાઈલમાં"
 
@@ -10377,7 +10365,7 @@ msgstr "'%s' માટે થમ્બનેઈલ ખોલી રહ્યા 
 msgid "File size: %02.01f kB"
 msgstr "ફાઈલ માપ: %02.01f kB"
 
-#: ../plug-ins/jpeg/jpeg-save.c:662 ../plug-ins/jpeg/jpeg-save.c:756
+#: ../plug-ins/jpeg/jpeg-save.c:662 ../plug-ins/jpeg/jpeg-save.c:763
 msgid "File size: unknown"
 msgstr "ફાઈલ માપ: અજ્ઞાત"
 
@@ -10393,74 +10381,78 @@ msgstr "ગુણવત્તા (_Q):"
 msgid "JPEG quality parameter"
 msgstr "JPEG ગુણવત્તા પરિમાણ"
 
-#: ../plug-ins/jpeg/jpeg-save.c:765
+#: ../plug-ins/jpeg/jpeg-save.c:761
+msgid "Enable preview to obtain the file size."
+msgstr "ફાઈલ માપ મેળવવા માટે પૂર્વદર્શન સક્રિય કરો."
+
+#: ../plug-ins/jpeg/jpeg-save.c:772
 msgid "Show _preview in image window"
 msgstr "ચિત્ર વિન્ડોમાં પૂર્વદર્શન બતાવો (_p)"
 
-#: ../plug-ins/jpeg/jpeg-save.c:777
+#: ../plug-ins/jpeg/jpeg-save.c:784
 msgid "_Advanced Options"
 msgstr "અદ્યતન વિકલ્પો (_A)"
 
-#: ../plug-ins/jpeg/jpeg-save.c:805
+#: ../plug-ins/jpeg/jpeg-save.c:812
 msgid "_Smoothing:"
 msgstr "લીસું બનાવી રહ્યા છીએ (_S):"
 
-#: ../plug-ins/jpeg/jpeg-save.c:818
+#: ../plug-ins/jpeg/jpeg-save.c:825
 msgid "Frequency (rows):"
 msgstr "આવૃત્તિ (હરોળો):"
 
-#: ../plug-ins/jpeg/jpeg-save.c:832
+#: ../plug-ins/jpeg/jpeg-save.c:839
 msgid "Use restart markers"
 msgstr "ફરી શરૂ કરો માર્કરો વાપરો"
 
-#: ../plug-ins/jpeg/jpeg-save.c:848 ../plug-ins/xjt/xjt.c:865
+#: ../plug-ins/jpeg/jpeg-save.c:855 ../plug-ins/xjt/xjt.c:869
 msgid "Optimize"
 msgstr "શ્રેષ્ઠ બનાવો"
 
-#: ../plug-ins/jpeg/jpeg-save.c:861
+#: ../plug-ins/jpeg/jpeg-save.c:868
 msgid "Progressive"
 msgstr "પ્રગતિકારક"
 
-#: ../plug-ins/jpeg/jpeg-save.c:875
+#: ../plug-ins/jpeg/jpeg-save.c:882
 msgid "Force baseline JPEG"
 msgstr "આધારરેખા JPEG ને દબાણ કરો"
 
-#: ../plug-ins/jpeg/jpeg-save.c:890
+#: ../plug-ins/jpeg/jpeg-save.c:897
 msgid "Save EXIF data"
 msgstr "EXIF માહિતી સંગ્રહો"
 
-#: ../plug-ins/jpeg/jpeg-save.c:906
+#: ../plug-ins/jpeg/jpeg-save.c:913
 msgid "Save thumbnail"
 msgstr "થમ્બનેઈલ સંગ્રહો"
 
 #. XMP metadata
-#: ../plug-ins/jpeg/jpeg-save.c:922
+#: ../plug-ins/jpeg/jpeg-save.c:929
 msgid "Save XMP data"
 msgstr "XMP માહિતી સંગ્રહો"
 
 #. Subsampling
-#: ../plug-ins/jpeg/jpeg-save.c:935
+#: ../plug-ins/jpeg/jpeg-save.c:942
 msgid "Subsampling:"
 msgstr "ઉપસેમ્પલીંગ:"
 
 #. DCT method
-#: ../plug-ins/jpeg/jpeg-save.c:962
+#: ../plug-ins/jpeg/jpeg-save.c:969
 msgid "DCT method:"
 msgstr "DCT પદ્ધતિ:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:968
+#: ../plug-ins/jpeg/jpeg-save.c:975
 msgid "Fast Integer"
 msgstr "ઝડપી પૂર્ણાંક"
 
-#: ../plug-ins/jpeg/jpeg-save.c:969
+#: ../plug-ins/jpeg/jpeg-save.c:976
 msgid "Integer"
 msgstr "પૂર્ણાંક"
 
-#: ../plug-ins/jpeg/jpeg-save.c:970
+#: ../plug-ins/jpeg/jpeg-save.c:977
 msgid "Floating-Point"
 msgstr "અપૂર્ણાંક-બિંદુ"
 
-#: ../plug-ins/jpeg/jpeg-save.c:984
+#: ../plug-ins/jpeg/jpeg-save.c:991
 msgid "Comment"
 msgstr "ટિપ્પણી"
 
@@ -11496,16 +11488,16 @@ msgstr ""
 msgid "TWAIN (Dump)..."
 msgstr "TWAIN (ડમ્પ)..."
 
-#: ../plug-ins/twain/twain.c:332
+#: ../plug-ins/twain/twain.c:333
 msgid "TWAIN (Read)..."
 msgstr "TWAIN (વાંચો)..."
 
-#: ../plug-ins/twain/twain.c:352
+#: ../plug-ins/twain/twain.c:354
 msgid "_TWAIN..."
 msgstr "_TWAIN..."
 
 #. Initialize our progress dialog
-#: ../plug-ins/twain/twain.c:489
+#: ../plug-ins/twain/twain.c:492
 msgid "Transferring TWAIN data..."
 msgstr "TWAIN માહિતી પરિવહન કરી રહ્યા છીએ..."
 
@@ -11649,67 +11641,67 @@ msgstr "સ્ક્રીન શોટ (_S)..."
 msgid "No data captured"
 msgstr "કોઈ માહિતી પકડાઈ નથી"
 
-#: ../plug-ins/xjt/xjt.c:475 ../plug-ins/xjt/xjt.c:493
+#: ../plug-ins/xjt/xjt.c:479 ../plug-ins/xjt/xjt.c:497
 msgid "GIMP compressed XJT image"
 msgstr "GIMP સંકુચિત XJT ચિત્ર"
 
-#: ../plug-ins/xjt/xjt.c:714
+#: ../plug-ins/xjt/xjt.c:718
 #, c-format
 msgid "XJT file contains unknown layermode %d"
 msgstr "XJT ફાઈલ અજ્ઞાત સ્તરસ્થિતિ %d સમાવે છે"
 
-#: ../plug-ins/xjt/xjt.c:751
+#: ../plug-ins/xjt/xjt.c:755
 #, c-format
 msgid "Warning: unsupported layermode %d saved to XJT"
 msgstr "ચેતવણી: બિનઆધારભૂત સ્તરસ્થિતિ %d એ XJT માં સંગ્રહાઈ"
 
-#: ../plug-ins/xjt/xjt.c:767
+#: ../plug-ins/xjt/xjt.c:771
 #, c-format
 msgid "XJT file contains unknown pathtype %d"
 msgstr "XJT ફાઈલ અજ્ઞાત પાથપ્રકાર %d સમાવે છે"
 
-#: ../plug-ins/xjt/xjt.c:783
+#: ../plug-ins/xjt/xjt.c:787
 #, c-format
 msgid "Warning: unsupported pathtype %d saved to XJT"
 msgstr "ચેતવણી: બિનઆધારભૂત પાથપ્રકાર %d એ XJT માં સંગ્રહાયો"
 
-#: ../plug-ins/xjt/xjt.c:802
+#: ../plug-ins/xjt/xjt.c:806
 #, c-format
 msgid "XJT file contains unknown unittype %d"
 msgstr "XJT ફાઈલ અજ્ઞાત એકમપ્રકાર %d સમાવે છે"
 
-#: ../plug-ins/xjt/xjt.c:823
+#: ../plug-ins/xjt/xjt.c:827
 #, c-format
 msgid "Warning: unsupported unittype %d saved to XJT"
 msgstr "ચેતવણી: બિનઆધારભૂત એકમપ્રકાર %d એ XJT માં સંગ્રહાયો"
 
-#: ../plug-ins/xjt/xjt.c:844
+#: ../plug-ins/xjt/xjt.c:848
 msgid "Save as XJT"
 msgstr "XJT તરીકે સંગ્રહો"
 
-#: ../plug-ins/xjt/xjt.c:875
+#: ../plug-ins/xjt/xjt.c:879
 msgid "Clear transparent"
 msgstr "પારદર્શક સાફ કરો"
 
-#: ../plug-ins/xjt/xjt.c:887
+#: ../plug-ins/xjt/xjt.c:891
 msgid "Quality:"
 msgstr "ગુણવત્તા:"
 
-#: ../plug-ins/xjt/xjt.c:896
+#: ../plug-ins/xjt/xjt.c:900
 msgid "Smoothing:"
 msgstr "લીસું બનાવી રહ્યા છીએ:"
 
-#: ../plug-ins/xjt/xjt.c:1694 ../plug-ins/xjt/xjt.c:3321
+#: ../plug-ins/xjt/xjt.c:1698 ../plug-ins/xjt/xjt.c:3325
 #, c-format
 msgid "Could not create working folder '%s': %s"
 msgstr "કામનું ફોલ્ડર '%s' બનાવી શક્યા નહિં: %s"
 
-#: ../plug-ins/xjt/xjt.c:3190
+#: ../plug-ins/xjt/xjt.c:3194
 #, c-format
 msgid "Error: Could not read XJT property file '%s'."
 msgstr "ભૂલ: XJT ગુણધર્મ ફાઈલ '%s' વાંચી શક્યા નહિં."
 
-#: ../plug-ins/xjt/xjt.c:3196
+#: ../plug-ins/xjt/xjt.c:3200
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "ભૂલ: XJT ગુણધર્મ ફાઈલ '%s' ખાલી છે."

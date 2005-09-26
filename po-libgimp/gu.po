@@ -1,3 +1,4 @@
+# translation of gimp-libgimp.HEAD.gu.po to Gujarati
 # translation of gimp-libgimp.HEAD.po to Gujarati
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
@@ -5,16 +6,17 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-libgimp.HEAD\n"
+"Project-Id-Version: gimp-libgimp.HEAD.gu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-02 03:31+0000\n"
-"PO-Revision-Date: 2005-09-04 18:37+0530\n"
+"POT-Creation-Date: 2005-09-26 02:52+0200\n"
+"PO-Revision-Date: 2005-09-26 09:51+0530\n"
 "Last-Translator: Ankit Patel <ankit644@yahoo.com>\n"
 "Language-Team: Gujarati <indianoss-gujarati@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n\n"
+"\n"
 "X-Generator: KBabel 1.9.1\n"
 
 #: ../libgimp/gimpbrushmenu.c:140
@@ -147,20 +149,20 @@ msgstr "સંગ્રહવામાં ખાતરી કરો"
 msgid "Confirm"
 msgstr "ખાતરી કરો"
 
-#: ../libgimp/gimpexport.c:459
+#: ../libgimp/gimpexport.c:462
 msgid "Export File"
 msgstr "ફાઈલ નિકાસ કરો"
 
-#: ../libgimp/gimpexport.c:463
+#: ../libgimp/gimpexport.c:466
 msgid "_Ignore"
 msgstr "અવગણો (_I)"
 
-#: ../libgimp/gimpexport.c:465
+#: ../libgimp/gimpexport.c:468
 msgid "_Export"
 msgstr "નિકાસ કરો (_E)"
 
 #. the headline
-#: ../libgimp/gimpexport.c:493
+#: ../libgimp/gimpexport.c:497
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -168,11 +170,11 @@ msgid ""
 msgstr "તમારું ચિત્ર %s તરીકે સંગ્રહાય તે પહેલાં નીચેના કારણોસર નિકાસ થવું જોઈએ:"
 
 #. the footline
-#: ../libgimp/gimpexport.c:564
+#: ../libgimp/gimpexport.c:568
 msgid "The export conversion won't modify your original image."
 msgstr "નિકાસ રૂપાંતરણ તમારું મૂળ ચિત્ર સુધારશે નહિં."
 
-#: ../libgimp/gimpexport.c:664
+#: ../libgimp/gimpexport.c:668
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -181,7 +183,7 @@ msgstr ""
 "તમે સ્તર માસ્ક %s તરીકે સંગ્રહવા માટે જઈ રહ્યા છો.\n"
 "આ દૃશ્ય સ્તરોનો સંગ્રહ કરશે નહિં."
 
-#: ../libgimp/gimpexport.c:670
+#: ../libgimp/gimpexport.c:674
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -706,7 +708,9 @@ msgid ""
 "When enabled, the GIMP will try to use the display color profile from the "
 "windowing system. The configured monitor profile is then only used as a "
 "fallback."
-msgstr "જ્યારે સક્રિય થયેલ હોય, ત્યારે GIMP દૃશ્ય રંગ રૂપરેખા વિન્ડો સિસ્ટમમાંથી વાપરવાનો પ્રયત્ન કરશે. રૂપરેખાંકિત મોનીટર રૂપરેખા એ પછી માત્ર ફોલબેક તરીકે વપરાય છે."
+msgstr ""
+"જ્યારે સક્રિય થયેલ હોય, ત્યારે GIMP દૃશ્ય રંગ રૂપરેખા વિન્ડો સિસ્ટમમાંથી વાપરવાનો પ્રયત્ન "
+"કરશે. રૂપરેખાંકિત મોનીટર રૂપરેખા એ પછી માત્ર ફોલબેક તરીકે વપરાય છે."
 
 #: ../libgimpconfig/gimpcolorconfig.c:48
 msgid "The default RGB workspace color profile."
@@ -726,7 +730,9 @@ msgstr "કેવી રીતે રંગો તમારા ડિસ્પ�
 
 #: ../libgimpconfig/gimpcolorconfig.c:56
 msgid "Sets how colors are converted from workspace to the print simulation device."
-msgstr "કેવી રીતે રંગો કામ કરવાની જગ્યામાંથી ચાપન સિમ્યુલેશન ઉપકરણમાં રૂપાંતરિત થાય છે તે સુયોજિત કરે છે."
+msgstr ""
+"કેવી રીતે રંગો કામ કરવાની જગ્યામાંથી ચાપન સિમ્યુલેશન ઉપકરણમાં રૂપાંતરિત થાય છે તે સુયોજિત "
+"કરે છે."
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
 msgid "No color management"
@@ -1059,23 +1065,23 @@ msgstr "લીટી જગ્યા (_i)"
 msgid "_Resize"
 msgstr "માપ બદલો (_R)"
 
-#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:298
+#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:300
 msgid "_Scale"
 msgstr "માપ (_S)"
 
-#: ../libgimpwidgets/gimpstock.c:276
+#: ../libgimpwidgets/gimpstock.c:278
 msgid "Crop"
 msgstr "કાપવું"
 
-#: ../libgimpwidgets/gimpstock.c:294
+#: ../libgimpwidgets/gimpstock.c:296
 msgid "_Transform"
 msgstr "રૂપાંતરણ (_T)"
 
-#: ../libgimpwidgets/gimpstock.c:297
+#: ../libgimpwidgets/gimpstock.c:299
 msgid "_Rotate"
 msgstr "ફેરવો (_R)"
 
-#: ../libgimpwidgets/gimpstock.c:299
+#: ../libgimpwidgets/gimpstock.c:301
 msgid "_Shear"
 msgstr "શીયર (_S)"
 
@@ -1099,7 +1105,9 @@ msgstr "અવયવ"
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
-msgstr "રેન્ડમ નંબર જનરેટર સીડ માટે આ કિંમત વાપરો - આ તમને આપેલ \"રેન્ડમ\" પ્રક્રિયાનું પુનરાવર્તન કરવા માટે પરવાનગી આપે છે"
+msgstr ""
+"રેન્ડમ નંબર જનરેટર સીડ માટે આ કિંમત વાપરો - આ તમને આપેલ \"રેન્ડમ\" પ્રક્રિયાનું પુનરાવર્તન "
+"કરવા માટે પરવાનગી આપે છે"
 
 #: ../libgimpwidgets/gimpwidgets.c:1007
 msgid "_New Seed"
@@ -1156,6 +1164,14 @@ msgstr "સ્તરો"
 #: ../libgimpwidgets/gimpwidgetsenums.c:127
 msgid "Images"
 msgstr "ચિત્રો"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:186
+msgid "Zoom in"
+msgstr "મોટું કરો"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:187
+msgid "Zoom out"
+msgstr "નાનું કરો"
 
 #: ../modules/cdisplay_colorblind.c:67
 msgid "Protanopia (insensitivity to red"
@@ -1267,43 +1283,47 @@ msgstr "CMYK રંગ પસંદગીકારક"
 msgid "CMYK"
 msgstr "CMYK"
 
-#: ../modules/colorsel_cmyk.c:147
+#. Cyan
+#: ../modules/colorsel_cmyk.c:148
 msgid "_C"
 msgstr "_C"
 
-#: ../modules/colorsel_cmyk.c:148
+#. Magenta
+#: ../modules/colorsel_cmyk.c:150
 msgid "_M"
 msgstr "_M"
 
-#: ../modules/colorsel_cmyk.c:149
+#. Yellow
+#: ../modules/colorsel_cmyk.c:152
 msgid "_Y"
 msgstr "_Y"
 
-#: ../modules/colorsel_cmyk.c:150
+#. Key (Black)
+#: ../modules/colorsel_cmyk.c:154
 msgid "_K"
 msgstr "_K"
 
-#: ../modules/colorsel_cmyk.c:154
+#: ../modules/colorsel_cmyk.c:158
 msgid "Cyan"
 msgstr "મોરપીંછ"
 
-#: ../modules/colorsel_cmyk.c:155
+#: ../modules/colorsel_cmyk.c:159
 msgid "Magenta"
 msgstr "ગુલાબી"
 
-#: ../modules/colorsel_cmyk.c:156
+#: ../modules/colorsel_cmyk.c:160
 msgid "Yellow"
 msgstr "પીળો"
 
-#: ../modules/colorsel_cmyk.c:157
+#: ../modules/colorsel_cmyk.c:161
 msgid "Black"
 msgstr "કાળો"
 
-#: ../modules/colorsel_cmyk.c:191
+#: ../modules/colorsel_cmyk.c:195
 msgid "Black _pullout:"
 msgstr "કાળા પુલઆઉટ (_p):"
 
-#: ../modules/colorsel_cmyk.c:208
+#: ../modules/colorsel_cmyk.c:212
 msgid "The percentage of black to pull out of the colored inks."
 msgstr "રંગીન કડીઓમાંથી ખેંચી લાવવા માટેના કાળાના ટકા."
 

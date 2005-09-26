@@ -1,3 +1,7 @@
+2005-09-26  Ankit Patel  <ankit644@yahoo.com>
+
+	* gu.po: Updated Gujarati translation.
+
 2005-09-25  Michael Natterer  <mitch@gimp.org>
 
 	* POTFILES.in: added paste-as-brush.scm and paste-as-pattern.scm
