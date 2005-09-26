@@ -1,3 +1,8 @@
+2005-09-26  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/script-fu/script-fu-interface.c (script_fu_interface):
+	set "activates-default" on all entries.
+
 2005-09-26  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/script-fu-interface.c: removed some frames

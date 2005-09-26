@@ -352,6 +352,7 @@ script_fu_interface (SFScript *script)
 	case SF_STRING:
 	  widget = gtk_entry_new ();
 	  gtk_widget_set_size_request (widget, TEXT_WIDTH, -1);
+          gtk_entry_set_activates_default (GTK_ENTRY (widget), TRUE);
 
 	  gtk_entry_set_text (GTK_ENTRY (widget),
                               script->arg_values[i].sfa_value);
@@ -400,6 +401,7 @@ script_fu_interface (SFScript *script)
 				      script->arg_defaults[i].sfa_adjustment.digits,
 				      TRUE, 0.0, 0.0,
 				      NULL, NULL);
+              gtk_entry_set_activates_default (GIMP_SCALE_ENTRY_SPINBUTTON (script->arg_values[i].sfa_adjustment.adj), TRUE);
 	      break;
 
 	    case SF_SPINNER:
@@ -413,6 +415,7 @@ script_fu_interface (SFScript *script)
                                       script->arg_defaults[i].sfa_adjustment.page,
                                       0, 0,
                                       script->arg_defaults[i].sfa_adjustment.digits);
+              gtk_entry_set_activates_default (GTK_ENTRY (widget), TRUE);
               script->arg_values[i].sfa_adjustment.adj = GTK_ADJUSTMENT (adj);
 	      break;
 	    }
@@ -434,9 +437,11 @@ script_fu_interface (SFScript *script)
                                           script->arg_values[i].sfa_file.filename,
                                           TRUE, TRUE);
 
+          gtk_entry_set_activates_default (GTK_ENTRY (GIMP_FILE_ENTRY (widget)->entry), TRUE);
+
 	  script->arg_values[i].sfa_file.file_entry = widget;
 
-	  g_signal_connect (widget, "filename_changed",
+	  g_signal_connect (widget, "filename-changed",
                             G_CALLBACK (script_fu_file_entry_callback),
                             &script->arg_values[i].sfa_file);
 	  break;
