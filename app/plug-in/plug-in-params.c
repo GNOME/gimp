@@ -514,16 +514,14 @@ plug_in_proc_args_check (const gchar *plug_in_name,
   else if (strncmp (menu_path, "<Image>", 7) == 0)
     {
       if ((n_args < 3) ||
-          (args[0].arg_type != GIMP_PDB_INT32) ||
-          (args[1].arg_type != GIMP_PDB_IMAGE) ||
-          (args[2].arg_type != GIMP_PDB_DRAWABLE))
+          (args[0].arg_type != GIMP_PDB_INT32))
         {
           g_set_error (error, 0, 0,
                        "Plug-In \"%s\"\n(%s)\n\n"
                        "attempted to install <Image> procedure \"%s\" "
                        "which does not take the standard <Image> Plug-In "
                        "args.\n"
-                       "(INT32, IMAGE, DRAWABLE)",
+                       "(INT32)",
                        gimp_filename_to_utf8 (plug_in_name),
                        gimp_filename_to_utf8 (plug_in_prog),
                        procedure_name);

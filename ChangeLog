@@ -1,3 +1,19 @@
+2005-09-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/plug-in-params.c (plug_in_proc_args_check): drop the
+	restriction that plug-ins registered in <Image> must have
+	RUN-MODE, IMAGE, DRAWABLE parameters because everything but
+	RUN-MODE is actually treated as optional be the rest of the code.
+
+	* plug-ins/script-fu/scripts/paste-as-brush.scm
+	* plug-ins/script-fu/scripts/paste-as-pattern.scm: removed IMAGE
+	and DRAWABLE parameters.
+
+	* plug-ins/common/screenshot.c
+	* plug-ins/twain/twain.c
+	* plug-ins/winsnap/winsnap.c: register menu entries in
+	<Image>/File/Acquire
+
 2005-09-26  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/gqbist.c: minor dialog tweak.

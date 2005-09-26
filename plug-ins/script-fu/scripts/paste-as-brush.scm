@@ -19,9 +19,7 @@
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 
-(define (script-fu-paste-as-brush image
-				  drawable
-				  name
+(define (script-fu-paste-as-brush name
 				  filename
 				  spacing)
 
@@ -40,7 +38,7 @@
     (set! path (string-append gimp-directory
 			      "/brushes/"
 			      filename
-			      (number->string image)
+			      (number->string brush-image)
 			      ".gbr"))
 
     (file-gbr-save 1 brush-image brush-draw path "" spacing name)
@@ -56,9 +54,7 @@
 		    "Michael Natterer <mitch@gimp.org>"
 		    "Michael Natterer"
 		    "2005-09-25"
-		    "*"
-		    SF-IMAGE       "Image"       0
-		    SF-DRAWABLE    "Drawable"    0
+		    ""
 		    SF-STRING     _"Brush name"  "My Brush"
 		    SF-STRING     _"File name"   "mybrush"
 		    SF-ADJUSTMENT _"Spacing"     '(25 0 1000 1 1 1 0))

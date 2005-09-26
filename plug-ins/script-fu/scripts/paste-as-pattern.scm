@@ -19,9 +19,7 @@
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 
-(define (script-fu-paste-as-pattern image
-				    drawable
-				    name
+(define (script-fu-paste-as-pattern name
 				    filename)
 
   (set! pattern-image (car (gimp-edit-paste-as-new)))
@@ -30,7 +28,7 @@
   (set! path (string-append gimp-directory
 			    "/patterns/"
 			    filename
-			    (number->string image)
+			    (number->string pattern-image)
 			    ".pat"))
 
   (file-pat-save 1 pattern-image pattern-draw path "" name)
@@ -48,10 +46,8 @@
 		    "Michael Natterer"
 		    "2005-09-25"
 		    "*"
-		    SF-IMAGE    "Image"         0
-		    SF-DRAWABLE "Drawable"      0
-		    SF-STRING   _"Pattern name" "My Pattern"
-		    SF-STRING   _"File name"    "mypattern")
+		    SF-STRING _"Pattern name" "My Pattern"
+		    SF-STRING _"File name"    "mypattern")
 
 (script-fu-menu-register "script-fu-paste-as-pattern"
 			 "<Image>/Edit/Paste as")
