@@ -1,3 +1,7 @@
+2005-09-26  Sven Neumann  <sven@gimp.org>
+
+	* Made 2.3.4 development release.
+
 2005-09-26  Michael Natterer  <mitch@gimp.org>
 
 	Allow to disable the color picker info dialog. Fixes bug #315011:

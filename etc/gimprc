@@ -596,7 +596,7 @@
 # appended to the command with a space separating the two.  This is a single
 # filename.
 # 
-# (web-browser "mozilla %s")
+# (web-browser "mozilla-firefox %s")
 
 # The window type hint that is set on the toolbox. This may affect how your
 # window manager decorates and handles the toolbox window.  Possible values

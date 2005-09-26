@@ -9,9 +9,10 @@ new stuff is being done that will one day be released as GIMP 2.4.
 
 Changes in GIMP 2.3.4
 =====================
-
+- allow plug-ins and scripts to register menu entries in the <Brushes>,
+  <Gradients>, <Palettes>, <Patterns> and <Fonts> menus
 - replaced Selection to Brush/Pattern scripts with scripts that paste
-  a new brush/pattern from the clipboard content
+  a new brush/pattern from the content of the clipboard
 - allow to easily close all opened images
 - added a first version of a Print plug-in using libgnomeprint
 - improved Sphere Designer plug-in
