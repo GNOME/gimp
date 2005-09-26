@@ -1,5 +1,9 @@
 2005-09-26  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/gqbist.c: minor dialog tweak.
+
+2005-09-26  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpdata.c
 	* app/file/file-save.c
 	* app/file/file-open.c: use g_access() from gstdio.h.
