@@ -1,5 +1,6 @@
 2005-09-26  Sven Neumann  <sven@gimp.org>
 
+	* tools/gimp-remote.c
 	* tools/test-clipboard.c: use G_OPTION_FLAG_NO_ARG where needed.
 
 2005-09-26  Michael Natterer  <mitch@gimp.org>
