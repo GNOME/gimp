@@ -875,6 +875,11 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
 
   gimp_help_set_help_data (shell->vrule, NULL, GIMP_HELP_IMAGE_WINDOW_RULER);
 
+  /* Workaround for GTK+ Wintab bug on Windows when creating guides by
+   * dragging from the rulers. See bug #168516. */
+  gtk_widget_set_extension_events (shell->hrule, GDK_EXTENSION_EVENTS_ALL);
+  gtk_widget_set_extension_events (shell->vrule, GDK_EXTENSION_EVENTS_ALL);
+  
   /*  the canvas  */
   gtk_widget_set_size_request (shell->canvas, n_width, n_height);
   gtk_widget_set_events (shell->canvas, GIMP_DISPLAY_SHELL_CANVAS_EVENT_MASK);

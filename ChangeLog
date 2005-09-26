@@ -1,3 +1,10 @@
+2005-09-26  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_new): applied
+	patch from Robert Ögren that works around problem creating guides
+	with a tablet on Windows by enabling extension events for the
+	rulers.  Fixes the first problem described in bug #168516.
+
 2005-09-25  Michael Natterer  <mitch@gimp.org>
 
 	Merged from HEAD branch:
