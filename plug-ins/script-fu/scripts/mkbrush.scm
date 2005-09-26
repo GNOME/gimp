@@ -57,7 +57,7 @@
     (gimp-context-set-brush name)))
 
 (script-fu-register "script-fu-make-brush-rectangular"
-		    _"_Rectangular..."
+		    _"New Re_ctangular..."
 		    "Create size of brush"
 		    "Seth Burgess <sjburges@ou.edu>"
 		    "Seth Burgess"
@@ -69,7 +69,7 @@
 		    SF-ADJUSTMENT _"Spacing" '(25 1 100 1 10 1 0))
 
 (script-fu-menu-register "script-fu-make-brush-rectangular"
-			 "<Toolbox>/Xtns/Script-Fu/Make Brush")
+			 "<Brushes>")
 
 
 (define (script-fu-make-brush-rectangular-feathered name width height
@@ -117,7 +117,7 @@
     (gimp-context-set-brush name)))
 
 (script-fu-register "script-fu-make-brush-rectangular-feathered"
-		    _"Re_ctangular, Feathered..."
+		    _"New Rectangular, Feathered..."
 		    "Create size of brush"
 		    "Seth Burgess <sjburges@ou.edu>"
 		    "Seth Burgess"
@@ -130,7 +130,7 @@
 		    SF-ADJUSTMENT _"Spacing"    '(25 1 100 1 10 1 0))
 
 (script-fu-menu-register "script-fu-make-brush-rectangular-feathered"
-			 "<Toolbox>/Xtns/Script-Fu/Make Brush")
+			 "<Brushes>")
 
 
 (define (script-fu-make-brush-elliptical name width height spacing)
@@ -167,7 +167,7 @@
     (gimp-context-set-brush name)))
 
 (script-fu-register "script-fu-make-brush-elliptical"
-		    _"_Elliptical..."
+		    _"New Elli_ptical..."
 		    "Create size of brush"
 		    "Seth Burgess <sjburges@ou.edu>"
 		    "Seth Burgess"
@@ -179,7 +179,7 @@
 		    SF-ADJUSTMENT _"Spacing" '(25 1 100 1 10 1 0))
 
 (script-fu-menu-register "script-fu-make-brush-elliptical"
-			 "<Toolbox>/Xtns/Script-Fu/Make Brush")
+			 "<Brushes>")
 
 
 (define (script-fu-make-brush-elliptical-feathered name width height
@@ -229,7 +229,7 @@
     (gimp-context-set-brush name)))
 
 (script-fu-register "script-fu-make-brush-elliptical-feathered"
-		    _"Elli_ptical, Feathered..."
+		    _"New Elliptical, Feathered..."
 		    "Makes a feathered elliptical brush of specified size"
 		    "Seth Burgess <sjburges@ou.edu>"
 		    "Seth Burgess"
@@ -242,4 +242,4 @@
 		    SF-ADJUSTMENT _"Spacing"    '(25 1 100 1 10 1 0))
 
 (script-fu-menu-register "script-fu-make-brush-elliptical-feathered"
-			 "<Toolbox>/Xtns/Script-Fu/Make Brush")
+			 "<Brushes>")

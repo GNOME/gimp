@@ -16,5 +16,6 @@
     <menuitem action="patterns-delete" />
     <separator />
     <menuitem action="patterns-refresh" />
+    <separator />
   </popup>
 </ui>

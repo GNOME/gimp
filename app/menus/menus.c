@@ -45,6 +45,7 @@
 #include "dockable-menu.h"
 #include "image-menu.h"
 #include "menus.h"
+#include "plug-in-menus.h"
 #include "tool-options-menu.h"
 #include "toolbox-menu.h"
 
@@ -180,44 +181,50 @@ menus_init (Gimp              *gimp,
 
   gimp_menu_factory_manager_register (global_menu_factory, "<Brushes>",
                                       "brushes",
+                                      "plug-in",
                                       NULL,
                                       "/brushes-popup",
-                                      "brushes-menu.xml", NULL,
+                                      "brushes-menu.xml", plug_in_menus_setup,
                                       NULL);
 
   gimp_menu_factory_manager_register (global_menu_factory, "<Patterns>",
                                       "patterns",
+                                      "plug-in",
                                       NULL,
                                       "/patterns-popup",
-                                      "patterns-menu.xml", NULL,
+                                      "patterns-menu.xml", plug_in_menus_setup,
                                       NULL);
 
   gimp_menu_factory_manager_register (global_menu_factory, "<Gradients>",
                                       "gradients",
+                                      "plug-in",
                                       NULL,
                                       "/gradients-popup",
-                                      "gradients-menu.xml", NULL,
+                                      "gradients-menu.xml", plug_in_menus_setup,
                                       NULL);
 
   gimp_menu_factory_manager_register (global_menu_factory, "<Palettes>",
                                       "palettes",
+                                      "plug-in",
                                       NULL,
                                       "/palettes-popup",
-                                      "palettes-menu.xml", NULL,
+                                      "palettes-menu.xml", plug_in_menus_setup,
                                       NULL);
 
   gimp_menu_factory_manager_register (global_menu_factory, "<Fonts>",
                                       "fonts",
+                                      "plug-in",
                                       NULL,
                                       "/fonts-popup",
-                                      "fonts-menu.xml", NULL,
+                                      "fonts-menu.xml", plug_in_menus_setup,
                                       NULL);
 
   gimp_menu_factory_manager_register (global_menu_factory, "<Buffers>",
                                       "buffers",
+                                      "plug-in",
                                       NULL,
                                       "/buffers-popup",
-                                      "buffers-menu.xml", NULL,
+                                      "buffers-menu.xml", plug_in_menus_setup,
                                       NULL);
 
   gimp_menu_factory_manager_register (global_menu_factory, "<Documents>",

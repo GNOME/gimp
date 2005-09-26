@@ -131,7 +131,7 @@
     (gimp-context-pop)))
 
 (script-fu-register "script-fu-font-map"
-		    _"_Font Map..."
+		    _"Render _Font Map..."
 		    "Generate a listing of fonts matching a filter"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
@@ -147,4 +147,4 @@
 							      _"Active colors"))
 
 (script-fu-menu-register "script-fu-font-map"
-			 "<Toolbox>/Xtns/Script-Fu/Utils")
+			 "<Fonts>")

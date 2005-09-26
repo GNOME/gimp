@@ -273,8 +273,6 @@ script_fu_extension_init (void)
   gimp_plugin_menu_branch_register ("<Toolbox>/Xtns/Script-Fu",
                                     N_("_Logos"));
   gimp_plugin_menu_branch_register ("<Toolbox>/Xtns/Script-Fu",
-                                    N_("Make Br_ush"));
-  gimp_plugin_menu_branch_register ("<Toolbox>/Xtns/Script-Fu",
                                     N_("_Misc"));
   gimp_plugin_menu_branch_register ("<Toolbox>/Xtns/Script-Fu",
                                     N_("_Patterns"));

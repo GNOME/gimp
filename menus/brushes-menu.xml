@@ -11,5 +11,6 @@
     <menuitem action="brushes-delete" />
     <separator />
     <menuitem action="brushes-refresh" />
+    <separator />
   </popup>
 </ui>

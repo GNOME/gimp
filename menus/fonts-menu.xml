@@ -4,5 +4,6 @@
 <ui>
   <popup action="fonts-popup">
     <menuitem action="fonts-refresh" />
+    <separator />
   </popup>
 </ui>

@@ -7,5 +7,6 @@
     <menuitem action="buffers-paste-into" />
     <menuitem action="buffers-paste-as-new" />
     <menuitem action="buffers-delete" />
+    <separator />
   </popup>
 </ui>

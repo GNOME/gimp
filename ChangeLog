@@ -1,3 +1,32 @@
+2005-09-26  Michael Natterer  <mitch@gimp.org>
+
+	Allow plug-ins to register menu entries in the <Brushes>,
+	<Gradients>, <Palettes>, <Patterns> and <Fonts> menus:
+
+	* app/actions/actions.c (action_data_get_gimp): return a Gimp
+	also if "data" is a GimpContainerView or GimpContainerEditor.
+
+	* app/gui/gui-vtable.c (gui_menus_add_proc)
+	* app/plug-in/plug-in-params.c (plug_in_proc_args_check): support
+	the new plug-in menu locations.
+
+	* app/menus/menus.c (menus_init): add the "plug-in" action group
+	to the resp. UI managers.
+
+	* menus/brushes-menu.xml
+	* menus/buffers-menu.xml
+	* menus/fonts-menu.xml
+	* menus/gradients-menu.xml
+	* menus/palettes-menu.xml
+	* menus/patterns-menu.xml: added separators at the end of the menus.
+
+	* plug-ins/script-fu/scripts/font-map.scm: -> <Fonts>
+	* plug-ins/script-fu/scripts/gradient-example.scm: -> <Gradients>
+	* plug-ins/script-fu/scripts/mkbrush.scm: -> <Brushes>
+
+	* plug-ins/script-fu/script-fu.c (script_fu_extension_init): don't
+	register the "Make Brush" menu branch.
+
 2005-09-26  Sven Neumann  <sven@gimp.org>
 
 	* tools/gimp-remote.c

@@ -254,6 +254,10 @@ action_data_get_gimp (gpointer data)
     context = ((GimpDock *) data)->context;
   else if (GIMP_IS_ITEM_TREE_VIEW (data))
     context = ((GimpItemTreeView *) data)->context;
+  else if (GIMP_IS_CONTAINER_VIEW (data))
+    context = gimp_container_view_get_context ((GimpContainerView *) data);
+  else if (GIMP_IS_CONTAINER_EDITOR (data))
+    context = gimp_container_view_get_context (((GimpContainerEditor *) data)->view);
   else if (GIMP_IS_IMAGE_EDITOR (data))
     context = ((GimpImageEditor *) data)->context;
   else if (GIMP_IS_NAVIGATION_EDITOR (data))

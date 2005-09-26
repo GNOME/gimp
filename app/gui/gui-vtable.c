@@ -391,38 +391,68 @@ gui_menus_add_proc (Gimp          *gimp,
                     PlugInProcDef *proc_def,
                     const gchar   *menu_path)
 {
-  gchar *name;
+  gchar *prefix;
   gchar *p;
   GList *list;
 
-  name = g_strdup (menu_path);
+  prefix = g_strdup (menu_path);
 
-  p = strchr (name, '>');
+  p = strchr (prefix, '>');
 
   if (p)
     {
       p[1] = '\0';
 
-      for (list = gimp_ui_managers_from_name (name);
+      for (list = gimp_ui_managers_from_name (prefix);
            list;
            list = g_list_next (list))
         {
-          if (! strncmp (menu_path, "<Image>", 7))
+          if (! strcmp (prefix, "<Image>"))
             {
               plug_in_menus_add_proc (list->data, "/image-menubar",
                                       proc_def, menu_path);
               plug_in_menus_add_proc (list->data, "/dummy-menubar/image-popup",
                                       proc_def, menu_path);
             }
-          else if (! strncmp (menu_path, "<Toolbox>", 9))
+          else if (! strcmp (prefix, "<Toolbox>"))
             {
               plug_in_menus_add_proc (list->data, "/toolbox-menubar",
+                                      proc_def, menu_path);
+            }
+          else if (! strcmp (prefix, "<Brushes>"))
+            {
+              plug_in_menus_add_proc (list->data, "/brushes-popup",
+                                      proc_def, menu_path);
+            }
+          else if (! strcmp (prefix, "<Gradients>"))
+            {
+              plug_in_menus_add_proc (list->data, "/gradients-popup",
+                                      proc_def, menu_path);
+            }
+          else if (! strcmp (prefix, "<Palettes>"))
+            {
+              plug_in_menus_add_proc (list->data, "/palettes-popup",
+                                      proc_def, menu_path);
+            }
+          else if (! strcmp (prefix, "<Patterns>"))
+            {
+              plug_in_menus_add_proc (list->data, "/patterns-popup",
+                                      proc_def, menu_path);
+            }
+          else if (! strcmp (prefix, "<Fonts>"))
+            {
+              plug_in_menus_add_proc (list->data, "/fonts-popup",
+                                      proc_def, menu_path);
+            }
+          else if (! strcmp (prefix, "<Buffers>"))
+            {
+              plug_in_menus_add_proc (list->data, "/buffers-popup",
                                       proc_def, menu_path);
             }
         }
     }
 
-  g_free (name);
+  g_free (prefix);
 }
 
 static void
@@ -430,19 +460,19 @@ gui_menus_delete_proc (Gimp          *gimp,
                        PlugInProcDef *proc_def,
                        const gchar   *menu_path)
 {
-  gchar *name;
+  gchar *prefix;
   gchar *p;
   GList *list;
 
-  name = g_strdup (menu_path);
+  prefix = g_strdup (menu_path);
 
-  p = strchr (name, '>');
+  p = strchr (prefix, '>');
 
   if (p)
     {
       p[1] = '\0';
 
-      for (list = gimp_ui_managers_from_name (name);
+      for (list = gimp_ui_managers_from_name (prefix);
            list;
            list = g_list_next (list))
         {
@@ -450,7 +480,7 @@ gui_menus_delete_proc (Gimp          *gimp,
         }
     }
 
-  g_free (name);
+  g_free (prefix);
 }
 
 static void

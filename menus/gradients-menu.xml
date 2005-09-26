@@ -11,5 +11,6 @@
     <menuitem action="gradients-delete" />
     <separator />
     <menuitem action="gradients-refresh" />
+    <separator />
   </popup>
 </ui>

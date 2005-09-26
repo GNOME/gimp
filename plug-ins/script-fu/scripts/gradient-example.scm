@@ -56,7 +56,7 @@
     (gimp-context-pop)))
 
 (script-fu-register "script-fu-gradient-example"
-		    _"Custom _Gradient..."
+		    _"Render _Image..."
 		    "Create an example image of a custom gradient"
 		    "Federico Mena Quintero"
 		    "Federico Mena Quintero"
@@ -67,4 +67,4 @@
 		    SF-TOGGLE     _"Gradient reverse" FALSE)
 
 (script-fu-menu-register "script-fu-gradient-example"
-			 "<Toolbox>/Xtns/Script-Fu/Utils")
+			 "<Gradients>")

@@ -12,5 +12,6 @@
     <menuitem action="palettes-delete" />
     <separator />
     <menuitem action="palettes-refresh" />
+    <separator />
   </popup>
 </ui>
