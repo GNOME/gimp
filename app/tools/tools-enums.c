@@ -17,6 +17,7 @@ gimp_color_pick_mode_get_type (void)
     { GIMP_COLOR_PICK_MODE_NONE, "GIMP_COLOR_PICK_MODE_NONE", "none" },
     { GIMP_COLOR_PICK_MODE_FOREGROUND, "GIMP_COLOR_PICK_MODE_FOREGROUND", "foreground" },
     { GIMP_COLOR_PICK_MODE_BACKGROUND, "GIMP_COLOR_PICK_MODE_BACKGROUND", "background" },
+    { GIMP_COLOR_PICK_MODE_PALETTE, "GIMP_COLOR_PICK_MODE_PALETTE", "palette" },
     { 0, NULL, NULL }
   };
 
@@ -25,6 +26,7 @@ gimp_color_pick_mode_get_type (void)
     { GIMP_COLOR_PICK_MODE_NONE, N_("Pick only"), NULL },
     { GIMP_COLOR_PICK_MODE_FOREGROUND, N_("Set foreground color"), NULL },
     { GIMP_COLOR_PICK_MODE_BACKGROUND, N_("Set background color"), NULL },
+    { GIMP_COLOR_PICK_MODE_PALETTE, N_("Add to palette"), NULL },
     { 0, NULL, NULL }
   };
 

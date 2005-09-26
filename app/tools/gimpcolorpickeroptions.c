@@ -37,7 +37,8 @@ enum
   PROP_0,
   PROP_SAMPLE_AVERAGE, /* overrides a GimpColorOptions property */
   PROP_PICK_MODE,
-  PROP_ADD_TO_PALETTE
+  PROP_ADD_TO_PALETTE,
+  PROP_USE_INFO_WINDOW
 };
 
 
@@ -108,6 +109,10 @@ gimp_color_picker_options_class_init (GimpColorPickerOptionsClass *klass)
                                     "add-to-palette", NULL,
                                     FALSE,
                                     0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_INFO_WINDOW,
+                                    "use-info-window", NULL,
+                                    FALSE,
+                                    0);
 }
 
 static void
@@ -128,6 +133,9 @@ gimp_color_picker_options_set_property (GObject      *object,
       break;
     case PROP_ADD_TO_PALETTE:
       options->add_to_palette = g_value_get_boolean (value);
+      break;
+    case PROP_USE_INFO_WINDOW:
+      options->use_info_window = g_value_get_boolean (value);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -154,6 +162,9 @@ gimp_color_picker_options_get_property (GObject    *object,
       break;
     case PROP_ADD_TO_PALETTE:
       g_value_set_boolean (value, options->add_to_palette);
+      break;
+    case PROP_USE_INFO_WINDOW:
+      g_value_set_boolean (value, options->use_info_window);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -187,13 +198,13 @@ gimp_color_picker_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  /*  the add to palette toggle  */
-  str = g_strdup_printf (_("Add to palette  (%s)"),
+  /*  the use_info_window toggle button  */
+  str = g_strdup_printf (_("Use info window  (%s)"),
                          gimp_get_mod_string (GDK_SHIFT_MASK));
-  button = gimp_prop_check_button_new (config, "add-to-palette", str);
+  button = gimp_prop_check_button_new (config, "use-info-window", str);
   g_free (str);
 
-  gtk_box_pack_start (GTK_BOX (vbox), button, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   return vbox;

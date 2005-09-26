@@ -546,10 +546,14 @@ gimp_color_tool_cursor_update (GimpTool        *tool,
             case GIMP_COLOR_PICK_MODE_BACKGROUND:
               modifier = GIMP_CURSOR_MODIFIER_BACKGROUND;
               break;
+            case GIMP_COLOR_PICK_MODE_PALETTE:
+              modifier = GIMP_CURSOR_MODIFIER_PLUS;
+              break;
             }
 
           gimp_tool_set_cursor (tool, gdisp,
-                                cursor, GIMP_TOOL_CURSOR_COLOR_PICKER, modifier);
+                                cursor, GIMP_TOOL_CURSOR_COLOR_PICKER,
+                                modifier);
         }
 
       return;  /*  don't chain up  */

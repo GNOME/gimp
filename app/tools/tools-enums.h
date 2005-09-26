@@ -29,9 +29,10 @@ GType gimp_color_pick_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_COLOR_PICK_MODE_NONE,       /*< desc="Pick only" >*/
+  GIMP_COLOR_PICK_MODE_NONE,       /*< desc="Pick only"            >*/
   GIMP_COLOR_PICK_MODE_FOREGROUND, /*< desc="Set foreground color" >*/
-  GIMP_COLOR_PICK_MODE_BACKGROUND  /*< desc="Set background color" >*/
+  GIMP_COLOR_PICK_MODE_BACKGROUND, /*< desc="Set background color" >*/
+  GIMP_COLOR_PICK_MODE_PALETTE     /*< desc="Add to palette"       >*/
 } GimpColorPickMode;
 
 

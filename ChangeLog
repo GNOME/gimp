@@ -1,5 +1,26 @@
 2005-09-26  Michael Natterer  <mitch@gimp.org>
 
+	Allow to disable the color picker info dialog. Fixes bug #315011:
+
+	* app/tools/tools-enums.[ch] (enum GimpColorPickerMode): added
+	value GIMP_COLOR_PICK_MODE_PALETTE.
+
+	* app/tools/gimpcolorpickeroptions.[ch]: deprecated property
+	"add-to-palette" and added property "use-info-window". Changed
+	tool options GUI accordingly.
+
+	* app/tools/gimpcolorpickertool.c
+	(gimp_color_picker_tool_modifier_key): made <shift> toggle
+	the use-info-window property.
+
+	(gimp_color_picker_tool_picked): moved palette picking code
+	into the pick_mode switch() statement.
+
+	* app/tools/gimpcolortool.c (gimp_color_tool_cursor_update):
+	show a "plus" cursor when adding to the palette.
+
+2005-09-26  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/script-fu/script-fu-interface.c (script_fu_interface):
 	set "activates-default" on all entries.
 
