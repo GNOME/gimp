@@ -66,8 +66,7 @@ static const GOptionEntry main_entries[] =
   {
     "selection-type", 's', 0,
     G_OPTION_ARG_CALLBACK, test_clipboard_parse_selection,
-    "Selection type (primary|secondary|clipboard)",
-    "<type>"
+    "Selection type (primary|secondary|clipboard)", "<type>"
   },
   {
     "list-targets", 'l', 0,
@@ -95,7 +94,7 @@ static const GOptionEntry main_entries[] =
     "Paste clipoard into <file>", "<file>"
   },
   {
-    "version", 'v', 0,
+    "version", 'v', G_OPTION_FLAG_NO_ARG,
     G_OPTION_ARG_CALLBACK, test_clipboard_show_version,
     "Show version information and exit", NULL
   },

@@ -73,7 +73,7 @@ static const gchar **filenames = NULL;
 
 static const GOptionEntry main_entries[] =
 {
-  { "version", 'v', 0,
+  { "version", 'v', G_OPTION_FLAG_NO_ARG,
     G_OPTION_ARG_CALLBACK, (GOptionArgFunc) show_version,
     N_("Show version information and exit"), NULL
   },
