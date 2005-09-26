@@ -110,6 +110,11 @@ static GimpActionEntry edit_actions[] =
     GIMP_HELP_EDIT_PASTE_INTO },
 
   { "edit-paste-as-new", GIMP_STOCK_PASTE_AS_NEW,
+    N_("Paste as New"), NULL, NULL,
+    G_CALLBACK (edit_paste_as_new_cmd_callback),
+    GIMP_HELP_EDIT_PASTE_AS_NEW },
+
+  { "edit-paste-as-new-short", GIMP_STOCK_PASTE_AS_NEW,
     N_("_New Image"), NULL, NULL,
     G_CALLBACK (edit_paste_as_new_cmd_callback),
     GIMP_HELP_EDIT_PASTE_AS_NEW },
@@ -165,6 +170,7 @@ edit_actions_setup (GimpActionGroup *group)
   GimpContext *context = gimp_get_user_context (group->gimp);
   GimpRGB      color;
   GimpPattern *pattern;
+  GtkAction   *action;
 
   gimp_action_group_add_actions (group,
                                  edit_actions,
@@ -174,6 +180,10 @@ edit_actions_setup (GimpActionGroup *group)
                                       edit_fill_actions,
                                       G_N_ELEMENTS (edit_fill_actions),
                                       G_CALLBACK (edit_fill_cmd_callback));
+
+  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
+                                        "edit-paste-as-new-short");
+  gtk_action_set_accel_path (action, "<Actions>/edit/edit-paste-as-new");
 
   g_signal_connect_object (context, "foreground-changed",
                            G_CALLBACK (edit_actions_foreground_changed),

@@ -1,5 +1,13 @@
 2005-09-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/edit-actions.c: renamed action back to "Paste as
+	New" and added a second action with the "New Image" label. The
+	original label is needed for <Toolbox>/File/Acquire.
+
+	* menus/image-menu.xml.in: changed accordingly.
+
+2005-09-26  Michael Natterer  <mitch@gimp.org>
+
 	* app/plug-in/plug-in-params.c (plug_in_proc_args_check): drop the
 	restriction that plug-ins registered in <Image> must have
 	RUN-MODE, IMAGE, DRAWABLE parameters because everything but

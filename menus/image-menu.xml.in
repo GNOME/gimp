@@ -164,7 +164,7 @@
 	<menuitem action="edit-paste-into" />
       </placeholder>
       <menu action="edit-paste-as-menu" name="Paste as">
-	<menuitem action="edit-paste-as-new" />
+	<menuitem action="edit-paste-as-new-short" />
       </menu>
       <menu action="edit-buffer-menu" name="Buffer">
         <menuitem action="edit-named-cut" />
