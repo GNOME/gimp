@@ -1,5 +1,10 @@
 2005-09-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/debug-commands.c (debug_dump_menus_cmd_callback)
+	(debug_dump_menus_recurse_menu): resurrected.
+
+2005-09-26  Michael Natterer  <mitch@gimp.org>
+
 	Allow plug-ins to register menu entries in the <Brushes>,
 	<Gradients>, <Palettes>, <Patterns> and <Fonts> menus:
 

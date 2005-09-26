@@ -73,31 +73,33 @@ debug_dump_menus_cmd_callback (GtkAction *action,
        list;
        list = g_list_next (list))
     {
-#if 0
-      FIXME
       GimpMenuFactoryEntry *entry = list->data;
-      GimpItemFactory      *item_factory;
+      GList                *managers;
 
-      item_factory = gimp_item_factory_from_path (entry->identifier);
+      managers = gimp_ui_managers_from_name (entry->identifier);
 
-      if (item_factory)
+      if (managers)
         {
-          GtkWidget *menu_item;
+          GimpUIManager *manager = managers->data;
+          GList         *list;
 
-          g_print ("%s\n", entry->identifier);
+          for (list = manager->registered_uis; list; list = g_list_next (list))
+            {
+              GimpUIManagerUIEntry *ui_entry = list->data;
 
-          menu_item = gtk_item_factory_get_item (GTK_ITEM_FACTORY (item_factory),
-                                                 entry->entries[0].entry.path);
+              if (GTK_IS_MENU_SHELL (ui_entry->widget))
+                {
+                  g_print ("\n\n========================================\n"
+                           "Menu: %s%s\n"
+                           "========================================\n\n",
+                           entry->identifier, ui_entry->ui_path);
 
-          if (menu_item         &&
-              menu_item->parent &&
-              GTK_IS_MENU (menu_item->parent))
-            debug_dump_menus_recurse_menu (menu_item->parent, 1,
-                                           entry->identifier);
-
-          g_print ("\n");
+                  debug_dump_menus_recurse_menu (ui_entry->widget, 1,
+                                                 entry->identifier);
+                  g_print ("\n");
+                }
+            }
         }
-#endif
     }
 }
 
@@ -136,14 +138,12 @@ debug_dump_menus_recurse_menu (GtkWidget *menu,
                                gint       depth,
                                gchar     *path)
 {
-#if 0
-  GtkItemFactory *item_factory;
-  GtkWidget      *menu_item;
-  GList          *list;
-  const gchar    *label;
-  gchar          *help_page;
-  gchar          *full_path;
-  gchar          *format_str;
+  GtkWidget   *menu_item;
+  GList       *list;
+  const gchar *label;
+  gchar       *help_page;
+  gchar       *full_path;
+  gchar       *format_str;
 
   for (list = GTK_MENU_SHELL (menu)->children; list; list = g_list_next (list))
     {
@@ -154,10 +154,7 @@ debug_dump_menus_recurse_menu (GtkWidget *menu,
 	  label = gtk_label_get_text (GTK_LABEL (GTK_BIN (menu_item)->child));
 	  full_path = g_strconcat (path, "/", label, NULL);
 
-	  item_factory = GTK_ITEM_FACTORY (gimp_item_factory_from_path (path));
-          help_page    = g_object_get_data (G_OBJECT (menu_item),
-                                            "gimp-help-id");
-
+          help_page = g_object_get_data (G_OBJECT (menu_item), "gimp-help-id");
           help_page = g_strdup (help_page);
 
 	  format_str = g_strdup_printf ("%%%ds%%%ds %%-20s %%s\n",
@@ -174,7 +171,6 @@ debug_dump_menus_recurse_menu (GtkWidget *menu,
 	  g_free (full_path);
 	}
     }
-#endif
 }
 
 #endif /* ENABLE_DEBUG_MENU */
