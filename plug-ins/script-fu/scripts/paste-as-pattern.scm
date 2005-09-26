@@ -31,7 +31,9 @@
 			    (number->string pattern-image)
 			    ".pat"))
 
-  (file-pat-save 1 pattern-image pattern-draw path "" name)
+  (file-pat-save RUN-NONINTERACTIVE
+		 pattern-image pattern-draw path path
+		 name)
 
   (gimp-image-delete pattern-image)
 
@@ -41,11 +43,11 @@
 
 (script-fu-register "script-fu-paste-as-pattern"
 		    _"New _Pattern..."
-		    "Pastes the clipboard into a new pattern"
+		    "Pastes the clipboard contents into a new pattern"
 		    "Michael Natterer <mitch@gimp.org>"
 		    "Michael Natterer"
 		    "2005-09-25"
-		    "*"
+		    ""
 		    SF-STRING _"Pattern name" "My Pattern"
 		    SF-STRING _"File name"    "mypattern")
 

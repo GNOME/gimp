@@ -1,5 +1,10 @@
 2005-09-26  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/script-fu/scripts/paste-as-brush.scm
+	* plug-ins/script-fu/scripts/paste-as-pattern.scm: cleanup.
+
+2005-09-26  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/edit-actions.c: renamed action back to "Paste as
 	New" and added a second action with the "New Image" label. The
 	original label is needed for <Toolbox>/File/Acquire.
