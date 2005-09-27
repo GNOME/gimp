@@ -93,7 +93,7 @@ GtkWidget * gimp_int_radio_group_new (gboolean          in_frame,
 				       *  GtkWidget   **widget_ptr,
 				       */
 
-				      ...);
+				      ...) G_GNUC_NULL_TERMINATED;
 
 void        gimp_int_radio_group_set_active (GtkRadioButton *radio_button,
                                              gint            item_data);
@@ -111,7 +111,7 @@ GtkWidget * gimp_radio_group_new   (gboolean            in_frame,
 				     *  gboolean        active,
 				     */
 
-				    ...);
+				    ...) G_GNUC_NULL_TERMINATED;
 GtkWidget * gimp_radio_group_new2  (gboolean            in_frame,
 				    const gchar        *frame_title,
 				    GCallback           radio_button_callback,
@@ -124,7 +124,7 @@ GtkWidget * gimp_radio_group_new2  (gboolean            in_frame,
 				     *  GtkWidget     **widget_ptr,
 				     */
 
-				    ...);
+				    ...) G_GNUC_NULL_TERMINATED;
 
 void   gimp_radio_group_set_active (GtkRadioButton     *radio_button,
                                     gpointer            item_data);

@@ -71,7 +71,7 @@ GtkWidget * gimp_proc_browser_dialog_new          (const gchar  *title,
                                                    const gchar  *role,
                                                    GimpHelpFunc  help_func,
                                                    const gchar  *help_id,
-                                                   ...);
+                                                   ...) G_GNUC_NULL_TERMINATED;
 
 gchar     * gimp_proc_browser_dialog_get_selected (GimpProcBrowserDialog *dialog);
 

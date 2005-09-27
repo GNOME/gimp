@@ -47,7 +47,7 @@ GtkWidget * gimp_int_option_menu_new         (gboolean        menu_only,
                                                *  GtkWidget **widget_ptr,
                                                */
 
-                                              ...);
+                                              ...) G_GNUC_NULL_TERMINATED;
 
 void        gimp_int_option_menu_set_history (GtkOptionMenu  *option_menu,
                                               gint            item_data);
@@ -70,7 +70,7 @@ GtkWidget * gimp_option_menu_new     (gboolean         menu_only,
                                        *  gboolean     active
                                        */
 
-                                      ...);
+                                      ...) G_GNUC_NULL_TERMINATED;
 GtkWidget * gimp_option_menu_new2    (gboolean          menu_only,
                                       GCallback         menu_item_callback,
                                       gpointer          menu_item_callback_data,
@@ -81,7 +81,7 @@ GtkWidget * gimp_option_menu_new2    (gboolean          menu_only,
                                        *  gpointer      item_data,
                                        *  GtkWidget   **widget_ptr,
                                        */
-                                      ...);
+                                      ...) G_GNUC_NULL_TERMINATED;
 void  gimp_option_menu_set_history   (GtkOptionMenu    *option_menu,
                                       gpointer          item_data);
 

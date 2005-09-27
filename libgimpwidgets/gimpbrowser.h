@@ -81,7 +81,7 @@ GtkWidget * gimp_browser_new              (void);
 void        gimp_browser_add_search_types (GimpBrowser *browser,
                                            const gchar *first_type_label,
                                            gint         first_type_id,
-                                           ...);
+                                           ...) G_GNUC_NULL_TERMINATED;
 
 void        gimp_browser_set_widget       (GimpBrowser *browser,
                                            GtkWidget   *widget);

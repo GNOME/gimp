@@ -231,6 +231,20 @@ gimp_proc_browser_dialog_init (GimpProcBrowserDialog *dialog)
 
 /*  public functions  */
 
+/**
+ * gimp_proc_browser_dialog_new:
+ * @title:     The dialog's title.
+ * @role:      The dialog's role, see gtk_window_set_role().
+ * @help_func: The function which will be called if the user presses "F1".
+ * @help_id:   The help_id which will be passed to @help_func.
+ * @...:       A %NULL-terminated list destribing the action_area buttons.
+ *
+ * Create a new #GimpProcBrowserDialog.
+ *
+ * Return Value: a newly created #GimpProcBrowserDialog.
+ *
+ * Since: GIMP 2.4
+ **/
 GtkWidget *
 gimp_proc_browser_dialog_new (const gchar  *title,
                               const gchar  *role,
@@ -255,12 +269,22 @@ gimp_proc_browser_dialog_new (const gchar  *title,
   va_end (args);
 
   /* first search (all procedures) */
-  browser_search (GIMP_BROWSER (dialog->browser), "", SEARCH_TYPE_ALL,
-                  dialog);
+  browser_search (GIMP_BROWSER (dialog->browser), "", SEARCH_TYPE_ALL, dialog);
 
   return GTK_WIDGET (dialog);
 }
 
+/**
+ * gimp_proc_browser_dialog_get_selected:
+ * @dialog: a #GimpProcBrowserDialog
+ *
+ * Retrieves the name of the currently selected procedure.
+ *
+ * Return Value: The name of the selected procedure of %NULL if no
+ *               procedure is selected.
+ *
+ * Since: GIMP 2.4
+ **/
 gchar *
 gimp_proc_browser_dialog_get_selected (GimpProcBrowserDialog *dialog)
 {

@@ -64,7 +64,7 @@ GType       gimp_int_combo_box_get_type        (void) G_GNUC_CONST;
 
 GtkWidget * gimp_int_combo_box_new             (const gchar     *first_label,
                                                 gint             first_value,
-                                                ...);
+                                                ...) G_GNUC_NULL_TERMINATED;
 GtkWidget * gimp_int_combo_box_new_valist      (const gchar     *first_label,
                                                 gint             first_value,
                                                 va_list          values);

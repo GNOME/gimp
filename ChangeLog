@@ -1,5 +1,18 @@
 2005-09-27  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpprocbrowserdialog.h
+	* libgimpwidgets/gimpbrowser.h
+	* libgimpwidgets/gimpdialog.h
+	* libgimpwidgets/gimpintcombobox.h
+	* libgimpwidgets/gimpoldwidgets.h
+	* libgimpwidgets/gimpwidgets.h: use G_GNUC_NULL_TERMINATED where
+	appropriate.
+
+	* libgimp/gimpprocbrowserdialog.c
+	* libgimpwidgets/gimpbrowser.c: added missing API docs.
+
+2005-09-27  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpprocbrowserdialog.[ch]: let
 	gimp_proc_browser_dialog_new() take standard dialog parameters,
 	similar to gimp_dialog_new().
