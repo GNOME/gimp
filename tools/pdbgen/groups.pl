@@ -3,6 +3,7 @@
     brush
     brush_select
     brushes
+    buffer
     channel
     color
     context

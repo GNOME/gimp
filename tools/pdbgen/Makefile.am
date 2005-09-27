@@ -5,6 +5,7 @@ pdb_sources = \
 	pdb/brush.pdb			\
 	pdb/brush_select.pdb		\
 	pdb/brushes.pdb			\
+	pdb/buffer.pdb			\
 	pdb/channel.pdb			\
 	pdb/color.pdb			\
 	pdb/context.pdb			\

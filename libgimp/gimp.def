@@ -42,6 +42,12 @@ EXPORTS
 	gimp_brushes_set_paint_mode
 	gimp_brushes_set_popup
 	gimp_brushes_set_spacing
+	gimp_buffer_delete
+	gimp_buffer_get_bytes
+	gimp_buffer_get_height
+	gimp_buffer_get_image_type
+	gimp_buffer_ger_width
+	gimp_buffer_rename
 	gimp_by_color_select
 	gimp_channel_combine_masks
 	gimp_channel_copy
@@ -173,10 +179,8 @@ EXPORTS
 	gimp_edit_named_copy
 	gimp_edit_named_copy_visible
 	gimp_edit_named_cut
-	gimp_edit_named_delete
 	gimp_edit_named_paste
 	gimp_edit_named_paste_as_new
-	gimp_edit_named_rename
 	gimp_edit_paste
 	gimp_edit_paste_as_new
 	gimp_edit_stroke

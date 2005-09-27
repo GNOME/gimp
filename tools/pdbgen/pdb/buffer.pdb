@@ -1,0 +1,245 @@
+# The GIMP -- an image manipulation program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+# The defs
+
+sub buffer_rename {
+    $blurb = 'Renames a named buffer.';
+
+    $help = <<'HELP';
+This procedure renames a named buffer.
+HELP
+
+    $author = $copyright = 'Michael Natterer <mitch@gimp.org>';
+    $date   = '2005';
+    $since  = '2.4';
+
+    @inargs = (
+        { name => 'buffer_name', type => 'string',
+          desc => 'The buffer name' },
+        { name => 'new_name', type => 'string',
+          desc => 'The buffer\'s new name' }
+    );
+
+    @outargs = (
+	{ name => 'real_name', type => 'string', init => 1,
+	  desc => 'The real name given to the buffer' }
+    );
+
+    %invoke = (
+	code => <<CODE
+{
+  GimpBuffer *buffer;
+
+  buffer = (GimpBuffer *)
+    gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
+
+  success = (buffer != NULL && strlen (new_name) > 0);
+
+  if (success)
+    {
+      gimp_object_set_name (GIMP_OBJECT (buffer), new_name);
+      real_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (buffer)));
+    }
+}
+CODE
+    );
+}
+
+sub buffer_delete {
+    $blurb = 'Deletes a named buffer.';
+
+    $help = <<'HELP';
+This procedure deletes a named buffer.
+HELP
+
+    $author = $copyright = 'David Gowers <neota@softhome.net>';
+    $date   = '2005';
+    $since  = '2.4';
+
+    @inargs = (
+        { name => 'buffer_name', type => 'string',
+          desc => 'The buffer name' }
+    );
+
+    %invoke = (
+	code => <<CODE
+{
+  GimpBuffer *buffer;
+
+  buffer = (GimpBuffer *) 
+    gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
+
+  success = (buffer != NULL);
+
+  if (success)
+    success = gimp_container_remove (gimp->named_buffers, GIMP_OBJECT (buffer));
+}
+CODE
+    );
+}
+
+sub buffer_get_width {
+    $blurb = "Retrieves the specified buffer's width.";
+    $help = <<'HELP';
+This procedure retrieves the specified named buffer's width.
+HELP
+
+    $author = $copyright = 'Michael Natterer <mitch@gimp.org>';
+    $date   = '2005';
+    $since  = '2.4';
+
+    @inargs = (
+        { name => 'buffer_name', type => 'string',
+          desc => 'The buffer name' }
+    );
+
+    @outargs = (
+	{ name => 'width', type => 'int32', no_declare => '1',
+          alias => 'gimp_buffer_get_width (buffer)',
+          desc => "The buffer width" }
+    );
+
+    %invoke = (
+	vars => [ 'GimpBuffer *buffer = NULL' ],
+	code => <<'CODE'
+{
+  buffer = (GimpBuffer *) 
+    gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
+
+  success = (buffer != NULL);
+}
+CODE
+    );
+}
+
+sub buffer_get_height {
+    $blurb = "Retrieves the specified buffer's height.";
+    $help = <<'HELP';
+This procedure retrieves the specified named buffer's height.
+HELP
+
+    $author = $copyright = 'Michael Natterer <mitch@gimp.org>';
+    $date   = '2005';
+    $since  = '2.4';
+
+    @inargs = (
+        { name => 'buffer_name', type => 'string',
+          desc => 'The buffer name' }
+    );
+
+    @outargs = (
+	{ name => 'height', type => 'int32', no_declare => '1',
+          alias => 'gimp_buffer_get_height (buffer)',
+          desc => "The buffer height" }
+    );
+
+    %invoke = (
+	vars => [ 'GimpBuffer *buffer = NULL' ],
+	code => <<'CODE'
+{
+  buffer = (GimpBuffer *) 
+    gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
+
+  success = (buffer != NULL);
+}
+CODE
+    );
+}
+
+sub buffer_get_bytes {
+    $blurb = "Retrieves the specified buffer's bytes.";
+    $help = <<'HELP';
+This procedure retrieves the specified named buffer's bytes.
+HELP
+
+    $author = $copyright = 'Michael Natterer <mitch@gimp.org>';
+    $date   = '2005';
+    $since  = '2.4';
+
+    @inargs = (
+        { name => 'buffer_name', type => 'string',
+          desc => 'The buffer name' }
+    );
+
+    @outargs = (
+	{ name => 'bytes', type => 'int32', no_declare => '1',
+          alias => 'gimp_buffer_get_bytes (buffer)',
+          desc => "The buffer bpp" }
+    );
+
+    %invoke = (
+	vars => [ 'GimpBuffer *buffer = NULL' ],
+	code => <<'CODE'
+{
+  buffer = (GimpBuffer *) 
+    gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
+
+  success = (buffer != NULL);
+}
+CODE
+    );
+}
+
+sub buffer_get_image_type {
+    $blurb = "Retrieves the specified buffer's image type.";
+    $help = <<'HELP';
+This procedure retrieves the specified named buffer's image type.
+HELP
+
+    $author = $copyright = 'Michael Natterer <mitch@gimp.org>';
+    $date   = '2005';
+    $since  = '2.4';
+
+    @inargs = (
+        { name => 'buffer_name', type => 'string',
+          desc => 'The buffer name' }
+    );
+
+    @outargs = (
+	{ name => 'image_type', type => 'enum GimpImageBaseType',
+          no_declare => '1',
+          alias => 'gimp_buffer_get_image_type (buffer)',
+          desc => "The buffer image type" }
+    );
+
+    %invoke = (
+	vars => [ 'GimpBuffer *buffer = NULL' ],
+	code => <<'CODE'
+{
+  buffer = (GimpBuffer *) 
+    gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
+
+  success = (buffer != NULL);
+}
+CODE
+    );
+}
+
+@headers = qw(<string.h> "core/gimp.h" "core/gimpbuffer.h"
+              "core/gimpcontainer.h" "gimp-intl.h");
+
+@procs = qw(buffer_rename buffer_delete
+	    buffer_get_width buffer_get_height
+            buffer_get_bytes buffer_get_image_type);
+%exports = (app => [@procs], lib => [@procs]);
+
+$desc = 'Buffer procedures';
+
+1;

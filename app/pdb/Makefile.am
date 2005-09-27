@@ -15,6 +15,7 @@ libapppdb_a_SOURCES = \
 	brush_cmds.c			\
 	brush_select_cmds.c		\
 	brushes_cmds.c			\
+	buffer_cmds.c			\
 	channel_cmds.c			\
 	color_cmds.c			\
 	context_cmds.c			\

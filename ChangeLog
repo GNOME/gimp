@@ -1,3 +1,28 @@
+2005-09-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpbuffer.[ch]: added gimp_buffer_get_bytes()
+	and gimp_buffer_get_image_type().
+
+	* tools/pdbgen/pdb/edit.pdb: removed edit_named_rename() and
+	edit_named_delete().
+
+	* tools/pdbgen/Makefile.am
+	* tools/pdbgen/groups.pl
+	* tools/pdbgen/pdb/buffer.pdb: new PDB group featuring
+	buffer_rename(), delete(), get_width(), get_height(), get_bytes(),
+	get_image_type().
+
+	* app/pdb/Makefile.am
+	* libgimp/Makefile.am
+	* libgimp/gimp.def: changed accordingly.
+
+	* app/pdb/buffer_cmds.c
+	* app/pdb/edit_cmds.c
+	* app/pdb/internal_procs.c
+	* libgimp/gimp_pdb.h
+	* libgimp/gimpbuffer_pdb.[ch]
+	* libgimp/gimpedit_pdb.[ch]: (re)generated.
+
 2005-09-27  DindinX  <dindinx@gimp.org>
 
 	* libgimpwidgets/gimpzoommodel.c: zooming out more is zooming out

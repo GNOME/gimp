@@ -378,3 +378,27 @@ gimp_buffer_get_height (const GimpBuffer *buffer)
 
   return tile_manager_height (buffer->tiles);
 }
+
+gint
+gimp_buffer_get_bytes (const GimpBuffer *buffer)
+{
+  g_return_val_if_fail (GIMP_IS_BUFFER (buffer), 0);
+
+  return tile_manager_bpp (buffer->tiles);
+}
+
+GimpImageType
+gimp_buffer_get_image_type (const GimpBuffer *buffer)
+{
+  g_return_val_if_fail (GIMP_IS_BUFFER (buffer), 0);
+
+  switch (tile_manager_bpp (buffer->tiles))
+    {
+    case 1: return GIMP_GRAY_IMAGE;
+    case 2: return GIMP_GRAYA_IMAGE;
+    case 3: return GIMP_RGB_IMAGE;
+    case 4: return GIMP_RGBA_IMAGE;
+    }
+
+  return 0;
+}

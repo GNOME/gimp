@@ -27,6 +27,7 @@
 #include <libgimp/gimpbrush_pdb.h>
 #include <libgimp/gimpbrushes_pdb.h>
 #include <libgimp/gimpbrushselect_pdb.h>
+#include <libgimp/gimpbuffer_pdb.h>
 #include <libgimp/gimpchannel_pdb.h>
 #include <libgimp/gimpcolor_pdb.h>
 #include <libgimp/gimpcontext_pdb.h>

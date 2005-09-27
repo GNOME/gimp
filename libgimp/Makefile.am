@@ -72,6 +72,7 @@ PDB_WRAPPERS_C = \
 	gimpbrush_pdb.c			\
 	gimpbrushes_pdb.c		\
 	gimpbrushselect_pdb.c		\
+	gimpbuffer_pdb.c		\
 	gimpchannel_pdb.c		\
 	gimpcolor_pdb.c			\
 	gimpcontext_pdb.c		\
@@ -119,6 +120,7 @@ PDB_WRAPPERS_H = \
 	gimpbrush_pdb.h			\
 	gimpbrushes_pdb.h		\
 	gimpbrushselect_pdb.h		\
+	gimpbuffer_pdb.h		\
 	gimpchannel_pdb.h		\
 	gimpcolor_pdb.h			\
 	gimpcontext_pdb.h		\

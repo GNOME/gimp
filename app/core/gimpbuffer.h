@@ -46,16 +46,19 @@ struct _GimpBufferClass
 };
 
 
-GType        gimp_buffer_get_type        (void) G_GNUC_CONST;
+GType           gimp_buffer_get_type        (void) G_GNUC_CONST;
 
-GimpBuffer * gimp_buffer_new             (TileManager      *tiles,
-                                          const gchar      *name,
-                                          gboolean          copy_pixels);
-GimpBuffer * gimp_buffer_new_from_pixbuf (GdkPixbuf        *pixbuf,
-                                          const gchar      *name);
+GimpBuffer    * gimp_buffer_new             (TileManager      *tiles,
+                                             const gchar      *name,
+                                             gboolean          copy_pixels);
+GimpBuffer    * gimp_buffer_new_from_pixbuf (GdkPixbuf        *pixbuf,
+                                             const gchar      *name);
 
-gint         gimp_buffer_get_width       (const GimpBuffer *buffer);
-gint         gimp_buffer_get_height      (const GimpBuffer *buffer);
+gint            gimp_buffer_get_width       (const GimpBuffer *buffer);
+gint            gimp_buffer_get_height      (const GimpBuffer *buffer);
+
+gint            gimp_buffer_get_bytes       (const GimpBuffer *buffer);
+GimpImageType   gimp_buffer_get_image_type  (const GimpBuffer *buffer);
 
 
 #endif /* __GIMP_BUFFER_H__ */
