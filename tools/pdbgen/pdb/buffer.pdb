@@ -19,6 +19,35 @@
 
 # The defs
 
+sub buffers_get_list {
+    $blurb = 'Retrieve a complete listing of the available buffers.';
+
+    $help = <<'HELP';
+This procedure returns a complete listing of available named buffers.
+HELP
+
+    $author = $copyright = 'Michael Natterer <mitch@gimp.org>';
+    $date   = '2005';
+    $since  = '2.4';
+
+    @inargs = (
+	{ name => 'filter', type => 'string', null_ok => 1,
+          desc => 'An optional regular expression used to filter the list' }
+    );
+
+    @outargs = (
+	{ name => 'buffer_list', type => 'stringarray',
+	  desc => 'The list of buffer names',
+	  array => { name => 'num_buffers',
+		     desc => 'The number of buffers' },
+	  init => 1 }
+    );
+
+    %invoke = (
+	code => 'buffer_list = gimp_container_get_filtered_name_array (gimp->named_buffers, filter, &num_buffers);'
+    );
+}
+
 sub buffer_rename {
     $blurb = 'Renames a named buffer.';
 
@@ -233,9 +262,11 @@ CODE
 }
 
 @headers = qw(<string.h> "core/gimp.h" "core/gimpbuffer.h"
-              "core/gimpcontainer.h" "gimp-intl.h");
+              "core/gimpcontainer.h" "core/gimpcontainer-filter.h"
+	      "gimp-intl.h");
 
-@procs = qw(buffer_rename buffer_delete
+@procs = qw(buffers_get_list
+            buffer_rename buffer_delete
 	    buffer_get_width buffer_get_height
             buffer_get_bytes buffer_get_image_type);
 %exports = (app => [@procs], lib => [@procs]);

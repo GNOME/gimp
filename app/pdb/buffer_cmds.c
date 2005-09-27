@@ -29,9 +29,11 @@
 
 #include "core/gimp.h"
 #include "core/gimpbuffer.h"
+#include "core/gimpcontainer-filter.h"
 #include "core/gimpcontainer.h"
 #include "gimp-intl.h"
 
+static ProcRecord buffers_get_list_proc;
 static ProcRecord buffer_rename_proc;
 static ProcRecord buffer_delete_proc;
 static ProcRecord buffer_get_width_proc;
@@ -42,6 +44,7 @@ static ProcRecord buffer_get_image_type_proc;
 void
 register_buffer_procs (Gimp *gimp)
 {
+  procedural_db_register (gimp, &buffers_get_list_proc);
   procedural_db_register (gimp, &buffer_rename_proc);
   procedural_db_register (gimp, &buffer_delete_proc);
   procedural_db_register (gimp, &buffer_get_width_proc);
@@ -49,6 +52,77 @@ register_buffer_procs (Gimp *gimp)
   procedural_db_register (gimp, &buffer_get_bytes_proc);
   procedural_db_register (gimp, &buffer_get_image_type_proc);
 }
+
+static Argument *
+buffers_get_list_invoker (Gimp         *gimp,
+                          GimpContext  *context,
+                          GimpProgress *progress,
+                          Argument     *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  gchar *filter;
+  gint32 num_buffers;
+  gchar **buffer_list = NULL;
+
+  filter = (gchar *) args[0].value.pdb_pointer;
+  if (filter && !g_utf8_validate (filter, -1, NULL))
+    success = FALSE;
+
+  if (success)
+    buffer_list = gimp_container_get_filtered_name_array (gimp->named_buffers, filter, &num_buffers);
+
+  return_args = procedural_db_return_args (&buffers_get_list_proc, success);
+
+  if (success)
+    {
+      return_args[1].value.pdb_int = num_buffers;
+      return_args[2].value.pdb_pointer = buffer_list;
+    }
+
+  return return_args;
+}
+
+static ProcArg buffers_get_list_inargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "filter",
+    "An optional regular expression used to filter the list"
+  }
+};
+
+static ProcArg buffers_get_list_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "num-buffers",
+    "The number of buffers"
+  },
+  {
+    GIMP_PDB_STRINGARRAY,
+    "buffer-list",
+    "The list of buffer names"
+  }
+};
+
+static ProcRecord buffers_get_list_proc =
+{
+  "gimp-buffers-get-list",
+  "gimp-buffers-get-list",
+  "Retrieve a complete listing of the available buffers.",
+  "This procedure returns a complete listing of available named buffers.",
+  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer <mitch@gimp.org>",
+  "2005",
+  NULL,
+  GIMP_INTERNAL,
+  1,
+  buffers_get_list_inargs,
+  2,
+  buffers_get_list_outargs,
+  { { buffers_get_list_invoker } }
+};
 
 static Argument *
 buffer_rename_invoker (Gimp         *gimp,

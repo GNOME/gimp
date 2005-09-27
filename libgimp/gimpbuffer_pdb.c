@@ -26,6 +26,49 @@
 #include "gimp.h"
 
 /**
+ * gimp_buffers_get_list:
+ * @filter: An optional regular expression used to filter the list.
+ * @num_buffers: The number of buffers.
+ *
+ * Retrieve a complete listing of the available buffers.
+ *
+ * This procedure returns a complete listing of available named
+ * buffers.
+ *
+ * Returns: The list of buffer names.
+ *
+ * Since: GIMP 2.4
+ */
+gchar **
+gimp_buffers_get_list (const gchar *filter,
+		       gint        *num_buffers)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gchar **buffer_list = NULL;
+  gint i;
+
+  return_vals = gimp_run_procedure ("gimp-buffers-get-list",
+				    &nreturn_vals,
+				    GIMP_PDB_STRING, filter,
+				    GIMP_PDB_END);
+
+  *num_buffers = 0;
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    {
+      *num_buffers = return_vals[1].data.d_int32;
+      buffer_list = g_new (gchar *, *num_buffers);
+      for (i = 0; i < *num_buffers; i++)
+	buffer_list[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
+    }
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return buffer_list;
+}
+
+/**
  * gimp_buffer_rename:
  * @buffer_name: The buffer name.
  * @new_name: The buffer's new name.

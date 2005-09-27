@@ -48,6 +48,7 @@ EXPORTS
 	gimp_buffer_get_image_type
 	gimp_buffer_ger_width
 	gimp_buffer_rename
+	gimp_buffers_get_list
 	gimp_by_color_select
 	gimp_channel_combine_masks
 	gimp_channel_copy

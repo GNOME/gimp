@@ -1,3 +1,14 @@
+2005-09-27  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/buffer.pdb: added gimp-buffers-get-list,
+	should probably get its own PDB group.
+
+	* libgimp/gimp.def: changed accordingly.
+
+	* app/pdb/buffer_cmds.c
+	* app/pdb/internal_procs.c
+	* libgimp/gimpbuffer_pdb.[ch]: regenerated.
+
 2005-09-27  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimp-gui.h
