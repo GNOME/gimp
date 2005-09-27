@@ -447,6 +447,7 @@ pygimp_progress_value(gdouble percentage, gpointer data)
 static PyObject *
 pygimp_progress_install(PyObject *self, PyObject *args, PyObject *kwargs)
 {
+    GimpProgressVtable vtable = { 0, };
     const gchar *ret;
     ProgressData *pdata;
     static char *kwlist[] = { "start", "end", "text", "value", "data", NULL };
@@ -477,11 +478,12 @@ pygimp_progress_install(PyObject *self, PyObject *args, PyObject *kwargs)
 
 #undef PROCESS_FUNC
 
-    ret = gimp_progress_install(pygimp_progress_start,
-				pygimp_progress_end,
-				pygimp_progress_text,
-				pygimp_progress_value,
-				pdata);
+    vtable.start     = pygimp_progress_start;
+    vtable.end       = pygimp_progress_end;
+    vtable.set_text  = pygimp_progress_text;
+    vtable.set_value = pygimp_progress_value;
+
+    ret = gimp_progress_install_vtable(&vtable, pdata);
 
     if (!ret) {
 	PyErr_SetString(pygimp_error,
