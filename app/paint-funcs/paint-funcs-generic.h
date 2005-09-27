@@ -1256,9 +1256,11 @@ swap_pixels (guchar *src,
 {
   while (length--)
     {
-      *src = *src ^ *dest;
-      *dest = *dest ^ *src;
-      *src = *src ^ *dest;
+      guchar tmp = *dest;
+
+      *dest = *src;
+      *src = tmp;
+
       src++;
       dest++;
     }
