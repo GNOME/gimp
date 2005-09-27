@@ -574,7 +574,7 @@ dialog (void)
                     G_CALLBACK (gimp_toggle_button_update),
                     &curl.shade);
 
-  combo = gimp_int_combo_box_new (NULL, -1);
+  combo = g_object_new (GIMP_TYPE_INT_COMBO_BOX, NULL);
 
   gimp_int_combo_box_prepend (GIMP_INT_COMBO_BOX (combo),
                               GIMP_INT_STORE_VALUE,    CURL_COLORS_GRADIENT_REVERSE,

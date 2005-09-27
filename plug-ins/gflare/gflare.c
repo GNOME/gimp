@@ -4375,7 +4375,7 @@ gradient_menu_new (GradientMenuCallback callback,
   gtk_widget_set_size_request (gm->preview,
                                GM_PREVIEW_WIDTH, GM_PREVIEW_HEIGHT);
 
-  gm->combo = gimp_int_combo_box_new (NULL, 0);
+  gm->combo = g_object_new (GIMP_TYPE_INT_COMBO_BOX, NULL);
 
   g_signal_connect (gm->combo, "changed",
                     G_CALLBACK (gm_gradient_combo_callback),

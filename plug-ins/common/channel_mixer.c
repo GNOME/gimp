@@ -530,7 +530,7 @@ cm_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  mix.combo = gimp_int_combo_box_new (NULL, 0);
+  mix.combo = g_object_new (GIMP_TYPE_INT_COMBO_BOX, NULL);
 
   gimp_int_combo_box_append (GIMP_INT_COMBO_BOX (mix.combo),
                              GIMP_INT_STORE_VALUE,    CM_RED_CHANNEL,

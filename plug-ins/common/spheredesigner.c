@@ -2677,8 +2677,7 @@ makewindow (void)
                              _("Type:"), 0.0, 0.5,
                              typemenu, 2, FALSE);
 
-  texturemenu = gimp_int_combo_box_new (NULL, 0);
-
+  texturemenu = g_object_new (GIMP_TYPE_INT_COMBO_BOX, NULL);
   {
     struct textures_t *t;
 

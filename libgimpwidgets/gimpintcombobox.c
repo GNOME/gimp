@@ -229,6 +229,9 @@ gimp_int_combo_box_init (GimpIntComboBox *combo_box)
  * item. The items to fill the combo box with are specified as a %NULL
  * terminated list of label/value pairs.
  *
+ * If you need to construct an empty #GimpIntComboBox, it's best to use
+ * g_object_new (GIMP_TYPE_INT_COMBO_BOX, NULL).
+ *
  * Return value: a new #GimpIntComboBox.
  *
  * Since: GIMP 2.2
@@ -482,8 +485,8 @@ gimp_int_combo_box_get_active (GimpIntComboBox *combo_box,
  *
  * This function also calls the @callback once after setting the
  * initial @value. This is often convenient when working with combo
- * boxes that select a default active item (like for example
- * gimp_drawable_combo_box_new). If you pass an invalid initial
+ * boxes that select a default active item, like for example
+ * gimp_drawable_combo_box_new(). If you pass an invalid initial
  * @value, the @callback will be called with the default item active.
  *
  * Return value: the signal handler ID as returned by g_signal_connect()

@@ -372,7 +372,7 @@ aa_dialog (gint selected)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  combo = gimp_int_combo_box_new (NULL, 0);
+  combo = g_object_new (GIMP_TYPE_INT_COMBO_BOX, NULL);
   gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
   gtk_widget_show (combo);
 

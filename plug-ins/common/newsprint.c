@@ -1037,7 +1037,7 @@ new_channel (const chan_tmpl *ct, GtkWidget *preview)
 
   gtk_size_group_add_widget (group, label);
 
-  chst->combo = gimp_int_combo_box_new (NULL, 0);
+  chst->combo = g_object_new (GIMP_TYPE_INT_COMBO_BOX, NULL);
 
   for (sf = spotfn_list, i = 0; sf->name; sf++, i++)
     gimp_int_combo_box_append (GIMP_INT_COMBO_BOX (chst->combo),

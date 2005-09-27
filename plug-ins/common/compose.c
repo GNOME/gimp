@@ -1461,7 +1461,7 @@ compose_dialog (const gchar *compose_type,
   gtk_size_group_add_widget (size_group, label);
   g_object_unref (size_group);
 
-  combo = gimp_int_combo_box_new (NULL, 0);
+  combo = g_object_new (GIMP_TYPE_INT_COMBO_BOX, NULL);
   for (j = 0; j < G_N_ELEMENTS (compose_dsc); j++)
     {
       gchar *label = g_strdup (gettext (compose_dsc[j].compose_type));

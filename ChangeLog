@@ -1,3 +1,18 @@
+2005-09-27  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpintcombobox.c: document how to construct an
+	empty GimpIntComboBox using g_object_new().
+
+	* plug-ins/common/aa.c
+	* plug-ins/common/channel_mixer.c
+	* plug-ins/common/compose.c
+	* plug-ins/common/decompose.c
+	* plug-ins/common/newsprint.c
+	* plug-ins/common/spheredesigner.c
+	* plug-ins/gflare/gflare.c
+	* plug-ins/pagecurl/pagecurl.c: use g_object_new() to construct an
+	empty GimpIntComboBox. The old way of doing it caused warnings.
+
 2005-09-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/data-commands.c
