@@ -1,3 +1,8 @@
+2005-09-27  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/tmpl/gimpstock.sgml: removed one '../' from
+	xml:base. Fixes inlinegraphics of stock images.
+
 2005-09-27  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-docs.sgml
