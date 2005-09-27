@@ -262,8 +262,7 @@ stageone (lab          *points,
 
       if (min > curval)
         min = curval;
-
-      if (max < curval)
+      else if (max < curval)
         max = curval;
     }
 
@@ -273,7 +272,6 @@ stageone (lab          *points,
       lab    *smallerpoints;
       lab    *biggerpoints;
       gint    countsm = 0;
-      gint    countgr = 0;
       gint    smallc  = 0;
       gint    bigc    = 0;
       gfloat  pivot   = (min + max) / 2.0;
@@ -285,15 +283,13 @@ stageone (lab          *points,
 
           if (curval <= pivot)
             countsm++;
-          else
-            countgr++;
         }
 
       /* FIXME: consider to sort the array and split in place instead
        *        of allocating memory here
        */
       smallerpoints = g_new (lab, countsm);
-      biggerpoints  = g_new (lab, countgr);
+      biggerpoints  = g_new (lab, length - countsm);
 
       for (i = 0; i < length; i++)
         {
@@ -311,7 +307,7 @@ stageone (lab          *points,
 
       /* create subtrees */
       stageone (smallerpoints, dims, depth + 1, clusters, limits, countsm);
-      stageone (biggerpoints, dims, depth + 1, clusters, limits, countgr);
+      stageone (biggerpoints, dims, depth + 1, clusters, limits, length - countsm);
     }
   else
     {
@@ -365,7 +361,6 @@ stagetwo (lab          *points,
       lab    *smallerpoints;
       lab    *biggerpoints;
       gint    countsm = 0;
-      gint    countgr = 0;
       gint    smallc  = 0;
       gint    bigc    = 0;
       gfloat  pivot   = (min + max) / 2.0;
@@ -381,15 +376,13 @@ stagetwo (lab          *points,
 
           if (curval <= pivot)
             countsm++;
-          else
-            countgr++;
         }
 
       /* FIXME: consider to sort the array and split in place instead
        *        of allocating memory here
        */
       smallerpoints = g_new (lab, countsm);
-      biggerpoints  = g_new (lab, countgr);
+      biggerpoints  = g_new (lab, length - countsm);
 
       /* do actual split */
       for (i = 0; i < length; i++)
@@ -408,7 +401,7 @@ stagetwo (lab          *points,
       stagetwo (smallerpoints, dims, depth + 1, clusters, limits,
                 countsm, total, threshold);
       stagetwo (biggerpoints, dims, depth + 1, clusters, limits,
-                countgr, total, threshold);
+                length - countsm, total, threshold);
     }
   else /* create leave */
     {
@@ -524,7 +517,7 @@ create_signature (lab          *input,
 
   stagetwo (centroids,
             SIOX_DIMS, 0, clusters, limits, size, length,
-            0.1 /* magic constant, see paper by tomasi */);
+            0.1f /* magic constant, see paper by tomasi */);
 
   rval = list_to_array (clusters, returnlength);
 
@@ -697,18 +690,18 @@ depth_first_search (TileManager *mask,
 }
 
 /*
- * This method finds the biggest connected component in mask, it
- * clears everything in mask except the biggest component Pixels that
- * should be considererd set in incoming mask, must fullfil (pixel &
+ * This method finds the biggest connected components in mask, it
+ * clears everything in mask except the biggest components' Pixels that
+ * should be considererd set in incoming mask, must fulfill (pixel &
  * 0x1) the method uses no further memory, except a queue, it finds
- * the biggest component by a 2 phase algorithm 1. in the first phase
- * the coordinates of an element of the biggest component are
+ * the biggest components by a 2 phase algorithm 1. in the first phase
+ * the coordinates of an element of the biggest components are
  * identified, during this phase all pixels are visited. In the
- * second phase first visitation flags are reset, and afterwards a
- * connected component starting at the found coordinates is
- * determined. This is the biggest component, the result is written
- * into mask, all pixels that belong to the biggest component, are set
- * to 255 any other to 0.
+ * second phase first visitation flags are reset, and afterwards
+ * connected components starting at the found coordinates are
+ * determined. These are the biggest components, the result is written
+ * into mask, all pixels that belong to the biggest components are set
+ * to 255, any other to 0.
  */
 
 static void
@@ -730,23 +723,25 @@ find_max_blob (TileManager *mask,
   pixel_region_init (&region, mask, x, y, width, height, TRUE);
 
   for (pr = pixel_regions_register (1, &region);
-       pr != NULL; pr = pixel_regions_process (pr))
+       pr != NULL;
+       pr = pixel_regions_process (pr))
     {
-      gint pos_y = region.y;
+      gint    pos_y = region.y;
+      guchar *data  = region.data;
 
       for (row = 0; row < region.h; row++, pos_y++)
         {
-          gint pos_x = region.x;
+          guchar *d = data;
 
-          for (col = 0; col < region.w; col++, pos_x++)
+          for (col = 0; col < region.w; col++, d++)
             {
-              read_pixel_data_1 (mask, pos_x, pos_y, &val);
+              val = *d;
 
               if (val && (val != FIND_BLOB_VISITED))
                 {
                   struct blob *b = g_new (struct blob, 1);
 
-                  b->seedx    = pos_x;
+                  b->seedx    = region.x + col;
                   b->seedy    = pos_y;
                   b->size     = 0;
                   b->mustkeep = FALSE;
@@ -761,6 +756,8 @@ find_max_blob (TileManager *mask,
                     maxsize = b->size;
                 }
             }
+
+          data += region.rowstride;
         }
     }
 
@@ -1197,11 +1194,10 @@ siox_drb (TileManager  *pixels,
 
               gfloat mindistbg = (gfloat) sqrt (cr->bgdist);
               gfloat mindistfg = (gfloat) sqrt (cr->fgdist);
+              gfloat alpha;
 
               if (brushmode == SIOX_DRB_ADD)
                 {
-                  gfloat alpha;
-
                   if (*m > SIOX_HIGH)
                     continue;
 
@@ -1209,21 +1205,9 @@ siox_drb (TileManager  *pixels,
                     alpha = 1.0; /* avoid div by zero */
                   else
                     alpha = MIN (mindistbg / mindistfg, 1.0);
-
-                  if (alpha < threshold)
-                    {
-                      /* background with a certain confidence
-                       * to be decided by user.
-                       */
-                      alpha = 0.0;
-                    }
-
-                  *m = (gint) 255 *alpha;
                 }
-              else if (brushmode == SIOX_DRB_SUBTRACT)
+              else /*if (brushmode == SIOX_DRB_SUBTRACT)*/
                 {
-                  gfloat alpha;
-
                   if (*m < SIOX_HIGH)
                     continue;
 
@@ -1232,13 +1216,17 @@ siox_drb (TileManager  *pixels,
                   else
                     alpha = 1.0 - MIN (mindistfg / mindistbg, 1.0);
 
-                  if (alpha < threshold)
-                    {
-                      alpha = 0.0;
-                    }
-
-                  *m = (gint) 255 *alpha;
                 }
+
+              if (alpha < threshold)
+                {
+                  /* background with a certain confidence
+                   * to be decided by user.
+                   */
+                  alpha = 0.0;
+                }
+
+              *m = (gint) 255 *alpha;
             }
 
           src += srcPR.rowstride;

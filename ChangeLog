@@ -1,5 +1,9 @@
 2005-09-27  Sven Neumann  <sven@gimp.org>
 
+	* app/base/siox.c: minor code cleanups by Tobias Lenz.
+
+2005-09-27  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpintcombobox.c: document how to construct an
 	empty GimpIntComboBox using g_object_new().
 
