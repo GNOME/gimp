@@ -12,3 +12,4 @@ gimp_image_combo_box_get_type
 gimp_layer_combo_box_get_type
 gimp_proc_browser_dialog_get_type
 gimp_progress_bar_get_type
+gimp_zoom_preview_get_type

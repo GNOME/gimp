@@ -30,6 +30,7 @@
     <chapter id="libgimp-general">
       <title>Functions not Related to Specific Images</title>
       <xi:include href="xml/gimp.xml" />
+      <xi:include href="xml/gimpbuffer.xml" />
       <xi:include href="xml/gimpcontext.xml" />
       <xi:include href="xml/gimpgimprc.xml" />
       <xi:include href="xml/gimphelp.xml" />
@@ -99,8 +100,9 @@
 
     <xi:include href="xml/gimpui.xml" />
     <xi:include href="xml/gimpexport.xml" />
-    <xi:include href="xml/gimpaspectpreview.xml" />
     <xi:include href="xml/gimpdrawablepreview.xml" />
+    <xi:include href="xml/gimpaspectpreview.xml" />
+    <xi:include href="xml/gimpzoompreview.xml" />
     <xi:include href="xml/gimpdrawablecombobox.xml" />
     <xi:include href="xml/gimpimagecombobox.xml" />
     <xi:include href="xml/gimppixbuf.xml" />

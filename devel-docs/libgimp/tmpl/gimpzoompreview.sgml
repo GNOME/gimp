@@ -1,0 +1,55 @@
+<!-- ##### SECTION Title ##### -->
+GimpZoomPreview
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GimpZoomPreview ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION gimp_zoom_preview_new ##### -->
+<para>
+
+</para>
+
+@drawable: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_zoom_preview_get_source ##### -->
+<para>
+
+</para>
+
+@preview: 
+@width: 
+@height: 
+@bpp: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_zoom_preview_get_drawable ##### -->
+<para>
+
+</para>
+
+@preview: 
+@Returns: 
+
+

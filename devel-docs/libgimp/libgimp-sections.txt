@@ -180,6 +180,16 @@ gimp_brushes_set_popup
 </SECTION>
 
 <SECTION>
+<FILE>gimpbuffer</FILE>
+gimp_buffer_rename
+gimp_buffer_delete
+gimp_buffer_get_width
+gimp_buffer_get_height
+gimp_buffer_get_bytes
+gimp_buffer_get_image_type
+</SECTION>
+
+<SECTION>
 <FILE>gimpchannel</FILE>
 gimp_channel_new
 gimp_channel_new_from_component
@@ -338,8 +348,6 @@ gimp_edit_named_copy
 gimp_edit_named_copy_visible
 gimp_edit_named_paste
 gimp_edit_named_paste_as_new
-gimp_edit_named_delete
-gimp_edit_named_rename
 gimp_edit_clear
 gimp_edit_fill
 gimp_edit_bucket_fill
@@ -883,6 +891,24 @@ gimp_drawable_preview_get_type
 GIMP_DRAWABLE_PREVIEW_CLASS
 GIMP_IS_DRAWABLE_PREVIEW_CLASS
 GIMP_DRAWABLE_PREVIEW_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpzoompreview</FILE>
+<TITLE>GimpZoomPreview</TITLE>
+GimpZoomPreview
+gimp_zoom_preview_new
+gimp_zoom_preview_get_source
+gimp_zoom_preview_get_drawable
+<SUBSECTION Standard>
+GimpZoomPreviewClass
+GIMP_ZOOM_PREVIEW
+GIMP_IS_ZOOM_PREVIEW
+GIMP_TYPE_ZOOM_PREVIEW
+gimp_zoom_preview_get_type
+GIMP_ZOOM_PREVIEW_CLASS
+GIMP_IS_ZOOM_PREVIEW_CLASS
+GIMP_ZOOM_PREVIEW_GET_CLASS
 </SECTION>
 
 <SECTION>

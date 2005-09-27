@@ -113,25 +113,6 @@ Edit menu functions (cut, copy, paste, clear, etc.)
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_edit_named_delete ##### -->
-<para>
-
-</para>
-
-@buffer_name: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_edit_named_rename ##### -->
-<para>
-
-</para>
-
-@buffer_name: 
-@new_name: 
-@Returns: 
-
-
 <!-- ##### FUNCTION gimp_edit_clear ##### -->
 <para>
 
