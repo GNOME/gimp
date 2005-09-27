@@ -1318,17 +1318,18 @@ gimp_composite_replace_any_any_any_generic (GimpCompositeContext *ctx)
 void
 gimp_composite_swap_any_any_any_generic (GimpCompositeContext * ctx)
 {
-  guint length;
   guchar *src = ctx->A;
   guchar *dest = ctx->B;
   guint bytes1 = gimp_composite_pixel_bpp[ctx->pixelformat_A];
-  length = ctx->n_pixels * bytes1;
+  guint length = ctx->n_pixels * bytes1;
 
   while (length--)
     {
-      *src = *src ^ *dest;
-      *dest = *dest ^ *src;
-      *src = *src ^ *dest;
+      guchar tmp = *dest;
+
+      *dest = *src;
+      *src = tmp;
+
       src++;
       dest++;
     }

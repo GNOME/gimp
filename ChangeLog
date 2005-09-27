@@ -1,8 +1,11 @@
 2005-09-28  Sven Neumann  <sven@gimp.org>
 
 	* app/paint-funcs/paint-funcs-generic.h (swap_pixels): replaced
-	the binary XOR operations with a naive but faster implementation
-	using a local variable.
+	binary operations with a naive but faster implementation using a
+	local variable.
+
+	* app/composite/gimp-composite-generic.c
+	(gimp_composite_swap_any_any_any_generic): same change here.
 
 2005-09-27  Sven Neumann  <sven@gimp.org>
 
