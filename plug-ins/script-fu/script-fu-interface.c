@@ -222,7 +222,7 @@ script_fu_interface (SFScript *script)
                      NULL, 0,
                      gimp_standard_help_func, sf_interface->help_id,
 
-                     GTK_STOCK_HELP,   GTK_RESPONSE_HELP,
+                     GTK_STOCK_ABOUT,  GTK_RESPONSE_HELP,
                      GIMP_STOCK_RESET, RESPONSE_RESET,
                      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                      GTK_STOCK_OK,     GTK_RESPONSE_OK,
