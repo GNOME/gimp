@@ -230,11 +230,11 @@ script_fu_interface (SFScript *script)
                      NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (sf_interface->dialog),
-					      GTK_RESPONSE_HELP,
-					      RESPONSE_RESET,
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_HELP,
+                                           RESPONSE_RESET,
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   g_signal_connect (dlg, "response",
                     G_CALLBACK (script_fu_response),

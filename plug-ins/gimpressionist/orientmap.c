@@ -516,10 +516,10 @@ create_orientmap_dialog (void)
                      NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (orient_map_window),
-                                              GTK_RESPONSE_OK,
-					      GTK_RESPONSE_APPLY,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_APPLY,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   g_signal_connect (orient_map_window, "response",
                     G_CALLBACK (orient_map_response),

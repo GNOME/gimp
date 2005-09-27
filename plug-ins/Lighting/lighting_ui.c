@@ -977,9 +977,9 @@ main_dialog (GimpDrawable *drawable)
                             NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (appwin),
-					    GTK_RESPONSE_OK,
-					    GTK_RESPONSE_CANCEL,
-					    -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   gimp_window_set_transient (GTK_WINDOW (appwin));
 

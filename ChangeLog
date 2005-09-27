@@ -1,5 +1,23 @@
 2005-09-27  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/data-commands.c
+	* app/actions/file-commands.c
+	* app/actions/templates-commands.c
+	* app/dialogs/image-scale-dialog.c
+	* app/dialogs/resize-dialog.c
+	* app/dialogs/vectors-options-dialog.c
+	* app/tools/gimptexttool.c
+	* libgimpwidgets/gimpcolorbutton.c
+	* plug-ins/Lighting/lighting_ui.c
+	* plug-ins/common/AlienMap2.c
+	* plug-ins/common/aa.c
+	* plug-ins/gimpressionist/orientmap.c
+	* plug-ins/script-fu/script-fu-interface.c
+	* plug-ins/xjt/xjt.c: fixed indentation in calls to
+	gtk_dialog_set_alternative_button_order().
+
+2005-09-27  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/pdb/buffer.pdb: added gimp-buffers-get-list,
 	should probably get its own PDB group.
 
