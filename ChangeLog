@@ -10,7 +10,7 @@
 	* tools/pdbgen/groups.pl
 	* tools/pdbgen/pdb/buffer.pdb: new PDB group featuring
 	buffer_rename(), delete(), get_width(), get_height(), get_bytes(),
-	get_image_type().
+	get_image_type(). Fixes bug #315130.
 
 	* app/pdb/Makefile.am
 	* libgimp/Makefile.am
