@@ -269,9 +269,9 @@ gimp_zoom_model_set_range (GimpZoomModel *model,
   g_return_if_fail (max <= ZOOM_MAX);
 
   g_object_set (model,
-		"minimum", min,
-		"maximum", max,
-		NULL);
+                "minimum", min,
+                "maximum", max,
+                NULL);
 }
 
 /**
@@ -550,9 +550,9 @@ gimp_zoom_model_zoom_step (GimpZoomType zoom_type,
       break;
 
     case GIMP_ZOOM_OUT_MORE:
-      scale = gimp_zoom_model_zoom_step (GIMP_ZOOM_IN, scale);
-      scale = gimp_zoom_model_zoom_step (GIMP_ZOOM_IN, scale);
-      scale = gimp_zoom_model_zoom_step (GIMP_ZOOM_IN, scale);
+      scale = gimp_zoom_model_zoom_step (GIMP_ZOOM_OUT, scale);
+      scale = gimp_zoom_model_zoom_step (GIMP_ZOOM_OUT, scale);
+      scale = gimp_zoom_model_zoom_step (GIMP_ZOOM_OUT, scale);
       new_scale = scale;
       break;
 

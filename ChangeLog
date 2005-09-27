@@ -1,3 +1,8 @@
+2005-09-27  DindinX  <dindinx@gimp.org>
+
+	* libgimpwidgets/gimpzoommodel.c: zooming out more is zooming out
+	three times, not zooming in. Fixes bug #155446.
+
 2005-09-26  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell.c (gimp_display_shell_new): applied

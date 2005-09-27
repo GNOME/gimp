@@ -106,6 +106,8 @@ GimpZoomModel
 @model: 
 @numerator: 
 @denominator: 
+<!-- # Unused Parameters # -->
+@zoom_factor: 
 
 
 <!-- ##### FUNCTION gimp_zoom_button_new ##### -->
