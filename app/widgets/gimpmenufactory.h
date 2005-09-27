@@ -69,7 +69,7 @@ GimpMenuFactory * gimp_menu_factory_new           (Gimp              *gimp,
 void           gimp_menu_factory_manager_register (GimpMenuFactory *factory,
                                                    const gchar     *identifier,
                                                    const gchar     *first_group,
-                                                   ...);
+                                                   ...) G_GNUC_NULL_TERMINATED;
 
 GimpUIManager * gimp_menu_factory_manager_new     (GimpMenuFactory *factory,
                                                    const gchar     *identifier,

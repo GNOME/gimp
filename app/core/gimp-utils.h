@@ -52,7 +52,7 @@ gboolean      gimp_boolean_handled_accum    (GSignalInvocationHint *ihint,
 GParameter  * gimp_parameters_append        (GType         object_type,
                                              GParameter   *params,
                                              gint         *n_params,
-                                            ...);
+                                             ...) G_GNUC_NULL_TERMINATED;
 GParameter  * gimp_parameters_append_valist (GType         object_type,
                                              GParameter   *params,
                                              gint         *n_params,

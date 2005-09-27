@@ -56,7 +56,7 @@ GtkWidget * gimp_message_dialog_new      (const gchar       *title,
                                           GtkDialogFlags     flags,
                                           GimpHelpFunc       help_func,
                                           const gchar       *help_id,
-                                          ...);
+                                          ...) G_GNUC_NULL_TERMINATED;
 
 
 G_END_DECLS

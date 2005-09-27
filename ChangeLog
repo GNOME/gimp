@@ -1,5 +1,19 @@
 2005-09-27  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimp-gui.h
+	* app/core/gimp-utils.h
+	* app/core/gimpimage-undo.h
+	* app/text/gimptextlayer.h
+	* app/widgets/gimpeditor.h
+	* app/widgets/gimpmenufactory.h
+	* app/widgets/gimpmessagedialog.h
+	* app/widgets/gimpsessioninfo.h
+	* app/widgets/gimptooldialog.h
+	* app/widgets/gimpviewabledialog.h: use G_GNUC_NULL_TERMINATED
+	where appropriate.
+
+2005-09-27  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpprocbrowserdialog.h
 	* libgimpwidgets/gimpbrowser.h
 	* libgimpwidgets/gimpdialog.h

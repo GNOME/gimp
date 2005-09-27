@@ -39,7 +39,7 @@ GimpUndo * gimp_image_undo_push         (GimpImage        *gimage,
                                          GimpDirtyMask     dirty_mask,
                                          GimpUndoPopFunc   pop_func,
                                          GimpUndoFreeFunc  free_func,
-                                         ...);
+                                         ...) G_GNUC_NULL_TERMINATED;
 
 GimpUndo * gimp_image_undo_can_compress (GimpImage        *gimage,
                                          GType             object_type,

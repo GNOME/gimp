@@ -63,7 +63,7 @@ GtkWidget * gimp_viewable_dialog_new      (GimpViewable       *viewable,
                                            GtkWidget          *parent,
                                            GimpHelpFunc        help_func,
                                            const gchar        *help_id,
-                                           ...);
+                                           ...) G_GNUC_NULL_TERMINATED;
 
 void    gimp_viewable_dialog_set_viewable (GimpViewableDialog *dialog,
                                            GimpViewable       *viewable);

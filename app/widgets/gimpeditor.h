@@ -86,7 +86,7 @@ GtkWidget * gimp_editor_add_stock_box     (GimpEditor           *editor,
 GtkWidget * gimp_editor_add_action_button (GimpEditor           *editor,
                                            const gchar          *group_name,
                                            const gchar          *action_name,
-                                           ...);
+                                           ...) G_GNUC_NULL_TERMINATED;
 
 void        gimp_editor_set_show_name       (GimpEditor         *editor,
                                              gboolean            show);

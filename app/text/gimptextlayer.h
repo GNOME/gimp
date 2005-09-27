@@ -66,7 +66,7 @@ void        gimp_text_layer_discard     (GimpTextLayer *layer);
 void        gimp_text_layer_set         (GimpTextLayer *layer,
                                          const gchar   *undo_desc,
                                          const gchar   *first_property_name,
-                                         ...);
+                                         ...) G_GNUC_NULL_TERMINATED;
 
 gboolean    gimp_drawable_is_text_layer (GimpDrawable  *drawable);
 

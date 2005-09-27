@@ -154,12 +154,12 @@ gboolean       gimp_pdb_dialog_new       (Gimp               *gimp,
                                           const gchar        *title,
                                           const gchar        *callback_name,
                                           const gchar        *object_name,
-                                          ...);
+                                          ...) G_GNUC_NULL_TERMINATED;
 gboolean       gimp_pdb_dialog_set       (Gimp               *gimp,
                                           GimpContainer      *container,
                                           const gchar        *callback_name,
                                           const gchar        *object_name,
-                                          ...);
+                                          ...) G_GNUC_NULL_TERMINATED;
 gboolean       gimp_pdb_dialog_close     (Gimp               *gimp,
                                           GimpContainer      *container,
                                           const gchar        *callback_name);
