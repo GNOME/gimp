@@ -122,9 +122,14 @@ run (const gchar      *name,
 
         gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-        dialog = gimp_proc_browser_dialog_new ();
-        gtk_dialog_add_button (GTK_DIALOG (dialog),
-                               GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE);
+        dialog =
+          gimp_proc_browser_dialog_new (_("Procedure Browser"), PLUG_IN_BINARY,
+                                        gimp_standard_help_func, PLUG_IN_PROC,
+
+                                        GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
+
+                                        NULL);
+
         gtk_dialog_run (GTK_DIALOG (dialog));
         gtk_widget_destroy (dialog);
       }

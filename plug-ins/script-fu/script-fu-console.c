@@ -34,6 +34,8 @@
 
 #define BUFSIZE     256
 
+#define PROC_NAME   "plug-in-script-fu-console"
+
 
 typedef struct
 {
@@ -160,10 +162,10 @@ script_fu_console_interface (void)
   console->history_cur = 0;
   console->history_max = 50;
 
-  console->dialog = gimp_dialog_new (_("Script-Fu Console"), "script-fu-console",
+  console->dialog = gimp_dialog_new (_("Script-Fu Console"),
+                                     "script-fu-console",
                                      NULL, 0,
-                                     gimp_standard_help_func,
-                                     "plug-in-script-fu-console",
+                                     gimp_standard_help_func, PROC_NAME,
 
                                      GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 
@@ -290,12 +292,16 @@ script_fu_browse_callback (GtkWidget        *widget,
 {
   if (! console->proc_browser)
     {
-      console->proc_browser = gimp_proc_browser_dialog_new ();
+      console->proc_browser =
+        gimp_proc_browser_dialog_new (_("Script-Fu Procedure Browser"),
+                                      "script-fu-procedure-browser",
+                                      gimp_standard_help_func, PROC_NAME,
 
-      gtk_dialog_add_buttons (GTK_DIALOG (console->proc_browser),
-                              GTK_STOCK_APPLY, GTK_RESPONSE_APPLY,
-                              GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
-                              NULL);
+                                      GTK_STOCK_APPLY, GTK_RESPONSE_APPLY,
+                                      GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
+
+                                      NULL);
+
       gtk_dialog_set_default_response (GTK_DIALOG (console->proc_browser),
                                        GTK_RESPONSE_APPLY);
 

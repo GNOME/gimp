@@ -168,7 +168,10 @@ proc_browser_dialog_new(PyObject *self, PyObject *args, PyObject *kwargs)
 	}
     }
 
-    dlg = G_OBJECT(gimp_proc_browser_dialog_new());
+    dlg = G_OBJECT(gimp_proc_browser_dialog_new("Python Procedure Browser",
+                                                "python-fu-procedure-browser",
+                                                gimp_standard_help_func, NULL,
+                                                NULL));
 
     if (has_apply) {
         gtk_dialog_add_button(GTK_DIALOG(dlg),

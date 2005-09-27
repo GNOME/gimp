@@ -1,5 +1,15 @@
 2005-09-27  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpprocbrowserdialog.[ch]: let
+	gimp_proc_browser_dialog_new() take standard dialog parameters,
+	similar to gimp_dialog_new().
+
+	* plug-ins/common/procedure-browser.c
+	* plug-ins/pygimp/procbrowser.c
+	* plug-ins/script-fu/script-fu-console.c: changed accordingly.
+
+2005-09-27  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/script-fu-interface.c (script_fu_interface):
 	use GTK_STOCK_ABOUT for the About button (bug #317339).
 

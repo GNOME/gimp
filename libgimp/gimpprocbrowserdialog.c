@@ -232,11 +232,27 @@ gimp_proc_browser_dialog_init (GimpProcBrowserDialog *dialog)
 /*  public functions  */
 
 GtkWidget *
-gimp_proc_browser_dialog_new (void)
+gimp_proc_browser_dialog_new (const gchar  *title,
+                              const gchar  *role,
+                              GimpHelpFunc  help_func,
+                              const gchar  *help_id,
+                              ...)
 {
   GimpProcBrowserDialog *dialog;
+  va_list                args;
 
-  dialog = g_object_new (GIMP_TYPE_PROC_BROWSER_DIALOG, NULL);
+  va_start (args, help_id);
+
+  dialog = g_object_new (GIMP_TYPE_PROC_BROWSER_DIALOG,
+                         "title",     title,
+                         "role",      role,
+                         "help-func", help_func,
+                         "help-id",   help_id,
+                         NULL);
+
+  gimp_dialog_add_buttons_valist (GIMP_DIALOG (dialog), args);
+
+  va_end (args);
 
   /* first search (all procedures) */
   browser_search (GIMP_BROWSER (dialog->browser), "", SEARCH_TYPE_ALL,
