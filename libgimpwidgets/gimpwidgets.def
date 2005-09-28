@@ -212,7 +212,7 @@ EXPORTS
 	gimp_preview_draw
 	gimp_preview_draw_buffer
 	gimp_preview_get_area
-	gimp_preview_get_control_box
+	gimp_preview_get_controls
 	gimp_preview_get_position
 	gimp_preview_get_size
 	gimp_preview_get_type

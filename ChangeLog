@@ -1,3 +1,20 @@
+2005-09-28  Sven Neumann  <neumann@jpk.com>
+
+
+2005-09-28  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimppreview.[ch]: renamed newly added function to
+	gimp_preview_get_controls(). Increased row padding for controls.
+
+	* libgimpwidgets/gimpwidgets.def
+	* libgimp/gimpzoompreview.c: changed accordingly.
+
+	* libgimpbase/gimputils.c (gimp_enum_get_value): ref the enum
+	class instead of only peeking at it.
+
+	* libgimpwidgets/gimpzoommodel.c (gimp_zoom_button_new): set a
+	tooltip on zoom buttons that only show an icon.
+
 2005-09-28  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimppreview.[ch]: added a hbox to the table and

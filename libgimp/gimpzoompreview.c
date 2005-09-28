@@ -103,7 +103,7 @@ gimp_zoom_preview_init (GimpZoomPreview *preview)
                             G_CALLBACK (gimp_zoom_preview_set_adjustments),
                             preview);
 
-  box = gimp_preview_get_control_box (GIMP_PREVIEW (preview));
+  box = gimp_preview_get_controls (GIMP_PREVIEW (preview));
   g_return_if_fail (GTK_IS_BOX (box));
 
   button_bar = gtk_hbox_new (FALSE, 2);

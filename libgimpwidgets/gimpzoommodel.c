@@ -26,8 +26,10 @@
 
 #include "gimpwidgetstypes.h"
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
 
+#include "gimphelpui.h"
 #include "gimpzoommodel.h"
 
 
@@ -417,10 +419,9 @@ zoom_button_new (const gchar *stock_id,
 
   if (icon_size > 0)
     {
-      GtkWidget *image;
+      GtkWidget *image = gtk_image_new_from_stock (stock_id, icon_size);
 
       button = gtk_button_new ();
-      image = gtk_image_new_from_stock (stock_id, icon_size);
       gtk_container_add (GTK_CONTAINER (button), image);
       gtk_widget_show (image);
     }
@@ -470,6 +471,17 @@ gimp_zoom_button_new (GimpZoomModel *model,
     default:
       g_warning ("sorry, no button for this zoom type (%d)", zoom_type);
       break;
+    }
+
+  if (button && icon_size > 0)
+    {
+      const gchar *desc;
+
+      if (gimp_enum_get_value (GIMP_TYPE_ZOOM_TYPE, zoom_type,
+                               NULL, NULL, &desc, NULL))
+        {
+          gimp_help_set_help_data (button, desc, NULL);
+        }
     }
 
   return button;

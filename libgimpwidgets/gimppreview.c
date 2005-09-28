@@ -50,7 +50,7 @@ enum
 
 typedef struct
 {
-  GtkWidget *control_box;
+  GtkWidget *controls;
 } GimpPreviewPrivate;
 
 #define GIMP_PREVIEW_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), GIMP_TYPE_PREVIEW, GimpPreviewPrivate))
@@ -192,19 +192,19 @@ gimp_preview_init (GimpPreview *preview)
   gtk_widget_show (preview->frame);
 
   preview->table = gtk_table_new (3, 2, FALSE);
-  gtk_table_set_row_spacing (GTK_TABLE (preview->table), 1, 2);
+  gtk_table_set_row_spacing (GTK_TABLE (preview->table), 1, 6);
   gtk_container_add (GTK_CONTAINER (preview->frame), preview->table);
   gtk_widget_show (preview->table);
 
-  preview->timeout_id     = 0;
+  preview->timeout_id = 0;
 
-  preview->xmin           = preview->ymin = 0;
-  preview->xmax           = preview->ymax = 1;
-  preview->width          = preview->xmax - preview->xmin;
-  preview->height         = preview->ymax - preview->ymin;
+  preview->xmin   = preview->ymin = 0;
+  preview->xmax   = preview->ymax = 1;
+  preview->width  = preview->xmax - preview->xmin;
+  preview->height = preview->ymax - preview->ymin;
 
-  preview->xoff           = 0;
-  preview->yoff           = 0;
+  preview->xoff   = 0;
+  preview->yoff   = 0;
 
   preview->default_cursor = NULL;
 
@@ -247,17 +247,16 @@ gimp_preview_init (GimpPreview *preview)
                     G_CALLBACK (gimp_preview_area_size_allocate),
                     preview);
 
-  priv->control_box = gtk_hbox_new (FALSE, 6);
-  gtk_table_attach (GTK_TABLE (preview->table), priv->control_box, 0, 2, 2, 3,
+  priv->controls = gtk_hbox_new (FALSE, 6);
+  gtk_table_attach (GTK_TABLE (preview->table), priv->controls, 0, 2, 2, 3,
                     GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
-  gtk_widget_show (priv->control_box);
+  gtk_widget_show (priv->controls);
 
   /*  toggle button to (des)activate the instant preview  */
   preview->toggle = gtk_check_button_new_with_mnemonic (_("_Preview"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (preview->toggle),
                                 preview->update_preview);
-  gtk_box_pack_start (GTK_BOX (priv->control_box), preview->toggle,
-                      TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (priv->controls), preview->toggle, TRUE, TRUE, 0);
   gtk_widget_show (preview->toggle);
 
   g_signal_connect (preview->toggle, "toggled",
@@ -720,7 +719,7 @@ gimp_preview_set_default_cursor (GimpPreview *preview,
 }
 
 /**
- * gimp_preview_get_control_box:
+ * gimp_preview_get_controls:
  * @preview: a #GimpPreview widget
  *
  * Gives access to the #GtkHBox at the bottom of the preview that
@@ -732,9 +731,9 @@ gimp_preview_set_default_cursor (GimpPreview *preview,
  * Since: GIMP 2.4
  **/
 GtkWidget *
-gimp_preview_get_control_box (GimpPreview *preview)
+gimp_preview_get_controls (GimpPreview *preview)
 {
   g_return_val_if_fail (GIMP_IS_PREVIEW (preview), NULL);
 
-  return GIMP_PREVIEW_GET_PRIVATE (preview)->control_box;
+  return GIMP_PREVIEW_GET_PRIVATE (preview)->controls;
 }

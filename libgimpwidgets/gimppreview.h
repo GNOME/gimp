@@ -116,10 +116,10 @@ void        gimp_preview_draw_buffer        (GimpPreview  *preview,
 
 void        gimp_preview_invalidate         (GimpPreview  *preview);
 
-void        gimp_preview_set_default_cursor (GimpPreview *preview,
-                                             GdkCursor   *cursor);
+void        gimp_preview_set_default_cursor (GimpPreview  *preview,
+                                             GdkCursor    *cursor);
 
-GtkWidget * gimp_preview_get_control_box    (GimpPreview *preview);
+GtkWidget * gimp_preview_get_controls       (GimpPreview  *preview);
 
 
 G_END_DECLS
