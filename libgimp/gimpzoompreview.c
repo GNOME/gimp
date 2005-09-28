@@ -94,7 +94,7 @@ gimp_zoom_preview_init (GimpZoomPreview *preview)
 {
   GtkWidget              *button_bar;
   GtkWidget              *button;
-  GtkWidget              *label;
+  GtkWidget              *box;
   GimpZoomPreviewPrivate *priv = GIMP_ZOOM_PREVIEW_GET_PRIVATE (preview);
 
   priv->zoom = gimp_zoom_model_new ();
@@ -103,9 +103,24 @@ gimp_zoom_preview_init (GimpZoomPreview *preview)
                             G_CALLBACK (gimp_zoom_preview_set_adjustments),
                             preview);
 
-  button_bar = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_end (GTK_BOX (preview), button_bar, FALSE, FALSE, 0);
+  box = gimp_preview_get_control_box (GIMP_PREVIEW (preview));
+  g_return_if_fail (GTK_IS_BOX (box));
+
+  button_bar = gtk_hbox_new (FALSE, 2);
+  gtk_box_pack_end (GTK_BOX (box), button_bar, FALSE, FALSE, 0);
   gtk_widget_show (button_bar);
+
+  /* label */
+#if 0
+  {
+    GtkWidget *label;
+
+    label = gimp_prop_label_new (G_OBJECT (priv->zoom), "fraction");
+    gtk_misc_set_padding (GTK_MISC (label), 3, 3);
+    gtk_box_pack_start (GTK_BOX (button_bar), label, FALSE, FALSE, 0);
+    gtk_widget_show (label);
+  }
+#endif
 
   /* zoom out */
   button = gimp_zoom_button_new (priv->zoom,
@@ -119,13 +134,6 @@ gimp_zoom_preview_init (GimpZoomPreview *preview)
   gtk_box_pack_start (GTK_BOX (button_bar), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  /* label */
-  label = gimp_prop_label_new (G_OBJECT (priv->zoom), "fraction");
-  gtk_misc_set_padding (GTK_MISC (label), 6, 6);
-  gtk_box_pack_start (GTK_BOX (button_bar), label,
-                      FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
   g_signal_connect (GIMP_PREVIEW (preview)->area, "size-allocate",
                     G_CALLBACK (gimp_zoom_preview_size_allocate),
                     preview);
@@ -134,6 +142,9 @@ gimp_zoom_preview_init (GimpZoomPreview *preview)
                 "check-size", gimp_check_size (),
                 "check-type", gimp_check_type (),
                 NULL);
+
+  gimp_scrolled_preview_set_policy (GIMP_SCROLLED_PREVIEW (preview),
+                                    GTK_POLICY_ALWAYS, GTK_POLICY_ALWAYS);
 }
 
 static void
@@ -147,40 +158,27 @@ gimp_zoom_preview_set_adjustments (GimpZoomPreview *preview)
   scrolled_preview = GIMP_SCROLLED_PREVIEW (preview);
   zoom_factor = gimp_zoom_model_get_factor (priv->zoom);
 
-  if (fabs (zoom_factor - 1.0) < 0.05)
-    {
-      gtk_widget_hide (scrolled_preview->vscr);
-      gtk_widget_hide (scrolled_preview->hscr);
-      gtk_widget_hide (scrolled_preview->nav_icon);
-    }
-  else
-    {
-      adj = gtk_range_get_adjustment (GTK_RANGE (scrolled_preview->hscr));
-      adj->lower          = 0;
-      adj->page_size      = GIMP_PREVIEW (preview)->width;
-      adj->upper          = GIMP_PREVIEW (preview)->width * zoom_factor;
-      adj->step_increment = 1.0;
-      adj->page_increment = MAX (adj->page_size / 2.0, adj->step_increment);
-      adj->value          = CLAMP (adj->value,
-                                   adj->lower,
-                                   adj->upper - adj->page_size);
-      gtk_adjustment_changed (adj);
+  adj = gtk_range_get_adjustment (GTK_RANGE (scrolled_preview->hscr));
+  adj->lower          = 0;
+  adj->page_size      = GIMP_PREVIEW (preview)->width;
+  adj->upper          = GIMP_PREVIEW (preview)->width * zoom_factor;
+  adj->step_increment = 1.0;
+  adj->page_increment = MAX (adj->page_size / 2.0, adj->step_increment);
+  adj->value          = CLAMP (adj->value,
+                               adj->lower,
+                               adj->upper - adj->page_size);
+  gtk_adjustment_changed (adj);
 
-      adj = gtk_range_get_adjustment (GTK_RANGE (scrolled_preview->vscr));
-      adj->lower          = 0;
-      adj->page_size      = GIMP_PREVIEW (preview)->height;
-      adj->upper          = GIMP_PREVIEW (preview)->height * zoom_factor;
-      adj->step_increment = 1.0;
-      adj->page_increment = MAX (adj->page_size / 2.0, adj->step_increment);
-      adj->value          = CLAMP (adj->value,
-                                   adj->lower,
-                                   adj->upper - adj->page_size);
-      gtk_adjustment_changed (adj);
-
-      gtk_widget_show (scrolled_preview->vscr);
-      gtk_widget_show (scrolled_preview->hscr);
-      gtk_widget_show (scrolled_preview->nav_icon);
-    }
+  adj = gtk_range_get_adjustment (GTK_RANGE (scrolled_preview->vscr));
+  adj->lower          = 0;
+  adj->page_size      = GIMP_PREVIEW (preview)->height;
+  adj->upper          = GIMP_PREVIEW (preview)->height * zoom_factor;
+  adj->step_increment = 1.0;
+  adj->page_increment = MAX (adj->page_size / 2.0, adj->step_increment);
+  adj->value          = CLAMP (adj->value,
+                               adj->lower,
+                               adj->upper - adj->page_size);
+  gtk_adjustment_changed (adj);
 
   gimp_preview_invalidate (GIMP_PREVIEW (preview));
 }

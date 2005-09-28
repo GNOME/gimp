@@ -36,6 +36,15 @@
 #define PEN_WIDTH          3
 
 
+typedef struct
+{
+  GtkPolicyType hscr_policy;
+  GtkPolicyType vscr_policy;
+} GimpScrolledPreviewPrivate;
+
+#define GIMP_SCROLLED_PREVIEW_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), GIMP_TYPE_SCROLLED_PREVIEW, GimpScrolledPreviewPrivate))
+
+
 static void      gimp_scrolled_preview_class_init          (GimpScrolledPreviewClass *klass);
 static void      gimp_scrolled_preview_init                (GimpScrolledPreview      *preview);
 static void      gimp_scrolled_preview_dispose             (GObject                  *object);
@@ -116,16 +125,22 @@ gimp_scrolled_preview_class_init (GimpScrolledPreviewClass *klass)
   object_class->dispose      = gimp_scrolled_preview_dispose;
 
   preview_class->set_cursor  = gimp_scrolled_preview_set_cursor;
+
+  g_type_class_add_private (object_class, sizeof (GimpScrolledPreviewPrivate));
 }
 
 static void
 gimp_scrolled_preview_init (GimpScrolledPreview *preview)
 {
+  GimpScrolledPreviewPrivate *priv = GIMP_SCROLLED_PREVIEW_GET_PRIVATE (preview);
   GtkWidget *image;
   GtkObject *adj;
 
   preview->in_drag   = FALSE;
   preview->nav_popup = NULL;
+
+  priv->hscr_policy = GTK_POLICY_AUTOMATIC;
+  priv->vscr_policy = GTK_POLICY_AUTOMATIC;
 
   /*  scrollbars  */
   adj = gtk_adjustment_new (0, 0, GIMP_PREVIEW (preview)->width - 1, 1.0,
@@ -140,8 +155,8 @@ gimp_scrolled_preview_init (GimpScrolledPreview *preview)
   gtk_range_set_update_policy (GTK_RANGE (preview->hscr),
                                GTK_UPDATE_CONTINUOUS);
   gtk_table_attach (GTK_TABLE (GIMP_PREVIEW (preview)->table),
-                    preview->hscr, 0,1, 1,2,
-                    GTK_EXPAND | GTK_SHRINK | GTK_FILL, GTK_FILL, 0, 0);
+                    preview->hscr, 0, 1, 1, 2,
+                    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
 
   adj = gtk_adjustment_new (0, 0, GIMP_PREVIEW (preview)->height - 1, 1.0,
                             GIMP_PREVIEW (preview)->height,
@@ -155,8 +170,8 @@ gimp_scrolled_preview_init (GimpScrolledPreview *preview)
   gtk_range_set_update_policy (GTK_RANGE (preview->vscr),
                                GTK_UPDATE_CONTINUOUS);
   gtk_table_attach (GTK_TABLE (GIMP_PREVIEW (preview)->table),
-                    preview->vscr, 1,2, 0,1,
-                    GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
+                    preview->vscr, 1, 2, 0, 1,
+                    GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 
   g_signal_connect (GIMP_PREVIEW (preview)->area, "event",
                     G_CALLBACK (gimp_scrolled_preview_area_event),
@@ -231,6 +246,7 @@ gimp_scrolled_preview_area_size_allocate (GtkWidget           *widget,
                                           GtkAllocation       *allocation,
                                           GimpScrolledPreview *preview)
 {
+  GimpScrolledPreviewPrivate *priv = GIMP_SCROLLED_PREVIEW_GET_PRIVATE (preview);
   GdkCursor *cursor = GIMP_PREVIEW (preview)->default_cursor;
   gint       width  = GIMP_PREVIEW (preview)->xmax - GIMP_PREVIEW (preview)->xmin;
   gint       height = GIMP_PREVIEW (preview)->ymax - GIMP_PREVIEW (preview)->ymin;
@@ -253,13 +269,25 @@ gimp_scrolled_preview_area_size_allocate (GtkWidget           *widget,
 
       gtk_adjustment_changed (adj);
 
-      gtk_widget_show (preview->hscr);
-
       cursor = preview->cursor_move;
     }
-  else
+
+  switch (priv->hscr_policy)
     {
+    case GTK_POLICY_AUTOMATIC:
+      if (width > GIMP_PREVIEW (preview)->width)
+        gtk_widget_show (preview->hscr);
+      else
+        gtk_widget_hide (preview->hscr);
+      break;
+
+    case GTK_POLICY_ALWAYS:
+      gtk_widget_show (preview->hscr);
+      break;
+
+    case GTK_POLICY_NEVER:
       gtk_widget_hide (preview->hscr);
+      break;
     }
 
   if (height > GIMP_PREVIEW (preview)->height)
@@ -278,13 +306,25 @@ gimp_scrolled_preview_area_size_allocate (GtkWidget           *widget,
 
       gtk_adjustment_changed (adj);
 
-      gtk_widget_show (preview->vscr);
-
       cursor = preview->cursor_move;
     }
-  else
+
+  switch (priv->vscr_policy)
     {
+    case GTK_POLICY_AUTOMATIC:
+      if (height > GIMP_PREVIEW (preview)->height)
+        gtk_widget_show (preview->vscr);
+      else
+        gtk_widget_hide (preview->vscr);
+      break;
+
+    case GTK_POLICY_ALWAYS:
+      gtk_widget_show (preview->vscr);
+      break;
+
+    case GTK_POLICY_NEVER:
       gtk_widget_hide (preview->vscr);
+      break;
     }
 
   if (GTK_WIDGET_VISIBLE (preview->vscr) &&
@@ -666,4 +706,29 @@ gimp_scrolled_preview_set_position (GimpScrolledPreview *scr,
   adj->value = preview->xoff;
   adj = gtk_range_get_adjustment (GTK_RANGE (scr->vscr));
   adj->value = preview->yoff;
+}
+
+/**
+ * gimp_scrolled_preview_set_policy
+ * @preview:           a #GimpScrolledPreview
+ * @hscrollbar_policy: policy for horizontal scrollbar
+ * @vscrollbar_policy: policy for vertical scrollbar
+ *
+ * Since: GIMP 2.4
+ **/
+void
+gimp_scrolled_preview_set_policy (GimpScrolledPreview *preview,
+                                  GtkPolicyType        hscrollbar_policy,
+                                  GtkPolicyType        vscrollbar_policy)
+{
+  GimpScrolledPreviewPrivate *priv;
+
+  g_return_if_fail (GIMP_IS_SCROLLED_PREVIEW (preview));
+
+  priv = GIMP_SCROLLED_PREVIEW_GET_PRIVATE (preview);
+
+  priv->hscr_policy = hscrollbar_policy;
+  priv->vscr_policy = vscrollbar_policy;
+
+  gtk_widget_queue_resize (GIMP_PREVIEW (preview)->area);
 }

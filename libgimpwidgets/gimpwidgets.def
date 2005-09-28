@@ -212,6 +212,7 @@ EXPORTS
 	gimp_preview_draw
 	gimp_preview_draw_buffer
 	gimp_preview_get_area
+	gimp_preview_get_control_box
 	gimp_preview_get_position
 	gimp_preview_get_size
 	gimp_preview_get_type
@@ -293,6 +294,7 @@ EXPORTS
 	gimp_scale_entry_set_sensitive
 	gimp_scrolled_preview_get_type
 	gimp_scrolled_preview_set_position
+	gimp_scrolled_preview_set_policy
 	gimp_size_entry_add_field
 	gimp_size_entry_attach_label
 	gimp_size_entry_get_help_widget

@@ -76,6 +76,9 @@ GType  gimp_scrolled_preview_get_type  (void) G_GNUC_CONST;
 void   gimp_scrolled_preview_set_position (GimpScrolledPreview *scr,
                                            gint                 x,
                                            gint                 y);
+void   gimp_scrolled_preview_set_policy   (GimpScrolledPreview *preview,
+                                           GtkPolicyType        hscrollbar_policy,
+                                           GtkPolicyType        vscrollbar_policy);
 
 G_END_DECLS
 

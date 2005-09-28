@@ -1,5 +1,21 @@
 2005-09-28  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimppreview.[ch]: added a hbox to the table and
+	the "Update Preview" checkbutton there. Added a function to access
+	this control box. Increased default size to 200.
+
+	* libgimpwidgets/gimpscrolledpreview.[ch]: added function
+	gimp_scrolled_preview_set_policy() to control when the scrollbars
+	should be shown.
+
+	* libgimpwidgets/gimpwidgets.def: updated.
+
+	* libgimp/gimpzoompreview.c: pack the zoom buttons into the
+	preview's control box. Commented out the label, it shows a bogus
+	zoom factor. Set scrollbar policy to ALWAYS to avoid resizing.
+
+2005-09-28  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimphistogrameditor.[ch]: do not calculate the
 	histogram if the histogram dock is invisible.
 
