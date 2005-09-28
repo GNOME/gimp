@@ -395,10 +395,11 @@ gimp_enum_get_value (GType         enum_type,
 {
   GEnumClass *enum_class;
   GEnumValue *enum_value;
+  gboolean    success = FALSE;
 
   g_return_val_if_fail (G_TYPE_IS_ENUM (enum_type), FALSE);
 
-  enum_class = g_type_class_peek (enum_type);
+  enum_class = g_type_class_ref (enum_type);
   enum_value = g_enum_get_value (enum_class, value);
 
   if (enum_value)
@@ -428,10 +429,12 @@ gimp_enum_get_value (GType         enum_type,
                            NULL);
         }
 
-      return TRUE;
+      success = TRUE;
     }
 
-  return FALSE;
+  g_type_class_unref (enum_class);
+
+  return success;
 }
 
 /**

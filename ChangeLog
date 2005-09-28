@@ -1,3 +1,10 @@
+2005-09-28  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
+	* libgimpbase/gimputils.c (gimp_enum_get_value): ref the enum
+	class instead of only peeking at it.
+
 2005-09-26  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell.c (gimp_display_shell_new): applied
@@ -13,6 +20,10 @@
 	(gimp_display_shell_canvas_tool_events): reordered checks for
 	the modifiers pressed on <Tab> so NumLock and friends don't
 	interfere. Fixes bug #317118.
+
+2005-09-20  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/svg.c: corrected version check (bug #314400).
 
 2005-09-17  Michael Natterer  <mitch@gimp.org>
 

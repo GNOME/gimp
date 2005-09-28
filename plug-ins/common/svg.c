@@ -437,10 +437,10 @@ load_rsvg_pixbuf (const gchar  *filename,
 
   handle = rsvg_handle_new ();
 
-#if (LIBRSVG_MAJOR_VERSION == 2 && LIBRSVG_MINOR_VERSION >= 11)
-  rsvg_handle_set_dpi (handle, vals->resolution, vals->resolution);
+#if (LIBRSVG_MAJOR_VERSION == 2 && LIBRSVG_MINOR_VERSION < 99)
+  rsvg_handle_set_dpi_x_y (handle, vals->resolution, vals->resolution);
 #else
-  rsvg_handle_set_dpi (handle, vals->resolution);
+  rsvg_handle_set_dpi (handle, vals->resolution, vals->resolution);
 #endif
 
   rsvg_handle_set_size_callback (handle, load_set_size_callback, vals, NULL);
@@ -538,10 +538,10 @@ load_rsvg_size (const gchar  *filename,
 
   handle = rsvg_handle_new ();
 
-#if (LIBRSVG_MAJOR_VERSION == 2 && LIBRSVG_MINOR_VERSION >= 11)
-  rsvg_handle_set_dpi (handle, vals->resolution, vals->resolution);
+#if (LIBRSVG_MAJOR_VERSION == 2 && LIBRSVG_MINOR_VERSION < 99)
+  rsvg_handle_set_dpi_x_y (handle, vals->resolution, vals->resolution);
 #else
-  rsvg_handle_set_dpi (handle, vals->resolution);
+  rsvg_handle_set_dpi (handle, vals->resolution, vals->resolution);
 #endif
 
   rsvg_handle_set_size_callback (handle, load_get_size_callback, vals, NULL);
