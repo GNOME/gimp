@@ -646,19 +646,22 @@ gimp_scrolled_preview_nav_popup_expose (GtkWidget           *widget,
                                         GdkEventExpose      *event,
                                         GimpScrolledPreview *preview)
 {
-  GimpPreview *gimp_preview = GIMP_PREVIEW (preview);
-  gdouble      x, y;
-  gdouble      w, h;
+  GtkAdjustment *adj;
+  gdouble        x, y;
+  gdouble        w, h;
 
-  x = ((gdouble) gimp_preview->xoff /
-       (gdouble) (gimp_preview->xmax - gimp_preview->xmin));
-  y = ((gdouble) gimp_preview->yoff /
-       (gdouble) (gimp_preview->ymax - gimp_preview->ymin));
+  adj = gtk_range_get_adjustment (GTK_RANGE (preview->hscr));
 
-  w = ((gdouble) gimp_preview->width  /
-       (gdouble) (gimp_preview->xmax - gimp_preview->xmin));
-  h = ((gdouble) gimp_preview->height /
-       (gdouble) (gimp_preview->ymax - gimp_preview->ymin));
+  x = adj->value / (adj->upper - adj->lower);
+  w = adj->page_size / (adj->upper - adj->lower);
+
+  adj = gtk_range_get_adjustment (GTK_RANGE (preview->vscr));
+
+  y = adj->value / (adj->upper - adj->lower);
+  h = adj->page_size / (adj->upper - adj->lower);
+
+  if (w >= 1.0 && h >= 1.0)
+    return;
 
   gdk_gc_set_clip_rectangle (preview->nav_gc, &event->area);
 
