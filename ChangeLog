@@ -1,5 +1,13 @@
 2005-09-28  Sven Neumann  <sven@gimp.org>
 
+	* docs/Makefile.am
+	* docs/keybindings.txt
+	* docs/quick_reference.ps
+	* docs/quick_reference.tar.gz: removed outdated documentation that
+	is now being maintained in the user manual (bug #316423).
+
+2005-09-28  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpscrolledpreview.c
 	(gimp_scrolled_preview_nav_popup_expose): draw the rectangle
 	according to the scrollbar adjustments.

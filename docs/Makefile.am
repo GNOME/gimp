@@ -1,23 +1,19 @@
 ## Process this file with automake to produce Makefile.in
 
+EXTRA_DIST = \
+	Wilber.svg			\
+	Wilber.xcf.gz			\
+	Wilber.xcf.gz.README		\
+	Wilber_Construction_Kit.xcf.gz
+
 mans = \
-	gimp-$(GIMP_APP_VERSION).1		\
-	gimprc-$(GIMP_APP_VERSION).5		\
+	gimp-$(GIMP_APP_VERSION).1	\
+	gimprc-$(GIMP_APP_VERSION).5	\
 	gimp-remote-$(GIMP_APP_VERSION).1
 
 man_MANS = \
-	$(mans)					\
+	$(mans)				\
 	gimptool-$(GIMP_TOOL_VERSION).1
-
-EXTRA_DIST = \
-	Wilber.svg				\
-	Wilber.xcf.gz				\
-	Wilber.xcf.gz.README			\
-	Wilber_Construction_Kit.xcf.gz		\
-	keybindings.txt 			\
-	quick_reference.ps 			\
-	quick_reference.tar.gz
-
 
 default_binary_mans = $(mans)
 if ENABLE_GIMP_CONSOLE
