@@ -25,20 +25,8 @@
 
 #include <string.h>
 #include <errno.h>
-#include <fcntl.h>
-
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
-#include <sys/types.h>
 
 #include <glib-object.h>
-#include <glib/gstdio.h>
-
-#ifdef G_OS_WIN32
-#include <io.h>
-#endif
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
@@ -52,16 +40,16 @@
 
 typedef struct
 {
-  gint      fd;
-  gchar    *name;
-  GError  **error;
+  gchar        *name;
+  GMappedFile  *file;
+  GError      **error;
 } GimpScannerData;
 
 
 /*  local function prototypes  */
 
 static GScanner * gimp_scanner_new     (const gchar  *name,
-                                        gint          fd,
+                                        GMappedFile  *file,
                                         GError      **error);
 static void       gimp_scanner_message (GScanner     *scanner,
                                         gchar        *message,
@@ -83,34 +71,33 @@ GScanner *
 gimp_scanner_new_file (const gchar  *filename,
 		       GError      **error)
 {
-  GScanner *scanner;
-  gint      fd;
+  GScanner    *scanner;
+  GMappedFile *file;
 
   g_return_val_if_fail (filename != NULL, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  fd = g_open (filename, O_RDONLY, 0);
+  file = g_mapped_file_new (filename, FALSE, error);
 
-  if (fd == -1)
+  if (! file)
     {
-      GimpConfigError code;
-
-      code = (errno == ENOENT ?
-              GIMP_CONFIG_ERROR_OPEN_ENOENT : GIMP_CONFIG_ERROR_OPEN);
-
-      g_set_error (error, GIMP_CONFIG_ERROR, code,
-                   _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+      if (error)
+        {
+          (*error)->domain = GIMP_CONFIG_ERROR;
+          (*error)->code   = ((*error)->code == G_FILE_ERROR_NOENT ?
+                              GIMP_CONFIG_ERROR_OPEN_ENOENT :
+                              GIMP_CONFIG_ERROR_OPEN);
+        }
 
       return NULL;
     }
 
-  /* gimp_scanner_new() takes a "name" for the scanner, not a filename. Thus
-   * do convert to UTF-8.
-   */
-  scanner = gimp_scanner_new (gimp_filename_to_utf8 (filename), fd, error);
+  /*  gimp_scanner_new() takes a "name" for the scanner, not a filename  */
+  scanner = gimp_scanner_new (gimp_filename_to_utf8 (filename), file, error);
 
-  g_scanner_input_file (scanner, fd);
+  g_scanner_input_text (scanner,
+                        g_mapped_file_get_contents (file),
+                        g_mapped_file_get_length (file));
 
   return scanner;
 }
@@ -138,7 +125,7 @@ gimp_scanner_new_string (const gchar  *text,
   if (text_len < 0)
     text_len = strlen (text);
 
-  scanner = gimp_scanner_new (NULL, -1, error);
+  scanner = gimp_scanner_new (NULL, NULL, error);
 
   g_scanner_input_text (scanner, text, text_len);
 
@@ -147,7 +134,7 @@ gimp_scanner_new_string (const gchar  *text,
 
 static GScanner *
 gimp_scanner_new (const gchar  *name,
-                  gint          fd,
+                  GMappedFile  *file,
                   GError      **error)
 {
   GScanner        *scanner;
@@ -158,7 +145,7 @@ gimp_scanner_new (const gchar  *name,
   data = g_new0 (GimpScannerData, 1);
 
   data->name  = g_strdup (name);
-  data->fd    = fd;
+  data->file  = file;
   data->error = error;
 
   scanner->user_data   = data;
@@ -189,12 +176,8 @@ gimp_scanner_destroy (GScanner *scanner)
 
   data = scanner->user_data;
 
-  if (data->fd > 0)
-    {
-      if (close (data->fd))
-        g_warning ("%s: could not close file descriptor: %s",
-                   G_STRFUNC, g_strerror (errno));
-    }
+  if (data->file)
+    g_mapped_file_free (data->file);
 
   g_free (data->name);
   g_free (data);

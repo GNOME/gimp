@@ -1,3 +1,8 @@
+2005-09-28  Sven Neumann  <sven@gimp.org>
+
+	* libgimpconfig/gimpscanner.c (gimp_scanner_new_file): mmap the
+	config file using GMappedFile. Let's see how well this works...
+
 2005-08-28  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/scripts/chrome-it.scm: Removed extraneous -
