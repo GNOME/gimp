@@ -6,8 +6,8 @@
 ;;   jseymour@jimsun.LinxNet.com (Jim Seymour)
 ;;   Sven Neumann <neumanns@uni-duesseldorf.de>
 ;;
-;; Modified June 24, 2004 by Kevin Cozens
-;; Incorporated changes made by Daniel P. Stasinski in his text-circle3.scm
+;; Modified June 24, 2005 by Kevin Cozens
+;; Incorporated changes made by Daniel P. Stasinski in his text-circle2.scm
 ;; script. The letters are now placed properly for both positive and negative
 ;; fill angles.
 

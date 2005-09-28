@@ -1,3 +1,11 @@
+2005-08-28  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/script-fu/scripts/chrome-it.scm: Removed extraneous -
+	in register block left when script was renamed.
+
+	* plug-ins/script-fu/scripts/text-circle.scm: Fixed minor errors
+	in comments.
+
 2005-09-28  Tor Lillqvist  <tml@novell.com>
 
 	* libgimp/gimp.def: Fix typo.

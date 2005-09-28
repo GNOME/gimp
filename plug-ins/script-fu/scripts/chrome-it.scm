@@ -179,7 +179,7 @@
     (gimp-context-pop)))
 
 (script-fu-register "script-fu-sota-chrome-it"
-		    _"Stencil C_hrome-..."
+		    _"Stencil C_hrome..."
 		    "Use the specified [GRAY] drawable as a stencil to run the chrome effect on."
 		    "Spencer Kimball"
 		    "Spencer Kimball"
