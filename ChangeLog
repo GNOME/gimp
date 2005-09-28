@@ -1,3 +1,11 @@
+2005-09-28  Michael Natterer  <mitch@gimp.org>
+
+	Merged from HEAD branch:
+
+	* app/actions/dialogs-actions.c (dialogs_dockable_actions): fixed
+	action parameter to match both the palette list and grid.
+	Fixes bug #317435.
+
 2005-09-28  Sven Neumann  <sven@gimp.org>
 
 	Merged from HEAD branch:

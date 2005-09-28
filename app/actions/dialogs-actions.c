@@ -133,7 +133,7 @@ GimpStringActionEntry dialogs_dockable_actions[] =
 
   { "dialogs-palettes", GIMP_STOCK_PALETTE,
     N_("Pal_ettes"), "<control>P", NULL,
-    "gimp-palette-list|gimp-palette-list",
+    "gimp-palette-list|gimp-palette-grid",
     GIMP_HELP_PALETTE_DIALOG },
 
   { "dialogs-fonts", GIMP_STOCK_FONT,
