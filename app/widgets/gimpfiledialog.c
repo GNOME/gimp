@@ -33,10 +33,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpprogress.h"
 
-#include "config/gimpcoreconfig.h"
 #include "config/gimpguiconfig.h"
-
-#include "pdb/procedural_db.h" /* FIXME */
 
 #include "file/file-utils.h"
 
@@ -48,6 +45,7 @@
 #include "gimphelp-ids.h"
 #include "gimpmessagebox.h"
 #include "gimpmessagedialog.h"
+#include "gimpprogressbox.h"
 #include "gimpview.h"
 #include "gimpviewrendererimagefile.h"
 #include "gimpthumbbox.h"
@@ -56,8 +54,8 @@
 #include "gimp-intl.h"
 
 
-static void  gimp_file_dialog_class_init            (GimpFileDialogClass   *klass);
-static void  gimp_file_dialog_progress_iface_init   (GimpProgressInterface *progress_iface);
+static void    gimp_file_dialog_class_init          (GimpFileDialogClass   *klass);
+static void    gimp_file_dialog_progress_iface_init (GimpProgressInterface *progress_iface);
 static gboolean gimp_file_dialog_delete_event       (GtkWidget        *widget,
                                                      GdkEventAny      *event);
 static void     gimp_file_dialog_response           (GtkDialog        *dialog,
@@ -183,8 +181,11 @@ gimp_file_dialog_response (GtkDialog *dialog,
     {
       file_dialog->canceled = TRUE;
 
-      if (file_dialog->progress_active && file_dialog->progress_cancelable)
-        gimp_progress_cancel (GIMP_PROGRESS (dialog));
+      if (GIMP_PROGRESS_BOX (file_dialog->progress)->active &&
+          GIMP_PROGRESS_BOX (file_dialog->progress)->cancelable)
+        {
+          gimp_progress_cancel (GIMP_PROGRESS (dialog));
+        }
     }
 }
 
@@ -194,23 +195,13 @@ gimp_file_dialog_progress_start (GimpProgress *progress,
                                  gboolean      cancelable)
 {
   GimpFileDialog *dialog = GIMP_FILE_DIALOG (progress);
+  GimpProgress   *retval;
 
-  if (! dialog->progress_active)
-    {
-      GtkProgressBar *bar = GTK_PROGRESS_BAR (dialog->progress);
+  retval = gimp_progress_start (GIMP_PROGRESS (dialog->progress),
+                                message, cancelable);
+  gtk_widget_show (dialog->progress);
 
-      gtk_progress_bar_set_text (bar, message);
-      gtk_progress_bar_set_fraction (bar, 0.0);
-
-      gtk_widget_show (dialog->progress);
-
-      dialog->progress_active     = TRUE;
-      dialog->progress_cancelable = cancelable;
-
-      return progress;
-    }
-
-  return NULL;
+  return retval;
 }
 
 static void
@@ -218,18 +209,8 @@ gimp_file_dialog_progress_end (GimpProgress *progress)
 {
   GimpFileDialog *dialog = GIMP_FILE_DIALOG (progress);
 
-  if (dialog->progress_active)
-    {
-      GtkProgressBar *bar = GTK_PROGRESS_BAR (dialog->progress);
-
-      gtk_progress_bar_set_text (bar, "");
-      gtk_progress_bar_set_fraction (bar, 0.0);
-
-      gtk_widget_hide (dialog->progress);
-
-      dialog->progress_active     = FALSE;
-      dialog->progress_cancelable = FALSE;
-    }
+  gimp_progress_end (GIMP_PROGRESS (dialog->progress));
+  gtk_widget_hide (dialog->progress);
 }
 
 static gboolean
@@ -237,7 +218,7 @@ gimp_file_dialog_progress_is_active (GimpProgress *progress)
 {
   GimpFileDialog *dialog = GIMP_FILE_DIALOG (progress);
 
-  return dialog->progress_active;
+  return gimp_progress_is_active (GIMP_PROGRESS (dialog->progress));
 }
 
 static void
@@ -246,12 +227,7 @@ gimp_file_dialog_progress_set_text (GimpProgress *progress,
 {
   GimpFileDialog *dialog = GIMP_FILE_DIALOG (progress);
 
-  if (dialog->progress_active)
-    {
-      GtkProgressBar *bar = GTK_PROGRESS_BAR (dialog->progress);
-
-      gtk_progress_bar_set_text (bar, message);
-    }
+  gimp_progress_set_text (GIMP_PROGRESS (dialog->progress), message);
 }
 
 static void
@@ -260,12 +236,7 @@ gimp_file_dialog_progress_set_value (GimpProgress *progress,
 {
   GimpFileDialog *dialog = GIMP_FILE_DIALOG (progress);
 
-  if (dialog->progress_active)
-    {
-      GtkProgressBar *bar = GTK_PROGRESS_BAR (dialog->progress);
-
-      gtk_progress_bar_set_fraction (bar, percentage);
-    }
+  gimp_progress_set_value (GIMP_PROGRESS (dialog->progress), percentage);
 }
 
 static gdouble
@@ -273,14 +244,7 @@ gimp_file_dialog_progress_get_value (GimpProgress *progress)
 {
   GimpFileDialog *dialog = GIMP_FILE_DIALOG (progress);
 
-  if (dialog->progress_active)
-    {
-      GtkProgressBar *bar = GTK_PROGRESS_BAR (dialog->progress);
-
-      return gtk_progress_bar_get_fraction (bar);
-    }
-
-  return 0.0;
+  return gimp_progress_get_value (GIMP_PROGRESS (dialog->progress));
 }
 
 static void
@@ -288,12 +252,7 @@ gimp_file_dialog_progress_pulse (GimpProgress *progress)
 {
   GimpFileDialog *dialog = GIMP_FILE_DIALOG (progress);
 
-  if (dialog->progress_active)
-    {
-      GtkProgressBar *bar = GTK_PROGRESS_BAR (dialog->progress);
-
-      gtk_progress_bar_pulse (bar);
-    }
+  gimp_progress_pulse (GIMP_PROGRESS (dialog->progress));
 }
 
 static guint32
@@ -397,7 +356,7 @@ gimp_file_dialog_new (Gimp                 *gimp,
   gimp_file_dialog_add_proc_selection (dialog, gimp, file_procs, automatic,
                                        automatic_help_id);
 
-  dialog->progress = gtk_progress_bar_new ();
+  dialog->progress = gimp_progress_box_new ();
   gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dialog)->vbox), dialog->progress,
                     FALSE, FALSE, 0);
 

@@ -47,9 +47,6 @@ struct _GimpFileDialog
   GtkWidget            *thumb_box;
   GtkWidget            *proc_expander;
   GtkWidget            *proc_view;
-
-  gboolean              progress_active;
-  gboolean              progress_cancelable;
   GtkWidget            *progress;
 
   gboolean              busy;

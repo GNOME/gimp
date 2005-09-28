@@ -1,5 +1,14 @@
 2005-09-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpprogressbox.c
+	* plug-ins/script-fu/script-fu-interface.c: made progress bars HIG
+	compliant (with italic label below).
+
+	* app/widgets/gimpfiledialog.[ch]: use a GimpProgressBox intead of
+	implementing the progress bar again.
+
+2005-09-28  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/dialogs-actions.c (dialogs_dockable_actions): fixed
 	action parameter to match both the palette list and grid.
 	Fixes bug #317435.

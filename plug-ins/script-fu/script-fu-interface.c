@@ -553,16 +553,19 @@ script_fu_interface (SFScript *script)
   gtk_container_add (GTK_CONTAINER (frame), vbox2);
   gtk_widget_show (vbox2);
 
-  sf_interface->progress_label = gtk_label_new (_("(none)"));
-  gtk_misc_set_alignment (GTK_MISC (sf_interface->progress_label), 0.0, 0.5);
-  gtk_box_pack_start (GTK_BOX (vbox2), sf_interface->progress_label,
-                      FALSE, FALSE, 0);
-  gtk_widget_show (sf_interface->progress_label);
-
   sf_interface->progress_bar = gimp_progress_bar_new ();
   gtk_box_pack_start (GTK_BOX (vbox2), sf_interface->progress_bar,
                       FALSE, FALSE, 0);
   gtk_widget_show (sf_interface->progress_bar);
+
+  sf_interface->progress_label = gtk_label_new (_("(none)"));
+  gtk_misc_set_alignment (GTK_MISC (sf_interface->progress_label), 0.0, 0.5);
+  gimp_label_set_attributes (GTK_LABEL (sf_interface->progress_label),
+                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
+                             -1);
+  gtk_box_pack_start (GTK_BOX (vbox2), sf_interface->progress_label,
+                      FALSE, FALSE, 0);
+  gtk_widget_show (sf_interface->progress_label);
 
   gtk_widget_show (dlg);
 
