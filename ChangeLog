@@ -1,6 +1,3 @@
-2005-09-28  Sven Neumann  <neumann@jpk.com>
-
-
 2005-09-28  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimppreview.[ch]: renamed newly added function to
