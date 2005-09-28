@@ -1,5 +1,10 @@
 2005-09-28  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimphistogrameditor.[ch]: do not calculate the
+	histogram if the histogram dock is invisible.
+
+2005-09-28  Sven Neumann  <sven@gimp.org>
+
 	* app/paint-funcs/paint-funcs-generic.h (swap_pixels): replaced
 	binary operations with a naive but faster implementation using a
 	local variable.

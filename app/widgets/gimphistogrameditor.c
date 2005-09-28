@@ -63,6 +63,8 @@ static void  gimp_histogram_editor_menu_update    (GimpHistogramEditor *editor);
 static void  gimp_histogram_editor_name_update    (GimpHistogramEditor *editor);
 static void  gimp_histogram_editor_info_update    (GimpHistogramEditor *editor);
 
+static gboolean gimp_histogram_view_expose        (GimpHistogramEditor *editor);
+
 
 static GimpImageEditorClass *parent_class        = NULL;
 static GimpDockedInterface  *parent_docked_iface = NULL;
@@ -136,6 +138,7 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
 
   editor->drawable  = NULL;
   editor->histogram = NULL;
+  editor->valid     = FALSE;
   editor->idle_id   = 0;
   editor->box       = gimp_histogram_box_new ();
 
@@ -178,6 +181,10 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
                             editor);
   g_signal_connect_swapped (view, "notify::histogram-channel",
                             G_CALLBACK (gimp_histogram_editor_info_update),
+                            editor);
+
+  g_signal_connect_swapped (view, "expose-event",
+                            G_CALLBACK (gimp_histogram_view_expose),
                             editor);
 
   table = gtk_table_new (3, 4, FALSE);
@@ -357,8 +364,8 @@ gimp_histogram_editor_layer_changed (GimpImage           *gimage,
     }
   else if (editor->histogram)
     {
-      gimp_histogram_calculate (editor->histogram, NULL, NULL);
-      gtk_widget_queue_draw GTK_WIDGET (editor->box);
+      editor->valid = FALSE;
+      gtk_widget_queue_draw (GTK_WIDGET (editor->box));
     }
 
   gimp_histogram_editor_info_update (editor);
@@ -371,10 +378,11 @@ gimp_histogram_editor_update (GimpHistogramEditor *editor)
   if (editor->idle_id)
     g_source_remove (editor->idle_id);
 
-  editor->idle_id = g_idle_add_full (G_PRIORITY_LOW,
-                                     (GSourceFunc) gimp_histogram_editor_idle_update,
-                                     editor,
-                                     (GDestroyNotify) NULL);
+  editor->idle_id =
+    g_idle_add_full (G_PRIORITY_LOW,
+                     (GSourceFunc) gimp_histogram_editor_idle_update,
+                     editor,
+                     NULL);
 }
 
 static gboolean
@@ -382,13 +390,12 @@ gimp_histogram_editor_idle_update (GimpHistogramEditor *editor)
 {
   editor->idle_id = 0;
 
-  if (editor->drawable && editor->histogram)
-    {
-      gimp_drawable_calculate_histogram (editor->drawable, editor->histogram);
+  /* Mark the histogram as invalid and queue a redraw.
+   * We will then recalculate the histogram when the view is exposed.
+   */
 
-      gtk_widget_queue_draw GTK_WIDGET (editor->box);
-      gimp_histogram_editor_info_update (editor);
-    }
+  editor->valid = FALSE;
+  gtk_widget_queue_draw (GTK_WIDGET (editor->box));
 
   return FALSE;
 }
@@ -455,7 +462,6 @@ gimp_histogram_editor_name_update (GimpHistogramEditor *editor)
   gimp_editor_set_name (GIMP_EDITOR (editor), name);
 }
 
-
 static void
 gimp_histogram_editor_info_update (GimpHistogramEditor *editor)
 {
@@ -506,4 +512,22 @@ gimp_histogram_editor_info_update (GimpHistogramEditor *editor)
       for (i = 0; i < 6; i++)
         gtk_label_set_text (GTK_LABEL (editor->labels[i]), NULL);
     }
+}
+
+static gboolean
+gimp_histogram_view_expose (GimpHistogramEditor *editor)
+{
+  if (! editor->valid && editor->histogram)
+    {
+      if (editor->drawable)
+        gimp_drawable_calculate_histogram (editor->drawable, editor->histogram);
+      else
+        gimp_histogram_calculate (editor->histogram, NULL, NULL);
+
+      editor->valid = TRUE;
+
+      gimp_histogram_editor_info_update (editor);
+    }
+
+  return FALSE;
 }

@@ -41,6 +41,7 @@ struct _GimpHistogramEditor
   GimpHistogram        *histogram;
 
   guint                 idle_id;
+  gboolean              valid;
 
   GtkWidget            *menu;
   GtkWidget            *box;
