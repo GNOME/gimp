@@ -1,3 +1,9 @@
+2005-09-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/dialogs-actions.c (dialogs_dockable_actions): fixed
+	action parameter to match both the palette list and grid.
+	Fixes bug #317435.
+
 2005-09-28  Sven Neumann  <sven@gimp.org>
 
 	* libgimpconfig/gimpscanner.c (gimp_scanner_new_file): mmap the
