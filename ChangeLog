@@ -1,5 +1,12 @@
 2005-09-28  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpscrolledpreview.[ch]
+	(gimp_scrolled_preview_set_position): must not set the adjustment
+	value directly. Instead make sure that the scrollbar adjustments
+	are uptodate and use gtk_adjustment_set_value().
+
+2005-09-28  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimppreview.[ch]: renamed newly added function to
 	gimp_preview_get_controls(). Increased row padding for controls.
 

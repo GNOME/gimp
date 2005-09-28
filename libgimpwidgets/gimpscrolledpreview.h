@@ -73,7 +73,7 @@ struct _GimpScrolledPreviewClass
 
 GType  gimp_scrolled_preview_get_type  (void) G_GNUC_CONST;
 
-void   gimp_scrolled_preview_set_position (GimpScrolledPreview *scr,
+void   gimp_scrolled_preview_set_position (GimpScrolledPreview *preview,
                                            gint                 x,
                                            gint                 y);
 void   gimp_scrolled_preview_set_policy   (GimpScrolledPreview *preview,
