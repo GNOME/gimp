@@ -113,7 +113,9 @@ static void      dialog_update_previews (GtkWidget *widget,
 static void      dialog_select_preview  (GtkWidget *widget,
                                          ExpInfo   *n_info);
 
-static QbistInfo qbist_info;
+static QbistInfo  qbist_info;
+static GRand     *gr = NULL;
+
 
 /** qbist functions *********************************************************/
 
@@ -121,9 +123,6 @@ static void
 create_info (ExpInfo *info)
 {
   gint k;
-  GRand *gr;
-
-  gr = g_rand_new();
 
   for (k = 0; k < MAX_TRANSFORMS; k++)
     {
@@ -132,8 +131,6 @@ create_info (ExpInfo *info)
       info->control[k] = g_rand_int_range (gr, 0, NUM_REGISTERS);
       info->dest[k] = g_rand_int_range (gr, 0, NUM_REGISTERS);
     }
-
-  g_rand_free(gr);
 }
 
 static void
@@ -141,9 +138,7 @@ modify_info (ExpInfo *o_info,
              ExpInfo *n_info)
 {
   gint k, n;
-  GRand *gr;
 
-  gr = g_rand_new ();
   *n_info = *o_info;
   n = g_rand_int_range (gr, 0, MAX_TRANSFORMS);
   for (k = 0; k < n; k++)
@@ -171,7 +166,6 @@ modify_info (ExpInfo *o_info,
           break;
         }
     }
-  g_rand_free (gr);
 }
 
 /*
@@ -464,6 +458,8 @@ run (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
+      gr = g_rand_new ();
+
       memset (&qbist_info, 0, sizeof (qbist_info));
       create_info (&qbist_info.info);
       qbist_info.oversampling = 4;
@@ -544,6 +540,8 @@ run (const gchar      *name,
 
           gimp_displays_flush ();
         }
+
+      g_rand_free (gr);
     }
 
   values[0].type          = GIMP_PDB_STATUS;
