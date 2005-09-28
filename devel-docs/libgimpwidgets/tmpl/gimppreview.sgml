@@ -134,3 +134,12 @@ A widget providing a #GimpPreviewArea plus framework to update the preview.
 @cursor: 
 
 
+<!-- ##### FUNCTION gimp_preview_get_controls ##### -->
+<para>
+
+</para>
+
+@preview: 
+@Returns: 
+
+

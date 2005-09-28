@@ -735,6 +735,8 @@ GIMP_STOCK_FONT
 GIMP_STOCK_GRADIENT
 GIMP_STOCK_PALETTE
 GIMP_STOCK_PATTERN
+GIMP_STOCK_QMASK_ON
+GIMP_STOCK_QMASK_OFF
 </SECTION>
 
 <SECTION>
@@ -988,6 +990,7 @@ gimp_preview_draw
 gimp_preview_draw_buffer
 gimp_preview_invalidate
 gimp_preview_set_default_cursor
+gimp_preview_get_controls
 <SUBSECTION Standard>
 GimpPreviewClass
 GIMP_PREVIEW
@@ -1004,6 +1007,7 @@ GIMP_PREVIEW_GET_CLASS
 <TITLE>GimpScrolledPreview</TITLE>
 GimpScrolledPreview
 gimp_scrolled_preview_set_position
+gimp_scrolled_preview_set_policy
 <SUBSECTION Standard>
 GimpScrolledPreviewClass
 GIMP_SCROLLED_PREVIEW
