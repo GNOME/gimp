@@ -206,7 +206,7 @@ do_zcrop (GimpDrawable *drawable,
         }
 
       area += width;
-      if (y % 20)
+      if (y % 20 == 0)
         gimp_progress_update ((double) area / (double) total_area);
     }
 
@@ -229,7 +229,7 @@ do_zcrop (GimpDrawable *drawable,
         }
 
       area += height;
-      if (x % 20)
+      if (x % 20 == 0)
         gimp_progress_update ((double) area / (double) total_area);
     }
 
@@ -253,7 +253,7 @@ do_zcrop (GimpDrawable *drawable,
         }
 
       area += width;
-      if (y % 20)
+      if (y % 20 == 0)
         gimp_progress_update ((double) area / (double) total_area);
     }
 
@@ -271,7 +271,7 @@ do_zcrop (GimpDrawable *drawable,
         }
 
       area += height;
-      if (x % 20)
+      if (x % 20 == 0)
         gimp_progress_update ((double) area / (double) total_area);
     }
 
