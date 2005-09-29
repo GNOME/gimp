@@ -1,3 +1,9 @@
+2005-09-29  Akkana Peck  <akkana@cvs.gnome.org>
+
+	* plug-ins/common/autocrop.c:
+	It was cropping too much, eliminating the first non-background
+	row/column on each edge.
+
 2005-09-29  Sven Neumann  <sven@gimp.org>
 
 	* app/base/tile-cache.c
