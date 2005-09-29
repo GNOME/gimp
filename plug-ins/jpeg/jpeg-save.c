@@ -220,11 +220,8 @@ save_image (const gchar *filename,
                        0, 0, drawable->width, drawable->height, FALSE, FALSE);
 
   if (!preview)
-    {
-      gimp_progress_init (NULL);
-      gimp_progress_set_text (_("Saving '%s'..."),
-                              gimp_filename_to_utf8 (filename));
-    }
+    gimp_progress_init_printf (_("Saving '%s'..."),
+                               gimp_filename_to_utf8 (filename));
 
   /* Step 1: allocate and initialize JPEG compression object */
 

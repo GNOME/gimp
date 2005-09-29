@@ -280,17 +280,16 @@ static gint32 ReadImage (FILE *, const gchar *,
 static gint32
 load_image (const gchar *filename)
 {
-  FILE *fd;
-  char * name_buf;
-  unsigned char buf[16];
-  unsigned char c;
-  CMap localColorMap;
-  int grayScale;
-  int useGlobalColormap;
-  int bitPixel;
-  int imageCount = 0;
-  char version[4];
-  gint32 image_ID = -1;
+  FILE   *fd;
+  guchar  buf[16];
+  guchar  c;
+  CMap    localColorMap;
+  gint    grayScale;
+  gint    useGlobalColormap;
+  gint    bitPixel;
+  gint    imageCount = 0;
+  gchar   version[4];
+  gint32  image_ID = -1;
 
   fd = g_fopen (filename, "rb");
   if (!fd)
@@ -300,10 +299,8 @@ load_image (const gchar *filename)
       return -1;
     }
 
-  name_buf = g_strdup_printf (_("Opening '%s'..."),
-                              gimp_filename_to_utf8 (filename));
-  gimp_progress_init (name_buf);
-  g_free (name_buf);
+  gimp_progress_init_printf (_("Opening '%s'..."),
+                             gimp_filename_to_utf8 (filename));
 
   if (!ReadOK (fd, buf, 6))
     {

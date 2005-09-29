@@ -311,9 +311,8 @@ load_image (const gchar *filename)
       return -1;
     }
 
-  gimp_progress_init (NULL);
-  gimp_progress_set_text (_("Opening '%s'..."),
-                          gimp_filename_to_utf8 (filename));
+  gimp_progress_init_printf (_("Opening '%s'..."),
+                             gimp_filename_to_utf8 (filename));
 
   if (fread (&pcx_header, 128, 1, fd) == 0)
     {
@@ -548,9 +547,8 @@ save_image (const gchar *filename,
   height = drawable->height;
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, width, height, FALSE, FALSE);
 
-  gimp_progress_init (NULL);
-  gimp_progress_set_text (_("Saving '%s'..."),
-                          gimp_filename_to_utf8 (filename));
+  gimp_progress_init_printf (_("Saving '%s'..."),
+                             gimp_filename_to_utf8 (filename));
 
   pcx_header.manufacturer = 0x0a;
   pcx_header.version = 5;

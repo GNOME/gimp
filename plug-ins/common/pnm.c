@@ -444,9 +444,8 @@ load_image (const gchar *filename)
       return -1;
     }
 
-  gimp_progress_init (NULL);
-  gimp_progress_set_text (_("Opening '%s'..."),
-                          gimp_filename_to_utf8 (filename));
+  gimp_progress_init_printf (_("Opening '%s'..."),
+                             gimp_filename_to_utf8 (filename));
 
   /* allocate the necessary structures */
   pnminfo = g_new (PNMInfo, 1);
@@ -792,7 +791,6 @@ save_image (const gchar *filename,
   unsigned char *data, *d;
   char          *rowbuf;
   char           buf[BUFLEN];
-  char          *temp;
   int            np = 0;
   int            xres, yres;
   int            ypos, yend;
@@ -821,10 +819,8 @@ save_image (const gchar *filename,
       return FALSE;
     }
 
-  temp = g_strdup_printf (_("Saving '%s'..."),
-                          gimp_filename_to_utf8 (filename));
-  gimp_progress_init (temp);
-  g_free (temp);
+  gimp_progress_init_printf (_("Saving '%s'..."),
+                             gimp_filename_to_utf8 (filename));
 
   xres = drawable->width;
   yres = drawable->height;

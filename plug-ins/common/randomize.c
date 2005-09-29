@@ -386,10 +386,9 @@ run (const gchar      *name,
 	    case RNDM_SLUR: rndm_type_str = "slur"; break;
             }
 
-          gimp_progress_init (NULL);
-          gimp_progress_set_text ("%s (%s)...",
-                                  gettext (RNDM_VERSION[rndm_type - 1]),
-                                  gettext (rndm_type_str));
+          gimp_progress_init_printf ("%s (%s)...",
+                                     gettext (RNDM_VERSION[rndm_type - 1]),
+                                     gettext (rndm_type_str));
 	  gimp_tile_cache_ntiles (2 *
                                   (drawable->width / gimp_tile_width () + 1));
 	  /*

@@ -53,12 +53,14 @@ struct _GimpProgressVtable
 };
 
 
-const gchar * gimp_progress_install_vtable (const GimpProgressVtable *vtable,
-                                            gpointer                  user_data);
-gpointer      gimp_progress_uninstall      (const gchar              *progress_callback);
+const gchar * gimp_progress_install_vtable  (const GimpProgressVtable *vtable,
+                                             gpointer                  user_data);
+gpointer      gimp_progress_uninstall       (const gchar              *progress_callback);
 
-gboolean      gimp_progress_set_text       (const gchar              *format,
-                                            ...) G_GNUC_PRINTF (1, 2);
+gboolean      gimp_progress_init_printf     (const gchar              *format,
+                                             ...) G_GNUC_PRINTF (1, 2);
+gboolean      gimp_progress_set_text_printf (const gchar              *format,
+                                             ...) G_GNUC_PRINTF (1, 2);
 
 
 #ifndef GIMP_DISABLE_DEPRECATED

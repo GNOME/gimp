@@ -869,7 +869,6 @@ save_image (const gchar *filename,
   guint rows, cols;
   gint BitsPerPixel, liberalBPP=0, useBPP=0;
   gint colors;
-  gchar *temp_buf;
   gint i;
   gint transparent;
   gint offset_x, offset_y;
@@ -1005,10 +1004,8 @@ save_image (const gchar *filename,
 
 
   /* init the progress meter */
-  temp_buf = g_strdup_printf (_("Saving '%s'..."),
-                              gimp_filename_to_utf8 (filename));
-  gimp_progress_init (temp_buf);
-  g_free (temp_buf);
+  gimp_progress_init_printf (_("Saving '%s'..."),
+                             gimp_filename_to_utf8 (filename));
 
 
   /* write the GIFheader */

@@ -430,9 +430,8 @@ load_image (const gchar *filename)
 	     *4 + sunhdr.l_ras_maplength, SEEK_SET);
     }
 
-  gimp_progress_init (NULL);
-  gimp_progress_set_text (_("Opening '%s'..."),
-                          gimp_filename_to_utf8 (filename));
+  gimp_progress_init_printf (_("Opening '%s'..."),
+                             gimp_filename_to_utf8 (filename));
 
   switch (sunhdr.l_ras_depth)
     {
@@ -510,9 +509,8 @@ save_image (const gchar *filename,
       return FALSE;
     }
 
-  gimp_progress_init (NULL);
-  gimp_progress_set_text (_("Saving '%s'..."),
-                          gimp_filename_to_utf8 (filename));
+  gimp_progress_init_printf (_("Saving '%s'..."),
+                             gimp_filename_to_utf8 (filename));
 
   if (drawable_type == GIMP_INDEXED_IMAGE)
     retval = save_index (ofp,image_ID, drawable_ID, 0, (int)psvals.rle);

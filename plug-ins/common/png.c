@@ -724,9 +724,8 @@ load_image (const gchar *filename,
 
   png_init_io (pp, fp);
 
-  gimp_progress_init (NULL);
-  gimp_progress_set_text (_("Opening '%s'..."),
-                          gimp_filename_to_utf8 (filename));
+  gimp_progress_init_printf (_("Opening '%s'..."),
+                             gimp_filename_to_utf8 (filename));
 
   /*
    * Get the image dimensions and create the image...
@@ -1226,9 +1225,8 @@ save_image (const gchar *filename,
 
   png_init_io (pp, fp);
 
-  gimp_progress_init (NULL);
-  gimp_progress_set_text (_("Saving '%s'..."),
-                          gimp_filename_to_utf8 (filename));
+  gimp_progress_init_printf (_("Saving '%s'..."),
+                             gimp_filename_to_utf8 (filename));
 
   /*
    * Get the drawable for the current image...

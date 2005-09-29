@@ -1296,8 +1296,6 @@ ifs_compose (GimpDrawable *drawable)
   gimp_context_get_background (&color);
   gimp_rgb_get_uchar (&color, &rc, &gc, &bc);
 
-  gimp_progress_init (NULL);
-
   for (band_no = 0, band_y = 0; band_no < num_bands; band_no++)
     {
       GimpPixelRgn  dest_rgn;
@@ -1305,9 +1303,8 @@ ifs_compose (GimpDrawable *drawable)
       gint          progress;
       gint          max_progress;
 
-      gimp_progress_update (0.0);
-      gimp_progress_set_text (_("Rendering IFS (%d/%d)..."),
-                              band_no + 1, num_bands);
+      gimp_progress_init_printf (_("Rendering IFS (%d/%d)..."),
+                                 band_no + 1, num_bands);
 
       /* render the band to a buffer */
       if (band_y + band_height > height)
@@ -1323,9 +1320,8 @@ ifs_compose (GimpDrawable *drawable)
 
       /* transfer the image to the drawable */
 
-      gimp_progress_update (0.0);
-      gimp_progress_set_text (_("Copying IFS to image (%d/%d)..."),
-                              band_no + 1, num_bands);
+      gimp_progress_init_printf (_("Copying IFS to image (%d/%d)..."),
+                                 band_no + 1, num_bands);
 
       progress = 0;
       max_progress = band_height * width;

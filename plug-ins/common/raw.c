@@ -649,9 +649,8 @@ load_image (gchar *filename)
       return -1;
     }
 
-  gimp_progress_init (NULL);
-  gimp_progress_set_text (_("Opening '%s'..."),
-                          gimp_filename_to_utf8 (filename));
+  gimp_progress_init_printf (_("Opening '%s'..."),
+                             gimp_filename_to_utf8 (filename));
 
   size = get_file_info (filename);
 

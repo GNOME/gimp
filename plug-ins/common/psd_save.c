@@ -1351,9 +1351,8 @@ save_image (const gchar *filename,
       return FALSE;
     }
 
-  gimp_progress_init (NULL);
-  gimp_progress_set_text (_("Saving '%s'..."),
-                          gimp_filename_to_utf8 (filename));
+  gimp_progress_init_printf (_("Saving '%s'..."),
+                             gimp_filename_to_utf8 (filename));
 
   IFDBG g_print ("      File \"%s\" has been opened\n",
                  gimp_filename_to_utf8 (filename));

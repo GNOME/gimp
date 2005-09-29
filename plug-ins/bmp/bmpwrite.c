@@ -111,7 +111,6 @@ WriteBMP (const gchar *filename,
   gint          rows, cols, Spcols, channels, MapSize, SpZeile;
   glong         BitsPerPixel;
   gint          colors;
-  gchar        *temp_buf;
   guchar       *pixels;
   GimpPixelRgn  pixel_rgn;
   GimpDrawable *drawable;
@@ -209,10 +208,8 @@ WriteBMP (const gchar *filename,
                            0, 0, drawable->width, drawable->height);
 
   /* And let's begin the progress */
-  temp_buf = g_strdup_printf (_("Saving '%s'..."),
-                               gimp_filename_to_utf8 (filename));
-  gimp_progress_init (temp_buf);
-  g_free (temp_buf);
+  gimp_progress_init_printf (_("Saving '%s'..."),
+                             gimp_filename_to_utf8 (filename));
 
   cur_progress = 0;
   max_progress = drawable->height;

@@ -242,9 +242,8 @@ save_image (const gchar  *filename,
     fprintf (fp, "<CAPTION>%s</CAPTION>\n",
              gtmvals.captiontxt);
 
-  gimp_progress_init (NULL);
-  gimp_progress_set_text (_("Saving '%s'..."),
-                          gimp_filename_to_utf8 (filename));
+  gimp_progress_init_printf (_("Saving '%s'..."),
+                             gimp_filename_to_utf8 (filename));
 
   gimp_pixel_rgn_init (&pixel_rgn, drawable,
                        0, 0, drawable->width, drawable->height,

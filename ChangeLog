@@ -1,3 +1,22 @@
+2005-09-29  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/progress.pdb: removed the "wrap" from
+	gimp_progress_set_text() so it shows up as libgimp function again.
+
+	* libgimp/gimpprogress_pdb.[ch]: regenerated.
+
+	* libgimp/gimpprogress.[ch]: changed the old
+	gimp_progress_set_text() to gimp_progress_set_text_printf() and
+	added gimp_progress_init_printf(). (did this because the method of
+	calling init(NULL) followed by set_text("foo") caused popup
+	progress windows to be resized after they were shown).
+
+	* libgimp/gimp.def: changed accordingly.
+
+	* plug-ins/*/*.c: use gimp_progress_init_printf() instead of
+	init(NULL) plus set_text(foo) and changed users of set_text() to
+	use set_text_printf().	
+
 2005-09-29  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/script-fu-interface.c: removed the frame

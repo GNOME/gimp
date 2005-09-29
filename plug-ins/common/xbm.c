@@ -722,9 +722,8 @@ load_image (const gchar *filename)
       return -1;
     }
 
-  gimp_progress_init (NULL);
-  gimp_progress_set_text (_("Opening '%s'..."),
-                          gimp_filename_to_utf8 (filename));
+  gimp_progress_init_printf (_("Opening '%s'..."),
+                             gimp_filename_to_utf8 (filename));
 
   comment = fgetcomment (fp);
 
@@ -947,7 +946,7 @@ save_image (const gchar *filename,
   gint     bpp;
 
   guchar *data, *cmap;
-  gchar  *name_buf, *intfmt;
+  gchar  *intfmt;
 
 #if 0
   if (save_mask)
@@ -1005,10 +1004,8 @@ save_image (const gchar *filename,
       return FALSE;
     }
 
-  name_buf = g_strdup_printf (_("Saving '%s'..."),
-                              gimp_filename_to_utf8 (filename));
-  gimp_progress_init (name_buf);
-  g_free (name_buf);
+  gimp_progress_init_printf (_("Saving '%s'..."),
+                             gimp_filename_to_utf8 (filename));
 
   /* Maybe write the image comment. */
 #if 0

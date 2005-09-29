@@ -470,9 +470,8 @@ load_image (const gchar *filename)
         }
     }
 
-  gimp_progress_init (NULL);
-  gimp_progress_set_text (_("Opening '%s'..."),
-                          gimp_filename_to_utf8 (filename));
+  gimp_progress_init_printf (_("Opening '%s'..."),
+                             gimp_filename_to_utf8 (filename));
 
   depth = xwdhdr.l_pixmap_depth;
   bpp   = xwdhdr.l_bits_per_pixel;
@@ -537,7 +536,6 @@ save_image (const gchar *filename,
   FILE          *ofp;
   GimpImageType  drawable_type;
   gint           retval;
-  gchar         *temp;
 
   drawable_type = gimp_drawable_type (drawable_ID);
 
@@ -569,10 +567,8 @@ save_image (const gchar *filename,
       return FALSE;
     }
 
-  temp = g_strdup_printf (_("Saving '%s'..."),
-                          gimp_filename_to_utf8 (filename));
-  gimp_progress_init (temp);
-  g_free (temp);
+  gimp_progress_init_printf (_("Saving '%s'..."),
+                             gimp_filename_to_utf8 (filename));
 
   if (drawable_type == GIMP_INDEXED_IMAGE)
     retval = save_index (ofp, image_ID, drawable_ID, 0);

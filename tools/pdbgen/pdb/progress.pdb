@@ -136,8 +136,7 @@ HELP
 
     @inargs = (
 	{ name => 'message', type => 'string', null_ok => 1,
-	  desc => 'Message to use in the progress dialog',
-	  wrap => 1 }
+	  desc => 'Message to use in the progress dialog' }
     );
     %invoke = (
 	code => <<'CODE'

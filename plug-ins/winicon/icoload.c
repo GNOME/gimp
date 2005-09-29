@@ -457,9 +457,8 @@ ico_load_image (const gchar *filename)
   gint    height = 0;
   gint    i;
 
-  gimp_progress_init (NULL);
-  gimp_progress_set_text (_("Opening '%s'..."),
-                          gimp_filename_to_utf8 (filename));
+  gimp_progress_init_printf (_("Opening '%s'..."),
+                             gimp_filename_to_utf8 (filename));
 
   if (! ico_init (filename, &ico))
     return -1;
@@ -522,9 +521,8 @@ ico_load_thumbnail_image (const gchar *filename,
   gint    match = 0;
   gint    i;
 
-  gimp_progress_init (NULL);
-  gimp_progress_set_text (_("Opening thumbnail for '%s'..."),
-                          gimp_filename_to_utf8 (filename));
+  gimp_progress_init_printf (_("Opening thumbnail for '%s'..."),
+                             gimp_filename_to_utf8 (filename));
 
   if (! ico_init (filename, &ico))
     return -1;

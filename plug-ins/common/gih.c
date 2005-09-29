@@ -651,9 +651,8 @@ gih_load_image (const gchar *filename)
       return -1;
     }
 
-  gimp_progress_init (NULL);
-  gimp_progress_set_text (_("Opening '%s'..."),
-                          gimp_filename_to_utf8 (filename));
+  gimp_progress_init_printf (_("Opening '%s'..."),
+                             gimp_filename_to_utf8 (filename));
 
   /* The file format starts with a painfully simple text header */
 
@@ -1238,7 +1237,7 @@ gih_save_image (const gchar *filename,
   GimpPixelRgn  pixel_rgn;
   GimpParasite *pipe_parasite;
   gchar *header;
-  gchar *msg, *parstring;
+  gchar *parstring;
   gint32 *layer_ID;
   gint fd;
   gint nlayers, layer, row, col;
@@ -1261,10 +1260,8 @@ gih_save_image (const gchar *filename,
       return FALSE;
     }
 
-  msg = g_strdup_printf (_("Saving '%s'..."),
-                         gimp_filename_to_utf8 (filename));
-  gimp_progress_init (msg);
-  g_free (msg);
+  gimp_progress_init_printf (_("Saving '%s'..."),
+                             gimp_filename_to_utf8 (filename));
 
   parstring = gimp_pixpipe_params_build (&gihparams);
 

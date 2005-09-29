@@ -504,10 +504,12 @@ EXPORTS
 	gimp_procedural_db_temp_name
 	gimp_progress_cancel
 	gimp_progress_init
+	gimp_progress_init_printf
 	gimp_progress_install
 	gimp_progress_install_vtable
 	gimp_progress_pulse
 	gimp_progress_set_text
+	gimp_progress_set_text_printf
 	gimp_progress_get_window_handle
 	gimp_progress_uninstall
 	gimp_progress_update

@@ -32,7 +32,7 @@ G_BEGIN_DECLS
 gboolean gimp_progress_init              (const gchar *message);
 gboolean gimp_progress_update            (gdouble      percentage);
 gboolean gimp_progress_pulse             (void);
-gboolean _gimp_progress_set_text         (const gchar *message);
+gboolean gimp_progress_set_text          (const gchar *message);
 gint     gimp_progress_get_window_handle (void);
 gboolean _gimp_progress_install          (const gchar *progress_callback);
 gboolean _gimp_progress_uninstall        (const gchar *progress_callback);

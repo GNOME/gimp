@@ -1014,9 +1014,8 @@ load_image (const gchar *filename)
     }
   fclose (ifp);
 
-  gimp_progress_init (NULL);
-  gimp_progress_set_text (_("Opening '%s'..."),
-                          gimp_filename_to_utf8 (filename));
+  gimp_progress_init_printf (_("Opening '%s'..."),
+                             gimp_filename_to_utf8 (filename));
 
   ifp = ps_open (filename, &plvals, &llx, &lly, &urx, &ury, &is_epsf,
                  &ChildPid);
@@ -1187,9 +1186,8 @@ save_image (const gchar *filename,
       return FALSE;
     }
 
-  gimp_progress_init (NULL);
-  gimp_progress_set_text (_("Saving '%s'..."),
-                          gimp_filename_to_utf8 (filename));
+  gimp_progress_init_printf (_("Saving '%s'..."),
+                             gimp_filename_to_utf8 (filename));
 
   save_ps_header (ofp, filename);
 

@@ -323,9 +323,8 @@ load_image (const gchar *filename)
       return -1;
     }
 
-  gimp_progress_init (NULL);
-  gimp_progress_set_text (_("Opening '%s'..."),
-                          gimp_filename_to_utf8 (filename));
+  gimp_progress_init_printf (_("Opening '%s'..."),
+                             gimp_filename_to_utf8 (filename));
 
   if (read (fd, &ph, sizeof (PatternHeader)) != sizeof (PatternHeader))
     {
@@ -454,9 +453,8 @@ save_image (const gchar *filename,
       return FALSE;
     }
 
-  gimp_progress_init (NULL);
-  gimp_progress_set_text (_("Saving '%s'..."),
-                          gimp_filename_to_utf8 (filename));
+  gimp_progress_init_printf (_("Saving '%s'..."),
+                             gimp_filename_to_utf8 (filename));
 
   drawable = gimp_drawable_get (drawable_ID);
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width,

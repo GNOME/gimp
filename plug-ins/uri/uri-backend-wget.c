@@ -166,9 +166,8 @@ uri_backend_load_image (const gchar  *uri,
 
       timeout_msg = g_strdup_printf (_("(timeout is %s seconds)"), TIMEOUT);
 
-      gimp_progress_init (NULL);
-      gimp_progress_set_text ("%s %s",
-                              _("Connecting to server..."), timeout_msg);
+      gimp_progress_init_printf ("%s %s",
+                                 _("Connecting to server..."), timeout_msg);
 
     read_connect:
       if (fgets (buf, sizeof (buf), input) == NULL)

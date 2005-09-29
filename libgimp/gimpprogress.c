@@ -215,7 +215,42 @@ gimp_progress_uninstall (const gchar *progress_callback)
 }
 
 /**
- * gimp_progress_set_text:
+ * gimp_progress_init_printf:
+ * @format: a standard printf() format string
+ * @Varargs: arguments for @format
+ *
+ * Initializes the progress bar for the current plug-in.
+ *
+ * Initializes the progress bar for the current plug-in. It is only
+ * valid to call this procedure from a plug-in.
+ *
+ * Returns: %TRUE on success.
+ *
+ * Since: GIMP 2.4
+ **/
+gboolean
+gimp_progress_init_printf (const gchar *format,
+                           ...)
+{
+  gchar    *text;
+  gboolean  retval;
+  va_list   args;
+
+  g_return_val_if_fail (format != NULL, FALSE);
+
+  va_start (args, format);
+  text = g_strdup_vprintf (format, args);
+  va_end (args);
+
+  retval = gimp_progress_init (text);
+
+  g_free (text);
+
+  return retval;
+}
+
+/**
+ * gimp_progress_set_text_printf:
  * @format: a standard printf() format string
  * @Varargs: arguments for @format
  *
@@ -230,8 +265,8 @@ gimp_progress_uninstall (const gchar *progress_callback)
  * Since: GIMP 2.4
  **/
 gboolean
-gimp_progress_set_text (const gchar *format,
-                        ...)
+gimp_progress_set_text_printf (const gchar *format,
+                               ...)
 {
   gchar    *text;
   gboolean  retval;
@@ -243,7 +278,7 @@ gimp_progress_set_text (const gchar *format,
   text = g_strdup_vprintf (format, args);
   va_end (args);
 
-  retval = _gimp_progress_set_text (text);
+  retval = gimp_progress_set_text (text);
 
   g_free (text);
 

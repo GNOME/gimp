@@ -788,8 +788,8 @@ iwarp (void)
 
           destdrawable = gimp_drawable_get (animlayers[i]);
 
-          gimp_progress_init (NULL);
-          gimp_progress_set_text (_("Warping Frame No. %d..."), frame_number);
+          gimp_progress_init_printf (_("Warping Frame No. %d..."),
+                                     frame_number);
 
           if (animate_deform_value > 0.0)
             iwarp_frame ();

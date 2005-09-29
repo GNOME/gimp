@@ -1686,9 +1686,8 @@ save_xjt_image (const gchar *filename,
       break;
     }
 
-  gimp_progress_init (NULL);
-  gimp_progress_set_text (_("Saving '%s'..."),
-                          gimp_filename_to_utf8 (filename));
+  gimp_progress_init_printf (_("Saving '%s'..."),
+                             gimp_filename_to_utf8 (filename));
 
   /* create temporary directory */
   l_dirname = gimp_temp_name (".tmpdir");
@@ -3312,9 +3311,8 @@ load_xjt_image (const gchar *filename)
   l_fsel_attached_to_id = -1;    /* -1  assume fsel is not available (and not attached to any drawable) */
   l_fsel_id = -1;                /* -1  assume there is no floating selection */
 
-  gimp_progress_init (NULL);
-  gimp_progress_set_text (_("Opening '%s'..."),
-                          gimp_filename_to_utf8 (filename));
+  gimp_progress_init_printf (_("Opening '%s'..."),
+                             gimp_filename_to_utf8 (filename));
 
   /* create temporary directory */
   l_dirname = gimp_temp_name (".tmpdir");

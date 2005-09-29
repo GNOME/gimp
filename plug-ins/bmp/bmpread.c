@@ -154,9 +154,8 @@ ReadBMP (const gchar *name)
       return -1;
     }
 
-  gimp_progress_init (NULL);
-  gimp_progress_set_text (_("Opening '%s'..."),
-                          gimp_filename_to_utf8 (name));
+  gimp_progress_init_printf (_("Opening '%s'..."),
+                             gimp_filename_to_utf8 (name));
 
   /* It is a File. Now is it a Bitmap? Read the shortest possible header */
 
