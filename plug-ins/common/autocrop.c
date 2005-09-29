@@ -237,6 +237,12 @@ autocrop (GimpDrawable *drawable,
 
   y2 += 1; /* to make y2 - y1 == height */
 
+  /* The coordinates are now the first rows which DON'T match
+   * the color. Crop instead to one row larger:
+   */
+  if (y1 > 0) --y1;
+  if (y2 < height-1) ++y2;
+
   if (show_progress)
     gimp_progress_update (0.5);
 
@@ -262,6 +268,12 @@ autocrop (GimpDrawable *drawable,
     }
 
   x2 += 1; /* to make x2 - x1 == width */
+
+  /* The coordinates are now the first columns which DON'T match
+   * the color. Crop instead to one column larger:
+   */
+  if (x1 > 0) --x1;
+  if (x2 < width-1) ++x2;
 
   g_free (buffer);
 
