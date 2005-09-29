@@ -1,5 +1,15 @@
 2005-09-29  Sven Neumann  <sven@gimp.org>
 
+	* app/base/tile-cache.c
+	* app/base/tile-manager.c
+	* app/base/tile-private.h
+	* app/base/tile-swap.c
+	* app/base/tile.c: keep the data size of a tile in the Tile struct
+	instead of recalculating it over and over again. Adds 4 bytes per
+	tile but speeds up the tile cache significantly.
+
+2005-09-29  Sven Neumann  <sven@gimp.org>
+
 	* app/base/siox.c: optimizations by Tobias Lenz.
 
 2005-09-29  Michael Natterer  <mitch@gimp.org>

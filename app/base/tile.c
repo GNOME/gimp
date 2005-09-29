@@ -218,7 +218,7 @@ tile_alloc (Tile *tile)
 
   /* Allocate the data for the tile.
    */
-  tile->data = g_new (guchar, tile_size_inline (tile));
+  tile->data = g_new (guchar, tile->size);
 
 #ifdef HINTS_SANITY
   tile_exist_count++;
@@ -281,7 +281,7 @@ tile_size (Tile *tile)
   /* Return the actual size of the tile data.
    *  (Based on its effective width and height).
    */
-  return tile->ewidth * tile->eheight * tile->bpp;
+  return tile->size;
 }
 
 gint

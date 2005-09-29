@@ -57,6 +57,7 @@ struct _Tile
 		         *  (but not larger) than TILE_WIDTH and TILE_HEIGHT.
 		         *  this is to handle edge tiles of a drawable.
 		         */
+  gint    size;         /* size of the tile data (ewidth * eheight * bpp) */
 
   TileRowHint *rowhint; /* An array of hints for rendering purposes */
 
@@ -92,15 +93,6 @@ struct _Tile
 #define TILE_MUTEX_LOCK(tile)   /* nothing */
 #define TILE_MUTEX_UNLOCK(tile) /* nothing */
 #endif
-
-
-/*  an inlined version of tile_size()  */
-static inline gint
-tile_size_inline (Tile *tile)
-{
-  return tile->ewidth * tile->eheight * tile->bpp;
-}
-
 
 
 #endif /* __TILE_PRIVATE_H__ */

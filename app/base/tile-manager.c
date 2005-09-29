@@ -184,15 +184,20 @@ tile_manager_get (TileManager *tm,
 	{
 	  for (j = 0; j < ncols; j++, k++)
 	    {
-	      tiles[k] = g_new (Tile, 1);
-	      tile_init (tiles[k], tm->bpp);
-	      tile_attach (tiles[k], tm, k);
+              Tile *new = g_new (Tile, 1);
+
+	      tile_init (new, tm->bpp);
+	      tile_attach (new, tm, k);
 
 	      if (j == (ncols - 1))
-		tiles[k]->ewidth = right_tile;
+		new->ewidth = right_tile;
 
 	      if (i == (nrows - 1))
-		tiles[k]->eheight = bottom_tile;
+		new->eheight = bottom_tile;
+
+              new->size = new->ewidth * new->eheight * new->bpp;
+
+	      tiles[k] = new;
 	    }
 	}
     }
@@ -218,42 +223,41 @@ tile_manager_get (TileManager *tm,
 	  if ((*tile_ptr)->share_count > 1)
 	    {
 	      /* Copy-on-write required */
-	      Tile *newtile = g_new (Tile, 1);
-              gint  newsize;
+	      Tile *new = g_new (Tile, 1);
 
-	      tile_init (newtile, (*tile_ptr)->bpp);
+	      tile_init (new, (*tile_ptr)->bpp);
 
-	      newtile->ewidth  = (*tile_ptr)->ewidth;
-	      newtile->eheight = (*tile_ptr)->eheight;
-	      newtile->valid   = (*tile_ptr)->valid;
+	      new->ewidth  = (*tile_ptr)->ewidth;
+	      new->eheight = (*tile_ptr)->eheight;
+	      new->valid   = (*tile_ptr)->valid;
 
-              newsize = tile_size_inline (newtile);
-	      newtile->data    = g_new (guchar, newsize);
+              new->size    = new->ewidth * new->eheight * new->bpp;
+	      new->data    = g_new (guchar, new->size);
 
-	      if (!newtile->valid)
+	      if (!new->valid)
 		g_warning ("Oh boy, r/w tile is invalid... we suck. "
                            "Please report.");
 
               if ((*tile_ptr)->rowhint)
-                newtile->rowhint = g_memdup ((*tile_ptr)->rowhint,
-                                             newtile->eheight *
+                new->rowhint = g_memdup ((*tile_ptr)->rowhint,
+                                             new->eheight *
                                              sizeof (TileRowHint));
 
 	      if ((*tile_ptr)->data)
 		{
-		  memcpy (newtile->data, (*tile_ptr)->data, newsize);
+		  memcpy (new->data, (*tile_ptr)->data, new->size);
 		}
 	      else
 		{
 		  tile_lock (*tile_ptr);
-		  memcpy (newtile->data, (*tile_ptr)->data, newsize);
+		  memcpy (new->data, (*tile_ptr)->data, new->size);
 		  tile_release (*tile_ptr, FALSE);
 		}
 
 	      tile_detach (*tile_ptr, tm, tile_num);
-	      TILE_MUTEX_LOCK (newtile);
-	      tile_attach (newtile, tm, tile_num);
-	      *tile_ptr = newtile;
+	      TILE_MUTEX_LOCK (new);
+	      tile_attach (new, tm, tile_num);
+	      *tile_ptr = new;
 	    }
 
 	  (*tile_ptr)->write_count++;
@@ -374,18 +378,19 @@ tile_invalidate (Tile        **tile_ptr,
   if (tile->share_count > 1)
     {
       /* This tile is shared.  Replace it with a new, invalid tile. */
-      Tile *newtile = g_new (Tile, 1);
+      Tile *new = g_new (Tile, 1);
 
       g_print ("invalidating shared tile (executing buggy code!!!)\n");
 
-      tile_init (newtile, tile->bpp);
-      newtile->ewidth  = tile->ewidth;
-      newtile->eheight = tile->eheight;
+      tile_init (new, tile->bpp);
+      new->ewidth  = tile->ewidth;
+      new->eheight = tile->eheight;
+      new->size    = tile->size;
 
       tile_detach (tile, tm, tile_num);
-      TILE_MUTEX_LOCK (newtile);
-      tile_attach (newtile, tm, tile_num);
-      tile = *tile_ptr = newtile;
+      TILE_MUTEX_LOCK (new);
+      tile_attach (new, tm, tile_num);
+      tile = *tile_ptr = new;
     }
 
   if (tile->listhead)
@@ -471,18 +476,23 @@ tile_manager_map (TileManager *tm,
 	{
 	  for (j = 0; j < ncols; j++, k++)
 	    {
+              Tile *new = g_new (Tile, 1);
+
 #ifdef DEBUG_TILE_MANAGER
 	      g_printerr (",");
 #endif
-	      tiles[k] = g_new (Tile, 1);
-	      tile_init (tiles[k], tm->bpp);
-	      tile_attach (tiles[k], tm, k);
+	      tile_init (new, tm->bpp);
+	      tile_attach (new, tm, k);
 
 	      if (j == (ncols - 1))
-		tiles[k]->ewidth = right_tile;
+		new->ewidth = right_tile;
 
 	      if (i == (nrows - 1))
-		tiles[k]->eheight = bottom_tile;
+		new->eheight = bottom_tile;
+
+              new->size = new->ewidth * new->eheight * new->bpp;
+
+	      tiles[k] = new;
 	    }
 	}
     }

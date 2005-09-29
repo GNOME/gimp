@@ -585,7 +585,6 @@ tile_swap_default_in (DefSwapFile *def_swap_file,
 		      gint         fd,
 		      Tile        *tile)
 {
-  gint  bytes;
   gint  err;
   gint  nleft;
   off_t offset;
@@ -611,15 +610,14 @@ tile_swap_default_in (DefSwapFile *def_swap_file,
 	}
     }
 
-  bytes = tile_size_inline (tile);
   tile_alloc (tile);
 
-  nleft = bytes;
+  nleft = tile->size;
   while (nleft > 0)
     {
       do
 	{
-	  err = read (fd, tile->data + bytes - nleft, nleft);
+	  err = read (fd, tile->data + tile->size - nleft, nleft);
 	}
       while ((err == -1) && ((errno == EAGAIN) || (errno == EINTR)));
 
@@ -635,7 +633,7 @@ tile_swap_default_in (DefSwapFile *def_swap_file,
       nleft -= err;
     }
 
-  def_swap_file->cur_position += bytes;
+  def_swap_file->cur_position += tile->size;
 
   /*  Do not delete the swap from the file  */
   /*  tile_swap_default_delete (def_swap_file, fd, tile);  */
@@ -649,14 +647,12 @@ tile_swap_default_out (DefSwapFile *def_swap_file,
 		       Tile        *tile)
 {
   gint  bytes;
-  gint  rbytes;
   gint  err;
   gint  nleft;
   off_t offset;
   off_t newpos;
 
   bytes = TILE_WIDTH * TILE_HEIGHT * tile->bpp;
-  rbytes = tile_size_inline (tile);
 
   /*  If there is already a valid swap_offset, use it  */
   if (tile->swap_offset == -1)
@@ -678,10 +674,10 @@ tile_swap_default_out (DefSwapFile *def_swap_file,
       def_swap_file->cur_position = newpos;
     }
 
-  nleft = rbytes;
+  nleft = tile->size;
   while (nleft > 0)
     {
-      err = write (fd, tile->data + rbytes - nleft, nleft);
+      err = write (fd, tile->data + tile->size - nleft, nleft);
       if (err <= 0)
 	{
 	  if (write_err_msg)
@@ -694,7 +690,7 @@ tile_swap_default_out (DefSwapFile *def_swap_file,
       nleft -= err;
     }
 
-  def_swap_file->cur_position += rbytes;
+  def_swap_file->cur_position += tile->size;
 
   /* Do NOT free tile->data because we may be pre-swapping.
    * tile->data is freed in tile_cache_zorch_next
@@ -912,7 +908,6 @@ tile_swap_in_attempt (DefSwapFile *def_swap_file,
 		      gint         fd,
 		      Tile        *tile)
 {
-  gint  bytes;
   gint  err;
   gint  nleft;
   off_t offset;
@@ -935,15 +930,14 @@ tile_swap_in_attempt (DefSwapFile *def_swap_file,
 	return;
     }
 
-  bytes = tile_size_inline (tile);
   tile_alloc (tile);
 
-  nleft = bytes;
+  nleft = tile->size;
   while (nleft > 0)
     {
       do
 	{
-	  err = read (fd, tile->data + bytes - nleft, nleft);
+	  err = read (fd, tile->data + tile->size - nleft, nleft);
 	}
       while ((err == -1) && ((errno == EAGAIN) || (errno == EINTR)));
 
