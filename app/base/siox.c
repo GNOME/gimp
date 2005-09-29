@@ -80,12 +80,6 @@ typedef struct
 } classresult;
 
 
-/* Simulate a java.util.ArrayList */
-
-/* Could be improved. At the moment we are wasting a node per list and
- * the tail pointer on each node is only used in the first node.
- */
-
 typedef struct
 {
   gfloat l;
@@ -94,98 +88,6 @@ typedef struct
   gint   cardinality;
 } lab;
 
-typedef struct _ArrayList ArrayList;
-
-struct _ArrayList
-{
-  lab       *array;
-  guint      arraylength;
-  gboolean   owned;
-  ArrayList *next;
-  ArrayList *tail; /* only valid in the root item */
-};
-
-static ArrayList *
-list_new (void)
-{
-  ArrayList *list = g_new0 (ArrayList, 1);
-
-  list->tail = list;
-
-  return list;
-}
-
-static void
-add_to_list (ArrayList *list,
-             lab       *array,
-             guint      arraylength,
-             gboolean   take)
-{
-  ArrayList *tail = list->tail;
-
-  tail->array = array;
-  tail->arraylength = arraylength;
-  tail->owned = take;
-
-  list->tail = tail->next = g_new0 (ArrayList, 1);
-}
-
-static gint
-list_size (ArrayList *list)
-{
-  ArrayList *cur   = list;
-  gint       count = 0;
-
-  while (cur->array)
-    {
-      count++;
-      cur = cur->next;
-    }
-
-  return count;
-}
-
-static lab *
-list_to_array (ArrayList *list,
-               gint      *returnlength)
-{
-  ArrayList *cur   = list;
-  gint       i     = 0;
-  gint       len   = list_size (list);
-  lab       *array = g_new (lab, len);
-
-  *returnlength = len;
-
-  while (cur->array)
-    {
-      array[i++] = cur->array[0];
-
-      /* Every array in the list node has only one point
-       * when we call this method
-       */
-      cur = cur->next;
-    }
-
-  return array;
-}
-
-static void
-free_list (ArrayList *list)
-{
-  ArrayList *cur = list;
-
-  while (cur)
-    {
-      ArrayList *prev = cur;
-
-      cur = cur->next;
-
-      if (prev->owned)
-        g_free (prev->array);
-
-      g_free (prev);
-    }
-}
 
 static void
 calc_lab (const guchar *src,
@@ -234,29 +136,25 @@ calc_lab (const guchar *src,
 /*  assumes that lab starts with an array of floats (l,a,b)  */
 #define CURRENT_VALUE(points, i, dim) (((const gfloat *) (points + i))[dim])
 
+
 /* Stage one of modified KD-Tree algorithm */
 static void
-stageone (lab          *points,
-          gint          dims,
-          gint          depth,
-          ArrayList    *clusters,
-          const gfloat *limits,
-          gint          length)
+stageone (lab           *points,
+          gint           left,
+          gint           right,
+          gint           depth,
+          GSList       **clusters,
+          const gfloat  *limits)
 {
-  gint    curdim = depth % dims;
+  gint    curdim = depth % SIOX_DIMS;
   gfloat  min, max;
   gfloat  curval;
   gint    i;
 
-  if (length < 1)
-    return;
+  min = CURRENT_VALUE (points, left, curdim);
+  max = min;
 
-  curval = CURRENT_VALUE (points, 0, curdim);
-
-  min = curval;
-  max = curval;
-
-  for (i = 1; i < length; i++)
+  for (i = left+1; i < right; i++)
     {
       curval = CURRENT_VALUE (points, i, curdim);
 
@@ -269,50 +167,39 @@ stageone (lab          *points,
   /* Split according to Rubner-Rule */
   if (max - min > limits[curdim])
     {
-      lab    *smallerpoints;
-      lab    *biggerpoints;
-      gint    countsm = 0;
-      gint    smallc  = 0;
-      gint    bigc    = 0;
-      gfloat  pivot   = (min + max) / 2.0;
+      gfloat pivot = (min + max) / 2.0;
+      gint   l     = left;
+      gint   r     = right - 1;
+      lab    tmp;
 
-      /* find out cluster sizes */
-      for (i = 0; i < length; i++)
+      while (TRUE)
         {
-          curval = CURRENT_VALUE (points, i, curdim);
+      	  while ( CURRENT_VALUE (points, l, curdim) <= pivot )
+      	    ++l;
+      	  while ( CURRENT_VALUE (points, r, curdim) > pivot )
+      	    --r;
 
-          if (curval <= pivot)
-            countsm++;
-        }
+      	  if (l > r)
+      	  	break;
 
-      /* FIXME: consider to sort the array and split in place instead
-       *        of allocating memory here
-       */
-      smallerpoints = g_new (lab, countsm);
-      biggerpoints  = g_new (lab, length - countsm);
+          tmp = points[l];
+          points[l] = points[r];
+          points[r] = tmp;
 
-      for (i = 0; i < length; i++)
-        {
-          /* do actual split */
-          curval = CURRENT_VALUE (points, i, curdim);
-
-          if (curval <= pivot)
-            smallerpoints[smallc++] = points[i];
-          else
-            biggerpoints[bigc++] = points[i];
-        }
-
-      if (depth > 0)
-        g_free (points);
+          ++l;
+          --r;
+      	}
 
       /* create subtrees */
-      stageone (smallerpoints, dims, depth + 1, clusters, limits, countsm);
-      stageone (biggerpoints, dims, depth + 1, clusters, limits, length - countsm);
+      stageone (points, left, l, depth + 1, clusters, limits);
+      stageone (points, l, right, depth + 1, clusters, limits);
     }
   else
     {
       /* create leave */
-      add_to_list (clusters, points, length, depth != 0);
+      *clusters =
+        g_slist_prepend (g_slist_prepend (*clusters, GINT_TO_POINTER (right)),
+                         GINT_TO_POINTER (left));
     }
 }
 
@@ -323,29 +210,23 @@ stageone (lab          *points,
  * differences => not integrated into method stageone()
  */
 static void
-stagetwo (lab          *points,
-          gint          dims,
-          gint          depth,
-          ArrayList    *clusters,
-          const gfloat *limits,
-          gint          length,
-          gint          total,
-          gfloat        threshold)
+stagetwo (lab           *points,
+          gint           left,
+          gint           right,
+          gint           depth,
+          GSList       **clusters,
+          const gfloat  *limits,
+          gfloat         threshold)
 {
-  gint    curdim = depth % dims;
+  gint    curdim = depth % SIOX_DIMS;
   gfloat  min, max;
   gfloat  curval;
   gint    i;
 
-  if (length < 1)
-    return;
+  min = CURRENT_VALUE (points, left, curdim);
+  max = min;
 
-  curval = CURRENT_VALUE (points, 0, curdim);
-
-  min = curval;
-  max = curval;
-
-  for (i = 1; i < length; i++)
+  for (i = left+1; i < right; i++)
     {
       curval = CURRENT_VALUE (points, i, curdim);
 
@@ -358,82 +239,62 @@ stagetwo (lab          *points,
   /* Split according to Rubner-Rule */
   if (max - min > limits[curdim])
     {
-      lab    *smallerpoints;
-      lab    *biggerpoints;
-      gint    countsm = 0;
-      gint    smallc  = 0;
-      gint    bigc    = 0;
-      gfloat  pivot   = (min + max) / 2.0;
+      gfloat pivot = (min + max) / 2.0;
+      gint   l     = left;
+      gint   r     = right - 1;
+      lab    tmp;
 
-#ifdef SIOX_DEBUG
-      g_printerr ("siox.c: max=%f min=%f pivot=%f\n", max, min, pivot);
-#endif
-
-      for (i = 0; i < length; i++)
+      while (TRUE)
         {
-          /* find out cluster sizes */
-          curval = CURRENT_VALUE (points, i, curdim);
+      	  while ( CURRENT_VALUE (points, l, curdim) <= pivot )
+      	    ++l;
+      	  while ( CURRENT_VALUE (points, r, curdim) > pivot )
+      	    --r;
 
-          if (curval <= pivot)
-            countsm++;
-        }
+      	  if (l > r)
+      	  	break;
 
-      /* FIXME: consider to sort the array and split in place instead
-       *        of allocating memory here
-       */
-      smallerpoints = g_new (lab, countsm);
-      biggerpoints  = g_new (lab, length - countsm);
+          tmp = points[l];
+          points[l] = points[r];
+          points[r] = tmp;
 
-      /* do actual split */
-      for (i = 0; i < length; i++)
-        {
-          curval = CURRENT_VALUE (points, i, curdim);
-
-          if (curval <= pivot)
-            smallerpoints[smallc++] = points[i];
-          else
-            biggerpoints[bigc++] = points[i];
-        }
-
-      g_free (points);
+          ++l;
+          --r;
+      	}
 
       /* create subtrees */
-      stagetwo (smallerpoints, dims, depth + 1, clusters, limits,
-                countsm, total, threshold);
-      stagetwo (biggerpoints, dims, depth + 1, clusters, limits,
-                length - countsm, total, threshold);
+      stagetwo (points, left, l, depth + 1, clusters, limits, threshold);
+      stagetwo (points, l, right, depth + 1, clusters, limits, threshold);
     }
   else /* create leave */
     {
       gint sum = 0;
 
-      for (i = 0; i < length; i++)
+      for (i = left; i < right; i++)
         sum += points[i].cardinality;
 
-      if (((sum * 100.0) / total) >= threshold)
+      if (sum >= threshold)
         {
           lab *point = g_new0 (lab, 1);
 
-          for (i = 0; i < length; i++)
+          for (i = left; i < right; i++)
             {
               point->l += points[i].l;
               point->a += points[i].a;
               point->b += points[i].b;
             }
 
-          point->l /= length;
-          point->a /= length;
-          point->b /= length;
+          point->l /= right - left;
+          point->a /= right - left;
+          point->b /= right - left;
 
 #ifdef SIOX_DEBUG
           g_printerr ("siox.c: cluster=%f, %f, %f sum=%d\n",
                      point->l, point->a, point->b, sum);
 #endif
 
-          add_to_list (clusters, point, 1, TRUE);
+          *clusters = g_slist_prepend (*clusters, (gpointer)point);
         }
-
-      g_free (points);
     }
 }
 
@@ -458,11 +319,10 @@ get_clustersize (const gfloat *limits)
 static lab *
 create_signature (lab          *input,
                   gint          length,
-                  const gfloat *limits,
-                  gint         *returnlength)
+                  gint         *returnlength,
+                  const gfloat *limits)
 {
-  ArrayList *clusters;
-  ArrayList *curelem;
+  GSList    *clusters = NULL;
   lab       *centroids;
   lab       *rval;
   gint       size;
@@ -474,54 +334,59 @@ create_signature (lab          *input,
       return NULL;
     }
 
-  clusters = list_new ();
-
-  stageone (input, SIOX_DIMS, 0, clusters, limits, length);
-  size = list_size (clusters);
+  stageone (input, 0, length, 0, &clusters, limits);
+  size = g_slist_length(clusters) / 2;
   centroids = g_new (lab, size);
-  curelem = clusters;
 
   i = 0;
-  while (curelem->array)
+  while (clusters != NULL)
     {
-      lab    *cluster = curelem->array;
       gfloat  l       = 0;
       gfloat  a       = 0;
       gfloat  b       = 0;
       gint    k;
+      gint    left, right;
 
-      for (k = 0; k < curelem->arraylength; k++)
+      left     = GPOINTER_TO_INT (clusters->data);
+      clusters = g_slist_delete_link (clusters, clusters);
+      right    = GPOINTER_TO_INT (clusters->data);
+      clusters = g_slist_delete_link (clusters, clusters);
+
+      for (k = left; k < right; k++)
         {
-          l += cluster[k].l;
-          a += cluster[k].a;
-          b += cluster[k].b;
+          l += input[k].l;
+          a += input[k].a;
+          b += input[k].b;
         }
 
-      centroids[i].l = l / curelem->arraylength;
-      centroids[i].a = a / curelem->arraylength;
-      centroids[i].b = b / curelem->arraylength;
+      centroids[i].l = l / (right - left);
+      centroids[i].a = a / (right - left);
+      centroids[i].b = b / (right - left);
 
-      centroids[i].cardinality = curelem->arraylength;
+      centroids[i].cardinality = right - left;
 
       i++;
-      curelem = curelem->next;
     }
 
 #ifdef SIOX_DEBUG
   g_printerr ("siox.c: step #1 -> %d clusters\n", size);
 #endif
 
-  free_list (clusters);
+  clusters = NULL;
 
-  clusters = list_new ();
+  stagetwo (centroids, 0, size, 0, &clusters, limits, length * 0.001f);
 
-  stagetwo (centroids,
-            SIOX_DIMS, 0, clusters, limits, size, length,
-            0.1f /* magic constant, see paper by tomasi */);
+  size = g_slist_length(clusters);
+  rval = g_new (lab, size);
 
-  rval = list_to_array (clusters, returnlength);
+  i = 0;
+  while (clusters != NULL)
+    {
+      rval[i++] = *((lab*) clusters->data);
+      clusters = g_slist_delete_link (clusters, clusters);
+    }
 
-  free_list (clusters);
+  *returnlength = size;
 
 #ifdef SIOX_DEBUG
   g_printerr ("siox.c: step #2 -> %d clusters\n", returnlength[0]);
@@ -958,7 +823,7 @@ siox_foreground_extract (TileManager      *pixels,
   siox_progress_update (progress_callback, progress_data, 0.2);
 
   /* Create color signature for the background */
-  bgsig = create_signature (surebg, surebgcount, limits, &bgsiglen);
+  bgsig = create_signature (surebg, surebgcount, &bgsiglen, limits);
   g_free (surebg);
 
   if (bgsiglen < 1)
@@ -970,7 +835,7 @@ siox_foreground_extract (TileManager      *pixels,
   siox_progress_update (progress_callback, progress_data, 0.3);
 
   /* Create color signature for the foreground */
-  fgsig = create_signature (surefg, surefgcount, limits, &fgsiglen);
+  fgsig = create_signature (surefg, surefgcount, &fgsiglen, limits);
   g_free (surefg);
 
   siox_progress_update (progress_callback, progress_data, 0.4);

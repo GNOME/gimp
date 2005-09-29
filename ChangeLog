@@ -1,3 +1,7 @@
+2005-09-29  Sven Neumann  <sven@gimp.org>
+
+	* app/base/siox.c: optimizations by Tobias Lenz.
+
 2005-09-29  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/progress.pdb: removed the "wrap" from
