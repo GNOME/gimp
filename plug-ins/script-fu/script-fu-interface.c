@@ -154,7 +154,6 @@ void
 script_fu_interface (SFScript *script)
 {
   GtkWidget    *dlg;
-  GtkWidget    *frame;
   GtkWidget    *menu;
   GtkWidget    *vbox;
   GtkWidget    *vbox2;
@@ -544,13 +543,9 @@ script_fu_interface (SFScript *script)
 
   g_object_unref (group);
 
-  /* the script progress frame */
-  frame = gimp_frame_new (_("Script Progress"));
-  gtk_box_pack_end (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
+  /* the script progress bar */
   vbox2 = gtk_vbox_new (FALSE, 6);
-  gtk_container_add (GTK_CONTAINER (frame), vbox2);
+  gtk_box_pack_end (GTK_BOX (vbox), vbox2, FALSE, FALSE, 0);
   gtk_widget_show (vbox2);
 
   sf_interface->progress_bar = gimp_progress_bar_new ();
@@ -558,7 +553,7 @@ script_fu_interface (SFScript *script)
                       FALSE, FALSE, 0);
   gtk_widget_show (sf_interface->progress_bar);
 
-  sf_interface->progress_label = gtk_label_new (_("(none)"));
+  sf_interface->progress_label = gtk_label_new (NULL);
   gtk_misc_set_alignment (GTK_MISC (sf_interface->progress_label), 0.0, 0.5);
   gimp_label_set_attributes (GTK_LABEL (sf_interface->progress_label),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
