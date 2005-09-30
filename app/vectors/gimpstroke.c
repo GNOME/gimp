@@ -465,7 +465,7 @@ gimp_stroke_nearest_intersection_get (const GimpStroke      *stroke,
 {
   g_return_val_if_fail (GIMP_IS_STROKE (stroke), FALSE);
   g_return_val_if_fail (coords1 != NULL, FALSE);
-  g_return_val_if_fail (coords2 != NULL, FALSE);
+  g_return_val_if_fail (direction != NULL, FALSE);
 
 #ifdef __GNUC__
 #warning please implement me, nomis!
