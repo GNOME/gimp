@@ -20,8 +20,7 @@
 #define __KEYBOARD_SHORTCUTS_DIALOG_H__
 
 
-GtkWidget * keyboard_shortcuts_dialog_new (GtkWidget      *parent,
-                                           GtkDialogFlags  flags);
+GtkWidget * keyboard_shortcuts_dialog_new (void);
 
 
 #endif /* __KEYBOARD_SHORTCUTS_DIALOG_H__ */

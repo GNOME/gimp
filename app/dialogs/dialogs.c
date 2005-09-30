@@ -94,19 +94,21 @@ static const GimpDialogFactoryEntry toplevel_entries[] =
 
   /*  singleton toplevels  */
   TOPLEVEL ("gimp-preferences-dialog",
-            dialogs_preferences_get, TRUE, TRUE,  FALSE),
+            dialogs_preferences_get,        TRUE, TRUE,  FALSE),
+  TOPLEVEL ("gimp-keyboard-shortcuts-dialog",
+            dialogs_keyboard_shortcuts_get, TRUE, TRUE,  TRUE),
   TOPLEVEL ("gimp-module-dialog",
-            dialogs_module_get,      TRUE, TRUE,  TRUE),
+            dialogs_module_get,             TRUE, TRUE,  TRUE),
   TOPLEVEL ("gimp-tips-dialog",
-            dialogs_tips_get,        TRUE, FALSE, FALSE),
+            dialogs_tips_get,               TRUE, FALSE, FALSE),
   TOPLEVEL ("gimp-about-dialog",
-            dialogs_about_get,       TRUE, FALSE, FALSE),
+            dialogs_about_get,              TRUE, FALSE, FALSE),
   TOPLEVEL ("gimp-error-dialog",
-            dialogs_error_get,       TRUE, FALSE, FALSE),
+            dialogs_error_get,              TRUE, FALSE, FALSE),
   TOPLEVEL ("gimp-close-all-dialog",
-            dialogs_close_all_get,   TRUE, FALSE, FALSE),
+            dialogs_close_all_get,          TRUE, FALSE, FALSE),
   TOPLEVEL ("gimp-quit-dialog",
-            dialogs_quit_get,        TRUE, FALSE, FALSE)
+            dialogs_quit_get,               TRUE, FALSE, FALSE)
 };
 
 #define DOCKABLE(id,name,blurb,stock_id,help_id,\

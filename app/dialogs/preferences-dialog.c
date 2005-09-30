@@ -41,6 +41,7 @@
 #include "widgets/gimpcontrollerlist.h"
 #include "widgets/gimpdeviceinfo.h"
 #include "widgets/gimpdevices.h"
+#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpgrideditor.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimppropwidgets.h"
@@ -54,7 +55,6 @@
 #include "gui/session.h"
 #include "gui/themes.h"
 
-#include "keyboard-shortcuts-dialog.h"
 #include "resolution-calibrate-dialog.h"
 
 #include "gimp-intl.h"
@@ -87,8 +87,6 @@ static void   prefs_input_devices_dialog          (GtkWidget  *widget,
 static void   prefs_input_dialog_able_callback    (GtkWidget  *widget,
                                                    GdkDevice  *device,
                                                    gpointer    data);
-static void   prefs_keyboard_shortcuts_dialog     (GtkWidget  *widget,
-                                                   Gimp       *gimp);
 static void   prefs_menus_save_callback           (GtkWidget  *widget,
                                                    Gimp       *gimp);
 static void   prefs_menus_clear_callback          (GtkWidget  *widget,
@@ -469,38 +467,12 @@ prefs_input_dialog_able_callback (GtkWidget *widget,
 }
 
 static void
-prefs_keyboard_shortcuts_destroy (GtkWidget *widget,
-                                  GtkWidget *prefs)
-{
-  g_object_set_data (G_OBJECT (prefs), "gimp-keyboard-shortcuts-dialog", NULL);
-}
-
-static void
 prefs_keyboard_shortcuts_dialog (GtkWidget *widget,
                                  Gimp      *gimp)
 {
-  GtkWidget *dialog;
-
-  dialog = g_object_get_data (G_OBJECT (gtk_widget_get_toplevel (widget)),
-                              "gimp-keyboard-shortcuts-dialog");
-
-  if (dialog)
-    {
-      gtk_window_present (GTK_WINDOW (dialog));
-      return;
-    }
-
-  dialog = keyboard_shortcuts_dialog_new (widget,
-                                          GTK_DIALOG_DESTROY_WITH_PARENT);
-
-  g_object_set_data (G_OBJECT (gtk_widget_get_toplevel (widget)),
-                     "gimp-keyboard-shortcuts-dialog", dialog);
-
-  g_signal_connect_object (dialog, "destroy",
-                           G_CALLBACK (prefs_keyboard_shortcuts_destroy),
-                           gtk_widget_get_toplevel (widget), 0);
-
-  gtk_widget_show (dialog);
+  gimp_dialog_factory_dialog_raise (gimp_dialog_factory_from_name ("toplevel"),
+                                    gtk_widget_get_screen (widget),
+                                    "gimp-keyboard-shortcuts-dialog", 0);
 }
 
 static void

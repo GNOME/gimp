@@ -75,6 +75,7 @@
 #include "file-open-location-dialog.h"
 #include "file-save-dialog.h"
 #include "image-new-dialog.h"
+#include "keyboard-shortcuts-dialog.h"
 #include "module-dialog.h"
 #include "preferences-dialog.h"
 #include "quit-dialog.h"
@@ -132,6 +133,14 @@ dialogs_preferences_get (GimpDialogFactory *factory,
                          gint               preview_size)
 {
   return preferences_dialog_create (context->gimp);
+}
+
+GtkWidget *
+dialogs_keyboard_shortcuts_get (GimpDialogFactory *factory,
+                                GimpContext       *context,
+                                gint               preview_size)
+{
+  return keyboard_shortcuts_dialog_new ();
 }
 
 GtkWidget *

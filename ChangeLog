@@ -1,5 +1,18 @@
 2005-09-30  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/dialogs-actions.c
+	* app/dialogs/dialogs-constructors.[ch]
+	* app/dialogs/dialogs.c
+	* app/dialogs/keyboard-shortcuts-dialog.[ch]: register the keyboard
+	shortcut dialog with the dialog factory as singleton toplevel dialog.
+
+	* app/dialogs/preferences-dialog.c: changed accordingly.
+
+	* menus/image-menu.xml.in: added a "Keyboard Shortcuts" entry to
+	the Edit menu.
+
+2005-09-30  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/Makefile.am
 	* app/dialogs/keyboard-shortcuts-dialog.[ch]
 	* app/dialogs/preferences-dialog.c

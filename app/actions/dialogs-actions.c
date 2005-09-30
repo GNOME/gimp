@@ -191,6 +191,11 @@ static GimpStringActionEntry dialogs_toplevel_actions[] =
     "gimp-preferences-dialog",
     GIMP_HELP_PREFS_DIALOG },
 
+  { "dialogs-keyboard-shortcuts", NULL,
+    N_("_Keyboard Shortcuts"), NULL, NULL,
+    "gimp-keyboard-shortcuts-dialog",
+    GIMP_HELP_KEYBOARD_SHORTCUTS },
+
   { "dialogs-module-dialog", GTK_STOCK_EXECUTE,
     N_("_Module Manager"), NULL, NULL,
     "gimp-module-dialog",

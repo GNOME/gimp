@@ -37,6 +37,9 @@ GtkWidget * dialogs_file_save_new          (GimpDialogFactory *factory,
 GtkWidget * dialogs_preferences_get        (GimpDialogFactory *factory,
                                             GimpContext       *context,
                                             gint               preview_size);
+GtkWidget * dialogs_keyboard_shortcuts_get (GimpDialogFactory *factory,
+                                            GimpContext       *context,
+                                            gint               preview_size);
 GtkWidget * dialogs_module_get             (GimpDialogFactory *factory,
                                             GimpContext       *context,
                                             gint               preview_size);

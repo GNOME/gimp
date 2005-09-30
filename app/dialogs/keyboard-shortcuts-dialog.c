@@ -24,19 +24,17 @@
 
 #include "dialogs-types.h"
 
-#include "keyboard-shortcuts-dialog.h"
-
 #include "widgets/gimpactionview.h"
-#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpuimanager.h"
+
+#include "keyboard-shortcuts-dialog.h"
 
 #include "gimp-intl.h"
 
 
 GtkWidget *
-keyboard_shortcuts_dialog_new (GtkWidget      *parent,
-                               GtkDialogFlags  flags)
+keyboard_shortcuts_dialog_new (void)
 {
   GtkWidget *dialog;
   GtkWidget *vbox;
@@ -46,21 +44,15 @@ keyboard_shortcuts_dialog_new (GtkWidget      *parent,
   GtkWidget *image;
   GtkWidget *label;
 
-  g_return_val_if_fail (parent == NULL || GTK_IS_WIDGET (parent), NULL);
-
   dialog = gimp_dialog_new (_("Configure Keyboard Shortcuts"),
                             "gimp-keyboard-shortcuts-dialog",
-                            gtk_widget_get_toplevel (parent), flags,
-
+                            NULL, 0,
                             gimp_standard_help_func,
                             GIMP_HELP_KEYBOARD_SHORTCUTS,
 
                             GTK_STOCK_CLOSE, GTK_RESPONSE_OK,
 
                             NULL);
-
-  gimp_dialog_factory_add_foreign (gimp_dialog_factory_from_name ("toplevel"),
-                                   "gimp-keyboard-shortcuts-dialog", dialog);
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (gtk_widget_destroy),

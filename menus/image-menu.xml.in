@@ -187,6 +187,7 @@
       </placeholder>
       <separator />
         <menuitem action="dialogs-preferences" />      
+        <menuitem action="dialogs-keyboard-shortcuts" />
       <separator />
     </menu>
 
