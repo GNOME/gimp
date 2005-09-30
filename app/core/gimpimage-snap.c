@@ -543,11 +543,6 @@ gimp_image_snap_rectangle (GimpImage *gimage,
           GimpCoords nearest;
           gdouble    dist;
 
-#define gimp_stroke_nearest_tangent_get(stroke,coords1,coords2,\
-                                        d,e,f,g,h) FALSE
-#define gimp_stroke_nearest_intersection_get(stroke,coords,direction,\
-                                             d,e,f,g,h) FALSE
-
           /*  top edge  */
 
           coords1.x = x1;

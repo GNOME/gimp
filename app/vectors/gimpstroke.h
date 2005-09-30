@@ -175,6 +175,22 @@ gdouble      gimp_stroke_nearest_point_get    (const GimpStroke      *stroke,
                                                GimpAnchor           **ret_segment_start,
                                                GimpAnchor           **ret_segment_end,
                                                gdouble               *ret_pos);
+gdouble     gimp_stroke_nearest_tangent_get   (const GimpStroke      *stroke,
+                                               const GimpCoords      *coords1,
+                                               const GimpCoords      *coords2,
+                                               gdouble                precision,
+                                               GimpCoords            *nearest,
+                                               GimpAnchor           **ret_segment_start,
+                                               GimpAnchor           **ret_segment_end,
+                                               gdouble               *ret_pos);
+gdouble  gimp_stroke_nearest_intersection_get (const GimpStroke      *stroke,
+                                               const GimpCoords      *coords1,
+                                               const GimpCoords      *coords2,
+                                               gdouble                precision,
+                                               GimpCoords            *nearest,
+                                               GimpAnchor           **ret_segment_start,
+                                               GimpAnchor           **ret_segment_end,
+                                               gdouble               *ret_pos);
 
 
 /* prev == NULL: "first" anchor */

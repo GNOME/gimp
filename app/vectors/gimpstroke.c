@@ -432,6 +432,48 @@ gimp_stroke_nearest_point_get (const GimpStroke *stroke,
                                                             ret_pos);
 }
 
+gdouble
+gimp_stroke_nearest_tangent_get   (const GimpStroke      *stroke,
+                                   const GimpCoords      *coords1,
+                                   const GimpCoords      *coords2,
+                                   gdouble                precision,
+                                   GimpCoords            *nearest,
+                                   GimpAnchor           **ret_segment_start,
+                                   GimpAnchor           **ret_segment_end,
+                                   gdouble               *ret_pos)
+{
+  g_return_val_if_fail (GIMP_IS_STROKE (stroke), FALSE);
+  g_return_val_if_fail (coords1 != NULL, FALSE);
+  g_return_val_if_fail (coords2 != NULL, FALSE);
+
+#ifdef __GNUC__
+#warning please implement me, nomis!
+#endif
+
+  return -1;
+}
+
+gdouble
+gimp_stroke_nearest_intersection_get (const GimpStroke      *stroke,
+                                      const GimpCoords      *coords1,
+                                      const GimpCoords      *coords2,
+                                      gdouble                precision,
+                                      GimpCoords            *nearest,
+                                      GimpAnchor           **ret_segment_start,
+                                      GimpAnchor           **ret_segment_end,
+                                      gdouble               *ret_pos)
+{
+  g_return_val_if_fail (GIMP_IS_STROKE (stroke), FALSE);
+  g_return_val_if_fail (coords1 != NULL, FALSE);
+  g_return_val_if_fail (coords2 != NULL, FALSE);
+
+#ifdef __GNUC__
+#warning please implement me, nomis!
+#endif
+
+  return -1;
+}
+
 static gdouble
 gimp_stroke_real_nearest_point_get (const GimpStroke *stroke,
                                     const GimpCoords *coord,

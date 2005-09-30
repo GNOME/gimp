@@ -1,3 +1,10 @@
+2005-09-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/vectors/gimpstroke.[ch]: added stubs of two new snapping
+	functions.
+
+	* app/core/gimpimage-snap.c: removed their #defines here.
+
 2005-09-30  Sven Neumann  <sven@gimp.org>
 
 	* app/core/core-enums.[ch]
