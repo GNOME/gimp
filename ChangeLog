@@ -1,3 +1,11 @@
+2005-09-30  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/Makefile.am
+	* app/dialogs/keyboard-shortcuts-dialog.[ch]
+	* app/dialogs/preferences-dialog.c
+	* app/widgets/gimphelp-ids.h: moved Keyboard Shortcuts dialog into
+	it's own file.
+
 2005-09-29  Akkana Peck  <akkana@cvs.gnome.org>
 
 	* plug-ins/common/autocrop.c:

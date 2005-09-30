@@ -35,18 +35,15 @@
 #include "core/gimplist.h"
 #include "core/gimptemplate.h"
 
-#include "widgets/gimpactionview.h"
 #include "widgets/gimpcolorpanel.h"
 #include "widgets/gimpcontainercombobox.h"
 #include "widgets/gimpcontainerview.h"
 #include "widgets/gimpcontrollerlist.h"
 #include "widgets/gimpdeviceinfo.h"
 #include "widgets/gimpdevices.h"
-#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpgrideditor.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimppropwidgets.h"
-#include "widgets/gimpuimanager.h"
 #include "widgets/gimptemplateeditor.h"
 #include "widgets/gimpwidgets-utils.h"
 
@@ -57,6 +54,7 @@
 #include "gui/session.h"
 #include "gui/themes.h"
 
+#include "keyboard-shortcuts-dialog.h"
 #include "resolution-calibrate-dialog.h"
 
 #include "gimp-intl.h"
@@ -482,12 +480,6 @@ prefs_keyboard_shortcuts_dialog (GtkWidget *widget,
                                  Gimp      *gimp)
 {
   GtkWidget *dialog;
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *scrolled_window;
-  GtkWidget *view;
-  GtkWidget *image;
-  GtkWidget *label;
 
   dialog = g_object_get_data (G_OBJECT (gtk_widget_get_toplevel (widget)),
                               "gimp-keyboard-shortcuts-dialog");
@@ -498,70 +490,15 @@ prefs_keyboard_shortcuts_dialog (GtkWidget *widget,
       return;
     }
 
-  dialog = gimp_dialog_new (_("Configure Keyboard Shortcuts"),
-                            "gimp-keyboard-shortcuts-dialog",
-                            gtk_widget_get_toplevel (widget),
-                            GTK_DIALOG_DESTROY_WITH_PARENT,
-                            gimp_standard_help_func,
-                            GIMP_HELP_PREFS_INTERFACE,
-
-                            GTK_STOCK_CLOSE, GTK_RESPONSE_OK,
-
-                            NULL);
+  dialog = keyboard_shortcuts_dialog_new (widget,
+                                          GTK_DIALOG_DESTROY_WITH_PARENT);
 
   g_object_set_data (G_OBJECT (gtk_widget_get_toplevel (widget)),
                      "gimp-keyboard-shortcuts-dialog", dialog);
 
-  gimp_dialog_factory_add_foreign (gimp_dialog_factory_from_name ("toplevel"),
-                                   "gimp-keyboard-shortcuts-dialog", dialog);
-
-  g_signal_connect (dialog, "response",
-                    G_CALLBACK (gtk_widget_destroy),
-                    NULL);
   g_signal_connect_object (dialog, "destroy",
                            G_CALLBACK (prefs_keyboard_shortcuts_destroy),
                            gtk_widget_get_toplevel (widget), 0);
-
-  vbox = gtk_vbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);
-  gtk_widget_show (vbox);
-
-  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
-  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
-                                       GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (vbox), scrolled_window, TRUE, TRUE, 0);
-  gtk_widget_show (scrolled_window);
-
-  view = gimp_action_view_new (gimp_ui_managers_from_name ("<Image>")->data,
-                               NULL, TRUE);
-  gtk_widget_set_size_request (view, 300, 400);
-  gtk_container_add (GTK_CONTAINER (scrolled_window), view);
-  gtk_widget_show (view);
-
-  hbox = gtk_hbox_new (FALSE, 12);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  image = gtk_image_new_from_stock (GIMP_STOCK_INFO, GTK_ICON_SIZE_DIALOG);
-  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
-  gtk_widget_show (image);
-
-  label = g_object_new (GTK_TYPE_LABEL,
-                        "label",   _("To edit a shortcut key, click on the "
-                                     "corresponding row and type a new "
-                                     "accelerator, or press backspace to "
-                                     "clear."),
-                        "wrap",    TRUE,
-                        "justify", GTK_JUSTIFY_LEFT,
-                        "xalign",  0.0,
-                        "yalign",  0.5,
-                        NULL);
-  gimp_label_set_attributes (GTK_LABEL (label),
-                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
-                             -1);
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
 
   gtk_widget_show (dialog);
 }

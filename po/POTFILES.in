@@ -150,6 +150,7 @@ app/dialogs/image-new-dialog.c
 app/dialogs/image-properties-dialog.c
 app/dialogs/image-scale-dialog.c
 app/dialogs/info-dialog.c
+app/dialogs/keyboard-shortcuts-dialog.c
 app/dialogs/layer-add-mask-dialog.c
 app/dialogs/layer-options-dialog.c
 app/dialogs/module-dialog.c

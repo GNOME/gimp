@@ -410,6 +410,8 @@
 #define GIMP_HELP_PREFS_FOLDERS_ENVIRONMENT       "gimp-prefs-folders-environment"
 #define GIMP_HELP_PREFS_FOLDERS_THEMES            "gimp-prefs-folders-themes"
 
+#define GIMP_HELP_KEYBOARD_SHORTCUTS              "gimp-help-keyboard-shortcuts"
+
 #define GIMP_HELP_INDEXED_PALETTE_DIALOG          "gimp-indexed-palette-dialog"
 #define GIMP_HELP_INDEXED_PALETTE_EDIT            "gimp-indexed-palette-edit"
 #define GIMP_HELP_INDEXED_PALETTE_ADD             "gimp-indexed-palette-add"
