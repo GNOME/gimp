@@ -1,3 +1,11 @@
+2005-09-29  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/uri/uri-backend-wget.c: Finish porting to new progress
+	API (and make it build).
+
+	* plug-ins/uri/uri-backend-gnomevfs.c: Convert a g_strdup_printf
+	gimp_progress_set_text pair to gimp_progress_set_text_printf.
+
 2005-09-30  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/dialogs-actions.c

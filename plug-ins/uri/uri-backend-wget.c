@@ -191,7 +191,7 @@ uri_backend_load_image (const gchar  *uri,
 
       /*  The fourth line is either the network request or an error  */
 
-      gimp_progress_set_text ("%s %s", _("Opening URI..."), timeout_msg);
+      gimp_progress_set_text_printf ("%s %s", _("Opening URI..."), timeout_msg);
 
       if (fgets (buf, sizeof (buf), input) == NULL)
         {
@@ -284,7 +284,7 @@ uri_backend_load_image (const gchar  *uri,
           memsize = NULL;
         }
 
-      gimp_progress_set_text ("%s %s", message, timeout_msg);
+      gimp_progress_set_text_printf ("%s %s", message, timeout_msg);
 
       g_free (message);
       g_free (memsize);
@@ -316,14 +316,12 @@ uri_backend_load_image (const gchar  *uri,
               else
                 {
                   memsize = gimp_memsize_to_string (kilobytes * 1024);
-                  message = g_strdup_printf (_("Downloaded %s of image data"),
-                                             memsize);
-                  g_free (memsize);
 
-                  gimp_progress_set_text (message);
+                  gimp_progress_set_text_printf
+                    (_("Downloaded %s of image data"), memsize);
                   gimp_progress_pulse ();
 
-                  g_free (message);
+                  g_free (memsize);
                 }
             }
           else if (dot == ':')  /* the time string contains a ':' */

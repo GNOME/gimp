@@ -187,7 +187,6 @@ copy_uri (const gchar  *src_uri,
   guchar            buffer[BUFSIZE];
   GnomeVFSResult    result;
   gchar            *memsize;
-  gchar            *message;
   GTimeVal          last_time = { 0, 0 };
 
   gimp_progress_init (_("Connecting to server..."));
@@ -281,13 +280,11 @@ copy_uri (const gchar  *src_uri,
           else
             {
               memsize = gimp_memsize_to_string (bytes_read);
-              message = g_strdup_printf (copied_format_str, memsize);
-              g_free (memsize);
 
-              gimp_progress_set_text (message);
+              gimp_progress_set_text_printf (copied_format_str, memsize);
               gimp_progress_pulse ();
 
-              g_free (message);
+              g_free (memsize);
             }
 
           last_time = now;
