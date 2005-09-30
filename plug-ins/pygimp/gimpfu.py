@@ -183,13 +183,7 @@ def register(func_name, blurb, help, author, copyright, date, menupath,
         if not letterCheck(ent[1]):
             raise error, "result name contains illegal characters"
 
-    if menupath[:8] == '<Image>/' or \
-       menupath[:7] == '<Load>/' or \
-       menupath[:7] == '<Save>/' or \
-       menupath[:10] == '<Toolbox>/':
-        plugin_type = PLUGIN
-    else:
-        raise error, "Invalid menu path"
+    plugin_type = PLUGIN
 
     if not func_name[:7] == 'python_' and \
        not func_name[:10] == 'extension_' and \

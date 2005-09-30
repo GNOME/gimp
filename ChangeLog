@@ -1,3 +1,8 @@
+2005-09-30  Carol Spears  <carol@gimp.org>
+
+	* plug-ins/pygimp/gimpfu.py: removed code that limited plug-in 
+        registration.
+
 2005-09-30  Michael Natterer  <mitch@gimp.org>
 
 	* app/vectors/gimpstroke.[ch]: added stubs of two new snapping
