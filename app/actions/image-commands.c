@@ -225,7 +225,7 @@ image_resize_to_layers_cmd_callback (GtkAction *action,
   return_if_no_display (gdisp, data);
 
   progress = gimp_progress_start (GIMP_PROGRESS (gdisp),
-                                  _("Resizing..."), FALSE);
+                                  _("Resizing"), FALSE);
 
   gimp_image_resize_to_layers (gdisp->gimage,
                                action_data_get_context (data),
@@ -295,7 +295,7 @@ image_flip_cmd_callback (GtkAction *action,
   return_if_no_display (gdisp, data);
 
   progress = gimp_progress_start (GIMP_PROGRESS (gdisp),
-                                  _("Flipping..."), FALSE);
+                                  _("Flipping"), FALSE);
 
   gimp_image_flip (gdisp->gimage, action_data_get_context (data),
                    (GimpOrientationType) value, progress);
@@ -316,7 +316,7 @@ image_rotate_cmd_callback (GtkAction *action,
   return_if_no_display (gdisp, data);
 
   progress = gimp_progress_start (GIMP_PROGRESS (gdisp),
-                                  _("Rotating..."), FALSE);
+                                  _("Rotating"), FALSE);
 
   gimp_image_rotate (gdisp->gimage, action_data_get_context (data),
                      (GimpRotationType) value, progress);
@@ -485,7 +485,7 @@ image_resize_callback (GtkWidget             *dialog,
         return;
 
       progress = gimp_progress_start (GIMP_PROGRESS (gdisp),
-                                      _("Resizing..."), FALSE);
+                                      _("Resizing"), FALSE);
 
       gimp_image_resize_with_layers (image,
                                      context,
@@ -558,7 +558,7 @@ image_scale_callback (ImageScaleDialog  *dialog)
           GimpProgress *progress;
 
           progress = gimp_progress_start (GIMP_PROGRESS (dialog->gdisp),
-                                          _("Scaling..."), FALSE);
+                                          _("Scaling"), FALSE);
 
           gimp_image_scale (image,
                             dialog->width,

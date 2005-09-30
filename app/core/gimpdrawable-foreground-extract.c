@@ -108,7 +108,7 @@ gimp_drawable_foreground_extract_siox (GimpDrawable  *drawable,
     return;
 
   if (progress)
-    gimp_progress_start (progress, _("Foreground Extraction..."), FALSE);
+    gimp_progress_start (progress, _("Foreground Extraction"), FALSE);
 
   siox_foreground_extract (gimp_drawable_data (drawable), colormap,
                            offset_x, offset_y,

@@ -985,7 +985,7 @@ layers_scale_layer_callback (GtkWidget             *dialog,
           progress = GIMP_PROGRESS (progress_dialog);
         }
 
-      progress = gimp_progress_start (progress, _("Scaling..."), FALSE);
+      progress = gimp_progress_start (progress, _("Scaling"), FALSE);
 
       gimp_item_scale_by_origin (item,
                                  width, height, interpolation,

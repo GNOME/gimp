@@ -616,7 +616,7 @@ view_actions_set_zoom (GimpActionGroup  *group,
     {
       action = "view-zoom-other";
 
-      label = g_strdup_printf (_("Othe_r (%s) ..."), str);
+      label = g_strdup_printf (_("Othe_r (%s)..."), str);
       gimp_action_group_set_action_label (group, action, label);
       g_free (label);
 

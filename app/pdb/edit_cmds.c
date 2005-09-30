@@ -1178,7 +1178,7 @@ edit_blend_invoker (Gimp         *gimp,
       if (success)
         {
           if (progress)
-            gimp_progress_start (progress, _("Blending..."), FALSE);
+            gimp_progress_start (progress, _("Blending"), FALSE);
 
           gimp_drawable_blend (drawable,
                                context,

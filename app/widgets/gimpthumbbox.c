@@ -754,7 +754,7 @@ gimp_thumb_box_auto_thumbnail (GimpThumbBox *box)
 
               size = gimp_memsize_to_string (thumb->image_filesize);
               text = g_strdup_printf ("%s\n%s",
-                                      size, _("Creating Preview ..."));
+                                      size, _("Creating preview..."));
 
               gtk_label_set_text (GTK_LABEL (box->info), text);
 
@@ -764,7 +764,7 @@ gimp_thumb_box_auto_thumbnail (GimpThumbBox *box)
           else
             {
               gtk_label_set_text (GTK_LABEL (box->info),
-                                  _("Creating Preview ..."));
+                                  _("Creating preview..."));
             }
 
           gimp_imagefile_create_thumbnail_weak (box->imagefile,

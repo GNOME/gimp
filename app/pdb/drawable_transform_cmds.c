@@ -247,7 +247,7 @@ drawable_transform_flip_invoker (Gimp         *gimp,
                                            x, y, width, height, x0, y0, x1, y1);
 
           if (progress)
-            gimp_progress_start (progress, _("Flip..."), FALSE);
+            gimp_progress_start (progress, _("Flipping"), FALSE);
 
           /* Transform the selection */
           success = gimp_drawable_transform_affine (drawable, context,
@@ -403,7 +403,7 @@ drawable_transform_flip_default_invoker (Gimp         *gimp,
             interpolation_type = gimp->config->interpolation_type;
 
           if (progress)
-            gimp_progress_start (progress, _("Flip..."), FALSE);
+            gimp_progress_start (progress, _("Flipping"), FALSE);
 
           /* Transform the selection */
           success = gimp_drawable_transform_affine (drawable, context,
@@ -564,7 +564,7 @@ drawable_transform_perspective_invoker (Gimp         *gimp,
                                              trans_info[X3], trans_info[Y3]);
 
           if (progress)
-            gimp_progress_start (progress, _("Perspective..."), FALSE);
+            gimp_progress_start (progress, _("Perspective"), FALSE);
 
           /* Transform the selection */
           success = gimp_drawable_transform_affine (drawable, context,
@@ -749,7 +749,7 @@ drawable_transform_perspective_default_invoker (Gimp         *gimp,
             interpolation_type = gimp->config->interpolation_type;
 
           if (progress)
-            gimp_progress_start (progress, _("Perspective..."), FALSE);
+            gimp_progress_start (progress, _("Perspective"), FALSE);
 
           /* Transform the selection */
           success = gimp_drawable_transform_affine (drawable, context,
@@ -1040,7 +1040,7 @@ drawable_transform_rotate_invoker (Gimp         *gimp,
                                                  center_x, center_y, angle);
 
           if (progress)
-            gimp_progress_start (progress, _("Rotating..."), FALSE);
+            gimp_progress_start (progress, _("Rotating"), FALSE);
 
           /* Transform the selection */
           success = gimp_drawable_transform_affine (drawable, context,
@@ -1199,7 +1199,7 @@ drawable_transform_rotate_default_invoker (Gimp         *gimp,
             interpolation_type = gimp->config->interpolation_type;
 
           if (progress)
-            gimp_progress_start (progress, _("Rotating..."), FALSE);
+            gimp_progress_start (progress, _("Rotating"), FALSE);
 
           /* Transform the selection */
           success = gimp_drawable_transform_affine (drawable, context,
@@ -1354,7 +1354,7 @@ drawable_transform_scale_invoker (Gimp         *gimp,
                                        trans_info[Y1] - trans_info[Y0]);
 
           if (progress)
-            gimp_progress_start (progress, _("Scaling..."), FALSE);
+            gimp_progress_start (progress, _("Scaling"), FALSE);
 
           /* Transform the selection */
           success = gimp_drawable_transform_affine (drawable, context,
@@ -1513,7 +1513,7 @@ drawable_transform_scale_default_invoker (Gimp         *gimp,
             interpolation_type = gimp->config->interpolation_type;
 
           if (progress)
-            gimp_progress_start (progress, _("Scaling..."), FALSE);
+            gimp_progress_start (progress, _("Scaling"), FALSE);
 
           /* Transform the selection */
           success = gimp_drawable_transform_affine (drawable, context,
@@ -1662,7 +1662,7 @@ drawable_transform_shear_invoker (Gimp         *gimp,
                                        shear_type, magnitude);
 
           if (progress)
-            gimp_progress_start (progress, _("Shearing..."), FALSE);
+            gimp_progress_start (progress, _("Shearing"), FALSE);
 
           /* Transform the selection */
           success = gimp_drawable_transform_affine (drawable, context,
@@ -1805,7 +1805,7 @@ drawable_transform_shear_default_invoker (Gimp         *gimp,
             interpolation_type = gimp->config->interpolation_type;
 
           if (progress)
-            gimp_progress_start (progress, _("Shearing..."), FALSE);
+            gimp_progress_start (progress, _("Shearing"), FALSE);
 
           /* Transform the selection */
           success = gimp_drawable_transform_affine (drawable, context,
@@ -1958,7 +1958,7 @@ drawable_transform_2d_invoker (Gimp         *gimp,
           gimp_matrix3_translate (&matrix, dest_x, dest_y);
 
           if (progress)
-            gimp_progress_start (progress, _("2D Transform..."), FALSE);
+            gimp_progress_start (progress, _("2D Transform"), FALSE);
 
           /* Transform the selection */
           success = gimp_drawable_transform_affine (drawable, context,
@@ -2140,7 +2140,7 @@ drawable_transform_2d_default_invoker (Gimp         *gimp,
             interpolation_type = gimp->config->interpolation_type;
 
           if (progress)
-            gimp_progress_start (progress, _("2D Transform..."), FALSE);
+            gimp_progress_start (progress, _("2D Transforming"), FALSE);
 
           /* Transform the selection */
           success = gimp_drawable_transform_affine (drawable, context,
@@ -2328,7 +2328,7 @@ drawable_transform_matrix_invoker (Gimp         *gimp,
           matrix.coeff[2][2] = coeff_2_2;
 
           if (progress)
-            gimp_progress_start (progress, _("2D Transform..."), FALSE);
+            gimp_progress_start (progress, _("2D Transforming"), FALSE);
 
           /* Transform the selection */
           success = gimp_drawable_transform_affine (drawable, context,
@@ -2530,7 +2530,7 @@ drawable_transform_matrix_default_invoker (Gimp         *gimp,
             interpolation_type = gimp->config->interpolation_type;
 
           if (progress)
-            gimp_progress_start (progress, _("2D Transform..."), FALSE);
+            gimp_progress_start (progress, _("2D Transforming"), FALSE);
 
           /* Transform the selection */
           success = gimp_drawable_transform_affine (drawable, context,

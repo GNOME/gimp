@@ -274,7 +274,7 @@ convert_dialog_response (GtkWidget     *widget,
       GimpProgress *progress;
 
       progress = gimp_progress_start (dialog->progress,
-                                      _("Converting to indexed..."), FALSE);
+                                      _("Converting to indexed"), FALSE);
 
       /*  Convert the image to indexed color  */
       gimp_image_convert (dialog->gimage,

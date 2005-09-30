@@ -614,7 +614,7 @@ gimp_imagefile_get_desc_string (GimpImagefile *imagefile)
             break;
 
           case GIMP_THUMB_STATE_EXISTS:
-            g_string_append (str, _("Loading preview ..."));
+            g_string_append (str, _("Loading preview..."));
             break;
 
           case GIMP_THUMB_STATE_OLD:

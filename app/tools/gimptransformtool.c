@@ -252,7 +252,7 @@ gimp_transform_tool_init (GimpTransformTool *tr_tool)
   tr_tool->direction        = GIMP_TRANSFORM_FORWARD;
 
   tr_tool->shell_desc       = NULL;
-  tr_tool->progress_text    = _("Transforming...");
+  tr_tool->progress_text    = _("Transforming");
   tr_tool->info_dialog      = NULL;
 }
 

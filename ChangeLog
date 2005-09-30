@@ -1,3 +1,29 @@
+2005-09-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/image-commands.c
+	* app/actions/layers-commands.c
+	* app/actions/view-actions.c
+	* app/core/gimpdrawable-foreground-extract.c
+	* app/core/gimpimagefile.c
+	* app/core/gimpprogress.c
+	* app/dialogs/convert-dialog.c
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpperspectivetool.c
+	* app/tools/gimprotatetool.c
+	* app/tools/gimpscaletool.c
+	* app/tools/gimpsheartool.c
+	* app/tools/gimptransformtool.c
+	* app/widgets/gimpthumbbox.c
+	* tools/pdbgen/pdb/drawable_transform.pdb
+	* tools/pdbgen/pdb/edit.pdb
+	* tools/pdbgen/pdb/transform_tools.pdb: removed '...' from
+	progress messages. Removed spaces between the text and the '...'
+	in some other places.
+
+	* app/pdb/drawable_transform_cmds.c
+	* app/pdb/edit_cmds.c
+	* app/pdb/transform_tools_cmds.c: regenerated.
+
 2005-09-30  Carol Spears  <carol@gimp.org>
 
 	* plug-ins/pygimp/gimpfu.py: removed code that limited plug-in 

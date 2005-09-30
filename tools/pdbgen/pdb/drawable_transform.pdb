@@ -23,10 +23,10 @@
 
 # shortcuts
 
-sub pdb_misc {
+sub joao_pdb_misc {
     $author = $copyright = 'Jo\xc3\xa3o S. O. Bueno Calligaris';
-    $date = '2004';
-    $since = '2.2';
+    $date   = '2004';
+    $since  = '2.2';
 }
 
 sub drawable_arg () {{
@@ -172,7 +172,7 @@ selection, this will be equal to the drawable ID supplied as input.
 Otherwise, this will be the newly created and flipped drawable.
 HELP
 
-    &pdb_misc;
+    &joao_pdb_misc;
 
     @inargs = (
         &drawable_arg,
@@ -227,7 +227,7 @@ Otherwise, this will be the newly created and flipped drawable. The clip
 results parameter specifies wheter current selection will affect the transform.
 HELP
 
-    &pdb_misc;
+    &joao_pdb_misc;
 
     @inargs = (
         &drawable_arg,
@@ -244,7 +244,7 @@ HELP
 
     @outargs = ( &drawable_out_arg('flipped') );
 
-    transform_invoke ("Flip...", <<CODE);
+    transform_invoke ("Flipping", <<CODE);
       gimp_matrix3_identity (&matrix);
       gimp_transform_matrix_flip_free (&matrix,
                                        x, y, width, height, x0, y0, x1, y1);
@@ -263,7 +263,7 @@ uses no interpolation/supersampling at all, or default values
 (depending on the 'interpolate' parameter).
 HELP
 
-    &pdb_misc;
+    &joao_pdb_misc;
 
     @inargs = (
         &drawable_arg,
@@ -280,7 +280,7 @@ HELP
 
     @outargs = ( &drawable_out_arg('flipped') );
 
-    transform_default_invoke ("Flip...", <<CODE);
+    transform_default_invoke ("Flipping", <<CODE);
       gimp_matrix3_identity (&matrix);
       gimp_transform_matrix_flip_free (&matrix,
                                        x, y, width, height, x0, y0, x1, y1);
@@ -311,7 +311,7 @@ resulting transformed drawable will appear to have been projected via
 a perspective transform.
 HELP
 
-    &pdb_misc;
+    &joao_pdb_misc;
 
     @inargs = (
         &drawable_arg
@@ -334,7 +334,7 @@ HELP
 
     @outargs = ( &drawable_out_arg('newly mapped') );
 
-    transform_invoke ("Perspective...", <<CODE, [ 'gdouble trans_info[8]' ]);
+    transform_invoke ("Perspective", <<CODE, [ 'gdouble trans_info[8]' ]);
       gimp_matrix3_identity (&matrix);
       gimp_transform_matrix_perspective (&matrix,
                                          x, y, width, height,
@@ -357,7 +357,7 @@ uses no interpolation/supersampling at all, or default values
 (depending on the 'interpolate' parameter).
 HELP
 
-    &pdb_misc;
+    &joao_pdb_misc;
 
     @inargs = (
         &drawable_arg
@@ -380,7 +380,7 @@ HELP
 
     @outargs = ( &drawable_out_arg('newly mapped') );
 
-    transform_default_invoke ("Perspective...", <<CODE, [ 'gdouble trans_info[8]' ]);
+    transform_default_invoke ("Perspective", <<CODE, [ 'gdouble trans_info[8]' ]);
       gimp_matrix3_identity (&matrix);
       gimp_transform_matrix_perspective (&matrix,
                                          x, y, width, height,
@@ -407,7 +407,7 @@ this will be equal to the drawable ID supplied as input. Otherwise,
 this will be the newly created and rotated drawable.
 HELP
 
-    &pdb_misc;
+    &joao_pdb_misc;
 
     @inargs = (
         &drawable_arg,
@@ -460,7 +460,7 @@ this will be equal to the drawable ID supplied as input. Otherwise,
 this will be the newly created and rotated drawable.
 HELP
 
-    &pdb_misc;
+    &joao_pdb_misc;
 
     @inargs = (
         &drawable_arg,
@@ -477,7 +477,7 @@ HELP
 
     @outargs = ( &drawable_out_arg('rotated') );
 
-    transform_invoke ("Rotating...", <<CODE);
+    transform_invoke ("Rotating", <<CODE);
       gimp_matrix3_identity (&matrix);
       if (auto_center)
         gimp_transform_matrix_rotate_rect (&matrix, x, y, width, height, angle);
@@ -499,7 +499,7 @@ uses no interpolation/supersampling at all, or default values
 (depending on the 'interpolate' parameter).
 HELP
 
-    &pdb_misc;
+    &joao_pdb_misc;
 
     @inargs = (
         &drawable_arg,
@@ -516,7 +516,7 @@ HELP
 
     @outargs = ( &drawable_out_arg('rotated') );
 
-    transform_default_invoke ("Rotating...", <<CODE);
+    transform_default_invoke ("Rotating", <<CODE);
       gimp_matrix3_identity (&matrix);
       if (auto_center)
         gimp_transform_matrix_rotate_rect (&matrix, x, y, width, height, angle);
@@ -540,7 +540,7 @@ this will be equal to the drawable ID supplied as input. Otherwise,
 this will be the newly created and scaled drawable.
 HELP
 
-    &pdb_misc;
+    &joao_pdb_misc;
 
     @inargs = (
         &drawable_arg
@@ -564,7 +564,7 @@ HELP
 
     @outargs = ( &drawable_out_arg('scaled') );
 
-    transform_invoke ("Scaling...", <<CODE, [ 'gdouble trans_info[4]' ], <<CODE2);
+    transform_invoke ("Scaling", <<CODE, [ 'gdouble trans_info[4]' ], <<CODE2);
       gimp_matrix3_identity (&matrix);
       gimp_transform_matrix_scale (&matrix,
                                    x, y, width, height,
@@ -588,7 +588,7 @@ uses no interpolation/supersampling at all, or default values
 (depending on the 'interpolate' parameter).
 HELP
 
-    &pdb_misc;
+    &joao_pdb_misc;
 
     @inargs = (
         &drawable_arg
@@ -612,7 +612,7 @@ HELP
 
     @outargs = ( &drawable_out_arg('scaled') );
 
-    transform_default_invoke ("Scaling...", <<CODE, [ 'gdouble trans_info[4]' ], <<CODE2);
+    transform_default_invoke ("Scaling", <<CODE, [ 'gdouble trans_info[4]' ], <<CODE2);
       gimp_matrix3_identity (&matrix);
       gimp_transform_matrix_scale (&matrix,
                                    x, y, width, height,
@@ -645,7 +645,7 @@ vertically. The magnitude can be either positive or negative and
 indicates the extent (in pixels) to shear by.
 HELP
 
-    &pdb_misc;
+    &joao_pdb_misc;
 
     @inargs = (
         &drawable_arg,
@@ -658,7 +658,7 @@ HELP
 
     @outargs = ( &drawable_out_arg('sheared') );
 
-    transform_invoke ("Shearing...", <<CODE);
+    transform_invoke ("Shearing", <<CODE);
       gimp_matrix3_identity (&matrix);
       gimp_transform_matrix_shear (&matrix,
                                    x, y, width, height,
@@ -678,7 +678,7 @@ uses no interpolation/supersampling at all, or default values
 (depending on the 'interpolate' parameter).
 HELP
 
-    &pdb_misc;
+    &joao_pdb_misc;
 
     @inargs = (
         &drawable_arg,
@@ -691,7 +691,7 @@ HELP
 
     @outargs = ( &drawable_out_arg('sheared') );
 
-    transform_default_invoke ("Shearing...", <<CODE);
+    transform_default_invoke ("Shearing", <<CODE);
       gimp_matrix3_identity (&matrix);
       gimp_transform_matrix_shear (&matrix,
                                    x, y, width, height,
@@ -719,7 +719,7 @@ input. Otherwise, this will be the newly created and transformed
 drawable.
 HELP
 
-    &pdb_misc;
+    &joao_pdb_misc;
 
     @inargs = (
         &drawable_arg,
@@ -742,7 +742,7 @@ HELP
 
     @outargs = ( &drawable_out_arg('transformed') );
 
-    transform_invoke ("2D Transform...", <<CODE);
+    transform_invoke ("2D Transform", <<CODE);
       gimp_matrix3_identity  (&matrix);
       gimp_matrix3_translate (&matrix, -source_x, -source_y);
       gimp_matrix3_scale     (&matrix, scale_x, scale_y);
@@ -763,7 +763,7 @@ uses no interpolation/supersampling at all, or default values
 (depending on the 'interpolate' parameter).
 HELP
 
-    &pdb_misc;
+    &joao_pdb_misc;
 
     @inargs = (
         &drawable_arg,
@@ -786,7 +786,7 @@ HELP
 
     @outargs = ( &drawable_out_arg('transformed') );
 
-    transform_default_invoke ("2D Transform...", <<CODE);
+    transform_default_invoke ("2D Transforming", <<CODE);
       gimp_matrix3_identity  (&matrix);
       gimp_matrix3_translate (&matrix, -source_x, -source_y);
       gimp_matrix3_scale     (&matrix, scale_x, scale_y);
@@ -812,7 +812,7 @@ this will be equal to the drawable ID supplied as input. Otherwise,
 this will be the newly created and transformed drawable.
 HELP
 
-    &pdb_misc;
+    &joao_pdb_misc;
 
     @inargs = (
         &drawable_arg,
@@ -839,7 +839,7 @@ HELP
 
     @outargs = ( &drawable_out_arg('transformed') );
 
-    transform_invoke ("2D Transform...", <<CODE);
+    transform_invoke ("2D Transforming", <<CODE);
       matrix.coeff[0][0] = coeff_0_0;
       matrix.coeff[0][1] = coeff_0_1;
       matrix.coeff[0][2] = coeff_0_2;
@@ -864,7 +864,7 @@ uses no interpolation/supersampling at all, or default values
 (depending on the 'interpolate' parameter).
 HELP
 
-    &pdb_misc;
+    &joao_pdb_misc;
 
     @inargs = (
         &drawable_arg,
@@ -891,7 +891,7 @@ HELP
 
     @outargs = ( &drawable_out_arg('transformed') );
 
-    transform_default_invoke ("2D Transform...", <<CODE);
+    transform_default_invoke ("2D Transforming", <<CODE);
       matrix.coeff[0][0] = coeff_0_0;
       matrix.coeff[0][1] = coeff_0_1;
       matrix.coeff[0][2] = coeff_0_2;

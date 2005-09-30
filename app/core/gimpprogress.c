@@ -104,7 +104,7 @@ gimp_progress_start (GimpProgress *progress,
   g_return_val_if_fail (GIMP_IS_PROGRESS (progress), NULL);
 
   if (! message)
-    message = _("Please wait...");
+    message = _("Please wait");
 
   progress_iface = GIMP_PROGRESS_GET_INTERFACE (progress);
 
@@ -151,7 +151,7 @@ gimp_progress_set_text (GimpProgress *progress,
   g_return_if_fail (GIMP_IS_PROGRESS (progress));
 
   if (! message || ! strlen (message))
-    message = _("Please wait...");
+    message = _("Please wait");
 
   progress_iface = GIMP_PROGRESS_GET_INTERFACE (progress);
 

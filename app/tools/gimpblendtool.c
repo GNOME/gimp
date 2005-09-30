@@ -240,7 +240,7 @@ gimp_blend_tool_button_release (GimpTool        *tool,
       GimpProgress *progress;
 
       progress = gimp_progress_start (GIMP_PROGRESS (gdisp),
-                                      _("Blending..."), FALSE);
+                                      _("Blending"), FALSE);
 
       gimp_drawable_blend (gimp_image_active_drawable (gimage),
                            context,
