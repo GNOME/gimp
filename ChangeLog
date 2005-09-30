@@ -1,5 +1,11 @@
 2005-09-30  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/dialogs-actions.c (dialogs_toplevel_actions): use
+	GIMP_STOCK_CHAR_PICKER for the keyboard shortcuts dialog. Not
+	quite right but at least greppable when we have a proper icon.
+
+2005-09-30  Michael Natterer  <mitch@gimp.org>
+
 	* app/dialogs/dialog.c: removed forgotten foreign registration of
 	"gimp-keyboard-shortcuts-dialog".
 
