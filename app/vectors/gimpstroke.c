@@ -456,7 +456,7 @@ gimp_stroke_nearest_tangent_get   (const GimpStroke      *stroke,
 gdouble
 gimp_stroke_nearest_intersection_get (const GimpStroke      *stroke,
                                       const GimpCoords      *coords1,
-                                      const GimpCoords      *coords2,
+                                      const GimpCoords      *direction,
                                       gdouble                precision,
                                       GimpCoords            *nearest,
                                       GimpAnchor           **ret_segment_start,
