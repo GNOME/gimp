@@ -305,11 +305,11 @@ diffraction_func (gint x,
   py = 5.0 + param->dvert * (y - param->y1);
 
   diff_diffract (px, py, &rgb);
-  
+
   dest[0] = 255.0 * rgb.r;
   dest[1] = 255.0 * rgb.g;
   dest[2] = 255.0 * rgb.b;
-  
+
   if (bpp == 4)
     dest[3] = 255;
 }
@@ -327,7 +327,7 @@ diffraction (GimpDrawable *drawable)
   param.dhoriz = 10.0 / (x2 - x1 - 1);
   param.dvert  = -10.0 / (y2 - y1 - 1);
 
-  gimp_progress_init (_("Creating diffraction pattern..."));
+  gimp_progress_init (_("Creating diffraction pattern"));
   iter = gimp_rgn_iterator_new (drawable, 0);
   gimp_rgn_iterator_dest (iter, diffraction_func, &param);
   gimp_rgn_iterator_free (iter);

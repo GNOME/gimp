@@ -318,7 +318,7 @@ run (const gchar      *name,
     {
       /* Set the tile cache size */
 
-      gimp_progress_init (_("Tiling..."));
+      gimp_progress_init (_("Tiling"));
 
       do_tiles ();
 

@@ -400,7 +400,7 @@ run (const gchar      *name,
       /*  Make sure that the drawable is gray or RGB color  */
       if (gimp_drawable_is_rgb (drawable->drawable_id))
         {
-          gimp_progress_init (_("Applying Filter Pack..."));
+          gimp_progress_init (_("Applying filter pack"));
           gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
           fp (drawable);
 

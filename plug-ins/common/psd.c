@@ -1882,7 +1882,7 @@ load_image (const gchar *name)
       return -1;
     }
 
-  gimp_progress_init_printf (_("Opening '%s'..."),
+  gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_filename_to_utf8 (name));
 
   read_whole_file (fd);

@@ -532,7 +532,7 @@ load_image (const gchar *filename)
       gimp_quit ();
     }
 
-  gimp_progress_init_printf (_("Opening '%s'..."),
+  gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_filename_to_utf8 (filename));
 
   /* We will loop through the all pages in case of multipage TIFF
@@ -1922,7 +1922,7 @@ save_image (const gchar *filename,
       return FALSE;
     }
 
-  gimp_progress_init_printf (_("Saving '%s'..."),
+  gimp_progress_init_printf (_("Saving '%s'"),
                              gimp_filename_to_utf8 (filename));
 
   drawable = gimp_drawable_get (layer);

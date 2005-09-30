@@ -585,7 +585,7 @@ run (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      gimp_progress_init (_("Composing..."));
+      gimp_progress_init (_("Composing"));
 
       image_ID = compose (composevals.compose_type,
                           composevals.inputs,

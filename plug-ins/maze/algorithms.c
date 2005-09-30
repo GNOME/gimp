@@ -1,11 +1,11 @@
 /* $Id$
- * Contains routines for generating mazes, somewhat intertwined with 
+ * Contains routines for generating mazes, somewhat intertwined with
  * Gimp plug-in-maze specific stuff.
  *
  * Kevin Turner <acapnotic@users.sourceforge.net>
  * http://gimp-plug-ins.sourceforge.net/maze/
  */
- 
+
 /* mazegen code from rec.games.programmer's maze-faq:
  * * maz.c - generate a maze
  * *
@@ -16,7 +16,7 @@
  * * yell and scream and embarass you in front of your friends...
  */
 
-/* I've put a HTMLized version of the FAQ up at 
+/* I've put a HTMLized version of the FAQ up at
  * http://www.poboxes.com/kevint/gimp/maze-faq/maze-faq.html
  */
 
@@ -61,11 +61,11 @@ void      mazegen_tileable(gint     pos,
 			   gint     y,
 			   gint     rnd);
 void      prim(gint pos,
-	       gchar *maz, 
-	       guint x, 
+	       gchar *maz,
+	       guint x,
 	       guint y);
-void      prim_tileable(gchar *maz, 
-			guint x, 
+void      prim_tileable(gchar *maz,
+			guint x,
 			guint y);
 
 #define ABSMOD(A,B) ( ((A) < 0) ? (((B) + (A)) % (B)) : ((A) % (B)) )
@@ -97,7 +97,7 @@ void      prim_tileable(gchar *maz,
 #define CELL_UP_TILEABLE(POS) ((POS) < (x*2) ? x*(y-2)+(POS) : (POS) - x - x)
 #define CELL_DOWN_TILEABLE(POS) ((POS) >= x*(y-2) ? (POS) - x*(y-2) : (POS) + x + x)
 #define CELL_LEFT_TILEABLE(POS) (((POS) % x) <= 1 ? (POS) + x - 2 : (POS) - 2)
-#define CELL_RIGHT_TILEABLE(POS) (((POS) % x) >= (x - 2) ? (POS) + 2 - x : (POS) + 2)         
+#define CELL_RIGHT_TILEABLE(POS) (((POS) % x) >= (x - 2) ? (POS) + 2 - x : (POS) + 2)
 /* Up and left need checks, but down and right should never have to
    wrap on an even sized maze. */
 #define WALL_UP_TILEABLE(POS) ((POS) < x ? x*(y-1)+(POS) : (POS) - x)
@@ -151,7 +151,7 @@ mazegen(gint pos, gchar *maz, gint x, gint y, gint rnd)
 
 	switch (i) {  /* This is simple enough. */
 	case 0:       /* Go in the direction we just figured . . . */
-	    j= -x;   
+	    j= -x;
 	    break;
 	case 1:
 	    j = x;
@@ -229,7 +229,7 @@ mazegen_tileable(gint pos, gchar *maz, gint x, gint y, gint rnd)
 	     break;
 	case 1:
 	     maz[WALL_DOWN_TILEABLE(pos)]=IN;
-	     npos = CELL_DOWN_TILEABLE(pos); 
+	     npos = CELL_DOWN_TILEABLE(pos);
 	     break;
 	case 2:
 	     maz[WALL_RIGHT_TILEABLE(pos)]=IN;
@@ -284,7 +284,7 @@ prim(gint pos, gchar *maz, guint x, guint y)
 
      g_rand_set_seed (gr, rnd);
 
-     gimp_progress_init (_("Constructing maze using Prim's Algorithm..."));
+     gimp_progress_init (_("Constructing maze using Prim's Algorithm"));
 
      /* OUT is zero, so we should be already initalized. */
 
@@ -294,7 +294,7 @@ prim(gint pos, gchar *maz, guint x, guint y)
 
      maz[pos]=IN;
 
-     /* For now, repeating everything four times seems manageable.  But when 
+     /* For now, repeating everything four times seems manageable.  But when
 	Gimp is extended to drawings in n-dimensional space instead of 2D,
         this will require a bit of a re-write. */
      /* Add frontier. */
@@ -344,7 +344,7 @@ prim(gint pos, gchar *maz, guint x, guint y)
 	       case OUT:
 		    maz[up]=FRONTIER;
 		    front_cells=g_slist_prepend(front_cells,
-						GINT_TO_POINTER(up)); 
+						GINT_TO_POINTER(up));
 	       break;
 	       case IN:
 		    d=1;
@@ -358,7 +358,7 @@ prim(gint pos, gchar *maz, guint x, guint y)
 	       case OUT:
 		    maz[down]=FRONTIER;
 		    front_cells=g_slist_prepend(front_cells,
-						GINT_TO_POINTER(down)); 
+						GINT_TO_POINTER(down));
 		    break;
 	       case IN:
 		    d=d|2;
@@ -372,7 +372,7 @@ prim(gint pos, gchar *maz, guint x, guint y)
 	       case OUT:
 		    maz[left]=FRONTIER;
 		    front_cells=g_slist_prepend(front_cells,
-						GINT_TO_POINTER(left)); 
+						GINT_TO_POINTER(left));
 		    break;
 	       case IN:
 		    d=d|4;
@@ -386,14 +386,14 @@ prim(gint pos, gchar *maz, guint x, guint y)
 	       case OUT:
 		    maz[right]=FRONTIER;
 		    front_cells=g_slist_prepend(front_cells,
-						GINT_TO_POINTER(right)); 
+						GINT_TO_POINTER(right));
 		    break;
 	       case IN:
 		    d=d|8;
 		    break;
 	       default:
 		    ;
-	       }	       
+	       }
 	  }
 
 	  /* The cell is guaranteed to have at least one neighbor in
@@ -405,7 +405,7 @@ prim(gint pos, gchar *maz, guint x, guint y)
 	       g_warning("maze: prim: Lack of neighbors.\n"
 			 "seed: %d, mw: %d, mh: %d, mult: %d, offset: %d\n",
 			 mvals.seed, x, y, mvals.multiple, mvals.offset);
-	       break;	   
+	       break;
 	  }
 
 	  c=0;
@@ -417,7 +417,7 @@ prim(gint pos, gchar *maz, guint x, guint y)
 		    break;        /* here forever...                    */
 	       }
 	  } while ( !(d & ( 1 << i) ) );
-	  
+
 	  switch (i) {
 	  case 0:
 	       maz[WALL_UP(pos)]=IN;
@@ -460,7 +460,7 @@ prim_tileable(gchar *maz, guint x, guint y)
 
      g_rand_set_seed (gr, rnd);
 
-     gimp_progress_init (_("Constructing tileable maze using Prim's Algorithm..."));
+     gimp_progress_init (_("Constructing tileable maze using Prim's Algorithm"));
 
      /* OUT is zero, so we should be already initalized. */
 
@@ -484,7 +484,7 @@ prim_tileable(gchar *maz, guint x, guint y)
      front_cells=g_slist_append(front_cells,GINT_TO_POINTER(down));
      front_cells=g_slist_append(front_cells,GINT_TO_POINTER(left));
      front_cells=g_slist_append(front_cells,GINT_TO_POINTER(right));
- 
+
      /* While frontier is not empty do the following... */
      while(g_slist_length(front_cells) > 0) {
 
@@ -547,7 +547,7 @@ prim_tileable(gchar *maz, guint x, guint y)
 	       break;
 	  default:
 	       ;
-	  }	       
+	  }
 
 	  /* The cell is guaranteed to have at least one neighbor in
 	     IN (otherwise it would not have been in FRONTIER); pick
@@ -558,7 +558,7 @@ prim_tileable(gchar *maz, guint x, guint y)
 	       g_warning("maze: prim's tileable: Lack of neighbors.\n"
 			 "seed: %d, mw: %d, mh: %d, mult: %d, offset: %d\n",
 			 mvals.seed, x, y, mvals.multiple, mvals.offset);
-	       break;	   
+	       break;
 	  }
 
 	  c=0;
@@ -570,7 +570,7 @@ prim_tileable(gchar *maz, guint x, guint y)
 		    break;        /* here forever...                    */
 	       }
 	  } while ( !(d & ( 1 << i) ) );
-	  
+
 	  switch (i) {
 	  case 0:
 	       maz[WALL_UP_TILEABLE(pos)]=IN;

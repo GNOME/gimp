@@ -189,7 +189,7 @@ copy_uri (const gchar  *src_uri,
   gchar            *memsize;
   GTimeVal          last_time = { 0, 0 };
 
-  gimp_progress_init (_("Connecting to server..."));
+  gimp_progress_init (_("Connecting to server"));
 
   src_info = gnome_vfs_file_info_new ();
   result = gnome_vfs_get_file_info (src_uri, src_info, 0);

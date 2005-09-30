@@ -166,7 +166,7 @@ run (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      gimp_progress_init (_("Colorifying..."));
+      gimp_progress_init (_("Colorifying"));
 
       colorify (drawable, NULL);
 

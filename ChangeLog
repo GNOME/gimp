@@ -1,3 +1,10 @@
+2005-09-30  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/*/*.c: removed '...' from progress messages. They are
+	redundant because we are already in a progress. Ported some more
+	g_strdup_printf()/gimp_progress_init() to
+	gimp_progress_init_printf(). Core will follow...
+
 2005-09-29  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/uri/uri-backend-wget.c: Finish porting to new progress

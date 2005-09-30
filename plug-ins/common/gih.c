@@ -651,7 +651,7 @@ gih_load_image (const gchar *filename)
       return -1;
     }
 
-  gimp_progress_init_printf (_("Opening '%s'..."),
+  gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_filename_to_utf8 (filename));
 
   /* The file format starts with a painfully simple text header */
@@ -1260,7 +1260,7 @@ gih_save_image (const gchar *filename,
       return FALSE;
     }
 
-  gimp_progress_init_printf (_("Saving '%s'..."),
+  gimp_progress_init_printf (_("Saving '%s'"),
                              gimp_filename_to_utf8 (filename));
 
   parstring = gimp_pixpipe_params_build (&gihparams);

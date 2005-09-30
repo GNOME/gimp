@@ -374,22 +374,22 @@ DepthMerge_execute (DepthMerge *dm)
   depthMap1HasAlpha = 0;
   depthMap2HasAlpha = 0;
 
-  gimp_progress_init(_("Depth-merging..."));
+  gimp_progress_init (_("Depth-merging"));
 
-  resultRow    = g_new(guchar, dm->selectionWidth * 4);
-  source1Row   = g_new(guchar, dm->selectionWidth * 4);
-  source2Row   = g_new(guchar, dm->selectionWidth * 4);
-  depthMap1Row = g_new(guchar, dm->selectionWidth    );
-  depthMap2Row = g_new(guchar, dm->selectionWidth    );
-  tempRow      = g_new(guchar, dm->selectionWidth * 4);
+  resultRow    = g_new (guchar, dm->selectionWidth * 4);
+  source1Row   = g_new (guchar, dm->selectionWidth * 4);
+  source2Row   = g_new (guchar, dm->selectionWidth * 4);
+  depthMap1Row = g_new (guchar, dm->selectionWidth    );
+  depthMap2Row = g_new (guchar, dm->selectionWidth    );
+  tempRow      = g_new (guchar, dm->selectionWidth * 4);
 
   if (dm->source1Drawable != NULL)
     {
-      source1HasAlpha = gimp_drawable_has_alpha(dm->source1Drawable->drawable_id);
-      gimp_pixel_rgn_init(&source1Rgn, dm->source1Drawable,
-                          dm->selectionX0, dm->selectionY0,
-                          dm->selectionWidth, dm->selectionHeight,
-                          FALSE, FALSE);
+      source1HasAlpha = gimp_drawable_has_alpha (dm->source1Drawable->drawable_id);
+      gimp_pixel_rgn_init (&source1Rgn, dm->source1Drawable,
+                           dm->selectionX0, dm->selectionY0,
+                           dm->selectionWidth, dm->selectionHeight,
+                           FALSE, FALSE);
     }
   else
     for (x = 0; x < dm->selectionWidth; x++)
@@ -401,11 +401,11 @@ DepthMerge_execute (DepthMerge *dm)
       }
   if (dm->source2Drawable != NULL)
     {
-      source2HasAlpha = gimp_drawable_has_alpha(dm->source2Drawable->drawable_id);
-      gimp_pixel_rgn_init(&source2Rgn, dm->source2Drawable,
-                          dm->selectionX0, dm->selectionY0,
-                          dm->selectionWidth, dm->selectionHeight,
-                          FALSE, FALSE);
+      source2HasAlpha = gimp_drawable_has_alpha (dm->source2Drawable->drawable_id);
+      gimp_pixel_rgn_init (&source2Rgn, dm->source2Drawable,
+                           dm->selectionX0, dm->selectionY0,
+                           dm->selectionWidth, dm->selectionHeight,
+                           FALSE, FALSE);
     }
   else
     for (x = 0; x < dm->selectionWidth; x++)
@@ -501,7 +501,8 @@ DepthMerge_execute (DepthMerge *dm)
                              dm->selectionX0, y,
                              dm->selectionWidth);
 
-      gimp_progress_update((double)(y-dm->selectionY0) / (double)(dm->selectionHeight-1));
+      gimp_progress_update ((double)(y-dm->selectionY0) /
+                            (double)(dm->selectionHeight-1));
     }
 
   g_free (resultRow);

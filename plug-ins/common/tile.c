@@ -189,7 +189,7 @@ run (const gchar      *name,
   /*  Make sure that the drawable is gray or RGB color  */
   if (status == GIMP_PDB_SUCCESS)
     {
-      gimp_progress_init (_("Tiling..."));
+      gimp_progress_init (_("Tiling"));
       gimp_tile_cache_ntiles (2 * (width + 1) / gimp_tile_width ());
 
       values[1].data.d_image = tile (param[1].data.d_image,

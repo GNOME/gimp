@@ -329,7 +329,7 @@ solid_noise (GimpDrawable *drawable,
   /*  Initialization  */
   solid_noise_init ();
   if (!preview)
-    gimp_progress_init (_("Solid Noise..."));
+    gimp_progress_init (_("Solid Noise"));
 
   progress = 0;
   max_progress = width * height;

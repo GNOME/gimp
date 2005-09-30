@@ -274,7 +274,7 @@ run (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS && (dvals.do_x || dvals.do_y))
     {
-      gimp_progress_init (_("Displacing..."));
+      gimp_progress_init (_("Displacing"));
 
       /*  run the displace effect  */
       displace (drawable, NULL);

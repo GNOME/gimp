@@ -100,7 +100,7 @@ compute_image (void)
 
   row = g_new (guchar, obpp * width);
 
-  gimp_progress_init (_("Lighting Effects..."));
+  gimp_progress_init (_("Lighting Effects"));
 
 /*  if (mapvals.antialiasing==FALSE)
     { */

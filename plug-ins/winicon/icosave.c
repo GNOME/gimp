@@ -974,7 +974,7 @@ SaveICO (const gchar *filename,
   if ((icon_depths = ico_show_icon_dialog (image, &num_icons)) == NULL)
     return GIMP_PDB_CANCEL;
 
-  gimp_progress_init_printf (_("Saving '%s'..."),
+  gimp_progress_init_printf (_("Saving '%s'"),
                              gimp_filename_to_utf8 (filename));
 
   /* Okay, let's actually save the thing with the depths the

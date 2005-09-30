@@ -424,7 +424,7 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
 	{
-	  gimp_progress_init(_("Printing..."));
+	  gimp_progress_init(_("Printing"));
 
 	  gimp_pixel_rgn_init(&rgn, drawable, 0, 0,
 			      width, height,

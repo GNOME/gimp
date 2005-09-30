@@ -460,7 +460,7 @@ load_image (PopplerDocument        *doc,
   if (target == GIMP_PAGE_SELECTOR_TARGET_IMAGES)
     images = g_new0 (gint32, pages->n_pages);
 
-  gimp_progress_init_printf (_("Opening '%s'..."),
+  gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_filename_to_utf8 (filename));
 
   scale = resolution / gimp_unit_get_factor (GIMP_UNIT_POINT);

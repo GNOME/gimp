@@ -161,12 +161,12 @@ run (const gchar      *name,
       if ( !strcmp (name, GRADMAP_PROC))
         {
           mode = GRADIENT_MODE;
-          gimp_progress_init (_("Gradient Map..."));
+          gimp_progress_init (_("Gradient Map"));
         }
       else if ( !strcmp (name, PALETTEMAP_PROC))
         {
           mode = PALETTE_MODE;
-          gimp_progress_init (_("Palette Map..."));
+          gimp_progress_init (_("Palette Map"));
         }
       else
         {

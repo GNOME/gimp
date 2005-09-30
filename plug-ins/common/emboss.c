@@ -404,7 +404,7 @@ emboss (GimpDrawable *drawable,
   for (y = 0; y < height - 2; y++)
     {
       if (! preview && (y % p_update == 0))
-          gimp_progress_update ((gdouble) y / (gdouble) height);
+        gimp_progress_update ((gdouble) y / (gdouble) height);
 
       gimp_pixel_rgn_get_rect (&src, srcbuf, x1, y1+y, width, 3);
       EmbossRow (srcbuf, evals.embossp ? (guchar *) 0 : srcbuf,

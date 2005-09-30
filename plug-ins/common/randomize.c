@@ -386,7 +386,7 @@ run (const gchar      *name,
 	    case RNDM_SLUR: rndm_type_str = "slur"; break;
             }
 
-          gimp_progress_init_printf ("%s (%s)...",
+          gimp_progress_init_printf ("%s (%s)",
                                      gettext (RNDM_VERSION[rndm_type - 1]),
                                      gettext (rndm_type_str));
 	  gimp_tile_cache_ntiles (2 *
@@ -658,7 +658,7 @@ randomize (GimpDrawable *drawable,
 	  nr = tmp;
 
 	  if (PROG_UPDATE_TIME)
-	    gimp_progress_update((double) row / (double) (y2 - y1));
+	    gimp_progress_update ((double) row / (double) (y2 - y1));
         }
       /*
        *  if we have more cycles to perform, swap the src and dest Pixel Regions
@@ -679,13 +679,13 @@ randomize (GimpDrawable *drawable,
             }
         }
     }
-  gimp_progress_update((double) 100);
+  gimp_progress_update ((double) 100);
   /*
    *  update the randomized region
    */
-  gimp_drawable_flush(drawable);
-  gimp_drawable_merge_shadow(drawable->drawable_id, TRUE);
-  gimp_drawable_update(drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_flush (drawable);
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
   /*
    *  clean up after ourselves.
    */

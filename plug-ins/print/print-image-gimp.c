@@ -317,7 +317,7 @@ Image_get_row(stp_image_t *image, unsigned char *data, int row)
 static void
 Image_progress_init(stp_image_t *image)
 {
-  gimp_progress_init(_("Printing..."));
+  gimp_progress_init(_("Printing"));
 }
 
 static void

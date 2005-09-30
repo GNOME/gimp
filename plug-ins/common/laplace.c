@@ -242,7 +242,7 @@ laplace (GimpDrawable *drawable)
    */
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-  gimp_progress_init (_("Laplace..."));
+  gimp_progress_init (_("Laplace"));
 
   /* Get the size of the input image. (This will/must be the same
    *  as the size of the output image.
@@ -320,7 +320,7 @@ laplace (GimpDrawable *drawable)
   laplace_prepare_row (&srcPR, pr, x1, y1 - 1, (x2 - x1));
   laplace_prepare_row (&srcPR, cr, x1, y1, (x2 - x1));
 
-  gimp_progress_init (_("Cleanup..."));
+  gimp_progress_init (_("Cleanup"));
   counter =0;
 
   /*  loop through the rows, applying the laplace convolution  */

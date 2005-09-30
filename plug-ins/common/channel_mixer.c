@@ -39,7 +39,6 @@
 
 #define PLUG_IN_PROC        "plug-in-colors-channel-mixer"
 #define PLUG_IN_BINARY      "channel_mixer"
-#define PLUG_IN_VERSION     "Channel Mixer 0.8"
 #define PROGRESS_UPDATE_NUM 20
 #define CM_LINE_SIZE        1024
 
@@ -275,7 +274,7 @@ run (const gchar      *name,
                  param[3].data.d_int32, mix.black.red_gain,
                  mix.black.green_gain, mix.black.blue_gain); */
 
-          gimp_progress_init (_(PLUG_IN_VERSION));
+          gimp_progress_init (_("Channel Mixer"));
 
           channel_mixer (drawable);
 

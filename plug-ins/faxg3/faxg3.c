@@ -201,7 +201,7 @@ load_image (const gchar *filename)
   gint	 max_rows;		/* max. rows allocated */
   gint 	 col, hcol;		/* column, highest column ever used */
 
-  gimp_progress_init_printf (_("Opening '%s'..."),
+  gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_filename_to_utf8 (filename));
 
   /* initialize lookup trees */

@@ -805,7 +805,7 @@ mblur (GimpDrawable *drawable,
     return;
 
   if (! preview)
-    gimp_progress_init (_("Motion Blurring..."));
+    gimp_progress_init (_("Motion blurring"));
 
   switch (mbvals.mblur_type)
     {

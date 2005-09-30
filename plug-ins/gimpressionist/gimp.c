@@ -347,7 +347,7 @@ gimpressionist_main (void)
 
   dest_row = g_new (guchar, (x2 - x1) * bpp);
 
-  gimp_progress_init (_("Painting..."));
+  gimp_progress_init (_("Painting"));
 
   if (!PPM_IS_INITED (&infile))
     {

@@ -434,7 +434,7 @@ rotate (void)
 	}
     }
 
-  gimp_progress_init (_("Rotating..."));
+  gimp_progress_init (_("Rotating"));
 
   gimp_image_undo_group_start (image_ID);
 

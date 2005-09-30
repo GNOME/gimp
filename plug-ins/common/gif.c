@@ -1004,7 +1004,7 @@ save_image (const gchar *filename,
 
 
   /* init the progress meter */
-  gimp_progress_init_printf (_("Saving '%s'..."),
+  gimp_progress_init_printf (_("Saving '%s'"),
                              gimp_filename_to_utf8 (filename));
 
 

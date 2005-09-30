@@ -346,7 +346,7 @@ polarize (GimpDrawable *drawable)
   gimp_context_get_background (&background);
   gimp_pixel_fetcher_set_bg_color (pft, &background);
 
-  gimp_progress_init (_("Polarizing..."));
+  gimp_progress_init (_("Polarizing"));
 
   iter = gimp_rgn_iterator_new (drawable, 0);
   gimp_rgn_iterator_dest (iter, polarize_func, pft);

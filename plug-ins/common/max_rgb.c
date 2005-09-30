@@ -234,7 +234,7 @@ main_function (GimpDrawable *drawable,
     }
   else
     {
-      gimp_progress_init ( _("Max RGB..."));
+      gimp_progress_init (_("Max RGB"));
 
       gimp_rgn_iterate2 (drawable, 0 /* unused */, max_rgb_func, &param);
 

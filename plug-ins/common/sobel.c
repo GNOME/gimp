@@ -365,7 +365,7 @@ sobel (GimpDrawable *drawable,
   else
     {
       gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-      gimp_progress_init (_("Sobel Edge Detecting..."));
+      gimp_progress_init (_("Sobel edge detecting"));
       width  = x2 - x1;
       height = y2 - y1;
     }

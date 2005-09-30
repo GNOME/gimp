@@ -724,7 +724,7 @@ load_image (const gchar *filename,
 
   png_init_io (pp, fp);
 
-  gimp_progress_init_printf (_("Opening '%s'..."),
+  gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_filename_to_utf8 (filename));
 
   /*
@@ -1225,7 +1225,7 @@ save_image (const gchar *filename,
 
   png_init_io (pp, fp);
 
-  gimp_progress_init_printf (_("Saving '%s'..."),
+  gimp_progress_init_printf (_("Saving '%s'"),
                              gimp_filename_to_utf8 (filename));
 
   /*

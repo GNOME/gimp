@@ -489,7 +489,7 @@ void
 preTransferCallback(void *clientData)
 {
   /* Initialize our progress dialog */
-  gimp_progress_init(_("Transferring TWAIN data..."));
+  gimp_progress_init(_("Transferring TWAIN data"));
 }
 
 /*

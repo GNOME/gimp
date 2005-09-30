@@ -755,7 +755,7 @@ CML_main_function (gboolean preview_p)
     }
 
   if (! preview_p)
-    gimp_progress_init (_("CML_explorer: evoluting..."));
+    gimp_progress_init (_("CML Explorer: evoluting"));
 
   /* rolling start */
   for (index = 0; index < VALS.start_offset; index++)

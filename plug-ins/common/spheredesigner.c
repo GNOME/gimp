@@ -2938,7 +2938,7 @@ realrender (GimpDrawable *drawable)
   tx = x2 - x1;
   ty = y2 - y1;
 
-  gimp_progress_init (_("Rendering Sphere..."));
+  gimp_progress_init (_("Rendering sphere"));
 
   for (y = 0; y < ty; y++)
     {

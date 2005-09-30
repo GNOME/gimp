@@ -306,7 +306,7 @@ sharpen (GimpDrawable *drawable)
   /*
    * Let the user know what we're doing...
    */
-  gimp_progress_init( _("Sharpening..."));
+  gimp_progress_init( _("Sharpening"));
 
   /*
    * Setup for filter...

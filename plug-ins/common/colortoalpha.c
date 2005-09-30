@@ -183,7 +183,7 @@ run (const gchar      *name,
       lock_alpha = gimp_layer_get_lock_alpha (drawable->drawable_id);
       gimp_layer_set_lock_alpha (drawable->drawable_id, FALSE);
 
-      gimp_progress_init (_("Removing color..."));
+      gimp_progress_init (_("Removing color"));
       gimp_rgn_iterate2 (drawable, 0 /* unused */, to_alpha_func, NULL);
 
       gimp_layer_set_lock_alpha (drawable->drawable_id, lock_alpha);

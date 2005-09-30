@@ -761,7 +761,7 @@ run (const gchar      *name,
             {
               cd = g_new (BenderDialog, 1);
               cd->run = TRUE;
-              cd->show_progress = FALSE;
+              cd->show_progress = TRUE;
               cd->drawable = l_active_drawable;
 
               cd->rotation      = (gdouble) param[3].data.d_float;
@@ -2952,7 +2952,7 @@ p_vertical_bend (BenderDialog *cd,
   l_progress_step = 1.0 / l_progress_max;
   l_progress = 0.0;
   if (cd->show_progress)
-    gimp_progress_init ( _("Curve Bend..."));
+    gimp_progress_init ( _("Curve Bend"));
 
   for (l_row = l_first_row; l_row <= l_last_row; l_row++)
     {

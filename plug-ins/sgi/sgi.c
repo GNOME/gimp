@@ -315,7 +315,7 @@ load_image (const gchar *filename)  /* I - File to load */
       return -1;
     };
 
-  gimp_progress_init_printf (_("Opening '%s'..."),
+  gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_filename_to_utf8 (filename));
 
   /*
@@ -534,7 +534,7 @@ save_image (const gchar *filename,
       return FALSE;
     };
 
-  gimp_progress_init_printf (_("Saving '%s'..."),
+  gimp_progress_init_printf (_("Saving '%s'"),
                              gimp_filename_to_utf8 (filename));
 
   /*

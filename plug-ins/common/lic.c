@@ -564,7 +564,7 @@ compute_image (GimpDrawable *drawable)
   gimp_drawable_mask_bounds (drawable->drawable_id,
                              &border_x1, &border_y1, &border_x2, &border_y2);
 
-  gimp_progress_init (_("Van Gogh (LIC)..."));
+  gimp_progress_init (_("Van Gogh (LIC)"));
 
   if (licvals.effect_convolve == 0)
     generatevectors ();

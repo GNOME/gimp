@@ -376,7 +376,7 @@ pluginCore (piArgs *argp)
 
   build_tab (argp->mode);
 
-  gimp_progress_init (_("Hot..."));
+  gimp_progress_init (_("Hot"));
   prog_interval = height / 10;
 
   for (y = sel_y1; y < sel_y2; y++)

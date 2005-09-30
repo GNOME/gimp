@@ -278,7 +278,6 @@ load_image (const gchar *filename)
   gint32          layer_ID;
   GimpDrawable   *drawable;
   FILE           *DICOM;
-  gchar          *temp;
   gchar           buf[500];    /* buffer for random things like scanning */
   DicomInfo      *dicominfo;
   gint            width             = 0;
@@ -298,10 +297,8 @@ load_image (const gchar *filename)
       return -1;
     }
 
-  temp = g_strdup_printf (_("Opening '%s'..."),
-                          gimp_filename_to_utf8 (filename));
-  gimp_progress_init (temp);
-  g_free (temp);
+  gimp_progress_init_printf (_("Opening '%s'"),
+                             gimp_filename_to_utf8 (filename));
 
   /* allocate the necessary structures */
   dicominfo = g_new0 (DicomInfo, 1);

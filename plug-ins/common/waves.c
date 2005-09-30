@@ -429,7 +429,7 @@ wave (guchar  *src,
 
   if (verbose)
     {
-      gimp_progress_init (_("Waving..."));
+      gimp_progress_init (_("Waving"));
       prog_interval=height/10;
     }
 

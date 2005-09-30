@@ -271,16 +271,16 @@ compute_image (void)
   switch (mapvals.maptype)
     {
       case MAP_PLANE:
-        gimp_progress_init (_("Map to Plane..."));
+        gimp_progress_init (_("Map to plane"));
         break;
       case MAP_SPHERE:
-        gimp_progress_init (_("Map to Sphere..."));
+        gimp_progress_init (_("Map to sphere"));
         break;
       case MAP_BOX:
-        gimp_progress_init (_("Map to Box..."));
+        gimp_progress_init (_("Map to box"));
         break;
       case MAP_CYLINDER:
-        gimp_progress_init (_("Map to Cylinder..."));
+        gimp_progress_init (_("Map to cylinder"));
         break;
     }
 

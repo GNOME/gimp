@@ -136,7 +136,7 @@ run (const gchar      *name,
           gimp_drawable_is_gray (drawable->drawable_id) ||
           gimp_drawable_is_indexed (drawable->drawable_id))
         {
-          gimp_progress_init (_("ZealousCropping(tm)..."));
+          gimp_progress_init (_("Zealous cropping"));
 
           gimp_tile_cache_ntiles (1 +
                                   2 * (drawable->width > drawable->height ?

@@ -444,7 +444,7 @@ maze (GimpDrawable * drawable)
   /* Get the foreground and background colors */
   get_colors (drawable, fg, bg);
 
-  gimp_progress_init (_("Drawing Maze..."));
+  gimp_progress_init (_("Drawing maze"));
 
   for (pr = gimp_pixel_rgns_register (1, &dest_rgn);
        pr != NULL;

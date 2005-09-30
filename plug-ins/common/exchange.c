@@ -211,7 +211,7 @@ run (const gchar      *name,
     {
       if (gimp_drawable_is_rgb (drawable->drawable_id))
         {
-          gimp_progress_init (_("Color Exchange..."));
+          gimp_progress_init (_("Color Exchange"));
           gimp_tile_cache_ntiles (2 * (drawable->width /
                                        gimp_tile_width () + 1));
           exchange (drawable, NULL);

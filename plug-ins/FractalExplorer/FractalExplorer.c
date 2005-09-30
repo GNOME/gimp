@@ -377,7 +377,7 @@ run (const gchar      *name,
       /*  Make sure that the drawable is indexed or RGB color  */
       if (gimp_drawable_is_rgb (drawable->drawable_id))
         {
-          gimp_progress_init (_("Rendering Fractal..."));
+          gimp_progress_init (_("Rendering fractal"));
 
           /* Set the tile cache size */
           gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width() + 1));

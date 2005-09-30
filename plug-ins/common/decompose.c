@@ -339,7 +339,7 @@ run (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      gimp_progress_init (_("Decomposing..."));
+      gimp_progress_init (_("Decomposing"));
 
       num_images = decompose (image_ID, layer,
                               decovals.extract_type,

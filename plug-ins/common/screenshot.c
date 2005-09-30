@@ -599,7 +599,7 @@ create_image (const GdkPixbuf *pixbuf)
   guchar       *pixels;
   gpointer      pr;
 
-  status = gimp_progress_init (_("Loading Screenshot..."));
+  status = gimp_progress_init (_("Importing screenshot"));
 
   width  = gdk_pixbuf_get_width (pixbuf);
   height = gdk_pixbuf_get_height (pixbuf);

@@ -1303,7 +1303,7 @@ ifs_compose (GimpDrawable *drawable)
       gint          progress;
       gint          max_progress;
 
-      gimp_progress_init_printf (_("Rendering IFS (%d/%d)..."),
+      gimp_progress_init_printf (_("Rendering IFS (%d/%d)"),
                                  band_no + 1, num_bands);
 
       /* render the band to a buffer */
@@ -1320,7 +1320,7 @@ ifs_compose (GimpDrawable *drawable)
 
       /* transfer the image to the drawable */
 
-      gimp_progress_init_printf (_("Copying IFS to image (%d/%d)..."),
+      gimp_progress_init_printf (_("Copying IFS to image (%d/%d)"),
                                  band_no + 1, num_bands);
 
       progress = 0;

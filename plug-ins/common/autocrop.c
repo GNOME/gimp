@@ -147,7 +147,7 @@ run (const gchar      *name,
       gimp_drawable_is_indexed (drawable->drawable_id))
     {
       if (interactive)
-        gimp_progress_init (_("Cropping..."));
+        gimp_progress_init (_("Cropping"));
 
       gimp_tile_cache_ntiles (MAX (drawable->width / gimp_tile_width (),
                                    drawable->height / gimp_tile_height ()) + 1);

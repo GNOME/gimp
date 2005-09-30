@@ -180,8 +180,7 @@ run (const gchar      *name,
       if (gimp_drawable_is_rgb (drawable->drawable_id) ||
           gimp_drawable_is_gray (drawable->drawable_id))
         {
-          gimp_progress_init (_("Spreading..."));
-
+          gimp_progress_init (_("Spreading"));
 
           /*  run the spread effect  */
           spread (drawable);

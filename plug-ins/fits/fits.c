@@ -456,7 +456,7 @@ save_image (const gchar *filename,
       return (FALSE);
     }
 
-  gimp_progress_init_printf (_("Saving '%s'..."),
+  gimp_progress_init_printf (_("Saving '%s'"),
                              gimp_filename_to_utf8 (filename));
 
   if ((drawable_type == GIMP_INDEXED_IMAGE) ||

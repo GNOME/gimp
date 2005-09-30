@@ -314,7 +314,7 @@ render_blast (GimpDrawable *drawable,
       if (gimp_drawable_mask_intersect (drawable->drawable_id,
                                         &x1, &y1, &x2, &y2))
         {
-          gimp_progress_init (_("Rendering Blast..."));
+          gimp_progress_init (_("Rendering blast"));
 
           width = x2 - x1;
           height = y2 - y1;
@@ -441,7 +441,7 @@ render_wind (GimpDrawable *drawable,
     {
       if (gimp_drawable_mask_intersect (drawable->drawable_id, &x1, &y1, &x2, &y2))
         {
-          gimp_progress_init (_("Rendering Wind..."));
+          gimp_progress_init (_("Rendering wind"));
 
           width = x2 - x1;
           height = y2 - y1;

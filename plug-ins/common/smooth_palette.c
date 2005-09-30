@@ -176,7 +176,7 @@ run (const gchar      *name,
     {
       if (gimp_drawable_is_rgb (drawable->drawable_id))
         {
-          gimp_progress_init (_("Deriving Smooth Palette..."));
+          gimp_progress_init (_("Deriving smooth palette"));
 
           gimp_tile_cache_ntiles (2 * (drawable->width + 1) /
                                   gimp_tile_width ());

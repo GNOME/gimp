@@ -2651,7 +2651,7 @@ sample_analyze (t_GDRW *sample_gdrw)
   progress_step = 1.0 / progress_max;
   progress = 0.0;
   if (g_show_progress)
-    gimp_progress_init (_("Sample Analyze..."));
+    gimp_progress_init (_("Sample analyze"));
 
   prot_fp = NULL;
   if (g_Sdebug)
@@ -3029,7 +3029,7 @@ colorize_drawable (gint32 drawable_id)
   has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
   if (g_show_progress)
-    gimp_progress_init (_("Remap Colorized..."));
+    gimp_progress_init (_("Remap colorized"));
 
   gimp_rgn_iterate2 (drawable, 0 /* unused */, colorize_func,
                      GINT_TO_POINTER (has_alpha));

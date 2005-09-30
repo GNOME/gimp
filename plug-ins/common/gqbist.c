@@ -505,7 +505,7 @@ run (const gchar      *name,
 
           optimize (&qbist_info.info);
 
-          gimp_progress_init (_("Qbist ..."));
+          gimp_progress_init (_("Qbist"));
 
           for (pr = gimp_pixel_rgns_register (1, &imagePR);
                pr != NULL;

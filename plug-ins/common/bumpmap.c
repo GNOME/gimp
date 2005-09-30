@@ -487,7 +487,7 @@ bumpmap (void)
   gint              progress;
   gint              drawable_tiles_per_row, bm_tiles_per_row;
 
-  gimp_progress_init (_("Bump-mapping..."));
+  gimp_progress_init (_("Bump-mapping"));
 
   /* Get the bumpmap drawable */
   if (bmvals.bumpmap_id != -1)

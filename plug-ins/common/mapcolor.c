@@ -233,7 +233,7 @@ run (const gchar      *name,
 
           plvals.map_mode = 0;
 
-          gimp_progress_init (_("Adjusting Foreground/Background..."));
+          gimp_progress_init (_("Adjusting FG-BG"));
 
           color_mapping (drawable);
           break;
@@ -275,7 +275,7 @@ run (const gchar      *name,
               break;
             }
 
-          gimp_progress_init (_("Mapping colors..."));
+          gimp_progress_init (_("Mapping colors"));
 
           color_mapping (drawable);
 

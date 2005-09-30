@@ -416,7 +416,7 @@ cubism (GimpDrawable *drawable,
     }
   else
     {
-      gimp_progress_init (_("Cubistic Transformation..."));
+      gimp_progress_init (_("Cubistic transformation"));
       gimp_pixel_rgn_init (&src_rgn, drawable,
                            x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
 

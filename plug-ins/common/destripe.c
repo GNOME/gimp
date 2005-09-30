@@ -269,7 +269,7 @@ destripe (GimpDrawable *drawable,
     }
   else
     {
-      gimp_progress_init (_("Destriping..."));
+      gimp_progress_init (_("Destriping"));
       gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
       width  = x2 - x1;

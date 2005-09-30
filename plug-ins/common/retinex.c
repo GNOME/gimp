@@ -247,9 +247,9 @@ run (const gchar      *name,
   if ((status == GIMP_PDB_SUCCESS) &&
       (gimp_drawable_is_rgb (drawable->drawable_id)))
     {
-      gimp_progress_init (_("Retinex..."));
+      gimp_progress_init (_("Retinex"));
+
       retinex (drawable, NULL);
-      gimp_progress_init (_("Retinex (4/4): updated..."));
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush ();
@@ -651,7 +651,7 @@ MSRCR (guchar *src, gint width, gint height, gint bytes, gboolean preview_mode)
 
   if (!preview_mode)
     {
-      gimp_progress_init (_("Retinex: Filtering..."));
+      gimp_progress_init (_("Retinex: filtering"));
       max_preview = 3 * rvals.nscales;
     }
 

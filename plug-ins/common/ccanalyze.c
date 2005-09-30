@@ -199,7 +199,7 @@ analyze (GimpDrawable *drawable)
   gint          ofsx, ofsy;
   GimpDrawable *selDrawable;
 
-  gimp_progress_init (_("Colorcube Analysis..."));
+  gimp_progress_init (_("Colorcube Analysis"));
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 

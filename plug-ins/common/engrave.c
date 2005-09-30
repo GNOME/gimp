@@ -179,7 +179,7 @@ run (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      gimp_progress_init (_("Engraving..."));
+      gimp_progress_init (_("Engraving"));
 
       engrave (drawable, NULL);
 

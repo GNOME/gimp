@@ -340,7 +340,7 @@ load_image (const gchar *filename)
   guchar   *cmap;
   gint32    image_ID;
 
-  gimp_progress_init_printf (_("Opening '%s'..."),
+  gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_filename_to_utf8 (filename));
 
   /* read the raw file */
@@ -620,7 +620,7 @@ save_image (const gchar *filename,
 
   hash = g_hash_table_new ((GHashFunc) rgbhash, (GCompareFunc) compare);
 
-  gimp_progress_init_printf (_("Saving '%s'..."),
+  gimp_progress_init_printf (_("Saving '%s'"),
                              gimp_filename_to_utf8 (filename));
 
   ncolors = alpha ? 1 : 0;

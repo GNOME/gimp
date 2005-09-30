@@ -165,7 +165,7 @@ run (const gchar      *name,
           gimp_drawable_is_gray (drawable->drawable_id))
         {
           gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width() + 1));
-          gimp_progress_init (_("Illusion..."));
+          gimp_progress_init (_("Illusion"));
           illusion (drawable);
           if (run_mode != GIMP_RUN_NONINTERACTIVE)
             gimp_displays_flush ();

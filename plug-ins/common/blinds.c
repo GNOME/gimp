@@ -187,7 +187,7 @@ run (const gchar      *name,
   if (gimp_drawable_is_rgb (drawable->drawable_id) ||
       gimp_drawable_is_gray (drawable->drawable_id))
     {
-      gimp_progress_init ( _("Adding Blinds..."));
+      gimp_progress_init ( _("Adding blinds"));
 
       apply_blinds (drawable);
 

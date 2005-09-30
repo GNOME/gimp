@@ -238,7 +238,7 @@ run (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      gimp_progress_init (_("Drawing Grid..."));
+      gimp_progress_init (_("Drawing grid"));
       gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
 
       grid (image_ID, drawable, NULL);

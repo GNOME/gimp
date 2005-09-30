@@ -815,7 +815,7 @@ plugin_query (void)
                           "Eiichi Takamori",
                           "Eiichi Takamori, and a lot of GIMP people",
                           "1997",
-                          N_("_GFlare..."),
+                          N_("_Gradient Flare..."),
                           "RGB*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
@@ -954,7 +954,7 @@ plugin_run (const gchar      *name,
       if (gimp_drawable_is_rgb (drawable->drawable_id) ||
           gimp_drawable_is_gray (drawable->drawable_id))
         {
-          gimp_progress_init (_("Gradient Flare..."));
+          gimp_progress_init (_("Gradient Flare"));
           plugin_do ();
 
           if (run_mode != GIMP_RUN_NONINTERACTIVE)
@@ -2288,7 +2288,7 @@ dlg_run (void)
    *    Dialog Shell
    */
 
-  shell = dlg->shell = gimp_dialog_new (_("GFlare"), PLUG_IN_BINARY,
+  shell = dlg->shell = gimp_dialog_new (_("Gradient Flare"), PLUG_IN_BINARY,
                                         NULL, 0,
                                         gimp_standard_help_func, PLUG_IN_PROC,
 
@@ -2986,7 +2986,7 @@ dlg_selector_new_callback (GtkWidget *widget,
 {
   GtkWidget *query_box;
 
-  query_box = gimp_query_string_box (_("New GFlare"),
+  query_box = gimp_query_string_box (_("New Gradient Flare"),
                                      gtk_widget_get_toplevel (widget),
                                      gimp_standard_help_func, PLUG_IN_PROC,
                                      _("Enter a name for the new GFlare"),
@@ -3065,7 +3065,7 @@ dlg_selector_copy_callback (GtkWidget *widget,
 
   name = g_strdup_printf ("%s copy", dlg->gflare->name);
 
-  query_box = gimp_query_string_box (_("Copy GFlare"),
+  query_box = gimp_query_string_box (_("Copy Gradient Flare"),
                                      gtk_widget_get_toplevel (widget),
                                      gimp_standard_help_func, PLUG_IN_PROC,
                                      _("Enter a name for the copied GFlare"),
@@ -3131,7 +3131,7 @@ dlg_selector_delete_callback (GtkWidget *widget,
                            "\"%s\" from the list and from disk?"),
                          dlg->gflare->name);
 
-  dialog = gimp_query_boolean_box (_("Delete GFlare"),
+  dialog = gimp_query_boolean_box (_("Delete Gradient Flare"),
                                    dlg->shell,
                                    gimp_standard_help_func, PLUG_IN_PROC,
                                    GTK_STOCK_DIALOG_QUESTION,
@@ -3244,7 +3244,7 @@ ed_run (GtkWindow            *parent,
    *    Dialog Shell
    */
   ed->shell =
-    shell = gimp_dialog_new (_("GFlare Editor"), PLUG_IN_BINARY,
+    shell = gimp_dialog_new (_("Gradient Flare Editor"), PLUG_IN_BINARY,
                              GTK_WIDGET (parent), 0,
                              gimp_standard_help_func, PLUG_IN_PROC,
 

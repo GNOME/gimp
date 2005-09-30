@@ -1176,9 +1176,9 @@ diff (GimpDrawable *drawable,
 
   gimp_displays_flush();  /* make sure layer is visible */
 
-  gimp_progress_init (_("Smoothing X gradient..."));
+  gimp_progress_init (_("Smoothing X gradient"));
   blur16(draw_xd);
-  gimp_progress_init (_("Smoothing Y gradient..."));
+  gimp_progress_init (_("Smoothing Y gradient"));
   blur16(draw_yd);
 
   g_free (prev_row);  /* row buffers allocated at top of fn. */
@@ -1233,7 +1233,7 @@ warp (GimpDrawable  *orig_draw,
 
   /* calculate new X,Y Displacement image maps */
 
-  gimp_progress_init (_("Finding XY gradient..."));
+  gimp_progress_init (_("Finding XY gradient"));
 
   diff (disp_map, &xdlayer, &ydlayer);    /* generate x,y differential images (arrays) */
 
@@ -1258,11 +1258,8 @@ warp (GimpDrawable  *orig_draw,
 
   for (warp_iter = 0; warp_iter < dvals.iter; warp_iter++)
     {
-      string = g_strdup_printf (_("Flow Step %d..."), warp_iter+1);
-      gimp_progress_init (string);
-      g_free (string);
+      gimp_progress_init_printf (_("Flow step %d"), warp_iter+1);
       progress = 0;
-      gimp_progress_update (0);
 
       warp_one (orig_draw, orig_draw,
                 *map_x, *map_y, mag_draw, first_time, warp_iter);

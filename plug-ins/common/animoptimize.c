@@ -426,17 +426,17 @@ do_optimizations (GimpRunMode run_mode,
   switch (opmode)
     {
     case OPUNOPTIMIZE:
-      gimp_progress_init (_("UnOptimizing Animation..."));
+      gimp_progress_init (_("Unoptimizing animation"));
       break;
     case OPFOREGROUND:
-      gimp_progress_init (_("Removing Animation Background..."));
+      gimp_progress_init (_("Removing animation background"));
       break;
     case OPBACKGROUND:
-      gimp_progress_init (_("Finding Animation Background..."));
+      gimp_progress_init (_("Finding animation background"));
       break;
     case OPOPTIMIZE:
     default:
-      gimp_progress_init (_("Optimizing Animation..."));
+      gimp_progress_init (_("Optimizing animation"));
       break;
     }
 

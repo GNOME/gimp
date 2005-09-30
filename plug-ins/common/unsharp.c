@@ -426,7 +426,7 @@ unsharp_region (GimpPixelRgn *srcPR,
   gint     threshold = unsharp_params.threshold;
 
   if (show_progress)
-    gimp_progress_init (_("Blurring..."));
+    gimp_progress_init (_("Blurring"));
 
   /* generate convolution matrix
      and make sure it's smaller than each dimension */
@@ -462,7 +462,7 @@ unsharp_region (GimpPixelRgn *srcPR,
     }
 
   if (show_progress)
-    gimp_progress_init (_("Merging..."));
+    gimp_progress_init (_("Merging"));
 
   /* merge the source and destination (which currently contains
      the blurred version) images */

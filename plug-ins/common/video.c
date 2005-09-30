@@ -1883,7 +1883,7 @@ run (const gchar      *name,
       /*  Make sure that the drawable is gray or RGB color  */
       if (gimp_drawable_is_rgb (drawable->drawable_id))
         {
-          gimp_progress_init (_("Video/RGB..."));
+          gimp_progress_init (_("Video"));
           gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width ()
                                        + 1));
           video (drawable);
@@ -1986,8 +1986,8 @@ video_render_preview (gboolean raw)
             }
           else
             {
-              video_func (x, y, 
-                          &preview_raw[y * PREVIEW_WIDTH * 3 + x * 3], 
+              video_func (x, y,
+                          &preview_raw[y * PREVIEW_WIDTH * 3 + x * 3],
                           preview_row + (y * PREVIEW_WIDTH + x) * 3, 3,
                           NULL);
             }

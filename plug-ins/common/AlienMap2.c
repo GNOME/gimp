@@ -317,7 +317,7 @@ run (const gchar      *name,
       /*  Make sure that the drawable is RGB or RGBA  */
       if (gimp_drawable_is_rgb (drawable->drawable_id))
         {
-          gimp_progress_init (_("AlienMap2: Transforming..."));
+          gimp_progress_init (_("AlienMap2: Transforming"));
 
           /* Set the tile cache size */
           gimp_tile_cache_ntiles (2 * (drawable->width /

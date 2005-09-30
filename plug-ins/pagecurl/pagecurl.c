@@ -1019,7 +1019,7 @@ page_curl (gint32 drawable_id)
 
   gimp_image_undo_group_start (image_id);
 
-  gimp_progress_init (_("Page Curl..."));
+  gimp_progress_init (_("Page Curl"));
 
   init_calculation (drawable_id);
 

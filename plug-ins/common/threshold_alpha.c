@@ -162,7 +162,7 @@ run (const gchar      *name,
     {
       if (gimp_drawable_has_alpha (drawable->drawable_id))
         {
-          gimp_progress_init (_("Threshold Alpha: Coloring Transparency..."));
+          gimp_progress_init (_("Coloring transparency"));
 
           threshold_alpha (drawable, NULL);
 

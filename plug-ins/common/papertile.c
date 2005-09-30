@@ -530,7 +530,7 @@ filter (void)
 
   overlap = p.drawable_has_alpha ? overlap_RGBA : overlap_RGB;
 
-  gimp_progress_init (_("Paper Tile..."));
+  gimp_progress_init (_("Paper Tile"));
 
   gimp_drawable_mask_bounds (p.drawable->drawable_id,
 			     &p.selection.x0, &p.selection.y0,

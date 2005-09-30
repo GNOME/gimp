@@ -411,7 +411,7 @@ run (const gchar      *name,
           status = GIMP_PDB_CANCEL;
           break;
         }
-      gimp_progress_init (_("Assembling Jigsaw..."));
+      gimp_progress_init (_("Assembling jigsaw"));
 
       jigsaw (drawable, NULL);
       gimp_set_data (PLUG_IN_PROC, &config, sizeof(config_t));
@@ -2566,4 +2566,3 @@ jigsaw_dialog (GimpDrawable *drawable)
 
   return run;
 }
-

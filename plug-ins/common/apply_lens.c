@@ -179,7 +179,7 @@ run (const gchar      *name,
     }
 
   gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
-  gimp_progress_init (_("Applying lens..."));
+  gimp_progress_init (_("Applying lens"));
   drawlens (drawable, NULL);
 
   if (run_mode != GIMP_RUN_NONINTERACTIVE)

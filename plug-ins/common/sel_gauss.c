@@ -186,7 +186,7 @@ run (const gchar      *name,
   if (gimp_drawable_is_rgb (drawable->drawable_id) ||
       gimp_drawable_is_gray (drawable->drawable_id))
     {
-      gimp_progress_init (_("Selective Gaussian Blur..."));
+      gimp_progress_init (_("Selective Gaussian Blur"));
 
       radius = fabs (bvals.radius) + 1.0;
 

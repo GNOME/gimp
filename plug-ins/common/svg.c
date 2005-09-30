@@ -316,7 +316,7 @@ load_image (const gchar *filename)
       gimp_quit ();
     }
 
-  gimp_progress_init (_("Rendering SVG..."));
+  gimp_progress_init (_("Rendering SVG"));
 
   width  = gdk_pixbuf_get_width (pixbuf);
   height = gdk_pixbuf_get_height (pixbuf);

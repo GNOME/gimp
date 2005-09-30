@@ -32,7 +32,7 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
 
 static pixel_outline_type find_one_outline (edge_type,
 			  		    unsigned, unsigned, bitmap_type *);
-static void append_pixel_outline (pixel_outline_list_type *, 
+static void append_pixel_outline (pixel_outline_list_type *,
                                   pixel_outline_type);
 static pixel_outline_type new_pixel_outline (void);
 static void append_outline_pixel (pixel_outline_type *, coordinate_type);
@@ -80,7 +80,7 @@ find_outline_pixels (void)
 
 /*   printf("width = %d, height = %d\n",BITMAP_WIDTH(marked),BITMAP_HEIGHT(marked)); */
 
-  gimp_progress_init (_("Selection to Path..."));
+  gimp_progress_init (_("Selection to Path"));
 
   O_LIST_LENGTH (outline_list) = 0;
   outline_list.data = NULL;
@@ -103,9 +103,9 @@ find_outline_pixels (void)
 	  {
             pixel_outline_type outline;
             boolean clockwise = edge == bottom;
-            
+
             outline = find_one_outline (edge, row, col, &marked);
-            
+
             /* Outside outlines will start at a top edge, and move
                counterclockwise, and inside outlines will start at a
                bottom edge, and move clockwise.  This happens because of
@@ -120,8 +120,8 @@ find_outline_pixels (void)
 	gimp_progress_update (((gdouble)row) / height);
   }
 
-  local_free_bitmap (&marked); 
-  
+  local_free_bitmap (&marked);
+
   return outline_list;
 }
 
@@ -146,7 +146,7 @@ find_one_outline (edge_type original_edge,
     {
       /* Put this edge on to the output list, changing to Cartesian, and
          taking account of the side bearings.  */
-      append_coordinate (&outline, col, 
+      append_coordinate (&outline, col,
                          sel_get_height() - row, edge);
 
       mark_edge (edge, row, col, marked);
@@ -190,7 +190,7 @@ free_pixel_outline_list (pixel_outline_list_type *outline_list)
 
 
 /* Return an empty list of pixels.  */
-   
+
 
 pixel_outline_type
 new_pixel_outline (void)
@@ -235,22 +235,22 @@ append_coordinate (pixel_outline_type *o, int x, int y, edge_type edge)
       c.y++;
       str = "top";
       break;
-    
+
     case right:
       c.x++;
       c.y++;
       str = "right";
       break;
-    
+
     case bottom:
       c.x++;
       str = "bottom";
       break;
-    
+
     case left:
       str = "left";
       break;
-    
+
     default:
       printf ("append_coordinate: Bad edge (%d)", edge);
     }

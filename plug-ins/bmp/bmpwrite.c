@@ -208,7 +208,7 @@ WriteBMP (const gchar *filename,
                            0, 0, drawable->width, drawable->height);
 
   /* And let's begin the progress */
-  gimp_progress_init_printf (_("Saving '%s'..."),
+  gimp_progress_init_printf (_("Saving '%s'"),
                              gimp_filename_to_utf8 (filename));
 
   cur_progress = 0;

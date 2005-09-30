@@ -335,7 +335,7 @@ tile (GimpDrawable *drawable)
   gint  x1, y1, x2, y2;
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-  gimp_progress_init (_("Tiler..."));
+  gimp_progress_init (_("Tiler"));
 
   height = y2 - y1;
   width = x2 - x1;

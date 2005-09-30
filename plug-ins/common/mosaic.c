@@ -494,7 +494,7 @@ mosaic (GimpDrawable *drawable,
       height = (y2 - y1);
 
       /*  progress bar for gradient finding  */
-      gimp_progress_init (_("Finding Edges..."));
+      gimp_progress_init (_("Finding edges"));
     }
 
   /*  Find the gradients  */
@@ -545,7 +545,7 @@ mosaic (GimpDrawable *drawable,
   if (!preview)
     {
       /*  Progress bar for rendering tiles  */
-      gimp_progress_init (_("Rendering Tiles..."));
+      gimp_progress_init (_("Rendering tiles"));
     }
 
   /*  Render the tiles  */

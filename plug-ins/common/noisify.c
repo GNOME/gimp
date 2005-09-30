@@ -279,7 +279,7 @@ run (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      gimp_progress_init (_("Adding Noise..."));
+      gimp_progress_init (_("Adding noise"));
 
       /*  compute the luminosity which exceeds the luminosity threshold  */
       gimp_rgn_iterate2 (drawable, 0 /* unused */, noisify_func, noise_gr);

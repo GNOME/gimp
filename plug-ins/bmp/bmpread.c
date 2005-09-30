@@ -154,7 +154,7 @@ ReadBMP (const gchar *name)
       return -1;
     }
 
-  gimp_progress_init_printf (_("Opening '%s'..."),
+  gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_filename_to_utf8 (name));
 
   /* It is a File. Now is it a Bitmap? Read the shortest possible header */
@@ -613,7 +613,7 @@ ReadImage (FILE     *fd,
             /* compressed image (either RLE8 or RLE4) */
 	    while (ypos >= 0 && xpos <= width)
 	      {
-                if (!ReadOK (fd, buffer, 2)) 
+                if (!ReadOK (fd, buffer, 2))
                   {
                     g_message (_("The bitmap ends unexpectedly."));
                     break;

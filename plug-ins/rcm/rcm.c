@@ -263,7 +263,7 @@ run (const gchar      *name,
       /* call dialog and rotate the colormap */
       if (gimp_drawable_is_rgb (Current.drawable->drawable_id) && rcm_dialog ())
         {
-          gimp_progress_init (_("Rotating the colormap..."));
+          gimp_progress_init (_("Rotating the colormap"));
 
           gimp_tile_cache_ntiles (2 * (Current.drawable->width /
                                        gimp_tile_width () + 1));

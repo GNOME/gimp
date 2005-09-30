@@ -105,7 +105,7 @@ run (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      gimp_progress_init (_("Guillotine..."));
+      gimp_progress_init (_("Guillotine"));
       guillotine (image_ID);
       gimp_displays_flush ();
     }

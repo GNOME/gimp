@@ -215,7 +215,7 @@ scatter_hsv (GimpDrawable *drawable)
 {
   gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
 
-  gimp_progress_init (_("Scattering HSV..."));
+  gimp_progress_init (_("HSV Noise"));
 
   gimp_rgn_iterate2 (drawable, 0 /* unused */, scatter_hsv_func, NULL);
 

@@ -952,7 +952,7 @@ nlfilter (GimpDrawable *drawable,
   filtno = nlfiltInit (nlfvals.alpha, nlfvals.radius, nlfvals.filter);
 
   if (!preview)
-    gimp_progress_init (_("NL Filter..."));
+    gimp_progress_init (_("NL Filter"));
 
   /* first row */
   gimp_pixel_rgn_get_row (&srcPr, thisrow, x1, y1, width);

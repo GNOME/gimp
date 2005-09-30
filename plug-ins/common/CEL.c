@@ -274,7 +274,6 @@ load_image (const gchar *file,
             const gchar *brief)
 {
   FILE      *fp;            /* Read file pointer */
-  gchar     *progress;      /* Title for progress display */
   guchar     header[32];    /* File header */
   gint       height, width, /* Dimensions of image */
              offx, offy,    /* Layer offets */
@@ -302,10 +301,8 @@ load_image (const gchar *file,
       return -1;
     }
 
-  progress = g_strdup_printf (_("Opening '%s'..."),
-                              gimp_filename_to_utf8 (brief));
-  gimp_progress_init (progress);
-  g_free (progress);
+  gimp_progress_init_printf (_("Opening '%s'"),
+                             gimp_filename_to_utf8 (brief));
 
   /* Get the image dimensions and create the image... */
 
@@ -539,7 +536,6 @@ save_image (const gchar *file,
             gint32       layer)
 {
   FILE          *fp;            /* Write file pointer */
-  char          *progress;      /* Title for progress display */
   guchar         header[32];    /* File header */
   gint           bpp;           /* Bit per pixel */
   gint           colours, type; /* Number of colours, type of layer */
@@ -574,10 +570,8 @@ save_image (const gchar *file,
       return FALSE;
     }
 
-  progress = g_strdup_printf (_("Saving '%s'..."),
-                              gimp_filename_to_utf8 (brief));
-  gimp_progress_init (progress);
-  g_free (progress);
+  gimp_progress_init_printf (_("Saving '%s'"),
+                             gimp_filename_to_utf8 (brief));
 
   /* Headers */
   memset (header, 0, 32);
