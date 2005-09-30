@@ -148,7 +148,7 @@ query (void)
                           "FIXME: write help",
                           "Tim Newsome, Jens Lautenbacher, Sven Neumann",
                           "Tim Newsome, Jens Lautenbacher, Sven Neumann",
-                          "1997-2000",
+                          "1997-2005",
                           N_("GIMP brush"),
                           NULL,
                           GIMP_PLUGIN,
@@ -171,7 +171,7 @@ query (void)
                           "Tim Newsome, Jens Lautenbacher, Sven Neumann",
                           "1997-2000",
                           N_("GIMP brush"),
-                          "RGBA, GRAY",
+                          "RGB, RGBA, GRAY",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
@@ -588,13 +588,25 @@ save_image (const gchar *filename,
   GimpDrawable *drawable;
   gint          line;
   gint          x;
+  gint          bpp;
   GimpPixelRgn  pixel_rgn;
 
-  if (gimp_drawable_type (drawable_ID) != GIMP_GRAY_IMAGE &&
-      gimp_drawable_type (drawable_ID) != GIMP_RGBA_IMAGE)
+  switch (gimp_drawable_type (drawable_ID))
     {
-      g_message (_("GIMP brushes are either GRAYSCALE or RGBA"));
-      return FALSE;
+    case GIMP_RGB_IMAGE:
+    case GIMP_RGBA_IMAGE:
+      bpp = 4;
+      break;
+
+    case GIMP_GRAY_IMAGE:
+      bpp = 1;
+      break;
+
+    default:
+      {
+        g_message (_("GIMP brushes are either GRAYSCALE or RGBA"));
+        return FALSE;
+      }
     }
 
   fd = g_open (filename, O_CREAT | O_TRUNC | O_WRONLY | _O_BINARY, 0644);
@@ -616,7 +628,7 @@ save_image (const gchar *filename,
   bh.version      = g_htonl (2);
   bh.width        = g_htonl (drawable->width);
   bh.height       = g_htonl (drawable->height);
-  bh.bytes        = g_htonl (drawable->bpp);
+  bh.bytes        = g_htonl (bpp);
   bh.magic_number = g_htonl (GBRUSH_MAGIC);
   bh.spacing      = g_htonl (info.spacing);
 
@@ -637,20 +649,33 @@ save_image (const gchar *filename,
 		       0, 0, drawable->width, drawable->height,
 		       FALSE, FALSE);
 
-  buffer = g_malloc (drawable->width * drawable->bpp);
+  buffer = g_new (guchar, drawable->width * bpp);
 
   for (line = 0; line < drawable->height; line++)
     {
       gimp_pixel_rgn_get_row (&pixel_rgn, buffer, 0, line, drawable->width);
 
-      if (drawable->bpp == 1)
-	{
+      switch (drawable->bpp)
+        {
+        case 1:
+          /*  invert  */
 	  for (x = 0; x < drawable->width; x++)
 	    buffer[x] = 255 - buffer[x];
-	}
+          break;
 
-      if (write (fd, buffer, drawable->width * drawable->bpp) !=
-          drawable->width * drawable->bpp)
+        case 3:
+          /*  add alpha channel  */
+          for (x = drawable->width - 1; x >= 0; x--)
+            {
+              buffer[x * 4 + 3] = 0xFF;
+              buffer[x * 4 + 2] = buffer[x * 3 + 2];
+              buffer[x * 4 + 1] = buffer[x * 3 + 1];
+              buffer[x * 4 + 0] = buffer[x * 3 + 0];
+            }
+          break;
+        }
+
+      if (write (fd, buffer, drawable->width * bpp) != drawable->width * bpp)
 	{
 	  g_free (buffer);
 	  close (fd);

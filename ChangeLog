@@ -1,3 +1,8 @@
+2005-09-30  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/gbr.c (save_image): handle RGB drawables and
+	implicitely add the alpha channel.
+
 2005-09-30  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/dialogs-actions.c (dialogs_toplevel_actions): use
