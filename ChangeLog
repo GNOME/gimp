@@ -1,5 +1,10 @@
 2005-09-30  Michael Natterer  <mitch@gimp.org>
 
+	* app/dialogs/dialog.c: removed forgotten foreign registration of
+	"gimp-keyboard-shortcuts-dialog".
+
+2005-09-30  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/*/*.c: removed '...' from progress messages. They are
 	redundant because we are already in a progress. Ported some more
 	g_strdup_printf()/gimp_progress_init() to

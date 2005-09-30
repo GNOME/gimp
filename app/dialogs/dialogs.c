@@ -78,7 +78,6 @@ static const GimpDialogFactoryEntry toplevel_entries[] =
   FOREIGN ("gimp-palette-editor-color-dialog",     TRUE,  FALSE),
   FOREIGN ("gimp-colormap-editor-color-dialog",    TRUE,  FALSE),
 
-  FOREIGN ("gimp-keyboard-shortcuts-dialog",       TRUE,  TRUE),
   FOREIGN ("gimp-controller-editor-dialog",        FALSE, TRUE),
   FOREIGN ("gimp-controller-action-dialog",        FALSE, TRUE),
 
