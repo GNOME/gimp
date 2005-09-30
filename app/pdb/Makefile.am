@@ -32,6 +32,7 @@ libapppdb_a_SOURCES = \
 	gradient_cmds.c			\
 	gradient_select_cmds.c		\
 	gradients_cmds.c		\
+	grid_cmds.c			\
 	guides_cmds.c			\
 	help_cmds.c			\
 	image_cmds.c			\

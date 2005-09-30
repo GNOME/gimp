@@ -20,6 +20,7 @@
     gradient
     gradient_select
     gradients
+    grid
     guides
     help
     image

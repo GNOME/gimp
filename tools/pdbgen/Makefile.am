@@ -22,6 +22,7 @@ pdb_sources = \
 	pdb/gradient.pdb		\
 	pdb/gradient_select.pdb		\
 	pdb/gradients.pdb		\
+	pdb/grid.pdb			\
 	pdb/guides.pdb			\
 	pdb/help.pdb			\
 	pdb/image.pdb			\

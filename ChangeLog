@@ -1,5 +1,30 @@
 2005-09-30  Sven Neumann  <sven@gimp.org>
 
+	* app/core/core-enums.[ch]
+	* libgimpbase/gimpbaseenums.[ch]: moved GimpGridStyle enum to
+	libgimpbase.
+
+	* app/core/gimpimage-grid.h: indentation.
+
+	* app/pdb/Makefile.am
+	* libgimp/Makefile.am
+	* tools/pdbgen/Makefile.am
+	* tools/pdbgen/pdb/grid.pdb: applied slightly modified patch by
+	Sylvain FORET that adds a PDB API for the image grid.
+
+	* app/pdb/grid_cmds.c
+	* app/pdb/internal_procs.c
+	* libgimp/gimp_pdb.h
+	* libgimp/gimpenums.c.tail
+	* libgimp/gimpgrid_pdb.[ch]
+	* tools/pdbgen/enums.pl
+	* tools/pdbgen/groups.pl: (re)generated.
+
+	* libgimp/gimp.def
+	* libgimpbase/gimpbase.def: updated.
+
+2005-09-30  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/gbr.c (save_image): handle RGB drawables and
 	implicitely add the alpha channel.
 

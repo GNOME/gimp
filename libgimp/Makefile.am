@@ -90,6 +90,7 @@ PDB_WRAPPERS_C = \
 	gimpgradients_pdb.c		\
 	gimpgradientselect_pdb.c	\
 	gimpguides_pdb.c		\
+	gimpgrid_pdb.c			\
 	gimphelp_pdb.c			\
 	gimpimage_pdb.c			\
 	gimplayer_pdb.c			\
@@ -137,6 +138,7 @@ PDB_WRAPPERS_H = \
 	gimpgradient_pdb.h		\
 	gimpgradients_pdb.h		\
 	gimpgradientselect_pdb.h	\
+	gimpgrid_pdb.h			\
 	gimpguides_pdb.h		\
 	gimphelp_pdb.h			\
 	gimpimage_pdb.h			\

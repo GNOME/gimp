@@ -410,6 +410,41 @@ gimp_gradient_type_get_type (void)
 }
 
 GType
+gimp_grid_style_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_GRID_DOTS, "GIMP_GRID_DOTS", "dots" },
+    { GIMP_GRID_INTERSECTIONS, "GIMP_GRID_INTERSECTIONS", "intersections" },
+    { GIMP_GRID_ON_OFF_DASH, "GIMP_GRID_ON_OFF_DASH", "on-off-dash" },
+    { GIMP_GRID_DOUBLE_DASH, "GIMP_GRID_DOUBLE_DASH", "double-dash" },
+    { GIMP_GRID_SOLID, "GIMP_GRID_SOLID", "solid" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_GRID_DOTS, N_("Intersections (dots)"), NULL },
+    { GIMP_GRID_INTERSECTIONS, N_("Intersections (crosshairs)"), NULL },
+    { GIMP_GRID_ON_OFF_DASH, N_("Dashed"), NULL },
+    { GIMP_GRID_DOUBLE_DASH, N_("Double dashed"), NULL },
+    { GIMP_GRID_SOLID, N_("Solid"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (! type)
+    {
+      type = g_enum_register_static ("GimpGridStyle", values);
+      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_icon_type_get_type (void)
 {
   static const GEnumValue values[] =

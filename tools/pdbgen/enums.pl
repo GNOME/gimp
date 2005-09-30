@@ -128,6 +128,18 @@ package Gimp::CodeGen::enums;
 		       GIMP_GRADIENT_SPIRAL_CLOCKWISE => '9',
 		       GIMP_GRADIENT_SPIRAL_ANTICLOCKWISE => '10' }
 	},
+    GimpGridStyle =>
+	{ contig => 1,
+	  header => 'libgimpbase/gimpbaseenums.h',
+	  symbols => [ qw(GIMP_GRID_DOTS GIMP_GRID_INTERSECTIONS
+			  GIMP_GRID_ON_OFF_DASH GIMP_GRID_DOUBLE_DASH
+			  GIMP_GRID_SOLID) ],
+	  mapping => { GIMP_GRID_DOTS => '0',
+		       GIMP_GRID_INTERSECTIONS => '1',
+		       GIMP_GRID_ON_OFF_DASH => '2',
+		       GIMP_GRID_DOUBLE_DASH => '3',
+		       GIMP_GRID_SOLID => '4' }
+	},
     GimpIconType =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',

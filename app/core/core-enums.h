@@ -125,20 +125,6 @@ typedef enum
 } GimpFillType;
 
 
-#define GIMP_TYPE_GRID_STYLE (gimp_grid_style_get_type ())
-
-GType gimp_grid_style_get_type (void) G_GNUC_CONST;
-
-typedef enum  /*< pdb-skip >*/
-{
-  GIMP_GRID_DOTS,           /*< desc="Intersections (dots)"       >*/
-  GIMP_GRID_INTERSECTIONS,  /*< desc="Intersections (crosshairs)" >*/
-  GIMP_GRID_ON_OFF_DASH,    /*< desc="Dashed"                     >*/
-  GIMP_GRID_DOUBLE_DASH,    /*< desc="Double dashed"              >*/
-  GIMP_GRID_SOLID           /*< desc="Solid"                      >*/
-} GimpGridStyle;
-
-
 #define GIMP_TYPE_STROKE_METHOD (gimp_stroke_method_get_type ())
 
 GType gimp_stroke_method_get_type (void) G_GNUC_CONST;

@@ -313,6 +313,14 @@ EXPORTS
 	gimp_image_get_tattoo_state
 	gimp_image_get_thumbnail_data
 	gimp_image_get_unit
+	gimp_image_grid_get_background_color
+	gimp_image_grid_get_foreground_color
+	gimp_image_grid_get_offset
+	gimp_image_grid_get_spacing
+	gimp_image_grid_set_background_color
+	gimp_image_grid_set_foreground_color
+	gimp_image_grid_set_offset
+	gimp_image_grid_set_spacing
 	gimp_image_height
 	gimp_image_is_dirty
 	gimp_image_list

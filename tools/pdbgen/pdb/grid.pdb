@@ -1,0 +1,318 @@
+# The GIMP -- an image manipulation program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+sub pdb_misc {
+    $author = $copyright = 'Sylvain FORET';
+    $date   = '2005';
+    $since  = '2.4';
+}
+
+sub image_grid_get_dimensions {
+    my ($type) = @_;
+
+    $blurb = "Gets the ${type} of an image's grid.";
+
+    $help = <<HELP;
+This procedure retrieves the horizontal and vertical ${type} of an image's grid.
+It takes the image as parameter.
+HELP
+
+    &pdb_misc;
+
+    my $bounded_type = 'float';
+    #my $bounded_type = ($type eq 'spacing') ? 1 : '-GIMP_MAX_IMAGE_SIZE';
+    #$bounded_type .= " <= float <= GIMP_MAX_IMAGE_SIZE";
+
+    @inargs = (
+        &std_image_arg
+    );
+
+    @outargs = (
+        { name => "x$type",
+          type => $bounded_type,
+          void_ret => 1,
+          desc => "The image's grid horizontal $type" },
+        { name => "y$type",
+          type => $bounded_type,
+          void_ret => 1,
+          desc => "The image's grid vertical $type" }
+    );
+
+    %invoke = (
+	vars => [ 'GimpGrid  *grid' ],
+	code => <<CODE
+{
+  grid = gimp_image_get_grid (gimage);
+  if (grid)
+    {
+      x$type = grid->x$type;
+      y$type = grid->y$type;
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub image_grid_set_dimensions {
+    my ($type) = @_;
+
+    $blurb = "Sets the ${type} of an image's grid.";
+
+    $help = <<HELP;
+This procedure sets the horizontal and vertical ${type} of an image's grid.
+HELP
+
+    &pdb_misc;
+
+    my $bounded_type = 'float';
+    #my $bounded_type = ($type eq 'spacing') ? 1 : '-GIMP_MAX_IMAGE_SIZE';
+    #$bounded_type .= " <= float <= GIMP_MAX_IMAGE_SIZE";
+
+    @inargs = (
+        &std_image_arg,
+        { name => "x$type",
+          type => $bounded_type,
+          desc => "The image's grid horizontal $type" },
+        { name => "y$type",
+          type => $bounded_type,
+          desc => "The image's grid vertical $type" }
+    );
+
+    %invoke = (
+	vars => [ 'GimpGrid  *grid' ],
+	code => <<CODE
+{
+  grid = gimp_image_get_grid (gimage);
+  if (grid)
+    {
+      g_object_set (grid,
+                    "x$type", x$type,
+                    "y$type", y$type,
+                    NULL);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub image_grid_get_color {
+    my ($desc, $type) = @_;
+    my $arg  = "${type}color";
+
+    $blurb = "Sets the $desc color of an image's grid.";
+
+    $help = <<HELP;
+This procedure gets the $desc color of an image's grid.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+        &std_image_arg,
+    );
+    @outargs = (
+        { name     => "$arg",
+          type     => 'color',
+          void_ret => 1,
+          desc     => "The image's grid $desc color" }
+    );
+
+    %invoke = (
+	vars => [ 'GimpGrid  *grid' ],
+	code => <<CODE
+{
+  grid = gimp_image_get_grid (gimage);
+  if (grid)
+    {
+      $arg = grid->$arg;
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub image_grid_set_color {
+    my ($desc, $type) = @_;
+    my $arg  = "${type}color";
+
+    $blurb = "Gets the $desc color of an image's grid.";
+
+    $help = <<HELP;
+This procedure sets the $desc color of an image's grid.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+        &std_image_arg,
+        { name     => "$arg",
+          type     => 'color',
+          desc     => "The new $desc color" }
+    );
+
+    %invoke = (
+	vars => [ 'GimpGrid  *grid' ],
+	code => <<CODE
+{
+  grid = gimp_image_get_grid (gimage);
+  if (grid)
+    g_object_set (grid,
+                  "$arg", &$arg,
+                  NULL);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+# The defs
+
+sub image_grid_get_spacing {
+    &image_grid_get_dimensions ('spacing');
+}
+
+sub image_grid_set_spacing {
+    &image_grid_set_dimensions ('spacing');
+}
+
+sub image_grid_get_offset {
+    &image_grid_get_dimensions ('offset');
+}
+
+sub image_grid_set_offset {
+    &image_grid_set_dimensions ('offset');
+}
+
+sub image_grid_get_foreground_color {
+    &image_grid_get_color ('foreground', 'fg');
+}
+
+sub image_grid_set_foreground_color {
+    &image_grid_set_color ('foreground', 'fg');
+}
+
+sub image_grid_get_background_color {
+    &image_grid_get_color ('background', 'bg');
+}
+
+sub image_grid_set_background_color {
+    &image_grid_set_color ('background', 'bg');
+}
+
+sub image_grid_get_style {
+
+    $blurb = "Gets the style of an image's grid.";
+
+    $help = <<HELP;
+This procedure retrieves the style of an image's grid.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+        &std_image_arg
+    );
+
+    @outargs = (
+        { name => 'style',
+          type => 'enum GimpGridStyle',
+          desc => "The image's grid style" }
+    );
+
+    %invoke = (
+	vars => [ 'GimpGrid  *grid' ],
+	code => <<CODE
+{
+  grid = gimp_image_get_grid (gimage);
+  if (grid)
+    {
+      style = grid->style;
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub image_grid_set_style {
+
+    $blurb = "Sets the style unit of an image's grid.";
+
+    $help = <<HELP;
+This procedure sets the style of an image's grid.
+It takes the image and the new style as parameters.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+        &std_image_arg,
+        { name => 'style',
+          type => 'enum GimpGridStyle',
+          desc => "The image's grid style" }
+    );
+
+    %invoke = (
+	vars => [ 'GimpGrid  *grid' ],
+	code => <<CODE
+{
+  grid = gimp_image_get_grid (gimage);
+  if (grid)
+    g_object_set (grid,
+                  "style", style,
+                  NULL);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+# Required headers
+
+@headers = qw("core/gimpimage-grid.h"
+              "core/gimpgrid.h"
+              "libgimpbase/gimpbaseenums.h"
+             );
+
+# Exported procedures
+
+@procs = qw(image_grid_get_spacing
+            image_grid_set_spacing
+            image_grid_get_offset
+            image_grid_set_offset
+            image_grid_get_foreground_color
+            image_grid_set_foreground_color
+            image_grid_get_background_color
+            image_grid_set_background_color
+            image_grid_get_style
+            image_grid_set_style
+           );
+
+%exports = (app => [@procs], lib => [@procs]);
+
+$desc = 'Image grid procedures';
+
+1;
