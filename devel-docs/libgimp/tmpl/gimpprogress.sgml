@@ -46,6 +46,16 @@ Functions for embedding the progress bar into a plug-in's GUI.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_progress_init_printf ##### -->
+<para>
+
+</para>
+
+@format: 
+@Varargs: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_progress_update ##### -->
 <para>
 
@@ -64,6 +74,18 @@ Functions for embedding the progress bar into a plug-in's GUI.
 
 
 <!-- ##### FUNCTION gimp_progress_set_text ##### -->
+<para>
+
+</para>
+
+@message: 
+@Returns: 
+<!-- # Unused Parameters # -->
+@format: 
+@Varargs: 
+
+
+<!-- ##### FUNCTION gimp_progress_set_text_printf ##### -->
 <para>
 
 </para>

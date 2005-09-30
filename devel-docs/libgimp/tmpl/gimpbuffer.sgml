@@ -17,6 +17,16 @@ gimpbuffer
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### FUNCTION gimp_buffers_get_list ##### -->
+<para>
+
+</para>
+
+@filter: 
+@num_buffers: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_buffer_rename ##### -->
 <para>
 

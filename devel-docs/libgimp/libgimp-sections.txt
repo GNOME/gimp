@@ -181,6 +181,7 @@ gimp_brushes_set_popup
 
 <SECTION>
 <FILE>gimpbuffer</FILE>
+gimp_buffers_get_list
 gimp_buffer_rename
 gimp_buffer_delete
 gimp_buffer_get_width
@@ -747,9 +748,11 @@ gimp_procedural_db_get_data_size
 <FILE>gimpprogress</FILE>
 GimpProgressVtable
 gimp_progress_init
+gimp_progress_init_printf
 gimp_progress_update
 gimp_progress_pulse
 gimp_progress_set_text
+gimp_progress_set_text_printf
 gimp_progress_uninstall
 gimp_progress_cancel
 gimp_progress_get_window_handle
