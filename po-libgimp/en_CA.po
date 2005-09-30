@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-28 21:40-0400\n"
+"POT-Creation-Date: 2005-09-30 15:59-0400\n"
 "PO-Revision-Date: 2005-09-06 20:02-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
@@ -403,7 +403,7 @@ msgstr "Blue"
 msgid "Gray"
 msgstr "Gray"
 
-#: libgimpbase/gimpbaseenums.c:164 libgimpbase/gimpbaseenums.c:494
+#: libgimpbase/gimpbaseenums.c:164 libgimpbase/gimpbaseenums.c:529
 msgid "Indexed"
 msgstr "Indexed"
 
@@ -475,7 +475,7 @@ msgstr "Dodge"
 msgid "Burn"
 msgstr "Burn"
 
-#: libgimpbase/gimpbaseenums.c:386 libgimpbase/gimpbaseenums.c:526
+#: libgimpbase/gimpbaseenums.c:386 libgimpbase/gimpbaseenums.c:561
 msgid "Linear"
 msgstr "Linear"
 
@@ -519,119 +519,139 @@ msgstr "Spiral (cw)"
 msgid "Spiral (ccw)"
 msgstr "Spiral (ccw)"
 
-#: libgimpbase/gimpbaseenums.c:425
+#: libgimpbase/gimpbaseenums.c:427
+msgid "Intersections (dots)"
+msgstr "Intersections (dots)"
+
+#: libgimpbase/gimpbaseenums.c:428
+msgid "Intersections (crosshairs)"
+msgstr "Intersections (crosshairs)"
+
+#: libgimpbase/gimpbaseenums.c:429
+msgid "Dashed"
+msgstr "Dashed"
+
+#: libgimpbase/gimpbaseenums.c:430
+msgid "Double dashed"
+msgstr "Double-dashed"
+
+#: libgimpbase/gimpbaseenums.c:431
+msgid "Solid"
+msgstr "Solid"
+
+#: libgimpbase/gimpbaseenums.c:460
 msgid "Stock ID"
 msgstr "Stock ID"
 
-#: libgimpbase/gimpbaseenums.c:426
+#: libgimpbase/gimpbaseenums.c:461
 msgid "Inline pixbuf"
 msgstr "Inline pixbuf"
 
-#: libgimpbase/gimpbaseenums.c:427
+#: libgimpbase/gimpbaseenums.c:462
 msgid "Image file"
 msgstr "Image file"
 
-#: libgimpbase/gimpbaseenums.c:456
+#: libgimpbase/gimpbaseenums.c:491
 msgid "RGB color"
 msgstr "RGB colour"
 
-#: libgimpbase/gimpbaseenums.c:457 libgimpbase/gimpbaseenums.c:492
+#: libgimpbase/gimpbaseenums.c:492 libgimpbase/gimpbaseenums.c:527
 msgid "Grayscale"
 msgstr "Grayscale"
 
-#: libgimpbase/gimpbaseenums.c:458
+#: libgimpbase/gimpbaseenums.c:493
 msgid "Indexed color"
 msgstr "Indexed colour"
 
-#: libgimpbase/gimpbaseenums.c:490
+#: libgimpbase/gimpbaseenums.c:525
 msgid "RGB"
 msgstr "RGB"
 
-#: libgimpbase/gimpbaseenums.c:491
+#: libgimpbase/gimpbaseenums.c:526
 msgid "RGB-alpha"
 msgstr "RGB-alpha"
 
-#: libgimpbase/gimpbaseenums.c:493
+#: libgimpbase/gimpbaseenums.c:528
 msgid "Grayscale-alpha"
 msgstr "Grayscale-alpha"
 
-#: libgimpbase/gimpbaseenums.c:495
+#: libgimpbase/gimpbaseenums.c:530
 msgid "Indexed-alpha"
 msgstr "Indexed-alpha"
 
-#: libgimpbase/gimpbaseenums.c:525
+#: libgimpbase/gimpbaseenums.c:560
 msgid "None (Fastest)"
 msgstr "None (Fastest)"
 
-#: libgimpbase/gimpbaseenums.c:527
+#: libgimpbase/gimpbaseenums.c:562
 msgid "Cubic"
 msgstr "Cubic"
 
-#: libgimpbase/gimpbaseenums.c:528
+#: libgimpbase/gimpbaseenums.c:563
 msgid "Lanczos (Best)"
 msgstr "Lanczos (Best)"
 
-#: libgimpbase/gimpbaseenums.c:556
+#: libgimpbase/gimpbaseenums.c:591
 msgid "Constant"
 msgstr "Constant"
 
-#: libgimpbase/gimpbaseenums.c:557
+#: libgimpbase/gimpbaseenums.c:592
 msgid "Incremental"
 msgstr "Incremental"
 
-#: libgimpbase/gimpbaseenums.c:586 modules/cdisplay_lcms.c:254
+#: libgimpbase/gimpbaseenums.c:621 modules/cdisplay_lcms.c:254
 msgid "None"
 msgstr "None"
 
-#: libgimpbase/gimpbaseenums.c:587
+#: libgimpbase/gimpbaseenums.c:622
 msgid "Sawtooth wave"
 msgstr "Sawtooth wave"
 
-#: libgimpbase/gimpbaseenums.c:588
+#: libgimpbase/gimpbaseenums.c:623
 msgid "Triangular wave"
 msgstr "Triangular wave"
 
-#: libgimpbase/gimpbaseenums.c:616
+#: libgimpbase/gimpbaseenums.c:651
 msgid "Pixels"
 msgstr "Pixels"
 
-#: libgimpbase/gimpbaseenums.c:617
+#: libgimpbase/gimpbaseenums.c:652
 msgid "Points"
 msgstr "Points"
 
-#: libgimpbase/gimpbaseenums.c:646
+#: libgimpbase/gimpbaseenums.c:681
 msgid "Shadows"
 msgstr "Shadows"
 
-#: libgimpbase/gimpbaseenums.c:647
+#: libgimpbase/gimpbaseenums.c:682
 msgid "Midtones"
 msgstr "Midtones"
 
-#: libgimpbase/gimpbaseenums.c:648
+#: libgimpbase/gimpbaseenums.c:683
 msgid "Highlights"
 msgstr "Highlights"
 
-#: libgimpbase/gimpbaseenums.c:676
+#: libgimpbase/gimpbaseenums.c:711
 msgid "Forward"
 msgstr "Forward"
 
-#: libgimpbase/gimpbaseenums.c:677
+#: libgimpbase/gimpbaseenums.c:712
 msgid "Backward"
 msgstr "Backward"
 
-#: libgimpbase/gimpbaseenums.c:778
+#: libgimpbase/gimpbaseenums.c:813
 msgid "Internal GIMP procedure"
 msgstr "Internal GIMP procedure"
 
-#: libgimpbase/gimpbaseenums.c:779
+#: libgimpbase/gimpbaseenums.c:814
 msgid "GIMP Plug-In"
 msgstr "GIMP Plug-In"
 
-#: libgimpbase/gimpbaseenums.c:780
+#: libgimpbase/gimpbaseenums.c:815
 msgid "GIMP Extension"
 msgstr "GIMP Extension"
 
-#: libgimpbase/gimpbaseenums.c:781
+#: libgimpbase/gimpbaseenums.c:816
 msgid "Temporary Procedure"
 msgstr "Temporary Procedure"
 
