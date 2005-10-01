@@ -203,7 +203,7 @@ file_open_dialog_open_image (GtkWidget     *open_dialog,
     }
   else if (status != GIMP_PDB_CANCEL)
     {
-      gchar *filename = file_utils_uri_to_utf8_filename (uri);
+      gchar *filename = file_utils_uri_display_name (uri);
 
       g_message (_("Opening '%s' failed:\n\n%s"),
                  filename, error->message);
@@ -254,7 +254,7 @@ file_open_dialog_open_layer (GtkWidget     *open_dialog,
     }
   else if (status != GIMP_PDB_CANCEL)
     {
-      gchar *filename = file_utils_uri_to_utf8_filename (uri);
+      gchar *filename = file_utils_uri_display_name (uri);
 
       g_message (_("Opening '%s' failed:\n\n%s"),
                  filename, error->message);

@@ -27,8 +27,10 @@ gchar         * file_utils_filename_to_uri        (GSList        *procs,
                                                    GError       **error);
 gchar         * file_utils_filename_from_uri      (const gchar   *uri);
 
-gchar         * file_utils_uri_to_utf8_basename   (const gchar   *uri);
 gchar         * file_utils_uri_to_utf8_filename   (const gchar   *uri);
+
+gchar         * file_utils_uri_display_basename   (const gchar   *uri);
+gchar         * file_utils_uri_display_name       (const gchar   *uri);
 
 PlugInProcDef * file_utils_find_proc              (GSList        *procs,
                                                    const gchar   *filename);

@@ -184,7 +184,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
                 const gchar *uri = gimp_image_get_uri (image);
 		gchar       *basename;
 
-		basename = file_utils_uri_to_utf8_basename (uri);
+		basename = file_utils_uri_display_basename (uri);
 
 		i += print (title, title_len, i, "%s", basename);
 
@@ -197,7 +197,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 		gchar *filename;
                 const gchar *uri = gimp_image_get_uri (image);
 
-		filename = file_utils_uri_to_utf8_filename (uri);
+		filename = file_utils_uri_display_name (uri);
 
                 i += print (title, title_len, i, "%s", filename);
 

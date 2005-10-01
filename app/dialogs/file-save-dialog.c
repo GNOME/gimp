@@ -459,7 +459,7 @@ file_save_dialog_save_image (GtkWidget     *save_dialog,
   if (status != GIMP_PDB_SUCCESS &&
       status != GIMP_PDB_CANCEL)
     {
-      gchar *filename = file_utils_uri_to_utf8_filename (uri);
+      gchar *filename = file_utils_uri_display_name (uri);
 
       g_message (_("Saving '%s' failed:\n\n%s"),
                  filename, error->message);

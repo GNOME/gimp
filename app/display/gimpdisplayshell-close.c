@@ -118,7 +118,7 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
       return;
     }
 
-  name = file_utils_uri_to_utf8_basename (gimp_image_get_uri (gimage));
+  name = file_utils_uri_display_basename (gimp_image_get_uri (gimage));
 
   title = g_strdup_printf (_("Close %s"), name);
   g_free (name);
@@ -191,7 +191,7 @@ gimp_display_shell_close_name_changed (GimpImage      *image,
   GtkWidget *window = gtk_widget_get_toplevel (GTK_WIDGET (box));
   gchar     *name;
 
-  name = file_utils_uri_to_utf8_basename (gimp_image_get_uri (image));
+  name = file_utils_uri_display_basename (gimp_image_get_uri (image));
 
   if (window)
     {

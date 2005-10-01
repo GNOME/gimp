@@ -399,11 +399,10 @@ file_open_layer (Gimp               *gimp,
 
           if (item)
             {
-              gchar *basename;
+              gchar *basename = file_utils_uri_display_basename (uri);
 
               new_layer = GIMP_LAYER (item);
 
-              basename = file_utils_uri_to_utf8_basename (uri);
               gimp_object_set_name (GIMP_OBJECT (new_layer), basename);
               g_free (basename);
 

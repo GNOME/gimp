@@ -449,7 +449,7 @@ gimp_file_overwrite_dialog (GtkWidget   *parent,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  filename = file_utils_uri_to_utf8_filename (uri);
+  filename = file_utils_uri_display_name (uri);
   gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
                                      _("A file named '%s' already exists."),
                                      filename);
@@ -726,7 +726,7 @@ gimp_file_dialog_proc_changed (GimpFileProcView *view,
 
                   gtk_file_chooser_set_uri (chooser, s->str);
 
-                  basename = file_utils_uri_to_utf8_basename (s->str);
+                  basename = file_utils_uri_display_basename (s->str);
                   gtk_file_chooser_set_current_name (chooser, basename);
                   g_free (basename);
 

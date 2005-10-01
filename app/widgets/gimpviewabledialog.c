@@ -346,7 +346,7 @@ gimp_viewable_dialog_name_changed (GimpObject         *object,
       uri = gimp_image_get_uri (gimp_item_get_image (GIMP_ITEM (object)));
       tmp = name;
 
-      basename = file_utils_uri_to_utf8_basename (uri);
+      basename = file_utils_uri_display_basename (uri);
       name = g_strdup_printf ("%s-%d (%s)",
                               tmp,
                               gimp_item_get_ID (GIMP_ITEM (object)),

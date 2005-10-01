@@ -683,7 +683,7 @@ domain_error_set_message (GError      **error,
 {
   if (error && *error)
     {
-      gchar *name = g_filename_to_utf8 (filename, -1, NULL, NULL, NULL);
+      gchar *name = g_filename_display_name (filename);
       gchar *msg  = g_strdup_printf (format, name, (*error)->message);
 
       g_free (name);

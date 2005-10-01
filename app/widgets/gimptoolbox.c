@@ -939,7 +939,7 @@ toolbox_paste_received (GtkClipboard *clipboard,
 
           if (! image && status != GIMP_PDB_CANCEL)
             {
-              gchar *filename = file_utils_uri_to_utf8_filename (copy);
+              gchar *filename = file_utils_uri_display_name (copy);
 
               g_message (_("Opening '%s' failed:\n\n%s"),
                          filename, error->message);

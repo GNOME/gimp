@@ -153,7 +153,7 @@ gimp_dnd_xds_save_image (GdkDragContext   *context,
 
               if (error)
                 {
-                  gchar *filename = file_utils_uri_to_utf8_filename (uri);
+                  gchar *filename = file_utils_uri_display_name (uri);
 
                   g_message (_("Saving '%s' failed:\n\n%s"),
                              filename, error->message);

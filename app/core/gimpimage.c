@@ -1069,10 +1069,10 @@ gimp_image_get_description (GimpViewable  *viewable,
 
   uri = gimp_image_get_uri (GIMP_IMAGE (gimage));
 
-  basename = file_utils_uri_to_utf8_basename (uri);
+  basename = file_utils_uri_display_basename (uri);
 
   if (tooltip)
-    *tooltip = file_utils_uri_to_utf8_filename (uri);
+    *tooltip = file_utils_uri_display_name (uri);
 
   retval = g_strdup_printf ("%s-%d", basename, gimp_image_get_ID (gimage));
 

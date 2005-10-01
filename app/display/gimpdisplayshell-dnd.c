@@ -443,7 +443,7 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
         }
       else if (status != GIMP_PDB_CANCEL)
         {
-          gchar *filename = file_utils_uri_to_utf8_filename (uri);
+          gchar *filename = file_utils_uri_display_name (uri);
 
           g_message (_("Opening '%s' failed:\n\n%s"),
                      filename, error->message);

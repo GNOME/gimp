@@ -481,9 +481,8 @@ gimp_thumb_box_set_uri (GimpThumbBox *box,
 
   if (uri)
     {
-      gchar *basename;
+      gchar *basename = file_utils_uri_display_basename (uri);
 
-      basename = file_utils_uri_to_utf8_basename (uri);
       gtk_label_set_text (GTK_LABEL (box->filename), basename);
       g_free (basename);
     }
@@ -707,7 +706,7 @@ gimp_thumb_box_create_thumbnail (GimpThumbBox      *box,
 
   thumb = box->imagefile->thumbnail;
 
-  basename = file_utils_uri_to_utf8_basename (uri);
+  basename = file_utils_uri_display_basename (uri);
   gtk_label_set_text (GTK_LABEL (box->filename), basename);
   g_free (basename);
 

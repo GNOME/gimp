@@ -522,7 +522,7 @@ gimp_imagefile_get_description (GimpViewable   *viewable,
       gchar       *filename;
       const gchar *desc;
 
-      filename = file_utils_uri_to_utf8_filename (thumbnail->image_uri);
+      filename = file_utils_uri_display_name (thumbnail->image_uri);
       desc     = gimp_imagefile_get_desc_string (imagefile);
 
       if (desc)
@@ -536,7 +536,7 @@ gimp_imagefile_get_description (GimpViewable   *viewable,
         }
     }
 
-  basename = file_utils_uri_to_utf8_basename (thumbnail->image_uri);
+  basename = file_utils_uri_display_basename (thumbnail->image_uri);
 
   if (thumbnail->image_width > 0 && thumbnail->image_height > 0)
     {

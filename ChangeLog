@@ -1,3 +1,34 @@
+2005-10-02  Sven Neumann  <sven@gimp.org>
+
+	* app/file/file-utils.[ch]: introduced variants of
+	file_utils_uri_to_utf8_filename() and
+	file_utils_uri_to_utf8_basename() that use g_filename_display_name()
+	and g_filename_display_basename().
+
+	* app/actions/data-commands.c
+	* app/actions/documents-commands.c
+	* app/actions/file-actions.c
+	* app/actions/file-commands.c
+	* app/core/gimpimage.c
+	* app/core/gimpimagefile.c
+	* app/dialogs/file-open-dialog.c
+	* app/dialogs/file-open-location-dialog.c
+	* app/dialogs/file-save-dialog.c
+	* app/dialogs/palette-import-dialog.c
+	* app/display/gimpdisplayshell-close.c
+	* app/display/gimpdisplayshell-dnd.c
+	* app/display/gimpdisplayshell-title.c
+	* app/file/file-open.c
+	* app/widgets/gimpdnd-xds.c
+	* app/widgets/gimpfiledialog.c
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimpthumbbox.c
+	* app/widgets/gimptoolbox-dnd.c
+	* app/widgets/gimptoolbox.c
+	* app/widgets/gimpviewabledialog.c: use the new functions.
+
+	* plug-ins/help/domain.c: use g_filename_display_name().
+
 2005-10-01  Michael Natterer  <mitch@gimp.org>
 
 	* app/sanity.c (sanity_check_glib): we require 2.8.0 now.

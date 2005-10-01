@@ -265,6 +265,35 @@ file_utils_find_proc_by_extension (GSList      *procs,
 }
 
 gchar *
+file_utils_uri_to_utf8_filename (const gchar *uri)
+{
+  g_return_val_if_fail (uri != NULL, NULL);
+
+  if (g_str_has_prefix (uri, "file:"))
+    {
+      gchar *filename = file_utils_filename_from_uri (uri);
+
+      if (filename)
+        {
+          GError *error = NULL;
+          gchar  *utf8;
+
+          utf8 = g_filename_to_utf8 (filename, -1, NULL, NULL, &error);
+          g_free (filename);
+
+          if (utf8)
+            return utf8;
+
+          g_warning ("%s: cannot convert filename to UTF-8: %s",
+                     G_STRLOC, error->message);
+          g_error_free (error);
+        }
+    }
+
+  return g_strdup (uri);
+}
+
+static gchar *
 file_utils_uri_to_utf8_basename (const gchar *uri)
 {
   gchar *filename;
@@ -297,7 +326,7 @@ file_utils_uri_to_utf8_basename (const gchar *uri)
 }
 
 gchar *
-file_utils_uri_to_utf8_filename (const gchar *uri)
+file_utils_uri_display_basename (const gchar *uri)
 {
   g_return_val_if_fail (uri != NULL, NULL);
 
@@ -307,24 +336,38 @@ file_utils_uri_to_utf8_filename (const gchar *uri)
 
       if (filename)
         {
-          GError *error = NULL;
-          gchar  *utf8;
+          gchar *basename = g_filename_display_basename (filename);
 
-          utf8 = g_filename_to_utf8 (filename, -1, NULL, NULL, &error);
           g_free (filename);
 
-          if (utf8)
-            return utf8;
+          return basename;
+        }
+    }
 
-          g_warning ("%s: cannot convert filename to UTF-8: %s",
-                     G_STRLOC, error->message);
-          g_error_free (error);
+  return file_utils_uri_to_utf8_basename (uri);
+}
+
+gchar *
+file_utils_uri_display_name (const gchar *uri)
+{
+  g_return_val_if_fail (uri != NULL, NULL);
+
+  if (g_str_has_prefix (uri, "file:"))
+    {
+      gchar *filename = file_utils_filename_from_uri (uri);
+
+      if (filename)
+        {
+          gchar *name = g_filename_display_name (filename);
+
+          g_free (filename);
+
+          return name;
         }
     }
 
   return g_strdup (uri);
 }
-
 
 /*  private functions  */
 

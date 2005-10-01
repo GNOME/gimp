@@ -479,7 +479,8 @@ palette_import_image_changed (GimpContext  *context,
       gchar *basename;
       gchar *label;
 
-      basename = file_utils_uri_to_utf8_basename (gimp_image_get_uri (gimage));
+      basename =
+        file_utils_uri_display_basename (gimp_image_get_uri (gimage));
       label = g_strdup_printf ("%s-%d", basename, gimp_image_get_ID (gimage));
       g_free (basename);
 

@@ -167,10 +167,8 @@ file_last_opened_cmd_callback (GtkAction *action,
 
       if (! gimage && status != GIMP_PDB_CANCEL)
         {
-          gchar *filename;
-
-          filename =
-            file_utils_uri_to_utf8_filename (GIMP_OBJECT (imagefile)->name);
+          gchar *filename =
+            file_utils_uri_display_name (GIMP_OBJECT (imagefile)->name);
 
           g_message (_("Opening '%s' failed:\n\n%s"),
                      filename, error->message);
@@ -224,9 +222,7 @@ file_save_cmd_callback (GtkAction *action,
           if (status != GIMP_PDB_SUCCESS &&
               status != GIMP_PDB_CANCEL)
             {
-              gchar *filename;
-
-              filename = file_utils_uri_to_utf8_filename (uri);
+              gchar *filename = file_utils_uri_display_name (uri);
 
               g_message (_("Saving '%s' failed:\n\n%s"),
                          filename, error->message);
@@ -338,8 +334,8 @@ file_revert_cmd_callback (GtkAction *action,
                         G_CALLBACK (file_revert_confirm_response),
                         gdisp);
 
-      basename = g_path_get_basename (uri);
-      filename = file_utils_uri_to_utf8_filename (uri);
+      basename = file_utils_uri_display_basename (uri);
+      filename = file_utils_uri_display_name (uri);
 
       gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
                                          _("Revert '%s' to '%s'?"),
@@ -543,7 +539,7 @@ file_revert_confirm_response (GtkWidget   *dialog,
         {
           gchar *filename;
 
-          filename = file_utils_uri_to_utf8_filename (uri);
+          filename = file_utils_uri_display_name (uri);
 
           g_message (_("Reverting to '%s' failed:\n\n%s"),
                      filename, error->message);
