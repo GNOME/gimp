@@ -1,5 +1,10 @@
 2005-10-02  Simon Budig  <simon@gimp.org>
 
+	* app/vectors/gimpbezierstroke.c: correctly pass back the
+	nearest coordinate. Snapping sortof works.
+
+2005-10-02  Simon Budig  <simon@gimp.org>
+
 	* app/core/gimpcoords.c: use ABS instead of fabs.
 
 	* app/core/gimpimage-snap.c: Use proper default values for the

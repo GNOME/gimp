@@ -204,6 +204,7 @@ gimp_bezier_stroke_class_init (GimpBezierStrokeClass *klass)
 
   stroke_class->nearest_point_get    = gimp_bezier_stroke_nearest_point_get;
   stroke_class->nearest_tangent_get  = gimp_bezier_stroke_nearest_tangent_get;
+  stroke_class->nearest_intersection_get = NULL;
   stroke_class->anchor_move_relative = gimp_bezier_stroke_anchor_move_relative;
   stroke_class->anchor_move_absolute = gimp_bezier_stroke_anchor_move_absolute;
   stroke_class->anchor_convert       = gimp_bezier_stroke_anchor_convert;
@@ -885,6 +886,8 @@ gimp_bezier_stroke_nearest_tangent_get (const GimpStroke  *stroke,
               min_dist = dist;
               if (ret_pos)
                 *ret_pos = pos;
+              if (nearest)
+                *nearest = point;
               if (ret_segment_start)
                 *ret_segment_start = segment_start;
               if (ret_segment_end)
@@ -922,6 +925,8 @@ gimp_bezier_stroke_nearest_tangent_get (const GimpStroke  *stroke,
           min_dist = dist;
           if (ret_pos)
             *ret_pos = pos;
+          if (nearest)
+            *nearest = point;
           if (ret_segment_start)
             *ret_segment_start = segment_start;
           if (ret_segment_end)
