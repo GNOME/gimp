@@ -1,3 +1,7 @@
+2005-10-01  Michael Natterer  <mitch@gimp.org>
+
+	* app/sanity.c (sanity_check_glib): we require 2.8.0 now.
+
 2005-10-01  DindinX  <dindinx@gimp.org>
 
 	* libgimpwidgets/gimpwidgetsmarshal.list: added VOID__DOUBLE_DOUBLE
