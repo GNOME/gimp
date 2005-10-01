@@ -1,3 +1,8 @@
+2005-10-01  Carol Spears  <carol@gimp.org>
+
+	* pt_BR.po: Applied patch provided by Joao S. O. Bueno Calligaris 
+        <gwidion@mpc.com.br>
+
 2005-09-30  Adam Weinberger  <adamw@gnome.org>
 
 	* en_CA.po: Updated Canadian English translation.

@@ -10207,7 +10207,7 @@ msgstr "Todos os Arquivos"
 #: app/widgets/gimpfiledialog.c:635
 #, c-format
 msgid "Select File _Type (%s)"
-msgstr "Tipo de Preenchimento (%s)"
+msgstr "Tipo de Arquivo (%s)"
 
 #: app/widgets/gimpfileprocview.c:234
 msgid "File Type"
