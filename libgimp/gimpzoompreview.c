@@ -168,6 +168,7 @@ gimp_zoom_preview_set_adjustments (GimpZoomPreview *preview)
                                adj->lower,
                                adj->upper - adj->page_size);
   gtk_adjustment_changed (adj);
+  gtk_adjustment_value_changed (adj);
 
   adj = gtk_range_get_adjustment (GTK_RANGE (scrolled_preview->vscr));
   adj->lower          = 0;
@@ -179,6 +180,7 @@ gimp_zoom_preview_set_adjustments (GimpZoomPreview *preview)
                                adj->lower,
                                adj->upper - adj->page_size);
   gtk_adjustment_changed (adj);
+  gtk_adjustment_value_changed (adj);
 
   gimp_preview_invalidate (GIMP_PREVIEW (preview));
 }

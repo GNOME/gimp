@@ -1,3 +1,9 @@
+2005-10-01  DindinX  <dindinx@gimp.org>
+
+	* libgimp/gimpzoompreview.c: call gtk_adjustment_value_changed in
+	addition to gtk_adjustment_changed, so the offsets are correctly
+	updated.
+
 2005-09-30  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/pygimp-pdb.c (pf_call): use canonical name for
@@ -10,8 +16,8 @@
 2005-09-30  Carol Spears  <carol@gimp.org>
 
 	* plug-ins/pygimp/plug-ins/clothify.py  
-	* plug-ins/pygimp/plug-ins/foggify.py: Added run_mode parameter. 
-        
+	* plug-ins/pygimp/plug-ins/foggify.py: Added run_mode parameter.
+
 2005-10-01  Simon Budig  <simon@gimp.org>
 
 	* app/core/gimpcoords.[ch]: Added small utility function for the
