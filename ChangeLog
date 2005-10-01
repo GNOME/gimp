@@ -1,3 +1,16 @@
+2005-10-01  Simon Budig  <simon@gimp.org>
+
+	* app/core/gimpcoords.[ch]: Added small utility function for the
+	manhattan metric.
+
+	* app/vectors/gimpstroke.[ch]: virtualized stubs provided by mitch
+
+	* app/vectors/gimpbezierstroke.c: Reworked some internal functions
+	to make it easier to access the parameters for the coordinates of an
+	stroke interpolation. Simplified the straight line test. Added an
+	implementation of the _nearest_tangent_get () function that does
+	not yet seem to work properly. Not sure where the problem is.
+
 2005-09-30  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/image-commands.c

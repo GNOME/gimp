@@ -61,6 +61,23 @@ struct _GimpStrokeClass
                                           GimpAnchor           **ret_segment_start,
                                           GimpAnchor           **ret_segment_end,
                                           gdouble               *ret_pos);
+  gdouble       (* nearest_tangent_get)  (const GimpStroke      *stroke,
+                                          const GimpCoords      *coord1,
+                                          const GimpCoords      *coord2,
+                                          const gdouble          precision,
+                                          GimpCoords            *nearest,
+                                          GimpAnchor           **ret_segment_start,
+                                          GimpAnchor           **ret_segment_end,
+                                          gdouble               *ret_pos);
+  gdouble       (* nearest_intersection_get)
+                                         (const GimpStroke      *stroke,
+                                          const GimpCoords      *coord1,
+                                          const GimpCoords      *direction,
+                                          const gdouble          precision,
+                                          GimpCoords            *nearest,
+                                          GimpAnchor           **ret_segment_start,
+                                          GimpAnchor           **ret_segment_end,
+                                          gdouble               *ret_pos);
   GimpAnchor  * (* anchor_get_next)      (const GimpStroke      *stroke,
                                           const GimpAnchor      *prev);
   void          (* anchor_select)        (GimpStroke            *stroke,

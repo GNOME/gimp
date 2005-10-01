@@ -55,13 +55,6 @@ static void    gimp_stroke_finalize                  (GObject      *object);
 static gint64  gimp_stroke_get_memsize               (GimpObject   *object,
                                                       gint64       *gui_size);
 
-static gdouble gimp_stroke_real_nearest_point_get    (const GimpStroke *stroke,
-                                                      const GimpCoords *coord,
-                                                      const gdouble     precision,
-                                                      GimpCoords       *ret_point,
-                                                      GimpAnchor      **ret_segment_start,
-                                                      GimpAnchor      **ret_segment_end,
-                                                      gdouble          *ret_pos);
 static GimpAnchor * gimp_stroke_real_anchor_get      (const GimpStroke *stroke,
                                                       const GimpCoords *coord);
 static GimpAnchor * gimp_stroke_real_anchor_get_next (const GimpStroke *stroke,
@@ -204,53 +197,55 @@ gimp_stroke_class_init (GimpStrokeClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize         = gimp_stroke_finalize;
-  object_class->get_property     = gimp_stroke_get_property;
-  object_class->set_property     = gimp_stroke_set_property;
+  object_class->finalize          = gimp_stroke_finalize;
+  object_class->get_property      = gimp_stroke_get_property;
+  object_class->set_property      = gimp_stroke_set_property;
 
-  gimp_object_class->get_memsize = gimp_stroke_get_memsize;
+  gimp_object_class->get_memsize  = gimp_stroke_get_memsize;
 
-  klass->changed                 = NULL;
-  klass->removed                 = NULL;
+  klass->changed                  = NULL;
+  klass->removed                  = NULL;
 
-  klass->anchor_get              = gimp_stroke_real_anchor_get;
-  klass->anchor_get_next         = gimp_stroke_real_anchor_get_next;
-  klass->anchor_select           = gimp_stroke_real_anchor_select;
-  klass->anchor_move_relative    = gimp_stroke_real_anchor_move_relative;
-  klass->anchor_move_absolute    = gimp_stroke_real_anchor_move_absolute;
-  klass->anchor_convert          = gimp_stroke_real_anchor_convert;
-  klass->anchor_delete           = gimp_stroke_real_anchor_delete;
+  klass->anchor_get               = gimp_stroke_real_anchor_get;
+  klass->anchor_get_next          = gimp_stroke_real_anchor_get_next;
+  klass->anchor_select            = gimp_stroke_real_anchor_select;
+  klass->anchor_move_relative     = gimp_stroke_real_anchor_move_relative;
+  klass->anchor_move_absolute     = gimp_stroke_real_anchor_move_absolute;
+  klass->anchor_convert           = gimp_stroke_real_anchor_convert;
+  klass->anchor_delete            = gimp_stroke_real_anchor_delete;
 
-  klass->point_is_movable        = gimp_stroke_real_point_is_movable;
-  klass->point_move_relative     = gimp_stroke_real_point_move_relative;
-  klass->point_move_absolute     = gimp_stroke_real_point_move_absolute;
+  klass->point_is_movable         = gimp_stroke_real_point_is_movable;
+  klass->point_move_relative      = gimp_stroke_real_point_move_relative;
+  klass->point_move_absolute      = gimp_stroke_real_point_move_absolute;
 
-  klass->nearest_point_get       = gimp_stroke_real_nearest_point_get;
-  klass->close                   = gimp_stroke_real_close;
-  klass->open                    = gimp_stroke_real_open;
-  klass->anchor_is_insertable    = gimp_stroke_real_anchor_is_insertable;
-  klass->anchor_insert           = gimp_stroke_real_anchor_insert;
-  klass->is_extendable           = gimp_stroke_real_is_extendable;
-  klass->extend                  = gimp_stroke_real_extend;
-  klass->connect_stroke          = gimp_stroke_real_connect_stroke;
+  klass->nearest_point_get        = NULL;
+  klass->nearest_tangent_get      = NULL;
+  klass->nearest_intersection_get = NULL;
+  klass->close                    = gimp_stroke_real_close;
+  klass->open                     = gimp_stroke_real_open;
+  klass->anchor_is_insertable     = gimp_stroke_real_anchor_is_insertable;
+  klass->anchor_insert            = gimp_stroke_real_anchor_insert;
+  klass->is_extendable            = gimp_stroke_real_is_extendable;
+  klass->extend                   = gimp_stroke_real_extend;
+  klass->connect_stroke           = gimp_stroke_real_connect_stroke;
 
-  klass->is_empty                = gimp_stroke_real_is_empty;
-  klass->get_length              = gimp_stroke_real_get_length;
-  klass->get_distance            = gimp_stroke_real_get_distance;
-  klass->get_point_at_dist       = gimp_stroke_real_get_point_at_dist;
-  klass->interpolate             = gimp_stroke_real_interpolate;
+  klass->is_empty                 = gimp_stroke_real_is_empty;
+  klass->get_length               = gimp_stroke_real_get_length;
+  klass->get_distance             = gimp_stroke_real_get_distance;
+  klass->get_point_at_dist        = gimp_stroke_real_get_point_at_dist;
+  klass->interpolate              = gimp_stroke_real_interpolate;
 
-  klass->duplicate               = gimp_stroke_real_duplicate;
-  klass->make_bezier             = gimp_stroke_real_make_bezier;
+  klass->duplicate                = gimp_stroke_real_duplicate;
+  klass->make_bezier              = gimp_stroke_real_make_bezier;
 
-  klass->translate               = gimp_stroke_real_translate;
-  klass->scale                   = gimp_stroke_real_scale;
-  klass->transform               = gimp_stroke_real_transform;
+  klass->translate                = gimp_stroke_real_translate;
+  klass->scale                    = gimp_stroke_real_scale;
+  klass->transform                = gimp_stroke_real_transform;
 
-  klass->get_draw_anchors        = gimp_stroke_real_get_draw_anchors;
-  klass->get_draw_controls       = gimp_stroke_real_get_draw_controls;
-  klass->get_draw_lines          = gimp_stroke_real_get_draw_lines;
-  klass->control_points_get      = gimp_stroke_real_control_points_get;
+  klass->get_draw_anchors         = gimp_stroke_real_get_draw_anchors;
+  klass->get_draw_controls        = gimp_stroke_real_get_draw_controls;
+  klass->get_draw_lines           = gimp_stroke_real_get_draw_lines;
+  klass->control_points_get       = gimp_stroke_real_control_points_get;
 
   anchor_param_spec = g_param_spec_boxed ("gimp-anchor",
                                           "Gimp Anchor",
@@ -423,13 +418,15 @@ gimp_stroke_nearest_point_get (const GimpStroke *stroke,
   g_return_val_if_fail (GIMP_IS_STROKE (stroke), FALSE);
   g_return_val_if_fail (coord != NULL, FALSE);
 
-  return GIMP_STROKE_GET_CLASS (stroke)->nearest_point_get (stroke,
-                                                            coord,
-                                                            precision,
-                                                            ret_point,
-                                                            ret_segment_start,
-                                                            ret_segment_end,
-                                                            ret_pos);
+  if (GIMP_STROKE_GET_CLASS (stroke)->nearest_point_get)
+    return GIMP_STROKE_GET_CLASS (stroke)->nearest_point_get (stroke,
+                                                              coord,
+                                                              precision,
+                                                              ret_point,
+                                                              ret_segment_start,
+                                                              ret_segment_end,
+                                                              ret_pos);
+  return -1;
 }
 
 gdouble
@@ -446,10 +443,15 @@ gimp_stroke_nearest_tangent_get   (const GimpStroke      *stroke,
   g_return_val_if_fail (coords1 != NULL, FALSE);
   g_return_val_if_fail (coords2 != NULL, FALSE);
 
-#ifdef __GNUC__
-#warning please implement me, nomis!
-#endif
-
+  if (GIMP_STROKE_GET_CLASS (stroke)->nearest_tangent_get)
+    return GIMP_STROKE_GET_CLASS (stroke)->nearest_tangent_get (stroke,
+                                                                coords1,
+                                                                coords2,
+                                                                precision,
+                                                                nearest,
+                                                                ret_segment_start,
+                                                                ret_segment_end,
+                                                                ret_pos);
   return -1;
 }
 
@@ -467,23 +469,15 @@ gimp_stroke_nearest_intersection_get (const GimpStroke      *stroke,
   g_return_val_if_fail (coords1 != NULL, FALSE);
   g_return_val_if_fail (direction != NULL, FALSE);
 
-#ifdef __GNUC__
-#warning please implement me, nomis!
-#endif
-
-  return -1;
-}
-
-static gdouble
-gimp_stroke_real_nearest_point_get (const GimpStroke *stroke,
-                                    const GimpCoords *coord,
-                                    const gdouble     precision,
-                                    GimpCoords       *ret_point,
-                                    GimpAnchor      **ret_segment_start,
-                                    GimpAnchor      **ret_segment_end,
-                                    gdouble          *ret_pos)
-{
-  g_printerr ("gimp_stroke_nearest_point_get: default implementation\n");
+  if (GIMP_STROKE_GET_CLASS (stroke)->nearest_tangent_get)
+    return GIMP_STROKE_GET_CLASS (stroke)->nearest_tangent_get (stroke,
+                                                                coords1,
+                                                                direction,
+                                                                precision,
+                                                                nearest,
+                                                                ret_segment_start,
+                                                                ret_segment_end,
+                                                                ret_pos);
   return -1;
 }
 

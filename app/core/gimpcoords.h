@@ -45,6 +45,8 @@ gdouble  gimp_coords_scalarprod     (const GimpCoords *a,
                                      const GimpCoords *b);
 gdouble  gimp_coords_length         (const GimpCoords *a);
 gdouble  gimp_coords_length_squared (const GimpCoords *a);
+gdouble  gimp_coords_manhattan_dist (const GimpCoords *a,
+                                     const GimpCoords *b);
 
 gboolean gimp_coords_equal          (const GimpCoords *a,
                                      const GimpCoords *b);
