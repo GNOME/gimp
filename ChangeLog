@@ -1,3 +1,13 @@
+2005-10-02  Simon Budig  <simon@gimp.org>
+
+	* app/core/gimpcoords.c: use ABS instead of fabs.
+
+	* app/core/gimpimage-snap.c: Use proper default values for the
+	coordinates.
+
+	* app/vectors/gimpbezierstroke.c: Fix a bug plus add some debug
+	output. For some reason does not snap yet.
+
 2005-10-02  Sven Neumann  <sven@gimp.org>
 
 	* app/file/file-utils.[ch]: introduced variants of

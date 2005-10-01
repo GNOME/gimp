@@ -159,15 +159,15 @@ gimp_coords_manhattan_dist (const GimpCoords *a,
 {
   gdouble dist = 0;
 
-  dist += fabs (a->pressure - b->pressure);
-  dist += fabs (a->xtilt - b->xtilt);
-  dist += fabs (a->ytilt - b->ytilt);
-  dist += fabs (a->wheel - b->wheel);
+  dist += ABS (a->pressure - b->pressure);
+  dist += ABS (a->xtilt - b->xtilt);
+  dist += ABS (a->ytilt - b->ytilt);
+  dist += ABS (a->wheel - b->wheel);
 
   dist *= INPUT_RESOLUTION;
 
-  dist += fabs (a->x - b->x);
-  dist += fabs (a->y - b->y);
+  dist += ABS (a->x - b->x);
+  dist += ABS (a->y - b->y);
 
   return dist;
 }

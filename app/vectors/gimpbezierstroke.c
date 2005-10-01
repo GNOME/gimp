@@ -950,6 +950,9 @@ gimp_bezier_stroke_segment_nearest_tangent_get (const GimpCoords *beziercoords,
   ret_coords = g_array_new (FALSE, FALSE, sizeof (GimpCoords));
   ret_params = g_array_new (FALSE, FALSE, sizeof (gdouble));
 
+  g_printerr ("(%.2f, %.2f)-(%.2f,%.2f): ", coord1->x, coord1->y,
+              coord2->x, coord2->y);
+
   gimp_bezier_coords_subdivide (beziercoords, precision,
                                 &ret_coords, &ret_params);
 
@@ -999,7 +1002,7 @@ gimp_bezier_stroke_segment_nearest_tangent_get (const GimpCoords *beziercoords,
               if (dist < min_dist || min_dist < 0)
                 {
                   min_dist   = dist;
-                  *ret_point = min_point;
+                  *ret_point = g_array_index (ret_coords, GimpCoords, i);
                   *ret_pos   = g_array_index (ret_params, gdouble, i);
                 }
             }
@@ -1007,6 +1010,11 @@ gimp_bezier_stroke_segment_nearest_tangent_get (const GimpCoords *beziercoords,
       ori = ori2;
     }
 
+  if (min_dist < 0)
+    g_printerr ("-\n");
+  else
+    g_printerr ("%f: (%.2f, %.2f) /%.3f/\n", min_dist,
+                (*ret_point).x, (*ret_point).y, *ret_pos);
   return min_dist;
 }
 
