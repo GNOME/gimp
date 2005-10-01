@@ -766,7 +766,7 @@ pf_call(PyGimpPDBFunction *self, PyObject *args, PyObject *kwargs)
     fprintf(stderr, "--- %s --- ", PyString_AsString(self->proc_name));
 #endif
 
-    if (self->nparams > 0 && !strcmp(self->params[0].name, "run_mode")) {
+    if (self->nparams > 0 && !strcmp(self->params[0].name, "run-mode")) {
 	params = pygimp_param_from_tuple(args, self->params + 1,
 					 self->nparams - 1);
 

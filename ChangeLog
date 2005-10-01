@@ -1,3 +1,12 @@
+2005-09-30  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/pygimp-pdb.c (pf_call): use canonical name for
+	run-mode.
+
+	* plug-ins/pygimp/plug-ins/clothify.py
+	* plug-ins/pygimp/plug-ins/foggify.py: revert the below, since
+	we eat the run-mode parameter again.
+
 2005-09-30  Carol Spears  <carol@gimp.org>
 
 	* plug-ins/pygimp/plug-ins/clothify.py  
