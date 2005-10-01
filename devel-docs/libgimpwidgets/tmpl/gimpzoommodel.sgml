@@ -23,6 +23,15 @@ GimpZoomModel
 </para>
 
 
+<!-- ##### SIGNAL GimpZoomModel::zoomed ##### -->
+<para>
+
+</para>
+
+@gimpzoommodel: the object which received the signal.
+@arg1: 
+@arg2: 
+
 <!-- ##### ARG GimpZoomModel:fraction ##### -->
 <para>
 

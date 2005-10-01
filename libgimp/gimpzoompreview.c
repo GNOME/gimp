@@ -47,25 +47,27 @@ struct _GimpZoomPreviewPrivate
 
 #define GIMP_ZOOM_PREVIEW_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), GIMP_TYPE_ZOOM_PREVIEW, GimpZoomPreviewPrivate))
 
-static void     gimp_zoom_preview_set_adjustments    (GimpZoomPreview      *preview);
-static void     gimp_zoom_preview_size_allocate      (GtkWidget            *widget,
-                                                      GtkAllocation        *allocation,
-                                                      GimpZoomPreview      *preview);
-static void     gimp_zoom_preview_style_set          (GtkWidget            *widget,
-                                                      GtkStyle             *prev_style);
-static void     gimp_zoom_preview_draw               (GimpPreview          *preview);
-static void     gimp_zoom_preview_draw_buffer        (GimpPreview          *preview,
-                                                      const guchar         *buffer,
-                                                      gint                  rowstride);
-static void     gimp_zoom_preview_draw_thumb         (GimpPreview          *preview,
-                                                      GimpPreviewArea      *area,
-                                                      gint                  width,
-                                                      gint                  height);
-static gboolean gimp_zoom_preview_get_bounds         (GimpDrawable         *drawable,
-                                                      gint                 *xmin,
-                                                      gint                 *ymin,
-                                                      gint                 *xmax,
-                                                      gint                 *ymax);
+static void     gimp_zoom_preview_set_adjustments (GimpZoomPreview *preview,
+                                                   gdouble          old_factor,
+                                                   gdouble          new_factor);
+static void     gimp_zoom_preview_size_allocate   (GtkWidget       *widget,
+                                                   GtkAllocation   *allocation,
+                                                   GimpZoomPreview *preview);
+static void     gimp_zoom_preview_style_set       (GtkWidget       *widget,
+                                                   GtkStyle        *prev_style);
+static void     gimp_zoom_preview_draw            (GimpPreview     *preview);
+static void     gimp_zoom_preview_draw_buffer     (GimpPreview     *preview,
+                                                   const guchar    *buffer,
+                                                   gint             rowstride);
+static void     gimp_zoom_preview_draw_thumb      (GimpPreview     *preview,
+                                                   GimpPreviewArea *area,
+                                                   gint             width,
+                                                   gint             height);
+static gboolean gimp_zoom_preview_get_bounds      (GimpDrawable    *drawable,
+                                                   gint            *xmin,
+                                                   gint            *ymin,
+                                                   gint            *xmax,
+                                                   gint            *ymax);
 
 G_DEFINE_TYPE (GimpZoomPreview, gimp_zoom_preview,
                GIMP_TYPE_SCROLLED_PREVIEW)
@@ -99,7 +101,7 @@ gimp_zoom_preview_init (GimpZoomPreview *preview)
 
   priv->zoom = gimp_zoom_model_new ();
   gimp_zoom_model_set_range (GIMP_ZOOM_MODEL (priv->zoom), 1.0, 256.0);
-  g_signal_connect_swapped (priv->zoom, "notify::value",
+  g_signal_connect_swapped (priv->zoom, "zoomed",
                             G_CALLBACK (gimp_zoom_preview_set_adjustments),
                             preview);
 
@@ -148,37 +150,41 @@ gimp_zoom_preview_init (GimpZoomPreview *preview)
 }
 
 static void
-gimp_zoom_preview_set_adjustments (GimpZoomPreview *preview)
+gimp_zoom_preview_set_adjustments (GimpZoomPreview *preview,
+                                   gdouble          old_factor,
+                                   gdouble          new_factor)
 {
-  GimpScrolledPreview    *scrolled_preview;
-  GtkAdjustment          *adj;
-  gdouble                 zoom_factor;
-  GimpZoomPreviewPrivate *priv = GIMP_ZOOM_PREVIEW_GET_PRIVATE (preview);
+  GimpScrolledPreview *scrolled_preview = GIMP_SCROLLED_PREVIEW (preview);
+  GtkAdjustment       *adj;
+  gdouble              width;
+  gdouble              height;
+  gdouble              ratio;
 
-  scrolled_preview = GIMP_SCROLLED_PREVIEW (preview);
-  zoom_factor = gimp_zoom_model_get_factor (priv->zoom);
+  width  = GIMP_PREVIEW (preview)->width;
+  height = GIMP_PREVIEW (preview)->height;
+  ratio = new_factor / old_factor;
 
   adj = gtk_range_get_adjustment (GTK_RANGE (scrolled_preview->hscr));
   adj->lower          = 0;
-  adj->page_size      = GIMP_PREVIEW (preview)->width;
-  adj->upper          = GIMP_PREVIEW (preview)->width * zoom_factor;
-  adj->step_increment = 1.0;
-  adj->page_increment = MAX (adj->page_size / 2.0, adj->step_increment);
-  adj->value          = CLAMP (adj->value,
+  adj->page_size      = width;
+  adj->upper          = width * new_factor;
+  adj->step_increment = new_factor;
+  adj->page_increment = MAX (width / 2.0, adj->step_increment);
+  adj->value          = CLAMP ((adj->value + width / 2.0) * ratio - width / 2.0,
                                adj->lower,
-                               adj->upper - adj->page_size);
+                               adj->upper - width);
   gtk_adjustment_changed (adj);
   gtk_adjustment_value_changed (adj);
 
   adj = gtk_range_get_adjustment (GTK_RANGE (scrolled_preview->vscr));
   adj->lower          = 0;
-  adj->page_size      = GIMP_PREVIEW (preview)->height;
-  adj->upper          = GIMP_PREVIEW (preview)->height * zoom_factor;
-  adj->step_increment = 1.0;
-  adj->page_increment = MAX (adj->page_size / 2.0, adj->step_increment);
-  adj->value          = CLAMP (adj->value,
+  adj->page_size      = height;
+  adj->upper          = height * new_factor;
+  adj->step_increment = new_factor;
+  adj->page_increment = MAX (height / 2.0, adj->step_increment);
+  adj->value          = CLAMP ((adj->value + height / 2.0) *ratio - height / 2.0,
                                adj->lower,
-                               adj->upper - adj->page_size);
+                               adj->upper - height);
   gtk_adjustment_changed (adj);
   gtk_adjustment_value_changed (adj);
 
@@ -190,13 +196,16 @@ gimp_zoom_preview_size_allocate (GtkWidget       *widget,
                                  GtkAllocation   *allocation,
                                  GimpZoomPreview *preview)
 {
+  GimpZoomPreviewPrivate *priv = GIMP_ZOOM_PREVIEW_GET_PRIVATE (preview);
+  gdouble                 zoom_factor;
   gint width  = GIMP_PREVIEW (preview)->xmax - GIMP_PREVIEW (preview)->xmin;
   gint height = GIMP_PREVIEW (preview)->ymax - GIMP_PREVIEW (preview)->ymin;
 
   GIMP_PREVIEW (preview)->width  = MIN (width,  allocation->width);
   GIMP_PREVIEW (preview)->height = MIN (height, allocation->height);
 
-  gimp_zoom_preview_set_adjustments (preview);
+  zoom_factor = gimp_zoom_model_get_factor (priv->zoom);
+  gimp_zoom_preview_set_adjustments (preview, zoom_factor, zoom_factor);
 }
 
 static void
@@ -483,7 +492,7 @@ gimp_zoom_preview_new (GimpDrawable *drawable)
                 "ratio", (gdouble) width / (gdouble) height,
                 NULL);
 
-  gimp_zoom_preview_set_adjustments (preview);
+  gimp_zoom_preview_set_adjustments (preview, 1.0, 1.0);
 
   return GTK_WIDGET (preview);
 }

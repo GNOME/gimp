@@ -30,11 +30,18 @@
 #include "libgimpmath/gimpmath.h"
 
 #include "gimphelpui.h"
+#include "gimpwidgetsmarshal.h"
 #include "gimpzoommodel.h"
 
 
 #define ZOOM_MIN  (1.0 / 256.0)
 #define ZOOM_MAX  (256.0)
+
+enum
+{
+  ZOOMED,
+  LAST_SIGNAL
+};
 
 enum
 {
@@ -66,15 +73,34 @@ static void  gimp_zoom_model_get_property (GObject      *object,
                                            GValue       *value,
                                            GParamSpec   *pspec);
 
+static guint zoom_model_signals[LAST_SIGNAL] = { 0, };
+
 G_DEFINE_TYPE (GimpZoomModel, gimp_zoom_model, G_TYPE_OBJECT);
 #define parent_class gimp_zoom_model_parent_class
 
 static void
 gimp_zoom_model_class_init (GimpZoomModelClass *klass)
 {
-  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  parent_class = g_type_class_peek_parent (klass);
+  /**
+   * GimpZoomModel::zoomed:
+   * @model: the object that received the signal
+   * @old_factor: the zoom factor before it changes
+   * @new_factor: the zoom factor after it has changed.
+   *
+   * Emitted the zoom factor of the zoom model changes.
+   */
+  zoom_model_signals[ZOOMED] =
+      g_signal_new ("zoomed",
+                    G_TYPE_FROM_CLASS (klass),
+                    G_SIGNAL_RUN_LAST,
+                    G_STRUCT_OFFSET (GimpZoomModelClass,
+                                     zoomed),
+                    NULL, NULL,
+                    _gimp_widgets_marshal_VOID__DOUBLE_DOUBLE,
+                    G_TYPE_NONE, 2,
+                    G_TYPE_DOUBLE, G_TYPE_DOUBLE);
 
   object_class->set_property = gimp_zoom_model_set_property;
   object_class->get_property = gimp_zoom_model_get_property;
@@ -129,7 +155,9 @@ gimp_zoom_model_set_property (GObject      *object,
                               GParamSpec   *pspec)
 {
   GimpZoomModelPrivate *priv  = GIMP_ZOOM_MODEL_GET_PRIVATE (object);
+  gdouble               previous_value;
 
+  previous_value = priv->value;
   g_object_freeze_notify (object);
 
   switch (property_id)
@@ -137,6 +165,7 @@ gimp_zoom_model_set_property (GObject      *object,
     case PROP_VALUE:
       priv->value = g_value_get_double (value);
 
+      g_object_notify (object, "value");
       g_object_notify (object, "fraction");
       g_object_notify (object, "percentage");
       break;
@@ -164,6 +193,11 @@ gimp_zoom_model_set_property (GObject      *object,
     }
 
   g_object_thaw_notify (object);
+  if (priv->value != previous_value)
+    {
+      g_signal_emit (object, zoom_model_signals[ZOOMED],
+                     0, previous_value, priv->value);
+    }
 }
 
 static void

@@ -1,5 +1,18 @@
 2005-10-01  DindinX  <dindinx@gimp.org>
 
+	* libgimpwidgets/gimpwidgetsmarshal.list: added VOID__DOUBLE_DOUBLE
+	marshaller.
+
+	* libgimpwidgets/gimpzoommodel.[ch]: new signal: "zoomed", emitted
+	when the zoom factor changes.  This signal have the old factor and the
+	new factor as argument.
+
+	* libgimp/gimpzoompreview.c: use the "zoomed" signal instead of the
+	"notify::value" one. This allow to use the old and new factors to keep
+	the preview centered on the same point.
+
+2005-10-01  DindinX  <dindinx@gimp.org>
+
 	* libgimp/gimpzoompreview.c: call gtk_adjustment_value_changed in
 	addition to gtk_adjustment_changed, so the offsets are correctly
 	updated.

@@ -45,6 +45,10 @@ struct _GimpZoomModelClass
 {
   GObjectClass  parent_class;
 
+  void (* zoomed) (GimpZoomModel *model,
+                   gdouble        old_factor,
+                   gdouble        new_factor);
+
   /* Padding for future expansion */
   void (* _gimp_reserved1) (void);
   void (* _gimp_reserved2) (void);
