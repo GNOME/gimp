@@ -469,15 +469,15 @@ gimp_stroke_nearest_intersection_get (const GimpStroke      *stroke,
   g_return_val_if_fail (coords1 != NULL, FALSE);
   g_return_val_if_fail (direction != NULL, FALSE);
 
-  if (GIMP_STROKE_GET_CLASS (stroke)->nearest_tangent_get)
-    return GIMP_STROKE_GET_CLASS (stroke)->nearest_tangent_get (stroke,
-                                                                coords1,
-                                                                direction,
-                                                                precision,
-                                                                nearest,
-                                                                ret_segment_start,
-                                                                ret_segment_end,
-                                                                ret_pos);
+  if (GIMP_STROKE_GET_CLASS (stroke)->nearest_intersection_get)
+    return GIMP_STROKE_GET_CLASS (stroke)->nearest_intersection_get (stroke,
+                                                                     coords1,
+                                                                     direction,
+                                                                     precision,
+                                                                     nearest,
+                                                                     ret_segment_start,
+                                                                     ret_segment_end,
+                                                                     ret_pos);
   return -1;
 }
 

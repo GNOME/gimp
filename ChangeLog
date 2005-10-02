@@ -1,5 +1,14 @@
 2005-10-02  Simon Budig  <simon@gimp.org>
 
+	* app/vectors/gimpbezierstroke.c: a segment doesn't necessarily
+	have a matching tangent. Check for this when iterating over all
+	segments of a path...
+
+	* app/vectors/gimpstroke.c: fix the dispatch of
+	_nearest_intersection_get().
+
+2005-10-02  Simon Budig  <simon@gimp.org>
+
 	* app/vectors/gimpbezierstroke.c: correctly pass back the
 	nearest coordinate. Snapping sortof works.
 

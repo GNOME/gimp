@@ -881,7 +881,7 @@ gimp_bezier_stroke_nearest_tangent_get (const GimpStroke  *stroke,
                                                                  precision,
                                                                  &point, &pos);
 
-          if (dist < min_dist || min_dist < 0)
+          if (dist >= 0 && (dist < min_dist || min_dist < 0))
             {
               min_dist = dist;
               if (ret_pos)
@@ -920,7 +920,7 @@ gimp_bezier_stroke_nearest_tangent_get (const GimpStroke  *stroke,
                                                              precision,
                                                              &point, &pos);
 
-      if (dist < min_dist || min_dist < 0)
+      if (dist >= 0 && (dist < min_dist || min_dist < 0))
         {
           min_dist = dist;
           if (ret_pos)
