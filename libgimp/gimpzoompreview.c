@@ -41,7 +41,7 @@ typedef struct _GimpZoomPreviewPrivate GimpZoomPreviewPrivate;
 struct _GimpZoomPreviewPrivate
 {
   GimpDrawable  *drawable;
-  GimpZoomModel *zoom;
+  GimpZoomModel *model;
   GdkRectangle   extents;
 };
 
@@ -99,9 +99,9 @@ gimp_zoom_preview_init (GimpZoomPreview *preview)
   GtkWidget              *box;
   GimpZoomPreviewPrivate *priv = GIMP_ZOOM_PREVIEW_GET_PRIVATE (preview);
 
-  priv->zoom = gimp_zoom_model_new ();
-  gimp_zoom_model_set_range (GIMP_ZOOM_MODEL (priv->zoom), 1.0, 256.0);
-  g_signal_connect_swapped (priv->zoom, "zoomed",
+  priv->model = gimp_zoom_model_new ();
+  gimp_zoom_model_set_range (GIMP_ZOOM_MODEL (priv->model), 1.0, 256.0);
+  g_signal_connect_swapped (priv->model, "zoomed",
                             G_CALLBACK (gimp_zoom_preview_set_adjustments),
                             preview);
 
@@ -117,7 +117,7 @@ gimp_zoom_preview_init (GimpZoomPreview *preview)
   {
     GtkWidget *label;
 
-    label = gimp_prop_label_new (G_OBJECT (priv->zoom), "fraction");
+    label = gimp_prop_label_new (G_OBJECT (priv->model), "fraction");
     gtk_misc_set_padding (GTK_MISC (label), 3, 3);
     gtk_box_pack_start (GTK_BOX (button_bar), label, FALSE, FALSE, 0);
     gtk_widget_show (label);
@@ -125,13 +125,13 @@ gimp_zoom_preview_init (GimpZoomPreview *preview)
 #endif
 
   /* zoom out */
-  button = gimp_zoom_button_new (priv->zoom,
+  button = gimp_zoom_button_new (priv->model,
                                  GIMP_ZOOM_OUT, GTK_ICON_SIZE_SMALL_TOOLBAR);
   gtk_box_pack_start (GTK_BOX (button_bar), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   /* zoom in */
-  button = gimp_zoom_button_new (priv->zoom,
+  button = gimp_zoom_button_new (priv->model,
                                  GIMP_ZOOM_IN, GTK_ICON_SIZE_SMALL_TOOLBAR);
   gtk_box_pack_start (GTK_BOX (button_bar), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
@@ -204,7 +204,7 @@ gimp_zoom_preview_size_allocate (GtkWidget       *widget,
   GIMP_PREVIEW (preview)->width  = MIN (width,  allocation->width);
   GIMP_PREVIEW (preview)->height = MIN (height, allocation->height);
 
-  zoom_factor = gimp_zoom_model_get_factor (priv->zoom);
+  zoom_factor = gimp_zoom_model_get_factor (priv->model);
   gimp_zoom_preview_set_adjustments (preview, zoom_factor, zoom_factor);
 }
 
@@ -258,7 +258,7 @@ gimp_zoom_preview_get_source (GimpZoomPreview *preview,
   gdouble                 zoom_factor;
   GimpPreview  *gimp_preview = GIMP_PREVIEW (preview);
 
-  zoom_factor = gimp_zoom_model_get_factor (priv->zoom);
+  zoom_factor = gimp_zoom_model_get_factor (priv->model);
   *width  = gimp_preview->width;
   *height = gimp_preview->height;
 
@@ -296,7 +296,7 @@ gimp_zoom_preview_draw (GimpPreview *preview)
   drawable = priv->drawable;
   if (!drawable)
     return;
-  zoom_factor = gimp_zoom_model_get_factor (priv->zoom);
+  zoom_factor = gimp_zoom_model_get_factor (priv->model);
 
   width  = preview->width;
   height = preview->height;
@@ -503,4 +503,12 @@ gimp_zoom_preview_get_drawable (GimpZoomPreview *preview)
   GimpZoomPreviewPrivate *priv = GIMP_ZOOM_PREVIEW_GET_PRIVATE (preview);
 
   return priv->drawable;
+}
+
+gdouble
+gimp_zoom_preview_get_factor (GimpZoomPreview *preview)
+{
+  GimpZoomPreviewPrivate *priv = GIMP_ZOOM_PREVIEW_GET_PRIVATE (preview);
+
+  return gimp_zoom_model_get_factor (priv->model);
 }

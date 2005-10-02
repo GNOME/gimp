@@ -1,3 +1,18 @@
+2005-10-02  DindinX  <dindinx@gimp.org>
+
+	* libgimp/gimpzoompreview.[ch]: added a new function:
+	gimp_zoom_preview_get_factor(), which is a proxy to get the zoom
+	factor of the zoom model used by the zoom preview.
+	Also renamed the zoom field of the private data of gimpzoompreview to
+	model, since it is a gimpzoommodel.
+
+	* libgimp/gimpui.def: added gimp_zoom_preview_get_factor.
+
+	* plug-ins/common/nova.c: use gimp_zoom_preview_get_factor to
+	correctly handle the position of the nova at various zoom level.
+	There still are problems if there is a selection before when running
+	this plugin.
+
 2005-10-02  Simon Budig  <simon@gimp.org>
 
 	* app/vectors/gimpbezierstroke.c: fixed the bogus snaps. One

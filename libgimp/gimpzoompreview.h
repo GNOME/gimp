@@ -65,6 +65,7 @@ guchar       * gimp_zoom_preview_get_source   (GimpZoomPreview *preview,
                                                gint            *height,
                                                gint            *bpp);
 GimpDrawable * gimp_zoom_preview_get_drawable (GimpZoomPreview *preview);
+gdouble        gimp_zoom_preview_get_factor   (GimpZoomPreview *preview);
 
 G_END_DECLS
 

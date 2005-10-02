@@ -573,12 +573,19 @@ nova_center_coords_update (GimpSizeEntry *coords,
 static void
 nova_center_cursor_update (NovaCenter *center)
 {
-  gint width, height;
+  gint    width, height;
+  gdouble xoff, yoff;
+  gdouble zoom;
 
   gimp_preview_get_size (center->preview, &width, &height);
+  xoff = center->preview->xoff;
+  yoff = center->preview->yoff;
+  zoom = gimp_zoom_preview_get_factor (GIMP_ZOOM_PREVIEW (center->preview));
 
-  center->curx = pvals.xcenter * width  / center->drawable->width;
-  center->cury = pvals.ycenter * height / center->drawable->height;
+  center->curx = pvals.xcenter * width  / center->drawable->width * zoom -
+                 xoff;
+  center->cury = pvals.ycenter * height / center->drawable->height * zoom -
+                 yoff;
 
   center->curx = CLAMP (center->curx, 0, width - 1);
   center->cury = CLAMP (center->cury, 0, height - 1);
@@ -622,18 +629,26 @@ nova_center_preview_events (GtkWidget  *widget,
                             GdkEvent   *event,
                             NovaCenter *center)
 {
-  gint width, height;
+  gint    width, height;
+  gint    curx, cury;
+  gdouble zoom;
 
   gimp_preview_get_size (center->preview, &width, &height);
 
   switch (event->type)
     {
     case GDK_MOTION_NOTIFY:
-      if (! (((GdkEventMotion *) event)->state & GDK_BUTTON1_MASK))
+      if (! (((GdkEventMotion *) event)->state & GDK_BUTTON2_MASK))
         break;
 
     case GDK_BUTTON_PRESS:
-      gtk_widget_get_pointer (widget, &center->curx, &center->cury);
+      if (((GdkEventButton *) event)->button != 2)
+        break;
+      gtk_widget_get_pointer (widget, &curx, &cury);
+
+      zoom = gimp_zoom_preview_get_factor (GIMP_ZOOM_PREVIEW (center->preview));
+      center->curx = (curx + center->preview->xoff) / zoom;
+      center->cury = (cury + center->preview->yoff) / zoom;
 
       nova_center_cursor_draw (center);
 
@@ -709,6 +724,7 @@ nova (GimpDrawable *drawable,
    GRand        *gr;
    guchar       *cache = NULL;
    gint          width, height;
+   gdouble       zoom = 0.0;
 
    gr = g_rand_new ();
 
@@ -739,8 +755,11 @@ nova (GimpDrawable *drawable,
      {
        cache = gimp_zoom_preview_get_source (GIMP_ZOOM_PREVIEW (preview),
                                              &width, &height, &bpp);
-       xc = (gdouble) pvals.xcenter * width  / drawable->width;
-       yc = (gdouble) pvals.ycenter * height / drawable->height;
+       zoom = gimp_zoom_preview_get_factor (GIMP_ZOOM_PREVIEW (preview));
+       xc = (gdouble) pvals.xcenter * width  / drawable->width * zoom -
+            preview->xoff;
+       yc = (gdouble) pvals.ycenter * height / drawable->height * zoom -
+            preview->yoff;
 
        x1 = y1 = 0;
        x2 = width;
@@ -779,9 +798,9 @@ nova (GimpDrawable *drawable,
            for (col = 0, x = 0; col < x2; col++, x++)
              {
                u = (gdouble) (x - xc) /
-                          (pvals.radius * width / drawable->width);
+                          (pvals.radius * width / drawable->width * zoom);
                v = (gdouble) (y - yc) /
-                          (pvals.radius * height / drawable->height);
+                          (pvals.radius * height / drawable->height * zoom);
                l = sqrt (u * u + v * v);
 
                /* This algorithm is still under construction. */
