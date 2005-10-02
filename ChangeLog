@@ -1,5 +1,11 @@
 2005-10-02  Simon Budig  <simon@gimp.org>
 
+	* app/vectors/gimpbezierstroke.c: fixed the bogus snaps. One
+	should not calculate tangents for points beyond the end of the
+	array...
+
+2005-10-02  Simon Budig  <simon@gimp.org>
+
 	* app/vectors/gimpbezierstroke.c: a segment doesn't necessarily
 	have a matching tangent. Check for this when iterating over all
 	segments of a path...

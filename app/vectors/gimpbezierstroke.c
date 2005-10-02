@@ -971,10 +971,10 @@ gimp_bezier_stroke_segment_nearest_tangent_get (const GimpCoords *beziercoords,
                           &dir);
   ori = dir.x * line.y - dir.y * line.x;
 
-  for (i = 1; i < ret_coords->len; i++)
+  for (i = 2; i < ret_coords->len; i++)
     {
-      gimp_coords_difference (&g_array_index (ret_coords, GimpCoords, i+1),
-                              &g_array_index (ret_coords, GimpCoords, i),
+      gimp_coords_difference (&g_array_index (ret_coords, GimpCoords, i),
+                              &g_array_index (ret_coords, GimpCoords, i-1),
                               &dir);
       ori2 = dir.x * line.y - dir.y * line.x;
 
