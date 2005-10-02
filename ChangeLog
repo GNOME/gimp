@@ -4,6 +4,8 @@
 	should not calculate tangents for points beyond the end of the
 	array...
 
+	Don't leak lots of g_arrays...
+
 2005-10-02  Simon Budig  <simon@gimp.org>
 
 	* app/vectors/gimpbezierstroke.c: a segment doesn't necessarily

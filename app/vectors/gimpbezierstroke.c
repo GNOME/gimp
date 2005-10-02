@@ -1020,6 +1020,10 @@ gimp_bezier_stroke_segment_nearest_tangent_get (const GimpCoords *beziercoords,
   else
     g_printerr ("%f: (%.2f, %.2f) /%.3f/\n", min_dist,
                 (*ret_point).x, (*ret_point).y, *ret_pos);
+
+  g_array_free (ret_coords, TRUE);
+  g_array_free (ret_params, TRUE);
+
   return min_dist;
 }
 
