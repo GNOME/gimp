@@ -11,14 +11,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-13 18:02+0200\n"
-"PO-Revision-Date: 2005-09-01 18:16+0200\n"
+"POT-Creation-Date: 2005-10-03 16:12+0200\n"
+"PO-Revision-Date: 2005-10-03 16:16+0200\n"
 "Last-Translator: Hendrik Richter <hendi@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);"
 
 #: ../libgimp/gimpbrushmenu.c:140
 msgid "Brush Selection"
@@ -245,55 +245,55 @@ msgstr "nach Datum"
 msgid "by type"
 msgstr "nach Typ"
 
-#: ../libgimp/gimpprocbrowserdialog.c:371
+#: ../libgimp/gimpprocbrowserdialog.c:411
 msgid "Searching by name - please wait"
 msgstr "Suche nach Namen - bitte warten"
 
-#: ../libgimp/gimpprocbrowserdialog.c:391
+#: ../libgimp/gimpprocbrowserdialog.c:431
 msgid "Searching by description - please wait"
 msgstr "Suche nach Beschreibung - bitte warten"
 
-#: ../libgimp/gimpprocbrowserdialog.c:399
+#: ../libgimp/gimpprocbrowserdialog.c:439
 msgid "Searching by help - please wait"
 msgstr "Suche nach Hilfe - bitte warten"
 
-#: ../libgimp/gimpprocbrowserdialog.c:407
+#: ../libgimp/gimpprocbrowserdialog.c:447
 msgid "Searching by author - please wait"
 msgstr "Suche nach Autor - bitte warten"
 
-#: ../libgimp/gimpprocbrowserdialog.c:415
+#: ../libgimp/gimpprocbrowserdialog.c:455
 msgid "Searching by copyright - please wait"
 msgstr "Suche nach Copyright - bitte warten"
 
-#: ../libgimp/gimpprocbrowserdialog.c:423
+#: ../libgimp/gimpprocbrowserdialog.c:463
 msgid "Searching by date - please wait"
 msgstr "Suche nach Datum - bitte warten"
 
-#: ../libgimp/gimpprocbrowserdialog.c:431
+#: ../libgimp/gimpprocbrowserdialog.c:471
 msgid "Searching by type - please wait"
 msgstr "Suche nach Typ - bitte warten"
 
-#: ../libgimp/gimpprocbrowserdialog.c:439
+#: ../libgimp/gimpprocbrowserdialog.c:479
 msgid "Searching - please wait"
 msgstr "Suche - bitte warten"
 
-#: ../libgimp/gimpprocbrowserdialog.c:447
+#: ../libgimp/gimpprocbrowserdialog.c:487
 #, c-format
 msgid "%d Procedures"
 msgstr "%d Prozeduren"
 
-#: ../libgimp/gimpprocbrowserdialog.c:454
+#: ../libgimp/gimpprocbrowserdialog.c:494
 msgid "No matches for your query"
 msgstr "Keine Treffer für die Suche"
 
-#: ../libgimp/gimpprocbrowserdialog.c:458
+#: ../libgimp/gimpprocbrowserdialog.c:498
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
 msgstr[0] "%d Prozedur als Ergebnis der Suche"
 msgstr[1] "%d Prozeduren als Ergebnis der Suche"
 
-#: ../libgimp/gimpprocbrowserdialog.c:507
+#: ../libgimp/gimpprocbrowserdialog.c:547
 msgid "No matches"
 msgstr "Keine Treffer"
 
@@ -409,7 +409,7 @@ msgstr "Blau"
 msgid "Gray"
 msgstr "Grau"
 
-#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpbase/gimpbaseenums.c:494
+#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpbase/gimpbaseenums.c:529
 msgid "Indexed"
 msgstr "Indiziert"
 
@@ -481,7 +481,7 @@ msgstr "Abwedeln"
 msgid "Burn"
 msgstr "Nachbelichten"
 
-#: ../libgimpbase/gimpbaseenums.c:386 ../libgimpbase/gimpbaseenums.c:526
+#: ../libgimpbase/gimpbaseenums.c:386 ../libgimpbase/gimpbaseenums.c:561
 msgid "Linear"
 msgstr "Linear"
 
@@ -525,119 +525,139 @@ msgstr "Spirale (rechtsdrehend)"
 msgid "Spiral (ccw)"
 msgstr "Spirale (rechtsdrehend)"
 
-#: ../libgimpbase/gimpbaseenums.c:425
+#: ../libgimpbase/gimpbaseenums.c:427
+msgid "Intersections (dots)"
+msgstr "Schnittpunkte (Punkte)"
+
+#: ../libgimpbase/gimpbaseenums.c:428
+msgid "Intersections (crosshairs)"
+msgstr "Schnittpunkte (Fadenkreuz)"
+
+#: ../libgimpbase/gimpbaseenums.c:429
+msgid "Dashed"
+msgstr "Gestrichelt"
+
+#: ../libgimpbase/gimpbaseenums.c:430
+msgid "Double dashed"
+msgstr "Doppelt gestrichelt"
+
+#: ../libgimpbase/gimpbaseenums.c:431
+msgid "Solid"
+msgstr "Durchgängig"
+
+#: ../libgimpbase/gimpbaseenums.c:460
 msgid "Stock ID"
 msgstr "Stock-ID"
 
-#: ../libgimpbase/gimpbaseenums.c:426
+#: ../libgimpbase/gimpbaseenums.c:461
 msgid "Inline pixbuf"
 msgstr "Inline pixbuf"
 
-#: ../libgimpbase/gimpbaseenums.c:427
+#: ../libgimpbase/gimpbaseenums.c:462
 msgid "Image file"
 msgstr "Bildgröße"
 
-#: ../libgimpbase/gimpbaseenums.c:456
+#: ../libgimpbase/gimpbaseenums.c:491
 msgid "RGB color"
 msgstr "RGB Farben"
 
-#: ../libgimpbase/gimpbaseenums.c:457 ../libgimpbase/gimpbaseenums.c:492
+#: ../libgimpbase/gimpbaseenums.c:492 ../libgimpbase/gimpbaseenums.c:527
 msgid "Grayscale"
 msgstr "Graustufen"
 
-#: ../libgimpbase/gimpbaseenums.c:458
+#: ../libgimpbase/gimpbaseenums.c:493
 msgid "Indexed color"
 msgstr "Indizierte Farben"
 
-#: ../libgimpbase/gimpbaseenums.c:490
+#: ../libgimpbase/gimpbaseenums.c:525
 msgid "RGB"
 msgstr "RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:491
+#: ../libgimpbase/gimpbaseenums.c:526
 msgid "RGB-alpha"
 msgstr "RGB-Alpha"
 
-#: ../libgimpbase/gimpbaseenums.c:493
+#: ../libgimpbase/gimpbaseenums.c:528
 msgid "Grayscale-alpha"
 msgstr "Graustufen-Alpha"
 
-#: ../libgimpbase/gimpbaseenums.c:495
+#: ../libgimpbase/gimpbaseenums.c:530
 msgid "Indexed-alpha"
 msgstr "Indiziert-Alpha"
 
-#: ../libgimpbase/gimpbaseenums.c:525
+#: ../libgimpbase/gimpbaseenums.c:560
 msgid "None (Fastest)"
 msgstr "Keine (am schnellsten)"
 
-#: ../libgimpbase/gimpbaseenums.c:527
+#: ../libgimpbase/gimpbaseenums.c:562
 msgid "Cubic"
 msgstr "Kubisch"
 
-#: ../libgimpbase/gimpbaseenums.c:528
+#: ../libgimpbase/gimpbaseenums.c:563
 msgid "Lanczos (Best)"
 msgstr "Lanczos (am besten)"
 
-#: ../libgimpbase/gimpbaseenums.c:556
+#: ../libgimpbase/gimpbaseenums.c:591
 msgid "Constant"
 msgstr "Konstant"
 
-#: ../libgimpbase/gimpbaseenums.c:557
+#: ../libgimpbase/gimpbaseenums.c:592
 msgid "Incremental"
 msgstr "Steigernd"
 
-#: ../libgimpbase/gimpbaseenums.c:586 ../modules/cdisplay_lcms.c:254
+#: ../libgimpbase/gimpbaseenums.c:621 ../modules/cdisplay_lcms.c:254
 msgid "None"
 msgstr "Keine"
 
-#: ../libgimpbase/gimpbaseenums.c:587
+#: ../libgimpbase/gimpbaseenums.c:622
 msgid "Sawtooth wave"
 msgstr "Sägezahnwelle"
 
-#: ../libgimpbase/gimpbaseenums.c:588
+#: ../libgimpbase/gimpbaseenums.c:623
 msgid "Triangular wave"
 msgstr "Dreieckswelle"
 
-#: ../libgimpbase/gimpbaseenums.c:616
+#: ../libgimpbase/gimpbaseenums.c:651
 msgid "Pixels"
 msgstr "Pixel"
 
-#: ../libgimpbase/gimpbaseenums.c:617
+#: ../libgimpbase/gimpbaseenums.c:652
 msgid "Points"
 msgstr "Punkte"
 
-#: ../libgimpbase/gimpbaseenums.c:646
+#: ../libgimpbase/gimpbaseenums.c:681
 msgid "Shadows"
 msgstr "Schatten"
 
-#: ../libgimpbase/gimpbaseenums.c:647
+#: ../libgimpbase/gimpbaseenums.c:682
 msgid "Midtones"
 msgstr "Mitten"
 
-#: ../libgimpbase/gimpbaseenums.c:648
+#: ../libgimpbase/gimpbaseenums.c:683
 msgid "Highlights"
 msgstr "Glanzlichter"
 
-#: ../libgimpbase/gimpbaseenums.c:676
+#: ../libgimpbase/gimpbaseenums.c:711
 msgid "Forward"
 msgstr "Weiter"
 
-#: ../libgimpbase/gimpbaseenums.c:677
+#: ../libgimpbase/gimpbaseenums.c:712
 msgid "Backward"
 msgstr "Zurück"
 
-#: ../libgimpbase/gimpbaseenums.c:778
+#: ../libgimpbase/gimpbaseenums.c:813
 msgid "Internal GIMP procedure"
 msgstr "Interne GIMP-Prozedur"
 
-#: ../libgimpbase/gimpbaseenums.c:779
+#: ../libgimpbase/gimpbaseenums.c:814
 msgid "GIMP Plug-In"
 msgstr "GIMP-Plugin"
 
-#: ../libgimpbase/gimpbaseenums.c:780
+#: ../libgimpbase/gimpbaseenums.c:815
 msgid "GIMP Extension"
 msgstr "GIMP-Erweiterung"
 
-#: ../libgimpbase/gimpbaseenums.c:781
+#: ../libgimpbase/gimpbaseenums.c:816
 msgid "Temporary Procedure"
 msgstr "Temporäre Prozedur"
 
@@ -809,8 +829,8 @@ msgid "while parsing token '%s': %s"
 msgstr "beim Verarbeiten von %s: %s"
 
 #: ../libgimpconfig/gimpconfig-iface.c:453
-#: ../libgimpconfig/gimpconfig-iface.c:466 ../libgimpconfig/gimpscanner.c:515
-#: ../libgimpconfig/gimpscanner.c:596
+#: ../libgimpconfig/gimpconfig-iface.c:466 ../libgimpconfig/gimpscanner.c:498
+#: ../libgimpconfig/gimpscanner.c:579
 msgid "fatal parse error"
 msgstr "Schwerwiegender Fehler bei Syntaxanalyse"
 
@@ -857,16 +877,11 @@ msgstr "Fehler beim Schreiben von »%s«: %s"
 msgid "Could not create '%s': %s"
 msgstr "»%s« konnte nicht angelegt werden: %s"
 
-#: ../libgimpconfig/gimpscanner.c:102
-#, c-format
-msgid "Could not open '%s' for reading: %s"
-msgstr "»%s« konnte nicht zum Lesen geöffnet werden: %s"
-
-#: ../libgimpconfig/gimpscanner.c:272
+#: ../libgimpconfig/gimpscanner.c:255
 msgid "invalid UTF-8 string"
 msgstr "ungültiger UTF-8 Text"
 
-#: ../libgimpconfig/gimpscanner.c:623
+#: ../libgimpconfig/gimpscanner.c:606
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Fehler beim Verarbeiten von »%s« in Zeile %d: %s"
@@ -1009,7 +1024,7 @@ msgid "Check Style"
 msgstr "Schachbrett Muster"
 
 #. toggle button to (des)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:240
+#: ../libgimpwidgets/gimppreview.c:256
 msgid "_Preview"
 msgstr "_Vorschau"
 
@@ -1075,23 +1090,23 @@ msgstr "Z_eilenabstand"
 msgid "_Resize"
 msgstr "_Größe ändern"
 
-#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:298
+#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:300
 msgid "_Scale"
 msgstr "_Skalieren"
 
-#: ../libgimpwidgets/gimpstock.c:276
+#: ../libgimpwidgets/gimpstock.c:278
 msgid "Crop"
 msgstr "Zuschneiden"
 
-#: ../libgimpwidgets/gimpstock.c:294
+#: ../libgimpwidgets/gimpstock.c:296
 msgid "_Transform"
 msgstr "_Transformation"
 
-#: ../libgimpwidgets/gimpstock.c:297
+#: ../libgimpwidgets/gimpstock.c:299
 msgid "_Rotate"
 msgstr "_Rotieren"
 
-#: ../libgimpwidgets/gimpstock.c:299
+#: ../libgimpwidgets/gimpstock.c:301
 msgid "_Shear"
 msgstr "_Scheren"
 
@@ -1174,6 +1189,14 @@ msgstr "Ebenen"
 #: ../libgimpwidgets/gimpwidgetsenums.c:127
 msgid "Images"
 msgstr "Bilder"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:186
+msgid "Zoom in"
+msgstr "Vergrößern"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:187
+msgid "Zoom out"
+msgstr "Verkleinern"
 
 #: ../modules/cdisplay_colorblind.c:67
 msgid "Protanopia (insensitivity to red"
@@ -1352,3 +1375,4 @@ msgstr "Wasserfarbe"
 #: ../modules/colorsel_water.c:220
 msgid "Pressure"
 msgstr "Druck"
+
