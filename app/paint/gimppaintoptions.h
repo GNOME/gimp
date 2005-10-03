@@ -33,6 +33,7 @@
 typedef struct _GimpPressureOptions GimpPressureOptions;
 typedef struct _GimpFadeOptions     GimpFadeOptions;
 typedef struct _GimpGradientOptions GimpGradientOptions;
+typedef struct _GimpJitterOptions   GimpJitterOptions;
 
 struct _GimpPressureOptions
 {
@@ -50,6 +51,12 @@ struct _GimpFadeOptions
   gboolean  use_fade;
   gdouble   fade_length;
   GimpUnit  fade_unit;
+};
+
+struct _GimpJitterOptions
+{
+  gboolean  use_jitter;
+  gdouble   jitter_amount;
 };
 
 struct _GimpGradientOptions
@@ -86,6 +93,7 @@ struct _GimpPaintOptions
   GimpPressureOptions      *pressure_options;
   GimpFadeOptions          *fade_options;
   GimpGradientOptions      *gradient_options;
+  GimpJitterOptions        *jitter_options;
 };
 
 struct _GimpPaintOptionsClass
@@ -107,6 +115,9 @@ gboolean gimp_paint_options_get_gradient_color (GimpPaintOptions *paint_options,
                                                 gdouble           pressure,
                                                 gdouble           pixel_dist,
                                                 GimpRGB          *color);
+
+gdouble          gimp_paint_options_get_jitter (GimpPaintOptions *paint_options,
+                                                GimpImage        *gimage);
 
 GimpBrushApplicationMode
              gimp_paint_options_get_brush_mode (GimpPaintOptions *paint_options);

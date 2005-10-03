@@ -64,7 +64,9 @@ static GtkWidget * gradient_options_gui (GimpGradientOptions *gradient,
                                          GimpPaintOptions    *paint_options,
                                          GType                tool_type,
                                          GtkWidget           *incremental_toggle);
-
+static GtkWidget * jitter_options_gui   (GimpJitterOptions   *jitter,
+                                         GimpPaintOptions    *paint_options,
+                                         GType                tool_type);
 
 /*  public functions  */
 
@@ -145,6 +147,14 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
 
   frame = fade_options_gui (options->fade_options,
                             options, tool_type);
+  if (frame)
+    {
+      gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+      gtk_widget_show (frame);
+    }
+
+  frame = jitter_options_gui (options->jitter_options,
+			      options, tool_type);
   if (frame)
     {
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
@@ -352,6 +362,54 @@ fade_options_gui (GimpFadeOptions  *fade,
 
       g_object_set_data (G_OBJECT (menu), "set_digits", spinbutton);
       gimp_unit_menu_set_pixel_digits (GIMP_UNIT_MENU (menu), 0);
+    }
+
+  return frame;
+}
+
+static GtkWidget *
+jitter_options_gui (GimpJitterOptions  *jitter,
+		    GimpPaintOptions   *paint_options,
+		    GType               tool_type)
+{
+  GObject   *config = G_OBJECT (paint_options);
+  GtkWidget *frame  = NULL;
+  GtkWidget *table;
+  GtkWidget *spinbutton;
+  GtkWidget *button;
+
+  if (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL) ||
+      tool_type == GIMP_TYPE_CLONE_TOOL                  ||
+      tool_type == GIMP_TYPE_CONVOLVE_TOOL               ||
+      tool_type == GIMP_TYPE_DODGE_BURN_TOOL             ||
+      tool_type == GIMP_TYPE_ERASER_TOOL                 ||
+      tool_type == GIMP_TYPE_SMUDGE_TOOL)
+    {
+      frame = gimp_frame_new (NULL);
+
+      button = gimp_prop_check_button_new (config, "use-jitter",
+                                           _("Apply Jitter"));
+
+      gtk_frame_set_label_widget (GTK_FRAME (frame), button);
+      gtk_widget_show (button);
+
+      table = gtk_table_new (1, 2, FALSE);
+      gtk_table_set_col_spacings (GTK_TABLE (table), 2);
+      gtk_container_add (GTK_CONTAINER (frame), table);
+      if (jitter->use_jitter)
+        gtk_widget_show (table);
+
+      g_signal_connect_object (button, "toggled",
+                               G_CALLBACK (gimp_toggle_button_set_visible),
+                               table, 0);
+
+      spinbutton = gimp_prop_spin_button_new (config, "jitter-amount",
+                                              0.01, 0.1, 2);
+      gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 6);
+
+      gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                                 _("Amount:"), 0.0, 0.5,
+                                 spinbutton, 1, FALSE);
     }
 
   return frame;

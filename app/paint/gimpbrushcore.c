@@ -420,6 +420,8 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
   gdouble        pixel_initial;
   gdouble        xd, yd;
   gdouble        mag;
+  gdouble        jitter_x = 0.0;
+  gdouble        jitter_y = 0.0;
 
   gimp_avoid_exact_integer (&paint_core->last_coords.x);
   gimp_avoid_exact_integer (&paint_core->last_coords.y);
@@ -615,8 +617,16 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
       gdouble t = t0 + n * dt;
       gdouble p = (gdouble) n / num_points;
 
-      paint_core->cur_coords.x        = paint_core->last_coords.x        + t * delta_vec.x;
-      paint_core->cur_coords.y        = paint_core->last_coords.y        + t * delta_vec.y;
+      if (core->jitter > 0.0)
+	{
+	  jitter_x = g_random_double_range (-core->jitter, core->jitter);
+	  jitter_y = g_random_double_range (-core->jitter, core->jitter);
+	}
+
+      paint_core->cur_coords.x  = paint_core->last_coords.x
+	+ t * delta_vec.x + (jitter_x * core->brush->x_axis.x);
+      paint_core->cur_coords.y  = paint_core->last_coords.y
+	+ t * delta_vec.y + (jitter_y * core->brush->y_axis.y);
 
 
       paint_core->cur_coords.pressure = paint_core->last_coords.pressure + p * delta_pressure;

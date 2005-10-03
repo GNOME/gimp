@@ -48,6 +48,9 @@
 #define DEFAULT_FADE_LENGTH           100.0
 #define DEFAULT_FADE_UNIT             GIMP_UNIT_PIXEL
 
+#define DEFAULT_USE_JITTER            FALSE
+#define DEFAULT_JITTER_AMOUNT         0.2
+
 #define DEFAULT_USE_GRADIENT          FALSE
 #define DEFAULT_GRADIENT_REVERSE      FALSE
 #define DEFAULT_GRADIENT_REPEAT       GIMP_REPEAT_TRIANGULAR
@@ -75,7 +78,9 @@ enum
   PROP_GRADIENT_REVERSE,
   PROP_GRADIENT_REPEAT,
   PROP_GRADIENT_LENGTH,
-  PROP_GRADIENT_UNIT
+  PROP_GRADIENT_UNIT,
+  PROP_USE_JITTER,
+  PROP_JITTER_AMOUNT
 };
 
 
@@ -197,6 +202,15 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                  TRUE, TRUE, DEFAULT_FADE_UNIT,
                                  0);
 
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_JITTER,
+                                    "use-jitter", NULL,
+                                    DEFAULT_USE_JITTER,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_JITTER_AMOUNT,
+                                   "jitter-amount", NULL,
+                                   0.0, 50.0, DEFAULT_JITTER_AMOUNT,
+                                   0);
+
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_GRADIENT,
                                     "use-gradient", NULL,
                                     DEFAULT_USE_GRADIENT, 0);
@@ -226,6 +240,7 @@ gimp_paint_options_init (GimpPaintOptions *options)
   options->pressure_options = g_new0 (GimpPressureOptions, 1);
   options->fade_options     = g_new0 (GimpFadeOptions,     1);
   options->gradient_options = g_new0 (GimpGradientOptions, 1);
+  options->jitter_options   = g_new0 (GimpJitterOptions,   1);
 }
 
 static void
@@ -239,6 +254,7 @@ gimp_paint_options_finalize (GObject *object)
   g_free (options->pressure_options);
   g_free (options->fade_options);
   g_free (options->gradient_options);
+  g_free (options->jitter_options);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -253,10 +269,12 @@ gimp_paint_options_set_property (GObject      *object,
   GimpPressureOptions *pressure_options;
   GimpFadeOptions     *fade_options;
   GimpGradientOptions *gradient_options;
+  GimpJitterOptions   *jitter_options;
 
   pressure_options = options->pressure_options;
   fade_options     = options->fade_options;
   gradient_options = options->gradient_options;
+  jitter_options   = options->jitter_options;
 
   switch (property_id)
     {
@@ -303,6 +321,13 @@ gimp_paint_options_set_property (GObject      *object,
       fade_options->fade_unit = g_value_get_int (value);
       break;
 
+    case PROP_USE_JITTER:
+      jitter_options->use_jitter = g_value_get_boolean (value);
+      break;
+    case PROP_JITTER_AMOUNT:
+      jitter_options->jitter_amount = g_value_get_double (value);
+      break;
+
     case PROP_USE_GRADIENT:
       gradient_options->use_gradient = g_value_get_boolean (value);
       break;
@@ -335,10 +360,12 @@ gimp_paint_options_get_property (GObject    *object,
   GimpPressureOptions *pressure_options;
   GimpFadeOptions     *fade_options;
   GimpGradientOptions *gradient_options;
+  GimpJitterOptions   *jitter_options;
 
   pressure_options = options->pressure_options;
   fade_options     = options->fade_options;
   gradient_options = options->gradient_options;
+  jitter_options   = options->jitter_options;
 
   switch (property_id)
     {
@@ -383,6 +410,13 @@ gimp_paint_options_get_property (GObject    *object,
       break;
     case PROP_FADE_UNIT:
       g_value_set_int (value, fade_options->fade_unit);
+      break;
+
+    case PROP_USE_JITTER:
+      g_value_set_boolean (value, jitter_options->use_jitter);
+      break;
+    case PROP_JITTER_AMOUNT:
+      g_value_set_double (value, jitter_options->jitter_amount);
       break;
 
     case PROP_USE_GRADIENT:
@@ -497,6 +531,20 @@ gimp_paint_options_get_fade (GimpPaintOptions *paint_options,
     }
 
   return GIMP_OPACITY_OPAQUE;
+}
+
+gdouble
+gimp_paint_options_get_jitter (GimpPaintOptions *paint_options,
+			       GimpImage        *gimage)
+{
+  GimpJitterOptions *jitter_options;
+
+  jitter_options = paint_options->jitter_options;
+
+  if (jitter_options->use_jitter)
+    return jitter_options->jitter_amount;
+
+  return 0.0;
 }
 
 gboolean
