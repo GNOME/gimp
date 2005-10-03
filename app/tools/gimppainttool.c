@@ -884,15 +884,15 @@ gimp_paint_tool_color_picked (GimpColorTool      *color_tool,
 
       switch (color_tool->pick_mode)
         {
-        case GIMP_COLOR_PICK_MODE_NONE:
-          break;
-
         case GIMP_COLOR_PICK_MODE_FOREGROUND:
           gimp_context_set_foreground (context, color);
           break;
 
         case GIMP_COLOR_PICK_MODE_BACKGROUND:
           gimp_context_set_background (context, color);
+          break;
+
+        default:
           break;
         }
     }

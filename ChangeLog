@@ -1,3 +1,8 @@
+2005-10-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimppainttool.c (gimp_paint_tool_color_picked):
+	fix compile warning by adding default: for unused enum values.
+
 2005-10-03  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* gimp/app/paint/gimpbrushcore.c
