@@ -487,19 +487,26 @@ depth_first_search (TileManager *mask,
 		    struct blob *b,
 		    guchar 	 mark)
 {
-  gint   xx, yy;
+  gint   oldx = -1;
+  gint   xx = b->seedx;
+  gint   yy = b->seedy;
   guchar val;
 
-  GSList *stack =
-    g_slist_prepend (g_slist_prepend (NULL, GINT_TO_POINTER (b->seedy)),
-                     GINT_TO_POINTER (b->seedx));
+  GSList *stack = NULL;
 
-  while (stack != NULL)
+  while (TRUE)
     {
-      xx    = GPOINTER_TO_INT (stack->data);
-      stack = g_slist_delete_link (stack, stack);
-      yy    = GPOINTER_TO_INT (stack->data);
-      stack = g_slist_delete_link (stack, stack);
+      if (oldx == xx)
+        {
+          if (stack == NULL)
+            break;
+
+          xx    = GPOINTER_TO_INT (stack->data);
+          stack = g_slist_delete_link (stack, stack);
+          yy    = GPOINTER_TO_INT (stack->data);
+          stack = g_slist_delete_link (stack, stack);
+        }
+      oldx = xx;
 
       read_pixel_data_1 (mask, xx, yy, &val);
       if (val && (val != mark))
@@ -513,14 +520,6 @@ depth_first_search (TileManager *mask,
 
           write_pixel_data_1 (mask, xx, yy, &mark);
 
-          if (xx > x)
-            stack =
-              g_slist_prepend (g_slist_prepend (stack, GINT_TO_POINTER (yy)),
-                               GINT_TO_POINTER (xx - 1));
-          if (xx + 1 < xwidth)
-            stack =
-              g_slist_prepend (g_slist_prepend (stack, GINT_TO_POINTER (yy)),
-                               GINT_TO_POINTER (xx + 1));
           if (yy > y)
             stack =
               g_slist_prepend (g_slist_prepend
@@ -531,6 +530,16 @@ depth_first_search (TileManager *mask,
               g_slist_prepend (g_slist_prepend
                                (stack, GINT_TO_POINTER (yy + 1)),
                                GINT_TO_POINTER (xx));
+          if (xx + 1 < xwidth)
+            {
+              if (xx > x)
+                stack =
+                  g_slist_prepend (g_slist_prepend (stack, GINT_TO_POINTER (yy)),
+                                   GINT_TO_POINTER (xx - 1));
+              ++xx;
+            }
+          else if (xx > x)
+            --xx;
         }
     }
 }
@@ -555,7 +564,8 @@ find_max_blob (TileManager *mask,
                gint         x,
                gint         y,
                gint         width,
-               gint         height)
+               gint         height,
+               gint         sizeFactorToKeep)
 {
   GSList     *list = NULL;
   PixelRegion region;
@@ -615,7 +625,7 @@ find_max_blob (TileManager *mask,
 
       depth_first_search (mask, x, y, x + width, y + height, b,
                           (b->mustkeep
-                           || (b->size * 4 > maxsize)) ? FIND_BLOB_FINAL : 0);
+                           || (b->size * sizeFactorToKeep >= maxsize)) ? FIND_BLOB_FINAL : 0);
       g_free (b);
     }
 }
@@ -950,7 +960,7 @@ siox_foreground_extract (TileManager      *pixels,
   erode_mask (mask, x, y, width, height);
 
   /* search the biggest connected component */
-  find_max_blob (mask, x, y, width, height);
+  find_max_blob (mask, x, y, width, height, 4);
 
   siox_progress_update (progress_callback, progress_data, 0.9);
 
@@ -959,7 +969,7 @@ siox_foreground_extract (TileManager      *pixels,
     smooth_mask (mask, x, y, width, height);
 
   /* search the biggest connected component again to kill jitter */
-  find_max_blob (mask, x, y, width, height);
+  find_max_blob (mask, x, y, width, height, 4);
 
   /* dilate, to fill up boundary pixels killed by erode */
   dilate_mask (mask, x, y, width, height);
