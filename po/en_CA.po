@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-30 15:58-0400\n"
+"POT-Creation-Date: 2005-10-04 00:04-0400\n"
 "PO-Revision-Date: 2005-09-06 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
@@ -708,7 +708,7 @@ msgid "Sample Merged"
 msgstr "Sample Merged"
 
 #: app/actions/data-commands.c:100 app/actions/documents-commands.c:331
-#: app/actions/file-commands.c:175 app/dialogs/file-open-dialog.c:208
+#: app/actions/file-commands.c:173 app/dialogs/file-open-dialog.c:208
 #: app/dialogs/file-open-dialog.c:259
 #: app/dialogs/file-open-location-dialog.c:201
 #: app/display/gimpdisplayshell-dnd.c:448 app/widgets/gimplayertreeview.c:764
@@ -725,7 +725,7 @@ msgstr ""
 
 #: app/actions/data-commands.c:126 app/core/gimpimage.c:1349
 #: app/core/gimppalette-import.c:221 app/core/gimppalette.c:517
-#: app/core/gimppalette.c:627 app/dialogs/palette-import-dialog.c:698
+#: app/core/gimppalette.c:627 app/dialogs/palette-import-dialog.c:699
 #: app/pdb/image_cmds.c:3892 app/widgets/gimpdnd-xds.c:83
 msgid "Untitled"
 msgstr "Untitled"
@@ -1397,7 +1397,7 @@ msgstr "Close all"
 msgid "_Quit"
 msgstr "_Quit"
 
-#: app/actions/file-commands.c:231 app/dialogs/file-save-dialog.c:464
+#: app/actions/file-commands.c:227 app/dialogs/file-save-dialog.c:464
 #: app/widgets/gimpdnd-xds.c:158
 #, c-format
 msgid ""
@@ -1409,36 +1409,36 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/actions/file-commands.c:254 app/dialogs/file-save-dialog.c:80
+#: app/actions/file-commands.c:250 app/dialogs/file-save-dialog.c:80
 msgid "Save Image"
 msgstr "Save Image"
 
-#: app/actions/file-commands.c:270
+#: app/actions/file-commands.c:266
 msgid "Save a Copy of the Image"
 msgstr "Save a Copy of the Image"
 
-#: app/actions/file-commands.c:281
+#: app/actions/file-commands.c:277
 msgid "Create New Template"
 msgstr "Create New Template"
 
-#: app/actions/file-commands.c:285
+#: app/actions/file-commands.c:281
 msgid "Enter a name for this template"
 msgstr "Enter a name for this template"
 
-#: app/actions/file-commands.c:307
+#: app/actions/file-commands.c:303
 msgid "Revert failed. No file name associated with this image."
 msgstr "Revert failed. No file name associated with this image."
 
-#: app/actions/file-commands.c:319
+#: app/actions/file-commands.c:315
 msgid "Revert Image"
 msgstr "Revert Image"
 
-#: app/actions/file-commands.c:345
+#: app/actions/file-commands.c:341
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "Revert '%s' to '%s'?"
 
-#: app/actions/file-commands.c:351
+#: app/actions/file-commands.c:347
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
@@ -1446,19 +1446,19 @@ msgstr ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
 
-#: app/actions/file-commands.c:423
+#: app/actions/file-commands.c:419
 msgid "Open Image as Layer"
 msgstr "Open Image as Layer"
 
-#: app/actions/file-commands.c:428 app/dialogs/file-open-dialog.c:74
+#: app/actions/file-commands.c:424 app/dialogs/file-open-dialog.c:74
 msgid "Open Image"
 msgstr "Open Image"
 
-#: app/actions/file-commands.c:499
+#: app/actions/file-commands.c:495
 msgid "(Unnamed Template)"
 msgstr "(Unnamed Template)"
 
-#: app/actions/file-commands.c:548
+#: app/actions/file-commands.c:544
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -3401,7 +3401,7 @@ msgid "Saturation"
 msgstr "Saturation"
 
 #: app/base/base-enums.c:121 app/pdb/internal_procs.c:104
-#: app/tools/gimppaintoptions-gui.c:294
+#: app/tools/gimppaintoptions-gui.c:304
 msgid "Color"
 msgstr "Colour"
 
@@ -7581,7 +7581,7 @@ msgstr "Plug-In returned SUCCESS but did not return an image"
 msgid "Plug-In could not open image"
 msgstr "Plug-In could not open image"
 
-#: app/file/file-open.c:418
+#: app/file/file-open.c:417
 msgid "Image doesn't contain any visible layers"
 msgstr "Image doesn't contain any visible layers"
 
@@ -8150,7 +8150,7 @@ msgstr "Offset:"
 msgid "Shape:"
 msgstr "Shape:"
 
-#: app/tools/gimpblendoptions.c:258 app/tools/gimppaintoptions-gui.c:430
+#: app/tools/gimpblendoptions.c:258 app/tools/gimppaintoptions-gui.c:488
 msgid "Repeat:"
 msgstr "Repeat:"
 
@@ -8960,61 +8960,69 @@ msgstr "Paint fuzzy brush strokes"
 msgid "_Paintbrush"
 msgstr "_Paintbrush"
 
-#: app/tools/gimppaintoptions-gui.c:102 app/tools/gimpselectionoptions.c:428
+#: app/tools/gimppaintoptions-gui.c:104 app/tools/gimpselectionoptions.c:428
 #: app/widgets/gimpbrushselect.c:214 app/widgets/gimplayertreeview.c:295
 msgid "Mode:"
 msgstr "Mode:"
 
-#: app/tools/gimppaintoptions-gui.c:108 app/widgets/gimpbrushselect.c:201
+#: app/tools/gimppaintoptions-gui.c:110 app/widgets/gimpbrushselect.c:201
 #: app/widgets/gimplayertreeview.c:310
 msgid "Opacity:"
 msgstr "Opacity:"
 
-#: app/tools/gimppaintoptions-gui.c:125
+#: app/tools/gimppaintoptions-gui.c:127
 msgid "Brush:"
 msgstr "Brush:"
 
-#: app/tools/gimppaintoptions-gui.c:134 app/tools/gimppaintoptions-gui.c:406
+#: app/tools/gimppaintoptions-gui.c:136 app/tools/gimppaintoptions-gui.c:464
 msgid "Gradient:"
 msgstr "Gradient:"
 
-#: app/tools/gimppaintoptions-gui.c:162
+#: app/tools/gimppaintoptions-gui.c:172
 msgid "Incremental"
 msgstr "Incremental"
 
-#: app/tools/gimppaintoptions-gui.c:176
+#: app/tools/gimppaintoptions-gui.c:186
 msgid "Hard edge"
 msgstr "Hard edge"
 
-#: app/tools/gimppaintoptions-gui.c:217
+#: app/tools/gimppaintoptions-gui.c:227
 msgid "Pressure sensitivity"
 msgstr "Pressure sensitivity"
 
-#: app/tools/gimppaintoptions-gui.c:236
+#: app/tools/gimppaintoptions-gui.c:246
 msgid "Opacity"
 msgstr "Opacity"
 
-#: app/tools/gimppaintoptions-gui.c:250
+#: app/tools/gimppaintoptions-gui.c:260
 msgid "Hardness"
 msgstr "Hardness"
 
-#: app/tools/gimppaintoptions-gui.c:261
+#: app/tools/gimppaintoptions-gui.c:271
 msgid "Rate"
 msgstr "Rate"
 
-#: app/tools/gimppaintoptions-gui.c:276 app/tools/gimppaintoptions-gui.c:285
+#: app/tools/gimppaintoptions-gui.c:286 app/tools/gimppaintoptions-gui.c:295
 msgid "Size"
 msgstr "Size"
 
-#: app/tools/gimppaintoptions-gui.c:324
+#: app/tools/gimppaintoptions-gui.c:334
 msgid "Fade out"
 msgstr "Fade out"
 
-#: app/tools/gimppaintoptions-gui.c:344 app/tools/gimppaintoptions-gui.c:415
+#: app/tools/gimppaintoptions-gui.c:354 app/tools/gimppaintoptions-gui.c:473
 msgid "Length:"
 msgstr "Length:"
 
-#: app/tools/gimppaintoptions-gui.c:379
+#: app/tools/gimppaintoptions-gui.c:391
+msgid "Apply Jitter"
+msgstr "Apply Jitter"
+
+#: app/tools/gimppaintoptions-gui.c:411
+msgid "Amount:"
+msgstr "Amount:"
+
+#: app/tools/gimppaintoptions-gui.c:437
 msgid "Use color from gradient"
 msgstr "Use colour from gradient"
 
@@ -10563,16 +10571,16 @@ msgstr ""
 "Click to update preview\n"
 "%s%sClick to force update even if preview is up-to-date"
 
-#: app/widgets/gimpthumbbox.c:422 app/widgets/gimpthumbbox.c:492
+#: app/widgets/gimpthumbbox.c:422 app/widgets/gimpthumbbox.c:491
 msgid "No selection"
 msgstr "No selection"
 
-#: app/widgets/gimpthumbbox.c:620 app/widgets/gimpthumbbox.c:644
+#: app/widgets/gimpthumbbox.c:619 app/widgets/gimpthumbbox.c:643
 #, c-format
 msgid "Thumbnail %d of %d"
 msgstr "Thumbnail %d of %d"
 
-#: app/widgets/gimpthumbbox.c:757 app/widgets/gimpthumbbox.c:767
+#: app/widgets/gimpthumbbox.c:756 app/widgets/gimpthumbbox.c:766
 msgid "Creating preview..."
 msgstr "Creating preview..."
 
