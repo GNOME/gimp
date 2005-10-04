@@ -1,3 +1,8 @@
+2005-10-04  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/benchmark-foreground-extract.py (benchmark): removed
+	run-mode parameters again.  Seems to have been fixed in pygimp.
+
 2005-09-27  Sven Neumann  <sven@gimp.org>
 
 	* gimpmodule.c (pygimp_progress_install): undeprecated.

@@ -72,14 +72,14 @@ def benchmark (folder, save_output):
         mask_name = os.path.join (folder, "cm_bmp", name + '.png')
         truth_name = os.path.join (folder, "truth", name + '.bmp')
 
-        image = pdb.gimp_file_load (RUN_NONINTERACTIVE, image_name, image_name)
+        image = pdb.gimp_file_load (image_name, image_name)
         image_layer = image.active_layer;
 
-        mask = pdb.gimp_file_load (RUN_NONINTERACTIVE, mask_name, mask_name)
+        mask = pdb.gimp_file_load (mask_name, mask_name)
         convert_grayscale (mask)
         mask_layer = mask.active_layer;
 
-        truth = pdb.gimp_file_load (RUN_NONINTERACTIVE, truth_name, truth_name)
+        truth = pdb.gimp_file_load (truth_name, truth_name)
 	convert_grayscale (truth)
         truth_layer = truth.active_layer;
 
@@ -125,8 +125,7 @@ def benchmark (folder, save_output):
 
 	if save_output:
 	    filename = os.path.join (folder, "output", name + '.png')
-	    pdb.gimp_file_save (RUN_NONINTERACTIVE,
-				mask, mask_layer, filename, filename)
+	    pdb.gimp_file_save (mask, mask_layer, filename, filename)
 
         gimp.delete (mask)
 
