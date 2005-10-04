@@ -143,7 +143,7 @@ stageone (lab           *points,
           gint           left,
           gint           right,
           gint           depth,
-          GSList       **clusters,
+          gint          *clusters,
           const gfloat  *limits)
 {
   gint    curdim = depth % SIOX_DIMS;
@@ -197,9 +197,23 @@ stageone (lab           *points,
   else
     {
       /* create leave */
-      *clusters =
-        g_slist_prepend (g_slist_prepend (*clusters, GINT_TO_POINTER (right)),
-                         GINT_TO_POINTER (left));
+  	  gfloat  l = 0;
+      gfloat  a = 0;
+      gfloat  b = 0;
+
+      points[*clusters].cardinality = right - left;
+
+      for (; left < right; ++left)
+        {
+          l += points[left].l;
+          a += points[left].a;
+          b += points[left].b;
+        }
+
+      points[*clusters].l = l / points[*clusters].cardinality;
+      points[*clusters].a = a / points[*clusters].cardinality;
+      points[*clusters].b = b / points[*clusters].cardinality;
+      ++(*clusters);
     }
 }
 
@@ -323,9 +337,8 @@ create_signature (lab          *input,
                   const gfloat *limits)
 {
   GSList    *clusters = NULL;
-  lab       *centroids;
   lab       *rval;
-  gint       size;
+  gint       size = 0;
   gint       i;
 
   if (length < 1)
@@ -334,39 +347,7 @@ create_signature (lab          *input,
       return NULL;
     }
 
-  stageone (input, 0, length, 0, &clusters, limits);
-  size = g_slist_length(clusters) / 2;
-  centroids = g_new (lab, size);
-
-  i = 0;
-  while (clusters != NULL)
-    {
-      gfloat  l       = 0;
-      gfloat  a       = 0;
-      gfloat  b       = 0;
-      gint    k;
-      gint    left, right;
-
-      left     = GPOINTER_TO_INT (clusters->data);
-      clusters = g_slist_delete_link (clusters, clusters);
-      right    = GPOINTER_TO_INT (clusters->data);
-      clusters = g_slist_delete_link (clusters, clusters);
-
-      for (k = left; k < right; k++)
-        {
-          l += input[k].l;
-          a += input[k].a;
-          b += input[k].b;
-        }
-
-      centroids[i].l = l / (right - left);
-      centroids[i].a = a / (right - left);
-      centroids[i].b = b / (right - left);
-
-      centroids[i].cardinality = right - left;
-
-      i++;
-    }
+  stageone (input, 0, length, 0, &size, limits);
 
 #ifdef SIOX_DEBUG
   g_printerr ("siox.c: step #1 -> %d clusters\n", size);
@@ -374,7 +355,7 @@ create_signature (lab          *input,
 
   clusters = NULL;
 
-  stagetwo (centroids, 0, size, 0, &clusters, limits, length * 0.001f);
+  stagetwo (input, 0, size, 0, &clusters, limits, length * 0.001f);
 
   size = g_slist_length(clusters);
   rval = g_new (lab, size);

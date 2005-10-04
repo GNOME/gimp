@@ -1,3 +1,7 @@
+2005-10-04  Sven Neumann  <sven@gimp.org>
+
+	* app/base/siox.c: small optimization by Tobias Lenz.
+
 2005-10-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimppainttool.c (gimp_paint_tool_color_picked):
