@@ -1,3 +1,9 @@
+2005-10-04  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/Lighting/lighting_shade.c: Don't add foreground
+	when using an env map; fixes bug #313872.  This bug does
+	not apply to HEAD.
+
 2005-09-28  Michael Natterer  <mitch@gimp.org>
 
 	Merged from HEAD branch:

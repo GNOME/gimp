@@ -474,11 +474,10 @@ get_ray_color (GimpVector3 *position)
 GimpRGB
 get_ray_color_ref (GimpVector3 *position)
 {
-  GimpRGB      color_sum;
   GimpRGB      color_int;
   GimpRGB      light_color;
   GimpRGB      color, env_color;
-  gint         x, f;
+  gint         x;
   gdouble      xf, yf;
   GimpVector3  normal, *p, v, r;
   gint         k;
@@ -489,13 +488,10 @@ get_ray_color_ref (GimpVector3 *position)
 
   if (mapvals.transparent_background && heights[1][x] == 0)
     {
-      gimp_rgb_set_alpha (&color_sum, 0.0);
+      gimp_rgb_set_alpha (&light_color, 0.0);
     }
   else
     {
-      color = get_image_color (xf, yf, &f);
-      color_sum = color;
-
       for (k = 0; k < NUM_LIGHTS; k++)
         {
           if (!mapvals.lightsource[k].active
@@ -543,13 +539,11 @@ get_ray_color_ref (GimpVector3 *position)
                                          &color_int,
                                          mapvals.lightsource[0].type);
             }
-
-          gimp_rgb_add (&color_sum, &light_color);
         }
     }
 
-  gimp_rgb_clamp (&color_sum);
-  return color_sum;
+  gimp_rgb_clamp (&light_color);
+  return light_color;
 }
 
 GimpRGB
@@ -627,7 +621,6 @@ get_ray_color_no_bilinear (GimpVector3 *position)
 GimpRGB
 get_ray_color_no_bilinear_ref (GimpVector3 *position)
 {
-  GimpRGB      color_sum;
   GimpRGB      color_int;
   GimpRGB      light_color;
   GimpRGB      color, env_color;
@@ -642,13 +635,10 @@ get_ray_color_no_bilinear_ref (GimpVector3 *position)
 
   if (mapvals.transparent_background && heights[1][x] == 0)
     {
-      gimp_rgb_set_alpha (&color_sum, 0.0);
+      gimp_rgb_set_alpha (&light_color, 0.0);
     }
   else
     {
-      color = peek (RINT (xf), RINT (yf));
-      color_sum = color;
-
       for (k = 0; k < NUM_LIGHTS; k++)
         {
           if (!mapvals.lightsource[k].active
@@ -714,12 +704,10 @@ get_ray_color_no_bilinear_ref (GimpVector3 *position)
                                          &env_color,
                                          &color_int,
                                          mapvals.lightsource[0].type);
-
-          gimp_rgb_add (&color_sum, &light_color);
             }
         }
     }
 
- gimp_rgb_clamp (&color_sum);
- return color_sum;
+ gimp_rgb_clamp (&light_color);
+ return light_color;
 }
