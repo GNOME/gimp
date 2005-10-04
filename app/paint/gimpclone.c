@@ -262,19 +262,13 @@ gimp_clone_motion (GimpPaintCore    *paint_core,
   gdouble              opacity;
   gint                 offset_x;
   gint                 offset_y;
-  gdouble              jitter;
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
   opacity = gimp_paint_options_get_fade (paint_options, gimage,
                                          paint_core->pixel_dist);
-
   if (opacity == 0.0)
     return;
-
-  jitter = gimp_paint_options_get_jitter (paint_options, gimage);
-  if (jitter > 0.0)
-      GIMP_BRUSH_CORE (clone)->jitter = jitter;
 
   /*  make local copies because we change them  */
   offset_x = clone->offset_x;

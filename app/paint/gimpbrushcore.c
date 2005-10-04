@@ -374,6 +374,10 @@ gimp_brush_core_start (GimpPaintCore    *paint_core,
 
   core->brush = core->main_brush;
 
+  core->jitter =
+    gimp_paint_options_get_jitter (paint_options,
+                                   gimp_item_get_image (GIMP_ITEM (drawable)));
+
   return TRUE;
 }
 
@@ -420,8 +424,6 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
   gdouble        pixel_initial;
   gdouble        xd, yd;
   gdouble        mag;
-  gdouble        jitter_x = 0.0;
-  gdouble        jitter_y = 0.0;
 
   gimp_avoid_exact_integer (&paint_core->last_coords.x);
   gimp_avoid_exact_integer (&paint_core->last_coords.y);
@@ -617,25 +619,33 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
       gdouble t = t0 + n * dt;
       gdouble p = (gdouble) n / num_points;
 
+      paint_core->cur_coords.x        = (paint_core->last_coords.x +
+                                         t * delta_vec.x);
+      paint_core->cur_coords.y        = (paint_core->last_coords.y +
+                                         t * delta_vec.y);
+      paint_core->cur_coords.pressure = (paint_core->last_coords.pressure +
+                                         p * delta_pressure);
+      paint_core->cur_coords.xtilt    = (paint_core->last_coords.xtilt +
+                                         p * delta_xtilt);
+      paint_core->cur_coords.ytilt    = (paint_core->last_coords.ytilt +
+                                         p * delta_ytilt);
+      paint_core->cur_coords.wheel    = (paint_core->last_coords.wheel +
+                                         p * delta_wheel);
+
       if (core->jitter > 0.0)
 	{
+          gdouble jitter_x;
+          gdouble jitter_y;
+
 	  jitter_x = g_random_double_range (-core->jitter, core->jitter);
 	  jitter_y = g_random_double_range (-core->jitter, core->jitter);
-	}
 
-      paint_core->cur_coords.x  = paint_core->last_coords.x
-	+ t * delta_vec.x + (jitter_x * core->brush->x_axis.x);
-      paint_core->cur_coords.y  = paint_core->last_coords.y
-	+ t * delta_vec.y + (jitter_y * core->brush->y_axis.y);
+          paint_core->cur_coords.x += jitter_x * core->brush->x_axis.x;
+          paint_core->cur_coords.y += jitter_y * core->brush->y_axis.y;
+        }
 
-
-      paint_core->cur_coords.pressure = paint_core->last_coords.pressure + p * delta_pressure;
-      paint_core->cur_coords.xtilt    = paint_core->last_coords.xtilt    + p * delta_xtilt;
-      paint_core->cur_coords.ytilt    = paint_core->last_coords.ytilt    + p * delta_ytilt;
-      paint_core->cur_coords.wheel    = paint_core->last_coords.wheel    + p * delta_wheel;
-
-      paint_core->distance            = initial                    + t * dist;
-      paint_core->pixel_dist          = pixel_initial              + t * pixel_dist;
+      paint_core->distance   = initial       + t * dist;
+      paint_core->pixel_dist = pixel_initial + t * pixel_dist;
 
       gimp_paint_core_paint (paint_core, drawable, paint_options,
                              GIMP_PAINT_STATE_MOTION, time);

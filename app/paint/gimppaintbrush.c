@@ -144,7 +144,6 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
   TempBuf                  *area;
   guchar                    col[MAX_CHANNELS];
   GimpPaintApplicationMode  paint_appl_mode;
-  gdouble                   jitter;
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -152,20 +151,6 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
                                           paint_core->pixel_dist);
   if (opacity == 0.0)
     return;
-
-  jitter = gimp_paint_options_get_jitter (paint_options, gimage);
-  if (jitter > 0.0)
-    {
-      /* 
-       * jitter_x = g_random_double_range(-jitter, jitter);
-       * jitter_y = g_random_double_range(-jitter, jitter);
-       */
-      GIMP_BRUSH_CORE (brush_core)->jitter = jitter;
-#if 0
-      GIMP_PAINT_CORE (brush_core)->cur_coords.y
-	= paint_core->last_coords.y + (jitter_y * brush_core->brush->y_axis.y);
-#endif
-    }
 
   paint_appl_mode = paint_options->application_mode;
 

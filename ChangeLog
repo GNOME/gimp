@@ -1,3 +1,16 @@
+2005-10-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/gimpbrushcore.c (gimp_brush_core_start): set
+	core->jitter here for all brush-based paint tools.
+
+	(gimp_brush_core_interpolate): cleanup.
+
+	* app/paint/gimpbrushcore.h: removed trailing whitespace.
+
+	* app/paint/gimpclone.c (gimp_clone_motion)
+	* app/paint/gimppaintbrush.c (_gimp_paintbrush_motion): removed
+	jitter stuff here.
+
 2005-10-04  Sven Neumann  <sven@gimp.org>
 
 	* app/base/siox.c: another optimization by Tobias Lenz.
