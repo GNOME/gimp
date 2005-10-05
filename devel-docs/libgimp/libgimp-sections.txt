@@ -461,6 +461,20 @@ gimp_gradients_set_popup
 </SECTION>
 
 <SECTION>
+<FILE>gimpgrid</FILE>
+gimp_image_grid_get_spacing
+gimp_image_grid_set_spacing
+gimp_image_grid_get_offset
+gimp_image_grid_set_offset
+gimp_image_grid_get_foreground_color
+gimp_image_grid_set_foreground_color
+gimp_image_grid_get_background_color
+gimp_image_grid_set_background_color
+gimp_image_grid_get_style
+gimp_image_grid_set_style
+</SECTION>
+
+<SECTION>
 <FILE>gimpguides</FILE>
 gimp_image_add_hguide
 gimp_image_add_vguide
@@ -903,6 +917,7 @@ GimpZoomPreview
 gimp_zoom_preview_new
 gimp_zoom_preview_get_source
 gimp_zoom_preview_get_drawable
+gimp_zoom_preview_get_factor
 <SUBSECTION Standard>
 GimpZoomPreviewClass
 GIMP_ZOOM_PREVIEW

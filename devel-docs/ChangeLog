@@ -1,3 +1,11 @@
+2005-10-05  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-docs.sgml
+	* libgimp/libgimp-sections.txt
+	* libgimp/tmpl/gimpgrid.sgml: added new Grid PDB API.
+
+	* libgimp/tmpl/gimpzoompreview.sgml: updated.
+
 2005-09-30  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-sections.txt

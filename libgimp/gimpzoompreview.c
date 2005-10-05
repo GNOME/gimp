@@ -455,6 +455,14 @@ gimp_zoom_preview_get_bounds (GimpDrawable *drawable,
   return retval;
 }
 
+/**
+ * gimp_zoom_preview_new:
+ * @drawable: a #GimpDrawable
+ *
+ * Creates a new #GimpZoomPreview widget for @drawable.
+ *
+ * Since: GIMP 2.4
+ **/
 GtkWidget *
 gimp_zoom_preview_new (GimpDrawable *drawable)
 {
@@ -464,9 +472,11 @@ gimp_zoom_preview_new (GimpDrawable *drawable)
   GimpZoomPreviewPrivate *priv;
 
   preview = g_object_new (GIMP_TYPE_ZOOM_PREVIEW, NULL);
+
   priv = GIMP_ZOOM_PREVIEW_GET_PRIVATE (preview);
 
   priv->drawable = drawable;
+
   width  = gimp_drawable_width  (drawable->drawable_id);
   height = gimp_drawable_height (drawable->drawable_id);
 
@@ -497,6 +507,14 @@ gimp_zoom_preview_new (GimpDrawable *drawable)
   return GTK_WIDGET (preview);
 }
 
+/**
+ * gimp_zoom_get_drawable:
+ * @preview: a #GimpZoomPreview widget
+ *
+ * Return Value: the #GimpDrawable that was passed to gimp_zoom_preview_new().
+ *
+ * Since: GIMP 2.4
+ **/
 GimpDrawable *
 gimp_zoom_preview_get_drawable (GimpZoomPreview *preview)
 {
@@ -505,6 +523,14 @@ gimp_zoom_preview_get_drawable (GimpZoomPreview *preview)
   return priv->drawable;
 }
 
+/**
+ * gimp_zoom_get_factor:
+ * @preview: a #GimpZoomPreview widget
+ *
+ * Return Value: the current zoom factor
+ *
+ * Since: GIMP 2.4
+ **/
 gdouble
 gimp_zoom_preview_get_factor (GimpZoomPreview *preview)
 {

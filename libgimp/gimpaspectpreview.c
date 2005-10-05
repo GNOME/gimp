@@ -201,6 +201,17 @@ gimp_aspect_preview_notify_update (GimpPreview *preview,
   *toggle = gimp_preview_get_update (preview);
 }
 
+/**
+ * gimp_aspect_preview_new:
+ * @drawable: a #GimpDrawable
+ * @toggle:   pointer to a #gboolean variable to sync with the "Preview"
+ *            check-button or %NULL
+ *
+ * Creates a new #GimpAspectPreview widget for @drawable. See also
+ * gimp_drawable_preview_new().
+ *
+ * Since: GIMP 2.2
+ **/
 GtkWidget *
 gimp_aspect_preview_new (GimpDrawable *drawable,
                          gboolean     *toggle)

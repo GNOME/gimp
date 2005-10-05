@@ -53,3 +53,12 @@ GimpZoomPreview
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_zoom_preview_get_factor ##### -->
+<para>
+
+</para>
+
+@preview: 
+@Returns: 
+
+

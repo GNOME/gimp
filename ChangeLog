@@ -1,5 +1,10 @@
 2005-10-05  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpaspectpreview.c
+	* libgimp/gimpzoompreview.c: added missing API docs.
+
+2005-10-05  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/siod-wrapper.c: reverted changes to handling
 	of string arrays to stay backward compatible (see bug #168290 and
 	bug #317634).
