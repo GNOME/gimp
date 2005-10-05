@@ -171,17 +171,20 @@ domain_map (HelpDomain   *domain,
 
       if (! domain_locale_parse (domain, locale, &error))
         {
-          const gchar *msg;
-
           if (error->code == G_FILE_ERROR_NOENT)
-            msg = _("The GIMP help files are not installed.");
+            {
+              g_message ("%s\n\n%s",
+                         _("The GIMP help files are not found."),
+                         _("Please install the additional help package or use "
+                           "the online user manual at http://docs.gimp.org/."));
+            }
           else
-            msg = _("There is a problem with the GIMP help files.");
-
-          g_message ("%s\n\n%s\n\n%s",
-                     msg,
-                     error->message,
-                     _("Please check your installation."));
+            {
+              g_message ("%s\n\n%s\n\n%s",
+                         _("There is a problem with the GIMP help files."),
+                         error->message,
+                         _("Please check your installation."));
+            }
 
           g_error_free (error);
 
