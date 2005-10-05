@@ -1,5 +1,10 @@
 2005-10-06  Sven Neumann  <sven@gimp.org>
 
+	* libgimpbase/gimputils.c: gimp_canonicalize_identifier() is new API,
+	mark it as such.
+
+2005-10-06  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpprocbrowserdialog.c: capitalization and other string
 	changes.
 
