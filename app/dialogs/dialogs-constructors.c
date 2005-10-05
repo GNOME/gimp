@@ -140,7 +140,7 @@ dialogs_keyboard_shortcuts_get (GimpDialogFactory *factory,
                                 GimpContext       *context,
                                 gint               preview_size)
 {
-  return keyboard_shortcuts_dialog_new ();
+  return keyboard_shortcuts_dialog_new (context->gimp);
 }
 
 GtkWidget *

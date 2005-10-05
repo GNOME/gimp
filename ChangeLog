@@ -1,5 +1,11 @@
 2005-10-06  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/dialogs-constructors.c
+	* app/dialogs/keyboard-shortcuts-dialog.[ch]: include a check
+	button for the "save-accels" gimprc property.
+
+2005-10-06  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/help/domain.c: try to improve the error message that is
 	shown for missing help files.
 

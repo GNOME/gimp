@@ -24,6 +24,8 @@
 
 #include "dialogs-types.h"
 
+#include "core/gimp.h"
+
 #include "widgets/gimpactionview.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpuimanager.h"
@@ -34,7 +36,7 @@
 
 
 GtkWidget *
-keyboard_shortcuts_dialog_new (void)
+keyboard_shortcuts_dialog_new (Gimp *gimp)
 {
   GtkWidget *dialog;
   GtkWidget *vbox;
@@ -43,6 +45,9 @@ keyboard_shortcuts_dialog_new (void)
   GtkWidget *view;
   GtkWidget *image;
   GtkWidget *label;
+  GtkWidget *button;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   dialog = gimp_dialog_new (_("Configure Keyboard Shortcuts"),
                             "gimp-keyboard-shortcuts-dialog",
@@ -99,6 +104,11 @@ keyboard_shortcuts_dialog_new (void)
                              -1);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
+
+  button = gimp_prop_check_button_new (G_OBJECT (gimp->config), "save-accels",
+                                       _("_Save keyboard shortcuts on exit"));
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
   return dialog;
 }
