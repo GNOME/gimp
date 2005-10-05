@@ -402,89 +402,86 @@ browser_search (GimpBrowser           *browser,
   gint    num_procs;
   gchar  *str;
 
-  if (search_type == SEARCH_TYPE_NAME)
+  switch (search_type)
     {
-      GString     *query = g_string_new ("");
-      const gchar *q     = query_text;
-
-      gimp_browser_show_message (browser,
-                                 _("Searching by name - please wait"));
-
-      while (*q)
-        {
-          if ((*q == '_') || (*q == '-'))
-            g_string_append (query, "-");
-          else
-            g_string_append_c (query, *q);
-
-          q++;
-        }
-
-      gimp_procedural_db_query (query->str, ".*", ".*", ".*", ".*", ".*", ".*",
-                                &num_procs, &proc_list);
-
-      g_string_free (query, TRUE);
-    }
-  else if (search_type == SEARCH_TYPE_BLURB)
-    {
-      gimp_browser_show_message (browser,
-                                 _("Searching by description - please wait"));
-
-      gimp_procedural_db_query (".*", query_text, ".*", ".*", ".*", ".*", ".*",
-                                &num_procs, &proc_list);
-    }
-  else if (search_type == SEARCH_TYPE_HELP)
-    {
-      gimp_browser_show_message (browser,
-                                 _("Searching by help - please wait"));
-
-      gimp_procedural_db_query (".*", ".*", query_text, ".*", ".*", ".*", ".*",
-                                &num_procs, &proc_list);
-    }
-  else if (search_type == SEARCH_TYPE_AUTHOR)
-    {
-      gimp_browser_show_message (browser,
-                                 _("Searching by author - please wait"));
-
-      gimp_procedural_db_query (".*", ".*", ".*", query_text, ".*", ".*", ".*",
-                                &num_procs, &proc_list);
-    }
-  else if (search_type == SEARCH_TYPE_COPYRIGHT)
-    {
-      gimp_browser_show_message (browser,
-                                 _("Searching by copyright - please wait"));
-
-      gimp_procedural_db_query (".*", ".*", ".*", ".*", query_text, ".*", ".*",
-                                &num_procs, &proc_list);
-    }
-  else if (search_type == SEARCH_TYPE_DATE)
-    {
-      gimp_browser_show_message (browser,
-                                 _("Searching by date - please wait"));
-
-      gimp_procedural_db_query (".*", ".*", ".*", ".*", ".*", query_text, ".*",
-                                &num_procs, &proc_list);
-    }
-  else if (search_type == SEARCH_TYPE_PROC_TYPE)
-    {
-      gimp_browser_show_message (browser,
-                                 _("Searching by type - please wait"));
-
-      gimp_procedural_db_query (".*", ".*", ".*", ".*", ".*", ".*", query_text,
-                                &num_procs, &proc_list);
-    }
-  else
-    {
-      gimp_browser_show_message (browser,
-                                 _("Searching - please wait"));
+    case SEARCH_TYPE_ALL:
+      gimp_browser_show_message (browser, _("Searching"));
 
       gimp_procedural_db_query (".*", ".*", ".*", ".*", ".*", ".*", ".*",
                                 &num_procs, &proc_list);
+      break;
+
+    case SEARCH_TYPE_NAME:
+      {
+        GString     *query = g_string_new ("");
+        const gchar *q     = query_text;
+
+        gimp_browser_show_message (browser, _("Searching by name"));
+
+        while (*q)
+          {
+            if ((*q == '_') || (*q == '-'))
+              g_string_append (query, "-");
+            else
+              g_string_append_c (query, *q);
+
+            q++;
+          }
+
+        gimp_procedural_db_query (query->str,
+                                  ".*", ".*", ".*", ".*", ".*", ".*",
+                                  &num_procs, &proc_list);
+
+        g_string_free (query, TRUE);
+      }
+      break;
+
+    case SEARCH_TYPE_BLURB:
+      gimp_browser_show_message (browser, _("Searching by description"));
+
+      gimp_procedural_db_query (".*", query_text, ".*", ".*", ".*", ".*", ".*",
+                                &num_procs, &proc_list);
+      break;
+
+    case SEARCH_TYPE_HELP:
+      gimp_browser_show_message (browser, _("Searching by help"));
+
+      gimp_procedural_db_query (".*", ".*", query_text, ".*", ".*", ".*", ".*",
+                                &num_procs, &proc_list);
+      break;
+
+    case SEARCH_TYPE_AUTHOR:
+      gimp_browser_show_message (browser, _("Searching by author"));
+
+      gimp_procedural_db_query (".*", ".*", ".*", query_text, ".*", ".*", ".*",
+                                &num_procs, &proc_list);
+      break;
+
+    case SEARCH_TYPE_COPYRIGHT:
+      gimp_browser_show_message (browser, _("Searching by copyright"));
+
+      gimp_procedural_db_query (".*", ".*", ".*", ".*", query_text, ".*", ".*",
+                                &num_procs, &proc_list);
+      break;
+
+    case SEARCH_TYPE_DATE:
+      gimp_browser_show_message (browser, _("Searching by date"));
+
+      gimp_procedural_db_query (".*", ".*", ".*", ".*", ".*", query_text, ".*",
+                                &num_procs, &proc_list);
+      break;
+
+    case SEARCH_TYPE_PROC_TYPE:
+      gimp_browser_show_message (browser, _("Searching by type"));
+
+      gimp_procedural_db_query (".*", ".*", ".*", ".*", ".*", ".*", query_text,
+                                &num_procs, &proc_list);
+      break;
     }
 
   if (! query_text || strlen (query_text) == 0)
     {
-      str = g_strdup_printf (_("%d Procedures"), num_procs);
+      str = g_strdup_printf (_("%d procedures"), num_procs);
     }
   else
     {

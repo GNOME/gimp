@@ -142,7 +142,7 @@ gimp_browser_init (GimpBrowser *browser)
 
   /* count label */
 
-  browser->count_label = gtk_label_new ("0 Matches");
+  browser->count_label = gtk_label_new (_("No matches"));
   gtk_misc_set_alignment (GTK_MISC (browser->count_label), 0.0, 0.5);
   gimp_label_set_attributes (GTK_LABEL (browser->count_label),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
@@ -316,7 +316,12 @@ gimp_browser_show_message (GimpBrowser *browser,
     }
   else
     {
-      gimp_browser_set_widget (browser, gtk_label_new (message));
+      GtkWidget *label = gtk_label_new (message);
+
+      gimp_label_set_attributes (GTK_LABEL (label),
+                                 PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
+                                 -1);
+      gimp_browser_set_widget (browser, label);
     }
 
   while (gtk_events_pending ())

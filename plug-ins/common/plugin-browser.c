@@ -378,7 +378,7 @@ browser_search (GimpBrowser   *gimp_browser,
   GtkTreeStore *tree_store;
 
   gimp_browser_show_message (GIMP_BROWSER (browser->browser),
-                             _("Searching by name - please wait"));
+                             _("Searching by name"));
 
   return_vals = gimp_run_procedure ("gimp-plugins-query",
                                     &nreturn_vals,
@@ -392,7 +392,7 @@ browser_search (GimpBrowser   *gimp_browser,
 
   if (! search_text || strlen (search_text) == 0)
     {
-      str = g_strdup_printf (_("%d Plug-ins"), num_plugins);
+      str = g_strdup_printf (_("%d plug-ins"), num_plugins);
     }
   else
     {
@@ -401,12 +401,10 @@ browser_search (GimpBrowser   *gimp_browser,
         case 0:
           str = g_strdup (_("No matches for your query"));
           break;
-        case 1:
-          str = g_strdup (_("1 plug-in matches your query"));
-          break;
         default:
-          str = g_strdup_printf (_("%d plug-ins match your query"),
-                                 num_plugins);
+          str = g_strdup_printf (ngettext ("%d plug-in matches your query",
+                                           "%d plug-ins match your query",
+                                           num_plugins), num_plugins);
           break;
         }
     }

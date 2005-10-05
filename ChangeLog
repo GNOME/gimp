@@ -1,5 +1,15 @@
 2005-10-06  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpprocbrowserdialog.c: capitalization and other string
+	changes.
+
+	* libgimpwidgets/gimpbrowser.c: string unification. Set the
+	message label italic.
+
+	* plug-ins/common/plugin-browser.c: use ngettext() for plural forms.
+
+2005-10-06  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/dialogs-constructors.c
 	* app/dialogs/keyboard-shortcuts-dialog.[ch]: include a check
 	button for the "save-accels" gimprc property.
