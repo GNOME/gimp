@@ -735,13 +735,13 @@ marshall_proc_db_call (LISP a)
               if ((n_elements < 0) || (n_elements > nlength (list)))
                 {
                   g_snprintf (error_str, sizeof (error_str),
-                              "STRING array (argument %d) for function %s has "
+                              "String array (argument %d) for function %s has "
                               "incorrect length (got %ld, expected %d)",
                               i + 1, proc_name, nlength (list), n_elements);
                   return my_err (error_str, NIL);
                 }
 
-              args[i].type              = GIMP_PDB_STRINGARRAY;
+              args[i].type               = GIMP_PDB_STRINGARRAY;
               args[i].data.d_stringarray = list->storage_as.string_array.data;
             }
           break;
@@ -1047,16 +1047,25 @@ marshall_proc_db_call (LISP a)
 
             case GIMP_PDB_STRINGARRAY:
               {
-                LISP array;
+                LISP array = NIL;
                 gint j;
 
-                array = arcons (tc_string_array, values[i].data.d_int32, 0);
                 for (j = 0; j < values[i].data.d_int32; j++)
                   {
-                    array->storage_as.string_array.data[j] =
-                      g_strdup (values[i + 1].data.d_stringarray[j]);
+                    string = (values[i + 1].data.d_stringarray)[j];
+
+                    if (string)
+                      {
+                        string_len = strlen (string);
+                        array = cons (strcons (string_len, string), array);
+                      }
+                    else
+                      {
+                        array = cons (strcons (0, ""), array);
+                      }
                   }
-                return_val = cons (array, return_val);
+
+                return_val = cons (nreverse (array), return_val);
               }
               break;
 
