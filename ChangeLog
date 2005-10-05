@@ -1,5 +1,10 @@
 2005-10-05  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/about-dialog.c: set application name to "GIMP", the
+	expanded acronym is in the comment already.
+
+2005-10-05  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/quit-dialog.c: fixed string.
 
 2005-10-05  Sven Neumann  <sven@gimp.org>

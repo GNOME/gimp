@@ -57,6 +57,7 @@
   "along with this program; if not, write to the Free Software\n"          \
   "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA."
 
+#define NAME           "GIMP"
 #define COMMENTS       _("GNU Image Manipulation Program")
 
 #define WEBSITE        "http://www.gimp.org/"
@@ -138,6 +139,7 @@ about_dialog_create (GimpContext *context)
       widget = g_object_new (GTK_TYPE_ABOUT_DIALOG,
                              "role",               "about-dialog",
                              "window-position",    GTK_WIN_POS_CENTER,
+                             "name",               NAME,
                              "version",            GIMP_VERSION,
                              "copyright",          COPYRIGHT,
                              "comments",           COMMENTS,
