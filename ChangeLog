@@ -54,7 +54,7 @@
 	Adrian Likins to add "jitter" to paint tools (bug #163049),
 	with small fixes for coding style and default jitter set
 	to 0.2 instead of 0.0.
-	
+
 2005-10-02  DindinX  <dindinx@gimp.org>
 
 	* libgimp/gimpzoompreview.[ch]: added a new function:

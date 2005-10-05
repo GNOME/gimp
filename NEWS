@@ -7,8 +7,20 @@ This is the development branch of The GIMP. Here's where all the shiny
 new stuff is being done that will one day be released as GIMP 2.4.
 
 
+Changes in GIMP 2.3.5
+=====================
+
+- optionally add jitter to paint strokes
+- implemented Snap to Path
+- added PDB API to access the Image Grid
+- optimizations to the Tile Cache and Undo/Redo implementations
+- more work on the Buffer PDB API
+- bug fixes and code cleanup
+
+
 Changes in GIMP 2.3.4
 =====================
+
 - allow plug-ins and scripts to register menu entries in the <Brushes>,
   <Gradients>, <Palettes>, <Patterns> and <Fonts> menus
 - replaced Selection to Brush/Pattern scripts with scripts that paste
