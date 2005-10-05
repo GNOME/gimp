@@ -45,6 +45,7 @@
 
 #include "gimp-intl.h"
 
+
 static GtkWidget * quit_close_all_dialog_new               (Gimp              *gimp,
                                                             gboolean           do_quit);
 static void        quit_close_all_dialog_response          (GtkWidget         *dialog,
@@ -159,7 +160,7 @@ quit_close_all_dialog_new (Gimp     *gimp,
     label = gtk_label_new (_("If you quit GIMP now, "
                              "these changes will be lost."));
   else
-    label = gtk_label_new (_("If close these files now, "
+    label = gtk_label_new (_("If you close these images now, "
                              "changes will be lost."));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);

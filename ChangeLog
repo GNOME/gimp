@@ -1,5 +1,9 @@
 2005-10-05  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/quit-dialog.c: fixed string.
+
+2005-10-05  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpaspectpreview.c
 	* libgimp/gimpzoompreview.c: added missing API docs.
 
