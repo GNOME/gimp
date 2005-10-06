@@ -1,5 +1,10 @@
 2005-10-06  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/jpeg/jpeg-save.c: can't use smoothing with nonstandard
+	sampling ratios. Set the slider sensitivity accordingly (bug #318081).
+
+2005-10-06  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/gimpressionist/gimpressionist.c: removed About dialog.
 
 	* plug-ins/gimpressionist/Makefile.am

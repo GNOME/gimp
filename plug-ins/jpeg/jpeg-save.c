@@ -69,6 +69,8 @@ static void  make_preview        (void);
 
 static void  save_restart_update (GtkAdjustment *adjustment,
                                   GtkWidget     *toggle);
+static void  subsampling_changed (GtkWidget     *combo,
+                                  GtkObject     *entry);
 
 #ifdef HAVE_EXIF
 
@@ -312,8 +314,11 @@ save_image (const gchar *filename,
   jpeg_set_defaults (&cinfo);
 
   jpeg_set_quality (&cinfo, (gint) (jsvals.quality + 0.5), jsvals.baseline);
-  cinfo.smoothing_factor = (gint) (jsvals.smoothing * 100);
   cinfo.optimize_coding = jsvals.optimize;
+
+  /*  smoothing is not supported with nonstandard sampling ratios  */
+  if (jsvals.subsmp != 1)
+    cinfo.smoothing_factor = (gint) (jsvals.smoothing * 100);
 
   if (jsvals.progressive)
     {
@@ -946,17 +951,13 @@ save_dialog (void)
                                   "2x1,1x1,1x1 (4:2:2)", 1,
                                   "1x1,1x1,1x1",         2,
                                   NULL);
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), jsvals.subsmp);
   gtk_table_attach (GTK_TABLE (table), combo, 3, 6, 2, 3,
                     GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
   gtk_widget_show (combo);
 
-  g_signal_connect (combo, "changed",
-                    G_CALLBACK (gimp_int_combo_box_get_active),
-                    &jsvals.subsmp);
-  g_signal_connect (combo, "changed",
-                    G_CALLBACK (make_preview),
-                    NULL);
+  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), jsvals.subsmp,
+                              G_CALLBACK (subsampling_changed),
+                              entry);
 
   dtype = gimp_drawable_type (drawable_ID_global);
   if (dtype != GIMP_RGB_IMAGE && dtype != GIMP_RGBA_IMAGE)
@@ -1046,6 +1047,18 @@ save_restart_update (GtkAdjustment *adjustment,
 
   gtk_widget_set_sensitive (restart_markers_label, jsvals.restart);
   gtk_widget_set_sensitive (restart_markers_scale, jsvals.restart);
+
+  make_preview ();
+}
+
+static void
+subsampling_changed (GtkWidget *combo,
+                     GtkObject *entry)
+{
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (combo), &jsvals.subsmp);
+
+  /*  smoothing is not supported with nonstandard sampling ratios  */
+  gimp_scale_entry_set_sensitive (entry, jsvals.subsmp != 1);
 
   make_preview ();
 }
