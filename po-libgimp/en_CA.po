@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-30 15:59-0400\n"
+"POT-Creation-Date: 2005-10-06 11:57-0400\n"
 "PO-Revision-Date: 2005-09-06 20:02-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
@@ -239,55 +239,56 @@ msgstr "by date"
 msgid "by type"
 msgstr "by type"
 
-#: libgimp/gimpprocbrowserdialog.c:411
-msgid "Searching by name - please wait"
-msgstr "Searching by name - please wait"
+#: libgimp/gimpprocbrowserdialog.c:408
+msgid "Searching"
+msgstr "Searching"
 
-#: libgimp/gimpprocbrowserdialog.c:431
-msgid "Searching by description - please wait"
-msgstr "Searching by description - please wait"
+#: libgimp/gimpprocbrowserdialog.c:419
+msgid "Searching by name"
+msgstr "Searching by name"
 
-#: libgimp/gimpprocbrowserdialog.c:439
-msgid "Searching by help - please wait"
-msgstr "Searching by help - please wait"
+#: libgimp/gimpprocbrowserdialog.c:440
+msgid "Searching by description"
+msgstr "Searching by description"
 
 #: libgimp/gimpprocbrowserdialog.c:447
-msgid "Searching by author - please wait"
-msgstr "Searching by author - please wait"
+msgid "Searching by help"
+msgstr "Searching by help"
 
-#: libgimp/gimpprocbrowserdialog.c:455
-msgid "Searching by copyright - please wait"
-msgstr "Searching by copyright - please wait"
+#: libgimp/gimpprocbrowserdialog.c:454
+msgid "Searching by author"
+msgstr "Searching by author"
 
-#: libgimp/gimpprocbrowserdialog.c:463
-msgid "Searching by date - please wait"
-msgstr "Searching by date - please wait"
+#: libgimp/gimpprocbrowserdialog.c:461
+msgid "Searching by copyright"
+msgstr "Searching by copyright"
 
-#: libgimp/gimpprocbrowserdialog.c:471
-msgid "Searching by type - please wait"
-msgstr "Searching by type - please wait"
+#: libgimp/gimpprocbrowserdialog.c:468
+msgid "Searching by date"
+msgstr "Searching by date"
 
-#: libgimp/gimpprocbrowserdialog.c:479
-msgid "Searching - please wait"
-msgstr "Searching - please wait"
+#: libgimp/gimpprocbrowserdialog.c:475
+msgid "Searching by type"
+msgstr "Searching by type"
 
-#: libgimp/gimpprocbrowserdialog.c:487
+#: libgimp/gimpprocbrowserdialog.c:484
 #, c-format
-msgid "%d Procedures"
-msgstr "%d Procedures"
+msgid "%d procedures"
+msgstr "%d procedures"
 
-#: libgimp/gimpprocbrowserdialog.c:494
+#: libgimp/gimpprocbrowserdialog.c:491
 msgid "No matches for your query"
 msgstr "No matches for your query"
 
-#: libgimp/gimpprocbrowserdialog.c:498
+#: libgimp/gimpprocbrowserdialog.c:495
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
 msgstr[0] "%d procedure matches your query"
 msgstr[1] "%d procedures matches your query"
 
-#: libgimp/gimpprocbrowserdialog.c:547
+#. count label
+#: libgimp/gimpprocbrowserdialog.c:544 libgimpwidgets/gimpbrowser.c:145
 msgid "No matches"
 msgstr "No matches"
 

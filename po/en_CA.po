@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-04 00:04-0400\n"
+"POT-Creation-Date: 2005-10-06 11:56-0400\n"
 "PO-Revision-Date: 2005-09-06 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
@@ -132,7 +132,7 @@ msgstr "Make all warnings fatal"
 msgid "Output a gimprc file with default settings"
 msgstr "Output a gimprc file with default settings"
 
-#: app/main.c:248 app/dialogs/about-dialog.c:60 desktop/gimp.desktop.in.in.h:2
+#: app/main.c:248 app/dialogs/about-dialog.c:61 desktop/gimp.desktop.in.in.h:2
 msgid "GNU Image Manipulation Program"
 msgstr "GNU Image Manipulation Program"
 
@@ -3866,19 +3866,19 @@ msgstr "Enable tooltips display."
 
 #: app/config/gimprc-blurbs.h:334
 msgid ""
-"Sets the swap file location. The GIMP uses a tile based memory allocation "
+"Sets the swap file location. GIMP uses a tile based memory allocation "
 "scheme. The swap file is used to quickly and easily swap tiles out to disk "
-"and back in. Be aware that the swap file can easily get very large if the "
-"GIMP is used with large images. Also, things can get horribly slow if the "
-"swap file is created on a directory that is mounted over NFS.  For these "
-"reasons, it may be desirable to put your swap file in \"/tmp\"."
+"and back in. Be aware that the swap file can easily get very largeif GIMP is "
+"used with large images. Also, things can get horribly slow if the swap file "
+"is created on a directory that is mounted over NFS.  For these reasons, it "
+"may be desirable to put your swap file in \"/tmp\"."
 msgstr ""
-"Sets the swap file location. The GIMP uses a tile based memory allocation "
-"scheme. The swap file is used to swap tiles quickly and easily out to disk "
-"and back in. Be aware that the swap file can easily get very large if the "
-"GIMP is used with large images. Also, things can become horribly slow if the "
-"swap file is created on a directory that is mounted over NFS.  For these "
-"reasons, it may be desirable to put your swap file in \"/tmp\"."
+"Sets the swap file location. GIMP uses a tile based memory allocation "
+"scheme. The swap file is used to quickly and easily swap tiles out to disk "
+"and back in. Be aware that the swap file can easily get very large if GIMP is "
+"used with large images. Also, things can get horribly slow if the swap file "
+"is created on a directory that is mounted over NFS.  For these reasons, it "
+"may be desirable to put your swap file in \"/tmp\"."
 
 #: app/config/gimprc-blurbs.h:343
 msgid "When enabled, menus can be torn off."
@@ -5610,18 +5610,18 @@ msgstr "picas"
 msgid "percent"
 msgstr "percent"
 
-#: app/dialogs/about-dialog.c:63
+#: app/dialogs/about-dialog.c:64
 msgid "Visit the GIMP website"
 msgstr "Visit the GIMP website"
 
 #. Translators: insert your names here,
 #. * separated by newline
 #.
-#: app/dialogs/about-dialog.c:153
+#: app/dialogs/about-dialog.c:155
 msgid "translator-credits"
 msgstr "Adam Weinberger <adamw@gnome.org>"
 
-#: app/dialogs/about-dialog.c:689
+#: app/dialogs/about-dialog.c:691
 msgid "GIMP is brought to you by"
 msgstr "GIMP is brought to you by"
 
@@ -5883,17 +5883,22 @@ msgstr "Is this what you want to do?"
 msgid "General"
 msgstr "General"
 
-#: app/dialogs/keyboard-shortcuts-dialog.c:47
+#: app/dialogs/keyboard-shortcuts-dialog.c:52
 msgid "Configure Keyboard Shortcuts"
 msgstr "Configure Keyboard Shortcuts"
 
-#: app/dialogs/keyboard-shortcuts-dialog.c:87
+#: app/dialogs/keyboard-shortcuts-dialog.c:92
 msgid ""
 "To edit a shortcut key, click on the corresponding row and type a new "
 "accelerator, or press backspace to clear."
 msgstr ""
 "To edit a shortcut key, click on the corresponding row and type a new "
 "accelerator, or press backspace to clear."
+
+#: app/dialogs/keyboard-shortcuts-dialog.c:109
+#: app/dialogs/preferences-dialog.c:1432
+msgid "_Save keyboard shortcuts on exit"
+msgstr "_Save keyboard shortcuts on exit"
 
 #: app/dialogs/layer-add-mask-dialog.c:63
 msgid "Add a Mask to the Layer"
@@ -6301,10 +6306,6 @@ msgstr "Use _dynamic keyboard shortcuts"
 #: app/dialogs/preferences-dialog.c:1425
 msgid "Configure _Keyboard Shortcuts..."
 msgstr "Configure _Keyboard Shortcuts..."
-
-#: app/dialogs/preferences-dialog.c:1432
-msgid "_Save keyboard shortcuts on exit"
-msgstr "_Save keyboard shortcuts on exit"
 
 #: app/dialogs/preferences-dialog.c:1436
 msgid "Save Keyboard Shortcuts _Now"
@@ -6863,8 +6864,8 @@ msgid "pixels/%a"
 msgstr "pixels/%a"
 
 #: app/dialogs/quit-dialog.c:102
-msgid "Quit The GIMP"
-msgstr "Quit The GIMP"
+msgid "Quit GIMP"
+msgstr "Quit GIMP"
 
 #: app/dialogs/quit-dialog.c:102
 msgid "Close All Images"
@@ -6875,8 +6876,8 @@ msgid "If you quit GIMP now, these changes will be lost."
 msgstr "If you quit GIMP now, these changes will be lost."
 
 #: app/dialogs/quit-dialog.c:162
-msgid "If close these files now, changes will be lost."
-msgstr "If close these files now, changes will be lost."
+msgid "If you close these images now, changes will be lost."
+msgstr "If you close these images now, changes will be lost."
 
 #: app/dialogs/quit-dialog.c:210
 #, c-format
