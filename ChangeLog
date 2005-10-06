@@ -1,3 +1,10 @@
+2005-10-06  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	Merged from HEAD branch:
+
+	* plug-ins/common/gauss.c: always use RLE if horz or
+	vert radius is less than 1.  Fixes bug #315953.
+
 2005-10-04  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/Lighting/lighting_shade.c: Don't add foreground

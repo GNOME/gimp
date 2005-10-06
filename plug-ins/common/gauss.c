@@ -644,6 +644,13 @@ gauss (GimpDrawable *drawable,
   guchar       *preview_buffer1 = NULL;
   guchar       *preview_buffer2 = NULL;
 
+  /*
+   * IIR goes wrong if the blur radius is less than 1, so we silently
+   * switch to RLE in this case.  See bug #315953
+   */
+  if (horz <= 1.0 || vert <= 1.0)
+    method = BLUR_RLE;
+
   if (horz <= 0.0 && vert <= 0.0)
     {
       if (preview)
