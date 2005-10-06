@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-06 02:36+0200\n"
-"PO-Revision-Date: 2005-10-06 02:34+0200\n"
+"POT-Creation-Date: 2005-10-06 02:56+0200\n"
+"PO-Revision-Date: 2005-10-06 02:57+0200\n"
 "Last-Translator: Hendrik Brandt <heb@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -7166,7 +7166,7 @@ msgid ""
 "this conversion."
 msgstr ""
 "Warnung:\n"
-"Das Bild welches Sie zu laden möchten besitzt 16 Bit pro Farbkanal. The Gimp "
+"Das Bild welches Sie zu laden möchten besitzt 16 Bit pro Farbkanal. GIMP "
 "kann jedoch nur mit 8 Bit pro Kanal umgehen. Deshalb wird das Bild nun für "
 "Sie umgewandelt, dadurch wird es zu einem Informationsverlust kommen."
 
@@ -9407,8 +9407,8 @@ msgid "Save Current"
 msgstr "Einstellungen speichern"
 
 #: ../plug-ins/gimpressionist/presets.c:874
-msgid "The Gimpressionist Defaults"
-msgstr "Die Gimpressionist Voreinstellungen"
+msgid "Gimpressionist Defaults"
+msgstr "Gimpressionist Voreinstellungen"
 
 #: ../plug-ins/gimpressionist/presets.c:990
 msgid "_Presets"
@@ -11735,7 +11735,7 @@ msgstr "Keine Daten"
 
 #: ../plug-ins/xjt/xjt.c:479 ../plug-ins/xjt/xjt.c:497
 msgid "GIMP compressed XJT image"
-msgstr "Mit The Gimp komprimiertes XJT-Bild"
+msgstr "GIMP (komprimiertes XJT-Bild)"
 
 #: ../plug-ins/xjt/xjt.c:718
 #, c-format

@@ -871,7 +871,7 @@ read_description (const char *fn)
       if (!strcmp (fn, factory_defaults))
         {
           gtk_widget_set_sensitive (delete_button, FALSE);
-          set_preset_description_text (_("The Gimpressionist Defaults"));
+          set_preset_description_text (_("Gimpressionist Defaults"));
         }
       else
         {

@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-06 02:26+0200\n"
-"PO-Revision-Date: 2005-10-06 02:29+0200\n"
+"POT-Creation-Date: 2005-10-06 02:53+0200\n"
+"PO-Revision-Date: 2005-10-06 02:54+0200\n"
 "Last-Translator: Hendrik Brandt <heb@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -3501,7 +3501,13 @@ msgid ""
 "swap file. Some parts of your images may be corrupted. Try to save your work "
 "using different filenames, restart the Gimp and check the location of the "
 "swap directory in your Preferences."
-msgstr "Die Auslagerungsdatei konnte nicht geöffnet werden. Der Speicher für GIMP hat sich erschöpft und es kann keine Auslagerungsdatei verwendet werden. Einige Elemente Ihres Bildes könnten verloren gehen. Versuchen Sie Ihre Arbeit unter einem anderen Dateinamen abzuspeichern, starten Sie anschließend GIMP neu und überprüfen Sie den Ort Ihres Auslagerungsverzeichnisses in den Einstellungen."
+msgstr ""
+"Die Auslagerungsdatei konnte nicht geöffnet werden. Der Speicher für GIMP "
+"hat sich erschöpft und es kann keine Auslagerungsdatei verwendet werden. "
+"Einige Elemente Ihres Bildes könnten verloren gehen. Versuchen Sie Ihre "
+"Arbeit unter einem anderen Dateinamen abzuspeichern, starten Sie "
+"anschließend GIMP neu und überprüfen Sie den Ort Ihres "
+"Auslagerungsverzeichnisses in den Einstellungen."
 
 #: ../app/config/gimpconfig-file.c:66 ../app/core/gimpbrushgenerated.c:254
 #: ../app/core/gimpgradient-save.c:51 ../app/core/gimpgradient-save.c:142
@@ -3780,7 +3786,11 @@ msgid ""
 "Sets whether GIMP should create previews of layers and channels. Previews in "
 "the layers and channels dialog are nice to have but they can slow things "
 "down when working with large images."
-msgstr "Legt fest, ob GIMP Vorschaubilder von Ebenen und Kanälen anlegt. Vorschaubilder im Ebenen- und Kanäle-Dialog kann die Übersicht erhöhen, führt aber auch dazu, dass das System beim Bearbeiten sehr großer Bilder langsamer reagiert."
+msgstr ""
+"Legt fest, ob GIMP Vorschaubilder von Ebenen und Kanälen anlegt. "
+"Vorschaubilder im Ebenen- und Kanäle-Dialog kann die Übersicht erhöhen, "
+"führt aber auch dazu, dass das System beim Bearbeiten sehr großer Bilder "
+"langsamer reagiert."
 
 #: ../app/config/gimprc-blurbs.h:251
 msgid ""
@@ -3807,7 +3817,9 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:263
 msgid "Let GIMP try to restore your last saved session on each startup."
-msgstr "Wenn diese Option ausgewählt ist, versucht GIMP bei jedem Start die letzte Sitzung wieder herzustellen."
+msgstr ""
+"Wenn diese Option ausgewählt ist, versucht GIMP bei jedem Start die letzte "
+"Sitzung wieder herzustellen."
 
 #: ../app/config/gimprc-blurbs.h:266
 msgid ""
@@ -3937,13 +3949,21 @@ msgstr "Minihilfe anzeigen."
 
 #: ../app/config/gimprc-blurbs.h:334
 msgid ""
-"Sets the swap file location. The GIMP uses a tile based memory allocation "
+"Sets the swap file location. GIMP uses a tile based memory allocation "
 "scheme. The swap file is used to quickly and easily swap tiles out to disk "
-"and back in. Be aware that the swap file can easily get very large if the "
-"GIMP is used with large images. Also, things can get horribly slow if the "
-"swap file is created on a directory that is mounted over NFS.  For these "
-"reasons, it may be desirable to put your swap file in \"/tmp\"."
-msgstr "Legt den Ort der Auslagerungsdatei fest. GIMP verwendet ein blockorientiertes Speicherzugriffssystem. Die Auslagerungsdatei wird verwendet, um einzelne Speicherblöcke schnell und einfach auf die Festplatte auszulagern. Beachten Sie, dass diese Ausölagerungsdatei sehr groß werden kann, wenn Sie mit GIMP große Bilder bearbeiten. Weiterhin kann das Programm sehr langsam reagieren, wenn Sie die Auslagerungsdatei innerhalb eines Netzwerkverzeichnisses erstellen. Für diesen Fall ist eine Auslagerung in den Ordner »/tmp« zu empfehlen."
+"and back in. Be aware that the swap file can easily get very largeif GIMP is "
+"used with large images. Also, things can get horribly slow if the swap file "
+"is created on a directory that is mounted over NFS.  For these reasons, it "
+"may be desirable to put your swap file in \"/tmp\"."
+msgstr ""
+"Legt den Ort der Auslagerungsdatei fest. GIMP verwendet ein "
+"blockorientiertes Speicherzugriffssystem. Die Auslagerungsdatei wird "
+"verwendet, um einzelne Speicherblöcke schnell und einfach auf die Festplatte "
+"auszulagern. Beachten Sie, dass diese Ausölagerungsdatei sehr groß werden "
+"kann, wenn Sie mit GIMP große Bilder bearbeiten. Weiterhin kann das Programm "
+"sehr langsam reagieren, wenn Sie die Auslagerungsdatei innerhalb eines "
+"Netzwerkverzeichnisses erstellen. Für diesen Fall ist eine Auslagerung in "
+"den Ordner »/tmp« zu empfehlen."
 
 #: ../app/config/gimprc-blurbs.h:343
 msgid "When enabled, menus can be torn off."
@@ -3976,7 +3996,8 @@ msgstr "Speichert geänderte Tastenkürzel, wenn GIMP beendet wird."
 
 #: ../app/config/gimprc-blurbs.h:359
 msgid "Restore saved keyboard shortcuts on each GIMP startup."
-msgstr "Stellt gespeicherte Tastenkürzel bei jedem Neustart von GIMP wieder her."
+msgstr ""
+"Stellt gespeicherte Tastenkürzel bei jedem Neustart von GIMP wieder her."
 
 #: ../app/config/gimprc-blurbs.h:362
 msgid ""
@@ -3984,7 +4005,12 @@ msgid ""
 "course of running the GIMP.  Most files will disappear when the GIMP exits, "
 "but some files are likely to remain, so it is best if this directory not be "
 "one that is shared by other users."
-msgstr "Legt das Verzeichnis für den temporären Speicher fest. Während der Benutzung von GIMP werden hier verschiedene Ablaufdateien abgelegt. Die meisten Dateien verschwinden nach dem Beenden von GIMP, da jedoch einige Dateien verbleiben könnten, sollte dieses Verzeichnis nur für Sie und nicht für andere Benutzer zugänglich sein."
+msgstr ""
+"Legt das Verzeichnis für den temporären Speicher fest. Während der Benutzung "
+"von GIMP werden hier verschiedene Ablaufdateien abgelegt. Die meisten "
+"Dateien verschwinden nach dem Beenden von GIMP, da jedoch einige Dateien "
+"verbleiben könnten, sollte dieses Verzeichnis nur für Sie und nicht für "
+"andere Benutzer zugänglich sein."
 
 #: ../app/config/gimprc-blurbs.h:374
 msgid ""
@@ -4040,8 +4066,8 @@ msgid ""
 "When enabled, the GIMP will not save an image if it has not been changed "
 "since it was opened."
 msgstr ""
-"Wenn diese Option ausgewählt ist, wird The GIMP keine Bilder speichern, die "
-"seit ihres Ladens nicht verändert wurden."
+"Wenn diese Option ausgewählt ist, wird GIMP keine Bilder speichern, die seit "
+"ihres Ladens nicht verändert wurden."
 
 #: ../app/config/gimprc-blurbs.h:407
 msgid ""
@@ -7025,30 +7051,30 @@ msgstr "_Y Auflösung:"
 msgid "pixels/%a"
 msgstr "Pixel/%a"
 
-#: ../app/dialogs/quit-dialog.c:103
-msgid "Quit The GIMP"
+#: ../app/dialogs/quit-dialog.c:102
+msgid "Quit GIMP"
 msgstr "GIMP beenden"
 
-#: ../app/dialogs/quit-dialog.c:103
+#: ../app/dialogs/quit-dialog.c:102
 msgid "Close All Images"
 msgstr "Alle Bilder schließen"
 
-#: ../app/dialogs/quit-dialog.c:160
+#: ../app/dialogs/quit-dialog.c:159
 msgid "If you quit GIMP now, these changes will be lost."
 msgstr "Wenn Sie GIMP jetzt beenden, gehen diese Änderungen verloren."
 
-#: ../app/dialogs/quit-dialog.c:163
+#: ../app/dialogs/quit-dialog.c:162
 msgid "If you close these images now, changes will be lost."
 msgstr "Wenn Sie diese Bilder jetzt schließen, gehen Änderungen verloren."
 
-#: ../app/dialogs/quit-dialog.c:211
+#: ../app/dialogs/quit-dialog.c:210
 #, c-format
 msgid "There is one image with unsaved changes:"
 msgid_plural "There are %d images with unsaved changes:"
 msgstr[0] "Es ist ein Bild mit ungesicherten Änderungen geöffnet:"
 msgstr[1] "Es sind %d Bilder mit ungesicherten Änderungen geöffnet:"
 
-#: ../app/dialogs/quit-dialog.c:233
+#: ../app/dialogs/quit-dialog.c:232
 msgid "_Discard Changes"
 msgstr "Änderungen _verwerfen"
 
@@ -7174,11 +7200,11 @@ msgid ""
 "information about their functionality is cached in this file.  This file is "
 "intended to be written to by GIMP only, and should not be edited."
 msgstr ""
-"Plugins und Erweiterungen sind externe Programme, die von The GIMP gestartet "
+"Plugins und Erweiterungen sind externe Programme, die von GIMP gestartet "
 "werden und Zusatzfunktionen bereitstellen. Diese Programme werden zur "
 "Laufzeit gesucht und die Informationen zu ihrer Funktionalität werden in "
-"dieser Datei gespeichert. Diese Datei sollte nur von The GIMP geschrieben "
-"und nicht bearbeitet werden."
+"dieser Datei gespeichert. Diese Datei sollte nur von GIMP geschrieben und "
+"nicht bearbeitet werden."
 
 #: ../app/dialogs/user-install-dialog.c:154
 msgid ""
@@ -10555,7 +10581,9 @@ msgstr "Der Hilfe-Browser konnte nicht gefunden werden"
 #: ../app/widgets/gimphelp.c:189
 msgid ""
 "The GIMP help browser plug-in appears to be missing from your installation."
-msgstr "Das Hilfe-Browser Plugin scheint in Ihrer GIMP Installation nicht vorhanden zu sein."
+msgstr ""
+"Das Hilfe-Browser Plugin scheint in Ihrer GIMP Installation nicht vorhanden "
+"zu sein."
 
 #: ../app/widgets/gimphelp.c:213
 msgid "Help browser doesn't start"
