@@ -20,12 +20,7 @@
 
 #include "ppmtool.h"
 
-#include "logo-pixbuf.h"
-
 #include "libgimp/stdplugins-intl.h"
-
-
-#define RESPONSE_ABOUT 1
 
 
 static GtkWidget *dialog = NULL;
@@ -96,82 +91,12 @@ create_one_column_list (GtkWidget *parent,
 }
 
 static void
-show_about (GtkWidget *parent)
-{
-  static GtkWidget *window = NULL;
-
-  GtkWidget *vbox;
-  GtkWidget *frame;
-  GtkWidget *logobox;
-  GtkWidget *logo;
-  GtkWidget *label;
-  GdkPixbuf *pixbuf;
-
-  if (window)
-    {
-      gtk_window_present (GTK_WINDOW (window));
-      return;
-    }
-
-  window =
-    gimp_dialog_new (_("About GIMPressionist"), "gimpressionist",
-                     gtk_widget_get_toplevel (parent), 0,
-                     gimp_standard_help_func, NULL,
-
-                     GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
-
-                     NULL);
-
-  g_signal_connect (window, "response",
-                    G_CALLBACK (gtk_widget_destroy),
-                    NULL);
-  g_signal_connect (window, "destroy",
-                    G_CALLBACK (gtk_widget_destroyed),
-                    &window);
-
-  vbox = gtk_vbox_new (TRUE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->vbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
-
-  logobox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), logobox, FALSE, FALSE, 0);
-  gtk_widget_show (logobox);
-
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (logobox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  pixbuf = gdk_pixbuf_new_from_inline (-1, logo_data, FALSE, NULL);
-  logo = gtk_image_new_from_pixbuf (pixbuf);
-  g_object_unref (pixbuf);
-
-  gtk_container_add (GTK_CONTAINER (frame), logo);
-  gtk_widget_show (logo);
-
-  label = gtk_label_new ("(C) 1999 Vidar Madsen\n"
-                         "vidar@prosalg.no\n"
-                         "http://www.prosalg.no/~vidar/gimpressionist/\n"
-                         PLUG_IN_VERSION);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, TRUE, 0);
-  gtk_widget_show (label);
-
-  gtk_widget_show (window);
-}
-
-static void
 dialog_response (GtkWidget *widget,
                  gint       response_id,
                  gpointer   data)
 {
   switch (response_id)
     {
-    case RESPONSE_ABOUT:
-      show_about (widget);
-      break;
-
     case GTK_RESPONSE_OK:
       store_values ();
       pcvals.run = TRUE;
@@ -197,14 +122,12 @@ create_dialog (void)
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_NAME,
 
-                            GTK_STOCK_ABOUT,  RESPONSE_ABOUT,
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
                             NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           RESPONSE_ABOUT,
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);

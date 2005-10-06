@@ -28,7 +28,7 @@ libexecdir = $(gimpplugindir)/plug-ins
 
 libexec_PROGRAMS = gimpressionist
 
-gimpressionist_sources = \
+gimpressionist_SOURCES = \
 	brush.c			\
 	brush.h			\
 	color.c			\
@@ -62,13 +62,6 @@ gimpressionist_sources = \
 	sizemap.c		\
 	utils.c
 
-gimpressionist_built_sources = logo-pixbuf.h
-gimpressionist.c: $(gimpressionist_built_sources)
-
-gimpressionist_SOURCES = \
-	$(gimpressionist_built_sources) $(gimpressionist_sources)
-
-
 LDADD = \
 	$(libgimpui)		\
 	$(libgimpwidgets)	\
@@ -81,12 +74,4 @@ LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
-
-$(srcdir)/logo-pixbuf.h: logo.png
-	$(GDK_PIXBUF_CSOURCE) --raw --name=logo_data $< > $(@F)
-
-EXTRA_DIST = \
-	README	\
-	logo.png
-
-CLEANFILES = logo-pixbuf.h
+EXTRA_DIST = README

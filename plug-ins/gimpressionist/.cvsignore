@@ -4,4 +4,3 @@ Makefile.in
 .libs
 _libs
 gimpressionist
-logo-pixbuf.h
