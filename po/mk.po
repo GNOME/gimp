@@ -145,7 +145,7 @@ msgstr "Испиши gimprc датотека со стандардните по�
 #: ../app/main.c:248 ../app/dialogs/about-dialog.c:60
 #: ../desktop/gimp.desktop.in.in.h:2
 msgid "GNU Image Manipulation Program"
-msgstr "ГНУ Програма За Манипулација Со Слики"
+msgstr "Програма за манипулација со слики"
 
 #: ../app/main.c:292
 msgid ""
