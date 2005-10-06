@@ -1055,6 +1055,9 @@ create_presetpage (GtkNotebook *notebook)
   gimp_help_set_help_data (tmpw, _("Reread the folder of Presets"), NULL);
 
   presetdesclabel = tmpw = gtk_label_new (NULL);
+  gimp_label_set_attributes (GTK_LABEL (tmpw),
+                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
+                             -1);
   gtk_label_set_line_wrap (GTK_LABEL (tmpw), TRUE);
   /*
    * Make sure the label's width is reasonable and it won't stretch
