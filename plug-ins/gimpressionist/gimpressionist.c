@@ -96,7 +96,7 @@ create_one_column_list (GtkWidget *parent,
 }
 
 static void
-show_about (void)
+show_about (GtkWidget *parent)
 {
   static GtkWidget *window = NULL;
 
@@ -114,9 +114,9 @@ show_about (void)
     }
 
   window =
-    gimp_dialog_new (_("The GIMPressionist"), "gimpressionist",
-                     NULL, 0,
-                     gimp_standard_help_func, HELP_ID,
+    gimp_dialog_new (_("About GIMPressionist"), "gimpressionist",
+                     gtk_widget_get_toplevel (parent), 0,
+                     gimp_standard_help_func, NULL,
 
                      GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 
@@ -169,7 +169,7 @@ dialog_response (GtkWidget *widget,
   switch (response_id)
     {
     case RESPONSE_ABOUT:
-      show_about ();
+      show_about (widget);
       break;
 
     case GTK_RESPONSE_OK:
@@ -193,9 +193,9 @@ create_dialog (void)
 
   gimp_ui_init ("gimpressionist", TRUE);
 
-  dialog = gimp_dialog_new (_("Gimpressionist"), "gimpressionist",
+  dialog = gimp_dialog_new (_("GIMPressionist"), "gimpressionist",
                             NULL, 0,
-                            gimp_standard_help_func, HELP_ID,
+                            gimp_standard_help_func, PLUG_IN_NAME,
 
                             GTK_STOCK_ABOUT,  RESPONSE_ABOUT,
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,

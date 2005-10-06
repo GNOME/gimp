@@ -9,9 +9,8 @@
 #include "ppmtool.h"
 /* Defines */
 
-#define PLUG_IN_NAME    "plug_in_gimpressionist"
+#define PLUG_IN_NAME    "plug-in-gimpressionist"
 #define PLUG_IN_VERSION "v1.0, November 2003"
-#define HELP_ID         "plug-in-gimppressionist"
 
 #define PREVIEWSIZE     150
 #define MAXORIENTVECT   50
@@ -128,14 +127,14 @@ void readdirintolist_extended (char *subdir, GtkWidget *view, char *selected,
 
 GtkWidget *create_one_column_list (GtkWidget *parent,
 			           void (*changed_cb)
-			           (GtkTreeSelection *selection, 
+			           (GtkTreeSelection *selection,
                                     gpointer data));
 
 void brush_reload (const gchar *fn, struct ppm *p);
 
 double get_direction (double x, double y, int from);
 
-void create_sizemap_dialog (void);
+void create_sizemap_dialog (GtkWidget *parent);
 double getsiz_proto (double x, double y, int n, smvector_t *vec,
                      double smstrexp, int voronoi);
 

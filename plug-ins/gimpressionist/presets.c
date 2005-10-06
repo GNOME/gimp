@@ -608,7 +608,7 @@ save_preset_response (GtkWidget *widget,
 }
 
 static void
-create_save_preset (void)
+create_save_preset (GtkWidget *parent)
 {
   static GtkWidget *window = NULL;
   GtkWidget        *box, *label;
@@ -623,8 +623,8 @@ create_save_preset (void)
 
   window =
     gimp_dialog_new (_("Save Current"), "gimpressionist",
-                     NULL, 0,
-                     gimp_standard_help_func, HELP_ID,
+                     gtk_widget_get_toplevel (parent), 0,
+                     gimp_standard_help_func, PLUG_IN_NAME,
 
                      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                      GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -899,8 +899,9 @@ read_description (const char *fn)
     }
 }
 
-static void presets_list_select_preset (GtkTreeSelection *selection,
-                                        gpointer data)
+static void
+presets_list_select_preset (GtkTreeSelection *selection,
+                            gpointer          data)
 {
   GtkTreeIter iter;
   GtkTreeModel *model;
@@ -914,9 +915,11 @@ static void presets_list_select_preset (GtkTreeSelection *selection,
                           &preset_name, -1);
       gtk_tree_model_get (model, &iter, PRESETS_LIST_COLUMN_FILENAME,
                           &preset_filename, -1);
+
       /* TODO : Maybe make the factory defaults behavior in regards
        * to the preset's object name and filename more robust?
-       * */
+       *
+       */
       if (strcmp (preset_filename, factory_defaults))
         {
           gtk_entry_set_text (GTK_ENTRY (presetnameentry), preset_name);
@@ -925,7 +928,9 @@ static void presets_list_select_preset (GtkTreeSelection *selection,
           selected_preset_orig_name = g_strdup (preset_name);
           selected_preset_filename = g_strdup (selected_preset_filename);
         }
+
       read_description (preset_filename);
+
       g_free (preset_name);
       g_free (preset_filename);
     }
@@ -948,7 +953,7 @@ create_presets_list (GtkWidget *parent)
                                        GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (parent), swin, FALSE, FALSE, 0);
   gtk_widget_show (swin);
-  gtk_widget_set_size_request (swin, 150,-1);
+  gtk_widget_set_size_request (swin, 200, -1);
 
   store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
   view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (store));
@@ -999,7 +1004,7 @@ create_presetpage (GtkNotebook *notebook)
 
   presetnameentry = tmpw = gtk_entry_new ();
   gtk_box_pack_start (GTK_BOX (box1), tmpw, FALSE, FALSE, 0);
-  gtk_widget_set_size_request (tmpw, 150, -1);
+  gtk_widget_set_size_request (tmpw, 200, -1);
   gtk_widget_show (tmpw);
 
   presetsavebutton = tmpw = gtk_button_new_with_label ( _("Save Current..."));
@@ -1055,7 +1060,7 @@ create_presetpage (GtkNotebook *notebook)
    * Make sure the label's width is reasonable and it won't stretch
    * the dialog more than its width.
    * */
-  gtk_widget_set_size_request (tmpw, 200, -1);
+  gtk_widget_set_size_request (tmpw, 240, -1);
 
   gtk_misc_set_alignment (GTK_MISC (tmpw), 0.0, 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), tmpw, TRUE, TRUE, 0);

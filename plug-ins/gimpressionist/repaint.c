@@ -222,6 +222,9 @@ apply_brush (ppm_t *brush,
   int    shadowdepth = pcvals.general_shadow_depth;
   int    shadowblur = pcvals.general_shadow_blur;
 
+  atmp.col = 0;
+  atmp.width = 0;
+
   tmp = *p;
   if (img_has_alpha)
     atmp = *a;
@@ -1045,9 +1048,11 @@ repaint (ppm_t *p, ppm_t *a)
           if (doy)
             {
               if (dox < 0)
-                apply_brush (brush, shadow, &tmp, &atmp, tx+orig_width,ty+doy*orig_height,r,g,b);
+                apply_brush (brush, shadow, &tmp, &atmp,
+                             tx+orig_width, ty + doy * orig_height, r, g, b);
               if (dox > 0)
-                apply_brush (brush, shadow, &tmp, &atmp, tx-orig_width,ty+doy*orig_height,r,g,b);
+                apply_brush (brush, shadow, &tmp, &atmp,
+                             tx-orig_width, ty + doy * orig_height, r, g, b);
             }
         }
     }
@@ -1151,13 +1156,15 @@ repaint (ppm_t *p, ppm_t *a)
   ppm_kill (&paper_ppm);
   ppm_kill (&dirmap);
   ppm_kill (&sizmap);
+
   if (runningvals.run)
     {
       gimp_progress_update (0.8);
     }
   else
     {
-      preview_set_button_label (_("Update"));
+      preview_set_button_label (_("_Update"));
     }
+
   running = 0;
 }

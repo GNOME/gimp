@@ -1,5 +1,19 @@
 2005-10-06  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/gimpressionist/gimpressionist.[ch]
+	* plug-ins/gimpressionist/orientation.c
+	* plug-ins/gimpressionist/orientmap.[ch]
+	* plug-ins/gimpressionist/placement.c
+	* plug-ins/gimpressionist/presets.c
+	* plug-ins/gimpressionist/preview.c
+	* plug-ins/gimpressionist/repaint.c
+	* plug-ins/gimpressionist/size.c
+
+	* plug-ins/gimpressionist/sizemap.c: various minor improvements
+	like setting all dialogs transient to the main window.
+
+2005-10-06  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/gimpressionist/presets.c
 	* app/config/gimprc-blurbs.h
 	* app/dialogs/quit-dialog.c

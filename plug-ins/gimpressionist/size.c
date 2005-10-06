@@ -50,10 +50,10 @@ size_restore (void)
 }
 
 static void
-create_sizemap_dialog_helper (void)
+create_sizemap_dialog_helper (GtkWidget *widget)
 {
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (sizeradio[7]), TRUE);
-  create_sizemap_dialog ();
+  create_sizemap_dialog (widget);
 }
 
 static void

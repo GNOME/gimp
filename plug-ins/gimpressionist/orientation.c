@@ -45,11 +45,11 @@ void orientation_restore (void)
 }
 
 static void
-create_orientmap_dialog_helper (void)
+create_orientmap_dialog_helper (GtkWidget *widget)
 {
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (orient_radio[7]), TRUE);
 
-  create_orientmap_dialog ();
+  create_orientmap_dialog (widget);
 }
 
 

@@ -362,7 +362,7 @@ update_sizemap_dialog (void)
 #endif
 
 void
-create_sizemap_dialog (void)
+create_sizemap_dialog (GtkWidget *parent)
 {
   GtkWidget *tmpw, *tmpw2;
   GtkWidget *table1;
@@ -381,8 +381,8 @@ create_sizemap_dialog (void)
 
   smwindow =
     gimp_dialog_new (_("Size Map Editor"), "gimpressionist",
-                     NULL, 0,
-                     gimp_standard_help_func, HELP_ID,
+                     gtk_widget_get_toplevel (parent), 0,
+                     gimp_standard_help_func, PLUG_IN_NAME,
 
                      GTK_STOCK_APPLY,  RESPONSE_APPLY,
                      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,

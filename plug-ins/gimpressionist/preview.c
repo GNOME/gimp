@@ -17,9 +17,13 @@
 static GtkWidget *preview       = NULL;
 static GtkWidget *previewbutton = NULL;
 
-void preview_set_button_label (gchar * text)
+void
+preview_set_button_label (const gchar *text)
 {
-  gtk_label_set_text (GTK_LABEL (GTK_BIN (previewbutton)->child), text);
+  g_object_set (previewbutton,
+                "label",         text,
+                "use-underline", TRUE,
+                NULL);
 }
 
 static void

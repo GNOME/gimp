@@ -487,7 +487,7 @@ update_orientmap_dialog (void)
 }
 
 void
-create_orientmap_dialog (void)
+create_orientmap_dialog (GtkWidget *parent)
 {
   GtkWidget *tmpw, *tmpw2;
   GtkWidget *table1, *table2;
@@ -506,8 +506,8 @@ create_orientmap_dialog (void)
 
   orient_map_window =
     gimp_dialog_new (_("Orientation Map Editor"), "gimpressionist",
-                     NULL, 0,
-                     gimp_standard_help_func, HELP_ID,
+                     gtk_widget_get_toplevel (parent), 0,
+                     gimp_standard_help_func, PLUG_IN_NAME,
 
                      GTK_STOCK_APPLY,  GTK_RESPONSE_APPLY,
                      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
@@ -530,7 +530,8 @@ create_orientmap_dialog (void)
 
   table1 = gtk_table_new (2, 5, FALSE);
   gtk_container_set_border_width (GTK_CONTAINER (table1), 6);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (orient_map_window)->vbox), table1);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (orient_map_window)->vbox),
+                     table1);
   gtk_widget_show (table1);
 
   frame = gtk_frame_new (_("Vectors"));

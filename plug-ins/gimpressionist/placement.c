@@ -81,6 +81,17 @@ create_placementpage (GtkNotebook *notebook)
   gtk_toggle_button_set_active
     (GTK_TOGGLE_BUTTON (placement_radio[pcvals.place_type]), TRUE);
 
+  placement_center = gtk_check_button_new_with_mnemonic ( _("Centered"));
+  tmpw = placement_center;
+
+  gtk_box_pack_start (GTK_BOX (vbox), tmpw, FALSE, FALSE, 0);
+  gtk_widget_show (tmpw);
+  gimp_help_set_help_data
+    (tmpw, _("Focus the brush strokes around the center of the image"), NULL);
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw),
+                                pcvals.placement_center);
+
   table = gtk_table_new (1, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
@@ -97,16 +108,6 @@ create_placementpage (GtkNotebook *notebook)
   g_signal_connect (brush_density_adjust, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pcvals.brush_density);
-
-  placement_center = gtk_check_button_new_with_mnemonic ( _("Centerize"));
-  tmpw = placement_center;
-
-  gtk_box_pack_start (GTK_BOX (vbox), tmpw, FALSE, FALSE, 0);
-  gtk_widget_show (tmpw);
-  gimp_help_set_help_data
-    (tmpw, _("Focus the brush strokes around the center of the image"), NULL);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw),
-                                pcvals.placement_center);
 
   gtk_notebook_append_page_menu (notebook, vbox, label, NULL);
 }
