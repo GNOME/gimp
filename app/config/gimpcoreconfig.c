@@ -65,7 +65,7 @@ static void gimp_core_config_color_management_notify (GObject      *object,
 #define DEFAULT_PALETTE   "Default"
 #define DEFAULT_GRADIENT  "FG to BG (RGB)"
 #define DEFAULT_FONT      "Sans"
-#define DEFAULT_COMMENT   "Created with The GIMP"
+#define DEFAULT_COMMENT   "Created with GIMP"
 
 enum
 {

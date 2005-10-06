@@ -11,14 +11,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-03 16:12+0200\n"
-"PO-Revision-Date: 2005-10-03 16:16+0200\n"
+"POT-Creation-Date: 2005-10-06 02:24+0200\n"
+"PO-Revision-Date: 2005-10-06 02:25+0200\n"
 "Last-Translator: Hendrik Richter <hendi@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../libgimp/gimpbrushmenu.c:140
 msgid "Brush Selection"
@@ -245,55 +245,56 @@ msgstr "nach Datum"
 msgid "by type"
 msgstr "nach Typ"
 
-#: ../libgimp/gimpprocbrowserdialog.c:411
-msgid "Searching by name - please wait"
-msgstr "Suche nach Namen - bitte warten"
+#: ../libgimp/gimpprocbrowserdialog.c:408
+msgid "Searching"
+msgstr "Suche"
 
-#: ../libgimp/gimpprocbrowserdialog.c:431
-msgid "Searching by description - please wait"
-msgstr "Suche nach Beschreibung - bitte warten"
+#: ../libgimp/gimpprocbrowserdialog.c:419
+msgid "Searching by name"
+msgstr "Suche nach Namen"
 
-#: ../libgimp/gimpprocbrowserdialog.c:439
-msgid "Searching by help - please wait"
-msgstr "Suche nach Hilfe - bitte warten"
+#: ../libgimp/gimpprocbrowserdialog.c:440
+msgid "Searching by description"
+msgstr "Suche nach Beschreibung"
 
 #: ../libgimp/gimpprocbrowserdialog.c:447
-msgid "Searching by author - please wait"
-msgstr "Suche nach Autor - bitte warten"
+msgid "Searching by help"
+msgstr "Suche nach Hilfe"
 
-#: ../libgimp/gimpprocbrowserdialog.c:455
-msgid "Searching by copyright - please wait"
-msgstr "Suche nach Copyright - bitte warten"
+#: ../libgimp/gimpprocbrowserdialog.c:454
+msgid "Searching by author"
+msgstr "Suche nach Autor"
 
-#: ../libgimp/gimpprocbrowserdialog.c:463
-msgid "Searching by date - please wait"
-msgstr "Suche nach Datum - bitte warten"
+#: ../libgimp/gimpprocbrowserdialog.c:461
+msgid "Searching by copyright"
+msgstr "Suche nach Copyright"
 
-#: ../libgimp/gimpprocbrowserdialog.c:471
-msgid "Searching by type - please wait"
-msgstr "Suche nach Typ - bitte warten"
+#: ../libgimp/gimpprocbrowserdialog.c:468
+msgid "Searching by date"
+msgstr "Suche nach Datum"
 
-#: ../libgimp/gimpprocbrowserdialog.c:479
-msgid "Searching - please wait"
-msgstr "Suche - bitte warten"
+#: ../libgimp/gimpprocbrowserdialog.c:475
+msgid "Searching by type"
+msgstr "Suche nach Typ"
 
-#: ../libgimp/gimpprocbrowserdialog.c:487
+#: ../libgimp/gimpprocbrowserdialog.c:484
 #, c-format
-msgid "%d Procedures"
+msgid "%d procedures"
 msgstr "%d Prozeduren"
 
-#: ../libgimp/gimpprocbrowserdialog.c:494
+#: ../libgimp/gimpprocbrowserdialog.c:491
 msgid "No matches for your query"
 msgstr "Keine Treffer für die Suche"
 
-#: ../libgimp/gimpprocbrowserdialog.c:498
+#: ../libgimp/gimpprocbrowserdialog.c:495
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
 msgstr[0] "%d Prozedur als Ergebnis der Suche"
 msgstr[1] "%d Prozeduren als Ergebnis der Suche"
 
-#: ../libgimp/gimpprocbrowserdialog.c:547
+#. count label
+#: ../libgimp/gimpprocbrowserdialog.c:544 ../libgimpwidgets/gimpbrowser.c:145
 msgid "No matches"
 msgstr "Keine Treffer"
 
@@ -1376,3 +1377,5 @@ msgstr "Wasserfarbe"
 msgid "Pressure"
 msgstr "Druck"
 
+#~ msgid "Searching - please wait"
+#~ msgstr "Suche - bitte warten"

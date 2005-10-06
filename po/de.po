@@ -17,14 +17,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-03 14:27+0200\n"
-"PO-Revision-Date: 2005-10-03 14:46+0200\n"
+"POT-Creation-Date: 2005-10-06 02:26+0200\n"
+"PO-Revision-Date: 2005-10-06 02:29+0200\n"
 "Last-Translator: Hendrik Brandt <heb@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../app/app_procs.c:134
 msgid "(This console window will close in ten seconds)\n"
@@ -146,7 +146,7 @@ msgstr "Alle Warnungen als kritisch einstufen"
 msgid "Output a gimprc file with default settings"
 msgstr "Eine gimprc-Datei mit Vorgabeeinstellungen ausgeben"
 
-#: ../app/main.c:248 ../app/dialogs/about-dialog.c:60
+#: ../app/main.c:248 ../app/dialogs/about-dialog.c:61
 #: ../desktop/gimp.desktop.in.in.h:2
 msgid "GNU Image Manipulation Program"
 msgstr "GNU Image Manipulation Program"
@@ -171,7 +171,8 @@ msgid ""
 "\n"
 "Please check the value of the environment variable G_FILENAME_ENCODING."
 msgstr ""
-"Die eingestellte Dateinamenskodierung kann nicht in UTF-8 umgewandelt werden: %s\n"
+"Die eingestellte Dateinamenskodierung kann nicht in UTF-8 umgewandelt "
+"werden: %s\n"
 "\n"
 "Bitte überprüfen Sie den Wert der Umgebungsvariable G_FILENAME_ENCODING."
 
@@ -3458,7 +3459,7 @@ msgid "Saturation"
 msgstr "Sättigung"
 
 #: ../app/base/base-enums.c:121 ../app/pdb/internal_procs.c:104
-#: ../app/tools/gimppaintoptions-gui.c:294
+#: ../app/tools/gimppaintoptions-gui.c:304
 msgid "Color"
 msgstr "Farbe"
 
@@ -3500,13 +3501,7 @@ msgid ""
 "swap file. Some parts of your images may be corrupted. Try to save your work "
 "using different filenames, restart the Gimp and check the location of the "
 "swap directory in your Preferences."
-msgstr ""
-"Die Auslagerungsdatei konnte nicht geöffnet werden. Der Speicher für The "
-"Gimp hat sich erschöpft und es kann keine Auslagerungsdatei verwendet "
-"werden. Einige Elemente Ihres Bildes könnten verloren gehen. Versuchen Sie "
-"Ihre Arbeit unter einem anderen Dateinamen abzuspeichern, starten Sie "
-"anschließend The Gimp neu und überprüfen Sie den Ort Ihres "
-"Auslagerungsverzeichnisses in den Einstellungen."
+msgstr "Die Auslagerungsdatei konnte nicht geöffnet werden. Der Speicher für GIMP hat sich erschöpft und es kann keine Auslagerungsdatei verwendet werden. Einige Elemente Ihres Bildes könnten verloren gehen. Versuchen Sie Ihre Arbeit unter einem anderen Dateinamen abzuspeichern, starten Sie anschließend GIMP neu und überprüfen Sie den Ort Ihres Auslagerungsverzeichnisses in den Einstellungen."
 
 #: ../app/config/gimpconfig-file.c:66 ../app/core/gimpbrushgenerated.c:254
 #: ../app/core/gimpgradient-save.c:51 ../app/core/gimpgradient-save.c:142
@@ -3785,11 +3780,7 @@ msgid ""
 "Sets whether GIMP should create previews of layers and channels. Previews in "
 "the layers and channels dialog are nice to have but they can slow things "
 "down when working with large images."
-msgstr ""
-"Legt fest, ob The Gimp Vorschaubilder von Ebenen und Kanälen anlegt. "
-"Vorschaubilder im Ebenen- und Kanäle-Dialog kann die Übersicht erhöhen, "
-"führt aber auch dazu, dass das System beim Bearbeiten sehr großer Bilder "
-"langsamer reagiert."
+msgstr "Legt fest, ob GIMP Vorschaubilder von Ebenen und Kanälen anlegt. Vorschaubilder im Ebenen- und Kanäle-Dialog kann die Übersicht erhöhen, führt aber auch dazu, dass das System beim Bearbeiten sehr großer Bilder langsamer reagiert."
 
 #: ../app/config/gimprc-blurbs.h:251
 msgid ""
@@ -3816,9 +3807,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:263
 msgid "Let GIMP try to restore your last saved session on each startup."
-msgstr ""
-"Wenn diese Option ausgewählt ist, versucht The Gimp bei jedem Start die "
-"letzte Sitzung wieder herzustellen."
+msgstr "Wenn diese Option ausgewählt ist, versucht GIMP bei jedem Start die letzte Sitzung wieder herzustellen."
 
 #: ../app/config/gimprc-blurbs.h:266
 msgid ""
@@ -3940,7 +3929,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:328
 msgid "Enable displaying a handy GIMP tip on startup."
-msgstr "Einen kurzen Tipp beim Starten von The GIMP anzeigen."
+msgstr "Einen kurzen Tipp beim Starten von GIMP anzeigen."
 
 #: ../app/config/gimprc-blurbs.h:331
 msgid "Enable tooltips display."
@@ -3954,15 +3943,7 @@ msgid ""
 "GIMP is used with large images. Also, things can get horribly slow if the "
 "swap file is created on a directory that is mounted over NFS.  For these "
 "reasons, it may be desirable to put your swap file in \"/tmp\"."
-msgstr ""
-"Legt den Ort der Auslagerungsdatei fest. The GIMP verwendet ein "
-"blockorientiertes Speicherzugriffssystem. Die Auslagerungsdatei wird "
-"verwendet, um einzelne Speicherblöcke schnell und einfach auf die Festplatte "
-"auszulagern. Beachten Sie, dass diese Ausölagerungsdatei sehr groß werden "
-"kann, wenn Sie mit The Gimp große Bilder bearbeiten. Weiterhin kann das "
-"Programm sehr langsam reagieren, wenn Sie die Auslagerungsdatei innerhalb "
-"eines Netzwerkverzeichnisses erstellen. Für diesen Fall ist eine Auslagerung "
-"in den Ordner »/tmp« zu empfehlen."
+msgstr "Legt den Ort der Auslagerungsdatei fest. GIMP verwendet ein blockorientiertes Speicherzugriffssystem. Die Auslagerungsdatei wird verwendet, um einzelne Speicherblöcke schnell und einfach auf die Festplatte auszulagern. Beachten Sie, dass diese Ausölagerungsdatei sehr groß werden kann, wenn Sie mit GIMP große Bilder bearbeiten. Weiterhin kann das Programm sehr langsam reagieren, wenn Sie die Auslagerungsdatei innerhalb eines Netzwerkverzeichnisses erstellen. Für diesen Fall ist eine Auslagerung in den Ordner »/tmp« zu empfehlen."
 
 #: ../app/config/gimprc-blurbs.h:343
 msgid "When enabled, menus can be torn off."
@@ -3991,12 +3972,11 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:356
 msgid "Save changed keyboard shortcuts when the GIMP exits."
-msgstr "Speichert geänderte Tastenkürzel, wenn The Gimp beendet wird."
+msgstr "Speichert geänderte Tastenkürzel, wenn GIMP beendet wird."
 
 #: ../app/config/gimprc-blurbs.h:359
 msgid "Restore saved keyboard shortcuts on each GIMP startup."
-msgstr ""
-"Stellt gespeicherte Tastenkürzel bei jedem Neustart von The Gimp wieder her."
+msgstr "Stellt gespeicherte Tastenkürzel bei jedem Neustart von GIMP wieder her."
 
 #: ../app/config/gimprc-blurbs.h:362
 msgid ""
@@ -4004,12 +3984,7 @@ msgid ""
 "course of running the GIMP.  Most files will disappear when the GIMP exits, "
 "but some files are likely to remain, so it is best if this directory not be "
 "one that is shared by other users."
-msgstr ""
-"Legt das Verzeichnis für den temporären Speicher fest. Während der Benutzung "
-"von The Gimp werden hier verschiedene Ablaufdateien abgelegt. Die meisten "
-"Dateien verschwinden nach dem Beenden von The Gimp, da jedoch einige Dateien "
-"verbleiben könnten, sollte dieses Verzeichnis nur für Sie und nicht für "
-"andere Benutzer zugänglich sein."
+msgstr "Legt das Verzeichnis für den temporären Speicher fest. Während der Benutzung von GIMP werden hier verschiedene Ablaufdateien abgelegt. Die meisten Dateien verschwinden nach dem Beenden von GIMP, da jedoch einige Dateien verbleiben könnten, sollte dieses Verzeichnis nur für Sie und nicht für andere Benutzer zugänglich sein."
 
 #: ../app/config/gimprc-blurbs.h:374
 msgid ""
@@ -4017,7 +3992,7 @@ msgid ""
 "not create thumbnails if layer previews are disabled."
 msgstr ""
 "Legt die Abmessungen der Vorschaubilder im Bild-öffnen-Dialog fest. Bitte "
-"beachten Sie, dass The Gimp keine Vorschaubilder erstellen kann, wenn die "
+"beachten Sie, dass GIMP keine Vorschaubilder erstellen kann, wenn die "
 "Ebenevorschau deaktiviert ist."
 
 #: ../app/config/gimprc-blurbs.h:378
@@ -5773,14 +5748,14 @@ msgstr "Pica"
 msgid "percent"
 msgstr "Prozent"
 
-#: ../app/dialogs/about-dialog.c:63
+#: ../app/dialogs/about-dialog.c:64
 msgid "Visit the GIMP website"
 msgstr "Besuchen Sie die GIMP Webseite"
 
 #. Translators: insert your names here,
 #. * separated by newline
 #.
-#: ../app/dialogs/about-dialog.c:153
+#: ../app/dialogs/about-dialog.c:155
 msgid "translator-credits"
 msgstr ""
 "Daniel Egger\n"
@@ -5790,7 +5765,7 @@ msgstr ""
 "Roman Joost\n"
 "Hendrik Brandt"
 
-#: ../app/dialogs/about-dialog.c:689
+#: ../app/dialogs/about-dialog.c:691
 msgid "GIMP is brought to you by"
 msgstr "GIMP wurde Euch gebracht von"
 
@@ -6061,11 +6036,11 @@ msgstr "Sind Sie sicher, dass Sie fortfahren möchten?"
 msgid "General"
 msgstr "Allgemein"
 
-#: ../app/dialogs/keyboard-shortcuts-dialog.c:47
+#: ../app/dialogs/keyboard-shortcuts-dialog.c:52
 msgid "Configure Keyboard Shortcuts"
 msgstr "Tastenkürzel konfigurieren"
 
-#: ../app/dialogs/keyboard-shortcuts-dialog.c:87
+#: ../app/dialogs/keyboard-shortcuts-dialog.c:92
 msgid ""
 "To edit a shortcut key, click on the corresponding row and type a new "
 "accelerator, or press backspace to clear."
@@ -6073,6 +6048,11 @@ msgstr ""
 "Um ein Tastenkürzel zu konfigurieren, klicken Sie auf die entsprechende "
 "Zeile und geben Sie dann ein neues Tastenkürzel ein oder drücken Sie die "
 "Rücktaste, um es zu löschen."
+
+#: ../app/dialogs/keyboard-shortcuts-dialog.c:109
+#: ../app/dialogs/preferences-dialog.c:1432
+msgid "_Save keyboard shortcuts on exit"
+msgstr "Tastenkürzel beim Beenden _speichern"
 
 #: ../app/dialogs/layer-add-mask-dialog.c:63
 msgid "Add a Mask to the Layer"
@@ -6483,10 +6463,6 @@ msgstr "Dynamische _Tastenkürzel benutzen"
 #: ../app/dialogs/preferences-dialog.c:1425
 msgid "Configure _Keyboard Shortcuts..."
 msgstr "Tastenkürzel _konfigurieren"
-
-#: ../app/dialogs/preferences-dialog.c:1432
-msgid "_Save keyboard shortcuts on exit"
-msgstr "Tastenkürzel beim Beenden _speichern"
 
 #: ../app/dialogs/preferences-dialog.c:1436
 msgid "Save Keyboard Shortcuts _Now"
@@ -7049,31 +7025,30 @@ msgstr "_Y Auflösung:"
 msgid "pixels/%a"
 msgstr "Pixel/%a"
 
-#: ../app/dialogs/quit-dialog.c:102
+#: ../app/dialogs/quit-dialog.c:103
 msgid "Quit The GIMP"
 msgstr "GIMP beenden"
 
-#: ../app/dialogs/quit-dialog.c:102
+#: ../app/dialogs/quit-dialog.c:103
 msgid "Close All Images"
 msgstr "Alle Bilder schließen"
 
-#: ../app/dialogs/quit-dialog.c:159
+#: ../app/dialogs/quit-dialog.c:160
 msgid "If you quit GIMP now, these changes will be lost."
 msgstr "Wenn Sie GIMP jetzt beenden, gehen diese Änderungen verloren."
 
-#: ../app/dialogs/quit-dialog.c:162
-msgid "If close these files now, changes will be lost."
-msgstr ""
-"Wenn Sie diese Dateien jetzt schließen, gehen alle Änderungen verloren."
+#: ../app/dialogs/quit-dialog.c:163
+msgid "If you close these images now, changes will be lost."
+msgstr "Wenn Sie diese Bilder jetzt schließen, gehen Änderungen verloren."
 
-#: ../app/dialogs/quit-dialog.c:210
+#: ../app/dialogs/quit-dialog.c:211
 #, c-format
 msgid "There is one image with unsaved changes:"
 msgid_plural "There are %d images with unsaved changes:"
 msgstr[0] "Es ist ein Bild mit ungesicherten Änderungen geöffnet:"
 msgstr[1] "Es sind %d Bilder mit ungesicherten Änderungen geöffnet:"
 
-#: ../app/dialogs/quit-dialog.c:232
+#: ../app/dialogs/quit-dialog.c:233
 msgid "_Discard Changes"
 msgstr "Änderungen _verwerfen"
 
@@ -8369,7 +8344,7 @@ msgstr "Versatz:"
 msgid "Shape:"
 msgstr "Form:"
 
-#: ../app/tools/gimpblendoptions.c:258 ../app/tools/gimppaintoptions-gui.c:430
+#: ../app/tools/gimpblendoptions.c:258 ../app/tools/gimppaintoptions-gui.c:488
 msgid "Repeat:"
 msgstr "Wiederholung:"
 
@@ -9187,65 +9162,73 @@ msgstr "Weiche Pinselstriche zeichnen"
 msgid "_Paintbrush"
 msgstr "_Pinsel"
 
-#: ../app/tools/gimppaintoptions-gui.c:102
+#: ../app/tools/gimppaintoptions-gui.c:104
 #: ../app/tools/gimpselectionoptions.c:428
 #: ../app/widgets/gimpbrushselect.c:214 ../app/widgets/gimplayertreeview.c:295
 msgid "Mode:"
 msgstr "Modus:"
 
-#: ../app/tools/gimppaintoptions-gui.c:108
+#: ../app/tools/gimppaintoptions-gui.c:110
 #: ../app/widgets/gimpbrushselect.c:201 ../app/widgets/gimplayertreeview.c:310
 msgid "Opacity:"
 msgstr "Deckkraft:"
 
-#: ../app/tools/gimppaintoptions-gui.c:125
+#: ../app/tools/gimppaintoptions-gui.c:127
 msgid "Brush:"
 msgstr "Pinsel:"
 
-#: ../app/tools/gimppaintoptions-gui.c:134
-#: ../app/tools/gimppaintoptions-gui.c:406
+#: ../app/tools/gimppaintoptions-gui.c:136
+#: ../app/tools/gimppaintoptions-gui.c:464
 msgid "Gradient:"
 msgstr "Farbverlauf:"
 
-#: ../app/tools/gimppaintoptions-gui.c:162
+#: ../app/tools/gimppaintoptions-gui.c:172
 msgid "Incremental"
 msgstr "Steigernd"
 
-#: ../app/tools/gimppaintoptions-gui.c:176
+#: ../app/tools/gimppaintoptions-gui.c:186
 msgid "Hard edge"
 msgstr "Harte Kanten"
 
-#: ../app/tools/gimppaintoptions-gui.c:217
+#: ../app/tools/gimppaintoptions-gui.c:227
 msgid "Pressure sensitivity"
 msgstr "Druckempfindlichkeit"
 
-#: ../app/tools/gimppaintoptions-gui.c:236
+#: ../app/tools/gimppaintoptions-gui.c:246
 msgid "Opacity"
 msgstr "Deckkraft"
 
-#: ../app/tools/gimppaintoptions-gui.c:250
+#: ../app/tools/gimppaintoptions-gui.c:260
 msgid "Hardness"
 msgstr "Härte"
 
-#: ../app/tools/gimppaintoptions-gui.c:261
+#: ../app/tools/gimppaintoptions-gui.c:271
 msgid "Rate"
 msgstr "Rate"
 
-#: ../app/tools/gimppaintoptions-gui.c:276
-#: ../app/tools/gimppaintoptions-gui.c:285
+#: ../app/tools/gimppaintoptions-gui.c:286
+#: ../app/tools/gimppaintoptions-gui.c:295
 msgid "Size"
 msgstr "Größe"
 
-#: ../app/tools/gimppaintoptions-gui.c:324
+#: ../app/tools/gimppaintoptions-gui.c:334
 msgid "Fade out"
 msgstr "Verblassen"
 
-#: ../app/tools/gimppaintoptions-gui.c:344
-#: ../app/tools/gimppaintoptions-gui.c:415
+#: ../app/tools/gimppaintoptions-gui.c:354
+#: ../app/tools/gimppaintoptions-gui.c:473
 msgid "Length:"
 msgstr "Länge:"
 
-#: ../app/tools/gimppaintoptions-gui.c:379
+#: ../app/tools/gimppaintoptions-gui.c:391
+msgid "Apply Jitter"
+msgstr ""
+
+#: ../app/tools/gimppaintoptions-gui.c:411
+msgid "Amount:"
+msgstr "Menge:"
+
+#: ../app/tools/gimppaintoptions-gui.c:437
 msgid "Use color from gradient"
 msgstr "Farbe aus Farbverlauf"
 
@@ -10567,14 +10550,12 @@ msgstr "Der Hilfe-Browser wurde nicht gefunden"
 
 #: ../app/widgets/gimphelp.c:188
 msgid "Could not find GIMP help browser."
-msgstr "Der Hilfe-Browser von The Gimp konnte nicht gefunden werden"
+msgstr "Der Hilfe-Browser konnte nicht gefunden werden"
 
 #: ../app/widgets/gimphelp.c:189
 msgid ""
 "The GIMP help browser plug-in appears to be missing from your installation."
-msgstr ""
-"Das Hilfe-Browser Plugin scheint in Ihrer Installation nicht vorhanden zu "
-"sein."
+msgstr "Das Hilfe-Browser Plugin scheint in Ihrer GIMP Installation nicht vorhanden zu sein."
 
 #: ../app/widgets/gimphelp.c:213
 msgid "Help browser doesn't start"
@@ -10920,7 +10901,7 @@ msgstr "Einstellungen löschen..."
 
 #: ../app/widgets/gimpuimanager.c:701
 msgid "Your GIMP installation is incomplete:"
-msgstr "Ihre Installation von The Gimp ist unvollständig:"
+msgstr "Ihre Installation von GIMP ist unvollständig:"
 
 #: ../app/widgets/gimpuimanager.c:703
 msgid "Plase make sure the menu XML files are correctly installed."
@@ -11009,7 +10990,7 @@ msgstr "Ausgefallen"
 
 #: ../app/widgets/widgets-enums.c:199
 msgid "GIMP help browser"
-msgstr "Hilfe-Browser von The Gimp"
+msgstr "GIMP Hilfe-Browser"
 
 #: ../app/widgets/widgets-enums.c:200
 msgid "Web browser"
@@ -11144,4 +11125,3 @@ msgstr "Bitte stellen Sie sicher, dass das Werkzeugefenster sichtbar ist!"
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "»%s« konnte nicht gestartet werden: %s"
-

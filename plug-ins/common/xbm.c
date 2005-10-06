@@ -241,7 +241,7 @@ run (const gchar      *name,
 
   INIT_I18N ();
 
-  strncpy (xsvals.comment, _("Created with The GIMP"), MAX_COMMENT);
+  strncpy (xsvals.comment, "Created with GIMP", MAX_COMMENT);
 
   run_mode = param[0].data.d_int32;
 

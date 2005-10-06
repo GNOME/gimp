@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-03 15:43+0200\n"
-"PO-Revision-Date: 2005-10-03 15:43+0200\n"
+"POT-Creation-Date: 2005-10-06 02:36+0200\n"
+"PO-Revision-Date: 2005-10-06 02:34+0200\n"
 "Last-Translator: Hendrik Brandt <heb@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -438,7 +438,7 @@ msgstr "Fraktalparameter speichern"
 #: ../plug-ins/common/xwd.c:420 ../plug-ins/faxg3/faxg3.c:219
 #: ../plug-ins/fits/fits.c:342 ../plug-ins/flame/flame.c:411
 #: ../plug-ins/gfig/gfig.c:427 ../plug-ins/gfli/gfli.c:428
-#: ../plug-ins/gfli/gfli.c:463 ../plug-ins/help/domain.c:423
+#: ../plug-ins/gfli/gfli.c:463 ../plug-ins/help/domain.c:426
 #: ../plug-ins/jpeg/jpeg-load.c:85 ../plug-ins/jpeg/jpeg-load.c:871
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:211
 #: ../plug-ins/winicon/icoload.c:135 ../plug-ins/xjt/xjt.c:2530
@@ -6274,14 +6274,12 @@ msgid "Smooth samples"
 msgstr "Muster verweichen"
 
 #: ../plug-ins/common/sample_colorize.c:2654
-#, fuzzy
 msgid "Sample analyze"
-msgstr "Analyse der Quellfarben..."
+msgstr "Analyse der Quellfarben"
 
 #: ../plug-ins/common/sample_colorize.c:3032
-#, fuzzy
 msgid "Remap colorized"
-msgstr "Einfärben..."
+msgstr "Einfärben"
 
 #: ../plug-ins/common/scatter_hsv.c:110
 msgid "HSV Noise..."
@@ -7957,10 +7955,6 @@ msgstr "Gerendertes WMF"
 msgid "X BitMap image"
 msgstr "X-BitMap-Bild"
 
-#: ../plug-ins/common/xbm.c:244
-msgid "Created with The GIMP"
-msgstr "Erzeugt mit GIMP"
-
 #: ../plug-ins/common/xbm.c:803
 #, c-format
 msgid ""
@@ -8851,7 +8845,6 @@ msgid "Angular gradient:"
 msgstr "Winkeliger Farbverlauf:"
 
 #: ../plug-ins/gflare/gflare.c:3504 ../plug-ins/gflare/gflare.c:3609
-#, fuzzy
 msgid "Angular size gradient:"
 msgstr "Umfangs-Gradient:"
 
@@ -9586,23 +9579,29 @@ msgstr ""
 "Einfluss"
 
 #: ../plug-ins/help/domain.c:177
-msgid "The GIMP help files are not installed."
-msgstr "Die GIMP Hilfedateien sind nicht installiert."
+msgid "The GIMP help files are not found."
+msgstr "Die GIMP Hilfedateien werden nicht gefunden."
 
-#: ../plug-ins/help/domain.c:179
-msgid "There is a problem with the GIMP help files."
-msgstr "Es gibt ein Problem mit den The-Gimp-Hilfedateien."
+#: ../plug-ins/help/domain.c:178
+msgid ""
+"Please install the additional help package or use the online user manual at "
+"http://docs.gimp.org/."
+msgstr ""
 
 #: ../plug-ins/help/domain.c:184
+msgid "There is a problem with the GIMP help files."
+msgstr "Es gibt ein Problem mit den GIMP-Hilfedateien."
+
+#: ../plug-ins/help/domain.c:186
 msgid "Please check your installation."
 msgstr "Bitte überprüfen Sie Ihre Installation."
 
-#: ../plug-ins/help/domain.c:192
+#: ../plug-ins/help/domain.c:195
 #, c-format
 msgid "Help ID '%s' unknown"
 msgstr "Hilfe-ID »%s« ist unbekannt"
 
-#: ../plug-ins/help/domain.c:449
+#: ../plug-ins/help/domain.c:452
 #, c-format
 msgid ""
 "Parse error in '%s':\n"
@@ -9936,7 +9935,6 @@ msgid "_Horz. spacing:"
 msgstr "_Horizontaler Abstand:"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:193
-#, fuzzy
 msgid "_No. across:"
 msgstr "Anz. _horiz."
 
@@ -9945,7 +9943,6 @@ msgid "_Vert. spacing:"
 msgstr "_Vertikaler Abstand"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:205
-#, fuzzy
 msgid "No. _down:"
 msgstr "Anz. _vert.:"
 

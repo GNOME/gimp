@@ -1,5 +1,11 @@
 2005-10-06  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpcoreconfig.c: changed "The GIMP" to "GIMP".
+
+	* plug-ins/common/xbm.c: unmarked same string for translation.
+
+2005-10-06  Sven Neumann  <sven@gimp.org>
+
 	* libgimpbase/gimputils.c: gimp_canonicalize_identifier() is new API,
 	mark it as such.
 
