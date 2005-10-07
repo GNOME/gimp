@@ -17,14 +17,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-06 02:53+0200\n"
-"PO-Revision-Date: 2005-10-06 02:54+0200\n"
+"POT-Creation-Date: 2005-10-07 18:03+0200\n"
+"PO-Revision-Date: 2005-10-07 18:05+0200\n"
 "Last-Translator: Hendrik Brandt <heb@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);"
 
 #: ../app/app_procs.c:134
 msgid "(This console window will close in ten seconds)\n"
@@ -56,7 +56,7 @@ msgstr ""
 "Zugriffsrechte des Auslagerungsordners der in Ihren Einstellungen angegeben "
 "ist .(derzeit »%s«)."
 
-#: ../app/app_procs.c:334 ../app/core/gimppalette-import.c:458
+#: ../app/app_procs.c:334 ../app/core/gimppalette-import.c:487
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "»%s« konnte nicht geöffnet werden: %s"
@@ -754,7 +754,7 @@ msgstr ""
 "%s"
 
 #: ../app/actions/data-commands.c:126 ../app/core/gimpimage.c:1349
-#: ../app/core/gimppalette-import.c:221 ../app/core/gimppalette.c:517
+#: ../app/core/gimppalette-import.c:218 ../app/core/gimppalette.c:517
 #: ../app/core/gimppalette.c:627 ../app/dialogs/palette-import-dialog.c:699
 #: ../app/pdb/image_cmds.c:3892 ../app/widgets/gimpdnd-xds.c:83
 msgid "Untitled"
@@ -5549,12 +5549,12 @@ msgstr "Ebenenmaske bewegen"
 msgid "Show Layer Mask"
 msgstr "Ebenenmaske anzeigen"
 
-#: ../app/core/gimppalette-import.c:370
+#: ../app/core/gimppalette-import.c:369
 #, c-format
 msgid "Index %d"
 msgstr "Index %d"
 
-#: ../app/core/gimppalette-import.c:570
+#: ../app/core/gimppalette-import.c:599
 #, c-format
 msgid "Unknown type of palette file: %s"
 msgstr "Unbekannter Palettendateityp: %s"
@@ -6266,45 +6266,45 @@ msgstr "_Importieren"
 msgid "Select Source"
 msgstr "Quelle auswählen"
 
-#: ../app/dialogs/palette-import-dialog.c:244
+#: ../app/dialogs/palette-import-dialog.c:245
 msgid "I_mage"
 msgstr "_Bild"
 
-#: ../app/dialogs/palette-import-dialog.c:259
+#: ../app/dialogs/palette-import-dialog.c:260
 msgid "Palette _file"
 msgstr "_Farbpalette"
 
-#: ../app/dialogs/palette-import-dialog.c:286
+#: ../app/dialogs/palette-import-dialog.c:287
 msgid "Select Palette File"
 msgstr "Wählen Sie die Palettendatei"
 
 #. The "Import" frame
-#: ../app/dialogs/palette-import-dialog.c:317
+#: ../app/dialogs/palette-import-dialog.c:318
 msgid "Import Options"
 msgstr "Importeinstellungen"
 
-#: ../app/dialogs/palette-import-dialog.c:330
+#: ../app/dialogs/palette-import-dialog.c:332
 msgid "New import"
 msgstr "Neu importiert"
 
-#: ../app/dialogs/palette-import-dialog.c:332
+#: ../app/dialogs/palette-import-dialog.c:334
 msgid "Palette _name:"
 msgstr "Paletten_name:"
 
-#: ../app/dialogs/palette-import-dialog.c:338
+#: ../app/dialogs/palette-import-dialog.c:340
 msgid "N_umber of colors:"
 msgstr "_Anzahl der Farben:"
 
-#: ../app/dialogs/palette-import-dialog.c:351
+#: ../app/dialogs/palette-import-dialog.c:353
 msgid "C_olumns:"
 msgstr "_Spalten:"
 
-#: ../app/dialogs/palette-import-dialog.c:363
+#: ../app/dialogs/palette-import-dialog.c:365
 msgid "I_nterval:"
 msgstr "I_ntervall:"
 
 #. The "Preview" frame
-#: ../app/dialogs/palette-import-dialog.c:375
+#: ../app/dialogs/palette-import-dialog.c:377
 msgid "Preview"
 msgstr "Vorschau"
 
@@ -9248,7 +9248,7 @@ msgstr "Länge:"
 
 #: ../app/tools/gimppaintoptions-gui.c:391
 msgid "Apply Jitter"
-msgstr ""
+msgstr "Flackern anwenden"
 
 #: ../app/tools/gimppaintoptions-gui.c:411
 msgid "Amount:"
@@ -11153,3 +11153,4 @@ msgstr "Bitte stellen Sie sicher, dass das Werkzeugefenster sichtbar ist!"
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "»%s« konnte nicht gestartet werden: %s"
+

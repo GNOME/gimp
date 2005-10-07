@@ -17,13 +17,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-06 02:56+0200\n"
-"PO-Revision-Date: 2005-10-06 02:57+0200\n"
+"POT-Creation-Date: 2005-10-07 18:07+0200\n"
+"PO-Revision-Date: 2005-10-07 18:10+0200\n"
 "Last-Translator: Hendrik Brandt <heb@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8bit"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:529
 #: ../plug-ins/gfig/gfig-dialog.c:282 ../plug-ins/gflare/gflare.c:887
@@ -395,7 +395,7 @@ msgstr "_Fraktale"
 #: ../plug-ins/common/xbm.c:1002 ../plug-ins/common/xwd.c:565
 #: ../plug-ins/fits/fits.c:454 ../plug-ins/flame/flame.c:442
 #: ../plug-ins/gfig/gfig.c:787 ../plug-ins/gfli/gfli.c:714
-#: ../plug-ins/ifscompose/ifscompose.c:2387 ../plug-ins/jpeg/jpeg-save.c:265
+#: ../plug-ins/ifscompose/ifscompose.c:2387 ../plug-ins/jpeg/jpeg-save.c:267
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:222
 #: ../plug-ins/winicon/icosave.c:244 ../plug-ins/xjt/xjt.c:1272
 #: ../plug-ins/xjt/xjt.c:1706
@@ -860,7 +860,8 @@ msgid "_Environment Map"
 msgstr "_Environmentmapping"
 
 #: ../plug-ins/Lighting/lighting_ui.c:1026
-#: ../plug-ins/gimpressionist/preview.c:181
+#: ../plug-ins/gimpressionist/preview.c:185
+#: ../plug-ins/gimpressionist/repaint.c:1166
 #: ../plug-ins/imagemap/imap_polygon.c:515
 msgid "_Update"
 msgstr "_Neu zeichnen"
@@ -1277,7 +1278,7 @@ msgstr ""
 #: ../plug-ins/common/tga.c:1031 ../plug-ins/common/tiff.c:1925
 #: ../plug-ins/common/xbm.c:1007 ../plug-ins/common/xpm.c:623
 #: ../plug-ins/common/xwd.c:570 ../plug-ins/fits/fits.c:459
-#: ../plug-ins/gfli/gfli.c:683 ../plug-ins/jpeg/jpeg-save.c:223
+#: ../plug-ins/gfli/gfli.c:683 ../plug-ins/jpeg/jpeg-save.c:225
 #: ../plug-ins/sgi/sgi.c:537 ../plug-ins/winicon/icosave.c:977
 #: ../plug-ins/xjt/xjt.c:1689
 #, c-format
@@ -2837,7 +2838,7 @@ msgstr "Verbiegen"
 
 #. Preview area, top of column
 #: ../plug-ins/common/curve_bend.c:1274
-#: ../plug-ins/gimpressionist/orientmap.c:573
+#: ../plug-ins/gimpressionist/orientmap.c:574
 #: ../plug-ins/gimpressionist/sizemap.c:443
 msgid "Preview"
 msgstr "Vorschau"
@@ -7867,7 +7868,7 @@ msgstr "Bei_de"
 msgid "Higher values restrict the effect to fewer areas of the image"
 msgstr "Höhere Werte beschränken den Effekt auf weniger Gebiete des Bildes"
 
-#: ../plug-ins/common/wind.c:1027 ../plug-ins/gimpressionist/orientmap.c:675
+#: ../plug-ins/common/wind.c:1027 ../plug-ins/gimpressionist/orientmap.c:676
 msgid "_Strength:"
 msgstr "_Stärke:"
 
@@ -8524,11 +8525,11 @@ msgstr "Gitter-Abstand:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1409
 msgid "Polar grid sectors desired:"
-msgstr ""
+msgstr "Gewünschte Abschnitte des Polarkoordinatensystems:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1431
 msgid "Polar grid radius interval:"
-msgstr ""
+msgstr "Radiusintervall des Polarkoordinatensystems:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1447
 msgid "Rectangle"
@@ -9110,13 +9111,9 @@ msgstr "_GIMPressionist..."
 msgid "Painting"
 msgstr "Zeichnen"
 
-#: ../plug-ins/gimpressionist/gimpressionist.c:117
-msgid "The GIMPressionist"
-msgstr "Der GIMPressionist"
-
-#: ../plug-ins/gimpressionist/gimpressionist.c:196
-msgid "Gimpressionist"
-msgstr "Gimpressionist"
+#: ../plug-ins/gimpressionist/gimpressionist.c:121
+msgid "GIMPressionist"
+msgstr "GIMPressionist"
 
 #: ../plug-ins/gimpressionist/orientation.c:74
 msgid "Or_ientation"
@@ -9223,11 +9220,11 @@ msgstr "Öffnet den Orientation-Map Editor"
 msgid "Orientation Map Editor"
 msgstr "Orientation-Map Editor"
 
-#: ../plug-ins/gimpressionist/orientmap.c:536
+#: ../plug-ins/gimpressionist/orientmap.c:537
 msgid "Vectors"
 msgstr "Vektoren"
 
-#: ../plug-ins/gimpressionist/orientmap.c:548
+#: ../plug-ins/gimpressionist/orientmap.c:549
 msgid ""
 "The vector-field. Left-click to move selected vector, Right-click to point "
 "it towards mouse, Middle-click to add a new vector."
@@ -9236,95 +9233,95 @@ msgstr ""
 "Rechts-klicken, um den Vektor zum Mauszeiger zeigen zu lassen,\n"
 "Mittel-klicken, um einen neuen Vektor hinzuzufügen."
 
-#: ../plug-ins/gimpressionist/orientmap.c:571
+#: ../plug-ins/gimpressionist/orientmap.c:572
 #: ../plug-ins/gimpressionist/sizemap.c:441
 msgid "Adjust the preview's brightness"
 msgstr "Helligkeit der Vorschau einstellen"
 
-#: ../plug-ins/gimpressionist/orientmap.c:593
+#: ../plug-ins/gimpressionist/orientmap.c:594
 msgid "Select previous vector"
 msgstr "Vorherigen Vektor auswählen"
 
-#: ../plug-ins/gimpressionist/orientmap.c:599
+#: ../plug-ins/gimpressionist/orientmap.c:600
 msgid "Select next vector"
 msgstr "Nächsten Vektor auswählen"
 
-#: ../plug-ins/gimpressionist/orientmap.c:601
+#: ../plug-ins/gimpressionist/orientmap.c:602
 #: ../plug-ins/gimpressionist/sizemap.c:472
 msgid "A_dd"
 msgstr "Hinzu_fügen"
 
-#: ../plug-ins/gimpressionist/orientmap.c:605
+#: ../plug-ins/gimpressionist/orientmap.c:606
 msgid "Add new vector"
 msgstr "Neuen Vektor hinzufügen"
 
 # kann man vektoren töten ?;-)
-#: ../plug-ins/gimpressionist/orientmap.c:607
+#: ../plug-ins/gimpressionist/orientmap.c:608
 #: ../plug-ins/gimpressionist/sizemap.c:479
 msgid "_Kill"
 msgstr "_Entfernen"
 
-#: ../plug-ins/gimpressionist/orientmap.c:611
+#: ../plug-ins/gimpressionist/orientmap.c:612
 msgid "Delete selected vector"
 msgstr "Ausgewählten Vektor entfernen"
 
-#: ../plug-ins/gimpressionist/orientmap.c:622
+#: ../plug-ins/gimpressionist/orientmap.c:623
 msgid "Type"
 msgstr "Typ"
 
-#: ../plug-ins/gimpressionist/orientmap.c:626
+#: ../plug-ins/gimpressionist/orientmap.c:627
 msgid "_Normal"
 msgstr "_Normal"
 
-#: ../plug-ins/gimpressionist/orientmap.c:627
+#: ../plug-ins/gimpressionist/orientmap.c:628
 msgid "Vorte_x"
 msgstr "Vorte_x"
 
-#: ../plug-ins/gimpressionist/orientmap.c:628
+#: ../plug-ins/gimpressionist/orientmap.c:629
 msgid "Vortex_2"
 msgstr "Vortex_2"
 
-#: ../plug-ins/gimpressionist/orientmap.c:629
+#: ../plug-ins/gimpressionist/orientmap.c:630
 msgid "Vortex_3"
 msgstr "Vortex_3"
 
-#: ../plug-ins/gimpressionist/orientmap.c:635
+#: ../plug-ins/gimpressionist/orientmap.c:636
 #: ../plug-ins/gimpressionist/sizemap.c:524
 msgid "_Voronoi"
 msgstr "_Voronoi"
 
-#: ../plug-ins/gimpressionist/orientmap.c:643
+#: ../plug-ins/gimpressionist/orientmap.c:644
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
 msgstr ""
 "Voronoi-Modus: Nur der Vektor, der einem Punkt am nächsten ist, hat Einfluss"
 
-#: ../plug-ins/gimpressionist/orientmap.c:653
+#: ../plug-ins/gimpressionist/orientmap.c:654
 msgid "A_ngle:"
 msgstr "Wi_nkel:"
 
-#: ../plug-ins/gimpressionist/orientmap.c:657
+#: ../plug-ins/gimpressionist/orientmap.c:658
 msgid "Change the angle of the selected vector"
 msgstr "Den Winkel des ausgewählten Vektors ändern"
 
-#: ../plug-ins/gimpressionist/orientmap.c:664
+#: ../plug-ins/gimpressionist/orientmap.c:665
 msgid "Ang_le offset:"
 msgstr "Winke_l-Versatz:"
 
-#: ../plug-ins/gimpressionist/orientmap.c:668
+#: ../plug-ins/gimpressionist/orientmap.c:669
 msgid "Offset all vectors with a given angle"
 msgstr "Alle Vektoren mit diesem Winkel versetzen"
 
-#: ../plug-ins/gimpressionist/orientmap.c:679
+#: ../plug-ins/gimpressionist/orientmap.c:680
 msgid "Change the strength of the selected vector"
 msgstr "Stärke des ausgewählten Vektors ändern"
 
-#: ../plug-ins/gimpressionist/orientmap.c:686
+#: ../plug-ins/gimpressionist/orientmap.c:687
 msgid "S_trength exp.:"
 msgstr "S_tärke Exp.:"
 
-#: ../plug-ins/gimpressionist/orientmap.c:690
+#: ../plug-ins/gimpressionist/orientmap.c:691
 #: ../plug-ins/gimpressionist/sizemap.c:519
 msgid "Change the exponent of the strength"
 msgstr "Ändern Sie den Exponenten der Stärke"
@@ -9375,22 +9372,22 @@ msgstr "Platziert Pinselstriche zufällig im Bild"
 msgid "The strokes are evenly distributed across the image"
 msgstr "Die Pinselstriche sind gleichmäßig im Bild verteilt"
 
+#: ../plug-ins/gimpressionist/placement.c:84
+msgid "Centered"
+msgstr "Zentriert"
+
+#: ../plug-ins/gimpressionist/placement.c:90
+msgid "Focus the brush strokes around the center of the image"
+msgstr "Die Pinselstriche um den Mittelpunkt des Bildes orientieren"
+
 # (Pinsel-)~ ?
-#: ../plug-ins/gimpressionist/placement.c:91
+#: ../plug-ins/gimpressionist/placement.c:102
 msgid "Stroke _density:"
 msgstr "Strich_dichte:"
 
-#: ../plug-ins/gimpressionist/placement.c:95
+#: ../plug-ins/gimpressionist/placement.c:106
 msgid "The relative density of the brush strokes"
 msgstr "Die relative Dichte der Pinselstriche"
-
-#: ../plug-ins/gimpressionist/placement.c:101
-msgid "Centerize"
-msgstr "Am Mittelpunkt orientieren"
-
-#: ../plug-ins/gimpressionist/placement.c:107
-msgid "Focus the brush strokes around the center of the image"
-msgstr "Die Pinselstriche um den Mittelpunkt des Bildes orientieren"
 
 # unterschied drawable/bild!! TODO
 #.
@@ -9410,41 +9407,37 @@ msgstr "Einstellungen speichern"
 msgid "Gimpressionist Defaults"
 msgstr "Gimpressionist Voreinstellungen"
 
-#: ../plug-ins/gimpressionist/presets.c:990
+#: ../plug-ins/gimpressionist/presets.c:995
 msgid "_Presets"
 msgstr "_Voreinstellungen"
 
-#: ../plug-ins/gimpressionist/presets.c:1005
+#: ../plug-ins/gimpressionist/presets.c:1010
 msgid "Save Current..."
 msgstr "Aktuelles speichern..."
 
-#: ../plug-ins/gimpressionist/presets.c:1010
+#: ../plug-ins/gimpressionist/presets.c:1015
 msgid "Save the current settings to the specified file"
 msgstr "Speichert die momentanen Einstellungen in der angegebenen Datei"
 
-#: ../plug-ins/gimpressionist/presets.c:1038
+#: ../plug-ins/gimpressionist/presets.c:1043
 msgid "Reads the selected Preset into memory"
 msgstr "Lädt die Einstellungen aus der angegebenen Datei"
 
-#: ../plug-ins/gimpressionist/presets.c:1044
+#: ../plug-ins/gimpressionist/presets.c:1049
 msgid "Deletes the selected Preset"
 msgstr "Löscht die ausgewählte Datei mit Einstellungen"
 
-#: ../plug-ins/gimpressionist/presets.c:1050
+#: ../plug-ins/gimpressionist/presets.c:1055
 msgid "Reread the folder of Presets"
 msgstr "Liest das Verzeichnis mit Voreinstellungen neu ein"
 
-#: ../plug-ins/gimpressionist/preview.c:187
+#: ../plug-ins/gimpressionist/preview.c:191
 msgid "Refresh the Preview window"
 msgstr "Das Vorschau-Fenster auffrischen"
 
-#: ../plug-ins/gimpressionist/preview.c:195
+#: ../plug-ins/gimpressionist/preview.c:199
 msgid "Revert to the original image"
 msgstr "Auf das ursprüngliche Bild zurücksetzen"
-
-#: ../plug-ins/gimpressionist/repaint.c:1160
-msgid "Update"
-msgstr "Neu zeichnen"
 
 #: ../plug-ins/gimpressionist/size.c:77
 msgid "_Size"
@@ -9586,7 +9579,8 @@ msgstr "Die GIMP Hilfedateien werden nicht gefunden."
 msgid ""
 "Please install the additional help package or use the online user manual at "
 "http://docs.gimp.org/."
-msgstr ""
+msgstr "Bitte installieren Sie das separat erhältliche Hilfe-Paket oder verwenden Sie das "
+"Online-Benutzerhandbuch unter http://docs.gim.org/."
 
 #: ../plug-ins/help/domain.c:184
 msgid "There is a problem with the GIMP help files."
@@ -10433,99 +10427,99 @@ msgstr "JPEG Vorschau"
 msgid "Opening thumbnail for '%s'"
 msgstr "Vorschau von »%s« wird geöffnet"
 
-#: ../plug-ins/jpeg/jpeg-save.c:139
+#: ../plug-ins/jpeg/jpeg-save.c:141
 #, c-format
 msgid "File size: %02.01f kB"
 msgstr "Dateigröße: %02.01f kB"
 
-#: ../plug-ins/jpeg/jpeg-save.c:659 ../plug-ins/jpeg/jpeg-save.c:760
+#: ../plug-ins/jpeg/jpeg-save.c:664 ../plug-ins/jpeg/jpeg-save.c:765
 msgid "File size: unknown"
 msgstr "Dateigröße: unbekannt"
 
-#: ../plug-ins/jpeg/jpeg-save.c:712
+#: ../plug-ins/jpeg/jpeg-save.c:717
 msgid "Save as JPEG"
 msgstr "Als JPEG speichern"
 
-#: ../plug-ins/jpeg/jpeg-save.c:739
+#: ../plug-ins/jpeg/jpeg-save.c:744
 msgid "_Quality:"
 msgstr "_Qualität:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:743
+#: ../plug-ins/jpeg/jpeg-save.c:748
 msgid "JPEG quality parameter"
 msgstr "JPEG-Qualitätseinstellungen"
 
-#: ../plug-ins/jpeg/jpeg-save.c:758
+#: ../plug-ins/jpeg/jpeg-save.c:763
 msgid "Enable preview to obtain the file size."
 msgstr "Vorschau aktivieren um die Dateigröße zu ermitteln."
 
-#: ../plug-ins/jpeg/jpeg-save.c:769
+#: ../plug-ins/jpeg/jpeg-save.c:774
 msgid "Show _preview in image window"
 msgstr "_Vorschau im Bildfenster anzeigen"
 
-#: ../plug-ins/jpeg/jpeg-save.c:781
+#: ../plug-ins/jpeg/jpeg-save.c:786
 msgid "_Advanced Options"
 msgstr "_Erweiterte Optionen"
 
-#: ../plug-ins/jpeg/jpeg-save.c:809
+#: ../plug-ins/jpeg/jpeg-save.c:814
 msgid "_Smoothing:"
 msgstr "_Glättung:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:822
+#: ../plug-ins/jpeg/jpeg-save.c:827
 msgid "Frequency (rows):"
 msgstr "Frequenz (Zeilen):"
 
-#: ../plug-ins/jpeg/jpeg-save.c:836
+#: ../plug-ins/jpeg/jpeg-save.c:841
 msgid "Use restart markers"
 msgstr "Start-Markierungen"
 
-#: ../plug-ins/jpeg/jpeg-save.c:852 ../plug-ins/xjt/xjt.c:869
+#: ../plug-ins/jpeg/jpeg-save.c:857 ../plug-ins/xjt/xjt.c:869
 msgid "Optimize"
 msgstr "Optimieren"
 
-#: ../plug-ins/jpeg/jpeg-save.c:865
+#: ../plug-ins/jpeg/jpeg-save.c:870
 msgid "Progressive"
 msgstr "Progressiv"
 
-#: ../plug-ins/jpeg/jpeg-save.c:879
+#: ../plug-ins/jpeg/jpeg-save.c:884
 msgid "Force baseline JPEG"
 msgstr "Baseline JPEG erzwingen"
 
-#: ../plug-ins/jpeg/jpeg-save.c:894
+#: ../plug-ins/jpeg/jpeg-save.c:899
 msgid "Save EXIF data"
 msgstr "EXIF Daten speichern"
 
-#: ../plug-ins/jpeg/jpeg-save.c:910
+#: ../plug-ins/jpeg/jpeg-save.c:915
 msgid "Save thumbnail"
 msgstr "Vorschau speichern"
 
 #. XMP metadata
-#: ../plug-ins/jpeg/jpeg-save.c:926
+#: ../plug-ins/jpeg/jpeg-save.c:931
 msgid "Save XMP data"
 msgstr "XMP Daten speichern"
 
 #. Subsampling
-#: ../plug-ins/jpeg/jpeg-save.c:939
+#: ../plug-ins/jpeg/jpeg-save.c:944
 msgid "Subsampling:"
 msgstr "Zwischenschritte:"
 
 #. DCT method
-#: ../plug-ins/jpeg/jpeg-save.c:966
+#: ../plug-ins/jpeg/jpeg-save.c:967
 msgid "DCT method:"
 msgstr "DCT-Methode:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:972
+#: ../plug-ins/jpeg/jpeg-save.c:973
 msgid "Fast Integer"
 msgstr "Schnelle Ganzzahlen"
 
-#: ../plug-ins/jpeg/jpeg-save.c:973
+#: ../plug-ins/jpeg/jpeg-save.c:974
 msgid "Integer"
 msgstr "Ganzzahlen"
 
-#: ../plug-ins/jpeg/jpeg-save.c:974
+#: ../plug-ins/jpeg/jpeg-save.c:975
 msgid "Floating-Point"
 msgstr "Fließkommazahlen"
 
-#: ../plug-ins/jpeg/jpeg-save.c:988
+#: ../plug-ins/jpeg/jpeg-save.c:989
 msgid "Comment"
 msgstr "Kommentar"
 
@@ -11797,3 +11791,4 @@ msgstr "Fehler: XJT-Eigenschaften-Datei »%s« konnte nicht gelesen werden."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Fehler: Die XJT Eigenschaften-Datei »%s« ist leer."
+
