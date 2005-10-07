@@ -30,6 +30,10 @@ GimpPalette * gimp_palette_import_from_image         (GimpImage    *gimage,
 						      gint          treshold);
 GimpPalette * gimp_palette_import_from_indexed_image (GimpImage    *gimage,
 						      const gchar  *palette_name);
+GimpPalette * gimp_palette_import_from_drawable      (GimpDrawable *drawable,
+                                                      const gchar  *palette_name,
+                                                      gint          n_colors,
+                                                      gint          threshold);
 GimpPalette * gimp_palette_import_from_file          (const gchar  *filename,
                                                       const gchar  *palette_name,
                                                       GError      **error);

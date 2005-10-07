@@ -44,6 +44,7 @@
 #include "base/pixel-region.h"
 
 #include "gimpcontainer.h"
+#include "gimpdrawable.h"
 #include "gimpgradient.h"
 #include "gimpimage.h"
 #include "gimppalette.h"
@@ -105,7 +106,7 @@ struct _ImgColors
 static gint count_color_entries = 0;
 
 static GHashTable *
-gimp_palette_import_store_colors (GHashTable *h_array,
+gimp_palette_import_store_colors (GHashTable *table,
 				  guchar     *colors,
 				  guchar     *colors_real,
 				  gint        n_colors)
@@ -114,15 +115,14 @@ gimp_palette_import_store_colors (GHashTable *h_array,
   ImgColors *new_color;
   guint      key_colors = colors[0] * 256 * 256 + colors[1] * 256 + colors[2];
 
-  if (h_array == NULL)
+  if (table == NULL)
     {
-      h_array = g_hash_table_new (g_direct_hash, g_direct_equal);
+      table = g_hash_table_new (g_direct_hash, g_direct_equal);
       count_color_entries = 0;
     }
   else
     {
-      found_color = g_hash_table_lookup (h_array,
-                                         GUINT_TO_POINTER (key_colors));
+      found_color = g_hash_table_lookup (table, GUINT_TO_POINTER (key_colors));
     }
 
   if (found_color == NULL)
@@ -130,7 +130,7 @@ gimp_palette_import_store_colors (GHashTable *h_array,
       if (count_color_entries > MAX_IMAGE_COLORS)
 	{
 	  /* Don't add any more new ones */
-	  return h_array;
+	  return table;
 	}
 
       count_color_entries++;
@@ -145,11 +145,11 @@ gimp_palette_import_store_colors (GHashTable *h_array,
       new_color->g     = colors[1];
       new_color->b     = colors[2];
 
-      g_hash_table_insert (h_array, GUINT_TO_POINTER (key_colors), new_color);
+      g_hash_table_insert (table, GUINT_TO_POINTER (key_colors), new_color);
     }
   else
     {
-      new_color = (ImgColors *) found_color;
+      new_color = found_color;
 
       if (new_color->count < (G_MAXINT - 1))
 	new_color->count++;
@@ -170,26 +170,26 @@ gimp_palette_import_store_colors (GHashTable *h_array,
 	new_color->b_adj /= new_color->count;
     }
 
-  return h_array;
+  return table;
 }
 
 static void
-gimp_palette_import_create_sorted_list (gpointer key,
-					gpointer value,
-					gpointer user_data)
+gimp_palette_import_create_list (gpointer key,
+                                 gpointer value,
+                                 gpointer user_data)
 {
-  GSList    **sorted_list = (GSList**) user_data;
-  ImgColors  *color_tab   = (ImgColors *) value;
+  GSList    **list      = user_data;
+  ImgColors  *color_tab = value;
 
-  *sorted_list = g_slist_prepend (*sorted_list, color_tab);
+  *list = g_slist_prepend (*list, color_tab);
 }
 
 static gint
 gimp_palette_import_sort_colors (gconstpointer a,
 				 gconstpointer b)
 {
-  ImgColors *s1 = (ImgColors *) a;
-  ImgColors *s2 = (ImgColors *) b;
+  const ImgColors *s1 = a;
+  const ImgColors *s2 = b;
 
   if(s1->count > s2->count)
     return -1;
@@ -203,14 +203,11 @@ static void
 gimp_palette_import_create_image_palette (gpointer data,
 					  gpointer user_data)
 {
-  GimpPalette *palette;
-  ImgColors   *color_tab;
+  GimpPalette *palette   = user_data;
+  ImgColors   *color_tab = data;;
   gint         n_colors;
   gchar       *lab;
   GimpRGB      color;
-
-  palette   = (GimpPalette *) user_data;
-  color_tab = (ImgColors *) data;
 
   n_colors = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (palette),
 						 "import-n-colors"));
@@ -234,24 +231,23 @@ gimp_palette_import_create_image_palette (gpointer data,
 }
 
 static GimpPalette *
-gimp_palette_import_image_make_palette (GHashTable  *h_array,
-					const gchar *palette_name,
-					gint         n_colors)
+gimp_palette_import_make_palette (GHashTable  *table,
+                                  const gchar *palette_name,
+                                  gint         n_colors)
 {
-  GimpPalette *palette;
-  GSList      *sorted_list = NULL;
+  GimpPalette *palette = GIMP_PALETTE (gimp_palette_new (palette_name));
+  GSList      *list    = NULL;
 
-  g_hash_table_foreach (h_array, gimp_palette_import_create_sorted_list,
-			&sorted_list);
-  sorted_list = g_slist_sort (sorted_list, gimp_palette_import_sort_colors);
+  if (! table)
+    return palette;
 
-  palette = GIMP_PALETTE (gimp_palette_new (palette_name));
+  g_hash_table_foreach (table, gimp_palette_import_create_list, &list);
+  list = g_slist_sort (list, gimp_palette_import_sort_colors);
 
   g_object_set_data (G_OBJECT (palette), "import-n-colors",
 		     GINT_TO_POINTER (n_colors));
 
-  g_slist_foreach (sorted_list, gimp_palette_import_create_image_palette,
-		   palette);
+  g_slist_foreach (list, gimp_palette_import_create_image_palette, palette);
 
   g_object_set_data (G_OBJECT (palette), "import-n-colors", NULL);
 
@@ -259,64 +255,48 @@ gimp_palette_import_image_make_palette (GHashTable  *h_array,
    *  Note the same structure is on both the hash list and the sorted
    *  list. So only delete it once.
    */
-  g_hash_table_destroy (h_array);
+  g_hash_table_destroy (table);
 
-  g_slist_foreach (sorted_list, (GFunc) g_free, NULL);
+  g_slist_foreach (list, (GFunc) g_free, NULL);
 
-  g_slist_free (sorted_list);
+  g_slist_free (list);
 
   return palette;
 }
 
-GimpPalette *
-gimp_palette_import_from_image (GimpImage   *gimage,
-				const gchar *palette_name,
-				gint         n_colors,
-				gint         threshold)
+static GHashTable *
+gimp_palette_import_extract (GimpImage     *image,
+                             TileManager   *tiles,
+                             GimpImageType  type,
+                             gint           x,
+                             gint           y,
+                             gint           width,
+                             gint           height,
+                             gint           n_colors,
+                             gint           threshold)
 {
-  PixelRegion    imagePR;
-  guchar        *image_data;
-  guchar        *idata;
-  guchar         rgba[MAX_CHANNELS];
-  gboolean       has_alpha, indexed;
-  gint           width, height;
-  gint           bytes, alpha;
-  gint           i, j;
-  void          *pr;
-  GimpImageType  d_type;
-  GHashTable    *store_array = NULL;
+  PixelRegion  region;
+  gpointer     pr;
+  GHashTable  *colors = NULL;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
-  g_return_val_if_fail (palette_name != NULL, NULL);
-  g_return_val_if_fail (n_colors > 1, NULL);
-  g_return_val_if_fail (threshold > 0, NULL);
+  pixel_region_init (&region, tiles, x, y, width, height, FALSE);
 
-  d_type    = gimp_projection_get_image_type (gimage->projection);
-  bytes     = gimp_projection_get_bytes (gimage->projection);
-  has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (d_type);
-  indexed   = GIMP_IMAGE_TYPE_IS_INDEXED (d_type);
-  width     = gimage->width;
-  height    = gimage->height;
-
-  pixel_region_init (&imagePR, gimp_projection_get_tiles (gimage->projection),
-                     0, 0, width, height, FALSE);
-
-  alpha = bytes - 1;
-
-  /*  iterate over the entire image  */
-  for (pr = pixel_regions_register (1, &imagePR);
+  for (pr = pixel_regions_register (1, &region);
        pr != NULL;
        pr = pixel_regions_process (pr))
     {
-      image_data = imagePR.data;
+      const guchar *data = region.data;
+      gint          i, j;
 
-      for (i = 0; i < imagePR.h; i++)
+      for (i = 0; i < region.h; i++)
 	{
-	  idata = image_data;
+	  const guchar *idata = data;
 
-	  for (j = 0; j < imagePR.w; j++)
+	  for (j = 0; j < region.w; j++)
 	    {
-	      gimp_image_get_color (gimage, d_type, idata, rgba);
+              guchar  rgba[MAX_CHANNELS];
+
+	      gimp_image_get_color (image, type, idata, rgba);
 
               /*  ignore completely transparent pixels  */
               if (rgba[ALPHA_PIX])
@@ -329,22 +309,41 @@ gimp_palette_import_from_image (GimpImage   *gimage,
                   rgba[1] = (rgba[1] / threshold) * threshold;
                   rgba[2] = (rgba[2] / threshold) * threshold;
 
-                  store_array =
-                    gimp_palette_import_store_colors (store_array,
-                                                      rgba, rgb_real,
-                                                      n_colors);
+                  colors = gimp_palette_import_store_colors (colors,
+                                                             rgba, rgb_real,
+                                                             n_colors);
                 }
 
-	      idata += bytes;
+	      idata += region.bytes;
 	    }
 
-	  image_data += imagePR.rowstride;
+	  data += region.rowstride;
 	}
     }
 
-  return gimp_palette_import_image_make_palette (store_array,
-						 palette_name,
-						 n_colors);
+  return colors;
+}
+
+GimpPalette *
+gimp_palette_import_from_image (GimpImage   *gimage,
+				const gchar *palette_name,
+				gint         n_colors,
+				gint         threshold)
+{
+  GHashTable *colors;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (palette_name != NULL, NULL);
+  g_return_val_if_fail (n_colors > 1, NULL);
+  g_return_val_if_fail (threshold > 0, NULL);
+
+  colors = gimp_palette_import_extract (gimage,
+                                        gimp_projection_get_tiles (gimage->projection),
+                                        gimp_projection_get_image_type (gimage->projection),
+                                        0, 0, gimage->width, gimage->height,
+                                        n_colors, threshold);
+
+  return gimp_palette_import_make_palette (colors, palette_name, n_colors);
 }
 
 /*  create a palette from an indexed image  **********************************/
@@ -381,6 +380,36 @@ gimp_palette_import_from_indexed_image (GimpImage   *gimage,
   return palette;
 }
 
+/*  create a palette from a drawable  ****************************************/
+
+GimpPalette *
+gimp_palette_import_from_drawable (GimpDrawable *drawable,
+                                   const gchar  *palette_name,
+                                   gint          n_colors,
+                                   gint          threshold)
+{
+  GHashTable *colors = NULL;
+  gint        x, y;
+  gint        width, height;
+
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
+  g_return_val_if_fail (palette_name != NULL, NULL);
+  g_return_val_if_fail (n_colors > 1, NULL);
+  g_return_val_if_fail (threshold > 0, NULL);
+
+  if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+    {
+      colors =
+        gimp_palette_import_extract (gimp_item_get_image (GIMP_ITEM (drawable)),
+                                     gimp_drawable_data (drawable),
+                                     gimp_drawable_type (drawable),
+                                     0, 0, width, height,
+                                     n_colors, threshold);
+    }
+
+  return gimp_palette_import_make_palette (colors, palette_name, n_colors);
+}
 
 /*  create a palette from a file  **********************************/
 

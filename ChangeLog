@@ -1,3 +1,9 @@
+2005-10-07  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimppalette-import.[ch]: added new function
+	gimp_palette_import_from_drawable(), respecting the selection as
+	suggested in bug #316212.
+
 2005-10-06  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/common/gauss.c: always use RLE if horz or
