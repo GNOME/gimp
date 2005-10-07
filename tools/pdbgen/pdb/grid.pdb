@@ -16,7 +16,7 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
 sub pdb_misc {
-    $author = $copyright = 'Sylvain FORET';
+    $author = $copyright = 'Sylvain Foret';
     $date   = '2005';
     $since  = '2.4';
 }
@@ -42,21 +42,21 @@ HELP
     );
 
     @outargs = (
-        { name => "x$type",
-          type => $bounded_type,
+        { name => "x$type", type => $bounded_type,
           void_ret => 1,
-          desc => "The image's grid horizontal $type" },
-        { name => "y$type",
-          type => $bounded_type,
+          desc => "The image's grid horizontal $type",
+          init => 1 },
+        { name => "y$type", type => $bounded_type,
           void_ret => 1,
-          desc => "The image's grid vertical $type" }
+          desc => "The image's grid vertical $type",
+          init => 1 }
     );
 
     %invoke = (
-	vars => [ 'GimpGrid  *grid' ],
 	code => <<CODE
 {
-  grid = gimp_image_get_grid (gimage);
+  GimpGrid *grid = gimp_image_get_grid (gimage);
+
   if (grid)
     {
       x$type = grid->x$type;
@@ -95,17 +95,15 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'GimpGrid  *grid' ],
 	code => <<CODE
 {
-  grid = gimp_image_get_grid (gimage);
+  GimpGrid *grid = gimp_image_get_grid (gimage);
+
   if (grid)
-    {
-      g_object_set (grid,
-                    "x$type", x$type,
-                    "y$type", y$type,
-                    NULL);
-    }
+    g_object_set (grid,
+                  "x$type", x$type,
+                  "y$type", y$type,
+                  NULL);
   else
     success = FALSE;
 }
@@ -136,14 +134,12 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'GimpGrid  *grid' ],
 	code => <<CODE
 {
-  grid = gimp_image_get_grid (gimage);
+  GimpGrid *grid = gimp_image_get_grid (gimage);
+
   if (grid)
-    {
-      $arg = grid->$arg;
-    }
+    $arg = grid->$arg;
   else
     success = FALSE;
 }
@@ -171,10 +167,10 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'GimpGrid  *grid' ],
 	code => <<CODE
 {
-  grid = gimp_image_get_grid (gimage);
+  GimpGrid *grid = gimp_image_get_grid (gimage);
+
   if (grid)
     g_object_set (grid,
                   "$arg", &$arg,
@@ -237,14 +233,15 @@ HELP
     @outargs = (
         { name => 'style',
           type => 'enum GimpGridStyle',
-          desc => "The image's grid style" }
+          desc => "The image's grid style",
+          init => 1 }
     );
 
     %invoke = (
-	vars => [ 'GimpGrid  *grid' ],
 	code => <<CODE
 {
-  grid = gimp_image_get_grid (gimage);
+  GimpGrid *grid = gimp_image_get_grid (gimage);
+
   if (grid)
     {
       style = grid->style;
@@ -275,10 +272,10 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'GimpGrid  *grid' ],
 	code => <<CODE
 {
-  grid = gimp_image_get_grid (gimage);
+  GimpGrid *grid = gimp_image_get_grid (gimage);
+
   if (grid)
     g_object_set (grid,
                   "style", style,
@@ -292,24 +289,16 @@ CODE
 
 # Required headers
 
-@headers = qw("core/gimpimage-grid.h"
-              "core/gimpgrid.h"
-              "libgimpbase/gimpbaseenums.h"
-             );
+@headers = qw("core/gimpimage-grid.h" "core/gimpgrid.h"
+              "libgimpbase/gimpbaseenums.h");
 
 # Exported procedures
 
-@procs = qw(image_grid_get_spacing
-            image_grid_set_spacing
-            image_grid_get_offset
-            image_grid_set_offset
-            image_grid_get_foreground_color
-            image_grid_set_foreground_color
-            image_grid_get_background_color
-            image_grid_set_background_color
-            image_grid_get_style
-            image_grid_set_style
-           );
+@procs = qw(image_grid_get_spacing image_grid_set_spacing
+            image_grid_get_offset image_grid_set_offset
+            image_grid_get_foreground_color image_grid_set_foreground_color
+            image_grid_get_background_color image_grid_set_background_color
+            image_grid_get_style image_grid_set_style);
 
 %exports = (app => [@procs], lib => [@procs]);
 

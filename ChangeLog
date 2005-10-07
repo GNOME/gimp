@@ -1,3 +1,10 @@
+2005-10-07  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/grid.pdb: fixed (false) uninitialized variable
+	warnings and cleaned up the code a bit.
+
+	* app/pdb/grid_cmds.c: regenerated.
+
 2005-10-07  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/palette-import-dialog.c (palette_import_filename_changed)

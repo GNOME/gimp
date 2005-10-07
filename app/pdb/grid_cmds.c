@@ -68,9 +68,8 @@ image_grid_get_spacing_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpImage *gimage;
-  gdouble xspacing;
-  gdouble yspacing;
-  GimpGrid  *grid;
+  gdouble xspacing = 0;
+  gdouble yspacing = 0;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -78,7 +77,8 @@ image_grid_get_spacing_invoker (Gimp         *gimp,
 
   if (success)
     {
-      grid = gimp_image_get_grid (gimage);
+      GimpGrid *grid = gimp_image_get_grid (gimage);
+
       if (grid)
         {
           xspacing = grid->xspacing;
@@ -128,8 +128,8 @@ static ProcRecord image_grid_get_spacing_proc =
   "gimp-image-grid-get-spacing",
   "Gets the spacing of an image's grid.",
   "This procedure retrieves the horizontal and vertical spacing of an image's grid. It takes the image as parameter.",
-  "Sylvain FORET",
-  "Sylvain FORET",
+  "Sylvain Foret",
+  "Sylvain Foret",
   "2005",
   NULL,
   GIMP_INTERNAL,
@@ -150,7 +150,6 @@ image_grid_set_spacing_invoker (Gimp         *gimp,
   GimpImage *gimage;
   gdouble xspacing;
   gdouble yspacing;
-  GimpGrid  *grid;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -162,14 +161,13 @@ image_grid_set_spacing_invoker (Gimp         *gimp,
 
   if (success)
     {
-      grid = gimp_image_get_grid (gimage);
+      GimpGrid *grid = gimp_image_get_grid (gimage);
+
       if (grid)
-        {
-          g_object_set (grid,
-                        "xspacing", xspacing,
-                        "yspacing", yspacing,
-                        NULL);
-        }
+        g_object_set (grid,
+                      "xspacing", xspacing,
+                      "yspacing", yspacing,
+                      NULL);
       else
         success = FALSE;
     }
@@ -202,8 +200,8 @@ static ProcRecord image_grid_set_spacing_proc =
   "gimp-image-grid-set-spacing",
   "Sets the spacing of an image's grid.",
   "This procedure sets the horizontal and vertical spacing of an image's grid.",
-  "Sylvain FORET",
-  "Sylvain FORET",
+  "Sylvain Foret",
+  "Sylvain Foret",
   "2005",
   NULL,
   GIMP_INTERNAL,
@@ -223,9 +221,8 @@ image_grid_get_offset_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpImage *gimage;
-  gdouble xoffset;
-  gdouble yoffset;
-  GimpGrid  *grid;
+  gdouble xoffset = 0;
+  gdouble yoffset = 0;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -233,7 +230,8 @@ image_grid_get_offset_invoker (Gimp         *gimp,
 
   if (success)
     {
-      grid = gimp_image_get_grid (gimage);
+      GimpGrid *grid = gimp_image_get_grid (gimage);
+
       if (grid)
         {
           xoffset = grid->xoffset;
@@ -283,8 +281,8 @@ static ProcRecord image_grid_get_offset_proc =
   "gimp-image-grid-get-offset",
   "Gets the offset of an image's grid.",
   "This procedure retrieves the horizontal and vertical offset of an image's grid. It takes the image as parameter.",
-  "Sylvain FORET",
-  "Sylvain FORET",
+  "Sylvain Foret",
+  "Sylvain Foret",
   "2005",
   NULL,
   GIMP_INTERNAL,
@@ -305,7 +303,6 @@ image_grid_set_offset_invoker (Gimp         *gimp,
   GimpImage *gimage;
   gdouble xoffset;
   gdouble yoffset;
-  GimpGrid  *grid;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -317,14 +314,13 @@ image_grid_set_offset_invoker (Gimp         *gimp,
 
   if (success)
     {
-      grid = gimp_image_get_grid (gimage);
+      GimpGrid *grid = gimp_image_get_grid (gimage);
+
       if (grid)
-        {
-          g_object_set (grid,
-                        "xoffset", xoffset,
-                        "yoffset", yoffset,
-                        NULL);
-        }
+        g_object_set (grid,
+                      "xoffset", xoffset,
+                      "yoffset", yoffset,
+                      NULL);
       else
         success = FALSE;
     }
@@ -357,8 +353,8 @@ static ProcRecord image_grid_set_offset_proc =
   "gimp-image-grid-set-offset",
   "Sets the offset of an image's grid.",
   "This procedure sets the horizontal and vertical offset of an image's grid.",
-  "Sylvain FORET",
-  "Sylvain FORET",
+  "Sylvain Foret",
+  "Sylvain Foret",
   "2005",
   NULL,
   GIMP_INTERNAL,
@@ -379,7 +375,6 @@ image_grid_get_foreground_color_invoker (Gimp         *gimp,
   Argument *return_args;
   GimpImage *gimage;
   GimpRGB fgcolor;
-  GimpGrid  *grid;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -387,11 +382,10 @@ image_grid_get_foreground_color_invoker (Gimp         *gimp,
 
   if (success)
     {
-      grid = gimp_image_get_grid (gimage);
+      GimpGrid *grid = gimp_image_get_grid (gimage);
+
       if (grid)
-        {
-          fgcolor = grid->fgcolor;
-        }
+        fgcolor = grid->fgcolor;
       else
         success = FALSE;
     }
@@ -428,8 +422,8 @@ static ProcRecord image_grid_get_foreground_color_proc =
   "gimp-image-grid-get-foreground-color",
   "Sets the foreground color of an image's grid.",
   "This procedure gets the foreground color of an image's grid.",
-  "Sylvain FORET",
-  "Sylvain FORET",
+  "Sylvain Foret",
+  "Sylvain Foret",
   "2005",
   NULL,
   GIMP_INTERNAL,
@@ -449,7 +443,6 @@ image_grid_set_foreground_color_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   GimpImage *gimage;
   GimpRGB fgcolor;
-  GimpGrid  *grid;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -459,7 +452,8 @@ image_grid_set_foreground_color_invoker (Gimp         *gimp,
 
   if (success)
     {
-      grid = gimp_image_get_grid (gimage);
+      GimpGrid *grid = gimp_image_get_grid (gimage);
+
       if (grid)
         g_object_set (grid,
                       "fgcolor", &fgcolor,
@@ -491,8 +485,8 @@ static ProcRecord image_grid_set_foreground_color_proc =
   "gimp-image-grid-set-foreground-color",
   "Gets the foreground color of an image's grid.",
   "This procedure sets the foreground color of an image's grid.",
-  "Sylvain FORET",
-  "Sylvain FORET",
+  "Sylvain Foret",
+  "Sylvain Foret",
   "2005",
   NULL,
   GIMP_INTERNAL,
@@ -513,7 +507,6 @@ image_grid_get_background_color_invoker (Gimp         *gimp,
   Argument *return_args;
   GimpImage *gimage;
   GimpRGB bgcolor;
-  GimpGrid  *grid;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -521,11 +514,10 @@ image_grid_get_background_color_invoker (Gimp         *gimp,
 
   if (success)
     {
-      grid = gimp_image_get_grid (gimage);
+      GimpGrid *grid = gimp_image_get_grid (gimage);
+
       if (grid)
-        {
-          bgcolor = grid->bgcolor;
-        }
+        bgcolor = grid->bgcolor;
       else
         success = FALSE;
     }
@@ -562,8 +554,8 @@ static ProcRecord image_grid_get_background_color_proc =
   "gimp-image-grid-get-background-color",
   "Sets the background color of an image's grid.",
   "This procedure gets the background color of an image's grid.",
-  "Sylvain FORET",
-  "Sylvain FORET",
+  "Sylvain Foret",
+  "Sylvain Foret",
   "2005",
   NULL,
   GIMP_INTERNAL,
@@ -583,7 +575,6 @@ image_grid_set_background_color_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   GimpImage *gimage;
   GimpRGB bgcolor;
-  GimpGrid  *grid;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -593,7 +584,8 @@ image_grid_set_background_color_invoker (Gimp         *gimp,
 
   if (success)
     {
-      grid = gimp_image_get_grid (gimage);
+      GimpGrid *grid = gimp_image_get_grid (gimage);
+
       if (grid)
         g_object_set (grid,
                       "bgcolor", &bgcolor,
@@ -625,8 +617,8 @@ static ProcRecord image_grid_set_background_color_proc =
   "gimp-image-grid-set-background-color",
   "Gets the background color of an image's grid.",
   "This procedure sets the background color of an image's grid.",
-  "Sylvain FORET",
-  "Sylvain FORET",
+  "Sylvain Foret",
+  "Sylvain Foret",
   "2005",
   NULL,
   GIMP_INTERNAL,
@@ -646,8 +638,7 @@ image_grid_get_style_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpImage *gimage;
-  gint32 style;
-  GimpGrid  *grid;
+  gint32 style = 0;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -655,7 +646,8 @@ image_grid_get_style_invoker (Gimp         *gimp,
 
   if (success)
     {
-      grid = gimp_image_get_grid (gimage);
+      GimpGrid *grid = gimp_image_get_grid (gimage);
+
       if (grid)
         {
           style = grid->style;
@@ -696,8 +688,8 @@ static ProcRecord image_grid_get_style_proc =
   "gimp-image-grid-get-style",
   "Gets the style of an image's grid.",
   "This procedure retrieves the style of an image's grid.",
-  "Sylvain FORET",
-  "Sylvain FORET",
+  "Sylvain Foret",
+  "Sylvain Foret",
   "2005",
   NULL,
   GIMP_INTERNAL,
@@ -717,7 +709,6 @@ image_grid_set_style_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   GimpImage *gimage;
   gint32 style;
-  GimpGrid  *grid;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -729,7 +720,8 @@ image_grid_set_style_invoker (Gimp         *gimp,
 
   if (success)
     {
-      grid = gimp_image_get_grid (gimage);
+      GimpGrid *grid = gimp_image_get_grid (gimage);
+
       if (grid)
         g_object_set (grid,
                       "style", style,
@@ -761,8 +753,8 @@ static ProcRecord image_grid_set_style_proc =
   "gimp-image-grid-set-style",
   "Sets the style unit of an image's grid.",
   "This procedure sets the style of an image's grid. It takes the image and the new style as parameters.",
-  "Sylvain FORET",
-  "Sylvain FORET",
+  "Sylvain Foret",
+  "Sylvain Foret",
   "2005",
   NULL,
   GIMP_INTERNAL,
