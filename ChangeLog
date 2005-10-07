@@ -1,5 +1,10 @@
 2005-10-07  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/palette-import-dialog.c (palette_import_filename_changed)
+	(palette_import_file_callback): use UTF8 encoding with GtkEntry.
+
+2005-10-07  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimppalette-import.[ch]: added new function
 	gimp_palette_import_from_drawable(), respecting the selection as
 	suggested in bug #316212.

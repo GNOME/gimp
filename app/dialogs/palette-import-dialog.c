@@ -503,9 +503,9 @@ palette_import_filename_changed (GimpFileEntry *file_entry,
 
   filename = gimp_file_entry_get_filename (file_entry);
 
-  if (filename && filename[0])
+  if (filename && *filename)
     {
-      gchar *basename = g_path_get_basename (filename);
+      gchar *basename = g_filename_display_basename (filename);
 
       /* TODO: strip filename extension */
       gtk_entry_set_text (GTK_ENTRY (import_dialog->entry), basename);
@@ -528,9 +528,7 @@ import_dialog_drop_callback (GtkWidget    *widget,
                              GimpViewable *viewable,
                              gpointer      data)
 {
-  ImportDialog *import_dialog;
-
-  import_dialog = (ImportDialog *) data;
+  ImportDialog *import_dialog = data;
 
   gimp_context_set_by_type (import_dialog->context,
                             G_TYPE_FROM_INSTANCE (viewable),
@@ -629,7 +627,7 @@ palette_import_file_callback (GtkWidget    *widget,
 
   if (filename && *filename)
     {
-      gchar *basename = g_path_get_basename (filename);
+      gchar *basename = g_filename_display_basename (filename);
 
       /* TODO: strip filename extension */
       gtk_entry_set_text (GTK_ENTRY (import_dialog->entry), basename);
@@ -719,9 +717,7 @@ palette_import_make_palette (ImportDialog *import_dialog)
 
     case IMAGE_IMPORT:
       {
-        GimpImage *gimage;
-
-        gimage = gimp_context_get_image (import_dialog->context);
+        GimpImage *gimage = gimp_context_get_image (import_dialog->context);
 
         if (gimp_image_base_type (gimage) == GIMP_INDEXED)
           {
@@ -740,10 +736,11 @@ palette_import_make_palette (ImportDialog *import_dialog)
 
     case FILE_IMPORT:
       {
-        gchar  *filename;
-        GError *error = NULL;
+        GtkWidget *entry = import_dialog->filename_entry;
+        gchar     *filename;
+        GError    *error = NULL;
 
-        filename = gimp_file_entry_get_filename (GIMP_FILE_ENTRY (import_dialog->filename_entry));
+        filename = gimp_file_entry_get_filename (GIMP_FILE_ENTRY (entry));
 
         palette = gimp_palette_import_from_file (filename,
                                                  palette_name, &error);
