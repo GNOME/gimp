@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-10-07 18:07+0200\n"
-"PO-Revision-Date: 2005-10-07 18:10+0200\n"
+"PO-Revision-Date: 2005-10-07 19:28+0200\n"
 "Last-Translator: Hendrik Brandt <heb@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -9324,7 +9324,7 @@ msgstr "S_tärke Exp.:"
 #: ../plug-ins/gimpressionist/orientmap.c:691
 #: ../plug-ins/gimpressionist/sizemap.c:519
 msgid "Change the exponent of the strength"
-msgstr "Ändern Sie den Exponenten der Stärke"
+msgstr "Den Exponenten der Stärke ändern"
 
 #: ../plug-ins/gimpressionist/paper.c:120
 msgid "P_aper"

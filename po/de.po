@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-10-07 18:03+0200\n"
-"PO-Revision-Date: 2005-10-07 18:05+0200\n"
+"PO-Revision-Date: 2005-10-07 19:26+0200\n"
 "Last-Translator: Hendrik Brandt <heb@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -9248,7 +9248,7 @@ msgstr "Länge:"
 
 #: ../app/tools/gimppaintoptions-gui.c:391
 msgid "Apply Jitter"
-msgstr "Flackern anwenden"
+msgstr "Zittern"
 
 #: ../app/tools/gimppaintoptions-gui.c:411
 msgid "Amount:"
