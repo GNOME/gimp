@@ -208,27 +208,51 @@ gimp_drawable_preview_draw_thumb (GimpPreview     *preview,
   guchar              *buffer;
   gint                 x1, y1, x2, y2;
   gint                 bpp;
+  gint                 size = 100;
+  gint                 nav_width, nav_height;
 
   if (! drawable)
     return;
 
   if (gimp_drawable_preview_get_bounds (drawable, &x1, &y1, &x2, &y2))
     {
+      width  = x2 - x1;
+      height = y2 - y1;
+    }
+  else
+    {
+      width  = gimp_drawable_width  (drawable->drawable_id);
+      height = gimp_drawable_height (drawable->drawable_id);
+    }
+
+  if (width > height)
+    {
+      nav_width  = MIN (width, size);
+      nav_height = (height * nav_width) / width;
+    }
+  else
+    {
+      nav_height = MIN (height, size);
+      nav_width  = (width * nav_height) / height;
+    }
+
+  if (gimp_drawable_preview_get_bounds (drawable, &x1, &y1, &x2, &y2))
+    {
       buffer = gimp_drawable_get_sub_thumbnail_data (drawable->drawable_id,
                                                      x1, y1, x2 - x1, y2 - y1,
-                                                     &width, &height, &bpp);
+                                                     &nav_width, &nav_height, &bpp);
     }
   else
     {
       buffer = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
-                                                 &width, &height, &bpp);
+                                                 &nav_width, &nav_height, &bpp);
     }
 
   if (buffer)
     {
       GimpImageType  type;
 
-      gtk_widget_set_size_request (GTK_WIDGET (area), width, height);
+      gtk_widget_set_size_request (GTK_WIDGET (area), nav_width, nav_height);
       gtk_widget_show (GTK_WIDGET (area));
       gtk_widget_realize (GTK_WIDGET (area));
 
@@ -244,8 +268,8 @@ gimp_drawable_preview_draw_thumb (GimpPreview     *preview,
         }
 
       gimp_preview_area_draw (area,
-                              0, 0, width, height,
-                              type, buffer, bpp * width);
+                              0, 0, nav_width, nav_height,
+                              type, buffer, bpp * nav_width);
 
       g_free (buffer);
     }

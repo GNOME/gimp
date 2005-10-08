@@ -1,3 +1,8 @@
+2005-10-09  DindinX  <dindinx@gimp.org>
+
+	* libgimp/gimpdrawablepreview.c: made the navigation popup respect the
+	aspect ratio of the selection or the drawable.
+
 2005-10-08  Karine Delvare  <kdelvare@nerim.net>
 
 	* app/tools/gimpcroptool.c
