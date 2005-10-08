@@ -1335,13 +1335,17 @@ gimp_rectangle_tool_button_release (GimpTool        *tool,
                                     GimpDisplay     *gdisp)
 {
   GimpRectangleTool *rectangle = GIMP_RECTANGLE_TOOL (tool);
-  gint lastx, lasty;
-  gint pressx, pressy;
+  guint              function;
+  gint               lastx, lasty;
+  gint               pressx, pressy;
 
   g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (tool));
 
   gimp_tool_control_halt (tool->control);
-  gimp_tool_pop_status (tool, gdisp);
+
+  g_object_get (rectangle, "function", &function, NULL);
+  if (function == RECT_EXECUTING)
+    gimp_tool_pop_status (tool, gdisp);
 
   if (! (state & GDK_BUTTON3_MASK))
     {

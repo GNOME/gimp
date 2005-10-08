@@ -1,3 +1,10 @@
+2005-10-08  Karine Delvare  <kdelvare@nerim.net>
+
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpnewrectselecttool.c
+	* app/tools/gimprectangletool.c: added status bar info to tell the user
+	what to do once the rectangle area is drawn. Fixes bug #318267.
+
 2005-10-07  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/grid.pdb: fixed (false) uninitialized variable
