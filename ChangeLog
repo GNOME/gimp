@@ -1,5 +1,10 @@
 2005-10-10  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/gimpcolorselection.c: added a pick button, it's
+	too useful to be just in the color dockable.
+
+2005-10-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpviewable.c (gimp_viewable_get_description): set the
 	"tooltip" return value to NULL before calling the virtual function.
 

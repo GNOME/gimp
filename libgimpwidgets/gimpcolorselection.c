@@ -81,6 +81,9 @@ static void   gimp_color_selection_scales_changed    (GimpColorSelector  *select
                                                       const GimpRGB      *rgb,
                                                       const GimpHSV      *hsv,
                                                       GimpColorSelection *selection);
+static void   gimp_color_selection_color_picked      (GtkWidget          *widget,
+                                                      const GimpRGB      *rgb,
+                                                      GimpColorSelection *selection);
 static void   gimp_color_selection_entry_changed     (GimpColorHexEntry  *entry,
                                                       GimpColorSelection *selection);
 static void   gimp_color_selection_channel_changed   (GimpColorSelector  *selector,
@@ -152,6 +155,7 @@ gimp_color_selection_init (GimpColorSelection *selection)
   GtkWidget *hbox;
   GtkWidget *label;
   GtkWidget *entry;
+  GtkWidget *button;
 
   selection->show_alpha = TRUE;
 
@@ -271,11 +275,20 @@ gimp_color_selection_init (GimpColorSelection *selection)
                     G_CALLBACK (gimp_color_selection_scales_changed),
                     selection);
 
-  /* The hex triplet entry */
   hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (selection->right_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
+  /*  The color picker  */
+  button = gimp_pick_button_new ();
+  gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  g_signal_connect (button, "color-picked",
+                    G_CALLBACK (gimp_color_selection_color_picked),
+                    selection);
+
+  /* The hex triplet entry */
   entry = gimp_color_hex_entry_new ();
   gimp_help_set_help_data (entry,
                            _("Hexadecimal color notation "
@@ -506,6 +519,14 @@ gimp_color_selection_scales_changed (GimpColorSelector  *selector,
   gimp_color_selection_update (selection,
                                UPDATE_ENTRY | UPDATE_NOTEBOOK | UPDATE_COLOR);
   gimp_color_selection_color_changed (selection);
+}
+
+static void
+gimp_color_selection_color_picked (GtkWidget          *widget,
+                                   const GimpRGB      *rgb,
+                                   GimpColorSelection *selection)
+{
+  gimp_color_selection_set_color (selection, rgb);
 }
 
 static void
