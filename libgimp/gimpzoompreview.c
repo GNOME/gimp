@@ -80,8 +80,6 @@ gimp_zoom_preview_class_init (GimpZoomPreviewClass *klass)
   GtkWidgetClass   *widget_class  = GTK_WIDGET_CLASS (klass);
   GimpPreviewClass *preview_class = GIMP_PREVIEW_CLASS (klass);
 
-  parent_class = g_type_class_peek_parent (klass);
-
   widget_class->style_set    = gimp_zoom_preview_style_set;
 
   preview_class->draw        = gimp_zoom_preview_draw;
@@ -111,18 +109,6 @@ gimp_zoom_preview_init (GimpZoomPreview *preview)
   button_bar = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_end (GTK_BOX (box), button_bar, FALSE, FALSE, 0);
   gtk_widget_show (button_bar);
-
-  /* label */
-#if 0
-  {
-    GtkWidget *label;
-
-    label = gimp_prop_label_new (G_OBJECT (priv->model), "fraction");
-    gtk_misc_set_padding (GTK_MISC (label), 3, 3);
-    gtk_box_pack_start (GTK_BOX (button_bar), label, FALSE, FALSE, 0);
-    gtk_widget_show (label);
-  }
-#endif
 
   /* zoom out */
   button = gimp_zoom_button_new (priv->model,
@@ -217,6 +203,8 @@ gimp_zoom_preview_style_set (GtkWidget *widget,
   GimpDrawable           *drawable = priv->drawable;
   gint                    size;
   gint                    width, height;
+  gint                    x1, y1;
+  gint                    x2, y2;
 
   if (GTK_WIDGET_CLASS (parent_class)->style_set)
     GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
@@ -224,8 +212,16 @@ gimp_zoom_preview_style_set (GtkWidget *widget,
   gtk_widget_style_get (widget,
                         "size", &size,
                         NULL);
-  width  = gimp_drawable_width  (drawable->drawable_id);
-  height = gimp_drawable_height (drawable->drawable_id);
+  if (gimp_zoom_preview_get_bounds (drawable, &x1, &y1, &x2, &y2))
+    {
+      width  = x2 - x1;
+      height = y2 - y1;
+    }
+  else
+    {
+      width  = gimp_drawable_width  (drawable->drawable_id);
+      height = gimp_drawable_height (drawable->drawable_id);
+    }
 
   if (width > height)
     {
@@ -329,14 +325,17 @@ gimp_zoom_preview_draw_buffer (GimpPreview  *preview,
 
   image_id = gimp_drawable_get_image (drawable->drawable_id);
 
+/*
   if (gimp_selection_is_empty (image_id))
     {
+*/
       gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview->area),
                               0, 0,
                               preview->width, preview->height,
                               gimp_drawable_type (drawable->drawable_id),
                               buffer,
                               rowstride);
+/*
     }
   else
     {
@@ -366,6 +365,7 @@ gimp_zoom_preview_draw_buffer (GimpPreview  *preview,
       g_free (sel);
       g_free (src);
     }
+*/
 }
 
 static void
@@ -379,27 +379,51 @@ gimp_zoom_preview_draw_thumb (GimpPreview     *preview,
   guchar                 *buffer;
   gint                    x1, y1, x2, y2;
   gint                    bpp;
+  gint                    size = 100;
+  gint                    nav_width, nav_height;
 
   if (! drawable)
     return;
 
   if (gimp_zoom_preview_get_bounds (drawable, &x1, &y1, &x2, &y2))
     {
+      width  = x2 - x1;
+      height = y2 - y1;
+    }
+  else
+    {
+      width  = gimp_drawable_width  (drawable->drawable_id);
+      height = gimp_drawable_height (drawable->drawable_id);
+    }
+
+  if (width > height)
+    {
+      nav_width  = MIN (width, size);
+      nav_height = (height * nav_width) / width;
+    }
+  else
+    {
+      nav_height = MIN (height, size);
+      nav_width  = (width * nav_height) / height;
+    }
+
+  if (gimp_zoom_preview_get_bounds (drawable, &x1, &y1, &x2, &y2))
+    {
       buffer = gimp_drawable_get_sub_thumbnail_data (drawable->drawable_id,
                                                      x1, y1, x2 - x1, y2 - y1,
-                                                     &width, &height, &bpp);
+                                                     &nav_width, &nav_height, &bpp);
     }
   else
     {
       buffer = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
-                                                 &width, &height, &bpp);
+                                                 &nav_width, &nav_height, &bpp);
     }
 
   if (buffer)
     {
       GimpImageType  type;
 
-      gtk_widget_set_size_request (GTK_WIDGET (area), width, height);
+      gtk_widget_set_size_request (GTK_WIDGET (area), nav_width, nav_height);
       gtk_widget_show (GTK_WIDGET (area));
       gtk_widget_realize (GTK_WIDGET (area));
 
@@ -414,8 +438,8 @@ gimp_zoom_preview_draw_thumb (GimpPreview     *preview,
           return;
         }
       gimp_preview_area_draw (area,
-                              0, 0, width, height,
-                              type, buffer, bpp * width);
+                              0, 0, nav_width, nav_height,
+                              type, buffer, bpp * nav_width);
 
       g_free (buffer);
     }
@@ -470,6 +494,8 @@ gimp_zoom_preview_new (GimpDrawable *drawable)
   gint                    width, height;
   gint                    max_width, max_height;
   GimpZoomPreviewPrivate *priv;
+  gint                    x1, y1;
+  gint                    x2, y2;
 
   preview = g_object_new (GIMP_TYPE_ZOOM_PREVIEW, NULL);
 
@@ -477,14 +503,24 @@ gimp_zoom_preview_new (GimpDrawable *drawable)
 
   priv->drawable = drawable;
 
-  width  = gimp_drawable_width  (drawable->drawable_id);
-  height = gimp_drawable_height (drawable->drawable_id);
+  if (gimp_zoom_preview_get_bounds (drawable, &x1, &y1, &x2, &y2))
+    {
+      width  = x2 - x1;
+      height = y2 - y1;
 
-  priv->extents.x = 0;
-  priv->extents.y = 0;
+      priv->extents.x = x1;
+      priv->extents.y = y1;
+    }
+  else
+    {
+      width  = gimp_drawable_width  (drawable->drawable_id);
+      height = gimp_drawable_height (drawable->drawable_id);
+
+      priv->extents.x = 0;
+      priv->extents.y = 0;
+    }
   priv->extents.width  = width;
   priv->extents.height = height;
-
   if (width > height)
     {
       max_width  = MIN (width, 512);

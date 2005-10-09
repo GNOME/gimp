@@ -1,5 +1,10 @@
 2005-10-09  DindinX  <dindinx@gimp.org>
 
+	* libgimp/gimpzoompreview.c: better handling of selections and
+	navigation popup. Still not perfect.
+
+2005-10-09  DindinX  <dindinx@gimp.org>
+
 	* libgimp/gimpdrawablepreview.c: made the navigation popup respect the
 	aspect ratio of the selection or the drawable.
 
