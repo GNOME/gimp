@@ -1,5 +1,12 @@
 2005-10-09  DindinX  <dindinx@gimp.org>
 
+	* libgimp/gimpzoompreview.c: Enable selection masking, even if it
+	looks buggy. It looks to me that the bug is in
+	gimp_drawable_get_sub_preview (), not handling the selection drawable
+	as a normal drawable.
+
+2005-10-09  DindinX  <dindinx@gimp.org>
+
 	* libgimp/gimpzoompreview.c: better handling of selections and
 	navigation popup. Still not perfect.
 

@@ -325,35 +325,52 @@ gimp_zoom_preview_draw_buffer (GimpPreview  *preview,
 
   image_id = gimp_drawable_get_image (drawable->drawable_id);
 
-/*
+
   if (gimp_selection_is_empty (image_id))
     {
-*/
+
       gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview->area),
                               0, 0,
                               preview->width, preview->height,
                               gimp_drawable_type (drawable->drawable_id),
                               buffer,
                               rowstride);
-/*
+
     }
   else
     {
-      guchar *sel;
-      guchar *src;
-      gint    selection_id;
-      gint    width, height;
-      gint    bpp;
+      guchar  *sel;
+      guchar  *src;
+      gint     selection_id;
+      gint     width, height;
+      gint     bpp;
+      gint     src_x;
+      gint     src_y;
+      gint     src_width;
+      gint     src_height;
+      gdouble  zoom_factor;
 
+      zoom_factor = gimp_zoom_model_get_factor (priv->model);
       selection_id = gimp_image_get_selection (image_id);
 
       width  = preview->width;
       height = preview->height;
 
-      src = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
-                                              &width, &height, &bpp);
-      sel = gimp_drawable_get_thumbnail_data (selection_id,
-                                              &width, &height, &bpp);
+      src_x = priv->extents.x +
+           preview->xoff * priv->extents.width / width / zoom_factor;
+      src_y = priv->extents.y +
+           preview->yoff * priv->extents.height / height / zoom_factor;
+      src_width  = priv->extents.width / zoom_factor;
+      src_height = priv->extents.height / zoom_factor;
+
+      src = gimp_drawable_get_sub_thumbnail_data (drawable->drawable_id,
+                                                  src_x, src_y,
+                                                  src_width, src_height,
+                                                  &width, &height, &bpp);
+      sel = gimp_drawable_get_sub_thumbnail_data (selection_id,
+                                                  src_x, src_y,
+                                                  src_width, src_height,
+                                                  &width, &height, &bpp);
 
       gimp_preview_area_mask (GIMP_PREVIEW_AREA (preview->area),
                               0, 0, preview->width, preview->height,
@@ -365,7 +382,7 @@ gimp_zoom_preview_draw_buffer (GimpPreview  *preview,
       g_free (sel);
       g_free (src);
     }
-*/
+
 }
 
 static void
