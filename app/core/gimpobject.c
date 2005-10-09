@@ -99,9 +99,7 @@ gimp_object_get_type (void)
 static void
 gimp_object_class_init (GimpObjectClass *klass)
 {
-  GObjectClass *object_class;
-
-  object_class = G_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -132,8 +130,7 @@ gimp_object_class_init (GimpObjectClass *klass)
   klass->name_changed        = NULL;
   klass->get_memsize         = gimp_object_real_get_memsize;
 
-  g_object_class_install_property (object_class,
-				   PROP_NAME,
+  g_object_class_install_property (object_class, PROP_NAME,
 				   g_param_spec_string ("name",
 							NULL, NULL,
 							NULL,
@@ -152,15 +149,13 @@ gimp_object_dispose (GObject *object)
 {
   gboolean disconnected;
 
-  disconnected = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (object),
-						     "disconnected"));
+  disconnected = GPOINTER_TO_INT (g_object_get_data (object, "disconnected"));
 
   if (! disconnected)
     {
       g_signal_emit (object, object_signals[DISCONNECT], 0);
 
-      g_object_set_data (G_OBJECT (object), "disconnected",
-			 GINT_TO_POINTER (TRUE));
+      g_object_set_data (object, "disconnected", GINT_TO_POINTER (TRUE));
     }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
@@ -235,6 +230,7 @@ gimp_object_set_name (GimpObject  *object,
   object->name = g_strdup (name);
 
   gimp_object_name_changed (object);
+  g_object_notify (G_OBJECT (object), "name");
 }
 
 /**
@@ -261,6 +257,7 @@ gimp_object_set_name_safe (GimpObject  *object,
   object->name = gimp_utf8_strtrim (name, 30);
 
   gimp_object_name_changed (object);
+  g_object_notify (G_OBJECT (object), "name");
 }
 
 /**
@@ -284,7 +281,7 @@ gimp_object_get_name (const GimpObject *object)
  * gimp_object_name_changed:
  * @object: a #GimpObject
  *
- * Causes the "name_changed" signal to be emitted.
+ * Causes the "name-changed" signal to be emitted.
  **/
 void
 gimp_object_name_changed (GimpObject *object)
@@ -303,7 +300,7 @@ gimp_object_name_changed (GimpObject *object)
  *
  * In general you should be using gimp_object_set_name() instead. But
  * if you ever need to free the object name but don't want the
- * "name_changed" signal to be emitted, then use this function. Never
+ * "name-changed" signal to be emitted, then use this function. Never
  * ever free the object name directly!
  **/
 void
@@ -451,11 +448,10 @@ static gint64
 gimp_object_real_get_memsize (GimpObject *object,
                               gint64     *gui_size)
 {
-  gint64  memsize = 0;
+  gint64 memsize = 0;
 
   if (object->name)
     memsize += strlen (object->name) + 1;
 
   return memsize + gimp_g_object_get_memsize ((GObject *) object);
 }
-

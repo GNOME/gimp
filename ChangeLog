@@ -1,3 +1,23 @@
+2005-10-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpviewable.c (gimp_viewable_get_description): set the
+	"tooltip" return value to NULL before calling the virtual function.
+
+	* app/core/gimpbrush.c
+	* app/core/gimpbuffer.c
+	* app/core/gimpchannel.c
+	* app/core/gimplayer.c
+	* app/core/gimppaintinfo.c
+	* app/core/gimppalette.c
+	* app/core/gimppattern.c
+	* app/core/gimptoolinfo.c (get_description): don't do it here.
+
+	* app/core/gimpbuffer.c
+	* app/core/gimppaintinfo.c: untabbify, cleanup.
+
+	* app/core/gimpobject.c: emit "notify::name" whenerver the name
+	changes, clenup.
+
 2005-10-09  DindinX  <dindinx@gimp.org>
 
 	* libgimp/gimpzoompreview.c: Enable selection masking, even if it

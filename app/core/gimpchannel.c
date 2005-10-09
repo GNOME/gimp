@@ -398,9 +398,6 @@ gimp_channel_get_description (GimpViewable  *viewable,
   if (! strcmp (GIMP_IMAGE_QUICK_MASK_NAME,
                 gimp_object_get_name (GIMP_OBJECT (viewable))))
     {
-      if (tooltip)
-        *tooltip = NULL;
-
       return g_strdup (_("Quick Mask"));
     }
 

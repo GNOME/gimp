@@ -229,9 +229,6 @@ gimp_tool_info_get_description (GimpViewable  *viewable,
 {
   GimpToolInfo *tool_info = GIMP_TOOL_INFO (viewable);
 
-  if (tooltip)
-    *tooltip = NULL;
-
   return g_strdup (tool_info->blurb);
 }
 

@@ -298,9 +298,6 @@ gimp_brush_get_description (GimpViewable  *viewable,
 {
   GimpBrush *brush = GIMP_BRUSH (viewable);
 
-  if (tooltip)
-    *tooltip = NULL;
-
   return g_strdup_printf ("%s (%d x %d)",
                           GIMP_OBJECT (brush)->name,
                           brush->mask->width,

@@ -293,8 +293,6 @@ gimp_viewable_get_memsize (GimpObject *object,
 static void
 gimp_viewable_real_invalidate_preview (GimpViewable *viewable)
 {
-  g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
-
   g_object_set_qdata (G_OBJECT (viewable), quark_preview_temp_buf, NULL);
   g_object_set_qdata (G_OBJECT (viewable), quark_preview_pixbuf, NULL);
 }
@@ -342,10 +340,6 @@ gimp_viewable_real_get_new_pixbuf (GimpViewable *viewable,
 {
   TempBuf   *temp_buf;
   GdkPixbuf *pixbuf = NULL;
-
-  g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
-  g_return_val_if_fail (width  > 0, NULL);
-  g_return_val_if_fail (height > 0, NULL);
 
   temp_buf = gimp_viewable_get_preview (viewable, width, height);
 
@@ -395,9 +389,6 @@ static gchar *
 gimp_viewable_real_get_description (GimpViewable  *viewable,
                                     gchar        **tooltip)
 {
-  if (tooltip)
-    *tooltip = NULL;
-
   return g_strdup (gimp_object_get_name (GIMP_OBJECT (viewable)));
 }
 
@@ -998,6 +989,9 @@ gimp_viewable_get_description (GimpViewable  *viewable,
                                gchar        **tooltip)
 {
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
+
+  if (tooltip)
+    *tooltip = NULL;
 
   return GIMP_VIEWABLE_GET_CLASS (viewable)->get_description (viewable,
                                                               tooltip);

@@ -76,19 +76,19 @@ gimp_buffer_get_type (void)
       static const GTypeInfo buffer_info =
       {
         sizeof (GimpBufferClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_buffer_class_init,
-	NULL,		/* class_finalize */
-	NULL,		/* class_data     */
-	sizeof (GimpBuffer),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_buffer_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_buffer_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpBuffer),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_buffer_init,
       };
 
       buffer_type = g_type_register_static (GIMP_TYPE_VIEWABLE,
-					    "GimpBuffer",
-					    &buffer_info, 0);
+                                            "GimpBuffer",
+                                            &buffer_info, 0);
   }
 
   return buffer_type;
@@ -164,11 +164,11 @@ gimp_buffer_get_size (GimpViewable *viewable,
 
 static void
 gimp_buffer_get_preview_size (GimpViewable *viewable,
-			      gint          size,
+                              gint          size,
                               gboolean      is_popup,
                               gboolean      dot_for_dot,
-			      gint         *width,
-			      gint         *height)
+                              gint         *width,
+                              gint         *height)
 {
   GimpBuffer *buffer = GIMP_BUFFER (viewable);
 
@@ -225,8 +225,8 @@ gimp_buffer_get_popup_size (GimpViewable *viewable,
 
 static TempBuf *
 gimp_buffer_get_new_preview (GimpViewable *viewable,
-			     gint          width,
-			     gint          height)
+                             gint          width,
+                             gint          height)
 {
   GimpBuffer  *buffer = GIMP_BUFFER (viewable);
   TempBuf     *temp_buf;
@@ -242,10 +242,10 @@ gimp_buffer_get_new_preview (GimpViewable *viewable,
   bytes = tile_manager_bpp (buffer->tiles);
 
   pixel_region_init (&srcPR, buffer->tiles,
-		     0, 0,
-		     buffer_width,
-		     buffer_height,
-		     FALSE);
+                     0, 0,
+                     buffer_width,
+                     buffer_height,
+                     FALSE);
 
   if (buffer_height > height || buffer_width > width)
     temp_buf = temp_buf_new (width, height, bytes, 0, 0, NULL);
@@ -282,9 +282,6 @@ gimp_buffer_get_description (GimpViewable  *viewable,
 {
   GimpBuffer *buffer = GIMP_BUFFER (viewable);
 
-  if (tooltip)
-    *tooltip = NULL;
-
   return g_strdup_printf ("%s (%d x %d)",
                           GIMP_OBJECT (buffer)->name,
                           gimp_buffer_get_width (buffer),
@@ -293,7 +290,7 @@ gimp_buffer_get_description (GimpViewable  *viewable,
 
 GimpBuffer *
 gimp_buffer_new (TileManager *tiles,
-		 const gchar *name,
+                 const gchar *name,
                  gboolean     copy_pixels)
 {
   GimpBuffer *buffer;

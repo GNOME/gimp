@@ -295,9 +295,6 @@ gimp_palette_get_description (GimpViewable  *viewable,
 {
   GimpPalette *palette = GIMP_PALETTE (viewable);
 
-  if (tooltip)
-    *tooltip = NULL;
-
   return g_strdup_printf ("%s (%d)",
                           GIMP_OBJECT (palette)->name,
                           palette->n_colors);

@@ -481,9 +481,6 @@ gimp_layer_get_description (GimpViewable  *viewable,
 {
   if (gimp_layer_is_floating_sel (GIMP_LAYER (viewable)))
     {
-      if (tooltip)
-        *tooltip = NULL;
-
       return g_strdup_printf (_("Floating Selection\n(%s)"),
                               gimp_object_get_name (GIMP_OBJECT (viewable)));
     }

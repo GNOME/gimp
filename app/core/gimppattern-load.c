@@ -205,9 +205,6 @@ gimp_pattern_get_description (GimpViewable  *viewable,
 {
   GimpPattern *pattern = GIMP_PATTERN (viewable);
 
-  if (tooltip)
-    *tooltip = NULL;
-
   return g_strdup_printf ("%s (%d x %d)",
                           GIMP_OBJECT (pattern)->name,
                           pattern->mask->width,
