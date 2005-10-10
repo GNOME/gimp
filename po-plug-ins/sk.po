@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-03 22:50+0200\n"
-"PO-Revision-Date: 2005-10-03 23:06+0200\n"
+"POT-Creation-Date: 2005-10-11 00:08+0200\n"
+"PO-Revision-Date: 2005-10-11 00:11+0200\n"
 "Last-Translator: Marcel Telka <marcel@telka.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -384,7 +384,7 @@ msgstr "_Fraktály"
 #: ../plug-ins/common/xbm.c:1002 ../plug-ins/common/xwd.c:565
 #: ../plug-ins/fits/fits.c:454 ../plug-ins/flame/flame.c:442
 #: ../plug-ins/gfig/gfig.c:787 ../plug-ins/gfli/gfli.c:714
-#: ../plug-ins/ifscompose/ifscompose.c:2387 ../plug-ins/jpeg/jpeg-save.c:265
+#: ../plug-ins/ifscompose/ifscompose.c:2387 ../plug-ins/jpeg/jpeg-save.c:267
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:222
 #: ../plug-ins/winicon/icosave.c:244 ../plug-ins/xjt/xjt.c:1272
 #: ../plug-ins/xjt/xjt.c:1706
@@ -427,7 +427,7 @@ msgstr "Uložiť parametre fraktálu"
 #: ../plug-ins/common/xwd.c:420 ../plug-ins/faxg3/faxg3.c:219
 #: ../plug-ins/fits/fits.c:342 ../plug-ins/flame/flame.c:411
 #: ../plug-ins/gfig/gfig.c:427 ../plug-ins/gfli/gfli.c:428
-#: ../plug-ins/gfli/gfli.c:463 ../plug-ins/help/domain.c:423
+#: ../plug-ins/gfli/gfli.c:463 ../plug-ins/help/domain.c:426
 #: ../plug-ins/jpeg/jpeg-load.c:85 ../plug-ins/jpeg/jpeg-load.c:871
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:211
 #: ../plug-ins/winicon/icoload.c:135 ../plug-ins/xjt/xjt.c:2530
@@ -846,7 +846,8 @@ msgid "_Environment Map"
 msgstr "Mapa prostr_edia"
 
 #: ../plug-ins/Lighting/lighting_ui.c:1026
-#: ../plug-ins/gimpressionist/preview.c:181
+#: ../plug-ins/gimpressionist/preview.c:185
+#: ../plug-ins/gimpressionist/repaint.c:1166
 #: ../plug-ins/imagemap/imap_polygon.c:515
 msgid "_Update"
 msgstr "_Obnoviť"
@@ -1260,7 +1261,7 @@ msgstr "Nie je možné použiť alfa kanál nad indexovanými obrázkami."
 #: ../plug-ins/common/tga.c:1031 ../plug-ins/common/tiff.c:1925
 #: ../plug-ins/common/xbm.c:1007 ../plug-ins/common/xpm.c:623
 #: ../plug-ins/common/xwd.c:570 ../plug-ins/fits/fits.c:459
-#: ../plug-ins/gfli/gfli.c:683 ../plug-ins/jpeg/jpeg-save.c:223
+#: ../plug-ins/gfli/gfli.c:683 ../plug-ins/jpeg/jpeg-save.c:225
 #: ../plug-ins/sgi/sgi.c:537 ../plug-ins/winicon/icosave.c:977
 #: ../plug-ins/xjt/xjt.c:1689
 #, c-format
@@ -2811,7 +2812,7 @@ msgstr "Ohýbanie pomocou krivky"
 
 #. Preview area, top of column
 #: ../plug-ins/common/curve_bend.c:1274
-#: ../plug-ins/gimpressionist/orientmap.c:573
+#: ../plug-ins/gimpressionist/orientmap.c:574
 #: ../plug-ins/gimpressionist/sizemap.c:443
 msgid "Preview"
 msgstr "Náhľad"
@@ -7811,7 +7812,7 @@ msgstr "_Oboje"
 msgid "Higher values restrict the effect to fewer areas of the image"
 msgstr "Vyššie hodnoty obmedzujú efekt na menšie oblasti obrázky"
 
-#: ../plug-ins/common/wind.c:1027 ../plug-ins/gimpressionist/orientmap.c:675
+#: ../plug-ins/common/wind.c:1027 ../plug-ins/gimpressionist/orientmap.c:676
 msgid "_Strength:"
 msgstr "_Sila:"
 
@@ -7898,10 +7899,6 @@ msgstr "Generované WMF"
 #: ../plug-ins/common/xbm.c:172 ../plug-ins/common/xbm.c:190
 msgid "X BitMap image"
 msgstr "X BitMap obrázok"
-
-#: ../plug-ins/common/xbm.c:244
-msgid "Created with The GIMP"
-msgstr "Vytvorené s programom GIMP"
 
 #: ../plug-ins/common/xbm.c:803
 #, c-format
@@ -9038,12 +9035,8 @@ msgstr "_GIMPressionista..."
 msgid "Painting"
 msgstr "Kreslím"
 
-#: ../plug-ins/gimpressionist/gimpressionist.c:117
-msgid "The GIMPressionist"
-msgstr "GIMPressionista"
-
-#: ../plug-ins/gimpressionist/gimpressionist.c:196
-msgid "Gimpressionist"
+#: ../plug-ins/gimpressionist/gimpressionist.c:121
+msgid "GIMPressionist"
 msgstr "GIMPressionista"
 
 #: ../plug-ins/gimpressionist/orientation.c:74
@@ -9144,11 +9137,11 @@ msgstr "Otvorí editor máp orientácie"
 msgid "Orientation Map Editor"
 msgstr "Editor máp orientácie"
 
-#: ../plug-ins/gimpressionist/orientmap.c:536
+#: ../plug-ins/gimpressionist/orientmap.c:537
 msgid "Vectors"
 msgstr "Vektory"
 
-#: ../plug-ins/gimpressionist/orientmap.c:548
+#: ../plug-ins/gimpressionist/orientmap.c:549
 msgid ""
 "The vector-field. Left-click to move selected vector, Right-click to point "
 "it towards mouse, Middle-click to add a new vector."
@@ -9156,93 +9149,93 @@ msgstr ""
 "Vektorové pole. Ľavé tlačítko presunie zvolený vektor. Pravé tlačítko ho "
 "smeruje podľa myši. Prostredné tlačítko pridá nový vektor."
 
-#: ../plug-ins/gimpressionist/orientmap.c:571
+#: ../plug-ins/gimpressionist/orientmap.c:572
 #: ../plug-ins/gimpressionist/sizemap.c:441
 msgid "Adjust the preview's brightness"
 msgstr "Prispôsobiť jas náhľadu"
 
-#: ../plug-ins/gimpressionist/orientmap.c:593
+#: ../plug-ins/gimpressionist/orientmap.c:594
 msgid "Select previous vector"
 msgstr "Vybrať predchádzajúci vektor"
 
-#: ../plug-ins/gimpressionist/orientmap.c:599
+#: ../plug-ins/gimpressionist/orientmap.c:600
 msgid "Select next vector"
 msgstr "Vybrať nasledujúci vektor"
 
-#: ../plug-ins/gimpressionist/orientmap.c:601
+#: ../plug-ins/gimpressionist/orientmap.c:602
 #: ../plug-ins/gimpressionist/sizemap.c:472
 msgid "A_dd"
 msgstr "_Pridať"
 
-#: ../plug-ins/gimpressionist/orientmap.c:605
+#: ../plug-ins/gimpressionist/orientmap.c:606
 msgid "Add new vector"
 msgstr "Pridať nový vektor"
 
-#: ../plug-ins/gimpressionist/orientmap.c:607
+#: ../plug-ins/gimpressionist/orientmap.c:608
 #: ../plug-ins/gimpressionist/sizemap.c:479
 msgid "_Kill"
 msgstr "_Odstrániť"
 
-#: ../plug-ins/gimpressionist/orientmap.c:611
+#: ../plug-ins/gimpressionist/orientmap.c:612
 msgid "Delete selected vector"
 msgstr "Zmazať zvolený vektor"
 
-#: ../plug-ins/gimpressionist/orientmap.c:622
+#: ../plug-ins/gimpressionist/orientmap.c:623
 msgid "Type"
 msgstr "Typ"
 
-#: ../plug-ins/gimpressionist/orientmap.c:626
+#: ../plug-ins/gimpressionist/orientmap.c:627
 msgid "_Normal"
 msgstr "_Normálny"
 
-#: ../plug-ins/gimpressionist/orientmap.c:627
+#: ../plug-ins/gimpressionist/orientmap.c:628
 msgid "Vorte_x"
 msgstr "Ví_r"
 
-#: ../plug-ins/gimpressionist/orientmap.c:628
+#: ../plug-ins/gimpressionist/orientmap.c:629
 msgid "Vortex_2"
 msgstr "Vír_2"
 
-#: ../plug-ins/gimpressionist/orientmap.c:629
+#: ../plug-ins/gimpressionist/orientmap.c:630
 msgid "Vortex_3"
 msgstr "Vír_3"
 
-#: ../plug-ins/gimpressionist/orientmap.c:635
+#: ../plug-ins/gimpressionist/orientmap.c:636
 #: ../plug-ins/gimpressionist/sizemap.c:524
 msgid "_Voronoi"
 msgstr "_Voronoi"
 
-#: ../plug-ins/gimpressionist/orientmap.c:643
+#: ../plug-ins/gimpressionist/orientmap.c:644
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
 msgstr "Režim Voronoi znamená, že vplyv bude mať iba najbližší vektor k bodu"
 
-#: ../plug-ins/gimpressionist/orientmap.c:653
+#: ../plug-ins/gimpressionist/orientmap.c:654
 msgid "A_ngle:"
 msgstr "_Uhol:"
 
-#: ../plug-ins/gimpressionist/orientmap.c:657
+#: ../plug-ins/gimpressionist/orientmap.c:658
 msgid "Change the angle of the selected vector"
 msgstr "Zmeniť uhol zvoleného vektora"
 
-#: ../plug-ins/gimpressionist/orientmap.c:664
+#: ../plug-ins/gimpressionist/orientmap.c:665
 msgid "Ang_le offset:"
 msgstr "Posun uh_la:"
 
-#: ../plug-ins/gimpressionist/orientmap.c:668
+#: ../plug-ins/gimpressionist/orientmap.c:669
 msgid "Offset all vectors with a given angle"
 msgstr "Posun všetkých vektorov o daný uhol"
 
-#: ../plug-ins/gimpressionist/orientmap.c:679
+#: ../plug-ins/gimpressionist/orientmap.c:680
 msgid "Change the strength of the selected vector"
 msgstr "Zmeniť silu zvoleného vektora"
 
-#: ../plug-ins/gimpressionist/orientmap.c:686
+#: ../plug-ins/gimpressionist/orientmap.c:687
 msgid "S_trength exp.:"
 msgstr "Exponent _sily:"
 
-#: ../plug-ins/gimpressionist/orientmap.c:690
+#: ../plug-ins/gimpressionist/orientmap.c:691
 #: ../plug-ins/gimpressionist/sizemap.c:519
 msgid "Change the exponent of the strength"
 msgstr "Zmena exponenta sily"
@@ -9291,21 +9284,21 @@ msgstr "Náhodne umiestni ťahy v obrázku"
 msgid "The strokes are evenly distributed across the image"
 msgstr "Ťahy sú rovnomerne rozložené v obrázku"
 
-#: ../plug-ins/gimpressionist/placement.c:91
+#: ../plug-ins/gimpressionist/placement.c:84
+msgid "Centered"
+msgstr "Vystredené"
+
+#: ../plug-ins/gimpressionist/placement.c:90
+msgid "Focus the brush strokes around the center of the image"
+msgstr "Smerovať ťahy štetca do stredu obrázka"
+
+#: ../plug-ins/gimpressionist/placement.c:102
 msgid "Stroke _density:"
 msgstr "_Hustota ťahov:"
 
-#: ../plug-ins/gimpressionist/placement.c:95
+#: ../plug-ins/gimpressionist/placement.c:106
 msgid "The relative density of the brush strokes"
 msgstr "Relatívna hustota ťahov štetca"
-
-#: ../plug-ins/gimpressionist/placement.c:101
-msgid "Centerize"
-msgstr "Centrovať"
-
-#: ../plug-ins/gimpressionist/placement.c:107
-msgid "Focus the brush strokes around the center of the image"
-msgstr "Smerovať ťahy štetca do stredu obrázka"
 
 #.
 #. * gimp_filename_to_utf8 () and g_strerror () return temporary strings
@@ -9321,44 +9314,40 @@ msgid "Save Current"
 msgstr "Uložiť aktuálne"
 
 #: ../plug-ins/gimpressionist/presets.c:874
-msgid "The Gimpressionist Defaults"
-msgstr "Štandardné nastavenia GIMPressionistu"
+msgid "Gimpressionist Defaults"
+msgstr "Štandardné nastavenia Gimpressionistu"
 
-#: ../plug-ins/gimpressionist/presets.c:990
+#: ../plug-ins/gimpressionist/presets.c:995
 msgid "_Presets"
 msgstr "_Predvoľby"
 
-#: ../plug-ins/gimpressionist/presets.c:1005
+#: ../plug-ins/gimpressionist/presets.c:1010
 msgid "Save Current..."
 msgstr "Uložiť aktuálne..."
 
-#: ../plug-ins/gimpressionist/presets.c:1010
+#: ../plug-ins/gimpressionist/presets.c:1015
 msgid "Save the current settings to the specified file"
 msgstr "Uloží aktuálne nastavenia do určeného súboru"
 
-#: ../plug-ins/gimpressionist/presets.c:1038
+#: ../plug-ins/gimpressionist/presets.c:1043
 msgid "Reads the selected Preset into memory"
 msgstr "Číta zvolené predvoľby do pamäte"
 
-#: ../plug-ins/gimpressionist/presets.c:1044
+#: ../plug-ins/gimpressionist/presets.c:1049
 msgid "Deletes the selected Preset"
 msgstr "Zmaže zvolené prevoľby"
 
-#: ../plug-ins/gimpressionist/presets.c:1050
+#: ../plug-ins/gimpressionist/presets.c:1055
 msgid "Reread the folder of Presets"
 msgstr "Znovu načítanie priečinka s predvoľbami"
 
-#: ../plug-ins/gimpressionist/preview.c:187
+#: ../plug-ins/gimpressionist/preview.c:191
 msgid "Refresh the Preview window"
 msgstr "Aktualizovať okno s náhľadom"
 
-#: ../plug-ins/gimpressionist/preview.c:195
+#: ../plug-ins/gimpressionist/preview.c:199
 msgid "Revert to the original image"
 msgstr "Návrat k pôvodnému obrázku"
-
-#: ../plug-ins/gimpressionist/repaint.c:1160
-msgid "Update"
-msgstr "Aktualizovať"
 
 #: ../plug-ins/gimpressionist/size.c:77
 msgid "_Size"
@@ -9481,23 +9470,31 @@ msgid ""
 msgstr "Režim Voronoi berie do úvahy iba vplyv bodu najbližšieho vektora mv"
 
 #: ../plug-ins/help/domain.c:177
-msgid "The GIMP help files are not installed."
-msgstr "Súbory pomocníka GIMP nie sú nainštalované."
+msgid "The GIMP help files are not found."
+msgstr "Súbory pomocníka GIMP neboli nájdené."
 
-#: ../plug-ins/help/domain.c:179
+#: ../plug-ins/help/domain.c:178
+msgid ""
+"Please install the additional help package or use the online user manual at "
+"http://docs.gimp.org/."
+msgstr ""
+"Prosím, nainštalujte prídavný balík pomocníka, alebo použite príručku používateľa "
+"na internete na adrese http://docs.gimp.org/."
+
+#: ../plug-ins/help/domain.c:184
 msgid "There is a problem with the GIMP help files."
 msgstr "Je problém so súbormi pomocníka GIMP-"
 
-#: ../plug-ins/help/domain.c:184
+#: ../plug-ins/help/domain.c:186
 msgid "Please check your installation."
 msgstr "Prekontrolujte si inštaláciu."
 
-#: ../plug-ins/help/domain.c:192
+#: ../plug-ins/help/domain.c:195
 #, c-format
 msgid "Help ID '%s' unknown"
 msgstr "Neznáme ID pomocníka '%s'"
 
-#: ../plug-ins/help/domain.c:449
+#: ../plug-ins/help/domain.c:452
 #, c-format
 msgid ""
 "Parse error in '%s':\n"
@@ -10324,99 +10321,99 @@ msgstr "Náhľad na JPEG"
 msgid "Opening thumbnail for '%s'"
 msgstr "Otváranie miniatúry pre '%s'"
 
-#: ../plug-ins/jpeg/jpeg-save.c:139
+#: ../plug-ins/jpeg/jpeg-save.c:141
 #, c-format
 msgid "File size: %02.01f kB"
 msgstr "Veľkosť súboru: %02.01f kB"
 
-#: ../plug-ins/jpeg/jpeg-save.c:659 ../plug-ins/jpeg/jpeg-save.c:760
+#: ../plug-ins/jpeg/jpeg-save.c:664 ../plug-ins/jpeg/jpeg-save.c:765
 msgid "File size: unknown"
 msgstr "Veľkosť: neznáma"
 
-#: ../plug-ins/jpeg/jpeg-save.c:712
+#: ../plug-ins/jpeg/jpeg-save.c:717
 msgid "Save as JPEG"
 msgstr "Uložiť ako JPEG"
 
-#: ../plug-ins/jpeg/jpeg-save.c:739
+#: ../plug-ins/jpeg/jpeg-save.c:744
 msgid "_Quality:"
 msgstr "_Kvalita:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:743
+#: ../plug-ins/jpeg/jpeg-save.c:748
 msgid "JPEG quality parameter"
 msgstr "Parametre kvality JPEG"
 
-#: ../plug-ins/jpeg/jpeg-save.c:758
+#: ../plug-ins/jpeg/jpeg-save.c:763
 msgid "Enable preview to obtain the file size."
 msgstr "Povoliť náhľad na získanie veľkosti súboru."
 
-#: ../plug-ins/jpeg/jpeg-save.c:769
+#: ../plug-ins/jpeg/jpeg-save.c:774
 msgid "Show _preview in image window"
 msgstr "Zobraziť _náhľad v okne obrázka"
 
-#: ../plug-ins/jpeg/jpeg-save.c:781
+#: ../plug-ins/jpeg/jpeg-save.c:786
 msgid "_Advanced Options"
 msgstr "Pokročilé n_astavenia"
 
-#: ../plug-ins/jpeg/jpeg-save.c:809
+#: ../plug-ins/jpeg/jpeg-save.c:814
 msgid "_Smoothing:"
 msgstr "_Vyhladzovanie:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:822
+#: ../plug-ins/jpeg/jpeg-save.c:827
 msgid "Frequency (rows):"
 msgstr "Frekvencia (riadky):"
 
-#: ../plug-ins/jpeg/jpeg-save.c:836
+#: ../plug-ins/jpeg/jpeg-save.c:841
 msgid "Use restart markers"
 msgstr "Používať reštartovacie značky"
 
-#: ../plug-ins/jpeg/jpeg-save.c:852 ../plug-ins/xjt/xjt.c:869
+#: ../plug-ins/jpeg/jpeg-save.c:857 ../plug-ins/xjt/xjt.c:869
 msgid "Optimize"
 msgstr "Optimalizovať"
 
-#: ../plug-ins/jpeg/jpeg-save.c:865
+#: ../plug-ins/jpeg/jpeg-save.c:870
 msgid "Progressive"
 msgstr "Progresívny"
 
-#: ../plug-ins/jpeg/jpeg-save.c:879
+#: ../plug-ins/jpeg/jpeg-save.c:884
 msgid "Force baseline JPEG"
 msgstr "Vnútiť základný JPEG"
 
-#: ../plug-ins/jpeg/jpeg-save.c:894
+#: ../plug-ins/jpeg/jpeg-save.c:899
 msgid "Save EXIF data"
 msgstr "Uložiť EXIF dáta"
 
-#: ../plug-ins/jpeg/jpeg-save.c:910
+#: ../plug-ins/jpeg/jpeg-save.c:915
 msgid "Save thumbnail"
 msgstr "Uložiť miniatúru"
 
 #. XMP metadata
-#: ../plug-ins/jpeg/jpeg-save.c:926
+#: ../plug-ins/jpeg/jpeg-save.c:931
 msgid "Save XMP data"
 msgstr "Uložiť XMP dáta"
 
 #. Subsampling
-#: ../plug-ins/jpeg/jpeg-save.c:939
+#: ../plug-ins/jpeg/jpeg-save.c:944
 msgid "Subsampling:"
 msgstr "Podvzorkovanie:"
 
 #. DCT method
-#: ../plug-ins/jpeg/jpeg-save.c:966
+#: ../plug-ins/jpeg/jpeg-save.c:967
 msgid "DCT method:"
 msgstr "DCT metóda:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:972
+#: ../plug-ins/jpeg/jpeg-save.c:973
 msgid "Fast Integer"
 msgstr "Rýchle celočíselné"
 
-#: ../plug-ins/jpeg/jpeg-save.c:973
+#: ../plug-ins/jpeg/jpeg-save.c:974
 msgid "Integer"
 msgstr "Celé číslo"
 
-#: ../plug-ins/jpeg/jpeg-save.c:974
+#: ../plug-ins/jpeg/jpeg-save.c:975
 msgid "Floating-Point"
 msgstr "Plávajúca bodka"
 
-#: ../plug-ins/jpeg/jpeg-save.c:988
+#: ../plug-ins/jpeg/jpeg-save.c:989
 msgid "Comment"
 msgstr "Komentár"
 

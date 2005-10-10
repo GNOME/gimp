@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-03 05:20+0200\n"
-"PO-Revision-Date: 2005-10-03 05:23+0200\n"
+"POT-Creation-Date: 2005-10-11 00:04+0200\n"
+"PO-Revision-Date: 2005-10-11 00:07+0200\n"
 "Last-Translator: Marcel Telka <marcel@telka.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -245,48 +245,48 @@ msgstr "podľa dátumu"
 msgid "by type"
 msgstr "podľa typu"
 
-#: ../libgimp/gimpprocbrowserdialog.c:411
-msgid "Searching by name - please wait"
-msgstr "Vyhľadávanie podľa názvu - prosím čakajte"
+#: ../libgimp/gimpprocbrowserdialog.c:408
+msgid "Searching"
+msgstr "Vyhľadávanie"
 
-#: ../libgimp/gimpprocbrowserdialog.c:431
-msgid "Searching by description - please wait"
-msgstr "Vyhľadávanie podľa popisu - prosím čakajte"
+#: ../libgimp/gimpprocbrowserdialog.c:419
+msgid "Searching by name"
+msgstr "Vyhľadávanie podľa názvu"
 
-#: ../libgimp/gimpprocbrowserdialog.c:439
-msgid "Searching by help - please wait"
-msgstr "Vyhľadávanie podľa pomocníka - prosím čakajte"
+#: ../libgimp/gimpprocbrowserdialog.c:440
+msgid "Searching by description"
+msgstr "Vyhľadávanie podľa popisu"
 
 #: ../libgimp/gimpprocbrowserdialog.c:447
-msgid "Searching by author - please wait"
-msgstr "Vyhľadávanie podľa autora - prosím čakajte"
+msgid "Searching by help"
+msgstr "Vyhľadávanie podľa pomocníka"
 
-#: ../libgimp/gimpprocbrowserdialog.c:455
-msgid "Searching by copyright - please wait"
-msgstr "Vyhľadávanie podľa autorských práv - prosím čakajte"
+#: ../libgimp/gimpprocbrowserdialog.c:454
+msgid "Searching by author"
+msgstr "Vyhľadávanie podľa autora"
 
-#: ../libgimp/gimpprocbrowserdialog.c:463
-msgid "Searching by date - please wait"
-msgstr "Vyhľadávanie podľa dátumu - prosím čakajte"
+#: ../libgimp/gimpprocbrowserdialog.c:461
+msgid "Searching by copyright"
+msgstr "Vyhľadávanie podľa autorských práv"
 
-#: ../libgimp/gimpprocbrowserdialog.c:471
-msgid "Searching by type - please wait"
-msgstr "Vyhľadávanie podľa typu - prosím čakajte"
+#: ../libgimp/gimpprocbrowserdialog.c:468
+msgid "Searching by date"
+msgstr "Vyhľadávanie podľa dátumu"
 
-#: ../libgimp/gimpprocbrowserdialog.c:479
-msgid "Searching - please wait"
-msgstr "Vyhľadávanie - prosím čakajte"
+#: ../libgimp/gimpprocbrowserdialog.c:475
+msgid "Searching by type"
+msgstr "Vyhľadávanie podľa typu"
 
-#: ../libgimp/gimpprocbrowserdialog.c:487
+#: ../libgimp/gimpprocbrowserdialog.c:484
 #, c-format
-msgid "%d Procedures"
+msgid "%d procedures"
 msgstr "%d procedúr"
 
-#: ../libgimp/gimpprocbrowserdialog.c:494
+#: ../libgimp/gimpprocbrowserdialog.c:491
 msgid "No matches for your query"
 msgstr "Pre vašu otázku nie sú zhody"
 
-#: ../libgimp/gimpprocbrowserdialog.c:498
+#: ../libgimp/gimpprocbrowserdialog.c:495
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
@@ -294,7 +294,8 @@ msgstr[0] "%d procedúr vyhovuje vašej otázke"
 msgstr[1] "%d procedúra vyhovuje vašej otázke"
 msgstr[2] "%d procedúry vyhovujú vašej otázke"
 
-#: ../libgimp/gimpprocbrowserdialog.c:547
+#. count label
+#: ../libgimp/gimpprocbrowserdialog.c:544 ../libgimpwidgets/gimpbrowser.c:145
 msgid "No matches"
 msgstr "Bez zhody"
 
@@ -960,19 +961,19 @@ msgstr "_Biela"
 msgid "Scales"
 msgstr "Mierky"
 
-#: ../libgimpwidgets/gimpcolorselection.c:214
+#: ../libgimpwidgets/gimpcolorselection.c:218
 msgid "Current:"
 msgstr "Aktuálne:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:236
+#: ../libgimpwidgets/gimpcolorselection.c:240
 msgid "Old:"
 msgstr "Staré:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:281
+#: ../libgimpwidgets/gimpcolorselection.c:294
 msgid "Hexadecimal color notation as used in HTML and CSS"
 msgstr "Hexadecimálny zápis farby ako v HTML a CSS"
 
-#: ../libgimpwidgets/gimpcolorselection.c:286
+#: ../libgimpwidgets/gimpcolorselection.c:299
 msgid "HTML _notation:"
 msgstr "HTML _zápis:"
 
