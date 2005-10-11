@@ -1,3 +1,10 @@
+2005-10-11  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpthumb/gimpthumbnail.c: the mime-type is stored in
+	"tEXt::Thumb::Mimetype", not in "tEXt::Thumb::Image::Mimetype".
+	Fixed this and reordered properties so "tEXt::Thumb" and
+	"tEXt::Thumb::Image" stuff is grouped together again.
+
 2005-10-10  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpcolorselection.c: added a pick button, it's

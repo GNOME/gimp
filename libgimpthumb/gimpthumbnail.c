@@ -66,9 +66,9 @@
 #define TAG_THUMB_URI             "tEXt::Thumb::URI"
 #define TAG_THUMB_MTIME           "tEXt::Thumb::MTime"
 #define TAG_THUMB_FILESIZE        "tEXt::Thumb::Size"
+#define TAG_THUMB_MIMETYPE        "tEXt::Thumb::Mimetype"
 #define TAG_THUMB_IMAGE_WIDTH     "tEXt::Thumb::Image::Width"
 #define TAG_THUMB_IMAGE_HEIGHT    "tEXt::Thumb::Image::Height"
-#define TAG_THUMB_IMAGE_MIMETYPE  "tEXt::Thumb::Image::Mimetype"
 #define TAG_THUMB_GIMP_TYPE       "tEXt::Thumb::X-GIMP::Type"
 #define TAG_THUMB_GIMP_LAYERS     "tEXt::Thumb::X-GIMP::Layers"
 
@@ -80,9 +80,9 @@ enum
   PROP_IMAGE_URI,
   PROP_IMAGE_MTIME,
   PROP_IMAGE_FILESIZE,
+  PROP_IMAGE_MIMETYPE,
   PROP_IMAGE_WIDTH,
   PROP_IMAGE_HEIGHT,
-  PROP_IMAGE_MIMETYPE,
   PROP_IMAGE_TYPE,
   PROP_IMAGE_NUM_LAYERS,
   PROP_THUMB_STATE
@@ -187,6 +187,17 @@ gimp_thumbnail_class_init (GimpThumbnailClass *klass)
                                                        "Size of the image file in bytes",
                                                        0, G_MAXINT64, 0,
                                                        G_PARAM_READWRITE));
+  /**
+   * GimpThumbnail::image-mimetype:
+   *
+   * Since: GIMP 2.2
+   **/
+  g_object_class_install_property (object_class,
+				   PROP_IMAGE_MIMETYPE,
+				   g_param_spec_string ("image-mimetype", NULL,
+                                                        "Image mimetype",
+                                                        NULL,
+                                                        G_PARAM_READWRITE));
   g_object_class_install_property (object_class,
 				   PROP_IMAGE_WIDTH,
 				   g_param_spec_int ("image-width", NULL,
@@ -199,17 +210,6 @@ gimp_thumbnail_class_init (GimpThumbnailClass *klass)
                                                      "Height of the image in pixels",
                                                      0, G_MAXINT, 0,
                                                      G_PARAM_READWRITE));
-  /**
-   * GimpThumbnail::image-mimetype:
-   *
-   * Since: GIMP 2.2
-   **/
-  g_object_class_install_property (object_class,
-				   PROP_IMAGE_MIMETYPE,
-				   g_param_spec_string ("image-mimetype", NULL,
-                                                        "Image mimetype",
-                                                        NULL,
-                                                        G_PARAM_READWRITE));
   g_object_class_install_property (object_class,
                                    PROP_IMAGE_TYPE,
                                    g_param_spec_string ("image-type", NULL,
@@ -239,9 +239,9 @@ gimp_thumbnail_init (GimpThumbnail *thumbnail)
   thumbnail->image_filename   = NULL;
   thumbnail->image_mtime      = 0;
   thumbnail->image_filesize   = 0;
+  thumbnail->image_mimetype   = NULL;
   thumbnail->image_width      = 0;
   thumbnail->image_height     = 0;
-  thumbnail->image_mimetype   = NULL;
   thumbnail->image_type       = NULL;
   thumbnail->image_num_layers = 0;
 
@@ -315,15 +315,15 @@ gimp_thumbnail_set_property (GObject      *object,
     case PROP_IMAGE_FILESIZE:
       thumbnail->image_filesize = g_value_get_int64 (value);
       break;
+    case PROP_IMAGE_MIMETYPE:
+      g_free (thumbnail->image_mimetype);
+      thumbnail->image_mimetype = g_value_dup_string (value);
+      break;
     case PROP_IMAGE_WIDTH:
       thumbnail->image_width = g_value_get_int (value);
       break;
     case PROP_IMAGE_HEIGHT:
       thumbnail->image_height = g_value_get_int (value);
-      break;
-    case PROP_IMAGE_MIMETYPE:
-      g_free (thumbnail->image_mimetype);
-      thumbnail->image_mimetype = g_value_dup_string (value);
       break;
     case PROP_IMAGE_TYPE:
       g_free (thumbnail->image_type);
@@ -364,14 +364,14 @@ gimp_thumbnail_get_property (GObject    *object,
     case PROP_IMAGE_FILESIZE:
       g_value_set_int64 (value, thumbnail->image_filesize);
       break;
+    case PROP_IMAGE_MIMETYPE:
+      g_value_set_string (value, thumbnail->image_mimetype);
+      break;
     case PROP_IMAGE_WIDTH:
       g_value_set_int (value, thumbnail->image_width);
       break;
     case PROP_IMAGE_HEIGHT:
       g_value_set_int (value, thumbnail->image_height);
-      break;
-    case PROP_IMAGE_MIMETYPE:
-      g_value_set_string (value, thumbnail->image_mimetype);
       break;
     case PROP_IMAGE_TYPE:
       g_value_set_string (value, thumbnail->image_type);
@@ -444,9 +444,9 @@ gimp_thumbnail_set_uri (GimpThumbnail *thumbnail,
                 "image-state",      GIMP_THUMB_STATE_UNKNOWN,
                 "image-filesize",   (gint64) 0,
                 "image-mtime",      (gint64) 0,
+                "image-mimetype",   NULL,
                 "image-width",      0,
                 "image-height",     0,
-                "image-mimetype",   NULL,
                 "image-type",       NULL,
                 "image-num-layers", 0,
                 "thumb-state",      GIMP_THUMB_STATE_UNKNOWN,
@@ -772,9 +772,9 @@ static void
 gimp_thumbnail_reset_info (GimpThumbnail *thumbnail)
 {
   g_object_set (thumbnail,
+                "image-mimetype",   NULL,
                 "image-width",      0,
                 "image-height",     0,
-                "image-mimetype",   NULL,
                 "image-type",       NULL,
                 "image-num-layers", 0,
                 NULL);
@@ -791,6 +791,9 @@ gimp_thumbnail_set_info_from_pixbuf (GimpThumbnail *thumbnail,
 
   gimp_thumbnail_reset_info (thumbnail);
 
+  thumbnail->image_mimetype =
+    g_strdup (gdk_pixbuf_get_option (pixbuf, TAG_THUMB_MIMETYPE));
+
   option = gdk_pixbuf_get_option (pixbuf, TAG_THUMB_IMAGE_WIDTH);
   if (option && sscanf (option, "%d", &num) == 1)
     thumbnail->image_width = num;
@@ -798,9 +801,6 @@ gimp_thumbnail_set_info_from_pixbuf (GimpThumbnail *thumbnail,
   option = gdk_pixbuf_get_option (pixbuf, TAG_THUMB_IMAGE_HEIGHT);
   if (option && sscanf (option, "%d", &num) == 1)
     thumbnail->image_height = num;
-
-  thumbnail->image_mimetype =
-    g_strdup (gdk_pixbuf_get_option (pixbuf, TAG_THUMB_IMAGE_MIMETYPE));
 
   thumbnail->image_type =
     g_strdup (gdk_pixbuf_get_option (pixbuf, TAG_THUMB_GIMP_TYPE));
@@ -848,6 +848,13 @@ gimp_thumbnail_save (GimpThumbnail  *thumbnail,
   values[i] = g_strdup_printf ("%" G_GINT64_FORMAT, thumbnail->image_filesize);
   i++;
 
+  if (thumbnail->image_mimetype)
+    {
+      keys[i]   = TAG_THUMB_MIMETYPE;
+      values[i] = g_strdup_printf (thumbnail->image_mimetype);
+      i++;
+    }
+
   if (thumbnail->image_width > 0)
     {
       keys[i]   = TAG_THUMB_IMAGE_WIDTH;
@@ -859,13 +866,6 @@ gimp_thumbnail_save (GimpThumbnail  *thumbnail,
     {
       keys[i]   = TAG_THUMB_IMAGE_HEIGHT;
       values[i] = g_strdup_printf ("%d", thumbnail->image_height);
-      i++;
-    }
-
-  if (thumbnail->image_mimetype)
-    {
-      keys[i]   = TAG_THUMB_IMAGE_MIMETYPE;
-      values[i] = g_strdup_printf (thumbnail->image_mimetype);
       i++;
     }
 
