@@ -171,9 +171,9 @@ query (void)
   gimp_install_procedure (PLUG_IN_PROC,
                           "Displace the contents of the specified drawable",
                           "Displaces the contents of the specified drawable "
-                          "by the amounts specified by 'amount_x' and "
-                          "'amount_y' multiplied by the luminance of "
-                          "corresponding pixels in the 'displace_map' "
+                          "by the amounts specified by 'amount-x' and "
+                          "'amount-y' multiplied by the luminance of "
+                          "corresponding pixels in the 'displace-map' "
                           "drawables.",
                           "Stephen Robert Norris & (ported to 1.0 by) "
                           "Spencer Kimball",
@@ -270,6 +270,22 @@ run (const gchar      *name,
 
     default:
       break;
+    }
+
+  if (status == GIMP_PDB_SUCCESS)
+    {
+      if (dvals.displace_map_x != -1 &&
+          (gimp_drawable_width (dvals.displace_map_x) != drawable->width ||
+           gimp_drawable_height (dvals.displace_map_x) != drawable->height))
+        status = GIMP_PDB_CALLING_ERROR;
+    }
+
+  if (status == GIMP_PDB_SUCCESS)
+    {
+      if (dvals.displace_map_y != -1 &&
+          (gimp_drawable_width (dvals.displace_map_y) != drawable->width ||
+           gimp_drawable_height (dvals.displace_map_y) != drawable->height))
+        status = GIMP_PDB_CALLING_ERROR;
     }
 
   if (status == GIMP_PDB_SUCCESS && (dvals.do_x || dvals.do_y))
@@ -495,8 +511,8 @@ static void
 displace (GimpDrawable *drawable,
           GimpPreview  *preview)
 {
-  GimpDrawable     *map_x;
-  GimpDrawable     *map_y;
+  GimpDrawable     *map_x = NULL;
+  GimpDrawable     *map_y = NULL;
   GimpPixelRgn      dest_rgn;
   GimpPixelRgn      map_x_rgn;
   GimpPixelRgn      map_y_rgn;
@@ -548,8 +564,7 @@ displace (GimpDrawable *drawable,
 
   bytes  = drawable->bpp;
 
-  gimp_drawable_mask_bounds (drawable->drawable_id,
-                                 &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
   width  = x2 - x1;
   height = y2 - y1;
 
@@ -582,24 +597,24 @@ displace (GimpDrawable *drawable,
       map_x = gimp_drawable_get (dvals.displace_map_x);
       gimp_pixel_rgn_init (&map_x_rgn, map_x,
                            x1, y1, width, height, FALSE, FALSE);
-      if (gimp_drawable_has_alpha(map_x->drawable_id))
+
+      if (gimp_drawable_has_alpha (map_x->drawable_id))
         xm_alpha = 1;
-      xm_bytes = gimp_drawable_bpp(map_x->drawable_id);
+
+      xm_bytes = gimp_drawable_bpp (map_x->drawable_id);
     }
-  else
-    map_x = NULL;
 
   if (dvals.displace_map_y != -1 && dvals.do_y)
     {
       map_y = gimp_drawable_get (dvals.displace_map_y);
       gimp_pixel_rgn_init (&map_y_rgn, map_y,
                            x1, y1, width, height, FALSE, FALSE);
-      if (gimp_drawable_has_alpha(map_y->drawable_id))
+
+      if (gimp_drawable_has_alpha (map_y->drawable_id))
         ym_alpha = 1;
-      ym_bytes = gimp_drawable_bpp(map_y->drawable_id);
+
+      ym_bytes = gimp_drawable_bpp (map_y->drawable_id);
     }
-  else
-    map_y = NULL;
 
   gimp_pixel_rgn_init (&dest_rgn, drawable,
                        x1, y1, width, height,

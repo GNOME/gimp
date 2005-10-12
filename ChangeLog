@@ -1,5 +1,11 @@
 2005-10-12  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/displace.c: check that displacement maps have
+	the same size as the target drawable, return a PDB_CALLING_ERROR
+	otherwise. Fixes bug #318644.
+
+2005-10-12  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/plugin-browser.c: store the installation time in
 	the models, not only the string representation. Sort by time, not
 	alphabetically. Fixes bug #318652.
