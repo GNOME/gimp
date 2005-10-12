@@ -45,6 +45,7 @@ enum
 {
   LIST_COLUMN_NAME,
   LIST_COLUMN_DATE,
+  LIST_COLUMN_DATE_STRING,
   LIST_COLUMN_PATH,
   LIST_COLUMN_IMAGE_TYPES,
   LIST_COLUMN_PINFO,
@@ -55,6 +56,7 @@ enum
 {
   TREE_COLUMN_PATH_NAME,
   TREE_COLUMN_DATE,
+  TREE_COLUMN_DATE_STRING,
   TREE_COLUMN_IMAGE_TYPES,
   TREE_COLUMN_MPATH,
   TREE_COLUMN_PINFO,
@@ -316,10 +318,11 @@ get_parent (PluginBrowser *browser,
 
 static void
 insert_into_tree_view (PluginBrowser *browser,
-                       gchar         *name,
-                       gchar         *xtimestr,
-                       gchar         *menu_str,
-                       gchar         *types_str,
+                       const gchar   *name,
+                       gint64         xtime,
+                       const gchar   *xtimestr,
+                       const gchar   *menu_str,
+                       const gchar   *types_str,
                        PInfo         *pinfo)
 {
   gchar        *labels[3];
@@ -359,7 +362,8 @@ insert_into_tree_view (PluginBrowser *browser,
                       TREE_COLUMN_MPATH,       menu_str,
                       TREE_COLUMN_PATH_NAME,   name,
                       TREE_COLUMN_IMAGE_TYPES, types_str,
-                      TREE_COLUMN_DATE,        xtimestr,
+                      TREE_COLUMN_DATE,        xtime,
+                      TREE_COLUMN_DATE_STRING, xtimestr,
                       TREE_COLUMN_PINFO,       pinfo,
                       -1);
 }
@@ -487,7 +491,8 @@ browser_search (GimpBrowser   *gimp_browser,
           gtk_list_store_append (list_store, &iter);
           gtk_list_store_set (list_store, &iter,
                               LIST_COLUMN_NAME,        name,
-                              LIST_COLUMN_DATE,        xtimestr,
+                              LIST_COLUMN_DATE,        (gint64) tx,
+                              LIST_COLUMN_DATE_STRING, xtimestr,
                               LIST_COLUMN_PATH,        menu_strs[i],
                               LIST_COLUMN_IMAGE_TYPES, types_strs[i],
                               LIST_COLUMN_PINFO,       pinfo,
@@ -496,6 +501,7 @@ browser_search (GimpBrowser   *gimp_browser,
           /* Now do the tree view.... */
           insert_into_tree_view (browser,
                                  name,
+                                 (gint64) tx,
                                  xtimestr,
                                  menu_strs[i],
                                  types_strs[i],
@@ -577,6 +583,7 @@ browser_dialog_new (void)
   /* list : list in a scrolled_win */
   list_store = gtk_list_store_new (N_LIST_COLUMNS,
                                    G_TYPE_STRING,
+                                   G_TYPE_INT64,
                                    G_TYPE_STRING,
                                    G_TYPE_STRING,
                                    G_TYPE_STRING,
@@ -616,7 +623,8 @@ browser_dialog_new (void)
 
   column = gtk_tree_view_column_new_with_attributes (_("Installation Date"),
                                                      renderer,
-                                                     "text", LIST_COLUMN_DATE,
+                                                     "text",
+                                                     LIST_COLUMN_DATE_STRING,
                                                      NULL);
   gtk_tree_view_column_set_sort_column_id  (column, LIST_COLUMN_DATE);
   gtk_tree_view_append_column (GTK_TREE_VIEW (list_view), column);
@@ -646,6 +654,7 @@ browser_dialog_new (void)
   /* notebook->ctree */
   tree_store = gtk_tree_store_new (N_LIST_COLUMNS,
                                    G_TYPE_STRING,
+                                   G_TYPE_INT64,
                                    G_TYPE_STRING,
                                    G_TYPE_STRING,
                                    G_TYPE_STRING,
@@ -678,7 +687,7 @@ browser_dialog_new (void)
   column = gtk_tree_view_column_new_with_attributes (_("Installation Date"),
                                                      renderer,
                                                      "text",
-                                                     TREE_COLUMN_DATE,
+                                                     TREE_COLUMN_DATE_STRING,
                                                      NULL);
   gtk_tree_view_column_set_sort_column_id  (column, TREE_COLUMN_DATE);
   gtk_tree_view_append_column (GTK_TREE_VIEW (tree_view), column);

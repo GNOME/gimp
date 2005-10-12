@@ -1,5 +1,11 @@
 2005-10-12  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/plugin-browser.c: store the installation time in
+	the models, not only the string representation. Sort by time, not
+	alphabetically. Fixes bug #318652.
+
+2005-10-12  Sven Neumann  <sven@gimp.org>
+
 	* app/base/base-types.h
 	* app/base/siox.[ch]: applied patch from Gerald Friedland that
 	introduces a state to the SIOX operation.
