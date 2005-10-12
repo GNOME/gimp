@@ -43,24 +43,45 @@
 #define SIOX_DEFAULT_SENSITIVITY_A  1.28
 #define SIOX_DEFAULT_SENSITIVITY_B  2.56
 
+#define SIOX_REFINEMENT_TYPE_NO_CHANGE          0
+#define SIOX_REFINEMENT_TYPE_ADD_FOREGROUND     (1 << 0)
+#define SIOX_REFINEMENT_TYPE_ADD_BACKGROUND     (1 << 1)
+#define SIOX_REFINEMENT_TYPE_CHANGE_SENSITIVITY (1 << 2)
+#define SIOX_REFINEMENT_TYPE_CHANGE_SMOOTHNESS  (1 << 3)
+#define SIOX_REFINEMENT_TYPE_CHANGE_MULTIBLOB   (1 << 4)
+#define SIOX_REFINEMENT_TYPE_RECALCULATE        0xFF
+
+/*  FIXME: turn this into an enum  */
+#define SIOX_DRB_ADD       0
+#define SIOX_DRB_SUBTRACT  1
+
 
 typedef void (* SioxProgressFunc) (gpointer  progress_data,
                                    gdouble   fraction);
 
-
-void  siox_foreground_extract (TileManager      *pixels,
-                               const guchar     *colormap,
-                               gint              offset_x,
-                               gint              offset_y,
-                               TileManager      *mask,
-                               gint              x,
-                               gint              y,
-                               gint              width,
-                               gint              height,
-                               gint              smoothness,
-                               const gdouble     sensitivity[3],
-                               SioxProgressFunc  progress_callback,
-                               gpointer          progress_data);
+SioxState * siox_init               (TileManager      *pixels,
+                                     const guchar     *colormap,
+                                     gint              offset_x,
+                                     gint              offset_y,
+                                     TileManager      *mask,
+                                     gint              x,
+                                     gint              y,
+                                     gint              width,
+                                     gint              height,
+                                     SioxProgressFunc  progress_callback,
+                                     gpointer          progress_data);
+void        siox_foreground_extract (SioxState        *state,
+                                     gint              smoothness,
+                                     const gdouble     sensitivity[3],
+                                     gboolean          multiblob,
+                                     gint              refinementtype);
+void        siox_drb                (SioxState        *state,
+                                     gint              x,
+                                     gint              y,
+                                     gint              brushradius,
+                                     gint              brushmode,
+                                     gfloat            threshold);
+void        siox_done               (SioxState        *state);
 
 
 #endif /* __SIOX_H__ */

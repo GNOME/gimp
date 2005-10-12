@@ -73,6 +73,7 @@ gimp_drawable_foreground_extract_siox (GimpDrawable  *drawable,
                                        GimpProgress  *progress)
 {
   GimpImage    *gimage;
+  SioxState    *state;
   const guchar *colormap = NULL;
   gboolean      intersect;
   gint          offset_x;
@@ -110,12 +111,14 @@ gimp_drawable_foreground_extract_siox (GimpDrawable  *drawable,
   if (progress)
     gimp_progress_start (progress, _("Foreground Extraction"), FALSE);
 
-  siox_foreground_extract (gimp_drawable_data (drawable), colormap,
-                           offset_x, offset_y,
-                           gimp_drawable_data (mask), x, y, width, height,
-                           smoothness, sensitivity,
-                           (SioxProgressFunc) gimp_progress_set_value,
-                           progress);
+  state = siox_init (gimp_drawable_data (drawable), colormap,
+                     offset_x, offset_y,
+                     gimp_drawable_data (mask), x, y, width, height,
+                     (SioxProgressFunc) gimp_progress_set_value,
+                     progress);
+
+  siox_foreground_extract (state, smoothness, sensitivity, TRUE, 255);
+  siox_done (state);
 
   if (progress)
     gimp_progress_end (progress);

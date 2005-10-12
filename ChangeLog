@@ -1,3 +1,11 @@
+2005-10-12  Sven Neumann  <sven@gimp.org>
+
+	* app/base/base-types.h
+	* app/base/siox.[ch]: applied patch from Gerald Friedland that
+	introduces a state to the SIOX operation.
+
+	* app/core/gimpdrawable-foreground-extract.c: adapted to the new API.
+
 2005-10-11  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpthumb/gimpthumbnail.c: the mime-type is stored in
