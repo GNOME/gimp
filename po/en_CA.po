@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-06 11:56-0400\n"
+"POT-Creation-Date: 2005-10-12 21:26-0400\n"
 "PO-Revision-Date: 2005-09-06 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
@@ -44,7 +44,7 @@ msgstr ""
 "To avoid data loss, please check the location and permissions of the swap "
 "directory defined in your Preferences (currently \"%s\")."
 
-#: app/app_procs.c:334 app/core/gimppalette-import.c:458
+#: app/app_procs.c:334 app/core/gimppalette-import.c:487
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "Opening '%s' failed: %s"
@@ -297,7 +297,7 @@ msgid "Plug-Ins"
 msgstr "Plug-Ins"
 
 #: app/actions/actions.c:175 app/core/core-enums.c:781
-#: app/core/gimpchannel.c:404
+#: app/core/gimpchannel.c:401
 msgid "Quick Mask"
 msgstr "Quick Mask"
 
@@ -724,8 +724,8 @@ msgstr ""
 "%s"
 
 #: app/actions/data-commands.c:126 app/core/gimpimage.c:1349
-#: app/core/gimppalette-import.c:221 app/core/gimppalette.c:517
-#: app/core/gimppalette.c:627 app/dialogs/palette-import-dialog.c:699
+#: app/core/gimppalette-import.c:218 app/core/gimppalette.c:514
+#: app/core/gimppalette.c:624 app/dialogs/palette-import-dialog.c:699
 #: app/pdb/image_cmds.c:3892 app/widgets/gimpdnd-xds.c:83
 msgid "Untitled"
 msgstr "Untitled"
@@ -2242,7 +2242,7 @@ msgstr "Crop Layer"
 msgid "Layer Mask to Selection"
 msgstr "Layer Mask to Selection"
 
-#: app/actions/layers-commands.c:929 app/core/gimplayer.c:1293
+#: app/actions/layers-commands.c:929 app/core/gimplayer.c:1290
 #: app/dialogs/layer-add-mask-dialog.c:61
 msgid "Add Layer Mask"
 msgstr "Add Layer Mask"
@@ -2793,8 +2793,8 @@ msgstr "Open Text File (UTF-8)"
 #: app/actions/text-editor-commands.c:137 app/config/gimpconfig-file.c:57
 #: app/core/gimpbrush-load.c:115 app/core/gimpbrush-load.c:395
 #: app/core/gimpbrushgenerated.c:594 app/core/gimpbrushpipe.c:331
-#: app/core/gimpgradient-load.c:62 app/core/gimppalette.c:358
-#: app/core/gimppattern.c:297 app/tools/gimpimagemaptool.c:612
+#: app/core/gimpgradient-load.c:62 app/core/gimppalette.c:355
+#: app/core/gimppattern.c:294 app/tools/gimpimagemaptool.c:612
 #: app/xcf/xcf.c:295
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -3451,7 +3451,7 @@ msgstr ""
 
 #: app/config/gimpconfig-file.c:66 app/core/gimpbrushgenerated.c:254
 #: app/core/gimpgradient-save.c:51 app/core/gimpgradient-save.c:142
-#: app/core/gimppalette.c:561 app/gui/themes.c:238
+#: app/core/gimppalette.c:558 app/gui/themes.c:238
 #: app/tools/gimpimagemaptool.c:611 app/vectors/gimpvectors-export.c:83
 #: app/xcf/xcf.c:352
 #, c-format
@@ -3875,10 +3875,10 @@ msgid ""
 msgstr ""
 "Sets the swap file location. GIMP uses a tile based memory allocation "
 "scheme. The swap file is used to quickly and easily swap tiles out to disk "
-"and back in. Be aware that the swap file can easily get very large if GIMP is "
-"used with large images. Also, things can get horribly slow if the swap file "
-"is created on a directory that is mounted over NFS.  For these reasons, it "
-"may be desirable to put your swap file in \"/tmp\"."
+"and back in. Be aware that the swap file can easily get very large if GIMP "
+"is used with large images. Also, things can get horribly slow if the swap "
+"file is created on a directory that is mounted over NFS.  For these reasons, "
+"it may be desirable to put your swap file in \"/tmp\"."
 
 #: app/config/gimprc-blurbs.h:343
 msgid "When enabled, menus can be torn off."
@@ -4627,7 +4627,7 @@ msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Invalid UTF-8 string in brush file '%s'."
 
 #: app/core/gimpbrush-load.c:258 app/core/gimpcontext.c:1294
-#: app/core/gimpitem.c:560 app/core/gimppattern.c:369
+#: app/core/gimpitem.c:560 app/core/gimppattern.c:366
 #: app/dialogs/template-options-dialog.c:80 app/tools/gimpvectortool.c:334
 msgid "Unnamed"
 msgstr "Unnamed"
@@ -4751,19 +4751,19 @@ msgstr "Grow Channel"
 msgid "Shrink Channel"
 msgstr "Shrink Channel"
 
-#: app/core/gimpchannel.c:732
+#: app/core/gimpchannel.c:729
 msgid "Cannot stroke empty channel."
 msgstr "Cannot stroke empty channel."
 
-#: app/core/gimpchannel.c:1627
+#: app/core/gimpchannel.c:1624
 msgid "Set Channel Color"
 msgstr "Set Channel Colour"
 
-#: app/core/gimpchannel.c:1675
+#: app/core/gimpchannel.c:1672
 msgid "Set Channel Opacity"
 msgstr "Set Channel Opacity"
 
-#: app/core/gimpchannel.c:1743 app/core/gimpselection.c:548
+#: app/core/gimpchannel.c:1740 app/core/gimpselection.c:548
 msgid "Selection Mask"
 msgstr "Selection Mask"
 
@@ -4850,7 +4850,7 @@ msgstr "Desaturate"
 msgid "Equalize"
 msgstr "Equalize"
 
-#: app/core/gimpdrawable-foreground-extract.c:111
+#: app/core/gimpdrawable-foreground-extract.c:112
 msgid "Foreground Extraction"
 msgstr "Foreground Extraction"
 
@@ -5337,13 +5337,13 @@ msgstr "Flip Layer"
 msgid "Rotate Layer"
 msgstr "Rotate Layer"
 
-#: app/core/gimplayer.c:441 app/core/gimplayer.c:1337
+#: app/core/gimplayer.c:441 app/core/gimplayer.c:1334
 #: app/core/gimplayermask.c:237
 #, c-format
 msgid "%s mask"
 msgstr "%s mask"
 
-#: app/core/gimplayer.c:487
+#: app/core/gimplayer.c:484
 #, c-format
 msgid ""
 "Floating Selection\n"
@@ -5352,43 +5352,43 @@ msgstr ""
 "Floating Selection\n"
 "(%s)"
 
-#: app/core/gimplayer.c:1263
+#: app/core/gimplayer.c:1260
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr "Cannot add layer mask to layer which is not part of an image."
 
-#: app/core/gimplayer.c:1270
+#: app/core/gimplayer.c:1267
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Unable to add a layer mask since the layer already has one."
 
-#: app/core/gimplayer.c:1277
+#: app/core/gimplayer.c:1274
 msgid "Cannot add layer mask to a layer with no alpha channel."
 msgstr "Cannot add layer mask to a layer with no alpha channel."
 
-#: app/core/gimplayer.c:1287
+#: app/core/gimplayer.c:1284
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Cannot add layer mask of different dimensions than specified layer."
 
-#: app/core/gimplayer.c:1391
+#: app/core/gimplayer.c:1388
 msgid "Transfer Alpha to Mask"
 msgstr "Transfer Alpha to Mask"
 
-#: app/core/gimplayer.c:1551 app/core/gimplayermask.c:264
+#: app/core/gimplayer.c:1548 app/core/gimplayermask.c:264
 msgid "Apply Layer Mask"
 msgstr "Apply Layer Mask"
 
-#: app/core/gimplayer.c:1552
+#: app/core/gimplayer.c:1549
 msgid "Delete Layer Mask"
 msgstr "Delete Layer Mask"
 
-#: app/core/gimplayer.c:1653
+#: app/core/gimplayer.c:1650
 msgid "Add Alpha Channel"
 msgstr "Add Alpha Channel"
 
-#: app/core/gimplayer.c:1704
+#: app/core/gimplayer.c:1701
 msgid "Remove Alpha Channel"
 msgstr "Remove Alpha Channel"
 
-#: app/core/gimplayer.c:1726
+#: app/core/gimplayer.c:1723
 msgid "Layer to Image Size"
 msgstr "Layer to Image Size"
 
@@ -5400,17 +5400,17 @@ msgstr "Move Layer Mask"
 msgid "Show Layer Mask"
 msgstr "Show Layer Mask"
 
-#: app/core/gimppalette-import.c:370
+#: app/core/gimppalette-import.c:369
 #, c-format
 msgid "Index %d"
 msgstr "Index %d"
 
-#: app/core/gimppalette-import.c:570
+#: app/core/gimppalette-import.c:599
 #, c-format
 msgid "Unknown type of palette file: %s"
 msgstr "Unknown type of palette file: %s"
 
-#: app/core/gimppalette.c:373
+#: app/core/gimppalette.c:370
 #, c-format
 msgid ""
 "Fatal parse error in palette file '%s': Missing magic header.\n"
@@ -5419,23 +5419,23 @@ msgstr ""
 "Fatal parse error in palette file '%s': Missing magic header.\n"
 "Does this file need converting from DOS?"
 
-#: app/core/gimppalette.c:379
+#: app/core/gimppalette.c:376
 #, c-format
 msgid "Fatal parse error in palette file '%s': Missing magic header."
 msgstr "Fatal parse error in palette file '%s': Missing magic header."
 
-#: app/core/gimppalette.c:395 app/core/gimppalette.c:420
-#: app/core/gimppalette.c:450 app/core/gimppalette.c:530
+#: app/core/gimppalette.c:392 app/core/gimppalette.c:417
+#: app/core/gimppalette.c:447 app/core/gimppalette.c:527
 #, c-format
 msgid "Fatal parse error in palette file '%s': Read error in line %d."
 msgstr "Fatal parse error in palette file '%s': Read error in line %d."
 
-#: app/core/gimppalette.c:410
+#: app/core/gimppalette.c:407
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
 msgstr "Invalid UTF-8 string in palette file '%s'"
 
-#: app/core/gimppalette.c:438
+#: app/core/gimppalette.c:435
 #, c-format
 msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
@@ -5445,40 +5445,40 @@ msgstr ""
 "default value."
 
 #. maybe we should just abort?
-#: app/core/gimppalette.c:478
+#: app/core/gimppalette.c:475
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
 msgstr "Reading palette file '%s': Missing RED component in line %d."
 
-#: app/core/gimppalette.c:486
+#: app/core/gimppalette.c:483
 #, c-format
 msgid "Reading palette '%s': Missing GREEN component in line %d."
 msgstr "Reading palette '%s': Missing GREEN component in line %d."
 
-#: app/core/gimppalette.c:494
+#: app/core/gimppalette.c:491
 #, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
 msgstr "Reading palette file '%s': Missing BLUE component in line %d."
 
-#: app/core/gimppalette.c:504
+#: app/core/gimppalette.c:501
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgstr "Reading palette file '%s': RGB value out of range in line %d."
 
-#: app/core/gimppattern.c:306 app/core/gimppattern.c:353
-#: app/core/gimppattern.c:385
+#: app/core/gimppattern.c:303 app/core/gimppattern.c:350
+#: app/core/gimppattern.c:382
 #, c-format
 msgid "Fatal parse error in pattern file '%s': Could not read %d bytes: %s"
 msgstr "Fatal parse error in pattern file '%s': Could not read %d bytes: %s"
 
-#: app/core/gimppattern.c:326
+#: app/core/gimppattern.c:323
 #, c-format
 msgid ""
 "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
 msgstr ""
 "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
 
-#: app/core/gimppattern.c:336
+#: app/core/gimppattern.c:333
 #, c-format
 msgid ""
 "Fatal parse error in pattern file '%s: Unsupported pattern depth %d.\n"
@@ -5487,7 +5487,7 @@ msgstr ""
 "Fatal parse error in pattern file '%s: Unsupported pattern depth %d.\n"
 "GIMP Patterns must be GRAY or RGB."
 
-#: app/core/gimppattern.c:362
+#: app/core/gimppattern.c:359
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Invalid UTF-8 string in pattern file '%s'."
@@ -6084,45 +6084,45 @@ msgstr "_Import"
 msgid "Select Source"
 msgstr "Select Source"
 
-#: app/dialogs/palette-import-dialog.c:244
+#: app/dialogs/palette-import-dialog.c:245
 msgid "I_mage"
 msgstr "I_mage"
 
-#: app/dialogs/palette-import-dialog.c:259
+#: app/dialogs/palette-import-dialog.c:260
 msgid "Palette _file"
 msgstr "Palette _file"
 
-#: app/dialogs/palette-import-dialog.c:286
+#: app/dialogs/palette-import-dialog.c:287
 msgid "Select Palette File"
 msgstr "Select Palette File"
 
 #. The "Import" frame
-#: app/dialogs/palette-import-dialog.c:317
+#: app/dialogs/palette-import-dialog.c:318
 msgid "Import Options"
 msgstr "Import Options"
 
-#: app/dialogs/palette-import-dialog.c:330
+#: app/dialogs/palette-import-dialog.c:332
 msgid "New import"
 msgstr "New import"
 
-#: app/dialogs/palette-import-dialog.c:332
+#: app/dialogs/palette-import-dialog.c:334
 msgid "Palette _name:"
 msgstr "Palette _name:"
 
-#: app/dialogs/palette-import-dialog.c:338
+#: app/dialogs/palette-import-dialog.c:340
 msgid "N_umber of colors:"
 msgstr "N_umber of colours:"
 
-#: app/dialogs/palette-import-dialog.c:351
+#: app/dialogs/palette-import-dialog.c:353
 msgid "C_olumns:"
 msgstr "C_olumns:"
 
-#: app/dialogs/palette-import-dialog.c:363
+#: app/dialogs/palette-import-dialog.c:365
 msgid "I_nterval:"
 msgstr "I_nterval:"
 
 #. The "Preview" frame
-#: app/dialogs/palette-import-dialog.c:375
+#: app/dialogs/palette-import-dialog.c:377
 msgid "Preview"
 msgstr "Preview"
 
@@ -8442,17 +8442,25 @@ msgstr "Tool Toggle  (%s)"
 msgid "Current layer only"
 msgstr "Current layer only"
 
-#: app/tools/gimpcroptool.c:81
+#: app/tools/gimpcroptool.c:86
 msgid "Crop & Resize"
 msgstr "Crop & Resize"
 
-#: app/tools/gimpcroptool.c:82
+#: app/tools/gimpcroptool.c:87
 msgid "Crop or Resize an image"
 msgstr "Crop or Resize an image"
 
-#: app/tools/gimpcroptool.c:83
+#: app/tools/gimpcroptool.c:88
 msgid "_Crop & Resize"
 msgstr "_Crop & Resize"
+
+#: app/tools/gimpcroptool.c:215
+msgid "Click or press enter to crop."
+msgstr "Click or press enter to crop."
+
+#: app/tools/gimpcroptool.c:218
+msgid "Click or press enter to resize."
+msgstr "Click or press enter to resize."
 
 #: app/tools/gimpcurvestool.c:137
 msgid "Adjust color curves"
@@ -9101,24 +9109,24 @@ msgstr "Aspect"
 msgid "Center"
 msgstr "Centre"
 
-#: app/tools/gimprectangletool.c:1827 app/tools/gimprectangletool.c:2254
+#: app/tools/gimprectangletool.c:1831 app/tools/gimprectangletool.c:2258
 msgid "Rectangle: "
 msgstr "Rectangle: "
 
-#: app/tools/gimprectangletool.c:2673
+#: app/tools/gimprectangletool.c:2677
 msgid "1 "
 msgstr "1 "
 
-#: app/tools/gimprectangletool.c:2674
+#: app/tools/gimprectangletool.c:2678
 msgid "2 "
 msgstr "2 "
 
-#: app/tools/gimprectangletool.c:2675 app/widgets/gimpcursorview.c:170
+#: app/tools/gimprectangletool.c:2679 app/widgets/gimpcursorview.c:170
 #: app/widgets/gimpcursorview.c:192
 msgid "X"
 msgstr "X"
 
-#: app/tools/gimprectangletool.c:2676 app/widgets/gimpcursorview.c:176
+#: app/tools/gimprectangletool.c:2680 app/widgets/gimpcursorview.c:176
 #: app/widgets/gimpcursorview.c:198
 msgid "Y"
 msgstr "Y"
