@@ -61,7 +61,15 @@ tools_select_cmd_callback (GtkAction   *action,
   GimpToolInfo *tool_info;
   GimpContext  *context;
   GimpDisplay  *gdisp;
+  gboolean      rotate_layer = FALSE;
   return_if_no_gimp (gimp, data);
+
+  /*  special case gimp-rotate-tool being called from the Layer menu  */
+  if (strcmp (value, "gimp-rotate-layer") == 0)
+    {
+      rotate_layer = TRUE;
+      value = "gimp-rotate-tool";
+    }
 
   tool_info = (GimpToolInfo *)
     gimp_container_get_child_by_name (gimp->tool_info_list, value);
@@ -73,6 +81,11 @@ tools_select_cmd_callback (GtkAction   *action,
   if (gimp_context_get_tool (context) != tool_info)
     {
       gimp_context_set_tool (context, tool_info);
+
+      if (rotate_layer)
+        g_object_set (tool_info->tool_options,
+                      "type", GIMP_TRANSFORM_TYPE_LAYER,
+                      NULL);
     }
   else
     {

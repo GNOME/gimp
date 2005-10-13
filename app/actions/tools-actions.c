@@ -102,7 +102,7 @@ static GimpStringActionEntry tools_alternative_actions[] =
 
   { "tools-rotate-arbitrary", GIMP_STOCK_TOOL_ROTATE,
     N_("_Arbitrary Rotation..."), NULL, NULL,
-    "gimp-rotate-tool",
+    "gimp-rotate-layer",
     GIMP_HELP_TOOL_ROTATE }
 };
 

@@ -1,3 +1,10 @@
+2005-10-13  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/tools-actions.c
+	* app/actions/tools-commands.c: special case gimp-rotate-tool
+	being called from the Layer menu and set transform type to
+	GIMP_TRANSFORM_TYPE_LAYER. Fixes bug #318540.
+
 2005-10-13  Jakub Steiner <jimmac@ximian.com>
 
 	* data/palettes/Tango.gpl: Added the tango icon palette
