@@ -528,6 +528,7 @@ gimp_color_area_set_draw_border (GimpColorArea *area,
 
 void
 _gimp_color_area_render_buf (GtkWidget         *widget,
+                             gboolean           insensitive,
                              GimpColorAreaType  type,
                              guchar            *buf,
                              guint              width,
@@ -540,7 +541,7 @@ _gimp_color_area_render_buf (GtkWidget         *widget,
   guchar   light[3];
   guchar   dark[3];
   guchar   opaque[3];
-  guchar   insensitive[3];
+  guchar   insens[3];
   guchar  *p;
   gdouble  frac;
 
@@ -565,11 +566,11 @@ _gimp_color_area_render_buf (GtkWidget         *widget,
 
   gimp_rgb_get_uchar (color, opaque, opaque + 1, opaque + 2);
 
-  insensitive[0] = widget->style->bg[GTK_STATE_INSENSITIVE].red   >> 8;
-  insensitive[1] = widget->style->bg[GTK_STATE_INSENSITIVE].green >> 8;
-  insensitive[2] = widget->style->bg[GTK_STATE_INSENSITIVE].blue  >> 8;
+  insens[0] = widget->style->bg[GTK_STATE_INSENSITIVE].red   >> 8;
+  insens[1] = widget->style->bg[GTK_STATE_INSENSITIVE].green >> 8;
+  insens[2] = widget->style->bg[GTK_STATE_INSENSITIVE].blue  >> 8;
 
-  if (check_size == 0 || color->a == 1.0 || ! GTK_WIDGET_IS_SENSITIVE (widget))
+  if (insensitive || check_size == 0 || color->a == 1.0)
     {
       for (y = 0; y < height; y++)
         {
@@ -577,11 +578,11 @@ _gimp_color_area_render_buf (GtkWidget         *widget,
 
           for (x = 0; x < width; x++)
             {
-              if ((! GTK_WIDGET_IS_SENSITIVE (widget)) && ((x + y) % 2))
+              if (insensitive && ((x + y) % 2))
                 {
-                  *p++ = insensitive[0];
-                  *p++ = insensitive[1];
-                  *p++ = insensitive[2];
+                  *p++ = insens[0];
+                  *p++ = insens[1];
+                  *p++ = insens[2];
                 }
               else
                 {
@@ -672,6 +673,7 @@ gimp_color_area_render (GimpColorArea *area)
     return;
 
   _gimp_color_area_render_buf (GTK_WIDGET (area),
+                               ! GTK_WIDGET_IS_SENSITIVE (area),
                                area->type,
                                area->buf,
                                area->width, area->height, area->rowstride,

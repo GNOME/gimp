@@ -1,5 +1,14 @@
 2005-10-13  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpcolorarea.[ch]: pass sensitivity to
+	_gimp_color_area_render_buf().
+
+	* libgimpwidgets/gimpcellrenderercolor.c
+	(gimp_cell_renderer_color_render): respect cell and widget
+	sensitivity.
+
+2005-10-13  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/tools-actions.c
 	* app/actions/tools-commands.c: special case gimp-rotate-tool
 	being called from the Layer menu and set transform type to
