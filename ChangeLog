@@ -1,5 +1,9 @@
 2005-10-13  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/palette-import-dialog.c: minor dialog tweaks.
+
+2005-10-13  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpcolorarea.[ch]: pass sensitivity to
 	_gimp_color_area_render_buf().
 

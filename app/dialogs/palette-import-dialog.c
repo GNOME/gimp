@@ -216,22 +216,21 @@ palette_import_dialog_new (Gimp *gimp)
   gtk_box_pack_start (GTK_BOX (main_hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-
   /*  The "Source" frame  */
   frame = gimp_frame_new (_("Select Source"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
   dialog->gradient_radio =
     gtk_radio_button_new_with_mnemonic (NULL, _("_Gradient"));
-  gtk_table_attach_defaults (GTK_TABLE (table), dialog->gradient_radio,
-                             0, 1, 0, 1);
+  gtk_table_attach (GTK_TABLE (table), dialog->gradient_radio,
+                    0, 1, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (dialog->gradient_radio);
 
   g_signal_connect (dialog->gradient_radio, "toggled",
@@ -243,8 +242,8 @@ palette_import_dialog_new (Gimp *gimp)
 
   dialog->image_radio =
     gtk_radio_button_new_with_mnemonic (group, _("I_mage"));
-  gtk_table_attach_defaults (GTK_TABLE (table), dialog->image_radio,
-                             0, 1, 1, 2);
+  gtk_table_attach (GTK_TABLE (table), dialog->image_radio,
+                    0, 1, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (dialog->image_radio);
 
   g_signal_connect (dialog->image_radio, "toggled",
@@ -258,9 +257,8 @@ palette_import_dialog_new (Gimp *gimp)
 
   dialog->palettefile_radio =
     gtk_radio_button_new_with_mnemonic (group, _("Palette _file"));
-  gtk_table_attach_defaults (GTK_TABLE (table),
-                             dialog->palettefile_radio,
-                             0, 1, 2, 3);
+  gtk_table_attach (GTK_TABLE (table), dialog->palettefile_radio,
+                    0, 1, 2, 3, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (dialog->palettefile_radio);
 
   g_signal_connect (dialog->palettefile_radio, "toggled",
@@ -272,22 +270,19 @@ palette_import_dialog_new (Gimp *gimp)
     gimp_container_combo_box_new (gimp->gradient_factory->container,
                                   dialog->context, 24, 1);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             NULL, 0.0, 0.5,
-                             dialog->gradient_combo, 1, FALSE);
+                             NULL, 0.0, 0.5, dialog->gradient_combo, 1, FALSE);
 
   /*  The image menu  */
   dialog->image_combo =
     gimp_container_combo_box_new (gimp->images, dialog->context, 24, 1);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             NULL, 0.0, 0.5,
-                             dialog->image_combo, 1, FALSE);
+                             NULL, 0.0, 0.5, dialog->image_combo, 1, FALSE);
 
   /*  Palette file name entry  */
   dialog->filename_entry =
     gimp_file_entry_new (_("Select Palette File"), NULL, FALSE, FALSE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                             NULL, 0.0, 0.5,
-                             dialog->filename_entry, 1, FALSE);
+                             NULL, 0.0, 0.5, dialog->filename_entry, 1, FALSE);
 
   gtk_widget_show (dialog->filename_entry);
 
@@ -320,8 +315,8 @@ palette_import_dialog_new (Gimp *gimp)
   gtk_widget_show (frame);
 
   table = gtk_table_new (4, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
@@ -378,7 +373,7 @@ palette_import_dialog_new (Gimp *gimp)
   gtk_box_pack_start (GTK_BOX (main_hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+  abox = gtk_alignment_new (0.0, 0.0, 0.0, 0.0);
   gtk_container_add (GTK_CONTAINER (frame), abox);
   gtk_widget_show (abox);
 
