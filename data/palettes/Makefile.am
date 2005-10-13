@@ -36,6 +36,7 @@ palettedata_DATA = \
 	Reds.gpl		\
 	Reds_And_Purples.gpl	\
 	Royal.gpl		\
+	Tango.gpl		\
 	Topographic.gpl		\
 	Visibone.gpl		\
 	Visibone_2.gpl		\
