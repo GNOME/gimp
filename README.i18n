@@ -61,7 +61,7 @@ sections, but you definitely want to read sections 5 - 9.
  - If not, the caller will receive a pointer to the original string.
 
  This way it is ensured that there isn't any harm caused to the program
- (i.e. The GIMP) if no useful catalog is installed.
+ if no useful catalog is installed.
 
  Please note that it is important to use _() directly (and not gettext())
  for simple messages because of reasons that will be mentioned below.
@@ -177,7 +177,7 @@ this one may not necessarily fit.
  get this wrong, Gimp will warn you at startup about bad translations.
  So do always test your translations and watch the console for output.
 
- The version of The GIMP you are holding in your hand uses GTK+-2.0.
+ The version of GIMP you are holding in your hand uses GTK+-2.0.
  GTK+-2.0 requires that all strings are UTF-8 encoded. Therefore to make
  internationalisation work, po files need to be UTF-8 encoded. If your
  editor doesn't support UTF-8, you need to convert it to an encoding your
@@ -188,14 +188,14 @@ this one may not necessarily fit.
 7. Adding additional textdomains
 
  Third-party plug-ins (plug-ins that are not distributed with The
- GIMP) can't have their messages in the gimp-std-plugins textdomain. 
- We have therefore provided a mechanism that allows plug-ins to install
- their own message catalogs and tell The GIMP to bind to that
- textdomain. This is necessary so that The GIMP can correctly translate
- the menu paths the plug-in registers. Basically the plug-in has to call
- gimp_plugin_domain_add() or gimp_domain_plugin_add_with_path() before
- it registers any functions. Have a look at the script-fu plug-in to see
- how this is done in detail.
+ GIMP) can't have their messages in the gimp-std-plugins textdomain.
+ We have therefore provided a mechanism that allows plug-ins to
+ install their own message catalogs and tell GIMP to bind to that
+ textdomain. This is necessary so that GIMP can correctly translate
+ the menu paths the plug-in registers. Basically the plug-in has to
+ call gimp_plugin_domain_add() or gimp_domain_plugin_add_with_path()
+ before it registers any functions. Have a look at the script-fu
+ plug-in to see how this is done in detail.
 
 8. Tip of the Day messages
 
