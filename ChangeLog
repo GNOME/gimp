@@ -1,3 +1,8 @@
+2005-10-15  Karine Delvare  <kdelvare@nerim.net>
+
+	* app/tools/gimpnewrectselecttool.c
+	* app/tools/gimpselectiontool.c: let status info be pushed.
+	
 2005-10-14  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/channel_mixer.c: indentation and other cleanups.

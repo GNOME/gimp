@@ -218,6 +218,7 @@ gimp_new_rect_select_tool_button_release (GimpTool        *tool,
                                           GdkModifierType  state,
                                           GimpDisplay     *gdisp)
 {
+  gimp_tool_pop_status (tool, gdisp);
   gimp_tool_push_status (tool, gdisp,
                          _("Click or press enter to create the selection."));
 

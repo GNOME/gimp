@@ -276,7 +276,7 @@ gimp_selection_tool_oper_update (GimpTool        *tool,
         }
     }
 
-  gimp_tool_replace_status (tool, gdisp, status);
+  gimp_tool_push_status (tool, gdisp, status);
 }
 
 static void
