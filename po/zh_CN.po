@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-03 10:35+0200\n"
-"PO-Revision-Date: 2005-10-03 17:36+0800\n"
+"POT-Creation-Date: 2005-10-15 02:38+0200\n"
+"PO-Revision-Date: 2005-10-15 16:14+0800\n"
 "Last-Translator: Cai Qian <caiqian@gnome.org>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -45,7 +45,7 @@ msgstr ""
 "为了避免数据丢失，请检查您在首选项中定义的交换目录的位置以及权限(当前为“%"
 "s”)。"
 
-#: ../app/app_procs.c:334 ../app/core/gimppalette-import.c:458
+#: ../app/app_procs.c:334 ../app/core/gimppalette-import.c:487
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "打开“%s”失败：%s"
@@ -73,7 +73,7 @@ msgstr "不加载画笔、渐变、图案等"
 
 #: ../app/main.c:141
 msgid "Do not load any fonts"
-msgstr ""
+msgstr "不装入任何字体"
 
 #: ../app/main.c:146
 msgid "Do not show a startup window"
@@ -101,7 +101,7 @@ msgstr "使用别的系统 gimprc 文件"
 
 #: ../app/main.c:176
 msgid "Batch command to run (can be used multiple times)"
-msgstr ""
+msgstr "要运行的批处理命令(可以使用多次)"
 
 #: ../app/main.c:181
 msgid "The procedure to process batch commands with"
@@ -114,12 +114,12 @@ msgstr "在控制台而不是对话框中显示警告信息"
 #. don't translate the mode names (off|on|warn)
 #: ../app/main.c:192
 msgid "PDB compatibility mode (off|on|warn)"
-msgstr ""
+msgstr "PDB 兼容模式(off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
 #: ../app/main.c:198
 msgid "Debug in case of a crash (never|query|always)"
-msgstr ""
+msgstr "崩溃时调试(never|query|always)"
 
 #: ../app/main.c:203
 msgid "Enable non-fatal debugging signal handlers"
@@ -133,7 +133,7 @@ msgstr ""
 msgid "Output a gimprc file with default settings"
 msgstr "输出默认设置的 gimprc 文件"
 
-#: ../app/main.c:248 ../app/dialogs/about-dialog.c:60
+#: ../app/main.c:248 ../app/dialogs/about-dialog.c:61
 #: ../desktop/gimp.desktop.in.in.h:2
 msgid "GNU Image Manipulation Program"
 msgstr "GNU 图像操纵程序"
@@ -302,7 +302,7 @@ msgid "Plug-Ins"
 msgstr "插件"
 
 #: ../app/actions/actions.c:175 ../app/core/core-enums.c:781
-#: ../app/core/gimpchannel.c:404
+#: ../app/core/gimpchannel.c:401
 msgid "Quick Mask"
 msgstr "快速蒙板"
 
@@ -664,7 +664,7 @@ msgid "_Palette"
 msgstr "色板(_P)"
 
 #: ../app/actions/context-actions.c:54
-#: ../app/dialogs/palette-import-dialog.c:232
+#: ../app/dialogs/palette-import-dialog.c:231
 #: ../app/dialogs/preferences-dialog.c:1681
 msgid "_Gradient"
 msgstr "渐变(_G)"
@@ -738,8 +738,8 @@ msgstr ""
 "%s"
 
 #: ../app/actions/data-commands.c:126 ../app/core/gimpimage.c:1349
-#: ../app/core/gimppalette-import.c:221 ../app/core/gimppalette.c:517
-#: ../app/core/gimppalette.c:627 ../app/dialogs/palette-import-dialog.c:699
+#: ../app/core/gimppalette-import.c:218 ../app/core/gimppalette.c:514
+#: ../app/core/gimppalette.c:624 ../app/dialogs/palette-import-dialog.c:694
 #: ../app/pdb/image_cmds.c:3892 ../app/widgets/gimpdnd-xds.c:83
 msgid "Untitled"
 msgstr "无标题"
@@ -1089,8 +1089,7 @@ msgstr "删除文档历史中的全部项吗？"
 msgid ""
 "Clearing the document history will permanently remove all currently listed "
 "entries."
-msgstr ""
-"清除文档历史将永久删除目前列出的全部项。"
+msgstr "清除文档历史将永久删除目前列出的全部项。"
 
 #: ../app/actions/drawable-actions.c:45
 msgid "_Desaturate..."
@@ -2261,7 +2260,7 @@ msgstr "剪裁图层"
 msgid "Layer Mask to Selection"
 msgstr "图层蒙板到选区"
 
-#: ../app/actions/layers-commands.c:929 ../app/core/gimplayer.c:1293
+#: ../app/actions/layers-commands.c:929 ../app/core/gimplayer.c:1290
 #: ../app/dialogs/layer-add-mask-dialog.c:61
 msgid "Add Layer Mask"
 msgstr "添加图层蒙板"
@@ -2815,7 +2814,7 @@ msgstr "打开文本文件(UTF-8)"
 #: ../app/config/gimpconfig-file.c:57 ../app/core/gimpbrush-load.c:115
 #: ../app/core/gimpbrush-load.c:395 ../app/core/gimpbrushgenerated.c:594
 #: ../app/core/gimpbrushpipe.c:331 ../app/core/gimpgradient-load.c:62
-#: ../app/core/gimppalette.c:358 ../app/core/gimppattern.c:297
+#: ../app/core/gimppalette.c:355 ../app/core/gimppattern.c:294
 #: ../app/tools/gimpimagemaptool.c:612 ../app/xcf/xcf.c:295
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -3422,7 +3421,7 @@ msgid "Saturation"
 msgstr "饱和度"
 
 #: ../app/base/base-enums.c:121 ../app/pdb/internal_procs.c:104
-#: ../app/tools/gimppaintoptions-gui.c:294
+#: ../app/tools/gimppaintoptions-gui.c:304
 msgid "Color"
 msgstr "颜色"
 
@@ -3471,7 +3470,7 @@ msgstr ""
 
 #: ../app/config/gimpconfig-file.c:66 ../app/core/gimpbrushgenerated.c:254
 #: ../app/core/gimpgradient-save.c:51 ../app/core/gimpgradient-save.c:142
-#: ../app/core/gimppalette.c:561 ../app/gui/themes.c:238
+#: ../app/core/gimppalette.c:558 ../app/gui/themes.c:238
 #: ../app/tools/gimpimagemaptool.c:611 ../app/vectors/gimpvectors-export.c:83
 #: ../app/xcf/xcf.c:352
 #, c-format
@@ -3837,12 +3836,12 @@ msgstr "允许显示工具提示。"
 #: ../app/config/gimprc-blurbs.h:334
 #, fuzzy
 msgid ""
-"Sets the swap file location. The GIMP uses a tile based memory allocation "
+"Sets the swap file location. GIMP uses a tile based memory allocation "
 "scheme. The swap file is used to quickly and easily swap tiles out to disk "
-"and back in. Be aware that the swap file can easily get very large if the "
-"GIMP is used with large images. Also, things can get horribly slow if the "
-"swap file is created on a directory that is mounted over NFS.  For these "
-"reasons, it may be desirable to put your swap file in \"/tmp\"."
+"and back in. Be aware that the swap file can easily get very largeif GIMP is "
+"used with large images. Also, things can get horribly slow if the swap file "
+"is created on a directory that is mounted over NFS.  For these reasons, it "
+"may be desirable to put your swap file in \"/tmp\"."
 msgstr ""
 "设置交换文件的位置。GIMP 使用基于平铺的内存分配机制。交换文件用作方便快捷地用"
 "平铺片交换到磁盘中然后回收。需要注意的是当 GIMP 处理大的图像时能很快地使交换"
@@ -4584,7 +4583,7 @@ msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "画笔文件“%s”中含有无效的 UTF-8 字符串。"
 
 #: ../app/core/gimpbrush-load.c:258 ../app/core/gimpcontext.c:1294
-#: ../app/core/gimpitem.c:560 ../app/core/gimppattern.c:369
+#: ../app/core/gimpitem.c:560 ../app/core/gimppattern.c:366
 #: ../app/dialogs/template-options-dialog.c:80
 #: ../app/tools/gimpvectortool.c:334
 msgid "Unnamed"
@@ -4708,19 +4707,19 @@ msgstr "通道增长"
 msgid "Shrink Channel"
 msgstr "通道收缩"
 
-#: ../app/core/gimpchannel.c:732
+#: ../app/core/gimpchannel.c:729
 msgid "Cannot stroke empty channel."
 msgstr "无法勾画空通道。"
 
-#: ../app/core/gimpchannel.c:1627
+#: ../app/core/gimpchannel.c:1624
 msgid "Set Channel Color"
 msgstr "设置通道颜色"
 
-#: ../app/core/gimpchannel.c:1675
+#: ../app/core/gimpchannel.c:1672
 msgid "Set Channel Opacity"
 msgstr "设置通道不透明度"
 
-#: ../app/core/gimpchannel.c:1743 ../app/core/gimpselection.c:548
+#: ../app/core/gimpchannel.c:1740 ../app/core/gimpselection.c:548
 msgid "Selection Mask"
 msgstr "选区蒙板"
 
@@ -4810,7 +4809,7 @@ msgstr "去色"
 msgid "Equalize"
 msgstr "均化"
 
-#: ../app/core/gimpdrawable-foreground-extract.c:111
+#: ../app/core/gimpdrawable-foreground-extract.c:112
 msgid "Foreground Extraction"
 msgstr "前景提取"
 
@@ -4937,9 +4936,8 @@ msgid "Add Color to Colormap"
 msgstr "添加颜色到颜色表"
 
 #: ../app/core/gimpimage-convert.c:810
-#, fuzzy
 msgid "Cannot convert image: palette is empty."
-msgstr "无法转换图像，色板为空。"
+msgstr "无法转换图像：色板为空。"
 
 #: ../app/core/gimpimage-convert.c:824
 msgid "Convert Image to RGB"
@@ -5295,13 +5293,13 @@ msgstr "翻转图层"
 msgid "Rotate Layer"
 msgstr "旋转图层"
 
-#: ../app/core/gimplayer.c:441 ../app/core/gimplayer.c:1337
+#: ../app/core/gimplayer.c:441 ../app/core/gimplayer.c:1334
 #: ../app/core/gimplayermask.c:237
 #, c-format
 msgid "%s mask"
 msgstr "%s蒙板"
 
-#: ../app/core/gimplayer.c:487
+#: ../app/core/gimplayer.c:484
 #, c-format
 msgid ""
 "Floating Selection\n"
@@ -5310,43 +5308,43 @@ msgstr ""
 "浮动选区\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1263
+#: ../app/core/gimplayer.c:1260
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr "无法给不属于图像的一部分的图层添加图层蒙板。"
 
-#: ../app/core/gimplayer.c:1270
+#: ../app/core/gimplayer.c:1267
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "无法添加图层蒙板，因为已有一个。"
 
-#: ../app/core/gimplayer.c:1277
+#: ../app/core/gimplayer.c:1274
 msgid "Cannot add layer mask to a layer with no alpha channel."
 msgstr "无法给没有 alpha 通道的图层添加图层蒙板。"
 
-#: ../app/core/gimplayer.c:1287
+#: ../app/core/gimplayer.c:1284
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "无法添加跟指定图层尺寸不同的图层蒙板。"
 
-#: ../app/core/gimplayer.c:1391
+#: ../app/core/gimplayer.c:1388
 msgid "Transfer Alpha to Mask"
 msgstr "转移 Alpha 到蒙板"
 
-#: ../app/core/gimplayer.c:1551 ../app/core/gimplayermask.c:264
+#: ../app/core/gimplayer.c:1548 ../app/core/gimplayermask.c:264
 msgid "Apply Layer Mask"
 msgstr "应用图层蒙板"
 
-#: ../app/core/gimplayer.c:1552
+#: ../app/core/gimplayer.c:1549
 msgid "Delete Layer Mask"
 msgstr "删除图层蒙板"
 
-#: ../app/core/gimplayer.c:1653
+#: ../app/core/gimplayer.c:1650
 msgid "Add Alpha Channel"
 msgstr "添加 Alpha 通道"
 
-#: ../app/core/gimplayer.c:1704
+#: ../app/core/gimplayer.c:1701
 msgid "Remove Alpha Channel"
 msgstr "删除 Alpha 通道"
 
-#: ../app/core/gimplayer.c:1726
+#: ../app/core/gimplayer.c:1723
 msgid "Layer to Image Size"
 msgstr "图层到图像大小"
 
@@ -5358,19 +5356,19 @@ msgstr "移动图层蒙板"
 msgid "Show Layer Mask"
 msgstr "显示图层蒙板"
 
-#: ../app/core/gimppalette-import.c:370
-#, fuzzy, c-format
+#: ../app/core/gimppalette-import.c:369
+#, c-format
 msgid "Index %d"
-msgstr "索引："
+msgstr "索引 %d"
 
-#: ../app/core/gimppalette-import.c:570
-#, fuzzy, c-format
+#: ../app/core/gimppalette-import.c:599
+#, c-format
 msgid "Unknown type of palette file: %s"
 msgstr ""
-"未知类型的色板文件：\n"
+"未知类型的色板文件："
 "%s"
 
-#: ../app/core/gimppalette.c:373
+#: ../app/core/gimppalette.c:370
 #, c-format
 msgid ""
 "Fatal parse error in palette file '%s': Missing magic header.\n"
@@ -5379,23 +5377,23 @@ msgstr ""
 "色板文件“%s”出现严重解析错误：缺少 magic 头。\n"
 "这个文件是否需要从 DOS 转换过来？"
 
-#: ../app/core/gimppalette.c:379
+#: ../app/core/gimppalette.c:376
 #, c-format
 msgid "Fatal parse error in palette file '%s': Missing magic header."
 msgstr "色板文件“%s”出现严重解析错误：缺少 magic 头。"
 
-#: ../app/core/gimppalette.c:395 ../app/core/gimppalette.c:420
-#: ../app/core/gimppalette.c:450 ../app/core/gimppalette.c:530
+#: ../app/core/gimppalette.c:392 ../app/core/gimppalette.c:417
+#: ../app/core/gimppalette.c:447 ../app/core/gimppalette.c:527
 #, c-format
 msgid "Fatal parse error in palette file '%s': Read error in line %d."
 msgstr "色板文件“%s”出现严重解析错误：第 %d 行读入出错。"
 
-#: ../app/core/gimppalette.c:410
+#: ../app/core/gimppalette.c:407
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
 msgstr "色板文件“%s”中含有无效的 UTF-8 字符串。"
 
-#: ../app/core/gimppalette.c:438
+#: ../app/core/gimppalette.c:435
 #, c-format
 msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
@@ -5403,39 +5401,39 @@ msgid ""
 msgstr "读取色板文件“%s”：第 %d 行列的数目无效。使用默认值。"
 
 #. maybe we should just abort?
-#: ../app/core/gimppalette.c:478
+#: ../app/core/gimppalette.c:475
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
 msgstr "读取色板文件“%s”：第 %d 行缺少 RED 分量。"
 
-#: ../app/core/gimppalette.c:486
+#: ../app/core/gimppalette.c:483
 #, c-format
 msgid "Reading palette '%s': Missing GREEN component in line %d."
 msgstr "读取色板文件“%s”：第 %d 行缺少 GREEN 分量。"
 
-#: ../app/core/gimppalette.c:494
+#: ../app/core/gimppalette.c:491
 #, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
 msgstr "读取色板文件“%s”：第 %d 行缺少 BLUE 分量。"
 
-#: ../app/core/gimppalette.c:504
+#: ../app/core/gimppalette.c:501
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgstr "读取色板文件“%s”：第 %d 行 RGB 取值超出范围。"
 
-#: ../app/core/gimppattern.c:306 ../app/core/gimppattern.c:353
-#: ../app/core/gimppattern.c:385
+#: ../app/core/gimppattern.c:303 ../app/core/gimppattern.c:350
+#: ../app/core/gimppattern.c:382
 #, c-format
 msgid "Fatal parse error in pattern file '%s': Could not read %d bytes: %s"
 msgstr "图案文件“%s”出现严重解析错误：无法读取 %d 字节：%s"
 
-#: ../app/core/gimppattern.c:326
+#: ../app/core/gimppattern.c:323
 #, c-format
 msgid ""
 "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
 msgstr "图案文件“%s”出现严重解析错误：未知图案格式版本 %d。"
 
-#: ../app/core/gimppattern.c:336
+#: ../app/core/gimppattern.c:333
 #, c-format
 msgid ""
 "Fatal parse error in pattern file '%s: Unsupported pattern depth %d.\n"
@@ -5444,7 +5442,7 @@ msgstr ""
 "图案文件“%s”出现严重解析错误：不支持的图案深度 %d。\n"
 "GIMP 图案必须为灰度或 RGB。"
 
-#: ../app/core/gimppattern.c:362
+#: ../app/core/gimppattern.c:359
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "图案文件“%s”中含有无效的 UTF-8 字符串。"
@@ -5455,9 +5453,8 @@ msgid "Unable to run %s callback. The corresponding plug-in may have crashed."
 msgstr "无法执行%s回调。相应的插件可能已崩溃。"
 
 #: ../app/core/gimpprogress.c:107 ../app/core/gimpprogress.c:154
-#, fuzzy
 msgid "Please wait"
-msgstr "请等待..."
+msgstr "请稍候"
 
 #: ../app/core/gimpselection.c:179 ../app/tools/gimpeditselectiontool.c:263
 msgid "Move Selection"
@@ -5469,11 +5466,11 @@ msgstr "锐化选区"
 
 #: ../app/core/gimpselection.c:198
 msgid "Select None"
-msgstr "全不选"
+msgstr "全部不选"
 
 #: ../app/core/gimpselection.c:199
 msgid "Select All"
-msgstr "全选"
+msgstr "全部选中"
 
 #: ../app/core/gimpselection.c:200
 msgid "Invert Selection"
@@ -5566,20 +5563,20 @@ msgstr "派卡"
 msgid "percent"
 msgstr "百分点"
 
-#: ../app/dialogs/about-dialog.c:63
+#: ../app/dialogs/about-dialog.c:64
 msgid "Visit the GIMP website"
 msgstr "查看 GIMP 网站"
 
 #. Translators: insert your names here,
 #. * separated by newline
 #.
-#: ../app/dialogs/about-dialog.c:153
+#: ../app/dialogs/about-dialog.c:155
 msgid "translator-credits"
 msgstr ""
 "Yuheng Xie\n"
 "Funda Wang"
 
-#: ../app/dialogs/about-dialog.c:689
+#: ../app/dialogs/about-dialog.c:691
 msgid "GIMP is brought to you by"
 msgstr "GIMP 作者群"
 
@@ -5838,15 +5835,20 @@ msgstr "这是您所希望的吗？"
 msgid "General"
 msgstr "常规"
 
-#: ../app/dialogs/keyboard-shortcuts-dialog.c:47
+#: ../app/dialogs/keyboard-shortcuts-dialog.c:52
 msgid "Configure Keyboard Shortcuts"
 msgstr "配置快捷键"
 
-#: ../app/dialogs/keyboard-shortcuts-dialog.c:87
+#: ../app/dialogs/keyboard-shortcuts-dialog.c:92
 msgid ""
 "To edit a shortcut key, click on the corresponding row and type a new "
 "accelerator, or press backspace to clear."
 msgstr "要编辑快捷键，请在相应行按新的加速键，或按 Backspace 清除"
+
+#: ../app/dialogs/keyboard-shortcuts-dialog.c:109
+#: ../app/dialogs/preferences-dialog.c:1432
+msgid "_Save keyboard shortcuts on exit"
+msgstr "退出时保存快捷键(_S)"
 
 #: ../app/dialogs/layer-add-mask-dialog.c:63
 msgid "Add a Mask to the Layer"
@@ -6030,7 +6032,7 @@ msgid "_Import"
 msgstr "导入(_I)"
 
 #. The "Source" frame
-#: ../app/dialogs/palette-import-dialog.c:221
+#: ../app/dialogs/palette-import-dialog.c:220
 msgid "Select Source"
 msgstr "选择来源"
 
@@ -6042,37 +6044,37 @@ msgstr "图像(_M)"
 msgid "Palette _file"
 msgstr "色板文件(_F)"
 
-#: ../app/dialogs/palette-import-dialog.c:286
+#: ../app/dialogs/palette-import-dialog.c:283
 msgid "Select Palette File"
 msgstr "选择色板文件"
 
 #. The "Import" frame
-#: ../app/dialogs/palette-import-dialog.c:317
+#: ../app/dialogs/palette-import-dialog.c:313
 msgid "Import Options"
 msgstr "导入选项"
 
-#: ../app/dialogs/palette-import-dialog.c:330
+#: ../app/dialogs/palette-import-dialog.c:327
 msgid "New import"
 msgstr "新的导入"
 
-#: ../app/dialogs/palette-import-dialog.c:332
+#: ../app/dialogs/palette-import-dialog.c:329
 msgid "Palette _name:"
 msgstr "色板名字(_N)："
 
-#: ../app/dialogs/palette-import-dialog.c:338
+#: ../app/dialogs/palette-import-dialog.c:335
 msgid "N_umber of colors:"
 msgstr "颜色数量(_U)："
 
-#: ../app/dialogs/palette-import-dialog.c:351
+#: ../app/dialogs/palette-import-dialog.c:348
 msgid "C_olumns:"
 msgstr "列数(_O)："
 
-#: ../app/dialogs/palette-import-dialog.c:363
+#: ../app/dialogs/palette-import-dialog.c:360
 msgid "I_nterval:"
 msgstr "间隔(_N)："
 
 #. The "Preview" frame
-#: ../app/dialogs/palette-import-dialog.c:375
+#: ../app/dialogs/palette-import-dialog.c:372
 msgid "Preview"
 msgstr "预览"
 
@@ -6249,10 +6251,6 @@ msgstr "使用动态快捷键(_D)"
 #: ../app/dialogs/preferences-dialog.c:1425
 msgid "Configure _Keyboard Shortcuts..."
 msgstr "配置快捷键(_K)..."
-
-#: ../app/dialogs/preferences-dialog.c:1432
-msgid "_Save keyboard shortcuts on exit"
-msgstr "退出时保存快捷键(_S)"
 
 #: ../app/dialogs/preferences-dialog.c:1436
 msgid "Save Keyboard Shortcuts _Now"
@@ -6815,8 +6813,8 @@ msgid "pixels/%a"
 msgstr "像素/%a"
 
 #: ../app/dialogs/quit-dialog.c:102
-msgid "Quit The GIMP"
-msgstr "退出 The GIMP"
+msgid "Quit GIMP"
+msgstr "退出 GIMP"
 
 #: ../app/dialogs/quit-dialog.c:102
 msgid "Close All Images"
@@ -6827,8 +6825,8 @@ msgid "If you quit GIMP now, these changes will be lost."
 msgstr "如果您现在退出 GIMP，这些更改将会丢失。"
 
 #: ../app/dialogs/quit-dialog.c:162
-msgid "If close these files now, changes will be lost."
-msgstr "如果您现在退出 GIMP，更改将会丢失。"
+msgid "If you close these images now, changes will be lost."
+msgstr "如果您现在关闭这些图像，更改将会丢失。"
 
 #: ../app/dialogs/quit-dialog.c:210
 #, c-format
@@ -6998,7 +6996,7 @@ msgid ""
 "the GIMP."
 msgstr ""
 "unitrc 用于储存您的用户单位数据库。您可以定义附加的单位然后就像使用内置的单位"
-"英寸、毫米、点、派卡那样使用它们。这个文件在每次退出 GIMP 时都会被重写。"
+"英寸、毫米、点、皮卡那样使用它们。这个文件在每次退出 GIMP 时都会被重写。"
 
 #: ../app/dialogs/user-install-dialog.c:186
 #, fuzzy
@@ -7006,8 +7004,8 @@ msgid ""
 "This folder is used to store user defined brushes. GIMP checks this folder "
 "in addition to the system-wide brushes installation."
 msgstr ""
-"这个文件夹用于储存用户自定义的画笔。GIMP 在搜索画笔时除了检查系统的 GIMP 画笔"
-"安装以外还将搜索这个文件夹。"
+"此文件夹用于储存用户自定义的画笔。GIMP 在搜索画笔时除了检查系统的 GIMP 画笔"
+"安装以外还将搜索此文件夹。"
 
 #: ../app/dialogs/user-install-dialog.c:193
 #, fuzzy
@@ -7017,8 +7015,8 @@ msgid ""
 "this only if you really want to have fonts available in GIMP only, otherwise "
 "put them in your global font directory."
 msgstr ""
-"这个文件夹用于储存您希望只在 GIMP 中使用的字体。GIMP 在搜索字体时除了检查系统"
-"的 GIMP 字体安装以外还将搜索这个文件夹。只有当您真的打算只在 GIMP 中使用这些"
+"此文件夹用于储存您希望只在 GIMP 中使用的字体。GIMP 在搜索字体时除了检查系统"
+"的 GIMP 字体安装以外还将搜索此文件夹。只有当您真的打算只在 GIMP 中使用这些"
 "字体时才使用该项，否则最好将它们放在全局字体目录中。"
 
 #: ../app/dialogs/user-install-dialog.c:202
@@ -7027,8 +7025,8 @@ msgid ""
 "This folder is used to store user defined gradients.  GIMP checks this "
 "folder in addition to the system-wide gradients installation."
 msgstr ""
-"这个文件夹用于储存用户自定义的渐变。GIMP 在搜索渐变时除了检查系统的 GIMP 渐变"
-"安装以外还将搜索这个文件夹。"
+"此文件夹用于储存用户自定义的渐变。GIMP 在搜索渐变时除了检查系统的 GIMP 渐变"
+"安装以外还将搜索此文件夹。"
 
 #: ../app/dialogs/user-install-dialog.c:209
 #, fuzzy
@@ -7036,8 +7034,8 @@ msgid ""
 "This folder is used to store user defined palettes.  GIMP checks this folder "
 "in addition to the system-wide palettes installation."
 msgstr ""
-"这个文件夹用于储存用户自定义的色板。GIMP 在搜索色板时除了检查系统的 GIMP 色板"
-"安装以外还将搜索这个文件夹。"
+"此文件夹用于储存用户自定义的色板。GIMP 在搜索色板时除了检查系统的 GIMP 色板"
+"安装以外还将搜索此文件夹。"
 
 #: ../app/dialogs/user-install-dialog.c:216
 #, fuzzy
@@ -7046,8 +7044,8 @@ msgid ""
 "in addition to the system-wide patterns installation when searching for "
 "patterns."
 msgstr ""
-"这个文件夹用于储存用户自定义的图案。GIMP 在搜索图案时除了检查系统的 GIMP 图案"
-"安装以外还将搜索这个文件夹。"
+"此文件夹用于储存用户自定义的图案。GIMP 在搜索图案时除了检查系统的 GIMP 图案"
+"安装以外还将搜索此文件夹。"
 
 #: ../app/dialogs/user-install-dialog.c:223
 #, fuzzy
@@ -7056,8 +7054,8 @@ msgid ""
 "system-supported plug-ins.  GIMP checks this folder in addition to the "
 "system-wide plug-in folder."
 msgstr ""
-"这个文件夹用于储存用户创建的、临时的、或者其它非系统支持的插件。GIMP 在搜索插"
-"件时除了检查系统的 GIMP 插件安装以外还将搜索这个文件夹。"
+"此文件夹用于储存用户创建的、临时的、或者其它非系统支持的插件。GIMP 在搜索插"
+"件时除了检查系统的 GIMP 插件安装以外还将搜索此文件夹。"
 
 #: ../app/dialogs/user-install-dialog.c:231
 #, fuzzy
@@ -7066,7 +7064,7 @@ msgid ""
 "system-supported DLL modules.  GIMP checks this folder in addition to the "
 "system-wide module folder."
 msgstr ""
-"这个文件夹用于储存用户创建的、临时的、或者其它非系统支持的 DLL 模块。GIMP 在"
+"此文件夹用于储存用户创建的、临时的、或者其它非系统支持的 DLL 模块。GIMP 在"
 "初始化阶段搜索加载模块的时候除了检查系统的 GIMP 模块安装以外还将搜索这个文件"
 "夹。"
 
@@ -7078,9 +7076,9 @@ msgid ""
 "folder in addition to the system-wide GIMP interpreters folder when "
 "searching for plug-in interpreter configuration files."
 msgstr ""
-"这个文件夹用于储存用户创建的、临时的、或者其它非系统支持插件的解释器。GIMP 在"
+"此文件夹用于储存用户创建的、临时的、或者其它非系统支持插件的解释器。GIMP 在"
 "搜索插件解释器配置文件时除了检查系统的 GIMP 插件解释器安装文件夹以外还将搜索"
-"这个文件夹。"
+"此文件夹。"
 
 #: ../app/dialogs/user-install-dialog.c:249
 #, fuzzy
@@ -7090,7 +7088,7 @@ msgid ""
 "folder in addition to the system-wide GIMP environment folder when searching "
 "for plug-in environment modification files."
 msgstr ""
-"这个文件夹用于储存用户创建的、临时的、或者其它非系统支持的插件环境附加文件。"
+"此文件夹用于储存用户创建的、临时的、或者其它非系统支持的插件环境附加文件。"
 "GIMP 在搜索插件环境修改文件时除了检查系统的 GIMP 环境文件夹以外还将搜索这个文"
 "件夹。"
 
@@ -7100,33 +7098,32 @@ msgid ""
 "This folder is used to store user created and installed scripts.  GIMP "
 "checks this folder in addition to the systemwide scripts folder."
 msgstr ""
-"这个文件夹用于储存用户创建和安装的脚本。GIMP 在搜索脚本时除了检查系统的 GIMP "
-"脚本安装以外还将搜索这个文件夹。"
+"此文件夹用于储存用户创建和安装的脚本。GIMP 在搜索脚本时除了检查系统的 GIMP "
+"脚本安装以外还将搜索此文件夹。"
 
 #: ../app/dialogs/user-install-dialog.c:266
 msgid "This folder is searched for image templates."
-msgstr "在这个文件夹中搜索图像模板。"
+msgstr "在此文件夹中搜索图像模板。"
 
 #: ../app/dialogs/user-install-dialog.c:271
 msgid "This folder is searched for user-installed themes."
-msgstr "在这个文件夹中搜索用户安装的主题。"
+msgstr "在此文件夹中搜索用户安装的主题。"
 
 #: ../app/dialogs/user-install-dialog.c:276
-#, fuzzy
 msgid "This folder is used for temporary files."
-msgstr "在这个文件夹中搜索图像模板。"
+msgstr "此文件夹用于临时文件。"
 
 #: ../app/dialogs/user-install-dialog.c:281
 msgid "This folder is used to store tool options."
-msgstr "这个文件夹用于储存工具选项。"
+msgstr "此文件夹用于储存工具选项。"
 
 #: ../app/dialogs/user-install-dialog.c:286
 msgid "This folder is used to store parameter files for the Curves tool."
-msgstr "这个文件夹用于储存曲线工具的参数文件。"
+msgstr "此文件夹用于储存曲线工具的参数文件。"
 
 #: ../app/dialogs/user-install-dialog.c:291
 msgid "This folder is used to store parameter files for the Levels tool."
-msgstr "这个文件夹用于储存色阶工具的参数文件。"
+msgstr "此文件夹用于储存色阶工具的参数文件。"
 
 #: ../app/dialogs/user-install-dialog.c:387
 msgid "Installation successful.  Click \"Continue\" to proceed."
@@ -7242,7 +7239,7 @@ msgid ""
 "This folder will contain a number of important files.  Click on one of the "
 "files or folders in the tree to get more information about the selected item."
 msgstr ""
-"这个文件夹将包含许多重要的文件。点击树中的一个文件或文件夹来获取选中项目的更"
+"此文件夹将包含许多重要的文件。点击树中的一个文件或文件夹来获取选中项目的更"
 "多信息。"
 
 #: ../app/dialogs/user-install-dialog.c:1009
@@ -7680,9 +7677,8 @@ msgid "Brush UI"
 msgstr "画笔用户界面"
 
 #: ../app/pdb/internal_procs.c:98
-#, fuzzy
 msgid "Buffer procedures"
-msgstr "参考线过程"
+msgstr "缓存过程"
 
 #: ../app/pdb/internal_procs.c:110
 msgid "Convert"
@@ -8094,7 +8090,7 @@ msgstr "位移："
 msgid "Shape:"
 msgstr "形状："
 
-#: ../app/tools/gimpblendoptions.c:258 ../app/tools/gimppaintoptions-gui.c:430
+#: ../app/tools/gimpblendoptions.c:258 ../app/tools/gimppaintoptions-gui.c:488
 msgid "Repeat:"
 msgstr "重复："
 
@@ -8392,17 +8388,27 @@ msgstr "工具切换(%s)"
 msgid "Current layer only"
 msgstr "仅对当前图层"
 
-#: ../app/tools/gimpcroptool.c:81
+#: ../app/tools/gimpcroptool.c:86
 msgid "Crop & Resize"
 msgstr "剪裁和改变大小"
 
-#: ../app/tools/gimpcroptool.c:82
+#: ../app/tools/gimpcroptool.c:87
 msgid "Crop or Resize an image"
 msgstr "剪裁图像或改变大小"
 
-#: ../app/tools/gimpcroptool.c:83
+#: ../app/tools/gimpcroptool.c:88
 msgid "_Crop & Resize"
 msgstr "剪裁和改变大小(_C)"
+
+#: ../app/tools/gimpcroptool.c:215
+#, fuzzy
+msgid "Click or press enter to crop."
+msgstr "点击可删除此锚点。"
+
+#: ../app/tools/gimpcroptool.c:218
+#, fuzzy
+msgid "Click or press enter to resize."
+msgstr "点击生成预览"
 
 #: ../app/tools/gimpcurvestool.c:137
 msgid "Adjust color curves"
@@ -8915,65 +8921,74 @@ msgstr "模糊涂画处理"
 msgid "_Paintbrush"
 msgstr "画笔(_P)"
 
-#: ../app/tools/gimppaintoptions-gui.c:102
+#: ../app/tools/gimppaintoptions-gui.c:104
 #: ../app/tools/gimpselectionoptions.c:428
 #: ../app/widgets/gimpbrushselect.c:214 ../app/widgets/gimplayertreeview.c:295
 msgid "Mode:"
 msgstr "模式："
 
-#: ../app/tools/gimppaintoptions-gui.c:108
+#: ../app/tools/gimppaintoptions-gui.c:110
 #: ../app/widgets/gimpbrushselect.c:201 ../app/widgets/gimplayertreeview.c:310
 msgid "Opacity:"
 msgstr "不透明度："
 
-#: ../app/tools/gimppaintoptions-gui.c:125
+#: ../app/tools/gimppaintoptions-gui.c:127
 msgid "Brush:"
 msgstr "画笔："
 
-#: ../app/tools/gimppaintoptions-gui.c:134
-#: ../app/tools/gimppaintoptions-gui.c:406
+#: ../app/tools/gimppaintoptions-gui.c:136
+#: ../app/tools/gimppaintoptions-gui.c:464
 msgid "Gradient:"
 msgstr "渐变："
 
-#: ../app/tools/gimppaintoptions-gui.c:162
+#: ../app/tools/gimppaintoptions-gui.c:172
 msgid "Incremental"
 msgstr "增值"
 
-#: ../app/tools/gimppaintoptions-gui.c:176
+#: ../app/tools/gimppaintoptions-gui.c:186
 msgid "Hard edge"
 msgstr "硬质边界"
 
-#: ../app/tools/gimppaintoptions-gui.c:217
+#: ../app/tools/gimppaintoptions-gui.c:227
 msgid "Pressure sensitivity"
 msgstr "压力灵敏度"
 
-#: ../app/tools/gimppaintoptions-gui.c:236
+#: ../app/tools/gimppaintoptions-gui.c:246
 msgid "Opacity"
 msgstr "不透明度"
 
-#: ../app/tools/gimppaintoptions-gui.c:250
+#: ../app/tools/gimppaintoptions-gui.c:260
 msgid "Hardness"
 msgstr "硬度"
 
-#: ../app/tools/gimppaintoptions-gui.c:261
+#: ../app/tools/gimppaintoptions-gui.c:271
 msgid "Rate"
 msgstr "比率"
 
-#: ../app/tools/gimppaintoptions-gui.c:276
-#: ../app/tools/gimppaintoptions-gui.c:285
+#: ../app/tools/gimppaintoptions-gui.c:286
+#: ../app/tools/gimppaintoptions-gui.c:295
 msgid "Size"
 msgstr "大小"
 
-#: ../app/tools/gimppaintoptions-gui.c:324
+#: ../app/tools/gimppaintoptions-gui.c:334
 msgid "Fade out"
 msgstr "淡出"
 
-#: ../app/tools/gimppaintoptions-gui.c:344
-#: ../app/tools/gimppaintoptions-gui.c:415
+#: ../app/tools/gimppaintoptions-gui.c:354
+#: ../app/tools/gimppaintoptions-gui.c:473
 msgid "Length:"
 msgstr "长度："
 
-#: ../app/tools/gimppaintoptions-gui.c:379
+#: ../app/tools/gimppaintoptions-gui.c:391
+msgid "Apply Jitter"
+msgstr ""
+
+#: ../app/tools/gimppaintoptions-gui.c:411
+#, fuzzy
+msgid "Amount:"
+msgstr "计数："
+
+#: ../app/tools/gimppaintoptions-gui.c:437
 msgid "Use color from gradient"
 msgstr "使用渐变中的颜色"
 
@@ -9051,24 +9066,24 @@ msgstr "宽高比"
 msgid "Center"
 msgstr "中心"
 
-#: ../app/tools/gimprectangletool.c:1827 ../app/tools/gimprectangletool.c:2254
+#: ../app/tools/gimprectangletool.c:1831 ../app/tools/gimprectangletool.c:2258
 msgid "Rectangle: "
 msgstr "矩形："
 
-#: ../app/tools/gimprectangletool.c:2673
+#: ../app/tools/gimprectangletool.c:2677
 msgid "1 "
 msgstr "1 "
 
-#: ../app/tools/gimprectangletool.c:2674
+#: ../app/tools/gimprectangletool.c:2678
 msgid "2 "
 msgstr "2 "
 
-#: ../app/tools/gimprectangletool.c:2675 ../app/widgets/gimpcursorview.c:170
+#: ../app/tools/gimprectangletool.c:2679 ../app/widgets/gimpcursorview.c:170
 #: ../app/widgets/gimpcursorview.c:192
 msgid "X"
 msgstr "X"
 
-#: ../app/tools/gimprectangletool.c:2676 ../app/widgets/gimpcursorview.c:176
+#: ../app/tools/gimprectangletool.c:2680 ../app/widgets/gimpcursorview.c:176
 #: ../app/widgets/gimpcursorview.c:198
 msgid "Y"
 msgstr "Y"
@@ -9249,14 +9264,12 @@ msgid "Indentation of the first line"
 msgstr "第一行的缩进深度"
 
 #: ../app/tools/gimptextoptions.c:183
-#, fuzzy
 msgid "Adjust line spacing"
-msgstr "网格线间距"
+msgstr "调整线间距"
 
 #: ../app/tools/gimptextoptions.c:188
-#, fuzzy
 msgid "Adjust letter spacing"
-msgstr "修改字符距"
+msgstr "调整字母符距"
 
 #: ../app/tools/gimptextoptions.c:430
 msgid "Font:"
@@ -9731,7 +9744,7 @@ msgstr "未选择滤镜"
 
 #: ../app/widgets/gimpcoloreditor.c:280
 msgid "Hexadecimal color notation as used in HTML and CSS"
-msgstr ""
+msgstr "在 HTML 和 CSS 中使用的十六进制颜色引用"
 
 #: ../app/widgets/gimpcolorframe.c:446
 msgid "Index:"
@@ -9908,7 +9921,7 @@ msgstr "键盘消息"
 #: ../app/widgets/gimpcontrollerkeyboard.c:252
 #: ../app/widgets/gimpcontrollerwheel.c:251
 msgid "Ready"
-msgstr "就位"
+msgstr "就绪"
 
 #: ../app/widgets/gimpcontrollerlist.c:213
 msgid "Available Controllers"
@@ -10602,8 +10615,8 @@ msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Click to open the color selection dialog."
 msgstr ""
-"前景色和背景色。黑白小方格可以重置颜色。箭头可以交换颜色。单击可以从颜色选"
-"择对话框中选择颜色。"
+"前景色和背景色。黑白小方格可以重置颜色。箭头可以交换颜色。单击可以从颜色选择"
+"对话框中选择颜色。"
 
 #: ../app/widgets/gimptooloptionseditor.c:187
 msgid "Save options to..."
@@ -10628,7 +10641,7 @@ msgstr "请确认菜单 XML 文件已正确安装。"
 #: ../app/widgets/gimpuimanager.c:708
 #, c-format
 msgid "There was an error parsing the menu definition from %s: %s"
-msgstr ""
+msgstr "从 %s 处理菜单定义时出错：%s"
 
 #: ../app/widgets/gimpundoeditor.c:256
 msgid "[ Base Image ]"
@@ -10825,19 +10838,18 @@ msgstr ""
 
 #: ../tools/gimp-remote.c:93
 msgid "Start GIMP without showing the startup window"
-msgstr ""
+msgstr "启动 GIMP 而不显示启动窗口"
 
 #: ../tools/gimp-remote.c:197
 msgid "Could not connect to GIMP."
-msgstr ""
+msgstr "无法连接到 GIMP。"
 
 #: ../tools/gimp-remote.c:198
 msgid "Make sure that the Toolbox is visible!"
-msgstr ""
+msgstr "确定工具箱可见！"
 
 #. if execv and execvp return, there was an error
 #: ../tools/gimp-remote.c:299
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "无法启动“%s”：%s"
-
