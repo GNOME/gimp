@@ -170,4 +170,4 @@
 		    SF-TOGGLE     _"Gradient reverse"   FALSE)
 
 (script-fu-menu-register "script-fu-title-header"
-			 "<Toolbox>/Xtns/Script-Fu/Logos")
+			 "<Toolbox>/Xtns/Logos")

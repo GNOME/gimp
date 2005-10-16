@@ -120,7 +120,7 @@ script_fu_query (void)
 			  console_args, NULL);
 
   gimp_plugin_menu_register ("plug-in-script-fu-console",
-                             N_("<Toolbox>/Xtns/Script-Fu"));
+                             N_("<Toolbox>/Xtns/Languages/Script-Fu"));
 
   gimp_install_procedure ("plug-in-script-fu-text-console",
                           "Provides a text console mode for script-fu "
@@ -149,7 +149,7 @@ script_fu_query (void)
 			  server_args, NULL);
 
   gimp_plugin_menu_register ("plug-in-script-fu-server",
-                             N_("<Toolbox>/Xtns/Script-Fu"));
+                             N_("<Toolbox>/Xtns/Languages/Script-Fu"));
 
   gimp_install_procedure ("plug-in-script-fu-eval",
 			  "Evaluate scheme code",
@@ -266,27 +266,27 @@ script_fu_extension_init (void)
     { GIMP_PDB_INT32, "run_mode", "[Interactive], non-interactive" }
   };
 
-  gimp_plugin_menu_branch_register ("<Toolbox>/Xtns",
+  gimp_plugin_menu_branch_register ("<Toolbox>/Xtns/Languages",
                                     N_("_Script-Fu"));
-  gimp_plugin_menu_branch_register ("<Toolbox>/Xtns/Script-Fu",
+  gimp_plugin_menu_branch_register ("<Toolbox>/Xtns",
                                     N_("_Buttons"));
-  gimp_plugin_menu_branch_register ("<Toolbox>/Xtns/Script-Fu",
+  gimp_plugin_menu_branch_register ("<Toolbox>/Xtns",
                                     N_("_Logos"));
-  gimp_plugin_menu_branch_register ("<Toolbox>/Xtns/Script-Fu",
+  gimp_plugin_menu_branch_register ("<Toolbox>/Xtns",
                                     N_("_Misc"));
-  gimp_plugin_menu_branch_register ("<Toolbox>/Xtns/Script-Fu",
+  gimp_plugin_menu_branch_register ("<Toolbox>/Xtns",
                                     N_("_Patterns"));
-  gimp_plugin_menu_branch_register ("<Toolbox>/Xtns/Script-Fu",
+  gimp_plugin_menu_branch_register ("<Toolbox>/Xtns/Languages/Script-Fu",
                                     N_("_Test"));
-  gimp_plugin_menu_branch_register ("<Toolbox>/Xtns/Script-Fu",
+  gimp_plugin_menu_branch_register ("<Toolbox>/Xtns",
                                     N_("_Utils"));
-  gimp_plugin_menu_branch_register ("<Toolbox>/Xtns/Script-Fu",
+  gimp_plugin_menu_branch_register ("<Toolbox>/Xtns",
                                     N_("_Web Page Themes"));
-  gimp_plugin_menu_branch_register ("<Toolbox>/Xtns/Script-Fu/Web Page Themes",
+  gimp_plugin_menu_branch_register ("<Toolbox>/Xtns/Web Page Themes",
                                     N_("_Alien Glow"));
-  gimp_plugin_menu_branch_register ("<Toolbox>/Xtns/Script-Fu/Web Page Themes",
+  gimp_plugin_menu_branch_register ("<Toolbox>/Xtns/Web Page Themes",
                                     N_("_Beveled Pattern"));
-  gimp_plugin_menu_branch_register ("<Toolbox>/Xtns/Script-Fu/Web Page Themes",
+  gimp_plugin_menu_branch_register ("<Toolbox>/Xtns/Web Page Themes",
                                     N_("_Classic.Gimp.Org"));
 
   gimp_plugin_menu_branch_register ("<Image>/Filters",
@@ -312,7 +312,7 @@ script_fu_extension_init (void)
 			  script_fu_refresh_proc);
 
   gimp_plugin_menu_register ("script_fu_refresh",
-                             N_("<Toolbox>/Xtns/Script-Fu"));
+                             N_("<Toolbox>/Xtns/Languages/Script-Fu"));
 }
 
 static void

@@ -174,4 +174,4 @@
 		    SF-FONT       _"Font"               "Sans")
 
 (script-fu-menu-register "script-fu-text-circle"
-			 "<Toolbox>/Xtns/Script-Fu/Logos")
+			 "<Toolbox>/Xtns/Logos")

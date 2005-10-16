@@ -189,4 +189,4 @@
 		    SF-PATTERN    _"Pattern"              "Burlwood")
 
 (script-fu-menu-register "script-fu-chip-away-logo"
-			 "<Toolbox>/Xtns/Script-Fu/Logos")
+			 "<Toolbox>/Xtns/Logos")

@@ -80,4 +80,4 @@
 		    SF-COLOR      _"Background color"   '(255 255 255))
 
 (script-fu-menu-register "script-fu-newsprint-text"
-			 "<Toolbox>/Xtns/Script-Fu/Logos")
+			 "<Toolbox>/Xtns/Logos")

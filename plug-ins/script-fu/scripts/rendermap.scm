@@ -87,4 +87,4 @@
 							_"Detail in middle"))
 
 (script-fu-menu-register "script-fu-render-map"
-			 "<Toolbox>/Xtns/Script-Fu/Patterns")
+			 "<Toolbox>/Xtns/Patterns")

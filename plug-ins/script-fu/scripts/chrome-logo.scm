@@ -115,4 +115,4 @@
 		    SF-COLOR      _"Background color"   '(191 191 191))
 
 (script-fu-menu-register "script-fu-chrome-logo"
-			 "<Toolbox>/Xtns/Script-Fu/Logos")
+			 "<Toolbox>/Xtns/Logos")

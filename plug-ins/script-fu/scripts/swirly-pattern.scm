@@ -88,4 +88,4 @@
 		    SF-ADJUSTMENT _"Number of times to whirl" '(4 0 128 1 1 0 1))
 
 (script-fu-menu-register "script-fu-swirly-pattern"
-			 "<Toolbox>/Xtns/Script-Fu/Patterns")
+			 "<Toolbox>/Xtns/Patterns")

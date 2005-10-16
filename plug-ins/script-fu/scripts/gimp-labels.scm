@@ -116,7 +116,7 @@
 		    SF-TOGGLE _"Index image"       TRUE)
 
 (script-fu-menu-register "script-fu-tube-button-label-gimp-org"
-			 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org")
+			 "<Toolbox>/Xtns/Web Page Themes/Classic.Gimp.Org")
 
 
 (script-fu-register "script-fu-tube-subbutton-label-gimp-org"
@@ -131,7 +131,7 @@
 		    SF-TOGGLE _"Index image"       TRUE)
 
 (script-fu-menu-register "script-fu-tube-subbutton-label-gimp-org"
-			 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org")
+			 "<Toolbox>/Xtns/Web Page Themes/Classic.Gimp.Org")
 
 
 (script-fu-register "script-fu-tube-subsubbutton-label-gimp-org"
@@ -146,7 +146,7 @@
 		    SF-TOGGLE _"Index image"       TRUE)
 
 (script-fu-menu-register "script-fu-tube-subsubbutton-label-gimp-org"
-			 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org")
+			 "<Toolbox>/Xtns/Web Page Themes/Classic.Gimp.Org")
 
 
 (script-fu-register "script-fu-labels-gimp-org"
@@ -171,4 +171,4 @@
 		    SF-ADJUSTMENT _"Height"             '(30 2 1000 1 10 0 1))
 
 (script-fu-menu-register "script-fu-labels-gimp-org"
-			 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org")
+			 "<Toolbox>/Xtns/Web Page Themes/Classic.Gimp.Org")

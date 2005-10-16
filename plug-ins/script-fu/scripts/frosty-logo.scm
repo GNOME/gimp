@@ -133,4 +133,4 @@
 		    SF-COLOR      _"Background color"   '(255 255 255))
 
 (script-fu-menu-register "script-fu-frosty-logo"
-			 "<Toolbox>/Xtns/Script-Fu/Logos")
+			 "<Toolbox>/Xtns/Logos")

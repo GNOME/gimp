@@ -169,4 +169,4 @@
 		    SF-COLOR      _"Ending blend"       '(0 0 106))
 
 (script-fu-menu-register "script-fu-textured-logo"
-			 "<Toolbox>/Xtns/Script-Fu/Logos")
+			 "<Toolbox>/Xtns/Logos")

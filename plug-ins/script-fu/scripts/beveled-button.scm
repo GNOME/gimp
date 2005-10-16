@@ -153,4 +153,4 @@
 		    SF-TOGGLE     _"Pressed"            FALSE)
 
 (script-fu-menu-register "script-fu-button00"
-			 "<Toolbox>/Xtns/Script-Fu/Buttons")
+			 "<Toolbox>/Xtns/Buttons")

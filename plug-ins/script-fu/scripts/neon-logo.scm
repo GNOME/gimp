@@ -222,4 +222,4 @@
 		    SF-TOGGLE     _"Create shadow"      FALSE)
 
 (script-fu-menu-register "script-fu-neon-logo"
-			 "<Toolbox>/Xtns/Script-Fu/Logos")
+			 "<Toolbox>/Xtns/Logos")

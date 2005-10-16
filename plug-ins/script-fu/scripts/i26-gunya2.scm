@@ -98,4 +98,4 @@
 		    SF-ADJUSTMENT _"Frame size"         '(2 1 20 1 5 0 1))
 
 (script-fu-menu-register "script-fu-i26-gunya2"
-			 "<Toolbox>/Xtns/Script-Fu/Logos")
+			 "<Toolbox>/Xtns/Logos")

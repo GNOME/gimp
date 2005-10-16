@@ -163,4 +163,4 @@
 		    SF-COLOR      _"Glow color"         '(28 65 188))
 
 (script-fu-menu-register "script-fu-starscape-logo"
-			 "<Toolbox>/Xtns/Script-Fu/Logos")
+			 "<Toolbox>/Xtns/Logos")

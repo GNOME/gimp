@@ -204,4 +204,4 @@
 		    SF-TOGGLE     _"Pressed"              TRUE)
 
 (script-fu-menu-register "script-fu-round-button"
-			 "<Toolbox>/Xtns/Script-Fu/Buttons")
+			 "<Toolbox>/Xtns/Buttons")

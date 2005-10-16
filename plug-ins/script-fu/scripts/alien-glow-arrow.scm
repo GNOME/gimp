@@ -160,4 +160,4 @@
                     SF-TOGGLE     _"Flatten image"    TRUE)
 
 (script-fu-menu-register "script-fu-alien-glow-right-arrow"
-			 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow")
+			 "<Toolbox>/Xtns/Web Page Themes/Alien Glow")

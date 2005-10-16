@@ -38,7 +38,7 @@ register(
     "James Henstridge",
     "James Henstridge",
     "1997-1999",
-    "<Toolbox>/Xtns/Python-Fu/_PDB Browser",
+    "<Toolbox>/Xtns/Languages/Python-Fu/_PDB Browser",
     "",
     [],
     [],

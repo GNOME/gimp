@@ -266,4 +266,4 @@
                     SF-ADJUSTMENT _"Shadow Y offset"          '(8 0 100 1 10 0 1))
 
 (script-fu-menu-register "script-fu-glossy-logo"
-			 "<Toolbox>/Xtns/Script-Fu/Logos")
+			 "<Toolbox>/Xtns/Logos")

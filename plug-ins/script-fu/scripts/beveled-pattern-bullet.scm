@@ -88,4 +88,4 @@
 		    SF-TOGGLE     _"Transparent background" FALSE)
 
 (script-fu-menu-register "script-fu-beveled-pattern-bullet"
-			 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern")
+			 "<Toolbox>/Xtns/Web Page Themes/Beveled Pattern")

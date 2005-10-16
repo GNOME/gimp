@@ -81,4 +81,4 @@
 		    SF-PATTERN    _"Pattern" "Wood")
 
 (script-fu-menu-register "script-fu-beveled-pattern-hrule"
-			 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern")
+			 "<Toolbox>/Xtns/Web Page Themes/Beveled Pattern")

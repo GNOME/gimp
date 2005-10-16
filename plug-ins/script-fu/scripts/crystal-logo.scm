@@ -206,4 +206,4 @@
 						   "/scripts/images/beavis.jpg"))
 
 (script-fu-menu-register "script-fu-crystal-logo"
-			 "<Toolbox>/Xtns/Script-Fu/Logos")
+			 "<Toolbox>/Xtns/Logos")

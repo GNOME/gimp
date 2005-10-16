@@ -270,4 +270,4 @@
 		    SF-DRAWABLE   "Drawable"           -1)
 
 (script-fu-menu-register "script-fu-test-sphere"
-			 "<Toolbox>/Xtns/Script-Fu/Test")
+			 "<Toolbox>/Xtns/Languages/Script-Fu/Test")

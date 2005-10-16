@@ -107,4 +107,4 @@
 		    SF-COLOR      _"Background color"   '(7 0 20))
 
 (script-fu-menu-register "script-fu-glowing-logo"
-			 "<Toolbox>/Xtns/Script-Fu/Logos")
+			 "<Toolbox>/Xtns/Logos")

@@ -102,4 +102,4 @@
 		    SF-COLOR      _"Glow color"         '(63 252 0))
 
 (script-fu-menu-register "script-fu-alien-glow-logo"
-			 "<Toolbox>/Xtns/Script-Fu/Logos")
+			 "<Toolbox>/Xtns/Logos")

@@ -198,4 +198,4 @@
 		    SF-COLOR      _"Chrome balance"     '(0 0 0))
 
 (script-fu-menu-register "script-fu-sota-chrome-logo"
-			 "<Toolbox>/Xtns/Script-Fu/Logos")
+			 "<Toolbox>/Xtns/Logos")

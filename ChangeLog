@@ -1,3 +1,65 @@
+2005-10-16  Akkana Peck  <akkana@shallowsky.com>
+
+	* plug-ins/pygimp/plug-ins/gimpcons.py
+	* plug-ins/pygimp/plug-ins/pdbbrowse.py
+	* plug-ins/pygimp/plug-ins/sphere.py
+	* plug-ins/script-fu/script-fu.c
+	* plug-ins/script-fu/scripts/3d-outline.scm
+	* plug-ins/script-fu/scripts/3dTruchet.scm
+	* plug-ins/script-fu/scripts/alien-glow-arrow.scm
+	* plug-ins/script-fu/scripts/alien-glow-bar.scm
+	* plug-ins/script-fu/scripts/alien-glow-bullet.scm
+	* plug-ins/script-fu/scripts/alien-glow-button.scm
+	* plug-ins/script-fu/scripts/alien-glow-logo.scm
+	* plug-ins/script-fu/scripts/alien-neon-logo.scm
+	* plug-ins/script-fu/scripts/basic1-logo.scm
+	* plug-ins/script-fu/scripts/basic2-logo.scm
+	* plug-ins/script-fu/scripts/beveled-button.scm
+	* plug-ins/script-fu/scripts/beveled-pattern-arrow.scm
+	* plug-ins/script-fu/scripts/beveled-pattern-bullet.scm
+	* plug-ins/script-fu/scripts/beveled-pattern-button.scm
+	* plug-ins/script-fu/scripts/beveled-pattern-heading.scm
+	* plug-ins/script-fu/scripts/beveled-pattern-hrule.scm
+	* plug-ins/script-fu/scripts/blended-logo.scm
+	* plug-ins/script-fu/scripts/bovinated-logo.scm
+	* plug-ins/script-fu/scripts/camo.scm
+	* plug-ins/script-fu/scripts/carved-logo.scm
+	* plug-ins/script-fu/scripts/chalk.scm
+	* plug-ins/script-fu/scripts/chip-away.scm
+	* plug-ins/script-fu/scripts/chrome-logo.scm
+	* plug-ins/script-fu/scripts/comic-logo.scm
+	* plug-ins/script-fu/scripts/coolmetal-logo.scm
+	* plug-ins/script-fu/scripts/crystal-logo.scm
+	* plug-ins/script-fu/scripts/flatland.scm
+	* plug-ins/script-fu/scripts/frosty-logo.scm
+	* plug-ins/script-fu/scripts/gimp-headers.scm
+	* plug-ins/script-fu/scripts/gimp-labels.scm
+	* plug-ins/script-fu/scripts/glossy.scm
+	* plug-ins/script-fu/scripts/glowing-logo.scm
+	* plug-ins/script-fu/scripts/gradient-bevel-logo.scm
+	* plug-ins/script-fu/scripts/i26-gunya2.scm
+	* plug-ins/script-fu/scripts/land.scm
+	* plug-ins/script-fu/scripts/neon-logo.scm
+	* plug-ins/script-fu/scripts/news-text.scm
+	* plug-ins/script-fu/scripts/pupi-button.scm
+	* plug-ins/script-fu/scripts/rendermap.scm
+	* plug-ins/script-fu/scripts/sota-chrome-logo.scm
+	* plug-ins/script-fu/scripts/speed-text.scm
+	* plug-ins/script-fu/scripts/sphere.scm
+	* plug-ins/script-fu/scripts/starburst-logo.scm
+	* plug-ins/script-fu/scripts/starscape-logo.scm
+	* plug-ins/script-fu/scripts/swirltile.scm
+	* plug-ins/script-fu/scripts/swirly-pattern.scm
+	* plug-ins/script-fu/scripts/t-o-p-logo.scm
+	* plug-ins/script-fu/scripts/test-sphere.scm
+	* plug-ins/script-fu/scripts/text-circle.scm
+	* plug-ins/script-fu/scripts/textured-logo.scm
+	* plug-ins/script-fu/scripts/title-header.scm
+	* plug-ins/script-fu/scripts/truchet.scm:
+	Move the script categories that were in Xtns->Script-Fu
+        directly into Xtns. Language specific tools (e.g. Refresh,
+        Console) remain in language-specific menus. Bug 145507.
+	
 2005-10-15  Karine Delvare  <kdelvare@nerim.net>
 
 	* app/tools/gimpnewrectselecttool.c

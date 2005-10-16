@@ -78,4 +78,4 @@
 		    SF-COLOR      _"Sphere color"       '(255 0 0))
 
 (script-fu-menu-register "script-fu-sphere"
-			 "<Toolbox>/Xtns/Script-Fu/Misc")
+			 "<Toolbox>/Xtns/Misc")

@@ -47,6 +47,7 @@
       <placeholder name="Extensions">
 	<menuitem action="dialogs-module-dialog" />
       </placeholder>
+      <placeholder name="Languages" />
       <separator />
     </menu>
 

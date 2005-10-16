@@ -168,4 +168,4 @@
                     SF-ADJUSTMENT _"Shadow Y offset"     '(0 0 200 1 5 0 1))
 
 (script-fu-menu-register "script-fu-3d-outline-logo"
-			 "<Toolbox>/Xtns/Script-Fu/Logos")
+			 "<Toolbox>/Xtns/Logos")

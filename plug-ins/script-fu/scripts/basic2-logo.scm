@@ -110,4 +110,4 @@
 		    SF-COLOR      _"Text color"         '(206 6 50))
 
 (script-fu-menu-register "script-fu-basic2-logo"
-			 "<Toolbox>/Xtns/Script-Fu/Logos")
+			 "<Toolbox>/Xtns/Logos")

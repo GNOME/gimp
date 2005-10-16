@@ -163,4 +163,4 @@
 		    SF-ADJUSTMENT _"Number of Y tiles" '(5 1 512 1 10 1 1))
 
 (script-fu-menu-register "script-fu-truchet"
-			 "<Toolbox>/Xtns/Script-Fu/Patterns")
+			 "<Toolbox>/Xtns/Patterns")

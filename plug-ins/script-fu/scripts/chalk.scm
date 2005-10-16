@@ -115,4 +115,4 @@
                     SF-COLOR      _"Chalk color"        '(255 255 255))
 
 (script-fu-menu-register "script-fu-chalk-logo"
-			 "<Toolbox>/Xtns/Script-Fu/Logos")
+			 "<Toolbox>/Xtns/Logos")

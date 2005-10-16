@@ -171,4 +171,4 @@
 		    SF-TOGGLE     _"Fade away"          TRUE)
 
 (script-fu-menu-register "script-fu-alien-neon-logo"
-			 "<Toolbox>/Xtns/Script-Fu/Logos")
+			 "<Toolbox>/Xtns/Logos")

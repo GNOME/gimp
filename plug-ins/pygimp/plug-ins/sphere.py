@@ -96,7 +96,7 @@ register(
     "James Henstridge",
     "James Henstridge",
     "1997-1999",
-    "<Toolbox>/Xtns/Python-Fu/Test/_Sphere",
+    "<Toolbox>/Xtns/Languages/Python-Fu/Test/_Sphere",
     "",
     [
         (PF_INT, "radius", "Radius for sphere", 100),

@@ -61,4 +61,4 @@
 		    SF-COLOR      _"Background color" '(255 255 255))
 
 (script-fu-menu-register "script-fu-swirl-tile"
-			 "<Toolbox>/Xtns/Script-Fu/Patterns")
+			 "<Toolbox>/Xtns/Patterns")

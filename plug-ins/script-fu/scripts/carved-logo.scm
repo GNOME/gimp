@@ -170,4 +170,4 @@
 		    SF-ADJUSTMENT _"Padding around text" '(10 0 1000 1 10 0 1))
 
 (script-fu-menu-register "script-fu-carved-logo"
-			 "<Toolbox>/Xtns/Script-Fu/Logos")
+			 "<Toolbox>/Xtns/Logos")
