@@ -50,6 +50,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimagefile.h"
 #include "core/gimplayer.h"
+#include "file/file-open.h"
 #include "file/file-utils.h"
 #include "plug-in/plug-in-proc-def.h"
 #include "plug-in/plug-in.h"

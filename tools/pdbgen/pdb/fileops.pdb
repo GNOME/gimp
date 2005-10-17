@@ -143,8 +143,9 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'GimpPDBStatusType status', 'gchar *uri' ],
-	code => <<'CODE'
+        headers => [ qw("file/file-open.h") ],
+	vars    => [ 'GimpPDBStatusType status', 'gchar *uri' ],
+	code    => <<'CODE'
 {
   uri = file_utils_filename_to_uri (gimp->load_procs, filename, NULL);
   if (! uri)
