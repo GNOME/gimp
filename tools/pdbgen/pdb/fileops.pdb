@@ -49,7 +49,7 @@ sub handler_args {
 # The defs
 
 sub file_load {
-    $blurb = 'Loads a file by invoking the right load handler.';
+    $blurb = 'Loads an image file by invoking the right load handler.';
 
     $help = <<'HELP';
 This procedure invokes the correct file load handler using magic if possible,
@@ -110,6 +110,51 @@ HELP
   g_free (new_args);
 
   return return_vals;
+}
+CODE
+    );
+}
+
+sub file_load_layer {
+    $blurb = 'Loads an image file as a layer into an already opened image.';
+
+    $help = <<'HELP';
+This procedure behaves like the file-load procedure but opens the specified
+image as a layer into an already opened image.
+HELP
+
+    $author = $copyright = 'Sven Neumann';
+    $date = '2005';
+    $since = '2.4';
+
+    @inargs = (
+	{ name => 'run_mode',
+	  type => 'enum GimpRunMode (no GIMP_RUN_WITH_LAST_VALS)',
+	  desc => 'The run mode: %%desc%%' },
+	{ name => 'image', type => 'image',
+	  desc => 'Destination image' },
+	{ name => 'filename', type => 'string', no_validate => 1,
+	  desc => 'The name of the file to load' }
+    );
+
+    @outargs = (
+	{ name => 'layer', type => 'layer', init => 1,
+	  desc => 'The layer created when loading the image file' }
+    );
+
+    %invoke = (
+	vars => [ 'GimpPDBStatusType status', 'gchar *uri' ],
+	code => <<'CODE'
+{
+  uri = file_utils_filename_to_uri (gimp->load_procs, filename, NULL);
+  if (! uri)
+    success = FALSE;
+
+  if (success)
+    layer = file_open_layer (gimp, context, progress,
+			     image, uri, run_mode, &status, NULL);
+
+  success = layer != NULL;
 }
 CODE
     );
@@ -584,11 +629,12 @@ CODE
               "plug-in/plug-in-proc-def.h"
               "file/file-utils.h");
 
-@procs = qw(file_load file_save file_load_thumbnail file_save_thumbnail
+@procs = qw(file_load file_load_layer file_load_thumbnail
+            file_save file_save_thumbnail
 	    temp_name register_magic_load_handler register_load_handler
 	    register_save_handler register_file_handler_mime
             register_thumbnail_loader);
-%exports = (app => [@procs], lib => [@procs[0,1,4..9]]);
+%exports = (app => [@procs], lib => [@procs[0,1,3,5..10]]);
 
 $desc = 'File Operations';
 

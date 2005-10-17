@@ -1,3 +1,22 @@
+2005-10-17  Sven Neumann  <sven@gimp.org>
+
+	* app/file/file-open.[ch]: added run-mode parameter to
+	file_open_layer().
+
+	* app/dialogs/file-open-dialog.c
+	* app/display/gimpdisplayshell-dnd.c
+	* app/widgets/gimplayertreeview.c: pass GIMP_RUN_INTERACTIVE to
+	file_open_layer().
+
+	* tools/pdbgen/pdb/fileops.pdb: export file_open_layer() to the PDB
+	as file-load-layer.
+
+	* app/pdb/fileops_cmds.c
+	* app/pdb/internal_procs.c
+	* libgimp/gimpfileops_pdb.[ch]: regenerated.
+
+	* libgimp/gimp.def: updated.
+
 2005-10-16  Akkana Peck  <akkana@shallowsky.com>
 
 	* plug-ins/pygimp/plug-ins/gimpcons.py

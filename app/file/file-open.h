@@ -62,6 +62,7 @@ GimpLayer * file_open_layer                 (Gimp               *gimp,
                                              GimpProgress       *progress,
                                              GimpImage          *dest_image,
                                              const gchar        *uri,
+                                             GimpRunMode         run_mode,
                                              GimpPDBStatusType  *status,
                                              GError            **error);
 

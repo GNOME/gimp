@@ -32,6 +32,9 @@ G_BEGIN_DECLS
 gint32   gimp_file_load                   (GimpRunMode  run_mode,
 					   const gchar *filename,
 					   const gchar *raw_filename);
+gint32   gimp_file_load_layer             (GimpRunMode  run_mode,
+					   gint32       image_ID,
+					   const gchar *filename);
 gboolean gimp_file_save                   (GimpRunMode  run_mode,
 					   gint32       image_ID,
 					   gint32       drawable_ID,

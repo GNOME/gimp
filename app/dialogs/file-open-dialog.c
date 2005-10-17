@@ -229,7 +229,7 @@ file_open_dialog_open_layer (GtkWidget     *open_dialog,
   new_layer = file_open_layer (gimage->gimp,
                                gimp_get_user_context (gimage->gimp),
                                GIMP_PROGRESS (open_dialog),
-                               gimage, uri,
+                               gimage, uri, GIMP_RUN_INTERACTIVE,
                                &status, &error);
 
   if (new_layer)

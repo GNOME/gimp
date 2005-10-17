@@ -360,6 +360,7 @@ gimp_edit_stroke
 <FILE>gimpfileops</FILE>
 gimp_temp_name
 gimp_file_load
+gimp_file_load_layer
 gimp_file_save
 gimp_register_magic_load_handler
 gimp_register_load_handler

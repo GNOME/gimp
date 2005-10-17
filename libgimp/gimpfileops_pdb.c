@@ -31,7 +31,7 @@
  * @filename: The name of the file to load.
  * @raw_filename: The name as entered by the user.
  *
- * Loads a file by invoking the right load handler.
+ * Loads an image file by invoking the right load handler.
  *
  * This procedure invokes the correct file load handler using magic if
  * possible, and falling back on the file's extension and/or prefix if
@@ -65,6 +65,45 @@ gimp_file_load (GimpRunMode  run_mode,
   gimp_destroy_params (return_vals, nreturn_vals);
 
   return image_ID;
+}
+
+/**
+ * gimp_file_load_layer:
+ * @run_mode: The run mode.
+ * @image_ID: Destination image.
+ * @filename: The name of the file to load.
+ *
+ * Loads an image file as a layer into an already opened image.
+ *
+ * This procedure behaves like the file-load procedure but opens the
+ * specified image as a layer into an already opened image.
+ *
+ * Returns: The layer created when loading the image file.
+ *
+ * Since: GIMP 2.4
+ */
+gint32
+gimp_file_load_layer (GimpRunMode  run_mode,
+		      gint32       image_ID,
+		      const gchar *filename)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint32 layer_ID = -1;
+
+  return_vals = gimp_run_procedure ("gimp-file-load-layer",
+				    &nreturn_vals,
+				    GIMP_PDB_INT32, run_mode,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_STRING, filename,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    layer_ID = return_vals[1].data.d_layer;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return layer_ID;
 }
 
 /**

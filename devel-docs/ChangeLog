@@ -1,3 +1,8 @@
+2005-10-17  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-sections.txt
+	* libgimp/tmpl/gimpfileops.sgml: updated.
+
 2005-10-05  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-docs.sgml

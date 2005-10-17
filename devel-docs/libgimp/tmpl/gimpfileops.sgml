@@ -38,6 +38,17 @@ File operations (load, save, etc.)
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_file_load_layer ##### -->
+<para>
+
+</para>
+
+@run_mode: 
+@image_ID: 
+@filename: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_file_save ##### -->
 <para>
 

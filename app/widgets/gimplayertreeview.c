@@ -737,7 +737,8 @@ gimp_layer_tree_view_drop_uri_list (GimpContainerTreeView   *view,
       GError            *error = NULL;
 
       new_layer = file_open_layer (gimage->gimp, item_view->context, NULL,
-                                   gimage, uri, &status, &error);
+                                   gimage, uri, GIMP_RUN_INTERACTIVE,
+                                   &status, &error);
 
       if (new_layer)
         {
