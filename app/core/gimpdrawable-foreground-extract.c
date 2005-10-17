@@ -45,7 +45,6 @@ gimp_drawable_foreground_extract (GimpDrawable              *drawable,
                                   GimpDrawable              *mask,
                                   GimpProgress              *progress)
 {
-  const gint    smoothness     = SIOX_DEFAULT_SMOOTHNESS;
   const gdouble sensitivity[3] = { SIOX_DEFAULT_SENSITIVITY_L,
                                    SIOX_DEFAULT_SENSITIVITY_A,
                                    SIOX_DEFAULT_SENSITIVITY_B };
@@ -57,7 +56,9 @@ gimp_drawable_foreground_extract (GimpDrawable              *drawable,
                                          0, 0,
                                          gimp_item_width (GIMP_ITEM (mask)),
                                          gimp_item_height (GIMP_ITEM (mask)),
-                                         smoothness, sensitivity,
+                                         FALSE,
+                                         SIOX_DEFAULT_SMOOTHNESS,
+                                         sensitivity,
                                          progress);
 }
 
@@ -68,6 +69,7 @@ gimp_drawable_foreground_extract_siox (GimpDrawable  *drawable,
                                        gint           y,
                                        gint           width,
                                        gint           height,
+                                       gboolean       multiblob,
                                        gint           smoothness,
                                        const gdouble  sensitivity[3],
                                        GimpProgress  *progress)
@@ -117,7 +119,7 @@ gimp_drawable_foreground_extract_siox (GimpDrawable  *drawable,
                      (SioxProgressFunc) gimp_progress_set_value,
                      progress);
 
-  siox_foreground_extract (state, smoothness, sensitivity, TRUE, 255);
+  siox_foreground_extract (state, smoothness, sensitivity, multiblob, 255);
   siox_done (state);
 
   if (progress)

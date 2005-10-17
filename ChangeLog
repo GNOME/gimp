@@ -1,5 +1,13 @@
 2005-10-17  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpdrawable-foreground-extract.[ch]
+	* app/tools/gimpforegroundselectoptions.[ch]
+	* app/tools/gimpforegroundselecttool.c: added "multiblob"
+	property to GimpForegroundSelectOptions and pass it to
+	gimp_drawable_foreground_extract_siox().
+
+2005-10-17  Sven Neumann  <sven@gimp.org>
+
 	* app/file/file-open.[ch]: added run-mode parameter to
 	file_open_layer().
 

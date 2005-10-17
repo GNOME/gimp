@@ -651,6 +651,7 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
       gimp_drawable_foreground_extract_siox (drawable,
                                              GIMP_DRAWABLE (mask),
                                              x1, y1, x2 - x1, y2 - y1,
+                                             options->multiblob,
                                              options->smoothness,
                                              options->sensitivity,
                                              GIMP_PROGRESS (gdisp));
@@ -823,6 +824,7 @@ gimp_foreground_select_options_notify (GimpForegroundSelectOptions *options,
 
   if (pspec->name &&
       (strcmp (pspec->name, "smoothness") == 0 ||
+       strcmp (pspec->name, "multiblob") == 0  ||
        strncmp (pspec->name, "sensitivity", strlen ("sensitivity")) == 0))
     {
       if (fg_select->idle_id)

@@ -40,6 +40,7 @@ struct _GimpForegroundSelectOptions
 
   gboolean              expanded;
   gboolean              background;
+  gboolean              multiblob;
   gint                  stroke_width;
   gint                  smoothness;
   gdouble               sensitivity[3];

@@ -40,6 +40,7 @@ enum
   PROP_0,
   PROP_EXPANDED,
   PROP_BACKGROUND,
+  PROP_MULTIBLOB,
   PROP_STROKE_WIDTH,
   PROP_SMOOTHNESS,
   PROP_SENSITIVITY_L,
@@ -104,6 +105,11 @@ gimp_foreground_select_options_class_init (GimpForegroundSelectOptionsClass *kla
                                     "background", NULL,
                                     FALSE,
                                     0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_MULTIBLOB,
+                                    "multiblob",
+                                    _("Select multiple disconnected objects"),
+                                    FALSE,
+                                    0);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_STROKE_WIDTH,
                                 "stroke-width",
                                 _("Size of the brush used for refinements"),
@@ -149,6 +155,9 @@ gimp_foreground_select_options_set_property (GObject      *object,
     case PROP_BACKGROUND:
       options->background = g_value_get_boolean (value);
       break;
+    case PROP_MULTIBLOB:
+      options->multiblob = g_value_get_boolean (value);
+      break;
     case PROP_STROKE_WIDTH:
       options->stroke_width = g_value_get_int (value);
       break;
@@ -185,6 +194,9 @@ gimp_foreground_select_options_get_property (GObject    *object,
       break;
     case PROP_BACKGROUND:
       g_value_set_boolean (value, options->background);
+      break;
+    case PROP_MULTIBLOB:
+      g_value_set_boolean (value, options->multiblob);
       break;
     case PROP_STROKE_WIDTH:
       g_value_set_int (value, options->stroke_width);
