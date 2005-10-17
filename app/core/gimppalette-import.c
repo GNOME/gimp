@@ -204,7 +204,7 @@ gimp_palette_import_create_image_palette (gpointer data,
 					  gpointer user_data)
 {
   GimpPalette *palette   = user_data;
-  ImgColors   *color_tab = data;;
+  ImgColors   *color_tab = data;
   gint         n_colors;
   gchar       *lab;
   GimpRGB      color;
