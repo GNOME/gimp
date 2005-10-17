@@ -249,6 +249,9 @@ gimp_foreground_select_tool_finalize (GObject *object)
   if (fg_select->strokes)
     g_warning ("%s: strokes should be NULL at this point", G_STRLOC);
 
+  if (fg_select->state)
+    g_warning ("%s: state should be NULL at this point", G_STRLOC);
+
   if (fg_select->mask)
     g_warning ("%s: mask should be NULL at this point", G_STRLOC);
 
@@ -280,6 +283,12 @@ gimp_foreground_select_tool_control (GimpTool       *tool,
 
         g_list_free (fg_select->strokes);
         fg_select->strokes = NULL;
+
+        if (fg_select->state)
+          {
+            gimp_drawable_foreground_extract_siox_done (fg_select->state);
+            fg_select->state = NULL;
+          }
       }
       break;
 
@@ -636,31 +645,41 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
   if (fg_select->strokes)
     {
       GList *list;
-      gint   x1, y1;
-      gint   x2, y2;
 
       gimp_set_busy (gimage->gimp);
-
-      /*  restrict working area to double the size of the bounding box  */
-      gimp_foreground_select_tool_get_area (mask, &x1, &y1, &x2, &y2);
 
       /*  apply foreground and background markers  */
       for (list = fg_select->strokes; list; list = list->next)
         gimp_foreground_select_tool_stroke (mask, list->data);
 
-      gimp_drawable_foreground_extract_siox (drawable,
-                                             GIMP_DRAWABLE (mask),
-                                             x1, y1, x2 - x1, y2 - y1,
-                                             options->multiblob,
-                                             options->smoothness,
-                                             options->sensitivity,
-                                             GIMP_PROGRESS (gdisp));
+      if (fg_select->state)
+        gimp_drawable_foreground_extract_siox (GIMP_DRAWABLE (mask),
+                                               fg_select->state,
+                                               fg_select->refinement,
+                                               options->smoothness,
+                                               options->sensitivity,
+                                               options->multiblob,
+                                               GIMP_PROGRESS (gdisp));
+
+      fg_select->refinement = SIOX_REFINEMENT_NO_CHANGE;
 
       gimp_unset_busy (gimage->gimp);
     }
   else
     {
+      gint x1, y1;
+      gint x2, y2;
+
       g_object_set (options, "background", FALSE, NULL);
+
+      gimp_foreground_select_tool_get_area (mask, &x1, &y1, &x2, &y2);
+
+      if (fg_select->state)
+        g_warning ("state should be NULL here");
+
+      fg_select->state =
+        gimp_drawable_foreground_extract_siox_init (drawable,
+                                                    x1, y1, x2 - x1, y2 - y1);
     }
 
   gimp_foreground_select_tool_set_mask (fg_select, gdisp, mask);
@@ -799,6 +818,10 @@ gimp_foreground_select_tool_push_stroke (GimpForegroundSelectTool    *fg_select,
   fg_select->stroke = NULL;
 
   fg_select->strokes = g_list_append (fg_select->strokes, stroke);
+
+  fg_select->refinement |= (stroke->background ?
+                            SIOX_REFINEMENT_ADD_BACKGROUND :
+                            SIOX_REFINEMENT_ADD_FOREGROUND);
 }
 
 static gboolean
@@ -819,20 +842,34 @@ gimp_foreground_select_options_notify (GimpForegroundSelectOptions *options,
                                        GParamSpec                  *pspec,
                                        GimpForegroundSelectTool    *fg_select)
 {
+  SioxRefinementType refinement = 0;
+
   if (! fg_select->mask)
     return;
 
-  if (pspec->name &&
-      (strcmp (pspec->name, "smoothness") == 0 ||
-       strcmp (pspec->name, "multiblob") == 0  ||
-       strncmp (pspec->name, "sensitivity", strlen ("sensitivity")) == 0))
+  if (strcmp (pspec->name, "smoothness") == 0)
     {
-      if (fg_select->idle_id)
-        g_source_remove (fg_select->idle_id);
-
-      fg_select->idle_id =
-        g_idle_add_full (G_PRIORITY_LOW,
-                         (GSourceFunc) gimp_foreground_select_tool_idle_select,
-                         fg_select, NULL);
+      refinement = SIOX_REFINEMENT_CHANGE_SMOOTHNESS;
     }
+  else if (strcmp (pspec->name, "multiblob") == 0)
+    {
+      refinement = SIOX_REFINEMENT_CHANGE_MULTIBLOB;
+    }
+  else if (strncmp (pspec->name, "sensitivity", strlen ("sensitivity")) == 0)
+    {
+      refinement = SIOX_REFINEMENT_CHANGE_SENSITIVITY;
+    }
+
+  if (! refinement)
+    return;
+
+  fg_select->refinement |= refinement;
+
+  if (fg_select->idle_id)
+    g_source_remove (fg_select->idle_id);
+
+  fg_select->idle_id =
+    g_idle_add_full (G_PRIORITY_LOW,
+                     (GSourceFunc) gimp_foreground_select_tool_idle_select,
+                     fg_select, NULL);
 }

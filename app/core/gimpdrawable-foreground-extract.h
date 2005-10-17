@@ -20,21 +20,28 @@
 #define  __GIMP_DRAWABLE_FOREGROUND_EXTRACT_H__
 
 
-void   gimp_drawable_foreground_extract      (GimpDrawable              *drawable,
-                                              GimpForegroundExtractMode  mode,
-                                              GimpDrawable              *mask,
-                                              GimpProgress              *progress);
+/*  general API (as seen from the PDB)  */
 
-/*  variant for SIOX that gives more control over the segmentation  */
-void   gimp_drawable_foreground_extract_siox (GimpDrawable              *drawable,
-                                              GimpDrawable              *mask,
-                                              gint                       x,
-                                              gint                       y,
-                                              gint                       width,
-                                              gint                       height,
-                                              gboolean                   multiblob,
-                                              gint                       smoothness,
-                                              const gdouble              sensitivity[3],
-                                              GimpProgress              *progress);
+void       gimp_drawable_foreground_extract (GimpDrawable              *drawable,
+                                             GimpForegroundExtractMode  mode,
+                                             GimpDrawable              *mask,
+                                             GimpProgress              *progress);
+
+/*  SIOX specific API  */
+
+SioxState * gimp_drawable_foreground_extract_siox_init   (GimpDrawable *drawable,
+                                                          gint          x,
+                                                          gint          y,
+                                                          gint          width,
+                                                          gint          height);
+void        gimp_drawable_foreground_extract_siox  (GimpDrawable       *mask,
+                                                    SioxState          *state,
+                                                    SioxRefinementType  refinemane,
+                                                    gint                smoothness,
+                                                    const gdouble       sensitivity[3],
+                                                    gboolean            multiblob,
+                                                    GimpProgress       *progress);
+void        gimp_drawable_foreground_extract_siox_done (SioxState      *state);
+
 
 #endif  /*  __GIMP_DRAWABLE_FOREGROUND_EXTRACT_H__  */

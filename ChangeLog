@@ -1,5 +1,13 @@
 2005-10-17  Sven Neumann  <sven@gimp.org>
 
+	* app/base/base-enums.h
+	* app/base/siox.[ch]
+	* app/core/gimpdrawable-foreground-extract.[ch]
+	* app/tools/gimpforegroundselecttool.[ch]: export stateful SIOX to
+	the core API and use it from the foreground selection tool.
+
+2005-10-17  Sven Neumann  <sven@gimp.org>
+
 	* app/base/base.c (base_init)
 	* app/base/tile-swap.c (tile_swap_init): create temp and swap
 	directories using g_mkdir_with_parents() (bug #308658).
