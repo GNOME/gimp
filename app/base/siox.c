@@ -1125,6 +1125,9 @@ siox_drb (SioxState   *state,
             {
               gint         key;
               classresult *cr;
+              gfloat       mindistbg;
+              gfloat       mindistfg;
+              gfloat       alpha;
 
               key = create_key (s, state->bpp, state->colormap);
               cr  = g_hash_table_lookup (state->cache, GINT_TO_POINTER (key));
@@ -1133,9 +1136,8 @@ siox_drb (SioxState   *state,
                 continue; /* Unknown color -
                              can only be sure background or sure forground */
 
-              gfloat mindistbg = (gfloat) sqrt (cr->bgdist);
-              gfloat mindistfg = (gfloat) sqrt (cr->fgdist);
-              gfloat alpha;
+              mindistbg = (gfloat) sqrt (cr->bgdist);
+              mindistfg = (gfloat) sqrt (cr->fgdist);
 
               if (brushmode == SIOX_DRB_ADD)
                 {

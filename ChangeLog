@@ -1,3 +1,8 @@
+2005-10-17  Manish Singh  <yosh@gimp.org>
+
+	* app/base/siox.c (siox_drb): declare mindistbg, mindistfg, and alpha
+	float variables at the start of the block.
+
 2005-10-17  Sven Neumann  <sven@gimp.org>
 
 	* app/base/base-enums.h
