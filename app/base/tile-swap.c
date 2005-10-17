@@ -231,10 +231,10 @@ tile_swap_init (const gchar *path)
 
   /*  create the swap directory if it doesn't exist */
   if (! g_file_test (swapdir, G_FILE_TEST_EXISTS))
-    g_mkdir (swapdir,
-             S_IRUSR | S_IXUSR | S_IWUSR |
-             S_IRGRP | S_IXGRP |
-             S_IROTH | S_IXOTH);
+    g_mkdir_with_parents (swapdir,
+                          S_IRUSR | S_IXUSR | S_IWUSR |
+                          S_IRGRP | S_IXGRP |
+                          S_IROTH | S_IXOTH);
 
   g_free (swapdir);
 

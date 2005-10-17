@@ -100,10 +100,10 @@ base_init (GimpBaseConfig *config,
   temp_dir = gimp_config_path_expand (config->temp_path, TRUE, NULL);
 
   if (! g_file_test (temp_dir, G_FILE_TEST_EXISTS))
-    g_mkdir (temp_dir,
-             S_IRUSR | S_IXUSR | S_IWUSR |
-             S_IRGRP | S_IXGRP |
-             S_IROTH | S_IXOTH);
+    g_mkdir_with_parents (temp_dir,
+                          S_IRUSR | S_IXUSR | S_IWUSR |
+                          S_IRGRP | S_IXGRP |
+                          S_IROTH | S_IXOTH);
 
   g_free (temp_dir);
 

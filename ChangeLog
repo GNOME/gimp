@@ -1,5 +1,11 @@
 2005-10-17  Sven Neumann  <sven@gimp.org>
 
+	* app/base/base.c (base_init)
+	* app/base/tile-swap.c (tile_swap_init): create temp and swap
+	directories using g_mkdir_with_parents() (bug #308658).
+
+2005-10-17  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpdrawable-foreground-extract.[ch]
 	* app/tools/gimpforegroundselectoptions.[ch]
 	* app/tools/gimpforegroundselecttool.c: added "multiblob"
