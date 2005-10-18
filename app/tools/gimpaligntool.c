@@ -49,6 +49,7 @@ static void   gimp_align_tool_init           (GimpAlignTool      *align_tool);
 static GObject * gimp_align_tool_constructor (GType             type,
                                               guint             n_params,
                                               GObjectConstructParam *params);
+static void   gimp_align_tool_dispose        (GObject          *object);
 static gboolean gimp_align_tool_initialize   (GimpTool         *tool,
                                               GimpDisplay      *gdisp);
 static void   gimp_align_tool_finalize       (GObject          *object);
@@ -138,12 +139,36 @@ gimp_align_tool_class_init (GimpAlignToolClass *klass)
 
   object_class->finalize     = gimp_align_tool_finalize;
   object_class->constructor  = gimp_align_tool_constructor;
-
+  object_class->dispose      = gimp_align_tool_dispose;
   tool_class->initialize     = gimp_align_tool_initialize;
   tool_class->button_press   = gimp_align_tool_button_press;
   tool_class->cursor_update  = gimp_align_tool_cursor_update;
 
   draw_tool_class->draw      = gimp_align_tool_draw;
+}
+
+static void
+gimp_align_tool_dispose (GObject *object)
+{
+  GimpAlignTool *align_tool = GIMP_ALIGN_TOOL (object);
+
+  if (align_tool->reference_item)
+    {
+      g_signal_handlers_disconnect_by_func (align_tool->reference_item,
+                                            G_CALLBACK (clear_reference),
+                                            (gpointer) align_tool);
+      align_tool->reference_item = NULL;
+    }
+
+  if (align_tool->target_item)
+    {
+      g_signal_handlers_disconnect_by_func (align_tool->target_item,
+                                            G_CALLBACK (clear_target),
+                                            (gpointer) align_tool);
+      align_tool->target_item = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
@@ -163,14 +188,6 @@ gimp_align_tool_finalize (GObject *object)
       gtk_widget_destroy (align_tool->controls);
       align_tool->controls = NULL;
     }
-
-  if (align_tool->reference_item)
-    g_object_remove_weak_pointer (G_OBJECT (align_tool->reference_item),
-                                  (gpointer) &align_tool->reference_item);
-
-  if (align_tool->target_item)
-    g_object_remove_weak_pointer (G_OBJECT (align_tool->target_item),
-                                  (gpointer) &align_tool->target_item);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

@@ -1,3 +1,10 @@
+2005-10-18  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/tools/gimpaligntool.c: Remove bogus stuff about
+	weak pointers, and disconnect properly in dispose 
+	callback instead of finalize, as suggested by mitch.
+	Fixes bug #314880.
+	
 2005-10-18  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-selection.c: formatting.
