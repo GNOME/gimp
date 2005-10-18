@@ -1,3 +1,7 @@
+2005-10-18  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-selection.c: formatting.
+
 2005-10-17  Manish Singh  <yosh@gimp.org>
 
 	* app/core/gimppalette-import.c
@@ -211,15 +215,15 @@
 
 2005-10-09  DindinX  <dindinx@gimp.org>
 
-	* libgimp/gimpdrawablepreview.c: made the navigation popup respect the
-	aspect ratio of the selection or the drawable.
+	* libgimp/gimpdrawablepreview.c: made the navigation popup respect
+	the aspect ratio of the selection or the drawable.
 
 2005-10-08  Karine Delvare  <kdelvare@nerim.net>
 
 	* app/tools/gimpcroptool.c
 	* app/tools/gimpnewrectselecttool.c
-	* app/tools/gimprectangletool.c: added status bar info to tell the user
-	what to do once the rectangle area is drawn. Fixes bug #318267.
+	* app/tools/gimprectangletool.c: added status bar info to tell the
+	user what to do once the rectangle area is drawn. Fixes bug #318267.
 
 2005-10-07  Michael Natterer  <mitch@gimp.org>
 

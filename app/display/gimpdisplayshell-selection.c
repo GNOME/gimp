@@ -214,17 +214,13 @@ gimp_display_shell_selection_layer_invis (Selection *select)
 
       /*  expose the region  */
       gimp_display_shell_expose_area (select->shell,
-                                      x1, y1,
-                                      (x2 - x1) + 1, (y3 - y1) + 1);
+                                      x1, y1, (x2 - x1) + 1, (y3 - y1) + 1);
       gimp_display_shell_expose_area (select->shell,
-                                      x1, y3,
-                                      (x3 - x1) + 1, (y4 - y3) + 1);
+                                      x1, y3, (x3 - x1) + 1, (y4 - y3) + 1);
       gimp_display_shell_expose_area (select->shell,
-                                      x1, y4,
-                                      (x2 - x1) + 1, (y2 - y4) + 1);
+                                      x1, y4, (x2 - x1) + 1, (y2 - y4) + 1);
       gimp_display_shell_expose_area (select->shell,
-                                      x4, y3,
-                                      (x2 - x4) + 1, (y4 - y3) + 1);
+                                      x4, y3, (x2 - x4) + 1, (y4 - y3) + 1);
     }
 }
 
@@ -319,6 +315,7 @@ selection_render_points (Selection *select)
 #endif
       x = select->segs_in[i].x1;
       dxa = select->segs_in[i].x2 - x;
+
       if (dxa > 0)
 	{
 	  dx = 1;
@@ -328,8 +325,10 @@ selection_render_points (Selection *select)
 	  dxa = -dxa;
 	  dx = -1;
 	}
+
       y = select->segs_in[i].y1;
       dya = select->segs_in[i].y2 - y;
+
       if (dya > 0)
 	{
 	  dy = 1;
@@ -339,39 +338,44 @@ selection_render_points (Selection *select)
 	  dya = -dya;
 	  dy = -1;
 	}
+
       if (dxa > dya)
 	{
 	  r = dya;
-	  do {
-	    selection_add_point (select->points_in,
-				 max_npoints,
-				 select->num_points_in,
-				 x, y);
-	    x += dx;
-	    r += dya;
-	    if (r >= (dxa << 1))
-              {
-                y += dy;
-                r -= (dxa << 1);
-              }
-	  } while (x != select->segs_in[i].x2);
+	  do
+            {
+              selection_add_point (select->points_in,
+                                   max_npoints,
+                                   select->num_points_in,
+                                   x, y);
+              x += dx;
+              r += dya;
+
+              if (r >= (dxa << 1))
+                {
+                  y += dy;
+                  r -= (dxa << 1);
+                }
+            } while (x != select->segs_in[i].x2);
 	}
       else if (dxa < dya)
 	{
 	  r = dxa;
-	  do {
-	    selection_add_point (select->points_in,
-				 max_npoints,
-				 select->num_points_in,
-				 x, y);
-	    y += dy;
-	    r += dxa;
-	    if (r >= (dya << 1))
-              {
-                x += dx;
-                r -= (dya << 1);
-              }
-	  } while (y != select->segs_in[i].y2);
+	  do
+            {
+              selection_add_point (select->points_in,
+                                   max_npoints,
+                                   select->num_points_in,
+                                   x, y);
+              y += dy;
+              r += dxa;
+
+              if (r >= (dya << 1))
+                {
+                  x += dx;
+                  r -= (dya << 1);
+                }
+            } while (y != select->segs_in[i].y2);
 	}
       else
         {
@@ -416,6 +420,7 @@ selection_draw (Selection *select)
               gimp_canvas_draw_points (canvas, GIMP_CANVAS_STYLE_WHITE,
                                        select->points_in[i],
                                        select->num_points_in[i]);
+
 	  for (i = 4; i < 8; i++)
 	    if (select->num_points_in[i])
               gimp_canvas_draw_points (canvas, GIMP_CANVAS_STYLE_BLACK,
@@ -429,6 +434,7 @@ selection_draw (Selection *select)
             gimp_canvas_draw_points (canvas, GIMP_CANVAS_STYLE_WHITE,
                                      select->points_in[i],
                                      select->num_points_in[i]);
+
 	  i = ((select->index + 7) & 7);
 	  if (select->num_points_in[i])
             gimp_canvas_draw_points (canvas, GIMP_CANVAS_STYLE_BLACK,
@@ -520,8 +526,8 @@ selection_generate_segs (Selection *select)
   if (select->num_segs_in)
     {
       select->segs_in = g_new (GdkSegment, select->num_segs_in);
-      selection_transform_segs (select, segs_in, select->segs_in,
-				select->num_segs_in);
+      selection_transform_segs (select, segs_in,
+                                select->segs_in, select->num_segs_in);
 
 #ifdef USE_DRAWPOINTS
       selection_render_points (select);
@@ -536,8 +542,8 @@ selection_generate_segs (Selection *select)
   if (select->num_segs_out)
     {
       select->segs_out = g_new (GdkSegment, select->num_segs_out);
-      selection_transform_segs (select, segs_out, select->segs_out,
-				select->num_segs_out);
+      selection_transform_segs (select, segs_out,
+                                select->segs_out, select->num_segs_out);
     }
   else
     {
@@ -546,14 +552,13 @@ selection_generate_segs (Selection *select)
 
   /*  The active layer's boundary  */
   gimp_image_layer_boundary (select->shell->gdisp->gimage,
-                             &segs_layer,
-			     &select->num_segs_layer);
+                             &segs_layer, &select->num_segs_layer);
 
   if (select->num_segs_layer)
     {
       select->segs_layer = g_new (GdkSegment, select->num_segs_layer);
-      selection_transform_segs (select, segs_layer, select->segs_layer,
-				select->num_segs_layer);
+      selection_transform_segs (select, segs_layer,
+                                select->segs_layer, select->num_segs_layer);
     }
   else
     {
@@ -571,8 +576,10 @@ selection_free_segs (Selection *select)
 
   if (select->segs_in)
     g_free (select->segs_in);
+
   if (select->segs_out)
     g_free (select->segs_out);
+
   if (select->segs_layer)
     g_free (select->segs_layer);
 
@@ -645,7 +652,7 @@ selection_start_marching (gpointer data)
 static gboolean
 selection_march_ants (gpointer data)
 {
-  Selection *select = (Selection *) data;
+  Selection *select = data;
 
   select->index++;
   selection_draw (select);
