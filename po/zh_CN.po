@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-15 02:38+0200\n"
-"PO-Revision-Date: 2005-10-15 16:14+0800\n"
+"POT-Creation-Date: 2005-10-18 02:50+0200\n"
+"PO-Revision-Date: 2005-10-18 14:38+0800\n"
 "Last-Translator: Cai Qian <caiqian@gnome.org>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -93,7 +93,7 @@ msgstr "使用别的 sessionrc 文件"
 
 #: ../app/main.c:166
 msgid "Use an alternate user gimprc file"
-msgstr "使用别的系统 gimprc 文件"
+msgstr "使用别的用户 gimprc 文件"
 
 #: ../app/main.c:171
 msgid "Use an alternate system gimprc file"
@@ -136,7 +136,7 @@ msgstr "输出默认设置的 gimprc 文件"
 #: ../app/main.c:248 ../app/dialogs/about-dialog.c:61
 #: ../desktop/gimp.desktop.in.in.h:2
 msgid "GNU Image Manipulation Program"
-msgstr "GNU 图像操纵程序"
+msgstr "GNU 图像处理程序"
 
 #: ../app/main.c:292
 msgid ""
@@ -580,7 +580,7 @@ msgstr "新建通道颜色"
 #: ../app/actions/channels-commands.c:245
 #: ../app/display/gimpdisplayshell-dnd.c:496
 #: ../app/widgets/gimpchanneltreeview.c:306
-#: ../app/widgets/gimplayertreeview.c:807 ../app/widgets/gimptoolbox-dnd.c:309
+#: ../app/widgets/gimplayertreeview.c:808 ../app/widgets/gimptoolbox-dnd.c:309
 #, c-format
 msgid "%s Channel Copy"
 msgstr "%s 通道副本"
@@ -725,7 +725,7 @@ msgstr "位样合并"
 #: ../app/dialogs/file-open-dialog.c:259
 #: ../app/dialogs/file-open-location-dialog.c:201
 #: ../app/display/gimpdisplayshell-dnd.c:448
-#: ../app/widgets/gimplayertreeview.c:764 ../app/widgets/gimptoolbox-dnd.c:157
+#: ../app/widgets/gimplayertreeview.c:765 ../app/widgets/gimptoolbox-dnd.c:157
 #: ../app/widgets/gimptoolbox.c:944
 #, c-format
 msgid ""
@@ -2236,7 +2236,7 @@ msgstr "编辑图层属性"
 #: ../app/actions/layers-commands.c:235 ../app/actions/layers-commands.c:237
 #: ../app/actions/layers-commands.c:294 ../app/actions/layers-commands.c:298
 #: ../app/widgets/gimpdrawabletreeview.c:361
-#: ../app/widgets/gimplayertreeview.c:871
+#: ../app/widgets/gimplayertreeview.c:872
 msgid "New Layer"
 msgstr "新建图层"
 
@@ -3714,14 +3714,12 @@ msgid ""
 msgstr "设置新创建的对话框中图层和通道的预览大小。"
 
 #: ../app/config/gimprc-blurbs.h:255
-#, fuzzy
 msgid ""
 "When enabled, the image window will automatically resize itself whenever the "
 "physical image size changes."
 msgstr "如果启用，当图像实际大小发生变化时，图像窗口大小将自动重置。"
 
 #: ../app/config/gimprc-blurbs.h:259
-#, fuzzy
 msgid ""
 "When enabled, the image window will automatically resize itself when zooming "
 "into and out of images."
@@ -3834,7 +3832,6 @@ msgid "Enable tooltips display."
 msgstr "允许显示工具提示。"
 
 #: ../app/config/gimprc-blurbs.h:334
-#, fuzzy
 msgid ""
 "Sets the swap file location. GIMP uses a tile based memory allocation "
 "scheme. The swap file is used to quickly and easily swap tiles out to disk "
@@ -3846,7 +3843,7 @@ msgstr ""
 "设置交换文件的位置。GIMP 使用基于平铺的内存分配机制。交换文件用作方便快捷地用"
 "平铺片交换到磁盘中然后回收。需要注意的是当 GIMP 处理大的图像时能很快地使交换"
 "文件变得很大，而且当交换文件所在的目录是通过 NFS 加载时会使程序变得极为缓慢。"
-"由于这些原因，也许最好是将您地交换文件放到\"/tmp\"目录。"
+"由于这些原因，最好是将您的交换文件放到“/tmp”目录。"
 
 #: ../app/config/gimprc-blurbs.h:343
 msgid "When enabled, menus can be torn off."
@@ -3925,7 +3922,6 @@ msgid "Sets the size of the checkerboard used to display transparency."
 msgstr "设置用于表示透明的棋盘格子的大小。"
 
 #: ../app/config/gimprc-blurbs.h:403
-#, fuzzy
 msgid ""
 "When enabled, the GIMP will not save an image if it has not been changed "
 "since it was opened."
@@ -4599,15 +4595,15 @@ msgstr ""
 "GIMP 画笔必须为灰度或 RGBA。"
 
 #: ../app/core/gimpbrush-load.c:408
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Fatal parse error in brush file '%s': unable to decode abr format version %d."
-msgstr "画笔文件“%s”出现严重解析错误：未知版本 %d。"
+msgstr "画笔文件“%s”出现严重解析错误：无法解码 abr 格式版本 %d。"
 
 #: ../app/core/gimpbrush-load.c:425
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in brush file '%s'"
-msgstr "画笔文件“%s”出现严重解析错误：字节数 = 0。"
+msgstr "画笔文件“%s”出现严重解析错误"
 
 #: ../app/core/gimpbrushgenerated.c:607
 #, c-format
@@ -4809,7 +4805,7 @@ msgstr "去色"
 msgid "Equalize"
 msgstr "均化"
 
-#: ../app/core/gimpdrawable-foreground-extract.c:112
+#: ../app/core/gimpdrawable-foreground-extract.c:134
 msgid "Foreground Extraction"
 msgstr "前景提取"
 
@@ -5364,9 +5360,7 @@ msgstr "索引 %d"
 #: ../app/core/gimppalette-import.c:599
 #, c-format
 msgid "Unknown type of palette file: %s"
-msgstr ""
-"未知类型的色板文件："
-"%s"
+msgstr "未知类型的色板文件：%s"
 
 #: ../app/core/gimppalette.c:370
 #, c-format
@@ -5795,7 +5789,7 @@ msgid "You are trying to create an image with a size of %s."
 msgstr "您正试图创建一幅大小为 %s 的图像。"
 
 #: ../app/dialogs/image-new-dialog.c:308
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "An image of the chosen size will use more memory than what is configured as "
 "\"Maximum Image Size\" in the Preferences dialog (currently %s)."
@@ -5808,7 +5802,7 @@ msgid "Confirm Scaling"
 msgstr "确认缩放"
 
 #: ../app/dialogs/image-scale-dialog.c:214
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Scaling the image to the chosen size will make it use more memory than what "
 "is configured as \"Maximum Image Size\" in the Preferences dialog (currently "
@@ -5818,7 +5812,6 @@ msgstr ""
 "存(当前为 %s)。"
 
 #: ../app/dialogs/image-scale-dialog.c:229
-#, fuzzy
 msgid ""
 "Scaling the image to the chosen size will shrink some layers completely away."
 msgstr "将图像缩放至您选择的大小会使一些图层收缩至完全消失。"
@@ -6105,11 +6098,10 @@ msgid ""
 msgstr "您的输入设备设置将在下次您启动 GIMP 的时候重置到默认值。"
 
 #: ../app/dialogs/preferences-dialog.c:609
-#, fuzzy
 msgid ""
 "Your tool options will be reset to default values the next time you start "
 "GIMP."
-msgstr "您的窗口设置将在下次您启动 GIMP 的时候重置到默认值。"
+msgstr "您的工具选项将在您下次启动 GIMP 时重置到默认值。"
 
 #: ../app/dialogs/preferences-dialog.c:1099
 msgid "Show _menubar"
@@ -6949,31 +6941,28 @@ msgstr ""
 "样。"
 
 #: ../app/dialogs/user-install-dialog.c:144
-#, fuzzy
 msgid ""
 "Plug-ins and extensions are external programs which provide additional "
 "functionality to GIMP.  These programs are searched for at run-time and "
 "information about their functionality is cached in this file.  This file is "
 "intended to be written to by GIMP only, and should not be edited."
 msgstr ""
-"插件和扩展是一些被 GIMP 调用并提供附加功能的外部程序。这些程序在运行时被搜"
+"插件和扩展是为 GIMP 提供附加功能的外部程序。这些程序在运行时被搜"
 "索，它们的功能以及修改时间等信息将被暂时保存在这个文件里。这个文件只应由 "
 "GIMP 来读取，请您不要编辑它。"
 
 #: ../app/dialogs/user-install-dialog.c:154
-#, fuzzy
 msgid ""
 "Key shortcuts can be dynamically redefined. The menurc is a dump of your "
 "configuration so it can be remembered for the next session.  You may edit "
 "this file if you wish, but it is much easier to define the keys from within "
 "GIMP.  Deleting this file will restore the default shortcuts."
 msgstr ""
-"GIMP 中的快捷键可以动态重定义。menurc 是您的当前设置的导出，以便下次会话时恢"
+"快捷键可以动态重定义。menurc 是您的当前设置的导出，以便下次会话时恢"
 "复。如果您愿意您也可以编辑这个文件，不过在 GIMP 中定义快捷键会更容易。删除这"
 "个文件将恢复默认的快捷键设置。"
 
 #: ../app/dialogs/user-install-dialog.c:164
-#, fuzzy
 msgid ""
 "The sessionrc is used to store what dialog windows were open the last time "
 "you quit GIMP.  You can configure GIMP to reopen these dialogs at the saved "
@@ -6986,7 +6975,7 @@ msgstr ""
 msgid ""
 "This file holds a collection of standard media sizes that serve as image "
 "templates."
-msgstr "该文件收录了一些用于图像模板的标准媒介的尺寸。"
+msgstr "该文件收录了一些用于图像模板的标准媒体的尺寸。"
 
 #: ../app/dialogs/user-install-dialog.c:177
 msgid ""
@@ -6999,16 +6988,14 @@ msgstr ""
 "英寸、毫米、点、皮卡那样使用它们。这个文件在每次退出 GIMP 时都会被重写。"
 
 #: ../app/dialogs/user-install-dialog.c:186
-#, fuzzy
 msgid ""
 "This folder is used to store user defined brushes. GIMP checks this folder "
 "in addition to the system-wide brushes installation."
 msgstr ""
-"此文件夹用于储存用户自定义的画笔。GIMP 在搜索画笔时除了检查系统的 GIMP 画笔"
-"安装以外还将搜索此文件夹。"
+"此文件夹用于储存用户自定义的画笔。GIMP 在搜索画笔时除了检查系统的画笔安"
+"装以外还将搜索此文件夹。"
 
 #: ../app/dialogs/user-install-dialog.c:193
-#, fuzzy
 msgid ""
 "This folder is used to store fonts you only want to be visible in GIMP. GIMP "
 "checks this folder in addition to the system-wide fonts installation. Use "
@@ -7016,72 +7003,65 @@ msgid ""
 "put them in your global font directory."
 msgstr ""
 "此文件夹用于储存您希望只在 GIMP 中使用的字体。GIMP 在搜索字体时除了检查系统"
-"的 GIMP 字体安装以外还将搜索此文件夹。只有当您真的打算只在 GIMP 中使用这些"
-"字体时才使用该项，否则最好将它们放在全局字体目录中。"
+"的字体安装以外还将搜索此文件夹。只有当您真的打算只在 GIMP 中使用这些字"
+"体时才使用该项，否则最好将它们放在全局字体目录中。"
 
 #: ../app/dialogs/user-install-dialog.c:202
-#, fuzzy
 msgid ""
 "This folder is used to store user defined gradients.  GIMP checks this "
 "folder in addition to the system-wide gradients installation."
 msgstr ""
-"此文件夹用于储存用户自定义的渐变。GIMP 在搜索渐变时除了检查系统的 GIMP 渐变"
-"安装以外还将搜索此文件夹。"
+"此文件夹用于储存用户自定义的渐变。GIMP 在搜索渐变时除了检查系统的渐变安"
+"装以外还将搜索此文件夹。"
 
 #: ../app/dialogs/user-install-dialog.c:209
-#, fuzzy
 msgid ""
 "This folder is used to store user defined palettes.  GIMP checks this folder "
 "in addition to the system-wide palettes installation."
 msgstr ""
-"此文件夹用于储存用户自定义的色板。GIMP 在搜索色板时除了检查系统的 GIMP 色板"
-"安装以外还将搜索此文件夹。"
+"此文件夹用于储存用户自定义的色板。GIMP 在搜索色板时除了检查系统的色板安"
+"装以外还将搜索此文件夹。"
 
 #: ../app/dialogs/user-install-dialog.c:216
-#, fuzzy
 msgid ""
 "This folder is used to store user defined patterns.  GIMP checks this folder "
 "in addition to the system-wide patterns installation when searching for "
 "patterns."
 msgstr ""
-"此文件夹用于储存用户自定义的图案。GIMP 在搜索图案时除了检查系统的 GIMP 图案"
-"安装以外还将搜索此文件夹。"
+"此文件夹用于储存用户自定义的图案。GIMP 在搜索图案时除了检查系统的图案安"
+"装以外还将搜索此文件夹。"
 
 #: ../app/dialogs/user-install-dialog.c:223
-#, fuzzy
 msgid ""
 "This folder is used to store user created, temporary, or otherwise non-"
 "system-supported plug-ins.  GIMP checks this folder in addition to the "
 "system-wide plug-in folder."
 msgstr ""
-"此文件夹用于储存用户创建的、临时的、或者其它非系统支持的插件。GIMP 在搜索插"
-"件时除了检查系统的 GIMP 插件安装以外还将搜索此文件夹。"
+"此文件夹用于储存用户创建的、临时的、或者其它非系统支持的插件。GIMP 在搜索插件"
+"时除了检查系统的插件安装以外还将搜索此文件夹。"
 
 #: ../app/dialogs/user-install-dialog.c:231
-#, fuzzy
 msgid ""
 "This folder is used to store user created, temporary, or otherwise non-"
 "system-supported DLL modules.  GIMP checks this folder in addition to the "
 "system-wide module folder."
 msgstr ""
-"此文件夹用于储存用户创建的、临时的、或者其它非系统支持的 DLL 模块。GIMP 在"
-"初始化阶段搜索加载模块的时候除了检查系统的 GIMP 模块安装以外还将搜索这个文件"
+"此文件夹用于储存用户创建的、临时的、或者其它非系统支持的 DLL 模块。GIMP 在初"
+"始化阶段搜索加载模块的时候除了检查系统的模块安装以外还将搜索这个文件"
 "夹。"
 
 #: ../app/dialogs/user-install-dialog.c:239
-#, fuzzy
 msgid ""
 "This folder is used to store configuration for user created, temporary, or "
 "otherwise non-system-supported plug-in interpreters.  GIMP checks this "
 "folder in addition to the system-wide GIMP interpreters folder when "
 "searching for plug-in interpreter configuration files."
 msgstr ""
-"此文件夹用于储存用户创建的、临时的、或者其它非系统支持插件的解释器。GIMP 在"
-"搜索插件解释器配置文件时除了检查系统的 GIMP 插件解释器安装文件夹以外还将搜索"
-"此文件夹。"
+"此文件夹用于储存用户创建的、临时的、或者其它非系统支持插件的解释器。GIMP 在搜"
+"索插件解释器配置文件时除了检查系统的 GIMP 插件解释器安装文件夹以外还将搜索此"
+"文件夹。"
 
 #: ../app/dialogs/user-install-dialog.c:249
-#, fuzzy
 msgid ""
 "This folder is used to store user created, temporary, or otherwise non-"
 "system-supported additions to the plug-in environment.  GIMP checks this "
@@ -7093,13 +7073,12 @@ msgstr ""
 "件夹。"
 
 #: ../app/dialogs/user-install-dialog.c:259
-#, fuzzy
 msgid ""
 "This folder is used to store user created and installed scripts.  GIMP "
 "checks this folder in addition to the systemwide scripts folder."
 msgstr ""
-"此文件夹用于储存用户创建和安装的脚本。GIMP 在搜索脚本时除了检查系统的 GIMP "
-"脚本安装以外还将搜索此文件夹。"
+"此文件夹用于储存用户创建和安装的脚本。GIMP 在搜索脚本时除了检查系统的脚"
+"本安装以外还将搜索此文件夹。"
 
 #: ../app/dialogs/user-install-dialog.c:266
 msgid "This folder is searched for image templates."
@@ -7239,8 +7218,8 @@ msgid ""
 "This folder will contain a number of important files.  Click on one of the "
 "files or folders in the tree to get more information about the selected item."
 msgstr ""
-"此文件夹将包含许多重要的文件。点击树中的一个文件或文件夹来获取选中项目的更"
-"多信息。"
+"此文件夹将包含许多重要的文件。点击树中的一个文件或文件夹来获取选中项目的更多"
+"信息。"
 
 #: ../app/dialogs/user-install-dialog.c:1009
 msgid "User Installation Log"
@@ -7421,7 +7400,7 @@ msgid "Drop New Path"
 msgstr "拖放入新路径"
 
 #: ../app/display/gimpdisplayshell-dnd.c:542
-#: ../app/widgets/gimplayertreeview.c:837 ../app/widgets/gimptoolbox-dnd.c:359
+#: ../app/widgets/gimplayertreeview.c:838 ../app/widgets/gimptoolbox-dnd.c:359
 #, fuzzy
 msgid "Dropped Buffer"
 msgstr "删除缓冲区(_D)"
@@ -7520,7 +7499,7 @@ msgstr "插件成功返回(SUCCESS)但没有返回图像"
 msgid "Plug-In could not open image"
 msgstr "插件无法打开图像"
 
-#: ../app/file/file-open.c:417
+#: ../app/file/file-open.c:418
 msgid "Image doesn't contain any visible layers"
 msgstr "图像没有包含任何可见图层"
 
@@ -8361,7 +8340,7 @@ msgstr "取消采样点"
 
 #: ../app/tools/gimpcolortool.c:447
 msgid "Add Sample Point: "
-msgstr ""
+msgstr "添加采样点："
 
 #: ../app/tools/gimpconvolvetool.c:70
 msgid "Blur or Sharpen"
@@ -8401,14 +8380,12 @@ msgid "_Crop & Resize"
 msgstr "剪裁和改变大小(_C)"
 
 #: ../app/tools/gimpcroptool.c:215
-#, fuzzy
 msgid "Click or press enter to crop."
-msgstr "点击可删除此锚点。"
+msgstr "点击或按 Enter 可剪裁。"
 
 #: ../app/tools/gimpcroptool.c:218
-#, fuzzy
 msgid "Click or press enter to resize."
-msgstr "点击生成预览"
+msgstr "点击或按 Enter 可改变大小。"
 
 #: ../app/tools/gimpcurvestool.c:137
 msgid "Adjust color curves"
@@ -8541,85 +8518,84 @@ msgstr "选择手画的区域"
 msgid "_Free Select"
 msgstr "自由选择(_F)"
 
-#: ../app/tools/gimpforegroundselectoptions.c:109
+#: ../app/tools/gimpforegroundselectoptions.c:110
+msgid "Select multiple disconnected objects"
+msgstr ""
+
+#: ../app/tools/gimpforegroundselectoptions.c:115
 msgid "Size of the brush used for refinements"
 msgstr ""
 
-#: ../app/tools/gimpforegroundselectoptions.c:114
+#: ../app/tools/gimpforegroundselectoptions.c:120
 msgid ""
 "Smaller values give a more accurate selection border but may introduce holes "
 "in the selection"
 msgstr ""
 
-#: ../app/tools/gimpforegroundselectoptions.c:121
+#: ../app/tools/gimpforegroundselectoptions.c:127
 msgid "Sensitivity for brightness component"
 msgstr ""
 
-#: ../app/tools/gimpforegroundselectoptions.c:126
+#: ../app/tools/gimpforegroundselectoptions.c:132
 msgid "Sensitivity for red/green component"
 msgstr ""
 
-#: ../app/tools/gimpforegroundselectoptions.c:131
+#: ../app/tools/gimpforegroundselectoptions.c:137
 msgid "Sensitivity for yellow/blue component"
 msgstr ""
 
-#: ../app/tools/gimpforegroundselectoptions.c:226
+#: ../app/tools/gimpforegroundselectoptions.c:238
 msgid "Interactive refinement"
 msgstr ""
 
-#: ../app/tools/gimpforegroundselectoptions.c:227
-#, fuzzy
+#: ../app/tools/gimpforegroundselectoptions.c:239
 msgid "Mark background"
-msgstr "背景"
+msgstr "标记背景"
 
-#: ../app/tools/gimpforegroundselectoptions.c:228
-#, fuzzy
+#: ../app/tools/gimpforegroundselectoptions.c:240
 msgid "Mark foreground"
-msgstr "前景"
+msgstr "标记前景"
 
-#: ../app/tools/gimpforegroundselectoptions.c:243
+#: ../app/tools/gimpforegroundselectoptions.c:255
 msgid "Small brush"
 msgstr "小画笔"
 
-#: ../app/tools/gimpforegroundselectoptions.c:251
+#: ../app/tools/gimpforegroundselectoptions.c:263
 msgid "Large brush"
 msgstr "大画笔"
 
-#: ../app/tools/gimpforegroundselectoptions.c:274
+#: ../app/tools/gimpforegroundselectoptions.c:286
 msgid "Smoothing:"
 msgstr "光滑："
 
 #. granularity
-#: ../app/tools/gimpforegroundselectoptions.c:277
-#, fuzzy
+#: ../app/tools/gimpforegroundselectoptions.c:289
 msgid "Color Sensitivity"
-msgstr "灵敏度"
+msgstr "颜色灵敏度"
 
 #: ../app/tools/gimpforegroundselecttool.c:139
-#, fuzzy
 msgid "Foreground Select"
-msgstr "前景"
+msgstr "前景选择"
 
 #: ../app/tools/gimpforegroundselecttool.c:140
-#, fuzzy
 msgid "Extract foreground objects"
-msgstr "设为前景色"
+msgstr "提取前景对象"
 
 #: ../app/tools/gimpforegroundselecttool.c:141
 msgid "F_oreground Select"
 msgstr "前景选择(_O)"
 
-#: ../app/tools/gimpforegroundselecttool.c:320
+#: ../app/tools/gimpforegroundselecttool.c:329
 msgid "Add more strokes or press Enter to accept the selection"
 msgstr ""
 
-#: ../app/tools/gimpforegroundselecttool.c:322
+#: ../app/tools/gimpforegroundselecttool.c:331
 msgid "Mark foreground by painting on the object to extract"
 msgstr ""
 
-#: ../app/tools/gimpforegroundselecttool.c:336
+#: ../app/tools/gimpforegroundselecttool.c:345
 msgid "Draw a rough circle around the object to extract"
-msgstr ""
+msgstr "在对象周围划出大致的轮廓以便提取"
 
 #: ../app/tools/gimpfuzzyselecttool.c:98
 msgid "Select contiguous regions"
@@ -8631,7 +8607,7 @@ msgstr "模糊选择(_Z)"
 
 #: ../app/tools/gimpfuzzyselecttool.c:216
 msgid "Move the mouse to change threshold."
-msgstr ""
+msgstr "移动鼠标可更改阀值。"
 
 #: ../app/tools/gimphistogramoptions.c:152
 msgid "Histogram Scale"
@@ -9832,35 +9808,32 @@ msgstr "启用此控制器"
 
 #: ../app/widgets/gimpcontrollereditor.c:242
 msgid "Name:"
-msgstr "名字："
+msgstr "名称："
 
 #: ../app/widgets/gimpcontrollereditor.c:393
 msgid "Event"
 msgstr "事件"
 
 #: ../app/widgets/gimpcontrollereditor.c:418
-#, fuzzy
 msgid "_Grab event"
-msgstr "渐变(_G)"
+msgstr "抓取事件(_G)"
 
 #: ../app/widgets/gimpcontrollereditor.c:428
-#, fuzzy
 msgid "Select the next event arriving from the controller"
-msgstr "转储此控制器事件"
+msgstr "选择控制器带来的下个事件"
 
 #: ../app/widgets/gimpcontrollereditor.c:441
 msgid "Assign an action to the selected event"
-msgstr ""
+msgstr "为选中事件指派动作"
 
 #: ../app/widgets/gimpcontrollereditor.c:453
-#, fuzzy
 msgid "Remove the action from the selected event"
-msgstr "删除选中的项"
+msgstr "删除选中事件的动作"
 
 #: ../app/widgets/gimpcontrollereditor.c:686
-#, fuzzy, c-format
+#, c-format
 msgid "Select Action for Event '%s'"
-msgstr "选择控制器事件动作"
+msgstr "选择事件“%s”的动作"
 
 #: ../app/widgets/gimpcontrollereditor.c:691
 msgid "Select Controller Event Action"
@@ -10076,7 +10049,7 @@ msgstr "背景：%d, %d, %d"
 
 #: ../app/widgets/gimpdnd-xds.c:174
 msgid "The given filename does not have any known file extension."
-msgstr ""
+msgstr "给定的文件名不包含任何已知的文件扩展名。"
 
 #: ../app/widgets/gimpdock.c:317
 msgid "Close all Tabs?"
@@ -10095,7 +10068,7 @@ msgstr "关闭全部页签吗？"
 msgid ""
 "This window has %d tabs open. Closing the window will also close all its "
 "tabs."
-msgstr "该窗口打开了 %d 页签，关闭该窗口也将关闭所有的页签。"
+msgstr "该窗口打开了 %d 个页签，关闭该窗口也将关闭所有的页签。"
 
 #: ../app/widgets/gimpdockable.c:195
 msgid "Configure this tab"
@@ -10412,7 +10385,7 @@ msgstr "锁定 Alpha 通道"
 msgid "Lock:"
 msgstr "停靠："
 
-#: ../app/widgets/gimplayertreeview.c:877
+#: ../app/widgets/gimplayertreeview.c:878
 msgid "Empty Layer"
 msgstr "空白图层"
 
@@ -10498,7 +10471,7 @@ msgstr "虚线预设(_P)："
 
 #: ../app/widgets/gimpstrokeeditor.c:312
 msgid "_Antialiasing"
-msgstr "边缘平滑(_A)"
+msgstr "反锯齿(_A)"
 
 #: ../app/widgets/gimptemplateeditor.c:251
 #, c-format
@@ -10830,11 +10803,11 @@ msgstr "图像编辑器"
 
 #: ../tools/gimp-remote.c:83
 msgid "Use a running GIMP only, never start a new one"
-msgstr ""
+msgstr "只使用运行中的 GIMP 实例，从不启动新实例"
 
 #: ../tools/gimp-remote.c:88
 msgid "Only check if GIMP is running, then quit"
-msgstr ""
+msgstr "只检查 GIMP 是否在运行，然后退出"
 
 #: ../tools/gimp-remote.c:93
 msgid "Start GIMP without showing the startup window"
