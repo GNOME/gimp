@@ -156,7 +156,6 @@ static gchar *
 preset_create_filename (const gchar *basename,
                         const gchar *dest_dir)
 {
-  gchar *filename;
   gchar *fullpath;
   gchar *safe_name;
   gint   i;
@@ -170,23 +169,20 @@ preset_create_filename (const gchar *basename,
 
   if (safe_name[0] == '.')
     safe_name[0] = '-';
+
   for (i = 0; safe_name[i]; i++)
     if (safe_name[i] == G_DIR_SEPARATOR || g_ascii_isspace (safe_name[i]))
       safe_name[i] = '-';
 
-  filename = g_strdup (safe_name);
-
-  fullpath = g_build_filename (dest_dir, filename, NULL);
-
-  g_free (filename);
+  fullpath = g_build_filename (dest_dir, safe_name, NULL);
 
   while (g_file_test (fullpath, G_FILE_TEST_EXISTS))
     {
+      gchar *filename;
+
       g_free (fullpath);
 
-      filename = g_strdup_printf ("%s-%d",
-                                  safe_name,
-                                  unum++);
+      filename = g_strdup_printf ("%s-%d", safe_name, unum++);
 
       fullpath = g_build_filename (dest_dir, filename, NULL);
 
@@ -502,9 +498,8 @@ select_preset (const gchar *preset)
       if (abs)
         {
           if (load_preset (abs))
-            {
-              ret = SELECT_PRESET_LOAD_FAILED;
-            }
+            ret = SELECT_PRESET_LOAD_FAILED;
+
           g_free (abs);
         }
       else
@@ -701,7 +696,8 @@ save_preset (void)
   /* Create the ~/.gimp-$VER/gimpressionist/Presets directory if
    * it doesn't already exists.
    * */
-  presets_dir_path = g_build_filename ((char *)thispath->data, "Presets", NULL);
+  presets_dir_path = g_build_filename ((const char *) thispath->data, "Presets",
+                                       NULL);
 
   if (!g_file_test (presets_dir_path, G_FILE_TEST_IS_DIR))
     {
@@ -998,7 +994,7 @@ create_presetpage (GtkNotebook *notebook)
   gtk_container_set_border_width (GTK_CONTAINER (thispage), 12);
   gtk_widget_show (thispage);
 
-  box1 = gtk_hbox_new (FALSE, 6);
+  box1 = gtk_hbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (thispage), box1, FALSE, FALSE, 0);
   gtk_widget_show (box1);
 
@@ -1008,6 +1004,9 @@ create_presetpage (GtkNotebook *notebook)
   gtk_widget_show (tmpw);
 
   presetsavebutton = tmpw = gtk_button_new_with_label ( _("Save Current..."));
+  gtk_button_set_image (GTK_BUTTON (presetsavebutton),
+                        gtk_image_new_from_stock (GTK_STOCK_SAVE,
+                                                  GTK_ICON_SIZE_BUTTON));
   gtk_box_pack_start (GTK_BOX (box1), tmpw, FALSE, FALSE, 0);
   gtk_widget_show (tmpw);
   g_signal_connect (tmpw, "clicked", G_CALLBACK (create_save_preset), NULL);
