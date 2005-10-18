@@ -1,5 +1,10 @@
 2005-10-18  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/tools/gimpaligntool.[ch]: Make buttons insensitive
+	until a target item has been selected; fixes bug #309038.
+
+2005-10-18  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/tools/gimpaligntool.c: Remove bogus stuff about
 	weak pointers, and disconnect properly in dispose 
 	callback instead of finalize, as suggested by mitch.

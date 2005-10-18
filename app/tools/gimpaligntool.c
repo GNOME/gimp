@@ -343,6 +343,14 @@ gimp_align_tool_button_press (GimpTool        *tool,
         }
     }
 
+  if (align_tool->target_item)
+    {
+      gint i;
+
+      for (i = 0; i < ALIGN_TOOL_NUM_BUTTONS; i++)
+        gtk_widget_set_sensitive (align_tool->button[i], TRUE);
+    }
+
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
 
@@ -453,7 +461,7 @@ gimp_align_tool_controls (GimpAlignTool *align_tool)
   GtkWidget *label;
   GtkWidget *button;
   GtkWidget *spinbutton;
-  gint       row, col;
+  gint       row, col, n;
 
   hbox = gtk_hbox_new (FALSE, 0);
 
@@ -497,22 +505,26 @@ gimp_align_tool_controls (GimpAlignTool *align_tool)
   /* second row */
 
   col = 1;
+  n = 0;
 
   button = button_with_stock (GIMP_ALIGN_LEFT, align_tool);
   gtk_table_attach_defaults (GTK_TABLE (table), button, col, col + 2, row, row + 1);
   gimp_help_set_help_data (button, _("Align left edge of target"), NULL);
+  align_tool->button[n++] = button;
   ++col;
   ++col;
 
   button = button_with_stock (GIMP_ALIGN_CENTER, align_tool);
   gtk_table_attach_defaults (GTK_TABLE (table), button, col, col + 2, row, row + 1);
   gimp_help_set_help_data (button, _("Align center of target"), NULL);
+  align_tool->button[n++] = button;
   ++col;
   ++col;
 
   button = button_with_stock (GIMP_ALIGN_RIGHT, align_tool);
   gtk_table_attach_defaults (GTK_TABLE (table), button, col, col + 2, row, row + 1);
   gimp_help_set_help_data (button, _("Align right edge of target"), NULL);
+  align_tool->button[n++] = button;
   ++col;
   ++col;
 
@@ -552,18 +564,21 @@ gimp_align_tool_controls (GimpAlignTool *align_tool)
   button = button_with_stock (GIMP_ALIGN_TOP, align_tool);
   gtk_table_attach_defaults (GTK_TABLE (table), button, col, col + 2, row, row + 1);
   gimp_help_set_help_data (button, _("Align top edge of target"), NULL);
+  align_tool->button[n++] = button;
   ++col;
   ++col;
 
   button = button_with_stock (GIMP_ALIGN_MIDDLE, align_tool);
   gtk_table_attach_defaults (GTK_TABLE (table), button, col, col + 2, row, row + 1);
   gimp_help_set_help_data (button, _("Align middle of target"), NULL);
+  align_tool->button[n++] = button;
   ++col;
   ++col;
 
   button = button_with_stock (GIMP_ALIGN_BOTTOM, align_tool);
   gtk_table_attach_defaults (GTK_TABLE (table), button, col, col + 2, row, row + 1);
   gimp_help_set_help_data (button, _("Align bottom of target"), NULL);
+  align_tool->button[n++] = button;
   ++col;
   ++col;
 
@@ -669,13 +684,13 @@ button_with_stock (GimpAlignmentType  action,
 
   button = gtk_button_new_from_stock (stock_id);
 
-  g_object_set_data (G_OBJECT (button), "action",       GINT_TO_POINTER (action));
+  g_object_set_data (G_OBJECT (button), "action", GINT_TO_POINTER (action));
 
-    g_signal_connect (button, "pressed",
-                      G_CALLBACK (set_action),
-                      align_tool);
+  g_signal_connect (button, "pressed",
+                    G_CALLBACK (set_action),
+                    align_tool);
 
-
+  gtk_widget_set_sensitive (button, FALSE);
   gtk_widget_show (button);
 
   return button;

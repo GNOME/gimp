@@ -30,6 +30,7 @@
 #define GIMP_IS_ALIGN_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ALIGN_TOOL))
 #define GIMP_ALIGN_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ALIGN_TOOL, GimpAlignToolClass))
 
+#define ALIGN_TOOL_NUM_BUTTONS 6
 
 typedef struct _GimpAlignTool      GimpAlignTool;
 typedef struct _GimpAlignToolClass GimpAlignToolClass;
@@ -39,6 +40,7 @@ struct _GimpAlignTool
   GimpDrawTool         parent_instance;
 
   GtkWidget           *controls;
+  GtkWidget           *button[ALIGN_TOOL_NUM_BUTTONS];
 
   GimpItem            *target_item;
   GimpItem            *reference_item;
