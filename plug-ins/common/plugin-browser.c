@@ -86,8 +86,8 @@ typedef struct
 
 /* Declare some local functions.
  */
-static void   query      (void);
-static void   run        (const gchar      *name,
+static void        query (void);
+static void        run   (const gchar      *name,
                           gint              nparams,
                           const GimpParam  *param,
                           gint             *nreturn_vals,
@@ -106,7 +106,7 @@ static void        browser_show_plugin            (PluginBrowser    *browser,
                                                    PInfo            *pinfo);
 
 static gboolean    find_existing_mpath            (GtkTreeModel     *model,
-                                                   gchar            *mpath,
+                                                   const gchar      *mpath,
                                                    GtkTreeIter      *return_iter);
 
 
@@ -183,26 +183,11 @@ run (const gchar      *name,
     }
 }
 
-#if 0
-static void
-pinfo_free (gpointer p)
-{
-  PInfo *pinfo = p;
-
-  g_free (pinfo->menu);
-  g_free (pinfo->accel);
-  g_free (pinfo->prog);
-  g_free (pinfo->types);
-  g_free (pinfo->realname);
-  g_free (pinfo);
-}
-#endif
-
 static gboolean
 find_existing_mpath_helper (GtkTreeModel *model,
                             GtkTreeIter  *iter,
                             GtkTreePath  *path,
-                            gchar        *mpath,
+                            const gchar  *mpath,
                             GtkTreeIter  *return_iter)
 {
   do
@@ -245,14 +230,12 @@ find_existing_mpath_helper (GtkTreeModel *model,
 
 static gboolean
 find_existing_mpath (GtkTreeModel *model,
-                     gchar        *mpath,
+                     const gchar  *mpath,
                      GtkTreeIter  *return_iter)
 {
-  GtkTreePath *path;
+  GtkTreePath *path = gtk_tree_path_new_first ();
   GtkTreeIter  parent;
   gboolean     found;
-
-  path = gtk_tree_path_new_first ();
 
   if (! gtk_tree_model_get_iter (model, &parent, path))
     {
@@ -260,8 +243,8 @@ find_existing_mpath (GtkTreeModel *model,
       return FALSE;
     }
 
-  found = find_existing_mpath_helper (model, &parent, path,
-                                      mpath, return_iter);
+  found = find_existing_mpath_helper (model, &parent, path, mpath, return_iter);
+
   gtk_tree_path_free (path);
 
   return found;
@@ -269,16 +252,16 @@ find_existing_mpath (GtkTreeModel *model,
 
 static void
 get_parent (PluginBrowser *browser,
-            gchar         *mpath,
+            const gchar   *mpath,
             GtkTreeIter   *parent)
 {
   GtkTreeIter   last_parent;
   gchar        *tmp_ptr;
   gchar        *str_ptr;
-  gchar        *leaf_ptr;
+  const gchar  *leaf_ptr;
   GtkTreeStore *tree_store;
 
-  if (mpath == NULL)
+  if (! mpath)
     return;
 
   tree_store = GTK_TREE_STORE (gtk_tree_view_get_model (browser->tree_view));
@@ -287,10 +270,14 @@ get_parent (PluginBrowser *browser,
   if (find_existing_mpath (GTK_TREE_MODEL (tree_store), mpath, parent))
     return;
 
-  /* Next one up */
   tmp_ptr = g_strdup (mpath);
 
-  str_ptr = strrchr (tmp_ptr,'/');
+  /* Strip off trailing ellipsis */
+  str_ptr = strstr (mpath, "...");
+  if (str_ptr && str_ptr == (mpath + strlen (mpath) - 3))
+    *str_ptr = '\0';
+
+  str_ptr = strrchr (tmp_ptr, '/');
 
   if (str_ptr == NULL)
     {
@@ -448,14 +435,24 @@ browser_search (GimpBrowser   *gimp_browser,
           gchar      xtimestr[50];
           struct tm *x;
           time_t     tx;
-          int        ret;
+          gint       ret;
+
+          /* Strip off trailing ellipsis */
+          name = strstr (menu_strs[i], "...");
+          if (name && name == (menu_strs[i] + strlen (menu_strs[i]) - 3))
+            *name = '\0';
 
           name = strrchr (menu_strs[i], '/');
 
           if (name)
-            name = name + 1;
+            {
+              *name = '\0';
+              name = name + 1;
+            }
           else
-            name = menu_strs[i];
+            {
+              name = menu_strs[i];
+            }
 
           tx = time_ints[i];
           if (tx)
@@ -666,7 +663,7 @@ browser_dialog_new (void)
   browser->tree_view = GTK_TREE_VIEW (tree_view);
 
   renderer = gtk_cell_renderer_text_new ();
-  column = gtk_tree_view_column_new_with_attributes (_("Menu Path/Name"),
+  column = gtk_tree_view_column_new_with_attributes (_("Menu Path"),
                                                      renderer,
                                                      "text",
                                                      TREE_COLUMN_PATH_NAME,
@@ -835,9 +832,11 @@ browser_tree_selection_changed (GtkTreeSelection *selection,
           found = TRUE;
           break;
         }
+
       g_free (picked_mpath);
       valid = gtk_tree_model_iter_next (model, &iter);
     }
+
   g_free (mpath);
 
   if (found)
