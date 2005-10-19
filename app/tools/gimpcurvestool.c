@@ -76,6 +76,10 @@ static void     gimp_curves_tool_finalize       (GObject          *object);
 
 static gboolean gimp_curves_tool_initialize     (GimpTool         *tool,
                                                  GimpDisplay      *gdisp);
+static void     gimp_curves_tool_oper_update    (GimpTool         *tool,
+                                                 GimpCoords       *coords,
+                                                 GdkModifierType   state,
+                                                 GimpDisplay      *gdisp);
 static void     gimp_curves_tool_button_release (GimpTool         *tool,
                                                  GimpCoords       *coords,
                                                  guint32           time,
@@ -190,6 +194,7 @@ gimp_curves_tool_class_init (GimpCurvesToolClass *klass)
   object_class->finalize     = gimp_curves_tool_finalize;
 
   tool_class->initialize     = gimp_curves_tool_initialize;
+  tool_class->oper_update    = gimp_curves_tool_oper_update;
   tool_class->button_release = gimp_curves_tool_button_release;
 
   color_tool_class->picked   = gimp_curves_tool_color_picked;
@@ -317,6 +322,36 @@ gimp_curves_tool_initialize (GimpTool    *tool,
 }
 
 static void
+gimp_curves_tool_oper_update (GimpTool        *tool,
+                              GimpCoords      *coords,
+                              GdkModifierType  state,
+                              GimpDisplay     *gdisp)
+{
+  GimpColorPickMode  mode   = GIMP_COLOR_PICK_MODE_NONE;
+  const gchar       *status = NULL;
+
+  GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, gdisp);
+
+  gimp_tool_pop_status (tool, gdisp);
+
+  if (state & GDK_SHIFT_MASK)
+    {
+      mode   = GIMP_COLOR_PICK_MODE_PALETTE;
+      status = _("Click to add a control point.");
+    }
+  else if (state & GDK_CONTROL_MASK)
+    {
+      mode   = GIMP_COLOR_PICK_MODE_PALETTE;
+      status = _("Click to add control points to all channels.");
+    }
+
+  GIMP_COLOR_TOOL (tool)->pick_mode = mode;
+
+  if (status)
+    gimp_tool_push_status (tool, gdisp, status);
+}
+
+static void
 gimp_curves_tool_button_release (GimpTool        *tool,
                                  GimpCoords      *coords,
                                  guint32          time,
@@ -343,6 +378,7 @@ gimp_curves_tool_button_release (GimpTool        *tool,
           curves_add_point (c_tool, i);
           curves_calculate_curve (c_tool->curves, c_tool->channel);
         }
+
       curves_update (c_tool, GRAPH | XRANGE);
     }
 
@@ -1063,10 +1099,12 @@ curves_graph_events (GtkWidget      *widget,
 
       if (new_cursor != cursor_type)
         {
+          Gimp *gimp = GIMP_TOOL (tool)->tool_info->gimp;
+
           cursor_type = new_cursor;
 
           gimp_cursor_set (tool->graph,
-                           GIMP_GUI_CONFIG (GIMP_TOOL (tool)->tool_info->gimp->config)->cursor_format,
+                           GIMP_GUI_CONFIG (gimp->config)->cursor_format,
                            cursor_type,
                            GIMP_TOOL_CURSOR_NONE,
                            GIMP_CURSOR_MODIFIER_NONE);
@@ -1252,7 +1290,8 @@ curves_graph_expose (GtkWidget      *widget,
       gdk_draw_layout (widget->window,
                        graph_gc,
                        RADIUS +
-                       ROUND (((gdouble) width  * (tool->col_value[channel])) / 256.0 + x),
+                       ROUND (((gdouble) width *
+                               (tool->col_value[channel])) / 256.0 + x),
                        height - y - 2,
                        tool->xpos_layout);
     }
