@@ -5,20 +5,21 @@
 # Karina Gribanova <buratina@delfi.lt>, 2001-2002.
 # Linas Vasiliauskas <linasv@centras.lt>, 2004.
 # Žygimantas Beručka <zygis@gnome.org>, 2004-2005.
-# Giedrius Naudžiūnas <gimp@projektas.lt>, 2004-2005.
+# Giedrius Naudžiūnas <gimpng@gmail.com>, 2004-2005.
 # 
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-11 01:30+0300\n"
-"PO-Revision-Date: 2005-10-11 11:59+0300\n"
-"Last-Translator: Giedrius Naudžiūnas <gimpng@gmail.com>\n"
+"POT-Creation-Date: 2005-10-19 17:22+0300\n"
+"PO-Revision-Date: 2005-10-19 17:22+0300\n"
+"Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: ../app/app_procs.c:134
 msgid "(This console window will close in ten seconds)\n"
@@ -339,7 +340,7 @@ msgstr "Įrankinė"
 #: ../app/pdb/internal_procs.c:185 ../app/pdb/internal_procs.c:224
 #: ../app/tools/gimpvectortool.c:154
 msgid "Paths"
-msgstr "Kontūrai"
+msgstr "Keliai"
 
 #: ../app/actions/actions.c:199
 msgid "View"
@@ -582,7 +583,7 @@ msgstr "Nauja kanalo spalva"
 #: ../app/actions/channels-commands.c:245
 #: ../app/display/gimpdisplayshell-dnd.c:496
 #: ../app/widgets/gimpchanneltreeview.c:306
-#: ../app/widgets/gimplayertreeview.c:807 ../app/widgets/gimptoolbox-dnd.c:309
+#: ../app/widgets/gimplayertreeview.c:808 ../app/widgets/gimptoolbox-dnd.c:309
 #, c-format
 msgid "%s Channel Copy"
 msgstr "%s Kanalo kopija"
@@ -667,7 +668,7 @@ msgid "_Palette"
 msgstr "_Paletė"
 
 #: ../app/actions/context-actions.c:54
-#: ../app/dialogs/palette-import-dialog.c:232
+#: ../app/dialogs/palette-import-dialog.c:231
 #: ../app/dialogs/preferences-dialog.c:1681
 msgid "_Gradient"
 msgstr "_Perėjimas"
@@ -731,7 +732,7 @@ msgstr ""
 #: ../app/dialogs/file-open-dialog.c:259
 #: ../app/dialogs/file-open-location-dialog.c:201
 #: ../app/display/gimpdisplayshell-dnd.c:448
-#: ../app/widgets/gimplayertreeview.c:764 ../app/widgets/gimptoolbox-dnd.c:157
+#: ../app/widgets/gimplayertreeview.c:765 ../app/widgets/gimptoolbox-dnd.c:157
 #: ../app/widgets/gimptoolbox.c:944
 #, c-format
 msgid ""
@@ -745,7 +746,7 @@ msgstr ""
 
 #: ../app/actions/data-commands.c:126 ../app/core/gimpimage.c:1349
 #: ../app/core/gimppalette-import.c:218 ../app/core/gimppalette.c:514
-#: ../app/core/gimppalette.c:624 ../app/dialogs/palette-import-dialog.c:699
+#: ../app/core/gimppalette.c:624 ../app/dialogs/palette-import-dialog.c:694
 #: ../app/pdb/image_cmds.c:3892 ../app/widgets/gimpdnd-xds.c:83
 msgid "Untitled"
 msgstr "Bevardis"
@@ -805,7 +806,6 @@ msgid "_Paths"
 msgstr "_Kontūrai"
 
 #: ../app/actions/dialogs-actions.c:90
-#, fuzzy
 msgid "Color_map"
 msgstr "Ga_ma"
 
@@ -816,7 +816,7 @@ msgstr "Histogra_ma"
 
 #: ../app/actions/dialogs-actions.c:100
 msgid "_Selection Editor"
-msgstr "_Pažymėjimų redaktorius"
+msgstr "Ž_ymėjimų redaktorius"
 
 #: ../app/actions/dialogs-actions.c:105
 msgid "Na_vigation"
@@ -885,7 +885,7 @@ msgstr "Klaidų ko_nsolė"
 
 #: ../app/actions/dialogs-actions.c:190
 msgid "_Preferences"
-msgstr "_Nustatymai"
+msgstr "N_ustatymai"
 
 #: ../app/actions/dialogs-actions.c:195
 msgid "_Keyboard Shortcuts"
@@ -1931,7 +1931,7 @@ msgstr "_Nauja..."
 
 #: ../app/actions/image-actions.c:81
 msgid "Can_vas Size..."
-msgstr "Pa_veikslėlio dydis..."
+msgstr "Pa_veikslėlio ribų dydis..."
 
 #: ../app/actions/image-actions.c:86
 msgid "F_it Canvas to Layers"
@@ -2274,7 +2274,7 @@ msgstr "Keisti sluoksnio parametrus"
 #: ../app/actions/layers-commands.c:235 ../app/actions/layers-commands.c:237
 #: ../app/actions/layers-commands.c:294 ../app/actions/layers-commands.c:298
 #: ../app/widgets/gimpdrawabletreeview.c:361
-#: ../app/widgets/gimplayertreeview.c:871
+#: ../app/widgets/gimplayertreeview.c:872
 msgid "New Layer"
 msgstr "Naujas sluoksnis"
 
@@ -2627,7 +2627,7 @@ msgstr "Pažymėjimo redaktoriaus meniu"
 
 #: ../app/actions/select-actions.c:47
 msgid "_Select"
-msgstr "_Pažymėti"
+msgstr "Ž_ymėjimas"
 
 #: ../app/actions/select-actions.c:50
 msgid "_All"
@@ -2893,45 +2893,38 @@ msgid "Reset to default values"
 msgstr "Atkurti numatytasias reikšmes"
 
 #: ../app/actions/tool-options-actions.c:87
-#, fuzzy
 msgid "Reset _all Tool Options"
-msgstr "Atkurti pradinius _visų įrankių nustatymus"
+msgstr "Atkurti _visus įrankio nustatymus"
 
 #: ../app/actions/tool-options-actions.c:88
-#, fuzzy
 msgid "Reset all tool options"
-msgstr "Atkurti pradinius visų įrankių nustatymus"
+msgstr "Atkurti pradinius visus įrankio nustatymus"
 
 #: ../app/actions/tool-options-commands.c:71
 msgid "Save Tool Options"
 msgstr "Išsaugoti įrankio savybes"
 
 #: ../app/actions/tool-options-commands.c:75
-#, fuzzy
 msgid "Enter a name for the saved options"
-msgstr "Įveskite saugotinų nustatymų pavadinimą"
+msgstr "Įveskite išsaugotų nustatymų pavadinimą"
 
 #: ../app/actions/tool-options-commands.c:76
 #: ../app/actions/tool-options-commands.c:246
 #: ../app/actions/tool-options-commands.c:264
-#, fuzzy
 msgid "Saved Options"
-msgstr "Išsaugotos savybės"
+msgstr "Išsaugoti nustatymai"
 
 #: ../app/actions/tool-options-commands.c:144
-#, fuzzy
 msgid "Rename Saved Tool Options"
-msgstr "Įrankių savybės"
+msgstr "Pervadinti išsaugotus įrankių nustatymus"
 
 #: ../app/actions/tool-options-commands.c:148
-#, fuzzy
 msgid "Enter a new name for the saved options"
 msgstr "Įveskite naują išsaugotų nustatymų pavadinimą"
 
 #: ../app/actions/tool-options-commands.c:191
-#, fuzzy
 msgid "Reset Tool Options"
-msgstr "Atstatyti įrankių nustatymus"
+msgstr "Atkurti įrankių nustatymus"
 
 #: ../app/actions/tool-options-commands.c:213
 msgid "Do you really want to reset all tool options to default values?"
@@ -3210,12 +3203,12 @@ msgstr "_Užverti"
 #: ../app/actions/view-actions.c:82
 #, fuzzy
 msgid "_Fit Image in Window"
-msgstr "Paveikslėlių langai"
+msgstr "_Sutalpinti paveikslėlį lange"
 
 #: ../app/actions/view-actions.c:83
 #, fuzzy
 msgid "Fit image in window"
-msgstr "Paveikslėlių langai"
+msgstr "Sutalpinti paveikslėlį lange"
 
 #: ../app/actions/view-actions.c:88
 #, fuzzy
@@ -3229,11 +3222,11 @@ msgstr "Sutalpinti į langą"
 
 #: ../app/actions/view-actions.c:94
 msgid "Na_vigation Window"
-msgstr "Navigacijos langas"
+msgstr "Na_vigacijos langas"
 
 #: ../app/actions/view-actions.c:99
 msgid "Display _Filters..."
-msgstr "Rodyti filtrus..."
+msgstr "Rodyti _filtrus..."
 
 #: ../app/actions/view-actions.c:104
 #, fuzzy
@@ -3251,7 +3244,7 @@ msgstr "_Taškas į tašką"
 
 #: ../app/actions/view-actions.c:119
 msgid "Show _Selection"
-msgstr "Rodyti pažymėjimą"
+msgstr "Rodyti _pažymėjimą"
 
 #: ../app/actions/view-actions.c:125
 msgid "Show _Layer Boundary"
@@ -3272,21 +3265,20 @@ msgstr "Rodyti pažymėjimą"
 
 #: ../app/actions/view-actions.c:149
 msgid "Sn_ap to Guides"
-msgstr "Kibti prie pagalbinių linijų"
+msgstr "Ki_bti prie pagalbinių linijų"
 
 #: ../app/actions/view-actions.c:155
 msgid "Sna_p to Grid"
-msgstr "Kibti prie tinklelio"
+msgstr "Kib_ti prie tinklelio"
 
 #: ../app/actions/view-actions.c:161
 #, fuzzy
 msgid "Snap to _Canvas Edges"
-msgstr "Kibti prie pagalbinių linijų"
+msgstr "Kibti prie _drobės kraštų"
 
 #: ../app/actions/view-actions.c:167
-#, fuzzy
 msgid "Snap t_o Active Path"
-msgstr "Perkelti aktyvų kontūrą"
+msgstr "Kibti p_rie aktyvaus kelio"
 
 #: ../app/actions/view-actions.c:173
 msgid "Show _Menubar"
@@ -3294,7 +3286,7 @@ msgstr "Rodyti _meniu juostą"
 
 #: ../app/actions/view-actions.c:179
 msgid "Show R_ulers"
-msgstr "Rodyti liniuotes"
+msgstr "Rodyti liniu_otes"
 
 #: ../app/actions/view-actions.c:185
 msgid "Show Scroll_bars"
@@ -3302,11 +3294,11 @@ msgstr "Rodyti slin_kties juostas"
 
 #: ../app/actions/view-actions.c:191
 msgid "Show S_tatusbar"
-msgstr "Rodyti bū_senos juostą"
+msgstr "Rod_yti būsenos juostą"
 
 #: ../app/actions/view-actions.c:197
 msgid "Fullscr_een"
-msgstr "Per visą ekraną"
+msgstr "Visame _ekrane"
 
 #: ../app/actions/view-actions.c:258
 msgid "1_6:1  (1600%)"
@@ -3330,7 +3322,7 @@ msgstr "_1:1  (100%)"
 
 #: ../app/actions/view-actions.c:279
 msgid "Zoom 1:1"
-msgstr "Didinimas 1:1"
+msgstr "Mastelis 1:1"
 
 #: ../app/actions/view-actions.c:284
 msgid "1:_2  (50%)"
@@ -3350,7 +3342,7 @@ msgstr "1:1_6  (6.25%)"
 
 #: ../app/actions/view-actions.c:304
 msgid "Othe_r..."
-msgstr "Kitas..."
+msgstr "Kita_s..."
 
 #: ../app/actions/view-actions.c:312
 msgid "From _Theme"
@@ -3358,11 +3350,11 @@ msgstr "Iš _temos"
 
 #: ../app/actions/view-actions.c:317
 msgid "_Light Check Color"
-msgstr "_Šviesių tonų patikrinimas"
+msgstr "Š_viesių kvadratėlių spalva"
 
 #: ../app/actions/view-actions.c:322
 msgid "_Dark Check Color"
-msgstr "_Tamsių tonų patikrinimas"
+msgstr "_Tamsių kvadratėlių spalva"
 
 #: ../app/actions/view-actions.c:327
 msgid "Select _Custom Color..."
@@ -3373,14 +3365,14 @@ msgid "As in _Preferences"
 msgstr "Kaip _nustatymuose"
 
 #: ../app/actions/view-actions.c:619
-#, fuzzy, c-format
+#, c-format
 msgid "Othe_r (%s)..."
-msgstr "Kitas (%s) ..."
+msgstr "Kit_a (%s) ..."
 
 #: ../app/actions/view-actions.c:628
 #, c-format
 msgid "_Zoom (%s)"
-msgstr "_Didinimas (%s)"
+msgstr "_Mastelis (%s)"
 
 #: ../app/actions/view-commands.c:579
 #, fuzzy
@@ -3393,15 +3385,17 @@ msgid "Set Custom Canvas Padding Color"
 msgstr "Nustatyti paveikslėlio dydį"
 
 #: ../app/actions/window-actions.c:65
-#, fuzzy, c-format
+#, c-format
 msgid "Screen %d (%s)"
-msgstr "Ekranas"
+msgstr "Ekranas %d (%s)"
 
 #: ../app/base/base-enums.c:23
+#, fuzzy
 msgid "Smooth"
-msgstr "Glotnumas"
+msgstr "Glotnus"
 
 #: ../app/base/base-enums.c:24
+#, fuzzy
 msgid "Freehand"
 msgstr "Laisva"
 
@@ -3525,6 +3519,10 @@ msgid ""
 "using different filenames, restart the Gimp and check the location of the "
 "swap directory in your Preferences."
 msgstr ""
+"Nepavyko atverti mainų bylos. Gimp išnaudojo visą atmintį ir negali naudoti "
+"mainų bylos. Kai kurios Jūsų paveikslėlių dalys gali būti sugadintos. "
+"Pabandykite išsaugoti Jūsų darbus naudodami kitus bylų vardus, perleiskite "
+"Gimp ir patikrinkite Nustatymuose nurodytą mainų aplanko vietą."
 
 #: ../app/config/gimpconfig-file.c:66 ../app/core/gimpbrushgenerated.c:254
 #: ../app/core/gimpgradient-save.c:51 ../app/core/gimpgradient-save.c:142
@@ -3533,18 +3531,18 @@ msgstr ""
 #: ../app/xcf/xcf.c:352
 #, c-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "Negalima atverti '%s' įrašymui: %s"
+msgstr "Nepavyko įrašymui atverti „%s“: %s"
 
 #: ../app/config/gimpconfig-file.c:77 ../app/config/gimpconfig-file.c:100
 #: ../app/vectors/gimpvectors-export.c:96
 #, c-format
 msgid "Error while writing '%s': %s"
-msgstr "Klaida įrašant %s : %s"
+msgstr "Klaida įrašant „%s“: %s"
 
 #: ../app/config/gimpconfig-file.c:88
 #, c-format
 msgid "Error while reading '%s': %s"
-msgstr "Klaida skaitant %s : %s"
+msgstr "Klaida skaitant „%s“: %s"
 
 #: ../app/config/gimpconfig-file.c:130
 #, c-format
@@ -3552,16 +3550,18 @@ msgid ""
 "There was an error parsing your '%s' file. Default values will be used. A "
 "backup of your configuration has been created at '%s'."
 msgstr ""
+"Skaitant bylą „%s“ įvyko klaida. Bus naudojamos numatytosios reikšmės. "
+"Atsarginė Jūsų konfigūracijos kopija buvo sukurta „%s“."
 
 #: ../app/config/gimprc.c:296 ../app/config/gimprc.c:309
 #, c-format
 msgid "Parsing '%s'\n"
-msgstr "Nagrinėjamas \"%s\"\n"
+msgstr "Skaitoma „%s“\n"
 
 #: ../app/config/gimprc.c:555
 #, c-format
 msgid "Saving '%s'\n"
-msgstr "Įrašinėjama %s\n"
+msgstr "Saugoma „%s“\n"
 
 #  Not all strings defined here are used in the user interface
 #  *  (the preferences dialog mainly) and only those that are should
@@ -3576,10 +3576,13 @@ msgid ""
 "receives the focus. This is useful for window managers using \"click to focus"
 "\"."
 msgstr ""
+"Kai įjungta, paveikslėlis taps aktyviu paveikslėliu, kai sufokusuojamas jo "
+"langas. Tai yra naudinga langų tvarkyklėms naudojančioms fokusavimą "
+"spragtelint."
 
 #: ../app/config/gimprc-blurbs.h:23
 msgid "Specifies how the area around the image should be drawn."
-msgstr ""
+msgstr "Nurodo kaip turi būti piešiama vieta aplink paveikslėlį."
 
 #: ../app/config/gimprc-blurbs.h:26
 msgid ""
@@ -3589,11 +3592,11 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:33
 msgid "Ask for confirmation before closing an image without saving."
-msgstr "Prašomas patvirtinimas prieš uždarant neišsaugotą paveikslėlį."
+msgstr "Prieš uždarant neišsaugotą paveikslėlį paklausti patvirtinimo."
 
 #: ../app/config/gimprc-blurbs.h:36
 msgid "Sets the pixel format of cursors the GIMP will use."
-msgstr "Nustato GIMP naudojamą žymeklio tipą."
+msgstr "Nustato pikselių formatą GIMP naudojamam žymekliui."
 
 #: ../app/config/gimprc-blurbs.h:39
 msgid "Sets the mode of cursor the GIMP will use."
@@ -3604,8 +3607,8 @@ msgid ""
 "Context-dependent cursors are cool.  They are enabled by default. However, "
 "they require overhead that you may want to do without."
 msgstr ""
-"Nuo konteksto priklausantys kursoriai yra jėga.  Jie yra įjungti pagal "
-"nutylėjimą. Tačiau jiems reikia papildomų resursų."
+"Nuo konteksto priklausantys kursoriai yra jėga. Pagal numatymą jie yra "
+"įjungti.Tačiau jiems reikia papildomų resursų."
 
 #: ../app/config/gimprc-blurbs.h:50
 msgid ""
@@ -3694,9 +3697,7 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:186
 #, fuzzy
 msgid "When enabled, GIMP will show mnemonics in menus."
-msgstr ""
-"Kai įjungta, GIMP naudoja skirtingus informacijos langus skirtingiems "
-"paveikslėliams"
+msgstr "Kai įjungta, GIMP meniu bus rodoma mnemonika."
 
 #: ../app/config/gimprc-blurbs.h:189
 msgid ""
@@ -3779,27 +3780,29 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:263
 msgid "Let GIMP try to restore your last saved session on each startup."
 msgstr ""
+"Kiekvieno paleidimo metu leisti GIMP pabandyti atsatyti paskutinę išsaugotą "
+"sesiją."
 
 #: ../app/config/gimprc-blurbs.h:266
 msgid ""
 "Remember the current tool, pattern, color, and brush across GIMP sessions."
-msgstr "Tarp GIMP sesijų išsaugoti esamą įrankį, raštą, spalvą ir teptuką."
+msgstr "Tarp GIMP sesijų atsiminti esamą įrankį, raštą, spalvą ir teptuką."
 
 #: ../app/config/gimprc-blurbs.h:270
 msgid "Save the positions and sizes of the main dialogs when the GIMP exits."
 msgstr ""
+"Baigiant darbą su GIMP išsaugoti pagrindinių dialogų dydžius ir pozicijas."
 
 #: ../app/config/gimprc-blurbs.h:273
-#, fuzzy
 msgid "Save the tool options when the GIMP exits."
-msgstr "Išsaugo pakeistas klavišų kombinacijas GIMP baigiant darbą."
+msgstr "Baigiant darbą su GIMP išsaugoti įrankių nustatymus."
 
 #: ../app/config/gimprc-blurbs.h:279
-#, fuzzy
 msgid ""
 "When enabled, all paint tools will show a preview of the current brush's "
 "outline."
-msgstr "Kai įjungta, visi"
+msgstr ""
+"Kai įjungta, visi piešimo įrankiai rodys esamo teptuko kontūro peržiūrą."
 
 #: ../app/config/gimprc-blurbs.h:283
 msgid ""
@@ -3822,16 +3825,16 @@ msgid ""
 "When enabled, the menubar is visible by default. This can also be toggled "
 "with the \"View->Show Menubar\" command."
 msgstr ""
-"Kai įjungta, meniu juosta yra matoma pagal nutylėjimą. Tai galima taip pat "
-"perjungti naudojant \"Vaizdas->Rodyti meniu juostą\" komandą."
+"Kai įjungta, yra numatytas meniu juostos rodymas. Tą tai pat galima "
+"perjungti naudojant „Vaizdas->Rodyti meniu juostą“ komandą."
 
 #: ../app/config/gimprc-blurbs.h:296
 msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
 msgstr ""
-"Kai įjungta, liniuotės yra matomos pagal nutylėjimą. Tai galima taip pat "
-"perjungti naudojant \"Vaizdas->Rodyti liniuotes\" komandą."
+"Kai įjungta, yra numatytas liniuočių maatymas. Tą taip pat galima perjungti "
+"naudojant „Vaizdas->Rodyti liniuotes“ komandą."
 
 #: ../app/config/gimprc-blurbs.h:300
 msgid ""
@@ -4037,14 +4040,12 @@ msgid "None"
 msgstr "Nieko"
 
 #: ../app/core/core-enums.c:54
-#, fuzzy
 msgid "Floyd-Steinberg (normal)"
-msgstr "Floyd-Steinberg spalvų suliejimas (Normalusis)"
+msgstr "Floyd-Steinberg (normalus)"
 
 #: ../app/core/core-enums.c:55
-#, fuzzy
 msgid "Floyd-Steinberg (reduced color bleeding)"
-msgstr "Floyd-Steinberg spalvų suliejimas (Sumažintas spalvų nublukimas)"
+msgstr "Floyd-Steinberg (sumažintas spalvų nublukimas)"
 
 #: ../app/core/core-enums.c:56
 #, fuzzy
@@ -4052,14 +4053,12 @@ msgid "Positioned"
 msgstr "Vieta: %0.6f"
 
 #: ../app/core/core-enums.c:85
-#, fuzzy
 msgid "Generate optimum palette"
-msgstr "Sugeneruoti optimalią paletę:"
+msgstr "Sugeneruoti optimalią paletę"
 
 #: ../app/core/core-enums.c:86
-#, fuzzy
 msgid "Use web-optimized palette"
-msgstr "Naudoti internetui tinkamą paletę"
+msgstr "Naudoti internetui optimizuotą paletę"
 
 #: ../app/core/core-enums.c:87
 msgid "Use black and white (1-bit) palette"
@@ -4095,11 +4094,11 @@ msgstr "Raštai"
 #: ../app/core/core-enums.c:231
 #, fuzzy
 msgid "Stroke line"
-msgstr "Saugojimo savybės"
+msgstr "Apvesti liniją"
 
 #: ../app/core/core-enums.c:232
 msgid "Stroke with a paint tool"
-msgstr ""
+msgstr "Apvesti su piešimo įrankiu"
 
 #: ../app/core/core-enums.c:259
 msgid "Solid"
@@ -4163,22 +4162,20 @@ msgid "Stipples"
 msgstr ""
 
 #: ../app/core/core-enums.c:365
-#, fuzzy
 msgid "Dash, dot"
-msgstr "Brūkšnelis taškelis..."
+msgstr "Brūkšnelis, taškelis"
 
 #: ../app/core/core-enums.c:366
-#, fuzzy
 msgid "Dash, dot, dot"
-msgstr "Brūkšnelis taškelis taškelis..."
+msgstr "Brūkšnelis, taškelis, taškelis"
 
 #: ../app/core/core-enums.c:394
 msgid "Circle"
-msgstr ""
+msgstr "Apskritimas"
 
 #: ../app/core/core-enums.c:396
 msgid "Diamond"
-msgstr ""
+msgstr "Deimantas"
 
 #: ../app/core/core-enums.c:424 ../app/dialogs/preferences-dialog.c:2065
 msgid "Horizontal"
@@ -4193,24 +4190,20 @@ msgid "Unknown"
 msgstr "Nežinomas"
 
 #: ../app/core/core-enums.c:457
-#, fuzzy
 msgid "Image-sized layers"
-msgstr "Keisti sluoksnio dydį"
+msgstr "Paveikslėlio dydžio sluoksniai"
 
 #: ../app/core/core-enums.c:458
-#, fuzzy
 msgid "All visible layers"
-msgstr "Sujungti matomus sluoksnius"
+msgstr "Visi matomi sluoksniai"
 
 #: ../app/core/core-enums.c:459
-#, fuzzy
 msgid "All linked layers"
-msgstr "%d sluoksnių"
+msgstr "Visi susieti sluoksniai"
 
 #: ../app/core/core-enums.c:460
-#, fuzzy
 msgid "All layers"
-msgstr "Visos Bylos"
+msgstr "Visi sluoksniai"
 
 #: ../app/core/core-enums.c:524
 msgid "Tiny"
@@ -4246,12 +4239,11 @@ msgstr "Milžiniškas"
 
 #: ../app/core/core-enums.c:532
 msgid "Gigantic"
-msgstr "Milžiniškas"
+msgstr "Gigantiškas"
 
 #: ../app/core/core-enums.c:594
-#, fuzzy
 msgid "No thumbnails"
-msgstr "Nėra peržiūros"
+msgstr "Nėra mini vaizdų"
 
 #: ../app/core/core-enums.c:595
 msgid "Normal (128x128)"
@@ -4274,7 +4266,6 @@ msgid "Resize image"
 msgstr "Keisti paveikslėlio dydį"
 
 #: ../app/core/core-enums.c:774
-#, fuzzy
 msgid "Flip image"
 msgstr "Apsukti paveikslėlį"
 
@@ -4291,18 +4282,16 @@ msgid "Convert image"
 msgstr "Konvertuoti paveikslėlį"
 
 #: ../app/core/core-enums.c:778
-#, fuzzy
 msgid "Remove item"
-msgstr "Pervadinti elementą"
+msgstr "Pašalinti elementą"
 
 #: ../app/core/core-enums.c:779
 msgid "Merge layers"
 msgstr "Sujungti sluoksnius"
 
 #: ../app/core/core-enums.c:780
-#, fuzzy
 msgid "Merge paths"
-msgstr "Sujungti paletes"
+msgstr "Sujungti kelius"
 
 #: ../app/core/core-enums.c:782 ../app/core/core-enums.c:812
 msgid "Guide"
@@ -4320,48 +4309,42 @@ msgid "Sample Point"
 msgstr "Apibraukti kelią"
 
 #: ../app/core/core-enums.c:785 ../app/core/core-enums.c:816
-#, fuzzy
 msgid "Layer/Channel"
-msgstr "Nuleisti kanalą"
+msgstr "Sluoksnis/kanalas"
 
 #: ../app/core/core-enums.c:786 ../app/core/core-enums.c:817
-#, fuzzy
 msgid "Layer/Channel modification"
-msgstr "Pakeisti kanalą pažymėjimu"
+msgstr "Sluoksnio/kanalo keitimas"
 
 #: ../app/core/core-enums.c:787 ../app/core/core-enums.c:818
 msgid "Selection mask"
 msgstr "Pažymėjimo kaukė"
 
 #: ../app/core/core-enums.c:788 ../app/core/core-enums.c:821
-#, fuzzy
 msgid "Item visibility"
 msgstr "Elemento matomumas"
 
 #: ../app/core/core-enums.c:789 ../app/core/core-enums.c:822
-#, fuzzy
 msgid "Link/Unlink item"
-msgstr "Susieti"
+msgstr "Susieti/atsieti elementą"
 
 #: ../app/core/core-enums.c:790
-#, fuzzy
 msgid "Item properties"
-msgstr "Vidinės procedūros"
+msgstr "Elemento savybės"
 
 #: ../app/core/core-enums.c:791 ../app/core/core-enums.c:820
-#, fuzzy
 msgid "Move item"
-msgstr "Perkelti"
+msgstr "Perkelti elementą"
 
 #: ../app/core/core-enums.c:792
 #, fuzzy
 msgid "Scale item"
-msgstr "Keisti paveikslėlio dydį"
+msgstr "Keisti elemento dydį"
 
 #: ../app/core/core-enums.c:793
 #, fuzzy
 msgid "Resize item"
-msgstr "Keisti paveikslėlio dydį"
+msgstr "Keisti elemento dydį"
 
 #: ../app/core/core-enums.c:794 ../app/core/core-enums.c:831
 msgid "Add layer mask"
@@ -4373,22 +4356,19 @@ msgstr "Pritaikyti sluoksnio kaukę"
 
 #: ../app/core/core-enums.c:796 ../app/core/core-enums.c:843
 msgid "Floating selection to layer"
-msgstr "Plaukiojantis pažymėjimas"
+msgstr "Plaukiojantis pažymėjimas į sluoksnį"
 
 #: ../app/core/core-enums.c:797
-#, fuzzy
 msgid "Float selection"
 msgstr "Plaukiojantis pažymėjimas"
 
 #: ../app/core/core-enums.c:798
-#, fuzzy
 msgid "Anchor floating selection"
 msgstr "Prikabinti plaukiojantį pažymėjimą"
 
 #: ../app/core/core-enums.c:799
-#, fuzzy
 msgid "Remove floating selection"
-msgstr "Plaukiojantis pažymėjimas"
+msgstr "Pašalinti plaukiojantį pažymėjimą"
 
 #: ../app/core/core-enums.c:800 ../app/core/gimp-edit.c:253
 msgid "Paste"
@@ -4414,22 +4394,20 @@ msgid "Paint"
 msgstr "Piešti"
 
 #: ../app/core/core-enums.c:805 ../app/core/core-enums.c:850
-#, fuzzy
 msgid "Attach parasite"
 msgstr "Prisegti parazitą"
 
 #: ../app/core/core-enums.c:806 ../app/core/core-enums.c:851
-#, fuzzy
 msgid "Remove parasite"
-msgstr "pašalinti papildomos informacijos bylą"
+msgstr "Pašalinti parazitą"
 
 #: ../app/core/core-enums.c:807
 msgid "Import paths"
-msgstr "Importuoti kontūrą"
+msgstr "Importuoti kelius"
 
 #: ../app/core/core-enums.c:808 ../app/pdb/drawable_cmds.c:1722
 msgid "Plug-In"
-msgstr "Priedai"
+msgstr "Įskiepis"
 
 #: ../app/core/core-enums.c:809
 msgid "Image type"
@@ -4440,12 +4418,10 @@ msgid "Image size"
 msgstr "Paveikslėlio dydis"
 
 #: ../app/core/core-enums.c:811
-#, fuzzy
 msgid "Image resolution change"
-msgstr "Skiriamosios gebos keitimas"
+msgstr "Paveikslėlio raiškos keitimas"
 
 #: ../app/core/core-enums.c:815
-#, fuzzy
 msgid "Change indexed palette"
 msgstr "Pakeisti indeksuotą paletę"
 
@@ -4458,9 +4434,8 @@ msgid "New layer"
 msgstr "Naujas sluoksnis"
 
 #: ../app/core/core-enums.c:825
-#, fuzzy
 msgid "Reposition layer"
-msgstr "Teksto sluoksnis"
+msgstr "Perkelti sluoksnį"
 
 #: ../app/core/core-enums.c:826
 msgid "Set layer mode"
@@ -4471,26 +4446,22 @@ msgid "Set layer opacity"
 msgstr "Nustatyti sluoksnio nepermatomumą"
 
 #: ../app/core/core-enums.c:828
-#, fuzzy
 msgid "Lock/Unlock alpha channel"
-msgstr "Sluoksnio alfa kanalas"
+msgstr "Užrakinti/atrakinti alfa kanalą"
 
 #: ../app/core/core-enums.c:829
-#, fuzzy
 msgid "Text layer"
 msgstr "Teksto sluoksnis"
 
 #: ../app/core/core-enums.c:830
-#, fuzzy
 msgid "Text layer modification"
-msgstr "Nustatyti sluoksnio režimą"
+msgstr "Teksto sluoksnio keitimas"
 
 #: ../app/core/core-enums.c:832
 msgid "Delete layer mask"
 msgstr "Ištrinti sluoksnio kaukę"
 
 #: ../app/core/core-enums.c:834
-#, fuzzy
 msgid "Show layer mask"
 msgstr "Rodyti sluoksnio kaukę"
 
@@ -4499,7 +4470,6 @@ msgid "New channel"
 msgstr "Naujas kanalas"
 
 #: ../app/core/core-enums.c:837
-#, fuzzy
 msgid "Reposition channel"
 msgstr "Perkelti kanalą"
 
@@ -4508,19 +4478,16 @@ msgid "Channel color"
 msgstr "Kanalo spalva"
 
 #: ../app/core/core-enums.c:839
-#, fuzzy
 msgid "New path"
-msgstr "Naujas kontūras"
+msgstr "Naujas kelias"
 
 #: ../app/core/core-enums.c:841
-#, fuzzy
 msgid "Path modification"
-msgstr "Kontūrą į pažymėjimą"
+msgstr "Kelio keitimas"
 
 #: ../app/core/core-enums.c:842
-#, fuzzy
 msgid "Reposition path"
-msgstr "Teksto sluoksnis"
+msgstr "Perkelti kelią"
 
 #: ../app/core/core-enums.c:844
 msgid "FS rigor"
@@ -4533,12 +4500,11 @@ msgstr ""
 #: ../app/core/core-enums.c:848 ../app/paint/gimpink.c:103
 #: ../app/tools/gimpinktool.c:62
 msgid "Ink"
-msgstr "Plunksna"
+msgstr "Rašalas"
 
 #: ../app/core/core-enums.c:849
-#, fuzzy
 msgid "Select foreground"
-msgstr "Nustatyti priekinio plano spalvą"
+msgstr "Pasirinkite priekinį planą"
 
 #: ../app/core/core-enums.c:852
 msgid "EEK: can't undo"
@@ -4547,11 +4513,9 @@ msgstr "EEK: atšaukimas negalimas"
 #: ../app/core/gimp-contexts.c:135 ../app/gui/session.c:246
 #: ../app/menus/menus.c:398 ../app/tools/gimp-tools.c:418
 #: ../app/widgets/gimpdevices.c:229
-#, fuzzy, c-format
+#, c-format
 msgid "Deleting \"%s\" failed: %s"
-msgstr ""
-"%s atidarymas nepavyko.\n"
-"%s"
+msgstr "Ištrinti „%s“ nepavyko: %s"
 
 #: ../app/core/gimp-edit.c:181 ../app/core/gimp-edit.c:315
 msgid "Pasted Layer"
@@ -4571,7 +4535,7 @@ msgstr "Užpildyti balta"
 
 #: ../app/core/gimp-edit.c:456
 msgid "Fill with Transparency"
-msgstr "Užpildyti permatomumu"
+msgstr "Užpildyti skaidrumu"
 
 #: ../app/core/gimp-edit.c:460
 msgid "Fill with Pattern"
@@ -4582,25 +4546,24 @@ msgid "Unable to cut or copy because the selected region is empty."
 msgstr "Neįmanoma iškirpti/kopijuoti, nes pasirinktas regionas yra tuščias."
 
 #: ../app/core/gimp-edit.c:565
-#, fuzzy
 msgid "Global Buffer"
-msgstr "_Įdėti buferį"
+msgstr "Blobalus buferis"
 
 #: ../app/core/gimp-gradients.c:68
 msgid "FG to BG (RGB)"
-msgstr "IŠ priekinio plano spalvos į fono spalvą (RGB)"
+msgstr "Iš priekinio plano į fono (RGB)"
 
 #: ../app/core/gimp-gradients.c:73
 msgid "FG to BG (HSV counter-clockwise)"
-msgstr "FG į BG (HSV prieš laikrodžio rodyklę)"
+msgstr "Iš priekinio plano į fono (HSV prieš laikrodžio rodyklę)"
 
 #: ../app/core/gimp-gradients.c:78
 msgid "FG to BG (HSV clockwise hue)"
-msgstr "FG į BG (HSV spalva pagal laikrodžio rodyklę)"
+msgstr "Iš priekinio plano į fono (HSV atspalvis pagal laikrodžio rodyklę)"
 
 #: ../app/core/gimp-gradients.c:83
 msgid "FG to Transparent"
-msgstr "Iš priekinio plano spalvos į skaidrią"
+msgstr "Iš priekinio plano į skaidrią"
 
 #: ../app/core/gimp-gui.c:155 ../app/widgets/gimptoolbox.c:577
 msgid "GIMP"
@@ -4612,9 +4575,8 @@ msgid "Procedural Database"
 msgstr "Procedūrinė duomenų bazė"
 
 #: ../app/core/gimp.c:635
-#, fuzzy
 msgid "Plug-In Interpreters"
-msgstr "Įskiepių aplankai"
+msgstr "Įskiepių interpretatoriai"
 
 #: ../app/core/gimp.c:641
 msgid "Plug-In Environment"
@@ -4628,7 +4590,7 @@ msgstr "Ieškomos duomenų bylos"
 
 #: ../app/core/gimp.c:852
 msgid "Parasites"
-msgstr "Papildomos informacijos bylos"
+msgstr "Parazitai"
 
 #. initialize the document history
 #: ../app/core/gimp.c:877
@@ -4643,27 +4605,27 @@ msgstr "Moduliai"
 #: ../app/core/gimpbrush-load.c:152
 #, c-format
 msgid "Could not read %d bytes from '%s': %s"
-msgstr "Negalima nuskaityti %d baitų iš %s: %s"
+msgstr "Nepavyko perskaityti %d baitų iš „%s“: %s"
 
 #: ../app/core/gimpbrush-load.c:172
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in brush file '%s': Width = 0."
-msgstr "Kritinė klaida teptukų byloje %s: nežinomas gylis %d."
+msgstr "Kritinė skaitymo klaida teptuko byloje „%s“: plotis = 0."
 
 #: ../app/core/gimpbrush-load.c:181
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in brush file '%s': Height = 0."
-msgstr "Kritinė klaida teptuko byloje %s: byla sugadinta."
+msgstr "Kritinė skaitymo klaida teptuko byloje „%s“: aukštis = 0."
 
 #: ../app/core/gimpbrush-load.c:190
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in brush file '%s': Bytes = 0."
-msgstr "Kritinė klaida teptuko byloje %s: byla sugadinta."
+msgstr "Kritinė skaitymo klaida teptuko byloje „%s“: baitų = 0."
 
 #: ../app/core/gimpbrush-load.c:214
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown depth %d."
-msgstr "Kritinė klaida teptukų byloje %s: nežinomas gylis %d."
+msgstr "Kritinė skaitymo klaida teptuko byloje „%s“: nežinomas gylis %d."
 
 #: ../app/core/gimpbrush-load.c:227
 #, c-format
@@ -4673,13 +4635,13 @@ msgstr "Kritinė klaida teptuko byloje %s: nežinoma versija %d."
 #: ../app/core/gimpbrush-load.c:243 ../app/core/gimpbrush-load.c:363
 #, c-format
 msgid "Fatal parse error in brush file '%s': File appears truncated."
-msgstr "Kritinė klaida teptuko byloje %s: panašu, kad byla nepilna."
+msgstr "Kritinė skaitymo klaida teptuko byloje „%s“: panašu, kad byla nepilna."
 
 #: ../app/core/gimpbrush-load.c:251 ../app/core/gimpbrushgenerated.c:641
 #: ../app/core/gimpbrushpipe.c:347
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
-msgstr "Nekorektiška UTF-8 eilutė teptukų byloje %s."
+msgstr "Nekorektiška UTF-8 eilutė teptukų byloje „%s“."
 
 #: ../app/core/gimpbrush-load.c:258 ../app/core/gimpcontext.c:1294
 #: ../app/core/gimpitem.c:560 ../app/core/gimppattern.c:366
@@ -4694,49 +4656,53 @@ msgid ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
 "GIMP brushes must be GRAY or RGBA."
 msgstr ""
-"Kritinė klaida teptukų byloje %s: nepalaikomas teptuko gylis %d\n"
-"GIMP teptukai turi būti pilki arba RGBA."
+"Kritinė skaitymo klaida teptukų byloje „%s“: nepalaikomas teptuko gylis %d\n"
+"GIMP teptukai turi būti pilki (GRAY) arba RGBA."
 
 #: ../app/core/gimpbrush-load.c:408
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Fatal parse error in brush file '%s': unable to decode abr format version %d."
-msgstr "Kritinė klaida teptuko byloje %s: nežinoma versija %d."
+msgstr ""
+"Kritinė skaitymo klaida teptuko byloje „%s“: nepavyko dekoduoti abr formato "
+"versijos %d."
 
 #: ../app/core/gimpbrush-load.c:425
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in brush file '%s'"
-msgstr "Kritinė klaida teptuko byloje %s: byla sugadinta."
+msgstr "Kritinė skaitymo klaida teptuko byloje „%s“"
 
 #: ../app/core/gimpbrushgenerated.c:607
 #, c-format
 msgid "Fatal parse error in brush file '%s': Not a GIMP brush file."
-msgstr "Kritinė klaida teptukų byloje %s: tai ne GIMP teprukų byla."
+msgstr "Kritinė skaitymo klaida teptuko byloje „%s“: tai ne GIMP teptukų byla."
 
 #: ../app/core/gimpbrushgenerated.c:623
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown GIMP brush version."
-msgstr "Kritinė klaida teptukų byloje %s: nežinoma GIMP teprukų versija."
+msgstr ""
+"Kritinė skaitymo klaida teptukų byloje „%s“: nežinoma GIMP teptukų versija."
 
 #: ../app/core/gimpbrushgenerated.c:662
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in brush file '%s': Unknown GIMP brush shape."
-msgstr "Kritinė klaida teptukų byloje %s: nežinoma GIMP teprukų versija."
+msgstr ""
+"Kritinė skaitymo klaida teptukų byloje „%s“: nežinoma GIMP teptuko forma."
 
 #: ../app/core/gimpbrushgenerated.c:740
-#, fuzzy, c-format
+#, c-format
 msgid "Error while reading brush file '%s': %s"
-msgstr "Klaida skaitant %s : %s"
+msgstr "Klaida skaitant teptuko bylą „%s“: %s"
 
 #: ../app/core/gimpbrushgenerated.c:742
 msgid "File is truncated"
-msgstr ""
+msgstr "Byla yra nepilna"
 
 #: ../app/core/gimpbrushpipe.c:363 ../app/core/gimpbrushpipe.c:383
 #: ../app/core/gimpbrushpipe.c:473
 #, c-format
 msgid "Fatal parse error in brush file '%s': File is corrupt."
-msgstr "Kritinė klaida teptuko byloje %s: byla sugadinta."
+msgstr "Kritinė skaitymo klaida teptuko byloje „%s“: byla sugadinta."
 
 #: ../app/core/gimpchannel.c:296 ../app/pdb/internal_procs.c:101
 msgid "Channel"
@@ -4771,19 +4737,16 @@ msgid "Transform Channel"
 msgstr "Transformuoti kanalą"
 
 #: ../app/core/gimpchannel.c:304
-#, fuzzy
 msgid "Stroke Channel"
-msgstr "Sumažinti kanalą"
+msgstr "Apvesti kanalą"
 
 #: ../app/core/gimpchannel.c:325
-#, fuzzy
 msgid "Feather Channel"
-msgstr "Ištrinti kanalą"
+msgstr "Išlieti kanalą"
 
 #: ../app/core/gimpchannel.c:326
-#, fuzzy
 msgid "Sharpen Channel"
-msgstr "Pakelti kanalą"
+msgstr "Paaštrinti kanalą"
 
 #: ../app/core/gimpchannel.c:327
 msgid "Clear Channel"
@@ -4800,7 +4763,7 @@ msgstr "Invertuoti kanalą"
 #: ../app/core/gimpchannel.c:330
 #, fuzzy
 msgid "Border Channel"
-msgstr "Nuleisti kanalą"
+msgstr "Įrėminti kanalą"
 
 #: ../app/core/gimpchannel.c:331
 msgid "Grow Channel"
@@ -4812,7 +4775,7 @@ msgstr "Sumažinti kanalą"
 
 #: ../app/core/gimpchannel.c:729
 msgid "Cannot stroke empty channel."
-msgstr ""
+msgstr "Negalima apvesti tuščio kanalo."
 
 #: ../app/core/gimpchannel.c:1624
 msgid "Set Channel Color"
@@ -4856,16 +4819,17 @@ msgstr "Pažymėti pagal spalvą"
 #: ../app/core/gimpdata.c:425
 #, c-format
 msgid "Could not delete '%s': %s"
-msgstr "Negalima ištrinti %s: %s"
+msgstr "Nepavyko ištrinti „%s“: %s"
 
 #: ../app/core/gimpdatafactory.c:322 ../app/core/gimpdatafactory.c:532
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning: Failed to save data:\n"
 "\n"
 "%s"
 msgstr ""
 "Įspėjimas: Nepavyko išsaugoti duomenų:\n"
+"\n"
 "%s"
 
 #: ../app/core/gimpdatafactory.c:434 ../app/core/gimpdatafactory.c:437
@@ -4879,13 +4843,14 @@ msgid "%s copy"
 msgstr "%s kopija"
 
 #: ../app/core/gimpdatafactory.c:628
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning: Failed to load data:\n"
 "\n"
 "%s"
 msgstr ""
 "Įspėjimas: Nepavyko įkelti duomenų:\n"
+"\n"
 "%s"
 
 #: ../app/core/gimpdrawable-blend.c:246 ../app/tools/gimpblendtool.c:101
@@ -4894,7 +4859,7 @@ msgstr "Perėjimas"
 
 #: ../app/core/gimpdrawable-bucket-fill.c:85 ../app/paint/gimpclone.c:185
 msgid "No patterns available for this operation."
-msgstr "Užpildyti raštu negalima."
+msgstr "Šiai operacijai nėra prieinamų raštų."
 
 #: ../app/core/gimpdrawable-bucket-fill.c:272
 #: ../app/tools/gimpbucketfilltool.c:92
@@ -4910,7 +4875,7 @@ msgstr "Nusordrinti"
 msgid "Equalize"
 msgstr "Išlyginti"
 
-#: ../app/core/gimpdrawable-foreground-extract.c:111
+#: ../app/core/gimpdrawable-foreground-extract.c:134
 #, fuzzy
 msgid "Foreground Extraction"
 msgstr "Priekinio plano spalva"
@@ -4953,47 +4918,47 @@ msgstr "Transformavimas"
 #: ../app/core/gimpenvirontable.c:286
 #, c-format
 msgid "Empty variable name in environment file %s"
-msgstr ""
+msgstr "Aplinkos byloje %s yra tuščias kintamojo pavadinimas"
 
 #: ../app/core/gimpenvirontable.c:304
 #, c-format
 msgid "Illegal variable name in environment file %s: %s"
-msgstr ""
+msgstr "Aplinkos byloje %s yra neteisingas kintamojo pavadinimas: %s"
 
 #: ../app/core/gimpgradient-load.c:71
 #, c-format
 msgid "Fatal parse error in gradient file '%s': Not a GIMP gradient file."
-msgstr "Kritinė klaida perėjimo byloje %s: ne GIMP perėjimo byla."
+msgstr "Kritinė skaitymo klaida perėjimo byloje „%s“: ne GIMP perėjimo byla."
 
 #: ../app/core/gimpgradient-load.c:88
 #, c-format
 msgid "Invalid UTF-8 string in gradient file '%s'."
-msgstr "Nekorektiška UTF-8 eilutė perėjimų byloje %s."
+msgstr "Nekorektiška UTF-8 eilutė perėjimų byloje „%s“."
 
 #: ../app/core/gimpgradient-load.c:110
 #, c-format
 msgid "Fatal parse error in gradient file '%s': File is corrupt."
-msgstr "Kritinė klaida perėjimo byloje %s: byla sugadinta."
+msgstr "Kritinė skaitymo klaida perėjimo byloje „%s“: byla sugadinta."
 
 #: ../app/core/gimpgradient-load.c:167
 #, c-format
 msgid "Corrupt segment %d in gradient file '%s'."
-msgstr "Sugadintas %d segmentas perėjimų byloje %s."
+msgstr "Sugadintas %d segmentas perėjimų byloje „%s“."
 
 #: ../app/core/gimpgradient-load.c:178 ../app/core/gimpgradient-load.c:192
 #, c-format
 msgid "Gradient file '%s' is corrupt: Segments do not span the range 0-1."
-msgstr ""
+msgstr "Perėjimų bylą „%s“ yra sugadinta: segmentai neapima rėžių 0-1."
 
 #: ../app/core/gimpgradient-load.c:275
-#, fuzzy, c-format
+#, c-format
 msgid "No linear gradients found in '%s'"
-msgstr "Kontūrų nerasta byloje %s"
+msgstr "Byloje „%s“ nerasta linijinių perėjimų"
 
 #: ../app/core/gimpgradient-load.c:285
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to import gradients from '%s': %s"
-msgstr "Negalima nuskaityti %d baitų iš %s: %s"
+msgstr "Nepavyko importuoti perėjimų iš „%s“: %s"
 
 #: ../app/core/gimpgrid.c:126
 msgid "Line style used for the grid."
@@ -5001,21 +4966,21 @@ msgstr "Tinklelio linijų tipas."
 
 #: ../app/core/gimpgrid.c:132
 msgid "The foreground color of the grid."
-msgstr "Grotelių priekinio plano spalva."
+msgstr "Tinklelio priekinio plano spalva."
 
 #: ../app/core/gimpgrid.c:137
 msgid ""
 "The background color of the grid; only used in double dashed line style."
 msgstr ""
-"Grotelių fono spalva; naudojama tik su dvigubų brukšnių stiliaus linijomis."
+"Tinklelio fono spalva; naudojama tik su dvigubų brukšnių stiliaus linijomis."
 
 #: ../app/core/gimpgrid.c:143
 msgid "Horizontal spacing of grid lines."
-msgstr "Atstumas tarp horizontalių grotelių linijų."
+msgstr "Atstumas tarp horizontalių tinklelio linijų."
 
 #: ../app/core/gimpgrid.c:148
 msgid "Vertical spacing of grid lines."
-msgstr "Atstumas tarp vertikalių grotelių linijų."
+msgstr "Atstumas tarp vertikalių tinklelio linijų."
 
 #: ../app/core/gimpgrid.c:157
 msgid ""
@@ -5044,9 +5009,8 @@ msgid "Add Color to Colormap"
 msgstr "/Pridėti spalvą iš priekinio plano"
 
 #: ../app/core/gimpimage-convert.c:810
-#, fuzzy
 msgid "Cannot convert image: palette is empty."
-msgstr "Neina iškirpti/kopijuoti, kadangi pasirinktas regionas tuščias "
+msgstr "Nepavyko konvertuoti paveikslėlio: paletė yra tuščia."
 
 #: ../app/core/gimpimage-convert.c:824
 msgid "Convert Image to RGB"
@@ -5061,14 +5025,12 @@ msgid "Convert Image to Indexed"
 msgstr "Konvertuoti paveiklėlį į indeksuotą"
 
 #: ../app/core/gimpimage-convert.c:914
-#, fuzzy
 msgid "Converting to indexed (stage 2)"
-msgstr "Konvertuoti paveiklėlį į indeksuotą"
+msgstr "Konvertuojama į indeksuotą (2 žingsnis)"
 
 #: ../app/core/gimpimage-convert.c:959
-#, fuzzy
 msgid "Converting to indexed (stage 3)"
-msgstr "Konvertuoti paveiklėlį į indeksuotą"
+msgstr "Konvertuojama į indeksuotą (3 žingsnis)"
 
 #: ../app/core/gimpimage-crop.c:124
 msgid "Crop Image"
@@ -5100,13 +5062,11 @@ msgstr "Sujungti matomus sluoksnius"
 
 #: ../app/core/gimpimage-merge.c:107
 msgid "Not enough visible layers for a merge. There must be at least two."
-msgstr ""
-"Neužtenka matomų sluoksnių sujungimui. \n"
-"Turi būti bent du."
+msgstr "Sujungimui neužtenka matomų sluoksnių, kurių turi būti bent du."
 
 #: ../app/core/gimpimage-merge.c:142
 msgid "Flatten Image"
-msgstr "Sujungti paveikslėlio sluoksnius"
+msgstr "Suploti paveikslėlį"
 
 #: ../app/core/gimpimage-merge.c:193
 msgid "Merge Down"
@@ -5118,21 +5078,19 @@ msgstr "Neužtenka matomų sluoksnių sujungimo su žemesniu sluoksniu veiksmui.
 
 #: ../app/core/gimpimage-merge.c:544
 msgid "Merge Visible Paths"
-msgstr "Sujungti matomus kontūrus"
+msgstr "Sujungti matomus kelius"
 
 #: ../app/core/gimpimage-merge.c:581
 msgid "Not enough visible paths for a merge. There must be at least two."
-msgstr "Neužtenka matomų kontūrų sujungimui. Turi būti bent du."
+msgstr "Sujungimui neužtenka matomų kelių, kurių turi būti bent du."
 
 #: ../app/core/gimpimage-quick-mask.c:67
-#, fuzzy
 msgid "Enable Quick Mask"
-msgstr "Aktyvuota greita kaukė"
+msgstr "Įjungti greitą kaukę"
 
 #: ../app/core/gimpimage-quick-mask.c:117
-#, fuzzy
 msgid "Disable Quick Mask"
-msgstr "Deaktyvuota greita kaukė"
+msgstr "Išjungti greitą kaukę"
 
 #: ../app/core/gimpimage-sample-points.c:55
 msgid "Add Sample_Point"
@@ -5151,7 +5109,7 @@ msgstr "Perkelti pažymėjimą"
 #: ../app/core/gimpimage-undo-push.c:3298
 #, c-format
 msgid "Can't undo %s"
-msgstr "Negaliu atšaukti %s"
+msgstr "Negalima atšaukti %s"
 
 #: ../app/core/gimpimage.c:1423
 msgid "Change Image Resolution"
@@ -5166,9 +5124,8 @@ msgid "Attach Parasite to Image"
 msgstr "Prie paveikslėlio prisegti parazitą"
 
 #: ../app/core/gimpimage.c:2309
-#, fuzzy
 msgid "Remove Parasite from Image"
-msgstr "pašalinti papildomos informacijos bylą"
+msgstr "Pašalinti nuo paveikslėlio parazitą"
 
 #: ../app/core/gimpimage.c:2777
 msgid "Add Layer"
@@ -5196,7 +5153,7 @@ msgstr "Nuleisti sluoksnį"
 
 #: ../app/core/gimpimage.c:2972
 msgid "Layer is already on top."
-msgstr "Sluoksnis jau viršuje."
+msgstr "Sluoksnis jau yra viršuje."
 
 #: ../app/core/gimpimage.c:2977
 msgid "Raise Layer to Top"
@@ -5220,7 +5177,7 @@ msgstr "Pašalinti kanalą"
 
 #: ../app/core/gimpimage.c:3177
 msgid "Channel cannot be raised higher."
-msgstr "Kanalo aukščiau pakelti negalima"
+msgstr "Kanalo aukščiau pakelti negalima."
 
 #: ../app/core/gimpimage.c:3182
 msgid "Raise Channel"
@@ -5236,7 +5193,7 @@ msgstr "Pakelti kanalą į viršų"
 
 #: ../app/core/gimpimage.c:3221
 msgid "Channel cannot be lowered more."
-msgstr "Kanalo žemiau nuleisti negalima"
+msgstr "Kanalo žemiau nuleisti negalima."
 
 #: ../app/core/gimpimage.c:3226
 msgid "Lower Channel"
@@ -5260,15 +5217,15 @@ msgstr "Pašalinti kelią"
 
 #: ../app/core/gimpimage.c:3415
 msgid "Path cannot be raised higher."
-msgstr "Kontūro aukščiau pakelti negalima."
+msgstr "Kelio aukščiau pakelti negalima."
 
 #: ../app/core/gimpimage.c:3420
 msgid "Raise Path"
-msgstr "Pakelti kontūrą"
+msgstr "Pakelti kelią"
 
 #: ../app/core/gimpimage.c:3437
 msgid "Path is already on top."
-msgstr "Sluoksnis jau viršuje."
+msgstr "Kelias jau yra viršuje."
 
 #: ../app/core/gimpimage.c:3442
 msgid "Raise Path to Top"
@@ -5276,42 +5233,39 @@ msgstr "Pakelti kelią iki viršaus"
 
 #: ../app/core/gimpimage.c:3459
 msgid "Path cannot be lowered more."
-msgstr "Kontūro žemiau nuleisti negalima."
+msgstr "Kelio žemiau nuleisti negalima."
 
 #: ../app/core/gimpimage.c:3464
 msgid "Lower Path"
-msgstr "Nuleisti kontūrą"
+msgstr "Nuleisti kelią"
 
 #: ../app/core/gimpimage.c:3484
 msgid "Path is already on the bottom."
-msgstr "Sluoksnis jau yra apačioje."
+msgstr "Kelias jau yra apačioje."
 
 #: ../app/core/gimpimage.c:3489
 msgid "Lower Path to Bottom"
-msgstr "Nuleisti sluoksnį iki apačios"
+msgstr "Nuleisti kelią iki apačios"
 
 #: ../app/core/gimpimagefile.c:575 ../app/dialogs/preferences-dialog.c:1502
 msgid "Folder"
-msgstr "Katalogas"
+msgstr "Aplankas"
 
 #: ../app/core/gimpimagefile.c:580
 msgid "Special File"
-msgstr ""
+msgstr "Speciali byla"
 
 #: ../app/core/gimpimagefile.c:596
-#, fuzzy
 msgid "Remote File"
-msgstr "Atstatyti paveikslėlį?"
+msgstr "Nevietinė byla"
 
 #: ../app/core/gimpimagefile.c:613
-#, fuzzy
 msgid "Click to create preview"
-msgstr "Nepavyko sukurti peržiūros"
+msgstr "Spragtelkite norėdami sukurti peržiūrą"
 
 #: ../app/core/gimpimagefile.c:617
-#, fuzzy
 msgid "Loading preview..."
-msgstr "Kraunama peržiūra..."
+msgstr "Įkeliama peržiūra..."
 
 #: ../app/core/gimpimagefile.c:621
 msgid "Preview is out of date"
@@ -5322,9 +5276,8 @@ msgid "Cannot create preview"
 msgstr "Nepavyko sukurti peržiūros"
 
 #: ../app/core/gimpimagefile.c:632
-#, fuzzy
 msgid "(Preview may be out of date)"
-msgstr "Peržiūra yra pasenusi"
+msgstr "(Peržiūra gali būti pasenusi)"
 
 #. pixel size
 #: ../app/core/gimpimagefile.c:638 ../app/widgets/gimpimagepropview.c:354
@@ -5335,65 +5288,60 @@ msgid "%d x %d pixels"
 msgstr "%d x %d taškų"
 
 #: ../app/core/gimpimagefile.c:653 ../app/display/gimpdisplayshell-title.c:316
-#, fuzzy, c-format
+#, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
-msgstr[0] "%d sluoksnių"
-msgstr[1] "%d sluoksnių"
+msgstr[0] "%d sluoksnis"
+msgstr[1] "%d sluoksniai"
+msgstr[2] "%d sluoksnių"
 
 #: ../app/core/gimpimagefile.c:699
-#, fuzzy, c-format
+#, c-format
 msgid "Could not open thumbnail '%s': %s"
-msgstr "Negaliu atverti bylos %s"
+msgstr "Nepavyko atverti mini vaizdo „%s“: %s"
 
 #: ../app/core/gimpinterpreterdb.c:297
 #, c-format
 msgid "Bad interpreter referenced in interpreter file %s: %s"
-msgstr ""
+msgstr "Interpretatoriaus byloje „%s“ nurodytas blogas interpretatorius: %s"
 
 #: ../app/core/gimpinterpreterdb.c:355
 #, c-format
 msgid "Bad binary format string in interpreter file %s"
-msgstr ""
+msgstr "Interpretatoriaus byloje „%s“ yra bloga dvejetainio formato eilutė"
 
 #: ../app/core/gimpitem.c:1181
 msgid "Attach Parasite"
 msgstr "Prisegti parazitą"
 
 #: ../app/core/gimpitem.c:1192
-#, fuzzy
 msgid "Attach Parasite to Item"
-msgstr "prisegti papildomos informacijos bylą"
+msgstr "Prisegti prie paveikslėlio parazitą"
 
 #: ../app/core/gimpitem.c:1233 ../app/core/gimpitem.c:1240
-#, fuzzy
 msgid "Remove Parasite from Item"
-msgstr "pašalinti papildomos informacijos bylą"
+msgstr "Pašalinti iš paveikslėlio parazitą"
 
 #: ../app/core/gimplayer-floating-sel.c:98
-#, fuzzy
 msgid "Remove Floating Selection"
-msgstr "Plaukiojantis pažymėjimas"
+msgstr "Pašalinti plaukiojantį pažymėjimą"
 
 #: ../app/core/gimplayer-floating-sel.c:129
-#, fuzzy
 msgid "Cannot anchor this layer because it is not a floating selection."
 msgstr ""
-"Negaliu pritvirtinti šio sluoksnio kadangi\n"
-"tai ne plaukiojantis pažymėjimas."
+"Nepavyko pritvirtinti šio sluoksnio, nes tai nėra plaukiojantis pažymėjimas."
 
 #: ../app/core/gimplayer-floating-sel.c:136
 msgid "Anchor Floating Selection"
-msgstr "Prikabinti plaukiojantį pažymėjimą"
+msgstr "Pritvirtinti plaukiojantį pažymėjimą"
 
 #: ../app/core/gimplayer-floating-sel.c:209
-#, fuzzy
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
 msgstr ""
-"Neina sukurti naujo sluoksnio iš plaukiojančio\n"
-"pažymėjimo kadangi jis priklauso sluoksnio kaukei ar kanalui"
+"Sukurti sluoksnio iš plaukiojančio pažymėjimo negalima, nes jis priklauso "
+"sluoksnio kaukei arba kanalui."
 
 #: ../app/core/gimplayer-floating-sel.c:215
 msgid "Floating Selection to Layer"
@@ -5431,38 +5379,37 @@ msgid "%s mask"
 msgstr "%s kaukė"
 
 #: ../app/core/gimplayer.c:484
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Floating Selection\n"
 "(%s)"
-msgstr "Plaukiojantis pažymėjimas"
+msgstr ""
+"Plaukiojantis pažymėjimas\n"
+"(%s)"
 
 #: ../app/core/gimplayer.c:1260
-#, fuzzy
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr ""
-"Neina pridėti sluoksnio kaukės prie sluoksnio,\n"
-"neturinčio alfa kanalo"
+"Negalima pridėti sluoksnio kaukės sluoksniui, kuris nėra paveikslėlio dalis."
 
 #: ../app/core/gimplayer.c:1267
 msgid "Unable to add a layer mask since the layer already has one."
-msgstr "Negalima pridėti sluoksnio kaukės, kadangi sluoksnis jau turi vieną."
+msgstr "Negalima pridėti sluoksnio kaukės, kadangi sluoksnis jau vieną turi."
 
 #: ../app/core/gimplayer.c:1274
 msgid "Cannot add layer mask to a layer with no alpha channel."
 msgstr ""
-"Negalima pridėti sluoksnio kaukės prie sluoksnio,\n"
-"neturinčio alfa kanalo"
+"Negalima pridėti sluoksnio kaukės prie sluoksnio, neturinčio alfa kanalo"
 
 #: ../app/core/gimplayer.c:1284
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
-"Negaliu pridėti sluoksnio kaukės, turinčios kitokius,\n"
-"nei pasirinkto sluoksnio, matmenis."
+"Negalima pridėti sluoksnio kaukės, turinčios kitokius, nei pasirinkto "
+"sluoksnio, matmenis."
 
 #: ../app/core/gimplayer.c:1388
 msgid "Transfer Alpha to Mask"
-msgstr "Transformuoti alfa į kaukę"
+msgstr "Perkelti alfą į kaukę"
 
 #: ../app/core/gimplayer.c:1548 ../app/core/gimplayermask.c:264
 msgid "Apply Layer Mask"
@@ -5477,9 +5424,8 @@ msgid "Add Alpha Channel"
 msgstr "Pridėti alfa kanalą"
 
 #: ../app/core/gimplayer.c:1701
-#, fuzzy
 msgid "Remove Alpha Channel"
-msgstr "Pašalinti kanalą"
+msgstr "Pašalinti alfa kanalą"
 
 #: ../app/core/gimplayer.c:1723
 msgid "Layer to Image Size"
@@ -5494,14 +5440,14 @@ msgid "Show Layer Mask"
 msgstr "Rodyti sluoksnio kaukę"
 
 #: ../app/core/gimppalette-import.c:369
-#, fuzzy, c-format
+#, c-format
 msgid "Index %d"
-msgstr "Rodyklė:"
+msgstr "Rodyklė %d"
 
 #: ../app/core/gimppalette-import.c:599
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown type of palette file: %s"
-msgstr "/K_eisti paletę..."
+msgstr "Nežinomas paletės bylos tipas: %s"
 
 #: ../app/core/gimppalette.c:370
 #, c-format
@@ -5509,26 +5455,24 @@ msgid ""
 "Fatal parse error in palette file '%s': Missing magic header.\n"
 "Does this file need converting from DOS?"
 msgstr ""
-"Kritinė klaida paletės byloje %s: trūksta magiškos antraštės.\n"
+"Kritinė klaida paletės byloje „%s“: trūksta magiškos antraštės.\n"
 "Ar ši byla turi būti konvertuota iš DOS?"
 
 #: ../app/core/gimppalette.c:376
 #, c-format
 msgid "Fatal parse error in palette file '%s': Missing magic header."
-msgstr "Kritinė klaida paletės byloje %s: trūksta magiškos antraštės."
+msgstr "Kritinė klaida paletės byloje „%s“: trūksta magiškos antraštės."
 
 #: ../app/core/gimppalette.c:392 ../app/core/gimppalette.c:417
 #: ../app/core/gimppalette.c:447 ../app/core/gimppalette.c:527
 #, c-format
 msgid "Fatal parse error in palette file '%s': Read error in line %d."
-msgstr ""
-"Įkeliama paletė %s (eilutė %d):\n"
-"Nuskaitymo klaida"
+msgstr "Kritinė klaida paletės byloje „%s“: skaitymo klaida eilutėje %d."
 
 #: ../app/core/gimppalette.c:407
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
-msgstr "Nekorektiška UTF-8 eilutė paletės byloje %s"
+msgstr "Nekorektiška UTF-8 eilutė paletės byloje „%s“"
 
 #: ../app/core/gimppalette.c:435
 #, c-format
@@ -5536,45 +5480,41 @@ msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
 "default value."
 msgstr ""
+"Skaitoma paletės byla „%s“: eilutėje %d yra netinkamas stulpelių skaičius. "
+"Naudojama numatytoji reikšmė."
 
 #. maybe we should just abort?
 #: ../app/core/gimppalette.c:475
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
-msgstr "Skaitoma paletės byla '%s': Eilutėje %d nėra RAUDONO (RED) komponento."
+msgstr "Skaitoma paletės byla „%s“: %d eilutėje nėra RAUDONO (RED) komponento."
 
 #: ../app/core/gimppalette.c:483
 #, c-format
 msgid "Reading palette '%s': Missing GREEN component in line %d."
-msgstr ""
-"Įkeliama paletė %s (eilutė %d):\n"
-"Nėra ŽALIO (GREEN) komponento"
+msgstr "Skaitoma paletė „%s“: %d eilutėje nėra ŽALIO (GREEN) komponento."
 
 #: ../app/core/gimppalette.c:491
 #, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
-msgstr ""
-"Įkeliama paletė %s (eilutė %d):\n"
-"Nėra MĖLYNO (BLUE) komponento"
+msgstr "Skaitoma paletės byla „%s“: %d eilutėje nėra MĖLYNO (BLUE) komponento."
 
 #: ../app/core/gimppalette.c:501
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
-msgstr ""
-"Įkeliama paletė %s (eilutė %d):\n"
-"RGB reikšmė išeina už ribų"
+msgstr "Skaitoma paletės byla „%s“: %d eilutėje RGB reikšmė išeina už ribų."
 
 #: ../app/core/gimppattern.c:303 ../app/core/gimppattern.c:350
 #: ../app/core/gimppattern.c:382
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in pattern file '%s': Could not read %d bytes: %s"
-msgstr "GIMP rašto byla yra nepilna: \"%s\"."
+msgstr "Kritinė klaida raštų byloje „%s“: nepavyko perskaityti %d baitų: %s"
 
 #: ../app/core/gimppattern.c:323
 #, c-format
 msgid ""
 "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
-msgstr "Kritinė klaida raštų byloje %s: nežinoma paletės formato versija %d."
+msgstr "Kritinė klaida raštų byloje „%s“: nežinoma paletės formato versija %d."
 
 #: ../app/core/gimppattern.c:333
 #, c-format
@@ -5582,32 +5522,31 @@ msgid ""
 "Fatal parse error in pattern file '%s: Unsupported pattern depth %d.\n"
 "GIMP Patterns must be GRAY or RGB."
 msgstr ""
-"Kritinė klaida raštų byloje %s: nepalaikomas rašto gylis %d.\n"
-"GIMP raštai būti pilki arba RGBA."
+"Kritinė klaida raštų byloje „%s“: nepalaikomas rašto gylis %d.\n"
+"GIMP raštai būti pilki (GRAY) arba RGBA."
 
 #: ../app/core/gimppattern.c:359
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
-msgstr "Nekorektiška UTF-8 eilutė raštų byloje %s."
+msgstr "Nekorektiška UTF-8 eilutė raštų byloje „%s“."
 
 #: ../app/core/gimppdbprogress.c:264 ../app/widgets/gimppdbdialog.c:320
 #, c-format
 msgid "Unable to run %s callback. The corresponding plug-in may have crashed."
 msgstr ""
+"Nepavyko paleisti %s šaukinio. Gali būti, kad nulūžo atitinkamas įskiepis."
 
 #: ../app/core/gimpprogress.c:107 ../app/core/gimpprogress.c:154
-#, fuzzy
 msgid "Please wait"
-msgstr "Palaukite..."
+msgstr "Palaukite"
 
 #: ../app/core/gimpselection.c:179 ../app/tools/gimpeditselectiontool.c:263
 msgid "Move Selection"
 msgstr "Perkelti pažymėjimą"
 
 #: ../app/core/gimpselection.c:197
-#, fuzzy
 msgid "Sharpen Selection"
-msgstr "Sumažinti pažymėjimą"
+msgstr "Paaštrinti pažymėjimą"
 
 #: ../app/core/gimpselection.c:198
 msgid "Select None"
@@ -5622,22 +5561,21 @@ msgid "Invert Selection"
 msgstr "Invertuoti pažymėjimą"
 
 #: ../app/core/gimpselection.c:301
-#, fuzzy
 msgid "No selection to stroke."
-msgstr "Nepažymėjote, ką reikia apvesti!"
+msgstr "Niekas nepažymėta apvedimui."
 
 #: ../app/core/gimpselection.c:805
 msgid "Cannot float selection because the selected region is empty."
-msgstr "Neįmanomas laisvas pažymėjimas, nes pasirinktas regionas yra tuščias."
+msgstr ""
+"Plaukiojantis pažymėjimas neįmanomas, nes pasirinktas regionas yra tuščias."
 
 #: ../app/core/gimpselection.c:812
 msgid "Float Selection"
 msgstr "Plaukiojantis pažymėjimas"
 
 #: ../app/core/gimpselection.c:829
-#, fuzzy
 msgid "Floated Layer"
-msgstr "Pasukti sluoksnį"
+msgstr "Plaukiojantis sluoksnis"
 
 #: ../app/core/gimpstrokeoptions.c:151
 msgid ""
@@ -5648,15 +5586,15 @@ msgstr ""
 #: ../app/core/gimptemplate.c:157
 msgid "The unit used for coordinate display when not in dot-for-dot mode."
 msgstr ""
+"Vienetai naudojami koordinuoti ekranui, kai nesama „taškas į tašką“ režime."
 
 #: ../app/core/gimptemplate.c:164
-#, fuzzy
 msgid "The horizontal image resolution."
-msgstr "Horizontali paveikslėlio raiška"
+msgstr "Horizontali paveikslėlio raiška."
 
 #: ../app/core/gimptemplate.c:169
 msgid "The vertical image resolution."
-msgstr "Vertikali paveikslėlio raiška"
+msgstr "Vertikali paveikslėlio raiška."
 
 #: ../app/core/gimptemplate.c:449 ../app/widgets/widgets-enums.c:24
 msgid "Background"
@@ -5693,11 +5631,11 @@ msgstr "milimetrai"
 #. professional units
 #: ../app/core/gimpunit.c:62
 msgid "point"
-msgstr "taškas"
+msgstr "punktas"
 
 #: ../app/core/gimpunit.c:62
 msgid "points"
-msgstr "taškai"
+msgstr "punktai"
 
 #: ../app/core/gimpunit.c:63
 msgid "pica"
@@ -5737,47 +5675,41 @@ msgid "Channel _name:"
 msgstr "Kanalo _pavadinimas:"
 
 #: ../app/dialogs/channel-options-dialog.c:173
-#, fuzzy
 msgid "Initialize from _selection"
-msgstr "Invertuoti pažymėjimą"
+msgstr "Inicializuoti iš _pažymėjimo"
 
 #: ../app/dialogs/convert-dialog.c:120
 msgid "Indexed Color Conversion"
-msgstr "Spalvas paversti indeksuotomis"
+msgstr "Indeksuotų spalvų konvertavimas"
 
 #: ../app/dialogs/convert-dialog.c:123
 msgid "Convert Image to Indexed Colors"
 msgstr "Konvertuoti paveikslėlį į indeksuotas spalvas"
 
 #: ../app/dialogs/convert-dialog.c:133
-#, fuzzy
 msgid "C_onvert"
-msgstr "Versti"
+msgstr "K_onvertuoti"
 
 #: ../app/dialogs/convert-dialog.c:167 ../app/dialogs/dialogs.c:181
 msgid "Colormap"
 msgstr "Gama"
 
 #: ../app/dialogs/convert-dialog.c:182
-#, fuzzy
 msgid "_Maximum number of colors:"
-msgstr "Maksimalus spalvų skaičius:"
+msgstr "_Maksimalus spalvų skaičius:"
 
 #: ../app/dialogs/convert-dialog.c:209
-#, fuzzy
 msgid "_Remove unused colors from final palette"
-msgstr "Pašalinti nenaudojamas spalvas iš galutinės paletės"
+msgstr "_Pašalinti nenaudojamas spalvas iš galutinės paletės"
 
 #. dithering
 #: ../app/dialogs/convert-dialog.c:224 ../app/tools/gimpblendoptions.c:266
-#, fuzzy
 msgid "Dithering"
-msgstr "Dalinu"
+msgstr ""
 
 #: ../app/dialogs/convert-dialog.c:236
-#, fuzzy
 msgid "Color _dithering:"
-msgstr "Be spalvų maišymo"
+msgstr ""
 
 #: ../app/dialogs/convert-dialog.c:251
 #, fuzzy
@@ -5785,18 +5717,16 @@ msgid "Enable dithering of _transparency"
 msgstr "Įjungti permatomumo suliejimą"
 
 #: ../app/dialogs/convert-dialog.c:277
-#, fuzzy
 msgid "Converting to indexed"
-msgstr "Konvertuoti paveiklėlį į indeksuotą"
+msgstr "Konvertuojama į indeksuotą"
 
 #: ../app/dialogs/convert-dialog.c:392
 msgid "Cannot convert to a palette with more than 256 colors."
-msgstr ""
+msgstr "Negalima konvertuoti į paletę turinčią daugiau nei 256 spalvas."
 
 #: ../app/dialogs/desaturate-dialog.c:61
-#, fuzzy
 msgid "Remove Colors"
-msgstr "_Atstatyti spalvą"
+msgstr "Pašalinti spalvas"
 
 #: ../app/dialogs/desaturate-dialog.c:93
 msgid "Choose shade of gray based on:"
@@ -5866,23 +5796,23 @@ msgstr "Priekinio plano/Fono spalva"
 
 #: ../app/dialogs/dialogs.c:215 ../app/widgets/gimpbrusheditor.c:102
 msgid "Brush Editor"
-msgstr "Teptukų savybių nustatymas"
+msgstr "Teptukų redaktorius"
 
 #: ../app/dialogs/file-open-location-dialog.c:71
-#, fuzzy
 msgid "Open Location"
-msgstr "Vieta:"
+msgstr "Atverti vietą"
 
 #: ../app/dialogs/file-open-location-dialog.c:109
-#, fuzzy
 msgid "Enter location (URI):"
-msgstr "Interpoliacijos tipas:"
+msgstr "Įveskite vietą (URI):"
 
 #: ../app/dialogs/file-save-dialog.c:259 ../app/dialogs/file-save-dialog.c:295
 msgid ""
 "The given filename does not have any known file extension. Please enter a "
 "known file extension or select a file format from the file format list."
 msgstr ""
+"Nurodytos bylos pavadinimo plėtinys nežinomas. Įveskite bylos plėtinį arba "
+"bylų formatų sąraše pasirinkite bylos formatą."
 
 #. remote URI
 #: ../app/dialogs/file-save-dialog.c:328
@@ -5891,23 +5821,25 @@ msgid ""
 "extension. Please enter a file extension that matches the selected file "
 "format or enter no file extension at all."
 msgstr ""
+"Saugant nevietines bylas reikia nustatyti bylos formatą pagal bylos plėtinį. "
+"Įveskite bylos plėtinį, kuris atitinka pasirinktos bylos formatą arba iš "
+"viso neįveskite bylos plėtinio."
 
 #: ../app/dialogs/file-save-dialog.c:398
-#, fuzzy
 msgid "Extension Mismatch"
-msgstr "/Pagal plėtinį"
+msgstr "Plėtinių neatitikimas"
 
 #: ../app/dialogs/file-save-dialog.c:414
 msgid "The given file extension does not match the chosen file type."
-msgstr ""
+msgstr "Nurodytas bylos plėtinys neatitinka pasirinktos bylos tipo."
 
 #: ../app/dialogs/file-save-dialog.c:418
 msgid "Do you want to use this name anyway?"
-msgstr ""
+msgstr "Vistiek norite naudoti šį pavadinimą?"
 
 #: ../app/dialogs/grid-dialog.c:80
 msgid "Configure Grid"
-msgstr "Tinklelio Konfigūravimas"
+msgstr "Tinklelio konfigūravimas"
 
 #: ../app/dialogs/grid-dialog.c:81
 msgid "Configure Image Grid"
@@ -5922,9 +5854,8 @@ msgid "Layers Merge Options"
 msgstr "Sluoksnių sujungimo savybės"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:68
-#, fuzzy
 msgid "_Merge"
-msgstr "_Matuoti"
+msgstr "_Sujungti"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:82
 msgid "Final, Merged Layer should be:"
@@ -5949,7 +5880,7 @@ msgstr "Sukurti naują paveikslėlį"
 #: ../app/dialogs/image-new-dialog.c:141
 #: ../app/dialogs/preferences-dialog.c:1754
 msgid "_Template:"
-msgstr "_Šablonai"
+msgstr "Ša_blonas:"
 
 #: ../app/dialogs/image-new-dialog.c:279
 msgid "Confirm Image Size"
@@ -5959,7 +5890,7 @@ msgstr "Patvirtinkite paveikslėlio dydį"
 #: ../app/dialogs/image-scale-dialog.c:208
 #, c-format
 msgid "You are trying to create an image with a size of %s."
-msgstr ""
+msgstr "Bandote sukurti %s dydžio paveiksėlį."
 
 #: ../app/dialogs/image-new-dialog.c:308
 #, c-format
@@ -5967,11 +5898,13 @@ msgid ""
 "An image of the chosen size will use more memory than what is configured as "
 "\"Maximum Image Size\" in the Preferences dialog (currently %s)."
 msgstr ""
+"Pasirinkto dydžio paveikslėlis sunaudos daugiau atminties, nei nurodytas "
+"nustatymuose „Maksimalus paveikslėlio dydis“ (šiuo metu %s)."
 
 #: ../app/dialogs/image-scale-dialog.c:174
 #, fuzzy
 msgid "Confirm Scaling"
-msgstr "Didinimas"
+msgstr "Patvirtinkite ištempimą"
 
 #: ../app/dialogs/image-scale-dialog.c:214
 #, c-format
@@ -5985,14 +5918,11 @@ msgstr ""
 #, fuzzy
 msgid ""
 "Scaling the image to the chosen size will shrink some layers completely away."
-msgstr ""
-"Sumažinus paveikslėlio dydį,\n"
-"keli sluoksniai visiškai pranyks.\n"
-"Ar jūs su tuo sutinkate?"
+msgstr "Sumažinus paveikslėlio dydį, keli sluoksniai visiškai pranyks."
 
 #: ../app/dialogs/image-scale-dialog.c:233
 msgid "Is this what you want to do?"
-msgstr ""
+msgstr "Ar tai ir yra ką Jūs norite padaryti?"
 
 #. General
 #: ../app/dialogs/info-dialog.c:377 ../app/dialogs/preferences-dialog.c:1573
@@ -6003,15 +5933,16 @@ msgid "General"
 msgstr "Bendras"
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:52
-#, fuzzy
 msgid "Configure Keyboard Shortcuts"
-msgstr "Klavišų kombinacijos"
+msgstr "Konfigūruoti klavišų kombinacijas"
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:92
 msgid ""
 "To edit a shortcut key, click on the corresponding row and type a new "
 "accelerator, or press backspace to clear."
 msgstr ""
+"Norėdami keisti klavišų kombinaciją, paspauskite atitinkamą eilutę ir "
+"paspauskite naują akseleratorių, o norėdami išvalyti, spauskite backspace."
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:109
 #: ../app/dialogs/preferences-dialog.c:1432
@@ -6024,17 +5955,15 @@ msgstr "Uždėti kaukę sluoksniui"
 
 #: ../app/dialogs/layer-add-mask-dialog.c:90
 msgid "Initialize Layer Mask to:"
-msgstr "Pritaikyti sluoksnio kaukę:"
+msgstr "Inicializuoti sluoksnio kaukę:"
 
 #: ../app/dialogs/layer-add-mask-dialog.c:100
-#, fuzzy
 msgid "In_vert mask"
-msgstr "Kaukės inversija"
+msgstr "In_vertuoti kaukę"
 
 #: ../app/dialogs/layer-options-dialog.c:119
-#, fuzzy
 msgid "Layer _name:"
-msgstr "Sluoksnio pavadinimas:"
+msgstr "Sluoksnio _pavadinimas:"
 
 #. The size labels
 #: ../app/dialogs/layer-options-dialog.c:128
@@ -6053,9 +5982,8 @@ msgid "Layer Fill Type"
 msgstr "Sluoksnio užpildymo tipas"
 
 #: ../app/dialogs/layer-options-dialog.c:206
-#, fuzzy
 msgid "Set name from _text"
-msgstr "Iš teksto sukurti kelią"
+msgstr "Sukurti pavadinimą iš _teksto"
 
 #: ../app/dialogs/module-dialog.c:122
 msgid "Module Manager"
@@ -6070,7 +5998,6 @@ msgid "Autoload"
 msgstr "Automatinis įkėlimas"
 
 #: ../app/dialogs/module-dialog.c:175
-#, fuzzy
 msgid "Module Path"
 msgstr "Modulių kelias"
 
@@ -6104,7 +6031,7 @@ msgstr "Iškelti"
 
 #: ../app/dialogs/module-dialog.c:499
 msgid "Purpose:"
-msgstr "Tikslas:"
+msgstr "Paskirtis:"
 
 #: ../app/dialogs/module-dialog.c:500
 msgid "Author:"
@@ -6132,12 +6059,10 @@ msgid "State:"
 msgstr "Būsena:"
 
 #: ../app/dialogs/module-dialog.c:506
-#, fuzzy
 msgid "Last error:"
 msgstr "Paskutinė klaida:"
 
 #: ../app/dialogs/module-dialog.c:507
-#, fuzzy
 msgid "Available types:"
 msgstr "Galimi tipai:"
 
@@ -6161,13 +6086,12 @@ msgstr "Poslinkis"
 
 #. offset, used as a verb
 #: ../app/dialogs/offset-dialog.c:117
-#, fuzzy
 msgid "_Offset"
-msgstr "Poslinkis"
+msgstr "_Paslinkti"
 
 #: ../app/dialogs/offset-dialog.c:174 ../app/dialogs/resize-dialog.c:222
 msgid "_X:"
-msgstr "X:"
+msgstr "_X:"
 
 #: ../app/dialogs/offset-dialog.c:176 ../app/dialogs/resize-dialog.c:223
 msgid "_Y:"
@@ -6176,13 +6100,12 @@ msgstr "_Y:"
 #: ../app/dialogs/offset-dialog.c:203
 #, fuzzy
 msgid "Offset by  x/_2, y/2"
-msgstr "Poslinkis (x/_2),(y/2)"
+msgstr "Poslinkis x/_2, y/2"
 
 #. The edge behavior frame
 #: ../app/dialogs/offset-dialog.c:212
-#, fuzzy
 msgid "Edge Behavior"
-msgstr "Dialogų elgesys"
+msgstr "Kraštų elgsena"
 
 #: ../app/dialogs/offset-dialog.c:216
 #, fuzzy
@@ -6190,14 +6113,12 @@ msgid "_Wrap around"
 msgstr "_Fonas"
 
 #: ../app/dialogs/offset-dialog.c:219
-#, fuzzy
 msgid "Fill with _background color"
-msgstr "Keisti fono spalvą"
+msgstr "Užpildyti _fono spalva"
 
 #: ../app/dialogs/offset-dialog.c:222
-#, fuzzy
 msgid "Make _transparent"
-msgstr "S_kaidrus"
+msgstr "Padaryti _skaidriu"
 
 #: ../app/dialogs/palette-import-dialog.c:174
 msgid "Import Palette"
@@ -6212,87 +6133,91 @@ msgid "_Import"
 msgstr "_Importuoti"
 
 #. The "Source" frame
-#: ../app/dialogs/palette-import-dialog.c:221
+#: ../app/dialogs/palette-import-dialog.c:220
 msgid "Select Source"
-msgstr "Pasirinkit šaltinį"
+msgstr "Pasirinkite šaltinį"
 
-#: ../app/dialogs/palette-import-dialog.c:245
+#: ../app/dialogs/palette-import-dialog.c:244
 msgid "I_mage"
 msgstr "Paveiks_lėlis"
 
-#: ../app/dialogs/palette-import-dialog.c:260
-#, fuzzy
+#: ../app/dialogs/palette-import-dialog.c:259
 msgid "Palette _file"
-msgstr "Palečių aplankai"
+msgstr "Paletės _byla"
 
-#: ../app/dialogs/palette-import-dialog.c:287
-#, fuzzy
+#: ../app/dialogs/palette-import-dialog.c:283
 msgid "Select Palette File"
-msgstr "Nurodykite palečių katalogus"
+msgstr "Pasirinkite paletės bylą"
 
 #. The "Import" frame
-#: ../app/dialogs/palette-import-dialog.c:318
+#: ../app/dialogs/palette-import-dialog.c:313
 msgid "Import Options"
 msgstr "Importavimo nustatymai"
 
-#: ../app/dialogs/palette-import-dialog.c:332
+#: ../app/dialogs/palette-import-dialog.c:327
 msgid "New import"
 msgstr "Naujas importavimas"
 
-#: ../app/dialogs/palette-import-dialog.c:334
-#, fuzzy
+#: ../app/dialogs/palette-import-dialog.c:329
 msgid "Palette _name:"
 msgstr "Paletės pavadi_nimas:"
 
-#: ../app/dialogs/palette-import-dialog.c:340
+#: ../app/dialogs/palette-import-dialog.c:335
 msgid "N_umber of colors:"
 msgstr "Spal_vų skaičius:"
 
-#: ../app/dialogs/palette-import-dialog.c:353
+#: ../app/dialogs/palette-import-dialog.c:348
 msgid "C_olumns:"
 msgstr "_Stulpeliai"
 
-#: ../app/dialogs/palette-import-dialog.c:365
+#: ../app/dialogs/palette-import-dialog.c:360
 msgid "I_nterval:"
 msgstr "I_ntervalas:"
 
 #. The "Preview" frame
-#: ../app/dialogs/palette-import-dialog.c:377
+#: ../app/dialogs/palette-import-dialog.c:372
 msgid "Preview"
 msgstr "Peržiūra"
 
 #: ../app/dialogs/preferences-dialog.c:295
 msgid "You will have to restart GIMP for the following changes to take effect:"
-msgstr "Kad įsigaliotų sekantys pakeitimai, turėsite GIMP užkrauti iš naujo:"
+msgstr "Kad įsigaliotų sekantys pakeitimai, turėsite paleisti GIMP iš naujo:"
 
 #: ../app/dialogs/preferences-dialog.c:431
-#, fuzzy
 msgid "Configure Input Devices"
-msgstr "Konfigūruoti papildomus ivedimo įrengininius"
+msgstr "Konfigūruoti įvedimo įrengininius"
 
 #: ../app/dialogs/preferences-dialog.c:507
 msgid ""
 "Your keyboard shortcuts will be reset to default values the next time you "
 "start GIMP."
 msgstr ""
+"Jūsų klavišų kombinacijos bus atstatytos į numatytasias reikšmes, kai kitą "
+"kartą paleisite GIMP."
 
 #: ../app/dialogs/preferences-dialog.c:541
 msgid ""
 "Your window setup will be reset to default values the next time you start "
 "GIMP."
 msgstr ""
+"Jūsų langų nustatymai bus atstatyti į numatytasias reikšmes, kai kitą kartą "
+"paleisite GIMP."
 
 #: ../app/dialogs/preferences-dialog.c:575
 msgid ""
 "Your input device settings will be reset to default values the next time you "
 "start GIMP."
 msgstr ""
+"Jūsų įvedimo įrenginių nustatymai bus atstatyti į numatytasias reikšmes, kai "
+"kitą kartą paleisite GIMP."
 
 #: ../app/dialogs/preferences-dialog.c:609
 msgid ""
 "Your tool options will be reset to default values the next time you start "
 "GIMP."
 msgstr ""
+"Jūsų įrankių nustatymai bus atstatyti į numatytasias reikšmes, kai kitą "
+"kartą paleisite GIMP."
 
 #: ../app/dialogs/preferences-dialog.c:1099
 msgid "Show _menubar"
@@ -6300,7 +6225,7 @@ msgstr "Rodyti _meniu juostą"
 
 #: ../app/dialogs/preferences-dialog.c:1102
 msgid "Show _rulers"
-msgstr "Rodyti liniuotes"
+msgstr "Rodyti _liniuotes"
 
 #: ../app/dialogs/preferences-dialog.c:1105
 msgid "Show scroll_bars"
@@ -6316,7 +6241,7 @@ msgstr "Rodyti p_ažymėjimą"
 
 #: ../app/dialogs/preferences-dialog.c:1119
 msgid "Show _layer boundary"
-msgstr "Rodyti s_luoksnių ribas"
+msgstr "Rodyti sl_uoksnių ribas"
 
 #: ../app/dialogs/preferences-dialog.c:1122
 msgid "Show _guides"
@@ -6356,51 +6281,46 @@ msgstr "Resursų naudojimas"
 
 #: ../app/dialogs/preferences-dialog.c:1341
 msgid "Minimal number of _undo levels:"
-msgstr "Mažiausias atšaukimų skaičius:"
+msgstr "Minimalus atša_ukimų skaičius:"
 
 #: ../app/dialogs/preferences-dialog.c:1344
 msgid "Maximum undo _memory:"
-msgstr "Maksimali atšaukimų atmintis:"
+msgstr "Maksimali atšaukimų at_mintis:"
 
 #: ../app/dialogs/preferences-dialog.c:1347
-#, fuzzy
 msgid "Tile cache _size:"
-msgstr "Tile Cache dydis:"
+msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1350
 msgid "Maximum _new image size:"
-msgstr "Maksimalus naujo paveikslėlio dydis:"
+msgstr "Maksimalus _naujo paveikslėlio dydis:"
 
 #: ../app/dialogs/preferences-dialog.c:1355
-#, fuzzy
 msgid "Number of _processors to use:"
-msgstr "Naudojamų procesorių skaičius:"
+msgstr "Naudotinų _procesorių skaičius:"
 
 #. Image Thumbnails
 #: ../app/dialogs/preferences-dialog.c:1360
-#, fuzzy
 msgid "Image Thumbnails"
-msgstr "Paveikslėlio kaukė"
+msgstr "Paveikslėlio mini vaizdai"
 
 #: ../app/dialogs/preferences-dialog.c:1365
-#, fuzzy
 msgid "Size of _thumbnails:"
-msgstr "Bylos peržiūros dydis:"
+msgstr "Mini _vaizdų dydis:"
 
 #: ../app/dialogs/preferences-dialog.c:1369
 msgid "Maximum _filesize for thumbnailing:"
-msgstr ""
+msgstr "Maksimalus mini vaizdų _bylų dydis:"
 
 #  File Saving
 #. File Saving
 #: ../app/dialogs/preferences-dialog.c:1373
 msgid "Saving Images"
-msgstr "Išsaugomi paveikslėliai"
+msgstr "Ssaugomi paveikslėliai"
 
 #: ../app/dialogs/preferences-dialog.c:1376
-#, fuzzy
 msgid "Confirm closing of unsa_ved images"
-msgstr "Patvirtinti neišsaugotų paveikslėlių uždarymą"
+msgstr "Patvirtinti neišsau_gotų paveikslėlių uždarymą"
 
 #: ../app/dialogs/preferences-dialog.c:1388
 msgid "User Interface"
@@ -6413,19 +6333,17 @@ msgstr "Sąsaja"
 #. Previews
 #: ../app/dialogs/preferences-dialog.c:1398
 msgid "Previews"
-msgstr "Peržiūra"
+msgstr "Peržiūros"
 
 #: ../app/dialogs/preferences-dialog.c:1401
 msgid "_Enable layer & channel previews"
-msgstr "_Įjungti sluoksnių ir kanalų peržiūras"
+msgstr "Į_jungti sluoksnių ir kanalų peržiūras"
 
 #: ../app/dialogs/preferences-dialog.c:1407
-#, fuzzy
 msgid "Default _layer & channel preview size:"
-msgstr "S_luoksnio ir kanalo peržiūros dydis:"
+msgstr "Numatytasis s_luoksnių ir kanalų peržiūros dydis:"
 
 #: ../app/dialogs/preferences-dialog.c:1410
-#, fuzzy
 msgid "Na_vigation preview size:"
 msgstr "_Navigatoriaus peržiūros dydis:"
 
@@ -6436,23 +6354,23 @@ msgstr "Klavišų kombinacijos"
 
 #: ../app/dialogs/preferences-dialog.c:1418
 msgid "Show menu _mnemonics (access keys)"
-msgstr ""
+msgstr "Rodyti meniu _mnemoniką (pasiekimo klavišus)"
 
 #: ../app/dialogs/preferences-dialog.c:1421
 msgid "Use _dynamic keyboard shortcuts"
-msgstr "Naudoti dinamines _klavišų kombinacijas"
+msgstr "Naudoti _dinamines klavišų kombinacijas"
 
 #: ../app/dialogs/preferences-dialog.c:1425
 msgid "Configure _Keyboard Shortcuts..."
-msgstr "Keisti klavišų kombinacijas..."
+msgstr "Konfigūruoti _klavišų kombinacijas..."
 
 #: ../app/dialogs/preferences-dialog.c:1436
 msgid "Save Keyboard Shortcuts _Now"
-msgstr "Išsaugoti klavišų kombinacijas dabar"
+msgstr "Išsaugoti klavišų kombinacijas _dabar"
 
 #: ../app/dialogs/preferences-dialog.c:1443
 msgid "_Reset Saved Keyboard Shortcuts to Default Values"
-msgstr "_Ištrinti išsaugotus sparčiuosius klavišus dabar"
+msgstr "_Atstatyti numatytasias klavišų kombinacijų reikšmes"
 
 #: ../app/dialogs/preferences-dialog.c:1458
 #: ../app/dialogs/preferences-dialog.c:1497
@@ -6461,7 +6379,7 @@ msgstr "Tema"
 
 #: ../app/dialogs/preferences-dialog.c:1467
 msgid "Select Theme"
-msgstr "Pasirinkit temą"
+msgstr "Pasirinkite temą"
 
 #: ../app/dialogs/preferences-dialog.c:1549
 msgid "Reload C_urrent Theme"
@@ -6477,11 +6395,11 @@ msgstr "Rodyti pa_tarimus"
 
 #: ../app/dialogs/preferences-dialog.c:1579
 msgid "Show help _buttons"
-msgstr "Rodyti pagalbos mygtukus"
+msgstr "Rodyti pagalbos _mygtukus"
 
 #: ../app/dialogs/preferences-dialog.c:1582
 msgid "Show tips on _startup"
-msgstr "Rodyti patarimu_s paleidimo metu"
+msgstr "Paleidimo metu rodyti patarimu_s"
 
 #. Help Browser
 #: ../app/dialogs/preferences-dialog.c:1586
@@ -6490,35 +6408,31 @@ msgstr "Pagalbos naršyklė"
 
 #: ../app/dialogs/preferences-dialog.c:1590
 msgid "H_elp browser to use:"
-msgstr "Naudojama pagal_bos naršyklė:"
+msgstr "Naudotina pagal_bos naršyklė:"
 
 #: ../app/dialogs/preferences-dialog.c:1595
 msgid "Web Browser"
 msgstr "Interneto naršyklė"
 
 #: ../app/dialogs/preferences-dialog.c:1599
-#, fuzzy
 msgid "Select Web Browser"
 msgstr "Pasirinkite interneto naršyklę"
 
 #: ../app/dialogs/preferences-dialog.c:1602
 msgid "_Web browser to use:"
-msgstr "_Naudojama interneto naršyklė:"
+msgstr "_Naudotina interneto naršyklė:"
 
 #: ../app/dialogs/preferences-dialog.c:1630
-#, fuzzy
 msgid "_Save tool options on exit"
-msgstr "_Išsaugoti langų pozicijas išeinant"
+msgstr "_Išeinant išsaugoti įrankių nustatymus"
 
 #: ../app/dialogs/preferences-dialog.c:1634
-#, fuzzy
 msgid "Save Tool Options _Now"
-msgstr "Išsaugoti įrankio savybes"
+msgstr "Išsaugoti įrankių nustatymus _dabar"
 
 #: ../app/dialogs/preferences-dialog.c:1641
-#, fuzzy
 msgid "_Reset Saved Tool Options to Default Values"
-msgstr "_Išsaugoti lango vietą baigiant"
+msgstr "_Atstatyti numatytasias įrankių nustatymų reikšmes"
 
 #. Snapping Distance
 #: ../app/dialogs/preferences-dialog.c:1651
@@ -6532,26 +6446,25 @@ msgstr "Atstumas:"
 
 #: ../app/dialogs/preferences-dialog.c:1664
 msgid "Default _interpolation:"
-msgstr "Iprastasis _interpoliacijos tipas:"
+msgstr "Numatytoji _interpoliacija:"
 
 #  Global Brush, Pattern, ...
 #. Global Brush, Pattern, ...
 #: ../app/dialogs/preferences-dialog.c:1671
 msgid "Paint Options Shared Between Tools"
-msgstr ""
+msgstr "Bendri piešimo nustatymai tarp įrankių"
 
 #: ../app/dialogs/preferences-dialog.c:1684
 msgid "Move Tool"
 msgstr "Perkėlimo įrankis"
 
 #: ../app/dialogs/preferences-dialog.c:1688
-#, fuzzy
 msgid "Change current layer or path"
-msgstr "Tik aktyvus sluoksnis"
+msgstr "Keisti esamą sluoksnį ar kelią"
 
 #: ../app/dialogs/preferences-dialog.c:1701
 msgid "Toolbox"
-msgstr "Įrankių dėžės meniu"
+msgstr "Įrankių dėžė"
 
 #. Appearance
 #: ../app/dialogs/preferences-dialog.c:1713
@@ -6561,46 +6474,40 @@ msgid "Appearance"
 msgstr "Išvaizda"
 
 #: ../app/dialogs/preferences-dialog.c:1717
-#, fuzzy
 msgid "Show _foreground & background color"
-msgstr "Nustatyti fono splavą"
+msgstr "Rodyti _priekinio plano ir fono spalvas"
 
 #: ../app/dialogs/preferences-dialog.c:1721
-#, fuzzy
 msgid "Show active _brush, pattern & gradient"
-msgstr "/Dialogai/Sukurti naują langą/Teptukai, raštai ir perėjimai"
+msgstr "Rodyti aktyvų _teptuką, raštą ir perėjimą"
 
 #: ../app/dialogs/preferences-dialog.c:1725
-#, fuzzy
 msgid "Show active _image"
-msgstr "/Automatiškai sekti aktyvų paveikslėlį"
+msgstr "Rodyti aktyvų _paveikslėlį"
 
 #: ../app/dialogs/preferences-dialog.c:1738
-#, fuzzy
 msgid "Default New Image"
-msgstr "Sukurti naują paveikslėlį"
+msgstr "Numatytasis naujas paveikslėlis"
 
 #: ../app/dialogs/preferences-dialog.c:1741
-#, fuzzy
 msgid "Default Image"
-msgstr "Įprastas paveikslėlio tinklelis"
+msgstr "Numatytasis paveikslėlis"
 
 #: ../app/dialogs/preferences-dialog.c:1776
 msgid "Default Image Grid"
-msgstr "Įprastas paveikslėlio tinklelis"
+msgstr "Numatytasis paveikslėlio tinklelis"
 
 #: ../app/dialogs/preferences-dialog.c:1779
 msgid "Default Grid"
-msgstr "Įprastas tinklelis"
+msgstr "Numatytasis tinklelis"
 
 #: ../app/dialogs/preferences-dialog.c:1799
 msgid "Image Windows"
 msgstr "Paveikslėlių langai"
 
 #: ../app/dialogs/preferences-dialog.c:1814
-#, fuzzy
 msgid "Use \"_Dot for dot\" by default"
-msgstr "Įprastai naudoti \"_Taškas į tašką\""
+msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1820
 msgid "Marching _ants speed:"
@@ -6609,50 +6516,44 @@ msgstr ""
 #. Zoom & Resize Behavior
 #: ../app/dialogs/preferences-dialog.c:1824
 msgid "Zoom & Resize Behavior"
-msgstr "Didinimo ir dydžio keitimo elgsena"
+msgstr "Mastelio ir dydžio keitimo elgsena"
 
 #: ../app/dialogs/preferences-dialog.c:1828
-#, fuzzy
 msgid "Resize window on _zoom"
-msgstr "Pakeisti lango dydį pakeitus mastelį"
+msgstr "_Pakeitus mastelį keisti ir lango dydį"
 
 #: ../app/dialogs/preferences-dialog.c:1831
-#, fuzzy
 msgid "Resize window on image _size change"
-msgstr "Pakeisti lango dydį pakeitus paveikslėlio dydį"
+msgstr "Pakeitus paveikslėlio _dydį keisti ir lango dydį"
 
 #: ../app/dialogs/preferences-dialog.c:1837
 msgid "Fit to window"
 msgstr "Sutalpinti į langą"
 
 #: ../app/dialogs/preferences-dialog.c:1839
-#, fuzzy
 msgid "Initial zoom _ratio:"
-msgstr "Dydžio keitimo santykis:"
+msgstr "Pradinis _mastelis:"
 
 #. Mouse Cursors
 #: ../app/dialogs/preferences-dialog.c:1843
 msgid "Mouse Cursors"
-msgstr ""
+msgstr "Pelės kursoriai"
 
 #: ../app/dialogs/preferences-dialog.c:1847
 msgid "Show _brush outline"
-msgstr "Rodyti teptuko kontūrus"
+msgstr "Rodyti _teptuko kontūrus"
 
 #: ../app/dialogs/preferences-dialog.c:1850
-#, fuzzy
 msgid "Show paint _tool cursor"
-msgstr "Rodyti pa_tarimus"
+msgstr "Rodyti piešimo įran_kio kursorių"
 
 #: ../app/dialogs/preferences-dialog.c:1856
-#, fuzzy
 msgid "Cursor _mode:"
-msgstr "Kursoriaus režimas:"
+msgstr "Kursoriaus _režimas:"
 
 #: ../app/dialogs/preferences-dialog.c:1859
-#, fuzzy
 msgid "Cursor re_ndering:"
-msgstr "Kursoriaus režimas:"
+msgstr "Kursoriaus va_zdavimas:"
 
 #: ../app/dialogs/preferences-dialog.c:1871
 msgid "Image Window Appearance"
@@ -6708,11 +6609,11 @@ msgstr "Vaizdavimas"
 
 #: ../app/dialogs/preferences-dialog.c:2037
 msgid "_Check style:"
-msgstr "_Langelių stilius:"
+msgstr "_Kvadratėlių stilius:"
 
 #: ../app/dialogs/preferences-dialog.c:2040
 msgid "Check _size:"
-msgstr "Langelių _dydis:"
+msgstr "Kvadratėlių _dydis:"
 
 #: ../app/dialogs/preferences-dialog.c:2043
 msgid "Get Monitor Resolution"
@@ -6727,7 +6628,7 @@ msgstr "Taškelių"
 #: ../app/dialogs/preferences-dialog.c:2069
 #: ../app/widgets/gimpimagepropview.c:381
 msgid "dpi"
-msgstr "taškų colyje"
+msgstr "taškelių colyje"
 
 #: ../app/dialogs/preferences-dialog.c:2085
 #, c-format
@@ -6816,9 +6717,8 @@ msgid "Save Input Device Settings _Now"
 msgstr "Išsaugoti įvesties įrenginių nustatymus _dabar"
 
 #: ../app/dialogs/preferences-dialog.c:2264
-#, fuzzy
 msgid "_Reset Saved Input Device Settings to Default Values"
-msgstr "Išsaugoti įrenginių būseną išeinant"
+msgstr "_Atstatyti numatytasias įvesties įrenginių nustatymų reikšmes"
 
 #: ../app/dialogs/preferences-dialog.c:2279
 msgid "Additional Input Controllers"
@@ -6833,7 +6733,6 @@ msgid "Window Management"
 msgstr "Langų valdymas"
 
 #: ../app/dialogs/preferences-dialog.c:2307
-#, fuzzy
 msgid "Window Manager Hints"
 msgstr "Langų valdyklės užuominos"
 
@@ -6864,15 +6763,15 @@ msgstr "Langų pozicijos"
 
 #: ../app/dialogs/preferences-dialog.c:2336
 msgid "_Save window positions on exit"
-msgstr "_Išsaugoti langų pozicijas išeinant"
+msgstr "Išeinant iš_saugoti langų pozicijas"
 
 #: ../app/dialogs/preferences-dialog.c:2340
 msgid "Save Window Positions _Now"
-msgstr "Išsaugoti lango vietą dabar"
+msgstr "Išsaugoti langų pozicijas _dabar"
 
 #: ../app/dialogs/preferences-dialog.c:2347
 msgid "_Reset Saved Window Positions to Default Values"
-msgstr "_Išsaugoti lango vietą baigiant"
+msgstr "_Atstatyti numatytasias langų pozicijų reikšmes"
 
 #: ../app/dialogs/preferences-dialog.c:2362
 msgid "Folders"
@@ -6884,16 +6783,16 @@ msgstr "Laikinas aplankas:"
 
 #: ../app/dialogs/preferences-dialog.c:2380
 msgid "Select Temp Folder"
-msgstr "Pasirinkite laikiną aplanką"
+msgstr "Nurodykite laikiną aplanką"
 
 #: ../app/dialogs/preferences-dialog.c:2381
 #: ../app/dialogs/user-install-dialog.c:1421
 msgid "Swap folder:"
-msgstr "Swap aplankas:"
+msgstr "Mainų aplankas:"
 
 #: ../app/dialogs/preferences-dialog.c:2381
 msgid "Select Swap Folder"
-msgstr "Pasirinkite Swap aplanką"
+msgstr "Nurodykite mainų aplanką"
 
 #: ../app/dialogs/preferences-dialog.c:2414
 msgid "Brush Folders"
@@ -6909,7 +6808,7 @@ msgstr "Raštų aplankai"
 
 #: ../app/dialogs/preferences-dialog.c:2420
 msgid "Select Pattern Folders"
-msgstr "Nurodykite·raštų aplanką"
+msgstr "Nurodykite raštų aplanką"
 
 #: ../app/dialogs/preferences-dialog.c:2422
 msgid "Palette Folders"
@@ -6917,7 +6816,7 @@ msgstr "Palečių aplankai"
 
 #: ../app/dialogs/preferences-dialog.c:2424
 msgid "Select Palette Folders"
-msgstr "Nurodykite palečių katalogus"
+msgstr "Nurodykite palečių aplankus"
 
 #: ../app/dialogs/preferences-dialog.c:2426
 msgid "Gradient Folders"
@@ -6925,7 +6824,7 @@ msgstr "Perėjimų aplankai"
 
 #: ../app/dialogs/preferences-dialog.c:2428
 msgid "Select Gradient Folders"
-msgstr "Nurodykite perėjimų katalogus"
+msgstr "Nurodykite perėjimų aplankus"
 
 #: ../app/dialogs/preferences-dialog.c:2430
 msgid "Font Folders"
@@ -6933,7 +6832,7 @@ msgstr "Šriftų aplankai"
 
 #: ../app/dialogs/preferences-dialog.c:2432
 msgid "Select Font Folders"
-msgstr "Nurodykite perėjimų aplanką"
+msgstr "Nurodykite šriftų aplankus"
 
 #: ../app/dialogs/preferences-dialog.c:2434
 msgid "Plug-In Folders"
@@ -6941,7 +6840,7 @@ msgstr "Įskiepių aplankai"
 
 #: ../app/dialogs/preferences-dialog.c:2436
 msgid "Select Plug-In Folders"
-msgstr "Nurodykite įskiepių katalogus"
+msgstr "Nurodykite įskiepių aplankus"
 
 #: ../app/dialogs/preferences-dialog.c:2438
 msgid "Scripts"
@@ -6949,11 +6848,11 @@ msgstr "Skriptai"
 
 #: ../app/dialogs/preferences-dialog.c:2438
 msgid "Script-Fu Folders"
-msgstr "\"Script-Fu\" aplankai"
+msgstr "Script-Fu aplankai"
 
 #: ../app/dialogs/preferences-dialog.c:2440
 msgid "Select Script-Fu Folders"
-msgstr "Pasirinkite \"Script-Fu\" katalogus"
+msgstr "Pasirinkite Script-Fu aplankus"
 
 #: ../app/dialogs/preferences-dialog.c:2442
 msgid "Module Folders"
@@ -6964,19 +6863,16 @@ msgid "Select Module Folders"
 msgstr "Nurodykite modulių katalogus"
 
 #: ../app/dialogs/preferences-dialog.c:2446
-#, fuzzy
 msgid "Interpreters"
-msgstr "Vidinės procedūros"
+msgstr "Interpretatoriai"
 
 #: ../app/dialogs/preferences-dialog.c:2446
-#, fuzzy
 msgid "Interpreter Folders"
-msgstr "Raštų aplankai"
+msgstr "Interpretatorių aplankai"
 
 #: ../app/dialogs/preferences-dialog.c:2448
-#, fuzzy
 msgid "Select Interpreter Folders"
-msgstr "Nurodykite·raštų aplanką"
+msgstr "Nurodykite interpretatorių aplankus"
 
 #: ../app/dialogs/preferences-dialog.c:2450
 msgid "Environment Folders"
@@ -6984,7 +6880,7 @@ msgstr "Aplinkos aplankai"
 
 #: ../app/dialogs/preferences-dialog.c:2452
 msgid "Select Environment Folders"
-msgstr "Nurodykite aplinkos katalogus"
+msgstr "Nurodykite aplinkos aplankus"
 
 #: ../app/dialogs/preferences-dialog.c:2454
 msgid "Themes"
@@ -6996,7 +6892,7 @@ msgstr "Temų aplankai"
 
 #: ../app/dialogs/preferences-dialog.c:2456
 msgid "Select Theme Folders"
-msgstr "Pasirinkite temų aplanką"
+msgstr "Nurodykite temų aplanką"
 
 #: ../app/dialogs/print-size-dialog.c:135
 msgid "Print Size"
@@ -7012,56 +6908,52 @@ msgstr "_Plotis:"
 #: ../app/dialogs/print-size-dialog.c:169 ../app/widgets/gimpsizebox.c:225
 #: ../app/widgets/gimptemplateeditor.c:239
 msgid "H_eight:"
-msgstr "Aukštis:"
+msgstr "A_ukštis:"
 
 #. the resolution labels
 #: ../app/dialogs/print-size-dialog.c:217 ../app/widgets/gimpsizebox.c:274
 #: ../app/widgets/gimptemplateeditor.c:359
-#, fuzzy
 msgid "_X resolution:"
-msgstr "Raiška:"
+msgstr "_X raiška:"
 
 #: ../app/dialogs/print-size-dialog.c:224 ../app/widgets/gimpsizebox.c:277
 #: ../app/widgets/gimptemplateeditor.c:366
-#, fuzzy
 msgid "_Y resolution:"
-msgstr "Raiška:"
+msgstr "_Y raiška:"
 
 #: ../app/dialogs/print-size-dialog.c:235 ../app/widgets/gimpsizebox.c:270
 #: ../app/widgets/gimptemplateeditor.c:379
 #, c-format
 msgid "pixels/%a"
-msgstr "Taškeliai/%a"
+msgstr "taškeliai/%a"
 
 #: ../app/dialogs/quit-dialog.c:102
-#, fuzzy
 msgid "Quit GIMP"
 msgstr "Baigti darbą su GIMP"
 
 #: ../app/dialogs/quit-dialog.c:102
-#, fuzzy
 msgid "Close All Images"
-msgstr "Paveikslėliai"
+msgstr "Užverti visus paveikslėlius"
 
 #: ../app/dialogs/quit-dialog.c:159
 msgid "If you quit GIMP now, these changes will be lost."
-msgstr ""
+msgstr "Jeigu dabar baigsite darbą su GIMP, šie pakeitimai bus prarasti."
 
 #: ../app/dialogs/quit-dialog.c:162
 msgid "If you close these images now, changes will be lost."
-msgstr ""
+msgstr "Jeigu dabar užversite šiuos paveikslėlius, pakeitimai bus prarasti."
 
 #: ../app/dialogs/quit-dialog.c:210
-#, fuzzy, c-format
+#, c-format
 msgid "There is one image with unsaved changes:"
 msgid_plural "There are %d images with unsaved changes:"
-msgstr[0] "Pakeisti lango dydį pakeitus paveikslėlio dydį"
-msgstr[1] "Pakeisti lango dydį pakeitus paveikslėlio dydį"
+msgstr[0] "Yra %d paveikslėlis su neišsaugotais pakeitimais:"
+msgstr[1] "Yra %d paveikslėliai su neišsaugotais pakeitimais:"
+msgstr[2] "Yra %d paveikslėlių su neišsaugotais pakeitimais:"
 
 #: ../app/dialogs/quit-dialog.c:232
-#, fuzzy
 msgid "_Discard Changes"
-msgstr "_Panaikinti pakeitimus"
+msgstr "_Atsisakyti pakeitimų"
 
 #: ../app/dialogs/resize-dialog.c:116
 msgid "Canvas Size"
@@ -7072,26 +6964,24 @@ msgid "Layer Size"
 msgstr "Sluoksnio dydis"
 
 #: ../app/dialogs/resize-dialog.c:289
-#, fuzzy
 msgid "Resize _layers:"
-msgstr "Keisti sluoksnio dydį"
+msgstr "Keisti s_luoksnių dydį:"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:70
 msgid "Calibrate Monitor Resolution"
 msgstr "Kalibruoti monitoriaus skiriamąją gebą"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:128
-#, fuzzy
 msgid "Measure the rulers and enter their lengths:"
-msgstr "Išmatuokite liniuotes ir žemiau įveskite jų ilgius."
+msgstr "Išmatuokite šias liniuotes ir įveskite jų ilgius:"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:153
 msgid "_Horizontal:"
-msgstr "Horizontaliai:"
+msgstr "_Horizontaliai:"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:158
 msgid "_Vertical:"
-msgstr "Vertikaliai:"
+msgstr "_Vertikaliai:"
 
 #. Image size frame
 #: ../app/dialogs/scale-dialog.c:96 ../app/widgets/gimptemplateeditor.c:210
@@ -7099,45 +6989,42 @@ msgid "Image Size"
 msgstr "Paveikslėlio dydis"
 
 #: ../app/dialogs/scale-dialog.c:172
-#, fuzzy
 msgid "Quality"
-msgstr "/Byla/Baigti darbą"
+msgstr "Kokybė"
 
 #: ../app/dialogs/scale-dialog.c:184
 msgid "I_nterpolation:"
-msgstr "Interpoliacijos tipas:"
+msgstr "I_nterpoliacija:"
 
 #: ../app/dialogs/scale-dialog.c:201
 msgid ""
 "Indexed color layers are always scaled without interpolation. The chosen "
 "interpolation type will affect channels and masks only."
 msgstr ""
+"Indeksuotų spalvų sluoksniai visada ištempiami be interpoliacijos. Parinktas "
+"interpoliacijos tipas įtakos tik kanalus ir kaukes."
 
 #: ../app/dialogs/stroke-dialog.c:101
 msgid "Choose Stroke Style"
-msgstr ""
+msgstr "Pasirinkite apvedimo stilių"
 
 #: ../app/dialogs/stroke-dialog.c:212
-#, fuzzy
 msgid "Paint tool:"
 msgstr "Piešimo įrankis:"
 
 #: ../app/dialogs/tips-dialog.c:89
 msgid "<b>Your GIMP tips file appears to be missing!</b>"
-msgstr "<b>Nėra GIMP patarimų bylos!</b>"
+msgstr "<b>Panašu, kad nėra GIMP patarimų bylos!</b>"
 
 #: ../app/dialogs/tips-dialog.c:91
-#, fuzzy, c-format
+#, c-format
 msgid "There should be a file called '%s'. Please check your installation."
 msgstr ""
-"Nerasta GIMP patarimų byla!\n"
-"Turėtų būti byla gimp_tips.txt GIMP duomenų katalogo\n"
-"patarimų pakatalogyje.\n"
-"Patikrinkite, ar teisingai įdiegėte GIMP."
+"Turėtų būti byla pavadinimu „%s“. Patikrinkite, ar teisingai įdiegėte GIMP."
 
 #: ../app/dialogs/tips-dialog.c:97
 msgid "<b>The GIMP tips file could not be parsed!</b>"
-msgstr "<b>GIMP patarimų byla negalėjo būti apdorota!</b>"
+msgstr "<b>Nepavyko perskaityti GIMP patarimų bylos!</b>"
 
 #: ../app/dialogs/tips-dialog.c:130
 msgid "GIMP Tip of the Day"
@@ -7145,17 +7032,15 @@ msgstr "GIMP dienos patarimas"
 
 #: ../app/dialogs/tips-dialog.c:194
 msgid "Show tip next time GIMP starts"
-msgstr "Rodyti patarimą startuojant GIMP'ui"
+msgstr "Rodyti patarimą kitą kart paleidžiant GIMP"
 
 #: ../app/dialogs/tips-dialog.c:218
-#, fuzzy
 msgid "_Previous Tip"
-msgstr "Ankstesnis patarimas"
+msgstr "_Buvęs patarimas"
 
 #: ../app/dialogs/tips-dialog.c:227
-#, fuzzy
 msgid "_Next Tip"
-msgstr "Kitas patarimas"
+msgstr "_Kitas patarimas"
 
 #. This is a special string to specify the language identifier to
 #. look for in the gimp-tips.xml file. Please translate the C in it
@@ -7172,17 +7057,16 @@ msgid ""
 "behavior.  Paths to search for brushes, palettes, gradients, patterns, plug-"
 "ins and modules can also configured here."
 msgstr ""
-"gimprc naudojamas asmeninių nustatymų, kurie įtakoja\n"
-"įpastąją GIMP elgseną, saugojimui.\n"
-"Čia taip pat nustamomi įvairių modulių, priedų, raštų,\n"
-"perėjimų, palečių ar pieštukų paeiškos keliai."
+"gimprc naudojamas asmeninių nustatymų, kurie įtakoja numatytąją GIMP "
+"elgseną, saugojimui. Čia taip pat nurodomi įvairių modulių, įskiepių, raštų, "
+"perėjimų, palečių ir pieštukų paeiškos keliai."
 
 #: ../app/dialogs/user-install-dialog.c:138
 msgid ""
 "GIMP uses an additional gtkrc file so you can configure it to look "
 "differently than other GTK apps."
 msgstr ""
-"GIMP naudoja papildoma gtkrc bylą todėl Jūs galite padaryti jo išvaizdą "
+"GIMP naudoja papildoma gtkrc bylą, todėl Jūs galite padaryti jo išvaizdą "
 "kitokia nei kitų GTK programų."
 
 #: ../app/dialogs/user-install-dialog.c:144
@@ -7193,7 +7077,7 @@ msgid ""
 "information about their functionality is cached in this file.  This file is "
 "intended to be written to by GIMP only, and should not be edited."
 msgstr ""
-"Priedai ir praplėtimai yra GIMP vykdomos išorinės\n"
+"Įskiepiai ir išplėtimai yra GIMP vykdomos išorinės\n"
 "programos, kurios suteikia papildomą funkcionalumą.\n"
 "Šios programos yra surandamos vykdymo metu ir informaciją\n"
 "apie jų funkcionalumą yra įrašoma šioje byloje.\n"
@@ -7273,7 +7157,7 @@ msgid ""
 "This folder is used to store user defined gradients.  GIMP checks this "
 "folder in addition to the system-wide gradients installation."
 msgstr ""
-"Tai yra katalogas, kuris naudojamas vartotojo apibrėžtiems perėjimams "
+"Tai yra aplankas, kuris naudojamas vartotojo apibrėžtiems perėjimams "
 "išsaugoti. Įdiegiant GIMP programos perėjimus, įprastoji gimprc byla\n"
 "papildomai tikrina šį pakatalogį."
 
@@ -7307,7 +7191,7 @@ msgid ""
 "system-supported plug-ins.  GIMP checks this folder in addition to the "
 "system-wide plug-in folder."
 msgstr ""
-"Tai yra katalogas, kuris gali būti naudojamas vartotojo sukurtiems,\n"
+"Tai yra aplankas, kuris gali būti naudojamas vartotojo sukurtiems,\n"
 "laikiniems ar kitokiems nesisteminiams priedams išsaugoti.\n"
 "Įdiegiant GIMP programos priedus, įprastoji gimprc byla\n"
 "papildomai tikrina šį pakatalogį."
@@ -7319,7 +7203,7 @@ msgid ""
 "system-supported DLL modules.  GIMP checks this folder in addition to the "
 "system-wide module folder."
 msgstr ""
-"Tai yra katalogas, kuris gali būti naudojamas vartotojo sukurtiems, \n"
+"Tai yra aplankas, kuris gali būti naudojamas vartotojo sukurtiems, \n"
 "laikiniems ar kitokiems nesisteminiams DLL moduliams\n"
 "išsaugoti. Įdiegiant GIMP programos priedus, įprastoji gimprc byla\n"
 "papildomai tikrina šį pakatalogį, kai ieško,\n"
@@ -7333,7 +7217,7 @@ msgid ""
 "folder in addition to the system-wide GIMP interpreters folder when "
 "searching for plug-in interpreter configuration files."
 msgstr ""
-"Tai yra katalogas, kuris gali būti naudojamas vartotojo sukurtiems,\n"
+"Tai yra aplankas, kuris gali būti naudojamas vartotojo sukurtiems,\n"
 "laikiniems ar kitokiems nesisteminiams priedams išsaugoti.\n"
 "Įdiegiant GIMP programos priedus, įprastoji gimprc byla\n"
 "papildomai tikrina šį pakatalogį."
@@ -7363,44 +7247,39 @@ msgstr ""
 
 #: ../app/dialogs/user-install-dialog.c:266
 msgid "This folder is searched for image templates."
-msgstr "Šiame kataloge ieškoma šablonų."
+msgstr "Šiame aplanke ieškoma šablonų."
 
 #: ../app/dialogs/user-install-dialog.c:271
 msgid "This folder is searched for user-installed themes."
-msgstr "Šiame kataloge ieškoma vartotojo instaliuotų temų."
+msgstr "Šiame aplanke ieškoma vartotojo įdiegtų temų."
 
 #: ../app/dialogs/user-install-dialog.c:276
-#, fuzzy
 msgid "This folder is used for temporary files."
-msgstr "Šiame kataloge ieškoma šablonų."
+msgstr "Šis aplankas naudojamas laikinosioms byloms."
 
 #: ../app/dialogs/user-install-dialog.c:281
 msgid "This folder is used to store tool options."
-msgstr "Šiame kataloge saujogamos įrankių savybės"
+msgstr "Šiame aplanke saugomi įrankių nustatymai."
 
 #: ../app/dialogs/user-install-dialog.c:286
 msgid "This folder is used to store parameter files for the Curves tool."
-msgstr ""
-"Šis katalogas naudojamas kreivių įrankio\n"
-"parametrų byloms išsaugoti."
+msgstr "Šis aplankas naudojamas saugoti kreivių įrankio parametrų byloms."
 
 #: ../app/dialogs/user-install-dialog.c:291
 msgid "This folder is used to store parameter files for the Levels tool."
-msgstr ""
-"Šis katalogas naudojamas lygių įrankio\n"
-"parametrų byloms išsaugoti."
+msgstr "Šis aplankas naudojamas saugoti lygių įrankio parametrų byloms."
 
 #: ../app/dialogs/user-install-dialog.c:387
 msgid "Installation successful.  Click \"Continue\" to proceed."
-msgstr "Instaliacija sėkmingai baigta. Norėdami tęsti, spauskite \"Tęsti\"."
+msgstr "Įdiegta sėkmingai. Norėdami tęsti, spauskite „Tęsti“."
 
 #: ../app/dialogs/user-install-dialog.c:393
 msgid "Installation failed.  Contact system administrator."
-msgstr "Įdiegimas nepavyko.  Susisiekite su sistemos administratoriumi."
+msgstr "Įdiegti nepavyko. Susisiekite su sistemos administratoriumi."
 
 #: ../app/dialogs/user-install-dialog.c:613
 msgid "GIMP User Installation"
-msgstr "GIMP vartotojo įdiegimas"
+msgstr "GIMP vartotojo diegimas"
 
 #: ../app/dialogs/user-install-dialog.c:618
 msgid "Continue"
@@ -7409,125 +7288,114 @@ msgstr "Tęsti"
 #. GPL_PAGE
 #. version number
 #: ../app/dialogs/user-install-dialog.c:774
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Welcome to\n"
 "The GIMP %d.%d User Installation"
 msgstr ""
 "Sveiki atvykę į\n"
-"GIMP·vartotojo·įdiegimą"
+"GIMP %d.%d vartotojo diegimą"
 
 #: ../app/dialogs/user-install-dialog.c:780
 msgid "Click \"Continue\" to enter the GIMP user installation."
-msgstr "Spauskite \"Tęsti\" kad pradėtumėte GIMP·vartotojo·įdiegimą."
+msgstr "Jei norite pradėti GIMP vartotojo diegimą, spauskite „Tęsti“."
 
 #: ../app/dialogs/user-install-dialog.c:787
-#, fuzzy
 msgid ""
 "<b>The GIMP - GNU Image Manipulation Program</b>\n"
 "Copyright (C) 1995-2005\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team."
 msgstr ""
-"GIMP - GNU paveikslėlių apdorojimo programa (Image Manipulation Program)\n"
-"Copyright (C) 1995-2004\n"
-"Spencer Kimball, Peter Mattis and the GIMP Development Team."
+"<b>The GIMP - GNU paveikslėlių apdorojimo programa</b>\n"
+"Apsaugota autorinėmis teisėmis © 1995-2005\n"
+"Spencer Kimball, Peter Mattis ir GIMP kūrimo komanda."
 
 #: ../app/dialogs/user-install-dialog.c:797
-#, fuzzy
 msgid ""
 "This program is free software; you can redistribute it and/or modify it "
 "under the terms of the GNU General Public License as published by the Free "
 "Software Foundation; either version 2 of the License, or (at your option) "
 "any later version."
 msgstr ""
-"Ši programa yra laisva programinė įranga; jūs galite paskirstyti ją ir/arba "
-"keisti,\n"
-"atsižvelgiant į GNU General Public License (GNU pagrindinės viešosios "
-"licencijos)\n"
-"reikalavimus, kaip aprašė the Free Software Foundation\n"
-"(Laisvosios Programinės Įrangos Fondas); arba remiantis\n"
-"antrąja ar kuria kita licencijos versija pagal pasirinkimą."
+"Ši programa yra laisva programinė įranga; galite ją platinti ir/ar "
+"modifikuoti GNU bendrosios viešosios licencijos sąlygomis, kurios paskelbtos "
+"Laisvosios programinės įrangos fondo; 2-osios arba (Jūsų pasirinkimu) bet "
+"kurios vėlesnės licencijos versijos sąlygomis."
 
 #: ../app/dialogs/user-install-dialog.c:803
-#, fuzzy
 msgid ""
 "This program is distributed in the hope that it will be useful, but WITHOUT "
 "ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
 "FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for "
 "more details."
 msgstr ""
-"Ši programa yra platinama, tikintis, kad ji bus naudinga,\n"
-"bet BE JOKIOS GARANTIJOS; net be turimos mintyje garantijos,\n"
-"kad ji bus tinkama PREKYBAI ar SPECIALIZUOTAM PANAUDOJIMUI.\n"
-"Peržiūrėkite the GNU General Public License,\n"
-"jei norite sužinoti daugiau informacijos."
+"Ši programa yra platinama tikintis, kad ji bus naudinga, bet BE JOKIŲ "
+"GARANTIJŲ; netgi be numanomų PARDAVIMO arba TINKAMUMO TAM TIKRAM TIKSLUI "
+"garantijų. Dėl išsamesnės informacijos žiūrėkite GNU bendrąją viešąją "
+"licenciją."
 
 #: ../app/dialogs/user-install-dialog.c:809
-#, fuzzy
 msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "this program; if not, write to the Free Software Foundation, Inc., 59 Temple "
 "Place - Suite 330, Boston, MA 02111-1307, USA."
 msgstr ""
-"Jūs turėjote gauti the GNU General Public License kopiją\n"
-"kartu su šia programa; jei ne, rašykite the Free Software\n"
-"Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
-"MA 02111-1307, USA."
+"Jūs turėjote gauti GNU bendrosios viešosios licencijos kopiją kartu su šia "
+"programa; jeigu negavote, rašykite Laisvosios programinės įrangos fondui, 59 "
+"Temple Place - Suite 330, Boston, MA 02111-1307, USA."
 
 #: ../app/dialogs/user-install-dialog.c:822
 msgid "Migrate User Settings"
-msgstr ""
+msgstr "Perkelti naudotojo nustatymus"
 
 #: ../app/dialogs/user-install-dialog.c:823
-#, fuzzy
 msgid "Click \"Continue\" to proceed with the user installation."
-msgstr "Spauskite \"Tęsti\" kad pradėtumėte GIMP·vartotojo·įdiegimą."
+msgstr "Norėdami tęsti naudotojo diegimą, spauskite „Tęsti“."
 
 #: ../app/dialogs/user-install-dialog.c:827
 #, c-format
 msgid "It seems you have used GIMP %s before."
-msgstr ""
+msgstr "Panašu, kad Jūs anksčiau jau naudojote GIMP %s."
 
 #: ../app/dialogs/user-install-dialog.c:829
 #, c-format
 msgid "_Migrate GIMP %s user settings"
-msgstr ""
+msgstr "_Perkelti GIMP %s naudotojo nustatymus"
 
 #: ../app/dialogs/user-install-dialog.c:838
-#, fuzzy
 msgid "Do a _fresh user installation"
-msgstr "GIMP vartotojo įdiegimas"
+msgstr "_Atlikti naują naudotojo diegimą"
 
 #: ../app/dialogs/user-install-dialog.c:869
 msgid "Personal GIMP Folder"
-msgstr "Asmeninis GIMP katalogas"
+msgstr "Asmeninis GIMP aplankas"
 
 #: ../app/dialogs/user-install-dialog.c:870
 msgid "Click \"Continue\" to create your personal GIMP folder."
-msgstr "Spausk \"Tęsti\", norėdamas sukurti savo asmeninį GIMP aplanką"
+msgstr "Norėdami sukurti Jūsų asmeninį GIMP aplanką, spauskite „Tęsti“."
 
 #: ../app/dialogs/user-install-dialog.c:914
 #, c-format
 msgid ""
 "For a proper GIMP installation, a folder named '<b>%s</b>' needs to be "
 "created."
-msgstr "Pilnam GIMP įdiegimui, turi būti sukurtas katalogas '<b>%s</b>'."
+msgstr "Tinkamam GIMP įdiegimui reikia sukurti aplanką „<b>%s</b>“."
 
 #: ../app/dialogs/user-install-dialog.c:921
 msgid ""
 "This folder will contain a number of important files.  Click on one of the "
 "files or folders in the tree to get more information about the selected item."
 msgstr ""
-"Šis katalogas turės keletą svarbių bylų. Paspauskite ant kurios nors bylos "
-"ar katalogo medyje, kad gautumėte daugiau informacijos apie tą elementą."
+"Šiame aplanke bus keletas svarbių bylų. Norėdami gauti daugiau informacijos "
+"apie vieną iš medyje esančių bylų ar aplankų, spragtelėkite ant jų."
 
 #: ../app/dialogs/user-install-dialog.c:1009
 msgid "User Installation Log"
-msgstr "Vartotojo įdiegimo protokolas"
+msgstr "Vartotojo diegimo žurnalas"
 
 #: ../app/dialogs/user-install-dialog.c:1010
 msgid "Please wait while your personal GIMP folder is being created..."
-msgstr "Palaukite kol bus sukurtas Jūsų asmeninis GIMP katalogas..."
+msgstr "Palaukite kol bus sukurtas Jūsų asmeninis GIMP aplankas..."
 
 #: ../app/dialogs/user-install-dialog.c:1017
 msgid "GIMP Performance Tuning"
@@ -7535,7 +7403,7 @@ msgstr "GIMP našumo derinimas"
 
 #: ../app/dialogs/user-install-dialog.c:1018
 msgid "Click \"Continue\" to accept the settings above."
-msgstr "Spausk \"Tęsti\", kad priimti aukščiau esančius nustatymus."
+msgstr "Norėdami priimti aukščiau esančius nustatymus, spauskite „Tęsti“."
 
 #: ../app/dialogs/user-install-dialog.c:1023
 msgid ""
@@ -7545,35 +7413,33 @@ msgstr "<b>Optimaliam GIMP našumui gali reikėti pakeisti keletą nustatymų.</
 #: ../app/dialogs/user-install-dialog.c:1083
 #, c-format
 msgid "Copying file '%s' from '%s'..."
-msgstr "Kopijuojama bylą %s iš %s..."
+msgstr "Kopijuojama byla „%s“ iš „%s“..."
 
 #: ../app/dialogs/user-install-dialog.c:1102
 #, c-format
 msgid "Creating folder '%s'..."
-msgstr "Kuriamas katalogas %s..."
+msgstr "Kuriamas aplankas „%s“..."
 
 #: ../app/dialogs/user-install-dialog.c:1116
 #, c-format
 msgid "Cannot create folder '%s': %s"
-msgstr "Nepavyksta sukurti dialogo %s: %s"
+msgstr "Negalima sukurti aplanko „%s“: %s"
 
 #: ../app/dialogs/user-install-dialog.c:1380
-#, fuzzy
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called "
 "\"Tile Cache\".  You should adjust its size to fit into memory.  Consider "
 "the amount of memory used by other running processes."
 msgstr ""
-"GIMP naudoja ribotą atminties dydį paveikslėlio duomenims saugoti,\n"
-"taip vadinamą \"Tile Cache\". Turėtumėte nustatyti tokį jo dydį,\n"
-"kuris tilptų į jūsų operatyvinę atmintį (RAM). Atsižvelkite į kitiems "
-"vykstantiems\n"
-"procesams reikalingą atminties kiekį."
+"GIMP naudoja ribotą atminties dydį paveikslėlio duomenims saugoti, taip "
+"vadinamą „Tile Cache“. Turėtumėte nustatyti tokį jo dydį, kad jis tilptų "
+"atmintyje. Atsižvelkite į kitiems vykstantiems procesams reikalingą "
+"atminties kiekį."
 
 #: ../app/dialogs/user-install-dialog.c:1393
 #, fuzzy
 msgid "Tile cache size:"
-msgstr "Tile Cache dydis:"
+msgstr "Tile cache dydis:"
 
 #: ../app/dialogs/user-install-dialog.c:1405
 #, fuzzy
@@ -7591,21 +7457,19 @@ msgstr ""
 
 #: ../app/dialogs/user-install-dialog.c:1416
 msgid "Select Swap Dir"
-msgstr "Pasirinkite Swap aplanką"
+msgstr "Pasirinkite mainų aplanką"
 
 #: ../app/dialogs/vectors-export-dialog.c:53
 msgid "Export Path to SVG"
 msgstr "Eksportuoti kelią į SVG"
 
 #: ../app/dialogs/vectors-export-dialog.c:83
-#, fuzzy
 msgid "Export the active path"
-msgstr "Perkelti aktyvų kontūrą"
+msgstr "Eksportuoti aktyvų kelią"
 
 #: ../app/dialogs/vectors-export-dialog.c:84
-#, fuzzy
 msgid "Export all paths from this image"
-msgstr "Sukurti visus kelius iš šios paveikslėlio"
+msgstr "Eksportuoti visus kelius iš šio paveikslėlio"
 
 #: ../app/dialogs/vectors-import-dialog.c:57
 msgid "Import Paths from SVG"
@@ -7620,26 +7484,24 @@ msgid "Scalable SVG image (*.svg)"
 msgstr ""
 
 #: ../app/dialogs/vectors-import-dialog.c:104
-#, fuzzy
 msgid "_Merge imported paths"
-msgstr "Importuoti kontūrą"
+msgstr "_Sujungti imporuotus kelius"
 
 #: ../app/dialogs/vectors-import-dialog.c:114
 msgid "_Scale imported paths to fit image"
 msgstr ""
 
 #: ../app/dialogs/vectors-options-dialog.c:118
-#, fuzzy
 msgid "Path name:"
-msgstr "Kontūro pavadinimas:"
+msgstr "Kelio pavadinimas:"
 
 #: ../app/display/display-enums.c:24
 msgid "Tool icon"
-msgstr "Įrankių ženkliukai"
+msgstr "Įrankio ikona"
 
 #: ../app/display/display-enums.c:25
 msgid "Tool icon with crosshair"
-msgstr "Įrankių ženkliukai su kryželiu"
+msgstr "Įrankio ikona su kryželiu"
 
 #: ../app/display/display-enums.c:26
 msgid "Crosshair only"
@@ -7651,19 +7513,19 @@ msgstr "Iš temos"
 
 #: ../app/display/display-enums.c:56
 msgid "Light check color"
-msgstr "Šviesių tonų patikrinimas"
+msgstr "Šviesių kvadratėlių spalva"
 
 #: ../app/display/display-enums.c:57
 msgid "Dark check color"
-msgstr "Tamsių tonų patikrinimas"
+msgstr "Tamsių kvadratėlių spalva"
 
 #: ../app/display/display-enums.c:58
 msgid "Custom color"
-msgstr "Pasirinkta spalva"
+msgstr "Kita spalva"
 
 #: ../app/display/gimpdisplayshell.c:919
 msgid "Zoom image when window size changes"
-msgstr ""
+msgstr "Keičiantis lango dydžiui keisti paveikslėlio mastelį"
 
 #: ../app/display/gimpdisplayshell.c:941
 msgid "Toggle Quick Mask"
@@ -7682,42 +7544,45 @@ msgstr "_Nesaugoti"
 #: ../app/display/gimpdisplayshell-close.c:205
 #, c-format
 msgid "Save the changes to image '%s' before closing?"
-msgstr "Prieš užveriant išsaugoti paveikslėlio „%s“ pakeitimus?"
+msgstr "Ar prieš užveriant išsaugoti paveikslėlio „%s“ pakeitimus?"
 
 #: ../app/display/gimpdisplayshell-close.c:222
 #, c-format
 msgid "If you don't save the image, changes from the last %s will be lost."
 msgstr ""
+"Jeigu neišsaugosite paveikslėlio, pakeitimai atlikti per paskutines %s bus "
+"prarasti."
 
 #: ../app/display/gimpdisplayshell-close.c:279
-#, fuzzy, c-format
+#, c-format
 msgid "second"
 msgid_plural "%d seconds"
-msgstr[0] "Ikona"
-msgstr[1] "Ikona"
+msgstr[0] "%d sekundę"
+msgstr[1] "%d sekundes"
+msgstr[2] "%d sekundžių"
 
 #: ../app/display/gimpdisplayshell-close.c:284
-#, fuzzy, c-format
+#, c-format
 msgid "minute"
 msgid_plural "%d minutes"
-msgstr[0] "Linija"
-msgstr[1] "Linija"
+msgstr[0] "%d minutę"
+msgstr[1] "%d minutes"
+msgstr[2] "%d minučių"
 
 #: ../app/display/gimpdisplayshell-dnd.c:200
 #: ../app/display/gimpdisplayshell-dnd.c:501
 #: ../app/display/gimpdisplayshell-dnd.c:554
 msgid "Drop New Layer"
-msgstr "Pamesti naują sluoksnį"
+msgstr "Numesti naują sluoksnį"
 
 #: ../app/display/gimpdisplayshell-dnd.c:246
 msgid "Drop New Path"
-msgstr "Pamesti naują kelią"
+msgstr "Numesti naują kelią"
 
 #: ../app/display/gimpdisplayshell-dnd.c:542
-#: ../app/widgets/gimplayertreeview.c:837 ../app/widgets/gimptoolbox-dnd.c:359
-#, fuzzy
+#: ../app/widgets/gimplayertreeview.c:838 ../app/widgets/gimptoolbox-dnd.c:359
 msgid "Dropped Buffer"
-msgstr "_Ištrinti buferį"
+msgstr "Numestas buferis"
 
 #: ../app/display/gimpdisplayshell-filter-dialog.c:73
 #, fuzzy
@@ -7735,28 +7600,27 @@ msgstr "Pažymėti sluoksnį"
 
 #: ../app/display/gimpdisplayshell-scale.c:472
 msgid "Zoom Ratio"
-msgstr "Didinimo koeficientas"
+msgstr "Mastelio koeficientas"
 
 #: ../app/display/gimpdisplayshell-scale.c:474
 msgid "Select Zoom Ratio"
-msgstr "Pasirinkti didinimo koeficientą"
+msgstr "Pasirinkite mastelio koeficientą"
 
 #: ../app/display/gimpdisplayshell-scale.c:517
-#, fuzzy
 msgid "Zoom ratio:"
-msgstr "Didinimo koeficientas:"
+msgstr "Mastelio koeficientas:"
 
 #: ../app/display/gimpdisplayshell-scale.c:542
 msgid "Zoom:"
-msgstr "Didinimas:"
+msgstr "Mastelis:"
 
 #: ../app/display/gimpdisplayshell-title.c:224
 msgid "RGB-empty"
-msgstr "RGB-tuščia"
+msgstr "RGB tuščia"
 
 #: ../app/display/gimpdisplayshell-title.c:227
 msgid "grayscale-empty"
-msgstr "pilkumo skalė-tuščia"
+msgstr "pilkumo skalė tuščia"
 
 #: ../app/display/gimpdisplayshell-title.c:227
 msgid "grayscale"
@@ -7771,9 +7635,8 @@ msgid "indexed"
 msgstr "indeksuotas"
 
 #: ../app/display/gimpdisplayshell-title.c:284
-#, fuzzy
 msgid "(modified)"
-msgstr "Tik kai padaryti pakeitimai"
+msgstr "(modifikuota)"
 
 #: ../app/display/gimpdisplayshell-title.c:289
 msgid "(clean)"
@@ -7816,9 +7679,9 @@ msgstr ""
 
 #: ../app/file/file-open.c:182
 msgid "Plug-In could not open image"
-msgstr "GIMP priedas negali atverti paveikslėlio"
+msgstr "GIMP įskiepis negali atverti paveikslėlio"
 
-#: ../app/file/file-open.c:417
+#: ../app/file/file-open.c:418
 msgid "Image doesn't contain any visible layers"
 msgstr "Paveikslėlyje nėra jokių matomų sluoksnių"
 
@@ -7910,7 +7773,7 @@ msgid "Posterize"
 msgstr ""
 
 #: ../app/pdb/color_cmds.c:820 ../app/pdb/color_cmds.c:947
-#: ../app/tools/gimpcurvestool.c:136
+#: ../app/tools/gimpcurvestool.c:140
 msgid "Curves"
 msgstr "Kreivės"
 
@@ -8073,7 +7936,7 @@ msgstr "Rašto UI"
 
 #: ../app/pdb/internal_procs.c:197
 msgid "Plug-in"
-msgstr "Priedas"
+msgstr "Įskiepis"
 
 #: ../app/pdb/internal_procs.c:200
 msgid "Procedural database"
@@ -8126,7 +7989,7 @@ msgstr "Laisvas pažymėjimas"
 #: ../app/pdb/vectors_cmds.c:240
 #, fuzzy
 msgid "Modify Path"
-msgstr "Perkelti kontūrą"
+msgstr "Perkelti kelią"
 
 #: ../app/plug-in/plug-in.c:607 ../app/plug-in/plug-in.c:640
 #, fuzzy, c-format
@@ -8142,7 +8005,7 @@ msgid ""
 "The dying Plug-In may have messed up GIMP's internal state. You may want to "
 "save your images and restart GIMP to be on the safe side."
 msgstr ""
-"Paleisti priedo nepavyko: \"%s\"\n"
+"Įskiepis nulūžo: „%s“\n"
 "(%s)\n"
 "\n"
 "Tai galėjo pakenkti vidinei GIMP'o būsenai.\n"
@@ -8183,21 +8046,21 @@ msgstr "Užklausiamas įskiepis: „%s“\n"
 #. initialize the plug-ins
 #: ../app/plug-in/plug-ins.c:179
 msgid "Initializing Plug-ins"
-msgstr "Inicijuojami priedai"
+msgstr "Inicijuojami įskiepiai"
 
 #: ../app/plug-in/plug-ins.c:193
-#, fuzzy, c-format
+#, c-format
 msgid "Initializing plug-in: '%s'\n"
-msgstr "priedo užklausimas:·\"%s\"\n"
+msgstr "Inicijuojamas įskiepis: „%s“\n"
 
 #: ../app/plug-in/plug-ins.c:321
 msgid "Starting Extensions"
-msgstr "Paleidžiami praplėtimai"
+msgstr "Paleidžiami išplėtimai"
 
 #: ../app/plug-in/plug-ins.c:328
 #, c-format
 msgid "Starting extension: '%s'\n"
-msgstr "Paleidžiami praplėtimai: %s\n"
+msgstr "Paleidžiamas išplėtimas: „%s“\n"
 
 #: ../app/text/text-enums.c:81
 #, fuzzy
@@ -8343,7 +8206,7 @@ msgstr "Transformuoti pažymėjimą"
 
 #: ../app/tools/tools-enums.c:145
 msgid "Transform path"
-msgstr "Transformuoti kontūrą"
+msgstr "Transformuoti kelią"
 
 #: ../app/tools/tools-enums.c:173
 msgid "Design"
@@ -8479,31 +8342,28 @@ msgstr "Maksimalus spalvų skirtumas"
 #: ../app/tools/gimpbucketfilloptions.c:237
 #, c-format
 msgid "Fill Type  (%s)"
-msgstr "Užpildymo tipas  (%s)"
+msgstr "Užpildymo tipas (%s)"
 
 #. fill selection
 #: ../app/tools/gimpbucketfilloptions.c:249
 #, c-format
 msgid "Affected Area  (%s)"
-msgstr "Veikiama sritis  (%s)"
+msgstr "Veikiama sritis (%s)"
 
 #: ../app/tools/gimpbucketfilloptions.c:253
-#, fuzzy
 msgid "Fill whole selection"
 msgstr "Užpildyti visą pažymėjimą"
 
 #: ../app/tools/gimpbucketfilloptions.c:254
-#, fuzzy
 msgid "Fill similar colors"
 msgstr "Užpildyti panašias spalvas"
 
 #: ../app/tools/gimpbucketfilloptions.c:263
 #: ../app/tools/gimpselectionoptions.c:496
 msgid "Finding Similar Colors"
-msgstr "Ieškoma panašių spalvų"
+msgstr "Panašių spalvų ieškojimas"
 
 #: ../app/tools/gimpbucketfilloptions.c:279
-#, fuzzy
 msgid "Fill transparent areas"
 msgstr "Užpildyti skaidrias sritis"
 
@@ -8645,15 +8505,15 @@ msgstr "Skersmuo:"
 
 #. the pick FG/BG frame
 #: ../app/tools/gimpcolorpickeroptions.c:193
-#, fuzzy, c-format
+#, c-format
 msgid "Pick Mode  (%s)"
-msgstr "Pasirinkite režimą %s"
+msgstr "Parinkimo režimas (%s)"
 
 #. the use_info_window toggle button
 #: ../app/tools/gimpcolorpickeroptions.c:202
-#, fuzzy, c-format
+#, c-format
 msgid "Use info window  (%s)"
-msgstr "Naudoti Info langą"
+msgstr "Naudoti informacinį langą (%s)"
 
 #: ../app/tools/gimpcolorpickertool.c:101
 msgid "Color Picker"
@@ -8661,11 +8521,11 @@ msgstr "Spalvų pipetė"
 
 #: ../app/tools/gimpcolorpickertool.c:102
 msgid "Pick colors from the image"
-msgstr "Išrinkti dažų spalvą iš paveikslėlio"
+msgstr "Pasirinkti spalvas iš paveikslėlio"
 
 #: ../app/tools/gimpcolorpickertool.c:103
 msgid "C_olor Picker"
-msgstr "Spalvų pipetė"
+msgstr "S_palvų pipetė"
 
 #. tool->gdisp->shell
 #: ../app/tools/gimpcolorpickertool.c:355
@@ -8690,6 +8550,7 @@ msgid "Blur or Sharpen"
 msgstr "Sulieti arba paaštrinti"
 
 #: ../app/tools/gimpconvolvetool.c:71
+#, fuzzy
 msgid "Con_volve"
 msgstr "Suliejimas ir paaštrinimas"
 
@@ -8702,9 +8563,9 @@ msgstr "Įrankio tipas"
 #. tool toggle
 #: ../app/tools/gimpcropoptions.c:221 ../app/tools/gimpmagnifyoptions.c:206
 #: ../app/tools/gimpmoveoptions.c:215
-#, fuzzy, c-format
+#, c-format
 msgid "Tool Toggle  (%s)"
-msgstr "Įrankio perjungimas  %s"
+msgstr "Įrankio perjungimas (%s)"
 
 #: ../app/tools/gimpcropoptions.c:233
 #, fuzzy
@@ -8732,58 +8593,67 @@ msgstr ""
 msgid "Click or press enter to resize."
 msgstr "Nepavyko sukurti peržiūros"
 
-#: ../app/tools/gimpcurvestool.c:137
+#: ../app/tools/gimpcurvestool.c:141
 msgid "Adjust color curves"
 msgstr "Nustatyti spalvų kreives"
 
-#: ../app/tools/gimpcurvestool.c:138
+#: ../app/tools/gimpcurvestool.c:142
 msgid "_Curves..."
 msgstr "_Kreivės"
 
-#: ../app/tools/gimpcurvestool.c:197
+#: ../app/tools/gimpcurvestool.c:202
 msgid "Adjust Color Curves"
 msgstr "Nustatyti spalvų kreives"
 
-#: ../app/tools/gimpcurvestool.c:199
+#: ../app/tools/gimpcurvestool.c:204
 msgid "Load Curves"
 msgstr "Įkelti kreives"
 
-#: ../app/tools/gimpcurvestool.c:200
+#: ../app/tools/gimpcurvestool.c:205
 #, fuzzy
 msgid "Load curves settings from file"
 msgstr "Skaityti lygių nustatymus iš bylos"
 
-#: ../app/tools/gimpcurvestool.c:201
+#: ../app/tools/gimpcurvestool.c:206
 msgid "Save Curves"
 msgstr "Išsaugoti kreives"
 
-#: ../app/tools/gimpcurvestool.c:202
+#: ../app/tools/gimpcurvestool.c:207
 msgid "Save curves settings to file"
 msgstr "Išsaugoti kreivių nustatymus į bylą"
 
-#: ../app/tools/gimpcurvestool.c:278
+#: ../app/tools/gimpcurvestool.c:283
 #, fuzzy
 msgid "Curves for indexed layers cannot be adjusted."
 msgstr "Kreivių negalima taikyti indeksuotiems paveikslėliams."
 
-#: ../app/tools/gimpcurvestool.c:471 ../app/tools/gimplevelstool.c:407
+#: ../app/tools/gimpcurvestool.c:340
+#, fuzzy
+msgid "Click to add a control point."
+msgstr "Spragtelkite norėdami pasirinkti kelią redagavimui."
+
+#: ../app/tools/gimpcurvestool.c:345
+msgid "Click to add control points to all channels."
+msgstr ""
+
+#: ../app/tools/gimpcurvestool.c:507 ../app/tools/gimplevelstool.c:407
 #, fuzzy
 msgid "Cha_nnel:"
 msgstr "Kanalas:"
 
-#: ../app/tools/gimpcurvestool.c:493 ../app/tools/gimplevelstool.c:429
+#: ../app/tools/gimpcurvestool.c:529 ../app/tools/gimplevelstool.c:429
 #, fuzzy
 msgid "R_eset Channel"
 msgstr "Atstatyti kanalą"
 
 #  Horizontal button box for load / save
 #. Horizontal button box for load / save
-#: ../app/tools/gimpcurvestool.c:595 ../app/tools/gimplevelstool.c:623
+#: ../app/tools/gimpcurvestool.c:631 ../app/tools/gimplevelstool.c:623
 msgid "All Channels"
 msgstr "Visi kanalai"
 
 #. The radio box for selecting the curve type
-#: ../app/tools/gimpcurvestool.c:613
+#: ../app/tools/gimpcurvestool.c:649
 msgid "Curve Type"
 msgstr "Kreivės tipas"
 
@@ -8794,27 +8664,27 @@ msgstr "Blukinti arba ryškinti"
 
 #: ../app/tools/gimpdodgeburntool.c:71
 msgid "Dod_geBurn"
-msgstr "Blukinimas ir ryškinimas"
+msgstr "Blu_kinimas ir ryškinimas"
 
 #. the type (dodge or burn)
 #: ../app/tools/gimpdodgeburntool.c:191
-#, fuzzy, c-format
+#, c-format
 msgid "Type  (%s)"
-msgstr "Tipas %s"
+msgstr "Tipas (%s)"
 
 #: ../app/tools/gimpdodgeburntool.c:203
 msgid "Mode"
 msgstr "Režimas"
 
 #: ../app/tools/gimpdodgeburntool.c:215
+#, fuzzy
 msgid "Exposure:"
 msgstr "Demonstravimas:"
 
 #: ../app/tools/gimpeditselectiontool.c:267
 #: ../app/tools/gimpeditselectiontool.c:1204
-#, fuzzy
 msgid "Move Floating Selection"
-msgstr "Plaukiojantis pažymėjimas"
+msgstr "Perkelti plaukiojantį pažymėjimą"
 
 #: ../app/tools/gimpeditselectiontool.c:465
 #: ../app/tools/gimpeditselectiontool.c:732
@@ -8850,17 +8720,17 @@ msgstr "Veikia:"
 
 #. tool toggle
 #: ../app/tools/gimpflipoptions.c:165
-#, fuzzy, c-format
+#, c-format
 msgid "Flip Type  (%s)"
-msgstr "Apsukimo tipas  %s"
+msgstr "Apsukimo tipas (%s)"
 
 #: ../app/tools/gimpfliptool.c:82
 msgid "Flip the layer or selection"
-msgstr "Sluoksnio ar pažymėjimo atspindys"
+msgstr "Apsukti sluoksnį ar pažymėjimą"
 
 #: ../app/tools/gimpfliptool.c:83
 msgid "_Flip"
-msgstr "Veidrodinis vaizdas"
+msgstr "_Apsukti"
 
 #: ../app/tools/gimpfreeselecttool.c:98
 msgid "Select hand-drawn regions"
@@ -8870,59 +8740,63 @@ msgstr "Laisvas sričių pažymėjimas"
 msgid "_Free Select"
 msgstr "_Laisvas pažymėjimas"
 
-#: ../app/tools/gimpforegroundselectoptions.c:109
+#: ../app/tools/gimpforegroundselectoptions.c:110
+msgid "Select multiple disconnected objects"
+msgstr ""
+
+#: ../app/tools/gimpforegroundselectoptions.c:115
 msgid "Size of the brush used for refinements"
 msgstr ""
 
-#: ../app/tools/gimpforegroundselectoptions.c:114
+#: ../app/tools/gimpforegroundselectoptions.c:120
 msgid ""
 "Smaller values give a more accurate selection border but may introduce holes "
 "in the selection"
 msgstr ""
 
-#: ../app/tools/gimpforegroundselectoptions.c:121
+#: ../app/tools/gimpforegroundselectoptions.c:127
 msgid "Sensitivity for brightness component"
 msgstr ""
 
-#: ../app/tools/gimpforegroundselectoptions.c:126
+#: ../app/tools/gimpforegroundselectoptions.c:132
 msgid "Sensitivity for red/green component"
 msgstr ""
 
-#: ../app/tools/gimpforegroundselectoptions.c:131
+#: ../app/tools/gimpforegroundselectoptions.c:137
 msgid "Sensitivity for yellow/blue component"
 msgstr ""
 
-#: ../app/tools/gimpforegroundselectoptions.c:226
+#: ../app/tools/gimpforegroundselectoptions.c:238
 msgid "Interactive refinement"
 msgstr ""
 
-#: ../app/tools/gimpforegroundselectoptions.c:227
+#: ../app/tools/gimpforegroundselectoptions.c:239
 #, fuzzy
 msgid "Mark background"
 msgstr "Fonas"
 
-#: ../app/tools/gimpforegroundselectoptions.c:228
+#: ../app/tools/gimpforegroundselectoptions.c:240
 #, fuzzy
 msgid "Mark foreground"
 msgstr "Priekinis planas"
 
-#: ../app/tools/gimpforegroundselectoptions.c:243
+#: ../app/tools/gimpforegroundselectoptions.c:255
 #, fuzzy
 msgid "Small brush"
 msgstr "Mažas"
 
-#: ../app/tools/gimpforegroundselectoptions.c:251
+#: ../app/tools/gimpforegroundselectoptions.c:263
 #, fuzzy
 msgid "Large brush"
 msgstr "Naujas teptukas"
 
-#: ../app/tools/gimpforegroundselectoptions.c:274
+#: ../app/tools/gimpforegroundselectoptions.c:286
 #, fuzzy
 msgid "Smoothing:"
 msgstr "Glotnumas"
 
 #. granularity
-#: ../app/tools/gimpforegroundselectoptions.c:277
+#: ../app/tools/gimpforegroundselectoptions.c:289
 #, fuzzy
 msgid "Color Sensitivity"
 msgstr "Jautrumas"
@@ -8942,15 +8816,15 @@ msgstr "Nustatyti priekinio plano spalvą"
 msgid "F_oreground Select"
 msgstr "Priekinis planas"
 
-#: ../app/tools/gimpforegroundselecttool.c:320
+#: ../app/tools/gimpforegroundselecttool.c:329
 msgid "Add more strokes or press Enter to accept the selection"
 msgstr ""
 
-#: ../app/tools/gimpforegroundselecttool.c:322
+#: ../app/tools/gimpforegroundselecttool.c:331
 msgid "Mark foreground by painting on the object to extract"
 msgstr ""
 
-#: ../app/tools/gimpforegroundselecttool.c:336
+#: ../app/tools/gimpforegroundselecttool.c:345
 msgid "Draw a rough circle around the object to extract"
 msgstr ""
 
@@ -9145,24 +9019,21 @@ msgid "Levels for indexed layers cannot be adjusted."
 msgstr ""
 
 #: ../app/tools/gimplevelstool.c:346
-#, fuzzy
 msgid "Pick black point"
-msgstr "Pasirinkit juodą tašką"
+msgstr "Pasirinkite juodą tašką"
 
 #: ../app/tools/gimplevelstool.c:350
-#, fuzzy
 msgid "Pick gray point"
-msgstr "Pasirinkit pilką tašką"
+msgstr "Pasirinkite pilką tašką"
 
 #: ../app/tools/gimplevelstool.c:354
-#, fuzzy
 msgid "Pick white point"
-msgstr "Pasirinkit baltą tašką"
+msgstr "Pasirinkite baltą tašką"
 
 #. Input levels frame
 #: ../app/tools/gimplevelstool.c:444
 msgid "Input Levels"
-msgstr "Įėjimo lygiai:"
+msgstr "Įvedimo lygiai"
 
 #: ../app/tools/gimplevelstool.c:531
 msgid "Gamma"
@@ -9178,9 +9049,8 @@ msgid "Adjust levels automatically"
 msgstr "Automatiškai nustatyti lygius"
 
 #: ../app/tools/gimpmagnifyoptions.c:201
-#, fuzzy
 msgid "Auto-resize window"
-msgstr "Pakeisti lango dydį pakeitus mastelį"
+msgstr "Automatiškai keisti lango dydį"
 
 #: ../app/tools/gimpmagnifytool.c:95
 msgid "Magnify"
@@ -9191,14 +9061,12 @@ msgid "Zoom in & out"
 msgstr "Vaizdo didinimas ir mažinimas"
 
 #: ../app/tools/gimpmagnifytool.c:97
-#, fuzzy
 msgid "M_agnify"
-msgstr "Didinti"
+msgstr "_Didinti"
 
 #: ../app/tools/gimpmeasureoptions.c:154
-#, fuzzy
 msgid "Use info window"
-msgstr "Naudoti Info langą"
+msgstr "Naudoti informacijos langą"
 
 #: ../app/tools/gimpmeasuretool.c:118
 msgid "Measure"
@@ -9226,29 +9094,24 @@ msgid "Distance:"
 msgstr "Atstumas:"
 
 #: ../app/tools/gimpmoveoptions.c:169
-#, fuzzy
 msgid "Pick a layer or guide"
-msgstr "/Stekas/Pakelti sluoksnį iki viršaus"
+msgstr "Pasirinkite sluoksnį ar pagalbinę liniją"
 
 #: ../app/tools/gimpmoveoptions.c:170
-#, fuzzy
 msgid "Move the current layer"
-msgstr "Perkelti aktyvų sluoksnį"
+msgstr "Perkelti esamą sluoksnį"
 
 #: ../app/tools/gimpmoveoptions.c:174
-#, fuzzy
 msgid "Move selection"
 msgstr "Perkelti pažymėjimą"
 
 #: ../app/tools/gimpmoveoptions.c:178
-#, fuzzy
 msgid "Pick a path"
-msgstr "Pasirinkit perkeliamą kelią"
+msgstr "Pasirinkite kelią"
 
 #: ../app/tools/gimpmoveoptions.c:179
-#, fuzzy
 msgid "Move the current path"
-msgstr "Perkelti aktyvų kontūrą"
+msgstr "Perkelti esamą kelią"
 
 #: ../app/tools/gimpmovetool.c:117
 msgid "Move layers & selections"
@@ -9259,19 +9122,16 @@ msgid "_Move"
 msgstr "_Perkelti"
 
 #: ../app/tools/gimpmovetool.c:299 ../app/tools/gimpmovetool.c:577
-#, fuzzy
 msgid "Move Guide: "
-msgstr "Perkelti pagalbinę liniją"
+msgstr "Perkelti pagalbinę liniją:"
 
 #: ../app/tools/gimpmovetool.c:571
-#, fuzzy
 msgid "Cancel Guide"
-msgstr "Atšaukti"
+msgstr "Atšaukti pagalbinę liniją"
 
 #: ../app/tools/gimpmovetool.c:577
-#, fuzzy
 msgid "Add Guide: "
-msgstr "Pridėti pagalbinių linijų"
+msgstr "Pridėti pagalbinę liniją:"
 
 #: ../app/tools/gimppaintbrushtool.c:52
 msgid "Paint fuzzy brush strokes"
@@ -9306,12 +9166,10 @@ msgid "Incremental"
 msgstr "Didėjantis"
 
 #: ../app/tools/gimppaintoptions-gui.c:186
-#, fuzzy
 msgid "Hard edge"
 msgstr "Aštrūs kraštai"
 
 #: ../app/tools/gimppaintoptions-gui.c:227
-#, fuzzy
 msgid "Pressure sensitivity"
 msgstr "Spaudimo jautrumas"
 
@@ -9335,7 +9193,7 @@ msgstr "Dydis"
 #: ../app/tools/gimppaintoptions-gui.c:334
 #, fuzzy
 msgid "Fade out"
-msgstr "Išblukimas"
+msgstr "Išblunkantis"
 
 #: ../app/tools/gimppaintoptions-gui.c:354
 #: ../app/tools/gimppaintoptions-gui.c:473
@@ -9347,26 +9205,24 @@ msgid "Apply Jitter"
 msgstr ""
 
 #: ../app/tools/gimppaintoptions-gui.c:411
-#, fuzzy
 msgid "Amount:"
-msgstr "Skaičius:"
+msgstr "Kiekis:"
 
 #: ../app/tools/gimppaintoptions-gui.c:437
-#, fuzzy
 msgid "Use color from gradient"
-msgstr "Naudoti spalvą iš perėjimo"
+msgstr "Naudoti perėjimo spalvą"
 
 #: ../app/tools/gimppainttool.c:714
 msgid "Press Shift to draw a straight line."
-msgstr ""
+msgstr "Norėdami nupiešti tiesią liniją, spauskite Shift."
 
 #: ../app/tools/gimppenciltool.c:52
 msgid "Paint hard edged pixels"
-msgstr "Piešti aštrių kampų taškus"
+msgstr "Piešti aštrių kampų taškelius"
 
 #: ../app/tools/gimppenciltool.c:53
 msgid "Pe_ncil"
-msgstr "Pieštukas"
+msgstr "Piešt_ukas"
 
 #: ../app/tools/gimpperspectivetool.c:82
 msgid "Change perspective of the layer or selection"
@@ -9410,9 +9266,8 @@ msgid "Posterize _levels:"
 msgstr "Posterize lygiai:"
 
 #: ../app/tools/gimprectangleoptions.c:660
-#, fuzzy
 msgid "Highlight"
-msgstr "Šviesios spalvos"
+msgstr "Paryškinti"
 
 #: ../app/tools/gimprectangleoptions.c:672
 msgid "Fix"
@@ -9439,17 +9294,16 @@ msgid "Center"
 msgstr "Centruota"
 
 #: ../app/tools/gimprectangletool.c:1831 ../app/tools/gimprectangletool.c:2258
-#, fuzzy
 msgid "Rectangle: "
-msgstr "Atstatyti paveikslėlį?"
+msgstr "Stačiakampis: "
 
 #: ../app/tools/gimprectangletool.c:2677
 msgid "1 "
-msgstr ""
+msgstr "1 "
 
 #: ../app/tools/gimprectangletool.c:2678
 msgid "2 "
-msgstr ""
+msgstr "2 "
 
 #: ../app/tools/gimprectangletool.c:2679 ../app/widgets/gimpcursorview.c:170
 #: ../app/widgets/gimpcursorview.c:192
@@ -9467,7 +9321,7 @@ msgstr "Pažymėti stačiakampius plotus"
 
 #: ../app/tools/gimprectselecttool.c:97
 msgid "_Rect Select"
-msgstr "_Keturkampis pažymėjimas"
+msgstr "_Stačiakampis pažymėjimas"
 
 #: ../app/tools/gimprectselecttool.c:394
 msgid "Selection: "
@@ -9479,7 +9333,7 @@ msgstr "Pasukti sluoksnį arba pažymėjimą"
 
 #: ../app/tools/gimprotatetool.c:99
 msgid "_Rotate"
-msgstr "_Pasukimas"
+msgstr "_Pasukti"
 
 #: ../app/tools/gimprotatetool.c:158
 msgid "Rotation Information"
@@ -9490,9 +9344,8 @@ msgid "Center X:"
 msgstr "Centro X:"
 
 #: ../app/tools/gimprotatetool.c:190
-#, fuzzy
 msgid "Center Y:"
-msgstr "Centro X:"
+msgstr "Centro Y:"
 
 #: ../app/tools/gimpscaletool.c:91
 msgid "Scale"
@@ -9509,21 +9362,19 @@ msgstr "_Mastelis"
 #: ../app/tools/gimpscaletool.c:152
 #, fuzzy
 msgid "Scaling Information"
-msgstr "Dydžio keitimo informacija"
+msgstr "Mastelio keitimo informacija"
 
 #: ../app/tools/gimpscaletool.c:163
 msgid "Original Width:"
 msgstr "Originalus plotis:"
 
 #: ../app/tools/gimpscaletool.c:170
-#, fuzzy
 msgid "Current width:"
 msgstr "Esamas plotis:"
 
 #: ../app/tools/gimpscaletool.c:174
-#, fuzzy
 msgid "Current height:"
-msgstr "Esamas plotis:"
+msgstr "Esamas aukštis:"
 
 #: ../app/tools/gimpscaletool.c:189
 #, fuzzy
@@ -9556,55 +9407,47 @@ msgstr ""
 
 #: ../app/tools/gimpselectionoptions.c:172
 msgid "Use all visible layers when shrinking the selection"
-msgstr ""
+msgstr "Mažinant pažymėjimą naudoti visus matomus sluoksnius"
 
 #: ../app/tools/gimpselectionoptions.c:436 ../app/tools/gimptextoptions.c:458
 msgid "Antialiasing"
-msgstr "Išlyginimas"
+msgstr "Glotninimas"
 
 #: ../app/tools/gimpselectionoptions.c:457
-#, fuzzy
 msgid "Feather edges"
-msgstr "Grubūs kraštai"
+msgstr "Išlieti kraštus"
 
 #: ../app/tools/gimpselectionoptions.c:483
-#, fuzzy
 msgid "Show interactive boundary"
 msgstr "Rodyti interaktyvias ribas"
 
 #: ../app/tools/gimpselectionoptions.c:506
-#, fuzzy
 msgid "Select transparent areas"
 msgstr "Pažymėti permatomas sritis"
 
 #: ../app/tools/gimpselectionoptions.c:546
-#, fuzzy
 msgid "Auto shrink selection"
 msgstr "Automatiškai sumažinti pažymėjimą"
 
 #: ../app/tools/gimpselectiontool.c:259
-#, fuzzy
 msgid "Move the selection mask"
-msgstr "Perkelti pažymėjimą"
+msgstr "Perkelti pažymėjimo kaukę"
 
 #: ../app/tools/gimpselectiontool.c:263
-#, fuzzy
 msgid "Move the selected pixels"
-msgstr "Perkelti pažymėtą filtrą aukštyn"
+msgstr "Perkelti pažymėtus taškus"
 
 #: ../app/tools/gimpselectiontool.c:267
-#, fuzzy
 msgid "Move a copy of the selected pixels"
-msgstr "Perkelti pažymėtą filtrą aukštyn"
+msgstr "Perkelti pažymėtų taškų kopiją"
 
 #: ../app/tools/gimpselectiontool.c:271
-#, fuzzy
 msgid "Anchor the floating selection"
 msgstr "Prikabinti plaukiojantį pažymėjimą"
 
 #: ../app/tools/gimpsheartool.c:98
 msgid "Shear"
-msgstr "Kirpti"
+msgstr "Šlytis"
 
 #: ../app/tools/gimpsheartool.c:99
 msgid "Shear the layer or selection"
@@ -9612,7 +9455,7 @@ msgstr "Sluoksnio arba pažymėjimo šlyties deformacija"
 
 #: ../app/tools/gimpsheartool.c:100
 msgid "S_hear"
-msgstr "Šlytis"
+msgstr "Šl_ytis"
 
 #: ../app/tools/gimpsheartool.c:157
 msgid "Shearing Information"
@@ -9652,14 +9495,12 @@ msgid "Indentation of the first line"
 msgstr "Pirmos eilutės įtraukimas"
 
 #: ../app/tools/gimptextoptions.c:183
-#, fuzzy
 msgid "Adjust line spacing"
-msgstr "Tarpai tarp pagalbinių linijų"
+msgstr "Keisti tarpus tarp eilučių"
 
 #: ../app/tools/gimptextoptions.c:188
-#, fuzzy
 msgid "Adjust letter spacing"
-msgstr "Keisti tarpą tarp eilučių"
+msgstr "Keisti tarpus tarp raidžių"
 
 #: ../app/tools/gimptextoptions.c:430
 msgid "Font:"
@@ -9667,11 +9508,11 @@ msgstr "Šriftas:"
 
 #: ../app/tools/gimptextoptions.c:442
 msgid "Hinting"
-msgstr "Dalinu"
+msgstr "Patarinėjimas"
 
 #: ../app/tools/gimptextoptions.c:449
 msgid "Force auto-hinter"
-msgstr ""
+msgstr "Priverstinis „auto-patarinėjimas“"
 
 #: ../app/tools/gimptextoptions.c:464
 msgid "Text Color"
@@ -9686,7 +9527,6 @@ msgid "Justify:"
 msgstr "Lygiavimas:"
 
 #: ../app/tools/gimptextoptions.c:493
-#, fuzzy
 msgid "Create Path from Text"
 msgstr "Iš teksto sukurti kelią"
 
@@ -9701,7 +9541,7 @@ msgstr "Rašyti tekstą paveikslėlyje"
 
 #: ../app/tools/gimptexttool.c:148
 msgid "Te_xt"
-msgstr "Tekstas"
+msgstr "Te_kstas"
 
 #: ../app/tools/gimptexttool.c:794
 msgid "GIMP Text Editor"
@@ -9709,7 +9549,7 @@ msgstr "GIMP teksto redaktorius"
 
 #: ../app/tools/gimptexttool.c:904 ../app/tools/gimptexttool.c:907
 msgid "Confirm Text Editing"
-msgstr ""
+msgstr "Patvirtinkite teksto redagavimą"
 
 #: ../app/tools/gimptexttool.c:936
 msgid ""
@@ -9725,18 +9565,16 @@ msgid "Reduce image to two colors using a threshold"
 msgstr "Sumažinti spalvų kiekį paveikslėlyje iki dviejų naudojant slenkstį"
 
 #: ../app/tools/gimpthresholdtool.c:91
-#, fuzzy
 msgid "_Threshold..."
-msgstr "Slenkstis"
+msgstr "_Slenkstis..."
 
 #: ../app/tools/gimpthresholdtool.c:145
 msgid "Apply Threshold"
 msgstr "Pritaikyti slenkstį"
 
 #: ../app/tools/gimpthresholdtool.c:196
-#, fuzzy
 msgid "Threshold does not operate on indexed layers."
-msgstr "Slenkstis neveikia indeksuotiems paveikslėliams."
+msgstr "Slenkstis neveikia indeksuotiems sluoksniams."
 
 #: ../app/tools/gimptransformoptions.c:328
 msgid "Transform Direction"
@@ -9744,7 +9582,7 @@ msgstr "Transformavimo kryptis"
 
 #: ../app/tools/gimptransformoptions.c:337
 msgid "Interpolation:"
-msgstr "Interpoliacijos tipas:"
+msgstr "Interpoliacija:"
 
 #: ../app/tools/gimptransformoptions.c:347
 #, fuzzy
@@ -9766,36 +9604,32 @@ msgid "Constraints"
 msgstr "Apribojimai"
 
 #: ../app/tools/gimptransformoptions.c:424
-#, fuzzy, c-format
+#, c-format
 msgid "15 degrees  (%s)"
-msgstr "15 laipsnių  %s"
+msgstr "15 laipsnių  (%s)"
 
 #: ../app/tools/gimptransformoptions.c:444
-#, fuzzy, c-format
+#, c-format
 msgid "Keep height  (%s)"
-msgstr "Nekeisti aukščio  %s"
+msgstr "Nekeisti aukščio  (%s)"
 
 #: ../app/tools/gimptransformoptions.c:446
-#, fuzzy, c-format
+#, c-format
 msgid "Keep width  (%s)"
-msgstr "Nekeisti pločio  %s"
+msgstr "Nekeisti pločio  (%s)"
 
-# Nesu tikra dėl Aspect.
 #: ../app/tools/gimptransformoptions.c:448
-#, fuzzy, c-format
+#, c-format
 msgid "Keep aspect  (%s)"
 msgstr ""
-"Nustatytas dydis /\n"
-"Pakrypimas plokštumos atžvilgiu"
 
 #: ../app/tools/gimptransformtool.c:255
-#, fuzzy
 msgid "Transforming"
-msgstr "Transformuojama..."
+msgstr "Transformuojama"
 
 #: ../app/tools/gimpvectoroptions.c:111
 msgid "Restrict editing to polygons"
-msgstr ""
+msgstr "Apriboti redagavimą iki poligonų"
 
 #: ../app/tools/gimpvectoroptions.c:175
 msgid "Edit Mode"
@@ -9816,20 +9650,19 @@ msgstr ""
 "Kanalą peversti pažymėjimu\n"
 "%s  Pridėti\n"
 "%s  Atimti\n"
-"%s%s%s  Sankirta"
+"%s  Susikirsti"
 
 #: ../app/tools/gimpvectoroptions.c:194
-#, fuzzy
 msgid "Create Selection from Path"
-msgstr "Sukurti pažymėjimą iš kontūro"
+msgstr "Sukurti pažymėjimą iš kelio"
 
 #: ../app/tools/gimpvectortool.c:155
 msgid "Create and edit paths"
-msgstr "Sukurti ir keisti kontūrus"
+msgstr "Sukurti ir keisti kelius"
 
 #: ../app/tools/gimpvectortool.c:358
 msgid "Add Stroke"
-msgstr "Pridėti apibraukimą"
+msgstr "Pridėti apvedimą"
 
 #: ../app/tools/gimpvectortool.c:376
 msgid "Add Anchor"
@@ -9837,7 +9670,7 @@ msgstr "Pridėti inkarą"
 
 #: ../app/tools/gimpvectortool.c:399
 msgid "Insert Anchor"
-msgstr ""
+msgstr "Įterpti inkarą"
 
 #: ../app/tools/gimpvectortool.c:428
 msgid "Drag Handle"
@@ -9849,7 +9682,7 @@ msgstr "Tempti inkarą"
 
 #: ../app/tools/gimpvectortool.c:474
 msgid "Drag Anchors"
-msgstr ""
+msgstr "Tempti inkarus"
 
 #: ../app/tools/gimpvectortool.c:494
 msgid "Drag Curve"
@@ -9861,16 +9694,15 @@ msgstr "Sujungti apibraukimus"
 
 #: ../app/tools/gimpvectortool.c:552
 msgid "Drag Path"
-msgstr "Tempti kontūrą"
+msgstr "Tempti kelią"
 
 #: ../app/tools/gimpvectortool.c:562
 msgid "Convert Edge"
 msgstr "Konvertuoti kraštą"
 
 #: ../app/tools/gimpvectortool.c:592
-#, fuzzy
 msgid "Delete Anchor"
-msgstr "Ištrinti pažymėjimą"
+msgstr "Ištrinti inkarą"
 
 #: ../app/tools/gimpvectortool.c:614
 msgid "Delete Segment"
@@ -9878,11 +9710,11 @@ msgstr "Ištrinti segmentą"
 
 #: ../app/tools/gimpvectortool.c:827
 msgid "Move Anchors"
-msgstr ""
+msgstr "Perkelti inkarus"
 
 #: ../app/tools/gimpvectortool.c:1192
 msgid "Click to pick path to edit."
-msgstr ""
+msgstr "Spragtelkite norėdami pasirinkti kelią redagavimui."
 
 #: ../app/tools/gimpvectortool.c:1195
 msgid "Click to create a new path."
@@ -9935,7 +9767,7 @@ msgstr ""
 
 #: ../app/tools/gimpvectortool.c:1237
 msgid "Click to open up the path."
-msgstr ""
+msgstr "Spragtelkite norėdami atverti kelią."
 
 #: ../app/tools/gimpvectortool.c:1240
 msgid "Click to make this node angular."
@@ -9944,26 +9776,23 @@ msgstr ""
 #: ../app/tools/gimpvectortool.c:1762
 #, fuzzy
 msgid "Delete Anchors"
-msgstr "Ištrinti pažymėjimą"
+msgstr "Ištrinti inkarus"
 
 #: ../app/tools/gimpvectortool.c:1930
-#, fuzzy
 msgid "There is no active layer or channel to stroke to"
-msgstr ""
-"Aktyvusis sluoksnis neturi alfa kanalo,\n"
-"kurį galėčiau paversti pažymėjimu"
+msgstr "Nėra apvestino aktyvaus sluoksnio ar kanalo"
 
 #: ../app/vectors/gimpvectors.c:229
 msgid "Path"
-msgstr "Kontūras"
+msgstr "Kelias"
 
 #: ../app/vectors/gimpvectors.c:230
 msgid "Rename Path"
-msgstr "Pervadinti kontūrą"
+msgstr "Pervadinti kelią"
 
 #: ../app/vectors/gimpvectors.c:231 ../app/vectors/gimpvectors.c:358
 msgid "Move Path"
-msgstr "Perkelti kontūrą"
+msgstr "Perkelti kelią"
 
 #: ../app/vectors/gimpvectors.c:232
 msgid "Scale Path"
@@ -9979,19 +9808,19 @@ msgstr "Apsukti kelią"
 
 #: ../app/vectors/gimpvectors.c:235 ../app/vectors/gimpvectors.c:483
 msgid "Rotate Path"
-msgstr "Pasukti kontūrą"
+msgstr "Pasukti kelią"
 
 #: ../app/vectors/gimpvectors.c:236 ../app/vectors/gimpvectors.c:514
 msgid "Transform Path"
-msgstr "Transformuoti kontūrą"
+msgstr "Transformuoti kelią"
 
 #: ../app/vectors/gimpvectors.c:542
 msgid "Cannot stroke empty path."
-msgstr ""
+msgstr "Negalima apvesti tuščio kelio."
 
 #: ../app/vectors/gimpvectors-import.c:287
 msgid "Import Paths"
-msgstr "Importuoti kontūrą"
+msgstr "Importuoti kelią"
 
 #: ../app/vectors/gimpvectors-import.c:298
 msgid "Imported Path"
@@ -10000,16 +9829,16 @@ msgstr "Importuotas kelias"
 #: ../app/vectors/gimpvectors-import.c:324
 #, c-format
 msgid "No paths found in '%s'"
-msgstr "Kontūrų nerasta byloje %s"
+msgstr "„%s“ kelių nerasta"
 
 #: ../app/vectors/gimpvectors-import.c:327
 msgid "No paths found in the buffer"
-msgstr "Nėra kontūrų buferyje"
+msgstr "Nėra kelių buferyje"
 
 #: ../app/vectors/gimpvectors-import.c:337
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to import paths from '%s': %s"
-msgstr "Negalima nuskaityti %d baitų iš %s: %s"
+msgstr "Nepavyko importuoti kelių iš „%s“: %s"
 
 #: ../app/widgets/gimpactiongroup.c:803
 #, c-format
@@ -10054,11 +9883,11 @@ msgstr ""
 
 #: ../app/widgets/gimpactionview.c:632
 msgid "Removing shortcut failed."
-msgstr ""
+msgstr "Nepavyko pašalinti kombinacijos."
 
 #: ../app/widgets/gimpactionview.c:637
 msgid "Invalid shortcut."
-msgstr ""
+msgstr "Netinkama konbinacija."
 
 #: ../app/widgets/gimpbrusheditor.c:168
 #, fuzzy
@@ -10114,11 +9943,11 @@ msgstr "Iškarpinė"
 
 #: ../app/widgets/gimpcolordialog.c:175
 msgid "Add the current color to the color history"
-msgstr ""
+msgstr "Pridėti esamą spalvą prie spalvų istorijos"
 
 #: ../app/widgets/gimpcolordisplayeditor.c:180
 msgid "Available Filters"
-msgstr "Filtrai"
+msgstr "Prieinami filtrai"
 
 #: ../app/widgets/gimpcolordisplayeditor.c:207
 msgid "Add the selected filter to the list of active filters."
@@ -10151,7 +9980,7 @@ msgstr "Nepasirinktas joks filtras"
 
 #: ../app/widgets/gimpcoloreditor.c:280
 msgid "Hexadecimal color notation as used in HTML and CSS"
-msgstr ""
+msgstr "Šešioliktainė spalvos notacija, tokia kaip naudojama HTML ir CSS"
 
 #: ../app/widgets/gimpcolorframe.c:446
 msgid "Index:"
@@ -10223,19 +10052,19 @@ msgstr "HTML notacija:"
 
 #: ../app/widgets/gimpcontainerpopup.c:564
 msgid "Smaller Previews"
-msgstr "Mažesnė peržiūra"
+msgstr "Mažesnės peržiūros"
 
 #: ../app/widgets/gimpcontainerpopup.c:569
 msgid "Larger Previews"
-msgstr "Didesnė peržiūra"
+msgstr "Didesnės peržiūros"
 
 #: ../app/widgets/gimpcontrollereditor.c:216
 msgid "Dump events from this controller"
-msgstr ""
+msgstr "Išveda šio kontrolerio įvykius"
 
 #: ../app/widgets/gimpcontrollereditor.c:221
 msgid "Enable this controller"
-msgstr ""
+msgstr "Įjungti šį kontrolerį"
 
 #: ../app/widgets/gimpcontrollereditor.c:242
 msgid "Name:"
@@ -10246,31 +10075,29 @@ msgid "Event"
 msgstr "Įvykis"
 
 #: ../app/widgets/gimpcontrollereditor.c:418
-#, fuzzy
 msgid "_Grab event"
-msgstr "_Perėjimas"
+msgstr "_Fiksuoti įvykį"
 
 #: ../app/widgets/gimpcontrollereditor.c:428
 msgid "Select the next event arriving from the controller"
-msgstr ""
+msgstr "Pasirinkti sekantį kontrolerio įvykį"
 
 #: ../app/widgets/gimpcontrollereditor.c:441
 msgid "Assign an action to the selected event"
-msgstr ""
+msgstr "Priskirti pasirinktam įvykiui veiksmą"
 
 #: ../app/widgets/gimpcontrollereditor.c:453
-#, fuzzy
 msgid "Remove the action from the selected event"
-msgstr "Pašalinti pažymėtą elementą"
+msgstr "Pašalinti veiksmą iš pažymėto įvykio"
 
 #: ../app/widgets/gimpcontrollereditor.c:686
-#, fuzzy, c-format
+#, c-format
 msgid "Select Action for Event '%s'"
-msgstr "Pažymėjimo savybių nustatymas"
+msgstr "Pasirinkite veiksmą įvykiui „%s“"
 
 #: ../app/widgets/gimpcontrollereditor.c:691
 msgid "Select Controller Event Action"
-msgstr ""
+msgstr "Pasirinkite kontrolerio įvykiui veiksmą"
 
 #: ../app/widgets/gimpcontrollerkeyboard.c:70
 #: ../app/widgets/gimpcontrollerkeyboard.c:73
@@ -10280,9 +10107,8 @@ msgstr ""
 #: ../app/widgets/gimpcontrollerkeyboard.c:85
 #: ../app/widgets/gimpcontrollerkeyboard.c:88
 #: ../app/widgets/gimpcontrollerkeyboard.c:91
-#, fuzzy
 msgid "Cursor Up"
-msgstr "Kursorius"
+msgstr "Kursorius aukštyn"
 
 #: ../app/widgets/gimpcontrollerkeyboard.c:95
 #: ../app/widgets/gimpcontrollerkeyboard.c:98
@@ -10292,9 +10118,8 @@ msgstr "Kursorius"
 #: ../app/widgets/gimpcontrollerkeyboard.c:110
 #: ../app/widgets/gimpcontrollerkeyboard.c:113
 #: ../app/widgets/gimpcontrollerkeyboard.c:116
-#, fuzzy
 msgid "Cursor Down"
-msgstr "Kursorius"
+msgstr "Kursorius žemyn"
 
 #: ../app/widgets/gimpcontrollerkeyboard.c:120
 #: ../app/widgets/gimpcontrollerkeyboard.c:123
@@ -10304,9 +10129,8 @@ msgstr "Kursorius"
 #: ../app/widgets/gimpcontrollerkeyboard.c:135
 #: ../app/widgets/gimpcontrollerkeyboard.c:138
 #: ../app/widgets/gimpcontrollerkeyboard.c:141
-#, fuzzy
 msgid "Cursor Left"
-msgstr "Kursorius"
+msgstr "Kursorius kairėn"
 
 #: ../app/widgets/gimpcontrollerkeyboard.c:145
 #: ../app/widgets/gimpcontrollerkeyboard.c:148
@@ -10316,55 +10140,45 @@ msgstr "Kursorius"
 #: ../app/widgets/gimpcontrollerkeyboard.c:160
 #: ../app/widgets/gimpcontrollerkeyboard.c:163
 #: ../app/widgets/gimpcontrollerkeyboard.c:166
-#, fuzzy
 msgid "Cursor Right"
-msgstr "Esamas plotis:"
+msgstr "Kursorius dešinėn"
 
 #: ../app/widgets/gimpcontrollerkeyboard.c:208
-#, fuzzy
 msgid "Keyboard"
-msgstr "Klavišų kombinacijos"
+msgstr "Klaviatūra"
 
 #: ../app/widgets/gimpcontrollerkeyboard.c:251
-#, fuzzy
 msgid "Keyboard Events"
-msgstr "Klavišų kombinacijos"
+msgstr "Klaviatūros įvykiai"
 
 #: ../app/widgets/gimpcontrollerkeyboard.c:252
 #: ../app/widgets/gimpcontrollerwheel.c:251
-#, fuzzy
 msgid "Ready"
-msgstr "Raudona"
+msgstr "Pasiruošęs"
 
 #: ../app/widgets/gimpcontrollerlist.c:213
-#, fuzzy
 msgid "Available Controllers"
-msgstr "Filtrai"
+msgstr "Prieinami kontroleriai"
 
 #: ../app/widgets/gimpcontrollerlist.c:278
-#, fuzzy
 msgid "Create a controller of the selected type."
-msgstr "Sukurti naują paveikslėlį iš pažymėto šablono"
+msgstr "Sukurti naują pasirinkto tipo kontrolerį."
 
 #: ../app/widgets/gimpcontrollerlist.c:313
-#, fuzzy
 msgid "Active Controllers"
-msgstr "Aktyvūs filtrai"
+msgstr "Aktyvūs kontroleriai"
 
 #: ../app/widgets/gimpcontrollerlist.c:329
-#, fuzzy
 msgid "Configure the selected controller"
-msgstr "Konfigūruoti pasirinktą filtrą"
+msgstr "Konfigūruoti pasirinktą kontrolerį"
 
 #: ../app/widgets/gimpcontrollerlist.c:337
-#, fuzzy
 msgid "Move the selected controller up"
-msgstr "Perkelti pažymėtą filtrą aukštyn"
+msgstr "Perkelti pažymėtą kontrolerį aukštyn"
 
 #: ../app/widgets/gimpcontrollerlist.c:345
-#, fuzzy
 msgid "Move the selected controller down"
-msgstr "Perkelti pažymėtą filtrą žemyn"
+msgstr "Perkelti pažymėtą kontrolerį žemyn"
 
 #: ../app/widgets/gimpcontrollerlist.c:517
 msgid ""
@@ -10381,23 +10195,21 @@ msgid ""
 msgstr ""
 
 #: ../app/widgets/gimpcontrollerlist.c:551
-#, fuzzy
 msgid "Remove Controller?"
-msgstr "Pašalinti _elementą"
+msgstr "Pašalinti kontrolerį?"
 
 #: ../app/widgets/gimpcontrollerlist.c:556
 msgid "Disable Controller"
-msgstr ""
+msgstr "Išjungti kontrolerį"
 
 #: ../app/widgets/gimpcontrollerlist.c:558
-#, fuzzy
 msgid "Remove Controller"
-msgstr "Pašalinti _elementą"
+msgstr "Pašalinti kontrolerį"
 
 #: ../app/widgets/gimpcontrollerlist.c:569
 #, c-format
 msgid "Remove Controller '%s'?"
-msgstr ""
+msgstr "Pašalinti kontrolerį „%s“?"
 
 #: ../app/widgets/gimpcontrollerlist.c:573
 msgid ""
@@ -10409,13 +10221,12 @@ msgid ""
 msgstr ""
 
 #: ../app/widgets/gimpcontrollerlist.c:634
-#, fuzzy
 msgid "Configure Controller"
-msgstr "/Dialogai/Rodyti filtrus..."
+msgstr "Konfigūruoti kontrolerį"
 
 #: ../app/widgets/gimpcontrollerlist.c:637
 msgid "Configure Input Controller"
-msgstr ""
+msgstr "Konfigūruoti įvesties kontrolerį"
 
 #: ../app/widgets/gimpcontrollerwheel.c:69
 #: ../app/widgets/gimpcontrollerwheel.c:72
@@ -10426,7 +10237,7 @@ msgstr ""
 #: ../app/widgets/gimpcontrollerwheel.c:87
 #: ../app/widgets/gimpcontrollerwheel.c:90
 msgid "Scroll Up"
-msgstr ""
+msgstr "Slinkimas aukštyn"
 
 #: ../app/widgets/gimpcontrollerwheel.c:94
 #: ../app/widgets/gimpcontrollerwheel.c:97
@@ -10437,7 +10248,7 @@ msgstr ""
 #: ../app/widgets/gimpcontrollerwheel.c:112
 #: ../app/widgets/gimpcontrollerwheel.c:115
 msgid "Scroll Down"
-msgstr ""
+msgstr "Slinkimas žemyn"
 
 #: ../app/widgets/gimpcontrollerwheel.c:119
 #: ../app/widgets/gimpcontrollerwheel.c:122
@@ -10448,7 +10259,7 @@ msgstr ""
 #: ../app/widgets/gimpcontrollerwheel.c:137
 #: ../app/widgets/gimpcontrollerwheel.c:140
 msgid "Scroll Left"
-msgstr ""
+msgstr "Slinkimas kairėn"
 
 #: ../app/widgets/gimpcontrollerwheel.c:144
 #: ../app/widgets/gimpcontrollerwheel.c:147
@@ -10459,17 +10270,15 @@ msgstr ""
 #: ../app/widgets/gimpcontrollerwheel.c:162
 #: ../app/widgets/gimpcontrollerwheel.c:165
 msgid "Scroll Right"
-msgstr ""
+msgstr "Slinkimas dešinėn"
 
 #: ../app/widgets/gimpcontrollerwheel.c:207
-#, fuzzy
 msgid "Mouse Wheel"
-msgstr "Perkelti kanalą"
+msgstr "Pelės ratukas"
 
 #: ../app/widgets/gimpcontrollerwheel.c:250
-#, fuzzy
 msgid "Mouse Wheel Events"
-msgstr "Perkelti kanalą"
+msgstr "Pelės ratuko įvykiai"
 
 #: ../app/widgets/gimpdataeditor.c:221
 msgid "Save"
@@ -10482,7 +10291,7 @@ msgstr "Atstatyti"
 #: ../app/widgets/gimpdataeditor.c:361
 #, c-format
 msgid "%s (read only)"
-msgstr ""
+msgstr "%s (tik skaitymui)"
 
 #: ../app/widgets/gimpdevicestatus.c:281
 msgid "Save device status"
@@ -10551,7 +10360,7 @@ msgstr "Automatiškai aptiktas"
 
 #: ../app/widgets/gimpfiledialog.c:302
 msgid "By Extension"
-msgstr "Pagal plėtinį"
+msgstr "pagal plėtinį"
 
 #: ../app/widgets/gimpfiledialog.c:438
 msgid "File Exists"
@@ -10689,7 +10498,7 @@ msgstr "Linijos _stilius:"
 
 #: ../app/widgets/gimpgrideditor.c:223
 msgid "Change grid foreground color"
-msgstr "Pakeisti grotelių priekinio plano spavą"
+msgstr "Pakeisti tinklelio priekinio plano spavą"
 
 #: ../app/widgets/gimpgrideditor.c:228
 msgid "_Foreground color:"
@@ -10697,7 +10506,7 @@ msgstr "_Priekinio plano spalva:"
 
 #: ../app/widgets/gimpgrideditor.c:232
 msgid "Change grid background color"
-msgstr "Pakeisti grotelių fono spalvą"
+msgstr "Pakeisti tinklelio fono spalvą"
 
 #: ../app/widgets/gimpgrideditor.c:237
 msgid "_Background color:"
@@ -10719,16 +10528,15 @@ msgstr "Nepavyko rasti GIMP pagalbos naršyklės."
 #: ../app/widgets/gimphelp.c:189
 msgid ""
 "The GIMP help browser plug-in appears to be missing from your installation."
-msgstr ""
+msgstr "Panašu, kad pas Jus neįdiegtas GIMP pagalbos naršyklės įskiepis."
 
 #: ../app/widgets/gimphelp.c:213
 msgid "Help browser doesn't start"
 msgstr "Nepavyksta paleisti pagalbos naršyklės"
 
 #: ../app/widgets/gimphelp.c:214
-#, fuzzy
 msgid "Could not start the GIMP help browser plug-in."
-msgstr "Nepavyko paleisti GIMP pagalbos naršyklės."
+msgstr "Nepavyko paleisti GIMP pagalbos naršyklės įskiepio."
 
 #: ../app/widgets/gimphelp.c:240
 msgid "Use _web browser instead"
@@ -10804,7 +10612,6 @@ msgid "Number of channels:"
 msgstr "Kanalų skaičius:"
 
 #: ../app/widgets/gimpimagepropview.c:221
-#, fuzzy
 msgid "Number of paths:"
 msgstr "Kelių skaičius:"
 
@@ -10842,7 +10649,7 @@ msgstr "Užrakinti alfa kanalą"
 msgid "Lock:"
 msgstr "Užrakinti"
 
-#: ../app/widgets/gimplayertreeview.c:877
+#: ../app/widgets/gimplayertreeview.c:878
 msgid "Empty Layer"
 msgstr "Tuščias sluoksnis"
 
@@ -10854,6 +10661,7 @@ msgstr "Auto"
 msgid ""
 "When enabled the dialog automatically follows the image you are working on."
 msgstr ""
+"Kai įjungta, dialogas automatiškai seka paveikslėlį, kuriame Jūs dirbate."
 
 #: ../app/widgets/gimpmessagebox.c:462
 #, c-format
@@ -10880,7 +10688,7 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
-"Bylos %s nepavyksta konvertuoti į URI:\n"
+"Bylos pavadinimo „%s“ nepavyko konvertuoti į korektišką URI:\n"
 "\n"
 "%s"
 
@@ -10899,21 +10707,18 @@ msgid "%d dpi"
 msgstr "%d dpi"
 
 #: ../app/widgets/gimpstrokeeditor.c:201
-#, fuzzy
 msgid "Line width:"
-msgstr "Sluoksnio plotis:"
+msgstr "Linijos plotis:"
 
 #: ../app/widgets/gimpstrokeeditor.c:212
 msgid "_Line Style"
 msgstr "_Linijos stilius"
 
 #: ../app/widgets/gimpstrokeeditor.c:231
-#, fuzzy
 msgid "_Cap style:"
 msgstr "_Galų stilius:"
 
 #: ../app/widgets/gimpstrokeeditor.c:237
-#, fuzzy
 msgid "_Join style:"
 msgstr "_Jungimo stilius:"
 
@@ -10922,66 +10727,59 @@ msgid "_Miter limit:"
 msgstr ""
 
 #: ../app/widgets/gimpstrokeeditor.c:249
-#, fuzzy
 msgid "Dash pattern:"
 msgstr "Brūkšnių raštas:"
 
 #: ../app/widgets/gimpstrokeeditor.c:291
-#, fuzzy
 msgid "Dash _preset:"
-msgstr "Brūkšnių raštas:"
+msgstr "Brūkšnių š_ablonas:"
 
 #: ../app/widgets/gimpstrokeeditor.c:312
 msgid "_Antialiasing"
-msgstr "Išlyginimas"
+msgstr "_Glotninimas"
 
 #: ../app/widgets/gimptemplateeditor.c:251
 #, c-format
 msgid "%p"
-msgstr ""
+msgstr "%p"
 
 #: ../app/widgets/gimptemplateeditor.c:326
-#, fuzzy
 msgid "_Advanced Options"
-msgstr "Išsaugotos savybės"
+msgstr "_Sudėtingesni nustatymai"
 
 #: ../app/widgets/gimptemplateeditor.c:433
-#, fuzzy
 msgid "Color _space:"
-msgstr "Spalva:"
+msgstr "_Gama:"
 
 #: ../app/widgets/gimptemplateeditor.c:441
-#, fuzzy
 msgid "_Fill with:"
-msgstr "Užpildyti balta"
+msgstr "_Užpildymas:"
 
 #: ../app/widgets/gimptemplateeditor.c:451
-#, fuzzy
 msgid "Comme_nt:"
-msgstr "Skaičius:"
+msgstr "Kome_ntaras:"
 
 #: ../app/widgets/gimptemplateeditor.c:561
 msgid "_Name:"
-msgstr "Pavadinimas:"
+msgstr "_Pavadinimas:"
 
 #: ../app/widgets/gimptemplateeditor.c:572
 msgid "_Icon:"
 msgstr "_Ikona:"
 
 #: ../app/widgets/gimptemplateeditor.c:695
-#, fuzzy, c-format
+#, c-format
 msgid "%d x %d dpi, %s"
-msgstr "%d x %d taškų"
+msgstr "%d x %d dpi, %s"
 
 #: ../app/widgets/gimptemplateeditor.c:697
 #, c-format
 msgid "%d dpi, %s"
-msgstr ""
+msgstr "%d dpi, %s"
 
 #: ../app/widgets/gimptexteditor.c:230
-#, fuzzy
 msgid "_Use selected font"
-msgstr "Pašalinti pažymėtą elementą"
+msgstr "_Naudoti pažymėtą šriftą"
 
 #: ../app/widgets/gimpthumbbox.c:351
 #, c-format
@@ -10989,9 +10787,11 @@ msgid ""
 "Click to update preview\n"
 "%s%sClick to force update even if preview is up-to-date"
 msgstr ""
+"Spragtelkite norėdami atnaujinti peržiūrą\n"
+"%s%sSpragtelkite norėdami priverstinai atnaujinti, net jei peržiūra ir "
+"nepasenusi"
 
 #: ../app/widgets/gimpthumbbox.c:422 ../app/widgets/gimpthumbbox.c:491
-#, fuzzy
 msgid "No selection"
 msgstr "Nieko nepažymėta"
 
@@ -11026,41 +10826,37 @@ msgid "Drag to an XDS enabled file-manager to save the image."
 msgstr ""
 
 #: ../app/widgets/gimptoolbox-indicator-area.c:149
-#, fuzzy
 msgid ""
 "The active brush.\n"
 "Click to open the Brush Dialog."
 msgstr ""
 "Aktyvus teptukas.\n"
-"Spragtelėkite, kad atidarytumėte teptukų dialogą."
+"Spragtelėkite norėdami atverti teptukų dialogą."
 
 #: ../app/widgets/gimptoolbox-indicator-area.c:180
-#, fuzzy
 msgid ""
 "The active pattern.\n"
 "Click to open the Pattern Dialog."
 msgstr ""
 "Aktyvus raštas.\n"
-"Spragtelėkite, kad atidarytumėte raštų dialogą."
+"Spragtelėkite norėdami atverti raštų dialogą."
 
 #: ../app/widgets/gimptoolbox-indicator-area.c:211
-#, fuzzy
 msgid ""
 "The active gradient.\n"
 "Click to open the Gradient Dialog."
 msgstr ""
 "Aktyvus perėjimas.\n"
-"Spragtelėkite, kad atidarytumėte perėjimų dialogą."
+"Spragtelėkite norėdami atverti perėjimų dialogą."
 
 #: ../app/widgets/gimptoolbox.c:728
-#, fuzzy
 msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Click to open the color selection dialog."
 msgstr ""
-"Priekinio plano ir fono spalvos. Maži kvadratėliai (juodas ir baltas) "
-"atstato spalvas. Rodyklės sukeičia spalvas. Spragtelėkite 2 kartus, kad "
-"pasirinktumėte spalvą iš spalvų pasirinkimo dialogo."
+"Priekinio plano ir fono spalvos. Juodas ir baltas kvadratėliai atstato "
+"spalvas. Rodyklės sukeičia spalvas. Spragtelėkite norėdami atverti spalvų "
+"pasirinkimo dialogą."
 
 #: ../app/widgets/gimptooloptionseditor.c:187
 msgid "Save options to..."
@@ -11068,7 +10864,7 @@ msgstr "Išsaugoti nustatymus į..."
 
 #: ../app/widgets/gimptooloptionseditor.c:195
 msgid "Restore options from..."
-msgstr "Užkrauti nustatymus iš..."
+msgstr "Atstatyti nustatymus iš..."
 
 #: ../app/widgets/gimptooloptionseditor.c:203
 msgid "Delete saved options..."
@@ -11076,30 +10872,28 @@ msgstr "Ištrinti išsaugotus nustatymus..."
 
 #: ../app/widgets/gimpuimanager.c:701
 msgid "Your GIMP installation is incomplete:"
-msgstr ""
+msgstr "Jūsų GIMP nepilnai įdiegtas:"
 
 #: ../app/widgets/gimpuimanager.c:703
 msgid "Plase make sure the menu XML files are correctly installed."
-msgstr ""
+msgstr "Įsitikinkite, kad meniu XML bylos įdiegtos korektiškai."
 
 #: ../app/widgets/gimpuimanager.c:708
 #, c-format
 msgid "There was an error parsing the menu definition from %s: %s"
-msgstr ""
+msgstr "Skaitant meniu aprašymą iš %s įvyko klaida: %s"
 
 #: ../app/widgets/gimpundoeditor.c:256
 msgid "[ Base Image ]"
 msgstr "[ Pagrindinis paveikslėlis ]"
 
 #: ../app/widgets/gimpvectorstreeview.c:151
-#, fuzzy
 msgid "Reorder path"
 msgstr "Keisti kelio tvarką"
 
 #: ../app/widgets/gimpvectorstreeview.c:293
-#, fuzzy
 msgid "Empty Path"
-msgstr "Importuoti kontūrą"
+msgstr "Išvalyti kelią"
 
 #: ../app/widgets/gimpviewablebox.c:75
 msgid "Open the brush selection dialog"
@@ -11118,9 +10912,8 @@ msgid "Reverse"
 msgstr "Atvirkščiai"
 
 #: ../app/widgets/gimpviewablebox.c:168
-#, fuzzy
 msgid "Open the palette selection dialog"
-msgstr "Atverti raštų pasirinkimo dialogą"
+msgstr "Atverti palečių pasirinkimo dialogą"
 
 #: ../app/widgets/gimpviewablebox.c:187
 msgid "Open the font selection dialog"
@@ -11129,7 +10922,7 @@ msgstr "Atverti šriftų pasirinkimo dialogą"
 #: ../app/widgets/gimpwidgets-utils.c:820
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
-msgstr "Nekorektiški UTF-8 duomenys byloje %s."
+msgstr "Nekorektiški UTF-8 duomenys byloje „%s“."
 
 #: ../app/widgets/widgets-enums.c:23
 msgid "Foreground"
@@ -11144,7 +10937,6 @@ msgid "Landscape"
 msgstr "Kraštovaizdis"
 
 #: ../app/widgets/widgets-enums.c:113
-#, fuzzy
 msgid "Pixel"
 msgstr "Taškelių"
 
@@ -11162,7 +10954,7 @@ msgstr "Juoda ir balta"
 
 #: ../app/widgets/widgets-enums.c:172
 msgid "Fancy"
-msgstr ""
+msgstr "Gražūs"
 
 #: ../app/widgets/widgets-enums.c:199
 msgid "GIMP help browser"
@@ -11221,7 +11013,6 @@ msgid "Normal window"
 msgstr "Įprastas langas"
 
 #: ../app/widgets/widgets-enums.c:325
-#, fuzzy
 msgid "Utility window"
 msgstr "Įrankių langas"
 
@@ -11248,7 +11039,7 @@ msgstr "Nekorektiška UTF-8 eilutė XCF byloje"
 #: ../app/xcf/xcf-save.c:211 ../app/xcf/xcf.c:346
 #, c-format
 msgid "Error saving XCF file: %s"
-msgstr "Klaida išsaugant XCF bylą: %s"
+msgstr "Klaida saugant XCF bylą: %s"
 
 #: ../app/xcf/xcf-write.c:86
 #, c-format
@@ -11267,37 +11058,35 @@ msgstr "GIMP XCF paveikslėlis"
 #: ../app/xcf/xcf.c:286
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
-msgstr "XCF klaida: nustatyta nepalaikoma XCF bylos versija %d"
+msgstr "XCF klaida: aptikta nepalaikoma XCF bylos versija %d"
 
 #: ../desktop/gimp.desktop.in.in.h:1
-#, fuzzy
 msgid "Create images and edit photographs"
-msgstr "Kurkit ir keiskit paveiklėlius ir fotografijas"
+msgstr "Kurkite paveiklėlius ir redaguokite fotografijas"
 
 #: ../desktop/gimp.desktop.in.in.h:3
-#, fuzzy
 msgid "Image Editor"
-msgstr "Paletės savybių nustatymas"
+msgstr "Paveikslėlių redaktorius"
 
 #: ../tools/gimp-remote.c:83
 msgid "Use a running GIMP only, never start a new one"
-msgstr ""
+msgstr "Naudoti tik veikiantį GIMP, niekada nepaleisti naujo"
 
 #: ../tools/gimp-remote.c:88
 msgid "Only check if GIMP is running, then quit"
-msgstr ""
+msgstr "Tik patikrinti ar GIMP paleistas, tada išeiti"
 
 #: ../tools/gimp-remote.c:93
 msgid "Start GIMP without showing the startup window"
-msgstr ""
+msgstr "Paleisti GIMP nerodant paleidimo lango"
 
 #: ../tools/gimp-remote.c:197
 msgid "Could not connect to GIMP."
-msgstr ""
+msgstr "Nepavyko prisijungti prie GIMP."
 
 #: ../tools/gimp-remote.c:198
 msgid "Make sure that the Toolbox is visible!"
-msgstr ""
+msgstr "Įsitikinkite, kad Įrankų dėžė matoma!"
 
 #. if execv and execvp return, there was an error
 #: ../tools/gimp-remote.c:299
