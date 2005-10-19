@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-12 21:26-0400\n"
+"POT-Creation-Date: 2005-10-19 14:47-0400\n"
 "PO-Revision-Date: 2005-09-06 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
@@ -568,7 +568,7 @@ msgid "New Channel Color"
 msgstr "New Channel Colour"
 
 #: app/actions/channels-commands.c:245 app/display/gimpdisplayshell-dnd.c:496
-#: app/widgets/gimpchanneltreeview.c:306 app/widgets/gimplayertreeview.c:807
+#: app/widgets/gimpchanneltreeview.c:306 app/widgets/gimplayertreeview.c:808
 #: app/widgets/gimptoolbox-dnd.c:309
 #, c-format
 msgid "%s Channel Copy"
@@ -651,7 +651,7 @@ msgstr "_Pattern"
 msgid "_Palette"
 msgstr "_Palette"
 
-#: app/actions/context-actions.c:54 app/dialogs/palette-import-dialog.c:232
+#: app/actions/context-actions.c:54 app/dialogs/palette-import-dialog.c:231
 #: app/dialogs/preferences-dialog.c:1681
 msgid "_Gradient"
 msgstr "_Gradient"
@@ -711,7 +711,7 @@ msgstr "Sample Merged"
 #: app/actions/file-commands.c:173 app/dialogs/file-open-dialog.c:208
 #: app/dialogs/file-open-dialog.c:259
 #: app/dialogs/file-open-location-dialog.c:201
-#: app/display/gimpdisplayshell-dnd.c:448 app/widgets/gimplayertreeview.c:764
+#: app/display/gimpdisplayshell-dnd.c:448 app/widgets/gimplayertreeview.c:765
 #: app/widgets/gimptoolbox-dnd.c:157 app/widgets/gimptoolbox.c:944
 #, c-format
 msgid ""
@@ -725,7 +725,7 @@ msgstr ""
 
 #: app/actions/data-commands.c:126 app/core/gimpimage.c:1349
 #: app/core/gimppalette-import.c:218 app/core/gimppalette.c:514
-#: app/core/gimppalette.c:624 app/dialogs/palette-import-dialog.c:699
+#: app/core/gimppalette.c:624 app/dialogs/palette-import-dialog.c:694
 #: app/pdb/image_cmds.c:3892 app/widgets/gimpdnd-xds.c:83
 msgid "Untitled"
 msgstr "Untitled"
@@ -2218,7 +2218,7 @@ msgstr "Edit Layer Attributes"
 
 #: app/actions/layers-commands.c:235 app/actions/layers-commands.c:237
 #: app/actions/layers-commands.c:294 app/actions/layers-commands.c:298
-#: app/widgets/gimpdrawabletreeview.c:361 app/widgets/gimplayertreeview.c:871
+#: app/widgets/gimpdrawabletreeview.c:361 app/widgets/gimplayertreeview.c:872
 msgid "New Layer"
 msgstr "New Layer"
 
@@ -4850,7 +4850,7 @@ msgstr "Desaturate"
 msgid "Equalize"
 msgstr "Equalize"
 
-#: app/core/gimpdrawable-foreground-extract.c:112
+#: app/core/gimpdrawable-foreground-extract.c:134
 msgid "Foreground Extraction"
 msgstr "Foreground Extraction"
 
@@ -6080,49 +6080,49 @@ msgid "_Import"
 msgstr "_Import"
 
 #. The "Source" frame
-#: app/dialogs/palette-import-dialog.c:221
+#: app/dialogs/palette-import-dialog.c:220
 msgid "Select Source"
 msgstr "Select Source"
 
-#: app/dialogs/palette-import-dialog.c:245
+#: app/dialogs/palette-import-dialog.c:244
 msgid "I_mage"
 msgstr "I_mage"
 
-#: app/dialogs/palette-import-dialog.c:260
+#: app/dialogs/palette-import-dialog.c:259
 msgid "Palette _file"
 msgstr "Palette _file"
 
-#: app/dialogs/palette-import-dialog.c:287
+#: app/dialogs/palette-import-dialog.c:283
 msgid "Select Palette File"
 msgstr "Select Palette File"
 
 #. The "Import" frame
-#: app/dialogs/palette-import-dialog.c:318
+#: app/dialogs/palette-import-dialog.c:313
 msgid "Import Options"
 msgstr "Import Options"
 
-#: app/dialogs/palette-import-dialog.c:332
+#: app/dialogs/palette-import-dialog.c:327
 msgid "New import"
 msgstr "New import"
 
-#: app/dialogs/palette-import-dialog.c:334
+#: app/dialogs/palette-import-dialog.c:329
 msgid "Palette _name:"
 msgstr "Palette _name:"
 
-#: app/dialogs/palette-import-dialog.c:340
+#: app/dialogs/palette-import-dialog.c:335
 msgid "N_umber of colors:"
 msgstr "N_umber of colours:"
 
-#: app/dialogs/palette-import-dialog.c:353
+#: app/dialogs/palette-import-dialog.c:348
 msgid "C_olumns:"
 msgstr "C_olumns:"
 
-#: app/dialogs/palette-import-dialog.c:365
+#: app/dialogs/palette-import-dialog.c:360
 msgid "I_nterval:"
 msgstr "I_nterval:"
 
 #. The "Preview" frame
-#: app/dialogs/palette-import-dialog.c:377
+#: app/dialogs/palette-import-dialog.c:372
 msgid "Preview"
 msgstr "Preview"
 
@@ -7484,7 +7484,7 @@ msgstr "Drop New Layer"
 msgid "Drop New Path"
 msgstr "Drop New Path"
 
-#: app/display/gimpdisplayshell-dnd.c:542 app/widgets/gimplayertreeview.c:837
+#: app/display/gimpdisplayshell-dnd.c:542 app/widgets/gimplayertreeview.c:838
 #: app/widgets/gimptoolbox-dnd.c:359
 msgid "Dropped Buffer"
 msgstr "Dropped Buffer"
@@ -7582,7 +7582,7 @@ msgstr "Plug-In returned SUCCESS but did not return an image"
 msgid "Plug-In could not open image"
 msgstr "Plug-In could not open image"
 
-#: app/file/file-open.c:417
+#: app/file/file-open.c:418
 msgid "Image doesn't contain any visible layers"
 msgstr "Image doesn't contain any visible layers"
 
@@ -7673,7 +7673,7 @@ msgid "Posterize"
 msgstr "Posterize"
 
 #: app/pdb/color_cmds.c:820 app/pdb/color_cmds.c:947
-#: app/tools/gimpcurvestool.c:136
+#: app/tools/gimpcurvestool.c:145
 msgid "Curves"
 msgstr "Curves"
 
@@ -8462,53 +8462,61 @@ msgstr "Click or press enter to crop."
 msgid "Click or press enter to resize."
 msgstr "Click or press enter to resize."
 
-#: app/tools/gimpcurvestool.c:137
+#: app/tools/gimpcurvestool.c:146
 msgid "Adjust color curves"
 msgstr "Adjust colour curves"
 
-#: app/tools/gimpcurvestool.c:138
+#: app/tools/gimpcurvestool.c:147
 msgid "_Curves..."
 msgstr "_Curves..."
 
-#: app/tools/gimpcurvestool.c:197
+#: app/tools/gimpcurvestool.c:208
 msgid "Adjust Color Curves"
 msgstr "Adjust Colour Curves"
 
-#: app/tools/gimpcurvestool.c:199
+#: app/tools/gimpcurvestool.c:210
 msgid "Load Curves"
 msgstr "Load Curves"
 
-#: app/tools/gimpcurvestool.c:200
+#: app/tools/gimpcurvestool.c:211
 msgid "Load curves settings from file"
 msgstr "Load curves settings from file"
 
-#: app/tools/gimpcurvestool.c:201
+#: app/tools/gimpcurvestool.c:212
 msgid "Save Curves"
 msgstr "Save Curves"
 
-#: app/tools/gimpcurvestool.c:202
+#: app/tools/gimpcurvestool.c:213
 msgid "Save curves settings to file"
 msgstr "Save curves settings to file"
 
-#: app/tools/gimpcurvestool.c:278
+#: app/tools/gimpcurvestool.c:289
 msgid "Curves for indexed layers cannot be adjusted."
 msgstr "Curves for indexed layers cannot be adjusted."
 
-#: app/tools/gimpcurvestool.c:471 app/tools/gimplevelstool.c:407
+#: app/tools/gimpcurvestool.c:391
+msgid "Click to add a control point."
+msgstr "Click to add a control point."
+
+#: app/tools/gimpcurvestool.c:396
+msgid "Click to add control points to all channels."
+msgstr "Click to add control points to all channels."
+
+#: app/tools/gimpcurvestool.c:593 app/tools/gimplevelstool.c:407
 msgid "Cha_nnel:"
 msgstr "Cha_nnel:"
 
-#: app/tools/gimpcurvestool.c:493 app/tools/gimplevelstool.c:429
+#: app/tools/gimpcurvestool.c:615 app/tools/gimplevelstool.c:429
 msgid "R_eset Channel"
 msgstr "R_eset Channel"
 
 #. Horizontal button box for load / save
-#: app/tools/gimpcurvestool.c:595 app/tools/gimplevelstool.c:623
+#: app/tools/gimpcurvestool.c:719 app/tools/gimplevelstool.c:623
 msgid "All Channels"
 msgstr "All Channels"
 
 #. The radio box for selecting the curve type
-#: app/tools/gimpcurvestool.c:613
+#: app/tools/gimpcurvestool.c:737
 msgid "Curve Type"
 msgstr "Curve Type"
 
@@ -8592,11 +8600,15 @@ msgstr "Select hand-drawn regions"
 msgid "_Free Select"
 msgstr "_Free Select"
 
-#: app/tools/gimpforegroundselectoptions.c:109
+#: app/tools/gimpforegroundselectoptions.c:110
+msgid "Select multiple disconnected objects"
+msgstr "Select multiple disconnected objects"
+
+#: app/tools/gimpforegroundselectoptions.c:115
 msgid "Size of the brush used for refinements"
 msgstr "Size of the brush used for refinements"
 
-#: app/tools/gimpforegroundselectoptions.c:114
+#: app/tools/gimpforegroundselectoptions.c:120
 msgid ""
 "Smaller values give a more accurate selection border but may introduce holes "
 "in the selection"
@@ -8604,44 +8616,44 @@ msgstr ""
 "Smaller values give a more accurate selection border but may introduce holes "
 "in the selection"
 
-#: app/tools/gimpforegroundselectoptions.c:121
+#: app/tools/gimpforegroundselectoptions.c:127
 msgid "Sensitivity for brightness component"
 msgstr "Sensitivity for brightness component"
 
-#: app/tools/gimpforegroundselectoptions.c:126
+#: app/tools/gimpforegroundselectoptions.c:132
 msgid "Sensitivity for red/green component"
 msgstr "Sensitivity for red/green component"
 
-#: app/tools/gimpforegroundselectoptions.c:131
+#: app/tools/gimpforegroundselectoptions.c:137
 msgid "Sensitivity for yellow/blue component"
 msgstr "Sensitivity for yellow/blue component"
 
-#: app/tools/gimpforegroundselectoptions.c:226
+#: app/tools/gimpforegroundselectoptions.c:238
 msgid "Interactive refinement"
 msgstr "Interactive refinement"
 
-#: app/tools/gimpforegroundselectoptions.c:227
+#: app/tools/gimpforegroundselectoptions.c:239
 msgid "Mark background"
 msgstr "Mark background"
 
-#: app/tools/gimpforegroundselectoptions.c:228
+#: app/tools/gimpforegroundselectoptions.c:240
 msgid "Mark foreground"
 msgstr "Mark foreground"
 
-#: app/tools/gimpforegroundselectoptions.c:243
+#: app/tools/gimpforegroundselectoptions.c:255
 msgid "Small brush"
 msgstr "Small brush"
 
-#: app/tools/gimpforegroundselectoptions.c:251
+#: app/tools/gimpforegroundselectoptions.c:263
 msgid "Large brush"
 msgstr "Large brush"
 
-#: app/tools/gimpforegroundselectoptions.c:274
+#: app/tools/gimpforegroundselectoptions.c:286
 msgid "Smoothing:"
 msgstr "Smoothing:"
 
 #. granularity
-#: app/tools/gimpforegroundselectoptions.c:277
+#: app/tools/gimpforegroundselectoptions.c:289
 msgid "Color Sensitivity"
 msgstr "Colour Sensitivity"
 
@@ -8657,15 +8669,15 @@ msgstr "Extract foreground objects"
 msgid "F_oreground Select"
 msgstr "F_oreground Select"
 
-#: app/tools/gimpforegroundselecttool.c:320
+#: app/tools/gimpforegroundselecttool.c:329
 msgid "Add more strokes or press Enter to accept the selection"
 msgstr "Add more strokes or press Enter to accept the selection"
 
-#: app/tools/gimpforegroundselecttool.c:322
+#: app/tools/gimpforegroundselecttool.c:331
 msgid "Mark foreground by painting on the object to extract"
 msgstr "Mark foreground by painting on the object to extract"
 
-#: app/tools/gimpforegroundselecttool.c:336
+#: app/tools/gimpforegroundselecttool.c:345
 msgid "Draw a rough circle around the object to extract"
 msgstr "Draw a rough circle around the object to extract"
 
@@ -10439,7 +10451,7 @@ msgstr "Lock alpha channel"
 msgid "Lock:"
 msgstr "Lock:"
 
-#: app/widgets/gimplayertreeview.c:877
+#: app/widgets/gimplayertreeview.c:878
 msgid "Empty Layer"
 msgstr "Empty Layer"
 
