@@ -1210,8 +1210,6 @@ warp (GimpDrawable  *orig_draw,
   GimpDrawable *disp_map;    /* Displacement map, ie, control array */
   GimpDrawable *mag_draw;    /* Magnitude multiplier factor map */
 
-  gchar *string;          /* string to hold title of progress bar window */
-
   gint    first_time = TRUE;
   gint    width;
   gint    height;
@@ -1352,8 +1350,7 @@ warp_one (GimpDrawable *draw,
 
   /* Get selection area */
 
-  if (! gimp_drawable_mask_bounds (draw->drawable_id,
-                                   &x1, &y1, &x2, &y2))
+  if (! gimp_drawable_mask_intersect (draw->drawable_id, &x1, &y1, &x2, &y2))
     return;
 
    width  = draw->width;
@@ -1367,7 +1364,8 @@ warp_one (GimpDrawable *draw,
 
    /*  --------- Register the (many) pixel regions ----------  */
 
-   gimp_pixel_rgn_init (&src_rgn, draw, x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
+   gimp_pixel_rgn_init (&src_rgn, draw,
+                        x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
 
    /* only push undo-stack the first time through. Thanks Spencer! */
    if (first_time==TRUE)
