@@ -1,3 +1,13 @@
+2005-10-19  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpnewrectselecttool.c
+	* app/tools/gimprectangletool.c
+	* app/tools/gimprectangletool.h: move tool_control out of rectangle
+	tool and into users of it, and make rect select execute on leaving
+	but crop tool not.  Also rename functions and clean up formatting
+	a bit.
+
 2005-10-19  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/plugin-browser.c: strip ellipsis from menu labels.

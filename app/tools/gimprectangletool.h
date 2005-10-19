@@ -92,128 +92,129 @@ struct _GimpRectangleToolInterface
 GType       gimp_rectangle_tool_interface_get_type  (void) G_GNUC_CONST;
 
 void        gimp_rectangle_tool_set_controls        (GimpRectangleTool *tool,
-                                                     GtkWidget            *controls);
+                                                     GtkWidget         *controls);
 GtkWidget * gimp_rectangle_tool_get_controls        (GimpRectangleTool *tool);
 void        gimp_rectangle_tool_set_entry           (GimpRectangleTool *tool,
-                                                     GtkWidget            *entry);
+                                                     GtkWidget         *entry);
 GtkWidget * gimp_rectangle_tool_get_entry           (GimpRectangleTool *tool);
 
 void        gimp_rectangle_tool_set_startx          (GimpRectangleTool *tool,
-                                                     gint                  startx);
+                                                     gint               startx);
 gint        gimp_rectangle_tool_get_startx          (GimpRectangleTool *tool);
 void        gimp_rectangle_tool_set_starty          (GimpRectangleTool *tool,
-                                                     gint                  starty);
+                                                     gint               starty);
 gint        gimp_rectangle_tool_get_starty          (GimpRectangleTool *tool);
 
 void        gimp_rectangle_tool_set_lastx           (GimpRectangleTool *tool,
-                                                     gint                  lastx);
+                                                     gint               lastx);
 gint        gimp_rectangle_tool_get_lastx           (GimpRectangleTool *tool);
 void        gimp_rectangle_tool_set_lasty           (GimpRectangleTool *tool,
-                                                     gint                  lasty);
+                                                     gint               lasty);
 gint        gimp_rectangle_tool_get_lasty           (GimpRectangleTool *tool);
 
 void        gimp_rectangle_tool_set_pressx          (GimpRectangleTool *tool,
-                                                     gint                  pressx);
+                                                     gint               pressx);
 gint        gimp_rectangle_tool_get_pressx          (GimpRectangleTool *tool);
 void        gimp_rectangle_tool_set_pressy          (GimpRectangleTool *tool,
-                                                     gint                  pressy);
+                                                     gint               pressy);
 gint        gimp_rectangle_tool_get_pressy          (GimpRectangleTool *tool);
 
 void        gimp_rectangle_tool_set_x1              (GimpRectangleTool *tool,
-                                                     gint                  x1);
+                                                     gint               x1);
 gint        gimp_rectangle_tool_get_x1              (GimpRectangleTool *tool);
 void        gimp_rectangle_tool_set_y1              (GimpRectangleTool *tool,
-                                                     gint                  y1);
+                                                     gint               y1);
 gint        gimp_rectangle_tool_get_y1              (GimpRectangleTool *tool);
 void        gimp_rectangle_tool_set_x2              (GimpRectangleTool *tool,
-                                                     gint                  x2);
+                                                     gint               x2);
 gint        gimp_rectangle_tool_get_x2              (GimpRectangleTool *tool);
 void        gimp_rectangle_tool_set_y2              (GimpRectangleTool *tool,
-                                                     gint                  y2);
+                                                     gint               y2);
 gint        gimp_rectangle_tool_get_y2              (GimpRectangleTool *tool);
 
 void        gimp_rectangle_tool_set_function        (GimpRectangleTool *tool,
-                                                     guint                 function);
+                                                     guint              function);
 guint       gimp_rectangle_tool_get_function        (GimpRectangleTool *tool);
 
 void        gimp_rectangle_tool_set_dx1             (GimpRectangleTool *tool,
-                                                     gint                  dx1);
+                                                     gint               dx1);
 gint        gimp_rectangle_tool_get_dx1             (GimpRectangleTool *tool);
 void        gimp_rectangle_tool_set_dy1             (GimpRectangleTool *tool,
-                                                     gint                  dy1);
+                                                     gint               dy1);
 gint        gimp_rectangle_tool_get_dy1             (GimpRectangleTool *tool);
 void        gimp_rectangle_tool_set_dx2             (GimpRectangleTool *tool,
-                                                     gint                  dx2);
+                                                     gint               dx2);
 gint        gimp_rectangle_tool_get_dx2             (GimpRectangleTool *tool);
 void        gimp_rectangle_tool_set_dy2             (GimpRectangleTool *tool,
-                                                     gint                  dy2);
+                                                     gint               dy2);
 gint        gimp_rectangle_tool_get_dy2             (GimpRectangleTool *tool);
 
 void        gimp_rectangle_tool_set_dcw             (GimpRectangleTool *tool,
-                                                     gint                  dcw);
+                                                     gint               dcw);
 gint        gimp_rectangle_tool_get_dcw             (GimpRectangleTool *tool);
 void        gimp_rectangle_tool_set_dch             (GimpRectangleTool *tool,
-                                                     gint                  dch);
+                                                     gint               dch);
 gint        gimp_rectangle_tool_get_dch             (GimpRectangleTool *tool);
 
 void        gimp_rectangle_tool_set_origx           (GimpRectangleTool *tool,
-                                                     gdouble               origx);
+                                                     gdouble            origx);
 gdouble     gimp_rectangle_tool_get_origx           (GimpRectangleTool *tool);
 void        gimp_rectangle_tool_set_origy           (GimpRectangleTool *tool,
-                                                     gdouble               origy);
+                                                     gdouble            origy);
 gdouble     gimp_rectangle_tool_get_origy           (GimpRectangleTool *tool);
 
 void        gimp_rectangle_tool_set_sizew           (GimpRectangleTool *tool,
-                                                     gdouble               sizew);
+                                                     gdouble            sizew);
 gdouble     gimp_rectangle_tool_get_sizew           (GimpRectangleTool *tool);
 void        gimp_rectangle_tool_set_sizeh           (GimpRectangleTool *tool,
-                                                     gdouble               sizeh);
+                                                     gdouble            sizeh);
 gdouble     gimp_rectangle_tool_get_sizeh           (GimpRectangleTool *tool);
 
-void        gimp_rectangle_tool_constructor         (GObject         *object);
-void        gimp_rectangle_tool_dispose             (GObject         *object);
-gboolean    gimp_rectangle_tool_initialize          (GimpTool        *tool,
-                                                     GimpDisplay     *gdisp);
-void        gimp_rectangle_tool_control             (GimpTool        *tool,
-                                                     GimpToolAction   action,
-                                                     GimpDisplay     *gdisp);
-void        gimp_rectangle_tool_button_press        (GimpTool        *tool,
-                                                     GimpCoords      *coords,
-                                                     guint32          time,
-                                                     GdkModifierType  state,
-                                                     GimpDisplay     *gdisp);
-void        gimp_rectangle_tool_button_release      (GimpTool        *tool,
-                                                     GimpCoords      *coords,
-                                                     guint32          time,
-                                                     GdkModifierType  state,
-                                                     GimpDisplay     *gdisp);
-void        gimp_rectangle_tool_motion              (GimpTool        *tool,
-                                                     GimpCoords      *coords,
-                                                     guint32          time,
-                                                     GdkModifierType  state,
-                                                     GimpDisplay     *gdisp);
-gboolean    gimp_rectangle_tool_key_press           (GimpTool        *tool,
-                                                     GdkEventKey     *kevent,
-                                                     GimpDisplay     *gdisp);
-void        gimp_rectangle_tool_modifier_key        (GimpTool        *tool,
-                                                     GdkModifierType  key,
-                                                     gboolean         press,
-                                                     GdkModifierType  state,
-                                                     GimpDisplay     *gdisp);
-void        gimp_rectangle_tool_oper_update         (GimpTool        *tool,
-                                                     GimpCoords      *coords,
-                                                     GdkModifierType  state,
-                                                     GimpDisplay     *gdisp);
-void        gimp_rectangle_tool_cursor_update       (GimpTool        *tool,
-                                                     GimpCoords      *coords,
-                                                     GdkModifierType  state,
-                                                     GimpDisplay     *gdisp);
-void        gimp_rectangle_tool_draw                (GimpDrawTool *draw);
+void        gimp_rectangle_tool_constructor         (GObject           *object);
+void        gimp_rectangle_tool_dispose             (GObject           *object);
+gboolean    gimp_rectangle_tool_initialize          (GimpTool          *tool,
+                                                     GimpDisplay       *gdisp);
+void        gimp_rectangle_tool_button_press        (GimpTool          *tool,
+                                                     GimpCoords        *coords,
+                                                     guint32            time,
+                                                     GdkModifierType    state,
+                                                     GimpDisplay       *gdisp);
+void        gimp_rectangle_tool_button_release      (GimpTool          *tool,
+                                                     GimpCoords        *coords,
+                                                     guint32            time,
+                                                     GdkModifierType    state,
+                                                     GimpDisplay       *gdisp);
+void        gimp_rectangle_tool_motion              (GimpTool          *tool,
+                                                     GimpCoords        *coords,
+                                                     guint32            time,
+                                                     GdkModifierType    state,
+                                                     GimpDisplay       *gdisp);
+gboolean    gimp_rectangle_tool_key_press           (GimpTool          *tool,
+                                                     GdkEventKey       *kevent,
+                                                     GimpDisplay       *gdisp);
+void        gimp_rectangle_tool_modifier_key        (GimpTool          *tool,
+                                                     GdkModifierType    key,
+                                                     gboolean           press,
+                                                     GdkModifierType    state,
+                                                     GimpDisplay       *gdisp);
+void        gimp_rectangle_tool_oper_update         (GimpTool          *tool,
+                                                     GimpCoords        *coords,
+                                                     GdkModifierType    state,
+                                                     GimpDisplay       *gdisp);
+void        gimp_rectangle_tool_cursor_update       (GimpTool          *tool,
+                                                     GimpCoords        *coords,
+                                                     GdkModifierType    state,
+                                                     GimpDisplay       *gdisp);
+void        gimp_rectangle_tool_draw                (GimpDrawTool      *draw);
 gboolean    gimp_rectangle_tool_execute             (GimpRectangleTool *rect_tool,
-                                                     gint                  x,
-                                                     gint                  y,
-                                                     gint                  w,
-                                                     gint                  h);
+                                                     gint               x,
+                                                     gint               y,
+                                                     gint               w,
+                                                     gint               h);
+void        gimp_rectangle_tool_response            (GtkWidget         *widget,
+                                                     gint               response_id,
+                                                     GimpRectangleTool *rectangle);
+void        gimp_rectangle_tool_configure           (GimpRectangleTool *rectangle);
 
 
 /*  convenience functions  */

@@ -64,6 +64,11 @@ static void gimp_new_rect_select_tool_finalize       (GObject         *object);
 static void gimp_new_rect_select_tool_control        (GimpTool        *tool,
                                                       GimpToolAction   action,
                                                       GimpDisplay     *gdisp);
+static void gimp_new_rect_select_tool_button_press   (GimpTool        *tool,
+                                                      GimpCoords      *coords,
+                                                      guint32          time,
+                                                      GdkModifierType  state,
+                                                      GimpDisplay     *gdisp);
 static void gimp_new_rect_select_tool_button_release (GimpTool        *tool,
                                                       GimpCoords      *coords,
                                                       guint32          time,
@@ -156,7 +161,7 @@ gimp_new_rect_select_tool_class_init (GimpNewRectSelectToolClass *klass)
 
   tool_class->initialize     = gimp_rectangle_tool_initialize;
   tool_class->control        = gimp_new_rect_select_tool_control;
-  tool_class->button_press   = gimp_rectangle_tool_button_press;
+  tool_class->button_press   = gimp_new_rect_select_tool_button_press;
   tool_class->button_release = gimp_new_rect_select_tool_button_release;
   tool_class->motion         = gimp_rectangle_tool_motion;
   tool_class->key_press      = gimp_rectangle_tool_key_press;
@@ -206,9 +211,41 @@ gimp_new_rect_select_tool_control (GimpTool       *tool,
                                    GimpToolAction  action,
                                    GimpDisplay    *gdisp)
 {
-  gimp_rectangle_tool_control (tool, action, gdisp);
+  GimpRectangleTool *rectangle = GIMP_RECTANGLE_TOOL (tool);
+
+  switch (action)
+    {
+    case PAUSE:
+      break;
+
+    case RESUME:
+      gimp_rectangle_tool_configure (rectangle);
+      break;
+
+    case HALT:
+      gimp_rectangle_tool_response (NULL, GIMP_RECTANGLE_MODE_EXECUTE,
+                                    rectangle);
+      break;
+
+    default:
+      break;
+    }
 
   GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
+}
+
+static void
+gimp_new_rect_select_tool_button_press (GimpTool        *tool,
+                                        GimpCoords      *coords,
+                                        guint32          time,
+                                        GdkModifierType  state,
+                                        GimpDisplay     *gdisp)
+{
+  if (tool->gdisp && gdisp != tool->gdisp)
+    gimp_rectangle_tool_response (NULL, GIMP_RECTANGLE_MODE_EXECUTE,
+                                  GIMP_RECTANGLE_TOOL (tool));
+
+  gimp_rectangle_tool_button_press (tool, coords, time, state, gdisp);
 }
 
 static void
