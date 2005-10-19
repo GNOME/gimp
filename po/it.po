@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-18 08:12+0200\n"
-"PO-Revision-Date: 2005-10-18 12:16+0200\n"
+"POT-Creation-Date: 2005-10-19 22:58+0200\n"
+"PO-Revision-Date: 2005-10-19 22:59+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -7832,7 +7832,7 @@ msgid "Posterize"
 msgstr "Posterizza"
 
 #: ../app/pdb/color_cmds.c:820 ../app/pdb/color_cmds.c:947
-#: ../app/tools/gimpcurvestool.c:136
+#: ../app/tools/gimpcurvestool.c:145
 msgid "Curves"
 msgstr "Curve"
 
@@ -8635,53 +8635,61 @@ msgstr "Fare clic o premere per ritagliare."
 msgid "Click or press enter to resize."
 msgstr "Fare clic o premere per ridimensionare."
 
-#: ../app/tools/gimpcurvestool.c:137
+#: ../app/tools/gimpcurvestool.c:146
 msgid "Adjust color curves"
 msgstr "Regola le curve di colore"
 
-#: ../app/tools/gimpcurvestool.c:138
+#: ../app/tools/gimpcurvestool.c:147
 msgid "_Curves..."
 msgstr "_Curve..."
 
-#: ../app/tools/gimpcurvestool.c:197
+#: ../app/tools/gimpcurvestool.c:208
 msgid "Adjust Color Curves"
 msgstr "Regola le curve di colore"
 
-#: ../app/tools/gimpcurvestool.c:199
+#: ../app/tools/gimpcurvestool.c:210
 msgid "Load Curves"
 msgstr "Apri curve"
 
-#: ../app/tools/gimpcurvestool.c:200
+#: ../app/tools/gimpcurvestool.c:211
 msgid "Load curves settings from file"
 msgstr "Lettura impostazioni curve da file"
 
-#: ../app/tools/gimpcurvestool.c:201
+#: ../app/tools/gimpcurvestool.c:212
 msgid "Save Curves"
 msgstr "Salva curve"
 
-#: ../app/tools/gimpcurvestool.c:202
+#: ../app/tools/gimpcurvestool.c:213
 msgid "Save curves settings to file"
 msgstr "Salvataggio impostazioni curve su file"
 
-#: ../app/tools/gimpcurvestool.c:278
+#: ../app/tools/gimpcurvestool.c:289
 msgid "Curves for indexed layers cannot be adjusted."
 msgstr "Le curve per il livelli a colori indicizzati non sono modificabili."
 
-#: ../app/tools/gimpcurvestool.c:471 ../app/tools/gimplevelstool.c:407
+#: ../app/tools/gimpcurvestool.c:391
+msgid "Click to add a control point."
+msgstr "Fare clic per aggiungere un punto di controllo."
+
+#: ../app/tools/gimpcurvestool.c:396
+msgid "Click to add control points to all channels."
+msgstr "Fare clic per aggiungere punti di controllo a tutti i canali."
+
+#: ../app/tools/gimpcurvestool.c:593 ../app/tools/gimplevelstool.c:407
 msgid "Cha_nnel:"
 msgstr "Ca_nale:"
 
-#: ../app/tools/gimpcurvestool.c:493 ../app/tools/gimplevelstool.c:429
+#: ../app/tools/gimpcurvestool.c:615 ../app/tools/gimplevelstool.c:429
 msgid "R_eset Channel"
 msgstr "R_eimposta canale"
 
 #. Horizontal button box for load / save
-#: ../app/tools/gimpcurvestool.c:595 ../app/tools/gimplevelstool.c:623
+#: ../app/tools/gimpcurvestool.c:719 ../app/tools/gimplevelstool.c:623
 msgid "All Channels"
 msgstr "Tutti i canali"
 
 #. The radio box for selecting the curve type
-#: ../app/tools/gimpcurvestool.c:613
+#: ../app/tools/gimpcurvestool.c:737
 msgid "Curve Type"
 msgstr "Tipo di curva"
 
@@ -9291,24 +9299,24 @@ msgstr "Aspetto"
 msgid "Center"
 msgstr "Centra"
 
-#: ../app/tools/gimprectangletool.c:1831 ../app/tools/gimprectangletool.c:2258
+#: ../app/tools/gimprectangletool.c:1834 ../app/tools/gimprectangletool.c:2261
 msgid "Rectangle: "
 msgstr "Rettangolo: "
 
-#: ../app/tools/gimprectangletool.c:2677
+#: ../app/tools/gimprectangletool.c:2680
 msgid "1 "
 msgstr "1 "
 
-#: ../app/tools/gimprectangletool.c:2678
+#: ../app/tools/gimprectangletool.c:2681
 msgid "2 "
 msgstr "2 "
 
-#: ../app/tools/gimprectangletool.c:2679 ../app/widgets/gimpcursorview.c:170
+#: ../app/tools/gimprectangletool.c:2682 ../app/widgets/gimpcursorview.c:170
 #: ../app/widgets/gimpcursorview.c:192
 msgid "X"
 msgstr "X"
 
-#: ../app/tools/gimprectangletool.c:2680 ../app/widgets/gimpcursorview.c:176
+#: ../app/tools/gimprectangletool.c:2683 ../app/widgets/gimpcursorview.c:176
 #: ../app/widgets/gimpcursorview.c:198
 msgid "Y"
 msgstr "Y"

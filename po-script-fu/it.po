@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-18 08:15+0200\n"
-"PO-Revision-Date: 2005-10-18 09:50+0200\n"
+"POT-Creation-Date: 2005-10-19 23:00+0200\n"
+"PO-Revision-Date: 2005-10-19 23:07+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -842,7 +842,6 @@ msgid "Image to carve"
 msgstr "Immagine da scolpire"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:3
-#, fuzzy
 msgid "Stencil C_arve..."
 msgstr "Scolpitur_a..."
 
@@ -936,9 +935,8 @@ msgid "Highlight balance"
 msgstr "Bilanciamento luminosità"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:8
-#, fuzzy
 msgid "Stencil C_hrome..."
-msgstr "_Cromato..."
+msgstr "Scol_pitura cromata..."
 
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:2
 msgid "C_hrome..."
