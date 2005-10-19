@@ -1275,7 +1275,7 @@ gimp_rectangle_tool_control (GimpTool       *tool,
       break;
 
     case HALT:
-      rectangle_response (NULL, GTK_RESPONSE_CANCEL, rectangle);
+      rectangle_response (NULL, GIMP_RECTANGLE_MODE_EXECUTE, rectangle);
       break;
 
     default:
@@ -1297,6 +1297,9 @@ gimp_rectangle_tool_button_press (GimpTool        *tool,
 
   if (gdisp != tool->gdisp)
     {
+      if (tool->gdisp)
+        rectangle_response (NULL, GIMP_RECTANGLE_MODE_EXECUTE, rectangle);
+
       if (gimp_draw_tool_is_active (draw_tool))
         gimp_draw_tool_stop (draw_tool);
 

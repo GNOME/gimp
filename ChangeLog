@@ -1,3 +1,9 @@
+2005-10-19  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/tools/gimprectangletool.c: "execute" the tool if the
+	user switches to a different tool or clicks in a different
+	image.  Good for rect select, not so sure about crop.
+
 2005-10-19  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/warp.c: use gimp_drawable_mask_intersect()
