@@ -1,5 +1,10 @@
 2005-10-19  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpcurvestool.[ch]: added keyboard control to the
+	Curves tool as suggested in bug #154809.
+
+2005-10-19  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpcurvestool.c (gimp_curves_tool_oper_update): set
 	cursor modifier and status bar hints to improve discoverability of
 	Curves tool features.
