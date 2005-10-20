@@ -1,5 +1,11 @@
 2005-10-20  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/tools/gimprectangletool.c: 
+	* app/tools/gimpnewrectselecttool.c Make clicking inside an existing 
+	selection create rect matching the marching ants.
+
+2005-10-20  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/tools/gimprectangleoptions.c: remove fixed-center stuff
 	from options gui in order to simplify it.
 	

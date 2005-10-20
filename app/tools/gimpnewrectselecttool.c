@@ -24,6 +24,8 @@
 
 #include "tools-types.h"
 
+#include "base/boundary.h"
+
 #include "core/gimpchannel.h"
 #include "core/gimpchannel-select.h"
 #include "core/gimplayer-floating-sel.h"
@@ -275,16 +277,15 @@ gimp_new_rect_select_tool_oper_update (GimpTool        *tool,
 
 /*
  * This function is called if the user clicks and releases the left
- * button without moving it.  There are five things we might want
+ * button without moving it.  There are four things we might want
  * to do here:
- * 1) If there is a floating selection, we anchor it.
- * 2) If there is an existing rectangle and we are inside it, we
+ * 1) If there is an existing rectangle and we are inside it, we
  *    convert it into a selection.
- * 3) If there is an existing rectangle and we are outside it, we
+ * 2) If there is an existing rectangle and we are outside it, we
  *    clear it.
- * 4) If there is no rectangle and we are inside the selection, we
+ * 3) If there is no rectangle and we are inside the selection, we
  *    create a rectangle from the selection bounds.
- * 5) If there is no rectangle and we are outside the selection,
+ * 4) If there is no rectangle and we are outside the selection,
  *    we clear the selection.
  */
 static gboolean
@@ -304,6 +305,7 @@ gimp_new_rect_select_tool_execute (GimpRectangleTool  *rectangle,
   GimpChannel          *selection_mask;
   gint                  x1, y1;
   gint                  x2, y2;
+  guchar               *val_ptr;
 
   options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
@@ -336,13 +338,6 @@ gimp_new_rect_select_tool_execute (GimpRectangleTool  *rectangle,
   if (y + h > max_y)
     h = max_y - y;
 
-  /*  If there is a floating selection, anchor it  */
-  if (gimp_image_floating_sel (gimage))
-    {
-      floating_sel_anchor (gimp_image_floating_sel (gimage));
-      return FALSE;
-    }
-
   /* if rectangle exists, turn it into a selection */
   if (rectangle_exists)
     {
@@ -357,20 +352,49 @@ gimp_new_rect_select_tool_execute (GimpRectangleTool  *rectangle,
       return TRUE;
     }
 
-
-  val = gimp_pickable_get_opacity_at (GIMP_PICKABLE (selection_mask),
-                                      gimp_rectangle_tool_get_pressx (rectangle), gimp_rectangle_tool_get_pressy (rectangle));
+  if ((val_ptr = gimp_pickable_get_color_at (GIMP_PICKABLE (selection_mask),
+                                             gimp_rectangle_tool_get_pressx (rectangle),
+                                             gimp_rectangle_tool_get_pressy (rectangle))))
+    val = *val_ptr;
+  else
+    val = 0;
 
   selected = (val > 127);
 
   /* if point clicked is inside selection, set rectangle to  */
-  /* selection bounds.                                       */
+  /* edges of marching ants.                                 */
   if (selected)
     {
-      if (! gimp_channel_bounds (selection_mask,
-                                 &x1, &y1,
-                                 &x2, &y2))
+      GimpChannel    *selection_mask = gimp_image_get_mask (gimage);
+      const BoundSeg *segs_in;
+      const BoundSeg *segs_out;
+      gint            n_segs_in;
+      gint            n_segs_out;
+
+      if (gimp_channel_boundary (selection_mask, &segs_in, &segs_out,
+                                 &n_segs_in, &n_segs_out,
+                                 0, 0, 0, 0))
         {
+          x1 = y1 = x2 = y2 = 0;
+
+          if (n_segs_in > 0)
+            {
+              gint i;
+
+              x1 = segs_in[0].x1;
+              x2 = segs_in[0].x1;
+              y1 = segs_in[0].y1;
+              y2 = segs_in[0].y1;
+
+              for (i = 1; i < n_segs_in; i++)
+                {
+                  x1 = MIN (x1, segs_in[i].x1);
+                  x2 = MAX (x2, segs_in[i].x1);
+                  y1 = MIN (y1, segs_in[i].y1);
+                  y2 = MAX (y2, segs_in[i].y1);
+                }
+            }
+
           gimp_rectangle_tool_set_x1 (rectangle, x1);
           gimp_rectangle_tool_set_y1 (rectangle, y1);
           gimp_rectangle_tool_set_x2 (rectangle, x2);
@@ -383,6 +407,8 @@ gimp_new_rect_select_tool_execute (GimpRectangleTool  *rectangle,
           gimp_rectangle_tool_set_x2 (rectangle, gimage->width);
           gimp_rectangle_tool_set_y2 (rectangle, gimage->height);
         }
+
+      gimp_rectangle_tool_set_function (rectangle, RECT_MOVING);
 
       return FALSE;
     }

@@ -2482,75 +2482,18 @@ gimp_rectangle_tool_execute (GimpRectangleTool *rectangle,
                              gint               h)
 {
   GimpRectangleToolInterface *tool_iface = GIMP_RECTANGLE_TOOL_GET_INTERFACE (rectangle);
-  GimpTool                   *tool = GIMP_TOOL (rectangle);
-  guint                       function;
-  gint                        pressx, pressy;
   gint                        rx1, ry1, rx2, ry2;
-  gboolean                    rectangle_exists;
-  GimpChannel                *selection_mask;
-  gint                        val;
-  gboolean                    selected;
-  GimpImage                  *gimage;
-  gint                        x1, y1;
-  gint                        x2, y2;
 
   g_return_val_if_fail (tool_iface->execute, FALSE);
 
   g_object_get (rectangle,
-      "function", &function,
-      "pressx", &pressx,
-      "pressy", &pressy,
-      NULL);
+                "x1", &rx1,
+                "y1", &ry1,
+                "x2", &rx2,
+                "y2", &ry2,
+                NULL);
 
-
-  rectangle_exists = (function != RECT_CREATING);
-
-  gimage = tool->gdisp->gimage;
-  selection_mask = gimp_image_get_mask (gimage);
-  val = gimp_pickable_get_opacity_at (GIMP_PICKABLE (selection_mask),
-                                      pressx, pressy);
-
-  selected = (val > 127);
-
-  if (rectangle_exists && selected)
-    {
-      if (gimp_channel_bounds (selection_mask,
-                               &x1, &y1,
-                               &x2, &y2))
-        {
-          g_object_set (rectangle,
-              "x1", x1,
-              "y1", y1,
-              "x2", x2,
-              "y2", y2,
-              NULL);
-        }
-      else
-        {
-          g_object_set (rectangle,
-              "x1", 0,
-              "y1", 0,
-              "x2", gimage->width,
-              "y2", gimage->height,
-              NULL);
-        }
-
-      return FALSE;
-    }
-
-  g_object_get (rectangle,
-      "x1", &rx1,
-      "y1", &ry1,
-      "x2", &rx2,
-      "y2", &ry2,
-      NULL);
-
-  tool_iface->execute (rectangle,
-      rx1,
-      ry1,
-      rx2 - rx1,
-      ry2 - ry1);
-  return TRUE;
+  return tool_iface->execute (rectangle, rx1, ry1, rx2 - rx1, ry2 - ry1);
 }
 
 static void
