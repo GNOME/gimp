@@ -79,7 +79,7 @@ batch_run (Gimp         *gimp,
       ProcRecord  *proc      = procedural_db_lookup (gimp, proc_name);
 
       if (proc)
-        batch_run_cmd (gimp, proc_name, proc, GIMP_RUN_INTERACTIVE, NULL);
+        batch_run_cmd (gimp, proc_name, proc, GIMP_RUN_NONINTERACTIVE, NULL);
       else
         g_message (_("The batch interpreter '%s' is not available. "
                      "Batch mode disabled."), proc_name);

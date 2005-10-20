@@ -43,36 +43,15 @@ script_fu_text_console_run (const gchar      *name,
 			    GimpParam       **return_vals)
 {
   static GimpParam  values[1];
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  GimpRunMode       run_mode;
 
-  run_mode = params[0].data.d_int32;
+  siod_set_output_file (stdout);
+  siod_set_verbose_level (2);
+  siod_print_welcome ();
 
-  switch (run_mode)
-    {
-    case GIMP_RUN_INTERACTIVE:
-      /*  Enable SIOD output  */
-      siod_set_output_file (stdout);
-      siod_set_verbose_level (2);
-      siod_print_welcome ();
-
-      /*  Run the interface  */
-      script_fu_text_console_interface ();
-
-      break;
-
-    case GIMP_RUN_WITH_LAST_VALS:
-    case GIMP_RUN_NONINTERACTIVE:
-      status = GIMP_PDB_CALLING_ERROR;
-      g_message (_("Script-Fu console mode allows only interactive invocation"));
-      break;
-
-    default:
-      break;
-    }
+  script_fu_text_console_interface ();
 
   values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
+  values[0].data.d_status = GIMP_PDB_SUCCESS;
 
   *nreturn_vals = 1;
   *return_vals  = values;
