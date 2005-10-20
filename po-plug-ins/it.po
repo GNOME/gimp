@@ -6,13 +6,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-18 08:15+0200\n"
-"PO-Revision-Date: 2005-10-17 15:01+0200\n"
+"POT-Creation-Date: 2005-10-19 23:07+0200\n"
+"PO-Revision-Date: 2005-10-20 17:59+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:529
 #: ../plug-ins/gfig/gfig-dialog.c:282 ../plug-ins/gflare/gflare.c:887
@@ -3912,7 +3913,7 @@ msgid "Spacing:"
 msgstr "Spaziatura:"
 
 #: ../plug-ins/common/gbr.c:742 ../plug-ins/common/gih.c:910
-#: ../plug-ins/common/pat.c:544 ../plug-ins/gimpressionist/presets.c:651
+#: ../plug-ins/common/pat.c:544 ../plug-ins/gimpressionist/presets.c:646
 msgid "Description:"
 msgstr "Descrizione:"
 
@@ -7672,11 +7673,11 @@ msgid "Smoothing Y gradient"
 msgstr "Sfumatura gradiente Y"
 
 #. calculate new X,Y Displacement image maps
-#: ../plug-ins/common/warp.c:1236
+#: ../plug-ins/common/warp.c:1234
 msgid "Finding XY gradient"
 msgstr "Ricerca gradienti XY"
 
-#: ../plug-ins/common/warp.c:1261
+#: ../plug-ins/common/warp.c:1259
 #, c-format
 msgid "Flow step %d"
 msgstr "Passo di flusso %d"
@@ -7846,7 +7847,7 @@ msgstr "PrintDlg è fallita: %d"
 
 #: ../plug-ins/common/winprint.c:377
 msgid "Printer doesn't support bitmaps"
-msgstr "La stampante non supporta i disegni per punti"
+msgstr "La stampante non supporta la modalità grafica"
 
 #: ../plug-ins/common/winprint.c:418
 msgid "StartPage failed"
@@ -9336,37 +9337,37 @@ msgstr "La densità relativa dei tratti di pennello"
 msgid "Failed to save PPM file '%s': %s"
 msgstr "Fallito il salvataggio del file PPM '%s': %s"
 
-#: ../plug-ins/gimpressionist/presets.c:625
+#: ../plug-ins/gimpressionist/presets.c:620
 msgid "Save Current"
 msgstr "Salva corrente"
 
-#: ../plug-ins/gimpressionist/presets.c:874
+#: ../plug-ins/gimpressionist/presets.c:870
 msgid "Gimpressionist Defaults"
 msgstr "Preimpostazioni di GIMPressionista"
 
-#: ../plug-ins/gimpressionist/presets.c:995
+#: ../plug-ins/gimpressionist/presets.c:991
 msgid "_Presets"
 msgstr "_Preimpostazioni"
 
-#: ../plug-ins/gimpressionist/presets.c:1010
+#: ../plug-ins/gimpressionist/presets.c:1006
 msgid "Save Current..."
 msgstr "Salva attuale..."
 
-#: ../plug-ins/gimpressionist/presets.c:1015
+#: ../plug-ins/gimpressionist/presets.c:1014
 msgid "Save the current settings to the specified file"
 msgstr "Salva le impostazioni correnti sul file specificato"
 
-#: ../plug-ins/gimpressionist/presets.c:1043
+#: ../plug-ins/gimpressionist/presets.c:1042
 msgid "Reads the selected Preset into memory"
 msgstr "Leggi le preimpostazioni selezionate in memoria"
 
-#: ../plug-ins/gimpressionist/presets.c:1049
+#: ../plug-ins/gimpressionist/presets.c:1048
 msgid "Deletes the selected Preset"
 msgstr "Cancella le impostazioni selezionate"
 
-#: ../plug-ins/gimpressionist/presets.c:1055
+#: ../plug-ins/gimpressionist/presets.c:1054
 msgid "Reread the folder of Presets"
-msgstr "Ri-leggi le impostazioni della cartella"
+msgstr "Rileggi la cartella delle preimpostazioni"
 
 #: ../plug-ins/gimpressionist/preview.c:191
 msgid "Refresh the Preview window"

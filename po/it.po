@@ -27,7 +27,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-10-19 22:58+0200\n"
-"PO-Revision-Date: 2005-10-19 22:59+0200\n"
+"PO-Revision-Date: 2005-10-20 19:45+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -156,7 +156,9 @@ msgstr "Genera un file gimprc con valori predefiniti"
 #: ../app/main.c:248 ../app/dialogs/about-dialog.c:61
 #: ../desktop/gimp.desktop.in.in.h:2
 msgid "GNU Image Manipulation Program"
-msgstr "Programma di fotoritocco GNU"
+msgstr ""
+"GNU Image Manipulation Program\n"
+"(Programma di fotoritocco del progetto GNU)"
 
 #: ../app/main.c:292
 msgid ""
