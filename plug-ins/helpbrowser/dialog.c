@@ -514,7 +514,16 @@ title_changed (HtmlDocument *doc,
 {
   if (new_title)
     {
-      gchar *title = g_strstrip (g_strdup (new_title));
+      gchar *title = g_strdup (new_title);
+      gchar *c;
+
+      for (c = title; *c; c++)
+        {
+          if (*c == '\n' || *c == '\r')
+            *c = ' ';
+        }
+
+      title = g_strstrip (title);
 
       history_add (GTK_COMBO_BOX (data), current_ref, title);
 
