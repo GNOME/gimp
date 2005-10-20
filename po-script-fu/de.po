@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-03 15:45+0200\n"
-"PO-Revision-Date: 2005-10-03 16:11+0200\n"
+"POT-Creation-Date: 2005-10-20 20:32+0200\n"
+"PO-Revision-Date: 2005-10-20 20:33+0200\n"
 "Last-Translator: Jens Seidel <jseidel@cvs.gnome.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit"
 
 #: ../plug-ins/script-fu/script-fu-console.c:132
-#: ../plug-ins/script-fu/script-fu-text-console.c:67
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "Der Skript-Fu Konsolenmodus kann nur interaktiv gestartet werden"
 
@@ -153,8 +152,8 @@ msgstr "Skript-Fu-_Konsole"
 
 #: ../plug-ins/script-fu/script-fu.c:123 ../plug-ins/script-fu/script-fu.c:152
 #: ../plug-ins/script-fu/script-fu.c:315
-msgid "<Toolbox>/Xtns/Script-Fu"
-msgstr "<Toolbox>/Xtns/Skript-Fu"
+msgid "<Toolbox>/Xtns/Languages/Script-Fu"
+msgstr "<Toolbox>/Xtns/Sprachen/Skript-Fu"
 
 #: ../plug-ins/script-fu/script-fu.c:145
 msgid "_Start Server..."
