@@ -1,5 +1,10 @@
 2005-10-20  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/helpbrowser/dialog.c (title_changed): replace newlines
+	with spaces to avoid multiple lines in the combo box.
+
+2005-10-20  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpforegroundselectoptions.[ch]
 	* app/tools/gimpforegroundselecttool.c: renamed "multiblob"
 	property to "discontinuous" and added a check button for it.

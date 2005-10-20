@@ -819,7 +819,17 @@ title_changed (HtmlDocument *doc,
 
   if (new_title)
     {
-      title = g_strstrip (g_strdup (new_title));
+      gchar *c;
+
+      title = g_strdup (new_title);
+
+      for (c = title; *c; c++)
+        {
+          if (*c == '\n' || *c == '\r')
+            *c = ' ';
+        }
+
+      title = g_strstrip (title);
       if (! strlen (title))
         {
           g_free (title);
@@ -827,8 +837,8 @@ title_changed (HtmlDocument *doc,
         }
     }
 
-  history_add (GTK_COMBO_BOX (data), current_uri,
-               title ? title : _("Untitled"));
+  history_add (GTK_COMBO_BOX (data),
+               current_uri, title ? title : _("Untitled"));
 
   if (title)
     queue_set_title (queue, title);
