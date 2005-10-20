@@ -38,11 +38,11 @@
 enum
 {
   PROP_0,
-  PROP_EXPANDED,
+  PROP_DISCONTINUOUS,
   PROP_BACKGROUND,
-  PROP_MULTIBLOB,
   PROP_STROKE_WIDTH,
   PROP_SMOOTHNESS,
+  PROP_EXPANDED,
   PROP_SENSITIVITY_L,
   PROP_SENSITIVITY_A,
   PROP_SENSITIVITY_B
@@ -97,17 +97,14 @@ gimp_foreground_select_options_class_init (GimpForegroundSelectOptionsClass *kla
   object_class->set_property = gimp_foreground_select_options_set_property;
   object_class->get_property = gimp_foreground_select_options_get_property;
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_EXPANDED,
-                                    "expanded", NULL,
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DISCONTINUOUS,
+                                    "discontinuous",
+                                    _("Allow to select multiple disjoint "
+                                      "objects"),
                                     FALSE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_BACKGROUND,
                                     "background", NULL,
-                                    FALSE,
-                                    0);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_MULTIBLOB,
-                                    "multiblob",
-                                    _("Select multiple disconnected objects"),
                                     FALSE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_STROKE_WIDTH,
@@ -122,6 +119,10 @@ gimp_foreground_select_options_class_init (GimpForegroundSelectOptionsClass *kla
                                   "in the selection"),
                                 0, 8, SIOX_DEFAULT_SMOOTHNESS,
                                 0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_EXPANDED,
+                                    "expanded", NULL,
+                                    FALSE,
+                                    0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_SENSITIVITY_L,
                                    "sensitivity-l",
                                    _("Sensitivity for brightness component"),
@@ -149,20 +150,20 @@ gimp_foreground_select_options_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_EXPANDED:
-      options->expanded = g_value_get_boolean (value);
+    case PROP_DISCONTINUOUS:
+      options->discontinuous = g_value_get_boolean (value);
       break;
     case PROP_BACKGROUND:
       options->background = g_value_get_boolean (value);
-      break;
-    case PROP_MULTIBLOB:
-      options->multiblob = g_value_get_boolean (value);
       break;
     case PROP_STROKE_WIDTH:
       options->stroke_width = g_value_get_int (value);
       break;
     case PROP_SMOOTHNESS:
       options->smoothness = g_value_get_int (value);
+      break;
+    case PROP_EXPANDED:
+      options->expanded = g_value_get_boolean (value);
       break;
     case PROP_SENSITIVITY_L:
       options->sensitivity[0] = g_value_get_double (value);
@@ -189,20 +190,20 @@ gimp_foreground_select_options_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_EXPANDED:
-      g_value_set_boolean (value, options->expanded);
+    case PROP_DISCONTINUOUS:
+      g_value_set_boolean (value, options->discontinuous);
       break;
     case PROP_BACKGROUND:
       g_value_set_boolean (value, options->background);
-      break;
-    case PROP_MULTIBLOB:
-      g_value_set_boolean (value, options->multiblob);
       break;
     case PROP_STROKE_WIDTH:
       g_value_set_int (value, options->stroke_width);
       break;
     case PROP_SMOOTHNESS:
       g_value_set_int (value, options->smoothness);
+      break;
+    case PROP_EXPANDED:
+      g_value_set_boolean (value, options->expanded);
       break;
     case PROP_SENSITIVITY_L:
       g_value_set_double (value, options->sensitivity[0]);
@@ -225,6 +226,7 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
   GObject   *config = G_OBJECT (tool_options);
   GtkWidget *vbox   = gimp_selection_options_gui (tool_options);
   GtkWidget *hbox;
+  GtkWidget *button;
   GtkWidget *frame;
   GtkWidget *scale;
   GtkWidget *label;
@@ -232,6 +234,12 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
   GtkWidget *table;
   GtkObject *adj;
   gint       row = 0;
+
+  /*  single / multiple objects  */
+  button = gimp_prop_check_button_new (config, "discontinuous",
+                                       _("Discontinuous"));
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
   /*  foreground / background  */
   frame = gimp_prop_boolean_radio_frame_new (config, "background",

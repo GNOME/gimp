@@ -1,12 +1,17 @@
+2005-10-20  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpforegroundselectoptions.[ch]
+	* app/tools/gimpforegroundselecttool.c: renamed "multiblob"
+	property to "discontinuous" and added a check button for it.
+
 2005-10-19  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/gimpcroptool.c
 	* app/tools/gimpnewrectselecttool.c
-	* app/tools/gimprectangletool.c
-	* app/tools/gimprectangletool.h: move tool_control out of rectangle
-	tool and into users of it, and make rect select execute on leaving
-	but crop tool not.  Also rename functions and clean up formatting
-	a bit.
+	* app/tools/gimprectangletool.[ch]: move tool_control out of
+	rectangle tool and into users of it, and make rect select execute
+	on leaving but crop tool not.  Also rename functions and clean up
+	formatting a bit.
 
 2005-10-19  Sven Neumann  <sven@gimp.org>
 

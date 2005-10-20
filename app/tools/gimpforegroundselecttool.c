@@ -658,7 +658,7 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
                                                fg_select->refinement,
                                                options->smoothness,
                                                options->sensitivity,
-                                               options->multiblob,
+                                               options->discontinuous,
                                                GIMP_PROGRESS (gdisp));
 
       fg_select->refinement = SIOX_REFINEMENT_NO_CHANGE;
@@ -851,7 +851,7 @@ gimp_foreground_select_options_notify (GimpForegroundSelectOptions *options,
     {
       refinement = SIOX_REFINEMENT_CHANGE_SMOOTHNESS;
     }
-  else if (strcmp (pspec->name, "multiblob") == 0)
+  else if (strcmp (pspec->name, "discontinuous") == 0)
     {
       refinement = SIOX_REFINEMENT_CHANGE_MULTIBLOB;
     }
