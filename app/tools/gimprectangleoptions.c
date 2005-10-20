@@ -665,7 +665,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  table = gtk_table_new (6, 3, FALSE);
+  table = gtk_table_new (4, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 5);
   gtk_box_pack_start (GTK_BOX (hbox), table, FALSE, FALSE, 0);
 
@@ -700,21 +700,6 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
   spinbutton = gimp_prop_spin_button_new (config, "aspect", 0.01, 0.1, 4);
   gtk_table_attach_defaults (GTK_TABLE (table), spinbutton, 1, 2, 3, 4);
   gtk_widget_show (spinbutton);
-
-  button = gimp_prop_check_button_new (config, "fixed-center",
-                                       _("Center"));
-  gtk_widget_show (button);
-  gtk_table_attach_defaults (GTK_TABLE (table), button, 0, 1, 4, 6);
-  entry = gimp_prop_size_entry_new (config, "center-x", "unit", "%a",
-                                    GIMP_SIZE_ENTRY_UPDATE_SIZE, 300);
-  gimp_size_entry_show_unit_menu (GIMP_SIZE_ENTRY (entry), FALSE);
-  gtk_table_attach_defaults (GTK_TABLE (table), entry, 1, 2, 4, 5);
-  gtk_widget_show (entry);
-  entry = gimp_prop_size_entry_new (config, "center-y", "unit", "%a",
-                                    GIMP_SIZE_ENTRY_UPDATE_SIZE, 300);
-  gimp_size_entry_show_unit_menu (GIMP_SIZE_ENTRY (entry), FALSE);
-  gtk_table_attach_defaults (GTK_TABLE (table), entry, 1, 2, 5, 6);
-  gtk_widget_show (entry);
 
   gtk_widget_show (table);
 
