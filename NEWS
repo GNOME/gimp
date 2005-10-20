@@ -22,6 +22,14 @@ Bugs fixed in GIMP 2.2.9
 - fixed minor issue in Dicom plug-in (bug #313008)
 - deal with API change in librsvg >= 2.11.0 (bug #314400)
 - fixed bug in ellipse selection (bug #315417)
+- fixed build issue on Cygwin (bug #314893)
+- fixed problem in ellipse selection (bug #315417)
+- ease closing of iscissors outline (bug #134250)
+- fixed handling of Tab key if NumLock is active (bug #317118)
+- fixed problem with random number generator in QBist plug-in (bug #317355)
+- raise palettes grid instead of creating a new one (bug #317435)
+- fixed problem with environment maps in Lighting plug-in (bug #313872)
+- fixed gaussian blur for small radii (bug #315953)
 
 
 Bugs fixed in GIMP 2.2.8
