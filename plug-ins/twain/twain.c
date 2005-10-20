@@ -310,7 +310,7 @@ query (void)
                              PLUG_IN_AUTHOR,
                              PLUG_IN_COPYRIGHT,
                              PLUG_IN_VERSION,
-                             N_("TWAIN (Dump)..."),
+                             "TWAIN (Dump)...",
                              NULL,
                              GIMP_PLUGIN,
                              NUMBER_IN_ARGS,
@@ -330,7 +330,7 @@ query (void)
                              PLUG_IN_AUTHOR,
                              PLUG_IN_COPYRIGHT,
                              PLUG_IN_VERSION,
-                             N_("TWAIN (Read)..."),
+                             "TWAIN (Read)...",
                              NULL,
                              GIMP_PLUGIN,
                              NUMBER_IN_ARGS,
@@ -351,7 +351,7 @@ query (void)
                              PLUG_IN_AUTHOR,
                              PLUG_IN_COPYRIGHT,
                              PLUG_IN_VERSION,
-                             N_("_TWAIN..."),
+                             N_("_Scanner/Camera..."),
                              NULL,
                              GIMP_PLUGIN,
                              NUMBER_IN_ARGS,
@@ -489,7 +489,7 @@ void
 preTransferCallback(void *clientData)
 {
   /* Initialize our progress dialog */
-  gimp_progress_init(_("Transferring TWAIN data"));
+  gimp_progress_init (_("Transferring data from scanner/camera"));
 }
 
 /*

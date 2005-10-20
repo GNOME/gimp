@@ -1,5 +1,10 @@
 2005-10-20  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/twain/twain.c: renamed menu entry to "Scanner/Camera"
+	as suggested in bug #311965.
+
+2005-10-20  Sven Neumann  <sven@gimp.org>
+
 	* app/batch.c (batch_run): always call the batch interpreter in
 	NON-INTERACTIVE mode (see bug #167964).
 
