@@ -13,8 +13,14 @@ Changes in GIMP 2.3.5
 - optionally add jitter to paint strokes
 - implemented Snap to Path
 - added PDB API to access the Image Grid
+- ease access to Keyboard Shortcuts editor
 - optimizations to the Tile Cache and Undo/Redo implementations
 - more work on the Buffer PDB API
+- bug fixes to the new zoomable plug-in previews
+- optimization of the SIOX algorithm
+- menu reorganisation in the Toolbox menu
+- export "Open As Layer" to the PDB as file-load-layer
+- added keyboard control for the Curves tool
 - bug fixes and code cleanup
 
 
