@@ -1,5 +1,10 @@
 2005-10-20  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/tools/gimprectangletool.c: add "notify" callbacks for changes
+	of width, height, or aspect entries in the tool options.
+
+2005-10-20  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/tools/gimprectangletool.c: 
 	* app/tools/gimpnewrectselecttool.c Make clicking inside an existing 
 	selection create rect matching the marching ants.
