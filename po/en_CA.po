@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-19 14:47-0400\n"
+"POT-Creation-Date: 2005-10-23 02:21-0400\n"
 "PO-Revision-Date: 2005-09-06 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
@@ -8442,23 +8442,23 @@ msgstr "Tool Toggle  (%s)"
 msgid "Current layer only"
 msgstr "Current layer only"
 
-#: app/tools/gimpcroptool.c:86
+#: app/tools/gimpcroptool.c:91
 msgid "Crop & Resize"
 msgstr "Crop & Resize"
 
-#: app/tools/gimpcroptool.c:87
+#: app/tools/gimpcroptool.c:92
 msgid "Crop or Resize an image"
 msgstr "Crop or Resize an image"
 
-#: app/tools/gimpcroptool.c:88
+#: app/tools/gimpcroptool.c:93
 msgid "_Crop & Resize"
 msgstr "_Crop & Resize"
 
-#: app/tools/gimpcroptool.c:215
+#: app/tools/gimpcroptool.c:252
 msgid "Click or press enter to crop."
 msgstr "Click or press enter to crop."
 
-#: app/tools/gimpcroptool.c:218
+#: app/tools/gimpcroptool.c:255
 msgid "Click or press enter to resize."
 msgstr "Click or press enter to resize."
 
@@ -8600,15 +8600,15 @@ msgstr "Select hand-drawn regions"
 msgid "_Free Select"
 msgstr "_Free Select"
 
-#: app/tools/gimpforegroundselectoptions.c:110
-msgid "Select multiple disconnected objects"
-msgstr "Select multiple disconnected objects"
+#: app/tools/gimpforegroundselectoptions.c:102
+msgid "Allow to select multiple disjoint objects"
+msgstr "Allow selection of multiple disjoint objects"
 
-#: app/tools/gimpforegroundselectoptions.c:115
+#: app/tools/gimpforegroundselectoptions.c:112
 msgid "Size of the brush used for refinements"
 msgstr "Size of the brush used for refinements"
 
-#: app/tools/gimpforegroundselectoptions.c:120
+#: app/tools/gimpforegroundselectoptions.c:117
 msgid ""
 "Smaller values give a more accurate selection border but may introduce holes "
 "in the selection"
@@ -8616,44 +8616,48 @@ msgstr ""
 "Smaller values give a more accurate selection border but may introduce holes "
 "in the selection"
 
-#: app/tools/gimpforegroundselectoptions.c:127
+#: app/tools/gimpforegroundselectoptions.c:128
 msgid "Sensitivity for brightness component"
 msgstr "Sensitivity for brightness component"
 
-#: app/tools/gimpforegroundselectoptions.c:132
+#: app/tools/gimpforegroundselectoptions.c:133
 msgid "Sensitivity for red/green component"
 msgstr "Sensitivity for red/green component"
 
-#: app/tools/gimpforegroundselectoptions.c:137
+#: app/tools/gimpforegroundselectoptions.c:138
 msgid "Sensitivity for yellow/blue component"
 msgstr "Sensitivity for yellow/blue component"
 
-#: app/tools/gimpforegroundselectoptions.c:238
+#: app/tools/gimpforegroundselectoptions.c:240
+msgid "Discontinuous"
+msgstr "Discontinuous"
+
+#: app/tools/gimpforegroundselectoptions.c:246
 msgid "Interactive refinement"
 msgstr "Interactive refinement"
 
-#: app/tools/gimpforegroundselectoptions.c:239
+#: app/tools/gimpforegroundselectoptions.c:247
 msgid "Mark background"
 msgstr "Mark background"
 
-#: app/tools/gimpforegroundselectoptions.c:240
+#: app/tools/gimpforegroundselectoptions.c:248
 msgid "Mark foreground"
 msgstr "Mark foreground"
 
-#: app/tools/gimpforegroundselectoptions.c:255
+#: app/tools/gimpforegroundselectoptions.c:263
 msgid "Small brush"
 msgstr "Small brush"
 
-#: app/tools/gimpforegroundselectoptions.c:263
+#: app/tools/gimpforegroundselectoptions.c:271
 msgid "Large brush"
 msgstr "Large brush"
 
-#: app/tools/gimpforegroundselectoptions.c:286
+#: app/tools/gimpforegroundselectoptions.c:294
 msgid "Smoothing:"
 msgstr "Smoothing:"
 
 #. granularity
-#: app/tools/gimpforegroundselectoptions.c:289
+#: app/tools/gimpforegroundselectoptions.c:297
 msgid "Color Sensitivity"
 msgstr "Colour Sensitivity"
 
@@ -9117,28 +9121,24 @@ msgstr "Height"
 msgid "Aspect"
 msgstr "Aspect"
 
-#: app/tools/gimprectangleoptions.c:705
-msgid "Center"
-msgstr "Centre"
-
-#: app/tools/gimprectangletool.c:1831 app/tools/gimprectangletool.c:2258
+#: app/tools/gimprectangletool.c:1822 app/tools/gimprectangletool.c:2249
 msgid "Rectangle: "
 msgstr "Rectangle: "
 
-#: app/tools/gimprectangletool.c:2677
+#: app/tools/gimprectangletool.c:2631
 msgid "1 "
 msgstr "1 "
 
-#: app/tools/gimprectangletool.c:2678
+#: app/tools/gimprectangletool.c:2632
 msgid "2 "
 msgstr "2 "
 
-#: app/tools/gimprectangletool.c:2679 app/widgets/gimpcursorview.c:170
+#: app/tools/gimprectangletool.c:2633 app/widgets/gimpcursorview.c:170
 #: app/widgets/gimpcursorview.c:192
 msgid "X"
 msgstr "X"
 
-#: app/tools/gimprectangletool.c:2680 app/widgets/gimpcursorview.c:176
+#: app/tools/gimprectangletool.c:2634 app/widgets/gimpcursorview.c:176
 #: app/widgets/gimpcursorview.c:198
 msgid "Y"
 msgstr "Y"
