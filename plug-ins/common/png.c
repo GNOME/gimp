@@ -1052,6 +1052,45 @@ load_image (const gchar *filename,
       g_free (comment);
     }
 
+#if defined(PNG_iCCP_SUPPORTED)
+  /*
+   * Get the iCCP (colour profile) chunk, if any, and attach it as
+   * a parasite
+   */
+
+  {
+    png_uint_32 proflen;
+    png_charp   profname, profile;
+    int         profcomp;
+
+    if (png_get_iCCP (pp, info, &profname, &profcomp, &profile, &proflen))
+      {
+        GimpParasite *parasite;
+
+        parasite = gimp_parasite_new ("icc-profile", 0, proflen, profile);
+
+        gimp_image_parasite_attach (image, parasite);
+        gimp_parasite_free (parasite);
+
+        if (profname)
+          {
+            gchar *tmp = g_convert (profname, strlen (profname),
+                                    "ISO-8859-1", "UTF-8", NULL, NULL, NULL);
+
+            if (tmp)
+              {
+                parasite = gimp_parasite_new ("icc-profile-name", 0,
+                                              strlen (tmp), tmp);
+                gimp_image_parasite_attach (image, parasite);
+                gimp_parasite_free (parasite);
+
+                g_free (tmp);
+              }
+          }
+      }
+  }
+#endif
+
   /*
    * Done with the file...
    */
@@ -1384,6 +1423,32 @@ save_image (const gchar *filename,
     }
 
 #endif /* PNG_LIBPNG_VER > 99 */
+
+#if defined(PNG_iCCP_SUPPORTED)
+  {
+    GimpParasite *profile_parasite;
+    gchar        *profile_name = NULL;
+
+    profile_parasite = gimp_image_parasite_find (orig_image_ID, "icc-profile");
+
+    if (profile_parasite)
+      {
+        GimpParasite *parasite = gimp_image_parasite_find (orig_image_ID,
+                                                           "icc-profile-name");
+        if (parasite)
+          profile_name = g_convert (gimp_parasite_data (parasite),
+                                    gimp_parasite_data_size (parasite),
+                                    "UTF-8", "ISO-8859-1", NULL, NULL, NULL);
+
+        png_set_iCCP (pp, info,
+                      profile_name ? profile_name : "ICC profile", 0,
+                      (gchar *) gimp_parasite_data (profile_parasite),
+                      gimp_parasite_data_size (profile_parasite));
+
+        g_free (profile_name);
+      }
+  }
+#endif
 
   png_write_info (pp, info);
 

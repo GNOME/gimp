@@ -164,6 +164,13 @@ Global data follows no strict rules.
 	manager exists to use this parasite, and it will be used
 	for interchange between TIFF and PNG (identical profiles)
 
+"icc-profile-name" (IMAGE, PERSISTENT)
+        The profile name is a convenient name for referring to the
+        profile. It is for example used in the PNG file format.  The
+        name must be stored in UTF-8 encoding. If a file format uses
+        a different character encoding, it must be converted to UTF-8
+        for use as a parasite.
+
 "decompose-data" (IMAGE, NONPERSISTENT) 
         Starting with GIMP 2.3, this is added to images produced by
         the decompose plug-in, and contains information necessary to

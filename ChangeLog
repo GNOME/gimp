@@ -1,14 +1,21 @@
+2005-10-24  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/png.c: load and save embedded ICC profiles, based
+	on a patch from Ture Pålsson (bug #319580).
+
+	* devel-docs/parasites.txt: document the "icc-profile-name" parasite.
+
 2005-10-24  Jakub Steiner <jimmac@ximian.com>
 
 	* themes/Default/images/tools/stock-tool-path-16.png
 	* themes/Default/images/tools/stock-tool-path-22.png: works on
-	  dark themes (bug #168981)
+	dark themes (bug #168981)
 
 2005-10-24  Jakub Steiner <jimmac@ximian.com>
 
 	* themes/Default/images/tools/stock-tool-airbrush-16.png
 	* themes/Default/images/tools/stock-tool-airbrush-22.png: make it
-		work on dark background
+	work on dark background
 
 2005-10-24  Michael Natterer  <mitch@gimp.org>
 
