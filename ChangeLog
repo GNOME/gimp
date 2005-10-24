@@ -1,3 +1,8 @@
+2005-10-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdockable.c (gimp_dockable_realize): create the
+	title window as GDK_WINDOW_CHILD, not GDK_WINDOW_TEMP.
+
 2005-10-20  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/gimprectangletool.c: add "notify" callbacks for changes
