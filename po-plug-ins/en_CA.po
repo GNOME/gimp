@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-06 11:58-0400\n"
+"POT-Creation-Date: 2005-10-24 04:06-0400\n"
 "PO-Revision-Date: 2005-09-06 14:31-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
@@ -251,7 +251,7 @@ msgid "Color Function"
 msgstr "Colour Function"
 
 #. Redmode radio frame
-#: plug-ins/FractalExplorer/Dialogs.c:978 plug-ins/common/channel_mixer.c:536
+#: plug-ins/FractalExplorer/Dialogs.c:978 plug-ins/common/channel_mixer.c:529
 #: plug-ins/common/decompose.c:138
 msgid "Red"
 msgstr "Red"
@@ -317,13 +317,13 @@ msgstr ""
 "ones and vice versa"
 
 #. Greenmode radio frame
-#: plug-ins/FractalExplorer/Dialogs.c:1019 plug-ins/common/channel_mixer.c:541
+#: plug-ins/FractalExplorer/Dialogs.c:1019 plug-ins/common/channel_mixer.c:534
 #: plug-ins/common/decompose.c:139
 msgid "Green"
 msgstr "Green"
 
 #. Bluemode radio frame
-#: plug-ins/FractalExplorer/Dialogs.c:1060 plug-ins/common/channel_mixer.c:546
+#: plug-ins/FractalExplorer/Dialogs.c:1060 plug-ins/common/channel_mixer.c:539
 #: plug-ins/common/decompose.c:140
 msgid "Blue"
 msgstr "Blue"
@@ -364,7 +364,7 @@ msgstr "_Fractals"
 #: plug-ins/FractalExplorer/Dialogs.c:1696
 #: plug-ins/Lighting/lighting_ui.c:1160 plug-ins/bmp/bmpwrite.c:200
 #: plug-ins/common/CEL.c:568 plug-ins/common/CML_explorer.c:2013
-#: plug-ins/common/channel_mixer.c:1065 plug-ins/common/compressor.c:410
+#: plug-ins/common/channel_mixer.c:1071 plug-ins/common/compressor.c:410
 #: plug-ins/common/compressor.c:541 plug-ins/common/curve_bend.c:860
 #: plug-ins/common/dicom.c:650 plug-ins/common/gbr.c:616
 #: plug-ins/common/gif.c:1000 plug-ins/common/gih.c:1258
@@ -405,7 +405,7 @@ msgstr "Save Fractal Parameters"
 #: plug-ins/FractalExplorer/FractalExplorer.c:917
 #: plug-ins/Lighting/lighting_ui.c:1304 plug-ins/bmp/bmpread.c:152
 #: plug-ins/common/CEL.c:299 plug-ins/common/CML_explorer.c:2233
-#: plug-ins/common/channel_mixer.c:982 plug-ins/common/curve_bend.c:912
+#: plug-ins/common/channel_mixer.c:988 plug-ins/common/curve_bend.c:912
 #: plug-ins/common/dicom.c:295 plug-ins/common/gbr.c:348
 #: plug-ins/common/gifload.c:297 plug-ins/common/gih.c:649
 #: plug-ins/common/mng.c:1124 plug-ins/common/pat.c:321
@@ -1758,7 +1758,7 @@ msgstr "Warning: the source and the destination are the same channel."
 msgid "Save Parameters To"
 msgstr "Save Parameters To"
 
-#: plug-ins/common/CML_explorer.c:2068 plug-ins/common/channel_mixer.c:1073
+#: plug-ins/common/CML_explorer.c:2068 plug-ins/common/channel_mixer.c:1079
 #, c-format
 msgid "Parameters were saved to '%s'"
 msgstr "Parameters were saved to '%s'"
@@ -1767,7 +1767,7 @@ msgstr "Parameters were saved to '%s'"
 msgid "CML Explorer: Overwrite File?"
 msgstr "CML Explorer: Overwrite File?"
 
-#: plug-ins/common/CML_explorer.c:2103 plug-ins/common/channel_mixer.c:1104
+#: plug-ins/common/CML_explorer.c:2103 plug-ins/common/channel_mixer.c:1110
 #, c-format
 msgid ""
 "File '%s' exists.\n"
@@ -2252,15 +2252,15 @@ msgstr "Channel Mi_xer..."
 #. printf("Channel Mixer:: Mode:%d  r %f  g %f  b %f\n ",
 #. param[3].data.d_int32, mix.black.red_gain,
 #. mix.black.green_gain, mix.black.blue_gain);
-#: plug-ins/common/channel_mixer.c:277 plug-ins/common/channel_mixer.c:491
+#: plug-ins/common/channel_mixer.c:271 plug-ins/common/channel_mixer.c:484
 msgid "Channel Mixer"
 msgstr "Channel Mixer"
 
-#: plug-ins/common/channel_mixer.c:527
+#: plug-ins/common/channel_mixer.c:520
 msgid "O_utput channel:"
 msgstr "O_utput channel:"
 
-#: plug-ins/common/channel_mixer.c:581 plug-ins/common/compose.c:185
+#: plug-ins/common/channel_mixer.c:574 plug-ins/common/compose.c:185
 #: plug-ins/common/compose.c:196 plug-ins/common/diffraction.c:501
 #: plug-ins/common/diffraction.c:539 plug-ins/common/diffraction.c:577
 #: plug-ins/common/exchange.c:399 plug-ins/common/noisify.c:530
@@ -2268,7 +2268,7 @@ msgstr "O_utput channel:"
 msgid "_Red:"
 msgstr "_Red:"
 
-#: plug-ins/common/channel_mixer.c:599 plug-ins/common/compose.c:186
+#: plug-ins/common/channel_mixer.c:592 plug-ins/common/compose.c:186
 #: plug-ins/common/compose.c:197 plug-ins/common/diffraction.c:510
 #: plug-ins/common/diffraction.c:548 plug-ins/common/diffraction.c:586
 #: plug-ins/common/exchange.c:459 plug-ins/common/noisify.c:531
@@ -2276,7 +2276,7 @@ msgstr "_Red:"
 msgid "_Green:"
 msgstr "_Green:"
 
-#: plug-ins/common/channel_mixer.c:618 plug-ins/common/compose.c:187
+#: plug-ins/common/channel_mixer.c:611 plug-ins/common/compose.c:187
 #: plug-ins/common/compose.c:198 plug-ins/common/diffraction.c:519
 #: plug-ins/common/diffraction.c:557 plug-ins/common/diffraction.c:595
 #: plug-ins/common/exchange.c:520 plug-ins/common/noisify.c:532
@@ -2285,23 +2285,23 @@ msgid "_Blue:"
 msgstr "_Blue:"
 
 #. The monochrome toggle
-#: plug-ins/common/channel_mixer.c:629
+#: plug-ins/common/channel_mixer.c:622
 msgid "_Monochrome"
 msgstr "_Monochrome"
 
-#: plug-ins/common/channel_mixer.c:641
+#: plug-ins/common/channel_mixer.c:635
 msgid "Preserve _luminosity"
 msgstr "Preserve _luminosity"
 
-#: plug-ins/common/channel_mixer.c:878
+#: plug-ins/common/channel_mixer.c:884
 msgid "Load Channel Mixer Settings"
 msgstr "Load Channel Mixer Settings"
 
-#: plug-ins/common/channel_mixer.c:1005
+#: plug-ins/common/channel_mixer.c:1011
 msgid "Save Channel Mixer Settings"
 msgstr "Save Channel Mixer Settings"
 
-#: plug-ins/common/channel_mixer.c:1089
+#: plug-ins/common/channel_mixer.c:1095
 msgid "Channel Mixer File Operation Warning"
 msgstr "Channel Mixer File Operation Warning"
 
@@ -2609,7 +2609,7 @@ msgstr "_Alpha"
 msgid "E_xtend"
 msgstr "E_xtend"
 
-#: plug-ins/common/convmatrix.c:87 plug-ins/common/displace.c:459
+#: plug-ins/common/convmatrix.c:87 plug-ins/common/displace.c:475
 #: plug-ins/common/edge.c:719 plug-ins/common/ripple.c:568
 msgid "_Wrap"
 msgstr "_Wrap"
@@ -3229,46 +3229,46 @@ msgstr "_Whirl"
 msgid "_Displace..."
 msgstr "_Displace..."
 
-#: plug-ins/common/displace.c:277
+#: plug-ins/common/displace.c:293
 msgid "Displacing"
 msgstr "Displacing"
 
-#: plug-ins/common/displace.c:313
+#: plug-ins/common/displace.c:329
 msgid "Displace"
 msgstr "Displace"
 
 #. X options
-#: plug-ins/common/displace.c:349
+#: plug-ins/common/displace.c:365
 msgid "_X displacement:"
 msgstr "_X displacement:"
 
 #. Y Options
-#: plug-ins/common/displace.c:396
+#: plug-ins/common/displace.c:412
 msgid "_Y displacement:"
 msgstr "_Y displacement:"
 
-#: plug-ins/common/displace.c:446
+#: plug-ins/common/displace.c:462
 msgid "Displacement Mode"
 msgstr "Displacement Mode"
 
-#: plug-ins/common/displace.c:449
+#: plug-ins/common/displace.c:465
 msgid "_Cartesian"
 msgstr "_Cartesian"
 
-#: plug-ins/common/displace.c:450
+#: plug-ins/common/displace.c:466
 msgid "_Polar"
 msgstr "_Polar"
 
-#: plug-ins/common/displace.c:455
+#: plug-ins/common/displace.c:471
 msgid "Edge Behavior"
 msgstr "Edge Behaviour"
 
-#: plug-ins/common/displace.c:461 plug-ins/common/edge.c:732
+#: plug-ins/common/displace.c:477 plug-ins/common/edge.c:732
 #: plug-ins/common/ripple.c:569 plug-ins/common/waves.c:276
 msgid "_Smear"
 msgstr "_Smear"
 
-#: plug-ins/common/displace.c:463 plug-ins/common/edge.c:745
+#: plug-ins/common/displace.c:479 plug-ins/common/edge.c:745
 #: plug-ins/common/fractaltrace.c:736 plug-ins/common/newsprint.c:400
 #: plug-ins/common/ripple.c:570
 msgid "_Black"
@@ -3448,7 +3448,7 @@ msgid "Composing images"
 msgstr "Composing images"
 
 #: plug-ins/common/film.c:436 plug-ins/common/guillotine.c:187
-#: plug-ins/helpbrowser/dialog.c:831
+#: plug-ins/helpbrowser/dialog.c:841
 msgid "Untitled"
 msgstr "Untitled"
 
@@ -3851,7 +3851,7 @@ msgid "Spacing:"
 msgstr "Spacing:"
 
 #: plug-ins/common/gbr.c:742 plug-ins/common/gih.c:910
-#: plug-ins/common/pat.c:544 plug-ins/gimpressionist/presets.c:651
+#: plug-ins/common/pat.c:544 plug-ins/gimpressionist/presets.c:646
 msgid "Description:"
 msgstr "Description:"
 
@@ -7600,11 +7600,11 @@ msgid "Smoothing Y gradient"
 msgstr "Smoothing Y gradient"
 
 #. calculate new X,Y Displacement image maps
-#: plug-ins/common/warp.c:1236
+#: plug-ins/common/warp.c:1234
 msgid "Finding XY gradient"
 msgstr "Finding XY gradient"
 
-#: plug-ins/common/warp.c:1261
+#: plug-ins/common/warp.c:1259
 #, c-format
 msgid "Flow step %d"
 msgstr "Flow step %d"
@@ -9246,35 +9246,35 @@ msgstr "The relative density of the brush strokes"
 msgid "Failed to save PPM file '%s': %s"
 msgstr "Failed to save PPM file '%s': %s"
 
-#: plug-ins/gimpressionist/presets.c:625
+#: plug-ins/gimpressionist/presets.c:620
 msgid "Save Current"
 msgstr "Save Current"
 
-#: plug-ins/gimpressionist/presets.c:874
+#: plug-ins/gimpressionist/presets.c:870
 msgid "Gimpressionist Defaults"
 msgstr "Gimpressionist Defaults"
 
-#: plug-ins/gimpressionist/presets.c:995
+#: plug-ins/gimpressionist/presets.c:991
 msgid "_Presets"
 msgstr "_Presets"
 
-#: plug-ins/gimpressionist/presets.c:1010
+#: plug-ins/gimpressionist/presets.c:1006
 msgid "Save Current..."
 msgstr "Save Current..."
 
-#: plug-ins/gimpressionist/presets.c:1015
+#: plug-ins/gimpressionist/presets.c:1014
 msgid "Save the current settings to the specified file"
 msgstr "Save the current settings to the specified file"
 
-#: plug-ins/gimpressionist/presets.c:1043
+#: plug-ins/gimpressionist/presets.c:1042
 msgid "Reads the selected Preset into memory"
 msgstr "Reads the selected Preset into memory"
 
-#: plug-ins/gimpressionist/presets.c:1049
+#: plug-ins/gimpressionist/presets.c:1048
 msgid "Deletes the selected Preset"
 msgstr "Deletes the selected Preset"
 
-#: plug-ins/gimpressionist/presets.c:1055
+#: plug-ins/gimpressionist/presets.c:1054
 msgid "Reread the folder of Presets"
 msgstr "Reread the folder of Presets"
 
@@ -11390,22 +11390,14 @@ msgstr ""
 "Aggressive RLE\n"
 "(not supported by SGI)"
 
-#: plug-ins/twain/twain.c:313
-msgid "TWAIN (Dump)..."
-msgstr "TWAIN (Dump)..."
-
-#: plug-ins/twain/twain.c:333
-msgid "TWAIN (Read)..."
-msgstr "TWAIN (Read)..."
-
 #: plug-ins/twain/twain.c:354
-msgid "_TWAIN..."
-msgstr "_TWAIN..."
+msgid "_Scanner/Camera..."
+msgstr "_Scanner/Camera..."
 
 #. Initialize our progress dialog
 #: plug-ins/twain/twain.c:492
-msgid "Transferring TWAIN data"
-msgstr "Transferring TWAIN data"
+msgid "Transferring data from scanner/camera"
+msgstr "Transferring data from scanner/camera"
 
 #: plug-ins/uri/uri.c:116 plug-ins/uri/uri.c:137
 msgid "URI"
