@@ -1,5 +1,11 @@
 2005-10-24  Jakub Steiner <jimmac@ximian.com>
 
+	* themes/Default/images/tools/stock-tool-path-16.png
+	* themes/Default/images/tools/stock-tool-path-22.png: works on
+	  dark themes (bug #168981)
+
+2005-10-24  Jakub Steiner <jimmac@ximian.com>
+
 	* themes/Default/images/tools/stock-tool-airbrush-16.png
 	* themes/Default/images/tools/stock-tool-airbrush-22.png: make it
 		work on dark background
