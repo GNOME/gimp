@@ -1,3 +1,9 @@
+2005-10-24  Jakub Steiner <jimmac@ximian.com>
+
+	* themes/Default/images/tools/stock-tool-airbrush-16.png
+	* themes/Default/images/tools/stock-tool-airbrush-22.png: make it
+		work on dark background
+
 2005-10-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpdockable.c (gimp_dockable_realize): create the
