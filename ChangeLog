@@ -1,3 +1,13 @@
+2005-10-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimage-contiguous-region.c
+	(struct ContinuousRegionData)
+	(gimp_image_contiguous_region_by_color)
+	(contiguous_region_by_color): the color samples are always RGB or
+	RGBA, so always compare 3 or 4 bytes of pixel data, and not just
+	the number of bytes of the drawable/projection. Fixes "select by
+	color" on GRAYA (bug #319683).
+
 2005-10-25  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/lib.pl: add G_GNUC_INTERNAL to declaration of

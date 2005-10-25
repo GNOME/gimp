@@ -46,7 +46,6 @@ typedef struct
   gint           threshold;
   gboolean       select_transparent;
   gboolean       has_alpha;
-  gint           color_bytes;
   guchar         color[MAX_CHANNELS];
 } ContinuousRegionData;
 
@@ -255,17 +254,6 @@ gimp_image_contiguous_region_by_color (GimpImage     *gimage,
       select_transparent = FALSE;
     }
 
-  if (GIMP_IMAGE_TYPE_IS_INDEXED (cont.type))
-    {
-      /* indexed colors are always RGB or RGBA */
-      cont.color_bytes = cont.has_alpha ? 4 : 3;
-    }
-  else
-    {
-      /* RGB, RGBA, GRAY and GRAYA colors are shaped just like the image */
-      cont.color_bytes = imagePR.bytes;
-    }
-
   cont.gimage             = gimage;
   cont.antialias          = antialias;
   cont.threshold          = threshold;
@@ -312,7 +300,7 @@ contiguous_region_by_color (ContinuousRegionData *cont,
           *m++ = pixel_difference (cont->color, rgb,
                                    cont->antialias,
                                    cont->threshold,
-                                   cont->color_bytes,
+                                   cont->has_alpha ? 4 : 3,
                                    cont->has_alpha,
                                    cont->select_transparent);
 
