@@ -196,9 +196,9 @@ gimp_image_contiguous_region_by_color (GimpImage     *gimage,
   guchar        *mask_data;
   guchar        *idata, *mdata;
   guchar         rgb[MAX_CHANNELS];
-  gint           has_alpha, indexed;
+  gint           has_alpha;
   gint           width, height;
-  gint           bytes, color_bytes, alpha;
+  gint           bytes;
   gint           i, j;
   gpointer       pr;
   GimpImageType  d_type;
@@ -218,7 +218,6 @@ gimp_image_contiguous_region_by_color (GimpImage     *gimage,
   d_type    = gimp_pickable_get_image_type (pickable);
   bytes     = GIMP_IMAGE_TYPE_BYTES (d_type);
   has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (d_type);
-  indexed   = GIMP_IMAGE_TYPE_IS_INDEXED (d_type);
 
   tiles  = gimp_pickable_get_tiles (pickable);
   width  = tile_manager_width (tiles);
@@ -242,18 +241,6 @@ gimp_image_contiguous_region_by_color (GimpImage     *gimage,
       select_transparent = FALSE;
     }
 
-  if (indexed)
-    {
-      /* indexed colors are always RGB or RGBA */
-      color_bytes = has_alpha ? 4 : 3;
-    }
-  else
-    {
-      /* RGB, RGBA, GRAY and GRAYA colors are shaped just like the image */
-      color_bytes = bytes;
-    }
-
-  alpha = bytes - 1;
   mask = gimp_channel_new_mask (gimage, width, height);
 
   pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE (mask)),
@@ -282,7 +269,7 @@ gimp_image_contiguous_region_by_color (GimpImage     *gimage,
 	      /*  Find how closely the colors match  */
 	      *mdata++ = pixel_difference (col, rgb,
                                            antialias, threshold,
-                                           color_bytes,
+                                           has_alpha ? 4 : 3,
                                            has_alpha, select_transparent);
 
 	      idata += bytes;
