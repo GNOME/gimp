@@ -625,6 +625,75 @@ CODE
     );
 }
 
+sub path_get_visible {
+    $blurb = 'Get the visibility of the named path.';
+
+    $help = <<'HELP';
+This procedure returns the visibility of the specified path.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'name', type => 'string',
+	  desc => 'The name of the path whose visibility should be obtained.' }
+    );
+
+    @outargs = (
+	{ name => 'visible', type => 'boolean',
+	  desc => 'TRUE if the path is visible, FALSE otherwise', init => 1 }
+    );
+
+    %invoke = (
+	vars => [ 'GimpVectors *vectors' ],
+	code => <<'CODE'
+{
+  vectors = gimp_image_get_vectors_by_name (gimage, name);
+
+  if (vectors)
+    visible = gimp_item_get_visible (GIMP_ITEM (vectors));
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub path_set_visible {
+    $blurb = 'Sets the visibility of the named path.';
+
+    $help = <<'HELP';
+This procedure sets the specified path's visibility.
+HELP
+
+    $author = $copyright = 'Sven Neumann';
+    $date = '2005';
+    $since = '2.4';
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'name', type => 'string',
+	  desc => 'The name of the path whose visibility should be set' },
+	{ name => 'visible', type => 'boolean',
+	  desc => 'The new path visibility', init => 1 }
+    );
+
+    %invoke = (
+	vars => [ 'GimpVectors *vectors' ],
+	code => <<'CODE'
+{
+  vectors = gimp_image_get_vectors_by_name (gimage, name);
+
+  if (vectors)
+    gimp_item_set_visible (GIMP_ITEM (vectors), visible, TRUE);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub path_to_selection {
     $blurb = 'Transforms the active path into a selection';
 
@@ -742,8 +811,9 @@ HELP
 	    path_get_points path_set_points
             path_stroke_current path_get_point_at_dist
 	    path_get_tattoo path_set_tattoo get_path_by_tattoo
-            path_get_locked path_set_locked path_to_selection
-	    path_import path_import_string);
+            path_get_locked path_set_locked
+            path_get_visible path_set_visible
+            path_to_selection path_import path_import_string);
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Paths';

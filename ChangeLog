@@ -1,3 +1,14 @@
+2005-10-25  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/paths.pdb: added getter and setter for path
+	visibility (bug #319617).
+
+	* app/pdb/internal_procs.c
+	* app/pdb/paths_cmds.c
+	* libgimp/gimppaths_pdb.[ch]: regenerated.
+
+	* libgimp/gimp.def: updated.
+
 2005-10-24  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/png.c: load and save embedded ICC profiles, based

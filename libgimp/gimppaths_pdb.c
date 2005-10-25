@@ -510,6 +510,76 @@ gimp_path_set_locked (gint32       image_ID,
 }
 
 /**
+ * gimp_path_get_visible:
+ * @image_ID: The image.
+ * @name: The name of the path whose visibility should be obtained.
+ *
+ * Get the visibility of the named path.
+ *
+ * This procedure returns the visibility of the specified path.
+ *
+ * Returns: TRUE if the path is visible, FALSE otherwise.
+ */
+gboolean
+gimp_path_get_visible (gint32       image_ID,
+		       const gchar *name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean visible = FALSE;
+
+  return_vals = gimp_run_procedure ("gimp-path-get-visible",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_STRING, name,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    visible = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return visible;
+}
+
+/**
+ * gimp_path_set_visible:
+ * @image_ID: The image.
+ * @name: The name of the path whose visibility should be set.
+ * @visible: The new path visibility.
+ *
+ * Sets the visibility of the named path.
+ *
+ * This procedure sets the specified path's visibility.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_path_set_visible (gint32       image_ID,
+		       const gchar *name,
+		       gboolean     visible)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-path-set-visible",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_STRING, name,
+				    GIMP_PDB_INT32, visible,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_path_to_selection:
  * @image_ID: The image.
  * @name: The name of the path which should be made into selection.

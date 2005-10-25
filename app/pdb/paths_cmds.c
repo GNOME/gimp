@@ -52,6 +52,8 @@ static ProcRecord path_set_tattoo_proc;
 static ProcRecord get_path_by_tattoo_proc;
 static ProcRecord path_get_locked_proc;
 static ProcRecord path_set_locked_proc;
+static ProcRecord path_get_visible_proc;
+static ProcRecord path_set_visible_proc;
 static ProcRecord path_to_selection_proc;
 static ProcRecord path_import_proc;
 static ProcRecord path_import_string_proc;
@@ -72,6 +74,8 @@ register_paths_procs (Gimp *gimp)
   procedural_db_register (gimp, &get_path_by_tattoo_proc);
   procedural_db_register (gimp, &path_get_locked_proc);
   procedural_db_register (gimp, &path_set_locked_proc);
+  procedural_db_register (gimp, &path_get_visible_proc);
+  procedural_db_register (gimp, &path_set_visible_proc);
   procedural_db_register (gimp, &path_to_selection_proc);
   procedural_db_register (gimp, &path_import_proc);
   procedural_db_register (gimp, &path_import_string_proc);
@@ -1178,6 +1182,158 @@ static ProcRecord path_set_locked_proc =
   0,
   NULL,
   { { path_set_locked_invoker } }
+};
+
+static Argument *
+path_get_visible_invoker (Gimp         *gimp,
+                          GimpContext  *context,
+                          GimpProgress *progress,
+                          Argument     *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpImage *gimage;
+  gchar *name;
+  gboolean visible = FALSE;
+  GimpVectors *vectors;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  name = (gchar *) args[1].value.pdb_pointer;
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+    success = FALSE;
+
+  if (success)
+    {
+      vectors = gimp_image_get_vectors_by_name (gimage, name);
+
+      if (vectors)
+        visible = gimp_item_get_visible (GIMP_ITEM (vectors));
+      else
+        success = FALSE;
+    }
+
+  return_args = procedural_db_return_args (&path_get_visible_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = visible;
+
+  return return_args;
+}
+
+static ProcArg path_get_visible_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  {
+    GIMP_PDB_STRING,
+    "name",
+    "The name of the path whose visibility should be obtained."
+  }
+};
+
+static ProcArg path_get_visible_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "visible",
+    "TRUE if the path is visible, FALSE otherwise"
+  }
+};
+
+static ProcRecord path_get_visible_proc =
+{
+  "gimp-path-get-visible",
+  "gimp-path-get-visible",
+  "Get the visibility of the named path.",
+  "This procedure returns the visibility of the specified path.",
+  "Andy Thomas",
+  "Andy Thomas",
+  "1999",
+  NULL,
+  GIMP_INTERNAL,
+  2,
+  path_get_visible_inargs,
+  1,
+  path_get_visible_outargs,
+  { { path_get_visible_invoker } }
+};
+
+static Argument *
+path_set_visible_invoker (Gimp         *gimp,
+                          GimpContext  *context,
+                          GimpProgress *progress,
+                          Argument     *args)
+{
+  gboolean success = TRUE;
+  GimpImage *gimage;
+  gchar *name;
+  gboolean visible = FALSE;
+  GimpVectors *vectors;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  name = (gchar *) args[1].value.pdb_pointer;
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+    success = FALSE;
+
+  visible = args[2].value.pdb_int ? TRUE : FALSE;
+
+  if (success)
+    {
+      vectors = gimp_image_get_vectors_by_name (gimage, name);
+
+      if (vectors)
+        gimp_item_set_visible (GIMP_ITEM (vectors), visible, TRUE);
+      else
+        success = FALSE;
+    }
+
+  return procedural_db_return_args (&path_set_visible_proc, success);
+}
+
+static ProcArg path_set_visible_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  {
+    GIMP_PDB_STRING,
+    "name",
+    "The name of the path whose visibility should be set"
+  },
+  {
+    GIMP_PDB_INT32,
+    "visible",
+    "The new path visibility"
+  }
+};
+
+static ProcRecord path_set_visible_proc =
+{
+  "gimp-path-set-visible",
+  "gimp-path-set-visible",
+  "Sets the visibility of the named path.",
+  "This procedure sets the specified path's visibility.",
+  "Sven Neumann",
+  "Sven Neumann",
+  "2005",
+  NULL,
+  GIMP_INTERNAL,
+  3,
+  path_set_visible_inargs,
+  0,
+  NULL,
+  { { path_set_visible_invoker } }
 };
 
 static Argument *

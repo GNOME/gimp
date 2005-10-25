@@ -454,6 +454,7 @@ EXPORTS
 	gimp_path_get_point_at_dist
 	gimp_path_get_points
 	gimp_path_get_tattoo
+	gimp_path_get_visible
 	gimp_path_import
 	gimp_path_import_string
 	gimp_path_list
@@ -461,6 +462,7 @@ EXPORTS
 	gimp_path_set_locked
 	gimp_path_set_points
 	gimp_path_set_tattoo
+	gimp_path_set_visible
 	gimp_path_stroke_current
 	gimp_path_to_selection
 	gimp_pattern_get_info

@@ -63,6 +63,11 @@ gboolean gimp_path_get_locked        (gint32           image_ID,
 gboolean gimp_path_set_locked        (gint32           image_ID,
 				      const gchar     *name,
 				      gboolean         locked);
+gboolean gimp_path_get_visible       (gint32           image_ID,
+				      const gchar     *name);
+gboolean gimp_path_set_visible       (gint32           image_ID,
+				      const gchar     *name,
+				      gboolean         visible);
 gboolean gimp_path_to_selection      (gint32           image_ID,
 				      const gchar     *name,
 				      GimpChannelOps   op,
