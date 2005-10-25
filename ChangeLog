@@ -1,3 +1,14 @@
+2005-10-26  Michael Natterer  <mitch@gimp.org>
+
+	Fixed bug #313547:
+
+	* app/widgets/gimpdataeditor.c
+	(gimp_data_editor_set_aux_info)
+	(gimp_data_editor_get_aux_info): store the state of edit_active
+	in sessionrc.
+
+	(gimp_data_editor_constructor): enable edit_active by default.
+
 2005-10-25  Michael Natterer  <mitch@gimp.org>
 
 	Let the data editors optionally follow the active brush, palette

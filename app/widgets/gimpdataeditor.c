@@ -216,6 +216,10 @@ gimp_data_editor_constructor (GType                  type,
 
   editor = GIMP_DATA_EDITOR (object);
 
+  g_assert (GIMP_IS_DATA_FACTORY (editor->data_factory));
+
+  gimp_data_editor_set_edit_active (editor, TRUE);
+
   editor->save_button =
     gimp_editor_add_button (GIMP_EDITOR (editor),
                             GTK_STOCK_SAVE,
@@ -299,6 +303,7 @@ gimp_data_editor_dispose (GObject *object)
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
+#define AUX_INFO_EDIT_ACTIVE  "edit-active"
 #define AUX_INFO_CURRENT_DATA "current-data"
 
 static void
@@ -314,16 +319,27 @@ gimp_data_editor_set_aux_info (GimpDocked *docked,
     {
       GimpSessionInfoAux *aux = list->data;
 
-      if (! strcmp (aux->name, AUX_INFO_CURRENT_DATA))
+      if (! strcmp (aux->name, AUX_INFO_EDIT_ACTIVE))
         {
-          GimpData *data;
+          gboolean edit_active;
 
-          data = (GimpData *)
-            gimp_container_get_child_by_name (editor->data_factory->container,
-                                              aux->value);
+          edit_active = ! g_ascii_strcasecmp (aux->value, "true");
 
-          if (data)
-            gimp_data_editor_set_data (editor, data);
+          gimp_data_editor_set_edit_active (editor, edit_active);
+        }
+      else if (! strcmp (aux->name, AUX_INFO_CURRENT_DATA))
+        {
+          if (! editor->edit_active)
+            {
+              GimpData *data;
+
+              data = (GimpData *)
+                gimp_container_get_child_by_name (editor->data_factory->container,
+                                                  aux->value);
+
+              if (data)
+                gimp_data_editor_set_data (editor, data);
+            }
         }
     }
 }
@@ -331,15 +347,19 @@ gimp_data_editor_set_aux_info (GimpDocked *docked,
 static GList *
 gimp_data_editor_get_aux_info (GimpDocked *docked)
 {
-  GimpDataEditor *editor = GIMP_DATA_EDITOR (docked);
-  GList          *aux_info;
+  GimpDataEditor     *editor = GIMP_DATA_EDITOR (docked);
+  GList              *aux_info;
+  GimpSessionInfoAux *aux;
 
   aux_info = parent_docked_iface->get_aux_info (docked);
 
+  aux = gimp_session_info_aux_new (AUX_INFO_EDIT_ACTIVE,
+                                   editor->edit_active ? "true" : "false");
+  aux_info = g_list_append (aux_info, aux);
+
   if (editor->data)
     {
-      GimpSessionInfoAux *aux;
-      const gchar        *value;
+      const gchar *value;
 
       value = gimp_object_get_name (GIMP_OBJECT (editor->data));
 
