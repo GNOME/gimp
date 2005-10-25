@@ -1,3 +1,8 @@
+2005-10-25  DindinX  <dindinx@gimp.org>
+
+	* app/paint-funcs/scale-funcs.c (subsample_region): correctly pass
+	the region offset to pixel_region_get_row().
+
 2005-10-25  Bill skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/gimppaintoptions-gui.c (jitter_options_gui):

@@ -629,18 +629,18 @@ subsample_region (PixelRegion *srcPR,
   guchar  *src,  *s;
   guchar  *dest, *d;
   gdouble *row,  *r;
-  gint destwidth;
-  gint src_row, src_col;
-  gint bytes, b;
-  gint width, height;
-  gint orig_width, orig_height;
-  gdouble x_rat, y_rat;
-  gdouble x_cum, y_cum;
-  gdouble x_last, y_last;
-  gdouble * x_frac, y_frac, tot_frac;
-  gint i, j;
-  gint frac;
-  gint advance_dest;
+  gint     destwidth;
+  gint     src_row, src_col;
+  gint     bytes, b;
+  gint     width, height;
+  gint     orig_width, orig_height;
+  gdouble  x_rat, y_rat;
+  gdouble  x_cum, y_cum;
+  gdouble  x_last, y_last;
+  gdouble *x_frac, y_frac, tot_frac;
+  gint     i, j;
+  gint     frac;
+  gint     advance_dest;
 
   orig_width = srcPR->w / subsample;
   orig_height = srcPR->h / subsample;
@@ -697,7 +697,8 @@ subsample_region (PixelRegion *srcPR,
   y_last = y_cum;
 
   pixel_region_get_row (srcPR,
-                        0, src_row * subsample, orig_width * subsample,
+                        srcPR->x, srcPR->y + src_row * subsample,
+                        orig_width * subsample,
                         src, subsample);
 
   /*  Scale the selected region  */
@@ -777,7 +778,9 @@ subsample_region (PixelRegion *srcPR,
       else
         {
           pixel_region_get_row (srcPR,
-                                0, src_row * subsample, orig_width * subsample,
+                                srcPR->x,
+                                srcPR->y + src_row * subsample,
+                                orig_width * subsample,
                                 src, subsample);
         }
     }
