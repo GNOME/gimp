@@ -48,7 +48,7 @@ gboolean _gimp_procedural_db_proc_info    (const gchar       *procedure,
 					   gchar            **date,
 					   GimpPDBProcType   *proc_type,
 					   gint              *num_args,
-					   gint              *num_values);
+					   gint              *num_values) G_GNUC_INTERNAL;
 gboolean gimp_procedural_db_proc_arg      (const gchar       *procedure,
 					   gint               arg_num,
 					   GimpPDBArgType    *arg_type,
@@ -61,11 +61,11 @@ gboolean gimp_procedural_db_proc_val      (const gchar       *procedure,
 					   gchar            **val_desc);
 gboolean _gimp_procedural_db_get_data     (const gchar       *identifier,
 					   gint              *bytes,
-					   guint8           **data);
+					   guint8           **data) G_GNUC_INTERNAL;
 gint     gimp_procedural_db_get_data_size (const gchar       *identifier);
 gboolean _gimp_procedural_db_set_data     (const gchar       *identifier,
 					   gint               bytes,
-					   const guint8      *data);
+					   const guint8      *data) G_GNUC_INTERNAL;
 
 
 G_END_DECLS

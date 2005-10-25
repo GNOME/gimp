@@ -36,7 +36,7 @@ gchar*   gimp_get_default_comment      (void);
 gboolean gimp_get_monitor_resolution   (gdouble     *xres,
 					gdouble     *yres);
 gchar*   gimp_get_theme_dir            (void);
-gchar*   _gimp_get_color_configuration (void);
+gchar*   _gimp_get_color_configuration (void) G_GNUC_INTERNAL;
 gchar*   gimp_get_module_load_inhibit  (void);
 
 

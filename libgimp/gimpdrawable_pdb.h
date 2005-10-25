@@ -102,7 +102,7 @@ gboolean      _gimp_drawable_thumbnail         (gint32                      draw
 						gint                       *ret_height,
 						gint                       *bpp,
 						gint                       *thumbnail_data_count,
-						guint8                    **thumbnail_data);
+						guint8                    **thumbnail_data) G_GNUC_INTERNAL;
 gboolean      _gimp_drawable_sub_thumbnail     (gint32                      drawable_ID,
 						gint                        src_x,
 						gint                        src_y,
@@ -114,7 +114,7 @@ gboolean      _gimp_drawable_sub_thumbnail     (gint32                      draw
 						gint                       *height,
 						gint                       *bpp,
 						gint                       *thumbnail_data_count,
-						guint8                    **thumbnail_data);
+						guint8                    **thumbnail_data) G_GNUC_INTERNAL;
 gboolean      gimp_drawable_foreground_extract (gint32                      drawable_ID,
 						GimpForegroundExtractMode   mode,
 						gint32                      mask_ID);

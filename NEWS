@@ -21,6 +21,9 @@ Changes in GIMP 2.3.5
 - menu reorganisation in the Toolbox menu
 - export "Open As Layer" to the PDB as file-load-layer
 - added keyboard control for the Curves tool
+- load and save embedded ICC profiles from/to PNG images
+- improved appearance of some tool icons on dark background
+- added PDB API to get and set path visibility
 - bug fixes and code cleanup
 
 

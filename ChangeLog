@@ -1,5 +1,28 @@
 2005-10-25  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/lib.pl: add G_GNUC_INTERNAL to declaration of
+	wrapped PDB functions.
+
+	* libgimp/gimpchannel_pdb.h
+	* libgimp/gimpdrawable_pdb.h
+	* libgimp/gimpgimprc_pdb.h
+	* libgimp/gimpimage_pdb.h
+	* libgimp/gimplayer_pdb.h
+	* libgimp/gimpplugin_pdb.h
+	* libgimp/gimpproceduraldb_pdb.h
+	* libgimp/gimpprogress_pdb.h
+	* libgimp/gimpselection_pdb.h
+	* libgimp/gimpunit_pdb.h: regenerated.
+
+	* libgimp/gimptile.h
+	* libgimp/gimpunitcache.h
+	* libgimpthumb/gimpthumb-utils.h
+	* libgimpwidgets/gimpcolorarea.h
+	* libgimpwidgets/gimphelpui.h: declare internal functions as such
+	using G_GNUC_INTERNAL.
+
+2005-10-25  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/pdb/paths.pdb: added getter and setter for path
 	visibility (bug #319617).
 

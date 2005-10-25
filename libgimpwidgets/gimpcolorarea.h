@@ -97,7 +97,8 @@ void        _gimp_color_area_render_buf     (GtkWidget         *widget,
                                              guint              width,
                                              guint              height,
                                              guint              rowstride,
-                                             GimpRGB           *color);
+                                             GimpRGB           *color) G_GNUC_INTERNAL;
+
 
 G_END_DECLS
 

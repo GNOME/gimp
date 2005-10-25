@@ -28,7 +28,7 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-void  _gimp_help_init              (void);
+void  _gimp_help_init              (void) G_GNUC_INTERNAL;
 
 void  gimp_help_enable_tooltips    (void);
 void  gimp_help_disable_tooltips   (void);

@@ -34,7 +34,7 @@ gint32   _gimp_channel_new               (gint32           image_ID,
 					  gint             height,
 					  const gchar     *name,
 					  gdouble          opacity,
-					  const GimpRGB   *color);
+					  const GimpRGB   *color) G_GNUC_INTERNAL;
 gint32   gimp_channel_new_from_component (gint32           image_ID,
 					  GimpChannelType  component,
 					  const gchar     *name);

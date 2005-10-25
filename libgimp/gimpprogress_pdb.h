@@ -34,8 +34,8 @@ gboolean gimp_progress_update            (gdouble      percentage);
 gboolean gimp_progress_pulse             (void);
 gboolean gimp_progress_set_text          (const gchar *message);
 gint     gimp_progress_get_window_handle (void);
-gboolean _gimp_progress_install          (const gchar *progress_callback);
-gboolean _gimp_progress_uninstall        (const gchar *progress_callback);
+gboolean _gimp_progress_install          (const gchar *progress_callback) G_GNUC_INTERNAL;
+gboolean _gimp_progress_uninstall        (const gchar *progress_callback) G_GNUC_INTERNAL;
 gboolean gimp_progress_cancel            (const gchar *progress_callback);
 
 

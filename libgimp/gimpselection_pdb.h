@@ -44,7 +44,7 @@ gboolean gimp_selection_translate   (gint32          image_ID,
 				     gint            offy);
 gint32   _gimp_selection_float      (gint32          drawable_ID,
 				     gint            offx,
-				     gint            offy);
+				     gint            offy) G_GNUC_INTERNAL;
 gboolean gimp_selection_invert      (gint32          image_ID);
 gboolean gimp_selection_sharpen     (gint32          image_ID);
 gboolean gimp_selection_all         (gint32          image_ID);
