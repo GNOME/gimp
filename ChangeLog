@@ -2,6 +2,13 @@
 
 	Merged from HEAD branch:
 
+	* app/widgets/gimpdockable.c (gimp_dockable_realize): create the
+	title window as GDK_WINDOW_CHILD, not GDK_WINDOW_TEMP.
+
+2005-10-25  Michael Natterer  <mitch@gimp.org>
+
+	Merged from HEAD branch:
+
 	* app/core/gimpimage-contiguous-region.c
 	(gimp_image_contiguous_region_by_color): the color samples are
 	always RGB or RGBA, so always compare 3 or 4 bytes of pixel data,

@@ -425,7 +425,7 @@ gimp_dockable_realize (GtkWidget *widget)
       attributes.y                 = area.y;
       attributes.width             = area.width;
       attributes.height            = area.height;
-      attributes.window_type       = GDK_WINDOW_TEMP;
+      attributes.window_type       = GDK_WINDOW_CHILD;
       attributes.wclass            = GDK_INPUT_ONLY;
       attributes.override_redirect = TRUE;
       attributes.event_mask        = (GDK_BUTTON_PRESS_MASK   |
