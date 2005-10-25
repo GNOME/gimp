@@ -487,6 +487,7 @@ midi_set_device (ControllerMidi *midi,
                                                        sizeof (GAlsaSource));
           event_source->controller = midi;
           midi->seq_id = g_source_attach ((GSource *) event_source, NULL);
+          g_source_unref (event_source);
 
           return TRUE;
         }

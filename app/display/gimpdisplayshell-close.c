@@ -173,6 +173,7 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
   source = g_timeout_source_new (1000);
   g_source_set_closure (source, closure);
   g_source_attach (source, NULL);
+  g_source_unref (source);
 
   /*  The dialog is destroyed with the shell, so it should be safe
    *  to hold an image pointer for the lifetime of the dialog.

@@ -1,3 +1,10 @@
+2005-10-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell-close.c
+	* app/widgets/gimpactionview.c
+	* modules/controller_midi.c: g_source_unref() GSources after
+	attaching them.
+
 2005-10-25  DindinX  <dindinx@gimp.org>
 
 	* app/paint-funcs/scale-funcs.c (subsample_region): correctly pass

@@ -193,6 +193,7 @@ gimp_action_view_button_press (GtkWidget      *widget,
       source = g_idle_source_new ();
       g_source_set_closure (source, closure);
       g_source_attach (source, NULL);
+      g_source_unref (source);
     }
 
   return TRUE;
