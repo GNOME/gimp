@@ -1,5 +1,42 @@
 2005-10-25  Michael Natterer  <mitch@gimp.org>
 
+	Let the data editors optionally follow the active brush, palette
+	and gradient. Still needs to be saved in sessionrc and probably
+	be enabled by default. Addresses bug #313547.
+
+	* app/widgets/gimpdataeditor.[ch]: added new functions
+	gimp_data_editor_set,get_edit_active().
+
+	Make it configurable from the palette and gradient editor menus:
+
+	* app/actions/gradient-editor-actions.c
+	* app/actions/palette-editor-actions.c: added actions...
+
+	* app/actions/data-editor-commands.[ch]: ...and callbacks...
+	(new file).
+
+	* app/widgets/gimphelp-ids.h: ...help IDs...
+
+	* menus/gradient-editor-menu.xml
+	* menus/palette-editor-menu.xml: ...and menu items.
+
+	Add menu to the brush editor and make it configurable there too:
+
+	* app/actions/Makefile.am
+	* app/actions/actions.c
+	* app/actions/brush-editor-actions.[ch]
+	* app/menus/menus.c
+	* menus/Makefile.am
+	* menus/brush-editor-menu.xml: added all the bits needed for
+	the new menu.
+
+	* app/widgets/gimpbrusheditor.[ch]: use the menu. Added menu_factory
+	paramater to the contstructor.
+
+	* app/dialogs/dialogs-constructors.c: changed accordingly.
+
+2005-10-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell-close.c
 	* app/widgets/gimpactionview.c
 	* modules/controller_midi.c: g_source_unref() GSources after

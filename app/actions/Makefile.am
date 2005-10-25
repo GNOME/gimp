@@ -7,6 +7,8 @@ libappactions_a_SOURCES = \
 	actions.c			\
 	actions.h			\
 	\
+	brush-editor-actions.c		\
+	bruah-editor-actions.h		\
 	brushes-actions.c		\
 	brushes-actions.h		\
 	buffers-actions.c		\
@@ -31,6 +33,8 @@ libappactions_a_SOURCES = \
 	cursor-info-commands.h		\
 	data-commands.c			\
 	data-commands.h			\
+	data-editor-commands.c		\
+	data-editor-commands.h		\
 	debug-actions.c			\
 	debug-actions.h			\
 	debug-commands.c		\

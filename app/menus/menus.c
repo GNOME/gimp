@@ -255,6 +255,13 @@ menus_init (Gimp              *gimp,
                                       "tools-menu.xml", NULL,
                                       NULL);
 
+  gimp_menu_factory_manager_register (global_menu_factory, "<BrushEditor>",
+                                      "brush-editor",
+                                      NULL,
+                                      "/brush-editor-popup",
+                                      "brush-editor-menu.xml", NULL,
+                                      NULL);
+
   gimp_menu_factory_manager_register (global_menu_factory, "<GradientEditor>",
                                       "gradient-editor",
                                       NULL,

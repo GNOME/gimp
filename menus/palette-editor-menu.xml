@@ -11,5 +11,7 @@
     <menuitem action="palette-editor-zoom-out" />
     <menuitem action="palette-editor-zoom-in" />
     <menuitem action="palette-editor-zoom-all" />
+    <separator />
+    <menuitem action="palette-editor-edit-active" />
   </popup>
 </ui>

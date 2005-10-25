@@ -286,7 +286,8 @@ gimp_brush_editor_set_data (GimpDataEditor *editor,
 /*  public functions  */
 
 GtkWidget *
-gimp_brush_editor_new (Gimp *gimp)
+gimp_brush_editor_new (Gimp            *gimp,
+                       GimpMenuFactory *menu_factory)
 {
   GimpBrush *brush;
 
@@ -295,8 +296,11 @@ gimp_brush_editor_new (Gimp *gimp)
   brush = gimp_context_get_brush (gimp_get_user_context (gimp));
 
   return g_object_new (GIMP_TYPE_BRUSH_EDITOR,
-                       "data-factory", gimp->brush_factory,
-                       "data",         brush,
+                       "menu-factory",    menu_factory,
+                       "menu-identifier", "<BrushEditor>",
+                       "ui-path",         "/brush-editor-popup",
+                       "data-factory",    gimp->brush_factory,
+                       "data",            brush,
                        NULL);
 }
 

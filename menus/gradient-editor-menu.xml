@@ -90,5 +90,7 @@
     <separator />
     <menuitem action="gradient-editor-blend-color" />
     <menuitem action="gradient-editor-blend-opacity" />
+    <separator />
+    <menuitem action="gradient-editor-edit-active" />
   </popup>
 </ui>

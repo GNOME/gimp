@@ -32,6 +32,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
+#include "core/gimpcontext.h"
 #include "core/gimpdata.h"
 #include "core/gimpdatafactory.h"
 
@@ -433,6 +434,52 @@ gimp_data_editor_get_data (GimpDataEditor *editor)
   g_return_val_if_fail (GIMP_IS_DATA_EDITOR (editor), NULL);
 
   return editor->data;
+}
+
+void
+gimp_data_editor_set_edit_active (GimpDataEditor *editor,
+                                  gboolean        edit_active)
+{
+  g_return_if_fail (GIMP_IS_DATA_EDITOR (editor));
+
+  if (editor->edit_active != edit_active)
+    {
+      GimpContext *user_context;
+
+      user_context = gimp_get_user_context (editor->data_factory->gimp);
+
+      editor->edit_active = edit_active;
+
+      if (editor->edit_active)
+        {
+          GType     data_type;
+          GimpData *data;
+
+          data_type = editor->data_factory->container->children_type;
+          data = GIMP_DATA (gimp_context_get_by_type (user_context, data_type));
+
+          g_signal_connect_object (user_context,
+                                   gimp_context_type_to_signal_name (data_type),
+                                   G_CALLBACK (gimp_data_editor_set_data),
+                                   editor, G_CONNECT_SWAPPED);
+
+          gimp_data_editor_set_data (editor, data);
+        }
+      else
+        {
+          g_signal_handlers_disconnect_by_func (user_context,
+                                                gimp_data_editor_set_data,
+                                                editor);
+        }
+    }
+}
+
+gboolean
+gimp_data_editor_get_edit_active (GimpDataEditor *editor)
+{
+  g_return_val_if_fail (GIMP_IS_DATA_EDITOR (editor), FALSE);
+
+  return editor->edit_active;
 }
 
 

@@ -286,6 +286,7 @@
 #define GIMP_HELP_BRUSH_REFRESH                   "gimp-brush-refresh"
 
 #define GIMP_HELP_BRUSH_EDITOR_DIALOG             "gimp-brush-editor-dialog"
+#define GIMP_HELP_BRUSH_EDITOR_EDIT_ACTIVE        "gimp-brush-editor-edit-active"
 
 #define GIMP_HELP_PATTERN_DIALOG                  "gimp-pattern-dialog"
 #define GIMP_HELP_PATTERN_EDIT                    "gimp-pattern-edit"
@@ -324,6 +325,7 @@
 #define GIMP_HELP_GRADIENT_EDITOR_ZOOM_OUT        "gimp-gradient-editor-zoom-out"
 #define GIMP_HELP_GRADIENT_EDITOR_ZOOM_IN         "gimp-gradient-editor-zoom-in"
 #define GIMP_HELP_GRADIENT_EDITOR_ZOOM_ALL        "gimp-gradient-editor-zoom-all"
+#define GIMP_HELP_GRADIENT_EDITOR_EDIT_ACTIVE     "gimp-gradient-editor-edit-active"
 
 #define GIMP_HELP_PALETTE_DIALOG                  "gimp-palette-dialog"
 #define GIMP_HELP_PALETTE_EDIT                    "gimp-palette-edit"
@@ -341,6 +343,7 @@
 #define GIMP_HELP_PALETTE_EDITOR_ZOOM_OUT         "gimp-palette-editor-zoom-out"
 #define GIMP_HELP_PALETTE_EDITOR_ZOOM_IN          "gimp-palette-editor-zoom-in"
 #define GIMP_HELP_PALETTE_EDITOR_ZOOM_ALL         "gimp-palette-editor-zoom-all"
+#define GIMP_HELP_PALETTE_EDITOR_EDIT_ACTIVE      "gimp-palette-editor-edit-active"
 
 #define GIMP_HELP_FONT_DIALOG                     "gimp-font-dialog"
 #define GIMP_HELP_FONT_REFRESH                    "gimp-font-refresh"

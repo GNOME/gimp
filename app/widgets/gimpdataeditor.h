@@ -41,6 +41,8 @@ struct _GimpDataEditor
   GimpEditor       parent_instance;
 
   GimpDataFactory *data_factory;
+  gboolean         edit_active;
+
   GimpData        *data;
   gboolean         data_editable;
 
@@ -62,11 +64,15 @@ struct _GimpDataEditorClass
 };
 
 
-GType       gimp_data_editor_get_type (void) G_GNUC_CONST;
+GType       gimp_data_editor_get_type        (void) G_GNUC_CONST;
 
-void        gimp_data_editor_set_data (GimpDataEditor *editor,
-                                       GimpData       *data);
-GimpData  * gimp_data_editor_get_data (GimpDataEditor *editor);
+void        gimp_data_editor_set_data        (GimpDataEditor *editor,
+                                              GimpData       *data);
+GimpData  * gimp_data_editor_get_data        (GimpDataEditor *editor);
+
+void        gimp_data_editor_set_edit_active (GimpDataEditor *editor,
+                                              gboolean        edit_active);
+gboolean    gimp_data_editor_get_edit_active (GimpDataEditor *editor);
 
 
 #endif  /*  __GIMP_DATA_EDITOR_H__  */

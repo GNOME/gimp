@@ -31,6 +31,7 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimppaletteeditor.h"
 
+#include "data-editor-commands.h"
 #include "palette-editor-actions.h"
 #include "palette-editor-commands.h"
 
@@ -54,6 +55,15 @@ static GimpActionEntry palette_editor_actions[] =
     N_("Delete color"),
     G_CALLBACK (palette_editor_delete_color_cmd_callback),
     GIMP_HELP_PALETTE_EDITOR_DELETE }
+};
+
+static GimpToggleActionEntry palette_editor_toggle_actions[] =
+{
+  { "palette-editor-edit-active", GIMP_STOCK_LINKED,
+    N_("Edit Active Palette"), NULL, NULL,
+    G_CALLBACK (data_editor_edit_active_cmd_callback),
+    FALSE,
+    GIMP_HELP_PALETTE_EDITOR_EDIT_ACTIVE }
 };
 
 static GimpEnumActionEntry palette_editor_new_actions[] =
@@ -100,6 +110,10 @@ palette_editor_actions_setup (GimpActionGroup *group)
                                  palette_editor_actions,
                                  G_N_ELEMENTS (palette_editor_actions));
 
+  gimp_action_group_add_toggle_actions (group,
+                                        palette_editor_toggle_actions,
+                                        G_N_ELEMENTS (palette_editor_toggle_actions));
+
   gimp_action_group_add_enum_actions (group,
                                       palette_editor_new_actions,
                                       G_N_ELEMENTS (palette_editor_new_actions),
@@ -122,6 +136,7 @@ palette_editor_actions_update (GimpActionGroup *group,
   gboolean           editable    = FALSE;
   GimpRGB            fg;
   GimpRGB            bg;
+  gboolean           edit_active = FALSE;
 
   context = gimp_get_user_context (group->gimp);
 
@@ -139,8 +154,12 @@ palette_editor_actions_update (GimpActionGroup *group,
       gimp_context_get_background (context, &bg);
     }
 
+  edit_active = gimp_data_editor_get_edit_active (data_editor);
+
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
+#define SET_ACTIVE(action,condition) \
+        gimp_action_group_set_action_active (group, action, (condition) != 0)
 #define SET_COLOR(action,color) \
         gimp_action_group_set_action_color (group, action, color, FALSE);
 
@@ -157,6 +176,9 @@ palette_editor_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("palette-editor-zoom-in",  data);
   SET_SENSITIVE ("palette-editor-zoom-all", data);
 
+  SET_ACTIVE ("palette-editor-edit-active", edit_active);
+
 #undef SET_SENSITIVE
+#undef SET_ACTIVE
 #undef SET_COLOR
 }

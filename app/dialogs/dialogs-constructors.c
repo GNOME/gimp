@@ -669,7 +669,8 @@ dialogs_brush_editor_get (GimpDialogFactory *factory,
 			  GimpContext       *context,
                           gint               preview_size)
 {
-  return gimp_brush_editor_new (context->gimp);
+  return gimp_brush_editor_new (context->gimp,
+                                factory->menu_factory);
 }
 
 GtkWidget *

@@ -33,6 +33,7 @@
 #include "widgets/gimpgradienteditor.h"
 #include "widgets/gimphelp-ids.h"
 
+#include "data-editor-commands.h"
 #include "gradient-editor-actions.h"
 #include "gradient-editor-commands.h"
 
@@ -112,6 +113,15 @@ static GimpActionEntry gradient_editor_actions[] =
     N_("Blend Endpoints' Opacit_y"), NULL, NULL,
     G_CALLBACK (gradient_editor_blend_opacity_cmd_callback),
     GIMP_HELP_GRADIENT_EDITOR_BLEND_OPACITY }
+};
+
+static GimpToggleActionEntry gradient_editor_toggle_actions[] =
+{
+  { "gradient-editor-edit-active", GIMP_STOCK_LINKED,
+    N_("Edit Active Gradient"), NULL, NULL,
+    G_CALLBACK (data_editor_edit_active_cmd_callback),
+    FALSE,
+    GIMP_HELP_GRADIENT_EDITOR_EDIT_ACTIVE }
 };
 
 
@@ -323,6 +333,10 @@ gradient_editor_actions_setup (GimpActionGroup *group)
                                  gradient_editor_actions,
                                  G_N_ELEMENTS (gradient_editor_actions));
 
+  gimp_action_group_add_toggle_actions (group,
+                                        gradient_editor_toggle_actions,
+                                        G_N_ELEMENTS (gradient_editor_toggle_actions));
+
   gimp_action_group_add_enum_actions (group,
                                       gradient_editor_load_left_actions,
                                       G_N_ELEMENTS (gradient_editor_load_left_actions),
@@ -379,6 +393,7 @@ gradient_editor_actions_update (GimpActionGroup *group,
   gboolean             coloring_equal = TRUE;
   gboolean             selection      = FALSE;
   gboolean             delete         = FALSE;
+  gboolean             edit_active    = FALSE;
 
   gradient = GIMP_GRADIENT (data_editor->data);
 
@@ -434,6 +449,8 @@ gradient_editor_actions_update (GimpActionGroup *group,
    */
   if (! GTK_WIDGET_SENSITIVE (editor))
     editable = FALSE;
+
+  edit_active = gimp_data_editor_get_edit_active (data_editor);
 
 #define SET_ACTIVE(action,condition) \
         gimp_action_group_set_action_active (group, action, (condition) != 0)
@@ -695,6 +712,8 @@ gradient_editor_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("gradient-editor-zoom-out", gradient);
   SET_SENSITIVE ("gradient-editor-zoom-in",  gradient);
   SET_SENSITIVE ("gradient-editor-zoom-all", gradient);
+
+  SET_ACTIVE ("gradient-editor-edit-active", edit_active);
 
 #undef SET_ACTIVE
 #undef SET_COLOR

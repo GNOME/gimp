@@ -46,6 +46,7 @@
 
 #include "dialogs/dialogs.h"
 
+#include "brush-editor-actions.h"
 #include "brushes-actions.h"
 #include "buffers-actions.h"
 #include "channels-actions.h"
@@ -94,6 +95,9 @@ GimpActionFactory *global_action_factory = NULL;
 
 static GimpActionFactoryEntry action_groups[] =
 {
+  { "brush-editor", N_("Brush Editor"), GIMP_STOCK_BRUSH,
+    brush_editor_actions_setup,
+    brush_editor_actions_update },
   { "brushes", N_("Brushes"), GIMP_STOCK_BRUSH,
     brushes_actions_setup,
     brushes_actions_update },
