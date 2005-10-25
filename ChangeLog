@@ -1,3 +1,9 @@
+2005-10-25  Bill skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/tools/gimppaintoptions-gui.c (jitter_options_gui):
+	Use a scale entry instead of spinbutton for jitter amount,
+	as discussed in bug #163049.
+
 2005-10-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage-contiguous-region.c

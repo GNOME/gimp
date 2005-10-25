@@ -375,7 +375,6 @@ jitter_options_gui (GimpJitterOptions  *jitter,
   GObject   *config = G_OBJECT (paint_options);
   GtkWidget *frame  = NULL;
   GtkWidget *table;
-  GtkWidget *spinbutton;
   GtkWidget *button;
 
   if (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL) ||
@@ -393,7 +392,7 @@ jitter_options_gui (GimpJitterOptions  *jitter,
       gtk_frame_set_label_widget (GTK_FRAME (frame), button);
       gtk_widget_show (button);
 
-      table = gtk_table_new (1, 2, FALSE);
+      table = gtk_table_new (1, 3, FALSE);
       gtk_table_set_col_spacings (GTK_TABLE (table), 2);
       gtk_container_add (GTK_CONTAINER (frame), table);
       if (jitter->use_jitter)
@@ -403,13 +402,11 @@ jitter_options_gui (GimpJitterOptions  *jitter,
                                G_CALLBACK (gimp_toggle_button_set_visible),
                                table, 0);
 
-      spinbutton = gimp_prop_spin_button_new (config, "jitter-amount",
-                                              0.01, 0.1, 2);
-      gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 6);
-
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                                 _("Amount:"), 0.0, 0.5,
-                                 spinbutton, 1, FALSE);
+      gimp_prop_scale_entry_new (config, "jitter-amount",
+                                 GTK_TABLE (table), 0, 0,
+                                 _("Amount:"),
+                                 0.01, 0.1, 2,
+                                 TRUE, 0.0, 2.0);
     }
 
   return frame;
