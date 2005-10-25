@@ -7,6 +7,7 @@ app/main.c
 app/sanity.c
 
 app/actions/actions.c
+app/actions/brush-editor-actions.c
 app/actions/brushes-actions.c
 app/actions/buffers-actions.c
 app/actions/channels-actions.c
