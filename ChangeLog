@@ -1,12 +1,14 @@
 2005-10-26  Carol Spears  <carol@gimp.org>
 
-	* app/actions/image-actions.c: added colors-info-menu and colors-modify-menu as children of
-        colors-menu
+	* app/actions/image-actions.c: added colors-info-menu and 
+        colors-modify-menu as children of colors-menu
 
-	* menus/image-menu.xml.in: changed Modify placeholder to colors-modify-menu menuaction and
-        added color-info-menu action to colors-menu
+	* menus/image-menu.xml.in: changed Modify placeholder to 
+        colors-modify-menu menuaction and added color-info-menu action to 
+        colors-menu
         
-        * plug-ins/common/colortoalpha.c: moved to Colors/Modify in the registration part.
+        * plug-ins/common/colortoalpha.c: moved to Colors/Modify in the 
+        registration part.
 
 2005-10-26  Sven Neumann  <sven@gimp.org>
 
