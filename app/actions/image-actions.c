@@ -63,9 +63,11 @@ static GimpActionEntry image_actions[] =
   { "image-guides-menu",      NULL, N_("_Guides")     },
 
   { "colors-menu",            NULL, N_("_Colors")     },
+  { "colors-info-menu",       NULL, N_("I_nfo")       },
   { "colors-auto-menu",       NULL, N_("_Auto")       },
   { "colors-map-menu",        NULL, N_("Ma_p")        },
   { "colors-components-menu", NULL, N_("_Components") },
+  { "colors-modify-menu",     NULL, N_("Mo_dify")     },
 
   { "image-new", GTK_STOCK_NEW,
     N_("_New..."), "<control>N", NULL,

@@ -107,7 +107,7 @@ query (void)
                           args, NULL);
 
   gimp_plugin_menu_register ("plug_in_colortoalpha",
-                             "<Image>/Colors");
+                             "<Image>/Colors/Modify");
   gimp_plugin_menu_register ("plug_in_colortoalpha",
                              "<Image>/Layer/Transparency/Modify");
 }

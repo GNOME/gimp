@@ -442,23 +442,21 @@
       <menuitem action="tools-curves" />
       <menuitem action="tools-posterize" />
       <separator />
-      <placeholder name="Info">
-        <menuitem action="dialogs-histogram" />
-      </placeholder>
-      <separator />
-      <menu action="colors-auto-menu" name="Auto">
-        <menuitem action="drawable-equalize" />
-        <menuitem action="drawable-levels-stretch" />
+      <menu action="colors-info-menu" name="Info">
+        <menuitem action="dialogs-histogram"/>
       </menu>
-      <menu action="colors-components-menu" name="Components" />
-      <menu action="colors-map-menu" name="Map" />
-      <separator />
-      <placeholder name="Modify">
-        <menuitem action="drawable-desaturate" />
+      <menu action="colors-auto-menu" name="Auto">
+        <menuitem action="drawable-equalize"/>
+        <menuitem action="drawable-levels-stretch"/>
+      </menu>
+      <menu action="colors-components-menu" name="Components"/>
+      <menu action="colors-map-menu" name="Map"/>
+      <menu action="colors-modify-menu" name="Modify">
+        <menuitem action="drawable-desaturate"/>
         <placeholder name="Invert">
-          <menuitem action="drawable-invert" />
+          <menuitem action="drawable-invert"/>
         </placeholder>
-      </placeholder>
+      </menu>
       <separator />
     </menu>
 
