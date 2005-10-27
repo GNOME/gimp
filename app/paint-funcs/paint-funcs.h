@@ -78,6 +78,11 @@ void  gray_to_rgb_pixels    (const guchar *src,
                              guint         length,
                              guint         bytes);
 
+void  component_pixels      (const guchar *src,
+                             guchar       *dest,
+                             guint         length,
+                             guint         bytes,
+                             guint         pixel);
 
 /*  apply the mask data to the alpha channel of the pixel data  */
 void  apply_mask_to_alpha_channel         (guchar       *src,
@@ -87,12 +92,17 @@ void  apply_mask_to_alpha_channel         (guchar       *src,
                                            guint         bytes);
 
 /*  combine the mask data with the alpha channel of the pixel data  */
-void  combine_mask_and_alpha_channel      (guchar       *src,
-                                           const guchar *mask,
-                                           guint         opacity,
-                                           guint         length,
-                                           guint         bytes);
+void  combine_mask_and_alpha_channel_stipple (guchar       *src,
+                                              const guchar *mask,
+                                              guint         opacity,
+                                              guint         length,
+                                              guint         bytes);
 
+void  combine_mask_and_alpha_channel_stroke  (guchar       *src,
+                                              const guchar *mask,
+                                              guint         opacity,
+                                              guint         length,
+                                              guint         bytes);
 
 /*  copy gray pixels to intensity-alpha pixels.  This function
  *  essentially takes a source that is only a grayscale image and

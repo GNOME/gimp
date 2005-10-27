@@ -1,3 +1,8 @@
+2005-10-27  Manish Singh  <yosh@gimp.org>
+
+	* app/paint-funcs/paint-funcs.h: declare component_pixels,
+	combine_mask_and_alpha_channel_{stipple,stroke}. Fixes bug #319811.
+
 2005-10-27  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped version to 2.2.10, interface_age 10.
