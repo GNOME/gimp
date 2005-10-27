@@ -38,8 +38,9 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define LOAD_PROC "file-uri-load"
-#define SAVE_PROC "file-uri-save"
+#define LOAD_PROC      "file-uri-load"
+#define SAVE_PROC      "file-uri-save"
+#define PLUG_IN_BINARY "uri"
 
 
 static void                query         (void);
@@ -97,7 +98,7 @@ query (void)
 
   GError *error = NULL;
 
-  if (! uri_backend_init (&error))
+  if (! uri_backend_init (PLUG_IN_BINARY, FALSE, 0, &error))
     {
       g_message (error->message);
       g_clear_error (&error);
@@ -170,7 +171,7 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
-  if (! uri_backend_init (&error))
+  if (! uri_backend_init (PLUG_IN_BINARY, TRUE, run_mode, &error))
     {
       g_message (error->message);
       g_clear_error (&error);
@@ -196,7 +197,7 @@ run (const gchar      *name,
       status = save_image (param[3].data.d_string,
                            param[1].data.d_int32,
                            param[2].data.d_int32,
-                           param[0].data.d_int32);
+                           run_mode);
     }
   else
     {

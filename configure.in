@@ -57,6 +57,7 @@ m4_define([pygtk_required_version], [1.99.15])
 m4_define([poppler_required_version], [0.3.1])
 m4_define([gnome_vfs_required_version], [2.10.0])
 m4_define([gnomeui_required_version], [2.10.0])
+m4_define([gnome_keyring_required_version], [0.4.5])
 m4_define([gnome_print_required_version], [2.10.0])
 
 
@@ -1219,9 +1220,9 @@ if test "x$have_poppler" = xyes; then
 fi
 
 
-#################################################
-# Check for gnome-vfs (and optionally libgnomeui)
-#################################################
+###################################################################
+# Check for gnome-vfs (and optionally libgnomeui and gnome-keyring)
+###################################################################
 
 uri_modules="gnome-vfs-2.0 >= gnome_vfs_required_version"
 
@@ -1232,6 +1233,13 @@ else
   AC_MSG_WARN([*** URI plug-in will be built without libgnomeui support (libgnomeui-2.0 not found) ***])
 fi
 
+if $PKG_CONFIG --atleast-version=gnome_keyring_required_version gnome-keyring-1; then
+  have_gnome_keyring=yes
+  uri_modules="$uri_modules gnome-keyring-1"
+else
+  AC_MSG_WARN([*** URI plug-in will be built without gnome-keyring support (gnome-keyring-1 not found) ***])
+fi
+
 PKG_CHECK_MODULES(URI, $uri_modules,
   have_gnomevfs=yes,
   AC_MSG_WARN([*** URI plug-in will be built without gnome-vfs support (gnome-vfs-2.0 not found) ***]))
@@ -1240,6 +1248,10 @@ AM_CONDITIONAL(HAVE_GNOMEVFS, test x$have_gnomevfs = xyes)
 
 if test "x$have_gnomeui" = xyes; then
   AC_DEFINE(HAVE_GNOMEUI, 1, [Define to 1 if libgnomeui is available])
+fi
+
+if test "x$have_gnome_keyring" = xyes; then
+  AC_DEFINE(HAVE_GNOME_KEYRING, 1, [Define to 1 if gnome-keyring is available])
 fi
 
 

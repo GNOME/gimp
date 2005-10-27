@@ -1,3 +1,23 @@
+2005-10-27  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: check for gnome-keyring.
+
+	* plug-ins/uri/uri-backend.h
+	* plug-ins/uri/uri-backend-wget.c
+	* plug-ins/uri/uri-backend-gnomevfs.c: added "plugin_name",
+	boolean "run" and "run_mode" parameters to uri_backend_init().
+
+	* plug-ins/uri/uri-backend-gnomevfs.c (uri_backend_init):
+	initialize the gnome authentication manager only when called
+	interactively from "run". Also call gimp_ui_init() when using the
+	auth manager, since recent versions seem to require an already
+	initialized GTK+. When running noninteractively and gnome-keyring
+	is available, implement the needed GnomeVFS authentication
+	callbacks ourselves and ask gnome-keyring directly.
+
+	* plug-ins/uri/uri.c: pass the additional parameters to
+	uri_backend_init().
+
 2005-10-26  Carol Spears  <carol@gimp.org>
 
 	* app/actions/image-actions.c: added colors-info-menu and 
@@ -6,7 +26,7 @@
 	* menus/image-menu.xml.in: changed Modify placeholder to 
         colors-modify-menu menuaction and added color-info-menu action to 
         colors-menu
-        
+
         * plug-ins/common/colortoalpha.c: moved to Colors/Modify in the 
         registration part.
 
@@ -59,7 +79,7 @@
 	the new menu.
 
 	* app/widgets/gimpbrusheditor.[ch]: use the menu. Added menu_factory
-	paramater to the contstructor.
+	parameter to the contstructor.
 
 	* app/dialogs/dialogs-constructors.c: changed accordingly.
 
@@ -3703,7 +3723,7 @@
 	by always asuming that the destination has alpha.
 	Fixes bug #312392.
 
-	(extract_from_region): removed has_alpha paramater. pass
+	(extract_from_region): removed has_alpha parameter. pass
 	src->bytes and dest->bytes to above functions.
 
 	* app/core/gimpselection.c (gimp_selection_extract): changed

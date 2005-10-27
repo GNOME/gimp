@@ -20,7 +20,10 @@
 #define __URI_BACKEND_H__
 
 
-gboolean      uri_backend_init               (GError      **error);
+gboolean      uri_backend_init               (const gchar  *plugin_name,
+                                              gboolean      run,
+                                              GimpRunMode   run_mode,
+                                              GError      **error);
 void          uri_backend_shutdown           (void);
 
 const gchar * uri_backend_get_load_protocols (void);

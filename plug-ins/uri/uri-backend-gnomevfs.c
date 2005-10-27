@@ -23,8 +23,12 @@
 #ifdef HAVE_GNOMEUI
 #include <libgnomeui/gnome-authentication-manager.h>
 #endif
+#ifdef HAVE_GNOME_KEYRING
+#include <gnome-keyring.h>
+#endif
 
 #include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -41,6 +45,21 @@ static gboolean   copy_uri      (const gchar  *src_uri,
                                  const gchar  *copied_format_str,
                                  GError      **error);
 
+#ifdef HAVE_GNOME_KEYRING
+static void vfs_async_fill_authentication_callback (gconstpointer in,
+                                                    size_t        in_size,
+                                                    gpointer      out,
+                                                    size_t        out_size,
+                                                    gpointer      user_data,
+                                                    GnomeVFSModuleCallbackResponse response,
+                                                    gpointer      response_data);
+static void vfs_fill_authentication_callback       (gconstpointer in,
+                                                    size_t        in_size,
+                                                    gpointer      out,
+                                                    size_t        out_size,
+                                                    gpointer      user_data);
+#endif /* HAVE_GNOME_KEYRING */
+
 
 /*  private variables  */
 
@@ -50,7 +69,10 @@ static gchar *supported_protocols = NULL;
 /*  public functions  */
 
 gboolean
-uri_backend_init (GError **error)
+uri_backend_init (const gchar  *plugin_name,
+                  gboolean      run,
+                  GimpRunMode   run_mode,
+                  GError      **error)
 {
   if (! gnome_vfs_init ())
     {
@@ -59,8 +81,31 @@ uri_backend_init (GError **error)
     }
 
 #ifdef HAVE_GNOMEUI
-  gnome_authentication_manager_init ();
-#endif
+  if (run)
+    {
+      if (run_mode == GIMP_RUN_INTERACTIVE)
+        {
+          gimp_ui_init (plugin_name, FALSE);
+          gnome_authentication_manager_init ();
+        }
+      else
+        {
+#ifdef HAVE_GNOME_KEYRING
+          gnome_vfs_async_module_callback_set_default
+            (GNOME_VFS_MODULE_CALLBACK_FILL_AUTHENTICATION,
+             vfs_async_fill_authentication_callback,
+             GINT_TO_POINTER (0),
+             NULL);
+
+          gnome_vfs_module_callback_set_default
+            (GNOME_VFS_MODULE_CALLBACK_FILL_AUTHENTICATION,
+             vfs_fill_authentication_callback,
+             GINT_TO_POINTER (0),
+             NULL);
+#endif /* HAVE_GNOME_KEYRING */
+        }
+    }
+#endif /* HAVE_GNOMEUI */
 
   return TRUE;
 }
@@ -126,6 +171,7 @@ uri_backend_save_image (const gchar  *uri,
 
   return success;
 }
+
 
 /*  private functions  */
 
@@ -313,3 +359,134 @@ copy_uri (const gchar  *src_uri,
 
   return TRUE;
 }
+
+#ifdef HAVE_GNOME_KEYRING
+
+typedef struct
+{
+  const GnomeVFSModuleCallbackFillAuthenticationIn *in_args;
+  GnomeVFSModuleCallbackFillAuthenticationOut	   *out_args;
+
+  GnomeVFSModuleCallbackResponse                    response;
+  gpointer                                          response_data;
+} FillCallbackInfo;
+
+static void
+fill_auth_callback (GnomeKeyringResult result,
+		    GList             *list,
+		    gpointer           data)
+{
+  FillCallbackInfo                *info = data;
+  GnomeKeyringNetworkPasswordData *pwd_data;;
+
+  if (result != GNOME_KEYRING_RESULT_OK || list == NULL)
+    {
+      info->out_args->valid = FALSE;
+    }
+  else
+    {
+      /* We use the first result, which is the least specific match */
+      pwd_data = list->data;
+
+      info->out_args->valid    = TRUE;
+      info->out_args->username = g_strdup (pwd_data->user);
+      info->out_args->domain   = g_strdup (pwd_data->domain);
+      info->out_args->password = g_strdup (pwd_data->password);
+    }
+
+  info->response (info->response_data);
+}
+
+static void /* GnomeVFSAsyncModuleCallback */
+vfs_async_fill_authentication_callback (gconstpointer in,
+                                        size_t in_size,
+					gpointer out,
+                                        size_t out_size,
+					gpointer user_data,
+					GnomeVFSModuleCallbackResponse response,
+					gpointer response_data)
+{
+  GnomeVFSModuleCallbackFillAuthenticationIn  *in_real;
+  GnomeVFSModuleCallbackFillAuthenticationOut *out_real;
+  gpointer                                     request;
+  FillCallbackInfo                            *info;
+
+  g_return_if_fail
+    (sizeof (GnomeVFSModuleCallbackFillAuthenticationIn) == in_size &&
+     sizeof (GnomeVFSModuleCallbackFillAuthenticationOut) == out_size);
+
+  g_return_if_fail (in != NULL);
+  g_return_if_fail (out != NULL);
+
+  in_real  = (GnomeVFSModuleCallbackFillAuthenticationIn *)in;
+  out_real = (GnomeVFSModuleCallbackFillAuthenticationOut *)out;
+
+  info = g_new (FillCallbackInfo, 1);
+
+  info->in_args       = in_real;
+  info->out_args      = out_real;
+  info->response      = response;
+  info->response_data = response_data;
+
+  request = gnome_keyring_find_network_password (in_real->username,
+                                                 in_real->domain,
+                                                 in_real->server,
+                                                 in_real->object,
+                                                 in_real->protocol,
+                                                 in_real->authtype,
+                                                 in_real->port,
+                                                 fill_auth_callback,
+                                                 info, g_free);
+}
+
+static void /* GnomeVFSModuleCallback */
+vfs_fill_authentication_callback (gconstpointer in,
+                                  size_t        in_size,
+				  gpointer      out,
+                                  size_t        out_size,
+				  gpointer      user_data)
+{
+  GnomeVFSModuleCallbackFillAuthenticationIn  *in_real;
+  GnomeVFSModuleCallbackFillAuthenticationOut *out_real;
+  GnomeKeyringNetworkPasswordData             *pwd_data;
+  GList                                       *list;
+  GnomeKeyringResult                           result;
+
+  g_return_if_fail
+    (sizeof (GnomeVFSModuleCallbackFillAuthenticationIn) == in_size &&
+     sizeof (GnomeVFSModuleCallbackFillAuthenticationOut) == out_size);
+
+  g_return_if_fail (in != NULL);
+  g_return_if_fail (out != NULL);
+
+  in_real  = (GnomeVFSModuleCallbackFillAuthenticationIn *)in;
+  out_real = (GnomeVFSModuleCallbackFillAuthenticationOut *)out;
+
+  result = gnome_keyring_find_network_password_sync (in_real->username,
+                                                     in_real->domain,
+                                                     in_real->server,
+                                                     in_real->object,
+                                                     in_real->protocol,
+                                                     in_real->authtype,
+                                                     in_real->port,
+                                                     &list);
+
+  if (result != GNOME_KEYRING_RESULT_OK || list == NULL)
+    {
+      out_real->valid = FALSE;
+    }
+  else
+    {
+      /* We use the first result, which is the least specific match */
+      pwd_data = list->data;
+
+      out_real->valid    = TRUE;
+      out_real->username = g_strdup (pwd_data->user);
+      out_real->domain   = g_strdup (pwd_data->domain);
+      out_real->password = g_strdup (pwd_data->password);
+
+      gnome_keyring_network_password_list_free (list);
+    }
+}
+
+#endif /* HAVE_GNOME_KEYRING */

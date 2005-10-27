@@ -42,7 +42,10 @@
 
 
 gboolean
-uri_backend_init (GError **error)
+uri_backend_init (const gchar  *plugin_name,
+                  gboolean      run,
+                  GimpRunMode   run_mode,
+                  GError      **error)
 {
   return TRUE;
 }
