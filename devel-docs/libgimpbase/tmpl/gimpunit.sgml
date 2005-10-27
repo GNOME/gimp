@@ -20,6 +20,9 @@ user-defined units.
 #GimpSizeEntry
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### ENUM GimpUnit ##### -->
 <para>
 

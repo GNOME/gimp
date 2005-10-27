@@ -21,6 +21,9 @@ selector modules.
 #libgimp-gimpmodule
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### STRUCT GimpColorSelector ##### -->
 <para>
 

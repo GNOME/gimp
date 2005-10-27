@@ -24,6 +24,9 @@ basic matrix manipulations and tests.
 #GimpVector4
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### STRUCT GimpMatrix2 ##### -->
 <para>
 A two by two matrix.

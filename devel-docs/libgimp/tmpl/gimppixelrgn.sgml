@@ -16,6 +16,9 @@ fast ways of accessing and modifying portions of a drawable.
 
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### STRUCT GimpPixelRgn ##### -->
 <para>
 

@@ -17,6 +17,9 @@ it's plug-ins.
 #libgimp-gimpprotocol
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### STRUCT WireMessage ##### -->
 <para>
 

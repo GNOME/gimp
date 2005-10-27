@@ -14,6 +14,9 @@ Functions providing a palette selection dialog.
 
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### USER_FUNCTION GimpRunPaletteCallback ##### -->
 <para>
 

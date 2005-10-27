@@ -17,6 +17,9 @@ A #GTypeModule subclass which implements module loading using #GModule.
 #GTypeModule
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### STRUCT GimpModule ##### -->
 <para>
 #GimpModule is a generic mechanism to dynamically load modules into

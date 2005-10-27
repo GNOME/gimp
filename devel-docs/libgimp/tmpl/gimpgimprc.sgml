@@ -15,6 +15,9 @@ Interactions with settings from .gimprc.
 
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### FUNCTION gimp_gimprc_query ##### -->
 <para>
 

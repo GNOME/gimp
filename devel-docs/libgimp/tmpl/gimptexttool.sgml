@@ -15,6 +15,9 @@ Functions for controlling the text tool.
 
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### FUNCTION gimp_text_fontname ##### -->
 <para>
 

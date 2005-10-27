@@ -14,6 +14,9 @@ A widget for selecting fonts.
 
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### FUNCTION gimp_font_select_widget_new ##### -->
 <para>
 

@@ -14,6 +14,9 @@ A widget for selecting gradients.
 
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### FUNCTION gimp_gradient_select_widget_new ##### -->
 <para>
 

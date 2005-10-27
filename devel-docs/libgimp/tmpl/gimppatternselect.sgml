@@ -14,6 +14,9 @@ Functions providing a pattern selection dialog.
 
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### USER_FUNCTION GimpRunPatternCallback ##### -->
 <para>
 

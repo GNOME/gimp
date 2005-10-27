@@ -15,6 +15,9 @@ Functions relating to patterns.
 
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### FUNCTION gimp_patterns_refresh ##### -->
 <para>
 

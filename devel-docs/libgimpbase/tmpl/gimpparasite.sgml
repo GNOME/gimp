@@ -16,6 +16,9 @@ gimp_image_parasite_attach(), gimp_drawable_parasite_attach(),
 gimp_parasite_attach() and their related functions.
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### STRUCT GimpParasite ##### -->
 <para>
 

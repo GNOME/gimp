@@ -25,6 +25,9 @@ as it will most probably have to open a dialog.
 
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### ENUM GimpExportCapabilities ##### -->
 <para>
 

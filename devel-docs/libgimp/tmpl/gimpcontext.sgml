@@ -14,6 +14,9 @@ Functions to manipulate a plug-in's context.
 
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### FUNCTION gimp_context_push ##### -->
 <para>
 

@@ -14,6 +14,9 @@ Functions providing a gradient selection dialog.
 
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### USER_FUNCTION GimpRunGradientCallback ##### -->
 <para>
 

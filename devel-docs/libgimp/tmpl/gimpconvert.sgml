@@ -15,6 +15,9 @@ Conversions between RGB, indexed, and grayscale modes.
 
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### FUNCTION gimp_image_convert_rgb ##### -->
 <para>
 

@@ -14,6 +14,9 @@ Basic GIMP enumeration data types.
 
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### ENUM GimpCheckSize ##### -->
 <para>
 

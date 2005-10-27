@@ -8,6 +8,7 @@ released as GIMP version 2.4.
 
 Bugs fixed in GIMP 2.2.9
 ========================
+
 - fixed minor problem in JPEG plug-in (bug #309091)
 - allow to disable build of gtkhtml2, svg, and lcms features (bug #307704)
 - fixed bug in Imagemap plug-in (bug #169698)
@@ -29,11 +30,13 @@ Bugs fixed in GIMP 2.2.9
 - fixed problem with random number generator in QBist plug-in (bug #317355)
 - raise palettes grid instead of creating a new one (bug #317435)
 - fixed problem with environment maps in Lighting plug-in (bug #313872)
-- fixed gaussian blur for small radii (bug #315953)
+- fixed Gaussian Blur for small radii (bug #315953)
+- fixed Select By Color tool on grayscale layers (bug #319683)
 
 
 Bugs fixed in GIMP 2.2.8
 ========================
+
 - fixed possible crash in plug-ins-query PDB function
 - fixes to Script-Fu server mode on Win32
 - fixed possible crash in win32 gimptool variant
@@ -53,6 +56,7 @@ Bugs fixed in GIMP 2.2.8
 
 Bugs fixed in GIMP 2.2.7
 ========================
+
 - update layer previews on colormap changes (bug #301033)
 - fixed loading of text layers from XCF files (bug #301028)
 - when loading a PDF, honor CropBox over MediaBox (bug #301432)
@@ -68,11 +72,13 @@ Bugs fixed in GIMP 2.2.7
 
 Bugs fixed in GIMP 2.2.6
 ========================
+
 - reverted change to the print plug-in (see bug #169909)
 
 
 Bugs fixed in GIMP 2.2.5
 ========================
+
 - fixed double-click behaviour of GimpButton
 - properly handle 302 redirect output from wget in URL plug-in (bug #168322)
 - fixed loading of layer masks in PSD plug-in (bug #166976)
@@ -119,6 +125,7 @@ Bugs fixed in GIMP 2.2.5
 
 Bugs fixed in GIMP 2.2.4
 ========================
+
 - fixed an out-of-bounds read access in the Edge plug-in (bug #164963)
 - limit aspect ratio in crop tool to sane values (bug #164827)
 - fixed indexed conversion on floating selections (bug #165342)
@@ -145,6 +152,7 @@ Bugs fixed in GIMP 2.2.4
 
 Bugs fixed in GIMP 2.2.3
 ========================
+
 - fixed build problem in MIDI input controller (bug #163593)
 - remember last used directory in file open and save dialogs (bug #162385)
 - fixed crashed in DND of indexed drawables (bug #163879)
@@ -168,6 +176,7 @@ Bugs fixed in GIMP 2.2.3
 
 Bugs fixed in GIMP 2.2.2
 ========================
+
 - let Decompose plug-in create layers with alpha channel
 - fixed crash in save dialog (bug #162443)
 - fixed misbehaviour in Scale and Resize dialogs (bug #162387)

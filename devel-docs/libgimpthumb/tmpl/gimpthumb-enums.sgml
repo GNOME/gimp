@@ -14,6 +14,9 @@ Enumerations used by libgimpthumb
 
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### ENUM GimpThumbFileType ##### -->
 <para>
 File types as returned by gimp_thumb_file_test().

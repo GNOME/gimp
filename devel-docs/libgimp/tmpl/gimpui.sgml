@@ -20,6 +20,9 @@ gtk_widget_set_default_visual(), gtk_widget_set_default_colormap(),
 gtk_preview_set_gamma().
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### FUNCTION gimp_ui_init ##### -->
 <para>
 

@@ -21,6 +21,9 @@ display color correction modules.
 #libgimp-gimpmodule
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### STRUCT GimpColorDisplay ##### -->
 <para>
 
