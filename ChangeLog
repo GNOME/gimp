@@ -1,3 +1,8 @@
+2005-10-27  Manish Singh  <yosh@gimp.org>
+
+	* app/paint-funcs/paint-funcs.h: declare component_pixels,
+	combine_mask_and_alpha_channel_{stipple,stroke}. Fixes bug #319811.
+
 2005-10-27  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in: check for gnome-keyring.
