@@ -1,5 +1,9 @@
 2005-10-27  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: bumped version to 2.2.10, interface_age 10.
+
+2005-10-27  Sven Neumann  <sven@gimp.org>
+
 	* Made 2.2.9 release.
 
 	* autogen.sh: prefer newer versions of automake over older ones.
