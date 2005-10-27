@@ -362,6 +362,10 @@ copy_uri (const gchar  *src_uri,
 
 #ifdef HAVE_GNOME_KEYRING
 
+/* gnome-keyring code copied from
+ * libgnomeui/libgnomeui/gnome-authentication-manager.c CVS version 1.13
+ */
+
 typedef struct
 {
   const GnomeVFSModuleCallbackFillAuthenticationIn *in_args;
