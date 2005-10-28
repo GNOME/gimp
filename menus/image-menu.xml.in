@@ -442,9 +442,6 @@
       <menuitem action="tools-curves" />
       <menuitem action="tools-posterize" />
       <separator />
-      <menu action="colors-info-menu" name="Info">
-        <menuitem action="dialogs-histogram"/>
-      </menu>
       <menu action="colors-auto-menu" name="Auto">
         <menuitem action="drawable-equalize"/>
         <menuitem action="drawable-levels-stretch"/>
@@ -456,6 +453,9 @@
         <placeholder name="Invert">
           <menuitem action="drawable-invert"/>
         </placeholder>
+      </menu>
+      <menu action="colors-info-menu" name="Info">
+        <menuitem action="dialogs-histogram"/>
       </menu>
       <separator />
     </menu>
