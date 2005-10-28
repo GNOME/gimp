@@ -180,12 +180,12 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "AlienMap2 Color Transformation Plug-In",
+                          "Alien Map Color Transformation Plug-In",
                           "No help yet. Just try it and you'll see!",
                           "Martin Weber (martweb@gmx.net)",
                           "Martin Weber (martweb@gmx.net",
                           "24th April 1998",
-                          N_("Alien Map _2..."),
+                          N_("_Alien Map..."),
                           "RGB*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
@@ -317,7 +317,7 @@ run (const gchar      *name,
       /*  Make sure that the drawable is RGB or RGBA  */
       if (gimp_drawable_is_rgb (drawable->drawable_id))
         {
-          gimp_progress_init (_("AlienMap2: Transforming"));
+          gimp_progress_init (_("Alien Map: Transforming"));
 
           /* Set the tile cache size */
           gimp_tile_cache_ntiles (2 * (drawable->width /
@@ -390,7 +390,7 @@ alienmap2_dialog (void)
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("AlienMap2"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Alien Map"), PLUG_IN_BINARY,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 
