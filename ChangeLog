@@ -1,5 +1,14 @@
 2005-10-28  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimppageselector.[ch]: added new signal "activate"
+	and emit it if the user activates an item in the icon view.
+
+	* plug-ins/common/poppler.c
+	* plug-ins/common/postscript.c: activate the dialog if the page
+	selector emits "activate" as suggested in bug #320080.
+
+2005-10-28  Sven Neumann  <sven@gimp.org>
+
 	* INSTALL
 	* configure.in: handle gimpprint just like other libraries. It
 	doesn't make sense any longer to require it.

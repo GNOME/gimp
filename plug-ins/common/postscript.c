@@ -301,9 +301,10 @@ static void compress_packbits (int            nin,
                                unsigned char *dst);
 
 
-static guint32 ascii85_buf;
-static int ascii85_len = 0;
-static int ascii85_linewidth = 0;
+static guint32  ascii85_buf       = 0;
+static gint     ascii85_len       = 0;
+static gint     ascii85_linewidth = 0;
+
 static GimpPageSelectorTarget ps_pagemode = GIMP_PAGE_SELECTOR_TARGET_LAYERS;
 
 static void
@@ -3051,7 +3052,12 @@ load_dialog (const gchar *filename,
 		                      page_count);
       gimp_page_selector_set_target (GIMP_PAGE_SELECTOR (selector),
 		                     ps_pagemode);
+
       gtk_widget_show (selector);
+
+      g_signal_connect_swapped (selector, "activate",
+                                G_CALLBACK (gtk_window_activate_default),
+                                dialog);
     }
 
   hbox = gtk_hbox_new (TRUE, 12);
@@ -3183,7 +3189,7 @@ load_dialog (const gchar *filename,
 
   run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  if (page_count > 1)
+  if (selector)
     {
       range = gimp_page_selector_get_selected_range (GIMP_PAGE_SELECTOR (selector));
 

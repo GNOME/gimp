@@ -35,6 +35,8 @@
 #define LOAD_THUMB_PROC "file-pdf-load-thumb"
 #define PLUG_IN_BINARY  "poppler"
 
+#define THUMBNAIL_SIZE  128
+
 
 /* Structs for the load dialog */
 typedef struct
@@ -569,8 +571,8 @@ load_image (PopplerDocument        *doc,
 
 static GdkPixbuf *
 get_thumbnail (PopplerDocument *doc,
-               int              page_num,
-               int              preferred_size)
+               gint             page_num,
+               gint             preferred_size)
 {
   PopplerPage *page;
   GdkPixbuf   *pixbuf;
@@ -659,7 +661,8 @@ thumbnail_thread (gpointer data)
       idle_data->page_no  = i;
 
       /* FIXME get preferred size from somewhere? */
-      idle_data->pixbuf = get_thumbnail (thread_data->document, i, 128);
+      idle_data->pixbuf = get_thumbnail (thread_data->document, i,
+                                         THUMBNAIL_SIZE);
 
       g_idle_add (idle_set_thumbnail, idle_data);
 
@@ -742,6 +745,10 @@ load_dialog (PopplerDocument  *doc,
       g_object_unref (page);
       g_free (label);
     }
+
+  g_signal_connect_swapped (selector, "activate",
+                            G_CALLBACK (gtk_window_activate_default),
+                            dialog);
 
   gtk_widget_show (selector);
 

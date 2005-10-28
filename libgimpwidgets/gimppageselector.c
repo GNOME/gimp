@@ -40,6 +40,7 @@
 enum
 {
   SELECTION_CHANGED,
+  ACTIVATE,
   LAST_SIGNAL
 };
 
@@ -99,6 +100,9 @@ static void   gimp_page_selector_style_set         (GtkWidget        *widget,
                                                     GtkStyle         *prev_style);
 
 static void   gimp_page_selector_selection_changed (GtkIconView      *icon_view,
+                                                    GimpPageSelector *selector);
+static void   gimp_page_selector_item_activated    (GtkIconView      *icon_view,
+                                                    GtkTreePath      *path,
                                                     GimpPageSelector *selector);
 static gboolean gimp_page_selector_range_focus_out (GtkEntry         *entry,
                                                     GdkEventFocus    *fevent,
@@ -166,9 +170,11 @@ gimp_page_selector_class_init (GimpPageSelectorClass *klass)
   widget_class->style_set    = gimp_page_selector_style_set;
 
   klass->selection_changed   = NULL;
+  klass->activate            = NULL;
 
   /**
    * GimpPageSelector::selection-changed:
+   * @widget: the object which received the signal.
    *
    * This signal is emitted whenever the set of selected pages changes.
    *
@@ -182,6 +188,23 @@ gimp_page_selector_class_init (GimpPageSelectorClass *klass)
                   NULL, NULL,
                   g_cclosure_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
+
+  /**
+   * GimpPageSelector::activate:
+   * @widget: the object which received the signal.
+   *
+   * The "activate" signal on GimpPageSelector is an action signal. It
+   * is emitted when a user double-clicks an item in the page selection.
+   */
+  selector_signals[ACTIVATE] =
+    g_signal_new ("activate",
+		  G_OBJECT_CLASS_TYPE (object_class),
+		  G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
+		  G_STRUCT_OFFSET (GimpPageSelectorClass, activate),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
+  widget_class->activate_signal = selector_signals[ACTIVATE];
 
   /**
    * GimpPageSelector:n-pages:
@@ -259,6 +282,9 @@ gimp_page_selector_init (GimpPageSelector *selector)
 
   g_signal_connect (priv->view, "selection-changed",
                     G_CALLBACK (gimp_page_selector_selection_changed),
+                    selector);
+  g_signal_connect (priv->view, "item-activated",
+                    G_CALLBACK (gimp_page_selector_item_activated),
                     selector);
 
   /*  Count label  */
@@ -1086,8 +1112,7 @@ gimp_page_selector_select_range (GimpPageSelector *selector,
                                      gimp_page_selector_selection_changed,
                                      selector);
 
-  gimp_page_selector_selection_changed (GTK_ICON_VIEW (priv->view),
-                                        selector);
+  gimp_page_selector_selection_changed (GTK_ICON_VIEW (priv->view), selector);
 }
 
 /**
@@ -1193,6 +1218,14 @@ gimp_page_selector_selection_changed (GtkIconView      *icon_view,
   gtk_editable_set_position (GTK_EDITABLE (priv->range_entry), -1);
 
   g_signal_emit (selector, selector_signals[SELECTION_CHANGED], 0);
+}
+
+static void
+gimp_page_selector_item_activated (GtkIconView      *icon_view,
+                                   GtkTreePath      *path,
+                                   GimpPageSelector *selector)
+{
+  g_signal_emit (selector, selector_signals[ACTIVATE], 0);
 }
 
 static gboolean

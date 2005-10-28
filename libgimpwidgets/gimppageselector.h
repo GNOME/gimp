@@ -47,6 +47,7 @@ struct _GimpPageSelectorClass
   GtkVBoxClass  parent_class;
 
   void (* selection_changed) (GimpPageSelector *selector);
+  void (* activate)          (GimpPageSelector *selector);
 
   /* Padding for future expansion */
   void (* _gimp_reserved1) (void);
