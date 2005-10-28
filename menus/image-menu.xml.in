@@ -441,6 +441,10 @@
       <menuitem action="tools-levels" />
       <menuitem action="tools-curves" />
       <menuitem action="tools-posterize" />
+      <menuitem action="drawable-desaturate"/>
+      <placeholder name="Invert">
+        <menuitem action="drawable-invert"/>
+      </placeholder>
       <separator />
       <menu action="colors-auto-menu" name="Auto">
         <menuitem action="drawable-equalize"/>
@@ -448,11 +452,7 @@
       </menu>
       <menu action="colors-components-menu" name="Components"/>
       <menu action="colors-map-menu" name="Map"/>
-      <menu action="colors-modify-menu" name="Modify">
-        <menuitem action="drawable-desaturate"/>
-        <placeholder name="Invert">
-          <menuitem action="drawable-invert"/>
-        </placeholder>
+      <menu action="colors-transform-menu" name="Transform">
       </menu>
       <menu action="colors-info-menu" name="Info">
         <menuitem action="dialogs-histogram"/>
