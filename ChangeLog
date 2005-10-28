@@ -1,3 +1,11 @@
+2005-10-28  Sven Neumann  <sven@gimp.org>
+
+	* INSTALL
+	* configure.in: handle gimpprint just like other libraries. It
+	doesn't make sense any longer to require it.
+
+	* app/paint/gimpink-blob.c: commented out unused code.
+
 2005-10-27  Manish Singh  <yosh@gimp.org>
 
 	* app/paint-funcs/paint-funcs.h: declare component_pixels,

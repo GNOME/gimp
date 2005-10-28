@@ -1284,10 +1284,9 @@ AC_SUBST(LIBGNOMEPRINT)
 # Check for gimp-print
 ######################
 
-AC_ARG_ENABLE(print, [  --disable-print         build without print support (requires libgimpprint)])
+AC_ARG_WITH(gimpprint, [  --without-gimpprint     disable build of gimpprint plug-in])
 
-have_gimp_print=no
-if test "x$enable_print" != "xno"; then
+if test "x$with_gimpprint" != xno; then
   AM_PATH_GIMPPRINT(gimpprint_required_version,
     [print_version=`$GIMPPRINT_CONFIG --version`
       if expr $print_version \>= gimpprint_toonew_version >/dev/null; then
@@ -1307,17 +1306,9 @@ dnl sanity check to avoid bug #125283
     ])
 fi
 
-if test x$enable_print != xno && test x$have_gimp_print != xyes; then
-  AC_MSG_ERROR([
-*** Check for libgimpprint failed. You can download it from 
-*** http://gimp-print.sourceforge.net/ or you can build without it by passing 
-*** --disable-print to configure (but you won't be able to print then).])
-fi
-
 AC_SUBST(PRINT_LIBS)
 AC_SUBST(PRINT_CFLAGS)
-AM_CONDITIONAL(BUILD_PRINT,
-               test x$enable_print != xno && test x$have_gimp_print = xyes)
+AM_CONDITIONAL(BUILD_PRINT, test x$have_gimp_print = xyes)
 
 
 ###################

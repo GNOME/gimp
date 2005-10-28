@@ -48,6 +48,8 @@ static void   blob_fill           (Blob     *b,
                                    EdgeType *present);
 static void   blob_make_convex    (Blob     *b,
                                    EdgeType *present);
+
+#if 0
 static void   blob_line_add_pixel (Blob     *b,
                                    gint      x,
                                    gint      y);
@@ -56,6 +58,7 @@ static void   blob_line           (Blob     *b,
                                    gint      y0,
                                    gint      x1,
                                    gint      y1);
+#endif
 
 
 /*  public functions  */
@@ -753,6 +756,9 @@ blob_make_convex (Blob     *b,
   blob_fill (b, present);
 }
 
+
+#if 0
+
 static void
 blob_line_add_pixel (Blob *b,
                      gint  x,
@@ -858,3 +864,5 @@ blob_line (Blob *b,
 	}
     }
 }
+
+#endif
