@@ -1,5 +1,10 @@
 2005-10-28  Sven Neumann  <sven@gimp.org>
 
+	* app/base/siox.c: applied a patch by Tobias Lenz that makes use
+	of the state that was added to SIOX in order to speed up the tool.
+
+2005-10-28  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimppageselector.[ch]: added new signal "activate"
 	and emit it if the user activates an item in the icon view.
 

@@ -40,6 +40,7 @@
 
 #include "libgimpmath/gimpmath.h"
 #include "base-types.h"
+#include "base-enums.h"
 #include "paint-funcs/paint-funcs.h"
 #include "cpercep.h"
 #include "pixel-region.h"
@@ -825,105 +826,132 @@ siox_foreground_extract (SioxState          *state,
 
   siox_progress_update (progress_callback, progress_data, 0.0);
 
-  g_hash_table_foreach_remove (state->cache,
-                               (GHRFunc) dummy_remove_hash, NULL);
 
-  /* count given foreground and background pixels */
-  pixel_region_init (&mapPR, mask, x, y, width, height, FALSE);
-
-  for (pr = pixel_regions_register (1, &mapPR);
-       pr != NULL; pr = pixel_regions_process (pr))
+  if (refinement & SIOX_REFINEMENT_CHANGE_SENSITIVITY)
     {
-      const guchar *map = mapPR.data;
-
-      for (row = 0; row < mapPR.h; row++)
-        {
-          const guchar *m = map;
-
-          for (col = 0; col < mapPR.w; col++, m++)
-            {
-              if (*m < SIOX_LOW)
-                surebgcount++;
-              else if (*m > SIOX_HIGH)
-                surefgcount++;
-            }
-
-          map += mapPR.rowstride;
-        }
+      refinement = SIOX_REFINEMENT_RECALCULATE;
     }
+  else
+    {
+      if (! state->bgsig)
+        refinement |= SIOX_REFINEMENT_ADD_BACKGROUND;
+
+      if (! state->fgsig)
+        refinement |= SIOX_REFINEMENT_ADD_FOREGROUND;
+    }
+
+
+  if (refinement & (SIOX_REFINEMENT_ADD_FOREGROUND |
+                    SIOX_REFINEMENT_ADD_BACKGROUND))
+    {
+      g_hash_table_foreach_remove (state->cache,
+                                   (GHRFunc) dummy_remove_hash, NULL);
+
+      /* count given foreground and background pixels */
+      pixel_region_init (&mapPR, mask, x, y, width, height, FALSE);
+
+      for (pr = pixel_regions_register (1, &mapPR);
+           pr != NULL;
+           pr = pixel_regions_process (pr))
+        {
+          const guchar *map = mapPR.data;
+
+          for (row = 0; row < mapPR.h; row++)
+            {
+              const guchar *m = map;
+
+              for (col = 0; col < mapPR.w; col++, m++)
+                {
+                  if (*m < SIOX_LOW)
+                    surebgcount++;
+                  else if (*m > SIOX_HIGH)
+                    surefgcount++;
+                }
+
+              map += mapPR.rowstride;
+            }
+        }
+
 #ifdef SIOX_DEBUG
-  g_printerr ("siox.c: usermask #surebg=%d #surefg=%d\n",
-              surebgcount, surefgcount);
+      g_printerr ("siox.c: usermask #surebg=%d #surefg=%d\n",
+                  surebgcount, surefgcount);
 #endif
 
-  surebg = g_new (lab, surebgcount);
-  surefg = g_new (lab, surefgcount);
+      surebg = g_new (lab, surebgcount);
+      surefg = g_new (lab, surefgcount);
 
-  i = 0;
-  j = 0;
+      i = 0;
+      j = 0;
 
-  siox_progress_update (progress_callback, progress_data, 0.1);
+      siox_progress_update (progress_callback, progress_data, 0.1);
 
-  /* create inputs for color signatures */
-  pixel_region_init (&srcPR, state->pixels,
-                     x - state->offset_x, y - state->offset_y,
-                     width, height, FALSE);
-  pixel_region_init (&mapPR, mask,
-                     x, y, width, height, FALSE);
+      /* create inputs for color signatures */
+      pixel_region_init (&srcPR, state->pixels,
+                         x - state->offset_x, y - state->offset_y,
+                         width, height, FALSE);
+      pixel_region_init (&mapPR, mask,
+                         x, y, width, height, FALSE);
 
-  for (pr = pixel_regions_register (2, &srcPR, &mapPR);
-       pr != NULL; pr = pixel_regions_process (pr))
-    {
-      const guchar *src = srcPR.data;
-      const guchar *map = mapPR.data;
-
-      for (row = 0; row < srcPR.h; row++)
+      for (pr = pixel_regions_register (2, &srcPR, &mapPR);
+           pr != NULL; pr = pixel_regions_process (pr))
         {
-          const guchar *s = src;
-          const guchar *m = map;
+          const guchar *src = srcPR.data;
+          const guchar *map = mapPR.data;
 
-          for (col = 0; col < srcPR.w; col++, m++, s += state->bpp)
+          for (row = 0; row < srcPR.h; row++)
             {
-              if (*m < SIOX_LOW)
-                {
-                  calc_lab (s, state->bpp, state->colormap, surebg + i);
-                  i++;
-                }
-              else if (*m > SIOX_HIGH)
-                {
-                  calc_lab (s, state->bpp, state->colormap, surefg + j);
-                  j++;
-                }
-            }
+              const guchar *s = src;
+              const guchar *m = map;
 
-          src += srcPR.rowstride;
-          map += mapPR.rowstride;
+              for (col = 0; col < srcPR.w; col++, m++, s += state->bpp)
+                {
+                  if (*m < SIOX_LOW)
+                    {
+                      calc_lab (s, state->bpp, state->colormap, surebg + i);
+                      i++;
+                    }
+                  else if (*m > SIOX_HIGH)
+                    {
+                      calc_lab (s, state->bpp, state->colormap, surefg + j);
+                      j++;
+                    }
+                }
+
+              src += srcPR.rowstride;
+              map += mapPR.rowstride;
+            }
+        }
+
+      siox_progress_update (progress_callback, progress_data, 0.2);
+
+      if (refinement & SIOX_REFINEMENT_ADD_BACKGROUND)
+        {
+          /* Create color signature for the background */
+          state->bgsig = create_signature (surebg, surebgcount,
+                                           &state->bgsiglen, limits,
+                                           state->bpp == 1 ?
+                                           SIOX_GRAY_DIMS : SIOX_COLOR_DIMS);
+          g_free (surebg);
+
+          if (state->bgsiglen < 1)
+            {
+              g_free (surefg);
+              return;
+            }
+        }
+
+      siox_progress_update (progress_callback, progress_data, 0.3);
+
+      if (refinement & SIOX_REFINEMENT_ADD_FOREGROUND)
+        {
+          /* Create color signature for the foreground */
+          state->fgsig = create_signature (surefg, surefgcount,
+                                           &state->fgsiglen, limits,
+                                           state->bpp == 1 ?
+                                           SIOX_GRAY_DIMS : SIOX_COLOR_DIMS);
+          g_free (surefg);
         }
     }
-
-  siox_progress_update (progress_callback, progress_data, 0.2);
-
-  /* Create color signature for the background */
-  state->bgsig = create_signature (surebg, surebgcount,
-                                   &state->bgsiglen, limits,
-                                   state->bpp == 1 ?
-                                   SIOX_GRAY_DIMS : SIOX_COLOR_DIMS);
-  g_free (surebg);
-
-  if (state->bgsiglen < 1)
-    {
-      g_free (surefg);
-      return;
-    }
-
-  siox_progress_update (progress_callback, progress_data, 0.3);
-
-  /* Create color signature for the foreground */
-  state->fgsig = create_signature (surefg, surefgcount,
-                                   &state->fgsiglen, limits,
-                                   state->bpp == 1 ?
-                                   SIOX_GRAY_DIMS : SIOX_COLOR_DIMS);
-  g_free (surefg);
 
   siox_progress_update (progress_callback, progress_data, 0.4);
 

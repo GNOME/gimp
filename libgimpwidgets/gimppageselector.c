@@ -195,6 +195,8 @@ gimp_page_selector_class_init (GimpPageSelectorClass *klass)
    *
    * The "activate" signal on GimpPageSelector is an action signal. It
    * is emitted when a user double-clicks an item in the page selection.
+   *
+   * Since: GIMP 2.4
    */
   selector_signals[ACTIVATE] =
     g_signal_new ("activate",
