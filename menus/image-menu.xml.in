@@ -441,23 +441,23 @@
       <menuitem action="tools-levels" />
       <menuitem action="tools-curves" />
       <menuitem action="tools-posterize" />
-      <menuitem action="drawable-desaturate"/>
+      <separator />
+      <menuitem action="drawable-desaturate" />
       <placeholder name="Invert">
-        <menuitem action="drawable-invert"/>
+        <menuitem action="drawable-invert" />
       </placeholder>
       <separator />
       <menu action="colors-auto-menu" name="Auto">
-        <menuitem action="drawable-equalize"/>
-        <menuitem action="drawable-levels-stretch"/>
+        <menuitem action="drawable-equalize" />
+        <menuitem action="drawable-levels-stretch" />
       </menu>
-      <menu action="colors-components-menu" name="Components"/>
-      <menu action="colors-map-menu" name="Map"/>
-      <menu action="colors-transform-menu" name="Transform">
-      </menu>
+      <menu action="colors-components-menu" name="Components" />
+      <menu action="colors-map-menu" name="Map" />
       <menu action="colors-info-menu" name="Info">
-        <menuitem action="dialogs-histogram"/>
+        <menuitem action="dialogs-histogram" />
       </menu>
       <separator />
+      <placeholder name="Modify" />
     </menu>
 
     <menu action="tools-menu" name="Tools">

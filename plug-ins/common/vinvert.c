@@ -87,7 +87,7 @@ query (void)
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Colors/Modify/Invert");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Colors/Invert");
 }
 
 static void

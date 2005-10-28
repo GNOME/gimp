@@ -1,3 +1,16 @@
+2005-10-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/image-actions.c: removed "colors-transform-menu".
+
+	* menus/image-menu.xml.in: revamped again: Moved desaturate and
+	the invert items to the toplevel, into a separator-enclosed group.
+	Changed Modify to a placeholder again. Things that have no useful
+	category can't go to a sub-menu, so please don't invent one just
+	for the sake of it.
+
+	* plug-ins/common/channel_mixer.c: -> Colors/Components
+	* plug-ins/common/vinvert.c: -> Colors/Invert
+
 2005-10-28  Carol Spears  <carol@gimp.org>
 
 	* app/actions/image-actions.c: Changed colors-modify-menu to 
