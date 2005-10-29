@@ -335,7 +335,12 @@ static gboolean
 gimp_toolbox_delete_event (GtkWidget   *widget,
                            GdkEventAny *event)
 {
-  gimp_exit (GIMP_DOCK (widget)->context->gimp, FALSE);
+  GtkAction *action;
+
+  action = gimp_ui_manager_find_action (GIMP_IMAGE_DOCK (widget)->ui_manager,
+                                        "file", "file-quit");
+  if (action)
+    gtk_action_activate (action);
 
   return TRUE;
 }

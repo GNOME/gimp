@@ -36,6 +36,7 @@
 #include "file/file-save.h"
 #include "file/file-utils.h"
 
+#include "widgets/gimpactiongroup.h"
 #include "widgets/gimpfiledialog.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmessagebox.h"
@@ -441,7 +442,16 @@ file_save_dialog_save_image (GtkWidget     *save_dialog,
                              gboolean       save_a_copy)
 {
   GimpPDBStatusType  status;
-  GError            *error = NULL;
+  GError            *error   = NULL;
+  GList             *list;
+  gboolean           success = TRUE;
+
+  for (list = gimp_action_groups_from_name ("file");
+       list;
+       list = g_list_next (list))
+    {
+      gimp_action_group_set_action_sensitive (list->data, "file-quit", FALSE);
+    }
 
   g_object_ref (gimage);
 
@@ -467,8 +477,15 @@ file_save_dialog_save_image (GtkWidget     *save_dialog,
 
       g_free (filename);
 
-      return FALSE;
+      success = FALSE;
     }
 
-  return TRUE;
+  for (list = gimp_action_groups_from_name ("file");
+       list;
+       list = g_list_next (list))
+    {
+      gimp_action_group_set_action_sensitive (list->data, "file-quit", TRUE);
+    }
+
+  return success;
 }

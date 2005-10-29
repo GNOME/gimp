@@ -38,6 +38,7 @@
 #include "file/file-save.h"
 #include "file/file-utils.h"
 
+#include "widgets/gimpactiongroup.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpfiledialog.h"
 #include "widgets/gimphelp-ids.h"
@@ -213,6 +214,15 @@ file_save_cmd_callback (GtkAction *action,
         {
           GimpPDBStatusType  status;
           GError            *error = NULL;
+          GList             *list;
+
+          for (list = gimp_action_groups_from_name ("file");
+               list;
+               list = g_list_next (list))
+            {
+              gimp_action_group_set_action_sensitive (list->data, "file-quit",
+                                                      FALSE);
+            }
 
           status = file_save (gimage, action_data_get_context (data),
                               GIMP_PROGRESS (gdisp),
@@ -229,6 +239,14 @@ file_save_cmd_callback (GtkAction *action,
               g_clear_error (&error);
 
               g_free (filename);
+            }
+
+          for (list = gimp_action_groups_from_name ("file");
+               list;
+               list = g_list_next (list))
+            {
+              gimp_action_group_set_action_sensitive (list->data, "file-quit",
+                                                      TRUE);
             }
         }
     }

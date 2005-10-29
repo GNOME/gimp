@@ -1,5 +1,18 @@
 2005-10-29  Michael Natterer  <mitch@gimp.org>
 
+	 Fix bug #145492:
+
+	* app/actions/file-commands.c (file_save_cmd_callback)
+	* app/dialogs/file-save-dialog.c (file_save_dialog_save_image):
+	set the "file-quit" action insensitive while the image is being
+	saved to prevent data loss.
+
+	* app/widgets/gimptoolbox.c (gimp_toolbox_delete_event): activate
+	the "file-quit" action instead of calling gimp_exit() directly so
+	trying to close the toolbox while saving is impossible too.
+
+2005-10-29  Michael Natterer  <mitch@gimp.org>
+
 	* app/paint/gimpconvolve.c (gimp_convolve_motion): allocate both
 	oversize buffers with the right size, instead of one twice with
 	the wrong size. Was broken since porting to pixel_region_init_data().
