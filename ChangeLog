@@ -1,5 +1,16 @@
 2005-10-29  Michael Natterer  <mitch@gimp.org>
 
+	* app/dialogs/user-install-dialog.c: added global "oldgimp_major"
+	an "oldgimp_minor" variables.
+
+	(user_install_dialog_run): set them to the version of the gimp
+	directory that should be migrated.
+
+	(user_install_migrate_files): skip "menurc" only when migrating
+	from 2.0. Fixes bug #317170.
+
+2005-10-29  Michael Natterer  <mitch@gimp.org>
+
 	 Fix bug #145492:
 
 	* app/actions/file-commands.c (file_save_cmd_callback)

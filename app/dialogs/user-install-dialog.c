@@ -105,6 +105,8 @@ static GdkColor    white_color;
 static GdkColor    title_color;
 
 static gchar      *oldgimp         = NULL;
+static gint        oldgimp_major   = 0;
+static gint        oldgimp_minor   = 0;
 static gboolean    migrate         = FALSE;
 
 
@@ -591,13 +593,21 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
   version = strstr (oldgimp, "2.3");
 
   if (version)
-    version[2] = '2';
+    {
+      version[2]    = '2';
+      oldgimp_major = 2;
+      oldgimp_minor = 2;
+    }
   migrate = (version && g_file_test (oldgimp, G_FILE_TEST_IS_DIR));
 
   if (! migrate)
     {
       if (version)
-        version[2] = '0';
+        {
+          version[2]    = '0';
+          oldgimp_major = 2;
+          oldgimp_minor = 0;
+        }
       migrate = (version && g_file_test (oldgimp, G_FILE_TEST_IS_DIR));
     }
 
@@ -605,6 +615,8 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
     {
       g_free (oldgimp);
       oldgimp = NULL;
+      oldgimp_major = 0;
+      oldgimp_minor = 0;
     }
 
   gimprc = gimp_rc_new (alternate_system_gimprc, alternate_gimprc, verbose);
@@ -1247,6 +1259,8 @@ user_install_create_files (GtkWidget     *log_view,
 
 static gboolean
 user_install_migrate_files (const gchar   *oldgimp,
+                            gint           oldgimp_major,
+                            gint           oldgimp_minor,
                             GtkWidget     *log_view,
                             GtkTextBuffer *log_buffer)
 {
@@ -1264,12 +1278,23 @@ user_install_migrate_files (const gchar   *oldgimp,
         {
           source = g_build_filename (oldgimp, basename, NULL);
 
-          if (g_file_test (source, G_FILE_TEST_IS_REGULAR) &&
-              (strncmp (basename, "gimpswap.", 9) != 0)    &&
-              (strncmp (basename, "menurc",    6) != 0)    &&
-              (strncmp (basename, "pluginrc",  8) != 0)    &&
-              (strncmp (basename, "themerc",   7) != 0))
+          if (g_file_test (source, G_FILE_TEST_IS_REGULAR))
             {
+              /*  skip these for all old versions  */
+              if ((strncmp (basename, "gimpswap.", 9) == 0) ||
+                  (strncmp (basename, "pluginrc",  8) == 0) ||
+                  (strncmp (basename, "themerc",   7) == 0))
+                {
+                  goto next_file;
+                }
+
+              /*  skip menurc for gimp 2.0 since the format has changed  */
+              if (oldgimp_minor == 0 &&
+                  (strncmp (basename, "menurc", 6) == 0))
+                {
+                  goto next_file;
+                }
+
               g_snprintf (dest, sizeof (dest), "%s%c%s",
                           gimp_directory (), G_DIR_SEPARATOR, basename);
 
@@ -1288,6 +1313,8 @@ user_install_migrate_files (const gchar   *oldgimp,
                   g_clear_error (&error);
                 }
             }
+
+            next_file:
 
           g_free (source);
           source = NULL;
@@ -1358,7 +1385,8 @@ user_install_run (const gchar *oldgimp)
   print_log (log_view, log_buffer, NULL);
 
   if (oldgimp)
-    return user_install_migrate_files (oldgimp, log_view, log_buffer);
+    return user_install_migrate_files (oldgimp, oldgimp_major, oldgimp_minor,
+                                       log_view, log_buffer);
   else
     return user_install_create_files (log_view, log_buffer);
 }
