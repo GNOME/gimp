@@ -1,5 +1,12 @@
 2005-10-29  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint/gimpconvolve.c (gimp_convolve_motion): allocate both
+	oversize buffers with the right size, instead of one twice with
+	the wrong size. Was broken since porting to pixel_region_init_data().
+	Spotted by Seth Burgess. Fixes bug #317340.
+
+2005-10-29  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/pdb/image.pdb: improved documentation of
 	gimp-image-clean-all and gimp-image-is-dirty. Fixes bug #318075.
 

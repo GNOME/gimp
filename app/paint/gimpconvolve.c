@@ -354,8 +354,8 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
                    srcPR.bytes : srcPR.bytes + 1);
       rowstride = (area->width + marginx) * bytes;
 
+      ovrsz1_data = g_malloc ((area->height + marginy) * rowstride);
       ovrsz2_data = g_malloc ((area->height + marginy) * rowstride);
-      ovrsz2_data = g_malloc ((area->width  + marginx) * rowstride);
 
       pixel_region_init_data (&ovrsz2PR, ovrsz2_data,
                               bytes, rowstride,
