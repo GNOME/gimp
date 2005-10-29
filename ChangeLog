@@ -1,3 +1,11 @@
+2005-10-29  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/image.pdb: improved documentation of
+	gimp-image-clean-all and gimp-image-is-dirty. Fixes bug #318075.
+
+	* app/pdb/image_cmds.c
+	* libgimp/gimpimage_pdb.c: regenerated.
+
 2005-10-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/image-actions.c: removed "colors-transform-menu".

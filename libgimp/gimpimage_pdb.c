@@ -1439,7 +1439,8 @@ _gimp_image_set_colormap (gint32        image_ID,
  * operations to occur without having a 'dirtied' image. This is
  * especially useful for creating and loading images which should not
  * initially be considered dirty, even though layers must be created,
- * filled, and installed in the image.
+ * filled, and installed in the image. Note that save plug-ins must NOT
+ * call this function themselves after saving the image.
  *
  * Returns: TRUE on success.
  */
@@ -1469,7 +1470,9 @@ gimp_image_clean_all (gint32 image_ID)
  * Checks if the image has unsaved changes.
  *
  * This procedure checks the specified image's dirty count to see if it
- * needs to be saved.
+ * needs to be saved. Note that saving the image does not automatically
+ * set the dirty count to 0, you need to call gimp-image-clean-all
+ * after calling a save procedure to make the image clean.
  *
  * Returns: True if the image has unsaved changes.
  */
