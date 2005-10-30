@@ -1,3 +1,9 @@
+2005-10-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/dialogs-actions.c (dialogs_dockable_actions): removed
+	shift+ctrl+t accelerator from dialogs-tool-options because it's
+	already taken by view-show-guides. Fixes bug #320196.
+
 2005-10-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/dialogs/user-install-dialog.c: added global "oldgimp_major"

@@ -62,7 +62,7 @@ static GimpActionEntry dialogs_actions[] =
 GimpStringActionEntry dialogs_dockable_actions[] =
 {
   { "dialogs-tool-options", GIMP_STOCK_TOOL_OPTIONS,
-    N_("Tool _Options"), "<control><shift>T", NULL,
+    N_("Tool _Options"), NULL, NULL,
     "gimp-tool-options",
     GIMP_HELP_TOOL_OPTIONS_DIALOG },
 
