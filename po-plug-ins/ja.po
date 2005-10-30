@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-22 11:53+0900\n"
-"PO-Revision-Date: 2005-10-18 23:00+0900\n"
+"POT-Creation-Date: 2005-10-30 12:29+0900\n"
+"PO-Revision-Date: 2005-10-26 23:00+0900\n"
 "Last-Translator: OKANO Takayoshi <kano@na.rim.or.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -275,8 +275,8 @@ msgstr "Cos"
 #: ../plug-ins/FractalExplorer/Dialogs.c:1068
 #: ../plug-ins/Lighting/lighting_ui.c:399
 #: ../plug-ins/common/CML_explorer.c:166 ../plug-ins/common/align_layers.c:421
-#: ../plug-ins/common/align_layers.c:452 ../plug-ins/common/postscript.c:3162
-#: ../plug-ins/common/postscript.c:3174 ../plug-ins/common/psp.c:421
+#: ../plug-ins/common/align_layers.c:452 ../plug-ins/common/postscript.c:3168
+#: ../plug-ins/common/postscript.c:3180 ../plug-ins/common/psp.c:421
 #: ../plug-ins/fits/fits.c:1019
 msgid "None"
 msgstr "なし"
@@ -370,8 +370,8 @@ msgstr "フラクタル(_F)"
 #: ../plug-ins/common/gtm.c:225 ../plug-ins/common/mng.c:561
 #: ../plug-ins/common/mng.c:953 ../plug-ins/common/pat.c:451
 #: ../plug-ins/common/pcx.c:588 ../plug-ins/common/pix.c:508
-#: ../plug-ins/common/png.c:1221 ../plug-ins/common/pnm.c:817
-#: ../plug-ins/common/postscript.c:1184 ../plug-ins/common/psd_save.c:1349
+#: ../plug-ins/common/png.c:1260 ../plug-ins/common/pnm.c:817
+#: ../plug-ins/common/postscript.c:1185 ../plug-ins/common/psd_save.c:1349
 #: ../plug-ins/common/raw.c:530 ../plug-ins/common/raw.c:557
 #: ../plug-ins/common/spheredesigner.c:2119 ../plug-ins/common/sunras.c:507
 #: ../plug-ins/common/tga.c:1026 ../plug-ins/common/tiff.c:1920
@@ -379,7 +379,7 @@ msgstr "フラクタル(_F)"
 #: ../plug-ins/fits/fits.c:454 ../plug-ins/flame/flame.c:442
 #: ../plug-ins/gfig/gfig.c:787 ../plug-ins/gfli/gfli.c:714
 #: ../plug-ins/ifscompose/ifscompose.c:2387 ../plug-ins/jpeg/jpeg-save.c:267
-#: ../plug-ins/uri/uri-backend-gnomevfs.c:222
+#: ../plug-ins/uri/uri-backend-gnomevfs.c:268
 #: ../plug-ins/winicon/icosave.c:244 ../plug-ins/xjt/xjt.c:1272
 #: ../plug-ins/xjt/xjt.c:1706
 #, c-format
@@ -411,8 +411,8 @@ msgstr "フラクタルパラメータを保存"
 #: ../plug-ins/common/mng.c:1124 ../plug-ins/common/pat.c:321
 #: ../plug-ins/common/pcx.c:309 ../plug-ins/common/pix.c:329
 #: ../plug-ins/common/png.c:720 ../plug-ins/common/pnm.c:442
-#: ../plug-ins/common/poppler.c:366 ../plug-ins/common/postscript.c:1011
-#: ../plug-ins/common/postscript.c:2976 ../plug-ins/common/psd.c:1880
+#: ../plug-ins/common/poppler.c:368 ../plug-ins/common/postscript.c:1012
+#: ../plug-ins/common/postscript.c:2977 ../plug-ins/common/psd.c:1880
 #: ../plug-ins/common/psp.c:1463 ../plug-ins/common/raw.c:242
 #: ../plug-ins/common/raw.c:647 ../plug-ins/common/spheredesigner.c:2009
 #: ../plug-ins/common/sunras.c:379 ../plug-ins/common/svg.c:313
@@ -423,7 +423,7 @@ msgstr "フラクタルパラメータを保存"
 #: ../plug-ins/gfig/gfig.c:427 ../plug-ins/gfli/gfli.c:428
 #: ../plug-ins/gfli/gfli.c:463 ../plug-ins/help/domain.c:426
 #: ../plug-ins/jpeg/jpeg-load.c:85 ../plug-ins/jpeg/jpeg-load.c:871
-#: ../plug-ins/uri/uri-backend-gnomevfs.c:211
+#: ../plug-ins/uri/uri-backend-gnomevfs.c:257
 #: ../plug-ins/winicon/icoload.c:135 ../plug-ins/xjt/xjt.c:2530
 #: ../plug-ins/xjt/xjt.c:2538
 #, c-format
@@ -1034,7 +1034,7 @@ msgstr "XYZ 空間中のオブジェクトの Z 位置"
 
 #. Rotation
 #: ../plug-ins/MapObject/mapobject_ui.c:1044
-#: ../plug-ins/common/postscript.c:3359
+#: ../plug-ins/common/postscript.c:3365
 msgid "Rotation"
 msgstr "回転"
 
@@ -1170,8 +1170,8 @@ msgstr "不正なカラーマップです"
 #: ../plug-ins/common/gifload.c:302 ../plug-ins/common/gih.c:654
 #: ../plug-ins/common/pat.c:326 ../plug-ins/common/pcx.c:314
 #: ../plug-ins/common/pix.c:334 ../plug-ins/common/png.c:727
-#: ../plug-ins/common/pnm.c:447 ../plug-ins/common/poppler.c:463
-#: ../plug-ins/common/postscript.c:1017 ../plug-ins/common/psd.c:1885
+#: ../plug-ins/common/pnm.c:447 ../plug-ins/common/poppler.c:465
+#: ../plug-ins/common/postscript.c:1018 ../plug-ins/common/psd.c:1885
 #: ../plug-ins/common/raw.c:652 ../plug-ins/common/sunras.c:433
 #: ../plug-ins/common/tga.c:419 ../plug-ins/common/tiff.c:535
 #: ../plug-ins/common/wmf.c:952 ../plug-ins/common/xbm.c:725
@@ -1248,8 +1248,8 @@ msgstr "インデックス画像ではアルファチャンネルを持った画
 #: ../plug-ins/common/gbr.c:621 ../plug-ins/common/gif.c:1007
 #: ../plug-ins/common/gih.c:1263 ../plug-ins/common/gtm.c:245
 #: ../plug-ins/common/pat.c:456 ../plug-ins/common/pcx.c:550
-#: ../plug-ins/common/pix.c:513 ../plug-ins/common/png.c:1228
-#: ../plug-ins/common/pnm.c:822 ../plug-ins/common/postscript.c:1189
+#: ../plug-ins/common/pix.c:513 ../plug-ins/common/png.c:1267
+#: ../plug-ins/common/pnm.c:822 ../plug-ins/common/postscript.c:1190
 #: ../plug-ins/common/psd_save.c:1354 ../plug-ins/common/sunras.c:512
 #: ../plug-ins/common/tga.c:1031 ../plug-ins/common/tiff.c:1925
 #: ../plug-ins/common/xbm.c:1007 ../plug-ins/common/xpm.c:623
@@ -1342,16 +1342,19 @@ msgid "Luminosity pha_seshift:"
 msgstr "光度位相変換(_S):"
 
 #: ../plug-ins/common/AlienMap2.c:188
-msgid "Alien Map _2..."
+#, fuzzy
+msgid "_Alien Map..."
 msgstr "エイリアンマップ _2..."
 
 #: ../plug-ins/common/AlienMap2.c:320
-msgid "AlienMap2: Transforming"
+#, fuzzy
+msgid "Alien Map: Transforming"
 msgstr "エイリアンマップ 2: 変換しています"
 
 #: ../plug-ins/common/AlienMap2.c:393
-msgid "AlienMap2"
-msgstr "エイリアンマップ 2"
+#, fuzzy
+msgid "Alien Map"
+msgstr "エイリアンマップ"
 
 #: ../plug-ins/common/AlienMap2.c:440 ../plug-ins/common/AlienMap2.c:464
 #: ../plug-ins/common/AlienMap2.c:488
@@ -1705,7 +1708,7 @@ msgstr "先チャンネル:"
 
 #: ../plug-ins/common/CML_explorer.c:1465
 msgid "Copy Parameters"
-msgstr "コピーパラメーター"
+msgstr "コピーパラメータ"
 
 #: ../plug-ins/common/CML_explorer.c:1474
 msgid "Selective Load Settings"
@@ -2177,7 +2180,7 @@ msgstr "方向(_A):"
 msgid "_Elevation:"
 msgstr "持ち上げ(_E):"
 
-#: ../plug-ins/common/bumpmap.c:998 ../plug-ins/common/postscript.c:3313
+#: ../plug-ins/common/bumpmap.c:998 ../plug-ins/common/postscript.c:3319
 msgid "_X offset:"
 msgstr "X オフセット(_X):"
 
@@ -2189,7 +2192,7 @@ msgstr ""
 "オフセットは、プレビューをマウスの中ボタンでドラッグして調整することもできま"
 "す。"
 
-#: ../plug-ins/common/bumpmap.c:1012 ../plug-ins/common/postscript.c:3322
+#: ../plug-ins/common/bumpmap.c:1012 ../plug-ins/common/postscript.c:3328
 msgid "_Y offset:"
 msgstr "Y オフセット(_Y):"
 
@@ -3178,7 +3181,7 @@ msgid "Destripe"
 msgstr "非ストライプ化"
 
 #: ../plug-ins/common/destripe.c:472 ../plug-ins/common/gtm.c:583
-#: ../plug-ins/common/postscript.c:3087 ../plug-ins/common/postscript.c:3295
+#: ../plug-ins/common/postscript.c:3093 ../plug-ins/common/postscript.c:3301
 #: ../plug-ins/common/raw.c:1000 ../plug-ins/common/smooth_palette.c:436
 #: ../plug-ins/common/tile.c:424 ../plug-ins/imagemap/imap_cmd_guides.c:167
 #: ../plug-ins/imagemap/imap_rectangle.c:403
@@ -3206,7 +3209,7 @@ msgstr "'%s' は DICOM ファイルではありません"
 msgid "Cannot save images with alpha channel."
 msgstr "アルファチャンネルを持った画像は保存できません。"
 
-#: ../plug-ins/common/dicom.c:635 ../plug-ins/common/postscript.c:1175
+#: ../plug-ins/common/dicom.c:635 ../plug-ins/common/postscript.c:1176
 #: ../plug-ins/common/xwd.c:556 ../plug-ins/fits/fits.c:445
 #: ../plug-ins/xjt/xjt.c:1684
 msgid "Cannot operate on unknown image types."
@@ -3427,8 +3430,8 @@ msgid "Engrave"
 msgstr "彫金風"
 
 #: ../plug-ins/common/engrave.c:245 ../plug-ins/common/film.c:1201
-#: ../plug-ins/common/gtm.c:599 ../plug-ins/common/postscript.c:3096
-#: ../plug-ins/common/postscript.c:3304 ../plug-ins/common/raw.c:1013
+#: ../plug-ins/common/gtm.c:599 ../plug-ins/common/postscript.c:3102
+#: ../plug-ins/common/postscript.c:3310 ../plug-ins/common/raw.c:1013
 #: ../plug-ins/common/smooth_palette.c:441 ../plug-ins/common/tile.c:428
 #: ../plug-ins/imagemap/imap_cmd_guides.c:177
 #: ../plug-ins/imagemap/imap_rectangle.c:410
@@ -4468,7 +4471,7 @@ msgstr "逆転(_E)"
 
 #: ../plug-ins/common/iwarp.c:976
 msgid "_Ping pong"
-msgstr "ピンポン"
+msgstr "ピンポン(_P)"
 
 #: ../plug-ins/common/iwarp.c:989
 msgid "_Animate"
@@ -4857,7 +4860,7 @@ msgstr "角度(_A):"
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: ../plug-ins/common/mng.c:498 ../plug-ins/common/png.c:1611
+#: ../plug-ins/common/mng.c:498 ../plug-ins/common/png.c:1676
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr "透明度を劣化させずに保存できませんでした。不透明で保存します。"
 
@@ -4933,7 +4936,7 @@ msgstr "デフォルトのフレーム配置:"
 msgid "PNG compression level:"
 msgstr "PNG 圧縮レベル:"
 
-#: ../plug-ins/common/mng.c:1465 ../plug-ins/common/png.c:1762
+#: ../plug-ins/common/mng.c:1465 ../plug-ins/common/png.c:1827
 msgid "Choose a high compression level for small file size"
 msgstr "ファイルサイズを小さくするには高圧縮レベルを選択してください"
 
@@ -5477,60 +5480,60 @@ msgstr ""
 "この PNG ファイルでは、レイヤーが画像の外に配置されるようなオフセットが指定さ"
 "れています。"
 
-#: ../plug-ins/common/png.c:1206
+#: ../plug-ins/common/png.c:1245
 #, c-format
 msgid "Error while saving '%s'. Could not save image."
 msgstr "'%s' の保存中にエラー。画像が保存できませんでした。"
 
-#: ../plug-ins/common/png.c:1641
+#: ../plug-ins/common/png.c:1706
 msgid "Save as PNG"
 msgstr "PNG 形式で保存する"
 
-#: ../plug-ins/common/png.c:1645
+#: ../plug-ins/common/png.c:1710
 msgid "_Load defaults"
 msgstr "初期値を読み込み(_L)"
 
-#: ../plug-ins/common/png.c:1646
+#: ../plug-ins/common/png.c:1711
 msgid "_Save defaults"
 msgstr "初期値を保存(_S)"
 
-#: ../plug-ins/common/png.c:1676
+#: ../plug-ins/common/png.c:1741
 msgid "_Interlacing (Adam7)"
 msgstr "インターレース (Adam7)(_I)"
 
-#: ../plug-ins/common/png.c:1687
+#: ../plug-ins/common/png.c:1752
 msgid "Save _background color"
 msgstr "背景色を保存(_B)"
 
-#: ../plug-ins/common/png.c:1695
+#: ../plug-ins/common/png.c:1760
 msgid "Save _gamma"
 msgstr "ガンマ値を保存(_G)"
 
-#: ../plug-ins/common/png.c:1704
+#: ../plug-ins/common/png.c:1769
 msgid "Save layer o_ffset"
 msgstr "レイヤーオフセットを保存(_F)"
 
-#: ../plug-ins/common/png.c:1713
+#: ../plug-ins/common/png.c:1778
 msgid "Save _resolution"
 msgstr "解像度を保存(_R)"
 
-#: ../plug-ins/common/png.c:1722
+#: ../plug-ins/common/png.c:1787
 msgid "Save creation _time"
 msgstr "作成日時を保存(_T)"
 
-#: ../plug-ins/common/png.c:1730
+#: ../plug-ins/common/png.c:1795
 msgid "Save comme_nt"
 msgstr "コメントを保存(_N)"
 
-#: ../plug-ins/common/png.c:1745
+#: ../plug-ins/common/png.c:1810
 msgid "Save color _values from transparent pixels"
 msgstr "透明ピクセルの色の値を保存(_V)"
 
-#: ../plug-ins/common/png.c:1758
+#: ../plug-ins/common/png.c:1823
 msgid "Co_mpression level:"
 msgstr "圧縮レベル(_M):"
 
-#: ../plug-ins/common/png.c:1878
+#: ../plug-ins/common/png.c:1943
 msgid "Could not load PNG defaults"
 msgstr "PNG のデフォルトが読み込めません"
 
@@ -5656,182 +5659,182 @@ msgstr ""
 "チェックしてない場合には極座標から直交座標への変換、チェックした場合には直交"
 "座標から極座標へ変換されます。"
 
-#: ../plug-ins/common/poppler.c:145
+#: ../plug-ins/common/poppler.c:147
 msgid "Portable Document Format"
 msgstr "PDF 形式"
 
-#: ../plug-ins/common/poppler.c:501
+#: ../plug-ins/common/poppler.c:503
 #, c-format
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/poppler.c:503 ../plug-ins/common/postscript.c:1099
+#: ../plug-ins/common/poppler.c:505 ../plug-ins/common/postscript.c:1100
 #, c-format
 msgid "%s-pages"
 msgstr "%s ページ"
 
-#: ../plug-ins/common/poppler.c:698
+#: ../plug-ins/common/poppler.c:701
 msgid "Import from PDF"
 msgstr "PDF 読み込み"
 
-#: ../plug-ins/common/poppler.c:703 ../plug-ins/common/postscript.c:3031
+#: ../plug-ins/common/poppler.c:706 ../plug-ins/common/postscript.c:3032
 msgid "_Import"
 msgstr "インポート(_I)"
 
-#: ../plug-ins/common/poppler.c:760
+#: ../plug-ins/common/poppler.c:767
 msgid "_Width (pixels):"
 msgstr "幅(_W) (ピクセル):"
 
-#: ../plug-ins/common/poppler.c:761
+#: ../plug-ins/common/poppler.c:768
 msgid "_Height (pixels):"
 msgstr "高さ(_H) (ピクセル):"
 
-#: ../plug-ins/common/poppler.c:764 ../plug-ins/common/poppler.c:765
+#: ../plug-ins/common/poppler.c:771 ../plug-ins/common/poppler.c:772
 msgid "_Resolution:"
 msgstr "解像度(_R):"
 
 #. Antialiasing
-#: ../plug-ins/common/poppler.c:779
+#: ../plug-ins/common/poppler.c:786
 msgid "A_ntialiasing"
 msgstr "アンチエイリアシング(_N)"
 
-#: ../plug-ins/common/postscript.c:587 ../plug-ins/common/postscript.c:679
+#: ../plug-ins/common/postscript.c:588 ../plug-ins/common/postscript.c:680
 msgid "PostScript document"
 msgstr "PostScript ドキュメント"
 
-#: ../plug-ins/common/postscript.c:606 ../plug-ins/common/postscript.c:695
+#: ../plug-ins/common/postscript.c:607 ../plug-ins/common/postscript.c:696
 msgid "Encapsulated PostScript image"
 msgstr "EPS 形式"
 
-#: ../plug-ins/common/postscript.c:626
+#: ../plug-ins/common/postscript.c:627
 msgid "PDF document"
 msgstr "PDF ドキュメント"
 
-#: ../plug-ins/common/postscript.c:1024
+#: ../plug-ins/common/postscript.c:1025
 #, c-format
 msgid "Could not interpret '%s'"
 msgstr "\"%s\" を解釈できません"
 
-#: ../plug-ins/common/postscript.c:1164
+#: ../plug-ins/common/postscript.c:1165
 msgid "PostScript save cannot handle images with alpha channels"
 msgstr "PostScript による保存はアルファチャンネルを取り扱えません"
 
-#: ../plug-ins/common/postscript.c:1691
+#: ../plug-ins/common/postscript.c:1692
 #, c-format
 msgid "Error starting ghostscript (%s)"
 msgstr "ghostscript 起動エラー (%s)"
 
-#: ../plug-ins/common/postscript.c:1721
+#: ../plug-ins/common/postscript.c:1722
 #, c-format
 msgid "Error starting ghostscript: %s"
 msgstr "ghostscript 起動エラー: %s"
 
-#: ../plug-ins/common/postscript.c:1885 ../plug-ins/common/tiff.c:888
+#: ../plug-ins/common/postscript.c:1886 ../plug-ins/common/tiff.c:888
 #, c-format
 msgid "Page %d"
 msgstr "ページ %d"
 
-#: ../plug-ins/common/postscript.c:2537 ../plug-ins/common/postscript.c:2670
-#: ../plug-ins/common/postscript.c:2822 ../plug-ins/common/postscript.c:2951
+#: ../plug-ins/common/postscript.c:2538 ../plug-ins/common/postscript.c:2671
+#: ../plug-ins/common/postscript.c:2823 ../plug-ins/common/postscript.c:2952
 #: ../plug-ins/common/sunras.c:1446 ../plug-ins/common/sunras.c:1554
 #: ../plug-ins/fits/fits.c:828 ../plug-ins/fits/fits.c:952
 msgid "Write error occurred"
 msgstr "書き出しエラー発生"
 
-#: ../plug-ins/common/postscript.c:3026
+#: ../plug-ins/common/postscript.c:3027
 msgid "Import from PostScript"
 msgstr "PostScript 読み込み"
 
 #. Rendering
-#: ../plug-ins/common/postscript.c:3062
+#: ../plug-ins/common/postscript.c:3068
 msgid "Rendering"
 msgstr "レンダリング"
 
 #. Resolution
-#: ../plug-ins/common/postscript.c:3078 ../plug-ins/common/svg.c:902
+#: ../plug-ins/common/postscript.c:3084 ../plug-ins/common/svg.c:902
 #: ../plug-ins/common/wmf.c:670 ../plug-ins/print/gimp_main_window.c:1104
 msgid "Resolution:"
 msgstr "解像度:"
 
-#: ../plug-ins/common/postscript.c:3108
+#: ../plug-ins/common/postscript.c:3114
 msgid "Pages:"
 msgstr "ページ:"
 
-#: ../plug-ins/common/postscript.c:3115
+#: ../plug-ins/common/postscript.c:3121
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr "読み込むページ (例: 1-4 あるいは 1,3,5-7)"
 
-#: ../plug-ins/common/postscript.c:3119
+#: ../plug-ins/common/postscript.c:3125
 #: ../plug-ins/common/spheredesigner.c:2621
 msgid "Layers"
 msgstr "レイヤー"
 
-#: ../plug-ins/common/postscript.c:3121
+#: ../plug-ins/common/postscript.c:3127
 msgid "Images"
 msgstr "画像"
 
-#: ../plug-ins/common/postscript.c:3124
+#: ../plug-ins/common/postscript.c:3130
 msgid "Open as"
 msgstr "新規に開く"
 
-#: ../plug-ins/common/postscript.c:3128
+#: ../plug-ins/common/postscript.c:3134
 msgid "Try Bounding Box"
 msgstr "境界枠を調べる"
 
 #. Colouring
-#: ../plug-ins/common/postscript.c:3141
+#: ../plug-ins/common/postscript.c:3147
 msgid "Coloring"
 msgstr "カラーリング"
 
-#: ../plug-ins/common/postscript.c:3145
+#: ../plug-ins/common/postscript.c:3151
 msgid "B/W"
 msgstr "白黒"
 
-#: ../plug-ins/common/postscript.c:3146 ../plug-ins/rcm/rcm_dialog.c:419
+#: ../plug-ins/common/postscript.c:3152 ../plug-ins/rcm/rcm_dialog.c:419
 msgid "Gray"
 msgstr "グレー"
 
-#: ../plug-ins/common/postscript.c:3147 ../plug-ins/common/xpm.c:468
+#: ../plug-ins/common/postscript.c:3153 ../plug-ins/common/xpm.c:468
 #: ../plug-ins/gimpressionist/color.c:48
 #: ../plug-ins/gimpressionist/general.c:151
 #: ../plug-ins/print/gimp_main_window.c:1416
 msgid "Color"
 msgstr "カラー"
 
-#: ../plug-ins/common/postscript.c:3148 ../plug-ins/fits/fits.c:1007
+#: ../plug-ins/common/postscript.c:3154 ../plug-ins/fits/fits.c:1007
 msgid "Automatic"
 msgstr "自動"
 
-#: ../plug-ins/common/postscript.c:3158
+#: ../plug-ins/common/postscript.c:3164
 msgid "Text antialiasing"
 msgstr "文字アンチエイリアシング"
 
-#: ../plug-ins/common/postscript.c:3163 ../plug-ins/common/postscript.c:3175
+#: ../plug-ins/common/postscript.c:3169 ../plug-ins/common/postscript.c:3181
 msgid "Weak"
 msgstr "少し"
 
-#: ../plug-ins/common/postscript.c:3164 ../plug-ins/common/postscript.c:3176
+#: ../plug-ins/common/postscript.c:3170 ../plug-ins/common/postscript.c:3182
 msgid "Strong"
 msgstr "強く"
 
-#: ../plug-ins/common/postscript.c:3170
+#: ../plug-ins/common/postscript.c:3176
 msgid "Graphic antialiasing"
 msgstr "グラフィックアンチエイリアシング"
 
-#: ../plug-ins/common/postscript.c:3248
+#: ../plug-ins/common/postscript.c:3254
 msgid "Save as PostScript"
 msgstr "PostScript 形式で保存"
 
 #. Image Size
-#: ../plug-ins/common/postscript.c:3279
+#: ../plug-ins/common/postscript.c:3285
 msgid "Image Size"
 msgstr "画像サイズ"
 
-#: ../plug-ins/common/postscript.c:3328
+#: ../plug-ins/common/postscript.c:3334
 msgid "_Keep aspect ratio"
 msgstr "縦横比を維持(_K)"
 
-#: ../plug-ins/common/postscript.c:3334
+#: ../plug-ins/common/postscript.c:3340
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
@@ -5840,36 +5843,36 @@ msgstr ""
 "されて出力されます。"
 
 #. Unit
-#: ../plug-ins/common/postscript.c:3343
+#: ../plug-ins/common/postscript.c:3349
 msgid "Unit"
 msgstr "単位"
 
-#: ../plug-ins/common/postscript.c:3347
+#: ../plug-ins/common/postscript.c:3353
 msgid "_Inch"
 msgstr "インチ(_I)"
 
-#: ../plug-ins/common/postscript.c:3348
+#: ../plug-ins/common/postscript.c:3354
 msgid "_Millimeter"
 msgstr "ミリメートル(_M)"
 
 #. Format
-#: ../plug-ins/common/postscript.c:3374
+#: ../plug-ins/common/postscript.c:3380
 msgid "Output"
 msgstr "出力"
 
-#: ../plug-ins/common/postscript.c:3380
+#: ../plug-ins/common/postscript.c:3386
 msgid "_PostScript level 2"
 msgstr "_PostScript レベル 2"
 
-#: ../plug-ins/common/postscript.c:3389
+#: ../plug-ins/common/postscript.c:3395
 msgid "_Encapsulated PostScript"
 msgstr "_EPS 形式"
 
-#: ../plug-ins/common/postscript.c:3398
+#: ../plug-ins/common/postscript.c:3404
 msgid "P_review"
 msgstr "プレビュー(_R)"
 
-#: ../plug-ins/common/postscript.c:3419
+#: ../plug-ins/common/postscript.c:3425
 msgid "Preview _size:"
 msgstr "プレビューサイズ(_S):"
 
@@ -6764,7 +6767,7 @@ msgstr "ファイルを保存"
 
 #: ../plug-ins/common/spheredesigner.c:2522
 msgid "Sphere Designer"
-msgstr "球面デザイナー"
+msgstr "球面デザイナ"
 
 #: ../plug-ins/common/spheredesigner.c:2653
 msgid "Properties"
@@ -6848,7 +6851,7 @@ msgstr "球体を描画しています"
 
 #: ../plug-ins/common/spheredesigner.c:2998
 msgid "Sphere _Designer..."
-msgstr "球面デザイナー(_D)..."
+msgstr "球面デザイナ(_D)..."
 
 #: ../plug-ins/common/spheredesigner.c:3052
 msgid "Region selected for plug-in is empty"
@@ -10321,7 +10324,7 @@ msgstr "ファイル容量のプレビューを有効にします。"
 
 #: ../plug-ins/jpeg/jpeg-save.c:774
 msgid "Show _preview in image window"
-msgstr "画像ウインドウ中でプレビュー(_P)"
+msgstr "画像ウィンドウ中でプレビュー(_P)"
 
 #: ../plug-ins/jpeg/jpeg-save.c:786
 msgid "_Advanced Options"
@@ -11432,78 +11435,78 @@ msgstr ""
 msgid "Transferring data from scanner/camera"
 msgstr ""
 
-#: ../plug-ins/uri/uri.c:116 ../plug-ins/uri/uri.c:137
+#: ../plug-ins/uri/uri.c:117 ../plug-ins/uri/uri.c:138
 msgid "URI"
 msgstr "URI"
 
-#: ../plug-ins/uri/uri-backend-gnomevfs.c:103
+#: ../plug-ins/uri/uri-backend-gnomevfs.c:148
 #, c-format
 msgid "Downloading %s of image data..."
 msgstr "%s の画像データをダウンロードしています..."
 
-#: ../plug-ins/uri/uri-backend-gnomevfs.c:104
-#: ../plug-ins/uri/uri-backend-wget.c:321
+#: ../plug-ins/uri/uri-backend-gnomevfs.c:149
+#: ../plug-ins/uri/uri-backend-wget.c:324
 #, c-format
 msgid "Downloaded %s of image data"
 msgstr "%s の画像データをダウンロードしました"
 
-#: ../plug-ins/uri/uri-backend-gnomevfs.c:122
+#: ../plug-ins/uri/uri-backend-gnomevfs.c:167
 #, c-format
 msgid "Uploading %s of image data..."
 msgstr "%s の画像データをアップロードしています..."
 
-#: ../plug-ins/uri/uri-backend-gnomevfs.c:123
+#: ../plug-ins/uri/uri-backend-gnomevfs.c:168
 #, c-format
 msgid "Uploaded %s of image data"
 msgstr "%s の画像データをアップロードしました"
 
-#: ../plug-ins/uri/uri-backend-gnomevfs.c:192
-#: ../plug-ins/uri/uri-backend-wget.c:170
+#: ../plug-ins/uri/uri-backend-gnomevfs.c:238
+#: ../plug-ins/uri/uri-backend-wget.c:173
 msgid "Connecting to server"
 msgstr "サーバに接続しています"
 
-#: ../plug-ins/uri/uri-backend-gnomevfs.c:251
+#: ../plug-ins/uri/uri-backend-gnomevfs.c:297
 #, c-format
 msgid "Failed to read %s from '%s': %s"
 msgstr "ファイル '%2$s' からの %1$s の読み込みに失敗: %3$s"
 
-#: ../plug-ins/uri/uri-backend-gnomevfs.c:300
+#: ../plug-ins/uri/uri-backend-gnomevfs.c:346
 #, c-format
 msgid "Failed to write %s to '%s': %s"
 msgstr "ファイル '%2$s' へ %1$s の書き込みに失敗: %3$s"
 
-#: ../plug-ins/uri/uri-backend-wget.c:139
-#: ../plug-ins/uri/uri-backend-wget.c:159
-#: ../plug-ins/uri/uri-backend-wget.c:176
-#: ../plug-ins/uri/uri-backend-wget.c:199
-#: ../plug-ins/uri/uri-backend-wget.c:228
+#: ../plug-ins/uri/uri-backend-wget.c:142
+#: ../plug-ins/uri/uri-backend-wget.c:162
+#: ../plug-ins/uri/uri-backend-wget.c:179
+#: ../plug-ins/uri/uri-backend-wget.c:202
+#: ../plug-ins/uri/uri-backend-wget.c:231
 #, c-format
 msgid "wget exited abnormally on URI '%s'"
 msgstr "URI '%s' で wget が異常終了しました"
 
 #. The third line is "Connecting to..."
-#: ../plug-ins/uri/uri-backend-wget.c:167
+#: ../plug-ins/uri/uri-backend-wget.c:170
 #, c-format
 msgid "(timeout is %s seconds)"
 msgstr "(%s 秒でタイムアウト)"
 
 #. The fourth line is either the network request or an error
-#: ../plug-ins/uri/uri-backend-wget.c:194
+#: ../plug-ins/uri/uri-backend-wget.c:197
 msgid "Opening URI"
 msgstr "URI を開いています"
 
-#: ../plug-ins/uri/uri-backend-wget.c:205
-#: ../plug-ins/uri/uri-backend-wget.c:238
+#: ../plug-ins/uri/uri-backend-wget.c:208
+#: ../plug-ins/uri/uri-backend-wget.c:241
 #, c-format
 msgid "A network error occurred: %s"
 msgstr "ネットワークエラー発生: %s"
 
-#: ../plug-ins/uri/uri-backend-wget.c:278
+#: ../plug-ins/uri/uri-backend-wget.c:281
 #, c-format
 msgid "Downloading %s of image data"
 msgstr "%s の画像データをダウンロードしています"
 
-#: ../plug-ins/uri/uri-backend-wget.c:283
+#: ../plug-ins/uri/uri-backend-wget.c:286
 msgid "Downloading unknown amount of image data"
 msgstr "容量不明の画像データをダウンロードしています"
 
@@ -11640,6 +11643,9 @@ msgstr "エラー: XJT プロパティファイル %s が読めません。"
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "エラー: XJT プロパティファイル %s が空です。"
+
+#~ msgid "AlienMap2"
+#~ msgstr "エイリアンマップ 2"
 
 #~ msgid "TWAIN (Dump)..."
 #~ msgstr "TWAIN (書き出し)..."
@@ -12991,9 +12997,6 @@ msgstr "エラー: XJT プロパティファイル %s が空です。"
 #~ msgid "AlienMap: Transforming..."
 #~ msgstr "エイリアンマップ: 変換しています..."
 
-#~ msgid "AlienMap"
-#~ msgstr "エイリアンマップ"
-
 #~ msgid "Change intensity of the red channel"
 #~ msgstr "赤チャンネルの強度を変える"
 
@@ -13497,7 +13500,7 @@ msgstr "エラー: XJT プロパティファイル %s が空です。"
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Colors/_Filter Pack..."
-#~ msgstr "<Image>/フィルタ/色/フィルターパック..."
+#~ msgstr "<Image>/フィルタ/色/フィルタパック..."
 
 #~ msgid "Display"
 #~ msgstr "ディスプレイ"
@@ -13773,7 +13776,7 @@ msgstr "エラー: XJT プロパティファイル %s が空です。"
 #~ msgstr "URL:"
 
 #~ msgid "Window:"
-#~ msgstr "ウインドウ:"
+#~ msgstr "ウィンドウ:"
 
 #~ msgid "Current"
 #~ msgstr "現在"
@@ -14014,7 +14017,7 @@ msgstr "エラー: XJT プロパティファイル %s が空です。"
 #~ msgstr "完了"
 
 #~ msgid "Enter Gfig Entry Name"
-#~ msgstr "Gfig エントリー名を入力"
+#~ msgstr "Gfig エントリ名を入力"
 
 #~ msgid "Load Gfig obj"
 #~ msgstr "Gfig オブジェクト読み込み"
@@ -14935,7 +14938,7 @@ msgstr "エラー: XJT プロパティファイル %s が空です。"
 #~ msgstr "背景に切り取られたレイヤーを結合"
 
 #~ msgid "Apply filter on Layer(s)"
-#~ msgstr "レイヤーにフィルターを適用"
+#~ msgstr "レイヤーにフィルタを適用"
 
 #~ msgid "Duplicate Layer(s)"
 #~ msgstr "レイヤーを複製する"
