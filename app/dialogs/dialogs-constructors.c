@@ -242,6 +242,10 @@ dialogs_dockable_constructor (GimpDialogFactory      *factory,
                                     entry->stock_id, entry->help_id);
       gtk_container_add (GTK_CONTAINER (dockable), widget);
       gtk_widget_show (widget);
+
+      /* EEK */
+      g_object_set_data (G_OBJECT (dockable), "gimp-dialog-identifier",
+                         entry->identifier);
     }
 
   return dockable;

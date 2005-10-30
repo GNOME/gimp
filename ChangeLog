@@ -1,5 +1,28 @@
 2005-10-30  Michael Natterer  <mitch@gimp.org>
 
+	Fixed bug #316395:
+
+	* app/actions/dialogs-actions.c (dialogs_dockable_actions)
+	* app/actions/quick-mask-actions.c (quick_mask_toggle_actions):
+	added tooltips to action entries.
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_new): use
+	gimp_widget_set_accel_help() to set the tooltip so it contains
+	the accelerator.
+
+	* app/dialogs/dialogs-constructors.c (dialogs_dockable_constructor):
+	attach the dialog's identifier to the dockable widget (hack).
+
+	* app/widgets/gimpdockbook.c (gimp_dockbook_get_tab_widget): use
+	the attached identifier to find the action for this dockable in
+	the dock's UI manager (HACK HACK). Use the found action to set
+	a tooltip with accelerator.
+
+	* app/widgets/gimpwidgets-utils.c (gimp_widget_set_accel_help):
+	fixed bug in fallback code what should never be used.
+
+2005-10-30  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/dialogs-actions.c (dialogs_dockable_actions): removed
 	shift+ctrl+t accelerator from dialogs-tool-options because it's
 	already taken by view-show-guides. Fixes bug #320196.

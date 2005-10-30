@@ -1018,7 +1018,7 @@ gimp_widget_set_accel_help (GtkWidget *widget,
       gchar *help_id;
 
       g_object_get (action, "tooltip", &tooltip, NULL);
-      help_id = g_object_get_qdata (G_OBJECT (tooltip), GIMP_HELP_ID);
+      help_id = g_object_get_qdata (G_OBJECT (action), GIMP_HELP_ID);
 
       gimp_help_set_help_data (widget, tooltip, help_id);
 

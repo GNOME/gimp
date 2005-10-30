@@ -577,6 +577,7 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
   GtkWidget         *inner_table;
   GtkWidget         *image;
   GdkScreen         *screen;
+  GtkAction         *action;
   gint               image_width, image_height;
   gint               n_width, n_height;
   gint               s_width, s_height;
@@ -846,11 +847,12 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
 
   gimp_help_set_help_data (shell->vrule, NULL, GIMP_HELP_IMAGE_WINDOW_RULER);
 
-  /* Workaround for GTK+ Wintab bug on Windows when creating guides by
-   * dragging from the rulers. See bug #168516. */
+  /*  Workaround for GTK+ Wintab bug on Windows when creating guides by
+   *  dragging from the rulers. See bug #168516.
+   */
   gtk_widget_set_extension_events (shell->hrule, GDK_EXTENSION_EVENTS_ALL);
   gtk_widget_set_extension_events (shell->vrule, GDK_EXTENSION_EVENTS_ALL);
-  
+
   /*  the canvas  */
   gtk_widget_set_size_request (shell->canvas, n_width, n_height);
   gtk_widget_set_events (shell->canvas, GIMP_DISPLAY_SHELL_CANVAS_EVENT_MASK);
@@ -937,9 +939,14 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
   gtk_container_add (GTK_CONTAINER (shell->quick_mask_button), image);
   gtk_widget_show (image);
 
-  gimp_help_set_help_data (shell->quick_mask_button,
-                           _("Toggle Quick Mask"),
-                           GIMP_HELP_IMAGE_WINDOW_QUICK_MASK_BUTTON);
+  action = gimp_ui_manager_find_action (shell->menubar_manager,
+                                        "quick-mask", "quick-mask-toggle");
+  if (action)
+    gimp_widget_set_accel_help (shell->quick_mask_button, action);
+  else
+    gimp_help_set_help_data (shell->quick_mask_button,
+                             _("Toggle Quick Mask"),
+                             GIMP_HELP_IMAGE_WINDOW_QUICK_MASK_BUTTON);
 
   g_signal_connect (shell->quick_mask_button, "toggled",
                     G_CALLBACK (gimp_display_shell_quick_mask_toggled),

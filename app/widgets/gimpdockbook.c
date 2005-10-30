@@ -33,12 +33,15 @@
 #include "core/gimpmarshal.h"
 
 #include "gimpdnd.h"
-#include "gimpdock.h"
 #include "gimpdockable.h"
 #include "gimpdockbook.h"
 #include "gimphelp-ids.h"
+#include "gimpimagedock.h"
 #include "gimpmenufactory.h"
+#include "gimpstringaction.h"
+#include "gimpuimanager.h"
 #include "gimpview.h"
+#include "gimpwidgets-utils.h"
 
 
 #define DEFAULT_TAB_BORDER     0
@@ -407,6 +410,7 @@ gimp_dockbook_get_tab_widget (GimpDockbook *dockbook,
 {
   GtkWidget   *tab_widget;
   GtkIconSize  tab_size = DEFAULT_TAB_ICON_SIZE;
+  GtkAction   *action   = NULL;
 
   gtk_widget_style_get (GTK_WIDGET (dockbook),
                         "tab-icon-size", &tab_size,
@@ -428,7 +432,48 @@ gimp_dockbook_get_tab_widget (GimpDockbook *dockbook,
       tab_widget = event_box;
     }
 
-  gimp_help_set_help_data (tab_widget, dockable->blurb, dockable->help_id);
+  /* EEK */
+  if (GIMP_IS_IMAGE_DOCK (dockbook->dock))
+    {
+      const gchar *dialog_id;
+
+      dialog_id = g_object_get_data (G_OBJECT (dockable),
+                                     "gimp-dialog-identifier");
+
+      if (dialog_id)
+        {
+          GimpActionGroup *group;
+
+          group = gimp_ui_manager_get_action_group
+            (GIMP_IMAGE_DOCK (dockbook->dock)->ui_manager, "dialogs");
+
+          if (group)
+            {
+              GList *actions;
+              GList *list;
+
+              actions = gtk_action_group_list_actions (GTK_ACTION_GROUP (group));
+
+              for (list = actions; list; list = g_list_next (list))
+                {
+                  if (GIMP_IS_STRING_ACTION (list->data) &&
+                      strstr (GIMP_STRING_ACTION (list->data)->value,
+                              dialog_id))
+                    {
+                      action = list->data;
+                      break;
+                    }
+                }
+
+              g_list_free (actions);
+            }
+        }
+    }
+
+  if (action)
+    gimp_widget_set_accel_help (tab_widget, action);
+  else
+    gimp_help_set_help_data (tab_widget, dockable->blurb, dockable->help_id);
 
   g_object_set_data (G_OBJECT (tab_widget), "gimp-dockable", dockable);
 
