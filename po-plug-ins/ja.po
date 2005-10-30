@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp gimp-2-2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-17 19:56+0900\n"
-"PO-Revision-Date: 2005-09-10 19:00+0900\n"
+"POT-Creation-Date: 2005-10-30 12:38+0900\n"
+"PO-Revision-Date: 2005-10-26 23:00+0900\n"
 "Last-Translator: <kano@na.rim.or.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -1734,7 +1734,7 @@ msgstr "先チャンネル:"
 
 #: ../plug-ins/common/CML_explorer.c:1459
 msgid "Copy parameters"
-msgstr "コピーパラメーター"
+msgstr "コピーパラメータ"
 
 #: ../plug-ins/common/CML_explorer.c:1468
 msgid "Selective Load Settings"
@@ -2834,7 +2834,7 @@ msgid "Smoo_thing"
 msgstr "スムージング(_T)"
 
 #. The antialiasing toggle
-#: ../plug-ins/common/curve_bend.c:1358 ../plug-ins/common/gqbist.c:823
+#: ../plug-ins/common/curve_bend.c:1358 ../plug-ins/common/gqbist.c:821
 #: ../plug-ins/common/mosaic.c:535 ../plug-ins/common/ripple.c:510
 msgid "_Antialiasing"
 msgstr "アンチエイリアシング(_A)"
@@ -3474,7 +3474,7 @@ msgid "Composing Images..."
 msgstr "画像合成中..."
 
 #: ../plug-ins/common/film.c:438 ../plug-ins/common/guillotine.c:183
-#: ../plug-ins/helpbrowser/dialog.c:525
+#: ../plug-ins/helpbrowser/dialog.c:534
 msgid "Untitled"
 msgstr "名称未設定"
 
@@ -3629,18 +3629,16 @@ msgid "_Filter Pack..."
 msgstr "フィルタパック(_F)..."
 
 #: ../plug-ins/common/fp.c:376
-#, fuzzy
 msgid "FP can only be used on RGB images."
-msgstr "RGB 描画対象のみ操作できます。"
+msgstr "フィルタパックは RGB 画像にのみ使えます。"
 
 #: ../plug-ins/common/fp.c:386
 msgid "FP can only be run interactively."
-msgstr ""
+msgstr "フィルタパックは対話的にのみ動作します。"
 
 #: ../plug-ins/common/fp.c:404
-#, fuzzy
 msgid "Applying Filter Pack..."
-msgstr "フィルターパックを適用しています..."
+msgstr "フィルタパックを適用しています..."
 
 #: ../plug-ins/common/fp.c:524
 msgid "Original:"
@@ -4148,23 +4146,23 @@ msgstr "タイル幅(_W):"
 msgid "Tile _height:"
 msgstr "タイル高(_H):"
 
-#: ../plug-ins/common/gqbist.c:415
+#: ../plug-ins/common/gqbist.c:409
 msgid "_Qbist..."
 msgstr "Qビスト(_Q)..."
 
-#: ../plug-ins/common/gqbist.c:514
+#: ../plug-ins/common/gqbist.c:510
 msgid "Qbist ..."
 msgstr "Qビスト..."
 
-#: ../plug-ins/common/gqbist.c:695
+#: ../plug-ins/common/gqbist.c:693
 msgid "Load QBE file"
 msgstr "QBE ファイル読み込み"
 
-#: ../plug-ins/common/gqbist.c:733
+#: ../plug-ins/common/gqbist.c:731
 msgid "Save (middle transform) as QBE file"
 msgstr "変形経過を QBE ファイルとして保存"
 
-#: ../plug-ins/common/gqbist.c:781
+#: ../plug-ins/common/gqbist.c:779
 msgid "G-Qbist"
 msgstr "G-Qビスト"
 
@@ -6809,7 +6807,7 @@ msgstr "ファイルを保存"
 
 #: ../plug-ins/common/spheredesigner.c:2481
 msgid "Sphere Designer"
-msgstr "球面デザイナー"
+msgstr "球面デザイナ"
 
 #: ../plug-ins/common/spheredesigner.c:2518
 msgid "Update _Preview"
@@ -6901,7 +6899,7 @@ msgstr "球体を描画しています..."
 
 #: ../plug-ins/common/spheredesigner.c:2979
 msgid "Sphere _Designer..."
-msgstr "球面デザイナー(_D)..."
+msgstr "球面デザイナ(_D)..."
 
 #: ../plug-ins/common/spread.c:99
 msgid "Sp_read..."
@@ -6921,11 +6919,11 @@ msgstr "拡散量"
 
 #: ../plug-ins/common/struc.c:1146
 msgid "_Apply Canvas..."
-msgstr "キャンパス地(_A)..."
+msgstr "キャンバス地(_A)..."
 
 #: ../plug-ins/common/struc.c:1227
 msgid "Applying Canvas..."
-msgstr "キャンパス地を適用しています..."
+msgstr "キャンバス地を適用しています..."
 
 #: ../plug-ins/common/struc.c:1264
 msgid "Apply Canvas"
@@ -12933,7 +12931,7 @@ msgstr "エラー: XJT プロパティファイル %s が空です。"
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Colors/_Filter Pack..."
-#~ msgstr "<Image>/フィルタ/色/フィルターパック..."
+#~ msgstr "<Image>/フィルタ/色/フィルタパック..."
 
 #~ msgid "Display"
 #~ msgstr "ディスプレイ"
@@ -13471,7 +13469,7 @@ msgstr "エラー: XJT プロパティファイル %s が空です。"
 #~ msgstr "完了"
 
 #~ msgid "Enter Gfig Entry Name"
-#~ msgstr "Gfig エントリー名を入力"
+#~ msgstr "Gfig エントリ名を入力"
 
 #~ msgid "Load Gfig obj"
 #~ msgstr "Gfig オブジェクト読み込み"
@@ -14398,7 +14396,7 @@ msgstr "エラー: XJT プロパティファイル %s が空です。"
 #~ msgstr "背景に切り取られたレイヤーを結合"
 
 #~ msgid "Apply filter on Layer(s)"
-#~ msgstr "レイヤーにフィルターを適用"
+#~ msgstr "レイヤーにフィルタを適用"
 
 #~ msgid "Duplicate Layer(s)"
 #~ msgstr "レイヤーを複製する"

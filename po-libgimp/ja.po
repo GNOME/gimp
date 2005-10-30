@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp gimp-2-2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-17 19:54+0900\n"
-"PO-Revision-Date: 2005-09-10 19:00+0900\n"
+"POT-Creation-Date: 2005-10-30 12:36+0900\n"
+"PO-Revision-Date: 2005-10-26 23:00+0900\n"
 "Last-Translator: <kano@na.rim.or.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -273,7 +273,7 @@ msgstr "RGB-アルファ"
 
 #: ../libgimpbase/gimpbaseenums.c:128
 msgid "Grayscale-alpha"
-msgstr "グレイスケール-アルファ"
+msgstr "グレースケール-アルファ"
 
 #: ../libgimpbase/gimpbaseenums.c:129
 msgid "Indexed"
@@ -698,7 +698,7 @@ msgstr "コントラスト"
 
 #: ../modules/cdisplay_highcontrast.c:352
 msgid "Contrast C_ycles:"
-msgstr "コントラストサイクル(_y):"
+msgstr "コントラストサイクル(_Y):"
 
 #: ../modules/cdisplay_proof.c:45 ../modules/cdisplay_proof.c:440
 msgid "Perceptual"
@@ -706,11 +706,11 @@ msgstr "鮮かさ重視"
 
 #: ../modules/cdisplay_proof.c:47 ../modules/cdisplay_proof.c:442
 msgid "Relative Colorimetric"
-msgstr "相対カラーメトリック"
+msgstr "相対色距離"
 
 #: ../modules/cdisplay_proof.c:51 ../modules/cdisplay_proof.c:446
 msgid "Absolute Colorimetric"
-msgstr "絶対カラーメトリック"
+msgstr "絶対色距離"
 
 #: ../modules/cdisplay_proof.c:138
 msgid "Color proof filter using ICC color profile"

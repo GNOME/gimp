@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-2-2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-17 20:01+0900\n"
-"PO-Revision-Date: 2005-09-10 19:00+0900\n"
+"POT-Creation-Date: 2005-10-30 12:42+0900\n"
+"PO-Revision-Date: 2005-10-26 23:00+0900\n"
 "Last-Translator: <kano@na.rim.or.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -198,7 +198,7 @@ msgid ""
 "                           The procedure to process batch commands with.\n"
 msgstr ""
 "  --batch-interpreter <procedure>\n"
-"                           バッチコマンドととともに起動するプロシージャ。\n"
+"                           バッチコマンドとともに起動するプロシージャ。\n"
 
 #: ../app/main.c:534
 msgid "  -b, --batch <commands>   Process commands in batch mode.\n"
@@ -345,8 +345,9 @@ msgstr "パターン"
 msgid "Plug-Ins"
 msgstr "プラグイン"
 
-#: ../app/actions/actions.c:166
-msgid "QuickMask"
+#: ../app/actions/actions.c:166 ../app/core/core-enums.c:1040
+#: ../app/core/gimpchannel.c:383
+msgid "Quick Mask"
 msgstr "クイックマスク"
 
 #: ../app/actions/actions.c:169
@@ -813,11 +814,11 @@ msgstr "ナビゲーション(_V)"
 
 #: ../app/actions/dialogs-actions.c:110
 msgid "Undo _History"
-msgstr "取り消し履歴(_h)"
+msgstr "取り消し履歴(_H)"
 
 #: ../app/actions/dialogs-actions.c:115
 msgid "Colo_rs"
-msgstr "色(_r)"
+msgstr "色(_R)"
 
 #: ../app/actions/dialogs-actions.c:120
 msgid "_Brushes"
@@ -861,7 +862,7 @@ msgstr "ツール(_O)"
 
 #: ../app/actions/dialogs-actions.c:170
 msgid "Error Co_nsole"
-msgstr "エラーコンソール<(_N)"
+msgstr "エラーコンソール(_N)"
 
 #: ../app/actions/dialogs-actions.c:180
 msgid "_Preferences"
@@ -2442,7 +2443,7 @@ msgstr "全フィルタリセット"
 
 #: ../app/actions/plug-in-commands.c:207
 msgid "Do you really want to reset all filters to default values?"
-msgstr "本当に全てのフィルターを初期値に戻してよろしいですか?"
+msgstr "本当に全てのフィルタを初期値に戻してよろしいですか?"
 
 #: ../app/actions/qmask-actions.c:42
 msgid "Quick Mask Menu"
@@ -3089,7 +3090,7 @@ msgstr "ガイドにスナップ(_A)"
 
 #: ../app/actions/view-actions.c:149
 msgid "S_how Grid"
-msgstr "グリッドを表示(_H)"
+msgstr "グリッドを表示する(_H)"
 
 #: ../app/actions/view-actions.c:155
 msgid "Sna_p to Grid"
@@ -3268,8 +3269,8 @@ msgid ""
 msgstr ""
 "スワップファイルを開けません。メモリが不足してもスワップファイルが使えなくな"
 "ります。画像の構成要素が欠ける可能性があります。作業中のものを別のファイル名"
-"で保存してから、 GIMP を再起動して初期設定のスワップディレトリの場所を確認し"
-"てください。"
+"で保存してから、 GIMP を再起動して初期設定のスワップディレクトリの場所を確認"
+"してください。"
 
 #: ../app/config/gimpconfig-deserialize.c:100
 #, c-format
@@ -3669,15 +3670,15 @@ msgid ""
 "with the \"View->Show Menubar\" command."
 msgstr ""
 "有効にすると、デフォルトでメニューバーを表示します。これは \"表示->メニュー"
-"バー\" コマンドでも切り替えられます。"
+"バーを表示する\" コマンドでも切り替えられます。"
 
 #: ../app/config/gimprc-blurbs.h:292
 msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
 msgstr ""
-"有効にすると、デフォルトでものさしが表示されます。これは \"表示->ものさし\" "
-"コマンドでも切り替えられます。"
+"有効にすると、デフォルトでものさしが表示されます。これは \"表示->ものさしを表"
+"示する\" コマンドでも切り替えられます。"
 
 #: ../app/config/gimprc-blurbs.h:296
 msgid ""
@@ -3685,7 +3686,7 @@ msgid ""
 "toggled with the \"View->Show Scrollbars\" command."
 msgstr ""
 "オンの場合、デフォルトでスクロールバーを表示します。これは \"表示->スクロール"
-"バー\" コマンドでも切り替えられます。"
+"バーを表示する\" コマンドでも切り替えられます。"
 
 #: ../app/config/gimprc-blurbs.h:300
 msgid ""
@@ -3693,15 +3694,15 @@ msgid ""
 "with the \"View->Show Statusbar\" command."
 msgstr ""
 "オンの場合、デフォルトでステータスバーを表示します。これは \"表示->ステータス"
-"バー\" コマンドでも切り替えられます。"
+"バーを表示する\" コマンドでも切り替えられます。"
 
 #: ../app/config/gimprc-blurbs.h:304
 msgid ""
 "When enabled, the selection is visible by default. This can also be toggled "
 "with the \"View->Show Selection\" command."
 msgstr ""
-"オンの場合、デフォルトで選択領域を表示します。これは \"表示->選択領域\" コマ"
-"ンドでも切り替えられます。"
+"オンの場合、デフォルトで選択領域を表示します。これは \"表示->選択領域を表示す"
+"る\" コマンドでも切り替えられます。"
 
 #: ../app/config/gimprc-blurbs.h:308
 msgid ""
@@ -3709,27 +3710,27 @@ msgid ""
 "toggled with the \"View->Show Layer Boundary\" command."
 msgstr ""
 "オンの場合、デフォルトでレイヤー境界を表示します。これは \"表示->レイヤー境界"
-"\" コマンドでも切り替えられます。"
+"を表示する\" コマンドでも切り替えられます。"
 
 #: ../app/config/gimprc-blurbs.h:312
 msgid ""
 "When enabled, the guides are visible by default. This can also be toggled "
 "with the \"View->Show Guides\" command."
 msgstr ""
-"オンの場合、デフォルトでガイドを表示します。これは \"表示->ガイド\" コマンド"
-"でも切り替えられます。"
+"オンの場合、デフォルトでガイドを表示します。これは \"表示->ガイドを表示する"
+"\" コマンドでも切り替えられます。"
 
 #: ../app/config/gimprc-blurbs.h:316
 msgid ""
 "When enabled, the grid is visible by default. This can also be toggled with "
 "the \"View->Show Grid\" command."
 msgstr ""
-"オンの場合、デフォルトでグリッドを表示します。これは \"表示->グリッド\" コマ"
-"ンドでも切り替えられます。"
+"オンの場合、デフォルトでグリッドを表示します。これは \"表示->グリッドを表示す"
+"る\" コマンドでも切り替えられます。"
 
 #: ../app/config/gimprc-blurbs.h:320
 msgid "Enable to display a handy GIMP tip on startup."
-msgstr "起動時にGIMPの技を表示します。"
+msgstr "起動時に GIMP の技を表示します。"
 
 #: ../app/config/gimprc-blurbs.h:323
 msgid "Enable to display tooltips."
@@ -3835,7 +3836,7 @@ msgstr "画像内の透明部分の表示方法について設定します。"
 
 #: ../app/config/gimprc-blurbs.h:391
 msgid "Sets the size of the checkerboard used to display transparency."
-msgstr "透明部分の表示に使うチェッカーボードの大きさを設定します。"
+msgstr "透明部分の表示に使う市松模様の大きさを設定します。"
 
 #: ../app/config/gimprc-blurbs.h:394
 msgid ""
@@ -4092,7 +4093,7 @@ msgstr "描画ツールを用いてストローク"
 
 #: ../app/core/core-enums.c:498
 msgid "Miter"
-msgstr "面とり"
+msgstr "斜め継ぎ"
 
 #: ../app/core/core-enums.c:499 ../app/core/core-enums.c:529
 msgid "Round"
@@ -4100,7 +4101,7 @@ msgstr "丸め"
 
 #: ../app/core/core-enums.c:500
 msgid "Bevel"
-msgstr "ベベル"
+msgstr "面取り"
 
 #: ../app/core/core-enums.c:528
 msgid "Butt"
@@ -4285,10 +4286,6 @@ msgstr "レイヤーの統合"
 #: ../app/core/core-enums.c:1039
 msgid "Merge vectors"
 msgstr "ベクタの統合"
-
-#: ../app/core/core-enums.c:1040 ../app/core/gimpchannel.c:383
-msgid "Quick Mask"
-msgstr "クイックマスク"
 
 #: ../app/core/core-enums.c:1041 ../app/core/core-enums.c:1070
 #: ../app/core/gimpimage-grid.c:59 ../app/dialogs/grid-dialog.c:144
@@ -6588,11 +6585,11 @@ msgstr "入力機器の設定をデフォルトに戻す(_R)"
 
 #: ../app/dialogs/preferences-dialog.c:2075
 msgid "Additional Input Controllers"
-msgstr "入力コントローラーの追加"
+msgstr "入力コントローラの追加"
 
 #: ../app/dialogs/preferences-dialog.c:2078
 msgid "Input Controllers"
-msgstr "入力コントローラー"
+msgstr "入力コントローラ"
 
 #: ../app/dialogs/preferences-dialog.c:2119
 #: ../app/dialogs/preferences-dialog.c:2122
@@ -7136,12 +7133,12 @@ msgstr "ツールオプションを保存しておくためのサブディレク
 #: ../app/dialogs/user-install-dialog.c:289
 msgid "This folder is used to store parameter files for the Curves tool."
 msgstr ""
-"カーブツールのパラメタファイルを保存しておくためのサブディレクトリです。"
+"カーブツールのパラメータファイルを保存しておくためのサブディレクトリです。"
 
 #: ../app/dialogs/user-install-dialog.c:294
 msgid "This folder is used to store parameter files for the Levels tool."
 msgstr ""
-"レベルツールのパラメタファイルを保存しておくためのサブディレクトリです。"
+"レベルツールのパラメータファイルを保存しておくためのサブディレクトリです。"
 
 #: ../app/dialogs/user-install-dialog.c:390
 msgid "Installation successful.  Click \"Continue\" to proceed."
@@ -7394,11 +7391,11 @@ msgstr "暗い市松模様の色"
 msgid "Custom color"
 msgstr "カスタムカラー"
 
-#: ../app/display/gimpdisplayshell.c:943
+#: ../app/display/gimpdisplayshell.c:948
 msgid "Zoom image when window size changes"
 msgstr "ウィンドウサイズ変更時に画像をズーム"
 
-#: ../app/display/gimpdisplayshell.c:963
+#: ../app/display/gimpdisplayshell.c:968
 msgid "Toggle Quick Mask"
 msgstr "クイックマスクの切り替え"
 
@@ -8845,7 +8842,7 @@ msgstr "定規"
 
 #: ../app/tools/gimpmeasuretool.c:119
 msgid "Measure distances and angles"
-msgstr "距離と角度を測ります"
+msgstr "距離と角度を測る"
 
 #: ../app/tools/gimpmeasuretool.c:120
 msgid "_Measure"
@@ -8983,7 +8980,7 @@ msgstr "遠近法"
 
 #: ../app/tools/gimpperspectivetool.c:82
 msgid "Change perspective of the layer or selection"
-msgstr "レイヤーや選択領域の遠近観を変更します"
+msgstr "レイヤーや選択領域の遠近観を変更する"
 
 #: ../app/tools/gimpperspectivetool.c:83
 msgid "_Perspective"
@@ -9332,7 +9329,7 @@ msgstr "変換しています..."
 
 #: ../app/tools/gimpvectoroptions.c:113
 msgid "Restrict editing to polygons"
-msgstr "多角形の編集を制限"
+msgstr "編集を多角形に制限"
 
 #: ../app/tools/gimpvectoroptions.c:177
 msgid "Edit Mode"
@@ -9761,11 +9758,11 @@ msgstr "大きなプレビュー"
 
 #: ../app/widgets/gimpcontrollereditor.c:210
 msgid "Dump events from this controller"
-msgstr "このコントローラーからのイベントをダンプ"
+msgstr "このコントローラからのイベントをダンプ"
 
 #: ../app/widgets/gimpcontrollereditor.c:215
 msgid "Enable this controller"
-msgstr "このコントローラーは有効"
+msgstr "このコントローラは有効"
 
 #: ../app/widgets/gimpcontrollereditor.c:236
 msgid "Name:"
@@ -9777,7 +9774,7 @@ msgstr "イベント"
 
 #: ../app/widgets/gimpcontrollereditor.c:550
 msgid "Select Controller Event Action"
-msgstr "コントローラーのアクションイベントを選択"
+msgstr "コントローラのアクションイベントを選択"
 
 #: ../app/widgets/gimpcontrollerkeyboard.c:69
 msgid "Key Up (Shift + Control + Alt)"
@@ -10409,7 +10406,7 @@ msgstr "結合スタイル(_J):"
 
 #: ../app/widgets/gimpstrokeeditor.c:239
 msgid "_Miter limit:"
-msgstr "面とり限界(_M):"
+msgstr "斜め継ぎ限界(_M):"
 
 #: ../app/widgets/gimpstrokeeditor.c:246
 msgid "Dash pattern:"
@@ -10829,6 +10826,9 @@ msgstr "画像や写真の作成や編集を行う"
 #: ../data/misc/gimp.desktop.in.in.h:2
 msgid "Image Editor"
 msgstr "画像エディタ"
+
+#~ msgid "QuickMask"
+#~ msgstr "クイックマスク"
 
 #~ msgid "Keep aspect ratio"
 #~ msgstr "縦横比を維持"
@@ -12065,7 +12065,7 @@ msgstr "画像エディタ"
 #~ msgstr "/オプション読込/(None)"
 
 #~ msgid "/Rename Saved Options/(None)"
-#~ msgstr "/保存オプション名変更(_n)/(None)"
+#~ msgstr "/保存オプション名変更/(None)"
 
 #~ msgid "/Delete Saved Options/(None)"
 #~ msgstr "/保存オプション削除/(None)"

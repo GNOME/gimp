@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu gimp-2-2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-17 19:58+0900\n"
-"PO-Revision-Date: 2005-09-10 19:00+0900\n"
+"POT-Creation-Date: 2005-10-30 12:41+0900\n"
+"PO-Revision-Date: 2005-10-26 23:00+0900\n"
 "Last-Translator: <kano@na.rim.or.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -1460,7 +1460,7 @@ msgstr "ファジー縁取り(_F)..."
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:1
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org"
-msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/クラッシック Gimp.Org"
+msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/クラシック Gimp.Org"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:2
 msgid "Autocrop"
@@ -2328,9 +2328,8 @@ msgid "Fill angle"
 msgstr "充てん角度"
 
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:8
-#, fuzzy
 msgid "Text C_ircle..."
-msgstr "文字円..."
+msgstr "文字円(_I)..."
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:5
 msgid "Ending blend"
