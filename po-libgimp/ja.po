@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-22 11:48+0900\n"
-"PO-Revision-Date: 2005-10-18 23:00+0900\n"
+"POT-Creation-Date: 2005-10-30 12:27+0900\n"
+"PO-Revision-Date: 2005-10-26 23:00+0900\n"
 "Last-Translator: OKANO Takayoshi <kano@na.rim.or.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -580,7 +580,7 @@ msgstr "RGB-アルファ"
 
 #: ../libgimpbase/gimpbaseenums.c:528
 msgid "Grayscale-alpha"
-msgstr "グレイスケール-アルファ"
+msgstr "グレースケール-アルファ"
 
 #: ../libgimpbase/gimpbaseenums.c:530
 msgid "Indexed-alpha"
@@ -1238,7 +1238,7 @@ msgstr "コントラスト"
 
 #: ../modules/cdisplay_highcontrast.c:251
 msgid "Contrast c_ycles:"
-msgstr "コントラストサイクル(_y):"
+msgstr "コントラストサイクル(_Y):"
 
 #: ../modules/cdisplay_lcms.c:105
 msgid "Color management display filter using ICC color profiles"

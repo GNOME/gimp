@@ -11,31 +11,27 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-22 11:55+0900\n"
-"PO-Revision-Date: 2005-10-18 23:00+0900\n"
+"POT-Creation-Date: 2005-10-30 12:31+0900\n"
+"PO-Revision-Date: 2005-10-26 23:00+0900\n"
 "Last-Translator: OKANO Takayoshi <kano@na.rim.or.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../plug-ins/script-fu/script-fu-console.c:132
-msgid "Script-Fu console mode allows only interactive invocation"
-msgstr "Script-Fu コンソールモードはインタラクティブ動作しかしません"
-
-#: ../plug-ins/script-fu/script-fu-console.c:165
+#: ../plug-ins/script-fu/script-fu-console.c:144
 msgid "Script-Fu Console"
 msgstr "Script-Fu コンソール"
 
-#: ../plug-ins/script-fu/script-fu-console.c:258
+#: ../plug-ins/script-fu/script-fu-console.c:237
 msgid "_Browse..."
 msgstr "参照(_B)..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:296
+#: ../plug-ins/script-fu/script-fu-console.c:275
 msgid "Script-Fu Procedure Browser"
 msgstr "Script-Fu プロシージャブラウザ"
 
-#: ../plug-ins/script-fu/script-fu-console.c:605
+#: ../plug-ins/script-fu/script-fu-console.c:584
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Script-Fu 評価モードは非インタラクティブ動作しかできません"
 
@@ -201,7 +197,7 @@ msgstr "ベベルパターン(_B)"
 
 #: ../plug-ins/script-fu/script-fu.c:290
 msgid "_Classic.Gimp.Org"
-msgstr "クラッシック Gimp.Org(_C)"
+msgstr "クラシック Gimp.Org(_C)"
 
 #: ../plug-ins/script-fu/script-fu.c:293
 msgid "Alpha to _Logo"
@@ -2254,6 +2250,9 @@ msgstr "ハイライト不透明度"
 msgid "_Xach-Effect..."
 msgstr "Xach 効果(_X)..."
 
+#~ msgid "Script-Fu console mode allows only interactive invocation"
+#~ msgstr "Script-Fu コンソールモードはインタラクティブ動作しかしません"
+
 #~ msgid "Script Progress"
 #~ msgstr "スクリプト進行"
 
@@ -2400,7 +2399,7 @@ msgstr "Xach 効果(_X)..."
 #~ msgstr "<Toolbox>/拡張/Script-Fu/ユーティリティ"
 
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org"
-#~ msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/クラッシック Gimp.Org"
+#~ msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/クラシック Gimp.Org"
 
 #~ msgid "<Image>/Script-Fu/Utils"
 #~ msgstr "<Image>/Script-Fu/ユーティリティ"
