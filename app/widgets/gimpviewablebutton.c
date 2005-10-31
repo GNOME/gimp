@@ -305,6 +305,7 @@ gimp_viewable_button_popup_closed (GimpContainerPopup *popup,
 GtkWidget *
 gimp_viewable_button_new (GimpContainer     *container,
                           GimpContext       *context,
+                          GimpViewType       view_type,
                           gint               preview_size,
                           gint               preview_border_width,
                           GimpDialogFactory *dialog_factory,
@@ -331,7 +332,10 @@ gimp_viewable_button_new (GimpContainer     *container,
       g_return_val_if_fail (dialog_tooltip != NULL, NULL);
     }
 
-  button = g_object_new (GIMP_TYPE_VIEWABLE_BUTTON, NULL);
+  button = g_object_new (GIMP_TYPE_VIEWABLE_BUTTON,
+                         "popup-view-type",    view_type,
+                         "popup-preview-size", preview_size,
+                         NULL);
 
   button->container = container;
   button->context   = context;

@@ -67,6 +67,7 @@ GType       gimp_viewable_button_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_viewable_button_new      (GimpContainer      *container,
                                            GimpContext        *context,
+                                           GimpViewType        view_type,
                                            gint                preview_size,
                                            gint                preview_border_width,
                                            GimpDialogFactory  *dialog_factory,

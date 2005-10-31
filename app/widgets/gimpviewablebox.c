@@ -45,6 +45,7 @@
 static GtkWidget      * gimp_viewable_box_new  (GimpContainer *container,
                                                 GimpContext   *context,
                                                 gint           spacing,
+                                                GimpViewType   view_type,
                                                 GimpViewSize   view_size,
                                                 const gchar   *dialog_identifier,
                                                 const gchar   *dialog_stock_id,
@@ -69,7 +70,7 @@ gimp_brush_box_new (GimpContainer *container,
     container = context->gimp->brush_factory->container;
 
   return gimp_viewable_box_new (container, context, spacing,
-                                GIMP_VIEW_SIZE_SMALL,
+                                GIMP_VIEW_TYPE_GRID, GIMP_VIEW_SIZE_SMALL,
                                 "gimp-brush-grid|gimp-brush-list",
                                 GIMP_STOCK_BRUSH,
                                 _("Open the brush selection dialog"));
@@ -88,7 +89,7 @@ gimp_pattern_box_new (GimpContainer *container,
     container = context->gimp->pattern_factory->container;
 
   return gimp_viewable_box_new (container, context, spacing,
-                                GIMP_VIEW_SIZE_SMALL,
+                                GIMP_VIEW_TYPE_GRID, GIMP_VIEW_SIZE_SMALL,
                                 "gimp-pattern-grid|gimp-pattern-list",
                                 GIMP_STOCK_PATTERN,
                                 _("Open the pattern selection dialog"));
@@ -113,6 +114,7 @@ gimp_gradient_box_new (GimpContainer *container,
   hbox = gtk_hbox_new (FALSE, spacing);
 
   button = gimp_viewable_button_new (container, context,
+                                     GIMP_VIEW_TYPE_LIST,
                                      GIMP_VIEW_SIZE_LARGE, 1,
                                      gimp_dialog_factory_from_name ("dock"),
                                      "gimp-gradient-list|gimp-gradient-grid",
@@ -162,7 +164,7 @@ gimp_palette_box_new (GimpContainer *container,
     container = context->gimp->palette_factory->container;
 
   return gimp_viewable_box_new (container, context, spacing,
-                                GIMP_VIEW_SIZE_MEDIUM,
+                                GIMP_VIEW_TYPE_LIST, GIMP_VIEW_SIZE_MEDIUM,
                                 "gimp-palette-list|gimp-palette-grid",
                                 GIMP_STOCK_PALETTE,
                                 _("Open the palette selection dialog"));
@@ -181,7 +183,7 @@ gimp_font_box_new (GimpContainer *container,
     container = context->gimp->fonts;
 
   return gimp_viewable_box_new (container, context, spacing,
-                                GIMP_VIEW_SIZE_SMALL,
+                                GIMP_VIEW_TYPE_LIST, GIMP_VIEW_SIZE_SMALL,
                                 "gimp-font-list|gimp-font-grid",
                                 GIMP_STOCK_FONT,
                                 _("Open the font selection dialog"));
@@ -194,6 +196,7 @@ static GtkWidget *
 gimp_viewable_box_new (GimpContainer *container,
                        GimpContext   *context,
                        gint           spacing,
+                       GimpViewType   view_type,
                        GimpViewSize   view_size,
                        const gchar   *dialog_identifier,
                        const gchar   *dialog_stock_id,
@@ -206,7 +209,7 @@ gimp_viewable_box_new (GimpContainer *container,
   hbox = gtk_hbox_new (FALSE, spacing);
 
   button = gimp_viewable_button_new (container, context,
-                                     view_size, 1,
+                                     view_type, view_size, 1,
                                      gimp_dialog_factory_from_name ("dock"),
                                      dialog_identifier,
                                      dialog_stock_id,

@@ -1,3 +1,12 @@
+2005-10-31  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpviewablebutton.[ch] (gimp_viewable_button_new):
+	add GimpViewType parameter.
+
+	* app/widgets/gimptemplateeditor.c
+	* app/widgets/gimpviewablebox.c: pass view types, using grid view
+	for brushes and patterns ass suggested in bug #315443.
+
 2005-10-30  Michael Natterer  <mitch@gimp.org>
 
 	Fixed bug #316395:
