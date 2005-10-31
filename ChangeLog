@@ -1,5 +1,10 @@
 2005-10-31  Sven Neumann  <sven@gimp.org>
 
+	* app/plug-in/plug-ins.c (plug_ins_init): only call the status
+	callback for plug-ins that are actually queried or initialized.
+
+2005-10-31  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/data-commands.[ch]: added new action command
 	data_copy_location_cmd_callback().
 

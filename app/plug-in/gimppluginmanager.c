@@ -94,9 +94,9 @@ plug_ins_init (Gimp               *gimp,
   gchar   *path;
   GSList  *list;
   GList   *extensions = NULL;
-  gdouble  n_plugins;
-  gdouble  n_extensions;
-  gdouble  nth;
+  gint     n_plugins;
+  gint     n_extensions;
+  gint     nth;
   GError  *error = NULL;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
@@ -114,7 +114,6 @@ plug_ins_init (Gimp               *gimp,
                                    &gimp->plug_in_defs);
 
   g_free (path);
-
 
   /* read the pluginrc file for cached data */
   if (gimp->config->plug_in_rc_path)
@@ -150,20 +149,30 @@ plug_ins_init (Gimp               *gimp,
    *  the pluginrc file.
    */
   (* status_callback) (_("Querying new Plug-ins"), "", 0);
-  n_plugins = g_slist_length (gimp->plug_in_defs);
 
-  for (list = gimp->plug_in_defs, nth = 0; list; list = list->next, nth++)
+  for (list = gimp->plug_in_defs, n_plugins = 0; list; list = list->next)
     {
       PlugInDef *plug_in_def = list->data;
 
-      basename = g_path_get_basename (plug_in_def->prog);
-      (* status_callback) (NULL, gimp_filename_to_utf8 (basename),
-			   nth / n_plugins);
-      g_free (basename);
-
       if (plug_in_def->needs_query)
-	{
-	  gimp->write_pluginrc = TRUE;
+        n_plugins++;
+    }
+
+  if (n_plugins)
+    {
+      gimp->write_pluginrc = TRUE;
+
+      for (list = gimp->plug_in_defs, nth = 0; list; list = list->next, nth++)
+        {
+          PlugInDef *plug_in_def = list->data;
+
+          if (! plug_in_def->needs_query)
+            continue;
+
+          basename = g_filename_display_basename (plug_in_def->prog);
+          (* status_callback) (NULL, basename,
+                               (gdouble) nth / (gdouble) n_plugins);
+          g_free (basename);
 
 	  if (gimp->be_verbose)
 	    g_print (_("Querying plug-in: '%s'\n"),
@@ -178,23 +187,34 @@ plug_ins_init (Gimp               *gimp,
   /* initialize the plug-ins */
   (* status_callback) (_("Initializing Plug-ins"), "", 0);
 
-  for (list = gimp->plug_in_defs, nth = 0; list; list = list->next, nth++)
+  for (list = gimp->plug_in_defs, n_plugins = 0; list; list = list->next)
     {
       PlugInDef *plug_in_def = list->data;
 
-      basename = g_path_get_basename (plug_in_def->prog);
-      (* status_callback) (NULL, gimp_filename_to_utf8 (basename),
-			   nth / n_plugins);
-      g_free (basename);
-
       if (plug_in_def->has_init)
-	{
-	  if (gimp->be_verbose)
-	    g_print (_("Initializing plug-in: '%s'\n"),
+        n_plugins++;
+    }
+
+  if (n_plugins)
+    {
+      for (list = gimp->plug_in_defs, nth = 0; list; list = list->next, nth++)
+        {
+          PlugInDef *plug_in_def = list->data;
+
+          if (! plug_in_def->has_init)
+            continue;
+
+          basename = g_filename_display_basename (plug_in_def->prog);
+          (* status_callback) (NULL, basename,
+                               (gdouble) nth / (gdouble) n_plugins);
+          g_free (basename);
+
+          if (gimp->be_verbose)
+            g_print (_("Initializing plug-in: '%s'\n"),
                      gimp_filename_to_utf8 (plug_in_def->prog));
 
-	  plug_in_call_init (gimp, context, plug_in_def);
-	}
+          plug_in_call_init (gimp, context, plug_in_def);
+        }
     }
 
   (* status_callback) (NULL, NULL, 1.0);
@@ -327,7 +347,8 @@ plug_ins_init (Gimp               *gimp,
 	  if (gimp->be_verbose)
 	    g_print (_("Starting extension: '%s'\n"), proc_def->db_info.name);
 
-	  (* status_callback) (NULL, proc_def->db_info.name, nth / n_plugins);
+	  (* status_callback) (NULL, proc_def->db_info.name,
+                               (gdouble) nth / (gdouble) n_extensions);
 
 	  plug_in_run (gimp, context, NULL, &proc_def->db_info,
                        NULL, 0, FALSE, TRUE, -1);
