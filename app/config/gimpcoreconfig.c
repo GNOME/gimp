@@ -107,7 +107,8 @@ enum
   PROP_THUMBNAIL_FILESIZE_LIMIT,
   PROP_INSTALL_COLORMAP,
   PROP_MIN_COLORS,
-  PROP_COLOR_MANAGEMENT
+  PROP_COLOR_MANAGEMENT,
+  PROP_SAVE_DOCUMENT_HISTORY
 };
 
 static GObjectClass *parent_class = NULL;
@@ -345,6 +346,10 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                    "color-management", COLOR_MANAGEMENT_BLURB,
                                    GIMP_TYPE_COLOR_CONFIG,
                                    GIMP_CONFIG_PARAM_AGGREGATE);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAVE_DOCUMENT_HISTORY,
+		                    "save-document-history", SAVE_DOCUMENT_HISTORY_BLURB,
+				    TRUE,
+				    0);
 }
 
 static void
@@ -556,6 +561,9 @@ gimp_core_config_set_property (GObject      *object,
         gimp_config_sync (g_value_get_object (value),
                           G_OBJECT (core_config->color_management), 0);
       break;
+    case PROP_SAVE_DOCUMENT_HISTORY:
+      core_config->save_document_history = g_value_get_boolean (value);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -686,6 +694,9 @@ gimp_core_config_get_property (GObject    *object,
       break;
     case PROP_COLOR_MANAGEMENT:
       g_value_set_object (value, core_config->color_management);
+      break;
+    case PROP_SAVE_DOCUMENT_HISTORY:
+      g_value_set_boolean (value, core_config->save_document_history);
       break;
 
     default:

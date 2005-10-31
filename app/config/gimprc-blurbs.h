@@ -266,6 +266,9 @@ N_("Let GIMP try to restore your last saved session on each startup.")
 N_("Remember the current tool, pattern, color, and brush across GIMP " \
    "sessions.")
 
+#define SAVE_DOCUMENT_HISTORY_BLURB \
+N_("Add all opened and saved files to the document history on disk.")
+
 #define SAVE_SESSION_INFO_BLURB \
 N_("Save the positions and sizes of the main dialogs when the GIMP exits.")
 

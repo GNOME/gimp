@@ -671,7 +671,10 @@ gimp_real_exit (Gimp     *gimp,
   gimp_data_factory_data_save (gimp->palette_factory);
 
   gimp_fonts_reset (gimp);
-  gimp_documents_save (gimp);
+
+  if (gimp->config->save_document_history)
+    gimp_documents_save (gimp);
+
   gimp_templates_save (gimp);
   gimp_parasiterc_save (gimp);
   gimp_unitrc_save (gimp);

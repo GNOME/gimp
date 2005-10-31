@@ -1379,6 +1379,13 @@ prefs_dialog_new (Gimp       *gimp,
   g_object_unref (size_group);
   size_group = NULL;
 
+  /*  Document History  */
+  vbox2 = prefs_frame_new (_("Document History"), GTK_CONTAINER (vbox), FALSE);
+
+  prefs_check_button_add (object, "save-document-history",
+		          _("Save document _history on exit"),
+			  GTK_BOX (vbox2));
+
 
   /***************/
   /*  Interface  */

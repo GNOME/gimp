@@ -43,6 +43,8 @@
 
 #include "core/core-types.h"
 
+#include "config/gimpcoreconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdocumentlist.h"
@@ -331,7 +333,8 @@ file_open_with_proc_and_display (Gimp               *gimp,
             }
         }
 
-      gimp_recent_list_add_uri (uri, mime_type);
+      if (gimp->config->save_document_history)
+        gimp_recent_list_add_uri (uri, mime_type);
 
       /*  the display owns the image now  */
       g_object_unref (gimage);
@@ -409,7 +412,9 @@ file_open_layer (Gimp               *gimp,
 
               gimp_document_list_add_uri (GIMP_DOCUMENT_LIST (gimp->documents),
                                           uri, mime_type);
-              gimp_recent_list_add_uri (uri, mime_type);
+
+              if (gimp->config->save_document_history)
+                gimp_recent_list_add_uri (uri, mime_type);
             }
         }
       else

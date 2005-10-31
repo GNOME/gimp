@@ -174,7 +174,8 @@ file_save (GimpImage      *gimage,
 
       gimp_imagefile_save_thumbnail (imagefile, file_proc->mime_type, gimage);
 
-      gimp_recent_list_add_uri (uri, file_proc->mime_type);
+      if (gimage->gimp->config->save_document_history)
+        gimp_recent_list_add_uri (uri, file_proc->mime_type);
     }
   else if (status != GIMP_PDB_CANCEL)
     {

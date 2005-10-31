@@ -1,3 +1,21 @@
+2005-10-31  Michael Natterer  <mitch@gimp.org>
+
+	Applied modified patch from Luis de Bethencourt Guimera which adds
+	a "Save document history" prefs option. Fixes bug #140001.
+
+	* app/config/gimprc-blurbs.h
+	* app/config/gimpcoreconfig.[ch]: added boolean property
+	"save-document-hitory".
+
+	* app/core/gimp.c
+	* app/file/file-open.c
+	* app/file/file-save.c: don't save the document history and don't
+	add files to the desktop-wide list of recently used files if the
+	option is FALSE.
+
+	* app/dialogs/preferences-dialog.c: added its toggle to the
+	"Environment" page.
+
 2005-10-31  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpmessagebox.c (gimp_message_box_init): reverted

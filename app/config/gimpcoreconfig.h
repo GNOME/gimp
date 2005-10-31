@@ -78,6 +78,7 @@ struct _GimpCoreConfig
   gboolean               install_cmap;
   gint                   min_colors;
   GimpColorConfig       *color_management;
+  gboolean               save_document_history;
 };
 
 struct _GimpCoreConfigClass
