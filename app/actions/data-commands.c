@@ -169,6 +169,41 @@ data_duplicate_cmd_callback (GtkAction *action,
 }
 
 void
+data_copy_location_cmd_callback (GtkAction *action,
+                                 gpointer   user_data)
+{
+  GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (user_data);
+  GimpContext         *context;
+  GimpData            *data;
+
+  context = gimp_container_view_get_context (GIMP_CONTAINER_EDITOR (view)->view);
+
+  data = (GimpData *)
+    gimp_context_get_by_type (context,
+			      view->factory->container->children_type);
+
+  if (data && data->filename && *data->filename)
+    {
+      gchar *uri = g_filename_to_uri (data->filename, NULL, NULL);
+
+      if (uri)
+        {
+          GtkClipboard *clipboard;
+
+          clipboard = gtk_clipboard_get_for_display (gdk_display_get_default (),
+                                                     GDK_SELECTION_CLIPBOARD);
+          gtk_clipboard_set_text (clipboard, uri, -1);
+
+          clipboard = gtk_clipboard_get_for_display (gdk_display_get_default (),
+                                                     GDK_SELECTION_PRIMARY);
+          gtk_clipboard_set_text (clipboard, uri, -1);
+
+          g_free (uri);
+        }
+    }
+}
+
+void
 data_delete_cmd_callback (GtkAction *action,
                           gpointer   user_data)
 {

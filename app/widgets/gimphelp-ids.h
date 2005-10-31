@@ -282,6 +282,7 @@
 #define GIMP_HELP_BRUSH_OPEN_AS_IMAGE             "gimp-brush-open-as-image"
 #define GIMP_HELP_BRUSH_NEW                       "gimp-brush-new"
 #define GIMP_HELP_BRUSH_DUPLICATE                 "gimp-brush-duplicate"
+#define GIMP_HELP_BRUSH_COPY_LOCATION             "gimp-brush-copy-location"
 #define GIMP_HELP_BRUSH_DELETE                    "gimp-brush-delete"
 #define GIMP_HELP_BRUSH_REFRESH                   "gimp-brush-refresh"
 
@@ -293,6 +294,7 @@
 #define GIMP_HELP_PATTERN_OPEN_AS_IMAGE           "gimp-pattern-open-as-image"
 #define GIMP_HELP_PATTERN_NEW                     "gimp-pattern-new"
 #define GIMP_HELP_PATTERN_DUPLICATE               "gimp-pattern-duplicate"
+#define GIMP_HELP_PATTERN_COPY_LOCATION           "gimp-pattern-copy-location"
 #define GIMP_HELP_PATTERN_DELETE                  "gimp-pattern-delete"
 #define GIMP_HELP_PATTERN_REFRESH                 "gimp-pattern-refresh"
 
@@ -300,6 +302,7 @@
 #define GIMP_HELP_GRADIENT_EDIT                   "gimp-gradient-edit"
 #define GIMP_HELP_GRADIENT_NEW                    "gimp-gradient-new"
 #define GIMP_HELP_GRADIENT_DUPLICATE              "gimp-gradient-duplicate"
+#define GIMP_HELP_GRADIENT_COPY_LOCATION          "gimp-gradient-copy-location"
 #define GIMP_HELP_GRADIENT_DELETE                 "gimp-gradient-delete"
 #define GIMP_HELP_GRADIENT_REFRESH                "gimp-gradient-refresh"
 #define GIMP_HELP_GRADIENT_SAVE_AS_POV            "gimp-gradient-save-as-pov"
@@ -331,6 +334,7 @@
 #define GIMP_HELP_PALETTE_EDIT                    "gimp-palette-edit"
 #define GIMP_HELP_PALETTE_NEW                     "gimp-palette-new"
 #define GIMP_HELP_PALETTE_DUPLICATE               "gimp-palette-duplicate"
+#define GIMP_HELP_PALETTE_COPY_LOCATION           "gimp-palette-copy-location"
 #define GIMP_HELP_PALETTE_DELETE                  "gimp-palette-delete"
 #define GIMP_HELP_PALETTE_REFRESH                 "gimp-palette-refresh"
 #define GIMP_HELP_PALETTE_IMPORT                  "gimp-palette-import"

@@ -8,6 +8,7 @@
     <separator />
     <menuitem action="brushes-new" />
     <menuitem action="brushes-duplicate" />
+    <menuitem action="brushes-copy-location" />
     <menuitem action="brushes-delete" />
     <separator />
     <menuitem action="brushes-refresh" />

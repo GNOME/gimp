@@ -61,6 +61,12 @@ static GimpActionEntry brushes_actions[] =
     G_CALLBACK (data_duplicate_cmd_callback),
     GIMP_HELP_BRUSH_DUPLICATE },
 
+  { "brushes-copy-location", GTK_STOCK_COPY,
+    N_("Copy Brush _Location"), "",
+    N_("Copy brush file location to clipboard"),
+    G_CALLBACK (data_copy_location_cmd_callback),
+    GIMP_HELP_BRUSH_COPY_LOCATION },
+
   { "brushes-delete", GTK_STOCK_DELETE,
     N_("_Delete Brush"), "",
     N_("Delete brush"),
@@ -119,6 +125,7 @@ brushes_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("brushes-edit",          brush);
   SET_SENSITIVE ("brushes-open-as-image", brush && data->filename && ! GIMP_IS_BRUSH_GENERATED (brush));
   SET_SENSITIVE ("brushes-duplicate",     brush && GIMP_DATA_GET_CLASS (data)->duplicate);
+  SET_SENSITIVE ("brushes-copy-location", brush && data->filename);
   SET_SENSITIVE ("brushes-delete",        brush && data->deletable);
 
 #undef SET_SENSITIVE

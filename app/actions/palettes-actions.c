@@ -68,6 +68,12 @@ static GimpActionEntry palettes_actions[] =
     G_CALLBACK (palettes_merge_cmd_callback),
     GIMP_HELP_PALETTE_MERGE },
 
+  { "palettes-copy-location", GTK_STOCK_COPY,
+    N_("Copy Palette _Location"), "",
+    N_("Copy palette file location to clipboard"),
+    G_CALLBACK (data_copy_location_cmd_callback),
+    GIMP_HELP_PALETTE_COPY_LOCATION },
+
   { "palettes-delete", GTK_STOCK_DELETE,
     N_("_Delete Palette"), "",
     N_("Delete palette"),
@@ -123,10 +129,11 @@ palettes_actions_update (GimpActionGroup *group,
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("palettes-edit",      palette);
-  SET_SENSITIVE ("palettes-duplicate", palette && GIMP_DATA_GET_CLASS (data)->duplicate);
-  SET_SENSITIVE ("palettes-merge",     FALSE); /* FIXME palette && GIMP_IS_CONTAINER_LIST_VIEW (editor->view)); */
-  SET_SENSITIVE ("palettes-delete",    palette && data->deletable);
+  SET_SENSITIVE ("palettes-edit",          palette);
+  SET_SENSITIVE ("palettes-duplicate",     palette && GIMP_DATA_GET_CLASS (data)->duplicate);
+  SET_SENSITIVE ("palettes-merge",         FALSE); /* FIXME palette && GIMP_IS_CONTAINER_LIST_VIEW (editor->view)); */
+  SET_SENSITIVE ("palettes-copy-location", palette && data->filename);
+  SET_SENSITIVE ("palettes-delete",        palette && data->deletable);
 
 #undef SET_SENSITIVE
 }

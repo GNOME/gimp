@@ -26,6 +26,8 @@ void   data_new_cmd_callback           (GtkAction   *action,
                                         gpointer     data);
 void   data_duplicate_cmd_callback     (GtkAction   *action,
                                         gpointer     data);
+void   data_copy_location_cmd_callback (GtkAction   *action,
+                                        gpointer     user_data);
 void   data_delete_cmd_callback        (GtkAction   *action,
                                         gpointer     data);
 void   data_refresh_cmd_callback       (GtkAction   *action,

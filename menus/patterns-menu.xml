@@ -13,6 +13,7 @@
     <menuitem action="patterns-duplicate" />
     -->
 
+    <menuitem action="patterns-copy-location" />
     <menuitem action="patterns-delete" />
     <separator />
     <menuitem action="patterns-refresh" />

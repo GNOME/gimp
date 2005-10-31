@@ -1,3 +1,19 @@
+2005-10-31  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/data-commands.[ch]: added new action command
+	data_copy_location_cmd_callback().
+
+	* app/actions/brushes-actions.c
+	* app/actions/gradients-actions.c
+	* app/actions/palettes-actions.c
+	* app/actions/patterns-actions.c
+	* app/widgets/gimphelp-ids.h
+	* menus/brushes-menu.xml
+	* menus/gradients-menu.xml
+	* menus/palettes-menu.xml
+	* menus/patterns-menu.xml: added Copy Location menu entries to all
+	data views. Allows to retrieve the file location for data files.
+
 2005-10-31  Tor Lillqvist  <tml@novell.com>
 
 	* gimptool-win32.c.in: Drop unnecessary <sys/stat.h>.

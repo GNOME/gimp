@@ -61,6 +61,12 @@ static GimpActionEntry patterns_actions[] =
     G_CALLBACK (data_duplicate_cmd_callback),
     GIMP_HELP_PATTERN_DUPLICATE },
 
+  { "patterns-copy-location", GTK_STOCK_COPY,
+    N_("Copy Pattern _Location"), "",
+    N_("Copy pattern file location to clipboard"),
+    G_CALLBACK (data_copy_location_cmd_callback),
+    GIMP_HELP_PATTERN_COPY_LOCATION },
+
   { "patterns-delete", GTK_STOCK_DELETE,
     N_("_Delete Pattern"), "",
     N_("Delete pattern"),
@@ -119,6 +125,7 @@ patterns_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("patterns-edit",          pattern && FALSE);
   SET_SENSITIVE ("patterns-open-as-image", pattern && data->filename);
   SET_SENSITIVE ("patterns-duplicate",     pattern && GIMP_DATA_GET_CLASS (data)->duplicate);
+  SET_SENSITIVE ("patterns-copy-location", pattern && data->filename);
   SET_SENSITIVE ("patterns-delete",        pattern && data->deletable);
 
 #undef SET_SENSITIVE
