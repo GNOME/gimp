@@ -177,6 +177,7 @@ gimp_data_init (GimpData      *data,
   data->dirty        = TRUE;
   data->internal     = FALSE;
   data->freeze_count = 0;
+  data->mtime        = 0;
 
   /*  look at the passed class pointer, not at GIMP_DATA_GET_CLASS(data)
    *  here, because the latter is always GimpDataClass itself
@@ -335,7 +336,14 @@ gimp_data_save (GimpData  *data,
     success = GIMP_DATA_GET_CLASS (data)->save (data, error);
 
   if (success)
-    data->dirty = FALSE;
+    {
+      struct stat filestat;
+
+      g_stat (data->filename, &filestat);
+
+      data->mtime = filestat.st_mtime;
+      data->dirty = FALSE;
+    }
 
   return success;
 }

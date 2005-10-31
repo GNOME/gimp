@@ -228,8 +228,12 @@ data_refresh_cmd_callback (GtkAction *action,
                            gpointer   user_data)
 {
   GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (user_data);
+  Gimp                *gimp;
+  return_if_no_gimp (gimp, user_data);
 
+  gimp_set_busy (gimp);
   gimp_data_factory_data_refresh (view->factory);
+  gimp_unset_busy (gimp);
 }
 
 void

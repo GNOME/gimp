@@ -1,3 +1,16 @@
+2005-10-31  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpdata.[ch]
+	* app/core/gimpdatafactory.c: applied a heavily modified version
+	of the patch provided by Shlomi Fish in bug #311740. Introduces a
+	cache to speed up reloading of data files.
+
+	* app/actions/data-commands.c: set gimp busy while refreshing data
+	factories.
+
+	* app/widgets/gimpwidgets-utils.c (gimp_widget_accel_changed):
+	free the return value of gimp_get_accel_string().
+
 2005-10-31  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpviewablebutton.[ch] (gimp_viewable_button_new):

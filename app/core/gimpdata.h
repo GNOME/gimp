@@ -22,6 +22,7 @@
 #ifndef __GIMP_DATA_H__
 #define __GIMP_DATA_H__
 
+#include <time.h>      /* time_t */
 
 #include "gimpviewable.h"
 
@@ -56,6 +57,7 @@ struct _GimpData
   guint         dirty     : 1;
   guint         internal  : 1;
   gint          freeze_count;
+  time_t        mtime;
 };
 
 struct _GimpDataClass

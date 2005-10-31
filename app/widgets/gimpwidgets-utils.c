@@ -966,11 +966,12 @@ gimp_widget_accel_changed (GtkAccelGroup   *accel_group,
           accel_key->accel_key &&
           accel_key->accel_flags & GTK_ACCEL_VISIBLE)
         {
-          tooltip = g_strconcat (orig_tooltip,
-                                 "     ",
-                                 gimp_get_accel_string (accel_key->accel_key,
-                                                        accel_key->accel_mods),
-                                 NULL);
+          gchar *tmp = gimp_get_accel_string (accel_key->accel_key,
+                                              accel_key->accel_mods);
+
+          tooltip = g_strconcat (orig_tooltip, "     ", tmp, NULL);
+
+          g_free (tmp);
         }
       else
         {
