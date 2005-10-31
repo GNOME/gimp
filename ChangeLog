@@ -1,3 +1,15 @@
+2005-10-31  Tor Lillqvist  <tml@novell.com>
+
+	* gimptool-win32.c.in: Drop unnecessary <sys/stat.h>.
+	(gtk_config): Drop the GIMP 1.2.x and gtk+-1-3-win32-production
+	support.
+	(get_cflags): Output GIMP's -I switch before GTK's CFLAGS. Use
+	"include/gimp-2.0" instead of just "include".
+	(get_libs, get_libs_noui): Update the list of libraries to match
+	reality, use GIMP_API_VERSION in library names.
+	(get_sys_plugin_dir): Use GIMP_PLUGIN_VERSION and not
+	GIMP_MAJOR_VERSION.GIMP_MINOR_VERSION in the plug-in folder name.
+
 2005-10-31  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpdata.[ch]

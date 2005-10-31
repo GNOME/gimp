@@ -1,5 +1,5 @@
 /* gimptool in C
- * Copyright (C) 2001 Tor Lillqvist
+ * Copyright (C) 2001--2005 Tor Lillqvist
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,8 +28,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-
-#include <sys/stat.h>
 
 #include <glib.h>
 
@@ -133,7 +131,6 @@ get_prefix (gchar slash)
 
   gchar *path;
   char *p, *q, *r;
-  struct stat st;
 
   path = g_find_program_in_path ("gimp-@GIMP_APP_VERSION@.exe");
 
@@ -346,11 +343,7 @@ static gchar *
 gtk_config (gchar *args)
 {
 #ifdef USE_PKG_CONFIG
-#if defined (G_OS_WIN32) && @GIMP_MAJOR_VERSION@ == 1 && @GIMP_MINOR_VERSION@ == 2
-  return pkg_config (g_strconcat (args, " gtk+-1.3-win32-production", NULL));
-#else
   return pkg_config (g_strconcat (args, " gtk+-2.0", NULL));
-#endif
 #else
   return one_line_output ("gtk-config", args);
 #endif
@@ -365,7 +358,7 @@ get_cflags (void)
    * accept it, and it means less quoting trouble when using backquoted
    * invokations of gimptool in Makefiles.
    */
-  return g_strdup_printf ("%s -I%s/include", gtk_cflags, get_prefix ('/'));
+  return g_strdup_printf ("-I%s/include/gimp-2.0 %s", get_prefix ('/'), gtk_cflags);
 }
 
 static void
@@ -394,9 +387,9 @@ get_libs (void)
   gchar *gtk_libs = gtk_config ("--libs");
 
   if (msvc_syntax)
-    return g_strdup_printf ("/libpath:%s/lib gimpui.lib gimp.lib %s", get_prefix ('/'), gtk_libs);
+    return g_strdup_printf ("/libpath:%s/lib gimpui-@GIMP_API_VERSION@.lib gimpwidgets-@GIMP_API_VERSION@.lib gimp-@GIMP_API_VERSION@.lib gimpcolor-@GIMP_API_VERSION@.lib gimpmath-@GIMP_API_VERSION@.lib gimpbase-@GIMP_API_VERSION@.lib %s", get_prefix ('/'), gtk_libs);
   else
-    return g_strdup_printf ("-L%s/lib -lgimpui -lgimp %s", get_prefix ('/'), gtk_libs);
+    return g_strdup_printf ("-L%s/lib -lgimpui-@GIMP_API_VERSION@ -lgimpwidgets-@GIMP_API_VERSION@ -lgimp-@GIMP_API_VERSION@ -lgimpcolor-@GIMP_API_VERSION@ -lgimpmath-@GIMP_API_VERSION@ -lgimpbase-@GIMP_API_VERSION@ %s", get_prefix ('/'), gtk_libs);
 }
 
 static void
@@ -411,9 +404,9 @@ get_libs_noui (void)
   gchar *glib_libs = glib_config ("--libs");
 
   if (msvc_syntax)
-    return g_strdup_printf ("/libpath:%s/lib gimp.lib %s", get_prefix ('/'), glib_libs);
+    return g_strdup_printf ("/libpath:%s/lib gimp-@GIMP_API_VERSION@.lib gimpcolor-@GIMP_API_VERSION@.lib gimpmath-@GIMP_API_VERSION@.lib gimpbase-@GIMP_API_VERSION@.lib %s", get_prefix ('/'), glib_libs);
   else
-    return g_strdup_printf ("-L%s/lib -lgimp %s", get_prefix ('/'), glib_libs);
+    return g_strdup_printf ("-L%s/lib -lgimp-@GIMP_API_VERSION@ -lgimpcolor-@GIMP_API_VERSION@ -lgimpmath-@GIMP_API_VERSION@ -lgimpbase-@GIMP_API_VERSION@ %s", get_prefix ('/'), glib_libs);
 }
 
 static void
@@ -566,11 +559,9 @@ get_sys_plugin_dir (gboolean forward_slashes)
   const gchar slash = '/';
 #endif
 
-  return g_strdup_printf ("%s%clib%cgimp%c%d.%d%cplug-ins",
+  return g_strdup_printf ("%s%clib%cgimp%c@GIMP_PLUGIN_VERSION@%cplug-ins",
 			  get_prefix (slash),
-			  slash, slash, slash,
-			  @GIMP_MAJOR_VERSION@, @GIMP_MINOR_VERSION@,
-			  slash);
+			  slash, slash, slash, slash);
 }
 
 static void
