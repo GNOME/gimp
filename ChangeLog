@@ -1,5 +1,11 @@
 2005-10-31  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpmessagebox.c (gimp_message_box_init): reverted
+	the change for bug #302400; it caused bug #319962 to be opened.
+	Instead unset the focus chain for the message box.
+
+2005-10-31  Sven Neumann  <sven@gimp.org>
+
 	* app/plug-in/plug-ins.c (plug_ins_init): only call the status
 	callback for plug-ins that are actually queried or initialized.
 
