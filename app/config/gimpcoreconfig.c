@@ -347,7 +347,8 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                    GIMP_TYPE_COLOR_CONFIG,
                                    GIMP_CONFIG_PARAM_AGGREGATE);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAVE_DOCUMENT_HISTORY,
-		                    "save-document-history", SAVE_DOCUMENT_HISTORY_BLURB,
+		                    "save-document-history",
+                                    SAVE_DOCUMENT_HISTORY_BLURB,
 				    TRUE,
 				    0);
 }
