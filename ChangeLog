@@ -1,5 +1,12 @@
 2005-11-01  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/data-commands.c
+	* app/actions/documents-commands.c
+	* app/widgets/gimpclipboard.[ch]: moved text clipboard handling to
+	utility function to avoid code duplication.
+
+2005-11-01  Sven Neumann  <sven@gimp.org>
+
 	* app/plug-in/plug-ins.c: formatting.
 
 2005-10-31  Michael Natterer  <mitch@gimp.org>

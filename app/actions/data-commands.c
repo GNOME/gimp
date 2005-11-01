@@ -32,6 +32,7 @@
 #include "file/file-open.h"
 #include "file/file-utils.h"
 
+#include "widgets/gimpclipboard.h"
 #include "widgets/gimpcontainerview.h"
 #include "widgets/gimpdataeditor.h"
 #include "widgets/gimpdatafactoryview.h"
@@ -188,16 +189,7 @@ data_copy_location_cmd_callback (GtkAction *action,
 
       if (uri)
         {
-          GtkClipboard *clipboard;
-
-          clipboard = gtk_clipboard_get_for_display (gdk_display_get_default (),
-                                                     GDK_SELECTION_CLIPBOARD);
-          gtk_clipboard_set_text (clipboard, uri, -1);
-
-          clipboard = gtk_clipboard_get_for_display (gdk_display_get_default (),
-                                                     GDK_SELECTION_PRIMARY);
-          gtk_clipboard_set_text (clipboard, uri, -1);
-
+          gimp_clipboard_set_text (uri);
           g_free (uri);
         }
     }

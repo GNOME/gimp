@@ -20,20 +20,22 @@
 #define __GIMP_CLIPBOARD_H__
 
 
-void         gimp_clipboard_init       (Gimp       *gimp);
-void         gimp_clipboard_exit       (Gimp       *gimp);
+void         gimp_clipboard_init       (Gimp        *gimp);
+void         gimp_clipboard_exit       (Gimp        *gimp);
 
-gboolean     gimp_clipboard_has_buffer (Gimp       *gimp);
-gboolean     gimp_clipboard_has_svg    (Gimp       *gimp);
+gboolean     gimp_clipboard_has_buffer (Gimp        *gimp);
+gboolean     gimp_clipboard_has_svg    (Gimp        *gimp);
 
-GimpBuffer * gimp_clipboard_get_buffer (Gimp       *gimp);
-gchar      * gimp_clipboard_get_svg    (Gimp       *gimp,
-                                        gsize      *svg_length);
+GimpBuffer * gimp_clipboard_get_buffer (Gimp        *gimp);
+gchar      * gimp_clipboard_get_svg    (Gimp        *gimp,
+                                        gsize       *svg_length);
 
-void         gimp_clipboard_set_buffer (Gimp       *gimp,
-                                        GimpBuffer *buffer);
-void         gimp_clipboard_set_svg    (Gimp       *gimp,
-                                        gchar      *svg);
+void         gimp_clipboard_set_buffer (Gimp        *gimp,
+                                        GimpBuffer  *buffer);
+void         gimp_clipboard_set_svg    (Gimp        *gimp,
+                                        const gchar *svg);
+
+void         gimp_clipboard_set_text   (const gchar *text);
 
 
 #endif /* __GIMP_CLIPBOARD_H__ */

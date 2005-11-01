@@ -38,6 +38,7 @@
 #include "file/file-open.h"
 #include "file/file-utils.h"
 
+#include "widgets/gimpclipboard.h"
 #include "widgets/gimpcontainerview.h"
 #include "widgets/gimpdocumentview.h"
 #include "widgets/gimpmessagebox.h"
@@ -159,20 +160,7 @@ documents_copy_location_cmd_callback (GtkAction *action,
   imagefile = gimp_context_get_imagefile (context);
 
   if (imagefile)
-    {
-      GtkClipboard *clipboard;
-      const gchar  *uri;
-
-      uri = gimp_object_get_name (GIMP_OBJECT (imagefile));
-
-      clipboard = gtk_clipboard_get_for_display (gdk_display_get_default (),
-                                                 GDK_SELECTION_CLIPBOARD);
-      gtk_clipboard_set_text (clipboard, uri, -1);
-
-      clipboard = gtk_clipboard_get_for_display (gdk_display_get_default (),
-                                                 GDK_SELECTION_PRIMARY);
-      gtk_clipboard_set_text (clipboard, uri, -1);
-    }
+    gimp_clipboard_set_text (gimp_object_get_name (GIMP_OBJECT (imagefile)));
 }
 
 void
