@@ -1,5 +1,11 @@
 2005-11-01  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpbrushgenerated.c: fixed compiler warning.
+
+	* app/core/gimpobject.c: turned "name" into a construct property.
+
+2005-11-01  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpbrushgenerated.c (gimp_brush_generated_load): use
 	gimp_brush_generated_new() to create the brush object. Removed
 	redundant calls to gimp_data_dirty().

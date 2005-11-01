@@ -566,7 +566,7 @@ GList *
 gimp_brush_generated_load (const gchar  *filename,
                            GError      **error)
 {
-  GimpBrushGenerated      *brush;
+  GimpBrush               *brush;
   FILE                    *file;
   gchar                    string[256];
   gchar                   *name       = NULL;
@@ -706,11 +706,11 @@ gimp_brush_generated_load (const gchar  *filename,
 
   fclose (file);
 
-  brush = gimp_brush_generated_new (name, shape, radius, spikes,
-                                    hardness, aspect_ratio, angle);
+  brush = GIMP_BRUSH (gimp_brush_generated_new (name, shape, radius, spikes,
+                                                hardness, aspect_ratio, angle));
   g_free (name);
 
-  GIMP_BRUSH (brush)->spacing = spacing;
+  brush->spacing = spacing;
 
   return g_list_prepend (NULL, brush);
 
