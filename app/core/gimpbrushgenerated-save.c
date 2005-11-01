@@ -559,9 +559,6 @@ gimp_brush_generated_new (const gchar             *name,
 
   GIMP_BRUSH (brush)->spacing = 20;
 
-  /* render brush mask */
-  gimp_data_dirty (GIMP_DATA (brush));
-
   return GIMP_DATA (brush);
 }
 
@@ -709,22 +706,11 @@ gimp_brush_generated_load (const gchar  *filename,
 
   fclose (file);
 
-  /* create new brush */
-  brush = g_object_new (GIMP_TYPE_BRUSH_GENERATED,
-                        "name",         name,
-                        "shape",        shape,
-                        "radius",       radius,
-                        "spikes",       spikes,
-                        "hardness",     hardness,
-                        "aspect-ratio", aspect_ratio,
-                        "angle",        angle,
-                        NULL);
+  brush = gimp_brush_generated_new (name, shape, radius, spikes,
+                                    hardness, aspect_ratio, angle);
   g_free (name);
 
   GIMP_BRUSH (brush)->spacing = spacing;
-
-  /* render brush mask */
-  gimp_data_dirty (GIMP_DATA (brush));
 
   return g_list_prepend (NULL, brush);
 
