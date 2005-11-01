@@ -1,3 +1,4 @@
+# translation of gimp-script-fu.HEAD.po to Bulgarian
 # Bulgarian translation of gimp script-fu
 # Copyright (C) 2005 THE GIMP'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the GIMP package.
@@ -5,120 +6,111 @@
 # Victor Dachev <vdachev@gmail.com>, 2005.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp CVS HEAD\n"
+"Project-Id-Version: gimp-script-fu.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-09 13:38+0300\n"
-"PO-Revision-Date: 2005-08-09 13:25+0300\n"
+"POT-Creation-Date: 2005-11-01 10:28+0200\n"
+"PO-Revision-Date: 2005-11-01 10:28+0200\n"
 "Last-Translator: Victor Dachev <vdachev@gmail.com>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: KBabel 1.10\n"
 
-#: ../plug-ins/script-fu/script-fu-console.c:129
-#: ../plug-ins/script-fu/script-fu-text-console.c:67
-msgid "Script-Fu console mode allows only interactive invocation"
-msgstr "В конзолен режим Script-Fu позволява интерактивно извикване"
-
-#: ../plug-ins/script-fu/script-fu-console.c:162
+#: ../plug-ins/script-fu/script-fu-console.c:144
 msgid "Script-Fu Console"
 msgstr "Конзола на Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:255
+#: ../plug-ins/script-fu/script-fu-console.c:237
 msgid "_Browse..."
 msgstr "_Отваряне..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:591
+#: ../plug-ins/script-fu/script-fu-console.c:275
+msgid "Script-Fu Procedure Browser"
+msgstr "Script-Fu процедурен четец"
+
+#: ../plug-ins/script-fu/script-fu-console.c:584
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Script-Fu в текстов режим позволява неинтерактивни действия"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:175
+#: ../plug-ins/script-fu/script-fu-interface.c:174
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu не може да пусне два скрипта едновременно."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:177
+#: ../plug-ins/script-fu/script-fu-interface.c:176
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Вече е пуснат скрипта „%s“."
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: ../plug-ins/script-fu/script-fu-interface.c:200
-#: ../plug-ins/script-fu/script-fu-interface.c:202
+#: ../plug-ins/script-fu/script-fu-interface.c:199
+#: ../plug-ins/script-fu/script-fu-interface.c:201
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:215
+#: ../plug-ins/script-fu/script-fu-interface.c:214
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
-#. the script arguments frame
-#: ../plug-ins/script-fu/script-fu-interface.c:255
-msgid "Script Arguments"
-msgstr "Параметри на скрипта"
-
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: ../plug-ins/script-fu/script-fu-interface.c:287
+#: ../plug-ins/script-fu/script-fu-interface.c:281
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:330
+#: ../plug-ins/script-fu/script-fu-interface.c:324
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu избор на цвят"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:434
+#: ../plug-ins/script-fu/script-fu-interface.c:431
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu избор на файл"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:438
+#: ../plug-ins/script-fu/script-fu-interface.c:435
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu избор на папка"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:450
+#: ../plug-ins/script-fu/script-fu-interface.c:449
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu избор на шрифт"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:458
+#: ../plug-ins/script-fu/script-fu-interface.c:457
 msgid "Script-Fu Palette Selection"
 msgstr "Script-Fu избор на палитра"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:466
+#: ../plug-ins/script-fu/script-fu-interface.c:465
 msgid "Script-fu Pattern Selection"
 msgstr "Script-Fu избор на шарка"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:473
+#: ../plug-ins/script-fu/script-fu-interface.c:472
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu избор на преливка"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:481
+#: ../plug-ins/script-fu/script-fu-interface.c:480
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu избор на четка"
 
-#. the script progress frame
-#: ../plug-ins/script-fu/script-fu-interface.c:548
-msgid "Script Progress"
-msgstr "Прогрес на скрипта"
+#: ../plug-ins/script-fu/script-fu-interface.c:1008
+#, c-format
+msgid "About %s"
+msgstr "Относно %s"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:556
-msgid "(none)"
-msgstr "(няма)"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:1084
+#: ../plug-ins/script-fu/script-fu-interface.c:1073
 msgid "Author:"
 msgstr "Автор:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1091
+#: ../plug-ins/script-fu/script-fu-interface.c:1080
 msgid "Copyright:"
 msgstr "Права:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1098
+#: ../plug-ins/script-fu/script-fu-interface.c:1087
 msgid "Date:"
 msgstr "Дата:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1107
+#: ../plug-ins/script-fu/script-fu-interface.c:1096
 msgid "Image Types:"
 msgstr "Видове изображения"
 
@@ -137,12 +129,16 @@ msgstr ""
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu настройки на сървъра"
 
+#: ../plug-ins/script-fu/script-fu-server.c:658
+msgid "_Start Server"
+msgstr "_Включване на сървъра"
+
 #: ../plug-ins/script-fu/script-fu-server.c:686
-msgid "Server Port:"
+msgid "Server port:"
 msgstr "Порт на сървъра:"
 
 #: ../plug-ins/script-fu/script-fu-server.c:692
-msgid "Server Logfile:"
+msgid "Server logfile:"
 msgstr "Журнал на сървъра:"
 
 #: ../plug-ins/script-fu/script-fu.c:116
@@ -150,8 +146,9 @@ msgid "Script-Fu _Console"
 msgstr "_Конзола на Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu.c:123 ../plug-ins/script-fu/script-fu.c:152
-#: ../plug-ins/script-fu/script-fu.c:321
-msgid "<Toolbox>/Xtns/Script-Fu"
+#: ../plug-ins/script-fu/script-fu.c:315
+#, fuzzy
+msgid "<Toolbox>/Xtns/Languages/Script-Fu"
 msgstr "<Кутия с инструменти>/Разширения/Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu.c:145
@@ -171,66 +168,54 @@ msgid "_Logos"
 msgstr "_Лога"
 
 #: ../plug-ins/script-fu/script-fu.c:276
-msgid "Make Br_ush"
-msgstr "Създаване на _Четка"
-
-#: ../plug-ins/script-fu/script-fu.c:278
 msgid "_Misc"
 msgstr "_Други"
 
-#: ../plug-ins/script-fu/script-fu.c:280
+#: ../plug-ins/script-fu/script-fu.c:278
 msgid "_Patterns"
 msgstr "_Шарки"
 
-#: ../plug-ins/script-fu/script-fu.c:282
+#: ../plug-ins/script-fu/script-fu.c:280
 msgid "_Test"
 msgstr "_Проба"
 
-#: ../plug-ins/script-fu/script-fu.c:284
+#: ../plug-ins/script-fu/script-fu.c:282
 msgid "_Utils"
 msgstr "_Инструменти"
 
-#: ../plug-ins/script-fu/script-fu.c:286
+#: ../plug-ins/script-fu/script-fu.c:284
 msgid "_Web Page Themes"
 msgstr "_Теми за уеб сайтове"
 
-#: ../plug-ins/script-fu/script-fu.c:288
+#: ../plug-ins/script-fu/script-fu.c:286
 msgid "_Alien Glow"
 msgstr "_Извънземно сияние"
 
-#: ../plug-ins/script-fu/script-fu.c:290
+#: ../plug-ins/script-fu/script-fu.c:288
 msgid "_Beveled Pattern"
 msgstr "_Заоблена шарка"
 
-#: ../plug-ins/script-fu/script-fu.c:292
+#: ../plug-ins/script-fu/script-fu.c:290
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
-#: ../plug-ins/script-fu/script-fu.c:295
+#: ../plug-ins/script-fu/script-fu.c:293
 msgid "Alpha to _Logo"
 msgstr "Прозрачност в _Лого"
 
-#: ../plug-ins/script-fu/script-fu.c:297
+#: ../plug-ins/script-fu/script-fu.c:295
 msgid "A_nimators"
 msgstr "_Аниматори"
 
-#: ../plug-ins/script-fu/script-fu.c:299
+#: ../plug-ins/script-fu/script-fu.c:297
 msgid "_Decor"
 msgstr "_Декор"
 
-#: ../plug-ins/script-fu/script-fu.c:301
+#: ../plug-ins/script-fu/script-fu.c:299
 msgid "_Render"
 msgstr "_Генериране"
 
-#: ../plug-ins/script-fu/script-fu.c:303
-msgid "_Selection"
-msgstr "_Селекция"
-
-#: ../plug-ins/script-fu/script-fu.c:305
-msgid "Stencil _Ops"
-msgstr "_Шаблонни шарки"
-
-#: ../plug-ins/script-fu/script-fu.c:313
+#: ../plug-ins/script-fu/script-fu.c:307
 msgid "_Refresh Scripts"
 msgstr "_Обновяване на скриптовете"
 
@@ -243,7 +228,7 @@ msgid "Bumpmap (alpha layer) blur radius"
 msgstr "Радиус на замъгляване за картата на релефа (слой с прозрачност)"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:3
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:5
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:4
 msgid "Default bumpmap settings"
 msgstr "Стойности по подразбиране за картата на релефа"
 
@@ -257,20 +242,20 @@ msgstr "Стойности по подразбиране за картата н�
 #: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:2
 #: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:9
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:3
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:3
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:6
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:3
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:3
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:3
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:3
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:2
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:6
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:5
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:3
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:6
@@ -297,20 +282,20 @@ msgstr "Шрифт"
 #: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:3
 #: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:2
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:10
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:4
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:7
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:4
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:3
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:7
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:6
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:4
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:2
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:7
@@ -342,13 +327,13 @@ msgid "Pattern"
 msgstr "Шарка"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:8
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:15
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:14
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:5
 msgid "Shadow X offset"
 msgstr "Изместване по хоризонтал на сянката"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:9
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:16
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:15
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:6
 msgid "Shadow Y offset"
 msgstr "Изместване по вертикал на сянката"
@@ -367,20 +352,20 @@ msgstr "Радиус на замъгляване за сянката"
 #: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:6
 #: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:5
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:15
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:5
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:12
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:9
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:11
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:13
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:17
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:16
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:9
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:6
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:9
@@ -410,9 +395,9 @@ msgstr "3_D Truchet..."
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:1
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:1
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:1
@@ -652,7 +637,7 @@ msgid "B_asic II..."
 msgstr "О_сновен II..."
 
 #: ../plug-ins/script-fu/scripts/beveled-button.scm.h:1
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:1
 msgid "Bevel width"
 msgstr "Ширина на заоблянето"
@@ -691,15 +676,15 @@ msgstr "_Заглавие..."
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:4
-#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:3
-#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:3
+#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:2
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:2
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:6
 msgid "Height"
 msgstr "Височина"
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:3
 #: ../plug-ins/script-fu/scripts/gradient-example.scm.h:4
-#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:7
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:9
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:10
 msgid "Width"
 msgstr "Ширина"
@@ -757,7 +742,7 @@ msgstr "Преливка"
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:12
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:2
+#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:1
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:4
 #: ../plug-ins/script-fu/scripts/title-header.scm.h:3
 msgid "Gradient reverse"
@@ -767,20 +752,15 @@ msgstr "Обърната преливка"
 msgid "Offset (pixels)"
 msgstr "Отстъп (в пиксели)"
 
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:1
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:1
-msgid "Background Color"
-msgstr "Цвят на фона"
-
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
 msgid "Bo_vination..."
 msgstr "_Забавяне..."
 
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:5
 msgid "Spots density X"
 msgstr "Гъстота на петната по хоризонтал"
 
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:6
 msgid "Spots density Y"
 msgstr "Гъстота на петнатапо вертикал"
 
@@ -852,20 +832,21 @@ msgid "_Camouflage..."
 msgstr "_Камуфлаж..."
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:1
-msgid "C_arve-It..."
-msgstr "_Издълбаване..."
-
-#: ../plug-ins/script-fu/scripts/carve-it.scm.h:2
 msgid "Carve white areas"
 msgstr "Издълбаване на белите полета"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm.h:3
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:2
 msgid "Image to carve"
 msgstr "Изображение за издълбаване"
 
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:3
+msgid "Stencil C_arve..."
+msgstr "_Шаблони за издълбаване..."
+
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:1
-msgid "Background Image"
-msgstr "Фоново изображение"
+#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:1
+msgid "Background image"
+msgstr "Изображение за фон"
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:2
 msgid "Carve raised text"
@@ -916,50 +897,50 @@ msgid "Keep background"
 msgstr "Запазване на фона"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:1
-msgid "C_hrome-It..."
-msgstr "_Хромиране..."
-
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:2
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:1
 msgid "Chrome balance"
 msgstr "Баланс на хрома"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:3
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:2
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:2
 msgid "Chrome factor"
 msgstr "Фактор на хрома"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:4
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:3
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:3
 msgid "Chrome lightness"
 msgstr "Светлина на хрома"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:5
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:4
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:4
 msgid "Chrome saturation"
 msgstr "Насищане на хрома"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:6
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:5
 msgid "Chrome white areas"
 msgstr "Хромиране на белите зони"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:7
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:6
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:5
 msgid "Environment map"
 msgstr "Карта на обкръжение"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:8
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:7
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:8
 msgid "Highlight balance"
 msgstr "Баланс на светлите области"
 
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:8
+msgid "Stencil C_hrome..."
+msgstr "_Шаблони за хром..."
+
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:2
 msgid "C_hrome..."
 msgstr "_Хром..."
 
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:5
 msgid "Offsets (pixels * 2)"
 msgstr "Отместване (в пиксели *2)"
 
@@ -1020,9 +1001,10 @@ msgid "_Clothify..."
 msgstr "_Тъкан..."
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:1
+#, fuzzy
 msgid ""
 "Darken only\n"
-"(Better, but only for images with alot of white)"
+"(Better, but only for images with a lot of white)"
 msgstr ""
 "Само тъмните\n"
 "(По-добре, но само за изображения с много бяло)"
@@ -1044,7 +1026,7 @@ msgid "Outline color"
 msgstr "Цвят на очертание"
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:10
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:9
 msgid "Outline size"
 msgstr "Размер на очертание"
 
@@ -1056,10 +1038,6 @@ msgstr "Хладен _Метал..."
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:2
 msgid "Effect size (pixels)"
 msgstr "Размер на ефекта (в пиксели)"
-
-#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:1
-msgid "Background image"
-msgstr "Изображение за фон"
 
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:3
 msgid "Crystal..."
@@ -1086,8 +1064,8 @@ msgid "Threshold (bigger 1<-->255 smaller)"
 msgstr "Праг (по-голям 1<-->255 по-малък)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:7
-msgid "_Distress Selection..."
-msgstr "_Повреждане на селекцията..."
+msgid "_Distort..."
+msgstr "_Деформиране..."
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:1
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:1
@@ -1165,7 +1143,8 @@ msgid "Rows/cols"
 msgstr "Редове/колони"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:10
-msgid "_Erase every other Row..."
+#, fuzzy
+msgid "_Erase Every Other Row..."
 msgstr "_Изтриване на всеки втори ред..."
 
 #: ../plug-ins/script-fu/scripts/fade-outline.scm.h:1
@@ -1189,16 +1168,16 @@ msgstr "Избледняване от %"
 
 #: ../plug-ins/script-fu/scripts/fade-outline.scm.h:7
 #, no-c-format
-msgid "Fade to   %"
-msgstr "Избледняване до   %"
+msgid "Fade to %"
+msgstr "Избледняване до %"
 
 #: ../plug-ins/script-fu/scripts/fade-outline.scm.h:8
 msgid "Use growing selection"
 msgstr "Използване на нарастваща селекция"
 
 #: ../plug-ins/script-fu/scripts/fade-outline.scm.h:9
-msgid "_Fade Outline..."
-msgstr "_Избледняване на очертание..."
+msgid "_Fade to Layer Mask..."
+msgstr "_Преливане до слоева маска..."
 
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:1
 #: ../plug-ins/script-fu/scripts/land.scm.h:1
@@ -1247,24 +1226,24 @@ msgid "Font _size (pixels)"
 msgstr "Размер на _шрифта (в пиксели)"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:4
+msgid "Render _Font Map..."
+msgstr "Генерирана _карта на шрифта..."
+
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:5
 msgid "Use font _name as text"
 msgstr "Използване _името на шрифта като текст"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm.h:5
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:6
 msgid "_Border (pixels)"
 msgstr "_Граница (в пиксели)"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm.h:6
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:7
 msgid "_Color scheme"
 msgstr "_Цветова схема"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm.h:7
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:8
 msgid "_Filter (regexp)"
 msgstr "_Филтър (regexp)"
-
-#: ../plug-ins/script-fu/scripts/font-map.scm.h:8
-msgid "_Font Map..."
-msgstr "Карта на _шрифта..."
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:9
 msgid "_Labels"
@@ -1362,55 +1341,51 @@ msgid "_Tube Button Label..."
 msgstr "Преглед на долния етикет..."
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:2
-msgid "Blend gradient (Text)"
-msgstr "Преливка (Текст)"
-
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:3
 msgid "Blend gradient (outline)"
 msgstr "Преливка (очертание)"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:4
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:3
 msgid "Blend gradient (text)"
 msgstr "Преливка (текст)"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:8
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:7
 msgid "Glo_ssy..."
 msgstr "_Лъскаво..."
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:9
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:8
 msgid "Outline gradient reverse"
 msgstr "Обръщане преливката на очертанията"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:11
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:10
 msgid "Pattern (outline)"
 msgstr "Шарка (очертание)"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:12
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:11
 msgid "Pattern (overlay)"
 msgstr "Шарка (подложка)"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:13
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:12
 msgid "Pattern (text)"
 msgstr "Шарка (текст)"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:14
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:13
 #: ../plug-ins/script-fu/scripts/sphere.scm.h:4
 msgid "Shadow"
 msgstr "Сянка"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:18
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:17
 msgid "Text gradient reverse"
 msgstr "Обръщане преливката на текста"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:19
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:18
 msgid "Use pattern for outline instead of gradient"
 msgstr "Използване на шарка за очертание, вместо преливка"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:20
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:19
 msgid "Use pattern for text instead of gradient"
 msgstr "Използване на шарка за текст, вместо преливка"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:21
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:20
 msgid "Use pattern overlay"
 msgstr "Използване на шарка за покритие"
 
@@ -1423,26 +1398,22 @@ msgid "Glo_wing Hot..."
 msgstr "_Горещо сияние..."
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:2
-msgid "Bevel height (Sharpness)"
-msgstr "Височина на заоблянето (Острота)"
-
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
 msgid "Bevel height (sharpness)"
 msgstr "Височина на заоблянето (острота)"
 
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:3
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:2
 msgid "Border size (pixels)"
 msgstr "Размер на границата (в пиксели)"
 
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
 msgid "Gradient Beve_l..."
 msgstr "Заобляне с _преливка..."
 
-#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:1
-msgid "Custom _Gradient..."
-msgstr "Собствена _преливка..."
+#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:3
+msgid "Render _Image..."
+msgstr "Генериране на _изображение..."
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm.h:1
 msgid "X divisions"
@@ -1453,8 +1424,8 @@ msgid "Y divisions"
 msgstr "Разделяне по вертикал"
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm.h:3
-msgid "_Grid..."
-msgstr "_Мрежа..."
+msgid "_Divisions..."
+msgstr "_Разделения..."
 
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm.h:1
 msgid "Creates four Guides around the bounding box of the current selection."
@@ -1594,33 +1565,34 @@ msgid "Sharpness (degrees)"
 msgstr "Острота (в градуси)"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:1
-msgid "Elli_ptical, Feathered..."
-msgstr "_Елиптично, смекчено..."
-
-#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:2
 msgid "Feathering"
 msgstr "Избледняващо"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:4
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:3
 msgid "Name"
 msgstr "Име"
 
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:4
+msgid "New Elli_ptical..."
+msgstr "_Ново елиптично запълване..."
+
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:5
-msgid "Re_ctangular, Feathered..."
-msgstr "_Правоъгълно, смекчено..."
+msgid "New Elliptical, Feathered..."
+msgstr "_Ново елиптично, смекчено..."
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:6
+msgid "New Re_ctangular..."
+msgstr "_Ново правоъгълно..."
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:7
+msgid "New Rectangular, Feathered..."
+msgstr "_Ново правоъгълно, смекчено..."
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:8
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:4
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:3
 msgid "Spacing"
 msgstr "Разстояние"
-
-#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:8
-msgid "_Elliptical..."
-msgstr "_Елиптично..."
-
-#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:9
-msgid "_Rectangular..."
-msgstr "_Правоъгълно..."
 
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:2
 msgid "Create shadow"
@@ -1663,6 +1635,31 @@ msgstr "Сепия"
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:6
 msgid "_Old Photo..."
 msgstr "_Стара фотография..."
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:1
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:1
+msgid "Brush name"
+msgstr "Име на четката"
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:2
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:1
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:2
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
+msgid "File name"
+msgstr "Име на файла"
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:3
+msgid "New _Brush..."
+msgstr "Нова _четка..."
+
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:2
+msgid "New _Pattern..."
+msgstr "Нова _шарка..."
+
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:3
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:2
+msgid "Pattern name"
+msgstr "Име на шарката"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:2
 msgid "Angle"
@@ -1749,8 +1746,8 @@ msgid "Behavior"
 msgstr "Поведение"
 
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:2
-msgid "Detail in Middle"
-msgstr "Детайл в средата"
+msgid "Detail in middle"
+msgstr "Детайлност в средата"
 
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:7
 msgid "Render _Map..."
@@ -1805,14 +1802,6 @@ msgstr "Радиус на ръбовете"
 msgid "_Round Corners..."
 msgstr "_Заоблени ръбове..."
 
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:1
-msgid "Brush name"
-msgstr "Име на четката"
-
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:2
-msgid "File name"
-msgstr "Име на файла"
-
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:4
 msgid "To _Brush..."
 msgstr "В _четка..."
@@ -1820,14 +1809,6 @@ msgstr "В _четка..."
 #: ../plug-ins/script-fu/scripts/select-to-image.scm.h:1
 msgid "To _Image"
 msgstr "В _изображение"
-
-#: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
-msgid "Filename"
-msgstr "Име на файла"
-
-#: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:2
-msgid "Pattern name"
-msgstr "Име на шарката"
 
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:3
 msgid "To _Pattern..."
@@ -1931,11 +1912,13 @@ msgid "Frame"
 msgstr "Рамка"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:10
-msgid "Gradient: Loop Sawtooth"
+#, fuzzy
+msgid "Gradient: loop sawtooth"
 msgstr "Преливка: повторение - трион"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:11
-msgid "Gradient: Loop Triangle"
+#, fuzzy
+msgid "Gradient: loop triangle"
 msgstr "Преливка: триъгълно повторение"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:12
