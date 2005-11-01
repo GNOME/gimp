@@ -134,8 +134,8 @@ plug_ins_init (Gimp               *gimp,
       filename = gimp_personal_rc_file ("pluginrc");
     }
 
-  (* status_callback) (_("Resource configuration"),
-		       gimp_filename_to_utf8 (filename), -1);
+  status_callback (_("Resource configuration"),
+                   gimp_filename_to_utf8 (filename), -1);
 
   if (! plug_in_rc_parse (gimp, filename, &error))
     {
@@ -145,10 +145,10 @@ plug_ins_init (Gimp               *gimp,
       g_clear_error (&error);
     }
 
-  /*  Query any plug-ins that have changed since we last wrote out
-   *  the pluginrc file.
+  /*  query any plug-ins that have changed since we last wrote out
+   *  the pluginrc file
    */
-  (* status_callback) (_("Querying new Plug-ins"), "", 0);
+  status_callback (_("Querying new Plug-ins"), "", 0);
 
   for (list = gimp->plug_in_defs, n_plugins = 0; list; list = list->next)
     {
@@ -170,8 +170,7 @@ plug_ins_init (Gimp               *gimp,
             continue;
 
           basename = g_filename_display_basename (plug_in_def->prog);
-          (* status_callback) (NULL, basename,
-                               (gdouble) nth / (gdouble) n_plugins);
+          status_callback (NULL, basename, (gdouble) nth / (gdouble) n_plugins);
           g_free (basename);
 
 	  if (gimp->be_verbose)
@@ -182,10 +181,10 @@ plug_ins_init (Gimp               *gimp,
 	}
     }
 
-  (* status_callback) (NULL, NULL, 1.0);
+  status_callback (NULL, NULL, 1.0);
 
   /* initialize the plug-ins */
-  (* status_callback) (_("Initializing Plug-ins"), "", 0);
+  status_callback (_("Initializing Plug-ins"), "", 0);
 
   for (list = gimp->plug_in_defs, n_plugins = 0; list; list = list->next)
     {
@@ -205,8 +204,7 @@ plug_ins_init (Gimp               *gimp,
             continue;
 
           basename = g_filename_display_basename (plug_in_def->prog);
-          (* status_callback) (NULL, basename,
-                               (gdouble) nth / (gdouble) n_plugins);
+          status_callback (NULL, basename, (gdouble) nth / (gdouble) n_plugins);
           g_free (basename);
 
           if (gimp->be_verbose)
@@ -217,7 +215,7 @@ plug_ins_init (Gimp               *gimp,
         }
     }
 
-  (* status_callback) (NULL, NULL, 1.0);
+  status_callback (NULL, NULL, 1.0);
 
   /* insert the proc defs */
   for (list = gimp->plug_in_defs; list; list = list->next)
@@ -270,8 +268,7 @@ plug_ins_init (Gimp               *gimp,
   if (gimp->write_pluginrc)
     {
       if (gimp->be_verbose)
-	g_print (_("Writing '%s'\n"),
-		 gimp_filename_to_utf8 (filename));
+	g_print (_("Writing '%s'\n"), gimp_filename_to_utf8 (filename));
 
       if (! plug_in_rc_write (gimp->plug_in_defs, filename, &error))
         {
@@ -338,7 +335,7 @@ plug_ins_init (Gimp               *gimp,
     {
       GList *list;
 
-      (* status_callback) (_("Starting Extensions"), "", 0);
+      status_callback (_("Starting Extensions"), "", 0);
 
       for (list = extensions, nth = 0; list; list = g_list_next (list), nth++)
         {
@@ -347,14 +344,14 @@ plug_ins_init (Gimp               *gimp,
 	  if (gimp->be_verbose)
 	    g_print (_("Starting extension: '%s'\n"), proc_def->db_info.name);
 
-	  (* status_callback) (NULL, proc_def->db_info.name,
-                               (gdouble) nth / (gdouble) n_extensions);
+	  status_callback (NULL, proc_def->db_info.name,
+                           (gdouble) nth / (gdouble) n_extensions);
 
 	  plug_in_run (gimp, context, NULL, &proc_def->db_info,
                        NULL, 0, FALSE, TRUE, -1);
 	}
 
-      (* status_callback) (NULL, NULL, 1.0);
+      status_callback (NULL, NULL, 1.0);
 
       g_list_free (extensions);
     }
@@ -535,6 +532,7 @@ plug_ins_file_register_thumb_loader (Gimp        *gimp,
     {
       if (proc_def->thumb_loader)
         g_free (proc_def->thumb_loader);
+
       proc_def->thumb_loader = g_strdup (thumb_proc);
     }
 
@@ -860,9 +858,7 @@ plug_ins_proc_def_find (Gimp       *gimp,
 
   for (list = gimp->plug_in_proc_defs; list; list = list->next)
     {
-      PlugInProcDef *proc_def;
-
-      proc_def = (PlugInProcDef *) list->data;
+      PlugInProcDef *proc_def = list->data;
 
       if (proc_rec == &proc_def->db_info)
         return proc_def;
@@ -1005,8 +1001,7 @@ plug_ins_init_file (const GimpDatafileData *file_data,
     {
       gchar *plug_in_name;
 
-      plug_in_def = (PlugInDef *) list->data;
-
+      plug_in_def  = list->data;
       plug_in_name = g_path_get_basename (plug_in_def->prog);
 
       if (g_ascii_strcasecmp (file_data->basename, plug_in_name) == 0)
@@ -1115,6 +1110,7 @@ plug_ins_file_proc_compare (gconstpointer a,
 
   if (strncmp (proc_a->prog, "gimp-xcf", 8) == 0)
     return -1;
+
   if (strncmp (proc_b->prog, "gimp-xcf", 8) == 0)
     return 1;
 

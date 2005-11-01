@@ -1,3 +1,7 @@
+2005-11-01  Sven Neumann  <sven@gimp.org>
+
+	* app/plug-in/plug-ins.c: formatting.
+
 2005-10-31  Michael Natterer  <mitch@gimp.org>
 
 	Applied modified patch from Luis de Bethencourt Guimera which adds
