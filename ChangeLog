@@ -1,5 +1,9 @@
 2005-11-02  Michael Natterer  <mitch@gimp.org>
 
+	* app/text/gimptext.c: code cleanup, untabified.
+
+2005-11-02  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/data-commands.c
 	* app/core/gimpprogress.c: #include "gimp.h" instead of "gimp-gui.h"
 
