@@ -1,3 +1,7 @@
+2005-11-02  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/actions/data-commands.c: add missing include file.
+
 2005-11-02  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimagefile.c
