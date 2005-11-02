@@ -167,6 +167,7 @@ uri_backend_load_image (const gchar  *uri,
 
       /*  The third line is "Connecting to..."  */
 
+      /* translate with the appropriate plural form for many seconds */
       timeout_msg = g_strdup_printf (_("(timeout is %s seconds)"), TIMEOUT);
 
       gimp_progress_init_printf ("%s %s",

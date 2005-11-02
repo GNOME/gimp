@@ -1,3 +1,9 @@
+2005-11-02  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimpprocbrowserdialog.c
+	* plug-ins/uri/uri-backend-wget.c: added translator comments for
+	plural forms (bug #320461 and bug #320462).
+
 2005-11-02  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpsizebox.[ch]: added a GtkSizeGroup member and put
