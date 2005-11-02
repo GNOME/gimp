@@ -481,6 +481,7 @@ browser_search (GimpBrowser           *browser,
 
   if (! query_text || strlen (query_text) == 0)
     {
+      /* translate with the appropriate plural form for a *lot* of procedures */
       str = g_strdup_printf (_("%d procedures"), num_procs);
     }
   else

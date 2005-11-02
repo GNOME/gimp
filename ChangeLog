@@ -1,3 +1,9 @@
+2005-11-02  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/gimpprocbrowserdialog.c (browser_search): added comment
+	that _("%d procedures") should be translated with a plural form
+	for *lots* of procedures. Fixes bug #320460.
+
 2005-11-01  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpbrushgenerated.c: fixed compiler warning.
