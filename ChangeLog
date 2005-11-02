@@ -1,3 +1,10 @@
+2005-11-02  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
+	* app/widgets/gimppropwidgets.c (gimp_prop_text_buffer_callback):
+	use g_utf8_strlen() to measure the length of the text.
+
 2005-10-31  Tor Lillqvist  <tml@novell.com>
 
 	* gimptool-win32.c.in: Drop unnecessary <sys/stat.h>.

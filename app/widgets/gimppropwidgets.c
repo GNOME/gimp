@@ -1532,7 +1532,7 @@ gimp_prop_text_buffer_callback (GtkTextBuffer *text_buffer,
   max_len = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (text_buffer),
                                                 "max-length"));
 
-  if (max_len > 0 && strlen (text) > max_len)
+  if (max_len > 0 && g_utf8_strlen (text, -1) > max_len)
     {
       g_message (_("This text input field is limited to %d characters."),
                  max_len);
