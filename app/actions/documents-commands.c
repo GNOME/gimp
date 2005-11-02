@@ -160,7 +160,8 @@ documents_copy_location_cmd_callback (GtkAction *action,
   imagefile = gimp_context_get_imagefile (context);
 
   if (imagefile)
-    gimp_clipboard_set_text (gimp_object_get_name (GIMP_OBJECT (imagefile)));
+    gimp_clipboard_set_text (context->gimp,
+                             gimp_object_get_name (GIMP_OBJECT (imagefile)));
 }
 
 void

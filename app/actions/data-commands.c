@@ -181,7 +181,7 @@ data_copy_location_cmd_callback (GtkAction *action,
 
   data = (GimpData *)
     gimp_context_get_by_type (context,
-			      view->factory->container->children_type);
+                              view->factory->container->children_type);
 
   if (data && data->filename && *data->filename)
     {
@@ -189,7 +189,7 @@ data_copy_location_cmd_callback (GtkAction *action,
 
       if (uri)
         {
-          gimp_clipboard_set_text (uri);
+          gimp_clipboard_set_text (context->gimp, uri);
           g_free (uri);
         }
     }

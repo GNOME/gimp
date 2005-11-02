@@ -34,8 +34,8 @@ void         gimp_clipboard_set_buffer (Gimp        *gimp,
                                         GimpBuffer  *buffer);
 void         gimp_clipboard_set_svg    (Gimp        *gimp,
                                         const gchar *svg);
-
-void         gimp_clipboard_set_text   (const gchar *text);
+void         gimp_clipboard_set_text   (Gimp        *gimp,
+                                        const gchar *text);
 
 
 #endif /* __GIMP_CLIPBOARD_H__ */

@@ -1,5 +1,14 @@
 2005-11-02  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpclipboard.[ch] (gimp_clipboard_set_text): clear
+	the GIMP clipboard. Suppress debug output unless gimp is started
+	with the --verbose command-line option.
+
+	* app/actions/data-commands.c
+	* app/actions/documents-commands.c: adapt to clipboard API change.
+
+2005-11-02  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpprocbrowserdialog.c
 	* plug-ins/uri/uri-backend-wget.c: added translator comments for
 	plural forms (bug #320461 and bug #320462).
