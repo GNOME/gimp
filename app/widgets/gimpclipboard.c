@@ -477,6 +477,7 @@ gimp_clipboard_set_text (Gimp        *gimp,
 {
   GtkClipboard *clipboard;
 
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (text != NULL);
 
   gimp_clipboard_clear (gimp_clipboard_get (gimp));

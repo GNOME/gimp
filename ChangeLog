@@ -1,5 +1,10 @@
 2005-11-02  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpclipboard.c (gimp_clipboard_set_text): added
+	g_return_if_fail (GIMP_IS_GIMP (gimp)).
+
+2005-11-02  Michael Natterer  <mitch@gimp.org>
+
 	* app/text/gimptext.c: code cleanup, untabified.
 
 2005-11-02  Michael Natterer  <mitch@gimp.org>
