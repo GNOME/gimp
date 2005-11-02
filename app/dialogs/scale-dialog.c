@@ -185,6 +185,8 @@ scale_dialog_new (GimpViewable          *viewable,
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
+  gtk_size_group_add_widget (GIMP_SIZE_BOX (private->box)->size_group, label);
+
   private->combo = gimp_enum_combo_box_new (GIMP_TYPE_INTERPOLATION_TYPE);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), private->combo);
   gtk_box_pack_start (GTK_BOX (hbox), private->combo, TRUE, TRUE, 0);

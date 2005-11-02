@@ -39,6 +39,8 @@ struct _GimpSizeBox
 {
   GtkVBox       parent_instance;
 
+  GtkSizeGroup *size_group;
+
   gint          width;
   gint          height;
   GimpUnit      unit;

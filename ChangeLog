@@ -1,5 +1,13 @@
 2005-11-02  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpsizebox.[ch]: added a GtkSizeGroup member and put
+	all labels into the group.
+
+	* app/dialogs/scale-dialog.c: put the "Interpolation:" label into
+	the same size box.
+
+2005-11-02  Michael Natterer  <mitch@gimp.org>
+
 	* libgimp/gimpprocbrowserdialog.c (browser_search): added comment
 	that _("%d procedures") should be translated with a plural form
 	for *lots* of procedures. Fixes bug #320460.

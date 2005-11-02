@@ -82,6 +82,8 @@ static void      gimp_size_box_get_property   (GObject         *object,
                                                GValue          *value,
                                                GParamSpec      *pspec);
 
+static void      gimp_size_box_destroy        (GtkObject       *object);
+
 static void      gimp_size_box_update_size       (GimpSizeBox *box);
 static void      gimp_size_box_update_resolution (GimpSizeBox *box);
 
@@ -120,13 +122,16 @@ gimp_size_box_get_type (void)
 static void
 gimp_size_box_class_init (GimpSizeBoxClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
+  GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
   object_class->constructor  = gimp_size_box_constructor;
   object_class->set_property = gimp_size_box_set_property;
   object_class->get_property = gimp_size_box_get_property;
+
+  gtk_object_class->destroy  = gimp_size_box_destroy;
 
   g_type_class_add_private (object_class, sizeof (GimpSizeBoxPrivate));
 
@@ -190,6 +195,8 @@ static void
 gimp_size_box_init (GimpSizeBox *box)
 {
   gtk_box_set_spacing (GTK_BOX (box), 6);
+
+  box->size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 }
 
 static GObject *
@@ -199,11 +206,13 @@ gimp_size_box_constructor (GType                  type,
 {
   GObject            *object;
   GimpSizeBox        *box;
+  GimpSizeBoxPrivate *priv;
   GtkWidget          *vbox;
   GtkWidget          *entry;
   GtkWidget          *hbox;
   GtkWidget          *label;
-  GimpSizeBoxPrivate *priv;
+  GList              *children;
+  GList              *list;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
@@ -247,6 +256,12 @@ gimp_size_box_constructor (GType                  type,
   gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
   gtk_widget_show (entry);
 
+  children = gtk_container_get_children (GTK_CONTAINER (entry));
+  for (list = children; list; list = g_list_next (list))
+    if (GTK_IS_LABEL (list->data))
+      gtk_size_group_add_widget (box->size_group, list->data);
+  g_list_free (children);
+
   vbox = gtk_vbox_new (2, FALSE);
   gtk_table_attach_defaults (GTK_TABLE (entry), vbox, 1, 3, 2, 3);
   gtk_widget_show (vbox);
@@ -281,6 +296,12 @@ gimp_size_box_constructor (GType                  type,
 
       gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
       gtk_widget_show (entry);
+
+      children = gtk_container_get_children (GTK_CONTAINER (entry));
+      for (list = children; list; list = g_list_next (list))
+        if (GTK_IS_LABEL (list->data))
+          gtk_size_group_add_widget (box->size_group, list->data);
+      g_list_free (children);
 
       gimp_prop_coordinates_connect (G_OBJECT (box),
                                      "xresolution", "yresolution",
@@ -416,6 +437,20 @@ gimp_size_box_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static void
+gimp_size_box_destroy (GtkObject *object)
+{
+  GimpSizeBox *box = GIMP_SIZE_BOX (object);
+
+  if (box->size_group)
+    {
+      g_object_unref (box->size_group);
+      box->size_group = NULL;
+    }
+
+  GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static void
