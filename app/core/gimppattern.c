@@ -301,9 +301,8 @@ gimp_pattern_load (const gchar  *filename,
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in pattern file '%s': "
-                     "Could not read %d bytes: %s"),
-                   gimp_filename_to_utf8 (filename),
-                   (gint) sizeof (header), g_strerror (errno));
+                     "File appears truncated."),
+                   gimp_filename_to_utf8 (filename));
       goto error;
     }
 
@@ -348,9 +347,8 @@ gimp_pattern_load (const gchar  *filename,
         {
           g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                        _("Fatal parse error in pattern file '%s': "
-                         "Could not read %d bytes: %s"),
-                       gimp_filename_to_utf8 (filename), bn_size,
-                       g_strerror (errno));
+                         "File appears truncated."),
+                       gimp_filename_to_utf8 (filename));
           g_free (name);
           goto error;
         }
@@ -380,10 +378,8 @@ gimp_pattern_load (const gchar  *filename,
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in pattern file '%s': "
-                     "Could not read %d bytes: %s"),
-                   gimp_filename_to_utf8 (filename),
-                   header.width * header.height * header.bytes,
-                   g_strerror (errno));
+                     "File appears truncated."),
+                   gimp_filename_to_utf8 (filename));
       goto error;
     }
 
