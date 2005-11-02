@@ -1,5 +1,10 @@
 2005-11-02  Sven Neumann  <sven@gimp.org>
 
+	* libgimpbase/gimpmemsize.c (gimp_memsize_to_string): use
+	dngettext() for plural form.
+
+2005-11-02  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimppattern.c: rephrased error message for consistency
 	and to avoid another plural form.
 

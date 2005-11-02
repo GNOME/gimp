@@ -174,7 +174,11 @@ gimp_memsize_to_string (guint64 memsize)
 
   if (memsize < 1024)
     {
-      return g_strdup_printf (_("%d Bytes"), (gint) memsize);
+      gint bytes = (gint) memsize;
+
+      return g_strdup_printf (dngettext (GETTEXT_PACKAGE "-libgimp",
+                                         "%d Byte",
+                                         "%d Bytes", bytes), bytes);
     }
 
   if (memsize < 1024 * 10)
