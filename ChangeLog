@@ -1,3 +1,7 @@
+2005-11-02  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/tga.c (save_image): allocate a tile cache.
+
 2005-11-02  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/actions/data-commands.c: add missing include file.
