@@ -1,3 +1,9 @@
+2005-11-02  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimppropwidgets.c: use g_utf8_strlen().
+
+	* plug-ins/uri/uri-backend-wget.c: use ngettext().
+
 2005-11-02  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimpprocbrowserdialog.c
@@ -16,7 +22,7 @@
 
 2005-11-02  Sven Neumann  <sven@gimp.org>
 
-	* libgimp/gimpprocbrowserdialog.c
+	* libgimpwidgets/gimppropwidgets.c
 	* plug-ins/uri/uri-backend-wget.c: added translator comments for
 	plural forms (bug #320461 and bug #320462).
 

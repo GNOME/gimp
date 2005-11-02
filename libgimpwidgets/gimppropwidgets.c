@@ -1788,13 +1788,16 @@ static void   gimp_prop_text_buffer_notify   (GObject       *config,
  * gimp_prop_text_buffer_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of string property.
- * @max_len:       Maximum allowed length of text.
+ * @max_len:       Maximum allowed length of text (in characters).
  *
  * Creates a #GtkTextBuffer to set and display the value of the
  * specified string property.  Unless the string is expected to
  * contain multiple lines or a large amount of text, use
  * gimp_prop_entry_new() instead.  See #GtkTextView for information on
  * how to insert a text buffer into a visible widget.
+ *
+ * If @max_len is 0 or negative, the text buffer allows an unlimited
+ * number of characters to be entered.
  *
  * Return value:  A new #GtkTextBuffer.
  *
@@ -1863,18 +1866,18 @@ gimp_prop_text_buffer_callback (GtkTextBuffer *text_buffer,
   max_len = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (text_buffer),
                                                 "max-length"));
 
-  if (max_len > 0 && strlen (text) > max_len)
+  if (max_len > 0 && g_utf8_strlen (text, -1) > max_len)
     {
       g_message (dngettext (GETTEXT_PACKAGE "-libgimp",
                             "This text input field is limited to %d character.",
                             "This text input field is limited to %d characters.",
                             max_len), max_len);
 
-      gtk_text_buffer_get_iter_at_offset (text_buffer, &start_iter,
-                                          max_len - 1);
+      gtk_text_buffer_get_iter_at_offset (text_buffer,
+                                          &start_iter, max_len - 1);
       gtk_text_buffer_get_end_iter (text_buffer, &end_iter);
 
-      /*  this calls us recursivaly, but in the else branch  */
+      /*  this calls us recursively, but in the else branch  */
       gtk_text_buffer_delete (text_buffer, &start_iter, &end_iter);
     }
   else
