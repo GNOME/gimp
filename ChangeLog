@@ -1,3 +1,7 @@
+2005-11-03  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/splash.c: set the splash image as back pixmap.
+
 2005-11-02  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpaction.c

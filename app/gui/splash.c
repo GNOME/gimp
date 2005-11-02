@@ -39,7 +39,6 @@ typedef struct
   gint            width;
   gint            height;
   GtkWidget      *progress;
-  GdkPixmap      *pixmap;
   GdkGC          *gc;
   PangoLayout    *upper;
   gint            upper_x, upper_y;
@@ -50,18 +49,20 @@ typedef struct
 static GimpSplash *splash = NULL;
 
 
-static void        splash_map             (void);
-static gboolean    splash_area_expose     (GtkWidget      *widget,
-                                           GdkEventExpose *event,
-                                           GimpSplash     *splash);
-static GdkPixbuf * splash_pick_from_dir   (const gchar    *dirname);
-static void        splash_rectangle_union (GdkRectangle   *dest,
-                                           PangoRectangle *pango_rect,
-                                           gint            offset_x,
-                                           gint            offset_y);
-static gboolean    splash_average_bottom  (GtkWidget      *widget,
-                                           GdkPixbuf      *pixbuf,
-                                           GdkColor       *color);
+static void        splash_map                 (void);
+static gboolean    splash_area_expose         (GtkWidget      *widget,
+                                               GdkEventExpose *event,
+                                               GimpSplash     *splash);
+static void        splash_rectangle_union     (GdkRectangle   *dest,
+                                               PangoRectangle *pango_rect,
+                                               gint            offset_x,
+                                               gint            offset_y);
+static gboolean    splash_average_bottom      (GtkWidget      *widget,
+                                               GdkPixbuf      *pixbuf,
+                                               GdkColor       *color);
+
+static GdkPixbuf * splash_image_load          (void);
+static GdkPixbuf * splash_image_pick_from_dir (const gchar    *dirname);
 
 
 /*  public functions  */
@@ -73,38 +74,14 @@ splash_create (void)
   GtkWidget      *vbox;
   GdkPixbuf      *pixbuf;
   GdkScreen      *screen;
+  GdkPixmap      *pixmap;
   PangoAttrList  *attrs;
   PangoAttribute *attr;
   GdkGCValues     values;
-  gchar          *filename;
 
   g_return_if_fail (splash == NULL);
 
-  filename = gimp_personal_rc_file ("gimp-splash.png");
-  pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
-  g_free (filename);
-
-  if (! pixbuf)
-    {
-      filename = gimp_personal_rc_file ("splashes");
-      pixbuf = splash_pick_from_dir (filename);
-      g_free (filename);
-    }
-
-  if (! pixbuf)
-    {
-      filename = g_build_filename (gimp_data_directory (),
-                                   "images", "gimp-splash.png", NULL);
-      pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
-      g_free (filename);
-    }
-
-  if (! pixbuf)
-    {
-      filename = g_build_filename (gimp_data_directory (), "splashes", NULL);
-      pixbuf = splash_pick_from_dir (filename);
-      g_free (filename);
-    }
+  pixbuf = splash_image_load ();
 
   if (! pixbuf)
     return;
@@ -160,12 +137,15 @@ splash_create (void)
   splash->gc = gdk_gc_new_with_values (splash->area->window, &values,
                                        GDK_GC_FOREGROUND);
 
-  splash->pixmap = gdk_pixmap_new (splash->area->window,
-                                   splash->width, splash->height, -1);
-  gdk_draw_pixbuf (splash->pixmap, splash->gc,
+  pixmap = gdk_pixmap_new (splash->area->window,
+                           splash->width, splash->height, -1);
+  gdk_draw_pixbuf (pixmap, splash->gc,
                    pixbuf, 0, 0, 0, 0, splash->width, splash->height,
                    GDK_RGB_DITHER_NORMAL, 0, 0);
   g_object_unref (pixbuf);
+
+  gdk_window_set_back_pixmap (splash->area->window, pixmap, FALSE);
+  g_object_unref (pixmap);
 
   g_signal_connect (splash->area, "expose-event",
                     G_CALLBACK (splash_area_expose),
@@ -189,10 +169,7 @@ splash_create (void)
   gtk_box_pack_end (GTK_BOX (vbox), splash->progress, FALSE, FALSE, 0);
   gtk_widget_show (splash->progress);
 
-  gtk_widget_show (splash->window);
-
-  while (gtk_events_pending ())
-    gtk_main_iteration ();
+  gtk_widget_show_now (splash->window);
 }
 
 void
@@ -204,7 +181,6 @@ splash_destroy (void)
   gtk_widget_destroy (splash->window);
 
   g_object_unref (splash->gc);
-  g_object_unref (splash->pixmap);
   g_object_unref (splash->upper);
   g_object_unref (splash->lower);
 
@@ -279,13 +255,6 @@ splash_area_expose (GtkWidget      *widget,
 {
   gdk_gc_set_clip_rectangle (splash->gc, &event->area);
 
-  gdk_draw_drawable (widget->window, splash->gc,
-                     splash->pixmap, 0, 0,
-                     (widget->allocation.width  - splash->width)  / 2,
-                     (widget->allocation.height - splash->height) / 2,
-                     splash->width,
-                     splash->height);
-
   gdk_draw_layout (widget->window, splash->gc,
                    splash->upper_x, splash->upper_y, splash->upper);
 
@@ -302,40 +271,6 @@ splash_map (void)
    *  so that the next window that is mapped sends the notification.
    */
    gtk_window_set_auto_startup_notification (TRUE);
-}
-
-static GdkPixbuf *
-splash_pick_from_dir (const gchar *dirname)
-{
-  GdkPixbuf *pixbuf = NULL;
-  GDir      *dir    = g_dir_open (dirname, 0, NULL);
-
-  if (dir)
-    {
-      const gchar *entry;
-      GList       *splashes = NULL;
-
-      while ((entry = g_dir_read_name (dir)))
-        splashes = g_list_prepend (splashes, g_strdup (entry));
-
-      g_dir_close (dir);
-
-      if (splashes)
-        {
-          gint32  i        = g_random_int_range (0, g_list_length (splashes));
-          gchar  *filename = g_build_filename (dirname,
-                                               g_list_nth_data (splashes, i),
-                                               NULL);
-
-          pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
-          g_free (filename);
-
-          g_list_foreach (splashes, (GFunc) g_free, NULL);
-          g_list_free (splashes);
-        }
-    }
-
-  return pixbuf;
 }
 
 static void
@@ -414,4 +349,73 @@ splash_average_bottom (GtkWidget *widget,
 
   return gdk_colormap_alloc_color (gtk_widget_get_colormap (widget),
                                    color, FALSE, TRUE);
+}
+
+static GdkPixbuf *
+splash_image_load (void)
+{
+  GdkPixbuf *pixbuf;
+  gchar     *filename;
+
+  filename = gimp_personal_rc_file ("gimp-splash.png");
+  pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
+  g_free (filename);
+
+  if (pixbuf)
+    return pixbuf;
+
+  filename = gimp_personal_rc_file ("splashes");
+  pixbuf = splash_image_pick_from_dir (filename);
+  g_free (filename);
+
+  if (pixbuf)
+    return pixbuf;
+
+  filename = g_build_filename (gimp_data_directory (),
+                               "images", "gimp-splash.png", NULL);
+  pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
+  g_free (filename);
+
+  if (pixbuf)
+    return pixbuf;
+
+  filename = g_build_filename (gimp_data_directory (), "splashes", NULL);
+  pixbuf = splash_image_pick_from_dir (filename);
+  g_free (filename);
+
+  return pixbuf;
+}
+
+static GdkPixbuf *
+splash_image_pick_from_dir (const gchar *dirname)
+{
+  GdkPixbuf *pixbuf = NULL;
+  GDir      *dir    = g_dir_open (dirname, 0, NULL);
+
+  if (dir)
+    {
+      const gchar *entry;
+      GList       *splashes = NULL;
+
+      while ((entry = g_dir_read_name (dir)))
+        splashes = g_list_prepend (splashes, g_strdup (entry));
+
+      g_dir_close (dir);
+
+      if (splashes)
+        {
+          gint32  i        = g_random_int_range (0, g_list_length (splashes));
+          gchar  *filename = g_build_filename (dirname,
+                                               g_list_nth_data (splashes, i),
+                                               NULL);
+
+          pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
+          g_free (filename);
+
+          g_list_foreach (splashes, (GFunc) g_free, NULL);
+          g_list_free (splashes);
+        }
+    }
+
+  return pixbuf;
 }
