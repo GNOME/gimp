@@ -460,9 +460,9 @@ gimp_size_box_update_size (GimpSizeBox *box)
 
   if (priv->pixel_label)
     {
-      gchar *text;
-
-      text = g_strdup_printf (_("%d x %d pixels"), box->width, box->height);
+      gchar *text = g_strdup_printf (ngettext ("%d x %d pixel",
+                                               "%d x %d pixels", box->height),
+                                     box->width, box->height);
       gtk_label_set_text (GTK_LABEL (priv->pixel_label), text);
       g_free (text);
     }

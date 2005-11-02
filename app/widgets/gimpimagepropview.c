@@ -351,7 +351,8 @@ gimp_image_prop_view_update (GimpImagePropView *view)
   gchar              buf[256];
 
   /*  pixel size  */
-  g_snprintf (buf, sizeof (buf), _("%d x %d pixels"),
+  g_snprintf (buf, sizeof (buf), ngettext ("%d x %d pixel",
+                                           "%d x %d pixels", image->height),
               image->width, image->height);
   gtk_label_set_text (GTK_LABEL (view->pixel_size_label), buf);
 

@@ -590,6 +590,17 @@ gimp_template_editor_show_advanced (GimpTemplateEditor *editor,
 /*  private functions  */
 
 static void
+gimp_template_editor_set_pixels (GimpTemplateEditor *editor,
+                                 GimpTemplate       *template)
+{
+  gchar *text = g_strdup_printf (ngettext ("%d x %d pixel",
+                                           "%d x %d pixels", template->height),
+                                 template->width, template->height);
+  gtk_label_set_text (GTK_LABEL (editor->pixel_label), text);
+  g_free (text);
+}
+
+static void
 gimp_template_editor_aspect_callback (GtkWidget          *widget,
                                       GimpTemplateEditor *editor)
 {
@@ -600,7 +611,6 @@ gimp_template_editor_aspect_callback (GtkWidget          *widget,
       gint          height      = template->height;
       gdouble       xresolution = template->xresolution;
       gdouble       yresolution = template->yresolution;
-      gchar        *text;
 
       if (template->width == template->height)
         {
@@ -631,10 +641,7 @@ gimp_template_editor_aspect_callback (GtkWidget          *widget,
                                          gimp_template_editor_template_notify,
                                          editor);
 
-      text = g_strdup_printf (_("%d x %d pixels"),
-                              template->width, template->height);
-      gtk_label_set_text (GTK_LABEL (editor->pixel_label), text);
-      g_free (text);
+      gimp_template_editor_set_pixels (editor, template);
     }
 }
 
@@ -669,10 +676,7 @@ gimp_template_editor_template_notify (GimpTemplate       *template,
   g_free (text);
 #endif
 
-  text = g_strdup_printf (_("%d x %d pixels"),
-                          template->width, template->height);
-  gtk_label_set_text (GTK_LABEL (editor->pixel_label), text);
-  g_free (text);
+  gimp_template_editor_set_pixels (editor, template);
 
   if (template->width > template->height)
     aspect = GIMP_ASPECT_LANDSCAPE;
