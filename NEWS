@@ -24,6 +24,13 @@ Changes in GIMP 2.3.5
 - load and save embedded ICC profiles from/to PNG images
 - improved appearance of some tool icons on dark background
 - added PDB API to get and set path visibility
+- let data editors follow the active brush, palette and gradient (optional)
+- some rearrangements in the new toplevel Colors menu
+- speed up reloading of data files
+- allow to copy the location of data files to the clipboard
+- allow to disable saving of the document history in the preferences
+- slightly faster application startup
+- more use of ngettext for plural forms
 - bug fixes and code cleanup
 
 
