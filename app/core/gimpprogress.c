@@ -27,8 +27,8 @@
 
 #include "core-types.h"
 
+#include "gimp.h"
 #include "gimpmarshal.h"
-#include "gimp-gui.h"
 #include "gimpprogress.h"
 
 #include "gimp-intl.h"

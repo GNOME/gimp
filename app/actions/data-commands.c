@@ -24,11 +24,11 @@
 
 #include "actions-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdata.h"
 #include "core/gimpdatafactory.h"
-#include "core/gimp-gui.h"
 
 #include "file/file-open.h"
 #include "file/file-utils.h"
