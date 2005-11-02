@@ -295,8 +295,7 @@ gimp_action_set_proxy (GimpAction *action,
 
       if (! area)
         {
-          GdkScreen   *screen   = gtk_widget_get_screen (proxy);
-          GtkSettings *settings = gtk_settings_get_for_screen (screen);
+          GtkSettings *settings = gtk_widget_get_settings (proxy);
           gint         width, height;
 
           area = gimp_color_area_new (action->color,
@@ -329,8 +328,7 @@ gimp_action_set_proxy (GimpAction *action,
 
       if (! view)
         {
-          GdkScreen   *screen   = gtk_widget_get_screen (proxy);
-          GtkSettings *settings = gtk_settings_get_for_screen (screen);
+          GtkSettings *settings = gtk_widget_get_settings (proxy);
           GtkIconSize  size;
           gint         width, height;
           gint         border_width;

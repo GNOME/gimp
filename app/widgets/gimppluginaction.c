@@ -192,8 +192,7 @@ gimp_plug_in_action_connect_proxy (GtkAction *action,
 
       if (pixbuf)
         {
-          GdkScreen   *screen   = gtk_widget_get_screen (proxy);
-          GtkSettings *settings = gtk_settings_get_for_screen (screen);
+          GtkSettings *settings = gtk_widget_get_settings (proxy);
           gint         width;
           gint         height;
           GtkWidget   *image;

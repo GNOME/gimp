@@ -1,5 +1,18 @@
 2005-11-02  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpaction.c
+	* app/widgets/gimpcoloreditor.c
+	* app/widgets/gimpcontainerbox.c
+	* app/widgets/gimpcontrollerlist.c
+	* app/widgets/gimpmenudock.c
+	* app/widgets/gimppluginaction.c
+	* app/widgets/gimptooloptionseditor.c
+	* app/widgets/gimpwidgets-utils.c
+	* libgimpwidgets/gimpcellrenderercolor.c: use gtk_widget_get_settings()
+	instead of gtk_settings_get_for_screen(gtk_widget_get_screen())
+
+2005-11-02  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpclipboard.c (gimp_clipboard_set_text): added
 	g_return_if_fail (GIMP_IS_GIMP (gimp)).
 

@@ -248,14 +248,12 @@ gimp_tool_options_editor_get_preview (GimpDocked   *docked,
                                       GimpContext  *context,
                                       GtkIconSize   size)
 {
-  GdkScreen *screen;
-  GtkWidget *view;
-  gint       width;
-  gint       height;
+  GtkSettings *settings = gtk_widget_get_settings (GTK_WIDGET (docked));
+  GtkWidget   *view;
+  gint         width;
+  gint         height;
 
-  screen = gtk_widget_get_screen (GTK_WIDGET (docked));
-  gtk_icon_size_lookup_for_settings (gtk_settings_get_for_screen (screen),
-                                     size, &width, &height);
+  gtk_icon_size_lookup_for_settings (settings, size, &width, &height);
 
   view = gimp_prop_preview_new (G_OBJECT (context), "tool", height);
   GIMP_VIEW (view)->renderer->size = -1;

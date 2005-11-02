@@ -204,13 +204,10 @@ gimp_cell_renderer_color_get_size (GtkCellRenderer *cell,
                                    gint            *height)
 {
   GimpCellRendererColor *color = GIMP_CELL_RENDERER_COLOR (cell);
-  GtkSettings           *settings;
   gint                   calc_width;
   gint                   calc_height;
 
-  settings = gtk_settings_get_for_screen (gtk_widget_get_screen (widget));
-
-  gtk_icon_size_lookup_for_settings (settings,
+  gtk_icon_size_lookup_for_settings (gtk_widget_get_settings (widget),
                                      color->size, &calc_width, &calc_height);
 
   if (cell_area && calc_width > 0 && calc_height > 0)

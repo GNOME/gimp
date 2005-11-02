@@ -339,8 +339,7 @@ gimp_color_editor_get_preview (GimpDocked  *docked,
                                GimpContext *context,
                                GtkIconSize  size)
 {
-  GdkScreen   *screen   = gtk_widget_get_screen (GTK_WIDGET (docked));
-  GtkSettings *settings = gtk_settings_get_for_screen (screen);
+  GtkSettings *settings = gtk_widget_get_settings (GTK_WIDGET (docked));
   GtkWidget   *preview;
   gint         width;
   gint         height;

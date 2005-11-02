@@ -251,7 +251,7 @@ gimp_menu_dock_style_set (GtkWidget *widget,
   GimpMenuDock *menu_dock;
   gint          minimal_width;
   GtkIconSize   menu_preview_size;
-  GdkScreen    *screen;
+  GtkSettings  *settings;
   gint          menu_preview_width  = 18;
   gint          menu_preview_height = 18;
   gint          focus_line_width;
@@ -268,8 +268,8 @@ gimp_menu_dock_style_set (GtkWidget *widget,
                         "menu-preview-size", &menu_preview_size,
                         NULL);
 
-  screen = gtk_widget_get_screen (menu_dock->image_combo);
-  gtk_icon_size_lookup_for_settings (gtk_settings_get_for_screen (screen),
+  settings = gtk_widget_get_settings (menu_dock->image_combo);
+  gtk_icon_size_lookup_for_settings (settings,
                                      menu_preview_size,
                                      &menu_preview_width,
                                      &menu_preview_height);
@@ -405,7 +405,7 @@ gimp_menu_dock_new (GimpDialogFactory *dialog_factory,
 {
   GimpMenuDock *menu_dock;
   GimpContext  *context;
-  GdkScreen    *screen;
+  GtkSettings  *settings;
   gint          menu_preview_width;
   gint          menu_preview_height;
 
@@ -458,8 +458,8 @@ gimp_menu_dock_new (GimpDialogFactory *dialog_factory,
 			   menu_dock,
 			   0);
 
-  screen = gtk_widget_get_screen (GTK_WIDGET (menu_dock));
-  gtk_icon_size_lookup_for_settings (gtk_settings_get_for_screen (screen),
+  settings = gtk_widget_get_settings (GTK_WIDGET (menu_dock));
+  gtk_icon_size_lookup_for_settings (settings,
                                      DEFAULT_MENU_PREVIEW_SIZE,
                                      &menu_preview_width,
                                      &menu_preview_height);
