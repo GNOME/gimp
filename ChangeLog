@@ -1,3 +1,10 @@
+2005-11-02  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/gimpprocbrowserdialog.c
+	* libgimpwidgets/gimppropwidgets.c
+	* plug-ins/uri/uri-backend-wget.c: use dngettext() for plural
+	forms. Fixes bug #320460, bug #320461 and bug #320462.
+
 2005-11-02  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpclipboard.[ch] (gimp_clipboard_set_text): clear

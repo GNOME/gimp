@@ -1865,9 +1865,10 @@ gimp_prop_text_buffer_callback (GtkTextBuffer *text_buffer,
 
   if (max_len > 0 && strlen (text) > max_len)
     {
-      /* translate with the appropriate plural form for many characters */
-      g_message (_("This text input field is limited to %d characters."),
-                 max_len);
+      g_message (dngettext (GETTEXT_PACKAGE "-libgimp",
+                            "This text input field is limited to %d character.",
+                            "This text input field is limited to %d characters.",
+                            max_len), max_len);
 
       gtk_text_buffer_get_iter_at_offset (text_buffer, &start_iter,
                                           max_len - 1);

@@ -37,7 +37,7 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define TIMEOUT "300"
+#define TIMEOUT  300
 #define BUFSIZE 1024
 
 
@@ -89,6 +89,8 @@ uri_backend_load_image (const gchar  *uri,
     }
   else if (pid == 0)
     {
+      gchar timeout_str[16];
+
       close (p[0]);
       close (2);
       dup (p[1]);
@@ -101,7 +103,9 @@ uri_backend_load_image (const gchar  *uri,
       putenv ("LANG=C");
 #endif
 
-      execlp ("wget", "wget", "-e", "server-response=off", "-T", TIMEOUT,
+      g_snprintf (timeout_str, sizeof (timeout_str), "%d", TIMEOUT);
+
+      execlp ("wget", "wget", "-e", "server-response=off", "-T", timeout_str,
               uri, "-O", tmpname, NULL);
       g_set_error (error, 0, 0, "exec() failed: wget: %s", g_strerror (errno));
       _exit (127);
@@ -168,7 +172,10 @@ uri_backend_load_image (const gchar  *uri,
       /*  The third line is "Connecting to..."  */
 
       /* translate with the appropriate plural form for many seconds */
-      timeout_msg = g_strdup_printf (_("(timeout is %s seconds)"), TIMEOUT);
+      timeout_msg = g_strdup_printf (dngettext (GETTEXT_PACKAGE "-std-plug-ins",
+                                                "(timeout is %d second)",
+                                                "(timeout is %d seconds)",
+                                                TIMEOUT), TIMEOUT);
 
       gimp_progress_init_printf ("%s %s",
                                  _("Connecting to server"), timeout_msg);
