@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-01 13:06-0500\n"
+"POT-Creation-Date: 2005-11-03 11:45-0500\n"
 "PO-Revision-Date: 2005-09-06 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
@@ -743,7 +743,7 @@ msgstr "_Sample Merged"
 msgid "Sample Merged"
 msgstr "Sample Merged"
 
-#: app/actions/data-commands.c:101 app/actions/documents-commands.c:319
+#: app/actions/data-commands.c:102 app/actions/documents-commands.c:320
 #: app/actions/file-commands.c:174 app/dialogs/file-open-dialog.c:208
 #: app/dialogs/file-open-dialog.c:259
 #: app/dialogs/file-open-location-dialog.c:201
@@ -759,18 +759,18 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/actions/data-commands.c:127 app/core/gimpimage.c:1349
+#: app/actions/data-commands.c:128 app/core/gimpimage.c:1349
 #: app/core/gimppalette-import.c:218 app/core/gimppalette.c:514
 #: app/core/gimppalette.c:624 app/dialogs/palette-import-dialog.c:694
 #: app/pdb/image_cmds.c:3892 app/widgets/gimpdnd-xds.c:83
 msgid "Untitled"
 msgstr "Untitled"
 
-#: app/actions/data-commands.c:223
+#: app/actions/data-commands.c:224
 msgid "Delete Object"
 msgstr "Delete Object"
 
-#: app/actions/data-commands.c:246
+#: app/actions/data-commands.c:247
 #, c-format
 msgid "Are you sure you want to delete '%s' from the list and from disk?"
 msgstr "Are you sure you want to delete '%s' from the list and from disk?"
@@ -1132,15 +1132,15 @@ msgstr "Remove Dangling E_ntries"
 msgid "Remove dangling entries"
 msgstr "Remove dangling entries"
 
-#: app/actions/documents-commands.c:196
+#: app/actions/documents-commands.c:197
 msgid "Clear Document History"
 msgstr "Clear Document History"
 
-#: app/actions/documents-commands.c:219
+#: app/actions/documents-commands.c:220
 msgid "Remove all entries from the document history?"
 msgstr "Remove all entries from the document history?"
 
-#: app/actions/documents-commands.c:223
+#: app/actions/documents-commands.c:224
 msgid ""
 "Clearing the document history will permanently remove all currently listed "
 "entries."
@@ -4740,7 +4740,7 @@ msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Invalid UTF-8 string in brush file '%s'."
 
 #: app/core/gimpbrush-load.c:258 app/core/gimpcontext.c:1294
-#: app/core/gimpitem.c:560 app/core/gimppattern.c:366
+#: app/core/gimpitem.c:560 app/core/gimppattern.c:364
 #: app/dialogs/template-options-dialog.c:80 app/tools/gimpvectortool.c:334
 msgid "Unnamed"
 msgstr "Unnamed"
@@ -5361,21 +5361,22 @@ msgid "(Preview may be out of date)"
 msgstr "(Preview may be out of date)"
 
 #. pixel size
-#: app/core/gimpimagefile.c:638 app/widgets/gimpimagepropview.c:354
-#: app/widgets/gimpsizebox.c:430 app/widgets/gimptemplateeditor.c:634
-#: app/widgets/gimptemplateeditor.c:672
+#: app/core/gimpimagefile.c:639 app/widgets/gimpimagepropview.c:354
+#: app/widgets/gimpsizebox.c:463 app/widgets/gimptemplateeditor.c:596
 #, c-format
-msgid "%d x %d pixels"
-msgstr "%d x %d pixels"
+msgid "%d x %d pixel"
+msgid_plural "%d x %d pixels"
+msgstr[0] "%d x %d pixel"
+msgstr[1] "%d x %d pixels"
 
-#: app/core/gimpimagefile.c:653 app/display/gimpdisplayshell-title.c:316
+#: app/core/gimpimagefile.c:656 app/display/gimpdisplayshell-title.c:316
 #, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
 msgstr[0] "%d layer"
 msgstr[1] "%d layers"
 
-#: app/core/gimpimagefile.c:699
+#: app/core/gimpimagefile.c:702
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Could not open thumbnail '%s': %s"
@@ -5578,20 +5579,20 @@ msgstr "Reading palette file '%s': Missing BLUE component in line %d."
 msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgstr "Reading palette file '%s': RGB value out of range in line %d."
 
-#: app/core/gimppattern.c:303 app/core/gimppattern.c:350
-#: app/core/gimppattern.c:382
+#: app/core/gimppattern.c:303 app/core/gimppattern.c:349
+#: app/core/gimppattern.c:380
 #, c-format
-msgid "Fatal parse error in pattern file '%s': Could not read %d bytes: %s"
-msgstr "Fatal parse error in pattern file '%s': Could not read %d bytes: %s"
+msgid "Fatal parse error in pattern file '%s': File appears truncated."
+msgstr "Fatal parse error in pattern file '%s': File appears truncated."
 
-#: app/core/gimppattern.c:323
+#: app/core/gimppattern.c:322
 #, c-format
 msgid ""
 "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
 msgstr ""
 "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
 
-#: app/core/gimppattern.c:333
+#: app/core/gimppattern.c:332
 #, c-format
 msgid ""
 "Fatal parse error in pattern file '%s: Unsupported pattern depth %d.\n"
@@ -5600,7 +5601,7 @@ msgstr ""
 "Fatal parse error in pattern file '%s: Unsupported pattern depth %d.\n"
 "GIMP Patterns must be GRAY or RGB."
 
-#: app/core/gimppattern.c:359
+#: app/core/gimppattern.c:357
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Invalid UTF-8 string in pattern file '%s'."
@@ -6644,7 +6645,7 @@ msgstr "Get Monitor Resolution"
 msgid "Pixels"
 msgstr "Pixels"
 
-#: app/dialogs/preferences-dialog.c:2076 app/widgets/gimpimagepropview.c:381
+#: app/dialogs/preferences-dialog.c:2076 app/widgets/gimpimagepropview.c:382
 msgid "dpi"
 msgstr "dpi"
 
@@ -6917,28 +6918,28 @@ msgid "Print Size"
 msgstr "Print Size"
 
 #. the image size labels
-#: app/dialogs/print-size-dialog.c:162 app/widgets/gimpsizebox.c:221
+#: app/dialogs/print-size-dialog.c:162 app/widgets/gimpsizebox.c:230
 #: app/widgets/gimptemplateeditor.c:232
 msgid "_Width:"
 msgstr "_Width:"
 
-#: app/dialogs/print-size-dialog.c:169 app/widgets/gimpsizebox.c:225
+#: app/dialogs/print-size-dialog.c:169 app/widgets/gimpsizebox.c:234
 #: app/widgets/gimptemplateeditor.c:239
 msgid "H_eight:"
 msgstr "H_eight:"
 
 #. the resolution labels
-#: app/dialogs/print-size-dialog.c:217 app/widgets/gimpsizebox.c:274
+#: app/dialogs/print-size-dialog.c:217 app/widgets/gimpsizebox.c:289
 #: app/widgets/gimptemplateeditor.c:359
 msgid "_X resolution:"
 msgstr "_X resolution:"
 
-#: app/dialogs/print-size-dialog.c:224 app/widgets/gimpsizebox.c:277
+#: app/dialogs/print-size-dialog.c:224 app/widgets/gimpsizebox.c:292
 #: app/widgets/gimptemplateeditor.c:366
 msgid "_Y resolution:"
 msgstr "_Y resolution:"
 
-#: app/dialogs/print-size-dialog.c:235 app/widgets/gimpsizebox.c:270
+#: app/dialogs/print-size-dialog.c:235 app/widgets/gimpsizebox.c:285
 #: app/widgets/gimptemplateeditor.c:379
 #, c-format
 msgid "pixels/%a"
@@ -7012,7 +7013,7 @@ msgstr "Quality"
 msgid "I_nterpolation:"
 msgstr "I_nterpolation:"
 
-#: app/dialogs/scale-dialog.c:201
+#: app/dialogs/scale-dialog.c:203
 msgid ""
 "Indexed color layers are always scaled without interpolation. The chosen "
 "interpolation type will affect channels and masks only."
@@ -7671,7 +7672,7 @@ msgstr "Plug-In could not save image"
 msgid "Invalid character sequence in URI"
 msgstr "Invalid character sequence in URI"
 
-#: app/gui/splash.c:118
+#: app/gui/splash.c:95
 msgid "GIMP Startup"
 msgstr "GIMP Startup"
 
@@ -9830,7 +9831,7 @@ msgstr "Reorder Channel"
 msgid "Empty Channel"
 msgstr "Empty Channel"
 
-#: app/widgets/gimpclipboard.c:294
+#: app/widgets/gimpclipboard.c:296
 msgid "Clipboard"
 msgstr "Clipboard"
 
@@ -10494,17 +10495,17 @@ msgstr "Number of channels:"
 msgid "Number of paths:"
 msgstr "Number of paths:"
 
-#: app/widgets/gimpimagepropview.c:376
+#: app/widgets/gimpimagepropview.c:377
 #, c-format
 msgid "pixels/%s"
 msgstr "pixels/%s"
 
-#: app/widgets/gimpimagepropview.c:378
+#: app/widgets/gimpimagepropview.c:379
 #, c-format
 msgid "%g x %g %s"
 msgstr "%g x %g %s"
 
-#: app/widgets/gimpimagepropview.c:398
+#: app/widgets/gimpimagepropview.c:399
 msgid "colors"
 msgstr "colours"
 
@@ -10575,12 +10576,12 @@ msgstr ""
 msgid "Invalid UTF-8"
 msgstr "Invalid UTF-8"
 
-#: app/widgets/gimpsizebox.c:454
+#: app/widgets/gimpsizebox.c:489
 #, c-format
 msgid "%d x %d dpi"
 msgstr "%d x %d dpi"
 
-#: app/widgets/gimpsizebox.c:456
+#: app/widgets/gimpsizebox.c:491
 #, c-format
 msgid "%d dpi"
 msgstr "%d dpi"
@@ -10646,12 +10647,12 @@ msgstr "_Name:"
 msgid "_Icon:"
 msgstr "_Icon:"
 
-#: app/widgets/gimptemplateeditor.c:696
+#: app/widgets/gimptemplateeditor.c:700
 #, c-format
 msgid "%d x %d dpi, %s"
 msgstr "%d x %d dpi, %s"
 
-#: app/widgets/gimptemplateeditor.c:698
+#: app/widgets/gimptemplateeditor.c:702
 #, c-format
 msgid "%d dpi, %s"
 msgstr "%d dpi, %s"
@@ -10797,7 +10798,7 @@ msgstr "Open the palette selection dialogue"
 msgid "Open the font selection dialog"
 msgstr "Open the font selection dialogue"
 
-#: app/widgets/gimpwidgets-utils.c:820
+#: app/widgets/gimpwidgets-utils.c:818
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Invalid UTF-8 data in file '%s'."

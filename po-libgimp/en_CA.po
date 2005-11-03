@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-06 11:57-0400\n"
+"POT-Creation-Date: 2005-11-03 11:46-0500\n"
 "PO-Revision-Date: 2005-09-06 20:02-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
@@ -271,16 +271,18 @@ msgstr "Searching by date"
 msgid "Searching by type"
 msgstr "Searching by type"
 
-#: libgimp/gimpprocbrowserdialog.c:484
+#: libgimp/gimpprocbrowserdialog.c:485
 #, c-format
-msgid "%d procedures"
-msgstr "%d procedures"
+msgid "%d procedure"
+msgid_plural "%d procedures"
+msgstr[0] "%d procedure"
+msgstr[1] "%d procedures"
 
-#: libgimp/gimpprocbrowserdialog.c:491
+#: libgimp/gimpprocbrowserdialog.c:494
 msgid "No matches for your query"
 msgstr "No matches for your query"
 
-#: libgimp/gimpprocbrowserdialog.c:495
+#: libgimp/gimpprocbrowserdialog.c:498
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
@@ -288,7 +290,7 @@ msgstr[0] "%d procedure matches your query"
 msgstr[1] "%d procedures matches your query"
 
 #. count label
-#: libgimp/gimpprocbrowserdialog.c:544 libgimpwidgets/gimpbrowser.c:145
+#: libgimp/gimpprocbrowserdialog.c:547 libgimpwidgets/gimpbrowser.c:145
 msgid "No matches"
 msgstr "No matches"
 
@@ -656,52 +658,54 @@ msgstr "GIMP Extension"
 msgid "Temporary Procedure"
 msgstr "Temporary Procedure"
 
-#: libgimpbase/gimpmemsize.c:177
+#: libgimpbase/gimpmemsize.c:180
 #, c-format
-msgid "%d Bytes"
-msgstr "%d Bytes"
+msgid "%d Byte"
+msgid_plural "%d Bytes"
+msgstr[0] "%d Byte"
+msgstr[1] "%d Bytes"
 
-#: libgimpbase/gimpmemsize.c:182
+#: libgimpbase/gimpmemsize.c:186
 #, c-format
 msgid "%.2f KB"
 msgstr "%.2f KB"
 
-#: libgimpbase/gimpmemsize.c:186
+#: libgimpbase/gimpmemsize.c:190
 #, c-format
 msgid "%.1f KB"
 msgstr "%.1f KB"
 
-#: libgimpbase/gimpmemsize.c:190
+#: libgimpbase/gimpmemsize.c:194
 #, c-format
 msgid "%d KB"
 msgstr "%d KB"
 
-#: libgimpbase/gimpmemsize.c:197
+#: libgimpbase/gimpmemsize.c:201
 #, c-format
 msgid "%.2f MB"
 msgstr "%.2f MB"
 
-#: libgimpbase/gimpmemsize.c:201
+#: libgimpbase/gimpmemsize.c:205
 #, c-format
 msgid "%.1f MB"
 msgstr "%.1f MB"
 
-#: libgimpbase/gimpmemsize.c:205
+#: libgimpbase/gimpmemsize.c:209
 #, c-format
 msgid "%d MB"
 msgstr "%d MB"
 
-#: libgimpbase/gimpmemsize.c:212
+#: libgimpbase/gimpmemsize.c:216
 #, c-format
 msgid "%.2f GB"
 msgstr "%.2f GB"
 
-#: libgimpbase/gimpmemsize.c:216
+#: libgimpbase/gimpmemsize.c:220
 #, c-format
 msgid "%.1f GB"
 msgstr "%.1f GB"
 
-#: libgimpbase/gimpmemsize.c:220
+#: libgimpbase/gimpmemsize.c:224
 #, c-format
 msgid "%d GB"
 msgstr "%d GB"
@@ -951,19 +955,19 @@ msgstr "_White"
 msgid "Scales"
 msgstr "Scales"
 
-#: libgimpwidgets/gimpcolorselection.c:214
+#: libgimpwidgets/gimpcolorselection.c:218
 msgid "Current:"
 msgstr "Current:"
 
-#: libgimpwidgets/gimpcolorselection.c:236
+#: libgimpwidgets/gimpcolorselection.c:240
 msgid "Old:"
 msgstr "Old:"
 
-#: libgimpwidgets/gimpcolorselection.c:281
+#: libgimpwidgets/gimpcolorselection.c:294
 msgid "Hexadecimal color notation as used in HTML and CSS"
 msgstr "Hexadecimal colour notation as used in HTML and CSS"
 
-#: libgimpwidgets/gimpcolorselection.c:286
+#: libgimpwidgets/gimpcolorselection.c:299
 msgid "HTML _notation:"
 msgstr "HTML _notation:"
 
@@ -1016,10 +1020,12 @@ msgstr "Check Style"
 msgid "_Preview"
 msgstr "_Preview"
 
-#: libgimpwidgets/gimppropwidgets.c:1868
+#: libgimpwidgets/gimppropwidgets.c:1872
 #, c-format
-msgid "This text input field is limited to %d characters."
-msgstr "This text input field is limited to %d characters."
+msgid "This text input field is limited to %d character."
+msgid_plural "This text input field is limited to %d characters."
+msgstr[0] "This text input field is limited to %d character."
+msgstr[1] "This text input field is limited to %d characters."
 
 #: libgimpwidgets/gimpresolutionentry.c:382
 #, c-format
