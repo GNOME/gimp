@@ -74,10 +74,10 @@ sanity_check_glib (void)
     {
       return g_strdup_printf
         ("%s\n\n"
-         "The GIMP requires GLib version %d.%d.%d or later.\n"
+         "GIMP requires GLib version %d.%d.%d or later.\n"
          "Installed GLib version is %d.%d.%d.\n\n"
          "Somehow you or your software packager managed\n"
-         "to install The GIMP with an older GLib version.\n\n"
+         "to install GIMP with an older GLib version.\n\n"
          "Please upgrade to GLib version %d.%d.%d or later.",
          mismatch,
          GLIB_REQUIRED_MAJOR, GLIB_REQUIRED_MINOR, GLIB_REQUIRED_MICRO,
@@ -110,8 +110,8 @@ sanity_check_fontconfig (void)
     {
       return g_strdup_printf
         ("The Fontconfig version being used is too old!\n\n"
-         "The GIMP requires Fontconfig version %d.%d.%d or later.\n"
-         "The Fontconfig version loaded by The GIMP is %d.%d.%d.\n\n"
+         "GIMP requires Fontconfig version %d.%d.%d or later.\n"
+         "The Fontconfig version loaded by GIMP is %d.%d.%d.\n\n"
          "This may be caused by another instance of libfontconfig.so.1\n"
          "being installed in the system, probably in /usr/X11R6/lib.\n"
          "Please correct the situation or report it to someone who can.",
@@ -160,10 +160,10 @@ sanity_check_freetype (void)
     {
       return g_strdup_printf
         ("FreeType version too old!\n\n"
-         "The GIMP requires FreeType version %d.%d.%d or later.\n"
+         "GIMP requires FreeType version %d.%d.%d or later.\n"
          "Installed FreeType version is %d.%d.%d.\n\n"
          "Somehow you or your software packager managed\n"
-         "to install The GIMP with an older FreeType version.\n\n"
+         "to install GIMP with an older FreeType version.\n\n"
          "Please upgrade to FreeType version %d.%d.%d or later.",
          FT_REQUIRED_MAJOR, FT_REQUIRED_MINOR, FT_REQUIRED_MICRO,
          ft_major_version, ft_minor_version, ft_micro_version,

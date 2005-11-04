@@ -1,3 +1,8 @@
+2005-11-04  Sven Neumann  <sven@gimp.org>
+
+	* app/errors.c
+	* app/sanity.c: s/The GIMP/GIMP/
+
 2005-11-03  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/splash.c: set the splash image as back pixmap.
