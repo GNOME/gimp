@@ -1,3 +1,7 @@
+2005-11-04  Sven Neumann  <sven@gimp.org>
+
+	* Made 2.3.5 development release.
+
 2005-11-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcontrollereditor.c (gimp_controller_editor_init):

@@ -46,11 +46,11 @@ shared by other users.  This is a single folder.
 .TP
 (swap-path "${gimp_dir}")
 
-Sets the swap file location. The GIMP uses a tile based memory allocation
-scheme. The swap file is used to quickly and easily swap tiles out to disk and
-back in. Be aware that the swap file can easily get very large if the GIMP is
-used with large images. Also, things can get horribly slow if the swap file is
-created on a directory that is mounted over NFS.  For these reasons, it may be
+Sets the swap file location. GIMP uses a tile based memory allocation scheme.
+The swap file is used to quickly and easily swap tiles out to disk and back
+in. Be aware that the swap file can easily get very largeif GIMP is used with
+large images. Also, things can get horribly slow if the swap file is created
+on a directory that is mounted over NFS.  For these reasons, it may be
 desirable to put your swap file in "/tmp".  This is a single folder.
 
 .TP
@@ -221,7 +221,7 @@ are yes and no.
     (resolution-unit inches)
     (image-type rgb)
     (fill-type background-fill)
-    (comment "Created with The GIMP"))
+    (comment "Created with GIMP"))
 
 Sets the default image in the "File/New" dialog.  This is a parameter list.
 
@@ -318,6 +318,12 @@ system colors allocated for the GIMP.  This is an integer value.
     (display-module "CdisplayLcms"))
 
 Defines the color management behavior.  This is a parameter list.
+
+.TP
+(save-document-history yes)
+
+Add all opened and saved files to the document history on disk.  Possible
+values are yes and no.
 
 .TP
 (transparency-size medium-checks)
@@ -833,7 +839,7 @@ The personal gimp directory which is set to the value of the environment
 variable GIMP2_DIRECTORY or to ~/@gimpdir@.
 .TP
 .I gimp_data_dir
-Nase for paths to shareable data, which is set to the value of the
+Base for paths to shareable data, which is set to the value of the
 environment variable GIMP2_DATADIR or to the compiled-in default value
 @gimpdatadir@.
 .TP
