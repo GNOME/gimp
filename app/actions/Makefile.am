@@ -8,7 +8,7 @@ libappactions_a_SOURCES = \
 	actions.h			\
 	\
 	brush-editor-actions.c		\
-	bruah-editor-actions.h		\
+	brush-editor-actions.h		\
 	brushes-actions.c		\
 	brushes-actions.h		\
 	buffers-actions.c		\

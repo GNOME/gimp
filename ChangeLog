@@ -1,5 +1,9 @@
 2005-11-04  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/Makefile.am (libappactions_a_SOURCES): fixed typo.
+
+2005-11-04  Sven Neumann  <sven@gimp.org>
+
 	* app/base/siox.c: applied a patch by Gerald Friedland that
 	changes the code to clear the cache selectively instead of dumping
 	it completely if the foreground or background area is changed.
