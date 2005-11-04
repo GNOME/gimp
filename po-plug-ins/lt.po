@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plugins HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-30 12:21+0200\n"
-"PO-Revision-Date: 2005-10-29 15:12+0300\n"
+"POT-Creation-Date: 2005-11-04 14:40+0200\n"
+"PO-Revision-Date: 2005-11-04 14:42+0200\n"
 "Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
@@ -134,7 +134,7 @@ msgstr ""
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:796
 msgid "Load a fractal from file"
-msgstr ""
+msgstr "Įkelti fraktalą iš bylos"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:804
 msgid "Reset parameters to default values"
@@ -142,12 +142,12 @@ msgstr "Atstatyti parametrus į numatytasias reikšmes"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:813
 msgid "Save active fractal to file"
-msgstr ""
+msgstr "Išsaugoti fraktalą į bylą"
 
 #. Fractal type toggle box
 #: ../plug-ins/FractalExplorer/Dialogs.c:816
 msgid "Fractal Type"
-msgstr ""
+msgstr "Fraktalo tipas"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:829
 msgid "Mandelbrot"
@@ -1130,7 +1130,7 @@ msgstr "Cilindro skersmuo"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1261 ../plug-ins/common/mblur.c:1023
 msgid "L_ength:"
-msgstr "Il_gis:"
+msgstr "_Ilgis:"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1265
 msgid "Cylinder length"
@@ -1223,7 +1223,7 @@ msgstr "Nepalaikomas arba netinkamas bitų gylis."
 #: ../plug-ins/common/png.c:852 ../plug-ins/common/pnm.c:526
 #: ../plug-ins/common/psd.c:2291 ../plug-ins/common/raw.c:687
 #: ../plug-ins/common/smooth_palette.c:257 ../plug-ins/common/sunras.c:917
-#: ../plug-ins/common/tga.c:926 ../plug-ins/common/tiff.c:886
+#: ../plug-ins/common/tga.c:927 ../plug-ins/common/tiff.c:886
 #: ../plug-ins/common/tile.c:266 ../plug-ins/common/xbm.c:866
 #: ../plug-ins/faxg3/faxg3.c:464 ../plug-ins/fits/fits.c:508
 #: ../plug-ins/gfig/gfig-dialog.c:1290
@@ -1278,7 +1278,6 @@ msgid "_Modify red channel"
 msgstr "_Modifikuoti raudoną kanalą"
 
 #: ../plug-ins/common/AlienMap2.c:140
-#, fuzzy
 msgid "_Modify hue channel"
 msgstr "_Modifikuoti atspalvio kanalą"
 
@@ -1287,7 +1286,6 @@ msgid "Mo_dify green channel"
 msgstr "Mo_difikuoti žalią kanalą"
 
 #: ../plug-ins/common/AlienMap2.c:141
-#, fuzzy
 msgid "Mo_dify saturation channel"
 msgstr "Mo_difikuoti sodrumo kanalą"
 
@@ -1296,66 +1294,62 @@ msgid "Mod_ify blue channel"
 msgstr "Mod_ifikuoti mėlyną kanalą"
 
 #: ../plug-ins/common/AlienMap2.c:142
-#, fuzzy
 msgid "Mod_ify luminosity channel"
 msgstr "Mod_ifikuoti šviesumo kanalą"
 
 #: ../plug-ins/common/AlienMap2.c:147
-#, fuzzy
 msgid "Red _frequency:"
-msgstr "Raudonas _dažnis:"
+msgstr "Raudonos _dažnis:"
 
 #: ../plug-ins/common/AlienMap2.c:147
 msgid "Hue _frequency:"
-msgstr ""
+msgstr "Atspalvio _dažnis:"
 
 #: ../plug-ins/common/AlienMap2.c:148
-#, fuzzy
 msgid "Green fr_equency:"
-msgstr "Sodrumas"
+msgstr "Žalios d_ažnis:"
 
 #: ../plug-ins/common/AlienMap2.c:148
-#, fuzzy
 msgid "Saturation fr_equency:"
-msgstr "Sodrumas"
+msgstr "Sodrumo daž_nis:"
 
 #: ../plug-ins/common/AlienMap2.c:149
 msgid "Blue freq_uency:"
-msgstr ""
+msgstr "Mėlynos dažn_is:"
 
 #: ../plug-ins/common/AlienMap2.c:149
 msgid "Luminosity freq_uency:"
-msgstr ""
+msgstr "Apšvietimo dažni_s:"
 
 #: ../plug-ins/common/AlienMap2.c:151
 #, fuzzy
 msgid "Red _phaseshift:"
-msgstr "Įdėta"
+msgstr "Raudonos _fazės kitimas:"
 
 #: ../plug-ins/common/AlienMap2.c:151
 #, fuzzy
 msgid "Hue _phaseshift:"
-msgstr "Įdėta"
+msgstr "Atspalvio _fazės kitimas:"
 
 #: ../plug-ins/common/AlienMap2.c:152
 #, fuzzy
 msgid "Green ph_aseshift:"
-msgstr "Įdėta"
+msgstr "Žalios fa_zės kitimas:"
 
 #: ../plug-ins/common/AlienMap2.c:152
 #, fuzzy
 msgid "Saturation ph_aseshift:"
-msgstr "Sodrumas"
+msgstr "Sodrumo f_azės kitimas:"
 
 #: ../plug-ins/common/AlienMap2.c:153
 #, fuzzy
 msgid "Blue pha_seshift:"
-msgstr "Įdėta"
+msgstr "Mėlynos fa_zės kitimas:"
 
 #: ../plug-ins/common/AlienMap2.c:153
 #, fuzzy
 msgid "Luminosity pha_seshift:"
-msgstr "Įdėta"
+msgstr "Apšvietimo fazė_s kitimas:"
 
 #: ../plug-ins/common/AlienMap2.c:188
 msgid "_Alien Map..."
@@ -1378,13 +1372,13 @@ msgstr ""
 #: ../plug-ins/common/AlienMap2.c:452 ../plug-ins/common/AlienMap2.c:476
 #: ../plug-ins/common/AlienMap2.c:500
 msgid "Phase angle, range 0-360"
-msgstr ""
+msgstr "Fazės kampas, ribos 0-360"
 
 #. Propagate Mode
 #: ../plug-ins/common/AlienMap2.c:514 ../plug-ins/common/hot.c:595
 #: ../plug-ins/common/vpropagate.c:1086 ../plug-ins/common/waves.c:272
 msgid "Mode"
-msgstr ""
+msgstr "Režimas"
 
 #: ../plug-ins/common/AlienMap2.c:518
 msgid "_RGB color model"
@@ -2130,14 +2124,12 @@ msgid "Blurring"
 msgstr "Suliejama"
 
 #: ../plug-ins/common/borderaverage.c:104
-#, fuzzy
 msgid "_Border Average..."
-msgstr "<Image>/Filters/Filtruoti visus sluoksnius..."
+msgstr ""
 
 #: ../plug-ins/common/borderaverage.c:171
-#, fuzzy
 msgid "Border Average"
-msgstr "<Image>/Filters/Filtruoti visus sluoksnius..."
+msgstr ""
 
 #: ../plug-ins/common/borderaverage.c:351
 msgid "Borderaverage"
@@ -2172,9 +2164,8 @@ msgid "_Bump map:"
 msgstr ""
 
 #: ../plug-ins/common/bumpmap.c:912
-#, fuzzy
 msgid "_Map type:"
-msgstr "Paveikslėlio tipas:"
+msgstr ""
 
 #. Compensate darkening
 #: ../plug-ins/common/bumpmap.c:917
@@ -2193,16 +2184,15 @@ msgstr ""
 
 #: ../plug-ins/common/bumpmap.c:960 ../plug-ins/common/emboss.c:504
 msgid "_Azimuth:"
-msgstr ""
+msgstr "_Azimutas:"
 
 #: ../plug-ins/common/bumpmap.c:972
-#, fuzzy
 msgid "_Elevation:"
-msgstr "Sutrumpinimas:"
+msgstr ""
 
 #: ../plug-ins/common/bumpmap.c:998 ../plug-ins/common/postscript.c:3319
 msgid "_X offset:"
-msgstr ""
+msgstr "_X poslinkis:"
 
 #: ../plug-ins/common/bumpmap.c:1001 ../plug-ins/common/bumpmap.c:1015
 msgid ""
@@ -2212,7 +2202,7 @@ msgstr ""
 
 #: ../plug-ins/common/bumpmap.c:1012 ../plug-ins/common/postscript.c:3328
 msgid "_Y offset:"
-msgstr ""
+msgstr "_Y poslinkis:"
 
 #: ../plug-ins/common/bumpmap.c:1026
 msgid "_Waterlevel:"
@@ -2220,7 +2210,7 @@ msgstr ""
 
 #: ../plug-ins/common/bumpmap.c:1038
 msgid "A_mbient:"
-msgstr ""
+msgstr "A_plinka:"
 
 #: ../plug-ins/common/c_astretch.c:81
 msgid "_Stretch Contrast"
@@ -2302,7 +2292,7 @@ msgid "Compressed size: %s"
 msgstr "Suspausto dydis: %s"
 
 #: ../plug-ins/common/ccanalyze.c:407
-#, fuzzy, c-format
+#, c-format
 msgid "Compression ratio (approx.): %d to 1"
 msgstr "Suspaudimo lygis (apytiksl.): %d prie 1"
 
@@ -2409,9 +2399,8 @@ msgid "Colorify"
 msgstr ""
 
 #: ../plug-ins/common/colorify.c:289
-#, fuzzy
 msgid "Custom color:"
-msgstr "Spalva:"
+msgstr ""
 
 #: ../plug-ins/common/colorify.c:294
 msgid "Colorify Custom Color"
@@ -2618,9 +2607,8 @@ msgid "Compose Channels"
 msgstr ""
 
 #: ../plug-ins/common/compose.c:1456 ../plug-ins/common/decompose.c:1287
-#, fuzzy
 msgid "Color _model:"
-msgstr "Spalva:"
+msgstr "Spalvos _modelis:"
 
 #. Channel representation table
 #: ../plug-ins/common/compose.c:1487
@@ -2628,17 +2616,16 @@ msgid "Channel Representations"
 msgstr ""
 
 #: ../plug-ins/common/compose.c:1543
-#, fuzzy
 msgid "Mask value"
-msgstr "Aukštis:"
+msgstr "Kaukės reikšmė"
 
 #: ../plug-ins/common/compressor.c:158
 msgid "gzip archive"
-msgstr ""
+msgstr "gzip archyvas"
 
 #: ../plug-ins/common/compressor.c:179
 msgid "bzip archive"
-msgstr ""
+msgstr "bzip archyvas"
 
 #: ../plug-ins/common/compressor.c:373
 msgid "No sensible extension, saving as compressed XCF."
@@ -2650,30 +2637,27 @@ msgstr ""
 
 #: ../plug-ins/common/convmatrix.c:77
 msgid "Gr_ey"
-msgstr ""
+msgstr "Pil_kas"
 
 #: ../plug-ins/common/convmatrix.c:78
-#, fuzzy
 msgid "Re_d"
-msgstr "Raudona:"
+msgstr "Rau_donas"
 
 #: ../plug-ins/common/convmatrix.c:79 ../plug-ins/common/newsprint.c:355
-#, fuzzy
 msgid "_Green"
-msgstr "Ekranas"
+msgstr "Ža_lias"
 
 #: ../plug-ins/common/convmatrix.c:80 ../plug-ins/common/newsprint.c:363
-#, fuzzy
 msgid "_Blue"
-msgstr "Reikšmė"
+msgstr "_Mėlynas"
 
 #: ../plug-ins/common/convmatrix.c:81
 msgid "_Alpha"
-msgstr ""
+msgstr "_Alfa"
 
 #: ../plug-ins/common/convmatrix.c:86
 msgid "E_xtend"
-msgstr ""
+msgstr "Išplė_sti"
 
 #: ../plug-ins/common/convmatrix.c:87 ../plug-ins/common/displace.c:475
 #: ../plug-ins/common/edge.c:719 ../plug-ins/common/ripple.c:568
@@ -2682,12 +2666,11 @@ msgstr ""
 
 #: ../plug-ins/common/convmatrix.c:88
 msgid "Cro_p"
-msgstr ""
+msgstr "A_pkirpti"
 
 #: ../plug-ins/common/convmatrix.c:189
-#, fuzzy
 msgid "_Convolution Matrix..."
-msgstr "<Image>/Filters/Filtruoti visus sluoksnius..."
+msgstr ""
 
 #: ../plug-ins/common/convmatrix.c:224
 msgid "Convolution Matrix does not work on layers smaller than 3 pixels."
@@ -2703,21 +2686,20 @@ msgstr ""
 
 #: ../plug-ins/common/convmatrix.c:909
 msgid "Matrix"
-msgstr ""
+msgstr "Matrica"
 
 #: ../plug-ins/common/convmatrix.c:946
-#, fuzzy
 msgid "D_ivisor:"
-msgstr "Skaitmenys:"
+msgstr "Dal_iklis:"
 
 #: ../plug-ins/common/convmatrix.c:970 ../plug-ins/common/depthmerge.c:752
 #: ../plug-ins/common/raw.c:987
 msgid "O_ffset:"
-msgstr ""
+msgstr "_Poslinkis:"
 
 #: ../plug-ins/common/convmatrix.c:999
 msgid "A_utomatic"
-msgstr ""
+msgstr "A_utomatiška"
 
 #: ../plug-ins/common/convmatrix.c:1011
 msgid "A_lpha-weighting"
@@ -2725,48 +2707,45 @@ msgstr ""
 
 #: ../plug-ins/common/convmatrix.c:1030
 msgid "Border"
-msgstr ""
+msgstr "Rėmelis"
 
 #: ../plug-ins/common/convmatrix.c:1057
 msgid "Channels"
-msgstr ""
+msgstr "Kanalai"
 
 #: ../plug-ins/common/csource.c:110
 msgid "C source code"
-msgstr ""
+msgstr "C pradinis kodas"
 
 #: ../plug-ins/common/csource.c:637
 msgid "Save as C-Source"
-msgstr ""
+msgstr "Išsaugoti kaip C kodą"
 
 #: ../plug-ins/common/csource.c:668
-#, fuzzy
 msgid "_Prefixed name:"
-msgstr "Spausdintuvo·vardas:"
+msgstr ""
 
 #: ../plug-ins/common/csource.c:677
-#, fuzzy
 msgid "Co_mment:"
-msgstr "GIF komentaras:"
+msgstr "Ko_mentaras:"
 
 #. Use Comment
 #.
 #: ../plug-ins/common/csource.c:684
-#, fuzzy
 msgid "_Save comment to file"
-msgstr "GIF komentaras:"
+msgstr "Iš_saugoti komentarą į bylą"
 
 #. GLib types
 #.
 #: ../plug-ins/common/csource.c:696
 msgid "_Use GLib types (guint8*)"
-msgstr ""
+msgstr "_Naudoti GLib tipus (guint8*)"
 
 #. Use Macros
 #.
 #: ../plug-ins/common/csource.c:708
 msgid "Us_e macros instead of struct"
-msgstr ""
+msgstr "Vi_etoj struktūrų naudoti makrokomandas"
 
 #. Use RLE
 #.
@@ -2778,19 +2757,19 @@ msgstr ""
 #.
 #: ../plug-ins/common/csource.c:732
 msgid "Sa_ve alpha channel (RGBA/RGB)"
-msgstr ""
+msgstr "Iš_saugoti alfa kanalą (RGBA/RGB)"
 
 #: ../plug-ins/common/csource.c:750 ../plug-ins/common/sparkle.c:455
 msgid "Op_acity:"
-msgstr ""
+msgstr "N_epermatomumas:"
 
 #: ../plug-ins/common/cubism.c:156
 msgid "_Cubism..."
-msgstr ""
+msgstr "_Kubizmas..."
 
 #: ../plug-ins/common/cubism.c:269
 msgid "Cubism"
-msgstr ""
+msgstr "Kubizmas"
 
 #: ../plug-ins/common/cubism.c:305
 #, fuzzy
@@ -2803,13 +2782,12 @@ msgid "T_ile saturation:"
 msgstr "Sodrumas"
 
 #: ../plug-ins/common/cubism.c:329
-#, fuzzy
 msgid "_Use background color"
-msgstr "Fonas"
+msgstr "_Naudoti fono spalvą"
 
 #: ../plug-ins/common/cubism.c:419
 msgid "Cubistic transformation"
-msgstr ""
+msgstr "Kubistinė transformacija"
 
 #: ../plug-ins/common/curve_bend.c:566
 msgid "_Curve Bend..."
@@ -2862,14 +2840,13 @@ msgstr "Pasirinkimai"
 
 #. Rotate spinbutton
 #: ../plug-ins/common/curve_bend.c:1336
-#, fuzzy
 msgid "Rotat_e:"
-msgstr "Raiška:"
+msgstr "Pas_ukti:"
 
 #. The smoothing toggle
 #: ../plug-ins/common/curve_bend.c:1354
 msgid "Smoo_thing"
-msgstr ""
+msgstr "Glo_tninimas"
 
 #. The antialiasing toggle
 #: ../plug-ins/common/curve_bend.c:1364 ../plug-ins/common/gqbist.c:836
@@ -2880,17 +2857,17 @@ msgstr ""
 #. The work_on_copy toggle
 #: ../plug-ins/common/curve_bend.c:1374
 msgid "Work on cop_y"
-msgstr ""
+msgstr "Dirbti kopi_joje"
 
 #. The curves graph
 #: ../plug-ins/common/curve_bend.c:1384
 msgid "Modify Curves"
-msgstr ""
+msgstr "Modifikuoti kreives"
 
 #: ../plug-ins/common/curve_bend.c:1412
 #, fuzzy
 msgid "Curve for Border"
-msgstr "Rėmelis:"
+msgstr "Rėmelio kreivė"
 
 #: ../plug-ins/common/curve_bend.c:1416
 #, fuzzy
@@ -2902,9 +2879,8 @@ msgid "_Lower"
 msgstr ""
 
 #: ../plug-ins/common/curve_bend.c:1427
-#, fuzzy
 msgid "Curve Type"
-msgstr "Paveikslėlio tipas:"
+msgstr "Kreivės tipas"
 
 #: ../plug-ins/common/curve_bend.c:1431
 msgid "Smoot_h"
@@ -2918,7 +2894,7 @@ msgstr "Ekranas"
 #. The Copy button
 #: ../plug-ins/common/curve_bend.c:1447
 msgid "_Copy"
-msgstr ""
+msgstr "_Kopijuoti"
 
 #: ../plug-ins/common/curve_bend.c:1452
 msgid "Copy the active curve to the other border"
@@ -2936,64 +2912,62 @@ msgstr ""
 #. The Swap button
 #: ../plug-ins/common/curve_bend.c:1472
 msgid "S_wap"
-msgstr ""
+msgstr "S_ukeisti"
 
 #: ../plug-ins/common/curve_bend.c:1477
-#, fuzzy
 msgid "Swap the two curves"
-msgstr "Visą ekraną"
+msgstr "Sukeisti dvi kreives"
 
 #: ../plug-ins/common/curve_bend.c:1489
 msgid "Reset the active curve"
-msgstr ""
+msgstr "Atstatyti aktyvią kreivę"
 
 #: ../plug-ins/common/curve_bend.c:1506
 msgid "Load the curves from a file"
-msgstr ""
+msgstr "Įkelti kreives iš bylos"
 
 #: ../plug-ins/common/curve_bend.c:1518
 msgid "Save the curves to a file"
-msgstr ""
+msgstr "Išsaugoti kreives į bylą"
 
 #: ../plug-ins/common/curve_bend.c:2053
 msgid "Load Curve Points from File"
-msgstr ""
+msgstr "Įkelti kreivių taškus iš bylos"
 
 #: ../plug-ins/common/curve_bend.c:2088
-#, fuzzy
 msgid "Save Curve Points to File"
-msgstr "GIF komentaras:"
+msgstr "Išsaugoti kreivių taškus į bylą"
 
 #: ../plug-ins/common/decompose.c:134 ../plug-ins/common/decompose.c:138
 #: ../plug-ins/common/decompose.c:142
 msgid "red"
-msgstr ""
+msgstr "raudona"
 
 #: ../plug-ins/common/decompose.c:135 ../plug-ins/common/decompose.c:139
 #: ../plug-ins/common/decompose.c:143
 msgid "green"
-msgstr ""
+msgstr "žalia"
 
 #: ../plug-ins/common/decompose.c:136 ../plug-ins/common/decompose.c:140
 #: ../plug-ins/common/decompose.c:144
 msgid "blue"
-msgstr ""
+msgstr "mėlyna"
 
 #: ../plug-ins/common/decompose.c:145 ../plug-ins/common/decompose.c:176
 msgid "alpha"
-msgstr ""
+msgstr "alfa"
 
 #: ../plug-ins/common/decompose.c:148 ../plug-ins/common/decompose.c:152
 msgid "hue"
-msgstr ""
+msgstr "atspalvis"
 
 #: ../plug-ins/common/decompose.c:149 ../plug-ins/common/decompose.c:153
 msgid "saturation"
-msgstr ""
+msgstr "sodrumas"
 
 #: ../plug-ins/common/decompose.c:150 ../plug-ins/common/decompose.c:154
 msgid "value"
-msgstr ""
+msgstr "reikšmė"
 
 #: ../plug-ins/common/decompose.c:157 ../plug-ins/common/decompose.c:161
 msgid "cyan"
@@ -3005,7 +2979,7 @@ msgstr ""
 
 #: ../plug-ins/common/decompose.c:159 ../plug-ins/common/decompose.c:163
 msgid "yellow"
-msgstr ""
+msgstr "geltona"
 
 #: ../plug-ins/common/decompose.c:161
 msgid "Cyan"
@@ -3017,7 +2991,7 @@ msgstr ""
 
 #: ../plug-ins/common/decompose.c:163
 msgid "Yellow"
-msgstr ""
+msgstr "Geltona"
 
 #: ../plug-ins/common/decompose.c:166 ../plug-ins/common/decompose.c:171
 msgid "cyan-k"
@@ -3049,7 +3023,7 @@ msgstr ""
 
 #: ../plug-ins/common/decompose.c:176
 msgid "Alpha"
-msgstr ""
+msgstr "Alfa"
 
 #: ../plug-ins/common/decompose.c:184
 msgid "luma-y470"
@@ -3057,11 +3031,11 @@ msgstr ""
 
 #: ../plug-ins/common/decompose.c:185
 msgid "blueness-cb470"
-msgstr ""
+msgstr "mėlynumas-cv470"
 
 #: ../plug-ins/common/decompose.c:186
 msgid "redness-cr470"
-msgstr ""
+msgstr "raudonumas-cr470"
 
 #: ../plug-ins/common/decompose.c:188
 msgid "luma-y709"
@@ -3199,9 +3173,8 @@ msgstr ""
 #: ../plug-ins/common/nlfilt.c:1091 ../plug-ins/common/nova.c:364
 #: ../plug-ins/common/unsharp.c:669 ../plug-ins/common/whirlpinch.c:588
 #: ../plug-ins/gflare/gflare.c:2688 ../plug-ins/imagemap/imap_circle.c:278
-#, fuzzy
 msgid "_Radius:"
-msgstr "Skersmuo:"
+msgstr "_Skersmuo:"
 
 #: ../plug-ins/common/despeckle.c:477
 msgid "_Black level:"
@@ -3229,47 +3202,43 @@ msgstr ""
 #: ../plug-ins/common/raw.c:1000 ../plug-ins/common/smooth_palette.c:436
 #: ../plug-ins/common/tile.c:424 ../plug-ins/imagemap/imap_cmd_guides.c:167
 #: ../plug-ins/imagemap/imap_rectangle.c:403
-#, fuzzy
 msgid "_Width:"
-msgstr "Plotis:"
+msgstr "_Plotis:"
 
 #: ../plug-ins/common/destripe.c:483
 msgid "Create _histogram"
-msgstr ""
+msgstr "Sukurti _histogramą"
 
 #: ../plug-ins/common/dicom.c:140
-#, fuzzy
 msgid "DICOM image"
-msgstr "GIF perspėjimas"
+msgstr "DICOM paveikslėlis"
 
 #: ../plug-ins/common/dicom.c:165
 msgid "Digital Imaging and Communications in Medicine image"
-msgstr ""
+msgstr "Digital Imaging and Communications in Medicine paveikslėlis"
 
 #: ../plug-ins/common/dicom.c:321
 #, c-format
 msgid "'%s' is not a DICOM file."
-msgstr ""
+msgstr "„%s“ yra ne DICOM paveikslėlis."
 
 #: ../plug-ins/common/dicom.c:620 ../plug-ins/common/pcx.c:582
 msgid "Cannot save images with alpha channel."
-msgstr ""
+msgstr "Negalima išsaugoti paveikslėlių su alfa kanalu."
 
 #: ../plug-ins/common/dicom.c:635 ../plug-ins/common/postscript.c:1176
 #: ../plug-ins/common/xwd.c:556 ../plug-ins/fits/fits.c:445
 #: ../plug-ins/xjt/xjt.c:1684
 msgid "Cannot operate on unknown image types."
-msgstr ""
+msgstr "Negalima dirbti su nežinomų tipų paveikslėliais."
 
 #: ../plug-ins/common/diffraction.c:172
-#, fuzzy
 msgid "_Diffraction Patterns..."
-msgstr "<Image>/Filters/Filtruoti visus sluoksnius..."
+msgstr ""
 
 #: ../plug-ins/common/diffraction.c:330
-#, fuzzy
 msgid "Creating diffraction pattern"
-msgstr "<Image>/Filters/Filtruoti visus sluoksnius..."
+msgstr ""
 
 #: ../plug-ins/common/diffraction.c:434
 msgid "Diffraction Patterns"
@@ -3277,22 +3246,20 @@ msgstr ""
 
 #: ../plug-ins/common/diffraction.c:527
 msgid "Frequencies"
-msgstr ""
+msgstr "Dažniai"
 
 #: ../plug-ins/common/diffraction.c:565
-#, fuzzy
 msgid "Contours"
-msgstr "Spalva:"
+msgstr "Spalvos"
 
 #: ../plug-ins/common/diffraction.c:603
-#, fuzzy
 msgid "Sharp Edges"
-msgstr "Ekranas"
+msgstr "Aštrūs kraštai"
 
 #: ../plug-ins/common/diffraction.c:615 ../plug-ins/common/softglow.c:682
 #: ../plug-ins/flame/flame.c:1053
 msgid "_Brightness:"
-msgstr ""
+msgstr "_Ryškumas:"
 
 #: ../plug-ins/common/diffraction.c:624
 #, fuzzy
@@ -3300,14 +3267,12 @@ msgid "Sc_attering:"
 msgstr "Nustatymai"
 
 #: ../plug-ins/common/diffraction.c:633
-#, fuzzy
 msgid "Po_larization:"
-msgstr "Sutrumpinimas:"
+msgstr "Po_larizacija:"
 
 #: ../plug-ins/common/diffraction.c:641
-#, fuzzy
 msgid "Other Options"
-msgstr "Pasirinkimai"
+msgstr "Kiti pasirinkimai"
 
 #: ../plug-ins/common/displace.c:145
 #, fuzzy
@@ -3333,9 +3298,8 @@ msgid "_Displace..."
 msgstr ""
 
 #: ../plug-ins/common/displace.c:293
-#, fuzzy
 msgid "Displacing"
-msgstr "Paveikslėlio tipas:"
+msgstr ""
 
 #: ../plug-ins/common/displace.c:329
 msgid "Displace"
@@ -3352,28 +3316,25 @@ msgid "_Y displacement:"
 msgstr ""
 
 #: ../plug-ins/common/displace.c:462
-#, fuzzy
 msgid "Displacement Mode"
-msgstr "Rodyti kaip:"
+msgstr ""
 
 #: ../plug-ins/common/displace.c:465
 msgid "_Cartesian"
 msgstr ""
 
 #: ../plug-ins/common/displace.c:466
-#, fuzzy
 msgid "_Polar"
-msgstr "Ieškoti:"
+msgstr ""
 
 #: ../plug-ins/common/displace.c:471
 msgid "Edge Behavior"
-msgstr ""
+msgstr "Kraštų elgsena"
 
 #: ../plug-ins/common/displace.c:477 ../plug-ins/common/edge.c:732
 #: ../plug-ins/common/ripple.c:569 ../plug-ins/common/waves.c:276
-#, fuzzy
 msgid "_Smear"
-msgstr "Ieškoti:"
+msgstr ""
 
 #: ../plug-ins/common/displace.c:479 ../plug-ins/common/edge.c:745
 #: ../plug-ins/common/fractaltrace.c:736 ../plug-ins/common/newsprint.c:400
@@ -3382,59 +3343,52 @@ msgid "_Black"
 msgstr ""
 
 #: ../plug-ins/common/dog.c:143
-#, fuzzy
 msgid "_Difference of Gaussians..."
-msgstr "<Image>/Filters/Filtruoti visus sluoksnius..."
+msgstr "_Gausų skirtumai..."
 
 #: ../plug-ins/common/dog.c:231 ../plug-ins/common/dog.c:276
 msgid "DoG Edge Detect"
-msgstr ""
+msgstr "DoG kraštų aptikimas"
 
 #: ../plug-ins/common/dog.c:304
-#, fuzzy
 msgid "Smoothing Parameters"
-msgstr "Parametrai"
+msgstr "Glotninimo parametrai"
 
 #: ../plug-ins/common/dog.c:318
-#, fuzzy
 msgid "_Radius 1:"
-msgstr "Skersmuo:"
+msgstr "_Skersmuo 1:"
 
 #: ../plug-ins/common/dog.c:322
-#, fuzzy
 msgid "R_adius 2:"
-msgstr "Skersmuo:"
+msgstr "S_kersmuo 2:"
 
 #: ../plug-ins/common/dog.c:334 ../plug-ins/common/normalize.c:90
-#, fuzzy
 msgid "_Normalize"
-msgstr "Formatas"
+msgstr "_Normalizuoti"
 
 #: ../plug-ins/common/dog.c:345 ../plug-ins/gimpressionist/paper.c:149
 msgid "_Invert"
-msgstr ""
+msgstr "_Invertuoti"
 
 #: ../plug-ins/common/edge.c:158
 msgid "_Edge..."
-msgstr ""
+msgstr "_Kraštas..."
 
 #: ../plug-ins/common/edge.c:230
-#, fuzzy
 msgid "Edge detection"
-msgstr "Raiška"
+msgstr "Kraštų aptikimas"
 
 #: ../plug-ins/common/edge.c:644
 msgid "Edge Detection"
-msgstr ""
+msgstr "Kraštų aptikimas"
 
 #: ../plug-ins/common/edge.c:678
 msgid "Sobel"
 msgstr ""
 
 #: ../plug-ins/common/edge.c:679
-#, fuzzy
 msgid "Prewitt"
-msgstr "Spausdinti"
+msgstr ""
 
 #: ../plug-ins/common/edge.c:680 ../plug-ins/common/sinus.c:904
 msgid "Gradient"
@@ -3454,17 +3408,15 @@ msgstr ""
 
 #: ../plug-ins/common/edge.c:692
 msgid "_Algorithm:"
-msgstr ""
+msgstr "_Algoritmas:"
 
 #: ../plug-ins/common/edge.c:700
-#, fuzzy
 msgid "A_mount:"
-msgstr "Apie"
+msgstr "_Kiekis:"
 
 #: ../plug-ins/common/emboss.c:132
-#, fuzzy
 msgid "_Emboss..."
-msgstr "Apie"
+msgstr ""
 
 #: ../plug-ins/common/emboss.c:388 ../plug-ins/common/emboss.c:451
 msgid "Emboss"
@@ -3472,7 +3424,7 @@ msgstr ""
 
 #: ../plug-ins/common/emboss.c:479
 msgid "Function"
-msgstr ""
+msgstr "Funkcija"
 
 #: ../plug-ins/common/emboss.c:483
 msgid "_Bumpmap"
@@ -3483,21 +3435,20 @@ msgid "_Emboss"
 msgstr ""
 
 #: ../plug-ins/common/emboss.c:516
-#, fuzzy
 msgid "E_levation:"
-msgstr "Sutrumpinimas:"
+msgstr ""
 
 #: ../plug-ins/common/engrave.c:108
 msgid "En_grave..."
-msgstr ""
+msgstr "Iš_graviruoti..."
 
 #: ../plug-ins/common/engrave.c:182
 msgid "Engraving"
-msgstr ""
+msgstr "Graviruojama"
 
 #: ../plug-ins/common/engrave.c:211
 msgid "Engrave"
-msgstr ""
+msgstr "Išgraviruoti"
 
 #: ../plug-ins/common/engrave.c:245 ../plug-ins/common/film.c:1201
 #: ../plug-ins/common/gtm.c:599 ../plug-ins/common/postscript.c:3102
@@ -3505,17 +3456,16 @@ msgstr ""
 #: ../plug-ins/common/smooth_palette.c:441 ../plug-ins/common/tile.c:428
 #: ../plug-ins/imagemap/imap_cmd_guides.c:177
 #: ../plug-ins/imagemap/imap_rectangle.c:410
-#, fuzzy
 msgid "_Height:"
-msgstr "Aukštis:"
+msgstr "_Aukštis:"
 
 #: ../plug-ins/common/engrave.c:256
 msgid "_Limit line width"
-msgstr ""
+msgstr "_Riboti linijos plotį"
 
 #: ../plug-ins/common/exchange.c:129
 msgid "_Color Exchange..."
-msgstr ""
+msgstr "_Spalvų apkeitimas..."
 
 #: ../plug-ins/common/exchange.c:214 ../plug-ins/common/exchange.c:288
 msgid "Color Exchange"
@@ -3564,32 +3514,31 @@ msgstr "Naujas spausdintuvas..."
 
 #: ../plug-ins/common/film.c:323
 msgid "Composing images"
-msgstr ""
+msgstr "Komponuojami paveikslėliai"
 
 #: ../plug-ins/common/film.c:436 ../plug-ins/common/guillotine.c:187
 #: ../plug-ins/helpbrowser/dialog.c:841
 msgid "Untitled"
-msgstr ""
+msgstr "Nepavadintas"
 
 #. ** Get a RGB copy of the source region **
 #: ../plug-ins/common/film.c:698
 msgid "Temporary"
-msgstr ""
+msgstr "Laikinas"
 
 #: ../plug-ins/common/film.c:1077
 msgid "Available images:"
-msgstr ""
+msgstr "Prieinami paveikslėliai:"
 
 #: ../plug-ins/common/film.c:1078
-#, fuzzy
 msgid "On film:"
-msgstr "Atidaryti"
+msgstr "Juostoje:"
 
 #. Create selection
 #: ../plug-ins/common/film.c:1164 ../plug-ins/imagemap/imap_selection.c:366
 #: ../plug-ins/rcm/rcm_dialog.c:173
 msgid "Selection"
-msgstr ""
+msgstr "Pasirinkimas"
 
 #. Film height/colour
 #: ../plug-ins/common/film.c:1174 ../plug-ins/common/film.c:1446
@@ -3604,47 +3553,43 @@ msgstr ""
 #. Film color
 #: ../plug-ins/common/film.c:1219
 msgid "Select Film Color"
-msgstr ""
+msgstr "Pasirinkite juostos spalvą"
 
 #: ../plug-ins/common/film.c:1224 ../plug-ins/common/film.c:1274
 #: ../plug-ins/common/nova.c:351
-#, fuzzy
 msgid "Co_lor:"
-msgstr "Spalva:"
+msgstr "Spa_lva:"
 
 #. Film numbering: Startindex/Font/colour
 #: ../plug-ins/common/film.c:1233
 msgid "Numbering"
-msgstr ""
+msgstr "Numeravimas"
 
 #: ../plug-ins/common/film.c:1251
 msgid "Start _index:"
-msgstr ""
+msgstr "Pradinis _indeksas:"
 
 #: ../plug-ins/common/film.c:1264
-#, fuzzy
 msgid "_Font:"
-msgstr "Šriftas:"
+msgstr "Šri_ftas:"
 
 #. Numbering color
 #: ../plug-ins/common/film.c:1269
 msgid "Select Number Color"
-msgstr ""
+msgstr "Pasirinkite skaičių spalvą"
 
 #: ../plug-ins/common/film.c:1284
-#, fuzzy
 msgid "At _bottom"
-msgstr "Apačia"
+msgstr "Apači_oje"
 
 #: ../plug-ins/common/film.c:1285
-#, fuzzy
 msgid "At _top"
-msgstr "Apačia"
+msgstr "Virš_uje"
 
 #. ** The right frame keeps the image selection **
 #: ../plug-ins/common/film.c:1298
 msgid "Image Selection"
-msgstr ""
+msgstr "Paveikslėlio pasirinkimas"
 
 #: ../plug-ins/common/film.c:1326
 msgid "All Values are Fractions of the Strip Height"
@@ -3655,60 +3600,52 @@ msgid "Ad_vanced"
 msgstr ""
 
 #: ../plug-ins/common/film.c:1348
-#, fuzzy
 msgid "Image _height:"
-msgstr "Aukštis:"
+msgstr "Paveikslėlių _aukštis:"
 
 #: ../plug-ins/common/film.c:1359
-#, fuzzy
 msgid "Image spac_ing:"
-msgstr "Paveikslėlio tipas:"
+msgstr "Atstumas tarp pa_veikslėlių:"
 
 #: ../plug-ins/common/film.c:1370
-#, fuzzy
 msgid "_Hole offset:"
-msgstr "Aukštis:"
+msgstr "Skylių _poslinkis:"
 
 #: ../plug-ins/common/film.c:1381
-#, fuzzy
 msgid "Ho_le width:"
-msgstr "Plotis:"
+msgstr "Sky_lių plotis:"
 
 #: ../plug-ins/common/film.c:1392
-#, fuzzy
 msgid "Hol_e height:"
-msgstr "Aukštis:"
+msgstr "Sk_ylių aukštis:"
 
 #: ../plug-ins/common/film.c:1403
-#, fuzzy
 msgid "Hole sp_acing:"
-msgstr "Paveikslėlio tipas:"
+msgstr "Atstumas tarp s_kylių:"
 
 #: ../plug-ins/common/film.c:1414
-#, fuzzy
 msgid "_Number height:"
-msgstr "Aukštis:"
+msgstr "_Skaičių aukštis:"
 
 #: ../plug-ins/common/flarefx.c:195
 msgid "_FlareFX..."
-msgstr ""
+msgstr "_LiepsnaFX..."
 
 #: ../plug-ins/common/flarefx.c:270
-#, fuzzy
 msgid "Render flare"
-msgstr "sekundžių"
+msgstr ""
 
 #: ../plug-ins/common/flarefx.c:307
 msgid "FlareFX"
-msgstr ""
+msgstr "LiepsnaFX"
 
 #: ../plug-ins/common/flarefx.c:746
 msgid "Center of Flare Effect"
-msgstr ""
+msgstr "Liepsnos efekto centras"
 
 #: ../plug-ins/common/flarefx.c:782
 msgid "_Show cursor"
-msgstr ""
+msgstr "_Rodyti kursorių"
 
 #: ../plug-ins/common/fp.c:230 ../plug-ins/print/gimp_color_window.c:307
 msgid "Cyan:"
@@ -3716,7 +3653,7 @@ msgstr ""
 
 #: ../plug-ins/common/fp.c:231 ../plug-ins/print/gimp_color_window.c:345
 msgid "Yellow:"
-msgstr ""
+msgstr "Geltona:"
 
 #: ../plug-ins/common/fp.c:232 ../plug-ins/print/gimp_color_window.c:326
 msgid "Magenta:"
@@ -3724,28 +3661,27 @@ msgstr ""
 
 #: ../plug-ins/common/fp.c:234
 msgid "Darker:"
-msgstr ""
+msgstr "Tamsesnė:"
 
 #: ../plug-ins/common/fp.c:235
 msgid "Lighter:"
-msgstr ""
+msgstr "Šviesesnė:"
 
 #: ../plug-ins/common/fp.c:237
 msgid "More Sat:"
-msgstr ""
+msgstr "Daugiau sodr.:"
 
 #: ../plug-ins/common/fp.c:238
 msgid "Less Sat:"
-msgstr ""
+msgstr "Mažiau sodr.:"
 
 #: ../plug-ins/common/fp.c:240 ../plug-ins/common/fp.c:530
 msgid "Current:"
-msgstr ""
+msgstr "Esamas:"
 
 #: ../plug-ins/common/fp.c:329
-#, fuzzy
 msgid "_Filter Pack..."
-msgstr "Naujas spausdintuvas..."
+msgstr ""
 
 #: ../plug-ins/common/fp.c:375
 msgid "FP can only be used on RGB images."
@@ -3777,7 +3713,7 @@ msgstr ""
 
 #: ../plug-ins/common/fp.c:675
 msgid "Sha_dows"
-msgstr ""
+msgstr "Šešė_liai"
 
 #: ../plug-ins/common/fp.c:676
 msgid "_Midtones"
@@ -3785,16 +3721,15 @@ msgstr ""
 
 #: ../plug-ins/common/fp.c:677
 msgid "H_ighlights"
-msgstr ""
+msgstr "_Išryškinimai"
 
 #: ../plug-ins/common/fp.c:691
 msgid "Windows"
-msgstr ""
+msgstr "Langai"
 
 #: ../plug-ins/common/fp.c:701 ../plug-ins/common/lic.c:673
-#, fuzzy
 msgid "_Saturation"
-msgstr "Sodrumas"
+msgstr "_Sodrumas"
 
 #: ../plug-ins/common/fp.c:709
 msgid "A_dvanced"
@@ -3817,27 +3752,24 @@ msgid "H_ue"
 msgstr ""
 
 #: ../plug-ins/common/fp.c:831
-#, fuzzy
 msgid "Satu_ration"
-msgstr "Sodrumas"
+msgstr "Sod_rumas"
 
 #: ../plug-ins/common/fp.c:832
-#, fuzzy
 msgid "V_alue"
-msgstr "Reikšmė"
+msgstr "R_eikšmė"
 
 #: ../plug-ins/common/fp.c:858
 msgid "Show"
-msgstr ""
+msgstr "Rodyti"
 
 #: ../plug-ins/common/fp.c:863
 msgid "_Entire image"
-msgstr ""
+msgstr "_Visą paveikslėlį"
 
 #: ../plug-ins/common/fp.c:864
-#, fuzzy
 msgid "Se_lection only"
-msgstr "Raiška"
+msgstr "Ti_k pasirinkimą"
 
 #: ../plug-ins/common/fp.c:865
 msgid "Selec_tion in context"
@@ -3849,7 +3781,7 @@ msgstr ""
 
 #: ../plug-ins/common/fp.c:1298
 msgid "Shadows:"
-msgstr ""
+msgstr "Šešėliai:"
 
 #: ../plug-ins/common/fp.c:1299
 msgid "Midtones:"
@@ -3857,7 +3789,7 @@ msgstr ""
 
 #: ../plug-ins/common/fp.c:1300
 msgid "Highlights:"
-msgstr ""
+msgstr "Išryškinimai:"
 
 #: ../plug-ins/common/fp.c:1312
 msgid "Advanced Filter Pack Options"
@@ -3869,16 +3801,15 @@ msgstr ""
 
 #: ../plug-ins/common/fp.c:1423
 msgid "Preview as You Drag"
-msgstr ""
+msgstr "Tempiant rody peržiūrą"
 
 #: ../plug-ins/common/fp.c:1427
 msgid "Preview Size"
-msgstr ""
+msgstr "Peržiūros dydis"
 
 #: ../plug-ins/common/fractaltrace.c:121
-#, fuzzy
 msgid "_Fractal Trace..."
-msgstr "<Image>/Filters/Filtruoti visus sluoksnius..."
+msgstr ""
 
 #: ../plug-ins/common/fractaltrace.c:460 ../plug-ins/common/fractaltrace.c:687
 msgid "Fractal Trace"
@@ -3903,70 +3834,67 @@ msgstr ""
 
 #: ../plug-ins/common/fractaltrace.c:756
 msgid "X_1:"
-msgstr ""
+msgstr "X_1:"
 
 #: ../plug-ins/common/fractaltrace.c:765
 msgid "X_2:"
-msgstr ""
+msgstr "X_2:"
 
 #: ../plug-ins/common/fractaltrace.c:774
 msgid "Y_1:"
-msgstr ""
+msgstr "Y_1:"
 
 #: ../plug-ins/common/fractaltrace.c:783
 msgid "Y_2:"
-msgstr ""
+msgstr "Y_2:"
 
 #: ../plug-ins/common/gauss.c:162
-#, fuzzy
 msgid "_Gaussian Blur..."
-msgstr "<Image>/Filters/Filtruoti visus sluoksnius..."
+msgstr "_Gauso suliejimas..."
 
 #: ../plug-ins/common/gauss.c:418 ../plug-ins/common/gauss.c:466
-#, fuzzy
 msgid "Gaussian Blur"
-msgstr "<Image>/Filters/Filtruoti visus sluoksnius..."
+msgstr "Gauso suliejimas"
 
 #. parameter settings
 #: ../plug-ins/common/gauss.c:496
 msgid "Blur Radius"
-msgstr ""
+msgstr "Išliejimo skersmuo"
 
 #: ../plug-ins/common/gauss.c:510 ../plug-ins/common/jigsaw.c:2458
 #: ../plug-ins/common/spread.c:386
 msgid "_Horizontal:"
-msgstr ""
+msgstr "_Horizontaliai:"
 
 #: ../plug-ins/common/gauss.c:514 ../plug-ins/common/jigsaw.c:2475
 #: ../plug-ins/common/spread.c:390
 msgid "_Vertical:"
-msgstr ""
+msgstr "_Vertikaliai:"
 
 #: ../plug-ins/common/gauss.c:537
 msgid "Blur Method"
-msgstr ""
+msgstr "Išliejimo metodas"
 
 #: ../plug-ins/common/gauss.c:541
 msgid "_IIR"
-msgstr ""
+msgstr "_IIR"
 
 #: ../plug-ins/common/gauss.c:542
 msgid "_RLE"
-msgstr ""
+msgstr "_RLE"
 
 #: ../plug-ins/common/gbr.c:152 ../plug-ins/common/gbr.c:173
 msgid "GIMP brush"
-msgstr ""
+msgstr "GIMP teptukas"
 
 #: ../plug-ins/common/gbr.c:388 ../plug-ins/common/gbr.c:400
-#, fuzzy
 msgid "Unsupported brush format"
-msgstr "PNM: Byla nepalaikomu formatu."
+msgstr "Nepalaikomas teptuko formatas"
 
 #: ../plug-ins/common/gbr.c:411
 #, c-format
 msgid "Error in GIMP brush file '%s'"
-msgstr ""
+msgstr "Klaida GIMP teptuko byloje „%s“"
 
 #: ../plug-ins/common/gbr.c:419
 #, c-format
@@ -3976,7 +3904,7 @@ msgstr ""
 #: ../plug-ins/common/gbr.c:425 ../plug-ins/common/gih.c:499
 #: ../plug-ins/common/gih.c:1158 ../plug-ins/gflare/gflare.c:2993
 msgid "Unnamed"
-msgstr ""
+msgstr "Nepavadinta"
 
 #: ../plug-ins/common/gbr.c:607
 msgid "GIMP brushes are either GRAYSCALE or RGBA"
@@ -3984,7 +3912,7 @@ msgstr ""
 
 #: ../plug-ins/common/gbr.c:704
 msgid "Save as Brush"
-msgstr ""
+msgstr "Išsaugoti kaip teptuką"
 
 #. attach labels
 #: ../plug-ins/common/gbr.c:731 ../plug-ins/common/grid.c:790
@@ -3994,16 +3922,15 @@ msgstr ""
 #: ../plug-ins/common/gbr.c:742 ../plug-ins/common/gih.c:910
 #: ../plug-ins/common/pat.c:544 ../plug-ins/gimpressionist/presets.c:646
 msgid "Description:"
-msgstr ""
+msgstr "Aprašymas:"
 
 #: ../plug-ins/common/gee.c:106 ../plug-ins/common/gee.c:162
-#, fuzzy
 msgid "Gee Slime"
-msgstr "Atstatyti"
+msgstr ""
 
 #: ../plug-ins/common/gee.c:168 ../plug-ins/common/gee_zoom.c:192
 msgid "Thank You for Choosing GIMP"
-msgstr ""
+msgstr "Ačiū, kad pasirinkote GIMP"
 
 #: ../plug-ins/common/gee.c:175
 #, c-format
@@ -4011,9 +3938,8 @@ msgid "A less obsolete creation by %s"
 msgstr ""
 
 #: ../plug-ins/common/gee_zoom.c:126 ../plug-ins/common/gee_zoom.c:186
-#, fuzzy
 msgid "Gee Zoom"
-msgstr "Padidinti"
+msgstr ""
 
 #: ../plug-ins/common/gee_zoom.c:200
 #, c-format
@@ -4021,9 +3947,8 @@ msgid "An obsolete creation by %s"
 msgstr ""
 
 #: ../plug-ins/common/gif.c:410 ../plug-ins/common/gifload.c:144
-#, fuzzy
 msgid "GIF image"
-msgstr "GIF perspėjimas"
+msgstr "GIF paveikslėlis"
 
 #: ../plug-ins/common/gif.c:694
 msgid "Couldn't simply reduce colors further. Saving as opaque."
@@ -4034,14 +3959,15 @@ msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
 msgstr ""
+"GIF formatas palaiko tik 7 bitų ASCII koduotės komentarus. Komentaras "
+"neišsaugotas."
 
 #: ../plug-ins/common/gif.c:976
-#, fuzzy
 msgid ""
 "Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
-"GIF: Atsiprašome, RGB paveikslėlio neina išsaugoti kaip GIF - konvertuokite\n"
-"į INDEXED arba GRAY pirma.\n"
+"Negalima išsaugoti RGB spalvų paveikslėlių. Pirma konvertuokite į indeksuotą "
+"spalvą arba pilkumo atspalvius."
 
 #: ../plug-ins/common/gif.c:1117
 msgid ""
@@ -4079,38 +4005,35 @@ msgid "GIF Options"
 msgstr "GIF parinktys"
 
 #: ../plug-ins/common/gif.c:1294
-#, fuzzy
 msgid "I_nterlace"
-msgstr "Naujas spausdintuvas..."
+msgstr ""
 
 #: ../plug-ins/common/gif.c:1310
-#, fuzzy
 msgid "_GIF comment:"
-msgstr "GIF komentaras:"
+msgstr "_GIF komentaras:"
 
 #. additional animated gif parameter settings
 #: ../plug-ins/common/gif.c:1367
 msgid "Animated GIF Options"
-msgstr ""
+msgstr "Animuoto GIF parinktys"
 
 #: ../plug-ins/common/gif.c:1373
 msgid "_Loop forever"
-msgstr ""
+msgstr "_Amžinas ciklas"
 
 #: ../plug-ins/common/gif.c:1386
 msgid "_Delay between frames where unspecified:"
-msgstr ""
+msgstr "_Delsa tarp kadrų, kur ji nenurodyta:"
 
 #: ../plug-ins/common/gif.c:1401 ../plug-ins/common/mng.c:1542
 msgid "milliseconds"
-msgstr ""
+msgstr "milisekundės"
 
 #: ../plug-ins/common/gif.c:1411
 msgid "_Frame disposal where unspecified:"
 msgstr ""
 
 #: ../plug-ins/common/gif.c:1415
-#, fuzzy
 msgid "I don't care"
 msgstr "Man nerūpi"
 
@@ -4133,25 +4056,25 @@ msgstr ""
 
 #: ../plug-ins/common/gif.c:2655
 msgid "Error writing output file."
-msgstr ""
+msgstr "Klaida rašant išvesties bylą."
 
 #: ../plug-ins/common/gif.c:2725
 #, c-format
 msgid "The default comment is limited to %d characters."
-msgstr ""
+msgstr "Numatytasis komentaras yra ribojamas iki %d simbolių."
 
 #: ../plug-ins/common/gifload.c:313
 msgid "This is not a GIF file"
-msgstr ""
+msgstr "Tai nėra GIF byla"
 
 #: ../plug-ins/common/gifload.c:351
 msgid "Non-square pixels.  Image might look squashed."
-msgstr ""
+msgstr "Nekvadratiniai pikseliai. Paveikslėlis gali atrodyti sudaužytas."
 
 #: ../plug-ins/common/gifload.c:869
-#, fuzzy, c-format
+#, c-format
 msgid "Background (%d%s)"
-msgstr "Fonas"
+msgstr "Fonas (%d%s)"
 
 #: ../plug-ins/common/gifload.c:918 ../plug-ins/common/iwarp.c:780
 #: ../plug-ins/common/iwarp.c:815
@@ -4160,9 +4083,9 @@ msgid "Frame %d"
 msgstr "Kadras %d"
 
 #: ../plug-ins/common/gifload.c:920
-#, fuzzy, c-format
+#, c-format
 msgid "Frame %d (%d%s)"
-msgstr "Kadras %d (%dms)"
+msgstr "Kadras %d (%d%s)"
 
 #: ../plug-ins/common/gifload.c:951
 #, c-format
@@ -4173,7 +4096,7 @@ msgstr ""
 
 #: ../plug-ins/common/gih.c:207 ../plug-ins/common/gih.c:228
 msgid "GIMP brush (animated)"
-msgstr ""
+msgstr "GIMP teptukas (animuotas)"
 
 #: ../plug-ins/common/gih.c:321
 #, c-format
@@ -4186,7 +4109,7 @@ msgstr ""
 
 #: ../plug-ins/common/gih.c:558
 msgid "GIMP brush file appears to be corrupted."
-msgstr ""
+msgstr "Panašu, kad GIMP teptuko byla yra sugadinta."
 
 #: ../plug-ins/common/gih.c:703
 msgid "Couldn't load one brush in the pipe, giving up."
@@ -4202,17 +4125,15 @@ msgstr ""
 
 #: ../plug-ins/common/gih.c:963
 msgid "Pixels"
-msgstr ""
+msgstr "Taškeliai"
 
 #: ../plug-ins/common/gih.c:968
-#, fuzzy
 msgid "Cell size:"
-msgstr "Dydis:"
+msgstr "Langelio dydis:"
 
 #: ../plug-ins/common/gih.c:980
-#, fuzzy
 msgid "Number of cells:"
-msgstr "kadrų skaičius:"
+msgstr "Langelių skaičius:"
 
 #: ../plug-ins/common/gih.c:1005
 msgid " Rows of "
@@ -4220,15 +4141,15 @@ msgstr ""
 
 #: ../plug-ins/common/gih.c:1017
 msgid " Columns on each layer"
-msgstr ""
+msgstr " Stulpelių kiekviename sluoksnyje"
 
 #: ../plug-ins/common/gih.c:1021
 msgid " (Width Mismatch!) "
-msgstr ""
+msgstr " (pločio nesutapimas!)"
 
 #: ../plug-ins/common/gih.c:1025
 msgid " (Height Mismatch!) "
-msgstr ""
+msgstr " (aukščio nesutapimas!)"
 
 #: ../plug-ins/common/gih.c:1030
 msgid "Display as:"
@@ -4236,7 +4157,7 @@ msgstr "Rodyti kaip:"
 
 #: ../plug-ins/common/gih.c:1039
 msgid "Dimension:"
-msgstr ""
+msgstr "Dimensija:"
 
 #: ../plug-ins/common/gih.c:1114
 msgid "Ranks:"
@@ -4253,26 +4174,24 @@ msgstr ""
 #: ../plug-ins/common/glasstile.c:290
 #, fuzzy
 msgid "Tile _width:"
-msgstr "Plotis:"
+msgstr "Detalės _plotis:"
 
 #: ../plug-ins/common/glasstile.c:304 ../plug-ins/common/mosaic.c:743
 #, fuzzy
 msgid "Tile _height:"
-msgstr "Aukštis:"
+msgstr "Detalės _ukštis:"
 
 #: ../plug-ins/common/gqbist.c:407
-#, fuzzy
 msgid "_Qbist..."
-msgstr "Apie"
+msgstr "_Qbistas..."
 
 #: ../plug-ins/common/gqbist.c:508
-#, fuzzy
 msgid "Qbist"
-msgstr "Apie"
+msgstr "Qbistas"
 
 #: ../plug-ins/common/gqbist.c:691
 msgid "Load QBE File"
-msgstr ""
+msgstr "Įkelti QBE bylą"
 
 #: ../plug-ins/common/gqbist.c:734
 msgid "Save (middle transform) as QBE File"
@@ -4280,50 +4199,48 @@ msgstr ""
 
 #: ../plug-ins/common/gqbist.c:787
 msgid "G-Qbist"
-msgstr ""
+msgstr "G-Qbistas"
 
 #: ../plug-ins/common/gradmap.c:98
 msgid "_Gradient Map"
 msgstr ""
 
 #: ../plug-ins/common/gradmap.c:121
-#, fuzzy
 msgid "_Palette Map"
-msgstr "Įdėta"
+msgstr ""
 
 #: ../plug-ins/common/gradmap.c:164
 msgid "Gradient Map"
 msgstr ""
 
 #: ../plug-ins/common/gradmap.c:169
-#, fuzzy
 msgid "Palette Map"
-msgstr "Įdėta"
+msgstr ""
 
 #: ../plug-ins/common/grid.c:148
 msgid "_Grid..."
-msgstr ""
+msgstr "_Tinklelis..."
 
 #: ../plug-ins/common/grid.c:241
 msgid "Drawing grid"
-msgstr ""
+msgstr "Piešiamas tinklelis"
 
 #: ../plug-ins/common/grid.c:635 ../plug-ins/gfig/gfig-dialog.c:1361
 msgid "Grid"
-msgstr ""
+msgstr "Tinklelis"
 
 #. attach labels
 #: ../plug-ins/common/grid.c:717
 msgid "Horizontal"
-msgstr ""
+msgstr "Horizontalios"
 
 #: ../plug-ins/common/grid.c:719
 msgid "Vertical"
-msgstr ""
+msgstr "Vertikalios"
 
 #: ../plug-ins/common/grid.c:721
 msgid "Intersection"
-msgstr ""
+msgstr "Susikirtimas"
 
 #. Width and Height
 #: ../plug-ins/common/grid.c:724 ../plug-ins/common/svg.c:781
@@ -4335,80 +4252,81 @@ msgstr "Plotis:"
 #. attach labels
 #: ../plug-ins/common/grid.c:857
 msgid "Offset:"
-msgstr ""
+msgstr "Poslinkis:"
 
 #. attach color selectors
 #: ../plug-ins/common/grid.c:896
 msgid "Horizontal Color"
-msgstr ""
+msgstr "Horizontali spalva"
 
 #: ../plug-ins/common/grid.c:914
 msgid "Vertical Color"
-msgstr ""
+msgstr "Vertikali spalva"
 
 #: ../plug-ins/common/grid.c:932
 msgid "Intersection Color"
-msgstr ""
+msgstr "Susikirtimų spalva"
 
 #: ../plug-ins/common/gtm.c:155
 msgid "HTML table"
-msgstr ""
+msgstr "HTML lentelė"
 
 #: ../plug-ins/common/gtm.c:397
-#, fuzzy
 msgid "Save as HTML table"
-msgstr "Išsaugoti kaip PNG"
+msgstr "Išsaugoti kaip HTML lentelę"
 
 #: ../plug-ins/common/gtm.c:424
 msgid "Warning"
-msgstr ""
+msgstr "Įspėjimas"
 
 #: ../plug-ins/common/gtm.c:435
-#, fuzzy
 msgid ""
 "You are about to create a huge\n"
 "HTML file which will most likely\n"
 "crash your browser."
 msgstr ""
-"Ar išprotėjote?\n"
-"\n"
-"Jūs norite sukurti didžiulę\n"
+"Jūs ketinate sukurti didžiulę\n"
 "HTML bylą, kuri greičiausiai\n"
 "nulauš jūsų naršyklę."
 
 #. HTML Page Options
 #: ../plug-ins/common/gtm.c:444
 msgid "HTML Page Options"
-msgstr ""
+msgstr "HTML puslapio nustatymai"
 
 #: ../plug-ins/common/gtm.c:451
 msgid "_Generate full HTML document"
-msgstr ""
+msgstr "_Generuoti visą HTML dokumentą"
 
 #: ../plug-ins/common/gtm.c:457
 msgid ""
 "If checked GTM will output a full HTML document with <HTML>, <BODY>, etc. "
 "tags instead of just the table html."
 msgstr ""
+"Jei pažymėta, GTM išves visą HTML dokumentą (su <html>, <body>, ir kt.) "
+"žymėmis, ne vien tik lentelės html."
 
 #. HTML Table Creation Options
 #: ../plug-ins/common/gtm.c:470
 msgid "Table Creation Options"
-msgstr ""
+msgstr "Lentelės kūrimo nustatymai"
 
 #: ../plug-ins/common/gtm.c:478
 msgid "_Use cellspan"
-msgstr ""
+msgstr "_Naudoti langelių sujungimą"
 
 #: ../plug-ins/common/gtm.c:484
 msgid ""
 "If checked GTM will replace any rectangular sections of identically colored "
 "blocks with one large cell with ROWSPAN and COLSPAN values."
 msgstr ""
+"Jei pažymėta, GTM pakeis visus vienodai nuspalvintų blokų "
+"stačiakampiusskyrius vienu dideliu langeliu naudojant ROWSPAN ir COLSPAN "
+"reikšmes."
 
 #: ../plug-ins/common/gtm.c:493
 msgid "Co_mpress TD tags"
-msgstr ""
+msgstr "Sus_pausti TD žymes"
 
 #: ../plug-ins/common/gtm.c:499
 msgid ""
@@ -4416,50 +4334,50 @@ msgid ""
 "and the cellcontent.  This is only necessary for pixel level positioning "
 "control."
 msgstr ""
+"Jei pažymėta, GTM nepaliks tuščių vietų tarp TD žymių ir langelio turinio. "
+"Tai būtina tik norint pasiekti išdėstymą taškelių tikslumu."
 
 #: ../plug-ins/common/gtm.c:509
-#, fuzzy
 msgid "C_aption"
-msgstr "Pasirinkimai"
+msgstr "_Antraštė"
 
 #: ../plug-ins/common/gtm.c:515
 msgid "Check if you would like to have the table captioned."
-msgstr ""
+msgstr "Pažymėkite, jei norite, kad lentelė turėtų antraštę."
 
 #: ../plug-ins/common/gtm.c:530
 msgid "The text for the table caption."
-msgstr ""
+msgstr "Lentelės antraštės tekstas."
 
 #: ../plug-ins/common/gtm.c:543
-#, fuzzy
 msgid "C_ell content:"
-msgstr "Dydis:"
+msgstr "Lang_elio turinys:"
 
 #: ../plug-ins/common/gtm.c:547
 msgid "The text to go into each cell."
-msgstr ""
+msgstr "Kiekvieno langelio tekstas."
 
 #. HTML Table Options
 #: ../plug-ins/common/gtm.c:557
 msgid "Table Options"
-msgstr ""
+msgstr "Lentelės nustatymai"
 
 #: ../plug-ins/common/gtm.c:568
-#, fuzzy
 msgid "_Border:"
-msgstr "Rėmelis:"
+msgstr "_Rėmelis:"
 
 #: ../plug-ins/common/gtm.c:572
 msgid "The number of pixels in the table border."
-msgstr ""
+msgstr "Lentelės rėmelio storis taškeliais."
 
 #: ../plug-ins/common/gtm.c:587
 msgid "The width for each table cell.  Can be a number or a percent."
-msgstr ""
+msgstr "Kiekvieno lentelės langelio plotis. Gali būti skaičius arba procentas."
 
 #: ../plug-ins/common/gtm.c:603
 msgid "The height for each table cell.  Can be a number or a percent."
 msgstr ""
+"Kiekvieno lentelės langelio aukštis. Gali būti skaičius arba procentas."
 
 #: ../plug-ins/common/gtm.c:614
 msgid "Cell-_padding:"
@@ -4479,42 +4397,39 @@ msgstr ""
 
 #: ../plug-ins/common/guillotine.c:76
 msgid "_Guillotine"
-msgstr ""
+msgstr "_Giljotina"
 
 #: ../plug-ins/common/guillotine.c:108
 msgid "Guillotine"
-msgstr ""
+msgstr "Giljotina"
 
 #: ../plug-ins/common/header.c:77
 msgid "C source code header"
-msgstr ""
+msgstr "C pradinio kodo antraštė"
 
 #: ../plug-ins/common/hot.c:217
-#, fuzzy
 msgid "_Hot..."
-msgstr "Apie"
+msgstr "_Karšta..."
 
 #: ../plug-ins/common/hot.c:379 ../plug-ins/common/hot.c:570
 msgid "Hot"
-msgstr ""
+msgstr "Karšta"
 
 #: ../plug-ins/common/hot.c:607
-#, fuzzy
 msgid "Create _new layer"
-msgstr "Atstatyti"
+msgstr "Sukurti _naują sluoksnį"
 
 #: ../plug-ins/common/hot.c:616
 msgid "Action"
-msgstr ""
+msgstr "Veiksmas"
 
 #: ../plug-ins/common/hot.c:620
 msgid "Reduce _Luminance"
 msgstr ""
 
 #: ../plug-ins/common/hot.c:621
-#, fuzzy
 msgid "Reduce _Saturation"
-msgstr "Sodrumas"
+msgstr "Sumažinti _sodrumą"
 
 #: ../plug-ins/common/hot.c:622 ../plug-ins/common/waves.c:277
 msgid "_Blacken"
@@ -4522,38 +4437,37 @@ msgstr ""
 
 #: ../plug-ins/common/illusion.c:96
 msgid "_Illusion..."
-msgstr ""
+msgstr "_Iliuzija..."
 
 #: ../plug-ins/common/illusion.c:168 ../plug-ins/common/illusion.c:385
 msgid "Illusion"
-msgstr ""
+msgstr "Iliuzija"
 
 #: ../plug-ins/common/illusion.c:423
 #, fuzzy
 msgid "_Divisions:"
-msgstr "Skaitmenys:"
+msgstr "_Dalybos:"
 
 #: ../plug-ins/common/illusion.c:433
 msgid "Mode _1"
-msgstr ""
+msgstr "_1 režimas"
 
 #: ../plug-ins/common/illusion.c:448
 msgid "Mode _2"
-msgstr ""
+msgstr "_2 režimas"
 
 #: ../plug-ins/common/iwarp.c:252
 msgid "_IWarp..."
 msgstr ""
 
 #: ../plug-ins/common/iwarp.c:686
-#, fuzzy
 msgid "Warping"
-msgstr "GIF perspėjimas"
+msgstr ""
 
 #: ../plug-ins/common/iwarp.c:791
-#, fuzzy, c-format
+#, c-format
 msgid "Warping Frame %d"
-msgstr "Kadras %d"
+msgstr ""
 
 #: ../plug-ins/common/iwarp.c:803
 msgid "Ping pong"
@@ -4581,7 +4495,7 @@ msgstr "_Animuoti"
 
 #: ../plug-ins/common/iwarp.c:1010
 msgid "Deform Mode"
-msgstr ""
+msgstr "Deformacijos režimas"
 
 #: ../plug-ins/common/iwarp.c:1023
 msgid "_Move"
@@ -4597,25 +4511,23 @@ msgstr ""
 
 #: ../plug-ins/common/iwarp.c:1026
 msgid "Remo_ve"
-msgstr ""
+msgstr "Pašali_nti"
 
 #: ../plug-ins/common/iwarp.c:1027
 msgid "S_hrink"
-msgstr ""
+msgstr "S_utraukti"
 
 #: ../plug-ins/common/iwarp.c:1028
 msgid "Sw_irl CW"
 msgstr ""
 
 #: ../plug-ins/common/iwarp.c:1057
-#, fuzzy
 msgid "_Deform radius:"
-msgstr "Skersmuo:"
+msgstr "_Deformavimo skersmuo:"
 
 #: ../plug-ins/common/iwarp.c:1067
-#, fuzzy
 msgid "D_eform amount:"
-msgstr "Skersmuo:"
+msgstr "D_eformavimo kiekis:"
 
 #: ../plug-ins/common/iwarp.c:1076
 msgid "_Bilinear"
@@ -4758,14 +4670,12 @@ msgid "W_ith source image"
 msgstr ""
 
 #: ../plug-ins/common/lic.c:717
-#, fuzzy
 msgid "_Effect image:"
-msgstr "Ilgis:"
+msgstr ""
 
 #: ../plug-ins/common/lic.c:728
-#, fuzzy
 msgid "_Filter length:"
-msgstr "Ilgis:"
+msgstr "_Filtro ilgis:"
 
 #: ../plug-ins/common/lic.c:737
 msgid "_Noise magnitude:"
@@ -4773,7 +4683,7 @@ msgstr ""
 
 #: ../plug-ins/common/lic.c:746
 msgid "In_tegration steps:"
-msgstr ""
+msgstr "In_tegravimo žingsneliai:"
 
 #: ../plug-ins/common/lic.c:755
 msgid "_Minimum value:"
@@ -4864,22 +4774,20 @@ msgid "Adjust _FG-BG"
 msgstr ""
 
 #: ../plug-ins/common/mapcolor.c:169
-#, fuzzy
 msgid "Color Range _Mapping..."
-msgstr "<Image>/File/Išsiųsti paštu..."
+msgstr ""
 
 #: ../plug-ins/common/mapcolor.c:215 ../plug-ins/common/mapcolor.c:508
 msgid "Cannot operate on gray or indexed color images."
-msgstr ""
+msgstr "Neveikia pilkuose arba indeksuotų spalvų paveikslėliuose."
 
 #: ../plug-ins/common/mapcolor.c:236
 msgid "Adjusting FG-BG"
 msgstr ""
 
 #: ../plug-ins/common/mapcolor.c:278
-#, fuzzy
 msgid "Mapping colors"
-msgstr "Spalva"
+msgstr ""
 
 #: ../plug-ins/common/mapcolor.c:353
 msgid "Map Color Range"
@@ -4898,11 +4806,11 @@ msgstr ""
 #: ../plug-ins/gfli/gfli.c:918 ../plug-ins/rcm/rcm_dialog.c:325
 #: ../plug-ins/rcm/rcm_dialog.c:378
 msgid "To:"
-msgstr ""
+msgstr "Į:"
 
 #: ../plug-ins/common/max_rgb.c:98
 msgid "_Maximum RGB..."
-msgstr ""
+msgstr "_Maksimalus RGB..."
 
 #: ../plug-ins/common/max_rgb.c:137
 msgid "Can only operate on RGB drawables."
@@ -4926,44 +4834,43 @@ msgstr ""
 
 #: ../plug-ins/common/mblur.c:174
 msgid "_Motion Blur..."
-msgstr ""
+msgstr "S_uliejimas judesiu..."
 
 #: ../plug-ins/common/mblur.c:808
 msgid "Motion blurring"
-msgstr ""
+msgstr "Suliejama judesiu"
 
 #: ../plug-ins/common/mblur.c:910
 msgid "Motion Blur"
-msgstr ""
+msgstr "Suliejimas judesiu"
 
 #: ../plug-ins/common/mblur.c:943
 msgid "Blur Type"
-msgstr ""
+msgstr "Suliejimo tipas"
 
 #: ../plug-ins/common/mblur.c:947
 msgid "_Linear"
-msgstr ""
+msgstr "_Tiesinis"
 
 #: ../plug-ins/common/mblur.c:948
 msgid "_Radial"
-msgstr ""
+msgstr "_Radialinis"
 
 #: ../plug-ins/common/mblur.c:949
-#, fuzzy
 msgid "_Zoom"
-msgstr "_Mastelis"
+msgstr "Pritra_ukimas"
 
 #: ../plug-ins/common/mblur.c:956
 msgid "Blur Center"
-msgstr ""
+msgstr "Išliejimo centras"
 
 #: ../plug-ins/common/mblur.c:999
 msgid "Blur _outward"
-msgstr ""
+msgstr "Išlieti į iš_orę"
 
 #: ../plug-ins/common/mblur.c:1012
 msgid "Blur Parameters"
-msgstr ""
+msgstr "Išliejimo parametrai"
 
 #: ../plug-ins/common/mblur.c:1036 ../plug-ins/common/newsprint.c:1003
 msgid "_Angle:"
@@ -5049,7 +4956,7 @@ msgstr "PNG suspaudimo lygis:"
 
 #: ../plug-ins/common/mng.c:1465 ../plug-ins/common/png.c:1827
 msgid "Choose a high compression level for small file size"
-msgstr ""
+msgstr "Pasirinkite didelį suspaudimo lygį norėdami mažo bylos dydžio"
 
 #: ../plug-ins/common/mng.c:1479
 msgid "JPEG compression quality:"
@@ -5094,13 +5001,12 @@ msgid "Mosaic"
 msgstr "Mozaika"
 
 #: ../plug-ins/common/mosaic.c:641
-#, fuzzy
 msgid "Co_lor averaging"
-msgstr "<Image>/File/Išsiųsti paštu..."
+msgstr ""
 
 #: ../plug-ins/common/mosaic.c:654
 msgid "Allo_w tile splitting"
-msgstr ""
+msgstr "Lei_sti detalių dalinimą"
 
 #: ../plug-ins/common/mosaic.c:667
 msgid "_Pitted surfaces"
@@ -5141,9 +5047,8 @@ msgid "Til_e spacing:"
 msgstr "Atstumas _tarp detalių:"
 
 #: ../plug-ins/common/mosaic.c:767
-#, fuzzy
 msgid "Tile _neatness:"
-msgstr "Aukštis:"
+msgstr ""
 
 #: ../plug-ins/common/mosaic.c:780
 msgid "Light _direction:"
@@ -5175,32 +5080,31 @@ msgstr "_Kiekis:"
 
 #: ../plug-ins/common/newsprint.c:127
 msgid "Round"
-msgstr ""
+msgstr "Apvalus"
 
 #: ../plug-ins/common/newsprint.c:136
 msgid "Line"
-msgstr ""
+msgstr "Linija"
 
 #: ../plug-ins/common/newsprint.c:145
 msgid "Diamond"
-msgstr ""
+msgstr "Deimantas"
 
 #: ../plug-ins/common/newsprint.c:153
 msgid "PS Square (Euclidean Dot)"
-msgstr ""
+msgstr "PS kvadratas (Euklido taškas)"
 
 #: ../plug-ins/common/newsprint.c:162
 msgid "PS Diamond"
-msgstr ""
+msgstr "PS deimantas"
 
 #: ../plug-ins/common/newsprint.c:334
 msgid "_Grey"
-msgstr ""
+msgstr "_Pilka"
 
 #: ../plug-ins/common/newsprint.c:347
-#, fuzzy
 msgid "R_ed"
-msgstr "Raudona:"
+msgstr "R_audona"
 
 #: ../plug-ins/common/newsprint.c:376
 msgid "C_yan"
@@ -5212,25 +5116,23 @@ msgstr ""
 
 #: ../plug-ins/common/newsprint.c:392
 msgid "_Yellow"
-msgstr ""
+msgstr "_Geltona"
 
 #: ../plug-ins/common/newsprint.c:413
 msgid "Luminance"
 msgstr ""
 
 #: ../plug-ins/common/newsprint.c:528
-#, fuzzy
 msgid "Newsprin_t..."
-msgstr "Naujas spausdintuvas..."
+msgstr ""
 
 #: ../plug-ins/common/newsprint.c:629 ../plug-ins/common/newsprint.c:1190
 msgid "Newsprint"
 msgstr ""
 
 #: ../plug-ins/common/newsprint.c:1033
-#, fuzzy
 msgid "_Spot function:"
-msgstr "Sodrumas"
+msgstr ""
 
 #. resolution settings
 #: ../plug-ins/common/newsprint.c:1241
@@ -5246,9 +5148,8 @@ msgid "O_utput LPI:"
 msgstr ""
 
 #: ../plug-ins/common/newsprint.c:1287
-#, fuzzy
 msgid "C_ell size:"
-msgstr "Dydis:"
+msgstr "_Langelio dydis:"
 
 #. screen settings
 #: ../plug-ins/common/newsprint.c:1300 ../plug-ins/gflare/gflare.c:559
@@ -5265,25 +5166,23 @@ msgstr ""
 
 #: ../plug-ins/common/newsprint.c:1345
 msgid "_RGB"
-msgstr ""
+msgstr "_RGB"
 
 #: ../plug-ins/common/newsprint.c:1362
 msgid "C_MYK"
-msgstr ""
+msgstr "C_MYK"
 
 #: ../plug-ins/common/newsprint.c:1379
-#, fuzzy
 msgid "I_ntensity"
-msgstr "Tankumas:"
+msgstr "I_ntensyvumas"
 
 #: ../plug-ins/common/newsprint.c:1404
 msgid "_Lock channels"
-msgstr ""
+msgstr "_Užrakinti kanalus"
 
 #: ../plug-ins/common/newsprint.c:1417
-#, fuzzy
 msgid "_Factory Defaults"
-msgstr "Išsaugoti"
+msgstr ""
 
 #. anti-alias control
 #: ../plug-ins/common/newsprint.c:1443 ../plug-ins/gfig/gfig-dialog.c:1262
@@ -5295,26 +5194,24 @@ msgid "O_versample:"
 msgstr ""
 
 #: ../plug-ins/common/nlfilt.c:126
-#, fuzzy
 msgid "_NL Filter..."
-msgstr "Naujas spausdintuvas..."
+msgstr "_NL filtras..."
 
 #: ../plug-ins/common/nlfilt.c:955 ../plug-ins/common/nlfilt.c:1018
 msgid "NL Filter"
-msgstr ""
+msgstr "NL filtras"
 
 #: ../plug-ins/common/nlfilt.c:1046
 msgid "Filter"
-msgstr ""
+msgstr "Filtras"
 
 #: ../plug-ins/common/nlfilt.c:1050
 msgid "_Alpha trimmed mean"
 msgstr ""
 
 #: ../plug-ins/common/nlfilt.c:1052
-#, fuzzy
 msgid "Op_timal estimation"
-msgstr "Orientacija"
+msgstr ""
 
 #: ../plug-ins/common/nlfilt.c:1054
 msgid "_Edge enhancement"
@@ -5322,99 +5219,92 @@ msgstr ""
 
 #: ../plug-ins/common/nlfilt.c:1079
 msgid "A_lpha:"
-msgstr ""
+msgstr "A_lfa:"
 
 #: ../plug-ins/common/noisify.c:154
 msgid "_RGB Noise..."
-msgstr ""
+msgstr "_RGB triukšmas..."
 
 #: ../plug-ins/common/noisify.c:282
 msgid "Adding noise"
-msgstr ""
+msgstr "Pridedamas triukšmas"
 
 #: ../plug-ins/common/noisify.c:448
-#, fuzzy
 msgid "RGB Noise"
-msgstr "Uždaryti"
+msgstr "RGB triukšmas"
 
 #: ../plug-ins/common/noisify.c:481
-#, fuzzy
 msgid "Co_rrelated noise"
-msgstr "Atstatyti"
+msgstr ""
 
 #: ../plug-ins/common/noisify.c:496
 msgid "_Independent RGB"
-msgstr ""
+msgstr "_Nepriklausomas RGB"
 
 #: ../plug-ins/common/noisify.c:520 ../plug-ins/common/noisify.c:524
-#, fuzzy
 msgid "_Gray:"
-msgstr "Nufotografuoti"
+msgstr "_Pilka:"
 
 #: ../plug-ins/common/noisify.c:550
 #, c-format
 msgid "Channel #%d:"
-msgstr ""
+msgstr "Kanalas #%d:"
 
 #: ../plug-ins/common/normalize.c:124
-#, fuzzy
 msgid "Normalizing"
-msgstr "Formatas"
+msgstr "Normalizuojama"
 
 #: ../plug-ins/common/nova.c:176
 msgid "Su_perNova..."
-msgstr ""
+msgstr "Su_perNova..."
 
 #: ../plug-ins/common/nova.c:260
 msgid "Rendering SuperNova"
-msgstr ""
+msgstr "Atvaizduojama SuperNova"
 
 #: ../plug-ins/common/nova.c:303
 msgid "SuperNova"
-msgstr ""
+msgstr "SuperNova"
 
 #: ../plug-ins/common/nova.c:347
 msgid "SuperNova Color Picker"
-msgstr ""
+msgstr "SuperNova spalvų parinkimas"
 
 #: ../plug-ins/common/nova.c:376
 msgid "_Spokes:"
 msgstr ""
 
 #: ../plug-ins/common/nova.c:391
-#, fuzzy
 msgid "R_andom hue:"
-msgstr "Skersmuo:"
+msgstr "_Atsitiktinis atspalvis:"
 
 #: ../plug-ins/common/nova.c:443
 msgid "Center of SuperNova"
-msgstr ""
+msgstr "SuperNovos spalva"
 
 #: ../plug-ins/common/nova.c:477
 msgid "S_how cursor"
-msgstr ""
+msgstr "_Rodyti kursorių"
 
 #: ../plug-ins/common/oilify.c:109
 msgid "Oili_fy..."
-msgstr ""
+msgstr "Alie_jinis dažymas..."
 
 #: ../plug-ins/common/oilify.c:187
-#, fuzzy
 msgid "Oil painting"
-msgstr "Paveikslėlio tipas:"
+msgstr "Aliejinis dažymas"
 
 #: ../plug-ins/common/oilify.c:475
 msgid "Oilify"
-msgstr ""
+msgstr "Aliejinis dažymas"
 
 #: ../plug-ins/common/oilify.c:509
-#, fuzzy
 msgid "_Mask size:"
-msgstr "Dydis:"
+msgstr "_Kaukės dydis:"
 
 #: ../plug-ins/common/oilify.c:520
 msgid "_Use intensity algorithm"
-msgstr ""
+msgstr "_Naudoti intensyvumo algoritmą"
 
 #: ../plug-ins/common/papertile.c:234 ../plug-ins/common/papertile.c:533
 msgid "Paper Tile"
@@ -5422,20 +5312,19 @@ msgstr ""
 
 #: ../plug-ins/common/papertile.c:260
 msgid "Division"
-msgstr ""
+msgstr "Dalijimas"
 
 #: ../plug-ins/common/papertile.c:299
 msgid "Fractional Pixels"
 msgstr ""
 
 #: ../plug-ins/common/papertile.c:304
-#, fuzzy
 msgid "_Background"
-msgstr "Fonas"
+msgstr "_Fonas"
 
 #: ../plug-ins/common/papertile.c:306
 msgid "_Ignore"
-msgstr ""
+msgstr "_Ignoruoti"
 
 #: ../plug-ins/common/papertile.c:308
 msgid "_Force"
@@ -5443,63 +5332,59 @@ msgstr ""
 
 #: ../plug-ins/common/papertile.c:315
 msgid "C_entering"
-msgstr ""
+msgstr "C_entravimas"
 
 #: ../plug-ins/common/papertile.c:330
 msgid "Movement"
-msgstr ""
+msgstr "Judėjimas"
 
 #: ../plug-ins/common/papertile.c:343
 msgid "_Max (%):"
-msgstr ""
+msgstr "_Maks. (%):"
 
 #: ../plug-ins/common/papertile.c:349
-#, fuzzy
 msgid "_Wrap around"
-msgstr "Fonas"
+msgstr ""
 
 #: ../plug-ins/common/papertile.c:359
 msgid "Background Type"
-msgstr ""
+msgstr "Fono tipas"
 
 #: ../plug-ins/common/papertile.c:366
 msgid "I_nverted image"
-msgstr ""
+msgstr "I_nvertuotas paveikslėlis"
 
 #: ../plug-ins/common/papertile.c:368
 msgid "Im_age"
-msgstr ""
+msgstr "P_aveikslėlis"
 
 #: ../plug-ins/common/papertile.c:370
-#, fuzzy
 msgid "Fo_reground color"
-msgstr "Fonas"
+msgstr "P_riekinio plano spalva"
 
 #: ../plug-ins/common/papertile.c:372
-#, fuzzy
 msgid "Bac_kground color"
-msgstr "Fonas"
+msgstr "Fo_no spalva"
 
 #: ../plug-ins/common/papertile.c:374
 msgid "S_elect here:"
-msgstr ""
+msgstr "Pasirin_kti čia:"
 
 #: ../plug-ins/common/papertile.c:381
 msgid "Background Color"
-msgstr ""
+msgstr "Fono spalva"
 
 #: ../plug-ins/common/papertile.c:820
 msgid "September 31, 1999"
-msgstr ""
+msgstr "1999 rugsėjo 31"
 
 #: ../plug-ins/common/papertile.c:821
 msgid "_Paper Tile..."
-msgstr ""
+msgstr "_Popieriaus detalės..."
 
 #: ../plug-ins/common/pat.c:123 ../plug-ins/common/pat.c:146
-#, fuzzy
 msgid "GIMP pattern"
-msgstr "GIMP išplėtimas"
+msgstr "GIMP raštas"
 
 #: ../plug-ins/common/pat.c:362
 #, c-format
@@ -5508,7 +5393,7 @@ msgstr ""
 
 #: ../plug-ins/common/pat.c:517
 msgid "Save as Pattern"
-msgstr ""
+msgstr "Išsaugoti kaip raštą"
 
 #: ../plug-ins/common/pcx.c:147 ../plug-ins/common/pcx.c:166
 msgid "ZSoft PCX image"
@@ -5558,58 +5443,55 @@ msgstr ""
 
 #: ../plug-ins/common/pixelize.c:171
 msgid "_Pixelize..."
-msgstr ""
+msgstr "Pi_kseliuoti..."
 
 #: ../plug-ins/common/pixelize.c:273
 msgid "Pixelizing"
-msgstr ""
+msgstr "Pikseliuojama"
 
 #: ../plug-ins/common/pixelize.c:314
 msgid "Pixelize"
-msgstr ""
+msgstr "Pikseliuoti"
 
 #: ../plug-ins/common/pixelize.c:350
-#, fuzzy
 msgid "Pixel _width:"
-msgstr "Plotis:"
+msgstr "Pikselių _plotis:"
 
 #: ../plug-ins/common/pixelize.c:355
-#, fuzzy
 msgid "Pixel _height:"
-msgstr "Aukštis:"
+msgstr "Pikselių _aukštis:"
 
 #: ../plug-ins/common/plasma.c:184
-#, fuzzy
 msgid "_Plasma..."
-msgstr "Įdedama..."
+msgstr "_Plazma..."
 
 #: ../plug-ins/common/plasma.c:266 ../plug-ins/common/plasma.c:303
 msgid "Plasma"
-msgstr ""
+msgstr "Plazma"
 
 #: ../plug-ins/common/plasma.c:339
 msgid "Random _seed:"
-msgstr ""
+msgstr "Atsitiktinė _sėkla:"
 
 #: ../plug-ins/common/plasma.c:350
 msgid "T_urbulence:"
-msgstr ""
+msgstr "T_urbulencija:"
 
 #: ../plug-ins/common/png.c:264 ../plug-ins/common/png.c:285
 #: ../plug-ins/common/png.c:307 ../plug-ins/common/png.c:326
 msgid "PNG image"
-msgstr ""
+msgstr "PNG paveikslėlis"
 
 #: ../plug-ins/common/png.c:703
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
-msgstr ""
+msgstr "Klaida skaitant „%s“. Byla sugadinta?"
 
 #. Aie! Unknown type
 #: ../plug-ins/common/png.c:835
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
-msgstr ""
+msgstr "PNG byloje „%s“ yra nežinomas spalvų modelis."
 
 #: ../plug-ins/common/png.c:890
 msgid ""
@@ -5620,7 +5502,7 @@ msgstr ""
 #: ../plug-ins/common/png.c:1245
 #, c-format
 msgid "Error while saving '%s'. Could not save image."
-msgstr ""
+msgstr "Klaida saugant „%s“. Paveikslėlio išsaugoti nepavyko."
 
 #: ../plug-ins/common/png.c:1706
 msgid "Save as PNG"
@@ -5628,12 +5510,11 @@ msgstr "Išsaugoti kaip PNG"
 
 #: ../plug-ins/common/png.c:1710
 msgid "_Load defaults"
-msgstr ""
+msgstr "Į_kelti numatytus"
 
 #: ../plug-ins/common/png.c:1711
-#, fuzzy
 msgid "_Save defaults"
-msgstr "Išsaugoti"
+msgstr "Iš_saugoti numatytus"
 
 #: ../plug-ins/common/png.c:1741
 msgid "_Interlacing (Adam7)"
@@ -6432,7 +6313,7 @@ msgstr "Padaryti _darbastalio nuotrauką"
 
 #: ../plug-ins/common/screenshot.c:869
 msgid "Select a region"
-msgstr "Pasirinkite regioną"
+msgstr "Pasirinkti regioną"
 
 #: ../plug-ins/common/screenshot.c:874
 msgid ""
@@ -6444,11 +6325,11 @@ msgstr ""
 
 #: ../plug-ins/common/screenshot.c:889
 msgid "W_ait"
-msgstr "L_aukimas"
+msgstr "Pal_aukti"
 
 #: ../plug-ins/common/screenshot.c:904
 msgid "seconds before grabbing"
-msgstr ""
+msgstr "sekundes prieš fotografuojant"
 
 #: ../plug-ins/common/screenshot.c:908
 msgid ""
@@ -7228,17 +7109,17 @@ msgstr "Nepavyko perskaityti „%s“ poraštės"
 msgid "Cannot read extension from '%s'"
 msgstr "Nepavyko perskaityti „%s“ plėtinio"
 
-#: ../plug-ins/common/tga.c:1188
+#: ../plug-ins/common/tga.c:1185
 msgid "Save as TGA"
 msgstr "Išsaugoti kaip TGA"
 
 #. rle
-#: ../plug-ins/common/tga.c:1211
+#: ../plug-ins/common/tga.c:1208
 msgid "_RLE compression"
 msgstr "_RLE suspaudimas"
 
 #. origin
-#: ../plug-ins/common/tga.c:1221
+#: ../plug-ins/common/tga.c:1218
 msgid "Or_igin at bottom left"
 msgstr ""
 
@@ -9092,24 +8973,24 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/brush.c:235
 msgid "Save Brush"
-msgstr ""
+msgstr "Išsaugoti teptuką"
 
 #: ../plug-ins/gimpressionist/brush.c:488
 msgid "_Brush"
-msgstr ""
+msgstr "_Teptukas"
 
 #: ../plug-ins/gimpressionist/brush.c:525
 #: ../plug-ins/print/gimp_color_window.c:407
 msgid "Gamma:"
-msgstr ""
+msgstr "Gama:"
 
 #: ../plug-ins/gimpressionist/brush.c:543
 msgid "Changes the gamma (brightness) of the selected brush"
-msgstr ""
+msgstr "Keičia pasirinkto teptuko gamą (ryškumą)"
 
 #: ../plug-ins/gimpressionist/brush.c:551
 msgid "Select:"
-msgstr ""
+msgstr "Pasirinkite:"
 
 #: ../plug-ins/gimpressionist/brush.c:580
 msgid "Aspect ratio:"
@@ -9122,7 +9003,7 @@ msgstr ""
 #: ../plug-ins/gimpressionist/brush.c:593
 #: ../plug-ins/gimpressionist/paper.c:188
 msgid "Relief:"
-msgstr ""
+msgstr "Reljefas:"
 
 #: ../plug-ins/gimpressionist/brush.c:597
 #: ../plug-ins/gimpressionist/paper.c:192
@@ -9130,9 +9011,8 @@ msgid "Specifies the amount of embossing to apply to the image (in percent)"
 msgstr ""
 
 #: ../plug-ins/gimpressionist/color.c:42
-#, fuzzy
 msgid "Co_lor"
-msgstr "Spalva"
+msgstr "Spa_lva"
 
 #: ../plug-ins/gimpressionist/color.c:52
 msgid "A_verage under brush"
@@ -9140,7 +9020,7 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/color.c:54
 msgid "C_enter of brush"
-msgstr ""
+msgstr "Teptuko c_entras"
 
 #: ../plug-ins/gimpressionist/color.c:61
 msgid "Color is computed from the average of all pixels under the brush"
@@ -9151,25 +9031,24 @@ msgid "Samples the color from the pixel in the center of the brush"
 msgstr ""
 
 #: ../plug-ins/gimpressionist/color.c:76
-#, fuzzy
 msgid "Color _noise:"
-msgstr "Spalva:"
+msgstr "Spalvų _trukdžiai:"
 
 #: ../plug-ins/gimpressionist/color.c:80
 msgid "Adds random noise to the color"
-msgstr ""
+msgstr "Prideda atsitiktinius spalvos trukdžius"
 
 #: ../plug-ins/gimpressionist/general.c:131
 msgid "Keep original"
-msgstr ""
+msgstr "Palikti originalų"
 
 #: ../plug-ins/gimpressionist/general.c:132
 msgid "Preserve the original image as a background"
-msgstr ""
+msgstr "Išsaugoti originalų paveikslėlį kaip foną"
 
 #: ../plug-ins/gimpressionist/general.c:137
 msgid "From paper"
-msgstr ""
+msgstr "Iš popieriaus"
 
 #: ../plug-ins/gimpressionist/general.c:138
 msgid "Copy the texture of the selected paper as a background"
@@ -9202,7 +9081,7 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/general.c:203
 msgid "Drop shadow"
-msgstr ""
+msgstr "Mesti šešėlį"
 
 #: ../plug-ins/gimpressionist/general.c:208
 msgid "Adds a shadow effect to each brush stroke"
@@ -9210,7 +9089,7 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/general.c:221
 msgid "Edge darken:"
-msgstr ""
+msgstr "Kraštų patamsinimas:"
 
 #: ../plug-ins/gimpressionist/general.c:225
 msgid "How much to \"darken\" the edges of each brush stroke"
@@ -9218,7 +9097,7 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/general.c:230
 msgid "Shadow darken:"
-msgstr ""
+msgstr "Šešėlio patamsinimas"
 
 #: ../plug-ins/gimpressionist/general.c:234
 msgid "How much to \"darken\" the drop shadow"
@@ -9226,7 +9105,7 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/general.c:239
 msgid "Shadow depth:"
-msgstr ""
+msgstr "Šešėlio gylis:"
 
 #: ../plug-ins/gimpressionist/general.c:243
 msgid ""
@@ -9235,7 +9114,7 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/general.c:248
 msgid "Shadow blur:"
-msgstr ""
+msgstr "Šešėlio išliejimas"
 
 #: ../plug-ins/gimpressionist/general.c:252
 msgid "How much to blur the drop shadow"
@@ -9250,28 +9129,24 @@ msgid "A bailout-value for adaptive selections"
 msgstr ""
 
 #: ../plug-ins/gimpressionist/gimp.c:79
-#, fuzzy
 msgid "_GIMPressionist..."
-msgstr "Gimp-Print versija"
+msgstr "_GIMPressionistas..."
 
 #: ../plug-ins/gimpressionist/gimp.c:350
-#, fuzzy
 msgid "Painting"
-msgstr "Spausdinti"
+msgstr "Piešiama"
 
 #: ../plug-ins/gimpressionist/gimpressionist.c:121
-#, fuzzy
 msgid "GIMPressionist"
-msgstr "Gimp-Print versija"
+msgstr "GIMPressionist"
 
 #: ../plug-ins/gimpressionist/orientation.c:74
-#, fuzzy
 msgid "Or_ientation"
-msgstr "Orientacija"
+msgstr "Or_ientacija"
 
 #: ../plug-ins/gimpressionist/orientation.c:88
 msgid "Directions:"
-msgstr ""
+msgstr "Kryptys:"
 
 #: ../plug-ins/gimpressionist/orientation.c:92
 msgid "The number of directions (i.e. brushes) to use"
@@ -9279,7 +9154,7 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/orientation.c:100
 msgid "Start angle:"
-msgstr ""
+msgstr "Pradinis kampas:"
 
 #: ../plug-ins/gimpressionist/orientation.c:104
 msgid "The starting angle of the first brush to create"
@@ -9302,7 +9177,7 @@ msgstr ""
 #: ../plug-ins/gimpressionist/orientation.c:142
 #: ../plug-ins/gimpressionist/size.c:145
 msgid "Radius"
-msgstr ""
+msgstr "Skersmuo"
 
 #: ../plug-ins/gimpressionist/orientation.c:143
 msgid ""
@@ -9393,7 +9268,7 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/orientmap.c:606
 msgid "Add new vector"
-msgstr ""
+msgstr "Pridėti naują vektorių"
 
 #: ../plug-ins/gimpressionist/orientmap.c:608
 #: ../plug-ins/gimpressionist/sizemap.c:479
@@ -9402,16 +9277,15 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/orientmap.c:612
 msgid "Delete selected vector"
-msgstr ""
+msgstr "Ištrinti pasirinktą vektorių"
 
 #: ../plug-ins/gimpressionist/orientmap.c:623
 msgid "Type"
-msgstr ""
+msgstr "Tipas"
 
 #: ../plug-ins/gimpressionist/orientmap.c:627
-#, fuzzy
 msgid "_Normal"
-msgstr "Formatas"
+msgstr "_Normalus"
 
 #: ../plug-ins/gimpressionist/orientmap.c:628
 msgid "Vorte_x"
@@ -9467,11 +9341,11 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/paper.c:120
 msgid "P_aper"
-msgstr ""
+msgstr "Popie_rius"
 
 #: ../plug-ins/gimpressionist/paper.c:155
 msgid "Inverts the Papers texture"
-msgstr ""
+msgstr "Invertuoja popieriaus tekstūrą"
 
 #: ../plug-ins/gimpressionist/paper.c:159
 msgid "O_verlay"
@@ -9487,19 +9361,19 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/placement.c:49
 msgid "Pl_acement"
-msgstr ""
+msgstr "Išdėst_ymas"
 
 #: ../plug-ins/gimpressionist/placement.c:55
 msgid "Placement"
-msgstr ""
+msgstr "Išdėstymas"
 
 #: ../plug-ins/gimpressionist/placement.c:59
 msgid "Randomly"
-msgstr ""
+msgstr "Atsitiktinai"
 
 #: ../plug-ins/gimpressionist/placement.c:63
 msgid "Evenly distributed"
-msgstr ""
+msgstr "Vienodai paskirstyti"
 
 #: ../plug-ins/gimpressionist/placement.c:71
 msgid "Place strokes randomly around the image"
@@ -9536,26 +9410,23 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/presets.c:620
 msgid "Save Current"
-msgstr ""
+msgstr "Išsaugoti esamą"
 
 #: ../plug-ins/gimpressionist/presets.c:870
-#, fuzzy
 msgid "Gimpressionist Defaults"
-msgstr "Gimp-Print versija"
+msgstr "Gimpressionist numatytieji"
 
 #: ../plug-ins/gimpressionist/presets.c:991
-#, fuzzy
 msgid "_Presets"
-msgstr "Atstatyti"
+msgstr "Š_ablonai"
 
 #: ../plug-ins/gimpressionist/presets.c:1006
-#, fuzzy
 msgid "Save Current..."
-msgstr "Ekranas"
+msgstr "Išsaugoti esamus..."
 
 #: ../plug-ins/gimpressionist/presets.c:1014
 msgid "Save the current settings to the specified file"
-msgstr ""
+msgstr "Išsaugoti esamus nustatymus į nurodytą bylą"
 
 #: ../plug-ins/gimpressionist/presets.c:1042
 msgid "Reads the selected Preset into memory"
@@ -9575,16 +9446,15 @@ msgstr "Atnaujinti peržiūros langą"
 
 #: ../plug-ins/gimpressionist/preview.c:199
 msgid "Revert to the original image"
-msgstr ""
+msgstr "Atstatyti į originalų paveikslėlį"
 
 #: ../plug-ins/gimpressionist/size.c:77
-#, fuzzy
 msgid "_Size"
-msgstr "Dydis"
+msgstr "_Dydis"
 
 #: ../plug-ins/gimpressionist/size.c:91
 msgid "Sizes:"
-msgstr ""
+msgstr "Dydžiai:"
 
 #: ../plug-ins/gimpressionist/size.c:95
 msgid "The number of sizes of brushes to use"
@@ -9592,7 +9462,7 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/size.c:103
 msgid "Minimum size:"
-msgstr ""
+msgstr "Minimalus dydis:"
 
 #: ../plug-ins/gimpressionist/size.c:107
 msgid "The smallest brush to create"
@@ -9600,7 +9470,7 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/size.c:115
 msgid "Maximum size:"
-msgstr ""
+msgstr "Maksimalus dydis:"
 
 #: ../plug-ins/gimpressionist/size.c:119
 msgid "The largest brush to create"
@@ -9721,14 +9591,13 @@ msgid "Help ID '%s' unknown"
 msgstr ""
 
 #: ../plug-ins/help/domain.c:452
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Parse error in '%s':\n"
 "%s"
-msgstr "GIF: atidarymas nepavyko %s\n"
+msgstr ""
 
 #: ../plug-ins/helpbrowser/dialog.c:190
-#, fuzzy
 msgid "GIMP Help Browser"
 msgstr "GIMP pagalbos naršyklė"
 
@@ -9750,20 +9619,19 @@ msgstr ""
 
 #: ../plug-ins/helpbrowser/dialog.c:503
 msgid "Visit the GIMP documentation website"
-msgstr ""
+msgstr "Aplankykite GIMP dokumentacijos tinklalapį"
 
 #: ../plug-ins/helpbrowser/dialog.c:577
 msgid "Document not found"
-msgstr ""
+msgstr "Dokumentas nerastas"
 
 #: ../plug-ins/helpbrowser/dialog.c:579
 msgid "The requested URL could not be loaded:"
 msgstr ""
 
 #: ../plug-ins/ifscompose/ifscompose.c:347
-#, fuzzy
 msgid "_IFS Fractal..."
-msgstr "<Image>/Filters/Filtruoti visus sluoksnius..."
+msgstr "_IFS fraktalas..."
 
 #. Asym
 #: ../plug-ins/ifscompose/ifscompose.c:583
@@ -9781,14 +9649,12 @@ msgid "Simple"
 msgstr ""
 
 #: ../plug-ins/ifscompose/ifscompose.c:651
-#, fuzzy
 msgid "IFS Fractal: Target"
-msgstr "<Image>/Filters/Filtruoti visus sluoksnius..."
+msgstr ""
 
 #: ../plug-ins/ifscompose/ifscompose.c:657
-#, fuzzy
 msgid "Scale hue by:"
-msgstr "Reikšmė"
+msgstr ""
 
 #: ../plug-ins/ifscompose/ifscompose.c:672
 msgid "Scale value by:"
@@ -9959,7 +9825,7 @@ msgstr ""
 #: ../plug-ins/imagemap/imap_rectangle.c:408
 #: ../plug-ins/imagemap/imap_rectangle.c:415
 msgid "pixels"
-msgstr ""
+msgstr "pikseliai"
 
 #: ../plug-ins/imagemap/imap_circle.c:271
 msgid "Center _y:"
@@ -10453,39 +10319,39 @@ msgstr ""
 
 #: ../plug-ins/imagemap/imap_preferences.c:437
 msgid "Co_ntiguous Region"
-msgstr ""
+msgstr "Vie_ntisas regionas"
 
 #: ../plug-ins/imagemap/imap_preferences.c:443
 msgid "_Automatically convert"
-msgstr ""
+msgstr "_Automatiškai konvertuoti"
 
 #: ../plug-ins/imagemap/imap_preferences.c:454
 msgid "General Preferences"
-msgstr ""
+msgstr "Bendri nustatymai"
 
 #: ../plug-ins/imagemap/imap_rectangle.c:69
 msgid "_Rectangle"
-msgstr ""
+msgstr "_Stačiakampis"
 
 #: ../plug-ins/imagemap/imap_rectangle.c:389
 msgid "Upper left _x:"
-msgstr ""
+msgstr "Viršutinis kairys _x:"
 
 #: ../plug-ins/imagemap/imap_rectangle.c:396
 msgid "Upper left _y:"
-msgstr ""
+msgstr "Viršutinis kairys _y:"
 
 #: ../plug-ins/imagemap/imap_selection.c:376
 msgid "#"
-msgstr ""
+msgstr "#"
 
 #: ../plug-ins/imagemap/imap_selection.c:387
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: ../plug-ins/imagemap/imap_selection.c:405
 msgid "ALT Text"
-msgstr ""
+msgstr "ALT tekstas"
 
 #: ../plug-ins/imagemap/imap_selection.c:415
 msgid "Target"
@@ -10497,33 +10363,32 @@ msgstr ""
 
 #: ../plug-ins/imagemap/imap_settings.c:94
 msgid "Filename:"
-msgstr ""
+msgstr "Bylos vardas:"
 
 #: ../plug-ins/imagemap/imap_settings.c:97
 msgid "Image name:"
-msgstr ""
+msgstr "Paveikslėlio pavadinimas:"
 
 #: ../plug-ins/imagemap/imap_settings.c:98
 msgid "Select Image File"
-msgstr ""
+msgstr "Pasirinkite paveikslėlio bylą"
 
 #: ../plug-ins/imagemap/imap_settings.c:102
 msgid "_Title:"
-msgstr ""
+msgstr "_Pavadinimas:"
 
 #: ../plug-ins/imagemap/imap_settings.c:104
 msgid "Aut_hor:"
-msgstr ""
+msgstr "Aut_orius:"
 
 #: ../plug-ins/imagemap/imap_settings.c:106
 msgid "Default _URL:"
-msgstr ""
+msgstr "Numatytasis _URL:"
 
 #: ../plug-ins/imagemap/imap_settings.c:108
 #: ../plug-ins/metadata/interface.c:301
-#, fuzzy
 msgid "_Description:"
-msgstr "Priedų aprašymai"
+msgstr "_Aprašymas:"
 
 #: ../plug-ins/imagemap/imap_settings.c:130
 msgid "Map File Format"
@@ -10717,7 +10582,7 @@ msgstr ""
 #. The maze algorithm frame
 #: ../plug-ins/maze/maze_face.c:283
 msgid "Algorithm"
-msgstr ""
+msgstr "Algoritmas"
 
 #: ../plug-ins/maze/maze_face.c:309
 msgid "Depth first"
@@ -10735,109 +10600,97 @@ msgstr ""
 
 #: ../plug-ins/metadata/interface.c:108
 msgid "Property"
-msgstr ""
+msgstr "Savybė"
 
 #: ../plug-ins/metadata/interface.c:261 ../plug-ins/metadata/interface.c:263
-#, fuzzy
 msgid "Description"
-msgstr "Priedų aprašymai"
+msgstr "Aprašymas"
 
 #: ../plug-ins/metadata/interface.c:276
-#, fuzzy
 msgid "Image _title:"
-msgstr "Paveikslėlio tipas:"
+msgstr "Paveikslėlio _pavadinimas:"
 
 #: ../plug-ins/metadata/interface.c:282
-#, fuzzy
 msgid "_Author:"
-msgstr "Apie"
+msgstr "_Autorius:"
 
 #: ../plug-ins/metadata/interface.c:307
-#, fuzzy
 msgid "Description _writer:"
-msgstr "Priedų aprašymai"
+msgstr "Aprašymo _rašytojas:"
 
 #: ../plug-ins/metadata/interface.c:321
 msgid "_Keywords:"
-msgstr ""
+msgstr "_Raktažodžiai:"
 
 #. FIXME: add entries, cross-link with XMP model
 #: ../plug-ins/metadata/interface.c:333 ../plug-ins/metadata/interface.c:345
 #: ../plug-ins/metadata/interface.c:357 ../plug-ins/metadata/interface.c:369
 msgid "Empty"
-msgstr ""
+msgstr "Tuščia"
 
 #: ../plug-ins/metadata/interface.c:335
-#, fuzzy
 msgid "Copyright"
-msgstr "Dešinė"
+msgstr "Aut. teisės"
 
 #: ../plug-ins/metadata/interface.c:347
 msgid "Origin"
-msgstr ""
+msgstr "Kilmė"
 
 #: ../plug-ins/metadata/interface.c:359
 msgid "Camera 1"
-msgstr ""
+msgstr "Fotoaparatas 1"
 
 #: ../plug-ins/metadata/interface.c:371
 msgid "Camera 2"
-msgstr ""
+msgstr "Fotoaparatas 2"
 
 #: ../plug-ins/metadata/interface.c:386
-#, fuzzy
 msgid "Thumbnail"
-msgstr "Išsaugoti"
+msgstr "Mini vaizdas"
 
 #: ../plug-ins/metadata/interface.c:405
-#, fuzzy
 msgid "Advanced"
-msgstr "Peržiūra"
+msgstr "Sudėtingesnės"
 
 #: ../plug-ins/metadata/interface.c:496
 msgid "Import XMP from File"
-msgstr ""
+msgstr "Improtuoti XMP iš bylos"
 
 #: ../plug-ins/metadata/interface.c:549
-#, fuzzy
 msgid "Cannot create file"
-msgstr "Atstatyti"
+msgstr "Negalima sukurti bylos"
 
 #: ../plug-ins/metadata/interface.c:564
 msgid "Some error occurred while saving"
-msgstr ""
+msgstr "Saugant įvyko kažkokia klaida"
 
 #: ../plug-ins/metadata/interface.c:574
-#, fuzzy
 msgid "Could not close the file"
-msgstr "Negaliu išsaugoti."
+msgstr "Nepavyko užverti bylos"
 
 #: ../plug-ins/metadata/interface.c:596
-#, fuzzy
 msgid "Export XMP to File"
-msgstr "Spausdinti į bylą"
+msgstr "Eksportuoti XMP į bylą"
 
 #: ../plug-ins/metadata/interface.c:662
-#, fuzzy
 msgid "Image Properties"
-msgstr "Paveikslėlio tipas"
+msgstr "Paveikslėlio savybės"
 
 #: ../plug-ins/metadata/interface.c:666
 msgid "_Import XMP..."
-msgstr ""
+msgstr "_Importuoti XMP..."
 
 #: ../plug-ins/metadata/interface.c:667
 msgid "_Export XMP..."
-msgstr ""
+msgstr "_Eksportuoti XMP..."
 
 #: ../plug-ins/metadata/metadata.c:192
-#, fuzzy
 msgid "Propert_ies"
-msgstr "Peržiūra"
+msgstr "Sav_ybės"
 
 #: ../plug-ins/metadata/xmp-parse.c:235
 msgid "Error: No XMP packet found"
-msgstr ""
+msgstr "Klaida: nerastas XMP paketas"
 
 #: ../plug-ins/metadata/xmp-parse.c:250
 #, c-format
@@ -11222,7 +11075,7 @@ msgstr ""
 
 #: ../plug-ins/print/gimp_main_window.c:792
 msgid "Choose PPD File"
-msgstr ""
+msgstr "Pasirinkite PPD bylą"
 
 #: ../plug-ins/print/gimp_main_window.c:819
 msgid "Define New Printer"
@@ -11230,9 +11083,8 @@ msgstr ""
 
 #: ../plug-ins/print/gimp_main_window.c:842
 #: ../plug-ins/print/gimp_main_window.c:937
-#, fuzzy
 msgid "Printer name:"
-msgstr "Spausdintuvo·vardas:"
+msgstr "Spausdintuvo vardas:"
 
 #: ../plug-ins/print/gimp_main_window.c:846
 msgid "Enter the name you wish to give this logical printer"
@@ -11269,6 +11121,26 @@ msgid ""
 "along with this program; if not, write to the Free Software\n"
 "Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA\n"
 msgstr ""
+"\n"
+"\n"
+"Autorinės teisės priklauso © 1997-2001 Michael Sweet, Robert Krawitz,\n"
+"ir kitiems Gimp-Print kūrimo komandos nariams.\n"
+"\n"
+"Aplankykite mūsų svetainę adresu http://gimp-print.sourceforge.net.\n"
+"\n"
+"Ši programa yra laisva programinė įranga; galite ją platinti ir/ar\n"
+"modifikuoti GNU bendrosios viešosios licencijos sąlygomis, kurios\n"
+"paskelbtos Laisvosios programinės įrangos fondo; 2-osios arba\n"
+"(Jūsų pasirinkimu) bet kurios vėlesnės licencijos versijos sąlygomis.\n"
+"\n"
+"Ši programa yra platinama tikintis, kad ji bus naudinga, bet\n"
+"BE JOKIŲ GARANTIJŲ; netgi be numanomų PARDAVIMO arba TINKAMUMO\n"
+"TAM TIKRAM TIKSLUI garantijų. Dėl išsamesnės informacijos\n"
+"žiūrėkite GNU bendrąją viešąją licenciją.\n"
+"\n"
+"Jūs turėjote gauti GNU bendrosios viešosios licencijos kopiją kartu su\n"
+"šia programa; jeigu negavote, rašykite Laisvosios programinės įrangos\n"
+"fondui, 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA\n"
 
 #: ../plug-ins/print/gimp_main_window.c:920
 msgid "Printer Settings"
@@ -11281,17 +11153,15 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/print/gimp_main_window.c:943
-#, fuzzy
 msgid "Printer model:"
-msgstr "Spausdintuvo·modelis:"
+msgstr "Spausdintuvo modelis:"
 
 #.
 #. * Setup printer button
 #.
 #: ../plug-ins/print/gimp_main_window.c:954
-#, fuzzy
 msgid "Setup Printer..."
-msgstr "Nustatyti Spaudintuvą..."
+msgstr "Nustatyti spaudintuvą..."
 
 #: ../plug-ins/print/gimp_main_window.c:956
 msgid ""
@@ -11303,7 +11173,6 @@ msgstr ""
 #. * New printer button
 #.
 #: ../plug-ins/print/gimp_main_window.c:971
-#, fuzzy
 msgid "New Printer..."
 msgstr "Naujas spausdintuvas..."
 
@@ -11324,7 +11193,7 @@ msgstr "Dydis:"
 
 #: ../plug-ins/print/gimp_main_window.c:1006
 msgid "Dimensions:"
-msgstr ""
+msgstr "Matmenys:"
 
 #: ../plug-ins/print/gimp_main_window.c:1020
 msgid "Width of the paper that you wish to print to"
@@ -11355,7 +11224,6 @@ msgid "Type of ink in the printer"
 msgstr ""
 
 #: ../plug-ins/print/gimp_main_window.c:1088
-#, fuzzy
 msgid "Ink type:"
 msgstr "Rašalo tipas:"
 
@@ -11423,7 +11291,7 @@ msgstr ""
 
 #: ../plug-ins/print/gimp_main_window.c:1275
 msgid "cm"
-msgstr ""
+msgstr "cm"
 
 #: ../plug-ins/print/gimp_main_window.c:1281
 msgid "Set the base unit of measurement to centimetres"
@@ -11437,6 +11305,8 @@ msgid ""
 "Use Original\n"
 "Image Size"
 msgstr ""
+"Naudoti originalų\n"
+"paveikslėlio dydį"
 
 #: ../plug-ins/print/gimp_main_window.c:1297
 msgid "Set the print size to the size of the image"
@@ -11444,10 +11314,9 @@ msgstr ""
 
 #: ../plug-ins/print/gimp_main_window.c:1320
 msgid "Image / Output Settings"
-msgstr ""
+msgstr "Paveikslėlio / išvesties nustatymai"
 
 #: ../plug-ins/print/gimp_main_window.c:1334
-#, fuzzy
 msgid "Image type:"
 msgstr "Paveikslėlio tipas:"
 
@@ -11464,9 +11333,8 @@ msgid "Fastest and brightest color for text and line art"
 msgstr ""
 
 #: ../plug-ins/print/gimp_main_window.c:1360
-#, fuzzy
 msgid "Solid colors"
-msgstr "Spalva"
+msgstr ""
 
 #: ../plug-ins/print/gimp_main_window.c:1367
 msgid "Best for images dominated by regions of solid color"
@@ -11474,7 +11342,7 @@ msgstr ""
 
 #: ../plug-ins/print/gimp_main_window.c:1375
 msgid "Photograph"
-msgstr ""
+msgstr "Nuotrauka"
 
 #: ../plug-ins/print/gimp_main_window.c:1383
 msgid ""
@@ -11524,19 +11392,17 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/print/gimp_main_window.c:1500
-#, fuzzy
 msgid "Print to File"
 msgstr "Spausdinti į bylą"
 
 #: ../plug-ins/print/print.c:172
-#, fuzzy
 msgid "_Print..."
-msgstr "Naujas spausdintuvas..."
+msgstr "_Spausdinti..."
 
 #: ../plug-ins/print/print.c:702 ../plug-ins/print/print.c:703
 #: ../plug-ins/print/print.c:793 ../plug-ins/print/print.c:1132
 msgid "File"
-msgstr ""
+msgstr "Byla"
 
 #: ../plug-ins/rcm/rcm.c:103
 msgid "Colormap _Rotation..."
@@ -11564,16 +11430,16 @@ msgstr ""
 
 #: ../plug-ins/rcm/rcm_dialog.c:172
 msgid "Entire Layer"
-msgstr ""
+msgstr "Visas sluoksnis"
 
 #: ../plug-ins/rcm/rcm_dialog.c:174
 msgid "Context"
-msgstr ""
+msgstr "Kontekstas"
 
 #. Gray: Circle: Spinbutton 1
 #: ../plug-ins/rcm/rcm_dialog.c:467
 msgid "Hue:"
-msgstr ""
+msgstr "Atspalvis:"
 
 #. * Gray: Operation-Mode *
 #: ../plug-ins/rcm/rcm_dialog.c:514
@@ -11597,20 +11463,20 @@ msgstr ""
 #. * Misc: Used unit selection *
 #: ../plug-ins/rcm/rcm_dialog.c:588 ../plug-ins/rcm/rcm_dialog.c:698
 msgid "Units"
-msgstr ""
+msgstr "Vienetai"
 
 #. Misc: Used unit selection: 3 radio buttons
 #: ../plug-ins/rcm/rcm_dialog.c:597
 msgid "Radians"
-msgstr ""
+msgstr "Radianai"
 
 #: ../plug-ins/rcm/rcm_dialog.c:609
 msgid "Radians/Pi"
-msgstr ""
+msgstr "Radianai/Pi"
 
 #: ../plug-ins/rcm/rcm_dialog.c:621
 msgid "Degrees"
-msgstr ""
+msgstr "Laipsniai"
 
 #: ../plug-ins/rcm/rcm_dialog.c:652
 msgid "Colormap Rotation"
@@ -11655,76 +11521,75 @@ msgstr ""
 
 #: ../plug-ins/sgi/sgi.c:119 ../plug-ins/sgi/sgi.c:139
 msgid "Silicon Graphics IRIS image"
-msgstr ""
+msgstr "Silicon Graphics IRIS paveikslėlis"
 
 #: ../plug-ins/sgi/sgi.c:532
 #, c-format
 msgid "Could not open '%s' for writing."
-msgstr ""
+msgstr "Nepavyko rašymui atverti „%s“."
 
 #: ../plug-ins/sgi/sgi.c:612
 msgid "Save as SGI"
-msgstr ""
+msgstr "Išsaugoti kaip SGI"
 
 #: ../plug-ins/sgi/sgi.c:628
-#, fuzzy
 msgid "Compression type"
-msgstr "Gimp-Print versija"
+msgstr "Suspaudimo tipas"
 
 #: ../plug-ins/sgi/sgi.c:632
-#, fuzzy
 msgid "No compression"
-msgstr "Gimp-Print versija"
+msgstr "Jokio suspaudimo"
 
 #: ../plug-ins/sgi/sgi.c:634
-#, fuzzy
 msgid "RLE compression"
-msgstr "Gimp-Print versija"
+msgstr "RLE suspaudimas"
 
 #: ../plug-ins/sgi/sgi.c:636
 msgid ""
 "Aggressive RLE\n"
 "(not supported by SGI)"
 msgstr ""
+"Agresyvus RLE\n"
+"(nepalaikomas SGI)"
 
 #: ../plug-ins/twain/twain.c:354
 msgid "_Scanner/Camera..."
-msgstr ""
+msgstr "_Skeneris/fotoaparatas."
 
 #. Initialize our progress dialog
 #: ../plug-ins/twain/twain.c:492
 msgid "Transferring data from scanner/camera"
-msgstr ""
+msgstr "Perduodami duomenys iš skenerio/fotoaparato"
 
 #: ../plug-ins/uri/uri.c:117 ../plug-ins/uri/uri.c:138
 msgid "URI"
-msgstr ""
+msgstr "URI"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:148
 #, c-format
 msgid "Downloading %s of image data..."
-msgstr ""
+msgstr "Parsiunčiama %s paveikslėlio duomenų..."
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:149
-#: ../plug-ins/uri/uri-backend-wget.c:324
+#: ../plug-ins/uri/uri-backend-wget.c:330
 #, c-format
 msgid "Downloaded %s of image data"
-msgstr ""
+msgstr "Parsiųsta %s paveikslėlio duomenų"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:167
 #, c-format
 msgid "Uploading %s of image data..."
-msgstr ""
+msgstr "Siunčiama %s paveikslėlio duomenų..."
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:168
 #, c-format
 msgid "Uploaded %s of image data"
-msgstr ""
+msgstr "Nusiųsta %s paveikslėlio duomenų"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:238
-#: ../plug-ins/uri/uri-backend-wget.c:173
+#: ../plug-ins/uri/uri-backend-wget.c:179
 msgid "Connecting to server"
-msgstr ""
+msgstr "Jungiamasi prie serverio"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:297
 #, c-format
@@ -11732,45 +11597,46 @@ msgid "Failed to read %s from '%s': %s"
 msgstr ""
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:346
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to write %s to '%s': %s"
-msgstr "PNM: neina atidaryti bylos %s."
+msgstr "Nepavyko įrašyti %s į „%s“: %s"
 
-#: ../plug-ins/uri/uri-backend-wget.c:142
-#: ../plug-ins/uri/uri-backend-wget.c:162
-#: ../plug-ins/uri/uri-backend-wget.c:179
-#: ../plug-ins/uri/uri-backend-wget.c:202
-#: ../plug-ins/uri/uri-backend-wget.c:231
+#: ../plug-ins/uri/uri-backend-wget.c:146
+#: ../plug-ins/uri/uri-backend-wget.c:166
+#: ../plug-ins/uri/uri-backend-wget.c:185
+#: ../plug-ins/uri/uri-backend-wget.c:208
+#: ../plug-ins/uri/uri-backend-wget.c:237
 #, c-format
 msgid "wget exited abnormally on URI '%s'"
 msgstr ""
 
 #. The third line is "Connecting to..."
-#: ../plug-ins/uri/uri-backend-wget.c:170
-#, c-format
-msgid "(timeout is %s seconds)"
-msgstr ""
+#: ../plug-ins/uri/uri-backend-wget.c:174
+#, fuzzy, c-format
+msgid "(timeout is %s second)"
+msgid_plural "(timeout is %s seconds)"
+msgstr[0] "(atsako negauta %s sek.)"
+msgstr[1] "(atsako negauta %s sek.)"
 
 #. The fourth line is either the network request or an error
-#: ../plug-ins/uri/uri-backend-wget.c:197
-#, fuzzy
+#: ../plug-ins/uri/uri-backend-wget.c:203
 msgid "Opening URI"
-msgstr "Kopijuoja..."
+msgstr "Atveriamas URI"
 
-#: ../plug-ins/uri/uri-backend-wget.c:208
-#: ../plug-ins/uri/uri-backend-wget.c:241
+#: ../plug-ins/uri/uri-backend-wget.c:214
+#: ../plug-ins/uri/uri-backend-wget.c:247
 #, c-format
 msgid "A network error occurred: %s"
-msgstr ""
+msgstr "Įvyko tinklo klaida: %s"
 
-#: ../plug-ins/uri/uri-backend-wget.c:281
+#: ../plug-ins/uri/uri-backend-wget.c:287
 #, c-format
 msgid "Downloading %s of image data"
-msgstr ""
+msgstr "Parsiunčiama %s paveikslėlio duomenų"
 
-#: ../plug-ins/uri/uri-backend-wget.c:286
+#: ../plug-ins/uri/uri-backend-wget.c:292
 msgid "Downloading unknown amount of image data"
-msgstr ""
+msgstr "Parsiunčiamas nežinomas kiekis paveikslėlio duomenų"
 
 #: ../plug-ins/winicon/icodialog.c:99
 msgid "1 bpp, 1-bit alpha, 2-slot palette"
@@ -11808,7 +11674,7 @@ msgstr ""
 
 #: ../plug-ins/winicon/main.c:99 ../plug-ins/winicon/main.c:133
 msgid "Microsoft Windows icon"
-msgstr ""
+msgstr "Microsoft Windows ikona"
 
 #: ../plug-ins/winsnap/winsnap.c:865
 msgid "Grab"
@@ -11827,18 +11693,16 @@ msgid "after"
 msgstr "už"
 
 #: ../plug-ins/winsnap/winsnap.c:923
-#, fuzzy
 msgid "Seconds delay"
-msgstr "sekundžių"
+msgstr "Sekundžių delsa"
 
 #: ../plug-ins/winsnap/winsnap.c:930
 msgid "Include decorations"
-msgstr ""
+msgstr "Įtraukti dekoracijas"
 
 #: ../plug-ins/winsnap/winsnap.c:994
-#, fuzzy
 msgid "_Screen Shot..."
-msgstr "Ekrano nuotrauka"
+msgstr "_Ekrano nuotrauka..."
 
 #: ../plug-ins/winsnap/winsnap.c:1143
 msgid "No data captured"
@@ -11846,7 +11710,7 @@ msgstr ""
 
 #: ../plug-ins/xjt/xjt.c:479 ../plug-ins/xjt/xjt.c:497
 msgid "GIMP compressed XJT image"
-msgstr ""
+msgstr "GIMP suspaustas XJT paveikslėlis"
 
 #: ../plug-ins/xjt/xjt.c:718
 #, c-format
@@ -11880,7 +11744,7 @@ msgstr ""
 
 #: ../plug-ins/xjt/xjt.c:848
 msgid "Save as XJT"
-msgstr ""
+msgstr "Išsaugoti kaip XJT"
 
 #: ../plug-ins/xjt/xjt.c:879
 msgid "Clear transparent"
@@ -11888,7 +11752,7 @@ msgstr ""
 
 #: ../plug-ins/xjt/xjt.c:891
 msgid "Quality:"
-msgstr ""
+msgstr "Kokybė:"
 
 #: ../plug-ins/xjt/xjt.c:900
 msgid "Smoothing:"
@@ -11907,4 +11771,4 @@ msgstr ""
 #: ../plug-ins/xjt/xjt.c:3199
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
-msgstr ""
+msgstr "Klaida: XJT savybių byla „%s“ yra tuščia."
