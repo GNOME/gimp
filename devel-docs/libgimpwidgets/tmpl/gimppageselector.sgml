@@ -23,6 +23,13 @@ GimpPageSelector
 </para>
 
 
+<!-- ##### SIGNAL GimpPageSelector::activate ##### -->
+<para>
+
+</para>
+
+@gimppageselector: the object which received the signal.
+
 <!-- ##### SIGNAL GimpPageSelector::selection-changed ##### -->
 <para>
 

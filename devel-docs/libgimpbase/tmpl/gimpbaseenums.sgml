@@ -140,6 +140,17 @@ Basic GIMP enumeration data types.
 @GIMP_GRADIENT_SPIRAL_CLOCKWISE: 
 @GIMP_GRADIENT_SPIRAL_ANTICLOCKWISE: 
 
+<!-- ##### ENUM GimpGridStyle ##### -->
+<para>
+
+</para>
+
+@GIMP_GRID_DOTS: 
+@GIMP_GRID_INTERSECTIONS: 
+@GIMP_GRID_ON_OFF_DASH: 
+@GIMP_GRID_DOUBLE_DASH: 
+@GIMP_GRID_SOLID: 
+
 <!-- ##### ENUM GimpIconType ##### -->
 <para>
 

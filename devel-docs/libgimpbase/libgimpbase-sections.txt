@@ -24,6 +24,7 @@ GimpDesaturateMode
 GimpDodgeBurnType
 GimpForegroundExtractMode
 GimpGradientType
+GimpGridStyle
 GimpIconType
 GimpImageBaseType
 GimpImageType
@@ -52,6 +53,7 @@ GIMP_TYPE_DESATURATE_MODE
 GIMP_TYPE_DODGE_BURN_TYPE
 GIMP_TYPE_FOREGROUND_EXTRACT_MODE
 GIMP_TYPE_GRADIENT_TYPE
+GIMP_TYPE_GRID_STYLE
 GIMP_TYPE_ICON_TYPE
 GIMP_TYPE_IMAGE_BASE_TYPE
 GIMP_TYPE_IMAGE_TYPE
@@ -79,6 +81,7 @@ gimp_desaturate_mode_get_type
 gimp_dodge_burn_type_get_type
 gimp_foreground_extract_mode_get_type
 gimp_gradient_type_get_type
+gimp_grid_style_get_type
 gimp_icon_type_get_type
 gimp_image_base_type_get_type
 gimp_image_type_get_type
