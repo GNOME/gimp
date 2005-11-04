@@ -700,7 +700,7 @@ siox_progress_update (SioxProgressFunc  progress_callback,
 
 /* Clear hashtable entries that get invalid due to refinement */
 static gboolean
-siox_cache_remove_fg (gpointer key,
+siox_cache_remove_bg (gpointer key,
                       gpointer value,
                       gpointer user_data)
 {
@@ -710,13 +710,13 @@ siox_cache_remove_fg (gpointer key,
 }
 
 static gboolean
-siox_cache_remove_bg (gpointer key,
+siox_cache_remove_fg (gpointer key,
                       gpointer value,
                       gpointer user_data)
 {
   classresult *cr = value;
 
-  return (cr->fgdist < cr->bgdist);
+  return (cr->bgdist >= cr->fgdist);
 }
 
 /**
@@ -857,7 +857,7 @@ siox_foreground_extract (SioxState          *state,
     {
       g_hash_table_foreach_remove (state->cache,
                                    refinement & SIOX_REFINEMENT_ADD_FOREGROUND ?
-                                   siox_cache_remove_fg : siox_cache_remove_bg,
+                                   siox_cache_remove_bg : siox_cache_remove_fg,
                                    NULL);
 
       /* count given foreground and background pixels */
