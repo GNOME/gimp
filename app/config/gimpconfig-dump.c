@@ -215,7 +215,7 @@ static const gchar *man_page_path =
 "variable GIMP2_DIRECTORY or to ~/@gimpdir@.\n"
 ".TP\n"
 ".I gimp_data_dir\n"
-"Nase for paths to shareable data, which is set to the value of the\n"
+"Base for paths to shareable data, which is set to the value of the\n"
 "environment variable GIMP2_DATADIR or to the compiled-in default value\n"
 "@gimpdatadir@.\n"
 ".TP\n"
