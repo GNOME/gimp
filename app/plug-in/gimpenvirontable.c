@@ -55,8 +55,8 @@ static void     gimp_environ_table_init           (GimpEnvironTable      *enviro
 
 static void     gimp_environ_table_finalize       (GObject               *object);
 
-static void    gimp_environ_table_load_env_file  (const GimpDatafileData *file_data,
-                                                  gpointer                user_data);
+static void     gimp_environ_table_load_env_file  (const GimpDatafileData *file_data,
+                                                   gpointer                user_data);
 static gboolean gimp_environ_table_legal_name     (gchar                 *name);
 
 static void     gimp_environ_table_populate       (GimpEnvironTable      *environ_table);
@@ -107,9 +107,7 @@ gimp_environ_table_get_type (void)
 static void
 gimp_environ_table_class_init (GimpEnvironTableClass *class)
 {
-  GObjectClass *object_class;
-
-  object_class = G_OBJECT_CLASS (class);
+  GObjectClass *object_class = G_OBJECT_CLASS (class);
 
   parent_class = g_type_class_peek_parent (class);
 
@@ -128,9 +126,7 @@ gimp_environ_table_init (GimpEnvironTable *environ_table)
 static void
 gimp_environ_table_finalize (GObject *object)
 {
-  GimpEnvironTable *environ_table;
-
-  environ_table = GIMP_ENVIRON_TABLE (object);
+  GimpEnvironTable *environ_table = GIMP_ENVIRON_TABLE (object);
 
   gimp_environ_table_clear_all (environ_table);
 
@@ -245,14 +241,12 @@ static void
 gimp_environ_table_load_env_file (const GimpDatafileData *file_data,
                                   gpointer                user_data)
 {
-  GimpEnvironTable *environ_table;
+  GimpEnvironTable *environ_table = GIMP_ENVIRON_TABLE (user_data);
   FILE             *env;
   gchar             buffer[4096];
   gsize             len;
   gchar            *name, *value, *separator, *expanded, *p, *q;
   GimpEnvironValue *val;
-
-  environ_table = GIMP_ENVIRON_TABLE (user_data);
 
   env = g_fopen (file_data->filename, "r");
   if (! env)
@@ -310,13 +304,7 @@ gimp_environ_table_load_env_file (const GimpDatafileData *file_data,
         {
           val = g_new (GimpEnvironValue, 1);
 
-	  expanded = gimp_config_path_expand (value, FALSE, NULL);
-
-	  if (expanded)
-	    val->value = expanded;
-	  else
-	    val->value = g_strdup (value);
-
+	  val->value     = gimp_config_path_expand (value, FALSE, NULL);
           val->separator = g_strdup (separator);
 
           g_hash_table_insert (environ_table->vars, g_strdup (name), val);

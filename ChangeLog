@@ -1,5 +1,11 @@
 2005-11-04  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpenvirontable.c (gimp_environ_table_load_env_file):
+	gimp_config_path_expand() only ever returns NULL if called with a
+	NULL path argument.
+
+2005-11-04  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpconfig-dump.c: fixed typo.
 
 2005-11-04  Sven Neumann  <sven@gimp.org>
