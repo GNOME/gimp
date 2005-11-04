@@ -245,7 +245,7 @@ gimp_environ_table_load_env_file (const GimpDatafileData *file_data,
   FILE             *env;
   gchar             buffer[4096];
   gsize             len;
-  gchar            *name, *value, *separator, *expanded, *p, *q;
+  gchar            *name, *value, *separator, *p, *q;
   GimpEnvironValue *val;
 
   env = g_fopen (file_data->filename, "r");
@@ -304,7 +304,7 @@ gimp_environ_table_load_env_file (const GimpDatafileData *file_data,
         {
           val = g_new (GimpEnvironValue, 1);
 
-	  val->value     = gimp_config_path_expand (value, FALSE, NULL);
+          val->value     = gimp_config_path_expand (value, FALSE, NULL);
           val->separator = g_strdup (separator);
 
           g_hash_table_insert (environ_table->vars, g_strdup (name), val);
