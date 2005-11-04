@@ -1,5 +1,9 @@
 2005-11-04  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpconfig-dump.c: fixed typo.
+
+2005-11-04  Sven Neumann  <sven@gimp.org>
+
 	* app/errors.c
 	* app/sanity.c: s/The GIMP/GIMP/
 
