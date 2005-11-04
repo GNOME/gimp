@@ -160,6 +160,8 @@ static void
 gimp_controller_editor_init (GimpControllerEditor *editor)
 {
   editor->info = NULL;
+
+  gtk_box_set_spacing (GTK_BOX (editor), 12);
 }
 
 static GObject *
