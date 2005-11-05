@@ -661,7 +661,7 @@ gimp_scrolled_preview_nav_popup_expose (GtkWidget           *widget,
   h = adj->page_size / (adj->upper - adj->lower);
 
   if (w >= 1.0 && h >= 1.0)
-    return;
+    return FALSE;
 
   gdk_gc_set_clip_rectangle (preview->nav_gc, &event->area);
 

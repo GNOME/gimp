@@ -1,3 +1,8 @@
+2005-11-05  DindinX  <dindinx@gimp.org>
+
+	* libgimpwidgets/gimpscrolledpreview.c: don't return void in a
+	function returning a gboolean.
+
 2005-11-05  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/splash.c: added some commented-out debug output that can
