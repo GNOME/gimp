@@ -30,7 +30,6 @@ SUBDIRS = \
 	gui		\
 	pdb
 
-scriptdata =
 
 if ENABLE_GIMP_CONSOLE
 bin_PROGRAMS = gimp-2.3 gimp-console-2.3

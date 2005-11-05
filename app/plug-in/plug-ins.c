@@ -162,7 +162,7 @@ plug_ins_init (Gimp               *gimp,
     {
       gimp->write_pluginrc = TRUE;
 
-      for (list = gimp->plug_in_defs, nth = 0; list; list = list->next, nth++)
+      for (list = gimp->plug_in_defs, nth = 0; list; list = list->next)
         {
           PlugInDef *plug_in_def = list->data;
 
@@ -171,7 +171,7 @@ plug_ins_init (Gimp               *gimp,
 
           basename = g_filename_display_basename (plug_in_def->prog);
           status_callback (NULL, basename,
-			   (gdouble) nth / (gdouble) n_plugins);
+			   (gdouble) nth++ / (gdouble) n_plugins);
           g_free (basename);
 
 	  if (gimp->be_verbose)
@@ -195,7 +195,7 @@ plug_ins_init (Gimp               *gimp,
 
   if (n_plugins)
     {
-      for (list = gimp->plug_in_defs, nth = 0; list; list = list->next, nth++)
+      for (list = gimp->plug_in_defs, nth = 0; list; list = list->next)
         {
           PlugInDef *plug_in_def = list->data;
 
@@ -204,7 +204,7 @@ plug_ins_init (Gimp               *gimp,
 
           basename = g_filename_display_basename (plug_in_def->prog);
           status_callback (NULL, basename,
-			   (gdouble) nth / (gdouble) n_plugins);
+			   (gdouble) nth++ / (gdouble) n_plugins);
           g_free (basename);
 
           if (gimp->be_verbose)

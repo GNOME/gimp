@@ -117,15 +117,14 @@ static GtkActionEntry actions[] =
   },
 
   { "unit-editor-new", GTK_STOCK_NEW,
-    NULL, NULL,
+    NULL, "<control>N",
     N_("Create a new unit from scratch."),
     G_CALLBACK (new_callback)
   },
 
   { "unit-editor-duplicate", GIMP_STOCK_DUPLICATE,
-    NULL, NULL,
-    N_("Create a new unit with the currently "
-       "selected unit as template."),
+    NULL,  "<control>D",
+    N_("Create a new unit using the currently selected unit as template."),
     G_CALLBACK (duplicate_callback)
   }
 };
@@ -143,8 +142,8 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "The GIMP unit editor (runs in interactive mode only)",
-                          "The GIMP unit editor (runs in interactive mode only)",
+                          "The GIMP unit editor",
+                          "The GIMP unit editor",
                           "Michael Natterer <mitch@gimp.org>",
                           "Michael Natterer <mitch@gimp.org>",
                           "2000",
@@ -207,12 +206,12 @@ new_unit_dialog (GtkWidget *main_dialog,
 
   GimpUnit   unit = GIMP_UNIT_PIXEL;
 
-  dialog = gimp_dialog_new (_("New Unit"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Add a New Unit"), PLUG_IN_BINARY,
                             main_dialog, GTK_DIALOG_MODAL,
 			    gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            GTK_STOCK_ADD,    GTK_RESPONSE_OK,
 
                             NULL);
 
@@ -326,8 +325,8 @@ new_unit_dialog (GtkWidget *main_dialog,
         break;
 
       identifier   = g_strdup (gtk_entry_get_text (GTK_ENTRY (identifier_entry)));
-      factor       = GTK_ADJUSTMENT (factor_adj)->value;
-      digits       = ROUND (GTK_ADJUSTMENT (digits_adj)->value);
+      factor       = gtk_adjustment_get_value (GTK_ADJUSTMENT (factor_adj));
+      digits       = gtk_adjustment_get_value (GTK_ADJUSTMENT (digits_adj));
       symbol       = g_strdup (gtk_entry_get_text (GTK_ENTRY (symbol_entry)));
       abbreviation = g_strdup (gtk_entry_get_text (GTK_ENTRY (abbreviation_entry)));
       singular     = g_strdup (gtk_entry_get_text (GTK_ENTRY (singular_entry)));
@@ -339,25 +338,28 @@ new_unit_dialog (GtkWidget *main_dialog,
       singular     = g_strstrip (singular);
       plural       = g_strstrip (plural);
 
-      if (factor < GIMP_MIN_RESOLUTION)
-        {
-          g_message (_("Unit factor must not be 0."));
-          continue;
-        }
-
       if (!strlen (identifier) |
           !strlen (symbol) |
           !strlen (abbreviation) |
           !strlen (singular) |
           !strlen (plural))
         {
-          g_message (_("All text fields must contain a value."));
+          GtkWidget *msg = gtk_message_dialog_new (GTK_WINDOW (dialog), 0,
+                                                   GTK_MESSAGE_ERROR,
+                                                   GTK_BUTTONS_OK,
+                                                   _("Incomplete input"));
+
+          gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (msg),
+                                                    _("Please fill in all text fields."));
+          gtk_dialog_run (GTK_DIALOG (msg));
+          gtk_widget_destroy (msg);
+
           continue;
         }
 
-      unit = gimp_unit_new (identifier, factor, digits,
-                            symbol, abbreviation,
-                            singular, plural);
+      unit = gimp_unit_new (identifier,
+                            factor, digits,
+                            symbol, abbreviation, singular, plural);
 
       g_free (identifier);
       g_free (symbol);
@@ -376,7 +378,7 @@ new_unit_dialog (GtkWidget *main_dialog,
 static void
 unit_editor_dialog (void)
 {
-  GtkWidget         *main_dialog;
+  GtkWidget         *dialog;
   GtkWidget         *scrolled_win;
   GtkUIManager      *ui_manager;
   GtkActionGroup    *group;
@@ -405,22 +407,21 @@ unit_editor_dialog (void)
   tv = gtk_tree_view_new_with_model (GTK_TREE_MODEL (list_store));
   g_object_unref (list_store);
 
-  main_dialog = gimp_dialog_new (_("Unit Editor"), PLUG_IN_BINARY,
-                                 NULL, 0,
-                                 gimp_standard_help_func, PLUG_IN_PROC,
+  dialog = gimp_dialog_new (_("Unit Editor"), PLUG_IN_BINARY,
+                            NULL, 0,
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
-                                 GTK_STOCK_REFRESH, RESPONSE_REFRESH,
-                                 GTK_STOCK_CLOSE,   GTK_RESPONSE_CLOSE,
+                            GTK_STOCK_REFRESH, RESPONSE_REFRESH,
+                            GTK_STOCK_CLOSE,   GTK_RESPONSE_CLOSE,
 
-                                 NULL);
+                            NULL);
 
-  gtk_dialog_set_default_response (GTK_DIALOG (main_dialog),
-                                   GTK_RESPONSE_CLOSE);
+  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CLOSE);
 
-  g_signal_connect (main_dialog, "response",
+  g_signal_connect (dialog, "response",
                     G_CALLBACK (unit_editor_response),
                     tv);
-  g_signal_connect (main_dialog, "destroy",
+  g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -428,8 +429,13 @@ unit_editor_dialog (void)
   ui_manager = gtk_ui_manager_new ();
 
   group = gtk_action_group_new ("unit-editor");
+
   gtk_action_group_set_translation_domain (group, NULL);
   gtk_action_group_add_actions (group, actions, G_N_ELEMENTS (actions), tv);
+
+  gtk_window_add_accel_group (GTK_WINDOW (dialog),
+                              gtk_ui_manager_get_accel_group (ui_manager));
+  gtk_accel_group_lock (gtk_ui_manager_get_accel_group (ui_manager));
 
   gtk_ui_manager_insert_action_group (ui_manager, group, -1);
   g_object_unref (group);
@@ -445,7 +451,7 @@ unit_editor_dialog (void)
      -1, NULL);
 
   toolbar = gtk_ui_manager_get_widget (ui_manager, "/unit-editor-toolbar");
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (main_dialog)->vbox), toolbar,
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), toolbar,
 		      FALSE, FALSE, 0);
   gtk_widget_show (toolbar);
 
@@ -456,7 +462,7 @@ unit_editor_dialog (void)
                                   GTK_POLICY_NEVER,
                                   GTK_POLICY_ALWAYS);
   gtk_container_set_border_width (GTK_CONTAINER (scrolled_win), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (main_dialog)->vbox),
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox),
                      scrolled_win);
   gtk_widget_show (scrolled_win);
 
@@ -496,13 +502,12 @@ unit_editor_dialog (void)
 
       gtk_tree_view_append_column (GTK_TREE_VIEW (tv), col);
 
-      gimp_help_set_help_data (col->button,
-                               gettext (columns[i].help), NULL);
+      gimp_help_set_help_data (col->button, gettext (columns[i].help), NULL);
     }
 
   unit_list_init (GTK_TREE_VIEW (tv));
 
-  gtk_widget_show (main_dialog);
+  gtk_widget_show (dialog);
 
   gtk_main ();
 }
@@ -611,6 +616,7 @@ saved_toggled_callback (GtkCellRendererToggle *celltoggle,
   GimpUnit     unit;
 
   path = gtk_tree_path_new_from_string (path_string);
+
   if (! gtk_tree_model_get_iter (GTK_TREE_MODEL (list_store), &iter, path))
     {
       g_warning ("%s: bad tree path?", G_STRLOC);
@@ -653,9 +659,7 @@ unit_list_init (GtkTreeView *tv)
 
   for (unit = GIMP_UNIT_INCH; unit < num_units; unit++)
     {
-      gboolean user_unit;
-
-      user_unit = (unit >= gimp_unit_get_number_of_built_in_units ());
+      gboolean user_unit = (unit >= gimp_unit_get_number_of_built_in_units ());
 
       gtk_list_store_append (list_store, &iter);
       gtk_list_store_set (list_store, &iter,
