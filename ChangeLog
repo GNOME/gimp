@@ -1,3 +1,7 @@
+2005-11-06  Sven Neumann  <sven@gimp.org>
+
+	* modules/controller_midi.c (midi_set_device): corrected casting.
+
 2005-11-05  Sven Neumann  <sven@gimp.org>
 
 	* app/Makefile.am: removed unused variable scriptdata.
