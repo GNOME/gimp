@@ -148,7 +148,7 @@ plug_ins_init (Gimp               *gimp,
   /*  query any plug-ins that have changed since we last wrote out
    *  the pluginrc file
    */
-  status_callback (_("Querying new Plug-ins"), "", 0);
+  status_callback (_("Querying new Plug-ins"), "", 0.0);
 
   for (list = gimp->plug_in_defs, n_plugins = 0; list; list = list->next)
     {
@@ -170,7 +170,8 @@ plug_ins_init (Gimp               *gimp,
             continue;
 
           basename = g_filename_display_basename (plug_in_def->prog);
-          status_callback (NULL, basename, (gdouble) nth / (gdouble) n_plugins);
+          status_callback (NULL, basename,
+			   (gdouble) nth / (gdouble) n_plugins);
           g_free (basename);
 
 	  if (gimp->be_verbose)
@@ -181,10 +182,8 @@ plug_ins_init (Gimp               *gimp,
 	}
     }
 
-  status_callback (NULL, NULL, 1.0);
-
   /* initialize the plug-ins */
-  status_callback (_("Initializing Plug-ins"), "", 0);
+  status_callback (_("Initializing Plug-ins"), "", 0.0);
 
   for (list = gimp->plug_in_defs, n_plugins = 0; list; list = list->next)
     {
@@ -204,7 +203,8 @@ plug_ins_init (Gimp               *gimp,
             continue;
 
           basename = g_filename_display_basename (plug_in_def->prog);
-          status_callback (NULL, basename, (gdouble) nth / (gdouble) n_plugins);
+          status_callback (NULL, basename,
+			   (gdouble) nth / (gdouble) n_plugins);
           g_free (basename);
 
           if (gimp->be_verbose)
@@ -215,7 +215,7 @@ plug_ins_init (Gimp               *gimp,
         }
     }
 
-  status_callback (NULL, NULL, 1.0);
+  status_callback (NULL, "", 1.0);
 
   /* insert the proc defs */
   for (list = gimp->plug_in_defs; list; list = list->next)
@@ -335,7 +335,7 @@ plug_ins_init (Gimp               *gimp,
     {
       GList *list;
 
-      status_callback (_("Starting Extensions"), "", 0);
+      status_callback (_("Starting Extensions"), "", 0.0);
 
       for (list = extensions, nth = 0; list; list = g_list_next (list), nth++)
         {
@@ -351,10 +351,10 @@ plug_ins_init (Gimp               *gimp,
                        NULL, 0, FALSE, TRUE, -1);
 	}
 
-      status_callback (NULL, NULL, 1.0);
-
       g_list_free (extensions);
     }
+
+  status_callback ("", "", 1.0);
 
   /* free up stuff */
   for (list = gimp->plug_in_defs; list; list = list->next)

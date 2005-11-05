@@ -1,5 +1,9 @@
 2005-11-05  Sven Neumann  <sven@gimp.org>
 
+	* app/plug-in/plug-ins.c (plug_ins_init): fine-tuning.
+
+2005-11-05  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/app.pl: removed calls to the splash update function
 	during initialization of internal procedures. This only takes time
 	and doesn't provide useful information.
