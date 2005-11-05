@@ -1,3 +1,15 @@
+2005-11-05  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/app.pl: removed calls to the splash update function
+	during initialization of internal procedures. This only takes time
+	and doesn't provide useful information.
+
+	* app/pdb/internal_procs.[ch]: regenerated.
+
+	* app/pdb/procedural_db.[ch]: changed accordingly.
+
+	* core/gimp.c: call the splash update function from here.
+
 2005-11-05  DindinX  <dindinx@gimp.org>
 
 	* libgimpwidgets/gimpscrolledpreview.c: don't return void in a

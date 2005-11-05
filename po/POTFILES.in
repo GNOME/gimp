@@ -216,7 +216,6 @@ app/pdb/drawable_transform_cmds.c
 app/pdb/edit_cmds.c
 app/pdb/guides_cmds.c
 app/pdb/image_cmds.c
-app/pdb/internal_procs.c
 app/pdb/layer_cmds.c
 app/pdb/paths_cmds.c
 app/pdb/procedural_db.c

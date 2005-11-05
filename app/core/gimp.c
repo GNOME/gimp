@@ -574,6 +574,8 @@ gimp_real_initialize (Gimp               *gimp,
   if (gimp->be_verbose)
     g_print ("INIT: gimp_real_initialize\n");
 
+  status_callback (_("Initialization"), NULL, 0.0);
+
   gimp_fonts_init (gimp);
 
   gimp->brush_factory =
@@ -629,20 +631,22 @@ gimp_real_initialize (Gimp               *gimp,
   gimp_gradients_init (gimp);
 
   /*  register all internal procedures  */
-  status_callback (_("Procedural Database"), NULL, 0.0);
-  procedural_db_init_procs (gimp, status_callback);
+  status_callback (NULL,_("Internal Procedures"), 0.2);
+  procedural_db_init_procs (gimp);
 
-  status_callback (_("Plug-In Interpreters"), "", 0.0);
+  status_callback (NULL, _("Plug-In Interpreters"), 0.8);
 
   path = gimp_config_path_expand (gimp->config->interpreter_path, TRUE, NULL);
   gimp_interpreter_db_load (gimp->interpreter_db, path);
   g_free (path);
 
-  status_callback (_("Plug-In Environment"), "", 0.0);
+  status_callback (NULL, _("Plug-In Environment"), 0.9);
 
   path = gimp_config_path_expand (gimp->config->environ_path, TRUE, NULL);
   gimp_environ_table_load (gimp->environ_table, path);
   g_free (path);
+
+  status_callback (NULL, "", 1.0);
 }
 
 static void

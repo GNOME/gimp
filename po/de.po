@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-02 16:58+0100\n"
+"POT-Creation-Date: 2005-11-05 13:56+0100\n"
 "PO-Revision-Date: 2005-11-02 17:04+0100\n"
 "Last-Translator: Hendrik Brandt <heb@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -200,8 +200,8 @@ msgstr "Pinseleditor"
 
 #. initialize the list of gimp brushes
 #: ../app/actions/actions.c:101 ../app/actions/dialogs-actions.c:130
-#: ../app/core/gimp.c:859 ../app/dialogs/dialogs.c:148
-#: ../app/dialogs/preferences-dialog.c:2421 ../app/pdb/internal_procs.c:95
+#: ../app/core/gimp.c:863 ../app/dialogs/dialogs.c:148
+#: ../app/dialogs/preferences-dialog.c:2421
 msgid "Brushes"
 msgstr "Pinsel"
 
@@ -219,7 +219,7 @@ msgstr "Kanäle"
 msgid "Colormap Editor"
 msgstr "Farbtabelleneditor"
 
-#: ../app/actions/actions.c:113 ../app/pdb/internal_procs.c:107
+#: ../app/actions/actions.c:113
 msgid "Context"
 msgstr "Kontext"
 
@@ -269,8 +269,8 @@ msgstr "Datei"
 
 #. initialize the list of gimp fonts
 #: ../app/actions/actions.c:146 ../app/actions/dialogs-actions.c:150
-#: ../app/core/gimp.c:875 ../app/dialogs/dialogs.c:156
-#: ../app/dialogs/preferences-dialog.c:2437 ../app/pdb/internal_procs.c:134
+#: ../app/core/gimp.c:879 ../app/dialogs/dialogs.c:156
+#: ../app/dialogs/preferences-dialog.c:2437
 msgid "Fonts"
 msgstr "Schriften"
 
@@ -281,8 +281,8 @@ msgstr "Farbverlaufseditor"
 
 #. initialize the list of gimp gradients
 #: ../app/actions/actions.c:152 ../app/actions/dialogs-actions.c:140
-#: ../app/core/gimp.c:871 ../app/dialogs/dialogs.c:152
-#: ../app/dialogs/preferences-dialog.c:2433 ../app/pdb/internal_procs.c:146
+#: ../app/core/gimp.c:875 ../app/dialogs/dialogs.c:152
+#: ../app/dialogs/preferences-dialog.c:2433
 msgid "Gradients"
 msgstr "Farbverläufe"
 
@@ -290,8 +290,7 @@ msgstr "Farbverläufe"
 msgid "Help"
 msgstr "Hilfe"
 
-#: ../app/actions/actions.c:158 ../app/pdb/internal_procs.c:158
-#: ../app/tools/tools-enums.c:206
+#: ../app/actions/actions.c:158 ../app/tools/tools-enums.c:206
 msgid "Image"
 msgstr "Bild"
 
@@ -313,15 +312,15 @@ msgstr "Farbpaletteneditor"
 
 #. initialize the list of gimp palettes
 #: ../app/actions/actions.c:170 ../app/actions/dialogs-actions.c:145
-#: ../app/core/gimp.c:867 ../app/dialogs/dialogs.c:154
-#: ../app/dialogs/preferences-dialog.c:2429 ../app/pdb/internal_procs.c:179
+#: ../app/core/gimp.c:871 ../app/dialogs/dialogs.c:154
+#: ../app/dialogs/preferences-dialog.c:2429
 msgid "Palettes"
 msgstr "Farbpaletten"
 
 #. initialize the list of gimp patterns
 #: ../app/actions/actions.c:173 ../app/actions/dialogs-actions.c:135
-#: ../app/core/gimp.c:863 ../app/dialogs/dialogs.c:150
-#: ../app/dialogs/preferences-dialog.c:2425 ../app/pdb/internal_procs.c:194
+#: ../app/core/gimp.c:867 ../app/dialogs/dialogs.c:150
+#: ../app/dialogs/preferences-dialog.c:2425
 msgid "Patterns"
 msgstr "Muster"
 
@@ -344,7 +343,7 @@ msgid "Select"
 msgstr "Auswählen"
 
 #. initialize the template list
-#: ../app/actions/actions.c:188 ../app/core/gimp.c:884
+#: ../app/actions/actions.c:188 ../app/core/gimp.c:888
 #: ../app/dialogs/dialogs.c:164
 msgid "Templates"
 msgstr "Vorlagen"
@@ -365,8 +364,7 @@ msgid "Tools"
 msgstr "Werkzeuge"
 
 #: ../app/actions/actions.c:200 ../app/actions/dialogs-actions.c:85
-#: ../app/dialogs/dialogs.c:177 ../app/pdb/internal_procs.c:185
-#: ../app/pdb/internal_procs.c:224 ../app/tools/gimpvectortool.c:154
+#: ../app/dialogs/dialogs.c:177 ../app/tools/gimpvectortool.c:154
 msgid "Paths"
 msgstr "Pfade"
 
@@ -767,7 +765,7 @@ msgstr "_Vereinigung prüfen"
 msgid "Sample Merged"
 msgstr "Vereinigung prüfen"
 
-#: ../app/actions/data-commands.c:101 ../app/actions/documents-commands.c:320
+#: ../app/actions/data-commands.c:102 ../app/actions/documents-commands.c:320
 #: ../app/actions/file-commands.c:174 ../app/dialogs/file-open-dialog.c:208
 #: ../app/dialogs/file-open-dialog.c:259
 #: ../app/dialogs/file-open-location-dialog.c:201
@@ -784,18 +782,18 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/actions/data-commands.c:127 ../app/core/gimpimage.c:1349
+#: ../app/actions/data-commands.c:128 ../app/core/gimpimage.c:1349
 #: ../app/core/gimppalette-import.c:218 ../app/core/gimppalette.c:514
 #: ../app/core/gimppalette.c:624 ../app/dialogs/palette-import-dialog.c:694
 #: ../app/pdb/image_cmds.c:3892 ../app/widgets/gimpdnd-xds.c:83
 msgid "Untitled"
 msgstr "Namenlos"
 
-#: ../app/actions/data-commands.c:223
+#: ../app/actions/data-commands.c:224
 msgid "Delete Object"
 msgstr "Objekt löschen"
 
-#: ../app/actions/data-commands.c:246
+#: ../app/actions/data-commands.c:247
 #, c-format
 msgid "Are you sure you want to delete '%s' from the list and from disk?"
 msgstr "»%s« wirklich aus der Liste und von der Platte löschen?"
@@ -1259,7 +1257,6 @@ msgid "_Undo"
 msgstr "_Rückgängig"
 
 #: ../app/actions/edit-actions.c:71 ../app/dialogs/dialogs.c:193
-#: ../app/pdb/internal_procs.c:218
 msgid "Undo"
 msgstr "Rückgängig"
 
@@ -3563,8 +3560,7 @@ msgstr "Farbton"
 msgid "Saturation"
 msgstr "Sättigung"
 
-#: ../app/base/base-enums.c:121 ../app/pdb/internal_procs.c:104
-#: ../app/tools/gimppaintoptions-gui.c:304
+#: ../app/base/base-enums.c:121 ../app/tools/gimppaintoptions-gui.c:304
 msgid "Color"
 msgstr "Farbe"
 
@@ -4286,7 +4282,6 @@ msgid "Transparency"
 msgstr "Transparenz"
 
 #: ../app/core/core-enums.c:203 ../app/core/core-enums.c:260
-#: ../app/pdb/internal_procs.c:188
 msgid "Pattern"
 msgstr "Muster"
 
@@ -4765,35 +4760,39 @@ msgstr "VG nach Transparent"
 msgid "GIMP"
 msgstr "GIMP"
 
-#. register all internal procedures
-#: ../app/core/gimp.c:632
-msgid "Procedural Database"
-msgstr "Prozedurdatenbank"
+#: ../app/core/gimp.c:577
+msgid "Initialization"
+msgstr "Initialisierung"
 
-#: ../app/core/gimp.c:635
+#. register all internal procedures
+#: ../app/core/gimp.c:634
+msgid "Internal Procedures"
+msgstr "Interne Prozeduren"
+
+#: ../app/core/gimp.c:637
 msgid "Plug-In Interpreters"
 msgstr "Plugin-Interpreten"
 
-#: ../app/core/gimp.c:641
+#: ../app/core/gimp.c:643
 msgid "Plug-In Environment"
 msgstr "Plugin-Umgebung"
 
 #. initialize  the global parasite table
-#: ../app/core/gimp.c:855
+#: ../app/core/gimp.c:859
 msgid "Looking for data files"
 msgstr "Suche nach Arbeitsdaten"
 
-#: ../app/core/gimp.c:855
+#: ../app/core/gimp.c:859
 msgid "Parasites"
 msgstr "Parasiten"
 
 #. initialize the document history
-#: ../app/core/gimp.c:880
+#: ../app/core/gimp.c:884
 msgid "Documents"
 msgstr "Dokumente"
 
 #. initialize the module list
-#: ../app/core/gimp.c:888 ../app/dialogs/preferences-dialog.c:2449
+#: ../app/core/gimp.c:892 ../app/dialogs/preferences-dialog.c:2449
 msgid "Modules"
 msgstr "Module"
 
@@ -4920,7 +4919,7 @@ msgid "Fatal parse error in brush file '%s': File is corrupt."
 msgstr ""
 "Schwerwiegend Fehler beim Lesen der Pinseldatei »%s«: Datei ist fehlerhaft."
 
-#: ../app/core/gimpchannel.c:296 ../app/pdb/internal_procs.c:101
+#: ../app/core/gimpchannel.c:296
 msgid "Channel"
 msgstr "Kanal"
 
@@ -5129,12 +5128,12 @@ msgstr "Ebene transformieren"
 msgid "Transformation"
 msgstr "Transformation"
 
-#: ../app/core/gimpenvirontable.c:286
+#: ../app/core/gimpenvirontable.c:280
 #, c-format
 msgid "Empty variable name in environment file %s"
 msgstr "Umgebungsdatei %s enthält leeren Variablennamen"
 
-#: ../app/core/gimpenvirontable.c:304
+#: ../app/core/gimpenvirontable.c:298
 #, c-format
 msgid "Illegal variable name in environment file %s: %s"
 msgstr "Umgebungsdatei %s enthält ungültigen Variablennamen: %s"
@@ -5570,7 +5569,7 @@ msgstr ""
 msgid "Floating Selection to Layer"
 msgstr "Schwebende Auswahl in Ebene"
 
-#: ../app/core/gimplayer.c:283 ../app/pdb/internal_procs.c:161
+#: ../app/core/gimplayer.c:283
 msgid "Layer"
 msgstr "Ebene"
 
@@ -5738,7 +5737,9 @@ msgstr ""
 #: ../app/core/gimppattern.c:380
 #, c-format
 msgid "Fatal parse error in pattern file '%s': File appears truncated."
-msgstr "Schwerwiegender Fehler beim Lesen der Musterdatei »%s«: Datei scheint nicht vollständig zu sein."
+msgstr ""
+"Schwerwiegender Fehler beim Lesen der Musterdatei »%s«: Datei scheint nicht "
+"vollständig zu sein."
 
 #: ../app/core/gimppattern.c:322
 #, c-format
@@ -6133,7 +6134,7 @@ msgstr "Sind Sie sicher, dass Sie fortfahren möchten?"
 #: ../app/dialogs/info-dialog.c:377 ../app/dialogs/preferences-dialog.c:1580
 #: ../app/dialogs/preferences-dialog.c:1634
 #: ../app/dialogs/preferences-dialog.c:1818
-#: ../app/widgets/gimpcontrollereditor.c:203
+#: ../app/widgets/gimpcontrollereditor.c:205
 msgid "General"
 msgstr "Allgemein"
 
@@ -6260,7 +6261,7 @@ msgid "Location:"
 msgstr "Ort:"
 
 #: ../app/dialogs/module-dialog.c:505
-#: ../app/widgets/gimpcontrollereditor.c:248
+#: ../app/widgets/gimpcontrollereditor.c:250
 msgid "State:"
 msgstr "Status:"
 
@@ -7884,7 +7885,7 @@ msgstr "Plugin konnte das Bild nicht speichern"
 msgid "Invalid character sequence in URI"
 msgstr "Ungültige Zeichenfolge in URI"
 
-#: ../app/gui/splash.c:118
+#: ../app/gui/splash.c:110
 msgid "GIMP Startup"
 msgstr "GIMP Start"
 
@@ -8018,139 +8019,7 @@ msgstr ""
 "Da die Auflösung des Bildes außerhalb des gültigen Bereiches liegt, wird die "
 "Vorgabeauflösung verwendet."
 
-#: ../app/pdb/internal_procs.c:89
-msgid "Internal Procedures"
-msgstr "Interne Prozeduren"
-
-#: ../app/pdb/internal_procs.c:89
-msgid "Brush"
-msgstr "Pinsel"
-
-#: ../app/pdb/internal_procs.c:92
-msgid "Brush UI"
-msgstr "Pinsel UI"
-
-#: ../app/pdb/internal_procs.c:98
-msgid "Buffer procedures"
-msgstr "Puffer-Prozeduren"
-
-#: ../app/pdb/internal_procs.c:110
-msgid "Convert"
-msgstr "Umwandeln"
-
-#: ../app/pdb/internal_procs.c:113
-msgid "Display procedures"
-msgstr "Anzeige-Prozeduren"
-
-#: ../app/pdb/internal_procs.c:116
-msgid "Drawable procedures"
-msgstr "Bild-Prozeduren"
-
-#: ../app/pdb/internal_procs.c:119
-msgid "Transformation procedures"
-msgstr "Transformationswerkzeug Prozeduren"
-
-#: ../app/pdb/internal_procs.c:122
-msgid "Edit procedures"
-msgstr "Bearbeiten-Prozeduren"
-
-#: ../app/pdb/internal_procs.c:125
-msgid "File Operations"
-msgstr "Datei-Prozeduren"
-
-#: ../app/pdb/internal_procs.c:128
-msgid "Floating selections"
-msgstr "Schwebende Auswahlen"
-
-#: ../app/pdb/internal_procs.c:131
-msgid "Font UI"
-msgstr "Schrift-UI"
-
-#: ../app/pdb/internal_procs.c:137
-msgid "Gimprc procedures"
-msgstr "Gimprc-Prozeduren"
-
-#: ../app/pdb/internal_procs.c:140
-msgid "Gradient"
-msgstr "Farbverlauf:"
-
-#: ../app/pdb/internal_procs.c:143
-msgid "Gradient UI"
-msgstr "Farbverlauf-UI"
-
-#: ../app/pdb/internal_procs.c:149
-msgid "Image grid procedures"
-msgstr "Bildrasterprozeduren"
-
-#: ../app/pdb/internal_procs.c:152
-msgid "Guide procedures"
-msgstr "Hilfslinien-Prozeduren"
-
-#: ../app/pdb/internal_procs.c:155
-msgid "Help procedures"
-msgstr "Hilfe-Prozeduren"
-
-#: ../app/pdb/internal_procs.c:164
-msgid "Message procedures"
-msgstr "Nachrichten-Prozeduren"
-
-#: ../app/pdb/internal_procs.c:167
-msgid "Miscellaneous"
-msgstr "Verschiedenes"
-
-#: ../app/pdb/internal_procs.c:170
-msgid "Paint Tool procedures"
-msgstr "Malwerkzeug Prozeduren"
-
-#: ../app/pdb/internal_procs.c:173
-msgid "Palette"
-msgstr "Farbpalette"
-
-#: ../app/pdb/internal_procs.c:176
-msgid "Palette UI"
-msgstr "Paletten-UI"
-
-#: ../app/pdb/internal_procs.c:182
-msgid "Parasite procedures"
-msgstr "Parasiten-Prozeduren"
-
-#: ../app/pdb/internal_procs.c:191
-msgid "Pattern UI"
-msgstr "Muster-UI"
-
-#: ../app/pdb/internal_procs.c:197
-msgid "Plug-in"
-msgstr "Plugin"
-
-#: ../app/pdb/internal_procs.c:200
-msgid "Procedural database"
-msgstr "Prozedurdatenbank"
-
-#: ../app/pdb/internal_procs.c:203 ../app/widgets/gimpprogressdialog.c:252
-msgid "Progress"
-msgstr "Fortschritt"
-
-#: ../app/pdb/internal_procs.c:206
-msgid "Image mask"
-msgstr "Bildmaske"
-
-#: ../app/pdb/internal_procs.c:209
-msgid "Selection Tool procedures"
-msgstr "Auswahlwerkzeug Prozeduren"
-
-#: ../app/pdb/internal_procs.c:212
-msgid "Text procedures"
-msgstr "Text Prozeduren"
-
-#: ../app/pdb/internal_procs.c:215
-msgid "Transform Tool procedures"
-msgstr "Transformwerkzeug Prozeduren"
-
-#: ../app/pdb/internal_procs.c:221 ../app/widgets/gimpcursorview.c:179
-msgid "Units"
-msgstr "Einheiten"
-
-#: ../app/pdb/procedural_db.c:267
+#: ../app/pdb/procedural_db.c:264
 #, c-format
 msgid ""
 "PDB calling error:\n"
@@ -8159,7 +8028,7 @@ msgstr ""
 "PDB-Aufruffehler:\n"
 "Prozedur '%s' nicht gefunden"
 
-#: ../app/pdb/procedural_db.c:294 ../app/pdb/procedural_db.c:420
+#: ../app/pdb/procedural_db.c:291 ../app/pdb/procedural_db.c:418
 #, c-format
 msgid ""
 "PDB calling error for procedure '%s':\n"
@@ -9986,7 +9855,7 @@ msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
 #: ../app/widgets/gimpactionview.c:334
-#: ../app/widgets/gimpcontrollereditor.c:399
+#: ../app/widgets/gimpcontrollereditor.c:401
 msgid "Action"
 msgstr "Aktion"
 
@@ -10195,44 +10064,44 @@ msgstr "Kleinere Vorschaubilder"
 msgid "Larger Previews"
 msgstr "Größere Vorschaubilder"
 
-#: ../app/widgets/gimpcontrollereditor.c:216
+#: ../app/widgets/gimpcontrollereditor.c:218
 msgid "Dump events from this controller"
 msgstr "Ereignisse des Gerätes ausgeben"
 
-#: ../app/widgets/gimpcontrollereditor.c:221
+#: ../app/widgets/gimpcontrollereditor.c:223
 msgid "Enable this controller"
 msgstr "Gerät einschalten"
 
-#: ../app/widgets/gimpcontrollereditor.c:242
+#: ../app/widgets/gimpcontrollereditor.c:244
 msgid "Name:"
 msgstr "_Name:"
 
-#: ../app/widgets/gimpcontrollereditor.c:393
+#: ../app/widgets/gimpcontrollereditor.c:395
 msgid "Event"
 msgstr "Ereignis"
 
-#: ../app/widgets/gimpcontrollereditor.c:418
+#: ../app/widgets/gimpcontrollereditor.c:420
 msgid "_Grab event"
 msgstr "E_reignis abfangen"
 
-#: ../app/widgets/gimpcontrollereditor.c:428
+#: ../app/widgets/gimpcontrollereditor.c:430
 msgid "Select the next event arriving from the controller"
 msgstr "Das nächste Ereignis das vom Gerät kommt auswählen"
 
-#: ../app/widgets/gimpcontrollereditor.c:441
+#: ../app/widgets/gimpcontrollereditor.c:443
 msgid "Assign an action to the selected event"
 msgstr "Eine Aktion mit dem ausgewählten Ereignis verbinden"
 
-#: ../app/widgets/gimpcontrollereditor.c:453
+#: ../app/widgets/gimpcontrollereditor.c:455
 msgid "Remove the action from the selected event"
 msgstr "Die verbundene Aktion vom gewählten Ereignis entfernen"
 
-#: ../app/widgets/gimpcontrollereditor.c:686
+#: ../app/widgets/gimpcontrollereditor.c:688
 #, c-format
 msgid "Select Action for Event '%s'"
 msgstr "Aktion für Ereignis '%s' auswählen"
 
-#: ../app/widgets/gimpcontrollereditor.c:691
+#: ../app/widgets/gimpcontrollereditor.c:693
 msgid "Select Controller Event Action"
 msgstr "Aktion für Ereignis auswählen"
 
@@ -10430,6 +10299,10 @@ msgstr "Mausrad"
 #: ../app/widgets/gimpcontrollerwheel.c:250
 msgid "Mouse Wheel Events"
 msgstr "Mausradereignisse"
+
+#: ../app/widgets/gimpcursorview.c:179
+msgid "Units"
+msgstr "Einheiten"
 
 #: ../app/widgets/gimpdataeditor.c:226
 msgid "Save"
@@ -10834,6 +10707,10 @@ msgstr "Nicht definiert"
 msgid "Columns:"
 msgstr "Spalten:"
 
+#: ../app/widgets/gimpprogressdialog.c:252
+msgid "Progress"
+msgstr "Fortschritt"
+
 #: ../app/widgets/gimpselectiondata.c:258
 #, c-format
 msgid ""
@@ -11077,7 +10954,7 @@ msgstr "Den Dialog zur Palettenauswahl öffnen"
 msgid "Open the font selection dialog"
 msgstr "Den Dialog zur Schriftauswahl öffnen"
 
-#: ../app/widgets/gimpwidgets-utils.c:820
+#: ../app/widgets/gimpwidgets-utils.c:818
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Ungültige UTF-8-Daten in Datei »%s«."
@@ -11251,11 +11128,3 @@ msgstr "Bitte stellen Sie sicher, dass das Werkzeugefenster sichtbar ist!"
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "»%s« konnte nicht gestartet werden: %s"
-
-#~ msgid "Fatal parse error in pattern file '%s': Could not read %d bytes: %s"
-#~ msgstr ""
-#~ "Schwerwiegender Fehler beim Lesen der Musterdatei '%s': Konnte %d Bytes "
-#~ "nicht lesen: %s"
-
-#~ msgid "Center"
-#~ msgstr "Zentriert"

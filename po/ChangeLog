@@ -1,3 +1,7 @@
+2005-11-05  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: removed app/pdb/internal_procs.c.
+
 2005-11-04  Sven Neumann  <sven@gimp.org>
 
 	* it.po: corrected translation that broke the gimp.desktop file.

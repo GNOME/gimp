@@ -99,8 +99,7 @@ procedural_db_free (Gimp *gimp)
 }
 
 void
-procedural_db_init_procs (Gimp               *gimp,
-                          GimpInitStatusFunc  status_callback)
+procedural_db_init_procs (Gimp *gimp)
 {
   static const struct
   {
@@ -174,9 +173,8 @@ procedural_db_init_procs (Gimp               *gimp,
   };
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (status_callback != NULL);
 
-  internal_procs_init (gimp, status_callback);
+  internal_procs_init (gimp);
 
   if (gimp->pdb_compat_mode != GIMP_PDB_COMPAT_OFF)
     {
