@@ -135,7 +135,7 @@ plug_ins_init (Gimp               *gimp,
     }
 
   status_callback (_("Resource configuration"),
-                   gimp_filename_to_utf8 (filename), -1);
+                   gimp_filename_to_utf8 (filename), 0.0);
 
   if (! plug_in_rc_parse (gimp, filename, &error))
     {

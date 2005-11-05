@@ -1,5 +1,16 @@
 2005-11-05  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/splash.c: added some commented-out debug output that can
+	be used to get an idea of where the startup time is being spent.
+
+	* app/core/gimp.c
+	* app/pdb/internal_procs.c
+	* app/pdb/procedural_db.c
+	* app/plug-in/plug-ins.c
+	* tools/pdbgen/app.pl: cosmetic changes.
+
+2005-11-05  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/splash.c (splash_area_expose): set the clip region
 	instead of just the clip rectangle.
 

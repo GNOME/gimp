@@ -820,7 +820,7 @@ GPL
 	push @group_decls, $decl;
 	$longest = length $decl if $longest < length $decl;
 
-	$group_procs .= ' ' x 2 . "(* status_callback) (";
+	$group_procs .= ' ' x 2 . "status_callback (";
 	$group_procs .= q/_("Internal Procedures")/ unless $once;
 	$group_procs .= 'NULL' if $once++;
 	$group_procs .= qq/, _("$main::grp{$group}->{desc}"), /;

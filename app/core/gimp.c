@@ -629,16 +629,16 @@ gimp_real_initialize (Gimp               *gimp,
   gimp_gradients_init (gimp);
 
   /*  register all internal procedures  */
-  (* status_callback) (_("Procedural Database"), NULL, -1);
+  status_callback (_("Procedural Database"), NULL, 0.0);
   procedural_db_init_procs (gimp, status_callback);
 
-  (* status_callback) (_("Plug-In Interpreters"), "", -1);
+  status_callback (_("Plug-In Interpreters"), "", 0.0);
 
   path = gimp_config_path_expand (gimp->config->interpreter_path, TRUE, NULL);
   gimp_interpreter_db_load (gimp->interpreter_db, path);
   g_free (path);
 
-  (* status_callback) (_("Plug-In Environment"), "", -1);
+  status_callback (_("Plug-In Environment"), "", 0.0);
 
   path = gimp_config_path_expand (gimp->config->environ_path, TRUE, NULL);
   gimp_environ_table_load (gimp->environ_table, path);
@@ -852,40 +852,40 @@ gimp_restore (Gimp               *gimp,
     g_print ("INIT: gimp_restore\n");
 
   /*  initialize  the global parasite table  */
-  (* status_callback) (_("Looking for data files"), _("Parasites"), 0.0);
+  status_callback (_("Looking for data files"), _("Parasites"), 0.0);
   gimp_parasiterc_load (gimp);
 
   /*  initialize the list of gimp brushes    */
-  (* status_callback) (NULL, _("Brushes"), 0.1);
+  status_callback (NULL, _("Brushes"), 0.1);
   gimp_data_factory_data_init (gimp->brush_factory, gimp->no_data);
 
   /*  initialize the list of gimp patterns   */
-  (* status_callback) (NULL, _("Patterns"), 0.2);
+  status_callback (NULL, _("Patterns"), 0.2);
   gimp_data_factory_data_init (gimp->pattern_factory, gimp->no_data);
 
   /*  initialize the list of gimp palettes   */
-  (* status_callback) (NULL, _("Palettes"), 0.3);
+  status_callback (NULL, _("Palettes"), 0.3);
   gimp_data_factory_data_init (gimp->palette_factory, gimp->no_data);
 
   /*  initialize the list of gimp gradients  */
-  (* status_callback) (NULL, _("Gradients"), 0.4);
+  status_callback (NULL, _("Gradients"), 0.4);
   gimp_data_factory_data_init (gimp->gradient_factory, gimp->no_data);
 
   /*  initialize the list of gimp fonts  */
-  (* status_callback) (NULL, _("Fonts"), 0.5);
+  status_callback (NULL, _("Fonts"), 0.5);
   if (! gimp->no_fonts)
     gimp_fonts_load (gimp);
 
   /*  initialize the document history  */
-  (* status_callback) (NULL, _("Documents"), 0.6);
+  status_callback (NULL, _("Documents"), 0.6);
   gimp_documents_load (gimp);
 
   /*  initialize the template list  */
-  (* status_callback) (NULL, _("Templates"), 0.7);
+  status_callback (NULL, _("Templates"), 0.7);
   gimp_templates_load (gimp);
 
   /*  initialize the module list  */
-  (* status_callback) (NULL, _("Modules"), 0.8);
+  status_callback (NULL, _("Modules"), 0.8);
   gimp_modules_load (gimp);
 
   g_signal_emit (gimp, gimp_signals[RESTORE], 0, status_callback);

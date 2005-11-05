@@ -32,6 +32,9 @@
 #include "gimp-intl.h"
 
 
+/*  #define STARTUP_TIMER 1  */
+
+
 typedef struct
 {
   GtkWidget      *window;
@@ -44,6 +47,12 @@ typedef struct
   gint            upper_x, upper_y;
   PangoLayout    *lower;
   gint            lower_x, lower_y;
+#ifdef STARTUP_TIMER
+  GTimer         *timer;
+  gdouble         last_time;
+  gchar          *text1;
+  gchar          *text2;
+#endif
 } GimpSplash;
 
 static GimpSplash *splash = NULL;
@@ -63,6 +72,12 @@ static gboolean    splash_average_bottom      (GtkWidget      *widget,
 
 static GdkPixbuf * splash_image_load          (void);
 static GdkPixbuf * splash_image_pick_from_dir (const gchar    *dirname);
+
+#ifdef STARTUP_TIMER
+static void        splash_timer_elapsed       (const gchar    *text1,
+                                               const gchar    *text2,
+                                               gdouble         percentage);
+#endif
 
 
 /*  public functions  */
@@ -170,6 +185,10 @@ splash_create (void)
   gtk_widget_show (splash->progress);
 
   gtk_widget_show_now (splash->window);
+
+#ifdef STARTUP_TIMER
+  splash->timer = g_timer_new ();
+#endif
 }
 
 void
@@ -183,6 +202,12 @@ splash_destroy (void)
   g_object_unref (splash->gc);
   g_object_unref (splash->upper);
   g_object_unref (splash->lower);
+
+#ifdef STARTUP_TIMER
+  g_timer_destroy (splash->timer);
+  g_free (splash->text1);
+  g_free (splash->text2);
+#endif
 
   g_free (splash);
   splash = NULL;
@@ -199,8 +224,14 @@ splash_update (const gchar *text1,
   gint            width;
   gint            height;
 
+  g_return_if_fail (percentage >= 0.0 && percentage <= 1.0);
+
   if (! splash)
     return;
+
+#ifdef STARTUP_TIMER
+  splash_timer_elapsed (text1, text2, percentage);
+#endif
 
   width  = splash->area->allocation.width;
   height = splash->area->allocation.height;
@@ -239,7 +270,7 @@ splash_update (const gchar *text1,
                                 expose.width, expose.height);
 
   gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (splash->progress),
-                                 CLAMP (percentage, 0.0, 1.0));
+                                 percentage);
 
   while (gtk_events_pending ())
     gtk_main_iteration ();
@@ -419,3 +450,34 @@ splash_image_pick_from_dir (const gchar *dirname)
 
   return pixbuf;
 }
+
+#ifdef STARTUP_TIMER
+static void
+splash_timer_elapsed (const gchar *text1,
+                      const gchar *text2,
+                      gdouble      percentage)
+{
+  gdouble elapsed = g_timer_elapsed (splash->timer, NULL);
+
+  if (text1)
+    {
+      g_free (splash->text1);
+      splash->text1 = g_strdup (text1);
+    }
+
+  if (text2)
+    {
+      g_free (splash->text2);
+      splash->text2 = g_strdup (text2);
+    }
+
+  g_printerr ("%8g  %8g  -  %s %g%%  -  %s\n",
+              elapsed,
+              elapsed - splash->last_time,
+              splash->text1 ? splash->text1 : "",
+              percentage * 100.0,
+              splash->text2 ? splash->text2 : "");
+
+  splash->last_time = elapsed;
+}
+#endif

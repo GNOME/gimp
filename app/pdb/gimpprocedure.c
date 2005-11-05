@@ -199,11 +199,10 @@ procedural_db_register (Gimp       *gimp,
   g_return_if_fail (procedure != NULL);
 
   list = g_hash_table_lookup (gimp->procedural_ht, procedure->name);
-  list = g_list_prepend (list, (gpointer) procedure);
 
   g_hash_table_insert (gimp->procedural_ht,
-                       (gpointer) procedure->name,
-                       (gpointer) list);
+                       procedure->name,
+                       g_list_prepend (list, procedure));
 }
 
 void
@@ -240,7 +239,7 @@ procedural_db_lookup (Gimp        *gimp,
   list = g_hash_table_lookup (gimp->procedural_ht, name);
 
   if (list)
-    return (ProcRecord *) list->data;
+    return list->data;
   else
     return NULL;
 }
@@ -341,7 +340,8 @@ procedural_db_execute (Gimp         *gimp,
           return_args[0].value.pdb_int != GIMP_PDB_PASS_THROUGH &&
           procedure->num_values > 0)
         {
-          memset (&return_args[1], 0, sizeof (Argument) * procedure->num_values);
+          memset (&return_args[1],
+                  0, sizeof (Argument) * procedure->num_values);
         }
 
       if (return_args[0].value.pdb_int == GIMP_PDB_PASS_THROUGH)
@@ -572,7 +572,7 @@ procedural_db_destroy_args (Argument *args,
           break;
 
         case GIMP_PDB_PARASITE:
-          gimp_parasite_free ((GimpParasite *) (args[i].value.pdb_pointer));
+          gimp_parasite_free (args[i].value.pdb_pointer);
           break;
 
         case GIMP_PDB_STATUS:
@@ -625,7 +625,7 @@ procedural_db_set_data (Gimp         *gimp,
 
   for (list = gimp->procedural_db_data_list; list; list = g_list_next (list))
     {
-      pdb_data = (PDBData *) list->data;
+      pdb_data = list->data;
 
       if (! strcmp (pdb_data->identifier, identifier))
         break;
