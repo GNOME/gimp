@@ -253,7 +253,7 @@ splash_area_expose (GtkWidget      *widget,
                     GdkEventExpose *event,
                     GimpSplash     *splash)
 {
-  gdk_gc_set_clip_rectangle (splash->gc, &event->area);
+  gdk_gc_set_clip_region (splash->gc, event->region);
 
   gdk_draw_layout (widget->window, splash->gc,
                    splash->upper_x, splash->upper_y, splash->upper);

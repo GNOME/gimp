@@ -1,3 +1,10 @@
+2005-11-05  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/splash.c (splash_area_expose): set the clip region
+	instead of just the clip rectangle.
+
+	* configure.in: bumped version to 2.3.6.
+
 2005-11-04  Manish Singh  <yosh@gimp.org>
 
 	* app/core/gimpenvirontable.c (gimp_environ_table_load_env_file):
