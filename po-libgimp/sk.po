@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-11 00:04+0200\n"
-"PO-Revision-Date: 2005-10-11 00:07+0200\n"
+"POT-Creation-Date: 2005-11-06 17:32+0100\n"
+"PO-Revision-Date: 2005-11-06 17:33+0100\n"
 "Last-Translator: Marcel Telka <marcel@telka.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -277,16 +277,19 @@ msgstr "Vyhľadávanie podľa dátumu"
 msgid "Searching by type"
 msgstr "Vyhľadávanie podľa typu"
 
-#: ../libgimp/gimpprocbrowserdialog.c:484
+#: ../libgimp/gimpprocbrowserdialog.c:485
 #, c-format
-msgid "%d procedures"
-msgstr "%d procedúr"
+msgid "%d procedure"
+msgid_plural "%d procedures"
+msgstr[0] "%d procedúr"
+msgstr[1] "%d procedúra"
+msgstr[2] "%d procedúry"
 
-#: ../libgimp/gimpprocbrowserdialog.c:491
+#: ../libgimp/gimpprocbrowserdialog.c:494
 msgid "No matches for your query"
 msgstr "Pre vašu otázku nie sú zhody"
 
-#: ../libgimp/gimpprocbrowserdialog.c:495
+#: ../libgimp/gimpprocbrowserdialog.c:498
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
@@ -295,7 +298,7 @@ msgstr[1] "%d procedúra vyhovuje vašej otázke"
 msgstr[2] "%d procedúry vyhovujú vašej otázke"
 
 #. count label
-#: ../libgimp/gimpprocbrowserdialog.c:544 ../libgimpwidgets/gimpbrowser.c:145
+#: ../libgimp/gimpprocbrowserdialog.c:547 ../libgimpwidgets/gimpbrowser.c:145
 msgid "No matches"
 msgstr "Bez zhody"
 
@@ -663,52 +666,55 @@ msgstr "Rozšírenie GIMPu"
 msgid "Temporary Procedure"
 msgstr "Dočasná procedúra"
 
-#: ../libgimpbase/gimpmemsize.c:177
+#: ../libgimpbase/gimpmemsize.c:180
 #, c-format
-msgid "%d Bytes"
-msgstr "%d bajtov"
+msgid "%d Byte"
+msgid_plural "%d Bytes"
+msgstr[0] "%d bajtov"
+msgstr[1] "%d bajt"
+msgstr[2] "%d bajty"
 
-#: ../libgimpbase/gimpmemsize.c:182
+#: ../libgimpbase/gimpmemsize.c:186
 #, c-format
 msgid "%.2f KB"
 msgstr "%.2f KB"
 
-#: ../libgimpbase/gimpmemsize.c:186
+#: ../libgimpbase/gimpmemsize.c:190
 #, c-format
 msgid "%.1f KB"
 msgstr "%.1f KB"
 
-#: ../libgimpbase/gimpmemsize.c:190
+#: ../libgimpbase/gimpmemsize.c:194
 #, c-format
 msgid "%d KB"
 msgstr "%d KB"
 
-#: ../libgimpbase/gimpmemsize.c:197
+#: ../libgimpbase/gimpmemsize.c:201
 #, c-format
 msgid "%.2f MB"
 msgstr "%.2f MB"
 
-#: ../libgimpbase/gimpmemsize.c:201
+#: ../libgimpbase/gimpmemsize.c:205
 #, c-format
 msgid "%.1f MB"
 msgstr "%.1f MB"
 
-#: ../libgimpbase/gimpmemsize.c:205
+#: ../libgimpbase/gimpmemsize.c:209
 #, c-format
 msgid "%d MB"
 msgstr "%d MB"
 
-#: ../libgimpbase/gimpmemsize.c:212
+#: ../libgimpbase/gimpmemsize.c:216
 #, c-format
 msgid "%.2f GB"
 msgstr "%.2f GB"
 
-#: ../libgimpbase/gimpmemsize.c:216
+#: ../libgimpbase/gimpmemsize.c:220
 #, c-format
 msgid "%.1f GB"
 msgstr "%.1f GB"
 
-#: ../libgimpbase/gimpmemsize.c:220
+#: ../libgimpbase/gimpmemsize.c:224
 #, c-format
 msgid "%d GB"
 msgstr "%d GB"
@@ -1026,10 +1032,13 @@ msgstr "Štýl šachovnice"
 msgid "_Preview"
 msgstr "_Náhľad"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1868
+#: ../libgimpwidgets/gimppropwidgets.c:1872
 #, c-format
-msgid "This text input field is limited to %d characters."
-msgstr "Toto vstupné textové pole je obmedzené na %d znakov."
+msgid "This text input field is limited to %d character."
+msgid_plural "This text input field is limited to %d characters."
+msgstr[0] "Toto vstupné textové pole je obmedzené na %d znakov."
+msgstr[1] "Toto vstupné textové pole je obmedzené na %d znak."
+msgstr[2] "Toto vstupné textové pole je obmedzené na %d znaky."
 
 #: ../libgimpwidgets/gimpresolutionentry.c:382
 #, c-format
