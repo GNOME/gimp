@@ -1,5 +1,11 @@
 2005-11-06  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpcolorpickertool.c (gimp_color_picker_tool_picked):
+	when picking FG or BG color from an indexed layer, select its
+	index in the colormap editor. Fixes bug #320660.
+
+2005-11-06  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimp-contexts.c
 	* app/core/gimp-documents.c
 	* app/core/gimp-parasites.c

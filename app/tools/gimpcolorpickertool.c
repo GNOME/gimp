@@ -32,10 +32,12 @@
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimpcolorframe.h"
+#include "widgets/gimpcolormapeditor.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdockable.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimppaletteeditor.h"
+#include "widgets/gimpsessioninfo.h"
 #include "widgets/gimptooldialog.h"
 #include "widgets/gimpviewabledialog.h"
 
@@ -288,6 +290,29 @@ gimp_color_picker_tool_picked (GimpColorTool      *color_tool,
 
   user_context = gimp_get_user_context (tool->gdisp->gimage->gimp);
 
+  if ((options->pick_mode == GIMP_COLOR_PICK_MODE_FOREGROUND ||
+       options->pick_mode == GIMP_COLOR_PICK_MODE_BACKGROUND) &&
+      GIMP_IMAGE_TYPE_IS_INDEXED (sample_type))
+    {
+      GimpDialogFactory *dialog_factory;
+      GimpSessionInfo   *info;
+
+      dialog_factory = gimp_dialog_factory_from_name ("dock");
+      info = gimp_dialog_factory_find_session_info (dialog_factory,
+                                                    "gimp-indexed-palette");
+
+      if (info && info->widget)
+        {
+          GtkWidget *colormap_editor;
+
+          colormap_editor = gtk_bin_get_child (GTK_BIN (info->widget));
+
+          gtk_adjustment_set_value
+            (GIMP_COLORMAP_EDITOR (colormap_editor)->index_adjustment,
+             color_index);
+        }
+    }
+
   switch (options->pick_mode)
     {
     case GIMP_COLOR_PICK_MODE_NONE:
@@ -306,35 +331,37 @@ gimp_color_picker_tool_picked (GimpColorTool      *color_tool,
         GimpDialogFactory *dialog_factory;
         GdkScreen         *screen;
         GtkWidget         *dockable;
-        GtkWidget         *palette_editor;
-        GimpData          *data;
 
         dialog_factory = gimp_dialog_factory_from_name ("dock");
-        screen         = gtk_widget_get_screen (tool->gdisp->shell);
-
-        dockable = gimp_dialog_factory_dialog_raise (dialog_factory,
-                                                     screen,
+        screen = gtk_widget_get_screen (tool->gdisp->shell);
+        dockable = gimp_dialog_factory_dialog_raise (dialog_factory, screen,
                                                      "gimp-palette-editor",
                                                      -1);
 
-        /* don't blink like mad when updating */
-        if (pick_state == GIMP_COLOR_PICK_STATE_UPDATE)
-          gimp_dockable_blink_cancel (GIMP_DOCKABLE (dockable));
-
-        palette_editor = gtk_bin_get_child (GTK_BIN (dockable));
-
-        data = gimp_data_editor_get_data (GIMP_DATA_EDITOR (palette_editor));
-
-        if (! data)
+        if (dockable)
           {
-            data = GIMP_DATA (gimp_context_get_palette (user_context));
+            GtkWidget *palette_editor;
+            GimpData  *data;
 
-            gimp_data_editor_set_data (GIMP_DATA_EDITOR (palette_editor),
-                                       data);
+            /* don't blink like mad when updating */
+            if (pick_state == GIMP_COLOR_PICK_STATE_UPDATE)
+              gimp_dockable_blink_cancel (GIMP_DOCKABLE (dockable));
+
+            palette_editor = gtk_bin_get_child (GTK_BIN (dockable));
+
+            data = gimp_data_editor_get_data (GIMP_DATA_EDITOR (palette_editor));
+
+            if (! data)
+              {
+                data = GIMP_DATA (gimp_context_get_palette (user_context));
+
+                gimp_data_editor_set_data (GIMP_DATA_EDITOR (palette_editor),
+                                           data);
+              }
+
+            gimp_palette_editor_pick_color (GIMP_PALETTE_EDITOR (palette_editor),
+                                            color, pick_state);
           }
-
-        gimp_palette_editor_pick_color (GIMP_PALETTE_EDITOR (palette_editor),
-                                        color, pick_state);
       }
       break;
     }
