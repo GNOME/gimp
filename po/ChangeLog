@@ -1,3 +1,7 @@
+2005-11-06  Adam Weinberger  <adamw@gnome.org>
+
+	* en_CA.po: Updated Canadian English translation.
+
 2005-11-05  Sven Neumann  <sven@gimp.org>
 
 	* POTFILES.in: removed app/pdb/internal_procs.c.

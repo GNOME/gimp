@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-03 11:48-0500\n"
+"POT-Creation-Date: 2005-11-06 14:19-0500\n"
 "PO-Revision-Date: 2005-09-06 14:31-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
@@ -7263,54 +7263,54 @@ msgid "Create a new unit from scratch."
 msgstr "Create a new unit from scratch."
 
 #: plug-ins/common/uniteditor.c:127
-msgid "Create a new unit with the currently selected unit as template."
-msgstr "Create a new unit with the currently selected unit as template."
+msgid "Create a new unit using the currently selected unit as template."
+msgstr "Create a new unit using the currently selected unit as template."
 
-#: plug-ins/common/uniteditor.c:151
+#: plug-ins/common/uniteditor.c:150
 msgid "_Unit Editor"
 msgstr "_Unit Editor"
 
-#: plug-ins/common/uniteditor.c:210
-msgid "New Unit"
-msgstr "New Unit"
+#: plug-ins/common/uniteditor.c:209
+msgid "Add a New Unit"
+msgstr "Add a New Unit"
 
-#: plug-ins/common/uniteditor.c:239
+#: plug-ins/common/uniteditor.c:238
 msgid "_ID:"
 msgstr "_ID:"
 
-#: plug-ins/common/uniteditor.c:250
+#: plug-ins/common/uniteditor.c:249
 msgid "_Factor:"
 msgstr "_Factor:"
 
-#: plug-ins/common/uniteditor.c:260
+#: plug-ins/common/uniteditor.c:259
 msgid "_Digits:"
 msgstr "_Digits:"
 
-#: plug-ins/common/uniteditor.c:272
+#: plug-ins/common/uniteditor.c:271
 msgid "_Symbol:"
 msgstr "_Symbol:"
 
-#: plug-ins/common/uniteditor.c:284
+#: plug-ins/common/uniteditor.c:283
 msgid "_Abbreviation:"
 msgstr "_Abbreviation:"
 
-#: plug-ins/common/uniteditor.c:296
+#: plug-ins/common/uniteditor.c:295
 msgid "Si_ngular:"
 msgstr "Si_ngular:"
 
-#: plug-ins/common/uniteditor.c:308
+#: plug-ins/common/uniteditor.c:307
 msgid "_Plural:"
 msgstr "_Plural:"
 
-#: plug-ins/common/uniteditor.c:344
-msgid "Unit factor must not be 0."
-msgstr "Unit factor must not be 0."
+#: plug-ins/common/uniteditor.c:350
+msgid "Incomplete input"
+msgstr "Incomplete input"
 
-#: plug-ins/common/uniteditor.c:354
-msgid "All text fields must contain a value."
-msgstr "All text fields must contain a value."
+#: plug-ins/common/uniteditor.c:353
+msgid "Please fill in all text fields."
+msgstr "Please fill in all text fields."
 
-#: plug-ins/common/uniteditor.c:408
+#: plug-ins/common/uniteditor.c:410
 msgid "Unit Editor"
 msgstr "Unit Editor"
 
