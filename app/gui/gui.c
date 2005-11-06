@@ -444,7 +444,7 @@ gui_restore_after_callback (Gimp               *gimp,
   if (status_callback == splash_update)
     splash_destroy ();
 
-  color_history_restore ();
+  color_history_restore (gimp);
 
   if (gui_config->restore_session)
     session_restore (gimp);
@@ -475,7 +475,7 @@ gui_exit_callback (Gimp     *gimp,
   if (gui_config->save_session_info)
     session_save (gimp, FALSE);
 
-  color_history_save ();
+  color_history_save (gimp);
 
   if (gui_config->save_accels)
     menus_save (gimp, FALSE);

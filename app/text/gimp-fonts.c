@@ -72,6 +72,9 @@ gimp_fonts_load (Gimp *gimp)
 
   gimp_set_busy (gimp);
 
+  if (gimp->be_verbose)
+    g_print ("Loading fonts\n");
+
   gimp_container_freeze (GIMP_CONTAINER (gimp->fonts));
 
   gimp_container_clear (GIMP_CONTAINER (gimp->fonts));
@@ -156,4 +159,3 @@ gimp_fonts_add_directories (FcConfig    *config,
 
   gimp_path_free (path);
 }
-

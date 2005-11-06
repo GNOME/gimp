@@ -25,6 +25,7 @@
 
 #include "core-types.h"
 
+#include "gimp.h"
 #include "gimptoolinfo.h"
 #include "gimptooloptions.h"
 
@@ -217,6 +218,9 @@ gimp_tool_options_serialize (GimpToolOptions  *tool_options,
 
   filename = gimp_tool_options_build_filename (tool_options, extension);
 
+  if (tool_options->tool_info->gimp->be_verbose)
+    g_print ("Writing '%s'\n", gimp_filename_to_utf8 (filename));
+
   header = g_strdup_printf ("GIMP %s options",
                             GIMP_OBJECT (tool_options->tool_info)->name);
   footer = g_strdup_printf ("end of %s options",
@@ -247,6 +251,9 @@ gimp_tool_options_deserialize (GimpToolOptions  *tool_options,
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   filename = gimp_tool_options_build_filename (tool_options, extension);
+
+  if (tool_options->tool_info->gimp->be_verbose)
+    g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (filename));
 
   retval = gimp_config_deserialize_file (GIMP_CONFIG (tool_options),
                                          filename,

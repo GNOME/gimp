@@ -137,6 +137,9 @@ plug_ins_init (Gimp               *gimp,
   status_callback (_("Resource configuration"),
                    gimp_filename_to_utf8 (filename), 0.0);
 
+  if (gimp->be_verbose)
+    g_print (_("Parsing '%s'\n"), gimp_filename_to_utf8 (filename));
+
   if (! plug_in_rc_parse (gimp, filename, &error))
     {
       if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)

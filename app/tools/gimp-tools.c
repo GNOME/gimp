@@ -237,6 +237,9 @@ gimp_tools_restore (Gimp *gimp)
 
   filename = gimp_personal_rc_file ("toolrc");
 
+  if (gimp->be_verbose)
+    g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (filename));
+
   if (gimp_config_deserialize_file (GIMP_CONFIG (gimp_list), filename,
                                     NULL, NULL))
     {
@@ -323,6 +326,10 @@ gimp_tools_restore (Gimp *gimp)
 
           filename = gimp_tool_options_build_filename (tool_info->tool_options,
                                                        "presets");
+
+          if (gimp->be_verbose)
+            g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (filename));
+
           gimp_config_deserialize_file (GIMP_CONFIG (tool_info->options_presets),
                                         filename,
                                         gimp, NULL);
@@ -370,6 +377,9 @@ gimp_tools_save (Gimp     *gimp,
           filename = gimp_tool_options_build_filename (tool_info->tool_options,
                                                        "presets");
 
+          if (gimp->be_verbose)
+            g_print ("Writing '%s'\n", gimp_filename_to_utf8 (filename));
+
           header = g_strdup_printf ("GIMP %s options presets",
                                     GIMP_OBJECT (tool_info)->name);
           footer = g_strdup_printf ("end of %s options presets",
@@ -386,6 +396,10 @@ gimp_tools_save (Gimp     *gimp,
     }
 
   filename = gimp_personal_rc_file ("toolrc");
+
+  if (gimp->be_verbose)
+    g_print ("Writing '%s'\n", gimp_filename_to_utf8 (filename));
+
   gimp_config_serialize_to_file (GIMP_CONFIG (gimp->tool_info_list),
                                  filename,
                                  "GIMP toolrc",

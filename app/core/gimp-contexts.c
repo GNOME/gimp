@@ -84,6 +84,9 @@ gimp_contexts_load (Gimp *gimp)
 
   filename = gimp_personal_rc_file ("contextrc");
 
+  if (gimp->be_verbose)
+    g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (filename));
+
   if (! gimp_config_deserialize_file (GIMP_CONFIG (gimp_get_user_context (gimp)),
 				      filename,
                                       NULL, &error))
@@ -105,6 +108,9 @@ gimp_contexts_save (Gimp *gimp)
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   filename = gimp_personal_rc_file ("contextrc");
+
+  if (gimp->be_verbose)
+    g_print ("Writing '%s'\n", gimp_filename_to_utf8 (filename));
 
   if (! gimp_config_serialize_to_file (GIMP_CONFIG (gimp_get_user_context (gimp)),
 				       filename,

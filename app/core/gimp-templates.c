@@ -46,6 +46,9 @@ gimp_templates_load (Gimp *gimp)
 
   filename = gimp_personal_rc_file ("templaterc");
 
+  if (gimp->be_verbose)
+    g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (filename));
+
   if (!gimp_config_deserialize_file (GIMP_CONFIG (gimp->templates),
 				     filename, NULL, &error))
     {
@@ -93,6 +96,9 @@ gimp_templates_save (Gimp *gimp)
   g_return_if_fail (GIMP_IS_LIST (gimp->templates));
 
   filename = gimp_personal_rc_file ("templaterc");
+
+  if (gimp->be_verbose)
+    g_print ("Writing '%s'\n", gimp_filename_to_utf8 (filename));
 
   if (! gimp_config_serialize_to_file (GIMP_CONFIG (gimp->templates),
 				       filename,

@@ -101,6 +101,9 @@ session_init (Gimp *gimp)
       return;
     }
 
+  if (gimp->be_verbose)
+    g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (filename));
+
   g_scanner_scope_add_symbol (scanner, 0, "session-info",
                               GINT_TO_POINTER (SESSION_INFO));
   g_scanner_scope_add_symbol (scanner, 0,  "last-tip-shown",
@@ -196,6 +199,9 @@ session_save (Gimp     *gimp,
     return;
 
   filename = session_filename (gimp);
+
+  if (gimp->be_verbose)
+    g_print ("Writing '%s'\n", gimp_filename_to_utf8 (filename));
 
   writer =
     gimp_config_writer_new_file (filename,

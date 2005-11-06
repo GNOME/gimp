@@ -210,7 +210,7 @@ gimp_data_factory_data_init (GimpDataFactory *factory,
         {
           const gchar *name = gimp_object_get_name (GIMP_OBJECT (factory));
 
-          g_print ("%s: loading data\n", name ? name : "???");
+          g_print ("Loading '%s' data\n", name ? name : "???");
         }
 
       gimp_data_factory_data_load (factory, NULL);
@@ -225,18 +225,12 @@ typedef struct
   GHashTable      *cache;
 } GimpDataLoadContext;
 
-typedef struct data_load_context_struct data_load_context;
-
 static gboolean
 gimp_data_factory_refresh_cache_remove (gpointer key,
                                         gpointer value,
                                         gpointer user_data)
 {
-  GList *list;
-
-  for (list = value; list; list = g_list_next (list))
-    g_object_unref (list->data);
-
+  g_list_foreach (value, (GFunc) g_object_unref, NULL);
   g_list_free (value);
 
   return TRUE;

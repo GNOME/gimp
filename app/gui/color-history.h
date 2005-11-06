@@ -25,8 +25,8 @@
 
 #define COLOR_HISTORY_SIZE 12
 
-void   color_history_save        (void);
-void   color_history_restore     (void);
+void   color_history_save        (Gimp             *gimp);
+void   color_history_restore     (Gimp             *gimp);
 
 gint   color_history_add         (const GimpRGB    *rgb);
 void   color_history_set         (gint              index,

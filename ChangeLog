@@ -1,3 +1,22 @@
+2005-11-06  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimp-contexts.c
+	* app/core/gimp-documents.c
+	* app/core/gimp-parasites.c
+	* app/core/gimp-templates.c
+	* app/core/gimp-units.c
+	* app/core/gimpdatafactory.c
+	* app/core/gimptooloptions.c
+	* app/gui/color-history.[ch]
+	* app/gui/gui.c
+	* app/gui/session.c
+	* app/plug-in/plug-ins.c
+	* app/text/gimp-fonts.c
+	* app/tools/gimp-tools.c
+	* app/widgets/gimpcontrollers.c
+	* app/widgets/gimpdevices.c: when running --verbose, print the
+	name of each config file parsed or written.
+
 2005-11-06  Sven Neumann  <sven@gimp.org>
 
 	Added support for binary relocation by means of binreloc, largely
