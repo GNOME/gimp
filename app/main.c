@@ -243,6 +243,8 @@ main (int    argc,
 
   gimp_init_malloc ();
 
+  gimp_env_init (FALSE);
+
   gimp_init_i18n ();
 
   g_set_application_name (_("GNU Image Manipulation Program"));

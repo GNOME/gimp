@@ -34,6 +34,7 @@
 
 #include "gimpenv.h"
 #include "gimpversion.h"
+#include "gimpreloc.h"
 
 
 #ifdef G_OS_WIN32
@@ -61,6 +62,56 @@
 static gchar * gimp_env_get_dir (const gchar *gimp_env_name,
                                  const gchar *env_dir);
 
+
+/**
+ * gimp_env_init:
+ * @plug_in: must be %TRUE if this function is called from a plug-in
+ *
+ * You don't need to care about this function. It is being called for
+ * you automatically (by means of the MAIN() macro that every plug-in
+ * runs). Calling it again will cause a fatal error.
+ *
+ * Since: GIMP 2.4
+ */
+void
+gimp_env_init (gboolean plug_in)
+{
+  static gboolean gimp_env_initialized = FALSE;
+
+  if (gimp_env_initialized)
+    g_error ("gimp_env_init() must only be called once!");
+
+  gimp_env_initialized = TRUE;
+
+#ifndef G_OS_WIN32
+  if (plug_in)
+    {
+      _gimp_reloc_init_lib (NULL);
+    }
+  else if (_gimp_reloc_init (NULL))
+    {
+      /* Set $LD_LIBRARY_PATH to ensure that plugins can be loaded. */
+
+      const gchar *ldpath = g_getenv ("LD_LIBRARY_PATH");
+      gchar       *libdir = _gimp_reloc_find_lib_dir (NULL);
+
+      if (ldpath && *ldpath)
+        {
+          gchar *tmp = g_strconcat (libdir, ":", ldpath, NULL);
+
+	  g_setenv ("LD_LIBRARY_PATH", tmp, TRUE);
+
+          g_free (tmp);
+	}
+      else
+        {
+          g_setenv ("LD_LIBRARY_PATH", libdir, TRUE);
+        }
+
+      g_free (libdir);
+    }
+#endif
+}
 
 /**
  * gimp_directory:
@@ -182,10 +233,10 @@ gimp_personal_rc_file (const gchar *basename)
   return g_build_filename (gimp_directory (), basename, NULL);
 }
 
-#ifdef G_OS_WIN32
 gchar *
 gimp_toplevel_directory (void)
 {
+#ifdef G_OS_WIN32
   /* Figure it out from the executable name */
   static gchar *toplevel = NULL;
 
@@ -217,7 +268,7 @@ gimp_toplevel_directory (void)
       if (filename == NULL)
 	g_error ("Converting module filename to UTF-8 failed");
     }
-  
+
   /* If the executable file name is of the format
    * <foobar>\bin\*.exe or
    * <foobar>\lib\gimp\GIMP_API_VERSION\plug-ins\*.exe, use <foobar>.
@@ -253,8 +304,11 @@ gimp_toplevel_directory (void)
   toplevel = filename;
 
   return toplevel;
-}
+#else
+
+  return _gimp_reloc_find_prefix (PREFIX);
 #endif
+}
 
 /**
  * gimp_data_directory:
@@ -277,7 +331,12 @@ gimp_data_directory (void)
   static gchar *gimp_data_dir = NULL;
 
   if (! gimp_data_dir)
-    gimp_data_dir = gimp_env_get_dir ("GIMP2_DATADIR", DATADIR);
+    {
+      gchar *tmp = _gimp_reloc_find_data_dir (DATADIR);
+
+      gimp_data_dir = gimp_env_get_dir ("GIMP2_DATADIR", tmp);
+      g_free (tmp);
+    }
 
   return gimp_data_dir;
 }
@@ -303,7 +362,12 @@ gimp_locale_directory (void)
   static gchar *gimp_locale_dir = NULL;
 
   if (! gimp_locale_dir)
-    gimp_locale_dir = gimp_env_get_dir ("GIMP2_LOCALEDIR", LOCALEDIR);
+    {
+      gchar *tmp = _gimp_reloc_find_locale_dir (LOCALEDIR);
+
+      gimp_locale_dir = gimp_env_get_dir ("GIMP2_LOCALEDIR", tmp);
+      g_free (tmp);
+    }
 
   return gimp_locale_dir;
 }
@@ -329,7 +393,12 @@ gimp_sysconf_directory (void)
   static gchar *gimp_sysconf_dir = NULL;
 
   if (! gimp_sysconf_dir)
-    gimp_sysconf_dir = gimp_env_get_dir ("GIMP2_SYSCONFDIR", SYSCONFDIR);
+    {
+      gchar *tmp = _gimp_reloc_find_etc_dir (SYSCONFDIR);
+
+      gimp_sysconf_dir = gimp_env_get_dir ("GIMP2_SYSCONFDIR", tmp);
+      g_free (tmp);
+    }
 
   return gimp_sysconf_dir;
 }
@@ -355,7 +424,12 @@ gimp_plug_in_directory (void)
   static gchar *gimp_plug_in_dir = NULL;
 
   if (! gimp_plug_in_dir)
-    gimp_plug_in_dir = gimp_env_get_dir ("GIMP2_PLUGINDIR", PLUGINDIR);
+    {
+      gchar *tmp = _gimp_reloc_find_plugin_dir (PLUGINDIR);
+
+      gimp_plug_in_dir = gimp_env_get_dir ("GIMP2_PLUGINDIR", tmp);
+      g_free (tmp);
+    }
 
   return gimp_plug_in_dir;
 }
@@ -397,7 +471,9 @@ gimp_gtkrc (void)
  * and *@path is replaced with a pointer to a new string with the
  * run-time prefix spliced in.
  *
- * On Unix, does nothing.
+ * On Linux, it does the same thing, but only if BinReloc support is enabled.
+ * On other Unices, it does nothing because those platforms don't have a
+ * way to find out where our binary is.
  */
 static void
 gimp_path_runtime_fix (gchar **path)
@@ -433,6 +509,20 @@ gimp_path_runtime_fix (gchar **path)
     {
       *path = g_build_filename (gimp_toplevel_directory (),
                                 *path, NULL);
+      g_free (p);
+    }
+#else
+  gchar *p;
+
+  if (strncmp (*path, PREFIX G_DIR_SEPARATOR_S, strlen (PREFIX G_DIR_SEPARATOR_S)) == 0)
+    {
+      /* This is a compile-time entry. Replace the path with the
+       * real one on this machine.
+       */
+      p = *path;
+      *path = g_build_filename (gimp_toplevel_directory (),
+				*path + strlen (PREFIX G_DIR_SEPARATOR_S),
+				NULL);
       g_free (p);
     }
 #endif

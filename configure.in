@@ -369,6 +369,8 @@ AC_FUNC_ALLOCA
 dnl check some more funcs
 AC_CHECK_FUNCS(difftime putenv mmap)
 
+AM_BINRELOC
+
 
 # _NL_MEASUREMENT_MEASUREMENT is an enum and not a define
 AC_MSG_CHECKING([for _NL_MEASUREMENT_MEASUREMENT])

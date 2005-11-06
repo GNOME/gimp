@@ -46,7 +46,12 @@ AM_CPPFLAGS = \
 	-DLOCALEDIR=\""$(gimplocaledir)"\"	\
 	-DPLUGINDIR=\""$(gimpplugindir)"\"	\
 	-DSYSCONFDIR=\""$(gimpsysconfdir)"\"	\
+	-DGIMP_PACKAGE=\""@PACKAGE@"\"		\
+	-DGIMP_DATA_VERSION=\"$(GIMP_DATA_VERSION)\"		\
+	-DGIMP_SYSCONF_VERSION=\"$(GIMP_SYSCONF_VERSION)\"	\
+	-DGIMP_PLUGIN_VERSION=\"$(GIMP_PLUGIN_VERSION)\"	\
 	-DG_LOG_DOMAIN=\"LibGimpBase\"		\
+	@BINRELOC_CFLAGS@			\
 	@GTHREAD_CFLAGS@
 
 INCLUDES = \
@@ -90,6 +95,8 @@ libgimpbase_sources = \
 	gimpparasiteio.h	\
 	gimpprotocol.c		\
 	gimpprotocol.h		\
+	gimpreloc.c		\
+	gimpreloc.h		\
 	gimpsignal.c            \
 	gimpsignal.h            \
 	gimpunit.c		\

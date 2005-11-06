@@ -1,5 +1,32 @@
 2005-11-06  Sven Neumann  <sven@gimp.org>
 
+	Added support for binary relocation by means of binreloc, largely
+	based on a patch by Hongli Lai:
+
+	* m4macros/Makefile.am
+	* m4macros/binreloc.m4: new file providing a macro to check for
+	binreloc support.
+
+	* acinclude.m4
+	* configure.in: use the macro.
+
+	* libgimpbase/Makefile.am
+	* libgimpbase/gimpreloc.[ch]: new files providing binreloc support
+	on Linux.
+
+	* libgimpbase/gimpenv.[ch]: use binreloc, provide a function to
+	initialize the environment machinery.
+
+	* libgimpbase/gimpbase.def: updated.
+
+	* app/Makefile.am: fiddle with the LDFLAGS for binreloc.
+
+	* app/main.c (main): gimp_env_init(FALSE).
+
+	* libgimp/gimp.c (gimp_main): gimp_env_init(TRUE).
+
+2005-11-06  Sven Neumann  <sven@gimp.org>
+
 	* modules/controller_midi.c (midi_set_device): corrected casting.
 
 2005-11-05  Sven Neumann  <sven@gimp.org>

@@ -47,6 +47,10 @@ void          gimp_path_free                  (GList        *path);
 gchar       * gimp_path_get_user_writable_dir (GList        *path);
 
 
+/*  should be considered private, don't use!  */
+void          gimp_env_init                   (gboolean      library);
+
+
 G_END_DECLS
 
 #endif  /*  __GIMPENV_H__  */

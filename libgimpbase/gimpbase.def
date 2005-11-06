@@ -24,6 +24,7 @@ EXPORTS
 	gimp_enum_set_value_descriptions
 	gimp_enum_value_get_desc
 	gimp_enum_value_get_help
+	gimp_env_init
 	gimp_escape_uline
 	gimp_filename_to_utf8
 	gimp_flags_get_first_desc

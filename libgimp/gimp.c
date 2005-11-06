@@ -286,6 +286,8 @@ gimp_main (const GimpPlugInInfo *info,
       return 1;
     }
 
+  gimp_env_init (TRUE);
+
   progname = argv[0];
 
   basename = g_path_get_basename (progname);

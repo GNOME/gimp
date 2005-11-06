@@ -70,6 +70,9 @@ endif
 if OS_WIN32
 mwindows = -mwindows
 endif
+if OS_UNIX
+munix = -Wl,-rpath '-Wl,$$ORIGIN/../lib'
+endif
 
 if HAVE_WINDRES
 GIMPICONRC = gimprc.o
@@ -86,7 +89,7 @@ INCLUDES = \
 	$(PANGOFT2_CFLAGS)	\
 	-I$(includedir)
 
-gimp_2_3_LDFLAGS = $(mwindows)
+gimp_2_3_LDFLAGS = $(mwindows) $(munix)
 
 gimp_2_3_LDADD = \
 	gui/libappgui.a			\

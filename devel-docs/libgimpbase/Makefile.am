@@ -29,6 +29,7 @@ CFILE_GLOB = $(DOC_SOURCE_DIR)/*.c
 IGNORE_HFILES = \
 	gimpbase.h		\
 	gimpbase-private.h	\
+	gimpreloc.h		\
 	gimpwin32-io.h
 
 # Images to copy into HTML directory

@@ -1,3 +1,7 @@
+2005-11-06  Sven Neumann  <sven@gimp.org>
+
+	* devel-docs/libgimpbase/Makefile.am: ignore gimpreloc.h.
+
 2005-11-04  Sven Neumann  <sven@gimp.org>
 
 	* libgimpbase/libgimpbase-sections.txt: added GimpGridStyle.
