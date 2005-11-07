@@ -366,6 +366,10 @@ menus_restore (Gimp *gimp)
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   filename = gimp_personal_rc_file ("menurc");
+
+  if (gimp->be_verbose)
+    g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (filename));
+
   gtk_accel_map_load (filename);
   g_free (filename);
 }
@@ -382,6 +386,10 @@ menus_save (Gimp     *gimp,
     return;
 
   filename = gimp_personal_rc_file ("menurc");
+
+  if (gimp->be_verbose)
+    g_print ("Writing '%s'\n", gimp_filename_to_utf8 (filename));
+
   gtk_accel_map_save (filename);
   g_free (filename);
 
