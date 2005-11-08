@@ -1,3 +1,9 @@
+2005-11-08  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/script-fu/scripts/guides-new.scm
+	* plug-ins/script-fu/scripts/guides-new-percent.scm: look at the
+	image's width/height, not the drawable's. Fixes bug #320933.
+
 2005-11-07  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimp-modules.c
