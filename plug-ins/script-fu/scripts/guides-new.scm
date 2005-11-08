@@ -8,8 +8,8 @@
 			     drawable
 			     direction
 			     position)
-  (let* ((width (car (gimp-drawable-width drawable)))
-	 (height (car (gimp-drawable-height drawable))))
+  (let* ((width (car (gimp-image-width image)))
+	 (height (car (gimp-image-height image))))
     (gimp-image-undo-group-start image)
 
     (if (= direction 0) 
