@@ -1,3 +1,7 @@
+2005-11-08  Simos Xenitellis  <simos@gnome.org>
+
+	* configure.in: Added tt (Tatarish) to ALL_LINGUAS.
+
 2005-11-08  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/script-fu/scripts/guides-new.scm
