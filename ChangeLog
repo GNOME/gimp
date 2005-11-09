@@ -1,3 +1,11 @@
+2005-11-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint-funcs/paint-funcs-generic.h
+	* app/paint-funcs/paint-funcs.c: reverted patch which makes
+	alpha=255 when turned off because these functions are not only
+	used for display projection. Re-opens bug #143315.
+	Fixes bug #307213.
+
 2005-11-08  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in: Removed 'tt' again until all po files are there.

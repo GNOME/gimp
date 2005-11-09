@@ -1577,9 +1577,6 @@ initial_inten_pixels (const guchar   *src,
   const guchar *srcp;
   const gint    dest_bytes = bytes + 1;
 
-  if (!affect[bytes])
-    opacity = 255;
-
   if (mask)
     {
       m = mask;
@@ -1590,6 +1587,8 @@ initial_inten_pixels (const guchar   *src,
 
       if (bytes == 3 && affect[0] && affect[1] && affect[2])
         {
+          if (!affect[bytes])
+            opacity = 0;
 
           destp = dest + bytes;
 
@@ -1639,6 +1638,8 @@ initial_inten_pixels (const guchar   *src,
         }
 
       /* fill the alpha channel */
+      if (!affect[bytes])
+        opacity = 0;
 
       destp = dest + bytes;
 
@@ -1664,6 +1665,9 @@ initial_inten_pixels (const guchar   *src,
 
       if (bytes == 3 && affect[0] && affect[1] && affect[2])
         {
+          if (!affect[bytes])
+            opacity = 0;
+
           destp = dest + bytes;
 
           while(length--)
@@ -1700,6 +1704,8 @@ initial_inten_pixels (const guchar   *src,
       }
 
       /* fill the alpha channel */
+      if (!affect[bytes])
+        opacity = 0;
 
       destp = dest + bytes;
 
@@ -1736,7 +1742,7 @@ initial_inten_a_pixels (const guchar   *src,
 
           /*  Set the alpha channel  */
           dest[alpha] = affect [alpha] ? INT_MULT3(opacity, src[alpha], *m, tmp)
-            : 255;
+            : 0;
 
           m++;
 
@@ -1752,7 +1758,7 @@ initial_inten_a_pixels (const guchar   *src,
             dest[b] = src[b] * affect[b];
 
           /*  Set the alpha channel  */
-          dest[alpha] = affect [alpha] ? INT_MULT(opacity , src[alpha], tmp) : 255;
+          dest[alpha] = affect [alpha] ? INT_MULT(opacity , src[alpha], tmp) : 0;
 
           dest += bytes;
           src += bytes;
