@@ -1,3 +1,8 @@
+2005-11-09  Simos Xenitellis  <simos@gnome.org>
+
+	* configure.in: (Re)Added tt (Tatarish) to ALL_LINGUAS, 
+	added stubs for missing PO files.
+
 2005-11-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint-funcs/paint-funcs-generic.h
