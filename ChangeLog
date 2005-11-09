@@ -1,3 +1,7 @@
+2005-11-09  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/gimpmodule.c: wrap gimpenv directory functions.
+
 2005-11-09  Karine Delvare  <kdelvare@nerim.net>
 
 	* app/tools/gimprectangletool.c: better fixed-aspect behavior.

@@ -749,6 +749,26 @@ pygimp_gtkrc(PyObject *self)
 }
 
 static PyObject *
+pygimp_personal_rc_file(PyObject *self, PyObject *args, PyObject *kwargs)
+{
+    char *basename, *filename;
+    PyObject *ret;
+
+    static char *kwlist[] = { "basename", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+				     "s:personal_rc_file", kwlist,
+				     &basename))
+	return NULL;
+
+    filename = gimp_personal_rc_file(basename);
+    ret = PyString_FromString(filename);
+    g_free(filename);
+
+    return ret;
+}
+
+static PyObject *
 pygimp_get_background(PyObject *self)
 {
     GimpRGB colour;
@@ -1440,6 +1460,7 @@ static struct PyMethodDef gimp_methods[] = {
     {"install_cmap",	(PyCFunction)pygimp_install_cmap,	METH_NOARGS},
     {"min_colors",	(PyCFunction)pygimp_min_colors,	METH_NOARGS},
     {"gtkrc",	(PyCFunction)pygimp_gtkrc,	METH_NOARGS},
+    {"personal_rc_file",	(PyCFunction)pygimp_personal_rc_file, METH_VARARGS | METH_KEYWORDS},
     {"get_background",	(PyCFunction)pygimp_get_background,	METH_NOARGS},
     {"get_foreground",	(PyCFunction)pygimp_get_foreground,	METH_NOARGS},
     {"set_background",	(PyCFunction)pygimp_set_background,	METH_VARARGS},
@@ -1601,7 +1622,19 @@ initgimp(void)
 					 gimp_minor_version,
 					 gimp_micro_version));
     Py_DECREF(i);
-	
+
+    /* Some environment constants */
+    PyDict_SetItemString(d, "directory",
+			 PyString_FromString(gimp_directory()));
+    PyDict_SetItemString(d, "data_directory",
+			 PyString_FromString(gimp_data_directory()));
+    PyDict_SetItemString(d, "locale_directory",
+			 PyString_FromString(gimp_locale_directory()));
+    PyDict_SetItemString(d, "sysconf_directory",
+			 PyString_FromString(gimp_sysconf_directory()));
+    PyDict_SetItemString(d, "plug_in_directory",
+			 PyString_FromString(gimp_plug_in_directory()));
+
     /* Check for errors */
     if (PyErr_Occurred())
 	Py_FatalError("can't initialize module gimp");
