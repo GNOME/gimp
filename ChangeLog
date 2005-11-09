@@ -1,3 +1,7 @@
+2005-11-09  Karine Delvare  <kdelvare@nerim.net>
+
+	* app/tools/gimprectangletool.c: better fixed-aspect behavior.
+
 2005-11-09  Simos Xenitellis  <simos@gnome.org>
 
 	* configure.in: (Re)Added tt (Tatarish) to ALL_LINGUAS, 

@@ -1630,16 +1630,6 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
       break;
     }
 
-  /*  make sure that the coords are in bounds  */
-  g_object_set (rectangle,
-      "x1", MIN (x1, x2),
-      "y1", MIN (y1, y2),
-      "x2", MAX (x1, x2),
-      "y2", MAX (y1, y2),
-      "lastx", curx,
-      "lasty", cury,
-      NULL);
-
   if (fixed_aspect)
     {
       gdouble aspect;
@@ -1655,89 +1645,47 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
       switch (function)
         {
         case RECT_RESIZING_UPPER_LEFT:
-        case RECT_RESIZING_LEFT:
-          ry2 = ry1 + aspect * (rx2 - rx1);
-          if (ry2 > max_y)
-            {
-              g_object_set (rectangle,
-                  "y2", max_y,
-                  "x2", rx1 + (max_y - ry1) / aspect,
-                  NULL);
-            }
+          if (inc_x == 0 || inc_y / inc_x > aspect)
+            x1 = rx2 - (ry2 - y1) / aspect + .5;
           else
-            g_object_set (rectangle, "y2", ry2, NULL);
+            y1 = ry2 - aspect * (rx2 - x1) + .5;
           break;
 
         case RECT_RESIZING_UPPER_RIGHT:
-        case RECT_RESIZING_RIGHT:
-          ry2 = ry1 + aspect * (rx2 - rx1);
-          if (ry2 > max_y)
-            {
-              g_object_set (rectangle,
-                  "y2", max_y,
-                  "x1", rx2 - (max_y - ry1) / aspect,
-                  NULL);
-            }
+          if (inc_x == 0 || inc_y / inc_x > aspect)
+            x2 = rx1 + (ry2 - y1) / aspect + .5;
           else
-            g_object_set (rectangle, "y2", ry2, NULL);
+            y1 = ry2 - aspect * (x2 - rx1) + .5;
           break;
 
         case RECT_RESIZING_LOWER_LEFT:
-          ry1 = ry2 - aspect * (rx2 - rx1);
-          if (ry1 < 0)
-            {
-              g_object_set (rectangle,
-                  "y1", 0,
-                  "x2", rx1 + (ry2 - 0) / aspect,
-                  NULL);
-            }
+          if (inc_x == 0 || inc_y / inc_x > aspect)
+            x1 = rx2 - (y2 - ry1) / aspect + .5;
           else
-            g_object_set (rectangle, "y1", ry1, NULL);
+            y2 = ry1 + aspect * (rx2 - x1) + .5;
           break;
 
         case RECT_RESIZING_LOWER_RIGHT:
-          ry1 = ry2 - aspect * (rx2 - rx1);
-          if (ry1 < 0)
-            {
-              g_object_set (rectangle,
-                  "y1", 0,
-                  "x1", rx2 - (ry2 - 0) / aspect,
-                  NULL);
-            }
+          if (inc_x == 0 || inc_y / inc_x > aspect)
+            x2 = rx1 + (y2 - ry1) / aspect + .5;
           else
-            g_object_set (rectangle, "y1", ry1, NULL);
-          break;
-
-        case RECT_RESIZING_TOP:
-          rx2 = rx1 + (ry2 - ry1) / aspect;
-          if (rx2 > max_x)
-            {
-              g_object_set (rectangle,
-                  "x2", max_x,
-                  "y2", ry1 + aspect * (max_x - rx1),
-                  NULL);
-            }
-          else
-            g_object_set (rectangle, "x2", rx2, NULL);
-          break;
-
-        case RECT_RESIZING_BOTTOM:
-          rx2 = rx1 + (ry2 - ry1) / aspect;
-          if (rx2 > max_x)
-            {
-              g_object_set (rectangle,
-                  "x2", max_x,
-                  "y1", ry2 - aspect * (max_x - rx1),
-                  NULL);
-            }
-          else
-            g_object_set (rectangle, "x2", rx2, NULL);
+            y2 = ry1 + aspect * (x2 - rx1) + .5;
           break;
 
         default:
           break;
         }
     }
+
+  /*  make sure that the coords are in bounds  */
+  g_object_set (rectangle,
+      "x1", MIN (x1, x2),
+      "y1", MIN (y1, y2),
+      "x2", MAX (x1, x2),
+      "y2", MAX (y1, y2),
+      "lastx", curx,
+      "lasty", cury,
+      NULL);
 
   /*  recalculate the coordinates for rectangle_draw based on the new values  */
   gimp_rectangle_tool_configure (rectangle);
