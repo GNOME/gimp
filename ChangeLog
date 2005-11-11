@@ -1,3 +1,8 @@
+2005-11-11  Sven Neumann  <sven@gimp.org>
+
+	* app/base/tile-swap.c (tile_swap_default_in): fixed compilation
+	of experimental threaded tile-swapper. Fixes bug #320977.
+
 2005-11-09  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/gimpmodule.c: wrap gimpenv directory functions.

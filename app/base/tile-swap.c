@@ -305,6 +305,7 @@ tile_swap_add (gchar    *filename,
 #ifdef ENABLE_THREADED_TILE_SWAPPER
   g_static_mutex_unlock (&swapfile_mutex);
 #endif
+
   return swap_file->swap_num;
 }
 
@@ -329,10 +330,12 @@ tile_swap_remove (gint swap_num)
     close (swap_file->fd);
 
   g_free (swap_file);
+
 out:
 #ifdef ENABLE_THREADED_TILE_SWAPPER
   g_static_mutex_unlock (&swapfile_mutex);
 #endif
+
   return;
 }
 
@@ -422,6 +425,7 @@ tile_swap_command (Tile *tile,
 		   gint  command)
 {
   SwapFile *swap_file;
+
 #ifdef ENABLE_THREADED_TILE_SWAPPER
   g_static_mutex_lock (&swapfile_mutex);
 #endif
@@ -540,18 +544,17 @@ tile_swap_default_in_async (DefSwapFile *def_swap_file,
 		            Tile        *tile)
 {
 #ifdef ENABLE_THREADED_TILE_SWAPPER
-  AsyncSwapArgs *args;
+  AsyncSwapArgs *args = g_new (AsyncSwapArgs, 1);
 
-  args = g_new(AsyncSwapArgs, 1);
   args->def_swap_file = def_swap_file;
-  args->fd = fd;
-  args->tile = tile;
+  args->fd            = fd;
+  args->tile          = tile;
 
   /* add this tile to the list of tiles for the async swapin task */
   g_mutex_lock (async_swapin_mutex);
   g_slist_append (async_swapin_tiles_end, args);
 
-  if (!async_swapin_tiles)
+  if (! async_swapin_tiles)
     async_swapin_tiles = async_swapin_tiles_end;
 
   g_cond_broadcast (async_swapin_signal);
@@ -908,25 +911,21 @@ tile_swap_in_attempt (DefSwapFile *def_swap_file,
 		      gint         fd,
 		      Tile        *tile)
 {
-  gint  err;
+  gint  err = -1;
   gint  nleft;
-  off_t offset;
-
-  err = -1;
 
   TILE_MUTEX_LOCK (tile);
   if (tile->data)
     goto out;
 
-  if (!tile->swap_num || !tile->swap_offset)
+  if (! tile->swap_num || ! tile->swap_offset)
     goto out;
 
   if (def_swap_file->cur_position != tile->swap_offset)
     {
       def_swap_file->cur_position = tile->swap_offset;
 
-      offset = lseek (fd, tile->swap_offset, SEEK_SET);
-      if (offset == -1)
+      if (lseek (fd, tile->swap_offset, SEEK_SET) == -1)
 	return;
     }
 
@@ -950,7 +949,7 @@ tile_swap_in_attempt (DefSwapFile *def_swap_file,
       nleft -= err;
     }
 
-  def_swap_file->cur_position += bytes;
+  def_swap_file->cur_position += tile->size;
 
 out:
   TILE_MUTEX_UNLOCK (tile);
@@ -966,21 +965,21 @@ tile_swap_in_thread (gpointer data)
     {
       g_mutex_lock (async_swapin_mutex);
 
-      if (!async_swapin_tiles)
+      if (! async_swapin_tiles)
         g_cond_wait (async_swapin_signal, async_swapin_mutex);
 
       args = async_swapin_tiles->data;
 
       free_item = async_swapin_tiles;
       async_swapin_tiles = async_swapin_tiles->next;
-      g_slist_free_1(free_item);
+      g_slist_free_1 (free_item);
 
-      if (!async_swapin_tiles)
+      if (! async_swapin_tiles)
         async_swapin_tiles_end = NULL;
 
       g_mutex_unlock (async_swapin_mutex);
 
-      tile_swap_in_attempt(args->def_swap_file, args->fd, args->tile);
+      tile_swap_in_attempt (args->def_swap_file, args->fd, args->tile);
 
       g_free(args);
     }
