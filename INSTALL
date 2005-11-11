@@ -41,7 +41,7 @@ header files installed.
      http://www.freetype.org/.  Fontconfig from
      http://freedesktop.org/fontconfig/.  GIMP 2.2 depends on
      freetype2 being newer than version 2.1.7. Older versions are
-     known to have bugs that seriously affect stability of The GIMP.
+     known to have bugs that seriously affect stability of GIMP.
 
   4. We use libart2. Grab the module libart_lgpl out of GNOME CVS or
      fetch the tarball from
@@ -52,15 +52,15 @@ header files installed.
      to check that the following libraries are installed: libpng,
      libjpeg, libpoppler, libtiff, gtkhtml-2, libmng, librsvg, libwmf.
 
-  6. Configure the GIMP by running the `configure' script. You may want
+  6. Configure GIMP by running the `configure' script. You may want
      to pass some options to it, see below.
 
-  7. Build the GIMP by running `make'. The use of GNU make is recommened.
+  7. Build GIMP by running `make'. The use of GNU make is recommened.
      If you need to tweak the build to make it work with other flavours
      of make, we'd appreciate if you'd send us a patch with the changes.
 
-  8. Install the GIMP by running `make install'. In order to avoid clashes
-     with other versions of The GIMP, we install a binary called gimp-2.3.
+  8. Install GIMP by running `make install'. In order to avoid clashes
+     with other versions of GIMP, we install a binary called gimp-2.3.
      By default there's also a link created so that you can type 'gimp'
      to start gimp-2.3.
 
@@ -71,19 +71,19 @@ new ones.
 
 Generic instructions for configuring and compiling auto-configured
 packages are included below. Here is an illustration of commands that
-might be used to build and install the GIMP. The actual configuration,
+might be used to build and install GIMP. The actual configuration,
 compilation and installation output is not shown.
 
   % tar xvfz gimp-2.3.x.tar.gz   # unpack the sources
   % cd gimp-2.3.x                # change to the toplevel directory
   % ./configure                  # run the `configure' script
-  % make                         # build the GIMP
-  % make install                 # install the GIMP
+  % make                         # build GIMP
+  % make install                 # install GIMP
 
 
-The `configure' script examines your system, and adapts the GIMP to
-run on it. The script has many options, some of which are described in
-the generic instructions included at the end of this file. All of the
+The `configure' script examines your system, and adapts GIMP to run on
+it. The script has many options, some of which are described in the
+generic instructions included at the end of this file. All of the
 options can be listed using the command `./configure --help'. There
 are several special options the GIMP `configure' script recognizes.
 These are:
@@ -95,7 +95,7 @@ These are:
 
   --enable-debug and --disable-debug.  This option causes the build
      process to compile with debugging enabled. If debugging is
-     disabled, the GIMP will instead be compiled with optimizations turned
+     disabled, GIMP will instead be compiled with optimizations turned
      on. The default is for debugging to be disabled. NOTE: This
      option is intended primarily as a convenience for developers.
 
@@ -105,8 +105,13 @@ These are:
      is intended primarily as a convenience for developers.
 
   --enable-gimpdir=DIR.  This option changes the default directory
-     the gimp uses to search for its configuration files from ~/.gimp-2.3 
+     GIMP uses to search for its configuration files from ~/.gimp-2.3 
      (the directory .gimp-2.3 in the users home directory) to DIR.
+
+  --enable-binreloc.  When compiled for Linux with this option enabled,
+     GIMP will be binary relocatable.  Plug-ins and data files will
+     be searched relative to the gimp binary instead of in the paths
+     defined at compile time.
 
   --without-libtiff, --without-libjpeg, --without-libpng.  configure
      will bail out if libtiff, libjpeg or libpng can not be found. You
