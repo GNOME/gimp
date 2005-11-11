@@ -6,8 +6,8 @@ AC_DEFUN([AM_BINRELOC],
 [
 	AC_ARG_ENABLE(binreloc,
 		[  --enable-binreloc       compile with binary relocation support
-                          (default=enable when available)],
-		enable_binreloc=$enableval,enable_binreloc=auto)
+                          (default=no)],
+		enable_binreloc=$enableval,enable_binreloc=no)
 
 	AC_ARG_ENABLE(binreloc-threads,
 		[  --enable-binreloc-threads      compile binary relocation with threads support

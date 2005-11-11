@@ -1,3 +1,7 @@
+2005-11-11  Michael Natterer  <mitch@gimp.org>
+
+	* m4macros/binreloc.m4: disable binreloc by default.
+
 2005-11-11  Sven Neumann  <sven@gimp.org>
 
 	* app/base/tile-swap.c (tile_swap_default_in): fixed compilation
