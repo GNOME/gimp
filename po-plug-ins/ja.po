@@ -10,13 +10,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-30 12:29+0900\n"
-"PO-Revision-Date: 2005-10-26 23:00+0900\n"
+"POT-Creation-Date: 2005-11-12 14:01+0900\n"
+"PO-Revision-Date: 2005-11-04 23:00+0900\n"
 "Last-Translator: OKANO Takayoshi <kano@na.rim.or.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:529
 #: ../plug-ins/gfig/gfig-dialog.c:282 ../plug-ins/gflare/gflare.c:887
@@ -977,7 +978,7 @@ msgstr "指向性光源"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:634
 msgid "No light"
-msgstr "光源無し"
+msgstr "光源なし"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:648
 msgid "Lightsource type:"
@@ -1219,7 +1220,7 @@ msgstr "非対応または不正なビット深度です。"
 #: ../plug-ins/common/png.c:852 ../plug-ins/common/pnm.c:526
 #: ../plug-ins/common/psd.c:2291 ../plug-ins/common/raw.c:687
 #: ../plug-ins/common/smooth_palette.c:257 ../plug-ins/common/sunras.c:917
-#: ../plug-ins/common/tga.c:926 ../plug-ins/common/tiff.c:886
+#: ../plug-ins/common/tga.c:927 ../plug-ins/common/tiff.c:886
 #: ../plug-ins/common/tile.c:266 ../plug-ins/common/xbm.c:866
 #: ../plug-ins/faxg3/faxg3.c:464 ../plug-ins/fits/fits.c:508
 #: ../plug-ins/gfig/gfig-dialog.c:1290
@@ -1342,17 +1343,14 @@ msgid "Luminosity pha_seshift:"
 msgstr "光度位相変換(_S):"
 
 #: ../plug-ins/common/AlienMap2.c:188
-#, fuzzy
 msgid "_Alien Map..."
-msgstr "エイリアンマップ _2..."
+msgstr "エイリアンマップ(_A)..."
 
 #: ../plug-ins/common/AlienMap2.c:320
-#, fuzzy
 msgid "Alien Map: Transforming"
-msgstr "エイリアンマップ 2: 変換しています"
+msgstr "エイリアンマップ: 変換しています"
 
 #: ../plug-ins/common/AlienMap2.c:393
-#, fuzzy
 msgid "Alien Map"
 msgstr "エイリアンマップ"
 
@@ -1568,7 +1566,7 @@ msgstr "連続的なグラデーション"
 
 #: ../plug-ins/common/CML_explorer.c:228
 msgid "Continuous grad. w/o gap"
-msgstr "ギャップ無しの連続的グラデーション"
+msgstr "ギャップなしの連続的グラデーション"
 
 #: ../plug-ins/common/CML_explorer.c:229
 msgid "Random, ch. independent"
@@ -7041,17 +7039,17 @@ msgstr "'%s' からフッタが読めません"
 msgid "Cannot read extension from '%s'"
 msgstr "'%s' から拡張が読めません"
 
-#: ../plug-ins/common/tga.c:1188
+#: ../plug-ins/common/tga.c:1185
 msgid "Save as TGA"
 msgstr "TGA 形式で保存"
 
 #. rle
-#: ../plug-ins/common/tga.c:1211
+#: ../plug-ins/common/tga.c:1208
 msgid "_RLE compression"
 msgstr "_RLE 圧縮"
 
 #. origin
-#: ../plug-ins/common/tga.c:1221
+#: ../plug-ins/common/tga.c:1218
 msgid "Or_igin at bottom left"
 msgstr "左下の原点(_I)"
 
@@ -7215,7 +7213,7 @@ msgstr "区切りの数"
 
 #: ../plug-ins/common/tiler.c:73
 msgid "_Make Seamless"
-msgstr "繋ぎ目無しタイル(_M)"
+msgstr "繋ぎ目なしタイル(_M)"
 
 #: ../plug-ins/common/tiler.c:338
 msgid "Tiler"
@@ -7304,54 +7302,56 @@ msgid "Create a new unit from scratch."
 msgstr "まっさらなところから新しい単位を作る。"
 
 #: ../plug-ins/common/uniteditor.c:127
-msgid "Create a new unit with the currently selected unit as template."
+#, fuzzy
+msgid "Create a new unit using the currently selected unit as template."
 msgstr "現在選択中の単位を元にして新しい単位を作る。"
 
-#: ../plug-ins/common/uniteditor.c:151
+#: ../plug-ins/common/uniteditor.c:150
 msgid "_Unit Editor"
 msgstr "単位エディタ(_U)"
 
-#: ../plug-ins/common/uniteditor.c:210
-msgid "New Unit"
+#: ../plug-ins/common/uniteditor.c:209
+#, fuzzy
+msgid "Add a New Unit"
 msgstr "新しい単位"
 
-#: ../plug-ins/common/uniteditor.c:239
+#: ../plug-ins/common/uniteditor.c:238
 msgid "_ID:"
 msgstr "_ID:"
 
-#: ../plug-ins/common/uniteditor.c:250
+#: ../plug-ins/common/uniteditor.c:249
 msgid "_Factor:"
 msgstr "乗数(_F):"
 
-#: ../plug-ins/common/uniteditor.c:260
+#: ../plug-ins/common/uniteditor.c:259
 msgid "_Digits:"
 msgstr "数字(_D):"
 
-#: ../plug-ins/common/uniteditor.c:272
+#: ../plug-ins/common/uniteditor.c:271
 msgid "_Symbol:"
 msgstr "シンボル(_S):"
 
-#: ../plug-ins/common/uniteditor.c:284
+#: ../plug-ins/common/uniteditor.c:283
 msgid "_Abbreviation:"
 msgstr "省略形(_A):"
 
-#: ../plug-ins/common/uniteditor.c:296
+#: ../plug-ins/common/uniteditor.c:295
 msgid "Si_ngular:"
 msgstr "単数形(_N):"
 
-#: ../plug-ins/common/uniteditor.c:308
+#: ../plug-ins/common/uniteditor.c:307
 msgid "_Plural:"
 msgstr "複数形(_P):"
 
-#: ../plug-ins/common/uniteditor.c:344
-msgid "Unit factor must not be 0."
-msgstr "単位乗数は0であってはなりません。"
+#: ../plug-ins/common/uniteditor.c:350
+msgid "Incomplete input"
+msgstr ""
 
-#: ../plug-ins/common/uniteditor.c:354
-msgid "All text fields must contain a value."
-msgstr "全ての文字フィールドが埋められていなければなりません。"
+#: ../plug-ins/common/uniteditor.c:353
+msgid "Please fill in all text fields."
+msgstr ""
 
-#: ../plug-ins/common/uniteditor.c:408
+#: ../plug-ins/common/uniteditor.c:410
 msgid "Unit Editor"
 msgstr "単位エディタ"
 
@@ -8949,7 +8949,7 @@ msgstr "タイル化可能"
 
 #: ../plug-ins/gimpressionist/general.c:198
 msgid "Selects if the resulting image should be seamlessly tileable"
-msgstr "結果画像が継目無しに並べられるようにするかどうか"
+msgstr "結果画像が継目なしに並べられるようにするかどうか"
 
 #: ../plug-ins/gimpressionist/general.c:203
 msgid "Drop shadow"
@@ -9785,7 +9785,7 @@ msgid ""
 "create the most common image map type - image collection of \"thumbnails\", "
 "suitable for navigation bars."
 msgstr ""
-"ガイドは画像を覆う前もって定められる長方形です。個々の幅、高さ、間隔\n"
+"ガイドは画像を覆う前もって定められる矩形です。個々の幅、高さ、間隔\n"
 "によって定義します。これはナビゲーション・バーに適した、\"サムネイル\"\n"
 "の共通イメージマップ型-コレクション画像をあなたが素早く作成することを\n"
 "可能にします。"
@@ -9887,7 +9887,7 @@ msgstr "非選択"
 
 #: ../plug-ins/imagemap/imap_cmd_unselect_all.c:56
 msgid "Unselect All"
-msgstr "選択無し"
+msgstr "選択なし"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:196
 msgid "Link Type"
@@ -11428,12 +11428,12 @@ msgstr ""
 
 #: ../plug-ins/twain/twain.c:354
 msgid "_Scanner/Camera..."
-msgstr ""
+msgstr "スキャナ/カメラ(_S)..."
 
 #. Initialize our progress dialog
 #: ../plug-ins/twain/twain.c:492
 msgid "Transferring data from scanner/camera"
-msgstr ""
+msgstr "スキャナ/カメラからデータを転送しています"
 
 #: ../plug-ins/uri/uri.c:117 ../plug-ins/uri/uri.c:138
 msgid "URI"
@@ -11445,7 +11445,7 @@ msgid "Downloading %s of image data..."
 msgstr "%s の画像データをダウンロードしています..."
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:149
-#: ../plug-ins/uri/uri-backend-wget.c:324
+#: ../plug-ins/uri/uri-backend-wget.c:330
 #, c-format
 msgid "Downloaded %s of image data"
 msgstr "%s の画像データをダウンロードしました"
@@ -11461,7 +11461,7 @@ msgid "Uploaded %s of image data"
 msgstr "%s の画像データをアップロードしました"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:238
-#: ../plug-ins/uri/uri-backend-wget.c:173
+#: ../plug-ins/uri/uri-backend-wget.c:179
 msgid "Connecting to server"
 msgstr "サーバに接続しています"
 
@@ -11475,38 +11475,40 @@ msgstr "ファイル '%2$s' からの %1$s の読み込みに失敗: %3$s"
 msgid "Failed to write %s to '%s': %s"
 msgstr "ファイル '%2$s' へ %1$s の書き込みに失敗: %3$s"
 
-#: ../plug-ins/uri/uri-backend-wget.c:142
-#: ../plug-ins/uri/uri-backend-wget.c:162
-#: ../plug-ins/uri/uri-backend-wget.c:179
-#: ../plug-ins/uri/uri-backend-wget.c:202
-#: ../plug-ins/uri/uri-backend-wget.c:231
+#: ../plug-ins/uri/uri-backend-wget.c:146
+#: ../plug-ins/uri/uri-backend-wget.c:166
+#: ../plug-ins/uri/uri-backend-wget.c:185
+#: ../plug-ins/uri/uri-backend-wget.c:208
+#: ../plug-ins/uri/uri-backend-wget.c:237
 #, c-format
 msgid "wget exited abnormally on URI '%s'"
 msgstr "URI '%s' で wget が異常終了しました"
 
 #. The third line is "Connecting to..."
-#: ../plug-ins/uri/uri-backend-wget.c:170
+#: ../plug-ins/uri/uri-backend-wget.c:174
 #, c-format
-msgid "(timeout is %s seconds)"
-msgstr "(%s 秒でタイムアウト)"
+msgid "(timeout is %s second)"
+msgid_plural "(timeout is %s seconds)"
+msgstr[0] "(%s 秒でタイムアウト)"
+msgstr[1] "(%s 秒でタイムアウト)"
 
 #. The fourth line is either the network request or an error
-#: ../plug-ins/uri/uri-backend-wget.c:197
+#: ../plug-ins/uri/uri-backend-wget.c:203
 msgid "Opening URI"
 msgstr "URI を開いています"
 
-#: ../plug-ins/uri/uri-backend-wget.c:208
-#: ../plug-ins/uri/uri-backend-wget.c:241
+#: ../plug-ins/uri/uri-backend-wget.c:214
+#: ../plug-ins/uri/uri-backend-wget.c:247
 #, c-format
 msgid "A network error occurred: %s"
 msgstr "ネットワークエラー発生: %s"
 
-#: ../plug-ins/uri/uri-backend-wget.c:281
+#: ../plug-ins/uri/uri-backend-wget.c:287
 #, c-format
 msgid "Downloading %s of image data"
 msgstr "%s の画像データをダウンロードしています"
 
-#: ../plug-ins/uri/uri-backend-wget.c:286
+#: ../plug-ins/uri/uri-backend-wget.c:292
 msgid "Downloading unknown amount of image data"
 msgstr "容量不明の画像データをダウンロードしています"
 
@@ -11643,6 +11645,12 @@ msgstr "エラー: XJT プロパティファイル %s が読めません。"
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "エラー: XJT プロパティファイル %s が空です。"
+
+#~ msgid "Unit factor must not be 0."
+#~ msgstr "単位乗数は0であってはなりません。"
+
+#~ msgid "All text fields must contain a value."
+#~ msgstr "全ての文字フィールドが埋められていなければなりません。"
 
 #~ msgid "AlienMap2"
 #~ msgstr "エイリアンマップ 2"
@@ -11960,7 +11968,7 @@ msgstr "エラー: XJT プロパティファイル %s が空です。"
 #~ msgstr "%d 個のプロシージャ"
 
 #~ msgid "No matches"
-#~ msgstr "マッチ無し"
+#~ msgstr "マッチなし"
 
 #~ msgid "Return Values"
 #~ msgstr "返り値"
@@ -12589,7 +12597,7 @@ msgstr "エラー: XJT プロパティファイル %s が空です。"
 #~ msgstr "EOF が現れました "
 
 #~ msgid "No memory for mapping colors"
-#~ msgstr "色をマップするためのメモリが無い"
+#~ msgstr "色をマップするためのメモリがない"
 
 #~ msgid "Selection:"
 #~ msgstr "選択:"
@@ -13452,7 +13460,7 @@ msgstr "エラー: XJT プロパティファイル %s が空です。"
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Map/_Make Seamless"
-#~ msgstr "<Image>/フィルタ/マップ/繋ぎ目無しタイル..."
+#~ msgstr "<Image>/フィルタ/マップ/繋ぎ目なしタイル..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Enhance/_Unsharp Mask..."
@@ -13782,7 +13790,7 @@ msgstr "エラー: XJT プロパティファイル %s が空です。"
 #~ msgstr "現在"
 
 #~ msgid "Can't open bzip2ed file without a sensible extension"
-#~ msgstr "bzip2 圧縮されたファイルは正しい拡張子無しでは開けません"
+#~ msgstr "bzip2 圧縮されたファイルは正しい拡張子なしでは開けません"
 
 #~ msgid "With _Decorations"
 #~ msgstr "ウィンドウ飾りも含める(_D)"
@@ -15084,7 +15092,7 @@ msgstr "エラー: XJT プロパティファイル %s が空です。"
 #~ msgstr "フレームピンポン"
 
 #~ msgid "Frame None"
-#~ msgstr "フレーム無し"
+#~ msgstr "フレームなし"
 
 #~ msgid "Move Path"
 #~ msgstr "パス移動"
@@ -15226,7 +15234,7 @@ msgstr "エラー: XJT プロパティファイル %s が空です。"
 #~ "(0 == No Keyframe)"
 #~ msgstr ""
 #~ "コントロールポイントをキーフレーム番号で修正\n"
-#~ "(0 == キーフレーム無し)"
+#~ "(0 == キーフレームなし)"
 
 #~ msgid "Add Point"
 #~ msgstr "端点追加"
@@ -15715,7 +15723,7 @@ msgstr "エラー: XJT プロパティファイル %s が空です。"
 #~ msgstr "ポジション色ディザリング"
 
 #~ msgid "No Color Dithering"
-#~ msgstr "色ディザリング無し"
+#~ msgstr "色ディザリングなし"
 
 #~ msgid "Custom Palette"
 #~ msgstr "カスタムパレット"
@@ -16228,7 +16236,7 @@ msgstr "エラー: XJT プロパティファイル %s が空です。"
 
 #, fuzzy
 #~ msgid "Spot Light"
-#~ msgstr "光源無し"
+#~ msgstr "光源なし"
 
 #, fuzzy
 #~ msgid "GDynText Layer "

@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-30 12:33+0900\n"
-"PO-Revision-Date: 2005-10-26 23:00+0900\n"
+"POT-Creation-Date: 2005-11-12 13:58+0900\n"
+"PO-Revision-Date: 2005-11-04 23:00+0900\n"
 "Last-Translator: OKANO Takayoshi <kano@na.rim.or.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -134,12 +134,12 @@ msgstr "すべての警告を致命的に"
 msgid "Output a gimprc file with default settings"
 msgstr "デフォルト設定の gimprc ファイルを出力する"
 
-#: ../app/main.c:248 ../app/dialogs/about-dialog.c:61
+#: ../app/main.c:250 ../app/dialogs/about-dialog.c:61
 #: ../desktop/gimp.desktop.in.in.h:2
 msgid "GNU Image Manipulation Program"
 msgstr "GNU Image Manipulation Program"
 
-#: ../app/main.c:292
+#: ../app/main.c:294
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -147,7 +147,7 @@ msgstr ""
 "GIMP はユーザインターフェイスを初期化できませんでした。\n"
 "ディスプレイ環境に対して適切な設定がされているか確認してください。"
 
-#: ../app/main.c:443 ../tools/gimp-remote.c:315
+#: ../app/main.c:445 ../tools/gimp-remote.c:315
 #, c-format
 msgid "%s version %s"
 msgstr "%s バージョン %s"
@@ -185,17 +185,19 @@ msgid "Brush Editor"
 msgstr "ブラシエディタ"
 
 #. initialize the list of gimp brushes
-#: ../app/actions/actions.c:101 ../app/core/gimp.c:856
-#: ../app/dialogs/dialogs.c:148 ../app/dialogs/preferences-dialog.c:2414
-#: ../app/pdb/internal_procs.c:95
+#: ../app/actions/actions.c:101 ../app/actions/dialogs-actions.c:130
+#: ../app/core/gimp.c:863 ../app/dialogs/dialogs.c:148
+#: ../app/dialogs/preferences-dialog.c:2421
 msgid "Brushes"
 msgstr "ブラシ"
 
-#: ../app/actions/actions.c:104 ../app/dialogs/dialogs.c:160
+#: ../app/actions/actions.c:104 ../app/actions/dialogs-actions.c:155
+#: ../app/dialogs/dialogs.c:160
 msgid "Buffers"
 msgstr "バッファ"
 
-#: ../app/actions/actions.c:107 ../app/dialogs/dialogs.c:173
+#: ../app/actions/actions.c:107 ../app/actions/dialogs-actions.c:80
+#: ../app/dialogs/dialogs.c:173
 msgid "Channels"
 msgstr "チャンネル"
 
@@ -203,11 +205,12 @@ msgstr "チャンネル"
 msgid "Colormap Editor"
 msgstr "カラーマップエディタ"
 
-#: ../app/actions/actions.c:113 ../app/pdb/internal_procs.c:107
+#: ../app/actions/actions.c:113
 msgid "Context"
 msgstr "状況"
 
-#: ../app/actions/actions.c:116 ../app/dialogs/dialogs.c:141
+#: ../app/actions/actions.c:116 ../app/actions/dialogs-actions.c:115
+#: ../app/dialogs/dialogs.c:141
 msgid "Cursor Info"
 msgstr "カーソル情報"
 
@@ -227,7 +230,9 @@ msgstr "ドック"
 msgid "Dockable"
 msgstr "ドック可能"
 
-#: ../app/actions/actions.c:131 ../app/dialogs/dialogs.c:162
+#. Document History
+#: ../app/actions/actions.c:131 ../app/actions/dialogs-actions.c:165
+#: ../app/dialogs/dialogs.c:162 ../app/dialogs/preferences-dialog.c:1383
 msgid "Document History"
 msgstr "文書履歴 (一覧)"
 
@@ -239,7 +244,8 @@ msgstr "描画対象"
 msgid "Edit"
 msgstr "編集"
 
-#: ../app/actions/actions.c:140 ../app/dialogs/dialogs.c:137
+#: ../app/actions/actions.c:140 ../app/actions/dialogs-actions.c:180
+#: ../app/dialogs/dialogs.c:137
 msgid "Error Console"
 msgstr "エラーコンソール"
 
@@ -248,9 +254,9 @@ msgid "File"
 msgstr "ファイル"
 
 #. initialize the list of gimp fonts
-#: ../app/actions/actions.c:146 ../app/core/gimp.c:872
-#: ../app/dialogs/dialogs.c:156 ../app/dialogs/preferences-dialog.c:2430
-#: ../app/pdb/internal_procs.c:134
+#: ../app/actions/actions.c:146 ../app/actions/dialogs-actions.c:150
+#: ../app/core/gimp.c:879 ../app/dialogs/dialogs.c:156
+#: ../app/dialogs/preferences-dialog.c:2437
 msgid "Fonts"
 msgstr "フォント"
 
@@ -260,9 +266,9 @@ msgid "Gradient Editor"
 msgstr "グラデーションエディタ"
 
 #. initialize the list of gimp gradients
-#: ../app/actions/actions.c:152 ../app/core/gimp.c:868
-#: ../app/dialogs/dialogs.c:152 ../app/dialogs/preferences-dialog.c:2426
-#: ../app/pdb/internal_procs.c:146
+#: ../app/actions/actions.c:152 ../app/actions/dialogs-actions.c:140
+#: ../app/core/gimp.c:875 ../app/dialogs/dialogs.c:152
+#: ../app/dialogs/preferences-dialog.c:2433
 msgid "Gradients"
 msgstr "グラデーション"
 
@@ -270,18 +276,18 @@ msgstr "グラデーション"
 msgid "Help"
 msgstr "ヘルプ"
 
-#: ../app/actions/actions.c:158 ../app/pdb/internal_procs.c:158
-#: ../app/tools/tools-enums.c:206
+#: ../app/actions/actions.c:158 ../app/tools/tools-enums.c:206
 msgid "Image"
 msgstr "画像"
 
 #. list & grid views
-#: ../app/actions/actions.c:161 ../app/dialogs/dialogs.c:146
+#: ../app/actions/actions.c:161 ../app/actions/dialogs-actions.c:160
+#: ../app/dialogs/dialogs.c:146
 msgid "Images"
 msgstr "画像"
 
-#: ../app/actions/actions.c:164 ../app/dialogs/dialogs.c:169
-#: ../app/dialogs/resize-dialog.c:281
+#: ../app/actions/actions.c:164 ../app/actions/dialogs-actions.c:75
+#: ../app/dialogs/dialogs.c:169 ../app/dialogs/resize-dialog.c:281
 msgid "Layers"
 msgstr "レイヤー"
 
@@ -291,20 +297,20 @@ msgid "Palette Editor"
 msgstr "パレット編集"
 
 #. initialize the list of gimp palettes
-#: ../app/actions/actions.c:170 ../app/core/gimp.c:864
-#: ../app/dialogs/dialogs.c:154 ../app/dialogs/preferences-dialog.c:2422
-#: ../app/pdb/internal_procs.c:179
+#: ../app/actions/actions.c:170 ../app/actions/dialogs-actions.c:145
+#: ../app/core/gimp.c:871 ../app/dialogs/dialogs.c:154
+#: ../app/dialogs/preferences-dialog.c:2429
 msgid "Palettes"
 msgstr "パレット"
 
 #. initialize the list of gimp patterns
-#: ../app/actions/actions.c:173 ../app/core/gimp.c:860
-#: ../app/dialogs/dialogs.c:150 ../app/dialogs/preferences-dialog.c:2418
-#: ../app/pdb/internal_procs.c:194
+#: ../app/actions/actions.c:173 ../app/actions/dialogs-actions.c:135
+#: ../app/core/gimp.c:867 ../app/dialogs/dialogs.c:150
+#: ../app/dialogs/preferences-dialog.c:2425
 msgid "Patterns"
 msgstr "パターン"
 
-#: ../app/actions/actions.c:176 ../app/dialogs/preferences-dialog.c:2434
+#: ../app/actions/actions.c:176 ../app/dialogs/preferences-dialog.c:2441
 msgid "Plug-Ins"
 msgstr "プラグイン"
 
@@ -313,7 +319,8 @@ msgstr "プラグイン"
 msgid "Quick Mask"
 msgstr "クイックマスク"
 
-#: ../app/actions/actions.c:182 ../app/dialogs/dialogs.c:197
+#: ../app/actions/actions.c:182 ../app/actions/dialogs-actions.c:120
+#: ../app/dialogs/dialogs.c:197
 msgid "Sample Points"
 msgstr "サンプルポイント"
 
@@ -322,7 +329,7 @@ msgid "Select"
 msgstr "選択"
 
 #. initialize the template list
-#: ../app/actions/actions.c:188 ../app/core/gimp.c:881
+#: ../app/actions/actions.c:188 ../app/core/gimp.c:888
 #: ../app/dialogs/dialogs.c:164
 msgid "Templates"
 msgstr "テンプレート"
@@ -331,18 +338,19 @@ msgstr "テンプレート"
 msgid "Text Editor"
 msgstr "テキストエディタ"
 
-#: ../app/actions/actions.c:194 ../app/dialogs/dialogs.c:129
-#: ../app/dialogs/preferences-dialog.c:1615 ../app/gui/gui.c:414
+#: ../app/actions/actions.c:194 ../app/actions/dialogs-actions.c:65
+#: ../app/dialogs/dialogs.c:129 ../app/dialogs/preferences-dialog.c:1622
+#: ../app/gui/gui.c:414
 msgid "Tool Options"
 msgstr "ツールオプション"
 
-#: ../app/actions/actions.c:197 ../app/dialogs/dialogs.c:158
+#: ../app/actions/actions.c:197 ../app/actions/dialogs-actions.c:175
+#: ../app/dialogs/dialogs.c:158
 msgid "Tools"
 msgstr "ツール"
 
-#: ../app/actions/actions.c:200 ../app/dialogs/dialogs.c:177
-#: ../app/pdb/internal_procs.c:185 ../app/pdb/internal_procs.c:224
-#: ../app/tools/gimpvectortool.c:154
+#: ../app/actions/actions.c:200 ../app/actions/dialogs-actions.c:85
+#: ../app/dialogs/dialogs.c:177 ../app/tools/gimpvectortool.c:154
 msgid "Paths"
 msgstr "パス"
 
@@ -351,14 +359,12 @@ msgid "View"
 msgstr "表示"
 
 #: ../app/actions/brush-editor-actions.c:42
-#, fuzzy
 msgid "Brush Editor Menu"
-msgstr "ブラシエディタ"
+msgstr "ブラシエディタメニュー"
 
 #: ../app/actions/brush-editor-actions.c:49
-#, fuzzy
 msgid "Edit Active Brush"
-msgstr "ブラシの編集"
+msgstr "アクティブなブラシの編集"
 
 #: ../app/actions/brushes-actions.c:43
 msgid "Brushes Menu"
@@ -389,26 +395,34 @@ msgid "Duplicate brush"
 msgstr "ブラシの複製"
 
 #: ../app/actions/brushes-actions.c:65
+msgid "Copy Brush _Location"
+msgstr "ブラシの場所をコピー(_L)"
+
+#: ../app/actions/brushes-actions.c:66
+msgid "Copy brush file location to clipboard"
+msgstr "ブラシファイルの場所をクリップボードにコピー"
+
+#: ../app/actions/brushes-actions.c:71
 msgid "_Delete Brush"
 msgstr "ブラシの削除(_D)"
 
-#: ../app/actions/brushes-actions.c:66
+#: ../app/actions/brushes-actions.c:72
 msgid "Delete brush"
 msgstr "ブラシの削除"
 
-#: ../app/actions/brushes-actions.c:71
+#: ../app/actions/brushes-actions.c:77
 msgid "_Refresh Brushes"
 msgstr "ブラシのリフレッシュ(_R)"
 
-#: ../app/actions/brushes-actions.c:72
+#: ../app/actions/brushes-actions.c:78
 msgid "Refresh brushes"
 msgstr "ブラシのリフレッシュ"
 
-#: ../app/actions/brushes-actions.c:80
+#: ../app/actions/brushes-actions.c:86
 msgid "_Edit Brush..."
 msgstr "ブラシの編集(_E)..."
 
-#: ../app/actions/brushes-actions.c:81
+#: ../app/actions/brushes-actions.c:87
 msgid "Edit brush"
 msgstr "ブラシの編集"
 
@@ -667,12 +681,12 @@ msgid "_Tool"
 msgstr "道具(_T)"
 
 #: ../app/actions/context-actions.c:51
-#: ../app/dialogs/preferences-dialog.c:1675
+#: ../app/dialogs/preferences-dialog.c:1682
 msgid "_Brush"
 msgstr "ブラシ(_B)"
 
 #: ../app/actions/context-actions.c:52 ../app/actions/plug-in-actions.c:76
-#: ../app/dialogs/preferences-dialog.c:1678
+#: ../app/dialogs/preferences-dialog.c:1685
 msgid "_Pattern"
 msgstr "パターン(_P)"
 
@@ -682,7 +696,7 @@ msgstr "パレット(_P)"
 
 #: ../app/actions/context-actions.c:54
 #: ../app/dialogs/palette-import-dialog.c:231
-#: ../app/dialogs/preferences-dialog.c:1681
+#: ../app/dialogs/preferences-dialog.c:1688
 msgid "_Gradient"
 msgstr "グラデーション(_G)"
 
@@ -737,7 +751,7 @@ msgstr "レイヤー結合色(_S)"
 msgid "Sample Merged"
 msgstr "レイヤー結合色"
 
-#: ../app/actions/data-commands.c:100 ../app/actions/documents-commands.c:331
+#: ../app/actions/data-commands.c:102 ../app/actions/documents-commands.c:320
 #: ../app/actions/file-commands.c:174 ../app/dialogs/file-open-dialog.c:208
 #: ../app/dialogs/file-open-dialog.c:259
 #: ../app/dialogs/file-open-location-dialog.c:201
@@ -754,18 +768,18 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/actions/data-commands.c:126 ../app/core/gimpimage.c:1349
+#: ../app/actions/data-commands.c:128 ../app/core/gimpimage.c:1349
 #: ../app/core/gimppalette-import.c:218 ../app/core/gimppalette.c:514
 #: ../app/core/gimppalette.c:624 ../app/dialogs/palette-import-dialog.c:694
 #: ../app/pdb/image_cmds.c:3892 ../app/widgets/gimpdnd-xds.c:83
 msgid "Untitled"
 msgstr "名称未設定"
 
-#: ../app/actions/data-commands.c:196
+#: ../app/actions/data-commands.c:224
 msgid "Delete Object"
 msgstr "データオブジェクトの削除"
 
-#: ../app/actions/data-commands.c:219
+#: ../app/actions/data-commands.c:247
 #, c-format
 msgid "Are you sure you want to delete '%s' from the list and from disk?"
 msgstr "'%s' を一覧とディスクから削除してよろしいですか?"
@@ -802,6 +816,10 @@ msgstr "ツールオプション(_O)"
 msgid "_Device Status"
 msgstr "デバイスの状態(_D)"
 
+#: ../app/actions/dialogs-actions.c:70 ../app/dialogs/dialogs.c:133
+msgid "Device Status"
+msgstr "デバイスの状態"
+
 #: ../app/actions/dialogs-actions.c:75
 msgid "_Layers"
 msgstr "レイヤー(_L)"
@@ -818,21 +836,42 @@ msgstr "パス(_P)"
 msgid "Color_map"
 msgstr "カラーマップ(_M)"
 
+#: ../app/actions/dialogs-actions.c:90 ../app/dialogs/convert-dialog.c:167
+#: ../app/dialogs/dialogs.c:181
+msgid "Colormap"
+msgstr "カラーマップ"
+
 #: ../app/actions/dialogs-actions.c:95
 msgid "Histogra_m"
 msgstr "ヒストグラム(_M)"
+
+#: ../app/actions/dialogs-actions.c:95 ../app/dialogs/dialogs.c:185
+msgid "Histogram"
+msgstr "ヒストグラム"
 
 #: ../app/actions/dialogs-actions.c:100
 msgid "_Selection Editor"
 msgstr "選択エディタ(_S)"
 
+#: ../app/actions/dialogs-actions.c:100 ../app/dialogs/dialogs.c:189
+msgid "Selection Editor"
+msgstr "選択エディタ "
+
 #: ../app/actions/dialogs-actions.c:105
 msgid "Na_vigation"
 msgstr "ナビゲーション(_V)"
 
+#: ../app/actions/dialogs-actions.c:105 ../app/dialogs/dialogs.c:203
+msgid "Display Navigation"
+msgstr "ナビゲーションを表示"
+
 #: ../app/actions/dialogs-actions.c:110
 msgid "Undo _History"
 msgstr "取り消し履歴(_H)"
+
+#: ../app/actions/dialogs-actions.c:110 ../app/dialogs/dialogs.c:193
+msgid "Undo History"
+msgstr "取り消し履歴"
 
 #: ../app/actions/dialogs-actions.c:115
 msgid "_Cursor"
@@ -845,6 +884,10 @@ msgstr "サンプルポイント(_S)"
 #: ../app/actions/dialogs-actions.c:125
 msgid "Colo_rs"
 msgstr "色(_R)"
+
+#: ../app/actions/dialogs-actions.c:125 ../app/dialogs/dialogs.c:209
+msgid "FG/BG Color"
+msgstr "描画色/背景色"
 
 #: ../app/actions/dialogs-actions.c:130
 msgid "_Brushes"
@@ -881,6 +924,10 @@ msgstr "文書履歴 (一覧)(_Y)"
 #: ../app/actions/dialogs-actions.c:170
 msgid "_Templates"
 msgstr "テンプレート(_T)"
+
+#: ../app/actions/dialogs-actions.c:170 ../app/dialogs/dialogs.c:164
+msgid "Image Templates"
+msgstr "画像テンプレート"
 
 #: ../app/actions/dialogs-actions.c:175
 msgid "T_ools"
@@ -1094,15 +1141,15 @@ msgstr "不要なエントリの削除(_N)"
 msgid "Remove dangling entries"
 msgstr "不要なエントリの削除"
 
-#: ../app/actions/documents-commands.c:208
+#: ../app/actions/documents-commands.c:197
 msgid "Clear Document History"
 msgstr "文書履歴を消去"
 
-#: ../app/actions/documents-commands.c:231
+#: ../app/actions/documents-commands.c:220
 msgid "Remove all entries from the document history?"
 msgstr "文書履歴の全項目を削除しますか?"
 
-#: ../app/actions/documents-commands.c:235
+#: ../app/actions/documents-commands.c:224
 msgid ""
 "Clearing the document history will permanently remove all currently listed "
 "entries."
@@ -1194,7 +1241,6 @@ msgid "_Undo"
 msgstr "取り消し(_U)"
 
 #: ../app/actions/edit-actions.c:71 ../app/dialogs/dialogs.c:193
-#: ../app/pdb/internal_procs.c:218
 msgid "Undo"
 msgstr "取り消し"
 
@@ -1323,7 +1369,7 @@ msgstr "切り取り元とすべきアクティブなレイヤーがありませ
 #: ../app/actions/edit-commands.c:413 ../app/actions/edit-commands.c:439
 #: ../app/actions/edit-commands.c:456
 msgid "(Unnamed Buffer)"
-msgstr "(名前の無いバッファ)"
+msgstr "(名前のないバッファ)"
 
 #: ../app/actions/edit-commands.c:434
 msgid "There is no active layer or channel to copy from."
@@ -1485,7 +1531,7 @@ msgstr "画像を開く"
 
 #: ../app/actions/file-commands.c:513
 msgid "(Unnamed Template)"
-msgstr "(名前の無いテンプレート)"
+msgstr "(名前のないテンプレート)"
 
 #: ../app/actions/file-commands.c:562
 #, c-format
@@ -1547,9 +1593,8 @@ msgid "Blend Endpoints' Opacit_y"
 msgstr "終端の不透明度を混ぜる(_Y)"
 
 #: ../app/actions/gradient-editor-actions.c:121
-#, fuzzy
 msgid "Edit Active Gradient"
-msgstr "グラデーションの編集"
+msgstr "アクティブなグラデーションの編集"
 
 #: ../app/actions/gradient-editor-actions.c:152
 msgid "_Left Neighbor's Right Endpoint"
@@ -1827,34 +1872,42 @@ msgid "Duplicate gradient"
 msgstr "グラデーションの複製"
 
 #: ../app/actions/gradients-actions.c:60
+msgid "Copy Gradient _Location"
+msgstr "グラデーションの場所をコピー(_L)"
+
+#: ../app/actions/gradients-actions.c:61
+msgid "Copy gradient file location to clipboard"
+msgstr "グラデーションファイルの場所をクリップボードにコピー"
+
+#: ../app/actions/gradients-actions.c:66
 msgid "Save as _POV-Ray..."
 msgstr "POV-Ray 形式で保存(_P)..."
 
-#: ../app/actions/gradients-actions.c:61
+#: ../app/actions/gradients-actions.c:67
 msgid "Save gradient as POV-Ray"
 msgstr "POV-Ray 形式で保存"
 
-#: ../app/actions/gradients-actions.c:66
+#: ../app/actions/gradients-actions.c:72
 msgid "_Delete Gradient"
 msgstr "グラデーションの削除(_D)"
 
-#: ../app/actions/gradients-actions.c:67
+#: ../app/actions/gradients-actions.c:73
 msgid "Delete gradient"
 msgstr "グラデーションの削除"
 
-#: ../app/actions/gradients-actions.c:72
+#: ../app/actions/gradients-actions.c:78
 msgid "_Refresh Gradients"
 msgstr "グラデーションのリフレッシュ(_R)"
 
-#: ../app/actions/gradients-actions.c:73
+#: ../app/actions/gradients-actions.c:79
 msgid "Refresh gradients"
 msgstr "グラデーションのリフレッシュ"
 
-#: ../app/actions/gradients-actions.c:81
+#: ../app/actions/gradients-actions.c:87
 msgid "_Edit Gradient..."
 msgstr "グラデーションの編集(_E)..."
 
-#: ../app/actions/gradients-actions.c:82
+#: ../app/actions/gradients-actions.c:88
 msgid "Edit gradient"
 msgstr "グラデーションの編集"
 
@@ -1900,9 +1953,8 @@ msgid "_Guides"
 msgstr "ガイド(_G)"
 
 #: ../app/actions/image-actions.c:66
-#, fuzzy
 msgid "I_nfo"
-msgstr "取り消し(_U)"
+msgstr "情報(_N)"
 
 #: ../app/actions/image-actions.c:67 ../app/tools/gimplevelstool.c:648
 msgid "_Auto"
@@ -2010,7 +2062,7 @@ msgstr "画像拡大縮小"
 
 #. Scaling
 #: ../app/actions/image-commands.c:561 ../app/actions/layers-commands.c:988
-#: ../app/dialogs/preferences-dialog.c:1660
+#: ../app/dialogs/preferences-dialog.c:1667
 #: ../app/pdb/drawable_transform_cmds.c:1357
 #: ../app/pdb/drawable_transform_cmds.c:1516
 #: ../app/pdb/transform_tools_cmds.c:464 ../app/tools/gimpscaletool.c:153
@@ -2310,9 +2362,8 @@ msgid "Delete color"
 msgstr "色の削除"
 
 #: ../app/actions/palette-editor-actions.c:63
-#, fuzzy
 msgid "Edit Active Palette"
-msgstr "パレットの編集"
+msgstr "アクティブなパレットの編集"
 
 #: ../app/actions/palette-editor-actions.c:72
 msgid "New Color from _FG"
@@ -2389,26 +2440,34 @@ msgid "Merge palettes"
 msgstr "パレット結合"
 
 #: ../app/actions/palettes-actions.c:72
+msgid "Copy Palette _Location"
+msgstr "パレットの場所をコピー(_L)"
+
+#: ../app/actions/palettes-actions.c:73
+msgid "Copy palette file location to clipboard"
+msgstr "パレットファイルの場所をクリップボードにコピー"
+
+#: ../app/actions/palettes-actions.c:78
 msgid "_Delete Palette"
 msgstr "パレットの削除(_D)"
 
-#: ../app/actions/palettes-actions.c:73
+#: ../app/actions/palettes-actions.c:79
 msgid "Delete palette"
 msgstr "パレットの削除"
 
-#: ../app/actions/palettes-actions.c:78
+#: ../app/actions/palettes-actions.c:84
 msgid "_Refresh Palettes"
 msgstr "パレットのリフレッシュ(_R)"
 
-#: ../app/actions/palettes-actions.c:79
+#: ../app/actions/palettes-actions.c:85
 msgid "Refresh palettes"
 msgstr "/パレットのリフレッシュ"
 
-#: ../app/actions/palettes-actions.c:87
+#: ../app/actions/palettes-actions.c:93
 msgid "_Edit Palette..."
 msgstr "パレットの編集(_E)..."
 
-#: ../app/actions/palettes-actions.c:88
+#: ../app/actions/palettes-actions.c:94
 msgid "Edit palette"
 msgstr "パレットの編集"
 
@@ -2449,26 +2508,34 @@ msgid "Duplicate pattern"
 msgstr "パターンの複製"
 
 #: ../app/actions/patterns-actions.c:65
+msgid "Copy Pattern _Location"
+msgstr "パターンの場所をコピー(_L)"
+
+#: ../app/actions/patterns-actions.c:66
+msgid "Copy pattern file location to clipboard"
+msgstr "パターンファイルの場所をクリップボードにコピー"
+
+#: ../app/actions/patterns-actions.c:71
 msgid "_Delete Pattern"
 msgstr "パターンの削除(_D)"
 
-#: ../app/actions/patterns-actions.c:66
+#: ../app/actions/patterns-actions.c:72
 msgid "Delete pattern"
 msgstr "パターンの削除"
 
-#: ../app/actions/patterns-actions.c:71
+#: ../app/actions/patterns-actions.c:77
 msgid "_Refresh Patterns"
 msgstr "パターンのリフレッシュ(_R)"
 
-#: ../app/actions/patterns-actions.c:72
+#: ../app/actions/patterns-actions.c:78
 msgid "Refresh patterns"
 msgstr "パターンのリフレッシュ"
 
-#: ../app/actions/patterns-actions.c:80
+#: ../app/actions/patterns-actions.c:86
 msgid "_Edit Pattern..."
 msgstr "パターンの編集(_E)..."
 
-#: ../app/actions/patterns-actions.c:81
+#: ../app/actions/patterns-actions.c:87
 msgid "Edit pattern"
 msgstr "パターンの編集"
 
@@ -2585,6 +2652,11 @@ msgstr "色と不透明度を設定(_C)..."
 #: ../app/actions/quick-mask-actions.c:54
 msgid "Toggle _Quick Mask"
 msgstr "クイックマスクの切り替え(_Q)"
+
+#: ../app/actions/quick-mask-actions.c:54
+#: ../app/display/gimpdisplayshell.c:948
+msgid "Toggle Quick Mask"
+msgstr "クイックマスクの切り替え"
 
 #: ../app/actions/quick-mask-actions.c:63
 msgid "Mask _Selected Areas"
@@ -2845,7 +2917,7 @@ msgstr "テキストファイル (UTF-8) を開く"
 
 #: ../app/actions/text-editor-commands.c:137
 #: ../app/config/gimpconfig-file.c:57 ../app/core/gimpbrush-load.c:115
-#: ../app/core/gimpbrush-load.c:395 ../app/core/gimpbrushgenerated.c:594
+#: ../app/core/gimpbrush-load.c:395 ../app/core/gimpbrushgenerated.c:591
 #: ../app/core/gimpbrushpipe.c:331 ../app/core/gimpgradient-load.c:62
 #: ../app/core/gimppalette.c:355 ../app/core/gimppattern.c:294
 #: ../app/tools/gimpimagemaptool.c:612 ../app/xcf/xcf.c:295
@@ -3453,8 +3525,7 @@ msgstr "色相"
 msgid "Saturation"
 msgstr "彩度"
 
-#: ../app/base/base-enums.c:121 ../app/pdb/internal_procs.c:104
-#: ../app/tools/gimppaintoptions-gui.c:304
+#: ../app/base/base-enums.c:121 ../app/tools/gimppaintoptions-gui.c:304
 msgid "Color"
 msgstr "色"
 
@@ -3490,7 +3561,7 @@ msgstr "微粒結合"
 msgid "Color erase"
 msgstr "色消しゴム"
 
-#: ../app/base/tile-swap.c:483
+#: ../app/base/tile-swap.c:487
 msgid ""
 "Unable to open swap file. The Gimp has run out of memory and cannot use the "
 "swap file. Some parts of your images may be corrupted. Try to save your work "
@@ -3532,6 +3603,7 @@ msgstr ""
 "あなたの設定のバックアップが '%s' に作成されました。"
 
 #: ../app/config/gimprc.c:296 ../app/config/gimprc.c:309
+#: ../app/plug-in/plug-ins.c:141
 #, c-format
 msgid "Parsing '%s'\n"
 msgstr "'%s' を解析中\n"
@@ -3791,14 +3863,19 @@ msgid ""
 msgstr "現在のツール、パターン、色やブラシを次の起動時に思い出す。"
 
 #: ../app/config/gimprc-blurbs.h:270
+msgid "Add all opened and saved files to the document history on disk."
+msgstr ""
+"開いたファイルと保存したファイルをすべて、ディスク上の文書履歴に追加します。"
+
+#: ../app/config/gimprc-blurbs.h:273
 msgid "Save the positions and sizes of the main dialogs when the GIMP exits."
 msgstr "GIMP 終了時にメインダイアログの位置と大きさを保存します。"
 
-#: ../app/config/gimprc-blurbs.h:273
+#: ../app/config/gimprc-blurbs.h:276
 msgid "Save the tool options when the GIMP exits."
 msgstr "GIMP 終了時にツールオプションを保存します。"
 
-#: ../app/config/gimprc-blurbs.h:279
+#: ../app/config/gimprc-blurbs.h:282
 msgid ""
 "When enabled, all paint tools will show a preview of the current brush's "
 "outline."
@@ -3806,7 +3883,7 @@ msgstr ""
 "有効にすると、全てのツールにおいて現在のブラシのアウトラインプレビューが表示"
 "されます。"
 
-#: ../app/config/gimprc-blurbs.h:283
+#: ../app/config/gimprc-blurbs.h:286
 msgid ""
 "When enabled, dialogs will show a help button that gives access to the "
 "related help page.  Without this button, the help page can still be reached "
@@ -3816,13 +3893,13 @@ msgstr ""
 "表示されます。このボタンがなくても、 F1 キーを押せばヘルプページを参照できま"
 "す。"
 
-#: ../app/config/gimprc-blurbs.h:288
+#: ../app/config/gimprc-blurbs.h:291
 msgid ""
 "When enabled, the cursor will be shown over the image while using a paint "
 "tool."
 msgstr "有効にすると、描画ツール使用中は、画像上にカーソルが表示されます。"
 
-#: ../app/config/gimprc-blurbs.h:292
+#: ../app/config/gimprc-blurbs.h:295
 msgid ""
 "When enabled, the menubar is visible by default. This can also be toggled "
 "with the \"View->Show Menubar\" command."
@@ -3830,7 +3907,7 @@ msgstr ""
 "有効にすると、デフォルトでメニューバーを表示します。これは \"表示->メニュー"
 "バーを表示する\" コマンドでも切り替えられます。"
 
-#: ../app/config/gimprc-blurbs.h:296
+#: ../app/config/gimprc-blurbs.h:299
 msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
@@ -3838,7 +3915,7 @@ msgstr ""
 "有効にすると、デフォルトでものさしが表示されます。これは \"表示->ものさしを表"
 "示する\" コマンドでも切り替えられます。"
 
-#: ../app/config/gimprc-blurbs.h:300
+#: ../app/config/gimprc-blurbs.h:303
 msgid ""
 "When enabled, the scrollbars are visible by default. This can also be "
 "toggled with the \"View->Show Scrollbars\" command."
@@ -3846,7 +3923,7 @@ msgstr ""
 "オンの場合、デフォルトでスクロールバーを表示します。これは \"表示->スクロール"
 "バーを表示する\" コマンドでも切り替えられます。"
 
-#: ../app/config/gimprc-blurbs.h:304
+#: ../app/config/gimprc-blurbs.h:307
 msgid ""
 "When enabled, the statusbar is visible by default. This can also be toggled "
 "with the \"View->Show Statusbar\" command."
@@ -3854,7 +3931,7 @@ msgstr ""
 "オンの場合、デフォルトでステータスバーを表示します。これは \"表示->ステータス"
 "バーを表示する\" コマンドでも切り替えられます。"
 
-#: ../app/config/gimprc-blurbs.h:308
+#: ../app/config/gimprc-blurbs.h:311
 msgid ""
 "When enabled, the selection is visible by default. This can also be toggled "
 "with the \"View->Show Selection\" command."
@@ -3862,7 +3939,7 @@ msgstr ""
 "オンの場合、デフォルトで選択領域を表示します。これは \"表示->選択領域を表示す"
 "る\" コマンドでも切り替えられます。"
 
-#: ../app/config/gimprc-blurbs.h:312
+#: ../app/config/gimprc-blurbs.h:315
 msgid ""
 "When enabled, the layer boundary is visible by default. This can also be "
 "toggled with the \"View->Show Layer Boundary\" command."
@@ -3870,7 +3947,7 @@ msgstr ""
 "オンの場合、デフォルトでレイヤー境界を表示します。これは \"表示->レイヤー境界"
 "を表示する\" コマンドでも切り替えられます。"
 
-#: ../app/config/gimprc-blurbs.h:316
+#: ../app/config/gimprc-blurbs.h:319
 msgid ""
 "When enabled, the guides are visible by default. This can also be toggled "
 "with the \"View->Show Guides\" command."
@@ -3878,7 +3955,7 @@ msgstr ""
 "オンの場合、デフォルトでガイドを表示します。これは \"表示->ガイドを表示する"
 "\" コマンドでも切り替えられます。"
 
-#: ../app/config/gimprc-blurbs.h:320
+#: ../app/config/gimprc-blurbs.h:323
 msgid ""
 "When enabled, the grid is visible by default. This can also be toggled with "
 "the \"View->Show Grid\" command."
@@ -3886,7 +3963,7 @@ msgstr ""
 "オンの場合、デフォルトでグリッドを表示します。これは \"表示->グリッドを表示す"
 "る\" コマンドでも切り替えられます。"
 
-#: ../app/config/gimprc-blurbs.h:324
+#: ../app/config/gimprc-blurbs.h:327
 msgid ""
 "When enabled, the sample points are visible by default. This can also be "
 "toggled with the \"View->Show Sample Points\" command."
@@ -3894,15 +3971,15 @@ msgstr ""
 "有効にすると、デフォルトでサンプルポイントが表示されます。これは \"表示->サン"
 "プルポイントを表示する\" コマンドでも切り替えられます。"
 
-#: ../app/config/gimprc-blurbs.h:328
+#: ../app/config/gimprc-blurbs.h:331
 msgid "Enable displaying a handy GIMP tip on startup."
 msgstr "起動時に GIMP の技を表示します。"
 
-#: ../app/config/gimprc-blurbs.h:331
+#: ../app/config/gimprc-blurbs.h:334
 msgid "Enable tooltips display."
 msgstr "ツールチップを表示します。"
 
-#: ../app/config/gimprc-blurbs.h:334
+#: ../app/config/gimprc-blurbs.h:337
 msgid ""
 "Sets the swap file location. GIMP uses a tile based memory allocation "
 "scheme. The swap file is used to quickly and easily swap tiles out to disk "
@@ -3918,11 +3995,11 @@ msgstr ""
 "ファイルを作成すると、とてつもなく動作が遅くなってしまいます。そのため、\"/"
 "tmp\" にスワップファイルを作成することが望ましいです。"
 
-#: ../app/config/gimprc-blurbs.h:343
+#: ../app/config/gimprc-blurbs.h:346
 msgid "When enabled, menus can be torn off."
 msgstr "オンの場合、メニューが切り離せます。"
 
-#: ../app/config/gimprc-blurbs.h:346
+#: ../app/config/gimprc-blurbs.h:349
 msgid ""
 "When enabled, dock windows (the toolbox and palettes) are set to be "
 "transient to the active image window. Most window managers will keep the "
@@ -3933,7 +4010,7 @@ msgstr ""
 "マネージャではドックウィンドウを画像ウィンドウの上に保持しますが、副作用があ"
 "るかもしれません。"
 
-#: ../app/config/gimprc-blurbs.h:352
+#: ../app/config/gimprc-blurbs.h:355
 msgid ""
 "When enabled, you can change keyboard shortcuts for menu items by hitting a "
 "key combination while the menu item is highlighted."
@@ -3941,15 +4018,15 @@ msgstr ""
 "オンの場合、メニューアイテムが選択されている時にキーの組み合わせを入力するこ"
 "とで、キーボードショートカットを変更することができます。"
 
-#: ../app/config/gimprc-blurbs.h:356
+#: ../app/config/gimprc-blurbs.h:359
 msgid "Save changed keyboard shortcuts when the GIMP exits."
 msgstr "GIMP 終了時に変更されたキーボードショートカットを保存します。"
 
-#: ../app/config/gimprc-blurbs.h:359
+#: ../app/config/gimprc-blurbs.h:362
 msgid "Restore saved keyboard shortcuts on each GIMP startup."
 msgstr "GIMP 起動時に保存されているキーボードショートカットを読み込みます。"
 
-#: ../app/config/gimprc-blurbs.h:362
+#: ../app/config/gimprc-blurbs.h:365
 msgid ""
 "Sets the temporary storage directory. Files will appear here during the "
 "course of running the GIMP.  Most files will disappear when the GIMP exits, "
@@ -3961,7 +4038,7 @@ msgstr ""
 "残りますので、他のユーザと共有されないディレクトリを指定することをお勧めしま"
 "す。"
 
-#: ../app/config/gimprc-blurbs.h:374
+#: ../app/config/gimprc-blurbs.h:377
 msgid ""
 "Sets the size of the thumbnail shown in the Open dialog. Note that GIMP can "
 "not create thumbnails if layer previews are disabled."
@@ -3969,7 +4046,7 @@ msgstr ""
 "画像を開くダイアログで表示されるサムネイルの大きさを指定します。GIMP はレイ"
 "ヤープレビューが無効になっている場合にはサムネイルを保存しません。"
 
-#: ../app/config/gimprc-blurbs.h:378
+#: ../app/config/gimprc-blurbs.h:381
 msgid ""
 "The thumbnail in the Open dialog will be automatically updated if the file "
 "being previewed is smaller than the size set here."
@@ -3977,7 +4054,7 @@ msgstr ""
 "プレビューしているファイルがここで設定したサイズより小さかった場合、ファイル"
 "を開くダイアログのサムネイルは自動的に更新されます。"
 
-#: ../app/config/gimprc-blurbs.h:382
+#: ../app/config/gimprc-blurbs.h:385
 msgid ""
 "The tile cache is used to make sure the GIMP doesn't thrash tiles between "
 "memory and disk. Setting this value higher will cause the GIMP to use less "
@@ -3989,7 +4066,7 @@ msgstr ""
 "少しますが、メモリ利用量は増加します。逆に小さくすると、スワップ利用量は増加"
 "し、メモリ利用量は減少します。"
 
-#: ../app/config/gimprc-blurbs.h:393
+#: ../app/config/gimprc-blurbs.h:396
 msgid ""
 "The window type hint that is set on the toolbox. This may affect how your "
 "window manager decorates and handles the toolbox window."
@@ -3997,21 +4074,21 @@ msgstr ""
 "ツールボックスに設定されるウィンドウタイプヒントです。ウィンドウマネージャに"
 "よるツールボックスウィンドウの装飾と取扱いに影響を与えます。"
 
-#: ../app/config/gimprc-blurbs.h:397
+#: ../app/config/gimprc-blurbs.h:400
 msgid "Sets the manner in which transparency is displayed in images."
 msgstr "画像内の透明部分の表示方法について設定します。"
 
-#: ../app/config/gimprc-blurbs.h:400
+#: ../app/config/gimprc-blurbs.h:403
 msgid "Sets the size of the checkerboard used to display transparency."
 msgstr "透明部分の表示に使う市松模様の大きさを設定します。"
 
-#: ../app/config/gimprc-blurbs.h:403
+#: ../app/config/gimprc-blurbs.h:406
 msgid ""
 "When enabled, the GIMP will not save an image if it has not been changed "
 "since it was opened."
 msgstr "オンの場合、GIMP は画像が変更されない限り保存しないようになります。"
 
-#: ../app/config/gimprc-blurbs.h:407
+#: ../app/config/gimprc-blurbs.h:410
 msgid ""
 "Sets the minimal number of operations that can be undone. More undo levels "
 "are kept available until the undo-size limit is reached."
@@ -4019,7 +4096,7 @@ msgstr ""
 "取り消し可能な操作の最小回数を指定します。取り消しサイズの限界に達するまで、"
 "取り消しを増やすことができます。"
 
-#: ../app/config/gimprc-blurbs.h:411
+#: ../app/config/gimprc-blurbs.h:414
 msgid ""
 "Sets an upper limit to the memory that is used per image to keep operations "
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
@@ -4029,15 +4106,15 @@ msgstr ""
 "ます。この設定によらず、少くとも取り消しレベルで設定された回数分は取り消し可"
 "能です。"
 
-#: ../app/config/gimprc-blurbs.h:416
+#: ../app/config/gimprc-blurbs.h:419
 msgid "Sets the size of the previews in the Undo History."
 msgstr "取り消し履歴のプレビューの大きさを設定します。"
 
-#: ../app/config/gimprc-blurbs.h:419
+#: ../app/config/gimprc-blurbs.h:422
 msgid "When enabled, pressing F1 will open the help browser."
 msgstr "オンの場合、F1キーを押すとヘルプブラウザが開きます。"
 
-#: ../app/config/gimprc-blurbs.h:422
+#: ../app/config/gimprc-blurbs.h:425
 #, c-format
 msgid ""
 "Sets the external web browser to be used.  This can be an absolute path or "
@@ -4049,8 +4126,8 @@ msgstr ""
 "ル名です。コマンドが '%s' を含む場合には、URL で置換され、含まない場合にはコ"
 "マンドの後にスペースで区切って URL が指定されます。"
 
-#: ../app/config/gimprc-deserialize.c:135 ../app/core/gimp-modules.c:130
-#: ../app/core/gimp-units.c:160 ../app/gui/session.c:157
+#: ../app/config/gimprc-deserialize.c:135 ../app/core/gimp-modules.c:134
+#: ../app/core/gimp-units.c:164 ../app/gui/session.c:160
 #: ../app/plug-in/plug-in-rc.c:204
 msgid "fatal parse error"
 msgstr "致命的な解析エラー"
@@ -4108,12 +4185,11 @@ msgid "White"
 msgstr "白"
 
 #. Transparency
-#: ../app/core/core-enums.c:202 ../app/dialogs/preferences-dialog.c:2033
+#: ../app/core/core-enums.c:202 ../app/dialogs/preferences-dialog.c:2040
 msgid "Transparency"
 msgstr "透明部分"
 
 #: ../app/core/core-enums.c:203 ../app/core/core-enums.c:260
-#: ../app/pdb/internal_procs.c:188
 msgid "Pattern"
 msgstr "パターン"
 
@@ -4201,11 +4277,11 @@ msgstr "丸"
 msgid "Diamond"
 msgstr "ひし形"
 
-#: ../app/core/core-enums.c:424 ../app/dialogs/preferences-dialog.c:2065
+#: ../app/core/core-enums.c:424 ../app/dialogs/preferences-dialog.c:2072
 msgid "Horizontal"
 msgstr "水平"
 
-#: ../app/core/core-enums.c:425 ../app/dialogs/preferences-dialog.c:2067
+#: ../app/core/core-enums.c:425 ../app/dialogs/preferences-dialog.c:2074
 msgid "Vertical"
 msgstr "垂直"
 
@@ -4267,7 +4343,7 @@ msgstr "超巨大"
 
 #: ../app/core/core-enums.c:594
 msgid "No thumbnails"
-msgstr "サムネイル無し"
+msgstr "サムネイルなし"
 
 #: ../app/core/core-enums.c:595
 msgid "Normal (128x128)"
@@ -4531,9 +4607,9 @@ msgstr "前景部分選択"
 msgid "EEK: can't undo"
 msgstr "EEK: 取り消しできません"
 
-#: ../app/core/gimp-contexts.c:135 ../app/gui/session.c:246
-#: ../app/menus/menus.c:405 ../app/tools/gimp-tools.c:418
-#: ../app/widgets/gimpdevices.c:229
+#: ../app/core/gimp-contexts.c:141 ../app/gui/session.c:252
+#: ../app/menus/menus.c:413 ../app/tools/gimp-tools.c:432
+#: ../app/widgets/gimpdevices.c:235
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
 msgstr "'%s' の削除に失敗: %s"
@@ -4590,35 +4666,40 @@ msgstr "前景から透明に"
 msgid "GIMP"
 msgstr "GIMP"
 
-#. register all internal procedures
-#: ../app/core/gimp.c:632
-msgid "Procedural Database"
-msgstr "プロシージャデータベース"
+#: ../app/core/gimp.c:577
+#, fuzzy
+msgid "Initialization"
+msgstr "最初に使う拡大率(_R):"
 
-#: ../app/core/gimp.c:635
+#. register all internal procedures
+#: ../app/core/gimp.c:634
+msgid "Internal Procedures"
+msgstr "内部プロシージャ"
+
+#: ../app/core/gimp.c:637
 msgid "Plug-In Interpreters"
 msgstr "プラグインのインタープリタ"
 
-#: ../app/core/gimp.c:641
+#: ../app/core/gimp.c:643
 msgid "Plug-In Environment"
 msgstr "プラグインの環境"
 
 #. initialize  the global parasite table
-#: ../app/core/gimp.c:852
+#: ../app/core/gimp.c:859
 msgid "Looking for data files"
 msgstr "データファイルを検索中"
 
-#: ../app/core/gimp.c:852
+#: ../app/core/gimp.c:859
 msgid "Parasites"
 msgstr "パラサイト"
 
 #. initialize the document history
-#: ../app/core/gimp.c:877
+#: ../app/core/gimp.c:884
 msgid "Documents"
 msgstr "文書"
 
 #. initialize the module list
-#: ../app/core/gimp.c:885 ../app/dialogs/preferences-dialog.c:2442
+#: ../app/core/gimp.c:892 ../app/dialogs/preferences-dialog.c:2449
 msgid "Modules"
 msgstr "モジュール"
 
@@ -4658,14 +4739,14 @@ msgid "Fatal parse error in brush file '%s': File appears truncated."
 msgstr ""
 "ブラシ '%s' で致命的な解析エラー: ファイルは切り分けられているようです。"
 
-#: ../app/core/gimpbrush-load.c:251 ../app/core/gimpbrushgenerated.c:641
+#: ../app/core/gimpbrush-load.c:251 ../app/core/gimpbrushgenerated.c:638
 #: ../app/core/gimpbrushpipe.c:347
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "ブラシファイル '%s' 中に不適切な UTF-8 文字列があります。"
 
 #: ../app/core/gimpbrush-load.c:258 ../app/core/gimpcontext.c:1294
-#: ../app/core/gimpitem.c:560 ../app/core/gimppattern.c:366
+#: ../app/core/gimpitem.c:560 ../app/core/gimppattern.c:364
 #: ../app/dialogs/template-options-dialog.c:80
 #: ../app/tools/gimpvectortool.c:334
 msgid "Unnamed"
@@ -4694,29 +4775,29 @@ msgstr ""
 msgid "Fatal parse error in brush file '%s'"
 msgstr "ブラシ '%s' で致命的な解析エラー"
 
-#: ../app/core/gimpbrushgenerated.c:607
+#: ../app/core/gimpbrushgenerated.c:604
 #, c-format
 msgid "Fatal parse error in brush file '%s': Not a GIMP brush file."
 msgstr "ブラシ '%s' で致命的な解析エラー: GIMP ブラシファイルではありません。"
 
-#: ../app/core/gimpbrushgenerated.c:623
+#: ../app/core/gimpbrushgenerated.c:620
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown GIMP brush version."
 msgstr ""
 "ブラシ '%s' で致命的な解析エラー: 不明な GIMP ブラシファイルのバージョンで"
 "す。"
 
-#: ../app/core/gimpbrushgenerated.c:662
+#: ../app/core/gimpbrushgenerated.c:659
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown GIMP brush shape."
 msgstr "ブラシ '%s' で致命的な解析エラー: 不明な GIMP ブラシの形状です。"
 
-#: ../app/core/gimpbrushgenerated.c:740
+#: ../app/core/gimpbrushgenerated.c:726
 #, c-format
 msgid "Error while reading brush file '%s': %s"
 msgstr "ブラシファイル '%s' 読み込み中にエラー: %s"
 
-#: ../app/core/gimpbrushgenerated.c:742
+#: ../app/core/gimpbrushgenerated.c:728
 msgid "File is truncated"
 msgstr "ファイルは切り詰めました"
 
@@ -4726,7 +4807,7 @@ msgstr "ファイルは切り詰めました"
 msgid "Fatal parse error in brush file '%s': File is corrupt."
 msgstr "ブラシ '%s' で致命的な解析エラー: ファイルが壊れています。"
 
-#: ../app/core/gimpchannel.c:296 ../app/pdb/internal_procs.c:101
+#: ../app/core/gimpchannel.c:296
 msgid "Channel"
 msgstr "チャンネル"
 
@@ -4837,40 +4918,40 @@ msgstr "あいまい選択"
 msgid "Select by Color"
 msgstr "色による選択"
 
-#: ../app/core/gimpdata.c:425
+#: ../app/core/gimpdata.c:455
 #, c-format
 msgid "Could not delete '%s': %s"
 msgstr "'%s' を削除できませんでした: %s"
 
-#: ../app/core/gimpdatafactory.c:322 ../app/core/gimpdatafactory.c:532
+#: ../app/core/gimpdatafactory.c:435 ../app/core/gimpdatafactory.c:608
 #, c-format
 msgid ""
-"Warning: Failed to save data:\n"
+"Failed to save data:\n"
 "\n"
 "%s"
 msgstr ""
-"警告: データの保存に失敗:\n"
+"データの保存に失敗:\n"
 "\n"
 "%s"
 
-#: ../app/core/gimpdatafactory.c:434 ../app/core/gimpdatafactory.c:437
+#: ../app/core/gimpdatafactory.c:510 ../app/core/gimpdatafactory.c:513
 #: ../app/core/gimpitem.c:344 ../app/core/gimpitem.c:347
 msgid "copy"
 msgstr "コピー"
 
-#: ../app/core/gimpdatafactory.c:446 ../app/core/gimpitem.c:356
+#: ../app/core/gimpdatafactory.c:522 ../app/core/gimpitem.c:356
 #, c-format
 msgid "%s copy"
 msgstr "%s コピー"
 
-#: ../app/core/gimpdatafactory.c:628
+#: ../app/core/gimpdatafactory.c:749
 #, c-format
 msgid ""
-"Warning: Failed to load data:\n"
+"Failed to load data:\n"
 "\n"
 "%s"
 msgstr ""
-"警告: データの読み込みに失敗:\n"
+"データの読み込みに失敗:\n"
 "\n"
 "%s"
 
@@ -4935,12 +5016,12 @@ msgstr "変換レイヤー"
 msgid "Transformation"
 msgstr "変換"
 
-#: ../app/core/gimpenvirontable.c:286
+#: ../app/core/gimpenvirontable.c:280
 #, c-format
 msgid "Empty variable name in environment file %s"
 msgstr "環境設定ファイル %s 内に空の変数名"
 
-#: ../app/core/gimpenvirontable.c:304
+#: ../app/core/gimpenvirontable.c:298
 #, c-format
 msgid "Illegal variable name in environment file %s: %s"
 msgstr "環境設定ファイル %s 内に無効な変数名: %s"
@@ -5261,7 +5342,7 @@ msgstr "パスは既に最背面にあります"
 msgid "Lower Path to Bottom"
 msgstr "パスを最背面へ"
 
-#: ../app/core/gimpimagefile.c:575 ../app/dialogs/preferences-dialog.c:1502
+#: ../app/core/gimpimagefile.c:575 ../app/dialogs/preferences-dialog.c:1509
 msgid "Folder"
 msgstr "フォルダ"
 
@@ -5294,21 +5375,22 @@ msgid "(Preview may be out of date)"
 msgstr "(プレビューが古すぎます)"
 
 #. pixel size
-#: ../app/core/gimpimagefile.c:638 ../app/widgets/gimpimagepropview.c:354
-#: ../app/widgets/gimpsizebox.c:430 ../app/widgets/gimptemplateeditor.c:633
-#: ../app/widgets/gimptemplateeditor.c:671
+#: ../app/core/gimpimagefile.c:639 ../app/widgets/gimpimagepropview.c:354
+#: ../app/widgets/gimpsizebox.c:463 ../app/widgets/gimptemplateeditor.c:596
 #, c-format
-msgid "%d x %d pixels"
-msgstr "%d x %d ピクセル"
+msgid "%d x %d pixel"
+msgid_plural "%d x %d pixels"
+msgstr[0] "%d x %d ピクセル"
+msgstr[1] "%d x %d ピクセル"
 
-#: ../app/core/gimpimagefile.c:653 ../app/display/gimpdisplayshell-title.c:316
+#: ../app/core/gimpimagefile.c:656 ../app/display/gimpdisplayshell-title.c:316
 #, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
 msgstr[0] "%d 枚のレイヤー"
 msgstr[1] "%d 枚のレイヤー"
 
-#: ../app/core/gimpimagefile.c:699
+#: ../app/core/gimpimagefile.c:702
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
 msgstr "サムネイルファイル '%s' が開けません: %s"
@@ -5359,7 +5441,7 @@ msgstr ""
 msgid "Floating Selection to Layer"
 msgstr "フローティング選択領域をレイヤーに"
 
-#: ../app/core/gimplayer.c:283 ../app/pdb/internal_procs.c:161
+#: ../app/core/gimplayer.c:283
 msgid "Layer"
 msgstr "レイヤー"
 
@@ -5516,19 +5598,20 @@ msgstr "パレット '%s' (%d 行目) 読み込み中: 青の要素が見つか�
 msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgstr "パレット '%s' (%d 行目) 読み込み中: RGB 値が範囲外です。"
 
-#: ../app/core/gimppattern.c:303 ../app/core/gimppattern.c:350
-#: ../app/core/gimppattern.c:382
+#: ../app/core/gimppattern.c:303 ../app/core/gimppattern.c:349
+#: ../app/core/gimppattern.c:380
 #, c-format
-msgid "Fatal parse error in pattern file '%s': Could not read %d bytes: %s"
-msgstr "パターン '%s' で致命的な解析エラー: %d バイト読み込めませんでした: %s"
+msgid "Fatal parse error in pattern file '%s': File appears truncated."
+msgstr ""
+"パターン '%s' で致命的な解析エラー: ファイルは切り分けられているようです。"
 
-#: ../app/core/gimppattern.c:323
+#: ../app/core/gimppattern.c:322
 #, c-format
 msgid ""
 "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
 msgstr "パターン '%s' で致命的な解析エラー: 不明なパターン形式バージョン %d."
 
-#: ../app/core/gimppattern.c:333
+#: ../app/core/gimppattern.c:332
 #, c-format
 msgid ""
 "Fatal parse error in pattern file '%s: Unsupported pattern depth %d.\n"
@@ -5537,7 +5620,7 @@ msgstr ""
 "パターン '%s' で致命的な解析エラー: 非サポートの深度 %d です。\n"
 "GIMP パターンは GRAY もしくは RGB でなければなりません。"
 
-#: ../app/core/gimppattern.c:359
+#: ../app/core/gimppattern.c:357
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "GIMP パターンファイル '%s' 中に不適切な UTF-8 文字列があります。"
@@ -5699,10 +5782,6 @@ msgstr "インデックスカラーに変換"
 msgid "C_onvert"
 msgstr "変換(_O)"
 
-#: ../app/dialogs/convert-dialog.c:167 ../app/dialogs/dialogs.c:181
-msgid "Colormap"
-msgstr "カラーマップ"
-
 #: ../app/dialogs/convert-dialog.c:182
 msgid "_Maximum number of colors:"
 msgstr "最大色数(_M):"
@@ -5748,10 +5827,6 @@ msgstr "GIMP メッセージ"
 msgid "Devices"
 msgstr "デバイス"
 
-#: ../app/dialogs/dialogs.c:133
-msgid "Device Status"
-msgstr "デバイスの状態"
-
 #: ../app/dialogs/dialogs.c:137
 msgid "Errors"
 msgstr "エラー"
@@ -5764,41 +5839,17 @@ msgstr "カーソル"
 msgid "History"
 msgstr "履歴"
 
-#: ../app/dialogs/dialogs.c:164
-msgid "Image Templates"
-msgstr "画像テンプレート"
-
-#: ../app/dialogs/dialogs.c:185
-msgid "Histogram"
-msgstr "ヒストグラム"
-
 #: ../app/dialogs/dialogs.c:189
 msgid "Selection"
 msgstr "選択"
-
-#: ../app/dialogs/dialogs.c:189
-msgid "Selection Editor"
-msgstr "選択エディタ "
-
-#: ../app/dialogs/dialogs.c:193
-msgid "Undo History"
-msgstr "取り消し履歴"
 
 #: ../app/dialogs/dialogs.c:203
 msgid "Navigation"
 msgstr "ナビゲーション"
 
-#: ../app/dialogs/dialogs.c:203
-msgid "Display Navigation"
-msgstr "ナビゲーションを表示"
-
 #: ../app/dialogs/dialogs.c:209
 msgid "FG/BG"
 msgstr "描画/背景"
-
-#: ../app/dialogs/dialogs.c:209
-msgid "FG/BG Color"
-msgstr "描画色/背景色"
 
 #: ../app/dialogs/file-open-location-dialog.c:71
 msgid "Open Location"
@@ -5880,7 +5931,7 @@ msgid "Create a New Image"
 msgstr "新規画像を作成"
 
 #: ../app/dialogs/image-new-dialog.c:141
-#: ../app/dialogs/preferences-dialog.c:1754
+#: ../app/dialogs/preferences-dialog.c:1761
 msgid "_Template:"
 msgstr "テンプレート(_T):"
 
@@ -5929,10 +5980,10 @@ msgid "Is this what you want to do?"
 msgstr "それでもよろしいですか?"
 
 #. General
-#: ../app/dialogs/info-dialog.c:377 ../app/dialogs/preferences-dialog.c:1573
-#: ../app/dialogs/preferences-dialog.c:1627
-#: ../app/dialogs/preferences-dialog.c:1811
-#: ../app/widgets/gimpcontrollereditor.c:203
+#: ../app/dialogs/info-dialog.c:377 ../app/dialogs/preferences-dialog.c:1580
+#: ../app/dialogs/preferences-dialog.c:1634
+#: ../app/dialogs/preferences-dialog.c:1818
+#: ../app/widgets/gimpcontrollereditor.c:205
 msgid "General"
 msgstr "一般"
 
@@ -5949,7 +6000,7 @@ msgstr ""
 "してください。割り当ての解除はバックスペースキーを押してください。"
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:109
-#: ../app/dialogs/preferences-dialog.c:1432
+#: ../app/dialogs/preferences-dialog.c:1439
 msgid "_Save keyboard shortcuts on exit"
 msgstr "終了時にキーボードショートカットを保存する(_S)"
 
@@ -6007,7 +6058,7 @@ msgstr "モジュールのパス"
 
 #: ../app/dialogs/module-dialog.c:418
 msgid "<No modules>"
-msgstr "<モジュール 無し>"
+msgstr "<モジュール なし>"
 
 #: ../app/dialogs/module-dialog.c:430 ../app/dialogs/module-dialog.c:439
 msgid "On disk"
@@ -6058,7 +6109,7 @@ msgid "Location:"
 msgstr "場所:"
 
 #: ../app/dialogs/module-dialog.c:505
-#: ../app/widgets/gimpcontrollereditor.c:248
+#: ../app/widgets/gimpcontrollereditor.c:250
 msgid "State:"
 msgstr "状態:"
 
@@ -6265,7 +6316,7 @@ msgid "Preferences"
 msgstr "環境設定"
 
 #: ../app/dialogs/preferences-dialog.c:1317
-#: ../app/dialogs/preferences-dialog.c:2450
+#: ../app/dialogs/preferences-dialog.c:2457
 msgid "Environment"
 msgstr "環境"
 
@@ -6315,573 +6366,577 @@ msgstr "画像の保存"
 msgid "Confirm closing of unsa_ved images"
 msgstr "未保存の画像を閉じるときの確認(_V)"
 
-#: ../app/dialogs/preferences-dialog.c:1388
+#: ../app/dialogs/preferences-dialog.c:1386
+msgid "Save document _history on exit"
+msgstr "終了時に文書履歴を保存する(_H)"
+
+#: ../app/dialogs/preferences-dialog.c:1395
 msgid "User Interface"
 msgstr "ユーザインターフェイス"
 
-#: ../app/dialogs/preferences-dialog.c:1391
+#: ../app/dialogs/preferences-dialog.c:1398
 msgid "Interface"
 msgstr "インターフェイス"
 
 #. Previews
-#: ../app/dialogs/preferences-dialog.c:1398
+#: ../app/dialogs/preferences-dialog.c:1405
 msgid "Previews"
 msgstr "プレビュー"
 
-#: ../app/dialogs/preferences-dialog.c:1401
+#: ../app/dialogs/preferences-dialog.c:1408
 msgid "_Enable layer & channel previews"
 msgstr "レイヤー & チャンネルを有効にする(_E)"
 
-#: ../app/dialogs/preferences-dialog.c:1407
+#: ../app/dialogs/preferences-dialog.c:1414
 msgid "Default _layer & channel preview size:"
 msgstr "レイヤー & チャンネルのデフォルトサイズ(_L):"
 
-#: ../app/dialogs/preferences-dialog.c:1410
+#: ../app/dialogs/preferences-dialog.c:1417
 msgid "Na_vigation preview size:"
 msgstr "ナビゲーションのプレビューサイズ(_V):"
 
 #. Keyboard Shortcuts
-#: ../app/dialogs/preferences-dialog.c:1414
+#: ../app/dialogs/preferences-dialog.c:1421
 msgid "Keyboard Shortcuts"
 msgstr "キーボードショートカット"
 
-#: ../app/dialogs/preferences-dialog.c:1418
+#: ../app/dialogs/preferences-dialog.c:1425
 msgid "Show menu _mnemonics (access keys)"
 msgstr "メニューにニーモニック (アクセスキー) を表示する(_M)"
 
-#: ../app/dialogs/preferences-dialog.c:1421
+#: ../app/dialogs/preferences-dialog.c:1428
 msgid "Use _dynamic keyboard shortcuts"
 msgstr "動的なキーボードショートカットを使用する(_D)"
 
-#: ../app/dialogs/preferences-dialog.c:1425
+#: ../app/dialogs/preferences-dialog.c:1432
 msgid "Configure _Keyboard Shortcuts..."
 msgstr "キーボードショートカット設定(_K)..."
 
-#: ../app/dialogs/preferences-dialog.c:1436
+#: ../app/dialogs/preferences-dialog.c:1443
 msgid "Save Keyboard Shortcuts _Now"
 msgstr "今すぐキーボードショートカットを保存する(_N)"
 
-#: ../app/dialogs/preferences-dialog.c:1443
+#: ../app/dialogs/preferences-dialog.c:1450
 msgid "_Reset Saved Keyboard Shortcuts to Default Values"
 msgstr "キーボードショートカットをデフォルトに戻す(_R)"
 
-#: ../app/dialogs/preferences-dialog.c:1458
-#: ../app/dialogs/preferences-dialog.c:1497
+#: ../app/dialogs/preferences-dialog.c:1465
+#: ../app/dialogs/preferences-dialog.c:1504
 msgid "Theme"
 msgstr "テーマ"
 
-#: ../app/dialogs/preferences-dialog.c:1467
+#: ../app/dialogs/preferences-dialog.c:1474
 msgid "Select Theme"
 msgstr "テーマの選択"
 
-#: ../app/dialogs/preferences-dialog.c:1549
+#: ../app/dialogs/preferences-dialog.c:1556
 msgid "Reload C_urrent Theme"
 msgstr "現在のテーマを再読み込み(_U)"
 
-#: ../app/dialogs/preferences-dialog.c:1561
+#: ../app/dialogs/preferences-dialog.c:1568
 msgid "Help System"
 msgstr "ヘルプシステム"
 
-#: ../app/dialogs/preferences-dialog.c:1576
+#: ../app/dialogs/preferences-dialog.c:1583
 msgid "Show tool _tips"
 msgstr "道具の簡易な説明を表示する(_T)"
 
-#: ../app/dialogs/preferences-dialog.c:1579
+#: ../app/dialogs/preferences-dialog.c:1586
 msgid "Show help _buttons"
 msgstr "ヘルプボタンを表示(_B)"
 
-#: ../app/dialogs/preferences-dialog.c:1582
+#: ../app/dialogs/preferences-dialog.c:1589
 msgid "Show tips on _startup"
 msgstr "起動時に今日の技を表示(_S)"
 
 #. Help Browser
-#: ../app/dialogs/preferences-dialog.c:1586
+#: ../app/dialogs/preferences-dialog.c:1593
 msgid "Help Browser"
 msgstr "ヘルプブラウザ"
 
-#: ../app/dialogs/preferences-dialog.c:1590
+#: ../app/dialogs/preferences-dialog.c:1597
 msgid "H_elp browser to use:"
 msgstr "使用するヘルプブラウザ(_E):"
 
-#: ../app/dialogs/preferences-dialog.c:1595
+#: ../app/dialogs/preferences-dialog.c:1602
 msgid "Web Browser"
 msgstr "ウェブブラウザ"
 
-#: ../app/dialogs/preferences-dialog.c:1599
+#: ../app/dialogs/preferences-dialog.c:1606
 msgid "Select Web Browser"
 msgstr "ウェブブラウザの選択"
 
-#: ../app/dialogs/preferences-dialog.c:1602
+#: ../app/dialogs/preferences-dialog.c:1609
 msgid "_Web browser to use:"
 msgstr "使用するウェブブラウザ(_W):"
 
-#: ../app/dialogs/preferences-dialog.c:1630
+#: ../app/dialogs/preferences-dialog.c:1637
 msgid "_Save tool options on exit"
 msgstr "終了時にツールオプションを保存する(_S)"
 
-#: ../app/dialogs/preferences-dialog.c:1634
+#: ../app/dialogs/preferences-dialog.c:1641
 msgid "Save Tool Options _Now"
 msgstr "今すぐツールオプションを保存する(_N)"
 
-#: ../app/dialogs/preferences-dialog.c:1641
+#: ../app/dialogs/preferences-dialog.c:1648
 msgid "_Reset Saved Tool Options to Default Values"
 msgstr "保存したツールオプションをデフォルト値に戻す(_R)"
 
 #. Snapping Distance
-#: ../app/dialogs/preferences-dialog.c:1651
+#: ../app/dialogs/preferences-dialog.c:1658
 msgid "Guide & Grid Snapping"
 msgstr "ガイドとグリッドにスナップ"
 
-#: ../app/dialogs/preferences-dialog.c:1656
+#: ../app/dialogs/preferences-dialog.c:1663
 msgid "_Snap distance:"
 msgstr "スナップ距離(_S):"
 
-#: ../app/dialogs/preferences-dialog.c:1664
+#: ../app/dialogs/preferences-dialog.c:1671
 msgid "Default _interpolation:"
 msgstr "デフォルトの補間方法(_I):"
 
 #. Global Brush, Pattern, ...
-#: ../app/dialogs/preferences-dialog.c:1671
+#: ../app/dialogs/preferences-dialog.c:1678
 msgid "Paint Options Shared Between Tools"
 msgstr "ツール共有の描画オプション"
 
-#: ../app/dialogs/preferences-dialog.c:1684
+#: ../app/dialogs/preferences-dialog.c:1691
 msgid "Move Tool"
 msgstr "移動ツール"
 
-#: ../app/dialogs/preferences-dialog.c:1688
+#: ../app/dialogs/preferences-dialog.c:1695
 msgid "Change current layer or path"
 msgstr "現在のレイヤーかパス"
 
-#: ../app/dialogs/preferences-dialog.c:1701
+#: ../app/dialogs/preferences-dialog.c:1708
 msgid "Toolbox"
 msgstr "道具箱"
 
 #. Appearance
-#: ../app/dialogs/preferences-dialog.c:1713
-#: ../app/dialogs/preferences-dialog.c:1874
+#: ../app/dialogs/preferences-dialog.c:1720
+#: ../app/dialogs/preferences-dialog.c:1881
 #: ../app/widgets/gimpgrideditor.c:206
 msgid "Appearance"
 msgstr "表示形式"
 
-#: ../app/dialogs/preferences-dialog.c:1717
+#: ../app/dialogs/preferences-dialog.c:1724
 msgid "Show _foreground & background color"
 msgstr "背景色と背景色を表示(_F)"
 
-#: ../app/dialogs/preferences-dialog.c:1721
+#: ../app/dialogs/preferences-dialog.c:1728
 msgid "Show active _brush, pattern & gradient"
 msgstr "アクティブなブラシ・パターンとグラデーションを表示(_B)"
 
-#: ../app/dialogs/preferences-dialog.c:1725
+#: ../app/dialogs/preferences-dialog.c:1732
 msgid "Show active _image"
 msgstr "アクティブな画像を表示(_I)"
 
-#: ../app/dialogs/preferences-dialog.c:1738
+#: ../app/dialogs/preferences-dialog.c:1745
 msgid "Default New Image"
 msgstr "新規初期画像"
 
-#: ../app/dialogs/preferences-dialog.c:1741
+#: ../app/dialogs/preferences-dialog.c:1748
 msgid "Default Image"
 msgstr "初期画像"
 
-#: ../app/dialogs/preferences-dialog.c:1776
+#: ../app/dialogs/preferences-dialog.c:1783
 msgid "Default Image Grid"
 msgstr "初期画像グリッド"
 
-#: ../app/dialogs/preferences-dialog.c:1779
+#: ../app/dialogs/preferences-dialog.c:1786
 msgid "Default Grid"
 msgstr "初期グリッド"
 
-#: ../app/dialogs/preferences-dialog.c:1799
+#: ../app/dialogs/preferences-dialog.c:1806
 msgid "Image Windows"
 msgstr "画像ウィンドウ"
 
-#: ../app/dialogs/preferences-dialog.c:1814
+#: ../app/dialogs/preferences-dialog.c:1821
 msgid "Use \"_Dot for dot\" by default"
 msgstr "デフォルトで「点に点」を対応させる(_D)"
 
-#: ../app/dialogs/preferences-dialog.c:1820
+#: ../app/dialogs/preferences-dialog.c:1827
 msgid "Marching _ants speed:"
 msgstr "蟻の行進速度(_A):"
 
 #. Zoom & Resize Behavior
-#: ../app/dialogs/preferences-dialog.c:1824
+#: ../app/dialogs/preferences-dialog.c:1831
 msgid "Zoom & Resize Behavior"
 msgstr "ズームとリサイズの振る舞い"
 
-#: ../app/dialogs/preferences-dialog.c:1828
+#: ../app/dialogs/preferences-dialog.c:1835
 msgid "Resize window on _zoom"
 msgstr "ズーム時にウィンドウをリサイズする(_Z)"
 
-#: ../app/dialogs/preferences-dialog.c:1831
+#: ../app/dialogs/preferences-dialog.c:1838
 msgid "Resize window on image _size change"
 msgstr "画像サイズ変更時にウィンドウをリサイズする(_S)"
 
-#: ../app/dialogs/preferences-dialog.c:1837
+#: ../app/dialogs/preferences-dialog.c:1844
 msgid "Fit to window"
 msgstr "ウィンドウにあわせる"
 
-#: ../app/dialogs/preferences-dialog.c:1839
+#: ../app/dialogs/preferences-dialog.c:1846
 msgid "Initial zoom _ratio:"
 msgstr "最初に使う拡大率(_R):"
 
 #. Mouse Cursors
-#: ../app/dialogs/preferences-dialog.c:1843
+#: ../app/dialogs/preferences-dialog.c:1850
 msgid "Mouse Cursors"
 msgstr "マウスカーソル"
 
-#: ../app/dialogs/preferences-dialog.c:1847
+#: ../app/dialogs/preferences-dialog.c:1854
 msgid "Show _brush outline"
 msgstr "ブラシの輪郭を表示する(_B)"
 
-#: ../app/dialogs/preferences-dialog.c:1850
+#: ../app/dialogs/preferences-dialog.c:1857
 msgid "Show paint _tool cursor"
 msgstr "描画ツールのカーソルを表示する(_T)"
 
-#: ../app/dialogs/preferences-dialog.c:1856
+#: ../app/dialogs/preferences-dialog.c:1863
 msgid "Cursor _mode:"
 msgstr "カーソルモード(_M):"
 
-#: ../app/dialogs/preferences-dialog.c:1859
+#: ../app/dialogs/preferences-dialog.c:1866
 msgid "Cursor re_ndering:"
 msgstr "カーソルの表現(_N):"
 
-#: ../app/dialogs/preferences-dialog.c:1871
+#: ../app/dialogs/preferences-dialog.c:1878
 msgid "Image Window Appearance"
 msgstr "画像ウィンドウの表示形式"
 
-#: ../app/dialogs/preferences-dialog.c:1882
+#: ../app/dialogs/preferences-dialog.c:1889
 msgid "Default Appearance in Normal Mode"
 msgstr "ノーマルモードのデフォルト表示"
 
-#: ../app/dialogs/preferences-dialog.c:1887
+#: ../app/dialogs/preferences-dialog.c:1894
 msgid "Default Appearance in Fullscreen Mode"
 msgstr "フルスクリーンモードのデフォルト表示"
 
-#: ../app/dialogs/preferences-dialog.c:1896
+#: ../app/dialogs/preferences-dialog.c:1903
 msgid "Image Title & Statusbar Format"
 msgstr "画像タイトルとフォーマットの形式"
 
-#: ../app/dialogs/preferences-dialog.c:1899
+#: ../app/dialogs/preferences-dialog.c:1906
 msgid "Title & Status"
 msgstr "タイトル & ステータスバー"
 
-#: ../app/dialogs/preferences-dialog.c:1917
+#: ../app/dialogs/preferences-dialog.c:1924
 msgid "Current format"
 msgstr "現在の形式"
 
-#: ../app/dialogs/preferences-dialog.c:1918
+#: ../app/dialogs/preferences-dialog.c:1925
 msgid "Default format"
 msgstr "初期形式"
 
-#: ../app/dialogs/preferences-dialog.c:1919
+#: ../app/dialogs/preferences-dialog.c:1926
 msgid "Show zoom percentage"
 msgstr "拡大パーセンテージを表示"
 
-#: ../app/dialogs/preferences-dialog.c:1920
+#: ../app/dialogs/preferences-dialog.c:1927
 msgid "Show zoom ratio"
 msgstr "拡大率を表示"
 
-#: ../app/dialogs/preferences-dialog.c:1921
+#: ../app/dialogs/preferences-dialog.c:1928
 msgid "Show image size"
 msgstr "画像サイズを表示"
 
-#: ../app/dialogs/preferences-dialog.c:1934
+#: ../app/dialogs/preferences-dialog.c:1941
 msgid "Image Title Format"
 msgstr "画像タイトル形式:"
 
-#: ../app/dialogs/preferences-dialog.c:1936
+#: ../app/dialogs/preferences-dialog.c:1943
 msgid "Image Statusbar Format"
 msgstr "画像ステータスバー形式:"
 
-#: ../app/dialogs/preferences-dialog.c:2021
+#: ../app/dialogs/preferences-dialog.c:2028
 msgid "Display"
 msgstr "表示"
 
-#: ../app/dialogs/preferences-dialog.c:2037
+#: ../app/dialogs/preferences-dialog.c:2044
 msgid "_Check style:"
 msgstr "市松模様のスタイル(_C):"
 
-#: ../app/dialogs/preferences-dialog.c:2040
+#: ../app/dialogs/preferences-dialog.c:2047
 msgid "Check _size:"
 msgstr "市松模様の大きさ(_S):"
 
-#: ../app/dialogs/preferences-dialog.c:2043
+#: ../app/dialogs/preferences-dialog.c:2050
 msgid "Get Monitor Resolution"
 msgstr "モニタ解像度を"
 
-#: ../app/dialogs/preferences-dialog.c:2047
+#: ../app/dialogs/preferences-dialog.c:2054
 #: ../app/widgets/gimpcursorview.c:157 ../app/widgets/gimpgrideditor.c:267
 #: ../app/widgets/gimpgrideditor.c:299
 msgid "Pixels"
 msgstr "ピクセル"
 
-#: ../app/dialogs/preferences-dialog.c:2069
-#: ../app/widgets/gimpimagepropview.c:381
+#: ../app/dialogs/preferences-dialog.c:2076
+#: ../app/widgets/gimpimagepropview.c:382
 msgid "dpi"
 msgstr "dpi"
 
-#: ../app/dialogs/preferences-dialog.c:2085
+#: ../app/dialogs/preferences-dialog.c:2092
 #, c-format
 msgid "From _windowing system (currently %d x %d dpi)"
 msgstr "ウィンドウシステムから (現在 %d x %d dpi)(_W)"
 
-#: ../app/dialogs/preferences-dialog.c:2105
+#: ../app/dialogs/preferences-dialog.c:2112
 msgid "_Manually"
 msgstr "自分で設定する(_M)"
 
-#: ../app/dialogs/preferences-dialog.c:2120
+#: ../app/dialogs/preferences-dialog.c:2127
 msgid "C_alibrate..."
 msgstr "測定(_A)..."
 
-#: ../app/dialogs/preferences-dialog.c:2142
+#: ../app/dialogs/preferences-dialog.c:2149
 msgid "Color Management"
 msgstr "色管理"
 
-#: ../app/dialogs/preferences-dialog.c:2162
+#: ../app/dialogs/preferences-dialog.c:2169
 msgid "_RGB profile:"
 msgstr "RGB プロファイル(_R):"
 
-#: ../app/dialogs/preferences-dialog.c:2163
+#: ../app/dialogs/preferences-dialog.c:2170
 msgid "Select RGB Color Profile"
 msgstr "RGB 色プロファイルの選択"
 
-#: ../app/dialogs/preferences-dialog.c:2164
+#: ../app/dialogs/preferences-dialog.c:2171
 msgid "_CMYK profile:"
 msgstr "CMYK プロファイル(_C)"
 
-#: ../app/dialogs/preferences-dialog.c:2165
+#: ../app/dialogs/preferences-dialog.c:2172
 msgid "Select CMYK Color Profile"
 msgstr "CMYK 色プロファイルの選択"
 
-#: ../app/dialogs/preferences-dialog.c:2166
+#: ../app/dialogs/preferences-dialog.c:2173
 msgid "_Monitor profile:"
 msgstr "モニタプロファイル(_M)"
 
-#: ../app/dialogs/preferences-dialog.c:2167
+#: ../app/dialogs/preferences-dialog.c:2174
 msgid "Select Monitor Color Profile"
 msgstr "モニタ色プロファイルの選択"
 
-#: ../app/dialogs/preferences-dialog.c:2168
+#: ../app/dialogs/preferences-dialog.c:2175
 msgid "_Print simulation profile:"
 msgstr "印刷プロファイル(_P):"
 
-#: ../app/dialogs/preferences-dialog.c:2169
+#: ../app/dialogs/preferences-dialog.c:2176
 msgid "Select Printer Color Profile"
 msgstr "印刷プロファイルの選択"
 
-#: ../app/dialogs/preferences-dialog.c:2178
+#: ../app/dialogs/preferences-dialog.c:2185
 msgid "_Mode of operation:"
 msgstr "操作のモード(_M):"
 
-#: ../app/dialogs/preferences-dialog.c:2181
+#: ../app/dialogs/preferences-dialog.c:2188
 msgid "_Display rendering intent:"
 msgstr "ディスプレイ描画方法(_D):"
 
-#: ../app/dialogs/preferences-dialog.c:2184
+#: ../app/dialogs/preferences-dialog.c:2191
 msgid "_Softproof rendering intent:"
 msgstr "ソフトプルーフ描画方法(_S):"
 
-#: ../app/dialogs/preferences-dialog.c:2213
+#: ../app/dialogs/preferences-dialog.c:2220
 msgid "_Try to obtain the monitor profile from the X server"
 msgstr "X サーバからのモニタプロファイル取得を試みる (_T)"
 
-#: ../app/dialogs/preferences-dialog.c:2232
+#: ../app/dialogs/preferences-dialog.c:2239
 msgid "Input Devices"
 msgstr "入力機器"
 
 #. Extended Input Devices
-#: ../app/dialogs/preferences-dialog.c:2242
+#: ../app/dialogs/preferences-dialog.c:2249
 msgid "Extended Input Devices"
 msgstr "追加入力機器"
 
-#: ../app/dialogs/preferences-dialog.c:2246
+#: ../app/dialogs/preferences-dialog.c:2253
 msgid "Configure E_xtended Input Devices..."
 msgstr "追加された入力機器の設定(_X)..."
 
-#: ../app/dialogs/preferences-dialog.c:2253
+#: ../app/dialogs/preferences-dialog.c:2260
 msgid "_Save input device settings on exit"
 msgstr "入力デバイスの設定を終了時に保存する(_S)"
 
-#: ../app/dialogs/preferences-dialog.c:2257
+#: ../app/dialogs/preferences-dialog.c:2264
 msgid "Save Input Device Settings _Now"
 msgstr "今すぐ入力デバイスの設定を保存する(_N)"
 
-#: ../app/dialogs/preferences-dialog.c:2264
+#: ../app/dialogs/preferences-dialog.c:2271
 msgid "_Reset Saved Input Device Settings to Default Values"
 msgstr "入力機器の設定をデフォルトに戻す(_R)"
 
-#: ../app/dialogs/preferences-dialog.c:2279
+#: ../app/dialogs/preferences-dialog.c:2286
 msgid "Additional Input Controllers"
 msgstr "入力コントローラの追加"
 
-#: ../app/dialogs/preferences-dialog.c:2282
+#: ../app/dialogs/preferences-dialog.c:2289
 msgid "Input Controllers"
 msgstr "入力コントローラ"
 
-#: ../app/dialogs/preferences-dialog.c:2298
+#: ../app/dialogs/preferences-dialog.c:2305
 msgid "Window Management"
 msgstr "ウィンドウ管理"
 
-#: ../app/dialogs/preferences-dialog.c:2307
+#: ../app/dialogs/preferences-dialog.c:2314
 msgid "Window Manager Hints"
 msgstr "ウィンドウ管理のヒント"
 
-#: ../app/dialogs/preferences-dialog.c:2313
+#: ../app/dialogs/preferences-dialog.c:2320
 msgid "Hint for the _toolbox:"
 msgstr "ツールボックスのヒント(_T):"
 
-#: ../app/dialogs/preferences-dialog.c:2317
+#: ../app/dialogs/preferences-dialog.c:2324
 msgid "Hint for other _docks:"
 msgstr "他のドックのヒント(_D):"
 
-#: ../app/dialogs/preferences-dialog.c:2321
+#: ../app/dialogs/preferences-dialog.c:2328
 msgid "Toolbox and other docks are transient to the active display"
 msgstr "ツールボックス他のドックをアクティブ画像に対してトランジェントに"
 
-#: ../app/dialogs/preferences-dialog.c:2325
+#: ../app/dialogs/preferences-dialog.c:2332
 msgid "Focus"
 msgstr "フォーカス"
 
-#: ../app/dialogs/preferences-dialog.c:2329
+#: ../app/dialogs/preferences-dialog.c:2336
 msgid "Activate the _focused image"
 msgstr "フォーカスされた画像をアクティブに(_F)"
 
 #. Window Positions
-#: ../app/dialogs/preferences-dialog.c:2333
+#: ../app/dialogs/preferences-dialog.c:2340
 msgid "Window Positions"
 msgstr "ウィンドウ位置"
 
-#: ../app/dialogs/preferences-dialog.c:2336
+#: ../app/dialogs/preferences-dialog.c:2343
 msgid "_Save window positions on exit"
 msgstr "終了時にウィンドウの位置を保存する(_S)"
 
-#: ../app/dialogs/preferences-dialog.c:2340
+#: ../app/dialogs/preferences-dialog.c:2347
 msgid "Save Window Positions _Now"
 msgstr "直ちに現在のウィンドウ位置を保存(_N)"
 
-#: ../app/dialogs/preferences-dialog.c:2347
+#: ../app/dialogs/preferences-dialog.c:2354
 msgid "_Reset Saved Window Positions to Default Values"
 msgstr "保存したウィンドウの位置をデフォルト値に戻す(_R)"
 
-#: ../app/dialogs/preferences-dialog.c:2362
+#: ../app/dialogs/preferences-dialog.c:2369
 msgid "Folders"
 msgstr "フォルダ"
 
-#: ../app/dialogs/preferences-dialog.c:2380
+#: ../app/dialogs/preferences-dialog.c:2387
 msgid "Temp folder:"
 msgstr "テンポラリディレクトリ:"
 
-#: ../app/dialogs/preferences-dialog.c:2380
+#: ../app/dialogs/preferences-dialog.c:2387
 msgid "Select Temp Folder"
 msgstr "テーマ用ディレクトリを選択"
 
-#: ../app/dialogs/preferences-dialog.c:2381
+#: ../app/dialogs/preferences-dialog.c:2388
 #: ../app/dialogs/user-install-dialog.c:1449
 msgid "Swap folder:"
 msgstr "スワップ用ディレクトリ:"
 
-#: ../app/dialogs/preferences-dialog.c:2381
+#: ../app/dialogs/preferences-dialog.c:2388
 msgid "Select Swap Folder"
 msgstr "スワップ用ディレクトリを選択"
 
-#: ../app/dialogs/preferences-dialog.c:2414
+#: ../app/dialogs/preferences-dialog.c:2421
 msgid "Brush Folders"
 msgstr "ブラシディレクトリ"
 
-#: ../app/dialogs/preferences-dialog.c:2416
+#: ../app/dialogs/preferences-dialog.c:2423
 msgid "Select Brush Folders"
 msgstr "ブラシ用ディレクトリを選択"
 
-#: ../app/dialogs/preferences-dialog.c:2418
+#: ../app/dialogs/preferences-dialog.c:2425
 msgid "Pattern Folders"
 msgstr "パターン塗りディレクトリ"
 
-#: ../app/dialogs/preferences-dialog.c:2420
+#: ../app/dialogs/preferences-dialog.c:2427
 msgid "Select Pattern Folders"
 msgstr "パターン塗り用ディレクトリを選択"
 
-#: ../app/dialogs/preferences-dialog.c:2422
+#: ../app/dialogs/preferences-dialog.c:2429
 msgid "Palette Folders"
 msgstr "パレットディレクトリ"
 
-#: ../app/dialogs/preferences-dialog.c:2424
+#: ../app/dialogs/preferences-dialog.c:2431
 msgid "Select Palette Folders"
 msgstr "パレット用ディレクトリを選択"
 
-#: ../app/dialogs/preferences-dialog.c:2426
+#: ../app/dialogs/preferences-dialog.c:2433
 msgid "Gradient Folders"
 msgstr "グラデーションディレクトリ"
 
-#: ../app/dialogs/preferences-dialog.c:2428
+#: ../app/dialogs/preferences-dialog.c:2435
 msgid "Select Gradient Folders"
 msgstr "グラデーション用ディレクトリを選択"
 
-#: ../app/dialogs/preferences-dialog.c:2430
+#: ../app/dialogs/preferences-dialog.c:2437
 msgid "Font Folders"
 msgstr "フォントディレクトリ"
 
-#: ../app/dialogs/preferences-dialog.c:2432
+#: ../app/dialogs/preferences-dialog.c:2439
 msgid "Select Font Folders"
 msgstr "フォント用ディレクトリを選択"
 
-#: ../app/dialogs/preferences-dialog.c:2434
+#: ../app/dialogs/preferences-dialog.c:2441
 msgid "Plug-In Folders"
 msgstr "プラグインディレクトリ"
 
-#: ../app/dialogs/preferences-dialog.c:2436
+#: ../app/dialogs/preferences-dialog.c:2443
 msgid "Select Plug-In Folders"
 msgstr "プラグイン用ディレクトリを選択"
 
-#: ../app/dialogs/preferences-dialog.c:2438
+#: ../app/dialogs/preferences-dialog.c:2445
 msgid "Scripts"
 msgstr "スクリプト"
 
-#: ../app/dialogs/preferences-dialog.c:2438
+#: ../app/dialogs/preferences-dialog.c:2445
 msgid "Script-Fu Folders"
 msgstr "Script-Fu ディレクトリ"
 
-#: ../app/dialogs/preferences-dialog.c:2440
+#: ../app/dialogs/preferences-dialog.c:2447
 msgid "Select Script-Fu Folders"
 msgstr "Script-Fu 用ディレクトリを選択"
 
-#: ../app/dialogs/preferences-dialog.c:2442
+#: ../app/dialogs/preferences-dialog.c:2449
 msgid "Module Folders"
 msgstr "モジュールディレクトリ"
 
-#: ../app/dialogs/preferences-dialog.c:2444
+#: ../app/dialogs/preferences-dialog.c:2451
 msgid "Select Module Folders"
 msgstr "モジュールディレクトリを選択"
 
-#: ../app/dialogs/preferences-dialog.c:2446
+#: ../app/dialogs/preferences-dialog.c:2453
 msgid "Interpreters"
 msgstr "インタプリタ"
 
-#: ../app/dialogs/preferences-dialog.c:2446
+#: ../app/dialogs/preferences-dialog.c:2453
 msgid "Interpreter Folders"
 msgstr "インタプリタディレクトリ"
 
-#: ../app/dialogs/preferences-dialog.c:2448
+#: ../app/dialogs/preferences-dialog.c:2455
 msgid "Select Interpreter Folders"
 msgstr "インタプリタ用ディレクトリを選択"
 
-#: ../app/dialogs/preferences-dialog.c:2450
+#: ../app/dialogs/preferences-dialog.c:2457
 msgid "Environment Folders"
 msgstr "環境ディレクトリ"
 
-#: ../app/dialogs/preferences-dialog.c:2452
+#: ../app/dialogs/preferences-dialog.c:2459
 msgid "Select Environment Folders"
 msgstr "環境を保存するディレクトリを選択"
 
-#: ../app/dialogs/preferences-dialog.c:2454
+#: ../app/dialogs/preferences-dialog.c:2461
 msgid "Themes"
 msgstr "テーマ"
 
-#: ../app/dialogs/preferences-dialog.c:2454
+#: ../app/dialogs/preferences-dialog.c:2461
 msgid "Theme Folders"
 msgstr "テーマディレクトリ"
 
-#: ../app/dialogs/preferences-dialog.c:2456
+#: ../app/dialogs/preferences-dialog.c:2463
 msgid "Select Theme Folders"
 msgstr "テーマ用ディレクトリを選択"
 
@@ -6890,28 +6945,28 @@ msgid "Print Size"
 msgstr "印刷サイズ"
 
 #. the image size labels
-#: ../app/dialogs/print-size-dialog.c:162 ../app/widgets/gimpsizebox.c:221
+#: ../app/dialogs/print-size-dialog.c:162 ../app/widgets/gimpsizebox.c:230
 #: ../app/widgets/gimptemplateeditor.c:232
 msgid "_Width:"
 msgstr "幅(_W):"
 
-#: ../app/dialogs/print-size-dialog.c:169 ../app/widgets/gimpsizebox.c:225
+#: ../app/dialogs/print-size-dialog.c:169 ../app/widgets/gimpsizebox.c:234
 #: ../app/widgets/gimptemplateeditor.c:239
 msgid "H_eight:"
 msgstr "高さ(_E):"
 
 #. the resolution labels
-#: ../app/dialogs/print-size-dialog.c:217 ../app/widgets/gimpsizebox.c:274
+#: ../app/dialogs/print-size-dialog.c:217 ../app/widgets/gimpsizebox.c:289
 #: ../app/widgets/gimptemplateeditor.c:359
 msgid "_X resolution:"
 msgstr "水平解像度(_X):"
 
-#: ../app/dialogs/print-size-dialog.c:224 ../app/widgets/gimpsizebox.c:277
+#: ../app/dialogs/print-size-dialog.c:224 ../app/widgets/gimpsizebox.c:292
 #: ../app/widgets/gimptemplateeditor.c:366
 msgid "_Y resolution:"
 msgstr "垂直解像度(_Y):"
 
-#: ../app/dialogs/print-size-dialog.c:235 ../app/widgets/gimpsizebox.c:270
+#: ../app/dialogs/print-size-dialog.c:235 ../app/widgets/gimpsizebox.c:285
 #: ../app/widgets/gimptemplateeditor.c:379
 #, c-format
 msgid "pixels/%a"
@@ -6987,7 +7042,7 @@ msgstr "品質"
 msgid "I_nterpolation:"
 msgstr "補間の種類(_N):"
 
-#: ../app/dialogs/scale-dialog.c:201
+#: ../app/dialogs/scale-dialog.c:203
 msgid ""
 "Indexed color layers are always scaled without interpolation. The chosen "
 "interpolation type will affect channels and masks only."
@@ -7489,13 +7544,9 @@ msgstr "暗い市松模様の色"
 msgid "Custom color"
 msgstr "カスタムカラー"
 
-#: ../app/display/gimpdisplayshell.c:919
+#: ../app/display/gimpdisplayshell.c:921
 msgid "Zoom image when window size changes"
 msgstr "ウィンドウサイズ変更時に画像をズーム"
-
-#: ../app/display/gimpdisplayshell.c:941
-msgid "Toggle Quick Mask"
-msgstr "クイックマスクの切り替え"
 
 #: ../app/display/gimpdisplayshell-close.c:123
 #: ../app/display/gimpdisplayshell-close.c:199
@@ -7624,27 +7675,27 @@ msgstr "取消"
 msgid "Other..."
 msgstr "その他..."
 
-#: ../app/file/file-open.c:106
+#: ../app/file/file-open.c:108
 msgid "Unknown file type"
 msgstr "不明なファイルタイプ"
 
-#: ../app/file/file-open.c:121 ../app/file/file-save.c:109
+#: ../app/file/file-open.c:123 ../app/file/file-save.c:109
 msgid "Not a regular file"
 msgstr "通常のファイルではありません"
 
-#: ../app/file/file-open.c:174
+#: ../app/file/file-open.c:176
 msgid "Plug-In returned SUCCESS but did not return an image"
 msgstr "プラグインは SUCCESS を返しましたが画像が返ってきません"
 
-#: ../app/file/file-open.c:182
+#: ../app/file/file-open.c:184
 msgid "Plug-In could not open image"
 msgstr "プラグインから画像をオープンできません"
 
-#: ../app/file/file-open.c:418
+#: ../app/file/file-open.c:423
 msgid "Image doesn't contain any visible layers"
 msgstr "画像に可視レイヤーが 1 枚もありません"
 
-#: ../app/file/file-save.c:182
+#: ../app/file/file-save.c:183
 msgid "Plug-In could not save image"
 msgstr "プラグインは画像を保存できません"
 
@@ -7652,11 +7703,11 @@ msgstr "プラグインは画像を保存できません"
 msgid "Invalid character sequence in URI"
 msgstr "URI中に不適切な文字列"
 
-#: ../app/gui/splash.c:118
+#: ../app/gui/splash.c:110
 msgid "GIMP Startup"
 msgstr "GIMP 起動中"
 
-#: ../app/gui/themes.c:231 ../app/plug-in/plug-ins.c:253
+#: ../app/gui/themes.c:231 ../app/plug-in/plug-ins.c:274
 #, c-format
 msgid "Writing '%s'\n"
 msgstr "'%s' を書き込み中\n"
@@ -7784,139 +7835,7 @@ msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr "画像の解像度が制限を越えているため、標準解像度を代わりに使用します。"
 
-#: ../app/pdb/internal_procs.c:89
-msgid "Internal Procedures"
-msgstr "内部プロシージャ"
-
-#: ../app/pdb/internal_procs.c:89
-msgid "Brush"
-msgstr "ブラシ"
-
-#: ../app/pdb/internal_procs.c:92
-msgid "Brush UI"
-msgstr "ブラシ UI"
-
-#: ../app/pdb/internal_procs.c:98
-msgid "Buffer procedures"
-msgstr "バッファプロシージャ"
-
-#: ../app/pdb/internal_procs.c:110
-msgid "Convert"
-msgstr "変換"
-
-#: ../app/pdb/internal_procs.c:113
-msgid "Display procedures"
-msgstr "Display プロシージャ"
-
-#: ../app/pdb/internal_procs.c:116
-msgid "Drawable procedures"
-msgstr "描画対象プロシージャ"
-
-#: ../app/pdb/internal_procs.c:119
-msgid "Transformation procedures"
-msgstr "変換プロシージャ"
-
-#: ../app/pdb/internal_procs.c:122
-msgid "Edit procedures"
-msgstr "プロシージャを編集"
-
-#: ../app/pdb/internal_procs.c:125
-msgid "File Operations"
-msgstr "ファイル操作"
-
-#: ../app/pdb/internal_procs.c:128
-msgid "Floating selections"
-msgstr "フローティング選択"
-
-#: ../app/pdb/internal_procs.c:131
-msgid "Font UI"
-msgstr "フォント UI"
-
-#: ../app/pdb/internal_procs.c:137
-msgid "Gimprc procedures"
-msgstr "Gimprc プロシージャ"
-
-#: ../app/pdb/internal_procs.c:140
-msgid "Gradient"
-msgstr "グラデーション"
-
-#: ../app/pdb/internal_procs.c:143
-msgid "Gradient UI"
-msgstr "グラデーション UI"
-
-#: ../app/pdb/internal_procs.c:149
-msgid "Image grid procedures"
-msgstr "画像グリッドプロシージャ"
-
-#: ../app/pdb/internal_procs.c:152
-msgid "Guide procedures"
-msgstr "ガイドプロシージャ"
-
-#: ../app/pdb/internal_procs.c:155
-msgid "Help procedures"
-msgstr "ヘルププロシージャ"
-
-#: ../app/pdb/internal_procs.c:164
-msgid "Message procedures"
-msgstr "メッセージプロシージャ"
-
-#: ../app/pdb/internal_procs.c:167
-msgid "Miscellaneous"
-msgstr "その他"
-
-#: ../app/pdb/internal_procs.c:170
-msgid "Paint Tool procedures"
-msgstr "描画ツールプロシージャ"
-
-#: ../app/pdb/internal_procs.c:173
-msgid "Palette"
-msgstr "パレット"
-
-#: ../app/pdb/internal_procs.c:176
-msgid "Palette UI"
-msgstr "パレット UI"
-
-#: ../app/pdb/internal_procs.c:182
-msgid "Parasite procedures"
-msgstr "パラサイトプロシージャ"
-
-#: ../app/pdb/internal_procs.c:191
-msgid "Pattern UI"
-msgstr "パターン UI"
-
-#: ../app/pdb/internal_procs.c:197
-msgid "Plug-in"
-msgstr "プラグイン"
-
-#: ../app/pdb/internal_procs.c:200
-msgid "Procedural database"
-msgstr "プロシージャデータベース"
-
-#: ../app/pdb/internal_procs.c:203 ../app/widgets/gimpprogressdialog.c:252
-msgid "Progress"
-msgstr "進度"
-
-#: ../app/pdb/internal_procs.c:206
-msgid "Image mask"
-msgstr "画像マスク"
-
-#: ../app/pdb/internal_procs.c:209
-msgid "Selection Tool procedures"
-msgstr "選択ツールプロシージャ"
-
-#: ../app/pdb/internal_procs.c:212
-msgid "Text procedures"
-msgstr "文字プロシージャ"
-
-#: ../app/pdb/internal_procs.c:215
-msgid "Transform Tool procedures"
-msgstr "変換ツールプロシージャ"
-
-#: ../app/pdb/internal_procs.c:221 ../app/widgets/gimpcursorview.c:179
-msgid "Units"
-msgstr "単位"
-
-#: ../app/pdb/procedural_db.c:267
+#: ../app/pdb/procedural_db.c:264
 #, c-format
 msgid ""
 "PDB calling error:\n"
@@ -7925,7 +7844,7 @@ msgstr ""
 "PDB 呼び出しエラー:\n"
 "手続き '%s' が見つかりません"
 
-#: ../app/pdb/procedural_db.c:294 ../app/pdb/procedural_db.c:420
+#: ../app/pdb/procedural_db.c:291 ../app/pdb/procedural_db.c:418
 #, c-format
 msgid ""
 "PDB calling error for procedure '%s':\n"
@@ -7977,37 +7896,37 @@ msgstr "アイコン型として不適切な値 '%s'"
 msgid "invalid value '%ld' for icon type"
 msgstr "アイコン型として不適切な値 '%ld'"
 
-#: ../app/plug-in/plug-ins.c:138
+#: ../app/plug-in/plug-ins.c:137
 msgid "Resource configuration"
 msgstr "リソース設定"
 
-#. Query any plug-ins that have changed since we last wrote out
-#. *  the pluginrc file.
+#. query any plug-ins that have changed since we last wrote out
+#. *  the pluginrc file
 #.
-#: ../app/plug-in/plug-ins.c:152
+#: ../app/plug-in/plug-ins.c:154
 msgid "Querying new Plug-ins"
 msgstr "新規プラグイン問い合わせ中"
 
-#: ../app/plug-in/plug-ins.c:169
+#: ../app/plug-in/plug-ins.c:181
 #, c-format
 msgid "Querying plug-in: '%s'\n"
 msgstr "プラグイン問い合わせ中: '%s'\n"
 
 #. initialize the plug-ins
-#: ../app/plug-in/plug-ins.c:179
+#: ../app/plug-in/plug-ins.c:189
 msgid "Initializing Plug-ins"
 msgstr "プラグイン初期化中"
 
-#: ../app/plug-in/plug-ins.c:193
+#: ../app/plug-in/plug-ins.c:214
 #, c-format
 msgid "Initializing plug-in: '%s'\n"
 msgstr "プラグイン初期化中: '%s'\n"
 
-#: ../app/plug-in/plug-ins.c:321
+#: ../app/plug-in/plug-ins.c:341
 msgid "Starting Extensions"
 msgstr "拡張機能起動中"
 
-#: ../app/plug-in/plug-ins.c:328
+#: ../app/plug-in/plug-ins.c:348
 #, c-format
 msgid "Starting extension: '%s'\n"
 msgstr "拡張機能起動中: '%s'\n"
@@ -8181,7 +8100,7 @@ msgstr "グリッドの線数"
 msgid "Grid line spacing"
 msgstr "グリッド線の間隔"
 
-#: ../app/tools/gimp-tools.c:312
+#: ../app/tools/gimp-tools.c:315
 msgid "This tool has no options."
 msgstr "このツールにはオプションはありません。"
 
@@ -8454,20 +8373,20 @@ msgstr "スポイトモード  (%s)"
 msgid "Use info window  (%s)"
 msgstr "情報ウィンドウを使用  (%s)"
 
-#: ../app/tools/gimpcolorpickertool.c:101
+#: ../app/tools/gimpcolorpickertool.c:103
 msgid "Color Picker"
 msgstr "スポイト"
 
-#: ../app/tools/gimpcolorpickertool.c:102
+#: ../app/tools/gimpcolorpickertool.c:104
 msgid "Pick colors from the image"
 msgstr "画像から色を選び出す"
 
-#: ../app/tools/gimpcolorpickertool.c:103
+#: ../app/tools/gimpcolorpickertool.c:105
 msgid "C_olor Picker"
 msgstr "スポイト(_O)"
 
 #. tool->gdisp->shell
-#: ../app/tools/gimpcolorpickertool.c:355
+#: ../app/tools/gimpcolorpickertool.c:382
 msgid "Color Picker Information"
 msgstr "スポイト情報"
 
@@ -8561,13 +8480,12 @@ msgid "Curves for indexed layers cannot be adjusted."
 msgstr "インデックス描画対象に対する色カーブは調整できません。"
 
 #: ../app/tools/gimpcurvestool.c:391
-#, fuzzy
 msgid "Click to add a control point."
-msgstr "クリックしてパスを編集します。"
+msgstr "クリックして制御点を追加します。"
 
 #: ../app/tools/gimpcurvestool.c:396
 msgid "Click to add control points to all channels."
-msgstr ""
+msgstr "クリックして全チャンネルに制御点を追加します。"
 
 #: ../app/tools/gimpcurvestool.c:593 ../app/tools/gimplevelstool.c:407
 msgid "Cha_nnel:"
@@ -8670,7 +8588,7 @@ msgstr "自由選択(_F)"
 
 #: ../app/tools/gimpforegroundselectoptions.c:102
 msgid "Allow to select multiple disjoint objects"
-msgstr ""
+msgstr "離れた場所にある複数の領域を選択できるようにします"
 
 #: ../app/tools/gimpforegroundselectoptions.c:112
 msgid "Size of the brush used for refinements"
@@ -8698,7 +8616,7 @@ msgstr "黄/青への感度"
 
 #: ../app/tools/gimpforegroundselectoptions.c:240
 msgid "Discontinuous"
-msgstr ""
+msgstr "断片的選択"
 
 #: ../app/tools/gimpforegroundselectoptions.c:246
 msgid "Interactive refinement"
@@ -9193,24 +9111,24 @@ msgstr "高さ"
 msgid "Aspect"
 msgstr "縦横比"
 
-#: ../app/tools/gimprectangletool.c:1822 ../app/tools/gimprectangletool.c:2249
+#: ../app/tools/gimprectangletool.c:1770 ../app/tools/gimprectangletool.c:2197
 msgid "Rectangle: "
 msgstr "矩形: "
 
-#: ../app/tools/gimprectangletool.c:2631
+#: ../app/tools/gimprectangletool.c:2579
 msgid "1 "
 msgstr "1 "
 
-#: ../app/tools/gimprectangletool.c:2632
+#: ../app/tools/gimprectangletool.c:2580
 msgid "2 "
 msgstr "2 "
 
-#: ../app/tools/gimprectangletool.c:2633 ../app/widgets/gimpcursorview.c:170
+#: ../app/tools/gimprectangletool.c:2581 ../app/widgets/gimpcursorview.c:170
 #: ../app/widgets/gimpcursorview.c:192
 msgid "X"
 msgstr "X"
 
-#: ../app/tools/gimprectangletool.c:2634 ../app/widgets/gimpcursorview.c:176
+#: ../app/tools/gimprectangletool.c:2582 ../app/widgets/gimpcursorview.c:176
 #: ../app/widgets/gimpcursorview.c:198
 msgid "Y"
 msgstr "Y"
@@ -9741,7 +9659,7 @@ msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
 #: ../app/widgets/gimpactionview.c:334
-#: ../app/widgets/gimpcontrollereditor.c:399
+#: ../app/widgets/gimpcontrollereditor.c:401
 msgid "Action"
 msgstr "操作"
 
@@ -9833,7 +9751,7 @@ msgstr "チャンネルの並び替え"
 msgid "Empty Channel"
 msgstr "空チャンネル"
 
-#: ../app/widgets/gimpclipboard.c:293
+#: ../app/widgets/gimpclipboard.c:296
 msgid "Clipboard"
 msgstr "クリップボード"
 
@@ -9954,44 +9872,44 @@ msgstr "小さなプレビュー"
 msgid "Larger Previews"
 msgstr "大きなプレビュー"
 
-#: ../app/widgets/gimpcontrollereditor.c:216
+#: ../app/widgets/gimpcontrollereditor.c:218
 msgid "Dump events from this controller"
 msgstr "このコントローラからのイベントをダンプ"
 
-#: ../app/widgets/gimpcontrollereditor.c:221
+#: ../app/widgets/gimpcontrollereditor.c:223
 msgid "Enable this controller"
 msgstr "このコントローラは有効"
 
-#: ../app/widgets/gimpcontrollereditor.c:242
+#: ../app/widgets/gimpcontrollereditor.c:244
 msgid "Name:"
 msgstr "名前:"
 
-#: ../app/widgets/gimpcontrollereditor.c:393
+#: ../app/widgets/gimpcontrollereditor.c:395
 msgid "Event"
 msgstr "イベント"
 
-#: ../app/widgets/gimpcontrollereditor.c:418
+#: ../app/widgets/gimpcontrollereditor.c:420
 msgid "_Grab event"
 msgstr "イベントを横取り(_G)"
 
-#: ../app/widgets/gimpcontrollereditor.c:428
+#: ../app/widgets/gimpcontrollereditor.c:430
 msgid "Select the next event arriving from the controller"
 msgstr "このコントローラからの次のイベントを選択"
 
-#: ../app/widgets/gimpcontrollereditor.c:441
+#: ../app/widgets/gimpcontrollereditor.c:443
 msgid "Assign an action to the selected event"
 msgstr "選択したイベントにアクションを割り当て"
 
-#: ../app/widgets/gimpcontrollereditor.c:453
+#: ../app/widgets/gimpcontrollereditor.c:455
 msgid "Remove the action from the selected event"
 msgstr "選択したイベントからアクションを削除"
 
-#: ../app/widgets/gimpcontrollereditor.c:686
+#: ../app/widgets/gimpcontrollereditor.c:688
 #, c-format
 msgid "Select Action for Event '%s'"
 msgstr "イベント '%s' 用のアクションを選択"
 
-#: ../app/widgets/gimpcontrollereditor.c:691
+#: ../app/widgets/gimpcontrollereditor.c:693
 msgid "Select Controller Event Action"
 msgstr "コントローラのアクションイベントを選択"
 
@@ -10186,6 +10104,10 @@ msgstr "マウスホイール"
 #: ../app/widgets/gimpcontrollerwheel.c:250
 msgid "Mouse Wheel Events"
 msgstr "マウスホイールのイベント"
+
+#: ../app/widgets/gimpcursorview.c:179
+msgid "Units"
+msgstr "単位"
 
 #: ../app/widgets/gimpdataeditor.c:226
 msgid "Save"
@@ -10520,17 +10442,17 @@ msgstr "レイヤー数:"
 msgid "Number of paths:"
 msgstr "パス数:"
 
-#: ../app/widgets/gimpimagepropview.c:376
+#: ../app/widgets/gimpimagepropview.c:377
 #, c-format
 msgid "pixels/%s"
 msgstr "ピクセル/%s"
 
-#: ../app/widgets/gimpimagepropview.c:378
+#: ../app/widgets/gimpimagepropview.c:379
 #, c-format
 msgid "%g x %g %s"
 msgstr "%g x %g %s"
 
-#: ../app/widgets/gimpimagepropview.c:398
+#: ../app/widgets/gimpimagepropview.c:399
 msgid "colors"
 msgstr "色"
 
@@ -10567,23 +10489,27 @@ msgid ""
 "When enabled the dialog automatically follows the image you are working on."
 msgstr "有効にすると、現在作業中の画像にダイアログが自動的に追従します。"
 
-#: ../app/widgets/gimpmessagebox.c:462
+#: ../app/widgets/gimpmessagebox.c:467
 #, c-format
 msgid "Message repeated %d times."
 msgstr "%d 回同じメッセージが繰り返されました"
 
-#: ../app/widgets/gimpmessagebox.c:464
+#: ../app/widgets/gimpmessagebox.c:469
 msgid "Message repeated once."
 msgstr "同じメッセージが繰り返されました"
 
 #: ../app/widgets/gimppaletteeditor.c:274
 #: ../app/widgets/gimppaletteeditor.c:695
 msgid "Undefined"
-msgstr "名前無し"
+msgstr "名前なし"
 
 #: ../app/widgets/gimppaletteeditor.c:282
 msgid "Columns:"
 msgstr "列:"
+
+#: ../app/widgets/gimpprogressdialog.c:252
+msgid "Progress"
+msgstr "進度"
 
 #: ../app/widgets/gimpselectiondata.c:258
 #, c-format
@@ -10600,12 +10526,12 @@ msgstr ""
 msgid "Invalid UTF-8"
 msgstr "不適切な UTF-8 文字列"
 
-#: ../app/widgets/gimpsizebox.c:454
+#: ../app/widgets/gimpsizebox.c:489
 #, c-format
 msgid "%d x %d dpi"
 msgstr "%d x %d dpi"
 
-#: ../app/widgets/gimpsizebox.c:456
+#: ../app/widgets/gimpsizebox.c:491
 #, c-format
 msgid "%d dpi"
 msgstr "%d dpi"
@@ -10667,16 +10593,16 @@ msgstr "コメント(_N):"
 msgid "_Name:"
 msgstr "名前(_N):"
 
-#: ../app/widgets/gimptemplateeditor.c:572
+#: ../app/widgets/gimptemplateeditor.c:573
 msgid "_Icon:"
 msgstr "アイコン(_I):"
 
-#: ../app/widgets/gimptemplateeditor.c:695
+#: ../app/widgets/gimptemplateeditor.c:700
 #, c-format
 msgid "%d x %d dpi, %s"
 msgstr "%d x %d dpi, %s"
 
-#: ../app/widgets/gimptemplateeditor.c:697
+#: ../app/widgets/gimptemplateeditor.c:702
 #, c-format
 msgid "%d dpi, %s"
 msgstr "%d dpi, %s"
@@ -10798,31 +10724,31 @@ msgstr "パスの並び替え"
 msgid "Empty Path"
 msgstr "空のパス"
 
-#: ../app/widgets/gimpviewablebox.c:75
+#: ../app/widgets/gimpviewablebox.c:76
 msgid "Open the brush selection dialog"
 msgstr "ブラシ選択ダイアログを開く"
 
-#: ../app/widgets/gimpviewablebox.c:94
+#: ../app/widgets/gimpviewablebox.c:95
 msgid "Open the pattern selection dialog"
 msgstr "パターン選択ダイアログを開く"
 
-#: ../app/widgets/gimpviewablebox.c:120
+#: ../app/widgets/gimpviewablebox.c:122
 msgid "Open the gradient selection dialog"
 msgstr "グラデーション選択ダイアログを開く"
 
-#: ../app/widgets/gimpviewablebox.c:132
+#: ../app/widgets/gimpviewablebox.c:134
 msgid "Reverse"
 msgstr "反転"
 
-#: ../app/widgets/gimpviewablebox.c:168
+#: ../app/widgets/gimpviewablebox.c:170
 msgid "Open the palette selection dialog"
 msgstr "パレット選択ダイアログを開く"
 
-#: ../app/widgets/gimpviewablebox.c:187
+#: ../app/widgets/gimpviewablebox.c:189
 msgid "Open the font selection dialog"
 msgstr "フォント選択ダイアログを開く"
 
-#: ../app/widgets/gimpwidgets-utils.c:820
+#: ../app/widgets/gimpwidgets-utils.c:818
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "ファイル '%s' 中に無効な UTF-8 データがあります。"
@@ -10996,6 +10922,103 @@ msgstr "ツールボックスを可視化してください!"
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "'%s' を開始できません: %s"
+
+#~ msgid "Procedural Database"
+#~ msgstr "プロシージャデータベース"
+
+#~ msgid "Brush"
+#~ msgstr "ブラシ"
+
+#~ msgid "Brush UI"
+#~ msgstr "ブラシ UI"
+
+#~ msgid "Buffer procedures"
+#~ msgstr "バッファプロシージャ"
+
+#~ msgid "Convert"
+#~ msgstr "変換"
+
+#~ msgid "Display procedures"
+#~ msgstr "Display プロシージャ"
+
+#~ msgid "Drawable procedures"
+#~ msgstr "描画対象プロシージャ"
+
+#~ msgid "Transformation procedures"
+#~ msgstr "変換プロシージャ"
+
+#~ msgid "Edit procedures"
+#~ msgstr "プロシージャを編集"
+
+#~ msgid "File Operations"
+#~ msgstr "ファイル操作"
+
+#~ msgid "Floating selections"
+#~ msgstr "フローティング選択"
+
+#~ msgid "Font UI"
+#~ msgstr "フォント UI"
+
+#~ msgid "Gimprc procedures"
+#~ msgstr "Gimprc プロシージャ"
+
+#~ msgid "Gradient"
+#~ msgstr "グラデーション"
+
+#~ msgid "Gradient UI"
+#~ msgstr "グラデーション UI"
+
+#~ msgid "Image grid procedures"
+#~ msgstr "画像グリッドプロシージャ"
+
+#~ msgid "Guide procedures"
+#~ msgstr "ガイドプロシージャ"
+
+#~ msgid "Help procedures"
+#~ msgstr "ヘルププロシージャ"
+
+#~ msgid "Message procedures"
+#~ msgstr "メッセージプロシージャ"
+
+#~ msgid "Miscellaneous"
+#~ msgstr "その他"
+
+#~ msgid "Paint Tool procedures"
+#~ msgstr "描画ツールプロシージャ"
+
+#~ msgid "Palette"
+#~ msgstr "パレット"
+
+#~ msgid "Palette UI"
+#~ msgstr "パレット UI"
+
+#~ msgid "Parasite procedures"
+#~ msgstr "パラサイトプロシージャ"
+
+#~ msgid "Pattern UI"
+#~ msgstr "パターン UI"
+
+#~ msgid "Plug-in"
+#~ msgstr "プラグイン"
+
+#~ msgid "Procedural database"
+#~ msgstr "プロシージャデータベース"
+
+#~ msgid "Image mask"
+#~ msgstr "画像マスク"
+
+#~ msgid "Selection Tool procedures"
+#~ msgstr "選択ツールプロシージャ"
+
+#~ msgid "Text procedures"
+#~ msgstr "文字プロシージャ"
+
+#~ msgid "Transform Tool procedures"
+#~ msgstr "変換ツールプロシージャ"
+
+#~ msgid "Fatal parse error in pattern file '%s': Could not read %d bytes: %s"
+#~ msgstr ""
+#~ "パターン '%s' で致命的な解析エラー: %d バイト読み込めませんでした: %s"
 
 #~ msgid "Center"
 #~ msgstr "中心"
@@ -11376,7 +11399,7 @@ msgstr "'%s' を開始できません: %s"
 #~ msgstr "変換保存の設定"
 
 #~ msgid "Cannot raise a layer without alpha."
-#~ msgstr "アルファチャンネルの無いレイヤーを前面には出せません。"
+#~ msgstr "アルファチャンネルのないレイヤーを前面には出せません。"
 
 #~ msgid "Layer '%s' has no alpha. Layer was placed above it."
 #~ msgstr ""
@@ -11777,7 +11800,7 @@ msgstr "'%s' を開始できません: %s"
 #~ msgstr "インデックスパレットに色を追加"
 
 #~ msgid "No preview available"
-#~ msgstr "プレビュー無し"
+#~ msgstr "プレビューなし"
 
 #~ msgid "Indexed Palette"
 #~ msgstr "インデックスパレット"

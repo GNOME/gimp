@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-30 12:27+0900\n"
-"PO-Revision-Date: 2005-10-26 23:00+0900\n"
+"POT-Creation-Date: 2005-11-12 14:00+0900\n"
+"PO-Revision-Date: 2005-11-04 23:00+0900\n"
 "Last-Translator: OKANO Takayoshi <kano@na.rim.or.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -277,16 +277,18 @@ msgstr "日付から検索中"
 msgid "Searching by type"
 msgstr "型から検索中"
 
-#: ../libgimp/gimpprocbrowserdialog.c:484
+#: ../libgimp/gimpprocbrowserdialog.c:485
 #, c-format
-msgid "%d procedures"
-msgstr "%d 個のプロシージャ"
+msgid "%d procedure"
+msgid_plural "%d procedures"
+msgstr[0] "%d 個のプロシージャ"
+msgstr[1] "%d 個のプロシージャ"
 
-#: ../libgimp/gimpprocbrowserdialog.c:491
+#: ../libgimp/gimpprocbrowserdialog.c:494
 msgid "No matches for your query"
 msgstr "条件に合致するものがありません"
 
-#: ../libgimp/gimpprocbrowserdialog.c:495
+#: ../libgimp/gimpprocbrowserdialog.c:498
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
@@ -294,7 +296,7 @@ msgstr[0] "1 個のプロシージャが合致しました"
 msgstr[1] "%d 個のプロシージャが合致しました"
 
 #. count label
-#: ../libgimp/gimpprocbrowserdialog.c:544 ../libgimpwidgets/gimpbrowser.c:145
+#: ../libgimp/gimpprocbrowserdialog.c:547 ../libgimpwidgets/gimpbrowser.c:145
 msgid "No matches"
 msgstr "合致するものがありません"
 
@@ -662,52 +664,54 @@ msgstr "GIMP 拡張"
 msgid "Temporary Procedure"
 msgstr "一時プロシージャ"
 
-#: ../libgimpbase/gimpmemsize.c:177
+#: ../libgimpbase/gimpmemsize.c:180
 #, c-format
-msgid "%d Bytes"
-msgstr "%d バイト"
+msgid "%d Byte"
+msgid_plural "%d Bytes"
+msgstr[0] "%d バイト"
+msgstr[1] "%d バイト"
 
-#: ../libgimpbase/gimpmemsize.c:182
+#: ../libgimpbase/gimpmemsize.c:186
 #, c-format
 msgid "%.2f KB"
 msgstr "%.2f KB"
 
-#: ../libgimpbase/gimpmemsize.c:186
+#: ../libgimpbase/gimpmemsize.c:190
 #, c-format
 msgid "%.1f KB"
 msgstr "%.1f KB"
 
-#: ../libgimpbase/gimpmemsize.c:190
+#: ../libgimpbase/gimpmemsize.c:194
 #, c-format
 msgid "%d KB"
 msgstr "%d KB"
 
-#: ../libgimpbase/gimpmemsize.c:197
+#: ../libgimpbase/gimpmemsize.c:201
 #, c-format
 msgid "%.2f MB"
 msgstr "%.2f MB"
 
-#: ../libgimpbase/gimpmemsize.c:201
+#: ../libgimpbase/gimpmemsize.c:205
 #, c-format
 msgid "%.1f MB"
 msgstr "%.1f MB"
 
-#: ../libgimpbase/gimpmemsize.c:205
+#: ../libgimpbase/gimpmemsize.c:209
 #, c-format
 msgid "%d MB"
 msgstr "%d MB"
 
-#: ../libgimpbase/gimpmemsize.c:212
+#: ../libgimpbase/gimpmemsize.c:216
 #, c-format
 msgid "%.2f GB"
 msgstr "%.2f GB"
 
-#: ../libgimpbase/gimpmemsize.c:216
+#: ../libgimpbase/gimpmemsize.c:220
 #, c-format
 msgid "%.1f GB"
 msgstr "%.1f GB"
 
-#: ../libgimpbase/gimpmemsize.c:220
+#: ../libgimpbase/gimpmemsize.c:224
 #, c-format
 msgid "%d GB"
 msgstr "%d GB"
@@ -1022,10 +1026,12 @@ msgstr "市松模様のスタイル"
 msgid "_Preview"
 msgstr "プレビュー(_P)"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1868
+#: ../libgimpwidgets/gimppropwidgets.c:1872
 #, c-format
-msgid "This text input field is limited to %d characters."
-msgstr "この文字入力フィールドは %d 文字に制限されています。"
+msgid "This text input field is limited to %d character."
+msgid_plural "This text input field is limited to %d characters."
+msgstr[0] "この文字入力フィールドは %d 文字に制限されています。"
+msgstr[1] "この文字入力フィールドは %d 文字に制限されています。"
 
 #: ../libgimpwidgets/gimpresolutionentry.c:382
 #, c-format
@@ -1102,7 +1108,7 @@ msgstr "回転(_R)"
 
 #: ../libgimpwidgets/gimpstock.c:301
 msgid "_Shear"
-msgstr "せん断変形(_S)"
+msgstr "剪断変形(_S)"
 
 #: ../libgimpwidgets/gimpunitmenu.c:302
 msgid "More..."
