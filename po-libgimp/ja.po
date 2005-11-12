@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp gimp-2-2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-30 12:36+0900\n"
-"PO-Revision-Date: 2005-10-26 23:00+0900\n"
+"POT-Creation-Date: 2005-11-12 13:53+0900\n"
+"PO-Revision-Date: 2005-11-04 23:00+0900\n"
 "Last-Translator: <kano@na.rim.or.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -517,7 +517,7 @@ msgstr "ギガバイト"
 
 #: ../libgimpwidgets/gimppatheditor.c:243
 msgid "Writable"
-msgstr "書きこみ可能"
+msgstr "書き込み可能"
 
 #: ../libgimpwidgets/gimppatheditor.c:252
 msgid "Folder"
@@ -614,7 +614,7 @@ msgstr "回転(_R)"
 
 #: ../libgimpwidgets/gimpstock.c:293
 msgid "_Shear"
-msgstr "せん断変形(_S)"
+msgstr "剪断変形(_S)"
 
 #: ../libgimpwidgets/gimpunitmenu.c:302
 msgid "More..."

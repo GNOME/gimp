@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-2-2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-30 12:42+0900\n"
-"PO-Revision-Date: 2005-10-26 23:00+0900\n"
+"POT-Creation-Date: 2005-11-12 13:51+0900\n"
+"PO-Revision-Date: 2005-11-04 23:00+0900\n"
 "Last-Translator: <kano@na.rim.or.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -1242,7 +1242,7 @@ msgstr "切り取り元とすべきアクティブなレイヤーがありませ
 
 #: ../app/actions/edit-commands.c:349 ../app/actions/edit-commands.c:386
 msgid "(Unnamed Buffer)"
-msgstr "(名前の無いバッファ)"
+msgstr "(名前のないバッファ)"
 
 #: ../app/actions/edit-commands.c:374
 msgid "There is no active layer or channel to copy from."
@@ -1399,7 +1399,7 @@ msgstr "画像を開く"
 
 #: ../app/actions/file-commands.c:451
 msgid "(Unnamed Template)"
-msgstr "(名前の無いテンプレート)"
+msgstr "(名前のないテンプレート)"
 
 #: ../app/actions/file-commands.c:500
 #, c-format
@@ -4229,7 +4229,7 @@ msgstr "三角波"
 
 #: ../app/core/core-enums.c:830
 msgid "No thumbnails"
-msgstr "サムネイル無し"
+msgstr "サムネイルなし"
 
 #: ../app/core/core-enums.c:831
 msgid "Normal (128x128)"
@@ -5063,7 +5063,7 @@ msgstr "これ以上レイヤーを前面に移動させられません"
 
 #: ../app/core/gimpimage.c:2837 ../app/core/gimpimage.c:2887
 msgid "Cannot raise a layer without alpha."
-msgstr "アルファチャンネルの無いレイヤーを前面には出せません。"
+msgstr "アルファチャンネルのないレイヤーを前面には出せません。"
 
 #: ../app/core/gimpimage.c:2842
 msgid "Raise Layer"
@@ -5987,7 +5987,7 @@ msgstr "モジュールのパス"
 
 #: ../app/dialogs/module-dialog.c:418
 msgid "<No modules>"
-msgstr "<モジュール 無し>"
+msgstr "<モジュール なし>"
 
 #: ../app/dialogs/module-dialog.c:430 ../app/dialogs/module-dialog.c:439
 msgid "On disk"
@@ -10352,7 +10352,7 @@ msgstr "同じメッセージが繰り返されました"
 #: ../app/widgets/gimppaletteeditor.c:258
 #: ../app/widgets/gimppaletteeditor.c:999
 msgid "Undefined"
-msgstr "名前無し"
+msgstr "名前なし"
 
 #: ../app/widgets/gimppaletteeditor.c:266
 msgid "Columns:"
@@ -10884,7 +10884,7 @@ msgstr "画像エディタ"
 #~ msgstr "インデックスパレットに色を追加"
 
 #~ msgid "No preview available"
-#~ msgstr "プレビュー無し"
+#~ msgstr "プレビューなし"
 
 #~ msgid "Indexed Palette"
 #~ msgstr "インデックスパレット"
