@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp gimp-2-2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-30 12:38+0900\n"
-"PO-Revision-Date: 2005-10-26 23:00+0900\n"
+"POT-Creation-Date: 2005-11-12 13:54+0900\n"
+"PO-Revision-Date: 2005-11-04 23:00+0900\n"
 "Last-Translator: <kano@na.rim.or.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -997,7 +997,7 @@ msgstr "指向性光源"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:660
 msgid "No light"
-msgstr "光源無し"
+msgstr "光源なし"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:674
 msgid "Lightsource type:"
@@ -1594,7 +1594,7 @@ msgstr "連続的なグラデーション"
 
 #: ../plug-ins/common/CML_explorer.c:230
 msgid "Continuous grad. w/o gap"
-msgstr "ギャップ無しの連続的グラデーション"
+msgstr "ギャップなしの連続的グラデーション"
 
 #: ../plug-ins/common/CML_explorer.c:231
 msgid "Random, ch. independent"
@@ -7260,7 +7260,7 @@ msgstr "区切りの数"
 
 #: ../plug-ins/common/tiler.c:66
 msgid "_Make Seamless"
-msgstr "繋ぎ目無しタイル(_M)"
+msgstr "繋ぎ目なしタイル(_M)"
 
 #: ../plug-ins/common/tiler.c:322
 msgid "Tiler..."
@@ -8181,7 +8181,7 @@ msgstr "%d 個のプロシージャ"
 #: ../plug-ins/dbbrowser/gimpprocbrowser.c:476
 #: ../plug-ins/dbbrowser/plugin-browser.c:516
 msgid "No matches"
-msgstr "マッチ無し"
+msgstr "マッチなし"
 
 #.
 #. *  Scales
@@ -9165,7 +9165,7 @@ msgstr "タイル化可能"
 
 #: ../plug-ins/gimpressionist/general.c:198
 msgid "Selects if the resulting image should be seamlessly tileable"
-msgstr "結果画像が継目無しに並べられるようにするかどうか"
+msgstr "結果画像が継目なしに並べられるようにするかどうか"
 
 #: ../plug-ins/gimpressionist/general.c:203
 msgid "Drop Shadow"
@@ -9999,7 +9999,7 @@ msgid ""
 "create the most common image map type - image collection of \"thumbnails\", "
 "suitable for navigation bars."
 msgstr ""
-"ガイドは画像を覆う前もって定められる長方形です。個々の幅、高さ、間隔\n"
+"ガイドは画像を覆う前もって定められる矩形です。個々の幅、高さ、間隔\n"
 "によって定義します。これはナビゲーション・バーに適した、\"サムネイル\"\n"
 "の共通イメージマップ型-コレクション画像をあなたが素早く作成することを\n"
 "可能にします。"
@@ -10109,7 +10109,7 @@ msgstr "非選択"
 
 #: ../plug-ins/imagemap/imap_cmd_unselect_all.c:53
 msgid "Unselect All"
-msgstr "選択無し"
+msgstr "選択なし"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:196
 msgid "Link Type"
@@ -12002,7 +12002,7 @@ msgstr "エラー: XJT プロパティファイル %s が空です。"
 #~ msgstr "EOF が現れました "
 
 #~ msgid "No memory for mapping colors"
-#~ msgstr "色をマップするためのメモリが無い"
+#~ msgstr "色をマップするためのメモリがない"
 
 #~ msgid "Selection:"
 #~ msgstr "選択:"
@@ -12880,7 +12880,7 @@ msgstr "エラー: XJT プロパティファイル %s が空です。"
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Map/_Make Seamless"
-#~ msgstr "<Image>/フィルタ/マップ/繋ぎ目無しタイル..."
+#~ msgstr "<Image>/フィルタ/マップ/繋ぎ目なしタイル..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Enhance/_Unsharp Mask..."
@@ -13224,7 +13224,7 @@ msgstr "エラー: XJT プロパティファイル %s が空です。"
 #~ msgstr "現在"
 
 #~ msgid "Can't open bzip2ed file without a sensible extension"
-#~ msgstr "bzip2 圧縮されたファイルは正しい拡張子無しでは開けません"
+#~ msgstr "bzip2 圧縮されたファイルは正しい拡張子なしでは開けません"
 
 #~ msgid "With _Decorations"
 #~ msgstr "ウィンドウ飾りも含める(_D)"
@@ -14542,7 +14542,7 @@ msgstr "エラー: XJT プロパティファイル %s が空です。"
 #~ msgstr "フレームピンポン"
 
 #~ msgid "Frame None"
-#~ msgstr "フレーム無し"
+#~ msgstr "フレームなし"
 
 #~ msgid "Move Path"
 #~ msgstr "パス移動"
@@ -14690,7 +14690,7 @@ msgstr "エラー: XJT プロパティファイル %s が空です。"
 #~ "(0 == No Keyframe)"
 #~ msgstr ""
 #~ "コントロールポイントをキーフレーム番号で修正\n"
-#~ "(0 == キーフレーム無し)"
+#~ "(0 == キーフレームなし)"
 
 #~ msgid "Add Point"
 #~ msgstr "端点追加"
@@ -15179,7 +15179,7 @@ msgstr "エラー: XJT プロパティファイル %s が空です。"
 #~ msgstr "ポジション色ディザリング"
 
 #~ msgid "No Color Dithering"
-#~ msgstr "色ディザリング無し"
+#~ msgstr "色ディザリングなし"
 
 #~ msgid "Custom Palette"
 #~ msgstr "カスタムパレット"
@@ -15698,7 +15698,7 @@ msgstr "エラー: XJT プロパティファイル %s が空です。"
 
 #, fuzzy
 #~ msgid "Spot Light"
-#~ msgstr "光源無し"
+#~ msgstr "光源なし"
 
 #, fuzzy
 #~ msgid "GDynText Layer "
