@@ -455,8 +455,9 @@ gimp_data_factory_remove_cb (GimpDataFactory *factory,
 void
 gimp_data_factory_data_free (GimpDataFactory *factory)
 {
-  return gimp_data_factory_data_foreach (factory,
-                                         gimp_data_factory_remove_cb, NULL);
+  g_return_if_fail (GIMP_IS_DATA_FACTORY (factory));
+
+  gimp_data_factory_data_foreach (factory, gimp_data_factory_remove_cb, NULL);
 }
 
 GimpData *
