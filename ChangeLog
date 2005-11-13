@@ -1,3 +1,10 @@
+2005-11-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_mask_bounds):
+	return TRUE only if the selection intersects with the viewport, as
+	expected by gimp_display_shell_selection_invis(), which is the
+	only caller of this function. Fixes bug #319029.
+
 2005-11-13  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/sgi/sgi.c (run): fixed cut'n'paste bug that broke saving.

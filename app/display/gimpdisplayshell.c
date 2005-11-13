@@ -1193,8 +1193,6 @@ gimp_display_shell_mask_bounds (GimpDisplayShell *shell,
                                 gint             *y2)
 {
   GimpLayer *layer;
-  gint       off_x;
-  gint       off_y;
 
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
   g_return_val_if_fail (x1 != NULL, FALSE);
@@ -1205,6 +1203,9 @@ gimp_display_shell_mask_bounds (GimpDisplayShell *shell,
   /*  If there is a floating selection, handle things differently  */
   if ((layer = gimp_image_floating_sel (shell->gdisp->gimage)))
     {
+      gint off_x;
+      gint off_y;
+
       gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
 
       if (! gimp_channel_bounds (gimp_image_get_mask (shell->gdisp->gimage),
@@ -1238,7 +1239,7 @@ gimp_display_shell_mask_bounds (GimpDisplayShell *shell,
   *x2 = CLAMP (*x2, 0, shell->disp_width);
   *y2 = CLAMP (*y2, 0, shell->disp_height);
 
-  return TRUE;
+  return ((*x2 - *x1) > 0) && ((*y2 - *y1) > 0);
 }
 
 void
