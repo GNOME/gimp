@@ -2108,14 +2108,14 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw)
                          dx1, dy1,
                          dx2, dy1);
   gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                         dx1, dy1,
-                         dx1, dy2);
+                         dx1, dy2 - 1,
+                         dx2, dy2 - 1);
   gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                         dx2, dy2,
-                         dx1, dy2);
+                         dx1, dy1 + 1,
+                         dx1, dy2 - 1);
   gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                         dx2, dy2,
-                         dx2, dy1);
+                         dx2 - 1, dy1 + 1,
+                         dx2 - 1, dy2 - 1);
 }
 
 void

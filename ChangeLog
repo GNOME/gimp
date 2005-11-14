@@ -1,3 +1,7 @@
+2005-11-14  Karine Delvare  <kdelvare@nerim.net>
+
+	* app/tools/gimprectangletool.c: better looking rectangle boundary.
+
 2005-11-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell.c (gimp_display_shell_mask_bounds):
