@@ -10,21 +10,20 @@
 # Roman Joost <romanofski@gimp.org>, 2005.
 # Hendrik Richter <hendi@gnome-de.org>, 2005.
 # Jens Seidel <jseidel@cvs.gnome.org>, 2005.
-# Jens Seidel <jseidel@cvs.gnome.org>, 2005.
 # 
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-05 13:56+0100\n"
-"PO-Revision-Date: 2005-11-02 17:04+0100\n"
+"POT-Creation-Date: 2005-11-15 15:10+0100\n"
+"PO-Revision-Date: 2005-11-15 15:22+0100\n"
 "Last-Translator: Hendrik Brandt <heb@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);"
 
 #: ../app/app_procs.c:134
 msgid "(This console window will close in ten seconds)\n"
@@ -146,12 +145,12 @@ msgstr "Alle Warnungen als kritisch einstufen"
 msgid "Output a gimprc file with default settings"
 msgstr "Eine gimprc-Datei mit Vorgabeeinstellungen ausgeben"
 
-#: ../app/main.c:248 ../app/dialogs/about-dialog.c:61
+#: ../app/main.c:250 ../app/dialogs/about-dialog.c:61
 #: ../desktop/gimp.desktop.in.in.h:2
 msgid "GNU Image Manipulation Program"
 msgstr "GNU Image Manipulation Program"
 
-#: ../app/main.c:292
+#: ../app/main.c:294
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -159,7 +158,7 @@ msgstr ""
 "GIMP konnte die grafische Benutzeroberfläche nicht initialisieren.\n"
 "Stellen Sie sicher, dass Ihr Bildschirm korrekt eingerichtet ist."
 
-#: ../app/main.c:443 ../tools/gimp-remote.c:315
+#: ../app/main.c:445 ../tools/gimp-remote.c:315
 #, c-format
 msgid "%s version %s"
 msgstr "%s Version %s"
@@ -3596,7 +3595,7 @@ msgstr "Faser mischen"
 msgid "Color erase"
 msgstr "Farbe entfernen"
 
-#: ../app/base/tile-swap.c:483
+#: ../app/base/tile-swap.c:487
 msgid ""
 "Unable to open swap file. The Gimp has run out of memory and cannot use the "
 "swap file. Some parts of your images may be corrupted. Try to save your work "
@@ -3640,6 +3639,7 @@ msgstr ""
 "s« wurde eine Sicherungskopie Ihrer Konfiguration gespeichert."
 
 #: ../app/config/gimprc.c:296 ../app/config/gimprc.c:309
+#: ../app/plug-in/plug-ins.c:141
 #, c-format
 msgid "Parsing '%s'\n"
 msgstr "»%s« wird verarbeitet\n"
@@ -3930,9 +3930,8 @@ msgstr ""
 "Pinsel über GIMP-Sitzungen hinweg merken."
 
 #: ../app/config/gimprc-blurbs.h:270
-#, fuzzy
 msgid "Add all opened and saved files to the document history on disk."
-msgstr "Möchten Sie alle Einträge aus dem Journal entfernen?"
+msgstr "Alle geöffneten und gespeicherten Dateien im Dokumentenindex speichern."
 
 #: ../app/config/gimprc-blurbs.h:273
 msgid "Save the positions and sizes of the main dialogs when the GIMP exits."
@@ -4218,8 +4217,8 @@ msgstr ""
 "andernfalls wird die Adresse mit einem vorangehenden Leerzeichen direkt "
 "hinter den Befehl gesetzt."
 
-#: ../app/config/gimprc-deserialize.c:135 ../app/core/gimp-modules.c:130
-#: ../app/core/gimp-units.c:160 ../app/gui/session.c:157
+#: ../app/config/gimprc-deserialize.c:135 ../app/core/gimp-modules.c:134
+#: ../app/core/gimp-units.c:164 ../app/gui/session.c:160
 #: ../app/plug-in/plug-in-rc.c:204
 msgid "fatal parse error"
 msgstr "Schwerwiegender Fehler bei Syntaxanalyse"
@@ -4699,9 +4698,9 @@ msgstr "Vordergrund auswählen"
 msgid "EEK: can't undo"
 msgstr "EEK: kann nicht rückgängig gemacht werden"
 
-#: ../app/core/gimp-contexts.c:135 ../app/gui/session.c:246
-#: ../app/menus/menus.c:405 ../app/tools/gimp-tools.c:418
-#: ../app/widgets/gimpdevices.c:229
+#: ../app/core/gimp-contexts.c:141 ../app/gui/session.c:252
+#: ../app/menus/menus.c:413 ../app/tools/gimp-tools.c:432
+#: ../app/widgets/gimpdevices.c:235
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
 msgstr "Öffnen von '%s' schlug fehl: %s"
@@ -5035,7 +5034,7 @@ msgstr "Nach Farbe auswählen"
 msgid "Could not delete '%s': %s"
 msgstr "»%s« konnte nicht gelöscht werden: %s"
 
-#: ../app/core/gimpdatafactory.c:441 ../app/core/gimpdatafactory.c:614
+#: ../app/core/gimpdatafactory.c:435 ../app/core/gimpdatafactory.c:609
 #, c-format
 msgid ""
 "Failed to save data:\n"
@@ -5046,17 +5045,17 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/core/gimpdatafactory.c:516 ../app/core/gimpdatafactory.c:519
+#: ../app/core/gimpdatafactory.c:511 ../app/core/gimpdatafactory.c:514
 #: ../app/core/gimpitem.c:344 ../app/core/gimpitem.c:347
 msgid "copy"
 msgstr "Kopie"
 
-#: ../app/core/gimpdatafactory.c:528 ../app/core/gimpitem.c:356
+#: ../app/core/gimpdatafactory.c:523 ../app/core/gimpitem.c:356
 #, c-format
 msgid "%s copy"
 msgstr "%s-Kopie"
 
-#: ../app/core/gimpdatafactory.c:755
+#: ../app/core/gimpdatafactory.c:750
 #, c-format
 msgid ""
 "Failed to load data:\n"
@@ -6890,11 +6889,11 @@ msgstr "_Arbeitsmodus:"
 
 #: ../app/dialogs/preferences-dialog.c:2188
 msgid "_Display rendering intent:"
-msgstr ""
+msgstr "_Farbanpassung des Bildschirms:"
 
 #: ../app/dialogs/preferences-dialog.c:2191
 msgid "_Softproof rendering intent:"
-msgstr ""
+msgstr "Fa_rbanpassung der Drucksimulation:"
 
 #: ../app/dialogs/preferences-dialog.c:2220
 msgid "_Try to obtain the monitor profile from the X server"
@@ -7889,7 +7888,7 @@ msgstr "Ungültige Zeichenfolge in URI"
 msgid "GIMP Startup"
 msgstr "GIMP Start"
 
-#: ../app/gui/themes.c:231 ../app/plug-in/plug-ins.c:271
+#: ../app/gui/themes.c:231 ../app/plug-in/plug-ins.c:274
 #, c-format
 msgid "Writing '%s'\n"
 msgstr "»%s« wird geschrieben\n"
@@ -8087,30 +8086,30 @@ msgstr "Ressourcenkonfiguration"
 #. query any plug-ins that have changed since we last wrote out
 #. *  the pluginrc file
 #.
-#: ../app/plug-in/plug-ins.c:151
+#: ../app/plug-in/plug-ins.c:154
 msgid "Querying new Plug-ins"
 msgstr "Neue Plugins werden abgefragt"
 
-#: ../app/plug-in/plug-ins.c:177
+#: ../app/plug-in/plug-ins.c:181
 #, c-format
 msgid "Querying plug-in: '%s'\n"
 msgstr "Plugin »%s« wird abgefragt\n"
 
 #. initialize the plug-ins
-#: ../app/plug-in/plug-ins.c:187
+#: ../app/plug-in/plug-ins.c:189
 msgid "Initializing Plug-ins"
 msgstr "Plugins werden initialisiert"
 
-#: ../app/plug-in/plug-ins.c:211
+#: ../app/plug-in/plug-ins.c:214
 #, c-format
 msgid "Initializing plug-in: '%s'\n"
 msgstr "Plugin »%s« wird initialisiert\n"
 
-#: ../app/plug-in/plug-ins.c:338
+#: ../app/plug-in/plug-ins.c:341
 msgid "Starting Extensions"
 msgstr "Erweiterungen werden gestartet"
 
-#: ../app/plug-in/plug-ins.c:345
+#: ../app/plug-in/plug-ins.c:348
 #, c-format
 msgid "Starting extension: '%s'\n"
 msgstr "Erweiterung »%s« wird gestartet\n"
@@ -8285,7 +8284,7 @@ msgstr "Anzahl der Gitterlinien"
 msgid "Grid line spacing"
 msgstr "Abstand der Gitterlinien"
 
-#: ../app/tools/gimp-tools.c:312
+#: ../app/tools/gimp-tools.c:315
 msgid "This tool has no options."
 msgstr "Dieses Werkzeug verfügt über keine Einstellungsmöglichkeiten."
 
@@ -8558,20 +8557,20 @@ msgstr "Auswahlmodus  (%s)"
 msgid "Use info window  (%s)"
 msgstr "Info-Fenster verwenden (%s)"
 
-#: ../app/tools/gimpcolorpickertool.c:101
+#: ../app/tools/gimpcolorpickertool.c:103
 msgid "Color Picker"
 msgstr "Farbpipette"
 
-#: ../app/tools/gimpcolorpickertool.c:102
+#: ../app/tools/gimpcolorpickertool.c:104
 msgid "Pick colors from the image"
 msgstr "Farben aus dem Bild wählen"
 
-#: ../app/tools/gimpcolorpickertool.c:103
+#: ../app/tools/gimpcolorpickertool.c:105
 msgid "C_olor Picker"
 msgstr "Fa_rbpipette"
 
 #. tool->gdisp->shell
-#: ../app/tools/gimpcolorpickertool.c:355
+#: ../app/tools/gimpcolorpickertool.c:382
 msgid "Color Picker Information"
 msgstr "Informationen zur Farbpipette"
 
@@ -8625,14 +8624,12 @@ msgid "_Crop & Resize"
 msgstr "_Zuschneiden / Größe ändern"
 
 #: ../app/tools/gimpcroptool.c:252
-#, fuzzy
 msgid "Click or press enter to crop."
-msgstr "Klick löscht diesen Anker."
+msgstr "Anklicken oder die Eingabetaste drücken, um zuzuschneiden."
 
 #: ../app/tools/gimpcroptool.c:255
-#, fuzzy
 msgid "Click or press enter to resize."
-msgstr "Anklicken um Vorschau zu erstellen"
+msgstr "Anklicken oder die Eingabetaste drücken, um die Größe zu ändern."
 
 #: ../app/tools/gimpcurvestool.c:146
 msgid "Adjust color curves"
@@ -8667,13 +8664,12 @@ msgid "Curves for indexed layers cannot be adjusted."
 msgstr "Kurven können bei indizierten Ebenen nicht angepaßt werden."
 
 #: ../app/tools/gimpcurvestool.c:391
-#, fuzzy
 msgid "Click to add a control point."
-msgstr "Klick wählt zu bearbeitenden Pfad."
+msgstr "Klicken, um einen Kontrollpunkt hinzuzufügen."
 
 #: ../app/tools/gimpcurvestool.c:396
 msgid "Click to add control points to all channels."
-msgstr ""
+msgstr "Anklicken, um Kontrollpunkte zu allen Kanälen hinzuzufügen."
 
 #: ../app/tools/gimpcurvestool.c:593 ../app/tools/gimplevelstool.c:407
 msgid "Cha_nnel:"
@@ -8776,7 +8772,7 @@ msgstr "_Freie Auswahl"
 
 #: ../app/tools/gimpforegroundselectoptions.c:102
 msgid "Allow to select multiple disjoint objects"
-msgstr ""
+msgstr "Das Auswählen verschiedener, getrennter Objekte ermöglichen"
 
 #: ../app/tools/gimpforegroundselectoptions.c:112
 msgid "Size of the brush used for refinements"
@@ -8804,7 +8800,7 @@ msgstr "Empfindlichkeit des gelben/blauen Anteils"
 
 #: ../app/tools/gimpforegroundselectoptions.c:240
 msgid "Discontinuous"
-msgstr ""
+msgstr "Unterbrochen"
 
 #: ../app/tools/gimpforegroundselectoptions.c:246
 msgid "Interactive refinement"
@@ -9299,24 +9295,24 @@ msgstr "Höhe"
 msgid "Aspect"
 msgstr "Perspektive"
 
-#: ../app/tools/gimprectangletool.c:1822 ../app/tools/gimprectangletool.c:2249
+#: ../app/tools/gimprectangletool.c:1770 ../app/tools/gimprectangletool.c:2197
 msgid "Rectangle: "
 msgstr "Rechteck: "
 
-#: ../app/tools/gimprectangletool.c:2631
+#: ../app/tools/gimprectangletool.c:2579
 msgid "1 "
 msgstr "1 "
 
-#: ../app/tools/gimprectangletool.c:2632
+#: ../app/tools/gimprectangletool.c:2580
 msgid "2 "
 msgstr "2 "
 
-#: ../app/tools/gimprectangletool.c:2633 ../app/widgets/gimpcursorview.c:170
+#: ../app/tools/gimprectangletool.c:2581 ../app/widgets/gimpcursorview.c:170
 #: ../app/widgets/gimpcursorview.c:192
 msgid "X"
 msgstr "X"
 
-#: ../app/tools/gimprectangletool.c:2634 ../app/widgets/gimpcursorview.c:176
+#: ../app/tools/gimprectangletool.c:2582 ../app/widgets/gimpcursorview.c:176
 #: ../app/widgets/gimpcursorview.c:198
 msgid "Y"
 msgstr "Y"
@@ -11128,3 +11124,4 @@ msgstr "Bitte stellen Sie sicher, dass das Werkzeugefenster sichtbar ist!"
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "»%s« konnte nicht gestartet werden: %s"
+
