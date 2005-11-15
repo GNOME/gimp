@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-06 02:24+0200\n"
-"PO-Revision-Date: 2005-10-06 02:25+0200\n"
+"POT-Creation-Date: 2005-11-15 15:00+0100\n"
+"PO-Revision-Date: 2005-11-15 14:59+0100\n"
 "Last-Translator: Hendrik Richter <hendi@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -277,16 +277,18 @@ msgstr "Suche nach Datum"
 msgid "Searching by type"
 msgstr "Suche nach Typ"
 
-#: ../libgimp/gimpprocbrowserdialog.c:484
+#: ../libgimp/gimpprocbrowserdialog.c:485
 #, c-format
-msgid "%d procedures"
-msgstr "%d Prozeduren"
+msgid "%d procedure"
+msgid_plural "%d procedures"
+msgstr[0] "%d Prozedur"
+msgstr[1] "%d Prozeduren"
 
-#: ../libgimp/gimpprocbrowserdialog.c:491
+#: ../libgimp/gimpprocbrowserdialog.c:494
 msgid "No matches for your query"
 msgstr "Keine Treffer für die Suche"
 
-#: ../libgimp/gimpprocbrowserdialog.c:495
+#: ../libgimp/gimpprocbrowserdialog.c:498
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
@@ -294,7 +296,7 @@ msgstr[0] "%d Prozedur als Ergebnis der Suche"
 msgstr[1] "%d Prozeduren als Ergebnis der Suche"
 
 #. count label
-#: ../libgimp/gimpprocbrowserdialog.c:544 ../libgimpwidgets/gimpbrowser.c:145
+#: ../libgimp/gimpprocbrowserdialog.c:547 ../libgimpwidgets/gimpbrowser.c:145
 msgid "No matches"
 msgstr "Keine Treffer"
 
@@ -662,52 +664,54 @@ msgstr "GIMP-Erweiterung"
 msgid "Temporary Procedure"
 msgstr "Temporäre Prozedur"
 
-#: ../libgimpbase/gimpmemsize.c:177
+#: ../libgimpbase/gimpmemsize.c:180
 #, c-format
-msgid "%d Bytes"
-msgstr "%d Byte"
+msgid "%d Byte"
+msgid_plural "%d Bytes"
+msgstr[0] "%d Byte"
+msgstr[1] "%d Byte"
 
-#: ../libgimpbase/gimpmemsize.c:182
+#: ../libgimpbase/gimpmemsize.c:186
 #, c-format
 msgid "%.2f KB"
 msgstr "%.2f KB"
 
-#: ../libgimpbase/gimpmemsize.c:186
+#: ../libgimpbase/gimpmemsize.c:190
 #, c-format
 msgid "%.1f KB"
 msgstr "%.1f KB"
 
-#: ../libgimpbase/gimpmemsize.c:190
+#: ../libgimpbase/gimpmemsize.c:194
 #, c-format
 msgid "%d KB"
 msgstr "%d KB"
 
-#: ../libgimpbase/gimpmemsize.c:197
+#: ../libgimpbase/gimpmemsize.c:201
 #, c-format
 msgid "%.2f MB"
 msgstr "%.2f MB"
 
-#: ../libgimpbase/gimpmemsize.c:201
+#: ../libgimpbase/gimpmemsize.c:205
 #, c-format
 msgid "%.1f MB"
 msgstr "%.1f MB"
 
-#: ../libgimpbase/gimpmemsize.c:205
+#: ../libgimpbase/gimpmemsize.c:209
 #, c-format
 msgid "%d MB"
 msgstr "%d MB"
 
-#: ../libgimpbase/gimpmemsize.c:212
+#: ../libgimpbase/gimpmemsize.c:216
 #, c-format
 msgid "%.2f GB"
 msgstr "%.2f GB"
 
-#: ../libgimpbase/gimpmemsize.c:216
+#: ../libgimpbase/gimpmemsize.c:220
 #, c-format
 msgid "%.1f GB"
 msgstr "%.1f GB"
 
-#: ../libgimpbase/gimpmemsize.c:220
+#: ../libgimpbase/gimpmemsize.c:224
 #, c-format
 msgid "%d GB"
 msgstr "%d GB"
@@ -964,19 +968,19 @@ msgstr "_Weiß"
 msgid "Scales"
 msgstr "Schieberegler"
 
-#: ../libgimpwidgets/gimpcolorselection.c:214
+#: ../libgimpwidgets/gimpcolorselection.c:218
 msgid "Current:"
 msgstr "Aktuell:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:236
+#: ../libgimpwidgets/gimpcolorselection.c:240
 msgid "Old:"
 msgstr "Vorher:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:281
+#: ../libgimpwidgets/gimpcolorselection.c:294
 msgid "Hexadecimal color notation as used in HTML and CSS"
 msgstr "Hexadezimale Schreibweise wie in HTML und CSS"
 
-#: ../libgimpwidgets/gimpcolorselection.c:286
+#: ../libgimpwidgets/gimpcolorselection.c:299
 msgid "HTML _notation:"
 msgstr "HTML _Form:"
 
@@ -1029,10 +1033,12 @@ msgstr "Schachbrett Muster"
 msgid "_Preview"
 msgstr "_Vorschau"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1868
+#: ../libgimpwidgets/gimppropwidgets.c:1872
 #, c-format
-msgid "This text input field is limited to %d characters."
-msgstr "Dieses Texteingabefeld ist auf %d Zeichen beschränkt."
+msgid "This text input field is limited to %d character."
+msgid_plural "This text input field is limited to %d characters."
+msgstr[0] "Dieses Texteingabefeld ist auf %d Zeichen beschränkt."
+msgstr[1] "Dieses Texteingabefeld ist auf %d Zeichen beschränkt."
 
 #: ../libgimpwidgets/gimpresolutionentry.c:382
 #, c-format
@@ -1376,6 +1382,3 @@ msgstr "Wasserfarbe"
 #: ../modules/colorsel_water.c:220
 msgid "Pressure"
 msgstr "Druck"
-
-#~ msgid "Searching - please wait"
-#~ msgstr "Suche - bitte warten"
