@@ -152,11 +152,12 @@ void   gimp_action_group_add_actions        (GimpActionGroup       *group,
 void   gimp_action_group_add_toggle_actions (GimpActionGroup       *group,
                                              GimpToggleActionEntry *entries,
                                              guint                  n_entries);
-void   gimp_action_group_add_radio_actions  (GimpActionGroup       *group,
+GSList *gimp_action_group_add_radio_actions (GimpActionGroup       *group,
                                              GimpRadioActionEntry  *entries,
                                              guint                  n_entries,
+                                             GSList                *radio_group,
                                              gint                   value,
-                                             GCallback              on_change);
+                                             GCallback              callback);
 
 void   gimp_action_group_add_enum_actions   (GimpActionGroup       *group,
                                              GimpEnumActionEntry   *entries,

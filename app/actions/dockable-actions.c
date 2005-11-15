@@ -144,18 +144,21 @@ dockable_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_radio_actions (group,
                                        dockable_preview_size_actions,
                                        G_N_ELEMENTS (dockable_preview_size_actions),
+                                       NULL,
                                        GIMP_VIEW_SIZE_MEDIUM,
                                        G_CALLBACK (dockable_preview_size_cmd_callback));
 
   gimp_action_group_add_radio_actions (group,
                                        dockable_tab_style_actions,
                                        G_N_ELEMENTS (dockable_tab_style_actions),
+                                       NULL,
                                        GIMP_TAB_STYLE_PREVIEW,
                                        G_CALLBACK (dockable_tab_style_cmd_callback));
 
   gimp_action_group_add_radio_actions (group,
                                        dockable_view_type_actions,
                                        G_N_ELEMENTS (dockable_view_type_actions),
+                                       NULL,
                                        GIMP_VIEW_TYPE_LIST,
                                        G_CALLBACK (dockable_toggle_view_cmd_callback));
 }

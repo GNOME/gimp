@@ -1,5 +1,21 @@
 2005-11-15  Michael Natterer  <mitch@gimp.org>
 
+	Allow to construct a group of radio actions in multiple chunks.
+	(not used yet).
+
+	* app/widgets/gimpactiongroup.[ch]
+	(gimp_action_group_add_radio_actions): added "GSList *radio_group"
+	parameter and return value.
+
+	* app/actions/dockable-actions.c
+	* app/actions/gradient-editor-actions.c
+	* app/actions/quick-mask-actions.c
+	* app/actions/text-editor-actions.c
+	* app/actions/view-actions.c
+	* app/actions/window-actions.c: pass NULL as radio_group.
+
+2005-11-15  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcontainercombobox.c: implement
 	GtkWidget::unrealize() and unrealize all GimpViewRenderers.
 	Fixes BadMatch with the renderers' GCs on display change.

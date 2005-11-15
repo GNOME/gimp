@@ -455,18 +455,18 @@ gimp_action_group_add_toggle_actions (GimpActionGroup       *group,
     }
 }
 
-void
+GSList *
 gimp_action_group_add_radio_actions (GimpActionGroup      *group,
                                      GimpRadioActionEntry *entries,
                                      guint                 n_entries,
+                                     GSList               *radio_group,
                                      gint                  value,
                                      GCallback             callback)
 {
   GtkRadioAction *first_action = NULL;
-  GSList         *radio_group  = NULL;
   gint            i;
 
-  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
+  g_return_val_if_fail (GIMP_IS_ACTION_GROUP (group), NULL);
 
   for (i = 0; i < n_entries; i++)
     {
@@ -512,6 +512,8 @@ gimp_action_group_add_radio_actions (GimpActionGroup      *group,
     g_signal_connect (first_action, "changed",
                       callback,
                       group->user_data);
+
+  return radio_group;
 }
 
 void

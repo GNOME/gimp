@@ -432,6 +432,7 @@ view_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_radio_actions (group,
                                        view_zoom_explicit_actions,
                                        G_N_ELEMENTS (view_zoom_explicit_actions),
+                                       NULL,
                                        10000,
                                        G_CALLBACK (view_zoom_explicit_cmd_callback));
 

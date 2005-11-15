@@ -72,7 +72,7 @@ window_actions_setup (GimpActionGroup *group,
       g_free (screen_name);
     }
 
-  gimp_action_group_add_radio_actions (group, entries, n_entries, 0,
+  gimp_action_group_add_radio_actions (group, entries, n_entries, NULL, 0,
                                        G_CALLBACK (move_to_screen_callback));
 
   for (i = 0; i < n_entries; i++)

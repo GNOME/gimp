@@ -85,6 +85,7 @@ quick_mask_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_radio_actions (group,
                                        quick_mask_invert_actions,
                                        G_N_ELEMENTS (quick_mask_invert_actions),
+                                       NULL,
                                        FALSE,
                                        G_CALLBACK (quick_mask_invert_cmd_callback));
 }

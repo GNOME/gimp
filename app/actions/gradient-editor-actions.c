@@ -361,12 +361,14 @@ gradient_editor_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_radio_actions (group,
                                        gradient_editor_blending_actions,
                                        G_N_ELEMENTS (gradient_editor_blending_actions),
+                                       NULL,
                                        0,
                                        G_CALLBACK (gradient_editor_blending_func_cmd_callback));
 
   gimp_action_group_add_radio_actions (group,
                                        gradient_editor_coloring_actions,
                                        G_N_ELEMENTS (gradient_editor_coloring_actions),
+                                       NULL,
                                        0,
                                        G_CALLBACK (gradient_editor_coloring_type_cmd_callback));
 
