@@ -50,6 +50,8 @@ static void     gimp_container_combo_box_init         (GimpContainerComboBox  *v
 
 static void     gimp_container_combo_box_view_iface_init (GimpContainerViewInterface *view_iface);
 
+static void     gimp_container_combo_box_unrealize    (GtkWidget              *widget);
+
 static gpointer gimp_container_combo_box_insert_item  (GimpContainerView      *view,
                                                        GimpViewable           *viewable,
                                                        gint                    index);
@@ -120,12 +122,15 @@ gimp_container_combo_box_get_type (void)
 static void
 gimp_container_combo_box_class_init (GimpContainerComboBoxClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
   object_class->set_property = gimp_container_view_set_property;
   object_class->get_property = gimp_container_view_get_property;
+
+  widget_class->unrealize    = gimp_container_combo_box_unrealize;
 
   gimp_container_view_install_properties (object_class);
 }
@@ -253,6 +258,30 @@ gimp_container_combo_box_set (GimpContainerComboBox *combo_box,
 
   g_object_unref (renderer);
   g_free (name);
+}
+
+static void
+gimp_container_combo_box_unrealize (GtkWidget *widget)
+{
+  GtkTreeModel *model = gtk_combo_box_get_model (GTK_COMBO_BOX (widget));
+  GtkTreeIter   iter;
+  gboolean      iter_valid;
+
+  for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
+       iter_valid;
+       iter_valid = gtk_tree_model_iter_next (model, &iter))
+    {
+      GimpViewRenderer *renderer;
+
+      gtk_tree_model_get (model, &iter,
+                          COLUMN_RENDERER, &renderer,
+                          -1);
+
+      gimp_view_renderer_unrealize (renderer);
+      g_object_unref (renderer);
+    }
+
+  GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
 }
 
 /*  GimpContainerView methods  */

@@ -1,3 +1,9 @@
+2005-11-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcontainercombobox.c: implement
+	GtkWidget::unrealize() and unrealize all GimpViewRenderers.
+	Fixes BadMatch with the renderers' GCs on display change.
+
 2005-11-14  Karine Delvare  <kdelvare@nerim.net>
 
 	* app/tools/gimprectangletool.c: better looking rectangle boundary.
