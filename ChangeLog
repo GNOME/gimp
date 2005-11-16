@@ -1,3 +1,9 @@
+2005-11-16  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimplayer.c (gimp_layer_convert):
+	gimp_layer_transform_color() wants the destination image passed,
+	not the source image.
+
 2005-11-16  Sven Neumann  <sven@gimp.org>
 
 	* libgimpbase/gimpreloc.c: minor cleanups.
