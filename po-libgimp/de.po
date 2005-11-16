@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-15 15:00+0100\n"
-"PO-Revision-Date: 2005-11-15 14:59+0100\n"
+"POT-Creation-Date: 2005-11-16 12:38+0100\n"
+"PO-Revision-Date: 2005-11-16 12:38+0100\n"
 "Last-Translator: Hendrik Richter <hendi@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -642,11 +642,11 @@ msgstr "Glanzlichter"
 
 #: ../libgimpbase/gimpbaseenums.c:711
 msgid "Forward"
-msgstr "Weiter"
+msgstr "Vorwärts"
 
 #: ../libgimpbase/gimpbaseenums.c:712
 msgid "Backward"
-msgstr "Zurück"
+msgstr "Rückwärts"
 
 #: ../libgimpbase/gimpbaseenums.c:813
 msgid "Internal GIMP procedure"
