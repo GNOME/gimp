@@ -507,7 +507,7 @@ gimp_colormap_editor_draw_cell (GimpColormapEditor *editor,
   gimage = GIMP_IMAGE_EDITOR (editor)->gimage;
 
   cellsize = editor->cellsize;
-  row = g_new (guchar, cellsize * 3);
+  row = g_alloca (cellsize * 3);
   x = (col % editor->xn) * cellsize;
   y = (col / editor->xn) * cellsize;
 

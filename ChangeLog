@@ -1,3 +1,10 @@
+2005-11-16  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
+	* app/widgets/gimpcolormapeditor.c (gimp_colormap_editor_draw_cell):
+	plugged a memleak.
+
 2005-11-14  Michael Natterer  <mitch@gimp.org>
 
 	Merged from HEAD branch:
