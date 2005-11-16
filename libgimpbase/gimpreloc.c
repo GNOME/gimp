@@ -10,12 +10,8 @@
  * more information and how to use this.
  */
 
-#ifndef _GIMPRELOC_C_
-#define _GIMPRELOC_C_
-
 #include "config.h"
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
 #include <string.h>
@@ -27,10 +23,9 @@
 #endif /* ENABLE_BINRELOC */
 
 #include <glib.h>
+#include <glib/gstdio.h>
 
 #include "gimpreloc.h"
-
-G_BEGIN_DECLS
 
 
 /** @internal
@@ -57,14 +52,14 @@ _br_find_exe (GimpBinrelocInitError *error)
 		buf_size = SSIZE_MAX - 1;
 	else
 		buf_size = PATH_MAX - 1;
-	path = (char *) g_try_malloc (buf_size);
+	path = g_try_new (char, buf_size);
 	if (path == NULL) {
 		/* Cannot allocate memory. */
 		if (error)
 			*error = GIMP_RELOC_INIT_ERROR_NOMEM;
 		return NULL;
 	}
-	path2 = (char *) g_try_malloc (buf_size);
+	path2 = g_try_new (char, buf_size);
 	if (path2 == NULL) {
 		/* Cannot allocate memory. */
 		if (error)
@@ -122,7 +117,7 @@ _br_find_exe (GimpBinrelocInitError *error)
 		return NULL;
 	}
 
-	f = fopen ("/proc/self/maps", "r");
+	f = g_fopen ("/proc/self/maps", "r");
 	if (f == NULL) {
 		g_free (line);
 		if (error)
@@ -193,12 +188,12 @@ _br_find_exe_for_symbol (const void *symbol, GimpBinrelocInitError *error)
 	if (symbol == NULL)
 		return (char *) NULL;
 
-	f = fopen ("/proc/self/maps", "r");
+	f = g_fopen ("/proc/self/maps", "r");
 	if (f == NULL)
 		return (char *) NULL;
 
 	address_string_len = 4;
-	address_string = (char *) g_try_malloc (address_string_len);
+	address_string = g_try_new (char, address_string_len);
 	found = (char *) NULL;
 
 	while (!feof (f)) {
@@ -336,7 +331,7 @@ _gimp_reloc_init (GError **error)
  *
  * @returns TRUE on success, FALSE if a filename cannot be found.
  */
-G_GNUC_INTERNAL gboolean
+gboolean
 _gimp_reloc_init_lib (GError **error)
 {
 	GimpBinrelocInitError errcode;
@@ -397,7 +392,7 @@ set_gerror (GError **error, GimpBinrelocInitError errcode)
  *          then a copy of default_exe will be returned. If default_exe
  *          is NULL, then NULL will be returned.
  */
-G_GNUC_INTERNAL gchar *
+gchar *
 _gimp_reloc_find_exe (const gchar *default_exe)
 {
 	if (exe == NULL) {
@@ -425,7 +420,7 @@ _gimp_reloc_find_exe (const gchar *default_exe)
  *         will be returned. If default_dir is NULL, then NULL will be
  *         returned.
  */
-G_GNUC_INTERNAL gchar *
+gchar *
 _gimp_reloc_find_exe_dir (const gchar *default_dir)
 {
 	if (exe == NULL) {
@@ -454,7 +449,7 @@ _gimp_reloc_find_exe_dir (const gchar *default_dir)
  *         will be returned. If default_prefix is NULL, then NULL will be
  *         returned.
  */
-G_GNUC_INTERNAL gchar *
+gchar *
 _gimp_reloc_find_prefix (const gchar *default_prefix)
 {
 	gchar *dir1, *dir2;
@@ -487,7 +482,7 @@ _gimp_reloc_find_prefix (const gchar *default_prefix)
  *         initialization function failed, then a copy of default_bin_dir will
  *         be returned. If default_bin_dir is NULL, then NULL will be returned.
  */
-G_GNUC_INTERNAL gchar *
+gchar *
 _gimp_reloc_find_bin_dir (const gchar *default_bin_dir)
 {
 	gchar *prefix, *dir;
@@ -521,7 +516,7 @@ _gimp_reloc_find_bin_dir (const gchar *default_bin_dir)
  *         will be returned. If default_data_dir is NULL, then NULL will be
  *         returned.
  */
-G_GNUC_INTERNAL gchar *
+gchar *
 _gimp_reloc_find_data_dir (const gchar *default_data_dir)
 {
 	gchar *prefix, *dir;
@@ -543,7 +538,7 @@ _gimp_reloc_find_data_dir (const gchar *default_data_dir)
 	return dir;
 }
 
-G_GNUC_INTERNAL gchar *
+gchar *
 _gimp_reloc_find_plugin_dir (const gchar *default_plugin_dir)
 {
 	gchar *libdir, *dir;
@@ -579,7 +574,7 @@ _gimp_reloc_find_plugin_dir (const gchar *default_plugin_dir)
  *         initialization function failed, then a copy of default_locale_dir will be returned.
  *         If default_locale_dir is NULL, then NULL will be returned.
  */
-G_GNUC_INTERNAL gchar *
+gchar *
 _gimp_reloc_find_locale_dir (const gchar *default_locale_dir)
 {
 	gchar *data_dir, *dir;
@@ -645,7 +640,7 @@ _gimp_reloc_find_lib_dir (const gchar *default_lib_dir)
  *         function failed, then a copy of default_libexec_dir will be returned.
  *         If default_libexec_dir is NULL, then NULL will be returned.
  */
-G_GNUC_INTERNAL gchar *
+gchar *
 _gimp_reloc_find_libexec_dir (const gchar *default_libexec_dir)
 {
 	gchar *prefix, *dir;
@@ -678,7 +673,7 @@ _gimp_reloc_find_libexec_dir (const gchar *default_libexec_dir)
  *         function failed, then a copy of default_etc_dir will be returned.
  *         If default_etc_dir is NULL, then NULL will be returned.
  */
-G_GNUC_INTERNAL gchar *
+gchar *
 _gimp_reloc_find_etc_dir (const gchar *default_etc_dir)
 {
 	gchar *prefix, *dir;
@@ -699,8 +694,3 @@ _gimp_reloc_find_etc_dir (const gchar *default_etc_dir)
 	g_free (prefix);
 	return dir;
 }
-
-
-G_END_DECLS
-
-#endif /* _GIMPRELOC_C_ */
