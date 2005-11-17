@@ -33,6 +33,7 @@
     <separator />
     <menuitem action="dock-show-image-menu" />
     <menuitem action="dock-auto-follow-active" />
+    <separator />
     <menu action="dock-move-to-screen-menu" name="Move to Screen" />
   </popup>
 </ui>

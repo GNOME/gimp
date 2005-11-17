@@ -1,5 +1,14 @@
 2005-11-17  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpgradienteditor.c: implement GtkWidget::unrealize()
+	and destroy the control pixmap. fixes crash when moving the dialog
+	to another display.
+
+	* menus/dockable-menu.xml.in: added a separator before the
+	"Move to Screen" submenu.
+
+2005-11-17  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/window-actions.[ch]: connect to GdkDisplayManager
 	and automatically add/remove move-to-screen actions when
 	displays are opened/closed.

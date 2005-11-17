@@ -112,6 +112,7 @@ static GObject * gimp_gradient_editor_constructor   (GType               type,
 
 static void   gimp_gradient_editor_destroy          (GtkObject          *object);
 static void   gimp_gradient_editor_unmap            (GtkWidget          *widget);
+static void   gimp_gradient_editor_unrealize        (GtkWidget          *widget);
 static void   gimp_gradient_editor_set_data         (GimpDataEditor     *editor,
                                                      GimpData           *data);
 
@@ -289,6 +290,7 @@ gimp_gradient_editor_class_init (GimpGradientEditorClass *klass)
   gtk_object_class->destroy = gimp_gradient_editor_destroy;
 
   widget_class->unmap       = gimp_gradient_editor_unmap;
+  widget_class->unrealize   = gimp_gradient_editor_unrealize;
 
   editor_class->set_data    = gimp_gradient_editor_set_data;
   editor_class->title       = _("Gradient Editor");
@@ -480,6 +482,20 @@ gimp_gradient_editor_unmap (GtkWidget *widget)
                          GTK_RESPONSE_CANCEL);
 
   GTK_WIDGET_CLASS (parent_class)->unmap (widget);
+}
+
+static void
+gimp_gradient_editor_unrealize (GtkWidget *widget)
+{
+  GimpGradientEditor *editor = GIMP_GRADIENT_EDITOR (widget);
+
+  if (editor->control_pixmap)
+    {
+      g_object_unref (editor->control_pixmap);
+      editor->control_pixmap = NULL;
+    }
+
+  GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
 }
 
 static void
