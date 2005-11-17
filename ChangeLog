@@ -1,3 +1,9 @@
+2005-11-16  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/common/curve_bend.c (p_gimp_rotate): use
+	gimp_drawable_transform_rotate_default instead of deprecated
+	gimp-rotate PDB call. Fixes bug #321692.
+
 2005-11-16  Sven Neumann  <sven@gimp.org>
 
 	* libgimpbase/gimpenv.c (gimp_toplevel_directory)

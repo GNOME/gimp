@@ -323,6 +323,8 @@ static int gb_debug = FALSE;
 /* Functions */
 /* XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX PDB_STUFF XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX */
 
+#ifdef ROTATE_OPTIMIZE
+
 /* ============================================================================
  * p_pdb_procedure_available
  *   if requested procedure is available in the PDB return the number of args
@@ -369,22 +371,23 @@ p_pdb_procedure_available (const gchar *proc_name)
   return -1;
 }
 
+#endif /* ROTATE_OPTIMIZE */
+
 static gint
 p_gimp_rotate (gint32  image_id,
                gint32  drawable_id,
                gint32  interpolation,
                gdouble angle_deg)
 {
-  static gchar *l_rotate_proc = "gimp-rotate";
-  GimpParam    *return_vals;
-  gint          nreturn_vals;
   gdouble       l_angle_rad;
-  gint          l_nparams;
   gint          l_rc;
 
 #ifdef ROTATE_OPTIMIZE
-  static gchar *l_rotate_proc2 = "plug-in-rotate";
+  static gchar *l_rotate_proc = "plug-in-rotate";
+  GimpParam    *return_vals;
+  gint          nreturn_vals;
   gint32        l_angle_step;
+  gint          l_nparams;
 
   if     (angle_deg == 90.0)  { l_angle_step = 1; }
   else if(angle_deg == 180.0) { l_angle_step = 2; }
@@ -393,11 +396,11 @@ p_gimp_rotate (gint32  image_id,
 
   if (l_angle_step != 0)
     {
-      l_nparams = p_pdb_procedure_available (l_rotate_proc2);
+      l_nparams = p_pdb_procedure_available (l_rotate_proc);
       if (l_nparams == 5)
         {
           /* use faster rotate plugin on multiples of 90 degrees */
-          return_vals = gimp_run_procedure (l_rotate_proc2,
+          return_vals = gimp_run_procedure (l_rotate_proc,
                                             &nreturn_vals,
                                             GIMP_PDB_INT32, GIMP_RUN_NONINTERACTIVE,
                                             GIMP_PDB_IMAGE, image_id,
@@ -412,40 +415,16 @@ p_gimp_rotate (gint32  image_id,
             }
         }
     }
-#endif
+#endif /* ROTATE_OPTIMIZE */
 
-  l_rc = -1;
   l_angle_rad = (angle_deg * G_PI) / 180.0;
 
-  l_nparams = p_pdb_procedure_available (l_rotate_proc);
-  if (l_nparams >= 0)
-    {
-      /* use the new Interface (Gimp 1.1 style)
-       * (1.1 knows the image_id where the drawable belongs to)
-       */
-      return_vals = gimp_run_procedure (l_rotate_proc,
-                                        &nreturn_vals,
-                                        GIMP_PDB_DRAWABLE, drawable_id,
-                                        GIMP_PDB_INT32, interpolation,
-                                        GIMP_PDB_FLOAT, l_angle_rad,
-                                        GIMP_PDB_END);
+  l_rc = gimp_drawable_transform_rotate_default (drawable_id, l_angle_rad,
+                                                 TRUE, 0, 0, interpolation,
+                                                 FALSE);
 
-      if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-        {
-          l_rc = 0;
-        }
-      else
-        {
-          g_printerr ("Error: %s call failed %d\n",
-                      l_rotate_proc, return_vals[0].data.d_status);
-        }
-
-      gimp_destroy_params (return_vals, nreturn_vals);
-    }
-  else
-    {
-      g_printerr ("Error: Procedure %s not found.\n", l_rotate_proc);
-    }
+  if (l_rc == -1)
+    g_printerr ("Error: gimp_drawable_transform_rotate_default call failed\n");
 
   return l_rc;
 }
