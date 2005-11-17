@@ -29,59 +29,50 @@
 
 #include "actions.h"
 #include "window-actions.h"
+#include "window-commands.h"
 
 #include "gimp-intl.h"
 
 
+/*  private functions  */
+
+static void   window_actions_display_opened (GdkDisplayManager *manager,
+                                             GdkDisplay        *display,
+                                             GimpActionGroup   *group);
+static void   window_actions_display_closed (GdkDisplay        *display,
+                                             gboolean           is_error,
+                                             GimpActionGroup   *group);
+
+
+/*  public functions  */
+
 void
 window_actions_setup (GimpActionGroup *group,
-                      const gchar     *move_to_screen_help_id,
-                      GCallback        move_to_screen_callback)
+                      const gchar     *move_to_screen_help_id)
 {
-  GdkDisplay           *display;
-  GimpRadioActionEntry *entries;
-  const gchar          *group_name;
-  gint                  n_entries;
-  gint                  i;
+  GdkDisplayManager *manager = gdk_display_manager_get ();
+  GSList            *displays;
+  GSList            *list;
 
-  display   = gdk_display_get_default ();
-  n_entries = gdk_display_get_n_screens (display);
+  g_object_set_data_full (G_OBJECT (group), "move-to-screen-help-id",
+                          g_strdup (move_to_screen_help_id),
+                          (GDestroyNotify) g_free);
 
-  group_name = gtk_action_group_get_name (GTK_ACTION_GROUP (group));
+  displays = gdk_display_manager_list_displays (manager);
 
-  entries = g_new0 (GimpRadioActionEntry, n_entries);
+  /*  present displays in the order in which they were opened  */
+  displays = g_slist_reverse (displays);
 
-  for (i = 0; i < n_entries; i++)
+  for (list = displays; list; list = g_slist_next (list))
     {
-      GdkScreen *screen;
-      gchar     *screen_name;
-
-      screen      = gdk_display_get_screen (display, i);
-      screen_name = gdk_screen_make_display_name (screen);
-
-      entries[i].name        = g_strdup_printf ("%s-move-to-screen-%02d",
-                                                group_name, i);
-      entries[i].stock_id    = GIMP_STOCK_MOVE_TO_SCREEN;
-      entries[i].label       = g_strdup_printf (_("Screen %d (%s)"),
-                                                i, screen_name);
-      entries[i].accelerator = NULL;
-      entries[i].tooltip     = NULL;
-      entries[i].value       = i;
-      entries[i].help_id     = move_to_screen_help_id;
-
-      g_free (screen_name);
+      window_actions_display_opened (manager, list->data, group);
     }
 
-  gimp_action_group_add_radio_actions (group, entries, n_entries, NULL, 0,
-                                       G_CALLBACK (move_to_screen_callback));
+  g_slist_free (displays);
 
-  for (i = 0; i < n_entries; i++)
-    {
-      g_free ((gchar *) entries[i].name);
-      g_free ((gchar *) entries[i].label);
-    }
-
-  g_free (entries);
+  g_signal_connect_object (manager, "display-opened",
+                           G_CALLBACK (window_actions_display_opened),
+                           G_OBJECT (group), 0);
 }
 
 void
@@ -89,7 +80,7 @@ window_actions_update (GimpActionGroup *group,
                        GtkWidget       *window)
 {
   const gchar *group_name;
-  gint         n_screens = 1;
+  gint         show_menu = FALSE;
   gchar       *name;
 
   group_name = gtk_action_group_get_name (GTK_ACTION_GROUP (group));
@@ -101,26 +92,155 @@ window_actions_update (GimpActionGroup *group,
 
   if (GTK_IS_WINDOW (window))
     {
-      GdkDisplay  *display;
-      GdkScreen   *screen;
-      gint         cur_screen;
+      GdkDisplay *display;
+      GdkScreen  *screen;
+      gchar      *screen_name;
 
       display = gtk_widget_get_display (window);
-      screen  = gtk_widget_get_screen (window);
 
-      n_screens  = gdk_display_get_n_screens (display);
-      cur_screen = gdk_screen_get_number (screen);
+      show_menu = (gdk_display_get_n_screens (display) > 1);
 
-      name = g_strdup_printf ("%s-move-to-screen-%02d",
-                              group_name, cur_screen);
+      if (! show_menu)
+        {
+          GdkDisplayManager *manager = gdk_display_manager_get ();
+          GSList            *displays;
+
+          displays = gdk_display_manager_list_displays (manager);
+          show_menu = (displays->next != NULL);
+          g_slist_free (displays);
+        }
+
+      screen = gtk_widget_get_screen (window);
+
+      screen_name = gdk_screen_make_display_name (screen);
+      name = g_strdup_printf ("%s-move-to-screen-%s", group_name, screen_name);
+      g_free (screen_name);
+
       SET_ACTIVE (name, TRUE);
       g_free (name);
     }
 
   name = g_strdup_printf ("%s-move-to-screen-menu", group_name);
-  SET_VISIBLE (name, n_screens > 1);
+  SET_VISIBLE (name, show_menu);
   g_free (name);
 
 #undef SET_ACTIVE
 #undef SET_VISIBLE
+}
+
+
+/*  private functions  */
+
+static void
+window_actions_display_opened (GdkDisplayManager *manager,
+                               GdkDisplay        *display,
+                               GimpActionGroup   *group)
+{
+  GimpRadioActionEntry *entries;
+  const gchar          *help_id;
+  const gchar          *group_name;
+  GSList               *radio_group;
+  gint                  n_screens;
+  gint                  i;
+
+  help_id = g_object_get_data (G_OBJECT (group), "change-to-screen-help-id");
+
+  group_name = gtk_action_group_get_name (GTK_ACTION_GROUP (group));
+
+  n_screens = gdk_display_get_n_screens (display);
+
+  entries = g_new0 (GimpRadioActionEntry, n_screens);
+
+  for (i = 0; i < n_screens; i++)
+    {
+      GdkScreen *screen = gdk_display_get_screen (display, i);
+      gchar     *screen_name;
+
+      screen_name = gdk_screen_make_display_name (screen);
+
+      entries[i].name        = g_strdup_printf ("%s-move-to-screen-%s",
+                                                group_name, screen_name);
+      entries[i].stock_id    = GIMP_STOCK_MOVE_TO_SCREEN;
+      entries[i].label       = g_strdup_printf (_("Screen %s"), screen_name);
+      entries[i].accelerator = NULL;
+      entries[i].tooltip     = NULL;
+      entries[i].value       = g_quark_from_string (screen_name);
+      entries[i].help_id     = help_id;
+
+      g_free (screen_name);
+    }
+
+  radio_group = g_object_get_data (G_OBJECT (group),
+                                   "change-to-screen-radio-group");
+  radio_group = gimp_action_group_add_radio_actions (group, entries, n_screens,
+                                                     radio_group, 0,
+                                                     G_CALLBACK (window_move_to_screen_cmd_callback));
+  g_object_set_data (G_OBJECT (group), "change-to-screen-radio-group",
+                     radio_group);
+
+  for (i = 0; i < n_screens; i++)
+    {
+      GdkScreen *screen = gdk_display_get_screen (display, i);
+      GtkAction *action;
+
+      action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
+                                            entries[i].name);
+      if (action)
+        g_object_set_data (G_OBJECT (action), "screen", screen);
+
+      g_free ((gchar *) entries[i].name);
+      g_free ((gchar *) entries[i].label);
+    }
+
+  g_free (entries);
+
+  g_signal_connect_object (display, "closed",
+                           G_CALLBACK (window_actions_display_closed),
+                           G_OBJECT (group), 0);
+}
+
+static void
+window_actions_display_closed (GdkDisplay      *display,
+                               gboolean         is_error,
+                               GimpActionGroup *group)
+{
+  const gchar *group_name;
+  gint         n_screens;
+  gint         i;
+
+  group_name = gtk_action_group_get_name (GTK_ACTION_GROUP (group));
+
+  n_screens = gdk_display_get_n_screens (display);
+
+  for (i = 0; i < n_screens; i++)
+    {
+      GdkScreen *screen = gdk_display_get_screen (display, i);
+      GtkAction *action;
+      gchar     *screen_name;
+      gchar     *action_name;
+
+      screen_name = gdk_screen_make_display_name (screen);
+      action_name = g_strdup_printf ("%s-move-to-screen-%s",
+                                     group_name, screen_name);
+      g_free (screen_name);
+
+      action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
+                                            action_name);
+
+      if (action)
+        {
+          GSList *radio_group;
+
+          radio_group = gtk_radio_action_get_group (GTK_RADIO_ACTION (action));
+          if (radio_group->data == (gpointer) action)
+            radio_group = radio_group->next;
+
+          gtk_action_group_remove_action (GTK_ACTION_GROUP (group), action);
+
+          g_object_set_data (G_OBJECT (group), "change-to-screen-radio-group",
+                             radio_group);
+        }
+
+      g_free (action_name);
+    }
 }

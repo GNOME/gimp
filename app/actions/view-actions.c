@@ -46,6 +46,7 @@
 #include "view-actions.h"
 #include "view-commands.h"
 #include "window-actions.h"
+#include "window-commands.h"
 
 #include "gimp-intl.h"
 
@@ -75,7 +76,7 @@ static GimpActionEntry view_actions[] =
 
   { "view-close", GTK_STOCK_CLOSE,
     N_( "_Close"), "<control>W", NULL,
-    G_CALLBACK (view_close_cmd_callback),
+    G_CALLBACK (window_close_cmd_callback),
     GIMP_HELP_FILE_CLOSE },
 
   { "view-zoom-fit-in", GTK_STOCK_ZOOM_FIT,
@@ -451,9 +452,7 @@ view_actions_setup (GimpActionGroup *group)
                                       G_N_ELEMENTS (view_scroll_vertical_actions),
                                       G_CALLBACK (view_scroll_vertical_cmd_callback));
 
-  window_actions_setup (group,
-                        GIMP_HELP_VIEW_CHANGE_SCREEN,
-                        G_CALLBACK (view_move_to_screen_cmd_callback));
+  window_actions_setup (group, GIMP_HELP_VIEW_CHANGE_SCREEN);
 
   /*  connect "activate" of view-zoom-other manually so it can be
    *  selected even if it's the active item of the radio group

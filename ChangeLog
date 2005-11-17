@@ -1,3 +1,23 @@
+2005-11-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/window-actions.[ch]: connect to GdkDisplayManager
+	and automatically add/remove move-to-screen actions when
+	displays are opened/closed.
+
+	* app/menus/window-menu.c: added similar code here to add/remove
+	menu items for the above actions.
+
+	* app/actions/Makefile.am
+	* app/actions/window-commands.[ch]: new files containing window
+	close and move-to-screen callbacks. There is no need to implement
+	these twice for GimpDock and GimpDisplay.
+
+	* app/actions/dock-commands.[ch]
+	* app/actions/view-commands.[ch]: remove the callbacks here.
+
+	* app/actions/dock-actions.c
+	* app/actions/view-actions.c: changed accordingly.
+
 2005-11-16  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/common/curve_bend.c (p_gimp_rotate): use

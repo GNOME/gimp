@@ -24,44 +24,50 @@
 
 #include "actions-types.h"
 
-#include "widgets/gimpmenudock.h"
-
 #include "actions.h"
-#include "dock-commands.h"
+#include "window-commands.h"
 
 
 /*  public functions  */
 
 void
-dock_toggle_image_menu_cmd_callback (GtkAction *action,
-                                     gpointer   data)
+window_close_cmd_callback (GtkAction *action,
+                           gpointer   data)
 {
   GtkWidget *widget;
-  gboolean   active;
   return_if_no_widget (widget, data);
 
   if (! GTK_WIDGET_TOPLEVEL (widget))
     widget = gtk_widget_get_toplevel (widget);
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  if (widget && widget->window)
+    {
+      GdkEvent *event = gdk_event_new (GDK_DELETE);
 
-  if (GIMP_IS_MENU_DOCK (widget))
-    gimp_menu_dock_set_show_image_menu (GIMP_MENU_DOCK (widget), active);
+      event->any.window     = g_object_ref (widget->window);
+      event->any.send_event = TRUE;
+
+      gtk_main_do_event (event);
+      gdk_event_free (event);
+    }
 }
 
 void
-dock_toggle_auto_cmd_callback (GtkAction *action,
-                               gpointer   data)
+window_move_to_screen_cmd_callback (GtkAction *action,
+                                    GtkAction *current,
+                                    gpointer   data)
 {
   GtkWidget *widget;
-  gboolean   active;
+  GdkScreen *screen;
   return_if_no_widget (widget, data);
 
   if (! GTK_WIDGET_TOPLEVEL (widget))
     widget = gtk_widget_get_toplevel (widget);
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  screen = g_object_get_data (G_OBJECT (current), "screen");
 
-  if (GIMP_IS_MENU_DOCK (widget))
-    gimp_menu_dock_set_auto_follow_active (GIMP_MENU_DOCK (widget), active);
+  if (GDK_IS_SCREEN (screen) && screen != gtk_widget_get_screen (widget))
+    {
+      gtk_window_set_screen (GTK_WINDOW (widget), screen);
+    }
 }

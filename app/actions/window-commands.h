@@ -16,14 +16,15 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __DOCK_COMMANDS_H__
-#define __DOCK_COMMANDS_H__
+#ifndef __WINDOW_COMMANDS_H__
+#define __WINDOW_COMMANDS_H__
 
 
-void   dock_toggle_image_menu_cmd_callback (GtkAction *action,
-                                            gpointer   data);
-void   dock_toggle_auto_cmd_callback       (GtkAction *action,
-                                            gpointer   data);
+void   window_close_cmd_callback          (GtkAction *action,
+                                           gpointer   data);
+void   window_move_to_screen_cmd_callback (GtkAction *action,
+                                           GtkAction *current,
+                                           gpointer   data);
 
 
-#endif /* __DOCK_COMMANDS_H__ */
+#endif /* __WINDOW_COMMANDS_H__ */

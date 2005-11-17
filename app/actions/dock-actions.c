@@ -32,6 +32,7 @@
 #include "dock-actions.h"
 #include "dock-commands.h"
 #include "window-actions.h"
+#include "window-commands.h"
 
 #include "gimp-intl.h"
 
@@ -44,7 +45,7 @@ static GimpActionEntry dock_actions[] =
 
   { "dock-close", GTK_STOCK_CLOSE,
     N_("Close Dock"), "<control>W", NULL,
-    G_CALLBACK (dock_close_cmd_callback),
+    G_CALLBACK (window_close_cmd_callback),
     GIMP_HELP_DOCK_CLOSE }
 };
 
@@ -75,9 +76,7 @@ dock_actions_setup (GimpActionGroup *group)
                                         dock_toggle_actions,
                                         G_N_ELEMENTS (dock_toggle_actions));
 
-  window_actions_setup (group,
-                        GIMP_HELP_DOCK_CHANGE_SCREEN,
-                        G_CALLBACK (dock_move_to_screen_cmd_callback));
+  window_actions_setup (group, GIMP_HELP_DOCK_CHANGE_SCREEN);
 }
 
 void

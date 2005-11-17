@@ -89,16 +89,6 @@ view_new_cmd_callback (GtkAction *action,
 }
 
 void
-view_close_cmd_callback (GtkAction *action,
-                         gpointer   data)
-{
-  GimpDisplay *gdisp;
-  return_if_no_display (gdisp, data);
-
-  gimp_display_shell_close (GIMP_DISPLAY_SHELL (gdisp->shell), FALSE);
-}
-
-void
 view_zoom_fit_in_cmd_callback (GtkAction *action,
                                gpointer   data)
 {
@@ -645,30 +635,6 @@ view_fullscreen_cmd_callback (GtkAction *action,
   active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
   gimp_display_shell_set_fullscreen (shell, active);
-}
-
-void
-view_move_to_screen_cmd_callback (GtkAction *action,
-                                  GtkAction *current,
-                                  gpointer   data)
-{
-  GimpDisplay *gdisp;
-  gint         value;
-  return_if_no_display (gdisp, data);
-
-  value = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
-
-  if (value != gdk_screen_get_number (gtk_widget_get_screen (gdisp->shell)))
-    {
-      GdkDisplay *display;
-      GdkScreen  *screen;
-
-      display = gtk_widget_get_display (gdisp->shell);
-      screen  = gdk_display_get_screen (display, value);
-
-      if (screen)
-        gtk_window_set_screen (GTK_WINDOW (gdisp->shell), screen);
-    }
 }
 
 

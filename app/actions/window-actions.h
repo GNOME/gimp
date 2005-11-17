@@ -21,8 +21,7 @@
 
 
 void   window_actions_setup  (GimpActionGroup *group,
-                              const gchar     *move_to_screen_help_id,
-                              GCallback        move_to_screen_callback);
+                              const gchar     *move_to_screen_help_id);
 void   window_actions_update (GimpActionGroup *group,
                               GtkWidget       *window);
 

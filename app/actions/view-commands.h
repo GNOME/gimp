@@ -22,8 +22,6 @@
 
 void   view_new_cmd_callback                   (GtkAction *action,
                                                 gpointer   data);
-void   view_close_cmd_callback                 (GtkAction *action,
-                                                gpointer   data);
 
 void   view_zoom_fit_in_cmd_callback           (GtkAction *action,
                                                 gpointer   data);
@@ -85,9 +83,6 @@ void   view_padding_color_cmd_callback         (GtkAction *action,
 void   view_shrink_wrap_cmd_callback           (GtkAction *action,
                                                 gpointer   data);
 void   view_fullscreen_cmd_callback            (GtkAction *action,
-                                                gpointer   data);
-void   view_move_to_screen_cmd_callback        (GtkAction *action,
-                                                GtkAction *current,
                                                 gpointer   data);
 
 
