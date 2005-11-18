@@ -1,3 +1,7 @@
+2005-11-18  Jakub Steiner <jimmac@ximian.com>
+
+	* data/palettes/Tango.gpl: Made the greens more vibrant.
+
 2005-11-17  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpgradienteditor.c: implement GtkWidget::unrealize()
