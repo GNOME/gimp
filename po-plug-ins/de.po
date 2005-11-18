@@ -17,13 +17,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-15 15:02+0100\n"
-"PO-Revision-Date: 2005-11-15 15:08+0100\n"
+"POT-Creation-Date: 2005-11-18 14:48+0100\n"
+"PO-Revision-Date: 2005-11-18 14:45+0100\n"
 "Last-Translator: Hendrik Brandt <heb@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:529
 #: ../plug-ins/gfig/gfig-dialog.c:282 ../plug-ins/gflare/gflare.c:887
@@ -381,7 +382,7 @@ msgstr "_Fraktale"
 #: ../plug-ins/Lighting/lighting_ui.c:1160 ../plug-ins/bmp/bmpwrite.c:200
 #: ../plug-ins/common/CEL.c:568 ../plug-ins/common/CML_explorer.c:2013
 #: ../plug-ins/common/channel_mixer.c:1071 ../plug-ins/common/compressor.c:410
-#: ../plug-ins/common/compressor.c:541 ../plug-ins/common/curve_bend.c:860
+#: ../plug-ins/common/compressor.c:541 ../plug-ins/common/curve_bend.c:839
 #: ../plug-ins/common/dicom.c:650 ../plug-ins/common/gbr.c:616
 #: ../plug-ins/common/gif.c:1000 ../plug-ins/common/gih.c:1258
 #: ../plug-ins/common/gtm.c:225 ../plug-ins/common/mng.c:561
@@ -422,7 +423,7 @@ msgstr "Fraktalparameter speichern"
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:917
 #: ../plug-ins/Lighting/lighting_ui.c:1304 ../plug-ins/bmp/bmpread.c:152
 #: ../plug-ins/common/CEL.c:299 ../plug-ins/common/CML_explorer.c:2233
-#: ../plug-ins/common/channel_mixer.c:988 ../plug-ins/common/curve_bend.c:912
+#: ../plug-ins/common/channel_mixer.c:988 ../plug-ins/common/curve_bend.c:891
 #: ../plug-ins/common/dicom.c:295 ../plug-ins/common/gbr.c:348
 #: ../plug-ins/common/gifload.c:297 ../plug-ins/common/gih.c:649
 #: ../plug-ins/common/mng.c:1124 ../plug-ins/common/pat.c:321
@@ -2812,149 +2813,149 @@ msgstr "Hintergrundfarbe _verwenden"
 msgid "Cubistic transformation"
 msgstr "Kubistische Umwandlung"
 
-#: ../plug-ins/common/curve_bend.c:566
+#: ../plug-ins/common/curve_bend.c:545
 msgid "_Curve Bend..."
 msgstr "_Verbiegen..."
 
-#: ../plug-ins/common/curve_bend.c:702
+#: ../plug-ins/common/curve_bend.c:681
 msgid "Can operate on layers only (but was called on channel or mask)."
 msgstr ""
 "Kurve operiert nur auf Ebenen (wurde aber auf einem Kanal oder einer Maske "
 "verwendet)."
 
-#: ../plug-ins/common/curve_bend.c:720
+#: ../plug-ins/common/curve_bend.c:699
 msgid "Cannot operate on layers with masks."
 msgstr "Kann nicht auf Ebenen mit Masken arbeiten."
 
-#: ../plug-ins/common/curve_bend.c:735
+#: ../plug-ins/common/curve_bend.c:714
 msgid "Cannot operate on empty selections."
 msgstr "Kann nicht auf einer leeren Auswahl arbeiten."
 
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
-#: ../plug-ins/common/curve_bend.c:1238 ../plug-ins/common/curve_bend.c:2955
+#: ../plug-ins/common/curve_bend.c:1217 ../plug-ins/common/curve_bend.c:2934
 msgid "Curve Bend"
 msgstr "Verbiegen"
 
 #. Preview area, top of column
-#: ../plug-ins/common/curve_bend.c:1274
+#: ../plug-ins/common/curve_bend.c:1253
 #: ../plug-ins/gimpressionist/orientmap.c:574
 #: ../plug-ins/gimpressionist/sizemap.c:443
 msgid "Preview"
 msgstr "Vorschau"
 
 #. The preview button
-#: ../plug-ins/common/curve_bend.c:1303
+#: ../plug-ins/common/curve_bend.c:1282
 msgid "_Preview Once"
 msgstr "_Vorschau einmal"
 
 #. The preview toggle
-#: ../plug-ins/common/curve_bend.c:1312
+#: ../plug-ins/common/curve_bend.c:1291
 msgid "Automatic pre_view"
 msgstr "A_utomatische Vorschau"
 
 #. Options area, bottom of column
 #. the vertical box and its toggle buttons
 #. Options section
-#: ../plug-ins/common/curve_bend.c:1322 ../plug-ins/common/mosaic.c:623
+#: ../plug-ins/common/curve_bend.c:1301 ../plug-ins/common/mosaic.c:623
 #: ../plug-ins/common/ripple.c:509 ../plug-ins/gfig/gfig-dialog.c:1213
 msgid "Options"
 msgstr "Einstellungen"
 
 #. Rotate spinbutton
-#: ../plug-ins/common/curve_bend.c:1336
+#: ../plug-ins/common/curve_bend.c:1315
 msgid "Rotat_e:"
 msgstr "_Drehen:"
 
 #. The smoothing toggle
-#: ../plug-ins/common/curve_bend.c:1354
+#: ../plug-ins/common/curve_bend.c:1333
 msgid "Smoo_thing"
 msgstr "_Glättung"
 
 #. The antialiasing toggle
-#: ../plug-ins/common/curve_bend.c:1364 ../plug-ins/common/gqbist.c:836
+#: ../plug-ins/common/curve_bend.c:1343 ../plug-ins/common/gqbist.c:836
 #: ../plug-ins/common/mosaic.c:629 ../plug-ins/common/ripple.c:518
 msgid "_Antialiasing"
 msgstr "K_antenglättung"
 
 #. The work_on_copy toggle
-#: ../plug-ins/common/curve_bend.c:1374
+#: ../plug-ins/common/curve_bend.c:1353
 msgid "Work on cop_y"
 msgstr "Mit Ko_pie arbeiten"
 
 #. The curves graph
-#: ../plug-ins/common/curve_bend.c:1384
+#: ../plug-ins/common/curve_bend.c:1363
 msgid "Modify Curves"
 msgstr "Kurven bearbeiten"
 
-#: ../plug-ins/common/curve_bend.c:1412
+#: ../plug-ins/common/curve_bend.c:1391
 msgid "Curve for Border"
 msgstr "Kurve für _Rand"
 
-#: ../plug-ins/common/curve_bend.c:1416
+#: ../plug-ins/common/curve_bend.c:1395
 msgid "_Upper"
 msgstr "_Obere"
 
-#: ../plug-ins/common/curve_bend.c:1417
+#: ../plug-ins/common/curve_bend.c:1396
 msgid "_Lower"
 msgstr "_Untere"
 
-#: ../plug-ins/common/curve_bend.c:1427
+#: ../plug-ins/common/curve_bend.c:1406
 msgid "Curve Type"
 msgstr "Kurven_typ"
 
-#: ../plug-ins/common/curve_bend.c:1431
+#: ../plug-ins/common/curve_bend.c:1410
 msgid "Smoot_h"
 msgstr "Gla_tt"
 
-#: ../plug-ins/common/curve_bend.c:1432
+#: ../plug-ins/common/curve_bend.c:1411
 msgid "_Free"
 msgstr "_Frei"
 
 #. The Copy button
-#: ../plug-ins/common/curve_bend.c:1447
+#: ../plug-ins/common/curve_bend.c:1426
 msgid "_Copy"
 msgstr "_Kopieren"
 
-#: ../plug-ins/common/curve_bend.c:1452
+#: ../plug-ins/common/curve_bend.c:1431
 msgid "Copy the active curve to the other border"
 msgstr "Die aktive Kurve an den anderen Rand kopieren"
 
 #. The CopyInv button
-#: ../plug-ins/common/curve_bend.c:1459
+#: ../plug-ins/common/curve_bend.c:1438
 msgid "_Mirror"
 msgstr "_Spiegeln"
 
-#: ../plug-ins/common/curve_bend.c:1464
+#: ../plug-ins/common/curve_bend.c:1443
 msgid "Mirror the active curve to the other border"
 msgstr "Die aktive Kurve an den anderen Rand spiegeln"
 
 #. The Swap button
-#: ../plug-ins/common/curve_bend.c:1472
+#: ../plug-ins/common/curve_bend.c:1451
 msgid "S_wap"
 msgstr "_Austauschen"
 
-#: ../plug-ins/common/curve_bend.c:1477
+#: ../plug-ins/common/curve_bend.c:1456
 msgid "Swap the two curves"
 msgstr "Die beiden Kurven vertauschen"
 
-#: ../plug-ins/common/curve_bend.c:1489
+#: ../plug-ins/common/curve_bend.c:1468
 msgid "Reset the active curve"
 msgstr "Die aktive Kurve zurücksetzen"
 
-#: ../plug-ins/common/curve_bend.c:1506
+#: ../plug-ins/common/curve_bend.c:1485
 msgid "Load the curves from a file"
 msgstr "Die Kurven aus einer Datei laden"
 
-#: ../plug-ins/common/curve_bend.c:1518
+#: ../plug-ins/common/curve_bend.c:1497
 msgid "Save the curves to a file"
 msgstr "Die Kurven in eine Datei speichern"
 
-#: ../plug-ins/common/curve_bend.c:2053
+#: ../plug-ins/common/curve_bend.c:2032
 msgid "Load Curve Points from File"
 msgstr "Kurvenkontrollpunkte aus Datei laden"
 
-#: ../plug-ins/common/curve_bend.c:2088
+#: ../plug-ins/common/curve_bend.c:2067
 msgid "Save Curve Points to File"
 msgstr "Kurvenkontrollpunkte in Datei speichern"
 
@@ -7381,7 +7382,8 @@ msgstr "Erzeuge eine neue Einheit."
 
 #: ../plug-ins/common/uniteditor.c:127
 msgid "Create a new unit using the currently selected unit as template."
-msgstr "Eine neue Einheit mit der derzeit ausgewählten Einheit als Vorlage erzeugen."
+msgstr ""
+"Eine neue Einheit mit der derzeit ausgewählten Einheit als Vorlage erzeugen."
 
 #: ../plug-ins/common/uniteditor.c:150
 msgid "_Unit Editor"
@@ -11628,7 +11630,9 @@ msgstr "wget wurde auf Adresse »%s« abgebrochen"
 #: ../plug-ins/uri/uri-backend-wget.c:174
 #, c-format
 msgid "(timeout is %s second)"
-msgstr "(die Zeitüberschreitung liegt bei %s Sekunde)"
+msgid_plural "(timeout is %s seconds)"
+msgstr[0] "(Wartezeit bei %s Sekunde)"
+msgstr[1] "(Wartezeit bei %s Sekunden)"
 
 #. The fourth line is either the network request or an error
 #: ../plug-ins/uri/uri-backend-wget.c:203
@@ -11784,4 +11788,3 @@ msgstr "Fehler: XJT-Eigenschaften-Datei »%s« konnte nicht gelesen werden."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Fehler: Die XJT Eigenschaften-Datei »%s« ist leer."
-
