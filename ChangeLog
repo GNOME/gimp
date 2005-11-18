@@ -1,3 +1,11 @@
+2005-11-18  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpgradienteditor.c (view_events):
+	* app/widgets/gimpnavigationview.c (gimp_navigation_view_scroll):
+	changed wheel scrolling to be HIG-compliant (control zooms). Also
+	handle GDK_SCROLL_LEFT/RIGHT correctly and made shift switch the
+	scroll axis. The widgets behave as the image window now.
+
 2005-11-18  Jakub Steiner <jimmac@ximian.com>
 
 	* data/palettes/Tango.gpl: Made the greens more vibrant.

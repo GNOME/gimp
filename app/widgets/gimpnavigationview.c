@@ -377,32 +377,34 @@ static gboolean
 gimp_navigation_view_scroll (GtkWidget      *widget,
                              GdkEventScroll *sevent)
 {
-  if (sevent->state & GDK_SHIFT_MASK)
+  if (sevent->state & GDK_CONTROL_MASK)
     {
-      if (sevent->direction == GDK_SCROLL_UP)
+      switch (sevent->direction)
         {
+        case GDK_SCROLL_UP:
           g_signal_emit (widget, view_signals[ZOOM], 0, GIMP_ZOOM_IN);
-        }
-      else
-        {
+          break;
+
+        case GDK_SCROLL_DOWN:
           g_signal_emit (widget, view_signals[ZOOM], 0, GIMP_ZOOM_OUT);
+          break;
+
+        default:
+          break;
         }
     }
   else
     {
-      GdkScrollDirection direction;
+      GdkScrollDirection direction = sevent->direction;
 
-      if (sevent->state & GDK_CONTROL_MASK)
-        {
-          if (sevent->direction == GDK_SCROLL_UP)
-            direction = GDK_SCROLL_LEFT;
-          else
-            direction = GDK_SCROLL_RIGHT;
-        }
-      else
-        {
-          direction = sevent->direction;
-        }
+      if (sevent->state & GDK_SHIFT_MASK)
+        switch (direction)
+          {
+          case GDK_SCROLL_UP:    direction = GDK_SCROLL_LEFT;  break;
+          case GDK_SCROLL_DOWN:  direction = GDK_SCROLL_RIGHT; break;
+          case GDK_SCROLL_LEFT:  direction = GDK_SCROLL_UP;    break;
+          case GDK_SCROLL_RIGHT: direction = GDK_SCROLL_DOWN;  break;
+          }
 
       g_signal_emit (widget, view_signals[SCROLL], 0, direction);
     }

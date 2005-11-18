@@ -889,24 +889,44 @@ view_events (GtkWidget          *widget,
       {
         GdkEventScroll *sevent = (GdkEventScroll *) event;
 
-        if (sevent->state & GDK_SHIFT_MASK)
+        if (sevent->state & GDK_CONTROL_MASK)
           {
-            if (sevent->direction == GDK_SCROLL_UP)
-              gimp_gradient_editor_zoom (editor, GIMP_ZOOM_IN);
-            else
-              gimp_gradient_editor_zoom (editor, GIMP_ZOOM_OUT);
+            switch (sevent->direction)
+              {
+              case GDK_SCROLL_UP:
+                gimp_gradient_editor_zoom (editor, GIMP_ZOOM_IN);
+                break;
+
+              case GDK_SCROLL_DOWN:
+                gimp_gradient_editor_zoom (editor, GIMP_ZOOM_OUT);
+                break;
+
+              default:
+                break;
+              }
           }
         else
           {
-            GtkAdjustment *adj = GTK_ADJUSTMENT (editor->scroll_data);
+            GtkAdjustment *adj   = GTK_ADJUSTMENT (editor->scroll_data);
+            gfloat         value = adj->value;
 
-            gfloat new_value = adj->value + ((sevent->direction == GDK_SCROLL_UP) ?
-                                             -adj->page_increment / 2 :
-                                             adj->page_increment / 2);
+            switch (sevent->direction)
+              {
+              case GDK_SCROLL_UP:
+                value -= adj->page_increment / 2;
+                break;
 
-            new_value = CLAMP (new_value, adj->lower, adj->upper - adj->page_size);
+              case GDK_SCROLL_DOWN:
+                value += adj->page_increment / 2;
+                break;
 
-            gtk_adjustment_set_value (adj, new_value);
+              deafult:
+                break;
+              }
+
+            value = CLAMP (value, adj->lower, adj->upper - adj->page_size);
+
+            gtk_adjustment_set_value (adj, value);
           }
       }
       break;
