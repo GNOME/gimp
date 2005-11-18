@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-15 15:10+0100\n"
-"PO-Revision-Date: 2005-11-15 15:22+0100\n"
+"POT-Creation-Date: 2005-11-18 14:50+0100\n"
+"PO-Revision-Date: 2005-11-18 14:52+0100\n"
 "Last-Translator: Hendrik Brandt <heb@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -274,7 +274,7 @@ msgid "Fonts"
 msgstr "Schriften"
 
 #: ../app/actions/actions.c:149 ../app/dialogs/dialogs.c:219
-#: ../app/widgets/gimpgradienteditor.c:294
+#: ../app/widgets/gimpgradienteditor.c:296
 msgid "Gradient Editor"
 msgstr "Farbverlaufseditor"
 
@@ -970,19 +970,19 @@ msgstr "_Tipp des Tages"
 msgid "_About"
 msgstr "_Über"
 
-#: ../app/actions/dock-actions.c:42
+#: ../app/actions/dock-actions.c:43
 msgid "M_ove to Screen"
 msgstr "Auf Bildschirm _verschieben"
 
-#: ../app/actions/dock-actions.c:46
+#: ../app/actions/dock-actions.c:47
 msgid "Close Dock"
 msgstr "Dock schließen"
 
-#: ../app/actions/dock-actions.c:54
+#: ../app/actions/dock-actions.c:55
 msgid "_Show Image Selection"
 msgstr "_Bildauswahl anzeigen"
 
-#: ../app/actions/dock-actions.c:60
+#: ../app/actions/dock-actions.c:61
 msgid "Auto _Follow Active Image"
 msgstr "Automatisch dem a_ktiven Bild folgen"
 
@@ -1689,19 +1689,19 @@ msgstr "Hineinzoomen"
 
 #: ../app/actions/gradient-editor-actions.c:311
 #: ../app/actions/palette-editor-actions.c:88
-#: ../app/actions/view-actions.c:228 ../app/actions/view-actions.c:239
-#: ../app/actions/view-actions.c:240
+#: ../app/actions/view-actions.c:229 ../app/actions/view-actions.c:240
+#: ../app/actions/view-actions.c:241
 msgid "Zoom in"
 msgstr "Hineinzoomen"
 
 #: ../app/actions/gradient-editor-actions.c:316
-#: ../app/actions/view-actions.c:233
+#: ../app/actions/view-actions.c:234
 msgid "Zoom Out"
 msgstr "Herauszoomen"
 
 #: ../app/actions/gradient-editor-actions.c:317
 #: ../app/actions/palette-editor-actions.c:94
-#: ../app/actions/view-actions.c:222 ../app/actions/view-actions.c:234
+#: ../app/actions/view-actions.c:223 ../app/actions/view-actions.c:235
 msgid "Zoom out"
 msgstr "Herauszoomen"
 
@@ -1714,75 +1714,75 @@ msgstr "Alles anzeigen"
 msgid "Zoom all"
 msgstr "Alles anzeigen"
 
-#: ../app/actions/gradient-editor-actions.c:605
+#: ../app/actions/gradient-editor-actions.c:607
 msgid "_Blending Function for Segment"
 msgstr "Farb_verlaufsfunktion für Segment"
 
-#: ../app/actions/gradient-editor-actions.c:607
+#: ../app/actions/gradient-editor-actions.c:609
 msgid "Coloring _Type for Segment"
 msgstr "_Färbungsart für Segment"
 
-#: ../app/actions/gradient-editor-actions.c:610
+#: ../app/actions/gradient-editor-actions.c:612
 msgid "_Flip Segment"
 msgstr "Segment sp_iegeln"
 
-#: ../app/actions/gradient-editor-actions.c:612
+#: ../app/actions/gradient-editor-actions.c:614
 msgid "_Replicate Segment..."
 msgstr "Segment duplizieren..."
 
-#: ../app/actions/gradient-editor-actions.c:614
+#: ../app/actions/gradient-editor-actions.c:616
 msgid "Split Segment at _Midpoint"
 msgstr "Segment _mittig teilen"
 
-#: ../app/actions/gradient-editor-actions.c:616
+#: ../app/actions/gradient-editor-actions.c:618
 msgid "Split Segment _Uniformly..."
 msgstr "Segment _gleichmäßig aufteilen..."
 
-#: ../app/actions/gradient-editor-actions.c:618
+#: ../app/actions/gradient-editor-actions.c:620
 msgid "_Delete Segment"
 msgstr "Segment _löschen"
 
-#: ../app/actions/gradient-editor-actions.c:620
+#: ../app/actions/gradient-editor-actions.c:622
 msgid "Re-_center Segment's Midpoint"
 msgstr "Mittelpunkt des Segments _zentrieren"
 
-#: ../app/actions/gradient-editor-actions.c:622
+#: ../app/actions/gradient-editor-actions.c:624
 msgid "Re-distribute _Handles in Segment"
 msgstr "Punkte _gleichmäßig im Segment verteilen"
 
-#: ../app/actions/gradient-editor-actions.c:627
+#: ../app/actions/gradient-editor-actions.c:629
 msgid "_Blending Function for Selection"
 msgstr "Farb_verlaufsfunktion für Auswahl"
 
-#: ../app/actions/gradient-editor-actions.c:629
+#: ../app/actions/gradient-editor-actions.c:631
 msgid "Coloring _Type for Selection"
 msgstr "_Färbungsart für Auswahl"
 
-#: ../app/actions/gradient-editor-actions.c:632
+#: ../app/actions/gradient-editor-actions.c:634
 msgid "_Flip Selection"
 msgstr "Auswahl sp_iegeln"
 
-#: ../app/actions/gradient-editor-actions.c:634
+#: ../app/actions/gradient-editor-actions.c:636
 msgid "_Replicate Selection..."
 msgstr "Auswahl _duplizieren..."
 
-#: ../app/actions/gradient-editor-actions.c:636
+#: ../app/actions/gradient-editor-actions.c:638
 msgid "Split Segments at _Midpoints"
 msgstr "Segment an _Mittelpunkten aufteilen"
 
-#: ../app/actions/gradient-editor-actions.c:638
+#: ../app/actions/gradient-editor-actions.c:640
 msgid "Split Segments _Uniformly..."
 msgstr "Segmente _gleichmäßig aufteilen..."
 
-#: ../app/actions/gradient-editor-actions.c:640
+#: ../app/actions/gradient-editor-actions.c:642
 msgid "_Delete Selection"
 msgstr "Auswahl _löschen"
 
-#: ../app/actions/gradient-editor-actions.c:642
+#: ../app/actions/gradient-editor-actions.c:644
 msgid "Re-_center Midpoints in Selection"
 msgstr "Mittelpunkte in Auswahl _zentrieren"
 
-#: ../app/actions/gradient-editor-actions.c:644
+#: ../app/actions/gradient-editor-actions.c:646
 msgid "Re-distribute _Handles in Selection"
 msgstr "Punkte _gleichmäßig in Auswahl verteilen"
 
@@ -2106,7 +2106,7 @@ msgstr "Ansichten an_heben"
 msgid "Raise this image's displays"
 msgstr "Die Ansichten dieses Bildes anheben"
 
-#: ../app/actions/images-actions.c:53 ../app/actions/view-actions.c:72
+#: ../app/actions/images-actions.c:53 ../app/actions/view-actions.c:73
 msgid "_New View"
 msgstr "_Neue Ansicht"
 
@@ -2407,12 +2407,12 @@ msgid "New color from BG"
 msgstr "Neue Farbe aus Hintergrund"
 
 #: ../app/actions/palette-editor-actions.c:87
-#: ../app/actions/view-actions.c:227
+#: ../app/actions/view-actions.c:228
 msgid "Zoom _In"
 msgstr "Hin_einzoomen"
 
 #: ../app/actions/palette-editor-actions.c:93
-#: ../app/actions/view-actions.c:221
+#: ../app/actions/view-actions.c:222
 msgid "Zoom _Out"
 msgstr "Hera_uszoomen"
 
@@ -3279,179 +3279,179 @@ msgstr "Auswahl aus Pfad"
 msgid "Stroke Path"
 msgstr "Pfad nachziehen"
 
-#: ../app/actions/view-actions.c:64
+#: ../app/actions/view-actions.c:65
 msgid "_View"
 msgstr "An_sicht"
 
-#: ../app/actions/view-actions.c:65
+#: ../app/actions/view-actions.c:66
 msgid "_Zoom"
 msgstr "_Zoom"
 
-#: ../app/actions/view-actions.c:66
+#: ../app/actions/view-actions.c:67
 msgid "_Padding Color"
 msgstr "Benutzerdefinierte _Rahmenfarbe"
 
-#: ../app/actions/view-actions.c:68
+#: ../app/actions/view-actions.c:69
 msgid "Move to Screen"
 msgstr "Auf Bildschirm verschieben"
 
-#: ../app/actions/view-actions.c:77
+#: ../app/actions/view-actions.c:78
 msgid "_Close"
 msgstr "_Schließen"
 
-#: ../app/actions/view-actions.c:82
+#: ../app/actions/view-actions.c:83
 msgid "_Fit Image in Window"
 msgstr "_Fenster an Bild anpassen"
 
-#: ../app/actions/view-actions.c:83
+#: ../app/actions/view-actions.c:84
 msgid "Fit image in window"
 msgstr "Fenstergröße an Bild anpassen."
 
-#: ../app/actions/view-actions.c:88
+#: ../app/actions/view-actions.c:89
 msgid "Fit Image _to Window"
 msgstr "_Bild dem Fenster anpassen"
 
-#: ../app/actions/view-actions.c:89
+#: ../app/actions/view-actions.c:90
 msgid "Fit image to window"
 msgstr "Bildgröße dem Fenster anpassen"
 
-#: ../app/actions/view-actions.c:94
+#: ../app/actions/view-actions.c:95
 msgid "Na_vigation Window"
 msgstr "Navi_gationsfenster"
 
-#: ../app/actions/view-actions.c:99
+#: ../app/actions/view-actions.c:100
 msgid "Display _Filters..."
 msgstr "Ansichts_filter..."
 
-#: ../app/actions/view-actions.c:104
+#: ../app/actions/view-actions.c:105
 msgid "Shrink _Wrap"
 msgstr "Fenster an_passen"
 
-#: ../app/actions/view-actions.c:105
+#: ../app/actions/view-actions.c:106
 msgid "Shrink wrap"
 msgstr "Fenster anpassen"
 
-#: ../app/actions/view-actions.c:113
+#: ../app/actions/view-actions.c:114
 msgid "_Dot for Dot"
 msgstr "_Punkt für Punkt"
 
-#: ../app/actions/view-actions.c:119
+#: ../app/actions/view-actions.c:120
 msgid "Show _Selection"
 msgstr "_Auswahl anzeigen"
 
-#: ../app/actions/view-actions.c:125
+#: ../app/actions/view-actions.c:126
 msgid "Show _Layer Boundary"
 msgstr "_Ebenenrahmen anzeigen"
 
-#: ../app/actions/view-actions.c:131
+#: ../app/actions/view-actions.c:132
 msgid "Show _Guides"
 msgstr "_Hilfslinien anzeigen"
 
-#: ../app/actions/view-actions.c:137
+#: ../app/actions/view-actions.c:138
 msgid "S_how Grid"
 msgstr "_Gitter anzeigen"
 
-#: ../app/actions/view-actions.c:143
+#: ../app/actions/view-actions.c:144
 msgid "Show Sample Points"
 msgstr "Prüfpunkte anzeigen"
 
-#: ../app/actions/view-actions.c:149
+#: ../app/actions/view-actions.c:150
 msgid "Sn_ap to Guides"
 msgstr "_Magnetische Hilfslinien"
 
-#: ../app/actions/view-actions.c:155
+#: ../app/actions/view-actions.c:156
 msgid "Sna_p to Grid"
 msgstr "Magnetis_ches Gitter"
 
-#: ../app/actions/view-actions.c:161
+#: ../app/actions/view-actions.c:162
 msgid "Snap to _Canvas Edges"
 msgstr "An _Leinwandkanten einrasten"
 
-#: ../app/actions/view-actions.c:167
+#: ../app/actions/view-actions.c:168
 msgid "Snap t_o Active Path"
 msgstr "Am aktiven P_fad einrasten"
 
-#: ../app/actions/view-actions.c:173
+#: ../app/actions/view-actions.c:174
 msgid "Show _Menubar"
 msgstr "Menüleis_te anzeigen"
 
-#: ../app/actions/view-actions.c:179
+#: ../app/actions/view-actions.c:180
 msgid "Show R_ulers"
 msgstr "_Lineale anzeigen"
 
-#: ../app/actions/view-actions.c:185
+#: ../app/actions/view-actions.c:186
 msgid "Show Scroll_bars"
 msgstr "_Scrollbalken anzeigen"
 
-#: ../app/actions/view-actions.c:191
+#: ../app/actions/view-actions.c:192
 msgid "Show S_tatusbar"
 msgstr "_Statusleiste anzeigen"
 
-#: ../app/actions/view-actions.c:197
+#: ../app/actions/view-actions.c:198
 msgid "Fullscr_een"
 msgstr "_Vollbild"
 
-#: ../app/actions/view-actions.c:258
+#: ../app/actions/view-actions.c:259
 msgid "1_6:1  (1600%)"
 msgstr "1_6:1  (1600%)"
 
-#: ../app/actions/view-actions.c:263
+#: ../app/actions/view-actions.c:264
 msgid "_8:1  (800%)"
 msgstr "_8:1  (800%)"
 
-#: ../app/actions/view-actions.c:268
+#: ../app/actions/view-actions.c:269
 msgid "_4:1  (400%)"
 msgstr "_4:1  (400%)"
 
-#: ../app/actions/view-actions.c:273
+#: ../app/actions/view-actions.c:274
 msgid "_2:1  (200%)"
 msgstr "_2:1  (200%)"
 
-#: ../app/actions/view-actions.c:278
+#: ../app/actions/view-actions.c:279
 msgid "_1:1  (100%)"
 msgstr "_1:1  (100%)"
 
-#: ../app/actions/view-actions.c:279
+#: ../app/actions/view-actions.c:280
 msgid "Zoom 1:1"
 msgstr "Maßstab 1:1"
 
-#: ../app/actions/view-actions.c:284
+#: ../app/actions/view-actions.c:285
 msgid "1:_2  (50%)"
 msgstr "1:_2  (50%)"
 
-#: ../app/actions/view-actions.c:289
+#: ../app/actions/view-actions.c:290
 msgid "1:_4  (25%)"
 msgstr "1:_4  (25%)"
 
-#: ../app/actions/view-actions.c:294
+#: ../app/actions/view-actions.c:295
 msgid "1:_8  (12.5%)"
 msgstr "1:_8  (12.5%)"
 
-#: ../app/actions/view-actions.c:299
+#: ../app/actions/view-actions.c:300
 msgid "1:1_6  (6.25%)"
 msgstr "1:1_6  (6.25%)"
 
-#: ../app/actions/view-actions.c:304
+#: ../app/actions/view-actions.c:305
 msgid "Othe_r..."
 msgstr "A_nders..."
 
-#: ../app/actions/view-actions.c:312
+#: ../app/actions/view-actions.c:313
 msgid "From _Theme"
 msgstr "Dem _Thema entsprechend"
 
-#: ../app/actions/view-actions.c:317
+#: ../app/actions/view-actions.c:318
 msgid "_Light Check Color"
 msgstr "H_elle Schachbrett-Farbe"
 
-#: ../app/actions/view-actions.c:322
+#: ../app/actions/view-actions.c:323
 msgid "_Dark Check Color"
 msgstr "_Dunkle Schachbrett-Farbe"
 
-#: ../app/actions/view-actions.c:327
+#: ../app/actions/view-actions.c:328
 msgid "Select _Custom Color..."
 msgstr "_Benutzerdefinierte Farbe wählen..."
 
-#: ../app/actions/view-actions.c:332
+#: ../app/actions/view-actions.c:333
 msgid "As in _Preferences"
 msgstr "Den _Einstellungen entsprechend"
 
@@ -3465,18 +3465,18 @@ msgstr "A_ndere (%s)..."
 msgid "_Zoom (%s)"
 msgstr "_Zoom (%s)"
 
-#: ../app/actions/view-commands.c:579
+#: ../app/actions/view-commands.c:569
 msgid "Set Canvas Padding Color"
 msgstr "Farbe des Leinwandrahmens festlegen"
 
-#: ../app/actions/view-commands.c:581
+#: ../app/actions/view-commands.c:571
 msgid "Set Custom Canvas Padding Color"
 msgstr "Farbe des Leinwandrahmens festlegen"
 
-#: ../app/actions/window-actions.c:65
+#: ../app/actions/window-actions.c:164
 #, c-format
-msgid "Screen %d (%s)"
-msgstr "Bildschirm %d (%s)"
+msgid "Screen %s"
+msgstr "Arbeitsfläche %s"
 
 #: ../app/base/base-enums.c:23
 msgid "Smooth"
@@ -3931,7 +3931,8 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:270
 msgid "Add all opened and saved files to the document history on disk."
-msgstr "Alle geöffneten und gespeicherten Dateien im Dokumentenindex speichern."
+msgstr ""
+"Alle geöffneten und gespeicherten Dateien im Dokumentenindex speichern."
 
 #: ../app/config/gimprc-blurbs.h:273
 msgid "Save the positions and sizes of the main dialogs when the GIMP exits."
@@ -5816,7 +5817,9 @@ msgstr "Schwebende Ebene"
 msgid ""
 "Convert a mitered join to a bevelled join if the miter would extend to a "
 "distance of more than miter-limit * line-width from the actual join point."
-msgstr ""
+msgstr "Gehrungsverbindungen in abgeschrägte Verbindungen umwandeln, "
+"sobald der Abstand der Gehrung zum Verbindungspunkt den Wert"
+"des Gehrungslimits mal der Linienbreite überschreitet"
 
 #: ../app/core/gimptemplate.c:157
 msgid "The unit used for coordinate display when not in dot-for-dot mode."
@@ -7836,7 +7839,7 @@ msgstr "(bereinigt)"
 
 #: ../app/display/gimpdisplayshell-title.c:328
 #: ../app/display/gimpdisplayshell-title.c:340
-#: ../app/widgets/gimpactiongroup.c:806
+#: ../app/widgets/gimpactiongroup.c:808
 msgid "(none)"
 msgstr "(Kein)"
 
@@ -9845,7 +9848,7 @@ msgstr "Keine Pfade in der Ablage gefunden"
 msgid "Failed to import paths from '%s': %s"
 msgstr "Fehler beim Pfad-Import aus »%s«: %s"
 
-#: ../app/widgets/gimpactiongroup.c:803
+#: ../app/widgets/gimpactiongroup.c:805
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
@@ -10421,94 +10424,94 @@ msgstr "Füllart"
 msgid "Extensions"
 msgstr "Nach Endung"
 
-#: ../app/widgets/gimpgradienteditor.c:399
+#: ../app/widgets/gimpgradienteditor.c:401
 msgid "Instant update"
 msgstr "Dauernd auffrischen"
 
-#: ../app/widgets/gimpgradienteditor.c:746
+#: ../app/widgets/gimpgradienteditor.c:762
 #, c-format
 msgid "Zoom factor: %d:1"
 msgstr "Maßstab: %d:1"
 
-#: ../app/widgets/gimpgradienteditor.c:749
+#: ../app/widgets/gimpgradienteditor.c:765
 #, c-format
 msgid "Displaying [%0.6f, %0.6f]"
 msgstr "[%0.6f, %0.6f] wird angezeigt"
 
-#: ../app/widgets/gimpgradienteditor.c:944
+#: ../app/widgets/gimpgradienteditor.c:960
 #, c-format
 msgid "Position: %0.6f"
 msgstr "Position: %0.6f"
 
-#: ../app/widgets/gimpgradienteditor.c:945
+#: ../app/widgets/gimpgradienteditor.c:961
 #, c-format
 msgid "RGB (%0.3f, %0.3f, %0.3f)"
 msgstr "RGB (%0.3f, %0.3f, %0.3f)"
 
-#: ../app/widgets/gimpgradienteditor.c:947
+#: ../app/widgets/gimpgradienteditor.c:963
 #, c-format
 msgid "HSV (%0.3f, %0.3f, %0.3f)"
 msgstr "HSV (%0.3f, %0.3f, %0.3f)"
 
-#: ../app/widgets/gimpgradienteditor.c:949
+#: ../app/widgets/gimpgradienteditor.c:965
 #, c-format
 msgid "Luminance: %0.3f    Opacity: %0.3f"
 msgstr "Intensität %0.3f    Deckkraft: %0.3f"
 
-#: ../app/widgets/gimpgradienteditor.c:982
-#: ../app/widgets/gimpgradienteditor.c:1017
+#: ../app/widgets/gimpgradienteditor.c:998
+#: ../app/widgets/gimpgradienteditor.c:1033
 #, c-format
 msgid "RGB (%d, %d, %d)"
 msgstr "RGB (%d, %d, %d)"
 
-#: ../app/widgets/gimpgradienteditor.c:990
+#: ../app/widgets/gimpgradienteditor.c:1006
 msgid "Foreground color set to:"
 msgstr "Vordergrundfarbe ist:"
 
-#: ../app/widgets/gimpgradienteditor.c:1022
+#: ../app/widgets/gimpgradienteditor.c:1038
 #, c-format
 msgid "(%0.3f, %0.3f, %0.3f)"
 msgstr "(%0.3f, %0.3f, %0.3f)"
 
-#: ../app/widgets/gimpgradienteditor.c:1026
+#: ../app/widgets/gimpgradienteditor.c:1042
 msgid "Background color set to:"
 msgstr "Hintergrundfarbe ist:"
 
-#: ../app/widgets/gimpgradienteditor.c:1229
-#: ../app/widgets/gimpgradienteditor.c:1295
+#: ../app/widgets/gimpgradienteditor.c:1245
+#: ../app/widgets/gimpgradienteditor.c:1311
 #, c-format
 msgid "%s%sDrag: move & compress"
 msgstr "%s%sZiehen: Verschieben & Stauchen"
 
-#: ../app/widgets/gimpgradienteditor.c:1235
+#: ../app/widgets/gimpgradienteditor.c:1251
 msgid "Drag: move"
 msgstr "Ziehen: Verschieben"
 
-#: ../app/widgets/gimpgradienteditor.c:1242
-#: ../app/widgets/gimpgradienteditor.c:1256
-#: ../app/widgets/gimpgradienteditor.c:1270
-#: ../app/widgets/gimpgradienteditor.c:1292
+#: ../app/widgets/gimpgradienteditor.c:1258
+#: ../app/widgets/gimpgradienteditor.c:1272
+#: ../app/widgets/gimpgradienteditor.c:1286
+#: ../app/widgets/gimpgradienteditor.c:1308
 #, c-format
 msgid "%s%sClick: extend selection"
 msgstr "%s%sKlick: Auswahl erweitern"
 
-#: ../app/widgets/gimpgradienteditor.c:1248
-#: ../app/widgets/gimpgradienteditor.c:1262
+#: ../app/widgets/gimpgradienteditor.c:1264
+#: ../app/widgets/gimpgradienteditor.c:1278
 msgid "Click: select"
 msgstr "Klick: Auswahl"
 
-#: ../app/widgets/gimpgradienteditor.c:1276
-#: ../app/widgets/gimpgradienteditor.c:1300
+#: ../app/widgets/gimpgradienteditor.c:1292
+#: ../app/widgets/gimpgradienteditor.c:1316
 msgid "Click: select    Drag: move"
 msgstr "Klick: Auswahl   Ziehen: Verschieben"
 
-#: ../app/widgets/gimpgradienteditor.c:1522
-#: ../app/widgets/gimpgradienteditor.c:1530
+#: ../app/widgets/gimpgradienteditor.c:1538
+#: ../app/widgets/gimpgradienteditor.c:1546
 #, c-format
 msgid "Handle position: %0.6f"
 msgstr "Markerposition: %0.6f"
 
-#: ../app/widgets/gimpgradienteditor.c:1547
+#: ../app/widgets/gimpgradienteditor.c:1563
 #, c-format
 msgid "Distance: %0.6f"
 msgstr "Abstand: %0.6f"
