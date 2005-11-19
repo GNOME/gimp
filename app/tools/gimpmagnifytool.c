@@ -163,7 +163,7 @@ gimp_magnify_tool_init (GimpMagnifyTool *magnify_tool)
   gimp_tool_control_set_snap_to                (tool->control, FALSE);
 
   gimp_tool_control_set_cursor                 (tool->control,
-                                                GIMP_CURSOR_ZOOM);
+                                                GIMP_CURSOR_MOUSE);
   gimp_tool_control_set_tool_cursor            (tool->control,
                                                 GIMP_TOOL_CURSOR_ZOOM);
   gimp_tool_control_set_cursor_modifier        (tool->control,

@@ -1271,7 +1271,6 @@ gimp_vector_tool_cursor_update (GimpTool        *tool,
   switch (vector_tool->function)
     {
     case VECTORS_SELECT_VECTOR:
-      cursor      = GDK_HAND2;
       tool_cursor = GIMP_TOOL_CURSOR_HAND;
       break;
 

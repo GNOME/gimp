@@ -375,7 +375,7 @@ gimp_align_tool_cursor_update (GimpTool        *tool,
                                      coords, 7, 7,
                                      NULL, NULL, NULL, NULL, NULL, NULL))
         {
-          cursor      = GDK_HAND2;
+          cursor      = GIMP_CURSOR_MOUSE;
           tool_cursor = GIMP_TOOL_CURSOR_HAND;
         }
     }
@@ -400,7 +400,7 @@ gimp_align_tool_cursor_update (GimpTool        *tool,
 	    }
 	  else
 	    {
-              cursor      = GDK_HAND2;
+              cursor      = GIMP_CURSOR_MOUSE;
               tool_cursor = GIMP_TOOL_CURSOR_HAND;
               modifier    = GIMP_CURSOR_MODIFIER_MOVE;
 	    }

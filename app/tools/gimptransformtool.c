@@ -651,7 +651,7 @@ gimp_transform_tool_cursor_update (GimpTool        *tool,
   if (tr_tool->use_grid)
     {
       GimpChannel        *selection = gimp_image_get_mask (gdisp->gimage);
-      GimpCursorType      cursor    = GDK_TOP_LEFT_ARROW;
+      GimpCursorType      cursor    = GIMP_CURSOR_MOUSE;
       GimpCursorModifier  modifier  = GIMP_CURSOR_MODIFIER_NONE;
 
       switch (options->type)

@@ -700,7 +700,7 @@ gimp_move_tool_cursor_update (GimpTool        *tool,
                                          coords, 7, 7,
                                          NULL, NULL, NULL, NULL, NULL, NULL))
             {
-              cursor      = GDK_HAND2;
+              cursor      = GIMP_CURSOR_MOUSE;
               tool_cursor = GIMP_TOOL_CURSOR_HAND;
             }
         }
@@ -732,7 +732,7 @@ gimp_move_tool_cursor_update (GimpTool        *tool,
                                           FUNSCALEX (shell, snap_distance),
                                           FUNSCALEY (shell, snap_distance))))
         {
-          cursor      = GDK_HAND2;
+          cursor      = GIMP_CURSOR_MOUSE;
           tool_cursor = GIMP_TOOL_CURSOR_HAND;
           modifier    = GIMP_CURSOR_MODIFIER_MOVE;
 	}
@@ -753,7 +753,7 @@ gimp_move_tool_cursor_update (GimpTool        *tool,
 	    }
 	  else
 	    {
-              cursor      = GDK_HAND2;
+              cursor      = GIMP_CURSOR_MOUSE;
               tool_cursor = GIMP_TOOL_CURSOR_HAND;
               modifier    = GIMP_CURSOR_MODIFIER_MOVE;
 	    }
@@ -844,7 +844,7 @@ gimp_move_tool_start_guide (GimpMoveTool        *move,
   move->guide_orientation = orientation;
 
   gimp_tool_set_cursor (tool, gdisp,
-                        GDK_HAND2,
+                        GIMP_CURSOR_MOUSE,
                         GIMP_TOOL_CURSOR_HAND,
                         GIMP_CURSOR_MODIFIER_MOVE);
 

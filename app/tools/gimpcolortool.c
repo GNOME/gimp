@@ -517,7 +517,7 @@ gimp_color_tool_cursor_update (GimpTool        *tool,
       if (color_tool->sample_point)
         {
           gimp_tool_set_cursor (tool, gdisp,
-                                GIMP_CURSOR_COLOR_PICKER,
+                                GIMP_CURSOR_MOUSE,
                                 GIMP_TOOL_CURSOR_COLOR_PICKER,
                                 GIMP_CURSOR_MODIFIER_MOVE);
         }
@@ -532,7 +532,7 @@ gimp_color_tool_cursor_update (GimpTool        *tool,
               (color_tool->options->sample_merged ||
                gimp_image_coords_in_active_drawable (gdisp->gimage, coords)))
             {
-              cursor = GIMP_CURSOR_COLOR_PICKER;
+              cursor = GIMP_CURSOR_MOUSE;
             }
 
           switch (color_tool->pick_mode)
@@ -730,7 +730,7 @@ gimp_color_tool_start_sample_point (GimpTool    *tool,
   color_tool->sample_point_y      = -1;
 
   gimp_tool_set_cursor (tool, gdisp,
-                        GIMP_CURSOR_COLOR_PICKER,
+                        GIMP_CURSOR_MOUSE,
                         GIMP_TOOL_CURSOR_COLOR_PICKER,
                         GIMP_CURSOR_MODIFIER_MOVE);
 

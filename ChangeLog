@@ -1,3 +1,14 @@
+2005-11-19  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpaligntool.c
+	* app/tools/gimpcolortool.c
+	* app/tools/gimpfliptool.c
+	* app/tools/gimpmagnifytool.c
+	* app/tools/gimpmovetool.c
+	* app/tools/gimptransformtool.c
+	* app/tools/gimpvectortool.c: started to get rid of all stock GDK
+	cursors in preparation of fixing bug #158407.
+
 2005-11-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpgradienteditor.c (view_events):
