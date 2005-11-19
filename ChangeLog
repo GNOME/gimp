@@ -1,5 +1,10 @@
 2005-11-19  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimppaintoptions-gui.c
+	* app/tools/gimpselectionoptions.c: code cleanup.
+
+2005-11-19  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpaligntool.c
 	* app/tools/gimpcolortool.c
 	* app/tools/gimpfliptool.c

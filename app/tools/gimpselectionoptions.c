@@ -527,7 +527,7 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
     }
 
   /*  widgets for fixed size select  */
-  if (tool_options->tool_info->tool_type == GIMP_TYPE_RECT_SELECT_TOOL     ||
+  if (tool_options->tool_info->tool_type == GIMP_TYPE_RECT_SELECT_TOOL ||
       tool_options->tool_info->tool_type == GIMP_TYPE_ELLIPSE_SELECT_TOOL)
     {
       GtkWidget *frame;

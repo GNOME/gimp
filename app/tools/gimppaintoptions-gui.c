@@ -104,11 +104,6 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
                                      _("Mode:"), 0.0, 0.5,
                                      menu, 2, FALSE);
 
-  /*  the opacity scale  */
-  gimp_prop_opacity_entry_new (config, "opacity",
-                               GTK_TABLE (table), 0, table_row++,
-                               _("Opacity:"));
-
   if (tool_type == GIMP_TYPE_ERASER_TOOL     ||
       tool_type == GIMP_TYPE_CONVOLVE_TOOL   ||
       tool_type == GIMP_TYPE_DODGE_BURN_TOOL ||
@@ -118,6 +113,12 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gtk_widget_set_sensitive (label, FALSE);
     }
 
+  /*  the opacity scale  */
+  gimp_prop_opacity_entry_new (config, "opacity",
+                               GTK_TABLE (table), 0, table_row++,
+                               _("Opacity:"));
+
+  /*  the brush  */
   if (tool_type != GIMP_TYPE_BUCKET_FILL_TOOL &&
       tool_type != GIMP_TYPE_BLEND_TOOL       &&
       tool_type != GIMP_TYPE_INK_TOOL)
@@ -128,6 +129,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
                                  button, 2, FALSE);
     }
 
+  /*  the gradient  */
   if (tool_type == GIMP_TYPE_BLEND_TOOL)
     {
       button = gimp_gradient_box_new (NULL, GIMP_CONTEXT (tool_options),
@@ -274,8 +276,7 @@ pressure_options_gui (GimpPressureOptions *pressure,
     }
 
   /*  the size toggle  */
-  if (
-      tool_type == GIMP_TYPE_CLONE_TOOL      ||
+  if (tool_type == GIMP_TYPE_CLONE_TOOL      ||
       tool_type == GIMP_TYPE_CONVOLVE_TOOL   ||
       tool_type == GIMP_TYPE_DODGE_BURN_TOOL ||
       tool_type == GIMP_TYPE_ERASER_TOOL     ||
@@ -316,10 +317,6 @@ fade_options_gui (GimpFadeOptions  *fade,
 {
   GObject   *config = G_OBJECT (paint_options);
   GtkWidget *frame  = NULL;
-  GtkWidget *table;
-  GtkWidget *spinbutton;
-  GtkWidget *button;
-  GtkWidget *menu;
 
   if (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL) ||
       tool_type == GIMP_TYPE_CLONE_TOOL                  ||
@@ -328,6 +325,11 @@ fade_options_gui (GimpFadeOptions  *fade,
       tool_type == GIMP_TYPE_ERASER_TOOL                 ||
       tool_type == GIMP_TYPE_SMUDGE_TOOL)
     {
+      GtkWidget *table;
+      GtkWidget *spinbutton;
+      GtkWidget *button;
+      GtkWidget *menu;
+
       frame = gimp_frame_new (NULL);
 
       button = gimp_prop_check_button_new (config, "use-fade",
@@ -374,8 +376,6 @@ jitter_options_gui (GimpJitterOptions  *jitter,
 {
   GObject   *config = G_OBJECT (paint_options);
   GtkWidget *frame  = NULL;
-  GtkWidget *table;
-  GtkWidget *button;
 
   if (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL) ||
       tool_type == GIMP_TYPE_CLONE_TOOL                  ||
@@ -384,6 +384,9 @@ jitter_options_gui (GimpJitterOptions  *jitter,
       tool_type == GIMP_TYPE_ERASER_TOOL                 ||
       tool_type == GIMP_TYPE_SMUDGE_TOOL)
     {
+      GtkWidget *table;
+      GtkWidget *button;
+
       frame = gimp_frame_new (NULL);
 
       button = gimp_prop_check_button_new (config, "use-jitter",
@@ -420,14 +423,15 @@ gradient_options_gui (GimpGradientOptions *gradient,
 {
   GObject   *config = G_OBJECT (paint_options);
   GtkWidget *frame  = NULL;
-  GtkWidget *table;
-  GtkWidget *spinbutton;
-  GtkWidget *button;
-  GtkWidget *menu;
-  GtkWidget *combo;
 
   if (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL))
     {
+      GtkWidget *table;
+      GtkWidget *spinbutton;
+      GtkWidget *button;
+      GtkWidget *menu;
+      GtkWidget *combo;
+
       frame = gimp_frame_new (NULL);
 
       button = gimp_prop_check_button_new (config, "use-gradient",
