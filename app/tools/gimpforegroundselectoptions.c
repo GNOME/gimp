@@ -38,7 +38,7 @@
 enum
 {
   PROP_0,
-  PROP_DISCONTINUOUS,
+  PROP_CONTIGUOUS,
   PROP_BACKGROUND,
   PROP_STROKE_WIDTH,
   PROP_SMOOTHNESS,
@@ -97,11 +97,10 @@ gimp_foreground_select_options_class_init (GimpForegroundSelectOptionsClass *kla
   object_class->set_property = gimp_foreground_select_options_set_property;
   object_class->get_property = gimp_foreground_select_options_get_property;
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DISCONTINUOUS,
-                                    "discontinuous",
-                                    _("Allow to select multiple disjoint "
-                                      "objects"),
-                                    FALSE,
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CONTIGUOUS,
+                                    "contiguous",
+                                    _("Select a single contiguous area"),
+                                    TRUE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_BACKGROUND,
                                     "background", NULL,
@@ -150,8 +149,8 @@ gimp_foreground_select_options_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_DISCONTINUOUS:
-      options->discontinuous = g_value_get_boolean (value);
+    case PROP_CONTIGUOUS:
+      options->contiguous = g_value_get_boolean (value);
       break;
     case PROP_BACKGROUND:
       options->background = g_value_get_boolean (value);
@@ -190,8 +189,8 @@ gimp_foreground_select_options_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_DISCONTINUOUS:
-      g_value_set_boolean (value, options->discontinuous);
+    case PROP_CONTIGUOUS:
+      g_value_set_boolean (value, options->contiguous);
       break;
     case PROP_BACKGROUND:
       g_value_set_boolean (value, options->background);
@@ -236,8 +235,7 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
   gint       row = 0;
 
   /*  single / multiple objects  */
-  button = gimp_prop_check_button_new (config, "discontinuous",
-                                       _("Discontinuous"));
+  button = gimp_prop_check_button_new (config, "contiguous", _("Contiguous"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 

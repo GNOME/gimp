@@ -38,7 +38,7 @@ struct _GimpForegroundSelectOptions
 {
   GimpSelectionOptions  parent_instance;
 
-  gboolean              discontinuous;
+  gboolean              contiguous;
   gboolean              background;
   gint                  stroke_width;
   gint                  smoothness;
