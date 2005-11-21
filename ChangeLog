@@ -1,5 +1,11 @@
 2005-11-21  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/context-actions.c (context_brush_radius_actions):
+	added default keyboard shortcuts for changing the brush radius
+	as suggested in bug #322028.
+
+2005-11-21  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpzoommodel.c (gimp_zoom_button_new): connect
 	to the model's "zoomed" signal and set the button sensitivity.
 
