@@ -1,5 +1,12 @@
 2005-11-21  Sven Neumann  <sven@gimp.org>
 
+	* menus/image-menu.xml.in: added "Animators" placeholder.
+
+	* plug-ins/script-fu/script-fu.c (script_fu_extension_init):
+	removed registration of "Animators" submenu.
+
+2005-11-21  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpforegroundselectoptions.[ch]
 	* app/tools/gimpforegroundselecttool.c: renamed "discontiguous" to
 	"continuous", both in the UI and as a variable.

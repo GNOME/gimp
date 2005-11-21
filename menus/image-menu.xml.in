@@ -551,7 +551,10 @@
 	<separator />
       </menu>
       <menu action="plug-in-web-menu" name="Web" />
-      <menu action="plug-in-animation-menu" name="Animation" />
+      <menu action="plug-in-animation-menu" name="Animation" >
+        <placeholder name="Animators" />
+	<separator />
+      </menu>
       <separator />
     </menu>
 

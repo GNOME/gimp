@@ -291,8 +291,6 @@ script_fu_extension_init (void)
 
   gimp_plugin_menu_branch_register ("<Image>/Filters",
                                     N_("Alpha to _Logo"));
-  gimp_plugin_menu_branch_register ("<Image>/Filters/Animation",
-                                    N_("A_nimators"));
   gimp_plugin_menu_branch_register ("<Image>/Filters",
                                     N_("_Decor"));
   gimp_plugin_menu_branch_register ("<Image>/Filters",
