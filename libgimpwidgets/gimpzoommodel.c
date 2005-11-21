@@ -193,6 +193,7 @@ gimp_zoom_model_set_property (GObject      *object,
     }
 
   g_object_thaw_notify (object);
+
   if (priv->value != previous_value)
     {
       g_signal_emit (object, zoom_model_signals[ZOOMED],
@@ -467,6 +468,28 @@ zoom_button_new (const gchar *stock_id,
   return button;
 }
 
+static void
+zoom_in_button_callback (GimpZoomModel *model,
+                         gdouble        old,
+                         gdouble        new,
+                         GtkWidget     *button)
+{
+  GimpZoomModelPrivate *priv = GIMP_ZOOM_MODEL_GET_PRIVATE (model);
+
+  gtk_widget_set_sensitive (button, priv->value != priv->maximum);
+}
+
+static void
+zoom_out_button_callback (GimpZoomModel *model,
+                          gdouble        old,
+                          gdouble        new,
+                          GtkWidget     *button)
+{
+  GimpZoomModelPrivate *priv = GIMP_ZOOM_MODEL_GET_PRIVATE (model);
+
+  gtk_widget_set_sensitive (button, priv->value != priv->minimum);
+}
+
 /**
  * gimp_zoom_button_new:
  * @model:     a #GimpZoomModel
@@ -493,6 +516,9 @@ gimp_zoom_button_new (GimpZoomModel *model,
       g_signal_connect_swapped (button, "clicked",
                                 G_CALLBACK (gimp_zoom_model_zoom_in),
                                 model);
+      g_signal_connect_object (model, "zoomed",
+                               G_CALLBACK (zoom_in_button_callback),
+                               button, 0);
       break;
 
     case GIMP_ZOOM_OUT:
@@ -500,6 +526,9 @@ gimp_zoom_button_new (GimpZoomModel *model,
       g_signal_connect_swapped (button, "clicked",
                                 G_CALLBACK (gimp_zoom_model_zoom_out),
                                 model);
+      g_signal_connect_object (model, "zoomed",
+                               G_CALLBACK (zoom_out_button_callback),
+                               button, 0);
       break;
 
     default:
@@ -507,14 +536,22 @@ gimp_zoom_button_new (GimpZoomModel *model,
       break;
     }
 
-  if (button && icon_size > 0)
+  if (button)
     {
-      const gchar *desc;
+      gdouble zoom = gimp_zoom_model_get_factor (model);
 
-      if (gimp_enum_get_value (GIMP_TYPE_ZOOM_TYPE, zoom_type,
-                               NULL, NULL, &desc, NULL))
+      /*  set initial button sensitivity  */
+      g_signal_emit (model, zoom_model_signals[ZOOMED], 0, zoom, zoom);
+
+      if (icon_size > 0)
         {
-          gimp_help_set_help_data (button, desc, NULL);
+          const gchar *desc;
+
+          if (gimp_enum_get_value (GIMP_TYPE_ZOOM_TYPE, zoom_type,
+                                   NULL, NULL, &desc, NULL))
+            {
+              gimp_help_set_help_data (button, desc, NULL);
+            }
         }
     }
 
