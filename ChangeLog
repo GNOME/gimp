@@ -1,5 +1,10 @@
 2005-11-21  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpscrolledpreview.c
+	(gimp_scrolled_preview_area_event): scroll using the mouse wheel.
+
+2005-11-21  Sven Neumann  <sven@gimp.org>
+
 	* menus/image-menu.xml.in: added "Animators" placeholder.
 
 	* plug-ins/script-fu/script-fu.c (script_fu_extension_init):

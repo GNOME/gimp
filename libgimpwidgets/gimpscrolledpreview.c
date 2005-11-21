@@ -429,6 +429,55 @@ gimp_scrolled_preview_area_event (GtkWidget           *area,
         }
       break;
 
+    case GDK_SCROLL:
+      {
+        GdkEventScroll     *sevent    = (GdkEventScroll *) event;
+        GdkScrollDirection  direction = sevent->direction;
+        GtkAdjustment      *adj;
+        gfloat              value;
+
+        if (sevent->state & GDK_SHIFT_MASK)
+          switch (direction)
+            {
+            case GDK_SCROLL_UP:    direction = GDK_SCROLL_LEFT;  break;
+            case GDK_SCROLL_DOWN:  direction = GDK_SCROLL_RIGHT; break;
+            case GDK_SCROLL_LEFT:  direction = GDK_SCROLL_UP;    break;
+            case GDK_SCROLL_RIGHT: direction = GDK_SCROLL_DOWN;  break;
+            }
+
+        switch (direction)
+          {
+          case GDK_SCROLL_UP:
+          case GDK_SCROLL_DOWN:
+          default:
+            adj = gtk_range_get_adjustment (GTK_RANGE (preview->vscr));
+            break;
+
+          case GDK_SCROLL_RIGHT:
+          case GDK_SCROLL_LEFT:
+            adj = gtk_range_get_adjustment (GTK_RANGE (preview->hscr));
+            break;
+          }
+
+        value = gtk_adjustment_get_value (adj);
+
+        switch (direction)
+          {
+          case GDK_SCROLL_UP:
+          case GDK_SCROLL_LEFT:
+            value -= adj->page_increment / 2;
+            break;
+
+          case GDK_SCROLL_DOWN:
+          case GDK_SCROLL_RIGHT:
+            value += adj->page_increment / 2;
+            break;
+          }
+
+        gtk_adjustment_set_value (adj, value);
+      }
+      break;
+
     default:
       break;
     }
