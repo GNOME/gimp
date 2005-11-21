@@ -300,10 +300,13 @@ preview_callback (GtkWidget *widget,
 }
 
 static void
-zoom_notify_callback (GObject *model)
+zoomed_callback (GimpZoomModel *model)
 {
+  mapvals.zoom = gimp_zoom_model_get_factor (model);
+
   if (linetab[0].x1 != -1)
     clear_wireframe ();
+
   draw_preview_image (TRUE);
 }
 
@@ -1330,13 +1333,14 @@ create_main_notebook (GtkWidget *container)
 gboolean
 main_dialog (GimpDrawable *drawable)
 {
-  GtkWidget *main_hbox;
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *frame;
-  GtkWidget *button;
-  GtkWidget *toggle;
-  gboolean   run = FALSE;
+  GtkWidget     *main_hbox;
+  GtkWidget     *vbox;
+  GtkWidget     *hbox;
+  GtkWidget     *frame;
+  GtkWidget     *button;
+  GtkWidget     *toggle;
+  GimpZoomModel *model;
+  gboolean       run = FALSE;
 
   gimp_ui_init ("MapObject", FALSE);
 
@@ -1404,18 +1408,20 @@ main_dialog (GimpDrawable *drawable)
 
   gimp_help_set_help_data (button, _("Recompute preview image"), NULL);
 
-  button = gimp_zoom_button_new (mapvals.zoom_model,
-                                 GIMP_ZOOM_IN, GTK_ICON_SIZE_MENU);
+  model = gimp_zoom_model_new ();
+  gimp_zoom_model_set_range (model, 0.25, 1.0);
+  gimp_zoom_model_zoom (model, GIMP_ZOOM_TO, mapvals.zoom);
+
+  button = gimp_zoom_button_new (model, GIMP_ZOOM_IN, GTK_ICON_SIZE_MENU);
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  button = gimp_zoom_button_new (mapvals.zoom_model,
-                                 GIMP_ZOOM_OUT, GTK_ICON_SIZE_MENU);
+  button = gimp_zoom_button_new (model, GIMP_ZOOM_OUT, GTK_ICON_SIZE_MENU);
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  g_signal_connect (mapvals.zoom_model, "notify::value",
-                    G_CALLBACK (zoom_notify_callback),
+  g_signal_connect (model, "zoomed",
+                    G_CALLBACK (zoomed_callback),
                     NULL);
 
   toggle = gtk_check_button_new_with_mnemonic (_("Show preview _wireframe"));

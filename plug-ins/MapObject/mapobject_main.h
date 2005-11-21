@@ -63,8 +63,7 @@ typedef struct
   gint showgrid;
   gint showcaps;
 
-  GimpZoomModel *zoom_model;
-
+  gdouble zoom;
   gdouble alpha,beta,gamma;
   gdouble maxdepth;
   gdouble pixeltreshold;

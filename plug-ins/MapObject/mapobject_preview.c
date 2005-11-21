@@ -396,10 +396,9 @@ update_light (gint xpos,
 	      gint ypos)
 {
   gint    startx, starty, pw, ph;
-  gdouble zoom = gimp_zoom_model_get_factor (mapvals.zoom_model);
 
-  pw     = PREVIEW_WIDTH * zoom;
-  ph     = PREVIEW_HEIGHT * zoom;
+  pw     = PREVIEW_WIDTH * mapvals.zoom;
+  ph     = PREVIEW_HEIGHT * mapvals.zoom;
   startx = (PREVIEW_WIDTH  - pw) / 2;
   starty = (PREVIEW_HEIGHT - ph) / 2;
 
@@ -416,7 +415,6 @@ void
 draw_preview_image (gint docompute)
 {
   gint startx, starty, pw, ph;
-  gdouble   zoom;
   GdkColor  color;
 
   color.red   = 0x0;
@@ -432,10 +430,8 @@ draw_preview_image (gint docompute)
   gdk_gc_set_function (gc, GDK_COPY);
   linetab[0].x1 = -1;
 
-  zoom = gimp_zoom_model_get_factor (mapvals.zoom_model);
-
-  pw = PREVIEW_WIDTH * zoom;
-  ph = PREVIEW_HEIGHT * zoom;
+  pw = PREVIEW_WIDTH * mapvals.zoom;
+  ph = PREVIEW_HEIGHT * mapvals.zoom;
   startx = (PREVIEW_WIDTH - pw) / 2;
   starty = (PREVIEW_HEIGHT - ph) / 2;
 
@@ -475,8 +471,7 @@ draw_preview_image (gint docompute)
 void
 draw_preview_wireframe (void)
 {
-  gint startx, starty, pw, ph;
-  gdouble   zoom;
+  gint      startx, starty, pw, ph;
   GdkColor  color;
 
   color.red   = 0x0;
@@ -491,10 +486,8 @@ draw_preview_wireframe (void)
 
   gdk_gc_set_function (gc, GDK_INVERT);
 
-  zoom = gimp_zoom_model_get_factor (mapvals.zoom_model);
-
-  pw     = PREVIEW_WIDTH  * zoom;
-  ph     = PREVIEW_HEIGHT * zoom;
+  pw     = PREVIEW_WIDTH  * mapvals.zoom;
+  ph     = PREVIEW_HEIGHT * mapvals.zoom;
   startx = (PREVIEW_WIDTH  - pw) / 2;
   starty = (PREVIEW_HEIGHT - ph) / 2;
 
