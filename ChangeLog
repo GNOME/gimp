@@ -1,5 +1,10 @@
 2005-11-22  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimppreview.c: moved the controls closer to the
+	preview.
+
+2005-11-22  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpzoompreview.c: zoom on Ctrl-Scroll events.
 
 	* libgimpwidgets/gimpscrolledpreview.c

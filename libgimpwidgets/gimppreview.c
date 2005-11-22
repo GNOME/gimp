@@ -192,7 +192,7 @@ gimp_preview_init (GimpPreview *preview)
   gtk_widget_show (preview->frame);
 
   preview->table = gtk_table_new (3, 2, FALSE);
-  gtk_table_set_row_spacing (GTK_TABLE (preview->table), 1, 6);
+  gtk_table_set_row_spacing (GTK_TABLE (preview->table), 1, 3);
   gtk_container_add (GTK_CONTAINER (preview->frame), preview->table);
   gtk_widget_show (preview->table);
 
