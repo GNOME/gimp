@@ -154,6 +154,8 @@ gimp_zoom_preview_set_adjustments (GimpZoomPreview *preview,
   gdouble              height;
   gdouble              ratio;
 
+  scrolled_preview->in_drag = TRUE;
+
   width  = GIMP_PREVIEW (preview)->width;
   height = GIMP_PREVIEW (preview)->height;
 
@@ -181,9 +183,10 @@ gimp_zoom_preview_set_adjustments (GimpZoomPreview *preview,
                                - height / 2.0,
                                adj->lower, adj->upper - height);
   gtk_adjustment_changed (adj);
-  gtk_adjustment_value_changed (adj);
 
-  gimp_preview_invalidate (GIMP_PREVIEW (preview));
+  scrolled_preview->in_drag = FALSE;
+
+  gtk_adjustment_value_changed (adj);
 }
 
 static void
@@ -256,6 +259,8 @@ gimp_zoom_preview_scroll_event (GtkWidget       *widget,
     {
       GimpZoomPreviewPrivate *priv = GIMP_ZOOM_PREVIEW_GET_PRIVATE (preview);
 
+      GIMP_SCROLLED_PREVIEW (preview)->in_drag = TRUE;
+
       switch (event->direction)
         {
         case GDK_SCROLL_UP:
@@ -269,6 +274,8 @@ gimp_zoom_preview_scroll_event (GtkWidget       *widget,
         default:
           break;
         }
+
+      GIMP_SCROLLED_PREVIEW (preview)->in_drag = FALSE;
     }
 
   return FALSE;
@@ -299,10 +306,11 @@ gimp_zoom_preview_draw (GimpPreview *preview)
 
   width  = preview->width;
   height = preview->height;
-  src_x = priv->extents.x +
-           preview->xoff * priv->extents.width / width / zoom_factor;
-  src_y = priv->extents.y +
-           preview->yoff * priv->extents.height / height / zoom_factor;
+
+  src_x      = (priv->extents.x +
+                preview->xoff * priv->extents.width / width / zoom_factor);
+  src_y      = (priv->extents.y +
+                preview->yoff * priv->extents.height / height / zoom_factor);
   src_width  = priv->extents.width / zoom_factor;
   src_height = priv->extents.height / zoom_factor;
 
@@ -310,6 +318,7 @@ gimp_zoom_preview_draw (GimpPreview *preview)
                                                src_x, src_y,
                                                src_width, src_height,
                                                &width, &height, &bpp);
+
   gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview->area),
                           0, 0, width, height,
                           gimp_drawable_type (drawable->drawable_id),
