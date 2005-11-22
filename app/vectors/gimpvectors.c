@@ -537,11 +537,9 @@ gimp_vectors_stroke (GimpItem       *item,
   GimpVectors *vectors = GIMP_VECTORS (item);
   gboolean     retval  = FALSE;
 
+  /*  return successfully on an empty path, there's nothing to stroke  */
   if (! vectors->strokes)
-    {
-      g_message (_("Cannot stroke empty path."));
-      return FALSE;
-    }
+    return TRUE;
 
   switch (stroke_desc->method)
     {

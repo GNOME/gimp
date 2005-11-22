@@ -1,5 +1,10 @@
 2005-11-22  Sven Neumann  <sven@gimp.org>
 
+	* app/vectors/gimpvectors.c (gimp_vectors_stroke): return
+	successfully when stroking an empty path. Fixes bug #322067.
+
+2005-11-22  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpscrolledpreview.c: request motion hints in
 	the navigation popup and redraw the window immidiately to give
 	better feedback.
