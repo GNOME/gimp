@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-18 14:50+0100\n"
-"PO-Revision-Date: 2005-11-18 14:52+0100\n"
+"POT-Creation-Date: 2005-11-22 18:38+0100\n"
+"PO-Revision-Date: 2005-11-22 18:40+0100\n"
 "Last-Translator: Hendrik Brandt <heb@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -3222,7 +3222,7 @@ msgstr "Pfad i_mportieren..."
 msgid "Path to Sele_ction"
 msgstr "Aus_wahl aus Pfad"
 
-#: ../app/actions/vectors-actions.c:163 ../app/tools/gimpvectortool.c:1905
+#: ../app/actions/vectors-actions.c:163 ../app/tools/gimpvectortool.c:1904
 msgid "Path to selection"
 msgstr "Auswahl aus Pfad"
 
@@ -3275,7 +3275,7 @@ msgid "Path to Selection"
 msgstr "Auswahl aus Pfad"
 
 #: ../app/actions/vectors-commands.c:371 ../app/tools/gimpvectoroptions.c:205
-#: ../app/tools/gimpvectortool.c:1935 ../app/vectors/gimpvectors.c:237
+#: ../app/tools/gimpvectortool.c:1934 ../app/vectors/gimpvectors.c:237
 msgid "Stroke Path"
 msgstr "Pfad nachziehen"
 
@@ -3559,7 +3559,7 @@ msgstr "Farbton"
 msgid "Saturation"
 msgstr "Sättigung"
 
-#: ../app/base/base-enums.c:121 ../app/tools/gimppaintoptions-gui.c:304
+#: ../app/base/base-enums.c:121 ../app/tools/gimppaintoptions-gui.c:305
 msgid "Color"
 msgstr "Farbe"
 
@@ -5817,9 +5817,10 @@ msgstr "Schwebende Ebene"
 msgid ""
 "Convert a mitered join to a bevelled join if the miter would extend to a "
 "distance of more than miter-limit * line-width from the actual join point."
-msgstr "Gehrungsverbindungen in abgeschrägte Verbindungen umwandeln, "
-"sobald der Abstand der Gehrung zum Verbindungspunkt den Wert"
-"des Gehrungslimits mal der Linienbreite überschreitet"
+msgstr ""
+"Gehrungsverbindungen in abgeschrägte Verbindungen umwandeln, sobald der "
+"Abstand der Gehrung zum Verbindungspunkt den Wertdes Gehrungslimits mal der "
+"Linienbreite überschreitet"
 
 #: ../app/core/gimptemplate.c:157
 msgid "The unit used for coordinate display when not in dot-for-dot mode."
@@ -8316,7 +8317,7 @@ msgstr "Versatz:"
 msgid "Shape:"
 msgstr "Form:"
 
-#: ../app/tools/gimpblendoptions.c:258 ../app/tools/gimppaintoptions-gui.c:485
+#: ../app/tools/gimpblendoptions.c:258 ../app/tools/gimppaintoptions-gui.c:489
 msgid "Repeat:"
 msgstr "Wiederholung:"
 
@@ -8774,14 +8775,14 @@ msgid "_Free Select"
 msgstr "_Freie Auswahl"
 
 #: ../app/tools/gimpforegroundselectoptions.c:102
-msgid "Allow to select multiple disjoint objects"
-msgstr "Das Auswählen verschiedener, getrennter Objekte ermöglichen"
+msgid "Select a single contiguous area"
+msgstr "Einen zusammenhängenden Bereich auswählen"
 
-#: ../app/tools/gimpforegroundselectoptions.c:112
+#: ../app/tools/gimpforegroundselectoptions.c:111
 msgid "Size of the brush used for refinements"
 msgstr "Größe des Pinsels für Verfeinerungen"
 
-#: ../app/tools/gimpforegroundselectoptions.c:117
+#: ../app/tools/gimpforegroundselectoptions.c:116
 msgid ""
 "Smaller values give a more accurate selection border but may introduce holes "
 "in the selection"
@@ -8789,48 +8790,49 @@ msgstr ""
 "Kleiner Werte erzeugen einen genaueren Auswahlrand können aber zu Lücken in "
 "der Auswahl führen"
 
-#: ../app/tools/gimpforegroundselectoptions.c:128
+#: ../app/tools/gimpforegroundselectoptions.c:127
 msgid "Sensitivity for brightness component"
 msgstr "Empfindlichkeit des Helligkeitsanteils"
 
-#: ../app/tools/gimpforegroundselectoptions.c:133
+#: ../app/tools/gimpforegroundselectoptions.c:132
 msgid "Sensitivity for red/green component"
 msgstr "Empfindlichkeit des roten/grünen Anteils"
 
-#: ../app/tools/gimpforegroundselectoptions.c:138
+#: ../app/tools/gimpforegroundselectoptions.c:137
 msgid "Sensitivity for yellow/blue component"
 msgstr "Empfindlichkeit des gelben/blauen Anteils"
 
-#: ../app/tools/gimpforegroundselectoptions.c:240
-msgid "Discontinuous"
-msgstr "Unterbrochen"
+#. single / multiple objects
+#: ../app/tools/gimpforegroundselectoptions.c:238
+msgid "Contiguous"
+msgstr "Zusammenhängend"
 
-#: ../app/tools/gimpforegroundselectoptions.c:246
+#: ../app/tools/gimpforegroundselectoptions.c:244
 msgid "Interactive refinement"
 msgstr "Interaktive Verbesserung"
 
-#: ../app/tools/gimpforegroundselectoptions.c:247
+#: ../app/tools/gimpforegroundselectoptions.c:245
 msgid "Mark background"
 msgstr "Hintergrund markieren"
 
-#: ../app/tools/gimpforegroundselectoptions.c:248
+#: ../app/tools/gimpforegroundselectoptions.c:246
 msgid "Mark foreground"
 msgstr "Vordergrund markieren"
 
-#: ../app/tools/gimpforegroundselectoptions.c:263
+#: ../app/tools/gimpforegroundselectoptions.c:261
 msgid "Small brush"
 msgstr "Kleiner Pinsel"
 
-#: ../app/tools/gimpforegroundselectoptions.c:271
+#: ../app/tools/gimpforegroundselectoptions.c:269
 msgid "Large brush"
 msgstr "Großer Pinsel"
 
-#: ../app/tools/gimpforegroundselectoptions.c:294
+#: ../app/tools/gimpforegroundselectoptions.c:292
 msgid "Smoothing:"
 msgstr "Weichzeichnen:"
 
 #. granularity
-#: ../app/tools/gimpforegroundselectoptions.c:297
+#: ../app/tools/gimpforegroundselectoptions.c:295
 msgid "Color Sensitivity"
 msgstr "Farbempfindlichkeit"
 
@@ -9164,67 +9166,67 @@ msgstr "_Pinsel"
 msgid "Mode:"
 msgstr "Modus:"
 
-#: ../app/tools/gimppaintoptions-gui.c:110
+#: ../app/tools/gimppaintoptions-gui.c:119
 #: ../app/widgets/gimpbrushselect.c:201 ../app/widgets/gimplayertreeview.c:310
 msgid "Opacity:"
 msgstr "Deckkraft:"
 
-#: ../app/tools/gimppaintoptions-gui.c:127
+#: ../app/tools/gimppaintoptions-gui.c:128
 msgid "Brush:"
 msgstr "Pinsel:"
 
-#: ../app/tools/gimppaintoptions-gui.c:136
-#: ../app/tools/gimppaintoptions-gui.c:461
+#: ../app/tools/gimppaintoptions-gui.c:138
+#: ../app/tools/gimppaintoptions-gui.c:465
 msgid "Gradient:"
 msgstr "Farbverlauf:"
 
-#: ../app/tools/gimppaintoptions-gui.c:172
+#: ../app/tools/gimppaintoptions-gui.c:174
 msgid "Incremental"
 msgstr "Steigernd"
 
-#: ../app/tools/gimppaintoptions-gui.c:186
+#: ../app/tools/gimppaintoptions-gui.c:188
 msgid "Hard edge"
 msgstr "Harte Kanten"
 
-#: ../app/tools/gimppaintoptions-gui.c:227
+#: ../app/tools/gimppaintoptions-gui.c:229
 msgid "Pressure sensitivity"
 msgstr "Druckempfindlichkeit"
 
-#: ../app/tools/gimppaintoptions-gui.c:246
+#: ../app/tools/gimppaintoptions-gui.c:248
 msgid "Opacity"
 msgstr "Deckkraft"
 
-#: ../app/tools/gimppaintoptions-gui.c:260
+#: ../app/tools/gimppaintoptions-gui.c:262
 msgid "Hardness"
 msgstr "Härte"
 
-#: ../app/tools/gimppaintoptions-gui.c:271
+#: ../app/tools/gimppaintoptions-gui.c:273
 msgid "Rate"
 msgstr "Rate"
 
-#: ../app/tools/gimppaintoptions-gui.c:286
-#: ../app/tools/gimppaintoptions-gui.c:295
+#: ../app/tools/gimppaintoptions-gui.c:287
+#: ../app/tools/gimppaintoptions-gui.c:296
 msgid "Size"
 msgstr "Größe"
 
-#: ../app/tools/gimppaintoptions-gui.c:334
+#: ../app/tools/gimppaintoptions-gui.c:336
 msgid "Fade out"
 msgstr "Verblassen"
 
-#: ../app/tools/gimppaintoptions-gui.c:354
-#: ../app/tools/gimppaintoptions-gui.c:470
+#: ../app/tools/gimppaintoptions-gui.c:356
+#: ../app/tools/gimppaintoptions-gui.c:474
 msgid "Length:"
 msgstr "Länge:"
 
-#: ../app/tools/gimppaintoptions-gui.c:390
+#: ../app/tools/gimppaintoptions-gui.c:393
 msgid "Apply Jitter"
 msgstr "Zittern"
 
-#: ../app/tools/gimppaintoptions-gui.c:407
+#: ../app/tools/gimppaintoptions-gui.c:410
 msgid "Amount:"
 msgstr "Menge:"
 
-#: ../app/tools/gimppaintoptions-gui.c:434
+#: ../app/tools/gimppaintoptions-gui.c:438
 msgid "Use color from gradient"
 msgstr "Farbe aus Farbverlauf"
 
@@ -9780,11 +9782,11 @@ msgstr "Klick trennt den Pfad auf."
 msgid "Click to make this node angular."
 msgstr "Klick macht diesen Knoten winklig."
 
-#: ../app/tools/gimpvectortool.c:1762
+#: ../app/tools/gimpvectortool.c:1761
 msgid "Delete Anchors"
 msgstr "Anker löschen"
 
-#: ../app/tools/gimpvectortool.c:1930
+#: ../app/tools/gimpvectortool.c:1929
 msgid "There is no active layer or channel to stroke to"
 msgstr ""
 "Es gibt weder eine aktive Ebene noch einen aktiven Kanal, die bzw. der "
@@ -10438,80 +10440,80 @@ msgstr "Maßstab: %d:1"
 msgid "Displaying [%0.6f, %0.6f]"
 msgstr "[%0.6f, %0.6f] wird angezeigt"
 
-#: ../app/widgets/gimpgradienteditor.c:960
+#: ../app/widgets/gimpgradienteditor.c:980
 #, c-format
 msgid "Position: %0.6f"
 msgstr "Position: %0.6f"
 
-#: ../app/widgets/gimpgradienteditor.c:961
+#: ../app/widgets/gimpgradienteditor.c:981
 #, c-format
 msgid "RGB (%0.3f, %0.3f, %0.3f)"
 msgstr "RGB (%0.3f, %0.3f, %0.3f)"
 
-#: ../app/widgets/gimpgradienteditor.c:963
+#: ../app/widgets/gimpgradienteditor.c:983
 #, c-format
 msgid "HSV (%0.3f, %0.3f, %0.3f)"
 msgstr "HSV (%0.3f, %0.3f, %0.3f)"
 
-#: ../app/widgets/gimpgradienteditor.c:965
+#: ../app/widgets/gimpgradienteditor.c:985
 #, c-format
 msgid "Luminance: %0.3f    Opacity: %0.3f"
 msgstr "Intensität %0.3f    Deckkraft: %0.3f"
 
-#: ../app/widgets/gimpgradienteditor.c:998
-#: ../app/widgets/gimpgradienteditor.c:1033
+#: ../app/widgets/gimpgradienteditor.c:1018
+#: ../app/widgets/gimpgradienteditor.c:1053
 #, c-format
 msgid "RGB (%d, %d, %d)"
 msgstr "RGB (%d, %d, %d)"
 
-#: ../app/widgets/gimpgradienteditor.c:1006
+#: ../app/widgets/gimpgradienteditor.c:1026
 msgid "Foreground color set to:"
 msgstr "Vordergrundfarbe ist:"
 
-#: ../app/widgets/gimpgradienteditor.c:1038
+#: ../app/widgets/gimpgradienteditor.c:1058
 #, c-format
 msgid "(%0.3f, %0.3f, %0.3f)"
 msgstr "(%0.3f, %0.3f, %0.3f)"
 
-#: ../app/widgets/gimpgradienteditor.c:1042
+#: ../app/widgets/gimpgradienteditor.c:1062
 msgid "Background color set to:"
 msgstr "Hintergrundfarbe ist:"
 
-#: ../app/widgets/gimpgradienteditor.c:1245
-#: ../app/widgets/gimpgradienteditor.c:1311
+#: ../app/widgets/gimpgradienteditor.c:1265
+#: ../app/widgets/gimpgradienteditor.c:1331
 #, c-format
 msgid "%s%sDrag: move & compress"
 msgstr "%s%sZiehen: Verschieben & Stauchen"
 
-#: ../app/widgets/gimpgradienteditor.c:1251
+#: ../app/widgets/gimpgradienteditor.c:1271
 msgid "Drag: move"
 msgstr "Ziehen: Verschieben"
 
-#: ../app/widgets/gimpgradienteditor.c:1258
-#: ../app/widgets/gimpgradienteditor.c:1272
-#: ../app/widgets/gimpgradienteditor.c:1286
-#: ../app/widgets/gimpgradienteditor.c:1308
+#: ../app/widgets/gimpgradienteditor.c:1278
+#: ../app/widgets/gimpgradienteditor.c:1292
+#: ../app/widgets/gimpgradienteditor.c:1306
+#: ../app/widgets/gimpgradienteditor.c:1328
 #, c-format
 msgid "%s%sClick: extend selection"
 msgstr "%s%sKlick: Auswahl erweitern"
 
-#: ../app/widgets/gimpgradienteditor.c:1264
-#: ../app/widgets/gimpgradienteditor.c:1278
+#: ../app/widgets/gimpgradienteditor.c:1284
+#: ../app/widgets/gimpgradienteditor.c:1298
 msgid "Click: select"
 msgstr "Klick: Auswahl"
 
-#: ../app/widgets/gimpgradienteditor.c:1292
-#: ../app/widgets/gimpgradienteditor.c:1316
+#: ../app/widgets/gimpgradienteditor.c:1312
+#: ../app/widgets/gimpgradienteditor.c:1336
 msgid "Click: select    Drag: move"
 msgstr "Klick: Auswahl   Ziehen: Verschieben"
 
-#: ../app/widgets/gimpgradienteditor.c:1538
-#: ../app/widgets/gimpgradienteditor.c:1546
+#: ../app/widgets/gimpgradienteditor.c:1558
+#: ../app/widgets/gimpgradienteditor.c:1566
 #, c-format
 msgid "Handle position: %0.6f"
 msgstr "Markerposition: %0.6f"
 
-#: ../app/widgets/gimpgradienteditor.c:1563
+#: ../app/widgets/gimpgradienteditor.c:1583
 #, c-format
 msgid "Distance: %0.6f"
 msgstr "Abstand: %0.6f"
