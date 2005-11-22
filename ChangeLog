@@ -1,5 +1,11 @@
 2005-11-22  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpscrolledpreview.c: request motion hints in
+	the navigation popup and redraw the window immidiately to give
+	better feedback.
+
+2005-11-22  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimppreview.c: moved the controls closer to the
 	preview.
 
