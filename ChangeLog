@@ -1,3 +1,11 @@
+2005-11-22  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimpzoompreview.c: zoom on Ctrl-Scroll events.
+
+	* libgimpwidgets/gimpscrolledpreview.c
+	(gimp_scrolled_preview_area_event): correctly clamp adjustment
+	value on scroll events. Ignore scroll events when Ctrl is pressed.
+
 2005-11-21  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpscrolledpreview.c

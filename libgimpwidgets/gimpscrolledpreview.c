@@ -436,6 +436,10 @@ gimp_scrolled_preview_area_event (GtkWidget           *area,
         GtkAdjustment      *adj;
         gfloat              value;
 
+        /*  Ctrl-Scroll is reserved for zooming  */
+        if (sevent->state & GDK_CONTROL_MASK)
+          return FALSE;
+
         if (sevent->state & GDK_SHIFT_MASK)
           switch (direction)
             {
@@ -474,7 +478,9 @@ gimp_scrolled_preview_area_event (GtkWidget           *area,
             break;
           }
 
-        gtk_adjustment_set_value (adj, value);
+        gtk_adjustment_set_value (adj, CLAMP (value,
+                                              adj->lower,
+                                              adj->upper - adj->page_size));
       }
       break;
 
