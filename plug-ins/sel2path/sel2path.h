@@ -20,7 +20,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- * 
+ *
  */
 
 #include "gtk/gtk.h"
@@ -30,7 +30,7 @@ guchar          sel_pixel_value       (gint, gint);
 gint            sel_pixel_is_white    (gint, gint);
 gint            sel_get_width         (void);
 gint            sel_get_height        (void);
-gint            sel_valid_pixel       (gint, gint);
+gboolean        sel_valid_pixel       (gint, gint);
 void            reset_adv_dialog      (void);
 
 

@@ -65,7 +65,7 @@ static void      sel2path_response       (GtkWidget *widget,
                                           gint       response_id,
                                           gpointer   data);
 static void      dialog_print_selVals    (SELVALS   *sels);
-gboolean         do_sel2path             (gint32     image_ID);
+static gboolean  sel2path                (gint32     image_ID);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -248,7 +248,7 @@ run (const gchar      *name,
         }
     }
 
-  do_sel2path (image_ID);
+  sel2path (image_ID);
   values[0].data.d_status = status;
 
   if (status == GIMP_PDB_SUCCESS)
@@ -392,7 +392,7 @@ sel_get_height (void)
   return sel_height;
 }
 
-gint
+gboolean
 sel_valid_pixel (gint row,
                  gint col)
 {
@@ -400,7 +400,7 @@ sel_valid_pixel (gint row,
           && 0 <= (col) && (col) < sel_get_width ());
 }
 
-void
+static void
 gen_anchor (gdouble  *p,
             gdouble   x,
             gdouble   y,
@@ -417,7 +417,7 @@ gen_anchor (gdouble  *p,
 }
 
 
-void
+static void
 gen_control (gdouble *p,
              gdouble  x,
              gdouble  y)
@@ -432,7 +432,7 @@ gen_control (gdouble *p,
 
 }
 
-void
+static void
 do_points (spline_list_array_type in_splines,
            gint32                 image_ID)
 {
@@ -460,8 +460,8 @@ do_points (spline_list_array_type in_splines,
 /*   printf("DRAW: 0\n"); */
 /*   printf("STATE: 4\n"); */
 
-  path_point_count = point_count*9;
-  cur_parray = (gdouble *)g_new0(gdouble ,point_count*9);
+  path_point_count = point_count * 9;
+  cur_parray = g_new0 (gdouble, path_point_count);
   parray = cur_parray;
 
   point_count = 0;
@@ -520,16 +520,12 @@ do_points (spline_list_array_type in_splines,
       seg_count++;
     }
 
-   gimp_path_set_points (image_ID,
-                        "selection_to_path",
-                         1,
-                         path_point_count,
-                         parray);
+   gimp_path_set_points (image_ID, _("Selection"), 1, path_point_count, parray);
 }
 
 
-gboolean
-do_sel2path (gint32 image_ID)
+static gboolean
+sel2path (gint32 image_ID)
 {
   gint32                   selection_ID;
   GimpDrawable            *sel_drawable;
@@ -580,8 +576,6 @@ do_sel2path (gint32 image_ID)
 void
 safe_free (address *item)
 {
-  g_return_if_fail (item != NULL);
-
   g_free (*item);
   *item = NULL;
 }
