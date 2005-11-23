@@ -1,5 +1,10 @@
 2005-11-23  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpmodule/gimpmodule.c: print error messages unconditionally
+	and let "verbose" print module access debugging stuff. Misc cleanup.
+
+2005-11-23  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimptoolcontrol.[ch]: cleaned up and reordered
 	instance struct and functions. Renamed functions so getters and
 	setters actually have "get" and "set" in their names.
