@@ -36,25 +36,28 @@ typedef struct _GimpToolControlClass GimpToolControlClass;
 
 struct _GimpToolControl
 {
-  GimpObject     parent_instance;
+  GimpObject         parent_instance;
 
-  gboolean       active;             /*  state of tool activity               */
-  gint           paused_count;       /*  paused control count                 */
+  gboolean           active;             /*  state of tool activity          */
+  gint               paused_count;       /*  paused control count            */
 
-  gboolean       scroll_lock;        /*  allow scrolling or not               */
-  gboolean       auto_snap_to;       /*  snap to guides automatically         */
-  gint           snap_offset_x;
-  gint           snap_offset_y;
-  gint           snap_width;
-  gint           snap_height;
-  gboolean       preserve;           /*  Preserve this tool across drawable   *
-                                      *  changes                              */
-  GimpDirtyMask  dirty_mask;         /*  if preserve is FALSE, cancel the     *
-                                      *  tool on these events                 */
-  gboolean       handle_empty_image; /*  invoke the tool on images without    *
-                                      *  active drawable                      */
-  GimpMotionMode motion_mode;        /*  how to process motion events before  *
-                                      *  they are forwarded to the tool       */
+  gboolean           preserve;           /*  Preserve this tool across       *
+                                          *  drawable changes                */
+  gboolean           scroll_lock;        /*  allow scrolling or not          */
+  gboolean           handle_empty_image; /*  invoke the tool on images       *
+                                          *  without active drawable         */
+  GimpDirtyMask      dirty_mask;         /*  if preserve is FALSE, cancel    *
+                                          *  the tool on these events        */
+  GimpMotionMode     motion_mode;        /*  how to process motion events    *
+                                          *  before they go to the tool      */
+  gboolean           auto_snap_to;       /*  snap to guides automatically    */
+  gint               snap_offset_x;
+  gint               snap_offset_y;
+  gint               snap_width;
+  gint               snap_height;
+
+  gboolean           toggled;
+
   GimpCursorType     cursor;
   GimpToolCursorType tool_cursor;
   GimpCursorModifier cursor_modifier;
@@ -62,8 +65,6 @@ struct _GimpToolControl
   GimpCursorType     toggle_cursor;
   GimpToolCursorType toggle_tool_cursor;
   GimpCursorModifier toggle_cursor_modifier;
-
-  gboolean           toggled;
 
   gchar             *action_value_1;
   gchar             *action_value_2;
@@ -79,92 +80,100 @@ struct _GimpToolControlClass
 };
 
 
-GType              gimp_tool_control_get_type                   (void) G_GNUC_CONST;
+GType          gimp_tool_control_get_type         (void) G_GNUC_CONST;
 
-void               gimp_tool_control_pause                      (GimpToolControl    *control);
-void               gimp_tool_control_resume                     (GimpToolControl    *control);
-gboolean           gimp_tool_control_is_paused                  (GimpToolControl    *control);
+void           gimp_tool_control_activate         (GimpToolControl *control);
+void           gimp_tool_control_halt             (GimpToolControl *control);
+gboolean       gimp_tool_control_is_active        (GimpToolControl *control);
 
-void               gimp_tool_control_activate                   (GimpToolControl    *control);
-void               gimp_tool_control_halt                       (GimpToolControl    *control);
-gboolean           gimp_tool_control_is_active                  (GimpToolControl    *control);
+void           gimp_tool_control_pause            (GimpToolControl *control);
+void           gimp_tool_control_resume           (GimpToolControl *control);
+gboolean       gimp_tool_control_is_paused        (GimpToolControl *control);
 
-void               gimp_tool_control_set_toggle                 (GimpToolControl    *control,
-                                                                 gboolean            toggled);
-gboolean           gimp_tool_control_is_toggled                 (GimpToolControl    *control);
+void           gimp_tool_control_set_preserve     (GimpToolControl *control,
+                                                   gboolean         preserve);
+gboolean       gimp_tool_control_get_preserve     (GimpToolControl *control);
 
-void               gimp_tool_control_set_preserve               (GimpToolControl    *control,
-                                                                 gboolean            preserve);
-gboolean           gimp_tool_control_preserve                   (GimpToolControl    *control);
+void           gimp_tool_control_set_scroll_lock  (GimpToolControl *control,
+                                                   gboolean         scroll_lock);
+gboolean       gimp_tool_control_get_scroll_lock  (GimpToolControl *control);
 
-void               gimp_tool_control_set_dirty_mask             (GimpToolControl    *control,
-                                                                 GimpDirtyMask       dirty_mask);
-GimpDirtyMask      gimp_tool_control_dirty_mask                 (GimpToolControl    *control);
+void     gimp_tool_control_set_handle_empty_image (GimpToolControl *control,
+                                                   gboolean         handle_empty);
+gboolean gimp_tool_control_get_handle_empty_image (GimpToolControl *control);
 
-void               gimp_tool_control_set_scroll_lock            (GimpToolControl    *control,
-                                                                 gboolean            scroll_lock);
-gboolean           gimp_tool_control_scroll_lock                (GimpToolControl    *control);
+void           gimp_tool_control_set_dirty_mask   (GimpToolControl *control,
+                                                   GimpDirtyMask    dirty_mask);
+GimpDirtyMask  gimp_tool_control_get_dirty_mask   (GimpToolControl *control);
 
-void               gimp_tool_control_set_motion_mode            (GimpToolControl    *control,
-                                                                 GimpMotionMode      motion_mode);
-GimpMotionMode     gimp_tool_control_motion_mode                (GimpToolControl    *control);
+void           gimp_tool_control_set_motion_mode  (GimpToolControl *control,
+                                                   GimpMotionMode   motion_mode);
+GimpMotionMode gimp_tool_control_get_motion_mode  (GimpToolControl *control);
 
-void               gimp_tool_control_set_handles_empty_image    (GimpToolControl    *control,
-                                                                 gboolean            handle_empty);
-gboolean           gimp_tool_control_handles_empty_image        (GimpToolControl    *control);
+void           gimp_tool_control_set_snap_to      (GimpToolControl *control,
+                                                   gboolean         snap_to);
+gboolean       gimp_tool_control_get_snap_to      (GimpToolControl *control);
 
-void               gimp_tool_control_set_snap_to                (GimpToolControl    *control,
-                                                                 gboolean            snap_to);
-gboolean           gimp_tool_control_auto_snap_to               (GimpToolControl    *control);
+void           gimp_tool_control_set_snap_offsets (GimpToolControl *control,
+                                                   gint             offset_x,
+                                                   gint             offset_y,
+                                                   gint             width,
+                                                   gint             height);
+void           gimp_tool_control_get_snap_offsets (GimpToolControl *control,
+                                                   gint            *offset_x,
+                                                   gint            *offset_y,
+                                                   gint            *width,
+                                                   gint            *height);
 
-void               gimp_tool_control_set_snap_offsets           (GimpToolControl    *control,
-                                                                 gint                offset_x,
-                                                                 gint                offset_y,
-                                                                 gint                width,
-                                                                 gint                height);
-void               gimp_tool_control_snap_offsets               (GimpToolControl    *control,
-                                                                 gint               *offset_x,
-                                                                 gint               *offset_y,
-                                                                 gint               *width,
-                                                                 gint               *height);
+void           gimp_tool_control_set_toggled      (GimpToolControl *control,
+                                                   gboolean         toggled);
+gboolean       gimp_tool_control_get_toggled      (GimpToolControl *control);
 
-void               gimp_tool_control_set_cursor                 (GimpToolControl    *control,
-                                                                 GimpCursorType      cursor);
-void               gimp_tool_control_set_tool_cursor            (GimpToolControl    *control,
-                                                                 GimpToolCursorType  cursor);
-void               gimp_tool_control_set_cursor_modifier        (GimpToolControl    *control,
-                                                                 GimpCursorModifier  cmodifier);
-void               gimp_tool_control_set_toggle_cursor          (GimpToolControl    *control,
-                                                                 GimpCursorType      cursor);
-void               gimp_tool_control_set_toggle_tool_cursor     (GimpToolControl    *control,
-                                                                 GimpToolCursorType  cursor);
-void               gimp_tool_control_set_toggle_cursor_modifier (GimpToolControl    *control,
-                                                                 GimpCursorModifier  cmodifier);
+void gimp_tool_control_set_cursor                 (GimpToolControl    *control,
+                                                   GimpCursorType      cursor);
+void gimp_tool_control_set_tool_cursor            (GimpToolControl    *control,
+                                                   GimpToolCursorType  cursor);
+void gimp_tool_control_set_cursor_modifier        (GimpToolControl    *control,
+                                                   GimpCursorModifier cmodifier);
+void gimp_tool_control_set_toggle_cursor          (GimpToolControl    *control,
+                                                   GimpCursorType      cursor);
+void gimp_tool_control_set_toggle_tool_cursor     (GimpToolControl    *control,
+                                                   GimpToolCursorType  cursor);
+void gimp_tool_control_set_toggle_cursor_modifier (GimpToolControl    *control,
+                                                   GimpCursorModifier  cmodifier);
 
-GimpCursorType     gimp_tool_control_get_cursor                 (GimpToolControl    *control);
+GimpCursorType
+     gimp_tool_control_get_cursor                 (GimpToolControl *control);
 
-GimpToolCursorType gimp_tool_control_get_tool_cursor            (GimpToolControl    *control);
+GimpToolCursorType
+     gimp_tool_control_get_tool_cursor            (GimpToolControl *control);
 
-GimpCursorModifier gimp_tool_control_get_cursor_modifier        (GimpToolControl    *control);
+GimpCursorModifier
+     gimp_tool_control_get_cursor_modifier        (GimpToolControl *control);
 
-void               gimp_tool_control_set_action_value_1         (GimpToolControl    *control,
-                                                                 const gchar        *action_desc);
-const gchar      * gimp_tool_control_get_action_value_1         (GimpToolControl    *control);
-void               gimp_tool_control_set_action_value_2         (GimpToolControl    *control,
-                                                                 const gchar        *action_desc);
-const gchar      * gimp_tool_control_get_action_value_2         (GimpToolControl    *control);
-void               gimp_tool_control_set_action_value_3         (GimpToolControl    *control,
-                                                                 const gchar        *action_desc);
-const gchar      * gimp_tool_control_get_action_value_3         (GimpToolControl    *control);
-void               gimp_tool_control_set_action_value_4         (GimpToolControl    *control,
-                                                                 const gchar        *action_desc);
-const gchar      * gimp_tool_control_get_action_value_4         (GimpToolControl    *control);
-void               gimp_tool_control_set_action_object_1        (GimpToolControl    *control,
-                                                                 const gchar        *action_desc);
-const gchar      * gimp_tool_control_get_action_object_1        (GimpToolControl    *control);
-void               gimp_tool_control_set_action_object_2        (GimpToolControl    *control,
-                                                                 const gchar        *action_desc);
-const gchar      * gimp_tool_control_get_action_object_2        (GimpToolControl    *control);
+void          gimp_tool_control_set_action_value_1  (GimpToolControl *control,
+                                                     const gchar     *action);
+const gchar * gimp_tool_control_get_action_value_1  (GimpToolControl *control);
+
+void          gimp_tool_control_set_action_value_2  (GimpToolControl *control,
+                                                     const gchar     *action);
+const gchar * gimp_tool_control_get_action_value_2  (GimpToolControl *control);
+
+void          gimp_tool_control_set_action_value_3  (GimpToolControl *control,
+                                                     const gchar     *action);
+const gchar * gimp_tool_control_get_action_value_3  (GimpToolControl *control);
+
+void          gimp_tool_control_set_action_value_4  (GimpToolControl *control,
+                                                     const gchar     *action);
+const gchar * gimp_tool_control_get_action_value_4  (GimpToolControl *control);
+
+void          gimp_tool_control_set_action_object_1 (GimpToolControl *control,
+                                                     const gchar     *action);
+const gchar * gimp_tool_control_get_action_object_1 (GimpToolControl *control);
+
+void          gimp_tool_control_set_action_object_2 (GimpToolControl *control,
+                                                     const gchar     *action);
+const gchar * gimp_tool_control_get_action_object_2 (GimpToolControl *control);
 
 
 #endif /* __GIMP_TOOL_CONTROL_H__ */

@@ -548,8 +548,8 @@ tool_manager_image_clean_dirty (GimpImage       *gimage,
   GimpTool *active_tool = tool_manager->active_tool;
 
   if (active_tool &&
-      ! gimp_tool_control_preserve (active_tool->control) &&
-      (gimp_tool_control_dirty_mask (active_tool->control) & dirty_mask))
+      ! gimp_tool_control_get_preserve (active_tool->control) &&
+      (gimp_tool_control_get_dirty_mask (active_tool->control) & dirty_mask))
     {
       GimpDisplay *gdisp = active_tool->gdisp;
 

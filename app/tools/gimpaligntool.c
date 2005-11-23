@@ -227,9 +227,8 @@ gimp_align_tool_init (GimpAlignTool *align_tool)
   align_tool->horz_offset = 0;
   align_tool->vert_offset = 0;
 
-  gimp_tool_control_set_snap_to             (tool->control, FALSE);
-  gimp_tool_control_set_tool_cursor         (tool->control,
-                                             GIMP_TOOL_CURSOR_MOVE);
+  gimp_tool_control_set_snap_to     (tool->control, FALSE);
+  gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_MOVE);
 
 }
 

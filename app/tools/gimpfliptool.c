@@ -212,8 +212,8 @@ gimp_flip_tool_cursor_update (GimpTool        *tool,
       gimp_tool_control_set_toggle_cursor (tool->control, GIMP_CURSOR_MOUSE);
     }
 
-  gimp_tool_control_set_toggle (tool->control,
-                                options->flip_type == GIMP_ORIENTATION_VERTICAL);
+  gimp_tool_control_set_toggled (tool->control,
+                                 options->flip_type == GIMP_ORIENTATION_VERTICAL);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }

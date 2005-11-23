@@ -217,12 +217,12 @@ gimp_vector_tool_init (GimpVectorTool *vector_tool)
 {
   GimpTool *tool = GIMP_TOOL (vector_tool);
 
-  gimp_tool_control_set_scroll_lock         (tool->control, TRUE);
-  gimp_tool_control_set_handles_empty_image (tool->control, TRUE);
-  gimp_tool_control_set_motion_mode         (tool->control,
-                                             GIMP_MOTION_MODE_COMPRESS);
-  gimp_tool_control_set_tool_cursor         (tool->control,
-                                             GIMP_TOOL_CURSOR_PATHS);
+  gimp_tool_control_set_scroll_lock        (tool->control, TRUE);
+  gimp_tool_control_set_handle_empty_image (tool->control, TRUE);
+  gimp_tool_control_set_motion_mode        (tool->control,
+                                            GIMP_MOTION_MODE_COMPRESS);
+  gimp_tool_control_set_tool_cursor        (tool->control,
+                                            GIMP_TOOL_CURSOR_PATHS);
 
   vector_tool->function       = VECTORS_CREATE_VECTOR;
   vector_tool->restriction    = GIMP_ANCHOR_FEATURE_NONE;

@@ -186,10 +186,10 @@ gimp_move_tool_init (GimpMoveTool *move_tool)
   move_tool->old_active_layer   = NULL;
   move_tool->old_active_vectors = NULL;
 
-  gimp_tool_control_set_snap_to             (tool->control, FALSE);
-  gimp_tool_control_set_handles_empty_image (tool->control, TRUE);
-  gimp_tool_control_set_tool_cursor         (tool->control,
-                                             GIMP_TOOL_CURSOR_MOVE);
+  gimp_tool_control_set_snap_to            (tool->control, FALSE);
+  gimp_tool_control_set_handle_empty_image (tool->control, TRUE);
+  gimp_tool_control_set_tool_cursor        (tool->control,
+                                            GIMP_TOOL_CURSOR_MOVE);
 }
 
 static void

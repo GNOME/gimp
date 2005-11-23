@@ -499,12 +499,12 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
   active_tool = tool_manager_get_active (gimp);
 
-  if (active_tool && gimp_tool_control_auto_snap_to (active_tool->control))
+  if (active_tool && gimp_tool_control_get_snap_to (active_tool->control))
     {
       gint x, y, width, height;
 
-      gimp_tool_control_snap_offsets (active_tool->control,
-                                      &x, &y, &width, &height);
+      gimp_tool_control_get_snap_offsets (active_tool->control,
+                                          &x, &y, &width, &height);
 
       if (gimp_display_shell_snap_coords (shell,
                                           &image_coords,
@@ -632,7 +632,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             if (active_tool)
               {
                 if ((! gimp_image_is_empty (gimage) ||
-                     gimp_tool_control_handles_empty_image (active_tool->control)) &&
+                     gimp_tool_control_get_handle_empty_image (active_tool->control)) &&
                     (bevent->button == 1 ||
                      bevent->button == 2 ||
                      bevent->button == 3))
@@ -642,7 +642,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                        gdisp);
                   }
                 else if (gimp_image_is_empty (gimage) &&
-                         ! gimp_tool_control_handles_empty_image (active_tool->control))
+                         ! gimp_tool_control_get_handle_empty_image (active_tool->control))
                   {
                     gimp_display_shell_set_cursor (shell,
                                                    GIMP_CURSOR_BAD,
@@ -681,7 +681,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
             if (active_tool &&
                 (! GIMP_DISPLAY_CONFIG (gimp->config)->perfect_mouse ||
-                 (gimp_tool_control_motion_mode (active_tool->control) !=
+                 (gimp_tool_control_get_motion_mode (active_tool->control) !=
                   GIMP_MOTION_MODE_EXACT)))
               {
                 /*  don't request motion hins for XInput devices because
@@ -703,7 +703,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
             if (active_tool &&
                 (! gimp_image_is_empty (gimage) ||
-                 gimp_tool_control_handles_empty_image (active_tool->control)))
+                 gimp_tool_control_get_handle_empty_image (active_tool->control)))
               {
                 gboolean initialized = TRUE;
 
@@ -715,7 +715,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                   }
                 else if ((active_tool->drawable !=
                           gimp_image_active_drawable (gimage)) &&
-                         ! gimp_tool_control_preserve (active_tool->control))
+                         ! gimp_tool_control_get_preserve (active_tool->control))
                   {
                     /*  create a new one, deleting the current
                      */
@@ -787,7 +787,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
             if (active_tool &&
                 (! gimp_image_is_empty (gimage) ||
-                 gimp_tool_control_handles_empty_image (active_tool->control)))
+                 gimp_tool_control_get_handle_empty_image (active_tool->control)))
               {
                 if (gimp_tool_control_is_active (active_tool->control))
                   {
@@ -932,12 +932,12 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
         active_tool = tool_manager_get_active (gimp);
 
         if (active_tool &&
-            gimp_tool_control_auto_snap_to (active_tool->control))
+            gimp_tool_control_get_snap_to (active_tool->control))
           {
             gint x, y, width, height;
 
-            gimp_tool_control_snap_offsets (active_tool->control,
-                                            &x, &y, &width, &height);
+            gimp_tool_control_get_snap_offsets (active_tool->control,
+                                                &x, &y, &width, &height);
 
             if (gimp_display_shell_snap_coords (shell,
                                                 &image_coords,
@@ -967,7 +967,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
         active_tool = tool_manager_get_active (gimp);
 
         if (active_tool &&
-            gimp_tool_control_motion_mode (active_tool->control) ==
+            gimp_tool_control_get_motion_mode (active_tool->control) ==
             GIMP_MOTION_MODE_COMPRESS)
           {
             compressed_motion = gimp_display_shell_compress_motion (shell);
@@ -989,12 +989,12 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                    &image_coords);
 
             if (active_tool &&
-                gimp_tool_control_auto_snap_to (active_tool->control))
+                gimp_tool_control_get_snap_to (active_tool->control))
               {
                 gint x, y, width, height;
 
-                gimp_tool_control_snap_offsets (active_tool->control,
-                                                &x, &y, &width, &height);
+                gimp_tool_control_get_snap_offsets (active_tool->control,
+                                                    &x, &y, &width, &height);
 
                 gimp_display_shell_snap_coords (shell,
                                                 &image_coords,
@@ -1026,7 +1026,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             if (active_tool                                        &&
                 gimp_tool_control_is_active (active_tool->control) &&
                 (! gimp_image_is_empty (gimage) ||
-                 gimp_tool_control_handles_empty_image (active_tool->control)))
+                 gimp_tool_control_get_handle_empty_image (active_tool->control)))
               {
                 GdkTimeCoord **history_events;
                 gint           n_history_events;
@@ -1038,12 +1038,12 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                      mevent->y < 0                 ||
                      mevent->x > shell->disp_width ||
                      mevent->y > shell->disp_height) &&
-                    ! gimp_tool_control_scroll_lock (active_tool->control))
+                    ! gimp_tool_control_get_scroll_lock (active_tool->control))
                   {
                     gimp_display_shell_autoscroll_start (shell, state, mevent);
                   }
 
-                if (gimp_tool_control_motion_mode (active_tool->control) ==
+                if (gimp_tool_control_get_motion_mode (active_tool->control) ==
                     GIMP_MOTION_MODE_EXACT &&
                     gdk_device_get_history (mevent->device, mevent->window,
                                             shell->last_motion_time,
@@ -1067,12 +1067,12 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                                &display_coords,
                                                                &image_coords);
 
-                        if (gimp_tool_control_auto_snap_to (active_tool->control))
+                        if (gimp_tool_control_get_snap_to (active_tool->control))
                           {
                             gint x, y, width, height;
 
-                            gimp_tool_control_snap_offsets (active_tool->control,
-                                                            &x, &y, &width, &height);
+                            gimp_tool_control_get_snap_offsets (active_tool->control,
+                                                                &x, &y, &width, &height);
 
                             gimp_display_shell_snap_coords (shell,
                                                             &image_coords,
@@ -1320,7 +1320,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
       if (active_tool)
         {
           if ((! gimp_image_is_empty (gimage) ||
-               gimp_tool_control_handles_empty_image (active_tool->control)) &&
+               gimp_tool_control_get_handle_empty_image (active_tool->control)) &&
               ! (state & (GDK_BUTTON1_MASK |
                           GDK_BUTTON2_MASK |
                           GDK_BUTTON3_MASK)))
@@ -1330,7 +1330,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                  gdisp);
             }
           else if (gimp_image_is_empty (gimage) &&
-                   ! gimp_tool_control_handles_empty_image (active_tool->control))
+                   ! gimp_tool_control_get_handle_empty_image (active_tool->control))
             {
               gimp_display_shell_set_cursor (shell,
                                              GIMP_CURSOR_BAD,

@@ -166,7 +166,7 @@ gimp_dodge_burn_tool_cursor_update (GimpTool        *tool,
 
   options = GIMP_DODGE_BURN_OPTIONS (tool->tool_info->tool_options);
 
-  gimp_tool_control_set_toggle (tool->control, (options->type == GIMP_BURN));
+  gimp_tool_control_set_toggled (tool->control, (options->type == GIMP_BURN));
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }

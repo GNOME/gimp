@@ -145,12 +145,12 @@ gimp_display_shell_autoscroll_timeout (gpointer data)
                                              &device_coords,
                                              &image_coords);
 
-      if (gimp_tool_control_auto_snap_to (active_tool->control))
+      if (gimp_tool_control_get_snap_to (active_tool->control))
         {
           gint x, y, width, height;
 
-          gimp_tool_control_snap_offsets (active_tool->control,
-                                          &x, &y, &width, &height);
+          gimp_tool_control_get_snap_offsets (active_tool->control,
+                                              &x, &y, &width, &height);
 
           gimp_display_shell_snap_coords (shell,
                                           &image_coords,

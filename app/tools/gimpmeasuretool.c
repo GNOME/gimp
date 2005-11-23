@@ -174,9 +174,9 @@ gimp_measure_tool_init (GimpMeasureTool *measure_tool)
 {
   GimpTool *tool = GIMP_TOOL (measure_tool);
 
-  gimp_tool_control_set_handles_empty_image (tool->control, TRUE);
-  gimp_tool_control_set_tool_cursor         (tool->control,
-                                             GIMP_TOOL_CURSOR_MEASURE);
+  gimp_tool_control_set_handle_empty_image (tool->control, TRUE);
+  gimp_tool_control_set_tool_cursor        (tool->control,
+                                            GIMP_TOOL_CURSOR_MEASURE);
 }
 
 static void

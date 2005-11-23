@@ -158,7 +158,7 @@ gimp_eraser_tool_cursor_update (GimpTool        *tool,
 
   options = GIMP_ERASER_OPTIONS (tool->tool_info->tool_options);
 
-  gimp_tool_control_set_toggle (tool->control, options->anti_erase);
+  gimp_tool_control_set_toggled (tool->control, options->anti_erase);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }

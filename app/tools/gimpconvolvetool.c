@@ -164,8 +164,8 @@ gimp_convolve_tool_cursor_update (GimpTool        *tool,
 
   options = GIMP_CONVOLVE_OPTIONS (tool->tool_info->tool_options);
 
-  gimp_tool_control_set_toggle (tool->control,
-                                (options->type == GIMP_SHARPEN_CONVOLVE));
+  gimp_tool_control_set_toggled (tool->control,
+                                 (options->type == GIMP_SHARPEN_CONVOLVE));
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }

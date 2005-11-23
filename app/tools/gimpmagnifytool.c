@@ -159,7 +159,7 @@ gimp_magnify_tool_init (GimpMagnifyTool *magnify_tool)
   magnify_tool->h = 0;
 
   gimp_tool_control_set_scroll_lock            (tool->control, TRUE);
-  gimp_tool_control_set_handles_empty_image    (tool->control, TRUE);
+  gimp_tool_control_set_handle_empty_image     (tool->control, TRUE);
   gimp_tool_control_set_snap_to                (tool->control, FALSE);
 
   gimp_tool_control_set_cursor                 (tool->control,
@@ -336,8 +336,8 @@ gimp_magnify_tool_cursor_update (GimpTool        *tool,
 
   options = GIMP_MAGNIFY_OPTIONS (tool->tool_info->tool_options);
 
-  gimp_tool_control_set_toggle (tool->control,
-                                options->zoom_type == GIMP_ZOOM_OUT);
+  gimp_tool_control_set_toggled (tool->control,
+                                 options->zoom_type == GIMP_ZOOM_OUT);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }

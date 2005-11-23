@@ -370,7 +370,7 @@ gimp_foreground_select_tool_cursor_update (GimpTool        *tool,
 
       options = GIMP_FOREGROUND_SELECT_OPTIONS (tool->tool_info->tool_options);
 
-      gimp_tool_control_set_toggle (tool->control, options->background);
+      gimp_tool_control_set_toggled (tool->control, options->background);
 
       switch (GIMP_SELECTION_TOOL (tool)->op)
         {
@@ -720,7 +720,7 @@ gimp_foreground_select_tool_set_mask (GimpForegroundSelectTool *fg_select,
       gimp_tool_control_set_toggle_tool_cursor (tool->control,
                                                 GIMP_TOOL_CURSOR_ERASER);
 
-      gimp_tool_control_set_toggle (tool->control, options->background);
+      gimp_tool_control_set_toggled (tool->control, options->background);
     }
   else
     {
@@ -729,7 +729,7 @@ gimp_foreground_select_tool_set_mask (GimpForegroundSelectTool *fg_select,
       gimp_tool_control_set_toggle_tool_cursor (tool->control,
                                                 GIMP_TOOL_CURSOR_FREE_SELECT);
 
-      gimp_tool_control_set_toggle (tool->control, FALSE);
+      gimp_tool_control_set_toggled (tool->control, FALSE);
     }
 }
 

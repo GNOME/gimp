@@ -1,3 +1,23 @@
+2005-11-23  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimptoolcontrol.[ch]: cleaned up and reordered
+	instance struct and functions. Renamed functions so getters and
+	setters actually have "get" and "set" in their names.
+
+	* app/display/gimpdisplayshell-autoscroll.c
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/tools/gimpaligntool.c
+	* app/tools/gimpconvolvetool.c
+	* app/tools/gimpdodgeburntool.c
+	* app/tools/gimperasertool.c
+	* app/tools/gimpfliptool.c
+	* app/tools/gimpforegroundselecttool.c
+	* app/tools/gimpmagnifytool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimpmovetool.c
+	* app/tools/gimpvectortool.c
+	* app/tools/tool_manager.c: changed accordingly.
+
 2005-11-23  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/sel2path/sel2path.[ch]: set a translatable name for the
