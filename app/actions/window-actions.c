@@ -100,6 +100,10 @@ window_actions_update (GimpActionGroup *group,
 
       show_menu = (gdk_display_get_n_screens (display) > 1);
 
+#ifdef GIMP_UNSTABLE
+      show_menu = TRUE;
+#endif
+
       if (! show_menu)
         {
           GdkDisplayManager *manager = gdk_display_manager_get ();

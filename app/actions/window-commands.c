@@ -18,11 +18,16 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "actions-types.h"
+
+#include "widgets/gimpmessagebox.h"
+#include "widgets/gimpmessagedialog.h"
 
 #include "actions.h"
 #include "window-commands.h"
@@ -50,6 +55,74 @@ window_close_cmd_callback (GtkAction *action,
       gtk_main_do_event (event);
       gdk_event_free (event);
     }
+}
+
+void
+window_open_display_cmd_callback (GtkAction *action,
+                                  gpointer   data)
+{
+  GtkWidget *widget;
+  GtkWidget *dialog;
+  GtkWidget *entry;
+  return_if_no_widget (widget, data);
+
+  dialog = gimp_message_dialog_new ("Open Display", GIMP_STOCK_WILBER_EEK,
+                                    widget, GTK_DIALOG_MODAL,
+                                    NULL, NULL,
+
+                                    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                    GTK_STOCK_OK,     GTK_RESPONSE_OK,
+
+                                    NULL);
+
+  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+
+  gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+                                     "Experimental multi-display stuff!\n"
+                                     "Click OK and have fun crashing GIMP...");
+
+  gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+                             "Please enter the name of the new display:");
+
+  entry = gtk_entry_new ();
+  gtk_entry_set_activates_default (GTK_ENTRY (entry), TRUE);
+  gtk_container_add (GTK_CONTAINER (GIMP_MESSAGE_DIALOG (dialog)->box), entry);
+
+  gtk_widget_grab_focus (entry);
+  gtk_widget_show_all (dialog);
+
+  while (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK)
+    {
+      gchar *screen_name;
+
+      screen_name = gtk_editable_get_chars (GTK_EDITABLE (entry), 0, -1);
+
+      if (strcmp (screen_name, ""))
+        {
+          GdkDisplay *display;
+
+          gtk_widget_set_sensitive (dialog, FALSE);
+
+          display = gdk_display_open (screen_name);
+
+          if (! display)
+            gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+                                       "Can't open display '%s'. "
+                                       "Please try another one:",
+                                       screen_name);
+
+          g_free (screen_name);
+
+          gtk_widget_set_sensitive (dialog, TRUE);
+
+          if (display)
+            break;
+        }
+
+      gtk_widget_grab_focus (entry);
+    }
+
+  gtk_widget_destroy (dialog);
 }
 
 void

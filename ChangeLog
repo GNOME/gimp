@@ -1,3 +1,13 @@
+2005-11-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/dock-actions.c
+	* app/actions/view-actions.c
+	* app/actions/window-actions.c
+	* app/actions/window-commands.[ch]
+	* menus/dockable-menu.xml.in
+	* menus/image-menu.xml.in: added "Open Display" dialog for
+	debugging purposes.
+
 2005-11-23  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpmodule/gimpmodule.c: print error messages unconditionally

@@ -34,6 +34,9 @@
     <menuitem action="dock-show-image-menu" />
     <menuitem action="dock-auto-follow-active" />
     <separator />
-    <menu action="dock-move-to-screen-menu" name="Move to Screen" />
+    <menu action="dock-move-to-screen-menu" name="Move to Screen">
+      <menuitem action="dock-open-display" />
+      <separator />
+    </menu>
   </popup>
 </ui>

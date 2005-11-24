@@ -46,7 +46,12 @@ static GimpActionEntry dock_actions[] =
   { "dock-close", GTK_STOCK_CLOSE,
     N_("Close Dock"), "<control>W", NULL,
     G_CALLBACK (window_close_cmd_callback),
-    GIMP_HELP_DOCK_CLOSE }
+    GIMP_HELP_DOCK_CLOSE },
+
+  { "dock-open-display", NULL,
+    N_("_Open Display..."), NULL, NULL,
+    G_CALLBACK (window_open_display_cmd_callback),
+    NULL }
 };
 
 static GimpToggleActionEntry dock_toggle_actions[] =

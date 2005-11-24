@@ -22,6 +22,8 @@
 
 void   window_close_cmd_callback          (GtkAction *action,
                                            gpointer   data);
+void   window_open_display_cmd_callback   (GtkAction *action,
+                                           gpointer   data);
 void   window_move_to_screen_cmd_callback (GtkAction *action,
                                            GtkAction *current,
                                            gpointer   data);

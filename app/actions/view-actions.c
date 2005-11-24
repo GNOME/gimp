@@ -105,7 +105,12 @@ static GimpActionEntry view_actions[] =
     N_("Shrink _Wrap"), "<control>E",
     N_("Shrink wrap"),
     G_CALLBACK (view_shrink_wrap_cmd_callback),
-    GIMP_HELP_VIEW_SHRINK_WRAP }
+    GIMP_HELP_VIEW_SHRINK_WRAP },
+
+  { "view-open-display", NULL,
+    N_("_Open Display..."), NULL, NULL,
+    G_CALLBACK (window_open_display_cmd_callback),
+    NULL }
 };
 
 static GimpToggleActionEntry view_toggle_actions[] =
