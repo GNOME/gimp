@@ -248,8 +248,7 @@ gui_message (Gimp        *gimp,
             gimp_error_dialog_add (GIMP_ERROR_DIALOG (dialog),
                                    GIMP_STOCK_WARNING, domain, message);
 
-            if (! GTK_WIDGET_VISIBLE (dialog))
-              gtk_widget_show (dialog);
+            gtk_window_present (GTK_WINDOW (dialog));
 
             return;
           }
