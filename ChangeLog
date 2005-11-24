@@ -1,3 +1,8 @@
+2005-11-24  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/gui-vtable.c (gui_message): only show the error console
+	but don't move the keyboard focus to it. Fixes bug #322210.
+
 2005-11-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/dock-actions.c

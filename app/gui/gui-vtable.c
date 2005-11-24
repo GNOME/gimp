@@ -248,7 +248,8 @@ gui_message (Gimp        *gimp,
             gimp_error_dialog_add (GIMP_ERROR_DIALOG (dialog),
                                    GIMP_STOCK_WARNING, domain, message);
 
-            gtk_window_present (GTK_WINDOW (dialog));
+            if (! GTK_WIDGET_VISIBLE (dialog))
+              gtk_widget_show (dialog);
 
             return;
           }
@@ -696,17 +697,16 @@ gui_pdb_dialog_set (Gimp          *gimp,
 
           if (object)
             {
-              const gchar *prop_name;
+              const gchar *prop_name = va_arg (args, const gchar *);
 
               gimp_context_set_by_type (dialog->context, dialog->select_type,
                                         object);
-
-              prop_name = va_arg (args, const gchar *);
 
               if (prop_name)
                 g_object_set_valist (G_OBJECT (dialog), prop_name, args);
 
               gtk_window_present (GTK_WINDOW (dialog));
+
               return TRUE;
             }
         }
