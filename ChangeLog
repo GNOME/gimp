@@ -1,5 +1,12 @@
 2005-11-24  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/oilify.c: applied a patch by Daniel Richard G.
+	that greatly improves the output of the Oilify filter (bug #322258).
+	Also changed the default to use the Intensity algorithm as
+	suggested in bug #322296.
+
+2005-11-24  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/gui-vtable.c (gui_message): reverted previous change.
 
 2005-11-24  Sven Neumann  <sven@gimp.org>

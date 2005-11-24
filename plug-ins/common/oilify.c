@@ -59,10 +59,6 @@ static void      run    (const gchar      *name,
 
 static void      oilify             (GimpDrawable *drawable,
                                      GimpPreview  *preview);
-static void      oilify_rgb         (GimpDrawable *drawable,
-                                     GimpPreview  *preview);
-static void      oilify_intensity   (GimpDrawable *drawable,
-                                     GimpPreview  *preview);
 
 static gboolean  oilify_dialog      (GimpDrawable *drawable);
 
@@ -77,9 +73,9 @@ GimpPlugInInfo PLUG_IN_INFO =
 
 static OilifyVals ovals =
 {
-  7.0,     /* mask size */
-  0,       /* mode      */
-  TRUE     /* preview   */
+  7.0,        /* mask size */
+  MODE_INTEN, /* mode      */
+  TRUE        /* preview   */
 };
 
 
@@ -207,27 +203,120 @@ run (const gchar      *name,
 }
 
 /*
- * For each RGB channel, replace the pixel at (x,y) with the
- * value that occurs most often in the n x n chunk centered
- * at (x,y).
+ * For each i in [0, HISTSIZE), hist[i] is the number of occurrences of the
+ * value i. Return a value in [0, HISTSIZE) weighted heavily toward the
+ * most frequent values in the histogram.
+ *
+ * Assuming that hist_max is the maximum number of occurrences for any
+ * value in the histogram, the weight given to each value i is
+ *
+ *         weight = (hist[i] / hist_max)^8
+ *
+ * The 8 is subjective. Lower powers give fuzzier edges.
+ */
+static inline guchar
+weighted_average_value (gint hist[HISTSIZE])
+{
+  gint i;
+  gint max = 1;
+  gfloat weight;
+  gfloat sum = 0.0;
+  gfloat div = 1.0e-6;
+  gint value;
+
+  for (i = 0; i < HISTSIZE; i++)
+    max = MAX (max, hist[i]);
+
+  for (i = 0; i < HISTSIZE; i++)
+  {
+    weight = (gfloat) hist[i] / (gfloat) max;
+    weight *= weight;
+    weight *= weight;
+    weight *= weight;  /* w' = w^8 */
+
+    sum += weight * (gfloat) i;
+    div += weight;
+  }
+
+  value = (gint) (sum / div);
+
+  return (guchar) CLAMP (value, 0, HISTSIZE - 1);
+}
+
+/*
+ * For each i in [0, HISTSIZE), hist[i] is the number of occurrences of
+ * pixels with intensity i. hist_rgb[][i] is the average color of those
+ * pixels with intensity i, each channel multiplied by hist[i]. Write to
+ * dest a pixel whose color is a weighted average of all the colors in
+ * hist_rgb[][], biased heavily toward those with the most frequently-
+ * occurring intensities (as noted in hist[]).
+ *
+ * The weight formula is the same as in weighted_average_value().
+ */
+static inline void
+weighted_average_color (gint    hist[HISTSIZE],
+                        gint    hist_rgb[4][HISTSIZE],
+                        guchar *dest,
+                        gint    bytes)
+{
+  gint   i, b, c;
+  gint   max = 1;
+  gfloat weight;
+  gfloat div = 1.0e-6;
+  gfloat color[4] = { 0.0, 0.0, 0.0, 0.0 };
+
+  for (i = 0; i < HISTSIZE; i++)
+    max = MAX (max, hist[i]);
+
+  for (i = 0; i < HISTSIZE; i++)
+  {
+    weight = (gfloat) hist[i] / (gfloat) max;
+    weight *= weight;
+    weight *= weight;
+    weight *= weight;  /* w' = w^8 */
+
+    if (hist[i] > 0)
+      for (b = 0; b < bytes; b++)
+        color[b] += weight * (gfloat) hist_rgb[b][i] / (gfloat) hist[i];
+
+    div += weight;
+  }
+
+  for (b = 0; b < bytes; b++)
+    {
+      c = (gint) (color[b] / div);
+      dest[b] = (guchar) CLAMP (c, 0, HISTSIZE - 1);
+    }
+}
+
+/*
+ * For all x and y as desired, replace the pixel at (x,y)
+ * with a weighted average of the most frequently occurring
+ * values in a circle of radius n centered at (x,y).
  */
 static void
-oilify_rgb (GimpDrawable *drawable,
-            GimpPreview  *preview)
+oilify (GimpDrawable *drawable,
+        GimpPreview  *preview)
 {
+  gboolean      use_inten_alg;
   GimpPixelRgn  src_rgn, dest_rgn;
   gint          bytes;
   gint          width, height;
   guchar       *src_row, *src;
   guchar       *dest_row, *dest;
-  gint          x, y, c, b, xx, yy, n;
+  gint          x, y, b, c, xx, yy, n;
   gint          x1, y1, x2, y2;
   gint          x3, y3, x4, y4;
-  gint          Cnt[4];
-  gint          Hist[4][HISTSIZE];
+  gint          Hist[HISTSIZE];
+  gint          Hist_rgb[4][HISTSIZE];
   gpointer      pr1;
   gint          progress, max_progress;
   guchar       *src_buf;
+  gchar        *mask_shape;
+  gint          y_off;
+
+  use_inten_alg = gimp_drawable_is_rgb (drawable->drawable_id) &&
+                  ovals.mode == MODE_INTEN;
 
   /*  get the selection bounds  */
   if (preview)
@@ -252,6 +341,19 @@ oilify_rgb (GimpDrawable *drawable,
 
   n = (int) ovals.mask_size / 2;
 
+  /*
+   * mask_shape represents a (n+1)x(n+1) bitmap of one-quarter of a
+   * circular disk, with radius n and center at (0,0). This is used in the
+   * inner loop below so that we sample pixels only inside a circular area.
+   * (Think of it as a lookup-table implementation of a distance function,
+   * returning zero if the distance > n and nonzero otherwise.)
+   */
+  mask_shape = g_new (gchar, (n + 1) * (n + 1));
+
+  for (x = 0; x <= n; x++)
+    for (y = 0; y <= n; y++)
+      mask_shape[y * (n + 1) + x] = x * x + y * y <= n * n;
+
   gimp_pixel_rgn_init (&dest_rgn, drawable,
                        x1, y1, width, height, (preview == NULL), TRUE);
   gimp_pixel_rgn_init (&src_rgn, drawable,
@@ -271,153 +373,57 @@ oilify_rgb (GimpDrawable *drawable,
 
           for (x = dest_rgn.x; x < (dest_rgn.x + dest_rgn.w); x++)
             {
+              if (use_inten_alg)
+                memset (Hist, 0, sizeof (Hist));
+
+              memset (Hist_rgb, 0, sizeof (Hist_rgb));
+
               x3 = CLAMP ((x - n), x1, x2);
               y3 = CLAMP ((y - n), y1, y2);
               x4 = CLAMP ((x + n + 1), x1, x2);
               y4 = CLAMP ((y + n + 1), y1, y2);
 
-              memset(Cnt, 0, sizeof(Cnt));
-              memset(Hist, 0, sizeof(Hist));
-
               src_row = src_buf + ((y3 - y1) * width + (x3 - x1)) * bytes;
+
               for (yy = y3 ; yy < y4 ; yy++)
                 {
+		  y_off = ABS (yy - y) * (n + 1);
                   src = src_row;
+
                   for (xx = x3 ; xx < x4 ; xx++)
                     {
-                      for (b = 0; b < bytes; b++)
+                      if (mask_shape[y_off + ABS(xx - x)])
                         {
-                          if ((c = ++Hist[b][src[b]]) > Cnt[b])
+                          if (use_inten_alg)
                             {
-                              dest[b] = src[b];
-                              Cnt[b] = c;
+                              c = INTENSITY(src);
+                              ++Hist[c];
+                              for (b = 0; b < bytes; b++)
+                                Hist_rgb[b][c] += src[b];
+                            }
+                          else
+                            {
+                              for (b = 0; b < bytes; b++)
+                                ++Hist_rgb[b][src[b]];
                             }
                         }
+
                       src += bytes;
                     }
+
                   src_row += width * bytes;
                 }
 
-              dest += bytes;
-            }
-
-          dest_row += dest_rgn.rowstride;
-        }
-
-      if (preview)
-        {
-          gimp_drawable_preview_draw_region (GIMP_DRAWABLE_PREVIEW (preview),
-                                             &dest_rgn);
-        }
-      else
-        {
-          progress += dest_rgn.w * dest_rgn.h;
-          if ((progress % 5) == 0)
-            gimp_progress_update ((double) progress / (double) max_progress);
-        }
-    }
-
-  g_free (src_buf);
-
-  if (!preview)
-    {
-      /*  update the oil-painted region  */
-      gimp_drawable_flush (drawable);
-      gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-      gimp_drawable_update (drawable->drawable_id, x1, y1, width, height);
-    }
-}
-
-/*
- * For each RGB channel, replace the pixel at (x,y) with the
- * value that occurs most often in the n x n chunk centered
- * at (x,y). Histogram is based on intensity.
- */
-static void
-oilify_intensity (GimpDrawable *drawable,
-                  GimpPreview  *preview)
-{
-  GimpPixelRgn  src_rgn, dest_rgn;
-  gint          bytes;
-  gint          width, height;
-  guchar       *src_row, *src, *selected_src = NULL;
-  guchar       *dest_row, *dest;
-  gint          x, y, c, xx, yy, n;
-  gint          x1, y1, x2, y2;
-  gint          x3, y3, x4, y4;
-  gint          Cnt;
-  gint          Hist[HISTSIZE];
-  gpointer      pr1;
-  gint          progress, max_progress;
-  guchar       *src_buf;
-
-  /*  get the selection bounds  */
-  if (preview)
-    {
-      gimp_preview_get_position (preview, &x1, &y1);
-      gimp_preview_get_size (preview, &width, &height);
-
-      x2 = x1 + width;
-      y2 = y1 + height;
-    }
-  else
-    {
-      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-      width  = x2 - x1;
-      height = y2 - y1;
-    }
-  bytes = drawable->bpp;
-
-  progress = 0;
-  max_progress = width * height;
-
-  n = (int) ovals.mask_size / 2;
-
-  gimp_pixel_rgn_init (&dest_rgn, drawable,
-                       x1, y1, width, height, (preview == NULL), TRUE);
-  gimp_pixel_rgn_init (&src_rgn, drawable,
-                       x1, y1, width, height, FALSE, FALSE);
-  src_buf = g_new (guchar, width * height * bytes);
-  gimp_pixel_rgn_get_rect (&src_rgn, src_buf, x1, y1, width, height);
-
-  for (pr1 = gimp_pixel_rgns_register (1, &dest_rgn);
-       pr1 != NULL;
-       pr1 = gimp_pixel_rgns_process (pr1))
-    {
-      dest_row = dest_rgn.data;
-
-      for (y = dest_rgn.y; y < (dest_rgn.y + dest_rgn.h); y++)
-        {
-          dest = dest_row;
-
-          for (x = dest_rgn.x; x < (dest_rgn.x + dest_rgn.w); x++)
-            {
-              Cnt = 0;
-              memset(Hist, 0, sizeof(Hist));
-
-              x3 = CLAMP ((x - n), x1, x2);
-              y3 = CLAMP ((y - n), y1, y2);
-              x4 = CLAMP ((x + n + 1), x1, x2);
-              y4 = CLAMP ((y + n + 1), y1, y2);
-
-              src_row = src_buf + ((y3 - y1) * width + (x3 - x1)) * bytes;
-              for (yy = y3 ; yy < y4 ; yy++)
+              if (use_inten_alg)
                 {
-                  src = src_row;
-                  for (xx = x3 ; xx < x4 ; xx++)
-                    {
-                      if ((c = ++Hist[INTENSITY(src)]) > Cnt)
-                        {
-                          Cnt = c;
-                          selected_src = src;
-                        }
-
-                      src += bytes;
-                    }
-
-                  src_row += width * bytes;
+                  weighted_average_color (Hist, Hist_rgb, dest, bytes);
                 }
-              memcpy (dest, selected_src, bytes);
+              else
+                {
+                  for (b = 0; b < bytes; b++)
+                    dest[b] = weighted_average_value (Hist_rgb[b]);
+                }
+
               dest += bytes;
             }
 
@@ -438,6 +444,7 @@ oilify_intensity (GimpDrawable *drawable,
     }
 
   g_free (src_buf);
+  g_free (mask_shape);
 
   if (!preview)
     {
@@ -446,17 +453,6 @@ oilify_intensity (GimpDrawable *drawable,
       gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
       gimp_drawable_update (drawable->drawable_id, x1, y1, width, height);
     }
-}
-
-static void
-oilify (GimpDrawable *drawable,
-        GimpPreview  *preview)
-{
-  if (gimp_drawable_is_rgb (drawable->drawable_id) &&
-      (ovals.mode == MODE_INTEN))
-    oilify_intensity (drawable, preview);
-  else
-    oilify_rgb (drawable, preview);
 }
 
 static gint
@@ -517,7 +513,7 @@ oilify_dialog (GimpDrawable *drawable)
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  toggle = gtk_check_button_new_with_mnemonic (_("_Use intensity algorithm"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_Use intensity"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 1, 2, GTK_FILL, 0, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), ovals.mode);
   gtk_widget_show (toggle);
