@@ -1,5 +1,10 @@
 2005-11-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/menus/window-menu.c (window_menu_display_opened,closed):
+	don't crash if gdk_display_get_name() returns NULL.
+
+2005-11-26  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell.c (gimp_display_shell_unrealize):
 	new function which destroys the GCs kept by the shell and
 	unrealizes the navigation popup.

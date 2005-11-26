@@ -90,6 +90,7 @@ window_menu_display_opened (GdkDisplayManager *disp_manager,
   GtkUIManager *ui_manager = GTK_UI_MANAGER (manager);
   const gchar  *group_name;
   const gchar  *ui_path;
+  const gchar  *display_name;
   gchar        *action_path;
   gchar        *merge_key;
   guint         merge_id;
@@ -103,8 +104,11 @@ window_menu_display_opened (GdkDisplayManager *disp_manager,
 
   action_path = g_strdup_printf ("%s/Move to Screen", ui_path);
 
-  merge_key = g_strdup_printf ("%s-display-merge-id",
-                               gdk_display_get_name (display));
+  display_name = gdk_display_get_name (display);
+  if (! display_name)
+    display_name = "eek";
+
+  merge_key = g_strdup_printf ("%s-display-merge-id", display_name);
 
   merge_id = gtk_ui_manager_new_merge_id (ui_manager);
   g_object_set_data (G_OBJECT (manager), merge_key,
@@ -147,11 +151,15 @@ window_menu_display_closed (GdkDisplay    *display,
                             gboolean       is_error,
                             GimpUIManager *manager)
 {
-  gchar *merge_key;
-  guint  merge_id;
+  const gchar *display_name;
+  gchar       *merge_key;
+  guint        merge_id;
 
-  merge_key = g_strdup_printf ("%s-display-merge-id",
-                               gdk_display_get_name (display));
+  display_name = gdk_display_get_name (display);
+  if (! display_name)
+    display_name = "eek";
+
+  merge_key = g_strdup_printf ("%s-display-merge-id", display_name);
   merge_id = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (manager),
                                                   merge_key));
   g_free (merge_key);
