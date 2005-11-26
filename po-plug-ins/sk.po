@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-06 17:36+0100\n"
-"PO-Revision-Date: 2005-11-06 17:40+0100\n"
+"POT-Creation-Date: 2005-11-26 20:34+0100\n"
+"PO-Revision-Date: 2005-11-26 20:35+0100\n"
 "Last-Translator: Marcel Telka <marcel@telka.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -371,7 +371,7 @@ msgstr "_Fraktály"
 #: ../plug-ins/Lighting/lighting_ui.c:1160 ../plug-ins/bmp/bmpwrite.c:200
 #: ../plug-ins/common/CEL.c:568 ../plug-ins/common/CML_explorer.c:2013
 #: ../plug-ins/common/channel_mixer.c:1071 ../plug-ins/common/compressor.c:410
-#: ../plug-ins/common/compressor.c:541 ../plug-ins/common/curve_bend.c:860
+#: ../plug-ins/common/compressor.c:541 ../plug-ins/common/curve_bend.c:839
 #: ../plug-ins/common/dicom.c:650 ../plug-ins/common/gbr.c:616
 #: ../plug-ins/common/gif.c:1000 ../plug-ins/common/gih.c:1258
 #: ../plug-ins/common/gtm.c:225 ../plug-ins/common/mng.c:561
@@ -412,7 +412,7 @@ msgstr "Uložiť parametre fraktálu"
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:917
 #: ../plug-ins/Lighting/lighting_ui.c:1304 ../plug-ins/bmp/bmpread.c:152
 #: ../plug-ins/common/CEL.c:299 ../plug-ins/common/CML_explorer.c:2233
-#: ../plug-ins/common/channel_mixer.c:988 ../plug-ins/common/curve_bend.c:912
+#: ../plug-ins/common/channel_mixer.c:988 ../plug-ins/common/curve_bend.c:891
 #: ../plug-ins/common/dicom.c:295 ../plug-ins/common/gbr.c:348
 #: ../plug-ins/common/gifload.c:297 ../plug-ins/common/gih.c:649
 #: ../plug-ins/common/mng.c:1124 ../plug-ins/common/pat.c:321
@@ -514,7 +514,7 @@ msgstr "_Svetelné efekty..."
 
 #. General options
 #: ../plug-ins/Lighting/lighting_ui.c:277
-#: ../plug-ins/MapObject/mapobject_ui.c:470
+#: ../plug-ins/MapObject/mapobject_ui.c:473
 msgid "General Options"
 msgstr "Všeobecné nastavenia"
 
@@ -531,7 +531,7 @@ msgid "Cre_ate new image"
 msgstr "_Vytvoriť nový obrázok"
 
 #: ../plug-ins/Lighting/lighting_ui.c:308
-#: ../plug-ins/MapObject/mapobject_ui.c:544
+#: ../plug-ins/MapObject/mapobject_ui.c:547
 msgid "Create a new image when applying filter"
 msgstr "Pri použití filtra vytvoriť nový obrázok"
 
@@ -548,7 +548,7 @@ msgid "Distance:"
 msgstr "Vzdialenosť:"
 
 #: ../plug-ins/Lighting/lighting_ui.c:361
-#: ../plug-ins/MapObject/mapobject_ui.c:623
+#: ../plug-ins/MapObject/mapobject_ui.c:626
 msgid "Light Settings"
 msgstr "Nastavenie svetla"
 
@@ -595,17 +595,17 @@ msgid "Point"
 msgstr "Bodové"
 
 #: ../plug-ins/Lighting/lighting_ui.c:416
-#: ../plug-ins/MapObject/mapobject_ui.c:651
+#: ../plug-ins/MapObject/mapobject_ui.c:654
 msgid "Type of light source to apply"
 msgstr "Typ použitého svetelného zdroja"
 
 #: ../plug-ins/Lighting/lighting_ui.c:418
-#: ../plug-ins/MapObject/mapobject_ui.c:653
+#: ../plug-ins/MapObject/mapobject_ui.c:656
 msgid "Select lightsource color"
 msgstr "Voľba farby svetelného zdroja"
 
 #: ../plug-ins/Lighting/lighting_ui.c:430
-#: ../plug-ins/MapObject/mapobject_ui.c:666
+#: ../plug-ins/MapObject/mapobject_ui.c:669
 msgid "Set light source color"
 msgstr "Nastavenie farby svetelného zdroja"
 
@@ -618,8 +618,8 @@ msgid "Light intensity"
 msgstr "Intenzita svetla"
 
 #: ../plug-ins/Lighting/lighting_ui.c:447
-#: ../plug-ins/MapObject/mapobject_ui.c:668
-#: ../plug-ins/MapObject/mapobject_ui.c:995
+#: ../plug-ins/MapObject/mapobject_ui.c:671
+#: ../plug-ins/MapObject/mapobject_ui.c:998
 #: ../plug-ins/print/gimp_main_window.c:475
 msgid "Position"
 msgstr "Pozícia"
@@ -632,7 +632,7 @@ msgid "_X:"
 msgstr "_X:"
 
 #: ../plug-ins/Lighting/lighting_ui.c:462
-#: ../plug-ins/MapObject/mapobject_ui.c:692
+#: ../plug-ins/MapObject/mapobject_ui.c:695
 msgid "Light source X position in XYZ space"
 msgstr "Poloha X svetelného zdroja v XYZ priestore"
 
@@ -644,7 +644,7 @@ msgid "_Y:"
 msgstr "_Y:"
 
 #: ../plug-ins/Lighting/lighting_ui.c:475
-#: ../plug-ins/MapObject/mapobject_ui.c:706
+#: ../plug-ins/MapObject/mapobject_ui.c:709
 msgid "Light source Y position in XYZ space"
 msgstr "Poloha Y svetelného zdroja v XYZ priestore"
 
@@ -653,7 +653,7 @@ msgid "_Z:"
 msgstr "_Z:"
 
 #: ../plug-ins/Lighting/lighting_ui.c:488
-#: ../plug-ins/MapObject/mapobject_ui.c:720
+#: ../plug-ins/MapObject/mapobject_ui.c:723
 msgid "Light source Z position in XYZ space"
 msgstr "Poloha Z svetelného zdroja v XYZ priestore"
 
@@ -667,46 +667,46 @@ msgstr "Smer"
 
 #. X
 #: ../plug-ins/Lighting/lighting_ui.c:499
-#: ../plug-ins/MapObject/mapobject_ui.c:684
-#: ../plug-ins/MapObject/mapobject_ui.c:738
-#: ../plug-ins/MapObject/mapobject_ui.c:1006
-#: ../plug-ins/MapObject/mapobject_ui.c:1055
+#: ../plug-ins/MapObject/mapobject_ui.c:687
+#: ../plug-ins/MapObject/mapobject_ui.c:741
+#: ../plug-ins/MapObject/mapobject_ui.c:1009
+#: ../plug-ins/MapObject/mapobject_ui.c:1058
 #: ../plug-ins/ifscompose/ifscompose.c:527
 msgid "X:"
 msgstr "X:"
 
 #: ../plug-ins/Lighting/lighting_ui.c:505
-#: ../plug-ins/MapObject/mapobject_ui.c:746
+#: ../plug-ins/MapObject/mapobject_ui.c:749
 msgid "Light source X direction in XYZ space"
 msgstr "Smer X svetelného zdroja v XYZ priestore"
 
 #. Y
 #: ../plug-ins/Lighting/lighting_ui.c:511
-#: ../plug-ins/MapObject/mapobject_ui.c:698
-#: ../plug-ins/MapObject/mapobject_ui.c:751
-#: ../plug-ins/MapObject/mapobject_ui.c:1019
-#: ../plug-ins/MapObject/mapobject_ui.c:1066
-#: ../plug-ins/MapObject/mapobject_ui.c:1164
+#: ../plug-ins/MapObject/mapobject_ui.c:701
+#: ../plug-ins/MapObject/mapobject_ui.c:754
+#: ../plug-ins/MapObject/mapobject_ui.c:1022
+#: ../plug-ins/MapObject/mapobject_ui.c:1069
+#: ../plug-ins/MapObject/mapobject_ui.c:1167
 #: ../plug-ins/ifscompose/ifscompose.c:541
 msgid "Y:"
 msgstr "Y:"
 
 #: ../plug-ins/Lighting/lighting_ui.c:517
-#: ../plug-ins/MapObject/mapobject_ui.c:759
+#: ../plug-ins/MapObject/mapobject_ui.c:762
 msgid "Light source Y direction in XYZ space"
 msgstr "Smer Y svetelného zdroja v XYZ priestore"
 
 #: ../plug-ins/Lighting/lighting_ui.c:523
-#: ../plug-ins/MapObject/mapobject_ui.c:712
-#: ../plug-ins/MapObject/mapobject_ui.c:764
-#: ../plug-ins/MapObject/mapobject_ui.c:1032
-#: ../plug-ins/MapObject/mapobject_ui.c:1077
-#: ../plug-ins/MapObject/mapobject_ui.c:1176
+#: ../plug-ins/MapObject/mapobject_ui.c:715
+#: ../plug-ins/MapObject/mapobject_ui.c:767
+#: ../plug-ins/MapObject/mapobject_ui.c:1035
+#: ../plug-ins/MapObject/mapobject_ui.c:1080
+#: ../plug-ins/MapObject/mapobject_ui.c:1179
 msgid "Z:"
 msgstr "Z:"
 
 #: ../plug-ins/Lighting/lighting_ui.c:529
-#: ../plug-ins/MapObject/mapobject_ui.c:772
+#: ../plug-ins/MapObject/mapobject_ui.c:775
 msgid "Light source Z direction in XYZ space"
 msgstr "Smer Z svetelného zdroja v XYZ priestore"
 
@@ -727,7 +727,7 @@ msgid "_Glowing:"
 msgstr "Žia_renie:"
 
 #: ../plug-ins/Lighting/lighting_ui.c:622
-#: ../plug-ins/MapObject/mapobject_ui.c:833
+#: ../plug-ins/MapObject/mapobject_ui.c:836
 msgid "Amount of original color to show where no direct light falls"
 msgstr ""
 "Množstvo pôvodnej farby na zobrazenie miesta, kam nedopadá priame svetlo"
@@ -737,7 +737,7 @@ msgid "_Bright:"
 msgstr "_Jas:"
 
 #: ../plug-ins/Lighting/lighting_ui.c:651
-#: ../plug-ins/MapObject/mapobject_ui.c:862
+#: ../plug-ins/MapObject/mapobject_ui.c:865
 msgid "Intensity of original color when lit by a light source"
 msgstr "Intenzita pôvodnej farby, keď je ožiarená svetelným zdrojom"
 
@@ -746,7 +746,7 @@ msgid "_Shiny:"
 msgstr "_Lesk:"
 
 #: ../plug-ins/Lighting/lighting_ui.c:680
-#: ../plug-ins/MapObject/mapobject_ui.c:934
+#: ../plug-ins/MapObject/mapobject_ui.c:937
 msgid "Controls how intense the highlights will be"
 msgstr "Ovláda intenzitu odlesku"
 
@@ -755,7 +755,7 @@ msgid "_Polished:"
 msgstr "_Leštený:"
 
 #: ../plug-ins/Lighting/lighting_ui.c:708
-#: ../plug-ins/MapObject/mapobject_ui.c:963
+#: ../plug-ins/MapObject/mapobject_ui.c:966
 msgid "Higher values makes the highlights more focused"
 msgstr "Vyššie hodnoty spôsobia ostrejší odlesk"
 
@@ -829,12 +829,12 @@ msgid "Op_tions"
 msgstr "_Možnosti"
 
 #: ../plug-ins/Lighting/lighting_ui.c:905
-#: ../plug-ins/MapObject/mapobject_ui.c:1300
+#: ../plug-ins/MapObject/mapobject_ui.c:1303
 msgid "_Light"
 msgstr "_Svetlo"
 
 #: ../plug-ins/Lighting/lighting_ui.c:909
-#: ../plug-ins/MapObject/mapobject_ui.c:1304
+#: ../plug-ins/MapObject/mapobject_ui.c:1307
 msgid "_Material"
 msgstr "_Materiál"
 
@@ -854,7 +854,7 @@ msgid "_Update"
 msgstr "_Obnoviť"
 
 #: ../plug-ins/Lighting/lighting_ui.c:1033
-#: ../plug-ins/MapObject/mapobject_ui.c:1405
+#: ../plug-ins/MapObject/mapobject_ui.c:1409
 msgid "Recompute preview image"
 msgstr "Prepočítať náhľad"
 
@@ -890,274 +890,274 @@ msgstr "Mapovať na kváder"
 msgid "Map to cylinder"
 msgstr "Mapovať na valec"
 
-#: ../plug-ins/MapObject/mapobject_main.c:200
+#: ../plug-ins/MapObject/mapobject_main.c:198
 msgid "Map _Object..."
 msgstr "Mapovať _objekt..."
 
 #: ../plug-ins/MapObject/mapobject_ui.c:248
-#: ../plug-ins/MapObject/mapobject_ui.c:1314
+#: ../plug-ins/MapObject/mapobject_ui.c:1317
 msgid "_Box"
 msgstr "_Hranol"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:266
-#: ../plug-ins/MapObject/mapobject_ui.c:1320
+#: ../plug-ins/MapObject/mapobject_ui.c:1323
 msgid "C_ylinder"
 msgstr "_Valec"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:482
+#: ../plug-ins/MapObject/mapobject_ui.c:485
 msgid "Map to:"
 msgstr "Mapovať na:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:486
+#: ../plug-ins/MapObject/mapobject_ui.c:489
 msgid "Plane"
 msgstr "Rovinu"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:487
+#: ../plug-ins/MapObject/mapobject_ui.c:490
 msgid "Sphere"
 msgstr "Guľu"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:488
+#: ../plug-ins/MapObject/mapobject_ui.c:491
 msgid "Box"
 msgstr "Hranol"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:489
+#: ../plug-ins/MapObject/mapobject_ui.c:492
 msgid "Cylinder"
 msgstr "Valec"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:504
+#: ../plug-ins/MapObject/mapobject_ui.c:507
 msgid "Type of object to map to"
 msgstr "Typ objektu, na ktorý sa mapuje"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:506
+#: ../plug-ins/MapObject/mapobject_ui.c:509
 msgid "Transparent background"
 msgstr "Priesvitné pozadie"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:517
+#: ../plug-ins/MapObject/mapobject_ui.c:520
 msgid "Make image transparent outside object"
 msgstr "Mimo objektu nech je obrázok priesvitný"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:519
+#: ../plug-ins/MapObject/mapobject_ui.c:522
 msgid "Tile source image"
 msgstr "Opakovať zdrojový obrázok"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:530
+#: ../plug-ins/MapObject/mapobject_ui.c:533
 msgid "Tile source image: useful for infinite planes"
 msgstr "Dlaždice zdrojového obrázka: užitočné pre nekonečné plochy"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:533
+#: ../plug-ins/MapObject/mapobject_ui.c:536
 msgid "Create new image"
 msgstr "Vytvoriť nový obrázok"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:552
+#: ../plug-ins/MapObject/mapobject_ui.c:555
 msgid "Enable _antialiasing"
 msgstr "Povoliť vyhl_adzovanie"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:559
+#: ../plug-ins/MapObject/mapobject_ui.c:562
 msgid "Enable/disable jagged edges removal (antialiasing)"
 msgstr "Povoliť/zakázať odstraňovanie zubatých hrán (vyhladzovanie)"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:576 ../plug-ins/common/bumpmap.c:984
+#: ../plug-ins/MapObject/mapobject_ui.c:579 ../plug-ins/common/bumpmap.c:984
 #: ../plug-ins/common/emboss.c:528 ../plug-ins/common/fractaltrace.c:792
 #: ../plug-ins/common/struc.c:1326
 msgid "_Depth:"
 msgstr "_Hĺbka:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:579
+#: ../plug-ins/MapObject/mapobject_ui.c:582
 msgid "Antialiasing quality. Higher is better, but slower"
 msgstr "Kvalita vyhladzovania. Vyššia je lepšia, ale je pomalšia"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:588 ../plug-ins/common/unsharp.c:695
+#: ../plug-ins/MapObject/mapobject_ui.c:591 ../plug-ins/common/unsharp.c:695
 #: ../plug-ins/common/wind.c:1008 ../plug-ins/imagemap/imap_preferences.c:441
 msgid "_Threshold:"
 msgstr "Pra_h:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:596
+#: ../plug-ins/MapObject/mapobject_ui.c:599
 msgid "Stop when pixel differences are smaller than this value"
 msgstr "Zastaviť, keď rozdiely pixelov sú menšie ako je táto hodnota"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:632
+#: ../plug-ins/MapObject/mapobject_ui.c:635
 msgid "Point light"
 msgstr "Bodové svetlo"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:633
+#: ../plug-ins/MapObject/mapobject_ui.c:636
 msgid "Directional light"
 msgstr "Smerové svetlo"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:634
+#: ../plug-ins/MapObject/mapobject_ui.c:637
 msgid "No light"
 msgstr "Bez svetla"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:648
+#: ../plug-ins/MapObject/mapobject_ui.c:651
 msgid "Lightsource type:"
 msgstr "Typ svetelného zdroja:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:658
+#: ../plug-ins/MapObject/mapobject_ui.c:661
 msgid "Lightsource color:"
 msgstr "Farba svetelného zdroja:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:723
+#: ../plug-ins/MapObject/mapobject_ui.c:726
 msgid "Direction Vector"
 msgstr "Smerový vektor"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:799
+#: ../plug-ins/MapObject/mapobject_ui.c:802
 msgid "Intensity Levels"
 msgstr "Úrovne intenzity"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:818
+#: ../plug-ins/MapObject/mapobject_ui.c:821
 msgid "Ambient:"
 msgstr "Okolie:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:847
-#: ../plug-ins/MapObject/mapobject_ui.c:890
+#: ../plug-ins/MapObject/mapobject_ui.c:850
+#: ../plug-ins/MapObject/mapobject_ui.c:893
 msgid "Diffuse:"
 msgstr "Rozptyl:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:871
+#: ../plug-ins/MapObject/mapobject_ui.c:874
 msgid "Reflectivity"
 msgstr "Odraz"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:905
+#: ../plug-ins/MapObject/mapobject_ui.c:908
 msgid "Higher values makes the object reflect more light (appear lighter)"
 msgstr "Vyššie hodnoty spôsobia väčší odraz svetla (objekt bude svetlejší)"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:919
+#: ../plug-ins/MapObject/mapobject_ui.c:922
 msgid "Specular:"
 msgstr "Zrkadlenie"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:948
+#: ../plug-ins/MapObject/mapobject_ui.c:951
 msgid "Highlight:"
 msgstr "Odlesk:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1009
+#: ../plug-ins/MapObject/mapobject_ui.c:1012
 msgid "Object X position in XYZ space"
 msgstr "Poloha X objektu v priestore XYZ"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1022
+#: ../plug-ins/MapObject/mapobject_ui.c:1025
 msgid "Object Y position in XYZ space"
 msgstr "Poloha Y objektu v priestore XYZ"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1035
+#: ../plug-ins/MapObject/mapobject_ui.c:1038
 msgid "Object Z position in XYZ space"
 msgstr "Poloha Z objektu v priestore XYZ"
 
 #. Rotation
-#: ../plug-ins/MapObject/mapobject_ui.c:1044
+#: ../plug-ins/MapObject/mapobject_ui.c:1047
 #: ../plug-ins/common/postscript.c:3365
 msgid "Rotation"
 msgstr "Otočenie"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1058
+#: ../plug-ins/MapObject/mapobject_ui.c:1061
 msgid "Rotation angle about X axis"
 msgstr "Uhol otočenia okolo osi X"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1069
+#: ../plug-ins/MapObject/mapobject_ui.c:1072
 msgid "Rotation angle about Y axis"
 msgstr "Uhol otočenia okolo osi Y"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1080
+#: ../plug-ins/MapObject/mapobject_ui.c:1083
 msgid "Rotation angle about Z axis"
 msgstr "Uhol otočenia okolo osi Z"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1106
+#: ../plug-ins/MapObject/mapobject_ui.c:1109
 msgid "Front:"
 msgstr "Vpredu:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1106
+#: ../plug-ins/MapObject/mapobject_ui.c:1109
 msgid "Back:"
 msgstr "Vzadu:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1107
+#: ../plug-ins/MapObject/mapobject_ui.c:1110
 #: ../plug-ins/print/gimp_main_window.c:534
 msgid "Top:"
 msgstr "Hore:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1107
+#: ../plug-ins/MapObject/mapobject_ui.c:1110
 #: ../plug-ins/print/gimp_main_window.c:575
 msgid "Bottom:"
 msgstr "Dole:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1108
+#: ../plug-ins/MapObject/mapobject_ui.c:1111
 #: ../plug-ins/print/gimp_main_window.c:521
 msgid "Left:"
 msgstr "Vľavo:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1108
+#: ../plug-ins/MapObject/mapobject_ui.c:1111
 #: ../plug-ins/print/gimp_main_window.c:547
 msgid "Right:"
 msgstr "Vpravo:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1114
+#: ../plug-ins/MapObject/mapobject_ui.c:1117
 msgid "Map Images to Box Faces"
 msgstr "Mapovať obrázok na plochy hranola"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1152
+#: ../plug-ins/MapObject/mapobject_ui.c:1155
 #: ../plug-ins/common/spheredesigner.c:2771
 msgid "Scale X:"
 msgstr "Zmena veľkosti X:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1155
+#: ../plug-ins/MapObject/mapobject_ui.c:1158
 msgid "X scale (size)"
 msgstr "Zmena veľkosti X"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1167
+#: ../plug-ins/MapObject/mapobject_ui.c:1170
 msgid "Y scale (size)"
 msgstr "Zmena veľkosti Y"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1179
+#: ../plug-ins/MapObject/mapobject_ui.c:1182
 msgid "Z scale (size)"
 msgstr "Zmena veľkosti Z"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1202
+#: ../plug-ins/MapObject/mapobject_ui.c:1205
 msgid "_Top:"
 msgstr "_Hore:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1202
+#: ../plug-ins/MapObject/mapobject_ui.c:1205
 msgid "_Bottom:"
 msgstr "_Dole:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1207
+#: ../plug-ins/MapObject/mapobject_ui.c:1210
 msgid "Images for the Cap Faces"
 msgstr "Obrázky pre uzatváracie plochy"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1236
+#: ../plug-ins/MapObject/mapobject_ui.c:1239
 #: ../plug-ins/print/gimp_main_window.c:1119
 msgid "Size"
 msgstr "Veľkosť"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1247
+#: ../plug-ins/MapObject/mapobject_ui.c:1250
 msgid "R_adius:"
 msgstr "_Polomer:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1251
+#: ../plug-ins/MapObject/mapobject_ui.c:1254
 msgid "Cylinder radius"
 msgstr "Polomer valca"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1261 ../plug-ins/common/mblur.c:1023
+#: ../plug-ins/MapObject/mapobject_ui.c:1264 ../plug-ins/common/mblur.c:1023
 msgid "L_ength:"
 msgstr "D_ĺžka:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1265
+#: ../plug-ins/MapObject/mapobject_ui.c:1268
 msgid "Cylinder length"
 msgstr "Dĺžka valca"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1296
+#: ../plug-ins/MapObject/mapobject_ui.c:1299
 msgid "O_ptions"
 msgstr "M_ožnosti"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1308
+#: ../plug-ins/MapObject/mapobject_ui.c:1311
 msgid "O_rientation"
 msgstr "O_rientácia"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1343
+#: ../plug-ins/MapObject/mapobject_ui.c:1347
 msgid "Map to Object"
 msgstr "Mapovať a objekt"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1396
+#: ../plug-ins/MapObject/mapobject_ui.c:1400
 #: ../plug-ins/common/diffraction.c:477
 msgid "_Preview!"
 msgstr "_Náhľad!"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1421
+#: ../plug-ins/MapObject/mapobject_ui.c:1427
 msgid "Show preview _wireframe"
 msgstr "Zobraziť náhľad na _drátový model"
 
@@ -2789,147 +2789,147 @@ msgstr "_Použiť farbu pozadia"
 msgid "Cubistic transformation"
 msgstr "Kubistická transformácia"
 
-#: ../plug-ins/common/curve_bend.c:566
+#: ../plug-ins/common/curve_bend.c:545
 msgid "_Curve Bend..."
 msgstr "_Zakriviť..."
 
-#: ../plug-ins/common/curve_bend.c:702
+#: ../plug-ins/common/curve_bend.c:681
 msgid "Can operate on layers only (but was called on channel or mask)."
 msgstr "Može pracovať iba s vrstvami (ale bolo volané na kanál alebo masku)."
 
-#: ../plug-ins/common/curve_bend.c:720
+#: ../plug-ins/common/curve_bend.c:699
 msgid "Cannot operate on layers with masks."
 msgstr "Nie je možné pracovať na vrstvách s maskou."
 
-#: ../plug-ins/common/curve_bend.c:735
+#: ../plug-ins/common/curve_bend.c:714
 msgid "Cannot operate on empty selections."
 msgstr "Nie je možné pracovať s prázdnym výberom."
 
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
-#: ../plug-ins/common/curve_bend.c:1238 ../plug-ins/common/curve_bend.c:2955
+#: ../plug-ins/common/curve_bend.c:1217 ../plug-ins/common/curve_bend.c:2934
 msgid "Curve Bend"
 msgstr "Ohýbanie pomocou krivky"
 
 #. Preview area, top of column
-#: ../plug-ins/common/curve_bend.c:1274
+#: ../plug-ins/common/curve_bend.c:1253
 #: ../plug-ins/gimpressionist/orientmap.c:574
 #: ../plug-ins/gimpressionist/sizemap.c:443
 msgid "Preview"
 msgstr "Náhľad"
 
 #. The preview button
-#: ../plug-ins/common/curve_bend.c:1303
+#: ../plug-ins/common/curve_bend.c:1282
 msgid "_Preview Once"
 msgstr "_Náhľad raz"
 
 #. The preview toggle
-#: ../plug-ins/common/curve_bend.c:1312
+#: ../plug-ins/common/curve_bend.c:1291
 msgid "Automatic pre_view"
 msgstr "Automa_tický náhľad"
 
 #. Options area, bottom of column
 #. the vertical box and its toggle buttons
 #. Options section
-#: ../plug-ins/common/curve_bend.c:1322 ../plug-ins/common/mosaic.c:623
+#: ../plug-ins/common/curve_bend.c:1301 ../plug-ins/common/mosaic.c:623
 #: ../plug-ins/common/ripple.c:509 ../plug-ins/gfig/gfig-dialog.c:1213
 msgid "Options"
 msgstr "Možnosti"
 
 #. Rotate spinbutton
-#: ../plug-ins/common/curve_bend.c:1336
+#: ../plug-ins/common/curve_bend.c:1315
 msgid "Rotat_e:"
 msgstr "_Otočiť:"
 
 #. The smoothing toggle
-#: ../plug-ins/common/curve_bend.c:1354
+#: ../plug-ins/common/curve_bend.c:1333
 msgid "Smoo_thing"
 msgstr "_Vyhladzovanie"
 
 #. The antialiasing toggle
-#: ../plug-ins/common/curve_bend.c:1364 ../plug-ins/common/gqbist.c:836
+#: ../plug-ins/common/curve_bend.c:1343 ../plug-ins/common/gqbist.c:836
 #: ../plug-ins/common/mosaic.c:629 ../plug-ins/common/ripple.c:518
 msgid "_Antialiasing"
 msgstr "_Vyhladzovanie"
 
 #. The work_on_copy toggle
-#: ../plug-ins/common/curve_bend.c:1374
+#: ../plug-ins/common/curve_bend.c:1353
 msgid "Work on cop_y"
 msgstr "Pracovať na kóp_ií"
 
 #. The curves graph
-#: ../plug-ins/common/curve_bend.c:1384
+#: ../plug-ins/common/curve_bend.c:1363
 msgid "Modify Curves"
 msgstr "Upraviť krivky"
 
-#: ../plug-ins/common/curve_bend.c:1412
+#: ../plug-ins/common/curve_bend.c:1391
 msgid "Curve for Border"
 msgstr "Krivka pre okraj"
 
-#: ../plug-ins/common/curve_bend.c:1416
+#: ../plug-ins/common/curve_bend.c:1395
 msgid "_Upper"
 msgstr "_Horný"
 
-#: ../plug-ins/common/curve_bend.c:1417
+#: ../plug-ins/common/curve_bend.c:1396
 msgid "_Lower"
 msgstr "_Dolný"
 
-#: ../plug-ins/common/curve_bend.c:1427
+#: ../plug-ins/common/curve_bend.c:1406
 msgid "Curve Type"
 msgstr "Typ krivky"
 
-#: ../plug-ins/common/curve_bend.c:1431
+#: ../plug-ins/common/curve_bend.c:1410
 msgid "Smoot_h"
 msgstr "_Plynulý"
 
-#: ../plug-ins/common/curve_bend.c:1432
+#: ../plug-ins/common/curve_bend.c:1411
 msgid "_Free"
 msgstr "_Voľná"
 
 #. The Copy button
-#: ../plug-ins/common/curve_bend.c:1447
+#: ../plug-ins/common/curve_bend.c:1426
 msgid "_Copy"
 msgstr "_Kopírovať"
 
-#: ../plug-ins/common/curve_bend.c:1452
+#: ../plug-ins/common/curve_bend.c:1431
 msgid "Copy the active curve to the other border"
 msgstr "Kopírovať aktívnu krivku na druhý okraj"
 
 #. The CopyInv button
-#: ../plug-ins/common/curve_bend.c:1459
+#: ../plug-ins/common/curve_bend.c:1438
 msgid "_Mirror"
 msgstr "_Zrkadliť"
 
-#: ../plug-ins/common/curve_bend.c:1464
+#: ../plug-ins/common/curve_bend.c:1443
 msgid "Mirror the active curve to the other border"
 msgstr "Zrkadliť aktívnu krivku na druhý okraj"
 
 #. The Swap button
-#: ../plug-ins/common/curve_bend.c:1472
+#: ../plug-ins/common/curve_bend.c:1451
 msgid "S_wap"
 msgstr "Pre_hodiť"
 
-#: ../plug-ins/common/curve_bend.c:1477
+#: ../plug-ins/common/curve_bend.c:1456
 msgid "Swap the two curves"
 msgstr "Prehodiť dve krivky"
 
-#: ../plug-ins/common/curve_bend.c:1489
+#: ../plug-ins/common/curve_bend.c:1468
 msgid "Reset the active curve"
 msgstr "Obnoviť aktívnu krivku"
 
-#: ../plug-ins/common/curve_bend.c:1506
+#: ../plug-ins/common/curve_bend.c:1485
 msgid "Load the curves from a file"
 msgstr "Načítať krivky zo súboru"
 
-#: ../plug-ins/common/curve_bend.c:1518
+#: ../plug-ins/common/curve_bend.c:1497
 msgid "Save the curves to a file"
 msgstr "Uložiť krivky do súboru"
 
-#: ../plug-ins/common/curve_bend.c:2053
+#: ../plug-ins/common/curve_bend.c:2032
 msgid "Load Curve Points from File"
 msgstr "Načítať body krivky zo súboru"
 
-#: ../plug-ins/common/curve_bend.c:2088
+#: ../plug-ins/common/curve_bend.c:2067
 msgid "Save Curve Points to File"
 msgstr "Uložiť body krivky do súboru"
 
@@ -3521,7 +3521,7 @@ msgstr "Na film:"
 
 #. Create selection
 #: ../plug-ins/common/film.c:1164 ../plug-ins/imagemap/imap_selection.c:366
-#: ../plug-ins/rcm/rcm_dialog.c:173
+#: ../plug-ins/rcm/rcm_dialog.c:173 ../plug-ins/sel2path/sel2path.c:523
 msgid "Selection"
 msgstr "Výber"
 
@@ -5283,25 +5283,25 @@ msgstr "Centrum SuperNovy"
 msgid "S_how cursor"
 msgstr "Zobraziť k_urzor"
 
-#: ../plug-ins/common/oilify.c:109
+#: ../plug-ins/common/oilify.c:105
 msgid "Oili_fy..."
 msgstr "_Olejomaľba"
 
-#: ../plug-ins/common/oilify.c:187
+#: ../plug-ins/common/oilify.c:183
 msgid "Oil painting"
 msgstr "Kreslenie olejomaľbou"
 
-#: ../plug-ins/common/oilify.c:475
+#: ../plug-ins/common/oilify.c:471
 msgid "Oilify"
 msgstr "Olejomaľba"
 
-#: ../plug-ins/common/oilify.c:509
+#: ../plug-ins/common/oilify.c:505
 msgid "_Mask size:"
 msgstr "Veľkosť _masky:"
 
-#: ../plug-ins/common/oilify.c:520
-msgid "_Use intensity algorithm"
-msgstr "Po_užiť algoritmus intenzity"
+#: ../plug-ins/common/oilify.c:516
+msgid "_Use intensity"
+msgstr "Použiť _intenzitu"
 
 #: ../plug-ins/common/papertile.c:234 ../plug-ins/common/papertile.c:533
 msgid "Paper Tile"
@@ -7327,7 +7327,8 @@ msgstr "Vytvoriť úplne novú jednotku."
 
 #: ../plug-ins/common/uniteditor.c:127
 msgid "Create a new unit using the currently selected unit as template."
-msgstr "Vytvoriť novú jednotku s použitím aktuálne zvolenej jednotky ako šablónou."
+msgstr ""
+"Vytvoriť novú jednotku s použitím aktuálne zvolenej jednotky ako šablónou."
 
 #: ../plug-ins/common/uniteditor.c:150
 msgid "_Unit Editor"
