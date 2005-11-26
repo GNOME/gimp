@@ -102,6 +102,8 @@ static void      gimp_display_shell_get_property   (GObject          *object,
                                                     GParamSpec       *pspec);
 
 static void      gimp_display_shell_destroy        (GtkObject        *object);
+
+static void      gimp_display_shell_unrealize      (GtkWidget        *widget);
 static void      gimp_display_shell_screen_changed (GtkWidget        *widget,
                                                     GdkScreen        *previous);
 static gboolean  gimp_display_shell_delete_event   (GtkWidget        *widget,
@@ -199,6 +201,7 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
 
   gtk_object_class->destroy    = gimp_display_shell_destroy;
 
+  widget_class->unrealize      = gimp_display_shell_unrealize;
   widget_class->screen_changed = gimp_display_shell_screen_changed;
   widget_class->delete_event   = gimp_display_shell_delete_event;
   widget_class->popup_menu     = gimp_display_shell_popup_menu;
@@ -364,6 +367,46 @@ gimp_display_shell_finalize (GObject *object)
 }
 
 static void
+gimp_display_shell_set_property (GObject      *object,
+                                 guint         property_id,
+                                 const GValue *value,
+                                 GParamSpec   *pspec)
+{
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (object);
+
+  switch (property_id)
+    {
+    case PROP_UNIT:
+      gimp_display_shell_set_unit (shell, g_value_get_int (value));
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_display_shell_get_property (GObject    *object,
+                                 guint       property_id,
+                                 GValue     *value,
+                                 GParamSpec *pspec)
+{
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (object);
+
+  switch (property_id)
+    {
+    case PROP_UNIT:
+      g_value_set_int (value, shell->unit);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
 gimp_display_shell_destroy (GtkObject *object)
 {
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (object);
@@ -436,43 +479,26 @@ gimp_display_shell_destroy (GtkObject *object)
 }
 
 static void
-gimp_display_shell_set_property (GObject      *object,
-                                 guint         property_id,
-                                 const GValue *value,
-                                 GParamSpec   *pspec)
+gimp_display_shell_unrealize (GtkWidget *widget)
 {
-  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (object);
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (widget);
 
-  switch (property_id)
+  if (shell->grid_gc)
     {
-    case PROP_UNIT:
-      gimp_display_shell_set_unit (shell, g_value_get_int (value));
-      break;
-
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
+      g_object_unref (shell->grid_gc);
+      shell->grid_gc = NULL;
     }
-}
 
-static void
-gimp_display_shell_get_property (GObject    *object,
-                                 guint       property_id,
-                                 GValue     *value,
-                                 GParamSpec *pspec)
-{
-  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (object);
-
-  switch (property_id)
+  if (shell->pen_gc)
     {
-    case PROP_UNIT:
-      g_value_set_int (value, shell->unit);
-      break;
-
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
+      g_object_unref (shell->pen_gc);
+      shell->pen_gc = NULL;
     }
+
+  if (shell->nav_popup)
+    gtk_widget_unrealize (shell->nav_popup);
+
+  GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
 }
 
 static void
