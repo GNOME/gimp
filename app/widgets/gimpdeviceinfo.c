@@ -155,6 +155,7 @@ static void
 gimp_device_info_init (GimpDeviceInfo *device_info)
 {
   device_info->device   = NULL;
+  device_info->display  = NULL;
   device_info->mode     = GDK_MODE_DISABLED;
   device_info->num_axes = 0;
   device_info->axes     = NULL;
@@ -237,8 +238,8 @@ gimp_device_info_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_MODE:
-      if (device_info->device)
-        gdk_device_set_mode (device_info->device, g_value_get_enum (value));
+      if (device)
+        gdk_device_set_mode (device, g_value_get_enum (value));
       else
         device_info->mode = g_value_get_enum (value);
       break;
@@ -423,29 +424,28 @@ GimpDeviceInfo *
 gimp_device_info_new (Gimp        *gimp,
                       const gchar *name)
 {
-  GimpDeviceInfo *device_info;
-
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (name != NULL, NULL);
 
-  device_info = g_object_new (GIMP_TYPE_DEVICE_INFO,
-                              "name", name,
-                              "gimp", gimp,
-                              NULL);
-
-  return device_info;
+  return g_object_new (GIMP_TYPE_DEVICE_INFO,
+                       "name", name,
+                       "gimp", gimp,
+                       NULL);
 }
 
 GimpDeviceInfo *
 gimp_device_info_set_from_device (GimpDeviceInfo *device_info,
-                                  GdkDevice      *device)
+                                  GdkDevice      *device,
+                                  GdkDisplay     *display)
 {
   g_return_val_if_fail (GIMP_IS_DEVICE_INFO (device_info), NULL);
   g_return_val_if_fail (GDK_IS_DEVICE (device), NULL);
+  g_return_val_if_fail (GDK_IS_DISPLAY (display), NULL);
 
   g_object_set_data (G_OBJECT (device), GIMP_DEVICE_INFO_DATA_KEY, device_info);
 
   device_info->device     = device;
+  device_info->display    = display;
 
   device_info->mode       = device->mode;
 
@@ -481,7 +481,7 @@ gimp_device_info_changed_by_device (GdkDevice *device)
 
   g_return_if_fail (GDK_IS_DEVICE (device));
 
-  device_info = g_object_get_data (G_OBJECT (device), GIMP_DEVICE_INFO_DATA_KEY);
+  device_info = gimp_device_info_get_by_device (device);
 
   if (device_info)
     gimp_device_info_changed (device_info);

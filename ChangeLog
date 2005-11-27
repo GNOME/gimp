@@ -1,5 +1,20 @@
 2005-11-27  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpdeviceinfo.[ch]: added GdkDisplay member since
+	there is no way fo figure the display a GdkDevice exists on.
+	Minor cleanups.
+
+	* app/widgets/gimpdevices.[ch]: connect to the GdkDeviceManager
+	and add input devices when displays are opened. Added API to get
+	the GimpContainer of devices.
+
+	* app/widgets/gimpdevicestatus.[ch]: don't just show the devices
+	of the default display. Instead get the device container from the
+	new API above and update the GUI when devices are added/removed.
+	Cleaned up the whole file quite a bit.
+
+2005-11-27  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpdeviceinfo.c (gimp_device_info_get_property):
 	use gtk_accelerator_name() instead of serializing the accelerator
 	manually.

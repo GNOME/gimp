@@ -39,18 +39,17 @@ typedef struct _GimpDeviceStatusClass GimpDeviceStatusClass;
 
 struct _GimpDeviceStatus
 {
-  GimpEditor             parent_instance;
+  GimpEditor  parent_instance;
 
-  Gimp                  *gimp;
-  GdkDevice             *current_device;
+  Gimp       *gimp;
+  GdkDevice  *current_device;
 
-  gint                   num_devices;
-  GimpDeviceStatusEntry *entries;
+  GList      *devices;
 
-  GtkWidget             *table;
+  GtkWidget  *vbox;
 
-  GtkWidget             *save_button;
-  GtkWidget             *edit_button;
+  GtkWidget  *save_button;
+  GtkWidget  *edit_button;
 };
 
 struct _GimpDeviceStatusClass
