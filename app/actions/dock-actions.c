@@ -115,7 +115,14 @@ dock_actions_update (GimpActionGroup *group,
       SET_VISIBLE ("dock-auto-follow-active", FALSE);
     }
 
-  window_actions_update (group, toplevel);
+  if (GIMP_IS_DOCK (toplevel))
+    {
+      /*  update the window actions only in the context of their
+       *  own window (not in the context of some display or NULL)
+       *  (see view-actions.c)
+       */
+      window_actions_update (group, toplevel);
+    }
 
 #undef SET_ACTIVE
 #undef SET_VISIBLE

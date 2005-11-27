@@ -457,8 +457,6 @@ view_actions_setup (GimpActionGroup *group)
                                       G_N_ELEMENTS (view_scroll_vertical_actions),
                                       G_CALLBACK (view_scroll_vertical_cmd_callback));
 
-  window_actions_setup (group, GIMP_HELP_VIEW_CHANGE_SCREEN);
-
   /*  connect "activate" of view-zoom-other manually so it can be
    *  selected even if it's the active item of the radio group
    */
@@ -473,6 +471,17 @@ view_actions_setup (GimpActionGroup *group)
                            group, 0);
   view_actions_check_type_notify (GIMP_DISPLAY_CONFIG (group->gimp->config),
                                   NULL, group);
+
+  if (GIMP_IS_DISPLAY (group->user_data) ||
+      GIMP_IS_GIMP (group->user_data))
+    {
+      /*  add window actions only if the context of the group is
+       *  the display itself or the global popup (not if the context
+       *  is a dock)
+       *  (see dock-actions.c)
+       */
+      window_actions_setup (group, GIMP_HELP_VIEW_CHANGE_SCREEN);
+    }
 }
 
 void
@@ -576,7 +585,12 @@ view_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("view-fullscreen",  gdisp);
   SET_ACTIVE    ("view-fullscreen",  gdisp && fullscreen);
 
-  window_actions_update (group, gdisp ? gdisp->shell : NULL);
+  if (GIMP_IS_DISPLAY (group->user_data) ||
+      GIMP_IS_GIMP (group->user_data))
+    {
+      /*  see view_actions_setup()  */
+      window_actions_update (group, gdisp ? gdisp->shell : NULL);
+    }
 
 #undef SET_ACTIVE
 #undef SET_VISIBLE

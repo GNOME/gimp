@@ -1,3 +1,20 @@
+2005-11-27  Michael Natterer  <mitch@gimp.org>
+
+	Apparently, there was a reason for implementing the window actions
+	separately for views and docks, fixed the bugs resulting from the
+	merge:
+
+	* app/actions/dock-actions.c (dock_actions_update): only update
+	the dock actions if the update function is called in the context
+	of a dock (not in the context of an image window). Fixes docks
+	jumping to other screens on any action on an image window on that
+	screen.
+
+	* app/actions/view-actions.c (view_actions_setup): add the window
+	actions only to action groups that live in an image window or
+	global popup ui manager (not to action groups that belong to a
+	dock or dockable). Prevents bugs similar to the one above.
+
 2005-11-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/menus/window-menu.c (window_menu_display_opened,closed):
