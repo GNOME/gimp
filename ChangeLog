@@ -1,5 +1,11 @@
 2005-11-27  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpdeviceinfo.c (gimp_device_info_get_property):
+	use gtk_accelerator_name() instead of serializing the accelerator
+	manually.
+
+2005-11-27  Michael Natterer  <mitch@gimp.org>
+
 	Apparently, there was a reason for implementing the window actions
 	separately for views and docks, fixed the bugs resulting from the
 	merge:

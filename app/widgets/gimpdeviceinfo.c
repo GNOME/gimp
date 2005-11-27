@@ -389,24 +389,13 @@ gimp_device_info_get_property (GObject    *object,
 
             if (keyval)
               {
-                /* FIXME: integrate this back with menus_install_accelerator */
-                gchar  accel[64];
-                gchar  t2[2];
+                gchar *accel;
                 gchar *escaped;
 
-                accel[0] = '\0';
-                if (modifiers & GDK_CONTROL_MASK)
-                  strcat (accel, "<control>");
-                if (modifiers & GDK_SHIFT_MASK)
-                  strcat (accel, "<shift>");
-                if (modifiers & GDK_MOD1_MASK)
-                  strcat (accel, "<alt>");
-
-                t2[0] = keyval;
-                t2[1] = '\0';
-                strcat (accel, t2);
-
+                accel = gtk_accelerator_name (keyval, modifiers);
                 escaped = g_strescape (accel, NULL);
+                g_free (accel);
+
                 g_value_set_string (&string_value, escaped);
                 g_free (escaped);
               }
