@@ -1,3 +1,10 @@
+2005-11-28  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/tools/gimprectangletool.c: don't crash when
+	user modifies width/height of nonexistent rectangle, and
+	make sure to disconnect option notify handlers in dispose.
+	Should fix bug #322396.
+
 2005-11-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpdeviceinfo.[ch]: added GdkDisplay member since

@@ -1219,10 +1219,13 @@ gimp_rectangle_tool_constructor (GObject *object)
 void
 gimp_rectangle_tool_dispose (GObject *object)
 {
+  GimpTool          *tool      = GIMP_TOOL (object);
   GimpRectangleTool *rectangle = GIMP_RECTANGLE_TOOL (object);
   GtkWidget         *controls;
+  GObject           *options;
 
   g_object_get (rectangle, "controls", &controls, NULL);
+  options = G_OBJECT (tool->tool_info->tool_options);
 
   if (controls)
     {
@@ -1230,6 +1233,13 @@ gimp_rectangle_tool_dispose (GObject *object)
       g_free (controls);
       g_object_set (rectangle, "controls", NULL, NULL);
     }
+
+  g_signal_handlers_disconnect_by_func (options,
+                                        G_CALLBACK (gimp_rectangle_tool_notify_width),
+                                        rectangle);
+  g_signal_handlers_disconnect_by_func (options,
+                                        G_CALLBACK (gimp_rectangle_tool_notify_height),
+                                        rectangle);
 }
 
 gboolean
@@ -2621,6 +2631,10 @@ gimp_rectangle_tool_notify_width (GimpRectangleOptions *options,
   GimpCoords coords;
   gdouble    width  = gimp_rectangle_options_get_width (options);
 
+  /* make sure a rectangle exists */
+  if (! GIMP_TOOL (rectangle)->gdisp)
+    return;
+
   g_object_get (rectangle,
                 "x1", &rx1,
                 "y1", &ry1,
@@ -2652,6 +2666,9 @@ gimp_rectangle_tool_notify_height (GimpRectangleOptions *options,
   gint       rx1, rx2, ry1, ry2;
   GimpCoords coords;
   gdouble    height  = gimp_rectangle_options_get_height (options);
+
+  if (! GIMP_TOOL (rectangle)->gdisp)
+    return;
 
   g_object_get (rectangle,
                 "x1", &rx1,
