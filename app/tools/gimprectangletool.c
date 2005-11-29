@@ -1240,6 +1240,9 @@ gimp_rectangle_tool_dispose (GObject *object)
   g_signal_handlers_disconnect_by_func (options,
                                         G_CALLBACK (gimp_rectangle_tool_notify_height),
                                         rectangle);
+  g_signal_handlers_disconnect_by_func (options,
+                                        G_CALLBACK (gimp_rectangle_tool_notify_aspect),
+                                        rectangle);
 }
 
 gboolean
@@ -1290,8 +1293,8 @@ gimp_rectangle_tool_button_press (GimpTool        *tool,
                                   GdkModifierType  state,
                                   GimpDisplay     *gdisp)
 {
-  GimpRectangleTool *rectangle = GIMP_RECTANGLE_TOOL (tool);
-  GimpDrawTool      *draw_tool = GIMP_DRAW_TOOL (tool);
+  GimpRectangleTool    *rectangle = GIMP_RECTANGLE_TOOL (tool);
+  GimpDrawTool         *draw_tool = GIMP_DRAW_TOOL (tool);
 
   g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (tool));
 
@@ -1662,6 +1665,7 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
           break;
 
         case RECT_RESIZING_UPPER_RIGHT:
+        case RECT_RESIZING_TOP:
           if (inc_x == 0 || inc_y / inc_x > aspect)
             x2 = rx1 + (ry2 - y1) / aspect + .5;
           else
@@ -1669,6 +1673,7 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
           break;
 
         case RECT_RESIZING_LOWER_LEFT:
+        case RECT_RESIZING_LEFT:
           if (inc_x == 0 || inc_y / inc_x > aspect)
             x1 = rx2 - (y2 - ry1) / aspect + .5;
           else
@@ -1676,6 +1681,8 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
           break;
 
         case RECT_RESIZING_LOWER_RIGHT:
+        case RECT_RESIZING_RIGHT:
+        case RECT_RESIZING_BOTTOM:
           if (inc_x == 0 || inc_y / inc_x > aspect)
             x2 = rx1 + (y2 - ry1) / aspect + .5;
           else
@@ -2485,18 +2492,26 @@ gimp_rectangle_tool_update_options (GimpRectangleTool *rectangle,
   GimpSizeEntry        *entry;
   gint                  x1, y1, x2, y2;
   GimpRectangleOptions *options;
+  gboolean              fixed_width;
+  gboolean              fixed_height;
+  gboolean              fixed_aspect;
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   g_object_get (rectangle,
-      "dimensions-entry", &entry,
-      "x1", &x1,
-      "y1", &y1,
-      "x2", &x2,
-      "y2", &y2,
-      NULL);
+                "dimensions-entry", &entry,
+                "x1", &x1,
+                "y1", &y1,
+                "x2", &x2,
+                "y2", &y2,
+                NULL);
 
   options = GIMP_RECTANGLE_OPTIONS (GIMP_TOOL (rectangle)->tool_info->tool_options);
+  g_object_get (options,
+                "new-fixed-width",  &fixed_width,
+                "new-fixed-height", &fixed_height,
+                "fixed-aspect",     &fixed_aspect,
+                NULL);
 
   width  = x2 - x1;
   height = y2 - y1;
@@ -2528,11 +2543,20 @@ gimp_rectangle_tool_update_options (GimpRectangleTool *rectangle,
                                    gimp_rectangle_tool_notify_aspect,
                                    rectangle);
 
-  g_object_set (options,
-                "width",  width,
-                "height", height,
-                "aspect", aspect,
-                NULL);
+  if (! fixed_width)
+    g_object_set (options,
+                  "width",  width,
+                  NULL);
+
+  if (! fixed_height)
+    g_object_set (options,
+                  "height", height,
+                  NULL);
+
+  if (! fixed_aspect)
+    g_object_set (options,
+                  "aspect", aspect,
+                  NULL);
 
   g_signal_handlers_unblock_by_func (options,
                                      gimp_rectangle_tool_notify_width,
@@ -2701,6 +2725,9 @@ gimp_rectangle_tool_notify_aspect (GimpRectangleOptions *options,
   gint       rx1, rx2, ry1, ry2;
   GimpCoords coords;
   gdouble    aspect  = gimp_rectangle_options_get_aspect (options);
+
+  if (! GIMP_TOOL (rectangle)->gdisp)
+    return;
 
   g_object_get (rectangle,
                 "x1", &rx1,

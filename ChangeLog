@@ -1,3 +1,11 @@
+2005-11-28  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/tools/gimprectangletool.c: handle fixed_width,
+	fixed_height, and fixed_aspect in a reasonable way.
+	Also don't crash when user modifies aspect of a 
+	nonexistent rectangle, and disconnect notify 
+	handler in dispose.
+	
 2005-11-30  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpeditor.c (gimp_editor_add_button)
