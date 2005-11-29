@@ -13,15 +13,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.HEAD.mk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-05 10:47+0200\n"
-"PO-Revision-Date: 2005-10-05 14:18+0200\n"
+"POT-Creation-Date: 2005-11-28 19:15+0100\n"
+"PO-Revision-Date: 2005-11-28 22:31+0100\n"
 "Last-Translator: Vladimir Stefanov <vladoboss@mt.net.mk>\n"
 "Language-Team: Macedonian <mkde-l10n@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural= n==1 || n%10==1 ? 0 : 1\n"
-"X-Generator: KBabel 1.10.1\n"
+"X-Generator: KBabel 1.10.2\n"
 
 #: ../libgimp/gimpbrushmenu.c:140
 msgid "Brush Selection"
@@ -250,42 +250,45 @@ msgstr "по датум"
 msgid "by type"
 msgstr "по тип"
 
-#: ../libgimp/gimpprocbrowserdialog.c:411
-msgid "Searching by name - please wait"
-msgstr "Пребарувам по име - ве молам почекајте"
+#: ../libgimp/gimpprocbrowserdialog.c:408
+msgid "Searching"
+msgstr "Барам"
 
-#: ../libgimp/gimpprocbrowserdialog.c:431
-msgid "Searching by description - please wait"
-msgstr "Пребарувам по опис - ве молам почекајте"
+#: ../libgimp/gimpprocbrowserdialog.c:419
+msgid "Searching by name"
+msgstr "Пребарувам по име"
 
-#: ../libgimp/gimpprocbrowserdialog.c:439
-msgid "Searching by help - please wait"
-msgstr "Пребарувам по помош - ве молам почекајте"
+#: ../libgimp/gimpprocbrowserdialog.c:440
+msgid "Searching by description"
+msgstr "Пребарувам по опис"
 
 #: ../libgimp/gimpprocbrowserdialog.c:447
-msgid "Searching by author - please wait"
-msgstr "Пребарувам по автор - ве молам почекајте"
+msgid "Searching by help"
+msgstr "Пребарувам според помош"
 
-#: ../libgimp/gimpprocbrowserdialog.c:455
-msgid "Searching by copyright - please wait"
-msgstr "Пребарувам по авторски права - ве молам почекајте"
+#: ../libgimp/gimpprocbrowserdialog.c:454
+msgid "Searching by author"
+msgstr "Пребарувам по автор"
 
-#: ../libgimp/gimpprocbrowserdialog.c:463
-msgid "Searching by date - please wait"
-msgstr "Пребарувам по датум - ве молам почекајте"
+#: ../libgimp/gimpprocbrowserdialog.c:461
+msgid "Searching by copyright"
+msgstr "Пребарувам по авторски права"
 
-#: ../libgimp/gimpprocbrowserdialog.c:471
-msgid "Searching by type - please wait"
-msgstr "Пребарувам по тип - ве молам почекајте"
+#: ../libgimp/gimpprocbrowserdialog.c:468
+msgid "Searching by date"
+msgstr "Пребарувам по датум"
 
-#: ../libgimp/gimpprocbrowserdialog.c:479
-msgid "Searching - please wait"
-msgstr "Пребарувам - ве молам почекајте"
+#: ../libgimp/gimpprocbrowserdialog.c:475
+msgid "Searching by type"
+msgstr "Пребарувам по тип"
 
-#: ../libgimp/gimpprocbrowserdialog.c:487
+#: ../libgimp/gimpprocbrowserdialog.c:485
 #, c-format
-msgid "%d Procedures"
-msgstr "%d Процедури"
+msgid "%d procedure"
+msgid_plural "%d procedures"
+msgstr[0] "%d Процедура"
+msgstr[1] "%d Процедури"
+msgstr[2] "%d Процедури"
 
 #: ../libgimp/gimpprocbrowserdialog.c:494
 msgid "No matches for your query"
@@ -299,7 +302,8 @@ msgstr[0] "%d процедура се совпадна со вашето бар�
 msgstr[1] "%d процедури се совпаднаа со вашето барање"
 msgstr[2] "%d процедури се совпаднаа со вашето барање"
 
-#: ../libgimp/gimpprocbrowserdialog.c:547
+#. count label
+#: ../libgimp/gimpprocbrowserdialog.c:547 ../libgimpwidgets/gimpbrowser.c:145
 msgid "No matches"
 msgstr "Нема совпаѓања"
 
@@ -668,52 +672,55 @@ msgid "Temporary Procedure"
 msgstr "Привремена процедура"
 
 # bug: plural-forms
-#: ../libgimpbase/gimpmemsize.c:177
+#: ../libgimpbase/gimpmemsize.c:180
 #, c-format
-msgid "%d Bytes"
-msgstr "%d Бајтови"
+msgid "%d Byte"
+msgid_plural "%d Bytes"
+msgstr[0] "%d Бајт"
+msgstr[1] "%d Бајти"
+msgstr[2] "%d Бајтови"
 
-#: ../libgimpbase/gimpmemsize.c:182
+#: ../libgimpbase/gimpmemsize.c:186
 #, c-format
 msgid "%.2f KB"
 msgstr "%.2f KB"
 
-#: ../libgimpbase/gimpmemsize.c:186
+#: ../libgimpbase/gimpmemsize.c:190
 #, c-format
 msgid "%.1f KB"
 msgstr "%.1f KB"
 
-#: ../libgimpbase/gimpmemsize.c:190
+#: ../libgimpbase/gimpmemsize.c:194
 #, c-format
 msgid "%d KB"
 msgstr "%d KB"
 
-#: ../libgimpbase/gimpmemsize.c:197
+#: ../libgimpbase/gimpmemsize.c:201
 #, c-format
 msgid "%.2f MB"
 msgstr "%.2f MB"
 
-#: ../libgimpbase/gimpmemsize.c:201
+#: ../libgimpbase/gimpmemsize.c:205
 #, c-format
 msgid "%.1f MB"
 msgstr "%.1f MB"
 
-#: ../libgimpbase/gimpmemsize.c:205
+#: ../libgimpbase/gimpmemsize.c:209
 #, c-format
 msgid "%d MB"
 msgstr "%d MB"
 
-#: ../libgimpbase/gimpmemsize.c:212
+#: ../libgimpbase/gimpmemsize.c:216
 #, c-format
 msgid "%.2f GB"
 msgstr "%.2f GB"
 
-#: ../libgimpbase/gimpmemsize.c:216
+#: ../libgimpbase/gimpmemsize.c:220
 #, c-format
 msgid "%.1f GB"
 msgstr "%.1f GB"
 
-#: ../libgimpbase/gimpmemsize.c:220
+#: ../libgimpbase/gimpmemsize.c:224
 #, c-format
 msgid "%d GB"
 msgstr "%d GB"
@@ -892,36 +899,26 @@ msgstr "Неправилен UTF-8 збор"
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Грешка при обработката на „%s“ во %d. редот: %s"
 
-#: ../libgimpmodule/gimpmodule.c:180
-#, c-format
-msgid "Loading module: '%s'\n"
-msgstr "Вчитувам модул: „%s“\n"
-
-#: ../libgimpmodule/gimpmodule.c:197 ../libgimpmodule/gimpmodule.c:216
-#: ../libgimpmodule/gimpmodule.c:330 ../libgimpmodule/gimpmodule.c:358
-#: ../libgimpmodule/gimpmodule.c:470
+#: ../libgimpmodule/gimpmodule.c:183 ../libgimpmodule/gimpmodule.c:201
+#: ../libgimpmodule/gimpmodule.c:310 ../libgimpmodule/gimpmodule.c:337
+#: ../libgimpmodule/gimpmodule.c:448
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Грешка при вчитувањето на модулот '%s': %s"
 
-#: ../libgimpmodule/gimpmodule.c:286
-#, c-format
-msgid "Skipping module: '%s'\n"
-msgstr "Прескoкнувам модул: '%s'\n"
-
-#: ../libgimpmodule/gimpmodule.c:426
+#: ../libgimpmodule/gimpmodule.c:405
 msgid "Module error"
 msgstr "Грешка на модулот"
 
-#: ../libgimpmodule/gimpmodule.c:427
+#: ../libgimpmodule/gimpmodule.c:406
 msgid "Loaded"
 msgstr "Вчитан"
 
-#: ../libgimpmodule/gimpmodule.c:428
+#: ../libgimpmodule/gimpmodule.c:407
 msgid "Load failed"
 msgstr "Неуспешно вчитување"
 
-#: ../libgimpmodule/gimpmodule.c:429
+#: ../libgimpmodule/gimpmodule.c:408
 msgid "Not loaded"
 msgstr "Не е вчитано"
 
@@ -969,19 +966,19 @@ msgstr "Б_ела"
 msgid "Scales"
 msgstr "Размери"
 
-#: ../libgimpwidgets/gimpcolorselection.c:214
+#: ../libgimpwidgets/gimpcolorselection.c:218
 msgid "Current:"
 msgstr "Тековно:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:236
+#: ../libgimpwidgets/gimpcolorselection.c:240
 msgid "Old:"
 msgstr "Старо:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:281
+#: ../libgimpwidgets/gimpcolorselection.c:294
 msgid "Hexadecimal color notation as used in HTML and CSS"
 msgstr "Хексадецимално обележување на боја како што се користи во HTML и CSS"
 
-#: ../libgimpwidgets/gimpcolorselection.c:286
+#: ../libgimpwidgets/gimpcolorselection.c:299
 msgid "HTML _notation:"
 msgstr "HTML _обележување:"
 
@@ -1034,10 +1031,13 @@ msgstr "Провери стил"
 msgid "_Preview"
 msgstr "Пре_глед"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1868
+#: ../libgimpwidgets/gimppropwidgets.c:1872
 #, c-format
-msgid "This text input field is limited to %d characters."
-msgstr "Ова поле за внесување на текст е ограничено на %d карактери."
+msgid "This text input field is limited to %d character."
+msgid_plural "This text input field is limited to %d characters."
+msgstr[0] "Ова поле за внесување на текст е ограничено на %d карактер."
+msgstr[1] "Ова поле за внесување на текст е ограничено на %d карактери."
+msgstr[2] "Ова поле за внесување на текст е ограничено на %d карактери."
 
 #: ../libgimpwidgets/gimpresolutionentry.c:382
 #, c-format
