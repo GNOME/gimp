@@ -12,33 +12,28 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.HEAD.mk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-05 10:53+0200\n"
-"PO-Revision-Date: 2005-10-05 15:22+0200\n"
+"POT-Creation-Date: 2005-11-28 19:22+0100\n"
+"PO-Revision-Date: 2005-11-28 22:43+0100\n"
 "Last-Translator: Vladimir Stefanov <vladoboss@mt.net.mk>\n"
 "Language-Team: Macedonian <mkde-l10n@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.10.1\n"
+"X-Generator: KBabel 1.10.2\n"
 
-#: ../plug-ins/script-fu/script-fu-console.c:132
-#: ../plug-ins/script-fu/script-fu-text-console.c:67
-msgid "Script-Fu console mode allows only interactive invocation"
-msgstr "Скрипт_Фу конзолата дозволува само интерактивно користење"
-
-#: ../plug-ins/script-fu/script-fu-console.c:165
+#: ../plug-ins/script-fu/script-fu-console.c:144
 msgid "Script-Fu Console"
 msgstr "Скрипт-Фу Конзола"
 
-#: ../plug-ins/script-fu/script-fu-console.c:258
+#: ../plug-ins/script-fu/script-fu-console.c:237
 msgid "_Browse..."
 msgstr "_Прелистај..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:296
+#: ../plug-ins/script-fu/script-fu-console.c:275
 msgid "Script-Fu Procedure Browser"
 msgstr "Скрипт-Фу прелистувач на процедури"
 
-#: ../plug-ins/script-fu/script-fu-console.c:605
+#: ../plug-ins/script-fu/script-fu-console.c:584
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Скрипт-Фу проверката е дозволена само како не-интерактивен повик"
 
@@ -156,9 +151,9 @@ msgid "Script-Fu _Console"
 msgstr "Скрипт-Фу _Конзола"
 
 #: ../plug-ins/script-fu/script-fu.c:123 ../plug-ins/script-fu/script-fu.c:152
-#: ../plug-ins/script-fu/script-fu.c:315
-msgid "<Toolbox>/Xtns/Script-Fu"
-msgstr "<Toolbox>/Проширувања/Скрипт-Фу"
+#: ../plug-ins/script-fu/script-fu.c:313
+msgid "<Toolbox>/Xtns/Languages/Script-Fu"
+msgstr "<Toolbox>/Проширувања/Јазици/Скрипт-Фу"
 
 #: ../plug-ins/script-fu/script-fu.c:145
 msgid "_Start Server..."
@@ -213,18 +208,14 @@ msgid "Alpha to _Logo"
 msgstr "Алфа во _лого"
 
 #: ../plug-ins/script-fu/script-fu.c:295
-msgid "A_nimators"
-msgstr "А_ниматори"
-
-#: ../plug-ins/script-fu/script-fu.c:297
 msgid "_Decor"
 msgstr "_Декор"
 
-#: ../plug-ins/script-fu/script-fu.c:299
+#: ../plug-ins/script-fu/script-fu.c:297
 msgid "_Render"
 msgstr "_Исцртување"
 
-#: ../plug-ins/script-fu/script-fu.c:307
+#: ../plug-ins/script-fu/script-fu.c:305
 msgid "_Refresh Scripts"
 msgstr "_Освежи скрипти"
 
