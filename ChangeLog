@@ -1,3 +1,10 @@
+2005-11-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpeditor.c (gimp_editor_add_button)
+	(gimp_editor_add_action_button): set the "use-stock" property on
+	the created buttons so changes of the underlying action's name
+	don't affect change the button's icon to a string.
+
 2005-11-28  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/gimprectangletool.c: don't crash when

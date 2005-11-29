@@ -505,7 +505,9 @@ gimp_editor_add_button (GimpEditor  *editor,
 
   button_icon_size = gimp_editor_ensure_button_box (editor);
 
-  button = gimp_button_new ();
+  button = g_object_new (GIMP_TYPE_BUTTON,
+                         "use-stock", TRUE,
+                         NULL);
   gtk_box_pack_start (GTK_BOX (editor->button_box), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
@@ -650,7 +652,9 @@ gimp_editor_add_action_button (GimpEditor  *editor,
     }
   else
     {
-      button = gimp_button_new ();
+      button = g_object_new (GIMP_TYPE_BUTTON,
+                             "use-stock", TRUE,
+                             NULL);
     }
 
   gtk_action_connect_proxy (action, button);
