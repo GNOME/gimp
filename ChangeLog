@@ -3,7 +3,7 @@
 	* app/widgets/gimpeditor.c (gimp_editor_add_button)
 	(gimp_editor_add_action_button): set the "use-stock" property on
 	the created buttons so changes of the underlying action's name
-	don't affect change the button's icon to a string.
+	don't change the button's icon to a string.
 
 2005-11-28  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
