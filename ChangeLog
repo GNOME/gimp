@@ -1,3 +1,9 @@
+2005-11-30  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/common/screenshot.c: can't use gtk_main_quit as a
+	timeout function, since it doesn't return a value. Wrap it in a
+	function that returns FALSE instead. Fixes bug #322343.
+
 2005-11-28  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/gimprectangletool.c: handle fixed_width,

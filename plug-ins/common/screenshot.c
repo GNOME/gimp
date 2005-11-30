@@ -187,6 +187,7 @@ static gint32    shoot                (GdkScreen        *screen);
 static gboolean  shoot_dialog         (GdkScreen       **screen);
 static void      shoot_delay          (gint32            delay);
 static gboolean  shoot_delay_callback (gpointer          data);
+static gboolean  shoot_quit_timeout   (gpointer          data);
 
 
 /* Global Variables */
@@ -929,7 +930,7 @@ shoot_dialog (GdkScreen **screen)
      /*  A short timeout to give the server a chance to
       *  redraw the area that was obscured by our dialog.
       */
-     g_timeout_add (100, (GSourceFunc) gtk_main_quit, NULL);
+     g_timeout_add (100, shoot_quit_timeout, NULL);
      gtk_main ();
 
      if (shootvals.shoot_type != SHOOT_ROOT && ! shootvals.window_id)
@@ -964,4 +965,11 @@ shoot_delay_callback (gpointer data)
     gtk_main_quit ();
 
   return *seconds_left;
+}
+
+static gboolean
+shoot_quit_timeout (gpointer data)
+{
+  gtk_main_quit ();
+  return FALSE;
 }
