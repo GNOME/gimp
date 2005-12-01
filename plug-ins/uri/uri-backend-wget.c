@@ -171,8 +171,8 @@ uri_backend_load_image (const gchar  *uri,
 
       /*  The third line is "Connecting to..."  */
 
-      timeout_msg = g_strdup_printf (ngettext ("(timeout is %s second)",
-                                               "(timeout is %s seconds)",
+      timeout_msg = g_strdup_printf (ngettext ("(timeout is %d second)",
+                                               "(timeout is %d seconds)",
                                                TIMEOUT), TIMEOUT);
 
       gimp_progress_init_printf ("%s %s",
