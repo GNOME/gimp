@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-26 20:34+0100\n"
-"PO-Revision-Date: 2005-11-26 20:35+0100\n"
+"POT-Creation-Date: 2005-12-01 23:45+0100\n"
+"PO-Revision-Date: 2005-12-01 23:47+0100\n"
 "Last-Translator: Marcel Telka <marcel@telka.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -6253,66 +6253,66 @@ msgstr "_Zadržanie:"
 msgid "H_ue:"
 msgstr "O_dtieň:"
 
-#: ../plug-ins/common/screenshot.c:239
+#: ../plug-ins/common/screenshot.c:240
 msgid "_Screenshot..."
 msgstr "_Snímka obrazovky..."
 
-#: ../plug-ins/common/screenshot.c:423
+#: ../plug-ins/common/screenshot.c:424
 msgid "Error grabbing the pointer"
 msgstr "Chyba pri zachytávaní ukazovateľa"
 
-#: ../plug-ins/common/screenshot.c:602
+#: ../plug-ins/common/screenshot.c:603
 msgid "Importing screenshot"
 msgstr "Načítavanie snímky obrazovky"
 
-#: ../plug-ins/common/screenshot.c:609 ../plug-ins/common/screenshot.c:781
+#: ../plug-ins/common/screenshot.c:610 ../plug-ins/common/screenshot.c:782
 msgid "Screenshot"
 msgstr "Snímka obrazovky"
 
-#: ../plug-ins/common/screenshot.c:717
+#: ../plug-ins/common/screenshot.c:718
 msgid "Specified window not found"
 msgstr "Určené okno nebolo nájdené"
 
-#: ../plug-ins/common/screenshot.c:744
+#: ../plug-ins/common/screenshot.c:745
 msgid "There was an error taking the screenshot."
 msgstr "Nastala chyba pri získavaní snímky obrazovky."
 
-#: ../plug-ins/common/screenshot.c:790
+#: ../plug-ins/common/screenshot.c:791
 msgid "_Grab"
 msgstr "_Zosnímať"
 
-#: ../plug-ins/common/screenshot.c:812
+#: ../plug-ins/common/screenshot.c:813
 msgid "Take a screenshot of a single _window"
 msgstr "Získať snímku obrazovky jedného _okna"
 
-#: ../plug-ins/common/screenshot.c:833
+#: ../plug-ins/common/screenshot.c:834
 msgid "Include window decoration"
 msgstr "Zahrnúť dekoráciu okna"
 
-#: ../plug-ins/common/screenshot.c:848
+#: ../plug-ins/common/screenshot.c:849
 msgid "Take a screenshot of your _desktop"
 msgstr "Získať snímku obrazovky vašej _pracovnej plochy"
 
-#: ../plug-ins/common/screenshot.c:869
+#: ../plug-ins/common/screenshot.c:870
 msgid "Select a region"
 msgstr "Vybrať oblasť"
 
-#: ../plug-ins/common/screenshot.c:874
+#: ../plug-ins/common/screenshot.c:875
 msgid ""
 "If enabled, you can use the mouse to select a rectangular region of the "
 "screen."
 msgstr ""
 "Ak je povolené, môžete použiť myš na výber obdĺžnikovej oblasti obrazovky."
 
-#: ../plug-ins/common/screenshot.c:889
+#: ../plug-ins/common/screenshot.c:890
 msgid "W_ait"
 msgstr "Č_akať"
 
-#: ../plug-ins/common/screenshot.c:904
+#: ../plug-ins/common/screenshot.c:905
 msgid "seconds before grabbing"
 msgstr "sekúnd pred zosnímaním"
 
-#: ../plug-ins/common/screenshot.c:908
+#: ../plug-ins/common/screenshot.c:909
 msgid ""
 "The number of seconds to wait after selecting the window or region and "
 "actually taking the screenshot."
@@ -11526,11 +11526,11 @@ msgstr "wget skončil neočakávane na URI '%s'"
 #. The third line is "Connecting to..."
 #: ../plug-ins/uri/uri-backend-wget.c:174
 #, c-format
-msgid "(timeout is %s second)"
-msgid_plural "(timeout is %s seconds)"
-msgstr[0] "(časový limit je %s sekúnd)"
-msgstr[1] "(časový limit je %s sekunda)"
-msgstr[2] "(časový limit sú %s sekundy)"
+msgid "(timeout is %d second)"
+msgid_plural "(timeout is %d seconds)"
+msgstr[0] "(časový limit je %d sekúnd)"
+msgstr[1] "(časový limit je %d sekunda)"
+msgstr[2] "(časový limit sú %d sekundy)"
 
 #. The fourth line is either the network request or an error
 #: ../plug-ins/uri/uri-backend-wget.c:203
