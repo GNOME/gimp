@@ -105,7 +105,8 @@ uri_backend_load_image (const gchar  *uri,
 
       g_snprintf (timeout_str, sizeof (timeout_str), "%d", TIMEOUT);
 
-      execlp ("wget", "wget", "-e", "server-response=off", "-T", timeout_str,
+      execlp ("wget",
+              "wget", "-v", "-e", "server-response=off", "-T", timeout_str,
               uri, "-O", tmpname, NULL);
       g_set_error (error, 0, 0, "exec() failed: wget: %s", g_strerror (errno));
       _exit (127);
