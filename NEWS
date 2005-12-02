@@ -7,6 +7,20 @@ This is the development branch of The GIMP. Here's where all the shiny
 new stuff is being done that will one day be released as GIMP 2.4.
 
 
+Changes in GIMP 2.3.6
+=====================
+
+- even faster application startup
+- binary relocatibility on Linux by means of binreloc
+- be more verbose when being asked for it
+- select color index when picking from an indexed drawable
+- allow to migrate windows between displays
+- mouse-wheel scrolling and zooming in plug-in previews
+- added keyboard shortcuts ([ and ]) for changing the brush radius
+- improved Oilify plug-in
+- bug fixes and code cleanup
+
+
 Changes in GIMP 2.3.5
 =====================
 
