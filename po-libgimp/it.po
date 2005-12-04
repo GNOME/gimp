@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.16\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-18 08:15+0200\n"
-"PO-Revision-Date: 2005-10-16 12:11+0200\n"
+"POT-Creation-Date: 2005-12-04 22:10+0100\n"
+"PO-Revision-Date: 2005-12-04 22:11+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -277,16 +277,18 @@ msgstr "Ricerca in corso per data"
 msgid "Searching by type"
 msgstr "Ricerca in corso per tipo"
 
-#: ../libgimp/gimpprocbrowserdialog.c:484
+#: ../libgimp/gimpprocbrowserdialog.c:485
 #, c-format
-msgid "%d procedures"
-msgstr "%d procedure"
+msgid "%d procedure"
+msgid_plural "%d procedures"
+msgstr[0] "%d procedure"
+msgstr[1] "%d procedure"
 
-#: ../libgimp/gimpprocbrowserdialog.c:491
+#: ../libgimp/gimpprocbrowserdialog.c:494
 msgid "No matches for your query"
 msgstr "La ricerca non ha prodotto nessun riscontro"
 
-#: ../libgimp/gimpprocbrowserdialog.c:495
+#: ../libgimp/gimpprocbrowserdialog.c:498
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
@@ -294,7 +296,7 @@ msgstr[0] "Trovata la corrispondenza di %d procedura"
 msgstr[1] "Trovata la corrispondenza di %d procedure"
 
 #. count label
-#: ../libgimp/gimpprocbrowserdialog.c:544 ../libgimpwidgets/gimpbrowser.c:145
+#: ../libgimp/gimpprocbrowserdialog.c:547 ../libgimpwidgets/gimpbrowser.c:145
 msgid "No matches"
 msgstr "Nessun riscontro"
 
@@ -662,52 +664,54 @@ msgstr "Estensione di GIMP"
 msgid "Temporary Procedure"
 msgstr "Procedura temporanea"
 
-#: ../libgimpbase/gimpmemsize.c:177
+#: ../libgimpbase/gimpmemsize.c:180
 #, c-format
-msgid "%d Bytes"
-msgstr "%d Byte"
+msgid "%d Byte"
+msgid_plural "%d Bytes"
+msgstr[0] "%d Byte"
+msgstr[1] "%d Byte"
 
-#: ../libgimpbase/gimpmemsize.c:182
+#: ../libgimpbase/gimpmemsize.c:186
 #, c-format
 msgid "%.2f KB"
 msgstr "%.2f KB"
 
-#: ../libgimpbase/gimpmemsize.c:186
+#: ../libgimpbase/gimpmemsize.c:190
 #, c-format
 msgid "%.1f KB"
 msgstr "%.1f KB"
 
-#: ../libgimpbase/gimpmemsize.c:190
+#: ../libgimpbase/gimpmemsize.c:194
 #, c-format
 msgid "%d KB"
 msgstr "%d KB"
 
-#: ../libgimpbase/gimpmemsize.c:197
+#: ../libgimpbase/gimpmemsize.c:201
 #, c-format
 msgid "%.2f MB"
 msgstr "%.2f MB"
 
-#: ../libgimpbase/gimpmemsize.c:201
+#: ../libgimpbase/gimpmemsize.c:205
 #, c-format
 msgid "%.1f MB"
 msgstr "%.1f MB"
 
-#: ../libgimpbase/gimpmemsize.c:205
+#: ../libgimpbase/gimpmemsize.c:209
 #, c-format
 msgid "%d MB"
 msgstr "%d MB"
 
-#: ../libgimpbase/gimpmemsize.c:212
+#: ../libgimpbase/gimpmemsize.c:216
 #, c-format
 msgid "%.2f GB"
 msgstr "%.2f GB"
 
-#: ../libgimpbase/gimpmemsize.c:216
+#: ../libgimpbase/gimpmemsize.c:220
 #, c-format
 msgid "%.1f GB"
 msgstr "%.1f GB"
 
-#: ../libgimpbase/gimpmemsize.c:220
+#: ../libgimpbase/gimpmemsize.c:224
 #, c-format
 msgid "%d GB"
 msgstr "%d GB"
@@ -885,36 +889,26 @@ msgstr "stringa UTF-8 non valida"
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Errore durante l'elaborazione di '%s' alla riga  %d: %s"
 
-#: ../libgimpmodule/gimpmodule.c:180
-#, c-format
-msgid "Loading module: '%s'\n"
-msgstr "Caricamento modulo: '%s'\n"
-
-#: ../libgimpmodule/gimpmodule.c:197 ../libgimpmodule/gimpmodule.c:216
-#: ../libgimpmodule/gimpmodule.c:330 ../libgimpmodule/gimpmodule.c:358
-#: ../libgimpmodule/gimpmodule.c:470
+#: ../libgimpmodule/gimpmodule.c:183 ../libgimpmodule/gimpmodule.c:201
+#: ../libgimpmodule/gimpmodule.c:310 ../libgimpmodule/gimpmodule.c:337
+#: ../libgimpmodule/gimpmodule.c:448
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Modulo '%s' errore di caricamento: %s"
 
-#: ../libgimpmodule/gimpmodule.c:286
-#, c-format
-msgid "Skipping module: '%s'\n"
-msgstr "Ignorato modulo: '%s'\n"
-
-#: ../libgimpmodule/gimpmodule.c:426
+#: ../libgimpmodule/gimpmodule.c:405
 msgid "Module error"
 msgstr "Errore modulo"
 
-#: ../libgimpmodule/gimpmodule.c:427
+#: ../libgimpmodule/gimpmodule.c:406
 msgid "Loaded"
 msgstr "Caricato"
 
-#: ../libgimpmodule/gimpmodule.c:428
+#: ../libgimpmodule/gimpmodule.c:407
 msgid "Load failed"
 msgstr "Caricamento fallito"
 
-#: ../libgimpmodule/gimpmodule.c:429
+#: ../libgimpmodule/gimpmodule.c:408
 msgid "Not loaded"
 msgstr "Non caricato"
 
@@ -1027,10 +1021,12 @@ msgstr "Controllo stile"
 msgid "_Preview"
 msgstr "Ante_prima"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1868
+#: ../libgimpwidgets/gimppropwidgets.c:1872
 #, c-format
-msgid "This text input field is limited to %d characters."
-msgstr "Questo campo di immissione testo è limitato a %d caratteri."
+msgid "This text input field is limited to %d character."
+msgid_plural "This text input field is limited to %d characters."
+msgstr[0] "Questo campo di immissione testo è limitato a %d carattere."
+msgstr[1] "Questo campo di immissione testo è limitato a %d caratteri."
 
 #: ../libgimpwidgets/gimpresolutionentry.c:382
 #, c-format

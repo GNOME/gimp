@@ -6,32 +6,27 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-19 23:00+0200\n"
-"PO-Revision-Date: 2005-10-19 23:07+0200\n"
+"POT-Creation-Date: 2005-12-04 22:18+0100\n"
+"PO-Revision-Date: 2005-12-04 23:47+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../plug-ins/script-fu/script-fu-console.c:132
-#: ../plug-ins/script-fu/script-fu-text-console.c:67
-msgid "Script-Fu console mode allows only interactive invocation"
-msgstr "La modalità console Script-Fu permette solo invocazioni interattive"
-
-#: ../plug-ins/script-fu/script-fu-console.c:165
+#: ../plug-ins/script-fu/script-fu-console.c:144
 msgid "Script-Fu Console"
 msgstr "Console Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:258
+#: ../plug-ins/script-fu/script-fu-console.c:237
 msgid "_Browse..."
 msgstr "_Naviga..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:296
+#: ../plug-ins/script-fu/script-fu-console.c:275
 msgid "Script-Fu Procedure Browser"
 msgstr "Navigatore delle procedure script-fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:605
+#: ../plug-ins/script-fu/script-fu-console.c:584
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 "La modalità di valutazione Script-Fu permette solo invocazioni non "
@@ -149,7 +144,7 @@ msgid "Script-Fu _Console"
 msgstr "_Console Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu.c:123 ../plug-ins/script-fu/script-fu.c:152
-#: ../plug-ins/script-fu/script-fu.c:315
+#: ../plug-ins/script-fu/script-fu.c:313
 msgid "<Toolbox>/Xtns/Languages/Script-Fu"
 msgstr "<Toolbox>/Xtns/Linguaggi/Script-Fu"
 
@@ -206,18 +201,14 @@ msgid "Alpha to _Logo"
 msgstr "Alfa a _logotipo"
 
 #: ../plug-ins/script-fu/script-fu.c:295
-msgid "A_nimators"
-msgstr "A_nimatori"
-
-#: ../plug-ins/script-fu/script-fu.c:297
 msgid "_Decor"
 msgstr "_Decorazioni"
 
-#: ../plug-ins/script-fu/script-fu.c:299
+#: ../plug-ins/script-fu/script-fu.c:297
 msgid "_Render"
 msgstr "_Render"
 
-#: ../plug-ins/script-fu/script-fu.c:307
+#: ../plug-ins/script-fu/script-fu.c:305
 msgid "_Refresh Scripts"
 msgstr "_Rinfresca gli scripts"
 
