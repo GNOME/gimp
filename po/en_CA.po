@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-06 14:18-0500\n"
+"POT-Creation-Date: 2005-12-04 01:13-0500\n"
 "PO-Revision-Date: 2005-09-06 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
@@ -259,7 +259,7 @@ msgid "Fonts"
 msgstr "Fonts"
 
 #: app/actions/actions.c:149 app/dialogs/dialogs.c:219
-#: app/widgets/gimpgradienteditor.c:294
+#: app/widgets/gimpgradienteditor.c:296
 msgid "Gradient Editor"
 msgstr "Gradient Editor"
 
@@ -946,19 +946,23 @@ msgstr "_Tip of the Day"
 msgid "_About"
 msgstr "_About"
 
-#: app/actions/dock-actions.c:42
+#: app/actions/dock-actions.c:43
 msgid "M_ove to Screen"
 msgstr "M_ove to Screen"
 
-#: app/actions/dock-actions.c:46
+#: app/actions/dock-actions.c:47
 msgid "Close Dock"
 msgstr "Close Dock"
 
-#: app/actions/dock-actions.c:54
+#: app/actions/dock-actions.c:52 app/actions/view-actions.c:111
+msgid "_Open Display..."
+msgstr "_Open Display..."
+
+#: app/actions/dock-actions.c:60
 msgid "_Show Image Selection"
 msgstr "_Show Image Selection"
 
-#: app/actions/dock-actions.c:60
+#: app/actions/dock-actions.c:66
 msgid "Auto _Follow Active Image"
 msgstr "Auto _Follow Active Image"
 
@@ -1655,18 +1659,18 @@ msgid "Zoom In"
 msgstr "Zoom In"
 
 #: app/actions/gradient-editor-actions.c:311
-#: app/actions/palette-editor-actions.c:88 app/actions/view-actions.c:228
-#: app/actions/view-actions.c:239 app/actions/view-actions.c:240
+#: app/actions/palette-editor-actions.c:88 app/actions/view-actions.c:234
+#: app/actions/view-actions.c:245 app/actions/view-actions.c:246
 msgid "Zoom in"
 msgstr "Zoom in"
 
-#: app/actions/gradient-editor-actions.c:316 app/actions/view-actions.c:233
+#: app/actions/gradient-editor-actions.c:316 app/actions/view-actions.c:239
 msgid "Zoom Out"
 msgstr "Zoom Out"
 
 #: app/actions/gradient-editor-actions.c:317
-#: app/actions/palette-editor-actions.c:94 app/actions/view-actions.c:222
-#: app/actions/view-actions.c:234
+#: app/actions/palette-editor-actions.c:94 app/actions/view-actions.c:228
+#: app/actions/view-actions.c:240
 msgid "Zoom out"
 msgstr "Zoom out"
 
@@ -1679,75 +1683,75 @@ msgstr "Zoom All"
 msgid "Zoom all"
 msgstr "Zoom all"
 
-#: app/actions/gradient-editor-actions.c:605
+#: app/actions/gradient-editor-actions.c:607
 msgid "_Blending Function for Segment"
 msgstr "_Blending Function for Segment"
 
-#: app/actions/gradient-editor-actions.c:607
+#: app/actions/gradient-editor-actions.c:609
 msgid "Coloring _Type for Segment"
 msgstr "Colouring _Type for Segment"
 
-#: app/actions/gradient-editor-actions.c:610
+#: app/actions/gradient-editor-actions.c:612
 msgid "_Flip Segment"
 msgstr "_Flip Segment"
 
-#: app/actions/gradient-editor-actions.c:612
+#: app/actions/gradient-editor-actions.c:614
 msgid "_Replicate Segment..."
 msgstr "_Replicate Segment..."
 
-#: app/actions/gradient-editor-actions.c:614
+#: app/actions/gradient-editor-actions.c:616
 msgid "Split Segment at _Midpoint"
 msgstr "Split Segment at _Midpoint"
 
-#: app/actions/gradient-editor-actions.c:616
+#: app/actions/gradient-editor-actions.c:618
 msgid "Split Segment _Uniformly..."
 msgstr "Split Segment _Uniformly..."
 
-#: app/actions/gradient-editor-actions.c:618
+#: app/actions/gradient-editor-actions.c:620
 msgid "_Delete Segment"
 msgstr "_Delete Segment"
 
-#: app/actions/gradient-editor-actions.c:620
+#: app/actions/gradient-editor-actions.c:622
 msgid "Re-_center Segment's Midpoint"
 msgstr "Re-_centre Segment's Midpoint"
 
-#: app/actions/gradient-editor-actions.c:622
+#: app/actions/gradient-editor-actions.c:624
 msgid "Re-distribute _Handles in Segment"
 msgstr "Re-distribute _Handles in Segment"
 
-#: app/actions/gradient-editor-actions.c:627
+#: app/actions/gradient-editor-actions.c:629
 msgid "_Blending Function for Selection"
 msgstr "_Blending Function for Selection"
 
-#: app/actions/gradient-editor-actions.c:629
+#: app/actions/gradient-editor-actions.c:631
 msgid "Coloring _Type for Selection"
 msgstr "Colouring _Type for Selection"
 
-#: app/actions/gradient-editor-actions.c:632
+#: app/actions/gradient-editor-actions.c:634
 msgid "_Flip Selection"
 msgstr "_Flip Selection"
 
-#: app/actions/gradient-editor-actions.c:634
+#: app/actions/gradient-editor-actions.c:636
 msgid "_Replicate Selection..."
 msgstr "_Replicate Selection..."
 
-#: app/actions/gradient-editor-actions.c:636
+#: app/actions/gradient-editor-actions.c:638
 msgid "Split Segments at _Midpoints"
 msgstr "Split Segments at _Midpoints"
 
-#: app/actions/gradient-editor-actions.c:638
+#: app/actions/gradient-editor-actions.c:640
 msgid "Split Segments _Uniformly..."
 msgstr "Split Segments _Uniformly..."
 
-#: app/actions/gradient-editor-actions.c:640
+#: app/actions/gradient-editor-actions.c:642
 msgid "_Delete Selection"
 msgstr "_Delete Selection"
 
-#: app/actions/gradient-editor-actions.c:642
+#: app/actions/gradient-editor-actions.c:644
 msgid "Re-_center Midpoints in Selection"
 msgstr "Re-_centre Midpoints in Selection"
 
-#: app/actions/gradient-editor-actions.c:644
+#: app/actions/gradient-editor-actions.c:646
 msgid "Re-distribute _Handles in Selection"
 msgstr "Re-distribute _Handles in Selection"
 
@@ -2066,7 +2070,7 @@ msgstr "_Raise Views"
 msgid "Raise this image's displays"
 msgstr "Raise this image's displays"
 
-#: app/actions/images-actions.c:53 app/actions/view-actions.c:72
+#: app/actions/images-actions.c:53 app/actions/view-actions.c:73
 msgid "_New View"
 msgstr "_New View"
 
@@ -2365,11 +2369,11 @@ msgstr "New Colour from _BG"
 msgid "New color from BG"
 msgstr "New colour from BG"
 
-#: app/actions/palette-editor-actions.c:87 app/actions/view-actions.c:227
+#: app/actions/palette-editor-actions.c:87 app/actions/view-actions.c:233
 msgid "Zoom _In"
 msgstr "Zoom _In"
 
-#: app/actions/palette-editor-actions.c:93 app/actions/view-actions.c:221
+#: app/actions/palette-editor-actions.c:93 app/actions/view-actions.c:227
 msgid "Zoom _Out"
 msgstr "Zoom _Out"
 
@@ -2635,7 +2639,7 @@ msgstr "_Configure Colour and Opacity..."
 msgid "Toggle _Quick Mask"
 msgstr "Toggle _Quick Mask"
 
-#: app/actions/quick-mask-actions.c:54 app/display/gimpdisplayshell.c:948
+#: app/actions/quick-mask-actions.c:54 app/display/gimpdisplayshell.c:974
 msgid "Toggle Quick Mask"
 msgstr "Toggle Quick Mask"
 
@@ -3172,7 +3176,7 @@ msgstr "I_mport Path..."
 msgid "Path to Sele_ction"
 msgstr "Path to Sele_ction"
 
-#: app/actions/vectors-actions.c:163 app/tools/gimpvectortool.c:1905
+#: app/actions/vectors-actions.c:163 app/tools/gimpvectortool.c:1904
 msgid "Path to selection"
 msgstr "Path to selection"
 
@@ -3222,208 +3226,208 @@ msgid "Path to Selection"
 msgstr "Path to Selection"
 
 #: app/actions/vectors-commands.c:371 app/tools/gimpvectoroptions.c:205
-#: app/tools/gimpvectortool.c:1935 app/vectors/gimpvectors.c:237
+#: app/tools/gimpvectortool.c:1934 app/vectors/gimpvectors.c:237
 msgid "Stroke Path"
 msgstr "Stroke Path"
 
-#: app/actions/view-actions.c:64
+#: app/actions/view-actions.c:65
 msgid "_View"
 msgstr "_View"
 
-#: app/actions/view-actions.c:65
+#: app/actions/view-actions.c:66
 msgid "_Zoom"
 msgstr "_Zoom"
 
-#: app/actions/view-actions.c:66
+#: app/actions/view-actions.c:67
 msgid "_Padding Color"
 msgstr "_Padding Colour"
 
-#: app/actions/view-actions.c:68
+#: app/actions/view-actions.c:69
 msgid "Move to Screen"
 msgstr "Move to Screen"
 
-#: app/actions/view-actions.c:77
+#: app/actions/view-actions.c:78
 msgid "_Close"
 msgstr "_Close"
 
-#: app/actions/view-actions.c:82
+#: app/actions/view-actions.c:83
 msgid "_Fit Image in Window"
 msgstr "_Fit Image in Window"
 
-#: app/actions/view-actions.c:83
+#: app/actions/view-actions.c:84
 msgid "Fit image in window"
 msgstr "Fit image in window"
 
-#: app/actions/view-actions.c:88
+#: app/actions/view-actions.c:89
 msgid "Fit Image _to Window"
 msgstr "Fit Image _to Window"
 
-#: app/actions/view-actions.c:89
+#: app/actions/view-actions.c:90
 msgid "Fit image to window"
 msgstr "Fit image to window"
 
-#: app/actions/view-actions.c:94
+#: app/actions/view-actions.c:95
 msgid "Na_vigation Window"
 msgstr "Na_vigation Window"
 
-#: app/actions/view-actions.c:99
+#: app/actions/view-actions.c:100
 msgid "Display _Filters..."
 msgstr "Display _Filters..."
 
-#: app/actions/view-actions.c:104
+#: app/actions/view-actions.c:105
 msgid "Shrink _Wrap"
 msgstr "Shrink _Wrap"
 
-#: app/actions/view-actions.c:105
+#: app/actions/view-actions.c:106
 msgid "Shrink wrap"
 msgstr "Shrink wrap"
 
-#: app/actions/view-actions.c:113
+#: app/actions/view-actions.c:119
 msgid "_Dot for Dot"
 msgstr "_Dot for Dot"
 
-#: app/actions/view-actions.c:119
+#: app/actions/view-actions.c:125
 msgid "Show _Selection"
 msgstr "Show _Selection"
 
-#: app/actions/view-actions.c:125
+#: app/actions/view-actions.c:131
 msgid "Show _Layer Boundary"
 msgstr "Show _Layer Boundary"
 
-#: app/actions/view-actions.c:131
+#: app/actions/view-actions.c:137
 msgid "Show _Guides"
 msgstr "Show _Guides"
 
-#: app/actions/view-actions.c:137
+#: app/actions/view-actions.c:143
 msgid "S_how Grid"
 msgstr "S_how Grid"
 
-#: app/actions/view-actions.c:143
+#: app/actions/view-actions.c:149
 msgid "Show Sample Points"
 msgstr "Show Sample Points"
 
-#: app/actions/view-actions.c:149
+#: app/actions/view-actions.c:155
 msgid "Sn_ap to Guides"
 msgstr "Sn_ap to Guides"
 
-#: app/actions/view-actions.c:155
+#: app/actions/view-actions.c:161
 msgid "Sna_p to Grid"
 msgstr "Sna_p to Grid"
 
-#: app/actions/view-actions.c:161
+#: app/actions/view-actions.c:167
 msgid "Snap to _Canvas Edges"
 msgstr "Snap to _Canvas Edges"
 
-#: app/actions/view-actions.c:167
+#: app/actions/view-actions.c:173
 msgid "Snap t_o Active Path"
 msgstr "Snap t_o Active Path"
 
-#: app/actions/view-actions.c:173
+#: app/actions/view-actions.c:179
 msgid "Show _Menubar"
 msgstr "Show _Menubar"
 
-#: app/actions/view-actions.c:179
+#: app/actions/view-actions.c:185
 msgid "Show R_ulers"
 msgstr "Show R_ulers"
 
-#: app/actions/view-actions.c:185
+#: app/actions/view-actions.c:191
 msgid "Show Scroll_bars"
 msgstr "Show Scroll_bars"
 
-#: app/actions/view-actions.c:191
+#: app/actions/view-actions.c:197
 msgid "Show S_tatusbar"
 msgstr "Show S_tatusbar"
 
-#: app/actions/view-actions.c:197
+#: app/actions/view-actions.c:203
 msgid "Fullscr_een"
 msgstr "Fullscr_een"
 
-#: app/actions/view-actions.c:258
+#: app/actions/view-actions.c:264
 msgid "1_6:1  (1600%)"
 msgstr "1_6:1  (1600%)"
 
-#: app/actions/view-actions.c:263
+#: app/actions/view-actions.c:269
 msgid "_8:1  (800%)"
 msgstr "_8:1  (800%)"
 
-#: app/actions/view-actions.c:268
+#: app/actions/view-actions.c:274
 msgid "_4:1  (400%)"
 msgstr "_4:1  (400%)"
 
-#: app/actions/view-actions.c:273
+#: app/actions/view-actions.c:279
 msgid "_2:1  (200%)"
 msgstr "_2:1  (200%)"
 
-#: app/actions/view-actions.c:278
+#: app/actions/view-actions.c:284
 msgid "_1:1  (100%)"
 msgstr "_1:1  (100%)"
 
-#: app/actions/view-actions.c:279
+#: app/actions/view-actions.c:285
 msgid "Zoom 1:1"
 msgstr "Zoom 1:1"
 
-#: app/actions/view-actions.c:284
+#: app/actions/view-actions.c:290
 msgid "1:_2  (50%)"
 msgstr "1:_2  (50%)"
 
-#: app/actions/view-actions.c:289
+#: app/actions/view-actions.c:295
 msgid "1:_4  (25%)"
 msgstr "1:_4  (25%)"
 
-#: app/actions/view-actions.c:294
+#: app/actions/view-actions.c:300
 msgid "1:_8  (12.5%)"
 msgstr "1:_8  (12.5%)"
 
-#: app/actions/view-actions.c:299
+#: app/actions/view-actions.c:305
 msgid "1:1_6  (6.25%)"
 msgstr "1:1_6  (6.25%)"
 
-#: app/actions/view-actions.c:304
+#: app/actions/view-actions.c:310
 msgid "Othe_r..."
 msgstr "Othe_r..."
 
-#: app/actions/view-actions.c:312
+#: app/actions/view-actions.c:318
 msgid "From _Theme"
 msgstr "From _Theme"
 
-#: app/actions/view-actions.c:317
+#: app/actions/view-actions.c:323
 msgid "_Light Check Color"
 msgstr "_Light Check Colour"
 
-#: app/actions/view-actions.c:322
+#: app/actions/view-actions.c:328
 msgid "_Dark Check Color"
 msgstr "_Dark Check Colour"
 
-#: app/actions/view-actions.c:327
+#: app/actions/view-actions.c:333
 msgid "Select _Custom Color..."
 msgstr "Select _Custom Colour..."
 
-#: app/actions/view-actions.c:332
+#: app/actions/view-actions.c:338
 msgid "As in _Preferences"
 msgstr "As in _Preferences"
 
-#: app/actions/view-actions.c:619
+#: app/actions/view-actions.c:638
 #, c-format
 msgid "Othe_r (%s)..."
 msgstr "Othe_r (%s)..."
 
-#: app/actions/view-actions.c:628
+#: app/actions/view-actions.c:647
 #, c-format
 msgid "_Zoom (%s)"
 msgstr "_Zoom (%s)"
 
-#: app/actions/view-commands.c:579
+#: app/actions/view-commands.c:569
 msgid "Set Canvas Padding Color"
 msgstr "Set Canvas Padding Colour"
 
-#: app/actions/view-commands.c:581
+#: app/actions/view-commands.c:571
 msgid "Set Custom Canvas Padding Color"
 msgstr "Set Custom Canvas Padding Colour"
 
-#: app/actions/window-actions.c:65
+#: app/actions/window-actions.c:168
 #, c-format
-msgid "Screen %d (%s)"
-msgstr "Screen %d (%s)"
+msgid "Screen %s"
+msgstr "Screen %s"
 
 #: app/base/base-enums.c:23
 msgid "Smooth"
@@ -3506,7 +3510,7 @@ msgstr "Hue"
 msgid "Saturation"
 msgstr "Saturation"
 
-#: app/base/base-enums.c:121 app/tools/gimppaintoptions-gui.c:304
+#: app/base/base-enums.c:121 app/tools/gimppaintoptions-gui.c:305
 msgid "Color"
 msgstr "Colour"
 
@@ -3542,7 +3546,7 @@ msgstr "Grain merge"
 msgid "Color erase"
 msgstr "Colour erase"
 
-#: app/base/tile-swap.c:483
+#: app/base/tile-swap.c:487
 msgid ""
 "Unable to open swap file. The Gimp has run out of memory and cannot use the "
 "swap file. Some parts of your images may be corrupted. Try to save your work "
@@ -3583,7 +3587,7 @@ msgstr ""
 "There was an error parsing your '%s' file. Default values will be used. A "
 "backup of your configuration has been created at '%s'."
 
-#: app/config/gimprc.c:296 app/config/gimprc.c:309
+#: app/config/gimprc.c:296 app/config/gimprc.c:309 app/plug-in/plug-ins.c:141
 #, c-format
 msgid "Parsing '%s'\n"
 msgstr "Parsing '%s'\n"
@@ -4122,8 +4126,8 @@ msgstr ""
 "contains '%s' it will be replaced with the URL, or else the URL will be "
 "appended to the command with a space separating the two."
 
-#: app/config/gimprc-deserialize.c:135 app/core/gimp-modules.c:130
-#: app/core/gimp-units.c:160 app/gui/session.c:157
+#: app/config/gimprc-deserialize.c:135 app/core/gimp-modules.c:134
+#: app/core/gimp-units.c:164 app/gui/session.c:160
 #: app/plug-in/plug-in-rc.c:204
 msgid "fatal parse error"
 msgstr "fatal parse error"
@@ -4603,8 +4607,8 @@ msgstr "Select foreground"
 msgid "EEK: can't undo"
 msgstr "EEK: cannot undo"
 
-#: app/core/gimp-contexts.c:135 app/gui/session.c:246 app/menus/menus.c:405
-#: app/tools/gimp-tools.c:418 app/widgets/gimpdevices.c:229
+#: app/core/gimp-contexts.c:141 app/gui/session.c:252 app/menus/menus.c:413
+#: app/tools/gimp-tools.c:432 app/widgets/gimpdevices.c:258
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
 msgstr "Deleting \"%s\" failed: %s"
@@ -4909,7 +4913,7 @@ msgstr "Select by Colour"
 msgid "Could not delete '%s': %s"
 msgstr "Could not delete '%s': %s"
 
-#: app/core/gimpdatafactory.c:441 app/core/gimpdatafactory.c:614
+#: app/core/gimpdatafactory.c:435 app/core/gimpdatafactory.c:609
 #, c-format
 msgid ""
 "Failed to save data:\n"
@@ -4920,17 +4924,17 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/core/gimpdatafactory.c:516 app/core/gimpdatafactory.c:519
+#: app/core/gimpdatafactory.c:511 app/core/gimpdatafactory.c:514
 #: app/core/gimpitem.c:344 app/core/gimpitem.c:347
 msgid "copy"
 msgstr "copy"
 
-#: app/core/gimpdatafactory.c:528 app/core/gimpitem.c:356
+#: app/core/gimpdatafactory.c:523 app/core/gimpitem.c:356
 #, c-format
 msgid "%s copy"
 msgstr "%s copy"
 
-#: app/core/gimpdatafactory.c:755
+#: app/core/gimpdatafactory.c:750
 #, c-format
 msgid ""
 "Failed to load data:\n"
@@ -7513,7 +7517,7 @@ msgstr "Dark check colour"
 msgid "Custom color"
 msgstr "Custom colour"
 
-#: app/display/gimpdisplayshell.c:921
+#: app/display/gimpdisplayshell.c:947
 msgid "Zoom image when window size changes"
 msgstr "Zoom image when window size changes"
 
@@ -7623,7 +7627,7 @@ msgid "(clean)"
 msgstr "(clean)"
 
 #: app/display/gimpdisplayshell-title.c:328
-#: app/display/gimpdisplayshell-title.c:340 app/widgets/gimpactiongroup.c:806
+#: app/display/gimpdisplayshell-title.c:340 app/widgets/gimpactiongroup.c:808
 msgid "(none)"
 msgstr "(none)"
 
@@ -7675,7 +7679,7 @@ msgstr "Invalid character sequence in URI"
 msgid "GIMP Startup"
 msgstr "GIMP Startup"
 
-#: app/gui/themes.c:231 app/plug-in/plug-ins.c:271
+#: app/gui/themes.c:231 app/plug-in/plug-ins.c:274
 #, c-format
 msgid "Writing '%s'\n"
 msgstr "Writing '%s'\n"
@@ -7870,30 +7874,30 @@ msgstr "Resource configuration"
 #. query any plug-ins that have changed since we last wrote out
 #. *  the pluginrc file
 #.
-#: app/plug-in/plug-ins.c:151
+#: app/plug-in/plug-ins.c:154
 msgid "Querying new Plug-ins"
 msgstr "Querying new Plug-ins"
 
-#: app/plug-in/plug-ins.c:178
+#: app/plug-in/plug-ins.c:181
 #, c-format
 msgid "Querying plug-in: '%s'\n"
 msgstr "Querying plug-in: '%s'\n"
 
 #. initialize the plug-ins
-#: app/plug-in/plug-ins.c:186
+#: app/plug-in/plug-ins.c:189
 msgid "Initializing Plug-ins"
 msgstr "Initializing Plug-ins"
 
-#: app/plug-in/plug-ins.c:211
+#: app/plug-in/plug-ins.c:214
 #, c-format
 msgid "Initializing plug-in: '%s'\n"
 msgstr "Initializing plug-in: '%s'\n"
 
-#: app/plug-in/plug-ins.c:338
+#: app/plug-in/plug-ins.c:341
 msgid "Starting Extensions"
 msgstr "Starting Extensions"
 
-#: app/plug-in/plug-ins.c:345
+#: app/plug-in/plug-ins.c:348
 #, c-format
 msgid "Starting extension: '%s'\n"
 msgstr "Starting extension: '%s'\n"
@@ -8067,7 +8071,7 @@ msgstr "Number of grid lines"
 msgid "Grid line spacing"
 msgstr "Grid line spacing"
 
-#: app/tools/gimp-tools.c:312
+#: app/tools/gimp-tools.c:315
 msgid "This tool has no options."
 msgstr "This tool has no options."
 
@@ -8096,7 +8100,7 @@ msgstr "Offset:"
 msgid "Shape:"
 msgstr "Shape:"
 
-#: app/tools/gimpblendoptions.c:258 app/tools/gimppaintoptions-gui.c:485
+#: app/tools/gimpblendoptions.c:258 app/tools/gimppaintoptions-gui.c:489
 msgid "Repeat:"
 msgstr "Repeat:"
 
@@ -8333,20 +8337,20 @@ msgstr "Pick Mode  (%s)"
 msgid "Use info window  (%s)"
 msgstr "Use info window  (%s)"
 
-#: app/tools/gimpcolorpickertool.c:101
+#: app/tools/gimpcolorpickertool.c:103
 msgid "Color Picker"
 msgstr "Colour Picker"
 
-#: app/tools/gimpcolorpickertool.c:102
+#: app/tools/gimpcolorpickertool.c:104
 msgid "Pick colors from the image"
 msgstr "Pick colours from the image"
 
-#: app/tools/gimpcolorpickertool.c:103
+#: app/tools/gimpcolorpickertool.c:105
 msgid "C_olor Picker"
 msgstr "C_olour Picker"
 
 #. tool->gdisp->shell
-#: app/tools/gimpcolorpickertool.c:355
+#: app/tools/gimpcolorpickertool.c:382
 msgid "Color Picker Information"
 msgstr "Colour Picker Information"
 
@@ -8546,14 +8550,14 @@ msgid "_Free Select"
 msgstr "_Free Select"
 
 #: app/tools/gimpforegroundselectoptions.c:102
-msgid "Allow to select multiple disjoint objects"
-msgstr "Allow selection of multiple disjoint objects"
+msgid "Select a single contiguous area"
+msgstr "Select a single contiguous area"
 
-#: app/tools/gimpforegroundselectoptions.c:112
+#: app/tools/gimpforegroundselectoptions.c:111
 msgid "Size of the brush used for refinements"
 msgstr "Size of the brush used for refinements"
 
-#: app/tools/gimpforegroundselectoptions.c:117
+#: app/tools/gimpforegroundselectoptions.c:116
 msgid ""
 "Smaller values give a more accurate selection border but may introduce holes "
 "in the selection"
@@ -8561,48 +8565,49 @@ msgstr ""
 "Smaller values give a more accurate selection border but may introduce holes "
 "in the selection"
 
-#: app/tools/gimpforegroundselectoptions.c:128
+#: app/tools/gimpforegroundselectoptions.c:127
 msgid "Sensitivity for brightness component"
 msgstr "Sensitivity for brightness component"
 
-#: app/tools/gimpforegroundselectoptions.c:133
+#: app/tools/gimpforegroundselectoptions.c:132
 msgid "Sensitivity for red/green component"
 msgstr "Sensitivity for red/green component"
 
-#: app/tools/gimpforegroundselectoptions.c:138
+#: app/tools/gimpforegroundselectoptions.c:137
 msgid "Sensitivity for yellow/blue component"
 msgstr "Sensitivity for yellow/blue component"
 
-#: app/tools/gimpforegroundselectoptions.c:240
-msgid "Discontinuous"
-msgstr "Discontinuous"
+#. single / multiple objects
+#: app/tools/gimpforegroundselectoptions.c:238
+msgid "Contiguous"
+msgstr "Contiguous"
 
-#: app/tools/gimpforegroundselectoptions.c:246
+#: app/tools/gimpforegroundselectoptions.c:244
 msgid "Interactive refinement"
 msgstr "Interactive refinement"
 
-#: app/tools/gimpforegroundselectoptions.c:247
+#: app/tools/gimpforegroundselectoptions.c:245
 msgid "Mark background"
 msgstr "Mark background"
 
-#: app/tools/gimpforegroundselectoptions.c:248
+#: app/tools/gimpforegroundselectoptions.c:246
 msgid "Mark foreground"
 msgstr "Mark foreground"
 
-#: app/tools/gimpforegroundselectoptions.c:263
+#: app/tools/gimpforegroundselectoptions.c:261
 msgid "Small brush"
 msgstr "Small brush"
 
-#: app/tools/gimpforegroundselectoptions.c:271
+#: app/tools/gimpforegroundselectoptions.c:269
 msgid "Large brush"
 msgstr "Large brush"
 
-#: app/tools/gimpforegroundselectoptions.c:294
+#: app/tools/gimpforegroundselectoptions.c:292
 msgid "Smoothing:"
 msgstr "Smoothing:"
 
 #. granularity
-#: app/tools/gimpforegroundselectoptions.c:297
+#: app/tools/gimpforegroundselectoptions.c:295
 msgid "Color Sensitivity"
 msgstr "Colour Sensitivity"
 
@@ -8935,64 +8940,64 @@ msgstr "_Paintbrush"
 msgid "Mode:"
 msgstr "Mode:"
 
-#: app/tools/gimppaintoptions-gui.c:110 app/widgets/gimpbrushselect.c:201
+#: app/tools/gimppaintoptions-gui.c:119 app/widgets/gimpbrushselect.c:201
 #: app/widgets/gimplayertreeview.c:310
 msgid "Opacity:"
 msgstr "Opacity:"
 
-#: app/tools/gimppaintoptions-gui.c:127
+#: app/tools/gimppaintoptions-gui.c:128
 msgid "Brush:"
 msgstr "Brush:"
 
-#: app/tools/gimppaintoptions-gui.c:136 app/tools/gimppaintoptions-gui.c:461
+#: app/tools/gimppaintoptions-gui.c:138 app/tools/gimppaintoptions-gui.c:465
 msgid "Gradient:"
 msgstr "Gradient:"
 
-#: app/tools/gimppaintoptions-gui.c:172
+#: app/tools/gimppaintoptions-gui.c:174
 msgid "Incremental"
 msgstr "Incremental"
 
-#: app/tools/gimppaintoptions-gui.c:186
+#: app/tools/gimppaintoptions-gui.c:188
 msgid "Hard edge"
 msgstr "Hard edge"
 
-#: app/tools/gimppaintoptions-gui.c:227
+#: app/tools/gimppaintoptions-gui.c:229
 msgid "Pressure sensitivity"
 msgstr "Pressure sensitivity"
 
-#: app/tools/gimppaintoptions-gui.c:246
+#: app/tools/gimppaintoptions-gui.c:248
 msgid "Opacity"
 msgstr "Opacity"
 
-#: app/tools/gimppaintoptions-gui.c:260
+#: app/tools/gimppaintoptions-gui.c:262
 msgid "Hardness"
 msgstr "Hardness"
 
-#: app/tools/gimppaintoptions-gui.c:271
+#: app/tools/gimppaintoptions-gui.c:273
 msgid "Rate"
 msgstr "Rate"
 
-#: app/tools/gimppaintoptions-gui.c:286 app/tools/gimppaintoptions-gui.c:295
+#: app/tools/gimppaintoptions-gui.c:287 app/tools/gimppaintoptions-gui.c:296
 msgid "Size"
 msgstr "Size"
 
-#: app/tools/gimppaintoptions-gui.c:334
+#: app/tools/gimppaintoptions-gui.c:336
 msgid "Fade out"
 msgstr "Fade out"
 
-#: app/tools/gimppaintoptions-gui.c:354 app/tools/gimppaintoptions-gui.c:470
+#: app/tools/gimppaintoptions-gui.c:356 app/tools/gimppaintoptions-gui.c:474
 msgid "Length:"
 msgstr "Length:"
 
-#: app/tools/gimppaintoptions-gui.c:390
+#: app/tools/gimppaintoptions-gui.c:393
 msgid "Apply Jitter"
 msgstr "Apply Jitter"
 
-#: app/tools/gimppaintoptions-gui.c:407
+#: app/tools/gimppaintoptions-gui.c:410
 msgid "Amount:"
 msgstr "Amount:"
 
-#: app/tools/gimppaintoptions-gui.c:434
+#: app/tools/gimppaintoptions-gui.c:438
 msgid "Use color from gradient"
 msgstr "Use colour from gradient"
 
@@ -9066,24 +9071,24 @@ msgstr "Height"
 msgid "Aspect"
 msgstr "Aspect"
 
-#: app/tools/gimprectangletool.c:1822 app/tools/gimprectangletool.c:2249
+#: app/tools/gimprectangletool.c:1787 app/tools/gimprectangletool.c:2214
 msgid "Rectangle: "
 msgstr "Rectangle: "
 
-#: app/tools/gimprectangletool.c:2631
+#: app/tools/gimprectangletool.c:2613
 msgid "1 "
 msgstr "1 "
 
-#: app/tools/gimprectangletool.c:2632
+#: app/tools/gimprectangletool.c:2614
 msgid "2 "
 msgstr "2 "
 
-#: app/tools/gimprectangletool.c:2633 app/widgets/gimpcursorview.c:170
+#: app/tools/gimprectangletool.c:2615 app/widgets/gimpcursorview.c:170
 #: app/widgets/gimpcursorview.c:192
 msgid "X"
 msgstr "X"
 
-#: app/tools/gimprectangletool.c:2634 app/widgets/gimpcursorview.c:176
+#: app/tools/gimprectangletool.c:2616 app/widgets/gimpcursorview.c:176
 #: app/widgets/gimpcursorview.c:198
 msgid "Y"
 msgstr "Y"
@@ -9543,11 +9548,11 @@ msgstr "Click to open up the path."
 msgid "Click to make this node angular."
 msgstr "Click to make this node angular."
 
-#: app/tools/gimpvectortool.c:1762
+#: app/tools/gimpvectortool.c:1761
 msgid "Delete Anchors"
 msgstr "Delete Anchors"
 
-#: app/tools/gimpvectortool.c:1930
+#: app/tools/gimpvectortool.c:1929
 msgid "There is no active layer or channel to stroke to"
 msgstr "There is no active layer or channel to stroke to"
 
@@ -9583,10 +9588,6 @@ msgstr "Rotate Path"
 msgid "Transform Path"
 msgstr "Transform Path"
 
-#: app/vectors/gimpvectors.c:542
-msgid "Cannot stroke empty path."
-msgstr "Cannot stroke empty path."
-
 #: app/vectors/gimpvectors-import.c:287
 msgid "Import Paths"
 msgstr "Import Paths"
@@ -9609,7 +9610,7 @@ msgstr "No paths found in the buffer"
 msgid "Failed to import paths from '%s': %s"
 msgstr "Failed to import paths from '%s': %s"
 
-#: app/widgets/gimpactiongroup.c:803
+#: app/widgets/gimpactiongroup.c:805
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
@@ -9677,7 +9678,7 @@ msgid "Percentage of width of brush"
 msgstr "Percentage of width of brush"
 
 #: app/widgets/gimpbufferview.c:166 app/widgets/gimpbufferview.c:247
-#: app/widgets/gimpeditor.c:758
+#: app/widgets/gimpeditor.c:762
 msgid "(None)"
 msgstr "(None)"
 
@@ -10053,16 +10054,16 @@ msgstr "Revert"
 msgid "%s (read only)"
 msgstr "%s (read only)"
 
-#: app/widgets/gimpdevicestatus.c:281
+#: app/widgets/gimpdevicestatus.c:169
 msgid "Save device status"
 msgstr "Save device status"
 
-#: app/widgets/gimpdevicestatus.c:385
+#: app/widgets/gimpdevicestatus.c:477
 #, c-format
 msgid "Foreground: %d, %d, %d"
 msgstr "Foreground: %d, %d, %d"
 
-#: app/widgets/gimpdevicestatus.c:390
+#: app/widgets/gimpdevicestatus.c:482
 #, c-format
 msgid "Background: %d, %d, %d"
 msgstr "Background: %d, %d, %d"
@@ -10159,87 +10160,87 @@ msgstr "File Type"
 msgid "Extensions"
 msgstr "Extensions"
 
-#: app/widgets/gimpgradienteditor.c:399
+#: app/widgets/gimpgradienteditor.c:401
 msgid "Instant update"
 msgstr "Instant update"
 
-#: app/widgets/gimpgradienteditor.c:746
+#: app/widgets/gimpgradienteditor.c:762
 #, c-format
 msgid "Zoom factor: %d:1"
 msgstr "Zoom factor: %d:1"
 
-#: app/widgets/gimpgradienteditor.c:749
+#: app/widgets/gimpgradienteditor.c:765
 #, c-format
 msgid "Displaying [%0.6f, %0.6f]"
 msgstr "Displaying [%0.6f, %0.6f]"
 
-#: app/widgets/gimpgradienteditor.c:944
+#: app/widgets/gimpgradienteditor.c:980
 #, c-format
 msgid "Position: %0.6f"
 msgstr "Position: %0.6f"
 
-#: app/widgets/gimpgradienteditor.c:945
+#: app/widgets/gimpgradienteditor.c:981
 #, c-format
 msgid "RGB (%0.3f, %0.3f, %0.3f)"
 msgstr "RGB (%0.3f, %0.3f, %0.3f)"
 
-#: app/widgets/gimpgradienteditor.c:947
+#: app/widgets/gimpgradienteditor.c:983
 #, c-format
 msgid "HSV (%0.3f, %0.3f, %0.3f)"
 msgstr "HSV (%0.3f, %0.3f, %0.3f)"
 
-#: app/widgets/gimpgradienteditor.c:949
+#: app/widgets/gimpgradienteditor.c:985
 #, c-format
 msgid "Luminance: %0.3f    Opacity: %0.3f"
 msgstr "Luminance: %0.3f    Opacity: %0.3f"
 
-#: app/widgets/gimpgradienteditor.c:982 app/widgets/gimpgradienteditor.c:1017
+#: app/widgets/gimpgradienteditor.c:1018 app/widgets/gimpgradienteditor.c:1053
 #, c-format
 msgid "RGB (%d, %d, %d)"
 msgstr "RGB (%d, %d, %d)"
 
-#: app/widgets/gimpgradienteditor.c:990
+#: app/widgets/gimpgradienteditor.c:1026
 msgid "Foreground color set to:"
 msgstr "Foreground colour set to:"
 
-#: app/widgets/gimpgradienteditor.c:1022
+#: app/widgets/gimpgradienteditor.c:1058
 #, c-format
 msgid "(%0.3f, %0.3f, %0.3f)"
 msgstr "(%0.3f, %0.3f, %0.3f)"
 
-#: app/widgets/gimpgradienteditor.c:1026
+#: app/widgets/gimpgradienteditor.c:1062
 msgid "Background color set to:"
 msgstr "Background colour set to:"
 
-#: app/widgets/gimpgradienteditor.c:1229 app/widgets/gimpgradienteditor.c:1295
+#: app/widgets/gimpgradienteditor.c:1265 app/widgets/gimpgradienteditor.c:1331
 #, c-format
 msgid "%s%sDrag: move & compress"
 msgstr "%s%sDrag: move & compress"
 
-#: app/widgets/gimpgradienteditor.c:1235
+#: app/widgets/gimpgradienteditor.c:1271
 msgid "Drag: move"
 msgstr "Drag: move"
 
-#: app/widgets/gimpgradienteditor.c:1242 app/widgets/gimpgradienteditor.c:1256
-#: app/widgets/gimpgradienteditor.c:1270 app/widgets/gimpgradienteditor.c:1292
+#: app/widgets/gimpgradienteditor.c:1278 app/widgets/gimpgradienteditor.c:1292
+#: app/widgets/gimpgradienteditor.c:1306 app/widgets/gimpgradienteditor.c:1328
 #, c-format
 msgid "%s%sClick: extend selection"
 msgstr "%s%sClick: extend selection"
 
-#: app/widgets/gimpgradienteditor.c:1248 app/widgets/gimpgradienteditor.c:1262
+#: app/widgets/gimpgradienteditor.c:1284 app/widgets/gimpgradienteditor.c:1298
 msgid "Click: select"
 msgstr "Click: select"
 
-#: app/widgets/gimpgradienteditor.c:1276 app/widgets/gimpgradienteditor.c:1300
+#: app/widgets/gimpgradienteditor.c:1312 app/widgets/gimpgradienteditor.c:1336
 msgid "Click: select    Drag: move"
 msgstr "Click: select    Drag: move"
 
-#: app/widgets/gimpgradienteditor.c:1522 app/widgets/gimpgradienteditor.c:1530
+#: app/widgets/gimpgradienteditor.c:1558 app/widgets/gimpgradienteditor.c:1566
 #, c-format
 msgid "Handle position: %0.6f"
 msgstr "Handle position: %0.6f"
 
-#: app/widgets/gimpgradienteditor.c:1547
+#: app/widgets/gimpgradienteditor.c:1583
 #, c-format
 msgid "Distance: %0.6f"
 msgstr "Distance: %0.6f"
