@@ -301,6 +301,7 @@ animoptimize_SOURCES = \
 animoptimize_LDADD = \
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GLIB_LIBS)		\
 	$(RT_LIBS)		\
@@ -327,6 +328,7 @@ autocrop_SOURCES = \
 autocrop_LDADD = \
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GLIB_LIBS)		\
 	$(RT_LIBS)		\
@@ -338,6 +340,7 @@ autostretch_hsv_SOURCES = \
 autostretch_hsv_LDADD = \
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GLIB_LIBS)		\
 	$(RT_LIBS)		\
@@ -364,6 +367,7 @@ blur_SOURCES = \
 blur_LDADD = \
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GLIB_LIBS)		\
 	$(RT_LIBS)		\
@@ -405,6 +409,7 @@ c_astretch_SOURCES = \
 c_astretch_LDADD = \
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GLIB_LIBS)		\
 	$(RT_LIBS)		\
@@ -536,6 +541,7 @@ compressor_SOURCES = \
 compressor_LDADD = \
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GLIB_LIBS)		\
 	$(RT_LIBS)		\
@@ -937,6 +943,7 @@ gifload_SOURCES = \
 gifload_LDADD = \
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GLIB_LIBS)		\
 	$(RT_LIBS)		\
@@ -978,6 +985,7 @@ glob_SOURCES = \
 glob_LDADD = \
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GLIB_LIBS)		\
 	$(RT_LIBS)		\
@@ -1067,6 +1075,7 @@ guillotine_SOURCES = \
 guillotine_LDADD = \
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GLIB_LIBS)		\
 	$(RT_LIBS)		\
@@ -1335,6 +1344,7 @@ normalize_SOURCES = \
 normalize_LDADD = \
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GLIB_LIBS)		\
 	$(RT_LIBS)		\
@@ -1590,6 +1600,7 @@ psd_SOURCES = \
 psd_LDADD = \
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GLIB_LIBS)		\
 	$(RT_LIBS)		\
@@ -1692,6 +1703,7 @@ rotate_SOURCES = \
 rotate_LDADD = \
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GLIB_LIBS)		\
 	$(RT_LIBS)		\
@@ -1764,6 +1776,7 @@ semiflatten_SOURCES = \
 semiflatten_LDADD = \
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GLIB_LIBS)		\
 	$(RT_LIBS)		\
@@ -2049,6 +2062,7 @@ tiler_SOURCES = \
 tiler_LDADD = \
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GLIB_LIBS)		\
 	$(RT_LIBS)		\
@@ -2105,6 +2119,7 @@ vinvert_SOURCES = \
 vinvert_LDADD = \
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GLIB_LIBS)		\
 	$(RT_LIBS)		\
@@ -2161,6 +2176,7 @@ webbrowser_SOURCES = \
 webbrowser_LDADD = \
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GLIB_LIBS)		\
 	$(RT_LIBS)		\
@@ -2282,6 +2298,7 @@ zealouscrop_SOURCES = \
 zealouscrop_LDADD = \
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GLIB_LIBS)		\
 	$(RT_LIBS)		\

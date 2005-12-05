@@ -33,6 +33,7 @@ LDADD = \
 	$(libgimp)	\
 	$(libgimpcolor)	\
 	$(libgimpbase)	\
+	$(libgimpmath)	\
 	$(GLIB_LIBS)	\
 	$(RT_LIBS)	\
 	$(INTLLIBS)

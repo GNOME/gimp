@@ -116,6 +116,7 @@ foreach (sort keys %plugins) {
     } else {
         $libgimp .= "\$(libgimp)";
         $libgimp .= "\t\t\\\n\t\$(libgimpcolor)";
+        $libgimp .= "\t\t\\\n\t\$(libgimpmath)";
         $libgimp .= "\t\t\\\n\t\$(libgimpbase)";
     }
 

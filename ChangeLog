@@ -1,3 +1,13 @@
+2005-12-05  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/mkgen.pl
+	* plug-ins/faxg3/Makefile.am
+	* plug-ins/help/Makefile.am
+	* plug-ins/metadata/Makefile.am: workaround for libtool brokeness
+	on Linux (bug #314513 and bug #323085)
+
+	* plug-ins/common/Makefile.am: regenerated.
+
 2005-12-02  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/uri/uri-backend-wget.c (uri_backend_load_image): added
