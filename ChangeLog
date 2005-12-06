@@ -1,5 +1,11 @@
 2005-12-06  Sven Neumann  <sven@gimp.org>
 
+	* autogen.sh: applied a patch provided by Pierre-Paul Lavoie that
+	makes it easier to adapt autogen.sh to uncommon executable names
+	(bug #323341).
+
+2005-12-06  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpdrawablepreview.c (gimp_drawable_preview_destroy):
 	initialize all fields of the struct passed to gimp_set_data().
 

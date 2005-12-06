@@ -9,6 +9,11 @@
 # tools and you shouldn't use this script.  Just call ./configure
 # directly.
 
+ACLOCAL=aclocal
+AUTOCONF=autoconf
+AUTOHEADER=autoheader
+AUTOMAKE=automake
+LIBTOOLIZE=libtoolize
 
 PROJECT="GNU Image Manipulation Program"
 TEST_TYPE=-d
@@ -58,8 +63,8 @@ esac
 
 
 echo -n "checking for libtool >= $LIBTOOL_REQUIRED_VERSION ... "
-if (libtoolize --version) < /dev/null > /dev/null 2>&1; then
-   LIBTOOLIZE=libtoolize
+if ($LIBTOOLIZE --version) < /dev/null > /dev/null 2>&1; then
+   LIBTOOLIZE=$LIBTOOLIZE
 elif (glibtoolize --version) < /dev/null > /dev/null 2>&1; then
    LIBTOOLIZE=glibtoolize
 else
@@ -107,8 +112,8 @@ else
 fi
 
 echo -n "checking for autoconf >= $AUTOCONF_REQUIRED_VERSION ... "
-if (autoconf --version) < /dev/null > /dev/null 2>&1; then
-    VER=`autoconf --version \
+if ($AUTOCONF --version) < /dev/null > /dev/null 2>&1; then
+    VER=`$AUTOCONF --version \
          | grep -iw autoconf | sed "s/.* \([0-9.]*\)[-a-z0-9]*$/\1/"`
     check_version $VER $AUTOCONF_REQUIRED_VERSION
 else
@@ -128,6 +133,9 @@ if (automake-1.9 --version) < /dev/null > /dev/null 2>&1; then
 elif (automake-1.8 --version) < /dev/null > /dev/null 2>&1; then
    AUTOMAKE=automake-1.8
    ACLOCAL=aclocal-1.8
+elif ($AUTOMAKE --version) < /dev/null > /dev/null 2>&1; then
+   AUTOMAKE=$AUTOMAKE
+   ACLOCAL=$ACLOCAL
 else
     echo
     echo "  You must have automake $AUTOMAKE_REQUIRED_VERSION or newer installed to compile $PROJECT."
@@ -260,10 +268,10 @@ else
 fi
 
 # optionally feature autoheader
-(autoheader --version)  < /dev/null > /dev/null 2>&1 && autoheader || exit 1
+($AUTOHEADER --version)  < /dev/null > /dev/null 2>&1 && $AUTOHEADER || exit 1
 
 $AUTOMAKE --add-missing || exit $?
-autoconf || exit $?
+$AUTOCONF || exit $?
 
 glib-gettextize --force || exit $?
 intltoolize --force --automake || exit $?
