@@ -99,13 +99,14 @@ static void       edge                (GimpDrawable     *drawable);
 static gboolean   edge_dialog         (GimpDrawable     *drawable);
 static void       edge_preview_update (GimpPreview      *preview);
 
-static gint edge_detect  (const guchar *data);
-static gint prewitt      (const guchar *data);
-static gint gradient     (const guchar *data);
-static gint roberts      (const guchar *data);
-static gint differential (const guchar *data);
-static gint laplace      (const guchar *data);
-static gint sobel        (const guchar *data);
+static gint       edge_detect         (const guchar     *data);
+static gint       prewitt             (const guchar     *data);
+static gint       gradient            (const guchar     *data);
+static gint       roberts             (const guchar     *data);
+static gint       differential        (const guchar     *data);
+static gint       laplace             (const guchar     *data);
+static gint       sobel               (const guchar     *data);
+
 
 /***** Local vars *****/
 
@@ -440,37 +441,35 @@ edge_detect (const guchar *data)
 static gint
 sobel (const guchar *data)
 {
-  gint    v_kernel[9] = {-1,  0,  1,
-                         -2,  0,  2,
-                         -1,  0,  1};
-  gint    h_kernel[9] = {-1, -2, -1,
-                          0,  0,  0,
-                          1,  2,  1};
+  const gint v_kernel[9] = { -1,  0,  1,
+                             -2,  0,  2,
+                             -1,  0,  1 };
+  const gint h_kernel[9] = { -1, -2, -1,
+                              0,  0,  0,
+                              1,  2,  1 };
 
   gint i;
-  gint    v_grad, h_grad;
+  gint v_grad, h_grad;
 
-  v_grad = 0;
-  h_grad = 0;
-
-  for (i = 0; i < 9; i++)
+  for (i = 0, v_grad = 0, h_grad = 0; i < 9; i++)
     {
       v_grad += v_kernel[i] * data[i];
       h_grad += h_kernel[i] * data[i];
     }
+
   return sqrt (v_grad * v_grad * evals.amount +
                h_grad * h_grad * evals.amount);
 }
 
 /*
  * Edge detector via template matting
- *   -- Prewitt
+ *   -- Prewitt Compass
  */
 static gint
 prewitt (const guchar *data)
 {
-  gint    k, max;
-  gint    m[8];
+  gint k, max;
+  gint m[8];
 
   m[0] =   data [0] +   data [1] + data [2]
          + data [3] - 2*data [4] + data [5]
@@ -497,8 +496,7 @@ prewitt (const guchar *data)
          - data [3] - 2*data [4] + data [5]
          - data [6] -   data [7] + data [8];
 
-  max = 0;
-  for (k = 0; k < 8; k++)
+  for (k = 0, max = 0; k < 8; k++)
     if (max < m[k])
       max = m[k];
 
@@ -511,20 +509,17 @@ prewitt (const guchar *data)
 static gint
 gradient (const guchar *data)
 {
-  gint    v_kernel[9] = { 0,  0,  0,
-                          0,  4, -4,
-                          0,  0,  0};
-  gint    h_kernel[9] = { 0,  0,  0,
-                          0, -4,  0,
-                          0,  4,  0};
+  const gint v_kernel[9] = { 0,  0,  0,
+                             0,  4, -4,
+                             0,  0,  0 };
+  const gint h_kernel[9] = { 0,  0,  0,
+                             0, -4,  0,
+                             0,  4,  0 };
 
   gint i;
-  gint    v_grad, h_grad;
+  gint v_grad, h_grad;
 
-  v_grad = 0;
-  h_grad = 0;
-
-  for (i = 0; i < 9; i++)
+  for (i = 0, v_grad = 0, h_grad = 0; i < 9; i++)
     {
       v_grad += v_kernel[i] * data[i];
       h_grad += h_kernel[i] * data[i];
@@ -540,20 +535,16 @@ gradient (const guchar *data)
 static gint
 roberts (const guchar *data)
 {
-  gint    v_kernel[9] = {0,  0,  0,
-                         0,  4,  0,
-                         0,  0, -4};
-  gint    h_kernel[9] = {0,  0,  0,
-                         0,  0,  4,
-                         0, -4,  0};
-
+  const gint v_kernel[9] = { 0,  0,  0,
+                             0,  4,  0,
+                             0,  0, -4 };
+  const gint h_kernel[9] = { 0,  0,  0,
+                             0,  0,  4,
+                             0, -4,  0 };
   gint i;
-  gint    v_grad, h_grad;
+  gint v_grad, h_grad;
 
-  v_grad = 0;
-  h_grad = 0;
-
-  for (i = 0; i < 9; i++)
+  for (i = 0, v_grad = 0, h_grad = 0; i < 9; i++)
     {
       v_grad += v_kernel[i] * data[i];
       h_grad += h_kernel[i] * data[i];
@@ -569,21 +560,16 @@ roberts (const guchar *data)
 static gint
 differential (const guchar *data)
 {
-  gint    v_kernel[9] = { 0,  0,  0,
-                          0,  2, -2,
-                          0,  2, -2};
-  gint    h_kernel[9] = { 0,  0,  0,
-                          0, -2, -2,
-                          0,  2,  2};
-
-
+  const gint v_kernel[9] = { 0,  0,  0,
+                             0,  2, -2,
+                             0,  2, -2 };
+  const gint h_kernel[9] = { 0,  0,  0,
+                             0, -2, -2,
+                             0,  2,  2 };
   gint i;
-  gint    v_grad, h_grad;
+  gint v_grad, h_grad;
 
-  v_grad = 0;
-  h_grad = 0;
-
-  for (i = 0; i < 9; i++)
+  for (i = 0, v_grad = 0, h_grad = 0; i < 9; i++)
     {
       v_grad += v_kernel[i] * data[i];
       h_grad += h_kernel[i] * data[i];
@@ -599,19 +585,14 @@ differential (const guchar *data)
 static gint
 laplace (const guchar *data)
 {
-  gint    kernel[9] = { 1,  1,  1,
-                        1, -8,  1,
-                        1,  1,  1};
-
+  const gint kernel[9] = { 1,  1,  1,
+                           1, -8,  1,
+                           1,  1,  1 };
   gint i;
   gint grad;
 
-  grad = 0;
-
-  for (i = 0; i < 9; i++)
-    {
-      grad += kernel[i] * data[i];
-    }
+  for (i = 0, grad = 0; i < 9; i++)
+    grad += kernel[i] * data[i];
 
   return grad * evals.amount;
 }
@@ -675,12 +656,12 @@ edge_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  combo = gimp_int_combo_box_new (_("Sobel"),        SOBEL,
-                                  _("Prewitt"),      PREWITT,
-                                  _("Gradient"),     GRADIENT,
-                                  _("Roberts"),      ROBERTS,
-                                  _("Differential"), DIFFERENTIAL,
-                                  _("Laplace"),      LAPLACE,
+  combo = gimp_int_combo_box_new (_("Sobel"),           SOBEL,
+                                  _("Prewitt compass"), PREWITT,
+                                  _("Gradient"),        GRADIENT,
+                                  _("Roberts"),         ROBERTS,
+                                  _("Differential"),    DIFFERENTIAL,
+                                  _("Laplace"),         LAPLACE,
                                   NULL);
 
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
