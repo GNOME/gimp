@@ -1,5 +1,10 @@
 2005-12-06  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpdrawablepreview.c (gimp_drawable_preview_destroy):
+	initialize all fields of the struct passed to gimp_set_data().
+
+2005-12-06  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/edge.c: corrected the algorithm name as
 	suggested in bug #323304.
 

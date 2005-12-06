@@ -128,8 +128,9 @@ gimp_drawable_preview_destroy (GtkObject *object)
   PreviewSettings  settings;
   gchar           *data_name;
 
-  settings.x = preview->xoff + preview->xmin;
-  settings.y = preview->yoff + preview->ymin;
+  settings.x      = preview->xoff + preview->xmin;
+  settings.y      = preview->yoff + preview->ymin;
+  settings.update = TRUE;
 
   data_name = g_strconcat (g_get_prgname (), "-preview", NULL);
   gimp_set_data (data_name, &settings, sizeof (PreviewSettings));
@@ -468,11 +469,11 @@ gimp_drawable_preview_new (GimpDrawable *drawable,
   gimp_drawable_preview_set_drawable (preview, drawable);
 
   data_name = g_strconcat (g_get_prgname (), "-preview", NULL);
+
   if (gimp_get_data (data_name, &settings))
-    {
-      gimp_scrolled_preview_set_position (GIMP_SCROLLED_PREVIEW (preview),
-                                          settings.x, settings.y);
-    }
+    gimp_scrolled_preview_set_position (GIMP_SCROLLED_PREVIEW (preview),
+                                        settings.x, settings.y);
+
   g_free (data_name);
 
   return GTK_WIDGET (preview);
