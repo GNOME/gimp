@@ -51,6 +51,9 @@ static gboolean   gimp_context_help_idle_start     (gpointer        widget);
 static gboolean   gimp_context_help_button_press   (GtkWidget      *widget,
                                                     GdkEventButton *bevent,
                                                     gpointer        data);
+static gboolean   gimp_context_help_key_press      (GtkWidget      *widget,
+                                                    GdkEventKey    *kevent,
+                                                    gpointer        data);
 static gboolean   gimp_context_help_idle_show_help (gpointer        data);
 
 
@@ -377,10 +380,22 @@ gimp_context_help_idle_start (gpointer widget)
           return FALSE;
         }
 
+      if (gdk_keyboard_grab (invisible->window, TRUE,
+                             GDK_CURRENT_TIME) != GDK_GRAB_SUCCESS)
+        {
+          gdk_display_pointer_ungrab (gtk_widget_get_display (invisible),
+                                      GDK_CURRENT_TIME);
+          gtk_widget_destroy (invisible);
+          return FALSE;
+        }
+
       gtk_grab_add (invisible);
 
       g_signal_connect (invisible, "button-press-event",
                         G_CALLBACK (gimp_context_help_button_press),
+                        NULL);
+      g_signal_connect (invisible, "key-press-event",
+                        G_CALLBACK (gimp_context_help_key_press),
                         NULL);
     }
 
@@ -392,19 +407,37 @@ gimp_context_help_button_press (GtkWidget      *widget,
                                 GdkEventButton *bevent,
                                 gpointer        data)
 {
-  GtkWidget *event_widget;
-
-  event_widget = gtk_get_event_widget ((GdkEvent *) bevent);
+  GtkWidget *event_widget = gtk_get_event_widget ((GdkEvent *) bevent);
 
   if (event_widget && bevent->button == 1 && bevent->type == GDK_BUTTON_PRESS)
     {
+      GdkDisplay *display = gtk_widget_get_display (widget);
+
       gtk_grab_remove (widget);
-      gdk_display_pointer_ungrab (gtk_widget_get_display (widget),
-                                  bevent->time);
+      gdk_display_keyboard_ungrab (display, bevent->time);
+      gdk_display_pointer_ungrab (display, bevent->time);
       gtk_widget_destroy (widget);
 
       if (event_widget != widget)
         g_idle_add (gimp_context_help_idle_show_help, event_widget);
+    }
+
+  return TRUE;
+}
+
+static gboolean
+gimp_context_help_key_press (GtkWidget   *widget,
+                             GdkEventKey *kevent,
+                             gpointer     data)
+{
+  if (kevent->keyval == GDK_Escape)
+    {
+      GdkDisplay *display = gtk_widget_get_display (widget);
+
+      gtk_grab_remove (widget);
+      gdk_display_keyboard_ungrab (display, kevent->time);
+      gdk_display_pointer_ungrab (display, kevent->time);
+      gtk_widget_destroy (widget);
     }
 
   return TRUE;
