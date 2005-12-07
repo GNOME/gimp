@@ -210,6 +210,11 @@ gimp_clone_paint (GimpPaintCore    *paint_core,
               clone->offset_x = 0;
               clone->offset_y = 0;
             }
+          else if (options->align_mode == GIMP_CLONE_ALIGN_FIXED)
+            {
+              clone->offset_x = clone->src_x - dest_x;
+              clone->offset_y = clone->src_y - dest_y;
+            }
           else if (clone->first_stroke)
             {
               clone->offset_x = clone->src_x - dest_x;

@@ -1,3 +1,10 @@
+2005-12-07  Michael Schumacher  <schumaml@cvs.gnome.org>
+
+	* app/paint/gimpclone.c
+	* app/paint/paint-enums.c
+	* app/paint/paint-enums.h: added alignment mode for cloning from a
+	fixed location source as suggested in bug #322791. 
+
 2005-12-06  Manish Singh  <yosh@gimp.org>
 
 	* autogen.sh: Allow overriding from shell environment variables,

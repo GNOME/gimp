@@ -16,6 +16,7 @@ gimp_clone_align_mode_get_type (void)
     { GIMP_CLONE_ALIGN_NO, "GIMP_CLONE_ALIGN_NO", "no" },
     { GIMP_CLONE_ALIGN_YES, "GIMP_CLONE_ALIGN_YES", "yes" },
     { GIMP_CLONE_ALIGN_REGISTERED, "GIMP_CLONE_ALIGN_REGISTERED", "registered" },
+    { GIMP_CLONE_ALIGN_FIXED, "GIMP_CLONE_ALIGN_FIXED", "fixed" },
     { 0, NULL, NULL }
   };
 
@@ -24,6 +25,7 @@ gimp_clone_align_mode_get_type (void)
     { GIMP_CLONE_ALIGN_NO, N_("Non-aligned"), NULL },
     { GIMP_CLONE_ALIGN_YES, N_("Aligned"), NULL },
     { GIMP_CLONE_ALIGN_REGISTERED, N_("Registered"), NULL },
+    { GIMP_CLONE_ALIGN_FIXED, N_("Fixed"), NULL },
     { 0, NULL, NULL }
   };
 

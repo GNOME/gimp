@@ -41,9 +41,10 @@ GType gimp_clone_align_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum /*< pdb-skip >*/
 {
-  GIMP_CLONE_ALIGN_NO,         /*< desc="Non-aligned" >*/
-  GIMP_CLONE_ALIGN_YES,        /*< desc="Aligned"     >*/
-  GIMP_CLONE_ALIGN_REGISTERED  /*< desc="Registered"  >*/
+  GIMP_CLONE_ALIGN_NO,          /*< desc="Non-aligned" >*/
+  GIMP_CLONE_ALIGN_YES,         /*< desc="Aligned"     >*/
+  GIMP_CLONE_ALIGN_REGISTERED,  /*< desc="Registered"  >*/
+  GIMP_CLONE_ALIGN_FIXED        /*< desc="Fixed"       >*/
 } GimpCloneAlignMode;
 
 
