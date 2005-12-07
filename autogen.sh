@@ -9,11 +9,11 @@
 # tools and you shouldn't use this script.  Just call ./configure
 # directly.
 
-ACLOCAL=aclocal
-AUTOCONF=autoconf
-AUTOHEADER=autoheader
-AUTOMAKE=automake
-LIBTOOLIZE=libtoolize
+AUTOCONF=${AUTOCONF-autoconf}
+AUTOHEADER=${AUTOHEADER-autoheader}
+AUTOMAKE=${AUTOMAKE-automake-1.9}
+ACLOCAL=${ACLOCAL-aclocal-1.9}
+LIBTOOLIZE=${LIBTOOLIZE-libtoolize}
 
 PROJECT="GNU Image Manipulation Program"
 TEST_TYPE=-d
@@ -127,15 +127,15 @@ fi
 
 
 echo -n "checking for automake >= $AUTOMAKE_REQUIRED_VERSION ... "
-if (automake-1.9 --version) < /dev/null > /dev/null 2>&1; then
+if ($AUTOMAKE --version) < /dev/null > /dev/null 2>&1; then
+   AUTOMAKE=$AUTOMAKE
+   ACLOCAL=$ACLOCAL
+elif (automake-1.9 --version) < /dev/null > /dev/null 2>&1; then
    AUTOMAKE=automake-1.9
    ACLOCAL=aclocal-1.9
 elif (automake-1.8 --version) < /dev/null > /dev/null 2>&1; then
    AUTOMAKE=automake-1.8
    ACLOCAL=aclocal-1.8
-elif ($AUTOMAKE --version) < /dev/null > /dev/null 2>&1; then
-   AUTOMAKE=$AUTOMAKE
-   ACLOCAL=$ACLOCAL
 else
     echo
     echo "  You must have automake $AUTOMAKE_REQUIRED_VERSION or newer installed to compile $PROJECT."

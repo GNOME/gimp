@@ -1,3 +1,9 @@
+2005-12-06  Manish Singh  <yosh@gimp.org>
+
+	* autogen.sh: Allow overriding from shell environment variables,
+	and prefer any overrid automakes to the default, so long as the
+	version is new enough.
+
 2005-12-06  Sven Neumann  <sven@gimp.org>
 
 	* autogen.sh: applied a patch provided by Pierre-Paul Lavoie that
