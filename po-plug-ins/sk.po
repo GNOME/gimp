@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-12-01 23:45+0100\n"
-"PO-Revision-Date: 2005-12-01 23:47+0100\n"
+"POT-Creation-Date: 2005-12-07 21:16+0100\n"
+"PO-Revision-Date: 2005-12-07 21:18+0100\n"
 "Last-Translator: Marcel Telka <marcel@telka.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -2662,7 +2662,7 @@ msgid "E_xtend"
 msgstr "Rozšír_iť"
 
 #: ../plug-ins/common/convmatrix.c:87 ../plug-ins/common/displace.c:475
-#: ../plug-ins/common/edge.c:719 ../plug-ins/common/ripple.c:568
+#: ../plug-ins/common/edge.c:700 ../plug-ins/common/ripple.c:568
 msgid "_Wrap"
 msgstr "_Zalomiť"
 
@@ -3317,12 +3317,12 @@ msgstr "_Polárny"
 msgid "Edge Behavior"
 msgstr "Správanie hrán"
 
-#: ../plug-ins/common/displace.c:477 ../plug-ins/common/edge.c:732
+#: ../plug-ins/common/displace.c:477 ../plug-ins/common/edge.c:713
 #: ../plug-ins/common/ripple.c:569 ../plug-ins/common/waves.c:276
 msgid "_Smear"
 msgstr "Š_kvrna"
 
-#: ../plug-ins/common/displace.c:479 ../plug-ins/common/edge.c:745
+#: ../plug-ins/common/displace.c:479 ../plug-ins/common/edge.c:726
 #: ../plug-ins/common/fractaltrace.c:736 ../plug-ins/common/newsprint.c:400
 #: ../plug-ins/common/ripple.c:570
 msgid "_Black"
@@ -3356,47 +3356,47 @@ msgstr "_Normalizovať"
 msgid "_Invert"
 msgstr "_Invertovať"
 
-#: ../plug-ins/common/edge.c:158
+#: ../plug-ins/common/edge.c:159
 msgid "_Edge..."
 msgstr "_Hrany..."
 
-#: ../plug-ins/common/edge.c:230
+#: ../plug-ins/common/edge.c:231
 msgid "Edge detection"
 msgstr "Detekcia hrán"
 
-#: ../plug-ins/common/edge.c:644
+#: ../plug-ins/common/edge.c:625
 msgid "Edge Detection"
 msgstr "Detekcia hrán"
 
-#: ../plug-ins/common/edge.c:678
+#: ../plug-ins/common/edge.c:659
 msgid "Sobel"
 msgstr "Sobel"
 
-#: ../plug-ins/common/edge.c:679
-msgid "Prewitt"
-msgstr "Prewitt"
+#: ../plug-ins/common/edge.c:660
+msgid "Prewitt compass"
+msgstr "Prewitt kompas"
 
-#: ../plug-ins/common/edge.c:680 ../plug-ins/common/sinus.c:904
+#: ../plug-ins/common/edge.c:661 ../plug-ins/common/sinus.c:904
 msgid "Gradient"
 msgstr "Prechod"
 
-#: ../plug-ins/common/edge.c:681
+#: ../plug-ins/common/edge.c:662
 msgid "Roberts"
 msgstr "Roberts"
 
-#: ../plug-ins/common/edge.c:682
+#: ../plug-ins/common/edge.c:663
 msgid "Differential"
 msgstr "Diferenciálny"
 
-#: ../plug-ins/common/edge.c:683 ../plug-ins/common/laplace.c:245
+#: ../plug-ins/common/edge.c:664 ../plug-ins/common/laplace.c:245
 msgid "Laplace"
 msgstr "Laplace"
 
-#: ../plug-ins/common/edge.c:692
+#: ../plug-ins/common/edge.c:673
 msgid "_Algorithm:"
 msgstr "_Algoritmus:"
 
-#: ../plug-ins/common/edge.c:700
+#: ../plug-ins/common/edge.c:681
 msgid "A_mount:"
 msgstr "_Miera:"
 
@@ -4072,8 +4072,8 @@ msgstr "Neštvorcové body. Obrázok môže vyzerať rozmačkaný."
 msgid "Background (%d%s)"
 msgstr "Pozadie (%d%s)"
 
-#: ../plug-ins/common/gifload.c:918 ../plug-ins/common/iwarp.c:780
-#: ../plug-ins/common/iwarp.c:815
+#: ../plug-ins/common/gifload.c:918 ../plug-ins/common/iwarp.c:797
+#: ../plug-ins/common/iwarp.c:832
 #, c-format
 msgid "Frame %d"
 msgstr "Snímka %d"
@@ -4450,105 +4450,105 @@ msgstr "Režim _1"
 msgid "Mode _2"
 msgstr "Režim _2"
 
-#: ../plug-ins/common/iwarp.c:252
+#: ../plug-ins/common/iwarp.c:269
 msgid "_IWarp..."
 msgstr "_IZvlnenie..."
 
-#: ../plug-ins/common/iwarp.c:686
+#: ../plug-ins/common/iwarp.c:703
 msgid "Warping"
 msgstr "Ohýbanie"
 
-#: ../plug-ins/common/iwarp.c:791
+#: ../plug-ins/common/iwarp.c:808
 #, c-format
 msgid "Warping Frame %d"
 msgstr "Ohýba sa snímka č. %d"
 
-#: ../plug-ins/common/iwarp.c:803
+#: ../plug-ins/common/iwarp.c:820
 msgid "Ping pong"
 msgstr "Ping Pong"
 
-#: ../plug-ins/common/iwarp.c:939
+#: ../plug-ins/common/iwarp.c:1026
 msgid "A_nimate"
 msgstr "A_nimovať"
 
-#: ../plug-ins/common/iwarp.c:958
+#: ../plug-ins/common/iwarp.c:1045
 msgid "Number of _frames:"
 msgstr "Počet s_nímok:"
 
-#: ../plug-ins/common/iwarp.c:967
+#: ../plug-ins/common/iwarp.c:1054
 msgid "R_everse"
 msgstr "Spätn_e"
 
-#: ../plug-ins/common/iwarp.c:976
+#: ../plug-ins/common/iwarp.c:1063
 msgid "_Ping pong"
 msgstr "_Ping Pong"
 
-#: ../plug-ins/common/iwarp.c:989
+#: ../plug-ins/common/iwarp.c:1076
 msgid "_Animate"
 msgstr "_Animovať"
 
-#: ../plug-ins/common/iwarp.c:1010
+#: ../plug-ins/common/iwarp.c:1097
 msgid "Deform Mode"
 msgstr "Režim deformácie"
 
-#: ../plug-ins/common/iwarp.c:1023
+#: ../plug-ins/common/iwarp.c:1110
 msgid "_Move"
 msgstr "_Presun"
 
-#: ../plug-ins/common/iwarp.c:1024
+#: ../plug-ins/common/iwarp.c:1111
 msgid "_Grow"
 msgstr "Ná_rast"
 
-#: ../plug-ins/common/iwarp.c:1025
+#: ../plug-ins/common/iwarp.c:1112
 msgid "S_wirl CCW"
 msgstr "_Vír proti smeru hod. ruč."
 
-#: ../plug-ins/common/iwarp.c:1026
+#: ../plug-ins/common/iwarp.c:1113
 msgid "Remo_ve"
 msgstr "_Odstrániť"
 
-#: ../plug-ins/common/iwarp.c:1027
+#: ../plug-ins/common/iwarp.c:1114
 msgid "S_hrink"
 msgstr "_Zmrštenie"
 
-#: ../plug-ins/common/iwarp.c:1028
+#: ../plug-ins/common/iwarp.c:1115
 msgid "Sw_irl CW"
 msgstr "V_ír v smere hod. ruč."
 
-#: ../plug-ins/common/iwarp.c:1057
+#: ../plug-ins/common/iwarp.c:1144
 msgid "_Deform radius:"
 msgstr "Polomer _deformácie:"
 
-#: ../plug-ins/common/iwarp.c:1067
+#: ../plug-ins/common/iwarp.c:1154
 msgid "D_eform amount:"
 msgstr "Miera d_eformácie:"
 
-#: ../plug-ins/common/iwarp.c:1076
+#: ../plug-ins/common/iwarp.c:1163
 msgid "_Bilinear"
 msgstr "_Bilineárny"
 
-#: ../plug-ins/common/iwarp.c:1090
+#: ../plug-ins/common/iwarp.c:1177
 msgid "Adaptive s_upersample"
 msgstr "Adaptívne prevzorko_vanie"
 
-#: ../plug-ins/common/iwarp.c:1110
+#: ../plug-ins/common/iwarp.c:1197
 msgid "Ma_x depth:"
 msgstr "Ma_ximálna hĺbka:"
 
-#: ../plug-ins/common/iwarp.c:1120
+#: ../plug-ins/common/iwarp.c:1207
 msgid "Thresho_ld:"
 msgstr "Pra_h:"
 
-#: ../plug-ins/common/iwarp.c:1133 ../plug-ins/common/sinus.c:771
+#: ../plug-ins/common/iwarp.c:1220 ../plug-ins/common/sinus.c:771
 #: ../plug-ins/gflare/gflare.c:2797
 msgid "_Settings"
 msgstr "Nas_tavenia"
 
-#: ../plug-ins/common/iwarp.c:1151
+#: ../plug-ins/common/iwarp.c:1270
 msgid "IWarp"
 msgstr "Interaktívne ohýbanie"
 
-#: ../plug-ins/common/iwarp.c:1214
+#: ../plug-ins/common/iwarp.c:1307
 msgid ""
 "Click and drag in the preview to define the distortions to apply to the "
 "image."
@@ -11484,7 +11484,7 @@ msgid "Downloading %s of image data..."
 msgstr "Sťahovanie %s obrazových dát..."
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:149
-#: ../plug-ins/uri/uri-backend-wget.c:330
+#: ../plug-ins/uri/uri-backend-wget.c:331
 #, c-format
 msgid "Downloaded %s of image data"
 msgstr "Stiahnutých %s obrazových dát"
@@ -11500,7 +11500,7 @@ msgid "Uploaded %s of image data"
 msgstr "Odoslaných %s obrazových dát"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:238
-#: ../plug-ins/uri/uri-backend-wget.c:179
+#: ../plug-ins/uri/uri-backend-wget.c:180
 msgid "Connecting to server"
 msgstr "Pripájanie na server"
 
@@ -11514,17 +11514,17 @@ msgstr "Zlyhalo čítanie %s z '%s': %s"
 msgid "Failed to write %s to '%s': %s"
 msgstr "Zlyhal zápis %s do '%s': %s"
 
-#: ../plug-ins/uri/uri-backend-wget.c:146
-#: ../plug-ins/uri/uri-backend-wget.c:166
-#: ../plug-ins/uri/uri-backend-wget.c:185
-#: ../plug-ins/uri/uri-backend-wget.c:208
-#: ../plug-ins/uri/uri-backend-wget.c:237
+#: ../plug-ins/uri/uri-backend-wget.c:147
+#: ../plug-ins/uri/uri-backend-wget.c:167
+#: ../plug-ins/uri/uri-backend-wget.c:186
+#: ../plug-ins/uri/uri-backend-wget.c:209
+#: ../plug-ins/uri/uri-backend-wget.c:238
 #, c-format
 msgid "wget exited abnormally on URI '%s'"
 msgstr "wget skončil neočakávane na URI '%s'"
 
 #. The third line is "Connecting to..."
-#: ../plug-ins/uri/uri-backend-wget.c:174
+#: ../plug-ins/uri/uri-backend-wget.c:175
 #, c-format
 msgid "(timeout is %d second)"
 msgid_plural "(timeout is %d seconds)"
@@ -11533,22 +11533,22 @@ msgstr[1] "(časový limit je %d sekunda)"
 msgstr[2] "(časový limit sú %d sekundy)"
 
 #. The fourth line is either the network request or an error
-#: ../plug-ins/uri/uri-backend-wget.c:203
+#: ../plug-ins/uri/uri-backend-wget.c:204
 msgid "Opening URI"
 msgstr "Otváranie URI"
 
-#: ../plug-ins/uri/uri-backend-wget.c:214
-#: ../plug-ins/uri/uri-backend-wget.c:247
+#: ../plug-ins/uri/uri-backend-wget.c:215
+#: ../plug-ins/uri/uri-backend-wget.c:248
 #, c-format
 msgid "A network error occurred: %s"
 msgstr "Vyskytla sa sieťová chyba: %s"
 
-#: ../plug-ins/uri/uri-backend-wget.c:287
+#: ../plug-ins/uri/uri-backend-wget.c:288
 #, c-format
 msgid "Downloading %s of image data"
 msgstr "Sťahovanie %s obrazových dát"
 
-#: ../plug-ins/uri/uri-backend-wget.c:292
+#: ../plug-ins/uri/uri-backend-wget.c:293
 msgid "Downloading unknown amount of image data"
 msgstr "Sťahovanie neznámeho množstva obrazových dát"
 
