@@ -40,9 +40,6 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_dodge_burn_class_init (GimpDodgeBurnClass *klass);
-static void   gimp_dodge_burn_init       (GimpDodgeBurn      *dodgeburn);
-
 static void   gimp_dodge_burn_finalize   (GObject            *object);
 
 static void   gimp_dodge_burn_paint      (GimpPaintCore      *paint_core,
@@ -74,7 +71,9 @@ static gfloat gimp_dodge_burn_shadows_lut_func    (gpointer   user_data,
                                                    gfloat     value);
 
 
-static GimpBrushCoreClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpDodgeBurn, gimp_dodge_burn, GIMP_TYPE_BRUSH_CORE);
+
+#define parent_class gimp_dodge_burn_parent_class
 
 
 void
@@ -87,42 +86,12 @@ gimp_dodge_burn_register (Gimp                      *gimp,
                 _("Dodge/Burn"));
 }
 
-GType
-gimp_dodge_burn_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo info =
-      {
-        sizeof (GimpDodgeBurnClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_dodge_burn_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpDodgeBurn),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_dodge_burn_init,
-      };
-
-      type = g_type_register_static (GIMP_TYPE_BRUSH_CORE,
-                                     "GimpDodgeBurn",
-                                     &info, 0);
-    }
-
-  return type;
-}
-
 static void
 gimp_dodge_burn_class_init (GimpDodgeBurnClass *klass)
 {
   GObjectClass       *object_class     = G_OBJECT_CLASS (klass);
   GimpPaintCoreClass *paint_core_class = GIMP_PAINT_CORE_CLASS (klass);
   GimpBrushCoreClass *brush_core_class = GIMP_BRUSH_CORE_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize  = gimp_dodge_burn_finalize;
 

@@ -42,17 +42,14 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_paintbrush_class_init (GimpPaintbrushClass *klass);
-static void   gimp_paintbrush_init       (GimpPaintbrush      *paintbrush);
-
-static void   gimp_paintbrush_paint      (GimpPaintCore       *paint_core,
-                                          GimpDrawable        *drawable,
-                                          GimpPaintOptions    *paint_options,
-                                          GimpPaintState       paint_state,
-                                          guint32              time);
+static void   gimp_paintbrush_paint (GimpPaintCore    *paint_core,
+                                     GimpDrawable     *drawable,
+                                     GimpPaintOptions *paint_options,
+                                     GimpPaintState    paint_state,
+                                     guint32           time);
 
 
-static GimpPaintCoreClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpPaintbrush, gimp_paintbrush, GIMP_TYPE_BRUSH_CORE);
 
 
 void
@@ -65,43 +62,13 @@ gimp_paintbrush_register (Gimp                      *gimp,
                 _("Paintbrush"));
 }
 
-GType
-gimp_paintbrush_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo info =
-      {
-        sizeof (GimpPaintbrushClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_paintbrush_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpPaintbrush),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_paintbrush_init,
-      };
-
-      type = g_type_register_static (GIMP_TYPE_BRUSH_CORE,
-                                     "GimpPaintbrush",
-                                     &info, 0);
-    }
-
-  return type;
-}
-
 static void
 gimp_paintbrush_class_init (GimpPaintbrushClass *klass)
 {
   GimpPaintCoreClass *paint_core_class = GIMP_PAINT_CORE_CLASS (klass);
   GimpBrushCoreClass *brush_core_class = GIMP_BRUSH_CORE_CLASS (klass);
 
-  parent_class = g_type_class_peek_parent (klass);
-
-  paint_core_class->paint = gimp_paintbrush_paint;
+  paint_core_class->paint                  = gimp_paintbrush_paint;
 
   brush_core_class->handles_changing_brush = TRUE;
 }

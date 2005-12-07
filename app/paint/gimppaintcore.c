@@ -50,9 +50,6 @@
 
 /*  local function prototypes  */
 
-static void      gimp_paint_core_class_init        (GimpPaintCoreClass *klass);
-static void      gimp_paint_core_init              (GimpPaintCore      *core);
-
 static void      gimp_paint_core_finalize            (GObject          *object);
 
 static gboolean  gimp_paint_core_real_start          (GimpPaintCore    *core,
@@ -91,45 +88,17 @@ static void      paint_mask_to_canvas_buf            (GimpPaintCore    *core,
 static void      canvas_tiles_to_canvas_buf          (GimpPaintCore    *core);
 
 
-static GimpObjectClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpPaintCore, gimp_paint_core, GIMP_TYPE_OBJECT);
+
+#define parent_class gimp_paint_core_parent_class
 
 static gint global_core_ID = 1;
 
-
-GType
-gimp_paint_core_get_type (void)
-{
-  static GType core_type = 0;
-
-  if (! core_type)
-    {
-      static const GTypeInfo core_info =
-      {
-        sizeof (GimpPaintCoreClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_paint_core_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpPaintCore),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_paint_core_init,
-      };
-
-      core_type = g_type_register_static (GIMP_TYPE_OBJECT,
-                                          "GimpPaintCore",
-                                          &core_info, 0);
-    }
-
-  return core_type;
-}
 
 static void
 gimp_paint_core_class_init (GimpPaintCoreClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize  = gimp_paint_core_finalize;
 

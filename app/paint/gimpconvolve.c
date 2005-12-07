@@ -56,9 +56,6 @@ typedef enum
 } ConvolveClipType;
 
 
-static void    gimp_convolve_class_init       (GimpConvolveClass *klass);
-static void    gimp_convolve_init             (GimpConvolve      *convolve);
-
 static void    gimp_convolve_paint            (GimpPaintCore     *paint_core,
                                                GimpDrawable      *drawable,
                                                GimpPaintOptions  *paint_options,
@@ -108,7 +105,7 @@ static gfloat sharpen_matrix[25] =
 };
 
 
-static GimpBrushCoreClass *parent_class;
+G_DEFINE_TYPE (GimpConvolve, gimp_convolve, GIMP_TYPE_BRUSH_CORE);
 
 
 void
@@ -121,40 +118,10 @@ gimp_convolve_register (Gimp                      *gimp,
                 _("Convolve"));
 }
 
-GType
-gimp_convolve_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo info =
-      {
-        sizeof (GimpConvolveClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_convolve_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpConvolve),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_convolve_init,
-      };
-
-      type = g_type_register_static (GIMP_TYPE_BRUSH_CORE,
-                                     "GimpConvolve",
-                                     &info, 0);
-    }
-
-  return type;
-}
-
 static void
 gimp_convolve_class_init (GimpConvolveClass *klass)
 {
   GimpPaintCoreClass *paint_core_class = GIMP_PAINT_CORE_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   paint_core_class->paint = gimp_convolve_paint;
 }

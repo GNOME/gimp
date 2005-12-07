@@ -40,23 +40,22 @@
 #include "gimp-intl.h"
 
 
-static void       gimp_airbrush_class_init (GimpAirbrushClass *klass);
-static void       gimp_airbrush_init       (GimpAirbrush      *airbrush);
+static void       gimp_airbrush_finalize (GObject          *object);
 
-static void       gimp_airbrush_finalize   (GObject           *object);
-
-static void       gimp_airbrush_paint      (GimpPaintCore     *paint_core,
-                                            GimpDrawable      *drawable,
-                                            GimpPaintOptions  *paint_options,
-                                            GimpPaintState     paint_state,
-                                            guint32            time);
-static void       gimp_airbrush_motion     (GimpPaintCore     *paint_core,
-                                            GimpDrawable      *drawable,
-                                            GimpPaintOptions  *paint_options);
-static gboolean   gimp_airbrush_timeout    (gpointer           data);
+static void       gimp_airbrush_paint    (GimpPaintCore    *paint_core,
+                                          GimpDrawable     *drawable,
+                                          GimpPaintOptions *paint_options,
+                                          GimpPaintState    paint_state,
+                                          guint32           time);
+static void       gimp_airbrush_motion   (GimpPaintCore    *paint_core,
+                                          GimpDrawable     *drawable,
+                                          GimpPaintOptions *paint_options);
+static gboolean   gimp_airbrush_timeout  (gpointer          data);
 
 
-static GimpPaintbrushClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpAirbrush, gimp_airbrush, GIMP_TYPE_PAINTBRUSH);
+
+#define parent_class gimp_airbrush_parent_class
 
 
 void
@@ -69,41 +68,11 @@ gimp_airbrush_register (Gimp                      *gimp,
                 _("Airbrush"));
 }
 
-GType
-gimp_airbrush_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo info =
-      {
-        sizeof (GimpAirbrushClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_airbrush_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpAirbrush),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_airbrush_init,
-      };
-
-      type = g_type_register_static (GIMP_TYPE_PAINTBRUSH,
-                                     "GimpAirbrush",
-                                     &info, 0);
-    }
-
-  return type;
-}
-
 static void
 gimp_airbrush_class_init (GimpAirbrushClass *klass)
 {
   GObjectClass       *object_class     = G_OBJECT_CLASS (klass);
   GimpPaintCoreClass *paint_core_class = GIMP_PAINT_CORE_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize  = gimp_airbrush_finalize;
 

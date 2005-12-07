@@ -41,9 +41,6 @@
 #include "gimp-intl.h"
 
 
-static void       gimp_smudge_class_init (GimpSmudgeClass  *klass);
-static void       gimp_smudge_init       (GimpSmudge       *smudge);
-
 static void       gimp_smudge_finalize   (GObject          *object);
 
 static void       gimp_smudge_paint      (GimpPaintCore    *paint_core,
@@ -65,7 +62,9 @@ static void  gimp_smudge_nonclipped_painthit_coords (GimpPaintCore *paint_core,
                                                      gint          *h);
 
 
-static GimpPaintCoreClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpSmudge, gimp_smudge, GIMP_TYPE_BRUSH_CORE);
+
+#define parent_class gimp_smudge_parent_class
 
 
 void
@@ -78,42 +77,12 @@ gimp_smudge_register (Gimp                      *gimp,
                 _("Smudge"));
 }
 
-GType
-gimp_smudge_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo info =
-      {
-        sizeof (GimpSmudgeClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_smudge_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpSmudge),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_smudge_init,
-      };
-
-      type = g_type_register_static (GIMP_TYPE_BRUSH_CORE,
-                                     "GimpSmudge",
-                                     &info, 0);
-    }
-
-  return type;
-}
-
 static void
 gimp_smudge_class_init (GimpSmudgeClass *klass)
 {
   GObjectClass       *object_class     = G_OBJECT_CLASS (klass);
   GimpPaintCoreClass *paint_core_class = GIMP_PAINT_CORE_CLASS (klass);
   GimpBrushCoreClass *brush_core_class = GIMP_BRUSH_CORE_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize      = gimp_smudge_finalize;
 

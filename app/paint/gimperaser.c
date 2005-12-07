@@ -38,20 +38,17 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_eraser_class_init (GimpEraserClass  *klass);
-static void   gimp_eraser_init       (GimpEraser       *eraser);
-
-static void   gimp_eraser_paint      (GimpPaintCore    *paint_core,
-                                      GimpDrawable     *drawable,
-                                      GimpPaintOptions *paint_options,
-                                      GimpPaintState    paint_state,
-                                      guint32           time);
-static void   gimp_eraser_motion     (GimpPaintCore    *paint_core,
-                                      GimpDrawable     *drawable,
-                                      GimpPaintOptions *paint_options);
+static void   gimp_eraser_paint  (GimpPaintCore    *paint_core,
+                                  GimpDrawable     *drawable,
+                                  GimpPaintOptions *paint_options,
+                                  GimpPaintState    paint_state,
+                                  guint32           time);
+static void   gimp_eraser_motion (GimpPaintCore    *paint_core,
+                                  GimpDrawable     *drawable,
+                                  GimpPaintOptions *paint_options);
 
 
-static GimpBrushCoreClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpEraser, gimp_eraser, GIMP_TYPE_BRUSH_CORE);
 
 
 void
@@ -64,41 +61,11 @@ gimp_eraser_register (Gimp                      *gimp,
                 _("Eraser"));
 }
 
-GType
-gimp_eraser_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo info =
-      {
-        sizeof (GimpEraserClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_eraser_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpEraser),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_eraser_init,
-      };
-
-      type = g_type_register_static (GIMP_TYPE_BRUSH_CORE,
-                                     "GimpEraser",
-                                     &info, 0);
-    }
-
-  return type;
-}
-
 static void
 gimp_eraser_class_init (GimpEraserClass *klass)
 {
   GimpPaintCoreClass *paint_core_class = GIMP_PAINT_CORE_CLASS (klass);
   GimpBrushCoreClass *brush_core_class = GIMP_BRUSH_CORE_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   paint_core_class->paint = gimp_eraser_paint;
 

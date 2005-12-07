@@ -39,8 +39,6 @@ enum
 };
 
 
-static void   gimp_convolve_options_class_init (GimpConvolveOptionsClass *klass);
-
 static void   gimp_convolve_options_set_property (GObject      *object,
                                                   guint         property_id,
                                                   const GValue *value,
@@ -51,43 +49,14 @@ static void   gimp_convolve_options_get_property (GObject      *object,
                                                   GParamSpec   *pspec);
 
 
-static GimpPaintOptionsClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpConvolveOptions, gimp_convolve_options,
+               GIMP_TYPE_PAINT_OPTIONS);
 
-
-GType
-gimp_convolve_options_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo info =
-      {
-        sizeof (GimpConvolveOptionsClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_convolve_options_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpConvolveOptions),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) NULL
-      };
-
-      type = g_type_register_static (GIMP_TYPE_PAINT_OPTIONS,
-                                     "GimpConvolveOptions",
-                                     &info, 0);
-    }
-
-  return type;
-}
 
 static void
 gimp_convolve_options_class_init (GimpConvolveOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->set_property = gimp_convolve_options_set_property;
   object_class->get_property = gimp_convolve_options_get_property;
@@ -101,6 +70,11 @@ gimp_convolve_options_class_init (GimpConvolveOptionsClass *klass)
                                    "rate", NULL,
                                    0.0, 100.0, DEFAULT_CONVOLVE_RATE,
                                    0);
+}
+
+static void
+gimp_convolve_options_init (GimpConvolveOptions *options)
+{
 }
 
 static void

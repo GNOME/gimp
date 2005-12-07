@@ -44,9 +44,6 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_clone_class_init       (GimpCloneClass   *klass);
-static void   gimp_clone_init             (GimpClone        *clone);
-
 static void   gimp_clone_paint            (GimpPaintCore    *paint_core,
                                            GimpDrawable     *drawable,
                                            GimpPaintOptions *paint_options,
@@ -78,7 +75,7 @@ static void   gimp_clone_set_src_drawable (GimpClone        *clone,
                                            GimpDrawable     *drawable);
 
 
-static GimpBrushCoreClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpClone, gimp_clone, GIMP_TYPE_BRUSH_CORE);
 
 
 void
@@ -91,41 +88,11 @@ gimp_clone_register (Gimp                      *gimp,
                 _("Clone"));
 }
 
-GType
-gimp_clone_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo info =
-      {
-        sizeof (GimpCloneClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_clone_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpClone),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_clone_init,
-      };
-
-      type = g_type_register_static (GIMP_TYPE_BRUSH_CORE,
-                                     "GimpClone",
-                                     &info, 0);
-    }
-
-  return type;
-}
-
 static void
 gimp_clone_class_init (GimpCloneClass *klass)
 {
   GimpPaintCoreClass *paint_core_class = GIMP_PAINT_CORE_CLASS (klass);
   GimpBrushCoreClass *brush_core_class = GIMP_BRUSH_CORE_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   paint_core_class->paint                  = gimp_clone_paint;
 

@@ -37,8 +37,6 @@ enum
 };
 
 
-static void   gimp_eraser_options_class_init   (GimpEraserOptionsClass *klass);
-
 static void   gimp_eraser_options_set_property (GObject         *object,
                                                 guint            property_id,
                                                 const GValue    *value,
@@ -49,43 +47,14 @@ static void   gimp_eraser_options_get_property (GObject         *object,
                                                 GParamSpec      *pspec);
 
 
-static GimpPaintOptionsClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpEraserOptions, gimp_eraser_options,
+               GIMP_TYPE_PAINT_OPTIONS);
 
-
-GType
-gimp_eraser_options_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo info =
-      {
-        sizeof (GimpEraserOptionsClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_eraser_options_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpEraserOptions),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) NULL
-      };
-
-      type = g_type_register_static (GIMP_TYPE_PAINT_OPTIONS,
-                                     "GimpEraserOptions",
-                                     &info, 0);
-    }
-
-  return type;
-}
 
 static void
 gimp_eraser_options_class_init (GimpEraserOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->set_property = gimp_eraser_options_set_property;
   object_class->get_property = gimp_eraser_options_get_property;
@@ -94,6 +63,11 @@ gimp_eraser_options_class_init (GimpEraserOptionsClass *klass)
                                     "anti-erase", NULL,
                                     ERASER_DEFAULT_ANTI_ERASE,
                                     0);
+}
+
+static void
+gimp_eraser_options_init (GimpEraserOptions *options)
+{
 }
 
 static void

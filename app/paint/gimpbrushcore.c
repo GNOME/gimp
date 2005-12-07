@@ -52,36 +52,33 @@ enum
 
 /*  local function prototypes  */
 
-static void     gimp_brush_core_class_init        (GimpBrushCoreClass *klass);
-static void     gimp_brush_core_init              (GimpBrushCore      *core);
+static void     gimp_brush_core_finalize          (GObject          *object);
 
-static void     gimp_brush_core_finalize          (GObject            *object);
+static gboolean gimp_brush_core_start             (GimpPaintCore    *core,
+                                                   GimpDrawable     *drawable,
+                                                   GimpPaintOptions *paint_options,
+                                                   GimpCoords       *coords);
+static gboolean gimp_brush_core_pre_paint         (GimpPaintCore    *core,
+                                                   GimpDrawable     *drawable,
+                                                   GimpPaintOptions *paint_options,
+                                                   GimpPaintState    paint_state,
+                                                   guint32           time);
+static void     gimp_brush_core_post_paint        (GimpPaintCore    *core,
+                                                   GimpDrawable     *drawable,
+                                                   GimpPaintOptions *paint_options,
+                                                   GimpPaintState    paint_state,
+                                                   guint32           time);
+static void     gimp_brush_core_interpolate       (GimpPaintCore    *core,
+                                                   GimpDrawable     *drawable,
+                                                   GimpPaintOptions *paint_options,
+                                                   guint32           time);
 
-static gboolean gimp_brush_core_start             (GimpPaintCore      *core,
-                                                   GimpDrawable       *drawable,
-                                                   GimpPaintOptions   *paint_options,
-                                                   GimpCoords         *coords);
-static gboolean gimp_brush_core_pre_paint         (GimpPaintCore      *core,
-                                                   GimpDrawable       *drawable,
-                                                   GimpPaintOptions   *paint_options,
-                                                   GimpPaintState      paint_state,
-                                                   guint32             time);
-static void     gimp_brush_core_post_paint        (GimpPaintCore      *core,
-                                                   GimpDrawable       *drawable,
-                                                   GimpPaintOptions   *paint_options,
-                                                   GimpPaintState      paint_state,
-                                                   guint32             time);
-static void     gimp_brush_core_interpolate       (GimpPaintCore      *core,
-                                                   GimpDrawable       *drawable,
-                                                   GimpPaintOptions   *paint_options,
-                                                   guint32             time);
+static TempBuf *gimp_brush_core_get_paint_area    (GimpPaintCore    *paint_core,
+                                                   GimpDrawable     *drawable,
+                                                   GimpPaintOptions *paint_options);
 
-static TempBuf *gimp_brush_core_get_paint_area    (GimpPaintCore      *paint_core,
-                                                   GimpDrawable       *drawable,
-                                                   GimpPaintOptions   *paint_options);
-
-static void     gimp_brush_core_real_set_brush    (GimpBrushCore      *core,
-                                                   GimpBrush          *brush);
+static void     gimp_brush_core_real_set_brush    (GimpBrushCore    *core,
+                                                   GimpBrush        *brush);
 
 static void   gimp_brush_core_calc_brush_size     (GimpBrushCore    *core,
                                                    MaskBuf          *mask,
@@ -130,46 +127,18 @@ static void      paint_line_pixmap_mask           (GimpImage        *dest,
                                                    GimpBrushApplicationMode  mode);
 
 
-static GimpPaintCoreClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpBrushCore, gimp_brush_core, GIMP_TYPE_PAINT_CORE);
+
+#define parent_class gimp_brush_core_parent_class
 
 static guint core_signals[LAST_SIGNAL] = { 0, };
 
-
-GType
-gimp_brush_core_get_type (void)
-{
-  static GType core_type = 0;
-
-  if (! core_type)
-    {
-      static const GTypeInfo core_info =
-      {
-        sizeof (GimpBrushCoreClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_brush_core_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpBrushCore),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_brush_core_init,
-      };
-
-      core_type = g_type_register_static (GIMP_TYPE_PAINT_CORE,
-                                          "GimpBrushCore",
-                                          &core_info, 0);
-    }
-
-  return core_type;
-}
 
 static void
 gimp_brush_core_class_init (GimpBrushCoreClass *klass)
 {
   GObjectClass       *object_class     = G_OBJECT_CLASS (klass);
   GimpPaintCoreClass *paint_core_class = GIMP_PAINT_CORE_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   core_signals[SET_BRUSH] =
     g_signal_new ("set-brush",

@@ -84,59 +84,29 @@ enum
 };
 
 
-static void   gimp_paint_options_init         (GimpPaintOptions      *options);
-static void   gimp_paint_options_class_init   (GimpPaintOptionsClass *klass);
-
-static void   gimp_paint_options_finalize     (GObject         *object);
-static void   gimp_paint_options_set_property (GObject         *object,
-                                               guint            property_id,
-                                               const GValue    *value,
-                                               GParamSpec      *pspec);
-static void   gimp_paint_options_get_property (GObject         *object,
-                                               guint            property_id,
-                                               GValue          *value,
-                                               GParamSpec      *pspec);
-static void   gimp_paint_options_notify       (GObject         *object,
-                                               GParamSpec      *pspec);
+static void   gimp_paint_options_finalize     (GObject      *object);
+static void   gimp_paint_options_set_property (GObject      *object,
+                                               guint         property_id,
+                                               const GValue *value,
+                                               GParamSpec   *pspec);
+static void   gimp_paint_options_get_property (GObject      *object,
+                                               guint         property_id,
+                                               GValue       *value,
+                                               GParamSpec   *pspec);
+static void   gimp_paint_options_notify       (GObject      *object,
+                                               GParamSpec   *pspec);
 
 
-static GimpToolOptionsClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpPaintOptions, gimp_paint_options,
+               GIMP_TYPE_TOOL_OPTIONS);
 
+#define parent_class gimp_paint_options_parent_class
 
-GType
-gimp_paint_options_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo info =
-      {
-        sizeof (GimpPaintOptionsClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_paint_options_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpPaintOptions),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_paint_options_init,
-      };
-
-      type = g_type_register_static (GIMP_TYPE_TOOL_OPTIONS,
-                                     "GimpPaintOptions",
-                                     &info, 0);
-    }
-
-  return type;
-}
 
 static void
 gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize     = gimp_paint_options_finalize;
   object_class->set_property = gimp_paint_options_set_property;

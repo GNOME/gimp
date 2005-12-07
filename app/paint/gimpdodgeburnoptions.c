@@ -41,8 +41,6 @@ enum
 };
 
 
-static void   gimp_dodge_burn_options_class_init   (GimpDodgeBurnOptionsClass *klass);
-
 static void   gimp_dodge_burn_options_set_property (GObject      *object,
                                                     guint         property_id,
                                                     const GValue *value,
@@ -53,43 +51,14 @@ static void   gimp_dodge_burn_options_get_property (GObject      *object,
                                                     GParamSpec   *pspec);
 
 
-static GimpPaintOptionsClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpDodgeBurnOptions, gimp_dodge_burn_options,
+               GIMP_TYPE_PAINT_OPTIONS);
 
-
-GType
-gimp_dodge_burn_options_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo info =
-      {
-        sizeof (GimpDodgeBurnOptionsClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_dodge_burn_options_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpDodgeBurnOptions),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) NULL
-      };
-
-      type = g_type_register_static (GIMP_TYPE_PAINT_OPTIONS,
-                                     "GimpDodgeBurnOptions",
-                                     &info, 0);
-    }
-
-  return type;
-}
 
 static void
 gimp_dodge_burn_options_class_init (GimpDodgeBurnOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->set_property = gimp_dodge_burn_options_set_property;
   object_class->get_property = gimp_dodge_burn_options_get_property;
@@ -108,6 +77,11 @@ gimp_dodge_burn_options_class_init (GimpDodgeBurnOptionsClass *klass)
                                    "exposure", NULL,
                                    0.0, 100.0, DODGE_BURN_DEFAULT_EXPOSURE,
                                    0);
+}
+
+static void
+gimp_dodge_burn_options_init (GimpDodgeBurnOptions *options)
+{
 }
 
 static void

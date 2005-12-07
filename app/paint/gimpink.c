@@ -47,9 +47,6 @@
 
 /*  local function prototypes  */
 
-static void      gimp_ink_class_init     (GimpInkClass     *klass);
-static void      gimp_ink_init           (GimpInk          *ink);
-
 static void      gimp_ink_finalize       (GObject          *object);
 
 static void      gimp_ink_paint          (GimpPaintCore    *paint_core,
@@ -90,7 +87,9 @@ static void      render_blob             (Blob             *blob,
                                           PixelRegion      *dest);
 
 
-static GimpPaintCoreClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpInk, gimp_ink, GIMP_TYPE_PAINT_CORE);
+
+#define parent_class gimp_ink_parent_class
 
 
 void
@@ -103,43 +102,13 @@ gimp_ink_register (Gimp                      *gimp,
                 _("Ink"));
 }
 
-GType
-gimp_ink_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo info =
-      {
-        sizeof (GimpInkClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_ink_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpInk),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_ink_init,
-      };
-
-      type = g_type_register_static (GIMP_TYPE_PAINT_CORE,
-                                     "GimpInk",
-                                     &info, 0);
-    }
-
-  return type;
-}
-
 static void
 gimp_ink_class_init (GimpInkClass *klass)
 {
   GObjectClass       *object_class     = G_OBJECT_CLASS (klass);
   GimpPaintCoreClass *paint_core_class = GIMP_PAINT_CORE_CLASS (klass);
 
-  parent_class = g_type_class_peek_parent (klass);
-
-  object_class->finalize  = gimp_ink_finalize;
+  object_class->finalize           = gimp_ink_finalize;
 
   paint_core_class->paint          = gimp_ink_paint;
   paint_core_class->get_paint_area = gimp_ink_get_paint_area;
