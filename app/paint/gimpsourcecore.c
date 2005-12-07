@@ -384,7 +384,15 @@ gimp_clone_motion (GimpPaintCore    *paint_core,
                                 gimp_context_get_opacity (context),
                                 gimp_context_get_paint_mode (context),
                                 gimp_paint_options_get_brush_mode (paint_options),
-                                GIMP_PAINT_CONSTANT);
+
+                                /* In fixed mode, paint incremental so the
+                                 * individual brushes are properly applied
+                                 * on top of each other.
+                                 * Otherwise the stuff we paint is seamless
+                                 * and we don't need intermediate masking.
+                                 */
+                                options->align_mode == GIMP_CLONE_ALIGN_FIXED ?
+                                GIMP_PAINT_INCREMENTAL : GIMP_PAINT_CONSTANT);
 }
 
 static void

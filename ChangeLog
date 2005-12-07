@@ -1,5 +1,11 @@
 2005-12-07  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint/gimpclone.c (gimp_clone_motion): In fixed mode, paint
+	incremental so the individual brushes are properly applied on top
+	of each other. Fixes bug #322791.
+
+2005-12-07  Michael Natterer  <mitch@gimp.org>
+
 	* app/paint/*: use G_DEFINE_TYPE().
 
 2005-12-07  Michael Natterer  <mitch@gimp.org>
