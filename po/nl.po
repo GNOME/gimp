@@ -7,20 +7,21 @@
 # Tino Meinen <a.t.meinen@chello.nl>, 2004, 2005.
 # Vincent van Adrighem <adrighem@gnome.org>, 2004.
 # --------------------------------------------------
-# posterise		- kleurverarming
+# document history	- documentgeschiedenis/Overzicht 'ongedaan maken'
 # font			- lettertype/font
 # paint tools		- schilder(gereedschap)
-# tool			- tool/werktuig/gereedschap
 # parse			- verwerken/ontleden
+# posterise		- kleurverarming
+# tool			- tool/werktuig/gereedschap
 # --------------------------------------------------
-# Menu's           (broncodebestand)
-# Beeld             view-actions
+# Menu's             (broncodebestand)
+# Beeld              view-actions
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp.gimp-2-0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-09-08 18:48+0200\n"
-"PO-Revision-Date: 2005-09-28 23:22+0200\n"
+"PO-Revision-Date: 2005-12-01 14:57+1100\n"
 "Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
 "Language-Team: Dutch <nl@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
@@ -170,6 +171,9 @@ msgid ""
 "\n"
 "Please check the value of the environment variable G_FILENAME_ENCODING."
 msgstr ""
+"De tekenset van de bestandsnaam kan niet naar UTF-8 worden omgezet: %s\n"
+"\n"
+"Controleer de waarde van de omgevingsvariabele G_FILENAME_ENCODING."
 
 #: ../app/sanity.c:211
 #, c-format
@@ -575,9 +579,8 @@ msgstr "Kanaalkleur bewerken"
 
 #: ../app/actions/channels-commands.c:92
 #: ../app/actions/channels-commands.c:125
-#, fuzzy
 msgid "_Fill opacity:"
-msgstr "Ondoorzichtigheid van opvullen: "
+msgstr "_Ondoorzichtigheid van opvullen:"
 
 #: ../app/actions/channels-commands.c:118
 #: ../app/actions/channels-commands.c:119
@@ -727,9 +730,8 @@ msgid "S_wap Colors"
 msgstr "Kleuren _wisselen"
 
 #: ../app/actions/cursor-info-actions.c:40
-#, fuzzy
 msgid "Cursor Info Menu"
-msgstr "Cursor-informatie"
+msgstr "Menu Cursorinformatie"
 
 #: ../app/actions/cursor-info-actions.c:47
 #: ../app/actions/sample-point-editor-actions.c:47
@@ -1060,9 +1062,8 @@ msgid "Open image dialog"
 msgstr "Dialoogvenster Afbeelding openen"
 
 #: ../app/actions/documents-actions.c:64
-#, fuzzy
 msgid "Copy Image _Location"
-msgstr "Afbeeldingslocatie kopieren"
+msgstr "_Afbeeldingslocatie kopieren"
 
 #: ../app/actions/documents-actions.c:65
 msgid "Copy image location to clipboard"
@@ -1076,16 +1077,15 @@ msgstr "_Item verwijderen"
 msgid "Remove the selected entry"
 msgstr "Geselecteerde ingang verwijderen"
 
+# Documentgeschiedenis/overzicht 'ongedaan maken'
 # wissen/leegmaken
 #: ../app/actions/documents-actions.c:76
-#, fuzzy
 msgid "_Clear History"
-msgstr "Overzicht 'Ongedaan maken' _leegmaken"
+msgstr "Overzicht 'Ongedaan maken' _wissen"
 
 #: ../app/actions/documents-actions.c:77
-#, fuzzy
 msgid "Clear the entire document history"
-msgstr "Overzicht 'Ongedaan maken' leegmaken..."
+msgstr "Het gehele overzicht 'Ongedaan maken' leegmaken"
 
 #: ../app/actions/documents-actions.c:82
 msgid "Recreate _Preview"
@@ -1111,8 +1111,8 @@ msgstr "Losse i_ngangen verwijderen"
 msgid "Remove dangling entries"
 msgstr "Losse ingangen verwijderen"
 
+# overzicht ongedaan maken wissen/documentgeschiedenis
 #: ../app/actions/documents-commands.c:208
-#, fuzzy
 msgid "Clear Document History"
 msgstr "Documentgeschiedenis wissen"
 
@@ -1202,10 +1202,10 @@ msgstr "Be_werken"
 msgid "_Buffer"
 msgstr "_Buffers"
 
+# zucht
 #: ../app/actions/edit-actions.c:64
-#, fuzzy
 msgid "Undo Editor Menu"
-msgstr "Menu Verloopeditor"
+msgstr "Menu 'Ongedaan maken'-editor"
 
 #: ../app/actions/edit-actions.c:68 ../app/actions/edit-actions.c:238
 msgid "_Undo"
@@ -1268,9 +1268,8 @@ msgstr "Benoemde buffer _kopiëren..."
 
 #. GIMP_STOCK_COPY_VISIBLE,
 #: ../app/actions/edit-actions.c:126
-#, fuzzy
 msgid "Copy _Visible Named..."
-msgstr "_Zichtbare kopiëren"
+msgstr "_Zichtbare benoemde buffer kopiëren..."
 
 #: ../app/actions/edit-actions.c:131
 msgid "_Paste Named..."
@@ -1332,9 +1331,8 @@ msgid "Copy Named"
 msgstr "Benoemde buffer kopiëren"
 
 #: ../app/actions/edit-commands.c:296
-#, fuzzy
 msgid "Copy Visible Named "
-msgstr "_Zichtbare kopiëren"
+msgstr "Zichtbare benoemde buffer kopiëren"
 
 #: ../app/actions/edit-commands.c:408
 msgid "There is no active layer or channel to cut from."
@@ -1895,11 +1893,11 @@ msgstr "_Contexthulp"
 
 #: ../app/actions/image-actions.c:47
 msgid "Toolbox Menu"
-msgstr "Gereedschapskistmenu"
+msgstr "Menu Gereedschapskist"
 
 #: ../app/actions/image-actions.c:51 ../app/actions/image-actions.c:55
 msgid "Image Menu"
-msgstr "Afbeeldingsmenu"
+msgstr "Menu Afbeelding"
 
 #: ../app/actions/image-actions.c:58
 msgid "_Xtns"
@@ -2642,11 +2640,11 @@ msgstr "Ondoorzichtigheid van _masker:"
 # Monsterpuntmenu
 #: ../app/actions/sample-point-editor-actions.c:40
 msgid "Sample Point Menu"
-msgstr "Menu monsterpunten"
+msgstr "Menu Monsterpunten"
 
 #: ../app/actions/select-actions.c:44
 msgid "Selection Editor Menu"
-msgstr "Menu selectie-editor"
+msgstr "Menu Selectie-editor"
 
 #: ../app/actions/select-actions.c:47
 msgid "_Select"
@@ -2925,15 +2923,14 @@ msgstr "Gereedschapsopties _herstellen"
 msgid "Reset to default values"
 msgstr "Terugzetten naar standaardwaarden"
 
-# herstellen/opnieuw instellen
+# herstellen/opnieuw instellen/resetten
 #: ../app/actions/tool-options-actions.c:87
-#, fuzzy
 msgid "Reset _all Tool Options"
-msgstr "_Alle gereedschapsopties opnieuw instellen..."
+msgstr "_Alle gereedschapsopties resetten"
 
 #: ../app/actions/tool-options-actions.c:88
 msgid "Reset all tool options"
-msgstr "Alle gereedschapsopties opnieuw instellen..."
+msgstr "Alle gereedschapsopties resetten"
 
 #: ../app/actions/tool-options-commands.c:71
 msgid "Save Tool Options"
@@ -2969,7 +2966,7 @@ msgstr ""
 
 #: ../app/actions/tools-actions.c:47
 msgid "Tools Menu"
-msgstr "Gereedschapmenu"
+msgstr "Menu Gereedschap"
 
 # Attention! Singular in Dutch!
 #: ../app/actions/tools-actions.c:50
@@ -3001,18 +2998,14 @@ msgstr "_Transformatie"
 msgid "_Color Tools"
 msgstr "_Kleur"
 
-# het zijn penselen en potloden/stiften.
-# schilderen en tekenen kan dus allebei.
-# tekenen vond ik net iets duidelijker
+# Optillen/verhogen/naar boven verplaatsen/
 #: ../app/actions/tools-actions.c:57
-#, fuzzy
 msgid "R_aise Tool"
-msgstr "T_ekenen"
+msgstr "Tool naar _boven verplaatsen"
 
 #: ../app/actions/tools-actions.c:58
-#, fuzzy
 msgid "Raise tool"
-msgstr "Pad omhoog"
+msgstr "Tool naar _boven verplaatsen"
 
 #: ../app/actions/tools-actions.c:63
 #, fuzzy
@@ -3020,29 +3013,24 @@ msgid "Ra_ise to Top"
 msgstr "Pad naar top"
 
 #: ../app/actions/tools-actions.c:64
-#, fuzzy
 msgid "Raise tool to top"
-msgstr "Pad naar top"
+msgstr "_Tool bovenaan zetten"
 
 #: ../app/actions/tools-actions.c:69
-#, fuzzy
 msgid "L_ower Tool"
-msgstr "Verplaatsing"
+msgstr "Tool naar beneden _verplaatsen"
 
 #: ../app/actions/tools-actions.c:70
-#, fuzzy
 msgid "Lower tool"
-msgstr "Pad verlagen"
+msgstr "Tool naar beneden verplaatsen"
 
 #: ../app/actions/tools-actions.c:75
-#, fuzzy
 msgid "Lo_wer to Bottom"
-msgstr "Pad naar bodem"
+msgstr "Tool _onderaan zetten"
 
 #: ../app/actions/tools-actions.c:76
-#, fuzzy
 msgid "Lower tool to bottom"
-msgstr "Pad naar bodem"
+msgstr "Tool onderaan zetten"
 
 #: ../app/actions/tools-actions.c:81
 msgid "_Reset Order & Visibility"
@@ -3437,9 +3425,8 @@ msgid "Set Canvas Padding Color"
 msgstr "Canvasopvulkleur instellen"
 
 #: ../app/actions/view-commands.c:586
-#, fuzzy
 msgid "Set Custom Canvas Padding Color"
-msgstr "Selecteer eigen opvulkleur voor canvas"
+msgstr "Selecteer een opvulkleur voor het canvas"
 
 #: ../app/actions/window-actions.c:65
 #, c-format
@@ -3666,13 +3653,10 @@ msgid "Sets the mode of cursor the GIMP will use."
 msgstr "De modus van de cursor die GIMP gebruikt."
 
 #: ../app/config/gimprc-blurbs.h:42
-#, fuzzy
 msgid ""
 "Context-dependent cursors are cool.  They are enabled by default. However, "
 "they require overhead that you may want to do without."
-msgstr ""
-"Contextafhankelijke cursors zijn handig. Standaard staan ze aan. Ze "
-"verbruiken echter extra bronnen, en wellicht wilt u dat niet."
+msgstr "Contextafhankelijke cursors zijn handig. Ze worden standaard gebruikt maar ze verbruiken echter extra bronnen, en wellicht wilt u dat niet."
 
 #: ../app/config/gimprc-blurbs.h:50
 msgid ""
@@ -3867,22 +3851,16 @@ msgstr ""
 "aangemaakte dialogen."
 
 #: ../app/config/gimprc-blurbs.h:255
-#, fuzzy
 msgid ""
 "When enabled, the image window will automatically resize itself whenever the "
 "physical image size changes."
-msgstr ""
-"Als dit aanstaat zal het afbeeldingsvenster zichzelf herschalen als de "
-"afbeelding zelf wordt geschaald."
+msgstr "Als dit aanstaat zal het venster automatisch meeschalen als de grootte van de afbeelding wijzigt."
 
 #: ../app/config/gimprc-blurbs.h:259
-#, fuzzy
 msgid ""
 "When enabled, the image window will automatically resize itself when zooming "
 "into and out of images."
-msgstr ""
-"Als dit aanstaat zal het afbeeldingsvenster zichzelf herschalen als er op de "
-"afbeelding wordt in- of uitgezoomd."
+msgstr "Als dit aanstaat zal het venster automatisch meeschalen bij het in of uitzoomen op afbeeldingen."
 
 #: ../app/config/gimprc-blurbs.h:263
 msgid "Let GIMP try to restore your last saved session on each startup."
@@ -3904,9 +3882,8 @@ msgstr ""
 "GIMP afsluit."
 
 #: ../app/config/gimprc-blurbs.h:273
-#, fuzzy
 msgid "Save the tool options when the GIMP exits."
-msgstr "Sla gewijzigde sneltoetsen op als de GIMP afsluit."
+msgstr "De gereedschapsopties opslaan wanneer GIMP wordt afgesloten."
 
 #: ../app/config/gimprc-blurbs.h:279
 msgid ""
@@ -3994,26 +3971,20 @@ msgstr ""
 "geschakeld met het menu-item \"Beeld/Raster tonen\"."
 
 #: ../app/config/gimprc-blurbs.h:324
-#, fuzzy
 msgid ""
 "When enabled, the sample points are visible by default. This can also be "
 "toggled with the \"View->Show Sample Points\" command."
-msgstr ""
-"Als dit aanstaat, zijn de linealen standaard zichtbaar. Dit kan ook worden "
-"geschakeld met het menu-item \"Beeld/Linealen tonen\"."
+msgstr "Als dit aanstaat, zijn de monsterpunten standaard zichtbaar. Dit kan ook worden geschakeld met het menu-item \"Beeld->Monsterpunten tonen\"."
 
 #: ../app/config/gimprc-blurbs.h:328
-#, fuzzy
 msgid "Enable displaying a handy GIMP tip on startup."
 msgstr "Toon handige tips bij het starten van de GIMP."
 
 #: ../app/config/gimprc-blurbs.h:331
-#, fuzzy
 msgid "Enable tooltips display."
 msgstr "Toon zwevende tips."
 
 #: ../app/config/gimprc-blurbs.h:334
-#, fuzzy
 msgid ""
 "Sets the swap file location. The GIMP uses a tile based memory allocation "
 "scheme. The swap file is used to quickly and easily swap tiles out to disk "
@@ -4021,15 +3992,7 @@ msgid ""
 "GIMP is used with large images. Also, things can get horribly slow if the "
 "swap file is created on a directory that is mounted over NFS.  For these "
 "reasons, it may be desirable to put your swap file in \"/tmp\"."
-msgstr ""
-"De locatie van het wisselbestand. De GIMP gebruikt een op 'tegels' "
-"gebaseerde geheugentoewijzingsmethode. Het wisselbestand wordt gebruikt om "
-"snel en gemakkelijk tegels naar de schijf te schrijven en weer terug te "
-"halen. Hou er rekening mee dat het wisselbestand gemakkelijk erg groot kan "
-"worden als de GIMP met grote afbeeldingen wordt gebruikt. De computer kan "
-"ook zeer traag worden als het wisselbestand wordt aangemaakt in een map die "
-"via NFS is aangekoppeld. Om deze redenen kan het wenselijk zijn dat u uw "
-"wisselbestand in \"/tmp\" opslaat (UNIX-achtige systemen)."
+msgstr "De locatie van het wisselbestand. De GIMP gebruikt een op 'tegels' gebaseerde geheugentoewijzingsmethode. Het wisselbestand wordt gebruikt om snel en gemakkelijk tegels van en naar de schijf te schrijven. Hou er rekening mee dat het wisselbestand snel erg groot kan worden als de GIMP met grote afbeeldingen wordt gebruikt. De computer kan ook zeer traag worden als het wisselbestand wordt aangemaakt in een map die via NFS is aangekoppeld. Om deze redenen kan het wenselijk zijn dat u uw wisselbestand in \"/tmp\" aanmaakt (voor UNIX-achtige systemen)."
 
 #: ../app/config/gimprc-blurbs.h:343
 msgid "When enabled, menus can be torn off."
@@ -4040,7 +4003,7 @@ msgid ""
 "When enabled, dock windows (the toolbox and palettes) are set to be "
 "transient to the active image window. Most window managers will keep the "
 "dock windows above the image window then, but it may also have other effects."
-msgstr ""
+msgstr "Indien aangevinkt zijn dokvensters (zoals het gereedschapvenster en de paletten) gerelateerd aan het actieve afbeeldingsvenster. De meeste windowmanagers zullen dan dokvensters boven de afbeelding houden, maar er kunnen ook andere effecten zijn."
 
 #: ../app/config/gimprc-blurbs.h:352
 msgid ""
@@ -4117,14 +4080,15 @@ msgstr ""
 "De grootte van de vakken die worden getoond om transparantie mee aan te "
 "geven."
 
+# bug: twee keer een negatief: not saved, not changed
+# Beter: only save when it has been changed
+# Als dit aanstaat, slaat de GIMP een afbeelding niet op als deze niet 
+# gewijzigd is sinds hij werd geopend.
 #: ../app/config/gimprc-blurbs.h:403
-#, fuzzy
 msgid ""
 "When enabled, the GIMP will not save an image if it has not been changed "
 "since it was opened."
-msgstr ""
-"Als dit aanstaat, slaat de GIMP een afbeelding niet op als deze niet "
-"gewijzigd is sinds hij werd geopend."
+msgstr "Als dit aanstaat, slaat de GIMP een afbeelding alleen dan op wanneer deze is gewijzigd sinds hij werd geopend."
 
 #: ../app/config/gimprc-blurbs.h:407
 msgid ""
@@ -4472,10 +4436,10 @@ msgid "Grid"
 msgstr "Raster"
 
 #: ../app/core/core-enums.c:818 ../app/core/core-enums.c:848
-#, fuzzy
 msgid "Sample Point"
-msgstr "Pad schalen"
+msgstr "Monsterpunt"
 
+# wat is dit nu weer? mod?
 #: ../app/core/core-enums.c:820 ../app/core/core-enums.c:851
 #, fuzzy
 msgid "Drawable mod"
@@ -4615,9 +4579,8 @@ msgid "Set layer opacity"
 msgstr "Ondoorzichtigheid laag instellen"
 
 #: ../app/core/core-enums.c:862
-#, fuzzy
 msgid "Lock/Unlock alpha channel"
-msgstr "_Alphakanaal van laag"
+msgstr "Alphakanaal vastzetten/losmaken"
 
 #: ../app/core/core-enums.c:864
 msgid "Text modified"
@@ -4721,9 +4684,8 @@ msgstr ""
 "Niet in staat te knippen of kopiëren, omdat geselecteerd gebied leeg is."
 
 #: ../app/core/gimp-edit.c:565
-#, fuzzy
 msgid "Global Buffer"
-msgstr "Buffers"
+msgstr "Algemene buffer"
 
 #: ../app/core/gimp-gradients.c:68
 msgid "FG to BG (RGB)"
@@ -4916,9 +4878,8 @@ msgid "Transform Channel"
 msgstr "Kanaal transformeren"
 
 #: ../app/core/gimpchannel.c:304
-#, fuzzy
 msgid "Stroke Channel"
-msgstr "Kanaal krimpen"
+msgstr "Kanaal naar pad"
 
 # Klopt dit?
 #: ../app/core/gimpchannel.c:325
@@ -5057,9 +5018,8 @@ msgid "Equalize"
 msgstr "Gelijkmaken"
 
 #: ../app/core/gimpdrawable-foreground-extract.c:111
-#, fuzzy
 msgid "Foreground Extraction..."
-msgstr "Voorgrondkleur"
+msgstr "Voorgrond uitnemen..."
 
 #: ../app/core/gimpdrawable-invert.c:61
 msgid "Invert"
@@ -5192,9 +5152,8 @@ msgid "Add Color to Colormap"
 msgstr "Kleur toevoegen aan kleurenkaart"
 
 #: ../app/core/gimpimage-convert.c:810
-#, fuzzy
 msgid "Cannot convert image: palette is empty."
-msgstr "Kan een palet met meer dan 256 kleuren niet omzetten."
+msgstr "Kan afbeelding niet omzetten: palet is leeg."
 
 #: ../app/core/gimpimage-convert.c:824
 msgid "Convert Image to RGB"
@@ -5299,11 +5258,11 @@ msgstr "Kan %s niet ongedaan maken"
 
 #: ../app/core/gimpimage.c:1423
 msgid "Change Image Resolution"
-msgstr "Afbeeldingsresolutie veranderen"
+msgstr "Afbeeldingsresolutie wijzigen"
 
 #: ../app/core/gimpimage.c:1463
 msgid "Change Image Unit"
-msgstr "Afbeeldingseenheid veranderen"
+msgstr "Afbeeldingseenheid wijzigen"
 
 #: ../app/core/gimpimage.c:2276
 msgid "Attach Parasite to Image"
@@ -5493,7 +5452,7 @@ msgstr "Kon miniatuurbestand '%s' niet openen: %s"
 #: ../app/core/gimpinterpreterdb.c:297
 #, c-format
 msgid "Bad interpreter referenced in interpreter file %s: %s"
-msgstr ""
+msgstr "Foutieve interpretatieprogramma gerefereerd in interpretatiebestand %s: %s"
 
 #: ../app/core/gimpinterpreterdb.c:355
 #, c-format
@@ -6012,7 +5971,7 @@ msgstr "Locatie invoeren (URI):"
 msgid ""
 "The given filename does not have any known file extension. Please enter a "
 "known file extension or select a file format from the file format list."
-msgstr ""
+msgstr "De gegeven bestandsnaam heeft geen bekende bestandsextensie. Geen een bekende extensie of kies een bestandsformaat ui de bestandsformaatlijst."
 
 #. remote URI
 #: ../app/dialogs/file-save-dialog.c:328
@@ -6091,14 +6050,11 @@ msgid "You are trying to create an image with a size of %s."
 msgstr "U probeert een afbeelding aan te maken met grootte %s."
 
 #: ../app/dialogs/image-new-dialog.c:308
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "An image of the chosen size will use more memory than what is configured as "
 "\"Maximum Image Size\" in the Preferences dialog (currently %s)."
-msgstr ""
-"Een afbeelding met de gekozen afmetingen zal meer geheugen nodig hebben dan "
-"momenteel als \"Maximale afbeeldingsgrootte\" is geconfigureerd in het "
-"dialoogvenster Voorkeuren (momenteel %s)."
+msgstr "Een afbeelding met de gekozen afmetingen zal meer geheugen gebruiken dan momenteel als \"Maximale afbeeldingsgrootte\" is geconfigureerd in het dialoogvenster Voorkeuren (momenteel %s)."
 
 #  Scaling
 #: ../app/dialogs/image-scale-dialog.c:174
@@ -6106,23 +6062,17 @@ msgid "Confirm Scaling"
 msgstr "Schalen bevestigen"
 
 #: ../app/dialogs/image-scale-dialog.c:214
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Scaling the image to the chosen size will make it use more memory than what "
 "is configured as \"Maximum Image Size\" in the Preferences dialog (currently "
 "%s)."
-msgstr ""
-"Een afbeelding met de gekozen afmetingen zal meer geheugen nodig hebben dan "
-"momenteel als \"Maximale afbeeldingsgrootte\" is geconfigureerd in het "
-"dialoogvenster Voorkeuren (momenteel %s)."
+msgstr "Wanneer de afbeelding wordt herschaald naar de gekozen afmetingen zal het meer geheugen gebruiken dan momenteel is geconfigureerd als \"Maximale afbeeldingsgrootte\" in het dialoogvenster Voorkeuren (momenteel %s)."
 
 #: ../app/dialogs/image-scale-dialog.c:229
-#, fuzzy
 msgid ""
 "Scaling the image to the chosen size will shrink some layers completely away."
-msgstr ""
-"Door de gekozen afbeeldingsgrootte zullen sommige lagen in het niets "
-"verdwijnen. Wilt u dit?"
+msgstr "Wanneer de afbeelding wordt herschaald naar de gekozen afmetingen zullen sommige lagen zo klein worden dat ze verdwijnen."
 
 #: ../app/dialogs/image-scale-dialog.c:233
 msgid "Is this what you want to do?"
@@ -6384,36 +6334,36 @@ msgstr "Invoerapparaten configureren"
 msgid "Configure Keyboard Shortcuts"
 msgstr "Sneltoetsen configureren"
 
+# Typ een nieuwe sneltoets, of geef Backspace om te wissen<
 #: ../app/dialogs/preferences-dialog.c:551
-#, fuzzy
 msgid ""
 "To edit a shortcut key, click on the corresponding row and type a new "
 "accelerator, or press backspace to clear."
-msgstr "Typ een nieuwe sneltoets, of geef Backspace om te wissen"
+msgstr "Om een sneltoets te wijzigen klikt op de op corresponderende regel en typt u een nieuwe toetscombinatie, of geeft u een backspace om de sneltoets te wissen."
 
 #: ../app/dialogs/preferences-dialog.c:598
 msgid ""
 "Your keyboard shortcuts will be reset to default values the next time you "
 "start GIMP."
-msgstr ""
+msgstr "Uw sneltoetsen zullen naar hun standaardwaarden worden teruggezet wanneer u de volgende keer GIMP opstart."
 
 #: ../app/dialogs/preferences-dialog.c:632
 msgid ""
 "Your window setup will be reset to default values the next time you start "
 "GIMP."
-msgstr ""
+msgstr "Uw vensterindeling zal naar de standaardwaarden worden teruggezet wanneer u de volgende keer GIMP opstart."
 
 #: ../app/dialogs/preferences-dialog.c:666
 msgid ""
 "Your input device settings will be reset to default values the next time you "
 "start GIMP."
-msgstr ""
+msgstr "Uw invoerapparaten zullen naar de standaardwaarden worden teruggezet wanneer u de volgende keer GIMP opstart."
 
 #: ../app/dialogs/preferences-dialog.c:700
 msgid ""
 "Your tool options will be reset to default values the next time you start "
 "GIMP."
-msgstr ""
+msgstr "Uw gereedschapopties zullen naar de standaardwaarden worden teruggezet wanneer u de volgende keer GIMP opstart."
 
 #: ../app/dialogs/preferences-dialog.c:1190
 msgid "Show _menubar"
@@ -6640,9 +6590,8 @@ msgid "Save Tool Options _Now"
 msgstr "Gereedschapsopties _nu opslaan"
 
 #: ../app/dialogs/preferences-dialog.c:1732
-#, fuzzy
 msgid "_Reset Saved Tool Options to Default Values"
-msgstr "_Opgeslagen vensterposities herstellen bij opstarten"
+msgstr "_Opgeslagen gereedschapsopties herstellen naar standaardwaarden"
 
 #  Snapping Distance
 #. Snapping Distance
@@ -6773,7 +6722,7 @@ msgstr "Cursor_modus:"
 
 #: ../app/dialogs/preferences-dialog.c:1950
 msgid "Cursor re_ndering:"
-msgstr ""
+msgstr "Cursor _tekenen:"
 
 #: ../app/dialogs/preferences-dialog.c:1962
 msgid "Image Window Appearance"
@@ -6900,29 +6849,37 @@ msgid "Select Monitor Color Profile"
 msgstr "Beeldscherm kleurprofiel selecteren"
 
 #: ../app/dialogs/preferences-dialog.c:2259
-#, fuzzy
 msgid "_Print simulation profile:"
-msgstr "_Printer-profiel"
+msgstr "_Simulatieprofiel afdrukken"
 
 #: ../app/dialogs/preferences-dialog.c:2260
 msgid "Select Printer Color Profile"
 msgstr "Printer kleurprofiel selecteren"
 
+# afdeling: Colormanagement
+# opties zijn: Color manged display, No color mangement, print simulation
 #: ../app/dialogs/preferences-dialog.c:2269
 msgid "_Mode of operation:"
-msgstr ""
+msgstr "_Kleurweergave:"
 
+# tooltip: sets how colors are managed for your display
+# opties: gevoelsmatig, relative colorimetric, Verzadiging,
+#  absolute colorimetric
 #: ../app/dialogs/preferences-dialog.c:2272
 msgid "_Display rendering intent:"
-msgstr ""
+msgstr "_Beeldscherm weergavedoel:"
 
+# Tooltip: sets how colors are converted from workspace to the print
+# simulation device.
+# afdrukvoorbeeld/softproof/
 #: ../app/dialogs/preferences-dialog.c:2275
 msgid "_Softproof rendering intent:"
-msgstr ""
+msgstr "_Softproof weergavedoel:"
 
+# dit is een keuzerondje
 #: ../app/dialogs/preferences-dialog.c:2304
 msgid "_Try to obtain the monitor profile from the X server"
-msgstr ""
+msgstr "_Probeer het beeldschermprofiel van de X-server te verkrijgen"
 
 #: ../app/dialogs/preferences-dialog.c:2323
 msgid "Input Devices"
@@ -6947,9 +6904,8 @@ msgid "Save Input Device Settings _Now"
 msgstr "Apparaatinstellingen _nu opslaan"
 
 #: ../app/dialogs/preferences-dialog.c:2355
-#, fuzzy
 msgid "_Reset Saved Input Device Settings to Default Values"
-msgstr "Sla apparaatinstellingen op bij verlaten"
+msgstr "_Opgeslagen invoerapparaatinstellingen herstellen naar standaardwaarden"
 
 #: ../app/dialogs/preferences-dialog.c:2370
 msgid "Additional Input Controllers"
@@ -6968,18 +6924,16 @@ msgid "Window Manager Hints"
 msgstr "Vensterbeheer hints"
 
 #: ../app/dialogs/preferences-dialog.c:2404
-#, fuzzy
 msgid "Hint for the _toolbox:"
-msgstr "Venstertypehint voor de Gereedschappen:"
+msgstr "_Venstertypehint voor het gereedschapvenster:"
 
 #: ../app/dialogs/preferences-dialog.c:2408
-#, fuzzy
 msgid "Hint for other _docks:"
-msgstr "Venstertypehint voor de dokken:"
+msgstr "V_enstertypehint voor de overige dokken:"
 
 #: ../app/dialogs/preferences-dialog.c:2412
 msgid "Toolbox and other docks are transient to the active display"
-msgstr ""
+msgstr "Gereedschap en overige dokken zijn gerelateerd aan het actieve venster"
 
 #: ../app/dialogs/preferences-dialog.c:2416
 msgid "Focus"
@@ -7352,22 +7306,14 @@ msgid ""
 "additional units and use them just like you use the built-in units inches, "
 "millimeters, points and picas.  This file is overwritten each time you quit "
 "the GIMP."
-msgstr ""
-"Het unitrc-bestand wordt gebruikt om uw eenhedendatabase op te slaan. U kunt "
-"additionele eenheden definiëren en deze net zo gebruiken als de ingebouwde "
-"eenheden, zoals duimen, millimeters, punten en picas. Dit bestand wordt elke "
-"keer dat u de GIMP afsluit, opgeslagen."
+msgstr "Het bestand unitrc wordt gebruikt om uw eenhedendatabase op te slaan. U kunt extra eenheden definiëren en deze net zo gebruiken als de ingebouwde eenheden, zoals duimen, millimeters, punten en picas. Dit bestand wordt elke keer dat u de GIMP afsluit, opgeslagen."
 
 # doorzoekt ipv controleert, zie overige beschrijvingen
 #: ../app/dialogs/user-install-dialog.c:186
-#, fuzzy
 msgid ""
 "This folder is used to store user defined brushes. GIMP checks this folder "
 "in addition to the system-wide brushes installation."
-msgstr ""
-"Deze map wordt gebruikt om door de gebruiker gedefinieerde penselen in op te "
-"slaan. De GIMP controleert deze map naast de systeembrede map voor penselen "
-"bij het zoeken naar penselen."
+msgstr "Deze map wordt gebruikt om door de gebruiker gedefinieerde penselen in op te slaan. De GIMP doorzoekt zowel deze map als de systeembrede map op beschikbare penselen."
 
 #: ../app/dialogs/user-install-dialog.c:193
 msgid ""
@@ -7375,107 +7321,69 @@ msgid ""
 "checks this folder in addition to the system-wide fonts installation. Use "
 "this only if you really want to have fonts available in GIMP only, otherwise "
 "put them in your global font directory."
-msgstr ""
-"Deze map wordt gebruikt voor fonts die alleen voor GIMP beschikbaar zijn. De "
-"GIMP doorzoekt deze map naast de systeembrede map voor fonts. Gebruik dit "
-"alleen wanneer u de fonts echt alleen in de GIMP beschikbaar wilt hebben. "
-"Zet de fonts anders in uw algemene fontmap."
+msgstr "Deze map wordt gebruikt voor fonts die alleen voor GIMP beschikbaar zijn. De GIMP doorzoekt zowel deze map als de systeembrede map op beschikbare fonts. Gebruik dit alleen wanneer u de fonts echt alleen in de GIMP beschikbaar wilt hebben. Zet de fonts anders in uw algemene fontmap."
 
 #: ../app/dialogs/user-install-dialog.c:202
 msgid ""
 "This folder is used to store user defined gradients.  GIMP checks this "
 "folder in addition to the system-wide gradients installation."
-msgstr ""
-"Deze map wordt gebruikt om door de gebruiker gedefinieerde verlopen in op te "
-"slaan. De GIMP doorzoekt deze map naast de systeembrede map voor verlopen."
+msgstr "Deze map wordt gebruikt om door de gebruiker gedefinieerde verlopen in op te slaan. De GIMP doorzoekt zowel deze map als de systeembrede map op beschikbare verlopen."
 
 # doorzoekt ipv controleert, zie overige beschrijvingen
 #: ../app/dialogs/user-install-dialog.c:209
-#, fuzzy
 msgid ""
 "This folder is used to store user defined palettes.  GIMP checks this folder "
 "in addition to the system-wide palettes installation."
-msgstr ""
-"Deze map wordt gebruikt om door de gebruiker gedefinieerde paletten in op te "
-"slaan. De GIMP controleert deze map naast de systeembrede map voor paletten "
-"bij het zoeken naar paletten."
+msgstr "Deze map wordt gebruikt om door de gebruiker gedefinieerde paletten in op te slaan. De GIMP doorzoekt zowel deze map als de systeembrede map op beschikbare paletten."
 
 # doorzoekt ipv controleert, zie overige beschrijvingen
 #: ../app/dialogs/user-install-dialog.c:216
-#, fuzzy
 msgid ""
 "This folder is used to store user defined patterns.  GIMP checks this folder "
 "in addition to the system-wide patterns installation when searching for "
 "patterns."
-msgstr ""
-"Deze map wordt gebruikt om door de gebruiker gedefinieerde patronen in op te "
-"slaan. De GIMP controleert deze map naast de systeembrede map voor patronen "
-"bij het zoeken naar patronen."
+msgstr "Deze map wordt gebruikt om door de gebruiker gedefinieerde patronen in op te slaan. De GIMP doorzoekt zowel deze map als de systeembrede map op beschikbare patronen."
 
 # doorzoekt ipv controleert, zie overige beschrijvingen
 #: ../app/dialogs/user-install-dialog.c:223
-#, fuzzy
 msgid ""
 "This folder is used to store user created, temporary, or otherwise non-"
 "system-supported plug-ins.  GIMP checks this folder in addition to the "
 "system-wide plug-in folder."
-msgstr ""
-"Deze map wordt gebruikt om door de gebruiker aangemaakte, tijdelijke, of "
-"andere niet door het systeem ondersteunde plug-ins in op te slaan. De GIMP "
-"controleert deze map naast de systeembrede map voor plug-ins bij het zoeken "
-"naar plug-ins."
+msgstr "Deze map wordt gebruikt om door de gebruiker aangemaakte, tijdelijke, of andere niet door het systeem ondersteunde plug-ins in op te slaan. De GIMP doorzoekt zowel deze map als de systeembrede map op beschikbare plug-ins."
 
 # doorzoekt ipv controleert, zie overige beschrijvingen
 #: ../app/dialogs/user-install-dialog.c:231
-#, fuzzy
 msgid ""
 "This folder is used to store user created, temporary, or otherwise non-"
 "system-supported DLL modules.  GIMP checks this folder in addition to the "
 "system-wide module folder."
-msgstr ""
-"Deze map wordt gebruikt om door de gebruiker gemaakte, tijdelijke of andere "
-"niet door het systeem ondersteunde DLL-modules in op te slaan. De GIMP "
-"controleert deze map naast de systeembrede map voor modules bij het zoeken "
-"naar modules tijdens het opstarten."
+msgstr "Deze map wordt gebruikt om door de gebruiker gemaakte, tijdelijke of andere niet door het systeem ondersteunde DLL-modules in op te slaan. De GIMP doorzoekt zowel deze map als de systeembrede map op beschikbare modules."
 
 # doorzoekt ipv controleert, zie overige beschrijvingen
 #: ../app/dialogs/user-install-dialog.c:239
-#, fuzzy
 msgid ""
 "This folder is used to store configuration for user created, temporary, or "
 "otherwise non-system-supported plug-in interpreters.  GIMP checks this "
 "folder in addition to the system-wide GIMP interpreters folder when "
 "searching for plug-in interpreter configuration files."
-msgstr ""
-"Deze map wordt gebruikt om door de gebruiker aangemaakte, tijdelijke, of "
-"andere niet door het systeem ondersteunde plug-ins in op te slaan. De GIMP "
-"controleert deze map naast de systeembrede map voor plug-ins bij het zoeken "
-"naar plug-ins."
+msgstr "Deze map wordt gebruikt om door de gebruiker aangemaakte, tijdelijke, of andere niet door het systeem ondersteunde plug-ins in op te slaan. De GIMP doorzoekt zowel deze map als de systeembrede map op beschikbare plug-ins."
 
 # doorzoekt ipv controleert, zie overige beschrijvingen
 #: ../app/dialogs/user-install-dialog.c:249
-#, fuzzy
 msgid ""
 "This folder is used to store user created, temporary, or otherwise non-"
 "system-supported additions to the plug-in environment.  GIMP checks this "
 "folder in addition to the system-wide GIMP environment folder when searching "
 "for plug-in environment modification files."
-msgstr ""
-"Deze map wordt gebruikt om door de gebruiker aangemaakte, tijdelijke, of "
-"andere niet door het systeem toevoegingen aan de plug-inomgeving op  te "
-"slaan. De GIMP controleert deze map naast de systeembrede omgevingsmap bij "
-"het zoeken naar plug-ins."
+msgstr "Deze map wordt gebruikt om door de gebruiker aangemaakte, tijdelijke, of andere niet door het systeem ondersteunde toevoegingen aan de plug-inomgeving in op te slaan. De GIMP doorzoekt zowel deze map als de systeembrede omgevingsmap op beschikbare plug-ins."
 
 # doorzoekt ipv controleert, zie overige beschrijvingen
 #: ../app/dialogs/user-install-dialog.c:259
-#, fuzzy
 msgid ""
 "This folder is used to store user created and installed scripts.  GIMP "
 "checks this folder in addition to the systemwide scripts folder."
-msgstr ""
-"Deze map wordt gebruikt om door de gebruiker gemaakte en geïnstalleerde "
-"scripts in op te slaan. De GIMP controleert deze map naast de systeembrede "
-"map voor scripts bij het zoeken naar scripts."
+msgstr "Deze map wordt gebruikt om door de gebruiker gemaakte en geïnstalleerde scripts in op te slaan. De GIMP doorzoekt zowel deze map als de systeembrede map op beschikbare scripts."
 
 #: ../app/dialogs/user-install-dialog.c:266
 msgid "This folder is searched for image templates."
@@ -7486,9 +7394,8 @@ msgid "This folder is searched for user-installed themes."
 msgstr "In deze map worden door de gebruiker geplaatste thema's gezocht."
 
 #: ../app/dialogs/user-install-dialog.c:276
-#, fuzzy
 msgid "This folder is used for temporary files."
-msgstr "In deze map worden afbeeldingssjablonen gezocht."
+msgstr "Deze map wordt gebruikt voor tijdelijke bestanden."
 
 #: ../app/dialogs/user-install-dialog.c:281
 msgid "This folder is used to store tool options."
@@ -7835,9 +7742,10 @@ msgstr "%d minuten"
 msgid "Drop New Layer"
 msgstr "Nieuwe laag slepen"
 
+# drag and drop
 #: ../app/display/gimpdisplayshell-dnd.c:246
 msgid "Drop New Path"
-msgstr "Nieuw pad verwijderen"
+msgstr "Nieuw pad slepen"
 
 #: ../app/display/gimpdisplayshell-dnd.c:542
 #: ../app/widgets/gimplayertreeview.c:837 ../app/widgets/gimptoolbox-dnd.c:359
@@ -8610,7 +8518,6 @@ msgstr "Hele selectie vullen"
 
 # gelijkende/gelijkaardige/gelijkwaardige/eendere
 #: ../app/tools/gimpbucketfilloptions.c:254
-#, fuzzy
 msgid "Fill similar colors"
 msgstr "Gelijkaardige kleuren vullen"
 
@@ -8655,9 +8562,8 @@ msgid "_Clone"
 msgstr "_Klonen"
 
 #: ../app/tools/gimpclonetool.c:270
-#, fuzzy
 msgid "Ctrl-Click to set a clone source."
-msgstr "Klik om een nieuw pad aan te maken"
+msgstr "Ctrl-klik om de bron van een kloon in te stellen."
 
 #: ../app/tools/gimpclonetool.c:329
 msgid "Source"
@@ -8684,7 +8590,6 @@ msgid "Color balance operates only on RGB color layers."
 msgstr "Kleurbalans werkt enkel op RGB-lagen."
 
 #: ../app/tools/gimpcolorbalancetool.c:275
-#, fuzzy
 msgid "Select Range to Adjust"
 msgstr "Selecteer bereik om aan te passen"
 
@@ -8978,13 +8883,13 @@ msgstr "_Vrije selectie"
 
 #: ../app/tools/gimpforegroundselectoptions.c:109
 msgid "Size of the brush used for refinements"
-msgstr ""
+msgstr "Grootte van het penseel dat gebruikt wordt voor verfijningen"
 
 #: ../app/tools/gimpforegroundselectoptions.c:114
 msgid ""
 "Smaller values give a more accurate selection border but may introduce holes "
 "in the selection"
-msgstr ""
+msgstr "Kleinere waardes geven een meer accurate selectierand maar kon zorgen voor gaten in de selectie."
 
 # component niet meevertaald
 #: ../app/tools/gimpforegroundselectoptions.c:121
@@ -9001,7 +8906,7 @@ msgstr "Gevoelgheid voor geel/blauw"
 
 #: ../app/tools/gimpforegroundselectoptions.c:226
 msgid "Interactive refinement"
-msgstr ""
+msgstr "Interactieve fijnafstelling"
 
 # aanmerken/selecteren/markeren
 #: ../app/tools/gimpforegroundselectoptions.c:227
@@ -9012,21 +8917,22 @@ msgstr "Achtergrond markeren"
 msgid "Mark foreground"
 msgstr "Voorgrond markeren"
 
-# dun/klein
+# dun/klein/smal
 #: ../app/tools/gimpforegroundselectoptions.c:243
 msgid "Small brush"
 msgstr "Dun penseel"
 
-# dik/groot
+# dik/groot/breed
 #: ../app/tools/gimpforegroundselectoptions.c:251
 msgid "Large brush"
 msgstr "Dik penseel"
 
+# toont een shuifknop waarmee de zachtheid van de 
+# selectie kan worden ingesteld.
 # glad
 #: ../app/tools/gimpforegroundselectoptions.c:274
-#, fuzzy
 msgid "Smoothing:"
-msgstr "Geleidelijk"
+msgstr "Zachtheid:"
 
 #. granularity
 #: ../app/tools/gimpforegroundselectoptions.c:277
@@ -9085,9 +8991,8 @@ msgid "Hue-_Saturation..."
 msgstr "_Tint-Verzadiging..."
 
 #: ../app/tools/gimphuesaturationtool.c:171
-#, fuzzy
 msgid "Adjust Hue / Lightness / Saturation"
-msgstr "Regelingen voor Kleurtoon / Lichtheid / Verzadiging"
+msgstr "Regelaars voor Kleurtoon / Lichtheid / Verzadiging"
 
 #: ../app/tools/gimphuesaturationtool.c:215
 msgid "Hue-Saturation operates only on RGB color layers."
@@ -9481,6 +9386,7 @@ msgstr "Posteriseren werkt niet op geïndexeerde lagen."
 msgid "Posterize _levels:"
 msgstr "Posterisatie_niveaus:"
 
+# oplichten/uitlichten
 #: ../app/tools/gimprectangleoptions.c:660
 #, fuzzy
 msgid "Highlight"
@@ -9625,10 +9531,10 @@ msgstr "Gebruik alle zichtbare lagen bij het krimpen van de selectie"
 msgid "Antialiasing"
 msgstr "Anti-aliasing"
 
+# zachte/vage/onscherpe randen
 #: ../app/tools/gimpselectionoptions.c:457
-#, fuzzy
 msgid "Feather edges"
-msgstr "Vage randen"
+msgstr "Zachte randen"
 
 #: ../app/tools/gimpselectionoptions.c:483
 #, fuzzy
@@ -9718,16 +9624,13 @@ msgstr ""
 msgid "Indentation of the first line"
 msgstr "Inspringing van eerste regel"
 
-# rasterlijnafstand/spatiering
 #: ../app/tools/gimptextoptions.c:183
-#, fuzzy
 msgid "Adjust line spacing"
-msgstr "Rasterlijnafstand"
+msgstr "Regelafstand aanpassen"
 
 #: ../app/tools/gimptextoptions.c:188
-#, fuzzy
 msgid "Adjust letter spacing"
-msgstr "Regeltussenruimte aanpassen"
+msgstr "Letterafstand aanpassen"
 
 #: ../app/tools/gimptextoptions.c:430
 msgid "Font:"
@@ -9737,10 +9640,10 @@ msgstr "Font:"
 msgid "Hinting"
 msgstr "Hinting"
 
+# gebruik/gebruiken
 #: ../app/tools/gimptextoptions.c:449
-#, fuzzy
 msgid "Force auto-hinter"
-msgstr "Gebruik auto-hinter"
+msgstr "Auto-hinter gebruiken"
 
 #: ../app/tools/gimptextoptions.c:464
 msgid "Text Color"
@@ -9755,14 +9658,12 @@ msgid "Justify:"
 msgstr "Uitvullen:"
 
 #: ../app/tools/gimptextoptions.c:493
-#, fuzzy
 msgid "Create Path from Text"
 msgstr "Pad van tekst maken"
 
 #: ../app/tools/gimptextoptions.c:501
-#, fuzzy
 msgid "Text along Path"
-msgstr "Naar _pad"
+msgstr "Tekst langs pad"
 
 #: ../app/tools/gimptexttool.c:147
 msgid "Add text to the image"
@@ -9863,20 +9764,19 @@ msgstr "Verhouding behouden %s"
 msgid "Transforming..."
 msgstr "Transformatie (bezig)"
 
-# veelhoeken
+# veelhoeken/polygonen/polygonalen
 #: ../app/tools/gimpvectoroptions.c:111
-#, fuzzy
 msgid "Restrict editing to polygons"
-msgstr "bewerken beperken tot polygonalen"
+msgstr "bewerken beperken tot veelhoeken"
 
 #: ../app/tools/gimpvectoroptions.c:175
 msgid "Edit Mode"
 msgstr "Bewerkstand"
 
-# veelhoek / meerhoek
+# veelhoek / polygon
 #: ../app/tools/gimpvectoroptions.c:180
 msgid "Polygonal"
-msgstr "Polygonaal"
+msgstr "Veelhoek"
 
 #: ../app/tools/gimpvectoroptions.c:184
 #, fuzzy, c-format
@@ -9966,7 +9866,7 @@ msgstr "Klik om nieuwe component van het pad aan te maken."
 
 #: ../app/tools/gimpvectortool.c:1201
 msgid "Click to create a new anchor. (try SHIFT)"
-msgstr "Klik om een nieuw anker aan te maken. (Probeer SHIFT.)"
+msgstr "Klik om een nieuw anker aan te maken. (Probeer SHIFT)"
 
 #: ../app/tools/gimpvectortool.c:1204
 msgid "Click-Drag to move the anchor around."
@@ -9978,15 +9878,15 @@ msgstr "Klik-sleep om de ankers te slepen."
 
 #: ../app/tools/gimpvectortool.c:1210
 msgid "Click-Drag to move the handle around. (try SHIFT)"
-msgstr "Klik-sleep om het handvat te slepen. (Probeer SHIFT.)"
+msgstr "Klik-sleep om het handvat te slepen. (Probeer SHIFT)"
 
 #: ../app/tools/gimpvectortool.c:1216
 msgid "Click-Drag to change the shape of the curve. (SHIFT: symmetrical)"
-msgstr "Klik-sleep om de vorm van de curve te veranderen. (SHIFT: symetrisch.)"
+msgstr "Klik-sleep om de vorm van de curve te wijzigen. (SHIFT: symetrisch)"
 
 #: ../app/tools/gimpvectortool.c:1220
 msgid "Click-Drag to move the component around. (try SHIFT)"
-msgstr "Klik-sleep om het component te slepen. (Probeer SHIFT.)"
+msgstr "Klik-sleep om het component te slepen. (Probeer SHIFT)"
 
 #: ../app/tools/gimpvectortool.c:1224
 msgid "Click-Drag to move the path around."
@@ -9994,7 +9894,7 @@ msgstr "Klik-sleep om het pad te slepen."
 
 #: ../app/tools/gimpvectortool.c:1227
 msgid "Click to insert an anchor on the path. (try SHIFT)"
-msgstr "Klik om een anker op het pad in te voegen. (Probeer SHIFT.)"
+msgstr "Klik om een anker op het pad in te voegen. (Probeer SHIFT)"
 
 #: ../app/tools/gimpvectortool.c:1230
 msgid "Click to delete this anchor."
@@ -10113,10 +10013,11 @@ msgstr "_Sneltoetsen opnieuw toewijzen"
 msgid "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
 msgstr "Sneltoets \"%s\" is al in gebruik bij \"%s\" in de groep \"%s\"."
 
+#
 #: ../app/widgets/gimpactionview.c:573
 #, c-format
 msgid "Reassigning the shortcut will cause it to be removed from \"%s\"."
-msgstr ""
+msgstr "Door het instellen van de sneltoets wordt deze losgekoppeld van \"%s\"."
 
 #: ../app/widgets/gimpactionview.c:630
 msgid "Removing shortcut failed."
@@ -10727,9 +10628,8 @@ msgid "The given filename does not have any known file extension."
 msgstr "De opgegeven bestandsnaam heeft geen bekende extensie."
 
 #: ../app/widgets/gimpdock.c:342
-#, fuzzy
 msgid "Close all Tabs?"
-msgstr "Alle tabs sluiten"
+msgstr "Alle tabs sluiten?"
 
 #: ../app/widgets/gimpdock.c:348
 msgid "Close all Tabs"
@@ -10779,7 +10679,6 @@ msgid "By Extension"
 msgstr "Volgens extensie"
 
 #: ../app/widgets/gimpfiledialog.c:469
-#, fuzzy
 msgid "File Exists"
 msgstr "Bestand bestaat"
 
@@ -10847,7 +10746,7 @@ msgid "HSV (%0.3f, %0.3f, %0.3f)"
 msgstr "KVW (%0.3f, %0.3f, %0.3f)"
 
 #: ../app/widgets/gimpgradienteditor.c:949
-#, fuzzy, c-format
+#, c-format
 msgid "Luminance: %0.3f    Opacity: %0.3f"
 msgstr "Intensiteit: %0.3f   Ondoorzichtigheid: %0.3f"
 
@@ -10915,7 +10814,7 @@ msgstr "_Lijnstijl:"
 
 #: ../app/widgets/gimpgrideditor.c:223
 msgid "Change grid foreground color"
-msgstr "Voorgrondkleur raster veranderen"
+msgstr "Voorgrondkleur raster wijzigen"
 
 #: ../app/widgets/gimpgrideditor.c:228
 msgid "_Foreground color:"
@@ -10923,7 +10822,7 @@ msgstr "_Voorgrondkleur:"
 
 #: ../app/widgets/gimpgrideditor.c:232
 msgid "Change grid background color"
-msgstr "Achtergrondkleur raster veranderen"
+msgstr "Achtergrondkleur raster wijzigen"
 
 #: ../app/widgets/gimpgrideditor.c:237
 msgid "_Background color:"
@@ -11007,6 +10906,7 @@ msgstr "Kleurruimte:"
 msgid "Size in memory:"
 msgstr "Grootte in geheugen:"
 
+# aantal stappen
 #: ../app/widgets/gimpimagepropview.c:204
 #, fuzzy
 msgid "Undo steps:"
@@ -11018,9 +10918,8 @@ msgid "Redo steps:"
 msgstr "%s opnieuw uitvoeren"
 
 #: ../app/widgets/gimpimagepropview.c:212
-#, fuzzy
 msgid "Number of pixels:"
-msgstr "Aantal paden:"
+msgstr "Aantal pixels:"
 
 #: ../app/widgets/gimpimagepropview.c:215
 msgid "Number of layers:"
@@ -11063,9 +10962,8 @@ msgid "Reorder Layer"
 msgstr "Laag herschikken"
 
 #: ../app/widgets/gimplayertreeview.c:332
-#, fuzzy
 msgid "Lock alpha channel"
-msgstr "_Alphakanaal van laag"
+msgstr "Alphakanaal vastzetten"
 
 # Dokbaar/aanlegbaar/aankoppelbaar
 #: ../app/widgets/gimplayertreeview.c:344
@@ -11230,11 +11128,11 @@ msgstr "Laden vooruitblik (bezig)"
 
 #: ../app/widgets/gimptoolbox-color-area.c:135
 msgid "Change Foreground Color"
-msgstr "Voorgrondkleur veranderen"
+msgstr "Voorgrondkleur wijzigen"
 
 #: ../app/widgets/gimptoolbox-color-area.c:140
 msgid "Change Background Color"
-msgstr "Achtergrondkleur veranderen"
+msgstr "Achtergrondkleur wijzigen"
 
 #: ../app/widgets/gimptoolbox-image-area.c:115
 #: ../app/widgets/gimptoolbox-image-area.c:120
@@ -11245,9 +11143,10 @@ msgstr ""
 "De actieve afbeelding.\n"
 "Klik om het dialoogvenster Afbeelding te openen."
 
+# wat is XDS (moet de gebruiker dit wel weten?)
 #: ../app/widgets/gimptoolbox-image-area.c:117
 msgid "Drag to an XDS enabled file-manager to save the image."
-msgstr ""
+msgstr "Sleep naar een bestandsbeerder met XDS om de afbeelding op te slaan."
 
 #: ../app/widgets/gimptoolbox-indicator-area.c:149
 msgid ""
@@ -11335,10 +11234,11 @@ msgstr "Open het patroonkeuzedialoogvenster"
 msgid "Open the gradient selection dialog"
 msgstr "Open het verloopkeuzedialoogvenster"
 
+# Dit is een chekbox waarmee een kleurverloop wordt omgedraaid.
 # omgekeerd/omgedraaid/terugdraaien/teruggedraaid
 #: ../app/widgets/gimpviewablebox.c:167
 msgid "Reverse"
-msgstr "Terugdraaien"
+msgstr "Omgekeerd"
 
 #: ../app/widgets/gimpviewablebox.c:210
 msgid "Open the palette selection dialog"
@@ -12172,9 +12072,6 @@ msgstr "Kon '%s' niet opstarten: %s"
 #~ msgid "Set Indexed Palette"
 #~ msgstr "Geïndexeerd palet instellen"
 
-#~ msgid "Change Indexed Palette Entry"
-#~ msgstr "Ingang van geïndexeerd palet veranderen"
-
 #~ msgid "Add Color to Indexed Palette"
 #~ msgstr "Kleur aan geïndexeerd palet toevoegen"
 
@@ -12623,24 +12520,6 @@ msgstr "Kon '%s' niet opstarten: %s"
 
 #~ msgid "Final, Anchored Layer should be:"
 #~ msgstr "Uiteindelijke, verankerde laag moet worden:"
-
-#~ msgid ""
-#~ "You are trying to create an image with a size of %s.\n"
-#~ "\n"
-#~ "Choose OK to create this image anyway.\n"
-#~ "Choose Cancel if you did not intend to create such a large image.\n"
-#~ "\n"
-#~ "To prevent this dialog from appearing, increase the \"Maximum Image Size"
-#~ "\" setting (currently %s) in the Preferences dialog."
-#~ msgstr ""
-#~ "U probeert een afbeelding aan te maken met een grootte van %s.\n"
-#~ "\n"
-#~ "Kies OK om deze afbeelding toch aan te maken.\n"
-#~ "Kies Annuleren als u niet zo'n grote afbeelding wilt aanmaken.\n"
-#~ "\n"
-#~ "Om dit dialoogvenster niet meer te laten verschijnen, kunt u de "
-#~ "instelling \"Maximale afbeeldingsgrootte\" (momenteel %s) in het "
-#~ "dialoogvenster Voorkeuren veranderen."
 
 #~ msgid "Image exceeds maximum image size"
 #~ msgstr "Afbeelding overschrijdt maximale grootte"
