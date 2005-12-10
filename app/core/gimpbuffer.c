@@ -33,66 +33,37 @@
 #include "gimpbuffer.h"
 
 
-static void      gimp_buffer_class_init       (GimpBufferClass *klass);
-static void      gimp_buffer_init             (GimpBuffer      *buffer);
+static void      gimp_buffer_finalize         (GObject       *object);
 
-static void      gimp_buffer_finalize         (GObject         *object);
+static gint64    gimp_buffer_get_memsize      (GimpObject    *object,
+                                               gint64        *gui_size);
 
-static gint64    gimp_buffer_get_memsize      (GimpObject      *object,
-                                               gint64          *gui_size);
-
-static gboolean  gimp_buffer_get_size         (GimpViewable    *viewable,
-                                               gint            *width,
-                                               gint            *height);
-static void      gimp_buffer_get_preview_size (GimpViewable    *viewable,
-                                               gint             size,
-                                               gboolean         is_popup,
-                                               gboolean         dot_for_dot,
-                                               gint            *popup_width,
-                                               gint            *popup_height);
-static gboolean  gimp_buffer_get_popup_size   (GimpViewable    *viewable,
-                                               gint             width,
-                                               gint             height,
-                                               gboolean         dot_for_dot,
-                                               gint            *popup_width,
-                                               gint            *popup_height);
-static TempBuf * gimp_buffer_get_new_preview  (GimpViewable    *viewable,
-                                               gint             width,
-                                               gint             height);
-static gchar   * gimp_buffer_get_description  (GimpViewable    *viewable,
-                                               gchar          **tooltip);
+static gboolean  gimp_buffer_get_size         (GimpViewable  *viewable,
+                                               gint          *width,
+                                               gint          *height);
+static void      gimp_buffer_get_preview_size (GimpViewable  *viewable,
+                                               gint           size,
+                                               gboolean       is_popup,
+                                               gboolean       dot_for_dot,
+                                               gint          *popup_width,
+                                               gint          *popup_height);
+static gboolean  gimp_buffer_get_popup_size   (GimpViewable  *viewable,
+                                               gint           width,
+                                               gint           height,
+                                               gboolean       dot_for_dot,
+                                               gint          *popup_width,
+                                               gint          *popup_height);
+static TempBuf * gimp_buffer_get_new_preview  (GimpViewable  *viewable,
+                                               gint           width,
+                                               gint           height);
+static gchar   * gimp_buffer_get_description  (GimpViewable  *viewable,
+                                               gchar        **tooltip);
 
 
-static GimpViewableClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpBuffer, gimp_buffer, GIMP_TYPE_VIEWABLE);
 
+#define parent_class gimp_buffer_parent_class
 
-GType
-gimp_buffer_get_type (void)
-{
-  static GType buffer_type = 0;
-
-  if (! buffer_type)
-    {
-      static const GTypeInfo buffer_info =
-      {
-        sizeof (GimpBufferClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_buffer_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpBuffer),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_buffer_init,
-      };
-
-      buffer_type = g_type_register_static (GIMP_TYPE_VIEWABLE,
-                                            "GimpBuffer",
-                                            &buffer_info, 0);
-  }
-
-  return buffer_type;
-}
 
 static void
 gimp_buffer_class_init (GimpBufferClass *klass)
@@ -100,8 +71,6 @@ gimp_buffer_class_init (GimpBufferClass *klass)
   GObjectClass      *object_class      = G_OBJECT_CLASS (klass);
   GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
   GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize           = gimp_buffer_finalize;
 

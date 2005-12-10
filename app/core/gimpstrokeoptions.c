@@ -57,58 +57,26 @@ enum
 };
 
 
-static void   gimp_stroke_options_class_init    (GimpStrokeOptionsClass *klass);
-
-static void   gimp_stroke_options_set_property  (GObject           *object,
-                                                 guint              property_id,
-                                                 const GValue      *value,
-                                                 GParamSpec        *pspec);
-static void   gimp_stroke_options_get_property  (GObject           *object,
-                                                 guint              property_id,
-                                                 GValue            *value,
-                                                 GParamSpec        *pspec);
+static void   gimp_stroke_options_set_property  (GObject      *object,
+                                                 guint         property_id,
+                                                 const GValue *value,
+                                                 GParamSpec   *pspec);
+static void   gimp_stroke_options_get_property  (GObject      *object,
+                                                 guint         property_id,
+                                                 GValue       *value,
+                                                 GParamSpec   *pspec);
 
 
-static guint  stroke_options_signals[LAST_SIGNAL] = { 0 };
+G_DEFINE_TYPE (GimpStrokeOptions, gimp_stroke_options, GIMP_TYPE_CONTEXT);
 
-static GimpContextClass *parent_class = NULL;
+static guint stroke_options_signals[LAST_SIGNAL] = { 0 };
 
-
-GType
-gimp_stroke_options_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo info =
-      {
-        sizeof (GimpStrokeOptionsClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_stroke_options_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpStrokeOptions),
-	0,              /* n_preallocs    */
-	NULL            /* instance_init  */
-      };
-
-      type = g_type_register_static (GIMP_TYPE_CONTEXT,
-                                     "GimpStrokeOptions",
-                                     &info, 0);
-    }
-
-  return type;
-}
 
 static void
 gimp_stroke_options_class_init (GimpStrokeOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GParamSpec   *array_spec;
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->set_property = gimp_stroke_options_set_property;
   object_class->get_property = gimp_stroke_options_get_property;
@@ -171,6 +139,11 @@ gimp_stroke_options_class_init (GimpStrokeOptionsClass *klass)
                                                              array_spec,
                                                              GIMP_CONFIG_PARAM_FLAGS));
 
+}
+
+static void
+gimp_stroke_options_init (GimpStrokeOptions *options)
+{
 }
 
 static void

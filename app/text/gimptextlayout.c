@@ -34,65 +34,33 @@
 #include "gimptextlayout.h"
 
 
-static void   gimp_text_layout_class_init  (GimpTextLayoutClass *klass);
-static void   gimp_text_layout_init        (GimpTextLayout      *layout);
-static void   gimp_text_layout_finalize    (GObject             *object);
+static void   gimp_text_layout_finalize           (GObject        *object);
 
-static void   gimp_text_layout_position    (GimpTextLayout      *layout);
+static void   gimp_text_layout_position           (GimpTextLayout *layout);
 
-static PangoContext * gimp_text_get_pango_context (GimpText     *text,
-                                                   gdouble       xres,
-                                                   gdouble       yres);
+static PangoContext * gimp_text_get_pango_context (GimpText       *text,
+                                                   gdouble         xres,
+                                                   gdouble         yres);
 
-static gint   gimp_text_layout_pixel_size         (Gimp         *gimp,
-                                                   gdouble       value,
-                                                   GimpUnit      unit,
-                                                   gdouble       res);
-static gint   gimp_text_layout_point_size         (Gimp         *gimp,
-                                                   gdouble       value,
-                                                   GimpUnit      unit,
-                                                   gdouble       res);
+static gint   gimp_text_layout_pixel_size         (Gimp           *gimp,
+                                                   gdouble         value,
+                                                   GimpUnit        unit,
+                                                   gdouble         res);
+static gint   gimp_text_layout_point_size         (Gimp           *gimp,
+                                                   gdouble         value,
+                                                   GimpUnit        unit,
+                                                   gdouble         res);
 
 
-static GObjectClass * parent_class = NULL;
+G_DEFINE_TYPE (GimpTextLayout, gimp_text_layout, G_TYPE_OBJECT);
 
+#define parent_class gimp_text_layout_parent_class
 
-GType
-gimp_text_layout_get_type (void)
-{
-  static GType layout_type = 0;
-
-  if (! layout_type)
-    {
-      static const GTypeInfo layout_info =
-      {
-        sizeof (GimpTextLayoutClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_text_layout_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpTextLayout),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_text_layout_init,
-      };
-
-      layout_type = g_type_register_static (G_TYPE_OBJECT,
-                                            "GimpTextLayout",
-                                            &layout_info, 0);
-    }
-
-  return layout_type;
-}
 
 static void
 gimp_text_layout_class_init (GimpTextLayoutClass *klass)
 {
-  GObjectClass *object_class;
-
-  object_class = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->finalize = gimp_text_layout_finalize;
 }
@@ -107,9 +75,7 @@ gimp_text_layout_init (GimpTextLayout *layout)
 static void
 gimp_text_layout_finalize (GObject *object)
 {
-  GimpTextLayout *layout;
-
-  layout = GIMP_TEXT_LAYOUT (object);
+  GimpTextLayout *layout = GIMP_TEXT_LAYOUT (object);
 
   if (layout->text)
     {

@@ -29,65 +29,38 @@
 #include "gimpimagefile.h"
 
 
-static void     gimp_document_list_config_iface_init (gpointer    iface,
-                                                      gpointer    iface_data);
+static void     gimp_document_list_config_iface_init (GimpConfigInterface *iface);
 static gboolean gimp_document_list_serialize   (GimpConfig       *config,
-						GimpConfigWriter *writer,
-						gpointer          data);
+                                                GimpConfigWriter *writer,
+                                                gpointer          data);
 static gboolean gimp_document_list_deserialize (GimpConfig       *config,
-						GScanner         *scanner,
-						gint              nest_level,
-						gpointer          data);
+                                                GScanner         *scanner,
+                                                gint              nest_level,
+                                                gpointer          data);
 
+
+G_DEFINE_TYPE_WITH_CODE (GimpDocumentList, gimp_document_list, GIMP_TYPE_LIST,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
+                                                gimp_document_list_config_iface_init));
 
 static const gchar *document_symbol = "document";
 
 
-GType
-gimp_document_list_get_type (void)
+static void
+gimp_document_list_class_init (GimpDocumentListClass *klass)
 {
-  static GType document_list_type = 0;
-
-  if (! document_list_type)
-    {
-      static const GTypeInfo document_list_info =
-      {
-        sizeof (GimpDocumentListClass),
-	NULL,           /* base_init      */
-        NULL,           /* base_finalize  */
-	NULL,           /* class_init     */
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpDocumentList),
-	0,              /* n_preallocs    */
-	NULL            /* instance_init  */
-      };
-      static const GInterfaceInfo document_list_iface_info =
-      {
-        gimp_document_list_config_iface_init,
-        NULL,           /* iface_finalize */
-        NULL            /* iface_data     */
-      };
-
-      document_list_type = g_type_register_static (GIMP_TYPE_LIST,
-                                                   "GimpDocumentList",
-                                                   &document_list_info, 0);
-
-      g_type_add_interface_static (document_list_type, GIMP_TYPE_CONFIG,
-                                   &document_list_iface_info);
-    }
-
-  return document_list_type;
 }
 
 static void
-gimp_document_list_config_iface_init (gpointer  iface,
-                                      gpointer  iface_data)
+gimp_document_list_init (GimpDocumentList *list)
 {
-  GimpConfigInterface *config_iface = (GimpConfigInterface *) iface;
+}
 
-  config_iface->serialize   = gimp_document_list_serialize;
-  config_iface->deserialize = gimp_document_list_deserialize;
+static void
+gimp_document_list_config_iface_init (GimpConfigInterface *iface)
+{
+  iface->serialize   = gimp_document_list_serialize;
+  iface->deserialize = gimp_document_list_deserialize;
 }
 
 static gboolean

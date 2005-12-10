@@ -45,58 +45,27 @@ enum
 };
 
 
-static void       gimp_layer_mask_class_init  (GimpLayerMaskClass *klass);
-static void       gimp_layer_mask_init        (GimpLayerMask      *layer_mask);
-
-static gboolean   gimp_layer_mask_is_attached  (GimpItem          *item);
-static GimpItem * gimp_layer_mask_duplicate    (GimpItem          *item,
-                                                GType              new_type,
-                                                gboolean           add_alpha);
-static gboolean   gimp_layer_mask_rename       (GimpItem          *item,
-                                                const gchar       *new_name,
-                                                const gchar       *undo_desc);
+static gboolean   gimp_layer_mask_is_attached  (GimpItem    *item);
+static GimpItem * gimp_layer_mask_duplicate    (GimpItem    *item,
+                                                GType        new_type,
+                                                gboolean     add_alpha);
+static gboolean   gimp_layer_mask_rename       (GimpItem    *item,
+                                                const gchar *new_name,
+                                                const gchar *undo_desc);
 
 
-static guint  layer_mask_signals[LAST_SIGNAL] = { 0 };
+G_DEFINE_TYPE (GimpLayerMask, gimp_layer_mask, GIMP_TYPE_CHANNEL);
 
-static GimpChannelClass *parent_class = NULL;
+#define parent_class gimp_layer_mask_parent_class
 
+static guint layer_mask_signals[LAST_SIGNAL] = { 0 };
 
-GType
-gimp_layer_mask_get_type (void)
-{
-  static GType layer_mask_type = 0;
-
-  if (! layer_mask_type)
-    {
-      static const GTypeInfo layer_mask_info =
-      {
-        sizeof (GimpLayerMaskClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_layer_mask_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpLayerMask),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_layer_mask_init,
-      };
-
-      layer_mask_type = g_type_register_static (GIMP_TYPE_CHANNEL,
-                                                "GimpLayerMask",
-                                                &layer_mask_info, 0);
-    }
-
-  return layer_mask_type;
-}
 
 static void
 gimp_layer_mask_class_init (GimpLayerMaskClass *klass)
 {
   GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
   GimpItemClass     *item_class     = GIMP_ITEM_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   layer_mask_signals[APPLY_CHANGED] =
     g_signal_new ("apply-changed",

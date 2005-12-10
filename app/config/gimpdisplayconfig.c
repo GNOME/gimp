@@ -38,27 +38,7 @@
 #include "gimp-intl.h"
 
 
-static void  gimp_display_config_class_init   (GimpDisplayConfigClass *klass);
-static void  gimp_display_config_init         (GimpDisplayConfig      *config);
-static void  gimp_display_config_finalize     (GObject      *object);
-static void  gimp_display_config_set_property (GObject      *object,
-                                               guint         property_id,
-                                               const GValue *value,
-                                               GParamSpec   *pspec);
-static void  gimp_display_config_get_property (GObject      *object,
-                                               guint         property_id,
-                                               GValue       *value,
-                                               GParamSpec   *pspec);
-
-static void  gimp_display_config_view_notify       (GObject    *object,
-                                                    GParamSpec *pspec,
-                                                    gpointer    data);
-static void  gimp_display_config_fullscreen_notify (GObject    *object,
-                                                    GParamSpec *pspec,
-                                                    gpointer    data);
-
-
-#define DEFAULT_ACTIVATE_ON_FOCUS   TRUE
+#define DEFAULT_ACTIVATE_ON_FOCUS TRUE
 
 
 enum
@@ -89,47 +69,36 @@ enum
   PROP_ACTIVATE_ON_FOCUS
 };
 
-static GObjectClass *parent_class = NULL;
+
+static void  gimp_display_config_finalize          (GObject      *object);
+static void  gimp_display_config_set_property      (GObject      *object,
+                                                    guint         property_id,
+                                                    const GValue *value,
+                                                    GParamSpec   *pspec);
+static void  gimp_display_config_get_property      (GObject      *object,
+                                                    guint         property_id,
+                                                    GValue       *value,
+                                                    GParamSpec   *pspec);
+
+static void  gimp_display_config_view_notify       (GObject      *object,
+                                                    GParamSpec   *pspec,
+                                                    gpointer      data);
+static void  gimp_display_config_fullscreen_notify (GObject      *object,
+                                                    GParamSpec   *pspec,
+                                                    gpointer      data);
 
 
-GType
-gimp_display_config_get_type (void)
-{
-  static GType config_type = 0;
+G_DEFINE_TYPE (GimpDisplayConfig, gimp_display_config, GIMP_TYPE_CORE_CONFIG);
 
-  if (! config_type)
-    {
-      static const GTypeInfo config_info =
-      {
-        sizeof (GimpDisplayConfigClass),
-	NULL,           /* base_init      */
-        NULL,           /* base_finalize  */
-	(GClassInitFunc) gimp_display_config_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpDisplayConfig),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_display_config_init
-      };
+#define parent_class gimp_display_config_parent_class
 
-      config_type = g_type_register_static (GIMP_TYPE_CORE_CONFIG,
-                                            "GimpDisplayConfig",
-                                            &config_info, 0);
-    }
-
-  return config_type;
-}
 
 static void
 gimp_display_config_class_init (GimpDisplayConfigClass *klass)
 {
-  GObjectClass *object_class;
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GimpRGB       white;
   GimpRGB       black;
-
-  parent_class = g_type_class_peek_parent (klass);
-
-  object_class = G_OBJECT_CLASS (klass);
 
   object_class->finalize     = gimp_display_config_finalize;
   object_class->set_property = gimp_display_config_set_property;

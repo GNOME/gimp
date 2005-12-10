@@ -44,57 +44,27 @@ enum
 };
 
 
-static void  gimp_scale_combo_box_class_init (GimpScaleComboBoxClass *klass);
-static void  gimp_scale_combo_box_init       (GimpScaleComboBox   *combo_box);
-static void  gimp_scale_combo_box_finalize   (GObject             *object);
-static void  gimp_scale_combo_box_changed    (GimpScaleComboBox   *combo_box);
+static void      gimp_scale_combo_box_finalize   (GObject           *object);
+static void      gimp_scale_combo_box_changed    (GimpScaleComboBox *combo_box);
 
-static void      gimp_scale_combo_box_scale_iter_set (GtkListStore *store,
-                                                      GtkTreeIter  *iter,
-                                                      gdouble       scale,
-                                                      gboolean      persistent);
-static gboolean  gimp_scale_combo_box_row_separator  (GtkTreeModel *model,
-                                                      GtkTreeIter  *iter,
-                                                      gpointer      data);
+static void      gimp_scale_combo_box_scale_iter_set (GtkListStore  *store,
+                                                      GtkTreeIter   *iter,
+                                                      gdouble        scale,
+                                                      gboolean       persistent);
+static gboolean  gimp_scale_combo_box_row_separator  (GtkTreeModel  *model,
+                                                      GtkTreeIter   *iter,
+                                                      gpointer       data);
 
 
-static GtkComboBoxClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpScaleComboBox, gimp_scale_combo_box, GTK_TYPE_COMBO_BOX);
 
+#define parent_class gimp_scale_combo_box_parent_class
 
-GType
-gimp_scale_combo_box_get_type (void)
-{
-  static GType combo_box_type = 0;
-
-  if (!combo_box_type)
-    {
-      static const GTypeInfo combo_box_info =
-      {
-        sizeof (GimpScaleComboBoxClass),
-        NULL,           /* base_init      */
-        NULL,           /* base_finalize  */
-        (GClassInitFunc) gimp_scale_combo_box_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpScaleComboBox),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_scale_combo_box_init
-      };
-
-      combo_box_type = g_type_register_static (GTK_TYPE_COMBO_BOX,
-                                               "GimpScaleComboBox",
-                                               &combo_box_info, 0);
-    }
-
-  return combo_box_type;
-}
 
 static void
 gimp_scale_combo_box_class_init (GimpScaleComboBoxClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize = gimp_scale_combo_box_finalize;
 }
@@ -174,7 +144,7 @@ gimp_scale_combo_box_finalize (GObject *object)
 static void
 gimp_scale_combo_box_changed (GimpScaleComboBox *combo_box)
 {
-  GtkTreeIter  iter;
+  GtkTreeIter iter;
 
   if (gtk_combo_box_get_active_iter (GTK_COMBO_BOX (combo_box), &iter))
     {
@@ -214,7 +184,7 @@ gimp_scale_combo_box_row_separator (GtkTreeModel *model,
                                     GtkTreeIter  *iter,
                                     gpointer      data)
 {
-  gboolean  separator;
+  gboolean separator;
 
   gtk_tree_model_get (model, iter,
                       SEPARATOR, &separator,
@@ -229,7 +199,7 @@ gimp_scale_combo_box_scale_iter_set (GtkListStore *store,
                                      gdouble       scale,
                                      gboolean      persistent)
 {
-  gchar  label[32];
+  gchar label[32];
 
   g_snprintf (label, sizeof (label), "%d%%", (int) ROUND (100.0 * scale));
 
@@ -416,8 +386,8 @@ gimp_scale_combo_box_set_scale (GimpScaleComboBox *combo_box,
 gdouble
 gimp_scale_combo_box_get_scale (GimpScaleComboBox *combo_box)
 {
-  GtkTreeIter  iter;
-  gdouble      scale = 1.0;
+  GtkTreeIter iter;
+  gdouble     scale = 1.0;
 
   g_return_val_if_fail (GIMP_IS_SCALE_COMBO_BOX (combo_box), FALSE);
 

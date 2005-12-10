@@ -34,8 +34,6 @@ enum
 };
 
 
-static void      gimp_item_undo_class_init   (GimpItemUndoClass     *klass);
-
 static GObject * gimp_item_undo_constructor  (GType                  type,
                                               guint                  n_params,
                                               GObjectConstructParam *params);
@@ -52,44 +50,16 @@ static void      gimp_item_undo_free         (GimpUndo              *undo,
                                               GimpUndoMode           undo_mode);
 
 
-static GimpUndoClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpItemUndo, gimp_item_undo, GIMP_TYPE_UNDO);
 
+#define parent_class gimp_item_undo_parent_class
 
-GType
-gimp_item_undo_get_type (void)
-{
-  static GType undo_type = 0;
-
-  if (! undo_type)
-    {
-      static const GTypeInfo undo_info =
-      {
-        sizeof (GimpItemUndoClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_item_undo_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpItemUndo),
-        0,              /* n_preallocs    */
-        NULL            /* instance_init  */
-      };
-
-      undo_type = g_type_register_static (GIMP_TYPE_UNDO,
-                                          "GimpItemUndo",
-                                          &undo_info, 0);
-  }
-
-  return undo_type;
-}
 
 static void
 gimp_item_undo_class_init (GimpItemUndoClass *klass)
 {
   GObjectClass  *object_class = G_OBJECT_CLASS (klass);
   GimpUndoClass *undo_class   = GIMP_UNDO_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->constructor  = gimp_item_undo_constructor;
   object_class->set_property = gimp_item_undo_set_property;
@@ -102,6 +72,11 @@ gimp_item_undo_class_init (GimpItemUndoClass *klass)
                                                         GIMP_TYPE_ITEM,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
+}
+
+static void
+gimp_item_undo_init (GimpItemUndo *undo)
+{
 }
 
 static GObject *

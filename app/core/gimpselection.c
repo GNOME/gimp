@@ -42,9 +42,6 @@
 #include "gimp-intl.h"
 
 
-static void       gimp_selection_class_init    (GimpSelectionClass *klass);
-static void       gimp_selection_init          (GimpSelection      *selection);
-
 static gboolean   gimp_selection_is_attached   (GimpItem        *item);
 static void       gimp_selection_translate     (GimpItem        *item,
                                                 gint             offset_x,
@@ -126,36 +123,10 @@ static void       gimp_selection_validate      (TileManager     *tm,
                                                 Tile            *tile);
 
 
-static GimpChannelClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpSelection, gimp_selection, GIMP_TYPE_CHANNEL);
 
+#define parent_class gimp_selection_parent_class
 
-GType
-gimp_selection_get_type (void)
-{
-  static GType selection_type = 0;
-
-  if (! selection_type)
-    {
-      static const GTypeInfo selection_info =
-      {
-        sizeof (GimpSelectionClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_selection_class_init,
-        NULL,		/* class_finalize */
-        NULL,		/* class_data     */
-        sizeof (GimpSelection),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_selection_init,
-      };
-
-      selection_type = g_type_register_static (GIMP_TYPE_CHANNEL,
-                                               "GimpSelection",
-                                               &selection_info, 0);
-    }
-
-  return selection_type;
-}
 
 static void
 gimp_selection_class_init (GimpSelectionClass *klass)
@@ -164,8 +135,6 @@ gimp_selection_class_init (GimpSelectionClass *klass)
   GimpItemClass     *item_class     = GIMP_ITEM_CLASS (klass);
   GimpDrawableClass *drawable_class = GIMP_DRAWABLE_CLASS (klass);
   GimpChannelClass  *channel_class  = GIMP_CHANNEL_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   viewable_class->default_stock_id    = "gimp-selection";
 

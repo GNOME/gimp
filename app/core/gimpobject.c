@@ -45,63 +45,32 @@ enum
 };
 
 
-static void    gimp_object_class_init        (GimpObjectClass *klass);
-static void    gimp_object_init              (GimpObject      *object);
-
-static void    gimp_object_dispose           (GObject         *object);
-static void    gimp_object_finalize          (GObject         *object);
-static void    gimp_object_set_property      (GObject         *object,
-                                              guint            property_id,
-                                              const GValue    *value,
-                                              GParamSpec      *pspec);
-static void    gimp_object_get_property      (GObject         *object,
-                                              guint            property_id,
-                                              GValue          *value,
-                                              GParamSpec      *pspec);
-static gint64  gimp_object_real_get_memsize  (GimpObject      *object,
-                                              gint64          *gui_size);
-static void    gimp_object_name_normalize    (GimpObject      *object);
+static void    gimp_object_dispose          (GObject      *object);
+static void    gimp_object_finalize         (GObject      *object);
+static void    gimp_object_set_property     (GObject      *object,
+                                             guint         property_id,
+                                             const GValue *value,
+                                             GParamSpec   *pspec);
+static void    gimp_object_get_property     (GObject      *object,
+                                             guint         property_id,
+                                             GValue       *value,
+                                             GParamSpec   *pspec);
+static gint64  gimp_object_real_get_memsize (GimpObject   *object,
+                                             gint64       *gui_size);
+static void    gimp_object_name_normalize   (GimpObject   *object);
 
 
-static guint   object_signals[LAST_SIGNAL] = { 0 };
+G_DEFINE_TYPE (GimpObject, gimp_object, G_TYPE_OBJECT);
 
-static GObjectClass *parent_class = NULL;
+#define parent_class gimp_object_parent_class
 
+static guint object_signals[LAST_SIGNAL] = { 0 };
 
-GType
-gimp_object_get_type (void)
-{
-  static GType object_type = 0;
-
-  if (! object_type)
-    {
-      static const GTypeInfo object_info =
-      {
-        sizeof (GimpObjectClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_object_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpObject),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_object_init,
-      };
-
-      object_type = g_type_register_static (G_TYPE_OBJECT,
-					    "GimpObject",
-					    &object_info, 0);
-    }
-
-  return object_type;
-}
 
 static void
 gimp_object_class_init (GimpObjectClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_signals[DISCONNECT] =
     g_signal_new ("disconnect",

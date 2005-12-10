@@ -88,9 +88,6 @@ enum
 
 /*  local function prototypes  */
 
-static void      gimp_display_shell_class_init    (GimpDisplayShellClass *klass);
-static void      gimp_display_shell_init          (GimpDisplayShell      *shell);
-
 static void      gimp_display_shell_finalize       (GObject          *object);
 static void      gimp_display_shell_set_property   (GObject          *object,
                                                     guint             property_id,
@@ -118,9 +115,12 @@ static void      gimp_display_shell_menu_position  (GtkMenu          *menu,
                                                     gpointer          data);
 
 
-static guint  display_shell_signals[LAST_SIGNAL] = { 0 };
+G_DEFINE_TYPE (GimpDisplayShell, gimp_display_shell, GTK_TYPE_WINDOW);
 
-static GtkWindowClass *parent_class = NULL;
+#define parent_class gimp_display_shell_parent_class
+
+static guint display_shell_signals[LAST_SIGNAL] = { 0 };
+
 
 static const gchar *display_rc_style =
   "style \"fullscreen-menubar-style\"\n"
@@ -131,42 +131,12 @@ static const gchar *display_rc_style =
   "widget \"*.gimp-menubar-fullscreen\" style \"fullscreen-menubar-style\"";
 
 
-GType
-gimp_display_shell_get_type (void)
-{
-  static GType shell_type = 0;
-
-  if (! shell_type)
-    {
-      static const GTypeInfo shell_info =
-      {
-        sizeof (GimpDisplayShellClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_display_shell_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpDisplayShell),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_display_shell_init,
-      };
-
-      shell_type = g_type_register_static (GTK_TYPE_WINDOW,
-                                           "GimpDisplayShell",
-                                           &shell_info, 0);
-    }
-
-  return shell_type;
-}
-
 static void
 gimp_display_shell_class_init (GimpDisplayShellClass *klass)
 {
   GObjectClass   *object_class      = G_OBJECT_CLASS (klass);
   GtkObjectClass *gtk_object_class  = GTK_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class      = GTK_WIDGET_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   display_shell_signals[SCALED] =
     g_signal_new ("scaled",

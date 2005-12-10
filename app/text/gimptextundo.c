@@ -40,8 +40,6 @@ enum
 };
 
 
-static void      gimp_text_undo_class_init   (GimpTextUndoClass     *klass);
-
 static GObject * gimp_text_undo_constructor  (GType                  type,
                                               guint                  n_params,
                                               GObjectConstructParam *params);
@@ -64,35 +62,10 @@ static void      gimp_text_undo_free         (GimpUndo              *undo,
                                               GimpUndoMode           undo_mode);
 
 
-static GimpUndoClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpTextUndo, gimp_text_undo, GIMP_TYPE_ITEM_UNDO);
 
+#define parent_class gimp_text_undo_parent_class
 
-GType
-gimp_text_undo_get_type (void)
-{
-  static GType undo_type = 0;
-
-  if (! undo_type)
-    {
-      static const GTypeInfo undo_info =
-      {
-        sizeof (GimpTextUndoClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_text_undo_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpTextUndo),
-	0,              /* n_preallocs    */
-	NULL            /* instance_init  */
-      };
-
-      undo_type = g_type_register_static (GIMP_TYPE_ITEM_UNDO, "GimpTextUndo",
-					  &undo_info, 0);
-  }
-
-  return undo_type;
-}
 
 static void
 gimp_text_undo_class_init (GimpTextUndoClass *klass)
@@ -100,8 +73,6 @@ gimp_text_undo_class_init (GimpTextUndoClass *klass)
   GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
   GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
   GimpUndoClass   *undo_class        = GIMP_UNDO_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->constructor      = gimp_text_undo_constructor;
   object_class->set_property     = gimp_text_undo_set_property;
@@ -117,6 +88,11 @@ gimp_text_undo_class_init (GimpTextUndoClass *klass)
                                                        G_TYPE_PARAM,
                                                        G_PARAM_READWRITE |
                                                        G_PARAM_CONSTRUCT_ONLY));
+}
+
+static void
+gimp_text_undo_init (GimpTextUndo *undo)
+{
 }
 
 static GObject *

@@ -46,8 +46,6 @@ enum
 };
 
 
-static void     gimp_parasite_list_class_init  (GimpParasiteListClass *klass);
-static void     gimp_parasite_list_init        (GimpParasiteList      *list);
 static void     gimp_parasite_list_finalize          (GObject     *object);
 static gint64   gimp_parasite_list_get_memsize       (GimpObject  *object,
                                                       gint64      *gui_size);
@@ -76,56 +74,21 @@ static void     parasite_count_if_persistent (const gchar      *key,
                                               gint             *count);
 
 
-static guint parasite_list_signals[LAST_SIGNAL] = { 0 };
+G_DEFINE_TYPE_WITH_CODE (GimpParasiteList, gimp_parasite_list, GIMP_TYPE_OBJECT,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
+                                                gimp_parasite_list_config_iface_init));
 
-static GimpObjectClass *parent_class = NULL;
+#define parent_class gimp_parasite_list_parent_class
 
-static const gchar     *parasite_symbol = "parasite";
+static guint        parasite_list_signals[LAST_SIGNAL] = { 0 };
+static const gchar *parasite_symbol                    = "parasite";
 
-
-GType
-gimp_parasite_list_get_type (void)
-{
-  static GType list_type = 0;
-
-  if (! list_type)
-    {
-      static const GTypeInfo list_info =
-      {
-        sizeof (GimpParasiteListClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_parasite_list_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpParasiteList),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_parasite_list_init,
-      };
-      static const GInterfaceInfo list_iface_info =
-      {
-        gimp_parasite_list_config_iface_init,
-        NULL,           /* iface_finalize */
-        NULL            /* iface_data     */
-      };
-
-      list_type = g_type_register_static (GIMP_TYPE_OBJECT,
-                                          "GimpParasiteList",
-                                          &list_info, 0);
-      g_type_add_interface_static (list_type, GIMP_TYPE_CONFIG,
-                                   &list_iface_info);
-    }
-
-  return list_type;
-}
 
 static void
 gimp_parasite_list_class_init (GimpParasiteListClass *klass)
 {
   GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
   GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   parasite_list_signals[ADD] =
     g_signal_new ("add",

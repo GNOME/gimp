@@ -60,9 +60,6 @@ enum
 
 /*  local function prototypes  */
 
-static void   gimp_brush_generated_class_init (GimpBrushGeneratedClass *klass);
-static void   gimp_brush_generated_init       (GimpBrushGenerated      *brush);
-
 static void       gimp_brush_generated_set_property  (GObject      *object,
                                                       guint         property_id,
                                                       const GValue *value,
@@ -78,44 +75,16 @@ static gchar    * gimp_brush_generated_get_extension (GimpData     *data);
 static GimpData * gimp_brush_generated_duplicate     (GimpData     *data);
 
 
-static GimpBrushClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpBrushGenerated, gimp_brush_generated, GIMP_TYPE_BRUSH);
 
+#define parent_class gimp_brush_generated_parent_class
 
-GType
-gimp_brush_generated_get_type (void)
-{
-  static GType brush_type = 0;
-
-  if (! brush_type)
-    {
-      static const GTypeInfo brush_info =
-      {
-        sizeof (GimpBrushGeneratedClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_brush_generated_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpBrushGenerated),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_brush_generated_init,
-      };
-
-      brush_type = g_type_register_static (GIMP_TYPE_BRUSH,
-                                           "GimpBrushGenerated",
-                                           &brush_info, 0);
-    }
-
-  return brush_type;
-}
 
 static void
 gimp_brush_generated_class_init (GimpBrushGeneratedClass *klass)
 {
   GObjectClass  *object_class = G_OBJECT_CLASS (klass);
   GimpDataClass *data_class   = GIMP_DATA_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->set_property = gimp_brush_generated_set_property;
   object_class->get_property = gimp_brush_generated_get_property;

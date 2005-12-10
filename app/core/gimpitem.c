@@ -63,9 +63,6 @@ enum
 
 /*  local function prototypes  */
 
-static void       gimp_item_class_init        (GimpItemClass *klass);
-static void       gimp_item_init              (GimpItem      *item);
-
 static void       gimp_item_set_property      (GObject       *object,
                                                guint          property_id,
                                                const GValue  *value,
@@ -106,40 +103,12 @@ static void       gimp_item_real_resize       (GimpItem      *item,
                                                gint           offset_y);
 
 
-/*  private variables  */
+G_DEFINE_TYPE (GimpItem, gimp_item, GIMP_TYPE_VIEWABLE);
+
+#define parent_class gimp_item_parent_class
 
 static guint gimp_item_signals[LAST_SIGNAL] = { 0 };
 
-static GimpViewableClass *parent_class = NULL;
-
-
-GType
-gimp_item_get_type (void)
-{
-  static GType item_type = 0;
-
-  if (! item_type)
-    {
-      static const GTypeInfo item_info =
-      {
-        sizeof (GimpItemClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_item_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpItem),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_item_init,
-      };
-
-      item_type = g_type_register_static (GIMP_TYPE_VIEWABLE,
-                                          "GimpItem",
-                                          &item_info, 0);
-    }
-
-  return item_type;
-}
 
 static void
 gimp_item_class_init (GimpItemClass *klass)
@@ -147,8 +116,6 @@ gimp_item_class_init (GimpItemClass *klass)
   GObjectClass      *object_class      = G_OBJECT_CLASS (klass);
   GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
   GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   gimp_item_signals[REMOVED] =
     g_signal_new ("removed",

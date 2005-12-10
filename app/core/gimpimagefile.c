@@ -55,10 +55,10 @@ enum
 };
 
 
-static void        gimp_imagefile_class_init       (GimpImagefileClass *klass);
-static void        gimp_imagefile_init             (GimpImagefile  *imagefile);
 static void        gimp_imagefile_finalize         (GObject        *object);
+
 static void        gimp_imagefile_name_changed     (GimpObject     *object);
+
 static void        gimp_imagefile_info_changed     (GimpImagefile  *imagefile);
 static void        gimp_imagefile_notify_thumbnail (GimpImagefile  *imagefile,
                                                     GParamSpec     *pspec);
@@ -87,39 +87,12 @@ static void     gimp_thumbnail_set_info            (GimpThumbnail  *thumbnail,
                                                     gint            height);
 
 
+G_DEFINE_TYPE (GimpImagefile, gimp_imagefile, GIMP_TYPE_VIEWABLE);
+
+#define parent_class gimp_imagefile_parent_class
 
 static guint gimp_imagefile_signals[LAST_SIGNAL] = { 0 };
 
-static GimpViewableClass *parent_class = NULL;
-
-
-GType
-gimp_imagefile_get_type (void)
-{
-  static GType imagefile_type = 0;
-
-  if (!imagefile_type)
-    {
-      static const GTypeInfo imagefile_info =
-      {
-        sizeof (GimpImagefileClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_imagefile_class_init,
-        NULL,           /* class_finalize */
-        NULL,                /* class_data     */
-        sizeof (GimpImagefile),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_imagefile_init,
-      };
-
-      imagefile_type = g_type_register_static (GIMP_TYPE_VIEWABLE,
-                                               "GimpImagefile",
-                                               &imagefile_info, 0);
-    }
-
-  return imagefile_type;
-}
 
 static void
 gimp_imagefile_class_init (GimpImagefileClass *klass)
@@ -128,8 +101,6 @@ gimp_imagefile_class_init (GimpImagefileClass *klass)
   GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
   GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
   gchar             *creator;
-
-  parent_class = g_type_class_peek_parent (klass);
 
   gimp_imagefile_signals[INFO_CHANGED] =
     g_signal_new ("info-changed",

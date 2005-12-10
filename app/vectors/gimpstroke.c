@@ -40,8 +40,6 @@ enum
 
 /* Prototypes */
 
-static void    gimp_stroke_class_init                (GimpStrokeClass  *klass);
-static void    gimp_stroke_init                      (GimpStroke       *stroke);
 static void    gimp_stroke_set_property              (GObject      *object,
                                                       guint         property_id,
                                                       const GValue *value,
@@ -150,52 +148,20 @@ static gboolean   gimp_stroke_real_get_point_at_dist (const GimpStroke *stroke,
                                                       GimpCoords       *position,
                                                       gdouble          *slope);
 
-/*  private variables  */
 
-static GimpObjectClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpStroke, gimp_stroke, GIMP_TYPE_OBJECT);
 
+#define parent_class gimp_stroke_parent_class
 
-GType
-gimp_stroke_get_type (void)
-{
-  static GType stroke_type = 0;
-
-  if (! stroke_type)
-    {
-      static const GTypeInfo stroke_info =
-      {
-        sizeof (GimpStrokeClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_stroke_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpStroke),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_stroke_init,
-      };
-
-      stroke_type = g_type_register_static (GIMP_TYPE_OBJECT,
-                                            "GimpStroke",
-                                            &stroke_info, 0);
-    }
-
-  return stroke_type;
-}
 
 static void
 gimp_stroke_class_init (GimpStrokeClass *klass)
 {
-  GObjectClass    *object_class;
-  GimpObjectClass *gimp_object_class;
+  GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
+  GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
   GParamSpec      *anchor_param_spec;
   GParamSpec      *control_points_param_spec;
   GParamSpec      *close_param_spec;
-
-  object_class      = G_OBJECT_CLASS (klass);
-  gimp_object_class = GIMP_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize          = gimp_stroke_finalize;
   object_class->get_property      = gimp_stroke_get_property;

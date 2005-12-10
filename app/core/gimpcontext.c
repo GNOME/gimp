@@ -64,9 +64,7 @@ typedef void (* GimpContextCopyPropFunc) (GimpContext *src,
 
 /*  local function prototypes  */
 
-static void    gimp_context_class_init        (GimpContextClass    *klass);
-static void    gimp_context_init              (GimpContext         *context);
-static void    gimp_context_config_iface_init (GimpConfigInterface *config_iface);
+static void    gimp_context_config_iface_init (GimpConfigInterface   *iface);
 
 static GObject *  gimp_context_constructor    (GType                  type,
                                                guint                  n_params,
@@ -311,9 +309,13 @@ static GType gimp_context_prop_types[] =
 };
 
 
-static guint gimp_context_signals[LAST_SIGNAL] = { 0 };
+G_DEFINE_TYPE_WITH_CODE (GimpContext, gimp_context, GIMP_TYPE_OBJECT,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
+                                                gimp_context_config_iface_init));
 
-static GimpObjectClass * parent_class = NULL;
+#define parent_class gimp_context_parent_class
+
+static guint gimp_context_signals[LAST_SIGNAL] = { 0 };
 
 static GimpToolInfo *standard_tool_info = NULL;
 static GimpBrush    *standard_brush     = NULL;
@@ -322,43 +324,6 @@ static GimpGradient *standard_gradient  = NULL;
 static GimpPalette  *standard_palette   = NULL;
 static GimpFont     *standard_font      = NULL;
 
-
-GType
-gimp_context_get_type (void)
-{
-  static GType context_type = 0;
-
-  if (! context_type)
-    {
-      static const GTypeInfo context_info =
-      {
-        sizeof (GimpContextClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_context_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpContext),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_context_init,
-      };
-      static const GInterfaceInfo config_iface_info =
-      {
-        (GInterfaceInitFunc) gimp_context_config_iface_init,
-        NULL,           /* iface_finalize */
-        NULL            /* iface_data     */
-      };
-
-      context_type = g_type_register_static (GIMP_TYPE_OBJECT,
-                                             "GimpContext",
-                                             &context_info, 0);
-
-      g_type_add_interface_static (context_type, GIMP_TYPE_CONFIG,
-                                   &config_iface_info);
-    }
-
-  return context_type;
-}
 
 static void
 gimp_context_class_init (GimpContextClass *klass)
@@ -370,8 +335,6 @@ gimp_context_class_init (GimpContextClass *klass)
 
   gimp_rgba_set (&black, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
   gimp_rgba_set (&white, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   gimp_context_signals[IMAGE_CHANGED] =
     g_signal_new ("image-changed",
@@ -700,12 +663,11 @@ gimp_context_init (GimpContext *context)
 }
 
 static void
-gimp_context_config_iface_init (GimpConfigInterface *config_iface)
+gimp_context_config_iface_init (GimpConfigInterface *iface)
 {
-  config_iface->serialize            = gimp_context_serialize;
-
-  config_iface->serialize_property   = gimp_context_serialize_property;
-  config_iface->deserialize_property = gimp_context_deserialize_property;
+  iface->serialize            = gimp_context_serialize;
+  iface->serialize_property   = gimp_context_serialize_property;
+  iface->deserialize_property = gimp_context_deserialize_property;
 }
 
 static GObject *

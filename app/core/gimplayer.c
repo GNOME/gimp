@@ -69,9 +69,7 @@ enum
 };
 
 
-static void       gimp_layer_class_init         (GimpLayerClass     *klass);
-static void       gimp_layer_init               (GimpLayer          *layer);
-static void       gimp_layer_pickable_iface_init (GimpPickableInterface *pickable_iface);
+static void   gimp_layer_pickable_iface_init (GimpPickableInterface *iface);
 
 static void       gimp_layer_set_property       (GObject            *object,
                                                  guint               property_id,
@@ -167,48 +165,14 @@ static void       gimp_layer_layer_mask_update  (GimpDrawable       *layer_mask,
                                                  GimpLayer          *layer);
 
 
-static guint  layer_signals[LAST_SIGNAL] = { 0 };
+G_DEFINE_TYPE_WITH_CODE (GimpLayer, gimp_layer, GIMP_TYPE_DRAWABLE,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_PICKABLE,
+                                                gimp_layer_pickable_iface_init));
 
-static GimpDrawableClass *parent_class   = NULL;
+#define parent_class gimp_layer_parent_class
 
+static guint layer_signals[LAST_SIGNAL] = { 0 };
 
-GType
-gimp_layer_get_type (void)
-{
-  static GType layer_type = 0;
-
-  if (! layer_type)
-    {
-      static const GTypeInfo layer_info =
-      {
-        sizeof (GimpLayerClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_layer_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpLayer),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_layer_init,
-      };
-
-      static const GInterfaceInfo pickable_iface_info =
-      {
-        (GInterfaceInitFunc) gimp_layer_pickable_iface_init,
-        NULL,           /* iface_finalize */
-        NULL            /* iface_data     */
-      };
-
-      layer_type = g_type_register_static (GIMP_TYPE_DRAWABLE,
-                                           "GimpLayer",
-                                           &layer_info, 0);
-
-      g_type_add_interface_static (layer_type, GIMP_TYPE_PICKABLE,
-                                   &pickable_iface_info);
-    }
-
-  return layer_type;
-}
 
 static void
 gimp_layer_class_init (GimpLayerClass *klass)
@@ -218,8 +182,6 @@ gimp_layer_class_init (GimpLayerClass *klass)
   GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
   GimpItemClass     *item_class        = GIMP_ITEM_CLASS (klass);
   GimpDrawableClass *drawable_class    = GIMP_DRAWABLE_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   layer_signals[OPACITY_CHANGED] =
     g_signal_new ("opacity-changed",
@@ -337,9 +299,9 @@ gimp_layer_init (GimpLayer *layer)
 }
 
 static void
-gimp_layer_pickable_iface_init (GimpPickableInterface *pickable_iface)
+gimp_layer_pickable_iface_init (GimpPickableInterface *iface)
 {
-  pickable_iface->get_opacity_at = gimp_layer_get_opacity_at;
+  iface->get_opacity_at = gimp_layer_get_opacity_at;
 }
 
 static void

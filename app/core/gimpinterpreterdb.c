@@ -80,9 +80,6 @@ struct _GimpInterpreterMagic
 };
 
 
-static void     gimp_interpreter_db_class_init       (GimpInterpreterDBClass  *class);
-static void     gimp_interpreter_db_init             (GimpInterpreterDB       *db);
-
 static void     gimp_interpreter_db_finalize         (GObject                 *object);
 
 static void     gimp_interpreter_db_load_interp_file (const GimpDatafileData  *file_data,
@@ -105,45 +102,15 @@ static void     gimp_interpreter_db_clear_magics     (GimpInterpreterDB       *d
 static void     gimp_interpreter_db_resolve_programs (GimpInterpreterDB       *db);
 
 
-static GObjectClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpInterpreterDB, gimp_interpreter_db, G_TYPE_OBJECT);
 
+#define parent_class gimp_interpreter_db_parent_class
 
-GType
-gimp_interpreter_db_get_type (void)
-{
-  static GType interpreter_db_type = 0;
-
-  if (! interpreter_db_type)
-    {
-      static const GTypeInfo interpreter_db_info =
-      {
-        sizeof (GimpInterpreterDBClass),
-        NULL,                /* base_init */
-        NULL,                /* base_finalize */
-        (GClassInitFunc) gimp_interpreter_db_class_init,
-        NULL,                /* class_finalize */
-        NULL,                /* class_data */
-        sizeof (GimpInterpreterDB),
-        0,                /* n_preallocs */
-        (GInstanceInitFunc) gimp_interpreter_db_init,
-      };
-
-      interpreter_db_type = g_type_register_static (G_TYPE_OBJECT,
-                                                    "GimpInterpreterDB",
-                                                    &interpreter_db_info, 0);
-    }
-
-  return interpreter_db_type;
-}
 
 static void
 gimp_interpreter_db_class_init (GimpInterpreterDBClass *class)
 {
-  GObjectClass *object_class;
-
-  object_class = G_OBJECT_CLASS (class);
-
-  parent_class = g_type_class_peek_parent (class);
+  GObjectClass *object_class = G_OBJECT_CLASS (class);
 
   object_class->finalize = gimp_interpreter_db_finalize;
 }
@@ -151,21 +118,19 @@ gimp_interpreter_db_class_init (GimpInterpreterDBClass *class)
 static void
 gimp_interpreter_db_init (GimpInterpreterDB *db)
 {
-  db->programs = NULL;
+  db->programs        = NULL;
 
-  db->magics = NULL;
-  db->magic_names = NULL;
+  db->magics          = NULL;
+  db->magic_names     = NULL;
 
-  db->extensions = NULL;
+  db->extensions      = NULL;
   db->extension_names = NULL;
 }
 
 static void
 gimp_interpreter_db_finalize (GObject *object)
 {
-  GimpInterpreterDB *db;
-
-  db = GIMP_INTERPRETER_DB (object);
+  GimpInterpreterDB *db = GIMP_INTERPRETER_DB (object);
 
   gimp_interpreter_db_clear (db);
 

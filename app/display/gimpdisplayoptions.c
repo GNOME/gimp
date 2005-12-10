@@ -55,93 +55,29 @@ enum
 };
 
 
-static void  gimp_display_options_class_init    (GimpDisplayOptionsClass *klass);
-static void  gimp_display_options_fs_class_init (GimpDisplayOptionsClass *klass);
-static void  gimp_display_options_init          (GimpDisplayOptions      *options);
-
-static void  gimp_display_options_set_property  (GObject      *object,
-                                                guint         property_id,
-                                                const GValue *value,
-                                                GParamSpec   *pspec);
-static void  gimp_display_options_get_property  (GObject      *object,
-                                                guint         property_id,
-                                                GValue       *value,
-                                                GParamSpec   *pspec);
+static void   gimp_display_options_set_property (GObject      *object,
+                                                 guint         property_id,
+                                                 const GValue *value,
+                                                 GParamSpec   *pspec);
+static void   gimp_display_options_get_property (GObject      *object,
+                                                 guint         property_id,
+                                                 GValue       *value,
+                                                 GParamSpec   *pspec);
 
 
-GType
-gimp_display_options_get_type (void)
-{
-  static GType options_type = 0;
+G_DEFINE_TYPE_WITH_CODE (GimpDisplayOptions,
+                         gimp_display_options,
+                         G_TYPE_OBJECT,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL));
 
-  if (! options_type)
-    {
-      static const GTypeInfo options_info =
-      {
-        sizeof (GimpDisplayOptionsClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_display_options_class_init,
-	NULL,		/* class_finalize */
-	NULL,		/* class_data     */
-	sizeof (GimpDisplayOptions),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_display_options_init
-      };
-      static const GInterfaceInfo config_iface_info =
-      {
-        NULL,           /* iface_init     */
-        NULL,           /* iface_finalize */
-        NULL            /* iface_data     */
-      };
+typedef struct _GimpDisplayOptions      GimpDisplayOptionsFullscreen;
+typedef struct _GimpDisplayOptionsClass GimpDisplayOptionsFullscreenClass;
 
-      options_type = g_type_register_static (G_TYPE_OBJECT,
-                                             "GimpDisplayOptions",
-                                             &options_info, 0);
+G_DEFINE_TYPE_WITH_CODE (GimpDisplayOptionsFullscreen,
+                         gimp_display_options_fullscreen,
+                         GIMP_TYPE_DISPLAY_OPTIONS,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL));
 
-      g_type_add_interface_static (options_type, GIMP_TYPE_CONFIG,
-                                   &config_iface_info);
-    }
-
-  return options_type;
-}
-
-GType
-gimp_display_options_fullscreen_get_type (void)
-{
-  static GType options_type = 0;
-
-  if (! options_type)
-    {
-      static const GTypeInfo options_info =
-      {
-        sizeof (GimpDisplayOptionsClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_display_options_fs_class_init,
-	NULL,		/* class_finalize */
-	NULL,		/* class_data     */
-	sizeof (GimpDisplayOptions),
-	0,              /* n_preallocs    */
-	NULL            /* instance_init  */
-      };
-      static const GInterfaceInfo config_iface_info =
-      {
-        NULL,           /* iface_init     */
-        NULL,           /* iface_finalize */
-        NULL            /* iface_data     */
-      };
-
-      options_type = g_type_register_static (GIMP_TYPE_DISPLAY_OPTIONS,
-                                             "GimpDisplayOptionsFullscreen",
-                                             &options_info, 0);
-
-      g_type_add_interface_static (options_type, GIMP_TYPE_CONFIG,
-                                   &config_iface_info);
-    }
-
-  return options_type;
-}
 
 static void
 gimp_display_options_class_init (GimpDisplayOptionsClass *klass)
@@ -202,7 +138,7 @@ gimp_display_options_class_init (GimpDisplayOptionsClass *klass)
 }
 
 static void
-gimp_display_options_fs_class_init (GimpDisplayOptionsClass *klass)
+gimp_display_options_fullscreen_class_init (GimpDisplayOptionsFullscreenClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GimpRGB       black;
@@ -261,6 +197,12 @@ gimp_display_options_fs_class_init (GimpDisplayOptionsClass *klass)
 
 static void
 gimp_display_options_init (GimpDisplayOptions *options)
+{
+  options->padding_mode_set = FALSE;
+}
+
+static void
+gimp_display_options_fullscreen_init (GimpDisplayOptionsFullscreen *options)
 {
   options->padding_mode_set = FALSE;
 }

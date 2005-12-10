@@ -29,15 +29,16 @@
 
 /*  local function prototypes  */
 
-static void     gimp_canvas_class_init (GimpCanvasClass  *klass);
-static void     gimp_canvas_init       (GimpCanvas       *gdisp);
-static void     gimp_canvas_realize    (GtkWidget        *widget);
-static void     gimp_canvas_unrealize  (GtkWidget        *widget);
-static GdkGC  * gimp_canvas_gc_new     (GimpCanvas       *canvas,
-                                        GimpCanvasStyle   style);
+static void    gimp_canvas_realize   (GtkWidget       *widget);
+static void    gimp_canvas_unrealize (GtkWidget       *widget);
+static GdkGC * gimp_canvas_gc_new    (GimpCanvas      *canvas,
+                                      GimpCanvasStyle  style);
 
 
-static GtkDrawingAreaClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpCanvas, gimp_canvas, GTK_TYPE_DRAWING_AREA);
+
+#define parent_class gimp_canvas_parent_class
+
 
 static const guchar stipples[GIMP_CANVAS_NUM_STIPPLES][8] =
 {
@@ -124,40 +125,10 @@ static const guchar stipples[GIMP_CANVAS_NUM_STIPPLES][8] =
 };
 
 
-GType
-gimp_canvas_get_type (void)
-{
-  static GType canvas_type = 0;
-
-  if (! canvas_type)
-    {
-      static const GTypeInfo canvas_info =
-      {
-        sizeof (GimpCanvasClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_canvas_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpCanvas),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_canvas_init,
-      };
-
-      canvas_type = g_type_register_static (GTK_TYPE_DRAWING_AREA,
-                                            "GimpCanvas",
-                                            &canvas_info, 0);
-    }
-
-  return canvas_type;
-}
-
 static void
 gimp_canvas_class_init (GimpCanvasClass *klass)
 {
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   widget_class->realize   = gimp_canvas_realize;
   widget_class->unrealize = gimp_canvas_unrealize;

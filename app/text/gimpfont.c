@@ -65,8 +65,6 @@ struct _GimpFontClass
 };
 
 
-static void      gimp_font_class_init       (GimpFontClass *klass);
-static void      gimp_font_init             (GimpFont      *font);
 static void      gimp_font_finalize         (GObject       *object);
 static void      gimp_font_set_property     (GObject       *object,
                                              guint          property_id,
@@ -90,44 +88,16 @@ static TempBuf * gimp_font_get_new_preview  (GimpViewable  *viewable,
                                              gint           height);
 
 
-static GimpViewableClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpFont, gimp_font, GIMP_TYPE_VIEWABLE);
 
+#define parent_class gimp_font_parent_class
 
-GType
-gimp_font_get_type (void)
-{
-  static GType font_type = 0;
-
-  if (! font_type)
-    {
-      static const GTypeInfo font_info =
-      {
-        sizeof (GimpFontClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_font_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_font     */
-        sizeof (GimpFont),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_font_init,
-      };
-
-      font_type = g_type_register_static (GIMP_TYPE_VIEWABLE,
-                                          "GimpFont",
-                                          &font_info, 0);
-  }
-
-  return font_type;
-}
 
 static void
 gimp_font_class_init (GimpFontClass *klass)
 {
   GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
   GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize     = gimp_font_finalize;
   object_class->set_property = gimp_font_set_property;

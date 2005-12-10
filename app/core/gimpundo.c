@@ -59,8 +59,6 @@ enum
 };
 
 
-static void      gimp_undo_class_init          (GimpUndoClass       *klass);
-
 static GObject * gimp_undo_constructor         (GType                type,
                                                 guint                n_params,
                                                 GObjectConstructParam *params);
@@ -97,38 +95,12 @@ static gboolean  gimp_undo_create_preview_idle (gpointer             data);
 static void   gimp_undo_create_preview_private (GimpUndo            *undo);
 
 
+G_DEFINE_TYPE (GimpUndo, gimp_undo, GIMP_TYPE_VIEWABLE);
+
+#define parent_class gimp_undo_parent_class
+
 static guint undo_signals[LAST_SIGNAL] = { 0 };
 
-static GimpViewableClass *parent_class = NULL;
-
-
-GType
-gimp_undo_get_type (void)
-{
-  static GType undo_type = 0;
-
-  if (! undo_type)
-    {
-      static const GTypeInfo undo_info =
-      {
-        sizeof (GimpUndoClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_undo_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpUndo),
-        0,              /* n_preallocs    */
-        NULL            /* instance_init  */
-      };
-
-      undo_type = g_type_register_static (GIMP_TYPE_VIEWABLE,
-                                          "GimpUndo",
-                                          &undo_info, 0);
-  }
-
-  return undo_type;
-}
 
 static void
 gimp_undo_class_init (GimpUndoClass *klass)
@@ -136,8 +108,6 @@ gimp_undo_class_init (GimpUndoClass *klass)
   GObjectClass      *object_class      = G_OBJECT_CLASS (klass);
   GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
   GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   undo_signals[POP] =
     g_signal_new ("pop",
@@ -217,6 +187,12 @@ gimp_undo_class_init (GimpUndoClass *klass)
                                                          G_PARAM_CONSTRUCT_ONLY));
 }
 
+static void
+gimp_undo_init (GimpUndo *undo)
+{
+  undo->time = time (NULL);
+}
+
 static GObject *
 gimp_undo_constructor (GType                  type,
                        guint                  n_params,
@@ -230,8 +206,6 @@ gimp_undo_constructor (GType                  type,
   undo = GIMP_UNDO (object);
 
   g_assert (GIMP_IS_IMAGE (undo->gimage));
-
-  undo->time = time (NULL);
 
   return object;
 }

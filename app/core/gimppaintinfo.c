@@ -28,52 +28,21 @@
 #include "gimppaintinfo.h"
 
 
-static void    gimp_paint_info_class_init      (GimpPaintInfoClass *klass);
-static void    gimp_paint_info_init            (GimpPaintInfo      *paint_info);
-
-static void    gimp_paint_info_finalize        (GObject            *object);
-static gchar * gimp_paint_info_get_description (GimpViewable       *viewable,
-                                                gchar             **tooltip);
+static void    gimp_paint_info_finalize        (GObject       *object);
+static gchar * gimp_paint_info_get_description (GimpViewable  *viewable,
+                                                gchar        **tooltip);
 
 
-static GimpViewableClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpPaintInfo, gimp_paint_info, GIMP_TYPE_VIEWABLE);
 
+#define parent_class gimp_paint_info_parent_class
 
-GType
-gimp_paint_info_get_type (void)
-{
-  static GType paint_info_type = 0;
-
-  if (! paint_info_type)
-    {
-      static const GTypeInfo paint_info_info =
-      {
-        sizeof (GimpPaintInfoClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_paint_info_class_init,
-        NULL,		/* class_finalize */
-        NULL,		/* class_data     */
-        sizeof (GimpPaintInfo),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_paint_info_init,
-      };
-
-      paint_info_type = g_type_register_static (GIMP_TYPE_VIEWABLE,
-                                                "GimpPaintInfo",
-                                                &paint_info_info, 0);
-    }
-
-  return paint_info_type;
-}
 
 static void
 gimp_paint_info_class_init (GimpPaintInfoClass *klass)
 {
   GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
   GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize          = gimp_paint_info_finalize;
 

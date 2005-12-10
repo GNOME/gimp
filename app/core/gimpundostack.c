@@ -28,9 +28,6 @@
 #include "gimpundostack.h"
 
 
-static void    gimp_undo_stack_class_init  (GimpUndoStackClass  *klass);
-static void    gimp_undo_stack_init        (GimpUndoStack       *stack);
-
 static void    gimp_undo_stack_finalize    (GObject             *object);
 
 static gint64  gimp_undo_stack_get_memsize (GimpObject          *object,
@@ -43,36 +40,10 @@ static void    gimp_undo_stack_free        (GimpUndo            *undo,
                                             GimpUndoMode         undo_mode);
 
 
-static GimpUndoClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpUndoStack, gimp_undo_stack, GIMP_TYPE_UNDO);
 
+#define parent_class gimp_undo_stack_parent_class
 
-GType
-gimp_undo_stack_get_type (void)
-{
-  static GType undo_stack_type = 0;
-
-  if (! undo_stack_type)
-    {
-      static const GTypeInfo undo_stack_info =
-      {
-        sizeof (GimpUndoStackClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_undo_stack_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpUndoStack),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_undo_stack_init,
-      };
-
-      undo_stack_type = g_type_register_static (GIMP_TYPE_UNDO,
-                                                "GimpUndoStack",
-                                                &undo_stack_info, 0);
-    }
-
-  return undo_stack_type;
-}
 
 static void
 gimp_undo_stack_class_init (GimpUndoStackClass *klass)
@@ -80,8 +51,6 @@ gimp_undo_stack_class_init (GimpUndoStackClass *klass)
   GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
   GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
   GimpUndoClass   *undo_class        = GIMP_UNDO_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize         = gimp_undo_stack_finalize;
 

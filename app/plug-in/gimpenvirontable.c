@@ -50,9 +50,6 @@ struct _GimpEnvironValue
 extern char **environ;
 
 
-static void     gimp_environ_table_class_init     (GimpEnvironTableClass *class);
-static void     gimp_environ_table_init           (GimpEnvironTable      *environ_table);
-
 static void     gimp_environ_table_finalize       (GObject               *object);
 
 static void     gimp_environ_table_load_env_file  (const GimpDatafileData *file_data,
@@ -73,43 +70,15 @@ static void     gimp_environ_table_clear_envp     (GimpEnvironTable      *enviro
 static void     gimp_environ_table_free_value     (gpointer               value);
 
 
-static GObjectClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpEnvironTable, gimp_environ_table, G_TYPE_OBJECT);
 
+#define parent_class gimp_environ_table_parent_class
 
-GType
-gimp_environ_table_get_type (void)
-{
-  static GType environ_table_type = 0;
-
-  if (! environ_table_type)
-    {
-      static const GTypeInfo environ_table_info =
-      {
-        sizeof (GimpEnvironTableClass),
-        NULL,                /* base_init */
-        NULL,                /* base_finalize */
-        (GClassInitFunc) gimp_environ_table_class_init,
-        NULL,                /* class_finalize */
-        NULL,                /* class_data */
-        sizeof (GimpEnvironTable),
-        0,                /* n_preallocs */
-        (GInstanceInitFunc) gimp_environ_table_init,
-      };
-
-      environ_table_type = g_type_register_static (G_TYPE_OBJECT,
-                                                   "GimpEnvironTable",
-                                                   &environ_table_info, 0);
-    }
-
-  return environ_table_type;
-}
 
 static void
 gimp_environ_table_class_init (GimpEnvironTableClass *class)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (class);
-
-  parent_class = g_type_class_peek_parent (class);
 
   object_class->finalize = gimp_environ_table_finalize;
 }
@@ -117,10 +86,10 @@ gimp_environ_table_class_init (GimpEnvironTableClass *class)
 static void
 gimp_environ_table_init (GimpEnvironTable *environ_table)
 {
-  environ_table->vars = NULL;
+  environ_table->vars     = NULL;
   environ_table->internal = NULL;
 
-  environ_table->envp = NULL;
+  environ_table->envp     = NULL;
 }
 
 static void

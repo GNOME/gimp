@@ -33,10 +33,8 @@
 #include "gimpbezierstroke.h"
 
 
-/* local prototypes */
+/*  local prototypes  */
 
-static void gimp_bezier_stroke_class_init  (GimpBezierStrokeClass *klass);
-static void gimp_bezier_stroke_init        (GimpBezierStroke      *bezier_stroke);
 static gdouble
     gimp_bezier_stroke_nearest_point_get   (const GimpStroke      *stroke,
                                             const GimpCoords      *coord,
@@ -156,49 +154,16 @@ static gboolean gimp_bezier_coords_is_straight
                                             const gdouble          precision);
 
 
-/*  private variables  */
+G_DEFINE_TYPE (GimpBezierStroke, gimp_bezier_stroke, GIMP_TYPE_STROKE);
 
-static GimpStrokeClass *parent_class = NULL;
+#define parent_class gimp_bezier_stroke_parent_class
 
-
-GType
-gimp_bezier_stroke_get_type (void)
-{
-  static GType bezier_stroke_type = 0;
-
-  if (! bezier_stroke_type)
-    {
-      static const GTypeInfo bezier_stroke_info =
-      {
-        sizeof (GimpBezierStrokeClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_bezier_stroke_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpBezierStroke),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_bezier_stroke_init,
-      };
-
-      bezier_stroke_type = g_type_register_static (GIMP_TYPE_STROKE,
-                                                   "GimpBezierStroke",
-                                                   &bezier_stroke_info, 0);
-    }
-
-  return bezier_stroke_type;
-}
 
 static void
 gimp_bezier_stroke_class_init (GimpBezierStrokeClass *klass)
 {
-  GObjectClass    *object_class;
-  GimpStrokeClass *stroke_class;
-
-  object_class = G_OBJECT_CLASS (klass);
-  stroke_class = GIMP_STROKE_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
+  GObjectClass    *object_class = G_OBJECT_CLASS (klass);
+  GimpStrokeClass *stroke_class = GIMP_STROKE_CLASS (klass);
 
   object_class->finalize             = gimp_bezier_stroke_finalize;
 
@@ -223,9 +188,8 @@ gimp_bezier_stroke_class_init (GimpBezierStrokeClass *klass)
 }
 
 static void
-gimp_bezier_stroke_init (GimpBezierStroke *bezier_stroke)
+gimp_bezier_stroke_init (GimpBezierStroke *stroke)
 {
-  /* pass */
 }
 
 static void
@@ -2210,4 +2174,3 @@ gimp_bezier_coords_subdivide2 (const GimpCoords *beziercoords,
                                      ret_coords, ret_params, depth-1);
     }
 }
-

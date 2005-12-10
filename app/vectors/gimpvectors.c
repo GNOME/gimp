@@ -58,9 +58,6 @@ enum
 };
 
 
-static void       gimp_vectors_class_init   (GimpVectorsClass *klass);
-static void       gimp_vectors_init         (GimpVectors      *vectors);
-
 static void       gimp_vectors_finalize     (GObject          *object);
 
 static gint64     gimp_vectors_get_memsize  (GimpObject       *object,
@@ -141,55 +138,20 @@ static gint       gimp_vectors_real_interpolate     (const GimpVectors *vectors,
 static GimpVectors * gimp_vectors_real_make_bezier  (const GimpVectors *vectors);
 
 
-/*  private variables  */
+G_DEFINE_TYPE (GimpVectors, gimp_vectors, GIMP_TYPE_ITEM);
+
+#define parent_class gimp_vectors_parent_class
 
 static guint gimp_vectors_signals[LAST_SIGNAL] = { 0 };
 
-static GimpItemClass *parent_class = NULL;
-
-
-GType
-gimp_vectors_get_type (void)
-{
-  static GType vectors_type = 0;
-
-  if (! vectors_type)
-    {
-      static const GTypeInfo vectors_info =
-      {
-        sizeof (GimpVectorsClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_vectors_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpVectors),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_vectors_init,
-      };
-
-      vectors_type = g_type_register_static (GIMP_TYPE_ITEM,
-                                             "GimpVectors",
-                                             &vectors_info, 0);
-    }
-
-  return vectors_type;
-}
 
 static void
 gimp_vectors_class_init (GimpVectorsClass *klass)
 {
-  GObjectClass      *object_class;
-  GimpObjectClass   *gimp_object_class;
-  GimpViewableClass *viewable_class;
-  GimpItemClass     *item_class;
-
-  object_class      = G_OBJECT_CLASS (klass);
-  gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  viewable_class    = GIMP_VIEWABLE_CLASS (klass);
-  item_class        = GIMP_ITEM_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
+  GObjectClass      *object_class      = G_OBJECT_CLASS (klass);
+  GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
+  GimpItemClass     *item_class        = GIMP_ITEM_CLASS (klass);
 
   gimp_vectors_signals[FREEZE] =
     g_signal_new ("freeze",

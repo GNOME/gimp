@@ -37,9 +37,6 @@
 #define EPSILON 1e-10
 
 
-static void       gimp_gradient_class_init       (GimpGradientClass *klass);
-static void       gimp_gradient_init             (GimpGradient      *gradient);
-
 static void       gimp_gradient_finalize         (GObject           *object);
 
 static gint64     gimp_gradient_get_memsize      (GimpObject        *object,
@@ -81,99 +78,10 @@ static inline gdouble  gimp_gradient_calc_sphere_decreasing_factor (gdouble  mid
                                                                     gdouble  pos);
 
 
-static GimpDataClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpGradient, gimp_gradient, GIMP_TYPE_DATA);
 
-static inline gdouble
-gimp_gradient_calc_linear_factor (gdouble middle,
-				  gdouble pos)
-{
-  if (pos <= middle)
-    {
-      if (middle < EPSILON)
-	return 0.0;
-      else
-	return 0.5 * pos / middle;
-    }
-  else
-    {
-      pos -= middle;
-      middle = 1.0 - middle;
+#define parent_class gimp_gradient_parent_class
 
-      if (middle < EPSILON)
-	return 1.0;
-      else
-	return 0.5 + 0.5 * pos / middle;
-    }
-}
-
-static inline gdouble
-gimp_gradient_calc_curved_factor (gdouble middle,
-				  gdouble pos)
-{
-  if (middle < EPSILON)
-    middle = EPSILON;
-
-  return pow (pos, log (0.5) / log (middle));
-}
-
-static inline gdouble
-gimp_gradient_calc_sine_factor (gdouble middle,
-				gdouble pos)
-{
-  pos = gimp_gradient_calc_linear_factor (middle, pos);
-
-  return (sin ((-G_PI / 2.0) + G_PI * pos) + 1.0) / 2.0;
-}
-
-static inline gdouble
-gimp_gradient_calc_sphere_increasing_factor (gdouble middle,
-					     gdouble pos)
-{
-  pos = gimp_gradient_calc_linear_factor (middle, pos) - 1.0;
-
-  /* Works for convex increasing and concave decreasing */
-  return sqrt (1.0 - pos * pos);
-}
-
-static inline gdouble
-gimp_gradient_calc_sphere_decreasing_factor (gdouble middle,
-					     gdouble pos)
-{
-  pos = gimp_gradient_calc_linear_factor (middle, pos);
-
-  /* Works for convex decreasing and concave increasing */
-  return 1.0 - sqrt(1.0 - pos * pos);
-}
-
-
-
-GType
-gimp_gradient_get_type (void)
-{
-  static GType gradient_type = 0;
-
-  if (! gradient_type)
-    {
-      static const GTypeInfo gradient_info =
-      {
-        sizeof (GimpGradientClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_gradient_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpGradient),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_gradient_init,
-      };
-
-      gradient_type = g_type_register_static (GIMP_TYPE_DATA,
-                                              "GimpGradient",
-                                              &gradient_info, 0);
-  }
-
-  return gradient_type;
-}
 
 static void
 gimp_gradient_class_init (GimpGradientClass *klass)
@@ -182,8 +90,6 @@ gimp_gradient_class_init (GimpGradientClass *klass)
   GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
   GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
   GimpDataClass     *data_class        = GIMP_DATA_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize           = gimp_gradient_finalize;
 
@@ -344,6 +250,9 @@ gimp_gradient_duplicate (GimpData *data)
 
   return GIMP_DATA (gradient);
 }
+
+
+/*  public functions  */
 
 GimpData *
 gimp_gradient_new (const gchar *name)
@@ -533,42 +442,6 @@ gimp_gradient_get_color_at (GimpGradient        *gradient,
   *color = rgb;
 
   return seg;
-}
-
-static GimpGradientSegment *
-gimp_gradient_get_segment_at_internal (GimpGradient        *gradient,
-                                       GimpGradientSegment *seg,
-                                       gdouble              pos)
-{
-  /* handle FP imprecision at the edges of the gradient */
-  pos = CLAMP (pos, 0.0, 1.0);
-
-  if (! seg)
-    seg = gradient->segments;
-
-  while (seg)
-    {
-      if (pos >= seg->left)
-	{
-	  if (pos <= seg->right)
-	    {
-	      return seg;
-	    }
-	  else
-	    {
-	      seg = seg->next;
-	    }
-	}
-      else
-	{
-	  seg = seg->prev;
-	}
-    }
-
-  /* Oops: we should have found a segment, but we didn't */
-  g_warning ("%s: no matching segment for position %0.15f", G_STRFUNC, pos);
-
-  return NULL;
 }
 
 GimpGradientSegment *
@@ -1822,4 +1695,105 @@ gimp_gradient_segment_range_move (GimpGradient        *gradient,
   gimp_data_thaw (GIMP_DATA (gradient));
 
   return delta;
+}
+
+
+/*  private functions  */
+
+static GimpGradientSegment *
+gimp_gradient_get_segment_at_internal (GimpGradient        *gradient,
+                                       GimpGradientSegment *seg,
+                                       gdouble              pos)
+{
+  /* handle FP imprecision at the edges of the gradient */
+  pos = CLAMP (pos, 0.0, 1.0);
+
+  if (! seg)
+    seg = gradient->segments;
+
+  while (seg)
+    {
+      if (pos >= seg->left)
+	{
+	  if (pos <= seg->right)
+	    {
+	      return seg;
+	    }
+	  else
+	    {
+	      seg = seg->next;
+	    }
+	}
+      else
+	{
+	  seg = seg->prev;
+	}
+    }
+
+  /* Oops: we should have found a segment, but we didn't */
+  g_warning ("%s: no matching segment for position %0.15f", G_STRFUNC, pos);
+
+  return NULL;
+}
+
+static inline gdouble
+gimp_gradient_calc_linear_factor (gdouble middle,
+				  gdouble pos)
+{
+  if (pos <= middle)
+    {
+      if (middle < EPSILON)
+	return 0.0;
+      else
+	return 0.5 * pos / middle;
+    }
+  else
+    {
+      pos -= middle;
+      middle = 1.0 - middle;
+
+      if (middle < EPSILON)
+	return 1.0;
+      else
+	return 0.5 + 0.5 * pos / middle;
+    }
+}
+
+static inline gdouble
+gimp_gradient_calc_curved_factor (gdouble middle,
+				  gdouble pos)
+{
+  if (middle < EPSILON)
+    middle = EPSILON;
+
+  return pow (pos, log (0.5) / log (middle));
+}
+
+static inline gdouble
+gimp_gradient_calc_sine_factor (gdouble middle,
+				gdouble pos)
+{
+  pos = gimp_gradient_calc_linear_factor (middle, pos);
+
+  return (sin ((-G_PI / 2.0) + G_PI * pos) + 1.0) / 2.0;
+}
+
+static inline gdouble
+gimp_gradient_calc_sphere_increasing_factor (gdouble middle,
+					     gdouble pos)
+{
+  pos = gimp_gradient_calc_linear_factor (middle, pos) - 1.0;
+
+  /* Works for convex increasing and concave decreasing */
+  return sqrt (1.0 - pos * pos);
+}
+
+static inline gdouble
+gimp_gradient_calc_sphere_decreasing_factor (gdouble middle,
+					     gdouble pos)
+{
+  pos = gimp_gradient_calc_linear_factor (middle, pos);
+
+  /* Works for convex decreasing and concave increasing */
+  return 1.0 - sqrt(1.0 - pos * pos);
 }

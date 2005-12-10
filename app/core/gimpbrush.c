@@ -42,64 +42,35 @@ enum
 };
 
 
-static void        gimp_brush_class_init            (GimpBrushClass *klass);
-static void        gimp_brush_init                  (GimpBrush      *brush);
+static void        gimp_brush_finalize              (GObject       *object);
 
-static void        gimp_brush_finalize              (GObject        *object);
+static gint64      gimp_brush_get_memsize           (GimpObject    *object,
+                                                     gint64        *gui_size);
 
-static gint64      gimp_brush_get_memsize           (GimpObject     *object,
-                                                     gint64         *gui_size);
+static gboolean    gimp_brush_get_size              (GimpViewable  *viewable,
+                                                     gint          *width,
+                                                     gint          *height);
+static TempBuf   * gimp_brush_get_new_preview       (GimpViewable  *viewable,
+                                                     gint           width,
+                                                     gint           height);
+static gchar     * gimp_brush_get_description       (GimpViewable  *viewable,
+                                                     gchar        **tooltip);
+static gchar     * gimp_brush_get_extension         (GimpData      *data);
 
-static gboolean    gimp_brush_get_size              (GimpViewable   *viewable,
-                                                     gint           *width,
-                                                     gint           *height);
-static TempBuf   * gimp_brush_get_new_preview       (GimpViewable   *viewable,
-                                                     gint            width,
-                                                     gint            height);
-static gchar     * gimp_brush_get_description       (GimpViewable   *viewable,
-                                                     gchar         **tooltip);
-static gchar     * gimp_brush_get_extension         (GimpData       *data);
+static GimpBrush * gimp_brush_real_select_brush     (GimpBrush     *brush,
+                                                     GimpCoords    *last_coords,
+                                                     GimpCoords    *cur_coords);
+static gboolean    gimp_brush_real_want_null_motion (GimpBrush     *brush,
+                                                     GimpCoords    *last_coords,
+                                                     GimpCoords    *cur_coords);
 
-static GimpBrush * gimp_brush_real_select_brush     (GimpBrush      *brush,
-                                                     GimpCoords     *last_coords,
-                                                     GimpCoords     *cur_coords);
-static gboolean    gimp_brush_real_want_null_motion (GimpBrush      *brush,
-                                                     GimpCoords     *last_coords,
-                                                     GimpCoords     *cur_coords);
 
+G_DEFINE_TYPE (GimpBrush, gimp_brush, GIMP_TYPE_DATA);
+
+#define parent_class gimp_brush_parent_class
 
 static guint brush_signals[LAST_SIGNAL] = { 0 };
 
-static GimpDataClass *parent_class = NULL;
-
-
-GType
-gimp_brush_get_type (void)
-{
-  static GType brush_type = 0;
-
-  if (! brush_type)
-    {
-      static const GTypeInfo brush_info =
-      {
-        sizeof (GimpBrushClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_brush_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpBrush),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_brush_init,
-      };
-
-      brush_type = g_type_register_static (GIMP_TYPE_DATA,
-                                           "GimpBrush",
-                                           &brush_info, 0);
-  }
-
-  return brush_type;
-}
 
 static void
 gimp_brush_class_init (GimpBrushClass *klass)
@@ -108,8 +79,6 @@ gimp_brush_class_init (GimpBrushClass *klass)
   GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
   GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
   GimpDataClass     *data_class        = GIMP_DATA_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   brush_signals[SPACING_CHANGED] =
     g_signal_new ("spacing-changed",
@@ -210,7 +179,7 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
   TempBuf   *mask_buf   = NULL;
   TempBuf   *pixmap_buf = NULL;
   TempBuf   *return_buf = NULL;
-  guchar     transp[4] = { 0, 0, 0, 0 };
+  guchar     transp[4]  = { 0, 0, 0, 0 };
   guchar    *mask;
   guchar    *buf;
   gint       x, y;
@@ -240,8 +209,8 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
           /* TODO: the scale function should scale the pixmap and the
            *  mask in one run
            */
-          pixmap_buf =
-            brush_scale_pixmap (pixmap_buf, brush_width, brush_height);
+          pixmap_buf = brush_scale_pixmap (pixmap_buf,
+                                           brush_width, brush_height);
         }
 
       scale = TRUE;

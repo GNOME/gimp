@@ -73,88 +73,48 @@ enum
 
 /*  local function prototypes  */
 
-static void   gimp_container_class_init          (GimpContainerClass  *klass);
-static void   gimp_container_init                (GimpContainer       *container);
-static void   gimp_container_config_iface_init   (GimpConfigInterface *config_iface);
+static void   gimp_container_config_iface_init   (GimpConfigInterface *iface);
 
-static void       gimp_container_dispose         (GObject            *object);
+static void       gimp_container_dispose         (GObject          *object);
 
-static void       gimp_container_set_property    (GObject            *object,
-                                                  guint               property_id,
-                                                  const GValue       *value,
-                                                  GParamSpec         *pspec);
-static void       gimp_container_get_property    (GObject            *object,
-                                                  guint               property_id,
-                                                  GValue             *value,
-                                                  GParamSpec         *pspec);
+static void       gimp_container_set_property    (GObject          *object,
+                                                  guint             property_id,
+                                                  const GValue     *value,
+                                                  GParamSpec       *pspec);
+static void       gimp_container_get_property    (GObject          *object,
+                                                  guint             property_id,
+                                                  GValue           *value,
+                                                  GParamSpec       *pspec);
 
-static gint64     gimp_container_get_memsize     (GimpObject         *object,
-                                                  gint64             *gui_size);
+static gint64     gimp_container_get_memsize     (GimpObject       *object,
+                                                  gint64           *gui_size);
 
-static gboolean   gimp_container_serialize       (GimpConfig         *config,
-                                                  GimpConfigWriter   *writer,
-                                                  gpointer            data);
-static gboolean   gimp_container_deserialize     (GimpConfig         *config,
-                                                  GScanner           *scanner,
-                                                  gint                nest_level,
-                                                  gpointer            data);
+static gboolean   gimp_container_serialize       (GimpConfig       *config,
+                                                  GimpConfigWriter *writer,
+                                                  gpointer          data);
+static gboolean   gimp_container_deserialize     (GimpConfig       *config,
+                                                  GScanner         *scanner,
+                                                  gint              nest_level,
+                                                  gpointer          data);
 
-static void   gimp_container_disconnect_callback (GimpObject         *object,
-						  gpointer            data);
+static void   gimp_container_disconnect_callback (GimpObject       *object,
+						  gpointer          data);
 
+
+G_DEFINE_TYPE_WITH_CODE (GimpContainer, gimp_container, GIMP_TYPE_OBJECT,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
+                                                gimp_container_config_iface_init));
+
+#define parent_class gimp_container_parent_class
 
 static guint container_signals[LAST_SIGNAL] = { 0, };
 
-static GimpObjectClass *parent_class = NULL;
-
-
-GType
-gimp_container_get_type (void)
-{
-  static GType container_type = 0;
-
-  if (! container_type)
-    {
-      static const GTypeInfo container_info =
-      {
-        sizeof (GimpContainerClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_container_class_init,
-	NULL,		/* class_finalize */
-	NULL,		/* class_data     */
-	sizeof (GimpContainer),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_container_init,
-      };
-      static const GInterfaceInfo config_iface_info =
-      {
-        (GInterfaceInitFunc) gimp_container_config_iface_init,
-        NULL,           /* iface_finalize */
-        NULL            /* iface_data     */
-      };
-
-      container_type = g_type_register_static (GIMP_TYPE_OBJECT,
-					       "GimpContainer",
-                                               &container_info, 0);
-
-      g_type_add_interface_static (container_type, GIMP_TYPE_CONFIG,
-                                   &config_iface_info);
-    }
-
-  return container_type;
-}
 
 static void
 gimp_container_class_init (GimpContainerClass *klass)
 {
-  GObjectClass    *object_class;
-  GimpObjectClass *gimp_object_class;
-
-  object_class      = G_OBJECT_CLASS (klass);
-  gimp_object_class = GIMP_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
+  GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
+  GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
 
   container_signals[ADD] =
     g_signal_new ("add",
@@ -251,10 +211,10 @@ gimp_container_init (GimpContainer *container)
 }
 
 static void
-gimp_container_config_iface_init (GimpConfigInterface *config_iface)
+gimp_container_config_iface_init (GimpConfigInterface *iface)
 {
-  config_iface->serialize   = gimp_container_serialize;
-  config_iface->deserialize = gimp_container_deserialize;
+  iface->serialize   = gimp_container_serialize;
+  iface->deserialize = gimp_container_deserialize;
 }
 
 static void

@@ -43,9 +43,6 @@
 
 /*  local function prototypes  */
 
-static void       gimp_palette_class_init       (GimpPaletteClass  *klass);
-static void       gimp_palette_init             (GimpPalette       *palette);
-
 static void       gimp_palette_finalize         (GObject           *object);
 
 static gint64     gimp_palette_get_memsize      (GimpObject        *object,
@@ -76,38 +73,10 @@ static GimpData * gimp_palette_duplicate        (GimpData          *data);
 static void       gimp_palette_entry_free       (GimpPaletteEntry  *entry);
 
 
-/*  private variables  */
+G_DEFINE_TYPE (GimpPalette, gimp_palette, GIMP_TYPE_DATA);
 
-static GimpDataClass *parent_class = NULL;
+#define parent_class gimp_palette_parent_class
 
-
-GType
-gimp_palette_get_type (void)
-{
-  static GType palette_type = 0;
-
-  if (! palette_type)
-    {
-      static const GTypeInfo palette_info =
-      {
-        sizeof (GimpPaletteClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_palette_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpPalette),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_palette_init,
-      };
-
-      palette_type = g_type_register_static (GIMP_TYPE_DATA,
-                                             "GimpPalette",
-                                             &palette_info, 0);
-    }
-
-  return palette_type;
-}
 
 static void
 gimp_palette_class_init (GimpPaletteClass *klass)
@@ -116,8 +85,6 @@ gimp_palette_class_init (GimpPaletteClass *klass)
   GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
   GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
   GimpDataClass     *data_class        = GIMP_DATA_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize           = gimp_palette_finalize;
 

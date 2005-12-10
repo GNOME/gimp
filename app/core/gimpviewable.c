@@ -52,9 +52,7 @@ enum
 };
 
 
-static void    gimp_viewable_class_init        (GimpViewableClass   *klass);
-static void    gimp_viewable_init              (GimpViewable        *viewable);
-static void    gimp_viewable_config_iface_init (GimpConfigInterface *config_iface);
+static void    gimp_viewable_config_iface_init (GimpConfigInterface *iface);
 
 static void    gimp_viewable_finalize               (GObject        *object);
 static void    gimp_viewable_set_property           (GObject        *object,
@@ -95,58 +93,22 @@ static gboolean gimp_viewable_serialize_property     (GimpConfig    *config,
                                                       GimpConfigWriter *writer);
 
 
+G_DEFINE_TYPE_WITH_CODE (GimpViewable, gimp_viewable, GIMP_TYPE_OBJECT,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
+                                                gimp_viewable_config_iface_init));
+
+#define parent_class gimp_viewable_parent_class
+
 static guint  viewable_signals[LAST_SIGNAL] = { 0 };
+static GQuark quark_preview_temp_buf        = 0;
+static GQuark quark_preview_pixbuf          = 0;
 
-static GimpObjectClass *parent_class = NULL;
-
-static GQuark  quark_preview_temp_buf = 0;
-static GQuark  quark_preview_pixbuf   = 0;
-
-
-GType
-gimp_viewable_get_type (void)
-{
-  static GType viewable_type = 0;
-
-  if (! viewable_type)
-    {
-      static const GTypeInfo viewable_info =
-      {
-        sizeof (GimpViewableClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_viewable_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpViewable),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_viewable_init,
-      };
-      static const GInterfaceInfo config_iface_info =
-      {
-        (GInterfaceInitFunc) gimp_viewable_config_iface_init,
-        NULL,           /* iface_finalize */
-        NULL            /* iface_data     */
-      };
-
-      viewable_type = g_type_register_static (GIMP_TYPE_OBJECT,
-                                              "GimpViewable",
-                                              &viewable_info, 0);
-
-      g_type_add_interface_static (viewable_type, GIMP_TYPE_CONFIG,
-                                   &config_iface_info);
-    }
-
-  return viewable_type;
-}
 
 static void
 gimp_viewable_class_init (GimpViewableClass *klass)
 {
   GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
   GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   quark_preview_temp_buf = g_quark_from_static_string ("viewable-preview-temp-buf");
   quark_preview_pixbuf   = g_quark_from_static_string ("viewable-preview-pixbuf");
@@ -201,9 +163,9 @@ gimp_viewable_init (GimpViewable *viewable)
 }
 
 static void
-gimp_viewable_config_iface_init (GimpConfigInterface *config_iface)
+gimp_viewable_config_iface_init (GimpConfigInterface *iface)
 {
-  config_iface->serialize_property = gimp_viewable_serialize_property;
+  iface->serialize_property = gimp_viewable_serialize_property;
 }
 
 static void

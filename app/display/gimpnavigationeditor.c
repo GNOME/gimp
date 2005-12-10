@@ -55,10 +55,7 @@
 #define MAX_SCALE_BUF 20
 
 
-static void   gimp_navigation_editor_class_init (GimpNavigationEditorClass *klass);
-static void   gimp_navigation_editor_init       (GimpNavigationEditor      *editor);
-
-static void   gimp_navigation_editor_docked_iface_init (GimpDockedInterface *docked_iface);
+static void   gimp_navigation_editor_docked_iface_init (GimpDockedInterface *iface);
 static void   gimp_navigation_editor_set_context       (GimpDocked       *docked,
                                                         GimpContext      *context);
 
@@ -95,52 +92,18 @@ static void   gimp_navigation_editor_shell_reconnect   (GimpDisplayShell     *sh
 static void   gimp_navigation_editor_update_marker     (GimpNavigationEditor *editor);
 
 
-static GimpEditorClass *parent_class = NULL;
+G_DEFINE_TYPE_WITH_CODE (GimpNavigationEditor, gimp_navigation_editor,
+                         GIMP_TYPE_EDITOR,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
+                                                gimp_navigation_editor_docked_iface_init));
 
+#define parent_class gimp_navigation_editor_parent_class
 
-GType
-gimp_navigation_editor_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo editor_info =
-      {
-        sizeof (GimpNavigationEditorClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_navigation_editor_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_navigation */
-        sizeof (GimpNavigationEditor),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_navigation_editor_init,
-      };
-      static const GInterfaceInfo docked_iface_info =
-      {
-        (GInterfaceInitFunc) gimp_navigation_editor_docked_iface_init,
-        NULL,           /* iface_finalize */
-        NULL            /* iface_data     */
-      };
-
-      type = g_type_register_static (GIMP_TYPE_EDITOR,
-                                     "GimpNavigationEditor",
-                                     &editor_info, 0);
-
-      g_type_add_interface_static (type, GIMP_TYPE_DOCKED,
-                                   &docked_iface_info);
-    }
-
-  return type;
-}
 
 static void
 gimp_navigation_editor_class_init (GimpNavigationEditorClass *klass)
 {
   GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   gtk_object_class->destroy = gimp_navigation_editor_destroy;
 }
@@ -177,9 +140,9 @@ gimp_navigation_editor_init (GimpNavigationEditor *editor)
 }
 
 static void
-gimp_navigation_editor_docked_iface_init (GimpDockedInterface *docked_iface)
+gimp_navigation_editor_docked_iface_init (GimpDockedInterface *iface)
 {
-  docked_iface->set_context = gimp_navigation_editor_set_context;
+  iface->set_context = gimp_navigation_editor_set_context;
 }
 
 static void

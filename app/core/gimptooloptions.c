@@ -37,9 +37,6 @@ enum
 };
 
 
-static void   gimp_tool_options_init       (GimpToolOptions      *options);
-static void   gimp_tool_options_class_init (GimpToolOptionsClass *options_class);
-
 static void   gimp_tool_options_set_property (GObject         *object,
                                               guint            property_id,
                                               const GValue    *value,
@@ -52,43 +49,13 @@ static void   gimp_tool_options_get_property (GObject         *object,
 static void   gimp_tool_options_real_reset   (GimpToolOptions *tool_options);
 
 
-static GimpContextClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpToolOptions, gimp_tool_options, GIMP_TYPE_CONTEXT);
 
-
-GType
-gimp_tool_options_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo info =
-      {
-        sizeof (GimpToolOptionsClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_tool_options_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpToolOptions),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_tool_options_init,
-      };
-
-      type = g_type_register_static (GIMP_TYPE_CONTEXT,
-                                     "GimpToolOptions",
-                                     &info, 0);
-    }
-
-  return type;
-}
 
 static void
 gimp_tool_options_class_init (GimpToolOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->set_property = gimp_tool_options_set_property;
   object_class->get_property = gimp_tool_options_get_property;

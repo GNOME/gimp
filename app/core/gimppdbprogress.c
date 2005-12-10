@@ -48,7 +48,7 @@ enum
 static void      gimp_pdb_progress_class_init     (GimpPdbProgressClass *klass);
 static void      gimp_pdb_progress_init           (GimpPdbProgress      *progress,
                                                    GimpPdbProgressClass *klass);
-static void      gimp_pdb_progress_progress_iface_init (GimpProgressInterface *progress_iface);
+static void gimp_pdb_progress_progress_iface_init (GimpProgressInterface *iface);
 
 static GObject * gimp_pdb_progress_constructor    (GType               type,
                                                    guint               n_params,
@@ -149,16 +149,16 @@ gimp_pdb_progress_init (GimpPdbProgress      *progress,
 }
 
 static void
-gimp_pdb_progress_progress_iface_init (GimpProgressInterface *progress_iface)
+gimp_pdb_progress_progress_iface_init (GimpProgressInterface *iface)
 {
-  progress_iface->start      = gimp_pdb_progress_progress_start;
-  progress_iface->end        = gimp_pdb_progress_progress_end;
-  progress_iface->is_active  = gimp_pdb_progress_progress_is_active;
-  progress_iface->set_text   = gimp_pdb_progress_progress_set_text;
-  progress_iface->set_value  = gimp_pdb_progress_progress_set_value;
-  progress_iface->get_value  = gimp_pdb_progress_progress_get_value;
-  progress_iface->pulse      = gimp_pdb_progress_progress_pulse;
-  progress_iface->get_window = gimp_pdb_progress_progress_get_window;
+  iface->start      = gimp_pdb_progress_progress_start;
+  iface->end        = gimp_pdb_progress_progress_end;
+  iface->is_active  = gimp_pdb_progress_progress_is_active;
+  iface->set_text   = gimp_pdb_progress_progress_set_text;
+  iface->set_value  = gimp_pdb_progress_progress_set_value;
+  iface->get_value  = gimp_pdb_progress_progress_get_value;
+  iface->pulse      = gimp_pdb_progress_progress_pulse;
+  iface->get_window = gimp_pdb_progress_progress_get_window;
 }
 
 static GObject *

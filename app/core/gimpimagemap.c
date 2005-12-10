@@ -61,9 +61,7 @@ struct _GimpImageMap
 };
 
 
-static void   gimp_image_map_class_init          (GimpImageMapClass *klass);
-static void   gimp_image_map_init                (GimpImageMap      *image_map);
-static void   gimp_image_map_pickable_iface_init (GimpPickableInterface *pickable_iface);
+static void   gimp_image_map_pickable_iface_init (GimpPickableInterface *iface);
 
 static void            gimp_image_map_finalize       (GObject      *object);
 
@@ -77,55 +75,19 @@ static guchar        * gimp_image_map_get_color_at   (GimpPickable *pickable,
 static gboolean        gimp_image_map_do             (GimpImageMap *image_map);
 
 
-static guint  image_map_signals[LAST_SIGNAL] = { 0 };
+G_DEFINE_TYPE_WITH_CODE (GimpImageMap, gimp_image_map, GIMP_TYPE_OBJECT,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_PICKABLE,
+                                                gimp_image_map_pickable_iface_init));
 
-static GimpObjectClass *parent_class = NULL;
+#define parent_class gimp_image_map_parent_class
 
+static guint image_map_signals[LAST_SIGNAL] = { 0 };
 
-GType
-gimp_image_map_get_type (void)
-{
-  static GType image_map_type = 0;
-
-  if (! image_map_type)
-    {
-      static const GTypeInfo image_map_info =
-      {
-        sizeof (GimpImageMapClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_image_map_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpImageMap),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_image_map_init,
-      };
-
-      static const GInterfaceInfo pickable_iface_info =
-      {
-        (GInterfaceInitFunc) gimp_image_map_pickable_iface_init,
-        NULL,           /* iface_finalize */
-        NULL            /* iface_data     */
-      };
-
-      image_map_type = g_type_register_static (GIMP_TYPE_OBJECT,
-                                               "GimpImageMap",
-                                               &image_map_info, 0);
-
-      g_type_add_interface_static (image_map_type, GIMP_TYPE_PICKABLE,
-                                   &pickable_iface_info);
-    }
-
-  return image_map_type;
-}
 
 static void
 gimp_image_map_class_init (GimpImageMapClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   image_map_signals[FLUSH] =
     g_signal_new ("flush",
@@ -153,12 +115,12 @@ gimp_image_map_init (GimpImageMap *image_map)
 }
 
 static void
-gimp_image_map_pickable_iface_init (GimpPickableInterface *pickable_iface)
+gimp_image_map_pickable_iface_init (GimpPickableInterface *iface)
 {
-  pickable_iface->get_image      = gimp_image_map_get_image;
-  pickable_iface->get_image_type = gimp_image_map_get_image_type;
-  pickable_iface->get_tiles      = gimp_image_map_get_tiles;
-  pickable_iface->get_color_at   = gimp_image_map_get_color_at;
+  iface->get_image      = gimp_image_map_get_image;
+  iface->get_image_type = gimp_image_map_get_image_type;
+  iface->get_tiles      = gimp_image_map_get_tiles;
+  iface->get_color_at   = gimp_image_map_get_color_at;
 }
 
 static void

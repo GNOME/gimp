@@ -84,9 +84,6 @@ enum
 };
 
 
-static void       gimp_class_init           (GimpClass         *klass);
-static void       gimp_init                 (Gimp              *gimp);
-
 static void       gimp_dispose              (GObject           *object);
 static void       gimp_finalize             (GObject           *object);
 
@@ -108,46 +105,18 @@ static void       gimp_edit_config_notify   (GObject           *edit_config,
                                              GObject           *global_config);
 
 
-static GimpObjectClass *parent_class = NULL;
+G_DEFINE_TYPE (Gimp, gimp, GIMP_TYPE_OBJECT);
+
+#define parent_class gimp_parent_class
 
 static guint gimp_signals[LAST_SIGNAL] = { 0, };
 
-
-GType
-gimp_get_type (void)
-{
-  static GType object_type = 0;
-
-  if (! object_type)
-    {
-      static const GTypeInfo object_info =
-      {
-        sizeof (GimpClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_class_init,
-        NULL,                /* class_finalize */
-        NULL,                /* class_data     */
-        sizeof (Gimp),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_init,
-      };
-
-      object_type = g_type_register_static (GIMP_TYPE_OBJECT,
-                                            "Gimp",
-                                            &object_info, 0);
-    }
-
-  return object_type;
-}
 
 static void
 gimp_class_init (GimpClass *klass)
 {
   GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
   GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   gimp_signals[INITIALIZE] =
     g_signal_new ("initialize",

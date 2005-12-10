@@ -61,8 +61,6 @@ enum
   PROP_MODIFIED
 };
 
-static void       gimp_text_layer_class_init     (GimpTextLayerClass *klass);
-static void       gimp_text_layer_init           (GimpTextLayer  *layer);
 static void       gimp_text_layer_finalize       (GObject        *object);
 static void       gimp_text_layer_get_property   (GObject        *object,
                                                   guint           property_id,
@@ -105,36 +103,10 @@ static void       gimp_text_layer_render_layout  (GimpTextLayer  *layer,
                                                   GimpTextLayout *layout);
 
 
-static GimpLayerClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpTextLayer, gimp_text_layer, GIMP_TYPE_LAYER);
 
+#define parent_class gimp_text_layer_parent_class
 
-GType
-gimp_text_layer_get_type (void)
-{
-  static GType layer_type = 0;
-
-  if (! layer_type)
-    {
-      static const GTypeInfo layer_info =
-      {
-        sizeof (GimpTextLayerClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_text_layer_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpTextLayer),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_text_layer_init,
-      };
-
-      layer_type = g_type_register_static (GIMP_TYPE_LAYER,
-					   "GimpTextLayer",
-					   &layer_info, 0);
-    }
-
-  return layer_type;
-}
 
 static void
 gimp_text_layer_class_init (GimpTextLayerClass *klass)
@@ -144,8 +116,6 @@ gimp_text_layer_class_init (GimpTextLayerClass *klass)
   GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
   GimpItemClass     *item_class        = GIMP_ITEM_CLASS (klass);
   GimpDrawableClass *drawable_class    = GIMP_DRAWABLE_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize           = gimp_text_layer_finalize;
   object_class->get_property       = gimp_text_layer_get_property;

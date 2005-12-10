@@ -39,9 +39,6 @@ enum
 };
 
 
-static void         gimp_list_class_init         (GimpListClass       *klass);
-static void         gimp_list_init               (GimpList            *list);
-
 static void         gimp_list_set_property       (GObject             *object,
                                                   guint                property_id,
                                                   const GValue        *value,
@@ -80,36 +77,10 @@ static void         gimp_list_object_renamed     (GimpObject          *object,
                                                   GimpList            *list);
 
 
-static GimpContainerClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpList, gimp_list, GIMP_TYPE_CONTAINER);
 
+#define parent_class gimp_list_parent_class
 
-GType
-gimp_list_get_type (void)
-{
-  static GType list_type = 0;
-
-  if (! list_type)
-    {
-      static const GTypeInfo list_info =
-      {
-        sizeof (GimpListClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_list_class_init,
-        NULL,		/* class_finalize */
-        NULL,		/* class_data     */
-        sizeof (GimpList),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_list_init,
-      };
-
-      list_type = g_type_register_static (GIMP_TYPE_CONTAINER,
-                                          "GimpList",
-                                          &list_info, 0);
-    }
-
-  return list_type;
-}
 
 static void
 gimp_list_class_init (GimpListClass *klass)
@@ -117,8 +88,6 @@ gimp_list_class_init (GimpListClass *klass)
   GObjectClass       *object_class      = G_OBJECT_CLASS (klass);
   GimpObjectClass    *gimp_object_class = GIMP_OBJECT_CLASS (klass);
   GimpContainerClass *container_class   = GIMP_CONTAINER_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->set_property          = gimp_list_set_property;
   object_class->get_property          = gimp_list_get_property;

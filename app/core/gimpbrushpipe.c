@@ -55,9 +55,6 @@
 #include "gimp-intl.h"
 
 
-static void        gimp_brush_pipe_class_init       (GimpBrushPipeClass *klass);
-static void        gimp_brush_pipe_init             (GimpBrushPipe      *pipe);
-
 static void        gimp_brush_pipe_finalize         (GObject      *object);
 
 static gint64      gimp_brush_pipe_get_memsize      (GimpObject   *object,
@@ -78,36 +75,10 @@ static gboolean    gimp_brush_pipe_want_null_motion (GimpBrush    *brush,
                                                      GimpCoords   *cur_coords);
 
 
-static GimpBrushClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpBrushPipe, gimp_brush_pipe, GIMP_TYPE_BRUSH);
 
+#define parent_class gimp_brush_pipe_parent_class
 
-GType
-gimp_brush_pipe_get_type (void)
-{
-  static GType brush_type = 0;
-
-  if (! brush_type)
-    {
-      static const GTypeInfo brush_info =
-      {
-        sizeof (GimpBrushPipeClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_brush_pipe_class_init,
-        NULL,		/* class_finalize */
-        NULL,		/* class_data     */
-        sizeof (GimpBrushPipe),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_brush_pipe_init,
-      };
-
-      brush_type = g_type_register_static (GIMP_TYPE_BRUSH,
-                                           "GimpBrushPipe",
-                                           &brush_info, 0);
-    }
-
-  return brush_type;
-}
 
 static void
 gimp_brush_pipe_class_init (GimpBrushPipeClass *klass)
@@ -116,8 +87,6 @@ gimp_brush_pipe_class_init (GimpBrushPipeClass *klass)
   GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
   GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
   GimpBrushClass    *brush_class       = GIMP_BRUSH_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize         = gimp_brush_pipe_finalize;
 

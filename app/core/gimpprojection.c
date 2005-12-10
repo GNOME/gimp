@@ -43,9 +43,7 @@ enum
 
 /*  local function prototypes  */
 
-static void   gimp_projection_class_init          (GimpProjectionClass   *klass);
-static void   gimp_projection_init                (GimpProjection        *proj);
-static void   gimp_projection_pickable_iface_init (GimpPickableInterface *pickable_iface);
+static void   gimp_projection_pickable_iface_init (GimpPickableInterface *iface);
 
 static void       gimp_projection_finalize              (GObject        *object);
 
@@ -98,56 +96,20 @@ static void       gimp_projection_image_flush           (GimpImage      *gimage,
                                                          GimpProjection *proj);
 
 
+G_DEFINE_TYPE_WITH_CODE (GimpProjection, gimp_projection, GIMP_TYPE_OBJECT,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_PICKABLE,
+                                                gimp_projection_pickable_iface_init));
+
+#define parent_class gimp_projection_parent_class
+
 static guint projection_signals[LAST_SIGNAL] = { 0 };
 
-static GimpObjectClass *parent_class = NULL;
-
-
-GType
-gimp_projection_get_type (void)
-{
-  static GType projection_type = 0;
-
-  if (! projection_type)
-    {
-      static const GTypeInfo projection_info =
-      {
-        sizeof (GimpProjectionClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_projection_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpProjection),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_projection_init,
-      };
-
-      static const GInterfaceInfo pickable_iface_info =
-      {
-        (GInterfaceInitFunc) gimp_projection_pickable_iface_init,
-        NULL,           /* iface_finalize */
-        NULL            /* iface_data     */
-      };
-
-      projection_type = g_type_register_static (GIMP_TYPE_OBJECT,
-                                                "GimpProjection",
-                                                &projection_info, 0);
-
-      g_type_add_interface_static (projection_type, GIMP_TYPE_PICKABLE,
-                                   &pickable_iface_info);
-    }
-
-  return projection_type;
-}
 
 static void
 gimp_projection_class_init (GimpProjectionClass *klass)
 {
   GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
   GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   projection_signals[UPDATE] =
     g_signal_new ("update",
@@ -186,13 +148,13 @@ gimp_projection_init (GimpProjection *proj)
 }
 
 static void
-gimp_projection_pickable_iface_init (GimpPickableInterface *pickable_iface)
+gimp_projection_pickable_iface_init (GimpPickableInterface *iface)
 {
-  pickable_iface->get_image      = gimp_projection_get_image;
-  pickable_iface->get_image_type = gimp_projection_get_image_type;
-  pickable_iface->get_tiles      = gimp_projection_get_tiles;
-  pickable_iface->get_color_at   = gimp_projection_get_color_at;
-  pickable_iface->get_opacity_at = gimp_projection_get_opacity_at;
+  iface->get_image      = gimp_projection_get_image;
+  iface->get_image_type = gimp_projection_get_image_type;
+  iface->get_tiles      = gimp_projection_get_tiles;
+  iface->get_color_at   = gimp_projection_get_color_at;
+  iface->get_opacity_at = gimp_projection_get_opacity_at;
 }
 
 static void

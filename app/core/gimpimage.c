@@ -116,9 +116,6 @@ enum
 
 /*  local function prototypes  */
 
-static void     gimp_image_class_init            (GimpImageClass *klass);
-static void     gimp_image_init                  (GimpImage      *gimage);
-
 static GObject *gimp_image_constructor           (GType           type,
                                                   guint           n_params,
                                                   GObjectConstructParam *params);
@@ -198,41 +195,13 @@ static gint valid_combinations[][MAX_CHANNELS + 1] =
   { -1, -1, COMBINE_INDEXED_A_INDEXED_A, -1, -1 },
 };
 
+
+G_DEFINE_TYPE (GimpImage, gimp_image, GIMP_TYPE_VIEWABLE);
+
+#define parent_class gimp_image_parent_class
+
 static guint gimp_image_signals[LAST_SIGNAL] = { 0 };
 
-static GimpViewableClass *parent_class = NULL;
-
-
-GType
-gimp_image_get_type (void)
-{
-  static GType image_type = 0;
-
-  if (! image_type)
-    {
-      static const GTypeInfo image_info =
-      {
-        sizeof (GimpImageClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_image_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpImage),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_image_init,
-      };
-
-      image_type = g_type_register_static (GIMP_TYPE_VIEWABLE,
-                                           "GimpImage",
-                                           &image_info, 0);
-    }
-
-  return image_type;
-}
-
-
-/*  private functions  */
 
 static void
 gimp_image_class_init (GimpImageClass *klass)
@@ -240,8 +209,6 @@ gimp_image_class_init (GimpImageClass *klass)
   GObjectClass      *object_class      = G_OBJECT_CLASS (klass);
   GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
   GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   gimp_image_signals[MODE_CHANGED] =
     g_signal_new ("mode-changed",

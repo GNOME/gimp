@@ -57,9 +57,7 @@ struct _GimpStatusbarMsg
 #define CURSOR_LEN 256
 
 
-static void     gimp_statusbar_class_init     (GimpStatusbarClass *klass);
-static void     gimp_statusbar_init           (GimpStatusbar      *statusbar);
-static void     gimp_statusbar_progress_iface_init (GimpProgressInterface *progress_iface);
+static void     gimp_statusbar_progress_iface_init (GimpProgressInterface *iface);
 
 static void     gimp_statusbar_destroy            (GtkObject         *object);
 
@@ -89,54 +87,18 @@ static guint    gimp_statusbar_get_context_id     (GimpStatusbar     *statusbar,
                                                    const gchar       *context);
 
 
-static GtkHBoxClass *parent_class = NULL;
+G_DEFINE_TYPE_WITH_CODE (GimpStatusbar, gimp_statusbar, GTK_TYPE_HBOX,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_PROGRESS,
+                                                gimp_statusbar_progress_iface_init));
 
+#define parent_class gimp_statusbar_parent_class
 
-GType
-gimp_statusbar_get_type (void)
-{
-  static GType statusbar_type = 0;
-
-  if (! statusbar_type)
-    {
-      static const GTypeInfo statusbar_info =
-      {
-        sizeof (GimpStatusbarClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_statusbar_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpStatusbar),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_statusbar_init,
-      };
-
-      static const GInterfaceInfo progress_iface_info =
-      {
-        (GInterfaceInitFunc) gimp_statusbar_progress_iface_init,
-        NULL,           /* iface_finalize */
-        NULL            /* iface_data     */
-      };
-
-      statusbar_type = g_type_register_static (GTK_TYPE_HBOX,
-                                               "GimpStatusbar",
-                                               &statusbar_info, 0);
-
-      g_type_add_interface_static (statusbar_type, GIMP_TYPE_PROGRESS,
-                                   &progress_iface_info);
-    }
-
-  return statusbar_type;
-}
 
 static void
 gimp_statusbar_class_init (GimpStatusbarClass *klass)
 {
   GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->destroy = gimp_statusbar_destroy;
 
@@ -252,15 +214,15 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
 }
 
 static void
-gimp_statusbar_progress_iface_init (GimpProgressInterface *progress_iface)
+gimp_statusbar_progress_iface_init (GimpProgressInterface *iface)
 {
-  progress_iface->start     = gimp_statusbar_progress_start;
-  progress_iface->end       = gimp_statusbar_progress_end;
-  progress_iface->is_active = gimp_statusbar_progress_is_active;
-  progress_iface->set_text  = gimp_statusbar_progress_set_text;
-  progress_iface->set_value = gimp_statusbar_progress_set_value;
-  progress_iface->get_value = gimp_statusbar_progress_get_value;
-  progress_iface->pulse     = gimp_statusbar_progress_pulse;
+  iface->start     = gimp_statusbar_progress_start;
+  iface->end       = gimp_statusbar_progress_end;
+  iface->is_active = gimp_statusbar_progress_is_active;
+  iface->set_text  = gimp_statusbar_progress_set_text;
+  iface->set_value = gimp_statusbar_progress_set_value;
+  iface->get_value = gimp_statusbar_progress_get_value;
+  iface->pulse     = gimp_statusbar_progress_pulse;
 }
 
 static void

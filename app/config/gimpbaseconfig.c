@@ -36,18 +36,6 @@
 #include "gimp-intl.h"
 
 
-static void  gimp_base_config_class_init   (GimpBaseConfigClass *klass);
-static void  gimp_base_config_finalize     (GObject             *object);
-static void  gimp_base_config_set_property (GObject             *object,
-                                            guint                property_id,
-                                            const GValue        *value,
-                                            GParamSpec          *pspec);
-static void  gimp_base_config_get_property (GObject             *object,
-                                            guint                property_id,
-                                            GValue              *value,
-                                            GParamSpec          *pspec);
-
-
 enum
 {
   PROP_0,
@@ -58,45 +46,27 @@ enum
   PROP_TILE_CACHE_SIZE
 };
 
-static GObjectClass *parent_class = NULL;
+
+static void   gimp_base_config_finalize     (GObject      *object);
+static void   gimp_base_config_set_property (GObject      *object,
+                                             guint         property_id,
+                                             const GValue *value,
+                                             GParamSpec   *pspec);
+static void   gimp_base_config_get_property (GObject      *object,
+                                             guint         property_id,
+                                             GValue       *value,
+                                             GParamSpec   *pspec);
 
 
-GType
-gimp_base_config_get_type (void)
-{
-  static GType config_type = 0;
+G_DEFINE_TYPE (GimpBaseConfig, gimp_base_config, G_TYPE_OBJECT);
 
-  if (! config_type)
-    {
-      static const GTypeInfo config_info =
-      {
-        sizeof (GimpBaseConfigClass),
-	NULL,           /* base_init      */
-        NULL,           /* base_finalize  */
-	(GClassInitFunc) gimp_base_config_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpBaseConfig),
-	0,              /* n_preallocs    */
-	NULL            /* instance_init  */
-      };
+#define parent_class gimp_base_config_parent_class
 
-      config_type = g_type_register_static (G_TYPE_OBJECT,
-                                            "GimpBaseConfig",
-                                            &config_info, 0);
-    }
-
-  return config_type;
-}
 
 static void
 gimp_base_config_class_init (GimpBaseConfigClass *klass)
 {
-  GObjectClass *object_class;
-
-  parent_class = g_type_class_peek_parent (klass);
-
-  object_class = G_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->finalize     = gimp_base_config_finalize;
   object_class->set_property = gimp_base_config_set_property;
@@ -125,6 +95,11 @@ gimp_base_config_class_init (GimpBaseConfigClass *klass)
                                     0, MIN (G_MAXULONG, GIMP_MAX_MEMSIZE),
                                     1 << 28, /* 256MB */
                                     GIMP_CONFIG_PARAM_CONFIRM);
+}
+
+static void
+gimp_base_config_init (GimpBaseConfig *config)
+{
 }
 
 static void

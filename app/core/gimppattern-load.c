@@ -55,56 +55,27 @@
 #include "gimp-intl.h"
 
 
-static void       gimp_pattern_class_init      (GimpPatternClass *klass);
-static void       gimp_pattern_init            (GimpPattern      *pattern);
+static void       gimp_pattern_finalize        (GObject       *object);
 
-static void       gimp_pattern_finalize        (GObject          *object);
+static gint64     gimp_pattern_get_memsize     (GimpObject    *object,
+                                                gint64        *gui_size);
 
-static gint64     gimp_pattern_get_memsize     (GimpObject       *object,
-                                                gint64           *gui_size);
-
-static gboolean   gimp_pattern_get_size        (GimpViewable     *viewable,
-                                                gint             *width,
-                                                gint             *height);
-static TempBuf  * gimp_pattern_get_new_preview (GimpViewable     *viewable,
-                                                gint              width,
-                                                gint              height);
-static gchar    * gimp_pattern_get_description (GimpViewable     *viewable,
-                                                gchar           **tooltip);
-static gchar    * gimp_pattern_get_extension   (GimpData         *data);
-static GimpData * gimp_pattern_duplicate       (GimpData         *data);
+static gboolean   gimp_pattern_get_size        (GimpViewable  *viewable,
+                                                gint          *width,
+                                                gint          *height);
+static TempBuf  * gimp_pattern_get_new_preview (GimpViewable  *viewable,
+                                                gint           width,
+                                                gint           height);
+static gchar    * gimp_pattern_get_description (GimpViewable  *viewable,
+                                                gchar        **tooltip);
+static gchar    * gimp_pattern_get_extension   (GimpData      *data);
+static GimpData * gimp_pattern_duplicate       (GimpData      *data);
 
 
-static GimpDataClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpPattern, gimp_pattern, GIMP_TYPE_DATA);
 
+#define parent_class gimp_pattern_parent_class
 
-GType
-gimp_pattern_get_type (void)
-{
-  static GType pattern_type = 0;
-
-  if (! pattern_type)
-    {
-      static const GTypeInfo pattern_info =
-      {
-        sizeof (GimpPatternClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_pattern_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpPattern),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_pattern_init,
-      };
-
-      pattern_type = g_type_register_static (GIMP_TYPE_DATA,
-                                             "GimpPattern",
-                                             &pattern_info, 0);
-  }
-
-  return pattern_type;
-}
 
 static void
 gimp_pattern_class_init (GimpPatternClass *klass)
@@ -113,8 +84,6 @@ gimp_pattern_class_init (GimpPatternClass *klass)
   GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
   GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
   GimpDataClass     *data_class        = GIMP_DATA_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize           = gimp_pattern_finalize;
 

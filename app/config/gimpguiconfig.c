@@ -34,18 +34,6 @@
 #include "gimp-intl.h"
 
 
-static void  gimp_gui_config_class_init   (GimpGuiConfigClass *klass);
-static void  gimp_gui_config_finalize     (GObject            *object);
-static void  gimp_gui_config_set_property (GObject            *object,
-                                           guint               property_id,
-                                           const GValue       *value,
-                                           GParamSpec         *pspec);
-static void  gimp_gui_config_get_property (GObject            *object,
-                                           guint               property_id,
-                                           GValue             *value,
-                                           GParamSpec         *pspec);
-
-
 #define   DEFAULT_THEME        "Default"
 
 #ifdef G_OS_WIN32
@@ -55,6 +43,7 @@ static void  gimp_gui_config_get_property (GObject            *object,
 #  define DEFAULT_GIMP_HELP_BROWSER GIMP_HELP_BROWSER_GIMP
 #  define DEFAULT_WEB_BROWSER  "mozilla-firefox %s"
 #endif
+
 
 enum
 {
@@ -92,46 +81,28 @@ enum
   PROP_CURSOR_FORMAT
 };
 
-static GObjectClass *parent_class = NULL;
+
+static void   gimp_gui_config_finalize     (GObject      *object);
+static void   gimp_gui_config_set_property (GObject      *object,
+                                            guint         property_id,
+                                            const GValue *value,
+                                            GParamSpec   *pspec);
+static void   gimp_gui_config_get_property (GObject      *object,
+                                            guint         property_id,
+                                            GValue       *value,
+                                            GParamSpec   *pspec);
 
 
-GType
-gimp_gui_config_get_type (void)
-{
-  static GType config_type = 0;
+G_DEFINE_TYPE (GimpGuiConfig, gimp_gui_config, GIMP_TYPE_DISPLAY_CONFIG);
 
-  if (! config_type)
-    {
-      static const GTypeInfo config_info =
-      {
-        sizeof (GimpGuiConfigClass),
-	NULL,           /* base_init      */
-        NULL,           /* base_finalize  */
-	(GClassInitFunc) gimp_gui_config_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpGuiConfig),
-	0,              /* n_preallocs    */
-	NULL            /* instance_init  */
-      };
+#define parent_class gimp_gui_config_parent_class
 
-      config_type = g_type_register_static (GIMP_TYPE_DISPLAY_CONFIG,
-                                            "GimpGuiConfig",
-                                            &config_info, 0);
-    }
-
-  return config_type;
-}
 
 static void
 gimp_gui_config_class_init (GimpGuiConfigClass *klass)
 {
-  GObjectClass *object_class;
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
   gchar        *path;
-
-  parent_class = g_type_class_peek_parent (klass);
-
-  object_class = G_OBJECT_CLASS (klass);
 
   object_class->finalize     = gimp_gui_config_finalize;
   object_class->set_property = gimp_gui_config_set_property;
@@ -280,6 +251,11 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                  GIMP_TYPE_CURSOR_FORMAT,
                                  GIMP_CURSOR_FORMAT_PIXBUF,
                                  0);
+}
+
+static void
+gimp_gui_config_init (GimpGuiConfig *config)
+{
 }
 
 static void

@@ -38,34 +38,13 @@
 #include "gimp-intl.h"
 
 
-static void  gimp_core_config_class_init   (GimpCoreConfigClass *klass);
-static void  gimp_core_config_init         (GimpCoreConfig      *config);
-static void  gimp_core_config_finalize               (GObject      *object);
-static void  gimp_core_config_set_property           (GObject      *object,
-                                                      guint         property_id,
-                                                      const GValue *value,
-                                                      GParamSpec   *pspec);
-static void  gimp_core_config_get_property           (GObject      *object,
-                                                      guint         property_id,
-                                                      GValue       *value,
-                                                      GParamSpec   *pspec);
-static void gimp_core_config_default_image_notify    (GObject      *object,
-                                                      GParamSpec   *pspec,
-                                                      gpointer      data);
-static void gimp_core_config_default_grid_notify     (GObject      *object,
-                                                      GParamSpec   *pspec,
-                                                      gpointer      data);
-static void gimp_core_config_color_management_notify (GObject      *object,
-                                                      GParamSpec   *pspec,
-                                                      gpointer      data);
-
-
 #define DEFAULT_BRUSH     "Circle (11)"
 #define DEFAULT_PATTERN   "Pine"
 #define DEFAULT_PALETTE   "Default"
 #define DEFAULT_GRADIENT  "FG to BG (RGB)"
 #define DEFAULT_FONT      "Sans"
 #define DEFAULT_COMMENT   "Created with GIMP"
+
 
 enum
 {
@@ -111,46 +90,37 @@ enum
   PROP_SAVE_DOCUMENT_HISTORY
 };
 
-static GObjectClass *parent_class = NULL;
+
+static void  gimp_core_config_finalize               (GObject      *object);
+static void  gimp_core_config_set_property           (GObject      *object,
+                                                      guint         property_id,
+                                                      const GValue *value,
+                                                      GParamSpec   *pspec);
+static void  gimp_core_config_get_property           (GObject      *object,
+                                                      guint         property_id,
+                                                      GValue       *value,
+                                                      GParamSpec   *pspec);
+static void gimp_core_config_default_image_notify    (GObject      *object,
+                                                      GParamSpec   *pspec,
+                                                      gpointer      data);
+static void gimp_core_config_default_grid_notify     (GObject      *object,
+                                                      GParamSpec   *pspec,
+                                                      gpointer      data);
+static void gimp_core_config_color_management_notify (GObject      *object,
+                                                      GParamSpec   *pspec,
+                                                      gpointer      data);
 
 
-GType
-gimp_core_config_get_type (void)
-{
-  static GType config_type = 0;
+G_DEFINE_TYPE (GimpCoreConfig, gimp_core_config, GIMP_TYPE_BASE_CONFIG);
 
-  if (! config_type)
-    {
-      static const GTypeInfo config_info =
-      {
-        sizeof (GimpCoreConfigClass),
-	NULL,           /* base_init      */
-        NULL,           /* base_finalize  */
-	(GClassInitFunc) gimp_core_config_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpCoreConfig),
-	0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_core_config_init
-      };
+#define parent_class gimp_core_config_parent_class
 
-      config_type = g_type_register_static (GIMP_TYPE_BASE_CONFIG,
-                                            "GimpCoreConfig",
-                                            &config_info, 0);
-    }
-
-  return config_type;
-}
 
 static void
 gimp_core_config_class_init (GimpCoreConfigClass *klass)
 {
-  GObjectClass *object_class;
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
   gchar        *path;
-
-  parent_class = g_type_class_peek_parent (klass);
-
-  object_class = G_OBJECT_CLASS (klass);
 
   object_class->finalize     = gimp_core_config_finalize;
   object_class->set_property = gimp_core_config_set_property;

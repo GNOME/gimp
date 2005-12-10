@@ -66,9 +66,7 @@ enum
 };
 
 
-static void       gimp_channel_class_init    (GimpChannelClass *klass);
-static void       gimp_channel_init          (GimpChannel      *channel);
-static void       gimp_channel_pickable_iface_init (GimpPickableInterface *pickable_iface);
+static void gimp_channel_pickable_iface_init (GimpPickableInterface *iface);
 
 static void       gimp_channel_finalize      (GObject          *object);
 
@@ -211,50 +209,14 @@ static void       gimp_channel_validate      (TileManager      *tm,
                                               Tile             *tile);
 
 
-/*  private variables  */
+G_DEFINE_TYPE_WITH_CODE (GimpChannel, gimp_channel, GIMP_TYPE_DRAWABLE,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_PICKABLE,
+                                                gimp_channel_pickable_iface_init));
+
+#define parent_class gimp_channel_parent_class
 
 static guint channel_signals[LAST_SIGNAL] = { 0 };
 
-static GimpDrawableClass *parent_class = NULL;
-
-
-GType
-gimp_channel_get_type (void)
-{
-  static GType channel_type = 0;
-
-  if (! channel_type)
-    {
-      static const GTypeInfo channel_info =
-      {
-        sizeof (GimpChannelClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_channel_class_init,
-        NULL,		/* class_finalize */
-        NULL,		/* class_data     */
-        sizeof (GimpChannel),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_channel_init,
-      };
-
-      static const GInterfaceInfo pickable_iface_info =
-      {
-        (GInterfaceInitFunc) gimp_channel_pickable_iface_init,
-        NULL,           /* iface_finalize */
-        NULL            /* iface_data     */
-      };
-
-      channel_type = g_type_register_static (GIMP_TYPE_DRAWABLE,
-                                             "GimpChannel",
-                                             &channel_info, 0);
-
-      g_type_add_interface_static (channel_type, GIMP_TYPE_PICKABLE,
-                                   &pickable_iface_info);
-    }
-
-  return channel_type;
-}
 
 static void
 gimp_channel_class_init (GimpChannelClass *klass)
@@ -264,8 +226,6 @@ gimp_channel_class_init (GimpChannelClass *klass)
   GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
   GimpItemClass     *item_class        = GIMP_ITEM_CLASS (klass);
   GimpDrawableClass *drawable_class    = GIMP_DRAWABLE_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   channel_signals[COLOR_CHANGED] =
     g_signal_new ("color-changed",
@@ -354,9 +314,9 @@ gimp_channel_init (GimpChannel *channel)
 }
 
 static void
-gimp_channel_pickable_iface_init (GimpPickableInterface *pickable_iface)
+gimp_channel_pickable_iface_init (GimpPickableInterface *iface)
 {
-  pickable_iface->get_opacity_at = gimp_channel_get_opacity_at;
+  iface->get_opacity_at = gimp_channel_get_opacity_at;
 }
 
 static void

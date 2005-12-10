@@ -42,8 +42,6 @@
 
 #define WRITABLE_PATH_KEY "gimp-data-factory-writable-path"
 
-static void    gimp_data_factory_class_init   (GimpDataFactoryClass *klass);
-static void    gimp_data_factory_init         (GimpDataFactory      *factory);
 
 static void    gimp_data_factory_finalize     (GObject              *object);
 
@@ -58,44 +56,17 @@ static gchar * gimp_data_factory_get_save_dir (GimpDataFactory      *factory);
 static void    gimp_data_factory_load_data  (const GimpDatafileData *file_data,
                                              gpointer                data);
 
-static GimpObjectClass *parent_class = NULL;
 
+G_DEFINE_TYPE (GimpDataFactory, gimp_data_factory, GIMP_TYPE_OBJECT);
 
-GType
-gimp_data_factory_get_type (void)
-{
-  static GType factory_type = 0;
+#define parent_class gimp_data_factory_parent_class
 
-  if (! factory_type)
-    {
-      static const GTypeInfo factory_info =
-      {
-        sizeof (GimpDataFactoryClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_data_factory_class_init,
-	NULL,		/* class_finalize */
-	NULL,		/* class_data     */
-	sizeof (GimpDataFactory),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_data_factory_init,
-      };
-
-      factory_type = g_type_register_static (GIMP_TYPE_OBJECT,
-					     "GimpDataFactory",
-					     &factory_info, 0);
-    }
-
-  return factory_type;
-}
 
 static void
 gimp_data_factory_class_init (GimpDataFactoryClass *klass)
 {
   GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
   GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize         = gimp_data_factory_finalize;
 

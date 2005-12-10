@@ -48,74 +48,38 @@ enum
 };
 
 
-static void         gimp_rc_class_init        (GimpRcClass      *klass);
-static void         gimp_rc_config_iface_init (gpointer          iface,
-                                               gpointer          iface_data);
-static void         gimp_rc_init              (GimpRc           *rc);
-static void         gimp_rc_dispose           (GObject          *object);
-static void         gimp_rc_finalize          (GObject          *object);
-static void         gimp_rc_set_property      (GObject          *object,
-                                               guint             property_id,
-                                               const GValue     *value,
-                                               GParamSpec       *pspec);
-static void         gimp_rc_get_property      (GObject          *object,
-                                               guint             property_id,
-                                               GValue           *value,
-                                               GParamSpec       *pspec);
-static GimpConfig * gimp_rc_duplicate         (GimpConfig       *object);
-static void         gimp_rc_load              (GimpRc           *rc);
-static gboolean     gimp_rc_idle_save         (GimpRc           *rc);
-static void         gimp_rc_notify            (GimpRc           *rc,
-                                               GParamSpec       *param,
-                                               gpointer          data);
+static void         gimp_rc_config_iface_init (GimpConfigInterface *iface);
+
+static void         gimp_rc_dispose           (GObject      *object);
+static void         gimp_rc_finalize          (GObject      *object);
+static void         gimp_rc_set_property      (GObject      *object,
+                                               guint         property_id,
+                                               const GValue *value,
+                                               GParamSpec   *pspec);
+static void         gimp_rc_get_property      (GObject      *object,
+                                               guint         property_id,
+                                               GValue       *value,
+                                               GParamSpec   *pspec);
+
+static GimpConfig * gimp_rc_duplicate         (GimpConfig   *object);
+static void         gimp_rc_load              (GimpRc       *rc);
+static gboolean     gimp_rc_idle_save         (GimpRc       *rc);
+static void         gimp_rc_notify            (GimpRc       *rc,
+                                               GParamSpec   *param,
+                                               gpointer      data);
 
 
-static GObjectClass *parent_class = NULL;
+G_DEFINE_TYPE_WITH_CODE (GimpRc, gimp_rc, GIMP_TYPE_PLUGIN_CONFIG,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
+                                                gimp_rc_config_iface_init));
 
+#define parent_class gimp_rc_parent_class
 
-GType
-gimp_rc_get_type (void)
-{
-  static GType rc_type = 0;
-
-  if (! rc_type)
-    {
-      static const GTypeInfo rc_info =
-      {
-        sizeof (GimpRcClass),
-	NULL,           /* base_init      */
-        NULL,           /* base_finalize  */
-        (GClassInitFunc) gimp_rc_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpRc),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_rc_init
-      };
-      static const GInterfaceInfo rc_iface_info =
-      {
-        gimp_rc_config_iface_init,
-        NULL,           /* iface_finalize */
-        NULL            /* iface_data     */
-      };
-
-      rc_type = g_type_register_static (GIMP_TYPE_PLUGIN_CONFIG,
-                                        "GimpRc", &rc_info, 0);
-
-      g_type_add_interface_static (rc_type, GIMP_TYPE_CONFIG, &rc_iface_info);
-    }
-
-  return rc_type;
-}
 
 static void
 gimp_rc_class_init (GimpRcClass *klass)
 {
-  GObjectClass *object_class;
-
-  parent_class = g_type_class_peek_parent (klass);
-
-  object_class = G_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->dispose      = gimp_rc_dispose;
   object_class->finalize     = gimp_rc_finalize;
@@ -128,12 +92,14 @@ gimp_rc_class_init (GimpRcClass *klass)
 							 FALSE,
 							 G_PARAM_READWRITE |
 							 G_PARAM_CONSTRUCT));
+
   g_object_class_install_property (object_class, PROP_SYSTEM_GIMPRC,
 				   g_param_spec_string ("system-gimprc",
                                                         NULL, NULL,
 							NULL,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
+
   g_object_class_install_property (object_class, PROP_USER_GIMPRC,
 				   g_param_spec_string ("user-gimprc",
                                                         NULL, NULL,
@@ -254,14 +220,11 @@ gimp_rc_get_property (GObject    *object,
 }
 
 static void
-gimp_rc_config_iface_init (gpointer  iface,
-                           gpointer  iface_data)
+gimp_rc_config_iface_init (GimpConfigInterface *iface)
 {
-  GimpConfigInterface *config_iface = (GimpConfigInterface *) iface;
-
-  config_iface->serialize   = gimp_rc_serialize;
-  config_iface->deserialize = gimp_rc_deserialize;
-  config_iface->duplicate   = gimp_rc_duplicate;
+  iface->serialize   = gimp_rc_serialize;
+  iface->deserialize = gimp_rc_deserialize;
+  iface->duplicate   = gimp_rc_duplicate;
 }
 
 static void

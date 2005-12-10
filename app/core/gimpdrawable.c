@@ -62,9 +62,7 @@ enum
 
 /*  local function prototypes  */
 
-static void       gimp_drawable_class_init         (GimpDrawableClass *klass);
-static void       gimp_drawable_init               (GimpDrawable      *drawable);
-static void       gimp_drawable_pickable_iface_init (GimpPickableInterface *pickable_iface);
+static void  gimp_drawable_pickable_iface_init (GimpPickableInterface *iface);
 
 static void       gimp_drawable_finalize           (GObject           *object);
 
@@ -152,50 +150,14 @@ static void       gimp_drawable_real_swap_pixels   (GimpDrawable      *drawable,
                                                     gint               height);
 
 
-/*  private variables  */
+G_DEFINE_TYPE_WITH_CODE (GimpDrawable, gimp_drawable, GIMP_TYPE_ITEM,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_PICKABLE,
+                                                gimp_drawable_pickable_iface_init));
+
+#define parent_class gimp_drawable_parent_class
 
 static guint gimp_drawable_signals[LAST_SIGNAL] = { 0 };
 
-static GimpItemClass *parent_class = NULL;
-
-
-GType
-gimp_drawable_get_type (void)
-{
-  static GType drawable_type = 0;
-
-  if (! drawable_type)
-    {
-      static const GTypeInfo drawable_info =
-      {
-        sizeof (GimpDrawableClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_drawable_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpDrawable),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_drawable_init,
-      };
-
-      static const GInterfaceInfo pickable_iface_info =
-      {
-        (GInterfaceInitFunc) gimp_drawable_pickable_iface_init,
-        NULL,           /* iface_finalize */
-        NULL            /* iface_data     */
-      };
-
-      drawable_type = g_type_register_static (GIMP_TYPE_ITEM,
-                                              "GimpDrawable",
-                                              &drawable_info, 0);
-
-      g_type_add_interface_static (drawable_type, GIMP_TYPE_PICKABLE,
-                                   &pickable_iface_info);
-    }
-
-  return drawable_type;
-}
 
 static void
 gimp_drawable_class_init (GimpDrawableClass *klass)
@@ -204,8 +166,6 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
   GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
   GimpItemClass     *item_class        = GIMP_ITEM_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   gimp_drawable_signals[UPDATE] =
     g_signal_new ("update",
@@ -268,12 +228,12 @@ gimp_drawable_init (GimpDrawable *drawable)
 }
 
 static void
-gimp_drawable_pickable_iface_init (GimpPickableInterface *pickable_iface)
+gimp_drawable_pickable_iface_init (GimpPickableInterface *iface)
 {
-  pickable_iface->get_image      = gimp_item_get_image;
-  pickable_iface->get_image_type = gimp_drawable_type;
-  pickable_iface->get_tiles      = gimp_drawable_data;
-  pickable_iface->get_color_at   = gimp_drawable_get_color_at;
+  iface->get_image      = gimp_item_get_image;
+  iface->get_image_type = gimp_drawable_type;
+  iface->get_tiles      = gimp_drawable_data;
+  iface->get_color_at   = gimp_drawable_get_color_at;
 }
 
 static void
