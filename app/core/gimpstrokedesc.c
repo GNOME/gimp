@@ -31,6 +31,7 @@
 #include "config/gimpcoreconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimptoolinfo.h"
 
@@ -250,6 +251,11 @@ gimp_stroke_desc_new (Gimp        *gimp,
 
       if (tool_info)
         paint_info = tool_info->paint_info;
+
+      if (! paint_info)
+        paint_info = (GimpPaintInfo *)
+          gimp_container_get_child_by_name (gimp->paint_info_list,
+                                            "GimpPaintbrush");
     }
 
   desc = g_object_new (GIMP_TYPE_STROKE_DESC,

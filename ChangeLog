@@ -1,3 +1,9 @@
+2005-12-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpstrokedesc.c (gimp_stroke_desc_new): fall back to
+	the paintbrush if we can't get the paint method from the active
+	tool (because there is no active tool). Fixes bug #323778.
+
 2005-12-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/config/*.c
