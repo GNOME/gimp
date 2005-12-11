@@ -11,12 +11,12 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: es\n"
+"Project-Id-Version: gimp-polibgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-26 21:30+0200\n"
-"PO-Revision-Date: 2005-10-26 21:31+0200\n"
-"Last-Translator: \n"
-"Language-Team:  <en@li.org>\n"
+"POT-Creation-Date: 2005-12-11 13:09+0100\n"
+"PO-Revision-Date: 2005-12-11 13:24+0100\n"
+"Last-Translator: Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
+"Language-Team:  Equipo de localizadores Hispano <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -26,7 +26,7 @@ msgstr ""
 
 #: ../libgimp/gimpbrushmenu.c:140
 msgid "Brush Selection"
-msgstr "Selección de brocha"
+msgstr "Selección de pincel"
 
 #: ../libgimp/gimpbrushmenu.c:180 ../libgimp/gimppatternmenu.c:165
 msgid "_Browse..."
@@ -112,7 +112,7 @@ msgstr ""
 #: ../libgimp/gimpexport.c:306
 #, c-format
 msgid "%s can only handle bitmap (two color) indexed images"
-msgstr "%s sólo puede manejar imágenes de mapas de bits (de dos colores) o indexadas"
+msgstr "%s sólo puede manejar imágenes de mapas de bits (de dos colores) indexados"
 
 #: ../libgimp/gimpexport.c:307
 msgid ""
@@ -172,9 +172,7 @@ msgstr "_Exportar"
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
 "reasons:"
-msgstr ""
-"Su imagen debería ser exportada antes de que pueda guardarse como «%s» por "
-"las siguientes razones:"
+msgstr "Su imagen debería exportarse antes de que pueda guardarse como «%s» por las siguientes razones:"
 
 #. the footline
 #: ../libgimp/gimpexport.c:568
@@ -207,9 +205,10 @@ msgstr "Selección de tipografía"
 msgid "Sans"
 msgstr "Sans"
 
+# La traducción de gradient en degradado, no gradiente (serrador)
 #: ../libgimp/gimpgradientmenu.c:115
 msgid "Gradient Selection"
-msgstr "Selección de gradiente"
+msgstr "Selección de degradado"
 
 #: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:167
 msgid "(Empty)"
@@ -283,16 +282,18 @@ msgstr "Buscando por fecha"
 msgid "Searching by type"
 msgstr "Buscando por tipo"
 
-#: ../libgimp/gimpprocbrowserdialog.c:484
+#: ../libgimp/gimpprocbrowserdialog.c:485
 #, c-format
-msgid "%d procedures"
-msgstr "%d procedimientos"
+msgid "%d procedure"
+msgid_plural "%d procedures"
+msgstr[0] "%d procedimiento"
+msgstr[1] "%d procedimientos"
 
-#: ../libgimp/gimpprocbrowserdialog.c:491
+#: ../libgimp/gimpprocbrowserdialog.c:494
 msgid "No matches for your query"
 msgstr "No hubo coindicencias según su consulta"
 
-#: ../libgimp/gimpprocbrowserdialog.c:495
+#: ../libgimp/gimpprocbrowserdialog.c:498
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
@@ -300,7 +301,7 @@ msgstr[0] "%d procedimiento coincide con su consulta"
 msgstr[1] "%d procedimiento coincide con su consulta"
 
 #. count label
-#: ../libgimp/gimpprocbrowserdialog.c:544 ../libgimpwidgets/gimpbrowser.c:145
+#: ../libgimp/gimpprocbrowserdialog.c:547 ../libgimpwidgets/gimpbrowser.c:145
 msgid "No matches"
 msgstr "Sin coincidencias"
 
@@ -673,52 +674,54 @@ msgstr "Añadido de El Gimp"
 msgid "Temporary Procedure"
 msgstr "Procedimiento temporal"
 
-#: ../libgimpbase/gimpmemsize.c:177
+#: ../libgimpbase/gimpmemsize.c:180
 #, c-format
-msgid "%d Bytes"
-msgstr "%d Bytes"
+msgid "%d Byte"
+msgid_plural "%d Bytes"
+msgstr[0] "%d Byte"
+msgstr[1] "%d Bytes"
 
-#: ../libgimpbase/gimpmemsize.c:182
+#: ../libgimpbase/gimpmemsize.c:186
 #, c-format
 msgid "%.2f KB"
 msgstr "%.2f KiB"
 
-#: ../libgimpbase/gimpmemsize.c:186
+#: ../libgimpbase/gimpmemsize.c:190
 #, c-format
 msgid "%.1f KB"
 msgstr "%.1f KiB"
 
-#: ../libgimpbase/gimpmemsize.c:190
+#: ../libgimpbase/gimpmemsize.c:194
 #, c-format
 msgid "%d KB"
 msgstr "%d KiB"
 
-#: ../libgimpbase/gimpmemsize.c:197
+#: ../libgimpbase/gimpmemsize.c:201
 #, c-format
 msgid "%.2f MB"
 msgstr "%.2f MiB"
 
-#: ../libgimpbase/gimpmemsize.c:201
+#: ../libgimpbase/gimpmemsize.c:205
 #, c-format
 msgid "%.1f MB"
 msgstr "%.1f MiB"
 
-#: ../libgimpbase/gimpmemsize.c:205
+#: ../libgimpbase/gimpmemsize.c:209
 #, c-format
 msgid "%d MB"
 msgstr "%d MiB"
 
-#: ../libgimpbase/gimpmemsize.c:212
+#: ../libgimpbase/gimpmemsize.c:216
 #, c-format
 msgid "%.2f GB"
 msgstr "%.2f GiB"
 
-#: ../libgimpbase/gimpmemsize.c:216
+#: ../libgimpbase/gimpmemsize.c:220
 #, c-format
 msgid "%.1f GB"
 msgstr "%.1f GiB"
 
-#: ../libgimpbase/gimpmemsize.c:220
+#: ../libgimpbase/gimpmemsize.c:224
 #, c-format
 msgid "%d GB"
 msgstr "%d GiB"
@@ -765,7 +768,8 @@ msgid "Sets how colors are mapped for your display."
 msgstr "Establece cómo se asignan los colores para su pantalla."
 
 #: ../libgimpconfig/gimpcolorconfig.c:56
-msgid "Sets how colors are converted from workspace to the print simulation device."
+msgid ""
+"Sets how colors are converted from workspace to the print simulation device."
 msgstr ""
 "Establece cómo se convierten los colores del espacio de trabajo al "
 "dispositivo de simulación de impresión."
@@ -895,36 +899,26 @@ msgstr "cadena UTF-8 inválida"
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Ha ocurrido un error al analizar «%s» en la línea %d: %s"
 
-#: ../libgimpmodule/gimpmodule.c:180
-#, c-format
-msgid "Loading module: '%s'\n"
-msgstr "Cargando módulo «%s»\n"
-
-#: ../libgimpmodule/gimpmodule.c:197 ../libgimpmodule/gimpmodule.c:216
-#: ../libgimpmodule/gimpmodule.c:330 ../libgimpmodule/gimpmodule.c:358
-#: ../libgimpmodule/gimpmodule.c:470
+#: ../libgimpmodule/gimpmodule.c:183 ../libgimpmodule/gimpmodule.c:201
+#: ../libgimpmodule/gimpmodule.c:310 ../libgimpmodule/gimpmodule.c:337
+#: ../libgimpmodule/gimpmodule.c:448
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Error en la carga del módulo «%s»: %s"
 
-#: ../libgimpmodule/gimpmodule.c:286
-#, c-format
-msgid "Skipping module: '%s'\n"
-msgstr "Omitiendo el módulo: «%s»\n"
-
-#: ../libgimpmodule/gimpmodule.c:426
+#: ../libgimpmodule/gimpmodule.c:405
 msgid "Module error"
 msgstr "Error del módulo"
 
-#: ../libgimpmodule/gimpmodule.c:427
+#: ../libgimpmodule/gimpmodule.c:406
 msgid "Loaded"
 msgstr "Cargado"
 
-#: ../libgimpmodule/gimpmodule.c:428
+#: ../libgimpmodule/gimpmodule.c:407
 msgid "Load failed"
 msgstr "La carga falló"
 
-#: ../libgimpmodule/gimpmodule.c:429
+#: ../libgimpmodule/gimpmodule.c:408
 msgid "Not loaded"
 msgstr "No cargado"
 
@@ -1037,10 +1031,12 @@ msgstr "Estilo de cuadrícula"
 msgid "_Preview"
 msgstr "Vista _previa"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1868
+#: ../libgimpwidgets/gimppropwidgets.c:1872
 #, c-format
-msgid "This text input field is limited to %d characters."
-msgstr "Este campo de introducción de texto está limitado a %d caracteres."
+msgid "This text input field is limited to %d character."
+msgid_plural "This text input field is limited to %d characters."
+msgstr[0] "Este campo de introducción de texto está limitado a %d carácter."
+msgstr[1] "Este campo de introducción de texto está limitado a %d caracteres."
 
 # Debe ir en minúsculas por las reglas de estilo
 #: ../libgimpwidgets/gimpresolutionentry.c:382
@@ -1048,9 +1044,10 @@ msgstr "Este campo de introducción de texto está limitado a %d caracteres."
 msgid "pixels/%s"
 msgstr "píxeles/%s"
 
+# Esto NO es anchura (serrador)
 #: ../libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
-msgstr "Anchura"
+msgstr "Ancla"
 
 #: ../libgimpwidgets/gimpstock.c:114
 msgid "C_enter"
@@ -1164,7 +1161,7 @@ msgstr "_H"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:92
 msgid "Hue"
-msgstr "Intensidad"
+msgstr "Tono"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:93
 msgid "_S"
@@ -1220,7 +1217,7 @@ msgstr "Deuteranopía (insensibilidad al verde)"
 
 #: ../modules/cdisplay_colorblind.c:71
 msgid "Tritanopia (insensitivity to blue)"
-msgstr "Tritanopía (Insensibilidad al azul)"
+msgstr "Tritanopía (insensibilidad al azul)"
 
 #: ../modules/cdisplay_colorblind.c:200
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
@@ -1238,7 +1235,7 @@ msgstr "Tipo de _deficiencia del color:"
 
 #: ../modules/cdisplay_gamma.c:91
 msgid "Gamma color display filter"
-msgstr "Filtro gamma del color "
+msgstr "Filtro gamma de visualización del color "
 
 #: ../modules/cdisplay_gamma.c:160
 msgid "Gamma"
@@ -1262,7 +1259,8 @@ msgstr "C_iclos de contraste:"
 
 #: ../modules/cdisplay_lcms.c:105
 msgid "Color management display filter using ICC color profiles"
-msgstr "Filtro de gestión del color de la pantalla que utiliza perfiles de color ICC"
+msgstr ""
+"Filtro de gestión del color de la pantalla que utiliza perfiles de color ICC"
 
 #: ../modules/cdisplay_lcms.c:173
 msgid "Color Management"
@@ -1388,3 +1386,8 @@ msgstr "Acuarela"
 msgid "Pressure"
 msgstr "Presión"
 
+#~ msgid "Loading module: '%s'\n"
+#~ msgstr "Cargando módulo «%s»\n"
+
+#~ msgid "Skipping module: '%s'\n"
+#~ msgstr "Omitiendo el módulo: «%s»\n"
