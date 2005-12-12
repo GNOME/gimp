@@ -1131,7 +1131,7 @@ gen_intern (char *name, long copyp)
       n = obarray_dim;
       cname = name;
       while ((c = *cname++))
-	hash = ((hash * 17) ^ c) % n;
+	hash = ((hash * 17) ^ (unsigned char)c) % n;
       sl = obarray[hash];
     }
   else

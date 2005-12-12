@@ -1,3 +1,9 @@
+2005-12-12  Michael Schumacher  <schumaml@cvs.gnome.org>
+
+	* plug-ins/script-fu/siod/slib.c: added a fix for the script-fu
+	crash in chinese (and maybe other) locales. Applied to both
+	branches. Fixes bug #163212. 
+
 2005-12-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpstrokedesc.c (gimp_stroke_desc_new): fall back to
