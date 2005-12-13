@@ -1,5 +1,4 @@
 EXPORTS
-	_gp_params_destroy
 	gimp_add_mask_type_get_type
 	gimp_any_to_utf8
 	gimp_base_init
@@ -101,10 +100,23 @@ EXPORTS
 	gimp_unit_new
 	gimp_unit_set_deletion_flag
 	gimp_utf8_strtrim
+	gimp_wire_clear_error
+	gimp_wire_destroy
+	gimp_wire_error
+	gimp_wire_flush
+	gimp_wire_read
+	gimp_wire_read_msg
+	gimp_wire_register
+	gimp_wire_set_flusher
+	gimp_wire_set_reader
+	gimp_wire_set_writer
+	gimp_wire_write
+	gimp_wire_write_msg
 	gp_config_write
 	gp_extension_ack_write
 	gp_has_init_write
 	gp_init
+	gp_params_destroy
 	gp_proc_install_write
 	gp_proc_return_write
 	gp_proc_run_write
@@ -115,25 +127,3 @@ EXPORTS
 	gp_tile_ack_write
 	gp_tile_data_write
 	gp_tile_req_write
-	wire_clear_error
-	wire_destroy
-	wire_error
-	wire_flush
-	wire_read
-	wire_read_double
-	wire_read_int16
-	wire_read_int32
-	wire_read_int8
-	wire_read_msg
-	wire_read_string
-	wire_register
-	wire_set_flusher
-	wire_set_reader
-	wire_set_writer
-	wire_write
-	wire_write_double
-	wire_write_int16
-	wire_write_int32
-	wire_write_int8
-	wire_write_msg
-	wire_write_string

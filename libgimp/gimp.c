@@ -125,8 +125,8 @@ typedef enum
 
 #define WRITE_BUFFER_SIZE  1024
 
-void gimp_read_expect_msg   (WireMessage *msg,
-			     gint         type);
+void gimp_read_expect_msg   (GimpWireMessage *msg,
+			     gint             type);
 
 
 static void       gimp_close                   (void);
@@ -138,24 +138,24 @@ static void       gimp_message_func            (const gchar    *log_domain,
 #ifndef G_OS_WIN32
 static void       gimp_plugin_sigfatal_handler (gint            sig_num);
 #endif
-static gboolean   gimp_plugin_io_error_handler (GIOChannel     *channel,
-						GIOCondition    cond,
-						gpointer        data);
-static gboolean   gimp_write                   (GIOChannel     *channel,
-						guint8         *buf,
-						gulong          count,
-                                                gpointer        user_data);
-static gboolean   gimp_flush                   (GIOChannel     *channel,
-                                                gpointer        user_data);
+static gboolean   gimp_plugin_io_error_handler (GIOChannel      *channel,
+						GIOCondition     cond,
+						gpointer         data);
+static gboolean   gimp_write                   (GIOChannel      *channel,
+						guint8          *buf,
+						gulong           count,
+                                                gpointer         user_data);
+static gboolean   gimp_flush                   (GIOChannel      *channel,
+                                                gpointer         user_data);
 static void       gimp_loop                    (void);
-static void       gimp_config                  (GPConfig       *config);
-static void       gimp_proc_run                (GPProcRun      *proc_run);
-static void       gimp_temp_proc_run           (GPProcRun      *proc_run);
-static void       gimp_process_message         (WireMessage    *msg);
+static void       gimp_config                  (GPConfig        *config);
+static void       gimp_proc_run                (GPProcRun       *proc_run);
+static void       gimp_temp_proc_run           (GPProcRun       *proc_run);
+static void       gimp_process_message         (GimpWireMessage *msg);
 static void       gimp_single_message          (void);
-static gboolean   gimp_extension_read          (GIOChannel     *channel,
-                                                GIOCondition    condition,
-                                                gpointer        data);
+static gboolean   gimp_extension_read          (GIOChannel      *channel,
+                                                GIOCondition     condition,
+                                                gpointer         data);
 
 
 static GIOChannel *_readchannel  = NULL;
@@ -359,8 +359,9 @@ gimp_main (const GimpPlugInInfo *info,
   g_io_channel_set_close_on_unref (_writechannel, TRUE);
 
   gp_init ();
-  wire_set_writer (gimp_write);
-  wire_set_flusher (gimp_flush);
+
+  gimp_wire_set_writer (gimp_write);
+  gimp_wire_set_flusher (gimp_flush);
 
   g_type_init ();
   gimp_enums_init ();
@@ -885,12 +886,12 @@ gimp_run_procedure (const gchar *name,
 }
 
 void
-gimp_read_expect_msg (WireMessage *msg,
-		      gint         type)
+gimp_read_expect_msg (GimpWireMessage *msg,
+		      gint             type)
 {
   while (TRUE)
     {
-      if (! wire_read_msg (_readchannel, msg, NULL))
+      if (! gimp_wire_read_msg (_readchannel, msg, NULL))
 	gimp_quit ();
 
       if (msg->type == type)
@@ -905,7 +906,7 @@ gimp_read_expect_msg (WireMessage *msg,
           g_error ("unexpected message: %d", msg->type);
         }
 
-      wire_destroy (msg);
+      gimp_wire_destroy (msg);
     }
 }
 
@@ -932,10 +933,10 @@ gimp_run_procedure2 (const gchar     *name,
 		     gint             n_params,
 		     const GimpParam *params)
 {
-  GPProcRun     proc_run;
-  GPProcReturn *proc_return;
-  WireMessage   msg;
-  GimpParam    *return_vals;
+  GPProcRun        proc_run;
+  GPProcReturn    *proc_return;
+  GimpWireMessage  msg;
+  GimpParam       *return_vals;
 
   g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (n_return_vals != NULL, NULL);
@@ -985,9 +986,9 @@ void
 gimp_destroy_params (GimpParam *params,
 		     gint       n_params)
 {
-  extern void _gp_params_destroy (GPParam *params, gint n_params);
+  extern void  gp_params_destroy (GPParam *params, gint n_params);
 
-  _gp_params_destroy ((GPParam*) params, n_params);
+  gp_params_destroy ((GPParam *) params, n_params);
 }
 
 /**
@@ -1535,7 +1536,7 @@ gimp_write (GIOChannel *channel,
 	  bytes = WRITE_BUFFER_SIZE - write_buffer_index;
 	  memcpy (&write_buffer[write_buffer_index], buf, bytes);
 	  write_buffer_index += bytes;
-	  if (! wire_flush (channel, NULL))
+	  if (! gimp_wire_flush (channel, NULL))
 	    return FALSE;
 	}
       else
@@ -1605,11 +1606,11 @@ gimp_flush (GIOChannel *channel,
 static void
 gimp_loop (void)
 {
-  WireMessage msg;
+  GimpWireMessage msg;
 
   while (TRUE)
     {
-      if (! wire_read_msg (_readchannel, &msg, NULL))
+      if (! gimp_wire_read_msg (_readchannel, &msg, NULL))
         {
 	  gimp_close ();
           return;
@@ -1618,7 +1619,7 @@ gimp_loop (void)
       switch (msg.type)
 	{
 	case GP_QUIT:
-          wire_destroy (&msg);
+          gimp_wire_destroy (&msg);
 	  gimp_close ();
 	  return;
 
@@ -1634,7 +1635,7 @@ gimp_loop (void)
 
 	case GP_PROC_RUN:
 	  gimp_proc_run (msg.data);
-          wire_destroy (&msg);
+          gimp_wire_destroy (&msg);
 	  gimp_close ();
           return;
 
@@ -1659,7 +1660,7 @@ gimp_loop (void)
 	  break;
 	}
 
-      wire_destroy (&msg);
+      gimp_wire_destroy (&msg);
     }
 }
 
@@ -1798,7 +1799,7 @@ gimp_proc_run (GPProcRun *proc_run)
 
       (* PLUG_IN_INFO.run_proc) (proc_run->name,
 				 proc_run->nparams,
-				 (GimpParam*) proc_run->params,
+				 (GimpParam *) proc_run->params,
 				 &n_return_vals,
 				 &return_vals);
 
@@ -1842,7 +1843,7 @@ gimp_temp_proc_run (GPProcRun *proc_run)
 }
 
 static void
-gimp_process_message (WireMessage *msg)
+gimp_process_message (GimpWireMessage *msg)
 {
   switch (msg->type)
     {
@@ -1881,15 +1882,15 @@ gimp_process_message (WireMessage *msg)
 static void
 gimp_single_message (void)
 {
-  WireMessage msg;
+  GimpWireMessage msg;
 
   /* Run a temp function */
-  if (! wire_read_msg (_readchannel, &msg, NULL))
+  if (! gimp_wire_read_msg (_readchannel, &msg, NULL))
     gimp_quit ();
 
   gimp_process_message (&msg);
 
-  wire_destroy (&msg);
+  gimp_wire_destroy (&msg);
 }
 
 static gboolean

@@ -83,8 +83,8 @@ static GSList *blocked_plug_ins = NULL;
 /*  public functions  */
 
 void
-plug_in_handle_message (PlugIn      *plug_in,
-                        WireMessage *msg)
+plug_in_handle_message (PlugIn          *plug_in,
+                        GimpWireMessage *msg)
 {
   switch (msg->type)
     {
@@ -171,13 +171,13 @@ static void
 plug_in_handle_tile_req (PlugIn    *plug_in,
                          GPTileReq *tile_req)
 {
-  GPTileData    tile_data;
-  GPTileData   *tile_info;
-  WireMessage   msg;
-  GimpDrawable *drawable;
-  TileManager  *tm;
-  Tile         *tile;
-  gint          shm_ID;
+  GPTileData       tile_data;
+  GPTileData      *tile_info;
+  GimpWireMessage  msg;
+  GimpDrawable    *drawable;
+  TileManager     *tm;
+  Tile            *tile;
+  gint             shm_ID;
 
   shm_ID = plug_in_shm_get_ID (plug_in->gimp);
 
@@ -201,7 +201,7 @@ plug_in_handle_tile_req (PlugIn    *plug_in,
 	  return;
 	}
 
-      if (! wire_read_msg (plug_in->my_read, &msg, plug_in))
+      if (! gimp_wire_read_msg (plug_in->my_read, &msg, plug_in))
 	{
 	  g_warning ("plug_in_handle_tile_req: ERROR");
 	  plug_in_close (plug_in, TRUE);
@@ -257,8 +257,8 @@ plug_in_handle_tile_req (PlugIn    *plug_in,
                 tile_size (tile));
 
       tile_release (tile, TRUE);
+      gimp_wire_destroy (&msg);
 
-      wire_destroy (&msg);
       if (! gp_tile_ack_write (plug_in->my_write, plug_in))
 	{
 	  g_warning ("plug_in_handle_tile_req: ERROR");
@@ -324,7 +324,7 @@ plug_in_handle_tile_req (PlugIn    *plug_in,
 
       tile_release (tile, FALSE);
 
-      if (! wire_read_msg (plug_in->my_read, &msg, plug_in))
+      if (! gimp_wire_read_msg (plug_in->my_read, &msg, plug_in))
 	{
 	  g_message ("plug_in_handle_tile_req: ERROR");
 	  plug_in_close (plug_in, TRUE);
@@ -338,7 +338,7 @@ plug_in_handle_tile_req (PlugIn    *plug_in,
 	  return;
 	}
 
-      wire_destroy (&msg);
+      gimp_wire_destroy (&msg);
     }
 }
 

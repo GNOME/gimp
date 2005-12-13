@@ -22,8 +22,8 @@
 #define __PLUG_IN_MESSAGE_H__
 
 
-void   plug_in_handle_message (PlugIn      *plug_in,
-                               WireMessage *msg);
+void   plug_in_handle_message (PlugIn          *plug_in,
+                               GimpWireMessage *msg);
 
 
 #endif /* __PLUG_IN_MESSAGE_H__ */

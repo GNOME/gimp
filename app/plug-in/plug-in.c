@@ -115,8 +115,9 @@ plug_in_init (Gimp *gimp)
    *  write handlers.
    */
   gp_init ();
-  wire_set_writer (plug_in_write);
-  wire_set_flusher (plug_in_flush);
+
+  gimp_wire_set_writer (plug_in_write);
+  gimp_wire_set_flusher (plug_in_flush);
 
   /* allocate a piece of shared memory for use in transporting tiles
    *  to plug-ins. if we can't allocate a piece of shared memory then
@@ -179,16 +180,16 @@ plug_in_call_query (Gimp        *gimp,
 	{
 	  while (plug_in->open)
 	    {
-              WireMessage msg;
+              GimpWireMessage msg;
 
-	      if (! wire_read_msg (plug_in->my_read, &msg, plug_in))
+	      if (! gimp_wire_read_msg (plug_in->my_read, &msg, plug_in))
                 {
                   plug_in_close (plug_in, TRUE);
                 }
 	      else
 		{
 		  plug_in_handle_message (plug_in, &msg);
-		  wire_destroy (&msg);
+		  gimp_wire_destroy (&msg);
 		}
 	    }
 	}
@@ -220,16 +221,16 @@ plug_in_call_init (Gimp        *gimp,
 	{
 	  while (plug_in->open)
 	    {
-              WireMessage msg;
+              GimpWireMessage msg;
 
-	      if (! wire_read_msg (plug_in->my_read, &msg, plug_in))
+	      if (! gimp_wire_read_msg (plug_in->my_read, &msg, plug_in))
                 {
                   plug_in_close (plug_in, TRUE);
                 }
 	      else
 		{
 		  plug_in_handle_message (plug_in, &msg);
-		  wire_destroy (&msg);
+		  gimp_wire_destroy (&msg);
 		}
 	    }
 	}
@@ -679,7 +680,7 @@ plug_in_close (PlugIn   *plug_in,
       plug_in->his_write = NULL;
     }
 
-  wire_clear_error ();
+  gimp_wire_clear_error ();
 
   for (list = plug_in->temp_proc_frames; list; list = g_list_next (list))
     {
@@ -747,10 +748,8 @@ plug_in_recv_message (GIOChannel   *channel,
 		      GIOCondition  cond,
 		      gpointer	    data)
 {
-  PlugIn   *plug_in;
+  PlugIn   *plug_in     = data;
   gboolean  got_message = FALSE;
-
-  plug_in = (PlugIn *) data;
 
 #ifdef G_OS_WIN32
   /* Workaround for GLib bug #137968: sometimes we are called for no
@@ -765,18 +764,18 @@ plug_in_recv_message (GIOChannel   *channel,
 
   if (cond & (G_IO_IN | G_IO_PRI))
     {
-      WireMessage msg;
+      GimpWireMessage msg;
 
-      memset (&msg, 0, sizeof (WireMessage));
+      memset (&msg, 0, sizeof (GimpWireMessage));
 
-      if (! wire_read_msg (plug_in->my_read, &msg, plug_in))
+      if (! gimp_wire_read_msg (plug_in->my_read, &msg, plug_in))
 	{
 	  plug_in_close (plug_in, TRUE);
 	}
       else
 	{
 	  plug_in_handle_message (plug_in, &msg);
-	  wire_destroy (&msg);
+	  gimp_wire_destroy (&msg);
 	  got_message = TRUE;
 	}
     }
@@ -805,14 +804,12 @@ plug_in_recv_message (GIOChannel   *channel,
 
 static gboolean
 plug_in_write (GIOChannel *channel,
-	       guint8      *buf,
-	       gulong       count,
-               gpointer     user_data)
+	       guint8     *buf,
+	       gulong      count,
+               gpointer    user_data)
 {
-  PlugIn *plug_in;
+  PlugIn *plug_in = user_data;
   gulong  bytes;
-
-  plug_in = (PlugIn *) user_data;
 
   while (count > 0)
     {
@@ -822,7 +819,7 @@ plug_in_write (GIOChannel *channel,
 	  memcpy (&plug_in->write_buffer[plug_in->write_buffer_index],
                   buf, bytes);
 	  plug_in->write_buffer_index += bytes;
-	  if (! wire_flush (channel, plug_in))
+	  if (! gimp_wire_flush (channel, plug_in))
 	    return FALSE;
 	}
       else
@@ -844,9 +841,7 @@ static gboolean
 plug_in_flush (GIOChannel *channel,
                gpointer    user_data)
 {
-  PlugIn *plug_in;
-
-  plug_in = (PlugIn *) user_data;
+  PlugIn *plug_in = user_data;
 
   if (plug_in->write_buffer_index > 0)
     {

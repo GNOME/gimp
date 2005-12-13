@@ -133,7 +133,7 @@ plug_in_run (Gimp         *gimp,
 
       if (! gp_config_write (plug_in->my_write, &config, plug_in)     ||
           ! gp_proc_run_write (plug_in->my_write, &proc_run, plug_in) ||
-          ! wire_flush (plug_in->my_write, plug_in))
+          ! gimp_wire_flush (plug_in->my_write, plug_in))
         {
           return_vals = procedural_db_return_args (proc_rec, FALSE);
 
@@ -261,7 +261,7 @@ plug_in_temp_run (ProcRecord   *proc_rec,
       proc_run.params  = plug_in_args_to_params (args, argc, FALSE);
 
       if (! gp_temp_proc_run_write (plug_in->my_write, &proc_run, plug_in) ||
-	  ! wire_flush (plug_in->my_write, plug_in))
+	  ! gimp_wire_flush (plug_in->my_write, plug_in))
 	{
 	  return_vals = procedural_db_return_args (proc_rec, FALSE);
 

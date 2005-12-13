@@ -39,13 +39,13 @@
 #define FREE_QUANTUM 0.1
 
 
-void         gimp_read_expect_msg   (WireMessage *msg,
-				     gint         type);
+void         gimp_read_expect_msg   (GimpWireMessage *msg,
+				     gint             type);
 
-static void  gimp_tile_get          (GimpTile    *tile);
-static void  gimp_tile_put          (GimpTile    *tile);
-static void  gimp_tile_cache_insert (GimpTile    *tile);
-static void  gimp_tile_cache_flush  (GimpTile    *tile);
+static void  gimp_tile_get          (GimpTile        *tile);
+static void  gimp_tile_put          (GimpTile        *tile);
+static void  gimp_tile_cache_insert (GimpTile        *tile);
+static void  gimp_tile_cache_flush  (GimpTile        *tile);
 
 
 /*  private variables  */
@@ -182,9 +182,9 @@ gimp_tile_get (GimpTile *tile)
 {
   extern GIOChannel *_writechannel;
 
-  GPTileReq    tile_req;
-  GPTileData  *tile_data;
-  WireMessage  msg;
+  GPTileReq        tile_req;
+  GPTileData      *tile_data;
+  GimpWireMessage  msg;
 
   tile_req.drawable_ID = tile->drawable->drawable_id;
   tile_req.tile_num    = tile->tile_num;
@@ -221,7 +221,7 @@ gimp_tile_get (GimpTile *tile)
   if (! gp_tile_ack_write (_writechannel, NULL))
     gimp_quit ();
 
-  wire_destroy (&msg);
+  gimp_wire_destroy (&msg);
 }
 
 static void
@@ -229,10 +229,10 @@ gimp_tile_put (GimpTile *tile)
 {
   extern GIOChannel *_writechannel;
 
-  GPTileReq    tile_req;
-  GPTileData   tile_data;
-  GPTileData  *tile_info;
-  WireMessage  msg;
+  GPTileReq        tile_req;
+  GPTileData       tile_data;
+  GPTileData      *tile_info;
+  GimpWireMessage  msg;
 
   tile_req.drawable_ID = -1;
   tile_req.tile_num    = 0;
@@ -264,10 +264,10 @@ gimp_tile_put (GimpTile *tile)
   if (! gp_tile_data_write (_writechannel, &tile_data, NULL))
     gimp_quit ();
 
-  wire_destroy (&msg);
+  gimp_wire_destroy (&msg);
 
   gimp_read_expect_msg (&msg, GP_TILE_ACK);
-  wire_destroy (&msg);
+  gimp_wire_destroy (&msg);
 }
 
 /* This function is nearly identical to the function 'tile_cache_insert'
