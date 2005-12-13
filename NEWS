@@ -6,6 +6,17 @@ here. New features are being added in the HEAD branch that will be
 released as GIMP version 2.4.
 
 
+Bugs fixed in GIMP 2.2.10
+=========================
+
+- fixed build error on Sun C compiler (bug #319811)
+- fixed issue with Guides scripts (bug #320933)
+- corrected selection display problem (bug #319029)
+- fixed potential wget issue (bug #322977)
+- fixed non-interactive use of gimp-edit-stroke (bug #322977)
+- fixed Script-Fu crash in some locales such as Chinese (bug #163212)
+
+
 Bugs fixed in GIMP 2.2.9
 ========================
 
