@@ -60,9 +60,6 @@
 
 /*  local function prototypes  */
 
-static void     gimp_measure_tool_class_init      (GimpMeasureToolClass *klass);
-static void     gimp_measure_tool_init            (GimpMeasureTool      *tool);
-
 static void     gimp_measure_tool_control         (GimpTool        *tool,
                                                    GimpToolAction   action,
                                                    GimpDisplay     *gdisp);
@@ -103,7 +100,9 @@ static void        gimp_measure_tool_dialog_update (GimpMeasureTool *mtool,
                                                     GimpDisplay     *gdisp);
 
 
-static GimpDrawToolClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpMeasureTool, gimp_measure_tool, GIMP_TYPE_DRAW_TOOL);
+
+#define parent_class gimp_measure_tool_parent_class
 
 
 void
@@ -123,41 +122,11 @@ gimp_measure_tool_register (GimpToolRegisterCallback  callback,
                 data);
 }
 
-GType
-gimp_measure_tool_get_type (void)
-{
-  static GType tool_type = 0;
-
-  if (! tool_type)
-    {
-      static const GTypeInfo tool_info =
-      {
-        sizeof (GimpMeasureToolClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_measure_tool_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpMeasureTool),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_measure_tool_init,
-      };
-
-      tool_type = g_type_register_static (GIMP_TYPE_DRAW_TOOL,
-                                          "GimpMeasureTool",
-                                          &tool_info, 0);
-    }
-
-  return tool_type;
-}
-
 static void
 gimp_measure_tool_class_init (GimpMeasureToolClass *klass)
 {
   GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   tool_class->control        = gimp_measure_tool_control;
   tool_class->button_press   = gimp_measure_tool_button_press;

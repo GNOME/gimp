@@ -25,49 +25,18 @@
 #include "gimptoolcontrol.h"
 
 
-static void gimp_tool_control_class_init (GimpToolControlClass *klass);
-static void gimp_tool_control_init       (GimpToolControl      *tool);
-
-static void gimp_tool_control_finalize   (GObject              *object);
+static void gimp_tool_control_finalize (GObject *object);
 
 
-static GimpObjectClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpToolControl, gimp_tool_control, GIMP_TYPE_OBJECT);
 
+#define parent_class gimp_tool_control_parent_class
 
-GType
-gimp_tool_control_get_type (void)
-{
-  static GType tool_control_type = 0;
-
-  if (! tool_control_type)
-    {
-      static const GTypeInfo tool_control_info =
-      {
-        sizeof (GimpToolControlClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_tool_control_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpToolControl),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_tool_control_init,
-      };
-
-      tool_control_type = g_type_register_static (GIMP_TYPE_OBJECT,
-                                                  "GimpToolControl",
-                                                  &tool_control_info, 0);
-    }
-
-  return tool_control_type;
-}
 
 static void
 gimp_tool_control_class_init (GimpToolControlClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize = gimp_tool_control_finalize;
 }

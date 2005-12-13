@@ -53,8 +53,6 @@ enum
 };
 
 
-static void   gimp_bucket_fill_options_class_init   (GimpBucketFillOptionsClass *klass);
-
 static void   gimp_bucket_fill_options_set_property (GObject         *object,
                                                      guint            property_id,
                                                      const GValue    *value,
@@ -70,44 +68,17 @@ static void   gimp_bucket_fill_options_notify (GimpBucketFillOptions *options,
                                                GtkWidget             *widget);
 
 
-static GimpPaintOptionsClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpBucketFillOptions, gimp_bucket_fill_options,
+               GIMP_TYPE_PAINT_OPTIONS);
 
+#define parent_class gimp_bucket_fill_options_parent_class
 
-GType
-gimp_bucket_fill_options_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo info =
-      {
-        sizeof (GimpBucketFillOptionsClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_bucket_fill_options_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpBucketFillOptions),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) NULL
-      };
-
-      type = g_type_register_static (GIMP_TYPE_PAINT_OPTIONS,
-                                     "GimpBucketFillOptions",
-                                     &info, 0);
-    }
-
-  return type;
-}
 
 static void
 gimp_bucket_fill_options_class_init (GimpBucketFillOptionsClass *klass)
 {
   GObjectClass         *object_class  = G_OBJECT_CLASS (klass);
   GimpToolOptionsClass *options_class = GIMP_TOOL_OPTIONS_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->set_property = gimp_bucket_fill_options_set_property;
   object_class->get_property = gimp_bucket_fill_options_get_property;
@@ -140,6 +111,11 @@ gimp_bucket_fill_options_class_init (GimpBucketFillOptionsClass *klass)
                                    N_("Maximum color difference"),
                                    0.0, 255.0, 15.0,
                                    0);
+}
+
+static void
+gimp_bucket_fill_options_init (GimpBucketFillOptions *options)
+{
 }
 
 static void

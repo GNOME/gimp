@@ -46,26 +46,24 @@
 #define SLIDER_WIDTH 200
 
 
-static void     gimp_posterize_tool_class_init (GimpPosterizeToolClass *klass);
-static void     gimp_posterize_tool_init       (GimpPosterizeTool      *bc_tool);
+static void     gimp_posterize_tool_finalize       (GObject           *object);
 
-static void     gimp_posterize_tool_finalize   (GObject          *object);
+static gboolean gimp_posterize_tool_initialize     (GimpTool          *tool,
+                                                    GimpDisplay       *gdisp);
 
-static gboolean gimp_posterize_tool_initialize (GimpTool         *tool,
-                                                GimpDisplay      *gdisp);
-
-static void     gimp_posterize_tool_map        (GimpImageMapTool *image_map_tool);
-static void     gimp_posterize_tool_dialog     (GimpImageMapTool *image_map_tool);
-static void     gimp_posterize_tool_reset      (GimpImageMapTool *image_map_tool);
+static void     gimp_posterize_tool_map            (GimpImageMapTool  *im_tool);
+static void     gimp_posterize_tool_dialog         (GimpImageMapTool  *im_tool);
+static void     gimp_posterize_tool_reset          (GimpImageMapTool  *im_tool);
 
 static void     posterize_levels_adjustment_update (GtkAdjustment     *adjustment,
                                                     GimpPosterizeTool *posterize_tool);
 
 
-static GimpImageMapToolClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpPosterizeTool, gimp_posterize_tool,
+               GIMP_TYPE_IMAGE_MAP_TOOL);
 
+#define parent_class gimp_posterize_tool_parent_class
 
-/*  functions  */
 
 void
 gimp_posterize_tool_register (GimpToolRegisterCallback  callback,
@@ -83,56 +81,22 @@ gimp_posterize_tool_register (GimpToolRegisterCallback  callback,
                 data);
 }
 
-GType
-gimp_posterize_tool_get_type (void)
-{
-  static GType tool_type = 0;
-
-  if (! tool_type)
-    {
-      static const GTypeInfo tool_info =
-      {
-        sizeof (GimpPosterizeToolClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_posterize_tool_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpPosterizeTool),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_posterize_tool_init,
-      };
-
-      tool_type = g_type_register_static (GIMP_TYPE_IMAGE_MAP_TOOL,
-					  "GimpPosterizeTool",
-                                          &tool_info, 0);
-    }
-
-  return tool_type;
-}
-
 static void
 gimp_posterize_tool_class_init (GimpPosterizeToolClass *klass)
 {
-  GObjectClass          *object_class;
-  GimpToolClass         *tool_class;
-  GimpImageMapToolClass *image_map_tool_class;
+  GObjectClass          *object_class  = G_OBJECT_CLASS (klass);
+  GimpToolClass         *tool_class    = GIMP_TOOL_CLASS (klass);
+  GimpImageMapToolClass *im_tool_class = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
 
-  object_class         = G_OBJECT_CLASS (klass);
-  tool_class           = GIMP_TOOL_CLASS (klass);
-  image_map_tool_class = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
+  object_class->finalize    = gimp_posterize_tool_finalize;
 
-  parent_class = g_type_class_peek_parent (klass);
+  tool_class->initialize    = gimp_posterize_tool_initialize;
 
-  object_class->finalize       = gimp_posterize_tool_finalize;
+  im_tool_class->shell_desc = _("Posterize (Reduce Number of Colors)");
 
-  tool_class->initialize       = gimp_posterize_tool_initialize;
-
-  image_map_tool_class->shell_desc = _("Posterize (Reduce Number of Colors)");
-
-  image_map_tool_class->map    = gimp_posterize_tool_map;
-  image_map_tool_class->dialog = gimp_posterize_tool_dialog;
-  image_map_tool_class->reset  = gimp_posterize_tool_reset;
+  im_tool_class->map        = gimp_posterize_tool_map;
+  im_tool_class->dialog     = gimp_posterize_tool_dialog;
+  im_tool_class->reset      = gimp_posterize_tool_reset;
 }
 
 static void

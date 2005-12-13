@@ -58,8 +58,6 @@ enum
 };
 
 
-static void   gimp_transform_options_class_init (GimpTransformOptionsClass *options_class);
-
 static void   gimp_transform_options_set_property   (GObject         *object,
                                                      guint            property_id,
                                                      const GValue    *value,
@@ -81,44 +79,17 @@ static void   gimp_scale_options_constrain_notify   (GimpTransformOptions *optio
                                                      GtkWidget            *vbox);
 
 
-static GimpToolOptionsClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpTransformOptions, gimp_transform_options,
+               GIMP_TYPE_TOOL_OPTIONS);
 
+#define parent_class gimp_transform_options_parent_class
 
-GType
-gimp_transform_options_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo info =
-      {
-        sizeof (GimpTransformOptionsClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_transform_options_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpTransformOptions),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) NULL
-      };
-
-      type = g_type_register_static (GIMP_TYPE_TOOL_OPTIONS,
-                                     "GimpTransformOptions",
-                                     &info, 0);
-    }
-
-  return type;
-}
 
 static void
 gimp_transform_options_class_init (GimpTransformOptionsClass *klass)
 {
   GObjectClass         *object_class  = G_OBJECT_CLASS (klass);
   GimpToolOptionsClass *options_class = GIMP_TOOL_OPTIONS_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->set_property = gimp_transform_options_set_property;
   object_class->get_property = gimp_transform_options_get_property;
@@ -185,6 +156,11 @@ gimp_transform_options_class_init (GimpTransformOptionsClass *klass)
                                     "constrain-2", NULL,
                                     FALSE,
                                     0);
+}
+
+static void
+gimp_transform_options_init (GimpTransformOptions *options)
+{
 }
 
 static void

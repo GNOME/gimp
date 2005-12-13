@@ -37,8 +37,10 @@
 #include "gimp-intl.h"
 
 
-static void        gimp_smudge_tool_init   (GimpSmudgeTool  *tool);
 static GtkWidget * gimp_smudge_options_gui (GimpToolOptions *tool_options);
+
+
+G_DEFINE_TYPE (GimpSmudgeTool, gimp_smudge_tool, GIMP_TYPE_PAINT_TOOL);
 
 
 void
@@ -58,32 +60,9 @@ gimp_smudge_tool_register (GimpToolRegisterCallback  callback,
                 data);
 }
 
-GType
-gimp_smudge_tool_get_type (void)
+static void
+gimp_smudge_tool_class_init (GimpSmudgeToolClass *klass)
 {
-  static GType tool_type = 0;
-
-  if (! tool_type)
-    {
-      static const GTypeInfo tool_info =
-      {
-        sizeof (GimpSmudgeToolClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        NULL,           /* class_init     */
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpSmudgeTool),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_smudge_tool_init,
-      };
-
-      tool_type = g_type_register_static (GIMP_TYPE_PAINT_TOOL,
-                                          "GimpSmudgeTool",
-                                          &tool_info, 0);
-    }
-
-  return tool_type;
 }
 
 static void

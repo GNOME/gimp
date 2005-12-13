@@ -52,9 +52,6 @@
 
 /*  local function prototypes  */
 
-static void   gimp_scale_tool_class_init     (GimpScaleToolClass *klass);
-static void   gimp_scale_tool_init           (GimpScaleTool      *sc_tool);
-
 static void   gimp_scale_tool_dialog         (GimpTransformTool  *tr_tool);
 static void   gimp_scale_tool_dialog_update  (GimpTransformTool  *tr_tool);
 static void   gimp_scale_tool_prepare        (GimpTransformTool  *tr_tool,
@@ -72,12 +69,10 @@ static void   gimp_scale_tool_aspect_changed (GtkWidget          *widget,
                                               GimpTransformTool  *tr_tool);
 
 
-/*  private variables  */
+G_DEFINE_TYPE (GimpScaleTool, gimp_scale_tool, GIMP_TYPE_TRANSFORM_TOOL);
 
-static GimpTransformToolClass *parent_class = NULL;
+#define parent_class gimp_scale_tool_parent_class
 
-
-/*  public functions  */
 
 void
 gimp_scale_tool_register (GimpToolRegisterCallback  callback,
@@ -96,49 +91,16 @@ gimp_scale_tool_register (GimpToolRegisterCallback  callback,
                 data);
 }
 
-GType
-gimp_scale_tool_get_type (void)
-{
-  static GType tool_type = 0;
-
-  if (! tool_type)
-    {
-      static const GTypeInfo tool_info =
-      {
-        sizeof (GimpScaleToolClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_scale_tool_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpScaleTool),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_scale_tool_init,
-      };
-
-      tool_type = g_type_register_static (GIMP_TYPE_TRANSFORM_TOOL,
-                                          "GimpScaleTool",
-                                          &tool_info, 0);
-    }
-
-  return tool_type;
-}
-
-
-/*  private functions  */
-
 static void
 gimp_scale_tool_class_init (GimpScaleToolClass *klass)
 {
   GimpTransformToolClass *trans_class = GIMP_TRANSFORM_TOOL_CLASS (klass);
 
-  parent_class = g_type_class_peek_parent (klass);
-
-  trans_class->dialog         = gimp_scale_tool_dialog;
-  trans_class->dialog_update  = gimp_scale_tool_dialog_update;
-  trans_class->prepare        = gimp_scale_tool_prepare;
-  trans_class->motion         = gimp_scale_tool_motion;
-  trans_class->recalc         = gimp_scale_tool_recalc;
+  trans_class->dialog        = gimp_scale_tool_dialog;
+  trans_class->dialog_update = gimp_scale_tool_dialog_update;
+  trans_class->prepare       = gimp_scale_tool_prepare;
+  trans_class->motion        = gimp_scale_tool_motion;
+  trans_class->recalc        = gimp_scale_tool_recalc;
 }
 
 static void

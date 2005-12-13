@@ -35,7 +35,7 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_paintbrush_tool_init (GimpPaintbrushTool *tool);
+G_DEFINE_TYPE (GimpPaintbrushTool, gimp_paintbrush_tool, GIMP_TYPE_PAINT_TOOL);
 
 
 void
@@ -56,32 +56,9 @@ gimp_paintbrush_tool_register (GimpToolRegisterCallback  callback,
                 data);
 }
 
-GType
-gimp_paintbrush_tool_get_type (void)
+static void
+gimp_paintbrush_tool_class_init (GimpPaintbrushToolClass *klass)
 {
-  static GType tool_type = 0;
-
-  if (! tool_type)
-    {
-      static const GTypeInfo tool_info =
-      {
-        sizeof (GimpPaintbrushToolClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        NULL,           /* class_init     */
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpPaintbrushTool),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_paintbrush_tool_init,
-      };
-
-      tool_type = g_type_register_static (GIMP_TYPE_PAINT_TOOL,
-                                          "GimpPaintbrushTool",
-                                          &tool_info, 0);
-    }
-
-  return tool_type;
 }
 
 static void

@@ -41,9 +41,6 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_selection_tool_class_init (GimpSelectionToolClass *klass);
-static void   gimp_selection_tool_init       (GimpSelectionTool      *sel_tool);
-
 static void   gimp_selection_tool_control       (GimpTool        *tool,
                                                  GimpToolAction   action,
                                                  GimpDisplay     *gdisp);
@@ -62,43 +59,15 @@ static void   gimp_selection_tool_cursor_update (GimpTool        *tool,
                                                  GimpDisplay     *gdisp);
 
 
-static GimpDrawToolClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpSelectionTool, gimp_selection_tool, GIMP_TYPE_DRAW_TOOL);
 
+#define parent_class gimp_selection_tool_parent_class
 
-GType
-gimp_selection_tool_get_type (void)
-{
-  static GType tool_type = 0;
-
-  if (! tool_type)
-    {
-      static const GTypeInfo tool_info =
-      {
-        sizeof (GimpSelectionToolClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_selection_tool_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpSelectionTool),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_selection_tool_init,
-      };
-
-      tool_type = g_type_register_static (GIMP_TYPE_DRAW_TOOL,
-                                          "GimpSelectionTool",
-                                          &tool_info, 0);
-    }
-
-  return tool_type;
-}
 
 static void
 gimp_selection_tool_class_init (GimpSelectionToolClass *klass)
 {
   GimpToolClass *tool_class = GIMP_TOOL_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   tool_class->control       = gimp_selection_tool_control;
   tool_class->modifier_key  = gimp_selection_tool_modifier_key;

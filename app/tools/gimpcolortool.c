@@ -56,9 +56,7 @@ enum
 
 /*  local function prototypes  */
 
-static void       gimp_color_tool_class_init  (GimpColorToolClass *klass);
-static void       gimp_color_tool_init        (GimpColorTool      *color_tool);
-static void       gimp_color_tool_finalize    (GObject            *object);
+static void       gimp_color_tool_finalize       (GObject         *object);
 
 static void       gimp_color_tool_control        (GimpTool        *tool,
                                                   GimpToolAction   action,
@@ -101,38 +99,12 @@ static void       gimp_color_tool_pick           (GimpColorTool   *tool,
                                                   gint             y);
 
 
+G_DEFINE_TYPE (GimpColorTool, gimp_color_tool, GIMP_TYPE_DRAW_TOOL);
+
+#define parent_class gimp_color_tool_parent_class
+
 static guint gimp_color_tool_signals[LAST_SIGNAL] = { 0 };
 
-static GimpDrawToolClass *parent_class = NULL;
-
-
-GType
-gimp_color_tool_get_type (void)
-{
-  static GType tool_type = 0;
-
-  if (! tool_type)
-    {
-      static const GTypeInfo tool_info =
-      {
-        sizeof (GimpColorToolClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_color_tool_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpColorTool),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_color_tool_init,
-      };
-
-      tool_type = g_type_register_static (GIMP_TYPE_DRAW_TOOL,
-                                          "GimpColorTool",
-                                          &tool_info, 0);
-    }
-
-  return tool_type;
-}
 
 static void
 gimp_color_tool_class_init (GimpColorToolClass *klass)
@@ -140,8 +112,6 @@ gimp_color_tool_class_init (GimpColorToolClass *klass)
   GObjectClass      *object_class = G_OBJECT_CLASS (klass);
   GimpToolClass     *tool_class   = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass *draw_class   = GIMP_DRAW_TOOL_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   gimp_color_tool_signals[PICKED] =
     g_signal_new ("picked",

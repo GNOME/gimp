@@ -45,36 +45,33 @@
 #include "gimp-intl.h"
 
 
-static GimpToolClass *parent_class = NULL;
-
-
 /*  local function prototypes  */
 
-static void   gimp_bucket_fill_tool_class_init (GimpBucketFillToolClass *klass);
-static void   gimp_bucket_fill_tool_init       (GimpBucketFillTool      *bucket_fill_tool);
-
-static void   gimp_bucket_fill_tool_button_press    (GimpTool        *tool,
-                                                     GimpCoords      *coords,
-                                                     guint32          time,
-                                                     GdkModifierType  state,
-                                                     GimpDisplay     *gdisp);
-static void   gimp_bucket_fill_tool_button_release  (GimpTool        *tool,
-                                                     GimpCoords      *coords,
-                                                     guint32          time,
-                                                     GdkModifierType  state,
-                                                     GimpDisplay     *gdisp);
-static void   gimp_bucket_fill_tool_modifier_key    (GimpTool        *tool,
-                                                     GdkModifierType  key,
-                                                     gboolean         press,
-                                                     GdkModifierType  state,
-                                                     GimpDisplay     *gdisp);
-static void   gimp_bucket_fill_tool_cursor_update   (GimpTool        *tool,
-                                                     GimpCoords      *coords,
-                                                     GdkModifierType  state,
-                                                     GimpDisplay     *gdisp);
+static void   gimp_bucket_fill_tool_button_press   (GimpTool        *tool,
+                                                    GimpCoords      *coords,
+                                                    guint32          time,
+                                                    GdkModifierType  state,
+                                                    GimpDisplay     *gdisp);
+static void   gimp_bucket_fill_tool_button_release (GimpTool        *tool,
+                                                    GimpCoords      *coords,
+                                                    guint32          time,
+                                                    GdkModifierType  state,
+                                                    GimpDisplay     *gdisp);
+static void   gimp_bucket_fill_tool_modifier_key   (GimpTool        *tool,
+                                                    GdkModifierType  key,
+                                                    gboolean         press,
+                                                    GdkModifierType  state,
+                                                    GimpDisplay     *gdisp);
+static void   gimp_bucket_fill_tool_cursor_update  (GimpTool        *tool,
+                                                    GimpCoords      *coords,
+                                                    GdkModifierType  state,
+                                                    GimpDisplay     *gdisp);
 
 
-/*  public functions  */
+G_DEFINE_TYPE (GimpBucketFillTool, gimp_bucket_fill_tool, GIMP_TYPE_TOOL);
+
+#define parent_class gimp_bucket_fill_tool_parent_class
+
 
 void
 gimp_bucket_fill_tool_register (GimpToolRegisterCallback  callback,
@@ -97,43 +94,10 @@ gimp_bucket_fill_tool_register (GimpToolRegisterCallback  callback,
                 data);
 }
 
-GType
-gimp_bucket_fill_tool_get_type (void)
-{
-  static GType tool_type = 0;
-
-  if (! tool_type)
-    {
-      static const GTypeInfo tool_info =
-      {
-        sizeof (GimpBucketFillToolClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_bucket_fill_tool_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpBucketFillTool),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_bucket_fill_tool_init,
-      };
-
-      tool_type = g_type_register_static (GIMP_TYPE_TOOL,
-                                          "GimpBucketFillTool",
-                                          &tool_info, 0);
-    }
-
-  return tool_type;
-}
-
-
-/*  private functions  */
-
 static void
 gimp_bucket_fill_tool_class_init (GimpBucketFillToolClass *klass)
 {
   GimpToolClass *tool_class = GIMP_TOOL_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   tool_class->button_press   = gimp_bucket_fill_tool_button_press;
   tool_class->button_release = gimp_bucket_fill_tool_button_release;

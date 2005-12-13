@@ -37,8 +37,10 @@
 #include "gimp-intl.h"
 
 
-static void        gimp_airbrush_tool_init   (GimpAirbrushTool *airbrush);
 static GtkWidget * gimp_airbrush_options_gui (GimpToolOptions  *tool_options);
+
+
+G_DEFINE_TYPE (GimpAirbrushTool, gimp_airbrush_tool, GIMP_TYPE_PAINTBRUSH_TOOL);
 
 
 void
@@ -59,32 +61,9 @@ gimp_airbrush_tool_register (GimpToolRegisterCallback  callback,
                 data);
 }
 
-GType
-gimp_airbrush_tool_get_type (void)
+static void
+gimp_airbrush_tool_class_init (GimpAirbrushToolClass *klass)
 {
-  static GType tool_type = 0;
-
-  if (! tool_type)
-    {
-      static const GTypeInfo tool_info =
-      {
-        sizeof (GimpAirbrushToolClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        NULL,           /* class_init     */
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpAirbrushTool),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_airbrush_tool_init,
-      };
-
-      tool_type = g_type_register_static (GIMP_TYPE_PAINTBRUSH_TOOL,
-					  "GimpAirbrushTool",
-                                          &tool_info, 0);
-    }
-
-  return tool_type;
 }
 
 static void

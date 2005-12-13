@@ -42,9 +42,6 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_ellipse_select_tool_class_init (GimpEllipseSelectToolClass *klass);
-static void   gimp_ellipse_select_tool_init       (GimpEllipseSelectTool      *ellipse_select);
-
 static void   gimp_ellipse_select_tool_draw        (GimpDrawTool       *draw_tool);
 
 static void   gimp_ellipse_select_tool_rect_select (GimpRectSelectTool *rect_tool,
@@ -54,7 +51,10 @@ static void   gimp_ellipse_select_tool_rect_select (GimpRectSelectTool *rect_too
                                                     gint                h);
 
 
-static GimpRectSelectToolClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpEllipseSelectTool, gimp_ellipse_select_tool,
+               GIMP_TYPE_RECT_SELECT_TOOL);
+
+#define parent_class gimp_ellipse_select_tool_parent_class
 
 
 /*  public functions  */
@@ -76,34 +76,6 @@ gimp_ellipse_select_tool_register (GimpToolRegisterCallback  callback,
                 data);
 }
 
-GType
-gimp_ellipse_select_tool_get_type (void)
-{
-  static GType tool_type = 0;
-
-  if (! tool_type)
-    {
-      static const GTypeInfo tool_info =
-      {
-        sizeof (GimpEllipseSelectToolClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_ellipse_select_tool_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpEllipseSelectTool),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_ellipse_select_tool_init,
-      };
-
-      tool_type = g_type_register_static (GIMP_TYPE_RECT_SELECT_TOOL,
-					  "GimpEllipseSelectTool",
-                                          &tool_info, 0);
-    }
-
-  return tool_type;
-}
-
 
 /*  private functions  */
 
@@ -115,8 +87,6 @@ gimp_ellipse_select_tool_class_init (GimpEllipseSelectToolClass *klass)
 
   draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
   rect_tool_class = GIMP_RECT_SELECT_TOOL_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   draw_tool_class->draw        = gimp_ellipse_select_tool_draw;
 

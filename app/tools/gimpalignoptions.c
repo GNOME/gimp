@@ -42,55 +42,23 @@ enum
 };
 
 
-static void   gimp_align_options_class_init (GimpAlignOptionsClass *options_class);
-
-static void   gimp_align_options_set_property (GObject         *object,
-                                              guint            property_id,
-                                              const GValue    *value,
-                                              GParamSpec      *pspec);
-static void   gimp_align_options_get_property (GObject         *object,
-                                              guint            property_id,
-                                              GValue          *value,
-                                              GParamSpec      *pspec);
+static void   gimp_align_options_set_property (GObject      *object,
+                                               guint         property_id,
+                                               const GValue *value,
+                                               GParamSpec   *pspec);
+static void   gimp_align_options_get_property (GObject      *object,
+                                               guint         property_id,
+                                               GValue       *value,
+                                               GParamSpec   *pspec);
 
 
-static GimpToolOptionsClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpAlignOptions, gimp_align_options, GIMP_TYPE_TOOL_OPTIONS);
 
-
-GType
-gimp_align_options_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo info =
-      {
-        sizeof (GimpAlignOptionsClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_align_options_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpAlignOptions),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) NULL
-      };
-
-      type = g_type_register_static (GIMP_TYPE_TOOL_OPTIONS,
-                                     "GimpAlignOptions",
-                                     &info, 0);
-    }
-
-  return type;
-}
 
 static void
 gimp_align_options_class_init (GimpAlignOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->set_property = gimp_align_options_set_property;
   object_class->get_property = gimp_align_options_get_property;
@@ -103,10 +71,15 @@ gimp_align_options_class_init (GimpAlignOptionsClass *klass)
 }
 
 static void
+gimp_align_options_init (GimpAlignOptions *options)
+{
+}
+
+static void
 gimp_align_options_set_property (GObject      *object,
-                                guint         property_id,
-                                const GValue *value,
-                                GParamSpec   *pspec)
+                                 guint         property_id,
+                                 const GValue *value,
+                                 GParamSpec   *pspec)
 {
   GimpAlignOptions *options = GIMP_ALIGN_OPTIONS (object);
 
@@ -123,9 +96,9 @@ gimp_align_options_set_property (GObject      *object,
 
 static void
 gimp_align_options_get_property (GObject    *object,
-                                guint       property_id,
-                                GValue     *value,
-                                GParamSpec *pspec)
+                                 guint       property_id,
+                                 GValue     *value,
+                                 GParamSpec *pspec)
 {
   GimpAlignOptions *options = GIMP_ALIGN_OPTIONS (object);
 
@@ -173,4 +146,3 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
 
   return vbox;
 }
-

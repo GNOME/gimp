@@ -98,14 +98,9 @@ struct _GimpEditSelectionTool
 
 struct _GimpEditSelectionToolClass
 {
-  GimpDrawToolClass parent_class;
+  GimpDrawToolClass   parent_class;
 };
 
-
-static GType   gimp_edit_selection_tool_get_type   (void) G_GNUC_CONST;
-
-static void    gimp_edit_selection_tool_class_init (GimpEditSelectionToolClass *klass);
-static void    gimp_edit_selection_tool_init       (GimpEditSelectionTool *edit_selection_tool);
 
 static void    gimp_edit_selection_tool_button_release (GimpTool        *tool,
                                                         GimpCoords      *coords,
@@ -121,36 +116,11 @@ static void    gimp_edit_selection_tool_motion         (GimpTool        *tool,
 static void    gimp_edit_selection_tool_draw           (GimpDrawTool    *tool);
 
 
-static GimpDrawToolClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpEditSelectionTool, gimp_edit_selection_tool,
+               GIMP_TYPE_DRAW_TOOL);
 
+#define parent_class gimp_edit_selection_tool_parent_class
 
-static GType
-gimp_edit_selection_tool_get_type (void)
-{
-  static GType tool_type = 0;
-
-  if (! tool_type)
-    {
-      static const GTypeInfo tool_info =
-      {
-        sizeof (GimpEditSelectionToolClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_edit_selection_tool_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpEditSelectionTool),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_edit_selection_tool_init,
-      };
-
-      tool_type = g_type_register_static (GIMP_TYPE_DRAW_TOOL,
-                                          "GimpEditSelectionTool",
-                                          &tool_info, 0);
-    }
-
-  return tool_type;
-}
 
 static void
 gimp_edit_selection_tool_class_init (GimpEditSelectionToolClass *klass)
@@ -158,12 +128,10 @@ gimp_edit_selection_tool_class_init (GimpEditSelectionToolClass *klass)
   GimpToolClass     *tool_class = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass *draw_class = GIMP_DRAW_TOOL_CLASS (klass);
 
-  parent_class = g_type_class_peek_parent (klass);
-
   tool_class->button_release = gimp_edit_selection_tool_button_release;
   tool_class->motion         = gimp_edit_selection_tool_motion;
 
-  draw_class->draw             = gimp_edit_selection_tool_draw;
+  draw_class->draw           = gimp_edit_selection_tool_draw;
 }
 
 static void

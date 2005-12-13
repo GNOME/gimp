@@ -42,8 +42,6 @@ enum
 };
 
 
-static void   gimp_histogram_options_class_init (GimpHistogramOptionsClass *options_class);
-
 static void   gimp_histogram_options_set_property (GObject      *object,
                                                    guint         property_id,
                                                    const GValue *value,
@@ -54,43 +52,14 @@ static void   gimp_histogram_options_get_property (GObject      *object,
                                                    GParamSpec   *pspec);
 
 
-static GimpColorOptionsClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpHistogramOptions, gimp_histogram_options,
+               GIMP_TYPE_COLOR_OPTIONS);
 
-
-GType
-gimp_histogram_options_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo info =
-      {
-        sizeof (GimpHistogramOptionsClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_histogram_options_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpHistogramOptions),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) NULL
-      };
-
-      type = g_type_register_static (GIMP_TYPE_COLOR_OPTIONS,
-                                     "GimpHistogramOptions",
-                                     &info, 0);
-    }
-
-  return type;
-}
 
 static void
 gimp_histogram_options_class_init (GimpHistogramOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->set_property = gimp_histogram_options_set_property;
   object_class->get_property = gimp_histogram_options_get_property;
@@ -100,6 +69,11 @@ gimp_histogram_options_class_init (GimpHistogramOptionsClass *klass)
                                  GIMP_TYPE_HISTOGRAM_SCALE,
                                  GIMP_HISTOGRAM_SCALE_LINEAR,
                                  0);
+}
+
+static void
+gimp_histogram_options_init (GimpHistogramOptions *options)
+{
 }
 
 static void

@@ -54,8 +54,7 @@ enum
 };
 
 
-static void   gimp_crop_options_class_init                   (GimpCropOptionsClass *klass);
-static void   gimp_crop_options_rectangle_options_iface_init (GimpRectangleOptionsInterface *rectangle_iface);
+static void   gimp_crop_options_rectangle_options_iface_init (GimpRectangleOptionsInterface *iface);
 
 static void   gimp_crop_options_set_property (GObject      *object,
                                               guint         property_id,
@@ -67,52 +66,16 @@ static void   gimp_crop_options_get_property (GObject      *object,
                                               GParamSpec   *pspec);
 
 
-static GimpToolOptionsClass *parent_class = NULL;
+G_DEFINE_TYPE_WITH_CODE (GimpCropOptions, gimp_crop_options,
+                         GIMP_TYPE_TOOL_OPTIONS,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_RECTANGLE_OPTIONS,
+                                                gimp_crop_options_rectangle_options_iface_init));
 
-
-GType
-gimp_crop_options_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo info =
-      {
-        sizeof (GimpCropOptionsClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_crop_options_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpCropOptions),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) NULL
-      };
-      static const GInterfaceInfo rectangle_info =
-      {
-        (GInterfaceInitFunc) gimp_crop_options_rectangle_options_iface_init,           /* interface_init */
-        NULL,           /* interface_finalize */
-        NULL            /* interface_data */
-      };
-
-      type = g_type_register_static (GIMP_TYPE_TOOL_OPTIONS,
-                                     "GimpCropOptions",
-                                     &info, 0);
-      g_type_add_interface_static (type,
-                                   GIMP_TYPE_RECTANGLE_OPTIONS,
-                                   &rectangle_info);
-     }
-
-  return type;
-}
 
 static void
 gimp_crop_options_class_init (GimpCropOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->set_property = gimp_crop_options_set_property;
   object_class->get_property = gimp_crop_options_get_property;
@@ -131,7 +94,12 @@ gimp_crop_options_class_init (GimpCropOptionsClass *klass)
 }
 
 static void
-gimp_crop_options_rectangle_options_iface_init (GimpRectangleOptionsInterface *rectangle_iface)
+gimp_crop_options_init (GimpCropOptions *options)
+{
+}
+
+static void
+gimp_crop_options_rectangle_options_iface_init (GimpRectangleOptionsInterface *iface)
 {
 }
 
@@ -141,7 +109,7 @@ gimp_crop_options_set_property (GObject      *object,
                                 const GValue *value,
                                 GParamSpec   *pspec)
 {
-  GimpCropOptions      *options           = GIMP_CROP_OPTIONS (object);
+  GimpCropOptions *options = GIMP_CROP_OPTIONS (object);
 
   switch (property_id)
     {
@@ -176,7 +144,7 @@ gimp_crop_options_get_property (GObject    *object,
                                 GValue     *value,
                                 GParamSpec *pspec)
 {
-  GimpCropOptions      *options           = GIMP_CROP_OPTIONS (object);
+  GimpCropOptions *options = GIMP_CROP_OPTIONS (object);
 
   switch (property_id)
     {

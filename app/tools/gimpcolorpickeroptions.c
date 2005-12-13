@@ -42,8 +42,6 @@ enum
 };
 
 
-static void   gimp_color_picker_options_class_init   (GimpColorPickerOptionsClass *klass);
-
 static void   gimp_color_picker_options_set_property (GObject      *object,
                                                       guint         property_id,
                                                       const GValue *value,
@@ -54,43 +52,14 @@ static void   gimp_color_picker_options_get_property (GObject      *object,
                                                       GParamSpec   *pspec);
 
 
-static GimpToolOptionsClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpColorPickerOptions, gimp_color_picker_options,
+               GIMP_TYPE_COLOR_OPTIONS);
 
-
-GType
-gimp_color_picker_options_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo info =
-      {
-        sizeof (GimpColorPickerOptionsClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_color_picker_options_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpColorPickerOptions),
-        0,              /* n_preallocs    */
-        NULL            /* instance_init  */
-      };
-
-      type = g_type_register_static (GIMP_TYPE_COLOR_OPTIONS,
-                                     "GimpColorPickerOptions",
-                                     &info, 0);
-    }
-
-  return type;
-}
 
 static void
 gimp_color_picker_options_class_init (GimpColorPickerOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->set_property = gimp_color_picker_options_set_property;
   object_class->get_property = gimp_color_picker_options_get_property;
@@ -113,6 +82,11 @@ gimp_color_picker_options_class_init (GimpColorPickerOptionsClass *klass)
                                     "use-info-window", NULL,
                                     FALSE,
                                     0);
+}
+
+static void
+gimp_color_picker_options_init (GimpColorPickerOptions *options)
+{
 }
 
 static void

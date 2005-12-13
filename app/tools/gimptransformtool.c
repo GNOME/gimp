@@ -75,9 +75,6 @@
 
 /*  local function prototypes  */
 
-static void   gimp_transform_tool_init        (GimpTransformTool      *tool);
-static void   gimp_transform_tool_class_init  (GimpTransformToolClass *tool);
-
 static GObject * gimp_transform_tool_constructor   (GType              type,
                                                     guint              n_params,
                                                     GObjectConstructParam *params);
@@ -152,36 +149,11 @@ static void     gimp_transform_tool_notify_preview (GimpTransformOptions *option
                                                     GParamSpec           *pspec,
                                                     GimpTransformTool    *tr_tool);
 
-static GimpDrawToolClass *parent_class = NULL;
 
+G_DEFINE_TYPE (GimpTransformTool, gimp_transform_tool, GIMP_TYPE_DRAW_TOOL);
 
-GType
-gimp_transform_tool_get_type (void)
-{
-  static GType tool_type = 0;
+#define parent_class gimp_transform_tool_parent_class
 
-  if (! tool_type)
-    {
-      static const GTypeInfo tool_info =
-      {
-        sizeof (GimpTransformToolClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_transform_tool_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpTransformTool),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_transform_tool_init,
-      };
-
-      tool_type = g_type_register_static (GIMP_TYPE_DRAW_TOOL,
-                                          "GimpTransformTool",
-                                          &tool_info, 0);
-    }
-
-  return tool_type;
-}
 
 static void
 gimp_transform_tool_class_init (GimpTransformToolClass *klass)
@@ -189,8 +161,6 @@ gimp_transform_tool_class_init (GimpTransformToolClass *klass)
   GObjectClass      *object_class = G_OBJECT_CLASS (klass);
   GimpToolClass     *tool_class   = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass *draw_class   = GIMP_DRAW_TOOL_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->constructor  = gimp_transform_tool_constructor;
   object_class->finalize     = gimp_transform_tool_finalize;

@@ -38,23 +38,22 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_eraser_tool_class_init    (GimpEraserToolClass  *klass);
-static void   gimp_eraser_tool_init          (GimpEraserTool       *eraser);
+static void   gimp_eraser_tool_modifier_key  (GimpTool        *tool,
+                                              GdkModifierType  key,
+                                              gboolean         press,
+                                              GdkModifierType  state,
+                                              GimpDisplay     *gdisp);
+static void   gimp_eraser_tool_cursor_update (GimpTool        *tool,
+                                              GimpCoords      *coords,
+                                              GdkModifierType  state,
+                                              GimpDisplay     *gdisp);
 
-static void   gimp_eraser_tool_modifier_key  (GimpTool             *tool,
-                                              GdkModifierType       key,
-                                              gboolean              press,
-                                              GdkModifierType       state,
-                                              GimpDisplay          *gdisp);
-static void   gimp_eraser_tool_cursor_update (GimpTool             *tool,
-                                              GimpCoords           *coords,
-                                              GdkModifierType       state,
-                                              GimpDisplay          *gdisp);
-
-static GtkWidget * gimp_eraser_options_gui   (GimpToolOptions      *tool_options);
+static GtkWidget * gimp_eraser_options_gui   (GimpToolOptions *tool_options);
 
 
-static GimpPaintToolClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpEraserTool, gimp_eraser_tool, GIMP_TYPE_PAINT_TOOL);
+
+#define parent_class gimp_eraser_tool_parent_class
 
 
 void
@@ -74,40 +73,10 @@ gimp_eraser_tool_register (GimpToolRegisterCallback  callback,
                 data);
 }
 
-GType
-gimp_eraser_tool_get_type (void)
-{
-  static GType tool_type = 0;
-
-  if (! tool_type)
-    {
-      static const GTypeInfo tool_info =
-      {
-        sizeof (GimpEraserToolClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_eraser_tool_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpEraserTool),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_eraser_tool_init,
-      };
-
-      tool_type = g_type_register_static (GIMP_TYPE_PAINT_TOOL,
-                                          "GimpEraserTool",
-                                          &tool_info, 0);
-    }
-
-  return tool_type;
-}
-
 static void
 gimp_eraser_tool_class_init (GimpEraserToolClass *klass)
 {
   GimpToolClass *tool_class = GIMP_TOOL_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   tool_class->modifier_key  = gimp_eraser_tool_modifier_key;
   tool_class->cursor_update = gimp_eraser_tool_cursor_update;

@@ -70,9 +70,6 @@
 
 /*  local function prototypes  */
 
-static void     gimp_curves_tool_class_init     (GimpCurvesToolClass *klass);
-static void     gimp_curves_tool_init           (GimpCurvesTool      *tool);
-
 static void     gimp_curves_tool_finalize       (GObject          *object);
 
 static gboolean gimp_curves_tool_initialize     (GimpTool         *tool,
@@ -128,7 +125,9 @@ static gboolean curves_graph_expose             (GtkWidget        *widget,
                                                  GimpCurvesTool   *tool);
 
 
-static GimpImageMapToolClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpCurvesTool, gimp_curves_tool, GIMP_TYPE_IMAGE_MAP_TOOL);
+
+#define parent_class gimp_curves_tool_parent_class
 
 
 /*  public functions  */
@@ -150,74 +149,38 @@ gimp_curves_tool_register (GimpToolRegisterCallback  callback,
                 data);
 }
 
-GType
-gimp_curves_tool_get_type (void)
-{
-  static GType tool_type = 0;
-
-  if (! tool_type)
-    {
-      static const GTypeInfo tool_info =
-      {
-        sizeof (GimpCurvesToolClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_curves_tool_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpCurvesTool),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_curves_tool_init,
-      };
-
-      tool_type = g_type_register_static (GIMP_TYPE_IMAGE_MAP_TOOL,
-                                          "GimpCurvesTool",
-                                          &tool_info, 0);
-    }
-
-  return tool_type;
-}
-
 
 /*  private functions  */
 
 static void
 gimp_curves_tool_class_init (GimpCurvesToolClass *klass)
 {
-  GObjectClass          *object_class;
-  GimpToolClass         *tool_class;
-  GimpColorToolClass    *color_tool_class;
-  GimpImageMapToolClass *image_map_tool_class;
+  GObjectClass          *object_class     = G_OBJECT_CLASS (klass);
+  GimpToolClass         *tool_class       = GIMP_TOOL_CLASS (klass);
+  GimpColorToolClass    *color_tool_class = GIMP_COLOR_TOOL_CLASS (klass);
+  GimpImageMapToolClass *im_tool_class    = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
 
-  object_class         = G_OBJECT_CLASS (klass);
-  tool_class           = GIMP_TOOL_CLASS (klass);
-  color_tool_class     = GIMP_COLOR_TOOL_CLASS (klass);
-  image_map_tool_class = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
+  object_class->finalize           = gimp_curves_tool_finalize;
 
-  parent_class = g_type_class_peek_parent (klass);
+  tool_class->initialize           = gimp_curves_tool_initialize;
+  tool_class->button_release       = gimp_curves_tool_button_release;
+  tool_class->key_press            = gimp_curves_tool_key_press;
+  tool_class->oper_update          = gimp_curves_tool_oper_update;
 
-  object_class->finalize     = gimp_curves_tool_finalize;
+  color_tool_class->picked         = gimp_curves_tool_color_picked;
 
-  tool_class->initialize     = gimp_curves_tool_initialize;
-  tool_class->button_release = gimp_curves_tool_button_release;
-  tool_class->key_press      = gimp_curves_tool_key_press;
-  tool_class->oper_update    = gimp_curves_tool_oper_update;
+  im_tool_class->shell_desc        = _("Adjust Color Curves");
+  im_tool_class->settings_name     = "curves";
+  im_tool_class->load_dialog_title = _("Load Curves");
+  im_tool_class->load_button_tip   = _("Load curves settings from file");
+  im_tool_class->save_dialog_title = _("Save Curves");
+  im_tool_class->save_button_tip   = _("Save curves settings to file");
 
-  color_tool_class->picked   = gimp_curves_tool_color_picked;
-
-  image_map_tool_class->shell_desc        = _("Adjust Color Curves");
-  image_map_tool_class->settings_name     = "curves";
-  image_map_tool_class->load_dialog_title = _("Load Curves");
-  image_map_tool_class->load_button_tip   = _("Load curves settings from file");
-  image_map_tool_class->save_dialog_title = _("Save Curves");
-  image_map_tool_class->save_button_tip   = _("Save curves settings to file");
-
-  image_map_tool_class->map               = gimp_curves_tool_map;
-  image_map_tool_class->dialog            = gimp_curves_tool_dialog;
-  image_map_tool_class->reset             = gimp_curves_tool_reset;
-
-  image_map_tool_class->settings_load     = gimp_curves_tool_settings_load;
-  image_map_tool_class->settings_save     = gimp_curves_tool_settings_save;
+  im_tool_class->map               = gimp_curves_tool_map;
+  im_tool_class->dialog            = gimp_curves_tool_dialog;
+  im_tool_class->reset             = gimp_curves_tool_reset;
+  im_tool_class->settings_load     = gimp_curves_tool_settings_load;
+  im_tool_class->settings_save     = gimp_curves_tool_settings_save;
 }
 
 static void

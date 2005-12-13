@@ -49,35 +49,34 @@
 #define TARGET_HEIGHT 15
 
 
-static void   gimp_clone_tool_class_init       (GimpCloneToolClass *klass);
-static void   gimp_clone_tool_init             (GimpCloneTool      *tool);
+static void   gimp_clone_tool_button_press  (GimpTool        *tool,
+                                             GimpCoords      *coords,
+                                             guint32          time,
+                                             GdkModifierType  state,
+                                             GimpDisplay     *gdisp);
+static void   gimp_clone_tool_motion        (GimpTool        *tool,
+                                             GimpCoords      *coords,
+                                             guint32          time,
+                                             GdkModifierType  state,
+                                             GimpDisplay     *gdisp);
 
-static void   gimp_clone_tool_button_press     (GimpTool        *tool,
-                                                GimpCoords      *coords,
-                                                guint32          time,
-                                                GdkModifierType  state,
-                                                GimpDisplay     *gdisp);
-static void   gimp_clone_tool_motion           (GimpTool        *tool,
-                                                GimpCoords      *coords,
-                                                guint32          time,
-                                                GdkModifierType  state,
-                                                GimpDisplay     *gdisp);
+static void   gimp_clone_tool_cursor_update (GimpTool        *tool,
+                                             GimpCoords      *coords,
+                                             GdkModifierType  state,
+                                             GimpDisplay     *gdisp);
+static void   gimp_clone_tool_oper_update   (GimpTool        *tool,
+                                             GimpCoords      *coords,
+                                             GdkModifierType  state,
+                                             GimpDisplay     *gdisp);
 
-static void   gimp_clone_tool_cursor_update    (GimpTool        *tool,
-                                                GimpCoords      *coords,
-                                                GdkModifierType  state,
-                                                GimpDisplay     *gdisp);
-static void   gimp_clone_tool_oper_update      (GimpTool        *tool,
-                                                GimpCoords      *coords,
-                                                GdkModifierType  state,
-                                                GimpDisplay     *gdisp);
+static void   gimp_clone_tool_draw          (GimpDrawTool    *draw_tool);
 
-static void   gimp_clone_tool_draw             (GimpDrawTool    *draw_tool);
-
-static GtkWidget * gimp_clone_options_gui      (GimpToolOptions *tool_options);
+static GtkWidget * gimp_clone_options_gui   (GimpToolOptions *tool_options);
 
 
-static GimpPaintToolClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpCloneTool, gimp_clone_tool, GIMP_TYPE_PAINT_TOOL);
+
+#define parent_class gimp_clone_tool_parent_class
 
 
 void
@@ -98,41 +97,11 @@ gimp_clone_tool_register (GimpToolRegisterCallback  callback,
                 data);
 }
 
-GType
-gimp_clone_tool_get_type (void)
-{
-  static GType tool_type = 0;
-
-  if (! tool_type)
-    {
-      static const GTypeInfo tool_info =
-      {
-        sizeof (GimpCloneToolClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_clone_tool_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpCloneTool),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_clone_tool_init,
-      };
-
-      tool_type = g_type_register_static (GIMP_TYPE_PAINT_TOOL,
-                                          "GimpCloneTool",
-                                          &tool_info, 0);
-    }
-
-  return tool_type;
-}
-
 static void
 gimp_clone_tool_class_init (GimpCloneToolClass *klass)
 {
   GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   tool_class->button_press  = gimp_clone_tool_button_press;
   tool_class->motion        = gimp_clone_tool_motion;

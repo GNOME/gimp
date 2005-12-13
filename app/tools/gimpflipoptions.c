@@ -42,55 +42,24 @@ enum
 };
 
 
-static void   gimp_flip_options_class_init   (GimpFlipOptionsClass *klass);
-
-static void   gimp_flip_options_set_property (GObject         *object,
-                                              guint            property_id,
-                                              const GValue    *value,
-                                              GParamSpec      *pspec);
-static void   gimp_flip_options_get_property (GObject         *object,
-                                              guint            property_id,
-                                              GValue          *value,
-                                              GParamSpec      *pspec);
+static void   gimp_flip_options_set_property (GObject      *object,
+                                              guint         property_id,
+                                              const GValue *value,
+                                              GParamSpec   *pspec);
+static void   gimp_flip_options_get_property (GObject      *object,
+                                              guint         property_id,
+                                              GValue       *value,
+                                              GParamSpec   *pspec);
 
 
-static GimpTransformOptionsClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpFlipOptions, gimp_flip_options,
+               GIMP_TYPE_TRANSFORM_OPTIONS);
 
-
-GType
-gimp_flip_options_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo info =
-      {
-        sizeof (GimpFlipOptionsClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_flip_options_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpFlipOptions),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) NULL
-      };
-
-      type = g_type_register_static (GIMP_TYPE_TRANSFORM_OPTIONS,
-                                     "GimpFlipOptions",
-                                     &info, 0);
-    }
-
-  return type;
-}
 
 static void
 gimp_flip_options_class_init (GimpFlipOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->set_property = gimp_flip_options_set_property;
   object_class->get_property = gimp_flip_options_get_property;
@@ -100,6 +69,11 @@ gimp_flip_options_class_init (GimpFlipOptionsClass *klass)
                                  GIMP_TYPE_ORIENTATION_TYPE,
                                  GIMP_ORIENTATION_HORIZONTAL,
                                  0);
+}
+
+static void
+gimp_flip_options_init (GimpFlipOptions *options)
+{
 }
 
 static void

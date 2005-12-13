@@ -35,9 +35,7 @@ enum
 };
 
 
-static void   gimp_image_map_options_class_init   (GimpImageMapOptionsClass *klass);
 static void   gimp_image_map_options_finalize     (GObject      *object);
-
 static void   gimp_image_map_options_set_property (GObject      *object,
                                                    guint         property_id,
                                                    const GValue *value,
@@ -48,43 +46,16 @@ static void   gimp_image_map_options_get_property (GObject      *object,
                                                    GParamSpec   *pspec);
 
 
-static GimpToolOptionsClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpImageMapOptions, gimp_image_map_options,
+               GIMP_TYPE_TOOL_OPTIONS);
 
+#define parent_class gimp_image_map_options_parent_class
 
-GType
-gimp_image_map_options_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo info =
-      {
-        sizeof (GimpImageMapOptionsClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_image_map_options_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpImageMapOptions),
-        0,              /* n_preallocs    */
-        NULL            /* instance_init  */
-      };
-
-      type = g_type_register_static (GIMP_TYPE_TOOL_OPTIONS,
-                                     "GimpImageMapOptions",
-                                     &info, 0);
-    }
-
-  return type;
-}
 
 static void
 gimp_image_map_options_class_init (GimpImageMapOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize     = gimp_image_map_options_finalize;
   object_class->set_property = gimp_image_map_options_set_property;
@@ -99,6 +70,11 @@ gimp_image_map_options_class_init (GimpImageMapOptionsClass *klass)
                                                         NULL, NULL,
                                                         NULL,
                                                         G_PARAM_READWRITE));
+}
+
+static void
+gimp_image_map_options_init (GimpImageMapOptions *options)
+{
 }
 
 static void

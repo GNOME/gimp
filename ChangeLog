@@ -1,3 +1,8 @@
+2005-12-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/*.c: port to G_DEFINE_TYPE() and friends. Some related
+	cleanup.
+
 2005-12-12  Michael Schumacher  <schumaml@cvs.gnome.org>
 
 	* plug-ins/script-fu/siod/slib.c: added a fix for the script-fu

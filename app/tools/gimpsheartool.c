@@ -60,9 +60,6 @@
 
 /*  local function prototypes  */
 
-static void   gimp_shear_tool_class_init    (GimpShearToolClass *klass);
-static void   gimp_shear_tool_init          (GimpShearTool      *shear_tool);
-
 static void   gimp_shear_tool_dialog        (GimpTransformTool  *tr_tool);
 static void   gimp_shear_tool_dialog_update (GimpTransformTool  *tr_tool);
 
@@ -79,12 +76,8 @@ static void   shear_y_mag_changed           (GtkWidget          *widget,
                                              GimpTransformTool  *tr_tool);
 
 
-/*  private variables  */
+G_DEFINE_TYPE (GimpShearTool, gimp_shear_tool, GIMP_TYPE_TRANSFORM_TOOL);
 
-static GimpTransformToolClass *parent_class = NULL;
-
-
-/*  public functions  */
 
 void
 gimp_shear_tool_register (GimpToolRegisterCallback  callback,
@@ -103,40 +96,10 @@ gimp_shear_tool_register (GimpToolRegisterCallback  callback,
                 data);
 }
 
-GType
-gimp_shear_tool_get_type (void)
-{
-  static GType tool_type = 0;
-
-  if (! tool_type)
-    {
-      static const GTypeInfo tool_info =
-      {
-        sizeof (GimpShearToolClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_shear_tool_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpShearTool),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_shear_tool_init,
-      };
-
-      tool_type = g_type_register_static (GIMP_TYPE_TRANSFORM_TOOL,
-                                          "GimpShearTool",
-                                          &tool_info, 0);
-    }
-
-  return tool_type;
-}
-
 static void
 gimp_shear_tool_class_init (GimpShearToolClass *klass)
 {
   GimpTransformToolClass *trans_class = GIMP_TRANSFORM_TOOL_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   trans_class->dialog        = gimp_shear_tool_dialog;
   trans_class->dialog_update = gimp_shear_tool_dialog_update;

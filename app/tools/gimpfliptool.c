@@ -45,9 +45,6 @@
 
 /*  local function prototypes  */
 
-static void          gimp_flip_tool_class_init    (GimpFlipToolClass *klass);
-static void          gimp_flip_tool_init          (GimpFlipTool      *flip_tool);
-
 static void          gimp_flip_tool_modifier_key  (GimpTool          *tool,
                                                    GdkModifierType    key,
                                                    gboolean           press,
@@ -64,10 +61,10 @@ static TileManager * gimp_flip_tool_transform     (GimpTransformTool *tool,
                                                    GimpDisplay       *gdisp);
 
 
-static GimpTransformToolClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpFlipTool, gimp_flip_tool, GIMP_TYPE_TRANSFORM_TOOL);
 
+#define parent_class gimp_flip_tool_parent_class
 
-/*  public functions  */
 
 void
 gimp_flip_tool_register (GimpToolRegisterCallback  callback,
@@ -86,44 +83,11 @@ gimp_flip_tool_register (GimpToolRegisterCallback  callback,
                 data);
 }
 
-GType
-gimp_flip_tool_get_type (void)
-{
-  static GType tool_type = 0;
-
-  if (! tool_type)
-    {
-      static const GTypeInfo tool_info =
-      {
-        sizeof (GimpFlipToolClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_flip_tool_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpFlipTool),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_flip_tool_init,
-      };
-
-      tool_type = g_type_register_static (GIMP_TYPE_TRANSFORM_TOOL,
-                                          "GimpFlipTool",
-                                          &tool_info, 0);
-    }
-
-  return tool_type;
-}
-
-
-/*  private functions  */
-
 static void
 gimp_flip_tool_class_init (GimpFlipToolClass *klass)
 {
   GimpToolClass          *tool_class  = GIMP_TOOL_CLASS (klass);
   GimpTransformToolClass *trans_class = GIMP_TRANSFORM_TOOL_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   tool_class->modifier_key  = gimp_flip_tool_modifier_key;
   tool_class->cursor_update = gimp_flip_tool_cursor_update;

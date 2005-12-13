@@ -55,9 +55,7 @@
 #include "gimp-intl.h"
 
 
-static void gimp_new_rect_select_tool_class_init     (GimpNewRectSelectToolClass *klass);
-static void gimp_new_rect_select_tool_init           (GimpNewRectSelectTool      *rect_tool);
-static void gimp_new_rect_select_tool_rectangle_tool_iface_init (GimpRectangleToolInterface *rectangle_iface);
+static void gimp_new_rect_select_tool_rectangle_tool_iface_init (GimpRectangleToolInterface *iface);
 
 static GObject * gimp_new_rect_select_tool_constructor (GType                       type,
                                                         guint                       n_params,
@@ -86,10 +84,14 @@ static gboolean gimp_new_rect_select_tool_execute    (GimpRectangleTool         
                                                       gint                        w,
                                                       gint                        h);
 
-static GimpSelectionToolClass *parent_class = NULL;
 
+G_DEFINE_TYPE_WITH_CODE (GimpNewRectSelectTool, gimp_new_rect_select_tool,
+                         GIMP_TYPE_SELECTION_TOOL,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_RECTANGLE_TOOL,
+                                                gimp_new_rect_select_tool_rectangle_tool_iface_init));
 
-/*  public functions  */
+#define parent_class gimp_new_rect_select_tool_parent_class
+
 
 void
 gimp_new_rect_select_tool_register (GimpToolRegisterCallback  callback,
@@ -108,43 +110,6 @@ gimp_new_rect_select_tool_register (GimpToolRegisterCallback  callback,
                 data);
 }
 
-GType
-gimp_new_rect_select_tool_get_type (void)
-{
-  static GType tool_type = 0;
-
-  if (! tool_type)
-    {
-      static const GTypeInfo tool_info =
-      {
-        sizeof (GimpNewRectSelectToolClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_new_rect_select_tool_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpNewRectSelectTool),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_new_rect_select_tool_init,
-      };
-      static const GInterfaceInfo rectangle_info =
-      {
-        (GInterfaceInitFunc) gimp_new_rect_select_tool_rectangle_tool_iface_init,           /* interface_init */
-        NULL,           /* interface_finalize */
-        NULL            /* interface_data */
-      };
-
-      tool_type = g_type_register_static (GIMP_TYPE_SELECTION_TOOL,
-                                          "GimpNewRectSelectTool",
-                                          &tool_info, 0);
-      g_type_add_interface_static (tool_type,
-                                   GIMP_TYPE_RECTANGLE_TOOL,
-                                   &rectangle_info);
-    }
-
-  return tool_type;
-}
-
 static void
 gimp_new_rect_select_tool_class_init (GimpNewRectSelectToolClass *klass)
 {
@@ -152,13 +117,12 @@ gimp_new_rect_select_tool_class_init (GimpNewRectSelectToolClass *klass)
   GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
-  parent_class = g_type_class_peek_parent (klass);
-
   object_class->constructor  = gimp_new_rect_select_tool_constructor;
   object_class->dispose      = gimp_rectangle_tool_dispose;
   object_class->finalize     = gimp_new_rect_select_tool_finalize;
   object_class->set_property = gimp_rectangle_tool_set_property;
   object_class->get_property = gimp_rectangle_tool_get_property;
+
   gimp_rectangle_tool_install_properties (object_class);
 
   tool_class->initialize     = gimp_rectangle_tool_initialize;
@@ -183,9 +147,9 @@ gimp_new_rect_select_tool_init (GimpNewRectSelectTool *new_rect_select_tool)
 }
 
 static void
-gimp_new_rect_select_tool_rectangle_tool_iface_init (GimpRectangleToolInterface *rectangle_iface)
+gimp_new_rect_select_tool_rectangle_tool_iface_init (GimpRectangleToolInterface *iface)
 {
-  rectangle_iface->execute      = gimp_new_rect_select_tool_execute;
+  iface->execute = gimp_new_rect_select_tool_execute;
 }
 
 static GObject *
@@ -418,4 +382,3 @@ gimp_new_rect_select_tool_execute (GimpRectangleTool  *rectangle,
 
   return TRUE;
 }
-

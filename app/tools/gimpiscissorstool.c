@@ -123,9 +123,6 @@ struct _ICurve
 
 /*  local function prototypes  */
 
-static void   gimp_iscissors_tool_class_init (GimpIscissorsToolClass *klass);
-static void   gimp_iscissors_tool_init       (GimpIscissorsTool      *iscissors);
-
 static void   gimp_iscissors_tool_finalize       (GObject           *object);
 
 static void   gimp_iscissors_tool_control        (GimpTool          *tool,
@@ -202,6 +199,12 @@ static GPtrArray   * plot_pixels               (GimpIscissorsTool *iscissors,
 						gint               ye);
 
 
+G_DEFINE_TYPE (GimpIscissorsTool, gimp_iscissors_tool,
+               GIMP_TYPE_SELECTION_TOOL);
+
+#define parent_class gimp_iscissors_tool_parent_class
+
+
 /*  static variables  */
 
 /*  where to move on a given link direction  */
@@ -263,9 +266,6 @@ static gboolean  initialized = FALSE;
 static Tile     *cur_tile = NULL;
 
 
-static GimpSelectionToolClass *parent_class = NULL;
-
-
 void
 gimp_iscissors_tool_register (GimpToolRegisterCallback  callback,
                               gpointer                  data)
@@ -284,42 +284,12 @@ gimp_iscissors_tool_register (GimpToolRegisterCallback  callback,
                 data);
 }
 
-GType
-gimp_iscissors_tool_get_type (void)
-{
-  static GType tool_type = 0;
-
-  if (! tool_type)
-    {
-      static const GTypeInfo tool_info =
-      {
-        sizeof (GimpIscissorsToolClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_iscissors_tool_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpIscissorsTool),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_iscissors_tool_init,
-      };
-
-      tool_type = g_type_register_static (GIMP_TYPE_SELECTION_TOOL,
-                                          "GimpIscissorsTool",
-                                          &tool_info, 0);
-    }
-
-  return tool_type;
-}
-
 static void
 gimp_iscissors_tool_class_init (GimpIscissorsToolClass *klass)
 {
   GObjectClass      *object_class    = G_OBJECT_CLASS (klass);
   GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize     = gimp_iscissors_tool_finalize;
 

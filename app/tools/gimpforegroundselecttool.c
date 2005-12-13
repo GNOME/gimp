@@ -62,8 +62,6 @@ typedef struct
 } FgSelectStroke;
 
 
-static void   gimp_foreground_select_tool_class_init (GimpForegroundSelectToolClass *klass);
-static void   gimp_foreground_select_tool_init       (GimpForegroundSelectTool      *fg_select);
 static GObject * gimp_foreground_select_tool_constructor (GType                  type,
                                                           guint                  n_params,
                                                           GObjectConstructParam *params);
@@ -122,10 +120,11 @@ static void   gimp_foreground_select_options_notify (GimpForegroundSelectOptions
                                                      GimpForegroundSelectTool    *fg_select);
 
 
-static GimpFreeSelectToolClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpForegroundSelectTool, gimp_foreground_select_tool,
+               GIMP_TYPE_FREE_SELECT_TOOL);
 
+#define parent_class gimp_foreground_select_tool_parent_class
 
-/*  public functions  */
 
 void
 gimp_foreground_select_tool_register (GimpToolRegisterCallback  callback,
@@ -144,36 +143,6 @@ gimp_foreground_select_tool_register (GimpToolRegisterCallback  callback,
                 data);
 }
 
-GType
-gimp_foreground_select_tool_get_type (void)
-{
-  static GType tool_type = 0;
-
-  if (! tool_type)
-    {
-      static const GTypeInfo tool_info =
-      {
-        sizeof (GimpForegroundSelectToolClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_foreground_select_tool_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpForegroundSelectTool),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_foreground_select_tool_init,
-      };
-
-      tool_type = g_type_register_static (GIMP_TYPE_FREE_SELECT_TOOL,
-                                          "GimpForegroundSelectTool",
-                                          &tool_info, 0);
-    }
-
-  return tool_type;
-}
-
-/*  private functions  */
-
 static void
 gimp_foreground_select_tool_class_init (GimpForegroundSelectToolClass *klass)
 {
@@ -183,8 +152,6 @@ gimp_foreground_select_tool_class_init (GimpForegroundSelectToolClass *klass)
   GimpFreeSelectToolClass *free_select_tool_class;
 
   free_select_tool_class = GIMP_FREE_SELECT_TOOL_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->constructor      = gimp_foreground_select_tool_constructor;
   object_class->finalize         = gimp_foreground_select_tool_finalize;

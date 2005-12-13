@@ -62,9 +62,6 @@
 #define STATUSBAR_SIZE 128
 
 
-static void   gimp_paint_tool_class_init     (GimpPaintToolClass  *klass);
-static void   gimp_paint_tool_init           (GimpPaintTool       *paint_tool);
-
 static GObject * gimp_paint_tool_constructor (GType                type,
                                               guint                n_params,
                                               GObjectConstructParam *params);
@@ -121,36 +118,10 @@ static void   gimp_paint_tool_notify_brush   (GimpDisplayConfig   *config,
                                               GimpPaintTool       *paint_tool);
 
 
-static GimpColorToolClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpPaintTool, gimp_paint_tool, GIMP_TYPE_COLOR_TOOL);
 
+#define parent_class gimp_paint_tool_parent_class
 
-GType
-gimp_paint_tool_get_type (void)
-{
-  static GType tool_type = 0;
-
-  if (! tool_type)
-    {
-      static const GTypeInfo tool_info =
-      {
-        sizeof (GimpPaintToolClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_paint_tool_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpPaintTool),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_paint_tool_init,
-      };
-
-      tool_type = g_type_register_static (GIMP_TYPE_COLOR_TOOL,
-                                          "GimpPaintTool",
-                                          &tool_info, 0);
-    }
-
-  return tool_type;
-}
 
 static void
 gimp_paint_tool_class_init (GimpPaintToolClass *klass)
@@ -159,8 +130,6 @@ gimp_paint_tool_class_init (GimpPaintToolClass *klass)
   GimpToolClass      *tool_class       = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass  *draw_tool_class  = GIMP_DRAW_TOOL_CLASS (klass);
   GimpColorToolClass *color_tool_class = GIMP_COLOR_TOOL_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->constructor  = gimp_paint_tool_constructor;
   object_class->finalize     = gimp_paint_tool_finalize;

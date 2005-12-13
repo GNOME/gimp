@@ -41,9 +41,6 @@ enum
 };
 
 
-static void     gimp_tool_class_init          (GimpToolClass   *klass);
-static void     gimp_tool_init                (GimpTool        *tool);
-
 static void     gimp_tool_finalize            (GObject         *object);
 static void     gimp_tool_set_property        (GObject         *object,
                                                guint            property_id,
@@ -92,45 +89,17 @@ static void     gimp_tool_real_cursor_update  (GimpTool        *tool,
                                                GimpDisplay     *gdisp);
 
 
-static GimpObjectClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpTool, gimp_tool, GIMP_TYPE_OBJECT);
+
+#define parent_class gimp_tool_parent_class
 
 static gint global_tool_ID = 1;
 
-
-GType
-gimp_tool_get_type (void)
-{
-  static GType tool_type = 0;
-
-  if (! tool_type)
-    {
-      static const GTypeInfo tool_info =
-      {
-        sizeof (GimpToolClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_tool_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpTool),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_tool_init,
-      };
-
-      tool_type = g_type_register_static (GIMP_TYPE_OBJECT,
-                                          "GimpTool",
-                                          &tool_info, 0);
-    }
-
-  return tool_type;
-}
 
 static void
 gimp_tool_class_init (GimpToolClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize     = gimp_tool_finalize;
   object_class->set_property = gimp_tool_set_property;

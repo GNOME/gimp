@@ -49,45 +49,19 @@ enum
 };
 
 
-static void   gimp_foreground_select_options_class_init   (GimpForegroundSelectOptionsClass *klass);
-
-static void   gimp_foreground_select_options_set_property (GObject         *object,
-                                                           guint            property_id,
-                                                           const GValue    *value,
-                                                           GParamSpec      *pspec);
-static void   gimp_foreground_select_options_get_property (GObject         *object,
-                                                           guint            property_id,
-                                                           GValue          *value,
-                                                           GParamSpec      *pspec);
+static void   gimp_foreground_select_options_set_property (GObject      *object,
+                                                           guint         property_id,
+                                                           const GValue *value,
+                                                           GParamSpec   *pspec);
+static void   gimp_foreground_select_options_get_property (GObject      *object,
+                                                           guint         property_id,
+                                                           GValue       *value,
+                                                           GParamSpec   *pspec);
 
 
-GType
-gimp_foreground_select_options_get_type (void)
-{
-  static GType type = 0;
+G_DEFINE_TYPE (GimpForegroundSelectOptions, gimp_foreground_select_options,
+               GIMP_TYPE_SELECTION_OPTIONS);
 
-  if (! type)
-    {
-      static const GTypeInfo info =
-      {
-        sizeof (GimpForegroundSelectOptionsClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_foreground_select_options_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpForegroundSelectOptions),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) NULL
-      };
-
-      type = g_type_register_static (GIMP_TYPE_SELECTION_OPTIONS,
-                                     "GimpForegroundSelectOptions",
-                                     &info, 0);
-    }
-
-  return type;
-}
 
 static void
 gimp_foreground_select_options_class_init (GimpForegroundSelectOptionsClass *klass)
@@ -137,6 +111,11 @@ gimp_foreground_select_options_class_init (GimpForegroundSelectOptionsClass *kla
                                    _("Sensitivity for yellow/blue component"),
                                    0.0, 10.0, SIOX_DEFAULT_SENSITIVITY_B,
                                    0);
+}
+
+static void
+gimp_foreground_select_options_init (GimpForegroundSelectOptions *options)
+{
 }
 
 static void

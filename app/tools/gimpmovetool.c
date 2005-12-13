@@ -59,9 +59,6 @@
 
 /*  local function prototypes  */
 
-static void   gimp_move_tool_class_init     (GimpMoveToolClass *klass);
-static void   gimp_move_tool_init           (GimpMoveTool      *move_tool);
-
 static void   gimp_move_tool_control        (GimpTool          *tool,
                                              GimpToolAction     action,
                                              GimpDisplay       *gdisp);
@@ -101,7 +98,9 @@ static void   gimp_move_tool_start_guide    (GimpMoveTool      *move,
                                              GimpOrientationType  orientation);
 
 
-static GimpDrawToolClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpMoveTool, gimp_move_tool, GIMP_TYPE_DRAW_TOOL);
+
+#define parent_class gimp_move_tool_parent_class
 
 
 void
@@ -121,41 +120,11 @@ gimp_move_tool_register (GimpToolRegisterCallback  callback,
                 data);
 }
 
-GType
-gimp_move_tool_get_type (void)
-{
-  static GType tool_type = 0;
-
-  if (! tool_type)
-    {
-      static const GTypeInfo tool_info =
-      {
-        sizeof (GimpMoveToolClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_move_tool_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpMoveTool),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_move_tool_init,
-      };
-
-      tool_type = g_type_register_static (GIMP_TYPE_DRAW_TOOL,
-                                          "GimpMoveTool",
-                                          &tool_info, 0);
-    }
-
-  return tool_type;
-}
-
 static void
 gimp_move_tool_class_init (GimpMoveToolClass *klass)
 {
   GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   tool_class->control        = gimp_move_tool_control;
   tool_class->button_press   = gimp_move_tool_button_press;

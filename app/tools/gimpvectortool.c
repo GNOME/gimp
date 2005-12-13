@@ -68,9 +68,6 @@
 
 /*  local function prototypes  */
 
-static void     gimp_vector_tool_class_init      (GimpVectorToolClass *klass);
-static void     gimp_vector_tool_init            (GimpVectorTool      *tool);
-
 static void     gimp_vector_tool_control         (GimpTool        *tool,
                                                   GimpToolAction   action,
                                                   GimpDisplay     *gdisp);
@@ -139,7 +136,9 @@ static void     gimp_vector_tool_stroke_vectors  (GimpVectorTool  *vector_tool,
                                                   GtkWidget       *button);
 
 
-static GimpDrawToolClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpVectorTool, gimp_vector_tool, GIMP_TYPE_DRAW_TOOL);
+
+#define parent_class gimp_vector_tool_parent_class
 
 
 void
@@ -159,46 +158,11 @@ gimp_vector_tool_register (GimpToolRegisterCallback callback,
                 data);
 }
 
-GType
-gimp_vector_tool_get_type (void)
-{
-  static GType tool_type = 0;
-
-  if (! tool_type)
-    {
-      static const GTypeInfo tool_info =
-      {
-        sizeof (GimpVectorToolClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_vector_tool_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpVectorTool),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_vector_tool_init,
-      };
-
-      tool_type = g_type_register_static (GIMP_TYPE_DRAW_TOOL,
-                                          "GimpVectorTool",
-                                          &tool_info, 0);
-    }
-
-  return tool_type;
-}
-
 static void
 gimp_vector_tool_class_init (GimpVectorToolClass *klass)
 {
-  GObjectClass      *object_class;
-  GimpToolClass     *tool_class;
-  GimpDrawToolClass *draw_tool_class;
-
-  object_class    = G_OBJECT_CLASS (klass);
-  tool_class      = GIMP_TOOL_CLASS (klass);
-  draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
+  GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
+  GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
   tool_class->control        = gimp_vector_tool_control;
   tool_class->button_press   = gimp_vector_tool_button_press;
@@ -1937,4 +1901,3 @@ gimp_vector_tool_stroke_vectors (GimpVectorTool *vector_tool,
                               button);
   gtk_widget_show (dialog);
 }
-

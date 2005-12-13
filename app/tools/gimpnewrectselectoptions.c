@@ -35,56 +35,19 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_new_rect_select_options_class_init                   (GimpNewRectSelectOptionsClass *klass);
-static void   gimp_new_rect_select_options_rectangle_options_iface_init (GimpRectangleOptionsInterface *rectangle_iface);
+static void   gimp_new_rect_select_options_rectangle_options_iface_init (GimpRectangleOptionsInterface *iface);
 
 
-static GimpSelectionOptionsClass *parent_class = NULL;
+G_DEFINE_TYPE_WITH_CODE (GimpNewRectSelectOptions, gimp_new_rect_select_options,
+                         GIMP_TYPE_SELECTION_OPTIONS,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_RECTANGLE_OPTIONS,
+                                                gimp_new_rect_select_options_rectangle_options_iface_init));
 
-
-GType
-gimp_new_rect_select_options_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo info =
-      {
-        sizeof (GimpNewRectSelectOptionsClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_new_rect_select_options_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpNewRectSelectOptions),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) NULL
-      };
-      static const GInterfaceInfo rectangle_info =
-      {
-        (GInterfaceInitFunc) gimp_new_rect_select_options_rectangle_options_iface_init,           /* interface_init */
-        NULL,           /* interface_finalize */
-        NULL            /* interface_data */
-      };
-
-      type = g_type_register_static (GIMP_TYPE_SELECTION_OPTIONS,
-                                     "GimpNewRectSelectOptions",
-                                     &info, 0);
-      g_type_add_interface_static (type,
-                                   GIMP_TYPE_RECTANGLE_OPTIONS,
-                                   &rectangle_info);
-     }
-
-  return type;
-}
 
 static void
 gimp_new_rect_select_options_class_init (GimpNewRectSelectOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->set_property = gimp_rectangle_options_set_property;
   object_class->get_property = gimp_rectangle_options_get_property;
@@ -93,7 +56,12 @@ gimp_new_rect_select_options_class_init (GimpNewRectSelectOptionsClass *klass)
 }
 
 static void
-gimp_new_rect_select_options_rectangle_options_iface_init (GimpRectangleOptionsInterface *rectangle_iface)
+gimp_new_rect_select_options_init (GimpNewRectSelectOptions *options)
+{
+}
+
+static void
+gimp_new_rect_select_options_rectangle_options_iface_init (GimpRectangleOptionsInterface *iface)
 {
 }
 

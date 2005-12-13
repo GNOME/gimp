@@ -44,8 +44,6 @@
 #define DEFAULT_MAX_INC 1024
 
 
-static void   gimp_free_select_tool_class_init (GimpFreeSelectToolClass *klass);
-static void   gimp_free_select_tool_init       (GimpFreeSelectTool      *free_select);
 static void   gimp_free_select_tool_finalize       (GObject         *object);
 
 static void   gimp_free_select_tool_control        (GimpTool        *tool,
@@ -80,10 +78,11 @@ static void   gimp_free_select_tool_move_points    (GimpFreeSelectTool *free_sel
                                                     gdouble             dy);
 
 
-static GimpSelectionToolClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpFreeSelectTool, gimp_free_select_tool,
+               GIMP_TYPE_SELECTION_TOOL);
 
+#define parent_class gimp_free_select_tool_parent_class
 
-/*  public functions  */
 
 void
 gimp_free_select_tool_register (GimpToolRegisterCallback  callback,
@@ -102,54 +101,12 @@ gimp_free_select_tool_register (GimpToolRegisterCallback  callback,
                 data);
 }
 
-GType
-gimp_free_select_tool_get_type (void)
-{
-  static GType tool_type = 0;
-
-  if (! tool_type)
-    {
-      static const GTypeInfo tool_info =
-      {
-        sizeof (GimpFreeSelectToolClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_free_select_tool_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpFreeSelectTool),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_free_select_tool_init,
-      };
-
-      tool_type = g_type_register_static (GIMP_TYPE_SELECTION_TOOL,
-                                          "GimpFreeSelectTool",
-                                          &tool_info, 0);
-    }
-
-  return tool_type;
-}
-
-void
-gimp_free_select_tool_select (GimpFreeSelectTool *free_sel,
-                              GimpDisplay        *gdisp)
-{
-  g_return_if_fail (GIMP_IS_FREE_SELECT_TOOL (free_sel));
-  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
-
-  GIMP_FREE_SELECT_TOOL_GET_CLASS (free_sel)->select (free_sel, gdisp);
-}
-
-/*  private functions  */
-
 static void
 gimp_free_select_tool_class_init (GimpFreeSelectToolClass *klass)
 {
   GObjectClass      *object_class    = G_OBJECT_CLASS (klass);
   GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize     = gimp_free_select_tool_finalize;
 
@@ -331,6 +288,22 @@ gimp_free_select_tool_draw (GimpDrawTool *draw_tool)
                                 FALSE);
     }
 }
+
+
+/*  public functions  */
+
+void
+gimp_free_select_tool_select (GimpFreeSelectTool *free_sel,
+                              GimpDisplay        *gdisp)
+{
+  g_return_if_fail (GIMP_IS_FREE_SELECT_TOOL (free_sel));
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
+
+  GIMP_FREE_SELECT_TOOL_GET_CLASS (free_sel)->select (free_sel, gdisp);
+}
+
+
+/*  private functions  */
 
 static void
 gimp_free_select_tool_real_select (GimpFreeSelectTool *free_sel,

@@ -56,17 +56,14 @@
 
 /*  local function prototypes  */
 
-static void     gimp_colorize_tool_class_init  (GimpColorizeToolClass *klass);
-static void     gimp_colorize_tool_init        (GimpColorizeTool      *tool);
-
 static void     gimp_colorize_tool_finalize    (GObject          *object);
 
 static gboolean gimp_colorize_tool_initialize  (GimpTool         *tool,
                                                 GimpDisplay      *gdisp);
 
-static void     gimp_colorize_tool_map         (GimpImageMapTool *image_map_tool);
-static void     gimp_colorize_tool_dialog      (GimpImageMapTool *image_map_tool);
-static void     gimp_colorize_tool_reset       (GimpImageMapTool *image_map_tool);
+static void     gimp_colorize_tool_map         (GimpImageMapTool *im_tool);
+static void     gimp_colorize_tool_dialog      (GimpImageMapTool *im_tool);
+static void     gimp_colorize_tool_reset       (GimpImageMapTool *im_tool);
 
 static void     colorize_update                (GimpColorizeTool *col_tool,
                                                 gint              update);
@@ -78,12 +75,10 @@ static void     colorize_lightness_adj_update  (GtkAdjustment    *adj,
                                                 GimpColorizeTool *col_tool);
 
 
-/*  private variables  */
+G_DEFINE_TYPE (GimpColorizeTool, gimp_colorize_tool, GIMP_TYPE_IMAGE_MAP_TOOL);
 
-static GimpImageMapToolClass *parent_class = NULL;
+#define parent_class gimp_colorize_tool_parent_class
 
-
-/*  public functions  */
 
 void
 gimp_colorize_tool_register (GimpToolRegisterCallback  callback,
@@ -101,59 +96,22 @@ gimp_colorize_tool_register (GimpToolRegisterCallback  callback,
                 data);
 }
 
-GType
-gimp_colorize_tool_get_type (void)
-{
-  static GType tool_type = 0;
-
-  if (! tool_type)
-    {
-      static const GTypeInfo tool_info =
-      {
-        sizeof (GimpColorizeToolClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_colorize_tool_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpColorizeTool),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_colorize_tool_init,
-      };
-
-      tool_type = g_type_register_static (GIMP_TYPE_IMAGE_MAP_TOOL,
-					  "GimpColorizeTool",
-                                          &tool_info, 0);
-    }
-
-  return tool_type;
-}
-
-
-/*  private functions  */
-
 static void
 gimp_colorize_tool_class_init (GimpColorizeToolClass *klass)
 {
-  GObjectClass          *object_class;
-  GimpToolClass         *tool_class;
-  GimpImageMapToolClass *image_map_tool_class;
+  GObjectClass          *object_class  = G_OBJECT_CLASS (klass);
+  GimpToolClass         *tool_class    = GIMP_TOOL_CLASS (klass);
+  GimpImageMapToolClass *im_tool_class = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
 
-  object_class         = G_OBJECT_CLASS (klass);
-  tool_class           = GIMP_TOOL_CLASS (klass);
-  image_map_tool_class = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
+  object_class->finalize    = gimp_colorize_tool_finalize;
 
-  parent_class = g_type_class_peek_parent (klass);
+  tool_class->initialize    = gimp_colorize_tool_initialize;
 
-  object_class->finalize       = gimp_colorize_tool_finalize;
+  im_tool_class->shell_desc = _("Colorize the Image");
 
-  tool_class->initialize       = gimp_colorize_tool_initialize;
-
-  image_map_tool_class->shell_desc = _("Colorize the Image");
-
-  image_map_tool_class->map    = gimp_colorize_tool_map;
-  image_map_tool_class->dialog = gimp_colorize_tool_dialog;
-  image_map_tool_class->reset  = gimp_colorize_tool_reset;
+  im_tool_class->map        = gimp_colorize_tool_map;
+  im_tool_class->dialog     = gimp_colorize_tool_dialog;
+  im_tool_class->reset      = gimp_colorize_tool_reset;
 }
 
 static void

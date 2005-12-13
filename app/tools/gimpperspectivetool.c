@@ -49,9 +49,6 @@
 
 /*  local function prototypes  */
 
-static void   gimp_perspective_tool_class_init (GimpPerspectiveToolClass *klass);
-static void   gimp_perspective_tool_init       (GimpPerspectiveTool      *tool);
-
 static void   gimp_perspective_tool_dialog        (GimpTransformTool *tr_tool);
 static void   gimp_perspective_tool_dialog_update (GimpTransformTool *tr_tool);
 static void   gimp_perspective_tool_prepare       (GimpTransformTool *tr_tool,
@@ -62,12 +59,9 @@ static void   gimp_perspective_tool_recalc        (GimpTransformTool *tr_tool,
                                                    GimpDisplay       *gdisp);
 
 
-/*  private variables  */
+G_DEFINE_TYPE (GimpPerspectiveTool, gimp_perspective_tool,
+               GIMP_TYPE_TRANSFORM_TOOL);
 
-static GimpTransformToolClass *parent_class = NULL;
-
-
-/*  public functions  */
 
 void
 gimp_perspective_tool_register (GimpToolRegisterCallback  callback,
@@ -86,40 +80,10 @@ gimp_perspective_tool_register (GimpToolRegisterCallback  callback,
                 data);
 }
 
-GType
-gimp_perspective_tool_get_type (void)
-{
-  static GType tool_type = 0;
-
-  if (! tool_type)
-    {
-      static const GTypeInfo tool_info =
-      {
-        sizeof (GimpPerspectiveToolClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_perspective_tool_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpPerspectiveTool),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_perspective_tool_init,
-      };
-
-      tool_type = g_type_register_static (GIMP_TYPE_TRANSFORM_TOOL,
-                                          "GimpPerspectiveTool",
-                                          &tool_info, 0);
-    }
-
-  return tool_type;
-}
-
 static void
 gimp_perspective_tool_class_init (GimpPerspectiveToolClass *klass)
 {
   GimpTransformToolClass *trans_class = GIMP_TRANSFORM_TOOL_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   trans_class->dialog        = gimp_perspective_tool_dialog;
   trans_class->dialog_update = gimp_perspective_tool_dialog_update;

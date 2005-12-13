@@ -52,11 +52,9 @@
 
 /*  local function prototypes  */
 
-static void      gimp_color_picker_tool_class_init (GimpColorPickerToolClass *klass);
-static void      gimp_color_picker_tool_init       (GimpColorPickerTool      *tool);
-static GObject * gimp_color_picker_tool_constructor(GType              type,
-                                                    guint              n_params,
-                                                    GObjectConstructParam *params);
+static GObject * gimp_color_picker_tool_constructor  (GType            type,
+                                                      guint            n_params,
+                                                      GObjectConstructParam *params);
 static void      gimp_color_picker_tool_finalize     (GObject         *object);
 
 static void      gimp_color_picker_tool_control      (GimpTool        *tool,
@@ -88,7 +86,10 @@ static void   gimp_color_picker_tool_info_update (GimpColorPickerTool *picker_to
                                                   gint                 color_index);
 
 
-static GimpColorToolClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpColorPickerTool, gimp_color_picker_tool,
+               GIMP_TYPE_COLOR_TOOL);
+
+#define parent_class gimp_color_picker_tool_parent_class
 
 
 void
@@ -108,42 +109,12 @@ gimp_color_picker_tool_register (GimpToolRegisterCallback  callback,
                 data);
 }
 
-GtkType
-gimp_color_picker_tool_get_type (void)
-{
-  static GtkType tool_type = 0;
-
-  if (! tool_type)
-    {
-      static const GTypeInfo tool_info =
-      {
-        sizeof (GimpColorPickerToolClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_color_picker_tool_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpColorPickerTool),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_color_picker_tool_init,
-      };
-
-      tool_type = g_type_register_static (GIMP_TYPE_COLOR_TOOL,
-                                          "GimpColorPickerTool",
-                                          &tool_info, 0);
-    }
-
-  return tool_type;
-}
-
 static void
 gimp_color_picker_tool_class_init (GimpColorPickerToolClass *klass)
 {
   GObjectClass       *object_class     = G_OBJECT_CLASS (klass);
   GimpToolClass      *tool_class       = GIMP_TOOL_CLASS (klass);
   GimpColorToolClass *color_tool_class = GIMP_COLOR_TOOL_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->constructor = gimp_color_picker_tool_constructor;
   object_class->finalize    = gimp_color_picker_tool_finalize;

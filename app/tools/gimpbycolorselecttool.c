@@ -42,9 +42,6 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_by_color_select_tool_class_init (GimpByColorSelectToolClass *klass);
-static void   gimp_by_color_select_tool_init       (GimpByColorSelectTool      *by_color_select);
-
 static void   gimp_by_color_select_tool_button_press   (GimpTool        *tool,
                                                         GimpCoords      *coords,
                                                         guint32          time,
@@ -65,10 +62,11 @@ static void   gimp_by_color_select_tool_cursor_update  (GimpTool        *tool,
                                                         GimpDisplay     *gdisp);
 
 
-static GimpSelectionToolClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpByColorSelectTool, gimp_by_color_select_tool,
+               GIMP_TYPE_SELECTION_TOOL);
 
+#define parent_class gimp_by_color_select_tool_parent_class
 
-/* public functions */
 
 void
 gimp_by_color_select_tool_register (GimpToolRegisterCallback  callback,
@@ -87,43 +85,10 @@ gimp_by_color_select_tool_register (GimpToolRegisterCallback  callback,
                 data);
 }
 
-GType
-gimp_by_color_select_tool_get_type (void)
-{
-  static GType tool_type = 0;
-
-  if (! tool_type)
-    {
-      static const GTypeInfo tool_info =
-      {
-        sizeof (GimpByColorSelectToolClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_by_color_select_tool_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpByColorSelectTool),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_by_color_select_tool_init,
-      };
-
-      tool_type = g_type_register_static (GIMP_TYPE_SELECTION_TOOL,
-                                          "GimpByColorSelectTool",
-                                          &tool_info, 0);
-    }
-
-  return tool_type;
-}
-
-
-/* private functions */
-
 static void
 gimp_by_color_select_tool_class_init (GimpByColorSelectToolClass *klass)
 {
   GimpToolClass *tool_class = GIMP_TOOL_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   tool_class->button_press   = gimp_by_color_select_tool_button_press;
   tool_class->button_release = gimp_by_color_select_tool_button_release;

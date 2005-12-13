@@ -71,8 +71,6 @@
 
 /*  local function prototypes  */
 
-static void      gimp_text_tool_class_init     (GimpTextToolClass *klass);
-static void      gimp_text_tool_init           (GimpTextTool      *tool);
 static GObject * gimp_text_tool_constructor    (GType              type,
                                                 guint              n_params,
                                                 GObjectConstructParam *params);
@@ -127,12 +125,10 @@ static gboolean  gimp_text_tool_set_drawable   (GimpTextTool      *text_tool,
                                                 gboolean           confirm);
 
 
-/*  local variables  */
+G_DEFINE_TYPE (GimpTextTool, gimp_text_tool, GIMP_TYPE_TOOL);
 
-static GimpToolClass *parent_class = NULL;
+#define parent_class gimp_text_tool_parent_class
 
-
-/*  public functions  */
 
 void
 gimp_text_tool_register (GimpToolRegisterCallback  callback,
@@ -151,44 +147,11 @@ gimp_text_tool_register (GimpToolRegisterCallback  callback,
                 data);
 }
 
-GType
-gimp_text_tool_get_type (void)
-{
-  static GType tool_type = 0;
-
-  if (! tool_type)
-    {
-      static const GTypeInfo tool_info =
-      {
-        sizeof (GimpTextToolClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_text_tool_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpTextTool),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_text_tool_init,
-      };
-
-      tool_type = g_type_register_static (GIMP_TYPE_TOOL,
-                                          "GimpTextTool",
-                                          &tool_info, 0);
-    }
-
-  return tool_type;
-}
-
-
-/*  private functions  */
-
 static void
 gimp_text_tool_class_init (GimpTextToolClass *klass)
 {
   GObjectClass  *object_class = G_OBJECT_CLASS (klass);
   GimpToolClass *tool_class   = GIMP_TOOL_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->constructor = gimp_text_tool_constructor;
   object_class->dispose     = gimp_text_tool_dispose;

@@ -35,16 +35,15 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_ink_tool_init          (GimpInkTool      *tool);
-static void   gimp_ink_tool_class_init    (GimpInkToolClass *klass);
-
-static void   gimp_ink_tool_cursor_update (GimpTool         *tool,
-                                           GimpCoords       *coords,
-                                           GdkModifierType   state,
-                                           GimpDisplay      *gdisp);
+static void   gimp_ink_tool_cursor_update (GimpTool        *tool,
+                                           GimpCoords      *coords,
+                                           GdkModifierType  state,
+                                           GimpDisplay     *gdisp);
 
 
-static GimpPaintToolClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpInkTool, gimp_ink_tool, GIMP_TYPE_PAINT_TOOL);
+
+#define parent_class gimp_ink_tool_parent_class
 
 
 void
@@ -67,40 +66,10 @@ gimp_ink_tool_register (GimpToolRegisterCallback  callback,
                 data);
 }
 
-GType
-gimp_ink_tool_get_type (void)
-{
-  static GType tool_type = 0;
-
-  if (! tool_type)
-    {
-      static const GTypeInfo tool_info =
-      {
-        sizeof (GimpInkToolClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_ink_tool_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpInkTool),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_ink_tool_init,
-      };
-
-      tool_type = g_type_register_static (GIMP_TYPE_PAINT_TOOL,
-                                          "GimpInkTool",
-                                          &tool_info, 0);
-    }
-
-  return tool_type;
-}
-
 static void
 gimp_ink_tool_class_init (GimpInkToolClass *klass)
 {
   GimpToolClass *tool_class = GIMP_TOOL_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   tool_class->cursor_update = gimp_ink_tool_cursor_update;
 }

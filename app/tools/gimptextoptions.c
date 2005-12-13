@@ -66,9 +66,6 @@ enum
 };
 
 
-static void  gimp_text_options_class_init (GimpTextOptionsClass *options_class);
-static void  gimp_text_options_init       (GimpTextOptions      *options);
-
 static void  gimp_text_options_set_property       (GObject      *object,
                                                    guint         property_id,
                                                    const GValue *value,
@@ -92,43 +89,13 @@ static void  gimp_text_options_notify_text_color  (GimpText     *text,
                                                    GimpContext  *context);
 
 
-static GimpToolOptionsClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpTextOptions, gimp_text_options, GIMP_TYPE_TOOL_OPTIONS);
 
-
-GType
-gimp_text_options_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo info =
-      {
-        sizeof (GimpTextOptionsClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_text_options_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpTextOptions),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_text_options_init
-      };
-
-      type = g_type_register_static (GIMP_TYPE_TOOL_OPTIONS,
-                                     "GimpTextOptions",
-                                     &info, 0);
-    }
-
-  return type;
-}
 
 static void
 gimp_text_options_class_init (GimpTextOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->set_property = gimp_text_options_set_property;
   object_class->get_property = gimp_text_options_get_property;

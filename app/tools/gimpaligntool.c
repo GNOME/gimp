@@ -41,51 +41,52 @@
 
 #include "gimp-intl.h"
 
+
 /*  local function prototypes  */
 
-static void   gimp_align_tool_class_init     (GimpAlignToolClass *klass);
-static void   gimp_align_tool_init           (GimpAlignTool      *align_tool);
-
-static GObject * gimp_align_tool_constructor (GType             type,
-                                              guint             n_params,
+static GObject * gimp_align_tool_constructor (GType              type,
+                                              guint              n_params,
                                               GObjectConstructParam *params);
-static void   gimp_align_tool_dispose        (GObject          *object);
-static gboolean gimp_align_tool_initialize   (GimpTool         *tool,
-                                              GimpDisplay      *gdisp);
-static void   gimp_align_tool_finalize       (GObject          *object);
+static void   gimp_align_tool_dispose        (GObject           *object);
+static gboolean gimp_align_tool_initialize   (GimpTool          *tool,
+                                              GimpDisplay       *gdisp);
+static void   gimp_align_tool_finalize       (GObject           *object);
 
 static void   gimp_align_tool_button_press   (GimpTool          *tool,
-                                             GimpCoords        *coords,
-                                             guint32            time,
-                                             GdkModifierType    state,
-                                             GimpDisplay       *gdisp);
+                                              GimpCoords        *coords,
+                                              guint32            time,
+                                              GdkModifierType    state,
+                                              GimpDisplay       *gdisp);
 static void   gimp_align_tool_cursor_update  (GimpTool          *tool,
-                                             GimpCoords        *coords,
-                                             GdkModifierType    state,
-                                             GimpDisplay       *gdisp);
+                                              GimpCoords        *coords,
+                                              GdkModifierType    state,
+                                              GimpDisplay       *gdisp);
 
 static void   gimp_align_tool_draw           (GimpDrawTool      *draw_tool);
 
-static GtkWidget *button_with_stock          (GimpAlignmentType action,
-                                              GimpAlignTool   *align_tool);
-static GtkWidget *gimp_align_tool_controls   (GimpAlignTool   *align_tool);
-static void   set_action                     (GtkWidget       *widget,
-                                              gpointer         data);
-static void   do_horizontal_alignment        (GtkWidget       *widget,
-                                              gpointer         data);
-static void   do_vertical_alignment          (GtkWidget       *widget,
-                                              gpointer         data);
-static void   clear_reference                (GimpItem        *reference_item,
-                                              GimpAlignTool   *align_tool);
-static void   clear_target                   (GimpItem        *target_item,
-                                              GimpAlignTool   *align_tool);
+static GtkWidget *button_with_stock          (GimpAlignmentType  action,
+                                              GimpAlignTool     *align_tool);
+static GtkWidget *gimp_align_tool_controls   (GimpAlignTool     *align_tool);
+static void   set_action                     (GtkWidget         *widget,
+                                              gpointer           data);
+static void   do_horizontal_alignment        (GtkWidget         *widget,
+                                              gpointer           data);
+static void   do_vertical_alignment          (GtkWidget         *widget,
+                                              gpointer           data);
+static void   clear_reference                (GimpItem          *reference_item,
+                                              GimpAlignTool     *align_tool);
+static void   clear_target                   (GimpItem          *target_item,
+                                              GimpAlignTool     *align_tool);
 
-static GimpDrawToolClass *parent_class = NULL;
+
+G_DEFINE_TYPE (GimpAlignTool, gimp_align_tool, GIMP_TYPE_DRAW_TOOL);
+
+#define parent_class gimp_align_tool_parent_class
 
 
 void
 gimp_align_tool_register (GimpToolRegisterCallback  callback,
-                         gpointer                  data)
+                          gpointer                  data)
 {
   (* callback) (GIMP_TYPE_ALIGN_TOOL,
                 GIMP_TYPE_ALIGN_OPTIONS,
@@ -100,34 +101,6 @@ gimp_align_tool_register (GimpToolRegisterCallback  callback,
                 data);
 }
 
-GType
-gimp_align_tool_get_type (void)
-{
-  static GType tool_type = 0;
-
-  if (! tool_type)
-    {
-      static const GTypeInfo tool_info =
-      {
-        sizeof (GimpAlignToolClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_align_tool_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpAlignTool),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_align_tool_init,
-      };
-
-      tool_type = g_type_register_static (GIMP_TYPE_DRAW_TOOL,
-                                          "GimpAlignTool",
-                                          &tool_info, 0);
-    }
-
-  return tool_type;
-}
-
 static void
 gimp_align_tool_class_init (GimpAlignToolClass *klass)
 {
@@ -135,76 +108,15 @@ gimp_align_tool_class_init (GimpAlignToolClass *klass)
   GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
-  parent_class = g_type_class_peek_parent (klass);
-
   object_class->finalize     = gimp_align_tool_finalize;
   object_class->constructor  = gimp_align_tool_constructor;
   object_class->dispose      = gimp_align_tool_dispose;
+
   tool_class->initialize     = gimp_align_tool_initialize;
   tool_class->button_press   = gimp_align_tool_button_press;
   tool_class->cursor_update  = gimp_align_tool_cursor_update;
 
   draw_tool_class->draw      = gimp_align_tool_draw;
-}
-
-static void
-gimp_align_tool_dispose (GObject *object)
-{
-  GimpAlignTool *align_tool = GIMP_ALIGN_TOOL (object);
-
-  if (align_tool->reference_item)
-    {
-      g_signal_handlers_disconnect_by_func (align_tool->reference_item,
-                                            G_CALLBACK (clear_reference),
-                                            (gpointer) align_tool);
-      align_tool->reference_item = NULL;
-    }
-
-  if (align_tool->target_item)
-    {
-      g_signal_handlers_disconnect_by_func (align_tool->target_item,
-                                            G_CALLBACK (clear_target),
-                                            (gpointer) align_tool);
-      align_tool->target_item = NULL;
-    }
-
-  G_OBJECT_CLASS (parent_class)->dispose (object);
-}
-
-static void
-gimp_align_tool_finalize (GObject *object)
-{
-  GimpTool      *tool       = GIMP_TOOL (object);
-  GimpAlignTool *align_tool = GIMP_ALIGN_TOOL (object);
-
-  if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (object)))
-      gimp_draw_tool_stop (GIMP_DRAW_TOOL (object));
-
-  if (gimp_tool_control_is_active (tool->control))
-    gimp_tool_control_halt (tool->control);
-
-  if (align_tool->controls)
-    {
-      gtk_widget_destroy (align_tool->controls);
-      align_tool->controls = NULL;
-    }
-
-  G_OBJECT_CLASS (parent_class)->finalize (object);
-}
-
-static gboolean
-gimp_align_tool_initialize (GimpTool    *tool,
-                            GimpDisplay *gdisp)
-{
-  GimpAlignTool    *align_tool = GIMP_ALIGN_TOOL (tool);
-
-  if (tool->gdisp != gdisp)
-    {
-/*       align_tool->target_item     = NULL; */
-/*       align_tool->reference_item  = NULL; */
-    }
-
-  return TRUE;
 }
 
 static void
@@ -262,11 +174,71 @@ gimp_align_tool_constructor (GType                  type,
 }
 
 static void
+gimp_align_tool_dispose (GObject *object)
+{
+  GimpAlignTool *align_tool = GIMP_ALIGN_TOOL (object);
+
+  if (align_tool->reference_item)
+    {
+      g_signal_handlers_disconnect_by_func (align_tool->reference_item,
+                                            G_CALLBACK (clear_reference),
+                                            (gpointer) align_tool);
+      align_tool->reference_item = NULL;
+    }
+
+  if (align_tool->target_item)
+    {
+      g_signal_handlers_disconnect_by_func (align_tool->target_item,
+                                            G_CALLBACK (clear_target),
+                                            (gpointer) align_tool);
+      align_tool->target_item = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
+gimp_align_tool_finalize (GObject *object)
+{
+  GimpTool      *tool       = GIMP_TOOL (object);
+  GimpAlignTool *align_tool = GIMP_ALIGN_TOOL (object);
+
+  if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (object)))
+    gimp_draw_tool_stop (GIMP_DRAW_TOOL (object));
+
+  if (gimp_tool_control_is_active (tool->control))
+    gimp_tool_control_halt (tool->control);
+
+  if (align_tool->controls)
+    {
+      gtk_widget_destroy (align_tool->controls);
+      align_tool->controls = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static gboolean
+gimp_align_tool_initialize (GimpTool    *tool,
+                            GimpDisplay *gdisp)
+{
+  GimpAlignTool    *align_tool = GIMP_ALIGN_TOOL (tool);
+
+  if (tool->gdisp != gdisp)
+    {
+/*       align_tool->target_item     = NULL; */
+/*       align_tool->reference_item  = NULL; */
+    }
+
+  return TRUE;
+}
+
+static void
 gimp_align_tool_button_press (GimpTool        *tool,
-                             GimpCoords      *coords,
-                             guint32          time,
-                             GdkModifierType  state,
-                             GimpDisplay     *gdisp)
+                              GimpCoords      *coords,
+                              guint32          time,
+                              GdkModifierType  state,
+                              GimpDisplay     *gdisp)
 {
   GimpAlignTool    *align_tool  = GIMP_ALIGN_TOOL (tool);
   GimpAlignOptions *options     = GIMP_ALIGN_OPTIONS (tool->tool_info->tool_options);
@@ -355,9 +327,9 @@ gimp_align_tool_button_press (GimpTool        *tool,
 
 static void
 gimp_align_tool_cursor_update (GimpTool        *tool,
-                              GimpCoords      *coords,
-                              GdkModifierType  state,
-                              GimpDisplay     *gdisp)
+                               GimpCoords      *coords,
+                               GdkModifierType  state,
+                               GimpDisplay     *gdisp)
 {
   GimpAlignOptions  *options = GIMP_ALIGN_OPTIONS (tool->tool_info->tool_options);
 
@@ -757,4 +729,3 @@ clear_reference (GimpItem      *reference_item,
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (align_tool));
 }
-

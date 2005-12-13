@@ -65,8 +65,6 @@ enum
 };
 
 
-static void   gimp_selection_options_class_init (GimpSelectionOptionsClass *options_class);
-
 static void   gimp_selection_options_set_property (GObject         *object,
                                                    guint            property_id,
                                                    const GValue    *value,
@@ -83,44 +81,17 @@ static void   selection_options_fixed_mode_notify (GimpSelectionOptions *options
                                                    GtkWidget            *fixed_box);
 
 
-static GimpToolOptionsClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpSelectionOptions, gimp_selection_options,
+               GIMP_TYPE_TOOL_OPTIONS);
 
+#define parent_class gimp_selection_options_parent_class
 
-GType
-gimp_selection_options_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo info =
-      {
-        sizeof (GimpSelectionOptionsClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_selection_options_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpSelectionOptions),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) NULL
-      };
-
-      type = g_type_register_static (GIMP_TYPE_TOOL_OPTIONS,
-                                     "GimpSelectionOptions",
-                                     &info, 0);
-    }
-
-  return type;
-}
 
 static void
 gimp_selection_options_class_init (GimpSelectionOptionsClass *klass)
 {
   GObjectClass         *object_class  = G_OBJECT_CLASS (klass);
   GimpToolOptionsClass *options_class = GIMP_TOOL_OPTIONS_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->set_property = gimp_selection_options_set_property;
   object_class->get_property = gimp_selection_options_get_property;
@@ -196,6 +167,11 @@ gimp_selection_options_class_init (GimpSelectionOptionsClass *klass)
                                     "interactive", NULL,
                                     FALSE,
                                     0);
+}
+
+static void
+gimp_selection_options_init (GimpSelectionOptions *options)
+{
 }
 
 static void

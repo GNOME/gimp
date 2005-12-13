@@ -52,38 +52,33 @@
 
 /*  local function prototypes  */
 
-static void    gimp_blend_tool_class_init        (GimpBlendToolClass *klass);
-static void    gimp_blend_tool_init              (GimpBlendTool      *blend_tool);
+static void   gimp_blend_tool_button_press   (GimpTool        *tool,
+                                              GimpCoords      *coords,
+                                              guint32          time,
+                                              GdkModifierType  state,
+                                              GimpDisplay     *gdisp);
+static void   gimp_blend_tool_button_release (GimpTool        *tool,
+                                              GimpCoords      *coords,
+                                              guint32          time,
+                                              GdkModifierType  state,
+                                              GimpDisplay     *gdisp);
+static void   gimp_blend_tool_motion         (GimpTool        *tool,
+                                              GimpCoords      *coords,
+                                              guint32          time,
+                                              GdkModifierType  state,
+                                              GimpDisplay     *gdisp);
+static void   gimp_blend_tool_cursor_update  (GimpTool        *tool,
+                                              GimpCoords      *coords,
+                                              GdkModifierType  state,
+                                              GimpDisplay     *gdisp);
 
-static void    gimp_blend_tool_button_press      (GimpTool        *tool,
-                                                  GimpCoords      *coords,
-                                                  guint32          time,
-                                                  GdkModifierType  state,
-                                                  GimpDisplay     *gdisp);
-static void    gimp_blend_tool_button_release    (GimpTool        *tool,
-                                                  GimpCoords      *coords,
-                                                  guint32          time,
-                                                  GdkModifierType  state,
-                                                  GimpDisplay     *gdisp);
-static void    gimp_blend_tool_motion            (GimpTool        *tool,
-                                                  GimpCoords      *coords,
-                                                  guint32          time,
-                                                  GdkModifierType  state,
-                                                  GimpDisplay     *gdisp);
-static void    gimp_blend_tool_cursor_update     (GimpTool        *tool,
-                                                  GimpCoords      *coords,
-                                                  GdkModifierType  state,
-                                                  GimpDisplay     *gdisp);
-
-static void    gimp_blend_tool_draw              (GimpDrawTool    *draw_tool);
+static void   gimp_blend_tool_draw           (GimpDrawTool    *draw_tool);
 
 
-/*  private variables  */
+G_DEFINE_TYPE (GimpBlendTool, gimp_blend_tool, GIMP_TYPE_DRAW_TOOL);
 
-static GimpDrawToolClass *parent_class = NULL;
+#define parent_class gimp_blend_tool_parent_class
 
-
-/*  public functions  */
 
 void
 gimp_blend_tool_register (GimpToolRegisterCallback  callback,
@@ -106,44 +101,11 @@ gimp_blend_tool_register (GimpToolRegisterCallback  callback,
                 data);
 }
 
-GType
-gimp_blend_tool_get_type (void)
-{
-  static GType tool_type = 0;
-
-  if (! tool_type)
-    {
-      static const GTypeInfo tool_info =
-      {
-        sizeof (GimpBlendToolClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_blend_tool_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpBlendTool),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_blend_tool_init,
-      };
-
-      tool_type = g_type_register_static (GIMP_TYPE_DRAW_TOOL,
-                                          "GimpBlendTool",
-                                          &tool_info, 0);
-    }
-
-  return tool_type;
-}
-
-
-/*  private functions  */
-
 static void
 gimp_blend_tool_class_init (GimpBlendToolClass *klass)
 {
   GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   tool_class->button_press   = gimp_blend_tool_button_press;
   tool_class->button_release = gimp_blend_tool_button_release;

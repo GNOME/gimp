@@ -47,8 +47,6 @@ enum
 };
 
 
-static void   gimp_magnify_options_class_init (GimpMagnifyOptionsClass *klass);
-
 static void   gimp_magnify_options_set_property (GObject         *object,
                                                  guint            property_id,
                                                  const GValue    *value,
@@ -61,44 +59,17 @@ static void   gimp_magnify_options_get_property (GObject         *object,
 static void   gimp_magnify_options_reset        (GimpToolOptions *tool_options);
 
 
-static GimpToolOptionsClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpMagnifyOptions, gimp_magnify_options,
+               GIMP_TYPE_TOOL_OPTIONS);
 
+#define parent_class gimp_magnify_options_parent_class
 
-GType
-gimp_magnify_options_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo info =
-      {
-        sizeof (GimpMagnifyOptionsClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_magnify_options_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpMagnifyOptions),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) NULL
-      };
-
-      type = g_type_register_static (GIMP_TYPE_TOOL_OPTIONS,
-                                     "GimpMagnifyOptions",
-                                     &info, 0);
-    }
-
-  return type;
-}
 
 static void
 gimp_magnify_options_class_init (GimpMagnifyOptionsClass *klass)
 {
   GObjectClass         *object_class  = G_OBJECT_CLASS (klass);
   GimpToolOptionsClass *options_class = GIMP_TOOL_OPTIONS_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->set_property = gimp_magnify_options_set_property;
   object_class->get_property = gimp_magnify_options_get_property;
@@ -118,6 +89,11 @@ gimp_magnify_options_class_init (GimpMagnifyOptionsClass *klass)
                                    "threshold", NULL,
                                    1.0, 15.0, 8.0,
                                    0);
+}
+
+static void
+gimp_magnify_options_init (GimpMagnifyOptions *options)
+{
 }
 
 static void

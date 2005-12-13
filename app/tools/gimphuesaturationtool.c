@@ -60,17 +60,14 @@
 
 /*  local function prototypes  */
 
-static void     gimp_hue_saturation_tool_class_init (GimpHueSaturationToolClass *klass);
-static void     gimp_hue_saturation_tool_init       (GimpHueSaturationTool      *tool);
-
 static void     gimp_hue_saturation_tool_finalize   (GObject          *object);
 
 static gboolean gimp_hue_saturation_tool_initialize (GimpTool         *tool,
                                                      GimpDisplay      *gdisp);
 
-static void     gimp_hue_saturation_tool_map        (GimpImageMapTool *image_map_tool);
-static void     gimp_hue_saturation_tool_dialog     (GimpImageMapTool *image_map_tool);
-static void     gimp_hue_saturation_tool_reset      (GimpImageMapTool *image_map_tool);
+static void     gimp_hue_saturation_tool_map        (GimpImageMapTool *im_tool);
+static void     gimp_hue_saturation_tool_dialog     (GimpImageMapTool *im_tool);
+static void     gimp_hue_saturation_tool_reset      (GimpImageMapTool *im_tool);
 
 static void     hue_saturation_update               (GimpHueSaturationTool *hs_tool,
                                                      gint                   update);
@@ -87,7 +84,11 @@ static void     hue_saturation_saturation_adjustment_update (GtkAdjustment *adj,
 static void     hue_saturation_overlap_adjustment_update    (GtkAdjustment *adj,
                                                              gpointer       data);
 
-/*  private variables  */
+
+G_DEFINE_TYPE (GimpHueSaturationTool, gimp_hue_saturation_tool,
+               GIMP_TYPE_IMAGE_MAP_TOOL);
+
+#define parent_class gimp_hue_saturation_tool_parent_class
 
 static gint default_colors[6][3] =
 {
@@ -99,10 +100,6 @@ static gint default_colors[6][3] =
   { 255,   0, 255 }
 };
 
-static GimpImageMapToolClass *parent_class = NULL;
-
-
-/*  public functions  */
 
 void
 gimp_hue_saturation_tool_register (GimpToolRegisterCallback  callback,
@@ -120,59 +117,22 @@ gimp_hue_saturation_tool_register (GimpToolRegisterCallback  callback,
                 data);
 }
 
-GType
-gimp_hue_saturation_tool_get_type (void)
-{
-  static GType tool_type = 0;
-
-  if (! tool_type)
-    {
-      static const GTypeInfo tool_info =
-      {
-        sizeof (GimpHueSaturationToolClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_hue_saturation_tool_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpHueSaturationTool),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_hue_saturation_tool_init,
-      };
-
-      tool_type = g_type_register_static (GIMP_TYPE_IMAGE_MAP_TOOL,
-					  "GimpHueSaturationTool",
-                                          &tool_info, 0);
-    }
-
-  return tool_type;
-}
-
-
-/*  private functions  */
-
 static void
 gimp_hue_saturation_tool_class_init (GimpHueSaturationToolClass *klass)
 {
-  GObjectClass          *object_class;
-  GimpToolClass         *tool_class;
-  GimpImageMapToolClass *image_map_tool_class;
+  GObjectClass          *object_class  = G_OBJECT_CLASS (klass);
+  GimpToolClass         *tool_class    = GIMP_TOOL_CLASS (klass);
+  GimpImageMapToolClass *im_tool_class = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
 
-  object_class         = G_OBJECT_CLASS (klass);
-  tool_class           = GIMP_TOOL_CLASS (klass);
-  image_map_tool_class = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
+  object_class->finalize    = gimp_hue_saturation_tool_finalize;
 
-  parent_class = g_type_class_peek_parent (klass);
+  tool_class->initialize    = gimp_hue_saturation_tool_initialize;
 
-  object_class->finalize       = gimp_hue_saturation_tool_finalize;
+  im_tool_class->shell_desc = _("Adjust Hue / Lightness / Saturation");
 
-  tool_class->initialize       = gimp_hue_saturation_tool_initialize;
-
-  image_map_tool_class->shell_desc = _("Adjust Hue / Lightness / Saturation");
-
-  image_map_tool_class->map    = gimp_hue_saturation_tool_map;
-  image_map_tool_class->dialog = gimp_hue_saturation_tool_dialog;
-  image_map_tool_class->reset  = gimp_hue_saturation_tool_reset;
+  im_tool_class->map        = gimp_hue_saturation_tool_map;
+  im_tool_class->dialog     = gimp_hue_saturation_tool_dialog;
+  im_tool_class->reset      = gimp_hue_saturation_tool_reset;
 }
 
 static void
