@@ -1,3 +1,18 @@
+2005-12-14  Sven Neumann  <sven@gimp.org>
+
+	* libgimpbase/Makefile.am
+	* libgimpbase/libgimpbase-docs.sgml
+	* libgimpbase/libgimpbase-sections.txt: do not generate API docs
+	for the private wire protocol API.
+
+	* libgimp/libgimp-sections.txt: added new path API.
+
+	* libgimpbase/tmpl/gimpprotocol.sgml
+	* libgimpbase/tmpl/gimpwire.sgml: removed from CVS.
+
+	* libgimp/tmpl/gimppaths.sgml
+	* libgimpbase/tmpl/gimpenv.sgml: regenerated.
+
 2005-11-06  Sven Neumann  <sven@gimp.org>
 
 	* devel-docs/libgimpbase/Makefile.am: ignore gimpreloc.h.

@@ -18,6 +18,16 @@ configuration files.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### FUNCTION gimp_env_init ##### -->
+<para>
+
+</para>
+
+@plug_in: 
+<!-- # Unused Parameters # -->
+@library: 
+
+
 <!-- ##### FUNCTION gimp_directory ##### -->
 <para>
 

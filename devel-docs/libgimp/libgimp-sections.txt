@@ -659,6 +659,8 @@ gimp_get_path_by_tattoo
 gimp_path_delete
 gimp_path_get_locked
 gimp_path_set_locked
+gimp_path_get_visible
+gimp_path_set_visible
 gimp_path_set_tattoo
 gimp_path_to_selection
 gimp_path_import

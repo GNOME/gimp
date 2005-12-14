@@ -28,7 +28,7 @@
 #include "gimpreloc.h"
 
 
-/** @internal
+/*
  * Find the canonical filename of the executable. Returns the filename
  * (which must be freed) or NULL on error. If the parameter 'error' is
  * not NULL, the error code will be stored there, if an error occured.
@@ -37,138 +37,138 @@ static char *
 _br_find_exe (GimpBinrelocInitError *error)
 {
 #ifndef ENABLE_BINRELOC
-	if (error)
-		*error = GIMP_RELOC_INIT_ERROR_DISABLED;
-	return NULL;
+        if (error)
+                *error = GIMP_RELOC_INIT_ERROR_DISABLED;
+        return NULL;
 #else
-	char *path, *path2, *line, *result;
-	size_t buf_size;
-	ssize_t size;
-	struct stat stat_buf;
-	FILE *f;
+        char *path, *path2, *line, *result;
+        size_t buf_size;
+        ssize_t size;
+        struct stat stat_buf;
+        FILE *f;
 
-	/* Read from /proc/self/exe (symlink) */
-	if (sizeof (path) > SSIZE_MAX)
-		buf_size = SSIZE_MAX - 1;
-	else
-		buf_size = PATH_MAX - 1;
-	path = g_try_new (char, buf_size);
-	if (path == NULL) {
-		/* Cannot allocate memory. */
-		if (error)
-			*error = GIMP_RELOC_INIT_ERROR_NOMEM;
-		return NULL;
-	}
-	path2 = g_try_new (char, buf_size);
-	if (path2 == NULL) {
-		/* Cannot allocate memory. */
-		if (error)
-			*error = GIMP_RELOC_INIT_ERROR_NOMEM;
-		g_free (path);
-		return NULL;
-	}
+        /* Read from /proc/self/exe (symlink) */
+        if (sizeof (path) > SSIZE_MAX)
+                buf_size = SSIZE_MAX - 1;
+        else
+                buf_size = PATH_MAX - 1;
+        path = g_try_new (char, buf_size);
+        if (path == NULL) {
+                /* Cannot allocate memory. */
+                if (error)
+                        *error = GIMP_RELOC_INIT_ERROR_NOMEM;
+                return NULL;
+        }
+        path2 = g_try_new (char, buf_size);
+        if (path2 == NULL) {
+                /* Cannot allocate memory. */
+                if (error)
+                        *error = GIMP_RELOC_INIT_ERROR_NOMEM;
+                g_free (path);
+                return NULL;
+        }
 
-	strncpy (path2, "/proc/self/exe", buf_size - 1);
+        strncpy (path2, "/proc/self/exe", buf_size - 1);
 
-	while (1) {
-		int i;
+        while (1) {
+                int i;
 
-		size = readlink (path2, path, buf_size - 1);
-		if (size == -1) {
-			/* Error. */
-			g_free (path2);
-			break;
-		}
+                size = readlink (path2, path, buf_size - 1);
+                if (size == -1) {
+                        /* Error. */
+                        g_free (path2);
+                        break;
+                }
 
-		/* readlink() success. */
-		path[size] = '\0';
+                /* readlink() success. */
+                path[size] = '\0';
 
-		/* Check whether the symlink's target is also a symlink.
-		 * We want to get the final target. */
-		i = stat (path, &stat_buf);
-		if (i == -1) {
-			/* Error. */
-			g_free (path2);
-			break;
-		}
+                /* Check whether the symlink's target is also a symlink.
+                 * We want to get the final target. */
+                i = stat (path, &stat_buf);
+                if (i == -1) {
+                        /* Error. */
+                        g_free (path2);
+                        break;
+                }
 
-		/* stat() success. */
-		if (!S_ISLNK (stat_buf.st_mode)) {
-			/* path is not a symlink. Done. */
-			g_free (path2);
-			return path;
-		}
+                /* stat() success. */
+                if (!S_ISLNK (stat_buf.st_mode)) {
+                        /* path is not a symlink. Done. */
+                        g_free (path2);
+                        return path;
+                }
 
-		/* path is a symlink. Continue loop and resolve this. */
-		strncpy (path, path2, buf_size - 1);
-	}
+                /* path is a symlink. Continue loop and resolve this. */
+                strncpy (path, path2, buf_size - 1);
+        }
 
 
-	/* readlink() or stat() failed; this can happen when the program is
-	 * running in Valgrind 2.2. Read from /proc/self/maps as fallback. */
+        /* readlink() or stat() failed; this can happen when the program is
+         * running in Valgrind 2.2. Read from /proc/self/maps as fallback. */
 
-	buf_size = PATH_MAX + 128;
-	line = (char *) g_try_realloc (path, buf_size);
-	if (line == NULL) {
-		/* Cannot allocate memory. */
-		g_free (path);
-		if (error)
-			*error = GIMP_RELOC_INIT_ERROR_NOMEM;
-		return NULL;
-	}
+        buf_size = PATH_MAX + 128;
+        line = (char *) g_try_realloc (path, buf_size);
+        if (line == NULL) {
+                /* Cannot allocate memory. */
+                g_free (path);
+                if (error)
+                        *error = GIMP_RELOC_INIT_ERROR_NOMEM;
+                return NULL;
+        }
 
-	f = g_fopen ("/proc/self/maps", "r");
-	if (f == NULL) {
-		g_free (line);
-		if (error)
-			*error = GIMP_RELOC_INIT_ERROR_OPEN_MAPS;
-		return NULL;
-	}
+        f = g_fopen ("/proc/self/maps", "r");
+        if (f == NULL) {
+                g_free (line);
+                if (error)
+                        *error = GIMP_RELOC_INIT_ERROR_OPEN_MAPS;
+                return NULL;
+        }
 
-	/* The first entry should be the executable name. */
-	result = fgets (line, (int) buf_size, f);
-	if (result == NULL) {
-		fclose (f);
-		g_free (line);
-		if (error)
-			*error = GIMP_RELOC_INIT_ERROR_READ_MAPS;
-		return NULL;
-	}
+        /* The first entry should be the executable name. */
+        result = fgets (line, (int) buf_size, f);
+        if (result == NULL) {
+                fclose (f);
+                g_free (line);
+                if (error)
+                        *error = GIMP_RELOC_INIT_ERROR_READ_MAPS;
+                return NULL;
+        }
 
-	/* Get rid of newline character. */
-	buf_size = strlen (line);
-	if (buf_size <= 0) {
-		/* Huh? An empty string? */
-		fclose (f);
-		g_free (line);
-		if (error)
-			*error = GIMP_RELOC_INIT_ERROR_INVALID_MAPS;
-		return NULL;
-	}
-	if (line[buf_size - 1] == 10)
-		line[buf_size - 1] = 0;
+        /* Get rid of newline character. */
+        buf_size = strlen (line);
+        if (buf_size <= 0) {
+                /* Huh? An empty string? */
+                fclose (f);
+                g_free (line);
+                if (error)
+                        *error = GIMP_RELOC_INIT_ERROR_INVALID_MAPS;
+                return NULL;
+        }
+        if (line[buf_size - 1] == 10)
+                line[buf_size - 1] = 0;
 
-	/* Extract the filename; it is always an absolute path. */
-	path = strchr (line, '/');
+        /* Extract the filename; it is always an absolute path. */
+        path = strchr (line, '/');
 
-	/* Sanity check. */
-	if (strstr (line, " r-xp ") == NULL || path == NULL) {
-		fclose (f);
-		g_free (line);
-		if (error)
-			*error = GIMP_RELOC_INIT_ERROR_INVALID_MAPS;
-		return NULL;
-	}
+        /* Sanity check. */
+        if (strstr (line, " r-xp ") == NULL || path == NULL) {
+                fclose (f);
+                g_free (line);
+                if (error)
+                        *error = GIMP_RELOC_INIT_ERROR_INVALID_MAPS;
+                return NULL;
+        }
 
-	path = g_strdup (path);
-	g_free (line);
-	fclose (f);
-	return path;
+        path = g_strdup (path);
+        g_free (line);
+        fclose (f);
+        return path;
 #endif /* ENABLE_BINRELOC */
 }
 
 
-/** @internal
+/*
  * Find the canonical filename of the executable which owns symbol.
  * Returns a filename which must be freed, or NULL on error.
  */
@@ -176,102 +176,102 @@ static char *
 _br_find_exe_for_symbol (const void *symbol, GimpBinrelocInitError *error)
 {
 #ifndef ENABLE_BINRELOC
-	if (error)
-		*error = GIMP_RELOC_INIT_ERROR_DISABLED;
-	return (char *) NULL;
+        if (error)
+                *error = GIMP_RELOC_INIT_ERROR_DISABLED;
+        return (char *) NULL;
 #else
-	#define SIZE PATH_MAX + 100
-	FILE *f;
-	size_t address_string_len;
-	char *address_string, line[SIZE], *found;
+        #define SIZE PATH_MAX + 100
+        FILE *f;
+        size_t address_string_len;
+        char *address_string, line[SIZE], *found;
 
-	if (symbol == NULL)
-		return (char *) NULL;
+        if (symbol == NULL)
+                return (char *) NULL;
 
-	f = g_fopen ("/proc/self/maps", "r");
-	if (f == NULL)
-		return (char *) NULL;
+        f = g_fopen ("/proc/self/maps", "r");
+        if (f == NULL)
+                return (char *) NULL;
 
-	address_string_len = 4;
-	address_string = g_try_new (char, address_string_len);
-	found = (char *) NULL;
+        address_string_len = 4;
+        address_string = g_try_new (char, address_string_len);
+        found = (char *) NULL;
 
-	while (!feof (f)) {
-		char *start_addr, *end_addr, *end_addr_end, *file;
-		void *start_addr_p, *end_addr_p;
-		size_t len;
+        while (!feof (f)) {
+                char *start_addr, *end_addr, *end_addr_end, *file;
+                void *start_addr_p, *end_addr_p;
+                size_t len;
 
-		if (fgets (line, SIZE, f) == NULL)
-			break;
+                if (fgets (line, SIZE, f) == NULL)
+                        break;
 
-		/* Sanity check. */
-		if (strstr (line, " r-xp ") == NULL || strchr (line, '/') == NULL)
-			continue;
+                /* Sanity check. */
+                if (strstr (line, " r-xp ") == NULL || strchr (line, '/') == NULL)
+                        continue;
 
-		/* Parse line. */
-		start_addr = line;
-		end_addr = strchr (line, '-');
-		file = strchr (line, '/');
+                /* Parse line. */
+                start_addr = line;
+                end_addr = strchr (line, '-');
+                file = strchr (line, '/');
 
-		/* More sanity check. */
-		if (!(file > end_addr && end_addr != NULL && end_addr[0] == '-'))
-			continue;
+                /* More sanity check. */
+                if (!(file > end_addr && end_addr != NULL && end_addr[0] == '-'))
+                        continue;
 
-		end_addr[0] = '\0';
-		end_addr++;
-		end_addr_end = strchr (end_addr, ' ');
-		if (end_addr_end == NULL)
-			continue;
+                end_addr[0] = '\0';
+                end_addr++;
+                end_addr_end = strchr (end_addr, ' ');
+                if (end_addr_end == NULL)
+                        continue;
 
-		end_addr_end[0] = '\0';
-		len = strlen (file);
-		if (len == 0)
-			continue;
-		if (file[len - 1] == '\n')
-			file[len - 1] = '\0';
+                end_addr_end[0] = '\0';
+                len = strlen (file);
+                if (len == 0)
+                        continue;
+                if (file[len - 1] == '\n')
+                        file[len - 1] = '\0';
 
-		/* Get rid of "(deleted)" from the filename. */
-		len = strlen (file);
-		if (len > 10 && strcmp (file + len - 10, " (deleted)") == 0)
-			file[len - 10] = '\0';
+                /* Get rid of "(deleted)" from the filename. */
+                len = strlen (file);
+                if (len > 10 && strcmp (file + len - 10, " (deleted)") == 0)
+                        file[len - 10] = '\0';
 
-		/* I don't know whether this can happen but better safe than sorry. */
-		len = strlen (start_addr);
-		if (len != strlen (end_addr))
-			continue;
-
-
-		/* Transform the addresses into a string in the form of 0xdeadbeef,
-		 * then transform that into a pointer. */
-		if (address_string_len < len + 3) {
-			address_string_len = len + 3;
-			address_string = (char *) g_try_realloc (address_string, address_string_len);
-		}
-
-		memcpy (address_string, "0x", 2);
-		memcpy (address_string + 2, start_addr, len);
-		address_string[2 + len] = '\0';
-		sscanf (address_string, "%p", &start_addr_p);
-
-		memcpy (address_string, "0x", 2);
-		memcpy (address_string + 2, end_addr, len);
-		address_string[2 + len] = '\0';
-		sscanf (address_string, "%p", &end_addr_p);
+                /* I don't know whether this can happen but better safe than sorry. */
+                len = strlen (start_addr);
+                if (len != strlen (end_addr))
+                        continue;
 
 
-		if (symbol >= start_addr_p && symbol < end_addr_p) {
-			found = file;
-			break;
-		}
-	}
+                /* Transform the addresses into a string in the form of 0xdeadbeef,
+                 * then transform that into a pointer. */
+                if (address_string_len < len + 3) {
+                        address_string_len = len + 3;
+                        address_string = (char *) g_try_realloc (address_string, address_string_len);
+                }
 
-	g_free (address_string);
-	fclose (f);
+                memcpy (address_string, "0x", 2);
+                memcpy (address_string + 2, start_addr, len);
+                address_string[2 + len] = '\0';
+                sscanf (address_string, "%p", &start_addr_p);
 
-	if (found == NULL)
-		return (char *) NULL;
-	else
-		return g_strdup (found);
+                memcpy (address_string, "0x", 2);
+                memcpy (address_string + 2, end_addr, len);
+                address_string[2 + len] = '\0';
+                sscanf (address_string, "%p", &end_addr_p);
+
+
+                if (symbol >= start_addr_p && symbol < end_addr_p) {
+                        found = file;
+                        break;
+                }
+        }
+
+        g_free (address_string);
+        fclose (f);
+
+        if (found == NULL)
+                return (char *) NULL;
+        else
+                return g_strdup (found);
 #endif /* ENABLE_BINRELOC */
 }
 
@@ -281,7 +281,7 @@ static gchar *exe = NULL;
 static void set_gerror (GError **error, GimpBinrelocInitError errcode);
 
 
-/** Initialize the BinReloc library (for applications).
+/* Initialize the BinReloc library (for applications).
  *
  * This function must be called before using any other BinReloc functions.
  * It attempts to locate the application's canonical filename.
@@ -301,25 +301,25 @@ static void set_gerror (GError **error, GimpBinrelocInitError errcode);
 gboolean
 _gimp_reloc_init (GError **error)
 {
-	GimpBinrelocInitError errcode;
+        GimpBinrelocInitError errcode;
 
-	/* Shut up compiler warning about uninitialized variable. */
-	errcode = GIMP_RELOC_INIT_ERROR_NOMEM;
+        /* Shut up compiler warning about uninitialized variable. */
+        errcode = GIMP_RELOC_INIT_ERROR_NOMEM;
 
-	/* Locate the application's filename. */
-	exe = _br_find_exe (&errcode);
-	if (exe != NULL)
-		/* Success! */
-		return TRUE;
-	else {
-		/* Failed :-( */
-		set_gerror (error, errcode);
-		return FALSE;
-	}
+        /* Locate the application's filename. */
+        exe = _br_find_exe (&errcode);
+        if (exe != NULL)
+                /* Success! */
+                return TRUE;
+        else {
+                /* Failed :-( */
+                set_gerror (error, errcode);
+                return FALSE;
+        }
 }
 
 
-/** Initialize the BinReloc library (for libraries).
+/* Initialize the BinReloc library (for libraries).
  *
  * This function must be called before using any other BinReloc functions.
  * It attempts to locate the calling library's canonical filename.
@@ -334,56 +334,56 @@ _gimp_reloc_init (GError **error)
 gboolean
 _gimp_reloc_init_lib (GError **error)
 {
-	GimpBinrelocInitError errcode;
+        GimpBinrelocInitError errcode;
 
-	/* Shut up compiler warning about uninitialized variable. */
-	errcode = GIMP_RELOC_INIT_ERROR_NOMEM;
+        /* Shut up compiler warning about uninitialized variable. */
+        errcode = GIMP_RELOC_INIT_ERROR_NOMEM;
 
-	exe = _br_find_exe_for_symbol ((const void *) "", &errcode);
-	if (exe != NULL)
-		/* Success! */
-		return TRUE;
-	else {
-		/* Failed :-( */
-		set_gerror (error, errcode);
-		return exe != NULL;
-	}
+        exe = _br_find_exe_for_symbol ((const void *) "", &errcode);
+        if (exe != NULL)
+                /* Success! */
+                return TRUE;
+        else {
+                /* Failed :-( */
+                set_gerror (error, errcode);
+                return exe != NULL;
+        }
 }
 
 static void
 set_gerror (GError **error, GimpBinrelocInitError errcode)
 {
-	gchar *error_message;
+        gchar *error_message;
 
-	if (error == NULL)
-		return;
+        if (error == NULL)
+                return;
 
-	switch (errcode) {
-	case GIMP_RELOC_INIT_ERROR_NOMEM:
-		error_message = "Cannot allocate memory.";
-		break;
-	case GIMP_RELOC_INIT_ERROR_OPEN_MAPS:
-		error_message = "Unable to open /proc/self/maps for reading.";
-		break;
-	case GIMP_RELOC_INIT_ERROR_READ_MAPS:
-		error_message = "Unable to read from /proc/self/maps.";
-		break;
-	case GIMP_RELOC_INIT_ERROR_INVALID_MAPS:
-		error_message = "The file format of /proc/self/maps is invalid.";
-		break;
-	case GIMP_RELOC_INIT_ERROR_DISABLED:
-		error_message = "Binary relocation support is disabled.";
-		break;
-	default:
-		error_message = "Unknown error.";
-		break;
-	};
-	g_set_error (error, g_quark_from_static_string ("GBinReloc"),
-		     errcode, "%s", error_message);
+        switch (errcode) {
+        case GIMP_RELOC_INIT_ERROR_NOMEM:
+                error_message = "Cannot allocate memory.";
+                break;
+        case GIMP_RELOC_INIT_ERROR_OPEN_MAPS:
+                error_message = "Unable to open /proc/self/maps for reading.";
+                break;
+        case GIMP_RELOC_INIT_ERROR_READ_MAPS:
+                error_message = "Unable to read from /proc/self/maps.";
+                break;
+        case GIMP_RELOC_INIT_ERROR_INVALID_MAPS:
+                error_message = "The file format of /proc/self/maps is invalid.";
+                break;
+        case GIMP_RELOC_INIT_ERROR_DISABLED:
+                error_message = "Binary relocation support is disabled.";
+                break;
+        default:
+                error_message = "Unknown error.";
+                break;
+        };
+        g_set_error (error, g_quark_from_static_string ("GBinReloc"),
+                     errcode, "%s", error_message);
 }
 
 
-/** Find the canonical filename of the current application.
+/* Find the canonical filename of the current application.
  *
  * @param default_exe  A default filename which will be used as fallback.
  * @returns A string containing the application's canonical filename,
@@ -395,18 +395,18 @@ set_gerror (GError **error, GimpBinrelocInitError errcode)
 gchar *
 _gimp_reloc_find_exe (const gchar *default_exe)
 {
-	if (exe == NULL) {
-		/* BinReloc is not initialized. */
-		if (default_exe != NULL)
-			return g_strdup (default_exe);
-		else
-			return NULL;
-	}
-	return g_strdup (exe);
+        if (exe == NULL) {
+                /* BinReloc is not initialized. */
+                if (default_exe != NULL)
+                        return g_strdup (default_exe);
+                else
+                        return NULL;
+        }
+        return g_strdup (exe);
 }
 
 
-/** Locate the directory in which the current application is installed.
+/* Locate the directory in which the current application is installed.
  *
  * The prefix is generated by the following pseudo-code evaluation:
  * \code
@@ -423,19 +423,19 @@ _gimp_reloc_find_exe (const gchar *default_exe)
 gchar *
 _gimp_reloc_find_exe_dir (const gchar *default_dir)
 {
-	if (exe == NULL) {
-		/* BinReloc not initialized. */
-		if (default_dir != NULL)
-			return g_strdup (default_dir);
-		else
-			return NULL;
-	}
+        if (exe == NULL) {
+                /* BinReloc not initialized. */
+                if (default_dir != NULL)
+                        return g_strdup (default_dir);
+                else
+                        return NULL;
+        }
 
-	return g_path_get_dirname (exe);
+        return g_path_get_dirname (exe);
 }
 
 
-/** Locate the prefix in which the current application is installed.
+/* Locate the prefix in which the current application is installed.
  *
  * The prefix is generated by the following pseudo-code evaluation:
  * \code
@@ -452,24 +452,24 @@ _gimp_reloc_find_exe_dir (const gchar *default_dir)
 gchar *
 _gimp_reloc_find_prefix (const gchar *default_prefix)
 {
-	gchar *dir1, *dir2;
+        gchar *dir1, *dir2;
 
-	if (exe == NULL) {
-		/* BinReloc not initialized. */
-		if (default_prefix != NULL)
-			return g_strdup (default_prefix);
-		else
-			return NULL;
-	}
+        if (exe == NULL) {
+                /* BinReloc not initialized. */
+                if (default_prefix != NULL)
+                        return g_strdup (default_prefix);
+                else
+                        return NULL;
+        }
 
-	dir1 = g_path_get_dirname (exe);
-	dir2 = g_path_get_dirname (dir1);
-	g_free (dir1);
-	return dir2;
+        dir1 = g_path_get_dirname (exe);
+        dir2 = g_path_get_dirname (dir1);
+        g_free (dir1);
+        return dir2;
 }
 
 
-/** Locate the application's binary folder.
+/* Locate the application's binary folder.
  *
  * The path is generated by the following pseudo-code evaluation:
  * \code
@@ -485,24 +485,24 @@ _gimp_reloc_find_prefix (const gchar *default_prefix)
 gchar *
 _gimp_reloc_find_bin_dir (const gchar *default_bin_dir)
 {
-	gchar *prefix, *dir;
+        gchar *prefix, *dir;
 
-	prefix = _gimp_reloc_find_prefix (NULL);
-	if (prefix == NULL) {
-		/* BinReloc not initialized. */
-		if (default_bin_dir != NULL)
-			return g_strdup (default_bin_dir);
-		else
-			return NULL;
-	}
+        prefix = _gimp_reloc_find_prefix (NULL);
+        if (prefix == NULL) {
+                /* BinReloc not initialized. */
+                if (default_bin_dir != NULL)
+                        return g_strdup (default_bin_dir);
+                else
+                        return NULL;
+        }
 
-	dir = g_build_filename (prefix, "bin", NULL);
-	g_free (prefix);
-	return dir;
+        dir = g_build_filename (prefix, "bin", NULL);
+        g_free (prefix);
+        return dir;
 }
 
 
-/** Locate the application's data folder.
+/* Locate the application's data folder.
  *
  * The path is generated by the following pseudo-code evaluation:
  * \code
@@ -519,49 +519,49 @@ _gimp_reloc_find_bin_dir (const gchar *default_bin_dir)
 gchar *
 _gimp_reloc_find_data_dir (const gchar *default_data_dir)
 {
-	gchar *prefix, *dir;
+        gchar *prefix, *dir;
 
-	prefix = _gimp_reloc_find_prefix (NULL);
-	if (prefix == NULL) {
-		/* BinReloc not initialized. */
-		if (default_data_dir != NULL)
-			return g_strdup (default_data_dir);
-		else
-			return NULL;
-	}
+        prefix = _gimp_reloc_find_prefix (NULL);
+        if (prefix == NULL) {
+                /* BinReloc not initialized. */
+                if (default_data_dir != NULL)
+                        return g_strdup (default_data_dir);
+                else
+                        return NULL;
+        }
 
-	dir = g_build_filename (prefix, "share",
-				GIMP_PACKAGE,
-				GIMP_DATA_VERSION,
-				NULL);
-	g_free (prefix);
-	return dir;
+        dir = g_build_filename (prefix, "share",
+                                GIMP_PACKAGE,
+                                GIMP_DATA_VERSION,
+                                NULL);
+        g_free (prefix);
+        return dir;
 }
 
 gchar *
 _gimp_reloc_find_plugin_dir (const gchar *default_plugin_dir)
 {
-	gchar *libdir, *dir;
+        gchar *libdir, *dir;
 
-	libdir = _gimp_reloc_find_lib_dir (NULL);
-	if (libdir == NULL) {
-		/* BinReloc not initialized. */
-		if (default_plugin_dir != NULL)
-			return g_strdup (default_plugin_dir);
-		else
-			return NULL;
-	}
+        libdir = _gimp_reloc_find_lib_dir (NULL);
+        if (libdir == NULL) {
+                /* BinReloc not initialized. */
+                if (default_plugin_dir != NULL)
+                        return g_strdup (default_plugin_dir);
+                else
+                        return NULL;
+        }
 
-	dir = g_build_filename (libdir,
-				GIMP_PACKAGE,
-				GIMP_PLUGIN_VERSION,
-				NULL);
-	g_free (libdir);
-	return dir;
+        dir = g_build_filename (libdir,
+                                GIMP_PACKAGE,
+                                GIMP_PLUGIN_VERSION,
+                                NULL);
+        g_free (libdir);
+        return dir;
 }
 
 
-/** Locate the application's localization folder.
+/* Locate the application's localization folder.
  *
  * The path is generated by the following pseudo-code evaluation:
  * \code
@@ -577,24 +577,24 @@ _gimp_reloc_find_plugin_dir (const gchar *default_plugin_dir)
 gchar *
 _gimp_reloc_find_locale_dir (const gchar *default_locale_dir)
 {
-	gchar *data_dir, *dir;
+        gchar *data_dir, *dir;
 
-	data_dir = _gimp_reloc_find_data_dir (NULL);
-	if (data_dir == NULL) {
-		/* BinReloc not initialized. */
-		if (default_locale_dir != NULL)
-			return g_strdup (default_locale_dir);
-		else
-			return NULL;
-	}
+        data_dir = _gimp_reloc_find_data_dir (NULL);
+        if (data_dir == NULL) {
+                /* BinReloc not initialized. */
+                if (default_locale_dir != NULL)
+                        return g_strdup (default_locale_dir);
+                else
+                        return NULL;
+        }
 
-	dir = g_build_filename (data_dir, "locale", NULL);
-	g_free (data_dir);
-	return dir;
+        dir = g_build_filename (data_dir, "locale", NULL);
+        g_free (data_dir);
+        return dir;
 }
 
 
-/** Locate the application's library folder.
+/* Locate the application's library folder.
  *
  * The path is generated by the following pseudo-code evaluation:
  * \code
@@ -610,24 +610,24 @@ _gimp_reloc_find_locale_dir (const gchar *default_locale_dir)
 gchar *
 _gimp_reloc_find_lib_dir (const gchar *default_lib_dir)
 {
-	gchar *prefix, *dir;
+        gchar *prefix, *dir;
 
-	prefix = _gimp_reloc_find_prefix (NULL);
-	if (prefix == NULL) {
-		/* BinReloc not initialized. */
-		if (default_lib_dir != NULL)
-			return g_strdup (default_lib_dir);
-		else
-			return NULL;
-	}
+        prefix = _gimp_reloc_find_prefix (NULL);
+        if (prefix == NULL) {
+                /* BinReloc not initialized. */
+                if (default_lib_dir != NULL)
+                        return g_strdup (default_lib_dir);
+                else
+                        return NULL;
+        }
 
-	dir = g_build_filename (prefix, "lib", NULL);
-	g_free (prefix);
-	return dir;
+        dir = g_build_filename (prefix, "lib", NULL);
+        g_free (prefix);
+        return dir;
 }
 
 
-/** Locate the application's libexec folder.
+/* Locate the application's libexec folder.
  *
  * The path is generated by the following pseudo-code evaluation:
  * \code
@@ -643,24 +643,24 @@ _gimp_reloc_find_lib_dir (const gchar *default_lib_dir)
 gchar *
 _gimp_reloc_find_libexec_dir (const gchar *default_libexec_dir)
 {
-	gchar *prefix, *dir;
+        gchar *prefix, *dir;
 
-	prefix = _gimp_reloc_find_prefix (NULL);
-	if (prefix == NULL) {
-		/* BinReloc not initialized. */
-		if (default_libexec_dir != NULL)
-			return g_strdup (default_libexec_dir);
-		else
-			return NULL;
-	}
+        prefix = _gimp_reloc_find_prefix (NULL);
+        if (prefix == NULL) {
+                /* BinReloc not initialized. */
+                if (default_libexec_dir != NULL)
+                        return g_strdup (default_libexec_dir);
+                else
+                        return NULL;
+        }
 
-	dir = g_build_filename (prefix, "libexec", NULL);
-	g_free (prefix);
-	return dir;
+        dir = g_build_filename (prefix, "libexec", NULL);
+        g_free (prefix);
+        return dir;
 }
 
 
-/** Locate the application's configuration files folder.
+/* Locate the application's configuration files folder.
  *
  * The path is generated by the following pseudo-code evaluation:
  * \code
@@ -669,28 +669,29 @@ _gimp_reloc_find_libexec_dir (const gchar *default_libexec_dir)
  *
  * @param default_etc_dir  A default path which will used as fallback.
  * @return A string containing the etc folder's path, which must be freed when
- *         no longer necessary. If BinReloc is not initialized, or if the initialization
- *         function failed, then a copy of default_etc_dir will be returned.
- *         If default_etc_dir is NULL, then NULL will be returned.
+ *         no longer necessary. If BinReloc is not initialized, or if the
+ *         initialization function failed, then a copy of default_etc_dir
+ *         will be returned. If default_etc_dir is NULL, then NULL will be
+ *         returned.
  */
 gchar *
 _gimp_reloc_find_etc_dir (const gchar *default_etc_dir)
 {
-	gchar *prefix, *dir;
+        gchar *prefix, *dir;
 
-	prefix = _gimp_reloc_find_prefix (NULL);
-	if (prefix == NULL) {
-		/* BinReloc not initialized. */
-		if (default_etc_dir != NULL)
-			return g_strdup (default_etc_dir);
-		else
-			return NULL;
-	}
+        prefix = _gimp_reloc_find_prefix (NULL);
+        if (prefix == NULL) {
+                /* BinReloc not initialized. */
+                if (default_etc_dir != NULL)
+                        return g_strdup (default_etc_dir);
+                else
+                        return NULL;
+        }
 
-	dir = g_build_filename (prefix, "etc",
-				GIMP_PACKAGE,
-				GIMP_SYSCONF_VERSION,
-				NULL);
-	g_free (prefix);
-	return dir;
+        dir = g_build_filename (prefix, "etc",
+                                GIMP_PACKAGE,
+                                GIMP_SYSCONF_VERSION,
+                                NULL);
+        g_free (prefix);
+        return dir;
 }

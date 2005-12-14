@@ -5,6 +5,11 @@
 
 	* libgimp/gimp.c (gimp_destroy_params): removed extern declaration.
 
+	* libgimpbase/gimpenv.h: changed parameter name to match what's
+	used in gimpenv.c.
+
+	* libgimpbase/gimpreloc.c: changed comments to please gtk-doc.
+
 2005-12-13  Sven Neumann  <sven@gimp.org>
 
 	* libgimpbase/gimpwire.[ch]: let the private wire methods live in

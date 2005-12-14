@@ -26,8 +26,6 @@
     <xi:include href="xml/gimpsignal.xml" />
     <xi:include href="xml/gimpunit.xml" />
     <xi:include href="xml/gimputils.xml" />
-    <xi:include href="xml/gimpprotocol.xml" />
-    <xi:include href="xml/gimpwire.xml" />
   </part>
 
   <index>
