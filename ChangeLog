@@ -1,3 +1,10 @@
+2005-12-14  Sven Neumann  <sven@gimp.org>
+
+	* libgimpbase/gimpprotocol.[ch]: declare gp_params_destroy() in
+	the private header file.
+
+	* libgimp/gimp.c (gimp_destroy_params): removed extern declaration.
+
 2005-12-13  Sven Neumann  <sven@gimp.org>
 
 	* libgimpbase/gimpwire.[ch]: let the private wire methods live in

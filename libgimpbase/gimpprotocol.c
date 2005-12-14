@@ -133,10 +133,6 @@ static void _gp_params_write             (GIOChannel       *channel,
 					  gint              nparams,
                                           gpointer          user_data);
 
-/* used by gimp.c:gimp_destroy_params() */
-void         gp_params_destroy           (GPParam          *params,
-					  gint              nparams);
-
 static void _gp_has_init_read            (GIOChannel       *channel,
 					  GimpWireMessage  *msg,
                                           gpointer          user_data);
@@ -1746,8 +1742,7 @@ void
 gp_params_destroy (GPParam *params,
                    gint     nparams)
 {
-  gint count;
-  gint i, j;
+  gint i;
 
   for (i = 0; i < nparams; i++)
     {
@@ -1793,9 +1788,12 @@ gp_params_destroy (GPParam *params,
 	case GIMP_PDB_STRINGARRAY:
 	  if ((i > 0) && (params[i-1].type == GIMP_PDB_INT32))
 	    {
-	      count = params[i-1].data.d_int32;
+	      gint count = params[i-1].data.d_int32;
+              gint j;
+
 	      for (j = 0; j < count; j++)
 		g_free (params[i].data.d_stringarray[j]);
+
 	      g_free (params[i].data.d_stringarray);
 	    }
 	  break;

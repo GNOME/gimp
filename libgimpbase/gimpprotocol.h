@@ -228,6 +228,9 @@ gboolean  gp_extension_ack_write    (GIOChannel      *channel,
 gboolean  gp_has_init_write         (GIOChannel      *channel,
                                      gpointer         user_data);
 
+void      gp_params_destroy         (GPParam         *params,
+                                     gint             nparams);
+
 
 G_END_DECLS
 

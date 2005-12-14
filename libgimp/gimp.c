@@ -986,8 +986,6 @@ void
 gimp_destroy_params (GimpParam *params,
 		     gint       n_params)
 {
-  extern void  gp_params_destroy (GPParam *params, gint n_params);
-
   gp_params_destroy ((GPParam *) params, n_params);
 }
 
