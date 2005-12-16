@@ -759,6 +759,8 @@ static gboolean
 shoot_dialog (GdkScreen **screen)
 {
   GtkWidget *dialog;
+  GtkWidget *main_vbox;
+  GtkWidget *frame;
   GtkWidget *vbox;
   GtkWidget *hbox;
   GtkWidget *label;
@@ -768,14 +770,7 @@ shoot_dialog (GdkScreen **screen)
   GdkPixbuf *pixbuf;
   GSList    *radio_group = NULL;
   GtkObject *adj;
-  gboolean   region = FALSE;
   gboolean   run;
-
-  if (shootvals.shoot_type == SHOOT_REGION)
-    {
-      shootvals.shoot_type = SHOOT_ROOT;
-      region = TRUE;
-    }
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
@@ -803,12 +798,22 @@ shoot_dialog (GdkScreen **screen)
       g_object_unref (pixbuf);
     }
 
-  vbox = gtk_vbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
-                      vbox, FALSE, FALSE, 0);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), main_vbox,
+                      FALSE, FALSE, 0);
+  gtk_widget_show (main_vbox);
+
+  frame = gimp_frame_new (_("Area"));
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
+
+  /*  single window  */
   button = gtk_radio_button_new_with_mnemonic (radio_group,
 					       _("Take a screenshot of "
                                                  "a single _window"));
@@ -831,7 +836,7 @@ shoot_dialog (GdkScreen **screen)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  toggle = gtk_check_button_new_with_label (_("Include window decoration"));
+  toggle = gtk_check_button_new_with_mnemonic (_("Include window _decoration"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), shootvals.decorate);
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 24);
   gtk_widget_show (toggle);
@@ -844,14 +849,16 @@ shoot_dialog (GdkScreen **screen)
 
 #endif /* HAVE_X11_XMU_WINUTIL_H */
 
-  /*  root window  */
+
+  /*  whole screen  */
   button = gtk_radio_button_new_with_mnemonic (radio_group,
 					       _("Take a screenshot of "
-                                                 "your _desktop"));
+                                                 "the entire _screen"));
   radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 shootvals.shoot_type == SHOOT_ROOT);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
   g_object_set_data (G_OBJECT (button), "gimp-item-data",
                      GINT_TO_POINTER (SHOOT_ROOT));
@@ -860,33 +867,42 @@ shoot_dialog (GdkScreen **screen)
                     G_CALLBACK (gimp_radio_button_update),
                     &shootvals.shoot_type);
 
-  gtk_widget_show (button);
 
   /*  dragged region  */
-  hbox = gtk_hbox_new (FALSE, 12);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  button = gtk_radio_button_new_with_mnemonic (radio_group,
+					       _("Select a _region to grab"));
+  radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                shootvals.shoot_type == SHOOT_REGION);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
-  toggle = gtk_check_button_new_with_label (_("Select a region"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), region);
-  gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 24);
-  gtk_widget_show (toggle);
-
-  gimp_help_set_help_data (toggle, _("If enabled, you can use the mouse to "
+  gimp_help_set_help_data (button, _("If enabled, you can use the mouse to "
                                      "select a rectangular region of the "
                                      "screen."), NULL);
 
-  g_object_set_data (G_OBJECT (button), "set_sensitive", toggle);
+  g_object_set_data (G_OBJECT (button), "gimp-item-data",
+                     GINT_TO_POINTER (SHOOT_REGION));
 
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &region);
+  g_signal_connect (button, "toggled",
+                    G_CALLBACK (gimp_radio_button_update),
+                    &shootvals.shoot_type);
+
 
   /*  grab delay  */
+  frame = gimp_frame_new (_("Delay"));
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
+
   hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
+  /* this string is part of "Wait [spinbutton] seconds before grabbing" */
   label = gtk_label_new_with_mnemonic (_("W_ait"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
@@ -902,6 +918,7 @@ shoot_dialog (GdkScreen **screen)
                     G_CALLBACK (gimp_int_adjustment_update),
                     &shootvals.select_delay);
 
+  /* this string is part of "Wait [spinbutton] seconds before grabbing" */
   label = gtk_label_new (_("seconds before grabbing"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
@@ -914,9 +931,6 @@ shoot_dialog (GdkScreen **screen)
 
   run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  if (shootvals.shoot_type == SHOOT_ROOT && region)
-    shootvals.shoot_type = SHOOT_REGION;
-
   if (run)
     {
       /* get the screen on which we are running */
@@ -926,21 +940,21 @@ shoot_dialog (GdkScreen **screen)
   gtk_widget_destroy (dialog);
 
   if (run)
-   {
-     /*  A short timeout to give the server a chance to
-      *  redraw the area that was obscured by our dialog.
-      */
-     g_timeout_add (100, shoot_quit_timeout, NULL);
-     gtk_main ();
+    {
+      /*  A short timeout to give the server a chance to
+       *  redraw the area that was obscured by our dialog.
+       */
+      g_timeout_add (100, shoot_quit_timeout, NULL);
+      gtk_main ();
 
-     if (shootvals.shoot_type != SHOOT_ROOT && ! shootvals.window_id)
-       {
-         shootvals.window_id = select_window (*screen);
+      if (shootvals.shoot_type != SHOOT_ROOT && ! shootvals.window_id)
+        {
+          shootvals.window_id = select_window (*screen);
 
-         if (! shootvals.window_id)
-           return FALSE;
-       }
-   }
+          if (! shootvals.window_id)
+            return FALSE;
+        }
+    }
 
   return run;
 }
