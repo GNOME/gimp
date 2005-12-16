@@ -22,7 +22,7 @@ gimp_clone_align_mode_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_CLONE_ALIGN_NO, N_("Non-aligned"), NULL },
+    { GIMP_CLONE_ALIGN_NO, N_("None"), NULL },
     { GIMP_CLONE_ALIGN_YES, N_("Aligned"), NULL },
     { GIMP_CLONE_ALIGN_REGISTERED, N_("Registered"), NULL },
     { GIMP_CLONE_ALIGN_FIXED, N_("Fixed"), NULL },

@@ -1,3 +1,11 @@
+2005-12-16  Sven Neumann  <sven@gimp.org>
+
+	* app/paint/paint-enums.[ch]: changed description of
+	GIMP_CLONE_ALIGN_NO enum value.
+
+	* app/tools/gimpclonetool.c (gimp_clone_options_gui): use a combo
+	box for the align mode.
+
 2005-12-14  Sven Neumann  <sven@gimp.org>
 
 	* libgimpbase/gimpprotocol.[ch]: declare gp_params_destroy() in

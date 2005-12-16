@@ -289,14 +289,15 @@ gimp_clone_options_gui (GimpToolOptions *tool_options)
   GObject   *config = G_OBJECT (tool_options);
   GtkWidget *vbox;
   GtkWidget *frame;
-  GtkWidget *hbox;
   GtkWidget *button;
+  GtkWidget *hbox;
+  GtkWidget *table;
+  GtkWidget *combo;
 
   vbox = gimp_paint_options_gui (tool_options);
 
   frame = gimp_prop_enum_radio_frame_new (config, "clone-type",
-                                          _("Source"),
-                                          0, 0);
+                                          _("Source"), 0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -307,11 +308,15 @@ gimp_clone_options_gui (GimpToolOptions *tool_options)
   hbox = gimp_pattern_box_new (NULL, GIMP_CONTEXT (tool_options), 2);
   gimp_enum_radio_frame_add (GTK_FRAME (frame), hbox, GIMP_PATTERN_CLONE);
 
-  frame = gimp_prop_enum_radio_frame_new (config, "align-mode",
-                                          _("Alignment"),
-                                          0, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  table = gtk_table_new (1, 2, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
+
+  combo = gimp_prop_enum_combo_box_new (config, "align-mode", 0, 0);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                             _("Alignment:"), 0.0, 0.5,
+                             combo, 1, FALSE);
 
   return vbox;
 }
