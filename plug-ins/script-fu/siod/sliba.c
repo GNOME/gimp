@@ -59,7 +59,6 @@ init_storage_a (void)
   gc_protect (&bashnum);
   bashnum = newcell (tc_flonum);
   init_storage_a1 (tc_string);
-  init_storage_a1 (tc_string_array);
   init_storage_a1 (tc_double_array);
   init_storage_a1 (tc_long_array);
   init_storage_a1 (tc_lisp_array);
@@ -102,7 +101,6 @@ array_gc_mark (LISP ptr)
 void
 array_gc_free (LISP ptr)
 {
-  int i;
   switch (ptr->type)
     {
     case tc_string:
@@ -115,60 +113,10 @@ array_gc_free (LISP ptr)
     case tc_long_array:
       free (ptr->storage_as.long_array.data);
       break;
-    case tc_string_array:
-      for (i = 0; i < ptr->storage_as.string_array.dim; ++i)
-        free (ptr->storage_as.string_array.data[i]);
-      free (ptr->storage_as.string_array.data);
-      break;
     case tc_lisp_array:
       free (ptr->storage_as.lisp_array.data);
       break;
     }
-}
-
-void
-array_prin1_string (char *ptr, struct gen_printio *f)
-{
-  int i;
-
-  gput_st (f, "\"");
-  if (ptr != NULL)
-    {
-      if (strcspn (ptr, "\"\\\n\r\t") == strlen (ptr))
-        gput_st (f, ptr);
-      else
-        {
-          int n, c;
-          char cbuff[3];
-          n = strlen (ptr);
-          for (i = 0; i < n; ++i)
-	    switch (c = ptr[i])
-	      {
-	      case '\\':
-	      case '"':
-	        cbuff[0] = '\\';
-	        cbuff[1] = c;
-	        cbuff[2] = 0;
-	        gput_st (f, cbuff);
-	        break;
-	      case '\n':
-	        gput_st (f, "\\n");
-	        break;
-	      case '\r':
-	        gput_st (f, "\\r");
-	        break;
-	      case '\t':
-	        gput_st (f, "\\t");
-	        break;
-	      default:
-	        cbuff[0] = c;
-	        cbuff[1] = 0;
-	        gput_st (f, cbuff);
-	        break;
-	      }
-        }
-    }
-  gput_st (f, "\"");
 }
 
 void
@@ -178,7 +126,42 @@ array_prin1 (LISP ptr, struct gen_printio *f)
   switch (ptr->type)
     {
     case tc_string:
-      array_prin1_string (ptr->storage_as.string.data, f);
+      gput_st (f, "\"");
+      if (strcspn (ptr->storage_as.string.data, "\"\\\n\r\t") ==
+	  strlen (ptr->storage_as.string.data))
+	gput_st (f, ptr->storage_as.string.data);
+      else
+	{
+	  int n, c;
+	  char cbuff[3];
+	  n = strlen (ptr->storage_as.string.data);
+	  for (j = 0; j < n; ++j)
+	    switch (c = ptr->storage_as.string.data[j])
+	      {
+	      case '\\':
+	      case '"':
+		cbuff[0] = '\\';
+		cbuff[1] = c;
+		cbuff[2] = 0;
+		gput_st (f, cbuff);
+		break;
+	      case '\n':
+		gput_st (f, "\\n");
+		break;
+	      case '\r':
+		gput_st (f, "\\r");
+		break;
+	      case '\t':
+		gput_st (f, "\\t");
+		break;
+	      default:
+		cbuff[0] = c;
+		cbuff[1] = 0;
+		gput_st (f, cbuff);
+		break;
+	      }
+	}
+      gput_st (f, "\"");
       break;
     case tc_double_array:
       gput_st (f, "#(");
@@ -219,16 +202,6 @@ array_prin1 (LISP ptr, struct gen_printio *f)
       if (i)
         gput_st (f, tkbuffer);
       gput_st (f, "\"");
-      break;
-    case tc_string_array:
-      gput_st (f, "#(");
-      for (j = 0; j < ptr->storage_as.string_array.dim; ++j)
-	{
-	  array_prin1_string (ptr->storage_as.string_array.data[j], f);
-	  if ((j + 1) < ptr->storage_as.string_array.dim)
-	    gput_st (f, " ");
-	}
-      gput_st (f, ")");
       break;
     case tc_lisp_array:
       gput_st (f, "#(");
@@ -342,6 +315,7 @@ aref1 (LISP a, LISP i)
   switch TYPE
     (a)
     {
+    case tc_string:
     case tc_byte_array:
       if (k >= a->storage_as.string.dim)
 	my_err ("index too large", i);
@@ -354,10 +328,6 @@ aref1 (LISP a, LISP i)
       if (k >= a->storage_as.long_array.dim)
 	my_err ("index too large", i);
       return (flocons (a->storage_as.long_array.data[k]));
-    case tc_string_array:
-      if (k >= a->storage_as.string_array.dim)
-	my_err ("index too large", i);
-      return (strcons (-1, a->storage_as.string_array.data[k]));
     case tc_lisp_array:
       if (k >= a->storage_as.lisp_array.dim)
 	my_err ("index too large", i);
@@ -391,6 +361,7 @@ aset1 (LISP a, LISP i, LISP v)
   switch TYPE
     (a)
     {
+    case tc_string:
     case tc_byte_array:
       if NFLONUMP
 	(v) err2_aset1 (v);
@@ -411,15 +382,6 @@ aset1 (LISP a, LISP i, LISP v)
       if (k >= a->storage_as.long_array.dim)
 	err1_aset1 (i);
       a->storage_as.long_array.data[k] = (long) FLONM (v);
-      return (v);
-    case tc_string_array:
-      if NSTRINGP
-	(v) err2_aset1 (v);
-      if (k >= a->storage_as.string_array.dim)
-	err1_aset1 (i);
-      if (a->storage_as.string_array.data[k] != NULL)
-        free (a->storage_as.string_array.data[k]);
-      a->storage_as.string_array.data[k] = strdup (STRING (v));
       return (v);
     case tc_lisp_array:
       if (k >= a->storage_as.lisp_array.dim)
@@ -454,14 +416,6 @@ arcons (long typecode, long n, long initp)
       if (initp)
 	for (j = 0; j < n; ++j)
 	  a->storage_as.long_array.data[j] = 0;
-      break;
-    case tc_string_array:
-      a->storage_as.string_array.dim = n;
-      a->storage_as.string_array.data = (char **) must_malloc (n *
-                                                          sizeof (char *));
-      if (initp)
-	for (j = 0; j < n; ++j)
-	  a->storage_as.string_array.data[j] = 0;
       break;
     case tc_string:
       a->storage_as.string.dim = n;
@@ -538,12 +492,12 @@ cons_array (LISP dim, LISP kind)
   else if EQ
     (cintern ("string"), kind)
     {
-      a->type = tc_string_array;
-      a->storage_as.string_array.dim = n;
-      a->storage_as.string_array.data = (char **) must_malloc (n *
-                                                          sizeof (char *));
+      a->type = tc_string;
+      a->storage_as.string.dim = n;
+      a->storage_as.string.data = (char *) must_malloc (n + 1);
+      a->storage_as.string.data[n] = 0;
       for (j = 0; j < n; ++j)
-	a->storage_as.string_array.data[j] = 0;
+	a->storage_as.string.data[j] = ' ';
     }
   else if EQ
     (cintern ("byte"), kind)
@@ -935,15 +889,6 @@ array_equal (LISP a, LISP b)
 	    b->storage_as.double_array.data[j])
 	  return (NIL);
       return (sym_t);
-    case tc_string_array:
-      len = a->storage_as.string_array.dim;
-      if (len != b->storage_as.string_array.dim)
-	return (NIL);
-      for (j = 0; j < len; ++j)
-	if (strcmp(a->storage_as.string_array.data[j],
-	           b->storage_as.string_array.data[j]) != 0)
-	  return (NIL);
-      return (sym_t);
     case tc_lisp_array:
       len = a->storage_as.lisp_array.dim;
       if (len != b->storage_as.lisp_array.dim)
@@ -962,7 +907,7 @@ array_equal (LISP a, LISP b)
 long
 array_sxhash (LISP a, long n)
 {
-  long i, j, len, hash;
+  long j, len, hash;
   unsigned char *char_data;
   unsigned long *long_data;
   double *double_data;
@@ -989,19 +934,6 @@ array_sxhash (LISP a, long n)
 	   j < len;
 	   ++j, ++double_data)
 	hash = HASH_COMBINE (hash, (unsigned long) *double_data % n, n);
-      return (hash);
-    case tc_string_array:
-      hash = 0;
-      for (i = 0; i < a->storage_as.string_array.dim; ++i)
-        {
-          char_data = (unsigned char *) a->storage_as.string_array.data[i];
-          if (char_data != NULL)
-            {
-              len = strlen ((const char *) char_data);
-              for (j = 0; j < len; ++j)
-	        hash = HASH_COMBINE (hash, *char_data++, n);
-            }
-        }
       return (hash);
     case tc_lisp_array:
       len = a->storage_as.lisp_array.dim;
@@ -1303,18 +1235,6 @@ array_fast_print (LISP ptr, LISP table)
       put_long (len, f);
       fwrite (ptr->storage_as.long_array.data, len, 1, f);
       return (NIL);
-    case tc_string_array:
-      putc (tc_string_array, f);
-      len = ptr->storage_as.long_array.dim;
-      put_long (len, f);
-      for (j = 0; j < ptr->storage_as.string_array.dim; ++j)
-        {
-          /* Add one to account for the NUL at the end of the string */
-          len = strlen (ptr->storage_as.string_array.data[j]) + 1;
-          put_long (len, f);
-          fwrite (ptr->storage_as.string_array.data[j], len, 1, f);
-        }
-      return (NIL);
     case tc_lisp_array:
       putc (tc_lisp_array, f);
       len = ptr->storage_as.lisp_array.dim;
@@ -1370,21 +1290,6 @@ array_fast_read (int code, LISP table)
       ptr->storage_as.long_array.data =
 	(long *) must_malloc (len * sizeof (long));
       fread (ptr->storage_as.long_array.data, sizeof (long), len, f);
-      no_interrupt (iflag);
-      return (ptr);
-    case tc_string_array:
-      len = get_long (f);
-      iflag = no_interrupt (1);
-      ptr = newcell (tc_string_array);
-      ptr->storage_as.string_array.dim = len;
-      ptr->storage_as.string_array.data =
-	(char **) must_malloc (len * sizeof (char *));
-      for (j = 0; j < ptr->storage_as.string_array.dim; ++j)
-        {
-          len = get_long (f);
-          ptr->storage_as.string_array.data[j] = must_malloc (len);
-          fread (ptr->storage_as.string_array.data[j], len, 1, f);
-        }
       no_interrupt (iflag);
       return (ptr);
     case tc_lisp_array:
@@ -1548,8 +1453,6 @@ nlength (LISP obj)
       return (obj->storage_as.double_array.dim);
     case tc_long_array:
       return (obj->storage_as.long_array.dim);
-    case tc_string_array:
-      return (obj->storage_as.string_array.dim);
     case tc_lisp_array:
       return (obj->storage_as.lisp_array.dim);
     case tc_nil:
@@ -2674,8 +2577,6 @@ ltypeof (LISP obj)
       return (cintern ("tc_double_array"));
     case tc_long_array:
       return (cintern ("tc_long_array"));
-    case tc_string_array:
-      return (cintern ("tc_string_array"));
     case tc_lisp_array:
       return (cintern ("tc_lisp_array"));
     case tc_c_file:

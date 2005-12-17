@@ -113,12 +113,6 @@ struct obj
 	struct
 	  {
 	    long dim;
-	    char **data;
-	  }
-	string_array;
-	struct
-	  {
-	    long dim;
 	    struct obj **data;
 	  }
 	lisp_array;
@@ -145,7 +139,6 @@ struct obj
 #define SUBRM(x) (*((*x).storage_as.subrm.f))
 #define SUBRF(x) (*((*x).storage_as.subr.f))
 #define FLONM(x) ((*x).storage_as.flonum.data)
-#define STRING(x) ((*x).storage_as.string.data)
 
 #define NIL ((struct obj *) 0)
 #define EQ(x,y) ((x) == (y))
@@ -180,7 +173,6 @@ struct obj
 #define tc_subr_4 19
 #define tc_subr_5 20
 #define tc_subr_2n 21
-#define tc_string_array 22
 #define FO_comment 35
 #define tc_user_min 50
 #define tc_user_max 100
@@ -198,14 +190,10 @@ typedef LISP (*SUBR_FUNC) (void);
 #define CONSP(x)   TYPEP(x,tc_cons)
 #define FLONUMP(x) TYPEP(x,tc_flonum)
 #define SYMBOLP(x) TYPEP(x,tc_symbol)
-#define STRINGP(x) TYPEP(x,tc_string)
-#define STRARYP(x) TYPEP(x,tc_string_array)
 
 #define NCONSP(x)   NTYPEP(x,tc_cons)
 #define NFLONUMP(x) NTYPEP(x,tc_flonum)
 #define NSYMBOLP(x) NTYPEP(x,tc_symbol)
-#define NSTRINGP(x) NTYPEP(x,tc_string)
-#define NSTRARYP(x) NTYPEP(x,tc_string_array)
 
 #define TKBUFFERN 5120
 

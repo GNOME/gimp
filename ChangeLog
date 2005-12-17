@@ -1,3 +1,10 @@
+2005-12-16  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/script-fu/siod/siod.h
+	* plug-ins/script-fu/siod/sliba.c: Reverted changes to handling
+	of string arrays to stay backward compatible (see bug #168290 and
+	bug #317634). These files were not reverted when other files were.
+
 2005-12-16  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/screenshot.c (shoot_dialog): cleaned up the GUI.
