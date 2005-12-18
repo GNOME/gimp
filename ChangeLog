@@ -1,3 +1,7 @@
+2005-12-18  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/script-fu/siod-wrapper.c: Finish the reverting here.
+
 2005-12-16  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/siod/siod.h

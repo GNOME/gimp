@@ -725,12 +725,13 @@ marshall_proc_db_call (LISP a)
           break;
 
         case GIMP_PDB_STRINGARRAY:
-          if (!TYPEP (car (a), tc_string_array))
+          if (!TYPEP (car (a), tc_cons))
             success = FALSE;
           if (success)
             {
               gint n_elements = args[i - 1].data.d_int32;
               LISP list       = car (a);
+              gint j;
 
               if ((n_elements < 0) || (n_elements > nlength (list)))
                 {
@@ -742,7 +743,13 @@ marshall_proc_db_call (LISP a)
                 }
 
               args[i].type               = GIMP_PDB_STRINGARRAY;
-              args[i].data.d_stringarray = list->storage_as.string_array.data;
+              args[i].data.d_stringarray = g_new0 (gchar *, n_elements);
+
+              for (j = 0; j < n_elements; j++)
+                {
+                  args[i].data.d_stringarray[j] = get_c_string (car (list));
+                  list = cdr (list);
+                }
             }
           break;
 
