@@ -29,7 +29,6 @@ G_BEGIN_DECLS
 
 
 #define GIMP_DEVICE_INFO_CONTEXT_MASK (GIMP_CONTEXT_TOOL_MASK       | \
-                                       GIMP_CONTEXT_PAINT_INFO_MASK | \
                                        GIMP_CONTEXT_FOREGROUND_MASK | \
                                        GIMP_CONTEXT_BACKGROUND_MASK | \
 			               GIMP_CONTEXT_BRUSH_MASK      | \
