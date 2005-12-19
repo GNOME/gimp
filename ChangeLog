@@ -1,3 +1,10 @@
+2005-12-19  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
+	* plug-ins/common/svg.c: fixed handling of librsvg API change,
+	based on a patch by S. Mukund (bug #314400).
+
 2005-12-12  Michael Schumacher  <schumaml@cvs.gnome.org>
 
 	* plug-ins/script-fu/siod/slib.c: added a fix for the script-fu
