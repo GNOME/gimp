@@ -52,15 +52,14 @@ enum
 };
 
 
-static void     gimp_container_popup_class_init (GimpContainerPopupClass *klass);
-static void     gimp_container_popup_init       (GimpContainerPopup      *view);
-
 static void     gimp_container_popup_finalize     (GObject            *object);
+
 static void     gimp_container_popup_map          (GtkWidget          *widget);
 static gboolean gimp_container_popup_button_press (GtkWidget          *widget,
                                                    GdkEventButton     *bevent);
 static gboolean gimp_container_popup_key_press    (GtkWidget          *widget,
                                                    GdkEventKey        *kevent);
+
 static void     gimp_container_popup_real_cancel  (GimpContainerPopup *popup);
 static void     gimp_container_popup_real_confirm (GimpContainerPopup *popup);
 
@@ -76,38 +75,12 @@ static void gimp_container_popup_dialog_clicked   (GtkWidget          *button,
                                                    GimpContainerPopup *popup);
 
 
-static GtkWindowClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpContainerPopup, gimp_container_popup, GTK_TYPE_WINDOW);
+
+#define parent_class gimp_container_popup_parent_class
 
 static guint popup_signals[LAST_SIGNAL];
 
-
-GType
-gimp_container_popup_get_type (void)
-{
-  static GType popup_type = 0;
-
-  if (! popup_type)
-    {
-      static const GTypeInfo popup_info =
-      {
-        sizeof (GimpContainerPopupClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_container_popup_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpContainerPopup),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_container_popup_init,
-      };
-
-      popup_type = g_type_register_static (GTK_TYPE_WINDOW,
-                                           "GimpContainerPopup",
-                                           &popup_info, 0);
-    }
-
-  return popup_type;
-}
 
 static void
 gimp_container_popup_class_init (GimpContainerPopupClass *klass)
@@ -115,8 +88,6 @@ gimp_container_popup_class_init (GimpContainerPopupClass *klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
   GtkBindingSet  *binding_set;
-
-  parent_class = g_type_class_peek_parent (klass);
 
   popup_signals[CANCEL] =
     g_signal_new ("cancel",

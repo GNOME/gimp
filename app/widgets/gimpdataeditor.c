@@ -53,10 +53,7 @@ enum
 };
 
 
-static void       gimp_data_editor_class_init (GimpDataEditorClass *klass);
-static void       gimp_data_editor_init       (GimpDataEditor      *view);
-
-static void       gimp_data_editor_docked_iface_init (GimpDockedInterface *docked_iface);
+static void       gimp_data_editor_docked_iface_init (GimpDockedInterface *iface);
 
 static GObject  * gimp_data_editor_constructor       (GType            type,
                                                       guint            n_params,
@@ -98,53 +95,19 @@ static void       gimp_data_editor_revert_clicked    (GtkWidget      *widget,
 static void       gimp_data_editor_save_dirty        (GimpDataEditor *editor);
 
 
-static GimpEditorClass     *parent_class        = NULL;
+G_DEFINE_TYPE_WITH_CODE (GimpDataEditor, gimp_data_editor, GIMP_TYPE_EDITOR,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
+                                                gimp_data_editor_docked_iface_init));
+
+#define parent_class gimp_data_editor_parent_class
+
 static GimpDockedInterface *parent_docked_iface = NULL;
 
-
-GType
-gimp_data_editor_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo view_info =
-      {
-        sizeof (GimpDataEditorClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_data_editor_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpDataEditor),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_data_editor_init,
-      };
-      static const GInterfaceInfo docked_iface_info =
-      {
-        (GInterfaceInitFunc) gimp_data_editor_docked_iface_init,
-        NULL,           /* iface_finalize */
-        NULL            /* iface_data     */
-      };
-
-      type = g_type_register_static (GIMP_TYPE_EDITOR,
-                                     "GimpDataEditor",
-                                     &view_info, 0);
-
-      g_type_add_interface_static (type, GIMP_TYPE_DOCKED,
-                                   &docked_iface_info);
-    }
-
-  return type;
-}
 
 static void
 gimp_data_editor_class_init (GimpDataEditorClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->constructor  = gimp_data_editor_constructor;
   object_class->set_property = gimp_data_editor_set_property;
@@ -192,16 +155,16 @@ gimp_data_editor_init (GimpDataEditor *editor)
 }
 
 static void
-gimp_data_editor_docked_iface_init (GimpDockedInterface *docked_iface)
+gimp_data_editor_docked_iface_init (GimpDockedInterface *iface)
 {
-  parent_docked_iface = g_type_interface_peek_parent (docked_iface);
+  parent_docked_iface = g_type_interface_peek_parent (iface);
 
   if (! parent_docked_iface)
     parent_docked_iface = g_type_default_interface_peek (GIMP_TYPE_DOCKED);
 
-  docked_iface->set_aux_info = gimp_data_editor_set_aux_info;
-  docked_iface->get_aux_info = gimp_data_editor_get_aux_info;
-  docked_iface->get_title    = gimp_data_editor_get_title;
+  iface->set_aux_info = gimp_data_editor_set_aux_info;
+  iface->get_aux_info = gimp_data_editor_get_aux_info;
+  iface->get_title    = gimp_data_editor_get_title;
 }
 
 static GObject *

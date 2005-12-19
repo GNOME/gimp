@@ -41,43 +41,19 @@ enum
 
 /*  local function prototypes  */
 
-static void      gimp_color_bar_class_init    (GimpColorBarClass *klass);
-static void      gimp_color_bar_init          (GimpColorBar      *bar);
-static void      gimp_color_bar_set_property  (GObject           *object,
-                                               guint              property_id,
-                                               const GValue      *value,
-                                               GParamSpec        *pspec);
+static void      gimp_color_bar_set_property (GObject        *object,
+                                              guint           property_id,
+                                              const GValue   *value,
+                                              GParamSpec     *pspec);
 
-static gboolean  gimp_color_bar_expose        (GtkWidget         *widget,
-                                               GdkEventExpose    *event);
+static gboolean  gimp_color_bar_expose       (GtkWidget      *widget,
+                                              GdkEventExpose *event);
 
 
-GType
-gimp_color_bar_get_type (void)
-{
-  static GType type = 0;
+G_DEFINE_TYPE (GimpColorBar, gimp_color_bar, GTK_TYPE_MISC);
 
-  if (! type)
-    {
-      static const GTypeInfo bar_info =
-      {
-        sizeof (GimpColorBarClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_color_bar_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpColorBar),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_color_bar_init,
-      };
+#define parent_class gimp_color_bar_parent_class
 
-      type = g_type_register_static (GTK_TYPE_MISC,
-                                     "GimpColorBar", &bar_info, 0);
-    }
-
-  return type;
-}
 
 static void
 gimp_color_bar_class_init (GimpColorBarClass *klass)

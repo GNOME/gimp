@@ -38,9 +38,6 @@
 #include "gimppaletteselect.h"
 
 
-static void   gimp_palette_select_class_init (GimpPaletteSelectClass *klass);
-static void   gimp_palette_select_init       (GimpPaletteSelect      *dialog);
-
 static GObject  * gimp_palette_select_constructor  (GType          type,
                                                     guint          n_params,
                                                     GObjectConstructParam *params);
@@ -51,44 +48,16 @@ static Argument * gimp_palette_select_run_callback (GimpPdbDialog *dialog,
                                                     gint          *n_return_vals);
 
 
-static GimpPdbDialogClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpPaletteSelect, gimp_palette_select, GIMP_TYPE_PDB_DIALOG);
 
+#define parent_class gimp_palette_select_parent_class
 
-GType
-gimp_palette_select_get_type (void)
-{
-  static GType dialog_type = 0;
-
-  if (! dialog_type)
-    {
-      static const GTypeInfo dialog_info =
-      {
-        sizeof (GimpPaletteSelectClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_palette_select_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpPaletteSelect),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_palette_select_init,
-      };
-
-      dialog_type = g_type_register_static (GIMP_TYPE_PDB_DIALOG,
-                                            "GimpPaletteSelect",
-                                            &dialog_info, 0);
-    }
-
-  return dialog_type;
-}
 
 static void
 gimp_palette_select_class_init (GimpPaletteSelectClass *klass)
 {
   GObjectClass       *object_class = G_OBJECT_CLASS (klass);
   GimpPdbDialogClass *pdb_class    = GIMP_PDB_DIALOG_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->constructor = gimp_palette_select_constructor;
 

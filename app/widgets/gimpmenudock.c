@@ -52,9 +52,6 @@
 #define DEFAULT_MENU_PREVIEW_SIZE GTK_ICON_SIZE_SMALL_TOOLBAR
 
 
-static void   gimp_menu_dock_class_init          (GimpMenuDockClass *klass);
-static void   gimp_menu_dock_init                (GimpMenuDock      *dock);
-
 static GObject * gimp_menu_dock_constructor   (GType                  type,
                                                guint                  n_params,
                                                GObjectConstructParam *params);
@@ -91,36 +88,10 @@ static void   gimp_menu_dock_auto_clicked            (GtkWidget      *widget,
                                                       GimpDock       *dock);
 
 
-static GimpDockClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpMenuDock, gimp_menu_dock, GIMP_TYPE_IMAGE_DOCK);
 
+#define parent_class gimp_menu_dock_parent_class
 
-GType
-gimp_menu_dock_get_type (void)
-{
-  static GType dock_type = 0;
-
-  if (! dock_type)
-    {
-      static const GTypeInfo dock_info =
-      {
-        sizeof (GimpMenuDockClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_menu_dock_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpMenuDock),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_menu_dock_init,
-      };
-
-      dock_type = g_type_register_static (GIMP_TYPE_IMAGE_DOCK,
-                                          "GimpMenuDock",
-                                          &dock_info, 0);
-    }
-
-  return dock_type;
-}
 
 static void
 gimp_menu_dock_class_init (GimpMenuDockClass *klass)
@@ -129,8 +100,6 @@ gimp_menu_dock_class_init (GimpMenuDockClass *klass)
   GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class     = GTK_WIDGET_CLASS (klass);
   GimpDockClass  *dock_class       = GIMP_DOCK_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->constructor = gimp_menu_dock_constructor;
 

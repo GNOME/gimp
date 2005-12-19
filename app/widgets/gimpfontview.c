@@ -39,50 +39,19 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_font_view_class_init    (GimpFontViewClass   *klass);
-static void   gimp_font_view_init          (GimpFontView        *view);
-
 static void   gimp_font_view_activate_item (GimpContainerEditor *editor,
                                             GimpViewable        *viewable);
 
 
-static GimpContainerEditorClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpFontView, gimp_font_view, GIMP_TYPE_CONTAINER_EDITOR);
 
+#define parent_class gimp_font_view_parent_class
 
-GType
-gimp_font_view_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo view_info =
-      {
-        sizeof (GimpFontViewClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_font_view_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpFontView),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_font_view_init,
-      };
-
-      type = g_type_register_static (GIMP_TYPE_CONTAINER_EDITOR,
-                                     "GimpFontView",
-                                     &view_info, 0);
-    }
-
-  return type;
-}
 
 static void
 gimp_font_view_class_init (GimpFontViewClass *klass)
 {
   GimpContainerEditorClass *editor_class = GIMP_CONTAINER_EDITOR_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   editor_class->activate_item = gimp_font_view_activate_item;
 }

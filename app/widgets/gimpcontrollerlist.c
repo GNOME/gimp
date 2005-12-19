@@ -69,9 +69,6 @@ enum
 };
 
 
-static void gimp_controller_list_class_init (GimpControllerListClass *klass);
-static void gimp_controller_list_init       (GimpControllerList      *list);
-
 static GObject * gimp_controller_list_constructor (GType               type,
                                                    guint               n_params,
                                                    GObjectConstructParam *params);
@@ -117,43 +114,15 @@ static void gimp_controller_list_down_clicked    (GtkWidget          *button,
                                                   GimpControllerList *list);
 
 
-static GtkVBoxClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpControllerList, gimp_controller_list, GTK_TYPE_VBOX);
 
+#define parent_class gimp_controller_list_parent_class
 
-GType
-gimp_controller_list_get_type (void)
-{
-  static GType view_type = 0;
-
-  if (! view_type)
-    {
-      static const GTypeInfo view_info =
-      {
-        sizeof (GimpControllerListClass),
-        NULL,           /* base_init      */
-        NULL,           /* base_finalize  */
-        (GClassInitFunc) gimp_controller_list_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpControllerList),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_controller_list_init
-      };
-
-      view_type = g_type_register_static (GTK_TYPE_VBOX,
-                                          "GimpControllerList",
-                                          &view_info, 0);
-    }
-
-  return view_type;
-}
 
 static void
 gimp_controller_list_class_init (GimpControllerListClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->constructor  = gimp_controller_list_constructor;
   object_class->set_property = gimp_controller_list_set_property;

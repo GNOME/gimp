@@ -63,9 +63,6 @@ enum
 };
 
 
-static void      gimp_dock_class_init        (GimpDockClass         *klass);
-static void      gimp_dock_init              (GimpDock              *dock);
-
 static GObject * gimp_dock_constructor       (GType                  type,
                                               guint                  n_params,
                                               GObjectConstructParam *params);
@@ -94,37 +91,12 @@ static void      gimp_dock_real_book_removed (GimpDock              *dock,
                                               GimpDockbook          *dockbook);
 
 
-static GtkWindowClass *parent_class              = NULL;
-static guint           dock_signals[LAST_SIGNAL] = { 0 };
+G_DEFINE_TYPE (GimpDock, gimp_dock, GTK_TYPE_WINDOW);
 
+#define parent_class gimp_dock_parent_class
 
-GType
-gimp_dock_get_type (void)
-{
-  static GType dock_type = 0;
+static guint dock_signals[LAST_SIGNAL] = { 0 };
 
-  if (! dock_type)
-    {
-      static const GTypeInfo dock_info =
-      {
-        sizeof (GimpDockClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_dock_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpDock),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_dock_init,
-      };
-
-      dock_type = g_type_register_static (GTK_TYPE_WINDOW,
-                                          "GimpDock",
-                                          &dock_info, 0);
-    }
-
-  return dock_type;
-}
 
 static void
 gimp_dock_class_init (GimpDockClass *klass)
@@ -132,8 +104,6 @@ gimp_dock_class_init (GimpDockClass *klass)
   GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
   GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class     = GTK_WIDGET_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   dock_signals[BOOK_ADDED] =
     g_signal_new ("book-added",

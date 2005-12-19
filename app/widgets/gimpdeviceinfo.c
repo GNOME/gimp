@@ -54,9 +54,6 @@ enum
 
 /*  local function prototypes  */
 
-static void   gimp_device_info_class_init   (GimpDeviceInfoClass *klass);
-static void   gimp_device_info_init         (GimpDeviceInfo      *device_info);
-
 static GObject * gimp_device_info_constructor  (GType                  type,
                                                 guint                  n_params,
                                                 GObjectConstructParam *params);
@@ -71,46 +68,18 @@ static void      gimp_device_info_get_property (GObject               *object,
                                                 GParamSpec            *pspec);
 
 
-static GimpContextClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpDeviceInfo, gimp_device_info, GIMP_TYPE_CONTEXT);
+
+#define parent_class gimp_device_info_parent_class
 
 static guint device_info_signals[LAST_SIGNAL] = { 0 };
 
-
-GType
-gimp_device_info_get_type (void)
-{
-  static GType device_info_type = 0;
-
-  if (! device_info_type)
-    {
-      static const GTypeInfo device_info_info =
-      {
-        sizeof (GimpDeviceInfoClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_device_info_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpDeviceInfo),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_device_info_init,
-      };
-
-      device_info_type = g_type_register_static (GIMP_TYPE_CONTEXT,
-                                                 "GimpDeviceInfo",
-                                                 &device_info_info, 0);
-    }
-
-  return device_info_type;
-}
 
 static void
 gimp_device_info_class_init (GimpDeviceInfoClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GParamSpec   *array_spec;
-
-  parent_class = g_type_class_peek_parent (klass);
 
   device_info_signals[CHANGED] =
     g_signal_new ("changed",

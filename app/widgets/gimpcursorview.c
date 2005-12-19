@@ -52,73 +52,39 @@ enum
 };
 
 
-static void   gimp_cursor_view_class_init        (GimpCursorViewClass  *klass);
-static void   gimp_cursor_view_init              (GimpCursorView       *view);
-static void   gimp_cursor_view_docked_iface_init (GimpDockedInterface  *docked_iface);
+static void   gimp_cursor_view_docked_iface_init (GimpDockedInterface *iface);
 
-static void   gimp_cursor_view_set_property      (GObject              *object,
-                                                  guint                 property_id,
-                                                  const GValue         *value,
-                                                  GParamSpec           *pspec);
-static void   gimp_cursor_view_get_property      (GObject              *object,
-                                                  guint                 property_id,
-                                                  GValue               *value,
-                                                  GParamSpec           *pspec);
-static void   gimp_cursor_view_set_aux_info      (GimpDocked           *docked,
-                                                  GList                *aux_info);
-static GList *gimp_cursor_view_get_aux_info      (GimpDocked           *docked);
-static void   gimp_cursor_view_style_set         (GtkWidget            *widget,
-                                                  GtkStyle             *prev_style);
+static void   gimp_cursor_view_set_property      (GObject      *object,
+                                                  guint         property_id,
+                                                  const GValue *value,
+                                                  GParamSpec   *pspec);
+static void   gimp_cursor_view_get_property      (GObject      *object,
+                                                  guint         property_id,
+                                                  GValue       *value,
+                                                  GParamSpec   *pspec);
+
+static void   gimp_cursor_view_style_set         (GtkWidget    *widget,
+                                                  GtkStyle      *prev_style);
+
+static void   gimp_cursor_view_set_aux_info      (GimpDocked   *docked,
+                                                  GList        *aux_info);
+static GList *gimp_cursor_view_get_aux_info      (GimpDocked   *docked);
 
 
-static GimpEditorClass     *parent_class        = NULL;
+G_DEFINE_TYPE_WITH_CODE (GimpCursorView, gimp_cursor_view, GIMP_TYPE_EDITOR,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
+                                                gimp_cursor_view_docked_iface_init));
+
+#define parent_class gimp_cursor_view_parent_class
+
 static GimpDockedInterface *parent_docked_iface = NULL;
 
-
-GType
-gimp_cursor_view_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo view_info =
-      {
-        sizeof (GimpCursorViewClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_cursor_view_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpCursorView),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_cursor_view_init,
-      };
-      static const GInterfaceInfo docked_iface_info =
-      {
-        (GInterfaceInitFunc) gimp_cursor_view_docked_iface_init,
-        NULL,           /* iface_finalize */
-        NULL            /* iface_data     */
-      };
-
-      type = g_type_register_static (GIMP_TYPE_EDITOR,
-                                     "GimpCursorView",
-                                     &view_info, 0);
-
-      g_type_add_interface_static (type, GIMP_TYPE_DOCKED,
-                                   &docked_iface_info);
-    }
-
-  return type;
-}
 
 static void
 gimp_cursor_view_class_init (GimpCursorViewClass* klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->get_property = gimp_cursor_view_get_property;
   object_class->set_property = gimp_cursor_view_set_property;
@@ -228,15 +194,15 @@ gimp_cursor_view_init (GimpCursorView *view)
 }
 
 static void
-gimp_cursor_view_docked_iface_init (GimpDockedInterface *docked_iface)
+gimp_cursor_view_docked_iface_init (GimpDockedInterface *iface)
 {
-  parent_docked_iface = g_type_interface_peek_parent (docked_iface);
+  parent_docked_iface = g_type_interface_peek_parent (iface);
 
   if (! parent_docked_iface)
     parent_docked_iface = g_type_default_interface_peek (GIMP_TYPE_DOCKED);
 
-  docked_iface->set_aux_info = gimp_cursor_view_set_aux_info;
-  docked_iface->get_aux_info = gimp_cursor_view_get_aux_info;
+  iface->set_aux_info = gimp_cursor_view_set_aux_info;
+  iface->get_aux_info = gimp_cursor_view_get_aux_info;
 }
 
 static void

@@ -42,52 +42,22 @@
 #include "gimp-intl.h"
 
 
-static void    gimp_document_view_class_init    (GimpDocumentViewClass *klass);
-static void    gimp_document_view_init          (GimpDocumentView      *view);
-
 static void    gimp_document_view_activate_item (GimpContainerEditor *editor,
                                                  GimpViewable        *viewable);
 static GList * gimp_document_view_drag_uri_list (GtkWidget           *widget,
                                                  gpointer             data);
 
 
-static GimpContainerEditorClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpDocumentView, gimp_document_view,
+               GIMP_TYPE_CONTAINER_EDITOR);
 
+#define parent_class gimp_document_view_parent_class
 
-GType
-gimp_document_view_get_type (void)
-{
-  static GType view_type = 0;
-
-  if (! view_type)
-    {
-      static const GTypeInfo view_info =
-      {
-        sizeof (GimpDocumentViewClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_document_view_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpDocumentView),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_document_view_init,
-      };
-
-      view_type = g_type_register_static (GIMP_TYPE_CONTAINER_EDITOR,
-                                          "GimpDocumentView",
-                                          &view_info, 0);
-    }
-
-  return view_type;
-}
 
 static void
 gimp_document_view_class_init (GimpDocumentViewClass *klass)
 {
   GimpContainerEditorClass *editor_class = GIMP_CONTAINER_EDITOR_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   editor_class->activate_item = gimp_document_view_activate_item;
 }

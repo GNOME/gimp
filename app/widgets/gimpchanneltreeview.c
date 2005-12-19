@@ -47,11 +47,8 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_channel_tree_view_class_init (GimpChannelTreeViewClass *klass);
-static void   gimp_channel_tree_view_init       (GimpChannelTreeView      *view);
-
-static void   gimp_channel_tree_view_view_iface_init   (GimpContainerViewInterface *view_iface);
-static void   gimp_channel_tree_view_docked_iface_init (GimpDockedInterface *docked_iface);
+static void  gimp_channel_tree_view_view_iface_init   (GimpContainerViewInterface *iface);
+static void  gimp_channel_tree_view_docked_iface_init (GimpDockedInterface *iface);
 
 static GObject * gimp_channel_tree_view_constructor   (GType              type,
                                                        guint              n_params,
@@ -75,100 +72,56 @@ static void   gimp_channel_tree_view_set_context      (GimpDocked        *docked
                                                        GimpContext       *context);
 
 
-static GimpDrawableTreeViewClass  *parent_class        = NULL;
+G_DEFINE_TYPE_WITH_CODE (GimpChannelTreeView, gimp_channel_tree_view,
+                         GIMP_TYPE_DRAWABLE_TREE_VIEW,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONTAINER_VIEW,
+                                                gimp_channel_tree_view_view_iface_init)
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
+                                                gimp_channel_tree_view_docked_iface_init));
+
+#define parent_class gimp_channel_tree_view_parent_class
+
 static GimpContainerViewInterface *parent_view_iface   = NULL;
 static GimpDockedInterface        *parent_docked_iface = NULL;
 
 
-GType
-gimp_channel_tree_view_get_type (void)
-{
-  static GType view_type = 0;
-
-  if (! view_type)
-    {
-      static const GTypeInfo view_info =
-      {
-        sizeof (GimpChannelTreeViewClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_channel_tree_view_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpChannelTreeView),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_channel_tree_view_init,
-      };
-
-      static const GInterfaceInfo view_iface_info =
-      {
-        (GInterfaceInitFunc) gimp_channel_tree_view_view_iface_init,
-        NULL,           /* iface_finalize */
-        NULL            /* iface_data     */
-      };
-      static const GInterfaceInfo docked_iface_info =
-      {
-        (GInterfaceInitFunc) gimp_channel_tree_view_docked_iface_init,
-        NULL,           /* iface_finalize */
-        NULL            /* iface_data     */
-      };
-
-      view_type = g_type_register_static (GIMP_TYPE_DRAWABLE_TREE_VIEW,
-                                          "GimpChannelTreeView",
-                                          &view_info, 0);
-
-      g_type_add_interface_static (view_type, GIMP_TYPE_CONTAINER_VIEW,
-                                   &view_iface_info);
-      g_type_add_interface_static (view_type, GIMP_TYPE_DOCKED,
-                                   &docked_iface_info);
-    }
-
-  return view_type;
-}
-
 static void
 gimp_channel_tree_view_class_init (GimpChannelTreeViewClass *klass)
 {
-  GObjectClass               *object_class;
-  GimpContainerTreeViewClass *view_class;
-  GimpItemTreeViewClass      *item_view_class;
+  GObjectClass               *object_class = G_OBJECT_CLASS (klass);
+  GimpContainerTreeViewClass *view_class   = GIMP_CONTAINER_TREE_VIEW_CLASS (klass);
+  GimpItemTreeViewClass      *iv_class     = GIMP_ITEM_TREE_VIEW_CLASS (klass);
 
-  object_class    = G_OBJECT_CLASS (klass);
-  view_class      = GIMP_CONTAINER_TREE_VIEW_CLASS (klass);
-  item_view_class = GIMP_ITEM_TREE_VIEW_CLASS (klass);
+  object_class->constructor  = gimp_channel_tree_view_constructor;
 
-  parent_class = g_type_class_peek_parent (klass);
+  view_class->drop_viewable  = gimp_channel_tree_view_drop_viewable;
+  view_class->drop_component = gimp_channel_tree_view_drop_component;
 
-  object_class->constructor        = gimp_channel_tree_view_constructor;
+  iv_class->set_image        = gimp_channel_tree_view_set_image;
 
-  view_class->drop_viewable        = gimp_channel_tree_view_drop_viewable;
-  view_class->drop_component       = gimp_channel_tree_view_drop_component;
+  iv_class->item_type        = GIMP_TYPE_CHANNEL;
+  iv_class->signal_name      = "active-channel-changed";
 
-  item_view_class->set_image       = gimp_channel_tree_view_set_image;
+  iv_class->get_container    = gimp_image_get_channels;
+  iv_class->get_active_item  = (GimpGetItemFunc) gimp_image_get_active_channel;
+  iv_class->set_active_item  = (GimpSetItemFunc) gimp_image_set_active_channel;
+  iv_class->reorder_item     = (GimpReorderItemFunc) gimp_image_position_channel;
+  iv_class->add_item         = (GimpAddItemFunc) gimp_image_add_channel;
+  iv_class->remove_item      = (GimpRemoveItemFunc) gimp_image_remove_channel;
+  iv_class->new_item         = gimp_channel_tree_view_item_new;
 
-  item_view_class->item_type       = GIMP_TYPE_CHANNEL;
-  item_view_class->signal_name     = "active-channel-changed";
-
-  item_view_class->get_container   = gimp_image_get_channels;
-  item_view_class->get_active_item = (GimpGetItemFunc) gimp_image_get_active_channel;
-  item_view_class->set_active_item = (GimpSetItemFunc) gimp_image_set_active_channel;
-  item_view_class->reorder_item    = (GimpReorderItemFunc) gimp_image_position_channel;
-  item_view_class->add_item        = (GimpAddItemFunc) gimp_image_add_channel;
-  item_view_class->remove_item     = (GimpRemoveItemFunc) gimp_image_remove_channel;
-  item_view_class->new_item        = gimp_channel_tree_view_item_new;
-
-  item_view_class->action_group        = "channels";
-  item_view_class->activate_action     = "channels-edit-attributes";
-  item_view_class->edit_action         = "channels-edit-attributes";
-  item_view_class->new_action          = "channels-new";
-  item_view_class->new_default_action  = "channels-new-last-values";
-  item_view_class->raise_action        = "channels-raise";
-  item_view_class->raise_top_action    = "channels-raise-to-top";
-  item_view_class->lower_action        = "channels-lower";
-  item_view_class->lower_bottom_action = "channels-lower-to-bottom";
-  item_view_class->duplicate_action    = "channels-duplicate";
-  item_view_class->delete_action       = "channels-delete";
-  item_view_class->reorder_desc        = _("Reorder Channel");
+  iv_class->action_group        = "channels";
+  iv_class->activate_action     = "channels-edit-attributes";
+  iv_class->edit_action         = "channels-edit-attributes";
+  iv_class->new_action          = "channels-new";
+  iv_class->new_default_action  = "channels-new-last-values";
+  iv_class->raise_action        = "channels-raise";
+  iv_class->raise_top_action    = "channels-raise-to-top";
+  iv_class->lower_action        = "channels-lower";
+  iv_class->lower_bottom_action = "channels-lower-to-bottom";
+  iv_class->duplicate_action    = "channels-duplicate";
+  iv_class->delete_action       = "channels-delete";
+  iv_class->reorder_desc        = _("Reorder Channel");
 }
 
 static void

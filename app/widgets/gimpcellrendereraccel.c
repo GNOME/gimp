@@ -54,10 +54,6 @@ enum
 #define GIMP_CELL_RENDERER_ACCEL_PATH "gimp-cell-renderer-accel-path"
 
 
-static void   gimp_cell_renderer_accel_init       (GimpCellRendererAccel      *cell);
-static void   gimp_cell_renderer_accel_class_init (GimpCellRendererAccelClass *klass);
-
-static void   gimp_cell_renderer_accel_finalize     (GObject         *object);
 static void   gimp_cell_renderer_accel_set_property (GObject         *object,
                                                      guint            param_id,
                                                      const GValue    *value,
@@ -84,51 +80,19 @@ static GtkCellEditable *
                                                      GtkCellRendererState  flags);
 
 
+G_DEFINE_TYPE (GimpCellRendererAccel, gimp_cell_renderer_accel,
+               GTK_TYPE_CELL_RENDERER_TEXT);
+
+#define parent_class gimp_cell_renderer_accel_parent_class
+
 static guint accel_cell_signals[LAST_SIGNAL] = { 0 };
 
-static GtkCellRendererTextClass *parent_class = NULL;
-
-
-GType
-gimp_cell_renderer_accel_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo info =
-      {
-        sizeof (GimpCellRendererAccelClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_cell_renderer_accel_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpCellRendererAccel),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_cell_renderer_accel_init
-      };
-
-      type = g_type_register_static (GTK_TYPE_CELL_RENDERER_TEXT,
-                                     "GimpCellRendererAccel",
-                                     &info, 0);
-    }
-
-  return type;
-}
-
-static void
-gimp_cell_renderer_accel_init (GimpCellRendererAccel *cell)
-{
-}
 
 static void
 gimp_cell_renderer_accel_class_init (GimpCellRendererAccelClass *klass)
 {
   GObjectClass         *object_class = G_OBJECT_CLASS (klass);
   GtkCellRendererClass *cell_class   = GTK_CELL_RENDERER_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (object_class);
 
   accel_cell_signals[ACCEL_EDITED] =
     g_signal_new ("accel-edited",
@@ -143,7 +107,6 @@ gimp_cell_renderer_accel_class_init (GimpCellRendererAccelClass *klass)
                   G_TYPE_UINT,
                   GDK_TYPE_MODIFIER_TYPE);
 
-  object_class->finalize     = gimp_cell_renderer_accel_finalize;
   object_class->set_property = gimp_cell_renderer_accel_set_property;
   object_class->get_property = gimp_cell_renderer_accel_get_property;
 
@@ -165,9 +128,8 @@ gimp_cell_renderer_accel_class_init (GimpCellRendererAccelClass *klass)
 }
 
 static void
-gimp_cell_renderer_accel_finalize (GObject *object)
+gimp_cell_renderer_accel_init (GimpCellRendererAccel *cell)
 {
-  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void

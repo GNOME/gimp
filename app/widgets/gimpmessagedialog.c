@@ -31,32 +31,17 @@
 #include "gimpmessagedialog.h"
 
 
-GType
-gimp_message_dialog_get_type (void)
+G_DEFINE_TYPE (GimpMessageDialog, gimp_message_dialog, GIMP_TYPE_DIALOG);
+
+
+static void
+gimp_message_dialog_class_init (GimpMessageDialogClass *klass)
 {
-  static GType dialog_type = 0;
+}
 
-  if (! dialog_type)
-    {
-      static const GTypeInfo dialog_info =
-      {
-        sizeof (GimpMessageDialogClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        NULL,           /* class_init     */
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpMessageDialog),
-        0,              /* n_preallocs    */
-        NULL            /* instance_init  */
-      };
-
-      dialog_type = g_type_register_static (GIMP_TYPE_DIALOG,
-                                            "GimpMessageDialog",
-                                            &dialog_info, 0);
-    }
-
-  return dialog_type;
+static void
+gimp_message_dialog_init (GimpMessageDialog *dialog)
+{
 }
 
 

@@ -36,32 +36,18 @@
 #include "gimpviewrenderer.h"
 
 
-GType
-gimp_pattern_factory_view_get_type (void)
+G_DEFINE_TYPE (GimpPatternFactoryView, gimp_pattern_factory_view,
+               GIMP_TYPE_DATA_FACTORY_VIEW);
+
+
+static void
+gimp_pattern_factory_view_class_init (GimpPatternFactoryViewClass *klass)
 {
-  static GType view_type = 0;
+}
 
-  if (! view_type)
-    {
-      static const GTypeInfo view_info =
-      {
-        sizeof (GimpPatternFactoryViewClass),
-        NULL,           /* base_init      */
-        NULL,           /* base_finalize  */
-        NULL,           /* class_init     */
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpPatternFactoryView),
-        0,              /* n_preallocs    */
-        NULL            /* instance_init  */
-      };
-
-      view_type = g_type_register_static (GIMP_TYPE_DATA_FACTORY_VIEW,
-                                          "GimpPatternFactoryView",
-                                          &view_info, 0);
-    }
-
-  return view_type;
+static void
+gimp_pattern_factory_view_init (GimpPatternFactoryView *view)
+{
 }
 
 GtkWidget *

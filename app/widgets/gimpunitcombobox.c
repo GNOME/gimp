@@ -29,35 +29,14 @@
 #include "gimpunitstore.h"
 
 
-static void  gimp_unit_combo_box_init (GimpUnitComboBox *combo);
+G_DEFINE_TYPE (GimpUnitComboBox, gimp_unit_combo_box, GTK_TYPE_COMBO_BOX);
+
+#define parent_class gimp_unit_combo_box_parent_class
 
 
-GType
-gimp_unit_combo_box_get_type (void)
+static void
+gimp_unit_combo_box_class_init (GimpUnitComboBoxClass *klass)
 {
-  static GType combo_box_type = 0;
-
-  if (!combo_box_type)
-    {
-      static const GTypeInfo combo_box_info =
-      {
-        sizeof (GimpUnitComboBoxClass),
-        NULL,           /* base_init      */
-        NULL,           /* base_finalize  */
-        NULL,           /* class_init     */
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpUnitComboBox),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_unit_combo_box_init
-      };
-
-      combo_box_type = g_type_register_static (GTK_TYPE_COMBO_BOX,
-                                               "GimpUnitComboBox",
-                                               &combo_box_info, 0);
-    }
-
-  return combo_box_type;
 }
 
 static void

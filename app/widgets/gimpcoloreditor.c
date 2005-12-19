@@ -49,9 +49,7 @@ enum
 };
 
 
-static void   gimp_color_editor_class_init        (GimpColorEditorClass *klass);
-static void   gimp_color_editor_init              (GimpColorEditor      *editor);
-static void   gimp_color_editor_docked_iface_init (GimpDockedInterface  *docked_iface);
+static void   gimp_color_editor_docked_iface_init (GimpDockedInterface  *iface);
 
 static void   gimp_color_editor_set_property    (GObject           *object,
                                                  guint              property_id,
@@ -95,46 +93,14 @@ static void   gimp_color_editor_entry_changed   (GimpColorHexEntry *entry,
                                                  GimpColorEditor   *editor);
 
 
-static GimpEditorClass     *parent_class        = NULL;
+G_DEFINE_TYPE_WITH_CODE (GimpColorEditor, gimp_color_editor, GIMP_TYPE_EDITOR,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
+                                                gimp_color_editor_docked_iface_init));
+
+#define parent_class gimp_color_editor_parent_class
+
 static GimpDockedInterface *parent_docked_iface = NULL;
 
-
-GType
-gimp_color_editor_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo editor_info =
-      {
-        sizeof (GimpColorEditorClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_color_editor_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpColorEditor),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_color_editor_init,
-      };
-      static const GInterfaceInfo docked_iface_info =
-      {
-        (GInterfaceInitFunc) gimp_color_editor_docked_iface_init,
-        NULL,           /* iface_finalize */
-        NULL            /* iface_data     */
-      };
-
-      type = g_type_register_static (GIMP_TYPE_EDITOR,
-                                     "GimpColorEditor",
-                                     &editor_info, 0);
-
-      g_type_add_interface_static (type, GIMP_TYPE_DOCKED,
-                                   &docked_iface_info);
-    }
-
-  return type;
-}
 
 static void
 gimp_color_editor_class_init (GimpColorEditorClass* klass)
@@ -142,8 +108,6 @@ gimp_color_editor_class_init (GimpColorEditorClass* klass)
   GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
   GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class     = GTK_WIDGET_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->set_property = gimp_color_editor_set_property;
   object_class->get_property = gimp_color_editor_get_property;
@@ -157,7 +121,6 @@ gimp_color_editor_class_init (GimpColorEditorClass* klass)
                                                         NULL, NULL,
                                                         GIMP_TYPE_CONTEXT,
                                                         G_PARAM_READWRITE));
-
 }
 
 static void
@@ -323,6 +286,7 @@ gimp_color_editor_get_property (GObject    *object,
       break;
     }
 }
+
 static void
 gimp_color_editor_destroy (GtkObject *object)
 {
@@ -353,17 +317,17 @@ gimp_color_editor_get_preview (GimpDocked  *docked,
 }
 
 static void
-gimp_color_editor_docked_iface_init (GimpDockedInterface *docked_iface)
+gimp_color_editor_docked_iface_init (GimpDockedInterface *iface)
 {
-  parent_docked_iface = g_type_interface_peek_parent (docked_iface);
+  parent_docked_iface = g_type_interface_peek_parent (iface);
 
   if (! parent_docked_iface)
     parent_docked_iface = g_type_default_interface_peek (GIMP_TYPE_DOCKED);
 
-  docked_iface->get_preview  = gimp_color_editor_get_preview;
-  docked_iface->set_aux_info = gimp_color_editor_set_aux_info;
-  docked_iface->get_aux_info = gimp_color_editor_get_aux_info;
-  docked_iface->set_context  = gimp_color_editor_set_context;
+  iface->get_preview  = gimp_color_editor_get_preview;
+  iface->set_aux_info = gimp_color_editor_set_aux_info;
+  iface->get_aux_info = gimp_color_editor_get_aux_info;
+  iface->set_context  = gimp_color_editor_set_context;
 }
 
 #define AUX_INFO_CURRENT_PAGE "current-page"

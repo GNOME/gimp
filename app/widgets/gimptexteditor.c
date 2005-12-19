@@ -45,57 +45,30 @@ enum
 };
 
 
-static void      gimp_text_editor_class_init    (GimpTextEditorClass *klass);
-static void      gimp_text_editor_init          (GimpTextEditor      *editor);
+static void   gimp_text_editor_finalize     (GObject         *object);
 
-static void      gimp_text_editor_finalize      (GObject             *object);
-
-static void      gimp_text_editor_text_changed  (GtkTextBuffer       *buffer,
-                                                 GimpTextEditor      *editor);
-static void      gimp_text_editor_font_toggled  (GtkToggleButton     *button,
-                                                 GimpTextEditor      *editor);
+static void   gimp_text_editor_text_changed (GtkTextBuffer   *buffer,
+                                             GimpTextEditor  *editor);
+static void   gimp_text_editor_font_toggled (GtkToggleButton *button,
+                                             GimpTextEditor  *editor);
 
 
-static GimpDialogClass *parent_class = NULL;
-static guint            text_editor_signals[LAST_SIGNAL] = { 0 };
+G_DEFINE_TYPE (GimpTextEditor, gimp_text_editor, GIMP_TYPE_DIALOG);
 
+#define parent_class gimp_text_editor_parent_class
 
-GType
-gimp_text_editor_get_type (void)
-{
-  static GType type = 0;
+static guint text_editor_signals[LAST_SIGNAL] = { 0 };
 
-  if (! type)
-    {
-      static const GTypeInfo info =
-      {
-        sizeof (GimpTextEditorClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_text_editor_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpTextEditor),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_text_editor_init,
-      };
-
-      type = g_type_register_static (GIMP_TYPE_DIALOG,
-                                     "GimpTextEditor",
-                                     &info, 0);
-    }
-
-  return type;
-}
 
 static void
 gimp_text_editor_class_init (GimpTextEditorClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  parent_class = g_type_class_peek_parent (klass);
-
   object_class->finalize = gimp_text_editor_finalize;
+
+  klass->text_changed    = NULL;
+  klass->dir_changed     = NULL;
 
   text_editor_signals[TEXT_CHANGED] =
     g_signal_new ("text-changed",
@@ -114,9 +87,6 @@ gimp_text_editor_class_init (GimpTextEditorClass *klass)
 		  NULL, NULL,
 		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
-
-  klass->text_changed = NULL;
-  klass->dir_changed  = NULL;
 }
 
 static void

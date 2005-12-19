@@ -50,9 +50,6 @@ enum
 };
 
 
-static void   gimp_action_group_init           (GimpActionGroup       *group);
-static void   gimp_action_group_class_init     (GimpActionGroupClass  *klass);
-
 static GObject * gimp_action_group_constructor (GType                  type,
                                                 guint                  n_params,
                                                 GObjectConstructParam *params);
@@ -68,43 +65,15 @@ static void   gimp_action_group_get_property   (GObject               *object,
                                                 GParamSpec            *pspec);
 
 
-static GtkActionGroupClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpActionGroup, gimp_action_group, GTK_TYPE_ACTION_GROUP);
 
+#define parent_class gimp_action_group_parent_class
 
-GType
-gimp_action_group_get_type (void)
-{
-  static GType type = 0;
-
-  if (!type)
-    {
-      static const GTypeInfo type_info =
-      {
-        sizeof (GimpActionGroupClass),
-	NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_action_group_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpActionGroup),
-        0, /* n_preallocs */
-        (GInstanceInitFunc) gimp_action_group_init,
-      };
-
-      type = g_type_register_static (GTK_TYPE_ACTION_GROUP,
-                                     "GimpActionGroup",
-				     &type_info, 0);
-    }
-
-  return type;
-}
 
 static void
 gimp_action_group_class_init (GimpActionGroupClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->constructor  = gimp_action_group_constructor;
   object_class->dispose      = gimp_action_group_dispose;

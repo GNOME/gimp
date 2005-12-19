@@ -47,9 +47,6 @@ enum
 };
 
 
-static void   gimp_sample_point_editor_class_init (GimpSamplePointEditorClass *klass);
-static void   gimp_sample_point_editor_init       (GimpSamplePointEditor      *editor);
-
 static GObject * gimp_sample_point_editor_constructor (GType                  type,
                                                        guint                  n_params,
                                                        GObjectConstructParam *params);
@@ -90,45 +87,18 @@ static void   gimp_sample_point_editor_dirty          (GimpSamplePointEditor *ed
 static gboolean gimp_sample_point_editor_update       (GimpSamplePointEditor *editor);
 
 
-static GimpImageEditorClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpSamplePointEditor, gimp_sample_point_editor,
+               GIMP_TYPE_IMAGE_EDITOR);
 
+#define parent_class gimp_sample_point_editor_parent_class
 
-GType
-gimp_sample_point_editor_get_type (void)
-{
-  static GType editor_type = 0;
-
-  if (! editor_type)
-    {
-      static const GTypeInfo editor_info =
-      {
-        sizeof (GimpSamplePointEditorClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_sample_point_editor_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpSamplePointEditor),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_sample_point_editor_init,
-      };
-
-      editor_type = g_type_register_static (GIMP_TYPE_IMAGE_EDITOR,
-                                            "GimpSamplePointEditor",
-                                            &editor_info, 0);
-    }
-
-  return editor_type;
-}
 
 static void
-gimp_sample_point_editor_class_init (GimpSamplePointEditorClass* klass)
+gimp_sample_point_editor_class_init (GimpSamplePointEditorClass *klass)
 {
   GObjectClass         *object_class       = G_OBJECT_CLASS (klass);
   GtkWidgetClass       *widget_class       = GTK_WIDGET_CLASS (klass);
   GimpImageEditorClass *image_editor_class = GIMP_IMAGE_EDITOR_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->constructor     = gimp_sample_point_editor_constructor;
   object_class->get_property    = gimp_sample_point_editor_get_property;

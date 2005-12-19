@@ -49,9 +49,6 @@ enum
 };
 
 
-static void gimp_dash_editor_class_init    (GimpDashEditorClass *klass);
-static void gimp_dash_editor_init          (GimpDashEditor      *editor);
-
 static void gimp_dash_editor_finalize           (GObject        *object);
 static void gimp_dash_editor_set_property       (GObject        *object,
                                                  guint           property_id,
@@ -81,44 +78,16 @@ static gint dash_x_to_index                     (GimpDashEditor *editor,
                                                  gint            x);
 
 
-static GtkDrawingAreaClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpDashEditor, gimp_dash_editor, GTK_TYPE_DRAWING_AREA);
 
+#define parent_class gimp_dash_editor_parent_class
 
-GType
-gimp_dash_editor_get_type (void)
-{
-  static GType editor_type = 0;
-
-  if (! editor_type)
-    {
-      static const GTypeInfo editor_info =
-      {
-        sizeof (GimpDashEditorClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_dash_editor_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpDashEditor),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_dash_editor_init,
-      };
-
-      editor_type = g_type_register_static (GTK_TYPE_DRAWING_AREA,
-                                            "GimpDashEditor",
-                                            &editor_info, 0);
-    }
-
-  return editor_type;
-}
 
 static void
 gimp_dash_editor_class_init (GimpDashEditorClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize     = gimp_dash_editor_finalize;
   object_class->get_property = gimp_dash_editor_get_property;

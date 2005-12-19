@@ -47,8 +47,6 @@
 
 /*  local function prototypes  */
 
-static void   gimp_histogram_box_init            (GimpHistogramBox  *box);
-
 static void   gimp_histogram_box_low_adj_update  (GtkAdjustment     *adj,
                                                   GimpHistogramBox  *box);
 static void   gimp_histogram_box_high_adj_update (GtkAdjustment     *adj,
@@ -74,32 +72,13 @@ static void gimp_histogram_draw_slider           (GtkWidget *widget,
                                                   GdkGC     *fill_gc,
                                                   gint       xpos);
 
-GType
-gimp_histogram_box_get_type (void)
+
+G_DEFINE_TYPE (GimpHistogramBox, gimp_histogram_box, GTK_TYPE_VBOX);
+
+
+static void
+gimp_histogram_box_class_init (GimpHistogramBoxClass *klass)
 {
-  static GType box_type = 0;
-
-  if (! box_type)
-    {
-      static const GTypeInfo box_info =
-      {
-        sizeof (GimpHistogramBoxClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) NULL,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpHistogramBox),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_histogram_box_init,
-      };
-
-      box_type = g_type_register_static (GTK_TYPE_VBOX,
-                                         "GimpHistogramBox",
-                                         &box_info, 0);
-    }
-
-  return box_type;
 }
 
 static void

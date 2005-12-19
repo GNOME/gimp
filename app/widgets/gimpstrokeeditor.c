@@ -42,9 +42,9 @@ enum
   PROP_RESOLUTION
 };
 
-static void      gimp_stroke_editor_class_init   (GimpStrokeEditorClass *klass);
-static GObject * gimp_stroke_editor_constructor  (GType                  type,
-                                                  guint                  n_params,
+
+static GObject * gimp_stroke_editor_constructor  (GType              type,
+                                                  guint              n_params,
                                                   GObjectConstructParam *params);
 static void      gimp_stroke_editor_set_property (GObject           *object,
                                                   guint              property_id,
@@ -65,43 +65,15 @@ static void      gimp_stroke_editor_combo_fill   (GimpStrokeOptions *options,
                                                   GtkComboBox       *box);
 
 
-static GtkVBoxClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpStrokeEditor, gimp_stroke_editor, GTK_TYPE_VBOX);
 
+#define parent_class gimp_stroke_editor_parent_class
 
-GType
-gimp_stroke_editor_get_type (void)
-{
-  static GType view_type = 0;
-
-  if (! view_type)
-    {
-      static const GTypeInfo view_info =
-      {
-        sizeof (GimpStrokeEditorClass),
-        NULL,           /* base_init      */
-        NULL,           /* base_finalize  */
-        (GClassInitFunc) gimp_stroke_editor_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpStrokeEditor),
-        0,              /* n_preallocs    */
-        NULL            /* instance_init  */
-      };
-
-      view_type = g_type_register_static (GTK_TYPE_VBOX,
-                                          "GimpStrokeEditor",
-                                          &view_info, 0);
-    }
-
-  return view_type;
-}
 
 static void
 gimp_stroke_editor_class_init (GimpStrokeEditorClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->constructor  = gimp_stroke_editor_constructor;
   object_class->set_property = gimp_stroke_editor_set_property;
@@ -120,6 +92,11 @@ gimp_stroke_editor_class_init (GimpStrokeEditorClass *klass)
                                                         72.0,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
+}
+
+static void
+gimp_stroke_editor_init (GimpStrokeEditor *editor)
+{
 }
 
 static void

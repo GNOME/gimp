@@ -50,8 +50,8 @@ enum
 };
 
 
-#define GIMP_SIZE_BOX_GET_PRIVATE(obj) \
-  (G_TYPE_INSTANCE_GET_PRIVATE ((obj), GIMP_TYPE_SIZE_BOX, GimpSizeBoxPrivate))
+#define GIMP_SIZE_BOX_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), \
+                                        GIMP_TYPE_SIZE_BOX, GimpSizeBoxPrivate))
 
 typedef struct _GimpSizeBoxPrivate GimpSizeBoxPrivate;
 
@@ -65,13 +65,9 @@ struct _GimpSizeBoxPrivate
 };
 
 
-static void      gimp_size_box_class_init    (GimpSizeBoxClass      *klass);
-
 static GObject * gimp_size_box_constructor   (GType                  type,
                                               guint                  n_params,
                                               GObjectConstructParam *params);
-
-static void      gimp_size_box_init           (GimpSizeBox     *box);
 
 static void      gimp_size_box_set_property   (GObject         *object,
                                                guint            property_id,
@@ -88,44 +84,16 @@ static void      gimp_size_box_update_size       (GimpSizeBox *box);
 static void      gimp_size_box_update_resolution (GimpSizeBox *box);
 
 
-static GtkVBoxClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpSizeBox, gimp_size_box, GTK_TYPE_VBOX);
 
+#define parent_class gimp_size_box_parent_class
 
-GType
-gimp_size_box_get_type (void)
-{
-  static GType box_type = 0;
-
-  if (! box_type)
-    {
-      static const GTypeInfo box_info =
-      {
-        sizeof (GimpSizeBoxClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_size_box_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpSizeBox),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_size_box_init
-      };
-
-      box_type = g_type_register_static (GTK_TYPE_VBOX,
-                                         "GimpSizeBox",
-                                         &box_info, 0);
-    }
-
-  return box_type;
-}
 
 static void
 gimp_size_box_class_init (GimpSizeBoxClass *klass)
 {
   GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
   GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->constructor  = gimp_size_box_constructor;
   object_class->set_property = gimp_size_box_set_property;
@@ -308,7 +276,7 @@ gimp_size_box_constructor (GType                  type,
                                      "resolution-unit",
                                      entry, NULL,
                                      1.0, 1.0);
-     }
+    }
   else
     {
       label = gtk_label_new (NULL);

@@ -44,9 +44,6 @@ enum
 };
 
 
-static void   gimp_enum_action_init       (GimpEnumAction      *action);
-static void   gimp_enum_action_class_init (GimpEnumActionClass *klass);
-
 static void   gimp_enum_action_set_property (GObject      *object,
                                              guint         prop_id,
                                              const GValue *value,
@@ -59,37 +56,12 @@ static void   gimp_enum_action_get_property (GObject      *object,
 static void   gimp_enum_action_activate     (GtkAction    *action);
 
 
-static GimpActionClass *parent_class                = NULL;
-static guint            action_signals[LAST_SIGNAL] = { 0 };
+G_DEFINE_TYPE (GimpEnumAction, gimp_enum_action, GIMP_TYPE_ACTION);
 
+#define parent_class gimp_enum_action_parent_class
 
-GType
-gimp_enum_action_get_type (void)
-{
-  static GType type = 0;
+static guint action_signals[LAST_SIGNAL] = { 0 };
 
-  if (!type)
-    {
-      static const GTypeInfo type_info =
-      {
-        sizeof (GimpEnumActionClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_enum_action_class_init,
-        (GClassFinalizeFunc) NULL,
-        NULL,
-        sizeof (GimpEnumAction),
-        0, /* n_preallocs */
-        (GInstanceInitFunc) gimp_enum_action_init,
-      };
-
-      type = g_type_register_static (GIMP_TYPE_ACTION,
-                                     "GimpEnumAction",
-                                     &type_info, 0);
-    }
-
-  return type;
-}
 
 static void
 gimp_enum_action_class_init (GimpEnumActionClass *klass)
@@ -97,12 +69,10 @@ gimp_enum_action_class_init (GimpEnumActionClass *klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkActionClass *action_class = GTK_ACTION_CLASS (klass);
 
-  parent_class = g_type_class_peek_parent (klass);
-
   object_class->set_property = gimp_enum_action_set_property;
   object_class->get_property = gimp_enum_action_get_property;
 
-  action_class->activate = gimp_enum_action_activate;
+  action_class->activate     = gimp_enum_action_activate;
 
   g_object_class_install_property (object_class, PROP_VALUE,
                                    g_param_spec_int ("value",

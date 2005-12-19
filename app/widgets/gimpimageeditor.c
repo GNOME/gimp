@@ -30,9 +30,7 @@
 #include "gimpuimanager.h"
 
 
-static void   gimp_image_editor_class_init (GimpImageEditorClass *klass);
-static void   gimp_image_editor_init       (GimpImageEditor      *editor);
-static void   gimp_image_editor_docked_iface_init (GimpDockedInterface *docked_iface);
+static void   gimp_image_editor_docked_iface_init (GimpDockedInterface *iface);
 
 static void   gimp_image_editor_set_context    (GimpDocked       *docked,
                                                 GimpContext      *context);
@@ -43,52 +41,17 @@ static void   gimp_image_editor_image_flush    (GimpImage        *gimage,
                                                 GimpImageEditor  *editor);
 
 
-static GimpEditorClass *parent_class = NULL;
+G_DEFINE_TYPE_WITH_CODE (GimpImageEditor, gimp_image_editor, GIMP_TYPE_EDITOR,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
+                                                gimp_image_editor_docked_iface_init));
 
+#define parent_class gimp_image_editor_parent_class
 
-GType
-gimp_image_editor_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo editor_info =
-      {
-        sizeof (GimpImageEditorClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_image_editor_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpImageEditor),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_image_editor_init,
-      };
-      static const GInterfaceInfo docked_iface_info =
-      {
-        (GInterfaceInitFunc) gimp_image_editor_docked_iface_init,
-        NULL,           /* iface_finalize */
-        NULL            /* iface_data     */
-      };
-
-      type = g_type_register_static (GIMP_TYPE_EDITOR,
-                                     "GimpImageEditor",
-                                     &editor_info, 0);
-
-      g_type_add_interface_static (type, GIMP_TYPE_DOCKED,
-                                   &docked_iface_info);
-    }
-
-  return type;
-}
 
 static void
 gimp_image_editor_class_init (GimpImageEditorClass *klass)
 {
   GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->destroy = gimp_image_editor_destroy;
 
@@ -104,9 +67,9 @@ gimp_image_editor_init (GimpImageEditor *editor)
 }
 
 static void
-gimp_image_editor_docked_iface_init (GimpDockedInterface *docked_iface)
+gimp_image_editor_docked_iface_init (GimpDockedInterface *iface)
 {
-  docked_iface->set_context = gimp_image_editor_set_context;
+  iface->set_context = gimp_image_editor_set_context;
 }
 
 static void

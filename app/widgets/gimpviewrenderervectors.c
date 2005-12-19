@@ -37,8 +37,6 @@
 #include "gimpviewrenderervectors.h"
 
 
-static void   gimp_view_renderer_vectors_class_init (GimpViewRendererVectorsClass *klass);
-
 static void   gimp_view_renderer_vectors_draw (GimpViewRenderer   *renderer,
                                                GdkWindow          *window,
                                                GtkWidget          *widget,
@@ -46,45 +44,23 @@ static void   gimp_view_renderer_vectors_draw (GimpViewRenderer   *renderer,
                                                const GdkRectangle *expose_area);
 
 
-static GimpViewRendererClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpViewRendererVectors, gimp_view_renderer_vectors,
+               GIMP_TYPE_VIEW_RENDERER);
 
+#define parent_class gimp_view_renderer_vectors_parent_class
 
-GType
-gimp_view_renderer_vectors_get_type (void)
-{
-  static GType renderer_type = 0;
-
-  if (! renderer_type)
-    {
-      static const GTypeInfo renderer_info =
-      {
-        sizeof (GimpViewRendererVectorsClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_view_renderer_vectors_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpViewRendererVectors),
-        0,              /* n_preallocs */
-        NULL,           /* instance_init */
-      };
-
-      renderer_type = g_type_register_static (GIMP_TYPE_VIEW_RENDERER,
-                                              "GimpViewRendererVectors",
-                                              &renderer_info, 0);
-    }
-
-  return renderer_type;
-}
 
 static void
 gimp_view_renderer_vectors_class_init (GimpViewRendererVectorsClass *klass)
 {
   GimpViewRendererClass *renderer_class = GIMP_VIEW_RENDERER_CLASS (klass);
 
-  parent_class = g_type_class_peek_parent (klass);
-
   renderer_class->draw = gimp_view_renderer_vectors_draw;
+}
+
+static void
+gimp_view_renderer_vectors_init (GimpViewRendererVectors *renderer)
+{
 }
 
 static void

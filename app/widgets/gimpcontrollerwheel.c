@@ -46,9 +46,6 @@ struct _WheelEvent
 };
 
 
-static void          gimp_controller_wheel_class_init      (GimpControllerWheelClass *klass);
-static void          gimp_controller_wheel_init            (GimpControllerWheel      *wheel);
-
 static GObject     * gimp_controller_wheel_constructor     (GType           type,
                                                             guint           n_params,
                                                             GObjectConstructParam *params);
@@ -60,7 +57,11 @@ static const gchar * gimp_controller_wheel_get_event_blurb (GimpController *cont
                                                             gint            event_id);
 
 
-static GimpControllerClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpControllerWheel, gimp_controller_wheel,
+               GIMP_TYPE_CONTROLLER);
+
+#define parent_class gimp_controller_wheel_parent_class
+
 
 static WheelEvent wheel_events[] =
 {
@@ -166,41 +167,11 @@ static WheelEvent wheel_events[] =
 };
 
 
-GType
-gimp_controller_wheel_get_type (void)
-{
-  static GType controller_type = 0;
-
-  if (! controller_type)
-    {
-      static const GTypeInfo controller_info =
-      {
-        sizeof (GimpControllerWheelClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_controller_wheel_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpControllerWheel),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_controller_wheel_init,
-      };
-
-      controller_type = g_type_register_static (GIMP_TYPE_CONTROLLER,
-                                                "GimpControllerWheel",
-                                                &controller_info, 0);
-    }
-
-  return controller_type;
-}
-
 static void
 gimp_controller_wheel_class_init (GimpControllerWheelClass *klass)
 {
   GObjectClass        *object_class     = G_OBJECT_CLASS (klass);
   GimpControllerClass *controller_class = GIMP_CONTROLLER_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->constructor         = gimp_controller_wheel_constructor;
 

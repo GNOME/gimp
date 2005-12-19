@@ -45,8 +45,6 @@ enum
 };
 
 
-static void   gimp_gradient_select_class_init (GimpGradientSelectClass *klass);
-
 static GObject  * gimp_gradient_select_constructor  (GType          type,
                                                      guint          n_params,
                                                      GObjectConstructParam *params);
@@ -61,44 +59,17 @@ static Argument * gimp_gradient_select_run_callback (GimpPdbDialog *dialog,
                                                      gint          *n_return_vals);
 
 
-static GimpPdbDialogClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpGradientSelect, gimp_gradient_select,
+               GIMP_TYPE_PDB_DIALOG);
 
+#define parent_class gimp_gradient_select_parent_class
 
-GType
-gimp_gradient_select_get_type (void)
-{
-  static GType dialog_type = 0;
-
-  if (! dialog_type)
-    {
-      static const GTypeInfo dialog_info =
-      {
-        sizeof (GimpGradientSelectClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_gradient_select_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpGradientSelect),
-        0,              /* n_preallocs    */
-        NULL            /* instance_init  */
-      };
-
-      dialog_type = g_type_register_static (GIMP_TYPE_PDB_DIALOG,
-                                            "GimpGradientSelect",
-                                            &dialog_info, 0);
-    }
-
-  return dialog_type;
-}
 
 static void
 gimp_gradient_select_class_init (GimpGradientSelectClass *klass)
 {
   GObjectClass       *object_class = G_OBJECT_CLASS (klass);
   GimpPdbDialogClass *pdb_class    = GIMP_PDB_DIALOG_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->constructor  = gimp_gradient_select_constructor;
   object_class->set_property = gimp_gradient_select_set_property;
@@ -110,6 +81,11 @@ gimp_gradient_select_class_init (GimpGradientSelectClass *klass)
                                                      0, 10000, 84,
                                                      G_PARAM_WRITABLE |
                                                      G_PARAM_CONSTRUCT_ONLY));
+}
+
+static void
+gimp_gradient_select_init (GimpGradientSelect *select)
+{
 }
 
 static GObject *

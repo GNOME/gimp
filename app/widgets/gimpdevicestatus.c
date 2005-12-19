@@ -73,9 +73,6 @@ struct _GimpDeviceStatusEntry
 };
 
 
-static void gimp_device_status_class_init      (GimpDeviceStatusClass *klass);
-static void gimp_device_status_init            (GimpDeviceStatus      *editor);
-
 static GObject *gimp_device_status_constructor (GType                  type,
                                                 guint                  n_params,
                                                 GObjectConstructParam *params);
@@ -102,44 +99,16 @@ static void gimp_device_status_preview_clicked (GtkWidget             *widget,
                                                 const gchar           *identifier);
 
 
-static GimpEditorClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpDeviceStatus, gimp_device_status, GIMP_TYPE_EDITOR);
 
+#define parent_class gimp_device_status_parent_class
 
-GType
-gimp_device_status_get_type (void)
-{
-  static GType view_type = 0;
-
-  if (! view_type)
-    {
-      static const GTypeInfo view_info =
-      {
-        sizeof (GimpDeviceStatusClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_device_status_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpDeviceStatus),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_device_status_init,
-      };
-
-      view_type = g_type_register_static (GIMP_TYPE_EDITOR,
-                                          "GimpDeviceStatus",
-                                          &view_info, 0);
-    }
-
-  return view_type;
-}
 
 static void
 gimp_device_status_class_init (GimpDeviceStatusClass *klass)
 {
   GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
   GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->constructor  = gimp_device_status_constructor;
   object_class->set_property = gimp_device_status_set_property;

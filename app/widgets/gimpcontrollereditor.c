@@ -59,9 +59,6 @@ enum
 };
 
 
-static void gimp_controller_editor_class_init (GimpControllerEditorClass *klass);
-static void gimp_controller_editor_init       (GimpControllerEditor      *editor);
-
 static GObject * gimp_controller_editor_constructor (GType               type,
                                                      guint               n_params,
                                                      GObjectConstructParam *params);
@@ -102,44 +99,16 @@ static void gimp_controller_editor_edit_response  (GtkWidget            *dialog,
                                                    GimpControllerEditor *editor);
 
 
-static GtkVBoxClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpControllerEditor, gimp_controller_editor, GTK_TYPE_VBOX);
 
+#define parent_class gimp_controller_editor_parent_class
 
-GType
-gimp_controller_editor_get_type (void)
-{
-  static GType view_type = 0;
-
-  if (! view_type)
-    {
-      static const GTypeInfo view_info =
-      {
-        sizeof (GimpControllerEditorClass),
-        NULL,           /* base_init      */
-        NULL,           /* base_finalize  */
-        (GClassInitFunc) gimp_controller_editor_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpControllerEditor),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_controller_editor_init
-      };
-
-      view_type = g_type_register_static (GTK_TYPE_VBOX,
-                                          "GimpControllerEditor",
-                                          &view_info, 0);
-    }
-
-  return view_type;
-}
 
 static void
 gimp_controller_editor_class_init (GimpControllerEditorClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->constructor  = gimp_controller_editor_constructor;
   object_class->set_property = gimp_controller_editor_set_property;

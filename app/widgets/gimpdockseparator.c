@@ -42,9 +42,6 @@
 #define LABEL_PADDING  4
 
 
-static void     gimp_dock_separator_class_init (GimpDockSeparatorClass *klass);
-static void     gimp_dock_separator_init       (GimpDockSeparator      *separator);
-
 static void     gimp_dock_separator_style_set     (GtkWidget      *widget,
                                                    GtkStyle       *prev_style);
 static void     gimp_dock_separator_size_allocate (GtkWidget      *widget,
@@ -64,44 +61,17 @@ static gboolean gimp_dock_separator_drag_drop     (GtkWidget      *widget,
                                                    guint           time);
 
 
-static GtkEventBoxClass *parent_class          = NULL;
-static GtkTargetEntry    dialog_target_table[] = { GIMP_TARGET_DIALOG };
+G_DEFINE_TYPE (GimpDockSeparator, gimp_dock_separator, GTK_TYPE_EVENT_BOX);
 
+#define parent_class gimp_dock_separator_parent_class
 
-GType
-gimp_dock_separator_get_type (void)
-{
-  static GType type = 0;
+static GtkTargetEntry dialog_target_table[] = { GIMP_TARGET_DIALOG };
 
-  if (! type)
-    {
-      static const GTypeInfo info =
-      {
-        sizeof (GimpDockSeparatorClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_dock_separator_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpDockSeparator),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_dock_separator_init,
-      };
-
-      type = g_type_register_static (GTK_TYPE_EVENT_BOX,
-                                     "GimpDockSeparator",
-                                     &info, 0);
-    }
-
-  return type;
-}
 
 static void
 gimp_dock_separator_class_init (GimpDockSeparatorClass *klass)
 {
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   widget_class->style_set     = gimp_dock_separator_style_set;
   widget_class->size_allocate = gimp_dock_separator_size_allocate;

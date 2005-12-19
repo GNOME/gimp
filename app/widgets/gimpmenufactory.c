@@ -36,49 +36,18 @@
 #include "gimpuimanager.h"
 
 
-static void   gimp_menu_factory_class_init (GimpMenuFactoryClass *klass);
-static void   gimp_menu_factory_init       (GimpMenuFactory      *factory);
-
-static void   gimp_menu_factory_finalize   (GObject              *object);
+static void   gimp_menu_factory_finalize (GObject *object);
 
 
-static GimpObjectClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpMenuFactory, gimp_menu_factory, GIMP_TYPE_OBJECT);
 
+#define parent_class gimp_menu_factory_parent_class
 
-GType
-gimp_menu_factory_get_type (void)
-{
-  static GType factory_type = 0;
-
-  if (! factory_type)
-    {
-      static const GTypeInfo factory_info =
-      {
-        sizeof (GimpMenuFactoryClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_menu_factory_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpMenuFactory),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_menu_factory_init,
-      };
-
-      factory_type = g_type_register_static (GIMP_TYPE_OBJECT,
-					     "GimpMenuFactory",
-					     &factory_info, 0);
-    }
-
-  return factory_type;
-}
 
 static void
 gimp_menu_factory_class_init (GimpMenuFactoryClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize = gimp_menu_factory_finalize;
 }

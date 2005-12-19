@@ -56,54 +56,27 @@ enum
 };
 
 
-static void  gimp_file_proc_view_class_init   (GimpFileProcViewClass *klass);
-
 static void  gimp_file_proc_view_finalize          (GObject          *object);
 
 static void  gimp_file_proc_view_selection_changed (GtkTreeSelection *selection,
                                                     GimpFileProcView *view);
 
 
-static GtkTreeViewClass *parent_class              = NULL;
-static guint             view_signals[LAST_SIGNAL] = { 0 };
+G_DEFINE_TYPE (GimpFileProcView, gimp_file_proc_view, GTK_TYPE_TREE_VIEW);
 
+#define parent_class gimp_file_proc_view_parent_class
 
-GType
-gimp_file_proc_view_get_type (void)
-{
-  static GType view_type = 0;
+static guint view_signals[LAST_SIGNAL] = { 0 };
 
-  if (! view_type)
-    {
-      static const GTypeInfo view_info =
-      {
-        sizeof (GimpFileProcViewClass),
-        NULL,           /* base_init      */
-        NULL,           /* base_finalize  */
-        (GClassInitFunc) gimp_file_proc_view_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpFileProcView),
-        0,              /* n_preallocs    */
-        NULL            /* instance_init  */
-      };
-
-      view_type = g_type_register_static (GTK_TYPE_TREE_VIEW,
-                                          "GimpFileProcView",
-                                          &view_info, 0);
-    }
-
-  return view_type;
-}
 
 static void
 gimp_file_proc_view_class_init (GimpFileProcViewClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  parent_class = g_type_class_peek_parent (klass);
-
   object_class->finalize = gimp_file_proc_view_finalize;
+
+  klass->changed         = NULL;
 
   view_signals[CHANGED] = g_signal_new ("changed",
                                         G_TYPE_FROM_CLASS (klass),
@@ -113,8 +86,11 @@ gimp_file_proc_view_class_init (GimpFileProcViewClass *klass)
                                         NULL, NULL,
                                         gimp_marshal_VOID__VOID,
                                         G_TYPE_NONE, 0);
+}
 
-  klass->changed = NULL;
+static void
+gimp_file_proc_view_init (GimpFileProcView *view)
+{
 }
 
 static void

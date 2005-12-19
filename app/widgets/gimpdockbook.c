@@ -60,9 +60,6 @@ enum
 };
 
 
-static void      gimp_dockbook_class_init       (GimpDockbookClass *klass);
-static void      gimp_dockbook_init             (GimpDockbook      *dockbook);
-
 static void      gimp_dockbook_finalize         (GObject        *object);
 
 static void      gimp_dockbook_style_set        (GtkWidget      *widget,
@@ -96,9 +93,11 @@ static void      gimp_dockbook_help_func        (const gchar    *help_id,
                                                  gpointer        help_data);
 
 
-static GtkNotebookClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpDockbook, gimp_dockbook, GTK_TYPE_NOTEBOOK);
 
-static guint  dockbook_signals[LAST_SIGNAL] = { 0 };
+#define parent_class gimp_dockbook_parent_class
+
+static guint dockbook_signals[LAST_SIGNAL] = { 0 };
 
 static GtkTargetEntry dialog_target_table[] =
 {
@@ -106,41 +105,11 @@ static GtkTargetEntry dialog_target_table[] =
 };
 
 
-GType
-gimp_dockbook_get_type (void)
-{
-  static GType dockbook_type = 0;
-
-  if (! dockbook_type)
-    {
-      static const GTypeInfo dockbook_info =
-      {
-        sizeof (GimpDockbookClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_dockbook_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpDockbook),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_dockbook_init,
-      };
-
-      dockbook_type = g_type_register_static (GTK_TYPE_NOTEBOOK,
-                                              "GimpDockbook",
-                                              &dockbook_info, 0);
-    }
-
-  return dockbook_type;
-}
-
 static void
 gimp_dockbook_class_init (GimpDockbookClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   dockbook_signals[DOCKABLE_ADDED] =
     g_signal_new ("dockable-added",

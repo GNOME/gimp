@@ -52,8 +52,6 @@ enum
 };
 
 
-static void   gimp_brush_select_class_init (GimpBrushSelectClass *klass);
-
 static GObject  * gimp_brush_select_constructor  (GType            type,
                                                   guint            n_params,
                                                   GObjectConstructParam *params);
@@ -82,44 +80,16 @@ static void   gimp_brush_select_spacing_update   (GtkAdjustment   *adj,
                                                   GimpBrushSelect *select);
 
 
-static GimpPdbDialogClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpBrushSelect, gimp_brush_select, GIMP_TYPE_PDB_DIALOG);
 
+#define parent_class gimp_brush_select_parent_class
 
-GType
-gimp_brush_select_get_type (void)
-{
-  static GType dialog_type = 0;
-
-  if (! dialog_type)
-    {
-      static const GTypeInfo dialog_info =
-      {
-        sizeof (GimpBrushSelectClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_brush_select_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpBrushSelect),
-        0,              /* n_preallocs    */
-        NULL            /* instance_init  */
-      };
-
-      dialog_type = g_type_register_static (GIMP_TYPE_PDB_DIALOG,
-                                            "GimpBrushSelect",
-                                            &dialog_info, 0);
-    }
-
-  return dialog_type;
-}
 
 static void
 gimp_brush_select_class_init (GimpBrushSelectClass *klass)
 {
   GObjectClass       *object_class = G_OBJECT_CLASS (klass);
   GimpPdbDialogClass *pdb_class    = GIMP_PDB_DIALOG_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->constructor  = gimp_brush_select_constructor;
   object_class->set_property = gimp_brush_select_set_property;
@@ -146,6 +116,11 @@ gimp_brush_select_class_init (GimpBrushSelectClass *klass)
                                                      -G_MAXINT, 1000, -1,
                                                      G_PARAM_WRITABLE |
                                                      G_PARAM_CONSTRUCT));
+}
+
+static void
+gimp_brush_select_init (GimpBrushSelect *select)
+{
 }
 
 static GObject *

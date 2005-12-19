@@ -1,3 +1,8 @@
+2005-12-19  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/*.c: port to G_DEFINE_TYPE() and friends. Some
+	related cleanup.
+
 2005-12-19  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/svg.c: fixed handling of librsvg API change,

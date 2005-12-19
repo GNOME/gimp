@@ -47,9 +47,6 @@ enum
 };
 
 
-static void   gimp_palette_view_class_init (GimpPaletteViewClass   *klass);
-static void   gimp_palette_view_init       (GimpPaletteView        *view);
-
 static void     gimp_palette_view_realize        (GtkWidget        *widget);
 static void     gimp_palette_view_unrealize      (GtkWidget        *widget);
 static gboolean gimp_palette_view_expose         (GtkWidget        *widget,
@@ -83,46 +80,18 @@ static void     gimp_palette_view_drop_color     (GtkWidget        *widget,
                                                   gpointer          data);
 
 
+G_DEFINE_TYPE (GimpPaletteView, gimp_palette_view, GIMP_TYPE_VIEW);
+
+#define parent_class gimp_palette_view_parent_class
+
 static guint view_signals[LAST_SIGNAL] = { 0 };
 
-static GimpViewClass *parent_class = NULL;
-
-
-GType
-gimp_palette_view_get_type (void)
-{
-  static GType view_type = 0;
-
-  if (! view_type)
-    {
-      static const GTypeInfo view_info =
-      {
-        sizeof (GimpPaletteViewClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_palette_view_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpPaletteView),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_palette_view_init,
-      };
-
-      view_type = g_type_register_static (GIMP_TYPE_VIEW,
-                                          "GimpPaletteView",
-                                          &view_info, 0);
-    }
-
-  return view_type;
-}
 
 static void
 gimp_palette_view_class_init (GimpPaletteViewClass *klass)
 {
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
   GimpViewClass  *view_class   = GIMP_VIEW_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   view_signals[ENTRY_CLICKED] =
     g_signal_new ("entry-clicked",

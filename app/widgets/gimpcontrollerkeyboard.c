@@ -47,9 +47,6 @@ struct _KeyboardEvent
 };
 
 
-static void          gimp_controller_keyboard_class_init      (GimpControllerKeyboardClass *klass);
-static void          gimp_controller_keyboard_init            (GimpControllerKeyboard      *keyboard);
-
 static GObject     * gimp_controller_keyboard_constructor     (GType           type,
                                                                guint           n_params,
                                                                GObjectConstructParam *params);
@@ -61,7 +58,11 @@ static const gchar * gimp_controller_keyboard_get_event_blurb (GimpController *c
                                                                gint            event_id);
 
 
-static GimpControllerClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpControllerKeyboard, gimp_controller_keyboard,
+               GIMP_TYPE_CONTROLLER);
+
+#define parent_class gimp_controller_keyboard_parent_class
+
 
 static KeyboardEvent keyboard_events[] =
 {
@@ -167,41 +168,11 @@ static KeyboardEvent keyboard_events[] =
 };
 
 
-GType
-gimp_controller_keyboard_get_type (void)
-{
-  static GType controller_type = 0;
-
-  if (! controller_type)
-    {
-      static const GTypeInfo controller_info =
-      {
-        sizeof (GimpControllerKeyboardClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_controller_keyboard_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpControllerKeyboard),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_controller_keyboard_init,
-      };
-
-      controller_type = g_type_register_static (GIMP_TYPE_CONTROLLER,
-                                                "GimpControllerKeyboard",
-                                                &controller_info, 0);
-    }
-
-  return controller_type;
-}
-
 static void
 gimp_controller_keyboard_class_init (GimpControllerKeyboardClass *klass)
 {
   GObjectClass        *object_class     = G_OBJECT_CLASS (klass);
   GimpControllerClass *controller_class = GIMP_CONTROLLER_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->constructor         = gimp_controller_keyboard_constructor;
 

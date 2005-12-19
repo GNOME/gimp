@@ -38,9 +38,6 @@
 #include "gimp-intl.h"
 
 
-static void  gimp_error_console_class_init  (GimpErrorConsoleClass *klass);
-static void  gimp_error_console_init        (GimpErrorConsole      *editor);
-
 static GObject * gimp_error_console_constructor  (GType             type,
                                                   guint             n_params,
                                                   GObjectConstructParam *params);
@@ -53,36 +50,10 @@ static gboolean  gimp_error_console_button_press (GtkWidget        *widget,
                                                   GimpErrorConsole *console);
 
 
-static GimpEditorClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpErrorConsole, gimp_error_console, GIMP_TYPE_EDITOR);
 
+#define parent_class gimp_error_console_parent_class
 
-GType
-gimp_error_console_get_type (void)
-{
-  static GType view_type = 0;
-
-  if (! view_type)
-    {
-      static const GTypeInfo view_info =
-      {
-        sizeof (GimpErrorConsoleClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_error_console_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpErrorConsole),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_error_console_init,
-      };
-
-      view_type = g_type_register_static (GIMP_TYPE_EDITOR,
-                                          "GimpErrorConsole",
-                                          &view_info, 0);
-    }
-
-  return view_type;
-}
 
 static void
 gimp_error_console_class_init (GimpErrorConsoleClass *klass)
@@ -90,8 +61,6 @@ gimp_error_console_class_init (GimpErrorConsoleClass *klass)
   GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
   GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class     = GTK_WIDGET_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->constructor = gimp_error_console_constructor;
   gtk_object_class->destroy = gimp_error_console_destroy;

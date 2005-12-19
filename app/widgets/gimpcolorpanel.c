@@ -34,9 +34,6 @@
 
 /*  local function prototypes  */
 
-static void       gimp_color_panel_class_init    (GimpColorPanelClass  *klass);
-static void       gimp_color_panel_init          (GimpColorPanel       *panel);
-
 static void       gimp_color_panel_destroy         (GtkObject          *object);
 static gboolean   gimp_color_panel_button_press    (GtkWidget          *widget,
                                                     GdkEventButton     *bevent);
@@ -50,36 +47,10 @@ static void       gimp_color_panel_dialog_update   (GimpColorDialog    *dialog,
                                                     GimpColorPanel     *panel);
 
 
-static GimpColorButtonClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpColorPanel, gimp_color_panel, GIMP_TYPE_COLOR_BUTTON);
 
+#define parent_class gimp_color_panel_parent_class
 
-GType
-gimp_color_panel_get_type (void)
-{
-  static GType panel_type = 0;
-
-  if (! panel_type)
-    {
-      static const GTypeInfo panel_info =
-      {
-        sizeof (GimpColorPanelClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_color_panel_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpColorPanel),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_color_panel_init,
-      };
-
-      panel_type = g_type_register_static (GIMP_TYPE_COLOR_BUTTON,
-                                           "GimpColorPanel",
-                                           &panel_info, 0);
-    }
-
-  return panel_type;
-}
 
 static void
 gimp_color_panel_class_init (GimpColorPanelClass *klass)
@@ -89,11 +60,12 @@ gimp_color_panel_class_init (GimpColorPanelClass *klass)
   GtkButtonClass       *button_class       = GTK_BUTTON_CLASS (klass);
   GimpColorButtonClass *color_button_class = GIMP_COLOR_BUTTON_CLASS (klass);
 
-  parent_class = g_type_class_peek_parent (klass);
-
   object_class->destroy               = gimp_color_panel_destroy;
+
   widget_class->button_press_event    = gimp_color_panel_button_press;
+
   button_class->clicked               = gimp_color_panel_clicked;
+
   color_button_class->color_changed   = gimp_color_panel_color_changed;
   color_button_class->get_action_type = gimp_color_panel_get_action_type;
 }

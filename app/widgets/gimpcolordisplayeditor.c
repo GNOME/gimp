@@ -53,10 +53,7 @@ enum
 };
 
 
-static void   gimp_color_display_editor_class_init        (GimpColorDisplayEditorClass *klass);
-static void   gimp_color_display_editor_init              (GimpColorDisplayEditor      *editor);
-
-static void   gimp_color_display_editor_destroy         (GtkObject             *object);
+static void   gimp_color_display_editor_destroy        (GtkObject             *object);
 
 static void   gimp_color_display_editor_add_clicked    (GtkWidget             *widget,
                                                         GimpColorDisplayEditor *editor);
@@ -96,43 +93,16 @@ static void   gimp_color_display_editor_enable_toggled (GtkCellRendererToggle  *
 static void   gimp_color_display_editor_update_buttons (GimpColorDisplayEditor *editor);
 
 
-static GtkVBoxClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpColorDisplayEditor, gimp_color_display_editor,
+               GTK_TYPE_VBOX);
 
+#define parent_class gimp_color_display_editor_parent_class
 
-GType
-gimp_color_display_editor_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo editor_info =
-      {
-        sizeof (GimpColorDisplayEditorClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_color_display_editor_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_tool */
-        sizeof (GimpColorDisplayEditor),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_color_display_editor_init,
-      };
-
-      type = g_type_register_static (GTK_TYPE_VBOX,
-                                     "GimpColorDisplayEditor",
-                                     &editor_info, 0);
-    }
-
-  return type;
-}
 
 static void
 gimp_color_display_editor_class_init (GimpColorDisplayEditorClass *klass)
 {
   GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->destroy = gimp_color_display_editor_destroy;
 }

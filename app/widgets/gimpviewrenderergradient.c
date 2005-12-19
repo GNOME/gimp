@@ -36,53 +36,23 @@
 #include "gimpviewrenderergradient.h"
 
 
-static void   gimp_view_renderer_gradient_class_init (GimpViewRendererGradientClass *klass);
-static void   gimp_view_renderer_gradient_init       (GimpViewRendererGradient      *renderer);
+static void   gimp_view_renderer_gradient_finalize (GObject          *object);
 
-static void   gimp_view_renderer_gradient_finalize   (GObject             *object);
-
-static void   gimp_view_renderer_gradient_render     (GimpViewRenderer    *renderer,
-                                                      GtkWidget           *widget);
+static void   gimp_view_renderer_gradient_render   (GimpViewRenderer *renderer,
+                                                    GtkWidget        *widget);
 
 
-static GimpViewRendererClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpViewRendererGradient, gimp_view_renderer_gradient,
+               GIMP_TYPE_VIEW_RENDERER);
 
+#define parent_class gimp_view_renderer_gradient_parent_class
 
-GType
-gimp_view_renderer_gradient_get_type (void)
-{
-  static GType renderer_type = 0;
-
-  if (! renderer_type)
-    {
-      static const GTypeInfo renderer_info =
-      {
-        sizeof (GimpViewRendererGradientClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_view_renderer_gradient_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpViewRendererGradient),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_view_renderer_gradient_init,
-      };
-
-      renderer_type = g_type_register_static (GIMP_TYPE_VIEW_RENDERER,
-                                              "GimpViewRendererGradient",
-                                              &renderer_info, 0);
-    }
-
-  return renderer_type;
-}
 
 static void
 gimp_view_renderer_gradient_class_init (GimpViewRendererGradientClass *klass)
 {
   GObjectClass          *object_class   = G_OBJECT_CLASS (klass);
   GimpViewRendererClass *renderer_class = GIMP_VIEW_RENDERER_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize = gimp_view_renderer_gradient_finalize;
 

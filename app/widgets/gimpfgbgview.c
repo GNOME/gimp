@@ -44,53 +44,24 @@ enum
 };
 
 
-static void     gimp_fg_bg_view_class_init   (GimpFgBgViewClass *klass);
-static void     gimp_fg_bg_view_init         (GimpFgBgView      *view);
+static void     gimp_fg_bg_view_set_property (GObject        *object,
+                                              guint           property_id,
+                                              const GValue   *value,
+                                              GParamSpec     *pspec);
+static void     gimp_fg_bg_view_get_property (GObject        *object,
+                                              guint           property_id,
+                                              GValue         *value,
+                                              GParamSpec     *pspec);
 
-static void     gimp_fg_bg_view_set_property (GObject           *object,
-                                              guint              property_id,
-                                              const GValue      *value,
-                                              GParamSpec        *pspec);
-static void     gimp_fg_bg_view_get_property (GObject           *object,
-                                              guint              property_id,
-                                              GValue            *value,
-                                              GParamSpec        *pspec);
-
-static void     gimp_fg_bg_view_destroy      (GtkObject         *object);
-static gboolean gimp_fg_bg_view_expose       (GtkWidget         *widget,
-                                              GdkEventExpose    *eevent);
+static void     gimp_fg_bg_view_destroy      (GtkObject      *object);
+static gboolean gimp_fg_bg_view_expose       (GtkWidget      *widget,
+                                              GdkEventExpose *eevent);
 
 
-static GtkDrawingAreaClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpFgBgView, gimp_fg_bg_view, GTK_TYPE_DRAWING_AREA);
 
+#define parent_class gimp_fg_bg_view_parent_class
 
-GType
-gimp_fg_bg_view_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo info =
-      {
-        sizeof (GimpFgBgViewClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_fg_bg_view_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpFgBgView),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_fg_bg_view_init,
-      };
-
-      type = g_type_register_static (GTK_TYPE_DRAWING_AREA,
-                                     "GimpFgBgView",
-                                     &info, 0);
-    }
-
-  return type;
-}
 
 static void
 gimp_fg_bg_view_class_init (GimpFgBgViewClass *klass)
@@ -98,8 +69,6 @@ gimp_fg_bg_view_class_init (GimpFgBgViewClass *klass)
   GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
   GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class     = GTK_WIDGET_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->set_property = gimp_fg_bg_view_set_property;
   object_class->get_property = gimp_fg_bg_view_get_property;

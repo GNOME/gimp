@@ -43,9 +43,6 @@ enum
 };
 
 
-static void   gimp_string_action_init       (GimpStringAction      *action);
-static void   gimp_string_action_class_init (GimpStringActionClass *klass);
-
 static void   gimp_string_action_finalize     (GObject      *object);
 static void   gimp_string_action_set_property (GObject      *object,
                                                guint         prop_id,
@@ -59,45 +56,18 @@ static void   gimp_string_action_get_property (GObject      *object,
 static void   gimp_string_action_activate     (GtkAction    *action);
 
 
-static GtkActionClass *parent_class                = NULL;
-static guint           action_signals[LAST_SIGNAL] = { 0 };
+G_DEFINE_TYPE (GimpStringAction, gimp_string_action, GIMP_TYPE_ACTION);
 
+#define parent_class gimp_string_action_parent_class
 
-GType
-gimp_string_action_get_type (void)
-{
-  static GType type = 0;
+static guint action_signals[LAST_SIGNAL] = { 0 };
 
-  if (!type)
-    {
-      static const GTypeInfo type_info =
-      {
-        sizeof (GimpStringActionClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_string_action_class_init,
-        (GClassFinalizeFunc) NULL,
-        NULL,
-        sizeof (GimpStringAction),
-        0, /* n_preallocs */
-        (GInstanceInitFunc) gimp_string_action_init,
-      };
-
-      type = g_type_register_static (GIMP_TYPE_ACTION,
-                                     "GimpStringAction",
-                                     &type_info, 0);
-    }
-
-  return type;
-}
 
 static void
 gimp_string_action_class_init (GimpStringActionClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkActionClass *action_class = GTK_ACTION_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize     = gimp_string_action_finalize;
   object_class->set_property = gimp_string_action_set_property;

@@ -60,9 +60,6 @@ typedef enum
 } FgBgTarget;
 
 
-static void     gimp_fg_bg_editor_class_init (GimpFgBgEditorClass *klass);
-static void     gimp_fg_bg_editor_init       (GimpFgBgEditor      *editor);
-
 static void     gimp_fg_bg_editor_set_property    (GObject        *object,
                                                    guint           property_id,
                                                    const GValue   *value,
@@ -95,38 +92,12 @@ static void     gimp_fg_bg_editor_drop_color      (GtkWidget      *widget,
                                                    gpointer        data);
 
 
+G_DEFINE_TYPE (GimpFgBgEditor, gimp_fg_bg_editor, GTK_TYPE_DRAWING_AREA);
+
+#define parent_class gimp_fg_bg_editor_parent_class
+
 static guint  editor_signals[LAST_SIGNAL] = { 0 };
 
-static GtkDrawingAreaClass *parent_class = NULL;
-
-
-GType
-gimp_fg_bg_editor_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo info =
-      {
-        sizeof (GimpFgBgEditorClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_fg_bg_editor_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpFgBgEditor),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_fg_bg_editor_init,
-      };
-
-      type = g_type_register_static (GTK_TYPE_DRAWING_AREA,
-                                     "GimpFgBgEditor",
-                                     &info, 0);
-    }
-
-  return type;
-}
 
 static void
 gimp_fg_bg_editor_class_init (GimpFgBgEditorClass *klass)
@@ -134,8 +105,6 @@ gimp_fg_bg_editor_class_init (GimpFgBgEditorClass *klass)
   GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
   GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class     = GTK_WIDGET_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   editor_signals[COLOR_CLICKED] =
     g_signal_new ("color-clicked",

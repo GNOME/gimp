@@ -37,9 +37,6 @@
 #include "gimpuimanager.h"
 
 
-static void      gimp_image_dock_class_init   (GimpImageDockClass    *klass);
-static void      gimp_image_dock_init         (GimpImageDock         *dock);
-
 static GObject * gimp_image_dock_constructor  (GType                  type,
                                                guint                  n_params,
                                                GObjectConstructParam *params);
@@ -57,44 +54,16 @@ static void      gimp_image_dock_notify_transient (GimpConfig        *config,
                                                    GimpDock          *dock);
 
 
-static GimpDockClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpImageDock, gimp_image_dock, GIMP_TYPE_DOCK);
 
+#define parent_class gimp_image_dock_parent_class
 
-GType
-gimp_image_dock_get_type (void)
-{
-  static GType dock_type = 0;
-
-  if (! dock_type)
-    {
-      static const GTypeInfo dock_info =
-      {
-        sizeof (GimpImageDockClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_image_dock_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpImageDock),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_image_dock_init,
-      };
-
-      dock_type = g_type_register_static (GIMP_TYPE_DOCK,
-                                          "GimpImageDock",
-                                          &dock_info, 0);
-    }
-
-  return dock_type;
-}
 
 static void
 gimp_image_dock_class_init (GimpImageDockClass *klass)
 {
   GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
   GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->constructor = gimp_image_dock_constructor;
 

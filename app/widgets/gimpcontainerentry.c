@@ -41,10 +41,7 @@
   gtk_entry_completion_get_model (gtk_entry_get_completion (GTK_ENTRY (entry)))
 
 
-static void     gimp_container_entry_class_init   (GimpContainerEntryClass *klass);
-static void     gimp_container_entry_init         (GimpContainerEntry  *view);
-
-static void     gimp_container_entry_view_iface_init (GimpContainerViewInterface *view_iface);
+static void     gimp_container_entry_view_iface_init (GimpContainerViewInterface *iface);
 
 static gpointer gimp_container_entry_insert_item  (GimpContainerView      *view,
                                                    GimpViewable           *viewable,
@@ -71,54 +68,20 @@ static void gimp_container_entry_renderer_update  (GimpViewRenderer       *rende
                                                    GimpContainerView      *view);
 
 
-static GtkEntryClass              *parent_class      = NULL;
+G_DEFINE_TYPE_WITH_CODE (GimpContainerEntry, gimp_container_entry,
+                         GTK_TYPE_ENTRY,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONTAINER_VIEW,
+                                                gimp_container_entry_view_iface_init));
+
+#define parent_class gimp_container_entry_parent_class
+
 static GimpContainerViewInterface *parent_view_iface = NULL;
 
-
-GType
-gimp_container_entry_get_type (void)
-{
-  static GType view_type = 0;
-
-  if (! view_type)
-    {
-      static const GTypeInfo view_info =
-      {
-        sizeof (GimpContainerEntryClass),
-        NULL,           /* base_init      */
-        NULL,           /* base_finalize  */
-        (GClassInitFunc) gimp_container_entry_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpContainerEntry),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_container_entry_init,
-      };
-
-      static const GInterfaceInfo view_iface_info =
-      {
-        (GInterfaceInitFunc) gimp_container_entry_view_iface_init,
-        NULL,           /* iface_finalize */
-        NULL            /* iface_data     */
-      };
-
-      view_type = g_type_register_static (GTK_TYPE_ENTRY,
-                                          "GimpContainerEntry",
-                                          &view_info, 0);
-
-      g_type_add_interface_static (view_type, GIMP_TYPE_CONTAINER_VIEW,
-                                   &view_iface_info);
-    }
-
-  return view_type;
-}
 
 static void
 gimp_container_entry_class_init (GimpContainerEntryClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->set_property = gimp_container_view_set_property;
   object_class->get_property = gimp_container_view_get_property;
@@ -163,23 +126,22 @@ gimp_container_entry_init (GimpContainerEntry *entry)
 }
 
 static void
-gimp_container_entry_view_iface_init (GimpContainerViewInterface *view_iface)
+gimp_container_entry_view_iface_init (GimpContainerViewInterface *iface)
 {
-  parent_view_iface = g_type_interface_peek_parent (view_iface);
+  parent_view_iface = g_type_interface_peek_parent (iface);
 
   if (! parent_view_iface)
     parent_view_iface = g_type_default_interface_peek (GIMP_TYPE_CONTAINER_VIEW);
 
-  view_iface->insert_item      = gimp_container_entry_insert_item;
-  view_iface->remove_item      = gimp_container_entry_remove_item;
-  view_iface->reorder_item     = gimp_container_entry_reorder_item;
-  view_iface->rename_item      = gimp_container_entry_rename_item;
-  view_iface->select_item      = gimp_container_entry_select_item;
-  view_iface->clear_items      = gimp_container_entry_clear_items;
-  view_iface->set_preview_size = gimp_container_entry_set_preview_size;
+  iface->insert_item      = gimp_container_entry_insert_item;
+  iface->remove_item      = gimp_container_entry_remove_item;
+  iface->reorder_item     = gimp_container_entry_reorder_item;
+  iface->rename_item      = gimp_container_entry_rename_item;
+  iface->select_item      = gimp_container_entry_select_item;
+  iface->clear_items      = gimp_container_entry_clear_items;
+  iface->set_preview_size = gimp_container_entry_set_preview_size;
 
-  view_iface->insert_data_free = (GDestroyNotify) g_free;
-
+  iface->insert_data_free = (GDestroyNotify) g_free;
 }
 
 GtkWidget *

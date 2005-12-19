@@ -59,10 +59,7 @@
 
 /*  local function prototypes  */
 
-static void   gimp_palette_editor_class_init (GimpPaletteEditorClass *klass);
-static void   gimp_palette_editor_init       (GimpPaletteEditor      *editor);
-
-static void   gimp_palette_editor_docked_iface_init (GimpDockedInterface *docked_iface);
+static void   gimp_palette_editor_docked_iface_init (GimpDockedInterface *face);
 
 static GObject * gimp_palette_editor_constructor   (GType              type,
                                                     guint              n_params,
@@ -128,46 +125,15 @@ static void   palette_editor_resize                (GimpPaletteEditor *editor,
 static void   palette_editor_scroll_top_left       (GimpPaletteEditor *editor);
 
 
-static GimpDataEditorClass *parent_class        = NULL;
+G_DEFINE_TYPE_WITH_CODE (GimpPaletteEditor, gimp_palette_editor,
+                         GIMP_TYPE_DATA_EDITOR,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
+                                                gimp_palette_editor_docked_iface_init));
+
+#define parent_class gimp_palette_editor_parent_class
+
 static GimpDockedInterface *parent_docked_iface = NULL;
 
-
-GType
-gimp_palette_editor_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo info =
-      {
-        sizeof (GimpPaletteEditorClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_palette_editor_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpPaletteEditor),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_palette_editor_init,
-      };
-      static const GInterfaceInfo docked_iface_info =
-      {
-        (GInterfaceInitFunc) gimp_palette_editor_docked_iface_init,
-        NULL,           /* iface_finalize */
-        NULL            /* iface_data     */
-      };
-
-      type = g_type_register_static (GIMP_TYPE_DATA_EDITOR,
-                                     "GimpPaletteEditor",
-                                     &info, 0);
-
-      g_type_add_interface_static (type, GIMP_TYPE_DOCKED,
-                                   &docked_iface_info);
-    }
-
-  return type;
-}
 
 static void
 gimp_palette_editor_class_init (GimpPaletteEditorClass *klass)
@@ -176,8 +142,6 @@ gimp_palette_editor_class_init (GimpPaletteEditorClass *klass)
   GtkObjectClass      *gtk_object_class = GTK_OBJECT_CLASS (klass);
   GtkWidgetClass      *widget_class     = GTK_WIDGET_CLASS (klass);
   GimpDataEditorClass *editor_class     = GIMP_DATA_EDITOR_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->constructor = gimp_palette_editor_constructor;
 
@@ -294,15 +258,15 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
 }
 
 static void
-gimp_palette_editor_docked_iface_init (GimpDockedInterface *docked_iface)
+gimp_palette_editor_docked_iface_init (GimpDockedInterface *iface)
 {
-  parent_docked_iface = g_type_interface_peek_parent (docked_iface);
+  parent_docked_iface = g_type_interface_peek_parent (iface);
 
   if (! parent_docked_iface)
     parent_docked_iface = g_type_default_interface_peek (GIMP_TYPE_DOCKED);
 
-  docked_iface->set_aux_info = gimp_palette_editor_set_aux_info;
-  docked_iface->get_aux_info = gimp_palette_editor_get_aux_info;
+  iface->set_aux_info = gimp_palette_editor_set_aux_info;
+  iface->get_aux_info = gimp_palette_editor_get_aux_info;
 }
 
 static GObject *

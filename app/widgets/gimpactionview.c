@@ -44,9 +44,6 @@
 
 /*  local function prototypes  */
 
-static void     gimp_action_view_class_init  (GimpActionViewClass *klass);
-static void     gimp_action_view_init        (GimpActionView      *view);
-
 static void     gimp_action_view_dispose         (GObject         *object);
 
 static gboolean gimp_action_view_accel_find_func (GtkAccelKey     *key,
@@ -65,43 +62,15 @@ static void     gimp_action_view_accel_edited    (GimpCellRendererAccel *accel,
                                                   GimpActionView  *view);
 
 
-static GtkTreeViewClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpActionView, gimp_action_view, GTK_TYPE_TREE_VIEW);
 
+#define parent_class gimp_action_view_parent_class
 
-GType
-gimp_action_view_get_type (void)
-{
-  static GType view_type = 0;
-
-  if (! view_type)
-    {
-      static const GTypeInfo view_info =
-      {
-        sizeof (GimpActionViewClass),
-        NULL,           /* base_init      */
-        NULL,           /* base_finalize  */
-        (GClassInitFunc) gimp_action_view_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpActionView),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_action_view_init
-      };
-
-      view_type = g_type_register_static (GTK_TYPE_TREE_VIEW,
-                                          "GimpActionView",
-                                          &view_info, 0);
-    }
-
-  return view_type;
-}
 
 static void
 gimp_action_view_class_init (GimpActionViewClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->dispose = gimp_action_view_dispose;
 }

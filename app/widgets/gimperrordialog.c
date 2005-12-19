@@ -37,51 +37,21 @@
 #define GIMP_ERROR_DIALOG_MAX_MESSAGES 3
 
 
-static void   gimp_error_dialog_class_init (GimpErrorDialogClass *klass);
-static void   gimp_error_dialog_init       (GimpErrorDialog      *dialog);
-static void   gimp_error_dialog_finalize   (GObject              *object);
-static void   gimp_error_dialog_response   (GtkDialog            *dialog,
-                                            gint                  response_id);
+static void   gimp_error_dialog_finalize (GObject   *object);
+static void   gimp_error_dialog_response (GtkDialog *dialog,
+                                          gint       response_id);
 
 
-static GimpDialogClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpErrorDialog, gimp_error_dialog, GIMP_TYPE_DIALOG);
 
+#define parent_class gimp_error_dialog_parent_class
 
-GType
-gimp_error_dialog_get_type (void)
-{
-  static GType dialog_type = 0;
-
-  if (! dialog_type)
-    {
-      static const GTypeInfo dialog_info =
-      {
-        sizeof (GimpErrorDialogClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_error_dialog_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpErrorDialog),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_error_dialog_init
-      };
-
-      dialog_type = g_type_register_static (GIMP_TYPE_DIALOG,
-                                            "GimpErrorDialog",
-                                            &dialog_info, 0);
-    }
-
-  return dialog_type;
-}
 
 static void
 gimp_error_dialog_class_init (GimpErrorDialogClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkDialogClass *dialog_class = GTK_DIALOG_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize = gimp_error_dialog_finalize;
 

@@ -103,9 +103,6 @@
 
 /*  local function prototypes  */
 
-static void   gimp_gradient_editor_class_init (GimpGradientEditorClass *klass);
-static void   gimp_gradient_editor_init       (GimpGradientEditor      *editor);
-
 static GObject * gimp_gradient_editor_constructor   (GType               type,
                                                      guint               n_params,
                                                      GObjectConstructParam *params);
@@ -244,36 +241,11 @@ static gboolean  seg_in_selection                 (GimpGradient         *grad,
 static GtkWidget * gradient_hint_label_add        (GtkBox *box);
 
 
-static GimpDataEditorClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpGradientEditor, gimp_gradient_editor,
+               GIMP_TYPE_DATA_EDITOR);
 
+#define parent_class gimp_gradient_editor_parent_class
 
-GType
-gimp_gradient_editor_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo info =
-      {
-        sizeof (GimpGradientEditorClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_gradient_editor_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpGradientEditor),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_gradient_editor_init,
-      };
-
-      type = g_type_register_static (GIMP_TYPE_DATA_EDITOR,
-                                     "GimpGradientEditor",
-                                     &info, 0);
-    }
-
-  return type;
-}
 
 static void
 gimp_gradient_editor_class_init (GimpGradientEditorClass *klass)
@@ -282,8 +254,6 @@ gimp_gradient_editor_class_init (GimpGradientEditorClass *klass)
   GtkObjectClass      *gtk_object_class = GTK_OBJECT_CLASS (klass);
   GtkWidgetClass      *widget_class     = GTK_WIDGET_CLASS (klass);
   GimpDataEditorClass *editor_class     = GIMP_DATA_EDITOR_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->constructor = gimp_gradient_editor_constructor;
 

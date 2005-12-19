@@ -40,9 +40,7 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_brush_factory_view_class_init (GimpBrushFactoryViewClass *klass);
-static void   gimp_brush_factory_view_init       (GimpBrushFactoryView      *view);
-static void   gimp_brush_factory_view_destroy    (GtkObject                *object);
+static void   gimp_brush_factory_view_destroy         (GtkObject            *object);
 
 static void   gimp_brush_factory_view_select_item     (GimpContainerEditor  *editor,
                                                        GimpViewable         *viewable);
@@ -53,47 +51,17 @@ static void   gimp_brush_factory_view_spacing_update  (GtkAdjustment        *adj
                                                        GimpBrushFactoryView *view);
 
 
-static GimpDataFactoryViewClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpBrushFactoryView, gimp_brush_factory_view,
+               GIMP_TYPE_DATA_FACTORY_VIEW);
 
+#define parent_class gimp_brush_factory_view_parent_class
 
-GType
-gimp_brush_factory_view_get_type (void)
-{
-  static GType view_type = 0;
-
-  if (! view_type)
-    {
-      static const GTypeInfo view_info =
-      {
-        sizeof (GimpBrushFactoryViewClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_brush_factory_view_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpBrushFactoryView),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_brush_factory_view_init,
-      };
-
-      view_type = g_type_register_static (GIMP_TYPE_DATA_FACTORY_VIEW,
-                                          "GimpBrushFactoryView",
-                                          &view_info, 0);
-    }
-
-  return view_type;
-}
 
 static void
 gimp_brush_factory_view_class_init (GimpBrushFactoryViewClass *klass)
 {
-  GtkObjectClass           *object_class;
-  GimpContainerEditorClass *editor_class;
-
-  object_class = GTK_OBJECT_CLASS (klass);
-  editor_class = GIMP_CONTAINER_EDITOR_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
+  GtkObjectClass           *object_class = GTK_OBJECT_CLASS (klass);
+  GimpContainerEditorClass *editor_class = GIMP_CONTAINER_EDITOR_CLASS (klass);
 
   object_class->destroy     = gimp_brush_factory_view_destroy;
 

@@ -58,10 +58,7 @@ enum
 };
 
 
-static void     gimp_controller_info_class_init (GimpControllerInfoClass *klass);
-static void     gimp_controller_info_init       (GimpControllerInfo      *info);
-
-static void     gimp_controller_info_config_iface_init (GimpConfigInterface *config_iface);
+static void     gimp_controller_info_config_iface_init (GimpConfigInterface *iface);
 
 static void     gimp_controller_info_finalize     (GObject          *object);
 static void     gimp_controller_info_set_property (GObject          *object,
@@ -90,54 +87,20 @@ static gboolean gimp_controller_info_event (GimpController            *controlle
                                             GimpControllerInfo        *info);
 
 
-static GimpViewableClass *parent_class = NULL;
+G_DEFINE_TYPE_WITH_CODE (GimpControllerInfo, gimp_controller_info,
+                         GIMP_TYPE_VIEWABLE,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
+                                                gimp_controller_info_config_iface_init));
 
-static guint  info_signals[LAST_SIGNAL] = { 0 };
+#define parent_class gimp_controller_info_parent_class
 
+static guint info_signals[LAST_SIGNAL] = { 0 };
 
-GType
-gimp_controller_info_get_type (void)
-{
-  static GType controller_type = 0;
-
-  if (! controller_type)
-    {
-      static const GTypeInfo controller_info =
-      {
-        sizeof (GimpControllerInfoClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_controller_info_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpControllerInfo),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_controller_info_init,
-      };
-      static const GInterfaceInfo config_iface_info =
-      {
-        (GInterfaceInitFunc) gimp_controller_info_config_iface_init,
-        NULL,  /* iface_finalize */
-        NULL   /* iface_data     */
-      };
-
-      controller_type = g_type_register_static (GIMP_TYPE_VIEWABLE,
-                                                "GimpControllerInfo",
-                                                &controller_info, 0);
-
-      g_type_add_interface_static (controller_type, GIMP_TYPE_CONFIG,
-                                   &config_iface_info);
-    }
-
-  return controller_type;
-}
 
 static void
 gimp_controller_info_class_init (GimpControllerInfoClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize     = gimp_controller_info_finalize;
   object_class->set_property = gimp_controller_info_set_property;
@@ -183,10 +146,10 @@ gimp_controller_info_init (GimpControllerInfo *info)
 }
 
 static void
-gimp_controller_info_config_iface_init (GimpConfigInterface *config_iface)
+gimp_controller_info_config_iface_init (GimpConfigInterface *iface)
 {
-  config_iface->serialize_property   = gimp_controller_info_serialize_property;
-  config_iface->deserialize_property = gimp_controller_info_deserialize_property;
+  iface->serialize_property   = gimp_controller_info_serialize_property;
+  iface->deserialize_property = gimp_controller_info_deserialize_property;
 }
 
 static void

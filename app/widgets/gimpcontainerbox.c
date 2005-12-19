@@ -41,10 +41,8 @@
 #include "gimpviewrenderer.h"
 
 
-static void   gimp_container_box_class_init      (GimpContainerBoxClass *klass);
-static void   gimp_container_box_init            (GimpContainerBox      *box);
-static void   gimp_container_box_view_iface_init   (GimpContainerViewInterface *view_iface);
-static void   gimp_container_box_docked_iface_init (GimpDockedInterface *docked_iface);
+static void   gimp_container_box_view_iface_init   (GimpContainerViewInterface *iface);
+static void   gimp_container_box_docked_iface_init (GimpDockedInterface *iface);
 
 static GtkWidget * gimp_container_box_get_preview  (GimpDocked   *docked,
                                                     GimpContext  *context,
@@ -53,61 +51,20 @@ static void        gimp_container_box_set_context  (GimpDocked   *docked,
                                                     GimpContext  *context);
 
 
-static GimpEditorClass *parent_class = NULL;
+G_DEFINE_TYPE_WITH_CODE (GimpContainerBox, gimp_container_box,
+                         GIMP_TYPE_EDITOR,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONTAINER_VIEW,
+                                                gimp_container_box_view_iface_init)
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
+                                                gimp_container_box_docked_iface_init));
 
+#define parent_class gimp_container_box_parent_class
 
-GType
-gimp_container_box_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo box_info =
-      {
-        sizeof (GimpContainerBoxClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_container_box_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpContainerBox),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_container_box_init,
-      };
-
-      static const GInterfaceInfo view_iface_info =
-      {
-        (GInterfaceInitFunc) gimp_container_box_view_iface_init,
-        NULL,           /* iface_finalize */
-        NULL            /* iface_data     */
-      };
-      static const GInterfaceInfo docked_iface_info =
-      {
-        (GInterfaceInitFunc) gimp_container_box_docked_iface_init,
-        NULL,           /* iface_finalize */
-        NULL            /* iface_data     */
-      };
-
-      type = g_type_register_static (GIMP_TYPE_EDITOR,
-                                     "GimpContainerBox",
-                                     &box_info, 0);
-
-      g_type_add_interface_static (type, GIMP_TYPE_CONTAINER_VIEW,
-                                   &view_iface_info);
-      g_type_add_interface_static (type, GIMP_TYPE_DOCKED,
-                                   &docked_iface_info);
-    }
-
-  return type;
-}
 
 static void
 gimp_container_box_class_init (GimpContainerBoxClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->set_property = gimp_container_view_set_property;
   object_class->get_property = gimp_container_view_get_property;
@@ -131,15 +88,15 @@ gimp_container_box_init (GimpContainerBox *box)
 }
 
 static void
-gimp_container_box_view_iface_init (GimpContainerViewInterface *view_iface)
+gimp_container_box_view_iface_init (GimpContainerViewInterface *iface)
 {
 }
 
 static void
-gimp_container_box_docked_iface_init (GimpDockedInterface *docked_iface)
+gimp_container_box_docked_iface_init (GimpDockedInterface *iface)
 {
-  docked_iface->get_preview = gimp_container_box_get_preview;
-  docked_iface->set_context = gimp_container_box_set_context;
+  iface->get_preview = gimp_container_box_get_preview;
+  iface->set_context = gimp_container_box_set_context;
 }
 
 void

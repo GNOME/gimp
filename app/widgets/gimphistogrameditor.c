@@ -43,9 +43,8 @@
 #include "gimp-intl.h"
 
 
-static void  gimp_histogram_editor_class_init     (GimpHistogramEditorClass *klass);
-static void  gimp_histogram_editor_init           (GimpHistogramEditor      *editor);
-static void    gimp_histogram_editor_docked_iface_init (GimpDockedInterface *docked_iface);
+static void    gimp_histogram_editor_docked_iface_init (GimpDockedInterface *iface);
+
 static void    gimp_histogram_editor_set_aux_info (GimpDocked          *docked,
                                                    GList               *aux_info);
 static GList * gimp_histogram_editor_get_aux_info (GimpDocked          *docked);
@@ -66,52 +65,20 @@ static void  gimp_histogram_editor_info_update    (GimpHistogramEditor *editor);
 static gboolean gimp_histogram_view_expose        (GimpHistogramEditor *editor);
 
 
-static GimpImageEditorClass *parent_class        = NULL;
-static GimpDockedInterface  *parent_docked_iface = NULL;
+G_DEFINE_TYPE_WITH_CODE (GimpHistogramEditor, gimp_histogram_editor,
+                         GIMP_TYPE_IMAGE_EDITOR,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
+                                                gimp_histogram_editor_docked_iface_init));
 
+#define parent_class gimp_histogram_editor_parent_class
 
-GType
-gimp_histogram_editor_get_type (void)
-{
-  static GType editor_type = 0;
+static GimpDockedInterface *parent_docked_iface = NULL;
 
-  if (! editor_type)
-    {
-      static const GTypeInfo editor_info =
-      {
-        sizeof (GimpHistogramEditorClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_histogram_editor_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpHistogramEditor),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_histogram_editor_init,
-      };
-      static const GInterfaceInfo docked_iface_info =
-      {
-        (GInterfaceInitFunc) gimp_histogram_editor_docked_iface_init,
-        NULL,           /* iface_finalize */
-        NULL            /* iface_data     */
-      };
-
-      editor_type = g_type_register_static (GIMP_TYPE_IMAGE_EDITOR,
-                                            "GimpHistogramEditor",
-                                            &editor_info, 0);
-      g_type_add_interface_static (editor_type, GIMP_TYPE_DOCKED,
-                                   &docked_iface_info);
-    }
-
-  return editor_type;
-}
 
 static void
 gimp_histogram_editor_class_init (GimpHistogramEditorClass* klass)
 {
   GimpImageEditorClass *image_editor_class = GIMP_IMAGE_EDITOR_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   image_editor_class->set_image = gimp_histogram_editor_set_image;
 }

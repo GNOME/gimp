@@ -50,10 +50,6 @@ enum
 };
 
 
-static void      gimp_view_renderer_class_init   (GimpViewRendererClass *klass);
-
-static void      gimp_view_renderer_init         (GimpViewRenderer   *renderer);
-
 static void      gimp_view_renderer_dispose      (GObject            *object);
 static void      gimp_view_renderer_finalize     (GObject            *object);
 
@@ -73,9 +69,11 @@ static GdkGC   * gimp_view_renderer_create_gc    (GimpViewRenderer   *renderer,
                                                   GtkWidget          *widget);
 
 
-static guint renderer_signals[LAST_SIGNAL] = { 0 };
+G_DEFINE_TYPE (GimpViewRenderer, gimp_view_renderer, G_TYPE_OBJECT);
 
-static GObjectClass *parent_class = NULL;
+#define parent_class gimp_view_renderer_parent_class
+
+static guint renderer_signals[LAST_SIGNAL] = { 0 };
 
 static GimpRGB  black_color;
 static GimpRGB  white_color;
@@ -83,40 +81,10 @@ static GimpRGB  green_color;
 static GimpRGB  red_color;
 
 
-GType
-gimp_view_renderer_get_type (void)
-{
-  static GType renderer_type = 0;
-
-  if (! renderer_type)
-    {
-      static const GTypeInfo renderer_info =
-      {
-        sizeof (GimpViewRendererClass),
-        NULL,           /* base_init      */
-        NULL,           /* base_finalize  */
-        (GClassInitFunc) gimp_view_renderer_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpViewRenderer),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc)  gimp_view_renderer_init,
-      };
-
-      renderer_type = g_type_register_static (G_TYPE_OBJECT,
-                                              "GimpViewRenderer",
-                                              &renderer_info, 0);
-    }
-
-  return renderer_type;
-}
-
 static void
 gimp_view_renderer_class_init (GimpViewRendererClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   renderer_signals[UPDATE] =
     g_signal_new ("update",
@@ -133,43 +101,43 @@ gimp_view_renderer_class_init (GimpViewRendererClass *klass)
   klass->draw            = gimp_view_renderer_real_draw;
   klass->render          = gimp_view_renderer_real_render;
 
+  klass->frame           = NULL;
+  klass->frame_left      = 0;
+  klass->frame_right     = 0;
+  klass->frame_top       = 0;
+  klass->frame_bottom    = 0;
+
   gimp_rgba_set (&black_color, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
   gimp_rgba_set (&white_color, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
   gimp_rgba_set (&green_color, 0.0, 0.94, 0.0, GIMP_OPACITY_OPAQUE);
   gimp_rgba_set (&red_color,   1.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
-
-  klass->frame        = NULL;
-  klass->frame_left   = 0;
-  klass->frame_right  = 0;
-  klass->frame_top    = 0;
-  klass->frame_bottom = 0;
 }
 
 static void
 gimp_view_renderer_init (GimpViewRenderer *renderer)
 {
-  renderer->viewable       = NULL;
+  renderer->viewable     = NULL;
 
-  renderer->width          = 8;
-  renderer->height         = 8;
-  renderer->border_width   = 0;
-  renderer->dot_for_dot    = TRUE;
-  renderer->is_popup       = FALSE;
+  renderer->width        = 8;
+  renderer->height       = 8;
+  renderer->border_width = 0;
+  renderer->dot_for_dot  = TRUE;
+  renderer->is_popup     = FALSE;
 
-  renderer->border_type    = GIMP_VIEW_BORDER_BLACK;
-  renderer->border_color   = black_color;
-  renderer->gc             = NULL;
+  renderer->border_type  = GIMP_VIEW_BORDER_BLACK;
+  renderer->border_color = black_color;
+  renderer->gc           = NULL;
 
-  renderer->buffer         = NULL;
-  renderer->rowstride      = 0;
-  renderer->bytes          = 3;
+  renderer->buffer       = NULL;
+  renderer->rowstride    = 0;
+  renderer->bytes        = 3;
 
-  renderer->pixbuf = NULL;
-  renderer->bg_stock_id    = NULL;
+  renderer->pixbuf       = NULL;
+  renderer->bg_stock_id  = NULL;
 
-  renderer->size           = -1;
-  renderer->needs_render   = TRUE;
-  renderer->idle_id        = 0;
+  renderer->size         = -1;
+  renderer->needs_render = TRUE;
+  renderer->idle_id      = 0;
 }
 
 static void

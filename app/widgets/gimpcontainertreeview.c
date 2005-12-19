@@ -51,10 +51,7 @@ enum
 };
 
 
-static void     gimp_container_tree_view_class_init   (GimpContainerTreeViewClass *klass);
-static void     gimp_container_tree_view_init         (GimpContainerTreeView      *view);
-
-static void  gimp_container_tree_view_view_iface_init (GimpContainerViewInterface *view_iface);
+static void  gimp_container_tree_view_view_iface_init (GimpContainerViewInterface *iface);
 
 static GObject *gimp_container_tree_view_constructor  (GType                   type,
                                                        guint                   n_params,
@@ -102,55 +99,21 @@ static GdkPixbuf    * gimp_container_tree_view_drag_pixbuf   (GtkWidget       *w
                                                               gpointer         data);
 
 
-static GimpContainerBoxClass      *parent_class      = NULL;
+G_DEFINE_TYPE_WITH_CODE (GimpContainerTreeView, gimp_container_tree_view,
+                         GIMP_TYPE_CONTAINER_BOX,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONTAINER_VIEW,
+                                                gimp_container_tree_view_view_iface_init));
+
+#define parent_class gimp_container_tree_view_parent_class
+
 static GimpContainerViewInterface *parent_view_iface = NULL;
 
-
-GType
-gimp_container_tree_view_get_type (void)
-{
-  static GType view_type = 0;
-
-  if (! view_type)
-    {
-      static const GTypeInfo view_info =
-      {
-        sizeof (GimpContainerTreeViewClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_container_tree_view_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpContainerTreeView),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_container_tree_view_init,
-      };
-
-      static const GInterfaceInfo view_iface_info =
-      {
-        (GInterfaceInitFunc) gimp_container_tree_view_view_iface_init,
-        NULL,           /* iface_finalize */
-        NULL            /* iface_data     */
-      };
-
-      view_type = g_type_register_static (GIMP_TYPE_CONTAINER_BOX,
-                                          "GimpContainerTreeView",
-                                          &view_info, 0);
-
-      g_type_add_interface_static (view_type, GIMP_TYPE_CONTAINER_VIEW,
-                                   &view_iface_info);
-    }
-
-  return view_type;
-}
 
 static void
 gimp_container_tree_view_class_init (GimpContainerTreeViewClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->constructor = gimp_container_tree_view_constructor;
 
@@ -189,20 +152,20 @@ gimp_container_tree_view_init (GimpContainerTreeView *tree_view)
 }
 
 static void
-gimp_container_tree_view_view_iface_init (GimpContainerViewInterface *view_iface)
+gimp_container_tree_view_view_iface_init (GimpContainerViewInterface *iface)
 {
-  parent_view_iface = g_type_interface_peek_parent (view_iface);
+  parent_view_iface = g_type_interface_peek_parent (iface);
 
-  view_iface->set_container    = gimp_container_tree_view_set_container;
-  view_iface->insert_item      = gimp_container_tree_view_insert_item;
-  view_iface->remove_item      = gimp_container_tree_view_remove_item;
-  view_iface->reorder_item     = gimp_container_tree_view_reorder_item;
-  view_iface->rename_item      = gimp_container_tree_view_rename_item;
-  view_iface->select_item      = gimp_container_tree_view_select_item;
-  view_iface->clear_items      = gimp_container_tree_view_clear_items;
-  view_iface->set_preview_size = gimp_container_tree_view_set_preview_size;
+  iface->set_container    = gimp_container_tree_view_set_container;
+  iface->insert_item      = gimp_container_tree_view_insert_item;
+  iface->remove_item      = gimp_container_tree_view_remove_item;
+  iface->reorder_item     = gimp_container_tree_view_reorder_item;
+  iface->rename_item      = gimp_container_tree_view_rename_item;
+  iface->select_item      = gimp_container_tree_view_select_item;
+  iface->clear_items      = gimp_container_tree_view_clear_items;
+  iface->set_preview_size = gimp_container_tree_view_set_preview_size;
 
-  view_iface->insert_data_free = (GDestroyNotify) g_free;
+  iface->insert_data_free = (GDestroyNotify) g_free;
 }
 
 static GObject *

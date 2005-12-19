@@ -37,51 +37,27 @@
 #include "gimpviewrendererdrawable.h"
 
 
-static void   gimp_view_renderer_drawable_class_init (GimpViewRendererDrawableClass *klass);
-
-static void   gimp_view_renderer_drawable_render     (GimpViewRenderer *renderer,
-                                                      GtkWidget        *widget);
+static void   gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
+                                                  GtkWidget        *widget);
 
 
-static GimpViewRendererClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpViewRendererDrawable, gimp_view_renderer_drawable,
+               GIMP_TYPE_VIEW_RENDERER);
 
+#define parent_class gimp_view_renderer_drawable_parent_class
 
-GType
-gimp_view_renderer_drawable_get_type (void)
-{
-  static GType renderer_type = 0;
-
-  if (! renderer_type)
-    {
-      static const GTypeInfo renderer_info =
-      {
-        sizeof (GimpViewRendererDrawableClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_view_renderer_drawable_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpViewRendererDrawable),
-        0,              /* n_preallocs */
-        NULL            /* instance_init */
-      };
-
-      renderer_type = g_type_register_static (GIMP_TYPE_VIEW_RENDERER,
-                                              "GimpViewRendererDrawable",
-                                              &renderer_info, 0);
-    }
-
-  return renderer_type;
-}
 
 static void
 gimp_view_renderer_drawable_class_init (GimpViewRendererDrawableClass *klass)
 {
   GimpViewRendererClass *renderer_class = GIMP_VIEW_RENDERER_CLASS (klass);
 
-  parent_class = g_type_class_peek_parent (klass);
-
   renderer_class->render = gimp_view_renderer_drawable_render;
+}
+
+static void
+gimp_view_renderer_drawable_init (GimpViewRendererDrawable *renderer)
+{
 }
 
 static void

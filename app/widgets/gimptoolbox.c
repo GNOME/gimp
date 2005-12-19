@@ -62,9 +62,6 @@
 
 /*  local function prototypes  */
 
-static void        gimp_toolbox_class_init       (GimpToolboxClass *klass);
-static void        gimp_toolbox_init             (GimpToolbox      *toolbox);
-
 static GObject   * gimp_toolbox_constructor      (GType           type,
                                                   guint           n_params,
                                                   GObjectConstructParam *params);
@@ -122,38 +119,10 @@ static void        toolbox_paste_received        (GtkClipboard   *clipboard,
                                                   gpointer        data);
 
 
-/*  local variables  */
+G_DEFINE_TYPE (GimpToolbox, gimp_toolbox, GIMP_TYPE_IMAGE_DOCK);
 
-static GimpImageDockClass *parent_class = NULL;
+#define parent_class gimp_toolbox_parent_class
 
-
-GType
-gimp_toolbox_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo type_info =
-      {
-        sizeof (GimpToolboxClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_toolbox_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpToolbox),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_toolbox_init,
-      };
-
-      type = g_type_register_static (GIMP_TYPE_IMAGE_DOCK,
-                                     "GimpToolbox",
-                                     &type_info, 0);
-    }
-
-  return type;
-}
 
 static void
 gimp_toolbox_class_init (GimpToolboxClass *klass)
@@ -162,8 +131,6 @@ gimp_toolbox_class_init (GimpToolboxClass *klass)
   GtkWidgetClass     *widget_class     = GTK_WIDGET_CLASS (klass);
   GimpDockClass      *dock_class       = GIMP_DOCK_CLASS (klass);
   GimpImageDockClass *image_dock_class = GIMP_IMAGE_DOCK_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->constructor         = gimp_toolbox_constructor;
 

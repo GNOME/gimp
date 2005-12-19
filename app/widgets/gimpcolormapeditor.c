@@ -74,9 +74,6 @@ enum
          gimp_image_get_colormap (gimage) != NULL)
 
 
-static void   gimp_colormap_editor_class_init (GimpColormapEditorClass *klass);
-static void   gimp_colormap_editor_init       (GimpColormapEditor      *colormap_editor);
-
 static GObject * gimp_colormap_editor_constructor  (GType               type,
                                                     guint               n_params,
                                                     GObjectConstructParam *params);
@@ -124,38 +121,13 @@ static void   gimp_colormap_image_colormap_changed (GimpImage          *gimage,
                                                     GimpColormapEditor *editor);
 
 
+G_DEFINE_TYPE (GimpColormapEditor, gimp_colormap_editor,
+               GIMP_TYPE_IMAGE_EDITOR);
+
+#define parent_class gimp_colormap_editor_parent_class
+
 static guint editor_signals[LAST_SIGNAL] = { 0 };
 
-static GimpImageEditorClass *parent_class = NULL;
-
-
-GType
-gimp_colormap_editor_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo info =
-      {
-        sizeof (GimpColormapEditorClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_colormap_editor_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpColormapEditor),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_colormap_editor_init,
-      };
-
-      type = g_type_register_static (GIMP_TYPE_IMAGE_EDITOR,
-                                     "GimpColormapEditor",
-                                     &info, 0);
-    }
-
-  return type;
-}
 
 static void
 gimp_colormap_editor_class_init (GimpColormapEditorClass* klass)
@@ -164,8 +136,6 @@ gimp_colormap_editor_class_init (GimpColormapEditorClass* klass)
   GtkObjectClass       *gtk_object_class   = GTK_OBJECT_CLASS (klass);
   GtkWidgetClass       *widget_class       = GTK_WIDGET_CLASS (klass);
   GimpImageEditorClass *image_editor_class = GIMP_IMAGE_EDITOR_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   editor_signals[SELECTED] =
     g_signal_new ("selected",

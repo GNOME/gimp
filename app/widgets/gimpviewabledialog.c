@@ -45,9 +45,6 @@ enum
 };
 
 
-static void   gimp_viewable_dialog_class_init (GimpViewableDialogClass *klass);
-static void   gimp_viewable_dialog_init       (GimpViewableDialog      *dialog);
-
 static void   gimp_viewable_dialog_set_property (GObject            *object,
                                                  guint               property_id,
                                                  const GValue       *value,
@@ -60,49 +57,18 @@ static void   gimp_viewable_dialog_name_changed (GimpObject         *object,
 static void   gimp_viewable_dialog_close        (GimpViewableDialog *dialog);
 
 
-static GimpDialogClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpViewableDialog, gimp_viewable_dialog, GIMP_TYPE_DIALOG);
 
+#define parent_class gimp_viewable_dialog_parent_class
 
-GType
-gimp_viewable_dialog_get_type (void)
-{
-  static GType dialog_type = 0;
-
-  if (! dialog_type)
-    {
-      static const GTypeInfo dialog_info =
-      {
-        sizeof (GimpViewableDialogClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_viewable_dialog_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpViewableDialog),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_viewable_dialog_init,
-      };
-
-      dialog_type = g_type_register_static (GIMP_TYPE_DIALOG,
-					    "GimpViewableDialog",
-					    &dialog_info, 0);
-    }
-
-  return dialog_type;
-}
 
 static void
 gimp_viewable_dialog_class_init (GimpViewableDialogClass *klass)
 {
-  GtkObjectClass *gtk_object_class;
-  GObjectClass   *object_class;
+  GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
+  GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
 
-  gtk_object_class = GTK_OBJECT_CLASS (klass);
-  object_class     = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
-
-  gtk_object_class->destroy = gimp_viewable_dialog_destroy;
+  gtk_object_class->destroy  = gimp_viewable_dialog_destroy;
 
   object_class->set_property = gimp_viewable_dialog_set_property;
 

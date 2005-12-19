@@ -62,10 +62,6 @@ enum
 };
 
 
-static void   gimp_item_tree_view_class_init   (GimpItemTreeViewClass *klass);
-static void   gimp_item_tree_view_init         (GimpItemTreeView      *view,
-                                                GimpItemTreeViewClass *view_class);
-
 static void   gimp_item_tree_view_view_iface_init   (GimpContainerViewInterface *view_iface);
 static void   gimp_item_tree_view_docked_iface_init (GimpDockedInterface *docked_iface);
 
@@ -149,57 +145,19 @@ static void   gimp_item_tree_view_toggle_clicked    (GtkCellRendererToggle *togg
                                                      GimpUndoType       undo_type);
 
 
-static guint  view_signals[LAST_SIGNAL] = { 0 };
+G_DEFINE_TYPE_WITH_CODE (GimpItemTreeView, gimp_item_tree_view,
+                         GIMP_TYPE_CONTAINER_TREE_VIEW,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONTAINER_VIEW,
+                                                gimp_item_tree_view_view_iface_init)
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
+                                                gimp_item_tree_view_docked_iface_init));
 
-static GimpContainerTreeViewClass *parent_class      = NULL;
+#define parent_class gimp_item_tree_view_parent_class
+
 static GimpContainerViewInterface *parent_view_iface = NULL;
 
+static guint view_signals[LAST_SIGNAL] = { 0 };
 
-GType
-gimp_item_tree_view_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo view_info =
-      {
-        sizeof (GimpItemTreeViewClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_item_tree_view_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpItemTreeView),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_item_tree_view_init,
-      };
-
-      static const GInterfaceInfo view_iface_info =
-      {
-        (GInterfaceInitFunc) gimp_item_tree_view_view_iface_init,
-        NULL,           /* iface_finalize */
-        NULL            /* iface_data     */
-      };
-      static const GInterfaceInfo docked_iface_info =
-      {
-        (GInterfaceInitFunc) gimp_item_tree_view_docked_iface_init,
-        NULL,           /* iface_finalize */
-        NULL            /* iface_data     */
-      };
-
-      type = g_type_register_static (GIMP_TYPE_CONTAINER_TREE_VIEW,
-                                     "GimpItemTreeView",
-                                     &view_info, G_TYPE_FLAG_ABSTRACT);
-
-      g_type_add_interface_static (type, GIMP_TYPE_CONTAINER_VIEW,
-                                   &view_iface_info);
-      g_type_add_interface_static (type, GIMP_TYPE_DOCKED,
-                                   &docked_iface_info);
-    }
-
-  return type;
-}
 
 static void
 gimp_item_tree_view_class_init (GimpItemTreeViewClass *klass)
@@ -208,11 +166,9 @@ gimp_item_tree_view_class_init (GimpItemTreeViewClass *klass)
   GtkObjectClass             *gtk_object_class;
   GimpContainerTreeViewClass *tree_view_class;
 
-  object_class         = G_OBJECT_CLASS (klass);
-  gtk_object_class     = GTK_OBJECT_CLASS (klass);
-  tree_view_class      = GIMP_CONTAINER_TREE_VIEW_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
+  object_class     = G_OBJECT_CLASS (klass);
+  gtk_object_class = GTK_OBJECT_CLASS (klass);
+  tree_view_class  = GIMP_CONTAINER_TREE_VIEW_CLASS (klass);
 
   view_signals[SET_IMAGE] =
     g_signal_new ("set-image",
@@ -258,8 +214,7 @@ gimp_item_tree_view_class_init (GimpItemTreeViewClass *klass)
 }
 
 static void
-gimp_item_tree_view_init (GimpItemTreeView      *view,
-                          GimpItemTreeViewClass *view_class)
+gimp_item_tree_view_init (GimpItemTreeView *view)
 {
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
 
@@ -290,22 +245,22 @@ gimp_item_tree_view_init (GimpItemTreeView      *view,
 }
 
 static void
-gimp_item_tree_view_view_iface_init (GimpContainerViewInterface *view_iface)
+gimp_item_tree_view_view_iface_init (GimpContainerViewInterface *iface)
 {
-  parent_view_iface = g_type_interface_peek_parent (view_iface);
+  parent_view_iface = g_type_interface_peek_parent (iface);
 
-  view_iface->set_container = gimp_item_tree_view_set_container;
-  view_iface->insert_item   = gimp_item_tree_view_insert_item;
-  view_iface->select_item   = gimp_item_tree_view_select_item;
-  view_iface->activate_item = gimp_item_tree_view_activate_item;
-  view_iface->context_item  = gimp_item_tree_view_context_item;
+  iface->set_container = gimp_item_tree_view_set_container;
+  iface->insert_item   = gimp_item_tree_view_insert_item;
+  iface->select_item   = gimp_item_tree_view_select_item;
+  iface->activate_item = gimp_item_tree_view_activate_item;
+  iface->context_item  = gimp_item_tree_view_context_item;
 }
 
 static void
-gimp_item_tree_view_docked_iface_init (GimpDockedInterface *docked_iface)
+gimp_item_tree_view_docked_iface_init (GimpDockedInterface *iface)
 {
-  docked_iface->get_preview = NULL;
-  docked_iface->set_context = gimp_item_tree_view_set_context;
+  iface->get_preview = NULL;
+  iface->set_context = gimp_item_tree_view_set_context;
 }
 
 static void

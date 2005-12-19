@@ -41,50 +41,20 @@
 #endif
 
 
-static void   gimp_view_renderer_imagefile_class_init (GimpViewRendererImagefileClass *klass);
-static void   gimp_view_renderer_imagefile_init       (GimpViewRendererImagefile      *renderer);
-
-static void   gimp_view_renderer_imagefile_render     (GimpViewRenderer *renderer,
-                                                       GtkWidget        *widget);
+static void   gimp_view_renderer_imagefile_render (GimpViewRenderer *renderer,
+                                                   GtkWidget        *widget);
 
 
-static GimpViewRendererClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpViewRendererImagefile, gimp_view_renderer_imagefile,
+               GIMP_TYPE_VIEW_RENDERER);
 
+#define parent_class gimp_view_renderer_imagefile_parent_class
 
-GType
-gimp_view_renderer_imagefile_get_type (void)
-{
-  static GType renderer_type = 0;
-
-  if (! renderer_type)
-    {
-      static const GTypeInfo renderer_info =
-      {
-        sizeof (GimpViewRendererImagefileClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_view_renderer_imagefile_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpViewRendererImagefile),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_view_renderer_imagefile_init,
-      };
-
-      renderer_type = g_type_register_static (GIMP_TYPE_VIEW_RENDERER,
-                                              "GimpViewRendererImagefile",
-                                              &renderer_info, 0);
-    }
-
-  return renderer_type;
-}
 
 static void
 gimp_view_renderer_imagefile_class_init (GimpViewRendererImagefileClass *klass)
 {
   GimpViewRendererClass *renderer_class = GIMP_VIEW_RENDERER_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   renderer_class->render = gimp_view_renderer_imagefile_render;
 }

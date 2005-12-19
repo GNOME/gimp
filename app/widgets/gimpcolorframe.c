@@ -44,59 +44,28 @@ enum
 
 /*  local function prototypes  */
 
-static void   gimp_color_frame_class_init    (GimpColorFrameClass *klass);
-static void   gimp_color_frame_init          (GimpColorFrame      *frame);
-
-static void   gimp_color_frame_get_property  (GObject             *object,
-                                              guint                property_id,
-                                              GValue              *value,
-                                              GParamSpec          *pspec);
-static void   gimp_color_frame_set_property  (GObject             *object,
-                                              guint                property_id,
-                                              const GValue        *value,
-                                              GParamSpec          *pspec);
-static void   gimp_color_frame_menu_callback (GtkWidget           *widget,
-                                              GimpColorFrame      *frame);
-static void   gimp_color_frame_update        (GimpColorFrame      *frame);
+static void   gimp_color_frame_get_property  (GObject        *object,
+                                              guint           property_id,
+                                              GValue         *value,
+                                              GParamSpec     *pspec);
+static void   gimp_color_frame_set_property  (GObject        *object,
+                                              guint           property_id,
+                                              const GValue   *value,
+                                              GParamSpec     *pspec);
+static void   gimp_color_frame_menu_callback (GtkWidget      *widget,
+                                              GimpColorFrame *frame);
+static void   gimp_color_frame_update        (GimpColorFrame *frame);
 
 
-static GimpFrameClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpColorFrame, gimp_color_frame, GIMP_TYPE_FRAME);
 
+#define parent_class gimp_color_frame_parent_class
 
-GType
-gimp_color_frame_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo frame_info =
-      {
-        sizeof (GimpColorFrameClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_color_frame_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpColorFrame),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_color_frame_init,
-      };
-
-      type = g_type_register_static (GIMP_TYPE_FRAME,
-                                     "GimpColorFrame",
-                                     &frame_info, 0);
-    }
-
-  return type;
-}
 
 static void
 gimp_color_frame_class_init (GimpColorFrameClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->get_property = gimp_color_frame_get_property;
   object_class->set_property = gimp_color_frame_set_property;

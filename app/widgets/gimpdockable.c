@@ -42,9 +42,6 @@
 #include "gimp-intl.h"
 
 
-static void       gimp_dockable_class_init        (GimpDockableClass *klass);
-static void       gimp_dockable_init              (GimpDockable      *dockable);
-
 static void       gimp_dockable_destroy           (GtkObject      *object);
 static void       gimp_dockable_size_request      (GtkWidget      *widget,
                                                    GtkRequisition *requisition);
@@ -91,41 +88,12 @@ static void       gimp_dockable_title_changed     (GimpDocked     *docked,
                                                    GimpDockable   *dockable);
 
 
-static GtkBinClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpDockable, gimp_dockable, GTK_TYPE_BIN);
 
-static GtkTargetEntry dialog_target_table[] =
-{
-  GIMP_TARGET_DIALOG
-};
+#define parent_class gimp_dockable_parent_class
 
+static GtkTargetEntry dialog_target_table[] = { GIMP_TARGET_DIALOG };
 
-GType
-gimp_dockable_get_type (void)
-{
-  static GType dockable_type = 0;
-
-  if (! dockable_type)
-    {
-      static const GTypeInfo dockable_info =
-      {
-        sizeof (GimpDockableClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_dockable_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpDockable),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_dockable_init,
-      };
-
-      dockable_type = g_type_register_static (GTK_TYPE_BIN,
-                                              "GimpDockable",
-                                              &dockable_info, 0);
-    }
-
-  return dockable_type;
-}
 
 static void
 gimp_dockable_class_init (GimpDockableClass *klass)
@@ -133,8 +101,6 @@ gimp_dockable_class_init (GimpDockableClass *klass)
   GtkObjectClass    *object_class    = GTK_OBJECT_CLASS (klass);
   GtkWidgetClass    *widget_class    = GTK_WIDGET_CLASS (klass);
   GtkContainerClass *container_class = GTK_CONTAINER_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->destroy       = gimp_dockable_destroy;
 

@@ -37,20 +37,8 @@ enum
   PROP_NUM_VALUES
 };
 
-static GType column_types[GIMP_UNIT_STORE_UNIT_COLUMNS] =
-{
-  G_TYPE_INVALID,
-  G_TYPE_DOUBLE,
-  G_TYPE_INT,
-  G_TYPE_STRING,
-  G_TYPE_STRING,
-  G_TYPE_STRING,
-  G_TYPE_STRING,
-  G_TYPE_STRING
-};
 
-static void         gimp_unit_store_class_init      (GimpUnitStoreClass *klass);
-static void         gimp_unit_store_tree_model_init (GtkTreeModelIface  *iface);
+static void         gimp_unit_store_tree_model_init (GtkTreeModelIface *iface);
 
 static void         gimp_unit_store_finalize        (GObject      *object);
 static void         gimp_unit_store_set_property    (GObject      *object,
@@ -93,47 +81,25 @@ static gboolean     gimp_unit_store_iter_parent     (GtkTreeModel *tree_model,
                                                      GtkTreeIter  *child);
 
 
-static GObjectClass *parent_class = NULL;
+G_DEFINE_TYPE_WITH_CODE (GimpUnitStore, gimp_unit_store, G_TYPE_OBJECT,
+                         G_IMPLEMENT_INTERFACE (GTK_TYPE_TREE_MODEL,
+                                                gimp_unit_store_tree_model_init));
+
+#define parent_class gimp_unit_store_parent_class
 
 
-GType
-gimp_unit_store_get_type (void)
+static GType column_types[GIMP_UNIT_STORE_UNIT_COLUMNS] =
 {
-  static GType store_type = 0;
+  G_TYPE_INVALID,
+  G_TYPE_DOUBLE,
+  G_TYPE_INT,
+  G_TYPE_STRING,
+  G_TYPE_STRING,
+  G_TYPE_STRING,
+  G_TYPE_STRING,
+  G_TYPE_STRING
+};
 
-  if (!store_type)
-    {
-      static const GTypeInfo store_info =
-      {
-        sizeof (GimpUnitStoreClass),
-        NULL,           /* base_init      */
-        NULL,           /* base_finalize  */
-        (GClassInitFunc) gimp_unit_store_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpUnitStore),
-        0,              /* n_preallocs    */
-        NULL            /* instance_init  */
-      };
-
-      static const GInterfaceInfo tree_model_info =
-      {
-	(GInterfaceInitFunc) gimp_unit_store_tree_model_init,
-	NULL,
-	NULL
-      };
-
-      store_type = g_type_register_static (G_TYPE_OBJECT,
-                                           "GimpUnitStore",
-                                           &store_info, 0);
-
-      g_type_add_interface_static (store_type,
-				   GTK_TYPE_TREE_MODEL,
-				   &tree_model_info);
-    }
-
-  return store_type;
-}
 
 static void
 gimp_unit_store_class_init (GimpUnitStoreClass *klass)
@@ -141,8 +107,6 @@ gimp_unit_store_class_init (GimpUnitStoreClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   column_types[GIMP_UNIT_STORE_UNIT] = GIMP_TYPE_UNIT;
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize     = gimp_unit_store_finalize;
   object_class->set_property = gimp_unit_store_set_property;
@@ -154,6 +118,11 @@ gimp_unit_store_class_init (GimpUnitStoreClass *klass)
                                                      0, G_MAXINT, 0,
                                                      G_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT_ONLY));
+}
+
+static void
+gimp_unit_store_init (GimpUnitStore *store)
+{
 }
 
 static void

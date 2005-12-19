@@ -56,9 +56,6 @@ enum
 };
 
 
-static void     gimp_ui_manager_init           (GimpUIManager      *manager);
-static void     gimp_ui_manager_class_init     (GimpUIManagerClass *klass);
-
 static GObject * gimp_ui_manager_constructor   (GType               type,
                                                 guint               n_params,
                                                 GObjectConstructParam *params);
@@ -109,46 +106,18 @@ static gboolean gimp_ui_manager_item_key_press (GtkWidget          *widget,
                                                 GimpUIManager      *manager);
 
 
+G_DEFINE_TYPE (GimpUIManager, gimp_ui_manager, GTK_TYPE_UI_MANAGER);
+
+#define parent_class gimp_ui_manager_parent_class
+
 static guint manager_signals[LAST_SIGNAL] = { 0 };
 
-static GtkUIManagerClass *parent_class = NULL;
-
-
-GType
-gimp_ui_manager_get_type (void)
-{
-  static GType type = 0;
-
-  if (!type)
-    {
-      static const GTypeInfo type_info =
-      {
-        sizeof (GimpUIManagerClass),
-	NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_ui_manager_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpUIManager),
-        0, /* n_preallocs */
-        (GInstanceInitFunc) gimp_ui_manager_init,
-      };
-
-      type = g_type_register_static (GTK_TYPE_UI_MANAGER,
-                                     "GimpUIManager",
-				     &type_info, 0);
-    }
-
-  return type;
-}
 
 static void
 gimp_ui_manager_class_init (GimpUIManagerClass *klass)
 {
   GObjectClass      *object_class  = G_OBJECT_CLASS (klass);
   GtkUIManagerClass *manager_class = GTK_UI_MANAGER_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->constructor    = gimp_ui_manager_constructor;
   object_class->dispose        = gimp_ui_manager_dispose;

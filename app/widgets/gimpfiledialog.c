@@ -54,8 +54,7 @@
 #include "gimp-intl.h"
 
 
-static void    gimp_file_dialog_class_init          (GimpFileDialogClass   *klass);
-static void    gimp_file_dialog_progress_iface_init (GimpProgressInterface *progress_iface);
+static void    gimp_file_dialog_progress_iface_init (GimpProgressInterface *iface);
 static gboolean gimp_file_dialog_delete_event       (GtkWidget        *widget,
                                                      GdkEventAny      *event);
 static void     gimp_file_dialog_response           (GtkDialog        *dialog,
@@ -102,43 +101,13 @@ static void     gimp_file_dialog_help_clicked       (GtkWidget        *widget,
 static gchar  * gimp_file_dialog_pattern_from_extension (const gchar  *extension);
 
 
-GType
-gimp_file_dialog_get_type (void)
-{
-  static GType dialog_type = 0;
+G_DEFINE_TYPE_WITH_CODE (GimpFileDialog, gimp_file_dialog,
+                         GTK_TYPE_FILE_CHOOSER_DIALOG,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_PROGRESS,
+                                                gimp_file_dialog_progress_iface_init));
 
-  if (! dialog_type)
-    {
-      static const GTypeInfo dialog_info =
-      {
-        sizeof (GimpFileDialogClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_file_dialog_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpFileDialog),
-        0,              /* n_preallocs    */
-        NULL,           /* instance_init  */
-      };
+#define parent_class gimp_file_dialog_parent_class
 
-      static const GInterfaceInfo progress_iface_info =
-      {
-        (GInterfaceInitFunc) gimp_file_dialog_progress_iface_init,
-        NULL,           /* iface_finalize */
-        NULL            /* iface_data     */
-      };
-
-      dialog_type = g_type_register_static (GTK_TYPE_FILE_CHOOSER_DIALOG,
-                                            "GimpFileDialog",
-                                            &dialog_info, 0);
-
-      g_type_add_interface_static (dialog_type, GIMP_TYPE_PROGRESS,
-                                   &progress_iface_info);
-    }
-
-  return dialog_type;
-}
 
 static void
 gimp_file_dialog_class_init (GimpFileDialogClass *klass)
@@ -152,16 +121,21 @@ gimp_file_dialog_class_init (GimpFileDialogClass *klass)
 }
 
 static void
-gimp_file_dialog_progress_iface_init (GimpProgressInterface *progress_iface)
+gimp_file_dialog_init (GimpFileDialog *dialog)
 {
-  progress_iface->start      = gimp_file_dialog_progress_start;
-  progress_iface->end        = gimp_file_dialog_progress_end;
-  progress_iface->is_active  = gimp_file_dialog_progress_is_active;
-  progress_iface->set_text   = gimp_file_dialog_progress_set_text;
-  progress_iface->set_value  = gimp_file_dialog_progress_set_value;
-  progress_iface->get_value  = gimp_file_dialog_progress_get_value;
-  progress_iface->pulse      = gimp_file_dialog_progress_pulse;
-  progress_iface->get_window = gimp_file_dialog_progress_get_window;
+}
+
+static void
+gimp_file_dialog_progress_iface_init (GimpProgressInterface *iface)
+{
+  iface->start      = gimp_file_dialog_progress_start;
+  iface->end        = gimp_file_dialog_progress_end;
+  iface->is_active  = gimp_file_dialog_progress_is_active;
+  iface->set_text   = gimp_file_dialog_progress_set_text;
+  iface->set_value  = gimp_file_dialog_progress_set_value;
+  iface->get_value  = gimp_file_dialog_progress_get_value;
+  iface->pulse      = gimp_file_dialog_progress_pulse;
+  iface->get_window = gimp_file_dialog_progress_get_window;
 }
 
 static gboolean

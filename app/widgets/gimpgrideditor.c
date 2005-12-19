@@ -52,7 +52,6 @@ enum
 };
 
 
-static void      gimp_grid_editor_class_init   (GimpGridEditorClass   *klass);
 static GObject * gimp_grid_editor_constructor  (GType                  type,
                                                 guint                  n_params,
                                                 GObjectConstructParam *params);
@@ -67,43 +66,15 @@ static void      gimp_grid_editor_get_property (GObject               *object,
 static void      gimp_grid_editor_finalize     (GObject               *object);
 
 
-static GtkVBoxClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpGridEditor, gimp_grid_editor, GTK_TYPE_VBOX);
 
+#define parent_class gimp_grid_editor_parent_class
 
-GType
-gimp_grid_editor_get_type (void)
-{
-  static GType view_type = 0;
-
-  if (! view_type)
-    {
-      static const GTypeInfo view_info =
-      {
-        sizeof (GimpGridEditorClass),
-        NULL,           /* base_init      */
-        NULL,           /* base_finalize  */
-        (GClassInitFunc) gimp_grid_editor_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpGridEditor),
-        0,              /* n_preallocs    */
-        NULL            /* instance_init  */
-      };
-
-      view_type = g_type_register_static (GTK_TYPE_VBOX,
-                                          "GimpGridEditor",
-                                          &view_info, 0);
-    }
-
-  return view_type;
-}
 
 static void
 gimp_grid_editor_class_init (GimpGridEditorClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->constructor  = gimp_grid_editor_constructor;
   object_class->set_property = gimp_grid_editor_set_property;
@@ -129,6 +100,11 @@ gimp_grid_editor_class_init (GimpGridEditorClass *klass)
                                                         GRID_EDITOR_DEFAULT_RESOLUTION,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
+}
+
+static void
+gimp_grid_editor_init (GimpGridEditor *editor)
+{
 }
 
 static void

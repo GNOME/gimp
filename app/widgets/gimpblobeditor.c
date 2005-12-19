@@ -35,9 +35,7 @@ enum
   PROP_ANGLE
 };
 
-static void      gimp_blob_editor_class_init     (GimpBlobEditorClass *klass);
 
-static void      gimp_blob_editor_init           (GimpBlobEditor *editor);
 static void      gimp_blob_editor_set_property   (GObject        *object,
                                                   guint           property_id,
                                                   const GValue   *value,
@@ -64,36 +62,10 @@ static void      gimp_blob_editor_draw_blob      (GimpBlobEditor *editor,
                                                   gdouble         radius);
 
 
-static GtkDrawingAreaClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpBlobEditor, gimp_blob_editor, GTK_TYPE_DRAWING_AREA);
 
+#define parent_class gimp_blob_editor_parent_class
 
-GType
-gimp_blob_editor_get_type (void)
-{
-  static GType view_type = 0;
-
-  if (! view_type)
-    {
-      static const GTypeInfo view_info =
-      {
-        sizeof (GimpBlobEditorClass),
-        NULL,           /* base_init      */
-        NULL,           /* base_finalize  */
-        (GClassInitFunc) gimp_blob_editor_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpBlobEditor),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_blob_editor_init
-      };
-
-      view_type = g_type_register_static (GTK_TYPE_DRAWING_AREA,
-                                          "GimpBlobEditor",
-                                          &view_info, 0);
-    }
-
-  return view_type;
-}
 
 static void
 gimp_blob_editor_class_init (GimpBlobEditorClass *klass)
@@ -101,10 +73,13 @@ gimp_blob_editor_class_init (GimpBlobEditorClass *klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  parent_class = g_type_class_peek_parent (klass);
+  object_class->set_property         = gimp_blob_editor_set_property;
+  object_class->get_property         = gimp_blob_editor_get_property;
 
-  object_class->set_property = gimp_blob_editor_set_property;
-  object_class->get_property = gimp_blob_editor_get_property;
+  widget_class->expose_event         = gimp_blob_editor_expose;
+  widget_class->button_press_event   = gimp_blob_editor_button_press;
+  widget_class->button_release_event = gimp_blob_editor_button_release;
+  widget_class->motion_notify_event  = gimp_blob_editor_motion_notify;
 
   g_object_class_install_property (object_class, PROP_TYPE,
                                    g_param_spec_enum ("blob-type",
@@ -125,11 +100,6 @@ gimp_blob_editor_class_init (GimpBlobEditorClass *klass)
                                                         -90.0, 90.0, 0.0,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
-
-  widget_class->expose_event         = gimp_blob_editor_expose;
-  widget_class->button_press_event   = gimp_blob_editor_button_press;
-  widget_class->button_release_event = gimp_blob_editor_button_release;
-  widget_class->motion_notify_event  = gimp_blob_editor_motion_notify;
 }
 
 static void

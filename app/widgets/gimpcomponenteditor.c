@@ -51,9 +51,6 @@ enum
 };
 
 
-static void gimp_component_editor_class_init (GimpComponentEditorClass *klass);
-static void gimp_component_editor_init       (GimpComponentEditor      *editor);
-
 static void gimp_component_editor_unrealize         (GtkWidget           *widget);
 
 static void gimp_component_editor_set_image         (GimpImageEditor     *editor,
@@ -90,36 +87,11 @@ static GimpImage * gimp_component_editor_drag_component (GtkWidget       *widget
                                                          gpointer         data);
 
 
-static GimpImageEditorClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpComponentEditor, gimp_component_editor,
+               GIMP_TYPE_IMAGE_EDITOR);
 
+#define parent_class gimp_component_editor_parent_class
 
-GType
-gimp_component_editor_get_type (void)
-{
-  static GType editor_type = 0;
-
-  if (! editor_type)
-    {
-      static const GTypeInfo editor_info =
-      {
-        sizeof (GimpComponentEditorClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_component_editor_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpComponentEditor),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_component_editor_init,
-      };
-
-      editor_type = g_type_register_static (GIMP_TYPE_IMAGE_EDITOR,
-                                            "GimpComponentEditor",
-                                            &editor_info, 0);
-    }
-
-  return editor_type;
-}
 
 static void
 gimp_component_editor_class_init (GimpComponentEditorClass *klass)
@@ -127,9 +99,7 @@ gimp_component_editor_class_init (GimpComponentEditorClass *klass)
   GtkWidgetClass       *widget_class       = GTK_WIDGET_CLASS (klass);
   GimpImageEditorClass *image_editor_class = GIMP_IMAGE_EDITOR_CLASS (klass);
 
-  parent_class = g_type_class_peek_parent (klass);
-
-  widget_class->unrealize = gimp_component_editor_unrealize;
+  widget_class->unrealize       = gimp_component_editor_unrealize;
 
   image_editor_class->set_image = gimp_component_editor_set_image;
 }

@@ -47,54 +47,25 @@ enum
 };
 
 
-static void   gimp_action_init          (GimpAction      *action);
-static void   gimp_action_class_init    (GimpActionClass *klass);
-
-static void   gimp_action_finalize      (GObject         *object);
-static void   gimp_action_set_property  (GObject         *object,
-                                         guint            prop_id,
-                                         const GValue    *value,
-                                         GParamSpec      *pspec);
-static void   gimp_action_get_property  (GObject         *object,
-                                         guint            prop_id,
-                                         GValue          *value,
-                                         GParamSpec      *pspec);
-static void   gimp_action_connect_proxy (GtkAction       *action,
-                                         GtkWidget       *proxy);
-static void   gimp_action_set_proxy     (GimpAction      *action,
-                                         GtkWidget       *proxy);
+static void   gimp_action_finalize      (GObject      *object);
+static void   gimp_action_set_property  (GObject      *object,
+                                         guint         prop_id,
+                                         const GValue *value,
+                                         GParamSpec   *pspec);
+static void   gimp_action_get_property  (GObject      *object,
+                                         guint         prop_id,
+                                         GValue       *value,
+                                         GParamSpec   *pspec);
+static void   gimp_action_connect_proxy (GtkAction    *action,
+                                         GtkWidget    *proxy);
+static void   gimp_action_set_proxy     (GimpAction   *action,
+                                         GtkWidget    *proxy);
 
 
-static GtkActionClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpAction, gimp_action, GTK_TYPE_ACTION);
 
+#define parent_class gimp_action_parent_class
 
-GType
-gimp_action_get_type (void)
-{
-  static GType type = 0;
-
-  if (!type)
-    {
-      static const GTypeInfo type_info =
-      {
-        sizeof (GimpActionClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_action_class_init,
-        (GClassFinalizeFunc) NULL,
-        NULL,
-        sizeof (GimpAction),
-        0, /* n_preallocs */
-        (GInstanceInitFunc) gimp_action_init,
-      };
-
-      type = g_type_register_static (GTK_TYPE_ACTION,
-                                     "GimpAction",
-                                     &type_info, 0);
-    }
-
-  return type;
-}
 
 static void
 gimp_action_class_init (GimpActionClass *klass)
@@ -102,8 +73,6 @@ gimp_action_class_init (GimpActionClass *klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkActionClass *action_class = GTK_ACTION_CLASS (klass);
   GimpRGB         black;
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize      = gimp_action_finalize;
   object_class->set_property  = gimp_action_set_property;

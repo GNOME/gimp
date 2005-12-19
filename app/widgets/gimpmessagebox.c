@@ -42,8 +42,6 @@ enum
 };
 
 
-static void      gimp_message_box_class_init    (GimpMessageBoxClass   *klass);
-
 static GObject * gimp_message_box_constructor   (GType                  type,
                                                  guint                  n_params,
                                                  GObjectConstructParam *params);
@@ -71,36 +69,10 @@ static void      gimp_message_box_size_allocate (GtkWidget      *widget,
                                                  GtkAllocation  *allocation);
 
 
-static GtkVBoxClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpMessageBox, gimp_message_box, GTK_TYPE_VBOX);
 
+#define parent_class gimp_message_box_parent_class
 
-GType
-gimp_message_box_get_type (void)
-{
-  static GType box_type = 0;
-
-  if (! box_type)
-    {
-      static const GTypeInfo box_info =
-      {
-        sizeof (GimpMessageBoxClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_message_box_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpMessageBox),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_message_box_init
-      };
-
-      box_type = g_type_register_static (GTK_TYPE_VBOX,
-                                         "GimpMessageBox",
-                                         &box_info, 0);
-    }
-
-  return box_type;
-}
 
 static void
 gimp_message_box_class_init (GimpMessageBoxClass *klass)
@@ -109,8 +81,6 @@ gimp_message_box_class_init (GimpMessageBoxClass *klass)
   GtkObjectClass    *gtk_object_class = GTK_OBJECT_CLASS (klass);
   GtkWidgetClass    *widget_class     = GTK_WIDGET_CLASS (klass);
   GtkContainerClass *container_class  = GTK_CONTAINER_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->constructor   = gimp_message_box_constructor;
   object_class->set_property  = gimp_message_box_set_property;

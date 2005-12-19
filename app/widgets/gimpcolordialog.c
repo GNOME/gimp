@@ -48,10 +48,8 @@ enum
 };
 
 
-static void   gimp_color_dialog_class_init     (GimpColorDialogClass *klass);
-static void   gimp_color_dialog_init           (GimpColorDialog      *dialog);
-
 static void   gimp_color_dialog_dispose        (GObject            *object);
+
 static void   gimp_color_dialog_response       (GtkDialog          *dialog,
                                                 gint                response_id);
 
@@ -68,48 +66,20 @@ static void   gimp_color_history_add_clicked   (GtkWidget          *widget,
                                                 GimpColorDialog    *dialog);
 
 
-static GimpViewableDialogClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpColorDialog, gimp_color_dialog, GIMP_TYPE_VIEWABLE_DIALOG);
+
+#define parent_class gimp_color_dialog_parent_class
 
 static guint color_dialog_signals[LAST_SIGNAL] = { 0, };
 
 static GList *color_dialogs = NULL;
 
 
-GType
-gimp_color_dialog_get_type (void)
-{
-  static GType dialog_type = 0;
-
-  if (! dialog_type)
-    {
-      static const GTypeInfo dialog_info =
-      {
-        sizeof (GimpColorDialogClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_color_dialog_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpColorDialog),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_color_dialog_init,
-      };
-
-      dialog_type = g_type_register_static (GIMP_TYPE_VIEWABLE_DIALOG,
-                                            "GimpColorDialog",
-                                            &dialog_info, 0);
-    }
-
-  return dialog_type;
-}
-
 static void
 gimp_color_dialog_class_init (GimpColorDialogClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkDialogClass *dialog_class = GTK_DIALOG_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->dispose  = gimp_color_dialog_dispose;
 

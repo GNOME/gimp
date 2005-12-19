@@ -58,9 +58,6 @@ enum
 };
 
 
-static void        gimp_view_class_init           (GimpViewClass    *klass);
-static void        gimp_view_init                 (GimpView         *view);
-
 static void        gimp_view_destroy              (GtkObject        *object);
 static void        gimp_view_realize              (GtkWidget        *widget);
 static void        gimp_view_unrealize            (GtkWidget        *widget);
@@ -94,47 +91,18 @@ static GdkPixbuf    * gimp_view_drag_pixbuf       (GtkWidget        *widget,
                                                    gpointer          data);
 
 
+G_DEFINE_TYPE (GimpView, gimp_view, GTK_TYPE_WIDGET);
+
+#define parent_class gimp_view_parent_class
 
 static guint view_signals[LAST_SIGNAL] = { 0 };
 
-static GtkWidgetClass *parent_class = NULL;
-
-
-GType
-gimp_view_get_type (void)
-{
-  static GType view_type = 0;
-
-  if (! view_type)
-    {
-      static const GTypeInfo view_info =
-      {
-        sizeof (GimpViewClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_view_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpView),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_view_init,
-      };
-
-      view_type = g_type_register_static (GTK_TYPE_WIDGET,
-                                          "GimpView",
-                                          &view_info, 0);
-    }
-
-  return view_type;
-}
 
 static void
 gimp_view_class_init (GimpViewClass *klass)
 {
   GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   view_signals[SET_VIEWABLE] =
     g_signal_new ("set-viewable",

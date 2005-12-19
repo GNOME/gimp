@@ -47,15 +47,13 @@
 
 /*  local function prototypes  */
 
-static void     gimp_thumb_box_class_init (GimpThumbBoxClass *klass);
-static void     gimp_thumb_box_init       (GimpThumbBox      *box);
-static void     gimp_thumb_box_progress_iface_init (GimpProgressInterface *progress_iface);
+static void     gimp_thumb_box_progress_iface_init (GimpProgressInterface *iface);
 
-static void     gimp_thumb_box_dispose    (GObject           *object);
-static void     gimp_thumb_box_finalize   (GObject           *object);
+static void     gimp_thumb_box_dispose            (GObject           *object);
+static void     gimp_thumb_box_finalize           (GObject           *object);
 
-static void     gimp_thumb_box_style_set  (GtkWidget         *widget,
-                                           GtkStyle          *prev_style);
+static void     gimp_thumb_box_style_set          (GtkWidget         *widget,
+                                                   GtkStyle          *prev_style);
 
 static GimpProgress *
                 gimp_thumb_box_progress_start     (GimpProgress      *progress,
@@ -93,56 +91,18 @@ static void gimp_thumb_box_create_thumbnail       (GimpThumbBox      *box,
 static gboolean gimp_thumb_box_auto_thumbnail     (GimpThumbBox      *box);
 
 
-/*  private variables  */
+G_DEFINE_TYPE_WITH_CODE (GimpThumbBox, gimp_thumb_box, GTK_TYPE_FRAME,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_PROGRESS,
+                                                gimp_thumb_box_progress_iface_init));
 
-static GtkFrameClass *parent_class = NULL;
+#define parent_class gimp_thumb_box_parent_class
 
-
-GType
-gimp_thumb_box_get_type (void)
-{
-  static GType box_type = 0;
-
-  if (! box_type)
-    {
-      static const GTypeInfo box_info =
-      {
-        sizeof (GimpThumbBoxClass),
-        (GBaseInitFunc)     NULL,
-        (GBaseFinalizeFunc) NULL,
-	(GClassInitFunc)    gimp_thumb_box_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpThumbBox),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_thumb_box_init,
-      };
-
-      static const GInterfaceInfo progress_iface_info =
-      {
-        (GInterfaceInitFunc) gimp_thumb_box_progress_iface_init,
-        NULL,           /* iface_finalize */
-        NULL            /* iface_data     */
-      };
-
-      box_type = g_type_register_static (GTK_TYPE_FRAME,
-                                         "GimpThumbBox",
-                                         &box_info, 0);
-
-      g_type_add_interface_static (box_type, GIMP_TYPE_PROGRESS,
-                                   &progress_iface_info);
-    }
-
-  return box_type;
-}
 
 static void
 gimp_thumb_box_class_init (GimpThumbBoxClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->dispose   = gimp_thumb_box_dispose;
   object_class->finalize  = gimp_thumb_box_finalize;
@@ -159,15 +119,15 @@ gimp_thumb_box_init (GimpThumbBox *box)
 }
 
 static void
-gimp_thumb_box_progress_iface_init (GimpProgressInterface *progress_iface)
+gimp_thumb_box_progress_iface_init (GimpProgressInterface *iface)
 {
-  progress_iface->start     = gimp_thumb_box_progress_start;
-  progress_iface->end       = gimp_thumb_box_progress_end;
-  progress_iface->is_active = gimp_thumb_box_progress_is_active;
-  progress_iface->set_value = gimp_thumb_box_progress_set_value;
-  progress_iface->get_value = gimp_thumb_box_progress_get_value;
-  progress_iface->pulse     = gimp_thumb_box_progress_pulse;
-  progress_iface->message   = gimp_thumb_box_progress_message;
+  iface->start     = gimp_thumb_box_progress_start;
+  iface->end       = gimp_thumb_box_progress_end;
+  iface->is_active = gimp_thumb_box_progress_is_active;
+  iface->set_value = gimp_thumb_box_progress_set_value;
+  iface->get_value = gimp_thumb_box_progress_get_value;
+  iface->pulse     = gimp_thumb_box_progress_pulse;
+  iface->message   = gimp_thumb_box_progress_message;
 }
 
 static void

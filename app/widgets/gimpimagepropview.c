@@ -47,9 +47,6 @@ enum
 };
 
 
-static void      gimp_image_prop_view_class_init   (GimpImagePropViewClass *klass);
-static void      gimp_image_prop_view_init         (GimpImagePropView      *view);
-
 static GObject * gimp_image_prop_view_constructor  (GType              type,
                                                     guint              n_params,
                                                     GObjectConstructParam *params);
@@ -72,43 +69,15 @@ static void        gimp_image_prop_view_undo_event (GimpImage         *gimage,
 static void        gimp_image_prop_view_update     (GimpImagePropView *view);
 
 
-static GtkTableClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpImagePropView, gimp_image_prop_view, GTK_TYPE_TABLE);
 
+#define parent_class gimp_image_prop_view_parent_class
 
-GType
-gimp_image_prop_view_get_type (void)
-{
-  static GType view_type = 0;
-
-  if (! view_type)
-    {
-      static const GTypeInfo view_info =
-      {
-        sizeof (GimpImagePropViewClass),
-        NULL,           /* base_init      */
-        NULL,           /* base_finalize  */
-        (GClassInitFunc) gimp_image_prop_view_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpImagePropView),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_image_prop_view_init
-      };
-
-      view_type = g_type_register_static (GTK_TYPE_TABLE,
-                                          "GimpImagePropView",
-                                          &view_info, 0);
-    }
-
-  return view_type;
-}
 
 static void
 gimp_image_prop_view_class_init (GimpImagePropViewClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->constructor  = gimp_image_prop_view_constructor;
   object_class->set_property = gimp_image_prop_view_set_property;

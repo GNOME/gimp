@@ -54,9 +54,7 @@ enum
 };
 
 
-static void        gimp_editor_class_init        (GimpEditorClass *klass);
-static void        gimp_editor_init              (GimpEditor      *editor);
-static void        gimp_editor_docked_iface_init (GimpDockedInterface *docked_iface);
+static void        gimp_editor_docked_iface_init (GimpDockedInterface *iface);
 
 static GObject   * gimp_editor_constructor       (GType            type,
                                                   guint            n_params,
@@ -84,45 +82,12 @@ static gboolean    gimp_editor_get_show_button_bar (GimpDocked      *docked);
 static GtkIconSize gimp_editor_ensure_button_box   (GimpEditor      *editor);
 
 
-static GtkVBoxClass *parent_class = NULL;
+G_DEFINE_TYPE_WITH_CODE (GimpEditor, gimp_editor, GTK_TYPE_VBOX,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
+                                                gimp_editor_docked_iface_init));
 
+#define parent_class gimp_editor_parent_class
 
-GType
-gimp_editor_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo info =
-      {
-        sizeof (GimpEditorClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_editor_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpEditor),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_editor_init,
-      };
-      static const GInterfaceInfo docked_iface_info =
-      {
-        (GInterfaceInitFunc) gimp_editor_docked_iface_init,
-        NULL,           /* iface_finalize */
-        NULL            /* iface_data     */
-      };
-
-      type = g_type_register_static (GTK_TYPE_VBOX,
-                                     "GimpEditor",
-                                     &info, 0);
-
-      g_type_add_interface_static (type, GIMP_TYPE_DOCKED,
-                                   &docked_iface_info);
-    }
-
-  return type;
-}
 
 static void
 gimp_editor_class_init (GimpEditorClass *klass)
@@ -130,8 +95,6 @@ gimp_editor_class_init (GimpEditorClass *klass)
   GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
   GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class     = GTK_WIDGET_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->constructor  = gimp_editor_constructor;
   object_class->set_property = gimp_editor_set_property;
@@ -228,12 +191,12 @@ gimp_editor_init (GimpEditor *editor)
 }
 
 static void
-gimp_editor_docked_iface_init (GimpDockedInterface *docked_iface)
+gimp_editor_docked_iface_init (GimpDockedInterface *iface)
 {
-  docked_iface->get_menu            = gimp_editor_get_menu;
-  docked_iface->has_button_bar      = gimp_editor_has_button_bar;
-  docked_iface->set_show_button_bar = gimp_editor_set_show_button_bar;
-  docked_iface->get_show_button_bar = gimp_editor_get_show_button_bar;
+  iface->get_menu            = gimp_editor_get_menu;
+  iface->has_button_bar      = gimp_editor_has_button_bar;
+  iface->set_show_button_bar = gimp_editor_set_show_button_bar;
+  iface->get_show_button_bar = gimp_editor_get_show_button_bar;
 }
 
 static GObject *

@@ -34,7 +34,7 @@
 #include "gimp-intl.h"
 
 
-static void     gimp_progress_box_progress_iface_init (GimpProgressInterface *progress_iface);
+static void     gimp_progress_box_progress_iface_init (GimpProgressInterface *iface);
 
 static GimpProgress *
                 gimp_progress_box_progress_start     (GimpProgress *progress,
@@ -50,55 +50,31 @@ static gdouble  gimp_progress_box_progress_get_value (GimpProgress *progress);
 static void     gimp_progress_box_progress_pulse     (GimpProgress *progress);
 
 
+G_DEFINE_TYPE_WITH_CODE (GimpProgressBox, gimp_progress_box, GTK_TYPE_VBOX,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_PROGRESS,
+                                                gimp_progress_box_progress_iface_init));
 
-GType
-gimp_progress_box_get_type (void)
+
+static void
+gimp_progress_box_class_init (GimpProgressBoxClass *klass)
 {
-  static GType box_type = 0;
-
-  if (! box_type)
-    {
-      static const GTypeInfo box_info =
-      {
-        sizeof (GimpProgressBoxClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        NULL,           /* class_init     */
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpProgressBox),
-        0,              /* n_preallocs    */
-        NULL            /* instance_init  */
-      };
-
-      static const GInterfaceInfo progress_iface_info =
-      {
-        (GInterfaceInitFunc) gimp_progress_box_progress_iface_init,
-        NULL,           /* iface_finalize */
-        NULL            /* iface_data     */
-      };
-
-      box_type = g_type_register_static (GTK_TYPE_VBOX,
-                                         "GimpProgressBox",
-                                         &box_info, 0);
-
-      g_type_add_interface_static (box_type, GIMP_TYPE_PROGRESS,
-                                   &progress_iface_info);
-    }
-
-  return box_type;
 }
 
 static void
-gimp_progress_box_progress_iface_init (GimpProgressInterface *progress_iface)
+gimp_progress_box_init (GimpProgressBox *box)
 {
-  progress_iface->start     = gimp_progress_box_progress_start;
-  progress_iface->end       = gimp_progress_box_progress_end;
-  progress_iface->is_active = gimp_progress_box_progress_is_active;
-  progress_iface->set_text  = gimp_progress_box_progress_set_text;
-  progress_iface->set_value = gimp_progress_box_progress_set_value;
-  progress_iface->get_value = gimp_progress_box_progress_get_value;
-  progress_iface->pulse     = gimp_progress_box_progress_pulse;
+}
+
+static void
+gimp_progress_box_progress_iface_init (GimpProgressInterface *iface)
+{
+  iface->start     = gimp_progress_box_progress_start;
+  iface->end       = gimp_progress_box_progress_end;
+  iface->is_active = gimp_progress_box_progress_is_active;
+  iface->set_text  = gimp_progress_box_progress_set_text;
+  iface->set_value = gimp_progress_box_progress_set_value;
+  iface->get_value = gimp_progress_box_progress_get_value;
+  iface->pulse     = gimp_progress_box_progress_pulse;
 }
 
 static GimpProgress *

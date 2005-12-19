@@ -40,50 +40,19 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_image_view_class_init    (GimpImageViewClass  *klass);
-static void   gimp_image_view_init          (GimpImageView       *view);
-
 static void   gimp_image_view_activate_item (GimpContainerEditor *editor,
                                              GimpViewable        *viewable);
 
 
-static GimpContainerEditorClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpImageView, gimp_image_view, GIMP_TYPE_CONTAINER_EDITOR);
 
+#define parent_class gimp_image_view_parent_class
 
-GType
-gimp_image_view_get_type (void)
-{
-  static GType view_type = 0;
-
-  if (! view_type)
-    {
-      static const GTypeInfo view_info =
-      {
-        sizeof (GimpImageViewClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_image_view_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpImageView),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_image_view_init,
-      };
-
-      view_type = g_type_register_static (GIMP_TYPE_CONTAINER_EDITOR,
-                                          "GimpImageView",
-                                          &view_info, 0);
-    }
-
-  return view_type;
-}
 
 static void
 gimp_image_view_class_init (GimpImageViewClass *klass)
 {
   GimpContainerEditorClass *editor_class = GIMP_CONTAINER_EDITOR_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   editor_class->activate_item = gimp_image_view_activate_item;
 }

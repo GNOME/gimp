@@ -50,9 +50,6 @@ enum
 };
 
 
-static void   gimp_navigation_view_class_init (GimpNavigationViewClass *klass);
-static void   gimp_navigation_view_init       (GimpNavigationView      *view);
-
 static void     gimp_navigation_view_realize        (GtkWidget      *widget);
 static void     gimp_navigation_view_unrealize      (GtkWidget      *widget);
 static void     gimp_navigation_view_size_allocate  (GtkWidget      *widget,
@@ -75,45 +72,17 @@ static void     gimp_navigation_view_draw_marker    (GimpNavigationView *nav_vie
                                                      GdkRectangle       *area);
 
 
+G_DEFINE_TYPE (GimpNavigationView, gimp_navigation_view, GIMP_TYPE_VIEW);
+
+#define parent_class gimp_navigation_view_parent_class
+
 static guint view_signals[LAST_SIGNAL] = { 0 };
 
-static GimpViewClass *parent_class = NULL;
-
-
-GType
-gimp_navigation_view_get_type (void)
-{
-  static GType view_type = 0;
-
-  if (! view_type)
-    {
-      static const GTypeInfo view_info =
-      {
-        sizeof (GimpNavigationViewClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_navigation_view_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpNavigationView),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_navigation_view_init,
-      };
-
-      view_type = g_type_register_static (GIMP_TYPE_VIEW,
-                                          "GimpNavigationView",
-                                          &view_info, 0);
-    }
-
-  return view_type;
-}
 
 static void
 gimp_navigation_view_class_init (GimpNavigationViewClass *klass)
 {
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   view_signals[MARKER_CHANGED] =
     g_signal_new ("marker-changed",

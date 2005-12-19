@@ -46,10 +46,7 @@
 #include "gimp-intl.h"
 
 
-static void    gimp_vectors_tree_view_class_init (GimpVectorsTreeViewClass *klass);
-static void    gimp_vectors_tree_view_init       (GimpVectorsTreeView      *view);
-
-static void    gimp_vectors_tree_view_view_iface_init (GimpContainerViewInterface *view_iface);
+static void    gimp_vectors_tree_view_view_iface_init (GimpContainerViewInterface *iface);
 
 static GObject * gimp_vectors_tree_view_constructor   (GType                  type,
                                                        guint                  n_params,
@@ -67,88 +64,50 @@ static guchar  * gimp_vectors_tree_view_drag_svg      (GtkWidget             *wi
                                                        gpointer               data);
 
 
-static GimpItemTreeViewClass      *parent_class      = NULL;
+G_DEFINE_TYPE_WITH_CODE (GimpVectorsTreeView, gimp_vectors_tree_view,
+                         GIMP_TYPE_ITEM_TREE_VIEW,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONTAINER_VIEW,
+                                                gimp_vectors_tree_view_view_iface_init));
+
+#define parent_class gimp_vectors_tree_view_parent_class
+
 static GimpContainerViewInterface *parent_view_iface = NULL;
 
-
-GType
-gimp_vectors_tree_view_get_type (void)
-{
-  static GType view_type = 0;
-
-  if (! view_type)
-    {
-      static const GTypeInfo view_info =
-      {
-        sizeof (GimpVectorsTreeViewClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_vectors_tree_view_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpVectorsTreeView),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_vectors_tree_view_init,
-      };
-
-      static const GInterfaceInfo view_iface_info =
-      {
-        (GInterfaceInitFunc) gimp_vectors_tree_view_view_iface_init,
-        NULL,           /* iface_finalize */
-        NULL            /* iface_data     */
-      };
-
-      view_type = g_type_register_static (GIMP_TYPE_ITEM_TREE_VIEW,
-                                          "GimpVectorsTreeView",
-                                          &view_info, 0);
-
-      g_type_add_interface_static (view_type, GIMP_TYPE_CONTAINER_VIEW,
-                                   &view_iface_info);
-    }
-
-  return view_type;
-}
 
 static void
 gimp_vectors_tree_view_class_init (GimpVectorsTreeViewClass *klass)
 {
-  GObjectClass               *object_class;
-  GimpContainerTreeViewClass *view_class;
-  GimpItemTreeViewClass      *item_view_class;
+  GObjectClass               *object_class = G_OBJECT_CLASS (klass);
+  GimpContainerTreeViewClass *view_class   = GIMP_CONTAINER_TREE_VIEW_CLASS (klass);
+  GimpItemTreeViewClass      *iv_class     = GIMP_ITEM_TREE_VIEW_CLASS (klass);
 
-  object_class    = G_OBJECT_CLASS (klass);
-  view_class      = GIMP_CONTAINER_TREE_VIEW_CLASS (klass);
-  item_view_class = GIMP_ITEM_TREE_VIEW_CLASS (klass);
+  object_class->constructor = gimp_vectors_tree_view_constructor;
 
-  parent_class = g_type_class_peek_parent (klass);
+  view_class->drop_svg      = gimp_vectors_tree_view_drop_svg;
 
-  object_class->constructor        = gimp_vectors_tree_view_constructor;
+  iv_class->item_type       = GIMP_TYPE_VECTORS;
+  iv_class->signal_name     = "active-vectors-changed";
 
-  view_class->drop_svg             = gimp_vectors_tree_view_drop_svg;
+  iv_class->get_container   = gimp_image_get_vectors;
+  iv_class->get_active_item = (GimpGetItemFunc) gimp_image_get_active_vectors;
+  iv_class->set_active_item = (GimpSetItemFunc) gimp_image_set_active_vectors;
+  iv_class->reorder_item    = (GimpReorderItemFunc) gimp_image_position_vectors;
+  iv_class->add_item        = (GimpAddItemFunc) gimp_image_add_vectors;
+  iv_class->remove_item     = (GimpRemoveItemFunc) gimp_image_remove_vectors;
+  iv_class->new_item        = gimp_vectors_tree_view_item_new;
 
-  item_view_class->item_type       = GIMP_TYPE_VECTORS;
-  item_view_class->signal_name     = "active-vectors-changed";
-
-  item_view_class->get_container   = gimp_image_get_vectors;
-  item_view_class->get_active_item = (GimpGetItemFunc) gimp_image_get_active_vectors;
-  item_view_class->set_active_item = (GimpSetItemFunc) gimp_image_set_active_vectors;
-  item_view_class->reorder_item    = (GimpReorderItemFunc) gimp_image_position_vectors;
-  item_view_class->add_item        = (GimpAddItemFunc) gimp_image_add_vectors;
-  item_view_class->remove_item     = (GimpRemoveItemFunc) gimp_image_remove_vectors;
-  item_view_class->new_item        = gimp_vectors_tree_view_item_new;
-
-  item_view_class->action_group        = "vectors";
-  item_view_class->activate_action     = "vectors-path-tool";
-  item_view_class->edit_action         = "vectors-edit-attributes";
-  item_view_class->new_action          = "vectors-new";
-  item_view_class->new_default_action  = "vectors-new-last-values";
-  item_view_class->raise_action        = "vectors-raise";
-  item_view_class->raise_top_action    = "vectors-raise-to-top";
-  item_view_class->lower_action        = "vectors-lower";
-  item_view_class->lower_bottom_action = "vectors-lower-to-bottom";
-  item_view_class->duplicate_action    = "vectors-duplicate";
-  item_view_class->delete_action       = "vectors-delete";
-  item_view_class->reorder_desc        = _("Reorder path");
+  iv_class->action_group        = "vectors";
+  iv_class->activate_action     = "vectors-path-tool";
+  iv_class->edit_action         = "vectors-edit-attributes";
+  iv_class->new_action          = "vectors-new";
+  iv_class->new_default_action  = "vectors-new-last-values";
+  iv_class->raise_action        = "vectors-raise";
+  iv_class->raise_top_action    = "vectors-raise-to-top";
+  iv_class->lower_action        = "vectors-lower";
+  iv_class->lower_bottom_action = "vectors-lower-to-bottom";
+  iv_class->duplicate_action    = "vectors-duplicate";
+  iv_class->delete_action       = "vectors-delete";
+  iv_class->reorder_desc        = _("Reorder path");
 }
 
 static void
@@ -157,11 +116,11 @@ gimp_vectors_tree_view_init (GimpVectorsTreeView *view)
 }
 
 static void
-gimp_vectors_tree_view_view_iface_init (GimpContainerViewInterface *view_iface)
+gimp_vectors_tree_view_view_iface_init (GimpContainerViewInterface *iface)
 {
-  parent_view_iface = g_type_interface_peek_parent (view_iface);
+  parent_view_iface = g_type_interface_peek_parent (iface);
 
-  view_iface->set_container = gimp_vectors_tree_view_set_container;
+  iface->set_container = gimp_vectors_tree_view_set_container;
 }
 
 static GObject *

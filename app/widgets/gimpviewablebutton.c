@@ -48,9 +48,6 @@ enum
 };
 
 
-static void     gimp_viewable_button_class_init   (GimpViewableButtonClass *klass);
-static void     gimp_viewable_button_init         (GimpViewableButton      *button);
-
 static void     gimp_viewable_button_finalize     (GObject            *object);
 static void     gimp_viewable_button_set_property (GObject            *object,
                                                    guint               property_id,
@@ -68,36 +65,10 @@ static void     gimp_viewable_button_popup_closed (GimpContainerPopup *popup,
                                                    GimpViewableButton *button);
 
 
-static GimpButtonClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpViewableButton, gimp_viewable_button, GIMP_TYPE_BUTTON);
 
+#define parent_class gimp_viewable_button_parent_class
 
-GType
-gimp_viewable_button_get_type (void)
-{
-  static GType button_type = 0;
-
-  if (!button_type)
-    {
-      static const GTypeInfo button_info =
-      {
-        sizeof (GimpViewableButtonClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_viewable_button_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpViewableButton),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_viewable_button_init,
-      };
-
-      button_type = g_type_register_static (GIMP_TYPE_BUTTON,
-                                            "GimpViewableButton",
-                                            &button_info, 0);
-    }
-
-  return button_type;
-}
 
 static void
 gimp_viewable_button_class_init (GimpViewableButtonClass *klass)
@@ -105,8 +76,6 @@ gimp_viewable_button_class_init (GimpViewableButtonClass *klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
   GtkButtonClass *button_class = GTK_BUTTON_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize     = gimp_viewable_button_finalize;
   object_class->get_property = gimp_viewable_button_get_property;

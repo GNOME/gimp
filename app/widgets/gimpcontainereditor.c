@@ -41,9 +41,7 @@
 #include "gimpuimanager.h"
 
 
-static void   gimp_container_editor_class_init        (GimpContainerEditorClass *klass);
-static void   gimp_container_editor_init              (GimpContainerEditor      *view);
-static void   gimp_container_editor_docked_iface_init (GimpDockedInterface      *docked_iface);
+static void   gimp_container_editor_docked_iface_init (GimpDockedInterface      *iface);
 
 static gboolean gimp_container_editor_select_item    (GtkWidget           *widget,
                                                       GimpViewable        *viewable,
@@ -75,52 +73,17 @@ static void      gimp_container_editor_set_show_button_bar (GimpDocked *docked,
 static gboolean  gimp_container_editor_get_show_button_bar (GimpDocked *docked);
 
 
-static GtkVBoxClass *parent_class = NULL;
+G_DEFINE_TYPE_WITH_CODE (GimpContainerEditor, gimp_container_editor,
+                         GTK_TYPE_VBOX,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
+                                                gimp_container_editor_docked_iface_init));
 
+#define parent_class gimp_container_editor_parent_class
 
-GType
-gimp_container_editor_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo view_info =
-      {
-        sizeof (GimpContainerEditorClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_container_editor_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpContainerEditor),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_container_editor_init,
-      };
-
-      static const GInterfaceInfo docked_iface_info =
-      {
-        (GInterfaceInitFunc) gimp_container_editor_docked_iface_init,
-        NULL,           /* iface_finalize */
-        NULL            /* iface_data     */
-      };
-
-      type = g_type_register_static (GTK_TYPE_VBOX,
-                                     "GimpContainerEditor",
-                                     &view_info, 0);
-
-      g_type_add_interface_static (type, GIMP_TYPE_DOCKED,
-                                   &docked_iface_info);
-    }
-
-  return type;
-}
 
 static void
 gimp_container_editor_class_init (GimpContainerEditorClass *klass)
 {
-  parent_class = g_type_class_peek_parent (klass);
-
   klass->select_item     = NULL;
   klass->activate_item   = NULL;
   klass->context_item    = gimp_container_editor_real_context_item;
@@ -133,14 +96,14 @@ gimp_container_editor_init (GimpContainerEditor *view)
 }
 
 static void
-gimp_container_editor_docked_iface_init (GimpDockedInterface *docked_iface)
+gimp_container_editor_docked_iface_init (GimpDockedInterface *iface)
 {
-  docked_iface->get_preview         = gimp_container_editor_get_preview;
-  docked_iface->set_context         = gimp_container_editor_set_context;
-  docked_iface->get_menu            = gimp_container_editor_get_menu;
-  docked_iface->has_button_bar      = gimp_container_editor_has_button_bar;
-  docked_iface->set_show_button_bar = gimp_container_editor_set_show_button_bar;
-  docked_iface->get_show_button_bar = gimp_container_editor_get_show_button_bar;
+  iface->get_preview         = gimp_container_editor_get_preview;
+  iface->set_context         = gimp_container_editor_set_context;
+  iface->get_menu            = gimp_container_editor_get_menu;
+  iface->has_button_bar      = gimp_container_editor_has_button_bar;
+  iface->set_show_button_bar = gimp_container_editor_set_show_button_bar;
+  iface->get_show_button_bar = gimp_container_editor_get_show_button_bar;
 }
 
 gboolean

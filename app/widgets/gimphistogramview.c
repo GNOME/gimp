@@ -50,9 +50,6 @@ enum
 };
 
 
-static void  gimp_histogram_view_class_init   (GimpHistogramViewClass *klass);
-static void  gimp_histogram_view_init         (GimpHistogramView *view);
-
 static void  gimp_histogram_view_set_property      (GObject        *object,
                                                     guint           property_id,
                                                     const GValue   *value,
@@ -83,46 +80,19 @@ static void     gimp_histogram_view_draw_spike (GimpHistogramView    *view,
                                                 gint                  border);
 
 
+G_DEFINE_TYPE (GimpHistogramView, gimp_histogram_view,
+               GTK_TYPE_DRAWING_AREA);
+
+#define parent_class gimp_histogram_view_parent_class
+
 static guint histogram_view_signals[LAST_SIGNAL] = { 0 };
 
-static GtkDrawingAreaClass *parent_class = NULL;
-
-
-GType
-gimp_histogram_view_get_type (void)
-{
-  static GType view_type = 0;
-
-  if (! view_type)
-    {
-      static const GTypeInfo view_info =
-      {
-        sizeof (GimpHistogramViewClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_histogram_view_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpHistogramView),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_histogram_view_init,
-      };
-
-      view_type = g_type_register_static (GTK_TYPE_DRAWING_AREA,
-                                          "GimpHistogramView",
-                                          &view_info, 0);
-    }
-
-  return view_type;
-}
 
 static void
 gimp_histogram_view_class_init (GimpHistogramViewClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   histogram_view_signals[RANGE_CHANGED] =
     g_signal_new ("range-changed",
