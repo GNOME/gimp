@@ -52,62 +52,31 @@ enum
 };
 
 
-static void     gimp_path_editor_class_init         (GimpPathEditorClass *klass);
-static void     gimp_path_editor_init               (GimpPathEditor      *editor);
+static void   gimp_path_editor_new_clicked        (GtkWidget           *widget,
+                                                   GimpPathEditor      *editor);
+static void   gimp_path_editor_move_clicked       (GtkWidget           *widget,
+                                                   GimpPathEditor      *editor);
+static void   gimp_path_editor_delete_clicked     (GtkWidget           *widget,
+                                                   GimpPathEditor      *editor);
+static void   gimp_path_editor_file_entry_changed (GtkWidget           *widget,
+                                                   GimpPathEditor      *editor);
+static void   gimp_path_editor_selection_changed  (GtkTreeSelection    *sel,
+                                                   GimpPathEditor      *editor);
+static void   gimp_path_editor_writable_toggled   (GtkCellRendererToggle *toggle,
+                                                   gchar               *path_str,
+                                                   GimpPathEditor      *editor);
 
-static void     gimp_path_editor_new_clicked        (GtkWidget           *widget,
-                                                     GimpPathEditor      *editor);
-static void     gimp_path_editor_move_clicked       (GtkWidget           *widget,
-                                                     GimpPathEditor      *editor);
-static void     gimp_path_editor_delete_clicked     (GtkWidget           *widget,
-                                                     GimpPathEditor      *editor);
-static void     gimp_path_editor_file_entry_changed (GtkWidget           *widget,
-                                                     GimpPathEditor      *editor);
-static void     gimp_path_editor_selection_changed  (GtkTreeSelection    *sel,
-                                                     GimpPathEditor      *editor);
-static void     gimp_path_editor_writable_toggled   (GtkCellRendererToggle *toggle,
-                                                     gchar               *path_str,
-                                                     GimpPathEditor      *editor);
 
+G_DEFINE_TYPE (GimpPathEditor, gimp_path_editor, GTK_TYPE_VBOX);
+
+#define parent_class gimp_path_editor_parent_class
 
 static guint gimp_path_editor_signals[LAST_SIGNAL] = { 0 };
 
-static GtkVBoxClass *parent_class = NULL;
-
-
-GType
-gimp_path_editor_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo info =
-      {
-        sizeof (GimpPathEditorClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_path_editor_class_init,
-	NULL,		/* class_finalize */
-	NULL,		/* class_data     */
-	sizeof (GimpPathEditor),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_path_editor_init,
-      };
-
-      type = g_type_register_static (GTK_TYPE_VBOX,
-                                     "GimpPathEditor",
-                                     &info, 0);
-    }
-
-  return type;
-}
 
 static void
 gimp_path_editor_class_init (GimpPathEditorClass *klass)
 {
-  parent_class = g_type_class_peek_parent (klass);
-
   /**
    * GimpPathEditor::path-changed:
    *

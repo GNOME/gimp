@@ -40,60 +40,29 @@ enum
 };
 
 
-static void       gimp_module_class_init     (GimpModuleClass *klass);
-static void       gimp_module_init           (GimpModule      *module);
+static void       gimp_module_finalize       (GObject     *object);
 
-static void       gimp_module_finalize       (GObject         *object);
+static gboolean   gimp_module_load           (GTypeModule *module);
+static void       gimp_module_unload         (GTypeModule *module);
 
-static gboolean   gimp_module_load           (GTypeModule     *module);
-static void       gimp_module_unload         (GTypeModule     *module);
+static gboolean   gimp_module_open           (GimpModule  *module);
+static gboolean   gimp_module_close          (GimpModule  *module);
+static void       gimp_module_set_last_error (GimpModule  *module,
+                                              const gchar *error_str);
 
-static gboolean   gimp_module_open           (GimpModule      *module);
-static gboolean   gimp_module_close          (GimpModule      *module);
-static void       gimp_module_set_last_error (GimpModule      *module,
-                                              const gchar     *error_str);
 
+G_DEFINE_TYPE (GimpModule, gimp_module, G_TYPE_TYPE_MODULE);
+
+#define parent_class gimp_module_parent_class
 
 static guint module_signals[LAST_SIGNAL];
 
-static GTypeModuleClass *parent_class = NULL;
-
-
-GType
-gimp_module_get_type (void)
-{
-  static GType module_type = 0;
-
-  if (! module_type)
-    {
-      static const GTypeInfo module_info =
-      {
-        sizeof (GimpModuleClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_module_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpModule),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_module_init,
-      };
-
-      module_type = g_type_register_static (G_TYPE_TYPE_MODULE,
-                                            "GimpModule",
-                                            &module_info, 0);
-    }
-
-  return module_type;
-}
 
 static void
 gimp_module_class_init (GimpModuleClass *klass)
 {
   GObjectClass     *object_class = G_OBJECT_CLASS (klass);
   GTypeModuleClass *module_class = G_TYPE_MODULE_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   module_signals[MODIFIED] =
     g_signal_new ("modified",

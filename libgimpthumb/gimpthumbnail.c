@@ -89,74 +89,42 @@ enum
 };
 
 
-static void      gimp_thumbnail_class_init   (GimpThumbnailClass *klass);
-static void      gimp_thumbnail_init         (GimpThumbnail      *thumbnail);
-static void      gimp_thumbnail_finalize     (GObject            *object);
-static void      gimp_thumbnail_set_property (GObject            *object,
-                                              guint               property_id,
-                                              const GValue       *value,
-                                              GParamSpec         *pspec);
-static void      gimp_thumbnail_get_property (GObject            *object,
-                                              guint               property_id,
-                                              GValue             *value,
-                                              GParamSpec         *pspec);
-static void      gimp_thumbnail_reset_info   (GimpThumbnail      *thumbnail);
+static void      gimp_thumbnail_finalize     (GObject        *object);
+static void      gimp_thumbnail_set_property (GObject        *object,
+                                              guint           property_id,
+                                              const GValue   *value,
+                                              GParamSpec     *pspec);
+static void      gimp_thumbnail_get_property (GObject        *object,
+                                              guint           property_id,
+                                              GValue         *value,
+                                              GParamSpec     *pspec);
+static void      gimp_thumbnail_reset_info   (GimpThumbnail  *thumbnail);
 
-static void      gimp_thumbnail_update_image (GimpThumbnail      *thumbnail);
-static void      gimp_thumbnail_update_thumb (GimpThumbnail      *thumbnail,
-                                              GimpThumbSize       size);
+static void      gimp_thumbnail_update_image (GimpThumbnail  *thumbnail);
+static void      gimp_thumbnail_update_thumb (GimpThumbnail  *thumbnail,
+                                              GimpThumbSize   size);
 
-static gboolean  gimp_thumbnail_save         (GimpThumbnail      *thumbnail,
-                                              GimpThumbSize       size,
-                                              const gchar        *filename,
-                                              GdkPixbuf          *pixbuf,
-                                              const gchar        *software,
-                                              GError            **error);
+static gboolean  gimp_thumbnail_save         (GimpThumbnail  *thumbnail,
+                                              GimpThumbSize   size,
+                                              const gchar    *filename,
+                                              GdkPixbuf      *pixbuf,
+                                              const gchar    *software,
+                                              GError        **error);
 #ifdef GIMP_THUMB_DEBUG
-static void      gimp_thumbnail_debug_notify (GObject            *object,
-                                              GParamSpec         *pspec);
+static void      gimp_thumbnail_debug_notify (GObject        *object,
+                                              GParamSpec     *pspec);
 #endif
 
 
-static GObjectClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpThumbnail, gimp_thumbnail, G_TYPE_OBJECT);
 
+#define parent_class gimp_thumbnail_parent_class
 
-GType
-gimp_thumbnail_get_type (void)
-{
-  static GType thumbnail_type = 0;
-
-  if (!thumbnail_type)
-    {
-      static const GTypeInfo thumbnail_info =
-      {
-        sizeof (GimpThumbnailClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_thumbnail_class_init,
-	NULL,           /* class_finalize */
-	NULL,		/* class_data     */
-	sizeof (GimpThumbnail),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_thumbnail_init,
-      };
-
-      thumbnail_type = g_type_register_static (G_TYPE_OBJECT,
-					       "GimpThumbnail",
-                                               &thumbnail_info, 0);
-    }
-
-  return thumbnail_type;
-}
 
 static void
 gimp_thumbnail_class_init (GimpThumbnailClass *klass)
 {
-  GObjectClass *object_class;
-
-  parent_class = g_type_class_peek_parent (klass);
-
-  object_class = G_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->finalize     = gimp_thumbnail_finalize;
   object_class->set_property = gimp_thumbnail_set_property;

@@ -83,9 +83,6 @@ struct _GimpPageSelectorPrivate
 #define GIMP_PAGE_SELECTOR_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), GIMP_TYPE_PAGE_SELECTOR, GimpPageSelectorPrivate))
 
 
-static void   gimp_page_selector_class_init   (GimpPageSelectorClass *klass);
-static void   gimp_page_selector_init         (GimpPageSelector      *selector);
-
 static void   gimp_page_selector_dispose           (GObject          *object);
 static void   gimp_page_selector_finalize          (GObject          *object);
 static void   gimp_page_selector_get_property      (GObject          *object,
@@ -122,45 +119,18 @@ static GdkPixbuf * gimp_page_selector_add_frame    (GtkWidget        *widget,
                                                     GdkPixbuf        *pixbuf);
 
 
-static guint         selector_signals[LAST_SIGNAL] = { 0 };
-static GtkVBoxClass *parent_class                  = NULL;
+G_DEFINE_TYPE (GimpPageSelector, gimp_page_selector, GTK_TYPE_VBOX);
 
+#define parent_class gimp_page_selector_parent_class
 
-GType
-gimp_page_selector_get_type (void)
-{
-  static GType selector_type = 0;
+static guint selector_signals[LAST_SIGNAL] = { 0 };
 
-  if (!selector_type)
-    {
-      static const GTypeInfo selector_info =
-      {
-        sizeof (GimpPageSelectorClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_page_selector_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpPageSelector),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_page_selector_init,
-      };
-
-      selector_type = g_type_register_static (GTK_TYPE_VBOX,
-                                              "GimpPageSelector",
-                                              &selector_info, 0);
-    }
-
-  return selector_type;
-}
 
 static void
 gimp_page_selector_class_init (GimpPageSelectorClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->dispose      = gimp_page_selector_dispose;
   object_class->finalize     = gimp_page_selector_finalize;

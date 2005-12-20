@@ -43,9 +43,6 @@ enum
 /*  #define DUMP_DB 1  */
 
 
-static void         gimp_module_db_class_init     (GimpModuleDBClass *klass);
-static void         gimp_module_db_init           (GimpModuleDB      *db);
-
 static void         gimp_module_db_finalize            (GObject      *object);
 
 static void         gimp_module_db_module_initialize   (const GimpDatafileData *file_data,
@@ -67,45 +64,17 @@ static void         gimp_module_db_module_modified     (GimpModule   *module,
                                                         GimpModuleDB *db);
 
 
-static GObjectClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpModuleDB, gimp_module_db, G_TYPE_OBJECT);
 
-static guint  db_signals[LAST_SIGNAL] = { 0 };
+#define parent_class gimp_module_db_parent_class
 
+static guint db_signals[LAST_SIGNAL] = { 0 };
 
-GType
-gimp_module_db_get_type (void)
-{
-  static GType db_type = 0;
-
-  if (! db_type)
-    {
-      static const GTypeInfo db_info =
-      {
-        sizeof (GimpModuleDBClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_module_db_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpModuleDB),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_module_db_init,
-      };
-
-      db_type = g_type_register_static (G_TYPE_OBJECT,
-                                        "GimpModuleDB",
-                                        &db_info, 0);
-    }
-
-  return db_type;
-}
 
 static void
 gimp_module_db_class_init (GimpModuleDBClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   db_signals[ADD] =
     g_signal_new ("add",

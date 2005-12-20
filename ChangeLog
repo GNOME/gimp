@@ -1,3 +1,12 @@
+2005-12-20  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/*.c
+	* libgimpconfig/*.c
+	* libgimpmodule/*.c
+	* libgimpthumb/*.c
+	* libgimpwidgets/*.c: port to G_DEFINE_TYPE() and friends. Some
+	related cleanup.
+
 2005-12-20  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpscrolledpreview.c: removed unused variable.

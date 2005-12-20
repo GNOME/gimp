@@ -64,9 +64,6 @@ struct _GimpColorScalesClass
 };
 
 
-static void   gimp_color_scales_class_init (GimpColorScalesClass  *klass);
-static void   gimp_color_scales_init       (GimpColorScales       *scales);
-
 static void   gimp_color_scales_togg_sensitive (GimpColorSelector *selector,
                                                 gboolean           sensitive);
 static void   gimp_color_scales_togg_visible   (GimpColorSelector *selector,
@@ -88,43 +85,15 @@ static void   gimp_color_scales_scale_update   (GtkAdjustment     *adjustment,
                                                 GimpColorScales   *scales);
 
 
-static GimpColorSelectorClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpColorScales, gimp_color_scales, GIMP_TYPE_COLOR_SELECTOR);
 
+#define parent_class gimp_color_scales_parent_class
 
-GType
-gimp_color_scales_get_type (void)
-{
-  static GType scales_type = 0;
-
-  if (! scales_type)
-    {
-      static const GTypeInfo scales_info =
-      {
-        sizeof (GimpColorScalesClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_color_scales_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpColorScales),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_color_scales_init,
-      };
-
-      scales_type = g_type_register_static (GIMP_TYPE_COLOR_SELECTOR,
-                                            "GimpColorScales",
-                                            &scales_info, 0);
-    }
-
-  return scales_type;
-}
 
 static void
 gimp_color_scales_class_init (GimpColorScalesClass *klass)
 {
   GimpColorSelectorClass *selector_class = GIMP_COLOR_SELECTOR_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   selector_class->name                  = _("Scales");
   selector_class->help_id               = "gimp-colorselector-scales";

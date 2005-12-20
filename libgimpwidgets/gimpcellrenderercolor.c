@@ -44,9 +44,6 @@ enum
 };
 
 
-static void gimp_cell_renderer_color_class_init (GimpCellRendererColorClass *klass);
-static void gimp_cell_renderer_color_init       (GimpCellRendererColor      *cell);
-
 static void gimp_cell_renderer_color_get_property (GObject         *object,
                                                    guint            param_id,
                                                    GValue          *value,
@@ -71,44 +68,17 @@ static void gimp_cell_renderer_color_render       (GtkCellRenderer *cell,
                                                    GtkCellRendererState flags);
 
 
-static GtkCellRendererClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpCellRendererColor, gimp_cell_renderer_color,
+               GTK_TYPE_CELL_RENDERER);
 
+#define parent_class gimp_cell_renderer_color_parent_class
 
-GType
-gimp_cell_renderer_color_get_type (void)
-{
-  static GType cell_type = 0;
-
-  if (! cell_type)
-    {
-      static const GTypeInfo cell_info =
-      {
-        sizeof (GimpCellRendererColorClass),
-        NULL,		/* base_init */
-        NULL,		/* base_finalize */
-        (GClassInitFunc) gimp_cell_renderer_color_class_init,
-        NULL,		/* class_finalize */
-        NULL,		/* class_data */
-        sizeof (GimpCellRendererColor),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_cell_renderer_color_init,
-      };
-
-      cell_type = g_type_register_static (GTK_TYPE_CELL_RENDERER,
-                                          "GimpCellRendererColor",
-                                          &cell_info, 0);
-    }
-
-  return cell_type;
-}
 
 static void
 gimp_cell_renderer_color_class_init (GimpCellRendererColorClass *klass)
 {
   GObjectClass         *object_class = G_OBJECT_CLASS (klass);
   GtkCellRendererClass *cell_class   = GTK_CELL_RENDERER_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->get_property = gimp_cell_renderer_color_get_property;
   object_class->set_property = gimp_cell_renderer_color_set_property;

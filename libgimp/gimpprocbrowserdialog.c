@@ -67,11 +67,6 @@ enum
 };
 
 
-/*  local function prototypes  */
-
-static void   gimp_proc_browser_dialog_class_init (GimpProcBrowserDialogClass *klass);
-static void   gimp_proc_browser_dialog_init       (GimpProcBrowserDialog *dialog);
-
 static void       browser_selection_changed (GtkTreeSelection      *sel,
                                              GimpProcBrowserDialog *dialog);
 static void       browser_row_activated     (GtkTreeView           *treeview,
@@ -86,43 +81,17 @@ static void       browser_search            (GimpBrowser           *browser,
                                              GimpProcBrowserDialog *dialog);
 
 
-static GimpDialogClass *parent_class                = NULL;
-static guint            dialog_signals[LAST_SIGNAL] = { 0, };
+G_DEFINE_TYPE (GimpProcBrowserDialog, gimp_proc_browser_dialog,
+               GIMP_TYPE_DIALOG);
 
+#define parent_class gimp_proc_browser_dialog_parent_class
 
-GType
-gimp_proc_browser_dialog_get_type (void)
-{
-  static GType type = 0;
+static guint dialog_signals[LAST_SIGNAL] = { 0, };
 
-  if (! type)
-    {
-      static const GTypeInfo info =
-      {
-        sizeof (GimpProcBrowserDialogClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_proc_browser_dialog_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpProcBrowserDialog),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_proc_browser_dialog_init,
-      };
-
-      type = g_type_register_static (GIMP_TYPE_DIALOG,
-                                     "GimpProcBrowserDialog",
-                                     &info, 0);
-    }
-
-  return type;
-}
 
 static void
 gimp_proc_browser_dialog_class_init (GimpProcBrowserDialogClass *klass)
 {
-  parent_class = g_type_class_peek_parent (klass);
-
   /**
    * GimpProcBrowserDialog::selection-changed:
    * @dialog: the object that received the signal

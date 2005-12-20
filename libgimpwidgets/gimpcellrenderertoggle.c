@@ -47,8 +47,6 @@ enum
 };
 
 
-static void gimp_cell_renderer_toggle_class_init (GimpCellRendererToggleClass *klass);
-
 static void gimp_cell_renderer_toggle_finalize     (GObject         *object);
 static void gimp_cell_renderer_toggle_get_property (GObject         *object,
                                                     guint            param_id,
@@ -83,46 +81,19 @@ static void gimp_cell_renderer_toggle_create_pixbuf (GimpCellRendererToggle *tog
                                                      GtkWidget              *widget);
 
 
+G_DEFINE_TYPE (GimpCellRendererToggle, gimp_cell_renderer_toggle,
+               GTK_TYPE_CELL_RENDERER_TOGGLE);
+
+#define parent_class gimp_cell_renderer_toggle_parent_class
+
 static guint toggle_cell_signals[LAST_SIGNAL] = { 0 };
 
-static GtkCellRendererToggleClass *parent_class = NULL;
-
-
-GType
-gimp_cell_renderer_toggle_get_type (void)
-{
-  static GType cell_type = 0;
-
-  if (! cell_type)
-    {
-      static const GTypeInfo cell_info =
-      {
-        sizeof (GimpCellRendererToggleClass),
-        NULL,		/* base_init      */
-        NULL,		/* base_finalize  */
-        (GClassInitFunc) gimp_cell_renderer_toggle_class_init,
-        NULL,		/* class_finalize */
-        NULL,		/* class_data     */
-        sizeof (GimpCellRendererToggle),
-        0,              /* n_preallocs    */
-        NULL            /* instance_init  */
-      };
-
-      cell_type = g_type_register_static (GTK_TYPE_CELL_RENDERER_TOGGLE,
-                                          "GimpCellRendererToggle",
-                                          &cell_info, 0);
-    }
-
-  return cell_type;
-}
 
 static void
 gimp_cell_renderer_toggle_class_init (GimpCellRendererToggleClass *klass)
 {
   GObjectClass         *object_class = G_OBJECT_CLASS (klass);
   GtkCellRendererClass *cell_class   = GTK_CELL_RENDERER_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   toggle_cell_signals[CLICKED] =
     g_signal_new ("clicked",
@@ -158,6 +129,11 @@ gimp_cell_renderer_toggle_class_init (GimpCellRendererToggleClass *klass)
                                                      DEFAULT_ICON_SIZE,
                                                      G_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
+}
+
+static void
+gimp_cell_renderer_toggle_init (GimpCellRendererToggle *toggle)
+{
 }
 
 static void

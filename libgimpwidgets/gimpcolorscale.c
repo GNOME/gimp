@@ -37,9 +37,6 @@
 #define SHADOW  1
 
 
-static void     gimp_color_scale_class_init (GimpColorScaleClass *klass);
-static void     gimp_color_scale_init       (GimpColorScale      *scale);
-
 static void     gimp_color_scale_destroy        (GtkObject       *object);
 static void     gimp_color_scale_size_allocate  (GtkWidget       *widget,
                                                  GtkAllocation   *allocation);
@@ -53,43 +50,16 @@ static void     gimp_color_scale_render_alpha   (GimpColorScale  *scale);
 static void     gimp_color_scale_render_stipple (GimpColorScale  *scale);
 
 
-static GtkScaleClass * parent_class = NULL;
+G_DEFINE_TYPE (GimpColorScale, gimp_color_scale, GTK_TYPE_SCALE);
 
+#define parent_class gimp_color_scale_parent_class
 
-GType
-gimp_color_scale_get_type (void)
-{
-  static GType scale_type = 0;
-
-  if (! scale_type)
-    {
-      static const GTypeInfo scale_info =
-      {
-        sizeof (GimpColorScaleClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_color_scale_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpColorScale),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_color_scale_init,
-      };
-
-      scale_type = g_type_register_static (GTK_TYPE_SCALE,
-                                           "GimpColorScale", &scale_info, 0);
-    }
-
-  return scale_type;
-}
 
 static void
 gimp_color_scale_class_init (GimpColorScaleClass *klass)
 {
   GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->destroy = gimp_color_scale_destroy;
 

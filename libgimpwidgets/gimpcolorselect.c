@@ -122,9 +122,6 @@ struct _ColorSelectFill
 };
 
 
-static void   gimp_color_select_class_init    (GimpColorSelectClass *klass);
-static void   gimp_color_select_init          (GimpColorSelect      *select);
-
 static void   gimp_color_select_unrealize       (GtkWidget          *widget);
 
 static void   gimp_color_select_togg_visible    (GimpColorSelector  *selector,
@@ -196,9 +193,9 @@ static void   color_select_update_hue_value        (ColorSelectFill *csf);
 static void   color_select_update_saturation_value (ColorSelectFill *csf);
 
 
-/*  static variables  */
+G_DEFINE_TYPE (GimpColorSelect, gimp_color_select, GIMP_TYPE_COLOR_SELECTOR);
 
-static GimpColorSelectorClass *parent_class = NULL;
+#define parent_class gimp_color_select_parent_class
 
 static ColorSelectFillUpdateProc update_procs[] =
 {
@@ -218,41 +215,11 @@ static ColorSelectFillUpdateProc update_procs[] =
 };
 
 
-GType
-gimp_color_select_get_type (void)
-{
-  static GType select_type = 0;
-
-  if (! select_type)
-    {
-      static const GTypeInfo select_info =
-      {
-        sizeof (GimpColorSelectClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_color_select_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpColorSelect),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_color_select_init,
-      };
-
-      select_type = g_type_register_static (GIMP_TYPE_COLOR_SELECTOR,
-                                            "GimpColorSelect",
-                                            &select_info, 0);
-    }
-
-  return select_type;
-}
-
 static void
 gimp_color_select_class_init (GimpColorSelectClass *klass)
 {
   GtkWidgetClass         *widget_class   = GTK_WIDGET_CLASS (klass);
   GimpColorSelectorClass *selector_class = GIMP_COLOR_SELECTOR_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   widget_class->unrealize               = gimp_color_select_unrealize;
 

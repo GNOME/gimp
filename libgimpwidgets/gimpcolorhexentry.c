@@ -49,8 +49,6 @@ enum
 };
 
 
-static void      gimp_color_hex_entry_class_init (GimpColorHexEntryClass *klass);
-static void      gimp_color_hex_entry_init       (GimpColorHexEntry  *entry);
 static gboolean  gimp_color_hex_entry_events     (GtkWidget          *widget,
                                                   GdkEvent           *event);
 
@@ -60,36 +58,12 @@ static gboolean  gimp_color_hex_entry_matched    (GtkEntryCompletion *completion
                                                   GimpColorHexEntry  *entry);
 
 
-static guint  entry_signals[LAST_SIGNAL] = { 0 };
+G_DEFINE_TYPE (GimpColorHexEntry, gimp_color_hex_entry, GTK_TYPE_ENTRY);
 
+#define parent_class gimp_color_hex_entry_parent_class
 
-GType
-gimp_color_hex_entry_get_type (void)
-{
-  static GType entry_type = 0;
+static guint entry_signals[LAST_SIGNAL] = { 0 };
 
-  if (! entry_type)
-    {
-      static const GTypeInfo entry_info =
-      {
-        sizeof (GimpColorHexEntryClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_color_hex_entry_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpColorHexEntry),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_color_hex_entry_init,
-      };
-
-      entry_type = g_type_register_static (GTK_TYPE_ENTRY,
-                                           "GimpColorHexEntry",
-                                           &entry_info, 0);
-    }
-
-  return entry_type;
-}
 
 static void
 gimp_color_hex_entry_class_init (GimpColorHexEntryClass *klass)

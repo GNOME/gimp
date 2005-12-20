@@ -36,54 +36,23 @@ enum
 };
 
 
-static void       gimp_button_class_init     (GimpButtonClass  *klass);
-static void       gimp_button_init           (GimpButton       *button);
+static gboolean   gimp_button_button_press   (GtkWidget      *widget,
+                                              GdkEventButton *event);
+static gboolean   gimp_button_button_release (GtkWidget      *widget,
+                                              GdkEventButton *event);
 
-static gboolean   gimp_button_button_press   (GtkWidget        *widget,
-                                              GdkEventButton   *event);
-static gboolean   gimp_button_button_release (GtkWidget        *widget,
-                                              GdkEventButton   *event);
 
+G_DEFINE_TYPE (GimpButton, gimp_button, GTK_TYPE_BUTTON);
+
+#define parent_class gimp_button_parent_class
 
 static guint button_signals[LAST_SIGNAL] = { 0 };
 
-static GtkButtonClass *parent_class = NULL;
-
-
-GType
-gimp_button_get_type (void)
-{
-  static GType button_type = 0;
-
-  if (! button_type)
-    {
-      static const GTypeInfo button_info =
-      {
-        sizeof (GimpButtonClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_button_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpButton),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_button_init,
-      };
-
-      button_type = g_type_register_static (GTK_TYPE_BUTTON,
-                                            "GimpButton",
-                                            &button_info, 0);
-    }
-
-  return button_type;
-}
 
 static void
 gimp_button_class_init (GimpButtonClass *klass)
 {
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   button_signals[EXTENDED_CLICKED] =
     g_signal_new ("extended-clicked",

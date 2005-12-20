@@ -38,9 +38,6 @@ enum
 };
 
 
-static void       gimp_dialog_class_init   (GimpDialogClass *klass);
-static void       gimp_dialog_init         (GimpDialog      *dialog);
-
 static GObject  * gimp_dialog_constructor  (GType            type,
                                             guint            n_params,
                                             GObjectConstructParam *params);
@@ -60,37 +57,12 @@ static void       gimp_dialog_close        (GtkDialog       *dialog);
 static void       gimp_dialog_help         (GObject         *dialog);
 
 
-static GtkDialogClass *parent_class     = NULL;
-static gboolean        show_help_button = TRUE;
+G_DEFINE_TYPE (GimpDialog, gimp_dialog, GTK_TYPE_DIALOG);
 
+#define parent_class gimp_dialog_parent_class
 
-GType
-gimp_dialog_get_type (void)
-{
-  static GType dialog_type = 0;
+static gboolean show_help_button = TRUE;
 
-  if (! dialog_type)
-    {
-      static const GTypeInfo dialog_info =
-      {
-        sizeof (GimpDialogClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_dialog_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpDialog),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_dialog_init,
-      };
-
-      dialog_type = g_type_register_static (GTK_TYPE_DIALOG,
-                                            "GimpDialog",
-                                            &dialog_info, 0);
-    }
-
-  return dialog_type;
-}
 
 static void
 gimp_dialog_class_init (GimpDialogClass *klass)
@@ -98,8 +70,6 @@ gimp_dialog_class_init (GimpDialogClass *klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
   GtkDialogClass *dialog_class = GTK_DIALOG_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->constructor  = gimp_dialog_constructor;
   object_class->dispose      = gimp_dialog_dispose;
@@ -130,6 +100,12 @@ gimp_dialog_class_init (GimpDialogClass *klass)
                                                         NULL,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
+}
+
+static void
+gimp_dialog_init (GimpDialog *dialog)
+{
+  gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
 }
 
 static GObject *
@@ -232,12 +208,6 @@ gimp_dialog_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
-}
-
-static void
-gimp_dialog_init (GimpDialog *dialog)
-{
-  gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
 }
 
 static gboolean

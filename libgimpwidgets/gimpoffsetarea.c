@@ -40,57 +40,26 @@ enum
 };
 
 
-static void      gimp_offset_area_class_init (GimpOffsetAreaClass *klass);
-static void      gimp_offset_area_init       (GimpOffsetArea      *area);
+static void      gimp_offset_area_resize        (GimpOffsetArea *area);
+static void      gimp_offset_area_size_allocate (GtkWidget      *widget,
+                                                 GtkAllocation  *allocation);
+static gboolean  gimp_offset_area_event         (GtkWidget      *widget,
+                                                 GdkEvent       *event);
+static gboolean  gimp_offset_area_expose_event  (GtkWidget      *widget,
+                                                 GdkEventExpose *eevent);
 
-static void      gimp_offset_area_resize        (GimpOffsetArea   *area);
-static void      gimp_offset_area_size_allocate (GtkWidget        *widget,
-                                                 GtkAllocation    *allocation);
-static gboolean  gimp_offset_area_event         (GtkWidget        *widget,
-                                                 GdkEvent         *event);
-static gboolean  gimp_offset_area_expose_event  (GtkWidget        *widget,
-                                                 GdkEventExpose   *eevent);
 
+G_DEFINE_TYPE (GimpOffsetArea, gimp_offset_area, GTK_TYPE_DRAWING_AREA);
+
+#define parent_class gimp_offset_area_parent_class
 
 static guint gimp_offset_area_signals[LAST_SIGNAL] = { 0 };
 
-static GtkDrawingAreaClass *parent_class = NULL;
-
-
-GType
-gimp_offset_area_get_type (void)
-{
-  static GType area_type = 0;
-
-  if (! area_type)
-    {
-      static const GTypeInfo area_info =
-      {
-        sizeof (GimpOffsetAreaClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_offset_area_class_init,
-	NULL,		/* class_finalize */
-	NULL,		/* class_data     */
-	sizeof (GimpOffsetArea),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_offset_area_init,
-      };
-
-      area_type = g_type_register_static (GTK_TYPE_DRAWING_AREA,
-                                          "GimpOffsetArea",
-                                          &area_info, 0);
-    }
-
-  return area_type;
-}
 
 static void
 gimp_offset_area_class_init (GimpOffsetAreaClass *klass)
 {
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   gimp_offset_area_signals[OFFSETS_CHANGED] =
     g_signal_new ("offsets-changed",

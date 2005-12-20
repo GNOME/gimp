@@ -39,8 +39,6 @@ enum
 };
 
 
-static void  gimp_enum_combo_box_class_init   (GimpEnumComboBoxClass *klass);
-
 static void  gimp_enum_combo_box_set_property (GObject      *object,
                                                guint         prop_id,
                                                const GValue *value,
@@ -51,33 +49,11 @@ static void  gimp_enum_combo_box_get_property (GObject      *object,
                                                GParamSpec   *pspec);
 
 
-GType
-gimp_enum_combo_box_get_type (void)
-{
-  static GType enum_combo_box_type = 0;
+G_DEFINE_TYPE (GimpEnumComboBox, gimp_enum_combo_box,
+               GIMP_TYPE_INT_COMBO_BOX);
 
-  if (!enum_combo_box_type)
-    {
-      static const GTypeInfo enum_combo_box_info =
-      {
-        sizeof (GimpEnumComboBoxClass),
-        NULL,           /* base_init      */
-        NULL,           /* base_finalize  */
-        (GClassInitFunc) gimp_enum_combo_box_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpEnumComboBox),
-        0,              /* n_preallocs    */
-        NULL            /* instance_init  */
-      };
+#define parent_class gimp_enum_combo_box_parent_class
 
-      enum_combo_box_type = g_type_register_static (GIMP_TYPE_INT_COMBO_BOX,
-                                                    "GimpEnumComboBox",
-                                                    &enum_combo_box_info, 0);
-    }
-
-  return enum_combo_box_type;
-}
 
 static void
 gimp_enum_combo_box_class_init (GimpEnumComboBoxClass *klass)
@@ -93,6 +69,11 @@ gimp_enum_combo_box_class_init (GimpEnumComboBoxClass *klass)
                                    g_param_spec_object ("model", NULL, NULL,
                                                         GIMP_TYPE_ENUM_STORE,
                                                         G_PARAM_READWRITE));
+}
+
+static void
+gimp_enum_combo_box_init (GimpEnumComboBox *combo_box)
+{
 }
 
 static void

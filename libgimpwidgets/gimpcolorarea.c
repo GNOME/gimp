@@ -52,9 +52,6 @@ enum
 };
 
 
-static void      gimp_color_area_class_init    (GimpColorAreaClass *klass);
-static void      gimp_color_area_init          (GimpColorArea      *area);
-
 static void      gimp_color_area_get_property  (GObject            *object,
                                                 guint               property_id,
                                                 GValue             *value,
@@ -91,40 +88,14 @@ static void  gimp_color_area_drag_data_get      (GtkWidget        *widget,
 						 guint             time);
 
 
-static const GtkTargetEntry target = { "application/x-color", 0 };
+G_DEFINE_TYPE (GimpColorArea, gimp_color_area, GTK_TYPE_DRAWING_AREA);
+
+#define parent_class gimp_color_area_parent_class
 
 static guint gimp_color_area_signals[LAST_SIGNAL] = { 0 };
 
-static GtkDrawingAreaClass * parent_class = NULL;
+static const GtkTargetEntry target = { "application/x-color", 0 };
 
-
-GType
-gimp_color_area_get_type (void)
-{
-  static GType area_type = 0;
-
-  if (! area_type)
-    {
-      static const GTypeInfo area_info =
-      {
-        sizeof (GimpColorAreaClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_color_area_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpColorArea),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_color_area_init,
-      };
-
-      area_type = g_type_register_static (GTK_TYPE_DRAWING_AREA,
-                                          "GimpColorArea",
-                                          &area_info, 0);
-    }
-
-  return area_type;
-}
 
 static void
 gimp_color_area_class_init (GimpColorAreaClass *klass)
@@ -132,8 +103,6 @@ gimp_color_area_class_init (GimpColorAreaClass *klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
   GimpRGB         color;
-
-  parent_class = g_type_class_peek_parent (klass);
 
   gimp_color_area_signals[COLOR_CHANGED] =
     g_signal_new ("color-changed",

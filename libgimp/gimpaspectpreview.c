@@ -34,54 +34,24 @@
 #include "gimpaspectpreview.h"
 
 
-static void  gimp_aspect_preview_class_init  (GimpAspectPreviewClass *klass);
-static void  gimp_aspect_preview_init        (GimpAspectPreview      *preview);
-
-static void  gimp_aspect_preview_style_set   (GtkWidget              *widget,
-                                              GtkStyle               *prev_style);
-static void  gimp_aspect_preview_draw        (GimpPreview            *preview);
-static void  gimp_aspect_preview_draw_buffer (GimpPreview            *preview,
-                                              const guchar           *buffer,
-                                              gint                    rowstride);
+static void  gimp_aspect_preview_style_set   (GtkWidget    *widget,
+                                              GtkStyle     *prev_style);
+static void  gimp_aspect_preview_draw        (GimpPreview  *preview);
+static void  gimp_aspect_preview_draw_buffer (GimpPreview  *preview,
+                                              const guchar *buffer,
+                                              gint          rowstride);
 
 
-static GimpPreviewClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpAspectPreview, gimp_aspect_preview, GIMP_TYPE_PREVIEW);
 
-GType
-gimp_aspect_preview_get_type (void)
-{
-  static GType preview_type = 0;
+#define parent_class gimp_aspect_preview_parent_class
 
-  if (! preview_type)
-    {
-      static const GTypeInfo preview_info =
-      {
-        sizeof (GimpAspectPreviewClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_aspect_preview_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpAspectPreview),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_aspect_preview_init,
-      };
-
-      preview_type = g_type_register_static (GIMP_TYPE_PREVIEW,
-                                             "GimpAspectPreview",
-                                             &preview_info, 0);
-    }
-
-  return preview_type;
-}
 
 static void
 gimp_aspect_preview_class_init (GimpAspectPreviewClass *klass)
 {
   GtkWidgetClass   *widget_class  = GTK_WIDGET_CLASS (klass);
   GimpPreviewClass *preview_class = GIMP_PREVIEW_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   widget_class->style_set    = gimp_aspect_preview_style_set;
 

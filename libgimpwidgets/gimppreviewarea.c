@@ -43,9 +43,10 @@ enum
 #define DEFAULT_CHECK_SIZE  GIMP_CHECK_SIZE_MEDIUM_CHECKS
 #define DEFAULT_CHECK_TYPE  GIMP_CHECK_TYPE_GRAY_CHECKS
 
+#define CHECK_COLOR(area, row, col)        \
+  (((((area)->offset_y + (row)) & size) ^  \
+    (((area)->offset_x + (col)) & size)) ? dark : light)
 
-static void      gimp_preview_area_class_init       (GimpPreviewAreaClass *klass);
-static void      gimp_preview_area_init             (GimpPreviewArea *area);
 
 static void      gimp_preview_area_finalize         (GObject         *object);
 static void      gimp_preview_area_set_property     (GObject         *object,
@@ -70,49 +71,16 @@ static void      gimp_preview_area_queue_draw       (GimpPreviewArea *area,
 static gint      gimp_preview_area_image_type_bytes (GimpImageType    type);
 
 
-static GtkDrawingAreaClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpPreviewArea, gimp_preview_area, GTK_TYPE_DRAWING_AREA);
 
+#define parent_class gimp_preview_area_parent_class
 
-#define CHECK_COLOR(area, row, col)        \
-  (((((area)->offset_y + (row)) & size) ^  \
-    (((area)->offset_x + (col)) & size)) ? dark : light)
-
-
-GType
-gimp_preview_area_get_type (void)
-{
-  static GType view_type = 0;
-
-  if (! view_type)
-    {
-      static const GTypeInfo view_info =
-      {
-        sizeof (GimpPreviewAreaClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_preview_area_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpPreviewArea),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_preview_area_init,
-      };
-
-      view_type = g_type_register_static (GTK_TYPE_DRAWING_AREA,
-                                          "GimpPreviewArea",
-                                          &view_info, 0);
-    }
-
-  return view_type;
-}
 
 static void
 gimp_preview_area_class_init (GimpPreviewAreaClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize      = gimp_preview_area_finalize;
   object_class->set_property  = gimp_preview_area_set_property;

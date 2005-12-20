@@ -66,9 +66,6 @@ enum
 };
 
 
-static void   gimp_color_selection_class_init (GimpColorSelectionClass *klass);
-static void   gimp_color_selection_init       (GimpColorSelection      *selection);
-
 static void   gimp_color_selection_switch_page       (GtkWidget          *widget,
                                                       GtkNotebookPage    *page,
                                                       guint               page_num,
@@ -96,44 +93,16 @@ static void   gimp_color_selection_update            (GimpColorSelection *select
                                                       UpdateType          update);
 
 
-static GtkVBoxClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpColorSelection, gimp_color_selection, GTK_TYPE_VBOX);
 
-static guint  selection_signals[LAST_SIGNAL] = { 0 };
+#define parent_class gimp_color_selection_parent_class
 
+static guint selection_signals[LAST_SIGNAL] = { 0 };
 
-GType
-gimp_color_selection_get_type (void)
-{
-  static GType selection_type = 0;
-
-  if (! selection_type)
-    {
-      static const GTypeInfo selection_info =
-      {
-        sizeof (GimpColorSelectionClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_color_selection_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpColorSelection),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_color_selection_init,
-      };
-
-      selection_type = g_type_register_static (GTK_TYPE_VBOX,
-                                              "GimpColorSelection",
-                                              &selection_info, 0);
-    }
-
-  return selection_type;
-}
 
 static void
 gimp_color_selection_class_init (GimpColorSelectionClass *klass)
 {
-  parent_class = g_type_class_peek_parent (klass);
-
   selection_signals[COLOR_CHANGED] =
     g_signal_new ("color-changed",
                   G_TYPE_FROM_CLASS (klass),

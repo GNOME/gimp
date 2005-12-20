@@ -40,60 +40,29 @@ enum
 };
 
 
-static void   gimp_file_entry_class_init      (GimpFileEntryClass *klass);
-static void   gimp_file_entry_init            (GimpFileEntry      *entry);
+static void   gimp_file_entry_destroy         (GtkObject     *object);
 
-static void   gimp_file_entry_destroy         (GtkObject          *object);
+static void   gimp_file_entry_entry_activate  (GtkWidget     *widget,
+                                               GimpFileEntry *entry);
+static gint   gimp_file_entry_entry_focus_out (GtkWidget     *widget,
+                                               GdkEvent      *event,
+                                               GimpFileEntry *entry);
+static void   gimp_file_entry_browse_clicked  (GtkWidget     *widget,
+                                               GimpFileEntry *entry);
+static void   gimp_file_entry_check_filename  (GimpFileEntry *entry);
 
-static void   gimp_file_entry_entry_activate  (GtkWidget          *widget,
-                                               GimpFileEntry      *entry);
-static gint   gimp_file_entry_entry_focus_out (GtkWidget          *widget,
-                                               GdkEvent           *event,
-                                               GimpFileEntry      *entry);
-static void   gimp_file_entry_browse_clicked  (GtkWidget          *widget,
-                                               GimpFileEntry      *entry);
-static void   gimp_file_entry_check_filename  (GimpFileEntry      *entry);
 
+G_DEFINE_TYPE (GimpFileEntry, gimp_file_entry, GTK_TYPE_HBOX);
+
+#define parent_class gimp_file_entry_parent_class
 
 static guint gimp_file_entry_signals[LAST_SIGNAL] = { 0 };
 
-static GtkHBoxClass *parent_class = NULL;
-
-
-GType
-gimp_file_entry_get_type (void)
-{
-  static GType entry_type = 0;
-
-  if (! entry_type)
-    {
-      static const GTypeInfo entry_info =
-      {
-        sizeof (GimpFileEntryClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_file_entry_class_init,
-        NULL,		/* class_finalize */
-        NULL,		/* class_data     */
-        sizeof (GimpFileEntry),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_file_entry_init,
-      };
-
-      entry_type = g_type_register_static (GTK_TYPE_HBOX,
-                                           "GimpFileEntry",
-                                           &entry_info, 0);
-    }
-
-  return entry_type;
-}
 
 static void
 gimp_file_entry_class_init (GimpFileEntryClass *klass)
 {
   GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   /**
    * GimpFileEntry::filename-changed:

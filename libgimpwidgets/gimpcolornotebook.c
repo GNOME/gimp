@@ -42,9 +42,6 @@
 #define DEFAULT_TAB_ICON_SIZE  GTK_ICON_SIZE_BUTTON
 
 
-static void   gimp_color_notebook_class_init (GimpColorNotebookClass *klass);
-static void   gimp_color_notebook_init       (GimpColorNotebook      *notebook);
-
 static void   gimp_color_notebook_finalize        (GObject           *object);
 
 static void   gimp_color_notebook_style_set       (GtkWidget         *widget,
@@ -78,36 +75,11 @@ static GtkWidget * gimp_color_notebook_add_page   (GimpColorNotebook *notebook,
                                                    GType              page_type);
 
 
-static GimpColorSelectorClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpColorNotebook, gimp_color_notebook,
+               GIMP_TYPE_COLOR_SELECTOR);
 
+#define parent_class gimp_color_notebook_parent_class
 
-GType
-gimp_color_notebook_get_type (void)
-{
-  static GType notebook_type = 0;
-
-  if (! notebook_type)
-    {
-      static const GTypeInfo notebook_info =
-      {
-        sizeof (GimpColorNotebookClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_color_notebook_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpColorNotebook),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_color_notebook_init,
-      };
-
-      notebook_type = g_type_register_static (GIMP_TYPE_COLOR_SELECTOR,
-                                              "GimpColorNotebook",
-                                              &notebook_info, 0);
-    }
-
-  return notebook_type;
-}
 
 static void
 gimp_color_notebook_class_init (GimpColorNotebookClass *klass)
@@ -115,8 +87,6 @@ gimp_color_notebook_class_init (GimpColorNotebookClass *klass)
   GObjectClass           *object_class   = G_OBJECT_CLASS (klass);
   GtkWidgetClass         *widget_class   = GTK_WIDGET_CLASS (klass);
   GimpColorSelectorClass *selector_class = GIMP_COLOR_SELECTOR_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize                = gimp_color_notebook_finalize;
 

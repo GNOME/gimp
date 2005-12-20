@@ -35,15 +35,18 @@ enum
 };
 
 
-static void  gimp_chain_button_class_init       (GimpChainButtonClass *klass);
-static void  gimp_chain_button_init             (GimpChainButton      *button);
+static void      gimp_chain_button_clicked_callback (GtkWidget       *widget,
+						     GimpChainButton *button);
+static gboolean  gimp_chain_button_draw_lines       (GtkWidget       *widget,
+						     GdkEventExpose  *eevent,
+						     GimpChainButton *button);
 
-static void      gimp_chain_button_clicked_callback (GtkWidget        *widget,
-						     GimpChainButton  *button);
-static gboolean  gimp_chain_button_draw_lines       (GtkWidget        *widget,
-						     GdkEventExpose   *eevent,
-						     GimpChainButton  *button);
 
+G_DEFINE_TYPE (GimpChainButton, gimp_chain_button, GTK_TYPE_TABLE);
+
+#define parent_class gimp_chain_button_parent_class
+
+static guint gimp_chain_button_signals[LAST_SIGNAL] = { 0 };
 
 static const gchar *gimp_chain_stock_items[] =
 {
@@ -54,43 +57,9 @@ static const gchar *gimp_chain_stock_items[] =
 };
 
 
-static guint gimp_chain_button_signals[LAST_SIGNAL] = { 0 };
-
-static GtkTableClass *parent_class = NULL;
-
-
-GType
-gimp_chain_button_get_type (void)
-{
-  static GType button_type = 0;
-
-  if (! button_type)
-    {
-      static const GTypeInfo button_info =
-      {
-        sizeof (GimpChainButtonClass),
-        NULL,           /* base_init      */
-        NULL,           /* base_finalize  */
-        (GClassInitFunc) gimp_chain_button_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpChainButton),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_chain_button_init,
-      };
-
-      button_type = g_type_register_static (GTK_TYPE_TABLE, "GimpChainButton",
-					    &button_info, 0);
-    }
-
-  return button_type;
-}
-
 static void
 gimp_chain_button_class_init (GimpChainButtonClass *klass)
 {
-  parent_class = g_type_class_peek_parent (klass);
-
   gimp_chain_button_signals[TOGGLED] =
     g_signal_new ("toggled",
 		  G_TYPE_FROM_CLASS (klass),

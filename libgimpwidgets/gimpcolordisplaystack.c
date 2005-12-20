@@ -43,9 +43,6 @@ enum
 };
 
 
-static void   gimp_color_display_stack_class_init (GimpColorDisplayStackClass *klass);
-static void   gimp_color_display_stack_init       (GimpColorDisplayStack      *stack);
-
 static void   gimp_color_display_stack_finalize        (GObject               *object);
 
 static void   gimp_color_display_stack_display_changed (GimpColorDisplay      *display,
@@ -55,45 +52,17 @@ static void   gimp_color_display_stack_display_enabled (GimpColorDisplay      *d
                                                         GimpColorDisplayStack *stack);
 
 
-static GObjectClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpColorDisplayStack, gimp_color_display_stack, G_TYPE_OBJECT);
 
-static guint  stack_signals[LAST_SIGNAL] = { 0 };
+#define parent_class gimp_color_display_stack_parent_class
 
+static guint stack_signals[LAST_SIGNAL] = { 0 };
 
-GType
-gimp_color_display_stack_get_type (void)
-{
-  static GType display_type = 0;
-
-  if (! display_type)
-    {
-      static const GTypeInfo display_info =
-      {
-        sizeof (GimpColorDisplayStackClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_color_display_stack_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpColorDisplayStack),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_color_display_stack_init,
-      };
-
-      display_type = g_type_register_static (G_TYPE_OBJECT,
-                                             "GimpColorDisplayStack",
-                                             &display_info, 0);
-    }
-
-  return display_type;
-}
 
 static void
 gimp_color_display_stack_class_init (GimpColorDisplayStackClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   stack_signals[CHANGED] =
     g_signal_new ("changed",

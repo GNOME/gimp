@@ -38,9 +38,6 @@
 #define GIMP_FRAME_IN_EXPANDER_KEY  "gimp-frame-in-expander"
 
 
-static void      gimp_frame_class_init          (GimpFrameClass *klass);
-static void      gimp_frame_init                (GimpFrame      *frame);
-
 static void      gimp_frame_size_request        (GtkWidget      *widget,
                                                  GtkRequisition *requisition);
 static void      gimp_frame_size_allocate       (GtkWidget      *widget,
@@ -56,45 +53,16 @@ static gint      gimp_frame_get_indent          (GtkWidget      *widget);
 static gint      gimp_frame_get_label_spacing   (GtkFrame       *frame);
 
 
-static GtkFrameClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpFrame, gimp_frame, GTK_TYPE_FRAME);
 
+#define parent_class gimp_frame_parent_class
 
-GType
-gimp_frame_get_type (void)
-{
-  static GType frame_type = 0;
-
-  if (! frame_type)
-    {
-      static const GTypeInfo frame_info =
-      {
-        sizeof (GimpFrameClass),
-        (GBaseInitFunc)     NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc)    gimp_frame_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpFrame),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_frame_init,
-        NULL            /* value_table    */
-      };
-
-      frame_type = g_type_register_static (GTK_TYPE_FRAME,
-                                           "GimpFrame",
-                                           &frame_info, 0);
-    }
-
-  return frame_type;
-}
 
 static void
 gimp_frame_class_init (GimpFrameClass *klass)
 {
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
   GtkFrameClass  *frame_class  = GTK_FRAME_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   widget_class->size_request  = gimp_frame_size_request;
   widget_class->size_allocate = gimp_frame_size_allocate;

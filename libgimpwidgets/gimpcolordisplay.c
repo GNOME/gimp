@@ -48,66 +48,28 @@ enum
 };
 
 
-static void   gimp_color_display_class_init   (GimpColorDisplayClass *klass);
-static void   gimp_color_display_set_property (GObject           *object,
-                                               guint              property_id,
-                                               const GValue      *value,
-                                               GParamSpec        *pspec);
-static void   gimp_color_display_get_property (GObject           *object,
-                                               guint              property_id,
-                                               GValue            *value,
-                                               GParamSpec        *pspec);
+static void   gimp_color_display_set_property (GObject      *object,
+                                               guint         property_id,
+                                               const GValue *value,
+                                               GParamSpec   *pspec);
+static void   gimp_color_display_get_property (GObject      *object,
+                                               guint         property_id,
+                                               GValue       *value,
+                                               GParamSpec   *pspec);
 
 
-static GObjectClass *parent_class = NULL;
+G_DEFINE_TYPE_WITH_CODE (GimpColorDisplay, gimp_color_display, G_TYPE_OBJECT,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL));
 
-static guint  display_signals[LAST_SIGNAL] = { 0 };
+#define parent_class gimp_color_display_parent_class
 
+static guint display_signals[LAST_SIGNAL] = { 0 };
 
-GType
-gimp_color_display_get_type (void)
-{
-  static GType display_type = 0;
-
-  if (! display_type)
-    {
-      static const GTypeInfo display_info =
-      {
-        sizeof (GimpColorDisplayClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_color_display_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpColorDisplay),
-	0,              /* n_preallocs    */
-	NULL            /* instance_init  */
-      };
-
-      static const GInterfaceInfo display_iface_info =
-      {
-        NULL,           /* iface_init     */
-        NULL,           /* iface_finalize */
-        NULL            /* iface_data     */
-      };
-
-      display_type = g_type_register_static (G_TYPE_OBJECT,
-                                             "GimpColorDisplay",
-                                             &display_info, 0);
-
-      g_type_add_interface_static (display_type,
-                                   GIMP_TYPE_CONFIG, &display_iface_info);
-    }
-
-  return display_type;
-}
 
 static void
 gimp_color_display_class_init (GimpColorDisplayClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->set_property = gimp_color_display_set_property;
   object_class->get_property = gimp_color_display_get_property;
@@ -137,6 +99,11 @@ gimp_color_display_class_init (GimpColorDisplayClass *klass)
   klass->configure       = NULL;
   klass->configure_reset = NULL;
   klass->changed         = NULL;
+}
+
+static void
+gimp_color_display_init (GimpColorDisplay *display)
+{
 }
 
 static void

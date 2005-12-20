@@ -41,55 +41,24 @@ enum
 };
 
 
-static void       gimp_browser_class_init     (GimpBrowserClass *klass);
-static void       gimp_browser_init           (GimpBrowser      *browser);
+static void       gimp_browser_destroy        (GtkObject   *object);
 
-static void       gimp_browser_destroy        (GtkObject        *object);
-
-static void       gimp_browser_entry_changed  (GtkEditable      *editable,
-                                               GimpBrowser      *browser);
-static gboolean   gimp_browser_search_timeout (gpointer          data);
+static void       gimp_browser_entry_changed  (GtkEditable *editable,
+                                               GimpBrowser *browser);
+static gboolean   gimp_browser_search_timeout (gpointer     data);
 
 
-static GtkHPanedClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpBrowser, gimp_browser, GTK_TYPE_HPANED);
+
+#define parent_class gimp_browser_parent_class
 
 static guint browser_signals[LAST_SIGNAL] = { 0 };
 
-
-GType
-gimp_browser_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo info =
-      {
-        sizeof (GimpBrowserClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_browser_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpBrowser),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_browser_init,
-      };
-
-      type = g_type_register_static (GTK_TYPE_HPANED,
-                                     "GimpBrowser",
-                                     &info, 0);
-    }
-
-  return type;
-}
 
 static void
 gimp_browser_class_init (GimpBrowserClass *klass)
 {
   GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   browser_signals[SEARCH] =
     g_signal_new ("search",

@@ -44,48 +44,16 @@ enum
 };
 
 
-static void   gimp_color_selector_class_init (GimpColorSelectorClass *klass);
-static void   gimp_color_selector_init       (GimpColorSelector      *selector);
+G_DEFINE_TYPE (GimpColorSelector, gimp_color_selector, GTK_TYPE_VBOX);
 
+#define parent_class gimp_color_selector_parent_class
 
-static GtkVBoxClass *parent_class = NULL;
+static guint selector_signals[LAST_SIGNAL] = { 0 };
 
-static guint  selector_signals[LAST_SIGNAL] = { 0 };
-
-
-GType
-gimp_color_selector_get_type (void)
-{
-  static GType selector_type = 0;
-
-  if (! selector_type)
-    {
-      static const GTypeInfo selector_info =
-      {
-        sizeof (GimpColorSelectorClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_color_selector_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpColorSelector),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_color_selector_init,
-      };
-
-      selector_type = g_type_register_static (GTK_TYPE_VBOX,
-                                              "GimpColorSelector",
-                                              &selector_info, 0);
-    }
-
-  return selector_type;
-}
 
 static void
 gimp_color_selector_class_init (GimpColorSelectorClass *klass)
 {
-  parent_class = g_type_class_peek_parent (klass);
-
   selector_signals[COLOR_CHANGED] =
     g_signal_new ("color-changed",
                   G_TYPE_FROM_CLASS (klass),

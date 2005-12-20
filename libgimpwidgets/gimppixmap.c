@@ -30,50 +30,19 @@
 #include "gimppixmap.h"
 
 
-static void   gimp_pixmap_class_init        (GimpPixmapClass *klass);
-static void   gimp_pixmap_init              (GimpPixmap      *pixmap);
-
-static void   gimp_pixmap_realize           (GtkWidget       *widget);
-static void   gimp_pixmap_create_from_xpm_d (GimpPixmap      *pixmap);
+static void   gimp_pixmap_realize           (GtkWidget  *widget);
+static void   gimp_pixmap_create_from_xpm_d (GimpPixmap *pixmap);
 
 
-static GtkImageClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpPixmap, gimp_pixmap, GTK_TYPE_IMAGE);
 
+#define parent_class gimp_pixmap_parent_class
 
-GType
-gimp_pixmap_get_type (void)
-{
-  static GType pixmap_type = 0;
-
-  if (! pixmap_type)
-    {
-      static const GTypeInfo pixmap_info =
-      {
-        sizeof (GimpPixmapClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_pixmap_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpPixmap),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_pixmap_init,
-      };
-
-      pixmap_type = g_type_register_static (GTK_TYPE_IMAGE,
-					    "GimpPixmap",
-					    &pixmap_info, 0);
-    }
-
-  return pixmap_type;
-}
 
 static void
 gimp_pixmap_class_init (GimpPixmapClass *klass)
 {
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   widget_class->realize = gimp_pixmap_realize;
 }

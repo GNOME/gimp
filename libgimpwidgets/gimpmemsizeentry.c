@@ -38,57 +38,30 @@ enum
   LAST_SIGNAL
 };
 
-static void  gimp_memsize_entry_class_init    (GimpMemsizeEntryClass *klass);
-static void  gimp_memsize_entry_init          (GimpMemsizeEntry      *entry);
-static void  gimp_memsize_entry_finalize      (GObject               *object);
 
-static void  gimp_memsize_entry_adj_callback  (GtkAdjustment         *adj,
-					       GimpMemsizeEntry      *entry);
-static void  gimp_memsize_entry_unit_callback (GtkWidget             *widget,
-					       GimpMemsizeEntry      *entry);
+static void  gimp_memsize_entry_finalize      (GObject          *object);
 
-
-static guint         gimp_memsize_entry_signals[LAST_SIGNAL] = { 0 };
-static GtkHBoxClass *parent_class                            = NULL;
+static void  gimp_memsize_entry_adj_callback  (GtkAdjustment    *adj,
+					       GimpMemsizeEntry *entry);
+static void  gimp_memsize_entry_unit_callback (GtkWidget        *widget,
+					       GimpMemsizeEntry *entry);
 
 
-GType
-gimp_memsize_entry_get_type (void)
-{
-  static GType entry_type = 0;
+G_DEFINE_TYPE (GimpMemsizeEntry, gimp_memsize_entry, GTK_TYPE_HBOX);
 
-  if (! entry_type)
-    {
-      static const GTypeInfo entry_info =
-      {
-        sizeof (GimpMemsizeEntryClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_memsize_entry_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpMemsizeEntry),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_memsize_entry_init,
-      };
+#define parent_class gimp_memsize_entry_parent_class
 
-      entry_type = g_type_register_static (GTK_TYPE_HBOX, "GimpMemsizeEntry",
-					   &entry_info, 0);
-    }
+static guint gimp_memsize_entry_signals[LAST_SIGNAL] = { 0 };
 
-  return entry_type;
-}
 
 static void
 gimp_memsize_entry_class_init (GimpMemsizeEntryClass *klass)
 {
-  GObjectClass *object_class;
-
-  parent_class = g_type_class_peek_parent (klass);
-
-  object_class = G_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->finalize = gimp_memsize_entry_finalize;
+
+  klass->value_changed   = NULL;
 
   gimp_memsize_entry_signals[VALUE_CHANGED] =
     g_signal_new ("value-changed",
@@ -98,8 +71,6 @@ gimp_memsize_entry_class_init (GimpMemsizeEntryClass *klass)
 		  NULL, NULL,
 		  g_cclosure_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
-
-  klass->value_changed = NULL;
 }
 
 static void

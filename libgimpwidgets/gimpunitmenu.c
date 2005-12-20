@@ -51,56 +51,25 @@ enum
 };
 
 
-static void          gimp_unit_menu_class_init   (GimpUnitMenuClass *klass);
-static void          gimp_unit_menu_init         (GimpUnitMenu      *menu);
+static void          gimp_unit_menu_finalize     (GObject     *object);
 
-static void          gimp_unit_menu_finalize     (GObject           *object);
+static const gchar * gimp_unit_menu_build_string (const gchar *format,
+						  GimpUnit     unit);
+static void          gimp_unit_menu_callback     (GtkWidget   *widget,
+						  gpointer     data);
 
-static const gchar * gimp_unit_menu_build_string (const gchar       *format,
-						  GimpUnit           unit);
-static void          gimp_unit_menu_callback     (GtkWidget         *widget,
-						  gpointer           data);
 
+G_DEFINE_TYPE (GimpUnitMenu, gimp_unit_menu, GTK_TYPE_OPTION_MENU);
+
+#define parent_class gimp_unit_menu_parent_class
 
 static guint gimp_unit_menu_signals[LAST_SIGNAL] = { 0 };
 
-static GtkOptionMenuClass *parent_class = NULL;
-
-
-GType
-gimp_unit_menu_get_type (void)
-{
-  static GType menu_type = 0;
-
-  if (! menu_type)
-    {
-      static const GTypeInfo menu_info =
-      {
-        sizeof (GimpUnitMenuClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_unit_menu_class_init,
-	NULL,		/* class_finalize */
-	NULL,		/* class_data     */
-	sizeof (GimpUnitMenu),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_unit_menu_init,
-      };
-
-      menu_type = g_type_register_static (GTK_TYPE_OPTION_MENU,
-                                         "GimpUnitMenu",
-                                         &menu_info, 0);
-    }
-
-  return menu_type;
-}
 
 static void
 gimp_unit_menu_class_init (GimpUnitMenuClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   /**
    * GimpUnitMenu::unit-changed:
@@ -136,11 +105,7 @@ gimp_unit_menu_init (GimpUnitMenu *menu)
 static void
 gimp_unit_menu_finalize (GObject *object)
 {
-  GimpUnitMenu *menu;
-
-  g_return_if_fail (GIMP_IS_UNIT_MENU (object));
-
-  menu = GIMP_UNIT_MENU (object);
+  GimpUnitMenu *menu = GIMP_UNIT_MENU (object);
 
   if (menu->format)
     {

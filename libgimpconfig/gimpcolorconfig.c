@@ -84,70 +84,29 @@ enum
 };
 
 
-static void  gimp_color_config_class_init   (GimpColorConfigClass *klass);
-static void  gimp_color_config_finalize     (GObject              *object);
-static void  gimp_color_config_set_property (GObject              *object,
-                                             guint                 property_id,
-                                             const GValue         *value,
-                                             GParamSpec           *pspec);
-static void  gimp_color_config_get_property (GObject              *object,
-                                             guint                 property_id,
-                                             GValue               *value,
-                                             GParamSpec           *pspec);
+static void  gimp_color_config_finalize     (GObject      *object);
+static void  gimp_color_config_set_property (GObject      *object,
+                                             guint         property_id,
+                                             const GValue *value,
+                                             GParamSpec   *pspec);
+static void  gimp_color_config_get_property (GObject      *object,
+                                             guint         property_id,
+                                             GValue       *value,
+                                             GParamSpec   *pspec);
 
 
-static GObjectClass *parent_class = NULL;
+G_DEFINE_TYPE_WITH_CODE (GimpColorConfig, gimp_color_config, G_TYPE_OBJECT,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL)
+                         gimp_type_set_translation_domain (g_define_type_id,
+                                                           GETTEXT_PACKAGE "-libgimp"));
 
+#define parent_class gimp_color_config_parent_class
 
-GType
-gimp_color_config_get_type (void)
-{
-  static GType config_type = 0;
-
-  if (! config_type)
-    {
-      static const GTypeInfo config_info =
-      {
-        sizeof (GimpColorConfigClass),
-        NULL,           /* base_init      */
-        NULL,           /* base_finalize  */
-        (GClassInitFunc) gimp_color_config_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpColorConfig),
-        0,              /* n_preallocs    */
-        NULL            /* instance_init  */
-      };
-
-      static const GInterfaceInfo config_iface_info =
-      {
-        NULL,           /* iface_init     */
-        NULL,           /* iface_finalize */
-        NULL            /* iface_data     */
-      };
-
-      config_type = g_type_register_static (G_TYPE_OBJECT,
-                                            "GimpColorConfig",
-                                            &config_info, 0);
-
-      g_type_add_interface_static (config_type,
-                                   GIMP_TYPE_CONFIG, &config_iface_info);
-
-      gimp_type_set_translation_domain (config_type,
-                                        GETTEXT_PACKAGE "-libgimp");
-    }
-
-  return config_type;
-}
 
 static void
 gimp_color_config_class_init (GimpColorConfigClass *klass)
 {
-  GObjectClass *object_class;
-
-  parent_class = g_type_class_peek_parent (klass);
-
-  object_class = G_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->finalize     = gimp_color_config_finalize;
   object_class->set_property = gimp_color_config_set_property;
@@ -215,6 +174,11 @@ gimp_color_config_class_init (GimpColorConfigClass *klass)
                                  GIMP_COLOR_FILE_OPEN_ASK,
                                  0);
 #endif
+}
+
+static void
+gimp_color_config_init (GimpColorConfig *config)
+{
 }
 
 static void

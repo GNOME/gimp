@@ -31,49 +31,25 @@
 #include "gimpenumlabel.h"
 
 
-static void   gimp_enum_label_class_init (GimpEnumLabelClass *klass);
-static void   gimp_enum_label_finalize   (GObject            *object);
+static void   gimp_enum_label_finalize (GObject *object);
 
 
-static GtkLabelClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpEnumLabel, gimp_enum_label, GTK_TYPE_LABEL);
 
+#define parent_class gimp_enum_label_parent_class
 
-GType
-gimp_enum_label_get_type (void)
-{
-  static GType enum_label_type = 0;
-
-  if (!enum_label_type)
-    {
-      static const GTypeInfo enum_label_info =
-      {
-        sizeof (GimpEnumLabelClass),
-        NULL,           /* base_init      */
-        NULL,           /* base_finalize  */
-        (GClassInitFunc) gimp_enum_label_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpEnumLabel),
-        0,              /* n_preallocs    */
-        NULL            /* instance_init  */
-      };
-
-      enum_label_type = g_type_register_static (GTK_TYPE_LABEL,
-                                                "GimpEnumLabel",
-                                                &enum_label_info, 0);
-    }
-
-  return enum_label_type;
-}
 
 static void
 gimp_enum_label_class_init (GimpEnumLabelClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  parent_class = g_type_class_peek_parent (klass);
-
   object_class->finalize = gimp_enum_label_finalize;
+}
+
+static void
+gimp_enum_label_init (GimpEnumLabel *enum_label)
+{
 }
 
 static void

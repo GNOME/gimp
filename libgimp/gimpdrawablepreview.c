@@ -40,59 +40,32 @@ typedef struct
   gboolean update;
 } PreviewSettings;
 
-static void  gimp_drawable_preview_class_init    (GimpDrawablePreviewClass *klass);
-static void  gimp_drawable_preview_init          (GimpDrawablePreview *preview);
 
-static void  gimp_drawable_preview_destroy       (GtkObject           *object);
+static void  gimp_drawable_preview_destroy       (GtkObject       *object);
 
-static void  gimp_drawable_preview_style_set     (GtkWidget           *widget,
-                                                  GtkStyle            *prev_style);
+static void  gimp_drawable_preview_style_set     (GtkWidget       *widget,
+                                                  GtkStyle        *prev_style);
 
-static void  gimp_drawable_preview_draw_original (GimpPreview         *preview);
-static void  gimp_drawable_preview_draw_thumb    (GimpPreview         *preview,
-                                                  GimpPreviewArea     *area,
-                                                  gint                 width,
-                                                  gint                 height);
-static void  gimp_drawable_preview_draw_buffer   (GimpPreview         *preview,
-                                                  const guchar        *buffer,
-                                                  gint                 rowstride);
-static gboolean gimp_drawable_preview_get_bounds (GimpDrawable        *drawable,
-                                                  gint                *xmin,
-                                                  gint                *ymin,
-                                                  gint                *xmax,
-                                                  gint                *ymax);
+static void  gimp_drawable_preview_draw_original (GimpPreview     *preview);
+static void  gimp_drawable_preview_draw_thumb    (GimpPreview     *preview,
+                                                  GimpPreviewArea *area,
+                                                  gint             width,
+                                                  gint             height);
+static void  gimp_drawable_preview_draw_buffer   (GimpPreview     *preview,
+                                                  const guchar    *buffer,
+                                                  gint             rowstride);
+static gboolean gimp_drawable_preview_get_bounds (GimpDrawable    *drawable,
+                                                  gint            *xmin,
+                                                  gint            *ymin,
+                                                  gint            *xmax,
+                                                  gint            *ymax);
 
 
-static GimpScrolledPreviewClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpDrawablePreview, gimp_drawable_preview,
+               GIMP_TYPE_SCROLLED_PREVIEW);
 
+#define parent_class gimp_drawable_preview_parent_class
 
-GType
-gimp_drawable_preview_get_type (void)
-{
-  static GType preview_type = 0;
-
-  if (!preview_type)
-    {
-      static const GTypeInfo drawable_preview_info =
-      {
-        sizeof (GimpDrawablePreviewClass),
-        (GBaseInitFunc)     NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_drawable_preview_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpDrawablePreview),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_drawable_preview_init
-      };
-
-      preview_type = g_type_register_static (GIMP_TYPE_SCROLLED_PREVIEW,
-                                             "GimpDrawablePreview",
-                                             &drawable_preview_info, 0);
-    }
-
-  return preview_type;
-}
 
 static void
 gimp_drawable_preview_class_init (GimpDrawablePreviewClass *klass)
@@ -100,8 +73,6 @@ gimp_drawable_preview_class_init (GimpDrawablePreviewClass *klass)
   GtkObjectClass   *object_class  = GTK_OBJECT_CLASS (klass);
   GtkWidgetClass   *widget_class  = GTK_WIDGET_CLASS (klass);
   GimpPreviewClass *preview_class = GIMP_PREVIEW_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->destroy      = gimp_drawable_preview_destroy;
 

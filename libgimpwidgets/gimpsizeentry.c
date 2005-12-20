@@ -71,9 +71,6 @@ struct _GimpSizeEntryField
 };
 
 
-static void   gimp_size_entry_class_init      (GimpSizeEntryClass *class);
-static void   gimp_size_entry_init            (GimpSizeEntry      *gse);
-
 static void   gimp_size_entry_finalize        (GObject            *object);
 
 static void   gimp_size_entry_update_value    (GimpSizeEntryField *gsef,
@@ -90,47 +87,17 @@ static void   gimp_size_entry_unit_callback   (GtkWidget          *widget,
 					       GimpSizeEntry      *sizeentry);
 
 
+G_DEFINE_TYPE (GimpSizeEntry, gimp_size_entry, GTK_TYPE_TABLE);
+
+#define parent_class gimp_size_entry_parent_class
+
 static guint gimp_size_entry_signals[LAST_SIGNAL] = { 0 };
 
-static GtkTableClass *parent_class = NULL;
-
-
-GType
-gimp_size_entry_get_type (void)
-{
-  static GType gse_type = 0;
-
-  if (! gse_type)
-    {
-      static const GTypeInfo gse_info =
-      {
-        sizeof (GimpSizeEntryClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_size_entry_class_init,
-	NULL,		/* class_finalize */
-	NULL,		/* class_data     */
-	sizeof (GimpSizeEntry),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_size_entry_init,
-      };
-
-      gse_type = g_type_register_static (GTK_TYPE_TABLE,
-                                         "GimpSizeEntry",
-                                         &gse_info, 0);
-    }
-
-  return gse_type;
-}
 
 static void
 gimp_size_entry_class_init (GimpSizeEntryClass *klass)
 {
-  GObjectClass *object_class;
-
-  object_class = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   gimp_size_entry_signals[VALUE_CHANGED] =
     g_signal_new ("value-changed",
@@ -182,11 +149,7 @@ gimp_size_entry_init (GimpSizeEntry *gse)
 static void
 gimp_size_entry_finalize (GObject *object)
 {
-  GimpSizeEntry *gse;
-
-  g_return_if_fail (GIMP_IS_SIZE_ENTRY (object));
-
-  gse = GIMP_SIZE_ENTRY (object);
+  GimpSizeEntry *gse = GIMP_SIZE_ENTRY (object);
 
   if (gse->fields)
     {

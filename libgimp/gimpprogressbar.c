@@ -39,60 +39,29 @@
 #include "gimpprogressbar.h"
 
 
-static void    gimp_progress_bar_class_init (GimpProgressBarClass *klass);
-static void    gimp_progress_bar_init       (GimpProgressBar      *bar);
+static void     gimp_progress_bar_destroy    (GtkObject   *object);
 
-static void    gimp_progress_bar_destroy    (GtkObject            *object);
-
-static void    gimp_progress_bar_start      (const gchar          *message,
-                                             gboolean              cancelable,
-                                             gpointer              user_data);
-static void    gimp_progress_bar_end        (gpointer              user_data);
-static void    gimp_progress_bar_set_text   (const gchar          *message,
-                                             gpointer              user_data);
-static void    gimp_progress_bar_set_value  (gdouble               percentage,
-                                             gpointer              user_data);
-static void    gimp_progress_bar_pulse      (gpointer              user_data);
-static guint32 gimp_progress_bar_get_window (gpointer              user_data);
+static void     gimp_progress_bar_start      (const gchar *message,
+                                              gboolean     cancelable,
+                                              gpointer     user_data);
+static void     gimp_progress_bar_end        (gpointer     user_data);
+static void     gimp_progress_bar_set_text   (const gchar *message,
+                                              gpointer     user_data);
+static void     gimp_progress_bar_set_value  (gdouble      percentage,
+                                              gpointer     user_data);
+static void     gimp_progress_bar_pulse      (gpointer     user_data);
+static guint32  gimp_progress_bar_get_window (gpointer     user_data);
 
 
-static GtkProgressBarClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpProgressBar, gimp_progress_bar, GTK_TYPE_PROGRESS_BAR);
 
+#define parent_class gimp_progress_bar_parent_class
 
-GType
-gimp_progress_bar_get_type (void)
-{
-  static GType bar_type = 0;
-
-  if (! bar_type)
-    {
-      static const GTypeInfo bar_info =
-      {
-        sizeof (GimpProgressBarClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_progress_bar_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpProgressBar),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_progress_bar_init,
-      };
-
-      bar_type = g_type_register_static (GTK_TYPE_PROGRESS_BAR,
-                                         "GimpProgressBar",
-                                         &bar_info, 0);
-    }
-
-  return bar_type;
-}
 
 static void
 gimp_progress_bar_class_init (GimpProgressBarClass *klass)
 {
   GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->destroy = gimp_progress_bar_destroy;
 }

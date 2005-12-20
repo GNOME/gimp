@@ -53,9 +53,6 @@ typedef struct
 #define GIMP_INT_COMBO_BOX_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), GIMP_TYPE_INT_COMBO_BOX, GimpIntComboBoxPrivate))
 
 
-static void  gimp_int_combo_box_class_init   (GimpIntComboBoxClass *klass);
-static void  gimp_int_combo_box_init         (GimpIntComboBox      *combo_box);
-
 static void  gimp_int_combo_box_finalize     (GObject         *object);
 static void  gimp_int_combo_box_set_property (GObject         *object,
                                               guint            property_id,
@@ -73,43 +70,15 @@ static void  gimp_int_combo_box_data_func    (GtkCellLayout   *layout,
                                               gpointer         data);
 
 
-static GtkComboBoxClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpIntComboBox, gimp_int_combo_box, GTK_TYPE_COMBO_BOX);
 
+#define parent_class gimp_int_combo_box_parent_class
 
-GType
-gimp_int_combo_box_get_type (void)
-{
-  static GType box_type = 0;
-
-  if (! box_type)
-    {
-      static const GTypeInfo box_info =
-      {
-        sizeof (GimpIntComboBoxClass),
-        NULL,           /* base_init      */
-        NULL,           /* base_finalize  */
-        (GClassInitFunc) gimp_int_combo_box_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpIntComboBox),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_int_combo_box_init
-      };
-
-      box_type = g_type_register_static (GTK_TYPE_COMBO_BOX,
-                                         "GimpIntComboBox",
-                                         &box_info, 0);
-    }
-
-  return box_type;
-}
 
 static void
 gimp_int_combo_box_class_init (GimpIntComboBoxClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->set_property = gimp_int_combo_box_set_property;
   object_class->get_property = gimp_int_combo_box_get_property;
@@ -132,6 +101,34 @@ gimp_int_combo_box_class_init (GimpIntComboBoxClass *klass)
 						      G_PARAM_READWRITE));
 
   g_type_class_add_private (object_class, sizeof (GimpIntComboBoxPrivate));
+}
+
+static void
+gimp_int_combo_box_init (GimpIntComboBox *combo_box)
+{
+  GimpIntComboBoxPrivate *priv = GIMP_INT_COMBO_BOX_GET_PRIVATE (combo_box);
+  GtkListStore           *store;
+  GtkCellRenderer        *cell;
+
+  store = gimp_int_store_new ();
+  gtk_combo_box_set_model (GTK_COMBO_BOX (combo_box), GTK_TREE_MODEL (store));
+  g_object_unref (store);
+
+  priv = GIMP_INT_COMBO_BOX_GET_PRIVATE (combo_box);
+
+  priv->pixbuf_renderer = cell = gtk_cell_renderer_pixbuf_new ();
+  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo_box), cell, FALSE);
+  gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (combo_box), cell,
+                                  "stock_id", GIMP_INT_STORE_STOCK_ID,
+                                  "pixbuf",   GIMP_INT_STORE_PIXBUF,
+                                  NULL);
+
+  priv->text_renderer = cell = gtk_cell_renderer_text_new ();
+
+  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo_box), cell, TRUE);
+  gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (combo_box), cell,
+                                  "text", GIMP_INT_STORE_LABEL,
+                                  NULL);
 }
 
 static void
@@ -188,34 +185,6 @@ gimp_int_combo_box_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
-}
-
-static void
-gimp_int_combo_box_init (GimpIntComboBox *combo_box)
-{
-  GimpIntComboBoxPrivate *priv = GIMP_INT_COMBO_BOX_GET_PRIVATE (combo_box);
-  GtkListStore           *store;
-  GtkCellRenderer        *cell;
-
-  store = gimp_int_store_new ();
-  gtk_combo_box_set_model (GTK_COMBO_BOX (combo_box), GTK_TREE_MODEL (store));
-  g_object_unref (store);
-
-  priv = GIMP_INT_COMBO_BOX_GET_PRIVATE (combo_box);
-
-  priv->pixbuf_renderer = cell = gtk_cell_renderer_pixbuf_new ();
-  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo_box), cell, FALSE);
-  gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (combo_box), cell,
-                                  "stock_id", GIMP_INT_STORE_STOCK_ID,
-                                  "pixbuf",   GIMP_INT_STORE_PIXBUF,
-                                  NULL);
-
-  priv->text_renderer = cell = gtk_cell_renderer_text_new ();
-
-  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo_box), cell, TRUE);
-  gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (combo_box), cell,
-                                  "text", GIMP_INT_STORE_LABEL,
-                                  NULL);
 }
 
 

@@ -31,53 +31,28 @@
 #include "gimpenumstore.h"
 
 
-static void   gimp_enum_store_class_init   (GimpEnumStoreClass *klass);
+static void   gimp_enum_store_finalize     (GObject      *object);
 
-static void   gimp_enum_store_finalize     (GObject       *object);
-
-static void   gimp_enum_store_add_value    (GtkListStore  *store,
-                                            GEnumValue    *value);
+static void   gimp_enum_store_add_value    (GtkListStore *store,
+                                            GEnumValue   *value);
 
 
-static GimpEnumStoreClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpEnumStore, gimp_enum_store, GIMP_TYPE_INT_STORE);
 
+#define parent_class gimp_enum_store_parent_class
 
-GType
-gimp_enum_store_get_type (void)
-{
-  static GType enum_store_type = 0;
-
-  if (!enum_store_type)
-    {
-      static const GTypeInfo enum_store_info =
-      {
-        sizeof (GimpEnumStoreClass),
-        NULL,           /* base_init      */
-        NULL,           /* base_finalize  */
-        (GClassInitFunc) gimp_enum_store_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpEnumStore),
-        0,              /* n_preallocs    */
-        NULL            /* instance_init  */
-      };
-
-      enum_store_type = g_type_register_static (GIMP_TYPE_INT_STORE,
-                                                "GimpEnumStore",
-                                                &enum_store_info, 0);
-    }
-
-  return enum_store_type;
-}
 
 static void
 gimp_enum_store_class_init (GimpEnumStoreClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  parent_class = g_type_class_peek_parent (klass);
-
   object_class->finalize = gimp_enum_store_finalize;
+}
+
+static void
+gimp_enum_store_init (GimpEnumStore *store)
+{
 }
 
 static void
