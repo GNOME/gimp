@@ -664,11 +664,10 @@ gimp_scrolled_preview_nav_popup_event (GtkWidget           *widget,
 
     case GDK_MOTION_NOTIFY:
       {
-        GdkEventMotion *motion_event = (GdkEventMotion *) event;
-        GtkAdjustment  *hadj;
-        GtkAdjustment  *vadj;
-        gint            cx, cy;
-        gdouble         x, y;
+        GtkAdjustment *hadj;
+        GtkAdjustment *vadj;
+        gint           cx, cy;
+        gdouble        x, y;
 
         hadj = gtk_range_get_adjustment (GTK_RANGE (preview->hscr));
         vadj = gtk_range_get_adjustment (GTK_RANGE (preview->vscr));
