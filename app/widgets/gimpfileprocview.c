@@ -43,8 +43,6 @@ enum
   COLUMN_PROC,
   COLUMN_LABEL,
   COLUMN_EXTENSIONS,
-  COLUMN_STOCK_ID,
-  COLUMN_PIXBUF,
   COLUMN_HELP_ID,
   NUM_COLUMNS
 };
@@ -124,12 +122,10 @@ gimp_file_proc_view_new (Gimp        *gimp,
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   store = gtk_list_store_new (NUM_COLUMNS,
-                              G_TYPE_POINTER,    /* COLUMN_PROC       */
-                              G_TYPE_STRING,     /* COLUMN_LABEL      */
-                              G_TYPE_STRING,     /* COLUMN_EXTENSIONS */
-                              G_TYPE_STRING,     /* COLUMN_STOCK_ID   */
-                              GDK_TYPE_PIXBUF,   /* COLUMN_PIXBUF     */
-                              G_TYPE_STRING);    /* COLUMN_HELP_ID    */
+                              G_TYPE_POINTER,    /*  COLUMN_PROC        */
+                              G_TYPE_STRING,     /*  COLUMN_LABEL       */
+                              G_TYPE_STRING,     /*  COLUMN_EXTENSIONS  */
+                              G_TYPE_STRING);    /*  COLUMN_HELP_ID     */
 
   view = g_object_new (GIMP_TYPE_FILE_PROC_VIEW,
                        "model",      store,
@@ -148,16 +144,12 @@ gimp_file_proc_view_new (Gimp        *gimp,
           const gchar *help_domain;
           gchar       *label;
           gchar       *help_id;
-          const gchar *stock_id;
-          GdkPixbuf   *pixbuf;
           GSList      *list2;
 
           locale_domain = plug_ins_locale_domain (gimp, proc->prog, NULL);
           help_domain   = plug_ins_help_domain   (gimp, proc->prog, NULL);
           label         = plug_in_proc_def_get_label    (proc, locale_domain);
           help_id       = plug_in_proc_def_get_help_id  (proc, help_domain);
-          stock_id      = plug_in_proc_def_get_stock_id (proc);
-          pixbuf        = plug_in_proc_def_get_pixbuf   (proc);
 
           if (label)
             {
@@ -166,8 +158,6 @@ gimp_file_proc_view_new (Gimp        *gimp,
                                   COLUMN_PROC,       proc,
                                   COLUMN_LABEL,      label,
                                   COLUMN_EXTENSIONS, proc->extensions,
-                                  COLUMN_STOCK_ID,   stock_id,
-                                  COLUMN_PIXBUF,     pixbuf,
                                   COLUMN_HELP_ID,    help_id,
                                   -1);
 
@@ -175,9 +165,6 @@ gimp_file_proc_view_new (Gimp        *gimp,
             }
 
           g_free (help_id);
-
-          if (pixbuf)
-            g_object_unref (pixbuf);
 
           for (list2 = proc->extensions_list;
                list2;
@@ -209,13 +196,6 @@ gimp_file_proc_view_new (Gimp        *gimp,
   column = gtk_tree_view_column_new ();
   gtk_tree_view_column_set_title (column, _("File Type"));
   gtk_tree_view_column_set_expand (column, TRUE);
-
-  cell = gtk_cell_renderer_pixbuf_new ();
-  gtk_tree_view_column_pack_start (column, cell, FALSE);
-  gtk_tree_view_column_set_attributes (column, cell,
-                                       "stock-id", COLUMN_STOCK_ID,
-                                       "pixbuf",   COLUMN_PIXBUF,
-                                       NULL);
 
   cell = gtk_cell_renderer_text_new ();
   gtk_tree_view_column_pack_start (column, cell, TRUE);

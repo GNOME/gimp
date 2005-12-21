@@ -1,3 +1,9 @@
+2005-12-21  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpfileprocview.c: removed icons from
+	GimpFileProcView.  It turned out that the Wilber icon is commonly
+	mistaken as an indicator for the selected file-type.
+
 2005-12-20  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/*.c
