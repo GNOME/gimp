@@ -246,7 +246,7 @@ blinds_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_zoom_preview_new (drawable);
+  preview = gimp_aspect_preview_new (drawable, NULL);
   gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
   gtk_widget_show (preview);
   g_signal_connect_swapped (preview, "invalidated",
@@ -453,9 +453,10 @@ dialog_update_preview (GimpDrawable *drawable,
   guchar   bg[4];
   gint     width, height, bpp;
 
-  cache = gimp_zoom_preview_get_source (GIMP_ZOOM_PREVIEW (preview),
-                                        &width, &height, &bpp);
-
+  gimp_preview_get_size (preview, &width, &height);
+  bpp = gimp_drawable_bpp (drawable->drawable_id);
+  cache = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
+                                            &width, &height, &bpp);
   p = cache;
 
   gimp_context_get_background (&background);

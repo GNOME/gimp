@@ -251,11 +251,12 @@ drawlens (GimpDrawable *drawable,
 
   if (preview)
     {
-      src = gimp_zoom_preview_get_source (GIMP_ZOOM_PREVIEW (preview),
-                                          &width, &height, &bytes);
       gimp_preview_get_position (preview, &x1, &y1);
+      gimp_preview_get_size (preview, &width, &height);
       x2 = x1 + width;
       y2 = y1 + height;
+      src = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
+                                              &width, &height, &bytes);
       regionwidth  = width;
       regionheight = height;
     }
@@ -411,7 +412,7 @@ lens_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_zoom_preview_new (drawable);
+  preview = gimp_aspect_preview_new (drawable, NULL);
   gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
   gtk_widget_show (preview);
   g_signal_connect_swapped (preview, "invalidated",

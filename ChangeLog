@@ -1,3 +1,9 @@
+2005-12-23  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/common/apply_lens.c
+	* plug-ins/common/blinds.c: revert to aspect preview until these
+	plug-ins fully support zoomed preview.
+
 2005-12-23  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpchannel.c
