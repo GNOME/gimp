@@ -244,9 +244,7 @@ gimp_text_layer_duplicate (GimpItem *item,
                            GType     new_type,
                            gboolean  add_alpha)
 {
-  GimpTextLayer *layer;
-  GimpTextLayer *new_layer;
-  GimpItem      *new_item;
+  GimpItem *new_item;
 
   g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_DRAWABLE), NULL);
 
@@ -254,26 +252,26 @@ gimp_text_layer_duplicate (GimpItem *item,
                                                         new_type,
                                                         add_alpha);
 
-  if (! GIMP_IS_TEXT_LAYER (new_item))
-    return new_item;
-
-  layer     = GIMP_TEXT_LAYER (item);
-  new_layer = GIMP_TEXT_LAYER (new_item);
-
-  gimp_config_sync (G_OBJECT (layer), G_OBJECT (new_layer), 0);
-
-  if (layer->text)
+  if (GIMP_IS_TEXT_LAYER (new_item))
     {
-      GimpText *text = gimp_config_duplicate (GIMP_CONFIG (layer->text));
+      GimpTextLayer *layer     = GIMP_TEXT_LAYER (item);
+      GimpTextLayer *new_layer = GIMP_TEXT_LAYER (new_item);
 
-      gimp_text_layer_set_text (new_layer, text);
+      gimp_config_sync (G_OBJECT (layer), G_OBJECT (new_layer), 0);
 
-      g_object_unref (text);
+      if (layer->text)
+        {
+          GimpText *text = gimp_config_duplicate (GIMP_CONFIG (layer->text));
+
+          gimp_text_layer_set_text (new_layer, text);
+
+          g_object_unref (text);
+        }
+
+      /*  this is just the parasite name, not a pointer to the parasite  */
+      if (layer->text_parasite)
+        new_layer->text_parasite = layer->text_parasite;
     }
-
-  /*  this is just the parasite name, not a pointer to the parasite  */
-  if (layer->text_parasite)
-    new_layer->text_parasite = layer->text_parasite;
 
   return new_item;
 }

@@ -302,53 +302,51 @@ gimp_drawable_duplicate (GimpItem *item,
                          GType     new_type,
                          gboolean  add_alpha)
 {
-  GimpDrawable  *drawable;
-  GimpItem      *new_item;
-  GimpDrawable  *new_drawable;
-  GimpImageType  new_image_type;
-  PixelRegion    srcPR;
-  PixelRegion    destPR;
+  GimpItem *new_item;
 
   g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_DRAWABLE), NULL);
 
   new_item = GIMP_ITEM_CLASS (parent_class)->duplicate (item, new_type,
                                                         add_alpha);
 
-  if (! GIMP_IS_DRAWABLE (new_item))
-    return new_item;
+  if (GIMP_IS_DRAWABLE (new_item))
+    {
+      GimpDrawable  *drawable     = GIMP_DRAWABLE (item);
+      GimpDrawable  *new_drawable = GIMP_DRAWABLE (new_item);
+      GimpImageType  new_image_type;
+      PixelRegion    srcPR;
+      PixelRegion    destPR;
 
-  drawable     = GIMP_DRAWABLE (item);
-  new_drawable = GIMP_DRAWABLE (new_item);
+      if (add_alpha)
+        new_image_type = gimp_drawable_type_with_alpha (drawable);
+      else
+        new_image_type = gimp_drawable_type (drawable);
 
-  if (add_alpha)
-    new_image_type = gimp_drawable_type_with_alpha (drawable);
-  else
-    new_image_type = gimp_drawable_type (drawable);
+      gimp_drawable_configure (new_drawable,
+                               gimp_item_get_image (item),
+                               item->offset_x,
+                               item->offset_y,
+                               item->width,
+                               item->height,
+                               new_image_type,
+                               GIMP_OBJECT (new_drawable)->name);
 
-  gimp_drawable_configure (new_drawable,
-                           gimp_item_get_image (GIMP_ITEM (drawable)),
-                           item->offset_x,
-                           item->offset_y,
-                           item->width,
-                           item->height,
-                           new_image_type,
-                           GIMP_OBJECT (new_drawable)->name);
+      pixel_region_init (&srcPR, drawable->tiles,
+                         0, 0,
+                         item->width,
+                         item->height,
+                         FALSE);
+      pixel_region_init (&destPR, new_drawable->tiles,
+                         0, 0,
+                         new_item->width,
+                         new_item->height,
+                         TRUE);
 
-  pixel_region_init (&srcPR, drawable->tiles,
-                     0, 0,
-                     item->width,
-                     item->height,
-                     FALSE);
-  pixel_region_init (&destPR, new_drawable->tiles,
-                     0, 0,
-                     new_item->width,
-                     new_item->height,
-                     TRUE);
-
-  if (new_image_type == drawable->type)
-    copy_region (&srcPR, &destPR);
-  else
-    add_alpha_region (&srcPR, &destPR);
+      if (new_image_type == drawable->type)
+        copy_region (&srcPR, &destPR);
+      else
+        add_alpha_region (&srcPR, &destPR);
+    }
 
   return new_item;
 }

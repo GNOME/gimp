@@ -274,22 +274,20 @@ gimp_vectors_duplicate (GimpItem *item,
                         GType     new_type,
                         gboolean  add_alpha)
 {
-  GimpVectors *vectors;
-  GimpItem    *new_item;
-  GimpVectors *new_vectors;
+  GimpItem *new_item;
 
   g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_VECTORS), NULL);
 
   new_item = GIMP_ITEM_CLASS (parent_class)->duplicate (item, new_type,
                                                         add_alpha);
 
-  if (! GIMP_IS_VECTORS (new_item))
-    return new_item;
+  if (GIMP_IS_VECTORS (new_item))
+    {
+      GimpVectors *vectors     = GIMP_VECTORS (item);
+      GimpVectors *new_vectors = GIMP_VECTORS (new_item);
 
-  vectors     = GIMP_VECTORS (item);
-  new_vectors = GIMP_VECTORS (new_item);
-
-  gimp_vectors_copy_strokes (vectors, new_vectors);
+      gimp_vectors_copy_strokes (vectors, new_vectors);
+    }
 
   return new_item;
 }

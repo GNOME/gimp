@@ -1,3 +1,13 @@
+2005-12-23  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpchannel.c
+	* app/core/gimpdrawable.c
+	* app/core/gimplayer.c
+	* app/core/gimplayermask.c
+	* app/text/gimptextlayer.c
+	* app/vectors/gimpvectors.c: moved variables to local scopes in
+	implementations of GimpItem::duplicate()
+
 2005-12-23  Simon Budig  <simon@gimp.org>
 
 	* app/vectors/gimpbezierstroke.c

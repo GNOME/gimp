@@ -514,32 +514,31 @@ gimp_layer_duplicate (GimpItem *item,
                       GType     new_type,
                       gboolean  add_alpha)
 {
-  GimpLayer *layer;
-  GimpItem  *new_item;
-  GimpLayer *new_layer;
+  GimpItem *new_item;
 
   g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_DRAWABLE), NULL);
 
   new_item = GIMP_ITEM_CLASS (parent_class)->duplicate (item, new_type,
                                                         add_alpha);
 
-  if (! GIMP_IS_LAYER (new_item))
-    return new_item;
-
-  layer     = GIMP_LAYER (item);
-  new_layer = GIMP_LAYER (new_item);
-
-  new_layer->mode       = layer->mode;
-  new_layer->opacity    = layer->opacity;
-  new_layer->lock_alpha = layer->lock_alpha;
-
-  /*  duplicate the layer mask if necessary  */
-  if (layer->mask)
+  if (GIMP_IS_LAYER (new_item))
     {
-      GimpItem *dup = gimp_item_duplicate (GIMP_ITEM (layer->mask),
-                                           G_TYPE_FROM_INSTANCE (layer->mask),
-                                           FALSE);
-      gimp_layer_add_mask (new_layer, GIMP_LAYER_MASK (dup), FALSE);
+      GimpLayer *layer     = GIMP_LAYER (item);;
+      GimpLayer *new_layer = GIMP_LAYER (new_item);
+
+      new_layer->mode       = layer->mode;
+      new_layer->opacity    = layer->opacity;
+      new_layer->lock_alpha = layer->lock_alpha;
+
+      /*  duplicate the layer mask if necessary  */
+      if (layer->mask)
+        {
+          GimpItem *new_mask =
+            gimp_item_duplicate (GIMP_ITEM (layer->mask),
+                                 G_TYPE_FROM_INSTANCE (layer->mask),
+                                 FALSE);
+          gimp_layer_add_mask (new_layer, GIMP_LAYER_MASK (new_mask), FALSE);
+        }
     }
 
   return new_item;

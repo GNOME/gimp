@@ -377,9 +377,7 @@ gimp_channel_duplicate (GimpItem *item,
                         GType     new_type,
                         gboolean  add_alpha)
 {
-  GimpChannel *channel;
-  GimpItem    *new_item;
-  GimpChannel *new_channel;
+  GimpItem *new_item;
 
   g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_DRAWABLE), NULL);
 
@@ -389,22 +387,22 @@ gimp_channel_duplicate (GimpItem *item,
   new_item = GIMP_ITEM_CLASS (parent_class)->duplicate (item, new_type,
                                                         add_alpha);
 
-  if (! GIMP_IS_CHANNEL (new_item))
-    return new_item;
+  if (GIMP_IS_CHANNEL (new_item))
+    {
+      GimpChannel *channel     = GIMP_CHANNEL (item);
+      GimpChannel *new_channel = GIMP_CHANNEL (new_item);
 
-  channel     = GIMP_CHANNEL (item);
-  new_channel = GIMP_CHANNEL (new_item);
+      new_channel->color        = channel->color;
+      new_channel->show_masked  = channel->show_masked;
 
-  new_channel->color        = channel->color;
-  new_channel->show_masked  = channel->show_masked;
-
-  /*  selection mask variables  */
-  new_channel->bounds_known = channel->bounds_known;
-  new_channel->empty        = channel->empty;
-  new_channel->x1           = channel->x1;
-  new_channel->y1           = channel->y1;
-  new_channel->x2           = channel->x2;
-  new_channel->y2           = channel->y2;
+      /*  selection mask variables  */
+      new_channel->bounds_known = channel->bounds_known;
+      new_channel->empty        = channel->empty;
+      new_channel->x1           = channel->x1;
+      new_channel->y1           = channel->y1;
+      new_channel->x2           = channel->x2;
+      new_channel->y2           = channel->y2;
+    }
 
   return new_item;
 }

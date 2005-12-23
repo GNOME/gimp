@@ -128,24 +128,22 @@ gimp_layer_mask_duplicate (GimpItem *item,
                            GType     new_type,
                            gboolean  add_alpha)
 {
-  GimpLayerMask *layer_mask;
-  GimpItem      *new_item;
-  GimpLayerMask *new_layer_mask;
+  GimpItem *new_item;
 
   g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_DRAWABLE), NULL);
 
   new_item = GIMP_ITEM_CLASS (parent_class)->duplicate (item, new_type,
                                                         add_alpha);
 
-  if (! GIMP_IS_LAYER_MASK (new_item))
-    return new_item;
+  if (GIMP_IS_LAYER_MASK (new_item))
+    {
+      GimpLayerMask *layer_mask     = GIMP_LAYER_MASK (item);
+      GimpLayerMask *new_layer_mask = GIMP_LAYER_MASK (new_item);
 
-  layer_mask     = GIMP_LAYER_MASK (item);
-  new_layer_mask = GIMP_LAYER_MASK (new_item);
-
-  new_layer_mask->apply_mask = layer_mask->apply_mask;
-  new_layer_mask->edit_mask  = layer_mask->edit_mask;
-  new_layer_mask->show_mask  = layer_mask->show_mask;
+      new_layer_mask->apply_mask = layer_mask->apply_mask;
+      new_layer_mask->edit_mask  = layer_mask->edit_mask;
+      new_layer_mask->show_mask  = layer_mask->show_mask;
+    }
 
   return new_item;
 }
