@@ -250,9 +250,6 @@ gimp_bezier_stroke_anchor_delete (GimpStroke        *stroke,
   /* Anchors always are surrounded by two handles that have to
    * be deleted too */
 
-  g_return_if_fail (GIMP_IS_BEZIER_STROKE (stroke));
-  g_return_if_fail (anchor && anchor->type == GIMP_ANCHOR_ANCHOR);
-
   list2 = g_list_find (stroke->anchors, anchor);
   list = g_list_previous(list2);
 
@@ -272,10 +269,6 @@ gimp_bezier_stroke_open (GimpStroke *stroke,
 {
   GList *list, *list2;
   GimpStroke *new_stroke = NULL;
-
-  g_return_val_if_fail (GIMP_IS_BEZIER_STROKE (stroke), NULL);
-  g_return_val_if_fail (end_anchor &&
-                        end_anchor->type == GIMP_ANCHOR_ANCHOR, NULL);
 
   list = g_list_find (stroke->anchors, end_anchor);
 
@@ -312,8 +305,6 @@ gimp_bezier_stroke_anchor_is_insertable (GimpStroke *stroke,
                                          GimpAnchor *predec,
                                          gdouble     position)
 {
-  g_return_val_if_fail (GIMP_IS_BEZIER_STROKE (stroke), FALSE);
-
   return (g_list_find (stroke->anchors, predec) != NULL);
 }
 
@@ -327,9 +318,6 @@ gimp_bezier_stroke_anchor_insert (GimpStroke *stroke,
   GimpCoords subdivided[8];
   GimpCoords beziercoords[4];
   gint i;
-
-  g_return_val_if_fail (GIMP_IS_BEZIER_STROKE (stroke), NULL);
-  g_return_val_if_fail (predec->type == GIMP_ANCHOR_ANCHOR, NULL);
 
   segment_start = g_list_find (stroke->anchors, predec);
 
@@ -421,8 +409,6 @@ gimp_bezier_stroke_point_is_movable (GimpStroke *stroke,
                                      GimpAnchor *predec,
                                      gdouble     position)
 {
-  g_return_val_if_fail (GIMP_IS_BEZIER_STROKE (stroke), FALSE);
-
   return (g_list_find (stroke->anchors, predec) != NULL);
 }
 
@@ -438,8 +424,6 @@ gimp_bezier_stroke_point_move_relative (GimpStroke            *stroke,
   GList      *segment_start, *list;
   gint        i;
   gdouble feel_good;
-
-  g_return_if_fail (GIMP_IS_BEZIER_STROKE (stroke));
 
   segment_start = g_list_find (stroke->anchors, predec);
 
@@ -495,8 +479,6 @@ gimp_bezier_stroke_point_move_absolute (GimpStroke            *stroke,
   GList      *segment_start, *list;
   gint        i;
 
-  g_return_if_fail (GIMP_IS_BEZIER_STROKE (stroke));
-
   segment_start = g_list_find (stroke->anchors, predec);
 
   g_return_if_fail (segment_start != NULL);
@@ -530,8 +512,6 @@ gimp_bezier_stroke_close (GimpStroke *stroke)
 {
   GList *start, *end;
   GimpAnchor *anchor;
-
-  g_return_if_fail (stroke->anchors != NULL);
 
   start = g_list_first (stroke->anchors);
   end = g_list_last (stroke->anchors);
@@ -588,8 +568,6 @@ gimp_bezier_stroke_nearest_point_get (const GimpStroke     *stroke,
   GimpAnchor *segment_start, *segment_end = NULL;
   GimpAnchor *anchor;
   gint        count;
-
-  g_return_val_if_fail (GIMP_IS_BEZIER_STROKE (stroke), -1.0);
 
   if (!stroke->anchors)
     return -1.0;
@@ -816,8 +794,6 @@ gimp_bezier_stroke_nearest_tangent_get (const GimpStroke  *stroke,
   GimpAnchor *anchor;
   gint        count;
 
-  g_return_val_if_fail (GIMP_IS_BEZIER_STROKE (stroke), -1.0);
-
   if (!stroke->anchors)
     return -1.0;
 
@@ -999,7 +975,6 @@ gimp_bezier_stroke_is_extendable (GimpStroke *stroke,
   GList            *listneighbor;
   gint              loose_end;
 
-  g_return_val_if_fail (GIMP_IS_BEZIER_STROKE (stroke), FALSE);
   bezier_stroke = GIMP_BEZIER_STROKE (stroke);
 
   if (stroke->closed)
@@ -1090,10 +1065,7 @@ gimp_bezier_stroke_extend (GimpStroke           *stroke,
   GList            *listneighbor;
   gint              loose_end, control_count;
 
-  g_return_val_if_fail (GIMP_IS_BEZIER_STROKE (stroke), NULL);
   bezier_stroke = GIMP_BEZIER_STROKE (stroke);
-
-  g_return_val_if_fail (!stroke->closed, NULL);
 
   if (stroke->anchors == NULL)
     {
@@ -1300,9 +1272,6 @@ gimp_bezier_stroke_connect_stroke (GimpStroke *stroke,
 {
   GList *list1, *list2;
 
-  g_return_val_if_fail (stroke->closed == FALSE &&
-                        extension->closed == FALSE, FALSE);
-
   list1 = g_list_find (stroke->anchors, anchor);
   list1 = gimp_bezier_stroke_get_anchor_listitem (list1);
   list2 = g_list_find (extension->anchors, neighbor);
@@ -1480,8 +1449,6 @@ gimp_bezier_stroke_interpolate (const GimpStroke  *stroke,
   GimpCoords  segmentcoords[4];
   gint        count;
   gboolean    need_endpoint = FALSE;
-
-  g_return_val_if_fail (GIMP_IS_BEZIER_STROKE (stroke), NULL);
 
   if (!stroke->anchors)
     {

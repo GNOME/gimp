@@ -457,8 +457,6 @@ gimp_stroke_real_anchor_get (const GimpStroke *stroke,
   GList      *list;
   GimpAnchor *anchor = NULL;
 
-  g_return_val_if_fail (GIMP_IS_STROKE (stroke), NULL);
-
   anchors = gimp_stroke_get_draw_controls (stroke);
 
   for (list = anchors; list; list = g_list_next (list))
@@ -509,8 +507,6 @@ gimp_stroke_real_anchor_get_next (const GimpStroke *stroke,
                                   const GimpAnchor *prev)
 {
   GList *list;
-
-  g_return_val_if_fail (GIMP_IS_STROKE (stroke), NULL);
 
   if (prev)
     {
@@ -693,6 +689,7 @@ void
 gimp_stroke_close (GimpStroke *stroke)
 {
   g_return_if_fail (GIMP_IS_STROKE (stroke));
+  g_return_if_fail (stroke->anchors != NULL);
 
   GIMP_STROKE_GET_CLASS (stroke)->close (stroke);
 }
@@ -729,6 +726,7 @@ gimp_stroke_anchor_delete (GimpStroke *stroke,
                            GimpAnchor *anchor)
 {
   g_return_if_fail (GIMP_IS_STROKE (stroke));
+  g_return_if_fail (anchor && anchor->type == GIMP_ANCHOR_ANCHOR);
 
   GIMP_STROKE_GET_CLASS (stroke)->anchor_delete (stroke, anchor);
 }
@@ -745,6 +743,8 @@ gimp_stroke_open (GimpStroke *stroke,
                   GimpAnchor *end_anchor)
 {
   g_return_val_if_fail (GIMP_IS_STROKE (stroke), NULL);
+  g_return_val_if_fail (end_anchor &&
+                        end_anchor->type == GIMP_ANCHOR_ANCHOR, NULL);
 
   return GIMP_STROKE_GET_CLASS (stroke)->open (stroke, end_anchor);
 }
@@ -785,6 +785,7 @@ gimp_stroke_anchor_insert (GimpStroke *stroke,
                            gdouble     position)
 {
   g_return_val_if_fail (GIMP_IS_STROKE (stroke), NULL);
+  g_return_val_if_fail (predec->type == GIMP_ANCHOR_ANCHOR, NULL);
 
   return GIMP_STROKE_GET_CLASS (stroke)->anchor_insert (stroke,
                                                         predec, position);
@@ -825,6 +826,7 @@ gimp_stroke_extend (GimpStroke           *stroke,
                     GimpVectorExtendMode  extend_mode)
 {
   g_return_val_if_fail (GIMP_IS_STROKE (stroke), NULL);
+  g_return_val_if_fail (!stroke->closed, NULL);
 
   return GIMP_STROKE_GET_CLASS (stroke)->extend (stroke, coords,
                                                  neighbor, extend_mode);
@@ -848,6 +850,8 @@ gimp_stroke_connect_stroke (GimpStroke *stroke,
 {
   g_return_val_if_fail (GIMP_IS_STROKE (stroke), FALSE);
   g_return_val_if_fail (GIMP_IS_STROKE (extension), FALSE);
+  g_return_val_if_fail (stroke->closed == FALSE &&
+                        extension->closed == FALSE, FALSE);
 
   return GIMP_STROKE_GET_CLASS (stroke)->connect_stroke (stroke, anchor,
                                                          extension, neighbor);
@@ -895,8 +899,6 @@ gimp_stroke_real_get_length (const GimpStroke *stroke,
   gint        i;
   gdouble     length;
   GimpCoords  difference;
-
-  g_return_val_if_fail (GIMP_IS_STROKE (stroke), -1);
 
   if (!stroke->anchors)
     return -1;
@@ -1278,8 +1280,6 @@ gimp_stroke_real_get_point_at_dist (const GimpStroke *stroke,
   gdouble     segment_length;
   gboolean    ret = FALSE;
   GimpCoords  difference;
-
-  g_return_val_if_fail (GIMP_IS_STROKE (stroke), FALSE);
 
   points = gimp_stroke_interpolate (stroke, precision, NULL);
   if (points == NULL)

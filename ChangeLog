@@ -1,3 +1,9 @@
+2005-12-23  Simon Budig  <simon@gimp.org>
+
+	* app/vectors/gimpbezierstroke.c
+	* app/vectors/gimpstroke.c: shuffled some g_return*_if_fail
+	around as suggested by mitch.
+
 2005-12-21  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpfileprocview.c: removed icons from
