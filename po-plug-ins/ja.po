@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-12 14:01+0900\n"
-"PO-Revision-Date: 2005-11-04 23:00+0900\n"
+"POT-Creation-Date: 2005-12-25 20:06+0900\n"
+"PO-Revision-Date: 2005-12-13 23:00+0900\n"
 "Last-Translator: OKANO Takayoshi <kano@na.rim.or.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -365,7 +365,7 @@ msgstr "フラクタル(_F)"
 #: ../plug-ins/Lighting/lighting_ui.c:1160 ../plug-ins/bmp/bmpwrite.c:200
 #: ../plug-ins/common/CEL.c:568 ../plug-ins/common/CML_explorer.c:2013
 #: ../plug-ins/common/channel_mixer.c:1071 ../plug-ins/common/compressor.c:410
-#: ../plug-ins/common/compressor.c:541 ../plug-ins/common/curve_bend.c:860
+#: ../plug-ins/common/compressor.c:541 ../plug-ins/common/curve_bend.c:839
 #: ../plug-ins/common/dicom.c:650 ../plug-ins/common/gbr.c:616
 #: ../plug-ins/common/gif.c:1000 ../plug-ins/common/gih.c:1258
 #: ../plug-ins/common/gtm.c:225 ../plug-ins/common/mng.c:561
@@ -406,7 +406,7 @@ msgstr "フラクタルパラメータを保存"
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:917
 #: ../plug-ins/Lighting/lighting_ui.c:1304 ../plug-ins/bmp/bmpread.c:152
 #: ../plug-ins/common/CEL.c:299 ../plug-ins/common/CML_explorer.c:2233
-#: ../plug-ins/common/channel_mixer.c:988 ../plug-ins/common/curve_bend.c:912
+#: ../plug-ins/common/channel_mixer.c:988 ../plug-ins/common/curve_bend.c:891
 #: ../plug-ins/common/dicom.c:295 ../plug-ins/common/gbr.c:348
 #: ../plug-ins/common/gifload.c:297 ../plug-ins/common/gih.c:649
 #: ../plug-ins/common/mng.c:1124 ../plug-ins/common/pat.c:321
@@ -417,7 +417,7 @@ msgstr "フラクタルパラメータを保存"
 #: ../plug-ins/common/psp.c:1463 ../plug-ins/common/raw.c:242
 #: ../plug-ins/common/raw.c:647 ../plug-ins/common/spheredesigner.c:2009
 #: ../plug-ins/common/sunras.c:379 ../plug-ins/common/svg.c:313
-#: ../plug-ins/common/svg.c:708 ../plug-ins/common/tga.c:414
+#: ../plug-ins/common/svg.c:715 ../plug-ins/common/tga.c:414
 #: ../plug-ins/common/tiff.c:530 ../plug-ins/common/xbm.c:720
 #: ../plug-ins/common/xwd.c:420 ../plug-ins/faxg3/faxg3.c:219
 #: ../plug-ins/fits/fits.c:342 ../plug-ins/flame/flame.c:411
@@ -508,7 +508,7 @@ msgstr "ライト効果(_L)..."
 
 #. General options
 #: ../plug-ins/Lighting/lighting_ui.c:277
-#: ../plug-ins/MapObject/mapobject_ui.c:470
+#: ../plug-ins/MapObject/mapobject_ui.c:473
 msgid "General Options"
 msgstr "一般オプション"
 
@@ -525,7 +525,7 @@ msgid "Cre_ate new image"
 msgstr "新規画像作成(_A)"
 
 #: ../plug-ins/Lighting/lighting_ui.c:308
-#: ../plug-ins/MapObject/mapobject_ui.c:544
+#: ../plug-ins/MapObject/mapobject_ui.c:547
 msgid "Create a new image when applying filter"
 msgstr "フィルタ適用時に新規画像を作成する"
 
@@ -542,7 +542,7 @@ msgid "Distance:"
 msgstr "距離:"
 
 #: ../plug-ins/Lighting/lighting_ui.c:361
-#: ../plug-ins/MapObject/mapobject_ui.c:623
+#: ../plug-ins/MapObject/mapobject_ui.c:626
 msgid "Light Settings"
 msgstr "光源設定"
 
@@ -589,17 +589,17 @@ msgid "Point"
 msgstr "点光源"
 
 #: ../plug-ins/Lighting/lighting_ui.c:416
-#: ../plug-ins/MapObject/mapobject_ui.c:651
+#: ../plug-ins/MapObject/mapobject_ui.c:654
 msgid "Type of light source to apply"
 msgstr "適用する光源の種類"
 
 #: ../plug-ins/Lighting/lighting_ui.c:418
-#: ../plug-ins/MapObject/mapobject_ui.c:653
+#: ../plug-ins/MapObject/mapobject_ui.c:656
 msgid "Select lightsource color"
 msgstr "光源色選択"
 
 #: ../plug-ins/Lighting/lighting_ui.c:430
-#: ../plug-ins/MapObject/mapobject_ui.c:666
+#: ../plug-ins/MapObject/mapobject_ui.c:669
 msgid "Set light source color"
 msgstr "光源色設定"
 
@@ -612,8 +612,8 @@ msgid "Light intensity"
 msgstr "光源強度"
 
 #: ../plug-ins/Lighting/lighting_ui.c:447
-#: ../plug-ins/MapObject/mapobject_ui.c:668
-#: ../plug-ins/MapObject/mapobject_ui.c:995
+#: ../plug-ins/MapObject/mapobject_ui.c:671
+#: ../plug-ins/MapObject/mapobject_ui.c:998
 #: ../plug-ins/print/gimp_main_window.c:475
 msgid "Position"
 msgstr "位置"
@@ -626,7 +626,7 @@ msgid "_X:"
 msgstr "_X:"
 
 #: ../plug-ins/Lighting/lighting_ui.c:462
-#: ../plug-ins/MapObject/mapobject_ui.c:692
+#: ../plug-ins/MapObject/mapobject_ui.c:695
 msgid "Light source X position in XYZ space"
 msgstr "XYZ 空間中の光源の X 位置"
 
@@ -638,7 +638,7 @@ msgid "_Y:"
 msgstr "_Y:"
 
 #: ../plug-ins/Lighting/lighting_ui.c:475
-#: ../plug-ins/MapObject/mapobject_ui.c:706
+#: ../plug-ins/MapObject/mapobject_ui.c:709
 msgid "Light source Y position in XYZ space"
 msgstr "XYZ 空間中の光源の Y 位置"
 
@@ -647,7 +647,7 @@ msgid "_Z:"
 msgstr "_Z:"
 
 #: ../plug-ins/Lighting/lighting_ui.c:488
-#: ../plug-ins/MapObject/mapobject_ui.c:720
+#: ../plug-ins/MapObject/mapobject_ui.c:723
 msgid "Light source Z position in XYZ space"
 msgstr "XYZ 空間中の光源の Z 位置"
 
@@ -661,46 +661,46 @@ msgstr "方向"
 
 #. X
 #: ../plug-ins/Lighting/lighting_ui.c:499
-#: ../plug-ins/MapObject/mapobject_ui.c:684
-#: ../plug-ins/MapObject/mapobject_ui.c:738
-#: ../plug-ins/MapObject/mapobject_ui.c:1006
-#: ../plug-ins/MapObject/mapobject_ui.c:1055
+#: ../plug-ins/MapObject/mapobject_ui.c:687
+#: ../plug-ins/MapObject/mapobject_ui.c:741
+#: ../plug-ins/MapObject/mapobject_ui.c:1009
+#: ../plug-ins/MapObject/mapobject_ui.c:1058
 #: ../plug-ins/ifscompose/ifscompose.c:527
 msgid "X:"
 msgstr "X:"
 
 #: ../plug-ins/Lighting/lighting_ui.c:505
-#: ../plug-ins/MapObject/mapobject_ui.c:746
+#: ../plug-ins/MapObject/mapobject_ui.c:749
 msgid "Light source X direction in XYZ space"
 msgstr "XYZ 空間中での光源の向きの X 方向要素"
 
 #. Y
 #: ../plug-ins/Lighting/lighting_ui.c:511
-#: ../plug-ins/MapObject/mapobject_ui.c:698
-#: ../plug-ins/MapObject/mapobject_ui.c:751
-#: ../plug-ins/MapObject/mapobject_ui.c:1019
-#: ../plug-ins/MapObject/mapobject_ui.c:1066
-#: ../plug-ins/MapObject/mapobject_ui.c:1164
+#: ../plug-ins/MapObject/mapobject_ui.c:701
+#: ../plug-ins/MapObject/mapobject_ui.c:754
+#: ../plug-ins/MapObject/mapobject_ui.c:1022
+#: ../plug-ins/MapObject/mapobject_ui.c:1069
+#: ../plug-ins/MapObject/mapobject_ui.c:1167
 #: ../plug-ins/ifscompose/ifscompose.c:541
 msgid "Y:"
 msgstr "Y:"
 
 #: ../plug-ins/Lighting/lighting_ui.c:517
-#: ../plug-ins/MapObject/mapobject_ui.c:759
+#: ../plug-ins/MapObject/mapobject_ui.c:762
 msgid "Light source Y direction in XYZ space"
 msgstr "XYZ 空間中での光源の向きの Y 方向要素"
 
 #: ../plug-ins/Lighting/lighting_ui.c:523
-#: ../plug-ins/MapObject/mapobject_ui.c:712
-#: ../plug-ins/MapObject/mapobject_ui.c:764
-#: ../plug-ins/MapObject/mapobject_ui.c:1032
-#: ../plug-ins/MapObject/mapobject_ui.c:1077
-#: ../plug-ins/MapObject/mapobject_ui.c:1176
+#: ../plug-ins/MapObject/mapobject_ui.c:715
+#: ../plug-ins/MapObject/mapobject_ui.c:767
+#: ../plug-ins/MapObject/mapobject_ui.c:1035
+#: ../plug-ins/MapObject/mapobject_ui.c:1080
+#: ../plug-ins/MapObject/mapobject_ui.c:1179
 msgid "Z:"
 msgstr "Z:"
 
 #: ../plug-ins/Lighting/lighting_ui.c:529
-#: ../plug-ins/MapObject/mapobject_ui.c:772
+#: ../plug-ins/MapObject/mapobject_ui.c:775
 msgid "Light source Z direction in XYZ space"
 msgstr "XYZ 空間中での光源の向きの Z 方向要素"
 
@@ -721,7 +721,7 @@ msgid "_Glowing:"
 msgstr "発色(_G):"
 
 #: ../plug-ins/Lighting/lighting_ui.c:622
-#: ../plug-ins/MapObject/mapobject_ui.c:833
+#: ../plug-ins/MapObject/mapobject_ui.c:836
 msgid "Amount of original color to show where no direct light falls"
 msgstr "直接光が当たっていない場合に見える元の色の量"
 
@@ -730,7 +730,7 @@ msgid "_Bright:"
 msgstr "明るさ(_B):"
 
 #: ../plug-ins/Lighting/lighting_ui.c:651
-#: ../plug-ins/MapObject/mapobject_ui.c:862
+#: ../plug-ins/MapObject/mapobject_ui.c:865
 msgid "Intensity of original color when lit by a light source"
 msgstr "光源に照らされた場合の元の色の強度"
 
@@ -739,7 +739,7 @@ msgid "_Shiny:"
 msgstr "輝き(_S):"
 
 #: ../plug-ins/Lighting/lighting_ui.c:680
-#: ../plug-ins/MapObject/mapobject_ui.c:934
+#: ../plug-ins/MapObject/mapobject_ui.c:937
 msgid "Controls how intense the highlights will be"
 msgstr "ハイライトの強度を制御する"
 
@@ -748,7 +748,7 @@ msgid "_Polished:"
 msgstr "光沢(_P):"
 
 #: ../plug-ins/Lighting/lighting_ui.c:708
-#: ../plug-ins/MapObject/mapobject_ui.c:963
+#: ../plug-ins/MapObject/mapobject_ui.c:966
 msgid "Higher values makes the highlights more focused"
 msgstr "大きな値にするとハイライトがくっきりする"
 
@@ -822,12 +822,12 @@ msgid "Op_tions"
 msgstr "オプション(_T)"
 
 #: ../plug-ins/Lighting/lighting_ui.c:905
-#: ../plug-ins/MapObject/mapobject_ui.c:1300
+#: ../plug-ins/MapObject/mapobject_ui.c:1303
 msgid "_Light"
 msgstr "光源(_L)"
 
 #: ../plug-ins/Lighting/lighting_ui.c:909
-#: ../plug-ins/MapObject/mapobject_ui.c:1304
+#: ../plug-ins/MapObject/mapobject_ui.c:1307
 msgid "_Material"
 msgstr "物質(_M)"
 
@@ -847,7 +847,7 @@ msgid "_Update"
 msgstr "更新(_U)"
 
 #: ../plug-ins/Lighting/lighting_ui.c:1033
-#: ../plug-ins/MapObject/mapobject_ui.c:1405
+#: ../plug-ins/MapObject/mapobject_ui.c:1409
 msgid "Recompute preview image"
 msgstr "プレビュー画像を再計算する"
 
@@ -883,274 +883,274 @@ msgstr "直方体にマップしています"
 msgid "Map to cylinder"
 msgstr "円柱にマップしています"
 
-#: ../plug-ins/MapObject/mapobject_main.c:200
+#: ../plug-ins/MapObject/mapobject_main.c:198
 msgid "Map _Object..."
 msgstr "オブジェクトにマップ(_O)..."
 
 #: ../plug-ins/MapObject/mapobject_ui.c:248
-#: ../plug-ins/MapObject/mapobject_ui.c:1314
+#: ../plug-ins/MapObject/mapobject_ui.c:1317
 msgid "_Box"
 msgstr "直方体(_B)"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:266
-#: ../plug-ins/MapObject/mapobject_ui.c:1320
+#: ../plug-ins/MapObject/mapobject_ui.c:1323
 msgid "C_ylinder"
 msgstr "円柱(_Y)"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:482
+#: ../plug-ins/MapObject/mapobject_ui.c:485
 msgid "Map to:"
 msgstr "マップ対象:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:486
+#: ../plug-ins/MapObject/mapobject_ui.c:489
 msgid "Plane"
 msgstr "面"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:487
+#: ../plug-ins/MapObject/mapobject_ui.c:490
 msgid "Sphere"
 msgstr "球"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:488
+#: ../plug-ins/MapObject/mapobject_ui.c:491
 msgid "Box"
 msgstr "直方体"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:489
+#: ../plug-ins/MapObject/mapobject_ui.c:492
 msgid "Cylinder"
 msgstr "円柱"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:504
+#: ../plug-ins/MapObject/mapobject_ui.c:507
 msgid "Type of object to map to"
 msgstr "マップするオブジェクトの形状"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:506
+#: ../plug-ins/MapObject/mapobject_ui.c:509
 msgid "Transparent background"
 msgstr "透過背景"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:517
+#: ../plug-ins/MapObject/mapobject_ui.c:520
 msgid "Make image transparent outside object"
 msgstr "オブジェクト部分以外は透明にする"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:519
+#: ../plug-ins/MapObject/mapobject_ui.c:522
 msgid "Tile source image"
 msgstr "元画像を並べる"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:530
+#: ../plug-ins/MapObject/mapobject_ui.c:533
 msgid "Tile source image: useful for infinite planes"
 msgstr "元画像を並べる: 無限平面に有効"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:533
+#: ../plug-ins/MapObject/mapobject_ui.c:536
 msgid "Create new image"
 msgstr "新規画像作成"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:552
+#: ../plug-ins/MapObject/mapobject_ui.c:555
 msgid "Enable _antialiasing"
 msgstr "アンチエイリアシングする(_A)"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:559
+#: ../plug-ins/MapObject/mapobject_ui.c:562
 msgid "Enable/disable jagged edges removal (antialiasing)"
 msgstr "ギザギザした縁を滑らかにするかどうか (アンチエイリアシング)"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:576 ../plug-ins/common/bumpmap.c:984
+#: ../plug-ins/MapObject/mapobject_ui.c:579 ../plug-ins/common/bumpmap.c:984
 #: ../plug-ins/common/emboss.c:528 ../plug-ins/common/fractaltrace.c:792
 #: ../plug-ins/common/struc.c:1326
 msgid "_Depth:"
 msgstr "深度(_D):"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:579
+#: ../plug-ins/MapObject/mapobject_ui.c:582
 msgid "Antialiasing quality. Higher is better, but slower"
 msgstr "アンチエイリアシングの品位。高い程綺麗だが遅い。"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:588 ../plug-ins/common/unsharp.c:695
+#: ../plug-ins/MapObject/mapobject_ui.c:591 ../plug-ins/common/unsharp.c:695
 #: ../plug-ins/common/wind.c:1008 ../plug-ins/imagemap/imap_preferences.c:441
 msgid "_Threshold:"
 msgstr "閾値(_T):"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:596
+#: ../plug-ins/MapObject/mapobject_ui.c:599
 msgid "Stop when pixel differences are smaller than this value"
 msgstr "ピクセル値がこの値よりも小さくなったら止まる"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:632
+#: ../plug-ins/MapObject/mapobject_ui.c:635
 msgid "Point light"
 msgstr "点光源"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:633
+#: ../plug-ins/MapObject/mapobject_ui.c:636
 msgid "Directional light"
 msgstr "指向性光源"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:634
+#: ../plug-ins/MapObject/mapobject_ui.c:637
 msgid "No light"
 msgstr "光源なし"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:648
+#: ../plug-ins/MapObject/mapobject_ui.c:651
 msgid "Lightsource type:"
 msgstr "光源種:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:658
+#: ../plug-ins/MapObject/mapobject_ui.c:661
 msgid "Lightsource color:"
 msgstr "光源色:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:723
+#: ../plug-ins/MapObject/mapobject_ui.c:726
 msgid "Direction Vector"
 msgstr "方向ベクトル"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:799
+#: ../plug-ins/MapObject/mapobject_ui.c:802
 msgid "Intensity Levels"
 msgstr "強度レベル"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:818
+#: ../plug-ins/MapObject/mapobject_ui.c:821
 msgid "Ambient:"
 msgstr "飽和度:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:847
-#: ../plug-ins/MapObject/mapobject_ui.c:890
+#: ../plug-ins/MapObject/mapobject_ui.c:850
+#: ../plug-ins/MapObject/mapobject_ui.c:893
 msgid "Diffuse:"
 msgstr "拡散:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:871
+#: ../plug-ins/MapObject/mapobject_ui.c:874
 msgid "Reflectivity"
 msgstr "反射性"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:905
+#: ../plug-ins/MapObject/mapobject_ui.c:908
 msgid "Higher values makes the object reflect more light (appear lighter)"
 msgstr "大きな値にすると物体がより光を反射する (明るく見える)"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:919
+#: ../plug-ins/MapObject/mapobject_ui.c:922
 msgid "Specular:"
 msgstr "反射:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:948
+#: ../plug-ins/MapObject/mapobject_ui.c:951
 msgid "Highlight:"
 msgstr "ハイライト:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1009
+#: ../plug-ins/MapObject/mapobject_ui.c:1012
 msgid "Object X position in XYZ space"
 msgstr "XYZ 空間中のオブジェクトの X 位置"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1022
+#: ../plug-ins/MapObject/mapobject_ui.c:1025
 msgid "Object Y position in XYZ space"
 msgstr "XYZ 空間中のオブジェクトの Y 位置"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1035
+#: ../plug-ins/MapObject/mapobject_ui.c:1038
 msgid "Object Z position in XYZ space"
 msgstr "XYZ 空間中のオブジェクトの Z 位置"
 
 #. Rotation
-#: ../plug-ins/MapObject/mapobject_ui.c:1044
+#: ../plug-ins/MapObject/mapobject_ui.c:1047
 #: ../plug-ins/common/postscript.c:3365
 msgid "Rotation"
 msgstr "回転"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1058
+#: ../plug-ins/MapObject/mapobject_ui.c:1061
 msgid "Rotation angle about X axis"
 msgstr "X 軸中心の回転角"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1069
+#: ../plug-ins/MapObject/mapobject_ui.c:1072
 msgid "Rotation angle about Y axis"
 msgstr "Y 軸中心の回転角"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1080
+#: ../plug-ins/MapObject/mapobject_ui.c:1083
 msgid "Rotation angle about Z axis"
 msgstr "Z 軸中心の回転角"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1106
+#: ../plug-ins/MapObject/mapobject_ui.c:1109
 msgid "Front:"
 msgstr "前:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1106
+#: ../plug-ins/MapObject/mapobject_ui.c:1109
 msgid "Back:"
 msgstr "後:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1107
+#: ../plug-ins/MapObject/mapobject_ui.c:1110
 #: ../plug-ins/print/gimp_main_window.c:534
 msgid "Top:"
 msgstr "上:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1107
+#: ../plug-ins/MapObject/mapobject_ui.c:1110
 #: ../plug-ins/print/gimp_main_window.c:575
 msgid "Bottom:"
 msgstr "下:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1108
+#: ../plug-ins/MapObject/mapobject_ui.c:1111
 #: ../plug-ins/print/gimp_main_window.c:521
 msgid "Left:"
 msgstr "左:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1108
+#: ../plug-ins/MapObject/mapobject_ui.c:1111
 #: ../plug-ins/print/gimp_main_window.c:547
 msgid "Right:"
 msgstr "右:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1114
+#: ../plug-ins/MapObject/mapobject_ui.c:1117
 msgid "Map Images to Box Faces"
 msgstr "画像を直方体の表面にマップ"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1152
+#: ../plug-ins/MapObject/mapobject_ui.c:1155
 #: ../plug-ins/common/spheredesigner.c:2771
 msgid "Scale X:"
 msgstr "拡大縮小 X:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1155
+#: ../plug-ins/MapObject/mapobject_ui.c:1158
 msgid "X scale (size)"
 msgstr "X 拡大縮小 (サイズ)"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1167
+#: ../plug-ins/MapObject/mapobject_ui.c:1170
 msgid "Y scale (size)"
 msgstr "Y 拡大縮小 (サイズ)"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1179
+#: ../plug-ins/MapObject/mapobject_ui.c:1182
 msgid "Z scale (size)"
 msgstr "Z 拡大縮小 (サイズ)"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1202
+#: ../plug-ins/MapObject/mapobject_ui.c:1205
 msgid "_Top:"
 msgstr "上(_T):"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1202
+#: ../plug-ins/MapObject/mapobject_ui.c:1205
 msgid "_Bottom:"
 msgstr "下(_B):"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1207
+#: ../plug-ins/MapObject/mapobject_ui.c:1210
 msgid "Images for the Cap Faces"
 msgstr "表面に被せる画像"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1236
+#: ../plug-ins/MapObject/mapobject_ui.c:1239
 #: ../plug-ins/print/gimp_main_window.c:1119
 msgid "Size"
 msgstr "サイズ"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1247
+#: ../plug-ins/MapObject/mapobject_ui.c:1250
 msgid "R_adius:"
 msgstr "半径(_A):"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1251
+#: ../plug-ins/MapObject/mapobject_ui.c:1254
 msgid "Cylinder radius"
 msgstr "円柱半径"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1261 ../plug-ins/common/mblur.c:1023
+#: ../plug-ins/MapObject/mapobject_ui.c:1264 ../plug-ins/common/mblur.c:1023
 msgid "L_ength:"
 msgstr "長さ(_E):"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1265
+#: ../plug-ins/MapObject/mapobject_ui.c:1268
 msgid "Cylinder length"
 msgstr "円柱長さ"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1296
+#: ../plug-ins/MapObject/mapobject_ui.c:1299
 msgid "O_ptions"
 msgstr "オプション(_P)"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1308
+#: ../plug-ins/MapObject/mapobject_ui.c:1311
 msgid "O_rientation"
 msgstr "向き(_R)"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1343
+#: ../plug-ins/MapObject/mapobject_ui.c:1347
 msgid "Map to Object"
 msgstr "オブジェクトにマップ"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1396
+#: ../plug-ins/MapObject/mapobject_ui.c:1400
 #: ../plug-ins/common/diffraction.c:477
 msgid "_Preview!"
 msgstr "プレビュー!(_P)"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1421
+#: ../plug-ins/MapObject/mapobject_ui.c:1427
 msgid "Show preview _wireframe"
 msgstr "ワイヤフレームでプレビュー表示(_W)"
 
@@ -2015,27 +2015,27 @@ msgstr "レンズ効果適用(_L)..."
 msgid "Applying lens"
 msgstr "レンズ効果を適用しています"
 
-#: ../plug-ins/common/apply_lens.c:393
+#: ../plug-ins/common/apply_lens.c:394
 msgid "Lens Effect"
 msgstr "レンズ効果"
 
-#: ../plug-ins/common/apply_lens.c:426
+#: ../plug-ins/common/apply_lens.c:427
 msgid "_Keep original surroundings"
 msgstr "元画像の周辺部を残す(_K)"
 
-#: ../plug-ins/common/apply_lens.c:441
+#: ../plug-ins/common/apply_lens.c:442
 msgid "_Set surroundings to index 0"
 msgstr "周辺部をインデックス 0 にする(_S)"
 
-#: ../plug-ins/common/apply_lens.c:442
+#: ../plug-ins/common/apply_lens.c:443
 msgid "_Set surroundings to background color"
 msgstr "周辺部を背景色にする(_S)"
 
-#: ../plug-ins/common/apply_lens.c:457
+#: ../plug-ins/common/apply_lens.c:458
 msgid "_Make surroundings transparent"
 msgstr "周辺部を透明にする(_M)"
 
-#: ../plug-ins/common/apply_lens.c:474
+#: ../plug-ins/common/apply_lens.c:475
 msgid "_Lens refraction index:"
 msgstr "レンズ屈折度(_L): "
 
@@ -2650,7 +2650,7 @@ msgid "E_xtend"
 msgstr "拡張(_X)"
 
 #: ../plug-ins/common/convmatrix.c:87 ../plug-ins/common/displace.c:475
-#: ../plug-ins/common/edge.c:719 ../plug-ins/common/ripple.c:568
+#: ../plug-ins/common/edge.c:700 ../plug-ins/common/ripple.c:568
 msgid "_Wrap"
 msgstr "回り込み(_W)"
 
@@ -2778,149 +2778,149 @@ msgstr "背景色を使用(_U)"
 msgid "Cubistic transformation"
 msgstr "キュービズム変換しています"
 
-#: ../plug-ins/common/curve_bend.c:566
+#: ../plug-ins/common/curve_bend.c:545
 msgid "_Curve Bend..."
 msgstr "ひん曲げる(_C)..."
 
-#: ../plug-ins/common/curve_bend.c:702
+#: ../plug-ins/common/curve_bend.c:681
 msgid "Can operate on layers only (but was called on channel or mask)."
 msgstr ""
 "ひん曲げることができるのはレイヤーだけです (チャンネルやマスクに対して呼び出"
 "されました)。"
 
-#: ../plug-ins/common/curve_bend.c:720
+#: ../plug-ins/common/curve_bend.c:699
 msgid "Cannot operate on layers with masks."
 msgstr "マスク付きのレイヤーには適用できません。"
 
-#: ../plug-ins/common/curve_bend.c:735
+#: ../plug-ins/common/curve_bend.c:714
 msgid "Cannot operate on empty selections."
 msgstr "空の選択領域には適用できません。"
 
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
-#: ../plug-ins/common/curve_bend.c:1238 ../plug-ins/common/curve_bend.c:2955
+#: ../plug-ins/common/curve_bend.c:1217 ../plug-ins/common/curve_bend.c:2934
 msgid "Curve Bend"
 msgstr "ひん曲げる"
 
 #. Preview area, top of column
-#: ../plug-ins/common/curve_bend.c:1274
+#: ../plug-ins/common/curve_bend.c:1253
 #: ../plug-ins/gimpressionist/orientmap.c:574
 #: ../plug-ins/gimpressionist/sizemap.c:443
 msgid "Preview"
 msgstr "プレビュー"
 
 #. The preview button
-#: ../plug-ins/common/curve_bend.c:1303
+#: ../plug-ins/common/curve_bend.c:1282
 msgid "_Preview Once"
 msgstr "一回プレビュー(_P)"
 
 #. The preview toggle
-#: ../plug-ins/common/curve_bend.c:1312
+#: ../plug-ins/common/curve_bend.c:1291
 msgid "Automatic pre_view"
 msgstr "自動プレビュー(_V)"
 
 #. Options area, bottom of column
 #. the vertical box and its toggle buttons
 #. Options section
-#: ../plug-ins/common/curve_bend.c:1322 ../plug-ins/common/mosaic.c:623
+#: ../plug-ins/common/curve_bend.c:1301 ../plug-ins/common/mosaic.c:623
 #: ../plug-ins/common/ripple.c:509 ../plug-ins/gfig/gfig-dialog.c:1213
 msgid "Options"
 msgstr "オプション"
 
 #. Rotate spinbutton
-#: ../plug-ins/common/curve_bend.c:1336
+#: ../plug-ins/common/curve_bend.c:1315
 msgid "Rotat_e:"
 msgstr "回転(_E):"
 
 #. The smoothing toggle
-#: ../plug-ins/common/curve_bend.c:1354
+#: ../plug-ins/common/curve_bend.c:1333
 msgid "Smoo_thing"
 msgstr "スムージング(_T)"
 
 #. The antialiasing toggle
-#: ../plug-ins/common/curve_bend.c:1364 ../plug-ins/common/gqbist.c:836
+#: ../plug-ins/common/curve_bend.c:1343 ../plug-ins/common/gqbist.c:836
 #: ../plug-ins/common/mosaic.c:629 ../plug-ins/common/ripple.c:518
 msgid "_Antialiasing"
 msgstr "アンチエイリアシング(_A)"
 
 #. The work_on_copy toggle
-#: ../plug-ins/common/curve_bend.c:1374
+#: ../plug-ins/common/curve_bend.c:1353
 msgid "Work on cop_y"
 msgstr "コピーを操作(_Y)"
 
 #. The curves graph
-#: ../plug-ins/common/curve_bend.c:1384
+#: ../plug-ins/common/curve_bend.c:1363
 msgid "Modify Curves"
 msgstr "カーブ変更"
 
-#: ../plug-ins/common/curve_bend.c:1412
+#: ../plug-ins/common/curve_bend.c:1391
 msgid "Curve for Border"
 msgstr "曲げ操作する端"
 
-#: ../plug-ins/common/curve_bend.c:1416
+#: ../plug-ins/common/curve_bend.c:1395
 msgid "_Upper"
 msgstr "上(_U)"
 
-#: ../plug-ins/common/curve_bend.c:1417
+#: ../plug-ins/common/curve_bend.c:1396
 msgid "_Lower"
 msgstr "下(_L)"
 
-#: ../plug-ins/common/curve_bend.c:1427
+#: ../plug-ins/common/curve_bend.c:1406
 msgid "Curve Type"
 msgstr "カーブタイプ"
 
-#: ../plug-ins/common/curve_bend.c:1431
+#: ../plug-ins/common/curve_bend.c:1410
 msgid "Smoot_h"
 msgstr "滑らか(_H)"
 
-#: ../plug-ins/common/curve_bend.c:1432
+#: ../plug-ins/common/curve_bend.c:1411
 msgid "_Free"
 msgstr "自由(_F)"
 
 #. The Copy button
-#: ../plug-ins/common/curve_bend.c:1447
+#: ../plug-ins/common/curve_bend.c:1426
 msgid "_Copy"
 msgstr "コピー(_C)"
 
-#: ../plug-ins/common/curve_bend.c:1452
+#: ../plug-ins/common/curve_bend.c:1431
 msgid "Copy the active curve to the other border"
 msgstr "このカーブをもう一方の端にコピーする"
 
 #. The CopyInv button
-#: ../plug-ins/common/curve_bend.c:1459
+#: ../plug-ins/common/curve_bend.c:1438
 msgid "_Mirror"
 msgstr "ミラー(_M)"
 
-#: ../plug-ins/common/curve_bend.c:1464
+#: ../plug-ins/common/curve_bend.c:1443
 msgid "Mirror the active curve to the other border"
 msgstr "このカーブをもう一方の端に対称に映す"
 
 #. The Swap button
-#: ../plug-ins/common/curve_bend.c:1472
+#: ../plug-ins/common/curve_bend.c:1451
 msgid "S_wap"
 msgstr "入れ替え(_W)"
 
-#: ../plug-ins/common/curve_bend.c:1477
+#: ../plug-ins/common/curve_bend.c:1456
 msgid "Swap the two curves"
 msgstr "二つのカーブを入れ替える"
 
-#: ../plug-ins/common/curve_bend.c:1489
+#: ../plug-ins/common/curve_bend.c:1468
 msgid "Reset the active curve"
 msgstr "このカーブをリセットする"
 
-#: ../plug-ins/common/curve_bend.c:1506
+#: ../plug-ins/common/curve_bend.c:1485
 msgid "Load the curves from a file"
 msgstr "カーブをファイルから読み込み"
 
-#: ../plug-ins/common/curve_bend.c:1518
+#: ../plug-ins/common/curve_bend.c:1497
 msgid "Save the curves to a file"
 msgstr "カーブをファイルに保存"
 
-#: ../plug-ins/common/curve_bend.c:2053
+#: ../plug-ins/common/curve_bend.c:2032
 msgid "Load Curve Points from File"
 msgstr "カーブ点をファイルから読み込み"
 
-#: ../plug-ins/common/curve_bend.c:2088
+#: ../plug-ins/common/curve_bend.c:2067
 msgid "Save Curve Points to File"
 msgstr "カーブ点をファイルに保存"
 
@@ -3308,12 +3308,12 @@ msgstr "極座標(_P)"
 msgid "Edge Behavior"
 msgstr "縁の処理"
 
-#: ../plug-ins/common/displace.c:477 ../plug-ins/common/edge.c:732
+#: ../plug-ins/common/displace.c:477 ../plug-ins/common/edge.c:713
 #: ../plug-ins/common/ripple.c:569 ../plug-ins/common/waves.c:276
 msgid "_Smear"
 msgstr "ぼかす(_S)"
 
-#: ../plug-ins/common/displace.c:479 ../plug-ins/common/edge.c:745
+#: ../plug-ins/common/displace.c:479 ../plug-ins/common/edge.c:726
 #: ../plug-ins/common/fractaltrace.c:736 ../plug-ins/common/newsprint.c:400
 #: ../plug-ins/common/ripple.c:570
 msgid "_Black"
@@ -3347,47 +3347,47 @@ msgstr "正規化(_N)"
 msgid "_Invert"
 msgstr "反転(_I)"
 
-#: ../plug-ins/common/edge.c:158
+#: ../plug-ins/common/edge.c:159
 msgid "_Edge..."
 msgstr "輪郭(_E)..."
 
-#: ../plug-ins/common/edge.c:230
+#: ../plug-ins/common/edge.c:231
 msgid "Edge detection"
 msgstr "輪郭を抽出しています"
 
-#: ../plug-ins/common/edge.c:644
+#: ../plug-ins/common/edge.c:625
 msgid "Edge Detection"
 msgstr "輪郭抽出"
 
-#: ../plug-ins/common/edge.c:678
+#: ../plug-ins/common/edge.c:659
 msgid "Sobel"
 msgstr "ソーベル"
 
-#: ../plug-ins/common/edge.c:679
-msgid "Prewitt"
+#: ../plug-ins/common/edge.c:660
+msgid "Prewitt compass"
 msgstr "プレヴィット"
 
-#: ../plug-ins/common/edge.c:680 ../plug-ins/common/sinus.c:904
+#: ../plug-ins/common/edge.c:661 ../plug-ins/common/sinus.c:904
 msgid "Gradient"
 msgstr "勾配/グラデーション"
 
-#: ../plug-ins/common/edge.c:681
+#: ../plug-ins/common/edge.c:662
 msgid "Roberts"
 msgstr "ロバーツ"
 
-#: ../plug-ins/common/edge.c:682
+#: ../plug-ins/common/edge.c:663
 msgid "Differential"
 msgstr "差分"
 
-#: ../plug-ins/common/edge.c:683 ../plug-ins/common/laplace.c:245
+#: ../plug-ins/common/edge.c:664 ../plug-ins/common/laplace.c:245
 msgid "Laplace"
 msgstr "ラプラス"
 
-#: ../plug-ins/common/edge.c:692
+#: ../plug-ins/common/edge.c:673
 msgid "_Algorithm:"
 msgstr "アルゴリズム(_A):"
 
-#: ../plug-ins/common/edge.c:700
+#: ../plug-ins/common/edge.c:681
 msgid "A_mount:"
 msgstr "量(_M):"
 
@@ -3512,7 +3512,7 @@ msgstr "フィルム上には:"
 
 #. Create selection
 #: ../plug-ins/common/film.c:1164 ../plug-ins/imagemap/imap_selection.c:366
-#: ../plug-ins/rcm/rcm_dialog.c:173
+#: ../plug-ins/rcm/rcm_dialog.c:173 ../plug-ins/sel2path/sel2path.c:523
 msgid "Selection"
 msgstr "選択"
 
@@ -4061,8 +4061,8 @@ msgstr "非正方形ピクセルです。画像が潰れたように見えるか
 msgid "Background (%d%s)"
 msgstr "背景 (%d%s)"
 
-#: ../plug-ins/common/gifload.c:918 ../plug-ins/common/iwarp.c:780
-#: ../plug-ins/common/iwarp.c:815
+#: ../plug-ins/common/gifload.c:918 ../plug-ins/common/iwarp.c:797
+#: ../plug-ins/common/iwarp.c:832
 #, c-format
 msgid "Frame %d"
 msgstr "フレーム %d"
@@ -4228,7 +4228,7 @@ msgid "Intersection"
 msgstr "交点"
 
 #. Width and Height
-#: ../plug-ins/common/grid.c:724 ../plug-ins/common/svg.c:781
+#: ../plug-ins/common/grid.c:724 ../plug-ins/common/svg.c:788
 #: ../plug-ins/common/wmf.c:549 ../plug-ins/print/gimp_main_window.c:1009
 #: ../plug-ins/print/gimp_main_window.c:1216
 msgid "Width:"
@@ -4438,105 +4438,105 @@ msgstr "モード_1"
 msgid "Mode _2"
 msgstr "モード_2"
 
-#: ../plug-ins/common/iwarp.c:252
+#: ../plug-ins/common/iwarp.c:269
 msgid "_IWarp..."
 msgstr "対話型歪め(_I)..."
 
-#: ../plug-ins/common/iwarp.c:686
+#: ../plug-ins/common/iwarp.c:703
 msgid "Warping"
 msgstr "歪めています"
 
-#: ../plug-ins/common/iwarp.c:791
+#: ../plug-ins/common/iwarp.c:808
 #, c-format
 msgid "Warping Frame %d"
 msgstr "%d番目のフレームを歪めています"
 
-#: ../plug-ins/common/iwarp.c:803
+#: ../plug-ins/common/iwarp.c:820
 msgid "Ping pong"
 msgstr "ピンポン"
 
-#: ../plug-ins/common/iwarp.c:939
+#: ../plug-ins/common/iwarp.c:1026
 msgid "A_nimate"
 msgstr "動画化(_N)"
 
-#: ../plug-ins/common/iwarp.c:958
+#: ../plug-ins/common/iwarp.c:1045
 msgid "Number of _frames:"
 msgstr "フレーム数(_F):"
 
-#: ../plug-ins/common/iwarp.c:967
+#: ../plug-ins/common/iwarp.c:1054
 msgid "R_everse"
 msgstr "逆転(_E)"
 
-#: ../plug-ins/common/iwarp.c:976
+#: ../plug-ins/common/iwarp.c:1063
 msgid "_Ping pong"
 msgstr "ピンポン(_P)"
 
-#: ../plug-ins/common/iwarp.c:989
+#: ../plug-ins/common/iwarp.c:1076
 msgid "_Animate"
 msgstr "動画化(_A)"
 
-#: ../plug-ins/common/iwarp.c:1010
+#: ../plug-ins/common/iwarp.c:1097
 msgid "Deform Mode"
 msgstr "歪めモード"
 
-#: ../plug-ins/common/iwarp.c:1023
+#: ../plug-ins/common/iwarp.c:1110
 msgid "_Move"
 msgstr "移動(_M)"
 
-#: ../plug-ins/common/iwarp.c:1024
+#: ../plug-ins/common/iwarp.c:1111
 msgid "_Grow"
 msgstr "広げる(_G)"
 
-#: ../plug-ins/common/iwarp.c:1025
+#: ../plug-ins/common/iwarp.c:1112
 msgid "S_wirl CCW"
 msgstr "渦巻 CCW(_W)"
 
-#: ../plug-ins/common/iwarp.c:1026
+#: ../plug-ins/common/iwarp.c:1113
 msgid "Remo_ve"
 msgstr "削除(_V)"
 
-#: ../plug-ins/common/iwarp.c:1027
+#: ../plug-ins/common/iwarp.c:1114
 msgid "S_hrink"
 msgstr "すぼめる(_H)"
 
-#: ../plug-ins/common/iwarp.c:1028
+#: ../plug-ins/common/iwarp.c:1115
 msgid "Sw_irl CW"
 msgstr "渦巻 CW(_I)"
 
-#: ../plug-ins/common/iwarp.c:1057
+#: ../plug-ins/common/iwarp.c:1144
 msgid "_Deform radius:"
 msgstr "歪める半径(_D):"
 
-#: ../plug-ins/common/iwarp.c:1067
+#: ../plug-ins/common/iwarp.c:1154
 msgid "D_eform amount:"
 msgstr "歪める量(_E):"
 
-#: ../plug-ins/common/iwarp.c:1076
+#: ../plug-ins/common/iwarp.c:1163
 msgid "_Bilinear"
 msgstr "双線形(_B)"
 
-#: ../plug-ins/common/iwarp.c:1090
+#: ../plug-ins/common/iwarp.c:1177
 msgid "Adaptive s_upersample"
 msgstr "適応型スーパーサンプリング(_U)"
 
-#: ../plug-ins/common/iwarp.c:1110
+#: ../plug-ins/common/iwarp.c:1197
 msgid "Ma_x depth:"
 msgstr "最大深度(_X):"
 
-#: ../plug-ins/common/iwarp.c:1120
+#: ../plug-ins/common/iwarp.c:1207
 msgid "Thresho_ld:"
 msgstr "閾値(_L):"
 
-#: ../plug-ins/common/iwarp.c:1133 ../plug-ins/common/sinus.c:771
+#: ../plug-ins/common/iwarp.c:1220 ../plug-ins/common/sinus.c:771
 #: ../plug-ins/gflare/gflare.c:2797
 msgid "_Settings"
 msgstr "設定(_S)"
 
-#: ../plug-ins/common/iwarp.c:1151
+#: ../plug-ins/common/iwarp.c:1270
 msgid "IWarp"
 msgstr "対話型歪め"
 
-#: ../plug-ins/common/iwarp.c:1214
+#: ../plug-ins/common/iwarp.c:1307
 msgid ""
 "Click and drag in the preview to define the distortions to apply to the "
 "image."
@@ -5266,25 +5266,25 @@ msgstr "超新星の中心"
 msgid "S_how cursor"
 msgstr "カーソル表示(_H)"
 
-#: ../plug-ins/common/oilify.c:109
+#: ../plug-ins/common/oilify.c:105
 msgid "Oili_fy..."
 msgstr "油絵化(_F)..."
 
-#: ../plug-ins/common/oilify.c:187
+#: ../plug-ins/common/oilify.c:183
 msgid "Oil painting"
 msgstr "油絵化しています"
 
-#: ../plug-ins/common/oilify.c:475
+#: ../plug-ins/common/oilify.c:471
 msgid "Oilify"
 msgstr "油絵化"
 
-#: ../plug-ins/common/oilify.c:509
+#: ../plug-ins/common/oilify.c:505
 msgid "_Mask size:"
 msgstr "マスクサイズ(_M):"
 
-#: ../plug-ins/common/oilify.c:520
-msgid "_Use intensity algorithm"
-msgstr "強度アルゴリズムを使用する(_U)"
+#: ../plug-ins/common/oilify.c:516
+msgid "_Use intensity"
+msgstr "強度を使用する(_U)"
 
 #: ../plug-ins/common/papertile.c:234 ../plug-ins/common/papertile.c:533
 msgid "Paper Tile"
@@ -5749,7 +5749,7 @@ msgid "Rendering"
 msgstr "レンダリング"
 
 #. Resolution
-#: ../plug-ins/common/postscript.c:3084 ../plug-ins/common/svg.c:902
+#: ../plug-ins/common/postscript.c:3084 ../plug-ins/common/svg.c:909
 #: ../plug-ins/common/wmf.c:670 ../plug-ins/print/gimp_main_window.c:1104
 msgid "Resolution:"
 msgstr "解像度:"
@@ -6237,65 +6237,81 @@ msgstr "保存度(_H):"
 msgid "H_ue:"
 msgstr "色相(_U):"
 
-#: ../plug-ins/common/screenshot.c:239
+#: ../plug-ins/common/screenshot.c:240
 msgid "_Screenshot..."
 msgstr "画面取り込み(_S)..."
 
-#: ../plug-ins/common/screenshot.c:423
+#: ../plug-ins/common/screenshot.c:424
 msgid "Error grabbing the pointer"
 msgstr "ポインタ取得エラー"
 
-#: ../plug-ins/common/screenshot.c:602
+#: ../plug-ins/common/screenshot.c:603
 msgid "Importing screenshot"
 msgstr "画面取り込みを読み込んでいます"
 
-#: ../plug-ins/common/screenshot.c:609 ../plug-ins/common/screenshot.c:781
+#: ../plug-ins/common/screenshot.c:610 ../plug-ins/common/screenshot.c:777
 msgid "Screenshot"
 msgstr "画面取り込み"
 
-#: ../plug-ins/common/screenshot.c:717
+#: ../plug-ins/common/screenshot.c:718
 msgid "Specified window not found"
 msgstr "ウィンドウが指定されていません"
 
-#: ../plug-ins/common/screenshot.c:744
+#: ../plug-ins/common/screenshot.c:745
 msgid "There was an error taking the screenshot."
 msgstr "画面取り込み中にエラー。"
 
-#: ../plug-ins/common/screenshot.c:790
+#: ../plug-ins/common/screenshot.c:786
 msgid "_Grab"
 msgstr "取り込む(_G)"
 
-#: ../plug-ins/common/screenshot.c:812
+#: ../plug-ins/common/screenshot.c:807
+#, fuzzy
+msgid "Area"
+msgstr "領域:"
+
+#: ../plug-ins/common/screenshot.c:818
 msgid "Take a screenshot of a single _window"
 msgstr "単一ウィンドウを取り込む(_W)"
 
-#: ../plug-ins/common/screenshot.c:833
-msgid "Include window decoration"
+#: ../plug-ins/common/screenshot.c:839
+#, fuzzy
+msgid "Include window _decoration"
 msgstr "ウィンドウ飾りも含める"
 
-#: ../plug-ins/common/screenshot.c:848
-msgid "Take a screenshot of your _desktop"
-msgstr "デスクトップを取り込む(_D)"
+#: ../plug-ins/common/screenshot.c:855
+#, fuzzy
+msgid "Take a screenshot of the entire _screen"
+msgstr "単一ウィンドウを取り込む(_W)"
 
-#: ../plug-ins/common/screenshot.c:869
-msgid "Select a region"
+#: ../plug-ins/common/screenshot.c:873
+#, fuzzy
+msgid "Select a _region to grab"
 msgstr "領域選択"
 
-#: ../plug-ins/common/screenshot.c:874
+#: ../plug-ins/common/screenshot.c:880
 msgid ""
 "If enabled, you can use the mouse to select a rectangular region of the "
 "screen."
 msgstr "有効にすると、マウスを使って画面中の矩形領域を選択できます。"
 
-#: ../plug-ins/common/screenshot.c:889
+#. grab delay
+#: ../plug-ins/common/screenshot.c:893
+#, fuzzy
+msgid "Delay"
+msgstr "削除"
+
+#. this string is part of "Wait [spinbutton] seconds before grabbing"
+#: ../plug-ins/common/screenshot.c:906
 msgid "W_ait"
 msgstr "待ち時間(_A)"
 
-#: ../plug-ins/common/screenshot.c:904
+#. this string is part of "Wait [spinbutton] seconds before grabbing"
+#: ../plug-ins/common/screenshot.c:922
 msgid "seconds before grabbing"
 msgstr "秒後に取り込み"
 
-#: ../plug-ins/common/screenshot.c:908
+#: ../plug-ins/common/screenshot.c:926
 msgid ""
 "The number of seconds to wait after selecting the window or region and "
 "actually taking the screenshot."
@@ -6958,7 +6974,7 @@ msgstr "RLE エンコード"
 msgid "Scalable SVG image"
 msgstr "拡大縮小可能な SVG 画像"
 
-#: ../plug-ins/common/svg.c:315 ../plug-ins/common/svg.c:710
+#: ../plug-ins/common/svg.c:315 ../plug-ins/common/svg.c:717
 msgid "Unknown reason"
 msgstr "原因不明"
 
@@ -6970,7 +6986,7 @@ msgstr "SVG を描画しています"
 msgid "Rendered SVG"
 msgstr "SVG 描画"
 
-#: ../plug-ins/common/svg.c:500
+#: ../plug-ins/common/svg.c:513
 msgid ""
 "SVG file does not\n"
 "specify a size!"
@@ -6978,50 +6994,50 @@ msgstr ""
 "SVG ファイルに\n"
 "サイズが指定されていません!"
 
-#: ../plug-ins/common/svg.c:506 ../plug-ins/common/wmf.c:338
+#: ../plug-ins/common/svg.c:519 ../plug-ins/common/wmf.c:338
 #, c-format
 msgid "%d x %d"
 msgstr "%d x %d"
 
 #. Scalable Vector Graphics is SVG, should perhaps not be translated
-#: ../plug-ins/common/svg.c:717
+#: ../plug-ins/common/svg.c:724
 msgid "Render Scalable Vector Graphics"
 msgstr "Scalable Vector Graphics を描く"
 
-#: ../plug-ins/common/svg.c:787 ../plug-ins/common/wmf.c:555
+#: ../plug-ins/common/svg.c:794 ../plug-ins/common/wmf.c:555
 #: ../plug-ins/print/gimp_main_window.c:1026
 #: ../plug-ins/print/gimp_main_window.c:1229
 msgid "Height:"
 msgstr "高さ:"
 
-#: ../plug-ins/common/svg.c:861 ../plug-ins/common/wmf.c:629
+#: ../plug-ins/common/svg.c:868 ../plug-ins/common/wmf.c:629
 msgid "_X ratio:"
 msgstr "比率 _X:"
 
-#: ../plug-ins/common/svg.c:883 ../plug-ins/common/wmf.c:651
+#: ../plug-ins/common/svg.c:890 ../plug-ins/common/wmf.c:651
 msgid "_Y ratio:"
 msgstr "比率 _Y:"
 
-#: ../plug-ins/common/svg.c:897 ../plug-ins/common/wmf.c:665
+#: ../plug-ins/common/svg.c:904 ../plug-ins/common/wmf.c:665
 msgid "Constrain aspect ratio"
 msgstr "縦横比指定"
 
-#: ../plug-ins/common/svg.c:908 ../plug-ins/common/wmf.c:676
+#: ../plug-ins/common/svg.c:915 ../plug-ins/common/wmf.c:676
 #, c-format
 msgid "pixels/%a"
 msgstr "ピクセル/%a"
 
 #. Path Import
-#: ../plug-ins/common/svg.c:928
+#: ../plug-ins/common/svg.c:935
 msgid "Import _paths"
 msgstr "パスをインポート(_P)"
 
-#: ../plug-ins/common/svg.c:934
+#: ../plug-ins/common/svg.c:941
 msgid ""
 "Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr "SVG のパス要素を GIMP パスツールで使えるようにインポートします"
 
-#: ../plug-ins/common/svg.c:947
+#: ../plug-ins/common/svg.c:954
 msgid "Merge imported paths"
 msgstr "インポートしたパスを統合"
 
@@ -7302,7 +7318,6 @@ msgid "Create a new unit from scratch."
 msgstr "まっさらなところから新しい単位を作る。"
 
 #: ../plug-ins/common/uniteditor.c:127
-#, fuzzy
 msgid "Create a new unit using the currently selected unit as template."
 msgstr "現在選択中の単位を元にして新しい単位を作る。"
 
@@ -7311,9 +7326,8 @@ msgid "_Unit Editor"
 msgstr "単位エディタ(_U)"
 
 #: ../plug-ins/common/uniteditor.c:209
-#, fuzzy
 msgid "Add a New Unit"
-msgstr "新しい単位"
+msgstr "新しい単位の追加"
 
 #: ../plug-ins/common/uniteditor.c:238
 msgid "_ID:"
@@ -7345,11 +7359,11 @@ msgstr "複数形(_P):"
 
 #: ../plug-ins/common/uniteditor.c:350
 msgid "Incomplete input"
-msgstr ""
+msgstr "入力が不完全"
 
 #: ../plug-ins/common/uniteditor.c:353
 msgid "Please fill in all text fields."
-msgstr ""
+msgstr "テキストフィールドをすべて埋めてください。"
 
 #: ../plug-ins/common/uniteditor.c:410
 msgid "Unit Editor"
@@ -11445,7 +11459,7 @@ msgid "Downloading %s of image data..."
 msgstr "%s の画像データをダウンロードしています..."
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:149
-#: ../plug-ins/uri/uri-backend-wget.c:330
+#: ../plug-ins/uri/uri-backend-wget.c:331
 #, c-format
 msgid "Downloaded %s of image data"
 msgstr "%s の画像データをダウンロードしました"
@@ -11461,7 +11475,7 @@ msgid "Uploaded %s of image data"
 msgstr "%s の画像データをアップロードしました"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:238
-#: ../plug-ins/uri/uri-backend-wget.c:179
+#: ../plug-ins/uri/uri-backend-wget.c:180
 msgid "Connecting to server"
 msgstr "サーバに接続しています"
 
@@ -11475,40 +11489,40 @@ msgstr "ファイル '%2$s' からの %1$s の読み込みに失敗: %3$s"
 msgid "Failed to write %s to '%s': %s"
 msgstr "ファイル '%2$s' へ %1$s の書き込みに失敗: %3$s"
 
-#: ../plug-ins/uri/uri-backend-wget.c:146
-#: ../plug-ins/uri/uri-backend-wget.c:166
-#: ../plug-ins/uri/uri-backend-wget.c:185
-#: ../plug-ins/uri/uri-backend-wget.c:208
-#: ../plug-ins/uri/uri-backend-wget.c:237
+#: ../plug-ins/uri/uri-backend-wget.c:147
+#: ../plug-ins/uri/uri-backend-wget.c:167
+#: ../plug-ins/uri/uri-backend-wget.c:186
+#: ../plug-ins/uri/uri-backend-wget.c:209
+#: ../plug-ins/uri/uri-backend-wget.c:238
 #, c-format
 msgid "wget exited abnormally on URI '%s'"
 msgstr "URI '%s' で wget が異常終了しました"
 
 #. The third line is "Connecting to..."
-#: ../plug-ins/uri/uri-backend-wget.c:174
+#: ../plug-ins/uri/uri-backend-wget.c:175
 #, c-format
-msgid "(timeout is %s second)"
-msgid_plural "(timeout is %s seconds)"
-msgstr[0] "(%s 秒でタイムアウト)"
-msgstr[1] "(%s 秒でタイムアウト)"
+msgid "(timeout is %d second)"
+msgid_plural "(timeout is %d seconds)"
+msgstr[0] "(%d 秒でタイムアウト)"
+msgstr[1] "(%d 秒でタイムアウト)"
 
 #. The fourth line is either the network request or an error
-#: ../plug-ins/uri/uri-backend-wget.c:203
+#: ../plug-ins/uri/uri-backend-wget.c:204
 msgid "Opening URI"
 msgstr "URI を開いています"
 
-#: ../plug-ins/uri/uri-backend-wget.c:214
-#: ../plug-ins/uri/uri-backend-wget.c:247
+#: ../plug-ins/uri/uri-backend-wget.c:215
+#: ../plug-ins/uri/uri-backend-wget.c:248
 #, c-format
 msgid "A network error occurred: %s"
 msgstr "ネットワークエラー発生: %s"
 
-#: ../plug-ins/uri/uri-backend-wget.c:287
+#: ../plug-ins/uri/uri-backend-wget.c:288
 #, c-format
 msgid "Downloading %s of image data"
 msgstr "%s の画像データをダウンロードしています"
 
-#: ../plug-ins/uri/uri-backend-wget.c:292
+#: ../plug-ins/uri/uri-backend-wget.c:293
 msgid "Downloading unknown amount of image data"
 msgstr "容量不明の画像データをダウンロードしています"
 
@@ -11645,6 +11659,12 @@ msgstr "エラー: XJT プロパティファイル %s が読めません。"
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "エラー: XJT プロパティファイル %s が空です。"
+
+#~ msgid "Take a screenshot of your _desktop"
+#~ msgstr "デスクトップを取り込む(_D)"
+
+#~ msgid "_Use intensity algorithm"
+#~ msgstr "強度アルゴリズムを使用する(_U)"
 
 #~ msgid "Unit factor must not be 0."
 #~ msgstr "単位乗数は0であってはなりません。"
@@ -13956,10 +13976,6 @@ msgstr "エラー: XJT プロパティファイル %s が空です。"
 
 #~ msgid "Dup"
 #~ msgstr "複製"
-
-#, fuzzy
-#~ msgid "Del"
-#~ msgstr "削除"
 
 #~ msgid ""
 #~ "by Vidar Madsen\n"
