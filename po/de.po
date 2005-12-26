@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-09-20 15:49+0200\n"
-"PO-Revision-Date: 2005-09-20 15:48+0200\n"
+"PO-Revision-Date: 2005-12-26 15:44+0100\n"
 "Last-Translator: Hendrik Richter <hendi@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -9025,7 +9025,7 @@ msgstr "Info-Fenster verwenden"
 
 #: ../app/tools/gimpmeasuretool.c:118
 msgid "Measure"
-msgstr "Me_ssen"
+msgstr "Messen"
 
 #: ../app/tools/gimpmeasuretool.c:119
 msgid "Measure distances and angles"
@@ -9327,7 +9327,7 @@ msgstr "Automatisch verkleinern"
 
 #: ../app/tools/gimpsheartool.c:98
 msgid "Shear"
-msgstr "Schere"
+msgstr "Scheren"
 
 #: ../app/tools/gimpsheartool.c:99
 msgid "Shear the layer or selection"
