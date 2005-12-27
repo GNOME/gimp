@@ -15,6 +15,8 @@ Bugs fixed in GIMP 2.2.10
 - fixed potential wget issue (bug #322977)
 - fixed non-interactive use of gimp-edit-stroke (bug #322977)
 - fixed Script-Fu crash in some locales such as Chinese (bug #163212)
+- fixed build of librsvg plug-in (bug #314400)
+- fixed parameter type in "plug-in-unsharp-mask" procedure (bug #325007).
 
 
 Bugs fixed in GIMP 2.2.9
