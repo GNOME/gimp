@@ -85,7 +85,7 @@ gimp_dodge_burn_register (Gimp                      *gimp,
                 GIMP_TYPE_DODGE_BURN_OPTIONS,
                 "gimp-dodge-burn",
                 _("Dodge/Burn"),
-                "gimp-tool-dodge-burn");
+                "gimp-tool-dodge");
 }
 
 static void

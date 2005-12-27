@@ -1,5 +1,11 @@
 2005-12-27  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint/gimpconvolve.c (gimp_convolve_register)
+	* app/paint/gimpdodgeburn.c (gimp_dodge_burn_register): fixed
+	stock IDs.
+
+2005-12-27  Michael Natterer  <mitch@gimp.org>
+
 	Fixed incomplete core/ui separation of paint tools and paint
 	methods:
 

@@ -117,7 +117,7 @@ gimp_convolve_register (Gimp                      *gimp,
                 GIMP_TYPE_CONVOLVE_OPTIONS,
                 "gimp-convolve",
                 _("Convolve"),
-                "gimp-tool-convolve");
+                "gimp-tool-blur");
 }
 
 static void
