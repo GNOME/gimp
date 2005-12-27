@@ -813,7 +813,7 @@ The personal gimp directory which is set to the value of the environment
 variable GIMP2_DIRECTORY or to ~/@gimpdir@.
 .TP
 .I gimp_data_dir
-Nase for paths to shareable data, which is set to the value of the
+Base for paths to shareable data, which is set to the value of the
 environment variable GIMP2_DATADIR or to the compiled-in default value
 @gimpdatadir@.
 .TP
