@@ -53,12 +53,18 @@ struct _GimpPaintInfoClass
 };
 
 
-GType           gimp_paint_info_get_type (void) G_GNUC_CONST;
+GType           gimp_paint_info_get_type     (void) G_GNUC_CONST;
 
-GimpPaintInfo * gimp_paint_info_new      (Gimp        *gimp,
-                                          GType        paint_type,
-                                          GType        paint_options_type,
-                                          const gchar *blurb);
+GimpPaintInfo * gimp_paint_info_new          (Gimp          *gimp,
+                                              GType          paint_type,
+                                              GType          paint_options_type,
+                                              const gchar   *identifier,
+                                              const gchar   *blurb,
+                                              const gchar   *stock_id);
+
+void            gimp_paint_info_set_standard (Gimp          *gimp,
+                                              GimpPaintInfo *paint_info);
+GimpPaintInfo * gimp_paint_info_get_standard (Gimp          *gimp);
 
 
 #endif  /*  __GIMP_PAINT_INFO_H__  */

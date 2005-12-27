@@ -59,7 +59,9 @@ gimp_paintbrush_register (Gimp                      *gimp,
   (* callback) (gimp,
                 GIMP_TYPE_PAINTBRUSH,
                 GIMP_TYPE_PAINT_OPTIONS,
-                _("Paintbrush"));
+                "gimp-paintbrush",
+                _("Paintbrush"),
+                "gimp-tool-paintbrush");
 }
 
 static void

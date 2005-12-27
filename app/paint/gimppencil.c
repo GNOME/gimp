@@ -38,7 +38,9 @@ gimp_pencil_register (Gimp                      *gimp,
   (* callback) (gimp,
                 GIMP_TYPE_PENCIL,
                 GIMP_TYPE_PENCIL_OPTIONS,
-                _("Pencil"));
+                "gimp-pencil",
+                _("Pencil"),
+                "gimp-tool-pencil");
 }
 
 static void

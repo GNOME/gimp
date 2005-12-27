@@ -36,7 +36,9 @@ typedef struct _GimpPaintOptions GimpPaintOptions;
 typedef void (* GimpPaintRegisterCallback) (Gimp        *gimp,
                                             GType        paint_type,
                                             GType        paint_options_type,
-                                            const gchar *blurb);
+                                            const gchar *identifier,
+                                            const gchar *blurb,
+                                            const gchar *stock_id);
 
 typedef void (* GimpPaintRegisterFunc)     (Gimp                      *gimp,
                                             GimpPaintRegisterCallback  callback);

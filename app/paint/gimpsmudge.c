@@ -74,7 +74,9 @@ gimp_smudge_register (Gimp                      *gimp,
   (* callback) (gimp,
                 GIMP_TYPE_SMUDGE,
                 GIMP_TYPE_SMUDGE_OPTIONS,
-                _("Smudge"));
+                "gimp-smudge",
+                _("Smudge"),
+                "gimp-tool-smudge");
 }
 
 static void

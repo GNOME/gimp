@@ -65,7 +65,9 @@ gimp_airbrush_register (Gimp                      *gimp,
   (* callback) (gimp,
                 GIMP_TYPE_AIRBRUSH,
                 GIMP_TYPE_AIRBRUSH_OPTIONS,
-                _("Airbrush"));
+                "gimp-airbrush",
+                _("Airbrush"),
+                "gimp-tool-airbrush");
 }
 
 static void

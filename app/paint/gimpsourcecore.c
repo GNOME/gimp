@@ -85,7 +85,9 @@ gimp_clone_register (Gimp                      *gimp,
   (* callback) (gimp,
                 GIMP_TYPE_CLONE,
                 GIMP_TYPE_CLONE_OPTIONS,
-                _("Clone"));
+                "gimp-clone",
+                _("Clone"),
+                "gimp-tool-clone");
 }
 
 static void

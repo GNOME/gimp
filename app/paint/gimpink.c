@@ -99,7 +99,9 @@ gimp_ink_register (Gimp                      *gimp,
   (* callback) (gimp,
                 GIMP_TYPE_INK,
                 GIMP_TYPE_INK_OPTIONS,
-                _("Ink"));
+                "gimp-ink",
+                _("Ink"),
+                "gimp-tool-ink");
 }
 
 static void

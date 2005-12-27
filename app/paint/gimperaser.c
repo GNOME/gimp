@@ -58,7 +58,9 @@ gimp_eraser_register (Gimp                      *gimp,
   (* callback) (gimp,
                 GIMP_TYPE_ERASER,
                 GIMP_TYPE_ERASER_OPTIONS,
-                _("Eraser"));
+                "gimp-eraser",
+                _("Eraser"),
+                "gimp-tool-eraser");
 }
 
 static void

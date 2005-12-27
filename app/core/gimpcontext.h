@@ -53,6 +53,9 @@ struct _GimpContext
   GimpToolInfo         *tool_info;
   gchar                *tool_name;
 
+  GimpPaintInfo        *paint_info;
+  gchar                *paint_name;
+
   GimpRGB               foreground;
   GimpRGB               background;
 
@@ -95,6 +98,8 @@ struct _GimpContextClass
 
   void (* tool_changed)       (GimpContext          *context,
                                GimpToolInfo         *tool_info);
+  void (* paint_info_changed) (GimpContext          *context,
+                               GimpPaintInfo        *paint_info);
 
   void (* foreground_changed) (GimpContext          *context,
                                GimpRGB              *color);
@@ -206,6 +211,13 @@ GimpToolInfo  * gimp_context_get_tool           (GimpContext     *context);
 void            gimp_context_set_tool           (GimpContext     *context,
                                                  GimpToolInfo    *tool_info);
 void            gimp_context_tool_changed       (GimpContext     *context);
+
+
+/*  paint info  */
+GimpPaintInfo * gimp_context_get_paint_info     (GimpContext     *context);
+void            gimp_context_set_paint_info     (GimpContext     *context,
+                                                 GimpPaintInfo   *paint_info);
+void            gimp_context_paint_info_changed (GimpContext     *context);
 
 
 /*  foreground color  */

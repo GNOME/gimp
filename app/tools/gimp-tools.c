@@ -488,43 +488,43 @@ gimp_tools_register (GType                   tool_type,
 
   if (tool_type == GIMP_TYPE_PENCIL_TOOL)
     {
-      paint_core_name = "GimpPencil";
+      paint_core_name = "gimp-pencil";
     }
   else if (tool_type == GIMP_TYPE_PAINTBRUSH_TOOL)
     {
-      paint_core_name = "GimpPaintbrush";
+      paint_core_name = "gimp-paintbrush";
     }
   else if (tool_type == GIMP_TYPE_ERASER_TOOL)
     {
-      paint_core_name = "GimpEraser";
+      paint_core_name = "gimp-eraser";
     }
   else if (tool_type == GIMP_TYPE_AIRBRUSH_TOOL)
     {
-      paint_core_name = "GimpAirbrush";
+      paint_core_name = "gimp-airbrush";
     }
   else if (tool_type == GIMP_TYPE_CLONE_TOOL)
     {
-      paint_core_name = "GimpClone";
+      paint_core_name = "gimp-clone";
     }
   else if (tool_type == GIMP_TYPE_CONVOLVE_TOOL)
     {
-      paint_core_name = "GimpConvolve";
+      paint_core_name = "gimp-convolve";
     }
   else if (tool_type == GIMP_TYPE_SMUDGE_TOOL)
     {
-      paint_core_name = "GimpSmudge";
+      paint_core_name = "gimp-smudge";
     }
   else if (tool_type == GIMP_TYPE_DODGE_BURN_TOOL)
     {
-      paint_core_name = "GimpDodgeBurn";
+      paint_core_name = "gimp-dodge-burn";
     }
   else if (tool_type == GIMP_TYPE_INK_TOOL)
     {
-      paint_core_name = "GimpInk";
+      paint_core_name = "gimp-ink";
     }
   else
     {
-      paint_core_name = "GimpPaintbrush";
+      paint_core_name = "gimp-paintbrush";
     }
 
   tool_info = gimp_tool_info_new (gimp,

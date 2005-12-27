@@ -44,7 +44,9 @@
 static void   gimp_paint_register (Gimp        *gimp,
                                    GType        paint_type,
                                    GType        paint_options_type,
-                                   const gchar *blurb);
+                                   const gchar *identifier,
+                                   const gchar *blurb,
+                                   const gchar *stock_id);
 
 
 /*  public functions  */
@@ -72,16 +74,22 @@ gimp_paint_init (Gimp *gimp)
   gimp->paint_info_list = gimp_list_new (GIMP_TYPE_PAINT_INFO, FALSE);
   gimp_object_set_name (GIMP_OBJECT (gimp->paint_info_list), "paint infos");
 
+  gimp_container_freeze (gimp->paint_info_list);
+
   for (i = 0; i < G_N_ELEMENTS (register_funcs); i++)
     {
       register_funcs[i] (gimp, gimp_paint_register);
     }
+
+  gimp_container_thaw (gimp->paint_info_list);
 }
 
 void
 gimp_paint_exit (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  gimp_paint_info_set_standard (gimp, NULL);
 
   if (gimp->paint_info_list)
     {
@@ -97,7 +105,9 @@ static void
 gimp_paint_register (Gimp        *gimp,
                      GType        paint_type,
                      GType        paint_options_type,
-                     const gchar *blurb)
+                     const gchar *identifier,
+                     const gchar *blurb,
+                     const gchar *stock_id)
 {
   GimpPaintInfo *paint_info;
 
@@ -109,8 +119,13 @@ gimp_paint_register (Gimp        *gimp,
   paint_info = gimp_paint_info_new (gimp,
                                     paint_type,
                                     paint_options_type,
-                                    blurb);
+                                    identifier,
+                                    blurb,
+                                    stock_id);
 
   gimp_container_add (gimp->paint_info_list, GIMP_OBJECT (paint_info));
   g_object_unref (paint_info);
+
+  if (paint_type == GIMP_TYPE_PAINTBRUSH)
+    gimp_paint_info_set_standard (gimp, paint_info);
 }

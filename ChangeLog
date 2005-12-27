@@ -1,3 +1,51 @@
+2005-12-27  Michael Natterer  <mitch@gimp.org>
+
+	Fixed incomplete core/ui separation of paint tools and paint
+	methods:
+
+	* app/core/core-enums.h
+	* app/core/gimpcontext.[ch]: added a "paint-info" property and API
+	so the current paint method can be selected without the need for
+	an active tool.
+
+	(gimp_context_real_set_tool): set the paint-info to
+	tool_info->paint_info so the paint method follows the active tool
+	just as the active image follows the active display.
+
+	* app/core/gimp.h (struct Gimp)
+	* app/core/gimppaintinfo.[ch]: added "standard_paint_info" API
+	and stuff to be consistent with other context object properties.
+
+	* app/paint/gimp-paint.c: set the paintbrush as
+	standard_paint_info.
+
+	* app/core/gimpstrokedesc.c (gimp_stroke_desc_new): removed the
+	hack of falling back to the paintbrush when there is no active
+	tool and use the active paint method instead. Fall back to the
+	standard paint method if there is no active one.
+	(nothing in the core uses the active tool any more now).
+
+	* app/widgets/gimpdeviceinfo.h: add the paint info to the
+	properties which are saved in devicerc.
+
+	Added identifiers (names) and stock-ids to GimpPaintInfo:
+
+	* app/core/gimppaintinfo.[ch] (gimp_paint_info_new): added
+	identifier and stock-id parameters.
+
+	* app/core/gimptoolinfo.c (gimp_tool_info_new): removed the hack
+	of setting the paint-info stock-id from the tool-info stock-id.
+
+	* app/paint/paint-types.h
+	* app/paint/gimp-paint.c: changed GimpPaintRegisterCallback
+	accordingly.
+
+	* app/tools/gimp-tools.c (gimp_tools_register): changed paint
+	info names accordingly.
+
+	* app/paint/*.c (gimp_*_register): pass identifier and stock-id
+	accordingly.
+
 2005-12-27  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/unsharp.c (query): fixed type of threshold

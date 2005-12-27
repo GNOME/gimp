@@ -256,8 +256,6 @@ gimp_tool_info_new (Gimp                *gimp,
 
   if (tool_info->tool_options_type == paint_info->paint_options_type)
     {
-      gimp_viewable_set_stock_id (GIMP_VIEWABLE (paint_info), stock_id);
-
       tool_info->tool_options = g_object_ref (paint_info->paint_options);
     }
   else

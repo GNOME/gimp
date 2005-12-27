@@ -91,15 +91,20 @@ GimpPaintInfo *
 gimp_paint_info_new (Gimp        *gimp,
                      GType        paint_type,
                      GType        paint_options_type,
-                     const gchar *blurb)
+                     const gchar *identifier,
+                     const gchar *blurb,
+                     const gchar *stock_id)
 {
   GimpPaintInfo *paint_info;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (identifier != NULL, NULL);
   g_return_val_if_fail (blurb != NULL, NULL);
+  g_return_val_if_fail (stock_id != NULL, NULL);
 
   paint_info = g_object_new (GIMP_TYPE_PAINT_INFO,
-                             "name", g_type_name (paint_type),
+                             "name",     identifier,
+                             "stock-id", stock_id,
                              NULL);
 
   paint_info->gimp               = gimp;
@@ -110,4 +115,31 @@ gimp_paint_info_new (Gimp        *gimp,
   paint_info->paint_options      = gimp_paint_options_new (paint_info);
 
   return paint_info;
+}
+
+void
+gimp_paint_info_set_standard (Gimp          *gimp,
+                              GimpPaintInfo *paint_info)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (! paint_info || GIMP_IS_PAINT_INFO (paint_info));
+
+  if (paint_info != gimp->standard_paint_info)
+    {
+      if (gimp->standard_paint_info)
+        g_object_unref (gimp->standard_paint_info);
+
+      gimp->standard_paint_info = paint_info;
+
+      if (gimp->standard_paint_info)
+        g_object_ref (gimp->standard_paint_info);
+    }
+}
+
+GimpPaintInfo *
+gimp_paint_info_get_standard (Gimp *gimp)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  return gimp->standard_paint_info;
 }

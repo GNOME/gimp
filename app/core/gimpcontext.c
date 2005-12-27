@@ -43,6 +43,7 @@
 #include "gimpgradient.h"
 #include "gimpimage.h"
 #include "gimpmarshal.h"
+#include "gimppaintinfo.h"
 #include "gimppalette.h"
 #include "gimppattern.h"
 #include "gimptemplate.h"
@@ -121,6 +122,17 @@ static void gimp_context_tool_list_thaw      (GimpContainer    *container,
                                               GimpContext      *context);
 static void gimp_context_real_set_tool       (GimpContext      *context,
                                               GimpToolInfo     *tool_info);
+
+/*  paint info  */
+static void gimp_context_paint_info_dirty    (GimpPaintInfo    *paint_info,
+                                              GimpContext      *context);
+static void gimp_context_paint_info_removed  (GimpContainer    *container,
+                                              GimpPaintInfo    *paint_info,
+                                              GimpContext      *context);
+static void gimp_context_paint_info_list_thaw(GimpContainer    *container,
+                                              GimpContext      *context);
+static void gimp_context_real_set_paint_info (GimpContext      *context,
+                                              GimpPaintInfo    *paint_info);
 
 /*  foreground  */
 static void gimp_context_real_set_foreground (GimpContext      *context,
@@ -251,6 +263,7 @@ enum
   IMAGE_CHANGED,
   DISPLAY_CHANGED,
   TOOL_CHANGED,
+  PAINT_INFO_CHANGED,
   FOREGROUND_CHANGED,
   BACKGROUND_CHANGED,
   OPACITY_CHANGED,
@@ -273,6 +286,7 @@ static gchar *gimp_context_prop_names[] =
   "image",
   "display",
   "tool",
+  "paint-info",
   "foreground",
   "background",
   "opacity",
@@ -293,6 +307,7 @@ static GType gimp_context_prop_types[] =
   G_TYPE_NONE, /* PROP_GIMP */
   0,
   G_TYPE_NONE,
+  0,
   0,
   G_TYPE_NONE,
   G_TYPE_NONE,
@@ -317,12 +332,13 @@ G_DEFINE_TYPE_WITH_CODE (GimpContext, gimp_context, GIMP_TYPE_OBJECT,
 
 static guint gimp_context_signals[LAST_SIGNAL] = { 0 };
 
-static GimpToolInfo *standard_tool_info = NULL;
-static GimpBrush    *standard_brush     = NULL;
-static GimpPattern  *standard_pattern   = NULL;
-static GimpGradient *standard_gradient  = NULL;
-static GimpPalette  *standard_palette   = NULL;
-static GimpFont     *standard_font      = NULL;
+static GimpToolInfo  *standard_tool_info  = NULL;
+static GimpPaintInfo *standard_paint_info = NULL;
+static GimpBrush     *standard_brush      = NULL;
+static GimpPattern   *standard_pattern    = NULL;
+static GimpGradient  *standard_gradient   = NULL;
+static GimpPalette   *standard_palette    = NULL;
+static GimpFont      *standard_font       = NULL;
 
 
 static void
@@ -365,6 +381,16 @@ gimp_context_class_init (GimpContextClass *klass)
                   gimp_marshal_VOID__OBJECT,
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_TOOL_INFO);
+
+  gimp_context_signals[PAINT_INFO_CHANGED] =
+    g_signal_new ("paint-info-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpContextClass, paint_info_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__OBJECT,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_PAINT_INFO);
 
   gimp_context_signals[FOREGROUND_CHANGED] =
     g_signal_new ("foreground-changed",
@@ -497,6 +523,7 @@ gimp_context_class_init (GimpContextClass *klass)
   klass->image_changed           = NULL;
   klass->display_changed         = NULL;
   klass->tool_changed            = NULL;
+  klass->paint_info_changed      = NULL;
   klass->foreground_changed      = NULL;
   klass->background_changed      = NULL;
   klass->opacity_changed         = NULL;
@@ -510,16 +537,17 @@ gimp_context_class_init (GimpContextClass *klass)
   klass->imagefile_changed       = NULL;
   klass->template_changed        = NULL;
 
-  gimp_context_prop_types[GIMP_CONTEXT_PROP_IMAGE]     = GIMP_TYPE_IMAGE;
-  gimp_context_prop_types[GIMP_CONTEXT_PROP_TOOL]      = GIMP_TYPE_TOOL_INFO;
-  gimp_context_prop_types[GIMP_CONTEXT_PROP_BRUSH]     = GIMP_TYPE_BRUSH;
-  gimp_context_prop_types[GIMP_CONTEXT_PROP_PATTERN]   = GIMP_TYPE_PATTERN;
-  gimp_context_prop_types[GIMP_CONTEXT_PROP_GRADIENT]  = GIMP_TYPE_GRADIENT;
-  gimp_context_prop_types[GIMP_CONTEXT_PROP_PALETTE]   = GIMP_TYPE_PALETTE;
-  gimp_context_prop_types[GIMP_CONTEXT_PROP_FONT]      = GIMP_TYPE_FONT;
-  gimp_context_prop_types[GIMP_CONTEXT_PROP_BUFFER]    = GIMP_TYPE_BUFFER;
-  gimp_context_prop_types[GIMP_CONTEXT_PROP_IMAGEFILE] = GIMP_TYPE_IMAGEFILE;
-  gimp_context_prop_types[GIMP_CONTEXT_PROP_TEMPLATE]  = GIMP_TYPE_TEMPLATE;
+  gimp_context_prop_types[GIMP_CONTEXT_PROP_IMAGE]      = GIMP_TYPE_IMAGE;
+  gimp_context_prop_types[GIMP_CONTEXT_PROP_TOOL]       = GIMP_TYPE_TOOL_INFO;
+  gimp_context_prop_types[GIMP_CONTEXT_PROP_PAINT_INFO] = GIMP_TYPE_PAINT_INFO;
+  gimp_context_prop_types[GIMP_CONTEXT_PROP_BRUSH]      = GIMP_TYPE_BRUSH;
+  gimp_context_prop_types[GIMP_CONTEXT_PROP_PATTERN]    = GIMP_TYPE_PATTERN;
+  gimp_context_prop_types[GIMP_CONTEXT_PROP_GRADIENT]   = GIMP_TYPE_GRADIENT;
+  gimp_context_prop_types[GIMP_CONTEXT_PROP_PALETTE]    = GIMP_TYPE_PALETTE;
+  gimp_context_prop_types[GIMP_CONTEXT_PROP_FONT]       = GIMP_TYPE_FONT;
+  gimp_context_prop_types[GIMP_CONTEXT_PROP_BUFFER]     = GIMP_TYPE_BUFFER;
+  gimp_context_prop_types[GIMP_CONTEXT_PROP_IMAGEFILE]  = GIMP_TYPE_IMAGEFILE;
+  gimp_context_prop_types[GIMP_CONTEXT_PROP_TEMPLATE]   = GIMP_TYPE_TEMPLATE;
 
   g_object_class_install_property (object_class, GIMP_CONTEXT_PROP_GIMP,
                                    g_param_spec_object ("gimp",
@@ -543,6 +571,11 @@ gimp_context_class_init (GimpContextClass *klass)
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_TOOL,
                                    gimp_context_prop_names[GIMP_CONTEXT_PROP_TOOL], NULL,
                                    GIMP_TYPE_TOOL_INFO,
+                                   0);
+
+  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_PAINT_INFO,
+                                   gimp_context_prop_names[GIMP_CONTEXT_PROP_PAINT_INFO], NULL,
+                                   GIMP_TYPE_PAINT_INFO,
                                    0);
 
   GIMP_CONFIG_INSTALL_PROP_RGB (object_class, GIMP_CONTEXT_PROP_FOREGROUND,
@@ -637,6 +670,9 @@ gimp_context_init (GimpContext *context)
   context->tool_info       = NULL;
   context->tool_name       = NULL;
 
+  context->paint_info      = NULL;
+  context->paint_name      = NULL;
+
   context->brush           = NULL;
   context->brush_name      = NULL;
 
@@ -698,6 +734,13 @@ gimp_context_constructor (GType                  type,
                            object, 0);
   g_signal_connect_object (gimp->tool_info_list, "thaw",
                            G_CALLBACK (gimp_context_tool_list_thaw),
+                           object, 0);
+
+  g_signal_connect_object (gimp->paint_info_list, "remove",
+                           G_CALLBACK (gimp_context_paint_info_removed),
+                           object, 0);
+  g_signal_connect_object (gimp->paint_info_list, "thaw",
+                           G_CALLBACK (gimp_context_paint_info_list_thaw),
                            object, 0);
 
   g_signal_connect_object (gimp->brush_factory->container, "remove",
@@ -792,6 +835,17 @@ gimp_context_finalize (GObject *object)
     {
       g_free (context->tool_name);
       context->tool_name = NULL;
+    }
+
+  if (context->paint_info)
+    {
+      g_object_unref (context->paint_info);
+      context->paint_info = NULL;
+    }
+  if (context->paint_name)
+    {
+      g_free (context->paint_name);
+      context->paint_name = NULL;
     }
 
   if (context->brush)
@@ -907,6 +961,9 @@ gimp_context_set_property (GObject      *object,
     case GIMP_CONTEXT_PROP_TOOL:
       gimp_context_set_tool (context, g_value_get_object (value));
       break;
+    case GIMP_CONTEXT_PROP_PAINT_INFO:
+      gimp_context_set_paint_info (context, g_value_get_object (value));
+      break;
     case GIMP_CONTEXT_PROP_FOREGROUND:
       gimp_context_set_foreground (context, g_value_get_boxed (value));
       break;
@@ -971,6 +1028,9 @@ gimp_context_get_property (GObject    *object,
     case GIMP_CONTEXT_PROP_TOOL:
       g_value_set_object (value, gimp_context_get_tool (context));
       break;
+    case GIMP_CONTEXT_PROP_PAINT_INFO:
+      g_value_set_object (value, gimp_context_get_paint_info (context));
+      break;
     case GIMP_CONTEXT_PROP_FOREGROUND:
       {
         GimpRGB color;
@@ -1033,6 +1093,9 @@ gimp_context_get_memsize (GimpObject *object,
   if (context->tool_name)
     memsize += strlen (context->tool_name) + 1;
 
+  if (context->paint_name)
+    memsize += strlen (context->paint_name) + 1;
+
   if (context->brush_name)
     memsize += strlen (context->brush_name) + 1;
 
@@ -1083,6 +1146,7 @@ gimp_context_serialize_property (GimpConfig       *config,
   switch (property_id)
     {
     case GIMP_CONTEXT_PROP_TOOL:
+    case GIMP_CONTEXT_PROP_PAINT_INFO:
     case GIMP_CONTEXT_PROP_BRUSH:
     case GIMP_CONTEXT_PROP_PATTERN:
     case GIMP_CONTEXT_PROP_GRADIENT:
@@ -1128,6 +1192,13 @@ gimp_context_deserialize_property (GimpConfig *object,
       container = context->gimp->tool_info_list;
       current   = (GimpObject *) context->tool_info;
       name_loc  = &context->tool_name;
+      no_data   = TRUE;
+      break;
+
+    case GIMP_CONTEXT_PROP_PAINT_INFO:
+      container = context->gimp->paint_info_list;
+      current   = (GimpObject *) context->paint_info;
+      name_loc  = &context->paint_name;
       no_data   = TRUE;
       break;
 
@@ -1423,6 +1494,14 @@ gimp_context_copy_property (GimpContext         *src,
       standard_object = standard_tool_info;
       src_name        = src->tool_name;
       dest_name_loc   = &dest->tool_name;
+      break;
+
+    case GIMP_CONTEXT_PROP_PAINT_INFO:
+      gimp_context_real_set_paint_info (dest, src->paint_info);
+      object          = src->paint_info;
+      standard_object = standard_paint_info;
+      src_name        = src->paint_name;
+      dest_name_loc   = &dest->paint_name;
       break;
 
     case GIMP_CONTEXT_PROP_FOREGROUND:
@@ -1862,10 +1941,136 @@ gimp_context_real_set_tool (GimpContext  *context,
 
       if (tool_info != standard_tool_info)
         context->tool_name = g_strdup (GIMP_OBJECT (tool_info)->name);
+
+      if (tool_info->paint_info)
+        gimp_context_real_set_paint_info (context, tool_info->paint_info);
     }
 
   g_object_notify (G_OBJECT (context), "tool");
   gimp_context_tool_changed (context);
+}
+
+
+/*****************************************************************************/
+/*  paint info  **************************************************************/
+
+GimpPaintInfo *
+gimp_context_get_paint_info (GimpContext *context)
+{
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+
+  return context->paint_info;
+}
+
+void
+gimp_context_set_paint_info (GimpContext   *context,
+                             GimpPaintInfo *paint_info)
+{
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (! paint_info || GIMP_IS_PAINT_INFO (paint_info));
+  context_find_defined (context, GIMP_CONTEXT_PROP_PAINT_INFO);
+
+  gimp_context_real_set_paint_info (context, paint_info);
+}
+
+void
+gimp_context_paint_info_changed (GimpContext *context)
+{
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
+
+  g_signal_emit (context,
+                 gimp_context_signals[PAINT_INFO_CHANGED], 0,
+                 context->paint_info);
+}
+
+/*  the active paint info was modified  */
+static void
+gimp_context_paint_info_dirty (GimpPaintInfo *paint_info,
+                               GimpContext   *context)
+{
+  g_free (context->paint_name);
+  context->paint_name = g_strdup (GIMP_OBJECT (paint_info)->name);
+}
+
+/*  the global paint info list is there again after refresh  */
+static void
+gimp_context_paint_info_list_thaw (GimpContainer *container,
+                                   GimpContext   *context)
+{
+  GimpPaintInfo *paint_info;
+
+  if (! context->paint_name)
+    context->paint_name = g_strdup ("GimpPaintbrush");
+
+  paint_info = gimp_context_find_object (context, container,
+                                         context->paint_name,
+                                         gimp_paint_info_get_standard (context->gimp));
+
+  gimp_context_real_set_paint_info (context, paint_info);
+}
+
+/*  the active paint info disappeared  */
+static void
+gimp_context_paint_info_removed (GimpContainer *container,
+                                 GimpPaintInfo *paint_info,
+                                 GimpContext   *context)
+{
+  if (paint_info == context->paint_info)
+    {
+      context->paint_info = NULL;
+
+      g_signal_handlers_disconnect_by_func (paint_info,
+                                            gimp_context_paint_info_dirty,
+                                            context);
+      g_object_unref (paint_info);
+
+      if (! gimp_container_frozen (container))
+        gimp_context_paint_info_list_thaw (container, context);
+    }
+}
+
+static void
+gimp_context_real_set_paint_info (GimpContext   *context,
+                                  GimpPaintInfo *paint_info)
+{
+  if (! standard_paint_info)
+    standard_paint_info = gimp_paint_info_get_standard (context->gimp);
+
+  if (context->paint_info == paint_info)
+    return;
+
+  if (context->paint_name && paint_info != standard_paint_info)
+    {
+      g_free (context->paint_name);
+      context->paint_name = NULL;
+    }
+
+  /*  disconnect from the old paint info's signals  */
+  if (context->paint_info)
+    {
+      g_signal_handlers_disconnect_by_func (context->paint_info,
+                                            gimp_context_paint_info_dirty,
+                                            context);
+      g_object_unref (context->paint_info);
+    }
+
+  context->paint_info = paint_info;
+
+  if (paint_info)
+    {
+      g_object_ref (paint_info);
+
+      g_signal_connect_object (paint_info, "name-changed",
+                               G_CALLBACK (gimp_context_paint_info_dirty),
+                               context,
+                               0);
+
+      if (paint_info != standard_paint_info)
+        context->paint_name = g_strdup (GIMP_OBJECT (paint_info)->name);
+    }
+
+  g_object_notify (G_OBJECT (context), "paint-info");
+  gimp_context_paint_info_changed (context);
 }
 
 

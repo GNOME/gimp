@@ -115,7 +115,9 @@ gimp_convolve_register (Gimp                      *gimp,
   (* callback) (gimp,
                 GIMP_TYPE_CONVOLVE,
                 GIMP_TYPE_CONVOLVE_OPTIONS,
-                _("Convolve"));
+                "gimp-convolve",
+                _("Convolve"),
+                "gimp-tool-convolve");
 }
 
 static void
