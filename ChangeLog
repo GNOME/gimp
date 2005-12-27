@@ -1,5 +1,10 @@
 2005-12-27  Sven Neumann  <sven@gimp.org>
 
+	* data/images/gimp-splash.png: anniversairy splash screen "Dialed In",
+	a contest submission by ix(at)hydrophilus.com.
+
+2005-12-27  Sven Neumann  <sven@gimp.org>
+
 	Merged from HEAD branch:
 
 	* plug-ins/common/unsharp.c (query): fixed type of threshold
