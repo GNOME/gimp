@@ -1,3 +1,10 @@
+2005-12-27  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
+	* plug-ins/common/unsharp.c (query): fixed type of threshold
+	parameter (bug #325007).
+
 2005-12-19  Sven Neumann  <sven@gimp.org>
 
 	Merged from HEAD branch:

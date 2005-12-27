@@ -126,7 +126,7 @@ query (void)
       { GIMP_PDB_DRAWABLE, "drawable",  "Drawable to draw on" },
       { GIMP_PDB_FLOAT,    "radius",    "Radius of gaussian blur (in pixels > 1.0)" },
       { GIMP_PDB_FLOAT,    "amount",    "Strength of effect" },
-      { GIMP_PDB_FLOAT,    "threshold", "Threshold" }
+      { GIMP_PDB_INT32,    "threshold", "Threshold (0-255)" }
     };
 
   gimp_install_procedure ("plug_in_unsharp_mask",
