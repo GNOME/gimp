@@ -1,3 +1,8 @@
+2005-12-27  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/unsharp.c (query): fixed type of threshold
+	parameter (bug #325007).
+
 2005-12-23  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/common/apply_lens.c
