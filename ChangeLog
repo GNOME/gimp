@@ -1,5 +1,13 @@
 2005-12-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpwidgets-utils.[ch]: removed
+	gimp_action_get_accel_closure().
+
+	* app/widgets/gimpactionview.c (gimp_action_view_new): use
+	gtk_action_get_accel_closure() instead.
+
+2005-12-28  Michael Natterer  <mitch@gimp.org>
+
 	* configure.in: bump version to 2.3.7,
 	require GTK+ >= 2.8.0 and pango >= 2.10.0.
 

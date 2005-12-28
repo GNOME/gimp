@@ -241,7 +241,7 @@ gimp_action_view_new (GimpUIManager *manager,
 
           if (show_shortcuts)
             {
-              accel_closure = gimp_action_get_accel_closure (action);
+              accel_closure = gtk_action_get_accel_closure (action);
 
               if (accel_closure)
                 {
