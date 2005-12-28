@@ -45,6 +45,7 @@
 
 #include "core/gimp.h"
 
+#include "about.h"
 #include "app_procs.h"
 #include "errors.h"
 #include "sanity.h"
@@ -247,7 +248,7 @@ main (int    argc,
 
   gimp_init_i18n ();
 
-  g_set_application_name (_("GNU Image Manipulation Program"));
+  g_set_application_name (GIMP_NAME);
 
   basename = g_path_get_basename (argv[0]);
   g_set_prgname (basename);

@@ -48,6 +48,8 @@
 
 #include "widgets/gimpwidgets-utils.h"
 
+#include "about.h"
+
 #include "user-install-dialog.h"
 
 #include "gimp-intl.h"
@@ -585,6 +587,7 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
   gchar     *filename;
   gchar     *version;
   gchar     *title;
+  gchar     *tmp;
   gint       i;
 
   oldgimp = g_strdup (gimp_directory ());
@@ -783,8 +786,7 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
   /*  GPL_PAGE  */
 
   /*  version number  */
-  title = g_strdup_printf (_("Welcome to\n"
-                             "The GIMP %d.%d User Installation"),
+  title = g_strdup_printf (_("Welcome to GIMP %d.%d"),
                            GIMP_MAJOR_VERSION, GIMP_MINOR_VERSION);
 
   page = user_install_notebook_append_page (GTK_NOTEBOOK (notebook),
@@ -795,33 +797,15 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
 
   /*  do not free title yet!  */
 
-  add_label (GTK_BOX (page),
-             _("<b>The GIMP - GNU Image Manipulation Program</b>\n"
-               "Copyright (C) 1995-2005\n"
-               "Spencer Kimball, Peter Mattis and the GIMP Development Team."));
+  tmp = g_strconcat ("<b>", GIMP_NAME, "</b>", "\n", GIMP_COPYRIGHT, NULL);
+  add_label (GTK_BOX (page), tmp);
+  g_free (tmp);
 
   sep = gtk_hseparator_new ();
   gtk_box_pack_start (GTK_BOX (page), sep, FALSE, FALSE, 2);
   gtk_widget_show (sep);
 
-  add_label
-    (GTK_BOX (page),
-     _("This program is free software; you can redistribute it and/or modify "
-       "it under the terms of the GNU General Public License as published by "
-       "the Free Software Foundation; either version 2 of the License, or "
-       "(at your option) any later version."));
-  add_label
-    (GTK_BOX (page),
-     _("This program is distributed in the hope that it will be useful, "
-       "but WITHOUT ANY WARRANTY; without even the implied warranty of "
-       "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. "
-       "See the GNU General Public License for more details."));
-  add_label
-    (GTK_BOX (page),
-     _("You should have received a copy of the GNU General Public License "
-       "along with this program; if not, write to the Free Software "
-       "Foundation, Inc., 59 Temple Place - Suite 330, Boston, "
-       "MA 02111-1307, USA."));
+  add_label (GTK_BOX (page), GIMP_LICENSE);
 
   /*  MIGRATION_PAGE  */
   if (version && migrate)

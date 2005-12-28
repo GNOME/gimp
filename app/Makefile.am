@@ -41,6 +41,7 @@ app_sources = \
 	app_procs.c	\
 	app_procs.h	\
 	main.c		\
+	about.h		\
 	batch.c		\
 	batch.h		\
 	errors.c	\
