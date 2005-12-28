@@ -1,3 +1,13 @@
+2005-12-28  Sven Neumann  <sven@gimp.org>
+
+	* HACKING
+	* INSTALL: document the changed dependencies.
+
+	* configure.in
+	* app/sanity.c: check for glib >= 2.8.2 at compile and run-time.
+
+	* app/plug-in/plug-in.c: removed workaround for glib < 2.8.2.
+
 2005-12-28  Simon Budig  <simon@gimp.org>
 
 	* tools/pdbgen/pdb/image.pdb

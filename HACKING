@@ -84,10 +84,10 @@ anonymous CVS server:
 The interesting modules and the suggested stable branches to use are:
 
     * gimp
-    * glib        (glib-2-6)
-    * atk         (gnome-2-6)
-    * pango       (pango-1-8)
-    * gtk+        (gtk-2-6)
+    * glib        (glib-2-8)
+    * atk         (gnome-2-12)
+    * pango       (pango-1-10)
+    * gtk+        (gtk-2-8)
     * libart_lgpl
     * gtkhtml2
     * intltool
