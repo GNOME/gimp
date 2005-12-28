@@ -148,7 +148,7 @@ airbrush_invoker (Gimp         *gimp,
   if (success)
     {
       GimpPaintInfo *info = (GimpPaintInfo *)
-        gimp_container_get_child_by_name (gimp->paint_info_list, "GimpAirbrush");
+        gimp_container_get_child_by_name (gimp->paint_info_list, "gimp-airbrush");
 
       success = (info && gimp_item_is_attached (GIMP_ITEM (drawable)));
 
@@ -236,7 +236,7 @@ airbrush_default_invoker (Gimp         *gimp,
   if (success)
     {
       GimpPaintInfo *info = (GimpPaintInfo *)
-        gimp_container_get_child_by_name (gimp->paint_info_list, "GimpAirbrush");
+        gimp_container_get_child_by_name (gimp->paint_info_list, "gimp-airbrush");
 
       success = (info && gimp_item_is_attached (GIMP_ITEM (drawable)));
 
@@ -331,7 +331,7 @@ clone_invoker (Gimp         *gimp,
   if (success)
     {
       GimpPaintInfo *info = (GimpPaintInfo *)
-        gimp_container_get_child_by_name (gimp->paint_info_list, "GimpClone");
+        gimp_container_get_child_by_name (gimp->paint_info_list, "gimp-clone");
 
       success = (info && gimp_item_is_attached (GIMP_ITEM (drawable)));
 
@@ -445,7 +445,7 @@ clone_default_invoker (Gimp         *gimp,
   if (success)
     {
       GimpPaintInfo *info = (GimpPaintInfo *)
-        gimp_container_get_child_by_name (gimp->paint_info_list, "GimpClone");
+        gimp_container_get_child_by_name (gimp->paint_info_list, "gimp-clone");
 
       success = (info && gimp_item_is_attached (GIMP_ITEM (drawable)));
 
@@ -534,7 +534,7 @@ convolve_invoker (Gimp         *gimp,
   if (success)
     {
       GimpPaintInfo *info = (GimpPaintInfo *)
-        gimp_container_get_child_by_name (gimp->paint_info_list, "GimpConvolve");
+        gimp_container_get_child_by_name (gimp->paint_info_list, "gimp-convolve");
 
       success = (info && gimp_item_is_attached (GIMP_ITEM (drawable)));
 
@@ -628,7 +628,7 @@ convolve_default_invoker (Gimp         *gimp,
   if (success)
     {
       GimpPaintInfo *info = (GimpPaintInfo *)
-        gimp_container_get_child_by_name (gimp->paint_info_list, "GimpConvolve");
+        gimp_container_get_child_by_name (gimp->paint_info_list, "gimp-convolve");
 
       success = (info && gimp_item_is_attached (GIMP_ITEM (drawable)));
 
@@ -722,7 +722,7 @@ dodgeburn_invoker (Gimp         *gimp,
   if (success)
     {
       GimpPaintInfo *info = (GimpPaintInfo *)
-        gimp_container_get_child_by_name (gimp->paint_info_list, "GimpDodgeBurn");
+        gimp_container_get_child_by_name (gimp->paint_info_list, "gimp-dodge-burn");
 
       success = (info && gimp_item_is_attached (GIMP_ITEM (drawable)));
 
@@ -822,7 +822,7 @@ dodgeburn_default_invoker (Gimp         *gimp,
   if (success)
     {
       GimpPaintInfo *info = (GimpPaintInfo *)
-        gimp_container_get_child_by_name (gimp->paint_info_list, "GimpDodgeBurn");
+        gimp_container_get_child_by_name (gimp->paint_info_list, "gimp-dodge-burn");
 
       success = (info && gimp_item_is_attached (GIMP_ITEM (drawable)));
 
@@ -911,7 +911,7 @@ eraser_invoker (Gimp         *gimp,
   if (success)
     {
       GimpPaintInfo *info = (GimpPaintInfo *)
-        gimp_container_get_child_by_name (gimp->paint_info_list, "GimpEraser");
+        gimp_container_get_child_by_name (gimp->paint_info_list, "gimp-eraser");
 
       success = (info && gimp_item_is_attached (GIMP_ITEM (drawable)));
 
@@ -1005,7 +1005,7 @@ eraser_default_invoker (Gimp         *gimp,
   if (success)
     {
       GimpPaintInfo *info = (GimpPaintInfo *)
-        gimp_container_get_child_by_name (gimp->paint_info_list, "GimpEraser");
+        gimp_container_get_child_by_name (gimp->paint_info_list, "gimp-eraser");
 
       success = (info && gimp_item_is_attached (GIMP_ITEM (drawable)));
 
@@ -1099,7 +1099,7 @@ paintbrush_invoker (Gimp         *gimp,
   if (success)
     {
       GimpPaintInfo *info = (GimpPaintInfo *)
-        gimp_container_get_child_by_name (gimp->paint_info_list, "GimpPaintbrush");
+        gimp_container_get_child_by_name (gimp->paint_info_list, "gimp-paintbrush");
 
       success = (info && gimp_item_is_attached (GIMP_ITEM (drawable)));
 
@@ -1201,7 +1201,7 @@ paintbrush_default_invoker (Gimp         *gimp,
   if (success)
     {
       GimpPaintInfo *info = (GimpPaintInfo *)
-        gimp_container_get_child_by_name (gimp->paint_info_list, "GimpPaintbrush");
+        gimp_container_get_child_by_name (gimp->paint_info_list, "gimp-paintbrush");
 
       success = (info && gimp_item_is_attached (GIMP_ITEM (drawable)));
 
@@ -1280,7 +1280,7 @@ pencil_invoker (Gimp         *gimp,
   if (success)
     {
       GimpPaintInfo *info = (GimpPaintInfo *)
-        gimp_container_get_child_by_name (gimp->paint_info_list, "GimpPencil");
+        gimp_container_get_child_by_name (gimp->paint_info_list, "gimp-pencil");
 
       success = (info && gimp_item_is_attached (GIMP_ITEM (drawable)));
 
@@ -1364,7 +1364,7 @@ smudge_invoker (Gimp         *gimp,
   if (success)
     {
       GimpPaintInfo *info = (GimpPaintInfo *)
-        gimp_container_get_child_by_name (gimp->paint_info_list, "GimpSmudge");
+        gimp_container_get_child_by_name (gimp->paint_info_list, "gimp-smudge");
 
       success = (info && gimp_item_is_attached (GIMP_ITEM (drawable)));
 
@@ -1452,7 +1452,7 @@ smudge_default_invoker (Gimp         *gimp,
   if (success)
     {
       GimpPaintInfo *info = (GimpPaintInfo *)
-        gimp_container_get_child_by_name (gimp->paint_info_list, "GimpSmudge");
+        gimp_container_get_child_by_name (gimp->paint_info_list, "gimp-smudge");
 
       success = (info && gimp_item_is_attached (GIMP_ITEM (drawable)));
 

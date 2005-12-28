@@ -1,3 +1,9 @@
+2005-12-28  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/paint_tools.pdb: follow paint-info renaming.
+
+	* app/pdb/paint_tools_cmds.c: regenerated.
+
 2005-12-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint/gimpconvolve.c (gimp_convolve_register)
