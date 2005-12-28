@@ -1,5 +1,11 @@
 2005-12-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/dialogs/about-dialog.c: set the new "wrap-license" property
+	on GtkAboutDialog and remove the explicit newlines from the string
+	holding the GPL.
+
+2005-12-28  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpwidgets-utils.[ch]: removed
 	gimp_action_get_accel_closure().
 
