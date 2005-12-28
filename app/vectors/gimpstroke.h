@@ -260,7 +260,7 @@ GimpStroke * gimp_stroke_open                 (GimpStroke            *stroke,
 gboolean     gimp_stroke_anchor_is_insertable (GimpStroke            *stroke,
                                                GimpAnchor            *predec,
                                                gdouble                position);
-GimpAnchor  * gimp_stroke_anchor_insert       (GimpStroke            *stroke,
+GimpAnchor * gimp_stroke_anchor_insert        (GimpStroke            *stroke,
                                                GimpAnchor            *predec,
                                                gdouble                position);
 

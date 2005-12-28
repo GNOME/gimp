@@ -70,13 +70,249 @@ gimp_vectors_get_strokes (gint32  vectors_ID,
 }
 
 /**
+ * gimp_vectors_get_locked:
+ * @vectors_ID: The vectors object.
+ *
+ * Gets the locking state of the vectors object.
+ *
+ * Gets the locking state of the vectors object.
+ *
+ * Returns: TRUE if the path is locked, FALSE otherwise.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_vectors_get_locked (gint32 vectors_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean locked = FALSE;
+
+  return_vals = gimp_run_procedure ("gimp-vectors-get-locked",
+				    &nreturn_vals,
+				    GIMP_PDB_PATH, vectors_ID,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    locked = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return locked;
+}
+
+/**
+ * gimp_vectors_set_locked:
+ * @vectors_ID: The vectors object.
+ * @locked: Whether the path is locked.
+ *
+ * Sets the locking state of the vectors object.
+ *
+ * Sets the locking state of the vectors object.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_vectors_set_locked (gint32   vectors_ID,
+			 gboolean locked)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-vectors-set-locked",
+				    &nreturn_vals,
+				    GIMP_PDB_PATH, vectors_ID,
+				    GIMP_PDB_INT32, locked,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_vectors_get_visible:
+ * @vectors_ID: The vectors object.
+ *
+ * Gets the visibility of the vectors object.
+ *
+ * Gets the visibility of the vectors object.
+ *
+ * Returns: TRUE if the path is visible, FALSE otherwise.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_vectors_get_visible (gint32 vectors_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean visible = FALSE;
+
+  return_vals = gimp_run_procedure ("gimp-vectors-get-visible",
+				    &nreturn_vals,
+				    GIMP_PDB_PATH, vectors_ID,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    visible = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return visible;
+}
+
+/**
+ * gimp_vectors_set_visible:
+ * @vectors_ID: The vectors object.
+ * @visible: Whether the path is visible.
+ *
+ * Sets the visibility of the vectors object.
+ *
+ * Sets the visibility of the vectors object.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_vectors_set_visible (gint32   vectors_ID,
+			  gboolean visible)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-vectors-set-visible",
+				    &nreturn_vals,
+				    GIMP_PDB_PATH, vectors_ID,
+				    GIMP_PDB_INT32, visible,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_vectors_get_name:
+ * @vectors_ID: The vectors object.
+ *
+ * Gets the name of the vectors object.
+ *
+ * Gets the name of the vectors object.
+ *
+ * Returns: The name of the vectors object.
+ *
+ * Since: GIMP 2.4
+ */
+gchar *
+gimp_vectors_get_name (gint32 vectors_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gchar *name = NULL;
+
+  return_vals = gimp_run_procedure ("gimp-vectors-get-name",
+				    &nreturn_vals,
+				    GIMP_PDB_PATH, vectors_ID,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    name = g_strdup (return_vals[1].data.d_string);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return name;
+}
+
+/**
+ * gimp_vectors_set_name:
+ * @vectors_ID: The vectors object.
+ * @name: the new name of the path.
+ *
+ * Sets the name of the vectors object.
+ *
+ * Sets the name of the vectors object.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_vectors_set_name (gint32       vectors_ID,
+		       const gchar *name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-vectors-set-name",
+				    &nreturn_vals,
+				    GIMP_PDB_PATH, vectors_ID,
+				    GIMP_PDB_STRING, name,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_vectors_stroke_get_length:
+ * @vectors_ID: The vectors object.
+ * @stroke_id: The stroke ID.
+ * @prescision: The prescision used for the approximation.
+ *
+ * measures the length of the given stroke.
+ *
+ * Measure the length of the given stroke.
+ *
+ * Returns: The length (in pixels) of the given stroke.
+ *
+ * Since: GIMP 2.4
+ */
+gdouble
+gimp_vectors_stroke_get_length (gint32  vectors_ID,
+				gint    stroke_id,
+				gdouble prescision)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gdouble length = 0;
+
+  return_vals = gimp_run_procedure ("gimp-vectors-stroke-get-length",
+				    &nreturn_vals,
+				    GIMP_PDB_PATH, vectors_ID,
+				    GIMP_PDB_INT32, stroke_id,
+				    GIMP_PDB_FLOAT, prescision,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    length = return_vals[1].data.d_float;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return length;
+}
+
+/**
  * gimp_vectors_stroke_remove:
  * @vectors_ID: The vectors object.
  * @stroke_id: The stroke ID.
  *
- * return coordinates along the given stroke.
+ * remove the stroke from a vectors object.
  *
- * Returns a lot of coordinates along the passed stroke.
+ * Remove the stroke from a vectors object.
  *
  * Returns: TRUE on success.
  *
@@ -107,8 +343,8 @@ gimp_vectors_stroke_remove (gint32 vectors_ID,
  * gimp_vectors_stroke_translate:
  * @vectors_ID: The vectors object.
  * @stroke_id: The stroke ID.
- * @offx: Offset in x direction.
- * @offy: Offset in y direction.
+ * @off_x: Offset in x direction.
+ * @off_y: Offset in y direction.
  *
  * translate the given stroke.
  *
@@ -121,8 +357,8 @@ gimp_vectors_stroke_remove (gint32 vectors_ID,
 gboolean
 gimp_vectors_stroke_translate (gint32 vectors_ID,
 			       gint   stroke_id,
-			       gint   offx,
-			       gint   offy)
+			       gint   off_x,
+			       gint   off_y)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -132,8 +368,48 @@ gimp_vectors_stroke_translate (gint32 vectors_ID,
 				    &nreturn_vals,
 				    GIMP_PDB_PATH, vectors_ID,
 				    GIMP_PDB_INT32, stroke_id,
-				    GIMP_PDB_INT32, offx,
-				    GIMP_PDB_INT32, offy,
+				    GIMP_PDB_INT32, off_x,
+				    GIMP_PDB_INT32, off_y,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_vectors_stroke_scale:
+ * @vectors_ID: The vectors object.
+ * @stroke_id: The stroke ID.
+ * @scale_x: Scale factor in x direction.
+ * @scale_y: Scale factor in y direction.
+ *
+ * scales the given stroke.
+ *
+ * Scale the given stroke.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_vectors_stroke_scale (gint32  vectors_ID,
+			   gint    stroke_id,
+			   gdouble scale_x,
+			   gdouble scale_y)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-vectors-stroke-scale",
+				    &nreturn_vals,
+				    GIMP_PDB_PATH, vectors_ID,
+				    GIMP_PDB_INT32, stroke_id,
+				    GIMP_PDB_FLOAT, scale_x,
+				    GIMP_PDB_FLOAT, scale_y,
 				    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;

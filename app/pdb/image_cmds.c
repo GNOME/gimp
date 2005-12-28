@@ -50,6 +50,7 @@
 #include "core/gimplist.h"
 #include "core/gimpunit.h"
 #include "gimp-intl.h"
+#include "vectors/gimpvectors.h"
 
 static ProcRecord image_list_proc;
 static ProcRecord image_new_proc;
@@ -80,8 +81,13 @@ static ProcRecord image_raise_layer_proc;
 static ProcRecord image_lower_layer_proc;
 static ProcRecord image_raise_layer_to_top_proc;
 static ProcRecord image_lower_layer_to_bottom_proc;
+static ProcRecord image_raise_vectors_proc;
+static ProcRecord image_lower_vectors_proc;
+static ProcRecord image_raise_vectors_to_top_proc;
+static ProcRecord image_lower_vectors_to_bottom_proc;
 static ProcRecord image_add_channel_proc;
 static ProcRecord image_remove_channel_proc;
+static ProcRecord image_remove_vectors_proc;
 static ProcRecord image_raise_channel_proc;
 static ProcRecord image_lower_channel_proc;
 static ProcRecord image_flatten_proc;
@@ -98,6 +104,8 @@ static ProcRecord image_get_active_layer_proc;
 static ProcRecord image_set_active_layer_proc;
 static ProcRecord image_get_active_channel_proc;
 static ProcRecord image_set_active_channel_proc;
+static ProcRecord image_get_active_vectors_proc;
+static ProcRecord image_set_active_vectors_proc;
 static ProcRecord image_get_selection_proc;
 static ProcRecord image_get_component_active_proc;
 static ProcRecord image_set_component_active_proc;
@@ -114,6 +122,7 @@ static ProcRecord image_get_tattoo_state_proc;
 static ProcRecord image_set_tattoo_state_proc;
 static ProcRecord image_get_layer_by_tattoo_proc;
 static ProcRecord image_get_channel_by_tattoo_proc;
+static ProcRecord image_get_vectors_by_tattoo_proc;
 
 void
 register_image_procs (Gimp *gimp)
@@ -147,8 +156,13 @@ register_image_procs (Gimp *gimp)
   procedural_db_register (gimp, &image_lower_layer_proc);
   procedural_db_register (gimp, &image_raise_layer_to_top_proc);
   procedural_db_register (gimp, &image_lower_layer_to_bottom_proc);
+  procedural_db_register (gimp, &image_raise_vectors_proc);
+  procedural_db_register (gimp, &image_lower_vectors_proc);
+  procedural_db_register (gimp, &image_raise_vectors_to_top_proc);
+  procedural_db_register (gimp, &image_lower_vectors_to_bottom_proc);
   procedural_db_register (gimp, &image_add_channel_proc);
   procedural_db_register (gimp, &image_remove_channel_proc);
+  procedural_db_register (gimp, &image_remove_vectors_proc);
   procedural_db_register (gimp, &image_raise_channel_proc);
   procedural_db_register (gimp, &image_lower_channel_proc);
   procedural_db_register (gimp, &image_flatten_proc);
@@ -165,6 +179,8 @@ register_image_procs (Gimp *gimp)
   procedural_db_register (gimp, &image_set_active_layer_proc);
   procedural_db_register (gimp, &image_get_active_channel_proc);
   procedural_db_register (gimp, &image_set_active_channel_proc);
+  procedural_db_register (gimp, &image_get_active_vectors_proc);
+  procedural_db_register (gimp, &image_set_active_vectors_proc);
   procedural_db_register (gimp, &image_get_selection_proc);
   procedural_db_register (gimp, &image_get_component_active_proc);
   procedural_db_register (gimp, &image_set_component_active_proc);
@@ -181,6 +197,7 @@ register_image_procs (Gimp *gimp)
   procedural_db_register (gimp, &image_set_tattoo_state_proc);
   procedural_db_register (gimp, &image_get_layer_by_tattoo_proc);
   procedural_db_register (gimp, &image_get_channel_by_tattoo_proc);
+  procedural_db_register (gimp, &image_get_vectors_by_tattoo_proc);
 }
 
 #if defined (HAVE_FINITE)
@@ -2142,6 +2159,230 @@ static ProcRecord image_lower_layer_to_bottom_proc =
 };
 
 static Argument *
+image_raise_vectors_invoker (Gimp         *gimp,
+                             GimpContext  *context,
+                             GimpProgress *progress,
+                             Argument     *args)
+{
+  gboolean success = TRUE;
+  GimpImage *gimage;
+  GimpVectors *vectors;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
+  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
+    success = FALSE;
+
+  if (success)
+    success = gimp_image_raise_vectors (gimage, vectors);
+
+  return procedural_db_return_args (&image_raise_vectors_proc, success);
+}
+
+static ProcArg image_raise_vectors_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  {
+    GIMP_PDB_PATH,
+    "vectors",
+    "The vectors object to raise"
+  }
+};
+
+static ProcRecord image_raise_vectors_proc =
+{
+  "gimp-image-raise-vectors",
+  "gimp-image-raise-vectors",
+  "Raise the specified vectors in the image's vectors stack",
+  "This procedure raises the specified vectors one step in the existing vectors stack. It will not move the vectors if there is no vectors above it.",
+  "Simon Budig",
+  "Spencer Kimball & Peter Mattis",
+  "2005",
+  NULL,
+  GIMP_INTERNAL,
+  2,
+  image_raise_vectors_inargs,
+  0,
+  NULL,
+  { { image_raise_vectors_invoker } }
+};
+
+static Argument *
+image_lower_vectors_invoker (Gimp         *gimp,
+                             GimpContext  *context,
+                             GimpProgress *progress,
+                             Argument     *args)
+{
+  gboolean success = TRUE;
+  GimpImage *gimage;
+  GimpVectors *vectors;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
+  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
+    success = FALSE;
+
+  if (success)
+    success = gimp_image_lower_vectors (gimage, vectors);
+
+  return procedural_db_return_args (&image_lower_vectors_proc, success);
+}
+
+static ProcArg image_lower_vectors_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  {
+    GIMP_PDB_PATH,
+    "vectors",
+    "The vectors object to lower"
+  }
+};
+
+static ProcRecord image_lower_vectors_proc =
+{
+  "gimp-image-lower-vectors",
+  "gimp-image-lower-vectors",
+  "Lower the specified vectors in the image's vectors stack",
+  "This procedure lowers the specified vectors one step in the existing vectors stack. It will not move the vectors if there is no vectors below it.",
+  "Simon Budig",
+  "Spencer Kimball & Peter Mattis",
+  "2005",
+  NULL,
+  GIMP_INTERNAL,
+  2,
+  image_lower_vectors_inargs,
+  0,
+  NULL,
+  { { image_lower_vectors_invoker } }
+};
+
+static Argument *
+image_raise_vectors_to_top_invoker (Gimp         *gimp,
+                                    GimpContext  *context,
+                                    GimpProgress *progress,
+                                    Argument     *args)
+{
+  gboolean success = TRUE;
+  GimpImage *gimage;
+  GimpVectors *vectors;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
+  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
+    success = FALSE;
+
+  if (success)
+    success = gimp_image_raise_vectors_to_top (gimage, vectors);
+
+  return procedural_db_return_args (&image_raise_vectors_to_top_proc, success);
+}
+
+static ProcArg image_raise_vectors_to_top_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  {
+    GIMP_PDB_PATH,
+    "vectors",
+    "The vectors object to raise to top"
+  }
+};
+
+static ProcRecord image_raise_vectors_to_top_proc =
+{
+  "gimp-image-raise-vectors-to-top",
+  "gimp-image-raise-vectors-to-top",
+  "Raise the specified vectors in the image's vectors stack to top of stack",
+  "This procedure raises the specified vectors to top of the existing vectors stack. It will not move the vectors if there is no vectors above it.",
+  "Simon Budig",
+  "Spencer Kimball & Peter Mattis",
+  "2005",
+  NULL,
+  GIMP_INTERNAL,
+  2,
+  image_raise_vectors_to_top_inargs,
+  0,
+  NULL,
+  { { image_raise_vectors_to_top_invoker } }
+};
+
+static Argument *
+image_lower_vectors_to_bottom_invoker (Gimp         *gimp,
+                                       GimpContext  *context,
+                                       GimpProgress *progress,
+                                       Argument     *args)
+{
+  gboolean success = TRUE;
+  GimpImage *gimage;
+  GimpVectors *vectors;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
+  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
+    success = FALSE;
+
+  if (success)
+    success = gimp_image_lower_vectors_to_bottom (gimage, vectors);
+
+  return procedural_db_return_args (&image_lower_vectors_to_bottom_proc, success);
+}
+
+static ProcArg image_lower_vectors_to_bottom_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  {
+    GIMP_PDB_PATH,
+    "vectors",
+    "The vectors object to lower to bottom"
+  }
+};
+
+static ProcRecord image_lower_vectors_to_bottom_proc =
+{
+  "gimp-image-lower-vectors-to-bottom",
+  "gimp-image-lower-vectors-to-bottom",
+  "Lower the specified vectors in the image's vectors stack to bottom of stack",
+  "This procedure lowers the specified vectors to bottom of the existing vectors stack. It will not move the vectors if there is no vectors below it.",
+  "Simon Budig",
+  "Spencer Kimball & Peter Mattis",
+  "2005",
+  NULL,
+  GIMP_INTERNAL,
+  2,
+  image_lower_vectors_to_bottom_inargs,
+  0,
+  NULL,
+  { { image_lower_vectors_to_bottom_invoker } }
+};
+
+static Argument *
 image_add_channel_invoker (Gimp         *gimp,
                            GimpContext  *context,
                            GimpProgress *progress,
@@ -2264,6 +2505,62 @@ static ProcRecord image_remove_channel_proc =
   0,
   NULL,
   { { image_remove_channel_invoker } }
+};
+
+static Argument *
+image_remove_vectors_invoker (Gimp         *gimp,
+                              GimpContext  *context,
+                              GimpProgress *progress,
+                              Argument     *args)
+{
+  gboolean success = TRUE;
+  GimpImage *gimage;
+  GimpVectors *vectors;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
+  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
+    success = FALSE;
+
+  if (success)
+    gimp_image_remove_vectors (gimage, vectors);
+
+  return procedural_db_return_args (&image_remove_vectors_proc, success);
+}
+
+static ProcArg image_remove_vectors_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  {
+    GIMP_PDB_PATH,
+    "vectors",
+    "The vectors object"
+  }
+};
+
+static ProcRecord image_remove_vectors_proc =
+{
+  "gimp-image-remove-vectors",
+  "gimp-image-remove-vectors",
+  "Remove the specified path from the image.",
+  "This procedure removes the specified path from the image. If the path doesn't exist, an error is returned.",
+  "Simon Budig",
+  "Spencer Kimball & Peter Mattis",
+  "2005",
+  NULL,
+  GIMP_INTERNAL,
+  2,
+  image_remove_vectors_inargs,
+  0,
+  NULL,
+  { { image_remove_vectors_invoker } }
 };
 
 static Argument *
@@ -3367,6 +3664,124 @@ static ProcRecord image_set_active_channel_proc =
 };
 
 static Argument *
+image_get_active_vectors_invoker (Gimp         *gimp,
+                                  GimpContext  *context,
+                                  GimpProgress *progress,
+                                  Argument     *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpImage *gimage;
+  GimpVectors *active_vectors = NULL;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  if (success)
+    active_vectors = gimp_image_get_active_vectors (gimage);
+
+  return_args = procedural_db_return_args (&image_get_active_vectors_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = active_vectors ? gimp_item_get_ID (GIMP_ITEM (active_vectors)) : -1;
+
+  return return_args;
+}
+
+static ProcArg image_get_active_vectors_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  }
+};
+
+static ProcArg image_get_active_vectors_outargs[] =
+{
+  {
+    GIMP_PDB_PATH,
+    "active-vectors",
+    "The active vectors"
+  }
+};
+
+static ProcRecord image_get_active_vectors_proc =
+{
+  "gimp-image-get-active-vectors",
+  "gimp-image-get-active-vectors",
+  "Returns the specified image's active vectors.",
+  "If there is an active path, its ID will be returned, otherwise, -1.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  NULL,
+  GIMP_INTERNAL,
+  1,
+  image_get_active_vectors_inargs,
+  1,
+  image_get_active_vectors_outargs,
+  { { image_get_active_vectors_invoker } }
+};
+
+static Argument *
+image_set_active_vectors_invoker (Gimp         *gimp,
+                                  GimpContext  *context,
+                                  GimpProgress *progress,
+                                  Argument     *args)
+{
+  gboolean success = TRUE;
+  GimpImage *gimage;
+  GimpVectors *active_vectors;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  active_vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
+  if (! (GIMP_IS_VECTORS (active_vectors) && ! gimp_item_is_removed (GIMP_ITEM (active_vectors))))
+    success = FALSE;
+
+  if (success)
+    success = (gimp_image_set_active_vectors (gimage, active_vectors) == active_vectors);
+
+  return procedural_db_return_args (&image_set_active_vectors_proc, success);
+}
+
+static ProcArg image_set_active_vectors_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  {
+    GIMP_PDB_PATH,
+    "active-vectors",
+    "The new image active vectors"
+  }
+};
+
+static ProcRecord image_set_active_vectors_proc =
+{
+  "gimp-image-set-active-vectors",
+  "gimp-image-set-active-vectors",
+  "Sets the specified image's active vectors.",
+  "If the path exists, it is set as the active path in the image.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  NULL,
+  GIMP_INTERNAL,
+  2,
+  image_set_active_vectors_inargs,
+  0,
+  NULL,
+  { { image_set_active_vectors_invoker } }
+};
+
+static Argument *
 image_get_selection_invoker (Gimp         *gimp,
                              GimpContext  *context,
                              GimpProgress *progress,
@@ -4452,4 +4867,79 @@ static ProcRecord image_get_channel_by_tattoo_proc =
   1,
   image_get_channel_by_tattoo_outargs,
   { { image_get_channel_by_tattoo_invoker } }
+};
+
+static Argument *
+image_get_vectors_by_tattoo_invoker (Gimp         *gimp,
+                                     GimpContext  *context,
+                                     GimpProgress *progress,
+                                     Argument     *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpImage *gimage;
+  gint32 tattoo;
+  GimpVectors *vectors = NULL;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  tattoo = args[1].value.pdb_int;
+  if (tattoo == 0)
+    success = FALSE;
+
+  if (success)
+    {
+      vectors = gimp_image_get_vectors_by_tattoo (gimage, tattoo);
+      success = vectors != NULL;
+    }
+
+  return_args = procedural_db_return_args (&image_get_vectors_by_tattoo_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (vectors));
+
+  return return_args;
+}
+
+static ProcArg image_get_vectors_by_tattoo_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  {
+    GIMP_PDB_INT32,
+    "tattoo",
+    "The tattoo of the vectors to find"
+  }
+};
+
+static ProcArg image_get_vectors_by_tattoo_outargs[] =
+{
+  {
+    GIMP_PDB_PATH,
+    "vectors",
+    "The vectors with the specified tattoo"
+  }
+};
+
+static ProcRecord image_get_vectors_by_tattoo_proc =
+{
+  "gimp-image-get-vectors-by-tattoo",
+  "gimp-image-get-vectors-by-tattoo",
+  "Find a vectors with a given tattoo in an image.",
+  "This procedure returns the vectors with the given tattoo in the specified image.",
+  "Jay Cox",
+  "Jay Cox",
+  "1998",
+  NULL,
+  GIMP_INTERNAL,
+  2,
+  image_get_vectors_by_tattoo_inargs,
+  1,
+  image_get_vectors_by_tattoo_outargs,
+  { { image_get_vectors_by_tattoo_invoker } }
 };

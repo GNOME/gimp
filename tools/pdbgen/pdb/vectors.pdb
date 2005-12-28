@@ -38,6 +38,188 @@ sub stroke_arg () {
      desc => 'The stroke ID'
    }}
 
+sub vectors_get_current {
+    $blurb = 'Gets the current path in the given image.';
+
+    $help = <<'HELP';
+Gets the current path in the given image.
+HELP
+
+    &pdb_misc;
+
+    @inargs = ( &std_image_arg );
+    $inargs[0]->{desc} = 'The ID of the image to get the current path from.';
+
+    @outargs = (
+	{ name => 'vectors', type => 'vectors',
+	  desc => 'the current vector object, 0 if no vector exists in the image.',
+	  init => 1 }
+    );
+
+    %invoke = (
+	code => <<"CODE"
+{
+  vectors = gimp_image_get_active_vectors (gimage);
+}
+CODE
+    );
+}
+
+
+sub vectors_get_locked {
+    $blurb = 'Gets the locking state of the vectors object.';
+
+    $help = <<'HELP';
+Gets the locking state of the vectors object.
+HELP
+
+    &pdb_misc;
+
+    @inargs = ( &vectors_arg );
+
+    @outargs = (
+        { name => 'locked', type => 'boolean',
+	  desc => 'TRUE if the path is locked, FALSE otherwise', init => 1 }
+    );
+
+    %invoke = (
+	code => <<"CODE"
+{
+  locked = gimp_item_get_linked (GIMP_ITEM (vectors));
+}
+CODE
+    );
+}
+
+
+sub vectors_set_locked {
+    $blurb = 'Sets the locking state of the vectors object.';
+
+    $help = <<'HELP';
+Sets the locking state of the vectors object.
+HELP
+
+    &pdb_misc;
+
+    @inargs = ( &vectors_arg,
+                { name => 'locked', type => 'boolean',
+		  desc => 'Whether the path is locked', init => 1 }
+    );
+
+    %invoke = (
+	code => <<"CODE"
+{
+  gimp_item_set_linked (GIMP_ITEM (vectors), locked, TRUE);
+}
+CODE
+    );
+}
+
+
+sub vectors_get_visible {
+    $blurb = 'Gets the visibility of the vectors object.';
+
+    $help = <<'HELP';
+Gets the visibility of the vectors object.
+HELP
+
+    &pdb_misc;
+
+    @inargs = ( &vectors_arg );
+
+    @outargs = (
+        { name => 'visible', type => 'boolean',
+	  desc => 'TRUE if the path is visible, FALSE otherwise', init => 1 }
+    );
+
+    %invoke = (
+	code => <<"CODE"
+{
+  visible = gimp_item_get_visible (GIMP_ITEM (vectors));
+}
+CODE
+    );
+}
+
+
+sub vectors_set_visible {
+    $blurb = 'Sets the visibility of the vectors object.';
+
+    $help = <<'HELP';
+Sets the visibility of the vectors object.
+HELP
+
+    &pdb_misc;
+
+    @inargs = ( &vectors_arg,
+                { name => 'visible', type => 'boolean',
+		  desc => 'Whether the path is visible',
+		  init => 1 }
+    );
+
+    %invoke = (
+	code => <<"CODE"
+{
+  gimp_item_set_visible (GIMP_ITEM (vectors), visible, TRUE);
+}
+CODE
+    );
+}
+
+
+sub vectors_get_name {
+    $blurb = 'Gets the name of the vectors object.';
+
+    $help = <<'HELP';
+Gets the name of the vectors object.
+HELP
+
+    &pdb_misc;
+
+    @inargs = ( &vectors_arg );
+
+    @outargs = (
+        { name => 'name', type => 'string',
+	  desc => 'The name of the vectors object',
+	  init => 1 }
+    );
+
+    %invoke = (
+	code => <<"CODE"
+{
+  name = g_strdup (gimp_object_get_name (GIMP_OBJECT (vectors)));
+}
+CODE
+    );
+}
+
+
+sub vectors_set_name {
+    $blurb = 'Sets the name of the vectors object.';
+
+    $help = <<'HELP';
+Sets the name of the vectors object.
+HELP
+
+    &pdb_misc;
+
+    @inargs = ( &vectors_arg,
+                { name => 'name', type => 'string',
+		  desc => 'the new name of the path',
+		  init => 1 }
+    );
+
+    %invoke = (
+	code => <<"CODE"
+{
+  if (!gimp_item_rename (GIMP_ITEM (vectors), name))
+    success = FALSE;
+}
+CODE
+    );
+}
+
+
 sub vectors_get_strokes {
     $blurb = 'List the strokes associated with the passed path.';
 
@@ -82,11 +264,49 @@ CODE
 }
 
 
-sub vectors_stroke_remove {
-    $blurb = 'return coordinates along the given stroke.';
+sub vectors_stroke_get_length {
+    $blurb = 'measures the length of the given stroke.';
 
     $help = <<'HELP';
-Returns a lot of coordinates along the passed stroke.
+Measure the length of the given stroke.
+HELP
+
+    &pdb_misc;
+
+    @inargs = ( &stroke_arg,
+                { name => 'prescision', type => 'float',
+		  desc => 'The prescision used for the approximation' } );
+
+    @outargs = (
+	{ name => 'length', type => 'float',
+	  desc => 'The length (in pixels) of the given stroke.' }
+    );
+
+    %invoke = (
+	vars => [ 'GimpStroke *stroke' ],
+        code => <<"CODE"
+{
+  stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
+  
+  if (!stroke)
+    {
+      success = FALSE;
+    }
+  else
+    {
+      length = gimp_stroke_get_length (stroke, prescision);
+    }
+}
+CODE
+    );
+}
+
+
+sub vectors_stroke_remove {
+    $blurb = 'remove the stroke from a vectors object.';
+
+    $help = <<'HELP';
+Remove the stroke from a vectors object.
 HELP
 
     &pdb_misc;
@@ -120,7 +340,7 @@ HELP
 
     @inargs = ( &stroke_arg );
     foreach (qw(x y)) {
-        push @inargs, { name => "off$_", type => 'int32',
+        push @inargs, { name => "off_$_", type => 'int32',
                         desc => "Offset in $_ direction" }
     }
 
@@ -142,7 +362,49 @@ HELP
       gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_DISPLACE,
                                    _("Modify Path"));
       gimp_vectors_freeze (vectors);
-      gimp_stroke_translate (stroke, offx, offy);
+      gimp_stroke_translate (stroke, off_x, off_y);
+      gimp_vectors_thaw (vectors);
+      gimp_image_undo_group_end (gimage);
+    }
+}
+CODE
+    );
+}
+
+sub vectors_stroke_scale {
+    $blurb = 'scales the given stroke.';
+
+    $help = <<'HELP';
+Scale the given stroke.
+HELP
+
+    &pdb_misc;
+
+    @inargs = ( &stroke_arg );
+    foreach (qw(x y)) {
+        push @inargs, { name => "scale_$_", type => 'float',
+                        desc => "Scale factor in $_ direction" }
+    }
+
+    %invoke = (
+	vars => [ 'GimpStroke *stroke' ],
+        code => <<"CODE"
+{
+  GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (vectors));
+  stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
+  
+  if (!stroke)
+    {
+      success = FALSE;
+    }
+  else
+    {
+      /* need to figure out how undo is supposed to work */
+
+      gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_DISPLACE,
+                                   _("Modify Path"));
+      gimp_vectors_freeze (vectors);
+      gimp_stroke_scale (stroke, scale_x, scale_y);
       gimp_vectors_thaw (vectors);
       gimp_image_undo_group_end (gimage);
     }
@@ -218,14 +480,22 @@ CODE
 
 
 @headers = qw(<string.h> "core/gimp.h" "core/gimplist.h"
-              "core/gimpimage-undo.h"
+              "core/gimpimage.h" "core/gimpimage-undo.h"
               "vectors/gimpanchor.h" "vectors/gimpbezierstroke.h"
               "vectors/gimpvectors.h" "vectors/gimpvectors-compat.h"
               "gimp-intl.h");
 
 @procs = qw(vectors_get_strokes
+            vectors_get_locked
+            vectors_set_locked
+            vectors_get_visible
+            vectors_set_visible
+	    vectors_get_name
+	    vectors_set_name
+            vectors_stroke_get_length
             vectors_stroke_remove
             vectors_stroke_translate
+            vectors_stroke_scale
 	    vectors_stroke_interpolate
             );
 %exports = (app => [@procs], lib => [@procs]);

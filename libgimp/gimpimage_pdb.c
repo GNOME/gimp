@@ -1097,6 +1097,152 @@ gimp_image_lower_layer_to_bottom (gint32 image_ID,
 }
 
 /**
+ * gimp_image_raise_vectors:
+ * @image_ID: The image.
+ * @vectors_ID: The vectors object to raise.
+ *
+ * Raise the specified vectors in the image's vectors stack
+ *
+ * This procedure raises the specified vectors one step in the existing
+ * vectors stack. It will not move the vectors if there is no vectors
+ * above it.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_image_raise_vectors (gint32 image_ID,
+			  gint32 vectors_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-image-raise-vectors",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_PATH, vectors_ID,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_image_lower_vectors:
+ * @image_ID: The image.
+ * @vectors_ID: The vectors object to lower.
+ *
+ * Lower the specified vectors in the image's vectors stack
+ *
+ * This procedure lowers the specified vectors one step in the existing
+ * vectors stack. It will not move the vectors if there is no vectors
+ * below it.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_image_lower_vectors (gint32 image_ID,
+			  gint32 vectors_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-image-lower-vectors",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_PATH, vectors_ID,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_image_raise_vectors_to_top:
+ * @image_ID: The image.
+ * @vectors_ID: The vectors object to raise to top.
+ *
+ * Raise the specified vectors in the image's vectors stack to top of
+ * stack
+ *
+ * This procedure raises the specified vectors to top of the existing
+ * vectors stack. It will not move the vectors if there is no vectors
+ * above it.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_image_raise_vectors_to_top (gint32 image_ID,
+				 gint32 vectors_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-image-raise-vectors-to-top",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_PATH, vectors_ID,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_image_lower_vectors_to_bottom:
+ * @image_ID: The image.
+ * @vectors_ID: The vectors object to lower to bottom.
+ *
+ * Lower the specified vectors in the image's vectors stack to bottom
+ * of stack
+ *
+ * This procedure lowers the specified vectors to bottom of the
+ * existing vectors stack. It will not move the vectors if there is no
+ * vectors below it.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_image_lower_vectors_to_bottom (gint32 image_ID,
+				    gint32 vectors_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-image-lower-vectors-to-bottom",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_PATH, vectors_ID,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_image_add_channel:
  * @image_ID: The image.
  * @channel_ID: The channel.
@@ -1157,6 +1303,41 @@ gimp_image_remove_channel (gint32 image_ID,
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_CHANNEL, channel_ID,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_image_remove_vectors:
+ * @image_ID: The image.
+ * @vectors_ID: The vectors object.
+ *
+ * Remove the specified path from the image.
+ *
+ * This procedure removes the specified path from the image. If the
+ * path doesn't exist, an error is returned.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_image_remove_vectors (gint32 image_ID,
+			   gint32 vectors_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-image-remove-vectors",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_PATH, vectors_ID,
 				    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
@@ -1685,6 +1866,68 @@ gimp_image_set_active_channel (gint32 image_ID,
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_CHANNEL, active_channel_ID,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_image_get_active_vectors:
+ * @image_ID: The image.
+ *
+ * Returns the specified image's active vectors.
+ *
+ * If there is an active path, its ID will be returned, otherwise, -1.
+ *
+ * Returns: The active vectors.
+ */
+gint32
+gimp_image_get_active_vectors (gint32 image_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint32 active_vectors_ID = -1;
+
+  return_vals = gimp_run_procedure ("gimp-image-get-active-vectors",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    active_vectors_ID = return_vals[1].data.d_vectors;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return active_vectors_ID;
+}
+
+/**
+ * gimp_image_set_active_vectors:
+ * @image_ID: The image.
+ * @active_vectors_ID: The new image active vectors.
+ *
+ * Sets the specified image's active vectors.
+ *
+ * If the path exists, it is set as the active path in the image.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_image_set_active_vectors (gint32 image_ID,
+			       gint32 active_vectors_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-image-set-active-vectors",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_PATH, active_vectors_ID,
 				    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;

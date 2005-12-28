@@ -59,7 +59,7 @@
 #include <libgimp/gimp_pdb.h>
 
 #ifdef G_OS_WIN32
-#  include <stdlib.h>		/* For __argc and __argv */
+#  include <stdlib.h>           /* For __argc and __argv */
 #  ifdef LIBGIMP_COMPILATION
 #    define GIMPVAR __declspec(dllexport)
 #  else  /* !LIBGIMP_COMPILATION */
@@ -86,10 +86,10 @@ typedef void (* GimpInitProc)  (void);
 typedef void (* GimpQuitProc)  (void);
 typedef void (* GimpQueryProc) (void);
 typedef void (* GimpRunProc)   (const gchar      *name,
-				gint              n_params,
-				const GimpParam  *param,
-				gint             *n_return_vals,
-				GimpParam       **return_vals);
+                                gint              n_params,
+                                const GimpParam  *param,
+                                gint             *n_return_vals,
+                                GimpParam       **return_vals);
 
 
 struct _GimpPlugInInfo
@@ -149,7 +149,7 @@ union _GimpParamData
   gint32            d_drawable;
   gint32            d_selection;
   gint32            d_boundary;
-  gint32            d_path;
+  gint32            d_vectors;
   gint32            d_unit;
   GimpParasite      d_parasite;
   gint32            d_tattoo;
@@ -187,28 +187,28 @@ struct _GimpParam
 #    endif
 #  endif
 
-#  define MAIN()					\
-   struct HINSTANCE__;					\
-   int _stdcall						\
-   WinMain (struct HINSTANCE__ *hInstance, 		\
-	    struct HINSTANCE__ *hPrevInstance,		\
-	    char *lpszCmdLine,				\
-	    int   nCmdShow)				\
-   {							\
-     return gimp_main (&PLUG_IN_INFO, __argc, __argv);	\
-   }							\
-							\
-   int							\
-   main (int argc, char *argv[])			\
-   {							\
-     return gimp_main (&PLUG_IN_INFO, argc, argv);	\
+#  define MAIN()                                        \
+   struct HINSTANCE__;                                  \
+   int _stdcall                                         \
+   WinMain (struct HINSTANCE__ *hInstance,              \
+            struct HINSTANCE__ *hPrevInstance,          \
+            char *lpszCmdLine,                          \
+            int   nCmdShow)                             \
+   {                                                    \
+     return gimp_main (&PLUG_IN_INFO, __argc, __argv);  \
+   }                                                    \
+                                                        \
+   int                                                  \
+   main (int argc, char *argv[])                        \
+   {                                                    \
+     return gimp_main (&PLUG_IN_INFO, argc, argv);      \
    }
 #else
-#  define MAIN()					\
-   int							\
-   main (int argc, char *argv[])			\
-   {							\
-     return gimp_main (&PLUG_IN_INFO, argc, argv);	\
+#  define MAIN()                                        \
+   int                                                  \
+   main (int argc, char *argv[])                        \
+   {                                                    \
+     return gimp_main (&PLUG_IN_INFO, argc, argv);      \
    }
 #endif
 

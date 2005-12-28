@@ -1,3 +1,40 @@
+2005-12-28  Simon Budig  <simon@gimp.org>
+
+	* tools/pdbgen/pdb/image.pdb
+	* tools/pdbgen/pdb/vectors.pdb: Added new functions for the vectors
+	PDB API. Minor cleanups. Please try to use them and test:
+
+	  gimp_image_get_active_vectors
+	  gimp_image_set_active_vectors
+	  gimp_image_get_vectors_by_tattoo
+	  gimp_image_lower_vectors
+	  gimp_image_lower_vectors_to_bottom
+	  gimp_image_raise_vectors
+	  gimp_image_raise_vectors_to_top
+	  gimp_image_remove_vectors
+
+	  gimp_vectors_get_locked
+	  gimp_vectors_set_locked
+	  gimp_vectors_get_name
+	  gimp_vectors_set_name
+	  gimp_vectors_get_visible
+	  gimp_vectors_set_visible
+	  gimp_vectors_stroke_get_length
+	  gimp_vectors_stroke_remove
+	  gimp_vectors_stroke_scale
+
+	* libgimp/gimp.[ch]: renamed the unused d_path to d_vectors and
+	use it. Untabbified.
+
+	* devel-docs/libgimp/tmpl/gimpvectors.sgml
+	* app/pdb/image_cmds.c
+	* app/pdb/internal_procs.c
+	* app/pdb/vectors_cmds.c
+	* libgimp/gimpimage_pdb.[ch]
+	* libgimp/gimpvectors_pdb.[ch]: Regenerated
+
+	* app/vectors/gimpstroke.h: minor cleanup.
+
 2005-12-28  Sven Neumann  <sven@gimp.org>
 
 	* menus/image-menu.xml.in: added "Image/Arrange" placeholder.

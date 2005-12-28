@@ -57,8 +57,8 @@ gimpvectors
 
 @vectors_ID: 
 @stroke_id: 
-@offx: 
-@offy: 
+@off_x: 
+@off_y: 
 @Returns: 
 
 

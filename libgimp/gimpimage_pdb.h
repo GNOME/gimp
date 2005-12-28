@@ -91,11 +91,21 @@ gboolean          gimp_image_raise_layer_to_top       (gint32                ima
 						       gint32                layer_ID);
 gboolean          gimp_image_lower_layer_to_bottom    (gint32                image_ID,
 						       gint32                layer_ID);
+gboolean          gimp_image_raise_vectors            (gint32                image_ID,
+						       gint32                vectors_ID);
+gboolean          gimp_image_lower_vectors            (gint32                image_ID,
+						       gint32                vectors_ID);
+gboolean          gimp_image_raise_vectors_to_top     (gint32                image_ID,
+						       gint32                vectors_ID);
+gboolean          gimp_image_lower_vectors_to_bottom  (gint32                image_ID,
+						       gint32                vectors_ID);
 gboolean          gimp_image_add_channel              (gint32                image_ID,
 						       gint32                channel_ID,
 						       gint                  position);
 gboolean          gimp_image_remove_channel           (gint32                image_ID,
 						       gint32                channel_ID);
+gboolean          gimp_image_remove_vectors           (gint32                image_ID,
+						       gint32                vectors_ID);
 gboolean          gimp_image_raise_channel            (gint32                image_ID,
 						       gint32                channel_ID);
 gboolean          gimp_image_lower_channel            (gint32                image_ID,
@@ -127,6 +137,9 @@ gboolean          gimp_image_set_active_layer         (gint32                ima
 gint32            gimp_image_get_active_channel       (gint32                image_ID);
 gboolean          gimp_image_set_active_channel       (gint32                image_ID,
 						       gint32                active_channel_ID);
+gint32            gimp_image_get_active_vectors       (gint32                image_ID);
+gboolean          gimp_image_set_active_vectors       (gint32                image_ID,
+						       gint32                active_vectors_ID);
 gint32            gimp_image_get_selection            (gint32                image_ID);
 gboolean          gimp_image_get_component_active     (gint32                image_ID,
 						       GimpChannelType       component);

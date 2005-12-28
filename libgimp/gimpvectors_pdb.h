@@ -29,19 +29,35 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gint*    gimp_vectors_get_strokes        (gint32    vectors_ID,
-					  gint     *num_strokes);
-gboolean gimp_vectors_stroke_remove      (gint32    vectors_ID,
-					  gint      stroke_id);
-gboolean gimp_vectors_stroke_translate   (gint32    vectors_ID,
-					  gint      stroke_id,
-					  gint      offx,
-					  gint      offy);
-gboolean gimp_vectors_stroke_interpolate (gint32    vectors_ID,
-					  gint      stroke_id,
-					  gdouble   prescision,
-					  gint     *num_coords,
-					  gdouble **coords);
+gint*    gimp_vectors_get_strokes        (gint32        vectors_ID,
+					  gint         *num_strokes);
+gboolean gimp_vectors_get_locked         (gint32        vectors_ID);
+gboolean gimp_vectors_set_locked         (gint32        vectors_ID,
+					  gboolean      locked);
+gboolean gimp_vectors_get_visible        (gint32        vectors_ID);
+gboolean gimp_vectors_set_visible        (gint32        vectors_ID,
+					  gboolean      visible);
+gchar*   gimp_vectors_get_name           (gint32        vectors_ID);
+gboolean gimp_vectors_set_name           (gint32        vectors_ID,
+					  const gchar  *name);
+gdouble  gimp_vectors_stroke_get_length  (gint32        vectors_ID,
+					  gint          stroke_id,
+					  gdouble       prescision);
+gboolean gimp_vectors_stroke_remove      (gint32        vectors_ID,
+					  gint          stroke_id);
+gboolean gimp_vectors_stroke_translate   (gint32        vectors_ID,
+					  gint          stroke_id,
+					  gint          off_x,
+					  gint          off_y);
+gboolean gimp_vectors_stroke_scale       (gint32        vectors_ID,
+					  gint          stroke_id,
+					  gdouble       scale_x,
+					  gdouble       scale_y);
+gboolean gimp_vectors_stroke_interpolate (gint32        vectors_ID,
+					  gint          stroke_id,
+					  gdouble       prescision,
+					  gint         *num_coords,
+					  gdouble     **coords);
 
 
 G_END_DECLS

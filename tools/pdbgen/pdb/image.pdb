@@ -29,6 +29,12 @@ sub channel_arg () {{
     desc => 'The channel'
 }}
 
+sub vectors_arg () {{
+    name => 'vectors',
+    type => 'vectors',
+    desc => 'The vectors object'
+}}
+
 sub new_dim_args {
     foreach (qw(width height)) {
 	push @inargs, { name => "new_$_",
@@ -907,6 +913,60 @@ HELP
     %invoke = ( code => 'gimp_image_remove_channel (gimage, channel);' );
 }
 
+sub image_remove_vectors {
+    $blurb = 'Remove the specified path from the image.';
+
+    $help = <<'HELP';
+This procedure removes the specified path from the image. If the path
+doesn't exist, an error is returned.
+HELP
+
+    &std_pdb_misc;
+
+    $author = "Simon Budig";
+    $date = 2005;
+    $since = 2.4;
+
+    @inargs = (
+	&std_image_arg,
+	&vectors_arg
+    );
+
+    %invoke = ( code => 'gimp_image_remove_vectors (gimage, vectors);' );
+}
+
+sub image_raise_vectors {
+    &type_move('vectors', 'raise', 'above');
+    &std_pdb_misc;
+    $author = "Simon Budig";
+    $date = 2005;
+    $since = 2.4;
+}
+
+sub image_lower_vectors {
+    &type_move('vectors', 'lower', 'below');
+    &std_pdb_misc;
+    $author = "Simon Budig";
+    $date = 2005;
+    $since = 2.4;
+}
+
+sub image_raise_vectors_to_top {
+    &type_move('vectors', 'raise_to_top', 'above');
+    &std_pdb_misc;
+    $author = "Simon Budig";
+    $date = 2005;
+    $since = 2.4;
+}
+
+sub image_lower_vectors_to_bottom {
+    &type_move('vectors', 'lower_to_bottom', 'below');
+    &std_pdb_misc;
+    $author = "Simon Budig";
+    $date = 2005;
+    $since = 2.4;
+}
+
 sub image_get_active_drawable {
     $blurb = "Get the image's active drawable";
 
@@ -1178,6 +1238,25 @@ this procedure will return an execution error.
 HELP
 CODE2
 
+&image_accessors('active_vectors', 'vectors', 'active vectors', 1,
+		 [ <<'CODE1', <<'CODE2' ]);
+    $invoke{code} = "active_vectors = $outargs[0]->{alias};";
+    delete @{$outargs[0]}{qw(alias no_declare)};
+    $outargs[0]->{return_fail} = -1;
+    $outargs[0]->{init} = 1;
+
+    $help = <<'HELP';
+If there is an active path, its ID will be returned, otherwise, -1.
+HELP
+CODE1
+    $invoke{code} =~ s/;//g;
+    $invoke{code} = "success = ($invoke{code} == active_vectors);";
+
+    $help = <<'HELP';
+If the path exists, it is set as the active path in the image.
+HELP
+CODE2
+
 &image_accessors('selection', 'selection', 'selection', 1,
 		 [ <<'CODE', undef ]);
     $invoke{code} = "success = (selection = gimp_image_get_mask (gimage)) != NULL;";
@@ -1427,7 +1506,7 @@ HELP
 CODE2
 
 
-foreach (qw(layer channel)) {
+foreach (qw(layer channel vectors)) {
     push @procs, "image_get_${_}_by_tattoo";
     eval <<SUB;
 sub image_get_${_}_by_tattoo {
@@ -1582,14 +1661,17 @@ unshift @procs, qw(image_list image_new image_duplicate image_delete
                    image_add_layer image_remove_layer
 		   image_raise_layer image_lower_layer
                    image_raise_layer_to_top image_lower_layer_to_bottom
+		   image_raise_vectors image_lower_vectors
+                   image_raise_vectors_to_top image_lower_vectors_to_bottom
                    image_add_channel image_remove_channel
+		   image_remove_vectors
                    image_raise_channel image_lower_channel
                    image_flatten image_merge_visible_layers image_merge_down
                    image_add_layer_mask image_remove_layer_mask
                    image_get_colormap image_set_colormap
 		   image_clean_all image_is_dirty
                    image_thumbnail);
-%exports = (app => [@procs], lib => [@procs[0..35,38..62]]);
+%exports = (app => [@procs], lib => [@procs[0..40,43..69]]);
 
 $desc = 'Image';
 
