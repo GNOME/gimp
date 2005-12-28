@@ -1057,13 +1057,12 @@ gimp_dockable_title_changed (GimpDocked   *docked,
       dockable->title_layout = NULL;
     }
 
-  if (GTK_WIDGET (dockable)->window)
+  if (GTK_WIDGET_DRAWABLE (dockable))
     {
-      GdkRectangle title_area;
+      GdkRectangle area;
 
-      gimp_dockable_get_title_area (dockable, &title_area);
+      gimp_dockable_get_title_area (dockable, &area);
 
-      gdk_window_invalidate_rect (GTK_WIDGET (dockable)->window,
-                                  &title_area, FALSE);
+      gdk_window_invalidate_rect (GTK_WIDGET (dockable)->window, &area, FALSE);
     }
 }
