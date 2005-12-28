@@ -311,6 +311,7 @@
         <menuitem action="image-merge-layers" />
         <menuitem action="image-flatten" />
       </placeholder>
+      <placeholder name="Arrange" />
       <separator />
       <menu action="image-guides-menu" name="Guides">
       </menu>
