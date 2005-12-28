@@ -77,6 +77,7 @@ static void       gimp_dockable_forall            (GtkContainer   *container,
 
 static void       gimp_dockable_get_title_area    (GimpDockable   *dockable,
                                                    GdkRectangle   *area);
+static void       gimp_dockable_clear_title_area  (GimpDockable   *dockable);
 
 static gboolean   gimp_dockable_menu_button_press (GtkWidget      *button,
                                                    GdkEventButton *bevent,
@@ -184,6 +185,8 @@ gimp_dockable_destroy (GtkObject *object)
 {
   GimpDockable *dockable = GIMP_DOCKABLE (object);
 
+  gimp_dockable_blink_cancel (dockable);
+
   if (dockable->context)
     gimp_dockable_set_context (dockable, NULL);
 
@@ -222,9 +225,6 @@ gimp_dockable_destroy (GtkObject *object)
       gtk_widget_unparent (dockable->menu_button);
       dockable->menu_button = NULL;
     }
-
-  if (dockable->blink_timeout_id)
-    gimp_dockable_blink_cancel (dockable);
 
   GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
@@ -827,8 +827,7 @@ gimp_dockable_blink (GimpDockable *dockable)
     g_source_remove (dockable->blink_timeout_id);
 
   dockable->blink_timeout_id =
-    g_timeout_add (150, (GSourceFunc) gimp_dockable_blink_timeout,
-                   dockable);
+    g_timeout_add (150, (GSourceFunc) gimp_dockable_blink_timeout, dockable);
 
   gimp_dockable_blink_timeout (dockable);
 }
@@ -841,8 +840,11 @@ gimp_dockable_blink_cancel (GimpDockable *dockable)
   if (dockable->blink_timeout_id)
     {
       g_source_remove (dockable->blink_timeout_id);
+
       dockable->blink_timeout_id = 0;
       dockable->blink_counter    = 0;
+
+      gimp_dockable_clear_title_area (dockable);
     }
 }
 
@@ -863,6 +865,19 @@ gimp_dockable_get_title_area (GimpDockable *dockable,
 
   if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
     area->x += dockable->menu_button->allocation.width;
+}
+
+static void
+gimp_dockable_clear_title_area (GimpDockable *dockable)
+{
+  if (GTK_WIDGET_DRAWABLE (dockable))
+    {
+      GdkRectangle area;
+
+      gimp_dockable_get_title_area (dockable, &area);
+      gtk_widget_queue_draw_area (GTK_WIDGET (dockable),
+                                  area.x, area.y, area.width, area.height);
+    }
 }
 
 static gboolean
@@ -1019,14 +1034,7 @@ gimp_dockable_show_menu (GimpDockable *dockable)
 static gboolean
 gimp_dockable_blink_timeout (GimpDockable *dockable)
 {
-  if (GTK_WIDGET_DRAWABLE (dockable))
-    {
-      GdkRectangle area;
-
-      gimp_dockable_get_title_area (dockable, &area);
-      gtk_widget_queue_draw_area (GTK_WIDGET (dockable),
-                                  area.x, area.y, area.width, area.height);
-    }
+  gimp_dockable_clear_title_area (dockable);
 
   if (dockable->blink_counter++ > 3)
     {
