@@ -285,7 +285,7 @@ pygimp_param_to_tuple(int nparams, const GimpParam *params)
 	    value = PyInt_FromLong(params[i].data.d_boundary);
 	    break;
 	case GIMP_PDB_PATH:
-	    value = PyInt_FromLong(params[i].data.d_path);
+	    value = PyInt_FromLong(params[i].data.d_vectors);
 	    break;
 	case GIMP_PDB_PARASITE:
 	    value = pygimp_parasite_new(gimp_parasite_copy(
@@ -515,7 +515,7 @@ pygimp_param_from_tuple(PyObject *args, const GimpParamDef *ptype, int nparams)
 	    break;
 	case GIMP_PDB_PATH:
 	    check(!PyInt_Check(item));
-	    ret[i].data.d_path = PyInt_AsLong(item);
+	    ret[i].data.d_vectors = PyInt_AsLong(item);
 	    break;
 	case GIMP_PDB_PARASITE:
 	    /* can't do anything, since size of GimpParasite is not known */
