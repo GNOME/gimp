@@ -18,6 +18,9 @@ Changes in GIMP 2.3.6
 - mouse-wheel scrolling and zooming in plug-in previews
 - added keyboard shortcuts ([ and ]) for changing the brush radius
 - improved Oilify plug-in
+- made the IWarp plug-in preview resizeable
+- added alignment mode for cloning from a fixed location source
+- completed core/ui separation of paint tools and paint methods
 - bug fixes and code cleanup
 
 
