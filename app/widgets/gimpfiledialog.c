@@ -43,8 +43,6 @@
 #include "gimpfiledialog.h"
 #include "gimpfileprocview.h"
 #include "gimphelp-ids.h"
-#include "gimpmessagebox.h"
-#include "gimpmessagedialog.h"
 #include "gimpprogressbox.h"
 #include "gimpview.h"
 #include "gimpviewrendererimagefile.h"
@@ -286,10 +284,11 @@ gimp_file_dialog_new (Gimp                 *gimp,
     }
 
   dialog = g_object_new (GIMP_TYPE_FILE_DIALOG,
-                         "title",      title,
-                         "role",       role,
-                         "action",     action,
-                         "local-only", local_only,
+                         "title",                     title,
+                         "role",                      role,
+                         "action",                    action,
+                         "local-only",                local_only,
+                         "do-overwrite-confirmation", TRUE,
                          NULL);
 
   gtk_dialog_add_buttons (GTK_DIALOG (dialog),
@@ -397,58 +396,6 @@ gimp_file_dialog_set_image (GimpFileDialog *dialog,
       gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog), current);
       g_free (current);
     }
-}
-
-
-
-gboolean
-gimp_file_overwrite_dialog (GtkWidget   *parent,
-                            const gchar *uri)
-{
-  GtkWidget *dialog;
-  gchar     *filename;
-  gboolean   overwrite = FALSE;
-
-  dialog = gimp_message_dialog_new (_("File Exists"), GIMP_STOCK_WARNING,
-                                    parent, GTK_DIALOG_DESTROY_WITH_PARENT,
-                                    gimp_standard_help_func, NULL,
-
-                                    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                    _("_Replace"),    GTK_RESPONSE_OK,
-
-                                    NULL);
-
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
-
-  filename = file_utils_uri_display_name (uri);
-  gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
-                                     _("A file named '%s' already exists."),
-                                     filename);
-  g_free (filename);
-
-  gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
-                             _("Do you want to replace it with the image "
-                               "you are saving?"));
-
-  if (GTK_IS_DIALOG (parent))
-    gtk_dialog_set_response_sensitive (GTK_DIALOG (parent),
-                                       GTK_RESPONSE_CANCEL, FALSE);
-
-  g_object_ref (dialog);
-
-  overwrite = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
-
-  gtk_widget_destroy (dialog);
-  g_object_unref (dialog);
-
-  if (GTK_IS_DIALOG (parent))
-    gtk_dialog_set_response_sensitive (GTK_DIALOG (parent),
-                                       GTK_RESPONSE_CANCEL, TRUE);
-
-  return overwrite;
 }
 
 

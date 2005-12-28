@@ -1,5 +1,18 @@
 2005-12-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpfiledialog.[ch]: set the new
+	"do-overwrite-confirmation" property on GtkFileChooser. Removed
+	gimp_file_overwrite_dialog().
+
+	* app/dialogs/file-save-dialog.c (file_save_dialog_check_uri):
+	removed broken code which tried to figure if a file exists.
+	Fixes bug #309729.
+
+	* app/widgets/gimpdnd-xds.c: added gimp_file_overwrite_dialog()
+	here as private utility function.
+
+2005-12-28  Michael Natterer  <mitch@gimp.org>
+
 	* app/dialogs/about-dialog.c: set the new "wrap-license" property
 	on GtkAboutDialog and remove the explicit newlines from the string
 	holding the GPL.

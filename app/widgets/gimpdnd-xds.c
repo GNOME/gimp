@@ -31,6 +31,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "widgets-types.h"
 
 #include "core/gimp.h"
@@ -41,6 +43,8 @@
 
 #include "gimpdnd-xds.h"
 #include "gimpfiledialog.h"
+#include "gimpmessagebox.h"
+#include "gimpmessagedialog.h"
 
 #include "gimp-intl.h"
 
@@ -54,6 +58,14 @@
 
 #define MAX_URI_LEN 4096
 
+
+/*  local function prototypes  */
+
+static gboolean   gimp_file_overwrite_dialog (GtkWidget   *parent,
+                                              const gchar *uri);
+
+
+/*  public functions  */
 
 void
 gimp_dnd_xds_source_set (GdkDragContext *context,
@@ -176,4 +188,57 @@ gimp_dnd_xds_save_image (GdkDragContext   *context,
     }
 
   g_free (uri);
+}
+
+
+/*  private functions  */
+
+static gboolean
+gimp_file_overwrite_dialog (GtkWidget   *parent,
+                            const gchar *uri)
+{
+  GtkWidget *dialog;
+  gchar     *filename;
+  gboolean   overwrite = FALSE;
+
+  dialog = gimp_message_dialog_new (_("File Exists"), GIMP_STOCK_WARNING,
+                                    parent, GTK_DIALOG_DESTROY_WITH_PARENT,
+                                    gimp_standard_help_func, NULL,
+
+                                    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                    _("_Replace"),    GTK_RESPONSE_OK,
+
+                                    NULL);
+
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
+  filename = file_utils_uri_display_name (uri);
+  gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+                                     _("A file named '%s' already exists."),
+                                     filename);
+  g_free (filename);
+
+  gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+                             _("Do you want to replace it with the image "
+                               "you are saving?"));
+
+  if (GTK_IS_DIALOG (parent))
+    gtk_dialog_set_response_sensitive (GTK_DIALOG (parent),
+                                       GTK_RESPONSE_CANCEL, FALSE);
+
+  g_object_ref (dialog);
+
+  overwrite = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+
+  gtk_widget_destroy (dialog);
+  g_object_unref (dialog);
+
+  if (GTK_IS_DIALOG (parent))
+    gtk_dialog_set_response_sensitive (GTK_DIALOG (parent),
+                                       GTK_RESPONSE_CANCEL, TRUE);
+
+  return overwrite;
 }

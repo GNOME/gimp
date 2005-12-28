@@ -78,9 +78,6 @@ void        gimp_file_dialog_set_image     (GimpFileDialog       *dialog,
                                             GimpImage            *gimage,
                                             gboolean              save_a_copy);
 
-gboolean    gimp_file_overwrite_dialog     (GtkWidget            *parent,
-                                            const gchar          *uri);
-
 G_END_DECLS
 
 #endif /* __GIMP_FILE_DIALOG_H__ */

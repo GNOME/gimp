@@ -372,16 +372,6 @@ file_save_dialog_check_uri (GtkWidget      *save_dialog,
       return FALSE;
     }
 
-  if (gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (save_dialog), uri))
-    {
-      if (! gimp_file_overwrite_dialog (save_dialog, uri))
-        {
-          g_free (uri);
-          g_free (basename);
-          return FALSE;
-        }
-    }
-
   *ret_uri       = uri;
   *ret_basename  = basename;
   *ret_save_proc = save_proc;
