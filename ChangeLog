@@ -1,5 +1,12 @@
 2005-12-29  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell.c (gimp_display_shell_new):
+	commented out gravity setting. While it's nice with
+	"resize-windows-on-zoom" it doesn't yield satisfying behaviour in
+	most cases.
+
+2005-12-29  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpdockbook.c (gimp_dockbook_dockable_added): set
 	the current notebook page to the dockable that was just added.
 
