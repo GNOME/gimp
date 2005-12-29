@@ -89,6 +89,9 @@ static gboolean  gimp_dockbook_tab_drag_drop    (GtkWidget      *widget,
                                                  gint            y,
                                                  guint           time,
                                                  gpointer        data);
+static gboolean  gimp_dockbook_tab_drag_expose  (GtkWidget      *widget,
+                                                 GdkEventExpose *event);
+
 static void      gimp_dockbook_help_func        (const gchar    *help_id,
                                                  gpointer        help_data);
 
@@ -527,29 +530,27 @@ gimp_dockbook_tab_drag_begin (GtkWidget      *widget,
 {
   GimpDockable   *dockable = GIMP_DOCKABLE (data);
   GtkWidget      *window;
-  GtkWidget      *frame;
   GtkWidget      *view;
   GtkRequisition  requisition;
 
   window = gtk_window_new (GTK_WINDOW_POPUP);
-
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
-  gtk_container_add (GTK_CONTAINER (window), frame);
-  gtk_widget_show (frame);
 
   view = gimp_dockable_get_tab_widget (dockable,
                                        dockable->context,
                                        GIMP_TAB_STYLE_ICON_BLURB,
                                        DND_WIDGET_ICON_SIZE);
 
+  g_signal_connect (view, "expose-event",
+                    G_CALLBACK (gimp_dockbook_tab_drag_expose),
+                    NULL);
+
   if (GTK_IS_CONTAINER (view))
-    gtk_container_set_border_width (GTK_CONTAINER (view), 3);
+    gtk_container_set_border_width (GTK_CONTAINER (view), 6);
 
   if (GTK_IS_HBOX (view))
     gtk_box_set_spacing (GTK_BOX (view), 6);
 
-  gtk_container_add (GTK_CONTAINER (frame), view);
+  gtk_container_add (GTK_CONTAINER (window), view);
   gtk_widget_show (view);
 
   gtk_window_set_screen (GTK_WINDOW (window), gtk_widget_get_screen (widget));
@@ -653,6 +654,24 @@ gimp_dockbook_tab_drag_drop (GtkWidget      *widget,
             }
         }
     }
+
+  return FALSE;
+}
+
+static gboolean
+gimp_dockbook_tab_drag_expose (GtkWidget      *widget,
+                               GdkEventExpose *event)
+{
+  /*  mimic the appearance of a notebook tab  */
+
+  gtk_paint_extension (widget->style, widget->window,
+                       widget->state, GTK_SHADOW_OUT,
+                       &event->area, widget, "tab",
+                       widget->allocation.x,
+                       widget->allocation.y,
+                       widget->allocation.width,
+                       widget->allocation.height,
+                       GTK_POS_BOTTOM);
 
   return FALSE;
 }
