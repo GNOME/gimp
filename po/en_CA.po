@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-12-26 02:02-0500\n"
+"POT-Creation-Date: 2005-12-29 03:23-0500\n"
 "PO-Revision-Date: 2005-09-06 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
@@ -16,6 +16,48 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../app/about.h:26 ../desktop/gimp.desktop.in.in.h:2
+msgid "GNU Image Manipulation Program"
+msgstr "GNU Image Manipulation Program"
+
+#: ../app/about.h:29
+msgid ""
+"Copyright (C) 1995-2005\n"
+"Spencer Kimball, Peter Mattis and the GIMP Development Team"
+msgstr ""
+"Copyright (C) 1995-2005\n"
+"Spencer Kimball, Peter Mattis and the GIMP Development Team"
+
+#: ../app/about.h:33
+msgid ""
+"This program is free software; you can redistribute it and/or modify it "
+"under the terms of the GNU General Public License as published by the Free "
+"Software Foundation; either version 2 of the License, or (at your option) "
+"any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT "
+"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
+"FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for "
+"more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License along with "
+"this program; if not, write to the Free Software Foundation, Inc., 59 Temple "
+"Place - Suite 330, Boston, MA 02111-1307, USA."
+msgstr ""
+"This program is free software; you can redistribute it and/or modify it "
+"under the terms of the GNU General Public Licence as published by the Free "
+"Software Foundation; either version 2 of the Licence, or (at your option) "
+"any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT "
+"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
+"FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public Licence for "
+"more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public Licence along with "
+"this program; if not, write to the Free Software Foundation, Inc., 59 Temple "
+"Place - Suite 330, Boston, MA 02111-1307, USA."
 
 #: ../app/app_procs.c:134
 msgid "(This console window will close in ten seconds)\n"
@@ -54,90 +96,85 @@ msgstr "Opening '%s' failed: %s"
 msgid "The batch interpreter '%s' is not available. Batch mode disabled."
 msgstr "The batch interpreter '%s' is not available. Batch mode disabled."
 
-#: ../app/main.c:121 ../tools/gimp-remote.c:78
+#: ../app/main.c:122 ../tools/gimp-remote.c:78
 msgid "Show version information and exit"
 msgstr "Show version information and exit"
 
-#: ../app/main.c:126
+#: ../app/main.c:127
 msgid "Be more verbose"
 msgstr "Be more verbose"
 
-#: ../app/main.c:131
+#: ../app/main.c:132
 msgid "Run without a user interface"
 msgstr "Run without a user interface"
 
-#: ../app/main.c:136
+#: ../app/main.c:137
 msgid "Do not load brushes, gradients, patterns, ..."
 msgstr "Do not load brushes, gradients, patterns, ..."
 
-#: ../app/main.c:141
+#: ../app/main.c:142
 msgid "Do not load any fonts"
 msgstr "Do not load any fonts"
 
-#: ../app/main.c:146
+#: ../app/main.c:147
 msgid "Do not show a startup window"
 msgstr "Do not show a startup window"
 
-#: ../app/main.c:151
+#: ../app/main.c:152
 msgid "Do not use shared memory between GIMP and plugins"
 msgstr "Do not use shared memory between GIMP and plugins"
 
-#: ../app/main.c:156
+#: ../app/main.c:157
 msgid "Do not use special CPU acceleration functions"
 msgstr "Do not use special CPU acceleration functions"
 
-#: ../app/main.c:161
+#: ../app/main.c:162
 msgid "Use an alternate sessionrc file"
 msgstr "Use an alternate sessionrc file"
 
-#: ../app/main.c:166
+#: ../app/main.c:167
 msgid "Use an alternate user gimprc file"
 msgstr "Use an alternate user gimprc file"
 
-#: ../app/main.c:171
+#: ../app/main.c:172
 msgid "Use an alternate system gimprc file"
 msgstr "Use an alternate system gimprc file"
 
-#: ../app/main.c:176
+#: ../app/main.c:177
 msgid "Batch command to run (can be used multiple times)"
 msgstr "Batch command to run (can be used multiple times)"
 
-#: ../app/main.c:181
+#: ../app/main.c:182
 msgid "The procedure to process batch commands with"
 msgstr "The procedure to process batch commands with"
 
-#: ../app/main.c:186
+#: ../app/main.c:187
 msgid "Send messages to console instead of using a dialog"
 msgstr "Send messages to console instead of using a dialogue box"
 
 #. don't translate the mode names (off|on|warn)
-#: ../app/main.c:192
+#: ../app/main.c:193
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr "PDB compatibility mode (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
-#: ../app/main.c:198
+#: ../app/main.c:199
 msgid "Debug in case of a crash (never|query|always)"
 msgstr "Debug in case of a crash (never|query|always)"
 
-#: ../app/main.c:203
+#: ../app/main.c:204
 msgid "Enable non-fatal debugging signal handlers"
 msgstr "Enable non-fatal debugging signal handlers"
 
-#: ../app/main.c:208
+#: ../app/main.c:209
 msgid "Make all warnings fatal"
 msgstr "Make all warnings fatal"
 
-#: ../app/main.c:213
+#: ../app/main.c:214
 msgid "Output a gimprc file with default settings"
 msgstr "Output a gimprc file with default settings"
 
-#: ../app/main.c:250 ../app/dialogs/about-dialog.c:61
-#: ../desktop/gimp.desktop.in.in.h:2
-msgid "GNU Image Manipulation Program"
-msgstr "GNU Image Manipulation Program"
-
-#: ../app/main.c:294
+#: ../app/main.c:295
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -145,7 +182,7 @@ msgstr ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
 
-#: ../app/main.c:445 ../tools/gimp-remote.c:315
+#: ../app/main.c:446 ../tools/gimp-remote.c:315
 #, c-format
 msgid "%s version %s"
 msgstr "%s version %s"
@@ -770,7 +807,7 @@ msgstr ""
 #: ../app/actions/data-commands.c:128 ../app/core/gimpimage.c:1316
 #: ../app/core/gimppalette-import.c:218 ../app/core/gimppalette.c:481
 #: ../app/core/gimppalette.c:591 ../app/dialogs/palette-import-dialog.c:694
-#: ../app/pdb/image_cmds.c:3892 ../app/widgets/gimpdnd-xds.c:83
+#: ../app/pdb/image_cmds.c:4307 ../app/widgets/gimpdnd-xds.c:95
 msgid "Untitled"
 msgstr "Untitled"
 
@@ -1477,8 +1514,8 @@ msgstr "Close all"
 msgid "_Quit"
 msgstr "_Quit"
 
-#: ../app/actions/file-commands.c:237 ../app/dialogs/file-save-dialog.c:474
-#: ../app/widgets/gimpdnd-xds.c:158
+#: ../app/actions/file-commands.c:237 ../app/dialogs/file-save-dialog.c:464
+#: ../app/widgets/gimpdnd-xds.c:170
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -4617,7 +4654,7 @@ msgstr "FS rigor"
 msgid "FS relax"
 msgstr "FS relax"
 
-#: ../app/core/core-enums.c:848 ../app/paint/gimpink.c:102
+#: ../app/core/core-enums.c:848 ../app/paint/gimpink.c:103
 #: ../app/tools/gimpinktool.c:61
 msgid "Ink"
 msgstr "Ink"
@@ -4766,7 +4803,7 @@ msgstr "Fatal parse error in brush file '%s': File appears truncated."
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Invalid UTF-8 string in brush file '%s'."
 
-#: ../app/core/gimpbrush-load.c:258 ../app/core/gimpcontext.c:1256
+#: ../app/core/gimpbrush-load.c:258 ../app/core/gimpcontext.c:1327
 #: ../app/core/gimpitem.c:527 ../app/core/gimppattern.c:333
 #: ../app/dialogs/template-options-dialog.c:80
 #: ../app/tools/gimpvectortool.c:298
@@ -4976,7 +5013,7 @@ msgstr ""
 msgid "Blend"
 msgstr "Blend"
 
-#: ../app/core/gimpdrawable-bucket-fill.c:85 ../app/paint/gimpclone.c:152
+#: ../app/core/gimpdrawable-bucket-fill.c:85 ../app/paint/gimpclone.c:154
 msgid "No patterns available for this operation."
 msgstr "No patterns available for this operation."
 
@@ -5756,18 +5793,18 @@ msgstr "picas"
 msgid "percent"
 msgstr "percent"
 
-#: ../app/dialogs/about-dialog.c:64
+#: ../app/dialogs/about-dialog.c:125
 msgid "Visit the GIMP website"
 msgstr "Visit the GIMP website"
 
 #. Translators: insert your names here,
 #. * separated by newline
 #.
-#: ../app/dialogs/about-dialog.c:155
+#: ../app/dialogs/about-dialog.c:132
 msgid "translator-credits"
 msgstr "Adam Weinberger <adamw@gnome.org>"
 
-#: ../app/dialogs/about-dialog.c:691
+#: ../app/dialogs/about-dialog.c:668
 msgid "GIMP is brought to you by"
 msgstr "GIMP is brought to you by"
 
@@ -5887,15 +5924,15 @@ msgstr ""
 "Please enter a file extension that matches the selected file format or enter "
 "no file extension at all."
 
-#: ../app/dialogs/file-save-dialog.c:399
+#: ../app/dialogs/file-save-dialog.c:389
 msgid "Extension Mismatch"
 msgstr "Extension Mismatch"
 
-#: ../app/dialogs/file-save-dialog.c:415
+#: ../app/dialogs/file-save-dialog.c:405
 msgid "The given file extension does not match the chosen file type."
 msgstr "The given file extension does not match the chosen file type."
 
-#: ../app/dialogs/file-save-dialog.c:419
+#: ../app/dialogs/file-save-dialog.c:409
 msgid "Do you want to use this name anyway?"
 msgstr "Do you want to use this name anyway?"
 
@@ -6847,7 +6884,7 @@ msgid "Select Temp Folder"
 msgstr "Select Temp Folder"
 
 #: ../app/dialogs/preferences-dialog.c:2388
-#: ../app/dialogs/user-install-dialog.c:1449
+#: ../app/dialogs/user-install-dialog.c:1433
 msgid "Swap folder:"
 msgstr "Swap folder:"
 
@@ -7109,7 +7146,7 @@ msgstr "_Next Tip"
 msgid "tips-locale:C"
 msgstr "tips-locale:C"
 
-#: ../app/dialogs/user-install-dialog.c:131
+#: ../app/dialogs/user-install-dialog.c:133
 msgid ""
 "The gimprc is used to store personal preferences that affect GIMP's default "
 "behavior.  Paths to search for brushes, palettes, gradients, patterns, plug-"
@@ -7119,7 +7156,7 @@ msgstr ""
 "behaviour.  Paths to search for brushes, palettes, gradients, patterns, plug-"
 "ins and modules can also configured here."
 
-#: ../app/dialogs/user-install-dialog.c:140
+#: ../app/dialogs/user-install-dialog.c:142
 msgid ""
 "GIMP uses an additional gtkrc file so you can configure it to look "
 "differently than other GTK apps."
@@ -7127,7 +7164,7 @@ msgstr ""
 "GIMP uses an additional gtkrc file so you can configure it to look "
 "differently than other GTK apps."
 
-#: ../app/dialogs/user-install-dialog.c:146
+#: ../app/dialogs/user-install-dialog.c:148
 msgid ""
 "Plug-ins and extensions are external programs which provide additional "
 "functionality to GIMP.  These programs are searched for at run-time and "
@@ -7139,7 +7176,7 @@ msgstr ""
 "information about their functionality is cached in this file.  This file is "
 "intended to be written to by GIMP only, and should not be edited."
 
-#: ../app/dialogs/user-install-dialog.c:156
+#: ../app/dialogs/user-install-dialog.c:158
 msgid ""
 "Key shortcuts can be dynamically redefined. The menurc is a dump of your "
 "configuration so it can be remembered for the next session.  You may edit "
@@ -7151,7 +7188,7 @@ msgstr ""
 "this file if you wish, but it is much easier to define the keys from within "
 "GIMP.  Deleting this file will restore the default shortcuts."
 
-#: ../app/dialogs/user-install-dialog.c:166
+#: ../app/dialogs/user-install-dialog.c:168
 msgid ""
 "The sessionrc is used to store what dialog windows were open the last time "
 "you quit GIMP.  You can configure GIMP to reopen these dialogs at the saved "
@@ -7161,7 +7198,7 @@ msgstr ""
 "you quit GIMP.  You can configure GIMP to reopen these dialogues at the "
 "saved position."
 
-#: ../app/dialogs/user-install-dialog.c:173
+#: ../app/dialogs/user-install-dialog.c:175
 msgid ""
 "This file holds a collection of standard media sizes that serve as image "
 "templates."
@@ -7169,7 +7206,7 @@ msgstr ""
 "This file holds a collection of standard media sizes that serve as image "
 "templates."
 
-#: ../app/dialogs/user-install-dialog.c:179
+#: ../app/dialogs/user-install-dialog.c:181
 msgid ""
 "The unitrc is used to store your user units database.  You can define "
 "additional units and use them just like you use the built-in units inches, "
@@ -7181,7 +7218,7 @@ msgstr ""
 "millimetres, points and picas.  This file is overwritten each time you quit "
 "the GIMP."
 
-#: ../app/dialogs/user-install-dialog.c:188
+#: ../app/dialogs/user-install-dialog.c:190
 msgid ""
 "This folder is used to store user defined brushes. GIMP checks this folder "
 "in addition to the system-wide brushes installation."
@@ -7189,7 +7226,7 @@ msgstr ""
 "This folder is used to store user defined brushes. GIMP checks this folder "
 "in addition to the system-wide brushes installation."
 
-#: ../app/dialogs/user-install-dialog.c:195
+#: ../app/dialogs/user-install-dialog.c:197
 msgid ""
 "This folder is used to store fonts you only want to be visible in GIMP. GIMP "
 "checks this folder in addition to the system-wide fonts installation. Use "
@@ -7201,7 +7238,7 @@ msgstr ""
 "this only if you really want to have fonts available in GIMP only. "
 "Otherwise, put them in your global font directory."
 
-#: ../app/dialogs/user-install-dialog.c:204
+#: ../app/dialogs/user-install-dialog.c:206
 msgid ""
 "This folder is used to store user defined gradients.  GIMP checks this "
 "folder in addition to the system-wide gradients installation."
@@ -7209,7 +7246,7 @@ msgstr ""
 "This folder is used to store user defined gradients.  GIMP checks this "
 "folder in addition to the system-wide gradients installation."
 
-#: ../app/dialogs/user-install-dialog.c:211
+#: ../app/dialogs/user-install-dialog.c:213
 msgid ""
 "This folder is used to store user defined palettes.  GIMP checks this folder "
 "in addition to the system-wide palettes installation."
@@ -7217,7 +7254,7 @@ msgstr ""
 "This folder is used to store user defined palettes.  GIMP checks this folder "
 "in addition to the system-wide palettes installation."
 
-#: ../app/dialogs/user-install-dialog.c:218
+#: ../app/dialogs/user-install-dialog.c:220
 msgid ""
 "This folder is used to store user defined patterns.  GIMP checks this folder "
 "in addition to the system-wide patterns installation when searching for "
@@ -7227,7 +7264,7 @@ msgstr ""
 "in addition to the system-wide patterns installation when searching for "
 "patterns."
 
-#: ../app/dialogs/user-install-dialog.c:225
+#: ../app/dialogs/user-install-dialog.c:227
 msgid ""
 "This folder is used to store user created, temporary, or otherwise non-"
 "system-supported plug-ins.  GIMP checks this folder in addition to the "
@@ -7237,7 +7274,7 @@ msgstr ""
 "system-supported plug-ins.  GIMP checks this folder in addition to the "
 "system-wide plug-in folder."
 
-#: ../app/dialogs/user-install-dialog.c:233
+#: ../app/dialogs/user-install-dialog.c:235
 msgid ""
 "This folder is used to store user created, temporary, or otherwise non-"
 "system-supported DLL modules.  GIMP checks this folder in addition to the "
@@ -7247,7 +7284,7 @@ msgstr ""
 "system-supported DLL modules.  GIMP checks this folder in addition to the "
 "system-wide module folder."
 
-#: ../app/dialogs/user-install-dialog.c:241
+#: ../app/dialogs/user-install-dialog.c:243
 msgid ""
 "This folder is used to store configuration for user created, temporary, or "
 "otherwise non-system-supported plug-in interpreters.  GIMP checks this "
@@ -7259,7 +7296,7 @@ msgstr ""
 "folder in addition to the system-wide GIMP interpreters folder when "
 "searching for plug-in interpreter configuration files."
 
-#: ../app/dialogs/user-install-dialog.c:251
+#: ../app/dialogs/user-install-dialog.c:253
 msgid ""
 "This folder is used to store user created, temporary, or otherwise non-"
 "system-supported additions to the plug-in environment.  GIMP checks this "
@@ -7271,7 +7308,7 @@ msgstr ""
 "folder in addition to the system-wide GIMP environment folder when searching "
 "for plug-in environment modification files."
 
-#: ../app/dialogs/user-install-dialog.c:261
+#: ../app/dialogs/user-install-dialog.c:263
 msgid ""
 "This folder is used to store user created and installed scripts.  GIMP "
 "checks this folder in addition to the systemwide scripts folder."
@@ -7279,136 +7316,88 @@ msgstr ""
 "This folder is used to store user-created and installed scripts.  GIMP "
 "checks this folder in addition to the systemwide scripts folder."
 
-#: ../app/dialogs/user-install-dialog.c:268
+#: ../app/dialogs/user-install-dialog.c:270
 msgid "This folder is searched for image templates."
 msgstr "This folder is searched for image templates."
 
-#: ../app/dialogs/user-install-dialog.c:273
+#: ../app/dialogs/user-install-dialog.c:275
 msgid "This folder is searched for user-installed themes."
 msgstr "This folder is searched for user-installed themes."
 
-#: ../app/dialogs/user-install-dialog.c:278
+#: ../app/dialogs/user-install-dialog.c:280
 msgid "This folder is used for temporary files."
 msgstr "This folder is used for temporary files."
 
-#: ../app/dialogs/user-install-dialog.c:283
+#: ../app/dialogs/user-install-dialog.c:285
 msgid "This folder is used to store tool options."
 msgstr "This folder is used to store tool options."
 
-#: ../app/dialogs/user-install-dialog.c:288
+#: ../app/dialogs/user-install-dialog.c:290
 msgid "This folder is used to store parameter files for the Curves tool."
 msgstr "This folder is used to store parameter files for the Curves tool."
 
-#: ../app/dialogs/user-install-dialog.c:293
+#: ../app/dialogs/user-install-dialog.c:295
 msgid "This folder is used to store parameter files for the Levels tool."
 msgstr "This folder is used to store parameter files for the Levels tool."
 
-#: ../app/dialogs/user-install-dialog.c:389
+#: ../app/dialogs/user-install-dialog.c:391
 msgid "Installation successful.  Click \"Continue\" to proceed."
 msgstr "Installation successful.  Click \"Continue\" to proceed."
 
-#: ../app/dialogs/user-install-dialog.c:395
+#: ../app/dialogs/user-install-dialog.c:397
 msgid "Installation failed.  Contact system administrator."
 msgstr "Installation failed.  Contact system administrator."
 
-#: ../app/dialogs/user-install-dialog.c:625
+#: ../app/dialogs/user-install-dialog.c:628
 msgid "GIMP User Installation"
 msgstr "GIMP User Installation"
 
-#: ../app/dialogs/user-install-dialog.c:630
+#: ../app/dialogs/user-install-dialog.c:633
 msgid "Continue"
 msgstr "Continue"
 
 #. GPL_PAGE
 #. version number
-#: ../app/dialogs/user-install-dialog.c:786
+#: ../app/dialogs/user-install-dialog.c:789
 #, c-format
-msgid ""
-"Welcome to\n"
-"The GIMP %d.%d User Installation"
-msgstr ""
-"Welcome to\n"
-"The GIMP %d.%d User Installation"
+msgid "Welcome to GIMP %d.%d"
+msgstr "Welcome to GIMP %d.%d"
 
-#: ../app/dialogs/user-install-dialog.c:792
+#: ../app/dialogs/user-install-dialog.c:794
 msgid "Click \"Continue\" to enter the GIMP user installation."
 msgstr "Click \"Continue\" to enter the GIMP user installation."
 
-#: ../app/dialogs/user-install-dialog.c:799
-msgid ""
-"<b>The GIMP - GNU Image Manipulation Program</b>\n"
-"Copyright (C) 1995-2005\n"
-"Spencer Kimball, Peter Mattis and the GIMP Development Team."
-msgstr ""
-"<b>The GIMP - GNU Image Manipulation Program</b>\n"
-"Copyright (C) 1995-2005\n"
-"Spencer Kimball, Peter Mattis and the GIMP Development Team."
-
-#: ../app/dialogs/user-install-dialog.c:809
-msgid ""
-"This program is free software; you can redistribute it and/or modify it "
-"under the terms of the GNU General Public License as published by the Free "
-"Software Foundation; either version 2 of the License, or (at your option) "
-"any later version."
-msgstr ""
-"This program is free software; you can redistribute it and/or modify it "
-"under the terms of the GNU General Public Licence as published by the Free "
-"Software Foundation; either version 2 of the Licence, or (at your option) "
-"any later version."
-
-#: ../app/dialogs/user-install-dialog.c:815
-msgid ""
-"This program is distributed in the hope that it will be useful, but WITHOUT "
-"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
-"FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for "
-"more details."
-msgstr ""
-"This program is distributed in the hope that it will be useful, but WITHOUT "
-"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
-"FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public Licence for "
-"more details."
-
-#: ../app/dialogs/user-install-dialog.c:821
-msgid ""
-"You should have received a copy of the GNU General Public License along with "
-"this program; if not, write to the Free Software Foundation, Inc., 59 Temple "
-"Place - Suite 330, Boston, MA 02111-1307, USA."
-msgstr ""
-"You should have received a copy of the GNU General Public Licence along with "
-"this program; if not, write to the Free Software Foundation, Inc., 59 Temple "
-"Place - Suite 330, Boston, MA 02111-1307, USA."
-
-#: ../app/dialogs/user-install-dialog.c:834
+#: ../app/dialogs/user-install-dialog.c:818
 msgid "Migrate User Settings"
 msgstr "Migrate User Settings"
 
-#: ../app/dialogs/user-install-dialog.c:835
+#: ../app/dialogs/user-install-dialog.c:819
 msgid "Click \"Continue\" to proceed with the user installation."
 msgstr "Click \"Continue\" to proceed with the user installation."
 
-#: ../app/dialogs/user-install-dialog.c:839
+#: ../app/dialogs/user-install-dialog.c:823
 #, c-format
 msgid "It seems you have used GIMP %s before."
 msgstr "It seems you have used GIMP %s before."
 
-#: ../app/dialogs/user-install-dialog.c:841
+#: ../app/dialogs/user-install-dialog.c:825
 #, c-format
 msgid "_Migrate GIMP %s user settings"
 msgstr "_Migrate GIMP %s user settings"
 
-#: ../app/dialogs/user-install-dialog.c:850
+#: ../app/dialogs/user-install-dialog.c:834
 msgid "Do a _fresh user installation"
 msgstr "Do a _fresh user installation"
 
-#: ../app/dialogs/user-install-dialog.c:881
+#: ../app/dialogs/user-install-dialog.c:865
 msgid "Personal GIMP Folder"
 msgstr "Personal GIMP Folder"
 
-#: ../app/dialogs/user-install-dialog.c:882
+#: ../app/dialogs/user-install-dialog.c:866
 msgid "Click \"Continue\" to create your personal GIMP folder."
 msgstr "Click \"Continue\" to create your personal GIMP folder."
 
-#: ../app/dialogs/user-install-dialog.c:926
+#: ../app/dialogs/user-install-dialog.c:910
 #, c-format
 msgid ""
 "For a proper GIMP installation, a folder named '<b>%s</b>' needs to be "
@@ -7417,7 +7406,7 @@ msgstr ""
 "For a proper GIMP installation, a folder named '<b>%s</b>' needs to be "
 "created."
 
-#: ../app/dialogs/user-install-dialog.c:933
+#: ../app/dialogs/user-install-dialog.c:917
 msgid ""
 "This folder will contain a number of important files.  Click on one of the "
 "files or folders in the tree to get more information about the selected item."
@@ -7425,44 +7414,44 @@ msgstr ""
 "This folder will contain a number of important files.  Click on one of the "
 "files or folders in the tree to get more information about the selected item."
 
-#: ../app/dialogs/user-install-dialog.c:1021
+#: ../app/dialogs/user-install-dialog.c:1005
 msgid "User Installation Log"
 msgstr "User Installation Log"
 
-#: ../app/dialogs/user-install-dialog.c:1022
+#: ../app/dialogs/user-install-dialog.c:1006
 msgid "Please wait while your personal GIMP folder is being created..."
 msgstr "Please wait while your personal GIMP folder is being created..."
 
-#: ../app/dialogs/user-install-dialog.c:1029
+#: ../app/dialogs/user-install-dialog.c:1013
 msgid "GIMP Performance Tuning"
 msgstr "GIMP Performance Tuning"
 
-#: ../app/dialogs/user-install-dialog.c:1030
+#: ../app/dialogs/user-install-dialog.c:1014
 msgid "Click \"Continue\" to accept the settings above."
 msgstr "Click \"Continue\" to accept the settings above."
 
-#: ../app/dialogs/user-install-dialog.c:1035
+#: ../app/dialogs/user-install-dialog.c:1019
 msgid ""
 "<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
 msgstr ""
 "<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
 
-#: ../app/dialogs/user-install-dialog.c:1095
+#: ../app/dialogs/user-install-dialog.c:1079
 #, c-format
 msgid "Copying file '%s' from '%s'..."
 msgstr "Copying file '%s' from '%s'..."
 
-#: ../app/dialogs/user-install-dialog.c:1114
+#: ../app/dialogs/user-install-dialog.c:1098
 #, c-format
 msgid "Creating folder '%s'..."
 msgstr "Creating folder '%s'..."
 
-#: ../app/dialogs/user-install-dialog.c:1128
+#: ../app/dialogs/user-install-dialog.c:1112
 #, c-format
 msgid "Cannot create folder '%s': %s"
 msgstr "Cannot create folder '%s': %s"
 
-#: ../app/dialogs/user-install-dialog.c:1408
+#: ../app/dialogs/user-install-dialog.c:1392
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called "
 "\"Tile Cache\".  You should adjust its size to fit into memory.  Consider "
@@ -7472,11 +7461,11 @@ msgstr ""
 "\"Tile Cache\".  You should adjust its size to fit into memory.  Consider "
 "the amount of memory used by other running processes."
 
-#: ../app/dialogs/user-install-dialog.c:1421
+#: ../app/dialogs/user-install-dialog.c:1405
 msgid "Tile cache size:"
 msgstr "Tile cache size:"
 
-#: ../app/dialogs/user-install-dialog.c:1433
+#: ../app/dialogs/user-install-dialog.c:1417
 msgid ""
 "All image and undo data which doesn't fit into the Tile Cache will be "
 "written to a swap file.  This file should be located on a local filesystem "
@@ -7488,7 +7477,7 @@ msgstr ""
 "with enough free space (several hundred MB). On a UNIX system, you may want "
 "to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
 
-#: ../app/dialogs/user-install-dialog.c:1444
+#: ../app/dialogs/user-install-dialog.c:1428
 msgid "Select Swap Dir"
 msgstr "Select Swap Dir"
 
@@ -7729,7 +7718,7 @@ msgstr "Writing '%s'\n"
 msgid "Adding theme '%s' (%s)\n"
 msgstr "Adding theme '%s' (%s)\n"
 
-#: ../app/paint/gimpairbrush.c:68 ../app/tools/gimpairbrushtool.c:56
+#: ../app/paint/gimpairbrush.c:69 ../app/tools/gimpairbrushtool.c:56
 msgid "Airbrush"
 msgstr "Airbrush"
 
@@ -7737,31 +7726,31 @@ msgstr "Airbrush"
 msgid "No brushes available for use with this tool."
 msgstr "No brushes available for use with this tool."
 
-#: ../app/paint/gimpclone.c:88 ../app/tools/gimpclonetool.c:92
+#: ../app/paint/gimpclone.c:89 ../app/tools/gimpclonetool.c:92
 msgid "Clone"
 msgstr "Clone"
 
-#: ../app/paint/gimpconvolve.c:118 ../app/tools/gimpconvolvetool.c:68
+#: ../app/paint/gimpconvolve.c:119 ../app/tools/gimpconvolvetool.c:68
 msgid "Convolve"
 msgstr "Convolve"
 
-#: ../app/paint/gimpdodgeburn.c:86 ../app/tools/gimpdodgeburntool.c:68
+#: ../app/paint/gimpdodgeburn.c:87 ../app/tools/gimpdodgeburntool.c:68
 msgid "Dodge/Burn"
 msgstr "Dodge/Burn"
 
-#: ../app/paint/gimperaser.c:61 ../app/tools/gimperasertool.c:68
+#: ../app/paint/gimperaser.c:62 ../app/tools/gimperasertool.c:68
 msgid "Eraser"
 msgstr "Eraser"
 
-#: ../app/paint/gimppaintbrush.c:62 ../app/tools/gimppaintbrushtool.c:51
+#: ../app/paint/gimppaintbrush.c:63 ../app/tools/gimppaintbrushtool.c:51
 msgid "Paintbrush"
 msgstr "Paintbrush"
 
-#: ../app/paint/gimppencil.c:41 ../app/tools/gimppenciltool.c:51
+#: ../app/paint/gimppencil.c:42 ../app/tools/gimppenciltool.c:51
 msgid "Pencil"
 msgstr "Pencil"
 
-#: ../app/paint/gimpsmudge.c:77 ../app/tools/gimpsmudgetool.c:55
+#: ../app/paint/gimpsmudge.c:78 ../app/tools/gimpsmudgetool.c:55
 msgid "Smudge"
 msgstr "Smudge"
 
@@ -7842,7 +7831,7 @@ msgstr "2D Transforming"
 msgid "Blending"
 msgstr "Blending"
 
-#: ../app/pdb/image_cmds.c:4031
+#: ../app/pdb/image_cmds.c:4446
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -7870,16 +7859,16 @@ msgstr ""
 msgid "Free Select"
 msgstr "Free Select"
 
-#: ../app/pdb/vectors_cmds.c:240
+#: ../app/pdb/vectors_cmds.c:900 ../app/pdb/vectors_cmds.c:990
 msgid "Modify Path"
 msgstr "Modify Path"
 
-#: ../app/plug-in/plug-in.c:608 ../app/plug-in/plug-in.c:641
+#: ../app/plug-in/plug-in.c:571 ../app/plug-in/plug-in.c:604
 #, c-format
 msgid "Terminating plug-in: '%s'\n"
 msgstr "Terminating plug-in: '%s'\n"
 
-#: ../app/plug-in/plug-in.c:792
+#: ../app/plug-in/plug-in.c:755
 #, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"
@@ -9861,11 +9850,11 @@ msgstr "Alpha:"
 msgid "n/a"
 msgstr "n/a"
 
-#: ../app/widgets/gimpcolormapeditor.c:210
+#: ../app/widgets/gimpcolormapeditor.c:206
 msgid "Color index:"
 msgstr "Colour index:"
 
-#: ../app/widgets/gimpcolormapeditor.c:220
+#: ../app/widgets/gimpcolormapeditor.c:216
 msgid "HTML notation:"
 msgstr "HTML notation:"
 
@@ -10141,9 +10130,26 @@ msgstr "Foreground: %d, %d, %d"
 msgid "Background: %d, %d, %d"
 msgstr "Background: %d, %d, %d"
 
-#: ../app/widgets/gimpdnd-xds.c:174
+#: ../app/widgets/gimpdnd-xds.c:186
 msgid "The given filename does not have any known file extension."
 msgstr "The given filename does not have any known file extension."
+
+#: ../app/widgets/gimpdnd-xds.c:204
+msgid "File Exists"
+msgstr "File Exists"
+
+#: ../app/widgets/gimpdnd-xds.c:209
+msgid "_Replace"
+msgstr "_Replace"
+
+#: ../app/widgets/gimpdnd-xds.c:220
+#, c-format
+msgid "A file named '%s' already exists."
+msgstr "A file named '%s' already exists."
+
+#: ../app/widgets/gimpdnd-xds.c:225
+msgid "Do you want to replace it with the image you are saving?"
+msgstr "Do you want to replace it with the image you are saving?"
 
 #: ../app/widgets/gimpdock.c:287
 msgid "Close all Tabs?"
@@ -10166,12 +10172,11 @@ msgstr ""
 "This window has %d tabs open. Closing the window will also close all its "
 "tabs."
 
-#: ../app/widgets/gimpdockable.c:161
+#: ../app/widgets/gimpdockable.c:169
 msgid "Configure this tab"
 msgstr "Configure this tab"
 
-#: ../app/widgets/gimpdockseparator.c:102
-#: ../app/widgets/gimpdockseparator.c:277
+#: ../app/widgets/gimpdockseparator.c:44
 msgid "You can drop dockable dialogs here."
 msgstr "You can drop dockable dialogues here."
 
@@ -10188,40 +10193,23 @@ msgstr "Too many error messages!"
 msgid "Messages are redirected to stderr."
 msgstr "Messages are redirected to stderr."
 
-#: ../app/widgets/gimpfiledialog.c:267
+#: ../app/widgets/gimpfiledialog.c:265
 msgid "Automatically Detected"
 msgstr "Automatically Detected"
 
-#: ../app/widgets/gimpfiledialog.c:276
+#: ../app/widgets/gimpfiledialog.c:274
 msgid "By Extension"
 msgstr "By Extension"
 
-#: ../app/widgets/gimpfiledialog.c:412
-msgid "File Exists"
-msgstr "File Exists"
-
-#: ../app/widgets/gimpfiledialog.c:417
-msgid "_Replace"
-msgstr "_Replace"
-
-#: ../app/widgets/gimpfiledialog.c:428
-#, c-format
-msgid "A file named '%s' already exists."
-msgstr "A file named '%s' already exists."
-
-#: ../app/widgets/gimpfiledialog.c:433
-msgid "Do you want to replace it with the image you are saving?"
-msgstr "Do you want to replace it with the image you are saving?"
-
-#: ../app/widgets/gimpfiledialog.c:493
+#: ../app/widgets/gimpfiledialog.c:440
 msgid "All Files"
 msgstr "All Files"
 
-#: ../app/widgets/gimpfiledialog.c:498
+#: ../app/widgets/gimpfiledialog.c:445
 msgid "All Images"
 msgstr "All Images"
 
-#: ../app/widgets/gimpfiledialog.c:637
+#: ../app/widgets/gimpfiledialog.c:584
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Select File _Type (%s)"
