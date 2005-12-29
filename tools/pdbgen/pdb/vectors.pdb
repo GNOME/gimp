@@ -66,11 +66,11 @@ CODE
 }
 
 
-sub vectors_get_locked {
-    $blurb = 'Gets the locking state of the vectors object.';
+sub vectors_get_image {
+    $blurb = 'Returns the vectors objects image.';
 
     $help = <<'HELP';
-Gets the locking state of the vectors object.
+Returns the vectors objects image.
 HELP
 
     &pdb_misc;
@@ -78,38 +78,117 @@ HELP
     @inargs = ( &vectors_arg );
 
     @outargs = (
-        { name => 'locked', type => 'boolean',
-	  desc => 'TRUE if the path is locked, FALSE otherwise', init => 1 }
+        { name => 'image', type => 'image',
+	  desc => 'The vectors image',
+	  init => 1 }
     );
 
     %invoke = (
 	code => <<"CODE"
 {
-  locked = gimp_item_get_linked (GIMP_ITEM (vectors));
+  image = gimp_item_get_image (GIMP_ITEM (vectors));
 }
 CODE
     );
 }
 
 
-sub vectors_set_locked {
-    $blurb = 'Sets the locking state of the vectors object.';
+sub vectors_get_linked {
+    $blurb = 'Gets the linked state of the vectors object.';
 
     $help = <<'HELP';
-Sets the locking state of the vectors object.
+Gets the linked state of the vectors object.
 HELP
 
     &pdb_misc;
 
-    @inargs = ( &vectors_arg,
-                { name => 'locked', type => 'boolean',
-		  desc => 'Whether the path is locked', init => 1 }
+    @inargs = ( &vectors_arg );
+
+    @outargs = (
+        { name => 'linked', type => 'boolean',
+	  desc => 'TRUE if the path is linked, FALSE otherwise', init => 1 }
     );
 
     %invoke = (
 	code => <<"CODE"
 {
-  gimp_item_set_linked (GIMP_ITEM (vectors), locked, TRUE);
+  linked = gimp_item_get_linked (GIMP_ITEM (vectors));
+}
+CODE
+    );
+}
+
+
+sub vectors_set_linked {
+    $blurb = 'Sets the linked state of the vectors object.';
+
+    $help = <<'HELP';
+Sets the linked state of the vectors object.
+HELP
+
+    &pdb_misc;
+
+    @inargs = ( &vectors_arg,
+                { name => 'linked', type => 'boolean',
+		  desc => 'Whether the path is linked', init => 1 }
+    );
+
+    %invoke = (
+	code => <<"CODE"
+{
+  gimp_item_set_linked (GIMP_ITEM (vectors), linked, TRUE);
+}
+CODE
+    );
+}
+
+
+sub vectors_get_tattoo {
+    $blurb = 'Get the tattoo of the vectors object.';
+
+    $help = <<'HELP';
+Get the tattoo state of the vectors object.
+HELP
+
+    &pdb_misc;
+
+    @inargs = ( &vectors_arg );
+
+    @outargs = (
+        { name => 'tattoo', type => 'int32',
+	  desc => 'The vectors tattoo',
+	  init => 1 }
+    );
+
+    %invoke = (
+	code => <<"CODE"
+{
+  tattoo = gimp_item_get_tattoo (GIMP_ITEM (vectors));
+}
+CODE
+    );
+}
+
+
+sub vectors_set_tattoo {
+    $blurb = 'Set the tattoo of the vectors object.';
+
+    $help = <<'HELP';
+Set the tattoo of the vectors object.
+HELP
+
+    &pdb_misc;
+
+    @inargs = ( &vectors_arg,
+                { name => 'tattoo', type => 'int32',
+		  desc => 'the new tattoo',
+		  init => 1 }
+    );
+
+    %invoke = (
+	code => <<"CODE"
+{
+  gimp_item_set_tattoo (GIMP_ITEM (vectors), tattoo);
 }
 CODE
     );
@@ -486,12 +565,15 @@ CODE
               "gimp-intl.h");
 
 @procs = qw(vectors_get_strokes
-            vectors_get_locked
-            vectors_set_locked
+            vectors_get_image
+            vectors_get_linked
+            vectors_set_linked
             vectors_get_visible
             vectors_set_visible
 	    vectors_get_name
 	    vectors_set_name
+	    vectors_get_tattoo
+	    vectors_set_tattoo
             vectors_stroke_get_length
             vectors_stroke_remove
             vectors_stroke_translate

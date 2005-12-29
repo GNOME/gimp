@@ -1,3 +1,14 @@
+2005-12-29  Simon Budig  <simon@gimp.org>
+
+	* tools/pdbgen/pdb/vectors.pdb: 
+	   gimp_vectors_[gs]et_locked  renamed to _linked for consistency.
+
+	   gimp_vectors_[gs]et_tattoo, gimp_vectors_get_image: new.
+
+	* app/pdb/internal_procs.c
+	* app/pdb/vectors_cmds.c
+	* libgimp/gimpvectors_pdb.[ch]: regenerated
+
 2005-12-29  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpcolormapeditor.c: code cleanup, use alloca in

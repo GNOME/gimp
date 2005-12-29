@@ -75,7 +75,7 @@ void register_undo_procs               (Gimp *gimp);
 void register_unit_procs               (Gimp *gimp);
 void register_vectors_procs            (Gimp *gimp);
 
-/* 509 procedures registered total */
+/* 512 procedures registered total */
 
 void
 internal_procs_init (Gimp *gimp)

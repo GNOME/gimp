@@ -31,15 +31,19 @@ G_BEGIN_DECLS
 
 gint*    gimp_vectors_get_strokes        (gint32        vectors_ID,
 					  gint         *num_strokes);
-gboolean gimp_vectors_get_locked         (gint32        vectors_ID);
-gboolean gimp_vectors_set_locked         (gint32        vectors_ID,
-					  gboolean      locked);
+gint32   gimp_vectors_get_image          (gint32        vectors_ID);
+gboolean gimp_vectors_get_linked         (gint32        vectors_ID);
+gboolean gimp_vectors_set_linked         (gint32        vectors_ID,
+					  gboolean      linked);
 gboolean gimp_vectors_get_visible        (gint32        vectors_ID);
 gboolean gimp_vectors_set_visible        (gint32        vectors_ID,
 					  gboolean      visible);
 gchar*   gimp_vectors_get_name           (gint32        vectors_ID);
 gboolean gimp_vectors_set_name           (gint32        vectors_ID,
 					  const gchar  *name);
+gint     gimp_vectors_get_tattoo         (gint32        vectors_ID);
+gboolean gimp_vectors_set_tattoo         (gint32        vectors_ID,
+					  gint          tattoo);
 gdouble  gimp_vectors_stroke_get_length  (gint32        vectors_ID,
 					  gint          stroke_id,
 					  gdouble       prescision);

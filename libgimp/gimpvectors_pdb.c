@@ -70,62 +70,94 @@ gimp_vectors_get_strokes (gint32  vectors_ID,
 }
 
 /**
- * gimp_vectors_get_locked:
+ * gimp_vectors_get_image:
  * @vectors_ID: The vectors object.
  *
- * Gets the locking state of the vectors object.
+ * Returns the vectors objects image.
  *
- * Gets the locking state of the vectors object.
+ * Returns the vectors objects image.
  *
- * Returns: TRUE if the path is locked, FALSE otherwise.
+ * Returns: The vectors image.
  *
  * Since: GIMP 2.4
  */
-gboolean
-gimp_vectors_get_locked (gint32 vectors_ID)
+gint32
+gimp_vectors_get_image (gint32 vectors_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gboolean locked = FALSE;
+  gint32 image_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp-vectors-get-locked",
+  return_vals = gimp_run_procedure ("gimp-vectors-get-image",
 				    &nreturn_vals,
 				    GIMP_PDB_PATH, vectors_ID,
 				    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    locked = return_vals[1].data.d_int32;
+    image_ID = return_vals[1].data.d_image;
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
-  return locked;
+  return image_ID;
 }
 
 /**
- * gimp_vectors_set_locked:
+ * gimp_vectors_get_linked:
  * @vectors_ID: The vectors object.
- * @locked: Whether the path is locked.
  *
- * Sets the locking state of the vectors object.
+ * Gets the linked state of the vectors object.
  *
- * Sets the locking state of the vectors object.
+ * Gets the linked state of the vectors object.
+ *
+ * Returns: TRUE if the path is linked, FALSE otherwise.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_vectors_get_linked (gint32 vectors_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean linked = FALSE;
+
+  return_vals = gimp_run_procedure ("gimp-vectors-get-linked",
+				    &nreturn_vals,
+				    GIMP_PDB_PATH, vectors_ID,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    linked = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return linked;
+}
+
+/**
+ * gimp_vectors_set_linked:
+ * @vectors_ID: The vectors object.
+ * @linked: Whether the path is linked.
+ *
+ * Sets the linked state of the vectors object.
+ *
+ * Sets the linked state of the vectors object.
  *
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
  */
 gboolean
-gimp_vectors_set_locked (gint32   vectors_ID,
-			 gboolean locked)
+gimp_vectors_set_linked (gint32   vectors_ID,
+			 gboolean linked)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-vectors-set-locked",
+  return_vals = gimp_run_procedure ("gimp-vectors-set-linked",
 				    &nreturn_vals,
 				    GIMP_PDB_PATH, vectors_ID,
-				    GIMP_PDB_INT32, locked,
+				    GIMP_PDB_INT32, linked,
 				    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
@@ -258,6 +290,72 @@ gimp_vectors_set_name (gint32       vectors_ID,
 				    &nreturn_vals,
 				    GIMP_PDB_PATH, vectors_ID,
 				    GIMP_PDB_STRING, name,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_vectors_get_tattoo:
+ * @vectors_ID: The vectors object.
+ *
+ * Get the tattoo of the vectors object.
+ *
+ * Get the tattoo state of the vectors object.
+ *
+ * Returns: The vectors tattoo.
+ *
+ * Since: GIMP 2.4
+ */
+gint
+gimp_vectors_get_tattoo (gint32 vectors_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint tattoo = 0;
+
+  return_vals = gimp_run_procedure ("gimp-vectors-get-tattoo",
+				    &nreturn_vals,
+				    GIMP_PDB_PATH, vectors_ID,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    tattoo = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return tattoo;
+}
+
+/**
+ * gimp_vectors_set_tattoo:
+ * @vectors_ID: The vectors object.
+ * @tattoo: the new tattoo.
+ *
+ * Set the tattoo of the vectors object.
+ *
+ * Set the tattoo of the vectors object.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_vectors_set_tattoo (gint32 vectors_ID,
+			 gint   tattoo)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-vectors-set-tattoo",
+				    &nreturn_vals,
+				    GIMP_PDB_PATH, vectors_ID,
+				    GIMP_PDB_INT32, tattoo,
 				    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;

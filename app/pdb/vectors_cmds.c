@@ -38,12 +38,15 @@
 #include "vectors/gimpvectors.h"
 
 static ProcRecord vectors_get_strokes_proc;
-static ProcRecord vectors_get_locked_proc;
-static ProcRecord vectors_set_locked_proc;
+static ProcRecord vectors_get_image_proc;
+static ProcRecord vectors_get_linked_proc;
+static ProcRecord vectors_set_linked_proc;
 static ProcRecord vectors_get_visible_proc;
 static ProcRecord vectors_set_visible_proc;
 static ProcRecord vectors_get_name_proc;
 static ProcRecord vectors_set_name_proc;
+static ProcRecord vectors_get_tattoo_proc;
+static ProcRecord vectors_set_tattoo_proc;
 static ProcRecord vectors_stroke_get_length_proc;
 static ProcRecord vectors_stroke_remove_proc;
 static ProcRecord vectors_stroke_translate_proc;
@@ -54,12 +57,15 @@ void
 register_vectors_procs (Gimp *gimp)
 {
   procedural_db_register (gimp, &vectors_get_strokes_proc);
-  procedural_db_register (gimp, &vectors_get_locked_proc);
-  procedural_db_register (gimp, &vectors_set_locked_proc);
+  procedural_db_register (gimp, &vectors_get_image_proc);
+  procedural_db_register (gimp, &vectors_get_linked_proc);
+  procedural_db_register (gimp, &vectors_set_linked_proc);
   procedural_db_register (gimp, &vectors_get_visible_proc);
   procedural_db_register (gimp, &vectors_set_visible_proc);
   procedural_db_register (gimp, &vectors_get_name_proc);
   procedural_db_register (gimp, &vectors_set_name_proc);
+  procedural_db_register (gimp, &vectors_get_tattoo_proc);
+  procedural_db_register (gimp, &vectors_set_tattoo_proc);
   procedural_db_register (gimp, &vectors_stroke_get_length_proc);
   procedural_db_register (gimp, &vectors_stroke_remove_proc);
   procedural_db_register (gimp, &vectors_stroke_translate_proc);
@@ -156,15 +162,15 @@ static ProcRecord vectors_get_strokes_proc =
 };
 
 static Argument *
-vectors_get_locked_invoker (Gimp         *gimp,
-                            GimpContext  *context,
-                            GimpProgress *progress,
-                            Argument     *args)
+vectors_get_image_invoker (Gimp         *gimp,
+                           GimpContext  *context,
+                           GimpProgress *progress,
+                           Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
   GimpVectors *vectors;
-  gboolean locked = FALSE;
+  GimpImage *image = NULL;
 
   vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
@@ -172,18 +178,18 @@ vectors_get_locked_invoker (Gimp         *gimp,
 
   if (success)
     {
-      locked = gimp_item_get_linked (GIMP_ITEM (vectors));
+      image = gimp_item_get_image (GIMP_ITEM (vectors));
     }
 
-  return_args = procedural_db_return_args (&vectors_get_locked_proc, success);
+  return_args = procedural_db_return_args (&vectors_get_image_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = locked;
+    return_args[1].value.pdb_int = gimp_image_get_ID (image);
 
   return return_args;
 }
 
-static ProcArg vectors_get_locked_inargs[] =
+static ProcArg vectors_get_image_inargs[] =
 {
   {
     GIMP_PDB_PATH,
@@ -192,58 +198,122 @@ static ProcArg vectors_get_locked_inargs[] =
   }
 };
 
-static ProcArg vectors_get_locked_outargs[] =
+static ProcArg vectors_get_image_outargs[] =
 {
   {
-    GIMP_PDB_INT32,
-    "locked",
-    "TRUE if the path is locked, FALSE otherwise"
+    GIMP_PDB_IMAGE,
+    "image",
+    "The vectors image"
   }
 };
 
-static ProcRecord vectors_get_locked_proc =
+static ProcRecord vectors_get_image_proc =
 {
-  "gimp-vectors-get-locked",
-  "gimp-vectors-get-locked",
-  "Gets the locking state of the vectors object.",
-  "Gets the locking state of the vectors object.",
+  "gimp-vectors-get-image",
+  "gimp-vectors-get-image",
+  "Returns the vectors objects image.",
+  "Returns the vectors objects image.",
   "Simon Budig",
   "Simon Budig",
   "2005",
   NULL,
   GIMP_INTERNAL,
   1,
-  vectors_get_locked_inargs,
+  vectors_get_image_inargs,
   1,
-  vectors_get_locked_outargs,
-  { { vectors_get_locked_invoker } }
+  vectors_get_image_outargs,
+  { { vectors_get_image_invoker } }
 };
 
 static Argument *
-vectors_set_locked_invoker (Gimp         *gimp,
+vectors_get_linked_invoker (Gimp         *gimp,
+                            GimpContext  *context,
+                            GimpProgress *progress,
+                            Argument     *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpVectors *vectors;
+  gboolean linked = FALSE;
+
+  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
+    success = FALSE;
+
+  if (success)
+    {
+      linked = gimp_item_get_linked (GIMP_ITEM (vectors));
+    }
+
+  return_args = procedural_db_return_args (&vectors_get_linked_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = linked;
+
+  return return_args;
+}
+
+static ProcArg vectors_get_linked_inargs[] =
+{
+  {
+    GIMP_PDB_PATH,
+    "vectors",
+    "The vectors object"
+  }
+};
+
+static ProcArg vectors_get_linked_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "linked",
+    "TRUE if the path is linked, FALSE otherwise"
+  }
+};
+
+static ProcRecord vectors_get_linked_proc =
+{
+  "gimp-vectors-get-linked",
+  "gimp-vectors-get-linked",
+  "Gets the linked state of the vectors object.",
+  "Gets the linked state of the vectors object.",
+  "Simon Budig",
+  "Simon Budig",
+  "2005",
+  NULL,
+  GIMP_INTERNAL,
+  1,
+  vectors_get_linked_inargs,
+  1,
+  vectors_get_linked_outargs,
+  { { vectors_get_linked_invoker } }
+};
+
+static Argument *
+vectors_set_linked_invoker (Gimp         *gimp,
                             GimpContext  *context,
                             GimpProgress *progress,
                             Argument     *args)
 {
   gboolean success = TRUE;
   GimpVectors *vectors;
-  gboolean locked = FALSE;
+  gboolean linked = FALSE;
 
   vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
     success = FALSE;
 
-  locked = args[1].value.pdb_int ? TRUE : FALSE;
+  linked = args[1].value.pdb_int ? TRUE : FALSE;
 
   if (success)
     {
-      gimp_item_set_linked (GIMP_ITEM (vectors), locked, TRUE);
+      gimp_item_set_linked (GIMP_ITEM (vectors), linked, TRUE);
     }
 
-  return procedural_db_return_args (&vectors_set_locked_proc, success);
+  return procedural_db_return_args (&vectors_set_linked_proc, success);
 }
 
-static ProcArg vectors_set_locked_inargs[] =
+static ProcArg vectors_set_linked_inargs[] =
 {
   {
     GIMP_PDB_PATH,
@@ -252,27 +322,27 @@ static ProcArg vectors_set_locked_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "locked",
-    "Whether the path is locked"
+    "linked",
+    "Whether the path is linked"
   }
 };
 
-static ProcRecord vectors_set_locked_proc =
+static ProcRecord vectors_set_linked_proc =
 {
-  "gimp-vectors-set-locked",
-  "gimp-vectors-set-locked",
-  "Sets the locking state of the vectors object.",
-  "Sets the locking state of the vectors object.",
+  "gimp-vectors-set-linked",
+  "gimp-vectors-set-linked",
+  "Sets the linked state of the vectors object.",
+  "Sets the linked state of the vectors object.",
   "Simon Budig",
   "Simon Budig",
   "2005",
   NULL,
   GIMP_INTERNAL,
   2,
-  vectors_set_locked_inargs,
+  vectors_set_linked_inargs,
   0,
   NULL,
-  { { vectors_set_locked_invoker } }
+  { { vectors_set_linked_invoker } }
 };
 
 static Argument *
@@ -516,6 +586,126 @@ static ProcRecord vectors_set_name_proc =
   0,
   NULL,
   { { vectors_set_name_invoker } }
+};
+
+static Argument *
+vectors_get_tattoo_invoker (Gimp         *gimp,
+                            GimpContext  *context,
+                            GimpProgress *progress,
+                            Argument     *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpVectors *vectors;
+  gint32 tattoo = 0;
+
+  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
+    success = FALSE;
+
+  if (success)
+    {
+      tattoo = gimp_item_get_tattoo (GIMP_ITEM (vectors));
+    }
+
+  return_args = procedural_db_return_args (&vectors_get_tattoo_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = tattoo;
+
+  return return_args;
+}
+
+static ProcArg vectors_get_tattoo_inargs[] =
+{
+  {
+    GIMP_PDB_PATH,
+    "vectors",
+    "The vectors object"
+  }
+};
+
+static ProcArg vectors_get_tattoo_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "tattoo",
+    "The vectors tattoo"
+  }
+};
+
+static ProcRecord vectors_get_tattoo_proc =
+{
+  "gimp-vectors-get-tattoo",
+  "gimp-vectors-get-tattoo",
+  "Get the tattoo of the vectors object.",
+  "Get the tattoo state of the vectors object.",
+  "Simon Budig",
+  "Simon Budig",
+  "2005",
+  NULL,
+  GIMP_INTERNAL,
+  1,
+  vectors_get_tattoo_inargs,
+  1,
+  vectors_get_tattoo_outargs,
+  { { vectors_get_tattoo_invoker } }
+};
+
+static Argument *
+vectors_set_tattoo_invoker (Gimp         *gimp,
+                            GimpContext  *context,
+                            GimpProgress *progress,
+                            Argument     *args)
+{
+  gboolean success = TRUE;
+  GimpVectors *vectors;
+  gint32 tattoo = 0;
+
+  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
+    success = FALSE;
+
+  tattoo = args[1].value.pdb_int;
+
+  if (success)
+    {
+      gimp_item_set_tattoo (GIMP_ITEM (vectors), tattoo);
+    }
+
+  return procedural_db_return_args (&vectors_set_tattoo_proc, success);
+}
+
+static ProcArg vectors_set_tattoo_inargs[] =
+{
+  {
+    GIMP_PDB_PATH,
+    "vectors",
+    "The vectors object"
+  },
+  {
+    GIMP_PDB_INT32,
+    "tattoo",
+    "the new tattoo"
+  }
+};
+
+static ProcRecord vectors_set_tattoo_proc =
+{
+  "gimp-vectors-set-tattoo",
+  "gimp-vectors-set-tattoo",
+  "Set the tattoo of the vectors object.",
+  "Set the tattoo of the vectors object.",
+  "Simon Budig",
+  "Simon Budig",
+  "2005",
+  NULL,
+  GIMP_INTERNAL,
+  2,
+  vectors_set_tattoo_inargs,
+  0,
+  NULL,
+  { { vectors_set_tattoo_invoker } }
 };
 
 static Argument *
