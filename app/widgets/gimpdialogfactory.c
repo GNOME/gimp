@@ -50,14 +50,6 @@
 #endif
 
 
-typedef enum
-{
-  GIMP_DIALOG_SHOW_ALL,
-  GIMP_DIALOG_HIDE_ALL,
-  GIMP_DIALOG_SHOW_TOOLBOX
-} GimpDialogShowState;
-
-
 static void   gimp_dialog_factory_dispose             (GObject           *object);
 static void   gimp_dialog_factory_finalize            (GObject           *object);
 
@@ -998,6 +990,19 @@ gimp_dialog_factory_remove_dialog (GimpDialogFactory *factory,
 }
 
 void
+gimp_dialog_factory_show_toolbox (GimpDialogFactory *toolbox_factory)
+{
+  GtkWidget *toolbox;
+
+  g_return_if_fail (GIMP_IS_DIALOG_FACTORY (toolbox_factory));
+
+  toolbox = gimp_dialog_factory_get_toolbox (toolbox_factory);
+
+  if (toolbox)
+    gtk_window_present (GTK_WINDOW (toolbox));
+}
+
+void
 gimp_dialog_factories_session_save (GimpConfigWriter *writer)
 {
   GimpDialogFactoryClass *factory_class;
@@ -1036,60 +1041,28 @@ gimp_dialog_factories_session_clear (void)
 }
 
 void
-gimp_dialog_factories_toggle (GimpDialogFactory *toolbox_factory,
-                              gboolean           ensure_visibility)
+gimp_dialog_factories_toggle (void)
 {
-  static GimpDialogShowState toggle_state = GIMP_DIALOG_SHOW_ALL;
-  static gboolean            doing_update = FALSE;
+  static gboolean shown = TRUE;  /* FIXME */
 
   GimpDialogFactoryClass *factory_class;
 
-  if (doing_update)
-    return;
-
-  if (ensure_visibility && toggle_state != GIMP_DIALOG_HIDE_ALL)
-    {
-      GtkWidget *toolbox = gimp_dialog_factory_get_toolbox (toolbox_factory);
-
-      if (toolbox)
-        gtk_window_present (GTK_WINDOW (toolbox));
-
-      return;
-    }
-
-  doing_update = TRUE;
-
   factory_class = g_type_class_peek (GIMP_TYPE_DIALOG_FACTORY);
 
-  switch (toggle_state)
+  if (shown)
     {
-    case GIMP_DIALOG_SHOW_ALL:
-      toggle_state = GIMP_DIALOG_HIDE_ALL;
-
+      shown = FALSE;
       g_hash_table_foreach (factory_class->factories,
                             (GHFunc) gimp_dialog_factories_hide_foreach,
                             NULL);
-      break;
-
-    case GIMP_DIALOG_HIDE_ALL:
-      toggle_state = GIMP_DIALOG_SHOW_TOOLBOX;
-
-      gimp_dialog_factories_show_foreach (GIMP_OBJECT (toolbox_factory)->name,
-                                          toolbox_factory,
-                                          NULL);
-      break;
-
-    case GIMP_DIALOG_SHOW_TOOLBOX:
-      toggle_state = GIMP_DIALOG_SHOW_ALL;
-
+    }
+  else
+    {
+      shown = TRUE;
       g_hash_table_foreach (factory_class->factories,
                             (GHFunc) gimp_dialog_factories_show_foreach,
                             NULL);
-    default:
-      break;
     }
-
-  doing_update = FALSE;
 }
 
 void

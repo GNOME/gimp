@@ -156,7 +156,7 @@ dialogs_show_toolbox (void)
     }
   else
     {
-      gimp_dialog_factories_toggle (global_toolbox_factory, TRUE);
+      gimp_dialog_factory_show_toolbox (global_toolbox_factory);
     }
 }
 

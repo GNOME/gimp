@@ -1,5 +1,15 @@
 2005-12-29  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpdialogfactory.[ch]: split
+	gimp_dialog_factories_toggle() into two functions. Turned the
+	tri-state into a simple boolean state. Dialogs are now either
+	shown or not, without treating the toolbox any special.
+
+	* app/actions/dialogs-commands.c
+	* app/display/gimpdisplayshell-callbacks.c: changed accordingly.
+
+2005-12-29  Sven Neumann  <sven@gimp.org>
+
 	* app/main.c: added --license command-line option.
 
 	* docs/gimp.1.in: documented the new option.
