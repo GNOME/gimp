@@ -1,5 +1,10 @@
 2005-12-29  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpcolormapeditor.c: code cleanup, use alloca in
+	gimp_colormap_editor_clear().
+
+2005-12-29  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpdockable.c: make sure the title area is cleared
 	when the timeout is cancelled.
 
