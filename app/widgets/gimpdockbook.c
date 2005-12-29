@@ -247,6 +247,10 @@ gimp_dockbook_dockable_added (GimpDockbook *dockbook,
                               GimpDockable *dockable)
 {
   gimp_dockbook_update_tabs (dockbook, TRUE);
+
+  gtk_notebook_set_current_page (GTK_NOTEBOOK (dockbook),
+                                 gtk_notebook_page_num (GTK_NOTEBOOK (dockbook),
+                                                        GTK_WIDGET (dockable)));
 }
 
 static void
