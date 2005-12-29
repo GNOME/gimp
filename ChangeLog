@@ -1,5 +1,10 @@
 2005-12-29  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpdockable.[ch]: invalidate stored coordinates on
+	button release.
+
+2005-12-29  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpdockbook.c: let the drag icon mimic the
 	appearance of a notebook tab.
 

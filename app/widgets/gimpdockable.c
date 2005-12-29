@@ -42,6 +42,9 @@
 #include "gimp-intl.h"
 
 
+#define DRAG_OFFSET (-4)
+
+
 static void       gimp_dockable_destroy           (GtkObject      *object);
 static void       gimp_dockable_size_request      (GtkWidget      *widget,
                                                    GtkRequisition *requisition);
@@ -63,6 +66,7 @@ static gboolean   gimp_dockable_expose_event      (GtkWidget      *widget,
                                                    GdkEventExpose *event);
 static gboolean   gimp_dockable_button_press      (GtkWidget      *widget,
                                                    GdkEventButton *event);
+static gboolean   gimp_dockable_button_release    (GtkWidget      *widget);
 static gboolean   gimp_dockable_popup_menu        (GtkWidget      *widget);
 
 static void       gimp_dockable_add               (GtkContainer   *container,
@@ -146,8 +150,8 @@ gimp_dockable_init (GimpDockable *dockable)
   dockable->title_layout = NULL;
   dockable->title_window = NULL;
 
-  dockable->button_x     = -1;
-  dockable->button_y     = -1;
+  dockable->button_x     = DRAG_OFFSET;
+  dockable->button_y     = DRAG_OFFSET;
 
   gtk_widget_push_composite_child ();
   dockable->menu_button = gtk_button_new ();
@@ -180,6 +184,9 @@ gimp_dockable_init (GimpDockable *dockable)
    */
   g_signal_connect (dockable, "button-press-event",
                     G_CALLBACK (gimp_dockable_button_press),
+                    NULL);
+  g_signal_connect (dockable, "button-release-event",
+                    G_CALLBACK (gimp_dockable_button_release),
                     NULL);
 }
 
@@ -532,11 +539,25 @@ gimp_dockable_button_press (GtkWidget      *widget,
 {
   GimpDockable *dockable = GIMP_DOCKABLE (widget);
 
+  /*  stop processing of events not coming from the title event window  */
+  if (event->window != dockable->title_window)
+    return TRUE;
+
   dockable->button_x = event->x;
   dockable->button_y = event->y;
 
-  /*  stop processing of events not coming from the title event window  */
-  return (event->window != dockable->title_window);
+  return FALSE;
+}
+
+static gboolean
+gimp_dockable_button_release (GtkWidget *widget)
+{
+  GimpDockable *dockable = GIMP_DOCKABLE (widget);
+
+  dockable->button_x = DRAG_OFFSET;
+  dockable->button_y = DRAG_OFFSET;
+
+  return FALSE;
 }
 
 static gboolean
