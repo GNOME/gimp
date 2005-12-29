@@ -210,9 +210,9 @@ gimp_help_set_help_data (GtkWidget   *widget,
 {
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
-  if (tooltip)
-    gtk_tooltips_set_tip (tool_tips, widget, tooltip, help_id);
-  else
+  gtk_tooltips_set_tip (tool_tips, widget, tooltip, help_id);
+
+  if (! tooltip)
     g_object_set_qdata (G_OBJECT (widget), GIMP_HELP_ID, (gpointer) help_id);
 }
 

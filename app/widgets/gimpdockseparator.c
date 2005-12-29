@@ -41,6 +41,8 @@
 #define DEFAULT_HEIGHT 6
 #define LABEL_PADDING  4
 
+#define HELP_TEXT      _("You can drop dockable dialogs here.")
+
 
 static void     gimp_dock_separator_style_set     (GtkWidget      *widget,
                                                    GtkStyle       *prev_style);
@@ -99,8 +101,7 @@ gimp_dock_separator_init (GimpDockSeparator *separator)
   gtk_widget_show (separator->frame);
 
   gimp_help_set_help_data (GTK_WIDGET (separator),
-                           _("You can drop dockable dialogs here."),
-                           GIMP_HELP_DOCK_SEPARATOR);
+                           HELP_TEXT, GIMP_HELP_DOCK_SEPARATOR);
 
   gtk_drag_dest_set (GTK_WIDGET (separator),
                      GTK_DEST_DEFAULT_ALL,
@@ -273,8 +274,7 @@ gimp_dock_separator_set_show_label (GimpDockSeparator *separator,
 
   if (show && ! separator->label)
     {
-      separator->label =
-        gtk_label_new (_("You can drop dockable dialogs here."));
+      separator->label = gtk_label_new (HELP_TEXT);
       gtk_misc_set_padding (GTK_MISC (separator->label),
                             LABEL_PADDING, LABEL_PADDING);
       gtk_label_set_line_wrap (GTK_LABEL (separator->label), TRUE);
@@ -284,10 +284,16 @@ gimp_dock_separator_set_show_label (GimpDockSeparator *separator,
                                  -1);
       gtk_container_add (GTK_CONTAINER (separator->frame), separator->label);
       gtk_widget_show (separator->label);
+
+      gimp_help_set_help_data (GTK_WIDGET (separator),
+                               NULL, GIMP_HELP_DOCK_SEPARATOR);
     }
   else if (! show && separator->label)
     {
       gtk_container_remove (GTK_CONTAINER (separator->frame), separator->label);
       separator->label = NULL;
+
+      gimp_help_set_help_data (GTK_WIDGET (separator),
+                               HELP_TEXT, GIMP_HELP_DOCK_SEPARATOR);
     }
 }

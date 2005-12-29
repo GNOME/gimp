@@ -1,3 +1,11 @@
+2005-12-29  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimphelpui.c (gimp_help_set_help_data): allow to
+	unset the tooltip by passing NULL.
+
+	* app/widgets/gimpdockseparator.c: unset the tooltip while the same
+	text is being shown as a label.
+
 2005-12-29  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpbase/gimpbaseenums.[ch] (enum GimpPDBArgType): renamed
