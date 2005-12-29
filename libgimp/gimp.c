@@ -730,7 +730,7 @@ gimp_run_procedure (const gchar *name,
         case GIMP_PDB_DRAWABLE:
         case GIMP_PDB_SELECTION:
         case GIMP_PDB_BOUNDARY:
-        case GIMP_PDB_PATH:
+        case GIMP_PDB_VECTORS:
         case GIMP_PDB_STATUS:
           (void) va_arg (args, gint);
           break;
@@ -846,7 +846,7 @@ gimp_run_procedure (const gchar *name,
         case GIMP_PDB_BOUNDARY:
           params[i].data.d_boundary = va_arg (args, gint32);
           break;
-        case GIMP_PDB_PATH:
+        case GIMP_PDB_VECTORS:
           params[i].data.d_vectors = va_arg (args, gint32);
           break;
         case GIMP_PDB_PARASITE:

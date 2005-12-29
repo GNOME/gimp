@@ -233,7 +233,7 @@ package Gimp::CodeGen::enums;
 		       GIMP_UNIT_END => '5' }
 	},
     GimpPDBArgType =>
-	{ contig => 1,
+	{ contig => 0,
 	  header => 'libgimpbase/gimpbaseenums.h',
 	  symbols => [ qw(GIMP_PDB_INT32 GIMP_PDB_INT16 GIMP_PDB_INT8
 			  GIMP_PDB_FLOAT GIMP_PDB_STRING GIMP_PDB_INT32ARRAY
@@ -242,8 +242,9 @@ package Gimp::CodeGen::enums;
 			  GIMP_PDB_COLOR GIMP_PDB_REGION GIMP_PDB_DISPLAY
 			  GIMP_PDB_IMAGE GIMP_PDB_LAYER GIMP_PDB_CHANNEL
 			  GIMP_PDB_DRAWABLE GIMP_PDB_SELECTION
-			  GIMP_PDB_BOUNDARY GIMP_PDB_PATH GIMP_PDB_PARASITE
-			  GIMP_PDB_STATUS GIMP_PDB_END) ],
+			  GIMP_PDB_BOUNDARY GIMP_PDB_VECTORS
+			  GIMP_PDB_PARASITE GIMP_PDB_STATUS GIMP_PDB_END
+			  GIMP_PDB_PATH) ],
 	  mapping => { GIMP_PDB_INT32 => '0',
 		       GIMP_PDB_INT16 => '1',
 		       GIMP_PDB_INT8 => '2',
@@ -263,10 +264,11 @@ package Gimp::CodeGen::enums;
 		       GIMP_PDB_DRAWABLE => '16',
 		       GIMP_PDB_SELECTION => '17',
 		       GIMP_PDB_BOUNDARY => '18',
-		       GIMP_PDB_PATH => '19',
+		       GIMP_PDB_VECTORS => '19',
 		       GIMP_PDB_PARASITE => '20',
 		       GIMP_PDB_STATUS => '21',
-		       GIMP_PDB_END => '22' }
+		       GIMP_PDB_END => '22',
+		       GIMP_PDB_PATH => 'GIMP_PDB_VECTORS' }
 	},
     GimpPDBProcType =>
 	{ contig => 1,

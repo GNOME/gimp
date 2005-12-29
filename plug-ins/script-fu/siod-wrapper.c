@@ -843,12 +843,12 @@ marshall_proc_db_call (LISP a)
                          car (a));
           break;
 
-        case GIMP_PDB_PATH:
+        case GIMP_PDB_VECTORS:
           if (!TYPEP (car (a), tc_flonum))
             success = FALSE;
           if (success)
             {
-              args[i].type = GIMP_PDB_PATH;
+              args[i].type = GIMP_PDB_VECTORS;
               args[i].data.d_int32 = get_c_long (car (a));
             }
           break;
@@ -1128,7 +1128,7 @@ marshall_proc_db_call (LISP a)
               return my_err ("Boundaries are currently unsupported as return values", NIL);
               break;
 
-            case GIMP_PDB_PATH:
+            case GIMP_PDB_VECTORS:
               return_val = cons (flocons (values[i + 1].data.d_int32),
                                  return_val);
               break;

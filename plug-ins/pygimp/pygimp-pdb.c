@@ -284,7 +284,7 @@ pygimp_param_to_tuple(int nparams, const GimpParam *params)
 	case GIMP_PDB_BOUNDARY:
 	    value = PyInt_FromLong(params[i].data.d_boundary);
 	    break;
-	case GIMP_PDB_PATH:
+	case GIMP_PDB_VECTORS:
 	    value = PyInt_FromLong(params[i].data.d_vectors);
 	    break;
 	case GIMP_PDB_PARASITE:
@@ -513,7 +513,7 @@ pygimp_param_from_tuple(PyObject *args, const GimpParamDef *ptype, int nparams)
 	    check(!PyInt_Check(item));
 	    ret[i].data.d_boundary = PyInt_AsLong(item);
 	    break;
-	case GIMP_PDB_PATH:
+	case GIMP_PDB_VECTORS:
 	    check(!PyInt_Check(item));
 	    ret[i].data.d_vectors = PyInt_AsLong(item);
 	    break;

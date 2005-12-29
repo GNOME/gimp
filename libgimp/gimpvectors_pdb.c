@@ -51,7 +51,7 @@ gimp_vectors_get_strokes (gint32  vectors_ID,
 
   return_vals = gimp_run_procedure ("gimp-vectors-get-strokes",
 				    &nreturn_vals,
-				    GIMP_PDB_PATH, vectors_ID,
+				    GIMP_PDB_VECTORS, vectors_ID,
 				    GIMP_PDB_END);
 
   *num_strokes = 0;
@@ -90,7 +90,7 @@ gimp_vectors_get_image (gint32 vectors_ID)
 
   return_vals = gimp_run_procedure ("gimp-vectors-get-image",
 				    &nreturn_vals,
-				    GIMP_PDB_PATH, vectors_ID,
+				    GIMP_PDB_VECTORS, vectors_ID,
 				    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
@@ -122,7 +122,7 @@ gimp_vectors_get_linked (gint32 vectors_ID)
 
   return_vals = gimp_run_procedure ("gimp-vectors-get-linked",
 				    &nreturn_vals,
-				    GIMP_PDB_PATH, vectors_ID,
+				    GIMP_PDB_VECTORS, vectors_ID,
 				    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
@@ -156,7 +156,7 @@ gimp_vectors_set_linked (gint32   vectors_ID,
 
   return_vals = gimp_run_procedure ("gimp-vectors-set-linked",
 				    &nreturn_vals,
-				    GIMP_PDB_PATH, vectors_ID,
+				    GIMP_PDB_VECTORS, vectors_ID,
 				    GIMP_PDB_INT32, linked,
 				    GIMP_PDB_END);
 
@@ -188,7 +188,7 @@ gimp_vectors_get_visible (gint32 vectors_ID)
 
   return_vals = gimp_run_procedure ("gimp-vectors-get-visible",
 				    &nreturn_vals,
-				    GIMP_PDB_PATH, vectors_ID,
+				    GIMP_PDB_VECTORS, vectors_ID,
 				    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
@@ -222,7 +222,7 @@ gimp_vectors_set_visible (gint32   vectors_ID,
 
   return_vals = gimp_run_procedure ("gimp-vectors-set-visible",
 				    &nreturn_vals,
-				    GIMP_PDB_PATH, vectors_ID,
+				    GIMP_PDB_VECTORS, vectors_ID,
 				    GIMP_PDB_INT32, visible,
 				    GIMP_PDB_END);
 
@@ -254,7 +254,7 @@ gimp_vectors_get_name (gint32 vectors_ID)
 
   return_vals = gimp_run_procedure ("gimp-vectors-get-name",
 				    &nreturn_vals,
-				    GIMP_PDB_PATH, vectors_ID,
+				    GIMP_PDB_VECTORS, vectors_ID,
 				    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
@@ -288,7 +288,7 @@ gimp_vectors_set_name (gint32       vectors_ID,
 
   return_vals = gimp_run_procedure ("gimp-vectors-set-name",
 				    &nreturn_vals,
-				    GIMP_PDB_PATH, vectors_ID,
+				    GIMP_PDB_VECTORS, vectors_ID,
 				    GIMP_PDB_STRING, name,
 				    GIMP_PDB_END);
 
@@ -320,7 +320,7 @@ gimp_vectors_get_tattoo (gint32 vectors_ID)
 
   return_vals = gimp_run_procedure ("gimp-vectors-get-tattoo",
 				    &nreturn_vals,
-				    GIMP_PDB_PATH, vectors_ID,
+				    GIMP_PDB_VECTORS, vectors_ID,
 				    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
@@ -354,7 +354,7 @@ gimp_vectors_set_tattoo (gint32 vectors_ID,
 
   return_vals = gimp_run_procedure ("gimp-vectors-set-tattoo",
 				    &nreturn_vals,
-				    GIMP_PDB_PATH, vectors_ID,
+				    GIMP_PDB_VECTORS, vectors_ID,
 				    GIMP_PDB_INT32, tattoo,
 				    GIMP_PDB_END);
 
@@ -390,7 +390,7 @@ gimp_vectors_stroke_get_length (gint32  vectors_ID,
 
   return_vals = gimp_run_procedure ("gimp-vectors-stroke-get-length",
 				    &nreturn_vals,
-				    GIMP_PDB_PATH, vectors_ID,
+				    GIMP_PDB_VECTORS, vectors_ID,
 				    GIMP_PDB_INT32, stroke_id,
 				    GIMP_PDB_FLOAT, prescision,
 				    GIMP_PDB_END);
@@ -426,7 +426,7 @@ gimp_vectors_stroke_remove (gint32 vectors_ID,
 
   return_vals = gimp_run_procedure ("gimp-vectors-stroke-remove",
 				    &nreturn_vals,
-				    GIMP_PDB_PATH, vectors_ID,
+				    GIMP_PDB_VECTORS, vectors_ID,
 				    GIMP_PDB_INT32, stroke_id,
 				    GIMP_PDB_END);
 
@@ -464,7 +464,7 @@ gimp_vectors_stroke_translate (gint32 vectors_ID,
 
   return_vals = gimp_run_procedure ("gimp-vectors-stroke-translate",
 				    &nreturn_vals,
-				    GIMP_PDB_PATH, vectors_ID,
+				    GIMP_PDB_VECTORS, vectors_ID,
 				    GIMP_PDB_INT32, stroke_id,
 				    GIMP_PDB_INT32, off_x,
 				    GIMP_PDB_INT32, off_y,
@@ -504,7 +504,7 @@ gimp_vectors_stroke_scale (gint32  vectors_ID,
 
   return_vals = gimp_run_procedure ("gimp-vectors-stroke-scale",
 				    &nreturn_vals,
-				    GIMP_PDB_PATH, vectors_ID,
+				    GIMP_PDB_VECTORS, vectors_ID,
 				    GIMP_PDB_INT32, stroke_id,
 				    GIMP_PDB_FLOAT, scale_x,
 				    GIMP_PDB_FLOAT, scale_y,
@@ -546,7 +546,7 @@ gimp_vectors_stroke_interpolate (gint32    vectors_ID,
 
   return_vals = gimp_run_procedure ("gimp-vectors-stroke-interpolate",
 				    &nreturn_vals,
-				    GIMP_PDB_PATH, vectors_ID,
+				    GIMP_PDB_VECTORS, vectors_ID,
 				    GIMP_PDB_INT32, stroke_id,
 				    GIMP_PDB_FLOAT, prescision,
 				    GIMP_PDB_END);

@@ -1122,7 +1122,7 @@ gimp_image_raise_vectors (gint32 image_ID,
   return_vals = gimp_run_procedure ("gimp-image-raise-vectors",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_PATH, vectors_ID,
+				    GIMP_PDB_VECTORS, vectors_ID,
 				    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
@@ -1158,7 +1158,7 @@ gimp_image_lower_vectors (gint32 image_ID,
   return_vals = gimp_run_procedure ("gimp-image-lower-vectors",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_PATH, vectors_ID,
+				    GIMP_PDB_VECTORS, vectors_ID,
 				    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
@@ -1195,7 +1195,7 @@ gimp_image_raise_vectors_to_top (gint32 image_ID,
   return_vals = gimp_run_procedure ("gimp-image-raise-vectors-to-top",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_PATH, vectors_ID,
+				    GIMP_PDB_VECTORS, vectors_ID,
 				    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
@@ -1232,7 +1232,7 @@ gimp_image_lower_vectors_to_bottom (gint32 image_ID,
   return_vals = gimp_run_procedure ("gimp-image-lower-vectors-to-bottom",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_PATH, vectors_ID,
+				    GIMP_PDB_VECTORS, vectors_ID,
 				    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
@@ -1337,7 +1337,7 @@ gimp_image_remove_vectors (gint32 image_ID,
   return_vals = gimp_run_procedure ("gimp-image-remove-vectors",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_PATH, vectors_ID,
+				    GIMP_PDB_VECTORS, vectors_ID,
 				    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
@@ -1927,7 +1927,7 @@ gimp_image_set_active_vectors (gint32 image_ID,
   return_vals = gimp_run_procedure ("gimp-image-set-active-vectors",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_PATH, active_vectors_ID,
+				    GIMP_PDB_VECTORS, active_vectors_ID,
 				    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;

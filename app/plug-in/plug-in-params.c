@@ -166,8 +166,8 @@ plug_in_params_to_args (GPParam  *params,
 	case GIMP_PDB_BOUNDARY:
 	  args[i].value.pdb_int = params[i].data.d_boundary;
 	  break;
-	case GIMP_PDB_PATH:
-	  args[i].value.pdb_int = params[i].data.d_path;
+	case GIMP_PDB_VECTORS:
+	  args[i].value.pdb_int = params[i].data.d_vectors;
 	  break;
 	case GIMP_PDB_PARASITE:
 	  if (full_copy)
@@ -318,8 +318,8 @@ plug_in_args_to_params (Argument *args,
 	case GIMP_PDB_BOUNDARY:
 	  params[i].data.d_boundary = args[i].value.pdb_int;
 	  break;
-	case GIMP_PDB_PATH:
-	  params[i].data.d_path = args[i].value.pdb_int;
+	case GIMP_PDB_VECTORS:
+	  params[i].data.d_vectors = args[i].value.pdb_int;
 	  break;
 	case GIMP_PDB_PARASITE:
 	  if (full_copy)
@@ -418,7 +418,7 @@ plug_in_params_destroy (GPParam  *params,
             case GIMP_PDB_DRAWABLE:
             case GIMP_PDB_SELECTION:
             case GIMP_PDB_BOUNDARY:
-            case GIMP_PDB_PATH:
+            case GIMP_PDB_VECTORS:
               break;
             case GIMP_PDB_PARASITE:
               if (params[i].data.d_parasite.data)

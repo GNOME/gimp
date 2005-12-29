@@ -123,7 +123,7 @@ vectors_get_strokes_invoker (Gimp         *gimp,
 static ProcArg vectors_get_strokes_inargs[] =
 {
   {
-    GIMP_PDB_PATH,
+    GIMP_PDB_VECTORS,
     "vectors",
     "The vectors object"
   }
@@ -192,7 +192,7 @@ vectors_get_image_invoker (Gimp         *gimp,
 static ProcArg vectors_get_image_inargs[] =
 {
   {
-    GIMP_PDB_PATH,
+    GIMP_PDB_VECTORS,
     "vectors",
     "The vectors object"
   }
@@ -256,7 +256,7 @@ vectors_get_linked_invoker (Gimp         *gimp,
 static ProcArg vectors_get_linked_inargs[] =
 {
   {
-    GIMP_PDB_PATH,
+    GIMP_PDB_VECTORS,
     "vectors",
     "The vectors object"
   }
@@ -316,7 +316,7 @@ vectors_set_linked_invoker (Gimp         *gimp,
 static ProcArg vectors_set_linked_inargs[] =
 {
   {
-    GIMP_PDB_PATH,
+    GIMP_PDB_VECTORS,
     "vectors",
     "The vectors object"
   },
@@ -376,7 +376,7 @@ vectors_get_visible_invoker (Gimp         *gimp,
 static ProcArg vectors_get_visible_inargs[] =
 {
   {
-    GIMP_PDB_PATH,
+    GIMP_PDB_VECTORS,
     "vectors",
     "The vectors object"
   }
@@ -436,7 +436,7 @@ vectors_set_visible_invoker (Gimp         *gimp,
 static ProcArg vectors_set_visible_inargs[] =
 {
   {
-    GIMP_PDB_PATH,
+    GIMP_PDB_VECTORS,
     "vectors",
     "The vectors object"
   },
@@ -496,7 +496,7 @@ vectors_get_name_invoker (Gimp         *gimp,
 static ProcArg vectors_get_name_inargs[] =
 {
   {
-    GIMP_PDB_PATH,
+    GIMP_PDB_VECTORS,
     "vectors",
     "The vectors object"
   }
@@ -559,7 +559,7 @@ vectors_set_name_invoker (Gimp         *gimp,
 static ProcArg vectors_set_name_inargs[] =
 {
   {
-    GIMP_PDB_PATH,
+    GIMP_PDB_VECTORS,
     "vectors",
     "The vectors object"
   },
@@ -619,7 +619,7 @@ vectors_get_tattoo_invoker (Gimp         *gimp,
 static ProcArg vectors_get_tattoo_inargs[] =
 {
   {
-    GIMP_PDB_PATH,
+    GIMP_PDB_VECTORS,
     "vectors",
     "The vectors object"
   }
@@ -679,7 +679,7 @@ vectors_set_tattoo_invoker (Gimp         *gimp,
 static ProcArg vectors_set_tattoo_inargs[] =
 {
   {
-    GIMP_PDB_PATH,
+    GIMP_PDB_VECTORS,
     "vectors",
     "The vectors object"
   },
@@ -755,7 +755,7 @@ vectors_stroke_get_length_invoker (Gimp         *gimp,
 static ProcArg vectors_stroke_get_length_inargs[] =
 {
   {
-    GIMP_PDB_PATH,
+    GIMP_PDB_VECTORS,
     "vectors",
     "The vectors object"
   },
@@ -831,7 +831,7 @@ vectors_stroke_remove_invoker (Gimp         *gimp,
 static ProcArg vectors_stroke_remove_inargs[] =
 {
   {
-    GIMP_PDB_PATH,
+    GIMP_PDB_VECTORS,
     "vectors",
     "The vectors object"
   },
@@ -911,7 +911,7 @@ vectors_stroke_translate_invoker (Gimp         *gimp,
 static ProcArg vectors_stroke_translate_inargs[] =
 {
   {
-    GIMP_PDB_PATH,
+    GIMP_PDB_VECTORS,
     "vectors",
     "The vectors object"
   },
@@ -1001,7 +1001,7 @@ vectors_stroke_scale_invoker (Gimp         *gimp,
 static ProcArg vectors_stroke_scale_inargs[] =
 {
   {
-    GIMP_PDB_PATH,
+    GIMP_PDB_VECTORS,
     "vectors",
     "The vectors object"
   },
@@ -1114,7 +1114,7 @@ vectors_stroke_interpolate_invoker (Gimp         *gimp,
 static ProcArg vectors_stroke_interpolate_inargs[] =
 {
   {
-    GIMP_PDB_PATH,
+    GIMP_PDB_VECTORS,
     "vectors",
     "The vectors object"
   },

@@ -1466,9 +1466,9 @@ _gp_params_read (GIOChannel  *channel,
 	    goto cleanup;
           break;
 
-        case GIMP_PDB_PATH:
+        case GIMP_PDB_VECTORS:
 	  if (! _gimp_wire_read_int32 (channel,
-                                       (guint32 *) &(*params)[i].data.d_path, 1,
+                                       (guint32 *) &(*params)[i].data.d_vectors, 1,
                                        user_data))
 	    goto cleanup;
           break;
@@ -1692,9 +1692,9 @@ _gp_params_write (GIOChannel *channel,
 	    return;
           break;
 
-        case GIMP_PDB_PATH:
+        case GIMP_PDB_VECTORS:
 	  if (! _gimp_wire_write_int32 (channel,
-                                        (const guint32 *) &params[i].data.d_path, 1,
+                                        (const guint32 *) &params[i].data.d_vectors, 1,
                                         user_data))
 	    return;
           break;
@@ -1761,7 +1761,7 @@ gp_params_destroy (GPParam *params,
 	case GIMP_PDB_DRAWABLE:
 	case GIMP_PDB_SELECTION:
 	case GIMP_PDB_BOUNDARY:
-	case GIMP_PDB_PATH:
+	case GIMP_PDB_VECTORS:
 	case GIMP_PDB_STATUS:
 	  break;
 

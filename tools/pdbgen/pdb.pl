@@ -76,7 +76,7 @@ package Gimp::CodeGen::pdb;
 		    id_func => '(GimpLayerMask *) gimp_item_get_by_ID',
 		    id_ret_func => 'gimp_item_get_ID (GIMP_ITEM ($var))',
 		    check_func => '(GIMP_IS_LAYER_MASK ($var) && ! gimp_item_is_removed (GIMP_ITEM ($var)))' },
-    vectors    => { name => 'PATH',
+    vectors    => { name => 'VECTORS',
 		    type => 'GimpVectors *', 
 		    headers => [ qw("vectors/gimpvectors.h") ],
 		    id_func => '(GimpVectors *) gimp_item_get_by_ID',

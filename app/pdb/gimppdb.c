@@ -461,7 +461,7 @@ procedural_db_run_proc (Gimp         *gimp,
         case GIMP_PDB_DRAWABLE:
         case GIMP_PDB_SELECTION:
         case GIMP_PDB_BOUNDARY:
-        case GIMP_PDB_PATH:
+        case GIMP_PDB_VECTORS:
           params[i].value.pdb_int = (gint32) va_arg (args, gint);
           break;
 
@@ -566,7 +566,7 @@ procedural_db_destroy_args (Argument *args,
         case GIMP_PDB_DRAWABLE:
         case GIMP_PDB_SELECTION:
         case GIMP_PDB_BOUNDARY:
-        case GIMP_PDB_PATH:
+        case GIMP_PDB_VECTORS:
           break;
 
         case GIMP_PDB_PARASITE:

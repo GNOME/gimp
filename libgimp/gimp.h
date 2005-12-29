@@ -149,6 +149,7 @@ union _GimpParamData
   gint32            d_drawable;
   gint32            d_selection;
   gint32            d_boundary;
+  gint32            d_path; /* deprecated */
   gint32            d_vectors;
   gint32            d_unit;
   GimpParasite      d_parasite;

@@ -134,7 +134,8 @@ struct _GPParam
     gint32 d_drawable;
     gint32 d_selection;
     gint32 d_boundary;
-    gint32 d_path;
+    gint32 d_path; /* deprecated */
+    gint32 d_vectors;
     struct
     {
       gchar    *name;

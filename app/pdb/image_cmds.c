@@ -2190,7 +2190,7 @@ static ProcArg image_raise_vectors_inargs[] =
     "The image"
   },
   {
-    GIMP_PDB_PATH,
+    GIMP_PDB_VECTORS,
     "vectors",
     "The vectors object to raise"
   }
@@ -2246,7 +2246,7 @@ static ProcArg image_lower_vectors_inargs[] =
     "The image"
   },
   {
-    GIMP_PDB_PATH,
+    GIMP_PDB_VECTORS,
     "vectors",
     "The vectors object to lower"
   }
@@ -2302,7 +2302,7 @@ static ProcArg image_raise_vectors_to_top_inargs[] =
     "The image"
   },
   {
-    GIMP_PDB_PATH,
+    GIMP_PDB_VECTORS,
     "vectors",
     "The vectors object to raise to top"
   }
@@ -2358,7 +2358,7 @@ static ProcArg image_lower_vectors_to_bottom_inargs[] =
     "The image"
   },
   {
-    GIMP_PDB_PATH,
+    GIMP_PDB_VECTORS,
     "vectors",
     "The vectors object to lower to bottom"
   }
@@ -2539,7 +2539,7 @@ static ProcArg image_remove_vectors_inargs[] =
     "The image"
   },
   {
-    GIMP_PDB_PATH,
+    GIMP_PDB_VECTORS,
     "vectors",
     "The vectors object"
   }
@@ -3701,7 +3701,7 @@ static ProcArg image_get_active_vectors_inargs[] =
 static ProcArg image_get_active_vectors_outargs[] =
 {
   {
-    GIMP_PDB_PATH,
+    GIMP_PDB_VECTORS,
     "active-vectors",
     "The active vectors"
   }
@@ -3757,7 +3757,7 @@ static ProcArg image_set_active_vectors_inargs[] =
     "The image"
   },
   {
-    GIMP_PDB_PATH,
+    GIMP_PDB_VECTORS,
     "active-vectors",
     "The new image active vectors"
   }
@@ -4920,7 +4920,7 @@ static ProcArg image_get_vectors_by_tattoo_inargs[] =
 static ProcArg image_get_vectors_by_tattoo_outargs[] =
 {
   {
-    GIMP_PDB_PATH,
+    GIMP_PDB_VECTORS,
     "vectors",
     "The vectors with the specified tattoo"
   }
