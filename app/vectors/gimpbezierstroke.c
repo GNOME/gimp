@@ -1680,7 +1680,11 @@ arcto_ellipsesegment (gdouble     radius_x,
                       GimpCoords *ellips)
 {
   gdouble       phi_s, phi_e;
-  GimpCoords    template    = { 0, 0, 1, 0.5, 0.5, 0.5 };
+  GimpCoords    template    = { 0, 0,
+                                GIMP_COORDS_DEFAULT_PRESSURE,
+                                GIMP_COORDS_DEFAULT_TILT,
+                                GIMP_COORDS_DEFAULT_TILT,
+                                GIMP_COORDS_DEFAULT_WHEEL };
   const gdouble circlemagic = 4.0 * (G_SQRT2 - 1.0) / 3.0;
   gdouble       y[4];
   gdouble       h0, h1;
@@ -1922,57 +1926,47 @@ gimp_bezier_stroke_arcto (GimpStroke       *bez_stroke,
 GimpStroke *
 gimp_bezier_stroke_new_ellipse (const GimpCoords *center,
                                 gdouble           radius_x,
-                                gdouble           radius_y)
+                                gdouble           radius_y,
+                                gdouble           angle)
 {
   GimpStroke    *stroke;
   GimpCoords     p1 = *center;
   GimpCoords     p2 = *center;
   GimpCoords     p3 = *center;
-  gdouble        cx = center->x;
-  gdouble        cy = center->y;
+  GimpCoords     dx = *center;
+  GimpCoords     dy = *center;
   const gdouble  circlemagic = 4.0 * (G_SQRT2 - 1.0) / 3.0;
   GimpAnchor    *handle;
 
-  p1.x = cx - radius_x;
-  p1.y = cy;
+  dx.x =   radius_x * cos (angle);
+  dx.y = - radius_x * sin (angle);
+  dy.x =   radius_y * sin (angle);
+  dy.y =   radius_y * cos (angle);
+
+  gimp_coords_mix (1.0, center, 1.0, &dx, &p1);
   stroke = gimp_bezier_stroke_new_moveto (&p1);
 
-  p1.x = cx - radius_x;
-  p1.y = cy + radius_y * circlemagic;
-  p2.x = cx - radius_x * circlemagic;
-  p2.y = cy + radius_y;
-  p3.x = cx;
-  p3.y = cy + radius_y;
+  handle = g_list_last (GIMP_STROKE (stroke)->anchors)->data;
+  gimp_coords_mix (1.0,    &p1, -circlemagic, &dy, &handle->position);
 
+  gimp_coords_mix (1.0,    &p1,  circlemagic, &dy, &p1);
+  gimp_coords_mix (1.0, center,          1.0, &dy, &p3);
+  gimp_coords_mix (1.0,    &p3,  circlemagic, &dx, &p2);
   gimp_bezier_stroke_cubicto (stroke, &p1, &p2, &p3);
 
-  p1.x = cx + radius_x * circlemagic;
-  p1.y = cy + radius_y;
-  p2.x = cx + radius_x;
-  p2.y = cy + radius_y * circlemagic;
-  p3.x = cx + radius_x;
-  p3.y = cy;
-
+  gimp_coords_mix (1.0,    &p3, -circlemagic, &dx, &p1);
+  gimp_coords_mix (1.0, center,         -1.0, &dx, &p3);
+  gimp_coords_mix (1.0,    &p3,  circlemagic, &dy, &p2);
   gimp_bezier_stroke_cubicto (stroke, &p1, &p2, &p3);
 
-  p1.x = cx + radius_x;
-  p1.y = cy - radius_y * circlemagic;
-  p2.x = cx + radius_x * circlemagic;
-  p2.y = cy - radius_y;
-  p3.x = cx;
-  p3.y = cy - radius_y;
+  gimp_coords_mix (1.0,    &p3, -circlemagic, &dy, &p1);
+  gimp_coords_mix (1.0, center,         -1.0, &dy, &p3);
+  gimp_coords_mix (1.0,    &p3, -circlemagic, &dx, &p2);
 
   gimp_bezier_stroke_cubicto (stroke, &p1, &p2, &p3);
 
   handle = g_list_first (GIMP_STROKE (stroke)->anchors)->data;
-
-  handle->position.x = cx - radius_x * circlemagic;
-  handle->position.y = cy - radius_y;
-
-  handle = g_list_last (GIMP_STROKE (stroke)->anchors)->data;
-
-  handle->position.x = cx - radius_x;
-  handle->position.y = cy - radius_y * circlemagic;
+  gimp_coords_mix (1.0,    &p3,  circlemagic, &dx, &handle->position);
 
   gimp_stroke_close (stroke);
 

@@ -29,39 +29,66 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gint*    gimp_vectors_get_strokes        (gint32        vectors_ID,
-					  gint         *num_strokes);
-gint32   gimp_vectors_get_image          (gint32        vectors_ID);
-gboolean gimp_vectors_get_linked         (gint32        vectors_ID);
-gboolean gimp_vectors_set_linked         (gint32        vectors_ID,
-					  gboolean      linked);
-gboolean gimp_vectors_get_visible        (gint32        vectors_ID);
-gboolean gimp_vectors_set_visible        (gint32        vectors_ID,
-					  gboolean      visible);
-gchar*   gimp_vectors_get_name           (gint32        vectors_ID);
-gboolean gimp_vectors_set_name           (gint32        vectors_ID,
-					  const gchar  *name);
-gint     gimp_vectors_get_tattoo         (gint32        vectors_ID);
-gboolean gimp_vectors_set_tattoo         (gint32        vectors_ID,
-					  gint          tattoo);
-gdouble  gimp_vectors_stroke_get_length  (gint32        vectors_ID,
-					  gint          stroke_id,
-					  gdouble       prescision);
-gboolean gimp_vectors_stroke_remove      (gint32        vectors_ID,
-					  gint          stroke_id);
-gboolean gimp_vectors_stroke_translate   (gint32        vectors_ID,
-					  gint          stroke_id,
-					  gint          off_x,
-					  gint          off_y);
-gboolean gimp_vectors_stroke_scale       (gint32        vectors_ID,
-					  gint          stroke_id,
-					  gdouble       scale_x,
-					  gdouble       scale_y);
-gboolean gimp_vectors_stroke_interpolate (gint32        vectors_ID,
-					  gint          stroke_id,
-					  gdouble       prescision,
-					  gint         *num_coords,
-					  gdouble     **coords);
+gint*    gimp_vectors_get_strokes               (gint32        vectors_ID,
+						 gint         *num_strokes);
+gint32   gimp_vectors_get_image                 (gint32        vectors_ID);
+gboolean gimp_vectors_get_linked                (gint32        vectors_ID);
+gboolean gimp_vectors_set_linked                (gint32        vectors_ID,
+						 gboolean      linked);
+gboolean gimp_vectors_get_visible               (gint32        vectors_ID);
+gboolean gimp_vectors_set_visible               (gint32        vectors_ID,
+						 gboolean      visible);
+gchar*   gimp_vectors_get_name                  (gint32        vectors_ID);
+gboolean gimp_vectors_set_name                  (gint32        vectors_ID,
+						 const gchar  *name);
+gint     gimp_vectors_get_tattoo                (gint32        vectors_ID);
+gboolean gimp_vectors_set_tattoo                (gint32        vectors_ID,
+						 gint          tattoo);
+gdouble  gimp_vectors_stroke_get_length         (gint32        vectors_ID,
+						 gint          stroke_id,
+						 gdouble       prescision);
+gboolean gimp_vectors_stroke_remove             (gint32        vectors_ID,
+						 gint          stroke_id);
+gboolean gimp_vectors_stroke_translate          (gint32        vectors_ID,
+						 gint          stroke_id,
+						 gint          off_x,
+						 gint          off_y);
+gboolean gimp_vectors_stroke_scale              (gint32        vectors_ID,
+						 gint          stroke_id,
+						 gdouble       scale_x,
+						 gdouble       scale_y);
+gboolean gimp_vectors_stroke_interpolate        (gint32        vectors_ID,
+						 gint          stroke_id,
+						 gdouble       prescision,
+						 gint         *num_coords,
+						 gdouble     **coords);
+gint     gimp_vectors_bezier_stroke_new_moveto  (gint32        vectors_ID,
+						 gdouble       x0,
+						 gdouble       y0);
+gboolean gimp_vectors_bezier_stroke_lineto      (gint32        vectors_ID,
+						 gint          stroke_id,
+						 gdouble       x0,
+						 gdouble       y0);
+gboolean gimp_vectors_bezier_stroke_conicto     (gint32        vectors_ID,
+						 gint          stroke_id,
+						 gdouble       x0,
+						 gdouble       y0,
+						 gdouble       x1,
+						 gdouble       y1);
+gboolean gimp_vectors_bezier_stroke_cubicto     (gint32        vectors_ID,
+						 gint          stroke_id,
+						 gdouble       x0,
+						 gdouble       y0,
+						 gdouble       x1,
+						 gdouble       y1,
+						 gdouble       x2,
+						 gdouble       y2);
+gint     gimp_vectors_bezier_stroke_new_ellipse (gint32        vectors_ID,
+						 gdouble       x0,
+						 gdouble       y0,
+						 gdouble       radius_x,
+						 gdouble       radius_y,
+						 gdouble       angle);
 
 
 G_END_DECLS

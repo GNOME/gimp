@@ -52,6 +52,11 @@ static ProcRecord vectors_stroke_remove_proc;
 static ProcRecord vectors_stroke_translate_proc;
 static ProcRecord vectors_stroke_scale_proc;
 static ProcRecord vectors_stroke_interpolate_proc;
+static ProcRecord vectors_bezier_stroke_new_moveto_proc;
+static ProcRecord vectors_bezier_stroke_lineto_proc;
+static ProcRecord vectors_bezier_stroke_conicto_proc;
+static ProcRecord vectors_bezier_stroke_cubicto_proc;
+static ProcRecord vectors_bezier_stroke_new_ellipse_proc;
 
 void
 register_vectors_procs (Gimp *gimp)
@@ -71,6 +76,11 @@ register_vectors_procs (Gimp *gimp)
   procedural_db_register (gimp, &vectors_stroke_translate_proc);
   procedural_db_register (gimp, &vectors_stroke_scale_proc);
   procedural_db_register (gimp, &vectors_stroke_interpolate_proc);
+  procedural_db_register (gimp, &vectors_bezier_stroke_new_moveto_proc);
+  procedural_db_register (gimp, &vectors_bezier_stroke_lineto_proc);
+  procedural_db_register (gimp, &vectors_bezier_stroke_conicto_proc);
+  procedural_db_register (gimp, &vectors_bezier_stroke_cubicto_proc);
+  procedural_db_register (gimp, &vectors_bezier_stroke_new_ellipse_proc);
 }
 
 static Argument *
@@ -1072,8 +1082,6 @@ vectors_stroke_interpolate_invoker (Gimp         *gimp,
 
       if (stroke)
         {
-          /* need to figure out how undo is supposed to work */
-
           coords_array = gimp_stroke_interpolate (stroke, prescision, &closed);
           if (coords_array)
             {
@@ -1165,4 +1173,525 @@ static ProcRecord vectors_stroke_interpolate_proc =
   3,
   vectors_stroke_interpolate_outargs,
   { { vectors_stroke_interpolate_invoker } }
+};
+
+static Argument *
+vectors_bezier_stroke_new_moveto_invoker (Gimp         *gimp,
+                                          GimpContext  *context,
+                                          GimpProgress *progress,
+                                          Argument     *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpVectors *vectors;
+  gdouble x0 = 0;
+  gdouble y0 = 0;
+  gint32 stroke_id = 0;
+  GimpStroke *stroke;
+  GimpCoords  coord0;
+
+  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
+    success = FALSE;
+
+  x0 = args[1].value.pdb_float;
+
+  y0 = args[2].value.pdb_float;
+
+  if (success)
+    {
+      coord0.x = x0;
+      coord0.y = y0;
+      coord0.pressure = GIMP_COORDS_DEFAULT_PRESSURE;
+      coord0.xtilt = GIMP_COORDS_DEFAULT_TILT;
+      coord0.ytilt = GIMP_COORDS_DEFAULT_TILT;
+      coord0.wheel = GIMP_COORDS_DEFAULT_WHEEL;
+
+      stroke = gimp_bezier_stroke_new_moveto (&coord0);
+      gimp_vectors_stroke_add (vectors, stroke);
+      stroke_id = gimp_stroke_get_ID (stroke);
+    }
+
+  return_args = procedural_db_return_args (&vectors_bezier_stroke_new_moveto_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = stroke_id;
+
+  return return_args;
+}
+
+static ProcArg vectors_bezier_stroke_new_moveto_inargs[] =
+{
+  {
+    GIMP_PDB_VECTORS,
+    "vectors",
+    "The vectors object"
+  },
+  {
+    GIMP_PDB_FLOAT,
+    "x0",
+    "The x-coordinate of the moveto"
+  },
+  {
+    GIMP_PDB_FLOAT,
+    "y0",
+    "The y-coordinate of the moveto"
+  }
+};
+
+static ProcArg vectors_bezier_stroke_new_moveto_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "stroke-id",
+    "The resulting stroke"
+  }
+};
+
+static ProcRecord vectors_bezier_stroke_new_moveto_proc =
+{
+  "gimp-vectors-bezier-stroke-new-moveto",
+  "gimp-vectors-bezier-stroke-new-moveto",
+  "Adds a bezier stroke with a single moveto to the vectors object.",
+  "Adds a bezier stroke with a single moveto to the vectors object.",
+  "Simon Budig",
+  "Simon Budig",
+  "2005",
+  NULL,
+  GIMP_INTERNAL,
+  3,
+  vectors_bezier_stroke_new_moveto_inargs,
+  1,
+  vectors_bezier_stroke_new_moveto_outargs,
+  { { vectors_bezier_stroke_new_moveto_invoker } }
+};
+
+static Argument *
+vectors_bezier_stroke_lineto_invoker (Gimp         *gimp,
+                                      GimpContext  *context,
+                                      GimpProgress *progress,
+                                      Argument     *args)
+{
+  gboolean success = TRUE;
+  GimpVectors *vectors;
+  gint32 stroke_id;
+  gdouble x0 = 0;
+  gdouble y0 = 0;
+  GimpStroke *stroke;
+  GimpCoords  coord0;
+
+  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
+    success = FALSE;
+
+  stroke_id = args[1].value.pdb_int;
+
+  x0 = args[2].value.pdb_float;
+
+  y0 = args[3].value.pdb_float;
+
+  if (success)
+    {
+      coord0.x = x0;
+      coord0.y = y0;
+      coord0.pressure = GIMP_COORDS_DEFAULT_PRESSURE;
+      coord0.xtilt = GIMP_COORDS_DEFAULT_TILT;
+      coord0.ytilt = GIMP_COORDS_DEFAULT_TILT;
+      coord0.wheel = GIMP_COORDS_DEFAULT_WHEEL;
+
+      stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
+      if (stroke)
+        gimp_bezier_stroke_lineto (stroke, &coord0);
+      else
+        success = FALSE;
+    }
+
+  return procedural_db_return_args (&vectors_bezier_stroke_lineto_proc, success);
+}
+
+static ProcArg vectors_bezier_stroke_lineto_inargs[] =
+{
+  {
+    GIMP_PDB_VECTORS,
+    "vectors",
+    "The vectors object"
+  },
+  {
+    GIMP_PDB_INT32,
+    "stroke-id",
+    "The stroke ID"
+  },
+  {
+    GIMP_PDB_FLOAT,
+    "x0",
+    "The x-coordinate of the lineto"
+  },
+  {
+    GIMP_PDB_FLOAT,
+    "y0",
+    "The y-coordinate of the lineto"
+  }
+};
+
+static ProcRecord vectors_bezier_stroke_lineto_proc =
+{
+  "gimp-vectors-bezier-stroke-lineto",
+  "gimp-vectors-bezier-stroke-lineto",
+  "Extends a bezier stroke with a lineto.",
+  "Extends a bezier stroke with a lineto.",
+  "Simon Budig",
+  "Simon Budig",
+  "2005",
+  NULL,
+  GIMP_INTERNAL,
+  4,
+  vectors_bezier_stroke_lineto_inargs,
+  0,
+  NULL,
+  { { vectors_bezier_stroke_lineto_invoker } }
+};
+
+static Argument *
+vectors_bezier_stroke_conicto_invoker (Gimp         *gimp,
+                                       GimpContext  *context,
+                                       GimpProgress *progress,
+                                       Argument     *args)
+{
+  gboolean success = TRUE;
+  GimpVectors *vectors;
+  gint32 stroke_id;
+  gdouble x0 = 0;
+  gdouble y0 = 0;
+  gdouble x1 = 0;
+  gdouble y1 = 0;
+  GimpStroke *stroke;
+  GimpCoords  coord0, coord1;
+
+  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
+    success = FALSE;
+
+  stroke_id = args[1].value.pdb_int;
+
+  x0 = args[2].value.pdb_float;
+
+  y0 = args[3].value.pdb_float;
+
+  x1 = args[4].value.pdb_float;
+
+  y1 = args[5].value.pdb_float;
+
+  if (success)
+    {
+      coord0.x = x0;
+      coord0.y = y0;
+      coord0.pressure = GIMP_COORDS_DEFAULT_PRESSURE;
+      coord0.xtilt = GIMP_COORDS_DEFAULT_TILT;
+      coord0.ytilt = GIMP_COORDS_DEFAULT_TILT;
+      coord0.wheel = GIMP_COORDS_DEFAULT_WHEEL;
+
+      coord1 = coord0;
+      coord1.x = x1;
+      coord1.y = y1;
+
+      stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
+      if (stroke)
+        gimp_bezier_stroke_conicto (stroke, &coord0, &coord1);
+      else
+        success = FALSE;
+    }
+
+  return procedural_db_return_args (&vectors_bezier_stroke_conicto_proc, success);
+}
+
+static ProcArg vectors_bezier_stroke_conicto_inargs[] =
+{
+  {
+    GIMP_PDB_VECTORS,
+    "vectors",
+    "The vectors object"
+  },
+  {
+    GIMP_PDB_INT32,
+    "stroke-id",
+    "The stroke ID"
+  },
+  {
+    GIMP_PDB_FLOAT,
+    "x0",
+    "The x-coordinate of the control point"
+  },
+  {
+    GIMP_PDB_FLOAT,
+    "y0",
+    "The y-coordinate of the control point"
+  },
+  {
+    GIMP_PDB_FLOAT,
+    "x1",
+    "The x-coordinate of the end point"
+  },
+  {
+    GIMP_PDB_FLOAT,
+    "y1",
+    "The y-coordinate of the end point"
+  }
+};
+
+static ProcRecord vectors_bezier_stroke_conicto_proc =
+{
+  "gimp-vectors-bezier-stroke-conicto",
+  "gimp-vectors-bezier-stroke-conicto",
+  "Extends a bezier stroke with a conic bezier spline.",
+  "Extends a bezier stroke with a conic bezier spline. Actually a cubic bezier spline gets added that realizes the shape of a conic bezier spline.",
+  "Simon Budig",
+  "Simon Budig",
+  "2005",
+  NULL,
+  GIMP_INTERNAL,
+  6,
+  vectors_bezier_stroke_conicto_inargs,
+  0,
+  NULL,
+  { { vectors_bezier_stroke_conicto_invoker } }
+};
+
+static Argument *
+vectors_bezier_stroke_cubicto_invoker (Gimp         *gimp,
+                                       GimpContext  *context,
+                                       GimpProgress *progress,
+                                       Argument     *args)
+{
+  gboolean success = TRUE;
+  GimpVectors *vectors;
+  gint32 stroke_id;
+  gdouble x0 = 0;
+  gdouble y0 = 0;
+  gdouble x1 = 0;
+  gdouble y1 = 0;
+  gdouble x2 = 0;
+  gdouble y2 = 0;
+  GimpStroke *stroke;
+  GimpCoords  coord0, coord1, coord2;
+
+  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
+    success = FALSE;
+
+  stroke_id = args[1].value.pdb_int;
+
+  x0 = args[2].value.pdb_float;
+
+  y0 = args[3].value.pdb_float;
+
+  x1 = args[4].value.pdb_float;
+
+  y1 = args[5].value.pdb_float;
+
+  x2 = args[6].value.pdb_float;
+
+  y2 = args[7].value.pdb_float;
+
+  if (success)
+    {
+      coord0.x = x0;
+      coord0.y = y0;
+      coord0.pressure = GIMP_COORDS_DEFAULT_PRESSURE;
+      coord0.xtilt = GIMP_COORDS_DEFAULT_TILT;
+      coord0.ytilt = GIMP_COORDS_DEFAULT_TILT;
+      coord0.wheel = GIMP_COORDS_DEFAULT_WHEEL;
+
+      coord1 = coord0;
+      coord1.x = x1;
+      coord1.y = y1;
+
+      coord2 = coord0;
+      coord1.x = x2;
+      coord1.y = y2;
+
+      stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
+      if (stroke)
+        gimp_bezier_stroke_cubicto (stroke, &coord0, &coord1, &coord2);
+      else
+        success = FALSE;
+    }
+
+  return procedural_db_return_args (&vectors_bezier_stroke_cubicto_proc, success);
+}
+
+static ProcArg vectors_bezier_stroke_cubicto_inargs[] =
+{
+  {
+    GIMP_PDB_VECTORS,
+    "vectors",
+    "The vectors object"
+  },
+  {
+    GIMP_PDB_INT32,
+    "stroke-id",
+    "The stroke ID"
+  },
+  {
+    GIMP_PDB_FLOAT,
+    "x0",
+    "The x-coordinate of the first control point"
+  },
+  {
+    GIMP_PDB_FLOAT,
+    "y0",
+    "The y-coordinate of the first control point"
+  },
+  {
+    GIMP_PDB_FLOAT,
+    "x1",
+    "The x-coordinate of the second control point"
+  },
+  {
+    GIMP_PDB_FLOAT,
+    "y1",
+    "The y-coordinate of the second control point"
+  },
+  {
+    GIMP_PDB_FLOAT,
+    "x2",
+    "The x-coordinate of the end point"
+  },
+  {
+    GIMP_PDB_FLOAT,
+    "y2",
+    "The y-coordinate of the end point"
+  }
+};
+
+static ProcRecord vectors_bezier_stroke_cubicto_proc =
+{
+  "gimp-vectors-bezier-stroke-cubicto",
+  "gimp-vectors-bezier-stroke-cubicto",
+  "Extends a bezier stroke with a cubic bezier spline.",
+  "Extends a bezier stroke with a cubic bezier spline.",
+  "Simon Budig",
+  "Simon Budig",
+  "2005",
+  NULL,
+  GIMP_INTERNAL,
+  8,
+  vectors_bezier_stroke_cubicto_inargs,
+  0,
+  NULL,
+  { { vectors_bezier_stroke_cubicto_invoker } }
+};
+
+static Argument *
+vectors_bezier_stroke_new_ellipse_invoker (Gimp         *gimp,
+                                           GimpContext  *context,
+                                           GimpProgress *progress,
+                                           Argument     *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpVectors *vectors;
+  gdouble x0 = 0;
+  gdouble y0 = 0;
+  gdouble radius_x = 0;
+  gdouble radius_y = 0;
+  gdouble angle = 0;
+  gint32 stroke_id = 0;
+  GimpStroke *stroke;
+  GimpCoords  coord0;
+
+  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
+    success = FALSE;
+
+  x0 = args[1].value.pdb_float;
+
+  y0 = args[2].value.pdb_float;
+
+  radius_x = args[3].value.pdb_float;
+
+  radius_y = args[4].value.pdb_float;
+
+  angle = args[5].value.pdb_float;
+
+  if (success)
+    {
+      coord0.x = x0;
+      coord0.y = y0;
+      coord0.pressure = GIMP_COORDS_DEFAULT_PRESSURE;
+      coord0.xtilt = GIMP_COORDS_DEFAULT_TILT;
+      coord0.ytilt = GIMP_COORDS_DEFAULT_TILT;
+      coord0.wheel = GIMP_COORDS_DEFAULT_WHEEL;
+
+      stroke = gimp_bezier_stroke_new_ellipse (&coord0, radius_x, radius_y, angle);
+      gimp_vectors_stroke_add (vectors, stroke);
+      stroke_id = gimp_stroke_get_ID (stroke);
+    }
+
+  return_args = procedural_db_return_args (&vectors_bezier_stroke_new_ellipse_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = stroke_id;
+
+  return return_args;
+}
+
+static ProcArg vectors_bezier_stroke_new_ellipse_inargs[] =
+{
+  {
+    GIMP_PDB_VECTORS,
+    "vectors",
+    "The vectors object"
+  },
+  {
+    GIMP_PDB_FLOAT,
+    "x0",
+    "The x-coordinate of the center"
+  },
+  {
+    GIMP_PDB_FLOAT,
+    "y0",
+    "The y-coordinate of the center"
+  },
+  {
+    GIMP_PDB_FLOAT,
+    "radius-x",
+    "The radius in x direction"
+  },
+  {
+    GIMP_PDB_FLOAT,
+    "radius-y",
+    "The radius in y direction"
+  },
+  {
+    GIMP_PDB_FLOAT,
+    "angle",
+    "The angle the x-axis of the ellipse (radians, counterclockwise)"
+  }
+};
+
+static ProcArg vectors_bezier_stroke_new_ellipse_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "stroke-id",
+    "The resulting stroke"
+  }
+};
+
+static ProcRecord vectors_bezier_stroke_new_ellipse_proc =
+{
+  "gimp-vectors-bezier-stroke-new-ellipse",
+  "gimp-vectors-bezier-stroke-new-ellipse",
+  "Adds a bezier stroke describing an ellipse the vectors object.",
+  "Adds a bezier stroke describing an ellipse the vectors object.",
+  "Simon Budig",
+  "Simon Budig",
+  "2005",
+  NULL,
+  GIMP_INTERNAL,
+  6,
+  vectors_bezier_stroke_new_ellipse_inargs,
+  1,
+  vectors_bezier_stroke_new_ellipse_outargs,
+  { { vectors_bezier_stroke_new_ellipse_invoker } }
 };

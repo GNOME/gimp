@@ -566,3 +566,228 @@ gimp_vectors_stroke_interpolate (gint32    vectors_ID,
 
   return closed;
 }
+
+/**
+ * gimp_vectors_bezier_stroke_new_moveto:
+ * @vectors_ID: The vectors object.
+ * @x0: The x-coordinate of the moveto.
+ * @y0: The y-coordinate of the moveto.
+ *
+ * Adds a bezier stroke with a single moveto to the vectors object.
+ *
+ * Adds a bezier stroke with a single moveto to the vectors object.
+ *
+ * Returns: The resulting stroke.
+ *
+ * Since: GIMP 2.4
+ */
+gint
+gimp_vectors_bezier_stroke_new_moveto (gint32  vectors_ID,
+				       gdouble x0,
+				       gdouble y0)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint stroke_id = 0;
+
+  return_vals = gimp_run_procedure ("gimp-vectors-bezier-stroke-new-moveto",
+				    &nreturn_vals,
+				    GIMP_PDB_VECTORS, vectors_ID,
+				    GIMP_PDB_FLOAT, x0,
+				    GIMP_PDB_FLOAT, y0,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    stroke_id = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return stroke_id;
+}
+
+/**
+ * gimp_vectors_bezier_stroke_lineto:
+ * @vectors_ID: The vectors object.
+ * @stroke_id: The stroke ID.
+ * @x0: The x-coordinate of the lineto.
+ * @y0: The y-coordinate of the lineto.
+ *
+ * Extends a bezier stroke with a lineto.
+ *
+ * Extends a bezier stroke with a lineto.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_vectors_bezier_stroke_lineto (gint32  vectors_ID,
+				   gint    stroke_id,
+				   gdouble x0,
+				   gdouble y0)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-vectors-bezier-stroke-lineto",
+				    &nreturn_vals,
+				    GIMP_PDB_VECTORS, vectors_ID,
+				    GIMP_PDB_INT32, stroke_id,
+				    GIMP_PDB_FLOAT, x0,
+				    GIMP_PDB_FLOAT, y0,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_vectors_bezier_stroke_conicto:
+ * @vectors_ID: The vectors object.
+ * @stroke_id: The stroke ID.
+ * @x0: The x-coordinate of the control point.
+ * @y0: The y-coordinate of the control point.
+ * @x1: The x-coordinate of the end point.
+ * @y1: The y-coordinate of the end point.
+ *
+ * Extends a bezier stroke with a conic bezier spline.
+ *
+ * Extends a bezier stroke with a conic bezier spline. Actually a cubic
+ * bezier spline gets added that realizes the shape of a conic bezier
+ * spline.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_vectors_bezier_stroke_conicto (gint32  vectors_ID,
+				    gint    stroke_id,
+				    gdouble x0,
+				    gdouble y0,
+				    gdouble x1,
+				    gdouble y1)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-vectors-bezier-stroke-conicto",
+				    &nreturn_vals,
+				    GIMP_PDB_VECTORS, vectors_ID,
+				    GIMP_PDB_INT32, stroke_id,
+				    GIMP_PDB_FLOAT, x0,
+				    GIMP_PDB_FLOAT, y0,
+				    GIMP_PDB_FLOAT, x1,
+				    GIMP_PDB_FLOAT, y1,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_vectors_bezier_stroke_cubicto:
+ * @vectors_ID: The vectors object.
+ * @stroke_id: The stroke ID.
+ * @x0: The x-coordinate of the first control point.
+ * @y0: The y-coordinate of the first control point.
+ * @x1: The x-coordinate of the second control point.
+ * @y1: The y-coordinate of the second control point.
+ * @x2: The x-coordinate of the end point.
+ * @y2: The y-coordinate of the end point.
+ *
+ * Extends a bezier stroke with a cubic bezier spline.
+ *
+ * Extends a bezier stroke with a cubic bezier spline.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_vectors_bezier_stroke_cubicto (gint32  vectors_ID,
+				    gint    stroke_id,
+				    gdouble x0,
+				    gdouble y0,
+				    gdouble x1,
+				    gdouble y1,
+				    gdouble x2,
+				    gdouble y2)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-vectors-bezier-stroke-cubicto",
+				    &nreturn_vals,
+				    GIMP_PDB_VECTORS, vectors_ID,
+				    GIMP_PDB_INT32, stroke_id,
+				    GIMP_PDB_FLOAT, x0,
+				    GIMP_PDB_FLOAT, y0,
+				    GIMP_PDB_FLOAT, x1,
+				    GIMP_PDB_FLOAT, y1,
+				    GIMP_PDB_FLOAT, x2,
+				    GIMP_PDB_FLOAT, y2,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_vectors_bezier_stroke_new_ellipse:
+ * @vectors_ID: The vectors object.
+ * @x0: The x-coordinate of the center.
+ * @y0: The y-coordinate of the center.
+ * @radius_x: The radius in x direction.
+ * @radius_y: The radius in y direction.
+ * @angle: The angle the x-axis of the ellipse (radians, counterclockwise).
+ *
+ * Adds a bezier stroke describing an ellipse the vectors object.
+ *
+ * Adds a bezier stroke describing an ellipse the vectors object.
+ *
+ * Returns: The resulting stroke.
+ *
+ * Since: GIMP 2.4
+ */
+gint
+gimp_vectors_bezier_stroke_new_ellipse (gint32  vectors_ID,
+					gdouble x0,
+					gdouble y0,
+					gdouble radius_x,
+					gdouble radius_y,
+					gdouble angle)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint stroke_id = 0;
+
+  return_vals = gimp_run_procedure ("gimp-vectors-bezier-stroke-new-ellipse",
+				    &nreturn_vals,
+				    GIMP_PDB_VECTORS, vectors_ID,
+				    GIMP_PDB_FLOAT, x0,
+				    GIMP_PDB_FLOAT, y0,
+				    GIMP_PDB_FLOAT, radius_x,
+				    GIMP_PDB_FLOAT, radius_y,
+				    GIMP_PDB_FLOAT, angle,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    stroke_id = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return stroke_id;
+}

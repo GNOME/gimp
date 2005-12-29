@@ -74,7 +74,8 @@ void         gimp_bezier_stroke_arcto           (GimpStroke       *bez_stroke,
                                                  const GimpCoords *end);
 GimpStroke * gimp_bezier_stroke_new_ellipse     (const GimpCoords *center,
                                                  gdouble           radius_x,
-                                                 gdouble           radius_y);
+                                                 gdouble           radius_y,
+                                                 gdouble           angle);
 
 
 GimpAnchor * gimp_bezier_stroke_extend      (GimpStroke           *stroke,

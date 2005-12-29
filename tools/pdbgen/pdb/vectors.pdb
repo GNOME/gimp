@@ -51,13 +51,13 @@ HELP
     $inargs[0]->{desc} = 'The ID of the image to get the current path from.';
 
     @outargs = (
-	{ name => 'vectors', type => 'vectors',
-	  desc => 'the current vector object, 0 if no vector exists in the image.',
-	  init => 1 }
+        { name => 'vectors', type => 'vectors',
+          desc => 'the current vector object, 0 if no vector exists in the image.',
+          init => 1 }
     );
 
     %invoke = (
-	code => <<"CODE"
+        code => <<"CODE"
 {
   vectors = gimp_image_get_active_vectors (gimage);
 }
@@ -79,12 +79,12 @@ HELP
 
     @outargs = (
         { name => 'image', type => 'image',
-	  desc => 'The vectors image',
-	  init => 1 }
+          desc => 'The vectors image',
+          init => 1 }
     );
 
     %invoke = (
-	code => <<"CODE"
+        code => <<"CODE"
 {
   image = gimp_item_get_image (GIMP_ITEM (vectors));
 }
@@ -106,11 +106,11 @@ HELP
 
     @outargs = (
         { name => 'linked', type => 'boolean',
-	  desc => 'TRUE if the path is linked, FALSE otherwise', init => 1 }
+          desc => 'TRUE if the path is linked, FALSE otherwise', init => 1 }
     );
 
     %invoke = (
-	code => <<"CODE"
+        code => <<"CODE"
 {
   linked = gimp_item_get_linked (GIMP_ITEM (vectors));
 }
@@ -130,11 +130,11 @@ HELP
 
     @inargs = ( &vectors_arg,
                 { name => 'linked', type => 'boolean',
-		  desc => 'Whether the path is linked', init => 1 }
+                  desc => 'Whether the path is linked', init => 1 }
     );
 
     %invoke = (
-	code => <<"CODE"
+        code => <<"CODE"
 {
   gimp_item_set_linked (GIMP_ITEM (vectors), linked, TRUE);
 }
@@ -156,12 +156,12 @@ HELP
 
     @outargs = (
         { name => 'tattoo', type => 'int32',
-	  desc => 'The vectors tattoo',
-	  init => 1 }
+          desc => 'The vectors tattoo',
+          init => 1 }
     );
 
     %invoke = (
-	code => <<"CODE"
+        code => <<"CODE"
 {
   tattoo = gimp_item_get_tattoo (GIMP_ITEM (vectors));
 }
@@ -181,12 +181,12 @@ HELP
 
     @inargs = ( &vectors_arg,
                 { name => 'tattoo', type => 'int32',
-		  desc => 'the new tattoo',
-		  init => 1 }
+                  desc => 'the new tattoo',
+                  init => 1 }
     );
 
     %invoke = (
-	code => <<"CODE"
+        code => <<"CODE"
 {
   gimp_item_set_tattoo (GIMP_ITEM (vectors), tattoo);
 }
@@ -208,11 +208,11 @@ HELP
 
     @outargs = (
         { name => 'visible', type => 'boolean',
-	  desc => 'TRUE if the path is visible, FALSE otherwise', init => 1 }
+          desc => 'TRUE if the path is visible, FALSE otherwise', init => 1 }
     );
 
     %invoke = (
-	code => <<"CODE"
+        code => <<"CODE"
 {
   visible = gimp_item_get_visible (GIMP_ITEM (vectors));
 }
@@ -232,12 +232,12 @@ HELP
 
     @inargs = ( &vectors_arg,
                 { name => 'visible', type => 'boolean',
-		  desc => 'Whether the path is visible',
-		  init => 1 }
+                  desc => 'Whether the path is visible',
+                  init => 1 }
     );
 
     %invoke = (
-	code => <<"CODE"
+        code => <<"CODE"
 {
   gimp_item_set_visible (GIMP_ITEM (vectors), visible, TRUE);
 }
@@ -259,12 +259,12 @@ HELP
 
     @outargs = (
         { name => 'name', type => 'string',
-	  desc => 'The name of the vectors object',
-	  init => 1 }
+          desc => 'The name of the vectors object',
+          init => 1 }
     );
 
     %invoke = (
-	code => <<"CODE"
+        code => <<"CODE"
 {
   name = g_strdup (gimp_object_get_name (GIMP_OBJECT (vectors)));
 }
@@ -284,12 +284,12 @@ HELP
 
     @inargs = ( &vectors_arg,
                 { name => 'name', type => 'string',
-		  desc => 'the new name of the path',
-		  init => 1 }
+                  desc => 'the new name of the path',
+                  init => 1 }
     );
 
     %invoke = (
-	code => <<"CODE"
+        code => <<"CODE"
 {
   if (!gimp_item_rename (GIMP_ITEM (vectors), name))
     success = FALSE;
@@ -311,17 +311,17 @@ HELP
     @inargs = ( &vectors_arg );
 
     @outargs = (
-	{ name => 'stroke_ids', type => 'int32array',
-	  desc => 'List of the strokes belonging to the path.',
-	  array => { name => 'num_strokes',
-		     desc => 'The number of strokes returned.',
-		     init => 1 },
-	  init => 1 }
+        { name => 'stroke_ids', type => 'int32array',
+          desc => 'List of the strokes belonging to the path.',
+          array => { name => 'num_strokes',
+                     desc => 'The number of strokes returned.',
+                     init => 1 },
+          init => 1 }
     );
 
     %invoke = (
         vars => ['gint i = 0', 'GimpStroke *cur_stroke = NULL'],
-	code => <<"CODE"
+        code => <<"CODE"
 {
   num_strokes = gimp_vectors_get_n_strokes (vectors);
 
@@ -331,11 +331,11 @@ HELP
 
       for (cur_stroke = gimp_vectors_stroke_get_next (vectors, NULL);
            cur_stroke;
-	   cur_stroke = gimp_vectors_stroke_get_next (vectors, cur_stroke))
-	{
-	  stroke_ids[i] = gimp_stroke_get_ID (cur_stroke);
-	  i++;
-	}
+           cur_stroke = gimp_vectors_stroke_get_next (vectors, cur_stroke))
+        {
+          stroke_ids[i] = gimp_stroke_get_ID (cur_stroke);
+          i++;
+        }
     }
 }
 CODE
@@ -354,15 +354,15 @@ HELP
 
     @inargs = ( &stroke_arg,
                 { name => 'prescision', type => 'float',
-		  desc => 'The prescision used for the approximation' } );
+                  desc => 'The prescision used for the approximation' } );
 
     @outargs = (
-	{ name => 'length', type => 'float',
-	  desc => 'The length (in pixels) of the given stroke.' }
+        { name => 'length', type => 'float',
+          desc => 'The length (in pixels) of the given stroke.' }
     );
 
     %invoke = (
-	vars => [ 'GimpStroke *stroke' ],
+        vars => [ 'GimpStroke *stroke' ],
         code => <<"CODE"
 {
   stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
@@ -393,7 +393,7 @@ HELP
     @inargs = ( &stroke_arg );
 
     %invoke = (
-	vars => [ 'GimpStroke *stroke' ],
+        vars => [ 'GimpStroke *stroke' ],
         code => <<"CODE"
 {
   stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
@@ -424,7 +424,7 @@ HELP
     }
 
     %invoke = (
-	vars => [ 'GimpStroke *stroke' ],
+        vars => [ 'GimpStroke *stroke' ],
         code => <<"CODE"
 {
   GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (vectors));
@@ -466,7 +466,7 @@ HELP
     }
 
     %invoke = (
-	vars => [ 'GimpStroke *stroke' ],
+        vars => [ 'GimpStroke *stroke' ],
         code => <<"CODE"
 {
   GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (vectors));
@@ -503,54 +503,302 @@ HELP
 
     @inargs = ( &stroke_arg,
                 { name => 'prescision', type => 'float',
-		  desc => 'The prescision used for the approximation' } );
+                  desc => 'The prescision used for the approximation' } );
 
     @outargs = (
-	{ name => 'closed', type => 'boolean',
-	  desc => 'List of the strokes belonging to the path.' },
-	{ name => 'coords', type => 'floatarray',
-	  desc => 'List of the coords along the path (x0, y0, x1, y1, ...).',
-	  array => { name => 'num_coords',
-		     desc => 'The number of floats returned.',
-		     init => 1 },
-	  init => 1 }
+        { name => 'closed', type => 'boolean',
+          desc => 'List of the strokes belonging to the path.' },
+        { name => 'coords', type => 'floatarray',
+          desc => 'List of the coords along the path (x0, y0, x1, y1, ...).',
+          array => { name => 'num_coords',
+                     desc => 'The number of floats returned.',
+                     init => 1 },
+          init => 1 }
     );
 
     %invoke = (
-	vars => [ 'GimpStroke *stroke',
-	          'GArray     *coords_array',
-		  'gint        i' ],
+        vars => [ 'GimpStroke *stroke',
+                  'GArray     *coords_array',
+                  'gint        i' ],
         code => <<"CODE"
 {
   stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
   
   if (stroke)
     {
-      /* need to figure out how undo is supposed to work */
-
       coords_array = gimp_stroke_interpolate (stroke, prescision, &closed);
       if (coords_array)
         {
-	  num_coords = coords_array->len;
-	  coords = g_new (gdouble, num_coords * 2);
+          num_coords = coords_array->len;
+          coords = g_new (gdouble, num_coords * 2);
 
-	  for (i = 0; i < num_coords; i++)
-	    {
-	      coords[2*i]   = g_array_index (coords_array, GimpCoords, i).x;
-	      coords[2*i+1] = g_array_index (coords_array, GimpCoords, i).y;
-	    }
-	  g_array_free (coords_array, TRUE);
-	  num_coords *= 2;
-	}
+          for (i = 0; i < num_coords; i++)
+            {
+              coords[2*i]   = g_array_index (coords_array, GimpCoords, i).x;
+              coords[2*i+1] = g_array_index (coords_array, GimpCoords, i).y;
+            }
+          g_array_free (coords_array, TRUE);
+          num_coords *= 2;
+        }
       else
         {
-	  success = FALSE;
-	}
+          success = FALSE;
+        }
     }
   else
     {
       success = FALSE;
     }
+}
+CODE
+    );
+}
+
+
+sub vectors_bezier_stroke_new_moveto {
+    $blurb = 'Adds a bezier stroke with a single moveto to the vectors object.';
+
+    $help = <<'HELP';
+Adds a bezier stroke with a single moveto to the vectors object.
+HELP
+
+    &pdb_misc;
+
+    @inargs = ( &vectors_arg,
+        { name => 'x0', type => 'float',
+          desc => 'The x-coordinate of the moveto',
+          init => 1 },
+        { name => 'y0', type => 'float',
+          desc => 'The y-coordinate of the moveto',
+          init => 1 }
+    );
+
+    @outargs = (
+        { name => 'stroke_id', type => 'int32',
+          desc => 'The resulting stroke',
+          init => 1 },
+    );
+
+    %invoke = (
+        vars => [ 'GimpStroke *stroke',
+                  'GimpCoords  coord0' ],
+        code => <<"CODE"
+{
+  coord0.x = x0;
+  coord0.y = y0;
+  coord0.pressure = GIMP_COORDS_DEFAULT_PRESSURE;
+  coord0.xtilt = GIMP_COORDS_DEFAULT_TILT;
+  coord0.ytilt = GIMP_COORDS_DEFAULT_TILT;
+  coord0.wheel = GIMP_COORDS_DEFAULT_WHEEL;
+
+  stroke = gimp_bezier_stroke_new_moveto (&coord0);
+  gimp_vectors_stroke_add (vectors, stroke);
+  stroke_id = gimp_stroke_get_ID (stroke);
+}
+CODE
+    );
+}
+
+sub vectors_bezier_stroke_lineto {
+    $blurb = 'Extends a bezier stroke with a lineto.';
+
+    $help = <<'HELP';
+Extends a bezier stroke with a lineto.
+HELP
+
+    &pdb_misc;
+
+    @inargs = ( &stroke_arg,
+        { name => 'x0', type => 'float',
+          desc => 'The x-coordinate of the lineto',
+          init => 1 },
+        { name => 'y0', type => 'float',
+          desc => 'The y-coordinate of the lineto',
+          init => 1 }
+    );
+
+    %invoke = (
+        vars => [ 'GimpStroke *stroke',
+                  'GimpCoords  coord0' ],
+        code => <<"CODE"
+{
+  coord0.x = x0;
+  coord0.y = y0;
+  coord0.pressure = GIMP_COORDS_DEFAULT_PRESSURE;
+  coord0.xtilt = GIMP_COORDS_DEFAULT_TILT;
+  coord0.ytilt = GIMP_COORDS_DEFAULT_TILT;
+  coord0.wheel = GIMP_COORDS_DEFAULT_WHEEL;
+
+  stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
+  if (stroke)
+    gimp_bezier_stroke_lineto (stroke, &coord0);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub vectors_bezier_stroke_conicto {
+    $blurb = 'Extends a bezier stroke with a conic bezier spline.';
+
+    $help = <<'HELP';
+Extends a bezier stroke with a conic bezier spline. Actually a
+cubic bezier spline gets added that realizes the shape of a conic
+bezier spline.
+HELP
+
+    &pdb_misc;
+
+    @inargs = ( &stroke_arg,
+        { name => 'x0', type => 'float',
+          desc => 'The x-coordinate of the control point',
+          init => 1 },
+        { name => 'y0', type => 'float',
+          desc => 'The y-coordinate of the control point',
+          init => 1 },
+        { name => 'x1', type => 'float',
+          desc => 'The x-coordinate of the end point',
+          init => 1 },
+        { name => 'y1', type => 'float',
+          desc => 'The y-coordinate of the end point',
+          init => 1 }
+    );
+
+    %invoke = (
+        vars => [ 'GimpStroke *stroke',
+                  'GimpCoords  coord0, coord1' ],
+        code => <<"CODE"
+{
+  coord0.x = x0;
+  coord0.y = y0;
+  coord0.pressure = GIMP_COORDS_DEFAULT_PRESSURE;
+  coord0.xtilt = GIMP_COORDS_DEFAULT_TILT;
+  coord0.ytilt = GIMP_COORDS_DEFAULT_TILT;
+  coord0.wheel = GIMP_COORDS_DEFAULT_WHEEL;
+
+  coord1 = coord0;
+  coord1.x = x1;
+  coord1.y = y1;
+
+  stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
+  if (stroke)
+    gimp_bezier_stroke_conicto (stroke, &coord0, &coord1);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub vectors_bezier_stroke_cubicto {
+    $blurb = 'Extends a bezier stroke with a cubic bezier spline.';
+
+    $help = <<'HELP';
+Extends a bezier stroke with a cubic bezier spline.
+HELP
+
+    &pdb_misc;
+
+    @inargs = ( &stroke_arg,
+        { name => 'x0', type => 'float',
+          desc => 'The x-coordinate of the first control point',
+          init => 1 },
+        { name => 'y0', type => 'float',
+          desc => 'The y-coordinate of the first control point',
+          init => 1 },
+        { name => 'x1', type => 'float',
+          desc => 'The x-coordinate of the second control point',
+          init => 1 },
+        { name => 'y1', type => 'float',
+          desc => 'The y-coordinate of the second control point',
+          init => 1 },
+        { name => 'x2', type => 'float',
+          desc => 'The x-coordinate of the end point',
+          init => 1 },
+        { name => 'y2', type => 'float',
+          desc => 'The y-coordinate of the end point',
+          init => 1 }
+    );
+
+    %invoke = (
+        vars => [ 'GimpStroke *stroke',
+                  'GimpCoords  coord0, coord1, coord2' ],
+        code => <<"CODE"
+{
+  coord0.x = x0;
+  coord0.y = y0;
+  coord0.pressure = GIMP_COORDS_DEFAULT_PRESSURE;
+  coord0.xtilt = GIMP_COORDS_DEFAULT_TILT;
+  coord0.ytilt = GIMP_COORDS_DEFAULT_TILT;
+  coord0.wheel = GIMP_COORDS_DEFAULT_WHEEL;
+
+  coord1 = coord0;
+  coord1.x = x1;
+  coord1.y = y1;
+
+  coord2 = coord0;
+  coord1.x = x2;
+  coord1.y = y2;
+
+  stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
+  if (stroke)
+    gimp_bezier_stroke_cubicto (stroke, &coord0, &coord1, &coord2);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub vectors_bezier_stroke_new_ellipse {
+    $blurb = 'Adds a bezier stroke describing an ellipse the vectors object.';
+
+    $help = <<'HELP';
+Adds a bezier stroke describing an ellipse the vectors object.
+HELP
+
+    &pdb_misc;
+
+    @inargs = ( &vectors_arg,
+        { name => 'x0', type => 'float',
+          desc => 'The x-coordinate of the center',
+          init => 1 },
+        { name => 'y0', type => 'float',
+          desc => 'The y-coordinate of the center',
+          init => 1 },
+        { name => 'radius_x', type => 'float',
+          desc => 'The radius in x direction',
+          init => 1 },
+        { name => 'radius_y', type => 'float',
+          desc => 'The radius in y direction',
+          init => 1 },
+        { name => 'angle', type => 'float',
+          desc => 'The angle the x-axis of the ellipse (radians, counterclockwise)',
+          init => 1 }
+    );
+
+    @outargs = (
+        { name => 'stroke_id', type => 'int32',
+          desc => 'The resulting stroke',
+          init => 1 },
+    );
+
+    %invoke = (
+        vars => [ 'GimpStroke *stroke',
+                  'GimpCoords  coord0' ],
+        code => <<"CODE"
+{
+  coord0.x = x0;
+  coord0.y = y0;
+  coord0.pressure = GIMP_COORDS_DEFAULT_PRESSURE;
+  coord0.xtilt = GIMP_COORDS_DEFAULT_TILT;
+  coord0.ytilt = GIMP_COORDS_DEFAULT_TILT;
+  coord0.wheel = GIMP_COORDS_DEFAULT_WHEEL;
+
+  stroke = gimp_bezier_stroke_new_ellipse (&coord0, radius_x, radius_y, angle);
+  gimp_vectors_stroke_add (vectors, stroke);
+  stroke_id = gimp_stroke_get_ID (stroke);
 }
 CODE
     );
@@ -570,15 +818,20 @@ CODE
             vectors_set_linked
             vectors_get_visible
             vectors_set_visible
-	    vectors_get_name
-	    vectors_set_name
-	    vectors_get_tattoo
-	    vectors_set_tattoo
+            vectors_get_name
+            vectors_set_name
+            vectors_get_tattoo
+            vectors_set_tattoo
             vectors_stroke_get_length
             vectors_stroke_remove
             vectors_stroke_translate
             vectors_stroke_scale
-	    vectors_stroke_interpolate
+            vectors_stroke_interpolate
+            vectors_bezier_stroke_new_moveto
+            vectors_bezier_stroke_lineto
+            vectors_bezier_stroke_conicto
+            vectors_bezier_stroke_cubicto
+            vectors_bezier_stroke_new_ellipse
             );
 %exports = (app => [@procs], lib => [@procs]);
 

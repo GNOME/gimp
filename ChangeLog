@@ -1,3 +1,22 @@
+2005-12-29  Simon Budig  <simon@gimp.org>
+
+	* app/vectors/gimpbezierstroke.[ch]: extended
+	gimp_bezier_stroke_new_ellipse() with an "angle" parameter.
+	* app/vectors/gimpvectors-import.c: changed accordingly, untabbified.
+
+	* tools/pdbgen/pdb/vectors.pdb: added PDB-wrappers for
+	      vectors_bezier_stroke_new_moveto
+	      vectors_bezier_stroke_lineto
+	      vectors_bezier_stroke_conicto
+	      vectors_bezier_stroke_cubicto
+	      vectors_bezier_stroke_new_ellipse
+	
+	Undo does not work properly yet.
+
+	* app/pdb/internal_procs.c
+	* app/pdb/vectors_cmds.c
+	* libgimp/gimpvectors_pdb.[ch]: regenerated.
+
 2005-12-29  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpdockable.c (gimp_dockable_expose_event): moved
