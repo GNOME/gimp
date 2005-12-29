@@ -567,7 +567,7 @@ gimp_dockbook_tab_drag_begin (GtkWidget      *widget,
                           (GDestroyNotify) gtk_widget_destroy);
 
   gtk_drag_set_icon_widget (context, window,
-                            dockable->button_x, dockable->button_y);
+                            dockable->drag_x, dockable->drag_y);
 }
 
 static void
