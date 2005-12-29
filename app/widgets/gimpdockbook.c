@@ -525,10 +525,11 @@ gimp_dockbook_tab_drag_begin (GtkWidget      *widget,
                               GdkDragContext *context,
                               gpointer        data)
 {
-  GimpDockable *dockable = GIMP_DOCKABLE (data);
-  GtkWidget    *window;
-  GtkWidget    *frame;
-  GtkWidget    *view;
+  GimpDockable   *dockable = GIMP_DOCKABLE (data);
+  GtkWidget      *window;
+  GtkWidget      *frame;
+  GtkWidget      *view;
+  GtkRequisition  requisition;
 
   window = gtk_window_new (GTK_WINDOW_POPUP);
 
@@ -550,6 +551,13 @@ gimp_dockbook_tab_drag_begin (GtkWidget      *widget,
 
   gtk_container_add (GTK_CONTAINER (frame), view);
   gtk_widget_show (view);
+
+  gtk_window_set_screen (GTK_WINDOW (window), gtk_widget_get_screen (widget));
+
+  gtk_widget_size_request (view, &requisition);
+
+  if (requisition.width < widget->allocation.width)
+    gtk_widget_set_size_request (view, widget->allocation.width, -1);
 
   gtk_widget_show (window);
 

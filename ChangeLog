@@ -1,5 +1,10 @@
 2005-12-29  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpdockbook.c (gimp_dockbook_tab_drag_begin): use
+	the width of the source widget as the minimum width of the drag icon.
+
+2005-12-29  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpdockable.[ch]: store coordinates of last button
 	press event.
 
