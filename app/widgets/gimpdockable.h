@@ -56,6 +56,10 @@ struct _GimpDockable
 
   guint         blink_timeout_id;
   gint          blink_counter;
+
+  /*  coordinates of last button press event  */
+  gint          button_x;
+  gint          button_y;
 };
 
 struct _GimpDockableClass

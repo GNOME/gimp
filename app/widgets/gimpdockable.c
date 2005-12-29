@@ -61,8 +61,8 @@ static void       gimp_dockable_style_set         (GtkWidget      *widget,
                                                    GtkStyle       *prev_style);
 static gboolean   gimp_dockable_expose_event      (GtkWidget      *widget,
                                                    GdkEventExpose *event);
-static gboolean   gimp_dockable_drag_event_filter (GtkWidget      *widget,
-                                                   GdkEventAny    *event);
+static gboolean   gimp_dockable_button_press      (GtkWidget      *widget,
+                                                   GdkEventButton *event);
 static gboolean   gimp_dockable_popup_menu        (GtkWidget      *widget);
 
 static void       gimp_dockable_add               (GtkContainer   *container,
@@ -146,6 +146,9 @@ gimp_dockable_init (GimpDockable *dockable)
   dockable->title_layout = NULL;
   dockable->title_window = NULL;
 
+  dockable->button_x     = -1;
+  dockable->button_y     = -1;
+
   gtk_widget_push_composite_child ();
   dockable->menu_button = gtk_button_new ();
   gtk_widget_pop_composite_child ();
@@ -176,7 +179,7 @@ gimp_dockable_init (GimpDockable *dockable)
       in the dockable to start a drag.
    */
   g_signal_connect (dockable, "button-press-event",
-                    G_CALLBACK (gimp_dockable_drag_event_filter),
+                    G_CALLBACK (gimp_dockable_button_press),
                     NULL);
 }
 
@@ -524,11 +527,16 @@ gimp_dockable_expose_event (GtkWidget      *widget,
 }
 
 static gboolean
-gimp_dockable_drag_event_filter (GtkWidget   *widget,
-                                 GdkEventAny *event)
+gimp_dockable_button_press (GtkWidget      *widget,
+                            GdkEventButton *event)
 {
+  GimpDockable *dockable = GIMP_DOCKABLE (widget);
+
+  dockable->button_x = event->x;
+  dockable->button_y = event->y;
+
   /*  stop processing of events not coming from the title event window  */
-  return (event->window != GIMP_DOCKABLE (widget)->title_window);
+  return (event->window != dockable->title_window);
 }
 
 static gboolean

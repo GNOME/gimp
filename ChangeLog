@@ -1,5 +1,13 @@
 2005-12-29  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpdockable.[ch]: store coordinates of last button
+	press event.
+
+	* app/widgets/gimpdockbook.c (gimp_dockbook_tab_drag_begin): set
+	the drag hotspot to the mouse position that started the drag.
+
+2005-12-29  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpdockable.c (gimp_dockable_expose_event): draw the
 	standalone dockable like a notebook tab to indicate that it can be
 	dragged.
