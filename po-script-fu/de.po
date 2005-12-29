@@ -2,7 +2,7 @@
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Sven Neumann <sven@gimp.org>
 # Felix Natter <fnatter@gmx.net>
-# Roman Joost <roman@bromeco.de>
+# Roman Joost <romanofski@gimp.org>, 2004-2005
 # Hendrik Brandt <eru@gmx.li>, 2004-2005.
 # Sven Neumann <sven@gimp.org>, 2004.
 # Jens Seidel <jseidel@cvs.gnome.org>
@@ -13,7 +13,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-10-20 20:32+0200\n"
 "PO-Revision-Date: 2005-10-20 20:33+0200\n"
-"Last-Translator: Jens Seidel <jseidel@cvs.gnome.org>\n"
+"Last-Translator: Róman Joost <romanofski@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -165,7 +165,7 @@ msgstr "_Skript-Fu"
 
 #: ../plug-ins/script-fu/script-fu.c:272
 msgid "_Buttons"
-msgstr "_Schalter"
+msgstr "_Schaltflächen"
 
 #: ../plug-ins/script-fu/script-fu.c:274
 msgid "_Logos"
@@ -578,7 +578,7 @@ msgstr "_Kugel..."
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:1
 #: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
 msgid "B_utton..."
-msgstr "_Schalter.."
+msgstr "_Schaltfläche..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:7
 msgid "Glow radius"
