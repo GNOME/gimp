@@ -1,3 +1,8 @@
+2005-12-29  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpdockable.c (gimp_dockable_expose_event): moved
+	some code to an internal helper function.
+
 2005-12-29  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/common/waves.c: small cleanups

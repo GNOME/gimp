@@ -450,6 +450,31 @@ gimp_dockable_style_set (GtkWidget *widget,
     GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 }
 
+static PangoLayout *
+gimp_dockable_create_title_layout (GimpDockable *dockable,
+                                   GtkWidget    *widget,
+                                   gint          width)
+{
+  PangoLayout *layout;
+  GtkBin      *bin  = GTK_BIN (dockable);
+  gchar       *title = NULL;
+
+  if (bin->child)
+    title = gimp_docked_get_title (GIMP_DOCKED (bin->child));
+
+  layout = gtk_widget_create_pango_layout (widget,
+                                           title ? title : dockable->blurb);
+  g_free (title);
+
+  if (width > 0)
+    {
+      pango_layout_set_width (layout, PANGO_SCALE * width);
+      pango_layout_set_ellipsize (layout, PANGO_ELLIPSIZE_END);
+    }
+
+  return layout;
+}
+
 static gboolean
 gimp_dockable_expose_event (GtkWidget      *widget,
                             GdkEventExpose *event)
@@ -490,22 +515,9 @@ gimp_dockable_expose_event (GtkWidget      *widget,
 
           if (! dockable->title_layout)
             {
-              GtkBin *bin   = GTK_BIN (dockable);
-              gchar  *title = NULL;
-
-              if (bin->child)
-                title = gimp_docked_get_title (GIMP_DOCKED (bin->child));
-
               dockable->title_layout =
-                gtk_widget_create_pango_layout (widget,
-                                                title ?
-                                                title : dockable->blurb);
-              g_free (title);
-
-              pango_layout_set_width (dockable->title_layout,
-                                      PANGO_SCALE * title_area.width);
-              pango_layout_set_ellipsize (dockable->title_layout,
-                                          PANGO_ELLIPSIZE_END);
+                gimp_dockable_create_title_layout (dockable, widget,
+                                                   title_area.width);
             }
 
           pango_layout_get_pixel_size (dockable->title_layout,
@@ -911,6 +923,7 @@ gimp_dockable_clear_title_area (GimpDockable *dockable)
       GdkRectangle area;
 
       gimp_dockable_get_title_area (dockable, &area);
+
       gtk_widget_queue_draw_area (GTK_WIDGET (dockable),
                                   area.x, area.y, area.width, area.height);
     }
