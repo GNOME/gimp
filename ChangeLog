@@ -1,5 +1,11 @@
 2005-12-29  Sven Neumann  <sven@gimp.org>
 
+	* app/main.c: added --license command-line option.
+
+	* docs/gimp.1.in: documented the new option.
+
+2005-12-29  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpdockbook.c: set the source dockable insensitive
 	during the drag operation.
 

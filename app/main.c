@@ -75,7 +75,8 @@ static gboolean  gimp_option_dump_gimprc      (const gchar  *option_name,
                                                gpointer      data,
                                                GError      **error);
 
-static void      gimp_show_version            (void) G_GNUC_NORETURN;
+static void      gimp_show_version_and_exit   (void) G_GNUC_NORETURN;
+static void      gimp_show_license_and_exit   (void) G_GNUC_NORETURN;
 
 static void      gimp_init_i18n               (void);
 static void      gimp_init_malloc             (void);
@@ -118,8 +119,13 @@ static GimpPDBCompatMode   pdb_compat_mode   = GIMP_PDB_COMPAT_ON;
 static const GOptionEntry main_entries[] =
 {
   { "version", 'v', G_OPTION_FLAG_NO_ARG,
-    G_OPTION_ARG_CALLBACK, (GOptionArgFunc) gimp_show_version,
+    G_OPTION_ARG_CALLBACK, (GOptionArgFunc) gimp_show_version_and_exit,
     N_("Show version information and exit"), NULL
+  },
+  {
+    "license", 0, G_OPTION_FLAG_NO_ARG,
+    G_OPTION_ARG_CALLBACK, (GOptionArgFunc) gimp_show_license_and_exit,
+    N_("Show license information and exit"), NULL
   },
   {
     "verbose", 0, 0,
@@ -268,8 +274,7 @@ main (int    argc,
 	}
       else if ((strcmp (arg, "--version") == 0) || (strcmp (arg, "-v") == 0))
 	{
-	  gimp_show_version ();
-	  app_exit (EXIT_SUCCESS);
+	  gimp_show_version_and_exit ();
 	}
     }
 
@@ -445,15 +450,32 @@ gimp_show_version (void)
 {
   g_print (_("%s version %s"), "GIMP", GIMP_VERSION);
   g_print ("\n");
+}
+
+static void
+gimp_show_version_and_exit (void)
+{
+  gimp_show_version ();
 
   app_exit (EXIT_SUCCESS);
 }
 
+static void
+gimp_show_license_and_exit (void)
+{
+  gimp_show_version ();
+
+  g_print ("\n");
+  g_print (GIMP_LICENSE);
+  g_print ("\n\n");
+
+  app_exit (EXIT_SUCCESS);
+}
 
 static void
 gimp_init_malloc (void)
 {
-#if 0
+#ifdef GIMP_GLIB_MEM_PROFILER
   g_mem_set_vtable (glib_mem_profiler_table);
   g_atexit (g_mem_profile);
 #endif
@@ -469,6 +491,9 @@ gimp_init_malloc (void)
    *
    * An alternative to tuning this parameter would be to use
    * malloc_trim(), for example after releasing a large tile-manager.
+   *
+   * Another possibility is to switch to using GSlice as soon as this
+   * API is available in a stable GLib release.
    */
   mallopt (M_MMAP_THRESHOLD, TILE_WIDTH * TILE_HEIGHT);
 #endif

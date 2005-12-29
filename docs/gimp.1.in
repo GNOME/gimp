@@ -1,4 +1,4 @@
-.TH GIMP 1 "April 6 2005" "Version @GIMP_VERSION@" "GIMP Manual Pages"
+.TH GIMP 1 "December 29 2005" "Version @GIMP_VERSION@" "GIMP Manual Pages"
 
 .SH NAME
 gimp - an image manipulation and paint program.
@@ -7,9 +7,9 @@ gimp - an image manipulation and paint program.
 .SH SYNOPSIS
 .B gimp
 [\-h] [\-\-help] [\-\-help-all] [\-\-help-gtk] [-v] [\-\-version]
-[\-\-verbose] [\-\-no\-shm] [\-\-no\-cpu\-accel] [\-\-display \fIdisplay\fP]
-[\-d] [\-\-no\-data] [\-f] [\-\-no\-fonts] [\-i] [\-\-no\-interface]
-[\-s] [\-\-no\-splash] [\-\-session \fI<name>\fP]
+[\-\-license] [\-\-verbose] [\-\-no\-shm] [\-\-no\-cpu\-accel]
+[\-\-display \fIdisplay\fP] [\-d] [\-\-no\-data] [\-f] [\-\-no\-fonts]
+[\-i] [\-\-no\-interface] [\-s] [\-\-no\-splash] [\-\-session \fI<name>\fP]
 [\-g] [\-\-gimprc \fI<gimprc>\fP] [\-\-system\-gimprc \fI<gimprc>\fP]
 [\-\-dump\-gimprc\fP] [\-\-console\-messages] [\-\-debug\-handlers]
 [\-\-stack\-trace\-mode \fI<mode>\fP] [\-\-pdb\-compat\-mode \fI<mode>\fP]
@@ -55,10 +55,13 @@ Show all command\-line options.
 Show GTK+ command\-line options.
 .TP 8
 .B \-v, \-\-version
-Output the version info.
+Output version information and exit.
+.TP 8
+.B \-\-license
+Output license information and exit.
 .TP 8
 .B \-\-verbose
-Show startup messages.
+Be verbose and create information on standard output.
 .TP 8 
 .B \-\-no\-shm
 Do not use shared memory between GIMP and its plugins. 
