@@ -87,6 +87,7 @@ static ProcRecord image_raise_vectors_to_top_proc;
 static ProcRecord image_lower_vectors_to_bottom_proc;
 static ProcRecord image_add_channel_proc;
 static ProcRecord image_remove_channel_proc;
+static ProcRecord image_add_vectors_proc;
 static ProcRecord image_remove_vectors_proc;
 static ProcRecord image_raise_channel_proc;
 static ProcRecord image_lower_channel_proc;
@@ -162,6 +163,7 @@ register_image_procs (Gimp *gimp)
   procedural_db_register (gimp, &image_lower_vectors_to_bottom_proc);
   procedural_db_register (gimp, &image_add_channel_proc);
   procedural_db_register (gimp, &image_remove_channel_proc);
+  procedural_db_register (gimp, &image_add_vectors_proc);
   procedural_db_register (gimp, &image_remove_vectors_proc);
   procedural_db_register (gimp, &image_raise_channel_proc);
   procedural_db_register (gimp, &image_lower_channel_proc);
@@ -2505,6 +2507,72 @@ static ProcRecord image_remove_channel_proc =
   0,
   NULL,
   { { image_remove_channel_invoker } }
+};
+
+static Argument *
+image_add_vectors_invoker (Gimp         *gimp,
+                           GimpContext  *context,
+                           GimpProgress *progress,
+                           Argument     *args)
+{
+  gboolean success = TRUE;
+  GimpImage *gimage;
+  GimpVectors *vectors;
+  gint32 position;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
+  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
+    success = FALSE;
+
+  position = args[2].value.pdb_int;
+
+  if (success)
+    {
+        success = gimp_image_add_vectors (gimage, vectors, MAX (position, -1));
+    }
+
+  return procedural_db_return_args (&image_add_vectors_proc, success);
+}
+
+static ProcArg image_add_vectors_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  {
+    GIMP_PDB_VECTORS,
+    "vectors",
+    "The vectors object"
+  },
+  {
+    GIMP_PDB_INT32,
+    "position",
+    "The vectors objects position"
+  }
+};
+
+static ProcRecord image_add_vectors_proc =
+{
+  "gimp-image-add-vectors",
+  "gimp-image-add-vectors",
+  "Add the specified vectors object to the image.",
+  "This procedure adds the specified vectors object to the gimage at the given position. If the position is specified as -1, then the vectors object is inserted at the top of the vectors stack.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  NULL,
+  GIMP_INTERNAL,
+  3,
+  image_add_vectors_inargs,
+  0,
+  NULL,
+  { { image_add_vectors_invoker } }
 };
 
 static Argument *

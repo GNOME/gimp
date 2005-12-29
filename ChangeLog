@@ -1,3 +1,22 @@
+2005-12-29  Simon Budig  <simon@gimp.org>
+
+	* tools/pdbgen/pdb/image.pdb: new function: 
+	    image_add_vectors
+
+	* tools/pdbgen/pdb/vectors.pdb: new functions: 
+	    vectors_get_strokes
+	    vectors_stroke_get_point_at_dist
+	    vectors_stroke_close
+	
+	removed nonfunctional undo code (that does not belong here anyways)
+	and fixed a bug in [...]_cubicto.
+
+	* app/pdb/image_cmds.c
+	* app/pdb/internal_procs.c
+	* app/pdb/vectors_cmds.c
+	* libgimp/gimpimage_pdb.[ch]
+	* libgimp/gimpvectors_pdb.[ch]: regenerated.
+
 2005-12-29  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpdialogfactory.[ch]: split

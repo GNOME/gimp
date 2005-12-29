@@ -38,6 +38,37 @@ sub stroke_arg () {
      desc => 'The stroke ID'
    }}
 
+sub vectors_new {
+    $blurb = 'Creates a new empty vectors object. Needs to be added to an image using gimp_image_add_vectors.';
+
+    $help = <<'HELP';
+Creates a new empty vectors object. Needs to be added to an image using gimp_image_add_vectors.
+HELP
+
+    &pdb_misc;
+
+    @inargs = ( &std_image_arg,
+        { name => 'name', type => 'string',
+          desc => 'the name of the new vector object.',
+          init => 1 }
+    );
+
+    @outargs = (
+        { name => 'vectors', type => 'vectors',
+          desc => 'the current vector object, 0 if no vector exists in the image.',
+          init => 1 }
+    );
+
+    %invoke = (
+        code => <<"CODE"
+{
+  vectors = gimp_vectors_new (gimage, name);
+}
+CODE
+    );
+}
+
+
 sub vectors_get_current {
     $blurb = 'Gets the current path in the given image.';
 
@@ -381,6 +412,61 @@ CODE
 }
 
 
+sub vectors_stroke_get_point_at_dist {
+    $blurb = 'Get point at a specified distance along the stroke.';
+
+    $help = <<'HELP';
+This will return the x,y position of a point at a given distance along the
+stroke. The distance will be obtained by first digitizing the 
+curve internally and then walking along the curve. For a closed stroke the
+start of the path is the first point on the path that was created. This might
+not be obvious. If the stroke is not long enough, a "valid" flag will be FALSE.
+HELP
+
+    &pdb_misc;
+
+    @inargs = ( &stroke_arg,
+                { name => 'dist', type => 'float',
+                  desc => 'The given distance.' },
+                { name => 'prescision', type => 'float',
+                  desc => 'The prescision used for the approximation' } );
+
+    @outargs = (
+        { name => 'x_point', type => 'float',
+          desc => 'The x position of the point.', init => 1 },
+        { name => 'y_point', type => 'float',
+          desc => 'The y position of the point.', init => 1 },
+        { name => 'slope', type => 'float',
+          desc => 'The slope (dy / dx) at the specified point.', init => 1 },
+        { name => 'valid', type => 'boolean',
+          desc => 'Indicator for the validity of the returned data.',
+          init => 1 }
+    );
+
+    %invoke = (
+        vars => [ 'GimpStroke *stroke',
+                  'GimpCoords  coord'],
+        code => <<"CODE"
+{
+  stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
+  
+  if (stroke)
+    {
+      valid = gimp_stroke_get_point_at_dist (stroke, dist, prescision,
+                                             &coord, &slope);
+      x_point = valid ? coord.x : 0;
+      y_point = valid ? coord.y : 0;
+    }
+  else
+    {
+      success = FALSE;
+    }
+}
+CODE
+    );
+}
+
+
 sub vectors_stroke_remove {
     $blurb = 'remove the stroke from a vectors object.';
 
@@ -400,6 +486,33 @@ HELP
   
   if (stroke)
     gimp_vectors_stroke_remove (vectors, stroke);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+
+sub vectors_stroke_close {
+    $blurb = 'closes the specified stroke.';
+
+    $help = <<'HELP';
+Closes the specified stroke.
+HELP
+
+    &pdb_misc;
+
+    @inargs = ( &stroke_arg );
+
+    %invoke = (
+        vars => [ 'GimpStroke *stroke' ],
+        code => <<"CODE"
+{
+  stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
+  
+  if (stroke)
+    gimp_stroke_close (stroke);
   else
     success = FALSE;
 }
@@ -430,21 +543,10 @@ HELP
   GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (vectors));
   stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
   
-  if (!stroke)
-    {
-      success = FALSE;
-    }
+  if (stroke)
+    gimp_stroke_translate (stroke, off_x, off_y);
   else
-    {
-      /* need to figure out how undo is supposed to work */
-
-      gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_DISPLACE,
-                                   _("Modify Path"));
-      gimp_vectors_freeze (vectors);
-      gimp_stroke_translate (stroke, off_x, off_y);
-      gimp_vectors_thaw (vectors);
-      gimp_image_undo_group_end (gimage);
-    }
+    success = FALSE;
 }
 CODE
     );
@@ -472,21 +574,10 @@ HELP
   GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (vectors));
   stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
   
-  if (!stroke)
-    {
-      success = FALSE;
-    }
+  if (stroke)
+    gimp_stroke_scale (stroke, scale_x, scale_y);
   else
-    {
-      /* need to figure out how undo is supposed to work */
-
-      gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_DISPLACE,
-                                   _("Modify Path"));
-      gimp_vectors_freeze (vectors);
-      gimp_stroke_scale (stroke, scale_x, scale_y);
-      gimp_vectors_thaw (vectors);
-      gimp_image_undo_group_end (gimage);
-    }
+    success = FALSE;
 }
 CODE
     );
@@ -738,8 +829,8 @@ HELP
   coord1.y = y1;
 
   coord2 = coord0;
-  coord1.x = x2;
-  coord1.y = y2;
+  coord2.x = x2;
+  coord2.y = y2;
 
   stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
   if (stroke)
@@ -807,12 +898,13 @@ CODE
 
 
 @headers = qw(<string.h> "core/gimp.h" "core/gimplist.h"
-              "core/gimpimage.h" "core/gimpimage-undo.h"
+              "core/gimpimage.h"
               "vectors/gimpanchor.h" "vectors/gimpbezierstroke.h"
               "vectors/gimpvectors.h" "vectors/gimpvectors-compat.h"
               "gimp-intl.h");
 
-@procs = qw(vectors_get_strokes
+@procs = qw(vectors_new
+            vectors_get_strokes
             vectors_get_image
             vectors_get_linked
             vectors_set_linked
@@ -823,7 +915,9 @@ CODE
             vectors_get_tattoo
             vectors_set_tattoo
             vectors_stroke_get_length
+            vectors_stroke_get_point_at_dist
             vectors_stroke_remove
+            vectors_stroke_close
             vectors_stroke_translate
             vectors_stroke_scale
             vectors_stroke_interpolate

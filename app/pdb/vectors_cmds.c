@@ -28,7 +28,6 @@
 #include "procedural_db.h"
 
 #include "core/gimp.h"
-#include "core/gimpimage-undo.h"
 #include "core/gimpimage.h"
 #include "core/gimplist.h"
 #include "gimp-intl.h"
@@ -37,6 +36,7 @@
 #include "vectors/gimpvectors-compat.h"
 #include "vectors/gimpvectors.h"
 
+static ProcRecord vectors_new_proc;
 static ProcRecord vectors_get_strokes_proc;
 static ProcRecord vectors_get_image_proc;
 static ProcRecord vectors_get_linked_proc;
@@ -48,7 +48,9 @@ static ProcRecord vectors_set_name_proc;
 static ProcRecord vectors_get_tattoo_proc;
 static ProcRecord vectors_set_tattoo_proc;
 static ProcRecord vectors_stroke_get_length_proc;
+static ProcRecord vectors_stroke_get_point_at_dist_proc;
 static ProcRecord vectors_stroke_remove_proc;
+static ProcRecord vectors_stroke_close_proc;
 static ProcRecord vectors_stroke_translate_proc;
 static ProcRecord vectors_stroke_scale_proc;
 static ProcRecord vectors_stroke_interpolate_proc;
@@ -61,6 +63,7 @@ static ProcRecord vectors_bezier_stroke_new_ellipse_proc;
 void
 register_vectors_procs (Gimp *gimp)
 {
+  procedural_db_register (gimp, &vectors_new_proc);
   procedural_db_register (gimp, &vectors_get_strokes_proc);
   procedural_db_register (gimp, &vectors_get_image_proc);
   procedural_db_register (gimp, &vectors_get_linked_proc);
@@ -72,7 +75,9 @@ register_vectors_procs (Gimp *gimp)
   procedural_db_register (gimp, &vectors_get_tattoo_proc);
   procedural_db_register (gimp, &vectors_set_tattoo_proc);
   procedural_db_register (gimp, &vectors_stroke_get_length_proc);
+  procedural_db_register (gimp, &vectors_stroke_get_point_at_dist_proc);
   procedural_db_register (gimp, &vectors_stroke_remove_proc);
+  procedural_db_register (gimp, &vectors_stroke_close_proc);
   procedural_db_register (gimp, &vectors_stroke_translate_proc);
   procedural_db_register (gimp, &vectors_stroke_scale_proc);
   procedural_db_register (gimp, &vectors_stroke_interpolate_proc);
@@ -82,6 +87,80 @@ register_vectors_procs (Gimp *gimp)
   procedural_db_register (gimp, &vectors_bezier_stroke_cubicto_proc);
   procedural_db_register (gimp, &vectors_bezier_stroke_new_ellipse_proc);
 }
+
+static Argument *
+vectors_new_invoker (Gimp         *gimp,
+                     GimpContext  *context,
+                     GimpProgress *progress,
+                     Argument     *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpImage *gimage;
+  gchar *name = NULL;
+  GimpVectors *vectors = NULL;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  name = (gchar *) args[1].value.pdb_pointer;
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+    success = FALSE;
+
+  if (success)
+    {
+      vectors = gimp_vectors_new (gimage, name);
+    }
+
+  return_args = procedural_db_return_args (&vectors_new_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (vectors));
+
+  return return_args;
+}
+
+static ProcArg vectors_new_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  {
+    GIMP_PDB_STRING,
+    "name",
+    "the name of the new vector object."
+  }
+};
+
+static ProcArg vectors_new_outargs[] =
+{
+  {
+    GIMP_PDB_VECTORS,
+    "vectors",
+    "the current vector object, 0 if no vector exists in the image."
+  }
+};
+
+static ProcRecord vectors_new_proc =
+{
+  "gimp-vectors-new",
+  "gimp-vectors-new",
+  "Creates a new empty vectors object. Needs to be added to an image using gimp_image_add_vectors.",
+  "Creates a new empty vectors object. Needs to be added to an image using gimp_image_add_vectors.",
+  "Simon Budig",
+  "Simon Budig",
+  "2005",
+  NULL,
+  GIMP_INTERNAL,
+  2,
+  vectors_new_inargs,
+  1,
+  vectors_new_outargs,
+  { { vectors_new_invoker } }
+};
 
 static Argument *
 vectors_get_strokes_invoker (Gimp         *gimp,
@@ -809,6 +888,131 @@ static ProcRecord vectors_stroke_get_length_proc =
 };
 
 static Argument *
+vectors_stroke_get_point_at_dist_invoker (Gimp         *gimp,
+                                          GimpContext  *context,
+                                          GimpProgress *progress,
+                                          Argument     *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpVectors *vectors;
+  gint32 stroke_id;
+  gdouble dist;
+  gdouble prescision;
+  gdouble x_point = 0;
+  gdouble y_point = 0;
+  gdouble slope = 0;
+  gboolean valid = FALSE;
+  GimpStroke *stroke;
+  GimpCoords  coord;
+
+  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
+    success = FALSE;
+
+  stroke_id = args[1].value.pdb_int;
+
+  dist = args[2].value.pdb_float;
+
+  prescision = args[3].value.pdb_float;
+
+  if (success)
+    {
+      stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
+
+      if (stroke)
+        {
+          valid = gimp_stroke_get_point_at_dist (stroke, dist, prescision,
+                                                 &coord, &slope);
+          x_point = valid ? coord.x : 0;
+          y_point = valid ? coord.y : 0;
+        }
+      else
+        {
+          success = FALSE;
+        }
+    }
+
+  return_args = procedural_db_return_args (&vectors_stroke_get_point_at_dist_proc, success);
+
+  if (success)
+    {
+      return_args[1].value.pdb_float = x_point;
+      return_args[2].value.pdb_float = y_point;
+      return_args[3].value.pdb_float = slope;
+      return_args[4].value.pdb_int = valid;
+    }
+
+  return return_args;
+}
+
+static ProcArg vectors_stroke_get_point_at_dist_inargs[] =
+{
+  {
+    GIMP_PDB_VECTORS,
+    "vectors",
+    "The vectors object"
+  },
+  {
+    GIMP_PDB_INT32,
+    "stroke-id",
+    "The stroke ID"
+  },
+  {
+    GIMP_PDB_FLOAT,
+    "dist",
+    "The given distance."
+  },
+  {
+    GIMP_PDB_FLOAT,
+    "prescision",
+    "The prescision used for the approximation"
+  }
+};
+
+static ProcArg vectors_stroke_get_point_at_dist_outargs[] =
+{
+  {
+    GIMP_PDB_FLOAT,
+    "x-point",
+    "The x position of the point."
+  },
+  {
+    GIMP_PDB_FLOAT,
+    "y-point",
+    "The y position of the point."
+  },
+  {
+    GIMP_PDB_FLOAT,
+    "slope",
+    "The slope (dy / dx) at the specified point."
+  },
+  {
+    GIMP_PDB_INT32,
+    "valid",
+    "Indicator for the validity of the returned data."
+  }
+};
+
+static ProcRecord vectors_stroke_get_point_at_dist_proc =
+{
+  "gimp-vectors-stroke-get-point-at-dist",
+  "gimp-vectors-stroke-get-point-at-dist",
+  "Get point at a specified distance along the stroke.",
+  "This will return the x,y position of a point at a given distance along the stroke. The distance will be obtained by first digitizing the curve internally and then walking along the curve. For a closed stroke the start of the path is the first point on the path that was created. This might not be obvious. If the stroke is not long enough, a \"valid\" flag will be FALSE.",
+  "Simon Budig",
+  "Simon Budig",
+  "2005",
+  NULL,
+  GIMP_INTERNAL,
+  4,
+  vectors_stroke_get_point_at_dist_inargs,
+  4,
+  vectors_stroke_get_point_at_dist_outargs,
+  { { vectors_stroke_get_point_at_dist_invoker } }
+};
+
+static Argument *
 vectors_stroke_remove_invoker (Gimp         *gimp,
                                GimpContext  *context,
                                GimpProgress *progress,
@@ -871,6 +1075,68 @@ static ProcRecord vectors_stroke_remove_proc =
 };
 
 static Argument *
+vectors_stroke_close_invoker (Gimp         *gimp,
+                              GimpContext  *context,
+                              GimpProgress *progress,
+                              Argument     *args)
+{
+  gboolean success = TRUE;
+  GimpVectors *vectors;
+  gint32 stroke_id;
+  GimpStroke *stroke;
+
+  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
+    success = FALSE;
+
+  stroke_id = args[1].value.pdb_int;
+
+  if (success)
+    {
+      stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
+
+      if (stroke)
+        gimp_stroke_close (stroke);
+      else
+        success = FALSE;
+    }
+
+  return procedural_db_return_args (&vectors_stroke_close_proc, success);
+}
+
+static ProcArg vectors_stroke_close_inargs[] =
+{
+  {
+    GIMP_PDB_VECTORS,
+    "vectors",
+    "The vectors object"
+  },
+  {
+    GIMP_PDB_INT32,
+    "stroke-id",
+    "The stroke ID"
+  }
+};
+
+static ProcRecord vectors_stroke_close_proc =
+{
+  "gimp-vectors-stroke-close",
+  "gimp-vectors-stroke-close",
+  "closes the specified stroke.",
+  "Closes the specified stroke.",
+  "Simon Budig",
+  "Simon Budig",
+  "2005",
+  NULL,
+  GIMP_INTERNAL,
+  2,
+  vectors_stroke_close_inargs,
+  0,
+  NULL,
+  { { vectors_stroke_close_invoker } }
+};
+
+static Argument *
 vectors_stroke_translate_invoker (Gimp         *gimp,
                                   GimpContext  *context,
                                   GimpProgress *progress,
@@ -898,21 +1164,10 @@ vectors_stroke_translate_invoker (Gimp         *gimp,
       GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (vectors));
       stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
 
-      if (!stroke)
-        {
-          success = FALSE;
-        }
+      if (stroke)
+        gimp_stroke_translate (stroke, off_x, off_y);
       else
-        {
-          /* need to figure out how undo is supposed to work */
-
-          gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_DISPLACE,
-                                       _("Modify Path"));
-          gimp_vectors_freeze (vectors);
-          gimp_stroke_translate (stroke, off_x, off_y);
-          gimp_vectors_thaw (vectors);
-          gimp_image_undo_group_end (gimage);
-        }
+        success = FALSE;
     }
 
   return procedural_db_return_args (&vectors_stroke_translate_proc, success);
@@ -988,21 +1243,10 @@ vectors_stroke_scale_invoker (Gimp         *gimp,
       GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (vectors));
       stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
 
-      if (!stroke)
-        {
-          success = FALSE;
-        }
+      if (stroke)
+        gimp_stroke_scale (stroke, scale_x, scale_y);
       else
-        {
-          /* need to figure out how undo is supposed to work */
-
-          gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_DISPLACE,
-                                       _("Modify Path"));
-          gimp_vectors_freeze (vectors);
-          gimp_stroke_scale (stroke, scale_x, scale_y);
-          gimp_vectors_thaw (vectors);
-          gimp_image_undo_group_end (gimage);
-        }
+        success = FALSE;
     }
 
   return procedural_db_return_args (&vectors_stroke_scale_proc, success);
@@ -1506,8 +1750,8 @@ vectors_bezier_stroke_cubicto_invoker (Gimp         *gimp,
       coord1.y = y1;
 
       coord2 = coord0;
-      coord1.x = x2;
-      coord1.y = y2;
+      coord2.x = x2;
+      coord2.y = y2;
 
       stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
       if (stroke)

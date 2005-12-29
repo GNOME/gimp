@@ -28,6 +28,43 @@
 #include "gimp.h"
 
 /**
+ * gimp_vectors_new:
+ * @image_ID: The image.
+ * @name: the name of the new vector object.
+ *
+ * Creates a new empty vectors object. Needs to be added to an image
+ * using gimp_image_add_vectors.
+ *
+ * Creates a new empty vectors object. Needs to be added to an image
+ * using gimp_image_add_vectors.
+ *
+ * Returns: the current vector object, 0 if no vector exists in the image.
+ *
+ * Since: GIMP 2.4
+ */
+gint32
+gimp_vectors_new (gint32       image_ID,
+		  const gchar *name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint32 vectors_ID = -1;
+
+  return_vals = gimp_run_procedure ("gimp-vectors-new",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_STRING, name,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    vectors_ID = return_vals[1].data.d_vectors;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return vectors_ID;
+}
+
+/**
  * gimp_vectors_get_strokes:
  * @vectors_ID: The vectors object.
  * @num_strokes: The number of strokes returned.
@@ -404,6 +441,63 @@ gimp_vectors_stroke_get_length (gint32  vectors_ID,
 }
 
 /**
+ * gimp_vectors_stroke_get_point_at_dist:
+ * @vectors_ID: The vectors object.
+ * @stroke_id: The stroke ID.
+ * @dist: The given distance.
+ * @prescision: The prescision used for the approximation.
+ * @y_point: The y position of the point.
+ * @slope: The slope (dy / dx) at the specified point.
+ * @valid: Indicator for the validity of the returned data.
+ *
+ * Get point at a specified distance along the stroke.
+ *
+ * This will return the x,y position of a point at a given distance
+ * along the stroke. The distance will be obtained by first digitizing
+ * the curve internally and then walking along the curve. For a closed
+ * stroke the start of the path is the first point on the path that was
+ * created. This might not be obvious. If the stroke is not long
+ * enough, a \"valid\" flag will be FALSE.
+ *
+ * Returns: The x position of the point.
+ *
+ * Since: GIMP 2.4
+ */
+gdouble
+gimp_vectors_stroke_get_point_at_dist (gint32    vectors_ID,
+				       gint      stroke_id,
+				       gdouble   dist,
+				       gdouble   prescision,
+				       gdouble  *y_point,
+				       gdouble  *slope,
+				       gboolean *valid)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gdouble x_point = 0;
+
+  return_vals = gimp_run_procedure ("gimp-vectors-stroke-get-point-at-dist",
+				    &nreturn_vals,
+				    GIMP_PDB_VECTORS, vectors_ID,
+				    GIMP_PDB_INT32, stroke_id,
+				    GIMP_PDB_FLOAT, dist,
+				    GIMP_PDB_FLOAT, prescision,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    {
+      x_point = return_vals[1].data.d_float;
+      *y_point = return_vals[2].data.d_float;
+      *slope = return_vals[3].data.d_float;
+      *valid = return_vals[4].data.d_int32;
+    }
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return x_point;
+}
+
+/**
  * gimp_vectors_stroke_remove:
  * @vectors_ID: The vectors object.
  * @stroke_id: The stroke ID.
@@ -425,6 +519,40 @@ gimp_vectors_stroke_remove (gint32 vectors_ID,
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-vectors-stroke-remove",
+				    &nreturn_vals,
+				    GIMP_PDB_VECTORS, vectors_ID,
+				    GIMP_PDB_INT32, stroke_id,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_vectors_stroke_close:
+ * @vectors_ID: The vectors object.
+ * @stroke_id: The stroke ID.
+ *
+ * closes the specified stroke.
+ *
+ * Closes the specified stroke.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_vectors_stroke_close (gint32 vectors_ID,
+			   gint   stroke_id)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-vectors-stroke-close",
 				    &nreturn_vals,
 				    GIMP_PDB_VECTORS, vectors_ID,
 				    GIMP_PDB_INT32, stroke_id,

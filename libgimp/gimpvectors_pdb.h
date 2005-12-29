@@ -29,6 +29,8 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
+gint32   gimp_vectors_new                       (gint32        image_ID,
+						 const gchar  *name);
 gint*    gimp_vectors_get_strokes               (gint32        vectors_ID,
 						 gint         *num_strokes);
 gint32   gimp_vectors_get_image                 (gint32        vectors_ID);
@@ -47,7 +49,16 @@ gboolean gimp_vectors_set_tattoo                (gint32        vectors_ID,
 gdouble  gimp_vectors_stroke_get_length         (gint32        vectors_ID,
 						 gint          stroke_id,
 						 gdouble       prescision);
+gdouble  gimp_vectors_stroke_get_point_at_dist  (gint32        vectors_ID,
+						 gint          stroke_id,
+						 gdouble       dist,
+						 gdouble       prescision,
+						 gdouble      *y_point,
+						 gdouble      *slope,
+						 gboolean     *valid);
 gboolean gimp_vectors_stroke_remove             (gint32        vectors_ID,
+						 gint          stroke_id);
+gboolean gimp_vectors_stroke_close              (gint32        vectors_ID,
 						 gint          stroke_id);
 gboolean gimp_vectors_stroke_translate          (gint32        vectors_ID,
 						 gint          stroke_id,

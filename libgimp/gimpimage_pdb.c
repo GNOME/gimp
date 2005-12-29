@@ -1313,6 +1313,43 @@ gimp_image_remove_channel (gint32 image_ID,
 }
 
 /**
+ * gimp_image_add_vectors:
+ * @image_ID: The image.
+ * @vectors_ID: The vectors object.
+ * @position: The vectors objects position.
+ *
+ * Add the specified vectors object to the image.
+ *
+ * This procedure adds the specified vectors object to the gimage at
+ * the given position. If the position is specified as -1, then the
+ * vectors object is inserted at the top of the vectors stack.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_image_add_vectors (gint32 image_ID,
+			gint32 vectors_ID,
+			gint   position)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-image-add-vectors",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_VECTORS, vectors_ID,
+				    GIMP_PDB_INT32, position,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_image_remove_vectors:
  * @image_ID: The image.
  * @vectors_ID: The vectors object.
