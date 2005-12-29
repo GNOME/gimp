@@ -1343,7 +1343,7 @@ gimp_dialog_factories_show_foreach (gconstpointer      key,
               if (focus_on_map)
                 gtk_window_set_focus_on_map (window, FALSE);
 
-              gtk_widget_show (window);
+              gtk_widget_show (GTK_WIDGET (window));
 
               if (GTK_WIDGET_VISIBLE (window))
                 gdk_window_raise (GTK_WIDGET (window)->window);
