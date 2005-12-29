@@ -1,5 +1,11 @@
 2005-12-29  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpdockable.c (gimp_dockable_expose_event): draw the
+	standalone dockable like a notebook tab to indicate that it can be
+	dragged.
+
+2005-12-29  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimphelpui.c (gimp_help_set_help_data): allow to
 	unset the tooltip by passing NULL.
 

@@ -450,6 +450,16 @@ gimp_dockable_expose_event (GtkWidget      *widget,
       GdkRectangle  title_area;
       GdkRectangle  expose_area;
 
+      if (! gtk_notebook_get_show_tabs (GTK_NOTEBOOK (dockable->dockbook)))
+        gtk_paint_extension (widget->style, widget->window,
+                             widget->state, GTK_SHADOW_OUT,
+                             &event->area, widget, "tab",
+                             widget->allocation.x,
+                             widget->allocation.y,
+                             widget->allocation.width,
+                             widget->allocation.height,
+                             GTK_POS_BOTTOM);
+
       gimp_dockable_get_title_area (dockable, &title_area);
 
       if (gdk_rectangle_intersect (&title_area, &event->area, &expose_area))
@@ -476,11 +486,10 @@ gimp_dockable_expose_event (GtkWidget      *widget,
               if (bin->child)
                 title = gimp_docked_get_title (GIMP_DOCKED (bin->child));
 
-              if (! title)
-                title = g_strdup (dockable->blurb);
-
-              dockable->title_layout = gtk_widget_create_pango_layout (widget,
-                                                                       title);
+              dockable->title_layout =
+                gtk_widget_create_pango_layout (widget,
+                                                title ?
+                                                title : dockable->blurb);
               g_free (title);
 
               pango_layout_set_width (dockable->title_layout,
