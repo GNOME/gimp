@@ -1337,7 +1337,19 @@ gimp_dialog_factories_show_foreach (gconstpointer      key,
           if (! GTK_WIDGET_VISIBLE (list->data) &&
               visibility == GIMP_DIALOG_VISIBILITY_VISIBLE)
             {
-              gtk_widget_show (GTK_WIDGET (list->data));
+              GtkWindow *window       = GTK_WINDOW (list->data);
+              gboolean   focus_on_map = gtk_window_get_focus_on_map (window);
+
+              if (focus_on_map)
+                gtk_window_set_focus_on_map (window, FALSE);
+
+              gtk_widget_show (window);
+
+              if (GTK_WIDGET_VISIBLE (window))
+                gdk_window_raise (GTK_WIDGET (window)->window);
+
+              if (focus_on_map)
+                gtk_window_set_focus_on_map (window, TRUE);
             }
         }
     }

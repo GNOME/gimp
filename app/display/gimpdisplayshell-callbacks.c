@@ -1209,8 +1209,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             else
               {
                 gimp_dialog_factories_toggle ();
-
-                gdk_window_focus (canvas->window, time);
               }
 
             return_val = TRUE;

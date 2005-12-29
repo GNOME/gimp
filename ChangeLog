@@ -1,3 +1,13 @@
+2005-12-29  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpdialogfactory.c (gimp_dialog_factories_show_foreach):
+	fiddle with the "focus-on-map" window hint to prevent the dialogs
+	from grabbing the focus away from the image window. Fixes bug #167762
+	for window managers supporting this hint.
+
+	* app/display/gimpdisplayshell-callbacks.c: removed redundant call
+	to gdk_window_focus() that wasn't having the desired effect anyway.
+
 2005-12-29  Simon Budig  <simon@gimp.org>
 
 	* tools/pdbgen/pdb/image.pdb: new function: 
