@@ -9,11 +9,11 @@
 2005-12-29  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpbase/gimpbaseenums.[ch] (enum GimpPDBArgType): renamed
-	GIMP_PDB_PATH to GIMP_PDB_VECTORS and add the former as an alias
+	GIMP_PDB_PATH to GIMP_PDB_VECTORS and added the former as an alias
 	for the latter.
 
 	* libgimp/gimp.h (union _GimpParamData): added back d_path member
-	to maintian source compatibility.
+	to maintain source compatibility.
 
 	* tools/pdbgen/pdb.pl
 	* libgimp/gimp.c
