@@ -1,3 +1,7 @@
+2005-12-29  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/common/waves.c: small cleanups
+
 2005-12-29  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpdockable.[ch]: invalidate stored coordinates on

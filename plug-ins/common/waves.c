@@ -35,19 +35,19 @@
 #define PLUG_IN_PROC   "plug-in-waves"
 #define PLUG_IN_BINARY "waves"
 
-enum
+typedef enum
 {
   MODE_SMEAR,
   MODE_BLACKEN
-};
+} BorderType;
 
 typedef struct
 {
-  gdouble  amplitude;
-  gdouble  phase;
-  gdouble  wavelength;
-  gint32   type;
-  gboolean reflective;
+  gdouble     amplitude;
+  gdouble     phase;
+  gdouble     wavelength;
+  BorderType  type;
+  gboolean    reflective;
 } piArgs;
 
 static piArgs wvals =
@@ -66,25 +66,26 @@ static void run   (const gchar      *name,
                    gint             *nretvals,
                    GimpParam       **retvals);
 
-static void waves            (GimpDrawable *drawable);
 
-static gboolean waves_dialog (GimpDrawable *drawable);
+static void     waves         (GimpDrawable *drawable);
 
-static void waves_preview    (GimpDrawable *drawable,
-                              GimpPreview  *preview);
+static gboolean waves_dialog  (GimpDrawable *drawable);
 
-static void wave (guchar  *src,
-                  guchar  *dest,
-                  gint     width,
-                  gint     height,
-                  gint     bypp,
-                  gboolean has_alpha,
-                  gdouble  amplitude,
-                  gdouble  wavelength,
-                  gdouble  phase,
-                  gint     smear,
-                  gboolean reflective,
-                  gboolean verbose);
+static void     waves_preview (GimpDrawable *drawable,
+                               GimpPreview  *preview);
+
+static void     wave          (guchar    *src,
+                               guchar    *dest,
+                               gint       width,
+                               gint       height,
+                               gint       bpp,
+                               gboolean   has_alpha,
+                               gdouble    amplitude,
+                               gdouble    wavelength,
+                               gdouble    phase,
+                               gboolean   smear,
+                               gboolean   reflective,
+                               gboolean   verbose);
 
 #define WITHIN(a, b, c) ((((a) <= (b)) && ((b) <= (c))) ? TRUE : FALSE)
 
@@ -212,7 +213,7 @@ waves (GimpDrawable *drawable)
 
   wave (src, dst, width, height, bpp, has_alpha,
         wvals.amplitude, wvals.wavelength, wvals.phase,
-        wvals.type == 0, wvals.reflective, TRUE);
+        wvals.type == MODE_SMEAR, wvals.reflective, TRUE);
   gimp_pixel_rgn_set_rect (&dstPr, dst, 0, 0, width, height);
 
   g_free (src);
@@ -365,7 +366,7 @@ waves_preview (GimpDrawable *drawable,
         bpp == 2 || bpp == 4,
         wvals.amplitude * width / drawable->width,
         wvals.wavelength * height / drawable->height,
-        wvals.phase, wvals.type == 0, wvals.reflective, FALSE);
+        wvals.phase, wvals.type == MODE_SMEAR, wvals.reflective, FALSE);
 
   gimp_preview_draw_buffer (preview, dest, width * bpp);
 
@@ -399,7 +400,7 @@ wave (guchar  *src,
       gdouble  amplitude,
       gdouble  wavelength,
       gdouble  phase,
-      gint     smear,
+      gboolean smear,
       gboolean reflective,
       gboolean verbose)
 {
@@ -408,7 +409,7 @@ wave (guchar  *src,
   guchar *dest;
   gint    x1, y1, x2, y2;
   gint    x, y;
-  gint    prog_interval=0;
+  gint    prog_interval = 0;
   gint    x1_in, y1_in, x2_in, y2_in;
 
   gdouble cen_x, cen_y;       /* Center of wave */
@@ -424,13 +425,13 @@ wave (guchar  *src,
   guchar *values[4];
   guchar  zeroes[4] = { 0, 0, 0, 0 };
 
-  phase = phase * G_PI / 180;
-  rowsiz   = width * bypp;
+  phase  = phase * G_PI / 180.0;
+  rowsiz = width * bypp;
 
   if (verbose)
     {
       gimp_progress_init (_("Waving"));
-      prog_interval=height/10;
+      prog_interval = height / 10;
     }
 
   x1 = y1 = 0;
