@@ -28,10 +28,10 @@ header files installed.
   1. You need to have installed a recent version of pkg-config available
      from http://www.freedesktop.org/software/pkgconfig/.  
 
-  2. You need to have installed GTK+ version 2.6.0 or newer. Do not
+  2. You need to have installed GTK+ version 2.8.x or newer. Do not
      try to use an older GTK+ version (1.2.x), it will not work.  GIMP
-     needs an even more recent version of GLib (>= 2.8.0). It also
-     wants Pango (>= 1.8.0) and ATK. Sources for these can be grabbed
+     needs an even more recent version of GLib (>= 2.8.2). It also
+     wants Pango (>= 1.10.0) and ATK. Sources for these can be grabbed
      from ftp://ftp.gtk.org/. GTK+-2.x and friends can be installed
      side by side with GTK+-1.2.
 
@@ -39,9 +39,9 @@ header files installed.
      sure you have FreeType2 and fontconfig installed before you
      compile Pango.  FreeType2 can be downloaded from
      http://www.freetype.org/.  Fontconfig from
-     http://freedesktop.org/fontconfig/.  GIMP 2.2 depends on
-     freetype2 being newer than version 2.1.7. Older versions are
-     known to have bugs that seriously affect stability of GIMP.
+     http://freedesktop.org/fontconfig/.  GIMP depends on freetype2
+     being newer than version 2.1.7. Older versions are known to have
+     bugs that seriously affect stability of GIMP.
 
   4. We use libart2. Grab the module libart_lgpl out of GNOME CVS or
      fetch the tarball from
