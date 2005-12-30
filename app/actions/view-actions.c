@@ -199,7 +199,7 @@ static GimpToggleActionEntry view_toggle_actions[] =
     TRUE,
     GIMP_HELP_VIEW_SHOW_STATUSBAR },
 
-  { "view-fullscreen", NULL,
+  { "view-fullscreen", GTK_STOCK_FULLSCREEN,
     N_("Fullscr_een"), "F11", NULL,
     G_CALLBACK (view_fullscreen_cmd_callback),
     FALSE,
