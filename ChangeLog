@@ -1,3 +1,9 @@
+2005-12-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/dialogs/preferences-dialog.c
+	(prefs_tree_select_callback)
+	(prefs_notebook_page_callback): clean up treeview/model code.
+
 2005-12-30  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpgradienteditor.c (view_events): typo.

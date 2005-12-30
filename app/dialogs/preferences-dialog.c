@@ -686,7 +686,9 @@ prefs_tree_select_callback (GtkTreeSelection *sel,
   GtkWidget    *image;
   GtkTreeModel *model;
   GtkTreeIter   iter;
-  GValue        val = { 0, };
+  gchar        *text;
+  GdkPixbuf    *pixbuf;
+  gint          index;
 
   if (! gtk_tree_selection_get_selected (sel, &model, &iter))
     return;
@@ -694,32 +696,26 @@ prefs_tree_select_callback (GtkTreeSelection *sel,
   label = g_object_get_data (G_OBJECT (notebook), "label");
   image = g_object_get_data (G_OBJECT (notebook), "image");
 
-  gtk_tree_model_get_value (model, &iter, 3, &val);
+  gtk_tree_model_get (model, &iter,
+                      3, &text,
+                      4, &pixbuf,
+                      2, &index,
+                      -1);
 
-  gtk_label_set_text (GTK_LABEL (label),
-                      g_value_get_string (&val));
+  gtk_label_set_text (GTK_LABEL (label), text);
+  g_free (text);
 
-  g_value_unset (&val);
-
-  gtk_tree_model_get_value (model, &iter, 4, &val);
-
-  gtk_image_set_from_pixbuf (GTK_IMAGE (image),
-                             g_value_get_object (&val));
-
-  g_value_unset (&val);
-
-  gtk_tree_model_get_value (model, &iter, 2, &val);
+  gtk_image_set_from_pixbuf (GTK_IMAGE (image), pixbuf);
+  if (pixbuf)
+    g_object_unref (pixbuf);
 
   g_signal_handlers_block_by_func (notebook,
                                    prefs_notebook_page_callback,
                                    sel);
-  gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook),
-                                 g_value_get_int (&val));
+  gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), index);
   g_signal_handlers_unblock_by_func (notebook,
                                      prefs_notebook_page_callback,
                                      sel);
-
-  g_value_unset (&val);
 }
 
 static void
@@ -728,57 +724,53 @@ prefs_notebook_page_callback (GtkNotebook      *notebook,
                               guint             page_num,
                               GtkTreeSelection *sel)
 {
+  GtkTreeView  *view;
   GtkTreeModel *model;
   GtkTreeIter   iter;
-  GtkTreeIter   child_iter;
-  GtkTreeView  *view;
-  GValue        val = { 0, };
-  gint          val_int;
-  gint          num_children;
-  gint          i;
+  gboolean      iter_valid;
 
-  view = gtk_tree_selection_get_tree_view (sel);
+  view  = gtk_tree_selection_get_tree_view (sel);
   model = gtk_tree_view_get_model (view);
 
-  if (gtk_tree_model_get_iter_first (model, &iter))
+  for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
+       iter_valid;
+       iter_valid = gtk_tree_model_iter_next (model, &iter))
     {
-      do
+      gint index;
+
+      gtk_tree_model_get (model, &iter, 2, &index, -1);
+
+      if (index == page_num)
         {
-          gtk_tree_model_get_value (model, &iter, 2, &val);
+          gtk_tree_selection_select_iter (sel, &iter);
+          return;
+        }
 
-          val_int = g_value_get_int (&val);
-          g_value_unset (&val);
+      if (gtk_tree_model_iter_has_child (model, &iter))
+        {
+          gint num_children;
+          gint i;
 
-          if (val_int == page_num)
+          num_children = gtk_tree_model_iter_n_children (model, &iter);
+
+          for (i = 0; i < num_children; i++)
             {
-              gtk_tree_selection_select_iter (sel, &iter);
-              return;
-            }
-          if (gtk_tree_model_iter_has_child (model, &iter))
-            {
-              num_children = gtk_tree_model_iter_n_children (model, &iter);
+              GtkTreeIter child_iter;
 
-              for (i = 0; i < num_children; i++)
+              gtk_tree_model_iter_nth_child (model, &child_iter, &iter, i);
+              gtk_tree_model_get (model, &child_iter, 2, &index, -1);
+
+              if (index == page_num)
                 {
-                  gtk_tree_model_iter_nth_child (model, &child_iter, &iter, i);
-                  gtk_tree_model_get_value (model, &child_iter, 2, &val);
+                  GtkTreePath *path;
 
-                  val_int = g_value_get_int (&val);
-                  g_value_unset (&val);
-
-                  if (val_int == page_num)
-                    {
-                      GtkTreePath *path;
-
-                      path = gtk_tree_model_get_path (model, &child_iter);
-                      gtk_tree_view_expand_to_path (view, path);
-                      gtk_tree_selection_select_iter (sel, &child_iter);
-                      return;
-                    }
+                  path = gtk_tree_model_get_path (model, &child_iter);
+                  gtk_tree_view_expand_to_path (view, path);
+                  gtk_tree_selection_select_iter (sel, &child_iter);
+                  return;
                 }
             }
         }
-      while (gtk_tree_model_iter_next (model, &iter));
     }
 }
 
