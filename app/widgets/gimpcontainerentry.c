@@ -96,7 +96,10 @@ gimp_container_entry_init (GimpContainerEntry *entry)
   GtkListStore       *store;
   GtkCellRenderer    *cell;
 
-  completion = gtk_entry_completion_new ();
+  completion = g_object_new (GTK_TYPE_ENTRY_COMPLETION,
+                             "inline-completion", TRUE,
+                             "popup-set-width",   FALSE,
+                             NULL);
 
   store = gtk_list_store_new (GIMP_CONTAINER_ENTRY_NUM_COLUMNS,
                               GIMP_TYPE_VIEW_RENDERER,

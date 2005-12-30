@@ -1,5 +1,10 @@
 2005-12-30  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpcontainerentry.c (gimp_container_entry_init):
+	set "inline-completion" and unset "popup-set-width" properties.
+
+2005-12-30  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/image-actions.c
 	* app/actions/view-actions.c
 	* app/dialogs/image-properties-dialog.c: use new stock icons from
