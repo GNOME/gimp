@@ -593,6 +593,8 @@ gimp_dockbook_tab_drag_end (GtkWidget      *widget,
       gimp_dockable_detach (dockable);
     }
 
+  dockable->drag_x = GIMP_DOCKABLE_DRAG_OFFSET;
+  dockable->drag_y = GIMP_DOCKABLE_DRAG_OFFSET;
   gtk_widget_set_sensitive (GTK_WIDGET (dockable), TRUE);
 }
 

@@ -1,5 +1,13 @@
 2005-12-30  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpdockable.[ch]: #define GIMP_DOCKABLE_DRAG_OFFSET
+	publically.
+
+	* app/widgets/gimpdockbook.c (gimp_dockbook_tab_drag_end): use the
+	define to reset the dockable's drag offsets.
+
+2005-12-30  Michael Natterer  <mitch@gimp.org>
+
 	* app/dialogs/preferences-dialog.c
 	(prefs_tree_select_callback)
 	(prefs_notebook_page_callback): clean up treeview/model code.

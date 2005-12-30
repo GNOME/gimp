@@ -42,9 +42,6 @@
 #include "gimp-intl.h"
 
 
-#define DRAG_OFFSET (-6)
-
-
 static void       gimp_dockable_destroy           (GtkObject      *object);
 static void       gimp_dockable_size_request      (GtkWidget      *widget,
                                                    GtkRequisition *requisition);
@@ -150,8 +147,8 @@ gimp_dockable_init (GimpDockable *dockable)
   dockable->title_layout = NULL;
   dockable->title_window = NULL;
 
-  dockable->drag_x       = DRAG_OFFSET;
-  dockable->drag_y       = DRAG_OFFSET;
+  dockable->drag_x       = GIMP_DOCKABLE_DRAG_OFFSET;
+  dockable->drag_y       = GIMP_DOCKABLE_DRAG_OFFSET;
 
   gtk_widget_push_composite_child ();
   dockable->menu_button = gtk_button_new ();
@@ -565,7 +562,7 @@ gimp_dockable_button_release (GtkWidget *widget)
 {
   GimpDockable *dockable = GIMP_DOCKABLE (widget);
 
-  dockable->drag_x = DRAG_OFFSET;
+  dockable->drag_x = GIMP_DOCKABLE_DRAG_OFFSET;
 
   return FALSE;
 }

@@ -26,6 +26,9 @@
 #include <gtk/gtkbin.h>
 
 
+#define GIMP_DOCKABLE_DRAG_OFFSET (-6)
+
+
 #define GIMP_TYPE_DOCKABLE            (gimp_dockable_get_type ())
 #define GIMP_DOCKABLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DOCKABLE, GimpDockable))
 #define GIMP_DOCKABLE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DOCKABLE, GimpDockableClass))
