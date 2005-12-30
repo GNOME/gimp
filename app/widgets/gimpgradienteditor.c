@@ -890,7 +890,7 @@ view_events (GtkWidget          *widget,
                 value += adj->page_increment / 2;
                 break;
 
-              deafult:
+              default:
                 break;
               }
 
