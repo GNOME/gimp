@@ -97,25 +97,25 @@ typedef struct _DepthMerge
   gint                 resultHasAlpha;
 } DepthMerge;
 
-static void      DepthMerge_initParams             (DepthMerge *dm);
-static void      DepthMerge_construct              (DepthMerge *dm);
-static void      DepthMerge_destroy                (DepthMerge *dm);
-static gint32    DepthMerge_execute                (DepthMerge *dm);
-static void      DepthMerge_executeRegion          (DepthMerge *dm,
-                                                    guchar     *source1Row,
-                                                    guchar     *source2Row,
-                                                    guchar     *depthMap1Row,
-                                                    guchar     *depthMap2Row,
-                                                    guchar     *resultRow,
-                                                    gint        length);
-static gboolean  DepthMerge_dialog                 (DepthMerge *dm);
-static void      DepthMerge_buildPreviewSourceImage(DepthMerge *dm);
-static void      DepthMerge_updatePreview          (DepthMerge *dm);
+static void      DepthMerge_initParams              (DepthMerge *dm);
+static void      DepthMerge_construct               (DepthMerge *dm);
+static void      DepthMerge_destroy                 (DepthMerge *dm);
+static gint32    DepthMerge_execute                 (DepthMerge *dm);
+static void      DepthMerge_executeRegion           (DepthMerge *dm,
+                                                     guchar     *source1Row,
+                                                     guchar     *source2Row,
+                                                     guchar     *depthMap1Row,
+                                                     guchar     *depthMap2Row,
+                                                     guchar     *resultRow,
+                                                     gint        length);
+static gboolean  DepthMerge_dialog                  (DepthMerge *dm);
+static void      DepthMerge_buildPreviewSourceImage (DepthMerge *dm);
+static void      DepthMerge_updatePreview           (DepthMerge *dm);
 
 
-static gboolean  dm_constraint                     (gint32      imageId,
-                                                    gint32      drawableId,
-                                                    gpointer    data);
+static gboolean  dm_constraint                      (gint32      imageId,
+                                                     gint32      drawableId,
+                                                     gpointer    data);
 
 static void dialogSource1ChangedCallback   (GtkWidget *widget, DepthMerge *dm);
 static void dialogSource2ChangedCallback   (GtkWidget *widget, DepthMerge *dm);
@@ -125,16 +125,23 @@ static void dialogDepthMap2ChangedCallback (GtkWidget *widget, DepthMerge *dm);
 static void dialogValueScaleUpdateCallback (GtkAdjustment *adjustment,
                                             gpointer       data);
 
-static void util_fillReducedBuffer (guchar *dest, gint destWidth, gint destHeight,
-                                    gint destBPP, gint destHasAlpha,
+static void util_fillReducedBuffer (guchar       *dest,
+                                    gint          destWidth,
+                                    gint          destHeight,
+                                    gint          destBPP,
+                                    gboolean      destHasAlpha,
                                     GimpDrawable *sourceDrawable,
-                                    gint x0, gint y0,
-                                    gint sourceWidth, gint sourceHeight);
-static void util_convertColorspace (guchar *dest,
-                                    gint destBPP,   gint destHasAlpha,
-                                    guchar *source,
-                                    gint sourceBPP, gint sourceHasAlpha,
-                                    gint length);
+                                    gint          x0,
+                                    gint          y0,
+                                    gint          sourceWidth,
+                                    gint          sourceHeight);
+static void util_convertColorspace (guchar       *dest,
+                                    gint          destBPP,
+                                    gboolean      destHasAlpha,
+                                    guchar       *source,
+                                    gint          sourceBPP,
+                                    gboolean      sourceHasAlpha,
+                                    gint          length);
 
 /* ----- plug-in entry points ----- */
 
@@ -358,21 +365,25 @@ DepthMerge_destroy (DepthMerge *dm)
 static gint32
 DepthMerge_execute (DepthMerge *dm)
 {
-  int       x, y;
-  GimpPixelRgn source1Rgn, source2Rgn, depthMap1Rgn, depthMap2Rgn,
-            resultRgn;
-  guchar    *source1Row, *source2Row, *depthMap1Row, *depthMap2Row,
-            *resultRow,
-            *tempRow;
-  gint      source1HasAlpha, source2HasAlpha,
-            depthMap1HasAlpha, depthMap2HasAlpha;
+  int           x, y;
+  GimpPixelRgn  source1Rgn,   source2Rgn;
+  GimpPixelRgn  depthMap1Rgn, depthMap2Rgn;
+  GimpPixelRgn  resultRgn;
+  guchar       *source1Row,   *source2Row;
+  guchar       *depthMap1Row, *depthMap2Row;
+  guchar       *resultRow;
+  guchar       *tempRow;
+  gboolean      source1HasAlpha;
+  gboolean      source2HasAlpha;
+  gboolean      depthMap1HasAlpha;
+  gboolean      depthMap2HasAlpha;
 
   /* initialize */
 
-  source1HasAlpha = 0;
-  source2HasAlpha = 0;
-  depthMap1HasAlpha = 0;
-  depthMap2HasAlpha = 0;
+  source1HasAlpha   = FALSE;
+  source2HasAlpha   = FALSE;
+  depthMap1HasAlpha = FALSE;
+  depthMap2HasAlpha = FALSE;
 
   gimp_progress_init (_("Depth-merging"));
 
@@ -394,10 +405,10 @@ DepthMerge_execute (DepthMerge *dm)
   else
     for (x = 0; x < dm->selectionWidth; x++)
       {
-        source1Row[4*x  ] = 0;
-        source1Row[4*x+1] = 0;
-        source1Row[4*x+2] = 0;
-        source1Row[4*x+3] = 255;
+        source1Row[4 * x    ] = 0;
+        source1Row[4 * x + 1] = 0;
+        source1Row[4 * x + 2] = 0;
+        source1Row[4 * x + 3] = 255;
       }
   if (dm->source2Drawable != NULL)
     {
@@ -410,99 +421,99 @@ DepthMerge_execute (DepthMerge *dm)
   else
     for (x = 0; x < dm->selectionWidth; x++)
       {
-        source2Row[4*x  ] = 0;
-        source2Row[4*x+1] = 0;
-        source2Row[4*x+2] = 0;
-        source2Row[4*x+3] = 255;
+        source2Row[4 * x    ] = 0;
+        source2Row[4 * x + 1] = 0;
+        source2Row[4 * x + 2] = 0;
+        source2Row[4 * x + 3] = 255;
       }
   if (dm->depthMap1Drawable != NULL)
     {
-      depthMap1HasAlpha = gimp_drawable_has_alpha(dm->depthMap1Drawable->drawable_id);
-      gimp_pixel_rgn_init(&depthMap1Rgn, dm->depthMap1Drawable,
-                          dm->selectionX0, dm->selectionY0,
-                          dm->selectionWidth, dm->selectionHeight,
-                          FALSE, FALSE);
+      depthMap1HasAlpha = gimp_drawable_has_alpha (dm->depthMap1Drawable->drawable_id);
+      gimp_pixel_rgn_init (&depthMap1Rgn, dm->depthMap1Drawable,
+                           dm->selectionX0, dm->selectionY0,
+                           dm->selectionWidth, dm->selectionHeight,
+                           FALSE, FALSE);
     }
   else
     for (x = 0; x < dm->selectionWidth; x++)
       {
-        depthMap1Row[x  ] = 0;
+        depthMap1Row[x] = 0;
       }
   if (dm->depthMap2Drawable != NULL)
     {
-      depthMap2HasAlpha = gimp_drawable_has_alpha(dm->depthMap2Drawable->drawable_id);
-      gimp_pixel_rgn_init(&depthMap2Rgn, dm->depthMap2Drawable,
-                          dm->selectionX0, dm->selectionY0,
-                          dm->selectionWidth, dm->selectionHeight,
-                          FALSE, FALSE);
+      depthMap2HasAlpha = gimp_drawable_has_alpha (dm->depthMap2Drawable->drawable_id);
+      gimp_pixel_rgn_init (&depthMap2Rgn, dm->depthMap2Drawable,
+                           dm->selectionX0, dm->selectionY0,
+                           dm->selectionWidth, dm->selectionHeight,
+                           FALSE, FALSE);
     }
   else
     for (x = 0; x < dm->selectionWidth; x++)
       {
-        depthMap2Row[x  ] = 0;
+        depthMap2Row[x] = 0;
       }
-  gimp_pixel_rgn_init(&resultRgn, dm->resultDrawable,
-                      dm->selectionX0, dm->selectionY0,
-                      dm->selectionWidth, dm->selectionHeight,
-                      TRUE, TRUE);
+  gimp_pixel_rgn_init (&resultRgn, dm->resultDrawable,
+                       dm->selectionX0, dm->selectionY0,
+                       dm->selectionWidth, dm->selectionHeight,
+                       TRUE, TRUE);
 
   for (y = dm->selectionY0; y < dm->selectionY1; y++)
     {
       if (dm->source1Drawable != NULL)
         {
-          gimp_pixel_rgn_get_row(&source1Rgn, tempRow,
-                                 dm->selectionX0, y,
-                                 dm->selectionWidth);
-          util_convertColorspace(source1Row, 4, TRUE,
-                                 tempRow,
-                                 dm->source1Drawable->bpp, source1HasAlpha,
-                                 dm->selectionWidth);
+          gimp_pixel_rgn_get_row (&source1Rgn, tempRow,
+                                  dm->selectionX0, y,
+                                  dm->selectionWidth);
+          util_convertColorspace (source1Row, 4, TRUE,
+                                  tempRow,
+                                  dm->source1Drawable->bpp, source1HasAlpha,
+                                  dm->selectionWidth);
         }
       if (dm->source2Drawable != NULL)
         {
-          gimp_pixel_rgn_get_row(&source2Rgn, tempRow,
-                                 dm->selectionX0, y,
-                                 dm->selectionWidth);
-          util_convertColorspace(source2Row, 4, TRUE,
-                                 tempRow,
-                                 dm->source2Drawable->bpp, source2HasAlpha,
-                                 dm->selectionWidth);
+          gimp_pixel_rgn_get_row (&source2Rgn, tempRow,
+                                  dm->selectionX0, y,
+                                  dm->selectionWidth);
+          util_convertColorspace (source2Row, 4, TRUE,
+                                  tempRow,
+                                  dm->source2Drawable->bpp, source2HasAlpha,
+                                  dm->selectionWidth);
         }
       if (dm->depthMap1Drawable != NULL)
         {
-          gimp_pixel_rgn_get_row(&depthMap1Rgn, tempRow,
-                                 dm->selectionX0, y,
-                                 dm->selectionWidth);
-          util_convertColorspace(depthMap1Row, 1, FALSE,
-                                 tempRow,
-                                 dm->depthMap1Drawable->bpp, depthMap1HasAlpha,
-                                 dm->selectionWidth);
+          gimp_pixel_rgn_get_row (&depthMap1Rgn, tempRow,
+                                  dm->selectionX0, y,
+                                  dm->selectionWidth);
+          util_convertColorspace (depthMap1Row, 1, FALSE,
+                                  tempRow,
+                                  dm->depthMap1Drawable->bpp, depthMap1HasAlpha,
+                                  dm->selectionWidth);
         }
       if (dm->depthMap2Drawable != NULL)
         {
-          gimp_pixel_rgn_get_row(&depthMap2Rgn, tempRow,
-                                 dm->selectionX0, y,
-                                 dm->selectionWidth);
-          util_convertColorspace(depthMap2Row, 1, FALSE,
-                                 tempRow,
-                                 dm->depthMap2Drawable->bpp, depthMap2HasAlpha,
-                                 dm->selectionWidth);
+          gimp_pixel_rgn_get_row (&depthMap2Rgn, tempRow,
+                                  dm->selectionX0, y,
+                                  dm->selectionWidth);
+          util_convertColorspace (depthMap2Row, 1, FALSE,
+                                  tempRow,
+                                  dm->depthMap2Drawable->bpp, depthMap2HasAlpha,
+                                  dm->selectionWidth);
         }
 
-      DepthMerge_executeRegion(dm,
-                               source1Row, source2Row, depthMap1Row, depthMap2Row,
-                               resultRow,
-                               dm->selectionWidth);
-      util_convertColorspace(tempRow, dm->resultDrawable->bpp, dm->resultHasAlpha,
-                             resultRow, 4, TRUE,
-                             dm->selectionWidth);
+      DepthMerge_executeRegion (dm,
+                                source1Row, source2Row, depthMap1Row, depthMap2Row,
+                                resultRow,
+                                dm->selectionWidth);
+      util_convertColorspace (tempRow, dm->resultDrawable->bpp, dm->resultHasAlpha,
+                              resultRow, 4, TRUE,
+                              dm->selectionWidth);
 
-      gimp_pixel_rgn_set_row(&resultRgn, tempRow,
-                             dm->selectionX0, y,
-                             dm->selectionWidth);
+      gimp_pixel_rgn_set_row (&resultRgn, tempRow,
+                              dm->selectionX0, y,
+                              dm->selectionWidth);
 
       gimp_progress_update ((double)(y-dm->selectionY0) /
-                            (double)(dm->selectionHeight-1));
+                            (double)(dm->selectionHeight - 1));
     }
 
   g_free (resultRow);
@@ -531,7 +542,9 @@ DepthMerge_executeRegion (DepthMerge *dm,
 {
   gfloat  scale1, scale2, offset255, invOverlap255;
   gfloat  frac, depth1, depth2;
-  gushort c1[4], c2[4], cR1[4], cR2[4], cR[4], temp;
+  gushort c1[4], c2[4];
+  gushort cR1[4] = { 0, 0, 0, 0 }, cR2[4] = { 0, 0, 0, 0 };
+  gushort cR[4], temp;
   gint    i, tempInt;
 
   invOverlap255 = 1.0 / (MAX (dm->params.overlap, 0.001) * 255);
@@ -544,38 +557,38 @@ DepthMerge_executeRegion (DepthMerge *dm,
       depth1 = (gfloat) depthMap1Row[i];
       depth2 = (gfloat) depthMap2Row[i];
 
-      frac = (depth2*scale2 - (depth1*scale1 + offset255)) * invOverlap255;
-      frac = 0.5 * (frac+1.0);
+      frac = (depth2 * scale2 - (depth1 * scale1 + offset255)) * invOverlap255;
+      frac = 0.5 * (frac + 1.0);
       frac = CLAMP(frac, 0.0, 1.0);
 
       /* c1 -> color corresponding to source1 */
-      c1[0] = source1Row[4*i  ];
-      c1[1] = source1Row[4*i+1];
-      c1[2] = source1Row[4*i+2];
-      c1[3] = source1Row[4*i+3];
+      c1[0] = source1Row[4 * i    ];
+      c1[1] = source1Row[4 * i + 1];
+      c1[2] = source1Row[4 * i + 2];
+      c1[3] = source1Row[4 * i + 3];
 
       /* c2 -> color corresponding to source2 */
-      c2[0] = source2Row[4*i  ];
-      c2[1] = source2Row[4*i+1];
-      c2[2] = source2Row[4*i+2];
-      c2[3] = source2Row[4*i+3];
+      c2[0] = source2Row[4 * i    ];
+      c2[1] = source2Row[4 * i + 1];
+      c2[2] = source2Row[4 * i + 2];
+      c2[3] = source2Row[4 * i + 3];
 
       if (frac != 0)
         {
           /* cR1 -> result if c1 is completely on top */
-          cR1[0] = c1[3]*c1[0]   + (255-c1[3])*c2[0];
-          cR1[1] = c1[3]*c1[1]   + (255-c1[3])*c2[1];
-          cR1[2] = c1[3]*c1[2]   + (255-c1[3])*c2[2];
-          cR1[3] = MUL255(c1[3]) + (255-c1[3])*c2[3];
+          cR1[0] = c1[3] * c1[0]  + (255 - c1[3]) * c2[0];
+          cR1[1] = c1[3] * c1[1]  + (255 - c1[3]) * c2[1];
+          cR1[2] = c1[3] * c1[2]  + (255 - c1[3]) * c2[2];
+          cR1[3] = MUL255 (c1[3]) + (255 - c1[3]) * c2[3];
         }
 
       if (frac != 1)
         {
           /* cR2 -> result if c2 is completely on top */
-          cR2[0] = c2[3]*c2[0]   + (255-c2[3])*c1[0];
-          cR2[1] = c2[3]*c2[1]   + (255-c2[3])*c1[1];
-          cR2[2] = c2[3]*c2[2]   + (255-c2[3])*c1[2];
-          cR2[3] = MUL255(c2[3]) + (255-c2[3])*c1[3];
+          cR2[0] = c2[3] * c2[0]  + (255 - c2[3]) * c1[0];
+          cR2[1] = c2[3] * c2[1]  + (255 - c2[3]) * c1[1];
+          cR2[2] = c2[3] * c2[2]  + (255 - c2[3]) * c1[2];
+          cR2[3] = MUL255 (c2[3]) + (255 - c2[3]) * c1[3];
         }
 
       if (frac == 1)
@@ -594,16 +607,20 @@ DepthMerge_executeRegion (DepthMerge *dm,
         }
       else
         {
-          tempInt = LERP(frac, cR2[0], cR1[0]); cR[0] = CLAMP(tempInt,0,255*255);
-          tempInt = LERP(frac, cR2[1], cR1[1]); cR[1] = CLAMP(tempInt,0,255*255);
-          tempInt = LERP(frac, cR2[2], cR1[2]); cR[2] = CLAMP(tempInt,0,255*255);
-          tempInt = LERP(frac, cR2[3], cR1[3]); cR[3] = CLAMP(tempInt,0,255*255);
+          tempInt = LERP (frac, cR2[0], cR1[0]);
+          cR[0] = CLAMP (tempInt,0,255 * 255);
+          tempInt = LERP (frac, cR2[1], cR1[1]);
+          cR[1] = CLAMP (tempInt,0,255 * 255);
+          tempInt = LERP (frac, cR2[2], cR1[2]);
+          cR[2] = CLAMP (tempInt,0,255 * 255);
+          tempInt = LERP (frac, cR2[3], cR1[3]);
+          cR[3] = CLAMP (tempInt,0,255 * 255);
         }
 
-      temp = DIV255 (cR[0]); resultRow[4*i  ] = MIN (temp, 255);
-      temp = DIV255 (cR[1]); resultRow[4*i+1] = MIN (temp, 255);
-      temp = DIV255 (cR[2]); resultRow[4*i+2] = MIN (temp, 255);
-      temp = DIV255 (cR[3]); resultRow[4*i+3] = MIN (temp, 255);
+      temp = DIV255 (cR[0]); resultRow[4 * i    ] = MIN (temp, 255);
+      temp = DIV255 (cR[1]); resultRow[4 * i + 1] = MIN (temp, 255);
+      temp = DIV255 (cR[2]); resultRow[4 * i + 2] = MIN (temp, 255);
+      temp = DIV255 (cR[3]); resultRow[4 * i + 3] = MIN (temp, 255);
     }
 }
 
@@ -795,59 +812,60 @@ static void
 DepthMerge_buildPreviewSourceImage (DepthMerge *dm)
 {
   dm->interface->previewSource1   =
-    g_new(guchar, dm->interface->previewWidth *
-                  dm->interface->previewHeight * 4);
-  util_fillReducedBuffer(dm->interface->previewSource1,
-                         dm->interface->previewWidth,
-                         dm->interface->previewHeight,
-                         4, TRUE,
-                         dm->source1Drawable,
-                         dm->selectionX0, dm->selectionY0,
-                         dm->selectionWidth, dm->selectionHeight);
+    g_new (guchar, dm->interface->previewWidth *
+                   dm->interface->previewHeight * 4);
+  util_fillReducedBuffer (dm->interface->previewSource1,
+                          dm->interface->previewWidth,
+                          dm->interface->previewHeight,
+                          4, TRUE,
+                          dm->source1Drawable,
+                          dm->selectionX0, dm->selectionY0,
+                          dm->selectionWidth, dm->selectionHeight);
   dm->interface->previewSource2   =
-    g_new(guchar, dm->interface->previewWidth *
-                  dm->interface->previewHeight * 4);
-  util_fillReducedBuffer(dm->interface->previewSource2,
-                         dm->interface->previewWidth,
-                         dm->interface->previewHeight,
-                         4, TRUE,
-                         dm->source2Drawable,
-                         dm->selectionX0, dm->selectionY0,
-                         dm->selectionWidth, dm->selectionHeight);
+    g_new (guchar, dm->interface->previewWidth *
+                   dm->interface->previewHeight * 4);
+  util_fillReducedBuffer (dm->interface->previewSource2,
+                          dm->interface->previewWidth,
+                          dm->interface->previewHeight,
+                          4, TRUE,
+                          dm->source2Drawable,
+                          dm->selectionX0, dm->selectionY0,
+                          dm->selectionWidth, dm->selectionHeight);
   dm->interface->previewDepthMap1 =
-    g_new(guchar, dm->interface->previewWidth *
-                  dm->interface->previewHeight * 1);
-  util_fillReducedBuffer(dm->interface->previewDepthMap1,
-                         dm->interface->previewWidth,
-                         dm->interface->previewHeight,
-                         1, FALSE,
-                         dm->depthMap1Drawable,
-                         dm->selectionX0, dm->selectionY0,
-                         dm->selectionWidth, dm->selectionHeight);
+    g_new (guchar, dm->interface->previewWidth *
+                   dm->interface->previewHeight * 1);
+  util_fillReducedBuffer (dm->interface->previewDepthMap1,
+                          dm->interface->previewWidth,
+                          dm->interface->previewHeight,
+                          1, FALSE,
+                          dm->depthMap1Drawable,
+                          dm->selectionX0, dm->selectionY0,
+                          dm->selectionWidth, dm->selectionHeight);
   dm->interface->previewDepthMap2 =
-    g_new(guchar, dm->interface->previewWidth *
-                  dm->interface->previewHeight * 1);
-  util_fillReducedBuffer(dm->interface->previewDepthMap2,
-                         dm->interface->previewWidth,
-                         dm->interface->previewHeight,
-                         1, FALSE,
-                         dm->depthMap2Drawable,
-                         dm->selectionX0, dm->selectionY0,
-                         dm->selectionWidth, dm->selectionHeight);
+    g_new (guchar, dm->interface->previewWidth *
+                   dm->interface->previewHeight * 1);
+  util_fillReducedBuffer (dm->interface->previewDepthMap2,
+                          dm->interface->previewWidth,
+                          dm->interface->previewHeight,
+                          1, FALSE,
+                          dm->depthMap2Drawable,
+                          dm->selectionX0, dm->selectionY0,
+                          dm->selectionWidth, dm->selectionHeight);
 }
 
 static void
 DepthMerge_updatePreview (DepthMerge *dm)
 {
   gint    y;
-  guchar *source1Row, *source2Row, *depthMap1Row, *depthMap2Row,
-         *resultRGBA;
+  guchar *source1Row, *source2Row;
+  guchar *depthMap1Row, *depthMap2Row;
+  guchar *resultRGBA;
 
   if (!dm->interface->active)
     return;
 
-  resultRGBA = g_new(guchar, 4 * dm->interface->previewWidth *
-                                 dm->interface->previewHeight);
+  resultRGBA = g_new (guchar, 4 * dm->interface->previewWidth *
+                                  dm->interface->previewHeight);
 
   for (y = 0; y < dm->interface->previewHeight; y++)
     {
@@ -862,7 +880,7 @@ DepthMerge_updatePreview (DepthMerge *dm)
 
       DepthMerge_executeRegion(dm,
                                source1Row, source2Row, depthMap1Row, depthMap2Row,
-                               resultRGBA + 4*y*dm->interface->previewWidth,
+                               resultRGBA + 4 * y * dm->interface->previewWidth,
                                dm->interface->previewWidth);
     }
 
@@ -1009,26 +1027,29 @@ dialogValueScaleUpdateCallback (GtkAdjustment *adjustment,
 /* ----- Utility routines ----- */
 
 static void
-util_fillReducedBuffer (guchar    *dest,
-                        gint       destWidth,
-                        gint       destHeight,
-                        gint       destBPP,
-                        gint       destHasAlpha,
+util_fillReducedBuffer (guchar       *dest,
+                        gint          destWidth,
+                        gint          destHeight,
+                        gint          destBPP,
+                        gboolean      destHasAlpha,
                         GimpDrawable *sourceDrawable,
-                        gint       x0,
-                        gint       y0,
-                        gint       sourceWidth,
-                        gint       sourceHeight)
+                        gint          x0,
+                        gint          y0,
+                        gint          sourceWidth,
+                        gint          sourceHeight)
 {
-  GimpPixelRgn rgn;
-  guchar    *sourceBuffer, *reducedRowBuffer,
-            *sourceBufferRow, *sourceBufferPos, *reducedRowBufferPos;
-  int       x, y, i, yPrime, sourceHasAlpha, sourceBpp;
-  int       *sourceRowOffsetLookup;
+  GimpPixelRgn  rgn;
+  guchar       *sourceBuffer,    *reducedRowBuffer;
+  guchar       *sourceBufferPos, *reducedRowBufferPos;
+  guchar       *sourceBufferRow;
+  gint          x, y, i, yPrime;
+  gboolean      sourceHasAlpha;
+  gint          sourceBpp;
+  gint         *sourceRowOffsetLookup;
 
   if ((sourceDrawable == NULL) || (sourceWidth == 0) || (sourceHeight == 0))
     {
-      for (x = 0; x < destWidth*destHeight*destBPP; x++)
+      for (x = 0; x < destWidth * destHeight * destBPP; x++)
         dest[x] = 0;
       return;
     }
@@ -1038,19 +1059,20 @@ util_fillReducedBuffer (guchar    *dest,
   sourceBuffer          = g_new (guchar, sourceWidth * sourceHeight * sourceBpp);
   reducedRowBuffer      = g_new (guchar, destWidth   * sourceBpp);
   sourceRowOffsetLookup = g_new (int, destWidth);
-  gimp_pixel_rgn_init(&rgn, sourceDrawable, x0, y0, sourceWidth, sourceHeight,
-                      FALSE, FALSE);
-  sourceHasAlpha = gimp_drawable_has_alpha(sourceDrawable->drawable_id);
+  gimp_pixel_rgn_init (&rgn, sourceDrawable,
+                       x0, y0, sourceWidth, sourceHeight,
+                       FALSE, FALSE);
+  sourceHasAlpha = gimp_drawable_has_alpha (sourceDrawable->drawable_id);
 
   for (x = 0; x < destWidth; x++)
-    sourceRowOffsetLookup[x] = (x*(sourceWidth-1)/(destWidth-1))*sourceBpp;
+    sourceRowOffsetLookup[x] = (x * (sourceWidth - 1) / (destWidth - 1)) * sourceBpp;
 
-  gimp_pixel_rgn_get_rect(&rgn, sourceBuffer,
-                          x0, y0, sourceWidth, sourceHeight);
+  gimp_pixel_rgn_get_rect (&rgn, sourceBuffer,
+                           x0, y0, sourceWidth, sourceHeight);
 
   for (y = 0; y < destHeight; y++)
     {
-      yPrime = y*(sourceHeight-1)/(destHeight-1);
+      yPrime = y * (sourceHeight - 1) / (destHeight - 1);
       sourceBufferRow = &(sourceBuffer[yPrime * sourceWidth * sourceBpp]);
       sourceBufferPos = sourceBufferRow;
       reducedRowBufferPos = reducedRowBuffer;
@@ -1061,7 +1083,7 @@ util_fillReducedBuffer (guchar    *dest,
             reducedRowBufferPos[i] = sourceBufferPos[i];
           reducedRowBufferPos += sourceBpp;
         }
-      util_convertColorspace(&(dest[y*destWidth*destBPP]), destBPP, destHasAlpha,
+      util_convertColorspace(&(dest[y * destWidth * destBPP]), destBPP, destHasAlpha,
                              reducedRowBuffer, sourceDrawable->bpp, sourceHasAlpha,
                              destWidth);
     }
@@ -1075,33 +1097,37 @@ util_fillReducedBuffer (guchar    *dest,
    likes gray and rgb best, of course.  Others will be creatively mutilated,
    and even rgb->gray is pretty bad */
 static void
-util_convertColorspace (guchar *dest,
-                        gint    destBPP,
-                        gint    destHasAlpha,
-                        guchar *source,
-                        gint    sourceBPP,
-                        gint    sourceHasAlpha,
-                        gint    length)
+util_convertColorspace (guchar   *dest,
+                        gint      destBPP,
+                        gboolean  destHasAlpha,
+                        guchar   *source,
+                        gint      sourceBPP,
+                        gboolean  sourceHasAlpha,
+                        gint      length)
 {
-  int i, j, sourcePos, destPos, accum;
-  int sourceColorBPP = sourceHasAlpha ? (sourceBPP-1) : sourceBPP;
-  int destColorBPP   = destHasAlpha   ? (destBPP  -1) : destBPP;
+  gint i, j;
+  gint sourcePos, destPos;
+  gint accum;
+  gint sourceColorBPP = sourceHasAlpha ? (sourceBPP - 1) : sourceBPP;
+  gint destColorBPP   = destHasAlpha   ? (destBPP   - 1) : destBPP;
 
   if (((sourceColorBPP != 1) && (sourceColorBPP != 3)) ||
       ((destColorBPP   != 1) && (destColorBPP   != 3)))
-    fprintf(stderr, "Warning: I don't _like_ this color space.  This is a suggestion, not a threat.\n");
+    fprintf (stderr, "Warning: I don't _like_ this color space.  This is a suggestion, not a threat.\n");
 
   if ((sourceColorBPP == destColorBPP) &&
       (sourceBPP      == destBPP     ))
     {
-      j = length*sourceBPP;
-      for (i = 0; i < j; i++) dest[i] = source[i];
+      j = length * sourceBPP;
+      for (i = 0; i < j; i++)
+        dest[i] = source[i];
       return;
     }
 
   if (sourceColorBPP == destColorBPP)
     {
-      for (i = destPos = sourcePos = 0; i < length;
+      for (i = destPos = sourcePos = 0;
+           i < length;
            i++, destPos += destBPP, sourcePos += sourceBPP)
         {
           for (j = 0; j < destColorBPP; j++)
@@ -1111,7 +1137,8 @@ util_convertColorspace (guchar *dest,
   else if (sourceColorBPP == 1)
     {
       /* Duplicate single "gray" source byte across all dest bytes */
-      for (i = destPos = sourcePos = 0; i < length;
+      for (i = destPos = sourcePos = 0;
+           i < length;
            i++, destPos += destBPP, sourcePos += sourceBPP)
         {
           for (j = 0; j < destColorBPP; j++)
@@ -1121,7 +1148,8 @@ util_convertColorspace (guchar *dest,
   else if (destColorBPP == 1)
     {
       /* Average all source bytes into single "gray" dest byte */
-      for (i = destPos = sourcePos = 0; i < length;
+      for (i = destPos = sourcePos = 0;
+           i < length;
            i++, destPos += destBPP, sourcePos += sourceBPP)
         {
           accum = 0;
@@ -1133,7 +1161,8 @@ util_convertColorspace (guchar *dest,
   else if (destColorBPP < sourceColorBPP)
     {
       /* Copy as many corresponding bytes from source to dest as will fit */
-      for (i = destPos = sourcePos = 0; i < length;
+      for (i = destPos = sourcePos = 0;
+           i < length;
            i++, destPos += destBPP, sourcePos += sourceBPP)
         {
           for (j = 0; j < destColorBPP; j++)
@@ -1143,7 +1172,8 @@ util_convertColorspace (guchar *dest,
   else /* destColorBPP > sourceColorBPP */
     {
       /* Fill extra dest bytes with zero */
-      for (i = destPos = sourcePos = 0; i < length;
+      for (i = destPos = sourcePos = 0;
+           i < length;
            i++, destPos += destBPP, sourcePos += sourceBPP)
         {
           for (j = 0; j < sourceColorBPP; j++)
