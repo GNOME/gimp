@@ -64,8 +64,8 @@ d_draw_poly (GfigObject *obj)
   gdouble     radius;
   gdouble     offset_angle;
   gint        loop;
-  GdkPoint    start_pnt;
-  GdkPoint    first_pnt;
+  GdkPoint    start_pnt = { 0, 0 };
+  GdkPoint    first_pnt = { 0, 0 };
   gboolean    do_line = FALSE;
 
   center_pnt = obj->points;
@@ -153,7 +153,8 @@ d_paint_poly (GfigObject *obj)
   gdouble     radius;
   gdouble     offset_angle;
   gint        loop;
-  GdkPoint    first_pnt, last_pnt;
+  GdkPoint    first_pnt = { 0, 0 };
+  GdkPoint    last_pnt  = { 0, 0 };
   gboolean    first = TRUE;
   gdouble    *min_max;
 
@@ -231,7 +232,7 @@ d_paint_poly (GfigObject *obj)
 
   /* Scale before drawing */
   if (selvals.scaletoimage)
-    {// FIXME scale xmax and al.
+    {/* FIXME scale xmax and al. */
       scale_to_original_xy (&line_pnts[0], i/2);
       scale_to_original_xy (min_max, 2);
     }
@@ -273,7 +274,8 @@ d_poly2lines (GfigObject *obj)
   gdouble     radius;
   gdouble     offset_angle;
   gint        loop;
-  GdkPoint    first_pnt, last_pnt;
+  GdkPoint    first_pnt = { 0, 0 };
+  GdkPoint    last_pnt  = { 0, 0 };
   gboolean    first = TRUE;
 
   g_assert (obj != NULL);
@@ -367,7 +369,8 @@ d_star2lines (GfigObject *obj)
   gdouble     inner_radius;
   gdouble     offset_angle;
   gint        loop;
-  GdkPoint    first_pnt, last_pnt;
+  GdkPoint    first_pnt = { 0, 0 };
+  GdkPoint    last_pnt  = { 0, 0 };
   gboolean    first = TRUE;
 
   g_assert (obj != NULL);

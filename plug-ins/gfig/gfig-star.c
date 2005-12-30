@@ -67,8 +67,8 @@ d_draw_star (GfigObject *obj)
   gdouble     inner_radius;
   gdouble     offset_angle;
   gint        loop;
-  GdkPoint    start_pnt;
-  GdkPoint    first_pnt;
+  GdkPoint    start_pnt = { 0, 0 };
+  GdkPoint    first_pnt = { 0, 0 };
   gboolean    do_line = FALSE;
 
   center_pnt = obj->points;
@@ -182,7 +182,8 @@ d_paint_star (GfigObject *obj)
   gdouble     inner_radius;
   gdouble     offset_angle;
   gint        loop;
-  GdkPoint    first_pnt, last_pnt;
+  GdkPoint    first_pnt = { 0, 0 };
+  GdkPoint    last_pnt  = { 0, 0 };
   gboolean    first = TRUE;
   gdouble    *min_max;
 

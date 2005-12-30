@@ -69,7 +69,7 @@ d_draw_spiral (GfigObject *obj)
   gdouble     offset_angle;
   gdouble     sp_cons;
   gint        loop;
-  GdkPoint    start_pnt;
+  GdkPoint    start_pnt = { 0, 0 };
   GdkPoint    first_pnt;
   gboolean    do_line = FALSE;
   gint        clock_wise = 1;
@@ -166,7 +166,7 @@ d_paint_spiral (GfigObject *obj)
   gdouble     offset_angle;
   gdouble     sp_cons;
   gint        loop;
-  GdkPoint    last_pnt;
+  GdkPoint    last_pnt = { 0, 0 };
   gint        clock_wise = 1;
 
   g_assert (obj != NULL);

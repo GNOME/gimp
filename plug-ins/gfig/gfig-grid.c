@@ -80,7 +80,7 @@ prime_factors_get (PrimeFactors *this)
   this->current = this->next;
   while (this->index <= PRIMES_MAX_INDEX)
     {
-      if (this->remaining % primes[this->index] == 0)   // divisible
+      if (this->remaining % primes[this->index] == 0)   /* divisible */
         {
           this->remaining /= primes[this->index];
           this->next = primes[this->index];

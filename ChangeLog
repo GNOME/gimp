@@ -1,5 +1,14 @@
 2005-12-30  DindinX  <dindinx@gimp.org>
 
+	* plug-ins/gfig/gfig-arc.c
+	* plug-ins/gfig/gfig-grid.c
+	* plug-ins/gfig/gfig-poly.c
+	* plug-ins/gfig/gfig-spiral.c
+	* plug-ins/gfig/gfig-star.c: fixed some compiler warnings and did some
+	cleanups.
+
+2005-12-30  DindinX  <dindinx@gimp.org>
+
 	* plug-ins/common/depthmerge.c: fixed some compiler warnings and did
 	some cleanups.
 

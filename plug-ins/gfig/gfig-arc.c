@@ -467,7 +467,7 @@ d_paint_arc (GfigObject *obj)
   gdouble  ang_loop;
   gdouble  radius;
   gint     loop;
-  GdkPoint first_pnt, last_pnt;
+  GdkPoint first_pnt, last_pnt = { 0, 0 };
   gboolean first = TRUE;
   GdkPoint center_pnt;
   gdouble  minang, arcang;
