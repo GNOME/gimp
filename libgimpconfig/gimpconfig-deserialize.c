@@ -214,7 +214,7 @@ gimp_config_deserialize_property (GimpConfig *config,
 {
   GTypeClass          *owner_class;
   GimpConfigInterface *config_iface;
-  GimpConfigInterface *parent_iface;
+  GimpConfigInterface *parent_iface = NULL;
   GParamSpec          *prop_spec;
   GTokenType           token = G_TOKEN_RIGHT_PAREN;
   GValue               value = { 0, };

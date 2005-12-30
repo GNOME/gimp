@@ -1018,6 +1018,7 @@ gimp_vector_2d_to_3d_val (gint        sx,
       result.y = (gdouble) (y - sy) / (gdouble) h;
     }
 
+  result.z = 0;
   return result;
 }
 

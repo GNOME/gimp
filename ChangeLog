@@ -1,5 +1,11 @@
 2005-12-30  DindinX  <dindinx@gimp.org>
 
+	* libgimpmath/gimpvector.c
+	* libgimpconfig/gimpconfig-deserialize.c: shut up some compiler
+	warnings.
+
+2005-12-30  DindinX  <dindinx@gimp.org>
+
 	* plug-ins/ifscompose/ifscompose_utils.c: fixed some compiler warnings
 	and did some cleanups.
 
