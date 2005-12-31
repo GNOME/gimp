@@ -1,4 +1,5 @@
-# translation of es.po to 
+# translation of es.po to Spanish
+# translation of es.po to
 # translation of es.po to
 # translation of es.po to
 # translation of gimp-plug-ins.HEAD.po to Spanish
@@ -7,7 +8,7 @@
 # Rodrigo Sancho Senosiain <ruy_ikari@bigfoot.com>, 2000-2002.
 # Francisco Javier F. Serrador <serrador@arrakis.es>, 2003.
 # Pablo G. del Campo <pablodc@bigfoot.com>, 2003, 2004.
-# Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004.
+# Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004, 2005.
 # Pablo del Campo <pablodc@par001001-703>, 2004.
 # Alonso Lara <keko@khor-ha.net>, 2005.
 #
@@ -15,10 +16,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-30 12:21+0100\n"
-"PO-Revision-Date: 2005-10-30 12:35+0100\n"
-"Last-Translator: \n"
-"Language-Team:  <en@li.org>\n"
+"POT-Creation-Date: 2005-12-31 13:34+0100\n"
+"PO-Revision-Date: 2005-12-31 13:38+0100\n"
+"Last-Translator: Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
+"Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -379,7 +380,7 @@ msgstr "_Fractales"
 #: ../plug-ins/Lighting/lighting_ui.c:1160 ../plug-ins/bmp/bmpwrite.c:200
 #: ../plug-ins/common/CEL.c:568 ../plug-ins/common/CML_explorer.c:2013
 #: ../plug-ins/common/channel_mixer.c:1071 ../plug-ins/common/compressor.c:410
-#: ../plug-ins/common/compressor.c:541 ../plug-ins/common/curve_bend.c:860
+#: ../plug-ins/common/compressor.c:541 ../plug-ins/common/curve_bend.c:839
 #: ../plug-ins/common/dicom.c:650 ../plug-ins/common/gbr.c:616
 #: ../plug-ins/common/gif.c:1000 ../plug-ins/common/gih.c:1258
 #: ../plug-ins/common/gtm.c:225 ../plug-ins/common/mng.c:561
@@ -420,7 +421,7 @@ msgstr "Guardar parámetros de fractal"
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:917
 #: ../plug-ins/Lighting/lighting_ui.c:1304 ../plug-ins/bmp/bmpread.c:152
 #: ../plug-ins/common/CEL.c:299 ../plug-ins/common/CML_explorer.c:2233
-#: ../plug-ins/common/channel_mixer.c:988 ../plug-ins/common/curve_bend.c:912
+#: ../plug-ins/common/channel_mixer.c:988 ../plug-ins/common/curve_bend.c:891
 #: ../plug-ins/common/dicom.c:295 ../plug-ins/common/gbr.c:348
 #: ../plug-ins/common/gifload.c:297 ../plug-ins/common/gih.c:649
 #: ../plug-ins/common/mng.c:1124 ../plug-ins/common/pat.c:321
@@ -431,7 +432,7 @@ msgstr "Guardar parámetros de fractal"
 #: ../plug-ins/common/psp.c:1463 ../plug-ins/common/raw.c:242
 #: ../plug-ins/common/raw.c:647 ../plug-ins/common/spheredesigner.c:2009
 #: ../plug-ins/common/sunras.c:379 ../plug-ins/common/svg.c:313
-#: ../plug-ins/common/svg.c:708 ../plug-ins/common/tga.c:414
+#: ../plug-ins/common/svg.c:715 ../plug-ins/common/tga.c:414
 #: ../plug-ins/common/tiff.c:530 ../plug-ins/common/xbm.c:720
 #: ../plug-ins/common/xwd.c:420 ../plug-ins/faxg3/faxg3.c:219
 #: ../plug-ins/fits/fits.c:342 ../plug-ins/flame/flame.c:411
@@ -522,7 +523,7 @@ msgstr "Efectos de _iluminación..."
 
 #. General options
 #: ../plug-ins/Lighting/lighting_ui.c:277
-#: ../plug-ins/MapObject/mapobject_ui.c:470
+#: ../plug-ins/MapObject/mapobject_ui.c:473
 msgid "General Options"
 msgstr "Opciones generales"
 
@@ -541,7 +542,7 @@ msgid "Cre_ate new image"
 msgstr "Cre_ar una imagen nueva"
 
 #: ../plug-ins/Lighting/lighting_ui.c:308
-#: ../plug-ins/MapObject/mapobject_ui.c:544
+#: ../plug-ins/MapObject/mapobject_ui.c:547
 msgid "Create a new image when applying filter"
 msgstr "Crear nueva imagen cuando se aplique el filtro"
 
@@ -558,7 +559,7 @@ msgid "Distance:"
 msgstr "Distancia:"
 
 #: ../plug-ins/Lighting/lighting_ui.c:361
-#: ../plug-ins/MapObject/mapobject_ui.c:623
+#: ../plug-ins/MapObject/mapobject_ui.c:626
 msgid "Light Settings"
 msgstr "Configuración de luz"
 
@@ -605,17 +606,17 @@ msgid "Point"
 msgstr "Punto"
 
 #: ../plug-ins/Lighting/lighting_ui.c:416
-#: ../plug-ins/MapObject/mapobject_ui.c:651
+#: ../plug-ins/MapObject/mapobject_ui.c:654
 msgid "Type of light source to apply"
 msgstr "Tipo de fuente de luz a aplicar"
 
 #: ../plug-ins/Lighting/lighting_ui.c:418
-#: ../plug-ins/MapObject/mapobject_ui.c:653
+#: ../plug-ins/MapObject/mapobject_ui.c:656
 msgid "Select lightsource color"
 msgstr "Seleccionar el color de la fuente de luz"
 
 #: ../plug-ins/Lighting/lighting_ui.c:430
-#: ../plug-ins/MapObject/mapobject_ui.c:666
+#: ../plug-ins/MapObject/mapobject_ui.c:669
 msgid "Set light source color"
 msgstr "Ver color de fuente de luz"
 
@@ -628,8 +629,8 @@ msgid "Light intensity"
 msgstr "Intensidad de la luz"
 
 #: ../plug-ins/Lighting/lighting_ui.c:447
-#: ../plug-ins/MapObject/mapobject_ui.c:668
-#: ../plug-ins/MapObject/mapobject_ui.c:995
+#: ../plug-ins/MapObject/mapobject_ui.c:671
+#: ../plug-ins/MapObject/mapobject_ui.c:998
 #: ../plug-ins/print/gimp_main_window.c:475
 msgid "Position"
 msgstr "Posición"
@@ -642,7 +643,7 @@ msgid "_X:"
 msgstr "_X:"
 
 #: ../plug-ins/Lighting/lighting_ui.c:462
-#: ../plug-ins/MapObject/mapobject_ui.c:692
+#: ../plug-ins/MapObject/mapobject_ui.c:695
 msgid "Light source X position in XYZ space"
 msgstr "Posición X de la fuente de luz en el espacio XYZ"
 
@@ -654,7 +655,7 @@ msgid "_Y:"
 msgstr "_Y:"
 
 #: ../plug-ins/Lighting/lighting_ui.c:475
-#: ../plug-ins/MapObject/mapobject_ui.c:706
+#: ../plug-ins/MapObject/mapobject_ui.c:709
 msgid "Light source Y position in XYZ space"
 msgstr "Posición Y de la fuente de luz en el espacio XYZ"
 
@@ -663,7 +664,7 @@ msgid "_Z:"
 msgstr "_Z:"
 
 #: ../plug-ins/Lighting/lighting_ui.c:488
-#: ../plug-ins/MapObject/mapobject_ui.c:720
+#: ../plug-ins/MapObject/mapobject_ui.c:723
 msgid "Light source Z position in XYZ space"
 msgstr "Posición Z de la fuente de luz en el espacio XYZ"
 
@@ -677,46 +678,46 @@ msgstr "Dirección"
 
 #. X
 #: ../plug-ins/Lighting/lighting_ui.c:499
-#: ../plug-ins/MapObject/mapobject_ui.c:684
-#: ../plug-ins/MapObject/mapobject_ui.c:738
-#: ../plug-ins/MapObject/mapobject_ui.c:1006
-#: ../plug-ins/MapObject/mapobject_ui.c:1055
+#: ../plug-ins/MapObject/mapobject_ui.c:687
+#: ../plug-ins/MapObject/mapobject_ui.c:741
+#: ../plug-ins/MapObject/mapobject_ui.c:1009
+#: ../plug-ins/MapObject/mapobject_ui.c:1058
 #: ../plug-ins/ifscompose/ifscompose.c:527
 msgid "X:"
 msgstr "X:"
 
 #: ../plug-ins/Lighting/lighting_ui.c:505
-#: ../plug-ins/MapObject/mapobject_ui.c:746
+#: ../plug-ins/MapObject/mapobject_ui.c:749
 msgid "Light source X direction in XYZ space"
 msgstr "Dirección X de la fuente de luz en el espacio XYZ"
 
 #. Y
 #: ../plug-ins/Lighting/lighting_ui.c:511
-#: ../plug-ins/MapObject/mapobject_ui.c:698
-#: ../plug-ins/MapObject/mapobject_ui.c:751
-#: ../plug-ins/MapObject/mapobject_ui.c:1019
-#: ../plug-ins/MapObject/mapobject_ui.c:1066
-#: ../plug-ins/MapObject/mapobject_ui.c:1164
+#: ../plug-ins/MapObject/mapobject_ui.c:701
+#: ../plug-ins/MapObject/mapobject_ui.c:754
+#: ../plug-ins/MapObject/mapobject_ui.c:1022
+#: ../plug-ins/MapObject/mapobject_ui.c:1069
+#: ../plug-ins/MapObject/mapobject_ui.c:1167
 #: ../plug-ins/ifscompose/ifscompose.c:541
 msgid "Y:"
 msgstr "Y:"
 
 #: ../plug-ins/Lighting/lighting_ui.c:517
-#: ../plug-ins/MapObject/mapobject_ui.c:759
+#: ../plug-ins/MapObject/mapobject_ui.c:762
 msgid "Light source Y direction in XYZ space"
 msgstr "Dirección Y de la fuente de luz en el espacio XYZ"
 
 #: ../plug-ins/Lighting/lighting_ui.c:523
-#: ../plug-ins/MapObject/mapobject_ui.c:712
-#: ../plug-ins/MapObject/mapobject_ui.c:764
-#: ../plug-ins/MapObject/mapobject_ui.c:1032
-#: ../plug-ins/MapObject/mapobject_ui.c:1077
-#: ../plug-ins/MapObject/mapobject_ui.c:1176
+#: ../plug-ins/MapObject/mapobject_ui.c:715
+#: ../plug-ins/MapObject/mapobject_ui.c:767
+#: ../plug-ins/MapObject/mapobject_ui.c:1035
+#: ../plug-ins/MapObject/mapobject_ui.c:1080
+#: ../plug-ins/MapObject/mapobject_ui.c:1179
 msgid "Z:"
 msgstr "Z:"
 
 #: ../plug-ins/Lighting/lighting_ui.c:529
-#: ../plug-ins/MapObject/mapobject_ui.c:772
+#: ../plug-ins/MapObject/mapobject_ui.c:775
 msgid "Light source Z direction in XYZ space"
 msgstr "Dirección Z de la fuente de luz en el espacio XYZ"
 
@@ -737,7 +738,7 @@ msgid "_Glowing:"
 msgstr "_Fluyendo"
 
 #: ../plug-ins/Lighting/lighting_ui.c:622
-#: ../plug-ins/MapObject/mapobject_ui.c:833
+#: ../plug-ins/MapObject/mapobject_ui.c:836
 msgid "Amount of original color to show where no direct light falls"
 msgstr "Cantidad de color original a mostrar donde no cae luz directa"
 
@@ -746,7 +747,7 @@ msgid "_Bright:"
 msgstr "_Brillo:"
 
 #: ../plug-ins/Lighting/lighting_ui.c:651
-#: ../plug-ins/MapObject/mapobject_ui.c:862
+#: ../plug-ins/MapObject/mapobject_ui.c:865
 msgid "Intensity of original color when lit by a light source"
 msgstr "Intensidad del color original donde es iluminado por la fuente de luz"
 
@@ -756,7 +757,7 @@ msgstr "_Lustre (Shiny):"
 
 # //R ¿reflejos?
 #: ../plug-ins/Lighting/lighting_ui.c:680
-#: ../plug-ins/MapObject/mapobject_ui.c:934
+#: ../plug-ins/MapObject/mapobject_ui.c:937
 msgid "Controls how intense the highlights will be"
 msgstr "Controla cómo de intensos son los reflejos"
 
@@ -766,7 +767,7 @@ msgstr "_Pulido:"
 
 # //R No estoy muy seguro de esto...
 #: ../plug-ins/Lighting/lighting_ui.c:708
-#: ../plug-ins/MapObject/mapobject_ui.c:963
+#: ../plug-ins/MapObject/mapobject_ui.c:966
 msgid "Higher values makes the highlights more focused"
 msgstr "Valores más altos hace que los reflejos estén más concentrados"
 
@@ -840,12 +841,12 @@ msgid "Op_tions"
 msgstr "Op_ciones"
 
 #: ../plug-ins/Lighting/lighting_ui.c:905
-#: ../plug-ins/MapObject/mapobject_ui.c:1300
+#: ../plug-ins/MapObject/mapobject_ui.c:1303
 msgid "_Light"
 msgstr "_Luz"
 
 #: ../plug-ins/Lighting/lighting_ui.c:909
-#: ../plug-ins/MapObject/mapobject_ui.c:1304
+#: ../plug-ins/MapObject/mapobject_ui.c:1307
 msgid "_Material"
 msgstr "_Material"
 
@@ -865,7 +866,7 @@ msgid "_Update"
 msgstr "Act_ualizar"
 
 #: ../plug-ins/Lighting/lighting_ui.c:1033
-#: ../plug-ins/MapObject/mapobject_ui.c:1405
+#: ../plug-ins/MapObject/mapobject_ui.c:1409
 msgid "Recompute preview image"
 msgstr "Recalcular imagen de vista previa"
 
@@ -901,277 +902,277 @@ msgstr "Mapear a caja"
 msgid "Map to cylinder"
 msgstr "Mapear a cilindro"
 
-#: ../plug-ins/MapObject/mapobject_main.c:200
+#: ../plug-ins/MapObject/mapobject_main.c:198
 msgid "Map _Object..."
 msgstr "Mapear _objeto..."
 
 #: ../plug-ins/MapObject/mapobject_ui.c:248
-#: ../plug-ins/MapObject/mapobject_ui.c:1314
+#: ../plug-ins/MapObject/mapobject_ui.c:1317
 msgid "_Box"
 msgstr "Ca_ja"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:266
-#: ../plug-ins/MapObject/mapobject_ui.c:1320
+#: ../plug-ins/MapObject/mapobject_ui.c:1323
 msgid "C_ylinder"
 msgstr "C_ilindro"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:482
+#: ../plug-ins/MapObject/mapobject_ui.c:485
 msgid "Map to:"
 msgstr "Mapear a:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:486
+#: ../plug-ins/MapObject/mapobject_ui.c:489
 msgid "Plane"
 msgstr "Plano"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:487
+#: ../plug-ins/MapObject/mapobject_ui.c:490
 msgid "Sphere"
 msgstr "Esfera"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:488
+#: ../plug-ins/MapObject/mapobject_ui.c:491
 msgid "Box"
 msgstr "Caja"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:489
+#: ../plug-ins/MapObject/mapobject_ui.c:492
 msgid "Cylinder"
 msgstr "Cilindro"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:504
+#: ../plug-ins/MapObject/mapobject_ui.c:507
 msgid "Type of object to map to"
 msgstr "Tipo de objeto a mapear"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:506
+#: ../plug-ins/MapObject/mapobject_ui.c:509
 msgid "Transparent background"
 msgstr "Fondo transparente"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:517
+#: ../plug-ins/MapObject/mapobject_ui.c:520
 msgid "Make image transparent outside object"
 msgstr "Hacer la imagen transparente fuera del objeto"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:519
+#: ../plug-ins/MapObject/mapobject_ui.c:522
 msgid "Tile source image"
 msgstr "Enlosado con imagen de origen"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:530
+#: ../plug-ins/MapObject/mapobject_ui.c:533
 msgid "Tile source image: useful for infinite planes"
 msgstr ""
 "Enlosado con la imagen fuente, colocándola una y otra vez de forma "
 "adyacente; como formando un enlosado. Esto es útil para producir planos "
 "infinitos."
 
-#: ../plug-ins/MapObject/mapobject_ui.c:533
+#: ../plug-ins/MapObject/mapobject_ui.c:536
 msgid "Create new image"
 msgstr "Crear imagen nueva"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:552
+#: ../plug-ins/MapObject/mapobject_ui.c:555
 msgid "Enable _antialiasing"
 msgstr "Activar _suavizado"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:559
+#: ../plug-ins/MapObject/mapobject_ui.c:562
 msgid "Enable/disable jagged edges removal (antialiasing)"
 msgstr "Activar/desactivar la eliminación de bordes afilados (suavizado)"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:576 ../plug-ins/common/bumpmap.c:984
+#: ../plug-ins/MapObject/mapobject_ui.c:579 ../plug-ins/common/bumpmap.c:984
 #: ../plug-ins/common/emboss.c:528 ../plug-ins/common/fractaltrace.c:792
 #: ../plug-ins/common/struc.c:1326
 msgid "_Depth:"
 msgstr "P_rofundidad:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:579
+#: ../plug-ins/MapObject/mapobject_ui.c:582
 msgid "Antialiasing quality. Higher is better, but slower"
 msgstr "Calidad del suavizado. A mayor calidad, mejor, pero más lento"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:588 ../plug-ins/common/unsharp.c:695
+#: ../plug-ins/MapObject/mapobject_ui.c:591 ../plug-ins/common/unsharp.c:695
 #: ../plug-ins/common/wind.c:1008 ../plug-ins/imagemap/imap_preferences.c:441
 msgid "_Threshold:"
 msgstr "_Umbral:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:596
+#: ../plug-ins/MapObject/mapobject_ui.c:599
 msgid "Stop when pixel differences are smaller than this value"
 msgstr "Parar cuando las diferencias entre píxeles sean más pequeñas que este valor"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:632
+#: ../plug-ins/MapObject/mapobject_ui.c:635
 msgid "Point light"
 msgstr "Punto de luz"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:633
+#: ../plug-ins/MapObject/mapobject_ui.c:636
 msgid "Directional light"
 msgstr "Luz direccional"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:634
+#: ../plug-ins/MapObject/mapobject_ui.c:637
 msgid "No light"
 msgstr "Sin luz"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:648
+#: ../plug-ins/MapObject/mapobject_ui.c:651
 msgid "Lightsource type:"
 msgstr "Tipo de fuente de luz:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:658
+#: ../plug-ins/MapObject/mapobject_ui.c:661
 msgid "Lightsource color:"
 msgstr "Color de fuente de luz:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:723
+#: ../plug-ins/MapObject/mapobject_ui.c:726
 msgid "Direction Vector"
 msgstr "Vector director"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:799
+#: ../plug-ins/MapObject/mapobject_ui.c:802
 msgid "Intensity Levels"
 msgstr "Niveles de intensidad"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:818
+#: ../plug-ins/MapObject/mapobject_ui.c:821
 msgid "Ambient:"
 msgstr "Ambiental:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:847
-#: ../plug-ins/MapObject/mapobject_ui.c:890
+#: ../plug-ins/MapObject/mapobject_ui.c:850
+#: ../plug-ins/MapObject/mapobject_ui.c:893
 msgid "Diffuse:"
 msgstr "Difusa:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:871
+#: ../plug-ins/MapObject/mapobject_ui.c:874
 msgid "Reflectivity"
 msgstr "Reflectividad"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:905
+#: ../plug-ins/MapObject/mapobject_ui.c:908
 msgid "Higher values makes the object reflect more light (appear lighter)"
 msgstr "Valores altos hacen que el objeto refleje más luz (parezca más claro)"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:919
+#: ../plug-ins/MapObject/mapobject_ui.c:922
 msgid "Specular:"
 msgstr "Especular:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:948
+#: ../plug-ins/MapObject/mapobject_ui.c:951
 msgid "Highlight:"
 msgstr "Reflejos:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1009
+#: ../plug-ins/MapObject/mapobject_ui.c:1012
 msgid "Object X position in XYZ space"
 msgstr "Posición X del objeto en el espacio XYZ"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1022
+#: ../plug-ins/MapObject/mapobject_ui.c:1025
 msgid "Object Y position in XYZ space"
 msgstr "Posición Y del objeto en el espacio XYZ"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1035
+#: ../plug-ins/MapObject/mapobject_ui.c:1038
 msgid "Object Z position in XYZ space"
 msgstr "Posición Z del objeto en el espacio XYZ"
 
 #. Rotation
-#: ../plug-ins/MapObject/mapobject_ui.c:1044
+#: ../plug-ins/MapObject/mapobject_ui.c:1047
 #: ../plug-ins/common/postscript.c:3365
 msgid "Rotation"
 msgstr "Rotación"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1058
+#: ../plug-ins/MapObject/mapobject_ui.c:1061
 msgid "Rotation angle about X axis"
 msgstr "Ángulo de rotación alrededor del eje X"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1069
+#: ../plug-ins/MapObject/mapobject_ui.c:1072
 msgid "Rotation angle about Y axis"
 msgstr "Ángulo de rotación alrededor del eje Y"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1080
+#: ../plug-ins/MapObject/mapobject_ui.c:1083
 msgid "Rotation angle about Z axis"
 msgstr "Ángulo de rotación alrededor del eje Z"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1106
+#: ../plug-ins/MapObject/mapobject_ui.c:1109
 msgid "Front:"
 msgstr "Frente:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1106
+#: ../plug-ins/MapObject/mapobject_ui.c:1109
 msgid "Back:"
 msgstr "Fondo:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1107
+#: ../plug-ins/MapObject/mapobject_ui.c:1110
 #: ../plug-ins/print/gimp_main_window.c:534
 msgid "Top:"
 msgstr "Cima:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1107
+#: ../plug-ins/MapObject/mapobject_ui.c:1110
 #: ../plug-ins/print/gimp_main_window.c:575
 msgid "Bottom:"
 msgstr "Suelo:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1108
+#: ../plug-ins/MapObject/mapobject_ui.c:1111
 #: ../plug-ins/print/gimp_main_window.c:521
 msgid "Left:"
 msgstr "Izquierda:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1108
+#: ../plug-ins/MapObject/mapobject_ui.c:1111
 #: ../plug-ins/print/gimp_main_window.c:547
 msgid "Right:"
 msgstr "Derecha:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1114
+#: ../plug-ins/MapObject/mapobject_ui.c:1117
 msgid "Map Images to Box Faces"
 msgstr "Mapear imágenes a las caras de la caja"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1152
+#: ../plug-ins/MapObject/mapobject_ui.c:1155
 #: ../plug-ins/common/spheredesigner.c:2771
 msgid "Scale X:"
 msgstr "Escala X:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1155
+#: ../plug-ins/MapObject/mapobject_ui.c:1158
 msgid "X scale (size)"
 msgstr "Escala X (tamaño)"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1167
+#: ../plug-ins/MapObject/mapobject_ui.c:1170
 msgid "Y scale (size)"
 msgstr "Escala Y (tamaño)"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1179
+#: ../plug-ins/MapObject/mapobject_ui.c:1182
 msgid "Z scale (size)"
 msgstr "Escala Z (tamaño)"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1202
+#: ../plug-ins/MapObject/mapobject_ui.c:1205
 msgid "_Top:"
 msgstr "S_uperior:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1202
+#: ../plug-ins/MapObject/mapobject_ui.c:1205
 msgid "_Bottom:"
 msgstr "I_nferior:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1207
+#: ../plug-ins/MapObject/mapobject_ui.c:1210
 msgid "Images for the Cap Faces"
 msgstr "Imágenes para las tapas"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1236
+#: ../plug-ins/MapObject/mapobject_ui.c:1239
 #: ../plug-ins/print/gimp_main_window.c:1119
 msgid "Size"
 msgstr "Tamaño"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1247
+#: ../plug-ins/MapObject/mapobject_ui.c:1250
 msgid "R_adius:"
 msgstr "R_adio:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1251
+#: ../plug-ins/MapObject/mapobject_ui.c:1254
 msgid "Cylinder radius"
 msgstr "Radio del cilindro"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1261 ../plug-ins/common/mblur.c:1023
+#: ../plug-ins/MapObject/mapobject_ui.c:1264 ../plug-ins/common/mblur.c:1023
 msgid "L_ength:"
 msgstr "L_ongitud:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1265
+#: ../plug-ins/MapObject/mapobject_ui.c:1268
 msgid "Cylinder length"
 msgstr "Longitud del cilindro"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1296
+#: ../plug-ins/MapObject/mapobject_ui.c:1299
 msgid "O_ptions"
 msgstr "O_pciones"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1308
+#: ../plug-ins/MapObject/mapobject_ui.c:1311
 msgid "O_rientation"
 msgstr "O_rientación"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1343
+#: ../plug-ins/MapObject/mapobject_ui.c:1347
 msgid "Map to Object"
 msgstr "Mapear al objeto"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1396
+#: ../plug-ins/MapObject/mapobject_ui.c:1400
 #: ../plug-ins/common/diffraction.c:477
 msgid "_Preview!"
 msgstr "Vista _previa"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1421
+#: ../plug-ins/MapObject/mapobject_ui.c:1427
 msgid "Show preview _wireframe"
 msgstr "Mostrar una _vista previa de alambre [wireframe]"
 
@@ -1241,7 +1242,7 @@ msgstr "Profundidad de bits no soportada o no válida."
 #: ../plug-ins/common/png.c:852 ../plug-ins/common/pnm.c:526
 #: ../plug-ins/common/psd.c:2291 ../plug-ins/common/raw.c:687
 #: ../plug-ins/common/smooth_palette.c:257 ../plug-ins/common/sunras.c:917
-#: ../plug-ins/common/tga.c:926 ../plug-ins/common/tiff.c:886
+#: ../plug-ins/common/tga.c:927 ../plug-ins/common/tiff.c:886
 #: ../plug-ins/common/tile.c:266 ../plug-ins/common/xbm.c:866
 #: ../plug-ins/faxg3/faxg3.c:464 ../plug-ins/fits/fits.c:508
 #: ../plug-ins/gfig/gfig-dialog.c:1290
@@ -1387,7 +1388,7 @@ msgstr "ángulo de fase, rango 0-360"
 
 #. Propagate Mode
 #: ../plug-ins/common/AlienMap2.c:514 ../plug-ins/common/hot.c:595
-#: ../plug-ins/common/vpropagate.c:1086 ../plug-ins/common/waves.c:272
+#: ../plug-ins/common/vpropagate.c:1086 ../plug-ins/common/waves.c:273
 msgid "Mode"
 msgstr "Modo"
 
@@ -2045,27 +2046,27 @@ msgstr "Aplicar _lentes..."
 msgid "Applying lens"
 msgstr "Aplicando lentes"
 
-#: ../plug-ins/common/apply_lens.c:393
+#: ../plug-ins/common/apply_lens.c:394
 msgid "Lens Effect"
 msgstr "Efecto de lente"
 
-#: ../plug-ins/common/apply_lens.c:426
+#: ../plug-ins/common/apply_lens.c:427
 msgid "_Keep original surroundings"
 msgstr "M_antener los alrededores originales"
 
-#: ../plug-ins/common/apply_lens.c:441
+#: ../plug-ins/common/apply_lens.c:442
 msgid "_Set surroundings to index 0"
 msgstr "E_stablecer los alrededores a índice 0"
 
-#: ../plug-ins/common/apply_lens.c:442
+#: ../plug-ins/common/apply_lens.c:443
 msgid "_Set surroundings to background color"
 msgstr "Establ_ecer los alrededores a color de fondo"
 
-#: ../plug-ins/common/apply_lens.c:457
+#: ../plug-ins/common/apply_lens.c:458
 msgid "_Make surroundings transparent"
 msgstr "H_acer los alrededores transparentes"
 
-#: ../plug-ins/common/apply_lens.c:474
+#: ../plug-ins/common/apply_lens.c:475
 msgid "_Lens refraction index:"
 msgstr "Índice de refracción de los _lentes:"
 
@@ -2686,7 +2687,7 @@ msgid "E_xtend"
 msgstr "E_xtender"
 
 #: ../plug-ins/common/convmatrix.c:87 ../plug-ins/common/displace.c:475
-#: ../plug-ins/common/edge.c:719 ../plug-ins/common/ripple.c:568
+#: ../plug-ins/common/edge.c:700 ../plug-ins/common/ripple.c:568
 msgid "_Wrap"
 msgstr "A_justar"
 
@@ -2718,7 +2719,7 @@ msgstr "Matriz"
 msgid "D_ivisor:"
 msgstr "D_ivisor:"
 
-#: ../plug-ins/common/convmatrix.c:970 ../plug-ins/common/depthmerge.c:752
+#: ../plug-ins/common/convmatrix.c:970 ../plug-ins/common/depthmerge.c:769
 #: ../plug-ins/common/raw.c:987
 msgid "O_ffset:"
 msgstr "Des_plazamiento:"
@@ -2813,147 +2814,147 @@ msgstr "_Usar el color de fondo"
 msgid "Cubistic transformation"
 msgstr "Transformación cubista"
 
-#: ../plug-ins/common/curve_bend.c:566
+#: ../plug-ins/common/curve_bend.c:545
 msgid "_Curve Bend..."
 msgstr "Doblar según _curva..."
 
-#: ../plug-ins/common/curve_bend.c:702
+#: ../plug-ins/common/curve_bend.c:681
 msgid "Can operate on layers only (but was called on channel or mask)."
 msgstr "sólo puede funcionar en capas (pero fue llamada en un canal o una máscara)."
 
-#: ../plug-ins/common/curve_bend.c:720
+#: ../plug-ins/common/curve_bend.c:699
 msgid "Cannot operate on layers with masks."
 msgstr "No funciona con capas con máscaras."
 
-#: ../plug-ins/common/curve_bend.c:735
+#: ../plug-ins/common/curve_bend.c:714
 msgid "Cannot operate on empty selections."
 msgstr "No puede operar sobre selecciones vacías."
 
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
-#: ../plug-ins/common/curve_bend.c:1238 ../plug-ins/common/curve_bend.c:2955
+#: ../plug-ins/common/curve_bend.c:1217 ../plug-ins/common/curve_bend.c:2934
 msgid "Curve Bend"
 msgstr "Doblar según curva"
 
 #. Preview area, top of column
-#: ../plug-ins/common/curve_bend.c:1274
+#: ../plug-ins/common/curve_bend.c:1253
 #: ../plug-ins/gimpressionist/orientmap.c:574
 #: ../plug-ins/gimpressionist/sizemap.c:443
 msgid "Preview"
 msgstr "Vista previa"
 
 #. The preview button
-#: ../plug-ins/common/curve_bend.c:1303
+#: ../plug-ins/common/curve_bend.c:1282
 msgid "_Preview Once"
 msgstr "_Previsualizar una vez"
 
 #. The preview toggle
-#: ../plug-ins/common/curve_bend.c:1312
+#: ../plug-ins/common/curve_bend.c:1291
 msgid "Automatic pre_view"
 msgstr "_Vista previa automática"
 
 #. Options area, bottom of column
 #. the vertical box and its toggle buttons
 #. Options section
-#: ../plug-ins/common/curve_bend.c:1322 ../plug-ins/common/mosaic.c:623
+#: ../plug-ins/common/curve_bend.c:1301 ../plug-ins/common/mosaic.c:623
 #: ../plug-ins/common/ripple.c:509 ../plug-ins/gfig/gfig-dialog.c:1213
 msgid "Options"
 msgstr "Opciones"
 
 #. Rotate spinbutton
-#: ../plug-ins/common/curve_bend.c:1336
+#: ../plug-ins/common/curve_bend.c:1315
 msgid "Rotat_e:"
 msgstr "R_otar:"
 
 #. The smoothing toggle
-#: ../plug-ins/common/curve_bend.c:1354
+#: ../plug-ins/common/curve_bend.c:1333
 msgid "Smoo_thing"
 msgstr "Suavizad_o"
 
 #. The antialiasing toggle
-#: ../plug-ins/common/curve_bend.c:1364 ../plug-ins/common/gqbist.c:836
+#: ../plug-ins/common/curve_bend.c:1343 ../plug-ins/common/gqbist.c:836
 #: ../plug-ins/common/mosaic.c:629 ../plug-ins/common/ripple.c:518
 msgid "_Antialiasing"
 msgstr "_Antialias"
 
 #. The work_on_copy toggle
-#: ../plug-ins/common/curve_bend.c:1374
+#: ../plug-ins/common/curve_bend.c:1353
 msgid "Work on cop_y"
 msgstr "Trabajar con una cop_ia"
 
 #. The curves graph
-#: ../plug-ins/common/curve_bend.c:1384
+#: ../plug-ins/common/curve_bend.c:1363
 msgid "Modify Curves"
 msgstr "Modificar las curvas"
 
-#: ../plug-ins/common/curve_bend.c:1412
+#: ../plug-ins/common/curve_bend.c:1391
 msgid "Curve for Border"
 msgstr "Curva para el borde"
 
-#: ../plug-ins/common/curve_bend.c:1416
+#: ../plug-ins/common/curve_bend.c:1395
 msgid "_Upper"
 msgstr "S_uperior"
 
-#: ../plug-ins/common/curve_bend.c:1417
+#: ../plug-ins/common/curve_bend.c:1396
 msgid "_Lower"
 msgstr "I_nferior"
 
-#: ../plug-ins/common/curve_bend.c:1427
+#: ../plug-ins/common/curve_bend.c:1406
 msgid "Curve Type"
 msgstr "Tipo de curva"
 
-#: ../plug-ins/common/curve_bend.c:1431
+#: ../plug-ins/common/curve_bend.c:1410
 msgid "Smoot_h"
 msgstr "Sua_ve"
 
-#: ../plug-ins/common/curve_bend.c:1432
+#: ../plug-ins/common/curve_bend.c:1411
 msgid "_Free"
 msgstr "_Libre"
 
 #. The Copy button
-#: ../plug-ins/common/curve_bend.c:1447
+#: ../plug-ins/common/curve_bend.c:1426
 msgid "_Copy"
 msgstr "_Copiar"
 
-#: ../plug-ins/common/curve_bend.c:1452
+#: ../plug-ins/common/curve_bend.c:1431
 msgid "Copy the active curve to the other border"
 msgstr "Copiar la curva activa al otro borde"
 
 #. The CopyInv button
-#: ../plug-ins/common/curve_bend.c:1459
+#: ../plug-ins/common/curve_bend.c:1438
 msgid "_Mirror"
 msgstr "_Reflejar"
 
-#: ../plug-ins/common/curve_bend.c:1464
+#: ../plug-ins/common/curve_bend.c:1443
 msgid "Mirror the active curve to the other border"
 msgstr "Reflejar la curva activa al otro borde"
 
 #. The Swap button
-#: ../plug-ins/common/curve_bend.c:1472
+#: ../plug-ins/common/curve_bend.c:1451
 msgid "S_wap"
 msgstr "I_ntercambiar"
 
-#: ../plug-ins/common/curve_bend.c:1477
+#: ../plug-ins/common/curve_bend.c:1456
 msgid "Swap the two curves"
 msgstr "Intercambiar las dos curvas"
 
-#: ../plug-ins/common/curve_bend.c:1489
+#: ../plug-ins/common/curve_bend.c:1468
 msgid "Reset the active curve"
 msgstr "Reiniciar la curva activa"
 
-#: ../plug-ins/common/curve_bend.c:1506
+#: ../plug-ins/common/curve_bend.c:1485
 msgid "Load the curves from a file"
 msgstr "Cargar las curvas desde un archivo"
 
-#: ../plug-ins/common/curve_bend.c:1518
+#: ../plug-ins/common/curve_bend.c:1497
 msgid "Save the curves to a file"
 msgstr "Guardar las curvas en un archivo"
 
-#: ../plug-ins/common/curve_bend.c:2053
+#: ../plug-ins/common/curve_bend.c:2032
 msgid "Load Curve Points from File"
 msgstr "Cargar puntos de curva desde un archivo"
 
-#: ../plug-ins/common/curve_bend.c:2088
+#: ../plug-ins/common/curve_bend.c:2067
 msgid "Save Curve Points to File"
 msgstr "Guardar puntos de curva en un archivo"
 
@@ -3128,40 +3129,40 @@ msgstr "Mantener los campos im_pares"
 msgid "Keep _even fields"
 msgstr "Mant_ener los campos pares"
 
-#: ../plug-ins/common/depthmerge.c:187
+#: ../plug-ins/common/depthmerge.c:194
 msgid "_Depth Merge..."
 msgstr "Mezcla con _profundidad..."
 
-#: ../plug-ins/common/depthmerge.c:377
+#: ../plug-ins/common/depthmerge.c:388
 msgid "Depth-merging"
 msgstr "Mezclando con profundidad"
 
-#: ../plug-ins/common/depthmerge.c:628
+#: ../plug-ins/common/depthmerge.c:645
 msgid "Depth Merge"
 msgstr "Mezcla con profundidad"
 
-#: ../plug-ins/common/depthmerge.c:680
+#: ../plug-ins/common/depthmerge.c:697
 msgid "Source 1:"
 msgstr "Fuente 1:"
 
-#: ../plug-ins/common/depthmerge.c:695 ../plug-ins/common/depthmerge.c:725
+#: ../plug-ins/common/depthmerge.c:712 ../plug-ins/common/depthmerge.c:742
 msgid "Depth map:"
 msgstr "Mapa de profundidad:"
 
-#: ../plug-ins/common/depthmerge.c:710
+#: ../plug-ins/common/depthmerge.c:727
 msgid "Source 2:"
 msgstr "Fuente 2:"
 
 # //R :-?
-#: ../plug-ins/common/depthmerge.c:742
+#: ../plug-ins/common/depthmerge.c:759
 msgid "O_verlap:"
 msgstr "_Solapamiento:"
 
-#: ../plug-ins/common/depthmerge.c:762
+#: ../plug-ins/common/depthmerge.c:779
 msgid "Sc_ale 1:"
 msgstr "_Escala 1:"
 
-#: ../plug-ins/common/depthmerge.c:772
+#: ../plug-ins/common/depthmerge.c:789
 msgid "Sca_le 2:"
 msgstr "E_scala 2:"
 
@@ -3342,12 +3343,12 @@ msgstr "_Polar"
 msgid "Edge Behavior"
 msgstr "Comportamiento del borde"
 
-#: ../plug-ins/common/displace.c:477 ../plug-ins/common/edge.c:732
-#: ../plug-ins/common/ripple.c:569 ../plug-ins/common/waves.c:276
+#: ../plug-ins/common/displace.c:477 ../plug-ins/common/edge.c:713
+#: ../plug-ins/common/ripple.c:569 ../plug-ins/common/waves.c:277
 msgid "_Smear"
 msgstr "Mancha_r"
 
-#: ../plug-ins/common/displace.c:479 ../plug-ins/common/edge.c:745
+#: ../plug-ins/common/displace.c:479 ../plug-ins/common/edge.c:726
 #: ../plug-ins/common/fractaltrace.c:736 ../plug-ins/common/newsprint.c:400
 #: ../plug-ins/common/ripple.c:570
 msgid "_Black"
@@ -3381,48 +3382,48 @@ msgstr "_Normalizar"
 msgid "_Invert"
 msgstr "_Invertir"
 
-#: ../plug-ins/common/edge.c:158
+#: ../plug-ins/common/edge.c:159
 msgid "_Edge..."
 msgstr "_Arista..."
 
-#: ../plug-ins/common/edge.c:230
+#: ../plug-ins/common/edge.c:231
 msgid "Edge detection"
 msgstr "Detección de bordes"
 
-#: ../plug-ins/common/edge.c:644
+#: ../plug-ins/common/edge.c:625
 msgid "Edge Detection"
 msgstr "Detección de bordes"
 
-#: ../plug-ins/common/edge.c:678
+#: ../plug-ins/common/edge.c:659
 msgid "Sobel"
 msgstr "Sobel"
 
 # //R ¿Esto existe?
-#: ../plug-ins/common/edge.c:679
-msgid "Prewitt"
+#: ../plug-ins/common/edge.c:660
+msgid "Prewitt compass"
 msgstr "Prewitt"
 
-#: ../plug-ins/common/edge.c:680 ../plug-ins/common/sinus.c:904
+#: ../plug-ins/common/edge.c:661 ../plug-ins/common/sinus.c:904
 msgid "Gradient"
 msgstr "Degradado"
 
-#: ../plug-ins/common/edge.c:681
+#: ../plug-ins/common/edge.c:662
 msgid "Roberts"
 msgstr "Roberts"
 
-#: ../plug-ins/common/edge.c:682
+#: ../plug-ins/common/edge.c:663
 msgid "Differential"
 msgstr "Diferencial"
 
-#: ../plug-ins/common/edge.c:683 ../plug-ins/common/laplace.c:245
+#: ../plug-ins/common/edge.c:664 ../plug-ins/common/laplace.c:245
 msgid "Laplace"
 msgstr "Laplace"
 
-#: ../plug-ins/common/edge.c:692
+#: ../plug-ins/common/edge.c:673
 msgid "_Algorithm:"
 msgstr "_Algoritmo:"
 
-#: ../plug-ins/common/edge.c:700
+#: ../plug-ins/common/edge.c:681
 msgid "A_mount:"
 msgstr "_Cantidad:"
 
@@ -3549,7 +3550,7 @@ msgstr "En la película:"
 
 #. Create selection
 #: ../plug-ins/common/film.c:1164 ../plug-ins/imagemap/imap_selection.c:366
-#: ../plug-ins/rcm/rcm_dialog.c:173
+#: ../plug-ins/rcm/rcm_dialog.c:173 ../plug-ins/sel2path/sel2path.c:523
 msgid "Selection"
 msgstr "Selección"
 
@@ -4099,8 +4100,8 @@ msgstr "Píxeles no cuadrados. La imagen se verá aplastada."
 msgid "Background (%d%s)"
 msgstr "Fondo (%d%s)"
 
-#: ../plug-ins/common/gifload.c:918 ../plug-ins/common/iwarp.c:780
-#: ../plug-ins/common/iwarp.c:815
+#: ../plug-ins/common/gifload.c:918 ../plug-ins/common/iwarp.c:797
+#: ../plug-ins/common/iwarp.c:832
 #, c-format
 msgid "Frame %d"
 msgstr "Cuadro %d"
@@ -4266,7 +4267,7 @@ msgid "Intersection"
 msgstr "Intersección"
 
 #. Width and Height
-#: ../plug-ins/common/grid.c:724 ../plug-ins/common/svg.c:781
+#: ../plug-ins/common/grid.c:724 ../plug-ins/common/svg.c:788
 #: ../plug-ins/common/wmf.c:549 ../plug-ins/print/gimp_main_window.c:1009
 #: ../plug-ins/print/gimp_main_window.c:1216
 msgid "Width:"
@@ -4454,7 +4455,7 @@ msgstr "Reducir la _luminosidad"
 msgid "Reduce _Saturation"
 msgstr "Reducir la _saturación"
 
-#: ../plug-ins/common/hot.c:622 ../plug-ins/common/waves.c:277
+#: ../plug-ins/common/hot.c:622 ../plug-ins/common/waves.c:278
 msgid "_Blacken"
 msgstr "Enne_grecer"
 
@@ -4478,105 +4479,105 @@ msgstr "Modo _1"
 msgid "Mode _2"
 msgstr "Modo _2"
 
-#: ../plug-ins/common/iwarp.c:252
+#: ../plug-ins/common/iwarp.c:269
 msgid "_IWarp..."
 msgstr "_IWarp..."
 
-#: ../plug-ins/common/iwarp.c:686
+#: ../plug-ins/common/iwarp.c:703
 msgid "Warping"
 msgstr "Deformación"
 
-#: ../plug-ins/common/iwarp.c:791
+#: ../plug-ins/common/iwarp.c:808
 #, c-format
 msgid "Warping Frame %d"
 msgstr "Deformando el cuadro %d"
 
-#: ../plug-ins/common/iwarp.c:803
+#: ../plug-ins/common/iwarp.c:820
 msgid "Ping pong"
 msgstr "Ping-Pong"
 
-#: ../plug-ins/common/iwarp.c:939
+#: ../plug-ins/common/iwarp.c:1026
 msgid "A_nimate"
 msgstr "A_nimar"
 
-#: ../plug-ins/common/iwarp.c:958
+#: ../plug-ins/common/iwarp.c:1045
 msgid "Number of _frames:"
 msgstr "Número de _fotogramas:"
 
-#: ../plug-ins/common/iwarp.c:967
+#: ../plug-ins/common/iwarp.c:1054
 msgid "R_everse"
 msgstr "Inv_erso"
 
-#: ../plug-ins/common/iwarp.c:976
+#: ../plug-ins/common/iwarp.c:1063
 msgid "_Ping pong"
 msgstr "_Ping-Pong"
 
-#: ../plug-ins/common/iwarp.c:989
+#: ../plug-ins/common/iwarp.c:1076
 msgid "_Animate"
 msgstr "_Animar"
 
-#: ../plug-ins/common/iwarp.c:1010
+#: ../plug-ins/common/iwarp.c:1097
 msgid "Deform Mode"
 msgstr "Modo de deformación"
 
-#: ../plug-ins/common/iwarp.c:1023
+#: ../plug-ins/common/iwarp.c:1110
 msgid "_Move"
 msgstr "_Mover"
 
-#: ../plug-ins/common/iwarp.c:1024
+#: ../plug-ins/common/iwarp.c:1111
 msgid "_Grow"
 msgstr "C_recer"
 
-#: ../plug-ins/common/iwarp.c:1025
+#: ../plug-ins/common/iwarp.c:1112
 msgid "S_wirl CCW"
 msgstr "T_orbellino (Antihorario)"
 
-#: ../plug-ins/common/iwarp.c:1026
+#: ../plug-ins/common/iwarp.c:1113
 msgid "Remo_ve"
 msgstr "Q_uitar"
 
-#: ../plug-ins/common/iwarp.c:1027
+#: ../plug-ins/common/iwarp.c:1114
 msgid "S_hrink"
 msgstr "E_ncoger"
 
-#: ../plug-ins/common/iwarp.c:1028
+#: ../plug-ins/common/iwarp.c:1115
 msgid "Sw_irl CW"
 msgstr "Torbell_ino (Horario)"
 
-#: ../plug-ins/common/iwarp.c:1057
+#: ../plug-ins/common/iwarp.c:1144
 msgid "_Deform radius:"
 msgstr "Radio de _deformación:"
 
-#: ../plug-ins/common/iwarp.c:1067
+#: ../plug-ins/common/iwarp.c:1154
 msgid "D_eform amount:"
 msgstr "Cantidad de d_eformación:"
 
-#: ../plug-ins/common/iwarp.c:1076
+#: ../plug-ins/common/iwarp.c:1163
 msgid "_Bilinear"
 msgstr "_Bilineal"
 
-#: ../plug-ins/common/iwarp.c:1090
+#: ../plug-ins/common/iwarp.c:1177
 msgid "Adaptive s_upersample"
 msgstr "Sobrem_uestreo adaptativo"
 
-#: ../plug-ins/common/iwarp.c:1110
+#: ../plug-ins/common/iwarp.c:1197
 msgid "Ma_x depth:"
 msgstr "Profundidad má_xima:"
 
-#: ../plug-ins/common/iwarp.c:1120
+#: ../plug-ins/common/iwarp.c:1207
 msgid "Thresho_ld:"
 msgstr "U_mbral:"
 
-#: ../plug-ins/common/iwarp.c:1133 ../plug-ins/common/sinus.c:771
+#: ../plug-ins/common/iwarp.c:1220 ../plug-ins/common/sinus.c:771
 #: ../plug-ins/gflare/gflare.c:2797
 msgid "_Settings"
 msgstr "C_onfiguración"
 
-#: ../plug-ins/common/iwarp.c:1151
+#: ../plug-ins/common/iwarp.c:1270
 msgid "IWarp"
 msgstr "Deformación Interactiva"
 
-#: ../plug-ins/common/iwarp.c:1214
+#: ../plug-ins/common/iwarp.c:1307
 msgid ""
 "Click and drag in the preview to define the distortions to apply to the "
 "image."
@@ -5311,25 +5312,25 @@ msgstr "Centro de la Supernova"
 msgid "S_how cursor"
 msgstr "Mo_strar el cursor"
 
-#: ../plug-ins/common/oilify.c:109
+#: ../plug-ins/common/oilify.c:105
 msgid "Oili_fy..."
 msgstr "Pintura al _óleo..."
 
-#: ../plug-ins/common/oilify.c:187
+#: ../plug-ins/common/oilify.c:183
 msgid "Oil painting"
 msgstr "Pintura al óleo"
 
-#: ../plug-ins/common/oilify.c:475
+#: ../plug-ins/common/oilify.c:471
 msgid "Oilify"
 msgstr "Pintura al óleo"
 
-#: ../plug-ins/common/oilify.c:509
+#: ../plug-ins/common/oilify.c:505
 msgid "_Mask size:"
 msgstr "Tamaño de _máscara:"
 
-#: ../plug-ins/common/oilify.c:520
-msgid "_Use intensity algorithm"
-msgstr "_Usar algoritmo de intensidad"
+#: ../plug-ins/common/oilify.c:516
+msgid "_Use intensity"
+msgstr "_Usar intensidad:"
 
 #: ../plug-ins/common/papertile.c:234 ../plug-ins/common/papertile.c:533
 msgid "Paper Tile"
@@ -5795,7 +5796,7 @@ msgid "Rendering"
 msgstr "Renderizado"
 
 #. Resolution
-#: ../plug-ins/common/postscript.c:3084 ../plug-ins/common/svg.c:902
+#: ../plug-ins/common/postscript.c:3084 ../plug-ins/common/svg.c:909
 #: ../plug-ins/common/wmf.c:670 ../plug-ins/print/gimp_main_window.c:1104
 msgid "Resolution:"
 msgstr "Resolución:"
@@ -6284,51 +6285,55 @@ msgstr "So_ltura:"
 msgid "H_ue:"
 msgstr "T_ono:"
 
-#: ../plug-ins/common/screenshot.c:239
+#: ../plug-ins/common/screenshot.c:240
 msgid "_Screenshot..."
 msgstr "_Captura de pantalla..."
 
-#: ../plug-ins/common/screenshot.c:423
+#: ../plug-ins/common/screenshot.c:424
 msgid "Error grabbing the pointer"
 msgstr "Ocurrió un error al grabar el puntero"
 
-#: ../plug-ins/common/screenshot.c:602
+#: ../plug-ins/common/screenshot.c:603
 msgid "Importing screenshot"
 msgstr "Importar captura"
 
-#: ../plug-ins/common/screenshot.c:609 ../plug-ins/common/screenshot.c:781
+#: ../plug-ins/common/screenshot.c:610 ../plug-ins/common/screenshot.c:777
 msgid "Screenshot"
 msgstr "Captura de pantalla"
 
-#: ../plug-ins/common/screenshot.c:717
+#: ../plug-ins/common/screenshot.c:718
 msgid "Specified window not found"
 msgstr "No se ha encontrado la ventana especificada"
 
-#: ../plug-ins/common/screenshot.c:744
+#: ../plug-ins/common/screenshot.c:745
 msgid "There was an error taking the screenshot."
 msgstr "Hubo un error al tomar la captura de pantalla."
 
-#: ../plug-ins/common/screenshot.c:790
+#: ../plug-ins/common/screenshot.c:786
 msgid "_Grab"
 msgstr "_Capturar"
 
-#: ../plug-ins/common/screenshot.c:812
+#: ../plug-ins/common/screenshot.c:807
+msgid "Area"
+msgstr "Área"
+
+#: ../plug-ins/common/screenshot.c:818
 msgid "Take a screenshot of a single _window"
 msgstr "Tomar una capturar la pantalla de una sola _ventana"
 
-#: ../plug-ins/common/screenshot.c:833
-msgid "Include window decoration"
-msgstr "Incluir decoración de la ventana"
+#: ../plug-ins/common/screenshot.c:839
+msgid "Include window _decoration"
+msgstr "Incluir _decoración de la ventana"
 
-#: ../plug-ins/common/screenshot.c:848
-msgid "Take a screenshot of your _desktop"
-msgstr "Tomar una captura de pantalla del _escritorio"
+#: ../plug-ins/common/screenshot.c:855
+msgid "Take a screenshot of the entire _screen"
+msgstr "Tomar una capturar de la _pantalla completa"
 
-#: ../plug-ins/common/screenshot.c:869
-msgid "Select a region"
-msgstr "Seleccionar una región"
+#: ../plug-ins/common/screenshot.c:873
+msgid "Select a _region to grab"
+msgstr "Seleccione una _región para obtener"
 
-#: ../plug-ins/common/screenshot.c:874
+#: ../plug-ins/common/screenshot.c:880
 msgid ""
 "If enabled, you can use the mouse to select a rectangular region of the "
 "screen."
@@ -6336,15 +6341,22 @@ msgstr ""
 "Si esta activado, puede usar el raton para seleccionar una region "
 "rectangular de la pantalla."
 
-#: ../plug-ins/common/screenshot.c:889
+#. grab delay
+#: ../plug-ins/common/screenshot.c:893
+msgid "Delay"
+msgstr "Retardo"
+
+#. this string is part of "Wait [spinbutton] seconds before grabbing"
+#: ../plug-ins/common/screenshot.c:906
 msgid "W_ait"
 msgstr "Esper_ar"
 
-#: ../plug-ins/common/screenshot.c:904
+#. this string is part of "Wait [spinbutton] seconds before grabbing"
+#: ../plug-ins/common/screenshot.c:922
 msgid "seconds before grabbing"
 msgstr "segundos antes de capturar"
 
-#: ../plug-ins/common/screenshot.c:908
+#: ../plug-ins/common/screenshot.c:926
 msgid ""
 "The number of seconds to wait after selecting the window or region and "
 "actually taking the screenshot."
@@ -7013,7 +7025,7 @@ msgstr "Codificación RunLenght"
 msgid "Scalable SVG image"
 msgstr "Imagen escalable SVG"
 
-#: ../plug-ins/common/svg.c:315 ../plug-ins/common/svg.c:710
+#: ../plug-ins/common/svg.c:315 ../plug-ins/common/svg.c:717
 msgid "Unknown reason"
 msgstr "Razón desconocida"
 
@@ -7025,7 +7037,7 @@ msgstr "Renderizando SVG"
 msgid "Rendered SVG"
 msgstr "SVG renderizado"
 
-#: ../plug-ins/common/svg.c:500
+#: ../plug-ins/common/svg.c:513
 msgid ""
 "SVG file does not\n"
 "specify a size!"
@@ -7033,51 +7045,51 @@ msgstr ""
 "¡El archivo SVG no especifica\n"
 "un tamaño!"
 
-#: ../plug-ins/common/svg.c:506 ../plug-ins/common/wmf.c:338
+#: ../plug-ins/common/svg.c:519 ../plug-ins/common/wmf.c:338
 #, c-format
 msgid "%d x %d"
 msgstr "%d x %d"
 
 #. Scalable Vector Graphics is SVG, should perhaps not be translated
-#: ../plug-ins/common/svg.c:717
+#: ../plug-ins/common/svg.c:724
 msgid "Render Scalable Vector Graphics"
 msgstr "Renderizar gráfico vectorial escalable"
 
-#: ../plug-ins/common/svg.c:787 ../plug-ins/common/wmf.c:555
+#: ../plug-ins/common/svg.c:794 ../plug-ins/common/wmf.c:555
 #: ../plug-ins/print/gimp_main_window.c:1026
 #: ../plug-ins/print/gimp_main_window.c:1229
 msgid "Height:"
 msgstr "Altura:"
 
-#: ../plug-ins/common/svg.c:861 ../plug-ins/common/wmf.c:629
+#: ../plug-ins/common/svg.c:868 ../plug-ins/common/wmf.c:629
 msgid "_X ratio:"
 msgstr "Proporción _X:"
 
-#: ../plug-ins/common/svg.c:883 ../plug-ins/common/wmf.c:651
+#: ../plug-ins/common/svg.c:890 ../plug-ins/common/wmf.c:651
 msgid "_Y ratio:"
 msgstr "Proporción _Y:"
 
-#: ../plug-ins/common/svg.c:897 ../plug-ins/common/wmf.c:665
+#: ../plug-ins/common/svg.c:904 ../plug-ins/common/wmf.c:665
 msgid "Constrain aspect ratio"
 msgstr "Restringir la proporción"
 
-#: ../plug-ins/common/svg.c:908 ../plug-ins/common/wmf.c:676
+#: ../plug-ins/common/svg.c:915 ../plug-ins/common/wmf.c:676
 #, c-format
 msgid "pixels/%a"
 msgstr "píxeles/%a"
 
 #. Path Import
-#: ../plug-ins/common/svg.c:928
+#: ../plug-ins/common/svg.c:935
 msgid "Import _paths"
 msgstr "Importar _rutas"
 
-#: ../plug-ins/common/svg.c:934
+#: ../plug-ins/common/svg.c:941
 msgid "Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr ""
 "Importar los elementos de la ruta del SVG para que puedan ser utilizados con "
 "la herramienta de ruta de GIMP"
 
-#: ../plug-ins/common/svg.c:947
+#: ../plug-ins/common/svg.c:954
 msgid "Merge imported paths"
 msgstr "Combinar las rutas importadas"
 
@@ -7095,17 +7107,17 @@ msgstr "No se puede leer el pie de «%s»"
 msgid "Cannot read extension from '%s'"
 msgstr "No se puede leer la extensión de «%s»"
 
-#: ../plug-ins/common/tga.c:1188
+#: ../plug-ins/common/tga.c:1185
 msgid "Save as TGA"
 msgstr "Guardar como TGA"
 
 #. rle
-#: ../plug-ins/common/tga.c:1211
+#: ../plug-ins/common/tga.c:1208
 msgid "_RLE compression"
 msgstr "Compresión _RLE"
 
 #. origin
-#: ../plug-ins/common/tga.c:1221
+#: ../plug-ins/common/tga.c:1218
 msgid "Or_igin at bottom left"
 msgstr "Or_igen en abajo a la izquierda"
 
@@ -7362,56 +7374,56 @@ msgid "Create a new unit from scratch."
 msgstr "Crea una nueva unidad partiendo de la nada."
 
 #: ../plug-ins/common/uniteditor.c:127
-msgid "Create a new unit with the currently selected unit as template."
+msgid "Create a new unit using the currently selected unit as template."
 msgstr ""
 "Crea una unidad nueva usando como plantilla la unidad actualmente "
 "seleccionada."
 
-#: ../plug-ins/common/uniteditor.c:151
+#: ../plug-ins/common/uniteditor.c:150
 msgid "_Unit Editor"
 msgstr "Editor de _unidades"
 
-#: ../plug-ins/common/uniteditor.c:210
-msgid "New Unit"
-msgstr "Nueva unidad"
+#: ../plug-ins/common/uniteditor.c:209
+msgid "Add a New Unit"
+msgstr "Añadir una unidad nueva"
 
-#: ../plug-ins/common/uniteditor.c:239
+#: ../plug-ins/common/uniteditor.c:238
 msgid "_ID:"
 msgstr "_ID:"
 
-#: ../plug-ins/common/uniteditor.c:250
+#: ../plug-ins/common/uniteditor.c:249
 msgid "_Factor:"
 msgstr "_Factor:"
 
-#: ../plug-ins/common/uniteditor.c:260
+#: ../plug-ins/common/uniteditor.c:259
 msgid "_Digits:"
 msgstr "_Dígitos:"
 
-#: ../plug-ins/common/uniteditor.c:272
+#: ../plug-ins/common/uniteditor.c:271
 msgid "_Symbol:"
 msgstr "_Símbolo:"
 
-#: ../plug-ins/common/uniteditor.c:284
+#: ../plug-ins/common/uniteditor.c:283
 msgid "_Abbreviation:"
 msgstr "_Abreviatura:"
 
-#: ../plug-ins/common/uniteditor.c:296
+#: ../plug-ins/common/uniteditor.c:295
 msgid "Si_ngular:"
 msgstr "Si_ngular:"
 
-#: ../plug-ins/common/uniteditor.c:308
+#: ../plug-ins/common/uniteditor.c:307
 msgid "_Plural:"
 msgstr "_Plural:"
 
-#: ../plug-ins/common/uniteditor.c:344
-msgid "Unit factor must not be 0."
-msgstr "El factor de unidad no debe ser 0."
+#: ../plug-ins/common/uniteditor.c:350
+msgid "Incomplete input"
+msgstr "Entrada incompleta"
 
-#: ../plug-ins/common/uniteditor.c:354
-msgid "All text fields must contain a value."
-msgstr "Todos los campos de texto deben contener un valor."
+#: ../plug-ins/common/uniteditor.c:353
+msgid "Please fill in all text fields."
+msgstr "Rellene todos los campos de texto"
 
-#: ../plug-ins/common/uniteditor.c:408
+#: ../plug-ins/common/uniteditor.c:410
 msgid "Unit Editor"
 msgstr "Editor de unidades"
 
@@ -7712,31 +7724,31 @@ msgstr "Buscando un degradado XY"
 msgid "Flow step %d"
 msgstr "Paso del flujo %d"
 
-#: ../plug-ins/common/waves.c:122
+#: ../plug-ins/common/waves.c:123
 msgid "_Waves..."
 msgstr "_Ondas..."
 
-#: ../plug-ins/common/waves.c:244
+#: ../plug-ins/common/waves.c:245
 msgid "Waves"
 msgstr "Ondas de agua"
 
-#: ../plug-ins/common/waves.c:289
+#: ../plug-ins/common/waves.c:290
 msgid "_Reflective"
 msgstr "_Reflexivo"
 
-#: ../plug-ins/common/waves.c:308
+#: ../plug-ins/common/waves.c:309
 msgid "_Amplitude:"
 msgstr "_Amplitud:"
 
-#: ../plug-ins/common/waves.c:320
+#: ../plug-ins/common/waves.c:321
 msgid "_Phase:"
 msgstr "_Fase:"
 
-#: ../plug-ins/common/waves.c:332
+#: ../plug-ins/common/waves.c:333
 msgid "_Wavelength:"
 msgstr "Longitud de on_da:"
 
-#: ../plug-ins/common/waves.c:432
+#: ../plug-ins/common/waves.c:433
 msgid "Waving"
 msgstr "Ondear..."
 
@@ -10846,9 +10858,10 @@ msgstr ""
 "resultados.\n"
 "«Ordenado» es más rápido y produce una calidad casi tan buena como la "
 "fotográfica.\n"
-"«Rápido» y «Muy rápido» son considerablemente mas rápidos, y funcionan bien con "
-"texto y arte de línea.\n"
-"«Híbrido Floyd-Steinberg» generalmente produce una salida de calidad inferior."
+"«Rápido» y «Muy rápido» son considerablemente mas rápidos, y funcionan bien "
+"con texto y arte de línea.\n"
+"«Híbrido Floyd-Steinberg» generalmente produce una salida de calidad "
+"inferior."
 
 #.
 #. * Create the main dialog
@@ -11543,7 +11556,7 @@ msgid "Downloading %s of image data..."
 msgstr "Descargando «%s» de datos de imagen..."
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:149
-#: ../plug-ins/uri/uri-backend-wget.c:324
+#: ../plug-ins/uri/uri-backend-wget.c:331
 #, c-format
 msgid "Downloaded %s of image data"
 msgstr "Descargado «%s» de datos de imagen"
@@ -11559,7 +11572,7 @@ msgid "Uploaded %s of image data"
 msgstr "Subidos «%s» de datos de imagen"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:238
-#: ../plug-ins/uri/uri-backend-wget.c:173
+#: ../plug-ins/uri/uri-backend-wget.c:180
 msgid "Connecting to server"
 msgstr "Conectando con el servidor"
 
@@ -11573,38 +11586,40 @@ msgstr "Fallo al leer %s de «%s»: %s"
 msgid "Failed to write %s to '%s': %s"
 msgstr "Fallo al escribir %s en «%s»: %s"
 
-#: ../plug-ins/uri/uri-backend-wget.c:142
-#: ../plug-ins/uri/uri-backend-wget.c:162
-#: ../plug-ins/uri/uri-backend-wget.c:179
-#: ../plug-ins/uri/uri-backend-wget.c:202
-#: ../plug-ins/uri/uri-backend-wget.c:231
+#: ../plug-ins/uri/uri-backend-wget.c:147
+#: ../plug-ins/uri/uri-backend-wget.c:167
+#: ../plug-ins/uri/uri-backend-wget.c:186
+#: ../plug-ins/uri/uri-backend-wget.c:209
+#: ../plug-ins/uri/uri-backend-wget.c:238
 #, c-format
 msgid "wget exited abnormally on URI '%s'"
 msgstr "wget finalizó inesperadamente en el URI «%s»"
 
 #. The third line is "Connecting to..."
-#: ../plug-ins/uri/uri-backend-wget.c:170
+#: ../plug-ins/uri/uri-backend-wget.c:175
 #, c-format
-msgid "(timeout is %s seconds)"
-msgstr "(expiración son %s segundos)"
+msgid "(timeout is %d second)"
+msgid_plural "(timeout is %d seconds)"
+msgstr[0] "(expiración es %d segundo)"
+msgstr[1] "(expiración son %d segundos)"
 
 #. The fourth line is either the network request or an error
-#: ../plug-ins/uri/uri-backend-wget.c:197
+#: ../plug-ins/uri/uri-backend-wget.c:204
 msgid "Opening URI"
 msgstr "Abriendo URI"
 
-#: ../plug-ins/uri/uri-backend-wget.c:208
-#: ../plug-ins/uri/uri-backend-wget.c:241
+#: ../plug-ins/uri/uri-backend-wget.c:215
+#: ../plug-ins/uri/uri-backend-wget.c:248
 #, c-format
 msgid "A network error occurred: %s"
 msgstr "Ocurrió un error de red: %s"
 
-#: ../plug-ins/uri/uri-backend-wget.c:281
+#: ../plug-ins/uri/uri-backend-wget.c:288
 #, c-format
 msgid "Downloading %s of image data"
 msgstr "Descargando «%s» de datos de imagen"
 
-#: ../plug-ins/uri/uri-backend-wget.c:286
+#: ../plug-ins/uri/uri-backend-wget.c:293
 msgid "Downloading unknown amount of image data"
 msgstr "Descargando una cantidad desconocida de datos de imagen"
 
@@ -11741,4 +11756,16 @@ msgstr "Error: No se ha podido leer el archivo de propiedades XJT «%s»."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Error: El archivo de propiedades XJT «%s» está vacío."
+
+#~ msgid "_Use intensity algorithm"
+#~ msgstr "_Usar algoritmo de intensidad"
+
+#~ msgid "Take a screenshot of your _desktop"
+#~ msgstr "Tomar una captura de pantalla del _escritorio"
+
+#~ msgid "Unit factor must not be 0."
+#~ msgstr "El factor de unidad no debe ser 0."
+
+#~ msgid "All text fields must contain a value."
+#~ msgstr "Todos los campos de texto deben contener un valor."
 
