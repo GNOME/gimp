@@ -18,6 +18,10 @@
  */
 
 /*
+ * 2005-09-04 - Switch 'positional' dither matrix to a 32x32 Bayer,
+ *  which generates results that compress somewhat better (and may look
+ *  worse or better depending on what you enjoy...).  [adam@gimp.org]
+ *
  * 2004-12-12 - Use a slower but much nicer technique for finding the
  *  two best colours to dither between when using fixed/positional
  *  dither methods.  Makes positional dither much less lame.  [adam@gimp.org]
@@ -159,10 +163,6 @@
 
 #include "gimp-intl.h"
 
-
-#ifndef DM_RANGE
-# define DM_RANGE 63
-#endif
 
 /* basic memory/quality tradeoff */
 #define PRECISION_R 8
@@ -1231,8 +1231,8 @@ generate_histogram_rgb (CFHistogram   histogram,
                   if (
                       (
                        has_alpha && (
-                                     (data[ALPHA_PIX] << 6) >
-                                     (255 * DM[col&DM_WIDTHMASK][row&DM_HEIGHTMASK])
+                                     (data[ALPHA_PIX]) >
+                                     (DM[col&DM_WIDTHMASK][row&DM_HEIGHTMASK])
                                      )
                        )
                       || (!has_alpha))
@@ -1286,7 +1286,7 @@ generate_histogram_rgb (CFHistogram   histogram,
           while (size--)
             {
               if ((has_alpha && (alpha_dither ?
-                                 ((data[ALPHA_PIX] << 6) > (255 * DM[col&DM_WIDTHMASK][row&DM_HEIGHTMASK])) :
+                                 ((data[ALPHA_PIX]) > (DM[col&DM_WIDTHMASK][row&DM_HEIGHTMASK])) :
                                  (data[ALPHA_PIX] > 127))) || (!has_alpha))
                 {
                   colfreq = HIST_RGB (histogram,
@@ -2814,7 +2814,7 @@ median_cut_pass2_no_dither_gray (QuantizeObj *quantobj,
                   if ((dest[ALPHA_I_PIX] =
                        (
                         (alpha_dither ?
-                         ((src[ALPHA_G_PIX] << 6) > (255 * DM[(col+offsetx+srcPR.x)&DM_WIDTHMASK][(row+offsety+srcPR.y)&DM_HEIGHTMASK])) :
+                         ((src[ALPHA_G_PIX]) > (DM[(col+offsetx+srcPR.x)&DM_WIDTHMASK][(row+offsety+srcPR.y)&DM_HEIGHTMASK])) :
                          (src[ALPHA_G_PIX] > 127)
                          ) ? 255 : 0)))
                     index_used_count[dest[INDEXED_PIX] = *cachep - 1]++;
@@ -2934,7 +2934,7 @@ median_cut_pass2_fixed_dither_gray (QuantizeObj *quantobj,
               err1 = ABS(color1->red - src[GRAY_PIX]);
               err2 = ABS(color2->red - src[GRAY_PIX]);
               if (err1 || err2) {
-                const int proportion2 = (256* DM_RANGE * err2) / (err1 + err2);
+                const int proportion2 = (256 * 255 * err2) / (err1 + err2);
                 if ((dmval * 256) > proportion2) {
                   pixval1 = pixval2; /* use color2 instead of color1*/
                 }
@@ -3031,7 +3031,7 @@ median_cut_pass2_no_dither_rgb (QuantizeObj *quantobj,
                 {
                   if ((dest[ALPHA_I_PIX] =
                        (alpha_dither ?
-                        ((src[alpha_pix] << 6) > (255 * DM[(col+offsetx+srcPR.x)&DM_WIDTHMASK][(row+offsety+srcPR.y)&DM_HEIGHTMASK])) :
+                        ((src[alpha_pix]) > (DM[(col+offsetx+srcPR.x)&DM_WIDTHMASK][(row+offsety+srcPR.y)&DM_HEIGHTMASK])) :
                         (src[alpha_pix] > 127)
                         ) ? 255 : 0)
                       == 0)
@@ -3239,7 +3239,7 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
                     src[red_pix], src[green_pix], src[blue_pix],
                     err2);
               if (err1 || err2) {
-                const int proportion2 = (DM_RANGE * err2) / (err1 + err2);
+                const int proportion2 = (255 * err2) / (err1 + err2);
                 if (dmval > proportion2) {
                   pixval1 = pixval2; /* use color2 instead of color1*/
                 }
@@ -3311,7 +3311,7 @@ median_cut_pass2_nodestruct_dither_rgb (QuantizeObj *quantobj,
           for (col = 0; col < srcPR.w; col++)
             {
               if ((has_alpha && (alpha_dither ?
-                                 ((src[alpha_pix] << 6) > (255 * DM[(col+srcPR.x+offsetx)&DM_WIDTHMASK][(row+srcPR.y+offsety)&DM_HEIGHTMASK])) :
+                                 ((src[alpha_pix]) > (DM[(col+srcPR.x+offsetx)&DM_WIDTHMASK][(row+srcPR.y+offsety)&DM_HEIGHTMASK])) :
                                  (src[alpha_pix] > 127)))
                   || !has_alpha)
                 {
@@ -3567,7 +3567,7 @@ median_cut_pass2_fs_dither_gray (QuantizeObj *quantobj,
                 {
                   if ((dest[ALPHA_I_PIX] =
                        (alpha_dither ?
-                        ((src[ALPHA_G_PIX] << 6) > (255 * DM[((width-col)+offsetx-1)&DM_WIDTHMASK][(row+offsety)&DM_HEIGHTMASK])) :
+                        ((src[ALPHA_G_PIX]) > (DM[((width-col)+offsetx-1)&DM_WIDTHMASK][(row+offsety)&DM_HEIGHTMASK])) :
                         (src[ALPHA_G_PIX] > 127)
                         ) ? 255 : 0)
                       == 0)
@@ -3582,7 +3582,7 @@ median_cut_pass2_fs_dither_gray (QuantizeObj *quantobj,
                 {
                   if ((dest[ALPHA_I_PIX] =
                        (alpha_dither ?
-                        ((src[ALPHA_G_PIX] << 6) > (255 * DM[(col+offsetx)&DM_WIDTHMASK][(row+offsety)&DM_HEIGHTMASK])) :
+                        ((src[ALPHA_G_PIX]) > (DM[(col+offsetx)&DM_WIDTHMASK][(row+offsety)&DM_HEIGHTMASK])) :
                         (src[ALPHA_G_PIX] > 127)
                         ) ? 255 : 0)
                       == 0)
@@ -3825,7 +3825,7 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
                   /* I get goosebumps over this expression. */
                   if ((dest[ALPHA_I_PIX] =
                        (alpha_dither ?
-                        ((src[alpha_pix] << 6) > (255 * DM[((width-col)+offsetx-1)&DM_WIDTHMASK][(row+offsety)&DM_HEIGHTMASK])) :
+                        ((src[alpha_pix]) > (DM[((width-col)+offsetx-1)&DM_WIDTHMASK][(row+offsety)&DM_HEIGHTMASK])) :
                         (src[alpha_pix] > 127)
                         ) ? 255 : 0)
                       == 0)
@@ -3840,7 +3840,7 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
                 {
                   if ((dest[ALPHA_I_PIX] =
                        (alpha_dither ?
-                        ((src[alpha_pix] << 6) > (255 * DM[(col+offsetx)&DM_WIDTHMASK][(row+offsety)&DM_HEIGHTMASK])) :
+                        ((src[alpha_pix]) > (DM[(col+offsetx)&DM_WIDTHMASK][(row+offsety)&DM_HEIGHTMASK])) :
                         (src[alpha_pix] > 127)
                         ) ? 255 : 0)
                       == 0)
