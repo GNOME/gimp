@@ -1,3 +1,7 @@
+2006-01-02  Simon Budig  <simon@gimp.org>
+
+	* libgimp/gimp.def: added a bunch of missing symbols.
+
 2006-01-02  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/context.pdb

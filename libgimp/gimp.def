@@ -117,6 +117,7 @@ EXPORTS
 	gimp_drawable_detach
 	gimp_drawable_fill
 	gimp_drawable_flush
+	gimp_drawable_foreground_extract
 	gimp_drawable_get
 	gimp_drawable_get_color_uchar
 	gimp_drawable_get_image
@@ -279,6 +280,7 @@ EXPORTS
 	gimp_image_add_channel
 	gimp_image_add_hguide
 	gimp_image_add_layer
+	gimp_image_add_vectors
 	gimp_image_add_vguide
 	gimp_image_attach_new_parasite
 	gimp_image_base_type
@@ -298,6 +300,7 @@ EXPORTS
 	gimp_image_get_active_channel
 	gimp_image_get_active_drawable
 	gimp_image_get_active_layer
+	gimp_image_get_active_vectors
 	gimp_image_get_channel_by_tattoo
 	gimp_image_get_channels
 	gimp_image_get_cmap
@@ -316,20 +319,25 @@ EXPORTS
 	gimp_image_get_tattoo_state
 	gimp_image_get_thumbnail_data
 	gimp_image_get_unit
+	gimp_image_get_vectors
 	gimp_image_grid_get_background_color
 	gimp_image_grid_get_foreground_color
 	gimp_image_grid_get_offset
 	gimp_image_grid_get_spacing
+	gimp_image_grid_get_style
 	gimp_image_grid_set_background_color
 	gimp_image_grid_set_foreground_color
 	gimp_image_grid_set_offset
 	gimp_image_grid_set_spacing
+	gimp_image_grid_set_style
 	gimp_image_height
 	gimp_image_is_dirty
 	gimp_image_list
 	gimp_image_lower_channel
 	gimp_image_lower_layer
 	gimp_image_lower_layer_to_bottom
+	gimp_image_lower_vectors
+	gimp_image_lower_vectors_to_bottom
 	gimp_image_merge_down
 	gimp_image_merge_visible_layers
 	gimp_image_new
@@ -342,14 +350,18 @@ EXPORTS
 	gimp_image_raise_channel
 	gimp_image_raise_layer
 	gimp_image_raise_layer_to_top
+	gimp_image_raise_vectors
+	gimp_image_raise_vectors_to_top
 	gimp_image_remove_channel
 	gimp_image_remove_layer
+	gimp_image_remove_vectors
 	gimp_image_resize
 	gimp_image_resize_to_layers
 	gimp_image_rotate
 	gimp_image_scale
 	gimp_image_set_active_channel
 	gimp_image_set_active_layer
+	gimp_image_set_active_vectors
 	gimp_image_set_cmap
 	gimp_image_set_colormap
 	gimp_image_set_component_active
@@ -516,6 +528,7 @@ EXPORTS
 	gimp_procedural_db_set_data
 	gimp_procedural_db_temp_name
 	gimp_progress_cancel
+	gimp_progress_get_window_handle
 	gimp_progress_init
 	gimp_progress_init_printf
 	gimp_progress_install
@@ -523,7 +536,6 @@ EXPORTS
 	gimp_progress_pulse
 	gimp_progress_set_text
 	gimp_progress_set_text_printf
-	gimp_progress_get_window_handle
 	gimp_progress_uninstall
 	gimp_progress_update
 	gimp_quit
@@ -588,5 +600,28 @@ EXPORTS
 	gimp_tile_width
 	gimp_transform_2d
 	gimp_uninstall_temp_proc
+	gimp_vectors_bezier_stroke_conicto
+	gimp_vectors_bezier_stroke_cubicto
+	gimp_vectors_bezier_stroke_lineto
+	gimp_vectors_bezier_stroke_new_ellipse
+	gimp_vectors_bezier_stroke_new_moveto
+	gimp_vectors_get_image
+	gimp_vectors_get_linked
+	gimp_vectors_get_name
+	gimp_vectors_get_strokes
+	gimp_vectors_get_tattoo
+	gimp_vectors_get_visible
+	gimp_vectors_new
+	gimp_vectors_set_linked
+	gimp_vectors_set_name
+	gimp_vectors_set_tattoo
+	gimp_vectors_set_visible
+	gimp_vectors_stroke_close
+	gimp_vectors_stroke_get_length
+	gimp_vectors_stroke_get_point_at_dist
+	gimp_vectors_stroke_interpolate
+	gimp_vectors_stroke_remove
+	gimp_vectors_stroke_scale
+	gimp_vectors_stroke_translate
 	gimp_version
 	gimp_wm_class
