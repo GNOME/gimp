@@ -24,6 +24,13 @@ sub pdb_misc {
    $since = '2.2';
 }
 
+sub mitch_misc {
+   $author = 'Michael Natterer <mitch@gimp.org>';
+   $copyright = 'Michael Natterer';
+   $date = '2005';
+   $since = '2.4';
+}
+
 sub context_push {
     $blurb = 'Pushes a context to the top of the plug-in\'s context stack.';
 
@@ -72,6 +79,63 @@ HELP
     {
       success = FALSE;
     }
+}
+CODE
+    );
+}
+
+sub context_get_paint_method {
+    $blurb = 'Retrieve the currently active paint method.';
+
+    $help = <<'HELP';
+This procedure returns the name of the currently active paint method.
+HELP
+
+    &mitch_misc;
+
+    @outargs = (
+	{ name  => 'name', type  => 'string',
+	  desc  => 'The name of the active paint method',
+	  alias => 'g_strdup (gimp_object_get_name (GIMP_OBJECT (paint_info)))',
+	  no_declare => 1 }
+    );
+
+    %invoke = (
+	vars => [ 'GimpPaintInfo *paint_info' ],
+	code => 'success = (paint_info = gimp_context_get_paint_info (context)) != NULL;'
+    );
+}
+
+sub context_set_paint_method {
+    $blurb = 'Set the specified paint method as the active paint method.';
+
+    $help = <<'HELP';
+This procedure allows the active paint method to be set by specifying
+its name.  The name is simply a string which corresponds to one of the
+names of the available paint methods. If there is no matching method
+found, this procedure will return an error.  Otherwise, the specified
+method becomes active and will be used in all subsequent paint
+operations.
+HELP
+
+    &mitch_misc;
+
+    @inargs = (
+        { name => 'name', type => 'string',
+          desc => 'The name of the paint method' }
+    );
+
+    %invoke = (
+	vars => [ 'GimpPaintInfo *paint_info' ],
+	code => <<'CODE'
+{
+  paint_info = (GimpPaintInfo *)
+    gimp_container_get_child_by_name (gimp->paint_info_list, name);
+
+  if (paint_info)
+    gimp_context_set_paint_info (context, paint_info);
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -275,7 +339,7 @@ sub context_get_brush {
     $blurb = 'Retrieve the currently active brush.';
 
     $help = <<'HELP';
-This procedure returns the nme of the currently active brush.
+This procedure returns the name of the currently active brush.
 All paint operations and stroke operations use this brush to control
 the application of paint to the image.
 HELP
@@ -310,7 +374,7 @@ HELP
 
     @inargs = (
         { name => 'name', type => 'string',
-          desc => 'The name o the brush' }
+          desc => 'The name of the brush' }
     );
 
     %invoke = (
@@ -560,6 +624,7 @@ CODE
               "plug-in/plug-in.h" "plug-in/plug-in-context.h");
 
 @procs = qw(context_push context_pop
+            context_get_paint_method context_set_paint_method
             context_get_foreground context_set_foreground
             context_get_background context_set_background
             context_set_default_colors context_swap_colors

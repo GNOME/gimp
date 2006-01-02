@@ -37,6 +37,8 @@
 
 static ProcRecord context_push_proc;
 static ProcRecord context_pop_proc;
+static ProcRecord context_get_paint_method_proc;
+static ProcRecord context_set_paint_method_proc;
 static ProcRecord context_get_foreground_proc;
 static ProcRecord context_set_foreground_proc;
 static ProcRecord context_get_background_proc;
@@ -63,6 +65,8 @@ register_context_procs (Gimp *gimp)
 {
   procedural_db_register (gimp, &context_push_proc);
   procedural_db_register (gimp, &context_pop_proc);
+  procedural_db_register (gimp, &context_get_paint_method_proc);
+  procedural_db_register (gimp, &context_set_paint_method_proc);
   procedural_db_register (gimp, &context_get_foreground_proc);
   procedural_db_register (gimp, &context_set_foreground_proc);
   procedural_db_register (gimp, &context_get_background_proc);
@@ -155,6 +159,108 @@ static ProcRecord context_pop_proc =
   0,
   NULL,
   { { context_pop_invoker } }
+};
+
+static Argument *
+context_get_paint_method_invoker (Gimp         *gimp,
+                                  GimpContext  *context,
+                                  GimpProgress *progress,
+                                  Argument     *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpPaintInfo *paint_info;
+
+  success = (paint_info = gimp_context_get_paint_info (context)) != NULL;
+
+  return_args = procedural_db_return_args (&context_get_paint_method_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_pointer = g_strdup (gimp_object_get_name (GIMP_OBJECT (paint_info)));
+
+  return return_args;
+}
+
+static ProcArg context_get_paint_method_outargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "name",
+    "The name of the active paint method"
+  }
+};
+
+static ProcRecord context_get_paint_method_proc =
+{
+  "gimp-context-get-paint-method",
+  "gimp-context-get-paint-method",
+  "Retrieve the currently active paint method.",
+  "This procedure returns the name of the currently active paint method.",
+  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer",
+  "2005",
+  NULL,
+  GIMP_INTERNAL,
+  0,
+  NULL,
+  1,
+  context_get_paint_method_outargs,
+  { { context_get_paint_method_invoker } }
+};
+
+static Argument *
+context_set_paint_method_invoker (Gimp         *gimp,
+                                  GimpContext  *context,
+                                  GimpProgress *progress,
+                                  Argument     *args)
+{
+  gboolean success = TRUE;
+  gchar *name;
+  GimpPaintInfo *paint_info;
+
+  name = (gchar *) args[0].value.pdb_pointer;
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+    success = FALSE;
+
+  if (success)
+    {
+      paint_info = (GimpPaintInfo *)
+        gimp_container_get_child_by_name (gimp->paint_info_list, name);
+
+      if (paint_info)
+        gimp_context_set_paint_info (context, paint_info);
+      else
+        success = FALSE;
+    }
+
+  return procedural_db_return_args (&context_set_paint_method_proc, success);
+}
+
+static ProcArg context_set_paint_method_inargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "name",
+    "The name of the paint method"
+  }
+};
+
+static ProcRecord context_set_paint_method_proc =
+{
+  "gimp-context-set-paint-method",
+  "gimp-context-set-paint-method",
+  "Set the specified paint method as the active paint method.",
+  "This procedure allows the active paint method to be set by specifying its name. The name is simply a string which corresponds to one of the names of the available paint methods. If there is no matching method found, this procedure will return an error. Otherwise, the specified method becomes active and will be used in all subsequent paint operations.",
+  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer",
+  "2005",
+  NULL,
+  GIMP_INTERNAL,
+  1,
+  context_set_paint_method_inargs,
+  0,
+  NULL,
+  { { context_set_paint_method_invoker } }
 };
 
 static Argument *
@@ -595,7 +701,7 @@ static ProcRecord context_get_brush_proc =
   "gimp-context-get-brush",
   "gimp-context-get-brush",
   "Retrieve the currently active brush.",
-  "This procedure returns the nme of the currently active brush. All paint operations and stroke operations use this brush to control the application of paint to the image.",
+  "This procedure returns the name of the currently active brush. All paint operations and stroke operations use this brush to control the application of paint to the image.",
   "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
   "Michael Natterer & Sven Neumann",
   "2004",
@@ -641,7 +747,7 @@ static ProcArg context_set_brush_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The name o the brush"
+    "The name of the brush"
   }
 };
 

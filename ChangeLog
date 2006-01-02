@@ -1,3 +1,15 @@
+2006-01-02  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/context.pdb
+	* libgimp/gimp.def: added gimp-context-get/set-paint-method which
+	get/set the context's paint-info by name. Use these functions to
+	stroke with any paint method (still only with its default paint
+	options).
+
+	* app/pdb/context_cmds.c
+	* app/pdb/internal_procs.c
+	* libgimp/gimpcontext_pdb.[ch]: regenerated.
+
 2006-01-02  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimage-convert-data.h
