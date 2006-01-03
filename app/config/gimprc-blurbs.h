@@ -336,7 +336,7 @@ N_("Enable tooltips display.")
 #define SWAP_PATH_BLURB \
 N_("Sets the swap file location. GIMP uses a tile based memory allocation " \
    "scheme. The swap file is used to quickly and easily swap tiles out to " \
-   "disk and back in. Be aware that the swap file can easily get very large" \
+   "disk and back in. Be aware that the swap file can easily get very large " \
    "if GIMP is used with large images. " \
    "Also, things can get horribly slow if the swap file is created on " \
    "a directory that is mounted over NFS.  For these reasons, it may " \
