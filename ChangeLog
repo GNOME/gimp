@@ -1,3 +1,12 @@
+2006-01-03  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpdialog.c (gimp_dialog_init): connect to our
+	own "response" signal so our callback is the first one called.
+
+	(gimp_dialog_response): let the activated widget grab the focus,
+	so input fields which update their model or constraints on
+	focus_out are properly recalculated. Fixes bug #309373.
+
 2006-01-02  Simon Budig  <simon@gimp.org>
 
 	* libgimp/gimp.def: added a bunch of missing symbols.

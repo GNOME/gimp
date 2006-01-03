@@ -54,7 +54,10 @@ static void       gimp_dialog_get_property (GObject         *object,
 static gboolean   gimp_dialog_delete_event (GtkWidget       *widget,
                                             GdkEventAny     *event);
 static void       gimp_dialog_close        (GtkDialog       *dialog);
+
 static void       gimp_dialog_help         (GObject         *dialog);
+static void       gimp_dialog_response     (GtkDialog       *dialog,
+                                            gint             response_id);
 
 
 G_DEFINE_TYPE (GimpDialog, gimp_dialog, GTK_TYPE_DIALOG);
@@ -106,6 +109,10 @@ static void
 gimp_dialog_init (GimpDialog *dialog)
 {
   gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
+
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (gimp_dialog_response),
+                    NULL);
 }
 
 static GObject *
@@ -243,6 +250,29 @@ gimp_dialog_help (GObject *dialog)
 
   if (help_func)
     help_func (g_object_get_data (dialog, "gimp-dialog-help-id"), dialog);
+}
+
+static void
+gimp_dialog_response (GtkDialog *dialog,
+                      gint       response_id)
+{
+  GList *children;
+  GList *list;
+
+  children = gtk_container_get_children (GTK_CONTAINER (dialog->action_area));
+
+  for (list = children; list; list = g_list_next (list))
+    {
+      GtkWidget *widget = list->data;
+
+      if (gtk_dialog_get_response_for_widget (dialog, widget) == response_id)
+        {
+          gtk_widget_grab_focus (widget);
+          break;
+        }
+    }
+
+  g_list_free (children);
 }
 
 
