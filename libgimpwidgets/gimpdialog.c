@@ -267,7 +267,12 @@ gimp_dialog_response (GtkDialog *dialog,
 
       if (gtk_dialog_get_response_for_widget (dialog, widget) == response_id)
         {
-          gtk_widget_grab_focus (widget);
+          if (! GTK_IS_BUTTON (widget) ||
+              gtk_button_get_focus_on_click (GTK_BUTTON (button)))
+            {
+              gtk_widget_grab_focus (widget);
+            }
+
           break;
         }
     }
