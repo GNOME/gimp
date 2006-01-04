@@ -1,14 +1,14 @@
 # Canadian English translations for gimp
-# Copyright (C) 2004-2005 Adam Weinberger and the GNOME Foundation
+# Copyright (C) 2004-2006 Adam Weinberger and the GNOME Foundation
 # This file is distributed under the same licence as the gimp package.
-# Adam Weinberger <adamw@gnome.org>, 2004, 2005.
+# Adam Weinberger <adamw@gnome.org>, 2004, 2005, 2006.
 # 
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-12-30 17:45-0500\n"
+"POT-Creation-Date: 2006-01-04 15:02-0500\n"
 "PO-Revision-Date: 2005-09-06 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
@@ -4044,10 +4044,10 @@ msgstr "Enable tooltips display."
 msgid ""
 "Sets the swap file location. GIMP uses a tile based memory allocation "
 "scheme. The swap file is used to quickly and easily swap tiles out to disk "
-"and back in. Be aware that the swap file can easily get very largeif GIMP is "
-"used with large images. Also, things can get horribly slow if the swap file "
-"is created on a directory that is mounted over NFS.  For these reasons, it "
-"may be desirable to put your swap file in \"/tmp\"."
+"and back in. Be aware that the swap file can easily get very large if GIMP "
+"is used with large images. Also, things can get horribly slow if the swap "
+"file is created on a directory that is mounted over NFS.  For these reasons, "
+"it may be desirable to put your swap file in \"/tmp\"."
 msgstr ""
 "Sets the swap file location. GIMP uses a tile based memory allocation "
 "scheme. The swap file is used to quickly and easily swap tiles out to disk "
