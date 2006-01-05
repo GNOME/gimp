@@ -1,3 +1,11 @@
+2006-01-05  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/brush.pdb (gimp-brush-set-spacing): allow to
+	change the spacing of brushes the user doesn't have write access
+	to. The user interface allows to do that as well.
+
+	* app/pdb/brush_cmds.c: regenerated.
+
 2006-01-04  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/context.pdb: fixed docs for gimp-context-push/pop.

@@ -826,7 +826,7 @@ brush_set_spacing_invoker (Gimp         *gimp,
       brush = (GimpBrush *)
         gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
-      if (brush && GIMP_DATA (brush)->writable)
+      if (brush)
         gimp_brush_set_spacing (brush, spacing);
       else
         success = FALSE;
