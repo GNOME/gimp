@@ -1,5 +1,9 @@
 2006-01-05  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: depend on gtk+ >= 2.8.8 (see bug #325794).
+
+2006-01-05  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/pdb/brush.pdb (gimp-brush-set-spacing): allow to
 	change the spacing of brushes the user doesn't have write access
 	to. The user interface allows to do that as well.
