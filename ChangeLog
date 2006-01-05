@@ -1,3 +1,7 @@
+2006-01-05  Stanislav Brabec  <sbrabec@suse.cz>
+
+	* app/base/pixel-processor.c: Added missing string.h include.
+
 2005-12-27  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped version to 2.2.11, interface_age 11.

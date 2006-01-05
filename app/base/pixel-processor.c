@@ -24,6 +24,8 @@
 #include <pthread.h>
 #endif
 
+#include <string.h>
+
 #include <glib-object.h>
 
 #include "base-types.h"
