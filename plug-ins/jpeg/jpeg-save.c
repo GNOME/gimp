@@ -575,6 +575,9 @@ save_image (const gchar *filename,
       pp->cinfo.err = jpeg_std_error(&(pp->jerr));
       pp->jerr.error_exit = background_error_exit;
 
+      gtk_label_set_text (GTK_LABEL (preview_size),
+                          _("Calculating file size..."));
+
       g_idle_add ((GSourceFunc) background_jpeg_save, pp);
 
       /* background_jpeg_save() will cleanup as needed */
