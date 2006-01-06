@@ -1,3 +1,18 @@
+2006-01-06  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/jpeg.c: applied a patch from Mukund that fixes
+	handling of EXIF data when preview is enabled (bug #303383).
+
+2006-01-05  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
+	* tools/pdbgen/pdb/brush.pdb (gimp-brush-set-spacing): allow to
+	change the spacing of brushes the user doesn't have write access
+	to. The user interface allows to do that as well.
+
+	* app/pdb/brush_cmds.c: regenerated.
+
 2006-01-05  Stanislav Brabec  <sbrabec@suse.cz>
 
 	* app/base/pixel-processor.c: Added missing string.h include.
