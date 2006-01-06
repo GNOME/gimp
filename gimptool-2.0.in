@@ -92,15 +92,20 @@ if test $# -eq 0; then
 fi
 
 if test x${PKG_CONFIG+set} != xset ; then
-  gtk_cflags='@GTK_CFLAGS@'
-  gtk_libs='@GTK_LIBS@'
-  glib_cflags='@GLIB_CFLAGS@'
-  glib_libs='@GLIB_LIBS@'
-else
+  PKG_CONFIG=pkg-config
+fi
+
+if $PKG_CONFIG --atleast-pkgconfig-version 0.7 ; then
   gtk_cflags=`$PKG_CONFIG --cflags gtk+-2.0`
   gtk_libs=`$PKG_CONFIG --libs gtk+-2.0`
   glib_cflags=`$PKG_CONFIG --cflags glib-2.0`
   glib_libs=`$PKG_CONFIG --libs glib-2.0`
+else
+  echo "*** pkg-config not found or too old; using paths from gimp compilation." 1>&2
+  gtk_cflags='@GTK_CFLAGS@'
+  gtk_libs='@GTK_LIBS@'
+  glib_cflags='@GLIB_CFLAGS@'
+  glib_libs='@GLIB_LIBS@'
 fi
 
 if test x${INSTALL+set} != xset ; then
