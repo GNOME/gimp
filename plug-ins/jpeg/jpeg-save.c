@@ -214,6 +214,7 @@ save_image (const gchar *filename,
 #ifdef HAVE_EXIF
   guchar   *thumbnail_buffer        = NULL;
   gint      thumbnail_buffer_length = 0;
+  ExifData  *exif_data_tmp          = NULL;
 #endif
 
   drawable = gimp_drawable_get (drawable_ID);
@@ -422,7 +423,9 @@ save_image (const gchar *filename,
       gdouble quality  = MIN (75.0, jsvals.quality);
 
       if ( (! jsvals.save_exif) || (! exif_data))
-        exif_data = exif_data_new ();
+        exif_data_tmp = exif_data_new ();
+      else
+        exif_data_tmp = exif_data;
 
       /* avoid saving markers longer than 65533, gradually decrease
        * quality in steps of 5 until exif_buf_len is lower than that.
@@ -436,13 +439,13 @@ save_image (const gchar *filename,
                                                         quality,
                                                         &thumbnail_buffer);
 
-          exif_data->data = thumbnail_buffer;
-          exif_data->size = thumbnail_buffer_length;
+          exif_data_tmp->data = thumbnail_buffer;
+          exif_data_tmp->size = thumbnail_buffer_length;
 
           if (exif_buf)
             free (exif_buf);
 
-          exif_data_save_data (exif_data, &exif_buf, &exif_buf_len);
+          exif_data_save_data (exif_data_tmp, &exif_buf, &exif_buf_len);
         }
 
       if (exif_buf_len > 65533)
@@ -452,25 +455,25 @@ save_image (const gchar *filename,
             thumbnail_buffer_length = create_thumbnail (image_ID, drawable_ID,
                                                         0.0,
                                                         &thumbnail_buffer);
-          exif_data->data = thumbnail_buffer;
-          exif_data->size = thumbnail_buffer_length;
+          exif_data_tmp->data = thumbnail_buffer;
+          exif_data_tmp->size = thumbnail_buffer_length;
 
           if (exif_buf)
             free (exif_buf);
 
-          exif_data_save_data (exif_data, &exif_buf, &exif_buf_len);
+          exif_data_save_data (exif_data_tmp, &exif_buf, &exif_buf_len);
         }
 
       if (exif_buf_len > 65533)
         {
           /* still no go? save without thumbnail */
-          exif_data->data = NULL;
-          exif_data->size = 0;
+          exif_data_tmp->data = NULL;
+          exif_data_tmp->size = 0;
 
           if (exif_buf)
             free (exif_buf);
 
-          exif_data_save_data (exif_data, &exif_buf, &exif_buf_len);
+          exif_data_save_data (exif_data_tmp, &exif_buf, &exif_buf_len);
         }
 
       g_print ("jpeg-save: saving EXIF block (%d bytes)\n", exif_buf_len);
