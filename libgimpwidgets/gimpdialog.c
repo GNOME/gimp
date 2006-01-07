@@ -54,6 +54,7 @@ static void       gimp_dialog_get_property (GObject         *object,
                                             GValue          *value,
                                             GParamSpec      *pspec);
 
+static void       gimp_dialog_hide         (GtkWidget       *widget);
 static gboolean   gimp_dialog_delete_event (GtkWidget       *widget,
                                             GdkEventAny     *event);
 static void       gimp_dialog_close        (GtkDialog       *dialog);
@@ -106,6 +107,7 @@ gimp_dialog_class_init (GimpDialogClass *klass)
   object_class->set_property = gimp_dialog_set_property;
   object_class->get_property = gimp_dialog_get_property;
 
+  widget_class->hide         = gimp_dialog_hide;
   widget_class->delete_event = gimp_dialog_delete_event;
 
   dialog_class->close        = gimp_dialog_close;
@@ -232,6 +234,15 @@ gimp_dialog_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static void
+gimp_dialog_hide (GtkWidget *widget)
+{
+  /*  set focus to NULL so focus_out callbacks are invoked synchronously  */
+  gtk_window_set_focus (GTK_WINDOW (widget), NULL);
+
+  GTK_WIDGET_CLASS (parent_class)->hide (widget);
 }
 
 static void

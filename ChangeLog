@@ -1,3 +1,18 @@
+2006-01-07  Michael Natterer  <mitch@gimp.org>
+
+	Merged from HEAD branch:
+
+	* libgimpwidgets/gimpdialog.c: implement GtkWidget::hide() and set
+	the the focus widget to NULL, so a focussed entry emits focus_out
+	and its callbacks are invoked immediately (before the call to
+	gtk_widget_hide() returns). Fixes crashes and warnings in tool
+	dialogs when hitting escape while a spinbutton is being edited.
+
+	* app/tools/gimptransformtool.c
+	(gimp_transform_tool_force_expose_preview): return silently
+	instead of warning when being called while the draw tool is not
+	active (same scenario as above).
+
 2006-01-06  Sven Neumann  <sven@gimp.org>
 
 	* gimptool-2.0.in: if available use pkg-config to determine
