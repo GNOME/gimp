@@ -1,3 +1,8 @@
+2006-01-07  Sven Neumann  <sven@gimp.org>
+
+	* app/base/siox.c: applied patch from Tobias Lenz that plugs a
+	memleak and yields another small speedup.
+
 2006-01-06  Sven Neumann  <sven@gimp.org>
 
 	* gimptool-2.0.in: if available use pkg-config to determine

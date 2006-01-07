@@ -164,7 +164,7 @@ stageone (lab          *points,
           gint          depth,
           gint         *clusters,
           const gfloat *limits,
-          gint          dims)
+          const gint    dims)
 {
   gint    curdim = depth % dims;
   gfloat  min, max;
@@ -248,10 +248,10 @@ stagetwo (lab           *points,
           gint           left,
           gint           right,
           gint           depth,
-          GSList       **clusters,
+          gint          *clusters,
           const gfloat  *limits,
-          gfloat         threshold,
-          gint           dims)
+          const gfloat   threshold,
+          const gint     dims)
 {
   gint    curdim = depth % dims;
   gfloat  min, max;
@@ -310,25 +310,27 @@ stagetwo (lab           *points,
 
       if (sum >= threshold)
         {
-          lab *point = g_new0 (lab, 1);
+          const gint c = right - left;
+          gfloat l = 0;
+          gfloat a = 0;
+          gfloat b = 0;
 
-          for (i = left; i < right; i++)
+          for (; left < right; ++left)
             {
-              point->l += points[i].l;
-              point->a += points[i].a;
-              point->b += points[i].b;
+              l += points[left].l;
+              a += points[left].a;
+              b += points[left].b;
             }
 
-          point->l /= right - left;
-          point->a /= right - left;
-          point->b /= right - left;
+          points[*clusters].l = l / c;
+          points[*clusters].a = a / c;
+          points[*clusters].b = b / c;
+          ++(*clusters);
 
 #ifdef SIOX_DEBUG
           g_printerr ("siox.c: cluster=%f, %f, %f sum=%d\n",
-                     point->l, point->a, point->b, sum);
+                     l, a, b, sum);
 #endif
-
-          *clusters = g_slist_prepend (*clusters, (gpointer)point);
         }
     }
 }
@@ -356,12 +358,10 @@ create_signature (lab          *input,
                   gint          length,
                   gint         *returnlength,
                   const gfloat *limits,
-                  gint          dims)
+                  const gint    dims)
 {
-  GSList    *clusters = NULL;
-  lab       *rval;
-  gint       size = 0;
-  gint       i;
+  gint size1 = 0;
+  gint size2 = 0;
 
   if (length < 1)
     {
@@ -369,33 +369,21 @@ create_signature (lab          *input,
       return NULL;
     }
 
-  stageone (input, 0, length, 0, &size, limits, dims);
+  stageone (input, 0, length, 0, &size1, limits, dims);
 
 #ifdef SIOX_DEBUG
-  g_printerr ("siox.c: step #1 -> %d clusters\n", size);
+  g_printerr ("siox.c: step #1 -> %d clusters\n", size1);
 #endif
 
-  clusters = NULL;
+  stagetwo (input, 0, size1, 0, &size2, limits, length * 0.001, dims);
 
-  stagetwo (input, 0, size, 0, &clusters, limits, length * 0.001f, dims);
-
-  size = g_slist_length(clusters);
-  rval = g_new (lab, size);
-
-  i = 0;
-  while (clusters != NULL)
-    {
-      rval[i++] = *((lab*) clusters->data);
-      clusters = g_slist_delete_link (clusters, clusters);
-    }
-
-  *returnlength = size;
+  *returnlength = size2;
 
 #ifdef SIOX_DEBUG
-  g_printerr ("siox.c: step #2 -> %d clusters\n", returnlength[0]);
+  g_printerr ("siox.c: step #2 -> %d clusters\n", *returnlength);
 #endif
 
-  return rval;
+  return g_memdup (input, size2 * sizeof (lab));
 }
 
 /* Smoothes mask by delegation to paint-funcs.c */
@@ -593,7 +581,7 @@ find_max_blob (TileManager *mask,
                gint         y,
                gint         width,
                gint         height,
-               gint         sizeFactorToKeep)
+               const gint   sizeFactorToKeep)
 {
   GSList     *list = NULL;
   PixelRegion region;
@@ -766,7 +754,7 @@ siox_init (TileManager      *pixels,
   state->fgsiglen = 0;
   state->bpp      = tile_manager_bpp (pixels);
   state->cache    = g_hash_table_new_full (g_direct_hash,
-                                           g_direct_equal, NULL, g_free);
+                                           NULL, NULL, g_free);
 
   cpercep_init ();
 
@@ -890,11 +878,13 @@ siox_foreground_extract (SioxState          *state,
                   surebgcount, surefgcount);
 #endif
 
-      surebg = g_new (lab, surebgcount);
-      surefg = g_new (lab, surefgcount);
+      if (refinement & SIOX_REFINEMENT_ADD_FOREGROUND)
+        surefg = g_new (lab, surefgcount);
+
+      if (refinement & SIOX_REFINEMENT_ADD_BACKGROUND)
+        surebg = g_new (lab, surebgcount);
 
       i = 0;
-      j = 0;
 
       siox_progress_update (progress_callback, progress_data, 0.1);
 
@@ -905,33 +895,91 @@ siox_foreground_extract (SioxState          *state,
       pixel_region_init (&mapPR, mask,
                          x, y, width, height, FALSE);
 
-      for (pr = pixel_regions_register (2, &srcPR, &mapPR);
-           pr != NULL; pr = pixel_regions_process (pr))
+      pr = pixel_regions_register (2, &srcPR, &mapPR);
+
+      if (! (refinement & SIOX_REFINEMENT_ADD_FOREGROUND))
         {
-          const guchar *src = srcPR.data;
-          const guchar *map = mapPR.data;
-
-          for (row = 0; row < srcPR.h; row++)
+          for (;pr != NULL; pr = pixel_regions_process (pr))
             {
-              const guchar *s = src;
-              const guchar *m = map;
+              const guchar *src = srcPR.data;
+              const guchar *map = mapPR.data;
 
-              for (col = 0; col < srcPR.w; col++, m++, s += state->bpp)
+              for (row = 0; row < srcPR.h; row++)
                 {
-                  if (*m < SIOX_LOW)
-                    {
-                      calc_lab (s, state->bpp, state->colormap, surebg + i);
-                      i++;
-                    }
-                  else if (*m > SIOX_HIGH)
-                    {
-                      calc_lab (s, state->bpp, state->colormap, surefg + j);
-                      j++;
-                    }
-                }
+                  const guchar *s = src;
+                  const guchar *m = map;
 
-              src += srcPR.rowstride;
-              map += mapPR.rowstride;
+                  for (col = 0; col < srcPR.w; col++, m++, s += state->bpp)
+                    {
+                      if (*m < SIOX_LOW)
+                        {
+                          calc_lab (s, state->bpp, state->colormap, surebg + i);
+                          i++;
+                        }
+                    }
+
+                  src += srcPR.rowstride;
+                  map += mapPR.rowstride;
+                }
+            }
+        }
+      else if (! (refinement & SIOX_REFINEMENT_ADD_BACKGROUND))
+        {
+          for (;pr != NULL; pr = pixel_regions_process (pr))
+            {
+              const guchar *src = srcPR.data;
+              const guchar *map = mapPR.data;
+
+              for (row = 0; row < srcPR.h; row++)
+                {
+                  const guchar *s = src;
+                  const guchar *m = map;
+
+                  for (col = 0; col < srcPR.w; col++, m++, s += state->bpp)
+                    {
+                      if (*m > SIOX_HIGH)
+                        {
+                          calc_lab (s, state->bpp, state->colormap, surefg + i);
+                          i++;
+                        }
+                    }
+
+                  src += srcPR.rowstride;
+                  map += mapPR.rowstride;
+                }
+            }
+        }
+      else   /* both changed */
+        {
+          j = 0;
+
+          for (;pr != NULL; pr = pixel_regions_process (pr))
+            {
+              const guchar *src = srcPR.data;
+              const guchar *map = mapPR.data;
+
+              for (row = 0; row < srcPR.h; row++)
+                {
+                  const guchar *s = src;
+                  const guchar *m = map;
+
+                  for (col = 0; col < srcPR.w; col++, m++, s += state->bpp)
+                    {
+                      if (*m < SIOX_LOW)
+                        {
+                          calc_lab (s, state->bpp, state->colormap, surebg + i);
+                          i++;
+                        }
+                      else if (*m > SIOX_HIGH)
+                        {
+                          calc_lab (s, state->bpp, state->colormap, surefg + j);
+                          j++;
+                        }
+                    }
+
+                  src += srcPR.rowstride;
+                  map += mapPR.rowstride;
+                }
             }
         }
 
@@ -939,6 +987,7 @@ siox_foreground_extract (SioxState          *state,
 
       if (refinement & SIOX_REFINEMENT_ADD_BACKGROUND)
         {
+
           /* Create color signature for the background */
           state->bgsig = create_signature (surebg, surebgcount,
                                            &state->bgsiglen, limits,
@@ -976,12 +1025,13 @@ siox_foreground_extract (SioxState          *state,
 #endif
 
   pixel_region_init (&srcPR, state->pixels,
-                     x - state->offset_x, y -state-> offset_y, width, height,
+                     x - state->offset_x, y - state->offset_y, width, height,
                      FALSE);
   pixel_region_init (&mapPR, mask, x, y, width, height, TRUE);
 
   for (pr = pixel_regions_register (2, &srcPR, &mapPR);
-       pr != NULL; pr = pixel_regions_process (pr))
+       pr != NULL;
+       pr = pixel_regions_process (pr))
     {
       const guchar *src = srcPR.data;
       guchar       *map = mapPR.data;
@@ -1058,7 +1108,6 @@ siox_foreground_extract (SioxState          *state,
                     }
                 }
 
-              cr->bgdist = minbg;
               cr->fgdist = minfg;
 
               g_hash_table_insert (state->cache, GINT_TO_POINTER (key), cr);
@@ -1152,7 +1201,8 @@ siox_drb (SioxState   *state,
                      brushradius * 2, brushradius * 2, TRUE);
 
   for (pr = pixel_regions_register (2, &srcPR, &mapPR);
-       pr != NULL; pr = pixel_regions_process (pr))
+       pr != NULL;
+       pr = pixel_regions_process (pr))
     {
       const guchar *src = srcPR.data;
       guchar       *map = mapPR.data;
@@ -1199,7 +1249,6 @@ siox_drb (SioxState   *state,
                     alpha = 0.0; /* avoid div by zero */
                   else
                     alpha = 1.0 - MIN (mindistfg / mindistbg, 1.0);
-
                 }
 
               if (alpha < threshold)
@@ -1207,15 +1256,16 @@ siox_drb (SioxState   *state,
                   /* background with a certain confidence
                    * to be decided by user.
                    */
-                  alpha = 0.0;
+                  *m = 0;
                 }
-
-              *m = (gint) 255 *alpha;
+              else
+                {
+                  *m = (gint) (255.999 * alpha);
+                }
             }
 
           src += srcPR.rowstride;
           map += mapPR.rowstride;
-
         }
     }
 }
