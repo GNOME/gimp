@@ -1144,7 +1144,12 @@ gimp_transform_tool_force_expose_preview (GimpTransformTool *tr_tool)
   if (! tr_tool->use_grid)
     return;
 
-  g_return_if_fail (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tr_tool)));
+  /*  we might be called as the result of cancelling the transform
+   *  tool dialog, return silently because the draw tool may have
+   *  already been stopped by gimp_transform_tool_halt()
+   */
+  if (! gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tr_tool)))
+    return;
 
   shell = GIMP_DISPLAY_SHELL (GIMP_DRAW_TOOL (tr_tool)->gdisp->shell);
 
