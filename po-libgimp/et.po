@@ -8,15 +8,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-13 19:29+0000\n"
-"PO-Revision-Date: 2005-08-14 11:54+0300\n"
+"Report-Msgid-Bugs-To: olle@paalalinn.com\n"
+"POT-Creation-Date: 2005-12-08 19:12+0100\n"
+"PO-Revision-Date: 2006-01-04 23:06+0200\n"
 "Last-Translator: Olle Niit <olle@paalalinn.com>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Emacs\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../libgimp/gimpbrushmenu.c:140
 msgid "Brush Selection"
@@ -149,20 +150,20 @@ msgstr "Kinnita salvestamine"
 msgid "Confirm"
 msgstr "Kinnita"
 
-#: ../libgimp/gimpexport.c:459
+#: ../libgimp/gimpexport.c:462
 msgid "Export File"
 msgstr "Ekspordi fail"
 
-#: ../libgimp/gimpexport.c:463
+#: ../libgimp/gimpexport.c:466
 msgid "_Ignore"
 msgstr "_Ignoreeri"
 
-#: ../libgimp/gimpexport.c:465
+#: ../libgimp/gimpexport.c:468
 msgid "_Export"
 msgstr "_Ekspordi"
 
 #. the headline
-#: ../libgimp/gimpexport.c:493
+#: ../libgimp/gimpexport.c:497
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -172,11 +173,11 @@ msgstr ""
 "järgnevatel põhjustel:"
 
 #. the footline
-#: ../libgimp/gimpexport.c:564
+#: ../libgimp/gimpexport.c:568
 msgid "The export conversion won't modify your original image."
 msgstr "Eksportimine ei muuda sinu originaalpilti."
 
-#: ../libgimp/gimpexport.c:664
+#: ../libgimp/gimpexport.c:668
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -185,7 +186,7 @@ msgstr ""
 "Sa salvestad kihi maski kui %s.\n"
 "See ei salvesta nähtavaid kihte."
 
-#: ../libgimp/gimpexport.c:670
+#: ../libgimp/gimpexport.c:674
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -218,85 +219,86 @@ msgstr "Värvipaleti valimine"
 msgid "Pattern Selection"
 msgstr "Mustri valimine"
 
-#: ../libgimp/gimpprocbrowserdialog.c:154
+#: ../libgimp/gimpprocbrowserdialog.c:171
 msgid "by name"
 msgstr "nime järgi"
 
-#: ../libgimp/gimpprocbrowserdialog.c:155
+#: ../libgimp/gimpprocbrowserdialog.c:172
 msgid "by description"
 msgstr "kirjelduse järgi"
 
-#: ../libgimp/gimpprocbrowserdialog.c:156
+#: ../libgimp/gimpprocbrowserdialog.c:173
 msgid "by help"
 msgstr "abiinfo järgi"
 
-#: ../libgimp/gimpprocbrowserdialog.c:157
+#: ../libgimp/gimpprocbrowserdialog.c:174
 msgid "by author"
 msgstr "autori järgi"
 
-#: ../libgimp/gimpprocbrowserdialog.c:158
+#: ../libgimp/gimpprocbrowserdialog.c:175
 msgid "by copyright"
 msgstr "copyright'i järgi"
 
-#: ../libgimp/gimpprocbrowserdialog.c:159
+#: ../libgimp/gimpprocbrowserdialog.c:176
 msgid "by date"
 msgstr "kuupäeva järgi"
 
-#: ../libgimp/gimpprocbrowserdialog.c:160
+#: ../libgimp/gimpprocbrowserdialog.c:177
 msgid "by type"
 msgstr "tüübi järgi"
 
-#: ../libgimp/gimpprocbrowserdialog.c:354
-msgid "Searching by name - please wait"
-msgstr "Nime järgi otsimine - palun oota"
+#: ../libgimp/gimpprocbrowserdialog.c:408
+msgid "Searching"
+msgstr "Otsimine"
 
-#: ../libgimp/gimpprocbrowserdialog.c:374
-msgid "Searching by description - please wait"
-msgstr "Kirjelduse järgi otsimine - palun oota"
+#: ../libgimp/gimpprocbrowserdialog.c:419
+msgid "Searching by name"
+msgstr "Nime järgi otsimine"
 
-#: ../libgimp/gimpprocbrowserdialog.c:382
-msgid "Searching by help - please wait"
-msgstr "Abiinfo järgi otsimine - palun oota"
+#: ../libgimp/gimpprocbrowserdialog.c:440
+msgid "Searching by description"
+msgstr "Kirjelduse järgi otsimine"
 
-#: ../libgimp/gimpprocbrowserdialog.c:390
-msgid "Searching by author - please wait"
-msgstr "Autori järgi otsimine - palun oota"
+#: ../libgimp/gimpprocbrowserdialog.c:447
+msgid "Searching by help"
+msgstr "Abiinfo järgi otsimine"
 
-#: ../libgimp/gimpprocbrowserdialog.c:398
-msgid "Searching by copyright - please wait"
-msgstr "Copyright'i järgi otsimine - palun oota"
+#: ../libgimp/gimpprocbrowserdialog.c:454
+msgid "Searching by author"
+msgstr "Autori järgi otsimine"
 
-#: ../libgimp/gimpprocbrowserdialog.c:406
-msgid "Searching by date - please wait"
-msgstr "Kuupäeva järgi otsimine - palun oota"
+#: ../libgimp/gimpprocbrowserdialog.c:461
+msgid "Searching by copyright"
+msgstr "Copyright'i järgi otsimine"
 
-#: ../libgimp/gimpprocbrowserdialog.c:414
-msgid "Searching by type - please wait"
-msgstr "Tüübi järgi otsimine - palun oota"
+#: ../libgimp/gimpprocbrowserdialog.c:468
+msgid "Searching by date"
+msgstr "Kuupäeva järgi otsimine"
 
-#: ../libgimp/gimpprocbrowserdialog.c:422
-msgid "Searching - please wait"
-msgstr "Otsimine - palun oota"
+#: ../libgimp/gimpprocbrowserdialog.c:475
+msgid "Searching by type"
+msgstr "Tüübi järgi otsimine"
 
-#: ../libgimp/gimpprocbrowserdialog.c:430
+#: ../libgimp/gimpprocbrowserdialog.c:485
 #, c-format
-msgid "%d Procedures"
-msgstr "%d protseduuri"
+msgid "%d procedure"
+msgid_plural "%d procedures"
+msgstr[0] "%d protseduur"
+msgstr[1] "%d protseduuri"
 
-#: ../libgimp/gimpprocbrowserdialog.c:437
+#: ../libgimp/gimpprocbrowserdialog.c:494
 msgid "No matches for your query"
 msgstr "Otsitavat protseduuri ei leitud"
 
-#: ../libgimp/gimpprocbrowserdialog.c:440
-msgid "1 procedure matches your query"
-msgstr "1 protseduur vastab sinu päringule"
-
-#: ../libgimp/gimpprocbrowserdialog.c:443
+#: ../libgimp/gimpprocbrowserdialog.c:498
 #, c-format
-msgid "%d procedures match your query"
-msgstr "%d protseduuri vastab sinu päringule"
+msgid "%d procedure matches your query"
+msgid_plural "%d procedures match your query"
+msgstr[0] "Sinu päringule vastab %d protseduur"
+msgstr[1] "Sinu päringule vastab %d protseduuri"
 
-#: ../libgimp/gimpprocbrowserdialog.c:491
+#. count label
+#: ../libgimp/gimpprocbrowserdialog.c:547 ../libgimpwidgets/gimpbrowser.c:145
 msgid "No matches"
 msgstr "Ei leitud"
 
@@ -412,7 +414,7 @@ msgstr "Sinine"
 msgid "Gray"
 msgstr "Hall"
 
-#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpbase/gimpbaseenums.c:494
+#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpbase/gimpbaseenums.c:529
 msgid "Indexed"
 msgstr "Indekseeritud"
 
@@ -433,27 +435,27 @@ msgid "Large"
 msgstr "Suur"
 
 #: ../libgimpbase/gimpbaseenums.c:228
-msgid "Light Checks"
-msgstr ""
+msgid "Light checks"
+msgstr "Hele malelaud"
 
 #: ../libgimpbase/gimpbaseenums.c:229
-msgid "Mid-Tone Checks"
-msgstr ""
+msgid "Mid-tone checks"
+msgstr "Keskmine malelaud"
 
 #: ../libgimpbase/gimpbaseenums.c:230
-msgid "Dark Checks"
-msgstr ""
+msgid "Dark checks"
+msgstr "Tume malelaud"
 
 #: ../libgimpbase/gimpbaseenums.c:231
-msgid "White Only"
+msgid "White only"
 msgstr "Ainult valge"
 
 #: ../libgimpbase/gimpbaseenums.c:232
-msgid "Gray Only"
+msgid "Gray only"
 msgstr "Ainult hall"
 
 #: ../libgimpbase/gimpbaseenums.c:233
-msgid "Black Only"
+msgid "Black only"
 msgstr "Ainult must"
 
 #: ../libgimpbase/gimpbaseenums.c:261
@@ -470,7 +472,7 @@ msgstr "Valgustatus"
 
 #: ../libgimpbase/gimpbaseenums.c:292
 msgid "Luminosity"
-msgstr ""
+msgstr "Paistvus"
 
 #: ../libgimpbase/gimpbaseenums.c:293
 msgid "Average"
@@ -484,7 +486,7 @@ msgstr "Helenda"
 msgid "Burn"
 msgstr "Tumenda"
 
-#: ../libgimpbase/gimpbaseenums.c:386 ../libgimpbase/gimpbaseenums.c:526
+#: ../libgimpbase/gimpbaseenums.c:386 ../libgimpbase/gimpbaseenums.c:561
 msgid "Linear"
 msgstr "Lineaarne"
 
@@ -528,168 +530,190 @@ msgstr "Spiraalne (pärip)"
 msgid "Spiral (ccw)"
 msgstr "Spiraalne (vastup)"
 
-#: ../libgimpbase/gimpbaseenums.c:425
+#: ../libgimpbase/gimpbaseenums.c:427
+msgid "Intersections (dots)"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:428
+msgid "Intersections (crosshairs)"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:429
+msgid "Dashed"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:430
+msgid "Double dashed"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:431
+msgid "Solid"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:460
 msgid "Stock ID"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:426
+#: ../libgimpbase/gimpbaseenums.c:461
 msgid "Inline pixbuf"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:427
+#: ../libgimpbase/gimpbaseenums.c:462
 msgid "Image file"
 msgstr "Pildifail"
 
-#: ../libgimpbase/gimpbaseenums.c:456
+#: ../libgimpbase/gimpbaseenums.c:491
 msgid "RGB color"
 msgstr "RGB värvid"
 
-#: ../libgimpbase/gimpbaseenums.c:457 ../libgimpbase/gimpbaseenums.c:492
+#: ../libgimpbase/gimpbaseenums.c:492 ../libgimpbase/gimpbaseenums.c:527
 msgid "Grayscale"
 msgstr "Halltoonid"
 
-#: ../libgimpbase/gimpbaseenums.c:458
+#: ../libgimpbase/gimpbaseenums.c:493
 msgid "Indexed color"
 msgstr "Indekseeritud värv"
 
-#: ../libgimpbase/gimpbaseenums.c:490
+#: ../libgimpbase/gimpbaseenums.c:525
 msgid "RGB"
 msgstr "RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:491
+#: ../libgimpbase/gimpbaseenums.c:526
 msgid "RGB-alpha"
 msgstr "RGB-alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:493
+#: ../libgimpbase/gimpbaseenums.c:528
 msgid "Grayscale-alpha"
 msgstr "Halltoonid-alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:495
+#: ../libgimpbase/gimpbaseenums.c:530
 msgid "Indexed-alpha"
 msgstr "Indekseeritud-alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:525
+#: ../libgimpbase/gimpbaseenums.c:560
 msgid "None (Fastest)"
 msgstr "Puudub (kiireim)"
 
-#: ../libgimpbase/gimpbaseenums.c:527
+#: ../libgimpbase/gimpbaseenums.c:562
 msgid "Cubic"
 msgstr "Kuubik"
 
-#: ../libgimpbase/gimpbaseenums.c:528
+#: ../libgimpbase/gimpbaseenums.c:563
 msgid "Lanczos (Best)"
 msgstr "Lanczos (Parim)"
 
-#: ../libgimpbase/gimpbaseenums.c:556
+#: ../libgimpbase/gimpbaseenums.c:591
 msgid "Constant"
 msgstr "Muutumatu"
 
-#: ../libgimpbase/gimpbaseenums.c:557
+#: ../libgimpbase/gimpbaseenums.c:592
 msgid "Incremental"
 msgstr "Suurenev"
 
-#: ../libgimpbase/gimpbaseenums.c:586 ../modules/cdisplay_lcms.c:254
+#: ../libgimpbase/gimpbaseenums.c:621 ../modules/cdisplay_lcms.c:254
 msgid "None"
 msgstr "Puudub"
 
-#: ../libgimpbase/gimpbaseenums.c:587
+#: ../libgimpbase/gimpbaseenums.c:622
 msgid "Sawtooth wave"
 msgstr "Saehamba laine"
 
-#: ../libgimpbase/gimpbaseenums.c:588
+#: ../libgimpbase/gimpbaseenums.c:623
 msgid "Triangular wave"
 msgstr "Kolmnurkne laine"
 
-#: ../libgimpbase/gimpbaseenums.c:616
+#: ../libgimpbase/gimpbaseenums.c:651
 msgid "Pixels"
 msgstr "Piksleid"
 
-#: ../libgimpbase/gimpbaseenums.c:617
+#: ../libgimpbase/gimpbaseenums.c:652
 msgid "Points"
 msgstr "Punkti"
 
-#: ../libgimpbase/gimpbaseenums.c:646
+#: ../libgimpbase/gimpbaseenums.c:681
 msgid "Shadows"
 msgstr "Varjud"
 
-#: ../libgimpbase/gimpbaseenums.c:647
+#: ../libgimpbase/gimpbaseenums.c:682
 msgid "Midtones"
 msgstr "Kesktoonid"
 
-#: ../libgimpbase/gimpbaseenums.c:648
+#: ../libgimpbase/gimpbaseenums.c:683
 msgid "Highlights"
 msgstr "Heledaimad"
 
-#: ../libgimpbase/gimpbaseenums.c:676
+#: ../libgimpbase/gimpbaseenums.c:711
 msgid "Forward"
 msgstr "Edasi"
 
-#: ../libgimpbase/gimpbaseenums.c:677
+#: ../libgimpbase/gimpbaseenums.c:712
 msgid "Backward"
 msgstr "Tagasi"
 
-#: ../libgimpbase/gimpbaseenums.c:778
+#: ../libgimpbase/gimpbaseenums.c:813
 msgid "Internal GIMP procedure"
 msgstr "Sisemine GIMP'i potseduur"
 
-#: ../libgimpbase/gimpbaseenums.c:779
+#: ../libgimpbase/gimpbaseenums.c:814
 msgid "GIMP Plug-In"
 msgstr "GIMP'i pistik"
 
-#: ../libgimpbase/gimpbaseenums.c:780
+#: ../libgimpbase/gimpbaseenums.c:815
 msgid "GIMP Extension"
 msgstr "GIMP'i laiendus"
 
-#: ../libgimpbase/gimpbaseenums.c:781
+#: ../libgimpbase/gimpbaseenums.c:816
 msgid "Temporary Procedure"
 msgstr "Ajutine protseduur"
 
-#: ../libgimpbase/gimpmemsize.c:177
+#: ../libgimpbase/gimpmemsize.c:180
 #, c-format
-msgid "%d Bytes"
-msgstr "%d Baiti"
+msgid "%d Byte"
+msgid_plural "%d Bytes"
+msgstr[0] "%d Baiti"
+msgstr[1] "%d Baiti"
 
-#: ../libgimpbase/gimpmemsize.c:182
+#: ../libgimpbase/gimpmemsize.c:186
 #, c-format
 msgid "%.2f KB"
 msgstr "%.2f KB"
 
-#: ../libgimpbase/gimpmemsize.c:186
+#: ../libgimpbase/gimpmemsize.c:190
 #, c-format
 msgid "%.1f KB"
 msgstr "%.1f KB"
 
-#: ../libgimpbase/gimpmemsize.c:190
+#: ../libgimpbase/gimpmemsize.c:194
 #, c-format
 msgid "%d KB"
 msgstr "%d KB"
 
-#: ../libgimpbase/gimpmemsize.c:197
+#: ../libgimpbase/gimpmemsize.c:201
 #, c-format
 msgid "%.2f MB"
 msgstr "%.2f MB"
 
-#: ../libgimpbase/gimpmemsize.c:201
+#: ../libgimpbase/gimpmemsize.c:205
 #, c-format
 msgid "%.1f MB"
 msgstr "%.1f MB"
 
-#: ../libgimpbase/gimpmemsize.c:205
+#: ../libgimpbase/gimpmemsize.c:209
 #, c-format
 msgid "%d MB"
 msgstr "%d MB"
 
-#: ../libgimpbase/gimpmemsize.c:212
+#: ../libgimpbase/gimpmemsize.c:216
 #, c-format
 msgid "%.2f GB"
 msgstr "%.2f GB"
 
-#: ../libgimpbase/gimpmemsize.c:216
+#: ../libgimpbase/gimpmemsize.c:220
 #, c-format
 msgid "%.1f GB"
 msgstr "%.1f GB"
 
-#: ../libgimpbase/gimpmemsize.c:220
+#: ../libgimpbase/gimpmemsize.c:224
 #, c-format
 msgid "%d GB"
 msgstr "%d GB"
@@ -712,7 +736,7 @@ msgid ""
 "When enabled, the GIMP will try to use the display color profile from the "
 "windowing system. The configured monitor profile is then only used as a "
 "fallback."
-msgstr ""
+msgstr "Kui lubatud, püüab GIMP kasutada graafilise keskkonna  värviprofiili. Häälestatud monitori profiili kasutatakse ainult siis kui eelnimetatu ebaõnnestub."
 
 #: ../libgimpconfig/gimpcolorconfig.c:48
 msgid "The default RGB workspace color profile."
@@ -724,7 +748,7 @@ msgstr "Seab CMYK värviprofiili teisendamiseks RGB ja CMYK vahel."
 
 #: ../libgimpconfig/gimpcolorconfig.c:52
 msgid "The color profile used for simulating a printed version (softproof)."
-msgstr ""
+msgstr "Värviprofiili kasutatakse trükiversiooni simuleerimiseks (softproof)."
 
 #: ../libgimpconfig/gimpcolorconfig.c:54
 msgid "Sets how colors are mapped for your display."
@@ -752,7 +776,7 @@ msgid "Perceptual"
 msgstr "Tajutav"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:57 ../modules/cdisplay_proof.c:56
-msgid "Relative Colorimetric"
+msgid "Relative colorimetric"
 msgstr ""
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:58
@@ -761,7 +785,7 @@ msgid "Saturation"
 msgstr "Küllastatus"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:59 ../modules/cdisplay_proof.c:58
-msgid "Absolute Colorimetric"
+msgid "Absolute colorimetric"
 msgstr ""
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:88
@@ -779,32 +803,32 @@ msgstr "Teisenda RGB töötsooniks"
 #: ../libgimpconfig/gimpconfig-deserialize.c:95
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
-msgstr ""
+msgstr "võetud %s väärtus ei ole korrektne URF-8 tekstilõik"
 
 #. please don't translate 'yes' and 'no'
 #: ../libgimpconfig/gimpconfig-deserialize.c:423
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
-msgstr ""
+msgstr "võetud loogikamuutuja %s puhul eeldati 'yes' või 'no' aga saadi '%s'"
 
 #: ../libgimpconfig/gimpconfig-deserialize.c:497
 #, c-format
 msgid "invalid value '%s' for token %s"
-msgstr ""
+msgstr "vigane väärtus '%s' muutujas %s"
 
 #: ../libgimpconfig/gimpconfig-deserialize.c:512
 #, c-format
 msgid "invalid value '%ld' for token %s"
-msgstr ""
+msgstr "vigane väärtus '%ld' muutujas %s"
 
 #: ../libgimpconfig/gimpconfig-deserialize.c:581
 #, c-format
 msgid "while parsing token '%s': %s"
-msgstr ""
+msgstr "töödeldes muutujat '%s': %s"
 
 #: ../libgimpconfig/gimpconfig-iface.c:453
-#: ../libgimpconfig/gimpconfig-iface.c:466 ../libgimpconfig/gimpscanner.c:515
-#: ../libgimpconfig/gimpscanner.c:596
+#: ../libgimpconfig/gimpconfig-iface.c:466 ../libgimpconfig/gimpscanner.c:498
+#: ../libgimpconfig/gimpscanner.c:579
 msgid "fatal parse error"
 msgstr "saatuslik süntaksiviga"
 
@@ -851,50 +875,35 @@ msgstr "Ei saanud '%s' kirjutada: %s"
 msgid "Could not create '%s': %s"
 msgstr "Ei suutnud '%s' luua: %s"
 
-#: ../libgimpconfig/gimpscanner.c:102
-#, c-format
-msgid "Could not open '%s' for reading: %s"
-msgstr "Ei saanud '%s' lugemiseks avada: %s"
-
-#: ../libgimpconfig/gimpscanner.c:272
+#: ../libgimpconfig/gimpscanner.c:255
 msgid "invalid UTF-8 string"
 msgstr "vigane UTF-8 tekstilõik"
 
-#: ../libgimpconfig/gimpscanner.c:623
+#: ../libgimpconfig/gimpscanner.c:606
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Viga failist '%s' andmete sõelumisel, rida %d: %s"
 
-#: ../libgimpmodule/gimpmodule.c:180
-#, c-format
-msgid "Loading module: '%s'\n"
-msgstr "Laadin moodulit: '%s'\n"
-
-#: ../libgimpmodule/gimpmodule.c:197 ../libgimpmodule/gimpmodule.c:216
-#: ../libgimpmodule/gimpmodule.c:330 ../libgimpmodule/gimpmodule.c:358
-#: ../libgimpmodule/gimpmodule.c:470
+#: ../libgimpmodule/gimpmodule.c:183 ../libgimpmodule/gimpmodule.c:201
+#: ../libgimpmodule/gimpmodule.c:310 ../libgimpmodule/gimpmodule.c:337
+#: ../libgimpmodule/gimpmodule.c:448
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Mooduli '%s' laadimisel tekkis viga: %s"
 
-#: ../libgimpmodule/gimpmodule.c:286
-#, c-format
-msgid "Skipping module: '%s'\n"
-msgstr "Jätan mooduli '%s' vahele\n"
-
-#: ../libgimpmodule/gimpmodule.c:426
+#: ../libgimpmodule/gimpmodule.c:405
 msgid "Module error"
 msgstr "Moodul on vigane"
 
-#: ../libgimpmodule/gimpmodule.c:427
+#: ../libgimpmodule/gimpmodule.c:406
 msgid "Loaded"
 msgstr "Laaditud"
 
-#: ../libgimpmodule/gimpmodule.c:428
+#: ../libgimpmodule/gimpmodule.c:407
 msgid "Load failed"
 msgstr "Laadimine ei õnnestunud"
 
-#: ../libgimpmodule/gimpmodule.c:429
+#: ../libgimpmodule/gimpmodule.c:408
 msgid "Not loaded"
 msgstr "Ei ole laaditud"
 
@@ -941,20 +950,20 @@ msgstr "_Valge"
 msgid "Scales"
 msgstr "Tasakaal"
 
-#: ../libgimpwidgets/gimpcolorselection.c:214
+#: ../libgimpwidgets/gimpcolorselection.c:218
 msgid "Current:"
 msgstr "Aktiivne:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:236
+#: ../libgimpwidgets/gimpcolorselection.c:240
 msgid "Old:"
 msgstr "Vana:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:281
+#: ../libgimpwidgets/gimpcolorselection.c:294
 msgid "Hexadecimal color notation as used in HTML and CSS"
 msgstr "16nd värviesitus nagu HTML ja CSS kasutab"
 
-#: ../libgimpwidgets/gimpcolorselection.c:286
-msgid "HTML _Notation:"
+#: ../libgimpwidgets/gimpcolorselection.c:299
+msgid "HTML _notation:"
 msgstr "HTML _esitus:"
 
 #: ../libgimpwidgets/gimpfileentry.c:351
@@ -1001,14 +1010,16 @@ msgid "Check Style"
 msgstr "Kontrolli stiili"
 
 #. toggle button to (des)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:240
+#: ../libgimpwidgets/gimppreview.c:256
 msgid "_Preview"
 msgstr "_Eelvaade"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1868
+#: ../libgimpwidgets/gimppropwidgets.c:1872
 #, c-format
-msgid "This text input field is limited to %d characters."
-msgstr "See tekstisisestusväli on piiratud %d tähemärgiga."
+msgid "This text input field is limited to %d character."
+msgid_plural "This text input field is limited to %d characters."
+msgstr[0] "See tekstisisestusväli on piiratud %d tähemärgiga."
+msgstr[1] "See tekstisisestusväli on piiratud %d tähemärgiga."
 
 #: ../libgimpwidgets/gimpresolutionentry.c:382
 #, c-format
@@ -1067,23 +1078,23 @@ msgstr "_Reavahed"
 msgid "_Resize"
 msgstr "_Muuda suurust"
 
-#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:298
+#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:300
 msgid "_Scale"
 msgstr "_Vii mõõtu"
 
-#: ../libgimpwidgets/gimpstock.c:276
+#: ../libgimpwidgets/gimpstock.c:278
 msgid "Crop"
 msgstr "Kärbi"
 
-#: ../libgimpwidgets/gimpstock.c:294
+#: ../libgimpwidgets/gimpstock.c:296
 msgid "_Transform"
 msgstr "_Teisenda"
 
-#: ../libgimpwidgets/gimpstock.c:297
+#: ../libgimpwidgets/gimpstock.c:299
 msgid "_Rotate"
 msgstr "_Pööra"
 
-#: ../libgimpwidgets/gimpstock.c:299
+#: ../libgimpwidgets/gimpstock.c:301
 msgid "_Shear"
 msgstr "_Lõika"
 
@@ -1167,29 +1178,37 @@ msgstr "Kihte"
 msgid "Images"
 msgstr "Pilte"
 
+#: ../libgimpwidgets/gimpwidgetsenums.c:186
+msgid "Zoom in"
+msgstr "Suurendus"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:187
+msgid "Zoom out"
+msgstr "Vähendus"
+
 #: ../modules/cdisplay_colorblind.c:67
 msgid "Protanopia (insensitivity to red"
-msgstr ""
+msgstr "Protanopia (intensiine punane)"
 
 #: ../modules/cdisplay_colorblind.c:69
 msgid "Deuteranopia (insensitivity to green)"
-msgstr ""
+msgstr "Deuteranopia (insensiivne roheline)"
 
 #: ../modules/cdisplay_colorblind.c:71
 msgid "Tritanopia (insensitivity to blue)"
-msgstr ""
+msgstr "Tritanopia (insensiivne sinine)"
 
 #: ../modules/cdisplay_colorblind.c:200
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
-msgstr ""
+msgstr "Värvivaeguse simulatsiooni filter (Brettel-Vienot-Mollon algoritm)"
 
 #: ../modules/cdisplay_colorblind.c:290
 msgid "Color Deficient Vision"
-msgstr ""
+msgstr "Värvivaeguse nägemus"
 
 #: ../modules/cdisplay_colorblind.c:503
-msgid "Color _Deficiency Type:"
-msgstr ""
+msgid "Color _deficiency type:"
+msgstr "_Värvivaeguse tüüp:"
 
 #: ../modules/cdisplay_gamma.c:91
 msgid "Gamma color display filter"
@@ -1205,15 +1224,15 @@ msgstr "_Gamma:"
 
 #: ../modules/cdisplay_highcontrast.c:91
 msgid "High Contrast color display filter"
-msgstr ""
+msgstr "Kõrgekontrastiline värviekraani filter"
 
 #: ../modules/cdisplay_highcontrast.c:160
 msgid "Contrast"
 msgstr "Kontrastsus"
 
 #: ../modules/cdisplay_highcontrast.c:251
-msgid "Contrast C_ycles:"
-msgstr ""
+msgid "Contrast c_ycles:"
+msgstr "Kontrastsuse _kordus:"
 
 #: ../modules/cdisplay_lcms.c:105
 msgid "Color management display filter using ICC color profiles"
@@ -1227,7 +1246,7 @@ msgstr "Värvihaldus"
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
-msgstr ""
+msgstr "See filter võtab oma häälestuse Häälestuse dialoogi Värvihalduse lõigust."
 
 #: ../modules/cdisplay_lcms.c:311
 msgid "Mode of operation:"
@@ -1277,43 +1296,47 @@ msgstr "CMYK värvi valija"
 msgid "CMYK"
 msgstr "CMYK"
 
-#: ../modules/colorsel_cmyk.c:147
+#. Cyan
+#: ../modules/colorsel_cmyk.c:148
 msgid "_C"
 msgstr "_C"
 
-#: ../modules/colorsel_cmyk.c:148
+#. Magenta
+#: ../modules/colorsel_cmyk.c:150
 msgid "_M"
 msgstr "_M"
 
-#: ../modules/colorsel_cmyk.c:149
+#. Yellow
+#: ../modules/colorsel_cmyk.c:152
 msgid "_Y"
 msgstr "_Y"
 
-#: ../modules/colorsel_cmyk.c:150
+#. Key (Black)
+#: ../modules/colorsel_cmyk.c:154
 msgid "_K"
 msgstr "_K"
 
-#: ../modules/colorsel_cmyk.c:154
+#: ../modules/colorsel_cmyk.c:158
 msgid "Cyan"
 msgstr "Tsüaan"
 
-#: ../modules/colorsel_cmyk.c:155
+#: ../modules/colorsel_cmyk.c:159
 msgid "Magenta"
 msgstr "Magenta"
 
-#: ../modules/colorsel_cmyk.c:156
+#: ../modules/colorsel_cmyk.c:160
 msgid "Yellow"
 msgstr "Kollane"
 
-#: ../modules/colorsel_cmyk.c:157
+#: ../modules/colorsel_cmyk.c:161
 msgid "Black"
 msgstr "Must"
 
-#: ../modules/colorsel_cmyk.c:191
-msgid "Black _Pullout:"
+#: ../modules/colorsel_cmyk.c:195
+msgid "Black _pullout:"
 msgstr ""
 
-#: ../modules/colorsel_cmyk.c:208
+#: ../modules/colorsel_cmyk.c:212
 msgid "The percentage of black to pull out of the colored inks."
 msgstr ""
 
@@ -1336,6 +1359,3 @@ msgstr "Vesivärv"
 #: ../modules/colorsel_water.c:220
 msgid "Pressure"
 msgstr "Surve"
-
-#~ msgid "Sets the color profile used when printing."
-#~ msgstr "Seab printimisel kasutatava värviprofiili."
