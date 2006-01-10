@@ -1,14 +1,14 @@
 # Canadian English translations for gimp plug-ins
-# Copyright (C) 2004-2005 Adam Weinberger and the GNOME Foundation
+# Copyright (C) 2004-2006 Adam Weinberger and the GNOME Foundation
 # This file is distributed under the same licence as the gimp plug-ins package.
-# Adam Weinberger <adamw@gnome.org>, 2004, 2005.
+# Adam Weinberger <adamw@gnome.org>, 2004, 2005, 2006.
 # 
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-12-26 02:03-0500\n"
+"POT-Creation-Date: 2006-01-09 22:24-0500\n"
 "PO-Revision-Date: 2005-09-06 14:31-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
@@ -383,7 +383,7 @@ msgstr "_Fractals"
 #: ../plug-ins/common/xbm.c:1002 ../plug-ins/common/xwd.c:565
 #: ../plug-ins/fits/fits.c:454 ../plug-ins/flame/flame.c:442
 #: ../plug-ins/gfig/gfig.c:787 ../plug-ins/gfli/gfli.c:714
-#: ../plug-ins/ifscompose/ifscompose.c:2387 ../plug-ins/jpeg/jpeg-save.c:267
+#: ../plug-ins/ifscompose/ifscompose.c:2387 ../plug-ins/jpeg/jpeg-save.c:268
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:268
 #: ../plug-ins/winicon/icosave.c:244 ../plug-ins/xjt/xjt.c:1272
 #: ../plug-ins/xjt/xjt.c:1706
@@ -1259,7 +1259,7 @@ msgstr "Cannot operate on indexed images with alpha channel."
 #: ../plug-ins/common/tga.c:1031 ../plug-ins/common/tiff.c:1925
 #: ../plug-ins/common/xbm.c:1007 ../plug-ins/common/xpm.c:623
 #: ../plug-ins/common/xwd.c:570 ../plug-ins/fits/fits.c:459
-#: ../plug-ins/gfli/gfli.c:683 ../plug-ins/jpeg/jpeg-save.c:225
+#: ../plug-ins/gfli/gfli.c:683 ../plug-ins/jpeg/jpeg-save.c:226
 #: ../plug-ins/sgi/sgi.c:537 ../plug-ins/winicon/icosave.c:977
 #: ../plug-ins/xjt/xjt.c:1689
 #, c-format
@@ -1370,7 +1370,7 @@ msgstr "Phase angle, range 0-360"
 
 #. Propagate Mode
 #: ../plug-ins/common/AlienMap2.c:514 ../plug-ins/common/hot.c:595
-#: ../plug-ins/common/vpropagate.c:1086 ../plug-ins/common/waves.c:272
+#: ../plug-ins/common/vpropagate.c:1086 ../plug-ins/common/waves.c:273
 msgid "Mode"
 msgstr "Mode"
 
@@ -2689,7 +2689,7 @@ msgstr "Matrix"
 msgid "D_ivisor:"
 msgstr "D_ivisor:"
 
-#: ../plug-ins/common/convmatrix.c:970 ../plug-ins/common/depthmerge.c:752
+#: ../plug-ins/common/convmatrix.c:970 ../plug-ins/common/depthmerge.c:769
 #: ../plug-ins/common/raw.c:987
 msgid "O_ffset:"
 msgstr "O_ffset:"
@@ -3099,39 +3099,39 @@ msgstr "Keep o_dd fields"
 msgid "Keep _even fields"
 msgstr "Keep _even fields"
 
-#: ../plug-ins/common/depthmerge.c:187
+#: ../plug-ins/common/depthmerge.c:194
 msgid "_Depth Merge..."
 msgstr "_Depth Merge..."
 
-#: ../plug-ins/common/depthmerge.c:377
+#: ../plug-ins/common/depthmerge.c:388
 msgid "Depth-merging"
 msgstr "Depth-merging"
 
-#: ../plug-ins/common/depthmerge.c:628
+#: ../plug-ins/common/depthmerge.c:645
 msgid "Depth Merge"
 msgstr "Depth Merge"
 
-#: ../plug-ins/common/depthmerge.c:680
+#: ../plug-ins/common/depthmerge.c:697
 msgid "Source 1:"
 msgstr "Source 1:"
 
-#: ../plug-ins/common/depthmerge.c:695 ../plug-ins/common/depthmerge.c:725
+#: ../plug-ins/common/depthmerge.c:712 ../plug-ins/common/depthmerge.c:742
 msgid "Depth map:"
 msgstr "Depth map:"
 
-#: ../plug-ins/common/depthmerge.c:710
+#: ../plug-ins/common/depthmerge.c:727
 msgid "Source 2:"
 msgstr "Source 2:"
 
-#: ../plug-ins/common/depthmerge.c:742
+#: ../plug-ins/common/depthmerge.c:759
 msgid "O_verlap:"
 msgstr "O_verlap:"
 
-#: ../plug-ins/common/depthmerge.c:762
+#: ../plug-ins/common/depthmerge.c:779
 msgid "Sc_ale 1:"
 msgstr "Sc_ale 1:"
 
-#: ../plug-ins/common/depthmerge.c:772
+#: ../plug-ins/common/depthmerge.c:789
 msgid "Sca_le 2:"
 msgstr "Sca_le 2:"
 
@@ -3313,7 +3313,7 @@ msgid "Edge Behavior"
 msgstr "Edge Behaviour"
 
 #: ../plug-ins/common/displace.c:477 ../plug-ins/common/edge.c:713
-#: ../plug-ins/common/ripple.c:569 ../plug-ins/common/waves.c:276
+#: ../plug-ins/common/ripple.c:569 ../plug-ins/common/waves.c:277
 msgid "_Smear"
 msgstr "_Smear"
 
@@ -4419,7 +4419,7 @@ msgstr "Reduce _Luminance"
 msgid "Reduce _Saturation"
 msgstr "Reduce _Saturation"
 
-#: ../plug-ins/common/hot.c:622 ../plug-ins/common/waves.c:277
+#: ../plug-ins/common/hot.c:622 ../plug-ins/common/waves.c:278
 msgid "_Blacken"
 msgstr "_Blacken"
 
@@ -7676,31 +7676,31 @@ msgstr "Finding XY gradient"
 msgid "Flow step %d"
 msgstr "Flow step %d"
 
-#: ../plug-ins/common/waves.c:122
+#: ../plug-ins/common/waves.c:123
 msgid "_Waves..."
 msgstr "_Waves..."
 
-#: ../plug-ins/common/waves.c:244
+#: ../plug-ins/common/waves.c:245
 msgid "Waves"
 msgstr "Waves"
 
-#: ../plug-ins/common/waves.c:289
+#: ../plug-ins/common/waves.c:290
 msgid "_Reflective"
 msgstr "_Reflective"
 
-#: ../plug-ins/common/waves.c:308
+#: ../plug-ins/common/waves.c:309
 msgid "_Amplitude:"
 msgstr "_Amplitude:"
 
-#: ../plug-ins/common/waves.c:320
+#: ../plug-ins/common/waves.c:321
 msgid "_Phase:"
 msgstr "_Phase:"
 
-#: ../plug-ins/common/waves.c:332
+#: ../plug-ins/common/waves.c:333
 msgid "_Wavelength:"
 msgstr "_Wavelength:"
 
-#: ../plug-ins/common/waves.c:432
+#: ../plug-ins/common/waves.c:433
 msgid "Waving"
 msgstr "Waving"
 
@@ -10339,94 +10339,98 @@ msgstr "Opening thumbnail for '%s'"
 msgid "File size: %02.01f kB"
 msgstr "File size: %02.01f kB"
 
-#: ../plug-ins/jpeg/jpeg-save.c:664 ../plug-ins/jpeg/jpeg-save.c:765
+#: ../plug-ins/jpeg/jpeg-save.c:579
+msgid "Calculating file size..."
+msgstr "Calculating file size..."
+
+#: ../plug-ins/jpeg/jpeg-save.c:670 ../plug-ins/jpeg/jpeg-save.c:771
 msgid "File size: unknown"
 msgstr "File size: unknown"
 
-#: ../plug-ins/jpeg/jpeg-save.c:717
+#: ../plug-ins/jpeg/jpeg-save.c:723
 msgid "Save as JPEG"
 msgstr "Save as JPEG"
 
-#: ../plug-ins/jpeg/jpeg-save.c:744
+#: ../plug-ins/jpeg/jpeg-save.c:750
 msgid "_Quality:"
 msgstr "_Quality:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:748
+#: ../plug-ins/jpeg/jpeg-save.c:754
 msgid "JPEG quality parameter"
 msgstr "JPEG quality parameter"
 
-#: ../plug-ins/jpeg/jpeg-save.c:763
+#: ../plug-ins/jpeg/jpeg-save.c:769
 msgid "Enable preview to obtain the file size."
 msgstr "Enable preview to obtain the file size."
 
-#: ../plug-ins/jpeg/jpeg-save.c:774
+#: ../plug-ins/jpeg/jpeg-save.c:780
 msgid "Show _preview in image window"
 msgstr "Show _preview in image window"
 
-#: ../plug-ins/jpeg/jpeg-save.c:786
+#: ../plug-ins/jpeg/jpeg-save.c:792
 msgid "_Advanced Options"
 msgstr "_Advanced Options"
 
-#: ../plug-ins/jpeg/jpeg-save.c:814
+#: ../plug-ins/jpeg/jpeg-save.c:820
 msgid "_Smoothing:"
 msgstr "_Smoothing:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:827
+#: ../plug-ins/jpeg/jpeg-save.c:833
 msgid "Frequency (rows):"
 msgstr "Frequency (rows):"
 
-#: ../plug-ins/jpeg/jpeg-save.c:841
+#: ../plug-ins/jpeg/jpeg-save.c:847
 msgid "Use restart markers"
 msgstr "Use restart markers"
 
-#: ../plug-ins/jpeg/jpeg-save.c:857 ../plug-ins/xjt/xjt.c:869
+#: ../plug-ins/jpeg/jpeg-save.c:863 ../plug-ins/xjt/xjt.c:869
 msgid "Optimize"
 msgstr "Optimize"
 
-#: ../plug-ins/jpeg/jpeg-save.c:870
+#: ../plug-ins/jpeg/jpeg-save.c:876
 msgid "Progressive"
 msgstr "Progressive"
 
-#: ../plug-ins/jpeg/jpeg-save.c:884
+#: ../plug-ins/jpeg/jpeg-save.c:890
 msgid "Force baseline JPEG"
 msgstr "Force baseline JPEG"
 
-#: ../plug-ins/jpeg/jpeg-save.c:899
+#: ../plug-ins/jpeg/jpeg-save.c:905
 msgid "Save EXIF data"
 msgstr "Save EXIF data"
 
-#: ../plug-ins/jpeg/jpeg-save.c:915
+#: ../plug-ins/jpeg/jpeg-save.c:921
 msgid "Save thumbnail"
 msgstr "Save thumbnail"
 
 #. XMP metadata
-#: ../plug-ins/jpeg/jpeg-save.c:931
+#: ../plug-ins/jpeg/jpeg-save.c:937
 msgid "Save XMP data"
 msgstr "Save XMP data"
 
 #. Subsampling
-#: ../plug-ins/jpeg/jpeg-save.c:944
+#: ../plug-ins/jpeg/jpeg-save.c:950
 msgid "Subsampling:"
 msgstr "Subsampling:"
 
 #. DCT method
-#: ../plug-ins/jpeg/jpeg-save.c:967
+#: ../plug-ins/jpeg/jpeg-save.c:973
 msgid "DCT method:"
 msgstr "DCT method:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:973
+#: ../plug-ins/jpeg/jpeg-save.c:979
 msgid "Fast Integer"
 msgstr "Fast Integer"
 
-#: ../plug-ins/jpeg/jpeg-save.c:974
+#: ../plug-ins/jpeg/jpeg-save.c:980
 msgid "Integer"
 msgstr "Integer"
 
-#: ../plug-ins/jpeg/jpeg-save.c:975
+#: ../plug-ins/jpeg/jpeg-save.c:981
 msgid "Floating-Point"
 msgstr "Floating-Point"
 
-#: ../plug-ins/jpeg/jpeg-save.c:989
+#: ../plug-ins/jpeg/jpeg-save.c:995
 msgid "Comment"
 msgstr "Comment"
 
