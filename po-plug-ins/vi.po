@@ -1,20 +1,20 @@
 # Vietnamese translation for Gimp Plug-ins.
-# Copyright © 2005 Gnome i18n Project for Vietnamese.
+# Copyright © 2003-2006 Gnome i18n Project for Vietnamese.
 # Trinh Minh Thanh <tmthanh@yahoo.com>, 2003.
-# Clytie Siddall <clytie@riverland.net.au>, 2005, 2006.
+# Clytie Siddall <clytie@riverland.net.au>, 2005-2006.
 msgid ""
 ""
 msgstr "Project-Id-Version: gimp-plugins HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-03 10:52+0100\n"
-"PO-Revision-Date: 2006-01-07 18:26+1030\n"
+"POT-Creation-Date: 2006-01-11 03:04+0100\n"
+"PO-Revision-Date: 2006-01-11 16:46+1030\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0\n"
-"X-Generator: LocFactoryEditor 1.5.1b\n"
+"X-Generator: LocFactoryEditor 1.6b23\n"
 
 #:../plug-ins/FractalExplorer/Dialogs.c:529
 #:../plug-ins/gfig/gfig-dialog.c:282 ../plug-ins/gflare/gflare.c:887
@@ -107,7 +107,8 @@ msgstr "LLại:"
 msgid ""
 "Change the iteration value. The higher it is, the more details will be "
 "calculated, which will take more time"
-msgstr "Sửa đổi giá trị lặp lại. Càng cao giá trị này, càng nhiều chi tiết sẽ được tính, mà sẽ mất nhiều thời gian hơn."
+msgstr "Sửa đổi giá trị lặp lại. Càng cao giá trị này, càng nhiều chi tiết sẽ được "
+"tính, mà sẽ mất nhiều thời gian hơn."
 
 #:../plug-ins/FractalExplorer/Dialogs.c:764
 msgid "CX:"
@@ -117,7 +118,8 @@ msgstr "CX:"
 msgid ""
 "Change the CX value (changes aspect of fractal, active with every fractal "
 "but Mandelbrot and Sierpinski)"
-msgstr "Sửa đổi giá trị CX (thay đổi khía cạnh của phân dạng, hoạt động với tất cả các phân dạng trừ Mandelbrot and Sierpinski)."
+msgstr "Sửa đổi giá trị CX (thay đổi khía cạnh của phân dạng, hoạt động với tất cả "
+"các phân dạng trừ Mandelbrot and Sierpinski)."
 
 #:../plug-ins/FractalExplorer/Dialogs.c:776
 msgid "CY:"
@@ -313,7 +315,8 @@ msgstr "Đảo"
 msgid ""
 "If you enable this option higher color values will be swapped with lower "
 "ones and vice versa"
-msgstr "Nếu bạn hiệu lực tùy chọn này thì các giá trị màu cao hơn sẽ được trao đổi với giá trị thấp hơn, và ngược lại"
+msgstr "Nếu bạn hiệu lực tùy chọn này thì các giá trị màu cao hơn sẽ được trao đổi "
+"với giá trị thấp hơn, và ngược lại"
 
 #.Greenmode radio frame
 #:../plug-ins/FractalExplorer/Dialogs.c:1019
@@ -340,7 +343,8 @@ msgstr "Như xác định trên"
 msgid ""
 "Create a color-map with the options you specified above (color density/"
 "function). The result is visible in the preview image"
-msgstr "Tạo một bố trí màu với các tùy chọn bạn xác định trên (mật độ/hàm màu). Có thể xem kết quả trong khung xem thử."
+msgstr "Tạo một bố trí màu với các tùy chọn bạn xác định trên (mật độ/hàm màu). Có "
+"thể xem kết quả trong khung xem thử."
 
 #:../plug-ins/FractalExplorer/Dialogs.c:1132
 msgid "Apply active gradient to final image"
@@ -376,7 +380,7 @@ msgstr "_Phân dạng"
 #:../plug-ins/common/xbm.c:1002 ../plug-ins/common/xwd.c:565
 #:../plug-ins/fits/fits.c:454 ../plug-ins/flame/flame.c:442
 #:../plug-ins/gfig/gfig.c:787 ../plug-ins/gfli/gfli.c:714
-#:../plug-ins/ifscompose/ifscompose.c:2387 ../plug-ins/jpeg/jpeg-save.c:267
+#:../plug-ins/ifscompose/ifscompose.c:2387 ../plug-ins/jpeg/jpeg-save.c:268
 #:../plug-ins/uri/uri-backend-gnomevfs.c:268
 #:../plug-ins/winicon/icosave.c:244 ../plug-ins/xjt/xjt.c:1272
 #:../plug-ins/xjt/xjt.c:1706
@@ -1254,7 +1258,7 @@ msgstr "Không thể thao tác ảnh phụ lục với kênh anfa."
 #:../plug-ins/common/tga.c:1031 ../plug-ins/common/tiff.c:1925
 #:../plug-ins/common/xbm.c:1007 ../plug-ins/common/xpm.c:623
 #:../plug-ins/common/xwd.c:570 ../plug-ins/fits/fits.c:459
-#:../plug-ins/gfli/gfli.c:683 ../plug-ins/jpeg/jpeg-save.c:225
+#:../plug-ins/gfli/gfli.c:683 ../plug-ins/jpeg/jpeg-save.c:226
 #:../plug-ins/sgi/sgi.c:537 ../plug-ins/winicon/icosave.c:977
 #:../plug-ins/xjt/xjt.c:1689
 #,c-format
@@ -1683,7 +1687,8 @@ msgid ""
 "(2) all mutation rates equal to zero."
 msgstr "Cái nút « Làm cho hạt cố định » là điều bí danh của tôi.\n"
 "Cùng một hạt thì sản xuất cùng một ảnh, nếu:\n"
-"1. mỗi ảnh có cùng một độ rộng (lý do ảnh trên môi trường vẽ được là khác với khung xem thử) và\n"
+"1. mỗi ảnh có cùng một độ rộng (lý do ảnh trên môi trường vẽ được là khác "
+"với khung xem thử) và\n"
 "2. mọi tỷ lệ đột biến là số không."
 
 #:../plug-ins/common/CML_explorer.c:1412
@@ -1834,7 +1839,8 @@ msgstr "Cảnh báo : « %s » là một tập tin khuôn dạng cũ."
 #:../plug-ins/common/CML_explorer.c:2265
 #,c-format
 msgid "Warning: '%s' is a parameter file for newer CML_explorer than me."
-msgstr "Cảnh báo : « %s » là một tập tin tham số cho bộ thám _hiểm CML mới hơn trình này."
+msgstr "Cảnh báo : « %s » là một tập tin tham số cho bộ thám _hiểm CML mới hơn trình "
+"này."
 
 #:../plug-ins/common/CML_explorer.c:2328
 msgid "Error: failed to load parameters"
@@ -2188,7 +2194,8 @@ msgstr "Hiệu số _X:"
 msgid ""
 "The offset can be adjusted by dragging the preview using the middle mouse "
 "button."
-msgstr "Có thể điều chỉnh hiệu số bằng cách kéo khung xem thử, bằng cái nút giữa trên con chuột."
+msgstr "Có thể điều chỉnh hiệu số bằng cách kéo khung xem thử, bằng cái nút giữa "
+"trên con chuột."
 
 #:../plug-ins/common/bumpmap.c:1012 ../plug-ins/common/postscript.c:3328
 msgid "_Y offset:"
@@ -2542,7 +2549,8 @@ msgstr "Soạn thảo _lại"
 msgid ""
 "You can only run 'Recompose' if the active image was originally produced by "
 "'Decompose'."
-msgstr "Bạn có thể chạy lệnh « Soạn thảo lại » chỉ nếu ảnh hoạt động đã được tạo đầu tiên bằng lệnh « Hủy soạn thảo »."
+msgstr "Bạn có thể chạy lệnh « Soạn thảo lại » chỉ nếu ảnh hoạt động đã được tạo đầu "
+"tiên bằng lệnh « Hủy soạn thảo »."
 
 #:../plug-ins/common/compose.c:486
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
@@ -3516,7 +3524,7 @@ msgstr "Vùng chọn"
 #.Film height/colour
 #:../plug-ins/common/film.c:1174 ../plug-ins/common/film.c:1446
 msgid "Filmstrip"
-msgstr "Phim đèn chiếu "
+msgstr "Phim đèn chiếu"
 
 #.Keep maximum image height
 #:../plug-ins/common/film.c:1183
@@ -3566,7 +3574,7 @@ msgstr "Nơi chọn ảnh"
 
 #:../plug-ins/common/film.c:1326
 msgid "All Values are Fractions of the Strip Height"
-msgstr "Mọi giá trị là phần số của độ cao của phim đèn chiếu "
+msgstr "Mọi giá trị là phần số của độ cao của phim đèn chiếu"
 
 #:../plug-ins/common/film.c:1329
 msgid "Ad_vanced"
@@ -3915,7 +3923,7 @@ msgid "Gee Zoom"
 msgstr "Thu phóng Gee"
 
 #:../plug-ins/common/gee_zoom.c:200
-#,fc-format
+#,c-format
 msgid "An obsolete creation by %s"
 msgstr "Một bản tạo cũ của %s"
 
@@ -3931,12 +3939,14 @@ msgstr "Không thể đơn giản giảm màu thêm nên lưu dạng đục."
 msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
-msgstr "Dạng thức GIF hỗ trợ chỉ chú thích dạng 7bit ASCII nên chưa lưu chú thích nào."
+msgstr "Dạng thức GIF hỗ trợ chỉ chú thích dạng 7bit ASCII nên chưa lưu chú thích "
+"nào."
 
 #:../plug-ins/common/gif.c:976
 msgid ""
 "Cannot save RGB color images. Convert to indexed color or grayscale first."
-msgstr "Không thể lưu ảnh màu RGB. Hãy chuyển đổi sang màu phụ lục hay mức xám trước hết."
+msgstr "Không thể lưu ảnh màu RGB. Hãy chuyển đổi sang màu phụ lục hay mức xám trước "
+"hết."
 
 #:../plug-ins/common/gif.c:1117
 msgid ""
@@ -3944,7 +3954,8 @@ msgid ""
 "Transparent color in written file might be incorrect on viewers which don't "
 "support transparency."
 msgstr "Cảnh báo :\n"
-"Màu trong suốt trong tập tin đã ghi có lẽ không đúng trong bộ xem không hỗ trợ tính trong suốt."
+"Màu trong suốt trong tập tin đã ghi có lẽ không đúng trong bộ xem không hỗ "
+"trợ tính trong suốt."
 
 #:../plug-ins/common/gif.c:1156
 msgid "Delay inserted to prevent evil CPU-sucking anim."
@@ -4028,7 +4039,6 @@ msgstr "_Dùng trễ đã nhập trên cho mọi khung"
 #:../plug-ins/common/gif.c:1445
 msgid "U_se disposal entered above for all frames"
 msgstr "Dù_ng cách sắp đặt đã nhập trên cho mọi khung"
-""
 
 #:../plug-ins/common/gif.c:2655
 msgid "Error writing output file."
@@ -4068,7 +4078,8 @@ msgstr "Khung %d (%d%s)"
 msgid ""
 "GIF: Undocumented GIF composite type %d is not handled.  Animation might not "
 "play or re-save perfectly."
-msgstr "GIF: không thể quản lý kiểu ghép GIF không có tài liệu %d nên có lẽ hoạt cảnh sẽ không phát hoặc lưu lại cho đúng."
+msgstr "GIF: không thể quản lý kiểu ghép GIF không có tài liệu %d nên có lẽ hoạt "
+"cảnh sẽ không phát hoặc lưu lại cho đúng."
 
 #:../plug-ins/common/gih.c:207 ../plug-ins/common/gih.c:228
 msgid "GIMP brush (animated)"
@@ -4113,7 +4124,7 @@ msgstr "Số ô :"
 
 #:../plug-ins/common/gih.c:1005
 msgid " Rows of "
-msgstr " Hàng"
+msgstr " Hàng "
 
 #:../plug-ins/common/gih.c:1017
 msgid " Columns on each layer"
@@ -4133,7 +4144,7 @@ msgstr "Hiển thị dạng:"
 
 #:../plug-ins/common/gih.c:1039
 msgid "Dimension:"
-msgstr "Chiều : "
+msgstr "Chiều :"
 
 #:../plug-ins/common/gih.c:1114
 msgid "Ranks:"
@@ -4275,7 +4286,8 @@ msgstr "Tạo _ra tài liệu HTML đầy đủ"
 msgid ""
 "If checked GTM will output a full HTML document with <HTML>, <BODY>, etc. "
 "tags instead of just the table html."
-msgstr "Nếu chọn, GTM sẽ xuất một tài liệu HTML đầy đủ có thẻ <HTML>, <BODY> v.v. thay vào chỉ mã html của bảng."
+msgstr "Nếu chọn, GTM sẽ xuất một tài liệu HTML đầy đủ có thẻ <HTML>, <BODY> v.v. "
+"thay vào chỉ mã html của bảng."
 
 #.HTML Table Creation Options
 #:../plug-ins/common/gtm.c:470
@@ -4290,7 +4302,8 @@ msgstr "_Dùng chiều theo ô"
 msgid ""
 "If checked GTM will replace any rectangular sections of identically colored "
 "blocks with one large cell with ROWSPAN and COLSPAN values."
-msgstr "Nếu chọn, GTM sẽ thay thế phần chữ nhật nào của khối có cùng một màu bằng một ô lớn riêng lẻ có giá trị ROWSPAN (ô theo hàng) và COLSPAN (ô theo cột)."
+msgstr "Nếu chọn, GTM sẽ thay thế phần chữ nhật nào của khối có cùng một màu bằng "
+"một ô lớn riêng lẻ có giá trị ROWSPAN (ô theo hàng) và COLSPAN (ô theo cột)."
 
 #:../plug-ins/common/gtm.c:493
 msgid "Co_mpress TD tags"
@@ -4301,7 +4314,8 @@ msgid ""
 "Checking this tag will cause GTM to leave no whitespace between the TD tags "
 "and the cellcontent.  This is only necessary for pixel level positioning "
 "control."
-msgstr "Việc chọn thẻ này sẽ gây ra GTM không chèn dấu cách nào giữa thẻ TD và nội dung ô. Việc này cần thiết chỉ để điều khiển mức độ của điểm ảnh."
+msgstr "Việc chọn thẻ này sẽ gây ra GTM không chèn dấu cách nào giữa thẻ TD và nội "
+"dung ô. Việc này cần thiết chỉ để điều khiển mức độ của điểm ảnh."
 
 #:../plug-ins/common/gtm.c:509
 msgid "C_aption"
@@ -4522,7 +4536,8 @@ msgstr "I Oằn"
 msgid ""
 "Click and drag in the preview to define the distortions to apply to the "
 "image."
-msgstr "Nhắp và kéo trong khung xem thử trước, để xác định sự méo mó cần áp dụng vào ảnh. "
+msgstr "Nhắp và kéo trong khung xem thử trước, để xác định sự méo mó cần áp dụng vào "
+"ảnh. "
 
 #:../plug-ins/common/jigsaw.c:361
 msgid "_Jigsaw..."
@@ -4711,7 +4726,7 @@ msgid "some sort of error with the file extension or lack thereof"
 msgstr "gặp lỗi kiểu nào về phần mở rộng tập tin, hoặc thiếu nó"
 
 #:../plug-ins/common/mail.c:952
-#,fc-format
+#,c-format
 msgid "Could not start sendmail (%s)"
 msgstr "Không thể khởi chạy trình sendmail (%s)"
 
@@ -5398,7 +5413,7 @@ msgstr "Phần trăm _trắng:"
 
 #:../plug-ins/common/pix.c:140 ../plug-ins/common/pix.c:157
 msgid "Alias|Wavefront PIX image"
-msgstr "Ảnh PIX Alias|Wavefront "
+msgstr "Ảnh PIX Alias|Wavefront"
 
 #:../plug-ins/common/pixelize.c:171
 msgid "_Pixelize..."
@@ -5610,7 +5625,8 @@ msgstr "Ánh _xạ ngược lại"
 msgid ""
 "If checked the mapping will begin at the right side, as opposed to beginning "
 "at the left."
-msgstr "Nếu chọn, việc ánh xạ sẽ bắt đầu bên phải, như trái ngược với bắt đầu bên trái."
+msgstr "Nếu chọn, việc ánh xạ sẽ bắt đầu bên phải, như trái ngược với bắt đầu bên "
+"trái."
 
 #:../plug-ins/common/polar.c:663
 msgid "Map from _top"
@@ -5620,7 +5636,8 @@ msgstr "Ánh xạ _từ đỉnh"
 msgid ""
 "If unchecked the mapping will put the bottom row in the middle and the top "
 "row on the outside.  If checked it will be the opposite."
-msgstr "Nếu không chọn, việc ánh xạ sẽ để hàng dưới ở giữa, và hàng trên ở ngoại. Nếu chọn thì ngược lại."
+msgstr "Nếu không chọn, việc ánh xạ sẽ để hàng dưới ở giữa, và hàng trên ở ngoại. "
+"Nếu chọn thì ngược lại."
 
 #:../plug-ins/common/polar.c:681
 msgid "To _polar"
@@ -5630,7 +5647,8 @@ msgstr "Đến _cực"
 msgid ""
 "If unchecked the image will be circularly mapped onto a rectangle.  If "
 "checked the image will be mapped onto a circle."
-msgstr "Nếu không chọn, ảnh sẽ được ánh xạ tròn vào hình chữ nhật. Nếu chọn thì ảnh sẽ được ánh xạ vào hình tròn."
+msgstr "Nếu không chọn, ảnh sẽ được ánh xạ tròn vào hình chữ nhật. Nếu chọn thì ảnh "
+"sẽ được ánh xạ vào hình tròn."
 
 #:../plug-ins/common/poppler.c:147
 msgid "Portable Document Format"
@@ -5812,7 +5830,8 @@ msgstr "_Giữ tỷ lệ hình thể"
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
-msgstr "Khi bật, ảnh kết quả sẽ được co giãn để vừa kích cỡ đã cho, không thay đổi tỷ lệ hình thể."
+msgstr "Khi bật, ảnh kết quả sẽ được co giãn để vừa kích cỡ đã cho, không thay đổi "
+"tỷ lệ hình thể."
 
 #.Unit
 #:../plug-ins/common/postscript.c:3349
@@ -5861,14 +5880,16 @@ msgstr "Ảnh Photoshop"
 msgid ""
 "Unable to save '%s'.  The psd file format does not support images that are "
 "more than 30000 pixels wide or tall."
-msgstr "Không thể lưu « %s ». Khuôn dạng tập tin PSD không hỗ trợ ảnh có chiều lớn hơn 30 000 điểm ảnh."
+msgstr "Không thể lưu « %s ». Khuôn dạng tập tin PSD không hỗ trợ ảnh có chiều lớn "
+"hơn 30 000 điểm ảnh."
 
 #:../plug-ins/common/psd_save.c:1337
 #,c-format
 msgid ""
 "Unable to save '%s'.  The psd file format does not support images with "
 "layers that are more than 30000 pixels wide or tall."
-msgstr "Không thể lưu « %s ». Khuôn dạng tập tin PSD không hỗ trợ ảnh có lớp có chiều lớn hơn 30 000 điểm ảnh."
+msgstr "Không thể lưu « %s ». Khuôn dạng tập tin PSD không hỗ trợ ảnh có lớp có "
+"chiều lớn hơn 30 000 điểm ảnh."
 
 #:../plug-ins/common/psp.c:359 ../plug-ins/common/psp.c:383
 msgid "Paint Shop Pro image"
@@ -6259,7 +6280,8 @@ msgstr "Chọn _vùng cần bắt"
 msgid ""
 "If enabled, you can use the mouse to select a rectangular region of the "
 "screen."
-msgstr "Nếu bật, bạn có thể dùng con chuột để chọn một vùng hình chữ nhật của màn hình."
+msgstr "Nếu bật, bạn có thể dùng con chuột để chọn một vùng hình chữ nhật của màn "
+"hình."
 
 #.grab delay
 #:../plug-ins/common/screenshot.c:893
@@ -7075,7 +7097,8 @@ msgid ""
 "bit, so it will be converted for you. Information will be lost because of "
 "this conversion."
 msgstr "Cảnh báo :\n"
-"Ảnh đang tải có 16 bit trên mỗi kênh. GIMP có thể quản lý chỉ 8 bit, thì sẽ chuyển đổi nó cho bạn. Tuy nhiên, thông tin sẽ bị mất do việc chuyển đổi này."
+"Ảnh đang tải có 16 bit trên mỗi kênh. GIMP có thể quản lý chỉ 8 bit, thì sẽ "
+"chuyển đổi nó cho bạn. Tuy nhiên, thông tin sẽ bị mất do việc chuyển đổi này."
 
 #:../plug-ins/common/tiff.c:2085
 msgid ""
@@ -7207,7 +7230,8 @@ msgstr "Đã lưu"
 msgid ""
 "A unit definition will only be saved before GIMP exits if this column is "
 "checked."
-msgstr "Một lời định nghĩa đơn vị sẽ được lưu trước khi GIMP thoát chỉ nếu cột này đã được chọn thôi."
+msgstr "Một lời định nghĩa đơn vị sẽ được lưu trước khi GIMP thoát chỉ nếu cột này "
+"đã được chọn thôi."
 
 #:../plug-ins/common/uniteditor.c:96
 msgid "ID"
@@ -7235,7 +7259,9 @@ msgid ""
 "This field is a hint for numerical input fields. It specifies how many "
 "decimal digits the input field should provide to get approximately the same "
 "accuracy as an \"inch\" input field with two decimal digits."
-msgstr "Trường này là mẹo cho những trường nhập số. Nó ghi rõ bao nhiêu con số kiểu số trường nhập nên cung cấp để được xấp xỉ cùng một độ chính xác với một trường nhập « inch » chứa hai con số kiểu số. "
+msgstr "Trường này là mẹo cho những trường nhập số. Nó ghi rõ bao nhiêu con số kiểu "
+"số trường nhập nên cung cấp để được xấp xỉ cùng một độ chính xác với một "
+"trường nhập « inch » chứa hai con số kiểu số. "
 
 #:../plug-ins/common/uniteditor.c:104
 msgid "Symbol"
@@ -7245,7 +7271,8 @@ msgstr "Ký hiệu"
 msgid ""
 "The unit's symbol if it has one (e.g. \"'\" for inches). The unit's "
 "abbreviation is used if doesn't have a symbol."
-msgstr "Ký hiệu của đơn vị nếu có (v.d. « \" » cho insơ). Nếu không thì dùng từ viết tắt của đơn vị (cho insơ là « in. »)."
+msgstr "Ký hiệu của đơn vị nếu có (v.d. « \" » cho insơ). Nếu không thì dùng từ viết "
+"tắt của đơn vị (cho insơ là « in. »)."
 
 #:../plug-ins/common/uniteditor.c:107
 msgid "Abbreviation"
@@ -7806,8 +7833,8 @@ msgstr "SetStretchBltMode (đặt chế độ kéo giãn bit) đã thất bại 
 msgid ""
 "StretchBlt (hDC, %d, %d, %d, %d, hdcMem, %d, 0, %d, 1, SRCCOPY) failed, "
 "error = %d, y = %d"
-msgstr "StretchBlt [kéo giãn bit] (hDC, %d, %d, %d, %d, hdcMem, %d, 0, %d, 1, SRCCOPY) đã thất bại, "
-"lỗi = %d, y = %d"
+msgstr "StretchBlt [kéo giãn bit] (hDC, %d, %d, %d, %d, hdcMem, %d, 0, %d, 1, "
+"SRCCOPY) đã thất bại, lỗi = %d, y = %d"
 
 #:../plug-ins/common/winprint.c:587
 msgid "EndPage failed"
@@ -7981,7 +8008,8 @@ msgstr "Không thể đọc các mục nhập màu sắc"
 msgid ""
 "XWD-file %s has format %d, depth %d and bits per pixel %d. Currently this is "
 "not supported."
-msgstr "Tập tin XWD %s có dạng %d, độ sâu %d và số bit trên mỗi điểm ảnh %d. Hiện thời không hỗ trợ trường hợp này."
+msgstr "Tập tin XWD %s có dạng %d, độ sâu %d và số bit trên mỗi điểm ảnh %d. Hiện "
+"thời không hỗ trợ trường hợp này."
 
 #:../plug-ins/common/xwd.c:545
 msgid "Cannot save images with alpha channels."
@@ -8553,7 +8581,8 @@ msgid ""
 "GFlare '%s' is not saved. If you add a new entry in '%s', like:\n"
 "(gflare-path \"%s\")\n"
 "and make a folder '%s', then you can save your own GFlares into that folder."
-msgstr "GFlare « %s » chưa được lưu. Nếu bạn thêm một mục nhập mới vào « %s », như :\n"
+msgstr "GFlare « %s » chưa được lưu. Nếu bạn thêm một mục nhập mới vào « %s », "
+"như :\n"
 "(gflare-path \"%s\")\n"
 "và tạo thư mục « %s », thì bạn có thể lưu các GFlare mình vào thư mục đó."
 
@@ -8833,7 +8862,7 @@ msgstr "Ghi rõ tỷ lệ hình thể của bút vẽ"
 #:../plug-ins/gimpressionist/brush.c:593
 #:../plug-ins/gimpressionist/paper.c:188
 msgid "Relief:"
-msgstr "Đắp khắc nổi "
+msgstr "Đắp khắc nổi:"
 
 #:../plug-ins/gimpressionist/brush.c:597
 #:../plug-ins/gimpressionist/paper.c:192
@@ -9026,7 +9055,7 @@ msgstr "Tỏa tròn"
 
 #:../plug-ins/gimpressionist/orientation.c:151
 msgid "Let the direction from the center determine the direction of the stroke"
-msgstr "Cho phép phía hướng từ tâm quyết định phía hướng của nét "
+msgstr "Cho phép phía hướng từ tâm quyết định phía hướng của nét"
 
 #:../plug-ins/gimpressionist/orientation.c:158
 #:../plug-ins/gimpressionist/size.c:161
@@ -9040,7 +9069,7 @@ msgstr "Các nét theo mẫu « chảy »"
 
 #:../plug-ins/gimpressionist/orientation.c:163
 msgid "The hue of the region determines the direction of the stroke"
-msgstr "Sắc màu của vùng quyết định phía hướng của nét "
+msgstr "Sắc màu của vùng quyết định phía hướng của nét"
 
 #:../plug-ins/gimpressionist/orientation.c:166
 #:../plug-ins/gimpressionist/size.c:169
@@ -9077,9 +9106,9 @@ msgid ""
 "The vector-field. Left-click to move selected vector, Right-click to point "
 "it towards mouse, Middle-click to add a new vector."
 msgstr "Trường véc-tơ :\n"
-"Nhắp-trái 	di chuyển véc-tơ đã chọn\n"
-"Nhắp-phải 	trỏ nó đến con chuột\n"
-"Nhắp-giữa 	thêm véc-tơ mới."
+"Nhắp-trái \tdi chuyển véc-tơ đã chọn\n"
+"Nhắp-phải \ttrỏ nó đến con chuột\n"
+"Nhắp-giữa \tthêm véc-tơ mới."
 
 #:../plug-ins/gimpressionist/orientmap.c:572
 #:../plug-ins/gimpressionist/sizemap.c:441
@@ -9360,9 +9389,9 @@ msgid ""
 "The smvector-field. Left-click to move selected smvector, Right-click to "
 "point it towards mouse, Middle-click to add a new smvector."
 msgstr "Trường smvector:\n"
-"Nhắp-trái	di chuyển smvector đã chọn\n"
-"Nhắp-phải	trỏ nó vào con chuột\n"
-"Nhắp giữa	thêm một smvector mới."
+"Nhắp-trái\tdi chuyển smvector đã chọn\n"
+"Nhắp-phải\ttrỏ nó vào con chuột\n"
+"Nhắp giữa\tthêm một smvector mới."
 
 #:../plug-ins/gimpressionist/sizemap.c:463
 msgid "Select previous smvector"
@@ -9410,7 +9439,8 @@ msgstr "Không tìm thấy những tập tin trợ giúp GIMP"
 msgid ""
 "Please install the additional help package or use the online user manual at "
 "http://docs.gimp.org/."
-msgstr "Hãy cài đặt gói trợ giúp thêm, hoặc dùng sổ hướng dẫn trực tuyến tại <http://docs.gimp.org/>."
+msgstr "Hãy cài đặt gói trợ giúp thêm, hoặc dùng sổ hướng dẫn trực tuyến tại <http://"
+"docs.gimp.org/>."
 
 #:../plug-ins/help/domain.c:184
 msgid "There is a problem with the GIMP help files."
@@ -9738,7 +9768,9 @@ msgid ""
 "their width, height, and spacing from each other. This allows you to rapidly "
 "create the most common image map type - image collection of \"thumbnails\", "
 "suitable for navigation bars."
-msgstr "Nét dẫn là hình chữ nhật định sẵn mà trải ra ảnh. Bạn xác định nó bằng độ rộng, độ cao và khoảng cảch từ nét dẫn khác. Nó cho phép bạn tạo nhanh kiểu ánh xạ ảnh thường nhất: tập hợp ảnh thu nhỏ, thích hợp với thanh duyệt."
+msgstr "Nét dẫn là hình chữ nhật định sẵn mà trải ra ảnh. Bạn xác định nó bằng độ "
+"rộng, độ cao và khoảng cảch từ nét dẫn khác. Nó cho phép bạn tạo nhanh kiểu "
+"ánh xạ ảnh thường nhất: tập hợp ảnh thu nhỏ, thích hợp với thanh duyệt."
 
 #:../plug-ins/imagemap/imap_cmd_guides.c:172
 msgid "_Left start at:"
@@ -10031,6 +10063,7 @@ msgid "Couldn't read file:"
 msgstr "Không thể đọc tập tin:"
 
 #:../plug-ins/imagemap/imap_main.c:1061
+#,c-format
 msgid "URL: %s"
 msgstr "Địa chỉ Mạng: %s"
 
@@ -10186,7 +10219,7 @@ msgstr "Chọn tập tin ảnh"
 
 #:../plug-ins/imagemap/imap_settings.c:102
 msgid "_Title:"
-msgstr "_Tựa đề: "
+msgstr "_Tựa đề:"
 
 #:../plug-ins/imagemap/imap_settings.c:104
 msgid "Aut_hor:"
@@ -10251,94 +10284,98 @@ msgstr "Đang mở hình thu nhỏ cho « %s »..."
 msgid "File size: %02.01f kB"
 msgstr "Cỡ tập tin: %02.01f kB"
 
-#:../plug-ins/jpeg/jpeg-save.c:664 ../plug-ins/jpeg/jpeg-save.c:765
+#:../plug-ins/jpeg/jpeg-save.c:579
+msgid "Calculating file size..."
+msgstr "Đang tính kích cỡ tập tin..."
+
+#:../plug-ins/jpeg/jpeg-save.c:670 ../plug-ins/jpeg/jpeg-save.c:771
 msgid "File size: unknown"
 msgstr "Cỡ tập tin: chưa biết"
 
-#:../plug-ins/jpeg/jpeg-save.c:717
+#:../plug-ins/jpeg/jpeg-save.c:723
 msgid "Save as JPEG"
 msgstr "Lưu dạng JPEG"
 
-#:../plug-ins/jpeg/jpeg-save.c:744
+#:../plug-ins/jpeg/jpeg-save.c:750
 msgid "_Quality:"
 msgstr "_Chất lượng:"
 
-#:../plug-ins/jpeg/jpeg-save.c:748
+#:../plug-ins/jpeg/jpeg-save.c:754
 msgid "JPEG quality parameter"
 msgstr "Tham số chất lượng JPEG"
 
-#:../plug-ins/jpeg/jpeg-save.c:763
+#:../plug-ins/jpeg/jpeg-save.c:769
 msgid "Enable preview to obtain the file size."
 msgstr "Bật khả năng xem thử để thấy biết kích cỡ tập tin."
 
-#:../plug-ins/jpeg/jpeg-save.c:774
+#:../plug-ins/jpeg/jpeg-save.c:780
 msgid "Show _preview in image window"
 msgstr "Hiện khung _xem thử trong cửa sổ ảnh"
 
-#:../plug-ins/jpeg/jpeg-save.c:786
+#:../plug-ins/jpeg/jpeg-save.c:792
 msgid "_Advanced Options"
 msgstr "Tùy chọn cấp c_ao"
 
-#:../plug-ins/jpeg/jpeg-save.c:814
+#:../plug-ins/jpeg/jpeg-save.c:820
 msgid "_Smoothing:"
 msgstr "Làm _mịn:"
 
-#:../plug-ins/jpeg/jpeg-save.c:827
+#:../plug-ins/jpeg/jpeg-save.c:833
 msgid "Frequency (rows):"
 msgstr "Tần số (hàng):"
 
-#:../plug-ins/jpeg/jpeg-save.c:841
+#:../plug-ins/jpeg/jpeg-save.c:847
 msgid "Use restart markers"
 msgstr "Dùng dấu khởi chạy lại"
 
-#:../plug-ins/jpeg/jpeg-save.c:857 ../plug-ins/xjt/xjt.c:869
+#:../plug-ins/jpeg/jpeg-save.c:863 ../plug-ins/xjt/xjt.c:869
 msgid "Optimize"
 msgstr "Tối ưu hóa"
 
-#:../plug-ins/jpeg/jpeg-save.c:870
+#:../plug-ins/jpeg/jpeg-save.c:876
 msgid "Progressive"
 msgstr "Tiến lên"
 
-#:../plug-ins/jpeg/jpeg-save.c:884
+#:../plug-ins/jpeg/jpeg-save.c:890
 msgid "Force baseline JPEG"
 msgstr "Buộc JPEG giá trị cơ bản"
 
-#:../plug-ins/jpeg/jpeg-save.c:899
+#:../plug-ins/jpeg/jpeg-save.c:905
 msgid "Save EXIF data"
 msgstr "Lưu dữ liệu EXIF"
 
-#:../plug-ins/jpeg/jpeg-save.c:915
+#:../plug-ins/jpeg/jpeg-save.c:921
 msgid "Save thumbnail"
 msgstr "Lưu hình thu nhỏ"
 
 #.XMP metadata
-#:../plug-ins/jpeg/jpeg-save.c:931
+#:../plug-ins/jpeg/jpeg-save.c:937
 msgid "Save XMP data"
 msgstr "Lưu dữ liệu XMP"
 
 #.Subsampling
-#:../plug-ins/jpeg/jpeg-save.c:944
+#:../plug-ins/jpeg/jpeg-save.c:950
 msgid "Subsampling:"
 msgstr "Phụ lấy mẫu :"
 
 #.DCT method
-#:../plug-ins/jpeg/jpeg-save.c:967
+#:../plug-ins/jpeg/jpeg-save.c:973
 msgid "DCT method:"
 msgstr "Phương pháp DCT:"
 
-#:../plug-ins/jpeg/jpeg-save.c:973
+#:../plug-ins/jpeg/jpeg-save.c:979
 msgid "Fast Integer"
 msgstr "Số nguyên nhanh"
 
-#:../plug-ins/jpeg/jpeg-save.c:974
+#:../plug-ins/jpeg/jpeg-save.c:980
 msgid "Integer"
 msgstr "Số nguyên"
 
-#:../plug-ins/jpeg/jpeg-save.c:975
+#:../plug-ins/jpeg/jpeg-save.c:981
 msgid "Floating-Point"
 msgstr "Điểm phù động"
 
-#:../plug-ins/jpeg/jpeg-save.c:989
+#:../plug-ins/jpeg/jpeg-save.c:995
 msgid "Comment"
 msgstr "Ghi chú"
 
@@ -10632,8 +10669,8 @@ msgid ""
 "Set the brightness of the print.\n"
 "0 is solid black, 2 is solid white"
 msgstr "Lập độ sáng của bản in.\n"
-"0	đen đặc\n"
-"2	trắng đặc"
+"0\tđen đặc\n"
+"2\ttrắng đặc"
 
 #:../plug-ins/print/gimp_color_window.c:288
 msgid "Contrast:"
@@ -10686,7 +10723,9 @@ msgid ""
 "Adjust the gamma of the print. Larger values will produce a generally "
 "brighter print, while smaller values will produce a generally darker print. "
 "Black and white will remain the same, unlike with the brightness adjustment."
-msgstr "Điều chỉnh giá trị gamma (γ) của bản in. Giá trị lớn hơn sẽ in ảnh một ít sáng hơn, còn giá trị nhỏ hơn sẽ in ảnh tối hơn suốt. Màu đen và trắng sẽ không thay đổi, khác với sự điều chỉnh độ sáng."
+msgstr "Điều chỉnh giá trị gamma (γ) của bản in. Giá trị lớn hơn sẽ in ảnh một ít "
+"sáng hơn, còn giá trị nhỏ hơn sẽ in ảnh tối hơn suốt. Màu đen và trắng sẽ "
+"không thay đổi, khác với sự điều chỉnh độ sáng."
 
 #:../plug-ins/print/gimp_color_window.c:432
 msgid "Dither algorithm:"
@@ -10701,11 +10740,12 @@ msgid ""
 "art.\n"
 "Hybrid Floyd-Steinberg generally produces inferior output."
 msgstr "Hãy chọn thuật toán rung động cần dùng.\n"
-" • Adaptive Hybrid	thường cung cấp chất lượng cao nhất toàn diện.\n"
-" • Ordered		nhanh hơn và cung cấp gần cùng một chất lượng với Adaptive Hybrid khi in ảnh chụp.\n		"
-" • Fast			}  rất nhanh hơn, cung cấp văn bản và ảnh vẽ nét đơn đẹp.\n"
-" • Very Fast		}\n"
-" • Hybrid Floyd-Steinberg 	thường in chất lượng thấp."
+" • Adaptive Hybrid\tthường cung cấp chất lượng cao nhất toàn diện.\n"
+" • Ordered\t\tnhanh hơn và cung cấp gần cùng một chất lượng với Adaptive "
+"Hybrid khi in ảnh chụp.\n"
+"\t\t • Fast\t\t\t}  rất nhanh hơn, cung cấp văn bản và ảnh vẽ nét đơn đẹp.\n"
+" • Very Fast\t\t}\n"
+" • Hybrid Floyd-Steinberg \tthường in chất lượng thấp."
 
 #.
 #.* Create the main dialog
@@ -10743,10 +10783,14 @@ msgid ""
 "to its original position."
 msgstr "Định vị ảnh vào trang.\n"
 "Nhắp và kéo bằng cái nút chính để định vị ảnh.\n"
-"Nhắp và kéo bằng cái nút thứ hai để di chuyển ảnh một cách chính xác hơn; mỗi đơn vị chuyển thì di chuyển ảnh theo một điểm (1/72\").\n"
-"Nhắp và kéo bằng cái nút thứ ba (giữa) để dichuyển ảnh theo đơn vị của kích cỡ ảnh.\n"
-"Bấm giữ phím Shift trong khi nhắp và kéo thì buộc ảnh chỉ chuyển ngang hay dọc.\n"
-"Nếu bạn bấm một cái nút khác trong khi kéo con chuột, ảnh sẽ trở về vị trí gốc."
+"Nhắp và kéo bằng cái nút thứ hai để di chuyển ảnh một cách chính xác hơn; "
+"mỗi đơn vị chuyển thì di chuyển ảnh theo một điểm (1/72\").\n"
+"Nhắp và kéo bằng cái nút thứ ba (giữa) để dichuyển ảnh theo đơn vị của kích "
+"cỡ ảnh.\n"
+"Bấm giữ phím Shift trong khi nhắp và kéo thì buộc ảnh chỉ chuyển ngang hay "
+"dọc.\n"
+"Nếu bạn bấm một cái nút khác trong khi kéo con chuột, ảnh sẽ trở về vị trí "
+"gốc."
 
 #:../plug-ins/print/gimp_main_window.c:492
 msgid "Auto"
@@ -10772,7 +10816,8 @@ msgstr "Bức hoạ về biển"
 msgid ""
 "Select the orientation: portrait, landscape, upside down, or seascape "
 "(upside down landscape)"
-msgstr "Hãy chọn hướng: thẳng đứng, nằm ngang, từ trên xuống hay bức hoạ về biền (nằm ngang từ trên xuống)"
+msgstr "Hãy chọn hướng: thẳng đứng, nằm ngang, từ trên xuống hay bức hoạ về biền "
+"(nằm ngang từ trên xuống)"
 
 #:../plug-ins/print/gimp_main_window.c:525
 msgid "Distance from the left of the paper to the image"
@@ -10904,7 +10949,7 @@ msgstr "Hãy gõ tên bạn muốn gán cho máy in hợp lý này"
 
 #:../plug-ins/print/gimp_main_window.c:859
 msgid "About Gimp-Print "
-msgstr "Giới thiệu In Gimp"
+msgstr "Giới thiệu In Gimp "
 
 #:../plug-ins/print/gimp_main_window.c:872
 msgid "Gimp-Print Version "
@@ -10934,9 +10979,11 @@ msgid ""
 "Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA\n"
 msgstr "\n"
 "\n"
-"Bản quyền © năm 1997-2001 Michael Sweet, Robert Krawitz, và các Nhóm Phát Triển Gimp-Print còn lại.\n"
+"Bản quyền © năm 1997-2001 Michael Sweet, Robert Krawitz, và các Nhóm Phát "
+"Triển Gimp-Print còn lại.\n"
 "\n"
-"Bạn thăm nơi Mạng của chúng tôi tại <http://gimp-print.sourceforge.net> nhé.\n"
+"Bạn thăm nơi Mạng của chúng tôi tại <http://gimp-print.sourceforge.net> "
+"nhé.\n"
 "\n"
 "Chương trình này là phần mềm tự do; bạn có thể phân phối nó lại và/hay\n"
 "sửa đổi nó theo điều kiện của Quyền Công Chung Gnu (GPL)\n"
@@ -11006,7 +11053,7 @@ msgstr "Cỡ vật chứa:"
 
 #:../plug-ins/print/gimp_main_window.c:1006
 msgid "Dimensions:"
-msgstr "Các chiều : "
+msgstr "Các chiều :"
 
 #:../plug-ins/print/gimp_main_window.c:1020
 msgid "Width of the paper that you wish to print to"
@@ -11060,7 +11107,8 @@ msgstr "Tỷ lệ theo :"
 msgid ""
 "Select whether scaling is measured as percent of available page size or "
 "number of output dots per inch"
-msgstr "Chọn việc tỷ lệ được đo theo phần trăm của khổ giấy hiện có hoặc số chấm trên mỗi insơ (dpi) đầu ra"
+msgstr "Chọn việc tỷ lệ được đo theo phần trăm của khổ giấy hiện có hoặc số chấm "
+"trên mỗi insơ (dpi) đầu ra"
 
 #:../plug-ins/print/gimp_main_window.c:1179
 msgid "Percent"
@@ -11160,7 +11208,8 @@ msgstr "Ảnh chụp"
 msgid ""
 "Slowest, but most accurate and smoothest color for continuous tone images "
 "and photographs"
-msgstr "Chậm nhất, còn chính xác nhất và có màu mịn nhất cho ảnh có sắc liên tục và cho ảnh chụp"
+msgstr "Chậm nhất, còn chính xác nhất và có màu mịn nhất cho ảnh có sắc liên tục và "
+"cho ảnh chụp"
 
 #:../plug-ins/print/gimp_main_window.c:1406
 msgid "Output type:"
@@ -11200,7 +11249,8 @@ msgstr "Chỉnh cách xuất..."
 #:../plug-ins/print/gimp_main_window.c:1466
 msgid ""
 "Adjust color balance, brightness, contrast, saturation, and dither algorithm"
-msgstr "Điều chỉnh cán cân màu, độ sáng, độ tương phản, độ bão hoà và thuật toán rung động"
+msgstr "Điều chỉnh cán cân màu, độ sáng, độ tương phản, độ bão hoà và thuật toán "
+"rung động"
 
 #:../plug-ins/print/gimp_main_window.c:1500
 msgid "Print to File"
@@ -11576,1359 +11626,3 @@ msgstr "Lỗi: không thể đọc tập tin thuộc tính XJT « %s »."
 #,c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Lỗi: tập tin thuộc tính XJT « %s » là rỗng"
-
-msgid "About"
-msgstr "Giới thiệu"
-
-msgid "Edit fractal name"
-msgstr "Sửa đổi tên phân dạng"
-
-msgid "Fractal name:"
-msgstr "Tên phân dạng:"
-
-msgid "New Fractal"
-msgstr "Phân dạng mới"
-
-msgid "Choose Fractal by double-clicking on it"
-msgstr "Chọn phân dạng bằng nhấn đúp chuột lên nó"
-
-msgid "Lighting Effects..."
-msgstr "Hiệu ứng ánh sáng..."
-
-msgid "General options"
-msgstr "Tùy chọn chung"
-
-msgid "Zoom out (make image smaller)"
-msgstr "Thu nhỏ (thu ảnh nhỏ đi)"
-
-msgid "Zoom in (make image bigger)"
-msgstr "Phóng to (phóng to ảnh lên)"
-
-msgid "Show/hide preview wireframe"
-msgstr "Hiện/Ẩn khung xem thử có đường viền"
-
-msgid "Opening '%s'..."
-msgstr "Đang mở « %s »..."
-
-msgid "Saving '%s'..."
-msgstr "Đang lưu « %s »..."
-
-msgid "AlienMap2: Transforming..."
-msgstr "Ánh xạ lạ 2: đang chuyển dạng..."
-
-msgid "AlienMap2"
-msgstr "Ánh xạ lạ 2"
-
-msgid "Random seed"
-msgstr "Hạt ngẫu nhiên"
-
-msgid "Playback:"
-msgstr "Phát lại:"
-
-msgid "Play/Stop"
-msgstr "Phát/Ngừng"
-
-msgid "Rewind"
-msgstr "Tua lại"
-
-msgid "Color Enhance..."
-msgstr "Cải tiến màu..."
-
-msgid "Alpha:"
-msgstr "Anfa:"
-
-msgid "Value:"
-msgstr "Giá trị:"
-
-msgid "Other options"
-msgstr "Tùy chọn khác"
-
-msgid "Film"
-msgstr "Phím"
-
-msgid "Before and After"
-msgstr "Trước và Sau"
-
-msgid "Gaussian Blur..."
-msgstr "Mờ Gauss..."
-
-msgid "GEE-SLIME"
-msgstr "NHỚT-GEE"
-
-msgid "Qbist ..."
-msgstr "Xu hướng lập thể..."
-
-msgid "Hot..."
-msgstr "Nóng..."
-
-msgid "Van Gogh (LIC)..."
-msgstr "Van Gogh (LIC)..."
-
-msgid "Adjusting Foreground/Background..."
-msgstr "Đang điều chỉnh Cảnh gần và Nền..."
-
-msgid "Max RGB..."
-msgstr "RGB tối đa..."
-
-msgid "Neon..."
-msgstr "Nê-ông..."
-
-msgid "Intensity"
-msgstr "Độ mạnh"
-
-msgid "Newsprint..."
-msgstr "Chữ ở báo..."
-
-msgid "NL Filter..."
-msgstr "Bộ lọc NL..."
-
-msgid "_Scatter RGB..."
-msgstr "_Rải RGB..."
-
-msgid "Scatter RGB"
-msgstr "Rải RGB"
-
-# Type: text
-# Description
-msgid "Plasma..."
-msgstr "Huyết tương..."
-
-msgid "Raw Image Loader"
-msgstr "Bộ tải ảnh thô"
-
-msgid "Rotating..."
-msgstr "Đang xoay..."
-
-msgid "Apply"
-msgstr "Áp dụng"
-
-msgid "S_catter HSV..."
-msgstr "Rả_i HSV..."
-
-msgid "Scattering HSV..."
-msgstr "Đang rải HSV..."
-
-msgid "Loading Screen Shot..."
-msgstr "Đang tải ảnh chụp màn hình..."
-
-msgid "a _Single Window"
-msgstr "một cửa _sổ đơn"
-
-msgid "S_elect Window After"
-msgstr "_Chọn cửa sổ sau"
-
-msgid "the _Whole Screen"
-msgstr "T_oàn bộ màn hình"
-
-msgid "Grab _After"
-msgstr "Bắt s_au"
-
-msgid "Update _Preview"
-msgstr "Cập nhật khung _xem thử"
-
-msgid "Texture Transformations"
-msgstr "Chuyển đổi hoạ tiết"
-
-msgid "C_reate New Image"
-msgstr "_Tạo ảnh mới"
-
-msgid "Video/RGB..."
-msgstr "Ảnh động/RGB..."
-
-msgid "From Clipboard"
-msgstr "Từ bảng tạm"
-
-msgid "Copying..."
-msgstr "Đang chép..."
-
-msgid "Created with The GIMP"
-msgstr "Tạo với GIMP"
-
-msgid "Search by _Name"
-msgstr "Tìm kiếm theo T_ên"
-
-msgid "_Search:"
-msgstr "Tìm _kiếm:"
-
-msgid "Searching by name - please wait"
-msgstr "Đang tìm kiếm theo tên: vui lòng chờ..."
-
-msgid "Searching - please wait"
-msgstr "Đang tìm kiếm: vui lòng chờ..."
-
-msgid "1 Procedure"
-msgstr "1 Thủ tục"
-
-msgid "No matches"
-msgstr "Không khớp gì"
-
-msgid "Date:"
-msgstr "Ngày:"
-
-msgid "Internal GIMP procedure"
-msgstr "Thủ tục GIMP nội bộ"
-
-msgid "GIMP Plug-In"
-msgstr "Bộ cầm phít GIMP"
-
-msgid "Temporary Procedure"
-msgstr "Thủ tục tạm thời"
-
-msgid "_Plug-In Browser"
-msgstr "Bộ duyệt bộ cầm _phít"
-
-msgid "1 Plug-In Interface"
-msgstr "1 Giao diện bộ cầm phít"
-
-msgid "%d Plug-In Interfaces"
-msgstr "%d Giao diện bộ cầm phít"
-
-msgid "Plug-In Browser"
-msgstr "Bộ duyệt bộ cầm phít"
-
-msgid "Name"
-msgstr "Tên"
-
-msgid "Insertion Date"
-msgstr "Ngày chèn"
-
-msgid "Menu Path"
-msgstr "Đường dẫn trình đơn"
-
-msgid "Image Types"
-msgstr "Kiểu ảnh"
-
-msgid "List View"
-msgstr "Xem danh sách"
-
-msgid "Menu Path/Name"
-msgstr "Đường dẫn/tên trình đơn"
-
-msgid "Tree View"
-msgstr "Xem cây"
-
-msgid "Gradient fill"
-msgstr "Điền độ dốc"
-
-msgid "GFlare"
-msgstr "GFlare"
-
-msgid "Hue Rotation:"
-msgstr "Độ xXoa sắc màu y:"
-
-msgid "Random Seed:"
-msgstr "Hạt ngẫu nhiên:"
-
-msgid "A_bout"
-msgstr "_Giới thiệu"
-
-msgid "Centerize"
-msgstr "Giữa lại"
-
-msgid "Update"
-msgstr "Cập nhật"
-
-msgid "Imagemap plug-in 2.2"
-msgstr "Bộ cầm phít Imagemap 2.0"
-
-msgid "_File"
-msgstr "_Tập tin"
-
-msgid "Open recent"
-msgstr "Mở gần đây"
-
-msgid "_Edit"
-msgstr "_Sửa"
-
-msgid "Select _all"
-msgstr "Chọn _hết"
-
-msgid "Deselect _all"
-msgstr "Bỏ chọn _hết"
-
-msgid "Edit area info..."
-msgstr "_Sửa đổi thông tin vùng.."
-
-msgid "_View"
-msgstr "_Xem"
-
-msgid "Area list"
-msgstr "Danh sách vùng"
-
-msgid "Source..."
-msgstr "Nguồn..."
-
-msgid "Zoom to"
-msgstr "Thu/Phóng thành"
-
-msgid "Select contiguous region"
-msgstr "Chọn vùng kề nhau"
-
-msgid "_Tools"
-msgstr "_Công cụ"
-
-msgid "Grid settings..."
-msgstr "Thiết lập lưới...."
-
-msgid "Create guides..."
-msgstr "Tạo nét dẫn..."
-
-msgid "_Help"
-msgstr "Trợ _giúp"
-
-msgid "_Contents"
-msgstr "_Nội dung"
-
-msgid "_About ImageMap"
-msgstr "_Giới thiệu ImageMap"
-
-msgid "Edit Area Info..."
-msgstr "Sửa đổi thông tin vùng..."
-
-msgid "Delete Area"
-msgstr "Xóa bỏ vùng"
-
-msgid "Tools"
-msgstr "Công cụ"
-
-msgid "Edit"
-msgstr "Sửa"
-
-msgid "Save"
-msgstr "Lưu"
-
-msgid "Preferences"
-msgstr "Tùy thích"
-
-msgid "Undo"
-msgstr "Hồi lại"
-
-msgid "Redo"
-msgstr "Làm lại"
-
-msgid "Zoom in"
-msgstr "Phóng to"
-
-msgid "Zoom out"
-msgstr "Thu nhỏ"
-
-msgid "Edit map info"
-msgstr "Sửa đổi thông tin ánh xạ"
-
-msgid "Select existing area"
-msgstr "Chọn vùng tồn tại"
-
-msgid "Fuzzy Select"
-msgstr "Chọn mờ"
-
-msgid "Define Polygon area"
-msgstr "Định ra vùng đa giác"
-
-msgid "Edit selected area info"
-msgstr "Sửa đổi thông tin vùng chọn"
-
-msgid "Delete selected area"
-msgstr "Xóa bỏ vùng chọn"
-
-msgid "From"
-msgstr "Từ"
-
-msgid "To"
-msgstr "Đến"
-
-msgid "Select all"
-msgstr "Chọn hết"
-
-msgid "Transferring TWAIN data..."
-msgstr "Đang truyền dữ liệu TWAIN..."
-
-msgid "Gfig layer %d"
-msgstr "Lớp Gfig %d"
-
-msgid "TIFF images"
-msgstr "Ảnh TIFF"
-
-msgid "All"
-msgstr "Tất cả"
-
-msgid "Clockwise"
-msgstr "Xuôi chiều"
-
-msgid "Anti-Clockwise"
-msgstr "Ngược chiều"
-
-msgid "Ifs_Compose..."
-msgstr "_Soạn thảo Ifs..."
-
-msgid "IfsCompose: Red"
-msgstr "Soạn thảo Ifs: đỏ"
-
-msgid "IfsCompose: Green"
-msgstr "Soạn thảo Ifs: xanh lá cây"
-
-msgid "IfsCompose: Blue"
-msgstr "Soạn thảo Ifs: xanh dương"
-
-msgid "IfsCompose: Black"
-msgstr "Soạn thảo Ifs: đen"
-
-msgid "IfsCompose"
-msgstr "Soạn thảo Ifs"
-
-msgid "Rotate/scale"
-msgstr "Xoay/co dãn"
-
-msgid "/Move"
-msgstr "/Chuyển"
-
-msgid "/New"
-msgstr "/Mới"
-
-msgid "/Delete"
-msgstr "/Xóa bỏ"
-
-msgid "/Undo"
-msgstr "/Hồi lại"
-
-msgid "/Redo"
-msgstr "/Làm lại"
-
-msgid "/Select All"
-msgstr "Chọn _hết"
-
-msgid "IfsCompose Options"
-msgstr "Tùy chọn Soạn thảo Ifs"
-
-msgid "See %s"
-msgstr "Xem %s"
-
-msgid "Loading %s:"
-msgstr "Đang tải %s:"
-
-msgid "Saving %s:"
-msgstr "Đang lưu %s:"
-
-msgid "Number of Sides/Points/Turns:"
-msgstr "Số cạnh/điểm/lần quay:"
-
-msgid "<Image>/Filters/Render"
-msgstr "<Image>/Lọc/Vẽ"
-
-msgid "<Image>/Filters/Light Effects"
-msgstr "<Image>/Lọc/Hiệu ứng sáng"
-
-msgid "<Image>/Filters/Map"
-msgstr "<Image>/Lọc/Ánh xạ"
-
-msgid "<Image>/Filters/Colors/Map"
-msgstr "<Image>/Filters/Colors/Map"
-
-msgid "<Image>/Filters/Render/Pattern"
-msgstr "<Image>/Filters/Render/Pattern"
-
-msgid "<Image>/Filters/Animation"
-msgstr "<Image>/Filters/Animation"
-
-msgid "<Image>/Filters/Glass Effects"
-msgstr "<Image>/Filters/Glass Effects"
-
-msgid "<Image>/Image/Crop"
-msgstr "<Image>/Image/Crop"
-
-msgid "<Image>/Layer/Crop"
-msgstr "<Image>/Layer/Crop"
-
-msgid "<Image>/Layer/Colors/Auto"
-msgstr "<Image>/Layer/Colors/Auto"
-
-msgid "<Image>/Filters/Distorts"
-msgstr "<Image>/Filters/Distorts"
-
-msgid "<Image>/Filters/Blur"
-msgstr "<Image>/LọcFMờrs/Blur"
-
-msgid "<Image>/Filters/Colors"
-msgstr "<Image>/Filters/Colors"
-
-msgid "<Image>/Layer/Colors/Info"
-msgstr "<Image>/Layer/Colors/Info"
-
-msgid "<Image>/Layer/Transparency/Modify"
-msgstr "<Image>/Layer/Transparency/Modify"
-
-msgid "<Image>/Image/Mode"
-msgstr "<Image>/Image/Mode"
-
-msgid "<Image>/Filters/Generic"
-msgstr "<Image>/Filters/Generic"
-
-msgid "<Image>/Filters/Artistic"
-msgstr "<Image>/Filters/Artistic"
-
-msgid "<Image>/Filters/Enhance"
-msgstr "<Image>/Filters/Enhance"
-
-msgid "<Image>/Filters/Combine"
-msgstr "<Image>/Filters/Combine"
-
-msgid "<Image>/Filters/Edge-Detect"
-msgstr "<Image>/Filters/Edge-Detect"
-
-msgid "<Image>/Filters/Toys"
-msgstr "<Image>/Filters/Toys"
-
-msgid "<Image>/Image/Transform"
-msgstr "<Image>/Image/Transform"
-
-msgid "<Image>/File/Send"
-msgstr "<Image>/File/Send"
-
-msgid "_Do preview"
-msgstr "Có khả năng _xem thử"
-
-msgid "<Image>/Filters/Noise"
-msgstr "<Image>/Filters/Noise"
-
-msgid "<Image>/Filters/Render/Clouds"
-msgstr "<Image>/Filters/Render/Clouds"
-
-msgid "<Toolbox>/File/Acquire"
-msgstr "<Toolbox>/File/Acquire"
-
-msgid "<Toolbox>/Xtns/Extensions"
-msgstr "<Toolbox>/Xtns/Extensions"
-
-msgid "<Image>/Edit"
-msgstr "<Image>/Edit"
-
-msgid "<Image>/Filters/Render/Nature"
-msgstr "<Image>/Filters/Render/Nature"
-
-msgid "<Image>/Filters/Web"
-msgstr "<Image>/Filters/Web"
-
-msgid "Source"
-msgstr "Nguồn"
-
-msgid "_Plugin Details"
-msgstr "Chi tiết bộ cầm _phít"
-
-msgid "Details <<"
-msgstr "Chi tiết ←"
-
-msgid "Details >>"
-msgstr "Chi tiết →"
-
-# Type: text
-# Description
-msgid "Name:"
-msgstr "Tên:"
-
-msgid "Help:"
-msgstr "Trợ giúp: "
-
-msgid "Plugin Descriptions"
-msgstr "Mô tả bộ cầm phít"
-
-msgid "Search by Name"
-msgstr "Tìm kiếm theo tên"
-
-msgid "Menu path"
-msgstr "Đường dẫn trình đơn"
-
-msgid "Search:"
-msgstr "Tìm kiếm:"
-
-msgid "In:"
-msgstr "Vào :"
-
-msgid "Out:"
-msgstr "Ra:"
-
-msgid "_Spherical"
-msgstr "Hình _cầu"
-
-msgid "No memory for mapping colors"
-msgstr "Không có bộ nhớ để ánh xạ màu"
-
-msgid "Selection:"
-msgstr "Vùng chọn:"
-
-msgid "E_nable antialiasing"
-msgstr "Bật làm trơ_n"
-
-msgid "T_hreshold:"
-msgstr "_Ngưỡng:"
-
-msgid "L_ight yype:"
-msgstr "K_iểu ánh sáng:"
-
-msgid "Lig_ht color:"
-msgstr "Màu ánh sáng:"
-
-msgid "_Diffuse:"
-msgstr "_Khuếch tán:"
-
-msgid "D_iffuse:"
-msgstr "Kh_uếch tán:"
-
-msgid "Parameters were Saved to '%s'"
-msgstr "Các tham số đã được lưu vào « %s »"
-
-msgid "'%s' is not a HRZ file"
-msgstr "« %s » không phải là tập tin HRZ"
-
-msgid "Brush"
-msgstr "Bút vẽ"
-
-msgid "Airbrush"
-msgstr "Chổi khí"
-
-msgid "Pencil"
-msgstr "Bút chì"
-
-msgid "New"
-msgstr "Mới"
-
-msgid "Using:"
-msgstr "Dùng:"
-
-msgid "Reverse line"
-msgstr "Đừơng đảo ngược"
-
-msgid "Scale to image"
-msgstr "Co dãn để vừa ảnh"
-
-msgid "Gfig Brush Selection"
-msgstr "Chọn bút vẽ Gfig"
-
-msgid "Pressure:"
-msgstr "Áp suất:"
-
-msgid "No options..."
-msgstr "Không có tùy chọn..."
-
-msgid "Set brush..."
-msgstr "Lập bút vẽ..."
-
-msgid "Add"
-msgstr "Thêm"
-
-msgid "Fill type:"
-msgstr "Kiểu điền:"
-
-msgid "Fill Opacity:"
-msgstr "Độ mờ đục điền:"
-
-msgid "Each selection"
-msgstr "Mỗi vùng chọn"
-
-msgid "All selections"
-msgstr "Mọi vùng chọn"
-
-msgid "Fill after:"
-msgstr "Điền sau"
-
-msgid "Reload image"
-msgstr "Tải lại ảnh"
-
-msgid "Object"
-msgstr "Đối tượng"
-
-msgid "_Merge"
-msgstr "T_rộn"
-
-msgid "%d unsaved Gfig objects. Continue with exiting?"
-msgstr "%d đối tượng Gfig chưa được lưu.\n"
-"Vẫn muốn tiếp tục thoát ra không?"
-
-msgid "Enter Gfig object name"
-msgstr "Gõ tên đối tượng Gfig"
-
-msgid "Gfig object name:"
-msgstr "Tên đối tượng Gfig:"
-
-msgid "Rescan for Gfig objects"
-msgstr "Quết lại tìm đối tượng Gfig"
-
-msgid "Add Gfig path"
-msgstr "Thêm đường dẫn Gfig"
-
-msgid "Gfig - GIMP plug-in"
-msgstr "Gfig: bộ cầm phít GIMP"
-
-msgid "Release 2.0"
-msgstr "Bản phát hành 2.0"
-
-msgid "New Gfig Object"
-msgstr "Đối tượng Gfig mới"
-
-msgid "Collection Details"
-msgstr "Chi tiết tập hợp"
-
-msgid "Draw name:"
-msgstr "Tên vẽ:"
-
-msgid "(none)"
-msgstr "(không có)"
-
-msgid "<NONE>"
-msgstr "<KHÔNG CÓ>"
-
-msgid "_Blur..."
-msgstr "_Mờ..."
-
-msgid "R_andomization %:"
-msgstr "% _ngẫu nhiên:"
-
-msgid "Save Gamma"
-msgstr "Lưu gamma (γ)"
-
-msgid "Save Resolution"
-msgstr "Lưu độ phân giải"
-
-msgid "Save Creation Time"
-msgstr "Lưu giờ tạo"
-
-msgid "Random _Seed:"
-msgstr "_Hạt ngẫu nhiên:"
-
-msgid "Save _Gamma"
-msgstr "Lưu _gamma (γ)"
-
-msgid "Save _Resolution"
-msgstr "Lưu độ _phân giải"
-
-msgid "Save Creation _Time"
-msgstr "Lưu _giờ tạo"
-
-msgid "_X Offset:"
-msgstr "Hiệu số _X:"
-
-msgid "_Y Offset:"
-msgstr "Hiệu số _Y:"
-
-msgid "_Random Seed:"
-msgstr "Hạt _ngẫu nhiên:"
-
-msgid "R_andom Seed:"
-msgstr "Hạt ngẫ_u nhiên:"
-
-msgid "RLE Compression"
-msgstr "Nén RLE"
-
-msgid "Save: No filename given"
-msgstr "Lưu : chưa nhập tên tập tin "
-
-msgid "Cannot save to a folder."
-msgstr "Không thể lưu vào thư mục."
-
-msgid "<Image>/Filters/Render/_Fractal Explorer..."
-msgstr "<Image>/Filters/Render/_Fractal Explorer..."
-
-msgid "<Image>/Filters/Light Effects/_Lighting Effects..."
-msgstr "<Image>/Filters/Light Effects/_Lighting Effects..."
-
-msgid "Preview Options"
-msgstr "Tùy chọn xem thửnét hiện trạng"
-
-msgid "<Image>/Filters/Map/Map _Object..."
-msgstr "<Image>/Filters/Map/Map _Object..."
-
-msgid "<Image>/Filters/Colors/Map/_Alien Map..."
-msgstr "<Image>/Filters/Colors/Map/_Alien Map..."
-
-msgid "Change intensity of the red channel"
-msgstr "Thay đổi độ mạnh của kênh màu đỏtính hiển thị của thanh bên"
-
-msgid "Change intensity of the green channel"
-msgstr "Thay đổi độ mạnh của kênh màu xanh lá cây"
-
-msgid "Change intensity of the blue channel"
-msgstr "Thay đổi độ mạnh của kênh màu xanh dương"
-
-msgid "Cos_ine"
-msgstr "Cos_in"
-
-msgid "Use sine-function for red component."
-msgstr "Dùng hàm sin cho thành phần màu đỏ"
-
-msgid "Use cosine-function for red component."
-msgstr "Dùng hàm cosin cho thành phần màu đỏ"
-
-msgid "Use sine-function for green component."
-msgstr "Dùng hàm sin cho thành phần màu xanh lá cây"
-
-msgid "Use cosine-function for green component."
-msgstr "Dùng hàm cosin cho thành phần màu xanh lá cây"
-
-msgid "Use sine-function for blue component."
-msgstr "Dùng hàm sin cho thành phần màu xanh dương"
-
-msgid "Use cosine-function for blue component."
-msgstr "Dùng hàm cosin cho thành phần màu xanh dương"
-
-msgid "About AlienMap"
-msgstr "Giới thiệu Ánh xạ lạ"
-
-msgid "<Image>/Filters/Colors/Map/Alien Map _2..."
-msgstr "<Image>/Filters/Colors/Map/Alien Map _2..."
-
-msgid "Change frequency of the red/hue channel"
-msgstr "Thay đổi tần số của kênh màu sắc/đỏ"
-
-msgid "Change angle of the red/hue channel"
-msgstr "Thay đổi góc của kênh màu sắc/đỏHãy nhập địa chỉ Mạng của kênh mới."
-
-msgid "Change frequency of the green/saturation channel"
-msgstr "Thay đổi tần số của kênh màu xanh lá cây/độ bão hòa"
-
-msgid "Change angle of the green/saturation channel"
-msgstr "Thay đổi góc của kênh màu xanh lá cây/độ bão hòa"
-
-msgid "Use function for red/hue component"
-msgstr "Dùng hàm cho thành phần màu đỏ"
-
-msgid "Use function for green/saturation component"
-msgstr "Dùng hàm cho thành phần màu xanh lá cây"
-
-msgid "About AlienMap2"
-msgstr "Giới thiệu Ánh xạ lạ 2"
-
-msgid "<Image>/Filters/Render/Pattern/CML _Explorer..."
-msgstr "<Image>/Filters/Render/Pattern/CML _Explorer..."
-
-msgid "NULL"
-msgstr "RỖNG>"
-
-msgid "CML File Operation Warning"
-msgstr "Cảnh báo Thao tác Tập tin CML"
-
-msgid "<Image>/Filters/Animation/_Playback..."
-msgstr "<Image>/Filters/Animation/_Playback..."
-
-msgid "<Image>/Filters/Animation/Optimize (for _GIF)"
-msgstr "<Image>/Filters/Animation/Optimize (for _GIF)"
-
-msgid "<Image>/Filters/Animation/_Remove Backdrop"
-msgstr "<Image>/Filters/Animation/_Remove Backdrop"
-
-msgid "<Image>/Filters/Animation/_Find Backdrop"
-msgstr "<Image>/Filters/Animation/_Find Backdrop"
-
-msgid "<Image>/Filters/Glass Effects/Apply _Lens..."
-msgstr "<Image>/Filters/Glass Effects/Apply _Lens..."
-
-msgid "<Image>/Layer/Colors/Auto/Stretch _HSV"
-msgstr "<Image>/Layer/Colors/Auto/Stretch _HSV"
-
-msgid "<Image>/Filters/Distorts/_Blinds..."
-msgstr "<Image>/Filters/Distorts/_Blinds..."
-
-msgid "<Image>/Filters/Map/_Bump Map..."
-msgstr "<Image>/Filters/Map/_Bump Map..."
-
-msgid "<Image>/Layer/Colors/Auto/_Stretch Contrast"
-msgstr "<Image>/Layer/Colors/Auto/_Stretch Contrast"
-
-msgid "<Image>/Filters/Colors/Channel Mi_xer.."
-msgstr "<Image>/Filters/Colors/Channel Mi_xer.."
-
-msgid "<Image>/Filters/Render/Pattern/_Checkerboard..."
-msgstr "<Image>/Filters/Render/Pattern/_Checkerboard..."
-
-msgid "<Image>/Layer/Colors/Auto/_Color Enhance"
-msgstr "<Image>/Layer/Colors/Auto/_Color Enhance"
-
-msgid "<Image>/Filters/Colors/_Colorify..."
-msgstr "<Image>/Filters/Colors/_Colorify..."
-
-msgid "<Image>/Filters/Colors/Color to _Alpha..."
-msgstr "<Image>/Filters/Colors/Color to _Alpha..."
-
-msgid "<Image>/Filters/Colors/C_ompose..."
-msgstr "<Image>/Filters/Colors/C_ompose..."
-
-msgid "<Image>/Filters/Distorts/_Curve Bend..."
-msgstr "<Image>/Filters/Distorts/_Curve Bend..."
-
-msgid "<Image>/Filters/Colors/_Decompose..."
-msgstr "<Image>/Filters/Colors/_Decompose..."
-
-msgid "<Image>/Filters/Enhance/_Deinterlace..."
-msgstr "<Image>/Filters/Enhance/_Deinterlace..."
-
-msgid "<Image>/Filters/Combine/_Depth Merge..."
-msgstr "<Image>/Filters/Combine/_Depth Merge..."
-
-msgid "<Image>/Filters/Enhance/Des_peckle..."
-msgstr "<Image>/Filters/Enhance/Des_peckle..."
-
-msgid "<Image>/Filters/Enhance/Des_tripe..."
-msgstr "<Image>/Filters/Enhance/Des_tripe..."
-
-msgid "<Image>/Filters/Map/_Displace..."
-msgstr "<Image>/Filters/Map/_Displace..."
-
-msgid "<Image>/Filters/Edge-Detect/_Edge..."
-msgstr "<Image>/Filters/Edge-Detect/_Edge..."
-
-msgid "<Image>/Filters/Distorts/_Emboss..."
-msgstr "<Image>/Filters/Distorts/_Emboss..."
-
-msgid "<Image>/Filters/Distorts/En_grave..."
-msgstr "<Image>/Filters/Distorts/En_grave..."
-
-msgid "<Image>/Filters/Colors/Map/_Color Exchange..."
-msgstr "<Image>/Filters/Colors/Map/_Color Exchange..."
-
-msgid "_Selection"
-msgstr "VùngPhần _chọn"
-
-msgid "<Image>/Filters/Light Effects/_FlareFX..."
-msgstr "<Image>/Filters/Light Effects/_FlareFX..."
-
-msgid "<Image>/Filters/Map/_Fractal Trace..."
-msgstr "<Image>/Filters/Map/_Fractal Trace..."
-
-msgid "<Image>/Filters/Toys/Gee-_Slime"
-msgstr "<Image>/Filters/Toys/Gee-_Slime"
-
-msgid "Icon Name:"
-msgstr "Tên biểu thượng:"
-
-msgid "Milliseconds"
-msgstr "Mili giây"
-
-msgid "<Image>/Filters/Render/Pattern/_Qbist..."
-msgstr "<Image>/Filters/Render/Pattern/_Qbist..."
-
-msgid "<Image>/Filters/Colors/Map/_Gradient Map"
-msgstr "<Image>/Filters/Colors/Map/_Gradient Map"
-
-msgid "<Image>/Filters/Render/Pattern/_Grid..."
-msgstr "<Image>/Filters/Render/Pattern/_Grid..."
-
-msgid "<Image>/Filters/Map/_Illusion..."
-msgstr "<Image>/Filters/Map/_Illusion..."
-
-msgid "<Image>/Filters/Distorts/_IWarp..."
-msgstr "<Image>/Filters/Distorts/_IWarp..."
-
-msgid "<Image>/Filters/Render/Pattern/_Jigsaw..."
-msgstr "<Image>/Filters/Render/Pattern/_Jigsaw..."
-
-msgid "Image comments"
-msgstr "Ghi chú ảnh"
-
-msgid "<Image>/Filters/Map/_Van Gogh (LIC)..."
-msgstr "<Image>/Filters/Map/_Van Gogh (LIC)..."
-
-msgid "<Image>/Filters/Colors/Map/Adjust _FG-BG"
-msgstr "<Image>/Filters/Colors/Map/Adjust _FG-BG"
-
-msgid "<Image>/Filters/Blur/_Motion Blur..."
-msgstr "<Image>/Filters/Blur/_Motion Blur..."
-
-msgid "<Image>/Filters/Distorts/_Mosaic..."
-msgstr "<Image>/Filters/Distorts/_Mosaic..."
-
-msgid "<Image>/Filters/Distorts/Newsprin_t..."
-msgstr "<Image>/Filters/Distorts/Newsprin_t..."
-
-msgid "<Image>/Filters/Enhance/_NL Filter..."
-msgstr "<Image>/Filters/Enhance/_NL Filter..."
-
-msgid "<Image>/Filters/Noise/_Noisify..."
-msgstr "<Image>/Filters/Noise/_Noisify..."
-
-msgid "<Image>/Filters/Light Effects/Su_perNova..."
-msgstr "<Image>/Filters/Light Effects/Su_perNova..."
-
-msgid "<Image>/Filters/Artistic/Oili_fy..."
-msgstr "<Image>/Filters/Artistic/Oili_fy..."
-
-msgid "<Image>/Filters/Map/_Paper Tile..."
-msgstr "<Image>/Filters/Map/_Paper Tile..."
-
-msgid "<Image>/Filters/Blur/_Pixelize..."
-msgstr "<Image>/Filters/Blur/_Pixelize..."
-
-msgid "<Toolbox>/Xtns/_Plugin Details"
-msgstr "<Toolbox>/Xtns/_Plugin Details"
-
-msgid "<Image>/Filters/Distorts/P_olar Coords..."
-msgstr "<Image>/Filters/Distorts/P_olar Coords..."
-
-msgid "_X-Offset:"
-msgstr "Hiệu số _X:"
-
-msgid "_Y-Offset:"
-msgstr "Hiệu số _Y:"
-
-msgid "<Image>/Filters/Noise/_Hurl..."
-msgstr "<Image>/Filters/Noise/_Hurl..."
-
-msgid "<Image>/Filters/Noise/_Pick..."
-msgstr "<Image>/Filters/Noise/_Pick..."
-
-msgid "<Image>/Filters/Distorts/_Ripple..."
-msgstr "<Image>/Filters/Distorts/_Ripple..."
-
-msgid "<Image>/Filters/Colors/Map/_Sample Colorize..."
-msgstr "<Image>/Filters/Colors/Map/_Sample Colorize..."
-
-msgid "<Image>/Filters/Noise/S_catter HSV..."
-msgstr "<Image>/Filters/Noise/S_catter HSV..."
-
-msgid "<Toolbox>/File/Acquire/_Screen Shot..."
-msgstr "<Toolbox>/File/Acquire/_Screen Shot..."
-
-msgid "<Image>/Filters/Colors/_Semi-Flatten"
-msgstr "<Image>/Filters/Colors/_Semi-Flatten"
-
-msgid "<Image>/Filters/Distorts/_Shift..."
-msgstr "<Image>/Filters/Distorts/_Shift..."
-
-msgid "<Image>/Filters/Render/Pattern/_Sinus..."
-msgstr "<Image>/Filters/Render/Pattern/_Sinus..."
-
-msgid "<Image>/Filters/Render/Clouds/_Solid Noise..."
-msgstr "<Image>/Filters/Render/Clouds/_Solid Noise..."
-
-msgid "<Image>/Filters/Edge-Detect/_Sobel..."
-msgstr "<Image>/Filters/Edge-Detect/_Sobel..."
-
-msgid "<Image>/Filters/Light Effects/_Sparkle..."
-msgstr "<Image>/Filters/Light Effects/_Sparkle..."
-
-msgid "<Image>/Filters/Noise/Sp_read..."
-msgstr "<Image>/Filters/Noise/Sp_read..."
-
-msgid "<Image>/Filters/Artistic/_Apply Canvas..."
-msgstr "<Image>/Filters/Artistic/_Apply Canvas..."
-
-msgid "Open SVG"
-msgstr "Mở SVG"
-
-msgid "Ratio _X:"
-msgstr "Tỷ số _X:"
-
-msgid "<Image>/Filters/Map/_Tile..."
-msgstr "<Image>/Filters/Map/_Tile..."
-
-msgid "<Image>/Filters/Map/_Make Seamless"
-msgstr "<Image>/Filters/Map/_Make Seamless"
-
-msgid "<Image>/Filters/Enhance/_Unsharp Mask..."
-msgstr "<Image>/Filters/Enhance/_Unsharp Mask..."
-
-msgid "<Image>/Filters/Distorts/Vi_deo..."
-msgstr "<Image>/Filters/Distorts/Vi_deo..."
-
-msgid "<Image>/Filters/Colors/_Value Invert"
-msgstr "<Image>/Filters/Colors/_Value Invert"
-
-msgid "<Image>/Filters/Distorts/_Value Propagate..."
-msgstr "<Image>/Filters/Distorts/_Value Propagate..."
-
-msgid "<Image>/Filters/Generic/_Dilate"
-msgstr "<Image>/Filters/Generic/_Dilate"
-
-msgid "Secondary Options"
-msgstr "Tùy chọn phụgửi"
-
-msgid "<Image>/Filters/Distorts/_Waves..."
-msgstr "<Image>/Filters/Distorts/_Waves..."
-
-msgid "<Toolbox>/Xtns/_DB Browser"
-msgstr "<Toolbox>/Xtns/_DB Browser"
-
-msgid "<Image>/Filters/Colors/_Filter Pack..."
-msgstr "<Image>/Filters/Colors/_Filter Pack..."
-
-msgid "Lighter And Darker"
-msgstr "Nhạt hơn và đậm hơn"
-
-msgid "Miscellaneous Options"
-msgstr "TCác tùy lặt vặt khác"
-
-msgid "none"
-msgstr "không có"
-
-msgid "Not found \"%s\": used \"%s\" instead"
-msgstr "Không thấy « %s » nên đã dùng « %s » để thay thế"
-
-msgid "Brush Preview:"
-msgstr "Xem thử bút vẽ:"
-
-msgid "<Image>/Filters/Artistic/_GIMPressionist..."
-msgstr "<Image>/Filters/Artistic/_GIMPressionist..."
-
-msgid "Paper Preview:"
-msgstr "Xem thử giấy:lớn"
-
-msgid "<Image>/Filters/Render/Nature/Ifs_Compose..."
-msgstr "<Image>/Filters/Render/Nature/Ifs_Compose..."
-
-msgid "lpeek.mrijk@consunet.nl"
-msgstr "lpeek.mrijk@consunet.nl"
-
-msgid "Selection is %dx%d"
-msgstr "VùngPhần  làh%d × %dọn: "
-
-msgid "<Image>/Filters/Distorts/_Pagecurl..."
-msgstr "<Image>/Filters/Distorts/_Pagecurl..."
-
-msgid "<Image>/File/_Print..."
-msgstr "<Image>/File/_Print..."
-
-msgid "<Image>/Filters/Colors/Map/Colormap _Rotation..."
-msgstr "<Image>/Filters/Colors/Map/Colormap _Rotation..."
-
-msgid "What is Gray?"
-msgstr "Màu xám là gì?tĩnh"
-
-msgid "Main"
-msgstr "Chính"
-
-msgid "Misc"
-msgstr "Lặt vặt"
-
-msgid "M_inimum Height:"
-msgstr "Độ cao tối th_iểu :"
-
-msgid "Auto_stretch to Fit Value Range"
-msgstr "Tự động _kéo giãn để vừa phạm vị giá trị"
-
-msgid "Fit into value range"
-msgstr "Vừa phạm vị giá trị"
-
-msgid ""
-"Failed to open help files:\n"
-"%s"
-msgstr "Lỗi mở tập tin trợ giúp:\n"
-"%s"
-
-msgid "About..."
-msgstr "Giới thiệu..."
-
-msgid "Image dimensions: %dx%d"
-msgstr "Ccác chiều ảnh: %d × %d"
-
-msgid ""
-"Can't open '%s':\n"
-"%s"
-msgstr "Không thể mở « %s »:\n"
-"%s"
-
-msgid "Cannot operate on unknown image types or alpha images"
-msgstr "Không thể thao tác các kiểu ảnh lạ hay ảnh anfa"
-
-msgid "Not enough memory to allocate buffers for optimization.\n"
-msgstr "Không đủ bộ nhớ để cấp phát bộ đệm để tối ưu hóa.\n"
-
-msgid "Width: "
-msgstr "Rộng:"
-
-msgid "Spacing: "
-msgstr "Khoảng cách:"
-
-msgid "Offset: "
-msgstr "Hiệu số :"
-
-msgid ""
-"'%s':\n"
-"PNG error. File corrupted?"
-msgstr "%s\n"
-"Lỗi PNG. Tập tin bị hỏng không?"
-
-msgid ""
-"'%s':\n"
-"Unknown PNG color model"
-msgstr "« %s »:\n"
-"Mô hình màu PNG lạ"
-
-msgid ""
-"'%s':\n"
-"PNG error. Couldn't save image"
-msgstr "« %s »:\n"
-"Lỗi PNG nên không thể lưu ảnh"
-
-msgid "_after"
-msgstr "_sau (khi)"
-
-msgid "Can't open file as XWD file"
-msgstr "Không thể mở tập tin trong khuôn dạng tập tin XWD"
-
-msgid "cannot operate on unknown image types"
-msgstr "không thể thao tác kiểu ảnh lạ"
-
-msgid "Can't open '%s': %s"
-msgstr "Không thể mở « %s »: %s"
-
-msgid "untitled"
-msgstr "chưa tên"
-
-msgid "Load failed"
-msgstr "Việc tải bị lỗi"
-
-msgid "Load IFS file"
-msgstr "Tải tập tin IFS"
-
-msgid "Help"
-msgstr "Trợ giúp"
-
-msgid "Can't open (write): %s"
-msgstr "Không thể mở (ghi): %s"
-
-msgid "xjt: cannot operate on unknown image types"
-msgstr "xjt: cannot operate on unknown image types"
-
-msgid "Can't open: %s"
-msgstr "Không thể mở : %s"
-
-msgid "Can't open (read): %s"
-msgstr "Không thể mở (đọc): %s"
-
-msgid "** From GRADIENT **"
-msgstr "•• Từ ĐỘ DỐC ••"
-
-msgid "Click here to load your file"
-msgstr "Nhấn vào đây để tải tập tin của bạn"
-
-msgid "Click here to cancel load procedure"
-msgstr "Nhấn vào đây để thôi thủ tục tải"
-
-msgid "Click here to save your file"
-msgstr "Nhấn vào đây để lưu tập tin của bạn"
-
-msgid "Click here to cancel save procedure"
-msgstr "Nhấn vào đây để để thôi thủ tục lưu"
-
-msgid "<Image>/Filters/Render/_Sinus..."
-msgstr "<Image>/Filters/Render/_Sinus..."
-
-msgid "<Toolbox>/Xtns/Web Browser/Open URL..."
-msgstr "<Toolbox>/Mở rộng/Trình duyệt Mạng/Mở địa chỉ Mạng..."
-
-msgid "Open URL"
-msgstr "Mở địa chỉ Mạng"
-
-msgid "URL:"
-msgstr "URL:"
-
-msgid "Window:"
-msgstr "Cửa sổ :"
-
-msgid "Current"
-msgstr "Hiện có"
-
-msgid "Can't open bzip2ed file without a sensible extension"
-msgstr "Không thể mở tập tin nén bzip2 không kèm theo phần mở rộng hữu ích"
-
-msgid ""
-"GIMP Help Browser Error.\n"
-"\n"
-"Couldn't find GIMP_HELP_ROOT html directory.\n"
-"(%s)"
-msgstr "Lỗi trình duyệt trợ giúp GIMP.\n"
-"\n"
-"Không thể tìm thư mục HTML của « GIMP_HELP_ROOT » (gốc trợ giúp GIMP).\n"
-"(%s)"
-
-msgid "<Image>/Select/To Path"
-msgstr "<Image>/Select/To Path"
-
-msgid "Error reading GFlare folder '%s'"
-msgstr "Gặp lỗi khi đọc thư mục GFlare « %s »"
-
-msgid "Could not save."
-msgstr "Không lưu được."
-
-msgid "Failed to write file\n"
-msgstr "Lỗi ghi vào tập tin\n"
-
-msgid "%s: can't open \"%s\""
-msgstr "%s: không mở được « %s »"
-
-msgid "Can't open %s"
-msgstr "Không mở được %s"
-
-msgid ""
-"%s\n"
-"is not present or is unreadable"
-msgstr "%s\n"
-"không có, hoặc không đọc được"
-
-msgid ""
-"CEL Couldn't write image to\n"
-"%s"
-msgstr "CEL Không thể ghi ảnh vào\n"
-"%s"
-
-msgid "Error: could not open \"%s\""
-msgstr "Lỗi: không thể mở « %s »"
-
-msgid "Unable to open %s"
-msgstr "Không thể mở %s"
-
-msgid "GIF: can't open %s\n"
-msgstr "GIF: không mở được %s\n"
-
-msgid "can't open \"%s\"\n"
-msgstr "không mở được « %s »\n"
-
-msgid "PNM: Can't open file %s."
-msgstr "PNM: Không mở được tập tin %s."
-
-msgid "Interpreting and Loading %s:"
-msgstr "Đang giải dịch và tải %s:"
-
-msgid "PS: can't open file for writing"
-msgstr "PS: không thể mở tập tin để ghi"
-
-msgid "TGA: can't open \"%s\"\n"
-msgstr "TGA: không mở được « %s »\n"
-
-msgid "TIFF: Can't open '%s'"
-msgstr "TIFF: không mở được « %s »"
-
-msgid "XBM: cannot open \"%s\"\n"
-msgstr "XBM: không mở được « %s »\n"
-
-msgid "XBM: cannot create \"%s\"\n"
-msgstr "XBM: không tạo được « %s »\n"
-
-msgid "can't open file for reading"
-msgstr "không mở được tập tin để đọc"
-
-msgid "can't get memory for colormap"
-msgstr "không thể lấy bộ nhớ cho ánh xạ màu"
-
-msgid "can't open file for writing"
-msgstr "Không thể mở tập tin để ghi"
-
-msgid "Error in creating layer"
-msgstr "Gặp lỗi khi tạo lớp"
-
-msgid "FLI: Can't open \"%s\""
-msgstr "FLI: không mở được « %s »"
-
-msgid "Add >>"
-msgstr "Thêm →"
-
-msgid "Remove"
-msgstr "Gỡ bỏ"
-
-msgid ""
-"C_reate\n"
-"New Image"
-msgstr "_Tạo\n"
-"Ảnh mới"
-
-msgid "Load"
-msgstr "Tải"
-
-msgid "Loading MPEG movie..."
-msgstr "Đang tải phím MPEG..."
