@@ -1,3 +1,11 @@
+2006-01-11  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/plug_in.pdb (plugin_menu_register): warn if a
+	plug-in attempts to register a menu path for a procedure that it
+	didn't install.
+
+	* app/pdb/plug_in_cmds.c: regenerated.
+
 2006-01-07  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpdialog.c: implement GtkWidget::hide() and set

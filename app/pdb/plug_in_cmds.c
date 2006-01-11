@@ -412,13 +412,13 @@ plugin_menu_register_invoker (Gimp         *gimp,
                 }
               else
                 {
-                  g_message ("Plug-In \"%s\"\n(%s)\n\n"
-                             "attempted to install additional menu_path \"%s\"\n"
+                  g_message ("Plug-in \"%s\"\n(%s)\n\n"
+                             "attempted to register the menu item \"%s\" "
                              "for procedure \"%s\".\n"
-                             "However the menu_path given in "
-                             "gimp_install_procedure() already contained "
-                             "a path. To make this work, pass just the menu's "
-                             "label to gimp_install_procedure().",
+                             "The menu label given in gimp_install_procedure() "
+                             "already contained a path.  To make this work, "
+                             "pass just the menu's label to "
+                             "gimp_install_procedure().",
                              gimp_filename_to_utf8 (gimp->current_plug_in->name),
                              gimp_filename_to_utf8 (gimp->current_plug_in->prog),
                              menu_path, canonical);
@@ -427,7 +427,18 @@ plugin_menu_register_invoker (Gimp         *gimp,
                 }
             }
           else
-            success = FALSE;
+            {
+              g_message ("Plug-in \"%s\"\n(%s)\n\n"
+                         "attempted to register the menu item \"%s\" "
+                         "for the procedure \"%s\"\n."
+                         "It has however not installed that procedure.  This "
+                         "is not allowed.",
+                         gimp_filename_to_utf8 (gimp->current_plug_in->name),
+                         gimp_filename_to_utf8 (gimp->current_plug_in->prog),
+                         menu_path, canonical);
+
+              success = FALSE;
+            }
 
           g_free (canonical);
         }
