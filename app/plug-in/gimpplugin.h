@@ -108,5 +108,9 @@ void              plug_in_main_loop_quit  (PlugIn       *plug_in);
 
 gchar           * plug_in_get_undo_desc   (PlugIn       *plug_in);
 
+gboolean          plug_in_menu_register   (PlugIn       *plug_in,
+                                           const gchar  *proc_name,
+                                           const gchar  *menu_path);
+
 
 #endif /* __PLUG_IN_H__ */

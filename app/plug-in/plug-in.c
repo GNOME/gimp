@@ -1000,3 +1000,97 @@ plug_in_get_undo_desc (PlugIn *plug_in)
 
   return undo_desc;
 }
+
+/*  called from the PDB (gimp_plugin_menu_register)  */
+gboolean
+plug_in_menu_register (PlugIn      *plug_in,
+                       const gchar *proc_name,
+                       const gchar *menu_path)
+{
+  PlugInProcDef *proc_def = NULL;
+  GError        *error    = NULL;
+
+  g_return_val_if_fail (plug_in != NULL, FALSE);
+  g_return_val_if_fail (proc_name != NULL, FALSE);
+  g_return_val_if_fail (menu_path != NULL, FALSE);
+
+  if (plug_in->plug_in_def)
+    proc_def = plug_in_proc_def_find (plug_in->plug_in_def->proc_defs,
+                                      proc_name);
+
+  if (! proc_def)
+    proc_def = plug_in_proc_def_find (plug_in->temp_proc_defs,
+                                      proc_name);
+
+  if (! proc_def)
+    {
+      g_message ("Plug-in \"%s\"\n(%s)\n"
+                 "attempted to register the menu item \"%s\" "
+                 "for the procedure \"%s\".\n"
+                 "It has however not installed that procedure.  This "
+                 "is not allowed.",
+                 gimp_filename_to_utf8 (plug_in->name),
+                 gimp_filename_to_utf8 (plug_in->prog),
+                 menu_path, proc_name);
+
+      return FALSE;
+    }
+
+  if (! proc_def->menu_label)
+    {
+      g_message ("Plug-in \"%s\"\n(%s)\n"
+                 "attempted to register the menu item \"%s\" "
+                 "for procedure \"%s\".\n"
+                 "The menu label given in gimp_install_procedure() "
+                 "already contained a path.  To make this work, "
+                 "pass just the menu's label to "
+                 "gimp_install_procedure().",
+                 gimp_filename_to_utf8 (plug_in->name),
+                 gimp_filename_to_utf8 (plug_in->prog),
+                 menu_path, proc_name);
+
+      return FALSE;
+    }
+
+  if (! plug_in_proc_args_check (plug_in->name,
+                                 plug_in->prog,
+                                 proc_name,
+                                 menu_path,
+                                 proc_def->db_info.args,
+                                 proc_def->db_info.num_args,
+                                 proc_def->db_info.values,
+                                 proc_def->db_info.num_values,
+                                 &error))
+    {
+      g_message (error->message);
+      g_clear_error (&error);
+
+      return FALSE;
+    }
+
+  switch (proc_def->db_info.proc_type)
+    {
+    case GIMP_INTERNAL:
+      return FALSE;
+
+    case GIMP_PLUGIN:
+    case GIMP_EXTENSION:
+      if (! plug_in->query && ! plug_in->init)
+        return FALSE;
+
+    case GIMP_TEMPORARY:
+      break;
+    }
+
+  proc_def->menu_paths = g_list_append (proc_def->menu_paths,
+                                        g_strdup (menu_path));
+
+  if (proc_def->db_info.proc_type == GIMP_TEMPORARY
+      && ! plug_in->gimp->no_interface)
+    {
+      gimp_menus_create_item (plug_in->gimp, proc_def, menu_path);
+    }
+
+  return TRUE;
+}
+

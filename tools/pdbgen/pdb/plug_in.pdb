@@ -180,106 +180,16 @@ HELP
 {
   if (gimp->current_plug_in)
     {
-      PlugInProcDef *proc_def = NULL;
-      gchar         *canonical;
+      gchar *canonical = gimp_canonicalize_identifier (procedure_name);
 
-      canonical = gimp_canonicalize_identifier (procedure_name);
-
-      if (gimp->current_plug_in->plug_in_def)
-        proc_def = plug_in_proc_def_find (gimp->current_plug_in->plug_in_def->proc_defs,
-                                          canonical);
-
-      if (! proc_def)
-        proc_def = plug_in_proc_def_find (gimp->current_plug_in->temp_proc_defs,
-                                          canonical);
-
-      if (proc_def)
-        {
-          if (proc_def->menu_label)
-            {
-              GError *error = NULL;
-
-              if (! plug_in_proc_args_check (gimp->current_plug_in->name,
-                                             gimp->current_plug_in->prog,
-                                             canonical,
-                                             menu_path,
-                                             proc_def->db_info.args,
-                                             proc_def->db_info.num_args,
-                                             proc_def->db_info.values,
-                                             proc_def->db_info.num_values,
-                                             &error))
-                {
-                  g_message (error->message);
-                  g_clear_error (&error);
-
-                  success = FALSE;
-                }
-              else
-                {
-                  switch (proc_def->db_info.proc_type)
-                    {
-                    case GIMP_INTERNAL:
-                      success = FALSE;
-                      break;
-
-                    case GIMP_PLUGIN:
-                    case GIMP_EXTENSION:
-                      if (! gimp->current_plug_in->query &&
-                          ! gimp->current_plug_in->init)
-                        success = FALSE;
-                      break;
-
-                    case GIMP_TEMPORARY:
-                      break;
-                    }
-
-                  if (success)
-                    {
-                      proc_def->menu_paths = g_list_append (proc_def->menu_paths,
-                                                            g_strdup (menu_path));
-
-                      if (! gimp->no_interface &&
-                          proc_def->db_info.proc_type == GIMP_TEMPORARY)
-                        {
-                          gimp_menus_create_item (gimp, proc_def, menu_path);
-                        }
-                    }
-                }
-            }
-          else
-            {
-	      g_message ("Plug-in \"%s\"\n(%s)\n\n"
-			 "attempted to register the menu item \"%s\" "
-			 "for procedure \"%s\".\n"
-			 "The menu label given in gimp_install_procedure() "
-			 "already contained a path.  To make this work, "
-			 "pass just the menu's label to "
-			 "gimp_install_procedure().",
-			 gimp_filename_to_utf8 (gimp->current_plug_in->name),
-			 gimp_filename_to_utf8 (gimp->current_plug_in->prog),
-			 menu_path, canonical);
-
-              success = FALSE;
-            }
-        }
-      else
-        {
-	  g_message ("Plug-in \"%s\"\n(%s)\n\n"
-		     "attempted to register the menu item \"%s\" "
-		     "for the procedure \"%s\"\n."
-		     "It has however not installed that procedure.  This "
-		     "is not allowed.",
-		     gimp_filename_to_utf8 (gimp->current_plug_in->name),
-		     gimp_filename_to_utf8 (gimp->current_plug_in->prog),
-		     menu_path, canonical);
-
-	  success = FALSE;
-	}
-
+      success = plug_in_menu_register (gimp->current_plug_in,
+				       canonical, menu_path);
       g_free (canonical);
     }
   else
-    success = FALSE;
+    {
+      success = FALSE;
+    }
 }
 CODE
     );

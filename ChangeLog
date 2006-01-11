@@ -1,5 +1,13 @@
 2006-01-11  Sven Neumann  <sven@gimp.org>
 
+	* app/plug-in/plug-in.[ch]
+	* tools/pdbgen/pdb/plug_in.pdb: moved code from the PDB wrapper to
+	a utility function in the core.
+
+	* app/pdb/plug_in_cmds.c: regenerated.
+
+2006-01-11  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/pdb/plug_in.pdb (plugin_menu_register): warn if a
 	plug-in attempts to register a menu path for a procedure that it
 	didn't install.
