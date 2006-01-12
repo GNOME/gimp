@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimplut.c: Copyright (C) 1999 Jay Cox <jaycox@earthlink.net>
+ * gimplut.c: Copyright (C) 1999 Jay Cox <jaycox@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

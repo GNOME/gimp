@@ -89,7 +89,7 @@ static const GimpModuleInfo cdisplay_contrast_info =
 {
   GIMP_MODULE_ABI_VERSION,
   N_("High Contrast color display filter"),
-  "Jay Cox <jaycox@earthlink.net>",
+  "Jay Cox <jaycox@gimp.org>",
   "v0.2",
   "(c) 2000, released under the GPL",
   "October 14, 2000"
