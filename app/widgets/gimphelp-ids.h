@@ -423,8 +423,8 @@
 #define GIMP_HELP_INDEXED_PALETTE_EDIT            "gimp-indexed-palette-edit"
 #define GIMP_HELP_INDEXED_PALETTE_ADD             "gimp-indexed-palette-add"
 
-#define GIMP_HELP_CURSOR_INFO_DIALOG              "gimp-cursor-info-dialog"
-#define GIMP_HELP_CURSOR_INFO_SAMPLE_MERGED       "gimp-cursor-info-sample-merged"
+#define GIMP_HELP_POINTER_INFO_DIALOG             "gimp-pointer-info-dialog"
+#define GIMP_HELP_POINTER_INFO_SAMPLE_MERGED      "gimp-pointer-info-sample-merged"
 
 #define GIMP_HELP_SAMPLE_POINT_DIALOG             "gimp-sample-point-dialog"
 #define GIMP_HELP_SAMPLE_POINT_SAMPLE_MERGED      "gimp-sample-point-sample-merged"

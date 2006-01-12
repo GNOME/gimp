@@ -232,10 +232,11 @@ Basic GIMP enumeration data types.
 @GIMP_PDB_DRAWABLE: 
 @GIMP_PDB_SELECTION: 
 @GIMP_PDB_BOUNDARY: 
-@GIMP_PDB_PATH: 
+@GIMP_PDB_VECTORS: 
 @GIMP_PDB_PARASITE: 
 @GIMP_PDB_STATUS: 
 @GIMP_PDB_END: 
+@GIMP_PDB_PATH: 
 
 <!-- ##### ENUM GimpPDBProcType ##### -->
 <para>

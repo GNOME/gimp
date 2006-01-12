@@ -37,8 +37,8 @@
 static GimpActionEntry cursor_info_actions[] =
 {
   { "cursor-info-popup", GIMP_STOCK_CURSOR,
-    N_("Cursor Info Menu"), NULL, NULL, NULL,
-    GIMP_HELP_CURSOR_INFO_DIALOG }
+    N_("Pointer Information Menu"), NULL, NULL, NULL,
+    GIMP_HELP_POINTER_INFO_DIALOG }
 };
 
 static GimpToggleActionEntry cursor_info_toggle_actions[] =
@@ -48,7 +48,7 @@ static GimpToggleActionEntry cursor_info_toggle_actions[] =
     N_("Sample Merged"),
     G_CALLBACK (cursor_info_sample_merged_cmd_callback),
     TRUE,
-    GIMP_HELP_CURSOR_INFO_SAMPLE_MERGED }
+    GIMP_HELP_POINTER_INFO_SAMPLE_MERGED }
 };
 
 

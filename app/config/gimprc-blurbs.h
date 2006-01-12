@@ -33,14 +33,14 @@ N_("Sets the canvas padding color used if the padding mode is set to " \
 N_("Ask for confirmation before closing an image without saving.")
 
 #define CURSOR_FORMAT_BLURB \
-N_("Sets the pixel format of cursors the GIMP will use.")
+N_("Sets the pixel format to use for mouse pointers.")
 
 #define CURSOR_MODE_BLURB \
-N_("Sets the mode of cursor the GIMP will use.")
+N_("Sets the type of mouse pointers to use.")
 
 #define CURSOR_UPDATING_BLURB \
-N_("Context-dependent cursors are cool.  They are enabled by default. " \
-   "However, they require overhead that you may want to do without.")
+N_("Context-dependent mouse pointers are helpful.  They are enabled by " \
+   "default.  However, they require overhead that you may want to do without.")
 
 #define DEFAULT_BRUSH_BLURB \
 "Specify a default brush.  The brush is searched for in the " \
@@ -288,7 +288,7 @@ N_("When enabled, dialogs will show a help button that gives access to " \
    "be reached by pressing F1.")
 
 #define SHOW_PAINT_TOOL_CURSOR_BLURB \
-N_("When enabled, the cursor will be shown over the image while " \
+N_("When enabled, the mouse pointer will be shown over the image while " \
     "using a paint tool.")
 
 #define SHOW_MENUBAR_BLURB \

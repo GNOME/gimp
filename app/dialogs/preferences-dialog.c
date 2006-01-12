@@ -1838,24 +1838,24 @@ prefs_dialog_new (Gimp       *gimp,
                                _("Initial zoom _ratio:"),
                                GTK_TABLE (table), 0, size_group);
 
-  /*  Mouse Cursors  */
-  vbox2 = prefs_frame_new (_("Mouse Cursors"),
+  /*  Mouse Pointers  */
+  vbox2 = prefs_frame_new (_("Mouse Pointers"),
                            GTK_CONTAINER (vbox), FALSE);
 
   prefs_check_button_add (object, "show-brush-outline",
                           _("Show _brush outline"),
                           GTK_BOX (vbox2));
   prefs_check_button_add (object, "show-paint-tool-cursor",
-                          _("Show paint _tool cursor"),
+                          _("Show pointer for paint _tools"),
                           GTK_BOX (vbox2));
 
   table = prefs_table_new (2, GTK_CONTAINER (vbox2));
 
   prefs_enum_combo_box_add (object, "cursor-mode", 0, 0,
-                            _("Cursor _mode:"),
+                            _("Pointer _mode:"),
                             GTK_TABLE (table), 0, size_group);
   prefs_enum_combo_box_add (object, "cursor-format", 0, 0,
-                            _("Cursor re_ndering:"),
+                            _("Pointer re_ndering:"),
                             GTK_TABLE (table), 1, size_group);
 
   g_object_unref (size_group);

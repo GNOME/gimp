@@ -1,3 +1,14 @@
+2006-01-12  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/actions.c
+	* app/actions/cursor-info-actions.c
+	* app/actions/dialogs-actions.c
+	* app/config/gimprc-blurbs.h
+	* app/dialogs/dialogs.c
+	* app/dialogs/preferences-dialog.c
+	* app/widgets/gimphelp-ids.h: use the term Pointer instead of
+	Cursor when refering to the mouse pointer (bug #326700).
+
 2006-01-11  Sven Neumann  <sven@gimp.org>
 
 	* app/plug-in/plug-in.[ch]

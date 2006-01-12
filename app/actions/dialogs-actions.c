@@ -112,9 +112,9 @@ GimpStringActionEntry dialogs_dockable_actions[] =
     GIMP_HELP_UNDO_DIALOG },
 
   { "dialogs-cursor", GIMP_STOCK_CURSOR,
-    N_("_Cursor"), NULL, N_("Cursor Info"),
+    N_("Pointer"), NULL, N_("Pointer Info"),
     "gimp-cursor-view",
-    GIMP_HELP_CURSOR_INFO_DIALOG },
+    GIMP_HELP_POINTER_INFO_DIALOG },
 
   { "dialogs-sample-points", GIMP_STOCK_SAMPLE_POINT,
     N_("_Sample Points"), NULL, N_("Sample Points"),

@@ -113,7 +113,7 @@ static GimpActionFactoryEntry action_groups[] =
   { "context", N_("Context"), NULL,
     context_actions_setup,
     context_actions_update },
-  { "cursor-info", N_("Cursor Info"), NULL,
+  { "cursor-info", N_("Pointer Information"), NULL,
     cursor_info_actions_setup,
     cursor_info_actions_update },
   { "debug", N_("Debug"), NULL,
