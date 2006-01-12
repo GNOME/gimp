@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * SuperNova plug-in
+ * Supernova plug-in
  * Copyright (C) 1997 Eiichi Takamori <taka@ma1.seikyou.ne.jp>,
  *                    Spencer Kimball, Federico Mena Quintero
  *
@@ -173,7 +173,7 @@ query (void)
                           "Eiichi Takamori",
                           "Eiichi Takamori",
                           "May 2000",
-                          N_("Su_perNova..."),
+                          N_("Su_pernova..."),
                           "RGB*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
@@ -257,7 +257,7 @@ run (const gchar      *name,
       if (gimp_drawable_is_rgb (drawable->drawable_id) ||
           gimp_drawable_is_gray (drawable->drawable_id))
         {
-          gimp_progress_init (_("Rendering SuperNova"));
+          gimp_progress_init (_("Rendering supernova"));
           gimp_tile_cache_ntiles (2 *
                                   (drawable->width / gimp_tile_width () + 1));
 
@@ -300,7 +300,7 @@ nova_dialog (GimpDrawable *drawable)
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("SuperNova"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Supernova"), PLUG_IN_BINARY,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 
@@ -344,7 +344,7 @@ nova_dialog (GimpDrawable *drawable)
   /* Color */
   if (gimp_drawable_is_rgb (drawable->drawable_id))
     {
-      button = gimp_color_button_new (_("SuperNova Color Picker"),
+      button = gimp_color_button_new (_("Supernova Color Picker"),
                                       SCALE_WIDTH - 8, 16,
                                       &pvals.color, GIMP_COLOR_AREA_FLAT);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
@@ -440,7 +440,7 @@ nova_center_create (GimpDrawable *drawable,
   center->oldx         = 0;
   center->oldy         = 0;
 
-  frame = gimp_frame_new (_("Center of SuperNova"));
+  frame = gimp_frame_new (_("Center of Nova"));
 
   g_signal_connect_swapped (frame, "destroy",
                             G_CALLBACK (g_free),
@@ -474,7 +474,7 @@ nova_center_create (GimpDrawable *drawable,
                     G_CALLBACK (nova_center_coords_update),
                     center);
 
-  check = gtk_check_button_new_with_mnemonic (_("S_how cursor"));
+  check = gtk_check_button_new_with_mnemonic (_("Show _position"));
   gtk_table_attach (GTK_TABLE (center->coords), check, 0, 5, 2, 3,
                     GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check), show_cursor);

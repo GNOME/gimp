@@ -1,5 +1,13 @@
 2006-01-12  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/flarefx.c: renamed to "Lens Flare", don't use
+	the term "Cursor" incorrectly (bug #326700).
+
+	* plug-ins/common/nova.c: renamed to "Supernova", don't use the
+	term "Cursor" incorrectly (bug #326700).
+
+2006-01-12  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/actions.c
 	* app/actions/cursor-info-actions.c
 	* app/actions/dialogs-actions.c

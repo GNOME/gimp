@@ -192,7 +192,7 @@ query (void)
                           "Karl-Johan Andersson", /* Author */
                           "Karl-Johan Andersson", /* Copyright */
                           "May 2000",
-                          N_("_FlareFX..."),
+                          N_("Lens _Flare..."),
                           "RGB*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
@@ -267,7 +267,7 @@ run (const gchar      *name,
       if (gimp_drawable_is_rgb (drawable->drawable_id) ||
           gimp_drawable_is_gray (drawable->drawable_id))
         {
-          gimp_progress_init (_("Render flare"));
+          gimp_progress_init (_("Render lens flare"));
           gimp_tile_cache_ntiles (2 *
                                   (drawable->width / gimp_tile_width () + 1));
 
@@ -282,7 +282,6 @@ run (const gchar      *name,
         }
       else
         {
-          /* gimp_message ("FlareFX: cannot operate on indexed color images"); */
           status = GIMP_PDB_EXECUTION_ERROR;
         }
     }
@@ -304,7 +303,7 @@ flare_dialog (GimpDrawable *drawable)
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("FlareFX"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Lens Flare"), PLUG_IN_BINARY,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 
@@ -779,7 +778,7 @@ flare_center_create (GimpDrawable *drawable,
                     G_CALLBACK (flare_center_coords_update),
                     center);
 
-  check = gtk_check_button_new_with_mnemonic (_("_Show cursor"));
+  check = gtk_check_button_new_with_mnemonic (_("Show _position"));
   gtk_table_attach (GTK_TABLE (center->coords), check, 0, 5, 2, 3,
                     GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check), show_cursor);
