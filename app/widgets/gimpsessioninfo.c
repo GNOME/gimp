@@ -789,12 +789,15 @@ gimp_session_info_restore (GimpSessionInfo   *info,
                                  GIMP_DOCKABLE (dockable), -1);
             }
 
-          if ((book_info->current_page > 0) &&
-              (book_info->current_page <
-               gtk_notebook_get_n_pages (GTK_NOTEBOOK (dockbook))))
+          if (book_info->current_page <
+              gtk_notebook_get_n_pages (GTK_NOTEBOOK (dockbook)))
             {
               gtk_notebook_set_current_page (GTK_NOTEBOOK (dockbook),
                                              book_info->current_page);
+            }
+          else
+            {
+              gtk_notebook_set_current_page (GTK_NOTEBOOK (dockbook), 0);
             }
         }
 

@@ -1,3 +1,8 @@
+2006-01-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpsessioninfo.c (gimp_session_info_restore): always
+	set the current page of dockbooks, also if it's the first one.
+
 2006-01-12  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/flarefx.c: renamed to "Lens Flare", don't use
