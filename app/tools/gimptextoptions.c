@@ -62,7 +62,10 @@ enum
   PROP_JUSTIFICATION,
   PROP_INDENTATION,
   PROP_LINE_SPACING,
-  PROP_LETTER_SPACING
+  PROP_LETTER_SPACING,
+
+  PROP_FONT_VIEW_TYPE,
+  PROP_FONT_VIEW_SIZE
 };
 
 
@@ -155,6 +158,18 @@ gimp_text_options_class_init (GimpTextOptionsClass *klass)
                                    N_("Adjust letter spacing"),
                                    -8192.0, 8192.0, 0.0,
                                    GIMP_CONFIG_PARAM_DEFAULTS);
+
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_FONT_VIEW_TYPE,
+                                 "font-view-type", NULL,
+                                 GIMP_TYPE_VIEW_TYPE,
+                                 GIMP_VIEW_TYPE_LIST,
+                                 0);
+  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_FONT_VIEW_SIZE,
+                                "font-view-size", NULL,
+                                GIMP_VIEW_SIZE_TINY,
+                                GIMP_VIEWABLE_MAX_BUTTON_SIZE,
+                                GIMP_VIEW_SIZE_SMALL,
+                                0);
 }
 
 static void
@@ -206,6 +221,14 @@ gimp_text_options_get_property (GObject    *object,
     case PROP_LETTER_SPACING:
       g_value_set_double (value, options->letter_spacing);
       break;
+
+    case PROP_FONT_VIEW_TYPE:
+      g_value_set_enum (value, options->font_view_type);
+      break;
+    case PROP_FONT_VIEW_SIZE:
+      g_value_set_int (value, options->font_view_size);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -256,6 +279,14 @@ gimp_text_options_set_property (GObject      *object,
     case PROP_LETTER_SPACING:
       options->letter_spacing = g_value_get_double (value);
       break;
+
+    case PROP_FONT_VIEW_TYPE:
+      options->font_view_type = g_value_get_enum (value);
+      break;
+    case PROP_FONT_VIEW_SIZE:
+      options->font_view_size = g_value_get_int (value);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -392,7 +423,8 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  hbox = gimp_font_box_new (NULL, GIMP_CONTEXT (tool_options), 2);
+  hbox = gimp_prop_font_box_new (NULL, GIMP_CONTEXT (tool_options), 2,
+                                 "font-view-type", "font-view-size");
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                              _("Font:"), 0.0, 0.5,
                              hbox, 2, FALSE);

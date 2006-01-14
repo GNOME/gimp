@@ -305,7 +305,8 @@ gimp_clone_options_gui (GimpToolOptions *tool_options)
                                        _("Sample merged"));
   gimp_enum_radio_frame_add (GTK_FRAME (frame), button, GIMP_IMAGE_CLONE);
 
-  hbox = gimp_pattern_box_new (NULL, GIMP_CONTEXT (tool_options), 2);
+  hbox = gimp_prop_pattern_box_new (NULL, GIMP_CONTEXT (tool_options), 2,
+                                    "pattern-view-type", "pattern-view-size");
   gimp_enum_radio_frame_add (GTK_FRAME (frame), hbox, GIMP_PATTERN_CLONE);
 
   table = gtk_table_new (1, 2, FALSE);

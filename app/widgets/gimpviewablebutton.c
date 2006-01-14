@@ -107,7 +107,7 @@ gimp_viewable_button_init (GimpViewableButton *button)
   button->popup_view_type      = GIMP_VIEW_TYPE_LIST;
   button->popup_preview_size   = GIMP_VIEW_SIZE_SMALL;
 
-  button->preview_size         = GIMP_VIEW_SIZE_SMALL;
+  button->button_preview_size  = GIMP_VIEW_SIZE_SMALL;
   button->preview_border_width = 1;
 }
 
@@ -240,7 +240,7 @@ gimp_viewable_button_clicked (GtkButton *button)
   popup = gimp_container_popup_new (viewable_button->container,
                                     viewable_button->context,
                                     viewable_button->popup_view_type,
-                                    viewable_button->preview_size,
+                                    viewable_button->button_preview_size,
                                     viewable_button->popup_preview_size,
                                     viewable_button->preview_border_width,
                                     viewable_button->dialog_factory,
@@ -275,6 +275,7 @@ GtkWidget *
 gimp_viewable_button_new (GimpContainer     *container,
                           GimpContext       *context,
                           GimpViewType       view_type,
+                          gint               button_preview_size,
                           gint               preview_size,
                           gint               preview_border_width,
                           GimpDialogFactory *dialog_factory,
@@ -309,8 +310,7 @@ gimp_viewable_button_new (GimpContainer     *container,
   button->container = container;
   button->context   = context;
 
-  button->popup_preview_size   = preview_size;
-  button->preview_size         = preview_size;
+  button->button_preview_size  = button_preview_size;
   button->preview_border_width = preview_border_width;
 
   if (dialog_factory)
@@ -324,7 +324,7 @@ gimp_viewable_button_new (GimpContainer     *container,
   prop_name = gimp_context_type_to_prop_name (container->children_type);
 
   button->preview = gimp_prop_preview_new (G_OBJECT (context), prop_name,
-                                           button->preview_size);
+                                           button->button_preview_size);
   gtk_container_add (GTK_CONTAINER (button), button->preview);
   gtk_widget_show (button->preview);
 

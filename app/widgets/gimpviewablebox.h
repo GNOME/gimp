@@ -20,22 +20,52 @@
 #define __GIMP_VIEWABLE_BOX_H__
 
 
-GtkWidget * gimp_brush_box_new    (GimpContainer *container,
-                                   GimpContext   *context,
-                                   gint           spacing);
-GtkWidget * gimp_pattern_box_new  (GimpContainer *container,
-                                   GimpContext   *context,
-                                   gint           spacing);
-GtkWidget * gimp_gradient_box_new (GimpContainer *container,
-                                   GimpContext   *context,
-                                   const gchar   *reverse_prop,
-                                   gint           scacing);
-GtkWidget * gimp_palette_box_new  (GimpContainer *container,
-                                   GimpContext   *context,
-                                   gint           spacing);
-GtkWidget * gimp_font_box_new     (GimpContainer *container,
-                                   GimpContext   *context,
-                                   gint           spacing);
+GtkWidget * gimp_brush_box_new         (GimpContainer *container,
+                                        GimpContext   *context,
+                                        gint           spacing);
+GtkWidget * gimp_prop_brush_box_new    (GimpContainer *container,
+                                        GimpContext   *context,
+                                        gint           spacing,
+                                        const gchar   *view_type_prop,
+                                        const gchar   *view_size_prop);
+
+GtkWidget * gimp_pattern_box_new       (GimpContainer *container,
+                                        GimpContext   *context,
+                                        gint           spacing);
+GtkWidget * gimp_prop_pattern_box_new  (GimpContainer *container,
+                                        GimpContext   *context,
+                                        gint           spacing,
+                                        const gchar   *view_type_prop,
+                                        const gchar   *view_size_prop);
+
+GtkWidget * gimp_gradient_box_new      (GimpContainer *container,
+                                        GimpContext   *context,
+                                        gint           scacing,
+                                        const gchar   *reverse_prop);
+GtkWidget * gimp_prop_gradient_box_new (GimpContainer *container,
+                                        GimpContext   *context,
+                                        gint           scacing,
+                                        const gchar   *view_type_prop,
+                                        const gchar   *view_size_prop,
+                                        const gchar   *reverse_prop);
+
+GtkWidget * gimp_palette_box_new       (GimpContainer *container,
+                                        GimpContext   *context,
+                                        gint           spacing);
+GtkWidget * gimp_prop_palette_box_new  (GimpContainer *container,
+                                        GimpContext   *context,
+                                        gint           spacing,
+                                        const gchar   *view_type_prop,
+                                        const gchar   *view_size_prop);
+
+GtkWidget * gimp_font_box_new          (GimpContainer *container,
+                                        GimpContext   *context,
+                                        gint           spacing);
+GtkWidget * gimp_prop_font_box_new     (GimpContainer *container,
+                                        GimpContext   *context,
+                                        gint           spacing,
+                                        const gchar   *view_type_prop,
+                                        const gchar   *view_size_prop);
 
 
 #endif /* __GIMP_VIEWABLE_BOX_H__ */

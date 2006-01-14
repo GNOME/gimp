@@ -1,5 +1,35 @@
 2006-01-14  Michael Natterer  <mitch@gimp.org>
 
+	* app/config/gimpconfig-utils.[ch] (gimp_config_connect_full):
+	variant of gimp_config_connect() which allows the connected
+	objects to have different propertynames.
+
+	* app/widgets/widgets-enums.[ch]: removed enum GimpViewType...
+
+	* app/core/core-enums.[ch]: ...and added it here.
+
+	* app/widgets/gimpviewablebutton.[ch] (gimp_viewable_button_new):
+	added "button_preview_size" parameter so the button and popup
+	preview sizes can be specified separately.
+
+	* app/widgets/gimptemplateeditor.c: changed accordingly.
+
+	* app/widgets/gimpviewablebox.[ch] (gimp_prop_*_box_new):
+	new functions which take additional "view_type_prop" and
+	"view_size_prop" parameters and sync the passed context's
+	properties with the resp. properties of the viewable button.
+
+	* app/paint/gimppaintoptions.[ch]
+	* app/tools/gimpbucketfilloptions.c
+	* app/tools/gimpclonetool.c
+	* app/tools/gimppaintoptions-gui.c
+	* app/tools/gimptextoptions.[ch]: added view-type and view-size
+	properties to the options objects and use the new viewable box
+	constructors so the selected view types and sizes are persistant
+	across sessions. Fixes bug #315443.
+
+2006-01-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpsessioninfo.c (gimp_session_info_restore): always
 	set the current page of dockbooks, also if it's the first one.
 

@@ -50,6 +50,9 @@ struct _GimpTextOptions
   gdouble                line_spacing;
   gdouble                letter_spacing;
 
+  GimpViewType           font_view_type;
+  GimpViewSize           font_view_size;
+
   GimpSizeEntry         *size_entry;
 };
 

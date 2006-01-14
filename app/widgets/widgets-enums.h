@@ -133,17 +133,6 @@ typedef enum
 } GimpTabStyle;
 
 
-#define GIMP_TYPE_VIEW_TYPE (gimp_view_type_get_type ())
-
-GType gimp_view_type_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_VIEW_TYPE_LIST,  /*< desc="View as list" >*/
-  GIMP_VIEW_TYPE_GRID   /*< desc="View as grid" >*/
-} GimpViewType;
-
-
 #define GIMP_TYPE_WINDOW_HINT (gimp_window_hint_get_type ())
 
 GType gimp_window_hint_get_type (void) G_GNUC_CONST;

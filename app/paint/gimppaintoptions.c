@@ -80,7 +80,14 @@ enum
   PROP_GRADIENT_LENGTH,
   PROP_GRADIENT_UNIT,
   PROP_USE_JITTER,
-  PROP_JITTER_AMOUNT
+  PROP_JITTER_AMOUNT,
+
+  PROP_BRUSH_VIEW_TYPE,
+  PROP_BRUSH_VIEW_SIZE,
+  PROP_PATTERN_VIEW_TYPE,
+  PROP_PATTERN_VIEW_SIZE,
+  PROP_GRADIENT_VIEW_TYPE,
+  PROP_GRADIENT_VIEW_SIZE
 };
 
 
@@ -200,6 +207,42 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                  "gradient-unit", NULL,
                                  TRUE, TRUE, DEFAULT_GRADIENT_UNIT,
                                  0);
+
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_BRUSH_VIEW_TYPE,
+                                 "brush-view-type", NULL,
+                                 GIMP_TYPE_VIEW_TYPE,
+                                 GIMP_VIEW_TYPE_GRID,
+                                 0);
+  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_BRUSH_VIEW_SIZE,
+                                "brush-view-size", NULL,
+                                GIMP_VIEW_SIZE_TINY,
+                                GIMP_VIEWABLE_MAX_BUTTON_SIZE,
+                                GIMP_VIEW_SIZE_SMALL,
+                                0);
+
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_PATTERN_VIEW_TYPE,
+                                 "pattern-view-type", NULL,
+                                 GIMP_TYPE_VIEW_TYPE,
+                                 GIMP_VIEW_TYPE_GRID,
+                                 0);
+  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_PATTERN_VIEW_SIZE,
+                                "pattern-view-size", NULL,
+                                GIMP_VIEW_SIZE_TINY,
+                                GIMP_VIEWABLE_MAX_BUTTON_SIZE,
+                                GIMP_VIEW_SIZE_SMALL,
+                                0);
+
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_GRADIENT_VIEW_TYPE,
+                                 "gradient-view-type", NULL,
+                                 GIMP_TYPE_VIEW_TYPE,
+                                 GIMP_VIEW_TYPE_LIST,
+                                 0);
+  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_GRADIENT_VIEW_SIZE,
+                                "gradient-view-size", NULL,
+                                GIMP_VIEW_SIZE_TINY,
+                                GIMP_VIEWABLE_MAX_BUTTON_SIZE,
+                                GIMP_VIEW_SIZE_LARGE,
+                                0);
 }
 
 static void
@@ -314,6 +357,27 @@ gimp_paint_options_set_property (GObject      *object,
       gradient_options->gradient_unit = g_value_get_int (value);
       break;
 
+    case PROP_BRUSH_VIEW_TYPE:
+      options->brush_view_type = g_value_get_enum (value);
+      break;
+    case PROP_BRUSH_VIEW_SIZE:
+      options->brush_view_size = g_value_get_int (value);
+      break;
+
+    case PROP_PATTERN_VIEW_TYPE:
+      options->pattern_view_type = g_value_get_enum (value);
+      break;
+    case PROP_PATTERN_VIEW_SIZE:
+      options->pattern_view_size = g_value_get_int (value);
+      break;
+
+    case PROP_GRADIENT_VIEW_TYPE:
+      options->gradient_view_type = g_value_get_enum (value);
+      break;
+    case PROP_GRADIENT_VIEW_SIZE:
+      options->gradient_view_size = g_value_get_int (value);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -403,6 +467,27 @@ gimp_paint_options_get_property (GObject    *object,
       break;
     case PROP_GRADIENT_UNIT:
       g_value_set_int (value, gradient_options->gradient_unit);
+      break;
+
+    case PROP_BRUSH_VIEW_TYPE:
+      g_value_set_enum (value, options->brush_view_type);
+      break;
+    case PROP_BRUSH_VIEW_SIZE:
+      g_value_set_int (value, options->brush_view_size);
+      break;
+
+    case PROP_PATTERN_VIEW_TYPE:
+      g_value_set_enum (value, options->pattern_view_type);
+      break;
+    case PROP_PATTERN_VIEW_SIZE:
+      g_value_set_int (value, options->pattern_view_size);
+      break;
+
+    case PROP_GRADIENT_VIEW_TYPE:
+      g_value_set_enum (value, options->gradient_view_type);
+      break;
+    case PROP_GRADIENT_VIEW_SIZE:
+      g_value_set_int (value, options->gradient_view_size);
       break;
 
     default:

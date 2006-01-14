@@ -94,6 +94,13 @@ struct _GimpPaintOptions
   GimpFadeOptions          *fade_options;
   GimpGradientOptions      *gradient_options;
   GimpJitterOptions        *jitter_options;
+
+  GimpViewType              brush_view_type;
+  GimpViewSize              brush_view_size;
+  GimpViewType              pattern_view_type;
+  GimpViewSize              pattern_view_size;
+  GimpViewType              gradient_view_type;
+  GimpViewSize              gradient_view_size;
 };
 
 struct _GimpPaintOptionsClass

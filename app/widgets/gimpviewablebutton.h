@@ -46,7 +46,7 @@ struct _GimpViewableButton
   GimpViewType       popup_view_type;
   gint               popup_preview_size;
 
-  gint               preview_size;
+  gint               button_preview_size;
   gint               preview_border_width;
 
   GimpDialogFactory *dialog_factory;
@@ -68,6 +68,7 @@ GType       gimp_viewable_button_get_type (void) G_GNUC_CONST;
 GtkWidget * gimp_viewable_button_new      (GimpContainer      *container,
                                            GimpContext        *context,
                                            GimpViewType        view_type,
+                                           gint                button_preview_size,
                                            gint                preview_size,
                                            gint                preview_border_width,
                                            GimpDialogFactory  *dialog_factory,

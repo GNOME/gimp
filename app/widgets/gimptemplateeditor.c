@@ -531,6 +531,7 @@ gimp_template_editor_new (GimpTemplate *template,
       button = gimp_viewable_button_new (editor->stock_id_container,
                                          editor->stock_id_context,
                                          GIMP_VIEW_TYPE_LIST,
+                                         GIMP_VIEW_SIZE_SMALL,
                                          GIMP_VIEW_SIZE_SMALL, 0,
                                          NULL, NULL, NULL, NULL);
       gimp_viewable_button_set_view_type (GIMP_VIEWABLE_BUTTON (button),

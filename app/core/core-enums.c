@@ -545,6 +545,34 @@ gimp_view_size_get_type (void)
 }
 
 GType
+gimp_view_type_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_VIEW_TYPE_LIST, "GIMP_VIEW_TYPE_LIST", "list" },
+    { GIMP_VIEW_TYPE_GRID, "GIMP_VIEW_TYPE_GRID", "grid" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_VIEW_TYPE_LIST, N_("View as list"), NULL },
+    { GIMP_VIEW_TYPE_GRID, N_("View as grid"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (! type)
+    {
+      type = g_enum_register_static ("GimpViewType", values);
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_selection_control_get_type (void)
 {
   static const GEnumValue values[] =
