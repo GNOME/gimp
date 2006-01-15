@@ -6,8 +6,8 @@ msgid ""
 ""
 msgstr "Project-Id-Version: gimp-plugins HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-11 03:04+0100\n"
-"PO-Revision-Date: 2006-01-11 16:46+1030\n"
+"POT-Creation-Date: 2006-01-15 03:16+0100\n"
+"PO-Revision-Date: 2006-01-15 17:59+1030\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -618,7 +618,7 @@ msgstr "Độ mạnh ánh sáng"
 msgid "Position"
 msgstr "Vị trí"
 
-#:../plug-ins/Lighting/lighting_ui.c:456 ../plug-ins/common/flarefx.c:761
+#:../plug-ins/Lighting/lighting_ui.c:456 ../plug-ins/common/flarefx.c:760
 #:../plug-ins/common/mblur.c:992 ../plug-ins/common/nova.c:456
 #:../plug-ins/common/papertile.c:273 ../plug-ins/flame/flame.c:1223
 #:../plug-ins/gflare/gflare.c:2655
@@ -630,7 +630,7 @@ msgstr "_X:"
 msgid "Light source X position in XYZ space"
 msgstr "Vị trí X của nguồn ánh sáng trong khoảng XYZ"
 
-#:../plug-ins/Lighting/lighting_ui.c:469 ../plug-ins/common/flarefx.c:766
+#:../plug-ins/Lighting/lighting_ui.c:469 ../plug-ins/common/flarefx.c:765
 #:../plug-ins/common/mblur.c:997 ../plug-ins/common/nova.c:461
 #:../plug-ins/common/papertile.c:282 ../plug-ins/flame/flame.c:1237
 #:../plug-ins/gflare/gflare.c:2659
@@ -3609,24 +3609,24 @@ msgid "_Number height:"
 msgstr "Cao _số :"
 
 #:../plug-ins/common/flarefx.c:195
-msgid "_FlareFX..."
-msgstr "_FlareFX..."
+msgid "Lens _Flare..."
+msgstr "Sáng _rực thấu kính..."
 
 #:../plug-ins/common/flarefx.c:270
-msgid "Render flare"
-msgstr "Vẽ sáng rực"
+msgid "Render lens flare"
+msgstr "Vẽ sáng rực thấu kính"
 
-#:../plug-ins/common/flarefx.c:307
-msgid "FlareFX"
-msgstr "FlareFX"
+#:../plug-ins/common/flarefx.c:306
+msgid "Lens Flare"
+msgstr "Sáng rực thấu kính"
 
-#:../plug-ins/common/flarefx.c:746
+#:../plug-ins/common/flarefx.c:745
 msgid "Center of Flare Effect"
 msgstr "Tâm của hiệu ứng sáng rực lên"
 
-#:../plug-ins/common/flarefx.c:782
-msgid "_Show cursor"
-msgstr "_Hiện con trỏ"
+#:../plug-ins/common/flarefx.c:781 ../plug-ins/common/nova.c:477
+msgid "Show _position"
+msgstr "Hiện _vị trí"
 
 #:../plug-ins/common/fp.c:230 ../plug-ins/print/gimp_color_window.c:307
 msgid "Cyan:"
@@ -5232,19 +5232,19 @@ msgid "Normalizing"
 msgstr "Đang chuẩn hóa..."
 
 #:../plug-ins/common/nova.c:176
-msgid "Su_perNova..."
+msgid "Su_pernova..."
 msgstr "_Siêu sao mới hiện..."
 
 #:../plug-ins/common/nova.c:260
-msgid "Rendering SuperNova"
+msgid "Rendering supernova"
 msgstr "Đang vẽ siêu sao mới hiện..."
 
 #:../plug-ins/common/nova.c:303
-msgid "SuperNova"
+msgid "Supernova"
 msgstr "Siêu sao mới hiện"
 
 #:../plug-ins/common/nova.c:347
-msgid "SuperNova Color Picker"
+msgid "Supernova Color Picker"
 msgstr "Bộ chọn màu Siêu sao mới hiện"
 
 #:../plug-ins/common/nova.c:376
@@ -5256,12 +5256,8 @@ msgid "R_andom hue:"
 msgstr "Sắc màu _ngẫu nhiên:"
 
 #:../plug-ins/common/nova.c:443
-msgid "Center of SuperNova"
-msgstr "Trung tâm của Siêu sao mới hiện"
-
-#:../plug-ins/common/nova.c:477
-msgid "S_how cursor"
-msgstr "_Hiện con trỏ"
+msgid "Center of Nova"
+msgstr "Trung tâm của sao mới hiện"
 
 #:../plug-ins/common/oilify.c:105
 msgid "Oili_fy..."

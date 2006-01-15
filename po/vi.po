@@ -7,15 +7,15 @@ msgid ""
 ""
 msgstr "Project-Id-Version: gimp Gnome HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-03 10:35+0100\n"
-"PO-Revision-Date: 2006-01-03 23:01+1030\n"
+"POT-Creation-Date: 2006-01-15 02:59+0100\n"
+"PO-Revision-Date: 2006-01-15 18:04+1030\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0\n"
-"X-Generator: LocFactoryEditor 1.5.1b\n"
+"X-Generator: LocFactoryEditor 1.6b23\n"
 
 #:../app/about.h:26 ../desktop/gimp.desktop.in.in.h:2
 msgid "GNU Image Manipulation Program"
@@ -43,11 +43,17 @@ msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "this program; if not, write to the Free Software Foundation, Inc., 59 Temple "
 "Place - Suite 330, Boston, MA 02111-1307, USA."
-msgstr "Chương trình này là phần mềm tự do; bạn có thể phát hành lại nó và/hay sửa đổi nó với điều kiện của Quyền Công Chung GNU (GPL) như xuất bản bởu Tổ chức Phần mềm Tự dol hoặc phiên bản 2 của Quyền này, hoặc (tùy chọn) bất cứ phiên bản sau nào.\n"
+msgstr "Chương trình này là phần mềm tự do; bạn có thể phát hành lại nó và/hay sửa "
+"đổi nó với điều kiện của Quyền Công Chung GNU (GPL) như xuất bản bởu Tổ chức "
+"Phần mềm Tự dol hoặc phiên bản 2 của Quyền này, hoặc (tùy chọn) bất cứ phiên "
+"bản sau nào.\n"
 "\n"
-"Chương trình này được phát hành vì tác giả hy vọng nó hữu ích, nhưng mà nó không có sự bảo đảm nào, thậm chí không có tính thương mại hay cho một mục đích đặc biệt nào cả. Hãy xem Quyền Công Chung GNU để tìm chi tiết.\n"
+"Chương trình này được phát hành vì tác giả hy vọng nó hữu ích, nhưng mà nó "
+"không có sự bảo đảm nào, thậm chí không có tính thương mại hay cho một mục "
+"đích đặc biệt nào cả. Hãy xem Quyền Công Chung GNU để tìm chi tiết.\n"
 "\n"
-"Bạn nên đã nhận một bản sao của Quyền Công Chung GNU có sẵn với chương trình này; nếu không, hãy viết một lá thư cho Tổ chức Phần mềm Tự do :\n"
+"Bạn nên đã nhận một bản sao của Quyền Công Chung GNU có sẵn với chương trình "
+"này; nếu không, hãy viết một lá thư cho Tổ chức Phần mềm Tự do :\n"
 "Free Software Foundation, Inc.,\n"
 "59 Temple Place - Suite 330,\n"
 "Boston, MA 02111-1307, USA (Mỹ)."
@@ -195,7 +201,8 @@ msgid ""
 "The configured filename encoding cannot be converted to UTF-8: %s\n"
 "\n"
 "Please check the value of the environment variable G_FILENAME_ENCODING."
-msgstr "Không thể chuyển đổi bảng mã tên tập tin đã cấu hình sang dạng thức UTF-8: %s\n"
+msgstr "Không thể chuyển đổi bảng mã tên tập tin đã cấu hình sang dạng thức UTF-8: %"
+"s\n"
 "\n"
 "Hãy kiểm tra giá trị của biến môi trường « G_FILENAME_ENCODING » [G bảng mã "
 "tên tập tin]."
@@ -246,9 +253,8 @@ msgstr "Bộ sửa bố trí màu"
 msgid "Context"
 msgstr "Ngữ cảnh"
 
-#:../app/actions/actions.c:116 ../app/actions/dialogs-actions.c:115
-#:../app/dialogs/dialogs.c:141
-msgid "Cursor Info"
+#:../app/actions/actions.c:116 ../app/dialogs/dialogs.c:141
+msgid "Pointer Information"
 msgstr "Thông tin con trỏ"
 
 #:../app/actions/actions.c:119
@@ -351,7 +357,7 @@ msgstr "Mẫu"
 msgid "Plug-Ins"
 msgstr "Bộ cầm phít"
 
-#:../app/actions/actions.c:179 ../app/core/core-enums.c:781
+#:../app/actions/actions.c:179 ../app/core/core-enums.c:809
 #:../app/core/gimpchannel.c:361
 msgid "Quick Mask"
 msgstr "Mặt nạ nhanh"
@@ -539,7 +545,7 @@ msgstr "Nhân đôi kênh."
 msgid "_Delete Channel"
 msgstr "_Xóa bỏ kênh"
 
-#:../app/actions/channels-actions.c:73 ../app/core/core-enums.c:836
+#:../app/actions/channels-actions.c:73 ../app/core/core-enums.c:864
 msgid "Delete channel"
 msgstr "Xóa bỏ kênh đó."
 
@@ -774,7 +780,7 @@ msgid "S_wap Colors"
 msgstr "Trao _đổi màu sắc"
 
 #:../app/actions/cursor-info-actions.c:40
-msgid "Cursor Info Menu"
+msgid "Pointer Information Menu"
 msgstr "Trình đơn thông tin con trỏ"
 
 #:../app/actions/cursor-info-actions.c:47
@@ -909,9 +915,13 @@ msgstr "Hồi lại _Lược sử"
 msgid "Undo History"
 msgstr "Hồi lại Lược sử"
 
+#:../app/actions/dialogs-actions.c:115 ../app/dialogs/dialogs.c:141
+msgid "Pointer"
+msgstr "Con trỏ"
+
 #:../app/actions/dialogs-actions.c:115
-msgid "_Cursor"
-msgstr "_Con trỏ"
+msgid "Pointer Info"
+msgstr "Thông tin con trỏ"
 
 #:../app/actions/dialogs-actions.c:120
 msgid "_Sample Points"
@@ -2200,7 +2210,7 @@ msgstr "Nhân đôi lớp"
 msgid "_Delete Layer"
 msgstr "_Xóa bỏ lớp"
 
-#:../app/actions/layers-actions.c:91 ../app/core/core-enums.c:824
+#:../app/actions/layers-actions.c:91 ../app/core/core-enums.c:852
 msgid "Delete layer"
 msgstr "Xóa bỏ lớp"
 
@@ -3150,7 +3160,7 @@ msgstr "Nhân đôi đường dẫn"
 msgid "_Delete Path"
 msgstr "_Xóa bỏ đường dẫn"
 
-#:../app/actions/vectors-actions.c:78 ../app/core/core-enums.c:840
+#:../app/actions/vectors-actions.c:78 ../app/core/core-enums.c:868
 msgid "Delete path"
 msgstr "Xóa bỏ đường dẫn"
 
@@ -3560,7 +3570,7 @@ msgstr "Sắc màu"
 msgid "Saturation"
 msgstr "Độ bão hòa"
 
-#:../app/base/base-enums.c:121 ../app/tools/gimppaintoptions-gui.c:305
+#:../app/base/base-enums.c:121 ../app/tools/gimppaintoptions-gui.c:308
 msgid "Color"
 msgstr "Màu"
 
@@ -3673,18 +3683,18 @@ msgid "Ask for confirmation before closing an image without saving."
 msgstr "Hỏi xác thực trước khi đóng ảnh mà chưa lưu."
 
 #:../app/config/gimprc-blurbs.h:36
-msgid "Sets the pixel format of cursors the GIMP will use."
-msgstr "Đặt dạng thức điểm ảnh của các con trỏ GIMP sẽ sử dụng."
+msgid "Sets the pixel format to use for mouse pointers."
+msgstr "Đặt dạng thức điểm ảnh của các con trỏ chuột."
 
 #:../app/config/gimprc-blurbs.h:39
-msgid "Sets the mode of cursor the GIMP will use."
-msgstr "Đặt chế độ con trỏ GIMP sẽ sử dụng."
+msgid "Sets the type of mouse pointers to use."
+msgstr "Đặt kiểu con trỏ chuột cần dùng."
 
 #:../app/config/gimprc-blurbs.h:42
 msgid ""
-"Context-dependent cursors are cool.  They are enabled by default. However, "
-"they require overhead that you may want to do without."
-msgstr "Con trỏ phụ thuộc vào ngữ cảnh là trơ tráo. Mặc định là bật con trỏ kiểu "
+"Context-dependent mouse pointers are helpful.  They are enabled by default.  "
+"However, they require overhead that you may want to do without."
+msgstr "Con trỏ chuột phụ thuộc vào ngữ cảnh là trơ tráo. Mặc định là bật con trỏ kiểu "
 "này, nhưng chúng cần thiết tiềm năng thêm."
 
 #:../app/config/gimprc-blurbs.h:50
@@ -3696,7 +3706,8 @@ msgstr "Khi bật thì tính năng này sẽ đảm bảo mọi điểm ảnh c�
 
 #:../app/config/gimprc-blurbs.h:76
 msgid "This is the distance in pixels where Guide and Grid snapping activates."
-msgstr "Giá trị này là bao nhiêu điểm ảnh đến vị trí sẽ hoạt hóa khả năng Dính nét dẫn và Dính lưới."
+msgstr "Giá trị này là bao nhiêu điểm ảnh đến vị trí sẽ hoạt hóa khả năng Dính nét "
+"dẫn và Dính lưới."
 
 #:../app/config/gimprc-blurbs.h:80
 msgid ""
@@ -3911,8 +3922,8 @@ msgstr "Khi bật thì mọi thoại sẽ hiển thị một cái nút trợ gi�
 
 #:../app/config/gimprc-blurbs.h:291
 msgid ""
-"When enabled, the cursor will be shown over the image while using a paint "
-"tool."
+"When enabled, the mouse pointer will be shown over the image while using a "
+"paint tool."
 msgstr "Khi bật thì hiển thị con trỏ ở trên ảnh khi sử dụng một công cụ sơn."
 
 #:../app/config/gimprc-blurbs.h:295
@@ -3990,15 +4001,17 @@ msgstr "Bật hiển thị mẹo công cụ."
 msgid ""
 "Sets the swap file location. GIMP uses a tile based memory allocation "
 "scheme. The swap file is used to quickly and easily swap tiles out to disk "
-"and back in. Be aware that the swap file can easily get very largeif GIMP is "
-"used with large images. Also, things can get horribly slow if the swap file "
-"is created on a directory that is mounted over NFS.  For these reasons, it "
-"may be desirable to put your swap file in \"/tmp\"."
+"and back in. Be aware that the swap file can easily get very large if GIMP "
+"is used with large images. Also, things can get horribly slow if the swap "
+"file is created on a directory that is mounted over NFS.  For these reasons, "
+"it may be desirable to put your swap file in \"/tmp\"."
 msgstr "Đặt địa điểm của tập tin trao đổi. GIMP sử dụng một lược đồ cấp phát bộ nhớ "
 "đựa vào ô. Nó sử dụng tập tin trao đổi để trao đổi một cách nhanh và dễ dàng "
-"các ô vào đĩa và ngược lại. Bạn hãy ghi nhớ rằng tập tin trao đổi có thể trở thành rất lớn nếu GIMP được dùng với ảnh lớn. Hơn nỡa, tiến trình có thể chạy rất chấm nếu "
-"tập tin trao đổi được tạo trong một thư mục được gắn kết qua NFS. Vì những "
-"lý do này, đề nghị bạn để tập tin trao đổi vào thư mục </tmp>."
+"các ô vào đĩa và ngược lại. Bạn hãy ghi nhớ rằng tập tin trao đổi có thể trở "
+"thành rất lớn nếu GIMP được dùng với ảnh lớn. Hơn nỡa, tiến trình có thể "
+"chạy rất chấm nếu tập tin trao đổi được tạo trong một thư mục được gắn kết "
+"qua NFS. Vì những lý do này, đề nghị bạn để tập tin trao đổi vào thư mục </"
+"tmp>."
 
 #:../app/config/gimprc-blurbs.h:346
 msgid "When enabled, menus can be torn off."
@@ -4339,269 +4352,277 @@ msgstr "Kếch xù"
 msgid "Gigantic"
 msgstr "Khổng lồ"
 
-#:../app/core/core-enums.c:594
+#:../app/core/core-enums.c:559
+msgid "View as list"
+msgstr "Xem kiểu danh sách"
+
+#:../app/core/core-enums.c:560
+msgid "View as grid"
+msgstr "Xem kiểu lưới"
+
+#:../app/core/core-enums.c:622
 msgid "No thumbnails"
 msgstr "Không có hình thu nhỏ"
 
-#:../app/core/core-enums.c:595
+#:../app/core/core-enums.c:623
 msgid "Normal (128x128)"
 msgstr "Bình thường (128x128)"
 
-#:../app/core/core-enums.c:596
+#:../app/core/core-enums.c:624
 msgid "Large (256x256)"
 msgstr "Lớn (256x256)"
 
-#:../app/core/core-enums.c:771
+#:../app/core/core-enums.c:799
 msgid "<<invalid>>"
 msgstr "•• không hợp lệ ••"
 
-#:../app/core/core-enums.c:772
+#:../app/core/core-enums.c:800
 msgid "Scale image"
 msgstr "Co dãn ảnh"
 
-#:../app/core/core-enums.c:773
+#:../app/core/core-enums.c:801
 msgid "Resize image"
 msgstr "Đổi cỡ ảnh"
 
-#:../app/core/core-enums.c:774
+#:../app/core/core-enums.c:802
 msgid "Flip image"
 msgstr "Lật ảnh"
 
-#:../app/core/core-enums.c:775
+#:../app/core/core-enums.c:803
 msgid "Rotate image"
 msgstr "Xoay ảnh"
 
-#:../app/core/core-enums.c:776
+#:../app/core/core-enums.c:804
 msgid "Crop image"
 msgstr "Xén ảnh"
 
-#:../app/core/core-enums.c:777
+#:../app/core/core-enums.c:805
 msgid "Convert image"
 msgstr "Chuyển đổi ảnh"
 
-#:../app/core/core-enums.c:778
+#:../app/core/core-enums.c:806
 msgid "Remove item"
 msgstr "Gỡ bỏ mục"
 
-#:../app/core/core-enums.c:779
+#:../app/core/core-enums.c:807
 msgid "Merge layers"
 msgstr "Trộn các lớp"
 
-#:../app/core/core-enums.c:780
+#:../app/core/core-enums.c:808
 msgid "Merge paths"
 msgstr "Hợp nhất đường dẫn"
 
-#:../app/core/core-enums.c:782 ../app/core/core-enums.c:812
+#:../app/core/core-enums.c:810 ../app/core/core-enums.c:840
 msgid "Guide"
 msgstr "Nét dẫn"
 
-#:../app/core/core-enums.c:783 ../app/core/core-enums.c:813
+#:../app/core/core-enums.c:811 ../app/core/core-enums.c:841
 #:../app/core/gimpimage-grid.c:58 ../app/dialogs/grid-dialog.c:149
 #:../app/tools/tools-enums.c:205
 msgid "Grid"
 msgstr "Lưới"
 
-#:../app/core/core-enums.c:784 ../app/core/core-enums.c:814
+#:../app/core/core-enums.c:812 ../app/core/core-enums.c:842
 msgid "Sample Point"
 msgstr "Điểm mẫu"
 
-#:../app/core/core-enums.c:785 ../app/core/core-enums.c:816
+#:../app/core/core-enums.c:813 ../app/core/core-enums.c:844
 msgid "Layer/Channel"
 msgstr "Lớp/Kênh"
 
-#:../app/core/core-enums.c:786 ../app/core/core-enums.c:817
+#:../app/core/core-enums.c:814 ../app/core/core-enums.c:845
 msgid "Layer/Channel modification"
 msgstr "Cách sửa đổi Lớp/Kenh"
 
-#:../app/core/core-enums.c:787 ../app/core/core-enums.c:818
+#:../app/core/core-enums.c:815 ../app/core/core-enums.c:846
 msgid "Selection mask"
 msgstr "Mặt nạ phần chọn"
 
-#:../app/core/core-enums.c:788 ../app/core/core-enums.c:821
+#:../app/core/core-enums.c:816 ../app/core/core-enums.c:849
 msgid "Item visibility"
 msgstr "Mục hiển thị"
 
-#:../app/core/core-enums.c:789 ../app/core/core-enums.c:822
+#:../app/core/core-enums.c:817 ../app/core/core-enums.c:850
 msgid "Link/Unlink item"
 msgstr "Liên kết/Bỏ liên kết mục"
 
-#:../app/core/core-enums.c:790
+#:../app/core/core-enums.c:818
 msgid "Item properties"
 msgstr "Thuộc tính mục"
 
-#:../app/core/core-enums.c:791 ../app/core/core-enums.c:820
+#:../app/core/core-enums.c:819 ../app/core/core-enums.c:848
 msgid "Move item"
 msgstr "Chuyển mục"
 
-#:../app/core/core-enums.c:792
+#:../app/core/core-enums.c:820
 msgid "Scale item"
 msgstr "Co dãn mục"
 
-#:../app/core/core-enums.c:793
+#:../app/core/core-enums.c:821
 msgid "Resize item"
 msgstr "Đổi cỡ mục"
 
-#:../app/core/core-enums.c:794 ../app/core/core-enums.c:831
+#:../app/core/core-enums.c:822 ../app/core/core-enums.c:859
 msgid "Add layer mask"
 msgstr "Thêm mặt nạ lớp"
 
-#:../app/core/core-enums.c:795 ../app/core/core-enums.c:833
+#:../app/core/core-enums.c:823 ../app/core/core-enums.c:861
 msgid "Apply layer mask"
 msgstr "Áp dụng mặt nạ lớp"
 
-#:../app/core/core-enums.c:796 ../app/core/core-enums.c:843
+#:../app/core/core-enums.c:824 ../app/core/core-enums.c:871
 msgid "Floating selection to layer"
 msgstr "Đang nổi phần chọn tới lớp"
 
-#:../app/core/core-enums.c:797
+#:../app/core/core-enums.c:825
 msgid "Float selection"
 msgstr "Nổi phần chọn"
 
-#:../app/core/core-enums.c:798
+#:../app/core/core-enums.c:826
 msgid "Anchor floating selection"
 msgstr "Neo phần chọn đang nổi"
 
-#:../app/core/core-enums.c:799
+#:../app/core/core-enums.c:827
 msgid "Remove floating selection"
 msgstr "Gỡ bỏ phần chọn đang nổi"
 
-#:../app/core/core-enums.c:800 ../app/core/gimp-edit.c:253
+#:../app/core/core-enums.c:828 ../app/core/gimp-edit.c:253
 msgid "Paste"
 msgstr "Dán"
 
-#:../app/core/core-enums.c:801 ../app/core/gimp-edit.c:495
+#:../app/core/core-enums.c:829 ../app/core/gimp-edit.c:495
 msgid "Cut"
 msgstr "Cắt"
 
-#:../app/core/core-enums.c:802 ../app/tools/gimptexttool.c:142
+#:../app/core/core-enums.c:830 ../app/tools/gimptexttool.c:142
 #:../app/widgets/widgets-enums.c:263
 msgid "Text"
 msgstr "Chữ"
 
-#:../app/core/core-enums.c:803 ../app/core/core-enums.c:846
+#:../app/core/core-enums.c:831 ../app/core/core-enums.c:874
 #:../app/core/gimpdrawable-transform.c:911
 msgid "Transform"
 msgstr "Chuyển dạng"
 
-#:../app/core/core-enums.c:804 ../app/core/core-enums.c:847
+#:../app/core/core-enums.c:832 ../app/core/core-enums.c:875
 #:../app/paint/gimppaintcore.c:335
 msgid "Paint"
 msgstr "Sơn"
 
-#:../app/core/core-enums.c:805 ../app/core/core-enums.c:850
+#:../app/core/core-enums.c:833 ../app/core/core-enums.c:878
 msgid "Attach parasite"
 msgstr "Đính bộ bám"
 
-#:../app/core/core-enums.c:806 ../app/core/core-enums.c:851
+#:../app/core/core-enums.c:834 ../app/core/core-enums.c:879
 msgid "Remove parasite"
 msgstr "Gỡ bỏ bộ bám"
 
-#:../app/core/core-enums.c:807
+#:../app/core/core-enums.c:835
 msgid "Import paths"
 msgstr "Nhập đường dẫn"
 
-#:../app/core/core-enums.c:808 ../app/pdb/drawable_cmds.c:1722
+#:../app/core/core-enums.c:836 ../app/pdb/drawable_cmds.c:1722
 msgid "Plug-In"
 msgstr "Bộ cầm phít"
 
-#:../app/core/core-enums.c:809
+#:../app/core/core-enums.c:837
 msgid "Image type"
 msgstr "Kiểu ảnh"
 
-#:../app/core/core-enums.c:810
+#:../app/core/core-enums.c:838
 msgid "Image size"
 msgstr "Cỡ ảnh"
 
-#:../app/core/core-enums.c:811
+#:../app/core/core-enums.c:839
 msgid "Image resolution change"
 msgstr "Cách thay đổi độ phân giải"
 
-#:../app/core/core-enums.c:815
+#:../app/core/core-enums.c:843
 msgid "Change indexed palette"
 msgstr "Đổi bảng chọn đã phụ lục"
 
-#:../app/core/core-enums.c:819
+#:../app/core/core-enums.c:847
 msgid "Rename item"
 msgstr "Đổi tên mục"
 
-#:../app/core/core-enums.c:823
+#:../app/core/core-enums.c:851
 msgid "New layer"
 msgstr "Lớp mới"
 
-#:../app/core/core-enums.c:825
+#:../app/core/core-enums.c:853
 msgid "Reposition layer"
 msgstr "Định vị lại lớp"
 
-#:../app/core/core-enums.c:826
+#:../app/core/core-enums.c:854
 msgid "Set layer mode"
 msgstr "Đặt chế độ lớp"
 
-#:../app/core/core-enums.c:827
+#:../app/core/core-enums.c:855
 msgid "Set layer opacity"
 msgstr "Đặt mờ độ đục mục"
 
-#:../app/core/core-enums.c:828
+#:../app/core/core-enums.c:856
 msgid "Lock/Unlock alpha channel"
 msgstr "(Mở) Khóa kênh anfa"
 
-#:../app/core/core-enums.c:829
+#:../app/core/core-enums.c:857
 msgid "Text layer"
 msgstr "Lớp chữ"
 
-#:../app/core/core-enums.c:830
+#:../app/core/core-enums.c:858
 msgid "Text layer modification"
 msgstr "Cách sửa đổi lớp chữ"
 
-#:../app/core/core-enums.c:832
+#:../app/core/core-enums.c:860
 msgid "Delete layer mask"
 msgstr "Xóa bỏ mặt nạ lớp"
 
-#:../app/core/core-enums.c:834
+#:../app/core/core-enums.c:862
 msgid "Show layer mask"
 msgstr "Hiện mặt nạ lớp"
 
-#:../app/core/core-enums.c:835
+#:../app/core/core-enums.c:863
 msgid "New channel"
 msgstr "Kênh mới"
 
-#:../app/core/core-enums.c:837
+#:../app/core/core-enums.c:865
 msgid "Reposition channel"
 msgstr "Định vị lại kênh"
 
-#:../app/core/core-enums.c:838
+#:../app/core/core-enums.c:866
 msgid "Channel color"
 msgstr "Màu kênh"
 
-#:../app/core/core-enums.c:839
+#:../app/core/core-enums.c:867
 msgid "New path"
 msgstr "Đường dẫn mới"
 
-#:../app/core/core-enums.c:841
+#:../app/core/core-enums.c:869
 msgid "Path modification"
 msgstr "Cách sửa đổi đường dẫn"
 
-#:../app/core/core-enums.c:842
+#:../app/core/core-enums.c:870
 msgid "Reposition path"
 msgstr "Định vị lại đường dẫn"
 
-#:../app/core/core-enums.c:844
+#:../app/core/core-enums.c:872
 msgid "FS rigor"
 msgstr "FS chặt chẽ"
 
-#:../app/core/core-enums.c:845
+#:../app/core/core-enums.c:873
 msgid "FS relax"
 msgstr "FS nới lỏng"
 
-#:../app/core/core-enums.c:848 ../app/paint/gimpink.c:103
+#:../app/core/core-enums.c:876 ../app/paint/gimpink.c:103
 #:../app/tools/gimpinktool.c:61
 msgid "Ink"
 msgstr "Mực"
 
-#:../app/core/core-enums.c:849
+#:../app/core/core-enums.c:877
 msgid "Select foreground"
 msgstr "Chọn cảnh gần"
 
-#:../app/core/core-enums.c:852
+#:../app/core/core-enums.c:880
 msgid "EEK: can't undo"
 msgstr "EEK: không thể hồi lại"
 
@@ -4730,7 +4751,8 @@ msgstr "Lỗi phân tách nghiêm trọng trong tập tin bút vẽ « %s »: đ
 #:../app/core/gimpbrush-load.c:227
 #,c-format
 msgid "Fatal parse error in brush file '%s': Unknown version %d."
-msgstr "Lỗi phân tách nghiêm trọng trong tập tin bút vẽ « %s »: phiên bản không rõ %d."
+msgstr "Lỗi phân tách nghiêm trọng trong tập tin bút vẽ « %s »: phiên bản không rõ %"
+"d."
 
 #:../app/core/gimpbrush-load.c:243 ../app/core/gimpbrush-load.c:363
 #,c-format
@@ -5372,7 +5394,7 @@ msgstr "(Có lẽ khung xem thử quá thời)"
 
 #.pixel size
 #:../app/core/gimpimagefile.c:610 ../app/widgets/gimpimagepropview.c:323
-#:../app/widgets/gimpsizebox.c:431 ../app/widgets/gimptemplateeditor.c:563
+#:../app/widgets/gimpsizebox.c:431 ../app/widgets/gimptemplateeditor.c:564
 #,c-format
 msgid "%d x %d pixel"
 msgid_plural "%d x %d pixels"
@@ -5562,13 +5584,15 @@ msgstr "Gặp chuỗi UTF-8 không hợp lệ trong tập tin bảng chọn « %
 msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
 "default value."
-msgstr "Đang đọc tập tin bảng chọn « %s »: gặp số lượng cột không hợp lệ trong dòng %d, nên dùng giá trị mặc định."
+msgstr "Đang đọc tập tin bảng chọn « %s »: gặp số lượng cột không hợp lệ trong dòng %"
+"d, nên dùng giá trị mặc định."
 
 #.maybe we should just abort?
 #:../app/core/gimppalette.c:442
 #,c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
-msgstr "Đang đọc tập tin bảng chọn « %s »: thiếu thành phần màu Đỏ (RED) trong dòng %d."
+msgstr "Đang đọc tập tin bảng chọn « %s »: thiếu thành phần màu Đỏ (RED) trong dòng %"
+"d."
 
 #:../app/core/gimppalette.c:450
 #,c-format
@@ -5585,13 +5609,15 @@ msgstr "Đang đọc tập tin bảng chọn « %s »: thiếu thành phần mà
 #:../app/core/gimppalette.c:468
 #,c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
-msgstr "Đang đọc tập tin bảng chọn « %s »: giá trị RGB nằm ngoài phạm vị trong dòng %d."
+msgstr "Đang đọc tập tin bảng chọn « %s »: giá trị RGB nằm ngoài phạm vị trong dòng %"
+"d."
 
 #:../app/core/gimppattern.c:272 ../app/core/gimppattern.c:318
 #:../app/core/gimppattern.c:349
 #,c-format
 msgid "Fatal parse error in pattern file '%s': File appears truncated."
-msgstr "Lỗi phân tách nghiêm trọng trong tập tin câu mẫu « %s »: hình như tập tin bị cụt."
+msgstr "Lỗi phân tách nghiêm trọng trong tập tin câu mẫu « %s »: hình như tập tin bị "
+"cụt."
 
 #:../app/core/gimppattern.c:291
 #,c-format
@@ -5818,10 +5844,6 @@ msgstr "Thiết bị"
 #:../app/dialogs/dialogs.c:137
 msgid "Errors"
 msgstr "Lỗi"
-
-#:../app/dialogs/dialogs.c:141
-msgid "Cursor"
-msgstr "Con trỏ"
 
 #:../app/dialogs/dialogs.c:162
 msgid "History"
@@ -6567,9 +6589,9 @@ msgstr "Vừa khít cửa sổ"
 msgid "Initial zoom _ratio:"
 msgstr "T_ỷ lệ thu phóng ban đầu:"
 
-#.Mouse Cursors
+#.Mouse Pointers
 #:../app/dialogs/preferences-dialog.c:1842
-msgid "Mouse Cursors"
+msgid "Mouse Pointers"
 msgstr "Con trỏ chuột"
 
 #:../app/dialogs/preferences-dialog.c:1846
@@ -6577,15 +6599,15 @@ msgid "Show _brush outline"
 msgstr "Hiện phác thảo _bút vẽ"
 
 #:../app/dialogs/preferences-dialog.c:1849
-msgid "Show paint _tool cursor"
+msgid "Show pointer for paint _tools"
 msgstr "Hiện con trỏ công cụ _sơn"
 
 #:../app/dialogs/preferences-dialog.c:1855
-msgid "Cursor _mode:"
-msgstr "_Chế độ con trỏ"
+msgid "Pointer _mode:"
+msgstr "Chế độ con _trỏ :"
 
 #:../app/dialogs/preferences-dialog.c:1858
-msgid "Cursor re_ndering:"
+msgid "Pointer re_ndering:"
 msgstr "_Vẽ con trỏ :"
 
 #:../app/dialogs/preferences-dialog.c:1870
@@ -8036,7 +8058,7 @@ msgstr "Hiệu số:"
 msgid "Shape:"
 msgstr "Hình"
 
-#:../app/tools/gimpblendoptions.c:231 ../app/tools/gimppaintoptions-gui.c:489
+#:../app/tools/gimpblendoptions.c:231 ../app/tools/gimppaintoptions-gui.c:494
 msgid "Repeat:"
 msgstr "Lặp lại"
 
@@ -8049,7 +8071,7 @@ msgid "Max depth:"
 msgstr "Dài tối đa:"
 
 #:../app/tools/gimpblendoptions.c:274
-#:../app/tools/gimpbucketfilloptions.c:273
+#:../app/tools/gimpbucketfilloptions.c:274
 #:../app/tools/gimpselectionoptions.c:500
 msgid "Threshold:"
 msgstr "Ngưỡng:"
@@ -8115,29 +8137,29 @@ msgid "Fill Type  (%s)"
 msgstr "Kiểu tô đầy (%s)"
 
 #.fill selection
-#:../app/tools/gimpbucketfilloptions.c:225
+#:../app/tools/gimpbucketfilloptions.c:226
 #,c-format
 msgid "Affected Area  (%s)"
 msgstr "Vùng có tác động (%s)"
 
-#:../app/tools/gimpbucketfilloptions.c:229
+#:../app/tools/gimpbucketfilloptions.c:230
 msgid "Fill whole selection"
 msgstr "Tô đầy toàn phần chọn."
 
-#:../app/tools/gimpbucketfilloptions.c:230
+#:../app/tools/gimpbucketfilloptions.c:231
 msgid "Fill similar colors"
 msgstr "Tô đầy các màu tương tự"
 
-#:../app/tools/gimpbucketfilloptions.c:239
+#:../app/tools/gimpbucketfilloptions.c:240
 #:../app/tools/gimpselectionoptions.c:472
 msgid "Finding Similar Colors"
 msgstr "Tìm màu tương tự"
 
-#:../app/tools/gimpbucketfilloptions.c:255
+#:../app/tools/gimpbucketfilloptions.c:256
 msgid "Fill transparent areas"
 msgstr "Tô đầy các vùng trong suốt"
 
-#:../app/tools/gimpbucketfilloptions.c:261 ../app/tools/gimpclonetool.c:305
+#:../app/tools/gimpbucketfilloptions.c:262 ../app/tools/gimpclonetool.c:305
 #:../app/tools/gimpcolorpickeroptions.c:162
 #:../app/tools/gimpselectionoptions.c:488
 #:../app/tools/gimpselectionoptions.c:536
@@ -8176,7 +8198,7 @@ msgstr "Ctrl-nhắp để đặt nguồn nhân đôi."
 msgid "Source"
 msgstr "Nguồn"
 
-#:../app/tools/gimpclonetool.c:318
+#:../app/tools/gimpclonetool.c:319
 msgid "Alignment:"
 msgstr "Canh lề :"
 
@@ -8676,7 +8698,7 @@ msgid "Adjustment"
 msgstr "Điều chỉnh"
 
 #:../app/tools/gimpinkoptions-gui.c:70 ../app/tools/gimpinkoptions-gui.c:95
-#:../app/tools/gimptextoptions.c:404
+#:../app/tools/gimptextoptions.c:436
 msgid "Size:"
 msgstr "Cỡ :"
 
@@ -8889,62 +8911,62 @@ msgstr "Chế độ:"
 msgid "Opacity:"
 msgstr "Độ mờ đục:"
 
-#:../app/tools/gimppaintoptions-gui.c:128
+#:../app/tools/gimppaintoptions-gui.c:129
 msgid "Brush:"
 msgstr "Bút vẽ:"
 
-#:../app/tools/gimppaintoptions-gui.c:138
-#:../app/tools/gimppaintoptions-gui.c:465
+#:../app/tools/gimppaintoptions-gui.c:141
+#:../app/tools/gimppaintoptions-gui.c:470
 msgid "Gradient:"
 msgstr "Độ dốc:"
 
-#:../app/tools/gimppaintoptions-gui.c:174
+#:../app/tools/gimppaintoptions-gui.c:177
 msgid "Incremental"
 msgstr "Dần dần"
 
-#:../app/tools/gimppaintoptions-gui.c:188
+#:../app/tools/gimppaintoptions-gui.c:191
 msgid "Hard edge"
 msgstr "Cạnh cứng"
 
-#:../app/tools/gimppaintoptions-gui.c:229
+#:../app/tools/gimppaintoptions-gui.c:232
 msgid "Pressure sensitivity"
 msgstr "Độ nhạy áp suất"
 
-#:../app/tools/gimppaintoptions-gui.c:248
+#:../app/tools/gimppaintoptions-gui.c:251
 msgid "Opacity"
 msgstr "Độ mờ đục"
 
-#:../app/tools/gimppaintoptions-gui.c:262
+#:../app/tools/gimppaintoptions-gui.c:265
 msgid "Hardness"
 msgstr "Độ cứng"
 
-#:../app/tools/gimppaintoptions-gui.c:273
+#:../app/tools/gimppaintoptions-gui.c:276
 msgid "Rate"
 msgstr "Tỷ lệ"
 
-#:../app/tools/gimppaintoptions-gui.c:287
-#:../app/tools/gimppaintoptions-gui.c:296
+#:../app/tools/gimppaintoptions-gui.c:290
+#:../app/tools/gimppaintoptions-gui.c:299
 msgid "Size"
 msgstr "Cỡ"
 
-#:../app/tools/gimppaintoptions-gui.c:336
+#:../app/tools/gimppaintoptions-gui.c:339
 msgid "Fade out"
 msgstr "Làm mờ dần"
 
-#:../app/tools/gimppaintoptions-gui.c:356
-#:../app/tools/gimppaintoptions-gui.c:474
+#:../app/tools/gimppaintoptions-gui.c:359
+#:../app/tools/gimppaintoptions-gui.c:479
 msgid "Length:"
 msgstr "Độ dài:"
 
-#:../app/tools/gimppaintoptions-gui.c:393
+#:../app/tools/gimppaintoptions-gui.c:396
 msgid "Apply Jitter"
 msgstr "Áp dụng Jitter"
 
-#:../app/tools/gimppaintoptions-gui.c:410
+#:../app/tools/gimppaintoptions-gui.c:413
 msgid "Amount:"
 msgstr "Lượng:"
 
-#:../app/tools/gimppaintoptions-gui.c:438
+#:../app/tools/gimppaintoptions-gui.c:441
 msgid "Use color from gradient"
 msgstr "Dùng màu từ độ dốc"
 
@@ -9128,7 +9150,7 @@ msgstr "Phần chọn đựa vào mọi lớp hiển thị"
 msgid "Use all visible layers when shrinking the selection"
 msgstr "Dùng mọi lớp hiển thị khi thu nhỏ phần chọn"
 
-#:../app/tools/gimpselectionoptions.c:412 ../app/tools/gimptextoptions.c:425
+#:../app/tools/gimpselectionoptions.c:412 ../app/tools/gimptextoptions.c:457
 msgid "Antialiasing"
 msgstr "Làm trơn"
 
@@ -9196,59 +9218,60 @@ msgstr "Nhoè ảnh"
 msgid "_Smudge"
 msgstr "_Nhoè"
 
-#:../app/tools/gimptextoptions.c:113
+#:../app/tools/gimptextoptions.c:116
 msgid ""
 "Hinting alters the font outline to produce a crisp bitmap at small sizes"
-msgstr "Gợi ý thì thay đổi các cạnh của phông chữ, để hiển thị bitmap chính xác ngay cả khi dùng kích thước nhỏ."
+msgstr "Gợi ý thì thay đổi các cạnh của phông chữ, để hiển thị bitmap chính xác ngay "
+"cả khi dùng kích thước nhỏ."
 
-#:../app/tools/gimptextoptions.c:120
+#:../app/tools/gimptextoptions.c:123
 msgid ""
 "If available, hints from the font are used but you may prefer to always use "
 "the automatic hinter"
 msgstr "Nếu có thì dùng lời gợi ý từ phông chữ đó, nhưng bạn có lẽ sẽ thích luôn sử "
 "dụng bộ gợi ý tự động."
 
-#:../app/tools/gimptextoptions.c:145
+#:../app/tools/gimptextoptions.c:148
 msgid "Indentation of the first line"
 msgstr "Thụt lề dòng đầu"
 
-#:../app/tools/gimptextoptions.c:150
+#:../app/tools/gimptextoptions.c:153
 msgid "Adjust line spacing"
 msgstr "Chỉnh khoảng cách dòng"
 
-#:../app/tools/gimptextoptions.c:155
+#:../app/tools/gimptextoptions.c:158
 msgid "Adjust letter spacing"
 msgstr "Chỉnh khoảng cách chữ"
 
-#:../app/tools/gimptextoptions.c:397
+#:../app/tools/gimptextoptions.c:429
 msgid "Font:"
 msgstr "Phông chữ :"
 
-#:../app/tools/gimptextoptions.c:409
+#:../app/tools/gimptextoptions.c:441
 msgid "Hinting"
 msgstr "Gợi ý"
 
-#:../app/tools/gimptextoptions.c:416
+#:../app/tools/gimptextoptions.c:448
 msgid "Force auto-hinter"
 msgstr "Buộc bộ gợi ý tự động"
 
-#:../app/tools/gimptextoptions.c:431
+#:../app/tools/gimptextoptions.c:463
 msgid "Text Color"
 msgstr "Màu chữ"
 
-#:../app/tools/gimptextoptions.c:436
+#:../app/tools/gimptextoptions.c:468
 msgid "Color:"
 msgstr "Màu:"
 
-#:../app/tools/gimptextoptions.c:441
+#:../app/tools/gimptextoptions.c:473
 msgid "Justify:"
 msgstr "Canh đều:"
 
-#:../app/tools/gimptextoptions.c:460
+#:../app/tools/gimptextoptions.c:492
 msgid "Create Path from Text"
 msgstr "Tạo đường dẫn từ chữ"
 
-#:../app/tools/gimptextoptions.c:468
+#:../app/tools/gimptextoptions.c:500
 msgid "Text along Path"
 msgstr "Chữ theo đường dẫn"
 
@@ -10485,16 +10508,16 @@ msgstr "_Ghi chú:"
 msgid "_Name:"
 msgstr "_Tên:"
 
-#:../app/widgets/gimptemplateeditor.c:540
+#:../app/widgets/gimptemplateeditor.c:541
 msgid "_Icon:"
 msgstr "_Biểu tượng:"
 
-#:../app/widgets/gimptemplateeditor.c:667
+#:../app/widgets/gimptemplateeditor.c:668
 #,c-format
 msgid "%d x %d dpi, %s"
 msgstr "%d × %d điểm, %s"
 
-#:../app/widgets/gimptemplateeditor.c:669
+#:../app/widgets/gimptemplateeditor.c:670
 #,c-format
 msgid "%d dpi, %s"
 msgstr "%d điểm, %s"
@@ -10611,27 +10634,27 @@ msgstr "Sắp xếp lại đường dẫn"
 msgid "Empty Path"
 msgstr "Làm cho đường dẫn rỗng"
 
-#:../app/widgets/gimpviewablebox.c:76
+#:../app/widgets/gimpviewablebox.c:81
 msgid "Open the brush selection dialog"
 msgstr "Mở thoại chọn bút vẽ"
 
-#:../app/widgets/gimpviewablebox.c:95
+#:../app/widgets/gimpviewablebox.c:138
 msgid "Open the pattern selection dialog"
 msgstr "Mở thoại chọn mẫu"
 
-#:../app/widgets/gimpviewablebox.c:122
+#:../app/widgets/gimpviewablebox.c:204
 msgid "Open the gradient selection dialog"
 msgstr "Mở thoại chọn độ dốc"
 
-#:../app/widgets/gimpviewablebox.c:134
+#:../app/widgets/gimpviewablebox.c:219
 msgid "Reverse"
 msgstr "Ngược lại"
 
-#:../app/widgets/gimpviewablebox.c:170
+#:../app/widgets/gimpviewablebox.c:298
 msgid "Open the palette selection dialog"
 msgstr "Mở thoại chọn bảng chọn"
 
-#:../app/widgets/gimpviewablebox.c:189
+#:../app/widgets/gimpviewablebox.c:356
 msgid "Open the font selection dialog"
 msgstr "Mở thoại chọn phông chữ"
 
@@ -10716,23 +10739,15 @@ msgstr "Trạng thái và chữ"
 msgid "Status & desc"
 msgstr "Trạng thái và mô tả"
 
-#:../app/widgets/widgets-enums.c:295
-msgid "View as list"
-msgstr "Xem kiểu danh sách"
-
 #:../app/widgets/widgets-enums.c:296
-msgid "View as grid"
-msgstr "Xem kiểu lưới"
-
-#:../app/widgets/widgets-enums.c:324
 msgid "Normal window"
 msgstr "Cửa sổ chuẩn"
 
-#:../app/widgets/widgets-enums.c:325
+#:../app/widgets/widgets-enums.c:297
 msgid "Utility window"
 msgstr "Cửa sổ tiện ích"
 
-#:../app/widgets/widgets-enums.c:326
+#:../app/widgets/widgets-enums.c:298
 msgid "Keep above"
 msgstr "Giữ trên"
 
