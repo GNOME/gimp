@@ -2,19 +2,19 @@
 # Copyright (C) 2000 Free Software Foundation, Inc.
 # Gert Dewit <Gert.Dewit@sos.be>, 2000
 # Branko Collin <collin@xs4all.nl>, 2001
-# Tino Meinen <a.t.meinen@chello.nl>, 2004. 2005.
+# Tino Meinen <a.t.meinen@chello.nl>, 2004, 2005, 2006
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-28 03:01+0200\n"
-"PO-Revision-Date: 2005-09-28 07:01+0200\n"
+"POT-Creation-Date: 2006-01-14 11:08+0100\n"
+"PO-Revision-Date: 2006-01-14 17:11+0100\n"
 "Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../libgimp/gimpbrushmenu.c:140
 msgid "Brush Selection"
@@ -210,7 +210,7 @@ msgstr "Sans"
 msgid "Gradient Selection"
 msgstr "Verloopselectie"
 
-#: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:167
+#: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:131
 msgid "(Empty)"
 msgstr "(Leeg)"
 
@@ -222,84 +222,88 @@ msgstr "Paletselectie"
 msgid "Pattern Selection"
 msgstr "Patroonselectie"
 
-#: ../libgimp/gimpprocbrowserdialog.c:171
+#: ../libgimp/gimpprocbrowserdialog.c:140
 msgid "by name"
 msgstr "op naam"
 
-#: ../libgimp/gimpprocbrowserdialog.c:172
+#: ../libgimp/gimpprocbrowserdialog.c:141
 msgid "by description"
 msgstr "op omschrijving"
 
-#: ../libgimp/gimpprocbrowserdialog.c:173
+#: ../libgimp/gimpprocbrowserdialog.c:142
 msgid "by help"
 msgstr "op hulp"
 
-#: ../libgimp/gimpprocbrowserdialog.c:174
+#: ../libgimp/gimpprocbrowserdialog.c:143
 msgid "by author"
 msgstr "op auteur"
 
-#: ../libgimp/gimpprocbrowserdialog.c:175
+#: ../libgimp/gimpprocbrowserdialog.c:144
 msgid "by copyright"
 msgstr "op copyright"
 
-#: ../libgimp/gimpprocbrowserdialog.c:176
+#: ../libgimp/gimpprocbrowserdialog.c:145
 msgid "by date"
 msgstr "op datum"
 
-#: ../libgimp/gimpprocbrowserdialog.c:177
+#: ../libgimp/gimpprocbrowserdialog.c:146
 msgid "by type"
 msgstr "op type"
 
-#: ../libgimp/gimpprocbrowserdialog.c:411
-msgid "Searching by name - please wait"
-msgstr "Zoeken op naam - een ogenblik geduld"
+# zoekende/bezig met zoeken/zoeken
+#: ../libgimp/gimpprocbrowserdialog.c:377
+msgid "Searching"
+msgstr "Zoeken"
 
-#: ../libgimp/gimpprocbrowserdialog.c:431
-msgid "Searching by description - please wait"
-msgstr "Zoeken op omschrijving - een ogenblik geduld"
+#: ../libgimp/gimpprocbrowserdialog.c:388
+msgid "Searching by name"
+msgstr "Zoeken op naam"
 
-#: ../libgimp/gimpprocbrowserdialog.c:439
-msgid "Searching by help - please wait"
-msgstr "Zoeken op hulp - een ogenblik geduld"
+#: ../libgimp/gimpprocbrowserdialog.c:409
+msgid "Searching by description"
+msgstr "Zoeken op omschrijving"
 
-#: ../libgimp/gimpprocbrowserdialog.c:447
-msgid "Searching by author - please wait"
-msgstr "Zoeken op auteur - een ogenblik geduld"
+#: ../libgimp/gimpprocbrowserdialog.c:416
+msgid "Searching by help"
+msgstr "Zoeken op hulp"
 
-#: ../libgimp/gimpprocbrowserdialog.c:455
-msgid "Searching by copyright - please wait"
-msgstr "Zoeken op copyright - een ogenblik geduld"
+#: ../libgimp/gimpprocbrowserdialog.c:423
+msgid "Searching by author"
+msgstr "Zoeken op auteur"
 
-#: ../libgimp/gimpprocbrowserdialog.c:463
-msgid "Searching by date - please wait"
-msgstr "Zoeken op datum - een ogenblik geduld"
+#: ../libgimp/gimpprocbrowserdialog.c:430
+msgid "Searching by copyright"
+msgstr "Zoeken op copyright"
 
-#: ../libgimp/gimpprocbrowserdialog.c:471
-msgid "Searching by type - please wait"
-msgstr "Zoeken op type - een ogenblik geduld"
+#: ../libgimp/gimpprocbrowserdialog.c:437
+msgid "Searching by date"
+msgstr "Zoeken op datum"
 
-#: ../libgimp/gimpprocbrowserdialog.c:479
-msgid "Searching - please wait"
-msgstr "Bezig met zoeken - een ogenblik geduld"
+#: ../libgimp/gimpprocbrowserdialog.c:444
+msgid "Searching by type"
+msgstr "Zoeken op type"
 
-#: ../libgimp/gimpprocbrowserdialog.c:487
+#: ../libgimp/gimpprocbrowserdialog.c:454
 #, c-format
-msgid "%d Procedures"
-msgstr "%d procedures"
+msgid "%d procedure"
+msgid_plural "%d procedures"
+msgstr[0] "%d procedure"
+msgstr[1] "%d procedures"
 
 # 'voor uw zoekopdracht' weggelaten
-#: ../libgimp/gimpprocbrowserdialog.c:494
+#: ../libgimp/gimpprocbrowserdialog.c:463
 msgid "No matches for your query"
 msgstr "Geen resultaten gevonden"
 
-#: ../libgimp/gimpprocbrowserdialog.c:498
+#: ../libgimp/gimpprocbrowserdialog.c:467
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
 msgstr[0] "%d procedure gevonden"
 msgstr[1] "%d procedures gevonden"
 
-#: ../libgimp/gimpprocbrowserdialog.c:547
+#. count label
+#: ../libgimp/gimpprocbrowserdialog.c:516 ../libgimpwidgets/gimpbrowser.c:114
 msgid "No matches"
 msgstr "Geen resultaten"
 
@@ -417,7 +421,7 @@ msgstr "Blauw"
 msgid "Gray"
 msgstr "Grijs"
 
-#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpbase/gimpbaseenums.c:494
+#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpbase/gimpbaseenums.c:529
 msgid "Indexed"
 msgstr "Met index"
 
@@ -491,7 +495,7 @@ msgstr "Lichter"
 msgid "Burn"
 msgstr "Donkerder"
 
-#: ../libgimpbase/gimpbaseenums.c:386 ../libgimpbase/gimpbaseenums.c:526
+#: ../libgimpbase/gimpbaseenums.c:386 ../libgimpbase/gimpbaseenums.c:561
 msgid "Linear"
 msgstr "Lineair"
 
@@ -538,173 +542,197 @@ msgstr "Spiraal (kloksgewijs)"
 msgid "Spiral (ccw)"
 msgstr "Spiraalvormig (antikloksgewijs)"
 
-#: ../libgimpbase/gimpbaseenums.c:425
+#: ../libgimpbase/gimpbaseenums.c:427
+msgid "Intersections (dots)"
+msgstr ""
+
+# kruisdraad
+#: ../libgimpbase/gimpbaseenums.c:428
+msgid "Intersections (crosshairs)"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:429
+msgid "Dashed"
+msgstr "Streepjes"
+
+#: ../libgimpbase/gimpbaseenums.c:430
+msgid "Double dashed"
+msgstr "Dubbele streepjes"
+
+# vaste lijn/vast/egaal/
+#: ../libgimpbase/gimpbaseenums.c:431
+msgid "Solid"
+msgstr "Vast"
+
+#: ../libgimpbase/gimpbaseenums.c:460
 msgid "Stock ID"
 msgstr "Standaard ID"
 
 # vertalen?
 # inlijns pixbuf
-#: ../libgimpbase/gimpbaseenums.c:426
+#: ../libgimpbase/gimpbaseenums.c:461
 msgid "Inline pixbuf"
 msgstr "Inline pixbuf"
 
-#: ../libgimpbase/gimpbaseenums.c:427
+#: ../libgimpbase/gimpbaseenums.c:462
 msgid "Image file"
 msgstr "Afbeelding"
 
-#: ../libgimpbase/gimpbaseenums.c:456
+#: ../libgimpbase/gimpbaseenums.c:491
 msgid "RGB color"
 msgstr "RGB kleur"
 
-#: ../libgimpbase/gimpbaseenums.c:457 ../libgimpbase/gimpbaseenums.c:492
+#: ../libgimpbase/gimpbaseenums.c:492 ../libgimpbase/gimpbaseenums.c:527
 msgid "Grayscale"
 msgstr "Grijswaarden"
 
-#: ../libgimpbase/gimpbaseenums.c:458
+#: ../libgimpbase/gimpbaseenums.c:493
 msgid "Indexed color"
 msgstr "Kleur met index"
 
-#: ../libgimpbase/gimpbaseenums.c:490
+#: ../libgimpbase/gimpbaseenums.c:525
 msgid "RGB"
 msgstr "RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:491
+#: ../libgimpbase/gimpbaseenums.c:526
 msgid "RGB-alpha"
 msgstr "RGB-alpha"
 
-#: ../libgimpbase/gimpbaseenums.c:493
+#: ../libgimpbase/gimpbaseenums.c:528
 msgid "Grayscale-alpha"
 msgstr "Grijswaarden-alpha"
 
-#: ../libgimpbase/gimpbaseenums.c:495
+#: ../libgimpbase/gimpbaseenums.c:530
 msgid "Indexed-alpha"
 msgstr "Met index en alpha"
 
-#: ../libgimpbase/gimpbaseenums.c:525
+#: ../libgimpbase/gimpbaseenums.c:560
 msgid "None (Fastest)"
 msgstr "Geen (snelste)"
 
-#: ../libgimpbase/gimpbaseenums.c:527
+#: ../libgimpbase/gimpbaseenums.c:562
 msgid "Cubic"
 msgstr "Kubisch"
 
-#: ../libgimpbase/gimpbaseenums.c:528
+#: ../libgimpbase/gimpbaseenums.c:563
 msgid "Lanczos (Best)"
 msgstr "Lanczos (beste)"
 
-#: ../libgimpbase/gimpbaseenums.c:556
+#: ../libgimpbase/gimpbaseenums.c:591
 msgid "Constant"
 msgstr "Constant"
 
-#: ../libgimpbase/gimpbaseenums.c:557
+#: ../libgimpbase/gimpbaseenums.c:592
 msgid "Incremental"
 msgstr "Oplopend"
 
-#: ../libgimpbase/gimpbaseenums.c:586 ../modules/cdisplay_lcms.c:254
+#: ../libgimpbase/gimpbaseenums.c:621 ../modules/cdisplay_lcms.c:254
 msgid "None"
 msgstr "Geen"
 
-#: ../libgimpbase/gimpbaseenums.c:587
+#: ../libgimpbase/gimpbaseenums.c:622
 msgid "Sawtooth wave"
 msgstr "Zaagtandgolf"
 
-#: ../libgimpbase/gimpbaseenums.c:588
+#: ../libgimpbase/gimpbaseenums.c:623
 msgid "Triangular wave"
 msgstr "Driehoekige golf"
 
 # beeldpunten
-#: ../libgimpbase/gimpbaseenums.c:616
+#: ../libgimpbase/gimpbaseenums.c:651
 msgid "Pixels"
 msgstr "Pixels"
 
-#: ../libgimpbase/gimpbaseenums.c:617
+#: ../libgimpbase/gimpbaseenums.c:652
 msgid "Points"
 msgstr "Punten"
 
-#: ../libgimpbase/gimpbaseenums.c:646
+#: ../libgimpbase/gimpbaseenums.c:681
 msgid "Shadows"
 msgstr "Donkere kleuren"
 
-#: ../libgimpbase/gimpbaseenums.c:647
+#: ../libgimpbase/gimpbaseenums.c:682
 msgid "Midtones"
 msgstr "Middenkleuren"
 
-#: ../libgimpbase/gimpbaseenums.c:648
+#: ../libgimpbase/gimpbaseenums.c:683
 msgid "Highlights"
 msgstr "Lichtere kleuren"
 
 # vooruit/heen/voorwaarts
-#: ../libgimpbase/gimpbaseenums.c:676
+#: ../libgimpbase/gimpbaseenums.c:711
 msgid "Forward"
 msgstr "Voorwaarts"
 
 # achteruit/terug/achterwaarts<
-#: ../libgimpbase/gimpbaseenums.c:677
+#: ../libgimpbase/gimpbaseenums.c:712
 msgid "Backward"
 msgstr "Achterwaarts"
 
-#: ../libgimpbase/gimpbaseenums.c:778
+#: ../libgimpbase/gimpbaseenums.c:815
 msgid "Internal GIMP procedure"
 msgstr "Interne GIMP procedure"
 
-#: ../libgimpbase/gimpbaseenums.c:779
+#: ../libgimpbase/gimpbaseenums.c:816
 msgid "GIMP Plug-In"
 msgstr "GIMP Plug-in"
 
-#: ../libgimpbase/gimpbaseenums.c:780
+#: ../libgimpbase/gimpbaseenums.c:817
 msgid "GIMP Extension"
 msgstr "GIMP extensie"
 
-#: ../libgimpbase/gimpbaseenums.c:781
+#: ../libgimpbase/gimpbaseenums.c:818
 msgid "Temporary Procedure"
 msgstr "Tijdelijke procedure"
 
-#: ../libgimpbase/gimpmemsize.c:177
+#: ../libgimpbase/gimpmemsize.c:180
 #, c-format
-msgid "%d Bytes"
-msgstr "%d Bytes"
-
-#: ../libgimpbase/gimpmemsize.c:182
-#, c-format
-msgid "%.2f KB"
-msgstr "%.2f kB"
+msgid "%d Byte"
+msgid_plural "%d Bytes"
+msgstr[0] "%d Byte"
+msgstr[1] "%d Bytes"
 
 #: ../libgimpbase/gimpmemsize.c:186
 #, c-format
-msgid "%.1f KB"
-msgstr "%.1f kB"
+msgid "%.2f KB"
+msgstr "%.2f KB"
 
 #: ../libgimpbase/gimpmemsize.c:190
 #, c-format
-msgid "%d KB"
-msgstr "%d kB"
+msgid "%.1f KB"
+msgstr "%.1f KB"
 
-#: ../libgimpbase/gimpmemsize.c:197
+#: ../libgimpbase/gimpmemsize.c:194
+#, c-format
+msgid "%d KB"
+msgstr "%d KB"
+
+#: ../libgimpbase/gimpmemsize.c:201
 #, c-format
 msgid "%.2f MB"
 msgstr "%.2f MB"
 
-#: ../libgimpbase/gimpmemsize.c:201
+#: ../libgimpbase/gimpmemsize.c:205
 #, c-format
 msgid "%.1f MB"
 msgstr "%.1f MB"
 
-#: ../libgimpbase/gimpmemsize.c:205
+#: ../libgimpbase/gimpmemsize.c:209
 #, c-format
 msgid "%d MB"
 msgstr "%d MB"
 
-#: ../libgimpbase/gimpmemsize.c:212
+#: ../libgimpbase/gimpmemsize.c:216
 #, c-format
 msgid "%.2f GB"
 msgstr "%.2f GB"
 
-#: ../libgimpbase/gimpmemsize.c:216
+#: ../libgimpbase/gimpmemsize.c:220
 #, c-format
 msgid "%.1f GB"
 msgstr "%.1f GB"
 
-#: ../libgimpbase/gimpmemsize.c:220
+#: ../libgimpbase/gimpmemsize.c:224
 #, c-format
 msgid "%d GB"
 msgstr "%d GB"
@@ -828,8 +856,8 @@ msgid "while parsing token '%s': %s"
 msgstr "bij parseren token '%s': %s"
 
 #: ../libgimpconfig/gimpconfig-iface.c:453
-#: ../libgimpconfig/gimpconfig-iface.c:466 ../libgimpconfig/gimpscanner.c:515
-#: ../libgimpconfig/gimpscanner.c:596
+#: ../libgimpconfig/gimpconfig-iface.c:466 ../libgimpconfig/gimpscanner.c:498
+#: ../libgimpconfig/gimpscanner.c:579
 msgid "fatal parse error"
 msgstr "fatale parseerfout"
 
@@ -881,50 +909,35 @@ msgstr "Fout bij schrijven naar '%s': %s"
 msgid "Could not create '%s': %s"
 msgstr "Kan '%s' niet aanmaken: %s"
 
-#: ../libgimpconfig/gimpscanner.c:102
-#, c-format
-msgid "Could not open '%s' for reading: %s"
-msgstr "Kon '%s' niet openen voor lezen: %s"
-
-#: ../libgimpconfig/gimpscanner.c:272
+#: ../libgimpconfig/gimpscanner.c:255
 msgid "invalid UTF-8 string"
 msgstr "ongeldige UTF-8-tekenreeks"
 
-#: ../libgimpconfig/gimpscanner.c:623
+#: ../libgimpconfig/gimpscanner.c:606
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Fout tijdens parseren '%s' in regel %d: %s"
 
-#: ../libgimpmodule/gimpmodule.c:180
-#, c-format
-msgid "Loading module: '%s'\n"
-msgstr "Module '%s' wordt geladen\n"
-
-#: ../libgimpmodule/gimpmodule.c:197 ../libgimpmodule/gimpmodule.c:216
-#: ../libgimpmodule/gimpmodule.c:330 ../libgimpmodule/gimpmodule.c:358
-#: ../libgimpmodule/gimpmodule.c:470
+#: ../libgimpmodule/gimpmodule.c:152 ../libgimpmodule/gimpmodule.c:170
+#: ../libgimpmodule/gimpmodule.c:279 ../libgimpmodule/gimpmodule.c:306
+#: ../libgimpmodule/gimpmodule.c:417
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Laadfout module '%s': %s"
 
-#: ../libgimpmodule/gimpmodule.c:286
-#, c-format
-msgid "Skipping module: '%s'\n"
-msgstr "Module '%s' wordt overgeslagen\n"
-
-#: ../libgimpmodule/gimpmodule.c:426
+#: ../libgimpmodule/gimpmodule.c:374
 msgid "Module error"
 msgstr "Modulefout"
 
-#: ../libgimpmodule/gimpmodule.c:427
+#: ../libgimpmodule/gimpmodule.c:375
 msgid "Loaded"
 msgstr "Geladen"
 
-#: ../libgimpmodule/gimpmodule.c:428
+#: ../libgimpmodule/gimpmodule.c:376
 msgid "Load failed"
 msgstr "Laden mislukte"
 
-#: ../libgimpmodule/gimpmodule.c:429
+#: ../libgimpmodule/gimpmodule.c:377
 msgid "Not loaded"
 msgstr "Niet geladen"
 
@@ -943,12 +956,12 @@ msgstr ""
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Kon de map '%s' voor de miniaturen niet aanmaken."
 
-#: ../libgimpthumb/gimpthumbnail.c:919
+#: ../libgimpthumb/gimpthumbnail.c:887
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Kon geen miniatuur aanmaken voor %s: %s"
 
-#: ../libgimpwidgets/gimpbrowser.c:129
+#: ../libgimpwidgets/gimpbrowser.c:98
 msgid "_Search:"
 msgstr "_Zoeken:"
 
@@ -970,58 +983,58 @@ msgstr "_Wit"
 
 # 'Schaalt'? 'Schubben'? Weegschalen
 # Misschien gaat het over kleurbereik
-#: ../libgimpwidgets/gimpcolorscales.c:129
+#: ../libgimpwidgets/gimpcolorscales.c:98
 msgid "Scales"
 msgstr "Schalen"
 
 # Huidige kleur
 # (niet huidig kleur)
-#: ../libgimpwidgets/gimpcolorselection.c:214
+#: ../libgimpwidgets/gimpcolorselection.c:187
 msgid "Current:"
 msgstr "Huidige:"
 
 # Vorige kleur
-#: ../libgimpwidgets/gimpcolorselection.c:236
+#: ../libgimpwidgets/gimpcolorselection.c:209
 msgid "Old:"
 msgstr "Oude:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:281
+#: ../libgimpwidgets/gimpcolorselection.c:263
 msgid "Hexadecimal color notation as used in HTML and CSS"
 msgstr "Hexadecimale kleurnotatie zoals gebruikt in HTML en CSS"
 
-#: ../libgimpwidgets/gimpcolorselection.c:286
+#: ../libgimpwidgets/gimpcolorselection.c:268
 msgid "HTML _notation:"
 msgstr "HTML-_notatie:"
 
-#: ../libgimpwidgets/gimpfileentry.c:351
+#: ../libgimpwidgets/gimpfileentry.c:320
 msgid "Select Folder"
 msgstr "Selecteer map"
 
-#: ../libgimpwidgets/gimpfileentry.c:353
+#: ../libgimpwidgets/gimpfileentry.c:322
 msgid "Select File"
 msgstr "Selecteer bestand"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:232
+#: ../libgimpwidgets/gimpmemsizeentry.c:203
 msgid "Kilobytes"
 msgstr "Kilobyte"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:233
+#: ../libgimpwidgets/gimpmemsizeentry.c:204
 msgid "Megabytes"
 msgstr "Megabyte"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:234
+#: ../libgimpwidgets/gimpmemsizeentry.c:205
 msgid "Gigabytes"
 msgstr "Gigabyte"
 
-#: ../libgimpwidgets/gimppatheditor.c:243
+#: ../libgimpwidgets/gimppatheditor.c:212
 msgid "Writable"
 msgstr "Schrijfbaar"
 
-#: ../libgimpwidgets/gimppatheditor.c:252
+#: ../libgimpwidgets/gimppatheditor.c:221
 msgid "Folder"
 msgstr "Map"
 
-#: ../libgimpwidgets/gimppickbutton.c:138
+#: ../libgimpwidgets/gimppickbutton.c:107
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
@@ -1029,24 +1042,26 @@ msgstr ""
 "Klik op de druppelaar en vervolgens op een kleur op het scherm om die kleur "
 "te selecteren."
 
-#: ../libgimpwidgets/gimppreviewarea.c:126
+#: ../libgimpwidgets/gimppreviewarea.c:94
 msgid "Check Size"
 msgstr "Vakgrootte"
 
 # transparantietype
-#: ../libgimpwidgets/gimppreviewarea.c:133
+#: ../libgimpwidgets/gimppreviewarea.c:101
 msgid "Check Style"
 msgstr "Transparantiestijl"
 
 #. toggle button to (des)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:240
+#: ../libgimpwidgets/gimppreview.c:256
 msgid "_Preview"
 msgstr "_Voorbeeld"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1868
+#: ../libgimpwidgets/gimppropwidgets.c:1872
 #, c-format
-msgid "This text input field is limited to %d characters."
-msgstr "Dit tekstinvoerveld mag  maximaal %d tekens bevatten."
+msgid "This text input field is limited to %d character."
+msgid_plural "This text input field is limited to %d characters."
+msgstr[0] "Dit tekstinvoerveld mag  maximaal %d teken bevatten."
+msgstr[1] "Dit tekstinvoerveld mag  maximaal %d tekens bevatten."
 
 # beeldpunten
 #: ../libgimpwidgets/gimpresolutionentry.c:382
@@ -1126,19 +1141,19 @@ msgstr "_Draaien"
 msgid "_Shear"
 msgstr "_Hellen"
 
-#: ../libgimpwidgets/gimpunitmenu.c:302
+#: ../libgimpwidgets/gimpunitmenu.c:267
 msgid "More..."
 msgstr "Meer..."
 
-#: ../libgimpwidgets/gimpunitmenu.c:612
+#: ../libgimpwidgets/gimpunitmenu.c:577
 msgid "Unit Selection"
 msgstr "Selectie van de eenheden"
 
-#: ../libgimpwidgets/gimpunitmenu.c:660
+#: ../libgimpwidgets/gimpunitmenu.c:625
 msgid "Unit"
 msgstr "Eenheid"
 
-#: ../libgimpwidgets/gimpunitmenu.c:664
+#: ../libgimpwidgets/gimpunitmenu.c:629
 msgid "Factor"
 msgstr "Factor"
 
@@ -1412,6 +1427,18 @@ msgstr "Waterverf"
 #: ../modules/colorsel_water.c:220
 msgid "Pressure"
 msgstr "Druk"
+
+#~ msgid "Searching - please wait"
+#~ msgstr "Bezig met zoeken - een ogenblik geduld"
+
+#~ msgid "Could not open '%s' for reading: %s"
+#~ msgstr "Kon '%s' niet openen voor lezen: %s"
+
+#~ msgid "Loading module: '%s'\n"
+#~ msgstr "Module '%s' wordt geladen\n"
+
+#~ msgid "Skipping module: '%s'\n"
+#~ msgstr "Module '%s' wordt overgeslagen\n"
 
 #~ msgid "Sets the color profile used when printing."
 #~ msgstr "Stelt het kleurprofiel is dat gebruikt wordt bij afdrukken."
