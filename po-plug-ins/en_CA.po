@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-09 22:24-0500\n"
+"POT-Creation-Date: 2006-01-15 23:52-0500\n"
 "PO-Revision-Date: 2005-09-06 14:31-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
@@ -622,7 +622,7 @@ msgstr "Light intensity"
 msgid "Position"
 msgstr "Position"
 
-#: ../plug-ins/Lighting/lighting_ui.c:456 ../plug-ins/common/flarefx.c:761
+#: ../plug-ins/Lighting/lighting_ui.c:456 ../plug-ins/common/flarefx.c:760
 #: ../plug-ins/common/mblur.c:992 ../plug-ins/common/nova.c:456
 #: ../plug-ins/common/papertile.c:273 ../plug-ins/flame/flame.c:1223
 #: ../plug-ins/gflare/gflare.c:2655
@@ -634,7 +634,7 @@ msgstr "_X:"
 msgid "Light source X position in XYZ space"
 msgstr "Light source X position in XYZ space"
 
-#: ../plug-ins/Lighting/lighting_ui.c:469 ../plug-ins/common/flarefx.c:766
+#: ../plug-ins/Lighting/lighting_ui.c:469 ../plug-ins/common/flarefx.c:765
 #: ../plug-ins/common/mblur.c:997 ../plug-ins/common/nova.c:461
 #: ../plug-ins/common/papertile.c:282 ../plug-ins/flame/flame.c:1237
 #: ../plug-ins/gflare/gflare.c:2659
@@ -3608,24 +3608,24 @@ msgid "_Number height:"
 msgstr "_Number height:"
 
 #: ../plug-ins/common/flarefx.c:195
-msgid "_FlareFX..."
-msgstr "_FlareFX..."
+msgid "Lens _Flare..."
+msgstr "Lens _Flare..."
 
 #: ../plug-ins/common/flarefx.c:270
-msgid "Render flare"
-msgstr "Render flare"
+msgid "Render lens flare"
+msgstr "Render lens flare"
 
-#: ../plug-ins/common/flarefx.c:307
-msgid "FlareFX"
-msgstr "FlareFX"
+#: ../plug-ins/common/flarefx.c:306
+msgid "Lens Flare"
+msgstr "Lens Flare"
 
-#: ../plug-ins/common/flarefx.c:746
+#: ../plug-ins/common/flarefx.c:745
 msgid "Center of Flare Effect"
 msgstr "Centre of Flare Effect"
 
-#: ../plug-ins/common/flarefx.c:782
-msgid "_Show cursor"
-msgstr "_Show cursor"
+#: ../plug-ins/common/flarefx.c:781 ../plug-ins/common/nova.c:477
+msgid "Show _position"
+msgstr "Show _position"
 
 #: ../plug-ins/common/fp.c:230 ../plug-ins/print/gimp_color_window.c:307
 msgid "Cyan:"
@@ -5242,20 +5242,20 @@ msgid "Normalizing"
 msgstr "Normalizing"
 
 #: ../plug-ins/common/nova.c:176
-msgid "Su_perNova..."
-msgstr "Su_perNova..."
+msgid "Su_pernova..."
+msgstr "Su_pernova..."
 
 #: ../plug-ins/common/nova.c:260
-msgid "Rendering SuperNova"
-msgstr "Rendering SuperNova"
+msgid "Rendering supernova"
+msgstr "Rendering supernova"
 
 #: ../plug-ins/common/nova.c:303
-msgid "SuperNova"
-msgstr "SuperNova"
+msgid "Supernova"
+msgstr "Supernova"
 
 #: ../plug-ins/common/nova.c:347
-msgid "SuperNova Color Picker"
-msgstr "SuperNova Colour Picker"
+msgid "Supernova Color Picker"
+msgstr "Supernova Colour Picker"
 
 #: ../plug-ins/common/nova.c:376
 msgid "_Spokes:"
@@ -5266,12 +5266,8 @@ msgid "R_andom hue:"
 msgstr "R_andom hue:"
 
 #: ../plug-ins/common/nova.c:443
-msgid "Center of SuperNova"
-msgstr "Centre of SuperNova"
-
-#: ../plug-ins/common/nova.c:477
-msgid "S_how cursor"
-msgstr "S_how cursor"
+msgid "Center of Nova"
+msgstr "Centre of Nova"
 
 #: ../plug-ins/common/oilify.c:105
 msgid "Oili_fy..."

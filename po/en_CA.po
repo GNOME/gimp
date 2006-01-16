@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-04 15:02-0500\n"
+"POT-Creation-Date: 2006-01-15 23:51-0500\n"
 "PO-Revision-Date: 2005-09-06 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
@@ -249,10 +249,9 @@ msgstr "Colourmap Editor"
 msgid "Context"
 msgstr "Context"
 
-#: ../app/actions/actions.c:116 ../app/actions/dialogs-actions.c:115
-#: ../app/dialogs/dialogs.c:141
-msgid "Cursor Info"
-msgstr "Cursor Info"
+#: ../app/actions/actions.c:116 ../app/dialogs/dialogs.c:141
+msgid "Pointer Information"
+msgstr "Pointer Information"
 
 #: ../app/actions/actions.c:119
 msgid "Debug"
@@ -354,7 +353,7 @@ msgstr "Patterns"
 msgid "Plug-Ins"
 msgstr "Plug-Ins"
 
-#: ../app/actions/actions.c:179 ../app/core/core-enums.c:781
+#: ../app/actions/actions.c:179 ../app/core/core-enums.c:809
 #: ../app/core/gimpchannel.c:361
 msgid "Quick Mask"
 msgstr "Quick Mask"
@@ -542,7 +541,7 @@ msgstr "Duplicate channel"
 msgid "_Delete Channel"
 msgstr "_Delete Channel"
 
-#: ../app/actions/channels-actions.c:73 ../app/core/core-enums.c:836
+#: ../app/actions/channels-actions.c:73 ../app/core/core-enums.c:864
 msgid "Delete channel"
 msgstr "Delete channel"
 
@@ -777,8 +776,8 @@ msgid "S_wap Colors"
 msgstr "S_wap Colours"
 
 #: ../app/actions/cursor-info-actions.c:40
-msgid "Cursor Info Menu"
-msgstr "Cursor Info Menu"
+msgid "Pointer Information Menu"
+msgstr "Pointer Information Menu"
 
 #: ../app/actions/cursor-info-actions.c:47
 #: ../app/actions/sample-point-editor-actions.c:47
@@ -913,9 +912,13 @@ msgstr "Undo _History"
 msgid "Undo History"
 msgstr "Undo History"
 
+#: ../app/actions/dialogs-actions.c:115 ../app/dialogs/dialogs.c:141
+msgid "Pointer"
+msgstr "Pointer"
+
 #: ../app/actions/dialogs-actions.c:115
-msgid "_Cursor"
-msgstr "_Cursor"
+msgid "Pointer Info"
+msgstr "Pointer Info"
 
 #: ../app/actions/dialogs-actions.c:120
 msgid "_Sample Points"
@@ -2211,7 +2214,7 @@ msgstr "Duplicate layer"
 msgid "_Delete Layer"
 msgstr "_Delete Layer"
 
-#: ../app/actions/layers-actions.c:91 ../app/core/core-enums.c:824
+#: ../app/actions/layers-actions.c:91 ../app/core/core-enums.c:852
 msgid "Delete layer"
 msgstr "Delete layer"
 
@@ -3162,7 +3165,7 @@ msgstr "Duplicate path"
 msgid "_Delete Path"
 msgstr "_Delete Path"
 
-#: ../app/actions/vectors-actions.c:78 ../app/core/core-enums.c:840
+#: ../app/actions/vectors-actions.c:78 ../app/core/core-enums.c:868
 msgid "Delete path"
 msgstr "Delete path"
 
@@ -3572,7 +3575,7 @@ msgstr "Hue"
 msgid "Saturation"
 msgstr "Saturation"
 
-#: ../app/base/base-enums.c:121 ../app/tools/gimppaintoptions-gui.c:305
+#: ../app/base/base-enums.c:121 ../app/tools/gimppaintoptions-gui.c:308
 msgid "Color"
 msgstr "Colour"
 
@@ -3691,20 +3694,20 @@ msgid "Ask for confirmation before closing an image without saving."
 msgstr "Ask for confirmation before closing an image without saving."
 
 #: ../app/config/gimprc-blurbs.h:36
-msgid "Sets the pixel format of cursors the GIMP will use."
-msgstr "Sets the pixel format of cursors the GIMP will use."
+msgid "Sets the pixel format to use for mouse pointers."
+msgstr "Sets the pixel format to use for mouse pointers."
 
 #: ../app/config/gimprc-blurbs.h:39
-msgid "Sets the mode of cursor the GIMP will use."
-msgstr "Sets the mode of cursor the GIMP will use."
+msgid "Sets the type of mouse pointers to use."
+msgstr "Sets the type of mouse pointers to use."
 
 #: ../app/config/gimprc-blurbs.h:42
 msgid ""
-"Context-dependent cursors are cool.  They are enabled by default. However, "
-"they require overhead that you may want to do without."
+"Context-dependent mouse pointers are helpful.  They are enabled by default.  "
+"However, they require overhead that you may want to do without."
 msgstr ""
-"Context-dependent cursors are cool.  They are enabled by default. However, "
-"they require overhead that you may want to do without."
+"Context-dependent mouse pointers are helpful.  They are enabled by default.  "
+"However, they require overhead that you may want to do without."
 
 #: ../app/config/gimprc-blurbs.h:50
 msgid ""
@@ -3954,11 +3957,11 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:291
 msgid ""
-"When enabled, the cursor will be shown over the image while using a paint "
-"tool."
+"When enabled, the mouse pointer will be shown over the image while using a "
+"paint tool."
 msgstr ""
-"When enabled, the cursor will be shown over the image while using a paint "
-"tool."
+"When enabled, the mouse pointer will be shown over the image while using a "
+"paint tool."
 
 #: ../app/config/gimprc-blurbs.h:295
 msgid ""
@@ -4405,269 +4408,277 @@ msgstr "Enormous"
 msgid "Gigantic"
 msgstr "Gigantic"
 
-#: ../app/core/core-enums.c:594
+#: ../app/core/core-enums.c:559
+msgid "View as list"
+msgstr "View as list"
+
+#: ../app/core/core-enums.c:560
+msgid "View as grid"
+msgstr "View as grid"
+
+#: ../app/core/core-enums.c:622
 msgid "No thumbnails"
 msgstr "No thumbnails"
 
-#: ../app/core/core-enums.c:595
+#: ../app/core/core-enums.c:623
 msgid "Normal (128x128)"
 msgstr "Normal (128x128)"
 
-#: ../app/core/core-enums.c:596
+#: ../app/core/core-enums.c:624
 msgid "Large (256x256)"
 msgstr "Large (256x256)"
 
-#: ../app/core/core-enums.c:771
+#: ../app/core/core-enums.c:799
 msgid "<<invalid>>"
 msgstr "<<invalid>>"
 
-#: ../app/core/core-enums.c:772
+#: ../app/core/core-enums.c:800
 msgid "Scale image"
 msgstr "Scale image"
 
-#: ../app/core/core-enums.c:773
+#: ../app/core/core-enums.c:801
 msgid "Resize image"
 msgstr "Resize image"
 
-#: ../app/core/core-enums.c:774
+#: ../app/core/core-enums.c:802
 msgid "Flip image"
 msgstr "Flip image"
 
-#: ../app/core/core-enums.c:775
+#: ../app/core/core-enums.c:803
 msgid "Rotate image"
 msgstr "Rotate image"
 
-#: ../app/core/core-enums.c:776
+#: ../app/core/core-enums.c:804
 msgid "Crop image"
 msgstr "Crop image"
 
-#: ../app/core/core-enums.c:777
+#: ../app/core/core-enums.c:805
 msgid "Convert image"
 msgstr "Convert image"
 
-#: ../app/core/core-enums.c:778
+#: ../app/core/core-enums.c:806
 msgid "Remove item"
 msgstr "Remove item"
 
-#: ../app/core/core-enums.c:779
+#: ../app/core/core-enums.c:807
 msgid "Merge layers"
 msgstr "Merge layers"
 
-#: ../app/core/core-enums.c:780
+#: ../app/core/core-enums.c:808
 msgid "Merge paths"
 msgstr "Merge paths"
 
-#: ../app/core/core-enums.c:782 ../app/core/core-enums.c:812
+#: ../app/core/core-enums.c:810 ../app/core/core-enums.c:840
 msgid "Guide"
 msgstr "Guide"
 
-#: ../app/core/core-enums.c:783 ../app/core/core-enums.c:813
+#: ../app/core/core-enums.c:811 ../app/core/core-enums.c:841
 #: ../app/core/gimpimage-grid.c:58 ../app/dialogs/grid-dialog.c:149
 #: ../app/tools/tools-enums.c:205
 msgid "Grid"
 msgstr "Grid"
 
-#: ../app/core/core-enums.c:784 ../app/core/core-enums.c:814
+#: ../app/core/core-enums.c:812 ../app/core/core-enums.c:842
 msgid "Sample Point"
 msgstr "Sample Point"
 
-#: ../app/core/core-enums.c:785 ../app/core/core-enums.c:816
+#: ../app/core/core-enums.c:813 ../app/core/core-enums.c:844
 msgid "Layer/Channel"
 msgstr "Layer/Channel"
 
-#: ../app/core/core-enums.c:786 ../app/core/core-enums.c:817
+#: ../app/core/core-enums.c:814 ../app/core/core-enums.c:845
 msgid "Layer/Channel modification"
 msgstr "Layer/Channel modification"
 
-#: ../app/core/core-enums.c:787 ../app/core/core-enums.c:818
+#: ../app/core/core-enums.c:815 ../app/core/core-enums.c:846
 msgid "Selection mask"
 msgstr "Selection mask"
 
-#: ../app/core/core-enums.c:788 ../app/core/core-enums.c:821
+#: ../app/core/core-enums.c:816 ../app/core/core-enums.c:849
 msgid "Item visibility"
 msgstr "Item visibility"
 
-#: ../app/core/core-enums.c:789 ../app/core/core-enums.c:822
+#: ../app/core/core-enums.c:817 ../app/core/core-enums.c:850
 msgid "Link/Unlink item"
 msgstr "Link/Unlink item"
 
-#: ../app/core/core-enums.c:790
+#: ../app/core/core-enums.c:818
 msgid "Item properties"
 msgstr "Item properties"
 
-#: ../app/core/core-enums.c:791 ../app/core/core-enums.c:820
+#: ../app/core/core-enums.c:819 ../app/core/core-enums.c:848
 msgid "Move item"
 msgstr "Move item"
 
-#: ../app/core/core-enums.c:792
+#: ../app/core/core-enums.c:820
 msgid "Scale item"
 msgstr "Scale item"
 
-#: ../app/core/core-enums.c:793
+#: ../app/core/core-enums.c:821
 msgid "Resize item"
 msgstr "Resize item"
 
-#: ../app/core/core-enums.c:794 ../app/core/core-enums.c:831
+#: ../app/core/core-enums.c:822 ../app/core/core-enums.c:859
 msgid "Add layer mask"
 msgstr "Add layer mask"
 
-#: ../app/core/core-enums.c:795 ../app/core/core-enums.c:833
+#: ../app/core/core-enums.c:823 ../app/core/core-enums.c:861
 msgid "Apply layer mask"
 msgstr "Apply layer mask"
 
-#: ../app/core/core-enums.c:796 ../app/core/core-enums.c:843
+#: ../app/core/core-enums.c:824 ../app/core/core-enums.c:871
 msgid "Floating selection to layer"
 msgstr "Floating selection to layer"
 
-#: ../app/core/core-enums.c:797
+#: ../app/core/core-enums.c:825
 msgid "Float selection"
 msgstr "Float selection"
 
-#: ../app/core/core-enums.c:798
+#: ../app/core/core-enums.c:826
 msgid "Anchor floating selection"
 msgstr "Anchor floating selection"
 
-#: ../app/core/core-enums.c:799
+#: ../app/core/core-enums.c:827
 msgid "Remove floating selection"
 msgstr "Remove floating selection"
 
-#: ../app/core/core-enums.c:800 ../app/core/gimp-edit.c:253
+#: ../app/core/core-enums.c:828 ../app/core/gimp-edit.c:253
 msgid "Paste"
 msgstr "Paste"
 
-#: ../app/core/core-enums.c:801 ../app/core/gimp-edit.c:495
+#: ../app/core/core-enums.c:829 ../app/core/gimp-edit.c:495
 msgid "Cut"
 msgstr "Cut"
 
-#: ../app/core/core-enums.c:802 ../app/tools/gimptexttool.c:142
+#: ../app/core/core-enums.c:830 ../app/tools/gimptexttool.c:142
 #: ../app/widgets/widgets-enums.c:263
 msgid "Text"
 msgstr "Text"
 
-#: ../app/core/core-enums.c:803 ../app/core/core-enums.c:846
+#: ../app/core/core-enums.c:831 ../app/core/core-enums.c:874
 #: ../app/core/gimpdrawable-transform.c:911
 msgid "Transform"
 msgstr "Transform"
 
-#: ../app/core/core-enums.c:804 ../app/core/core-enums.c:847
+#: ../app/core/core-enums.c:832 ../app/core/core-enums.c:875
 #: ../app/paint/gimppaintcore.c:335
 msgid "Paint"
 msgstr "Paint"
 
-#: ../app/core/core-enums.c:805 ../app/core/core-enums.c:850
+#: ../app/core/core-enums.c:833 ../app/core/core-enums.c:878
 msgid "Attach parasite"
 msgstr "Attach parasite"
 
-#: ../app/core/core-enums.c:806 ../app/core/core-enums.c:851
+#: ../app/core/core-enums.c:834 ../app/core/core-enums.c:879
 msgid "Remove parasite"
 msgstr "Remove parasite"
 
-#: ../app/core/core-enums.c:807
+#: ../app/core/core-enums.c:835
 msgid "Import paths"
 msgstr "Import paths"
 
-#: ../app/core/core-enums.c:808 ../app/pdb/drawable_cmds.c:1722
+#: ../app/core/core-enums.c:836 ../app/pdb/drawable_cmds.c:1722
 msgid "Plug-In"
 msgstr "Plug-In"
 
-#: ../app/core/core-enums.c:809
+#: ../app/core/core-enums.c:837
 msgid "Image type"
 msgstr "Image type"
 
-#: ../app/core/core-enums.c:810
+#: ../app/core/core-enums.c:838
 msgid "Image size"
 msgstr "Image size"
 
-#: ../app/core/core-enums.c:811
+#: ../app/core/core-enums.c:839
 msgid "Image resolution change"
 msgstr "Image resolution change"
 
-#: ../app/core/core-enums.c:815
+#: ../app/core/core-enums.c:843
 msgid "Change indexed palette"
 msgstr "Change indexed palette"
 
-#: ../app/core/core-enums.c:819
+#: ../app/core/core-enums.c:847
 msgid "Rename item"
 msgstr "Rename item"
 
-#: ../app/core/core-enums.c:823
+#: ../app/core/core-enums.c:851
 msgid "New layer"
 msgstr "New layer"
 
-#: ../app/core/core-enums.c:825
+#: ../app/core/core-enums.c:853
 msgid "Reposition layer"
 msgstr "Reposition layer"
 
-#: ../app/core/core-enums.c:826
+#: ../app/core/core-enums.c:854
 msgid "Set layer mode"
 msgstr "Set layer mode"
 
-#: ../app/core/core-enums.c:827
+#: ../app/core/core-enums.c:855
 msgid "Set layer opacity"
 msgstr "Set layer opacity"
 
-#: ../app/core/core-enums.c:828
+#: ../app/core/core-enums.c:856
 msgid "Lock/Unlock alpha channel"
 msgstr "Lock/Unlock alpha channel"
 
-#: ../app/core/core-enums.c:829
+#: ../app/core/core-enums.c:857
 msgid "Text layer"
 msgstr "Text layer"
 
-#: ../app/core/core-enums.c:830
+#: ../app/core/core-enums.c:858
 msgid "Text layer modification"
 msgstr "Text layer modification"
 
-#: ../app/core/core-enums.c:832
+#: ../app/core/core-enums.c:860
 msgid "Delete layer mask"
 msgstr "Delete layer mask"
 
-#: ../app/core/core-enums.c:834
+#: ../app/core/core-enums.c:862
 msgid "Show layer mask"
 msgstr "Show layer mask"
 
-#: ../app/core/core-enums.c:835
+#: ../app/core/core-enums.c:863
 msgid "New channel"
 msgstr "New channel"
 
-#: ../app/core/core-enums.c:837
+#: ../app/core/core-enums.c:865
 msgid "Reposition channel"
 msgstr "Reposition channel"
 
-#: ../app/core/core-enums.c:838
+#: ../app/core/core-enums.c:866
 msgid "Channel color"
 msgstr "Channel colour"
 
-#: ../app/core/core-enums.c:839
+#: ../app/core/core-enums.c:867
 msgid "New path"
 msgstr "New path"
 
-#: ../app/core/core-enums.c:841
+#: ../app/core/core-enums.c:869
 msgid "Path modification"
 msgstr "Path modification"
 
-#: ../app/core/core-enums.c:842
+#: ../app/core/core-enums.c:870
 msgid "Reposition path"
 msgstr "Reposition path"
 
-#: ../app/core/core-enums.c:844
+#: ../app/core/core-enums.c:872
 msgid "FS rigor"
 msgstr "FS rigor"
 
-#: ../app/core/core-enums.c:845
+#: ../app/core/core-enums.c:873
 msgid "FS relax"
 msgstr "FS relax"
 
-#: ../app/core/core-enums.c:848 ../app/paint/gimpink.c:103
+#: ../app/core/core-enums.c:876 ../app/paint/gimpink.c:103
 #: ../app/tools/gimpinktool.c:61
 msgid "Ink"
 msgstr "Ink"
 
-#: ../app/core/core-enums.c:849
+#: ../app/core/core-enums.c:877
 msgid "Select foreground"
 msgstr "Select foreground"
 
-#: ../app/core/core-enums.c:852
+#: ../app/core/core-enums.c:880
 msgid "EEK: can't undo"
 msgstr "EEK: cannot undo"
 
@@ -5434,7 +5445,7 @@ msgstr "(Preview may be out of date)"
 
 #. pixel size
 #: ../app/core/gimpimagefile.c:610 ../app/widgets/gimpimagepropview.c:323
-#: ../app/widgets/gimpsizebox.c:431 ../app/widgets/gimptemplateeditor.c:563
+#: ../app/widgets/gimpsizebox.c:431 ../app/widgets/gimptemplateeditor.c:564
 #, c-format
 msgid "%d x %d pixel"
 msgid_plural "%d x %d pixels"
@@ -5880,10 +5891,6 @@ msgstr "Devices"
 #: ../app/dialogs/dialogs.c:137
 msgid "Errors"
 msgstr "Errors"
-
-#: ../app/dialogs/dialogs.c:141
-msgid "Cursor"
-msgstr "Cursor"
 
 #: ../app/dialogs/dialogs.c:162
 msgid "History"
@@ -6636,26 +6643,26 @@ msgstr "Fit to window"
 msgid "Initial zoom _ratio:"
 msgstr "Initial zoom _ratio:"
 
-#. Mouse Cursors
+#. Mouse Pointers
 #: ../app/dialogs/preferences-dialog.c:1842
-msgid "Mouse Cursors"
-msgstr "Mouse Cursors"
+msgid "Mouse Pointers"
+msgstr "Mouse Pointers"
 
 #: ../app/dialogs/preferences-dialog.c:1846
 msgid "Show _brush outline"
 msgstr "Show _brush outline"
 
 #: ../app/dialogs/preferences-dialog.c:1849
-msgid "Show paint _tool cursor"
-msgstr "Show paint _tool cursor"
+msgid "Show pointer for paint _tools"
+msgstr "Show pointer for paint _tools"
 
 #: ../app/dialogs/preferences-dialog.c:1855
-msgid "Cursor _mode:"
-msgstr "Cursor _mode:"
+msgid "Pointer _mode:"
+msgstr "Pointer _mode:"
 
 #: ../app/dialogs/preferences-dialog.c:1858
-msgid "Cursor re_ndering:"
-msgstr "Cursor re_ndering:"
+msgid "Pointer re_ndering:"
+msgstr "Pointer re_ndering:"
 
 #: ../app/dialogs/preferences-dialog.c:1870
 msgid "Image Window Appearance"
@@ -8131,7 +8138,7 @@ msgstr "Offset:"
 msgid "Shape:"
 msgstr "Shape:"
 
-#: ../app/tools/gimpblendoptions.c:231 ../app/tools/gimppaintoptions-gui.c:489
+#: ../app/tools/gimpblendoptions.c:231 ../app/tools/gimppaintoptions-gui.c:494
 msgid "Repeat:"
 msgstr "Repeat:"
 
@@ -8144,7 +8151,7 @@ msgid "Max depth:"
 msgstr "Max depth:"
 
 #: ../app/tools/gimpblendoptions.c:274
-#: ../app/tools/gimpbucketfilloptions.c:273
+#: ../app/tools/gimpbucketfilloptions.c:274
 #: ../app/tools/gimpselectionoptions.c:500
 msgid "Threshold:"
 msgstr "Threshold:"
@@ -8210,29 +8217,29 @@ msgid "Fill Type  (%s)"
 msgstr "Fill Type  (%s)"
 
 #. fill selection
-#: ../app/tools/gimpbucketfilloptions.c:225
+#: ../app/tools/gimpbucketfilloptions.c:226
 #, c-format
 msgid "Affected Area  (%s)"
 msgstr "Affected Area  (%s)"
 
-#: ../app/tools/gimpbucketfilloptions.c:229
+#: ../app/tools/gimpbucketfilloptions.c:230
 msgid "Fill whole selection"
 msgstr "Fill whole selection"
 
-#: ../app/tools/gimpbucketfilloptions.c:230
+#: ../app/tools/gimpbucketfilloptions.c:231
 msgid "Fill similar colors"
 msgstr "Fill similar colours"
 
-#: ../app/tools/gimpbucketfilloptions.c:239
+#: ../app/tools/gimpbucketfilloptions.c:240
 #: ../app/tools/gimpselectionoptions.c:472
 msgid "Finding Similar Colors"
 msgstr "Finding Similar Colours"
 
-#: ../app/tools/gimpbucketfilloptions.c:255
+#: ../app/tools/gimpbucketfilloptions.c:256
 msgid "Fill transparent areas"
 msgstr "Fill transparent areas"
 
-#: ../app/tools/gimpbucketfilloptions.c:261 ../app/tools/gimpclonetool.c:305
+#: ../app/tools/gimpbucketfilloptions.c:262 ../app/tools/gimpclonetool.c:305
 #: ../app/tools/gimpcolorpickeroptions.c:162
 #: ../app/tools/gimpselectionoptions.c:488
 #: ../app/tools/gimpselectionoptions.c:536
@@ -8271,7 +8278,7 @@ msgstr "Ctrl-Click to set a clone source."
 msgid "Source"
 msgstr "Source"
 
-#: ../app/tools/gimpclonetool.c:318
+#: ../app/tools/gimpclonetool.c:319
 msgid "Alignment:"
 msgstr "Alignment:"
 
@@ -8772,7 +8779,7 @@ msgid "Adjustment"
 msgstr "Adjustment"
 
 #: ../app/tools/gimpinkoptions-gui.c:70 ../app/tools/gimpinkoptions-gui.c:95
-#: ../app/tools/gimptextoptions.c:404
+#: ../app/tools/gimptextoptions.c:436
 msgid "Size:"
 msgstr "Size:"
 
@@ -8985,62 +8992,62 @@ msgstr "Mode:"
 msgid "Opacity:"
 msgstr "Opacity:"
 
-#: ../app/tools/gimppaintoptions-gui.c:128
+#: ../app/tools/gimppaintoptions-gui.c:129
 msgid "Brush:"
 msgstr "Brush:"
 
-#: ../app/tools/gimppaintoptions-gui.c:138
-#: ../app/tools/gimppaintoptions-gui.c:465
+#: ../app/tools/gimppaintoptions-gui.c:141
+#: ../app/tools/gimppaintoptions-gui.c:470
 msgid "Gradient:"
 msgstr "Gradient:"
 
-#: ../app/tools/gimppaintoptions-gui.c:174
+#: ../app/tools/gimppaintoptions-gui.c:177
 msgid "Incremental"
 msgstr "Incremental"
 
-#: ../app/tools/gimppaintoptions-gui.c:188
+#: ../app/tools/gimppaintoptions-gui.c:191
 msgid "Hard edge"
 msgstr "Hard edge"
 
-#: ../app/tools/gimppaintoptions-gui.c:229
+#: ../app/tools/gimppaintoptions-gui.c:232
 msgid "Pressure sensitivity"
 msgstr "Pressure sensitivity"
 
-#: ../app/tools/gimppaintoptions-gui.c:248
+#: ../app/tools/gimppaintoptions-gui.c:251
 msgid "Opacity"
 msgstr "Opacity"
 
-#: ../app/tools/gimppaintoptions-gui.c:262
+#: ../app/tools/gimppaintoptions-gui.c:265
 msgid "Hardness"
 msgstr "Hardness"
 
-#: ../app/tools/gimppaintoptions-gui.c:273
+#: ../app/tools/gimppaintoptions-gui.c:276
 msgid "Rate"
 msgstr "Rate"
 
-#: ../app/tools/gimppaintoptions-gui.c:287
-#: ../app/tools/gimppaintoptions-gui.c:296
+#: ../app/tools/gimppaintoptions-gui.c:290
+#: ../app/tools/gimppaintoptions-gui.c:299
 msgid "Size"
 msgstr "Size"
 
-#: ../app/tools/gimppaintoptions-gui.c:336
+#: ../app/tools/gimppaintoptions-gui.c:339
 msgid "Fade out"
 msgstr "Fade out"
 
-#: ../app/tools/gimppaintoptions-gui.c:356
-#: ../app/tools/gimppaintoptions-gui.c:474
+#: ../app/tools/gimppaintoptions-gui.c:359
+#: ../app/tools/gimppaintoptions-gui.c:479
 msgid "Length:"
 msgstr "Length:"
 
-#: ../app/tools/gimppaintoptions-gui.c:393
+#: ../app/tools/gimppaintoptions-gui.c:396
 msgid "Apply Jitter"
 msgstr "Apply Jitter"
 
-#: ../app/tools/gimppaintoptions-gui.c:410
+#: ../app/tools/gimppaintoptions-gui.c:413
 msgid "Amount:"
 msgstr "Amount:"
 
-#: ../app/tools/gimppaintoptions-gui.c:438
+#: ../app/tools/gimppaintoptions-gui.c:441
 msgid "Use color from gradient"
 msgstr "Use colour from gradient"
 
@@ -9224,7 +9231,7 @@ msgstr "Base selection on all visible layers"
 msgid "Use all visible layers when shrinking the selection"
 msgstr "Use all visible layers when shrinking the selection"
 
-#: ../app/tools/gimpselectionoptions.c:412 ../app/tools/gimptextoptions.c:425
+#: ../app/tools/gimpselectionoptions.c:412 ../app/tools/gimptextoptions.c:457
 msgid "Antialiasing"
 msgstr "Antialiasing"
 
@@ -9292,13 +9299,13 @@ msgstr "Smudge image"
 msgid "_Smudge"
 msgstr "_Smudge"
 
-#: ../app/tools/gimptextoptions.c:113
+#: ../app/tools/gimptextoptions.c:116
 msgid ""
 "Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr ""
 "Hinting alters the font outline to produce a crisp bitmap at small sizes"
 
-#: ../app/tools/gimptextoptions.c:120
+#: ../app/tools/gimptextoptions.c:123
 msgid ""
 "If available, hints from the font are used but you may prefer to always use "
 "the automatic hinter"
@@ -9306,47 +9313,47 @@ msgstr ""
 "If available, hints from the font are used but you may prefer to always use "
 "the automatic hinter"
 
-#: ../app/tools/gimptextoptions.c:145
+#: ../app/tools/gimptextoptions.c:148
 msgid "Indentation of the first line"
 msgstr "Indentation of the first line"
 
-#: ../app/tools/gimptextoptions.c:150
+#: ../app/tools/gimptextoptions.c:153
 msgid "Adjust line spacing"
 msgstr "Adjust line spacing"
 
-#: ../app/tools/gimptextoptions.c:155
+#: ../app/tools/gimptextoptions.c:158
 msgid "Adjust letter spacing"
 msgstr "Adjust letter spacing"
 
-#: ../app/tools/gimptextoptions.c:397
+#: ../app/tools/gimptextoptions.c:429
 msgid "Font:"
 msgstr "Font:"
 
-#: ../app/tools/gimptextoptions.c:409
+#: ../app/tools/gimptextoptions.c:441
 msgid "Hinting"
 msgstr "Hinting"
 
-#: ../app/tools/gimptextoptions.c:416
+#: ../app/tools/gimptextoptions.c:448
 msgid "Force auto-hinter"
 msgstr "Force auto-hinter"
 
-#: ../app/tools/gimptextoptions.c:431
+#: ../app/tools/gimptextoptions.c:463
 msgid "Text Color"
 msgstr "Text Colour"
 
-#: ../app/tools/gimptextoptions.c:436
+#: ../app/tools/gimptextoptions.c:468
 msgid "Color:"
 msgstr "Colour:"
 
-#: ../app/tools/gimptextoptions.c:441
+#: ../app/tools/gimptextoptions.c:473
 msgid "Justify:"
 msgstr "Justify:"
 
-#: ../app/tools/gimptextoptions.c:460
+#: ../app/tools/gimptextoptions.c:492
 msgid "Create Path from Text"
 msgstr "Create Path from Text"
 
-#: ../app/tools/gimptextoptions.c:468
+#: ../app/tools/gimptextoptions.c:500
 msgid "Text along Path"
 msgstr "Text along Path"
 
@@ -10589,16 +10596,16 @@ msgstr "Comme_nt:"
 msgid "_Name:"
 msgstr "_Name:"
 
-#: ../app/widgets/gimptemplateeditor.c:540
+#: ../app/widgets/gimptemplateeditor.c:541
 msgid "_Icon:"
 msgstr "_Icon:"
 
-#: ../app/widgets/gimptemplateeditor.c:667
+#: ../app/widgets/gimptemplateeditor.c:668
 #, c-format
 msgid "%d x %d dpi, %s"
 msgstr "%d x %d dpi, %s"
 
-#: ../app/widgets/gimptemplateeditor.c:669
+#: ../app/widgets/gimptemplateeditor.c:670
 #, c-format
 msgid "%d dpi, %s"
 msgstr "%d dpi, %s"
@@ -10720,27 +10727,27 @@ msgstr "Reorder path"
 msgid "Empty Path"
 msgstr "Empty Path"
 
-#: ../app/widgets/gimpviewablebox.c:76
+#: ../app/widgets/gimpviewablebox.c:81
 msgid "Open the brush selection dialog"
 msgstr "Open the brush selection dialogue"
 
-#: ../app/widgets/gimpviewablebox.c:95
+#: ../app/widgets/gimpviewablebox.c:138
 msgid "Open the pattern selection dialog"
 msgstr "Open the pattern selection dialogue"
 
-#: ../app/widgets/gimpviewablebox.c:122
+#: ../app/widgets/gimpviewablebox.c:204
 msgid "Open the gradient selection dialog"
 msgstr "Open the gradient selection dialogue"
 
-#: ../app/widgets/gimpviewablebox.c:134
+#: ../app/widgets/gimpviewablebox.c:219
 msgid "Reverse"
 msgstr "Reverse"
 
-#: ../app/widgets/gimpviewablebox.c:170
+#: ../app/widgets/gimpviewablebox.c:298
 msgid "Open the palette selection dialog"
 msgstr "Open the palette selection dialogue"
 
-#: ../app/widgets/gimpviewablebox.c:189
+#: ../app/widgets/gimpviewablebox.c:356
 msgid "Open the font selection dialog"
 msgstr "Open the font selection dialogue"
 
@@ -10825,23 +10832,15 @@ msgstr "Status & text"
 msgid "Status & desc"
 msgstr "Status & desc"
 
-#: ../app/widgets/widgets-enums.c:295
-msgid "View as list"
-msgstr "View as list"
-
 #: ../app/widgets/widgets-enums.c:296
-msgid "View as grid"
-msgstr "View as grid"
-
-#: ../app/widgets/widgets-enums.c:324
 msgid "Normal window"
 msgstr "Normal window"
 
-#: ../app/widgets/widgets-enums.c:325
+#: ../app/widgets/widgets-enums.c:297
 msgid "Utility window"
 msgstr "Utility window"
 
-#: ../app/widgets/widgets-enums.c:326
+#: ../app/widgets/widgets-enums.c:298
 msgid "Keep above"
 msgstr "Keep above"
 
