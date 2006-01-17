@@ -54,17 +54,17 @@ GtkWidget *
 gimp_pattern_factory_view_new (GimpViewType      view_type,
                                GimpDataFactory  *factory,
                                GimpContext      *context,
-                               gint              preview_size,
-                               gint              preview_border_width,
+                               gint              view_size,
+                               gint              view_border_width,
                                GimpMenuFactory  *menu_factory)
 {
   GimpPatternFactoryView *factory_view;
 
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
-  g_return_val_if_fail (preview_size > 0 &&
-                        preview_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
-  g_return_val_if_fail (preview_border_width >= 0 &&
-                        preview_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
+  g_return_val_if_fail (view_size > 0 &&
+                        view_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
+  g_return_val_if_fail (view_border_width >= 0 &&
+                        view_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
                         NULL);
 
   factory_view = g_object_new (GIMP_TYPE_PATTERN_FACTORY_VIEW, NULL);
@@ -73,7 +73,7 @@ gimp_pattern_factory_view_new (GimpViewType      view_type,
                                           view_type,
                                           factory,
                                           context,
-                                          preview_size, preview_border_width,
+                                          view_size, view_border_width,
                                           menu_factory, "<Patterns>",
                                           "/patterns-popup",
                                           "patterns"))

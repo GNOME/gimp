@@ -44,7 +44,7 @@ enum
 {
   PROP_0,
   PROP_POPUP_VIEW_TYPE,
-  PROP_POPUP_PREVIEW_SIZE
+  PROP_POPUP_VIEW_SIZE
 };
 
 
@@ -92,8 +92,8 @@ gimp_viewable_button_class_init (GimpViewableButtonClass *klass)
                                                       GIMP_VIEW_TYPE_LIST,
                                                       G_PARAM_READWRITE));
 
-  g_object_class_install_property (object_class, PROP_POPUP_PREVIEW_SIZE,
-                                   g_param_spec_int ("popup-preview-size",
+  g_object_class_install_property (object_class, PROP_POPUP_VIEW_SIZE,
+                                   g_param_spec_int ("popup-view-size",
                                                      NULL, NULL,
                                                      GIMP_VIEW_SIZE_TINY,
                                                      GIMP_VIEW_SIZE_GIGANTIC,
@@ -104,11 +104,11 @@ gimp_viewable_button_class_init (GimpViewableButtonClass *klass)
 static void
 gimp_viewable_button_init (GimpViewableButton *button)
 {
-  button->popup_view_type      = GIMP_VIEW_TYPE_LIST;
-  button->popup_preview_size   = GIMP_VIEW_SIZE_SMALL;
+  button->popup_view_type   = GIMP_VIEW_TYPE_LIST;
+  button->popup_view_size   = GIMP_VIEW_SIZE_SMALL;
 
-  button->button_preview_size  = GIMP_VIEW_SIZE_SMALL;
-  button->preview_border_width = 1;
+  button->button_view_size  = GIMP_VIEW_SIZE_SMALL;
+  button->view_border_width = 1;
 }
 
 static void
@@ -150,8 +150,8 @@ gimp_viewable_button_set_property (GObject      *object,
     case PROP_POPUP_VIEW_TYPE:
       gimp_viewable_button_set_view_type (button, g_value_get_enum (value));
       break;
-    case PROP_POPUP_PREVIEW_SIZE:
-      gimp_viewable_button_set_preview_size (button, g_value_get_int (value));
+    case PROP_POPUP_VIEW_SIZE:
+      gimp_viewable_button_set_view_size (button, g_value_get_int (value));
       break;
    default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -172,8 +172,8 @@ gimp_viewable_button_get_property (GObject    *object,
     case PROP_POPUP_VIEW_TYPE:
       g_value_set_enum (value, button->popup_view_type);
       break;
-    case PROP_POPUP_PREVIEW_SIZE:
-      g_value_set_int (value, button->popup_preview_size);
+    case PROP_POPUP_VIEW_SIZE:
+      g_value_set_int (value, button->popup_view_size);
       break;
    default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -240,9 +240,9 @@ gimp_viewable_button_clicked (GtkButton *button)
   popup = gimp_container_popup_new (viewable_button->container,
                                     viewable_button->context,
                                     viewable_button->popup_view_type,
-                                    viewable_button->button_preview_size,
-                                    viewable_button->popup_preview_size,
-                                    viewable_button->preview_border_width,
+                                    viewable_button->button_view_size,
+                                    viewable_button->popup_view_size,
+                                    viewable_button->view_border_width,
                                     viewable_button->dialog_factory,
                                     viewable_button->dialog_identifier,
                                     viewable_button->dialog_stock_id,
@@ -264,8 +264,8 @@ gimp_viewable_button_popup_closed (GimpContainerPopup *popup,
 {
   gimp_viewable_button_set_view_type (button,
                                       gimp_container_popup_get_view_type (popup));
-  gimp_viewable_button_set_preview_size (button,
-                                         gimp_container_popup_get_preview_size (popup));
+  gimp_viewable_button_set_view_size (button,
+                                      gimp_container_popup_get_view_size (popup));
 }
 
 
@@ -275,9 +275,9 @@ GtkWidget *
 gimp_viewable_button_new (GimpContainer     *container,
                           GimpContext       *context,
                           GimpViewType       view_type,
-                          gint               button_preview_size,
-                          gint               preview_size,
-                          gint               preview_border_width,
+                          gint               button_view_size,
+                          gint               view_size,
+                          gint               view_border_width,
                           GimpDialogFactory *dialog_factory,
                           const gchar       *dialog_identifier,
                           const gchar       *dialog_stock_id,
@@ -288,10 +288,10 @@ gimp_viewable_button_new (GimpContainer     *container,
 
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
-  g_return_val_if_fail (preview_size >  0 &&
-                        preview_size <= GIMP_VIEWABLE_MAX_BUTTON_SIZE, NULL);
-  g_return_val_if_fail (preview_border_width >= 0 &&
-                        preview_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
+  g_return_val_if_fail (view_size >  0 &&
+                        view_size <= GIMP_VIEWABLE_MAX_BUTTON_SIZE, NULL);
+  g_return_val_if_fail (view_border_width >= 0 &&
+                        view_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
                         NULL);
   g_return_val_if_fail (dialog_factory == NULL ||
                         GIMP_IS_DIALOG_FACTORY (dialog_factory), NULL);
@@ -303,15 +303,15 @@ gimp_viewable_button_new (GimpContainer     *container,
     }
 
   button = g_object_new (GIMP_TYPE_VIEWABLE_BUTTON,
-                         "popup-view-type",    view_type,
-                         "popup-preview-size", preview_size,
+                         "popup-view-type", view_type,
+                         "popup-view-size", view_size,
                          NULL);
 
   button->container = container;
   button->context   = context;
 
-  button->button_preview_size  = button_preview_size;
-  button->preview_border_width = preview_border_width;
+  button->button_view_size  = button_view_size;
+  button->view_border_width = view_border_width;
 
   if (dialog_factory)
     {
@@ -323,10 +323,10 @@ gimp_viewable_button_new (GimpContainer     *container,
 
   prop_name = gimp_context_type_to_prop_name (container->children_type);
 
-  button->preview = gimp_prop_preview_new (G_OBJECT (context), prop_name,
-                                           button->button_preview_size);
-  gtk_container_add (GTK_CONTAINER (button), button->preview);
-  gtk_widget_show (button->preview);
+  button->view = gimp_prop_view_new (G_OBJECT (context), prop_name,
+                                     button->button_view_size);
+  gtk_container_add (GTK_CONTAINER (button), button->view);
+  gtk_widget_show (button->view);
 
   return GTK_WIDGET (button);
 }
@@ -354,23 +354,23 @@ gimp_viewable_button_set_view_type (GimpViewableButton *button,
 }
 
 gint
-gimp_viewable_button_get_preview_size (GimpViewableButton *button)
+gimp_viewable_button_get_view_size (GimpViewableButton *button)
 {
   g_return_val_if_fail (GIMP_IS_VIEWABLE_BUTTON (button), GIMP_VIEW_SIZE_SMALL);
 
-  return button->popup_preview_size;
+  return button->popup_view_size;
 }
 
 void
-gimp_viewable_button_set_preview_size (GimpViewableButton *button,
-                                       gint                preview_size)
+gimp_viewable_button_set_view_size (GimpViewableButton *button,
+                                    gint                view_size)
 {
   g_return_if_fail (GIMP_IS_VIEWABLE_BUTTON (button));
 
-  if (preview_size != button->popup_preview_size)
+  if (view_size != button->popup_view_size)
     {
-      button->popup_preview_size = preview_size;
+      button->popup_view_size = view_size;
 
-      g_object_notify (G_OBJECT (button), "popup-preview-size");
+      g_object_notify (G_OBJECT (button), "popup-view-size");
     }
 }

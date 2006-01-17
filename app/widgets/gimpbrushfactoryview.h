@@ -58,8 +58,8 @@ GtkWidget * gimp_brush_factory_view_new      (GimpViewType     view_type,
 					      GimpDataFactory *factory,
 					      GimpContext     *context,
 					      gboolean         change_brush_spacing,
-					      gint             preview_size,
-                                              gint             preview_border_width,
+					      gint             view_size,
+                                              gint             view_border_width,
 					      GimpMenuFactory *menu_factory);
 
 

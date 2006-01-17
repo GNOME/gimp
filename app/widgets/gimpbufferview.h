@@ -40,7 +40,7 @@ struct _GimpBufferView
 {
   GimpContainerEditor  parent_instance;
 
-  GtkWidget           *global_preview;
+  GtkWidget           *global_view;
   GtkWidget           *global_label;
 
   GtkWidget           *paste_button;
@@ -60,8 +60,8 @@ GType       gimp_buffer_view_get_type (void) G_GNUC_CONST;
 GtkWidget * gimp_buffer_view_new      (GimpViewType     view_type,
 				       GimpContainer   *container,
 				       GimpContext     *context,
-				       gint             preview_size,
-                                       gint             preview_border_width,
+				       gint             view_size,
+                                       gint             view_border_width,
 				       GimpMenuFactory *menu_factory);
 
 

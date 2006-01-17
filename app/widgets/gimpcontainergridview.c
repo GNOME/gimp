@@ -77,7 +77,7 @@ static gboolean  gimp_container_grid_view_select_item (GimpContainerView      *v
                                                        GimpViewable           *viewable,
                                                        gpointer                insert_data);
 static void     gimp_container_grid_view_clear_items  (GimpContainerView      *view);
-static void gimp_container_grid_view_set_preview_size (GimpContainerView      *view);
+static void    gimp_container_grid_view_set_view_size (GimpContainerView      *view);
 static gboolean gimp_container_grid_view_item_selected(GtkWidget              *widget,
                                                        GdkEventButton         *bevent,
                                                        gpointer                data);
@@ -196,13 +196,13 @@ gimp_container_grid_view_view_iface_init (GimpContainerViewInterface *iface)
 {
   parent_view_iface = g_type_interface_peek_parent (iface);
 
-  iface->insert_item      = gimp_container_grid_view_insert_item;
-  iface->remove_item      = gimp_container_grid_view_remove_item;
-  iface->reorder_item     = gimp_container_grid_view_reorder_item;
-  iface->rename_item      = gimp_container_grid_view_rename_item;
-  iface->select_item      = gimp_container_grid_view_select_item;
-  iface->clear_items      = gimp_container_grid_view_clear_items;
-  iface->set_preview_size = gimp_container_grid_view_set_preview_size;
+  iface->insert_item   = gimp_container_grid_view_insert_item;
+  iface->remove_item   = gimp_container_grid_view_remove_item;
+  iface->reorder_item  = gimp_container_grid_view_reorder_item;
+  iface->rename_item   = gimp_container_grid_view_rename_item;
+  iface->select_item   = gimp_container_grid_view_select_item;
+  iface->clear_items   = gimp_container_grid_view_clear_items;
+  iface->set_view_size = gimp_container_grid_view_set_view_size;
 }
 
 GtkWidget *
@@ -227,8 +227,7 @@ gimp_container_grid_view_new (GimpContainer *container,
 
   view = GIMP_CONTAINER_VIEW (grid_view);
 
-  gimp_container_view_set_preview_size (view, view_size,
-                                        view_border_width);
+  gimp_container_view_set_view_size (view, view_size, view_border_width);
 
   if (container)
     gimp_container_view_set_container (view, container);
@@ -389,87 +388,85 @@ gimp_container_grid_view_popup_menu (GtkWidget *widget)
 }
 
 static gpointer
-gimp_container_grid_view_insert_item (GimpContainerView *view,
+gimp_container_grid_view_insert_item (GimpContainerView *container_view,
                                       GimpViewable      *viewable,
                                       gint               index)
 {
-  GimpContainerGridView *grid_view = GIMP_CONTAINER_GRID_VIEW (view);
-  GtkWidget             *preview;
-  gint                   preview_size;
+  GimpContainerGridView *grid_view = GIMP_CONTAINER_GRID_VIEW (container_view);
+  GtkWidget             *view;
+  gint                   view_size;
 
-  preview_size = gimp_container_view_get_preview_size (view, NULL);
+  view_size = gimp_container_view_get_view_size (container_view, NULL);
 
-  preview = gimp_view_new_full (viewable,
-                                preview_size,
-                                preview_size,
-                                1,
-                                FALSE, TRUE, TRUE);
-  gimp_view_renderer_set_border_type (GIMP_VIEW (preview)->renderer,
+  view = gimp_view_new_full (viewable,
+                             view_size, view_size, 1,
+                             FALSE, TRUE, TRUE);
+  gimp_view_renderer_set_border_type (GIMP_VIEW (view)->renderer,
                                       GIMP_VIEW_BORDER_WHITE);
-  gimp_view_renderer_remove_idle (GIMP_VIEW (preview)->renderer);
+  gimp_view_renderer_remove_idle (GIMP_VIEW (view)->renderer);
 
-  gtk_wrap_box_pack (GTK_WRAP_BOX (grid_view->wrap_box), preview,
+  gtk_wrap_box_pack (GTK_WRAP_BOX (grid_view->wrap_box), view,
                      FALSE, FALSE, FALSE, FALSE);
 
   if (index != -1)
     gtk_wrap_box_reorder_child (GTK_WRAP_BOX (grid_view->wrap_box),
-                                preview, index);
+                                view, index);
 
-  gtk_widget_show (preview);
+  gtk_widget_show (view);
 
-  g_signal_connect (preview, "button-press-event",
+  g_signal_connect (view, "button-press-event",
                     G_CALLBACK (gimp_container_grid_view_item_selected),
-                    view);
-  g_signal_connect (preview, "double-clicked",
+                    container_view);
+  g_signal_connect (view, "double-clicked",
                     G_CALLBACK (gimp_container_grid_view_item_activated),
-                    view);
-  g_signal_connect (preview, "context",
+                    container_view);
+  g_signal_connect (view, "context",
                     G_CALLBACK (gimp_container_grid_view_item_context),
-                    view);
+                    container_view);
 
-  return (gpointer) preview;
+  return (gpointer) view;
 }
 
 static void
-gimp_container_grid_view_remove_item (GimpContainerView *view,
+gimp_container_grid_view_remove_item (GimpContainerView *container_view,
                                       GimpViewable      *viewable,
                                       gpointer           insert_data)
 {
-  GimpContainerGridView *grid_view = GIMP_CONTAINER_GRID_VIEW (view);
-  GtkWidget             *preview   = GTK_WIDGET (insert_data);
+  GimpContainerGridView *grid_view = GIMP_CONTAINER_GRID_VIEW (container_view);
+  GtkWidget             *view      = GTK_WIDGET (insert_data);
 
-  if (preview == (GtkWidget *) grid_view->selected_item)
+  if (view == (GtkWidget *) grid_view->selected_item)
     grid_view->selected_item = NULL;
 
-  gtk_container_remove (GTK_CONTAINER (grid_view->wrap_box), preview);
+  gtk_container_remove (GTK_CONTAINER (grid_view->wrap_box), view);
 }
 
 static void
-gimp_container_grid_view_reorder_item (GimpContainerView *view,
+gimp_container_grid_view_reorder_item (GimpContainerView *container_view,
                                        GimpViewable      *viewable,
                                        gint               new_index,
                                        gpointer           insert_data)
 {
-  GimpContainerGridView *grid_view = GIMP_CONTAINER_GRID_VIEW (view);
-  GtkWidget             *preview   = GTK_WIDGET (insert_data);
+  GimpContainerGridView *grid_view = GIMP_CONTAINER_GRID_VIEW (container_view);
+  GtkWidget             *view      = GTK_WIDGET (insert_data);
 
   gtk_wrap_box_reorder_child (GTK_WRAP_BOX (grid_view->wrap_box),
-                              preview, new_index);
+                              view, new_index);
 }
 
 static void
-gimp_container_grid_view_rename_item (GimpContainerView *view,
+gimp_container_grid_view_rename_item (GimpContainerView *container_view,
                                       GimpViewable      *viewable,
                                       gpointer           insert_data)
 {
-  GimpContainerGridView *grid_view = GIMP_CONTAINER_GRID_VIEW (view);
-  GtkWidget             *preview   = GTK_WIDGET (insert_data);
+  GimpContainerGridView *grid_view = GIMP_CONTAINER_GRID_VIEW (container_view);
+  GtkWidget             *view      = GTK_WIDGET (insert_data);
 
-  if (preview == (GtkWidget *) grid_view->selected_item)
+  if (view == (GtkWidget *) grid_view->selected_item)
     {
       gchar *name = gimp_viewable_get_description (viewable, NULL);
 
-      gimp_editor_set_name (GIMP_EDITOR (view), name);
+      gimp_editor_set_name (GIMP_EDITOR (container_view), name);
       g_free (name);
     }
 }
@@ -499,13 +496,13 @@ gimp_container_grid_view_clear_items (GimpContainerView *view)
 }
 
 static void
-gimp_container_grid_view_set_preview_size (GimpContainerView *view)
+gimp_container_grid_view_set_view_size (GimpContainerView *view)
 {
   GimpContainerGridView *grid_view = GIMP_CONTAINER_GRID_VIEW (view);
   GtkWrapBoxChild       *child;
-  gint                   preview_size;
+  gint                   view_size;
 
-  preview_size = gimp_container_view_get_preview_size (view, NULL);
+  view_size = gimp_container_view_get_view_size (view, NULL);
 
   for (child = GTK_WRAP_BOX (grid_view->wrap_box)->children;
        child;
@@ -514,7 +511,7 @@ gimp_container_grid_view_set_preview_size (GimpContainerView *view)
       GimpView *view = GIMP_VIEW (child->widget);
 
       gimp_view_renderer_set_size (view->renderer,
-                                   preview_size,
+                                   view_size,
                                    view->renderer->border_width);
     }
 
@@ -566,30 +563,30 @@ gimp_container_grid_view_item_context (GtkWidget *widget,
 }
 
 static void
-gimp_container_grid_view_highlight_item (GimpContainerView *view,
+gimp_container_grid_view_highlight_item (GimpContainerView *container_view,
                                          GimpViewable      *viewable,
                                          gpointer           insert_data)
 {
-  GimpContainerGridView *grid_view = GIMP_CONTAINER_GRID_VIEW (view);
-  GimpContainerBox      *box       = GIMP_CONTAINER_BOX (view);
+  GimpContainerGridView *grid_view = GIMP_CONTAINER_GRID_VIEW (container_view);
+  GimpContainerBox      *box       = GIMP_CONTAINER_BOX (container_view);
   GimpContainer         *container;
-  GimpView              *preview   = NULL;
+  GimpView              *view      = NULL;
 
-  container = gimp_container_view_get_container (view);
+  container = gimp_container_view_get_container (container_view);
 
   if (insert_data)
-    preview = GIMP_VIEW (insert_data);
+    view = GIMP_VIEW (insert_data);
 
-  if (grid_view->selected_item && grid_view->selected_item != preview)
+  if (grid_view->selected_item && grid_view->selected_item != view)
     {
       gimp_view_renderer_set_border_type (grid_view->selected_item->renderer,
                                           GIMP_VIEW_BORDER_WHITE);
       gimp_view_renderer_update (grid_view->selected_item->renderer);
     }
 
-  if (preview)
+  if (view)
     {
-      GtkRequisition  preview_requisition;
+      GtkRequisition  view_requisition;
       GtkAdjustment  *adj;
       gint            item_height;
       gint            index;
@@ -599,9 +596,9 @@ gimp_container_grid_view_highlight_item (GimpContainerView *view,
       adj = gtk_scrolled_window_get_vadjustment
         (GTK_SCROLLED_WINDOW (box->scrolled_win));
 
-      gtk_widget_size_request (GTK_WIDGET (preview), &preview_requisition);
+      gtk_widget_size_request (GTK_WIDGET (view), &view_requisition);
 
-      item_height = preview_requisition.height;
+      item_height = view_requisition.height;
 
       index = gimp_container_get_child_index (container,
                                               GIMP_OBJECT (viewable));
@@ -618,11 +615,11 @@ gimp_container_grid_view_highlight_item (GimpContainerView *view,
                                     (row + 1) * item_height - adj->page_size);
         }
 
-      gimp_view_renderer_set_border_type (preview->renderer,
+      gimp_view_renderer_set_border_type (view->renderer,
                                           GIMP_VIEW_BORDER_BLACK);
-      gimp_view_renderer_update (preview->renderer);
+      gimp_view_renderer_update (view->renderer);
 
-      name = gimp_viewable_get_description (preview->renderer->viewable, NULL);
+      name = gimp_viewable_get_description (view->renderer->viewable, NULL);
       gimp_editor_set_name (GIMP_EDITOR (grid_view), name);
       g_free (name);
     }
@@ -631,7 +628,7 @@ gimp_container_grid_view_highlight_item (GimpContainerView *view,
       gimp_editor_set_name (GIMP_EDITOR (grid_view), NULL);
     }
 
-  grid_view->selected_item = preview;
+  grid_view->selected_item = view;
 }
 
 static void
@@ -639,9 +636,9 @@ gimp_container_grid_view_viewport_resized (GtkWidget             *widget,
                                            GtkAllocation         *allocation,
                                            GimpContainerGridView *grid_view)
 {
-  GimpContainerView *view = GIMP_CONTAINER_VIEW (grid_view);
+  GimpContainerView *container_view = GIMP_CONTAINER_VIEW (grid_view);
 
-  if (gimp_container_view_get_container (view))
+  if (gimp_container_view_get_container (container_view))
     {
       GList *children;
       gint   n_children;
@@ -651,16 +648,16 @@ gimp_container_grid_view_viewport_resized (GtkWidget             *widget,
 
       if (children)
         {
-          GtkRequisition preview_requisition;
+          GtkRequisition view_requisition;
           gint           columns;
           gint           rows;
 
           gtk_widget_size_request (GTK_WIDGET (children->data),
-                                   &preview_requisition);
+                                   &view_requisition);
 
           g_list_free (children);
 
-          columns = MAX (1, allocation->width / preview_requisition.width);
+          columns = MAX (1, allocation->width / view_requisition.width);
 
           rows = n_children / columns;
 
@@ -673,22 +670,22 @@ gimp_container_grid_view_viewport_resized (GtkWidget             *widget,
               grid_view->columns = columns;
 
               gtk_widget_set_size_request (grid_view->wrap_box,
-                                           columns * preview_requisition.width,
-                                           rows    * preview_requisition.height);
+                                           columns * view_requisition.width,
+                                           rows    * view_requisition.height);
 
             }
 
           grid_view->visible_rows = (allocation->height /
-                                     preview_requisition.height);
+                                     view_requisition.height);
         }
 
       if (grid_view->selected_item)
         {
-          GimpView *preview = grid_view->selected_item;
+          GimpView *view = grid_view->selected_item;
 
-          gimp_container_grid_view_highlight_item (view,
-                                                   preview->viewable,
-                                                   preview);
+          gimp_container_grid_view_highlight_item (container_view,
+                                                   view->viewable,
+                                                   view);
         }
     }
 }
@@ -696,12 +693,12 @@ gimp_container_grid_view_viewport_resized (GtkWidget             *widget,
 static gboolean
 gimp_container_grid_view_button_press (GtkWidget              *widget,
                                        GdkEventButton         *bevent,
-                                       GimpContainerGridView  *view)
+                                       GimpContainerGridView  *grid_view)
 {
   switch (bevent->button)
     {
     case 3:
-      gimp_editor_popup_menu (GIMP_EDITOR (view), NULL, NULL);
+      gimp_editor_popup_menu (GIMP_EDITOR (grid_view), NULL, NULL);
       break;
 
     default:

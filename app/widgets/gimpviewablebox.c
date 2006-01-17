@@ -202,7 +202,7 @@ gradient_box_new (GimpContainer *container,
                                      "gimp-gradient-list|gimp-gradient-grid",
                                      GIMP_STOCK_GRADIENT,
                                      _("Open the gradient selection dialog"));
-  GIMP_VIEWABLE_BUTTON (button)->button_preview_size = GIMP_VIEW_SIZE_SMALL;
+  GIMP_VIEWABLE_BUTTON (button)->button_view_size = GIMP_VIEW_SIZE_SMALL;
 
   g_object_set_data (G_OBJECT (hbox), "viewable-button", button);
 
@@ -212,7 +212,7 @@ gradient_box_new (GimpContainer *container,
   if (reverse_prop)
     {
       GtkWidget *toggle;
-      GtkWidget *preview;
+      GtkWidget *view;
       gchar     *signal_name;
 
       toggle = gimp_prop_check_button_new (G_OBJECT (context), reverse_prop,
@@ -220,17 +220,17 @@ gradient_box_new (GimpContainer *container,
       gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
       gtk_widget_show (toggle);
 
-      preview = GTK_BIN (button)->child;
+      view = GTK_BIN (button)->child;
 
       signal_name = g_strconcat ("notify::", reverse_prop, NULL);
       g_signal_connect_object (context, signal_name,
                                G_CALLBACK (gimp_gradient_box_reverse_notify),
-                               G_OBJECT (preview), 0);
+                               G_OBJECT (view), 0);
       g_free (signal_name);
 
       gimp_gradient_box_reverse_notify (G_OBJECT (context),
                                         NULL,
-                                        GIMP_VIEW (preview));
+                                        GIMP_VIEW (view));
     }
 
   return hbox;
@@ -449,7 +449,7 @@ view_props_connect (GtkWidget   *box,
   gimp_config_connect_full (G_OBJECT (context), G_OBJECT (button),
                             view_type_prop, "popup-view-type");
   gimp_config_connect_full (G_OBJECT (context), G_OBJECT (button),
-                            view_size_prop, "popup-preview-size");
+                            view_size_prop, "popup-view-size");
 
   return box;
 }

@@ -94,7 +94,7 @@ static void gimp_device_status_update_entry    (GimpDeviceInfo        *device_in
                                                 GimpDeviceStatusEntry *entry);
 static void gimp_device_status_save_clicked    (GtkWidget             *button,
                                                 GimpDeviceStatus      *status);
-static void gimp_device_status_preview_clicked (GtkWidget             *widget,
+static void gimp_device_status_view_clicked    (GtkWidget             *widget,
                                                 GdkModifierType        state,
                                                 const gchar           *identifier);
 
@@ -287,15 +287,15 @@ gimp_device_status_device_add (GimpContainer    *devices,
 
   /*  the tool  */
 
-  entry->tool = gimp_prop_preview_new (G_OBJECT (context),
-                                       "tool", CELL_SIZE);
+  entry->tool = gimp_prop_view_new (G_OBJECT (context),
+                                    "tool", CELL_SIZE);
   GIMP_VIEW (entry->tool)->clickable = TRUE;
   gtk_table_attach (GTK_TABLE (entry->table), entry->tool,
                     1, 2, 1, 2, 0, 0, 0, 0);
   gtk_widget_show (entry->tool);
 
   g_signal_connect (entry->tool, "clicked",
-                    G_CALLBACK (gimp_device_status_preview_clicked),
+                    G_CALLBACK (gimp_device_status_view_clicked),
                     "gimp-tool-list|gimp-tool-grid");
 
   /*  the foreground color  */
@@ -324,8 +324,8 @@ gimp_device_status_device_add (GimpContainer    *devices,
 
   /*  the brush  */
 
-  entry->brush = gimp_prop_preview_new (G_OBJECT (context),
-                                        "brush", CELL_SIZE);
+  entry->brush = gimp_prop_view_new (G_OBJECT (context),
+                                     "brush", CELL_SIZE);
   GIMP_VIEW (entry->brush)->clickable  = TRUE;
   GIMP_VIEW (entry->brush)->show_popup = TRUE;
   gtk_table_attach (GTK_TABLE (entry->table), entry->brush,
@@ -333,13 +333,13 @@ gimp_device_status_device_add (GimpContainer    *devices,
   gtk_widget_show (entry->brush);
 
   g_signal_connect (entry->brush, "clicked",
-                    G_CALLBACK (gimp_device_status_preview_clicked),
+                    G_CALLBACK (gimp_device_status_view_clicked),
                     "gimp-brush-grid|gimp-brush-list");
 
   /*  the pattern  */
 
-  entry->pattern = gimp_prop_preview_new (G_OBJECT (context),
-                                          "pattern", CELL_SIZE);
+  entry->pattern = gimp_prop_view_new (G_OBJECT (context),
+                                       "pattern", CELL_SIZE);
   GIMP_VIEW (entry->pattern)->clickable  = TRUE;
   GIMP_VIEW (entry->pattern)->show_popup = TRUE;
   gtk_table_attach (GTK_TABLE (entry->table), entry->pattern,
@@ -347,13 +347,13 @@ gimp_device_status_device_add (GimpContainer    *devices,
   gtk_widget_show (entry->pattern);
 
   g_signal_connect (entry->pattern, "clicked",
-                    G_CALLBACK (gimp_device_status_preview_clicked),
+                    G_CALLBACK (gimp_device_status_view_clicked),
                     "gimp-pattern-grid|gimp-pattern-list");
 
   /*  the gradient  */
 
-  entry->gradient = gimp_prop_preview_new (G_OBJECT (context),
-                                           "gradient", 2 * CELL_SIZE);
+  entry->gradient = gimp_prop_view_new (G_OBJECT (context),
+                                        "gradient", 2 * CELL_SIZE);
   GIMP_VIEW (entry->gradient)->clickable  = TRUE;
   GIMP_VIEW (entry->gradient)->show_popup = TRUE;
   gtk_table_attach (GTK_TABLE (entry->table), entry->gradient,
@@ -361,7 +361,7 @@ gimp_device_status_device_add (GimpContainer    *devices,
   gtk_widget_show (entry->gradient);
 
   g_signal_connect (entry->gradient, "clicked",
-                    G_CALLBACK (gimp_device_status_preview_clicked),
+                    G_CALLBACK (gimp_device_status_view_clicked),
                     "gimp-gradient-list|gimp-gradient-grid");
 
   gimp_device_status_update_entry (device_info, entry);
@@ -463,9 +463,9 @@ gimp_device_status_save_clicked (GtkWidget        *button,
 }
 
 static void
-gimp_device_status_preview_clicked (GtkWidget       *widget,
-                                    GdkModifierType  state,
-                                    const gchar     *identifier)
+gimp_device_status_view_clicked (GtkWidget       *widget,
+                                 GdkModifierType  state,
+                                 const gchar     *identifier)
 {
   GimpDialogFactory *dialog_factory;
 

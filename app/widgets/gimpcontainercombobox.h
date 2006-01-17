@@ -53,8 +53,8 @@ GType       gimp_container_combo_box_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_container_combo_box_new      (GimpContainer *container,
 					       GimpContext   *context,
-                                               gint           preview_size,
-                                               gint           preview_border_width);
+                                               gint           view_size,
+                                               gint           view_border_width);
 
 
 #endif  /*  __GIMP_CONTAINER_COMBO_BOX_H__  */

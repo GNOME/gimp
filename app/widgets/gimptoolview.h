@@ -58,8 +58,8 @@ GType       gimp_tool_view_get_type (void) G_GNUC_CONST;
 GtkWidget * gimp_tool_view_new      (GimpViewType     view_type,
                                      GimpContainer   *container,
                                      GimpContext     *context,
-                                     gint             preview_size,
-                                     gint             preview_border_width,
+                                     gint             view_size,
+                                     gint             view_border_width,
                                      GimpMenuFactory *menu_factory);
 
 

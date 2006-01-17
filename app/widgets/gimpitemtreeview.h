@@ -118,8 +118,8 @@ struct _GimpItemTreeViewClass
 GType       gimp_item_tree_view_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_item_tree_view_new      (GType            view_type,
-                                          gint             preview_size,
-                                          gint             preview_border_width,
+                                          gint             view_size,
+                                          gint             view_border_width,
                                           GimpImage       *gimage,
                                           GimpMenuFactory *menu_facotry,
                                           const gchar     *menu_identifier,

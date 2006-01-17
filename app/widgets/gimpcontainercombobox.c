@@ -66,7 +66,7 @@ static gboolean  gimp_container_combo_box_select_item (GimpContainerView      *v
                                                        GimpViewable           *viewable,
                                                        gpointer                insert_data);
 static void     gimp_container_combo_box_clear_items  (GimpContainerView      *view);
-static void gimp_container_combo_box_set_preview_size (GimpContainerView      *view);
+static void    gimp_container_combo_box_set_view_size (GimpContainerView      *view);
 
 static void     gimp_container_combo_box_changed      (GtkComboBox            *combo_box,
                                                        GimpContainerView      *view);
@@ -145,13 +145,13 @@ gimp_container_combo_box_view_iface_init (GimpContainerViewInterface *iface)
   if (! parent_view_iface)
     parent_view_iface = g_type_default_interface_peek (GIMP_TYPE_CONTAINER_VIEW);
 
-  iface->insert_item      = gimp_container_combo_box_insert_item;
-  iface->remove_item      = gimp_container_combo_box_remove_item;
-  iface->reorder_item     = gimp_container_combo_box_reorder_item;
-  iface->rename_item      = gimp_container_combo_box_rename_item;
-  iface->select_item      = gimp_container_combo_box_select_item;
-  iface->clear_items      = gimp_container_combo_box_clear_items;
-  iface->set_preview_size = gimp_container_combo_box_set_preview_size;
+  iface->insert_item   = gimp_container_combo_box_insert_item;
+  iface->remove_item   = gimp_container_combo_box_remove_item;
+  iface->reorder_item  = gimp_container_combo_box_reorder_item;
+  iface->rename_item   = gimp_container_combo_box_rename_item;
+  iface->select_item   = gimp_container_combo_box_select_item;
+  iface->clear_items   = gimp_container_combo_box_clear_items;
+  iface->set_view_size = gimp_container_combo_box_set_view_size;
 
   iface->insert_data_free = (GDestroyNotify) g_free;
 }
@@ -159,8 +159,8 @@ gimp_container_combo_box_view_iface_init (GimpContainerViewInterface *iface)
 GtkWidget *
 gimp_container_combo_box_new (GimpContainer *container,
                               GimpContext   *context,
-                              gint           preview_size,
-                              gint           preview_border_width)
+                              gint           view_size,
+                              gint           view_border_width)
 {
   GtkWidget         *combo_box;
   GimpContainerView *view;
@@ -173,8 +173,7 @@ gimp_container_combo_box_new (GimpContainer *container,
 
   view = GIMP_CONTAINER_VIEW (combo_box);
 
-  gimp_container_view_set_preview_size (view,
-                                        preview_size, preview_border_width);
+  gimp_container_view_set_view_size (view, view_size, view_border_width);
 
   if (container)
     gimp_container_view_set_container (view, container);
@@ -194,17 +193,17 @@ gimp_container_combo_box_set (GimpContainerComboBox *combo_box,
   GtkTreeModel      *model;
   GimpViewRenderer  *renderer;
   gchar             *name;
-  gint               preview_size;
+  gint               view_size;
   gint               border_width;
 
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box));
 
-  preview_size = gimp_container_view_get_preview_size (view, &border_width);
+  view_size = gimp_container_view_get_view_size (view, &border_width);
 
   name = gimp_viewable_get_description (viewable, NULL);
 
   renderer = gimp_view_renderer_new (G_TYPE_FROM_INSTANCE (viewable),
-                                     preview_size, border_width,
+                                     view_size, border_width,
                                      FALSE);
   gimp_view_renderer_set_viewable (renderer, viewable);
   gimp_view_renderer_remove_idle (renderer);
@@ -399,15 +398,15 @@ gimp_container_combo_box_clear_items (GimpContainerView *view)
 }
 
 static void
-gimp_container_combo_box_set_preview_size (GimpContainerView *view)
+gimp_container_combo_box_set_view_size (GimpContainerView *view)
 {
   GtkTreeModel *model = gtk_combo_box_get_model (GTK_COMBO_BOX (view));
   GtkTreeIter   iter;
   gboolean      iter_valid;
-  gint          preview_size;
+  gint          view_size;
   gint          border_width;
 
-  preview_size = gimp_container_view_get_preview_size (view, &border_width);
+  view_size = gimp_container_view_get_view_size (view, &border_width);
 
   for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
        iter_valid;
@@ -419,7 +418,7 @@ gimp_container_combo_box_set_preview_size (GimpContainerView *view)
                           COLUMN_RENDERER, &renderer,
                           -1);
 
-      gimp_view_renderer_set_size (renderer, preview_size, border_width);
+      gimp_view_renderer_set_size (renderer, view_size, border_width);
       g_object_unref (renderer);
     }
 }

@@ -40,7 +40,7 @@ struct _GimpComponentEditor
 {
   GimpImageEditor    parent_instance;
 
-  gint               preview_size;
+  gint               view_size;
 
   GtkTreeModel      *model;
   GtkTreeView       *view;
@@ -59,12 +59,12 @@ struct _GimpComponentEditorClass
 };
 
 
-GType       gimp_component_editor_get_type         (void) G_GNUC_CONST;
+GType       gimp_component_editor_get_type      (void) G_GNUC_CONST;
 
-GtkWidget * gimp_component_editor_new              (gint                 preview_size,
-                                                    GimpMenuFactory     *menu_factory);
-void        gimp_component_editor_set_preview_size (GimpComponentEditor *editor,
-                                                    gint                 preview_size);
+GtkWidget * gimp_component_editor_new           (gint                 view_size,
+                                                 GimpMenuFactory     *menu_factory);
+void        gimp_component_editor_set_view_size (GimpComponentEditor *editor,
+                                                 gint                 view_size);
 
 
 #endif  /*  __GIMP_COMPONENT_EDITOR_H__  */

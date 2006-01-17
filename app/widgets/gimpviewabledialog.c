@@ -182,7 +182,7 @@ gimp_viewable_dialog_destroy (GtkObject *object)
 {
   GimpViewableDialog *dialog = GIMP_VIEWABLE_DIALOG (object);
 
-  if (dialog->preview)
+  if (dialog->view)
     gimp_viewable_dialog_set_viewable (dialog, NULL);
 
   GTK_OBJECT_CLASS (parent_class)->destroy (object);
@@ -234,16 +234,16 @@ gimp_viewable_dialog_set_viewable (GimpViewableDialog *dialog,
   g_return_if_fail (GIMP_IS_VIEWABLE_DIALOG (dialog));
   g_return_if_fail (! viewable || GIMP_IS_VIEWABLE (viewable));
 
-  if (dialog->preview)
+  if (dialog->view)
     {
       GimpViewable *old_viewable;
 
-      old_viewable = GIMP_VIEW (dialog->preview)->viewable;
+      old_viewable = GIMP_VIEW (dialog->view)->viewable;
 
       if (viewable == old_viewable)
         return;
 
-      gtk_widget_destroy (dialog->preview);
+      gtk_widget_destroy (dialog->view);
 
       if (old_viewable)
         {
@@ -265,13 +265,13 @@ gimp_viewable_dialog_set_viewable (GimpViewableDialog *dialog,
                                dialog,
                                0);
 
-      dialog->preview = gimp_view_new (viewable, 32, 1, TRUE);
-      gtk_box_pack_end (GTK_BOX (dialog->icon->parent), dialog->preview,
+      dialog->view = gimp_view_new (viewable, 32, 1, TRUE);
+      gtk_box_pack_end (GTK_BOX (dialog->icon->parent), dialog->view,
                         FALSE, FALSE, 2);
-      gtk_widget_show (dialog->preview);
+      gtk_widget_show (dialog->view);
 
-      g_object_add_weak_pointer (G_OBJECT (dialog->preview),
-                                 (gpointer *) &dialog->preview);
+      g_object_add_weak_pointer (G_OBJECT (dialog->view),
+                                 (gpointer *) &dialog->view);
 
       gimp_viewable_dialog_name_changed (GIMP_OBJECT (viewable), dialog);
 

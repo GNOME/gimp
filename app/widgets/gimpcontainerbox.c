@@ -107,7 +107,7 @@ gimp_container_box_set_size_request (GimpContainerBox *box,
   GimpContainerView      *view;
   GtkScrolledWindowClass *sw_class;
   GtkRequisition          req;
-  gint                    preview_size;
+  gint                    view_size;
   gint                    scrollbar_width;
   gint                    border_x;
   gint                    border_y;
@@ -116,10 +116,10 @@ gimp_container_box_set_size_request (GimpContainerBox *box,
 
   view = GIMP_CONTAINER_VIEW (box);
 
-  preview_size = gimp_container_view_get_preview_size (view, NULL);
+  view_size = gimp_container_view_get_view_size (view, NULL);
 
-  g_return_if_fail (width  <= 0 || width  >= preview_size);
-  g_return_if_fail (height <= 0 || height >= preview_size);
+  g_return_if_fail (width  <= 0 || width  >= view_size);
+  g_return_if_fail (height <= 0 || height >= view_size);
 
   sw_class = GTK_SCROLLED_WINDOW_GET_CLASS (box->scrolled_win);
 
@@ -175,10 +175,10 @@ gimp_container_box_get_preview (GimpDocked   *docked,
 
   prop_name = gimp_context_type_to_prop_name (container->children_type);
 
-  preview = gimp_prop_preview_new (G_OBJECT (context), prop_name, height);
+  preview = gimp_prop_view_new (G_OBJECT (context), prop_name, height);
   GIMP_VIEW (preview)->renderer->size = -1;
 
-  gimp_container_view_get_preview_size (view, &border_width);
+  gimp_container_view_get_view_size (view, &border_width);
 
   border_width = MIN (1, border_width);
 

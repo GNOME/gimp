@@ -45,9 +45,9 @@ struct _GimpContainerPopup
   GimpContext         *context;
 
   GimpViewType         view_type;
-  gint                 default_preview_size;
-  gint                 preview_size;
-  gint                 preview_border_width;
+  gint                 default_view_size;
+  gint                 view_size;
+  gint                 view_border_width;
 
   GtkWidget           *frame;
   GimpContainerEditor *editor;
@@ -72,9 +72,9 @@ GType       gimp_container_popup_get_type (void) G_GNUC_CONST;
 GtkWidget * gimp_container_popup_new      (GimpContainer      *container,
                                            GimpContext        *context,
                                            GimpViewType        view_type,
-                                           gint                default_preview_size,
-                                           gint                preview_size,
-                                           gint                preview_border_width,
+                                           gint                default_view_size,
+                                           gint                view_size,
+                                           gint                view_border_width,
                                            GimpDialogFactory  *dialog_factory,
                                            const gchar        *dialog_identifier,
                                            const gchar        *dialog_stock_id,
@@ -86,9 +86,9 @@ GimpViewType gimp_container_popup_get_view_type (GimpContainerPopup *popup);
 void         gimp_container_popup_set_view_type (GimpContainerPopup *popup,
                                                  GimpViewType        view_type);
 
-gint      gimp_container_popup_get_preview_size (GimpContainerPopup *popup);
-void      gimp_container_popup_set_preview_size (GimpContainerPopup *popup,
-                                                 gint                preview_size);
+gint         gimp_container_popup_get_view_size (GimpContainerPopup *popup);
+void         gimp_container_popup_set_view_size (GimpContainerPopup *popup,
+                                                 gint                view_size);
 
 
 #endif  /*  __GIMP_CONTAINER_POPUP_H__  */

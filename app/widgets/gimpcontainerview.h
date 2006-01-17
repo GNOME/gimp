@@ -29,9 +29,9 @@ typedef enum
   GIMP_CONTAINER_VIEW_PROP_CONTAINER,
   GIMP_CONTAINER_VIEW_PROP_CONTEXT,
   GIMP_CONTAINER_VIEW_PROP_REORDERABLE,
-  GIMP_CONTAINER_VIEW_PROP_PREVIEW_SIZE,
-  GIMP_CONTAINER_VIEW_PROP_PREVIEW_BORDER_WIDTH,
-  GIMP_CONTAINER_VIEW_PROP_LAST = GIMP_CONTAINER_VIEW_PROP_PREVIEW_BORDER_WIDTH
+  GIMP_CONTAINER_VIEW_PROP_VIEW_SIZE,
+  GIMP_CONTAINER_VIEW_PROP_VIEW_BORDER_WIDTH,
+  GIMP_CONTAINER_VIEW_PROP_LAST = GIMP_CONTAINER_VIEW_PROP_VIEW_BORDER_WIDTH
 } GimpContainerViewProp;
 
 
@@ -48,34 +48,34 @@ struct _GimpContainerViewInterface
   GTypeInterface base_iface;
 
   /*  signals  */
-  gboolean (* select_item)      (GimpContainerView *view,
-				 GimpViewable      *object,
-				 gpointer           insert_data);
-  void     (* activate_item)    (GimpContainerView *view,
-				 GimpViewable      *object,
-				 gpointer           insert_data);
-  void     (* context_item)     (GimpContainerView *view,
-				 GimpViewable      *object,
-				 gpointer           insert_data);
+  gboolean (* select_item)   (GimpContainerView *view,
+                              GimpViewable      *object,
+                              gpointer           insert_data);
+  void     (* activate_item) (GimpContainerView *view,
+                              GimpViewable      *object,
+                              gpointer           insert_data);
+  void     (* context_item)  (GimpContainerView *view,
+                              GimpViewable      *object,
+                              gpointer           insert_data);
 
   /*  virtual functions  */
-  void     (* set_container)    (GimpContainerView *view,
-				 GimpContainer     *container);
-  gpointer (* insert_item)      (GimpContainerView *view,
-				 GimpViewable      *object,
-				 gint               index);
-  void     (* remove_item)      (GimpContainerView *view,
-				 GimpViewable      *object,
-				 gpointer           insert_data);
-  void     (* reorder_item)     (GimpContainerView *view,
-				 GimpViewable      *object,
-				 gint               new_index,
-				 gpointer           insert_data);
-  void     (* rename_item)      (GimpContainerView *view,
-				 GimpViewable      *object,
-				 gpointer           insert_data);
-  void     (* clear_items)      (GimpContainerView *view);
-  void     (* set_preview_size) (GimpContainerView *view);
+  void     (* set_container) (GimpContainerView *view,
+                              GimpContainer     *container);
+  gpointer (* insert_item)   (GimpContainerView *view,
+                              GimpViewable      *object,
+                              gint               index);
+  void     (* remove_item)   (GimpContainerView *view,
+                              GimpViewable      *object,
+                              gpointer           insert_data);
+  void     (* reorder_item)  (GimpContainerView *view,
+                              GimpViewable      *object,
+                              gint               new_index,
+                              gpointer           insert_data);
+  void     (* rename_item)   (GimpContainerView *view,
+                              GimpViewable      *object,
+                              gpointer           insert_data);
+  void     (* clear_items)   (GimpContainerView *view);
+  void     (* set_view_size) (GimpContainerView *view);
 
   /*  the destroy notifier for private->hash_table's values  */
   GDestroyNotify  insert_data_free;
@@ -92,11 +92,11 @@ GimpContext   * gimp_container_view_get_context   (GimpContainerView *view);
 void            gimp_container_view_set_context   (GimpContainerView *view,
                                                    GimpContext       *context);
 
-gint      gimp_container_view_get_preview_size (GimpContainerView *view,
-                                                gint              *preview_border_width);
-void      gimp_container_view_set_preview_size (GimpContainerView *view,
-                                                gint               preview_size,
-                                                gint               preview_border_width);
+gint         gimp_container_view_get_view_size (GimpContainerView *view,
+                                                gint              *view_border_width);
+void         gimp_container_view_set_view_size (GimpContainerView *view,
+                                                gint               view_size,
+                                                gint               view_border_width);
 
 gboolean  gimp_container_view_get_reorderable  (GimpContainerView *view);
 void      gimp_container_view_set_reorderable  (GimpContainerView *view,

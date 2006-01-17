@@ -60,8 +60,8 @@ struct _GimpContainerViewPrivate
 
   GHashTable    *hash_table;
 
-  gint           preview_size;
-  gint           preview_border_width;
+  gint           view_size;
+  gint           view_border_width;
   gboolean       reorderable;
 
   /*  initialized by subclass  */
@@ -184,17 +184,17 @@ gimp_container_view_iface_base_init (GimpContainerViewInterface *view_iface)
                   GIMP_TYPE_OBJECT,
                   G_TYPE_POINTER);
 
-  view_iface->select_item      = NULL;
-  view_iface->activate_item    = NULL;
-  view_iface->context_item     = NULL;
+  view_iface->select_item   = NULL;
+  view_iface->activate_item = NULL;
+  view_iface->context_item  = NULL;
 
-  view_iface->set_container    = gimp_container_view_real_set_container;
-  view_iface->insert_item      = NULL;
-  view_iface->remove_item      = NULL;
-  view_iface->reorder_item     = NULL;
-  view_iface->rename_item      = NULL;
-  view_iface->clear_items      = gimp_container_view_real_clear_items;
-  view_iface->set_preview_size = NULL;
+  view_iface->set_container = gimp_container_view_real_set_container;
+  view_iface->insert_item   = NULL;
+  view_iface->remove_item   = NULL;
+  view_iface->reorder_item  = NULL;
+  view_iface->rename_item   = NULL;
+  view_iface->clear_items   = gimp_container_view_real_clear_items;
+  view_iface->set_view_size = NULL;
 
   view_iface->insert_data_free = NULL;
 
@@ -217,7 +217,7 @@ gimp_container_view_iface_base_init (GimpContainerViewInterface *view_iface)
                                                              G_PARAM_READWRITE));
 
   g_object_interface_install_property (view_iface,
-                                       g_param_spec_int ("preview-size",
+                                       g_param_spec_int ("view-size",
                                                          NULL, NULL,
                                                          1, GIMP_VIEWABLE_MAX_PREVIEW_SIZE,
                                                          GIMP_VIEW_SIZE_MEDIUM,
@@ -225,7 +225,7 @@ gimp_container_view_iface_base_init (GimpContainerViewInterface *view_iface)
                                                          G_PARAM_CONSTRUCT));
 
   g_object_interface_install_property (view_iface,
-                                       g_param_spec_int ("preview-border-width",
+                                       g_param_spec_int ("view-border-width",
                                                          NULL, NULL,
                                                          0, GIMP_VIEW_MAX_BORDER_WIDTH,
                                                          1,
@@ -278,7 +278,7 @@ gimp_container_view_get_private (GimpContainerView *view)
 
       private = g_new0 (GimpContainerViewPrivate, 1);
 
-      private->preview_border_width = 1;
+      private->view_border_width = 1;
 
       g_object_set_qdata_full ((GObject *) view, private_key, private,
                                (GDestroyNotify) gimp_container_view_private_finalize);
@@ -315,11 +315,11 @@ gimp_container_view_install_properties (GObjectClass *klass)
                                     GIMP_CONTAINER_VIEW_PROP_REORDERABLE,
                                     "reorderable");
   g_object_class_override_property (klass,
-                                    GIMP_CONTAINER_VIEW_PROP_PREVIEW_SIZE,
-                                    "preview-size");
+                                    GIMP_CONTAINER_VIEW_PROP_VIEW_SIZE,
+                                    "view-size");
   g_object_class_override_property (klass,
-                                    GIMP_CONTAINER_VIEW_PROP_PREVIEW_BORDER_WIDTH,
-                                    "preview-border-width");
+                                    GIMP_CONTAINER_VIEW_PROP_VIEW_BORDER_WIDTH,
+                                    "view-border-width");
 }
 
 GimpContainer *
@@ -547,8 +547,8 @@ gimp_container_view_set_context (GimpContainerView *view,
 }
 
 gint
-gimp_container_view_get_preview_size (GimpContainerView *view,
-                                      gint              *preview_border_width)
+gimp_container_view_get_view_size (GimpContainerView *view,
+                                   gint              *view_border_width)
 {
   GimpContainerViewPrivate *private;
 
@@ -556,38 +556,38 @@ gimp_container_view_get_preview_size (GimpContainerView *view,
 
   private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
 
-  if (preview_border_width)
-    *preview_border_width = private->preview_border_width;
+  if (view_border_width)
+    *view_border_width = private->view_border_width;
 
-  return private->preview_size;
+  return private->view_size;
 }
 
 void
-gimp_container_view_set_preview_size (GimpContainerView *view,
-                                      gint               preview_size,
-                                      gint               preview_border_width)
+gimp_container_view_set_view_size (GimpContainerView *view,
+                                   gint               view_size,
+                                   gint               view_border_width)
 {
   GimpContainerViewPrivate *private;
 
   g_return_if_fail (GIMP_IS_CONTAINER_VIEW (view));
-  g_return_if_fail (preview_size >  0 &&
-                    preview_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE);
-  g_return_if_fail (preview_border_width >= 0 &&
-                    preview_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH);
+  g_return_if_fail (view_size >  0 &&
+                    view_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE);
+  g_return_if_fail (view_border_width >= 0 &&
+                    view_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH);
 
   private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
 
-  if (private->preview_size         != preview_size ||
-      private->preview_border_width != preview_border_width)
+  if (private->view_size         != view_size ||
+      private->view_border_width != view_border_width)
     {
-      private->preview_size         = preview_size;
-      private->preview_border_width = preview_border_width;
+      private->view_size         = view_size;
+      private->view_border_width = view_border_width;
 
-      GIMP_CONTAINER_VIEW_GET_INTERFACE (view)->set_preview_size (view);
+      GIMP_CONTAINER_VIEW_GET_INTERFACE (view)->set_view_size (view);
 
       g_object_freeze_notify (G_OBJECT (view));
-      g_object_notify (G_OBJECT (view), "preview-size");
-      g_object_notify (G_OBJECT (view), "preview-border-width");
+      g_object_notify (G_OBJECT (view), "view-size");
+      g_object_notify (G_OBJECT (view), "view-border-width");
       g_object_thaw_notify (G_OBJECT (view));
     }
 }
@@ -837,19 +837,19 @@ gimp_container_view_set_property (GObject      *object,
     case GIMP_CONTAINER_VIEW_PROP_REORDERABLE:
       gimp_container_view_set_reorderable (view, g_value_get_boolean (value));
       break;
-    case GIMP_CONTAINER_VIEW_PROP_PREVIEW_SIZE:
-    case GIMP_CONTAINER_VIEW_PROP_PREVIEW_BORDER_WIDTH:
+    case GIMP_CONTAINER_VIEW_PROP_VIEW_SIZE:
+    case GIMP_CONTAINER_VIEW_PROP_VIEW_BORDER_WIDTH:
       {
         gint size, border;
 
-        size = gimp_container_view_get_preview_size (view, &border);
+        size = gimp_container_view_get_view_size (view, &border);
 
-        if (property_id == GIMP_CONTAINER_VIEW_PROP_PREVIEW_SIZE)
+        if (property_id == GIMP_CONTAINER_VIEW_PROP_VIEW_SIZE)
           size = g_value_get_int (value);
         else
           border = g_value_get_int (value);
 
-        gimp_container_view_set_preview_size (view, size, border);
+        gimp_container_view_set_view_size (view, size, border);
       }
       break;
     default:
@@ -877,14 +877,14 @@ gimp_container_view_get_property (GObject    *object,
     case GIMP_CONTAINER_VIEW_PROP_REORDERABLE:
       g_value_set_boolean (value, gimp_container_view_get_reorderable (view));
       break;
-    case GIMP_CONTAINER_VIEW_PROP_PREVIEW_SIZE:
-    case GIMP_CONTAINER_VIEW_PROP_PREVIEW_BORDER_WIDTH:
+    case GIMP_CONTAINER_VIEW_PROP_VIEW_SIZE:
+    case GIMP_CONTAINER_VIEW_PROP_VIEW_BORDER_WIDTH:
       {
         gint size, border;
 
-        size = gimp_container_view_get_preview_size (view, &border);
+        size = gimp_container_view_get_view_size (view, &border);
 
-        if (property_id == GIMP_CONTAINER_VIEW_PROP_PREVIEW_SIZE)
+        if (property_id == GIMP_CONTAINER_VIEW_PROP_VIEW_SIZE)
           g_value_set_int (value, size);
         else
           g_value_set_int (value, border);

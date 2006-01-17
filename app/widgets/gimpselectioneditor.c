@@ -59,7 +59,7 @@ static GObject * gimp_selection_editor_constructor (GType                type,
 static void   gimp_selection_editor_set_image      (GimpImageEditor     *editor,
                                                     GimpImage           *gimage);
 
-static gboolean gimp_selection_preview_button_press(GtkWidget           *widget,
+static gboolean gimp_selection_view_button_press   (GtkWidget           *widget,
                                                     GdkEventButton      *bevent,
                                                     GimpSelectionEditor *editor);
 static void   gimp_selection_editor_drop_color     (GtkWidget           *widget,
@@ -99,23 +99,23 @@ gimp_selection_editor_init (GimpSelectionEditor *editor)
   gtk_box_pack_start (GTK_BOX (editor), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  editor->preview = gimp_view_new_by_types (GIMP_TYPE_VIEW,
-                                            GIMP_TYPE_SELECTION,
-                                            GIMP_VIEW_SIZE_HUGE,
-                                            0, TRUE);
-  gimp_view_renderer_set_background (GIMP_VIEW (editor->preview)->renderer,
+  editor->view = gimp_view_new_by_types (GIMP_TYPE_VIEW,
+                                         GIMP_TYPE_SELECTION,
+                                         GIMP_VIEW_SIZE_HUGE,
+                                         0, TRUE);
+  gimp_view_renderer_set_background (GIMP_VIEW (editor->view)->renderer,
                                      GIMP_STOCK_TEXTURE);
-  gtk_widget_set_size_request (editor->preview,
+  gtk_widget_set_size_request (editor->view,
                                GIMP_VIEW_SIZE_HUGE, GIMP_VIEW_SIZE_HUGE);
-  gimp_view_set_expand (GIMP_VIEW (editor->preview), TRUE);
-  gtk_container_add (GTK_CONTAINER (frame), editor->preview);
-  gtk_widget_show (editor->preview);
+  gimp_view_set_expand (GIMP_VIEW (editor->view), TRUE);
+  gtk_container_add (GTK_CONTAINER (frame), editor->view);
+  gtk_widget_show (editor->view);
 
-  g_signal_connect (editor->preview, "button-press-event",
-                    G_CALLBACK (gimp_selection_preview_button_press),
+  g_signal_connect (editor->view, "button-press-event",
+                    G_CALLBACK (gimp_selection_view_button_press),
                     editor);
 
-  gimp_dnd_color_dest_add (editor->preview,
+  gimp_dnd_color_dest_add (editor->view,
                            gimp_selection_editor_drop_color,
                            editor);
 
@@ -188,12 +188,12 @@ gimp_selection_editor_set_image (GimpImageEditor *image_editor,
                         G_CALLBACK (gimp_selection_editor_mask_changed),
                         editor);
 
-      gimp_view_set_viewable (GIMP_VIEW (editor->preview),
+      gimp_view_set_viewable (GIMP_VIEW (editor->view),
                               GIMP_VIEWABLE (gimp_image_get_mask (gimage)));
     }
   else
     {
-      gimp_view_set_viewable (GIMP_VIEW (editor->preview), NULL);
+      gimp_view_set_viewable (GIMP_VIEW (editor->view), NULL);
     }
 }
 
@@ -213,9 +213,9 @@ gimp_selection_editor_new (GimpMenuFactory *menu_factory)
 }
 
 static gboolean
-gimp_selection_preview_button_press (GtkWidget           *widget,
-                                     GdkEventButton      *bevent,
-                                     GimpSelectionEditor *editor)
+gimp_selection_view_button_press (GtkWidget           *widget,
+                                  GdkEventButton      *bevent,
+                                  GimpSelectionEditor *editor)
 {
   GimpImageEditor      *image_editor = GIMP_IMAGE_EDITOR (editor);
   GimpViewRenderer     *renderer;
@@ -229,7 +229,7 @@ gimp_selection_preview_button_press (GtkWidget           *widget,
   if (! image_editor->gimage)
     return TRUE;
 
-  renderer = GIMP_VIEW (editor->preview)->renderer;
+  renderer = GIMP_VIEW (editor->view)->renderer;
 
   tool_info = (GimpToolInfo *)
     gimp_container_get_child_by_name (image_editor->gimage->gimp->tool_info_list,
@@ -334,5 +334,5 @@ static void
 gimp_selection_editor_mask_changed (GimpImage           *gimage,
                                     GimpSelectionEditor *editor)
 {
-  gimp_view_renderer_invalidate (GIMP_VIEW (editor->preview)->renderer);
+  gimp_view_renderer_invalidate (GIMP_VIEW (editor->view)->renderer);
 }

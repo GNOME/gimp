@@ -80,7 +80,7 @@ static gboolean  gimp_container_tree_view_select_item (GimpContainerView      *v
                                                        GimpViewable           *viewable,
                                                        gpointer                insert_data);
 static void     gimp_container_tree_view_clear_items  (GimpContainerView      *view);
-static void gimp_container_tree_view_set_preview_size (GimpContainerView      *view);
+static void    gimp_container_tree_view_set_view_size (GimpContainerView      *view);
 
 static void gimp_container_tree_view_name_canceled    (GtkCellRendererText    *cell,
                                                        GimpContainerTreeView  *tree_view);
@@ -156,14 +156,14 @@ gimp_container_tree_view_view_iface_init (GimpContainerViewInterface *iface)
 {
   parent_view_iface = g_type_interface_peek_parent (iface);
 
-  iface->set_container    = gimp_container_tree_view_set_container;
-  iface->insert_item      = gimp_container_tree_view_insert_item;
-  iface->remove_item      = gimp_container_tree_view_remove_item;
-  iface->reorder_item     = gimp_container_tree_view_reorder_item;
-  iface->rename_item      = gimp_container_tree_view_rename_item;
-  iface->select_item      = gimp_container_tree_view_select_item;
-  iface->clear_items      = gimp_container_tree_view_clear_items;
-  iface->set_preview_size = gimp_container_tree_view_set_preview_size;
+  iface->set_container = gimp_container_tree_view_set_container;
+  iface->insert_item   = gimp_container_tree_view_insert_item;
+  iface->remove_item   = gimp_container_tree_view_remove_item;
+  iface->reorder_item  = gimp_container_tree_view_reorder_item;
+  iface->rename_item   = gimp_container_tree_view_rename_item;
+  iface->select_item   = gimp_container_tree_view_select_item;
+  iface->clear_items   = gimp_container_tree_view_clear_items;
+  iface->set_view_size = gimp_container_tree_view_set_view_size;
 
   iface->insert_data_free = (GDestroyNotify) g_free;
 }
@@ -351,8 +351,8 @@ gimp_container_tree_view_popup_menu (GtkWidget *widget)
 GtkWidget *
 gimp_container_tree_view_new (GimpContainer *container,
                               GimpContext   *context,
-                              gint           preview_size,
-                              gint           preview_border_width)
+                              gint           view_size,
+                              gint           view_border_width)
 {
   GimpContainerTreeView *tree_view;
   GimpContainerView     *view;
@@ -360,18 +360,17 @@ gimp_container_tree_view_new (GimpContainer *container,
   g_return_val_if_fail (container == NULL || GIMP_IS_CONTAINER (container),
                         NULL);
   g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
-  g_return_val_if_fail (preview_size > 0 &&
-                        preview_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
-  g_return_val_if_fail (preview_border_width >= 0 &&
-                        preview_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
+  g_return_val_if_fail (view_size > 0 &&
+                        view_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
+  g_return_val_if_fail (view_border_width >= 0 &&
+                        view_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
                         NULL);
 
   tree_view = g_object_new (GIMP_TYPE_CONTAINER_TREE_VIEW, NULL);
 
   view = GIMP_CONTAINER_VIEW (tree_view);
 
-  gimp_container_view_set_preview_size (view, preview_size,
-                                        preview_border_width);
+  gimp_container_view_set_view_size (view, view_size, view_border_width);
 
   if (container)
     gimp_container_view_set_container (view, container);
@@ -390,13 +389,13 @@ gimp_container_tree_view_set (GimpContainerTreeView *tree_view,
   GimpContainerView *view = GIMP_CONTAINER_VIEW (tree_view);
   GimpViewRenderer  *renderer;
   gchar             *name;
-  gint               preview_size;
+  gint               view_size;
   gint               border_width;
 
-  preview_size = gimp_container_view_get_preview_size (view, &border_width);
+  view_size = gimp_container_view_get_view_size (view, &border_width);
 
   renderer = gimp_view_renderer_new (G_TYPE_FROM_INSTANCE (viewable),
-                                     preview_size, border_width,
+                                     view_size, border_width,
                                      FALSE);
   gimp_view_renderer_set_viewable (renderer, viewable);
   gimp_view_renderer_remove_idle (renderer);
@@ -678,17 +677,17 @@ gimp_container_tree_view_clear_items (GimpContainerView *view)
 }
 
 static void
-gimp_container_tree_view_set_preview_size (GimpContainerView *view)
+gimp_container_tree_view_set_view_size (GimpContainerView *view)
 {
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
   GtkWidget             *tree_widget;
   GtkTreeIter            iter;
   GList                 *list;
   gboolean               iter_valid;
-  gint                   preview_size;
+  gint                   view_size;
   gint                   border_width;
 
-  preview_size = gimp_container_view_get_preview_size (view, &border_width);
+  view_size = gimp_container_view_get_view_size (view, &border_width);
 
   if (tree_view->model)
     {
@@ -702,7 +701,7 @@ gimp_container_tree_view_set_preview_size (GimpContainerView *view)
                               COLUMN_RENDERER, &renderer,
                               -1);
 
-          gimp_view_renderer_set_size (renderer, preview_size, border_width);
+          gimp_view_renderer_set_size (renderer, view_size, border_width);
           g_object_unref (renderer);
         }
     }
@@ -724,9 +723,9 @@ gimp_container_tree_view_set_preview_size (GimpContainerView *view)
           icon_size = gimp_get_icon_size (tree_widget,
                                           stock_id,
                                           GTK_ICON_SIZE_BUTTON,
-                                          preview_size -
+                                          view_size -
                                           2 * tree_widget->style->xthickness,
-                                          preview_size -
+                                          view_size -
                                           2 * tree_widget->style->ythickness);
 
           g_object_set (list->data, "stock-size", icon_size, NULL);

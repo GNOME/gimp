@@ -60,7 +60,7 @@ static gboolean  gimp_container_entry_select_item (GimpContainerView      *view,
                                                    GimpViewable           *viewable,
                                                    gpointer                insert_data);
 static void     gimp_container_entry_clear_items  (GimpContainerView      *view);
-static void gimp_container_entry_set_preview_size (GimpContainerView      *view);
+static void    gimp_container_entry_set_view_size (GimpContainerView      *view);
 
 static void     gimp_container_entry_changed      (GtkEntry               *entry,
                                                    GimpContainerView      *view);
@@ -136,13 +136,13 @@ gimp_container_entry_view_iface_init (GimpContainerViewInterface *iface)
   if (! parent_view_iface)
     parent_view_iface = g_type_default_interface_peek (GIMP_TYPE_CONTAINER_VIEW);
 
-  iface->insert_item      = gimp_container_entry_insert_item;
-  iface->remove_item      = gimp_container_entry_remove_item;
-  iface->reorder_item     = gimp_container_entry_reorder_item;
-  iface->rename_item      = gimp_container_entry_rename_item;
-  iface->select_item      = gimp_container_entry_select_item;
-  iface->clear_items      = gimp_container_entry_clear_items;
-  iface->set_preview_size = gimp_container_entry_set_preview_size;
+  iface->insert_item   = gimp_container_entry_insert_item;
+  iface->remove_item   = gimp_container_entry_remove_item;
+  iface->reorder_item  = gimp_container_entry_reorder_item;
+  iface->rename_item   = gimp_container_entry_rename_item;
+  iface->select_item   = gimp_container_entry_select_item;
+  iface->clear_items   = gimp_container_entry_clear_items;
+  iface->set_view_size = gimp_container_entry_set_view_size;
 
   iface->insert_data_free = (GDestroyNotify) g_free;
 }
@@ -150,8 +150,8 @@ gimp_container_entry_view_iface_init (GimpContainerViewInterface *iface)
 GtkWidget *
 gimp_container_entry_new (GimpContainer *container,
                           GimpContext   *context,
-                          gint           preview_size,
-                          gint           preview_border_width)
+                          gint           view_size,
+                          gint           view_border_width)
 {
   GtkWidget         *entry;
   GimpContainerView *view;
@@ -164,8 +164,7 @@ gimp_container_entry_new (GimpContainer *container,
 
   view = GIMP_CONTAINER_VIEW (entry);
 
-  gimp_container_view_set_preview_size (view,
-                                        preview_size, preview_border_width);
+  gimp_container_view_set_view_size (view, view_size, view_border_width);
 
   if (container)
     gimp_container_view_set_container (view, container);
@@ -184,13 +183,13 @@ gimp_container_entry_set (GimpContainerEntry *entry,
   GimpContainerView *view  = GIMP_CONTAINER_VIEW (entry);
   GtkTreeModel      *model = gimp_container_entry_get_model (entry);
   GimpViewRenderer  *renderer;
-  gint               preview_size;
+  gint               view_size;
   gint               border_width;
 
-  preview_size = gimp_container_view_get_preview_size (view, &border_width);
+  view_size = gimp_container_view_get_view_size (view, &border_width);
 
   renderer = gimp_view_renderer_new (G_TYPE_FROM_INSTANCE (viewable),
-                                     preview_size, border_width,
+                                     view_size, border_width,
                                      FALSE);
   gimp_view_renderer_set_viewable (renderer, viewable);
   gimp_view_renderer_remove_idle (renderer);
@@ -338,18 +337,18 @@ gimp_container_entry_clear_items (GimpContainerView *view)
 }
 
 static void
-gimp_container_entry_set_preview_size (GimpContainerView *view)
+gimp_container_entry_set_view_size (GimpContainerView *view)
 {
   GtkTreeModel *model = gimp_container_entry_get_model (view);
   GtkTreeIter   iter;
   gboolean      iter_valid;
-  gint          preview_size;
+  gint          view_size;
   gint          border_width;
 
   if (! model)
     return;
 
-  preview_size = gimp_container_view_get_preview_size (view, &border_width);
+  view_size = gimp_container_view_get_view_size (view, &border_width);
 
   for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
        iter_valid;
@@ -361,7 +360,7 @@ gimp_container_entry_set_preview_size (GimpContainerView *view)
                           GIMP_CONTAINER_ENTRY_COLUMN_RENDERER, &renderer,
                           -1);
 
-      gimp_view_renderer_set_size (renderer, preview_size, border_width);
+      gimp_view_renderer_set_size (renderer, view_size, border_width);
       g_object_unref (renderer);
     }
 }

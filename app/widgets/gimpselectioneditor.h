@@ -37,7 +37,7 @@ struct _GimpSelectionEditor
 {
   GimpImageEditor  parent_instance;
 
-  GtkWidget       *preview;
+  GtkWidget       *view;
 
   GtkWidget       *all_button;
   GtkWidget       *none_button;

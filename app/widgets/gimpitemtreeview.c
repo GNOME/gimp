@@ -430,8 +430,8 @@ gimp_item_tree_view_destroy (GtkObject *object)
 
 GtkWidget *
 gimp_item_tree_view_new (GType            view_type,
-                         gint             preview_size,
-                         gint             preview_border_width,
+                         gint             view_size,
+                         gint             view_border_width,
                          GimpImage       *gimage,
                          GimpMenuFactory *menu_factory,
                          const gchar     *menu_identifier,
@@ -440,10 +440,10 @@ gimp_item_tree_view_new (GType            view_type,
   GimpItemTreeView *item_view;
 
   g_return_val_if_fail (g_type_is_a (view_type, GIMP_TYPE_ITEM_TREE_VIEW), NULL);
-  g_return_val_if_fail (preview_size >  0 &&
-			preview_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
-  g_return_val_if_fail (preview_border_width >= 0 &&
-                        preview_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
+  g_return_val_if_fail (view_size >  0 &&
+			view_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
+  g_return_val_if_fail (view_border_width >= 0 &&
+                        view_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
                         NULL);
   g_return_val_if_fail (gimage == NULL || GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
@@ -457,8 +457,8 @@ gimp_item_tree_view_new (GType            view_type,
                             "ui-path",         ui_path,
                             NULL);
 
-  gimp_container_view_set_preview_size (GIMP_CONTAINER_VIEW (item_view),
-                                        preview_size, preview_border_width);
+  gimp_container_view_set_view_size (GIMP_CONTAINER_VIEW (item_view),
+                                     view_size, view_border_width);
 
   gimp_item_tree_view_set_image (item_view, gimage);
 
@@ -811,12 +811,12 @@ gimp_item_tree_view_size_changed (GimpImage        *gimage,
                                   GimpItemTreeView *tree_view)
 {
   GimpContainerView *view = GIMP_CONTAINER_VIEW (tree_view);
-  gint               preview_size;
+  gint               view_size;
   gint               border_width;
 
-  preview_size = gimp_container_view_get_preview_size (view, &border_width);
+  view_size = gimp_container_view_get_view_size (view, &border_width);
 
-  gimp_container_view_set_preview_size (view, preview_size, border_width);
+  gimp_container_view_set_view_size (view, view_size, border_width);
 }
 
 static void

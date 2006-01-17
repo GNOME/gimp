@@ -86,8 +86,8 @@ GtkWidget *
 gimp_data_factory_view_new (GimpViewType      view_type,
                             GimpDataFactory  *factory,
                             GimpContext      *context,
-                            gint              preview_size,
-                            gint              preview_border_width,
+                            gint              view_size,
+                            gint              view_border_width,
                             GimpMenuFactory  *menu_factory,
                             const gchar      *menu_identifier,
                             const gchar      *ui_identifier,
@@ -101,8 +101,8 @@ gimp_data_factory_view_new (GimpViewType      view_type,
                                           view_type,
                                           factory,
                                           context,
-                                          preview_size,
-                                          preview_border_width,
+                                          view_size,
+                                          view_border_width,
                                           menu_factory,
                                           menu_identifier,
                                           ui_identifier,
@@ -120,8 +120,8 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
                                   GimpViewType         view_type,
                                   GimpDataFactory     *factory,
                                   GimpContext         *context,
-                                  gint                 preview_size,
-                                  gint                 preview_border_width,
+                                  gint                 view_size,
+                                  gint                 view_border_width,
                                   GimpMenuFactory     *menu_factory,
                                   const gchar         *menu_identifier,
                                   const gchar         *ui_identifier,
@@ -132,10 +132,10 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
 
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY_VIEW (factory_view), FALSE);
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), FALSE);
-  g_return_val_if_fail (preview_size >  0 &&
-                        preview_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, FALSE);
-  g_return_val_if_fail (preview_border_width >= 0 &&
-                        preview_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
+  g_return_val_if_fail (view_size >  0 &&
+                        view_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, FALSE);
+  g_return_val_if_fail (view_border_width >= 0 &&
+                        view_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
                         FALSE);
 
   factory_view->factory = factory;
@@ -143,7 +143,7 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
   if (! gimp_container_editor_construct (GIMP_CONTAINER_EDITOR (factory_view),
                                          view_type,
                                          factory->container, context,
-                                         preview_size, preview_border_width,
+                                         view_size, view_border_width,
                                          menu_factory, menu_identifier,
                                          ui_identifier))
     {

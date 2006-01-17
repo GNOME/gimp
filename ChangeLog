@@ -1,8 +1,54 @@
+2006-01-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/dockable-actions.c
+	* app/actions/dockable-commands.[ch]
+	* app/dialogs/dialogs-constructors.[ch]
+	* app/dialogs/dialogs.c
+	* app/display/gimpdisplayshell-layer-select.c
+	* app/widgets/gimpbrusheditor.[ch]
+	* app/widgets/gimpbrushfactoryview.h
+	* app/widgets/gimpbufferview.[ch]
+	* app/widgets/gimpchanneltreeview.c
+	* app/widgets/gimpcomponenteditor.[ch]
+	* app/widgets/gimpcontainerbox.c
+	* app/widgets/gimpcontainercombobox.[ch]
+	* app/widgets/gimpcontainereditor.[ch]
+	* app/widgets/gimpcontainerentry.[ch]
+	* app/widgets/gimpcontainergridview.[ch]
+	* app/widgets/gimpcontainerpopup.[ch]
+	* app/widgets/gimpcontainertreeview.[ch]
+	* app/widgets/gimpcontainerview.[ch]
+	* app/widgets/gimpdatafactoryview.[ch]
+	* app/widgets/gimpdevicestatus.c
+	* app/widgets/gimpdialogfactory.[ch]
+	* app/widgets/gimpdocumentview.[ch]
+	* app/widgets/gimpfontview.[ch]
+	* app/widgets/gimpgradienteditor.[ch]
+	* app/widgets/gimpimageview.[ch]
+	* app/widgets/gimpitemtreeview.[ch]
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimpmenudock.c
+	* app/widgets/gimppatternfactoryview.[ch]
+	* app/widgets/gimppropwidgets.[ch]
+	* app/widgets/gimpselectioneditor.[ch]
+	* app/widgets/gimpsessioninfo.[ch]
+	* app/widgets/gimptemplateview.[ch]
+	* app/widgets/gimptooloptionseditor.c
+	* app/widgets/gimptoolview.[ch]
+	* app/widgets/gimpundoeditor.[ch]
+	* app/widgets/gimpviewablebox.c
+	* app/widgets/gimpviewablebutton.[ch]
+	* app/widgets/gimpviewabledialog.[ch]
+	* app/widgets/gimpviewrenderer.c: change the word "preview" to
+	"view" whereever we talk about GimpView or GimpViewRenderer
+	objects or their sizes. Ther were renamed from "Preview" a long
+	time ago and we had a preview/view naming mess ever since.
+
 2006-01-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/config/gimpconfig-utils.[ch] (gimp_config_connect_full):
 	variant of gimp_config_connect() which allows the connected
-	objects to have different propertynames.
+	objects to have different property names.
 
 	* app/widgets/widgets-enums.[ch]: removed enum GimpViewType...
 

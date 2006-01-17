@@ -44,7 +44,7 @@ typedef struct _LayerSelect LayerSelect;
 struct _LayerSelect
 {
   GtkWidget *shell;
-  GtkWidget *preview;
+  GtkWidget *view;
   GtkWidget *label;
 
   GimpImage *gimage;
@@ -56,7 +56,7 @@ struct _LayerSelect
 
 static LayerSelect * layer_select_new       (GimpImage   *gimage,
                                              GimpLayer   *layer,
-                                             gint         preview_size);
+                                             gint         view_size);
 static void          layer_select_destroy   (LayerSelect *layer_select,
                                              guint32      time);
 static void          layer_select_advance   (LayerSelect *layer_select,
@@ -104,7 +104,7 @@ gimp_display_shell_layer_select_init (GimpDisplayShell *shell,
 static LayerSelect *
 layer_select_new (GimpImage *gimage,
                   GimpLayer *layer,
-                  gint       preview_size)
+                  gint       view_size)
 {
   LayerSelect *layer_select;
   GtkWidget   *frame1;
@@ -144,18 +144,18 @@ layer_select_new (GimpImage *gimage,
   gtk_container_add (GTK_CONTAINER (frame2), hbox);
   gtk_widget_show (hbox);
 
-  /*  The preview  */
+  /*  The view  */
   alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
   gtk_box_pack_start (GTK_BOX (hbox), alignment, FALSE, FALSE, 0);
   gtk_widget_show (alignment);
 
-  layer_select->preview = gimp_view_new_by_types (GIMP_TYPE_VIEW,
-                                                  GIMP_TYPE_LAYER,
-                                                  preview_size, 1, FALSE);
-  gimp_view_set_viewable (GIMP_VIEW (layer_select->preview),
+  layer_select->view = gimp_view_new_by_types (GIMP_TYPE_VIEW,
+                                               GIMP_TYPE_LAYER,
+                                               view_size, 1, FALSE);
+  gimp_view_set_viewable (GIMP_VIEW (layer_select->view),
                           GIMP_VIEWABLE (layer));
-  gtk_container_add (GTK_CONTAINER (alignment), layer_select->preview);
-  gtk_widget_show (layer_select->preview);
+  gtk_container_add (GTK_CONTAINER (alignment), layer_select->view);
+  gtk_widget_show (layer_select->view);
   gtk_widget_show (alignment);
 
   /*  the layer name label */
@@ -221,7 +221,7 @@ layer_select_advance (LayerSelect *layer_select,
 
       if (current_layer)
         {
-          gimp_view_set_viewable (GIMP_VIEW (layer_select->preview),
+          gimp_view_set_viewable (GIMP_VIEW (layer_select->view),
                                   GIMP_VIEWABLE (current_layer));
           gtk_label_set_text (GTK_LABEL (layer_select->label),
                               GIMP_OBJECT (current_layer)->name);

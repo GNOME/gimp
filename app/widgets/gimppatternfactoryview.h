@@ -51,8 +51,8 @@ GType       gimp_pattern_factory_view_get_type (void) G_GNUC_CONST;
 GtkWidget * gimp_pattern_factory_view_new      (GimpViewType     view_type,
 					        GimpDataFactory *factory,
 					        GimpContext     *context,
-					        gint             preview_size,
-                                                gint             preview_border_width,
+					        gint             view_size,
+                                                gint             view_border_width,
 					        GimpMenuFactory *menu_factory);
 
 

@@ -42,7 +42,7 @@ struct _GimpViewableDialog
   GimpDialog  parent_instance;
 
   GtkWidget  *icon;
-  GtkWidget  *preview;
+  GtkWidget  *view;
   GtkWidget  *desc_label;
   GtkWidget  *viewable_label;
 };

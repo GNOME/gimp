@@ -44,17 +44,17 @@ struct _GimpViewableButton
   GimpContext       *context;
 
   GimpViewType       popup_view_type;
-  gint               popup_preview_size;
+  gint               popup_view_size;
 
-  gint               button_preview_size;
-  gint               preview_border_width;
+  gint               button_view_size;
+  gint               view_border_width;
 
   GimpDialogFactory *dialog_factory;
   gchar             *dialog_identifier;
   gchar             *dialog_stock_id;
   gchar             *dialog_tooltip;
 
-  GtkWidget         *preview;
+  GtkWidget         *view;
 };
 
 struct _GimpViewableButtonClass
@@ -68,9 +68,9 @@ GType       gimp_viewable_button_get_type (void) G_GNUC_CONST;
 GtkWidget * gimp_viewable_button_new      (GimpContainer      *container,
                                            GimpContext        *context,
                                            GimpViewType        view_type,
-                                           gint                button_preview_size,
-                                           gint                preview_size,
-                                           gint                preview_border_width,
+                                           gint                button_view_size,
+                                           gint                view_size,
+                                           gint                view_border_width,
                                            GimpDialogFactory  *dialog_factory,
                                            const gchar        *dialog_identifier,
                                            const gchar        *dialog_stock_id,
@@ -80,9 +80,9 @@ GimpViewType gimp_viewable_button_get_view_type (GimpViewableButton *button);
 void         gimp_viewable_button_set_view_type (GimpViewableButton *button,
                                                  GimpViewType        view_type);
 
-gint      gimp_viewable_button_get_preview_size (GimpViewableButton *button);
-void      gimp_viewable_button_set_preview_size (GimpViewableButton *button,
-                                                 gint                preview_size);
+gint         gimp_viewable_button_get_view_size (GimpViewableButton *button);
+void         gimp_viewable_button_set_view_size (GimpViewableButton *button,
+                                                 gint                view_size);
 
 
 G_END_DECLS

@@ -44,7 +44,7 @@
 enum
 {
   PROP_0,
-  PROP_PREVIEW_SIZE
+  PROP_VIEW_SIZE
 };
 
 
@@ -89,9 +89,8 @@ gimp_undo_editor_class_init (GimpUndoEditorClass *klass)
 
   image_editor_class->set_image = gimp_undo_editor_set_image;
 
-  g_object_class_install_property (object_class,
-                                   PROP_PREVIEW_SIZE,
-                                   g_param_spec_enum ("preview-size",
+  g_object_class_install_property (object_class, PROP_VIEW_SIZE,
+                                   g_param_spec_enum ("view-size",
                                                       NULL, NULL,
                                                       GIMP_TYPE_VIEW_SIZE,
                                                       GIMP_VIEW_SIZE_LARGE,
@@ -117,7 +116,7 @@ gimp_undo_editor_constructor (GType                  type,
   undo_editor = GIMP_UNDO_EDITOR (object);
 
   undo_editor->view = gimp_container_tree_view_new (NULL, NULL,
-                                                    undo_editor->preview_size,
+                                                    undo_editor->view_size,
                                                     1);
 
   gtk_container_add (GTK_CONTAINER (undo_editor), undo_editor->view);
@@ -152,8 +151,8 @@ gimp_undo_editor_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_PREVIEW_SIZE:
-      undo_editor->preview_size = g_value_get_enum (value);
+    case PROP_VIEW_SIZE:
+      undo_editor->view_size = g_value_get_enum (value);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -203,7 +202,7 @@ gimp_undo_editor_new (GimpCoreConfig  *config,
                        "menu-factory",    menu_factory,
                        "menu-identifier", "<UndoEditor>",
                        "ui-path",         "/undo-editor-popup",
-                       "preview-size",    config->undo_preview_size,
+                       "view-size",       config->undo_preview_size,
                        NULL);
 }
 

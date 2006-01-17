@@ -282,20 +282,20 @@ gimp_prop_color_button_notify (GObject    *config,
 
 
 /*************/
-/*  preview  */
+/*  view  */
 /*************/
 
-static void   gimp_prop_preview_drop   (GtkWidget    *menu,
-                                        gint          x,
-                                        gint          y,
-                                        GimpViewable *viewable,
-                                        gpointer      data);
-static void   gimp_prop_preview_notify (GObject      *config,
-                                        GParamSpec   *param_spec,
-                                        GtkWidget    *preview);
+static void   gimp_prop_view_drop   (GtkWidget    *menu,
+                                     gint          x,
+                                     gint          y,
+                                     GimpViewable *viewable,
+                                     gpointer      data);
+static void   gimp_prop_view_notify (GObject      *config,
+                                     GParamSpec   *param_spec,
+                                     GtkWidget    *view);
 
 /**
- * gimp_prop_preview_new:
+ * gimp_prop_view_new:
  * @config:             #GimpConfig object to which property is attached.
  * @property_name:      Name of Unit property.
  * @size:               Width and height of preview display.
@@ -307,12 +307,12 @@ static void   gimp_prop_preview_notify (GObject      *config,
  * Since GIMP 2.4
  */
 GtkWidget *
-gimp_prop_preview_new (GObject     *config,
-                       const gchar *property_name,
-                       gint         size)
+gimp_prop_view_new (GObject     *config,
+                    const gchar *property_name,
+                    gint         size)
 {
   GParamSpec   *param_spec;
-  GtkWidget    *preview;
+  GtkWidget    *view;
   GimpViewable *viewable;
 
   param_spec = check_param_spec (config, property_name,
@@ -328,13 +328,13 @@ gimp_prop_preview_new (GObject     *config,
       return NULL;
     }
 
-  preview = gimp_view_new_by_types (GIMP_TYPE_VIEW,
-                                    param_spec->value_type,
-                                    size, 0, FALSE);
+  view = gimp_view_new_by_types (GIMP_TYPE_VIEW,
+                                 param_spec->value_type,
+                                 size, 0, FALSE);
 
-  if (! preview)
+  if (! view)
     {
-      g_warning ("%s: cannot create preview for type '%s'",
+      g_warning ("%s: cannot create view for type '%s'",
                  G_STRFUNC, g_type_name (param_spec->value_type));
       return NULL;
     }
@@ -345,34 +345,34 @@ gimp_prop_preview_new (GObject     *config,
 
   if (viewable)
     {
-      gimp_view_set_viewable (GIMP_VIEW (preview), viewable);
+      gimp_view_set_viewable (GIMP_VIEW (view), viewable);
       g_object_unref (viewable);
     }
 
-  set_param_spec (G_OBJECT (preview), preview, param_spec);
+  set_param_spec (G_OBJECT (view), view, param_spec);
 
-  gimp_dnd_viewable_dest_add (preview, param_spec->value_type,
-                              gimp_prop_preview_drop,
+  gimp_dnd_viewable_dest_add (view, param_spec->value_type,
+                              gimp_prop_view_drop,
                               config);
 
   connect_notify (config, property_name,
-                  G_CALLBACK (gimp_prop_preview_notify),
-                  preview);
+                  G_CALLBACK (gimp_prop_view_notify),
+                  view);
 
-  return preview;
+  return view;
 }
 
 static void
-gimp_prop_preview_drop (GtkWidget    *preview,
-                        gint          x,
-                        gint          y,
-                        GimpViewable *viewable,
-                        gpointer      data)
+gimp_prop_view_drop (GtkWidget    *view,
+                     gint          x,
+                     gint          y,
+                     GimpViewable *viewable,
+                     gpointer      data)
 {
   GObject    *config;
   GParamSpec *param_spec;
 
-  param_spec = get_param_spec (G_OBJECT (preview));
+  param_spec = get_param_spec (G_OBJECT (view));
   if (! param_spec)
     return;
 
@@ -384,9 +384,9 @@ gimp_prop_preview_drop (GtkWidget    *preview,
 }
 
 static void
-gimp_prop_preview_notify (GObject      *config,
-                          GParamSpec   *param_spec,
-                          GtkWidget    *preview)
+gimp_prop_view_notify (GObject      *config,
+                       GParamSpec   *param_spec,
+                       GtkWidget    *view)
 {
   GimpViewable *viewable;
 
@@ -394,7 +394,7 @@ gimp_prop_preview_notify (GObject      *config,
                 param_spec->name, &viewable,
                 NULL);
 
-  gimp_view_set_viewable (GIMP_VIEW (preview), viewable);
+  gimp_view_set_viewable (GIMP_VIEW (view), viewable);
 
   if (viewable)
     g_object_unref (viewable);

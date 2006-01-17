@@ -131,10 +131,10 @@ gimp_container_popup_class_init (GimpContainerPopupClass *klass)
 static void
 gimp_container_popup_init (GimpContainerPopup *popup)
 {
-  popup->view_type            = GIMP_VIEW_TYPE_LIST;
-  popup->default_preview_size = GIMP_VIEW_SIZE_SMALL;
-  popup->preview_size         = GIMP_VIEW_SIZE_SMALL;
-  popup->preview_border_width = 1;
+  popup->view_type         = GIMP_VIEW_TYPE_LIST;
+  popup->default_view_size = GIMP_VIEW_SIZE_SMALL;
+  popup->view_size         = GIMP_VIEW_SIZE_SMALL;
+  popup->view_border_width = 1;
 
   popup->frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (popup->frame), GTK_SHADOW_OUT);
@@ -322,9 +322,9 @@ GtkWidget *
 gimp_container_popup_new (GimpContainer     *container,
                           GimpContext       *context,
                           GimpViewType       view_type,
-                          gint               default_preview_size,
-                          gint               preview_size,
-                          gint               preview_border_width,
+                          gint               default_view_size,
+                          gint               view_size,
+                          gint               view_border_width,
                           GimpDialogFactory *dialog_factory,
                           const gchar       *dialog_identifier,
                           const gchar       *dialog_stock_id,
@@ -334,13 +334,13 @@ gimp_container_popup_new (GimpContainer     *container,
 
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
-  g_return_val_if_fail (default_preview_size >  0 &&
-                        default_preview_size <= GIMP_VIEWABLE_MAX_POPUP_SIZE,
+  g_return_val_if_fail (default_view_size >  0 &&
+                        default_view_size <= GIMP_VIEWABLE_MAX_POPUP_SIZE,
                         NULL);
-  g_return_val_if_fail (preview_size >  0 &&
-                        preview_size <= GIMP_VIEWABLE_MAX_POPUP_SIZE, NULL);
-  g_return_val_if_fail (preview_border_width >= 0 &&
-                        preview_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
+  g_return_val_if_fail (view_size >  0 &&
+                        view_size <= GIMP_VIEWABLE_MAX_POPUP_SIZE, NULL);
+  g_return_val_if_fail (view_border_width >= 0 &&
+                        view_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
                         NULL);
   g_return_val_if_fail (dialog_factory == NULL ||
                         GIMP_IS_DIALOG_FACTORY (dialog_factory), NULL);
@@ -360,10 +360,10 @@ gimp_container_popup_new (GimpContainer     *container,
   popup->orig_context = context;
   popup->context      = gimp_context_new (context->gimp, "popup", context);
 
-  popup->view_type            = view_type;
-  popup->default_preview_size = default_preview_size;
-  popup->preview_size         = preview_size;
-  popup->preview_border_width = preview_border_width;
+  popup->view_type         = view_type;
+  popup->default_view_size = default_view_size;
+  popup->view_size         = view_size;
+  popup->view_border_width = view_border_width;
 
   g_signal_connect (popup->context,
                     gimp_context_type_to_signal_name (container->children_type),
@@ -462,16 +462,16 @@ gimp_container_popup_set_view_type (GimpContainerPopup *popup,
 }
 
 gint
-gimp_container_popup_get_preview_size (GimpContainerPopup *popup)
+gimp_container_popup_get_view_size (GimpContainerPopup *popup)
 {
   g_return_val_if_fail (GIMP_IS_CONTAINER_POPUP (popup), GIMP_VIEW_SIZE_SMALL);
 
-  return popup->preview_size;
+  return popup->view_size;
 }
 
 void
-gimp_container_popup_set_preview_size (GimpContainerPopup *popup,
-                                       gint                preview_size)
+gimp_container_popup_set_view_size (GimpContainerPopup *popup,
+                                    gint                view_size)
 {
   GtkWidget *scrolled_win;
   gint       viewport_width;
@@ -482,17 +482,17 @@ gimp_container_popup_set_preview_size (GimpContainerPopup *popup,
 
   viewport_width = GTK_BIN (scrolled_win)->child->allocation.width;
 
-  preview_size = CLAMP (preview_size, GIMP_VIEW_SIZE_TINY,
-                        MIN (GIMP_VIEW_SIZE_GIGANTIC,
-                             viewport_width - 2 * popup->preview_border_width));
+  view_size = CLAMP (view_size, GIMP_VIEW_SIZE_TINY,
+                     MIN (GIMP_VIEW_SIZE_GIGANTIC,
+                          viewport_width - 2 * popup->view_border_width));
 
-  if (preview_size != popup->preview_size)
+  if (view_size != popup->view_size)
     {
-      popup->preview_size = preview_size;
+      popup->view_size = view_size;
 
-      gimp_container_view_set_preview_size (popup->editor->view,
-                                            popup->preview_size,
-                                            popup->preview_border_width);
+      gimp_container_view_set_view_size (popup->editor->view,
+                                         popup->view_size,
+                                         popup->view_border_width);
     }
 }
 
@@ -510,18 +510,18 @@ gimp_container_popup_create_view (GimpContainerPopup *popup)
                                    popup->view_type,
                                    popup->container,
                                    popup->context,
-                                   popup->preview_size,
-                                   popup->preview_border_width,
+                                   popup->view_size,
+                                   popup->view_border_width,
                                    NULL, NULL, NULL);
 
   gimp_container_view_set_reorderable (GIMP_CONTAINER_VIEW (popup->editor->view),
                                        FALSE);
 
   gimp_container_box_set_size_request (GIMP_CONTAINER_BOX (popup->editor->view),
-                                       6  * (popup->default_preview_size +
-                                             2 * popup->preview_border_width),
-                                       10 * (popup->default_preview_size +
-                                             2 * popup->preview_border_width));
+                                       6  * (popup->default_view_size +
+                                             2 * popup->view_border_width),
+                                       10 * (popup->default_view_size +
+                                             2 * popup->view_border_width));
 
   if (GIMP_IS_EDITOR (popup->editor->view))
     gimp_editor_set_show_name (GIMP_EDITOR (popup->editor->view), FALSE);
@@ -561,24 +561,22 @@ static void
 gimp_container_popup_smaller_clicked (GtkWidget          *button,
                                       GimpContainerPopup *popup)
 {
-  gint preview_size;
+  gint view_size;
 
-  preview_size = gimp_container_view_get_preview_size (popup->editor->view,
-                                                       NULL);
+  view_size = gimp_container_view_get_view_size (popup->editor->view, NULL);
 
-  gimp_container_popup_set_preview_size (popup, preview_size * 0.8);
+  gimp_container_popup_set_view_size (popup, view_size * 0.8);
 }
 
 static void
 gimp_container_popup_larger_clicked (GtkWidget          *button,
                                      GimpContainerPopup *popup)
 {
-  gint preview_size;
+  gint view_size;
 
-  preview_size = gimp_container_view_get_preview_size (popup->editor->view,
-                                                       NULL);
+  view_size = gimp_container_view_get_view_size (popup->editor->view, NULL);
 
-  gimp_container_popup_set_preview_size (popup, preview_size * 1.2);
+  gimp_container_popup_set_view_size (popup, view_size * 1.2);
 }
 
 static void

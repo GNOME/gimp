@@ -260,14 +260,14 @@ gimp_component_editor_new (gint             view_size,
                          "ui-path",         "/channels-popup",
                          NULL);
 
-  gimp_component_editor_set_preview_size (editor, view_size);
+  gimp_component_editor_set_view_size (editor, view_size);
 
   return GTK_WIDGET (editor);
 }
 
 void
-gimp_component_editor_set_preview_size (GimpComponentEditor *editor,
-                                        gint                 view_size)
+gimp_component_editor_set_view_size (GimpComponentEditor *editor,
+                                     gint                 view_size)
 {
   GtkWidget   *tree_widget;
   GtkIconSize  icon_size;
@@ -306,7 +306,7 @@ gimp_component_editor_set_preview_size (GimpComponentEditor *editor,
       g_object_unref (renderer);
     }
 
-  editor->preview_size = view_size;
+  editor->view_size = view_size;
 
   gtk_tree_view_columns_autosize (editor->view);
 }
@@ -358,7 +358,7 @@ gimp_component_editor_create_components (GimpComponentEditor *editor)
       visible = gimp_image_get_component_visible (gimage, components[i]);
 
       renderer = gimp_view_renderer_new (G_TYPE_FROM_INSTANCE (gimage),
-                                         editor->preview_size, 1, FALSE);
+                                         editor->view_size, 1, FALSE);
       gimp_view_renderer_set_viewable (renderer, GIMP_VIEWABLE (gimage));
       gimp_view_renderer_remove_idle (renderer);
 

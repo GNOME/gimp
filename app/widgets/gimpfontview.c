@@ -66,8 +66,8 @@ GtkWidget *
 gimp_font_view_new (GimpViewType     view_type,
                     GimpContainer   *container,
                     GimpContext     *context,
-                    gint             preview_size,
-                    gint             preview_border_width,
+                    gint             view_size,
+                    gint             view_border_width,
                     GimpMenuFactory *menu_factory)
 {
   GimpFontView        *font_view;
@@ -78,7 +78,7 @@ gimp_font_view_new (GimpViewType     view_type,
   if (! gimp_container_editor_construct (GIMP_CONTAINER_EDITOR (font_view),
                                          view_type,
                                          container,context,
-                                         preview_size, preview_border_width,
+                                         view_size, view_border_width,
                                          menu_factory, "<Fonts>",
                                          "/fonts-popup"))
     {

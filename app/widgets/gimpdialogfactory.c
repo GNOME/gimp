@@ -57,7 +57,7 @@ static GtkWidget *
               gimp_dialog_factory_default_constructor (GimpDialogFactory *factory,
                                                        GimpDialogFactoryEntry *entry,
                                                        GimpContext       *context,
-                                                       gint               preview_size);
+                                                       gint               view_size);
 static void     gimp_dialog_factory_set_widget_data   (GtkWidget         *dialog,
                                                        GimpDialogFactory *factory,
                                                        GimpDialogFactoryEntry *entry);
@@ -273,7 +273,7 @@ gimp_dialog_factory_register_entry (GimpDialogFactory *factory,
                                     const gchar       *stock_id,
                                     const gchar       *help_id,
                                     GimpDialogNewFunc  new_func,
-                                    gint               preview_size,
+                                    gint               view_size,
                                     gboolean           singleton,
                                     gboolean           session_managed,
                                     gboolean           remember_size,
@@ -292,7 +292,7 @@ gimp_dialog_factory_register_entry (GimpDialogFactory *factory,
   entry->stock_id         = g_strdup (stock_id);
   entry->help_id          = g_strdup (help_id);
   entry->new_func         = new_func;
-  entry->preview_size     = preview_size;
+  entry->view_size        = view_size;
   entry->singleton        = singleton ? TRUE : FALSE;
   entry->session_managed  = session_managed ? TRUE : FALSE;
   entry->remember_size    = remember_size ? TRUE : FALSE;
@@ -352,7 +352,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
                                          GdkScreen         *screen,
                                          GimpContext       *context,
                                          const gchar       *identifier,
-                                         gint               preview_size,
+                                         gint               view_size,
                                          gboolean           return_existing,
                                          gboolean           present)
 {
@@ -418,21 +418,21 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
        *  - the factory's context, which happens when raising a toplevel
        *    dialog was the original request.
        */
-      if (preview_size < GIMP_VIEW_SIZE_TINY)
-        preview_size = entry->preview_size;
+      if (view_size < GIMP_VIEW_SIZE_TINY)
+        view_size = entry->view_size;
 
       if (context)
         dialog = factory->constructor (factory, entry,
                                        context,
-                                       preview_size);
+                                       view_size);
       else if (dock)
         dialog = factory->constructor (factory, entry,
                                        GIMP_DOCK (dock)->context,
-                                       preview_size);
+                                       view_size);
       else
         dialog = factory->constructor (factory, entry,
                                        factory->context,
-                                       preview_size);
+                                       view_size);
 
       if (dialog)
         {
@@ -530,7 +530,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
  * @screen:       the #GdkScreen the dialog should appear on
  * @identifier:   the identifier of the dialog as registered with
  *                gimp_dialog_factory_register_entry()
- * @preview_size:
+ * @view_size:
  * @present:      whether gtk_window_present() should be called
  *
  * Creates a new toplevel dialog or a #GimpDockable, depending on whether
@@ -543,7 +543,7 @@ GtkWidget *
 gimp_dialog_factory_dialog_new (GimpDialogFactory *factory,
                                 GdkScreen         *screen,
                                 const gchar       *identifier,
-                                gint               preview_size,
+                                gint               view_size,
                                 gboolean           present)
 {
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
@@ -554,7 +554,7 @@ gimp_dialog_factory_dialog_new (GimpDialogFactory *factory,
                                                   screen,
                                                   factory->context,
                                                   identifier,
-                                                  preview_size,
+                                                  view_size,
                                                   FALSE,
                                                   present);
 }
@@ -565,7 +565,7 @@ gimp_dialog_factory_dialog_new (GimpDialogFactory *factory,
  * @screen:       the #GdkScreen the dialog should appear on
  * @identifiers:  a '|' separated list of identifiers of dialogs as
  *                registered with gimp_dialog_factory_register_entry()
- * @preview_size:
+ * @view_size:
  *
  * Raises any of a list of already existing toplevel dialog or
  * #GimpDockable if it was already created by this %facory.
@@ -579,7 +579,7 @@ GtkWidget *
 gimp_dialog_factory_dialog_raise (GimpDialogFactory *factory,
                                   GdkScreen         *screen,
                                   const gchar       *identifiers,
-                                  gint               preview_size)
+                                  gint               view_size)
 {
   GtkWidget *dialog;
 
@@ -608,7 +608,7 @@ gimp_dialog_factory_dialog_raise (GimpDialogFactory *factory,
                                                         screen,
                                                         NULL,
                                                         ids[i] ? ids[i] : ids[0],
-                                                        preview_size,
+                                                        view_size,
                                                         TRUE,
                                                         TRUE);
       g_strfreev (ids);
@@ -619,7 +619,7 @@ gimp_dialog_factory_dialog_raise (GimpDialogFactory *factory,
                                                         screen,
                                                         NULL,
                                                         identifiers,
-                                                        preview_size,
+                                                        view_size,
                                                         TRUE,
                                                         TRUE);
     }
@@ -633,7 +633,7 @@ gimp_dialog_factory_dialog_raise (GimpDialogFactory *factory,
  * @dock:         a #GimpDock crated by this %factory.
  * @identifier:   the identifier of the dialog as registered with
  *                gimp_dialog_factory_register_entry()
- * @preview_size:
+ * @view_size:
  *
  * Creates a new #GimpDockable in the context of the #GimpDock it will be
  * added to.
@@ -649,7 +649,7 @@ GtkWidget *
 gimp_dialog_factory_dockable_new (GimpDialogFactory *factory,
                                   GimpDock          *dock,
                                   const gchar       *identifier,
-                                  gint               preview_size)
+                                  gint               view_size)
 {
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
   g_return_val_if_fail (GIMP_IS_DOCK (dock), NULL);
@@ -659,7 +659,7 @@ gimp_dialog_factory_dockable_new (GimpDialogFactory *factory,
                                                   gtk_widget_get_screen (GTK_WIDGET (dock)),
                                                   dock->context,
                                                   identifier,
-                                                  preview_size,
+                                                  view_size,
                                                   FALSE,
                                                   FALSE);
 }
@@ -1122,9 +1122,9 @@ static GtkWidget *
 gimp_dialog_factory_default_constructor (GimpDialogFactory      *factory,
                                          GimpDialogFactoryEntry *entry,
                                          GimpContext            *context,
-                                         gint                    preview_size)
+                                         gint                    view_size)
 {
-  return entry->new_func (factory, context, preview_size);
+  return entry->new_func (factory, context, view_size);
 }
 
 static void

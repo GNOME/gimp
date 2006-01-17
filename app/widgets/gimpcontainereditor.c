@@ -111,8 +111,8 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
                                  GimpViewType         view_type,
                                  GimpContainer       *container,
                                  GimpContext         *context,
-                                 gint                 preview_size,
-                                 gint                 preview_border_width,
+                                 gint                 view_size,
+                                 gint                 view_border_width,
                                  GimpMenuFactory     *menu_factory,
                                  const gchar         *menu_identifier,
                                  const gchar         *ui_identifier)
@@ -120,10 +120,10 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
   g_return_val_if_fail (GIMP_IS_CONTAINER_EDITOR (editor), FALSE);
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), FALSE);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
-  g_return_val_if_fail (preview_size > 0 &&
-                        preview_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, FALSE);
-  g_return_val_if_fail (preview_border_width >= 0 &&
-                        preview_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
+  g_return_val_if_fail (view_size > 0 &&
+                        view_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, FALSE);
+  g_return_val_if_fail (view_border_width >= 0 &&
+                        view_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
                         FALSE);
   g_return_val_if_fail (menu_factory == NULL ||
                         GIMP_IS_MENU_FACTORY (menu_factory), FALSE);
@@ -134,16 +134,16 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
       editor->view =
         GIMP_CONTAINER_VIEW (gimp_container_grid_view_new (container,
                                                            context,
-                                                           preview_size,
-                                                           preview_border_width));
+                                                           view_size,
+                                                           view_border_width));
       break;
 
     case GIMP_VIEW_TYPE_LIST:
       editor->view =
         GIMP_CONTAINER_VIEW (gimp_container_tree_view_new (container,
                                                            context,
-                                                           preview_size,
-                                                           preview_border_width));
+                                                           view_size,
+                                                           view_border_width));
       break;
 
     default:

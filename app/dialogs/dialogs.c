@@ -111,16 +111,16 @@ static const GimpDialogFactoryEntry toplevel_entries[] =
 };
 
 #define DOCKABLE(id,name,blurb,stock_id,help_id,\
-                 new_func,preview_size,singleton) \
+                 new_func,view_size,singleton) \
   { id, name, blurb, stock_id, help_id, \
-    new_func, preview_size, singleton, FALSE, FALSE, TRUE }
+    new_func, view_size, singleton, FALSE, FALSE, TRUE }
 
 #define LISTGRID(id,name,blurb,stock_id,help_id,\
-                 preview_size) \
+                 view_size) \
   { "gimp-"#id"-list", name, blurb, stock_id, help_id, \
-    dialogs_##id##_list_view_new, preview_size, FALSE, FALSE, FALSE, TRUE }, \
+    dialogs_##id##_list_view_new, view_size, FALSE, FALSE, FALSE, TRUE }, \
   { "gimp-"#id"-grid", name, blurb, stock_id, help_id, \
-    dialogs_##id##_grid_view_new, preview_size, FALSE, FALSE, FALSE, TRUE }
+    dialogs_##id##_grid_view_new, view_size, FALSE, FALSE, FALSE, TRUE }
 
 static const GimpDialogFactoryEntry dock_entries[] =
 {
@@ -264,7 +264,7 @@ dialogs_init (Gimp            *gimp,
 					toplevel_entries[i].stock_id,
 					toplevel_entries[i].help_id,
 					toplevel_entries[i].new_func,
-					toplevel_entries[i].preview_size,
+					toplevel_entries[i].view_size,
 					toplevel_entries[i].singleton,
 					toplevel_entries[i].session_managed,
 					toplevel_entries[i].remember_size,
@@ -278,7 +278,7 @@ dialogs_init (Gimp            *gimp,
 					dock_entries[i].stock_id,
 					dock_entries[i].help_id,
 					dock_entries[i].new_func,
-					dock_entries[i].preview_size,
+					dock_entries[i].view_size,
 					dock_entries[i].singleton,
 					dock_entries[i].session_managed,
 					dock_entries[i].remember_size,

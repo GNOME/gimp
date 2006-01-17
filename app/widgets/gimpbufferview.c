@@ -50,7 +50,7 @@ static void   gimp_buffer_view_activate_item  (GimpContainerEditor *editor,
 
 static void   gimp_buffer_view_buffer_changed (Gimp                *gimp,
                                                GimpBufferView      *buffer_view);
-static void   gimp_buffer_view_preview_notify (GimpContainerView   *view,
+static void   gimp_buffer_view_view_notify    (GimpContainerView   *view,
                                                GParamSpec          *pspec,
                                                GimpBufferView      *buffer_view);
 
@@ -116,20 +116,20 @@ gimp_buffer_view_new (GimpViewType     view_type,
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);
 
-  buffer_view->global_preview =
+  buffer_view->global_view =
     gimp_view_new_full_by_types (GIMP_TYPE_VIEW,
                                  GIMP_TYPE_BUFFER,
                                  view_size, view_size, view_border_width,
                                  FALSE, FALSE, TRUE);
-  gtk_box_pack_start (GTK_BOX (hbox), buffer_view->global_preview,
+  gtk_box_pack_start (GTK_BOX (hbox), buffer_view->global_view,
                       FALSE, FALSE, 0);
-  gtk_widget_show (buffer_view->global_preview);
+  gtk_widget_show (buffer_view->global_view);
 
-  g_signal_connect_object (editor->view, "notify::preview-size",
-                           G_CALLBACK (gimp_buffer_view_preview_notify),
+  g_signal_connect_object (editor->view, "notify::view-size",
+                           G_CALLBACK (gimp_buffer_view_view_notify),
                            buffer_view, 0);
-  g_signal_connect_object (editor->view, "notify::preview-border-width",
-                           G_CALLBACK (gimp_buffer_view_preview_notify),
+  g_signal_connect_object (editor->view, "notify::view-border-width",
+                           G_CALLBACK (gimp_buffer_view_view_notify),
                            buffer_view, 0);
 
   buffer_view->global_label = gtk_label_new (_("(None)"));
@@ -199,7 +199,7 @@ static void
 gimp_buffer_view_buffer_changed (Gimp           *gimp,
                                  GimpBufferView *buffer_view)
 {
-  gimp_view_set_viewable (GIMP_VIEW (buffer_view->global_preview),
+  gimp_view_set_viewable (GIMP_VIEW (buffer_view->global_view),
                           (GimpViewable *) gimp->global_buffer);
 
   if (gimp->global_buffer)
@@ -218,16 +218,16 @@ gimp_buffer_view_buffer_changed (Gimp           *gimp,
 }
 
 static void
-gimp_buffer_view_preview_notify (GimpContainerView *container_view,
-                                 GParamSpec        *pspec,
-                                 GimpBufferView    *buffer_view)
+gimp_buffer_view_view_notify (GimpContainerView *container_view,
+                              GParamSpec        *pspec,
+                              GimpBufferView    *buffer_view)
 {
-  GimpView *view = GIMP_VIEW (buffer_view->global_preview);
+  GimpView *view = GIMP_VIEW (buffer_view->global_view);
   gint      view_size;
   gint      view_border_width;
 
-  view_size = gimp_container_view_get_preview_size (container_view,
-                                                    &view_border_width);
+  view_size = gimp_container_view_get_view_size (container_view,
+                                                 &view_border_width);
 
   gimp_view_renderer_set_size_full (view->renderer,
                                     view_size, view_size, view_border_width);

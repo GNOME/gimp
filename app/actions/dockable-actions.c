@@ -65,7 +65,7 @@ static GimpActionEntry dockable_actions[] =
     GIMP_HELP_DOCK_TAB_DETACH }
 };
 
-#define PREVIEW_SIZE(action,label,size) \
+#define VIEW_SIZE(action,label,size) \
   { "dockable-preview-size-" action, NULL, \
     (label), NULL, NULL, \
     (size), \
@@ -76,17 +76,17 @@ static GimpActionEntry dockable_actions[] =
     (style), \
     GIMP_HELP_DOCK_TAB_STYLE }
 
-static GimpRadioActionEntry dockable_preview_size_actions[] =
+static GimpRadioActionEntry dockable_view_size_actions[] =
 {
-  PREVIEW_SIZE ("tiny",        N_("_Tiny"),        GIMP_VIEW_SIZE_TINY),
-  PREVIEW_SIZE ("extra-small", N_("E_xtra Small"), GIMP_VIEW_SIZE_EXTRA_SMALL),
-  PREVIEW_SIZE ("small",       N_("_Small"),       GIMP_VIEW_SIZE_SMALL),
-  PREVIEW_SIZE ("medium",      N_("_Medium"),      GIMP_VIEW_SIZE_MEDIUM),
-  PREVIEW_SIZE ("large",       N_("_Large"),       GIMP_VIEW_SIZE_LARGE),
-  PREVIEW_SIZE ("extra-large", N_("Ex_tra Large"), GIMP_VIEW_SIZE_EXTRA_LARGE),
-  PREVIEW_SIZE ("huge",        N_("_Huge"),        GIMP_VIEW_SIZE_HUGE),
-  PREVIEW_SIZE ("enormous",    N_("_Enormous"),    GIMP_VIEW_SIZE_ENORMOUS),
-  PREVIEW_SIZE ("gigantic",    N_("_Gigantic"),    GIMP_VIEW_SIZE_GIGANTIC)
+  VIEW_SIZE ("tiny",        N_("_Tiny"),        GIMP_VIEW_SIZE_TINY),
+  VIEW_SIZE ("extra-small", N_("E_xtra Small"), GIMP_VIEW_SIZE_EXTRA_SMALL),
+  VIEW_SIZE ("small",       N_("_Small"),       GIMP_VIEW_SIZE_SMALL),
+  VIEW_SIZE ("medium",      N_("_Medium"),      GIMP_VIEW_SIZE_MEDIUM),
+  VIEW_SIZE ("large",       N_("_Large"),       GIMP_VIEW_SIZE_LARGE),
+  VIEW_SIZE ("extra-large", N_("Ex_tra Large"), GIMP_VIEW_SIZE_EXTRA_LARGE),
+  VIEW_SIZE ("huge",        N_("_Huge"),        GIMP_VIEW_SIZE_HUGE),
+  VIEW_SIZE ("enormous",    N_("_Enormous"),    GIMP_VIEW_SIZE_ENORMOUS),
+  VIEW_SIZE ("gigantic",    N_("_Gigantic"),    GIMP_VIEW_SIZE_GIGANTIC)
 };
 
 static GimpRadioActionEntry dockable_tab_style_actions[] =
@@ -98,7 +98,7 @@ static GimpRadioActionEntry dockable_tab_style_actions[] =
   TAB_STYLE ("preview-name", N_("St_atus & Text"),  GIMP_TAB_STYLE_PREVIEW_NAME)
 };
 
-#undef PREVIEW_SIZE
+#undef VIEW_SIZE
 #undef TAB_STYLE
 
 
@@ -142,11 +142,11 @@ dockable_actions_setup (GimpActionGroup *group)
                                         G_CALLBACK (dockable_add_tab_cmd_callback));
 
   gimp_action_group_add_radio_actions (group,
-                                       dockable_preview_size_actions,
-                                       G_N_ELEMENTS (dockable_preview_size_actions),
+                                       dockable_view_size_actions,
+                                       G_N_ELEMENTS (dockable_view_size_actions),
                                        NULL,
                                        GIMP_VIEW_SIZE_MEDIUM,
-                                       G_CALLBACK (dockable_preview_size_cmd_callback));
+                                       G_CALLBACK (dockable_view_size_cmd_callback));
 
   gimp_action_group_add_radio_actions (group,
                                        dockable_tab_style_actions,
@@ -175,7 +175,7 @@ dockable_actions_update (GimpActionGroup *group,
   GimpViewType            view_type           = -1;
   gboolean                list_view_available = FALSE;
   gboolean                grid_view_available = FALSE;
-  GimpViewSize            preview_size        = -1;
+  GimpViewSize            view_size           = -1;
   GimpTabStyle            tab_style           = -1;
   gint                    n_pages             = 0;
   gint                    n_books             = 0;
@@ -236,7 +236,7 @@ dockable_actions_update (GimpActionGroup *group,
   view = gimp_container_view_get_by_dockable (dockable);
 
   if (view)
-    preview_size = gimp_container_view_get_preview_size (view, NULL);
+    view_size = gimp_container_view_get_view_size (view, NULL);
 
   tab_style = dockable->tab_style;
 
@@ -252,43 +252,43 @@ dockable_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("dockable-detach-tab", n_pages > 1 || n_books > 1);
 
-  SET_VISIBLE ("dockable-preview-size-menu", preview_size != -1);
+  SET_VISIBLE ("dockable-preview-size-menu", view_size != -1);
 
-  if (preview_size != -1)
+  if (view_size != -1)
     {
-      if (preview_size >= GIMP_VIEW_SIZE_GIGANTIC)
+      if (view_size >= GIMP_VIEW_SIZE_GIGANTIC)
         {
           SET_ACTIVE ("dockable-preview-size-gigantic", TRUE);
         }
-      else if (preview_size >= GIMP_VIEW_SIZE_ENORMOUS)
+      else if (view_size >= GIMP_VIEW_SIZE_ENORMOUS)
         {
           SET_ACTIVE ("dockable-preview-size-enormous", TRUE);
         }
-      else if (preview_size >= GIMP_VIEW_SIZE_HUGE)
+      else if (view_size >= GIMP_VIEW_SIZE_HUGE)
         {
           SET_ACTIVE ("dockable-preview-size-huge", TRUE);
         }
-      else if (preview_size >= GIMP_VIEW_SIZE_EXTRA_LARGE)
+      else if (view_size >= GIMP_VIEW_SIZE_EXTRA_LARGE)
         {
           SET_ACTIVE ("dockable-preview-size-extra-large", TRUE);
         }
-      else if (preview_size >= GIMP_VIEW_SIZE_LARGE)
+      else if (view_size >= GIMP_VIEW_SIZE_LARGE)
         {
           SET_ACTIVE ("dockable-preview-size-large", TRUE);
         }
-      else if (preview_size >= GIMP_VIEW_SIZE_MEDIUM)
+      else if (view_size >= GIMP_VIEW_SIZE_MEDIUM)
         {
           SET_ACTIVE ("dockable-preview-size-medium", TRUE);
         }
-      else if (preview_size >= GIMP_VIEW_SIZE_SMALL)
+      else if (view_size >= GIMP_VIEW_SIZE_SMALL)
         {
           SET_ACTIVE ("dockable-preview-size-small", TRUE);
         }
-      else if (preview_size >= GIMP_VIEW_SIZE_EXTRA_SMALL)
+      else if (view_size >= GIMP_VIEW_SIZE_EXTRA_SMALL)
         {
           SET_ACTIVE ("dockable-preview-size-extra-small", TRUE);
         }
-      else if (preview_size >= GIMP_VIEW_SIZE_TINY)
+      else if (view_size >= GIMP_VIEW_SIZE_TINY)
         {
           SET_ACTIVE ("dockable-preview-size-tiny", TRUE);
         }

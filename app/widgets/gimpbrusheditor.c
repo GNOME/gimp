@@ -83,16 +83,16 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
   gtk_box_pack_start (GTK_BOX (editor), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  editor->preview = gimp_view_new_full_by_types (GIMP_TYPE_VIEW,
-                                                 GIMP_TYPE_BRUSH,
-                                                 BRUSH_VIEW_WIDTH,
-                                                 BRUSH_VIEW_HEIGHT, 0,
-                                                 FALSE, FALSE, TRUE);
-  gtk_widget_set_size_request (editor->preview,
+  editor->view = gimp_view_new_full_by_types (GIMP_TYPE_VIEW,
+                                              GIMP_TYPE_BRUSH,
+                                              BRUSH_VIEW_WIDTH,
+                                              BRUSH_VIEW_HEIGHT, 0,
+                                              FALSE, FALSE, TRUE);
+  gtk_widget_set_size_request (editor->view,
                                BRUSH_VIEW_WIDTH, BRUSH_VIEW_HEIGHT);
-  gimp_view_set_expand (GIMP_VIEW (editor->preview), TRUE);
-  gtk_container_add (GTK_CONTAINER (frame), editor->preview);
-  gtk_widget_show (editor->preview);
+  gimp_view_set_expand (GIMP_VIEW (editor->view), TRUE);
+  gtk_container_add (GTK_CONTAINER (frame), editor->view);
+  gtk_widget_show (editor->view);
 
   editor->shape_group = NULL;
 
@@ -223,7 +223,7 @@ gimp_brush_editor_set_data (GimpDataEditor *editor,
                       G_CALLBACK (gimp_brush_editor_notify_brush),
                       editor);
 
-  gimp_view_set_viewable (GIMP_VIEW (brush_editor->preview),
+  gimp_view_set_viewable (GIMP_VIEW (brush_editor->view),
                           (GimpViewable *) data);
 
   if (editor->data && GIMP_IS_BRUSH_GENERATED (editor->data))

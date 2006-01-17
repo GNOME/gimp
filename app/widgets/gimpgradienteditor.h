@@ -57,7 +57,7 @@ struct _GimpGradientEditor
   GtkWidget      *hint_label3;
   GtkWidget      *hint_label4;
   GtkWidget      *scrollbar;
-  GtkWidget      *preview;
+  GtkWidget      *view;
   GtkWidget      *control;
 
   /*  Zoom and scrollbar  */
@@ -70,9 +70,9 @@ struct _GimpGradientEditor
   /*  Color dialog  */
   GtkWidget      *color_dialog;
 
-  /*  Gradient preview  */
-  gint            preview_last_x;
-  gboolean        preview_button_down;
+  /*  Gradient view  */
+  gint            view_last_x;
+  gboolean        view_button_down;
 
   /*  Gradient control  */
   GdkPixmap              *control_pixmap;

@@ -98,6 +98,7 @@ gimp_view_renderer_class_init (GimpViewRendererClass *klass)
   object_class->dispose  = gimp_view_renderer_dispose;
   object_class->finalize = gimp_view_renderer_finalize;
 
+  klass->update          = NULL;
   klass->draw            = gimp_view_renderer_real_draw;
   klass->render          = gimp_view_renderer_real_render;
 
@@ -255,7 +256,7 @@ gimp_view_renderer_set_viewable (GimpViewRenderer *renderer,
                                  GimpViewable     *viewable)
 {
   g_return_if_fail (GIMP_IS_VIEW_RENDERER (renderer));
-  g_return_if_fail (! viewable || GIMP_IS_VIEWABLE (viewable));
+  g_return_if_fail (viewable == NULL || GIMP_IS_VIEWABLE (viewable));
 
   if (viewable)
     g_return_if_fail (g_type_is_a (G_TYPE_FROM_INSTANCE (viewable),
@@ -321,31 +322,31 @@ gimp_view_renderer_set_viewable (GimpViewRenderer *renderer,
 
 void
 gimp_view_renderer_set_size (GimpViewRenderer *renderer,
-                             gint              preview_size,
+                             gint              view_size,
                              gint              border_width)
 {
   gint width, height;
 
   g_return_if_fail (GIMP_IS_VIEW_RENDERER (renderer));
-  g_return_if_fail (preview_size >  0 &&
-                    preview_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE);
+  g_return_if_fail (view_size >  0 &&
+                    view_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE);
   g_return_if_fail (border_width >= 0 &&
                     border_width <= GIMP_VIEW_MAX_BORDER_WIDTH);
 
-  renderer->size = preview_size;
+  renderer->size = view_size;
 
   if (renderer->viewable)
     {
       gimp_viewable_get_preview_size (renderer->viewable,
-                                      preview_size,
+                                      view_size,
                                       renderer->is_popup,
                                       renderer->dot_for_dot,
                                       &width, &height);
     }
   else
     {
-      width  = preview_size;
-      height = preview_size;
+      width  = view_size;
+      height = view_size;
     }
 
   gimp_view_renderer_set_size_full (renderer, width, height, border_width);
@@ -416,18 +417,18 @@ gimp_view_renderer_set_border_type (GimpViewRenderer   *renderer,
 
   switch (border_type)
     {
-      case GIMP_VIEW_BORDER_BLACK:
-          border_color = &black_color;
-          break;
-      case GIMP_VIEW_BORDER_WHITE:
-          border_color = &white_color;
-          break;
-      case GIMP_VIEW_BORDER_GREEN:
-          border_color = &green_color;
-          break;
-      case GIMP_VIEW_BORDER_RED:
-          border_color = &red_color;
-          break;
+    case GIMP_VIEW_BORDER_BLACK:
+      border_color = &black_color;
+      break;
+    case GIMP_VIEW_BORDER_WHITE:
+      border_color = &white_color;
+      break;
+    case GIMP_VIEW_BORDER_GREEN:
+      border_color = &green_color;
+      break;
+    case GIMP_VIEW_BORDER_RED:
+      border_color = &red_color;
+      break;
     }
 
   gimp_view_renderer_set_border_color (renderer, border_color);

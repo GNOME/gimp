@@ -284,32 +284,32 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  /* Gradient preview */
-  editor->preview_last_x      = 0;
-  editor->preview_button_down = FALSE;
+  /* Gradient view */
+  editor->view_last_x      = 0;
+  editor->view_button_down = FALSE;
 
-  editor->preview = gimp_view_new_full_by_types (GIMP_TYPE_VIEW,
-                                                 GIMP_TYPE_GRADIENT,
-                                                 GRAD_VIEW_WIDTH,
-                                                 GRAD_VIEW_HEIGHT, 0,
-                                                 FALSE, FALSE, FALSE);
-  gtk_widget_set_size_request (editor->preview,
+  editor->view = gimp_view_new_full_by_types (GIMP_TYPE_VIEW,
+                                              GIMP_TYPE_GRADIENT,
+                                              GRAD_VIEW_WIDTH,
+                                              GRAD_VIEW_HEIGHT, 0,
+                                              FALSE, FALSE, FALSE);
+  gtk_widget_set_size_request (editor->view,
                                GRAD_VIEW_WIDTH, GRAD_VIEW_HEIGHT);
-  gtk_widget_set_events (editor->preview, GRAD_VIEW_EVENT_MASK);
-  gimp_view_set_expand (GIMP_VIEW (editor->preview), TRUE);
-  gtk_box_pack_start (GTK_BOX (vbox), editor->preview, TRUE, TRUE, 0);
-  gtk_widget_show (editor->preview);
+  gtk_widget_set_events (editor->view, GRAD_VIEW_EVENT_MASK);
+  gimp_view_set_expand (GIMP_VIEW (editor->view), TRUE);
+  gtk_box_pack_start (GTK_BOX (vbox), editor->view, TRUE, TRUE, 0);
+  gtk_widget_show (editor->view);
 
-  g_signal_connect (editor->preview, "event",
+  g_signal_connect (editor->view, "event",
                     G_CALLBACK (view_events),
                     editor);
 
-  gimp_dnd_viewable_dest_add (GTK_WIDGET (editor->preview),
+  gimp_dnd_viewable_dest_add (GTK_WIDGET (editor->view),
                               GIMP_TYPE_GRADIENT,
                               gradient_editor_drop_gradient,
                               editor);
 
-  gimp_dnd_color_dest_add (GTK_WIDGET (editor->preview),
+  gimp_dnd_color_dest_add (GTK_WIDGET (editor->view),
                               gradient_editor_drop_color,
                               editor);
 
@@ -493,7 +493,7 @@ gimp_gradient_editor_set_data (GimpDataEditor *editor,
                               G_CALLBACK (gimp_gradient_editor_gradient_dirty),
                               gradient_editor);
 
-  gimp_view_set_viewable (GIMP_VIEW (gradient_editor->preview),
+  gimp_view_set_viewable (GIMP_VIEW (gradient_editor->view),
                           GIMP_VIEWABLE (data));
 
   gtk_widget_set_sensitive (gradient_editor->control, editor->data_editable);
@@ -741,7 +741,7 @@ gradient_editor_scrollbar_update (GtkAdjustment      *adjustment,
   g_free (str1);
   g_free (str2);
 
-  renderer = GIMP_VIEW_RENDERER_GRADIENT (GIMP_VIEW (editor->preview)->renderer);
+  renderer = GIMP_VIEW_RENDERER_GRADIENT (GIMP_VIEW (editor->view)->renderer);
 
   gimp_view_renderer_gradient_set_offsets (renderer,
                                            adjustment->value,
@@ -806,13 +806,13 @@ view_events (GtkWidget          *widget,
       {
         GdkEventMotion *mevent = (GdkEventMotion *) event;
 
-        gtk_widget_get_pointer (editor->preview, &x, &y);
+        gtk_widget_get_pointer (editor->view, &x, &y);
 
-        if (x != editor->preview_last_x)
+        if (x != editor->view_last_x)
           {
-            editor->preview_last_x = x;
+            editor->view_last_x = x;
 
-            if (editor->preview_button_down)
+            if (editor->view_button_down)
               {
                 if (mevent->state & GDK_CONTROL_MASK)
                   view_set_background (editor, x);
@@ -831,13 +831,13 @@ view_events (GtkWidget          *widget,
       {
         GdkEventButton *bevent = (GdkEventButton *) event;
 
-        gtk_widget_get_pointer (editor->preview, &x, &y);
+        gtk_widget_get_pointer (editor->view, &x, &y);
 
         switch (bevent->button)
           {
           case 1:
-            editor->preview_last_x = x;
-            editor->preview_button_down = TRUE;
+            editor->view_last_x = x;
+            editor->view_button_down = TRUE;
             if (bevent->state & GDK_CONTROL_MASK)
               view_set_background (editor, x);
             else
@@ -902,14 +902,14 @@ view_events (GtkWidget          *widget,
       break;
 
     case GDK_BUTTON_RELEASE:
-      if (editor->preview_button_down)
+      if (editor->view_button_down)
         {
           GdkEventButton *bevent = (GdkEventButton *) event;
 
-          gtk_widget_get_pointer (editor->preview, &x, &y);
+          gtk_widget_get_pointer (editor->view, &x, &y);
 
-          editor->preview_last_x = x;
-          editor->preview_button_down = FALSE;
+          editor->view_last_x = x;
+          editor->view_button_down = FALSE;
           if (bevent->state & GDK_CONTROL_MASK)
             view_set_background (editor, x);
           else
@@ -1708,7 +1708,7 @@ control_update (GimpGradientEditor *editor,
   /*  See whether we have to re-create the control pixmap
    *  depending on the view's width
    */
-  cwidth  = editor->preview->allocation.width;
+  cwidth  = editor->view->allocation.width;
   cheight = GRAD_CONTROL_HEIGHT;
 
   if (editor->control_pixmap)

@@ -31,7 +31,7 @@ void   dockable_detach_tab_cmd_callback      (GtkAction   *action,
 void   dockable_toggle_view_cmd_callback     (GtkAction   *action,
                                               GtkAction   *current,
                                               gpointer     data);
-void   dockable_preview_size_cmd_callback    (GtkAction   *action,
+void   dockable_view_size_cmd_callback       (GtkAction   *action,
                                               GtkAction   *current,
                                               gpointer     data);
 void   dockable_tab_style_cmd_callback       (GtkAction   *action,

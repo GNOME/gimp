@@ -66,7 +66,7 @@ static void   gimp_channel_tree_view_set_image        (GimpItemTreeView  *item_v
                                                        GimpImage         *gimage);
 static GimpItem * gimp_channel_tree_view_item_new     (GimpImage         *image);
 
-static void   gimp_channel_tree_view_set_preview_size (GimpContainerView *view);
+static void   gimp_channel_tree_view_set_view_size    (GimpContainerView *view);
 
 static void   gimp_channel_tree_view_set_context      (GimpDocked        *docked,
                                                        GimpContext       *context);
@@ -134,7 +134,7 @@ gimp_channel_tree_view_view_iface_init (GimpContainerViewInterface *view_iface)
 {
   parent_view_iface = g_type_interface_peek_parent (view_iface);
 
-  view_iface->set_preview_size = gimp_channel_tree_view_set_preview_size;
+  view_iface->set_view_size = gimp_channel_tree_view_set_view_size;
 }
 
 static void
@@ -287,12 +287,12 @@ gimp_channel_tree_view_set_image (GimpItemTreeView *item_view,
   if (! channel_view->component_editor)
     {
       GimpContainerView *view = GIMP_CONTAINER_VIEW (item_view);
-      gint               preview_size;
+      gint               view_size;
 
-      preview_size = gimp_container_view_get_preview_size (view, NULL);
+      view_size = gimp_container_view_get_view_size (view, NULL);
 
       channel_view->component_editor =
-        gimp_component_editor_new (preview_size,
+        gimp_component_editor_new (view_size,
                                    GIMP_EDITOR (item_view)->menu_factory);
       gimp_docked_set_context (GIMP_DOCKED (channel_view->component_editor),
                                item_view->context);
@@ -341,18 +341,18 @@ gimp_channel_tree_view_item_new (GimpImage *image)
 /*  GimpContainerView methods  */
 
 static void
-gimp_channel_tree_view_set_preview_size (GimpContainerView *view)
+gimp_channel_tree_view_set_view_size (GimpContainerView *view)
 {
   GimpChannelTreeView *channel_view = GIMP_CHANNEL_TREE_VIEW (view);
-  gint                 preview_size;
+  gint                 view_size;
 
-  parent_view_iface->set_preview_size (view);
+  parent_view_iface->set_view_size (view);
 
-  preview_size = gimp_container_view_get_preview_size (view, NULL);
+  view_size = gimp_container_view_get_view_size (view, NULL);
 
   if (channel_view->component_editor)
-    gimp_component_editor_set_preview_size (GIMP_COMPONENT_EDITOR (channel_view->component_editor),
-                                            preview_size);
+    gimp_component_editor_set_view_size (GIMP_COMPONENT_EDITOR (channel_view->component_editor),
+                                         view_size);
 }
 
 

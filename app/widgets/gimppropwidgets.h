@@ -25,26 +25,26 @@
 
 /*  GParamEnum  */
 
-GtkWidget     * gimp_prop_paint_mode_menu_new     (GObject     *config,
-                                                   const gchar *property_name,
-                                                   gboolean     with_behind_mode);
+GtkWidget * gimp_prop_paint_mode_menu_new (GObject     *config,
+                                           const gchar *property_name,
+                                           gboolean     with_behind_mode);
 
 
 /*  GimpParamColor  */
 
-GtkWidget     * gimp_prop_color_button_new        (GObject     *config,
-                                                   const gchar *property_name,
-                                                   const gchar *title,
-                                                   gint         width,
-                                                   gint         height,
-                                                   GimpColorAreaType  type);
+GtkWidget * gimp_prop_color_button_new    (GObject     *config,
+                                           const gchar *property_name,
+                                           const gchar *title,
+                                           gint         width,
+                                           gint         height,
+                                           GimpColorAreaType  type);
 
 
 /*  GParamObject (GimpViewable)  */
 
-GtkWidget     * gimp_prop_preview_new             (GObject     *config,
-                                                   const gchar *property_name,
-                                                   gint         size);
+GtkWidget * gimp_prop_view_new            (GObject     *config,
+                                           const gchar *property_name,
+                                           gint         size);
 
 
 #endif /* __GIMP_APP_PROP_WIDGETS_H__ */

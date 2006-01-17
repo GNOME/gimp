@@ -54,7 +54,7 @@ enum
   SESSION_INFO_DOCKABLE,
 
   SESSION_INFO_DOCKABLE_TAB_STYLE,
-  SESSION_INFO_DOCKABLE_PREVIEW_SIZE,
+  SESSION_INFO_DOCKABLE_VIEW_SIZE,
   SESSION_INFO_DOCKABLE_AUX
 };
 
@@ -422,8 +422,8 @@ gimp_session_info_save (GimpSessionInfo  *info,
                 {
                   GimpContainerView *view;
                   GEnumValue        *enum_value;
-                  gchar             *tab_style    = "icon";
-                  gint               preview_size = -1;
+                  gchar             *tab_style = "icon";
+                  gint               view_size = -1;
                   GList             *aux_info;
 
                   gimp_config_writer_open (writer, "dockable");
@@ -442,14 +442,13 @@ gimp_session_info_save (GimpSessionInfo  *info,
                   view = gimp_container_view_get_by_dockable (dockable);
 
                   if (view)
-                    preview_size = gimp_container_view_get_preview_size (view,
-                                                                         NULL);
+                    view_size = gimp_container_view_get_view_size (view, NULL);
 
-                  if (preview_size > 0 &&
-                      preview_size != entry->preview_size)
+                  if (view_size > 0 &&
+                      view_size != entry->view_size)
                     {
                       gimp_config_writer_open (writer, "preview-size");
-                      gimp_config_writer_printf (writer, "%d", preview_size);
+                      gimp_config_writer_printf (writer, "%d", view_size);
                       gimp_config_writer_close (writer);
                     }
 
@@ -532,7 +531,7 @@ gimp_session_info_deserialize (GScanner *scanner,
   g_scanner_scope_add_symbol (scanner, SESSION_INFO_DOCKABLE, "tab-style",
                               GINT_TO_POINTER (SESSION_INFO_DOCKABLE_TAB_STYLE));
   g_scanner_scope_add_symbol (scanner, SESSION_INFO_DOCKABLE, "preview-size",
-                              GINT_TO_POINTER (SESSION_INFO_DOCKABLE_PREVIEW_SIZE));
+                              GINT_TO_POINTER (SESSION_INFO_DOCKABLE_VIEW_SIZE));
   g_scanner_scope_add_symbol (scanner, SESSION_INFO_DOCKABLE, "aux-info",
                               GINT_TO_POINTER (SESSION_INFO_DOCKABLE_AUX));
 
@@ -729,7 +728,7 @@ gimp_session_info_restore (GimpSessionInfo   *info,
       dialog =
         gimp_dialog_factory_dialog_new (factory, screen,
                                         info->toplevel_entry->identifier,
-                                        info->toplevel_entry->preview_size,
+                                        info->toplevel_entry->view_size,
                                         TRUE);
 
       if (dialog && info->aux_info)
@@ -762,9 +761,9 @@ gimp_session_info_restore (GimpSessionInfo   *info,
               GimpSessionInfoDockable *dockable_info = pages->data;
               GtkWidget               *dockable;
 
-              if (dockable_info->preview_size < GIMP_VIEW_SIZE_TINY ||
-                  dockable_info->preview_size > GIMP_VIEW_SIZE_GIGANTIC)
-                dockable_info->preview_size = -1;
+              if (dockable_info->view_size < GIMP_VIEW_SIZE_TINY ||
+                  dockable_info->view_size > GIMP_VIEW_SIZE_GIGANTIC)
+                dockable_info->view_size = -1;
 
               /*  use the new dock's dialog factory to create dockables
                *  because it may be different from the dialog factory
@@ -774,7 +773,7 @@ gimp_session_info_restore (GimpSessionInfo   *info,
                 gimp_dialog_factory_dockable_new (dock->dialog_factory,
                                                   dock,
                                                   dockable_info->identifier,
-                                                  dockable_info->preview_size);
+                                                  dockable_info->view_size);
 
               if (! dockable)
                 continue;
@@ -1093,9 +1092,9 @@ session_info_dockable_deserialize (GScanner            *scanner,
                 dockable->tab_style = enum_value->value;
               break;
 
-            case SESSION_INFO_DOCKABLE_PREVIEW_SIZE:
+            case SESSION_INFO_DOCKABLE_VIEW_SIZE:
               token = G_TOKEN_INT;
-              if (! gimp_scanner_parse_int (scanner, &dockable->preview_size))
+              if (! gimp_scanner_parse_int (scanner, &dockable->view_size))
                 goto error;
               break;
 

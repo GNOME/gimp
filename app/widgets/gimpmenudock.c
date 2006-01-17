@@ -48,8 +48,8 @@
 #include "gimp-intl.h"
 
 
-#define DEFAULT_MINIMAL_WIDTH     250
-#define DEFAULT_MENU_PREVIEW_SIZE GTK_ICON_SIZE_SMALL_TOOLBAR
+#define DEFAULT_MINIMAL_WIDTH  250
+#define DEFAULT_MENU_VIEW_SIZE GTK_ICON_SIZE_SMALL_TOOLBAR
 
 
 static GObject * gimp_menu_dock_constructor   (GType                  type,
@@ -124,7 +124,7 @@ gimp_menu_dock_class_init (GimpMenuDockClass *klass)
                                            g_param_spec_enum ("menu-preview-size",
                                                               NULL, NULL,
                                                               GTK_TYPE_ICON_SIZE,
-                                                              DEFAULT_MENU_PREVIEW_SIZE,
+                                                              DEFAULT_MENU_VIEW_SIZE,
                                                               G_PARAM_READABLE));
 }
 
@@ -219,10 +219,10 @@ gimp_menu_dock_style_set (GtkWidget *widget,
 {
   GimpMenuDock *menu_dock;
   gint          minimal_width;
-  GtkIconSize   menu_preview_size;
+  GtkIconSize   menu_view_size;
   GtkSettings  *settings;
-  gint          menu_preview_width  = 18;
-  gint          menu_preview_height = 18;
+  gint          menu_view_width  = 18;
+  gint          menu_view_height = 18;
   gint          focus_line_width;
   gint          focus_padding;
   gint          ythickness;
@@ -234,14 +234,14 @@ gimp_menu_dock_style_set (GtkWidget *widget,
 
   gtk_widget_style_get (widget,
                         "minimal-width",     &minimal_width,
-                        "menu-preview-size", &menu_preview_size,
+                        "menu-preview-size", &menu_view_size,
                         NULL);
 
   settings = gtk_widget_get_settings (menu_dock->image_combo);
   gtk_icon_size_lookup_for_settings (settings,
-                                     menu_preview_size,
-                                     &menu_preview_width,
-                                     &menu_preview_height);
+                                     menu_view_size,
+                                     &menu_view_width,
+                                     &menu_view_height);
 
   gtk_widget_style_get (menu_dock->auto_button,
                         "focus-line-width", &focus_line_width,
@@ -252,11 +252,11 @@ gimp_menu_dock_style_set (GtkWidget *widget,
 
   gtk_widget_set_size_request (widget, minimal_width, -1);
 
-  gimp_container_view_set_preview_size (GIMP_CONTAINER_VIEW (menu_dock->image_combo),
-                                        menu_preview_height, 1);
+  gimp_container_view_set_view_size (GIMP_CONTAINER_VIEW (menu_dock->image_combo),
+                                     menu_view_height, 1);
 
   gtk_widget_set_size_request (menu_dock->auto_button, -1,
-                               menu_preview_height +
+                               menu_view_height +
                                2 * (1 /* CHILD_SPACING */ +
                                     ythickness            +
                                     focus_padding         +
@@ -375,8 +375,8 @@ gimp_menu_dock_new (GimpDialogFactory *dialog_factory,
   GimpMenuDock *menu_dock;
   GimpContext  *context;
   GtkSettings  *settings;
-  gint          menu_preview_width;
-  gint          menu_preview_height;
+  gint          menu_view_width;
+  gint          menu_view_height;
 
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (dialog_factory), NULL);
   g_return_val_if_fail (GIMP_IS_CONTAINER (image_container), NULL);
@@ -429,9 +429,9 @@ gimp_menu_dock_new (GimpDialogFactory *dialog_factory,
 
   settings = gtk_widget_get_settings (GTK_WIDGET (menu_dock));
   gtk_icon_size_lookup_for_settings (settings,
-                                     DEFAULT_MENU_PREVIEW_SIZE,
-                                     &menu_preview_width,
-                                     &menu_preview_height);
+                                     DEFAULT_MENU_VIEW_SIZE,
+                                     &menu_view_width,
+                                     &menu_view_height);
 
   g_object_set (menu_dock->image_combo,
                 "container", image_container,

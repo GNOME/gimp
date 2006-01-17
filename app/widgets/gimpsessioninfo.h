@@ -60,7 +60,7 @@ struct _GimpSessionInfoDockable
 {
   gchar        *identifier;
   GimpTabStyle  tab_style;
-  gint          preview_size;
+  gint          view_size;
 
   /*  dialog specific list of GimpSessionInfoAux  */
   GList        *aux_info;

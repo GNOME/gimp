@@ -77,7 +77,7 @@ static gpointer gimp_layer_tree_view_insert_item  (GimpContainerView   *view,
 static gboolean gimp_layer_tree_view_select_item  (GimpContainerView   *view,
                                                    GimpViewable        *item,
                                                    gpointer             insert_data);
-static void gimp_layer_tree_view_set_preview_size (GimpContainerView   *view);
+static void    gimp_layer_tree_view_set_view_size (GimpContainerView   *view);
 
 static gboolean gimp_layer_tree_view_drop_possible(GimpContainerTreeView *view,
                                                    GimpDndType          src_type,
@@ -332,10 +332,10 @@ gimp_layer_tree_view_view_iface_init (GimpContainerViewInterface *iface)
 {
   parent_view_iface = g_type_interface_peek_parent (iface);
 
-  iface->set_container    = gimp_layer_tree_view_set_container;
-  iface->insert_item      = gimp_layer_tree_view_insert_item;
-  iface->select_item      = gimp_layer_tree_view_select_item;
-  iface->set_preview_size = gimp_layer_tree_view_set_preview_size;
+  iface->set_container = gimp_layer_tree_view_set_container;
+  iface->insert_item   = gimp_layer_tree_view_insert_item;
+  iface->select_item   = gimp_layer_tree_view_select_item;
+  iface->set_view_size = gimp_layer_tree_view_set_view_size;
 }
 
 static GObject *
@@ -580,7 +580,7 @@ gimp_layer_tree_view_select_item (GimpContainerView *view,
 }
 
 static void
-gimp_layer_tree_view_set_preview_size (GimpContainerView *view)
+gimp_layer_tree_view_set_view_size (GimpContainerView *view)
 {
   GimpContainerTreeView *tree_view  = GIMP_CONTAINER_TREE_VIEW (view);
 
@@ -589,10 +589,10 @@ gimp_layer_tree_view_set_preview_size (GimpContainerView *view)
       GimpLayerTreeView *layer_view = GIMP_LAYER_TREE_VIEW (view);
       GtkTreeIter        iter;
       gboolean           iter_valid;
-      gint               preview_size;
+      gint               view_size;
       gint               border_width;
 
-      preview_size = gimp_container_view_get_preview_size (view, &border_width);
+      view_size = gimp_container_view_get_view_size (view, &border_width);
 
       for (iter_valid = gtk_tree_model_get_iter_first (tree_view->model, &iter);
            iter_valid;
@@ -606,14 +606,13 @@ gimp_layer_tree_view_set_preview_size (GimpContainerView *view)
 
           if (renderer)
             {
-              gimp_view_renderer_set_size (renderer,
-                                           preview_size, border_width);
+              gimp_view_renderer_set_size (renderer, view_size, border_width);
               g_object_unref (renderer);
             }
         }
     }
 
-  parent_view_iface->set_preview_size (view);
+  parent_view_iface->set_view_size (view);
 }
 
 
@@ -1137,15 +1136,15 @@ gimp_layer_tree_view_mask_update (GimpLayerTreeView *layer_view,
   if (mask)
     {
       GClosure *closure;
-      gint      preview_size;
+      gint      view_size;
       gint      border_width;
 
-      preview_size = gimp_container_view_get_preview_size (view, &border_width);
+      view_size = gimp_container_view_get_view_size (view, &border_width);
 
       mask_visible = TRUE;
 
       renderer = gimp_view_renderer_new (G_TYPE_FROM_INSTANCE (mask),
-                                         preview_size, border_width,
+                                         view_size, border_width,
                                          FALSE);
       gimp_view_renderer_set_viewable (renderer, GIMP_VIEWABLE (mask));
 

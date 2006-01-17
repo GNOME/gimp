@@ -40,7 +40,7 @@ struct _GimpBrushEditor
 {
   GimpDataEditor  parent_instance;
 
-  GtkWidget      *preview;
+  GtkWidget      *view;
 
   GtkWidget      *shape_group;
   GtkWidget      *options_table;
