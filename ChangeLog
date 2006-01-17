@@ -1,5 +1,9 @@
 2006-01-17  Raphaël Quinet  <raphael@gimp.org>
 
+	* app/composite/make-installer.py (print_function_table): updated
+	so that the code does not add trailing whitespace in generated
+	function tables.
+
 	* (about 130 *.[ch] files): automatically removed trailing
 	whitespace from 3460 lines.
 
