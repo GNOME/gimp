@@ -1,3 +1,9 @@
+2006-01-17  Sven Neumann  <sven@gimp.org>
+
+	* app/about.h (GIMP_COPYRIGHT): updated year in copyright.
+
+	* app/actions/dialogs-actions.c: string change.
+
 2006-01-17  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/dockable-actions.c

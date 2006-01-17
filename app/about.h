@@ -26,7 +26,7 @@
   _("GNU Image Manipulation Program")
 
 #define GIMP_COPYRIGHT \
-  _("Copyright (C) 1995-2005\n" \
+  _("Copyright (C) 1995-2006\n" \
     "Spencer Kimball, Peter Mattis and the GIMP Development Team")
 
 #define GIMP_LICENSE \
