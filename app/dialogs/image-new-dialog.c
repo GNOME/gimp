@@ -131,10 +131,10 @@ image_new_dialog_new (Gimp *gimp)
   gtk_widget_show (table);
 
   dialog->combo = g_object_new (GIMP_TYPE_CONTAINER_COMBO_BOX,
-                                "container",            gimp->templates,
-                                "preview-size",         16,
-                                "preview-border-width", 0,
-                                "focus-on-click",       FALSE,
+                                "container",         gimp->templates,
+                                "view-size",         16,
+                                "view-border-width", 0,
+                                "focus-on-click",    FALSE,
                                 NULL);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
