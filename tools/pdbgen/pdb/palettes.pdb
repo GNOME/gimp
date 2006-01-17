@@ -170,7 +170,7 @@ sub palettes_get_palette_entry {
 
   if (palette)
     {
-      if (entry_num < 0 || entry_num >= palette->n_colors) 
+      if (entry_num < 0 || entry_num >= palette->n_colors)
         {
           success = FALSE;
         }

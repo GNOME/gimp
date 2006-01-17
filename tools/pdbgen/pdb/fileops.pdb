@@ -207,7 +207,7 @@ HELP
 
   g_free (uri);
 
-  if (! file_proc) 
+  if (! file_proc)
     return %%fail%%;
 
   proc = plug_in_proc_def_get_proc (file_proc);
@@ -251,13 +251,13 @@ HELP
 	  desc => 'The name of the file that owns the thumbnail to load' },
     );
 
-    @outargs = ( 
+    @outargs = (
 	{ name => 'width', type => 'int32', init => 1,
 	  desc => 'The width of the thumbnail' },
-	{ name => 'height', type => 'int32', init => 1, 
+	{ name => 'height', type => 'int32', init => 1,
 	  desc => 'The height of the thumbnail' },
 	{ name => 'thumb_data', type => 'int8array', init => 1,
-	  desc => 'The thumbnail data', 
+	  desc => 'The thumbnail data',
           array =>  { name => 'thumbnail_data_count',
 		      desc => 'The number of bytes in thumbnail data',
 		      alias => 'num_bytes', init => 1 } },

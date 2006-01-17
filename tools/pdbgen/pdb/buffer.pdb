@@ -112,7 +112,7 @@ HELP
 {
   GimpBuffer *buffer;
 
-  buffer = (GimpBuffer *) 
+  buffer = (GimpBuffer *)
     gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
 
   success = (buffer != NULL);
@@ -149,7 +149,7 @@ HELP
 	vars => [ 'GimpBuffer *buffer = NULL' ],
 	code => <<'CODE'
 {
-  buffer = (GimpBuffer *) 
+  buffer = (GimpBuffer *)
     gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
 
   success = (buffer != NULL);
@@ -183,7 +183,7 @@ HELP
 	vars => [ 'GimpBuffer *buffer = NULL' ],
 	code => <<'CODE'
 {
-  buffer = (GimpBuffer *) 
+  buffer = (GimpBuffer *)
     gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
 
   success = (buffer != NULL);
@@ -217,7 +217,7 @@ HELP
 	vars => [ 'GimpBuffer *buffer = NULL' ],
 	code => <<'CODE'
 {
-  buffer = (GimpBuffer *) 
+  buffer = (GimpBuffer *)
     gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
 
   success = (buffer != NULL);
@@ -252,7 +252,7 @@ HELP
 	vars => [ 'GimpBuffer *buffer = NULL' ],
 	code => <<'CODE'
 {
-  buffer = (GimpBuffer *) 
+  buffer = (GimpBuffer *)
     gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
 
   success = (buffer != NULL);

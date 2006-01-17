@@ -188,7 +188,7 @@ orientations of the guide.
 HELP
 
     &pdb_misc;
-    
+
     @inargs = (
 	&std_image_arg,
 	{ name => 'guide', type => 'guide',
@@ -262,7 +262,7 @@ HELP
 	  success = TRUE;
 	  break;
 	}
-    } 
+    }
 }
 CODE
     );

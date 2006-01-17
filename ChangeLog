@@ -1,5 +1,15 @@
 2006-01-17  Raphaël Quinet  <raphael@gimp.org>
 
+	* tools/pdbgen/pdb/buffer.pdb
+	* tools/pdbgen/pdb/color.pdb
+	* tools/pdbgen/pdb/fileops.pdb
+	* tools/pdbgen/pdb/guides.pdb
+	* tools/pdbgen/pdb/palettes.pdb
+	* tools/pdbgen/pdb/paths.pdb
+	* tools/pdbgen/pdb/selection.pdb
+	* tools/pdbgen/pdb/selection_tools.pdb: removed trailing
+	whitespace in the parts of these files generating C code.
+
 	* app/composite/make-installer.py (print_function_table): updated
 	so that the code does not add trailing whitespace in generated
 	function tables.
