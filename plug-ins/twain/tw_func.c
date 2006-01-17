@@ -126,12 +126,12 @@ float FIX32ToFloat(TW_FIX32 fix32)
 
 /*
  * twainError
- * 
+ *
  * Return the TWAIN error message associated
  * with the specified error code.
  */
 char *
-twainError(int errorCode) 
+twainError(int errorCode)
 {
   /* Check whether we've counted */
   if (twainErrorCount == 0)
@@ -166,7 +166,7 @@ currentTwainError(pTW_SESSION twSession)
 
 /*
  * getImage
- * 
+ *
  * This is a "high-level" function that can be called in order
  * to take all of the steps necessary to kick off an image-transfer
  * from a user-specified TWAIN datasource.  The data will be passed
@@ -258,7 +258,7 @@ selectDS(pTW_SESSION twSession)
   twSession->twRC = callDSM(APP_IDENTITY(twSession), NULL,
 			    DG_CONTROL, DAT_IDENTITY, MSG_USERSELECT,
 			    (TW_MEMREF) DS_IDENTITY(twSession));
-  
+
   /* Check the return to determine what the user decided
    * to do.
    */
@@ -272,9 +272,9 @@ selectDS(pTW_SESSION twSession)
     LogMessage("User cancelled TWAIN source selection\n");
     break;
 
-  case TWRC_FAILURE:	        
+  case TWRC_FAILURE:	
   default:
-    LogMessage("Error \"%s\" during TWAIN source selection\n", 
+    LogMessage("Error \"%s\" during TWAIN source selection\n",
 	       currentTwainError(twSession));
     break;
   }
@@ -332,7 +332,7 @@ openDS(pTW_SESSION twSession)
   twSession->twRC = callDSM(APP_IDENTITY(twSession), NULL,
 			    DG_CONTROL, DAT_IDENTITY, MSG_OPENDS,
 			    (TW_MEMREF) dsIdentity);
-  
+
   /* Check the return to determine what the user decided
    * to do.
 	 */
@@ -437,7 +437,7 @@ requestImageAcquire(pTW_SESSION twSession, gboolean showUI)
       return FALSE;
     }
   } else {
-    LogMessage("Unable to set buffered transfer mode: %s\n", 
+    LogMessage("Unable to set buffered transfer mode: %s\n",
 	       currentTwainError(twSession));
     return FALSE;
   }
@@ -483,7 +483,7 @@ disableDS(pTW_SESSION twSession)
 /*
  * closeDS
  *
- * Close the datasource associated with the 
+ * Close the datasource associated with the
  * specified session.
  */
 int
@@ -499,7 +499,7 @@ closeDS(pTW_SESSION twSession)
   twSession->twRC = callDSM(APP_IDENTITY(twSession), NULL,
 			    DG_CONTROL, DAT_IDENTITY, MSG_CLOSEDS,
 			    (TW_MEMREF) DS_IDENTITY(twSession));
-  
+
   /* Check the return to determine what the user decided
    * to do.
 	 */
@@ -575,7 +575,7 @@ beginImageTransfer(pTW_SESSION twSession, pTW_IMAGEINFO imageInfo)
   /* Check the return code */
   if (twSession->twRC != TWRC_SUCCESS) {
     LogMessage("Get Image Info failure - %s\n", currentTwainError(twSession));
-    
+
     return FALSE;
   }
 
@@ -591,9 +591,9 @@ beginImageTransfer(pTW_SESSION twSession, pTW_IMAGEINFO imageInfo)
 /*
  * transferImage
  *
- * The Source indicated it is ready to transfer data. It is 
- * waiting for the application to inquire about the image details, 
- * initiate the actual transfer, and, hence, transition the session 
+ * The Source indicated it is ready to transfer data. It is
+ * waiting for the application to inquire about the image details,
+ * initiate the actual transfer, and, hence, transition the session
  * from State 6 to 7.  Return the reason for exiting the transfer.
  */
 static void
@@ -638,7 +638,7 @@ transferImage(pTW_SESSION twSession, pTW_IMAGEINFO imageInfo)
 	(twSession->twRC == TWRC_XFERDONE)) {
       /* Call the callback function */
       if (!(*twSession->transferFunctions->txfrDataCb) (
-							imageInfo, 
+							imageInfo,
 							&imageMemXfer,	
 							twSession->clientData)) {
 	/* Callback function requested to cancel */
@@ -718,9 +718,9 @@ endImageTransfer(pTW_SESSION twSession, int *pendingCount)
 
   /* Call the end transfer callback */
   if (twSession->transferFunctions->txfrEndCb)
-    continueTransfers = 
-      (*twSession->transferFunctions->txfrEndCb)(exitCode, 
-						 *pendingCount, 
+    continueTransfers =
+      (*twSession->transferFunctions->txfrEndCb)(exitCode,
+						 *pendingCount,
 						 twSession->clientData);
 
   return (*pendingCount && continueTransfers);
@@ -853,9 +853,9 @@ registerWindowHandle(pTW_SESSION session, TW_HANDLE hwnd)
  * Register the callback to use when transferring
  * image data.
  */
-void 
-registerTransferCallbacks(pTW_SESSION session, 
-			  pTXFR_CB_FUNCS txfrFuncs, 
+void
+registerTransferCallbacks(pTW_SESSION session,
+			  pTXFR_CB_FUNCS txfrFuncs,
 			  void *clientData)
 {
   session->transferFunctions = txfrFuncs;

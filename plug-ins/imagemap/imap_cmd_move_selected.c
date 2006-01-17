@@ -46,14 +46,14 @@ typedef struct {
    gint dy;
 } MoveSelectedCommand_t;
 
-Command_t* 
+Command_t*
 move_selected_command_new(ObjectList_t *list, gint dx, gint dy)
 {
    MoveSelectedCommand_t *command = g_new(MoveSelectedCommand_t, 1);
    command->list = list;
    command->dx = dx;
    command->dy = dy;
-   return command_init(&command->parent, _("Move Selected Objects"), 
+   return command_init(&command->parent, _("Move Selected Objects"),
 		       &move_selected_command_class);
 }
 

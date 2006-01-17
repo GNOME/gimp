@@ -93,24 +93,24 @@ color_balance_create_lookup_tables (ColorBalance *cb)
     }
 
   /*  Set the transfer arrays  (for speed)  */
-  cyan_red_transfer[GIMP_SHADOWS] = 
+  cyan_red_transfer[GIMP_SHADOWS] =
     (cb->cyan_red[GIMP_SHADOWS] > 0) ? shadows_add : shadows_sub;
-  cyan_red_transfer[GIMP_MIDTONES] = 
+  cyan_red_transfer[GIMP_MIDTONES] =
     (cb->cyan_red[GIMP_MIDTONES] > 0) ? midtones_add : midtones_sub;
-  cyan_red_transfer[GIMP_HIGHLIGHTS] = 
+  cyan_red_transfer[GIMP_HIGHLIGHTS] =
     (cb->cyan_red[GIMP_HIGHLIGHTS] > 0) ? highlights_add : highlights_sub;
 
-  magenta_green_transfer[GIMP_SHADOWS] = 
+  magenta_green_transfer[GIMP_SHADOWS] =
     (cb->magenta_green[GIMP_SHADOWS] > 0) ? shadows_add : shadows_sub;
-  magenta_green_transfer[GIMP_MIDTONES] = 
+  magenta_green_transfer[GIMP_MIDTONES] =
     (cb->magenta_green[GIMP_MIDTONES] > 0) ? midtones_add : midtones_sub;
-  magenta_green_transfer[GIMP_HIGHLIGHTS] = 
+  magenta_green_transfer[GIMP_HIGHLIGHTS] =
     (cb->magenta_green[GIMP_HIGHLIGHTS] > 0) ? highlights_add : highlights_sub;
-  yellow_blue_transfer[GIMP_SHADOWS] = 
+  yellow_blue_transfer[GIMP_SHADOWS] =
     (cb->yellow_blue[GIMP_SHADOWS] > 0) ? shadows_add : shadows_sub;
-  yellow_blue_transfer[GIMP_MIDTONES] = 
+  yellow_blue_transfer[GIMP_MIDTONES] =
     (cb->yellow_blue[GIMP_MIDTONES] > 0) ? midtones_add : midtones_sub;
-  yellow_blue_transfer[GIMP_HIGHLIGHTS] = 
+  yellow_blue_transfer[GIMP_HIGHLIGHTS] =
     (cb->yellow_blue[GIMP_HIGHLIGHTS] > 0) ? highlights_add : highlights_sub;
 
   for (i = 0; i < 256; i++)

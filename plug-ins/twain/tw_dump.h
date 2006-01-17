@@ -1,4 +1,4 @@
-/*  
+/*
  * TWAIN Plug-in
  * Copyright (C) 1999 Craig Setera
  * Craig Setera <setera@home.com>
@@ -25,7 +25,7 @@
  * Randomize
  *
  * Any suggestions, bug-reports or patches are welcome.
- * 
+ *
  * This plug-in interfaces to the TWAIN support library in order
  * to capture images from TWAIN devices directly into GIMP images.
  * The plug-in is capable of acquiring the following type of
@@ -38,7 +38,7 @@
  * Prerequisites:
  *  This plug-in will not compile on anything other than a Win32
  *  platform.  Although the TWAIN documentation implies that there
- *  is TWAIN support available on Macintosh, I neither have a 
+ *  is TWAIN support available on Macintosh, I neither have a
  *  Macintosh nor the interest in porting this.  If anyone else
  *  has an interest, consult www.twain.org for more information on
  *  interfacing to TWAIN.
@@ -48,12 +48,12 @@
  *   configuration compiles with a maximum of single image transfers.
  */
 
-/* 
+/*
  * Revision history
  *  (02/07/99)  v0.1   First working version (internal)
  *  (02/09/99)  v0.2   First release to anyone other than myself
  *  (02/15/99)  v0.3   Added image dump and read support for debugging
- *  (03/31/99)  v0.5   Added support for multi-byte samples and paletted 
+ *  (03/31/99)  v0.5   Added support for multi-byte samples and paletted
  *                     images.
  */
 

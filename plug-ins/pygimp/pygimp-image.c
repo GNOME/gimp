@@ -1,4 +1,4 @@
-/* -*- Mode: C; c-basic-offset: 4 -*- 
+/* -*- Mode: C; c-basic-offset: 4 -*-
     Gimp-Python - allows the writing of Gimp plugins in Python.
     Copyright (C) 1997-2002  James Henstridge <james@daa.com.au>
 
@@ -100,7 +100,7 @@ static PyObject *
 img_lower_channel(PyGimpImage *self, PyObject *args)
 {
     PyGimpChannel *chn;
-    
+
     if (!PyArg_ParseTuple(args, "O!:lower_channel", &PyGimpChannel_Type, &chn))
 	return NULL;
 
@@ -630,7 +630,7 @@ img_delete_guide(PyGimpImage *self, PyObject *args)
     if (!gimp_image_delete_guide(self->ID, guide)) {
 	PyErr_Format(pygimp_error,
 		     "could not delete guide (ID %d) from image (ID %d)",
-		     guide, self->ID); 
+		     guide, self->ID);
 	return NULL;
     }
 
@@ -883,9 +883,9 @@ img_get_channels(PyGimpImage *self, void *closure)
     gint32 *channels;
     gint n_channels, i;
     PyObject *ret;
-    
+
     channels = gimp_image_get_channels(self->ID, &n_channels);
-    
+
     ret = PyList_New(n_channels);
 
     for (i = 0; i < n_channels; i++)
@@ -902,7 +902,7 @@ img_get_colormap(PyGimpImage *self, void *closure)
     guchar *cmap;
     gint n_colours;
     PyObject *ret;
-    
+
     cmap = gimp_image_get_colormap(self->ID, &n_colours);
 
     if (cmap == NULL) {
@@ -1021,7 +1021,7 @@ img_get_layers(PyGimpImage *self, void *closure)
     gint32 *layers;
     gint n_layers, i;
     PyObject *ret;
-    
+
     layers = gimp_image_get_layers(self->ID, &n_layers);
 
     ret = PyList_New(n_layers);

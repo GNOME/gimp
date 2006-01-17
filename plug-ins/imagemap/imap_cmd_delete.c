@@ -48,13 +48,13 @@ typedef struct {
    gboolean	 changed;
 } DeleteCommand_t;
 
-Command_t* 
+Command_t*
 delete_command_new(ObjectList_t *list, Object_t *obj)
 {
    DeleteCommand_t *command = g_new(DeleteCommand_t, 1);
    command->list = list;
    command->obj = object_ref(obj);
-   return command_init(&command->parent, _("Delete"), 
+   return command_init(&command->parent, _("Delete"),
 		       &delete_command_class);
 }
 

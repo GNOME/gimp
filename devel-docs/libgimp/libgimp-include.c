@@ -1,6 +1,6 @@
-/*  
+/*
  *   gtk-doc can't build libgimp-scan.c without PLUG_IN_INFO being defined
- *   so we include this file as a workaround 
+ *   so we include this file as a workaround
  */
 
 #include <glib.h>
@@ -9,7 +9,7 @@
 GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,
-  NULL, 
-  NULL, 
+  NULL,
+  NULL,
   NULL,
 };

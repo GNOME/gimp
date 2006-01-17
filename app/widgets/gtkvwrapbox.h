@@ -47,7 +47,7 @@ typedef struct _GtkVWrapBoxClass GtkVWrapBoxClass;
 struct _GtkVWrapBox
 {
   GtkWrapBox parent_widget;
-  
+
   /*<h2v-off>*/
   guint      max_child_width;
   guint      max_child_height;

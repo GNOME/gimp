@@ -189,7 +189,7 @@ gimp_composite_burn_rgba8_rgba8_rgba8_mmx (GimpCompositeContext *_op)
 
                     "\tpandn     %%mm5,%%mm7\n" /* mm7 = ~mm7 & mm5 */
                     "\tpor       %%mm1,%%mm7\n" /* mm7 = mm7 | mm1 */
-                    
+
                     "\tmovq      %%mm7,%0\n"
                     : "=m" (*d)
                     : "m" (*a), "m" (*b), "m" (*rgba8_b255_64), "m" (*rgba8_w1_64), "m" (*rgba8_w255_64), "m" (*rgba8_alpha_mask_64)
@@ -1186,7 +1186,7 @@ gimp_composite_screen_rgba8_rgba8_rgba8_mmx (GimpCompositeContext *_op)
                     "\tpand      %%mm0,%%mm3\n"
 
                     "\tpor       %%mm3,%%mm1\n"
-                    
+
                     "\tmovd      %%mm1,%0\n"
                     : "=m" (*d)
                     : "m" (*a), "m" (*b)
@@ -1269,7 +1269,7 @@ gimp_composite_swap_rgba8_rgba8_rgba8_mmx (GimpCompositeContext *_op)
                     "\tmovntq  %%mm3,%0\n"
                     "\tmovntq  %%mm2,%1\n"
                     : "+m" (*a), "+m" (*b)
-                    : 
+                    :
                     : "%mm2", "%mm3");
       a++;
       b++;
@@ -1300,7 +1300,7 @@ gimp_composite_addition_va8_va8_va8_mmx (GimpCompositeContext *_op)
   gulong n_pixels = _op->n_pixels;
 
   asm volatile ("movq    %0,%%mm0"
-                : 
+                :
                 : "m" (*va8_alpha_mask_64)
                 : "%mm0");
 
@@ -1347,7 +1347,7 @@ gimp_composite_addition_va8_va8_va8_mmx (GimpCompositeContext *_op)
       b32++;
       d32++;
     }
-  
+
   uint16 *a16 = (uint16 *) a32;
   uint16 *b16 = (uint16 *) b32;
   uint16 *d16 = (uint16 *) d32;
@@ -1373,7 +1373,7 @@ gimp_composite_addition_va8_va8_va8_mmx (GimpCompositeContext *_op)
       b16++;
       d16++;
     }
-  
+
   asm("emms");
 }
 
@@ -1386,7 +1386,7 @@ gimp_composite_subtract_va8_va8_va8_mmx (GimpCompositeContext *_op)
   gulong n_pixels = _op->n_pixels;
 
   asm volatile ("movq    %0,%%mm0"
-                : 
+                :
                 : "m" (*va8_alpha_mask_64)
                 : "%mm0");
 
@@ -1433,7 +1433,7 @@ gimp_composite_subtract_va8_va8_va8_mmx (GimpCompositeContext *_op)
       b32++;
       d32++;
     }
-  
+
   uint16 *a16 = (uint16 *) a32;
   uint16 *b16 = (uint16 *) b32;
   uint16 *d16 = (uint16 *) d32;
@@ -1459,7 +1459,7 @@ gimp_composite_subtract_va8_va8_va8_mmx (GimpCompositeContext *_op)
       b16++;
       d16++;
     }
-  
+
   asm("emms");
 }
 

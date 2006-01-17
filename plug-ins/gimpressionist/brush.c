@@ -605,7 +605,7 @@ create_brushpage (GtkNotebook *notebook)
   brush_select (selection, FALSE);
   readdirintolist ("Brushes", view, pcvals.selected_brush);
 
-  /* 
+  /*
    * This is so the "changed signal won't get sent to the brushes' list
    * and reset the gamma and stuff.
    * */

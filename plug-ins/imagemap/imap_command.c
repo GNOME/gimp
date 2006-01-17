@@ -36,8 +36,8 @@ static void command_destruct(Command_t *command);
 static CommandList_t _command_list = {NULL, DEFAULT_UNDO_LEVELS};
 static CommandList_t *_current_command_list = &_command_list;
 
-static void 
-command_list_callback_add(CommandListCallback_t *list, 
+static void
+command_list_callback_add(CommandListCallback_t *list,
 			  CommandListCallbackFunc_t func, gpointer data)
 {
    CommandListCB_t *cb = g_new(CommandListCB_t, 1);
@@ -46,7 +46,7 @@ command_list_callback_add(CommandListCallback_t *list,
    list->list = g_list_append(list->list, cb);
 }
 
-static void 
+static void
 command_list_callback_call(CommandListCallback_t *list, Command_t *command)
 {
    GList *p;
@@ -56,7 +56,7 @@ command_list_callback_call(CommandListCallback_t *list, Command_t *command)
    }
 }
 
-CommandList_t* 
+CommandList_t*
 command_list_new(gint undo_levels)
 {
    CommandList_t *list = g_new(CommandList_t, 1);
@@ -82,7 +82,7 @@ command_list_clear(CommandList_t *list)
    command_list_callback_call(&list->update_cb, NULL);
 }
 
-void 
+void
 command_list_destruct(CommandList_t *list)
 {
    command_list_clear(list);
@@ -172,7 +172,7 @@ subcommand_end(void)
    command_list_end(_current_command_list);
 }
 
-static void 
+static void
 _command_list_set_undo_level(CommandList_t *list, gint level)
 {
    gint diff = g_list_length(list->list) - level;
@@ -187,20 +187,20 @@ _command_list_set_undo_level(CommandList_t *list, gint level)
       }
 
       /* If still to long start removing redo levels at the end */
-      for (p = g_list_last(list->list); diff && p != list->undo; p = q, 
+      for (p = g_list_last(list->list); diff && p != list->undo; p = q,
 	      diff--) {
 	 Command_t *curr = (Command_t*) p->data;
 	 q = p->prev;
 	 command_destruct(curr);
 	 list->list = g_list_remove_link(list->list, p);
       }
-      command_list_callback_call(&list->update_cb, 
+      command_list_callback_call(&list->update_cb,
 				 (Command_t*) list->undo->data);
    }
    list->undo_levels = level;
 }
 
-void 
+void
 command_list_set_undo_level(gint level)
 {
    _command_list_set_undo_level(&_command_list, level);
@@ -213,7 +213,7 @@ command_list_get_redo_command(void)
       NULL;
 }
 
-void 
+void
 command_list_add_update_cb(CommandListCallbackFunc_t func, gpointer data)
 {
    command_list_callback_add(&_command_list.update_cb, func, data);
@@ -279,14 +279,14 @@ command_undo(Command_t *command)
       command->class->undo(command);
 }
 
-void 
+void
 command_set_name(Command_t *command, const gchar *name)
 {
    command->name = name;
    command_list_callback_call(&_command_list.update_cb, command);
 }
 
-void 
+void
 command_list_undo(CommandList_t *list)
 {
    Command_t *command = (Command_t*) list->undo->data;
@@ -301,14 +301,14 @@ command_list_undo(CommandList_t *list)
    command_list_callback_call(&list->update_cb, command);
 }
 
-void 
+void
 command_list_undo_all(CommandList_t *list)
 {
    while (list->undo)
       command_list_undo(list);
 }
 
-void 
+void
 last_command_undo(void)
 {
    command_list_undo(&_command_list);
@@ -332,7 +332,7 @@ command_list_redo_all(CommandList_t *list)
       command_list_redo(list);
 }
 
-void 
+void
 last_command_redo(void)
 {
    command_list_redo(&_command_list);

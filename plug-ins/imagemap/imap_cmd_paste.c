@@ -43,7 +43,7 @@ typedef struct {
    ObjectList_t *list;
 } PasteCommand_t;
 
-Command_t* 
+Command_t*
 paste_command_new(ObjectList_t *list)
 {
    PasteCommand_t *command = g_new(PasteCommand_t, 1);

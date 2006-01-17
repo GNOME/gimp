@@ -73,7 +73,7 @@ void
 ArcBall_Init (void)
 {
   int i;
-  
+
   center = qOne;
   radius = 1.0;
   vDown = vNow = qOne;
@@ -174,7 +174,7 @@ ArcBall_Values (double *alpha,
   else
     {
       *gamma=atan2(mNow[1][0],mNow[1][1]);
-      *alpha=0.0;     
+      *alpha=0.0;
     }
 }
 
@@ -285,7 +285,7 @@ V3_Unit (HVect v)
 {
   static HVect u = {0, 0, 0, 0};
   double vlen = sqrt(V3_Norm(v));
-  
+
   if (vlen != 0.0) u.x = v.x/vlen; u.y = v.y/vlen; u.z = v.z/vlen;
   return (u);
 }
@@ -410,7 +410,7 @@ MouseOnSphere (HVect  mouse,
 {
   HVect ballMouse;
   register double mag;
-  
+
   ballMouse.x = (mouse.x - ballCenter.x) / ballRadius;
   ballMouse.y = (mouse.y - ballCenter.y) / ballRadius;
   mag = ballMouse.x*ballMouse.x + ballMouse.y*ballMouse.y;
@@ -449,7 +449,7 @@ Qt_ToBallPoints (Quat   q,
 		 HVect *arcTo)
 {
   double s;
-  
+
   s = sqrt(q.x*q.x + q.y*q.y);
   if (s == 0.0) *arcFrom = V3_(0.0, 1.0, 0.0);
   else          *arcFrom = V3_(-q.y/s, q.x/s, 0.0);
@@ -468,7 +468,7 @@ ConstrainToAxis (HVect loose,
 {
   HVect onPlane;
   register double norm;
-  
+
   onPlane = V3_Sub(loose, V3_Scale(axis, V3_Dot(axis, loose)));
   norm = V3_Norm(onPlane);
   if (norm > 0.0)
@@ -496,7 +496,7 @@ NearestConstraintAxis (HVect  loose,
   register double max, dot;
   register int i, nearest;
   max = -1; nearest = 0;
-  
+
   for (i=0; i<nAxes; i++)
     {
       onPlane = ConstrainToAxis(loose, axes[i]);

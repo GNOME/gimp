@@ -34,7 +34,7 @@
 typedef struct _GimpEnvironTableClass GimpEnvironTableClass;
 
 struct _GimpEnvironTable
-{ 
+{
   GObject      parent_instance;
 
   GHashTable  *vars;
@@ -44,7 +44,7 @@ struct _GimpEnvironTable
 };
 
 struct _GimpEnvironTableClass
-{ 
+{
   GObjectClass  parent_class;
 };
 

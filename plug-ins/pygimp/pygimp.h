@@ -1,4 +1,4 @@
-/* -*- Mode: C; c-basic-offset: 4 -*- 
+/* -*- Mode: C; c-basic-offset: 4 -*-
     Gimp-Python - allows the writing of Gimp plugins in Python.
     Copyright (C) 1997-2002  James Henstridge <james@daa.com.au>
 

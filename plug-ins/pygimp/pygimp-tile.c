@@ -1,4 +1,4 @@
-/* -*- Mode: C; c-basic-offset: 4 -*- 
+/* -*- Mode: C; c-basic-offset: 4 -*-
     Gimp-Python - allows the writing of Gimp plugins in Python.
     Copyright (C) 1997-2002  James Henstridge <james@daa.com.au>
 
@@ -316,7 +316,7 @@ pr_resize(PyGimpPixelRgn *self, PyObject *args)
 
 static PyMethodDef pr_methods[] = {
     {"resize",	(PyCFunction)pr_resize,	METH_VARARGS},
- 
+
     {NULL,		NULL}		/* sentinel */
 };
 
@@ -508,7 +508,7 @@ pr_ass_sub(PyGimpPixelRgn *self, PyObject *v, PyObject *w)
 	
 	if (PyInt_Check(y)) {
 	    y1 = PyInt_AsLong(y);
-	    
+	
 	    if (pr->y > y1 || y1 >= pr->y + pr->h) {
 		PyErr_SetString(PyExc_IndexError, "y subscript out of range");
 		return -1;

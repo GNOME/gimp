@@ -58,7 +58,7 @@ delete_point_command_new(Object_t *obj, GdkPoint *point)
    command->copy = *point;
    command->position = g_list_index(command->polygon->points,
 				    (gpointer) point);
-   return command_init(&command->parent, _("Delete Point"), 
+   return command_init(&command->parent, _("Delete Point"),
 		       &delete_point_command_class);
 }
 

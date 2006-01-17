@@ -30,7 +30,7 @@ struct _PyGimp_Functions {
     PyObject *(* display_new)(gint32 ID);
     PyObject *(* layer_new)(gint32 ID);
     PyObject *(* channel_new)(gint32 ID);
-    
+
     PyTypeObject *PDBFunction_Type;
     PyObject *(* pdb_function_new)(const char *name, const char *blurb,
                                    const char *help, const char *author,

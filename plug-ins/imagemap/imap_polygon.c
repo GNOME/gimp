@@ -731,23 +731,23 @@ polygon_do_popup(Object_t *obj, GdkEventButton *event)
 {
   gint x = get_real_coord ((gint) event->x);
   gint y = get_real_coord ((gint) event->y);
- 
+
   _current_obj = obj;
- 
-  if (polygon_near_sash (obj, x, y)) 
+
+  if (polygon_near_sash (obj, x, y))
     {
       polygon_handle_popup (event, TRUE, FALSE);
-    } 
-  else 
+    }
+  else
     {
       _insert_edge = polygon_near_edge (obj, x, y);
-      if (_insert_edge) 
+      if (_insert_edge)
         {
           _insert_x = x;
            _insert_y = y;
-           
+
            polygon_handle_popup (event, FALSE, TRUE);
-        } 
+        }
       else {
         object_do_popup (obj, event);
       }

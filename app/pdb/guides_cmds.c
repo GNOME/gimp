@@ -507,7 +507,7 @@ image_get_guide_position_invoker (Gimp         *gimp,
               success = TRUE;
               break;
             }
-        } 
+        }
     }
 
   return_args = procedural_db_return_args (&image_get_guide_position_proc, success);

@@ -49,7 +49,7 @@ typedef struct {
    gboolean	 changed;
 } CreateCommand_t;
 
-Command_t* 
+Command_t*
 create_command_new(ObjectList_t *list, Object_t *obj)
 {
    CreateCommand_t *command = g_new(CreateCommand_t, 1);

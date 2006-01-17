@@ -476,7 +476,7 @@ gimp_interpreter_db_clear_magics (GimpInterpreterDB *db)
       list = list->next;
 
       g_slist_free_1 (last);
-    }  
+    }
 }
 
 #ifdef INTERP_DEBUG
@@ -522,7 +522,7 @@ resolve_program (gpointer key,
       g_free (value);
       value = g_strdup (program);
     }
-  
+
   g_hash_table_insert (db->extensions, key, value);
 
   return TRUE;
@@ -569,7 +569,7 @@ gimp_interpreter_db_resolve_programs (GimpInterpreterDB *db)
   g_hash_table_foreach (db->extensions, print_kv, NULL);
 
   g_print ("\nMagics:\n");
-  
+
   list = db->magics;
 
   while (list)

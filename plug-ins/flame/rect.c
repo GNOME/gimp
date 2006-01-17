@@ -35,7 +35,7 @@
 
 typedef short bucket[4];
 
-/* if you use longs instead of shorts, you 
+/* if you use longs instead of shorts, you
    get higher quality, and spend more memory */
 
 #if 1
@@ -157,7 +157,7 @@ void render_rectangle(spec, out, out_width, field, nchan, progress)
       fprintf(stderr, "%4f %4f\n", temporal_deltas[j], temporal_filter[j]);
    fprintf(stderr, "\n");
 #endif
-   
+
    /* the number of additional rows of buckets we put at the edge so
       that the filter doesn't go off the edge */
 
@@ -210,7 +210,7 @@ void render_rectangle(spec, out, out_width, field, nchan, progress)
 #else
 	    /* monochrome if you don't have any cmaps */
 	    cmap[j][k] = cp.white_level;
-#endif	    
+#endif	
 	 }
 	 cmap[j][3] = cp.white_level;
       }
@@ -245,7 +245,7 @@ void render_rectangle(spec, out, out_width, field, nchan, progress)
 
       nsamples = (int) (sample_density * nbuckets /
 			(oversample * oversample));
-   
+
       batch_size = nsamples / cp.nbatches;
 
       sbc = 0;
@@ -261,8 +261,8 @@ void render_rectangle(spec, out, out_width, field, nchan, progress)
 	 points[0][1] = random_uniform11();
 	 points[0][2] = random_uniform01();
 	 iterate(&cp, SUB_BATCH_SIZE, FUSE, points);
-	 
-	 
+	
+	
 	 /* merge them into buckets, looking up colors */
 	 for (j = 0; j < SUB_BATCH_SIZE; j++) {
 	    int k, color_index;
@@ -279,12 +279,12 @@ void render_rectangle(spec, out, out_width, field, nchan, progress)
 	       color_index = CMAP_SIZE-1;
 	    b = buckets +
 	       (int) (width * (p[0] - bounds[0]) * size[0]) +
-		  width * (int) (height * (p[1] - bounds[1]) * size[1]);	    
+		  width * (int) (height * (p[1] - bounds[1]) * size[1]);	
 	    for (k = 0; k < 4; k++)
 	       bump_no_overflow(b[0][k], cmap[color_index][k], short);
 	 }
       }
-      
+
       if (1) {
 	 double k1 =(cp.contrast * cp.brightness *
 		     PREFILTER_WHITE * 268.0 *
@@ -292,7 +292,7 @@ void render_rectangle(spec, out, out_width, field, nchan, progress)
 	 double area = image_width * image_height / (ppux * ppuy);
 	 double k2 = (oversample * oversample * nbatches) /
 	    (cp.contrast * area * cp.white_level * sample_density);
- 
+
 	 /* log intensity in hsv space */
 	 for (j = 0; j < height; j++)
 	    for (i = 0; i < width; i++) {
@@ -305,7 +305,7 @@ void render_rectangle(spec, out, out_width, field, nchan, progress)
 	       c[3] = (double) b[0][3];
 	       if (0.0 == c[3])
 		 continue;
-	       
+	
 	       ls = (k1 * log(1.0 + c[3] * k2))/c[3];
 	       c[0] *= ls;
 	       c[1] *= ls;
@@ -339,7 +339,7 @@ void render_rectangle(spec, out, out_width, field, nchan, progress)
 	       for (jj = 0; jj < filter_width; jj++) {
 		  double k = filter[ii + jj * filter_width];
 		  abucket *a = accumulate + x + ii + (y + jj) * width;
-		  
+		
 		  t[0] += k * a[0][0];
 		  t[1] += k * a[0][1];
 		  t[2] += k * a[0][2];
@@ -365,6 +365,6 @@ void render_rectangle(spec, out, out_width, field, nchan, progress)
 	 y += oversample;
       }
    }
-   
+
    free(filter);
 }

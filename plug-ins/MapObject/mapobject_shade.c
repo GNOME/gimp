@@ -136,14 +136,14 @@ plane_intersect (GimpVector3 *dir,
 	      imat[0][2] * imat[1][1] * imat[2][3] -
 	      imat[1][2] * imat[2][1] * imat[0][3] -
 	      imat[2][2] * imat[0][1] * imat[1][3]);
- 
+
       det2 = (imat[0][0] * imat[1][3] * imat[2][2] +
 	      imat[0][3] * imat[1][2] * imat[2][0] +
 	      imat[0][2] * imat[1][0] * imat[2][3] -
 	      imat[0][2] * imat[1][3] * imat[2][0] -
 	      imat[1][2] * imat[2][3] * imat[0][0] -
 	      imat[2][2] * imat[0][3] * imat[1][0]);
- 
+
       det3 = (imat[0][0] * imat[1][1] * imat[2][3] +
 	      imat[0][1] * imat[1][3] * imat[2][0] +
 	      imat[0][3] * imat[1][0] * imat[2][1] -
@@ -217,10 +217,10 @@ get_ray_color_plane (GimpVector3 *pos)
           gimp_rgb_clamp (&color);
         }
     }
-  
+
   if (mapvals.transparent_background == FALSE && color.a < 1.0)
     {
-      gimp_rgb_composite (&color, &background, 
+      gimp_rgb_composite (&color, &background,
 			  GIMP_RGB_COMPOSITE_BEHIND);
     }
 
@@ -375,7 +375,7 @@ get_ray_color_sphere (GimpVector3 *pos)
 
           gimp_vector3_sub (&normal, &spos2, &mapvals.position);
           gimp_vector3_normalize (&normal);
-          sphere_to_image (&normal, &vx, &vy); 
+          sphere_to_image (&normal, &vx, &vy);
           color2 = get_image_color (vx, vy, &inside);
 
           /* Make the normal point inwards */
@@ -417,13 +417,13 @@ get_ray_color_sphere (GimpVector3 *pos)
           gimp_rgb_clamp (&color);
         }
     }
-  
+
   if (mapvals.transparent_background == FALSE && color.a < 1.0)
     {
-      gimp_rgb_composite (&color, &background, 
+      gimp_rgb_composite (&color, &background,
 			  GIMP_RGB_COMPOSITE_BEHIND);
     }
-  
+
   return color;
 }
 
@@ -595,7 +595,7 @@ matmul (gfloat a[16],
 {
   gint   i, j, k;
   gfloat value;
-  
+
 #define A(row,col)  a[col*4+row]
 #define B(row,col)  b[col*4+row]
 #define C(row,col)  c[col*4+row]
@@ -622,9 +622,9 @@ void
 ident_mat (gfloat m[16])
 {
   gint  i, j;
-  
+
 #define M(row,col)  m[col*4+row]
-  
+
   for (i = 0; i < 4; i++)
     {
       for (j = 0; j < 4; j++)
@@ -660,7 +660,7 @@ intersect_rect (gdouble            u,
       face_info->s.y = viewp.y + face_info->t * dir.y;
       face_info->s.z = w;
 
-      if (face_info->s.x >= -u2 && face_info->s.x <= u2 && 
+      if (face_info->s.x >= -u2 && face_info->s.x <= u2 &&
           face_info->s.y >= -v2 && face_info->s.y <= v2)
         {
           face_info->u = (face_info->s.x + u2) / u;
@@ -718,7 +718,7 @@ intersect_box (GimpVector3        scale,
     {
       /* Top: Rotate viewpoint and direction into rectangle's local coordinate system */
       /* ============================================================================ */
-  
+
       rotatemat (90, &axis[0], m);
       vecmulmat (&v, &viewp, m);
       vecmulmat (&d, &dir, m);
@@ -734,7 +734,7 @@ intersect_box (GimpVector3        scale,
 
           gimp_vector3_set (&face_intersect[i++].n, 0.0, -1.0, 0.0);
           result = TRUE;
-        } 
+        }
     }
 
   /* Check if we've found the two possible intersection points */
@@ -745,7 +745,7 @@ intersect_box (GimpVector3        scale,
       /* Bottom: Rotate viewpoint and direction into rectangle's local coordinate system */
       /* =============================================================================== */
 
-      rotatemat (90, &axis[0], m);  
+      rotatemat (90, &axis[0], m);
       vecmulmat (&v, &viewp, m);
       vecmulmat (&d, &dir, m);
 
@@ -775,7 +775,7 @@ intersect_box (GimpVector3        scale,
       /* Left side: Rotate viewpoint and direction into rectangle's local coordinate system */
       /* ================================================================================== */
 
-      rotatemat (90, &axis[1], m);  
+      rotatemat (90, &axis[1], m);
       vecmulmat (&v, &viewp, m);
       vecmulmat (&d, &dir, m);
 
@@ -783,7 +783,7 @@ intersect_box (GimpVector3        scale,
 			  v, d, &face_intersect[i]) == TRUE)
         {
           face_intersect[i].face = 4;
-    
+
           transpose_mat (m);
           vecmulmat (&tmp, &face_intersect[i].s, m);
           face_intersect[i].s = tmp;
@@ -801,7 +801,7 @@ intersect_box (GimpVector3        scale,
       /* Right side: Rotate viewpoint and direction into rectangle's local coordinate system */
       /* =================================================================================== */
 
-      rotatemat (90, &axis[1], m);  
+      rotatemat (90, &axis[1], m);
       vecmulmat (&v, &viewp, m);
       vecmulmat (&d, &dir, m);
 
@@ -860,7 +860,7 @@ get_ray_color_box (GimpVector3 *pos)
 
   /* Compute direction */
   /* ================= */
-  
+
   gimp_vector3_sub (&dir, &p, &vp);
   gimp_vector3_normalize (&dir);
 
@@ -922,7 +922,7 @@ get_ray_color_box (GimpVector3 *pos)
 			       &mapvals.lightsource.position,
 			       &color,
 			       &mapvals.lightsource.color,
-			       mapvals.lightsource.type);      
+			       mapvals.lightsource.type);
 
           gimp_rgb_clamp (&color);
 
@@ -941,13 +941,13 @@ get_ray_color_box (GimpVector3 *pos)
 				&mapvals.lightsource.position,
 				&color2,
 				&mapvals.lightsource.color,
-				mapvals.lightsource.type);      
+				mapvals.lightsource.type);
 
           gimp_rgb_clamp (&color2);
 
           if (mapvals.transparent_background == FALSE && color2.a < 1.0)
             {
-	      gimp_rgb_composite (&color2, &background, 
+	      gimp_rgb_composite (&color2, &background,
 				  GIMP_RGB_COMPOSITE_BEHIND);
 	    }
 
@@ -965,7 +965,7 @@ get_ray_color_box (GimpVector3 *pos)
 			       &mapvals.lightsource.position,
 			       &color,
 			       &mapvals.lightsource.color,
-			       mapvals.lightsource.type);      
+			       mapvals.lightsource.type);
 
 	  gimp_rgb_clamp (&color);
         }
@@ -1037,18 +1037,18 @@ intersect_cylinder (GimpVector3        vp,
 
       if (f != 0.0)
         {
-          result = TRUE;      
-    
+          result = TRUE;
+
           face_intersect[0].t = (-b+e)/f;
           face_intersect[1].t = (-b-e)/f;
-    
+
           if (face_intersect[0].t>face_intersect[1].t)
             {
               tmp = face_intersect[0].t;
               face_intersect[0].t = face_intersect[1].t;
               face_intersect[1].t = tmp;
             }
-          
+
           for (i = 0; i < 2; i++)
             {
               face_intersect[i].s.x = vp.x + face_intersect[i].t * dir.x;
@@ -1066,17 +1066,17 @@ intersect_cylinder (GimpVector3        vp,
 
               /* Mark hitpoint as on the cylinder hull */
               /* ===================================== */
-              
+
               face_intersect[i].face = 0;
 
               /* Check if we're completely off the cylinder axis */
               /* =============================================== */
-    
+
               if (face_intersect[i].s.y>l || face_intersect[i].s.y<-l)
                 {
                   /* Check if we've hit a cap */
                   /* ======================== */
-    
+
                   if (face_intersect[i].s.y>l)
                     {
                       if (intersect_circle(vp,dir,l,&face_intersect[i])==FALSE)
@@ -1115,7 +1115,7 @@ get_cylinder_color (gint    face,
 {
   GimpRGB  color;
   gint    inside;
-  
+
   if (face == 0)
     color = get_image_color (u, v, &inside);
   else
@@ -1201,8 +1201,8 @@ get_ray_color_cylinder (GimpVector3 *pos)
 			       &mapvals.lightsource.position,
 			       &color,
 			       &mapvals.lightsource.color,
-			       mapvals.lightsource.type);      
-    
+			       mapvals.lightsource.type);
+
           gimp_rgb_clamp (&color);
 
           color2 = get_cylinder_color (face_intersect[1].face,
@@ -1226,7 +1226,7 @@ get_ray_color_cylinder (GimpVector3 *pos)
 
           if (mapvals.transparent_background == FALSE && color2.a < 1.0)
             {
-	      gimp_rgb_composite (&color2, &background, 
+	      gimp_rgb_composite (&color2, &background,
 				  GIMP_RGB_COMPOSITE_BEHIND);
             }
 
@@ -1254,6 +1254,6 @@ get_ray_color_cylinder (GimpVector3 *pos)
       if (mapvals.transparent_background == TRUE)
 	gimp_rgb_set_alpha (&color, 0.0);
     }
-  
+
   return color;
 }

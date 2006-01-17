@@ -423,7 +423,7 @@ file_save_invoker (Gimp         *gimp,
 
   g_free (uri);
 
-  if (! file_proc) 
+  if (! file_proc)
     return procedural_db_return_args (&file_save_proc, FALSE);
 
   proc = plug_in_proc_def_get_proc (file_proc);

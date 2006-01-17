@@ -23,13 +23,13 @@ create_blur_filter (int radius)
   ConvFilter *filter;
   int x, y;
   double sum;
-  
+
   filter = g_new0 (ConvFilter, 1);
   filter->size = radius * 2 + 1;
   filter->data = g_new (double, filter->size * filter->size);
 
   sum = 0.0;
-  
+
   for (y = 0 ; y < filter->size; y++)
     {
       for (x = 0 ; x < filter->size; x++)
@@ -49,7 +49,7 @@ create_blur_filter (int radius)
     }
 
   return filter;
-  
+
 }
 
 static GdkPixbuf *
@@ -61,12 +61,12 @@ create_shadow (GdkPixbuf *src)
   static ConvFilter *filter = NULL;
   int src_rowstride, dest_rowstride;
   int src_bpp, dest_bpp;
-  
+
   guchar *src_pixels, *dest_pixels;
 
   if (!filter)
     filter = create_blur_filter (BLUR_RADIUS);
-  
+
   width = gdk_pixbuf_get_width (src) + BLUR_RADIUS * 2 + SHADOW_OFFSET;
   height = gdk_pixbuf_get_height (src) + BLUR_RADIUS * 2 + SHADOW_OFFSET;
 
@@ -74,15 +74,15 @@ create_shadow (GdkPixbuf *src)
 			 gdk_pixbuf_get_has_alpha (src),
 			 gdk_pixbuf_get_bits_per_sample (src),
 			 width, height);
-  gdk_pixbuf_fill (dest, 0);  
+  gdk_pixbuf_fill (dest, 0);
   src_pixels = gdk_pixbuf_get_pixels (src);
   src_rowstride = gdk_pixbuf_get_rowstride (src);
   src_bpp = gdk_pixbuf_get_has_alpha (src) ? 4 : 3;
-  
+
   dest_pixels = gdk_pixbuf_get_pixels (dest);
   dest_rowstride = gdk_pixbuf_get_rowstride (dest);
   dest_bpp = gdk_pixbuf_get_has_alpha (dest) ? 4 : 3;
-  
+
   for (y = 0; y < height; y++)
     {
       for (x = 0; x < width; x++)
@@ -106,19 +106,19 @@ create_shadow (GdkPixbuf *src)
 				      src_x * src_bpp + 0] *
 		    filter->data [i * filter->size + j];
 		  sumg += src_pixels [src_y * src_rowstride +
-				      src_x * src_bpp + 1] * 
+				      src_x * src_bpp + 1] *
 		    filter->data [i * filter->size + j];
 
 		  sumb += src_pixels [src_y * src_rowstride +
-				      src_x * src_bpp + 2] * 
+				      src_x * src_bpp + 2] *
 		    filter->data [i * filter->size + j];
-		  
+		
 		  if (src_bpp == 4)
 		    suma += src_pixels [src_y * src_rowstride +
 					src_x * src_bpp + 3] *
 		    filter->data [i * filter->size + j];
 
-		    
+		
 		}
 	    }
 
@@ -128,7 +128,7 @@ create_shadow (GdkPixbuf *src)
 
 	}
     }
-  
+
   return dest;
 }
 
@@ -136,7 +136,7 @@ GdkPixbuf *
 create_shadowed_pixbuf (GdkPixbuf *src)
 {
   GdkPixbuf *dest;
-  
+
   dest = create_shadow (src);
 
   gdk_pixbuf_composite (src, dest,

@@ -195,7 +195,7 @@ extern string lowercasify (string s);
 /* If the string S parses as a character code, this sets *VALID to
    `true' and returns the number.  If it doesn't, it sets *VALID to
    `false' and the return value is garbage.
-   
+
    We allow any of the following possibilies: a single character, as in
    `a' or `0'; a decimal number, as in `21'; an octal number, as in `03'
    or `0177'; a hexadecimal number, as in `0x3' or `0xff'.  */

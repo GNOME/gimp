@@ -352,7 +352,7 @@ static struct PyMethodDef gimpcolor_methods[] = {
 
 /* Initialization function for the module (*must* be called initgimpcolor) */
 
-static char gimpcolor_doc[] = 
+static char gimpcolor_doc[] =
 "This module provides interfaces to allow you to write gimp plugins"
 ;
 

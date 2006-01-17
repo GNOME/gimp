@@ -69,7 +69,7 @@ typedef struct {
    PreferencesData_t	*old_data;
 } PreferencesDialog_t;
 
-static void get_button_colors (PreferencesDialog_t *dialog, 
+static void get_button_colors (PreferencesDialog_t *dialog,
 			       ColorSelData_t *colors);
 
 static gint
@@ -411,7 +411,7 @@ create_color_field(PreferencesDialog_t *data, GtkWidget *table, gint row,
    gimp_color_button_set_update (GIMP_COLOR_BUTTON (area), TRUE);
    gtk_table_attach_defaults (GTK_TABLE (table), area, col, col + 1, row,
 			      row + 1);
-   gtk_widget_show (area);   
+   gtk_widget_show (area);
 
    return area;
 }

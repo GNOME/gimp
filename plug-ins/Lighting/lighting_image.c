@@ -49,7 +49,7 @@ peek_map (GimpPixelRgn *region,
   gimp_pixel_rgn_get_pixel (region, data, x, y);
 
   if (region->bpp == 1)
-  { 
+  {
     ret_val = data[0];
   } else
   {
@@ -158,7 +158,7 @@ int_to_pos (gint x,
       pos.x = (gdouble) x / (gdouble) width;
       pos.y = (gdouble) y / (gdouble) width;
 
-      pos.y += 0.5 * (1.0 - (gdouble) height / (gdouble) width); 
+      pos.y += 0.5 * (1.0 - (gdouble) height / (gdouble) width);
     }
   else
     {
@@ -183,7 +183,7 @@ int_to_posf (gdouble x,
       pos.x = x / (gdouble) width;
       pos.y = y / (gdouble) width;
 
-      pos.y += 0.5 * (1.0 - (gdouble) height / (gdouble) width); 
+      pos.y += 0.5 * (1.0 - (gdouble) height / (gdouble) width);
     }
   else
     {
@@ -252,7 +252,7 @@ get_image_color (gdouble  u,
 {
   gint    x1, y1, x2, y2;
   GimpRGB p[4];
- 
+
   x1 = RINT (u);
   y1 = RINT (v);
 
@@ -288,7 +288,7 @@ get_map_value (GimpPixelRgn *region,
 {
   gint    x1, y1, x2, y2;
   gdouble p[4];
- 
+
   x1 = RINT (u);
   y1 = RINT (v);
 

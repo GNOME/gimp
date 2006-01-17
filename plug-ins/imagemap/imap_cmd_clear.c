@@ -43,7 +43,7 @@ typedef struct {
    ObjectList_t	*list;
 } ClearCommand_t;
 
-Command_t* 
+Command_t*
 clear_command_new(ObjectList_t *list)
 {
    ClearCommand_t *command = g_new(ClearCommand_t, 1);

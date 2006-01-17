@@ -842,7 +842,7 @@ activate_fractal_callback (GtkTreeView       *view,
   fractalexplorerOBJ *sel_obj;
 
   model = gtk_tree_view_get_model (view);
-  
+
   if (gtk_tree_model_get_iter (model, &iter, path))
     {
       gtk_tree_model_get (model, &iter, 1, &sel_obj, -1);

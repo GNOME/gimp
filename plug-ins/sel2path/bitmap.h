@@ -77,7 +77,7 @@ typedef struct
          && BITMAP_PIXEL (b, row + 1, col + 1) == BLACK)
 
 /* Allocate storage for the bits, set them all to white, and return an
-   initialized structure.  */ 
+   initialized structure.  */
 extern bitmap_type new_bitmap (dimensions_type);
 
 /* Free that storage.  */
@@ -86,7 +86,7 @@ extern void free_bitmap (bitmap_type *);
 /* Make a fresh copy of BITMAP in a new structure, and return it.  */
 extern bitmap_type copy_bitmap (bitmap_type bitmap);
 
-/* Return the pixels in the bitmap B enclosed by the bounding box BB. 
+/* Return the pixels in the bitmap B enclosed by the bounding box BB.
    The result is put in newly allocated storage.  */
 extern bitmap_type extract_subbitmap (bitmap_type b, bounding_box_type bb);
 

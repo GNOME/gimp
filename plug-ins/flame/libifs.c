@@ -51,7 +51,7 @@ void iterate(cp, n, fuse, points)
    /*
     * first, set up xform, which is an array that converts a uniform random
     * variable into one with the distribution dictated by the density
-    * fields 
+    * fields
     */
    dr = 0.0;
    for (i = 0; i < NXFORMS; i++)
@@ -101,7 +101,7 @@ void iterate(cp, n, fuse, points)
 	 p[0] += v * nx;
 	 p[1] += v * ny;
       }
-      
+
       v = vari[1];
       if (v > 0.0) {
 	 /* sinusoidal */
@@ -111,7 +111,7 @@ void iterate(cp, n, fuse, points)
 	 p[0] += v * nx;
 	 p[1] += v * ny;
       }
-      
+
       v = vari[2];
       if (v > 0.0) {
 	 /* complex */
@@ -134,7 +134,7 @@ void iterate(cp, n, fuse, points)
 	 p[0] += v * nx;
 	 p[1] += v * ny;
       }
-      
+
       v = vari[4];
       if (v > 0.0) {
 	 /* horseshoe */
@@ -264,7 +264,7 @@ void choose_evector(m, r, v)
 }
 
 
-/* diagonalize the linear part of a 3x2 matrix.  the evalues are returned 
+/* diagonalize the linear part of a 3x2 matrix.  the evalues are returned
    in r as either reals on the diagonal, or a complex pair.  the evectors
    are returned as a change of coords matrix.  does not handle shearing
    transforms.
@@ -719,7 +719,7 @@ int compare_xforms(a, b)
  * must integrate with tcl soon...
  */
 
-void parse_control_point(ss, cp) 
+void parse_control_point(ss, cp)
    char **ss;
    control_point *cp;
 {
@@ -749,7 +749,7 @@ void parse_control_point(ss, cp)
       cp->wiggle[j][0] = 0.0;
       cp->wiggle[j][1] = 60.0;
    }
-   
+
    tokenize(ss, argv, &argc);
    for (i = 0; i < argc; i++) {
       if (streql("xform", argv[i]))
@@ -904,16 +904,16 @@ copy_variation(control_point *cp0, control_point *cp1) {
   int i, j;
   for (i = 0; i < NXFORMS; i++) {
     for (j = 0; j < NVARS; j++)
-      cp0->xform[i].var[j] = 
+      cp0->xform[i].var[j] =
 	cp1->xform[i].var[j];
   }
 }
 
-     
+
 
 #define random_distrib(v) ((v)[g_random_int_range (0, vlen(v))])
 
-void random_control_point(cp, ivar) 
+void random_control_point(cp, ivar)
    control_point *cp;
    int ivar;
 {
@@ -959,7 +959,7 @@ void random_control_point(cp, ivar)
 	 cp->xform[i].var[var] = 1.0;
       else
 	 cp->xform[i].var[random_distrib(mixed_var_distrib)] = 1.0;
-      
+
    }
    for (; i < NXFORMS; i++)
       cp->xform[i].density = 0.0;
@@ -985,7 +985,7 @@ void estimate_bounding_box(cp, eps, bmin, bmax)
 
    min[0] = min[1] =  1e10;
    max[0] = max[1] = -1e10;
-   
+
    for (i = 0; i < batch; i++) {
       if (points[i][0] < min[0]) min[0] = points[i][0];
       if (points[i][1] < min[1]) min[1] = points[i][1];
@@ -1000,7 +1000,7 @@ void estimate_bounding_box(cp, eps, bmin, bmax)
       bmax[1] = max[1];
       return;
    }
-   
+
    delta[0] = (max[0] - min[0]) * 0.25;
    delta[1] = (max[1] - min[1]) * 0.25;
 
@@ -1033,7 +1033,7 @@ void estimate_bounding_box(cp, eps, bmin, bmax)
 
 /* use hill climberer to find smooth ordering of control points
    this is untested */
-   
+
 void sort_control_points(cps, ncps, metric)
    control_point *cps;
    int ncps;
@@ -1073,7 +1073,7 @@ double standard_metric(cp1, cp2)
 {
    int i, j, k;
    double t;
-   
+
    double dist = 0.0;
    for (i = 0; i < NXFORMS; i++) {
       double var_dist = 0.0;

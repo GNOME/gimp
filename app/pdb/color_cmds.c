@@ -448,7 +448,7 @@ posterize_invoker (Gimp         *gimp,
               GimpLut     *lut;
               PixelRegion  srcPR, destPR;
 
-              lut = posterize_lut_new (levels, gimp_drawable_bytes (drawable)); 
+              lut = posterize_lut_new (levels, gimp_drawable_bytes (drawable));
 
               pixel_region_init (&srcPR, gimp_drawable_data (drawable),
                                  x, y, width, height, FALSE);

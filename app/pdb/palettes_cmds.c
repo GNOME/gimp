@@ -238,7 +238,7 @@ palettes_get_palette_entry_invoker (Gimp         *gimp,
 
       if (palette)
         {
-          if (entry_num < 0 || entry_num >= palette->n_colors) 
+          if (entry_num < 0 || entry_num >= palette->n_colors)
             {
               success = FALSE;
             }

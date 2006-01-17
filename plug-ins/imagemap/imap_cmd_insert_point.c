@@ -59,7 +59,7 @@ insert_point_command_new(Object_t *obj, gint x, gint y, gint edge)
    command->x = x;
    command->y = y;
    command->edge = edge;
-   return command_init(&command->parent, _("Insert Point"), 
+   return command_init(&command->parent, _("Insert Point"),
 		       &insert_point_command_class);
 }
 

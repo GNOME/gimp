@@ -232,7 +232,7 @@ get_image_color (gdouble  u,
 
       if (x1 < 0) x1 = (width-1) - (-x1 % width);
       else        x1 = x1 % width;
-  
+
       if (y1 < 0) y1 = (height-1) - (-y1 % height);
       else        y1 = y1 % height;
 
@@ -282,7 +282,7 @@ get_box_image_color (gint    image,
   gint    w, h;
   gint    x1, y1, x2, y2;
   GimpRGB p[4];
- 
+
   w = box_drawables[image]->width;
   h = box_drawables[image]->height;
 
@@ -314,7 +314,7 @@ get_cylinder_image_color (gint    image,
   gint    w, h;
   gint    x1, y1, x2, y2;
   GimpRGB p[4];
- 
+
   w = cylinder_drawables[image]->width;
   h = cylinder_drawables[image]->height;
 

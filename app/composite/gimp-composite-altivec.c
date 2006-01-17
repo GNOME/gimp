@@ -291,7 +291,7 @@ gimp_composite_difference_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
   length = length*4;
   a=LoadUnalignedLess(A, length);
   b=LoadUnalignedLess(B, length);
- 
+
   alpha_a=vec_and(a,alphamask);
   alpha_b=vec_and(b,alphamask);
   d=vec_min(alpha_a,alpha_b);
@@ -302,7 +302,7 @@ gimp_composite_difference_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
   d=vec_subs(a,b);
   e=vec_subs(b, a);
   d=vec_add(d,e);
- 
+
   StoreUnalignedLess(d, D, length);
 }
 
@@ -321,7 +321,7 @@ gimp_composite_darken_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
       b=LoadUnaligned(B);
 
       d=vec_min(a, b);
-   
+
       StoreUnaligned(d, D);
 
       A+=16;
@@ -335,11 +335,11 @@ gimp_composite_darken_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
   b=LoadUnalignedLess(B, length);
 
   d=vec_min(a, b);
- 
+
   StoreUnalignedLess(d, D, length);
 }
 
-void 
+void
 gimp_composite_lighten_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
 {
   const guchar *A = ctx->A;
@@ -356,7 +356,7 @@ gimp_composite_lighten_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
       alpha_a=vec_and(a, alphamask);
       alpha_b=vec_and(b, alphamask);
       d=vec_min(alpha_a, alpha_b);
- 
+
       a=vec_andc(a, alphamask);
       a=vec_adds(a, d);
       b=vec_andc(b, alphamask);
@@ -377,7 +377,7 @@ gimp_composite_lighten_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
   alpha_a=vec_and(a,alphamask);
   alpha_b=vec_and(b,alphamask);
   d=vec_min(alpha_a,alpha_b);
-   
+
   a=vec_andc(a,alphamask);
   a=vec_adds(a,d);
   b=vec_andc(b,alphamask);
@@ -474,8 +474,8 @@ gimp_composite_blend_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
       a=LoadUnaligned(A);
       b=LoadUnaligned(B);
 
-      /* dest[b] = (src1[b] * blend2 + src2[b] * blend) / 255; 
-       * to divide by 255 we use ((n+1)+(n+1)>>8)>>8 
+      /* dest[b] = (src1[b] * blend2 + src2[b] * blend) / 255;
+       * to divide by 255 we use ((n+1)+(n+1)>>8)>>8
        * It works for all value but 0xffff
        * happily blending formula can't give this value */
 

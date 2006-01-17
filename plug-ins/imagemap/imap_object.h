@@ -66,7 +66,7 @@ struct ObjectClass_t {
    void (*draw_sashes)(Object_t *obj, GdkWindow *window, GdkGC* gc);
    MoveSashFunc_t (*near_sash)(Object_t *obj, gint x, gint y);
    gboolean (*point_is_on)(Object_t *obj, gint x, gint y);
-   void (*get_dimensions)(Object_t *obj, gint *x, gint *y, gint *width, 
+   void (*get_dimensions)(Object_t *obj, gint *x, gint *y, gint *width,
 			  gint *height);
    void (*resize)(Object_t *obj, gint percentage_x, gint percentage_y);
    void (*move)(Object_t *obj, gint dx, gint dy);
@@ -191,7 +191,7 @@ gint object_list_select_region(ObjectList_t *list, gint x, gint y, gint width,
 			       gint height);
 gint object_list_deselect_all(ObjectList_t *list, Object_t *exception);
 gint object_list_nr_selected(ObjectList_t *list);
-void object_list_resize(ObjectList_t *list, gint percentage_x, 
+void object_list_resize(ObjectList_t *list, gint percentage_x,
 			gint percentage_y);
 void object_list_move_selected(ObjectList_t *list, gint dx, gint dy);
 void object_list_move_up(ObjectList_t *list, Object_t *obj);
@@ -201,33 +201,33 @@ void object_list_move_selected_down(ObjectList_t *list);
 void object_list_move_to_front(ObjectList_t *list);
 void object_list_send_to_back(ObjectList_t *list);
 
-void object_list_write_csim(ObjectList_t *list, gpointer param, 
+void object_list_write_csim(ObjectList_t *list, gpointer param,
 			    OutputFunc_t output);
-void object_list_write_cern(ObjectList_t *list, gpointer param, 
+void object_list_write_cern(ObjectList_t *list, gpointer param,
 			    OutputFunc_t output);
-void object_list_write_ncsa(ObjectList_t *list, gpointer param, 
+void object_list_write_ncsa(ObjectList_t *list, gpointer param,
 			    OutputFunc_t output);
 
 typedef void (*ObjectListCallbackFunc_t)(Object_t*, gpointer);
 
 gpointer object_list_add_changed_cb(ObjectList_t *list,
-				    ObjectListCallbackFunc_t func, 
+				    ObjectListCallbackFunc_t func,
 				    gpointer data);
-gpointer object_list_add_update_cb(ObjectList_t *list, 
-				   ObjectListCallbackFunc_t func, 
+gpointer object_list_add_update_cb(ObjectList_t *list,
+				   ObjectListCallbackFunc_t func,
 				   gpointer data);
-gpointer object_list_add_add_cb(ObjectList_t *list, 
+gpointer object_list_add_add_cb(ObjectList_t *list,
 				ObjectListCallbackFunc_t func, gpointer data);
-gpointer object_list_add_remove_cb(ObjectList_t *list, 
-				   ObjectListCallbackFunc_t func, 
+gpointer object_list_add_remove_cb(ObjectList_t *list,
+				   ObjectListCallbackFunc_t func,
 				   gpointer data);
-gpointer object_list_add_select_cb(ObjectList_t *list, 
-				   ObjectListCallbackFunc_t func, 
+gpointer object_list_add_select_cb(ObjectList_t *list,
+				   ObjectListCallbackFunc_t func,
 				   gpointer data);
-gpointer object_list_add_move_cb(ObjectList_t *list, 
+gpointer object_list_add_move_cb(ObjectList_t *list,
 				 ObjectListCallbackFunc_t func, gpointer data);
-gpointer object_list_add_geometry_cb(ObjectList_t *list, 
-				     ObjectListCallbackFunc_t func, 
+gpointer object_list_add_geometry_cb(ObjectList_t *list,
+				     ObjectListCallbackFunc_t func,
 				     gpointer data);
 
 void object_list_remove_add_cb(ObjectList_t *list, gpointer id);
@@ -243,7 +243,7 @@ void object_list_remove_geometry_cb(ObjectList_t *list, gpointer id);
 
 void clear_paste_buffer(void);
 gpointer paste_buffer_add_add_cb(ObjectListCallbackFunc_t func, gpointer data);
-gpointer paste_buffer_add_remove_cb(ObjectListCallbackFunc_t func, 
+gpointer paste_buffer_add_remove_cb(ObjectListCallbackFunc_t func,
 				    gpointer data);
 ObjectList_t *get_paste_buffer(void);
 

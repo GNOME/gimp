@@ -99,10 +99,10 @@ updatepreview (GtkWidget *wg, gpointer d)
                             GIMP_RGB_IMAGE,
                             buffer,
                             PREVIEWSIZE * 3);
-    
+
     g_free (buffer);
   }
-  else 
+  else
 #endif
   {
     if (!PPM_IS_INITED (&backup_ppm))

@@ -159,10 +159,10 @@ static const short yyrline[] =
 /* YYTNAME[TOKEN_NUM] -- String name of the token TOKEN_NUM. */
 static const char *const yytname[] =
 {
-  "$", "error", "$undefined.", "RECTANGLE", "POLYGON", "CIRCLE", "DEFAULT", 
-  "AUTHOR", "DESCRIPTION", "BEGIN_COMMENT", "FLOAT", "COMMENT", "LINK", 
-  "'('", "','", "')'", "cern_file", "area_list", "area", "default", 
-  "rectangle", "circle", "polygon", "@1", "coord_list", "coord", 
+  "$", "error", "$undefined.", "RECTANGLE", "POLYGON", "CIRCLE", "DEFAULT",
+  "AUTHOR", "DESCRIPTION", "BEGIN_COMMENT", "FLOAT", "COMMENT", "LINK",
+  "'('", "','", "')'", "cern_file", "area_list", "area", "default",
+  "rectangle", "circle", "polygon", "@1", "coord_list", "coord",
   "comment_line", "real_comment", "author_line", "description_line", 0
 };
 #endif
@@ -995,7 +995,7 @@ case 16:
 {
 		   Polygon_t *polygon = ObjectToPolygon(current_object);
 		   GdkPoint *point = new_point((gint) yyvsp[-3].value, (gint) yyvsp[-1].value);
-		   polygon->points = g_list_append(polygon->points, 
+		   polygon->points = g_list_append(polygon->points,
 						   (gpointer) point);
 		}
     break;
@@ -1018,7 +1018,7 @@ case 22:
 		   MapInfo_t *info = get_map_info();
 		   gchar *description;
 
-		   description = g_strconcat(info->description, yyvsp[0].id, "\n", 
+		   description = g_strconcat(info->description, yyvsp[0].id, "\n",
 					     NULL);
 		   g_strreplace(&info->description, description);
 		}
@@ -1259,7 +1259,7 @@ yyreturn:
 #line 155 "imap_cern.y"
 
 
-static void 
+static void
 cern_error(char* s)
 {
    extern FILE *cern_in;

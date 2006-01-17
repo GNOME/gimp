@@ -26,7 +26,7 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
 #include "vector.h"
 
 /* Return a new spline structure, initialized with (recognizable)
-   garbage.  */ 
+   garbage.  */
 
 spline_type
 new_spline (void)
@@ -157,7 +157,7 @@ void
 append_spline (spline_list_type *l, spline_type s)
 {
   assert (l != NULL);
-  
+
   SPLINE_LIST_LENGTH (*l)++;
   SPLINE_LIST_DATA (*l) = g_realloc (SPLINE_LIST_DATA (*l),
                                SPLINE_LIST_LENGTH (*l) * sizeof (spline_type));
@@ -210,7 +210,7 @@ free_spline_list_array (spline_list_array_type *spline_list_array)
 
   for (this_list = 0;
        this_list < SPLINE_LIST_ARRAY_LENGTH (*spline_list_array);
-       this_list++) 
+       this_list++)
     free_spline_list (&SPLINE_LIST_ARRAY_ELT (*spline_list_array, this_list));
 
   if (SPLINE_LIST_ARRAY_DATA (*spline_list_array) != NULL)
@@ -224,7 +224,7 @@ void
 append_spline_list (spline_list_array_type *l, spline_list_type s)
 {
   SPLINE_LIST_ARRAY_LENGTH (*l)++;
-  
+
   SPLINE_LIST_ARRAY_DATA (*l) = g_realloc(SPLINE_LIST_ARRAY_DATA (*l),(SPLINE_LIST_ARRAY_LENGTH (*l))*sizeof(spline_list_type));
   LAST_SPLINE_LIST_ARRAY_ELT (*l) = s;
 }

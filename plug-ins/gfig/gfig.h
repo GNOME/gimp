@@ -40,11 +40,11 @@ typedef struct
   gboolean snap2grid;
   gboolean lockongrid;
   gboolean showcontrol;
-  gdouble grid_radius_min;          
-  gdouble grid_radius_interval;     
-  gdouble grid_rotation;          
-  gdouble grid_granularity;        
-  gint grid_sectors_desired;        
+  gdouble grid_radius_min;
+  gdouble grid_radius_interval;
+  gdouble grid_rotation;
+  gdouble grid_granularity;
+  gint grid_sectors_desired;
 } GfigOpts;
 
 typedef struct

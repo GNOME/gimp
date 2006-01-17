@@ -32,7 +32,7 @@ typedef enum
 
 void       plug_in_debug_init  (Gimp               *gimp);
 void       plug_in_debug_exit  (Gimp               *gimp);
-                                                                                
+
 gchar    **plug_in_debug_argv  (Gimp               *gimp,
                                 const gchar        *name,
                                 GimpDebugWrapFlag   flag,

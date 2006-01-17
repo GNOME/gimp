@@ -164,7 +164,7 @@ free_curve_list_array (curve_list_array_type *curve_list_array)
   unsigned this_list;
 
   for (this_list = 0; this_list < CURVE_LIST_ARRAY_LENGTH (*curve_list_array);
-       this_list++) 
+       this_list++)
     free_curve_list (&CURVE_LIST_ARRAY_ELT (*curve_list_array, this_list));
 
   /* If the character was empty, it won't have any curves.  */

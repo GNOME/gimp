@@ -1213,19 +1213,19 @@ imap_help (void)
   gimp_standard_help_func ("plug-in-imagemap", NULL);
 }
 
-void 
+void
 do_cut (void)
 {
   command_execute (cut_command_new (_shapes));
 }
 
-void 
+void
 do_copy (void)
 {
   command_execute (copy_command_new (_shapes));
 }
 
-void 
+void
 do_paste (void)
 {
   command_execute (paste_command_new (_shapes));

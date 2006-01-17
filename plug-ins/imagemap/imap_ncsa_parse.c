@@ -159,11 +159,11 @@ static const short yyrline[] =
 /* YYTNAME[TOKEN_NUM] -- String name of the token TOKEN_NUM. */
 static const char *const yytname[] =
 {
-  "$", "error", "$undefined.", "RECTANGLE", "POLYGON", "CIRCLE", "DEFAULT", 
-  "AUTHOR", "TITLE", "DESCRIPTION", "BEGIN_COMMENT", "FLOAT", "LINK", 
-  "COMMENT", "','", "ncsa_file", "comment_lines", "comment_line", 
-  "real_comment", "author_line", "title_line", "description_line", 
-  "area_list", "area", "default", "rectangle", "circle", "polygon", "@1", 
+  "$", "error", "$undefined.", "RECTANGLE", "POLYGON", "CIRCLE", "DEFAULT",
+  "AUTHOR", "TITLE", "DESCRIPTION", "BEGIN_COMMENT", "FLOAT", "LINK",
+  "COMMENT", "','", "ncsa_file", "comment_lines", "comment_line",
+  "real_comment", "author_line", "title_line", "description_line",
+  "area_list", "area", "default", "rectangle", "circle", "polygon", "@1",
   "coord_list", "coord", 0
 };
 #endif
@@ -970,7 +970,7 @@ case 11:
 		   MapInfo_t *info = get_map_info();
 		   gchar *description;
 
-		   description = g_strconcat(info->description, yyvsp[0].id, "\n", 
+		   description = g_strconcat(info->description, yyvsp[0].id, "\n",
 					     NULL);
 		   g_strreplace(&info->description, description);
 		}
@@ -978,7 +978,7 @@ case 11:
 case 19:
 #line 112 "imap_ncsa.y"
 {
-		   MapInfo_t *info = get_map_info();		      
+		   MapInfo_t *info = get_map_info();		
 		   g_strreplace(&info->default_url, yyvsp[0].id);
 		}
     break;
@@ -1026,7 +1026,7 @@ case 26:
 {
 		   Polygon_t *polygon = ObjectToPolygon(current_object);
 		   GdkPoint *point = new_point((gint) yyvsp[-2].value, (gint) yyvsp[0].value);
-		   polygon->points = g_list_append(polygon->points, 
+		   polygon->points = g_list_append(polygon->points,
 						   (gpointer) point);
 		}
     break;
@@ -1266,7 +1266,7 @@ yyreturn:
 #line 164 "imap_ncsa.y"
 
 
-static void 
+static void
 ncsa_error(char* s)
 {
    extern FILE *ncsa_in;

@@ -226,7 +226,7 @@ buffer_delete_invoker (Gimp         *gimp,
     {
       GimpBuffer *buffer;
 
-      buffer = (GimpBuffer *) 
+      buffer = (GimpBuffer *)
         gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
 
       success = (buffer != NULL);
@@ -282,7 +282,7 @@ buffer_get_width_invoker (Gimp         *gimp,
 
   if (success)
     {
-      buffer = (GimpBuffer *) 
+      buffer = (GimpBuffer *)
         gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
 
       success = (buffer != NULL);
@@ -349,7 +349,7 @@ buffer_get_height_invoker (Gimp         *gimp,
 
   if (success)
     {
-      buffer = (GimpBuffer *) 
+      buffer = (GimpBuffer *)
         gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
 
       success = (buffer != NULL);
@@ -416,7 +416,7 @@ buffer_get_bytes_invoker (Gimp         *gimp,
 
   if (success)
     {
-      buffer = (GimpBuffer *) 
+      buffer = (GimpBuffer *)
         gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
 
       success = (buffer != NULL);
@@ -483,7 +483,7 @@ buffer_get_image_type_invoker (Gimp         *gimp,
 
   if (success)
     {
-      buffer = (GimpBuffer *) 
+      buffer = (GimpBuffer *)
         gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
 
       success = (buffer != NULL);

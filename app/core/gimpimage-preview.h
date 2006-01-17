@@ -37,10 +37,10 @@ gboolean  gimp_image_get_popup_size   (GimpViewable *viewable,
                                        gint         *popup_width,
                                        gint         *popup_height);
 TempBuf * gimp_image_get_preview      (GimpViewable *viewable,
-                                       gint          width, 
+                                       gint          width,
                                        gint          height);
 TempBuf * gimp_image_get_new_preview (GimpViewable  *viewable,
-                                      gint           width, 
+                                      gint           width,
                                       gint           height);
 
 

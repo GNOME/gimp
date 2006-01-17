@@ -29,7 +29,7 @@
 
 #include "imap_mru.h"
 
-MRU_t* 
+MRU_t*
 mru_create(void)
 {
    MRU_t *mru = g_new(MRU_t, 1);
@@ -38,7 +38,7 @@ mru_create(void)
    return mru;
 }
 
-void 
+void
 mru_destruct(MRU_t *mru)
 {
    g_list_foreach(mru->list, (GFunc) g_free, NULL);
@@ -55,11 +55,11 @@ mru_remove_link(MRU_t *mru, GList *link)
 static GList*
 mru_find_link(MRU_t *mru, const gchar *filename)
 {
-   return g_list_find_custom(mru->list, (gpointer) filename, 
+   return g_list_find_custom(mru->list, (gpointer) filename,
 			     (GCompareFunc) strcmp);
 }
 
-void 
+void
 mru_add(MRU_t *mru, const gchar *filename)
 {
    if (g_list_length(mru->list) == mru->max_size)
@@ -67,7 +67,7 @@ mru_add(MRU_t *mru, const gchar *filename)
    mru->list = g_list_prepend(mru->list, g_strdup(filename));
 }
 
-void 
+void
 mru_remove(MRU_t *mru, const gchar *filename)
 {
    mru_remove_link(mru, mru_find_link(mru, filename));
@@ -78,13 +78,13 @@ mru_set_first(MRU_t *mru, const gchar *filename)
 {
    GList *link = mru_find_link(mru, filename);
    if (link)
-      mru->list = g_list_prepend(g_list_remove_link(mru->list, link), 
+      mru->list = g_list_prepend(g_list_remove_link(mru->list, link),
 				 link->data);
    else
       mru_add(mru, filename);
 }
 
-void 
+void
 mru_set_size(MRU_t *mru, gint size)
 {
    gint diff;

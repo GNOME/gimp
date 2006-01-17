@@ -46,7 +46,7 @@ typedef struct
 #define O_PREV(p_o, n) ((n) == 0				\
                          ? O_LENGTH (p_o) - 1			\
                          : (n) - 1)
-   
+
 /* And the character turns into a list of such lists.  */
 typedef struct
 {

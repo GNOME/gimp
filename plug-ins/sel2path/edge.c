@@ -40,7 +40,7 @@ static boolean is_outline_edge (edge_type, unsigned, unsigned);
 static edge_type next_edge (edge_type);
 
 /* The following macros are used (directly or indirectly) by the
-   `next_outline_edge' routine.  */ 
+   `next_outline_edge' routine.  */
 
 /* Given the direction DIR of the pixel to test, decide which edge on
    that pixel we are supposed to test.  Because we've chosen the mapping
@@ -53,19 +53,19 @@ static edge_type next_edge (edge_type);
   `COL').   We are in the ``display'' coordinate system, with y
   increasing downward and x increasing to the right.  Therefore, we are
   implementing the following table:
-  
+
   direction  row delta  col delta
-    north       -1          0  
+    north       -1          0
     south	+1	    0
     east	 0	   +1
     west	 0	   +1
-    
+
   with the other four directions (e.g., northwest) being the sum of
   their components (e.g., north + west).
-  
+
   The first macro, `COMPUTE_DELTA', handles splitting up the latter
   cases, all of which have been assigned odd numbers.  */
-  
+
 #define COMPUTE_DELTA(axis, dir)					\
   ((dir) % 2 != 0							\
     ? COMPUTE_##axis##_DELTA ((dir) - 1)				\
@@ -109,19 +109,19 @@ static edge_type next_edge (edge_type);
    on the current pixel.  We want to go around outside outlines
    counterclockwise, and inside outlines clockwise (because that is how
    both Metafont and Adobe Type 1 format want their curves to be drawn).
-   
+
    The very first outline (an outside one) on each character starts on a
    top edge (STARTING_EDGE in edge.h defines this); so, if we're at a
    top edge, we want to go only to the left (on the pixel to the west)
    or down (on the same pixel), to begin with.  Then, when we're on a
    left edge, we want to go to the top edge (on the southwest pixel) or
    to the left edge (on the south pixel).
-   
+
    All well and good. But if you draw a rasterized circle (or whatever),
    eventually we have to come back around to the beginning; at that
    point, we'll be on a top edge, and we'll have to go to the right edge
    on the northwest pixel.  Draw pictures.
-   
+
    The upshot is, if we find an edge on another pixel, we return (in ROW
    and COL) the position of the new pixel, and (in EDGE) the kind of
    edge it is.  If we don't find such an edge, we return (in EDGE) the
@@ -133,7 +133,7 @@ next_outline_edge (edge_type *edge,
 {
   unsigned original_row = *row;
   unsigned original_col = *col;
-  
+
   switch (*edge)
     {
     case right:
@@ -215,18 +215,18 @@ is_outline_edge (edge_type edge,
       return row == 0 || sel_pixel_is_white(row - 1, col);
 
     case right:
-      return (col ==  sel_get_width() - 1) 
+      return (col ==  sel_get_width() - 1)
 	|| sel_pixel_is_white(row, col + 1);
 
     case bottom:
-      return (row ==  sel_get_height() - 1) 
+      return (row ==  sel_get_height() - 1)
 	|| sel_pixel_is_white(row + 1, col);
- 
+
     case no_edge:
     default:
       printf ("is_outline_edge: Bad edge value(%d)", edge);
     }
-  
+
   return 0; /* NOTREACHED */
 }
 

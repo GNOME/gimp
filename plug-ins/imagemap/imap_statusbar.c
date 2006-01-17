@@ -48,7 +48,7 @@ make_statusbar(GtkWidget *main_vbox, GtkWidget *window)
    gtk_widget_show(statusbar->status);
 
    /* (x, y) coordinate */
-   iconw = gtk_image_new_from_stock(IMAP_STOCK_COORD, 
+   iconw = gtk_image_new_from_stock(IMAP_STOCK_COORD,
 				    GTK_ICON_SIZE_SMALL_TOOLBAR);
 
    gtk_box_pack_start(GTK_BOX(hbox), iconw, FALSE, FALSE, 10);
@@ -62,7 +62,7 @@ make_statusbar(GtkWidget *main_vbox, GtkWidget *window)
    gtk_widget_show(statusbar->xy);
 
    /* Dimension info */
-   iconw = gtk_image_new_from_stock(IMAP_STOCK_DIMENSION, 
+   iconw = gtk_image_new_from_stock(IMAP_STOCK_DIMENSION,
 				    GTK_ICON_SIZE_SMALL_TOOLBAR);
    gtk_box_pack_start(GTK_BOX(hbox), iconw, FALSE, FALSE, 10);
    gtk_widget_show(iconw);
@@ -87,7 +87,7 @@ make_statusbar(GtkWidget *main_vbox, GtkWidget *window)
    return statusbar;
 }
 
-void 
+void
 statusbar_set_status(StatusBar_t *statusbar, const gchar *format, ...)
 {
    va_list ap;
@@ -98,25 +98,25 @@ statusbar_set_status(StatusBar_t *statusbar, const gchar *format, ...)
    va_end(ap);
 
    statusbar_clear_status(statusbar);
-   statusbar->message_id = 
-			gtk_statusbar_push(GTK_STATUSBAR(statusbar->status), 
+   statusbar->message_id =
+			gtk_statusbar_push(GTK_STATUSBAR(statusbar->status),
 					   statusbar->status_id, scratch);
 }
 
-void 
+void
 statusbar_clear_status(StatusBar_t *statusbar)
 {
    if (statusbar->message_id)
-      gtk_statusbar_remove(GTK_STATUSBAR(statusbar->status), 
+      gtk_statusbar_remove(GTK_STATUSBAR(statusbar->status),
 			   statusbar->status_id,
 			   statusbar->message_id);
 }
 
-void 
+void
 statusbar_set_xy(StatusBar_t *statusbar, gint x, gint y)
 {
    char scratch[16];
- 
+
    sprintf(scratch, "%d, %d", (int) x, (int) y);
    gtk_entry_set_text(GTK_ENTRY(statusbar->xy), scratch);
 }
@@ -126,27 +126,27 @@ void statusbar_clear_xy(StatusBar_t *statusbar)
    gtk_entry_set_text(GTK_ENTRY(statusbar->xy), "");
 }
 
-void 
+void
 statusbar_set_dimension(StatusBar_t *statusbar, gint w, gint h)
 {
    char scratch[16];
- 
+
    sprintf(scratch, "%d x %d", (int) w, (int) h);
    gtk_entry_set_text(GTK_ENTRY(statusbar->dimension), scratch);
 }
 
-void 
+void
 statusbar_clear_dimension(StatusBar_t *statusbar)
 {
    gtk_entry_set_text(GTK_ENTRY(statusbar->dimension), "");
 }
 
-void 
+void
 statusbar_set_zoom(StatusBar_t *statusbar, gint factor)
 {
    char scratch[16];
- 
+
    sprintf(scratch, "1:%d", factor);
-   gtk_statusbar_push(GTK_STATUSBAR(statusbar->zoom), statusbar->zoom_id, 
+   gtk_statusbar_push(GTK_STATUSBAR(statusbar->zoom), statusbar->zoom_id,
 		      scratch);
 }

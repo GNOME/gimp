@@ -87,7 +87,7 @@ TagList_t*
 taglist_copy(TagList_t *src, TagList_t *des)
 {
    GList *p;
-   
+
    taglist_remove_all(des);
    for (p = src->list; p; p = p->next)
       des->list = g_list_append(des->list, tag_clone((Tag_t*) p->data));
@@ -106,7 +106,7 @@ taglist_set(TagList_t *tlist, const gchar *name, const gchar *value)
 {
    GList *p;
    Tag_t *tag;
-   
+
    for (p = tlist->list; p; p = p->next) {
       tag = (Tag_t*) p->data;
       if (!g_ascii_strcasecmp(tag->name, name)) {

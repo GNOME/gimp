@@ -1799,7 +1799,7 @@ function_graph_expose (GtkWidget      *widget,
   g_free (buffer);
 
   gdk_draw_line (widget->window, widget->style->white_gc, 0,255, 255, 0);
-  
+
   y = 255 * CLAMP (logistic_function (param, 0, param->power),
                      0, 1.0);
   for (x = 0; x < 256; x++)

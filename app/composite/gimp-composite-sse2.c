@@ -107,7 +107,7 @@ gimp_composite_addition_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
                     "\tmovdqu      %2,%%xmm3\n"
                     "\tmovdqu  %%xmm2,%%xmm4\n"
                     "\tpaddusb %%xmm3,%%xmm4\n"
-                    
+
                     "\tmovdqu  %%xmm0,%%xmm1\n"
                     "\tpandn   %%xmm4,%%xmm1\n"
                     "\tpminub  %%xmm3,%%xmm2\n"

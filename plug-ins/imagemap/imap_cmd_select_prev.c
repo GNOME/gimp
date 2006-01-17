@@ -43,12 +43,12 @@ typedef struct {
    ObjectList_t *list;
 } SelectPrevCommand_t;
 
-Command_t* 
+Command_t*
 select_prev_command_new(ObjectList_t *list)
 {
    SelectPrevCommand_t *command = g_new(SelectPrevCommand_t, 1);
    command->list = list;
-   return command_init(&command->parent, _("Select Previous"), 
+   return command_init(&command->parent, _("Select Previous"),
 		       &select_prev_command_class);
 }
 
@@ -58,7 +58,7 @@ select_one_object(Object_t *obj, gpointer data)
    SelectPrevCommand_t *command = (SelectPrevCommand_t*) data;
    Command_t *sub_command;
 
-   sub_command = (obj->selected) 
+   sub_command = (obj->selected)
       ? select_command_new(obj) : unselect_command_new(obj);
    command_add_subcommand(&command->parent, sub_command);
 }

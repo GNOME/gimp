@@ -25,7 +25,7 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
    edges, instead of through pixel centers.  This is necessary for those
    unfortunate times when a single pixel is on both an inside and an
    outside outline.
-   
+
    The numbers chosen here are not arbitrary; the code that figures out
    which edge to move to depends on particular values.  See the
    `TRY_PIXEL' macro in `edge.c'.  To emphasize this, I've written in the

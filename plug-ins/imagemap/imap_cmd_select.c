@@ -45,7 +45,7 @@ typedef struct {
    Object_t *obj;
 } SelectCommand_t;
 
-Command_t* 
+Command_t*
 select_command_new(Object_t *obj)
 {
    SelectCommand_t *command = g_new(SelectCommand_t, 1);

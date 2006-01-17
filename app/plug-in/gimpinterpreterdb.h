@@ -34,7 +34,7 @@
 typedef struct _GimpInterpreterDBClass GimpInterpreterDBClass;
 
 struct _GimpInterpreterDB
-{ 
+{
   GObject     parent_instance;
 
   GHashTable *programs;
@@ -47,7 +47,7 @@ struct _GimpInterpreterDB
 };
 
 struct _GimpInterpreterDBClass
-{ 
+{
   GObjectClass  parent_class;
 };
 

@@ -63,13 +63,13 @@ void main_toolbar_set_grid(gboolean active);
 
 void set_zoom(gint zoom_factor);
 gint get_real_coord(gint coord);
-void draw_line(GdkWindow *window, GdkGC *gc, gint x1, gint y1, gint x2, 
+void draw_line(GdkWindow *window, GdkGC *gc, gint x1, gint y1, gint x2,
 	       gint y2);
 void draw_rectangle(GdkWindow *window, GdkGC *gc, gint filled, gint x, gint y,
 		    gint width, gint height);
 void draw_arc(GdkWindow *window, GdkGC *gc, gint filled, gint x, gint y,
 	      gint width, gint height, gint angle1, gint angle2);
-void draw_circle(GdkWindow *window, GdkGC *gc, gint filled, gint x, gint y, 
+void draw_circle(GdkWindow *window, GdkGC *gc, gint filled, gint x, gint y,
 		 gint r);
 void draw_polygon(GdkWindow *window, GdkGC *gc, GList *list);
 

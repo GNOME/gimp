@@ -43,12 +43,12 @@ typedef struct {
    ObjectList_t *list;
 } SelectAllCommand_t;
 
-Command_t* 
+Command_t*
 select_all_command_new(ObjectList_t *list)
 {
    SelectAllCommand_t *command = g_new(SelectAllCommand_t, 1);
    command->list = list;
-   return command_init(&command->parent, _("Select All"), 
+   return command_init(&command->parent, _("Select All"),
 		       &select_all_command_class);
 }
 
@@ -67,7 +67,7 @@ select_all_command_execute(Command_t *parent)
    CmdExecuteValue_t rvalue;
 
    id = object_list_add_select_cb(command->list, select_one_object, command);
-   rvalue = (object_list_select_all(command->list)) 
+   rvalue = (object_list_select_all(command->list))
      ? CMD_APPEND : CMD_DESTRUCT;
    object_list_remove_select_cb(command->list, id);
 

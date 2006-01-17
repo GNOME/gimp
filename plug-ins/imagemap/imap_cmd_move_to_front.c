@@ -43,12 +43,12 @@ typedef struct {
    ObjectList_t *list;
 } MoveToFrontCommand_t;
 
-Command_t* 
+Command_t*
 move_to_front_command_new(ObjectList_t *list)
 {
    MoveToFrontCommand_t *command = g_new(MoveToFrontCommand_t, 1);
    command->list = list;
-   return command_init(&command->parent, _("Move To Front"), 
+   return command_init(&command->parent, _("Move To Front"),
 		       &move_to_front_command_class);
 }
 
@@ -76,7 +76,7 @@ move_to_front_command_execute(Command_t *parent)
 
    id1 = object_list_add_remove_cb(command->list, remove_one_object, command);
    id2 = object_list_add_add_cb(command->list, add_one_object, command);
-   
+
    object_list_move_to_front(command->list);
    object_list_remove_remove_cb(command->list, id1);
    object_list_remove_add_cb(command->list, id2);

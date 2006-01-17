@@ -205,7 +205,7 @@ static struct PyMethodDef procbrowser_methods[] = {
 
 /* Initialization function for the module (*must* be called initgimpprocbrowser) */
 
-static char procbrowser_doc[] = 
+static char procbrowser_doc[] =
 "This module provides a simple interface for the GIMP PDB Browser"
 ;
 

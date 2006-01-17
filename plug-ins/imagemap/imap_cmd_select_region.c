@@ -50,8 +50,8 @@ typedef struct {
    Command_t	*unselect_command;
 } SelectRegionCommand_t;
 
-Command_t* 
-select_region_command_new(GtkWidget *widget, ObjectList_t *list, gint x, 
+Command_t*
+select_region_command_new(GtkWidget *widget, ObjectList_t *list, gint x,
 			  gint y)
 {
    SelectRegionCommand_t *command = g_new(SelectRegionCommand_t, 1);
@@ -61,7 +61,7 @@ select_region_command_new(GtkWidget *widget, ObjectList_t *list, gint x,
    command->list = list;
    command->x = x;
    command->y = y;
-   (void) command_init(&command->parent, _("Select Region"), 
+   (void) command_init(&command->parent, _("Select Region"),
 		       &select_region_command_class);
 
    sub_command = unselect_all_command_new(list, NULL);
@@ -102,9 +102,9 @@ select_release(GtkWidget *widget, GdkEventButton *event, gpointer data)
    gpointer id;
    gint count;
 
-   g_signal_handlers_disconnect_by_func(widget, 
+   g_signal_handlers_disconnect_by_func(widget,
                                         select_motion, data);
-   g_signal_handlers_disconnect_by_func(widget, 
+   g_signal_handlers_disconnect_by_func(widget,
                                         select_release, data);
 
    object_draw(obj, widget->window);
@@ -131,10 +131,10 @@ select_region_command_execute(Command_t *parent)
    SelectRegionCommand_t *command = (SelectRegionCommand_t*) parent;
 
    command->obj = create_rectangle(command->x, command->y, 0, 0);
-   g_signal_connect(command->widget, "button-release-event", 
-                    G_CALLBACK (select_release), command);   
-   g_signal_connect(command->widget, "motion-notify-event", 
-                    G_CALLBACK (select_motion), command);   
+   g_signal_connect(command->widget, "button-release-event",
+                    G_CALLBACK (select_release), command);
+   g_signal_connect(command->widget, "motion-notify-event",
+                    G_CALLBACK (select_motion), command);
 
    gdk_gc_set_function(get_preferences()->normal_gc, GDK_XOR);
 

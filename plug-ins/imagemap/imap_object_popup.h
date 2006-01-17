@@ -33,7 +33,7 @@ typedef struct {
    Object_t  *obj;
 } ObjectPopup_t;
 
-void object_handle_popup(ObjectPopup_t *popup, Object_t *obj, 
+void object_handle_popup(ObjectPopup_t *popup, Object_t *obj,
 			 GdkEventButton *event);
 void object_do_popup(Object_t *obj, GdkEventButton *event);
 

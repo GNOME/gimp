@@ -88,7 +88,7 @@ plug_in_debug_init (Gimp *gimp)
       dbg->name = g_strdup (wrap);
       dbg->flags = GIMP_DEBUG_WRAP_DEFAULT;
     }
-  
+
   gimp->plug_in_debug = dbg;
 }
 

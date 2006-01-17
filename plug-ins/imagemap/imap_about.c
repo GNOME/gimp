@@ -43,7 +43,7 @@ do_about_dialog(void)
        gtk_about_dialog_set_copyright (GTK_ABOUT_DIALOG (dialog),
                                        _("Copyright(c) 1999-2005 by Maurits Rijk"));
        gtk_about_dialog_set_authors (GTK_ABOUT_DIALOG (dialog), authors);
-       gtk_about_dialog_set_license (GTK_ABOUT_DIALOG (dialog), 
+       gtk_about_dialog_set_license (GTK_ABOUT_DIALOG (dialog),
                                      _("Released under the GNU General Public License"));
 
        g_signal_connect (dialog, "destroy",

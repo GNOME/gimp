@@ -1,4 +1,4 @@
-/* -*- Mode: C; c-basic-offset: 4 -*- 
+/* -*- Mode: C; c-basic-offset: 4 -*-
     Gimp-Python - allows the writing of Gimp plugins in Python.
     Copyright (C) 1997-2002  James Henstridge <james@daa.com.au>
 
@@ -796,7 +796,7 @@ pf_call(PyGimpPDBFunction *self, PyObject *args, PyObject *kwargs)
     }
 
     gimp_destroy_params(params, self->nparams);
-    
+
     if (!ret) {
 	PyErr_SetString(pygimp_error, "no status returned");
 #if PG_DEBUG >= 1

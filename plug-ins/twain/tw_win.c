@@ -146,7 +146,7 @@ int
 unloadTwainLibrary(pTW_SESSION twSession)
 {
   /* Explicitly free the SM library */
-  if (hDLL) {        
+  if (hDLL) {
     FreeLibrary(hDLL);
     hDLL=NULL;
   }
@@ -155,7 +155,7 @@ unloadTwainLibrary(pTW_SESSION twSession)
    * twain is killed.  If the id is left around the
    * data source can not be found or opened
 	 */
-  DS_IDENTITY(twSession)->Id = 0;  
+  DS_IDENTITY(twSession)->Id = 0;
 
 	/* We are now back at state 1 */
   twSession->twainState = 1;
@@ -187,7 +187,7 @@ TwainProcessMessage(LPMSG lpMsg, pTW_SESSION twSession)
 		 */
 		twEvent.pEvent = (TW_MEMREF) lpMsg;
 		twSession->twRC = callDSM(APP_IDENTITY(twSession), DS_IDENTITY(twSession),
-			DG_CONTROL, DAT_EVENT, MSG_PROCESSEVENT, 
+			DG_CONTROL, DAT_EVENT, MSG_PROCESSEVENT,
 			(TW_MEMREF) &twEvent);
 		
 		/* Check the return code */
@@ -201,7 +201,7 @@ TwainProcessMessage(LPMSG lpMsg, pTW_SESSION twSession)
 	
   /* tell the caller what happened */
   return (twSession->twRC == TWRC_DSEVENT);
-} 
+}
 
 /*
  * twainMessageLoop
@@ -211,7 +211,7 @@ TwainProcessMessage(LPMSG lpMsg, pTW_SESSION twSession)
  * the application exits.
  */
 int
-twainMessageLoop(pTW_SESSION twSession) 
+twainMessageLoop(pTW_SESSION twSession)
 {
   MSG msg;
 	
@@ -232,20 +232,20 @@ twainMessageLoop(pTW_SESSION twSession)
  * GetLastError.
  */
 void
-LogLastWinError(void) 
+LogLastWinError(void)
 {
 	LPVOID lpMsgBuf;
 	
-	FormatMessage( 
-		FORMAT_MESSAGE_ALLOCATE_BUFFER | 
-		FORMAT_MESSAGE_FROM_SYSTEM | 
+	FormatMessage(
+		FORMAT_MESSAGE_ALLOCATE_BUFFER |
+		FORMAT_MESSAGE_FROM_SYSTEM |
 		FORMAT_MESSAGE_IGNORE_INSERTS,
 		NULL,
 		GetLastError(),
 		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), /* Default language */
 		(LPTSTR) &lpMsgBuf,
 		0,
-		NULL 
+		NULL
 		);
 	
 	LogMessage("%s\n", lpMsgBuf);

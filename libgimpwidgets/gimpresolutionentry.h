@@ -48,9 +48,9 @@ struct _GimpResolutionEntryField
   GimpResolutionEntryField *corresponding;
 
   gboolean       size;
-  
+
   GtkWidget     *label;
-  
+
   guint          changed_signal;
 
   GtkObject     *adjustment;
@@ -82,7 +82,7 @@ struct _GimpResolutionEntry
   GimpResolutionEntryField  height;
   GimpResolutionEntryField  x;
   GimpResolutionEntryField  y;
-  
+
 };
 
 struct _GimpResolutionEntryClass
@@ -124,7 +124,7 @@ GtkWidget * gimp_resolution_entry_attach_label (GimpResolutionEntry *gre,
                                                 gint                 column,
                                                 gfloat               alignment);
 
-void gimp_resolution_entry_set_width_boundaries 
+void gimp_resolution_entry_set_width_boundaries
                                                (GimpResolutionEntry *gre,
                                                 gdouble              lower,
                                                 gdouble              upper);
@@ -173,11 +173,11 @@ void        gimp_resolution_entry_set_pixel_digits
 
 void        gimp_resolution_entry_grab_focus  (GimpResolutionEntry *gre);
 
-void        gimp_resolution_entry_set_activates_default 
+void        gimp_resolution_entry_set_activates_default
                                               (GimpResolutionEntry *gre,
                                                gboolean             setting);
 
-GtkWidget * gimp_resolution_entry_get_width_help_widget 
+GtkWidget * gimp_resolution_entry_get_width_help_widget
                                               (GimpResolutionEntry *gre);
 GtkWidget * gimp_resolution_entry_get_height_help_widget
                                               (GimpResolutionEntry *gre);

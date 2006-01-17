@@ -951,7 +951,7 @@ yyparse ()
 #endif
 #endif
 {
-  
+
   register int yystate;
   register int yyn;
   int yyresult;
@@ -1272,7 +1272,7 @@ yyreduce:
     {
 		   gchar *description;
 
-		   description = g_strconcat(_map_info->description, (yyvsp[-1].id), "\n", 
+		   description = g_strconcat(_map_info->description, (yyvsp[-1].id), "\n",
 					     NULL);
 		   g_strreplace(&_map_info->description, description);
 		}
@@ -1663,7 +1663,7 @@ yyreturn:
 #line 311 "imap_csim.y"
 
 
-static void 
+static void
 csim_error(char* s)
 {
    extern FILE *csim_in;

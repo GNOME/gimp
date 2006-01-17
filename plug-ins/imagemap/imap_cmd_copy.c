@@ -58,7 +58,7 @@ static CmdExecuteValue_t
 copy_command_execute(Command_t *parent)
 {
    CopyCommand_t *command = (CopyCommand_t*) parent;
-   command->paste_buffer = object_list_copy(command->paste_buffer, 
+   command->paste_buffer = object_list_copy(command->paste_buffer,
 					    get_paste_buffer());
    object_list_copy_to_paste_buffer(command->list);
    return CMD_APPEND;

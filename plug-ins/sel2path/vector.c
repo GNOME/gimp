@@ -110,7 +110,7 @@ Vmult_scalar (const vector_type v, const real r)
 
 /* Given the IN_VECTOR and OUT_VECTOR, return the angle between them in
    degrees, in the range zero to 180.  */
-   
+
 real
 Vangle (const vector_type in_vector, const vector_type out_vector)
 {
@@ -147,7 +147,7 @@ coordinate_type
 Vadd_int_point (const coordinate_type c, const vector_type v)
 {
   coordinate_type a;
-  
+
   a.x = SROUND ((real) c.x + v.dx);
   a.y = SROUND ((real) c.y + v.dy);
   return a;
@@ -158,7 +158,7 @@ vector_type
 Vabs (const vector_type v)
 {
   vector_type new_v;
-  
+
   new_v.dx = fabs (v.dx);
   new_v.dy = fabs (v.dy);
   return new_v;
@@ -196,10 +196,10 @@ coordinate_type
 IPsubtractP (const coordinate_type c1, const coordinate_type c2)
 {
   coordinate_type c;
-  
+
   c.x = c1.x - c2.x;
   c.y = c1.y - c2.y;
-  
+
   return c;
 }
 
@@ -208,10 +208,10 @@ coordinate_type
 IPadd (const coordinate_type c1, const coordinate_type c2)
 {
   coordinate_type c;
-  
+
   c.x = c1.x + c2.x;
   c.y = c1.y + c2.y;
-  
+
   return c;
 }
 
@@ -220,10 +220,10 @@ coordinate_type
 IPmult_scalar (const coordinate_type c, const int i)
 {
   coordinate_type a;
-  
+
   a.x = c.x * i;
   a.y = c.y * i;
-  
+
   return a;
 }
 

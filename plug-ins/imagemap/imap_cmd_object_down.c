@@ -46,13 +46,13 @@ typedef struct {
    Object_t *obj;
 } ObjectDownCommand_t;
 
-Command_t* 
+Command_t*
 object_down_command_new(ObjectList_t *list, Object_t *obj)
 {
    ObjectDownCommand_t *command = g_new(ObjectDownCommand_t, 1);
    command->list = list;
    command->obj = object_ref(obj);
-   return command_init(&command->parent, _("Move Down"), 
+   return command_init(&command->parent, _("Move Down"),
 		       &object_down_command_class);
 }
 

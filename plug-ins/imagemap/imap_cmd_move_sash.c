@@ -50,8 +50,8 @@ typedef struct {
    MoveSashFunc_t sash_func;
 } MoveSashCommand_t;
 
-Command_t* 
-move_sash_command_new(GtkWidget *widget, Object_t *obj, 
+Command_t*
+move_sash_command_new(GtkWidget *widget, Object_t *obj,
 		      gint x, gint y, MoveSashFunc_t sash_func)
 {
    MoveSashCommand_t *command = g_new(MoveSashCommand_t, 1);
@@ -139,9 +139,9 @@ move_sash_command_execute(Command_t *parent)
    hide_url();
    preview_freeze();
    g_signal_connect(command->widget, "button-release-event",
-                    G_CALLBACK (sash_end), command);   
-   g_signal_connect(command->widget, "motion-notify-event", 
-                    G_CALLBACK (sash_move), command);   
+                    G_CALLBACK (sash_end), command);
+   g_signal_connect(command->widget, "motion-notify-event",
+                    G_CALLBACK (sash_move), command);
    gdk_gc_set_function(get_preferences()->selected_gc, GDK_EQUIV);
 
    return CMD_APPEND;

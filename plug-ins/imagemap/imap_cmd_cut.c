@@ -76,7 +76,7 @@ cut_command_execute(Command_t *parent)
    CutCommand_t *command = (CutCommand_t*) parent;
    gpointer id;
 
-   command->paste_buffer = object_list_copy(command->paste_buffer, 
+   command->paste_buffer = object_list_copy(command->paste_buffer,
 					    get_paste_buffer());
    id = object_list_add_remove_cb(command->list, remove_one_object, command);
    object_list_cut(command->list);

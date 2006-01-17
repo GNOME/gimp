@@ -44,13 +44,13 @@ typedef struct {
    gboolean add;
 } MoveDownCommand_t;
 
-Command_t* 
+Command_t*
 move_down_command_new(ObjectList_t *list)
 {
    MoveDownCommand_t *command = g_new(MoveDownCommand_t, 1);
    command->list = list;
    command->add = FALSE;
-   return command_init(&command->parent, _("Move Down"), 
+   return command_init(&command->parent, _("Move Down"),
 		       &move_down_command_class);
 }
 

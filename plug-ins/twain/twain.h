@@ -3,42 +3,42 @@
   Copyright (C) 1991, 1992 TWAIN Working Group: Aldus, Caere, Eastman-Kodak,
   Hewlett-Packard and Logitech Corporations.  All rights reserved.
 
-  Copyright (C) 1997 TWAIN Working Group: Bell+Howell, Canon, DocuMagix, 
+  Copyright (C) 1997 TWAIN Working Group: Bell+Howell, Canon, DocuMagix,
   Fujitsu, Genoa Technology, Hewlett-Packard, Kofax Imaging Products, and
   Ricoh Corporation.  All rights reserved.
- 
-  Copyright © 1998 TWAIN Working Group: Adobe Systems Incorporated, 
-	Canon Information Systems, Eastman Kodak Company, 
-	Fujitsu Computer Products of America, Genoa Technology, 
-	Hewlett-Packard Company, Intel Corporation, Kofax Image Products, 
-	JFL Peripheral Solutions Inc., Ricoh Corporation, and Xerox Corporation.  
+
+  Copyright © 1998 TWAIN Working Group: Adobe Systems Incorporated,
+	Canon Information Systems, Eastman Kodak Company,
+	Fujitsu Computer Products of America, Genoa Technology,
+	Hewlett-Packard Company, Intel Corporation, Kofax Image Products,
+	JFL Peripheral Solutions Inc., Ricoh Corporation, and Xerox Corporation.
 	All rights reserved.
 
   TWAIN.h -  This is the definitive include file for applications and
           data sources written to the TWAIN specification.
           It defines constants, data structures, messages etc.
           for the public interface to TWAIN.
- 
+
   Revision History:
     version 1.0, March 6, 1992.  TWAIN 1.0.
     version 1.1, January 1993.   Tech Notes 1.1
     version 1.5, June 1993.      Specification Update 1.5
-                                 Change DC to TW 
+                                 Change DC to TW
                                  Change filename from DC.H to TWAIN.H
     version 1.5, July 1993.      Remove spaces from country identifiers
- 
-    version 1.7, July 1997       Added Capabilities and data structure for 
+
+    version 1.7, July 1997       Added Capabilities and data structure for
                                  document imaging and digital cameras.
                                  KHL.
     version 1.7, July 1997       Inserted Borland compatibile structure packing
                                  directives provided by Mentor.  JMH
-    version 1.7, Aug 1997        Expanded file tabs to spaces.  
-                                 NOTE: future authors should be sure to have 
-                                 their editors set to automatically expand tabs 
+    version 1.7, Aug 1997        Expanded file tabs to spaces.
+                                 NOTE: future authors should be sure to have
+                                 their editors set to automatically expand tabs
                                  to spaces (original tab setting was 4 spaces).
     version 1.7, Sept 1997       Added job control values
                                  Added return codes
-    version 1.7, Sept 1997       changed definition of pRGBRESPONSE to 
+    version 1.7, Sept 1997       changed definition of pRGBRESPONSE to
                                  pTW_RGBRESPONSE
     version 1.7  Aug 1998        Added missing TWEI_BARCODEROTATION values
                                  TWBCOR_ types JMH
@@ -119,12 +119,12 @@ typedef char    TW_STR255[256],   FAR *pTW_STR255;
 
 /* Numeric types. */
 typedef char           TW_INT8,   FAR *pTW_INT8;
-typedef short          TW_INT16,  FAR *pTW_INT16; 
+typedef short          TW_INT16,  FAR *pTW_INT16;
 typedef long           TW_INT32,  FAR *pTW_INT32;
 typedef unsigned char  TW_UINT8,  FAR *pTW_UINT8;
 typedef unsigned short TW_UINT16, FAR *pTW_UINT16;
 typedef unsigned long  TW_UINT32, FAR *pTW_UINT32;
-typedef unsigned short TW_BOOL,   FAR *pTW_BOOL; 
+typedef unsigned short TW_BOOL,   FAR *pTW_BOOL;
 
 /* Fixed point structure type. */
 typedef struct {
@@ -414,9 +414,9 @@ typedef struct
 
 /* ----------------------------------------------------------------------- *\
 
-  Version 1.7:      Added Following data structure for Document Imaging 
+  Version 1.7:      Added Following data structure for Document Imaging
   July 1997         Enhancement.
-  KHL               TW_CUSTOMDSDATA --  For Saving and Restoring Source's 
+  KHL               TW_CUSTOMDSDATA --  For Saving and Restoring Source's
                                         state.
                     TW_INFO         --  Each attribute for extended image
                                         information.
@@ -788,7 +788,7 @@ typedef struct {
 #define TWJC_JSIS   2
 #define TWJC_JSXC   3
 #define TWJC_JSXS   4
-                  
+
 /* Added 1.7 */
 /* TWEI_BARCODEROTATION values (BCOR_ means barcode rotation) */
 #define TWBCOR_ROT0   0
@@ -1158,7 +1158,7 @@ typedef struct {
 #define TWLG_USA             13 /* U.S. English           */
 /* Added for 1.8 */
 #define TWLG_USERLOCALE           -1
-#define TWLG_AFRIKAANS            14  
+#define TWLG_AFRIKAANS            14
 #define TWLG_ALBANIA              15
 #define TWLG_ARABIC               16
 #define TWLG_ARABIC_ALGERIA       17
@@ -1374,7 +1374,7 @@ typedef struct {
 #define MSG_CHANGEDIRECTORY   0x0801
 #define MSG_CREATEDIRECTORY   0x0802
 #define MSG_DELETE            0x0803
-#define MSG_FORMATMEDIA       0x0804 
+#define MSG_FORMATMEDIA       0x0804
 #define MSG_GETCLOSE          0x0805
 #define MSG_GETFIRSTFILE      0x0806
 #define MSG_GETINFO           0x0807
@@ -1453,7 +1453,7 @@ typedef struct {
 #define CAP_BATTERYMINUTES          0x1032   /* Added 1.8 */
 #define CAP_BATTERYPERCENTAGE       0x1033   /* Added 1.8 */
 #define CAP_POWERDOWNTIME           0x1034   /* Added 1.8 */
- 
+
 /* image data sources MAY support these caps */
 #define ICAP_AUTOBRIGHT                   0x1100
 #define ICAP_BRIGHTNESS                   0x1101
@@ -1535,8 +1535,8 @@ typedef struct {
 /* ----------------------------------------------------------------------- *\
 
   Version 1.7:      Following is Extended Image Info Attributes.
-  July 1997         
-  KHL               
+  July 1997
+  KHL
 
 \* ----------------------------------------------------------------------- */
 
@@ -1654,7 +1654,7 @@ typedef struct {
 /* bit patterns: for query the operation that are supported by the data source on a capability */
 /* Application gets these through DG_CONTROL/DAT_CAPABILITY/MSG_QUERYSUPPORT */
 /* Added 1.6 */
-#define TWQC_GET           0x0001 
+#define TWQC_GET           0x0001
 #define TWQC_SET           0x0002
 #define TWQC_GETDEFAULT    0x0004
 #define TWQC_GETCURRENT    0x0008
@@ -1676,21 +1676,21 @@ typedef struct {
  *          This could identify an application or a data source.
  *          If this is NULL, the message goes to the Source Manager.
  *
- *  DG      The Data Group. 
+ *  DG      The Data Group.
  *          Example: DG_IMAGE.
  *
  *  DAT     The Data Attribute Type.
  *          Example: DAT_IMAGEMEMXFER.
- *    
+ *
  *  MSG     The message.  Messages are interpreted by the destination module
- *          with respect to the Data Group and the Data Attribute Type.  
+ *          with respect to the Data Group and the Data Attribute Type.
  *          Example: MSG_GET.
  *
- *  pData   A pointer to the data structure or variable identified 
+ *  pData   A pointer to the data structure or variable identified
  *          by the Data Attribute Type.
  *          Example: (TW_MEMREF)&ImageMemXfer
  *                   where ImageMemXfer is a TW_IMAGEMEMXFER structure.
- *                    
+ *
  * Returns:
  *  ReturnCode
  *         Example: TWRC_SUCCESS.
@@ -1739,21 +1739,21 @@ typedef TW_UINT16 (*DSMENTRYPROC)(pTW_IDENTITY, pTW_IDENTITY,
  *  pOrigin Identifies the source module of the message. This could
  *          identify an application or the Data Source Manager.
  *
- *  DG      The Data Group. 
+ *  DG      The Data Group.
  *          Example: DG_IMAGE.
- *           
+ *
  *  DAT     The Data Attribute Type.
  *          Example: DAT_IMAGEMEMXFER.
- *    
+ *
  *  MSG     The message.  Messages are interpreted by the data source
  *          with respect to the Data Group and the Data Attribute Type.
  *          Example: MSG_GET.
  *
- *  pData   A pointer to the data structure or variable identified 
+ *  pData   A pointer to the data structure or variable identified
  *          by the Data Attribute Type.
  *          Example: (TW_MEMREF)&ImageMemXfer
  *                   where ImageMemXfer is a TW_IMAGEMEMXFER structure.
- *                    
+ *
  * Returns:
  *  ReturnCode
  *          Example: TWRC_SUCCESS.
@@ -1771,28 +1771,28 @@ extern "C" {
 #ifdef  _MSWIN_
   #ifdef _WIN32
      __declspec(dllexport) TW_UINT16 FAR PASCAL DS_Entry (pTW_IDENTITY pOrigin,
-                                                          TW_UINT32    DG, 
-                                                          TW_UINT16    DAT, 
-                                                          TW_UINT16    MSG, 
+                                                          TW_UINT32    DG,
+                                                          TW_UINT16    DAT,
+                                                          TW_UINT16    MSG,
                                                           TW_MEMREF    pData);
   #else   /* _WIN32 */
      TW_UINT16 FAR PASCAL DS_Entry (pTW_IDENTITY pOrigin,
-                                    TW_UINT32    DG, 
-                                    TW_UINT16    DAT, 
-                                    TW_UINT16    MSG, 
+                                    TW_UINT32    DG,
+                                    TW_UINT16    DAT,
+                                    TW_UINT16    MSG,
                                     TW_MEMREF    pData);
   #endif  /* _WIN32 */
-  
+
   typedef TW_UINT16 (FAR PASCAL *DSENTRYPROC) (pTW_IDENTITY pOrigin,
-                                               TW_UINT32    DG, 
-                                               TW_UINT16    DAT, 
-                                               TW_UINT16    MSG, 
+                                               TW_UINT32    DG,
+                                               TW_UINT16    DAT,
+                                               TW_UINT16    MSG,
                                                TW_MEMREF    pData);
 #else   /* _MSWIN_ */
-FAR PASCAL TW_UINT16 DS_Entry( pTW_IDENTITY pOrigin, 
-                               TW_UINT32    DG, 
-                               TW_UINT16    DAT, 
-                               TW_UINT16    MSG, 
+FAR PASCAL TW_UINT16 DS_Entry( pTW_IDENTITY pOrigin,
+                               TW_UINT32    DG,
+                               TW_UINT16    DAT,
+                               TW_UINT16    MSG,
                                TW_MEMREF    pData);
 
 typedef TW_UINT16 (*DSENTRYPROC)(pTW_IDENTITY,

@@ -1,3 +1,8 @@
+2006-01-17  Raphaël Quinet  <raphael@gimp.org>
+
+	* (about 130 *.[ch] files): automatically removed trailing
+	whitespace from 3460 lines.
+
 2006-01-17  Sven Neumann  <sven@gimp.org>
 
 	* app/about.h (GIMP_COPYRIGHT): updated year in copyright.

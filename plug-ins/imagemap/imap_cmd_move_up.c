@@ -44,7 +44,7 @@ typedef struct {
    gboolean add;
 } MoveUpCommand_t;
 
-Command_t* 
+Command_t*
 move_up_command_new(ObjectList_t *list)
 {
    MoveUpCommand_t *command = g_new(MoveUpCommand_t, 1);

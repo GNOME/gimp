@@ -58,7 +58,7 @@ typedef struct {
    double pixels_per_unit;       /* and scale */
    double spatial_filter_radius; /* variance of gaussian */
    double sample_density;        /* samples per pixel (not bucket) */
-   /* in order to motion blur more accurately we compute the logs of the 
+   /* in order to motion blur more accurately we compute the logs of the
       sample density many times and average the results.  we interplate
       only this many times. */
    int nbatches;

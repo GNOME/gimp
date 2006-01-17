@@ -702,11 +702,11 @@ path_get_point_at_dist_invoker (Gimp         *gimp,
           distance_along = 0.0;
           stroke = gimp_vectors_stroke_get_next (vectors, NULL);
 
-          while (stroke != NULL ) 
+          while (stroke != NULL )
             {
               stroke_length = gimp_stroke_get_length (stroke, 0.5);
 
-              if (distance_along + stroke_length < distance) 
+              if (distance_along + stroke_length < distance)
                 {
                   distance_along += stroke_length;
                 }

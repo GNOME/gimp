@@ -47,14 +47,14 @@ typedef struct {
    gint dy;
 } ObjectMoveCommand_t;
 
-Command_t* 
+Command_t*
 object_move_command_new(Object_t *obj, gint dx, gint dy)
 {
    ObjectMoveCommand_t *command = g_new(ObjectMoveCommand_t, 1);
    command->obj = object_ref(obj);
    command->dx = dx;
    command->dy = dy;
-   return command_init(&command->parent, _("Move"), 
+   return command_init(&command->parent, _("Move"),
 		       &object_move_command_class);
 }
 

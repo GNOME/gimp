@@ -135,7 +135,7 @@ arch_get_vendor (void)
   *(int *)&id[0] = ebx;
   *(int *)&id[4] = edx;
   *(int *)&id[8] = ecx;
-  
+
   id[12] = '\0';
 
 #ifdef ARCH_X86_64
@@ -417,7 +417,7 @@ static guint32
 arch_accel (void)
 {
   signal (SIGILL, sigill_handler);
-  
+
   if (sigsetjmp (jmpbuf, 1))
     {
       signal (SIGILL, SIG_DFL);

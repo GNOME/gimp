@@ -40,7 +40,7 @@ typedef struct {
 static ObjectList_t *_paste_buffer;
 
 static gpointer
-object_list_callback_add(ObjectListCallback_t *list, 
+object_list_callback_add(ObjectListCallback_t *list,
 			 ObjectListCallbackFunc_t func, gpointer data)
 {
    ObjectListCB_t *cb = g_new(ObjectListCB_t, 1);
@@ -56,7 +56,7 @@ object_list_callback_remove(ObjectListCallback_t *list, gpointer id)
    list->list = g_list_remove(list->list, id);
 }
 
-static void 
+static void
 object_list_callback_call(ObjectListCallback_t *list, Object_t *obj)
 {
    GList *p;
@@ -81,35 +81,35 @@ object_list_add_update_cb(ObjectList_t *list, ObjectListCallbackFunc_t func,
 }
 
 gpointer
-object_list_add_add_cb(ObjectList_t *list, ObjectListCallbackFunc_t func, 
+object_list_add_add_cb(ObjectList_t *list, ObjectListCallbackFunc_t func,
 		       gpointer data)
 {
    return object_list_callback_add(&list->add_cb, func, data);
 }
 
 gpointer
-object_list_add_remove_cb(ObjectList_t *list, ObjectListCallbackFunc_t func, 
+object_list_add_remove_cb(ObjectList_t *list, ObjectListCallbackFunc_t func,
 			  gpointer data)
 {
    return object_list_callback_add(&list->remove_cb, func, data);
 }
 
 gpointer
-object_list_add_select_cb(ObjectList_t *list, ObjectListCallbackFunc_t func, 
+object_list_add_select_cb(ObjectList_t *list, ObjectListCallbackFunc_t func,
 			  gpointer data)
 {
    return object_list_callback_add(&list->select_cb, func, data);
 }
 
 gpointer
-object_list_add_move_cb(ObjectList_t *list, ObjectListCallbackFunc_t func, 
+object_list_add_move_cb(ObjectList_t *list, ObjectListCallbackFunc_t func,
 			gpointer data)
 {
    return object_list_callback_add(&list->move_cb, func, data);
 }
 
 gpointer
-object_list_add_geometry_cb(ObjectList_t *list, ObjectListCallbackFunc_t func, 
+object_list_add_geometry_cb(ObjectList_t *list, ObjectListCallbackFunc_t func,
 			    gpointer data)
 {
    return object_list_callback_add(&list->geometry_cb, func, data);
@@ -131,31 +131,31 @@ paste_buffer_add_remove_cb(ObjectListCallbackFunc_t func, gpointer data)
    return object_list_callback_add(&_paste_buffer->remove_cb, func, data);
 }
 
-void 
+void
 object_list_remove_add_cb(ObjectList_t *list, gpointer id)
 {
    object_list_callback_remove(&list->add_cb, id);
 }
 
-void 
+void
 object_list_remove_select_cb(ObjectList_t *list, gpointer id)
 {
    object_list_callback_remove(&list->select_cb, id);
 }
 
-void 
+void
 object_list_remove_remove_cb(ObjectList_t *list, gpointer id)
 {
    object_list_callback_remove(&list->remove_cb, id);
 }
 
-void 
+void
 object_list_remove_move_cb(ObjectList_t *list, gpointer id)
 {
    object_list_callback_remove(&list->move_cb, id);
 }
 
-void 
+void
 object_list_remove_geometry_cb(ObjectList_t *list, gpointer id)
 {
    object_list_callback_remove(&list->geometry_cb, id);
@@ -200,7 +200,7 @@ object_ref(Object_t *obj)
    return obj;
 }
 
-void 
+void
 object_unref(Object_t *obj)
 {
    if (!--obj->refcount)
@@ -210,7 +210,7 @@ object_unref(Object_t *obj)
 Object_t*
 object_clone(Object_t *obj)
 {
-   Object_t *clone = obj->class->clone(obj); 
+   Object_t *clone = obj->class->clone(obj);
    clone->class = obj->class;
    clone->refcount = 1;
    clone->selected = obj->selected;
@@ -221,7 +221,7 @@ object_clone(Object_t *obj)
    clone->mouse_over = g_strdup(obj->mouse_over);
    clone->mouse_out = g_strdup(obj->mouse_out);
    clone->focus = g_strdup(obj->focus);
-   clone->blur = g_strdup(obj->blur);  
+   clone->blur = g_strdup(obj->blur);
    return clone;
 }
 
@@ -248,18 +248,18 @@ object_assign(Object_t *obj, Object_t *des)
    return object_copy(obj, des);
 }
 
-void 
+void
 object_draw(Object_t *obj, GdkWindow *window)
 {
    PreferencesData_t *preferences = get_preferences();
-   GdkGC *gc = (obj->selected) ? preferences->selected_gc 
+   GdkGC *gc = (obj->selected) ? preferences->selected_gc
       : preferences->normal_gc;
    obj->class->draw(obj, window, gc);
    if (obj->selected && preferences->show_area_handle)
       obj->class->draw_sashes(obj, window, gc);
 }
 
-void 
+void
 object_edit(Object_t *obj, gboolean add)
 {
    if (!obj->class->info_dialog)
@@ -267,7 +267,7 @@ object_edit(Object_t *obj, gboolean add)
    edit_area_info_dialog_show(obj->class->info_dialog, obj, add);
 }
 
-void 
+void
 object_select(Object_t *obj)
 {
    obj->selected = TRUE;
@@ -275,7 +275,7 @@ object_select(Object_t *obj)
    object_emit_geometry_signal(obj);
 }
 
-void 
+void
 object_unselect(Object_t *obj)
 {
    obj->selected = FALSE;
@@ -297,31 +297,31 @@ object_remove(Object_t *obj)
    object_emit_geometry_signal(obj);
 }
 
-void 
+void
 object_lock(Object_t *obj)
 {
    obj->locked = TRUE;
 }
 
-void 
+void
 object_unlock(Object_t *obj)
 {
    obj->locked = FALSE;
 }
 
-void 
+void
 object_set_url(Object_t *obj, const gchar *url)
 {
    g_strreplace(&obj->url, url);
 }
 
-void 
+void
 object_set_target(Object_t *obj, const gchar *target)
 {
    g_strreplace(&obj->target, target);
 }
 
-void 
+void
 object_set_comment(Object_t *obj, const gchar *comment)
 {
    g_strreplace(&obj->comment, comment);
@@ -357,19 +357,19 @@ object_get_position_in_list(Object_t *obj)
    return g_list_index(obj->list->list, (gpointer) obj);
 }
 
-void 
+void
 object_emit_changed_signal(Object_t *obj)
 {
    object_list_callback_call(&obj->list->changed_cb, obj);
 }
 
-void 
+void
 object_emit_geometry_signal(Object_t *obj)
 {
    object_list_callback_call(&obj->list->geometry_cb, obj);
 }
 
-void 
+void
 object_emit_update_signal(Object_t *obj)
 {
    object_list_callback_call(&obj->list->update_cb, obj);
@@ -398,7 +398,7 @@ object_factory_create_object(ObjectFactory_t *factory, gint x, gint y)
 }
 
 static gboolean
-button_motion(GtkWidget *widget, GdkEventMotion *event, 
+button_motion(GtkWidget *widget, GdkEventMotion *event,
 	      ObjectFactory_t *factory)
 {
    gint x = get_real_coord((gint) event->x);
@@ -429,8 +429,8 @@ object_on_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
    if (obj) {
       if (event->button == 1) {
 	 if (!factory->finish || factory->finish(obj, x, y)) {
-	    g_signal_handlers_disconnect_by_func(widget, 
-                                                 button_motion, 
+	    g_signal_handlers_disconnect_by_func(widget,
+                                                 button_motion,
                                                  factory);
 	    if (object_is_valid(obj)) {
 	       Command_t *command = create_command_new(get_shapes(), obj);
@@ -448,8 +448,8 @@ object_on_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
       } else if (event->button == 3) {
 	 object_draw(obj, widget->window);
 	 if (!factory->cancel || factory->cancel(event, obj)) {
-	    g_signal_handlers_disconnect_by_func(widget, 
-                                                 button_motion, 
+	    g_signal_handlers_disconnect_by_func(widget,
+                                                 button_motion,
                                                  factory);
 	    object_unref(obj);
 	    gdk_gc_set_function(preferences->normal_gc, GDK_COPY);
@@ -463,7 +463,7 @@ object_on_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
       if (event->button == 1) {
 	 factory = ((ObjectFactory_t*(*)(guint)) data)(event->state);
 	 obj = object_factory_create_object(factory, x, y);
-	 
+	
 	 gdk_gc_set_function(preferences->normal_gc, GDK_EQUIV);
 
 	 g_signal_connect(widget, "motion-notify-event",
@@ -507,7 +507,7 @@ object_list_copy(ObjectList_t *des, ObjectList_t *src)
    return object_list_append_list(des, src);
 }
 
-void 
+void
 object_list_append(ObjectList_t *list, Object_t *object)
 {
    object->list = list;
@@ -516,7 +516,7 @@ object_list_append(ObjectList_t *list, Object_t *object)
    object_list_callback_call(&list->add_cb, object);
 }
 
-void 
+void
 object_list_prepend(ObjectList_t *list, Object_t *object)
 {
    object->list = list;
@@ -525,7 +525,7 @@ object_list_prepend(ObjectList_t *list, Object_t *object)
    object_list_callback_call(&list->add_cb, object);
 }
 
-void 
+void
 object_list_insert(ObjectList_t *list, gint position, Object_t *object)
 {
    object->list = list;
@@ -534,7 +534,7 @@ object_list_insert(ObjectList_t *list, gint position, Object_t *object)
    object_list_callback_call(&list->add_cb, object);
 }
 
-void 
+void
 object_list_remove(ObjectList_t *list, Object_t *object)
 {
    list->list = g_list_remove(list->list, (gpointer) object);
@@ -543,7 +543,7 @@ object_list_remove(ObjectList_t *list, Object_t *object)
    object_unref(object);
 }
 
-void 
+void
 object_list_remove_link(ObjectList_t *list, GList *link)
 {
    list->list = g_list_remove_link(list->list, link);
@@ -551,7 +551,7 @@ object_list_remove_link(ObjectList_t *list, GList *link)
    object_list_callback_call(&list->remove_cb, (Object_t*) link->data);
 }
 
-void 
+void
 object_list_update(ObjectList_t *list, Object_t *object)
 {
    object_list_callback_call(&list->update_cb, object);
@@ -661,7 +661,7 @@ object_list_cut(ObjectList_t *list)
    return count;
 }
 
-void 
+void
 object_list_copy_to_paste_buffer(ObjectList_t *list)
 {
    GList *p;
@@ -674,7 +674,7 @@ object_list_copy_to_paste_buffer(ObjectList_t *list)
    }
 }
 
-void 
+void
 object_list_paste(ObjectList_t *list)
 {
    object_list_append_list(list, _paste_buffer);
@@ -698,7 +698,7 @@ object_list_delete_selected(ObjectList_t *list)
    }
 }
 
-void 
+void
 object_list_edit_selected(ObjectList_t *list)
 {
    GList *p;
@@ -726,7 +726,7 @@ object_list_select_all(ObjectList_t *list)
    return count;
 }
 
-void 
+void
 object_list_select_next(ObjectList_t *list)
 {
    GList *p;
@@ -764,7 +764,7 @@ void object_list_select_prev(ObjectList_t *list)
    }
 }
 
-gint 
+gint
 object_list_select_region(ObjectList_t *list, gint x, gint y, gint width,
 			  gint height)
 {
@@ -799,7 +799,7 @@ object_list_deselect_all(ObjectList_t *list, Object_t *exception)
    return count;
 }
 
-gint 
+gint
 object_list_nr_selected(ObjectList_t *list)
 {
    GList *p;
@@ -812,7 +812,7 @@ object_list_nr_selected(ObjectList_t *list)
    return count;
 }
 
-void 
+void
 object_list_resize(ObjectList_t *list, gint percentage_x, gint percentage_y)
 {
    GList *p;
@@ -842,7 +842,7 @@ object_list_swap_next(ObjectList_t *list, GList *p)
    object_list_callback_call(&list->move_cb, (Object_t*) p->next->data);
 }
 
-void 
+void
 object_list_move_selected(ObjectList_t *list, gint dx, gint dy)
 {
    GList *p;
@@ -853,14 +853,14 @@ object_list_move_selected(ObjectList_t *list, gint dx, gint dy)
    }
 }
 
-void 
+void
 object_list_move_up(ObjectList_t *list, Object_t *obj)
 {
    GList *p = g_list_find(list->list, (gpointer) obj);
    object_list_swap_prev(list, p);
 }
 
-void 
+void
 object_list_move_down(ObjectList_t *list, Object_t *obj)
 {
    GList *p = g_list_find(list->list, (gpointer) obj);
@@ -891,7 +891,7 @@ object_list_move_selected_down(ObjectList_t *list)
    }
 }
 
-void 
+void
 object_list_move_to_front(ObjectList_t *list)
 {
    GList *p, *q;
@@ -907,7 +907,7 @@ object_list_move_to_front(ObjectList_t *list)
    }
 }
 
-void 
+void
 object_list_send_to_back(ObjectList_t *list)
 {
    GList *p, *q;
@@ -923,9 +923,9 @@ object_list_send_to_back(ObjectList_t *list)
    }
 }
 
-static void 
+static void
 write_xml_attrib(const gchar *attrib, const gchar *value,
-		 const gchar *default_text, gpointer param, 
+		 const gchar *default_text, gpointer param,
 		 OutputFunc_t output)
 {
    if (*value) {

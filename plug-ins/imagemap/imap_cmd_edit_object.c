@@ -45,13 +45,13 @@ typedef struct {
    Object_t *copy;
 } EditObjectCommand_t;
 
-Command_t* 
+Command_t*
 edit_object_command_new(Object_t *obj)
 {
    EditObjectCommand_t *command = g_new(EditObjectCommand_t, 1);
    command->obj = object_ref(obj);
    command->copy = object_clone(obj);
-   return command_init(&command->parent, _("Edit Object"), 
+   return command_init(&command->parent, _("Edit Object"),
 		       &edit_object_command_class);
 }
 

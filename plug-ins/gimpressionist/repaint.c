@@ -76,7 +76,7 @@ sum_brush (ppm_t *p)
   return sum;
 }
 
-/* TODO : Use r = rgb[0]; g = rgb[1] ; b = rgb[2]; instead of 
+/* TODO : Use r = rgb[0]; g = rgb[1] ; b = rgb[2]; instead of
  * the direct references here.
  * */
 static int

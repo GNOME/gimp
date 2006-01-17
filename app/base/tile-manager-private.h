@@ -45,7 +45,7 @@ struct _TileManager
 
 typedef struct _PixelDataHandlePrivate PixelDataHandlePrivate;
 
-struct _PixelDataHandlePrivate 
+struct _PixelDataHandlePrivate
 {
   PixelDataHandle  public;
   TileManager     *tm;

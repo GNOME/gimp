@@ -166,7 +166,7 @@ gimp_composite_burn_rgba8_rgba8_rgba8_sse (GimpCompositeContext *_op)
 
                     "\tpandn     %%mm5,%%mm7\n" /* mm7 = ~mm7 & mm5 */
                     "\tpor       %%mm1,%%mm7\n" /* mm7 = mm7 | mm1 */
-                    
+
                     "\tmovq      %%mm7,%0\n"
                     : "=m" (*d)
                     : "m" (*a), "m" (*b), "m" (*rgba8_b255_64), "m" (*rgba8_w1_64), "m" (*rgba8_w255_64), "m" (*rgba8_alpha_mask_64)

@@ -934,7 +934,7 @@ selection_load_invoker (Gimp         *gimp,
 
       gimp_channel_select_channel (gimp_image_get_mask (gimage),
                                    _("Channel to Selection"),
-                                   channel, 
+                                   channel,
                                    off_x, off_y,
                                    GIMP_CHANNEL_OP_REPLACE,
                                    FALSE, 0.0, 0.0);
@@ -1060,7 +1060,7 @@ selection_combine_invoker (Gimp         *gimp,
 
       gimp_channel_select_channel (gimp_image_get_mask (gimage),
                                    _("Channel to Selection"),
-                                   channel, 
+                                   channel,
                                    off_x, off_y,
                                    operation,
                                    FALSE, 0.0, 0.0);

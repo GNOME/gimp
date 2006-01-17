@@ -94,7 +94,7 @@ GType
 gtk_wrap_box_get_type (void)
 {
   static GType wrap_box_type = 0;
-  
+
   if (!wrap_box_type)
     {
       static const GTypeInfo wrap_box_info =
@@ -109,11 +109,11 @@ gtk_wrap_box_get_type (void)
 	0,		/* n_preallocs */
 	(GInstanceInitFunc) gtk_wrap_box_init,
       };
-      
+
       wrap_box_type = g_type_register_static (GTK_TYPE_CONTAINER, "GtkWrapBox",
 					      &wrap_box_info, 0);
     }
-  
+
   return wrap_box_type;
 }
 
@@ -123,20 +123,20 @@ gtk_wrap_box_class_init (GtkWrapBoxClass *class)
   GObjectClass *object_class;
   GtkWidgetClass *widget_class;
   GtkContainerClass *container_class;
-  
+
   object_class = G_OBJECT_CLASS (class);
   widget_class = GTK_WIDGET_CLASS (class);
   container_class = GTK_CONTAINER_CLASS (class);
-  
+
   parent_class = g_type_class_peek_parent (class);
-  
+
   object_class->set_property = gtk_wrap_box_set_property;
   object_class->get_property = gtk_wrap_box_get_property;
-  
+
   widget_class->map = gtk_wrap_box_map;
   widget_class->unmap = gtk_wrap_box_unmap;
   widget_class->expose_event = gtk_wrap_box_expose;
-  
+
   container_class->add = gtk_wrap_box_add;
   container_class->remove = gtk_wrap_box_remove;
   container_class->forall = gtk_wrap_box_forall;
@@ -268,7 +268,7 @@ static void
 gtk_wrap_box_init (GtkWrapBox *wbox)
 {
   GTK_WIDGET_SET_FLAGS (wbox, GTK_NO_WINDOW);
-  
+
   wbox->homogeneous = FALSE;
   wbox->hspacing = 0;
   wbox->vspacing = 0;
@@ -287,7 +287,7 @@ gtk_wrap_box_set_property (GObject      *object,
 			   GParamSpec   *pspec)
 {
   GtkWrapBox *wbox = GTK_WRAP_BOX (object);
-  
+
   switch (property_id)
     {
     case PROP_HOMOGENEOUS:
@@ -326,7 +326,7 @@ gtk_wrap_box_get_property (GObject    *object,
 {
   GtkWrapBox *wbox = GTK_WRAP_BOX (object);
   GtkWidget *widget = GTK_WIDGET (object);
-  
+
   switch (property_id)
     {
     case PROP_HOMOGENEOUS:
@@ -377,7 +377,7 @@ gtk_wrap_box_set_child_property (GtkContainer    *container,
 				      &hexpand, &hfill,
 				      &vexpand, &vfill,
 				      &wrapped);
-  
+
   switch (property_id)
     {
     case CHILD_PROP_POSITION:
@@ -430,13 +430,13 @@ gtk_wrap_box_get_child_property (GtkContainer    *container,
   gboolean hexpand = FALSE, hfill = FALSE;
   gboolean vexpand = FALSE, vfill = FALSE;
   gboolean wrapped = FALSE;
-  
+
   if (property_id != CHILD_PROP_POSITION)
     gtk_wrap_box_query_child_packing (wbox, child,
 				      &hexpand, &hfill,
 				      &vexpand, &vfill,
 				      &wrapped);
-  
+
   switch (property_id)
     {
       GtkWrapBoxChild *child_info;
@@ -483,7 +483,7 @@ gtk_wrap_box_set_homogeneous (GtkWrapBox *wbox,
 			      gboolean    homogeneous)
 {
   g_return_if_fail (GTK_IS_WRAP_BOX (wbox));
-  
+
   homogeneous = homogeneous != FALSE;
   if (wbox->homogeneous != homogeneous)
     {
@@ -497,7 +497,7 @@ gtk_wrap_box_set_hspacing (GtkWrapBox *wbox,
 			   guint       hspacing)
 {
   g_return_if_fail (GTK_IS_WRAP_BOX (wbox));
-  
+
   if (wbox->hspacing != hspacing)
     {
       wbox->hspacing = hspacing;
@@ -510,7 +510,7 @@ gtk_wrap_box_set_vspacing (GtkWrapBox *wbox,
 			   guint       vspacing)
 {
   g_return_if_fail (GTK_IS_WRAP_BOX (wbox));
-  
+
   if (wbox->vspacing != vspacing)
     {
       wbox->vspacing = vspacing;
@@ -524,7 +524,7 @@ gtk_wrap_box_set_justify (GtkWrapBox      *wbox,
 {
   g_return_if_fail (GTK_IS_WRAP_BOX (wbox));
   g_return_if_fail (justify <= GTK_JUSTIFY_FILL);
-  
+
   if (wbox->justify != justify)
     {
       wbox->justify = justify;
@@ -538,7 +538,7 @@ gtk_wrap_box_set_line_justify (GtkWrapBox      *wbox,
 {
   g_return_if_fail (GTK_IS_WRAP_BOX (wbox));
   g_return_if_fail (line_justify <= GTK_JUSTIFY_FILL);
-  
+
   if (wbox->line_justify != line_justify)
     {
       wbox->line_justify = line_justify;
@@ -551,9 +551,9 @@ gtk_wrap_box_set_aspect_ratio (GtkWrapBox *wbox,
 			       gfloat      aspect_ratio)
 {
   g_return_if_fail (GTK_IS_WRAP_BOX (wbox));
-  
+
   aspect_ratio = CLAMP (aspect_ratio, 1.0 / 256.0, 256.0);
-  
+
   if (wbox->aspect_ratio != aspect_ratio)
     {
       wbox->aspect_ratio = aspect_ratio;
@@ -586,11 +586,11 @@ gtk_wrap_box_pack_wrapped (GtkWrapBox *wbox,
 			   gboolean    wrapped)
 {
   GtkWrapBoxChild *child_info;
-  
+
   g_return_if_fail (GTK_IS_WRAP_BOX (wbox));
   g_return_if_fail (GTK_IS_WIDGET (child));
   g_return_if_fail (child->parent == NULL);
-  
+
   child_info = g_new (GtkWrapBoxChild, 1);
   child_info->widget = child;
   child_info->hexpand = hexpand ? TRUE : FALSE;
@@ -602,7 +602,7 @@ gtk_wrap_box_pack_wrapped (GtkWrapBox *wbox,
   if (wbox->children)
     {
       GtkWrapBoxChild *last = wbox->children;
-      
+
       while (last->next)
 	last = last->next;
       last->next = child_info;
@@ -610,17 +610,17 @@ gtk_wrap_box_pack_wrapped (GtkWrapBox *wbox,
   else
     wbox->children = child_info;
   wbox->n_children++;
-  
+
   gtk_widget_set_parent (child, GTK_WIDGET (wbox));
-  
+
   if (GTK_WIDGET_REALIZED (wbox))
     gtk_widget_realize (child);
-  
+
   if (GTK_WIDGET_VISIBLE (wbox) && GTK_WIDGET_VISIBLE (child))
     {
       if (GTK_WIDGET_MAPPED (wbox))
 	gtk_widget_map (child);
-      
+
       gtk_widget_queue_resize (child);
     }
 }
@@ -631,23 +631,23 @@ gtk_wrap_box_reorder_child (GtkWrapBox *wbox,
 			    gint        position)
 {
   GtkWrapBoxChild *child_info, *last = NULL;
-  
+
   g_return_if_fail (GTK_IS_WRAP_BOX (wbox));
   g_return_if_fail (GTK_IS_WIDGET (child));
-  
+
   for (child_info = wbox->children; child_info; last = child_info, child_info = last->next)
     if (child_info->widget == child)
       break;
-  
+
   if (child_info && wbox->children->next)
     {
       GtkWrapBoxChild *tmp;
-      
+
       if (last)
 	last->next = child_info->next;
       else
 	wbox->children = child_info->next;
-      
+
       last = NULL;
       tmp = wbox->children;
       while (position && tmp->next)
@@ -656,7 +656,7 @@ gtk_wrap_box_reorder_child (GtkWrapBox *wbox,
 	  last = tmp;
 	  tmp = last->next;
 	}
-      
+
       if (position)
 	{
 	  tmp->next = child_info;
@@ -670,7 +670,7 @@ gtk_wrap_box_reorder_child (GtkWrapBox *wbox,
 	  else
 	    wbox->children = child_info;
 	}
-      
+
       if (GTK_WIDGET_VISIBLE (child) && GTK_WIDGET_VISIBLE (wbox))
 	gtk_widget_queue_resize (child);
     }
@@ -686,14 +686,14 @@ gtk_wrap_box_query_child_packing (GtkWrapBox *wbox,
 				  gboolean   *wrapped)
 {
   GtkWrapBoxChild *child_info;
-  
+
   g_return_if_fail (GTK_IS_WRAP_BOX (wbox));
   g_return_if_fail (GTK_IS_WIDGET (child));
-  
+
   for (child_info = wbox->children; child_info; child_info = child_info->next)
     if (child_info->widget == child)
       break;
-  
+
   if (child_info)
     {
       if (hexpand)
@@ -719,10 +719,10 @@ gtk_wrap_box_set_child_packing (GtkWrapBox *wbox,
 				gboolean    wrapped)
 {
   GtkWrapBoxChild *child_info;
-  
+
   g_return_if_fail (GTK_IS_WRAP_BOX (wbox));
   g_return_if_fail (GTK_IS_WIDGET (child));
-  
+
   hexpand = hexpand != FALSE;
   hfill = hfill != FALSE;
   vexpand = vexpand != FALSE;
@@ -732,7 +732,7 @@ gtk_wrap_box_set_child_packing (GtkWrapBox *wbox,
   for (child_info = wbox->children; child_info; child_info = child_info->next)
     if (child_info->widget == child)
       break;
-  
+
   if (child_info &&
       (child_info->hexpand != hexpand || child_info->vexpand != vexpand ||
        child_info->hfill != hfill || child_info->vfill != vfill ||
@@ -743,7 +743,7 @@ gtk_wrap_box_set_child_packing (GtkWrapBox *wbox,
       child_info->vexpand = vexpand;
       child_info->vfill = vfill;
       child_info->wrapped = wrapped;
-      
+
       if (GTK_WIDGET_VISIBLE (child) && GTK_WIDGET_VISIBLE (wbox))
 	gtk_widget_queue_resize (child);
     }
@@ -802,9 +802,9 @@ gtk_wrap_box_map (GtkWidget *widget)
 {
   GtkWrapBox *wbox = GTK_WRAP_BOX (widget);
   GtkWrapBoxChild *child;
-  
+
   GTK_WIDGET_SET_FLAGS (wbox, GTK_MAPPED);
-  
+
   for (child = wbox->children; child; child = child->next)
     if (GTK_WIDGET_VISIBLE (child->widget) &&
 	!GTK_WIDGET_MAPPED (child->widget))
@@ -816,9 +816,9 @@ gtk_wrap_box_unmap (GtkWidget *widget)
 {
   GtkWrapBox *wbox = GTK_WRAP_BOX (widget);
   GtkWrapBoxChild *child;
-  
+
   GTK_WIDGET_UNSET_FLAGS (wbox, GTK_MAPPED);
-  
+
   for (child = wbox->children; child; child = child->next)
     if (GTK_WIDGET_VISIBLE (child->widget) &&
 	GTK_WIDGET_MAPPED (child->widget))
@@ -845,30 +845,30 @@ gtk_wrap_box_remove (GtkContainer *container,
 {
   GtkWrapBox *wbox = GTK_WRAP_BOX (container);
   GtkWrapBoxChild *child, *last = NULL;
-  
+
   child = wbox->children;
   while (child)
     {
       if (child->widget == widget)
 	{
 	  gboolean was_visible;
-	  
+	
 	  was_visible = GTK_WIDGET_VISIBLE (widget);
 	  gtk_widget_unparent (widget);
-	  
+	
 	  if (last)
 	    last->next = child->next;
 	  else
 	    wbox->children = child->next;
 	  g_free (child);
 	  wbox->n_children--;
-	  
+	
 	  if (was_visible)
 	    gtk_widget_queue_resize (GTK_WIDGET (container));
-	  
+	
 	  break;
 	}
-      
+
       last = child;
       child = last->next;
     }
@@ -882,14 +882,14 @@ gtk_wrap_box_forall (GtkContainer *container,
 {
   GtkWrapBox *wbox = GTK_WRAP_BOX (container);
   GtkWrapBoxChild *child;
-  
+
   child = wbox->children;
   while (child)
     {
       GtkWidget *widget = child->widget;
-      
+
       child = child->next;
-      
+
       callback (widget, callback_data);
     }
 }

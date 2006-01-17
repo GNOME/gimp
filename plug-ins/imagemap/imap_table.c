@@ -56,7 +56,7 @@ create_check_button_in_table(GtkWidget *table, int row, int col,
 }
 
 GtkWidget*
-create_radio_button_in_table(GtkWidget *table, GSList *group, 
+create_radio_button_in_table(GtkWidget *table, GSList *group,
 			     int row, int col, const char *text)
 {
    GtkWidget *button = gtk_radio_button_new_with_mnemonic(group, text);

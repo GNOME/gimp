@@ -432,7 +432,7 @@ pygimp_progress_value(gdouble percentage, gpointer data)
 	r = PyObject_CallFunction(pdata->value, "dO", percentage,
 				  pdata->user_data);
 	Py_DECREF(pdata->user_data);
-    } else 
+    } else
 	r = PyObject_CallFunction(pdata->value, "d", percentage);
 
     if (!r) {
@@ -1515,13 +1515,13 @@ static struct _PyGimp_Functions pygimp_api_functions = {
     pygimp_channel_new,
 
     &PyGimpPDBFunction_Type,
-    pygimp_pdb_function_new    
+    pygimp_pdb_function_new
 };
 
 
 /* Initialization function for the module (*must* be called initgimp) */
 
-static char gimp_module_documentation[] = 
+static char gimp_module_documentation[] =
 "This module provides interfaces to allow you to write gimp plugins"
 ;
 

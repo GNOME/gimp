@@ -110,7 +110,7 @@
                                           "psllq  $32,%%" #divisor ";"     \
                                           "por    %%" #divisor ",%%" #quotient ";"
 #define pdivwqX_clobber "%eax", "%ecx", "%edx", "%cc"
-   
+
 /*
  * Quadword divide.  Adjusted for subsequent unsigned packing
  * (high-order bit of each word is cleared)
@@ -175,7 +175,7 @@
                                                        "movd   %%eax,%%" #scratch ";"   \
                                                        "psllq  $96,%%" #scratch ";"     \
                                                        "por    %%" #scratch ",%%" #quotient ";"
-   
+
 #define xmm_pdivwX(dividend,divisor,quotient) "movd %%" #dividend ",%%eax; " \
                                               "movd %%" #divisor  ",%%ecx; " \
                                               "xorl %%edx,%%edx; "           \
@@ -226,7 +226,7 @@
                   "\tpsrlw     $8,        %%"#opr2"; " \
                   "\tpaddw     %%"#opr1", %%"#opr2"; " \
                   "\tpsrlw     $8,        %%"#opr2"\n"
- 
+
 #define xmm_pmulwX(opr1,opr2,w128) \
                   "\tpmullw    %%"#opr2", %%"#opr1"; " \
                   "\tpaddw     %%"#w128", %%"#opr1"; " \

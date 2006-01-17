@@ -47,13 +47,13 @@ typedef struct {
    Object_t *exception;
 } UnselectAllCommand_t;
 
-Command_t* 
+Command_t*
 unselect_all_command_new(ObjectList_t *list, Object_t *exception)
 {
    UnselectAllCommand_t *command = g_new(UnselectAllCommand_t, 1);
    command->list = list;
    command->exception = (exception) ? object_ref(exception) : exception;
-   return command_init(&command->parent, _("Unselect All"), 
+   return command_init(&command->parent, _("Unselect All"),
 		       &unselect_all_command_class);
 }
 

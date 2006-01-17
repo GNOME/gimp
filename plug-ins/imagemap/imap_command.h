@@ -90,7 +90,7 @@ void command_list_add_update_cb(CommandListCallbackFunc_t func, gpointer data);
 Command_t *command_list_get_redo_command(void);
 
 Command_t *command_new(void (*func)(void));
-Command_t *command_init(Command_t *command, const gchar *name, 
+Command_t *command_init(Command_t *command, const gchar *name,
 			CommandClass_t *class);
 void command_execute(Command_t *command);
 void command_undo(Command_t *command);

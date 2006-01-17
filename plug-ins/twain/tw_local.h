@@ -30,8 +30,8 @@
 
 /* Functions which the platform-independent code will call */
 
-TW_UINT16 callDSM(pTW_IDENTITY, pTW_IDENTITY, 
-		  TW_UINT32, TW_UINT16, 
+TW_UINT16 callDSM(pTW_IDENTITY, pTW_IDENTITY,
+		  TW_UINT32, TW_UINT16,
 		  TW_UINT16, TW_MEMREF);
 
 int twainIsAvailable(void);
