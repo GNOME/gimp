@@ -1,5 +1,10 @@
 2006-01-17  Michael Natterer  <mitch@gimp.org>
 
+	* app/dialogs/quit-dialog.c (quit_close_all_dialog_new):
+	s/preview-size/view-size/
+
+2006-01-17  Michael Natterer  <mitch@gimp.org>
+
 	* app/dialogs/image-new-dialog.c (image_new_dialog_new): one
 	more s/preview-size/view-size/.
 

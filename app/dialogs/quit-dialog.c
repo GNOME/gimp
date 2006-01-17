@@ -86,7 +86,7 @@ quit_close_all_dialog_new (Gimp     *gimp,
   GtkWidget      *view;
   GtkWidget      *dnd_widget;
   gint            rows;
-  gint            preview_size;
+  gint            view_size;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
@@ -136,13 +136,13 @@ quit_close_all_dialog_new (Gimp     *gimp,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  preview_size = gimp->config->layer_preview_size;
-  rows         = CLAMP (gimp_container_num_children (images), 3, 6);
+  view_size = gimp->config->layer_preview_size;
+  rows      = CLAMP (gimp_container_num_children (images), 3, 6);
 
-  view = gimp_container_tree_view_new (images, NULL, preview_size, 1);
+  view = gimp_container_tree_view_new (images, NULL, view_size, 1);
   gimp_container_box_set_size_request (GIMP_CONTAINER_BOX (view),
                                        -1,
-                                       rows * (preview_size + 2));
+                                       rows * (view_size + 2));
   gtk_box_pack_start (GTK_BOX (box), view, TRUE, TRUE, 0);
   gtk_widget_show (view);
 
