@@ -90,7 +90,7 @@ gimp_cell_renderer_dashes_class_init (GimpCellRendererDashesClass *klass)
 
   g_object_class_install_property (object_class, PROP_PATTERN,
                                    g_param_spec_pointer ("pattern", NULL, NULL,
-                                                         G_PARAM_WRITABLE));
+                                                         GIMP_PARAM_WRITABLE));
 }
 
 static void

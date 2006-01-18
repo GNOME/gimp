@@ -109,20 +109,20 @@ gimp_display_class_init (GimpDisplayClass *klass)
                                    g_param_spec_int ("id",
                                                      NULL, NULL,
                                                      0, G_MAXINT, 0,
-                                                     G_PARAM_READWRITE |
+                                                     GIMP_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_IMAGE,
                                    g_param_spec_object ("image",
                                                         NULL, NULL,
                                                         GIMP_TYPE_IMAGE,
-                                                        G_PARAM_READABLE));
+                                                        GIMP_PARAM_READABLE));
 
   g_object_class_install_property (object_class, PROP_SHELL,
                                    g_param_spec_object ("shell",
                                                         NULL, NULL,
                                                         GIMP_TYPE_DISPLAY_SHELL,
-                                                        G_PARAM_READABLE));
+                                                        GIMP_PARAM_READABLE));
 }
 
 static void

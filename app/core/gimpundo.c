@@ -147,14 +147,14 @@ gimp_undo_class_init (GimpUndoClass *klass)
   g_object_class_install_property (object_class, PROP_IMAGE,
                                    g_param_spec_object ("image", NULL, NULL,
                                                         GIMP_TYPE_IMAGE,
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_UNDO_TYPE,
                                    g_param_spec_enum ("undo-type", NULL, NULL,
                                                       GIMP_TYPE_UNDO_TYPE,
                                                       GIMP_UNDO_GROUP_NONE,
-                                                      G_PARAM_READWRITE |
+                                                      GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_DIRTY_MASK,
@@ -162,28 +162,28 @@ gimp_undo_class_init (GimpUndoClass *klass)
                                                        NULL, NULL,
                                                        GIMP_TYPE_DIRTY_MASK,
                                                        GIMP_DIRTY_NONE,
-                                                       G_PARAM_READWRITE |
+                                                       GIMP_PARAM_READWRITE |
                                                        G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_DATA,
                                    g_param_spec_pointer ("data", NULL, NULL,
-                                                         G_PARAM_READWRITE |
+                                                         GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_SIZE,
                                    g_param_spec_int64 ("size", NULL, NULL,
                                                        0, G_MAXINT64, 0,
-                                                       G_PARAM_READWRITE |
+                                                       GIMP_PARAM_READWRITE |
                                                        G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_POP_FUNC,
                                    g_param_spec_pointer ("pop-func", NULL, NULL,
-                                                         G_PARAM_READWRITE |
+                                                         GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_FREE_FUNC,
                                    g_param_spec_pointer ("free-func", NULL, NULL,
-                                                         G_PARAM_READWRITE |
+                                                         GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
 }
 

@@ -108,40 +108,40 @@ gimp_editor_class_init (GimpEditorClass *klass)
                                    g_param_spec_object ("menu-factory",
                                                         NULL, NULL,
                                                         GIMP_TYPE_MENU_FACTORY,
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_MENU_IDENTIFIER,
                                    g_param_spec_string ("menu-identifier",
                                                         NULL, NULL,
                                                         NULL,
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_UI_PATH,
                                    g_param_spec_string ("ui-path",
                                                         NULL, NULL,
                                                         NULL,
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_POPUP_DATA,
                                    g_param_spec_pointer ("popup-data",
                                                          NULL, NULL,
-                                                         G_PARAM_READWRITE |
+                                                         GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_SHOW_NAME,
                                    g_param_spec_boolean ("show-name",
                                                          NULL, NULL,
                                                          FALSE,
-                                                         G_PARAM_READWRITE));
+                                                         GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_NAME,
                                    g_param_spec_string ("name",
                                                         NULL, NULL,
                                                         NULL,
-                                                        G_PARAM_WRITABLE |
+                                                        GIMP_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT));
 
   gtk_widget_class_install_style_property (widget_class,
@@ -150,7 +150,7 @@ gimp_editor_class_init (GimpEditorClass *klass)
                                                              0,
                                                              G_MAXINT,
                                                              DEFAULT_CONTENT_SPACING,
-                                                             G_PARAM_READABLE));
+                                                             GIMP_PARAM_READABLE));
 
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_int ("button-spacing",
@@ -158,14 +158,14 @@ gimp_editor_class_init (GimpEditorClass *klass)
                                                              0,
                                                              G_MAXINT,
                                                              DEFAULT_BUTTON_SPACING,
-                                                             G_PARAM_READABLE));
+                                                             GIMP_PARAM_READABLE));
 
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_enum ("button-icon-size",
                                                               NULL, NULL,
                                                               GTK_TYPE_ICON_SIZE,
                                                               DEFAULT_BUTTON_ICON_SIZE,
-                                                              G_PARAM_READABLE));
+                                                              GIMP_PARAM_READABLE));
 }
 
 static void

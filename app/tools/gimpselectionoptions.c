@@ -102,71 +102,71 @@ gimp_selection_options_class_init (GimpSelectionOptionsClass *klass)
                                  "operation", NULL,
                                  GIMP_TYPE_CHANNEL_OPS,
                                  GIMP_CHANNEL_OP_REPLACE,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ANTIALIAS,
                                     "antialias",
                                     N_("Smooth edges"),
                                     TRUE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FEATHER,
                                     "feather", NULL,
                                     FALSE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_FEATHER_RADIUS,
                                    "feather-radius", NULL,
                                    0.0, 100.0, 10.0,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SELECT_TRANSPARENT,
                                     "select-transparent",
                                     N_("Allow completely transparent regions "
                                        "to be selected"),
                                     TRUE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAMPLE_MERGED,
                                     "sample-merged",
                                     N_("Base selection on all visible layers"),
                                     FALSE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_THRESHOLD,
                                    "threshold",
                                    N_("Maximum color difference"),
                                    0.0, 255.0, 15.0,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_AUTO_SHRINK,
                                     "auto-shrink", NULL,
                                     FALSE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHRINK_MERGED,
                                     "shrink-merged",
                                     N_("Use all visible layers when shrinking "
                                        "the selection"),
                                     FALSE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_FIXED_MODE,
                                  "fixed-mode", NULL,
                                  GIMP_TYPE_RECT_SELECT_MODE,
                                  GIMP_RECT_SELECT_MODE_FREE,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_FIXED_WIDTH,
                                    "fixed-width", NULL,
                                    0.0, GIMP_MAX_IMAGE_SIZE, 1.0,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_FIXED_HEIGHT,
                                    "fixed-height", NULL,
                                    0.0, GIMP_MAX_IMAGE_SIZE, 1.0,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_FIXED_UNIT,
                                  "fixed-unit", NULL,
                                  TRUE, TRUE, GIMP_UNIT_PIXEL,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_INTERACTIVE,
                                     "interactive", NULL,
                                     FALSE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void

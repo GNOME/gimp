@@ -91,7 +91,7 @@ gimp_template_editor_class_init (GimpTemplateEditorClass *klass)
   g_object_class_install_property (object_class, PROP_TEMPLATE,
                                    g_param_spec_object ("template", NULL, NULL,
                                                         GIMP_TYPE_TEMPLATE,
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 

@@ -103,14 +103,14 @@ gimp_dash_editor_class_init (GimpDashEditorClass *klass)
                                    g_param_spec_object ("stroke-options",
                                                         NULL, NULL,
                                                         GIMP_TYPE_STROKE_OPTIONS,
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_N_SEGMENTS,
                                    g_param_spec_int ("n-segments",
                                                      NULL, NULL,
                                                      2, 120, DEFAULT_N_SEGMENTS,
-                                                     G_PARAM_READWRITE |
+                                                     GIMP_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_LENGTH,
@@ -118,7 +118,7 @@ gimp_dash_editor_class_init (GimpDashEditorClass *klass)
                                                         NULL, NULL,
                                                         0.0, 2000.0,
                                                         0.5 * DEFAULT_N_SEGMENTS,
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 }
 

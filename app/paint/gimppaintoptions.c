@@ -124,125 +124,127 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                    g_param_spec_object ("paint-info",
                                                         NULL, NULL,
                                                         GIMP_TYPE_PAINT_INFO,
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_APPLICATION_MODE,
                                  "application-mode", NULL,
                                  GIMP_TYPE_PAINT_APPLICATION_MODE,
                                  DEFAULT_APPLICATION_MODE,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_HARD,
                                     "hard", NULL,
                                     DEFAULT_HARD,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PRESSURE_EXPANDED,
                                     "pressure-expanded", NULL,
                                     DEFAULT_PRESSURE_EXPANDED,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PRESSURE_OPACITY,
                                     "pressure-opacity", NULL,
                                     DEFAULT_PRESSURE_OPACITY,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PRESSURE_HARDNESS,
                                     "pressure-hardness", NULL,
                                     DEFAULT_PRESSURE_HARDNESS,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PRESSURE_RATE,
                                     "pressure-rate", NULL,
                                     DEFAULT_PRESSURE_RATE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PRESSURE_SIZE,
                                     "pressure-size", NULL,
                                     DEFAULT_PRESSURE_SIZE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PRESSURE_COLOR,
                                     "pressure-color", NULL,
                                     DEFAULT_PRESSURE_COLOR,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PRESSURE_INVERSE_SIZE,
                                     "pressure-inverse-size", NULL,
                                     DEFAULT_PRESSURE_INVERSE_SIZE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_FADE,
                                     "use-fade", NULL,
                                     DEFAULT_USE_FADE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_FADE_LENGTH,
                                    "fade-length", NULL,
                                    0.0, 32767.0, DEFAULT_FADE_LENGTH,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_FADE_UNIT,
                                  "fade-unit", NULL,
                                  TRUE, TRUE, DEFAULT_FADE_UNIT,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_JITTER,
                                     "use-jitter", NULL,
                                     DEFAULT_USE_JITTER,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_JITTER_AMOUNT,
                                    "jitter-amount", NULL,
                                    0.0, 50.0, DEFAULT_JITTER_AMOUNT,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_GRADIENT,
                                     "use-gradient", NULL,
-                                    DEFAULT_USE_GRADIENT, 0);
+                                    DEFAULT_USE_GRADIENT,
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_GRADIENT_REVERSE,
                                     "gradient-reverse", NULL,
-                                    DEFAULT_GRADIENT_REVERSE, 0);
+                                    DEFAULT_GRADIENT_REVERSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_GRADIENT_REPEAT,
                                  "gradient-repeat", NULL,
                                  GIMP_TYPE_REPEAT_MODE,
                                  DEFAULT_GRADIENT_REPEAT,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_GRADIENT_LENGTH,
                                    "gradient-length", NULL,
                                    0.0, 32767.0, DEFAULT_GRADIENT_LENGTH,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_GRADIENT_UNIT,
                                  "gradient-unit", NULL,
                                  TRUE, TRUE, DEFAULT_GRADIENT_UNIT,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_BRUSH_VIEW_TYPE,
                                  "brush-view-type", NULL,
                                  GIMP_TYPE_VIEW_TYPE,
                                  GIMP_VIEW_TYPE_GRID,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_BRUSH_VIEW_SIZE,
                                 "brush-view-size", NULL,
                                 GIMP_VIEW_SIZE_TINY,
                                 GIMP_VIEWABLE_MAX_BUTTON_SIZE,
                                 GIMP_VIEW_SIZE_SMALL,
-                                0);
+                                GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_PATTERN_VIEW_TYPE,
                                  "pattern-view-type", NULL,
                                  GIMP_TYPE_VIEW_TYPE,
                                  GIMP_VIEW_TYPE_GRID,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_PATTERN_VIEW_SIZE,
                                 "pattern-view-size", NULL,
                                 GIMP_VIEW_SIZE_TINY,
                                 GIMP_VIEWABLE_MAX_BUTTON_SIZE,
                                 GIMP_VIEW_SIZE_SMALL,
-                                0);
+                                GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_GRADIENT_VIEW_TYPE,
                                  "gradient-view-type", NULL,
                                  GIMP_TYPE_VIEW_TYPE,
                                  GIMP_VIEW_TYPE_LIST,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_GRADIENT_VIEW_SIZE,
                                 "gradient-view-size", NULL,
                                 GIMP_VIEW_SIZE_TINY,
                                 GIMP_VIEWABLE_MAX_BUTTON_SIZE,
                                 GIMP_VIEW_SIZE_LARGE,
-                                0);
+                                GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void

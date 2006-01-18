@@ -142,14 +142,14 @@ gimp_dock_class_init (GimpDockClass *klass)
   g_object_class_install_property (object_class, PROP_CONTEXT,
                                    g_param_spec_object ("context", NULL, NULL,
                                                         GIMP_TYPE_CONTEXT,
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_DIALOG_FACTORY,
                                    g_param_spec_object ("dialog-factory",
                                                         NULL, NULL,
                                                         GIMP_TYPE_DIALOG_FACTORY,
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   gtk_widget_class_install_style_property (widget_class,
@@ -157,7 +157,7 @@ gimp_dock_class_init (GimpDockClass *klass)
                                                              NULL, NULL,
                                                              -1, G_MAXINT,
                                                              DEFAULT_DOCK_HEIGHT,
-                                                             G_PARAM_READABLE));
+                                                             GIMP_PARAM_READABLE));
 }
 
 static void

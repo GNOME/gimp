@@ -66,15 +66,15 @@ gimp_color_options_class_init (GimpColorOptionsClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAMPLE_MERGED,
                                     "sample-merged", NULL,
                                     FALSE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAMPLE_AVERAGE,
                                     "sample-average", NULL,
                                     TRUE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_AVERAGE_RADIUS,
                                    "average-radius", NULL,
                                    1.0, 300.0, 3.0,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void

@@ -86,7 +86,7 @@ gimp_image_prop_view_class_init (GimpImagePropViewClass *klass)
   g_object_class_install_property (object_class, PROP_IMAGE,
                                    g_param_spec_object ("image", NULL, NULL,
                                                         GIMP_TYPE_IMAGE,
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 

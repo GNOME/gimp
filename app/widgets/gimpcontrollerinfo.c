@@ -109,18 +109,18 @@ gimp_controller_info_class_init (GimpControllerInfoClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ENABLED,
                                     "enabled", NULL,
                                     TRUE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DEBUG_EVENTS,
                                     "debug-events", NULL,
                                     FALSE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_CONTROLLER,
                                    "controller", NULL,
                                    GIMP_TYPE_CONTROLLER,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_POINTER (object_class, PROP_MAPPING,
                                     "mapping", NULL,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
 
   info_signals[EVENT_MAPPED] =
     g_signal_new ("event-mapped",

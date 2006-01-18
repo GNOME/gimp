@@ -75,25 +75,25 @@ gimp_color_frame_class_init (GimpColorFrameClass *klass)
                                                       NULL, NULL,
                                                       GIMP_TYPE_COLOR_FRAME_MODE,
                                                       GIMP_COLOR_FRAME_MODE_PIXEL,
-                                                      G_PARAM_READWRITE));
+                                                      GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_HAS_NUMBER,
                                    g_param_spec_boolean ("has-number",
                                                          NULL, NULL,
                                                          FALSE,
-                                                         G_PARAM_READWRITE));
+                                                         GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_NUMBER,
                                    g_param_spec_int ("number",
                                                      NULL, NULL,
                                                      0, 256, 0,
-                                                     G_PARAM_READWRITE));
+                                                     GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_HAS_COLOR_AREA,
                                    g_param_spec_boolean ("has-color-area",
                                                          NULL, NULL,
                                                          FALSE,
-                                                         G_PARAM_READWRITE));
+                                                         GIMP_PARAM_READWRITE));
 }
 
 static void

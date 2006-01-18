@@ -128,34 +128,34 @@ gimp_pdb_dialog_class_init (GimpPdbDialogClass *klass)
   g_object_class_install_property (object_class, PROP_CONTEXT,
                                    g_param_spec_object ("context", NULL, NULL,
                                                         GIMP_TYPE_CONTEXT,
-                                                        G_PARAM_WRITABLE |
+                                                        GIMP_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_SELECT_TYPE,
                                    g_param_spec_pointer ("select-type",
                                                          NULL, NULL,
-                                                         G_PARAM_WRITABLE |
+                                                         GIMP_PARAM_WRITABLE |
                                                          G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_INITIAL_OBJECT,
                                    g_param_spec_object ("initial-object",
                                                         NULL, NULL,
                                                         GIMP_TYPE_OBJECT,
-                                                        G_PARAM_WRITABLE |
+                                                        GIMP_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_CALLBACK_NAME,
                                    g_param_spec_string ("callback-name",
                                                         NULL, NULL,
                                                         NULL,
-                                                        G_PARAM_WRITABLE |
+                                                        GIMP_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_MENU_FACTORY,
                                    g_param_spec_object ("menu-factory",
                                                         NULL, NULL,
                                                         GIMP_TYPE_MENU_FACTORY,
-                                                        G_PARAM_WRITABLE |
+                                                        GIMP_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 

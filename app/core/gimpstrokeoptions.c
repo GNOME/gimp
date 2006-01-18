@@ -97,23 +97,23 @@ gimp_stroke_options_class_init (GimpStrokeOptionsClass *klass)
                                  "style", NULL,
                                  GIMP_TYPE_STROKE_STYLE,
                                  GIMP_STROKE_STYLE_SOLID,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_WIDTH,
                                    "width", NULL,
                                    0.0, 2000.0, 6.0,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_UNIT,
 				 "unit", NULL,
 				 TRUE, FALSE, GIMP_UNIT_PIXEL,
-				 0);
+				 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CAP_STYLE,
                                  "cap-style", NULL,
                                  GIMP_TYPE_CAP_STYLE, GIMP_CAP_BUTT,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_JOIN_STYLE,
                                  "join-style", NULL,
                                  GIMP_TYPE_JOIN_STYLE, GIMP_JOIN_MITER,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_MITER_LIMIT,
                                    "miter-limit",
                                    _("Convert a mitered join to a bevelled "
@@ -121,24 +121,24 @@ gimp_stroke_options_class_init (GimpStrokeOptionsClass *klass)
                                      "distance of more than miter-limit * "
                                      "line-width from the actual join point."),
                                    0.0, 100.0, 10.0,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ANTIALIAS,
                                     "antialias", NULL,
                                     TRUE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_DASH_OFFSET,
                                    "dash-offset", NULL,
                                    0.0, 2000.0, 0.0,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
 
   array_spec = g_param_spec_double ("dash-length", NULL, NULL,
-                                    0.0, 2000.0, 1.0, G_PARAM_READWRITE);
+                                    0.0, 2000.0, 1.0, GIMP_PARAM_READWRITE);
   g_object_class_install_property (object_class, PROP_DASH_INFO,
                                    g_param_spec_value_array ("dash-info",
                                                              NULL, NULL,
                                                              array_spec,
+                                                             GIMP_PARAM_STATIC_STRINGS |
                                                              GIMP_CONFIG_PARAM_FLAGS));
-
 }
 
 static void

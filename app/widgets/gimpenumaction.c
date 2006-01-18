@@ -78,13 +78,13 @@ gimp_enum_action_class_init (GimpEnumActionClass *klass)
                                    g_param_spec_int ("value",
                                                      NULL, NULL,
                                                      G_MININT, G_MAXINT, 0,
-                                                     G_PARAM_READWRITE));
+                                                     GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_VALUE_VARIABLE,
                                    g_param_spec_boolean ("value-variable",
                                                          NULL, NULL,
                                                          FALSE,
-                                                         G_PARAM_READWRITE));
+                                                         GIMP_PARAM_READWRITE));
 
   action_signals[SELECTED] =
     g_signal_new ("selected",

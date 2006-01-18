@@ -67,16 +67,16 @@ gimp_dodge_burn_options_class_init (GimpDodgeBurnOptionsClass *klass)
                                  "type", NULL,
                                  GIMP_TYPE_DODGE_BURN_TYPE,
                                  DODGE_BURN_DEFAULT_TYPE,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_MODE,
                                  "mode", NULL,
                                  GIMP_TYPE_TRANSFER_MODE,
                                  DODGE_BURN_DEFAULT_MODE,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_EXPOSURE,
                                    "exposure", NULL,
                                    0.0, 100.0, DODGE_BURN_DEFAULT_EXPOSURE,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void

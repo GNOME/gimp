@@ -119,13 +119,13 @@ gimp_menu_dock_class_init (GimpMenuDockClass *klass)
                                                              0,
                                                              G_MAXINT,
                                                              DEFAULT_MINIMAL_WIDTH,
-                                                             G_PARAM_READABLE));
+                                                             GIMP_PARAM_READABLE));
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_enum ("menu-preview-size",
                                                               NULL, NULL,
                                                               GTK_TYPE_ICON_SIZE,
                                                               DEFAULT_MENU_VIEW_SIZE,
-                                                              G_PARAM_READABLE));
+                                                              GIMP_PARAM_READABLE));
 }
 
 static void

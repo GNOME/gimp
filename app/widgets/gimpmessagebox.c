@@ -97,7 +97,7 @@ gimp_message_box_class_init (GimpMessageBoxClass *klass)
   g_object_class_install_property (object_class, PROP_STOCK_ID,
                                    g_param_spec_string ("stock-id", NULL, NULL,
                                                         NULL,
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 

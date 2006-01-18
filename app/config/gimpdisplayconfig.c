@@ -111,115 +111,117 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                                  "transparency-size", TRANSPARENCY_SIZE_BLURB,
                                  GIMP_TYPE_CHECK_SIZE,
                                  GIMP_CHECK_SIZE_MEDIUM_CHECKS,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_TRANSPARENCY_TYPE,
                                  "transparency-type", TRANSPARENCY_TYPE_BLURB,
                                  GIMP_TYPE_CHECK_TYPE,
                                  GIMP_CHECK_TYPE_GRAY_CHECKS,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_SNAP_DISTANCE,
                                 "snap-distance", DEFAULT_SNAP_DISTANCE_BLURB,
                                 1, 255, 8,
-                                0);
+                                GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_MARCHING_ANTS_SPEED,
                                 "marching-ants-speed",
                                 MARCHING_ANTS_SPEED_BLURB,
                                 50, G_MAXINT, 300,
-                                0);
+                                GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_RESIZE_WINDOWS_ON_ZOOM,
                                     "resize-windows-on-zoom",
                                     RESIZE_WINDOWS_ON_ZOOM_BLURB,
                                     FALSE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_RESIZE_WINDOWS_ON_RESIZE,
                                     "resize-windows-on-resize",
                                     RESIZE_WINDOWS_ON_RESIZE_BLURB,
                                     FALSE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DEFAULT_DOT_FOR_DOT,
                                     "default-dot-for-dot",
                                     DEFAULT_DOT_FOR_DOT_BLURB,
                                     TRUE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_INITIAL_ZOOM_TO_FIT,
-                                    "initial_zoom_to_fit",
+                                    "initial-zoom-to-fit",
                                     INITIAL_ZOOM_TO_FIT_BLURB,
                                     TRUE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PERFECT_MOUSE,
                                     "perfect-mouse", PERFECT_MOUSE_BLURB,
                                     TRUE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CURSOR_MODE,
                                  "cursor-mode", CURSOR_MODE_BLURB,
                                  GIMP_TYPE_CURSOR_MODE,
                                  GIMP_CURSOR_MODE_TOOL_ICON,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CURSOR_UPDATING,
                                     "cursor-updating", CURSOR_UPDATING_BLURB,
                                     TRUE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_BRUSH_OUTLINE,
                                     "show-brush-outline",
                                     SHOW_BRUSH_OUTLINE_BLURB,
                                     TRUE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_PAINT_TOOL_CURSOR,
                                     "show-paint-tool-cursor",
                                     SHOW_PAINT_TOOL_CURSOR_BLURB,
                                     TRUE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_IMAGE_TITLE_FORMAT,
                                    "image-title-format",
                                    IMAGE_TITLE_FORMAT_BLURB,
                                    GIMP_CONFIG_DEFAULT_IMAGE_TITLE_FORMAT,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_IMAGE_STATUS_FORMAT,
                                    "image-status-format",
                                    IMAGE_STATUS_FORMAT_BLURB,
                                    GIMP_CONFIG_DEFAULT_IMAGE_STATUS_FORMAT,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CONFIRM_ON_CLOSE,
                                     "confirm-on-close", CONFIRM_ON_CLOSE_BLURB,
                                     TRUE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_RESOLUTION (object_class, PROP_MONITOR_XRESOLUTION,
                                        "monitor-xresolution",
                                        MONITOR_XRESOLUTION_BLURB,
                                        72.0,
-                                       0);
+                                       GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_RESOLUTION (object_class, PROP_MONITOR_YRESOLUTION,
                                        "monitor-yresolution",
                                        MONITOR_YRESOLUTION_BLURB,
                                        72.0,
-                                       0);
+                                       GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_MONITOR_RES_FROM_GDK,
                                     "monitor-resolution-from-windowing-system",
                                     MONITOR_RES_FROM_GDK_BLURB,
                                     TRUE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_NAV_PREVIEW_SIZE,
                                  "navigation-preview-size",
                                  NAVIGATION_PREVIEW_SIZE_BLURB,
                                  GIMP_TYPE_VIEW_SIZE,
                                  GIMP_VIEW_SIZE_MEDIUM,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_DEFAULT_VIEW,
                                    "default-view",
                                    DEFAULT_VIEW_BLURB,
                                    GIMP_TYPE_DISPLAY_OPTIONS,
+                                   GIMP_PARAM_STATIC_STRINGS |
                                    GIMP_CONFIG_PARAM_AGGREGATE);
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_DEFAULT_FULLSCREEN_VIEW,
                                    "default-fullscreen-view",
                                    DEFAULT_FULLSCREEN_VIEW_BLURB,
                                    GIMP_TYPE_DISPLAY_OPTIONS,
+                                   GIMP_PARAM_STATIC_STRINGS |
                                    GIMP_CONFIG_PARAM_AGGREGATE);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ACTIVATE_ON_FOCUS,
                                     "activate-on-focus",
                                     ACTIVATE_ON_FOCUS_BLURB,
                                     DEFAULT_ACTIVATE_ON_FOCUS,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void

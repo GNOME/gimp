@@ -103,7 +103,7 @@ gimp_object_class_init (GimpObjectClass *klass)
 				   g_param_spec_string ("name",
 							NULL, NULL,
 							NULL,
-							G_PARAM_READWRITE |
+							GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 }
 

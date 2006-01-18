@@ -116,7 +116,7 @@ gimp_unit_store_class_init (GimpUnitStoreClass *klass)
                                    g_param_spec_int ("num-values",
                                                      NULL, NULL,
                                                      0, G_MAXINT, 0,
-                                                     G_PARAM_READWRITE |
+                                                     GIMP_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT_ONLY));
 }
 

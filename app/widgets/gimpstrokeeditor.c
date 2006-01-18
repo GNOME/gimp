@@ -83,14 +83,14 @@ gimp_stroke_editor_class_init (GimpStrokeEditorClass *klass)
   g_object_class_install_property (object_class, PROP_OPTIONS,
                                    g_param_spec_object ("options", NULL, NULL,
                                                         GIMP_TYPE_STROKE_OPTIONS,
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
   g_object_class_install_property (object_class, PROP_RESOLUTION,
                                    g_param_spec_double ("resolution", NULL, NULL,
                                                         GIMP_MIN_RESOLUTION,
                                                         GIMP_MAX_RESOLUTION,
                                                         72.0,
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 

@@ -110,15 +110,15 @@ gimp_text_class_init (GimpTextClass *klass)
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_TEXT,
 				   "text", NULL,
 				   NULL,
-				   0);
+				   GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_FONT,
 				   "font", NULL,
 				   "Sans",
-				   0);
+				   GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_FONT_SIZE,
 				   "font-size", NULL,
 				   0.0, 8192.0, 18.0,
-				   0);
+				   GIMP_PARAM_STATIC_STRINGS);
   /*
    *  We use the name "font-size-unit" for backward compatibility.
    *  The unit is also used for other sizes in the text object.
@@ -126,87 +126,98 @@ gimp_text_class_init (GimpTextClass *klass)
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_UNIT,
 				 "font-size-unit", NULL,
 				 TRUE, FALSE, GIMP_UNIT_PIXEL,
-				 0);
+				 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_HINTING,
                                     "hinting", NULL,
                                     TRUE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_AUTOHINT,
                                     "autohint", NULL,
                                     FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS |
                                     GIMP_CONFIG_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ANTIALIAS,
                                     "antialias", NULL,
                                     TRUE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_KERNING,
                                     "kerning", NULL,
                                     FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS |
                                     GIMP_CONFIG_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_LANGUAGE,
 				   "language", NULL,
 				   language,
-				   0);
+				   GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_BASE_DIR,
                                 "base-direction", NULL,
                                  GIMP_TYPE_TEXT_DIRECTION,
                                  GIMP_TEXT_DIRECTION_LTR,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_RGB (object_class, PROP_COLOR,
                                 "color", NULL,
                                 &black,
-                                0);
+                                GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_OUTLINE,
                                 "outline", NULL,
                                  GIMP_TYPE_TEXT_OUTLINE,
                                  GIMP_TEXT_OUTLINE_NONE,
+                                 GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_JUSTIFICATION,
                                 "justify", NULL,
                                  GIMP_TYPE_TEXT_JUSTIFICATION,
                                  GIMP_TEXT_JUSTIFY_LEFT,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_INDENTATION,
 				   "indent", NULL,
 				   -8192.0, 8192.0, 0.0,
-				   GIMP_CONFIG_PARAM_DEFAULTS);
+				   GIMP_PARAM_STATIC_STRINGS |
+                                   GIMP_CONFIG_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LINE_SPACING,
 				   "line-spacing", NULL,
 				   -8192.0, 8192.0, 0.0,
-				   GIMP_CONFIG_PARAM_DEFAULTS);
+				   GIMP_PARAM_STATIC_STRINGS |
+                                   GIMP_CONFIG_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LETTER_SPACING,
 				   "letter-spacing", NULL,
 				   -8192.0, 8192.0, 0.0,
-				   GIMP_CONFIG_PARAM_DEFAULTS);
+				   GIMP_PARAM_STATIC_STRINGS |
+                                   GIMP_CONFIG_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_BOX_MODE,
                                 "box-mode",
                                  NULL,
                                  GIMP_TYPE_TEXT_BOX_MODE,
                                  GIMP_TEXT_BOX_DYNAMIC,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BOX_WIDTH,
                                    "box-width", NULL,
                                    0.0, GIMP_MAX_IMAGE_SIZE, 0.0,
+                                   GIMP_PARAM_STATIC_STRINGS |
                                    GIMP_CONFIG_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BOX_HEIGHT,
                                    "box-height", NULL,
                                    0.0, GIMP_MAX_IMAGE_SIZE, 0.0,
+                                   GIMP_PARAM_STATIC_STRINGS |
                                    GIMP_CONFIG_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_BOX_UNIT,
 				 "box-unit", NULL,
 				 TRUE, FALSE, GIMP_UNIT_PIXEL,
-				 0);
+				 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_MATRIX2 (object_class, PROP_TRANSFORMATION,
                                     "transformation", NULL,
                                     &identity,
+                                    GIMP_PARAM_STATIC_STRINGS |
                                     GIMP_CONFIG_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_OFFSET_X,
                                    "offset-x", NULL,
                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0.0,
+                                   GIMP_PARAM_STATIC_STRINGS |
                                    GIMP_CONFIG_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_OFFSET_Y,
                                    "offset-y", NULL,
                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0.0,
+                                   GIMP_PARAM_STATIC_STRINGS |
                                    GIMP_CONFIG_PARAM_DEFAULTS);
 
   /*  border does only exist to implement the old text API  */
@@ -214,7 +225,7 @@ gimp_text_class_init (GimpTextClass *klass)
                                    g_param_spec_int ("border", NULL, NULL,
                                                      0, GIMP_MAX_IMAGE_SIZE, 0,
                                                      G_PARAM_CONSTRUCT |
-                                                     G_PARAM_WRITABLE));
+                                                     GIMP_PARAM_WRITABLE));
 
   g_free (language);
 }

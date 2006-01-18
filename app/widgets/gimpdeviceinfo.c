@@ -79,7 +79,7 @@ static void
 gimp_device_info_class_init (GimpDeviceInfoClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-  GParamSpec   *array_spec;
+  GParamSpec   *param_spec;
 
   device_info_signals[CHANGED] =
     g_signal_new ("changed",
@@ -98,26 +98,30 @@ gimp_device_info_class_init (GimpDeviceInfoClass *klass)
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_MODE, "mode", NULL,
                                  GDK_TYPE_INPUT_MODE,
                                  GDK_MODE_DISABLED,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
 
-  array_spec = g_param_spec_value_array ("axes",
-                                         NULL, NULL,
-                                         g_param_spec_enum ("axis",
-                                                            NULL, NULL,
-                                                            GDK_TYPE_AXIS_USE,
-                                                            GDK_AXIS_IGNORE,
-                                                            G_PARAM_READWRITE),
-                                         GIMP_CONFIG_PARAM_FLAGS);
-  g_object_class_install_property (object_class, PROP_AXES, array_spec);
+  param_spec = g_param_spec_enum ("axis",
+                                  NULL, NULL,
+                                  GDK_TYPE_AXIS_USE,
+                                  GDK_AXIS_IGNORE,
+                                  GIMP_PARAM_READWRITE);
+  g_object_class_install_property (object_class, PROP_AXES,
+                                   g_param_spec_value_array ("axes",
+                                                             NULL, NULL,
+                                                             param_spec,
+                                                             GIMP_PARAM_STATIC_STRINGS |
+                                                             GIMP_CONFIG_PARAM_FLAGS));
 
-  array_spec = g_param_spec_value_array ("keys",
-                                         NULL, NULL,
-                                         g_param_spec_string ("key",
-                                                              NULL, NULL,
-                                                              NULL,
-                                                              G_PARAM_READWRITE),
-                                         GIMP_CONFIG_PARAM_FLAGS);
-  g_object_class_install_property (object_class, PROP_KEYS, array_spec);
+  param_spec = g_param_spec_string ("key",
+                                    NULL, NULL,
+                                    NULL,
+                                    GIMP_PARAM_READWRITE);
+  g_object_class_install_property (object_class, PROP_KEYS,
+                                   g_param_spec_value_array ("keys",
+                                                             NULL, NULL,
+                                                             param_spec,
+                                                             GIMP_PARAM_STATIC_STRINGS |
+                                                             GIMP_CONFIG_PARAM_FLAGS));
 }
 
 static void

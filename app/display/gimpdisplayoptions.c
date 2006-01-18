@@ -93,48 +93,48 @@ gimp_display_options_class_init (GimpDisplayOptionsClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_MENUBAR,
                                     "show-menubar", SHOW_MENUBAR_BLURB,
                                     TRUE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_RULERS,
                                     "show-rulers", SHOW_RULERS_BLURB,
                                     TRUE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_SCROLLBARS,
                                     "show-scrollbars", SHOW_SCROLLBARS_BLURB,
                                     TRUE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_STATUSBAR,
                                     "show-statusbar", SHOW_STATUSBAR_BLURB,
                                     TRUE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_SELECTION,
                                     "show-selection", SHOW_SELECTION_BLURB,
                                     TRUE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_LAYER_BOUNDARY,
                                     "show-layer-boundary", SHOW_LAYER_BOUNDARY_BLURB,
                                     TRUE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_GUIDES,
                                     "show-guides", SHOW_GUIDES_BLURB,
                                     TRUE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_GRID,
                                     "show-grid", SHOW_GRID_BLURB,
                                     FALSE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_SAMPLE_POINTS,
                                     "show-sample-points", SHOW_SAMPLE_POINTS_BLURB,
                                     TRUE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_PADDING_MODE,
                                  "padding-mode", CANVAS_PADDING_MODE_BLURB,
                                  GIMP_TYPE_CANVAS_PADDING_MODE,
                                  GIMP_CANVAS_PADDING_MODE_DEFAULT,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_RGB (object_class, PROP_PADDING_COLOR,
                                 "padding-color", CANVAS_PADDING_COLOR_BLURB,
                                 &white,
-                                0);
+                                GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -151,48 +151,48 @@ gimp_display_options_fullscreen_class_init (GimpDisplayOptionsFullscreenClass *k
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_MENUBAR,
                                     "show-menubar", SHOW_MENUBAR_BLURB,
                                     FALSE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_RULERS,
                                     "show-rulers", SHOW_RULERS_BLURB,
                                     FALSE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_SCROLLBARS,
                                     "show-scrollbars", SHOW_SCROLLBARS_BLURB,
                                     FALSE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_STATUSBAR,
                                     "show-statusbar", SHOW_STATUSBAR_BLURB,
                                     FALSE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_SELECTION,
                                     "show-selection", SHOW_SELECTION_BLURB,
                                     FALSE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_LAYER_BOUNDARY,
                                     "show-layer-boundary", SHOW_LAYER_BOUNDARY_BLURB,
                                     FALSE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_GUIDES,
                                     "show-guides", SHOW_GUIDES_BLURB,
                                     FALSE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_GRID,
                                     "show-grid", SHOW_GRID_BLURB,
                                     FALSE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_SAMPLE_POINTS,
                                     "show-sample-points", SHOW_SAMPLE_POINTS_BLURB,
                                     FALSE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_PADDING_MODE,
                                  "padding-mode", CANVAS_PADDING_MODE_BLURB,
                                  GIMP_TYPE_CANVAS_PADDING_MODE,
                                  GIMP_CANVAS_PADDING_MODE_CUSTOM,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_RGB (object_class, PROP_PADDING_COLOR,
                                 "padding-color", CANVAS_PADDING_COLOR_BLURB,
                                 &black,
-                                0);
+                                GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void

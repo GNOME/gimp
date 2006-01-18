@@ -128,7 +128,7 @@ gimp_dockable_class_init (GimpDockableClass *klass)
                                                              0,
                                                              G_MAXINT,
                                                              0,
-                                                             G_PARAM_READABLE));
+                                                             GIMP_PARAM_READABLE));
 }
 
 static void

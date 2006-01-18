@@ -121,7 +121,7 @@ gimp_histogram_view_class_init (GimpHistogramViewClass *klass)
                                                       NULL, NULL,
                                                       GIMP_TYPE_HISTOGRAM_CHANNEL,
                                                       GIMP_HISTOGRAM_VALUE,
-                                                      G_PARAM_READWRITE |
+                                                      GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_SCALE,
@@ -129,20 +129,20 @@ gimp_histogram_view_class_init (GimpHistogramViewClass *klass)
                                                       NULL, NULL,
                                                       GIMP_TYPE_HISTOGRAM_SCALE,
                                                       GIMP_HISTOGRAM_SCALE_LINEAR,
-                                                      G_PARAM_READWRITE |
+                                                      GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_BORDER_WIDTH,
                                    g_param_spec_int ("border-width", NULL, NULL,
                                                      0, 32, 1,
-                                                     G_PARAM_READWRITE |
+                                                     GIMP_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_SUBDIVISIONS,
                                    g_param_spec_int ("subdivisions",
                                                      NULL, NULL,
                                                      1, 64, 5,
-                                                     G_PARAM_READWRITE |
+                                                     GIMP_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
 }
 

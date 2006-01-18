@@ -184,7 +184,7 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
                                    gimp_param_spec_unit ("unit", NULL, NULL,
                                                          TRUE, FALSE,
                                                          GIMP_UNIT_PIXEL,
-                                                         G_PARAM_READWRITE));
+                                                         GIMP_PARAM_READWRITE));
 
   gtk_rc_parse_string (display_rc_style);
 }

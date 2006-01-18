@@ -72,38 +72,38 @@ gimp_ink_options_class_init (GimpInkOptionsClass *klass)
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_SIZE,
                                    "size", NULL,
                                    0.0, 200.0, 16.0,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_TILT_ANGLE,
                                    "tilt-angle", NULL,
                                    -90.0, 90.0, 0.0,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_SIZE_SENSITIVITY,
                                    "size-sensitivity", NULL,
                                    0.0, 1.0, 1.0,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_VEL_SENSITIVITY,
                                    "vel-sensitivity", NULL,
                                    0.0, 1.0, 0.8,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_TILT_SENSITIVITY,
                                    "tilt-sensitivity", NULL,
                                    0.0, 1.0, 0.4,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_BLOB_TYPE,
                                  "blob-type", NULL,
                                  GIMP_TYPE_INK_BLOB_TYPE,
                                  GIMP_INK_BLOB_TYPE_ELLIPSE,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BLOB_ASPECT,
                                    "blob-aspect", NULL,
                                    1.0, 10.0, 1.0,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BLOB_ANGLE,
                                    "blob-angle", NULL,
                                    -90.0, 90.0, 0.0,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void

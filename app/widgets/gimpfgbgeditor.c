@@ -130,14 +130,14 @@ gimp_fg_bg_editor_class_init (GimpFgBgEditorClass *klass)
                                    g_param_spec_object ("context",
                                                         NULL, NULL,
                                                         GIMP_TYPE_CONTEXT,
-                                                        G_PARAM_READWRITE));
+                                                        GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_ACTIVE_COLOR,
                                    g_param_spec_enum ("active-color",
                                                       NULL, NULL,
                                                       GIMP_TYPE_ACTIVE_COLOR,
                                                       GIMP_ACTIVE_COLOR_FOREGROUND,
-                                                      G_PARAM_READWRITE));
+                                                      GIMP_PARAM_READWRITE));
 }
 
 static void

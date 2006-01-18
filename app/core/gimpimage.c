@@ -476,31 +476,31 @@ gimp_image_class_init (GimpImageClass *klass)
   g_object_class_install_property (object_class, PROP_GIMP,
                                    g_param_spec_object ("gimp", NULL, NULL,
                                                         GIMP_TYPE_GIMP,
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_ID,
                                    g_param_spec_int ("id", NULL, NULL,
                                                      0, G_MAXINT, 0,
-                                                     G_PARAM_READABLE));
+                                                     GIMP_PARAM_READABLE));
 
   g_object_class_install_property (object_class, PROP_WIDTH,
                                    g_param_spec_int ("width", NULL, NULL,
                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                     G_PARAM_READWRITE |
+                                                     GIMP_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_HEIGHT,
                                    g_param_spec_int ("height", NULL, NULL,
                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                     G_PARAM_READWRITE |
+                                                     GIMP_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_BASE_TYPE,
                                    g_param_spec_enum ("base-type", NULL, NULL,
                                                       GIMP_TYPE_IMAGE_BASE_TYPE,
                                                       GIMP_RGB,
-                                                      G_PARAM_READWRITE |
+                                                      GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 
   gimp_image_color_hash_init ();

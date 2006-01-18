@@ -120,14 +120,14 @@ gimp_data_editor_class_init (GimpDataEditorClass *klass)
                                    g_param_spec_object ("data-factory",
                                                         NULL, NULL,
                                                         GIMP_TYPE_DATA_FACTORY,
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_DATA,
                                    g_param_spec_object ("data",
                                                         NULL, NULL,
                                                         GIMP_TYPE_DATA,
-                                                        G_PARAM_READWRITE));
+                                                        GIMP_PARAM_READWRITE));
 }
 
 static void

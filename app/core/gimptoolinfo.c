@@ -75,7 +75,8 @@ gimp_tool_info_class_init (GimpToolInfoClass *klass)
   viewable_class->get_description = gimp_tool_info_get_description;
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_VISIBLE, "visible",
-                                    NULL, TRUE, 0);
+                                    NULL, TRUE,
+                                    GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void

@@ -121,7 +121,7 @@ gimp_controller_editor_class_init (GimpControllerEditorClass *klass)
                                    g_param_spec_object ("controller-info",
                                                         NULL, NULL,
                                                         GIMP_TYPE_CONTROLLER_INFO,
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 

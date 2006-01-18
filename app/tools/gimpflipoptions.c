@@ -68,7 +68,7 @@ gimp_flip_options_class_init (GimpFlipOptionsClass *klass)
                                  "flip-type", NULL,
                                  GIMP_TYPE_ORIENTATION_TYPE,
                                  GIMP_ORIENTATION_HORIZONTAL,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void

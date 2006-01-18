@@ -67,7 +67,7 @@ gimp_align_options_class_init (GimpAlignOptionsClass *klass)
                                  "align-type", NULL,
                                  GIMP_TYPE_TRANSFORM_TYPE,
                                  GIMP_TRANSFORM_TYPE_LAYER,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void

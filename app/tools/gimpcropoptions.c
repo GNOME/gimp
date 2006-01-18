@@ -83,12 +83,12 @@ gimp_crop_options_class_init (GimpCropOptionsClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_LAYER_ONLY,
                                     "layer-only", NULL,
                                     FALSE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CROP_MODE,
                                  "crop-mode", NULL,
                                  GIMP_TYPE_CROP_MODE,
                                  GIMP_CROP_MODE_CROP,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
 
   gimp_rectangle_options_install_properties (object_class);
 }

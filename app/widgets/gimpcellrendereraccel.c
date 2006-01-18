@@ -116,14 +116,14 @@ gimp_cell_renderer_accel_class_init (GimpCellRendererAccelClass *klass)
   g_object_class_install_property (object_class, PROP_ACCEL_KEY,
                                    g_param_spec_uint ("accel-key", NULL, NULL,
                                                       0, G_MAXINT, 0,
-                                                      G_PARAM_READWRITE |
+                                                      GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_ACCEL_MASK,
                                    g_param_spec_flags ("accel-mask", NULL, NULL,
                                                        GDK_TYPE_MODIFIER_TYPE,
                                                        0,
-                                                       G_PARAM_READWRITE |
+                                                       GIMP_PARAM_READWRITE |
                                                        G_PARAM_CONSTRUCT));
 }
 

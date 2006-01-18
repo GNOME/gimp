@@ -68,7 +68,7 @@ gimp_measure_options_class_init (GimpMeasureOptionsClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_INFO_WINDOW,
                                     "use-info-window", NULL,
                                     FALSE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void

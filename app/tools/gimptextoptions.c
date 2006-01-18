@@ -106,70 +106,73 @@ gimp_text_options_class_init (GimpTextOptionsClass *klass)
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_UNIT,
                                  "font-size-unit", NULL,
                                  TRUE, FALSE, GIMP_UNIT_PIXEL,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_FONT_SIZE,
                                    "font-size", NULL,
                                    0.0, 8192.0, 18.0,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_HINTING,
                                     "hinting",
                                     N_("Hinting alters the font outline to "
                                        "produce a crisp bitmap at small "
                                        "sizes"),
                                     TRUE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_AUTOHINT,
                                     "autohint",
                                     N_("If available, hints from the font are "
                                        "used but you may prefer to always use "
                                        "the automatic hinter"),
                                     FALSE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ANTIALIAS,
                                     "antialias", NULL,
                                     TRUE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_LANGUAGE,
                                    "language", NULL,
                                    (const gchar *) gtk_get_default_language (),
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_BASE_DIR,
                                 "base-direction", NULL,
                                  GIMP_TYPE_TEXT_DIRECTION,
                                  GIMP_TEXT_DIRECTION_LTR,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_JUSTIFICATION,
                                 "justify", NULL,
                                  GIMP_TYPE_TEXT_JUSTIFICATION,
                                  GIMP_TEXT_JUSTIFY_LEFT,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_INDENTATION,
                                    "indent",
                                    N_("Indentation of the first line"),
                                    -8192.0, 8192.0, 0.0,
+                                   GIMP_PARAM_STATIC_STRINGS |
                                    GIMP_CONFIG_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LINE_SPACING,
                                    "line-spacing",
                                    N_("Adjust line spacing"),
                                    -8192.0, 8192.0, 0.0,
+                                   GIMP_PARAM_STATIC_STRINGS |
                                    GIMP_CONFIG_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LETTER_SPACING,
                                    "letter-spacing",
                                    N_("Adjust letter spacing"),
                                    -8192.0, 8192.0, 0.0,
+                                   GIMP_PARAM_STATIC_STRINGS |
                                    GIMP_CONFIG_PARAM_DEFAULTS);
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_FONT_VIEW_TYPE,
                                  "font-view-type", NULL,
                                  GIMP_TYPE_VIEW_TYPE,
                                  GIMP_VIEW_TYPE_LIST,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_FONT_VIEW_SIZE,
                                 "font-view-size", NULL,
                                 GIMP_VIEW_SIZE_TINY,
                                 GIMP_VIEWABLE_MAX_BUTTON_SIZE,
                                 GIMP_VIEW_SIZE_SMALL,
-                                0);
+                                GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void

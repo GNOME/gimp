@@ -75,7 +75,7 @@ gimp_plugin_config_class_init (GimpPluginConfigClass *klass)
                                  "fractalexplorer-path",
                                  FRACTALEXPLORER_PATH_BLURB,
 				 GIMP_CONFIG_PATH_DIR_LIST, path,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   g_free (path);
 
   path = gimp_config_build_data_path ("gfig");
@@ -83,7 +83,7 @@ gimp_plugin_config_class_init (GimpPluginConfigClass *klass)
                                  PROP_GFIG_PATH,
                                  "gfig-path", GFIG_PATH_BLURB,
 				 GIMP_CONFIG_PATH_DIR_LIST, path,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   g_free (path);
 
   path = gimp_config_build_data_path ("gflare");
@@ -91,7 +91,7 @@ gimp_plugin_config_class_init (GimpPluginConfigClass *klass)
                                  PROP_GFLARE_PATH,
                                  "gflare-path", GFLARE_PATH_BLURB,
 				 GIMP_CONFIG_PATH_DIR_LIST, path,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   g_free (path);
 
   path = gimp_config_build_data_path ("gimpressionist");
@@ -100,7 +100,7 @@ gimp_plugin_config_class_init (GimpPluginConfigClass *klass)
                                  "gimpressionist-path",
                                  GIMPRESSIONIST_PATH_BLURB,
 				 GIMP_CONFIG_PATH_DIR_LIST, path,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   g_free (path);
 
   path = gimp_config_build_data_path ("scripts");
@@ -109,7 +109,7 @@ gimp_plugin_config_class_init (GimpPluginConfigClass *klass)
                                  "script-fu-path",
                                  SCRIPT_FU_PATH_BLURB,
 				 GIMP_CONFIG_PATH_DIR_LIST, path,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   g_free (path);
 }
 

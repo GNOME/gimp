@@ -98,33 +98,33 @@ gimp_brush_generated_class_init (GimpBrushGeneratedClass *klass)
                                    g_param_spec_enum ("shape", NULL, NULL,
                                                       GIMP_TYPE_BRUSH_GENERATED_SHAPE,
                                                       GIMP_BRUSH_GENERATED_CIRCLE,
-                                                      G_PARAM_READWRITE |
+                                                      GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class, PROP_RADIUS,
                                    g_param_spec_double ("radius", NULL, NULL,
                                                         0.1, 1000.0, 5.0,
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class, PROP_SPIKES,
                                    g_param_spec_int    ("spikes", NULL, NULL,
                                                         2, 20, 2,
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class, PROP_HARDNESS,
                                    g_param_spec_double ("hardness", NULL, NULL,
                                                         0.0, 1.0, 0.0,
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class, PROP_ASPECT_RATIO,
                                    g_param_spec_double ("aspect-ratio",
                                                         NULL, NULL,
                                                         1.0, 20.0, 1.0,
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class, PROP_ANGLE,
                                    g_param_spec_double ("angle", NULL, NULL,
                                                         0.0, 180.0, 0.0,
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 }
 

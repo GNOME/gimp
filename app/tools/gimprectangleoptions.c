@@ -93,71 +93,77 @@ gimp_rectangle_options_iface_base_init (GimpRectangleOptionsInterface *options_i
   if (! initialized)
     {
       g_object_interface_install_property (options_iface,
-        g_param_spec_boolean ("highlight",
-                              NULL, NULL,
-                              TRUE,
-                              G_PARAM_READWRITE));
+                                           g_param_spec_boolean ("highlight",
+                                                                 NULL, NULL,
+                                                                 TRUE,
+                                                                 GIMP_PARAM_READWRITE));
 
       g_object_interface_install_property (options_iface,
-        g_param_spec_boolean ("new-fixed-width",
-                              NULL, NULL,
-                              FALSE,
-                              G_PARAM_READWRITE));
+                                           g_param_spec_boolean ("new-fixed-width",
+                                                                 NULL, NULL,
+                                                                 FALSE,
+                                                                 GIMP_PARAM_READWRITE));
       g_object_interface_install_property (options_iface,
-        g_param_spec_double ("width",
-                             NULL, NULL,
-                             0.0, GIMP_MAX_IMAGE_SIZE,
-                             0.0,
-                             G_PARAM_READWRITE));
+                                           g_param_spec_double ("width",
+                                                                NULL, NULL,
+                                                                0.0, GIMP_MAX_IMAGE_SIZE,
+                                                                0.0,
+                                                                GIMP_PARAM_READWRITE));
 
       g_object_interface_install_property (options_iface,
-        g_param_spec_boolean ("new-fixed-height",
-                              NULL, NULL,
-                              FALSE,
-                              G_PARAM_READWRITE));
-      g_object_interface_install_property (options_iface,
-        g_param_spec_double ("height",
-                             NULL, NULL,
-                             0.0, GIMP_MAX_IMAGE_SIZE,
-                             0.0,
-                             G_PARAM_READWRITE));
+                                           g_param_spec_boolean ("new-fixed-height",
+                                                                 NULL, NULL,
+                                                                 FALSE,
+                                                                 GIMP_PARAM_READWRITE));
 
       g_object_interface_install_property (options_iface,
-        g_param_spec_boolean ("fixed-aspect",
-                              NULL, NULL,
-                              FALSE,
-                              G_PARAM_READWRITE));
-      g_object_interface_install_property (options_iface,
-        g_param_spec_double ("aspect",
-                             NULL, NULL,
-                             0.0, GIMP_MAX_IMAGE_SIZE,
-                             0.0,
-                             G_PARAM_READWRITE));
+                                           g_param_spec_double ("height",
+                                                                NULL, NULL,
+                                                                0.0, GIMP_MAX_IMAGE_SIZE,
+                                                                0.0,
+                                                                GIMP_PARAM_READWRITE));
 
       g_object_interface_install_property (options_iface,
-        g_param_spec_boolean ("fixed-center",
-                              NULL, NULL,
-                              FALSE,
-                              G_PARAM_READWRITE));
-      g_object_interface_install_property (options_iface,
-        g_param_spec_double ("center-x",
-                             NULL, NULL,
-                             -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
-                             0.0,
-                             G_PARAM_READWRITE));
-      g_object_interface_install_property (options_iface,
-        g_param_spec_double ("center-y",
-                             NULL, NULL,
-                             -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
-                             0.0,
-                             G_PARAM_READWRITE));
+                                           g_param_spec_boolean ("fixed-aspect",
+                                                                 NULL, NULL,
+                                                                 FALSE,
+                                                                 GIMP_PARAM_READWRITE));
 
       g_object_interface_install_property (options_iface,
-        gimp_param_spec_unit ("unit",
-                              NULL, NULL,
-                              TRUE, TRUE,
-                              GIMP_UNIT_PIXEL,
-                              G_PARAM_READWRITE));
+                                           g_param_spec_double ("aspect",
+                                                                NULL, NULL,
+                                                                0.0, GIMP_MAX_IMAGE_SIZE,
+                                                                0.0,
+                                                                GIMP_PARAM_READWRITE));
+
+      g_object_interface_install_property (options_iface,
+                                           g_param_spec_boolean ("fixed-center",
+                                                                 NULL, NULL,
+                                                                 FALSE,
+                                                                 GIMP_PARAM_READWRITE));
+
+      g_object_interface_install_property (options_iface,
+                                           g_param_spec_double ("center-x",
+                                                                NULL, NULL,
+                                                                -GIMP_MAX_IMAGE_SIZE,
+                                                                GIMP_MAX_IMAGE_SIZE,
+                                                                0.0,
+                                                                GIMP_PARAM_READWRITE));
+
+      g_object_interface_install_property (options_iface,
+                                           g_param_spec_double ("center-y",
+                                                                NULL, NULL,
+                                                                -GIMP_MAX_IMAGE_SIZE,
+                                                                GIMP_MAX_IMAGE_SIZE,
+                                                                0.0,
+                                                                GIMP_PARAM_READWRITE));
+
+      g_object_interface_install_property (options_iface,
+                                           gimp_param_spec_unit ("unit",
+                                                                 NULL, NULL,
+                                                                 TRUE, TRUE,
+                                                                 GIMP_UNIT_PIXEL,
+                                                                 GIMP_PARAM_READWRITE));
 
       initialized = TRUE;
     }

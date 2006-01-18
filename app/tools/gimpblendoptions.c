@@ -78,35 +78,35 @@ gimp_blend_options_class_init (GimpBlendOptionsClass *klass)
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_OFFSET,
                                    "offset", NULL,
                                    0.0, 100.0, 0.0,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_GRADIENT_TYPE,
                                  "gradient-type", NULL,
                                  GIMP_TYPE_GRADIENT_TYPE,
                                  GIMP_GRADIENT_LINEAR,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_GRADIENT_REPEAT,
                                  "gradient-repeat", NULL,
                                  GIMP_TYPE_REPEAT_MODE,
                                  GIMP_REPEAT_NONE,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SUPERSAMPLE,
                                     "supersample", NULL,
                                     FALSE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_SUPERSAMPLE_DEPTH,
                                 "supersample-depth", NULL,
                                 0, 6, 3,
-                                0);
+                                GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_SUPERSAMPLE_THRESHOLD,
                                    "supersample-threshold", NULL,
                                    0.0, 4.0, 0.2,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DITHER,
                                     "dither", NULL,
                                     TRUE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void

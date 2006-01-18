@@ -62,7 +62,7 @@ gimp_eraser_options_class_init (GimpEraserOptionsClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ANTI_ERASE,
                                     "anti-erase", NULL,
                                     ERASER_DEFAULT_ANTI_ERASE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void

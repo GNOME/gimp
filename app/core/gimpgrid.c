@@ -85,50 +85,50 @@ gimp_grid_class_init (GimpGridClass *klass)
                                  N_("Line style used for the grid."),
                                  GIMP_TYPE_GRID_STYLE,
                                  GIMP_GRID_INTERSECTIONS,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_RGB (object_class, PROP_FGCOLOR,
                                 "fgcolor",
                                 N_("The foreground color of the grid."),
                                 &black,
-                                0);
+                                GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_RGB (object_class, PROP_BGCOLOR,
                                 "bgcolor",
                                 N_("The background color of the grid; "
                                    "only used in double dashed line style."),
                                 &white,
-                                0);
+                                GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_XSPACING,
 				   "xspacing",
                                    N_("Horizontal spacing of grid lines."),
 				   1.0, GIMP_MAX_IMAGE_SIZE, 32.0,
-				   0);
+				   GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_YSPACING,
 				   "yspacing",
                                    N_("Vertical spacing of grid lines."),
 				   1.0, GIMP_MAX_IMAGE_SIZE, 32.0,
-				   0);
+				   GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_SPACING_UNIT,
 				 "spacing-unit", NULL,
 				 FALSE, FALSE, GIMP_UNIT_INCH,
-				 0);
+				 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_XOFFSET,
 				   "xoffset",
                                    N_("Horizontal offset of the first grid "
                                       "line; this may be a negative number."),
 				   - GIMP_MAX_IMAGE_SIZE,
                                    GIMP_MAX_IMAGE_SIZE, 0.0,
-				   0);
+				   GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_YOFFSET,
 				   "yoffset",
                                    N_("Vertical offset of the first grid "
                                       "line; this may be a negative number."),
 				   - GIMP_MAX_IMAGE_SIZE,
                                    GIMP_MAX_IMAGE_SIZE, 0.0,
-				   0);
+				   GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_OFFSET_UNIT,
 				 "offset-unit", NULL,
 				 FALSE, FALSE, GIMP_UNIT_INCH,
-				 0);
+				 GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void

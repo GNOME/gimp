@@ -64,11 +64,11 @@ gimp_airbrush_options_class_init (GimpAirbrushOptionsClass *klass)
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_RATE,
                                    "rate", NULL,
                                    0.0, 150.0, AIRBRUSH_DEFAULT_RATE,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_PRESSURE,
                                    "pressure", NULL,
                                    0.0, 100.0, AIRBRUSH_DEFAULT_PRESSURE,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void

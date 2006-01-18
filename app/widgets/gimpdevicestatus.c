@@ -118,7 +118,7 @@ gimp_device_status_class_init (GimpDeviceStatusClass *klass)
   g_object_class_install_property (object_class, PROP_GIMP,
                                    g_param_spec_object ("gimp", NULL, NULL,
                                                         GIMP_TYPE_GIMP,
-                                                        G_PARAM_WRITABLE |
+                                                        GIMP_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 

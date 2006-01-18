@@ -265,19 +265,19 @@ gimp_layer_class_init (GimpLayerClass *klass)
                                                         GIMP_OPACITY_TRANSPARENT,
                                                         GIMP_OPACITY_OPAQUE,
                                                         GIMP_OPACITY_OPAQUE,
-                                                        G_PARAM_READABLE));
+                                                        GIMP_PARAM_READABLE));
 
   g_object_class_install_property (object_class, PROP_MODE,
                                    g_param_spec_enum ("mode", NULL, NULL,
                                                       GIMP_TYPE_LAYER_MODE_EFFECTS,
                                                       GIMP_NORMAL_MODE,
-                                                      G_PARAM_READABLE));
+                                                      GIMP_PARAM_READABLE));
 
   g_object_class_install_property (object_class, PROP_LOCK_ALPHA,
                                    g_param_spec_boolean ("lock-alpha",
                                                          NULL, NULL,
                                                          FALSE,
-                                                         G_PARAM_READABLE));
+                                                         GIMP_PARAM_READABLE));
 }
 
 static void

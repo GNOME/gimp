@@ -150,11 +150,11 @@ gimp_text_layer_class_init (GimpTextLayerClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_AUTO_RENAME,
                                     "auto-rename", NULL,
                                     TRUE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_MODIFIED,
                                     "modified", NULL,
                                     FALSE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void

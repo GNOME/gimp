@@ -85,27 +85,28 @@ gimp_stroke_desc_class_init (GimpStrokeDescClass *klass)
                                    g_param_spec_object ("gimp",
                                                         NULL, NULL,
                                                         GIMP_TYPE_GIMP,
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_METHOD,
                                  "method", NULL,
                                  GIMP_TYPE_STROKE_METHOD,
                                  GIMP_STROKE_METHOD_LIBART,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_STROKE_OPTIONS,
                                    "stroke-options", NULL,
                                    GIMP_TYPE_STROKE_OPTIONS,
+                                   GIMP_PARAM_STATIC_STRINGS |
                                    GIMP_CONFIG_PARAM_AGGREGATE);
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_PAINT_INFO,
                                    "paint-info", NULL,
                                    GIMP_TYPE_PAINT_INFO,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_PAINT_OPTIONS,
                                    "paint-options", NULL,
                                    GIMP_TYPE_PAINT_OPTIONS,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void

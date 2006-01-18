@@ -111,146 +111,152 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_DEFAULT_THRESHOLD,
                                 "default-threshold", DEFAULT_THRESHOLD_BLURB,
                                 0, 255, 15,
-                                0);
+                                GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_MOVE_TOOL_CHANGES_ACTIVE,
                                     "move-tool-changes-active",
                                     MOVE_TOOL_CHANGES_ACTIVE_BLURB,
                                     FALSE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_INFO_WINDOW_PER_DISPLAY,
                                     "info-window-per-display",
                                     NULL,
                                     FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS |
                                     GIMP_CONFIG_PARAM_IGNORE);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_TRUST_DIRTY_FLAG,
                                     "trust-dirty-flag",
                                     TRUST_DIRTY_FLAG_BLURB,
                                     FALSE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAVE_DEVICE_STATUS,
                                     "save-device-status",
                                     SAVE_DEVICE_STATUS_BLURB,
                                     FALSE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAVE_SESSION_INFO,
                                     "save-session-info",
                                     SAVE_SESSION_INFO_BLURB,
                                     TRUE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_RESTORE_SESSION,
                                     "restore-session", RESTORE_SESSION_BLURB,
                                     TRUE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAVE_TOOL_OPTIONS,
                                     "save-tool-options",
                                     SAVE_TOOL_OPTIONS_BLURB,
                                     FALSE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_TIPS,
                                     "show-tips", SHOW_TIPS_BLURB,
                                     TRUE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_TOOL_TIPS,
                                     "show-tool-tips", SHOW_TOOL_TIPS_BLURB,
                                     TRUE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_TEAROFF_MENUS,
                                     "tearoff-menus", TEAROFF_MENUS_BLURB,
                                     TRUE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CAN_CHANGE_ACCELS,
                                     "can-change-accels", CAN_CHANGE_ACCELS_BLURB,
                                     FALSE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAVE_ACCELS,
                                     "save-accels", SAVE_ACCELS_BLURB,
                                     TRUE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_RESTORE_ACCELS,
                                     "restore-accels", RESTORE_ACCELS_BLURB,
                                     TRUE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_MENU_MNEMONICS,
                                     "menu-mnemonics", MENU_MNEMONICS_BLURB,
                                     TRUE,
+                                    GIMP_PARAM_STATIC_STRINGS |
                                     GIMP_CONFIG_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_LAST_OPENED_SIZE,
                                 "last-opened-size", LAST_OPENED_SIZE_BLURB,
                                 0, 1024, 10,
+                                GIMP_PARAM_STATIC_STRINGS |
                                 GIMP_CONFIG_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_MEMSIZE (object_class, PROP_MAX_NEW_IMAGE_SIZE,
                                     "max-new-image-size",
                                     MAX_NEW_IMAGE_SIZE_BLURB,
                                     0, GIMP_MAX_MEMSIZE, 1 << 26,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_TOOLBOX_COLOR_AREA,
                                     "toolbox-color-area",
                                     TOOLBOX_COLOR_AREA_BLURB,
                                     TRUE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_TOOLBOX_FOO_AREA,
                                     "toolbox-foo-area",
                                     TOOLBOX_FOO_AREA_BLURB,
                                     TRUE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_TOOLBOX_IMAGE_AREA,
                                     "toolbox-image-area",
                                     TOOLBOX_IMAGE_AREA_BLURB,
                                     FALSE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   path = gimp_config_build_data_path ("themes");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_THEME_PATH,
                                  "theme-path", THEME_PATH_BLURB,
 				 GIMP_CONFIG_PATH_DIR_LIST, path,
+                                 GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_THEME,
                                    "theme", THEME_BLURB,
                                    DEFAULT_THEME,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_HELP,
                                     "use-help", USE_HELP_BLURB,
                                     TRUE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_HELP_BUTTON,
                                     "show-help-button", SHOW_HELP_BUTTON_BLURB,
                                     TRUE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_HELP_LOCALES,
                                    "help-locales", HELP_LOCALES_BLURB,
                                    "",
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_HELP_BROWSER,
                                  "help-browser", HELP_BROWSER_BLURB,
                                  GIMP_TYPE_HELP_BROWSER_TYPE,
                                  DEFAULT_GIMP_HELP_BROWSER,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_WEB_BROWSER,
                                  "web-browser", WEB_BROWSER_BLURB,
                                  GIMP_CONFIG_PATH_FILE,
                                  DEFAULT_WEB_BROWSER,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_TOOLBOX_WINDOW_HINT,
                                  "toolbox-window-hint",
                                  TOOLBOX_WINDOW_HINT_BLURB,
                                  GIMP_TYPE_WINDOW_HINT,
                                  GIMP_WINDOW_HINT_NORMAL,
+                                 GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_DOCK_WINDOW_HINT,
                                  "dock-window-hint",
                                  DOCK_WINDOW_HINT_BLURB,
                                  GIMP_TYPE_WINDOW_HINT,
                                  GIMP_WINDOW_HINT_NORMAL,
+                                 GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_TRANSIENT_DOCKS,
                                     "transient-docks", TRANSIENT_DOCKS_BLURB,
                                     FALSE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CURSOR_FORMAT,
                                  "cursor-format", CURSOR_FORMAT_BLURB,
                                  GIMP_TYPE_CURSOR_FORMAT,
                                  GIMP_CURSOR_FORMAT_PIXBUF,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void

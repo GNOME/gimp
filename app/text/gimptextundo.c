@@ -86,7 +86,7 @@ gimp_text_undo_class_init (GimpTextUndoClass *klass)
   g_object_class_install_property (object_class, PROP_PARAM,
                                    g_param_spec_param ("param", NULL, NULL,
                                                        G_TYPE_PARAM,
-                                                       G_PARAM_READWRITE |
+                                                       GIMP_PARAM_READWRITE |
                                                        G_PARAM_CONSTRUCT_ONLY));
 }
 

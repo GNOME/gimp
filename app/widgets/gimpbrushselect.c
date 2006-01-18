@@ -101,20 +101,20 @@ gimp_brush_select_class_init (GimpBrushSelectClass *klass)
                                                         GIMP_OPACITY_TRANSPARENT,
                                                         GIMP_OPACITY_OPAQUE,
                                                         GIMP_OPACITY_OPAQUE,
-                                                        G_PARAM_WRITABLE |
+                                                        GIMP_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_PAINT_MODE,
                                    g_param_spec_enum ("paint-mode", NULL, NULL,
                                                       GIMP_TYPE_LAYER_MODE_EFFECTS,
                                                       GIMP_NORMAL_MODE,
-                                                      G_PARAM_WRITABLE |
+                                                      GIMP_PARAM_WRITABLE |
                                                       G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_SPACING,
                                    g_param_spec_int ("spacing", NULL, NULL,
                                                      -G_MAXINT, 1000, -1,
-                                                     G_PARAM_WRITABLE |
+                                                     GIMP_PARAM_WRITABLE |
                                                      G_PARAM_CONSTRUCT));
 }
 

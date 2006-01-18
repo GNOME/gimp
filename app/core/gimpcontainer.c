@@ -184,19 +184,19 @@ gimp_container_class_init (GimpContainerClass *klass)
   klass->get_child_by_index      = NULL;
   klass->get_child_index         = NULL;
 
-  g_object_class_install_property (object_class,
-				   PROP_CHILDREN_TYPE,
-				   g_param_spec_pointer ("children_type",
+  g_object_class_install_property (object_class, PROP_CHILDREN_TYPE,
+				   g_param_spec_pointer ("children-type",
                                                          NULL, NULL,
-                                                         G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+                                                         GIMP_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT_ONLY));
 
-  g_object_class_install_property (object_class,
-				   PROP_POLICY,
+  g_object_class_install_property (object_class, PROP_POLICY,
 				   g_param_spec_enum ("policy",
                                                       NULL, NULL,
                                                       GIMP_TYPE_CONTAINER_POLICY,
                                                       GIMP_CONTAINER_POLICY_STRONG,
-                                                      G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+                                                      GIMP_PARAM_READWRITE |
+                                                      G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void

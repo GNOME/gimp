@@ -202,34 +202,35 @@ gimp_container_view_iface_base_init (GimpContainerViewInterface *view_iface)
                                        g_param_spec_object ("container",
                                                             NULL, NULL,
                                                             GIMP_TYPE_CONTAINER,
-                                                            G_PARAM_READWRITE));
+                                                            GIMP_PARAM_READWRITE));
 
   g_object_interface_install_property (view_iface,
                                        g_param_spec_object ("context",
                                                             NULL, NULL,
                                                             GIMP_TYPE_CONTEXT,
-                                                            G_PARAM_READWRITE));
+                                                            GIMP_PARAM_READWRITE));
 
   g_object_interface_install_property (view_iface,
                                        g_param_spec_boolean ("reorderable",
                                                              NULL, NULL,
                                                              FALSE,
-                                                             G_PARAM_READWRITE));
+                                                             GIMP_PARAM_READWRITE));
 
   g_object_interface_install_property (view_iface,
                                        g_param_spec_int ("view-size",
                                                          NULL, NULL,
                                                          1, GIMP_VIEWABLE_MAX_PREVIEW_SIZE,
                                                          GIMP_VIEW_SIZE_MEDIUM,
-                                                         G_PARAM_READWRITE |
+                                                         GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
 
   g_object_interface_install_property (view_iface,
                                        g_param_spec_int ("view-border-width",
                                                          NULL, NULL,
-                                                         0, GIMP_VIEW_MAX_BORDER_WIDTH,
+                                                         0,
+                                                         GIMP_VIEW_MAX_BORDER_WIDTH,
                                                          1,
-                                                         G_PARAM_READWRITE |
+                                                         GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
 }
 

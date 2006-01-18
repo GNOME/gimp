@@ -108,20 +108,20 @@ gimp_size_box_class_init (GimpSizeBoxClass *klass)
                                                      GIMP_MIN_IMAGE_SIZE,
                                                      GIMP_MAX_IMAGE_SIZE,
                                                      256,
-                                                     G_PARAM_READWRITE |
+                                                     GIMP_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class, PROP_HEIGHT,
                                    g_param_spec_int ("height", NULL, NULL,
                                                      GIMP_MIN_IMAGE_SIZE,
                                                      GIMP_MAX_IMAGE_SIZE,
                                                      256,
-                                                     G_PARAM_READWRITE |
+                                                     GIMP_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class, PROP_UNIT,
                                    gimp_param_spec_unit ("unit", NULL, NULL,
                                                          TRUE, TRUE,
                                                          GIMP_UNIT_PIXEL,
-                                                         G_PARAM_READWRITE |
+                                                         GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class, PROP_XRESOLUTION,
                                    g_param_spec_double ("xresolution",
@@ -129,7 +129,7 @@ gimp_size_box_class_init (GimpSizeBoxClass *klass)
                                                         GIMP_MIN_RESOLUTION,
                                                         GIMP_MAX_RESOLUTION,
                                                         72.0,
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class, PROP_YRESOLUTION,
                                    g_param_spec_double ("yresolution",
@@ -137,25 +137,25 @@ gimp_size_box_class_init (GimpSizeBoxClass *klass)
                                                         GIMP_MIN_RESOLUTION,
                                                         GIMP_MAX_RESOLUTION,
                                                         72.0,
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class, PROP_RESOLUTION_UNIT,
                                    gimp_param_spec_unit ("resolution-unit",
                                                          NULL, NULL,
                                                          FALSE, FALSE,
                                                          GIMP_UNIT_INCH,
-                                                         G_PARAM_READWRITE |
+                                                         GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class, PROP_KEEP_ASPECT,
                                    g_param_spec_boolean ("keep-aspect",
                                                          NULL, NULL,
                                                          TRUE,
-                                                         G_PARAM_READWRITE));
+                                                         GIMP_PARAM_READWRITE));
   g_object_class_install_property (object_class, PROP_EDIT_RESOLUTION,
                                    g_param_spec_boolean ("edit-resolution",
                                                          NULL, NULL,
                                                          FALSE,
-                                                         G_PARAM_READWRITE |
+                                                         GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
 }
 

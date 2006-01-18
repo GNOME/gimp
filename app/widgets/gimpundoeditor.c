@@ -94,7 +94,7 @@ gimp_undo_editor_class_init (GimpUndoEditorClass *klass)
                                                       NULL, NULL,
                                                       GIMP_TYPE_VIEW_SIZE,
                                                       GIMP_VIEW_SIZE_LARGE,
-                                                      G_PARAM_WRITABLE |
+                                                      GIMP_PARAM_WRITABLE |
                                                       G_PARAM_CONSTRUCT_ONLY));
 }
 

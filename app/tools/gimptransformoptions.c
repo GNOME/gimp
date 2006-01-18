@@ -100,62 +100,62 @@ gimp_transform_options_class_init (GimpTransformOptionsClass *klass)
                                  "type", NULL,
                                  GIMP_TYPE_TRANSFORM_TYPE,
                                  GIMP_TRANSFORM_TYPE_LAYER,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_DIRECTION,
                                  "direction", NULL,
                                  GIMP_TYPE_TRANSFORM_DIRECTION,
                                  GIMP_TRANSFORM_FORWARD,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_INTERPOLATION,
                                  "interpolation", NULL,
                                  GIMP_TYPE_INTERPOLATION_TYPE,
                                  GIMP_INTERPOLATION_LINEAR,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SUPERSAMPLE,
                                     "supersample", NULL,
                                     FALSE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
 
 #if 0
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_RECURSION_LEVEL,
                                 "recursion-level", NULL,
                                 1, 5, 3,
-                                0);
+                                GIMP_PARAM_STATIC_STRINGS);
 #endif
 
   g_object_class_install_property (object_class, PROP_RECURSION_LEVEL,
                                    g_param_spec_int ("recursion-level",
                                                      NULL, NULL,
                                                      1, 5, 3,
-                                                     G_PARAM_READWRITE |
+                                                     GIMP_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CLIP,
                                     "clip", NULL,
                                     FALSE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_PREVIEW_TYPE,
                                  "preview-type", NULL,
                                  GIMP_TYPE_TRANSFORM_PREVIEW_TYPE,
                                  GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_GRID_TYPE,
                                  "grid-type", NULL,
                                  GIMP_TYPE_TRANSFORM_GRID_TYPE,
                                  GIMP_TRANSFORM_GRID_TYPE_N_LINES,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_GRID_SIZE,
                                 "grid-size", NULL,
                                 1, 128, 15,
-                                0);
+                                GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CONSTRAIN_1,
                                     "constrain-1", NULL,
                                     FALSE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CONSTRAIN_2,
                                     "constrain-2", NULL,
                                     FALSE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void

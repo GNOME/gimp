@@ -84,21 +84,21 @@ gimp_grid_editor_class_init (GimpGridEditorClass *klass)
   g_object_class_install_property (object_class, PROP_GRID,
                                    g_param_spec_object ("grid", NULL, NULL,
                                                         GIMP_TYPE_GRID,
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
   g_object_class_install_property (object_class, PROP_XRESOLUTION,
                                    g_param_spec_double ("xresolution", NULL, NULL,
                                                         GIMP_MIN_RESOLUTION,
                                                         GIMP_MAX_RESOLUTION,
                                                         GRID_EDITOR_DEFAULT_RESOLUTION,
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
   g_object_class_install_property (object_class, PROP_YRESOLUTION,
                                    g_param_spec_double ("yresolution", NULL, NULL,
                                                         GIMP_MIN_RESOLUTION,
                                                         GIMP_MAX_RESOLUTION,
                                                         GRID_EDITOR_DEFAULT_RESOLUTION,
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 

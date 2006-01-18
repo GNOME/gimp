@@ -108,13 +108,13 @@ gimp_list_class_init (GimpListClass *klass)
 				   g_param_spec_boolean ("unique-names",
                                                          NULL, NULL,
                                                          FALSE,
-                                                         G_PARAM_READWRITE |
+                                                         GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_SORT_FUNC,
 				   g_param_spec_pointer ("sort-func",
                                                          NULL, NULL,
-                                                         G_PARAM_READWRITE |
+                                                         GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
 }
 

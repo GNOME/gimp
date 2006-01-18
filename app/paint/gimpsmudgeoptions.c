@@ -62,7 +62,7 @@ gimp_smudge_options_class_init (GimpSmudgeOptionsClass *klass)
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_RATE,
                                    "rate", NULL,
                                    0.0, 100.0, SMUDGE_DEFAULT_RATE,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void

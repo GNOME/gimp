@@ -79,7 +79,7 @@ gimp_string_action_class_init (GimpStringActionClass *klass)
                                    g_param_spec_string ("value",
                                                         NULL, NULL,
                                                         NULL,
-                                                        G_PARAM_READWRITE));
+                                                        GIMP_PARAM_READWRITE));
 
   action_signals[SELECTED] =
     g_signal_new ("selected",

@@ -65,11 +65,11 @@ gimp_convolve_options_class_init (GimpConvolveOptionsClass *klass)
                                  "type", NULL,
                                  GIMP_TYPE_CONVOLVE_TYPE,
                                  DEFAULT_CONVOLVE_TYPE,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_RATE,
                                    "rate", NULL,
                                    0.0, 100.0, DEFAULT_CONVOLVE_RATE,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void

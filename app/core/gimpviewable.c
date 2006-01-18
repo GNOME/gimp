@@ -153,7 +153,8 @@ gimp_viewable_class_init (GimpViewableClass *klass)
   klass->get_description         = gimp_viewable_real_get_description;
 
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_STOCK_ID, "stock-id",
-                                   NULL, NULL, 0);
+                                   NULL, NULL,
+                                   GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void

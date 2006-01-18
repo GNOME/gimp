@@ -86,19 +86,19 @@ gimp_blob_editor_class_init (GimpBlobEditorClass *klass)
                                                       NULL, NULL,
                                                       GIMP_TYPE_INK_BLOB_TYPE,
                                                       GIMP_INK_BLOB_TYPE_ELLIPSE,
-                                                      G_PARAM_READWRITE |
+                                                      GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class, PROP_ASPECT,
                                    g_param_spec_double ("blob-aspect",
                                                         NULL, NULL,
                                                         1.0, 10.0, 1.0,
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class, PROP_ANGLE,
                                    g_param_spec_double ("blob-angle",
                                                         NULL, NULL,
                                                         -90.0, 90.0, 0.0,
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 }
 

@@ -130,14 +130,14 @@ gimp_pdb_progress_class_init (GimpPdbProgressClass *klass)
   g_object_class_install_property (object_class, PROP_CONTEXT,
                                    g_param_spec_object ("context", NULL, NULL,
                                                         GIMP_TYPE_CONTEXT,
-                                                        G_PARAM_WRITABLE |
+                                                        GIMP_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_CALLBACK_NAME,
                                    g_param_spec_string ("callback-name",
                                                         NULL, NULL,
                                                         NULL,
-                                                        G_PARAM_WRITABLE |
+                                                        GIMP_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 

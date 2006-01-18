@@ -553,42 +553,42 @@ gimp_context_class_init (GimpContextClass *klass)
                                    g_param_spec_object ("gimp",
                                                         NULL, NULL,
                                                         GIMP_TYPE_GIMP,
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, GIMP_CONTEXT_PROP_IMAGE,
                                    g_param_spec_object (gimp_context_prop_names[GIMP_CONTEXT_PROP_IMAGE],
                                                         NULL, NULL,
                                                         GIMP_TYPE_IMAGE,
-                                                        G_PARAM_READWRITE));
+                                                        GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, GIMP_CONTEXT_PROP_DISPLAY,
                                    g_param_spec_object (gimp_context_prop_names[GIMP_CONTEXT_PROP_DISPLAY],
                                                         NULL, NULL,
                                                         GIMP_TYPE_OBJECT,
-                                                        G_PARAM_READWRITE));
+                                                        GIMP_PARAM_READWRITE));
 
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_TOOL,
                                    gimp_context_prop_names[GIMP_CONTEXT_PROP_TOOL], NULL,
                                    GIMP_TYPE_TOOL_INFO,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_PAINT_INFO,
                                    gimp_context_prop_names[GIMP_CONTEXT_PROP_PAINT_INFO], NULL,
                                    GIMP_TYPE_PAINT_INFO,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_RGB (object_class, GIMP_CONTEXT_PROP_FOREGROUND,
                                 gimp_context_prop_names[GIMP_CONTEXT_PROP_FOREGROUND],
                                 NULL,
                                 &black,
-                                0);
+                                GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_RGB (object_class, GIMP_CONTEXT_PROP_BACKGROUND,
                                 gimp_context_prop_names[GIMP_CONTEXT_PROP_BACKGROUND],
                                 NULL,
                                 &white,
-                                0);
+                                GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, GIMP_CONTEXT_PROP_OPACITY,
                                    gimp_context_prop_names[GIMP_CONTEXT_PROP_OPACITY],
@@ -596,62 +596,62 @@ gimp_context_class_init (GimpContextClass *klass)
                                    GIMP_OPACITY_TRANSPARENT,
                                    GIMP_OPACITY_OPAQUE,
                                    GIMP_OPACITY_OPAQUE,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, GIMP_CONTEXT_PROP_PAINT_MODE,
                                  gimp_context_prop_names[GIMP_CONTEXT_PROP_PAINT_MODE],
                                  NULL,
                                  GIMP_TYPE_LAYER_MODE_EFFECTS,
                                  GIMP_NORMAL_MODE,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_BRUSH,
                                    gimp_context_prop_names[GIMP_CONTEXT_PROP_BRUSH],
                                    NULL,
                                    GIMP_TYPE_BRUSH,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_PATTERN,
                                    gimp_context_prop_names[GIMP_CONTEXT_PROP_PATTERN],
                                    NULL,
                                    GIMP_TYPE_PATTERN,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_GRADIENT,
                                    gimp_context_prop_names[GIMP_CONTEXT_PROP_GRADIENT],
                                    NULL,
                                    GIMP_TYPE_GRADIENT,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_PALETTE,
                                    gimp_context_prop_names[GIMP_CONTEXT_PROP_PALETTE],
                                    NULL,
                                    GIMP_TYPE_PALETTE,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_FONT,
                                    gimp_context_prop_names[GIMP_CONTEXT_PROP_FONT],
                                    NULL,
                                    GIMP_TYPE_FONT,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
 
   g_object_class_install_property (object_class, GIMP_CONTEXT_PROP_BUFFER,
                                    g_param_spec_object (gimp_context_prop_names[GIMP_CONTEXT_PROP_BUFFER],
                                                         NULL, NULL,
                                                         GIMP_TYPE_BUFFER,
-                                                        G_PARAM_READWRITE));
+                                                        GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, GIMP_CONTEXT_PROP_IMAGEFILE,
                                    g_param_spec_object (gimp_context_prop_names[GIMP_CONTEXT_PROP_IMAGEFILE],
                                                         NULL, NULL,
                                                         GIMP_TYPE_IMAGEFILE,
-                                                        G_PARAM_READWRITE));
+                                                        GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, GIMP_CONTEXT_PROP_TEMPLATE,
                                    g_param_spec_object (gimp_context_prop_names[GIMP_CONTEXT_PROP_TEMPLATE],
                                                         NULL, NULL,
                                                         GIMP_TYPE_TEMPLATE,
-                                                        G_PARAM_READWRITE));
+                                                        GIMP_PARAM_READWRITE));
 }
 
 static void

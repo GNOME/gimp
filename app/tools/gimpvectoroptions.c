@@ -72,13 +72,13 @@ gimp_vector_options_class_init (GimpVectorOptionsClass *klass)
                                  "vectors-edit-mode", NULL,
                                  GIMP_TYPE_VECTOR_MODE,
                                  GIMP_VECTOR_MODE_DESIGN,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_VECTORS_POLYGONAL,
                                     "vectors-polygonal",
                                     N_("Restrict editing to polygons"),
                                     FALSE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void

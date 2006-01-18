@@ -95,7 +95,7 @@ gimp_cursor_view_class_init (GimpCursorViewClass* klass)
                                    g_param_spec_boolean ("sample-merged",
                                                          NULL, NULL,
                                                          TRUE,
-                                                         G_PARAM_READWRITE |
+                                                         GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
 }
 

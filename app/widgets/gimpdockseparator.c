@@ -86,7 +86,7 @@ gimp_dock_separator_class_init (GimpDockSeparatorClass *klass)
                                                              NULL, NULL,
                                                              0, G_MAXINT,
                                                              DEFAULT_HEIGHT,
-                                                             G_PARAM_READABLE));
+                                                             GIMP_PARAM_READABLE));
 }
 
 static void

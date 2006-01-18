@@ -79,7 +79,7 @@ gimp_gradient_select_class_init (GimpGradientSelectClass *klass)
   g_object_class_install_property (object_class, PROP_SAMPLE_SIZE,
                                    g_param_spec_int ("sample-size", NULL, NULL,
                                                      0, 10000, 84,
-                                                     G_PARAM_WRITABLE |
+                                                     GIMP_PARAM_WRITABLE |
                                                      G_PARAM_CONSTRUCT_ONLY));
 }
 

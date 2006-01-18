@@ -64,12 +64,12 @@ gimp_image_map_options_class_init (GimpImageMapOptionsClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PREVIEW,
                                     "preview", NULL,
                                     TRUE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   g_object_class_install_property (object_class, PROP_SETTINGS,
                                    g_param_spec_string ("settings",
                                                         NULL, NULL,
                                                         NULL,
-                                                        G_PARAM_READWRITE));
+                                                        GIMP_PARAM_READWRITE));
 }
 
 static void

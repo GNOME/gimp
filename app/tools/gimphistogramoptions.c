@@ -68,7 +68,7 @@ gimp_histogram_options_class_init (GimpHistogramOptionsClass *klass)
                                  "histogram-scale", NULL,
                                  GIMP_TYPE_HISTOGRAM_SCALE,
                                  GIMP_HISTOGRAM_SCALE_LINEAR,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void

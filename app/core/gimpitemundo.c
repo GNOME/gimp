@@ -70,7 +70,7 @@ gimp_item_undo_class_init (GimpItemUndoClass *klass)
   g_object_class_install_property (object_class, PROP_ITEM,
                                    g_param_spec_object ("item", NULL, NULL,
                                                         GIMP_TYPE_ITEM,
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 

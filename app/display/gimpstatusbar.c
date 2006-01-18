@@ -108,7 +108,7 @@ gimp_statusbar_class_init (GimpStatusbarClass *klass)
                                            _("Style of bevel around the statusbar text"),
                                            GTK_TYPE_SHADOW_TYPE,
                                            GTK_SHADOW_IN,
-                                           G_PARAM_READABLE));
+                                           GIMP_PARAM_READABLE));
 }
 
 static void

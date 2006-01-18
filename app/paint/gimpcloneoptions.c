@@ -66,16 +66,16 @@ gimp_clone_options_class_init (GimpCloneOptionsClass *klass)
                                  "clone-type", NULL,
                                  GIMP_TYPE_CLONE_TYPE,
                                  CLONE_DEFAULT_TYPE,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_ALIGN_MODE,
                                  "align-mode", NULL,
                                  GIMP_TYPE_CLONE_ALIGN_MODE,
                                  CLONE_DEFAULT_ALIGN_MODE,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAMPLE_MERGED,
                                     "sample-merged", NULL,
                                     FALSE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void

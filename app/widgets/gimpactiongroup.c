@@ -85,28 +85,28 @@ gimp_action_group_class_init (GimpActionGroupClass *klass)
                                    g_param_spec_object ("gimp",
                                                         NULL, NULL,
                                                         GIMP_TYPE_GIMP,
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_LABEL,
                                    g_param_spec_string ("label",
                                                         NULL, NULL,
                                                         NULL,
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_STOCK_ID,
                                    g_param_spec_string ("stock-id",
                                                         NULL, NULL,
                                                         NULL,
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_MNEMONICS,
                                    g_param_spec_boolean ("mnemonics",
                                                          NULL, NULL,
                                                          TRUE,
-                                                         G_PARAM_READWRITE |
+                                                         GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
 
   klass->groups = g_hash_table_new_full (g_str_hash, g_str_equal,

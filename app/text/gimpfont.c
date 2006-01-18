@@ -112,7 +112,7 @@ gimp_font_class_init (GimpFontClass *klass)
                                    g_param_spec_object ("pango-context",
                                                         NULL, NULL,
                                                         PANGO_TYPE_CONTEXT,
-                                                        G_PARAM_WRITABLE));
+                                                        GIMP_PARAM_WRITABLE));
 }
 
 static void

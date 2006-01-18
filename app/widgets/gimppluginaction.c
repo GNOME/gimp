@@ -81,7 +81,7 @@ gimp_plug_in_action_class_init (GimpPlugInActionClass *klass)
   g_object_class_install_property (object_class, PROP_PROC_DEF,
                                    g_param_spec_pointer ("proc-def",
                                                          NULL, NULL,
-                                                         G_PARAM_READWRITE));
+                                                         GIMP_PARAM_READWRITE));
 
   action_signals[SELECTED] =
     g_signal_new ("selected",

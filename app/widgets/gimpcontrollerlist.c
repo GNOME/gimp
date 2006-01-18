@@ -133,7 +133,7 @@ gimp_controller_list_class_init (GimpControllerListClass *klass)
                                    g_param_spec_object ("gimp",
                                                         NULL, NULL,
                                                         GIMP_TYPE_GIMP,
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 

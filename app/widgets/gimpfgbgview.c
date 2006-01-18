@@ -81,7 +81,7 @@ gimp_fg_bg_view_class_init (GimpFgBgViewClass *klass)
                                    g_param_spec_object ("context",
                                                         NULL, NULL,
                                                         GIMP_TYPE_CONTEXT,
-                                                        G_PARAM_READWRITE));
+                                                        GIMP_PARAM_READWRITE));
 }
 
 static void

@@ -113,12 +113,11 @@ gimp_cell_renderer_viewable_class_init (GimpCellRendererViewableClass *klass)
 
   klass->clicked             = NULL;
 
-  g_object_class_install_property (object_class,
-                                   PROP_RENDERER,
+  g_object_class_install_property (object_class, PROP_RENDERER,
                                    g_param_spec_object ("renderer",
                                                         NULL, NULL,
                                                         GIMP_TYPE_VIEW_RENDERER,
-                                                        G_PARAM_READWRITE));
+                                                        GIMP_PARAM_READWRITE));
 }
 
 static void

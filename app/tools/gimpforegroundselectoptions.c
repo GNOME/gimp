@@ -75,23 +75,23 @@ gimp_foreground_select_options_class_init (GimpForegroundSelectOptionsClass *kla
                                     "contiguous",
                                     _("Select a single contiguous area"),
                                     TRUE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_BACKGROUND,
                                     "background", NULL,
                                     FALSE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_STROKE_WIDTH,
                                 "stroke-width",
                                 _("Size of the brush used for refinements"),
                                 1, 80, 18,
-                                0);
+                                GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_SMOOTHNESS,
                                 "smoothness",
                                 _("Smaller values give a more accurate "
                                   "selection border but may introduce holes "
                                   "in the selection"),
                                 0, 8, SIOX_DEFAULT_SMOOTHNESS,
-                                0);
+                                GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_EXPANDED,
                                     "expanded", NULL,
                                     FALSE,
@@ -100,17 +100,17 @@ gimp_foreground_select_options_class_init (GimpForegroundSelectOptionsClass *kla
                                    "sensitivity-l",
                                    _("Sensitivity for brightness component"),
                                    0.0, 10.0, SIOX_DEFAULT_SENSITIVITY_L,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_SENSITIVITY_A,
                                    "sensitivity-a",
                                    _("Sensitivity for red/green component"),
                                    0.0, 10.0, SIOX_DEFAULT_SENSITIVITY_A,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_SENSITIVITY_B,
                                    "sensitivity-b",
                                    _("Sensitivity for yellow/blue component"),
                                    0.0, 10.0, SIOX_DEFAULT_SENSITIVITY_B,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void

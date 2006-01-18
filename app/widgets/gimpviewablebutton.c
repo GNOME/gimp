@@ -90,7 +90,7 @@ gimp_viewable_button_class_init (GimpViewableButtonClass *klass)
                                                       NULL, NULL,
                                                       GIMP_TYPE_VIEW_TYPE,
                                                       GIMP_VIEW_TYPE_LIST,
-                                                      G_PARAM_READWRITE));
+                                                      GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_POPUP_VIEW_SIZE,
                                    g_param_spec_int ("popup-view-size",
@@ -98,7 +98,7 @@ gimp_viewable_button_class_init (GimpViewableButtonClass *klass)
                                                      GIMP_VIEW_SIZE_TINY,
                                                      GIMP_VIEW_SIZE_GIGANTIC,
                                                      GIMP_VIEW_SIZE_SMALL,
-                                                     G_PARAM_READWRITE));
+                                                     GIMP_PARAM_READWRITE));
 }
 
 static void

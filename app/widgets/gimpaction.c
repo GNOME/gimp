@@ -86,13 +86,13 @@ gimp_action_class_init (GimpActionClass *klass)
                                    gimp_param_spec_rgb ("color",
                                                         NULL, NULL,
                                                         &black,
-                                                        G_PARAM_READWRITE));
+                                                        GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_VIEWABLE,
                                    g_param_spec_object ("viewable",
                                                         NULL, NULL,
                                                         GIMP_TYPE_VIEWABLE,
-                                                        G_PARAM_READWRITE));
+                                                        GIMP_PARAM_READWRITE));
 }
 
 static void

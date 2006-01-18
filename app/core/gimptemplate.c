@@ -106,56 +106,56 @@ gimp_template_class_init (GimpTemplateClass *klass)
                                 NULL,
                                 GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
                                 DEFAULT_IMAGE_WIDTH,
-                                0);
+                                GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_HEIGHT, "height",
                                 NULL,
                                 GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
                                 DEFAULT_IMAGE_HEIGHT,
-                                0);
+                                GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_UNIT, "unit",
                                  N_("The unit used for coordinate display "
                                     "when not in dot-for-dot mode."),
                                  TRUE, FALSE, GIMP_UNIT_PIXEL,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_RESOLUTION (object_class, PROP_XRESOLUTION,
                                        "xresolution",
                                        N_("The horizontal image resolution."),
                                        72.0,
-                                       0);
+                                       GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_RESOLUTION (object_class, PROP_YRESOLUTION,
                                        "yresolution",
                                        N_("The vertical image resolution."),
                                        72.0,
-                                       0);
+                                       GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_RESOLUTION_UNIT,
                                  "resolution-unit",
                                  NULL,
                                  FALSE, FALSE, GIMP_UNIT_INCH,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_IMAGE_TYPE,
                                  "image-type",
                                  NULL,
                                  GIMP_TYPE_IMAGE_BASE_TYPE, GIMP_RGB,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_FILL_TYPE,
                                  "fill-type",
                                  NULL,
                                  GIMP_TYPE_FILL_TYPE, GIMP_BACKGROUND_FILL,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_COMMENT,
                                    "comment",
                                    NULL,
                                    NULL,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_FILENAME,
                                    "filename",
                                    NULL,
                                    NULL,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void

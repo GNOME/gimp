@@ -76,11 +76,13 @@ gimp_base_config_class_init (GimpBaseConfigClass *klass)
                                  "temp-path", TEMP_PATH_BLURB,
 				 GIMP_CONFIG_PATH_DIR,
                                  "${gimp_dir}" G_DIR_SEPARATOR_S "tmp",
+                                 GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_SWAP_PATH,
                                  "swap-path", SWAP_PATH_BLURB,
 				 GIMP_CONFIG_PATH_DIR,
                                  "${gimp_dir}",
+                                 GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_STINGY_MEMORY_USE,
                                     "stingy-memory-use", NULL,
@@ -89,11 +91,12 @@ gimp_base_config_class_init (GimpBaseConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_UINT (object_class, PROP_NUM_PROCESSORS,
                                  "num-processors", NUM_PROCESSORS_BLURB,
                                  1, GIMP_MAX_NUM_THREADS, 2,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_MEMSIZE (object_class, PROP_TILE_CACHE_SIZE,
                                     "tile-cache-size", TILE_CACHE_SIZE_BLURB,
                                     0, MIN (G_MAXULONG, GIMP_MAX_MEMSIZE),
                                     1 << 28, /* 256MB */
+                                    GIMP_PARAM_STATIC_STRINGS |
                                     GIMP_CONFIG_PARAM_CONFIRM);
 }
 

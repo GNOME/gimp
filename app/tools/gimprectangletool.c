@@ -148,149 +148,184 @@ gimp_rectangle_tool_iface_base_init (GimpRectangleToolInterface *tool_iface)
   if (! initialized)
     {
       g_object_interface_install_property (tool_iface,
-        g_param_spec_object ("controls",
-                             NULL, NULL,
-                             GTK_TYPE_WIDGET,
-                             G_PARAM_READWRITE));
-      g_object_interface_install_property (tool_iface,
-        g_param_spec_object ("dimensions-entry",
-                             NULL, NULL,
-                             GTK_TYPE_WIDGET,
-                             G_PARAM_READWRITE));
+                                           g_param_spec_object ("controls",
+                                                                NULL, NULL,
+                                                                GTK_TYPE_WIDGET,
+                                                                GIMP_PARAM_READWRITE));
 
       g_object_interface_install_property (tool_iface,
-        g_param_spec_int ("startx",
-                          NULL, NULL,
-                          -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
-                          0,
-                          G_PARAM_READWRITE));
-      g_object_interface_install_property (tool_iface,
-        g_param_spec_int ("starty",
-                          NULL, NULL,
-                          -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
-                          0,
-                          G_PARAM_READWRITE));
+                                           g_param_spec_object ("dimensions-entry",
+                                                                NULL, NULL,
+                                                                GTK_TYPE_WIDGET,
+                                                                GIMP_PARAM_READWRITE));
 
       g_object_interface_install_property (tool_iface,
-        g_param_spec_int ("lastx",
-                          NULL, NULL,
-                          -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
-                          0,
-                          G_PARAM_READWRITE));
-      g_object_interface_install_property (tool_iface,
-        g_param_spec_int ("lasty",
-                          NULL, NULL,
-                          -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
-                          0,
-                          G_PARAM_READWRITE));
+                                           g_param_spec_int ("startx",
+                                                             NULL, NULL,
+                                                             -GIMP_MAX_IMAGE_SIZE,
+                                                             GIMP_MAX_IMAGE_SIZE,
+                                                             0,
+                                                             GIMP_PARAM_READWRITE));
 
       g_object_interface_install_property (tool_iface,
-        g_param_spec_int ("pressx",
-                          NULL, NULL,
-                          0, GIMP_MAX_IMAGE_SIZE,
-                          0,
-                          G_PARAM_READWRITE));
-      g_object_interface_install_property (tool_iface,
-        g_param_spec_int ("pressy",
-                          NULL, NULL,
-                          0, GIMP_MAX_IMAGE_SIZE,
-                          0,
-                          G_PARAM_READWRITE));
+                                           g_param_spec_int ("starty",
+                                                             NULL, NULL,
+                                                             -GIMP_MAX_IMAGE_SIZE,
+                                                             GIMP_MAX_IMAGE_SIZE,
+                                                             0,
+                                                             GIMP_PARAM_READWRITE));
 
       g_object_interface_install_property (tool_iface,
-        g_param_spec_int ("x1",
-                          NULL, NULL,
-                          -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
-                          0,
-                          G_PARAM_READWRITE));
-      g_object_interface_install_property (tool_iface,
-        g_param_spec_int ("y1",
-                          NULL, NULL,
-                          -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
-                          0,
-                          G_PARAM_READWRITE));
-      g_object_interface_install_property (tool_iface,
-        g_param_spec_int ("x2",
-                          NULL, NULL,
-                          -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
-                          0,
-                          G_PARAM_READWRITE));
-      g_object_interface_install_property (tool_iface,
-        g_param_spec_int ("y2",
-                          NULL, NULL,
-                          -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
-                          0,
-                          G_PARAM_READWRITE));
+                                           g_param_spec_int ("lastx",
+                                                             NULL, NULL,
+                                                             -GIMP_MAX_IMAGE_SIZE,
+                                                             GIMP_MAX_IMAGE_SIZE,
+                                                             0,
+                                                             GIMP_PARAM_READWRITE));
 
       g_object_interface_install_property (tool_iface,
-        g_param_spec_uint ("function",
-                           NULL, NULL,
-                           RECT_CREATING, RECT_EXECUTING,
-                           0,
-                           G_PARAM_READWRITE));
+                                           g_param_spec_int ("lasty",
+                                                             NULL, NULL,
+                                                             -GIMP_MAX_IMAGE_SIZE,
+                                                             GIMP_MAX_IMAGE_SIZE,
+                                                             0,
+                                                             GIMP_PARAM_READWRITE));
 
       g_object_interface_install_property (tool_iface,
-        g_param_spec_int ("dx1",
-                          NULL, NULL,
-                          -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
-                          0,
-                          G_PARAM_READWRITE));
-      g_object_interface_install_property (tool_iface,
-        g_param_spec_int ("dy1",
-                          NULL, NULL,
-                          -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
-                          0,
-                          G_PARAM_READWRITE));
-      g_object_interface_install_property (tool_iface,
-        g_param_spec_int ("dx2",
-                          NULL, NULL,
-                          -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
-                          0,
-                          G_PARAM_READWRITE));
-      g_object_interface_install_property (tool_iface,
-        g_param_spec_int ("dy2",
-                          NULL, NULL,
-                          -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
-                          0,
-                          G_PARAM_READWRITE));
+                                           g_param_spec_int ("pressx",
+                                                             NULL, NULL,
+                                                             0,
+                                                             GIMP_MAX_IMAGE_SIZE,
+                                                             0,
+                                                             GIMP_PARAM_READWRITE));
 
       g_object_interface_install_property (tool_iface,
-        g_param_spec_int ("dcw",
-                          NULL, NULL,
-                          0, GIMP_MAX_IMAGE_SIZE,
-                          0,
-                          G_PARAM_READWRITE));
-      g_object_interface_install_property (tool_iface,
-        g_param_spec_int ("dch",
-                          NULL, NULL,
-                          0, GIMP_MAX_IMAGE_SIZE,
-                          0,
-                          G_PARAM_READWRITE));
+                                           g_param_spec_int ("pressy",
+                                                             NULL, NULL,
+                                                             0,
+                                                             GIMP_MAX_IMAGE_SIZE,
+                                                             0,
+                                                             GIMP_PARAM_READWRITE));
 
       g_object_interface_install_property (tool_iface,
-        g_param_spec_double ("origx",
-                             NULL, NULL,
-                             -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
-                             0.0,
-                             G_PARAM_READWRITE));
+                                           g_param_spec_int ("x1",
+                                                             NULL, NULL,
+                                                             -GIMP_MAX_IMAGE_SIZE,
+                                                             GIMP_MAX_IMAGE_SIZE,
+                                                             0,
+                                                             GIMP_PARAM_READWRITE));
+
       g_object_interface_install_property (tool_iface,
-        g_param_spec_double ("origy",
-                             NULL, NULL,
-                             -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
-                             0.0,
-                             G_PARAM_READWRITE));
+                                           g_param_spec_int ("y1",
+                                                             NULL, NULL,
+                                                             -GIMP_MAX_IMAGE_SIZE,
+                                                             GIMP_MAX_IMAGE_SIZE,
+                                                             0,
+                                                             GIMP_PARAM_READWRITE));
+
       g_object_interface_install_property (tool_iface,
-        g_param_spec_double ("sizew",
-                             NULL, NULL,
-                             0.0, GIMP_MAX_IMAGE_SIZE,
-                             0.0,
-                             G_PARAM_READWRITE));
+                                           g_param_spec_int ("x2",
+                                                             NULL, NULL,
+                                                             -GIMP_MAX_IMAGE_SIZE,
+                                                             GIMP_MAX_IMAGE_SIZE,
+                                                             0,
+                                                             GIMP_PARAM_READWRITE));
+
       g_object_interface_install_property (tool_iface,
-        g_param_spec_double ("sizeh",
-                             NULL, NULL,
-                             0.0, GIMP_MAX_IMAGE_SIZE,
-                             0.0,
-                             G_PARAM_READWRITE));
+                                           g_param_spec_int ("y2",
+                                                             NULL, NULL,
+                                                             -GIMP_MAX_IMAGE_SIZE,
+                                                             GIMP_MAX_IMAGE_SIZE,
+                                                             0,
+                                                             GIMP_PARAM_READWRITE));
+
+      g_object_interface_install_property (tool_iface,
+                                           g_param_spec_uint ("function",
+                                                              NULL, NULL,
+                                                              RECT_CREATING,
+                                                              RECT_EXECUTING,
+                                                              0,
+                                                              GIMP_PARAM_READWRITE));
+
+      g_object_interface_install_property (tool_iface,
+                                           g_param_spec_int ("dx1",
+                                                             NULL, NULL,
+                                                             -GIMP_MAX_IMAGE_SIZE,
+                                                             GIMP_MAX_IMAGE_SIZE,
+                                                             0,
+                                                             GIMP_PARAM_READWRITE));
+
+      g_object_interface_install_property (tool_iface,
+                                           g_param_spec_int ("dy1",
+                                                             NULL, NULL,
+                                                             -GIMP_MAX_IMAGE_SIZE,
+                                                             GIMP_MAX_IMAGE_SIZE,
+                                                             0,
+                                                             GIMP_PARAM_READWRITE));
+
+      g_object_interface_install_property (tool_iface,
+                                           g_param_spec_int ("dx2",
+                                                             NULL, NULL,
+                                                             -GIMP_MAX_IMAGE_SIZE,
+                                                             GIMP_MAX_IMAGE_SIZE,
+                                                             0,
+                                                             GIMP_PARAM_READWRITE));
+
+      g_object_interface_install_property (tool_iface,
+                                           g_param_spec_int ("dy2",
+                                                             NULL, NULL,
+                                                             -GIMP_MAX_IMAGE_SIZE,
+                                                             GIMP_MAX_IMAGE_SIZE,
+                                                             0,
+                                                             GIMP_PARAM_READWRITE));
+
+      g_object_interface_install_property (tool_iface,
+                                           g_param_spec_int ("dcw",
+                                                             NULL, NULL,
+                                                             0,
+                                                             GIMP_MAX_IMAGE_SIZE,
+                                                             0,
+                                                             GIMP_PARAM_READWRITE));
+
+      g_object_interface_install_property (tool_iface,
+                                           g_param_spec_int ("dch",
+                                                             NULL, NULL,
+                                                             0,
+                                                             GIMP_MAX_IMAGE_SIZE,
+                                                             0,
+                                                             GIMP_PARAM_READWRITE));
+
+      g_object_interface_install_property (tool_iface,
+                                           g_param_spec_double ("origx",
+                                                                NULL, NULL,
+                                                                -GIMP_MAX_IMAGE_SIZE,
+                                                                GIMP_MAX_IMAGE_SIZE,
+                                                                0.0,
+                                                                GIMP_PARAM_READWRITE));
+
+      g_object_interface_install_property (tool_iface,
+                                           g_param_spec_double ("origy",
+                                                                NULL, NULL,
+                                                                -GIMP_MAX_IMAGE_SIZE,
+                                                                GIMP_MAX_IMAGE_SIZE,
+                                                                0.0,
+                                                                GIMP_PARAM_READWRITE));
+
+      g_object_interface_install_property (tool_iface,
+                                           g_param_spec_double ("sizew",
+                                                                NULL, NULL,
+                                                                0.0,
+                                                                GIMP_MAX_IMAGE_SIZE,
+                                                                0.0,
+                                                                GIMP_PARAM_READWRITE));
+
+      g_object_interface_install_property (tool_iface,
+                                           g_param_spec_double ("sizeh",
+                                                                NULL, NULL,
+                                                                0.0,
+                                                                GIMP_MAX_IMAGE_SIZE,
+                                                                0.0,
+                                                                GIMP_PARAM_READWRITE));
 
       initialized = TRUE;
     }

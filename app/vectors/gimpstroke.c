@@ -159,9 +159,7 @@ gimp_stroke_class_init (GimpStrokeClass *klass)
 {
   GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
   GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  GParamSpec      *anchor_param_spec;
-  GParamSpec      *control_points_param_spec;
-  GParamSpec      *close_param_spec;
+  GParamSpec      *param_spec;
 
   object_class->finalize          = gimp_stroke_finalize;
   object_class->get_property      = gimp_stroke_get_property;
@@ -213,38 +211,32 @@ gimp_stroke_class_init (GimpStrokeClass *klass)
   klass->get_draw_lines           = gimp_stroke_real_get_draw_lines;
   klass->control_points_get       = gimp_stroke_real_control_points_get;
 
-  anchor_param_spec = g_param_spec_boxed ("gimp-anchor",
-                                          "Gimp Anchor",
-                                          "The control points of a Stroke",
-                                          GIMP_TYPE_ANCHOR,
-                                          G_PARAM_WRITABLE |
-                                          G_PARAM_CONSTRUCT_ONLY);
+  param_spec = g_param_spec_boxed ("gimp-anchor",
+                                   "Gimp Anchor",
+                                   "The control points of a Stroke",
+                                   GIMP_TYPE_ANCHOR,
+                                   GIMP_PARAM_WRITABLE |
+                                   G_PARAM_CONSTRUCT_ONLY);
+  g_object_class_install_property (object_class, PROP_CONTROL_POINTS,
+                                   g_param_spec_value_array ("control-points",
+                                                             "Control Points",
+                                                             "This is an ValueArray "
+                                                             "with the initial "
+                                                             "control points of "
+                                                             "the new Stroke",
+                                                             param_spec,
+                                                             GIMP_PARAM_WRITABLE |
+                                                             G_PARAM_CONSTRUCT_ONLY));
 
-  control_points_param_spec = g_param_spec_value_array ("control-points",
-                                                        "Control Points",
-                                                        "This is an ValueArray "
-                                                        "with the initial "
-                                                        "control points of "
-                                                        "the new Stroke",
-                                                        anchor_param_spec,
-                                                        G_PARAM_WRITABLE |
-                                                        G_PARAM_CONSTRUCT_ONLY);
-
-  close_param_spec = g_param_spec_boolean ("closed",
-                                           "Close Flag",
-                                           "this flag indicates, if the "
-                                           "stroke is closed or not",
-                                           FALSE,
-                                           G_PARAM_READWRITE |
-                                           G_PARAM_CONSTRUCT_ONLY);
-
-  g_object_class_install_property (object_class,
-                                   PROP_CONTROL_POINTS,
-                                   control_points_param_spec);
-
-  g_object_class_install_property (object_class,
-                                   PROP_CLOSED,
-                                   close_param_spec);
+  g_object_class_install_property (object_class, PROP_CLOSED,
+                                   g_param_spec_boolean ("closed",
+                                                         "Close Flag",
+                                                         "this flag indicates "
+                                                         "whether the stroke "
+                                                         "is closed or not",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void

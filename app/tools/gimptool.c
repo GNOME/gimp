@@ -119,7 +119,7 @@ gimp_tool_class_init (GimpToolClass *klass)
                                    g_param_spec_object ("tool-info",
                                                         NULL, NULL,
                                                         GIMP_TYPE_TOOL_INFO,
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
 }

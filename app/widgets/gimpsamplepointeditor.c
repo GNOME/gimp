@@ -113,7 +113,7 @@ gimp_sample_point_editor_class_init (GimpSamplePointEditorClass *klass)
                                    g_param_spec_boolean ("sample-merged",
                                                          NULL, NULL,
                                                          TRUE,
-                                                         G_PARAM_READWRITE |
+                                                         GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
 }
 

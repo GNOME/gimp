@@ -26,6 +26,17 @@
 #include "libgimpconfig/gimpconfigtypes.h"
 
 
+#define GIMP_PARAM_STATIC_STRINGS (G_PARAM_STATIC_NAME | \
+                                   G_PARAM_STATIC_NICK | \
+                                   G_PARAM_STATIC_BLURB)
+#define GIMP_PARAM_READABLE       (G_PARAM_READABLE    | \
+                                   GIMP_PARAM_STATIC_STRINGS)
+#define GIMP_PARAM_WRITABLE       (G_PARAM_WRITABLE    | \
+                                   GIMP_PARAM_STATIC_STRINGS)
+#define GIMP_PARAM_READWRITE      (G_PARAM_READWRITE   | \
+                                   GIMP_PARAM_STATIC_STRINGS)
+
+
 typedef struct _GimpBaseConfig       GimpBaseConfig;
 typedef struct _GimpCoreConfig       GimpCoreConfig;
 typedef struct _GimpDisplayConfig    GimpDisplayConfig;

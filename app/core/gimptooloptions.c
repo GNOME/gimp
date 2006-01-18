@@ -66,7 +66,7 @@ gimp_tool_options_class_init (GimpToolOptionsClass *klass)
                                    g_param_spec_object ("tool-info",
                                                         NULL, NULL,
                                                         GIMP_TYPE_TOOL_INFO,
-                                                        G_PARAM_READWRITE));
+                                                        GIMP_PARAM_READWRITE));
 
 }
 

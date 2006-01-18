@@ -145,14 +145,14 @@ gimp_ui_manager_class_init (GimpUIManagerClass *klass)
                                    g_param_spec_string ("name",
                                                         NULL, NULL,
                                                         NULL,
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_GIMP,
                                    g_param_spec_object ("gimp",
                                                         NULL, NULL,
                                                         GIMP_TYPE_GIMP,
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   klass->managers = g_hash_table_new_full (g_str_hash, g_str_equal,

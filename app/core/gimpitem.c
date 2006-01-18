@@ -181,17 +181,17 @@ gimp_item_class_init (GimpItemClass *klass)
   g_object_class_install_property (object_class, PROP_ID,
                                    g_param_spec_int ("id", NULL, NULL,
                                                      0, G_MAXINT, 0,
-                                                     G_PARAM_READABLE));
+                                                     GIMP_PARAM_READABLE));
 
   g_object_class_install_property (object_class, PROP_WIDTH,
                                    g_param_spec_int ("width", NULL, NULL,
                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                     G_PARAM_READABLE));
+                                                     GIMP_PARAM_READABLE));
 
   g_object_class_install_property (object_class, PROP_HEIGHT,
                                    g_param_spec_int ("height", NULL, NULL,
                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                     G_PARAM_READABLE));
+                                                     GIMP_PARAM_READABLE));
 }
 
 static void

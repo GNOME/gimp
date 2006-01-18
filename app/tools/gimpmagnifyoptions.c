@@ -79,16 +79,16 @@ gimp_magnify_options_class_init (GimpMagnifyOptionsClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_AUTO_RESIZE,
                                     "auto-resize", NULL,
                                     FALSE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_ZOOM_TYPE,
                                  "zoom-type", NULL,
                                  GIMP_TYPE_ZOOM_TYPE,
                                  GIMP_ZOOM_IN,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_THRESHOLD,
                                    "threshold", NULL,
                                    1.0, 15.0, 8.0,
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
