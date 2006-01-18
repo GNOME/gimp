@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-15 23:51-0500\n"
+"POT-Creation-Date: 2006-01-17 20:03-0500\n"
 "PO-Revision-Date: 2005-09-06 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
@@ -23,10 +23,10 @@ msgstr "GNU Image Manipulation Program"
 
 #: ../app/about.h:29
 msgid ""
-"Copyright (C) 1995-2005\n"
+"Copyright (C) 1995-2006\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team"
 msgstr ""
-"Copyright (C) 1995-2005\n"
+"Copyright (C) 1995-2006\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team"
 
 #: ../app/about.h:33
@@ -249,7 +249,8 @@ msgstr "Colourmap Editor"
 msgid "Context"
 msgstr "Context"
 
-#: ../app/actions/actions.c:116 ../app/dialogs/dialogs.c:141
+#: ../app/actions/actions.c:116 ../app/actions/dialogs-actions.c:115
+#: ../app/dialogs/dialogs.c:141
 msgid "Pointer Information"
 msgstr "Pointer Information"
 
@@ -650,7 +651,7 @@ msgstr "New Channel Colour"
 #: ../app/actions/channels-commands.c:245
 #: ../app/display/gimpdisplayshell-dnd.c:496
 #: ../app/widgets/gimpchanneltreeview.c:259
-#: ../app/widgets/gimplayertreeview.c:771 ../app/widgets/gimptoolbox-dnd.c:309
+#: ../app/widgets/gimplayertreeview.c:770 ../app/widgets/gimptoolbox-dnd.c:309
 #, c-format
 msgid "%s Channel Copy"
 msgstr "%s Channel Copy"
@@ -795,7 +796,7 @@ msgstr "Sample Merged"
 #: ../app/dialogs/file-open-dialog.c:259
 #: ../app/dialogs/file-open-location-dialog.c:201
 #: ../app/display/gimpdisplayshell-dnd.c:448
-#: ../app/widgets/gimplayertreeview.c:728 ../app/widgets/gimptoolbox-dnd.c:157
+#: ../app/widgets/gimplayertreeview.c:727 ../app/widgets/gimptoolbox-dnd.c:157
 #: ../app/widgets/gimptoolbox.c:916
 #, c-format
 msgid ""
@@ -915,10 +916,6 @@ msgstr "Undo History"
 #: ../app/actions/dialogs-actions.c:115 ../app/dialogs/dialogs.c:141
 msgid "Pointer"
 msgstr "Pointer"
-
-#: ../app/actions/dialogs-actions.c:115
-msgid "Pointer Info"
-msgstr "Pointer Info"
 
 #: ../app/actions/dialogs-actions.c:120
 msgid "_Sample Points"
@@ -2365,7 +2362,7 @@ msgstr "Edit Layer Attributes"
 #: ../app/actions/layers-commands.c:235 ../app/actions/layers-commands.c:237
 #: ../app/actions/layers-commands.c:294 ../app/actions/layers-commands.c:298
 #: ../app/widgets/gimpdrawabletreeview.c:324
-#: ../app/widgets/gimplayertreeview.c:835
+#: ../app/widgets/gimplayertreeview.c:834
 msgid "New Layer"
 msgstr "New Layer"
 
@@ -7605,7 +7602,7 @@ msgid "Drop New Path"
 msgstr "Drop New Path"
 
 #: ../app/display/gimpdisplayshell-dnd.c:542
-#: ../app/widgets/gimplayertreeview.c:801 ../app/widgets/gimptoolbox-dnd.c:359
+#: ../app/widgets/gimplayertreeview.c:800 ../app/widgets/gimptoolbox-dnd.c:359
 msgid "Dropped Buffer"
 msgstr "Dropped Buffer"
 
@@ -10477,7 +10474,7 @@ msgstr "Lock alpha channel"
 msgid "Lock:"
 msgstr "Lock:"
 
-#: ../app/widgets/gimplayertreeview.c:841
+#: ../app/widgets/gimplayertreeview.c:840
 msgid "Empty Layer"
 msgstr "Empty Layer"
 
@@ -10715,7 +10712,7 @@ msgstr "Plase make sure the menu XML files are correctly installed."
 msgid "There was an error parsing the menu definition from %s: %s"
 msgstr "There was an error parsing the menu definition from %s: %s"
 
-#: ../app/widgets/gimpundoeditor.c:226
+#: ../app/widgets/gimpundoeditor.c:225
 msgid "[ Base Image ]"
 msgstr "[ Base Image ]"
 
