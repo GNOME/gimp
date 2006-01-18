@@ -1,6 +1,6 @@
 2006-01-18  Michael Natterer  <mitch@gimp.org>
 
-	* app/config/config-types.c: define GIMP_PARAM_STATIC_STRINGS
+	* app/config/config-types.h: define GIMP_PARAM_STATIC_STRINGS
 	which is G_PARAM_STATIC_NAME|NICK|BLURB. Also define
 	GIMP_PARAM_READABLE, _WRITABLE and _READWRITE which include
 	GIMP_PARAM_STATIC_STRINGS.
