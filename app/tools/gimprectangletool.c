@@ -1265,7 +1265,6 @@ gimp_rectangle_tool_dispose (GObject *object)
   if (controls)
     {
       gtk_widget_destroy (controls);
-      g_free (controls);
       g_object_set (rectangle, "controls", NULL, NULL);
     }
 
