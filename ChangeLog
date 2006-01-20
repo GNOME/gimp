@@ -1,3 +1,9 @@
+2006-01-20  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: applied modified patch from Henrik Brix Andersen
+	which adds the possibility to build --without-alsa, even if alsa
+	is available. Fixes bug #327777.
+
 2006-01-19  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimprectangletool.c (gimp_rectangle_tool_dispose):

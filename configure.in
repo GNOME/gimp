@@ -1340,7 +1340,7 @@ AC_SUBST(WMF_CFLAGS)
 # Check for lcms
 ################
 
-AC_ARG_WITH(lcms,[  --without-lcms          build without lcms support])
+AC_ARG_WITH(lcms, [  --without-lcms          build without lcms support])
 
 have_lcms=no
 if test "x$with_lcms" != xno; then
@@ -1370,17 +1370,20 @@ AM_CONDITIONAL(HAVE_LCMS, test $have_lcms = yes)
 # Check for alsa
 ################
 
-AM_PATH_ALSA(alsa_required_version,
-             AC_DEFINE(HAVE_ALSA, 1, [Define to 1 if alsa is available]),
-             AC_MSG_WARN([*** midi input controller will be built without alsa support (alsa not found or unuseable) ***]))
+AC_ARG_WITH(alsa, [  --without-alsa          disable alsa support in midi input controller])
+
+if test "x$with_alsa" != xno; then
+  AM_PATH_ALSA(alsa_required_version,
+               AC_DEFINE(HAVE_ALSA, 1, [Define to 1 if alsa is available]),
+               AC_MSG_WARN([*** midi input controller will be built without alsa support (alsa not found or unuseable) ***]))
+fi
 
 
 #######################
 # Check for linux input
 #######################
 
-AC_ARG_WITH(linux-input,
-              [  --without-linux-input   don't build linux input event controller module])
+AC_ARG_WITH(linux-input, [  --without-linux-input   don't build linux input event controller module])
 
 have_linux_input=no
 if test "x$with_linux_input" != "xno"; then
