@@ -1,3 +1,11 @@
+2006-01-21  Simon Budig  <simon@gimp.org>
+
+	* desktop/gimp.desktop.in.in: Added "GTK" category. Fixes
+	bug #328012.
+
+        * tools/pdbgen/pdb/vectors.pdb: removed unused variables.
+	* app/pdb/vectors_cmds.c: regenerated.
+
 2006-01-21  Karine Delvare  <kdelvare@nerim.net>
 
 	* app/tools/gimpcroptool.c

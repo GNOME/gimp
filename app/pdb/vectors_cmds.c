@@ -1161,7 +1161,6 @@ vectors_stroke_translate_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (vectors));
       stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
 
       if (stroke)
@@ -1240,7 +1239,6 @@ vectors_stroke_scale_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (vectors));
       stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
 
       if (stroke)
