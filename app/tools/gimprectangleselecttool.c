@@ -55,34 +55,35 @@
 #include "gimp-intl.h"
 
 
-static void gimp_new_rect_select_tool_rectangle_tool_iface_init (GimpRectangleToolInterface *iface);
+static void     gimp_new_rect_select_tool_rectangle_tool_iface_init (GimpRectangleToolInterface *iface);
 
-static GObject * gimp_new_rect_select_tool_constructor (GType                       type,
-                                                        guint                       n_params,
-                                                        GObjectConstructParam      *params);
-static void gimp_new_rect_select_tool_finalize       (GObject         *object);
-static void gimp_new_rect_select_tool_control        (GimpTool        *tool,
-                                                      GimpToolAction   action,
-                                                      GimpDisplay     *gdisp);
-static void gimp_new_rect_select_tool_button_press   (GimpTool        *tool,
-                                                      GimpCoords      *coords,
-                                                      guint32          time,
-                                                      GdkModifierType  state,
-                                                      GimpDisplay     *gdisp);
-static void gimp_new_rect_select_tool_button_release (GimpTool        *tool,
-                                                      GimpCoords      *coords,
-                                                      guint32          time,
-                                                      GdkModifierType  state,
-                                                      GimpDisplay     *gdisp);
-static void gimp_new_rect_select_tool_oper_update    (GimpTool        *tool,
-                                                      GimpCoords      *coords,
-                                                      GdkModifierType  state,
-                                                      GimpDisplay     *gdisp);
-static gboolean gimp_new_rect_select_tool_execute    (GimpRectangleTool          *rect_tool,
-                                                      gint                        x,
-                                                      gint                        y,
-                                                      gint                        w,
-                                                      gint                        h);
+static GObject *
+                gimp_new_rect_select_tool_constructor    (GType            type,
+                                                          guint            n_params,
+                                                          GObjectConstructParam *params);
+static void     gimp_new_rect_select_tool_finalize       (GObject         *object);
+static void     gimp_new_rect_select_tool_control        (GimpTool        *tool,
+                                                          GimpToolAction   action,
+                                                          GimpDisplay     *gdisp);
+static void     gimp_new_rect_select_tool_button_press   (GimpTool        *tool,
+                                                          GimpCoords      *coords,
+                                                          guint32          time,
+                                                          GdkModifierType  state,
+                                                          GimpDisplay     *gdisp);
+static void     gimp_new_rect_select_tool_button_release (GimpTool        *tool,
+                                                          GimpCoords      *coords,
+                                                          guint32          time,
+                                                          GdkModifierType  state,
+                                                          GimpDisplay     *gdisp);
+static void     gimp_new_rect_select_tool_oper_update    (GimpTool        *tool,
+                                                          GimpCoords      *coords,
+                                                          GdkModifierType  state,
+                                                          GimpDisplay     *gdisp);
+static gboolean gimp_new_rect_select_tool_execute        (GimpRectangleTool *rect_tool,
+                                                          gint             x,
+                                                          gint             y,
+                                                          gint             w,
+                                                          gint             h);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpNewRectSelectTool, gimp_new_rect_select_tool,

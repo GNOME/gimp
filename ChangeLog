@@ -1,3 +1,10 @@
+2006-01-21  Karine Delvare  <kdelvare@nerim.net>
+
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpnewrectselecttool.c
+	* app/tools/gimprectangleoptions.c
+	* app/tools/gimprectangletool.c: indentation fixes.
+
 2006-01-20  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in: applied modified patch from Henrik Brix Andersen

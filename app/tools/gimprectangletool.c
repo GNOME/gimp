@@ -82,39 +82,40 @@ struct _GimpRectangleToolPrivate
 };
 
 
-static void    gimp_rectangle_tool_iface_base_init    (GimpRectangleToolInterface *rectangle_tool_iface);
+static void     gimp_rectangle_tool_iface_base_init (GimpRectangleToolInterface *rectangle_tool_iface);
 
 static GimpRectangleToolPrivate *
-               gimp_rectangle_tool_get_private        (GimpRectangleTool *tool);
+                gimp_rectangle_tool_get_private     (GimpRectangleTool     *tool);
 
 
 /*  Rectangle helper functions  */
-static void     rectangle_tool_start                      (GimpRectangleTool *rectangle);
+static void     rectangle_tool_start                (GimpRectangleTool     *rectangle);
 
 /*  Rectangle dialog functions  */
-static void     rectangle_info_update                     (GimpRectangleTool *rectangle);
+static void     rectangle_info_update               (GimpRectangleTool     *rectangle);
 
-static void     rectangle_selection_callback              (GtkWidget         *widget,
-                                                           GimpRectangleTool *rectangle);
-static void     rectangle_automatic_callback              (GtkWidget         *widget,
-                                                           GimpRectangleTool *rectangle);
+static void     rectangle_selection_callback        (GtkWidget             *widget,
+                                                     GimpRectangleTool     *rectangle);
+static void     rectangle_automatic_callback        (GtkWidget             *widget,
+                                                     GimpRectangleTool     *rectangle);
 
-static void     rectangle_dimensions_changed              (GtkWidget         *widget,
-                                                           GimpRectangleTool *rectangle);
+static void     rectangle_dimensions_changed        (GtkWidget             *widget,
+                                                     GimpRectangleTool     *rectangle);
 
-static void     gimp_rectangle_tool_update_options    (GimpRectangleTool     *rectangle,
-                                                       GimpDisplay           *gdisp);
-static GtkWidget * gimp_rectangle_controls            (GimpRectangleTool     *rectangle);
-static void     gimp_rectangle_tool_zero_controls     (GimpRectangleTool     *rectangle);
-static void     gimp_rectangle_tool_notify_width      (GimpRectangleOptions  *options,
-                                                       GParamSpec            *pspec,
-                                                       GimpRectangleTool     *rectangle);
-static void     gimp_rectangle_tool_notify_height     (GimpRectangleOptions  *options,
-                                                       GParamSpec            *pspec,
-                                                       GimpRectangleTool     *rectangle);
-static void     gimp_rectangle_tool_notify_aspect     (GimpRectangleOptions  *options,
-                                                       GParamSpec            *pspec,
-                                                       GimpRectangleTool     *rectangle);
+static void     gimp_rectangle_tool_update_options  (GimpRectangleTool     *rectangle,
+                                                     GimpDisplay           *gdisp);
+static GtkWidget *
+                gimp_rectangle_controls             (GimpRectangleTool     *rectangle);
+static void     gimp_rectangle_tool_zero_controls   (GimpRectangleTool     *rectangle);
+static void     gimp_rectangle_tool_notify_width    (GimpRectangleOptions  *options,
+                                                     GParamSpec            *pspec,
+                                                     GimpRectangleTool     *rectangle);
+static void     gimp_rectangle_tool_notify_height   (GimpRectangleOptions  *options,
+                                                     GParamSpec            *pspec,
+                                                     GimpRectangleTool     *rectangle);
+static void     gimp_rectangle_tool_notify_aspect   (GimpRectangleOptions  *options,
+                                                     GParamSpec            *pspec,
+                                                     GimpRectangleTool     *rectangle);
 
 
 GType
@@ -1343,23 +1344,23 @@ gimp_rectangle_tool_button_press (GimpTool        *tool,
       tool->gdisp = gdisp;
 
       g_object_set (rectangle,
-          "x1", ROUND (coords->x),
-          "y1", ROUND (coords->y),
-          "x2", ROUND (coords->x),
-          "y2", ROUND (coords->y),
-          NULL);
+                    "x1", ROUND (coords->x),
+                    "y1", ROUND (coords->y),
+                    "x2", ROUND (coords->x),
+                    "y2", ROUND (coords->y),
+                    NULL);
 
       rectangle_tool_start (rectangle);
     }
 
   g_object_set (rectangle,
-      "pressx", ROUND (coords->x),
-      "pressy", ROUND (coords->y),
-      "lastx", ROUND (coords->x),
-      "lasty", ROUND (coords->y),
-      "startx", ROUND (coords->x),
-      "starty", ROUND (coords->y),
-      NULL);
+                "pressx", ROUND (coords->x),
+                "pressy", ROUND (coords->y),
+                "lastx", ROUND (coords->x),
+                "lasty", ROUND (coords->y),
+                "startx", ROUND (coords->x),
+                "starty", ROUND (coords->y),
+                NULL);
 
   gimp_tool_control_activate (tool->control);
 }
@@ -1387,11 +1388,11 @@ gimp_rectangle_tool_button_release (GimpTool        *tool,
   if (! (state & GDK_BUTTON3_MASK))
     {
       g_object_get (rectangle,
-          "lastx", &lastx,
-          "lasty", &lasty,
-          "pressx", &pressx,
-          "pressy", &pressy,
-          NULL);
+                    "lastx", &lastx,
+                    "lasty", &lasty,
+                    "pressx", &pressx,
+                    "pressy", &pressy,
+                    NULL);
       if (lastx == pressx && lasty == pressy)
         {
           gimp_rectangle_tool_response (NULL, GIMP_RECTANGLE_MODE_EXECUTE,
@@ -1437,9 +1438,9 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
   cury = ROUND (coords->y);
 
   g_object_get (rectangle,
-      "startx", &x1,
-      "starty", &y1,
-      NULL);
+                "startx", &x1,
+                "starty", &y1,
+                NULL);
   x2 = curx;
   y2 = cury;
 
@@ -1448,20 +1449,20 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
 
   /*  If there have been no changes... return  */
   g_object_get (rectangle,
-      "lastx", &lastx,
-      "lasty", &lasty,
-      NULL);
+                "lastx", &lastx,
+                "lasty", &lasty,
+                NULL);
   if (lastx == x2 && lasty == y2)
     return;
 
   options = GIMP_RECTANGLE_OPTIONS (tool->tool_info->tool_options);
 
   g_object_get (options,
-      "new-fixed-width", &fixed_width,
-      "new-fixed-height", &fixed_height,
-      "fixed-aspect", &fixed_aspect,
-      "fixed-center", &fixed_center,
-      NULL);
+                "new-fixed-width", &fixed_width,
+                "new-fixed-height", &fixed_height,
+                "fixed-aspect", &fixed_aspect,
+                "fixed-center", &fixed_center,
+                NULL);
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
@@ -1470,18 +1471,18 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
   max_y = gdisp->gimage->height;
 
   g_object_get (options,
-      "width", &width,
-      "height", &height,
-      "center-x", &center_x,
-      "center-y", &center_y,
-      NULL);
+                "width", &width,
+                "height", &height,
+                "center-x", &center_x,
+                "center-y", &center_y,
+                NULL);
 
   g_object_get (rectangle,
-      "x1", &rx1,
-      "y1", &ry1,
-      "x2", &rx2,
-      "y2", &ry2,
-      NULL);
+                "x1", &rx1,
+                "y1", &ry1,
+                "x2", &rx2,
+                "y2", &ry2,
+                NULL);
 
   switch (function)
     {
@@ -1680,9 +1681,7 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
   if (fixed_aspect)
     {
       gdouble aspect;
-      g_object_get (options,
-        "aspect", &aspect,
-        NULL);
+      g_object_get (options, "aspect", &aspect, NULL);
 
       if (aspect > max_y)
         aspect = max_y;
@@ -1730,23 +1729,23 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
 
   /*  make sure that the coords are in bounds  */
   g_object_set (rectangle,
-      "x1", MIN (x1, x2),
-      "y1", MIN (y1, y2),
-      "x2", MAX (x1, x2),
-      "y2", MAX (y1, y2),
-      "lastx", curx,
-      "lasty", cury,
-      NULL);
+                "x1", MIN (x1, x2),
+                "y1", MIN (y1, y2),
+                "x2", MAX (x1, x2),
+                "y2", MAX (y1, y2),
+                "lastx", curx,
+                "lasty", cury,
+                NULL);
 
   /*  recalculate the coordinates for rectangle_draw based on the new values  */
   gimp_rectangle_tool_configure (rectangle);
 
   g_object_get (rectangle,
-      "x1", &rx1,
-      "y1", &ry1,
-      "x2", &rx2,
-      "y2", &ry2,
-      NULL);
+                "x1", &rx1,
+                "y1", &ry1,
+                "x2", &rx2,
+                "y2", &ry2,
+                NULL);
 
   switch (function)
     {
@@ -1901,18 +1900,18 @@ gimp_rectangle_tool_key_press (GimpTool    *tool,
   max_y = gdisp->gimage->height;
 
   g_object_get (rectangle,
-      "x1", &x1,
-      "y1", &y1,
-      "x2", &x2,
-      "y2", &y2,
-      NULL);
+                "x1", &x1,
+                "y1", &y1,
+                "x2", &x2,
+                "y2", &y2,
+                NULL);
 
   g_object_set (rectangle,
-      "x1", x1 + inc_x,
-      "y1", y1 + inc_y,
-      "x2", x2 + inc_x,
-      "y2", y2 + inc_y,
-      NULL);
+                "x1", x1 + inc_x,
+                "y1", y1 + inc_y,
+                "x2", x2 + inc_x,
+                "y2", y2 + inc_y,
+                NULL);
 
   gimp_rectangle_tool_configure (rectangle);
 
@@ -1946,18 +1945,16 @@ gimp_rectangle_tool_oper_update (GimpTool        *tool,
   g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (tool));
 
   if (tool->gdisp != gdisp)
-    {
-      return;
-    }
+    return;
 
   g_object_get (rectangle,
-      "x1", &x1,
-      "y1", &y1,
-      "x2", &x2,
-      "y2", &y2,
-      "dcw", &dcw,
-      "dch", &dch,
-      NULL);
+                "x1", &x1,
+                "y1", &y1,
+                "x2", &x2,
+                "y2", &y2,
+                "dcw", &dcw,
+                "dch", &dch,
+                NULL);
 
   inside_x = coords->x > x1 && coords->x < x2;
   inside_y = coords->y > y1 && coords->y < y2;
@@ -2149,11 +2146,11 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw)
   g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (tool));
 
   g_object_get (rectangle,
-      "dx1", &dx1,
-      "dy1", &dy1,
-      "dx2", &dx2,
-      "dy2", &dy2,
-      NULL);
+                "dx1", &dx1,
+                "dy1", &dy1,
+                "dx2", &dx2,
+                "dy2", &dy2,
+                NULL);
 
   gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
                          dx1, dy1,
@@ -2189,11 +2186,11 @@ gimp_rectangle_tool_configure (GimpRectangleTool *rectangle)
   g_object_get (options, "highlight", &highlight, NULL);
 
   g_object_get (rectangle,
-      "x1", &x1,
-      "y1", &y1,
-      "x2", &x2,
-      "y2", &y2,
-      NULL);
+                "x1", &x1,
+                "y1", &y1,
+                "x2", &x2,
+                "y2", &y2,
+                NULL);
 
   if (highlight)
     {
@@ -2216,19 +2213,19 @@ gimp_rectangle_tool_configure (GimpRectangleTool *rectangle)
                                    &dx2, &dy2,
                                    FALSE);
   g_object_set (rectangle,
-      "dx1", dx1,
-      "dy1", dy1,
-      "dx2", dx2,
-      "dy2", dy2,
-      NULL);
+                "dx1", dx1,
+                "dy1", dy1,
+                "dx2", dx2,
+                "dy2", dy2,
+                NULL);
 
 #define SRW 10
 #define SRH 10
 
   g_object_set (rectangle,
-      "dcw", ((dx2 - dx1) < SRW) ? (dx2 - dx1) : SRW,
-      "dch", ((dy2 - dy1) < SRH) ? (dy2 - dy1) : SRH,
-      NULL);
+                "dcw", ((dx2 - dx1) < SRW) ? (dx2 - dx1) : SRW,
+                "dch", ((dy2 - dy1) < SRH) ? (dy2 - dy1) : SRH,
+                NULL);
 
 #undef SRW
 #undef SRH
@@ -2256,24 +2253,24 @@ rectangle_info_update (GimpRectangleTool *rectangle)
   gint x1, y1, x2, y2;
 
   g_object_get (rectangle,
-      "x1", &x1,
-      "y1", &y1,
-      "x2", &x2,
-      "y2", &y2,
-      NULL);
+                "x1", &x1,
+                "y1", &y1,
+                "x2", &x2,
+                "y2", &y2,
+                NULL);
 
   g_object_set (rectangle,
-      "origx", (gdouble) x1,
-      NULL);
+                "origx", (gdouble) x1,
+                NULL);
   g_object_set (rectangle,
-      "origy", (gdouble) y1,
-      NULL);
+                "origy", (gdouble) y1,
+                NULL);
   g_object_set (rectangle,
-      "sizew", (gdouble) (x2 - x1),
-      NULL);
+                "sizew", (gdouble) (x2 - x1),
+                NULL);
   g_object_set (rectangle,
-      "sizeh", (gdouble) (y2 - y1),
-      NULL);
+                "sizeh", (gdouble) (y2 - y1),
+                NULL);
 }
 
 void
@@ -2281,18 +2278,18 @@ gimp_rectangle_tool_response (GtkWidget         *widget,
                               gint               response_id,
                               GimpRectangleTool *rectangle)
 {
-  GimpTool *tool = GIMP_TOOL (rectangle);
+  GimpTool *tool   = GIMP_TOOL (rectangle);
   gboolean  finish = TRUE;
   gint      x1, y1, x2, y2;
 
   if (response_id == GIMP_RECTANGLE_MODE_EXECUTE)
     {
       g_object_get (rectangle,
-        "x1", &x1,
-        "y1", &y1,
-        "x2", &x2,
-        "y2", &y2,
-        NULL);
+                    "x1", &x1,
+                    "y1", &y1,
+                    "x2", &x2,
+                    "y2", &y2,
+                    NULL);
 
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (rectangle));
 
@@ -2342,20 +2339,20 @@ rectangle_selection_callback (GtkWidget         *widget,
                            &x2, &y2))
     {
       g_object_set (rectangle,
-          "x1", x1,
-          "y1", y1,
-          "x2", x2,
-          "y2", y2,
-          NULL);
+                    "x1", x1,
+                    "y1", y1,
+                    "x2", x2,
+                    "y2", y2,
+                    NULL);
     }
   else
     {
       g_object_set (rectangle,
-          "x1", 0,
-          "y1", 0,
-          "x2", gdisp->gimage->width,
-          "y2", gdisp->gimage->height,
-          NULL);
+                    "x1", 0,
+                    "y1", 0,
+                    "x2", gdisp->gimage->width,
+                    "y2", gdisp->gimage->height,
+                    NULL);
     }
 
   gimp_rectangle_tool_configure (rectangle);
@@ -2385,11 +2382,11 @@ rectangle_automatic_callback (GtkWidget         *widget,
   offset_y = 0;
 
   g_object_get (rectangle,
-      "x1", &rx1,
-      "y1", &ry1,
-      "x2", &rx2,
-      "y2", &ry2,
-      NULL);
+                "x1", &rx1,
+                "y1", &ry1,
+                "x2", &rx2,
+                "y2", &ry2,
+                NULL);
 
   x1 = rx1 - offset_x  > 0      ? rx1 - offset_x : 0;
   x2 = rx2 - offset_x  < width  ? rx2 - offset_x : width;
@@ -2407,11 +2404,11 @@ rectangle_automatic_callback (GtkWidget         *widget,
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (rectangle));
 
       g_object_set (rectangle,
-          "x1", offset_x + shrunk_x1,
-          "y1", offset_y + shrunk_y1,
-          "x2", offset_x + shrunk_x2,
-          "y2", offset_y + shrunk_y2,
-          NULL);
+                    "x1", offset_x + shrunk_x1,
+                    "y1", offset_y + shrunk_y1,
+                    "x2", offset_x + shrunk_x2,
+                    "y2", offset_y + shrunk_y2,
+                    NULL);
 
       gimp_rectangle_tool_configure (rectangle);
 
@@ -2432,11 +2429,11 @@ rectangle_dimensions_changed (GtkWidget         *widget,
     return;
 
   g_object_get (rectangle,
-      "x1", &rx1,
-      "y1", &ry1,
-      "x2", &rx2,
-      "y2", &ry2,
-      NULL);
+                "x1", &rx1,
+                "y1", &ry1,
+                "x2", &rx2,
+                "y2", &ry2,
+                NULL);
 
   x1 = gimp_size_entry_get_refval (entry, 2);
   y1 = gimp_size_entry_get_refval (entry, 3);
@@ -2448,40 +2445,40 @@ rectangle_dimensions_changed (GtkWidget         *widget,
       coords.x = x1;
       coords.y = y1;
       g_object_set (rectangle,
-          "function", RECT_RESIZING_LEFT,
-          "startx", rx1,
-          "starty", ry1,
-          NULL);
+                    "function", RECT_RESIZING_LEFT,
+                    "startx", rx1,
+                    "starty", ry1,
+                    NULL);
     }
   else if (y1 != ry1)
     {
       coords.x = x1;
       coords.y = y1;
       g_object_set (rectangle,
-          "function", RECT_RESIZING_TOP,
-          "startx", rx1,
-          "starty", ry1,
-          NULL);
+                    "function", RECT_RESIZING_TOP,
+                    "startx", rx1,
+                    "starty", ry1,
+                    NULL);
     }
   else if (x2 != rx2)
     {
       coords.x = x2;
       coords.y = y2;
       g_object_set (rectangle,
-          "function", RECT_RESIZING_RIGHT,
-          "startx", rx2,
-          "starty", ry2,
-          NULL);
+                    "function", RECT_RESIZING_RIGHT,
+                    "startx", rx2,
+                    "starty", ry2,
+                    NULL);
     }
   else if (y2 != ry2)
     {
       coords.x = x2;
       coords.y = y2;
       g_object_set (rectangle,
-          "function", RECT_RESIZING_BOTTOM,
-          "startx", rx2,
-          "starty", ry2,
-          NULL);
+                    "function", RECT_RESIZING_BOTTOM,
+                    "startx", rx2,
+                    "starty", ry2,
+                    NULL);
     }
   else
     return;

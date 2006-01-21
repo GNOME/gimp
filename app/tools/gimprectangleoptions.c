@@ -38,22 +38,22 @@ typedef struct _GimpRectangleOptionsPrivate GimpRectangleOptionsPrivate;
 
 struct _GimpRectangleOptionsPrivate
 {
-  gboolean         highlight;
+  gboolean highlight;
 
-  gboolean         fixed_width;
-  gdouble          width;
+  gboolean fixed_width;
+  gdouble  width;
 
-  gboolean         fixed_height;
-  gdouble          height;
+  gboolean fixed_height;
+  gdouble  height;
 
-  gboolean         fixed_aspect;
-  gdouble          aspect;
+  gboolean fixed_aspect;
+  gdouble  aspect;
 
-  gboolean         fixed_center;
-  gdouble          center_x;
-  gdouble          center_y;
+  gboolean fixed_center;
+  gdouble  center_x;
+  gdouble  center_y;
 
-  GimpUnit         unit;
+  GimpUnit unit;
 };
 
 static void   gimp_rectangle_options_iface_base_init    (GimpRectangleOptionsInterface *rectangle_options_iface);
