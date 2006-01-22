@@ -1,21 +1,21 @@
 # Vietnamese translation for the GIMP.
-# Copyright © 2005 Gnome i18n Project for Vietnamese.
+# Copyright © 2002-2006 Gnome i18n Project for Vietnamese.
 # T.M.Thanh <tmthanh@yahoo.com>, 2002-2003.
-# Clytie Siddall <clytie@riverland.net.au>, 2005.
+# Clytie Siddall <clytie@riverland.net.au>, 2005-2006.
 # 
 msgid ""
 ""
 msgstr "Project-Id-Version: gimp Gnome HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-15 02:59+0100\n"
-"PO-Revision-Date: 2006-01-15 18:04+1030\n"
+"POT-Creation-Date: 2006-01-22 02:38+0100\n"
+"PO-Revision-Date: 2006-01-22 16:33+1030\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0\n"
-"X-Generator: LocFactoryEditor 1.6b23\n"
+"X-Generator: LocFactoryEditor 1.6b31\n"
 
 #:../app/about.h:26 ../desktop/gimp.desktop.in.in.h:2
 msgid "GNU Image Manipulation Program"
@@ -23,9 +23,9 @@ msgstr "Chương trình Thao tác Ảnh GNU"
 
 #:../app/about.h:29
 msgid ""
-"Copyright (C) 1995-2005\n"
+"Copyright (C) 1995-2006\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team"
-msgstr "Bản quyền © năm 1995-2005\n"
+msgstr "Bản quyền © năm 1995-2006\n"
 "Spencer Kimball, Peter Mattis và Nhóm Phát triển GIMP."
 
 #:../app/about.h:33
@@ -253,7 +253,8 @@ msgstr "Bộ sửa bố trí màu"
 msgid "Context"
 msgstr "Ngữ cảnh"
 
-#:../app/actions/actions.c:116 ../app/dialogs/dialogs.c:141
+#:../app/actions/actions.c:116 ../app/actions/dialogs-actions.c:115
+#:../app/dialogs/dialogs.c:141
 msgid "Pointer Information"
 msgstr "Thông tin con trỏ"
 
@@ -654,7 +655,7 @@ msgstr "Màu kênh mới"
 #:../app/actions/channels-commands.c:245
 #:../app/display/gimpdisplayshell-dnd.c:496
 #:../app/widgets/gimpchanneltreeview.c:259
-#:../app/widgets/gimplayertreeview.c:771 ../app/widgets/gimptoolbox-dnd.c:309
+#:../app/widgets/gimplayertreeview.c:770 ../app/widgets/gimptoolbox-dnd.c:309
 #,c-format
 msgid "%s Channel Copy"
 msgstr "%s Kênh Chép"
@@ -799,7 +800,7 @@ msgstr "Mẫu đã trộn"
 #:../app/dialogs/file-open-dialog.c:259
 #:../app/dialogs/file-open-location-dialog.c:201
 #:../app/display/gimpdisplayshell-dnd.c:448
-#:../app/widgets/gimplayertreeview.c:728 ../app/widgets/gimptoolbox-dnd.c:157
+#:../app/widgets/gimplayertreeview.c:727 ../app/widgets/gimptoolbox-dnd.c:157
 #:../app/widgets/gimptoolbox.c:916
 #,c-format
 msgid ""
@@ -918,10 +919,6 @@ msgstr "Hồi lại Lược sử"
 #:../app/actions/dialogs-actions.c:115 ../app/dialogs/dialogs.c:141
 msgid "Pointer"
 msgstr "Con trỏ"
-
-#:../app/actions/dialogs-actions.c:115
-msgid "Pointer Info"
-msgstr "Thông tin con trỏ"
 
 #:../app/actions/dialogs-actions.c:120
 msgid "_Sample Points"
@@ -2361,7 +2358,7 @@ msgstr "Sửa thuộc tính lớp"
 #:../app/actions/layers-commands.c:235 ../app/actions/layers-commands.c:237
 #:../app/actions/layers-commands.c:294 ../app/actions/layers-commands.c:298
 #:../app/widgets/gimpdrawabletreeview.c:324
-#:../app/widgets/gimplayertreeview.c:835
+#:../app/widgets/gimplayertreeview.c:834
 msgid "New Layer"
 msgstr "Lớp mới"
 
@@ -3694,8 +3691,8 @@ msgstr "Đặt kiểu con trỏ chuột cần dùng."
 msgid ""
 "Context-dependent mouse pointers are helpful.  They are enabled by default.  "
 "However, they require overhead that you may want to do without."
-msgstr "Con trỏ chuột phụ thuộc vào ngữ cảnh là trơ tráo. Mặc định là bật con trỏ kiểu "
-"này, nhưng chúng cần thiết tiềm năng thêm."
+msgstr "Con trỏ chuột phụ thuộc vào ngữ cảnh là trơ tráo. Mặc định là bật con trỏ "
+"kiểu này, nhưng chúng cần thiết tiềm năng thêm."
 
 #:../app/config/gimprc-blurbs.h:50
 msgid ""
@@ -7530,7 +7527,7 @@ msgid "Drop New Path"
 msgstr "Thả đường dẫn mới"
 
 #:../app/display/gimpdisplayshell-dnd.c:542
-#:../app/widgets/gimplayertreeview.c:801 ../app/widgets/gimptoolbox-dnd.c:359
+#:../app/widgets/gimplayertreeview.c:800 ../app/widgets/gimptoolbox-dnd.c:359
 msgid "Dropped Buffer"
 msgstr "Bộ đệm đã thả"
 
@@ -8356,23 +8353,23 @@ msgstr "Bật tắt công cụ (%s)"
 msgid "Current layer only"
 msgstr "Chỉ lớp hiện có"
 
-#:../app/tools/gimpcroptool.c:95
+#:../app/tools/gimpcroptool.c:96
 msgid "Crop & Resize"
 msgstr "Xén và Đổi cỡ"
 
-#:../app/tools/gimpcroptool.c:96
+#:../app/tools/gimpcroptool.c:97
 msgid "Crop or Resize an image"
 msgstr "Xén hay Đổi cỡ ảnh"
 
-#:../app/tools/gimpcroptool.c:97
+#:../app/tools/gimpcroptool.c:98
 msgid "_Crop & Resize"
 msgstr "_Xén và Đổi cỡ"
 
-#:../app/tools/gimpcroptool.c:217
+#:../app/tools/gimpcroptool.c:218
 msgid "Click or press enter to crop."
 msgstr "Nhắp chuột hay bấm phím Enter để xén."
 
-#:../app/tools/gimpcroptool.c:220
+#:../app/tools/gimpcroptool.c:221
 msgid "Click or press enter to resize."
 msgstr "Nhắp chuột hay bấm phím Enter để thay đổi kích cỡ."
 
@@ -8698,7 +8695,7 @@ msgid "Adjustment"
 msgstr "Điều chỉnh"
 
 #:../app/tools/gimpinkoptions-gui.c:70 ../app/tools/gimpinkoptions-gui.c:95
-#:../app/tools/gimptextoptions.c:436
+#:../app/tools/gimptextoptions.c:439
 msgid "Size:"
 msgstr "Cỡ :"
 
@@ -9018,46 +9015,46 @@ msgstr "Bích chương hóa không hoạt động trên lớp phụ lục."
 msgid "Posterize _levels:"
 msgstr "Bích chương hóa _lớp:"
 
-#:../app/tools/gimprectangleoptions.c:660
+#:../app/tools/gimprectangleoptions.c:666
 msgid "Highlight"
 msgstr "Tô sáng"
 
-#:../app/tools/gimprectangleoptions.c:672
+#:../app/tools/gimprectangleoptions.c:678
 msgid "Fix"
 msgstr "Đặt"
 
-#:../app/tools/gimprectangleoptions.c:677 ../app/widgets/gimpgrideditor.c:239
+#:../app/tools/gimprectangleoptions.c:683 ../app/widgets/gimpgrideditor.c:239
 #:../app/widgets/gimpgrideditor.c:271
 msgid "Width"
 msgstr "Rộng"
 
-#:../app/tools/gimprectangleoptions.c:687 ../app/widgets/gimpgrideditor.c:241
+#:../app/tools/gimprectangleoptions.c:693 ../app/widgets/gimpgrideditor.c:241
 #:../app/widgets/gimpgrideditor.c:273
 msgid "Height"
 msgstr "Cao"
 
-#:../app/tools/gimprectangleoptions.c:697
+#:../app/tools/gimprectangleoptions.c:703
 msgid "Aspect"
 msgstr "Khía cạnh"
 
-#:../app/tools/gimprectangletool.c:1787 ../app/tools/gimprectangletool.c:2214
+#:../app/tools/gimprectangletool.c:1820 ../app/tools/gimprectangletool.c:2245
 msgid "Rectangle: "
 msgstr "Hình chữ nhật:"
 
-#:../app/tools/gimprectangletool.c:2613
+#:../app/tools/gimprectangletool.c:2644
 msgid "1 "
 msgstr "1 "
 
-#:../app/tools/gimprectangletool.c:2614
+#:../app/tools/gimprectangletool.c:2645
 msgid "2 "
 msgstr "2 "
 
-#:../app/tools/gimprectangletool.c:2615 ../app/widgets/gimpcursorview.c:136
+#:../app/tools/gimprectangletool.c:2646 ../app/widgets/gimpcursorview.c:136
 #:../app/widgets/gimpcursorview.c:158
 msgid "X"
 msgstr "X"
 
-#:../app/tools/gimprectangletool.c:2616 ../app/widgets/gimpcursorview.c:142
+#:../app/tools/gimprectangletool.c:2647 ../app/widgets/gimpcursorview.c:142
 #:../app/widgets/gimpcursorview.c:164
 msgid "Y"
 msgstr "Y"
@@ -9150,7 +9147,7 @@ msgstr "Phần chọn đựa vào mọi lớp hiển thị"
 msgid "Use all visible layers when shrinking the selection"
 msgstr "Dùng mọi lớp hiển thị khi thu nhỏ phần chọn"
 
-#:../app/tools/gimpselectionoptions.c:412 ../app/tools/gimptextoptions.c:457
+#:../app/tools/gimpselectionoptions.c:412 ../app/tools/gimptextoptions.c:460
 msgid "Antialiasing"
 msgstr "Làm trơn"
 
@@ -9235,43 +9232,43 @@ msgstr "Nếu có thì dùng lời gợi ý từ phông chữ đó, nhưng bạn
 msgid "Indentation of the first line"
 msgstr "Thụt lề dòng đầu"
 
-#:../app/tools/gimptextoptions.c:153
+#:../app/tools/gimptextoptions.c:154
 msgid "Adjust line spacing"
 msgstr "Chỉnh khoảng cách dòng"
 
-#:../app/tools/gimptextoptions.c:158
+#:../app/tools/gimptextoptions.c:160
 msgid "Adjust letter spacing"
 msgstr "Chỉnh khoảng cách chữ"
 
-#:../app/tools/gimptextoptions.c:429
+#:../app/tools/gimptextoptions.c:432
 msgid "Font:"
 msgstr "Phông chữ :"
 
-#:../app/tools/gimptextoptions.c:441
+#:../app/tools/gimptextoptions.c:444
 msgid "Hinting"
 msgstr "Gợi ý"
 
-#:../app/tools/gimptextoptions.c:448
+#:../app/tools/gimptextoptions.c:451
 msgid "Force auto-hinter"
 msgstr "Buộc bộ gợi ý tự động"
 
-#:../app/tools/gimptextoptions.c:463
+#:../app/tools/gimptextoptions.c:466
 msgid "Text Color"
 msgstr "Màu chữ"
 
-#:../app/tools/gimptextoptions.c:468
+#:../app/tools/gimptextoptions.c:471
 msgid "Color:"
 msgstr "Màu:"
 
-#:../app/tools/gimptextoptions.c:473
+#:../app/tools/gimptextoptions.c:476
 msgid "Justify:"
 msgstr "Canh đều:"
 
-#:../app/tools/gimptextoptions.c:492
+#:../app/tools/gimptextoptions.c:495
 msgid "Create Path from Text"
 msgstr "Tạo đường dẫn từ chữ"
 
-#:../app/tools/gimptextoptions.c:500
+#:../app/tools/gimptextoptions.c:503
 msgid "Text along Path"
 msgstr "Chữ theo đường dẫn"
 
@@ -10392,7 +10389,7 @@ msgstr "Khóa kênh anfa"
 msgid "Lock:"
 msgstr "Khóa:"
 
-#:../app/widgets/gimplayertreeview.c:841
+#:../app/widgets/gimplayertreeview.c:840
 msgid "Empty Layer"
 msgstr "Lớp rỗng"
 
@@ -10622,7 +10619,7 @@ msgstr "Hãy kiểm tra đã cài đặt đúng các tập tin trình đơn XML.
 msgid "There was an error parsing the menu definition from %s: %s"
 msgstr "Gặp lỗi khi phân tách lời định nghĩa trình đơn từ %s: %s"
 
-#:../app/widgets/gimpundoeditor.c:226
+#:../app/widgets/gimpundoeditor.c:225
 msgid "[ Base Image ]"
 msgstr "[ Ảnh cơ bản ]"
 
