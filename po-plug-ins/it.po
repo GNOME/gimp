@@ -1,13 +1,13 @@
 # This is the Italian catalog for the standard GIMP Plugins.
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Daniele Medri <madrid@linux.it>, 1999, 2000, 2001, 2002
-# Marco Ciampa <ciampix@libero.it>, 2003, 2004, 2005
+# Marco Ciampa <ciampix@libero.it>, 2003, 2004, 2005, 2006
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-12-04 22:12+0100\n"
-"PO-Revision-Date: 2005-12-05 00:13+0100\n"
+"POT-Creation-Date: 2006-01-23 09:29+0100\n"
+"PO-Revision-Date: 2006-01-23 09:37+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -382,7 +382,7 @@ msgstr "_Frattali"
 #: ../plug-ins/common/xbm.c:1002 ../plug-ins/common/xwd.c:565
 #: ../plug-ins/fits/fits.c:454 ../plug-ins/flame/flame.c:442
 #: ../plug-ins/gfig/gfig.c:787 ../plug-ins/gfli/gfli.c:714
-#: ../plug-ins/ifscompose/ifscompose.c:2387 ../plug-ins/jpeg/jpeg-save.c:267
+#: ../plug-ins/ifscompose/ifscompose.c:2387 ../plug-ins/jpeg/jpeg-save.c:268
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:268
 #: ../plug-ins/winicon/icosave.c:244 ../plug-ins/xjt/xjt.c:1272
 #: ../plug-ins/xjt/xjt.c:1706
@@ -420,7 +420,7 @@ msgstr "Salva parametri frattali"
 #: ../plug-ins/common/psp.c:1463 ../plug-ins/common/raw.c:242
 #: ../plug-ins/common/raw.c:647 ../plug-ins/common/spheredesigner.c:2009
 #: ../plug-ins/common/sunras.c:379 ../plug-ins/common/svg.c:313
-#: ../plug-ins/common/svg.c:708 ../plug-ins/common/tga.c:414
+#: ../plug-ins/common/svg.c:715 ../plug-ins/common/tga.c:414
 #: ../plug-ins/common/tiff.c:530 ../plug-ins/common/xbm.c:720
 #: ../plug-ins/common/xwd.c:420 ../plug-ins/faxg3/faxg3.c:219
 #: ../plug-ins/fits/fits.c:342 ../plug-ins/flame/flame.c:411
@@ -622,7 +622,7 @@ msgstr "Intensità della luce"
 msgid "Position"
 msgstr "Posizione"
 
-#: ../plug-ins/Lighting/lighting_ui.c:456 ../plug-ins/common/flarefx.c:761
+#: ../plug-ins/Lighting/lighting_ui.c:456 ../plug-ins/common/flarefx.c:760
 #: ../plug-ins/common/mblur.c:992 ../plug-ins/common/nova.c:456
 #: ../plug-ins/common/papertile.c:273 ../plug-ins/flame/flame.c:1223
 #: ../plug-ins/gflare/gflare.c:2655
@@ -634,7 +634,7 @@ msgstr "_X:"
 msgid "Light source X position in XYZ space"
 msgstr "Posizione X della sorgente di luce nello spazio XYZ"
 
-#: ../plug-ins/Lighting/lighting_ui.c:469 ../plug-ins/common/flarefx.c:766
+#: ../plug-ins/Lighting/lighting_ui.c:469 ../plug-ins/common/flarefx.c:765
 #: ../plug-ins/common/mblur.c:997 ../plug-ins/common/nova.c:461
 #: ../plug-ins/common/papertile.c:282 ../plug-ins/flame/flame.c:1237
 #: ../plug-ins/gflare/gflare.c:2659
@@ -1263,7 +1263,7 @@ msgstr "Impossibile operare su immagini indicizzate con canale alfa."
 #: ../plug-ins/common/tga.c:1031 ../plug-ins/common/tiff.c:1925
 #: ../plug-ins/common/xbm.c:1007 ../plug-ins/common/xpm.c:623
 #: ../plug-ins/common/xwd.c:570 ../plug-ins/fits/fits.c:459
-#: ../plug-ins/gfli/gfli.c:683 ../plug-ins/jpeg/jpeg-save.c:225
+#: ../plug-ins/gfli/gfli.c:683 ../plug-ins/jpeg/jpeg-save.c:226
 #: ../plug-ins/sgi/sgi.c:537 ../plug-ins/winicon/icosave.c:977
 #: ../plug-ins/xjt/xjt.c:1689
 #, c-format
@@ -1374,7 +1374,7 @@ msgstr "Angolo di fase, campo 0-360"
 
 #. Propagate Mode
 #: ../plug-ins/common/AlienMap2.c:514 ../plug-ins/common/hot.c:595
-#: ../plug-ins/common/vpropagate.c:1086 ../plug-ins/common/waves.c:272
+#: ../plug-ins/common/vpropagate.c:1086 ../plug-ins/common/waves.c:273
 msgid "Mode"
 msgstr "Modalità"
 
@@ -2027,27 +2027,27 @@ msgstr "Applica _lenti..."
 msgid "Applying lens"
 msgstr "Applicazione lente"
 
-#: ../plug-ins/common/apply_lens.c:393
+#: ../plug-ins/common/apply_lens.c:394
 msgid "Lens Effect"
 msgstr "Effetto lente"
 
-#: ../plug-ins/common/apply_lens.c:426
+#: ../plug-ins/common/apply_lens.c:427
 msgid "_Keep original surroundings"
 msgstr "_Mantenere l'ambiente circostante originale"
 
-#: ../plug-ins/common/apply_lens.c:441
+#: ../plug-ins/common/apply_lens.c:442
 msgid "_Set surroundings to index 0"
 msgstr "_Imposta l'ambiente circostante a indice 0"
 
-#: ../plug-ins/common/apply_lens.c:442
+#: ../plug-ins/common/apply_lens.c:443
 msgid "_Set surroundings to background color"
 msgstr "_Imposta l'ambiente al colore di sfondo"
 
-#: ../plug-ins/common/apply_lens.c:457
+#: ../plug-ins/common/apply_lens.c:458
 msgid "_Make surroundings transparent"
 msgstr "Rendi l'a_mbiente circostante trasparente"
 
-#: ../plug-ins/common/apply_lens.c:474
+#: ../plug-ins/common/apply_lens.c:475
 msgid "_Lens refraction index:"
 msgstr "Indice di rifrazione _lente:"
 
@@ -2666,7 +2666,7 @@ msgid "E_xtend"
 msgstr "_Estendi"
 
 #: ../plug-ins/common/convmatrix.c:87 ../plug-ins/common/displace.c:475
-#: ../plug-ins/common/edge.c:719 ../plug-ins/common/ripple.c:568
+#: ../plug-ins/common/edge.c:700 ../plug-ins/common/ripple.c:568
 msgid "_Wrap"
 msgstr "_Wrap"
 
@@ -2699,7 +2699,7 @@ msgstr "Matrice"
 msgid "D_ivisor:"
 msgstr "D_ivisore:"
 
-#: ../plug-ins/common/convmatrix.c:970 ../plug-ins/common/depthmerge.c:752
+#: ../plug-ins/common/convmatrix.c:970 ../plug-ins/common/depthmerge.c:769
 #: ../plug-ins/common/raw.c:987
 msgid "O_ffset:"
 msgstr "O_ffset:"
@@ -3111,39 +3111,39 @@ msgstr "Mantieni campi _dispari"
 msgid "Keep _even fields"
 msgstr "Mantieni campi _pari"
 
-#: ../plug-ins/common/depthmerge.c:187
+#: ../plug-ins/common/depthmerge.c:194
 msgid "_Depth Merge..."
 msgstr "Fusione profon_da..."
 
-#: ../plug-ins/common/depthmerge.c:377
+#: ../plug-ins/common/depthmerge.c:388
 msgid "Depth-merging"
 msgstr "Fusione profonda"
 
-#: ../plug-ins/common/depthmerge.c:628
+#: ../plug-ins/common/depthmerge.c:645
 msgid "Depth Merge"
 msgstr "Fusione profonda"
 
-#: ../plug-ins/common/depthmerge.c:680
+#: ../plug-ins/common/depthmerge.c:697
 msgid "Source 1:"
 msgstr "Sorgente 1:"
 
-#: ../plug-ins/common/depthmerge.c:695 ../plug-ins/common/depthmerge.c:725
+#: ../plug-ins/common/depthmerge.c:712 ../plug-ins/common/depthmerge.c:742
 msgid "Depth map:"
 msgstr "Profondità mappa:"
 
-#: ../plug-ins/common/depthmerge.c:710
+#: ../plug-ins/common/depthmerge.c:727
 msgid "Source 2:"
 msgstr "Sorgente 2:"
 
-#: ../plug-ins/common/depthmerge.c:742
+#: ../plug-ins/common/depthmerge.c:759
 msgid "O_verlap:"
 msgstr "So_vrapponi:"
 
-#: ../plug-ins/common/depthmerge.c:762
+#: ../plug-ins/common/depthmerge.c:779
 msgid "Sc_ale 1:"
 msgstr "Sc_ala 1:"
 
-#: ../plug-ins/common/depthmerge.c:772
+#: ../plug-ins/common/depthmerge.c:789
 msgid "Sca_le 2:"
 msgstr "Sca_la 2:"
 
@@ -3324,12 +3324,12 @@ msgstr "_Polare"
 msgid "Edge Behavior"
 msgstr "Comportamento spigoli"
 
-#: ../plug-ins/common/displace.c:477 ../plug-ins/common/edge.c:732
-#: ../plug-ins/common/ripple.c:569 ../plug-ins/common/waves.c:276
+#: ../plug-ins/common/displace.c:477 ../plug-ins/common/edge.c:713
+#: ../plug-ins/common/ripple.c:569 ../plug-ins/common/waves.c:277
 msgid "_Smear"
 msgstr "_Macchia"
 
-#: ../plug-ins/common/displace.c:479 ../plug-ins/common/edge.c:745
+#: ../plug-ins/common/displace.c:479 ../plug-ins/common/edge.c:726
 #: ../plug-ins/common/fractaltrace.c:736 ../plug-ins/common/newsprint.c:400
 #: ../plug-ins/common/ripple.c:570
 msgid "_Black"
@@ -3363,47 +3363,47 @@ msgstr "_Normalizza"
 msgid "_Invert"
 msgstr "_Inverti"
 
-#: ../plug-ins/common/edge.c:158
+#: ../plug-ins/common/edge.c:159
 msgid "_Edge..."
 msgstr "_Spigoli..."
 
-#: ../plug-ins/common/edge.c:230
+#: ../plug-ins/common/edge.c:231
 msgid "Edge detection"
 msgstr "Rilevamento spigoli"
 
-#: ../plug-ins/common/edge.c:644
+#: ../plug-ins/common/edge.c:625
 msgid "Edge Detection"
 msgstr "Rilevamento spigoli"
 
-#: ../plug-ins/common/edge.c:678
+#: ../plug-ins/common/edge.c:659
 msgid "Sobel"
 msgstr "Sobel"
 
-#: ../plug-ins/common/edge.c:679
-msgid "Prewitt"
-msgstr "Prewitt"
+#: ../plug-ins/common/edge.c:660
+msgid "Prewitt compass"
+msgstr "Bussola Prewitt"
 
-#: ../plug-ins/common/edge.c:680 ../plug-ins/common/sinus.c:904
+#: ../plug-ins/common/edge.c:661 ../plug-ins/common/sinus.c:904
 msgid "Gradient"
 msgstr "Gradiente"
 
-#: ../plug-ins/common/edge.c:681
+#: ../plug-ins/common/edge.c:662
 msgid "Roberts"
 msgstr "Roberts"
 
-#: ../plug-ins/common/edge.c:682
+#: ../plug-ins/common/edge.c:663
 msgid "Differential"
 msgstr "Differenziale"
 
-#: ../plug-ins/common/edge.c:683 ../plug-ins/common/laplace.c:245
+#: ../plug-ins/common/edge.c:664 ../plug-ins/common/laplace.c:245
 msgid "Laplace"
 msgstr "Laplace"
 
-#: ../plug-ins/common/edge.c:692
+#: ../plug-ins/common/edge.c:673
 msgid "_Algorithm:"
 msgstr "_Algoritmo:"
 
-#: ../plug-ins/common/edge.c:700
+#: ../plug-ins/common/edge.c:681
 msgid "A_mount:"
 msgstr "_Quantità:"
 
@@ -3621,24 +3621,24 @@ msgid "_Number height:"
 msgstr "Altezza _numero:"
 
 #: ../plug-ins/common/flarefx.c:195
-msgid "_FlareFX..."
-msgstr "E_ffetto chiarore..."
+msgid "Lens _Flare..."
+msgstr "Ri_flesso lenti..."
 
 #: ../plug-ins/common/flarefx.c:270
-msgid "Render flare"
-msgstr "Render chiarore"
+msgid "Render lens flare"
+msgstr "Render riflesso lenti"
 
-#: ../plug-ins/common/flarefx.c:307
-msgid "FlareFX"
-msgstr "Effetto chiarore"
+#: ../plug-ins/common/flarefx.c:306
+msgid "Lens Flare"
+msgstr "Riflesso lenti"
 
-#: ../plug-ins/common/flarefx.c:746
+#: ../plug-ins/common/flarefx.c:745
 msgid "Center of Flare Effect"
 msgstr "Centro dell'effetto chiarore"
 
-#: ../plug-ins/common/flarefx.c:782
-msgid "_Show cursor"
-msgstr "Mostra cur_sore"
+#: ../plug-ins/common/flarefx.c:781 ../plug-ins/common/nova.c:477
+msgid "Show _position"
+msgstr "Mostra _posizione"
 
 #: ../plug-ins/common/fp.c:230 ../plug-ins/print/gimp_color_window.c:307
 msgid "Cyan:"
@@ -4078,8 +4078,8 @@ msgstr "Punti non quadrati. L'immagine potrebbe apparire schiacciata."
 msgid "Background (%d%s)"
 msgstr "Sfondo (%d%s)"
 
-#: ../plug-ins/common/gifload.c:918 ../plug-ins/common/iwarp.c:780
-#: ../plug-ins/common/iwarp.c:815
+#: ../plug-ins/common/gifload.c:918 ../plug-ins/common/iwarp.c:797
+#: ../plug-ins/common/iwarp.c:832
 #, c-format
 msgid "Frame %d"
 msgstr "Fotogramma %d"
@@ -4245,7 +4245,7 @@ msgid "Intersection"
 msgstr "Intersezione"
 
 #. Width and Height
-#: ../plug-ins/common/grid.c:724 ../plug-ins/common/svg.c:781
+#: ../plug-ins/common/grid.c:724 ../plug-ins/common/svg.c:788
 #: ../plug-ins/common/wmf.c:549 ../plug-ins/print/gimp_main_window.c:1009
 #: ../plug-ins/print/gimp_main_window.c:1216
 msgid "Width:"
@@ -4432,7 +4432,7 @@ msgstr "Riduci _luminanza"
 msgid "Reduce _Saturation"
 msgstr "Riduci _saturazione"
 
-#: ../plug-ins/common/hot.c:622 ../plug-ins/common/waves.c:277
+#: ../plug-ins/common/hot.c:622 ../plug-ins/common/waves.c:278
 msgid "_Blacken"
 msgstr "_Annera"
 
@@ -4456,105 +4456,105 @@ msgstr "Modalità _1"
 msgid "Mode _2"
 msgstr "Modalità _2"
 
-#: ../plug-ins/common/iwarp.c:252
+#: ../plug-ins/common/iwarp.c:269
 msgid "_IWarp..."
 msgstr "_IWarping..."
 
-#: ../plug-ins/common/iwarp.c:686
+#: ../plug-ins/common/iwarp.c:703
 msgid "Warping"
 msgstr "Warping"
 
-#: ../plug-ins/common/iwarp.c:791
+#: ../plug-ins/common/iwarp.c:808
 #, c-format
 msgid "Warping Frame %d"
 msgstr "Warping fotogramma %d"
 
-#: ../plug-ins/common/iwarp.c:803
+#: ../plug-ins/common/iwarp.c:820
 msgid "Ping pong"
 msgstr "Ping pong"
 
-#: ../plug-ins/common/iwarp.c:939
+#: ../plug-ins/common/iwarp.c:1026
 msgid "A_nimate"
 msgstr "A_nima"
 
-#: ../plug-ins/common/iwarp.c:958
+#: ../plug-ins/common/iwarp.c:1045
 msgid "Number of _frames:"
 msgstr "Numero di _fotogrammi:"
 
-#: ../plug-ins/common/iwarp.c:967
+#: ../plug-ins/common/iwarp.c:1054
 msgid "R_everse"
 msgstr "_Inverti"
 
-#: ../plug-ins/common/iwarp.c:976
+#: ../plug-ins/common/iwarp.c:1063
 msgid "_Ping pong"
 msgstr "_Ping pong"
 
-#: ../plug-ins/common/iwarp.c:989
+#: ../plug-ins/common/iwarp.c:1076
 msgid "_Animate"
 msgstr "_Anima"
 
-#: ../plug-ins/common/iwarp.c:1010
+#: ../plug-ins/common/iwarp.c:1097
 msgid "Deform Mode"
 msgstr "Modalità di deformazione"
 
-#: ../plug-ins/common/iwarp.c:1023
+#: ../plug-ins/common/iwarp.c:1110
 msgid "_Move"
 msgstr "_Sposta"
 
-#: ../plug-ins/common/iwarp.c:1024
+#: ../plug-ins/common/iwarp.c:1111
 msgid "_Grow"
 msgstr "_Allarga"
 
-#: ../plug-ins/common/iwarp.c:1025
+#: ../plug-ins/common/iwarp.c:1112
 msgid "S_wirl CCW"
 msgstr "_Torci in antiorario"
 
-#: ../plug-ins/common/iwarp.c:1026
+#: ../plug-ins/common/iwarp.c:1113
 msgid "Remo_ve"
 msgstr "Rimuo_vi"
 
-#: ../plug-ins/common/iwarp.c:1027
+#: ../plug-ins/common/iwarp.c:1114
 msgid "S_hrink"
 msgstr "Rid_uci"
 
-#: ../plug-ins/common/iwarp.c:1028
+#: ../plug-ins/common/iwarp.c:1115
 msgid "Sw_irl CW"
 msgstr "Torc_i in senso orario"
 
-#: ../plug-ins/common/iwarp.c:1057
+#: ../plug-ins/common/iwarp.c:1144
 msgid "_Deform radius:"
 msgstr "Raggio _deformazione:"
 
-#: ../plug-ins/common/iwarp.c:1067
+#: ../plug-ins/common/iwarp.c:1154
 msgid "D_eform amount:"
 msgstr "Ammontare della _deformazione:"
 
-#: ../plug-ins/common/iwarp.c:1076
+#: ../plug-ins/common/iwarp.c:1163
 msgid "_Bilinear"
 msgstr "_Bilineare"
 
-#: ../plug-ins/common/iwarp.c:1090
+#: ../plug-ins/common/iwarp.c:1177
 msgid "Adaptive s_upersample"
 msgstr "S_upercampionamento adattivo"
 
-#: ../plug-ins/common/iwarp.c:1110
+#: ../plug-ins/common/iwarp.c:1197
 msgid "Ma_x depth:"
 msgstr "Mas_sima profondità:"
 
-#: ../plug-ins/common/iwarp.c:1120
+#: ../plug-ins/common/iwarp.c:1207
 msgid "Thresho_ld:"
 msgstr "Sog_lia:"
 
-#: ../plug-ins/common/iwarp.c:1133 ../plug-ins/common/sinus.c:771
+#: ../plug-ins/common/iwarp.c:1220 ../plug-ins/common/sinus.c:771
 #: ../plug-ins/gflare/gflare.c:2797
 msgid "_Settings"
 msgstr "_Impostazioni"
 
-#: ../plug-ins/common/iwarp.c:1151
+#: ../plug-ins/common/iwarp.c:1270
 msgid "IWarp"
 msgstr "IWarp"
 
-#: ../plug-ins/common/iwarp.c:1214
+#: ../plug-ins/common/iwarp.c:1307
 msgid ""
 "Click and drag in the preview to define the distortions to apply to the "
 "image."
@@ -5256,19 +5256,19 @@ msgid "Normalizing"
 msgstr "Normalizzazione"
 
 #: ../plug-ins/common/nova.c:176
-msgid "Su_perNova..."
+msgid "Su_pernova..."
 msgstr "Su_pernova..."
 
 #: ../plug-ins/common/nova.c:260
-msgid "Rendering SuperNova"
+msgid "Rendering supernova"
 msgstr "Rendering supernova"
 
 #: ../plug-ins/common/nova.c:303
-msgid "SuperNova"
+msgid "Supernova"
 msgstr "Supernova"
 
 #: ../plug-ins/common/nova.c:347
-msgid "SuperNova Color Picker"
+msgid "Supernova Color Picker"
 msgstr "Selezione colore supernova"
 
 #: ../plug-ins/common/nova.c:376
@@ -5280,12 +5280,8 @@ msgid "R_andom hue:"
 msgstr "Ton_alità casuale:"
 
 #: ../plug-ins/common/nova.c:443
-msgid "Center of SuperNova"
-msgstr "Centro della supernova"
-
-#: ../plug-ins/common/nova.c:477
-msgid "S_how cursor"
-msgstr "Mostra c_ursore"
+msgid "Center of Nova"
+msgstr "Centro della nova"
 
 #: ../plug-ins/common/oilify.c:105
 msgid "Oili_fy..."
@@ -5771,7 +5767,7 @@ msgid "Rendering"
 msgstr "Rendering"
 
 #. Resolution
-#: ../plug-ins/common/postscript.c:3084 ../plug-ins/common/svg.c:902
+#: ../plug-ins/common/postscript.c:3084 ../plug-ins/common/svg.c:909
 #: ../plug-ins/common/wmf.c:670 ../plug-ins/print/gimp_main_window.c:1104
 msgid "Resolution:"
 msgstr "Risoluzione:"
@@ -6272,7 +6268,7 @@ msgstr "Errore di cattura del puntatore"
 msgid "Importing screenshot"
 msgstr "Importazione schermata"
 
-#: ../plug-ins/common/screenshot.c:610 ../plug-ins/common/screenshot.c:782
+#: ../plug-ins/common/screenshot.c:610 ../plug-ins/common/screenshot.c:777
 msgid "Screenshot"
 msgstr "Schermata"
 
@@ -6284,27 +6280,31 @@ msgstr "La finestra specificata non è stata trovata"
 msgid "There was an error taking the screenshot."
 msgstr "Si è verificato un errore durante la cattura della schermata."
 
-#: ../plug-ins/common/screenshot.c:791
+#: ../plug-ins/common/screenshot.c:786
 msgid "_Grab"
 msgstr "_Cattura"
 
-#: ../plug-ins/common/screenshot.c:813
+#: ../plug-ins/common/screenshot.c:807
+msgid "Area"
+msgstr "Area"
+
+#: ../plug-ins/common/screenshot.c:818
 msgid "Take a screenshot of a single _window"
 msgstr "Cattura una schermata di una _finestra singola"
 
-#: ../plug-ins/common/screenshot.c:834
-msgid "Include window decoration"
-msgstr "Includi decorazioni della finestra"
+#: ../plug-ins/common/screenshot.c:839
+msgid "Include window _decoration"
+msgstr "Includi _decorazioni della finestra"
 
-#: ../plug-ins/common/screenshot.c:849
-msgid "Take a screenshot of your _desktop"
-msgstr "Cattura una schermata del _desktop"
+#: ../plug-ins/common/screenshot.c:855
+msgid "Take a screenshot of the entire _screen"
+msgstr "Cattura l'immagine di tutto lo _schermo"
 
-#: ../plug-ins/common/screenshot.c:870
-msgid "Select a region"
-msgstr "Seleziona una regione"
+#: ../plug-ins/common/screenshot.c:873
+msgid "Select a _region to grab"
+msgstr "Seleziona la _regione da catturare"
 
-#: ../plug-ins/common/screenshot.c:875
+#: ../plug-ins/common/screenshot.c:880
 msgid ""
 "If enabled, you can use the mouse to select a rectangular region of the "
 "screen."
@@ -6312,15 +6312,22 @@ msgstr ""
 "Se abilitata è possibile usare il mouse per selezionare una regione "
 "rettangolare dello schermo."
 
-#: ../plug-ins/common/screenshot.c:890
+#. grab delay
+#: ../plug-ins/common/screenshot.c:893
+msgid "Delay"
+msgstr "Ritardo"
+
+#. this string is part of "Wait [spinbutton] seconds before grabbing"
+#: ../plug-ins/common/screenshot.c:906
 msgid "W_ait"
 msgstr "_Attendi"
 
-#: ../plug-ins/common/screenshot.c:905
+#. this string is part of "Wait [spinbutton] seconds before grabbing"
+#: ../plug-ins/common/screenshot.c:922
 msgid "seconds before grabbing"
 msgstr "secondi prima della cattura"
 
-#: ../plug-ins/common/screenshot.c:909
+#: ../plug-ins/common/screenshot.c:926
 msgid ""
 "The number of seconds to wait after selecting the window or region and "
 "actually taking the screenshot."
@@ -6985,7 +6992,7 @@ msgstr "RLE"
 msgid "Scalable SVG image"
 msgstr "Immagine scalabile SVG"
 
-#: ../plug-ins/common/svg.c:315 ../plug-ins/common/svg.c:710
+#: ../plug-ins/common/svg.c:315 ../plug-ins/common/svg.c:717
 msgid "Unknown reason"
 msgstr "Motivo sconosciuto"
 
@@ -6997,7 +7004,7 @@ msgstr "Rendering SVG"
 msgid "Rendered SVG"
 msgstr "SVG renderizzato"
 
-#: ../plug-ins/common/svg.c:500
+#: ../plug-ins/common/svg.c:513
 msgid ""
 "SVG file does not\n"
 "specify a size!"
@@ -7005,52 +7012,52 @@ msgstr ""
 "Il file SVG non\n"
 "specifica l'ampiezza!"
 
-#: ../plug-ins/common/svg.c:506 ../plug-ins/common/wmf.c:338
+#: ../plug-ins/common/svg.c:519 ../plug-ins/common/wmf.c:338
 #, c-format
 msgid "%d x %d"
 msgstr "%d x %d"
 
 #. Scalable Vector Graphics is SVG, should perhaps not be translated
-#: ../plug-ins/common/svg.c:717
+#: ../plug-ins/common/svg.c:724
 msgid "Render Scalable Vector Graphics"
 msgstr "Renderizza Grafica Vettoriale Scalabile (SVG)"
 
-#: ../plug-ins/common/svg.c:787 ../plug-ins/common/wmf.c:555
+#: ../plug-ins/common/svg.c:794 ../plug-ins/common/wmf.c:555
 #: ../plug-ins/print/gimp_main_window.c:1026
 #: ../plug-ins/print/gimp_main_window.c:1229
 msgid "Height:"
 msgstr "Altezza:"
 
-#: ../plug-ins/common/svg.c:861 ../plug-ins/common/wmf.c:629
+#: ../plug-ins/common/svg.c:868 ../plug-ins/common/wmf.c:629
 msgid "_X ratio:"
 msgstr "Rapporto _X:"
 
-#: ../plug-ins/common/svg.c:883 ../plug-ins/common/wmf.c:651
+#: ../plug-ins/common/svg.c:890 ../plug-ins/common/wmf.c:651
 msgid "_Y ratio:"
 msgstr "Rapporto _Y:"
 
-#: ../plug-ins/common/svg.c:897 ../plug-ins/common/wmf.c:665
+#: ../plug-ins/common/svg.c:904 ../plug-ins/common/wmf.c:665
 msgid "Constrain aspect ratio"
 msgstr "Mantieni rapporto dimensioni"
 
-#: ../plug-ins/common/svg.c:908 ../plug-ins/common/wmf.c:676
+#: ../plug-ins/common/svg.c:915 ../plug-ins/common/wmf.c:676
 #, c-format
 msgid "pixels/%a"
 msgstr "Punti/%a"
 
 #. Path Import
-#: ../plug-ins/common/svg.c:928
+#: ../plug-ins/common/svg.c:935
 msgid "Import _paths"
 msgstr "Importa _tracciati"
 
-#: ../plug-ins/common/svg.c:934
+#: ../plug-ins/common/svg.c:941
 msgid ""
 "Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr ""
 "Importa i tracciati dal file SVG in modo da poterli usare con lo strumento "
 "tracciati di GIMP"
 
-#: ../plug-ins/common/svg.c:947
+#: ../plug-ins/common/svg.c:954
 msgid "Merge imported paths"
 msgstr "Fondi tracciati importati"
 
@@ -7682,31 +7689,31 @@ msgstr "Ricerca gradienti XY"
 msgid "Flow step %d"
 msgstr "Passo di flusso %d"
 
-#: ../plug-ins/common/waves.c:122
+#: ../plug-ins/common/waves.c:123
 msgid "_Waves..."
 msgstr "_Onde..."
 
-#: ../plug-ins/common/waves.c:244
+#: ../plug-ins/common/waves.c:245
 msgid "Waves"
 msgstr "Onde"
 
-#: ../plug-ins/common/waves.c:289
+#: ../plug-ins/common/waves.c:290
 msgid "_Reflective"
 msgstr "_Riflessivo"
 
-#: ../plug-ins/common/waves.c:308
+#: ../plug-ins/common/waves.c:309
 msgid "_Amplitude:"
 msgstr "_Ampiezza:"
 
-#: ../plug-ins/common/waves.c:320
+#: ../plug-ins/common/waves.c:321
 msgid "_Phase:"
 msgstr "_Fase:"
 
-#: ../plug-ins/common/waves.c:332
+#: ../plug-ins/common/waves.c:333
 msgid "_Wavelength:"
 msgstr "_Lunghezza d'onda:"
 
-#: ../plug-ins/common/waves.c:432
+#: ../plug-ins/common/waves.c:433
 msgid "Waving"
 msgstr "Ondeggiatura"
 
@@ -10360,94 +10367,98 @@ msgstr "Apertura miniatura per '%s'"
 msgid "File size: %02.01f kB"
 msgstr "Dimensione: %02.01f kB"
 
-#: ../plug-ins/jpeg/jpeg-save.c:664 ../plug-ins/jpeg/jpeg-save.c:765
+#: ../plug-ins/jpeg/jpeg-save.c:579
+msgid "Calculating file size..."
+msgstr "Calcolo dimensione del file..."
+
+#: ../plug-ins/jpeg/jpeg-save.c:670 ../plug-ins/jpeg/jpeg-save.c:771
 msgid "File size: unknown"
 msgstr "Dimensione: sconosciuta"
 
-#: ../plug-ins/jpeg/jpeg-save.c:717
+#: ../plug-ins/jpeg/jpeg-save.c:723
 msgid "Save as JPEG"
 msgstr "Salva come JPEG"
 
-#: ../plug-ins/jpeg/jpeg-save.c:744
+#: ../plug-ins/jpeg/jpeg-save.c:750
 msgid "_Quality:"
 msgstr "Qualità:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:748
+#: ../plug-ins/jpeg/jpeg-save.c:754
 msgid "JPEG quality parameter"
 msgstr "Parametri JPEG"
 
-#: ../plug-ins/jpeg/jpeg-save.c:763
+#: ../plug-ins/jpeg/jpeg-save.c:769
 msgid "Enable preview to obtain the file size."
 msgstr "Abilitare l'anteprima per ottenere la dimensione del file."
 
-#: ../plug-ins/jpeg/jpeg-save.c:774
+#: ../plug-ins/jpeg/jpeg-save.c:780
 msgid "Show _preview in image window"
 msgstr "_Anteprima nella finestra immagine"
 
-#: ../plug-ins/jpeg/jpeg-save.c:786
+#: ../plug-ins/jpeg/jpeg-save.c:792
 msgid "_Advanced Options"
 msgstr "Opzioni avanzate"
 
-#: ../plug-ins/jpeg/jpeg-save.c:814
+#: ../plug-ins/jpeg/jpeg-save.c:820
 msgid "_Smoothing:"
 msgstr "Smussamento:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:827
+#: ../plug-ins/jpeg/jpeg-save.c:833
 msgid "Frequency (rows):"
 msgstr "Frequenza (righe):"
 
-#: ../plug-ins/jpeg/jpeg-save.c:841
+#: ../plug-ins/jpeg/jpeg-save.c:847
 msgid "Use restart markers"
 msgstr "Riavvia marcatori"
 
-#: ../plug-ins/jpeg/jpeg-save.c:857 ../plug-ins/xjt/xjt.c:869
+#: ../plug-ins/jpeg/jpeg-save.c:863 ../plug-ins/xjt/xjt.c:869
 msgid "Optimize"
 msgstr "Ottimizza"
 
-#: ../plug-ins/jpeg/jpeg-save.c:870
+#: ../plug-ins/jpeg/jpeg-save.c:876
 msgid "Progressive"
 msgstr "Progressiva"
 
-#: ../plug-ins/jpeg/jpeg-save.c:884
+#: ../plug-ins/jpeg/jpeg-save.c:890
 msgid "Force baseline JPEG"
 msgstr "Forza la linea base JPEG"
 
-#: ../plug-ins/jpeg/jpeg-save.c:899
+#: ../plug-ins/jpeg/jpeg-save.c:905
 msgid "Save EXIF data"
 msgstr "Salva dati EXIF"
 
-#: ../plug-ins/jpeg/jpeg-save.c:915
+#: ../plug-ins/jpeg/jpeg-save.c:921
 msgid "Save thumbnail"
 msgstr "Salva miniature"
 
 #. XMP metadata
-#: ../plug-ins/jpeg/jpeg-save.c:931
+#: ../plug-ins/jpeg/jpeg-save.c:937
 msgid "Save XMP data"
 msgstr "Salva dati XMP"
 
 #. Subsampling
-#: ../plug-ins/jpeg/jpeg-save.c:944
+#: ../plug-ins/jpeg/jpeg-save.c:950
 msgid "Subsampling:"
 msgstr "Sottocampionatura:"
 
 #. DCT method
-#: ../plug-ins/jpeg/jpeg-save.c:967
+#: ../plug-ins/jpeg/jpeg-save.c:973
 msgid "DCT method:"
 msgstr "Metodo DCT:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:973
+#: ../plug-ins/jpeg/jpeg-save.c:979
 msgid "Fast Integer"
 msgstr "Interi veloci"
 
-#: ../plug-ins/jpeg/jpeg-save.c:974
+#: ../plug-ins/jpeg/jpeg-save.c:980
 msgid "Integer"
 msgstr "Interi"
 
-#: ../plug-ins/jpeg/jpeg-save.c:975
+#: ../plug-ins/jpeg/jpeg-save.c:981
 msgid "Floating-Point"
 msgstr "Virgola mobile"
 
-#: ../plug-ins/jpeg/jpeg-save.c:989
+#: ../plug-ins/jpeg/jpeg-save.c:995
 msgid "Comment"
 msgstr "Commento"
 
