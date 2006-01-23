@@ -1,3 +1,9 @@
+2006-01-24  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/script-fu/scripts/guides-new.scm
+	* plug-ins/script-fu/scripts/guides-new-percent.scm: allow guides
+	at the right and bottom edges of the canvas. Fixes bug #328320.
+
 2006-01-21  Simon Budig  <simon@gimp.org>
 
 	* desktop/gimp.desktop.in.in: Added "GTK" category. Fixes
