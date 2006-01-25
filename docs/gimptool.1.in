@@ -1,4 +1,4 @@
-.TH GIMPTOOL\-2.0 1 "March 23 2004" "Version @GIMP_VERSION@" "GIMP Manual Pages"
+.TH GIMPTOOL\-2.0 1 "Version @GIMP_VERSION@" "GIMP Manual Pages"
 
 .SH NAME
 gimptool\-2.0 - script to perform various GIMPy functions
@@ -103,7 +103,7 @@ Outputs the includedir used to install the \fIGIMP\fP.
 Outputs the actual directory where the \fIGIMP\fP data files were installed.
 .TP 8
 .B \-\-gimpplugindir
-Outputs the actual directory where the \fIGIMP\fP plugins were installed.
+Outputs the actual directory where the \fIGIMP\fP plug-ins were installed.
 .TP 8
 .B  \-\-build \fIplug-in.c\fP
 Compile and link \fIplug-in.c\fP into a \fIGIMP\fP plug-in.
@@ -169,14 +169,14 @@ Print the linker flags that are necessary to link a \fIGIMP\fP plug-in.
 .TP 8
 .B \-\-libs-noui
 Print the linker flags that are necessary to link a \fIGIMP\fP plug-in, for
-plugins that do not require the GTK libs.
+plug-ins that do not require the GTK libs.
 .TP 8
 .B  \-\-cflags
 Print the compiler flags that are necessary to compile a \fIGIMP\fP plug-in.
 .TP 8
 .B \-\-clags-noui
 Print the compiler flags that are necessary to compile a \fIGIMP\fP plug-in
-for plugins that do not require the GTK libs.
+for plug-ins that do not require the GTK libs.
 .TP 8
 .B  \-\-prefix=PREFIX
 If specified, use PREFIX instead of the installation prefix that \fIGIMP\fP

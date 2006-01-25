@@ -1,3 +1,10 @@
+2006-01-25  Sven Neumann  <sven@gimp.org>
+
+	* docs/gimp.1.in: document some more environment variables.
+
+	* docs/gimprc.5.in
+	* docs/gimptool.1.in: unified spelling of "plug-in".
+
 2006-01-24  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/script-fu/scripts/guides-new.scm

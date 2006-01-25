@@ -844,7 +844,7 @@ environment variable GIMP2_DATADIR or to the compiled-in default value
 @gimpdatadir@.
 .TP
 .I gimp_plug_in_dir
-Base to paths for architecture-specific plugins and modules, which is set
+Base to paths for architecture-specific plug-ins and modules, which is set
 to the value of the environment variable GIMP2_PLUGINDIR or to the
 compiled-in default value @gimpplugindir@.
 .TP
