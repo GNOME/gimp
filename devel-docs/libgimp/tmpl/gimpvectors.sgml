@@ -17,6 +17,101 @@ gimpvectors
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### FUNCTION gimp_vectors_get_image ##### -->
+<para>
+
+</para>
+
+@vectors_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vectors_get_linked ##### -->
+<para>
+
+</para>
+
+@vectors_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vectors_get_name ##### -->
+<para>
+
+</para>
+
+@vectors_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vectors_get_tattoo ##### -->
+<para>
+
+</para>
+
+@vectors_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vectors_get_visible ##### -->
+<para>
+
+</para>
+
+@vectors_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vectors_new ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vectors_set_linked ##### -->
+<para>
+
+</para>
+
+@vectors_ID: 
+@linked: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vectors_set_name ##### -->
+<para>
+
+</para>
+
+@vectors_ID: 
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vectors_set_tattoo ##### -->
+<para>
+
+</para>
+
+@vectors_ID: 
+@tattoo: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vectors_set_visible ##### -->
+<para>
+
+</para>
+
+@vectors_ID: 
+@visible: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_vectors_get_strokes ##### -->
 <para>
 
@@ -24,6 +119,52 @@ gimpvectors
 
 @vectors_ID: 
 @num_strokes: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vectors_stroke_close ##### -->
+<para>
+
+</para>
+
+@vectors_ID: 
+@stroke_id: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vectors_stroke_remove ##### -->
+<para>
+
+</para>
+
+@vectors_ID: 
+@stroke_id: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vectors_stroke_get_length ##### -->
+<para>
+
+</para>
+
+@vectors_ID: 
+@stroke_id: 
+@prescision: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vectors_stroke_get_point_at_dist ##### -->
+<para>
+
+</para>
+
+@vectors_ID: 
+@stroke_id: 
+@dist: 
+@prescision: 
+@y_point: 
+@slope: 
+@valid: 
 @Returns: 
 
 
@@ -40,13 +181,15 @@ gimpvectors
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_vectors_stroke_remove ##### -->
+<!-- ##### FUNCTION gimp_vectors_stroke_scale ##### -->
 <para>
 
 </para>
 
 @vectors_ID: 
 @stroke_id: 
+@scale_x: 
+@scale_y: 
 @Returns: 
 
 
@@ -59,6 +202,73 @@ gimpvectors
 @stroke_id: 
 @off_x: 
 @off_y: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vectors_bezier_stroke_conicto ##### -->
+<para>
+
+</para>
+
+@vectors_ID: 
+@stroke_id: 
+@x0: 
+@y0: 
+@x1: 
+@y1: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vectors_bezier_stroke_cubicto ##### -->
+<para>
+
+</para>
+
+@vectors_ID: 
+@stroke_id: 
+@x0: 
+@y0: 
+@x1: 
+@y1: 
+@x2: 
+@y2: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vectors_bezier_stroke_lineto ##### -->
+<para>
+
+</para>
+
+@vectors_ID: 
+@stroke_id: 
+@x0: 
+@y0: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vectors_bezier_stroke_new_ellipse ##### -->
+<para>
+
+</para>
+
+@vectors_ID: 
+@x0: 
+@y0: 
+@radius_x: 
+@radius_y: 
+@angle: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vectors_bezier_stroke_new_moveto ##### -->
+<para>
+
+</para>
+
+@vectors_ID: 
+@x0: 
+@y0: 
 @Returns: 
 
 

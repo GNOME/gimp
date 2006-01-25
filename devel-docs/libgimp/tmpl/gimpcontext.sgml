@@ -204,3 +204,20 @@ Functions to manipulate a plug-in's context.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_context_get_paint_method ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_context_set_paint_method ##### -->
+<para>
+
+</para>
+
+@name: 
+@Returns: 
+
+

@@ -707,3 +707,83 @@ and operations involving multiple layers.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_image_add_vectors ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@vectors_ID: 
+@position: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_image_remove_vectors ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@vectors_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_image_get_active_vectors ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_image_set_active_vectors ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@active_vectors_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_image_lower_vectors ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@vectors_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_image_raise_vectors ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@vectors_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_image_lower_vectors_to_bottom ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@vectors_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_image_raise_vectors_to_top ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@vectors_ID: 
+@Returns: 
+
+

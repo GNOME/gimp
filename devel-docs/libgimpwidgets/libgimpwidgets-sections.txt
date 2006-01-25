@@ -1008,6 +1008,8 @@ GIMP_PREVIEW_GET_CLASS
 GimpScrolledPreview
 gimp_scrolled_preview_set_position
 gimp_scrolled_preview_set_policy
+gimp_scrolled_preview_freeze
+gimp_scrolled_preview_thaw
 <SUBSECTION Standard>
 GimpScrolledPreviewClass
 GIMP_SCROLLED_PREVIEW

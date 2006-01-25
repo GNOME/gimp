@@ -43,3 +43,19 @@ A widget providing a #GimpPreview enhanced by scrolling capabilities.
 @vscrollbar_policy: 
 
 
+<!-- ##### FUNCTION gimp_scrolled_preview_freeze ##### -->
+<para>
+
+</para>
+
+@preview: 
+
+
+<!-- ##### FUNCTION gimp_scrolled_preview_thaw ##### -->
+<para>
+
+</para>
+
+@preview: 
+
+
