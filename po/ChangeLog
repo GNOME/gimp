@@ -1,3 +1,9 @@
+2006-01-25  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in
+	* POTFILES.skip: moved files to the skip list. These were left out
+	intentionally.
+
 2006-01-25  Funda Wang  <fundawang@linux.net.cn>
 
 	* POTFILES.in, POTFILES.skip: Added missing files.
