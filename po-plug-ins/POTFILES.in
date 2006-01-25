@@ -66,6 +66,7 @@ plug-ins/common/gifload.c
 plug-ins/common/gih.c
 plug-ins/common/gih.c
 plug-ins/common/glasstile.c
+plug-ins/common/gnomeprint.c
 plug-ins/common/gqbist.c
 plug-ins/common/gradmap.c
 plug-ins/common/grid.c
@@ -98,11 +99,13 @@ plug-ins/common/photocopy.c
 plug-ins/common/pix.c
 plug-ins/common/pixelize.c
 plug-ins/common/plasma.c
+plug-ins/common/plugin-browser.c
 plug-ins/common/png.c
 plug-ins/common/pnm.c
 plug-ins/common/polar.c
 plug-ins/common/poppler.c
 plug-ins/common/postscript.c
+plug-ins/common/procedure-browser.c
 plug-ins/common/psd.c
 plug-ins/common/psd_save.c
 plug-ins/common/psp.c
