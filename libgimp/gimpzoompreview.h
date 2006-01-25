@@ -38,11 +38,15 @@ G_BEGIN_DECLS
 #define GIMP_IS_ZOOM_PREVIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ZOOM_PREVIEW))
 #define GIMP_ZOOM_PREVIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ZOOM_PREVIEW, GimpZoomPreviewClass))
 
+
 typedef struct _GimpZoomPreviewClass  GimpZoomPreviewClass;
 
 struct _GimpZoomPreview
 {
   GimpScrolledPreview  parent_instance;
+
+  /*< private >*/
+  gpointer             priv;
 };
 
 struct _GimpZoomPreviewClass

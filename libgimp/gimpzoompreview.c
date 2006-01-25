@@ -38,16 +38,16 @@
 #define SELECTION_BORDER  2
 
 
-typedef struct _GimpZoomPreviewPrivate GimpZoomPreviewPrivate;
-
-struct _GimpZoomPreviewPrivate
+typedef struct GimpZoomPreviewPrivate
 {
   GimpDrawable  *drawable;
   GimpZoomModel *model;
   GdkRectangle   extents;
-};
+} GimpZoomPreviewPrivate;
 
-#define GIMP_ZOOM_PREVIEW_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), GIMP_TYPE_ZOOM_PREVIEW, GimpZoomPreviewPrivate))
+#define GIMP_ZOOM_PREVIEW_GET_PRIVATE(obj) \
+  ((GimpZoomPreviewPrivate *) ((GimpZoomPreview *) (obj))->priv)
+
 
 static void     gimp_zoom_preview_set_adjustments (GimpZoomPreview *preview,
                                                    gdouble          old_factor,
@@ -74,8 +74,7 @@ static gboolean gimp_zoom_preview_get_bounds      (GimpDrawable    *drawable,
                                                    gint            *xmax,
                                                    gint            *ymax);
 
-G_DEFINE_TYPE (GimpZoomPreview, gimp_zoom_preview,
-               GIMP_TYPE_SCROLLED_PREVIEW)
+G_DEFINE_TYPE (GimpZoomPreview, gimp_zoom_preview, GIMP_TYPE_SCROLLED_PREVIEW)
 #define parent_class gimp_zoom_preview_parent_class
 
 static void
@@ -97,10 +96,16 @@ gimp_zoom_preview_class_init (GimpZoomPreviewClass *klass)
 static void
 gimp_zoom_preview_init (GimpZoomPreview *preview)
 {
+  GimpZoomPreviewPrivate *priv;
   GtkWidget              *button_bar;
   GtkWidget              *button;
   GtkWidget              *box;
-  GimpZoomPreviewPrivate *priv = GIMP_ZOOM_PREVIEW_GET_PRIVATE (preview);
+
+  preview->priv = G_TYPE_INSTANCE_GET_PRIVATE (preview,
+                                               GIMP_TYPE_ZOOM_PREVIEW,
+                                               GimpZoomPreviewPrivate);
+
+  priv = GIMP_ZOOM_PREVIEW_GET_PRIVATE (preview);
 
   priv->model = gimp_zoom_model_new ();
   gimp_zoom_model_set_range (GIMP_ZOOM_MODEL (priv->model), 1.0, 256.0);

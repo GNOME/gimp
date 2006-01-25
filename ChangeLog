@@ -1,5 +1,11 @@
 2006-01-25  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpzoompreview.[ch]: added a priv pointer to the
+	instance struct and changed the GET_PRIVATE() macro to access the
+	private data via that pointer.
+
+2006-01-25  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpintcombobox.[ch]
 	* libgimpwidgets/gimppageselector.[ch]
 	* libgimpwidgets/gimpzoommodel.[ch]: added a priv pointer to the
@@ -13,7 +19,7 @@
 	that derived widgets can be implemented without accessing private
 	data.
 
-	* libgimp/gimpzoompreview.c: changed accordingly.
+	* libgimp/gimpzoompreview.c: use gimp_scrolled_preview_[freeze|thaw].
 
 	* libgimp/gimpfontselectbutton.[ch]: let the priv pointer be an
 	anonymous void pointer.
