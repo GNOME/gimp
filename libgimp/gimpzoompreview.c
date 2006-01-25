@@ -154,7 +154,7 @@ gimp_zoom_preview_set_adjustments (GimpZoomPreview *preview,
   gdouble              height;
   gdouble              ratio;
 
-  scrolled_preview->in_drag = TRUE;
+  gimp_scrolled_preview_freeze (scrolled_preview);
 
   width  = GIMP_PREVIEW (preview)->width;
   height = GIMP_PREVIEW (preview)->height;
@@ -183,10 +183,9 @@ gimp_zoom_preview_set_adjustments (GimpZoomPreview *preview,
                                - height / 2.0,
                                adj->lower, adj->upper - height);
   gtk_adjustment_changed (adj);
-
-  scrolled_preview->in_drag = FALSE;
-
   gtk_adjustment_value_changed (adj);
+
+  gimp_scrolled_preview_thaw (scrolled_preview);
 }
 
 static void
@@ -259,7 +258,7 @@ gimp_zoom_preview_scroll_event (GtkWidget       *widget,
     {
       GimpZoomPreviewPrivate *priv = GIMP_ZOOM_PREVIEW_GET_PRIVATE (preview);
 
-      GIMP_SCROLLED_PREVIEW (preview)->in_drag = TRUE;
+      gimp_scrolled_preview_freeze (GIMP_SCROLLED_PREVIEW (preview));
 
       switch (event->direction)
         {
@@ -275,7 +274,7 @@ gimp_zoom_preview_scroll_event (GtkWidget       *widget,
           break;
         }
 
-      GIMP_SCROLLED_PREVIEW (preview)->in_drag = FALSE;
+      gimp_scrolled_preview_thaw (GIMP_SCROLLED_PREVIEW (preview));
     }
 
   return FALSE;

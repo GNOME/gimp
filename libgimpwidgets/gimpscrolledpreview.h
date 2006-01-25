@@ -53,10 +53,7 @@ struct _GimpScrolledPreview
   GdkGC        *nav_gc;
 
   /*< private >*/
-  gint          drag_x, drag_y;
-  gint          drag_xoff, drag_yoff;
-
-  gboolean      in_drag;
+  gpointer      priv;
 };
 
 struct _GimpScrolledPreviewClass
@@ -79,6 +76,11 @@ void   gimp_scrolled_preview_set_position (GimpScrolledPreview *preview,
 void   gimp_scrolled_preview_set_policy   (GimpScrolledPreview *preview,
                                            GtkPolicyType        hscrollbar_policy,
                                            GtkPolicyType        vscrollbar_policy);
+
+/*  only for use from derived widgets  */
+void   gimp_scrolled_preview_freeze       (GimpScrolledPreview *preview);
+void   gimp_scrolled_preview_thaw         (GimpScrolledPreview *preview);
+
 
 G_END_DECLS
 

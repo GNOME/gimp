@@ -60,9 +60,7 @@ enum
 };
 
 
-typedef struct _GimpPageSelectorPrivate GimpPageSelectorPrivate;
-
-struct _GimpPageSelectorPrivate
+typedef struct
 {
   gint                    n_pages;
   GimpPageSelectorTarget  target;
@@ -78,9 +76,10 @@ struct _GimpPageSelectorPrivate
   gint                    default_item_width;
   gint                    max_item_width;
   guint                   item_width_idle_id;
-};
+} GimpPageSelectorPrivate;
 
-#define GIMP_PAGE_SELECTOR_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), GIMP_TYPE_PAGE_SELECTOR, GimpPageSelectorPrivate))
+#define GIMP_PAGE_SELECTOR_GET_PRIVATE(obj) \
+  ((GimpPageSelectorPrivate *) ((GimpPageSelector *) (obj))->priv)
 
 
 static void   gimp_page_selector_dispose           (GObject          *object);
@@ -209,7 +208,7 @@ gimp_page_selector_class_init (GimpPageSelectorClass *klass)
 static void
 gimp_page_selector_init (GimpPageSelector *selector)
 {
-  GimpPageSelectorPrivate *priv = GIMP_PAGE_SELECTOR_GET_PRIVATE (selector);
+  GimpPageSelectorPrivate *priv;
   GtkWidget               *vbox;
   GtkWidget               *sw;
   GtkWidget               *hbox;
@@ -217,6 +216,12 @@ gimp_page_selector_init (GimpPageSelector *selector)
   GtkWidget               *button;
   GtkWidget               *label;
   GtkWidget               *combo;
+
+  selector->priv = G_TYPE_INSTANCE_GET_PRIVATE (selector,
+                                                GIMP_TYPE_PAGE_SELECTOR,
+                                                GimpPageSelectorPrivate);
+
+  priv = GIMP_PAGE_SELECTOR_GET_PRIVATE (selector);
 
   priv->n_pages = 0;
   priv->target  = GIMP_PAGE_SELECTOR_TARGET_LAYERS;

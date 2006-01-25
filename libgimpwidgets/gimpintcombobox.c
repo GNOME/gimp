@@ -49,8 +49,8 @@ typedef struct
   GDestroyNotify          sensitivity_destroy;
 } GimpIntComboBoxPrivate;
 
-
-#define GIMP_INT_COMBO_BOX_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), GIMP_TYPE_INT_COMBO_BOX, GimpIntComboBoxPrivate))
+#define GIMP_INT_COMBO_BOX_GET_PRIVATE(obj) \
+  ((GimpIntComboBoxPrivate *) ((GimpIntComboBox *) (obj))->priv)
 
 
 static void  gimp_int_combo_box_finalize     (GObject         *object);
@@ -106,9 +106,15 @@ gimp_int_combo_box_class_init (GimpIntComboBoxClass *klass)
 static void
 gimp_int_combo_box_init (GimpIntComboBox *combo_box)
 {
-  GimpIntComboBoxPrivate *priv = GIMP_INT_COMBO_BOX_GET_PRIVATE (combo_box);
+  GimpIntComboBoxPrivate *priv;
   GtkListStore           *store;
   GtkCellRenderer        *cell;
+
+  combo_box->priv = G_TYPE_INSTANCE_GET_PRIVATE (combo_box,
+                                                 GIMP_TYPE_INT_COMBO_BOX,
+                                                 GimpIntComboBoxPrivate);
+
+  priv = GIMP_INT_COMBO_BOX_GET_PRIVATE (combo_box);
 
   store = gimp_int_store_new ();
   gtk_combo_box_set_model (GTK_COMBO_BOX (combo_box), GTK_TREE_MODEL (store));

@@ -39,7 +39,9 @@ typedef struct _GimpPageSelectorClass  GimpPageSelectorClass;
 
 struct _GimpPageSelector
 {
-  GtkVBox  parent_instance;
+  GtkVBox   parent_instance;
+
+  gpointer  priv;
 };
 
 struct _GimpPageSelectorClass

@@ -42,8 +42,10 @@ struct _GimpIntComboBox
 {
   GtkComboBox       parent_instance;
 
+  /*< private >*/
+  gpointer          priv;
+
   /* Padding for future expansion (should have gone to the class) */
-  void (* _gimp_reserved1) (void);
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);

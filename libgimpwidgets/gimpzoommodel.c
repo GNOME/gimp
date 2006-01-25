@@ -53,16 +53,17 @@ enum
   PROP_PERCENTAGE
 };
 
-typedef struct _GimpZoomModelPrivate GimpZoomModelPrivate;
 
-struct _GimpZoomModelPrivate
+typedef struct
 {
   gdouble  value;
   gdouble  minimum;
   gdouble  maximum;
-};
+} GimpZoomModelPrivate;
 
-#define GIMP_ZOOM_MODEL_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), GIMP_TYPE_ZOOM_MODEL, GimpZoomModelPrivate))
+#define GIMP_ZOOM_MODEL_GET_PRIVATE(obj) \
+  ((GimpZoomModelPrivate *) ((GimpZoomModel *) (obj))->priv)
+
 
 static void  gimp_zoom_model_set_property (GObject      *object,
                                            guint         property_id,
@@ -141,7 +142,13 @@ gimp_zoom_model_class_init (GimpZoomModelClass *klass)
 static void
 gimp_zoom_model_init (GimpZoomModel *model)
 {
-  GimpZoomModelPrivate *priv = GIMP_ZOOM_MODEL_GET_PRIVATE (model);
+  GimpZoomModelPrivate *priv;
+
+  model->priv = G_TYPE_INSTANCE_GET_PRIVATE (model,
+                                             GIMP_TYPE_ZOOM_MODEL,
+                                             GimpZoomModelPrivate);
+
+  priv = GIMP_ZOOM_MODEL_GET_PRIVATE (model);
 
   priv->value   = 1.0;
   priv->minimum = ZOOM_MIN;

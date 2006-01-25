@@ -40,9 +40,16 @@ typedef struct
 {
   GtkPolicyType hscr_policy;
   GtkPolicyType vscr_policy;
+  gint          drag_x;
+  gint          drag_y;
+  gint          drag_xoff;
+  gint          drag_yoff;
+  gboolean      in_drag;
+  gint          frozen;
 } GimpScrolledPreviewPrivate;
 
-#define GIMP_SCROLLED_PREVIEW_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), GIMP_TYPE_SCROLLED_PREVIEW, GimpScrolledPreviewPrivate))
+#define GIMP_SCROLLED_PREVIEW_GET_PRIVATE(obj) \
+  ((GimpScrolledPreviewPrivate *) ((GimpScrolledPreview *) (obj))->priv)
 
 
 static void      gimp_scrolled_preview_class_init          (GimpScrolledPreviewClass *klass);
@@ -132,15 +139,23 @@ gimp_scrolled_preview_class_init (GimpScrolledPreviewClass *klass)
 static void
 gimp_scrolled_preview_init (GimpScrolledPreview *preview)
 {
-  GimpScrolledPreviewPrivate *priv = GIMP_SCROLLED_PREVIEW_GET_PRIVATE (preview);
-  GtkWidget *image;
-  GtkObject *adj;
+  GimpScrolledPreviewPrivate *priv;
+  GtkWidget                  *image;
+  GtkObject                  *adj;
 
-  preview->in_drag   = FALSE;
+  preview->priv = G_TYPE_INSTANCE_GET_PRIVATE (preview,
+                                               GIMP_TYPE_SCROLLED_PREVIEW,
+                                               GimpScrolledPreviewPrivate);
+
+  priv = GIMP_SCROLLED_PREVIEW_GET_PRIVATE (preview);
+
   preview->nav_popup = NULL;
 
   priv->hscr_policy = GTK_POLICY_AUTOMATIC;
   priv->vscr_policy = GTK_POLICY_AUTOMATIC;
+
+  priv->in_drag     = FALSE;
+  priv->frozen      = 0;
 
   /*  scrollbars  */
   adj = gtk_adjustment_new (0, 0, GIMP_PREVIEW (preview)->width - 1, 1.0,
@@ -361,7 +376,8 @@ gimp_scrolled_preview_area_event (GtkWidget           *area,
                                   GdkEvent            *event,
                                   GimpScrolledPreview *preview)
 {
-  GdkEventButton *button_event = (GdkEventButton *) event;
+  GimpScrolledPreviewPrivate *priv = GIMP_SCROLLED_PREVIEW_GET_PRIVATE (preview);
+  GdkEventButton             *button_event = (GdkEventButton *) event;
 
   switch (event->type)
     {
@@ -369,12 +385,11 @@ gimp_scrolled_preview_area_event (GtkWidget           *area,
       switch (button_event->button)
         {
         case 1:
-          gtk_widget_get_pointer (area, &preview->drag_x, &preview->drag_y);
+          gtk_widget_get_pointer (area, &priv->drag_x, &priv->drag_y);
 
-          preview->drag_xoff = GIMP_PREVIEW (preview)->xoff;
-          preview->drag_yoff = GIMP_PREVIEW (preview)->yoff;
-
-          preview->in_drag = TRUE;
+          priv->drag_xoff = GIMP_PREVIEW (preview)->xoff;
+          priv->drag_yoff = GIMP_PREVIEW (preview)->yoff;
+          priv->in_drag   = TRUE;
           gtk_grab_add (area);
           break;
 
@@ -387,15 +402,15 @@ gimp_scrolled_preview_area_event (GtkWidget           *area,
       break;
 
     case GDK_BUTTON_RELEASE:
-      if (preview->in_drag && button_event->button == 1)
+      if (priv->in_drag && button_event->button == 1)
         {
           gtk_grab_remove (area);
-          preview->in_drag = FALSE;
+          priv->in_drag = FALSE;
         }
       break;
 
     case GDK_MOTION_NOTIFY:
-      if (preview->in_drag)
+      if (priv->in_drag)
         {
           gint x, y;
           gint dx, dy;
@@ -403,15 +418,15 @@ gimp_scrolled_preview_area_event (GtkWidget           *area,
 
           gtk_widget_get_pointer (area, &x, &y);
 
-          dx = x - preview->drag_x;
-          dy = y - preview->drag_y;
+          dx = x - priv->drag_x;
+          dy = y - priv->drag_y;
 
-          xoff = CLAMP (preview->drag_xoff - dx,
+          xoff = CLAMP (priv->drag_xoff - dx,
                         0,
                         GIMP_PREVIEW (preview)->xmax -
                         GIMP_PREVIEW (preview)->xmin -
                         GIMP_PREVIEW (preview)->width);
-          yoff = CLAMP (preview->drag_yoff - dy,
+          yoff = CLAMP (priv->drag_yoff - dy,
                         0,
                         GIMP_PREVIEW (preview)->ymax -
                         GIMP_PREVIEW (preview)->ymin -
@@ -495,12 +510,14 @@ static void
 gimp_scrolled_preview_h_scroll (GtkAdjustment *hadj,
                                 GimpPreview   *preview)
 {
+  GimpScrolledPreviewPrivate *priv = GIMP_SCROLLED_PREVIEW_GET_PRIVATE (preview);
+
   preview->xoff = hadj->value;
 
   gimp_preview_area_set_offsets (GIMP_PREVIEW_AREA (preview->area),
                                  preview->xoff, preview->yoff);
 
-  if (! GIMP_SCROLLED_PREVIEW (preview)->in_drag)
+  if (! (priv->in_drag || priv->frozen))
     {
       gimp_preview_draw (preview);
       gimp_preview_invalidate (preview);
@@ -511,12 +528,14 @@ static void
 gimp_scrolled_preview_v_scroll (GtkAdjustment *vadj,
                                 GimpPreview   *preview)
 {
+  GimpScrolledPreviewPrivate *priv = GIMP_SCROLLED_PREVIEW_GET_PRIVATE (preview);
+
   preview->yoff = vadj->value;
 
   gimp_preview_area_set_offsets (GIMP_PREVIEW_AREA (preview->area),
                                  preview->xoff, preview->yoff);
 
-  if (! GIMP_SCROLLED_PREVIEW (preview)->in_drag)
+  if (! (priv->in_drag || priv->frozen))
     {
       gimp_preview_draw (preview);
       gimp_preview_invalidate (preview);
@@ -800,4 +819,61 @@ gimp_scrolled_preview_set_policy (GimpScrolledPreview *preview,
   priv->vscr_policy = vscrollbar_policy;
 
   gtk_widget_queue_resize (GIMP_PREVIEW (preview)->area);
+}
+
+
+/**
+ * gimp_scrolled_preview_freeze:
+ * @preview: a #GimpScrolledPreview
+ *
+ * While the @preview is frozen, it is not going to redraw itself in
+ * response to scroll events.
+ *
+ * This function should only be used to implement widgets derived from
+ * #GimpScrolledPreview. There is no point in calling this from a plug-in.
+ *
+ * Since: GIMP 2.4
+ **/
+void
+gimp_scrolled_preview_freeze (GimpScrolledPreview *preview)
+{
+  GimpScrolledPreviewPrivate *priv;
+
+  g_return_if_fail (GIMP_IS_SCROLLED_PREVIEW (preview));
+
+  priv = GIMP_SCROLLED_PREVIEW_GET_PRIVATE (preview);
+
+  priv->frozen++;
+}
+
+/**
+ * gimp_scrolled_preview_thaw:
+ * @preview: a #GimpScrolledPreview
+ *
+ * While the @preview is frozen, it is not going to redraw itself in
+ * response to scroll events.
+ *
+ * This function should only be used to implement widgets derived from
+ * #GimpScrolledPreview. There is no point in calling this from a plug-in.
+ *
+ * Since: GIMP 2.4
+ **/
+void
+gimp_scrolled_preview_thaw (GimpScrolledPreview *preview)
+{
+  GimpScrolledPreviewPrivate *priv;
+
+  g_return_if_fail (GIMP_IS_SCROLLED_PREVIEW (preview));
+
+  priv = GIMP_SCROLLED_PREVIEW_GET_PRIVATE (preview);
+
+  g_return_if_fail (priv->frozen > 0);
+
+  priv->frozen--;
+
+  if (! priv->frozen)
+    {
+      gimp_preview_draw (GIMP_PREVIEW (preview));
+      gimp_preview_invalidate (GIMP_PREVIEW (preview));
+    }
 }

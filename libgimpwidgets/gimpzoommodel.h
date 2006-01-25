@@ -38,7 +38,10 @@ typedef struct _GimpZoomModelClass  GimpZoomModelClass;
 
 struct _GimpZoomModel
 {
-  GObject  parent_instance;
+  GObject   parent_instance;
+
+  /*< private >*/
+  gpointer  priv;
 };
 
 struct _GimpZoomModelClass
