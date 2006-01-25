@@ -37,6 +37,7 @@ libgimpwidgets/gimpcolorselection.c
 libgimpwidgets/gimpfileentry.c
 libgimpwidgets/gimpintstore.c
 libgimpwidgets/gimpmemsizeentry.c
+libgimpwidgets/gimppageselector.c
 libgimpwidgets/gimppatheditor.c
 libgimpwidgets/gimppickbutton.c
 libgimpwidgets/gimppreviewarea.c
@@ -57,3 +58,5 @@ modules/cdisplay_proof.c
 modules/colorsel_cmyk.c
 modules/colorsel_triangle.c
 modules/colorsel_water.c
+modules/controller_linux_input.c
+modules/controller_midi.c
