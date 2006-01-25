@@ -6,7 +6,6 @@ app/app_procs.c
 app/batch.c
 app/main.c
 app/sanity.c
-
 app/actions/actions.c
 app/actions/brush-editor-actions.c
 app/actions/brushes-actions.c
@@ -242,6 +241,8 @@ app/text/gimptextlayer-xcf.c
 app/tools/tools-enums.c
 app/tools/gimp-tools.c
 app/tools/gimpairbrushtool.c
+app/tools/gimpalignoptions.c
+app/tools/gimpaligntool.c
 app/tools/gimpblendoptions.c
 app/tools/gimpblendtool.c
 app/tools/gimpbrightnesscontrasttool.c
@@ -282,6 +283,7 @@ app/tools/gimpmeasureoptions.c
 app/tools/gimpmeasuretool.c
 app/tools/gimpmoveoptions.c
 app/tools/gimpmovetool.c
+app/tools/gimpnewrectselecttool.c
 app/tools/gimppaintbrushtool.c
 app/tools/gimppaintoptions-gui.c
 app/tools/gimppainttool.c

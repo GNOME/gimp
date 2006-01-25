@@ -1,3 +1,7 @@
+2006-01-25  Funda Wang  <fundawang@linux.net.cn>
+
+	* POTFILES.in, POTFILES.skip: Added missing files.
+
 2006-01-24  Benoît Dejean  <benoit@placenet.org>
 
 	* fr.po: Updated French translation.
