@@ -344,7 +344,7 @@ gimp_thumb_box_new (Gimp *gimp)
                     G_CALLBACK (gtk_true),
                     NULL);
 
-  vbox2 = gtk_vbox_new (FALSE, 2);
+  vbox2 = gtk_vbox_new (FALSE, 6);
   gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
   gtk_container_add (GTK_CONTAINER (vbox), vbox2);
   gtk_widget_show (vbox2);
@@ -370,7 +370,7 @@ gimp_thumb_box_new (Gimp *gimp)
                                 gimp->config->thumbnail_size + MAX (h, v),
                                 0, FALSE);
 
-  gtk_box_pack_start (GTK_BOX (hbox), box->preview, TRUE, FALSE, 10);
+  gtk_box_pack_start (GTK_BOX (hbox), box->preview, TRUE, FALSE, 2);
   gtk_widget_show (box->preview);
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), box->preview);
@@ -382,12 +382,18 @@ gimp_thumb_box_new (Gimp *gimp)
   box->filename = gtk_label_new (_("No selection"));
   gtk_label_set_line_wrap (GTK_LABEL (box->filename), TRUE);
   gtk_label_set_justify (GTK_LABEL (box->filename), GTK_JUSTIFY_CENTER);
+  gimp_label_set_attributes (GTK_LABEL (box->filename),
+			     PANGO_ATTR_STYLE, PANGO_STYLE_OBLIQUE,
+			     -1);
   gtk_box_pack_start (GTK_BOX (vbox2), box->filename, FALSE, FALSE, 0);
   gtk_widget_show (box->filename);
 
   box->info = gtk_label_new (" \n \n \n ");
   gtk_misc_set_alignment (GTK_MISC (box->info), 0.5, 0.0);
   gtk_label_set_justify (GTK_LABEL (box->info), GTK_JUSTIFY_CENTER);
+  gimp_label_set_attributes (GTK_LABEL (box->info),
+			     PANGO_ATTR_SCALE, PANGO_SCALE_SMALL,
+			     -1);
   gtk_box_pack_start (GTK_BOX (vbox2), box->info, FALSE, FALSE, 0);
   gtk_widget_show (box->info);
 
