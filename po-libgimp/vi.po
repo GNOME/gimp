@@ -7,15 +7,15 @@ msgid ""
 ""
 msgstr "Project-Id-Version: Gimp-libgimp Gnome HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-03 10:52+0100\n"
-"PO-Revision-Date: 2006-01-03 23:06+1030\n"
+"POT-Creation-Date: 2006-01-26 03:44+0100\n"
+"PO-Revision-Date: 2006-01-26 16:18+1030\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0\n"
-"X-Generator: LocFactoryEditor 1.5.1b\n"
+"X-Generator: LocFactoryEditor 1.6b31\n"
 
 #:../libgimp/gimpbrushmenu.c:140
 msgid "Brush Selection"
@@ -186,11 +186,11 @@ msgid ""
 msgstr "Bạn sắp lưu một kênh (phần chọn được lưu) là %s.\n"
 "Việc này sẽ không lưu các lớp nhìn được."
 
-#:../libgimp/gimpfontselectbutton.c:124 ../libgimp/gimpfontselectbutton.c:169
+#:../libgimp/gimpfontselectbutton.c:126 ../libgimp/gimpfontselectbutton.c:177
 msgid "Font Selection"
 msgstr "Chọn phông chữ"
 
-#:../libgimp/gimpfontselectbutton.c:137 ../libgimp/gimpfontselectbutton.c:170
+#:../libgimp/gimpfontselectbutton.c:139 ../libgimp/gimpfontselectbutton.c:178
 msgid "Sans"
 msgstr "Không chân"
 
@@ -972,6 +972,48 @@ msgstr "Mega-byte"
 msgid "Gigabytes"
 msgstr "Giga-byte"
 
+#.Count label
+#:../libgimpwidgets/gimppageselector.c:269
+#:../libgimpwidgets/gimppageselector.c:1171
+msgid "Nothing selected"
+msgstr "Chưa chọn gì"
+
+#:../libgimpwidgets/gimppageselector.c:287
+msgid "Select _All"
+msgstr "Chọn _hết"
+
+#:../libgimpwidgets/gimppageselector.c:307
+msgid "Select _range:"
+msgstr "Chọn _phạm vị:"
+
+#:../libgimpwidgets/gimppageselector.c:319
+msgid "Open _pages as"
+msgstr "Mở t_rang dạng"
+
+#:../libgimpwidgets/gimppageselector.c:420
+msgid "Page 000"
+msgstr "Trang 000"
+
+#:../libgimpwidgets/gimppageselector.c:512
+#:../libgimpwidgets/gimppageselector.c:749
+#,c-format
+msgid "Page %d"
+msgstr "Trang %d"
+
+#:../libgimpwidgets/gimppageselector.c:1176
+msgid "One page selected"
+msgstr "Một trang đã chọn"
+
+#:../libgimpwidgets/gimppageselector.c:1183
+#,c-format
+msgid "All %d pages selected"
+msgstr "Mọi %d trang đã chọn"
+
+#:../libgimpwidgets/gimppageselector.c:1185
+#,c-format
+msgid "%d pages selected"
+msgstr "%d trang đã chọn"
+
 #:../libgimpwidgets/gimppatheditor.c:212
 msgid "Writable"
 msgstr "Có thể ghi"
@@ -1343,3 +1385,172 @@ msgstr "Màu nước"
 #:../modules/colorsel_water.c:220
 msgid "Pressure"
 msgstr "Áp lực"
+
+#:../modules/controller_linux_input.c:56
+msgid "Button 0"
+msgstr "Nút 0"
+
+#:../modules/controller_linux_input.c:57
+msgid "Button 1"
+msgstr "Nút 1"
+
+#:../modules/controller_linux_input.c:58
+msgid "Button 2"
+msgstr "Nút 2"
+
+#:../modules/controller_linux_input.c:59
+msgid "Button 3"
+msgstr "Nút 3"
+
+#:../modules/controller_linux_input.c:60
+msgid "Button 4"
+msgstr "Nút 4"
+
+#:../modules/controller_linux_input.c:61
+msgid "Button 5"
+msgstr "Nút 5"
+
+#:../modules/controller_linux_input.c:62
+msgid "Button 6"
+msgstr "Nút 6"
+
+#:../modules/controller_linux_input.c:63
+msgid "Button 7"
+msgstr "Nút 7"
+
+#:../modules/controller_linux_input.c:64
+msgid "Button 8"
+msgstr "Nút 8"
+
+#:../modules/controller_linux_input.c:65
+msgid "Button 9"
+msgstr "Nút 9"
+
+#:../modules/controller_linux_input.c:66
+msgid "Button Mouse"
+msgstr "Con chuột nút"
+
+#:../modules/controller_linux_input.c:67
+msgid "Button Left"
+msgstr "Nút trái"
+
+#:../modules/controller_linux_input.c:68
+msgid "Button Right"
+msgstr "Nút phải"
+
+#:../modules/controller_linux_input.c:69
+msgid "Button Middle"
+msgstr "Nút giữa"
+
+#:../modules/controller_linux_input.c:70
+msgid "Button Side"
+msgstr "Nút bên"
+
+#:../modules/controller_linux_input.c:71
+msgid "Button Extra"
+msgstr "Nút nữa"
+
+#:../modules/controller_linux_input.c:72
+#:../modules/controller_linux_input.c:73
+msgid "Button Forward"
+msgstr "Nút tới"
+
+#:../modules/controller_linux_input.c:75
+msgid "Button Wheel"
+msgstr "Bánh xe nút"
+
+#:../modules/controller_linux_input.c:78
+msgid "Button Gear Down"
+msgstr "Cơ chế nút Xuống"
+
+#:../modules/controller_linux_input.c:81
+msgid "Button Gear Up"
+msgstr "Cơ chế nút Lên"
+
+#:../modules/controller_linux_input.c:87
+msgid "Wheel Turn Left"
+msgstr "Bánh xe quay trái"
+
+#:../modules/controller_linux_input.c:88
+msgid "Wheel Turn Right"
+msgstr "Bánh xe quay phải"
+
+#:../modules/controller_linux_input.c:89
+msgid "Dial Turn Left"
+msgstr "La bàn quay trái"
+
+#:../modules/controller_linux_input.c:90
+msgid "Dial Turn Right"
+msgstr "La bàn quay phải"
+
+#:../modules/controller_linux_input.c:154
+msgid "Linux input event controller"
+msgstr "Bộ điều khiển sự kiện nhập Linux"
+
+#:../modules/controller_linux_input.c:222 ../modules/controller_midi.c:244
+msgid "Device:"
+msgstr "Thiết bị:"
+
+#:../modules/controller_linux_input.c:223
+msgid "The name of the device to read Linux Input events from."
+msgstr "Tên thiết bị từ mà cần đọc các sự kiện nhập Linux."
+
+#:../modules/controller_linux_input.c:227
+msgid "Linux Input"
+msgstr "Nhập Linux"
+
+#:../modules/controller_linux_input.c:351
+msgid "Linux Input Events"
+msgstr "Sự Kiện Nhập Linux"
+
+#:../modules/controller_linux_input.c:372 ../modules/controller_midi.c:480
+#:../modules/controller_midi.c:506
+#,c-format
+msgid "Reading from %s"
+msgstr "Đang đoc từ %s..."
+
+#:../modules/controller_linux_input.c:388
+#:../modules/controller_linux_input.c:431 ../modules/controller_midi.c:462
+#:../modules/controller_midi.c:523 ../modules/controller_midi.c:594
+#,c-format
+msgid "Device not available: %s"
+msgstr "Thiết bị không sẵn sàng: %s"
+
+#:../modules/controller_linux_input.c:396 ../modules/controller_midi.c:531
+msgid "No device configured"
+msgstr "Chưa cấu hình thiết bị nào"
+
+#:../modules/controller_linux_input.c:440 ../modules/controller_midi.c:603
+msgid "End of file"
+msgstr "Kết thúc tập tin"
+
+#:../modules/controller_midi.c:166
+msgid "MIDI event controller"
+msgstr "Bộ điều khiển sự kiện MIDI"
+
+#:../modules/controller_midi.c:235
+msgid "The name of the device to read MIDI events from."
+msgstr "Tên thiết bị từ mà cần đọc các sự kiện MIDI."
+
+#:../modules/controller_midi.c:238
+msgid "Enter 'alsa' to use the ALSA sequencer."
+msgstr "Hãy nhập « alsa » để sử dụng bộ sắp xếp dãy ALSA"
+
+#:../modules/controller_midi.c:253
+msgid "Channel:"
+msgstr "Kênh:"
+
+#:../modules/controller_midi.c:254
+msgid ""
+"The MIDI channel to read events from. Set to -1 for reading from all MIDI "
+"channels."
+msgstr "Kênh MIDI từ mà cần đọc các sự kiện. Hãy lập nó thành -1 để đọc từ mọi kênh MIDI."
+
+#:../modules/controller_midi.c:258
+# Name: don't translate / Tên: đừng dịch
+msgid "MIDI"
+msgstr "MIDI"
+
+#:../modules/controller_midi.c:434
+msgid "MIDI Events"
+msgstr "Sự Kiện MIDI"

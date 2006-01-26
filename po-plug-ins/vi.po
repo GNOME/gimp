@@ -6,15 +6,15 @@ msgid ""
 ""
 msgstr "Project-Id-Version: gimp-plugins HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-15 03:16+0100\n"
-"PO-Revision-Date: 2006-01-15 17:59+1030\n"
+"POT-Creation-Date: 2006-01-26 03:45+0100\n"
+"PO-Revision-Date: 2006-01-26 16:22+1030\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0\n"
-"X-Generator: LocFactoryEditor 1.6b23\n"
+"X-Generator: LocFactoryEditor 1.6b31\n"
 
 #:../plug-ins/FractalExplorer/Dialogs.c:529
 #:../plug-ins/gfig/gfig-dialog.c:282 ../plug-ins/gflare/gflare.c:887
@@ -4166,6 +4166,18 @@ msgstr "_Rộng đá lát:"
 msgid "Tile _height:"
 msgstr "_Cao đá lát:"
 
+#:../plug-ins/common/gnomeprint.c:93
+msgid "_GNOME Print..."
+msgstr "_In Gnome..."
+
+#:../plug-ins/common/gnomeprint.c:161
+msgid "Print"
+msgstr "In"
+
+#:../plug-ins/common/gnomeprint.c:182
+msgid "Print Preview"
+msgstr "Xem thử bản in"
+
 #:../plug-ins/common/gqbist.c:407
 msgid "_Qbist..."
 msgstr "_Xu hướng lập thể..."
@@ -5447,6 +5459,64 @@ msgstr "Hạt _ngẫu nhiên"
 msgid "T_urbulence:"
 msgstr "Độ hỗn l_oạn:"
 
+#:../plug-ins/common/plugin-browser.c:144
+msgid "_Plug-In Browser"
+msgstr "Bộ duyệt bộ cầm _phít"
+
+#:../plug-ins/common/plugin-browser.c:372
+msgid "Searching by name"
+msgstr "Đang tìm kiếm theo tên"
+
+#:../plug-ins/common/plugin-browser.c:386
+#,c-format
+msgid "%d plug-ins"
+msgstr "%d bộ cầm phít"
+
+#:../plug-ins/common/plugin-browser.c:393
+msgid "No matches for your query"
+msgstr "Không có gì khớp truy vấn của bạn"
+
+#:../plug-ins/common/plugin-browser.c:396
+#,c-format
+msgid "%d plug-in matches your query"
+msgid_plural "%d plug-ins match your query"
+msgstr[0] ""
+
+#:../plug-ins/common/plugin-browser.c:527
+msgid "No matches"
+msgstr "Không tìm thấy"
+
+#:../plug-ins/common/plugin-browser.c:552
+msgid "Plug-In Browser"
+msgstr "Bộ duyệt bộ cầm phít"
+
+#:../plug-ins/common/plugin-browser.c:595
+msgid "Name"
+msgstr "Tên"
+
+#:../plug-ins/common/plugin-browser.c:603
+#:../plug-ins/common/plugin-browser.c:666
+msgid "Menu Path"
+msgstr "Đường dẫn Trình đơn"
+
+#:../plug-ins/common/plugin-browser.c:611
+#:../plug-ins/common/plugin-browser.c:675
+msgid "Image Types"
+msgstr "Kiểu ảnh"
+
+#:../plug-ins/common/plugin-browser.c:621
+#:../plug-ins/common/plugin-browser.c:684
+msgid "Installation Date"
+msgstr "Ngày cài đặt"
+
+#:../plug-ins/common/plugin-browser.c:645
+msgid "List View"
+msgstr "Xem Danh sách"
+
+#:../plug-ins/common/plugin-browser.c:707
+msgid "Tree View"
+msgstr "Xem Cây"
+
 #:../plug-ins/common/png.c:264 ../plug-ins/common/png.c:285
 #:../plug-ins/common/png.c:307 ../plug-ins/common/png.c:326
 msgid "PNG image"
@@ -5862,6 +5932,14 @@ msgstr "_Xem thử"
 #:../plug-ins/common/postscript.c:3425
 msgid "Preview _size:"
 msgstr "_Cỡ xem thử :"
+
+#:../plug-ins/common/procedure-browser.c:88
+msgid "Procedure _Browser"
+msgstr "Bộ _duyệt thủ tục"
+
+#:../plug-ins/common/procedure-browser.c:126
+msgid "Procedure Browser"
+msgstr "Bộ duyệt thủ tục"
 
 #:../plug-ins/common/psd.c:524
 msgid "Invalid UTF-8 string in PSD file"
