@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-15 23:52-0500\n"
+"POT-Creation-Date: 2006-01-26 12:25-0500\n"
 "PO-Revision-Date: 2005-09-06 14:31-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
@@ -4170,6 +4170,18 @@ msgstr "Tile _width:"
 msgid "Tile _height:"
 msgstr "Tile _height:"
 
+#: ../plug-ins/common/gnomeprint.c:93
+msgid "_GNOME Print..."
+msgstr "_GNOME Print..."
+
+#: ../plug-ins/common/gnomeprint.c:161
+msgid "Print"
+msgstr "Print"
+
+#: ../plug-ins/common/gnomeprint.c:182
+msgid "Print Preview"
+msgstr "Print Preview"
+
 #: ../plug-ins/common/gqbist.c:407
 msgid "_Qbist..."
 msgstr "_Qbist..."
@@ -5457,6 +5469,65 @@ msgstr "Random _seed:"
 msgid "T_urbulence:"
 msgstr "T_urbulence:"
 
+#: ../plug-ins/common/plugin-browser.c:144
+msgid "_Plug-In Browser"
+msgstr "_Plug-In Browser"
+
+#: ../plug-ins/common/plugin-browser.c:372
+msgid "Searching by name"
+msgstr "Searching by name"
+
+#: ../plug-ins/common/plugin-browser.c:386
+#, c-format
+msgid "%d plug-ins"
+msgstr "%d plug-ins"
+
+#: ../plug-ins/common/plugin-browser.c:393
+msgid "No matches for your query"
+msgstr "No matches for your query"
+
+#: ../plug-ins/common/plugin-browser.c:396
+#, c-format
+msgid "%d plug-in matches your query"
+msgid_plural "%d plug-ins match your query"
+msgstr[0] "%d plug-in matches your query"
+msgstr[1] "%d plug-ins match your query"
+
+#: ../plug-ins/common/plugin-browser.c:527
+msgid "No matches"
+msgstr "No matches"
+
+#: ../plug-ins/common/plugin-browser.c:552
+msgid "Plug-In Browser"
+msgstr "Plug-In Browser"
+
+#: ../plug-ins/common/plugin-browser.c:595
+msgid "Name"
+msgstr "Name"
+
+#: ../plug-ins/common/plugin-browser.c:603
+#: ../plug-ins/common/plugin-browser.c:666
+msgid "Menu Path"
+msgstr "Menu Path"
+
+#: ../plug-ins/common/plugin-browser.c:611
+#: ../plug-ins/common/plugin-browser.c:675
+msgid "Image Types"
+msgstr "Image Types"
+
+#: ../plug-ins/common/plugin-browser.c:621
+#: ../plug-ins/common/plugin-browser.c:684
+msgid "Installation Date"
+msgstr "Installation Date"
+
+#: ../plug-ins/common/plugin-browser.c:645
+msgid "List View"
+msgstr "List View"
+
+#: ../plug-ins/common/plugin-browser.c:707
+msgid "Tree View"
+msgstr "Tree View"
+
 #: ../plug-ins/common/png.c:264 ../plug-ins/common/png.c:285
 #: ../plug-ins/common/png.c:307 ../plug-ins/common/png.c:326
 msgid "PNG image"
@@ -5877,6 +5948,14 @@ msgstr "P_review"
 #: ../plug-ins/common/postscript.c:3425
 msgid "Preview _size:"
 msgstr "Preview _size:"
+
+#: ../plug-ins/common/procedure-browser.c:88
+msgid "Procedure _Browser"
+msgstr "Procedure _Browser"
+
+#: ../plug-ins/common/procedure-browser.c:126
+msgid "Procedure Browser"
+msgstr "Procedure Browser"
 
 #: ../plug-ins/common/psd.c:524
 msgid "Invalid UTF-8 string in PSD file"
