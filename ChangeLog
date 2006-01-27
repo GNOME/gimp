@@ -1,3 +1,7 @@
+2006-01-27  Karine Delvare  <kdelvare@nerim.net>
+
+	* po/fr.po: fixed spelling error.
+
 2006-01-26  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpthumbbox.c: some finetuning to the labels.
@@ -41,6 +45,7 @@
 	* plug-ins/script-fu/scripts/guides-new-percent.scm: allow guides
 	at the right and bottom edges of the canvas. Fixes bug #328320.
 
+>>>>>>> 1.12122
 2006-01-21  Simon Budig  <simon@gimp.org>
 
 	* desktop/gimp.desktop.in.in: Added "GTK" category. Fixes
