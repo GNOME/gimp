@@ -6,15 +6,15 @@ msgid ""
 ""
 msgstr "Project-Id-Version: gimp-plugins HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-26 03:45+0100\n"
-"PO-Revision-Date: 2006-01-26 16:22+1030\n"
+"POT-Creation-Date: 2006-01-28 03:17+0100\n"
+"PO-Revision-Date: 2006-01-28 13:59+1030\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0\n"
-"X-Generator: LocFactoryEditor 1.6b31\n"
+"X-Generator: LocFactoryEditor 1.6b34\n"
 
 #:../plug-ins/FractalExplorer/Dialogs.c:529
 #:../plug-ins/gfig/gfig-dialog.c:282 ../plug-ins/gflare/gflare.c:887
@@ -5480,7 +5480,7 @@ msgstr "Không có gì khớp truy vấn của bạn"
 #,c-format
 msgid "%d plug-in matches your query"
 msgid_plural "%d plug-ins match your query"
-msgstr[0] ""
+msgstr[0] "%d bộ cầm phít khớp với truy vấn của bạn"
 
 #:../plug-ins/common/plugin-browser.c:527
 msgid "No matches"
