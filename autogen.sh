@@ -35,10 +35,10 @@ cd $srcdir
 
 check_version ()
 {
-    if expr $1 \>= $2 > /dev/null; then
+    if expr "$1" \>= "$2" > /dev/null; then
 	echo "yes (version $1)"
     else
-	echo "Too old (found version $1)!"
+	echo "Too old (found version [$1] expected [$2])"
 	DIE=1
     fi
 }
@@ -113,7 +113,7 @@ fi
 
 echo -n "checking for autoconf >= $AUTOCONF_REQUIRED_VERSION ... "
 if ($AUTOCONF --version) < /dev/null > /dev/null 2>&1; then
-    VER=`$AUTOCONF --version \
+    VER=`$AUTOCONF --version | head -1 \
          | grep -iw autoconf | sed "s/.* \([0-9.]*\)[-a-z0-9]*$/\1/"`
     check_version $VER $AUTOCONF_REQUIRED_VERSION
 else
