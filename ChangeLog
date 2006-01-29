@@ -1,3 +1,8 @@
+2006-01-29  Akkana Peck	 <akkana@cvs.gnome.org>
+
+	* configure.in: Print a table of features enabled/disabled
+        at the end (as discussed in bug 303383c11 and c13).
+
 2006-01-29  Roman Joost	 <romanofski@gimp.org>
 
 	* plug-ins/script-fu/scripts/web-browser.scm: adds eight
