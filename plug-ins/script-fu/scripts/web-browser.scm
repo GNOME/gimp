@@ -28,6 +28,115 @@
 (define (gimp-online-plug-in-web-site)
   (plug-in-web-browser "http://registry.gimp.org"))
 
+(define (gimp-online-docs-web-site)
+  (plug-in-web-browser "http://docs.gimp.org"))
+
+(define (gimp-help-2-concepts-usage)
+  (gimp-help "" "gimp-concepts-usage"))
+
+(define (gimp-help-2-using-docks)
+  (gimp-help "" "gimp-using-docks"))
+
+(define (gimp-help-2-using-simpleobjects)
+  (gimp-help "" "gimp-using-simpleobjects"))
+
+(define (gimp-help-2-using-selections)
+  (gimp-help "" "gimp-using-selections"))
+
+(define (gimp-help-2-using-fileformats)
+  (gimp-help "" "gimp-using-fileformats"))
+
+(define (gimp-help-2-using-photography)
+  (gimp-help "" "gimp-using-photography"))
+
+(define (gimp-help-2-using-web)
+  (gimp-help "" "gimp-using-web"))
+
+(define (gimp-help-2-concepts-paths)
+  (gimp-help "" "gimp-concepts-paths"))
+
+; shortcuts to help topics
+(script-fu-register "gimp-help-2-concepts-paths"
+                    _"Using _Paths"
+                     "Bookmark to gimp-concepts-paths"
+		    "Roman Joost <romanofski@gimp.org>"
+		    "Roman Joost <romanofski@gimp.org>"
+		    "2006"
+		    "")
+(script-fu-menu-register "gimp-help-2-concepts-paths"
+			 "<Toolbox>/Help/GIMP User Manual Shortcuts")
+
+(script-fu-register "gimp-help-2-using-web"
+                    _"_Preparing your Images for the web"
+                     "Bookmark to gimp-using-web"
+		    "Roman Joost <romanofski@gimp.org>"
+		    "Roman Joost <romanofski@gimp.org>"
+		    "2006"
+		    "")
+(script-fu-menu-register "gimp-help-2-using-web"
+			 "<Toolbox>/Help/GIMP User Manual Shortcuts")
+
+(script-fu-register "gimp-help-2-using-photography"
+                    _"_Working with Digital Camera Photos"
+                     "Bookmark to gimp-using-photography"
+		    "Roman Joost <romanofski@gimp.org>"
+		    "Roman Joost <romanofski@gimp.org>"
+		    "2006"
+		    "")
+(script-fu-menu-register "gimp-help-2-using-photography"
+			 "<Toolbox>/Help/GIMP User Manual Shortcuts")
+
+(script-fu-register "gimp-help-2-using-fileformats"
+                    _"Create, Open and Save _Files"
+                     "Bookmark to gimp-using-fileformats."
+		    "Roman Joost <romanofski@gimp.org>"
+		    "Roman Joost <romanofski@gimp.org>"
+		    "2006"
+		    "")
+(script-fu-menu-register "gimp-help-2-using-fileformats"
+			 "<Toolbox>/Help/GIMP User Manual Shortcuts")
+
+(script-fu-register "gimp-help-2-concepts-usage"
+                    _"_Basics of TheGIMP"
+                     "Bookmark to gimp-concepts-usage."
+		    "Roman Joost <romanofski@gimp.org>"
+		    "Roman Joost <romanofski@gimp.org>"
+		    "2006"
+		    "")
+(script-fu-menu-register "gimp-help-2-concepts-usage"
+			 "<Toolbox>/Help/GIMP User Manual Shortcuts")
+
+(script-fu-register "gimp-help-2-using-docks"
+                    _"Howto use _Dialogs"
+                     "Bookmark to gimp-using-docks"
+		    "Roman Joost <romanofski@gimp.org>"
+		    "Roman Joost <romanofski@gimp.org>"
+		    "2006"
+		    "")
+(script-fu-menu-register "gimp-help-2-using-docks"
+			 "<Toolbox>/Help/GIMP User Manual Shortcuts")
+
+(script-fu-register "gimp-help-2-using-simpleobjects"
+                    _"Drawing _Simple Objects"
+                     "Bookmark to gimp-using-simpleobjects"
+		     "Roman Joost <romanofski@gimp.org>"
+		     "Roman Joost <romanofski@gimp.org>"
+		     "2006"
+		     "")
+(script-fu-menu-register "gimp-help-2-using-simpleobjects"
+			 "<Toolbox>/Help/GIMP User Manual Shortcuts")
+
+(script-fu-register "gimp-help-2-using-selections"
+		    _"Create and use _Selections"
+		    "Bookmark to gimp-using-selections"
+		    "Roman Joost <romanofski@gimp.org>"
+		    "Roman Joost <romanofski@gimp.org>"
+		    "2006"
+		    "")
+(script-fu-menu-register "gimp-help-2-using-simpleobjects"
+			 "<Toolbox>/Help/GIMP User Manual Shortcuts")
+
+;; Links to GIMP related web sites
 
 (script-fu-register "gimp-online-main-web-site"
                     _"_Main Web Site"
@@ -62,4 +171,15 @@
 		    "")
 
 (script-fu-menu-register "gimp-online-plug-in-web-site"
+			 "<Toolbox>/Help/GIMP Online")
+
+(script-fu-register "gimp-online-docs-web-site"
+                    _"_User Manual Web Site"
+                    "Link to http://docs.gimp.org"
+		    "Roman Joost <romanofski@gimp.org>"
+		    "Roman Joost <romanofski@gimp.org>"
+		    "2006"
+		    "")
+
+(script-fu-menu-register "gimp-online-docs-web-site"
 			 "<Toolbox>/Help/GIMP Online")

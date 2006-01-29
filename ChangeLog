@@ -1,3 +1,10 @@
+2006-01-29  Roman Joost	 <romanofski@gimp.org>
+
+	* plug-ins/script-fu/scripts/web-browser.scm: adds eight
+	bookmarks to the user manual (Basics, Dialogs and Docks, Drawing
+	Simple Objects, Fileformats, Photography, Preparing for the Web,
+	Using Paths). It also adds a new link to http://docs.gimp.org.
+
 2006-01-26  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpthumbbox.c: some finetuning to the labels.
