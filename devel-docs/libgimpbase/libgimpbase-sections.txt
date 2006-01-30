@@ -149,6 +149,14 @@ gimp_param_memsize_get_type
 </SECTION>
 
 <SECTION>
+<FILE>gimpparam</FILE>
+GIMP_PARAM_STATIC_STRINGS
+GIMP_PARAM_READABLE
+GIMP_PARAM_WRITABLE
+GIMP_PARAM_READWRITE
+</SECTION>
+
+<SECTION>
 <FILE>gimpparasite</FILE>
 GimpParasite
 gimp_parasite_new

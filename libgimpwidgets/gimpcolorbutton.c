@@ -211,7 +211,7 @@ gimp_color_button_class_init (GimpColorButtonClass *klass)
   g_object_class_install_property (object_class, PROP_TITLE,
                                    g_param_spec_string ("title", NULL, NULL,
                                                         NULL,
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
   /**
    * GimpColorButton:color:
@@ -223,7 +223,7 @@ gimp_color_button_class_init (GimpColorButtonClass *klass)
   g_object_class_install_property (object_class, PROP_COLOR,
                                    gimp_param_spec_rgb ("color", NULL, NULL,
                                                         &color,
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
   /**
    * GimpColorButton:type:
@@ -236,7 +236,7 @@ gimp_color_button_class_init (GimpColorButtonClass *klass)
                                    g_param_spec_enum ("type", NULL, NULL,
                                                       GIMP_TYPE_COLOR_AREA_TYPE,
                                                       GIMP_COLOR_AREA_FLAT,
-                                                      G_PARAM_READWRITE |
+                                                      GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
   /**
    * GimpColorButton:continuous-update:

@@ -285,7 +285,7 @@ cdisplay_colorblind_class_init (CdisplayColorblindClass *klass)
                                  "deficiency", NULL,
                                  CDISPLAY_TYPE_COLORBLIND_DEFICIENCY,
                                  DEFAULT_DEFICIENCY,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
 
   display_class->name        = _("Color Deficient Vision");
   display_class->help_id     = "gimp-colordisplay-colorblind";

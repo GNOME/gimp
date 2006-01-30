@@ -36,6 +36,8 @@
 #include <glib/gstdio.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
+#include "libgimpbase/gimpparam.h"
+
 #ifdef G_OS_WIN32
 #include "libgimpbase/gimpwin32-io.h"
 #include <process.h>
@@ -136,25 +138,25 @@ gimp_thumbnail_class_init (GimpThumbnailClass *klass)
                                                       "State of the image associated to the thumbnail object",
                                                       GIMP_TYPE_THUMB_STATE,
                                                       GIMP_THUMB_STATE_UNKNOWN,
-                                                      G_PARAM_READWRITE));
+                                                      GIMP_PARAM_READWRITE));
   g_object_class_install_property (object_class,
 				   PROP_IMAGE_URI,
 				   g_param_spec_string ("image-uri", NULL,
                                                        "URI of the image file",
 							NULL,
-							G_PARAM_READWRITE));
+							GIMP_PARAM_READWRITE));
   g_object_class_install_property (object_class,
 				   PROP_IMAGE_MTIME,
 				   g_param_spec_int64 ("image-mtime", NULL,
                                                        "Modification time of the image file in seconds since the Epoch",
                                                        0, G_MAXINT64, 0,
-                                                       G_PARAM_READWRITE));
+                                                       GIMP_PARAM_READWRITE));
   g_object_class_install_property (object_class,
 				   PROP_IMAGE_FILESIZE,
 				   g_param_spec_int64 ("image-filesize", NULL,
                                                        "Size of the image file in bytes",
                                                        0, G_MAXINT64, 0,
-                                                       G_PARAM_READWRITE));
+                                                       GIMP_PARAM_READWRITE));
   /**
    * GimpThumbnail::image-mimetype:
    *
@@ -165,38 +167,38 @@ gimp_thumbnail_class_init (GimpThumbnailClass *klass)
 				   g_param_spec_string ("image-mimetype", NULL,
                                                         "Image mimetype",
                                                         NULL,
-                                                        G_PARAM_READWRITE));
+                                                        GIMP_PARAM_READWRITE));
   g_object_class_install_property (object_class,
 				   PROP_IMAGE_WIDTH,
 				   g_param_spec_int ("image-width", NULL,
                                                      "Width of the image in pixels",
                                                      0, G_MAXINT, 0,
-                                                     G_PARAM_READWRITE));
+                                                     GIMP_PARAM_READWRITE));
   g_object_class_install_property (object_class,
 				   PROP_IMAGE_HEIGHT,
 				   g_param_spec_int ("image-height", NULL,
                                                      "Height of the image in pixels",
                                                      0, G_MAXINT, 0,
-                                                     G_PARAM_READWRITE));
+                                                     GIMP_PARAM_READWRITE));
   g_object_class_install_property (object_class,
                                    PROP_IMAGE_TYPE,
                                    g_param_spec_string ("image-type", NULL,
                                                         "String describing the type of the image format",
                                                         NULL,
-                                                        G_PARAM_READWRITE));
+                                                        GIMP_PARAM_READWRITE));
   g_object_class_install_property (object_class,
                                    PROP_IMAGE_NUM_LAYERS,
                                    g_param_spec_int ("image-num-layers", NULL,
                                                      "The number of layers in the image",
                                                      0, G_MAXINT, 0,
-                                                     G_PARAM_READWRITE));
+                                                     GIMP_PARAM_READWRITE));
   g_object_class_install_property (object_class,
 				   PROP_THUMB_STATE,
 				   g_param_spec_enum ("thumb-state", NULL,
                                                       "State of the thumbnail file",
                                                       GIMP_TYPE_THUMB_STATE,
                                                       GIMP_THUMB_STATE_UNKNOWN,
-                                                      G_PARAM_READWRITE));
+                                                      GIMP_PARAM_READWRITE));
 }
 
 static void

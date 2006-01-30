@@ -1,3 +1,37 @@
+2006-01-30  Sven Neumann  <sven@gimp.org>
+
+	* app/config/config-types.h: moved GIMP_PARAM defines from here ...
+
+	* libgimpbase/gimpparam.h: ... to this new files.
+
+	* libgimpbase/Makefile.am
+	* libgimpbase/gimpbasetypes.h: include the new header file.
+
+	* libgimp/gimpfontselectbutton.c
+	* libgimpconfig/gimpcolorconfig.c
+	* libgimpthumb/gimpthumbnail.c
+	* libgimpwidgets/gimpcellrenderercolor.c
+	* libgimpwidgets/gimpcellrenderertoggle.c
+	* libgimpwidgets/gimpcolorarea.c
+	* libgimpwidgets/gimpcolorbutton.c
+	* libgimpwidgets/gimpcolordisplay.c
+	* libgimpwidgets/gimpcontroller.c
+	* libgimpwidgets/gimpdialog.c
+	* libgimpwidgets/gimpenumcombobox.c
+	* libgimpwidgets/gimpintcombobox.c
+	* libgimpwidgets/gimppageselector.c
+	* libgimpwidgets/gimppreview.c
+	* libgimpwidgets/gimppreviewarea.c
+	* libgimpwidgets/gimpzoommodel.c
+	* modules/cdisplay_colorblind.c
+	* modules/cdisplay_gamma.c
+	* modules/cdisplay_highcontrast.c
+	* modules/cdisplay_lcms.c
+	* modules/cdisplay_proof.c
+	* modules/controller_linux_input.c
+	* modules/controller_midi.c: use the GIMP_PARAM defines to avoid
+	unnecessary string allocations.
+
 2006-01-29  Michael Natterer  <mitch@gimp.org>
 
 	* autogen.sh: make autoconf check more robust and the generic

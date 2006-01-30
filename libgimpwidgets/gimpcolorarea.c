@@ -140,7 +140,7 @@ gimp_color_area_class_init (GimpColorAreaClass *klass)
   g_object_class_install_property (object_class, PROP_COLOR,
                                    gimp_param_spec_rgb ("color", NULL, NULL,
                                                         &color,
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
   /**
    * GimpColorArea:type:
@@ -153,7 +153,7 @@ gimp_color_area_class_init (GimpColorAreaClass *klass)
                                    g_param_spec_enum ("type", NULL, NULL,
                                                       GIMP_TYPE_COLOR_AREA_TYPE,
                                                       GIMP_COLOR_AREA_FLAT,
-                                                      G_PARAM_READWRITE |
+                                                      GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
   /**
    * GimpColorArea:drag-type:
@@ -166,7 +166,7 @@ gimp_color_area_class_init (GimpColorAreaClass *klass)
                                    g_param_spec_flags ("drag-mask", NULL, NULL,
                                                        GDK_TYPE_MODIFIER_TYPE,
                                                        0,
-                                                       G_PARAM_WRITABLE |
+                                                       GIMP_PARAM_WRITABLE |
                                                        G_PARAM_CONSTRUCT_ONLY));
   /**
    * GimpColorArea:draw-border:
@@ -179,7 +179,7 @@ gimp_color_area_class_init (GimpColorAreaClass *klass)
                                    g_param_spec_boolean ("draw-border",
                                                          NULL, NULL,
                                                          FALSE,
-                                                         G_PARAM_READWRITE));
+                                                         GIMP_PARAM_READWRITE));
 }
 
 static void

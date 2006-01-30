@@ -1,3 +1,9 @@
+2006-01-30  Sven Neumann  <sven@gimp.org>
+
+	* libgimpbase/libgimpbase-docs.sgml
+	* libgimpbase/libgimpbase-sections.txt
+	* libgimpbase/tmpl/gimpparam.sgml: added docs for GIMP_PARAM defines.
+
 2006-01-25  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-sections.txt

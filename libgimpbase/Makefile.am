@@ -77,6 +77,7 @@ libgimpbase_sources = \
 	gimpbasetypes.h		\
 	gimpbasetypes.c		\
 	gimplimits.h		\
+	gimpparam.h		\
 	gimpversion.h		\
 	\
 	gimpbase-private.c	\
@@ -118,6 +119,7 @@ libgimpbaseinclude_HEADERS = \
 	gimpbaseenums.h		\
 	gimpbasetypes.h		\
 	gimplimits.h		\
+	gimpparam.h		\
 	gimpversion.h		\
 	\
 	gimpchecks.h		\

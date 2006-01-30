@@ -124,7 +124,7 @@ gimp_font_select_button_class_init (GimpFontSelectButtonClass *klass)
   g_object_class_install_property (gobject_class, PROP_TITLE,
                                    g_param_spec_string ("title", NULL, NULL,
                                                         _("Font Selection"),
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   /**
@@ -137,7 +137,7 @@ gimp_font_select_button_class_init (GimpFontSelectButtonClass *klass)
   g_object_class_install_property (gobject_class, PROP_FONT_NAME,
                                    g_param_spec_string ("font-name", NULL, NULL,
                                                         _("Sans"),
-                                                        G_PARAM_READWRITE));
+                                                        GIMP_PARAM_READWRITE));
 
   /**
    * GimpFontSelectButton::font-set:

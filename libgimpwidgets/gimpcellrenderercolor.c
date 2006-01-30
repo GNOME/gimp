@@ -90,19 +90,19 @@ gimp_cell_renderer_color_class_init (GimpCellRendererColorClass *klass)
                                    PROP_COLOR,
                                    g_param_spec_boxed ("color", NULL, NULL,
                                                        GIMP_TYPE_RGB,
-                                                       G_PARAM_READWRITE));
+                                                       GIMP_PARAM_READWRITE));
   g_object_class_install_property (object_class,
                                    PROP_OPAQUE,
                                    g_param_spec_boolean ("opaque", NULL, NULL,
                                                          TRUE,
-                                                         G_PARAM_READWRITE |
+                                                         GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class,
 				   PROP_SIZE,
                                    g_param_spec_int ("icon-size", NULL, NULL,
                                                      0, G_MAXINT,
                                                      DEFAULT_ICON_SIZE,
-                                                     G_PARAM_READWRITE |
+                                                     GIMP_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
 }
 

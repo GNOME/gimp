@@ -103,13 +103,13 @@ gimp_controller_class_init (GimpControllerClass *klass)
   g_object_class_install_property (object_class, PROP_NAME,
                                    g_param_spec_string ("name", NULL, NULL,
                                                         "Unnamed Controller",
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_STATE,
                                    g_param_spec_string ("state", NULL, NULL,
                                                         "Unknown",
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   controller_signals[EVENT] =

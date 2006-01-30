@@ -111,30 +111,30 @@ gimp_zoom_model_class_init (GimpZoomModelClass *klass)
                                                         "Zoom factor", NULL,
                                                         ZOOM_MIN, ZOOM_MAX,
                                                         1.0,
-                                                        G_PARAM_READWRITE));
+                                                        GIMP_PARAM_READWRITE));
   g_object_class_install_property (object_class, PROP_MINIMUM,
                                    g_param_spec_double ("minimum",
                                                         "Lower limit for the zoom factor", NULL,
                                                         ZOOM_MIN, ZOOM_MAX,
                                                         ZOOM_MIN,
-                                                        G_PARAM_READWRITE));
+                                                        GIMP_PARAM_READWRITE));
   g_object_class_install_property (object_class, PROP_MAXIMUM,
                                    g_param_spec_double ("maximum",
                                                         "Upper limit for the zoom factor", NULL,
                                                         ZOOM_MIN, ZOOM_MAX,
                                                         ZOOM_MAX,
-                                                        G_PARAM_READWRITE));
+                                                        GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_FRACTION,
                                    g_param_spec_string ("fraction",
                                                         "The zoom factor expressed as a fraction", NULL,
                                                         "1:1",
-                                                        G_PARAM_READABLE));
+                                                        GIMP_PARAM_READABLE));
   g_object_class_install_property (object_class, PROP_PERCENTAGE,
                                    g_param_spec_string ("percentage",
                                                         "The zoom factor expressed as a percentage", NULL,
                                                         "100%",
-                                                        G_PARAM_READABLE));
+                                                        GIMP_PARAM_READABLE));
 
   g_type_class_add_private (object_class, sizeof (GimpZoomModelPrivate));
 }

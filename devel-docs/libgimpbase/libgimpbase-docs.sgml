@@ -17,6 +17,7 @@
     <xi:include href="xml/gimpbasetypes.xml" />
     <xi:include href="xml/gimpversion.xml" />
     <xi:include href="xml/gimplimits.xml" />
+    <xi:include href="xml/gimpparam.xml" />
     <xi:include href="xml/gimpchecks.xml" />
     <xi:include href="xml/gimpdatafiles.xml" />
     <xi:include href="xml/gimpenv.xml" />

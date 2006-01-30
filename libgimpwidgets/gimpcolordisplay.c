@@ -77,7 +77,7 @@ gimp_color_display_class_init (GimpColorDisplayClass *klass)
   g_object_class_install_property (object_class, PROP_ENABLED,
                                    g_param_spec_boolean ("enabled", NULL, NULL,
                                                          TRUE,
-                                                         G_PARAM_READWRITE |
+                                                         GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
 
   display_signals[CHANGED] =

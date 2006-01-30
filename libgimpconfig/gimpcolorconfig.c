@@ -116,63 +116,63 @@ gimp_color_config_class_init (GimpColorConfigClass *klass)
                                  "mode", COLOR_MANAGEMENT_MODE_BLURB,
                                  GIMP_TYPE_COLOR_MANAGEMENT_MODE,
                                  GIMP_COLOR_MANAGEMENT_DISPLAY,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_RGB_PROFILE,
                                  "rgb-profile", RGB_PROFILE_BLURB,
                                  GIMP_CONFIG_PATH_FILE, NULL,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_CMYK_PROFILE,
                                  "cmyk-profile", CMYK_PROFILE_BLURB,
                                  GIMP_CONFIG_PATH_FILE, NULL,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_DISPLAY_PROFILE,
                                  "display-profile", DISPLAY_PROFILE_BLURB,
                                  GIMP_CONFIG_PATH_FILE, NULL,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DISPLAY_PROFILE_FROM_GDK,
                                     "display-profile-from-gdk",
                                     DISPLAY_PROFILE_FROM_GDK_BLURB,
                                     TRUE,
-                                    0);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PRINTER_PROFILE,
                                  "printer-profile", PRINTER_PROFILE_BLURB,
                                  GIMP_CONFIG_PATH_FILE, NULL,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_DISPLAY_RENDERING_INTENT,
                                  "display-rendering-intent",
                                  DISPLAY_RENDERING_INTENT_BLURB,
                                  GIMP_TYPE_COLOR_RENDERING_INTENT,
                                  GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_SIMULATION_RENDERING_INTENT,
                                  "simulation-rendering-intent",
                                  SIMULATION_RENDERING_INTENT_BLURB,
                                  GIMP_TYPE_COLOR_RENDERING_INTENT,
                                  GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DISPLAY_MODULE,
                                    "display-module", NULL,
                                    "CdisplayLcms",
-                                   0);
+                                   GIMP_PARAM_STATIC_STRINGS);
 #if 0
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_OPEN_BEHAVIOUR_NO_PROFILE,
                                  "open-behaviour-no-profile",
                                  OPEN_BEHAVIOUR_NO_PROFILE_BLURB,
                                  GIMP_TYPE_COLOR_FILE_OPEN_BEHAVIOUR,
                                  GIMP_COLOR_FILE_OPEN_ASK,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_OPEN_BEHAVIOUR_RGB_PROFILE,
                                  "open-behaviour-rgb-profile",
                                  OPEN_BEHAVIOUR_RGB_PROFILE_BLURB,
                                  GIMP_TYPE_COLOR_FILE_OPEN_BEHAVIOUR,
                                  GIMP_COLOR_FILE_OPEN_ASK,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_OPEN_BEHAVIOUR_CMYK_PROFILE,
                                  "open-behaviour-cmyk-profile",
                                  OPEN_BEHAVIOUR_CMYK_PROFILE_BLURB,
                                  GIMP_TYPE_COLOR_FILE_OPEN_BEHAVIOUR,
                                  GIMP_COLOR_FILE_OPEN_ASK,
-                                 0);
+                                 GIMP_PARAM_STATIC_STRINGS);
 #endif
 }
 

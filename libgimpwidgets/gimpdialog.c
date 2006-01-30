@@ -92,7 +92,7 @@ gimp_dialog_class_init (GimpDialogClass *klass)
    **/
   g_object_class_install_property (object_class, PROP_HELP_FUNC,
                                    g_param_spec_pointer ("help-func", NULL, NULL,
-                                                         G_PARAM_READWRITE |
+                                                         GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
 
   /**
@@ -103,7 +103,7 @@ gimp_dialog_class_init (GimpDialogClass *klass)
   g_object_class_install_property (object_class, PROP_HELP_ID,
                                    g_param_spec_string ("help-id", NULL, NULL,
                                                         NULL,
-                                                        G_PARAM_READWRITE |
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 

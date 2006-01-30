@@ -187,7 +187,7 @@ gimp_page_selector_class_init (GimpPageSelectorClass *klass)
   g_object_class_install_property (object_class, PROP_N_PAGES,
                                    g_param_spec_int ("n-pages", NULL, NULL,
                                                      0, G_MAXINT, 0,
-                                                     G_PARAM_READWRITE));
+                                                     GIMP_PARAM_READWRITE));
 
   /**
    * GimpPageSelector:target:
@@ -200,7 +200,7 @@ gimp_page_selector_class_init (GimpPageSelectorClass *klass)
                                    g_param_spec_enum ("target", NULL, NULL,
                                                       GIMP_TYPE_PAGE_SELECTOR_TARGET,
                                                       GIMP_PAGE_SELECTOR_TARGET_LAYERS,
-                                                      G_PARAM_READWRITE));
+                                                      GIMP_PARAM_READWRITE));
 
   g_type_class_add_private (object_class, sizeof (GimpPageSelectorPrivate));
 }

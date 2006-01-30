@@ -98,7 +98,7 @@ gimp_int_combo_box_class_init (GimpIntComboBoxClass *klass)
                                    g_param_spec_enum ("ellipsize", NULL, NULL,
 						      PANGO_TYPE_ELLIPSIZE_MODE,
 						      PANGO_ELLIPSIZE_NONE,
-						      G_PARAM_READWRITE));
+						      GIMP_PARAM_READWRITE));
 
   g_type_class_add_private (object_class, sizeof (GimpIntComboBoxPrivate));
 }

@@ -162,7 +162,7 @@ gimp_preview_class_init (GimpPreviewClass *klass)
                                    g_param_spec_boolean ("update",
                                                          NULL, NULL,
                                                          TRUE,
-                                                         G_PARAM_READWRITE |
+                                                         GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
 
   gtk_widget_class_install_style_property (widget_class,
@@ -170,7 +170,7 @@ gimp_preview_class_init (GimpPreviewClass *klass)
                                                              NULL, NULL,
                                                              1, 1024,
                                                              DEFAULT_SIZE,
-                                                             G_PARAM_READABLE));
+                                                             GIMP_PARAM_READABLE));
 }
 
 static void

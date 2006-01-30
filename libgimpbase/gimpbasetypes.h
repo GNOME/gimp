@@ -25,6 +25,8 @@
 #include <libgimpmath/gimpmathtypes.h>
 
 #include <libgimpbase/gimpbaseenums.h>
+#include <libgimpbase/gimpparam.h>
+
 
 G_BEGIN_DECLS
 

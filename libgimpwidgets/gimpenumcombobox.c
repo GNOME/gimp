@@ -68,7 +68,7 @@ gimp_enum_combo_box_class_init (GimpEnumComboBoxClass *klass)
                                    PROP_MODEL,
                                    g_param_spec_object ("model", NULL, NULL,
                                                         GIMP_TYPE_ENUM_STORE,
-                                                        G_PARAM_READWRITE));
+                                                        GIMP_PARAM_READWRITE));
 }
 
 static void
