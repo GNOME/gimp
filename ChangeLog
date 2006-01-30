@@ -1,3 +1,8 @@
+2006-01-30  Michael Schumacher  <schumaml@cvs.gnome.org>
+
+	* app/tools/gimpmeasuretool.c: use the closest corner of the
+	current pixel as origin. Fixes bug #329000.
+	
 2006-01-30  Sven Neumann  <sven@gimp.org>
 
 	* app/config/config-types.h: moved GIMP_PARAM defines from here ...

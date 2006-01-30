@@ -300,8 +300,8 @@ gimp_measure_tool_button_press (GimpTool        *tool,
 	}
 
       /*  set the first point and go into ADDING mode  */
-      mtool->x[0]       = coords->x;
-      mtool->y[0]       = coords->y;
+      mtool->x[0]       = coords->x + 0.5;
+      mtool->y[0]       = coords->y + 0.5;
       mtool->point      = 0;
       mtool->num_points = 1;
       mtool->function   = ADDING;
