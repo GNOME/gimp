@@ -155,7 +155,7 @@ cdisplay_gamma_class_init (CdisplayGammaClass *klass)
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_GAMMA,
                                    "gamma", NULL,
                                    0.01, 10.0, DEFAULT_GAMMA,
-                                   GIMP_PARAM_STATIC_STRINGS);
+                                   0);
 
   display_class->name        = _("Gamma");
   display_class->help_id     = "gimp-colordisplay-gamma";

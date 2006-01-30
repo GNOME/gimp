@@ -244,7 +244,6 @@ midi_class_init (ControllerMidiClass *klass)
                                                         _("Device:"),
                                                         blurb,
                                                         NULL,
-                                                        GIMP_PARAM_STATIC_STRINGS |
                                                         GIMP_CONFIG_PARAM_FLAGS));
 
   g_free (blurb);
@@ -254,7 +253,6 @@ midi_class_init (ControllerMidiClass *klass)
                                                      _("Channel:"),
                                                      _("The MIDI channel to read events from. Set to -1 for reading from all MIDI channels."),
                                                      -1, 15, -1,
-                                                     GIMP_PARAM_STATIC_STRINGS |
                                                      GIMP_CONFIG_PARAM_FLAGS));
 
   controller_class->name            = _("MIDI");

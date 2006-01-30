@@ -22,15 +22,8 @@
 	* libgimpwidgets/gimppageselector.c
 	* libgimpwidgets/gimppreview.c
 	* libgimpwidgets/gimppreviewarea.c
-	* libgimpwidgets/gimpzoommodel.c
-	* modules/cdisplay_colorblind.c
-	* modules/cdisplay_gamma.c
-	* modules/cdisplay_highcontrast.c
-	* modules/cdisplay_lcms.c
-	* modules/cdisplay_proof.c
-	* modules/controller_linux_input.c
-	* modules/controller_midi.c: use the GIMP_PARAM defines to avoid
-	unnecessary string allocations.
+	* libgimpwidgets/gimpzoommodel.c: use the GIMP_PARAM defines to
+	avoid unnecessary string allocations.
 
 2006-01-29  Michael Natterer  <mitch@gimp.org>
 

@@ -208,15 +208,15 @@ cdisplay_proof_class_init (CdisplayProofClass *klass)
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_INTENT,
                                  "intent", NULL,
                                  CDISPLAY_TYPE_PROOF_INTENT, INTENT_PERCEPTUAL,
-                                 GIMP_PARAM_STATIC_STRINGS);
+                                 0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_BPC,
                                     "black-point-compensation", NULL,
                                     FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+                                    0);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PROFILE,
                                  "profile", NULL,
                                  GIMP_CONFIG_PATH_FILE, NULL,
-                                 GIMP_PARAM_STATIC_STRINGS);
+                                 0);
 
   display_class->name        = _("Color Proof");
   display_class->help_id     = "gimp-colordisplay-proof";

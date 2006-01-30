@@ -222,7 +222,6 @@ linux_input_class_init (ControllerLinuxInputClass *klass)
                                                         _("Device:"),
                                                         _("The name of the device to read Linux Input events from."),
                                                         NULL,
-                                                        GIMP_PARAM_STATIC_STRINGS |
                                                         GIMP_CONFIG_PARAM_FLAGS));
 
   controller_class->name            = _("Linux Input");

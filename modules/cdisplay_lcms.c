@@ -168,7 +168,7 @@ cdisplay_lcms_class_init (CdisplayLcmsClass *klass)
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_CONFIG,
                                    "config", NULL,
                                    GIMP_TYPE_COLOR_CONFIG,
-                                   GIMP_PARAM_STATIC_STRINGS);
+                                   0);
 
   display_class->name        = _("Color Management");
   display_class->help_id     = "gimp-colordisplay-lcms";
