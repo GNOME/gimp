@@ -999,6 +999,13 @@ AC_SUBST(LIBJPEG)
 ## xjt does build, but it is more confusing than useful on Win32,
 ## as it wants to run tar, mv and bzip2, which seldom are available
 AM_CONDITIONAL(BUILD_XJT, test x$jpeg_ok = xyes && test x"$os_win32" = xno)
+if test x$jpeg_ok != xyes; then
+  have_xjt="no (no JPEG library)"
+elif test x"$os_win32" = xyes; then
+  have_xjt="no (not built on Windows)"
+else
+  have_xjt=yes
+fi
 
 
 ################
@@ -1903,7 +1910,7 @@ GIMP Features:
   gimp-remote: $have_gimp_remote
   tiff:        $have_libtiff
   jpeg:        $jpeg_ok
-  xjt:         $jpeg_ok
+  xjt:         $have_xjt
   tiff:        $have_libtiff
   zlib:        $have_zlib
   png:         $have_libpng

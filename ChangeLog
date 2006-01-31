@@ -1,3 +1,7 @@
+2006-01-30  Akkana Peck	 <akkana@cvs.gnome.org>
+
+	* configure.in: don't report yes for xjt if on Windows.
+
 2006-01-30  Michael Schumacher  <schumaml@cvs.gnome.org>
 
 	* app/tools/gimpmeasuretool.c: use the closest corner of the
