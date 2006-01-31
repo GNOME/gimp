@@ -345,6 +345,7 @@ gimp_levels_tool_color_picker_new (GimpLevelsTool *tool,
                                    guint           value)
 {
   GtkWidget   *button;
+  GtkWidget   *image;
   const gchar *stock_id;
   const gchar *help;
 
@@ -367,10 +368,13 @@ gimp_levels_tool_color_picker_new (GimpLevelsTool *tool,
     }
 
   button = g_object_new (GTK_TYPE_TOGGLE_BUTTON,
-                         "label",          stock_id,
-                         "use_stock",      TRUE,
-                         "draw_indicator", FALSE,
+                         "draw-indicator", FALSE,
                          NULL);
+
+  image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_BUTTON);
+  gtk_misc_set_padding (GTK_MISC (image), 2, 2);
+  gtk_container_add (GTK_CONTAINER (button), image);
+  gtk_widget_show (image);
 
   gimp_help_set_help_data (button, help, NULL);
 
