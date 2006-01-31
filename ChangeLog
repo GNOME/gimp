@@ -1,3 +1,9 @@
+2006-01-31  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimplevelstool.c (gimp_levels_tool_color_picker_new):
+	manually add the icons to the color picker buttons instead of
+	abusing the stock-id property. Fixes bug #325745.
+
 2006-01-31  Michael Natterer  <mitch@gimp.org>
 
 	* autogen.sh: s/head -1/head -n 1/ (spotted by brix).
