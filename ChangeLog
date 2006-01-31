@@ -1,3 +1,7 @@
+2006-01-31  Michael Natterer  <mitch@gimp.org>
+
+	* autogen.sh: s/head -1/head -n 1/ (spotted by brix).
+
 2006-01-30  Akkana Peck	 <akkana@cvs.gnome.org>
 
 	* configure.in: don't report yes for xjt if on Windows.

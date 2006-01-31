@@ -113,7 +113,7 @@ fi
 
 echo -n "checking for autoconf >= $AUTOCONF_REQUIRED_VERSION ... "
 if ($AUTOCONF --version) < /dev/null > /dev/null 2>&1; then
-    VER=`$AUTOCONF --version | head -1 \
+    VER=`$AUTOCONF --version | head -n 1 \
          | grep -iw autoconf | sed "s/.* \([0-9.]*\)[-a-z0-9]*$/\1/"`
     check_version $VER $AUTOCONF_REQUIRED_VERSION
 else
