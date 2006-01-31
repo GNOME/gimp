@@ -194,10 +194,15 @@ gimp_brush_pipe_select_brush (GimpBrush  *brush,
 {
   GimpBrushPipe *pipe = GIMP_BRUSH_PIPE (brush);
   gint           i, brushix, ix;
-  gdouble        angle;
+  gdouble        angle, velocity, spacing;
 
   if (pipe->nbrushes == 1)
     return GIMP_BRUSH (pipe->current);
+
+  
+  /* calculates brush native spacing in pixels, based on it's width)*/
+  spacing = ((gdouble) pipe->current->spacing / 100) *  
+             MAX (brush->mask->width, brush->mask->height);
 
   brushix = 0;
   for (i = 0; i < pipe->dimension; i++)
@@ -219,6 +224,15 @@ gimp_brush_pipe_select_brush (GimpBrush  *brush,
           else if (angle > 2.0 * G_PI)
             angle -= 2.0 * G_PI;
           ix = RINT (angle / (2.0 * G_PI) * pipe->rank[i]);
+          break;
+
+        case PIPE_SELECT_VELOCITY:
+          velocity = sqrt (SQR (cur_coords->x - last_coords->x) +
+                           SQR (cur_coords->y - last_coords->y));
+
+          /* I don't know how much velocity is enough velocity. I will assume 0  to
+           brush' saved spacing (converted to pixels) to be 'enough' velocity */
+          ix = ROUND ((1.0 - MIN (1.0, velocity / (spacing))) * pipe->rank[i]);
           break;
 
         case PIPE_SELECT_RANDOM:
