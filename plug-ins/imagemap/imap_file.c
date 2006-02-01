@@ -65,7 +65,7 @@ do_file_open_dialog (void)
   if (! dialog)
     {
       dialog =
-        gtk_file_chooser_dialog_new (_("Load Imagemap"),
+        gtk_file_chooser_dialog_new (_("Load Image Map"),
                                      NULL,
                                      GTK_FILE_CHOOSER_ACTION_OPEN,
 
@@ -167,7 +167,7 @@ do_file_save_as_dialog (void)
   if (! dialog)
     {
       dialog =
-        gtk_file_chooser_dialog_new (_("Save Imagemap"),
+        gtk_file_chooser_dialog_new (_("Save Image Map"),
                                      NULL,
                                      GTK_FILE_CHOOSER_ACTION_SAVE,
 

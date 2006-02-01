@@ -192,7 +192,7 @@ preferences_save(PreferencesData_t *data)
 
    out = g_fopen(filename, "w");
    if (out) {
-      fprintf(out, "# Imagemap plug-in resource file\n\n");
+      fprintf(out, "# Image map plug-in resource file\n\n");
       if (data->default_map_type == NCSA)
 	 fprintf(out, "(default-map-type ncsa)\n");
       else if (data->default_map_type == CERN)

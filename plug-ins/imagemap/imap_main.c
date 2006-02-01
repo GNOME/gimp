@@ -121,7 +121,7 @@ static void query(void)
 			  "Maurits Rijk",
 			  "Maurits Rijk",
 			  "1998-2005",
-			  N_("_ImageMap..."),
+			  N_("_Image Map..."),
 			  "RGB*, GRAY*, INDEXED*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), nreturn_vals,
@@ -601,7 +601,7 @@ main_set_title(const char *filename)
 
    g_strreplace(&_filename, filename);
    p = (filename) ? g_path_get_basename(filename) : _("<Untitled>");
-   title = g_strdup_printf("%s - ImageMap", p);
+   title = g_strdup_printf("%s - Image Map", p);
    if (filename)
      g_free (p);
    gtk_window_set_title(GTK_WINDOW(_dlg), title);
@@ -611,8 +611,8 @@ main_set_title(const char *filename)
 void
 main_set_dimension(gint width, gint height)
 {
-   statusbar_set_dimension(_statusbar, width / _zoom_factor,
-			   height / _zoom_factor);
+   statusbar_set_dimension(_statusbar,
+                           width / _zoom_factor, height / _zoom_factor);
 }
 
 void
@@ -847,9 +847,9 @@ save_as_cern(gpointer param, OutputFunc_t output)
    gchar *next_token;
 
    write_cern_comment(param, output);
-   output(param, "-:Image Map file created by GIMP Imagemap Plugin\n");
+   output(param, "-:Image map file created by GIMP Image Map plug-in\n");
    write_cern_comment(param, output);
-   output(param, "-:GIMP Imagemap Plugin by Maurits Rijk\n");
+   output(param, "-:GIMP Image Map plug-in by Maurits Rijk\n");
    write_cern_comment(param, output);
    output(param, "-:Please do not edit lines starting with \"#$\"\n");
    write_cern_comment(param, output);
@@ -885,8 +885,8 @@ save_as_csim(gpointer param, OutputFunc_t output)
 	  _image_width, _image_height, _map_info.title);
    output(param, "<map name=\"%s\">\n", _map_info.title);
    output(param,
-	  "<!-- #$-:Image Map file created by GIMP Imagemap Plugin -->\n");
-   output(param, "<!-- #$-:GIMP Imagemap Plugin by Maurits Rijk -->\n");
+	  "<!-- #$-:Image map file created by GIMP Image Map plug-in -->\n");
+   output(param, "<!-- #$-:GIMP Image Map plug-in by Maurits Rijk -->\n");
    output(param,
 	  "<!-- #$-:Please do not edit lines starting with \"#$\" -->\n");
    output(param, "<!-- #$VERSION:2.3 -->\n");
@@ -910,8 +910,8 @@ save_as_ncsa(gpointer param, OutputFunc_t output)
    char *p;
    gchar *description;
 
-   output(param, "#$-:Image Map file created by GIMP Imagemap Plugin\n");
-   output(param, "#$-:GIMP Imagemap Plugin by Maurits Rijk\n");
+   output(param, "#$-:Image map file created by GIMP Image Map plug-in\n");
+   output(param, "#$-:GIMP Image Map plug-in by Maurits Rijk\n");
    output(param, "#$-:Please do not edit lines starting with \"#$\"\n");
    output(param, "#$VERSION:2.3\n");
    output(param, "#$TITLE:%s\n", _map_info.title);
