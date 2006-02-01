@@ -169,15 +169,13 @@ query (void)
 
   gimp_install_procedure (UNOPTIMIZE_PROC,
                           "This procedure 'simplifies' a GIMP layer-based"
-                          " animation that has been AnimationOptimized.  This"
-                          " makes the animation much easier to work with if,"
-                          " for example, the optimized version is all you"
-                          " have.",
+                          " animation that has been optimized for animation. "
+                          "This makes editing the animation much easier.",
                           "",
                           "Adam D. Moss <adam@gimp.org>",
                           "Adam D. Moss <adam@gimp.org>",
                           "1997-2001",
-                          N_("_UnOptimize"),
+                          N_("_Unoptimize"),
                           "RGB*, INDEXED*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args),
