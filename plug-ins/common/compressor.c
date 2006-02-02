@@ -323,7 +323,7 @@ run (const gchar      *name,
               break;
             case GIMP_RUN_NONINTERACTIVE:
               /*  Make sure all the arguments are there!  */
-              if (nparams != 4)
+              if (nparams != 5)
                 status = GIMP_PDB_CALLING_ERROR;
               break;
             case GIMP_RUN_WITH_LAST_VALS:
