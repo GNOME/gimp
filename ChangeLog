@@ -1,3 +1,9 @@
+2006-02-01  Matt Wilson  <msw@gimp.org>
+
+	* plug-ins/common/compressor.c (run): file_{gz,bz2}_save takes 5
+	parameters, not 4.  Correct the nparams check in non-interactive
+	mode.
+
 2006-02-01  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/animoptimize.c: renamed to "Unoptimize".
