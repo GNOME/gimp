@@ -6,15 +6,15 @@ msgid ""
 ""
 msgstr "Project-Id-Version: gimp-plugins HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-28 03:17+0100\n"
-"PO-Revision-Date: 2006-01-28 13:59+1030\n"
+"POT-Creation-Date: 2006-02-03 03:28+0100\n"
+"PO-Revision-Date: 2006-02-03 18:16+1030\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0\n"
-"X-Generator: LocFactoryEditor 1.6b34\n"
+"X-Generator: LocFactoryEditor 1.6b36\n"
 
 #:../plug-ins/FractalExplorer/Dialogs.c:529
 #:../plug-ins/gfig/gfig-dialog.c:282 ../plug-ins/gflare/gflare.c:887
@@ -1983,35 +1983,35 @@ msgstr "Tối ưu hóa (cho dạng _GIF)"
 msgid "_Optimize (Difference)"
 msgstr "Tối _ưu hóa (hiệu số)"
 
-#:../plug-ins/common/animoptimize.c:180
-msgid "_UnOptimize"
-msgstr "_Hủy tối ưu hóa:"
+#:../plug-ins/common/animoptimize.c:178
+msgid "_Unoptimize"
+msgstr "_Hủy tối ưu hóa"
 
-#:../plug-ins/common/animoptimize.c:200
+#:../plug-ins/common/animoptimize.c:198
 msgid "_Remove Backdrop"
 msgstr "_Gỡ bỏ nền"
 
-#:../plug-ins/common/animoptimize.c:216
+#:../plug-ins/common/animoptimize.c:214
 msgid "_Find Backdrop"
 msgstr "_Tìm nền"
 
 # Type: text
 # Description
-#:../plug-ins/common/animoptimize.c:429
+#:../plug-ins/common/animoptimize.c:427
 msgid "Unoptimizing animation"
 msgstr "Đang hủy tối ưu hóa hoạt cảnh..."
 
-#:../plug-ins/common/animoptimize.c:432
+#:../plug-ins/common/animoptimize.c:430
 msgid "Removing animation background"
 msgstr "Đang gỡ bỏ nền hoạt cảnh..."
 
-#:../plug-ins/common/animoptimize.c:435
+#:../plug-ins/common/animoptimize.c:433
 msgid "Finding animation background"
 msgstr "Đang tìm nền hoạt cảnh..."
 
 # Type: text
 # Description
-#:../plug-ins/common/animoptimize.c:439
+#:../plug-ins/common/animoptimize.c:437
 msgid "Optimizing animation"
 msgstr "Đang tối ưu hóa hoạt cảnh..."
 
@@ -5664,16 +5664,16 @@ msgid "Ascii"
 msgstr "Ascii"
 
 #:../plug-ins/common/polar.c:161
-msgid "P_olar Coords..."
+msgid "P_olar Coordinates..."
 msgstr "Tọa độ _cực..."
 
 #:../plug-ins/common/polar.c:349
-msgid "Polarizing"
-msgstr "Đang phân cực..."
+msgid "Polar coordinates"
+msgstr "Tọa độ cực"
 
 #:../plug-ins/common/polar.c:581
-msgid "Polarize"
-msgstr "Phân cực"
+msgid "Polar Coordinates"
+msgstr "Tọa độ cực..."
 
 #:../plug-ins/common/polar.c:619
 msgid "Circle _depth in percent:"
@@ -9728,11 +9728,11 @@ msgstr "Lưu dạng tập tin Phân dạng IFS"
 msgid "Open IFS Fractal file"
 msgstr "Mở tập tin Phân dạng IFS"
 
-#:../plug-ins/imagemap/imap_about.c:44
+#:../plug-ins/imagemap/imap_about.c:45
 msgid "Copyright(c) 1999-2005 by Maurits Rijk"
 msgstr "Bản quyền © năm 1999-2005 Maurits Rijk"
 
-#:../plug-ins/imagemap/imap_about.c:47
+#:../plug-ins/imagemap/imap_about.c:48
 msgid "Released under the GNU General Public License"
 msgstr "Được phát hành với điều khoản của Quyền Công Chung GNU (GPL)"
 
@@ -10031,7 +10031,7 @@ msgid "Error opening file"
 msgstr "Gặp lỗi khi mở tập tin"
 
 #:../plug-ins/imagemap/imap_file.c:68
-msgid "Load Imagemap"
+msgid "Load Image Map"
 msgstr "Tải ánh xạ ảnh"
 
 #:../plug-ins/imagemap/imap_file.c:121
@@ -10043,7 +10043,7 @@ msgid "Do you really want to overwrite?"
 msgstr "Bạn có chắc muốn ghi đè không?"
 
 #:../plug-ins/imagemap/imap_file.c:170
-msgid "Save Imagemap"
+msgid "Save Image Map"
 msgstr "Lưu ánh xạ ảnh"
 
 #:../plug-ins/imagemap/imap_grid.c:197
@@ -10099,7 +10099,7 @@ msgid "_Preview"
 msgstr "_Xem thử"
 
 #:../plug-ins/imagemap/imap_main.c:124
-msgid "_ImageMap..."
+msgid "_Image Map..."
 msgstr "_Ánh xạ ảnh..."
 
 #:../plug-ins/imagemap/imap_main.c:603
