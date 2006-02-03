@@ -82,7 +82,7 @@ struct _GimpRectangleToolPrivate
 };
 
 
-static void     gimp_rectangle_tool_iface_base_init (GimpRectangleToolInterface *rectangle_tool_iface);
+static void     gimp_rectangle_tool_iface_base_init (GimpRectangleToolInterface *iface);
 
 static GimpRectangleToolPrivate *
                 gimp_rectangle_tool_get_private     (GimpRectangleTool     *tool);
@@ -142,25 +142,25 @@ gimp_rectangle_tool_interface_get_type (void)
 }
 
 static void
-gimp_rectangle_tool_iface_base_init (GimpRectangleToolInterface *tool_iface)
+gimp_rectangle_tool_iface_base_init (GimpRectangleToolInterface *iface)
 {
   static gboolean initialized = FALSE;
 
   if (! initialized)
     {
-      g_object_interface_install_property (tool_iface,
+      g_object_interface_install_property (iface,
                                            g_param_spec_object ("controls",
                                                                 NULL, NULL,
                                                                 GTK_TYPE_WIDGET,
                                                                 GIMP_PARAM_READWRITE));
 
-      g_object_interface_install_property (tool_iface,
+      g_object_interface_install_property (iface,
                                            g_param_spec_object ("dimensions-entry",
                                                                 NULL, NULL,
                                                                 GTK_TYPE_WIDGET,
                                                                 GIMP_PARAM_READWRITE));
 
-      g_object_interface_install_property (tool_iface,
+      g_object_interface_install_property (iface,
                                            g_param_spec_int ("startx",
                                                              NULL, NULL,
                                                              -GIMP_MAX_IMAGE_SIZE,
@@ -168,7 +168,7 @@ gimp_rectangle_tool_iface_base_init (GimpRectangleToolInterface *tool_iface)
                                                              0,
                                                              GIMP_PARAM_READWRITE));
 
-      g_object_interface_install_property (tool_iface,
+      g_object_interface_install_property (iface,
                                            g_param_spec_int ("starty",
                                                              NULL, NULL,
                                                              -GIMP_MAX_IMAGE_SIZE,
@@ -176,7 +176,7 @@ gimp_rectangle_tool_iface_base_init (GimpRectangleToolInterface *tool_iface)
                                                              0,
                                                              GIMP_PARAM_READWRITE));
 
-      g_object_interface_install_property (tool_iface,
+      g_object_interface_install_property (iface,
                                            g_param_spec_int ("lastx",
                                                              NULL, NULL,
                                                              -GIMP_MAX_IMAGE_SIZE,
@@ -184,7 +184,7 @@ gimp_rectangle_tool_iface_base_init (GimpRectangleToolInterface *tool_iface)
                                                              0,
                                                              GIMP_PARAM_READWRITE));
 
-      g_object_interface_install_property (tool_iface,
+      g_object_interface_install_property (iface,
                                            g_param_spec_int ("lasty",
                                                              NULL, NULL,
                                                              -GIMP_MAX_IMAGE_SIZE,
@@ -192,7 +192,7 @@ gimp_rectangle_tool_iface_base_init (GimpRectangleToolInterface *tool_iface)
                                                              0,
                                                              GIMP_PARAM_READWRITE));
 
-      g_object_interface_install_property (tool_iface,
+      g_object_interface_install_property (iface,
                                            g_param_spec_int ("pressx",
                                                              NULL, NULL,
                                                              0,
@@ -200,7 +200,7 @@ gimp_rectangle_tool_iface_base_init (GimpRectangleToolInterface *tool_iface)
                                                              0,
                                                              GIMP_PARAM_READWRITE));
 
-      g_object_interface_install_property (tool_iface,
+      g_object_interface_install_property (iface,
                                            g_param_spec_int ("pressy",
                                                              NULL, NULL,
                                                              0,
@@ -208,7 +208,7 @@ gimp_rectangle_tool_iface_base_init (GimpRectangleToolInterface *tool_iface)
                                                              0,
                                                              GIMP_PARAM_READWRITE));
 
-      g_object_interface_install_property (tool_iface,
+      g_object_interface_install_property (iface,
                                            g_param_spec_int ("x1",
                                                              NULL, NULL,
                                                              -GIMP_MAX_IMAGE_SIZE,
@@ -216,7 +216,7 @@ gimp_rectangle_tool_iface_base_init (GimpRectangleToolInterface *tool_iface)
                                                              0,
                                                              GIMP_PARAM_READWRITE));
 
-      g_object_interface_install_property (tool_iface,
+      g_object_interface_install_property (iface,
                                            g_param_spec_int ("y1",
                                                              NULL, NULL,
                                                              -GIMP_MAX_IMAGE_SIZE,
@@ -224,7 +224,7 @@ gimp_rectangle_tool_iface_base_init (GimpRectangleToolInterface *tool_iface)
                                                              0,
                                                              GIMP_PARAM_READWRITE));
 
-      g_object_interface_install_property (tool_iface,
+      g_object_interface_install_property (iface,
                                            g_param_spec_int ("x2",
                                                              NULL, NULL,
                                                              -GIMP_MAX_IMAGE_SIZE,
@@ -232,7 +232,7 @@ gimp_rectangle_tool_iface_base_init (GimpRectangleToolInterface *tool_iface)
                                                              0,
                                                              GIMP_PARAM_READWRITE));
 
-      g_object_interface_install_property (tool_iface,
+      g_object_interface_install_property (iface,
                                            g_param_spec_int ("y2",
                                                              NULL, NULL,
                                                              -GIMP_MAX_IMAGE_SIZE,
@@ -240,7 +240,7 @@ gimp_rectangle_tool_iface_base_init (GimpRectangleToolInterface *tool_iface)
                                                              0,
                                                              GIMP_PARAM_READWRITE));
 
-      g_object_interface_install_property (tool_iface,
+      g_object_interface_install_property (iface,
                                            g_param_spec_uint ("function",
                                                               NULL, NULL,
                                                               RECT_CREATING,
@@ -248,7 +248,7 @@ gimp_rectangle_tool_iface_base_init (GimpRectangleToolInterface *tool_iface)
                                                               0,
                                                               GIMP_PARAM_READWRITE));
 
-      g_object_interface_install_property (tool_iface,
+      g_object_interface_install_property (iface,
                                            g_param_spec_int ("dx1",
                                                              NULL, NULL,
                                                              -GIMP_MAX_IMAGE_SIZE,
@@ -256,7 +256,7 @@ gimp_rectangle_tool_iface_base_init (GimpRectangleToolInterface *tool_iface)
                                                              0,
                                                              GIMP_PARAM_READWRITE));
 
-      g_object_interface_install_property (tool_iface,
+      g_object_interface_install_property (iface,
                                            g_param_spec_int ("dy1",
                                                              NULL, NULL,
                                                              -GIMP_MAX_IMAGE_SIZE,
@@ -264,7 +264,7 @@ gimp_rectangle_tool_iface_base_init (GimpRectangleToolInterface *tool_iface)
                                                              0,
                                                              GIMP_PARAM_READWRITE));
 
-      g_object_interface_install_property (tool_iface,
+      g_object_interface_install_property (iface,
                                            g_param_spec_int ("dx2",
                                                              NULL, NULL,
                                                              -GIMP_MAX_IMAGE_SIZE,
@@ -272,7 +272,7 @@ gimp_rectangle_tool_iface_base_init (GimpRectangleToolInterface *tool_iface)
                                                              0,
                                                              GIMP_PARAM_READWRITE));
 
-      g_object_interface_install_property (tool_iface,
+      g_object_interface_install_property (iface,
                                            g_param_spec_int ("dy2",
                                                              NULL, NULL,
                                                              -GIMP_MAX_IMAGE_SIZE,
@@ -280,7 +280,7 @@ gimp_rectangle_tool_iface_base_init (GimpRectangleToolInterface *tool_iface)
                                                              0,
                                                              GIMP_PARAM_READWRITE));
 
-      g_object_interface_install_property (tool_iface,
+      g_object_interface_install_property (iface,
                                            g_param_spec_int ("dcw",
                                                              NULL, NULL,
                                                              0,
@@ -288,7 +288,7 @@ gimp_rectangle_tool_iface_base_init (GimpRectangleToolInterface *tool_iface)
                                                              0,
                                                              GIMP_PARAM_READWRITE));
 
-      g_object_interface_install_property (tool_iface,
+      g_object_interface_install_property (iface,
                                            g_param_spec_int ("dch",
                                                              NULL, NULL,
                                                              0,
@@ -296,7 +296,7 @@ gimp_rectangle_tool_iface_base_init (GimpRectangleToolInterface *tool_iface)
                                                              0,
                                                              GIMP_PARAM_READWRITE));
 
-      g_object_interface_install_property (tool_iface,
+      g_object_interface_install_property (iface,
                                            g_param_spec_double ("origx",
                                                                 NULL, NULL,
                                                                 -GIMP_MAX_IMAGE_SIZE,
@@ -304,7 +304,7 @@ gimp_rectangle_tool_iface_base_init (GimpRectangleToolInterface *tool_iface)
                                                                 0.0,
                                                                 GIMP_PARAM_READWRITE));
 
-      g_object_interface_install_property (tool_iface,
+      g_object_interface_install_property (iface,
                                            g_param_spec_double ("origy",
                                                                 NULL, NULL,
                                                                 -GIMP_MAX_IMAGE_SIZE,
@@ -312,7 +312,7 @@ gimp_rectangle_tool_iface_base_init (GimpRectangleToolInterface *tool_iface)
                                                                 0.0,
                                                                 GIMP_PARAM_READWRITE));
 
-      g_object_interface_install_property (tool_iface,
+      g_object_interface_install_property (iface,
                                            g_param_spec_double ("sizew",
                                                                 NULL, NULL,
                                                                 0.0,
@@ -320,7 +320,7 @@ gimp_rectangle_tool_iface_base_init (GimpRectangleToolInterface *tool_iface)
                                                                 0.0,
                                                                 GIMP_PARAM_READWRITE));
 
-      g_object_interface_install_property (tool_iface,
+      g_object_interface_install_property (iface,
                                            g_param_spec_double ("sizeh",
                                                                 NULL, NULL,
                                                                 0.0,
@@ -1683,43 +1683,43 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
       gdouble aspect;
       g_object_get (options, "aspect", &aspect, NULL);
 
-      if (aspect > max_y)
-        aspect = max_y;
-      if (aspect < 1.0 / max_x)
-        aspect = 1.0 / max_x;
+      if (aspect < 1.0 / max_y)
+        aspect = 1.0 / max_y;
+      if (aspect > max_x)
+        aspect = max_x;
 
       switch (function)
         {
         case RECT_RESIZING_UPPER_LEFT:
-          if (inc_x == 0 || inc_y / inc_x > aspect)
-            x1 = rx2 - (ry2 - y1) / aspect + .5;
+          if (inc_x == 0 || inc_x / inc_y < aspect)
+            x1 = rx2 - (ry2 - y1) * aspect + .5;
           else
-            y1 = ry2 - aspect * (rx2 - x1) + .5;
+            y1 = ry2 - (rx2 - x1) / aspect + .5;
           break;
 
         case RECT_RESIZING_UPPER_RIGHT:
         case RECT_RESIZING_TOP:
-          if (inc_x == 0 || inc_y / inc_x > aspect)
-            x2 = rx1 + (ry2 - y1) / aspect + .5;
+          if (inc_x == 0 || inc_x / inc_y < aspect)
+            x2 = rx1 + (ry2 - y1) * aspect + .5;
           else
-            y1 = ry2 - aspect * (x2 - rx1) + .5;
+            y1 = ry2 - (x2 - rx1) / aspect + .5;
           break;
 
         case RECT_RESIZING_LOWER_LEFT:
         case RECT_RESIZING_LEFT:
-          if (inc_x == 0 || inc_y / inc_x > aspect)
-            x1 = rx2 - (y2 - ry1) / aspect + .5;
+          if (inc_x == 0 || inc_x / inc_y < aspect)
+            x1 = rx2 - (y2 - ry1) * aspect + .5;
           else
-            y2 = ry1 + aspect * (rx2 - x1) + .5;
+            y2 = ry1 + (rx2 - x1) / aspect + .5;
           break;
 
         case RECT_RESIZING_LOWER_RIGHT:
         case RECT_RESIZING_RIGHT:
         case RECT_RESIZING_BOTTOM:
-          if (inc_x == 0 || inc_y / inc_x > aspect)
-            x2 = rx1 + (y2 - ry1) / aspect + .5;
+          if (inc_x == 0 || inc_x / inc_y < aspect)
+            x2 = rx1 + (y2 - ry1) * aspect + .5;
           else
-            y2 = ry1 + aspect * (x2 - rx1) + .5;
+            y2 = ry1 + (x2 - rx1) / aspect + .5;
           break;
 
         default:
@@ -2496,10 +2496,10 @@ gimp_rectangle_tool_execute (GimpRectangleTool *rectangle,
                              gint               w,
                              gint               h)
 {
-  GimpRectangleToolInterface *tool_iface = GIMP_RECTANGLE_TOOL_GET_INTERFACE (rectangle);
+  GimpRectangleToolInterface *iface = GIMP_RECTANGLE_TOOL_GET_INTERFACE (rectangle);
   gint                        rx1, ry1, rx2, ry2;
 
-  g_return_val_if_fail (tool_iface->execute, FALSE);
+  g_return_val_if_fail (iface->execute, FALSE);
 
   g_object_get (rectangle,
                 "x1", &rx1,
@@ -2508,7 +2508,7 @@ gimp_rectangle_tool_execute (GimpRectangleTool *rectangle,
                 "y2", &ry2,
                 NULL);
 
-  return tool_iface->execute (rectangle, rx1, ry1, rx2 - rx1, ry2 - ry1);
+  return iface->execute (rectangle, rx1, ry1, rx2 - rx1, ry2 - ry1);
 }
 
 static void
@@ -2548,7 +2548,7 @@ gimp_rectangle_tool_update_options (GimpRectangleTool *rectangle,
   height = y2 - y1;
 
   if (width > 0.01)
-    aspect = height / width;
+    aspect = width / height;
   else
     aspect = 0;
 
@@ -2768,7 +2768,7 @@ gimp_rectangle_tool_notify_aspect (GimpRectangleOptions *options,
                 NULL);
 
   coords.x = rx2;
-  coords.y = ry1 + aspect * (rx2 - rx1);
+  coords.y = ry1 + (rx2 - rx1) / aspect;
 
   g_object_set (rectangle,
                 "function", RECT_RESIZING_BOTTOM,
