@@ -69,23 +69,23 @@
 
 typedef struct _PNMScanner
 {
-  gint    fd;		      /* The file descriptor of the file being read */
-  gchar   cur;		      /* The current character in the input stream */
-  gint    eof;		      /* Have we reached end of file? */
-  gchar  *inbuf;	      /* Input buffer - initially 0 */
-  gint    inbufsize;	      /* Size of input buffer */
+  gint    fd;                 /* The file descriptor of the file being read */
+  gchar   cur;                /* The current character in the input stream */
+  gint    eof;                /* Have we reached end of file? */
+  gchar  *inbuf;              /* Input buffer - initially 0 */
+  gint    inbufsize;          /* Size of input buffer */
   gint    inbufvalidsize;     /* Size of input buffer with valid data */
   gint    inbufpos;           /* Position in input buffer */
 } PNMScanner;
 
 typedef struct _PNMInfo
 {
-  gint       xres, yres;	/* The size of the image */
-  gint       maxval;		/* For ascii image files, the max value
-				 * which we need to normalize to */
-  gint       np;		/* Number of image planes (0 for pbm) */
-  gint       asciibody;		/* 1 if ascii body, 0 if raw body */
-  jmp_buf    jmpbuf;		/* Where to jump to on an error loading */
+  gint       xres, yres;        /* The size of the image */
+  gint       maxval;            /* For ascii image files, the max value
+                                 * which we need to normalize to */
+  gint       np;                /* Number of image planes (0 for pbm) */
+  gint       asciibody;         /* 1 if ascii body, 0 if raw body */
+  jmp_buf    jmpbuf;            /* Where to jump to on an error loading */
   /* Routine to use to load the pnm body */
   void    (* loader) (PNMScanner *, struct _PNMInfo *, GimpPixelRgn *);
 } PNMInfo;
@@ -93,13 +93,13 @@ typedef struct _PNMInfo
 /* Contains the information needed to write out PNM rows */
 typedef struct _PNMRowInfo
 {
-  gint    fd;		/* File descriptor */
-  gchar  *rowbuf;	/* Buffer for writing out rows */
-  gint    xres;		/* X resolution */
-  gint    np;		/* Number of planes */
-  guchar *red;		/* Colormap red */
-  guchar *grn;		/* Colormap green */
-  guchar *blu;		/* Colormap blue */
+  gint    fd;           /* File descriptor */
+  gchar  *rowbuf;       /* Buffer for writing out rows */
+  gint    xres;         /* X resolution */
+  gint    np;           /* Number of planes */
+  guchar *red;          /* Colormap red */
+  guchar *grn;          /* Colormap green */
+  guchar *blu;          /* Colormap blue */
 } PNMRowInfo;
 
 /* Save info  */
@@ -108,11 +108,11 @@ typedef struct
   gint  raw;  /*  raw or ascii  */
 } PNMSaveVals;
 
-#define BUFLEN 512		/* The input buffer size for data returned
-				 * from the scanner.  Note that lines
-				 * aren't allowed to be over 256 characters
-				 * by the spec anyways so this shouldn't
-				 * be an issue. */
+#define BUFLEN 512              /* The input buffer size for data returned
+                                 * from the scanner.  Note that lines
+                                 * aren't allowed to be over 256 characters
+                                 * by the spec anyways so this shouldn't
+                                 * be an issue. */
 
 #define SAVE_COMMENT_STRING "# CREATOR: The GIMP's PNM Filter Version 1.0\n"
 
@@ -126,40 +126,40 @@ static void   run        (const gchar      *name,
                           GimpParam       **return_vals);
 static gint32 load_image (const gchar      *filename);
 static gint   save_image (const gchar      *filename,
-			  gint32            image_ID,
-			  gint32            drawable_ID);
+                          gint32            image_ID,
+                          gint32            drawable_ID);
 
 static gint   save_dialog              (void);
 
-static void   pnm_load_ascii           (PNMScanner *scan,
-					PNMInfo    *info,
-					GimpPixelRgn  *pixel_rgn);
-static void   pnm_load_raw             (PNMScanner *scan,
-					PNMInfo    *info,
-					GimpPixelRgn  *pixel_rgn);
-static void   pnm_load_rawpbm          (PNMScanner *scan,
-					PNMInfo    *info,
-					GimpPixelRgn  *pixel_rgn);
+static void   pnm_load_ascii           (PNMScanner   *scan,
+                                        PNMInfo      *info,
+                                        GimpPixelRgn *pixel_rgn);
+static void   pnm_load_raw             (PNMScanner   *scan,
+                                        PNMInfo      *info,
+                                        GimpPixelRgn *pixel_rgn);
+static void   pnm_load_rawpbm          (PNMScanner   *scan,
+                                        PNMInfo      *info,
+                                        GimpPixelRgn *pixel_rgn);
 
 static void   pnmsaverow_ascii         (PNMRowInfo *ri,
-					guchar     *data);
+                                        guchar     *data);
 static void   pnmsaverow_raw           (PNMRowInfo *ri,
-					guchar     *data);
+                                        guchar     *data);
 static void   pnmsaverow_ascii_indexed (PNMRowInfo *ri,
-					guchar     *data);
+                                        guchar     *data);
 static void   pnmsaverow_raw_indexed   (PNMRowInfo *ri,
-					guchar     *data);
+                                        guchar     *data);
 
 static void   pnmscanner_destroy       (PNMScanner *s);
 static void   pnmscanner_createbuffer  (PNMScanner *s,
-					gint        bufsize);
+                                        gint        bufsize);
 static void   pnmscanner_getchar       (PNMScanner *s);
 static void   pnmscanner_eatwhitespace (PNMScanner *s);
 static void   pnmscanner_gettoken      (PNMScanner *s,
-					gchar      *buf,
-					gint        bufsize);
+                                        gchar      *buf,
+                                        gint        bufsize);
 static void   pnmscanner_getsmalltoken (PNMScanner *s,
-					gchar      *buf);
+                                        gchar      *buf);
 
 static PNMScanner * pnmscanner_create  (gint        fd);
 
@@ -237,7 +237,7 @@ query (void)
                           "Erik Nygren",
                           "1996",
                           N_("PNM Image"),
-			  NULL,
+                          NULL,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (load_args),
                           G_N_ELEMENTS (load_return_vals),
@@ -246,9 +246,9 @@ query (void)
   gimp_register_file_handler_mime (LOAD_PROC, "image/x-portable-anymap");
   gimp_register_magic_load_handler (LOAD_PROC,
                                     "pnm,ppm,pgm,pbm",
-				    "",
-				    "0,string,P1,0,string,P2,0,string,P3,0,"
-				    "string,P4,0,string,P5,0,string,P6");
+                                    "",
+                                    "0,string,P1,0,string,P2,0,string,P3,0,"
+                                    "string,P4,0,string,P5,0,string,P6");
 
   gimp_install_procedure (PNM_SAVE_PROC,
                           "saves files in the pnm file format",
@@ -257,7 +257,7 @@ query (void)
                           "Erik Nygren",
                           "1996",
                           N_("PNM image"),
-			  "RGB, GRAY, INDEXED",
+                          "RGB, GRAY, INDEXED",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
@@ -269,7 +269,7 @@ query (void)
                           "Erik Nygren",
                           "1996",
                           N_("PGM image"),
-			  "RGB, GRAY, INDEXED",
+                          "RGB, GRAY, INDEXED",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
@@ -281,7 +281,7 @@ query (void)
                           "Erik Nygren",
                           "1996",
                           N_("PPM image"),
-			  "RGB, GRAY, INDEXED",
+                          "RGB, GRAY, INDEXED",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
@@ -320,15 +320,15 @@ run (const gchar      *name,
       image_ID = load_image (param[1].data.d_string);
 
       if (image_ID != -1)
-	{
-	  *nreturn_vals = 2;
-	  values[1].type         = GIMP_PDB_IMAGE;
-	  values[1].data.d_image = image_ID;
-	}
+        {
+          *nreturn_vals = 2;
+          values[1].type         = GIMP_PDB_IMAGE;
+          values[1].data.d_image = image_ID;
+        }
       else
-	{
-	  status = GIMP_PDB_EXECUTION_ERROR;
-	}
+        {
+          status = GIMP_PDB_EXECUTION_ERROR;
+        }
     }
   else if (strcmp (name, PNM_SAVE_PROC) == 0 ||
            strcmp (name, PGM_SAVE_PROC) == 0 ||
@@ -339,10 +339,10 @@ run (const gchar      *name,
 
       /*  eventually export the image */
       switch (run_mode)
-	{
-	case GIMP_RUN_INTERACTIVE:
-	case GIMP_RUN_WITH_LAST_VALS:
-	  gimp_ui_init (PLUG_IN_BINARY, FALSE);
+        {
+        case GIMP_RUN_INTERACTIVE:
+        case GIMP_RUN_WITH_LAST_VALS:
+          gimp_ui_init (PLUG_IN_BINARY, FALSE);
           if (strcmp (name, PNM_SAVE_PROC) == 0)
             export = gimp_export_image (&image_ID, &drawable_ID, "PNM",
                                         (GIMP_EXPORT_CAN_HANDLE_RGB |
@@ -356,62 +356,62 @@ run (const gchar      *name,
                                         (GIMP_EXPORT_CAN_HANDLE_RGB |
                                          GIMP_EXPORT_CAN_HANDLE_INDEXED));
 
-	  if (export == GIMP_EXPORT_CANCEL)
-	    {
-	      values[0].data.d_status = GIMP_PDB_CANCEL;
-	      return;
-	    }
-	break;
-	default:
-	  break;
-	}
+          if (export == GIMP_EXPORT_CANCEL)
+            {
+              values[0].data.d_status = GIMP_PDB_CANCEL;
+              return;
+            }
+        break;
+        default:
+          break;
+        }
 
       switch (run_mode)
-	{
-	case GIMP_RUN_INTERACTIVE:
-	  /*  Possibly retrieve data  */
-	  gimp_get_data (name, &psvals);
+        {
+        case GIMP_RUN_INTERACTIVE:
+          /*  Possibly retrieve data  */
+          gimp_get_data (name, &psvals);
 
-	  /*  First acquire information with a dialog  */
-	  if (! save_dialog ())
-	    status = GIMP_PDB_CANCEL;
-	  break;
+          /*  First acquire information with a dialog  */
+          if (! save_dialog ())
+            status = GIMP_PDB_CANCEL;
+          break;
 
-	case GIMP_RUN_NONINTERACTIVE:
-	  /*  Make sure all the arguments are there!  */
-	  if (nparams != 6)
-	    {
-	      status = GIMP_PDB_CALLING_ERROR;
-	    }
-	  else
-	    {
-	      psvals.raw = (param[5].data.d_int32) ? TRUE : FALSE;
-	    }
+        case GIMP_RUN_NONINTERACTIVE:
+          /*  Make sure all the arguments are there!  */
+          if (nparams != 6)
+            {
+              status = GIMP_PDB_CALLING_ERROR;
+            }
+          else
+            {
+              psvals.raw = (param[5].data.d_int32) ? TRUE : FALSE;
+            }
 
-	case GIMP_RUN_WITH_LAST_VALS:
-	  /*  Possibly retrieve data  */
-	  gimp_get_data (name, &psvals);
-	  break;
+        case GIMP_RUN_WITH_LAST_VALS:
+          /*  Possibly retrieve data  */
+          gimp_get_data (name, &psvals);
+          break;
 
-	default:
-	  break;
-	}
+        default:
+          break;
+        }
 
       if (status == GIMP_PDB_SUCCESS)
-	{
-	  if (save_image (param[3].data.d_string, image_ID, drawable_ID))
-	    {
-	      /*  Store psvals data  */
-	      gimp_set_data (name, &psvals, sizeof (PNMSaveVals));
-	    }
-	  else
-	    {
-	      status = GIMP_PDB_EXECUTION_ERROR;
-	    }
-	}
+        {
+          if (save_image (param[3].data.d_string, image_ID, drawable_ID))
+            {
+              /*  Store psvals data  */
+              gimp_set_data (name, &psvals, sizeof (PNMSaveVals));
+            }
+          else
+            {
+              status = GIMP_PDB_EXECUTION_ERROR;
+            }
+        }
 
       if (export == GIMP_EXPORT_EXPORT)
-	gimp_image_delete (image_ID);
+        gimp_image_delete (image_ID);
     }
   else
     {
@@ -456,11 +456,11 @@ load_image (const gchar *filename)
     {
       /* If we get here, we had a problem reading the file */
       if (scan)
-	pnmscanner_destroy (scan);
+        pnmscanner_destroy (scan);
       close (fd);
       g_free (pnminfo);
       if (image_ID != -1)
-	gimp_image_delete (image_ID);
+        gimp_image_delete (image_ID);
       return -1;
     }
 
@@ -469,69 +469,69 @@ load_image (const gchar *filename)
 
   /* Get magic number */
   pnmscanner_gettoken (scan, buf, BUFLEN);
-  CHECK_FOR_ERROR(pnmscanner_eof(scan), pnminfo->jmpbuf,
-		  _("PNM: Premature end of file."));
-  CHECK_FOR_ERROR((buf[0] != 'P' || buf[2]), pnminfo->jmpbuf,
-		  _("PNM: Invalid file."));
+  CHECK_FOR_ERROR (pnmscanner_eof (scan), pnminfo->jmpbuf,
+                   _("PNM: Premature end of file."));
+  CHECK_FOR_ERROR ((buf[0] != 'P' || buf[2]), pnminfo->jmpbuf,
+                   _("PNM: Invalid file."));
 
   /* Look up magic number to see what type of PNM this is */
-  for (ctr=0; pnm_types[ctr].name; ctr++)
+  for (ctr = 0; pnm_types[ctr].name; ctr++)
     if (buf[1] == pnm_types[ctr].name)
       {
-	pnminfo->np        = pnm_types[ctr].np;
-	pnminfo->asciibody = pnm_types[ctr].asciibody;
-	pnminfo->maxval    = pnm_types[ctr].maxval;
-	pnminfo->loader    = pnm_types[ctr].loader;
+        pnminfo->np        = pnm_types[ctr].np;
+        pnminfo->asciibody = pnm_types[ctr].asciibody;
+        pnminfo->maxval    = pnm_types[ctr].maxval;
+        pnminfo->loader    = pnm_types[ctr].loader;
       }
 
   if (!pnminfo->loader)
     {
       g_message (_("File not in a supported format."));
-      longjmp(pnminfo->jmpbuf,1);
+      longjmp (pnminfo->jmpbuf,1);
     }
 
-  pnmscanner_gettoken(scan, buf, BUFLEN);
-  CHECK_FOR_ERROR(pnmscanner_eof(scan), pnminfo->jmpbuf,
-		  _("PNM: Premature end of file."));
-  pnminfo->xres = g_ascii_isdigit(*buf)?atoi(buf):0;
-  CHECK_FOR_ERROR(pnminfo->xres<=0, pnminfo->jmpbuf,
-		  _("PNM: Invalid X resolution."));
+  pnmscanner_gettoken (scan, buf, BUFLEN);
+  CHECK_FOR_ERROR (pnmscanner_eof (scan), pnminfo->jmpbuf,
+                   _("PNM: Premature end of file."));
+  pnminfo->xres = g_ascii_isdigit(*buf) ? atoi (buf) : 0;
+  CHECK_FOR_ERROR (pnminfo->xres <= 0, pnminfo->jmpbuf,
+                   _("PNM: Invalid X resolution."));
 
-  pnmscanner_gettoken(scan, buf, BUFLEN);
-  CHECK_FOR_ERROR(pnmscanner_eof(scan), pnminfo->jmpbuf,
-		  _("PNM: Premature end of file."));
-  pnminfo->yres = g_ascii_isdigit(*buf)?atoi(buf):0;
-  CHECK_FOR_ERROR(pnminfo->yres<=0, pnminfo->jmpbuf,
-		  _("PNM: Invalid Y resolution."));
+  pnmscanner_gettoken (scan, buf, BUFLEN);
+  CHECK_FOR_ERROR (pnmscanner_eof (scan), pnminfo->jmpbuf,
+                   _("PNM: Premature end of file."));
+  pnminfo->yres = g_ascii_isdigit (*buf) ? atoi (buf) : 0;
+  CHECK_FOR_ERROR (pnminfo->yres <= 0, pnminfo->jmpbuf,
+                   _("PNM: Invalid Y resolution."));
 
-  if (pnminfo->np != 0)		/* pbm's don't have a maxval field */
+  if (pnminfo->np != 0)         /* pbm's don't have a maxval field */
     {
-      pnmscanner_gettoken(scan, buf, BUFLEN);
-      CHECK_FOR_ERROR(pnmscanner_eof(scan), pnminfo->jmpbuf,
-		      _("PNM: Premature end of file."));
+      pnmscanner_gettoken (scan, buf, BUFLEN);
+      CHECK_FOR_ERROR (pnmscanner_eof (scan), pnminfo->jmpbuf,
+                       _("PNM: Premature end of file."));
 
-      pnminfo->maxval = g_ascii_isdigit(*buf)?atoi(buf):0;
-      CHECK_FOR_ERROR(((pnminfo->maxval<=0)
-		       || (pnminfo->maxval>255 && !pnminfo->asciibody)),
-		      pnminfo->jmpbuf,
-		      _("PNM: Invalid maximum value."));
+      pnminfo->maxval = g_ascii_isdigit (*buf) ? atoi (buf) : 0;
+      CHECK_FOR_ERROR (((pnminfo->maxval<=0)
+                        || (pnminfo->maxval>255 && !pnminfo->asciibody)),
+                       pnminfo->jmpbuf,
+                       _("PNM: Invalid maximum value."));
     }
 
   /* Create a new image of the proper size and associate the filename with it.
    */
   image_ID = gimp_image_new (pnminfo->xres, pnminfo->yres,
-			     (pnminfo->np >= 3) ? GIMP_RGB : GIMP_GRAY);
+                             (pnminfo->np >= 3) ? GIMP_RGB : GIMP_GRAY);
   gimp_image_set_filename (image_ID, filename);
 
   layer_ID = gimp_layer_new (image_ID, _("Background"),
-			     pnminfo->xres, pnminfo->yres,
-			     (pnminfo->np >= 3) ? GIMP_RGB_IMAGE : GIMP_GRAY_IMAGE,
-			     100, GIMP_NORMAL_MODE);
+                             pnminfo->xres, pnminfo->yres,
+                             (pnminfo->np >= 3) ? GIMP_RGB_IMAGE : GIMP_GRAY_IMAGE,
+                             100, GIMP_NORMAL_MODE);
   gimp_image_add_layer (image_ID, layer_ID, 0);
 
   drawable = gimp_drawable_get (layer_ID);
   gimp_pixel_rgn_init (&pixel_rgn, drawable,
-		       0, 0, drawable->width, drawable->height, TRUE, FALSE);
+                       0, 0, drawable->width, drawable->height, TRUE, FALSE);
 
   pnminfo->loader (scan, pnminfo, &pixel_rgn);
 
@@ -553,20 +553,20 @@ load_image (const gchar *filename)
 
 static void
 pnm_load_ascii (PNMScanner   *scan,
-		PNMInfo      *info,
-		GimpPixelRgn *pixel_rgn)
+                PNMInfo      *info,
+                GimpPixelRgn *pixel_rgn)
 {
-  unsigned char *data, *d;
-  int            x, y, i, b;
-  int            start, end, scanlines;
-  int            np;
-  char           buf[BUFLEN];
+  guchar *data, *d;
+  gint    x, y, i, b;
+  gint    start, end, scanlines;
+  gint    np;
+  gchar   buf[BUFLEN];
 
-  np = (info->np)?(info->np):1;
-  data = g_malloc (gimp_tile_height () * info->xres * np);
+  np = (info->np) ? (info->np) : 1;
+  data = g_new (guchar, gimp_tile_height () * info->xres * np);
 
   /* Buffer reads to increase performance */
-  pnmscanner_createbuffer(scan, 4096);
+  pnmscanner_createbuffer (scan, 4096);
 
   for (y = 0; y < info->yres; )
     {
@@ -577,33 +577,35 @@ pnm_load_ascii (PNMScanner   *scan,
       d = data;
 
       for (i = 0; i < scanlines; i++)
-	for (x = 0; x < info->xres; x++)
-	  {
-	    for (b = 0; b < np; b++)
-	      {
-		/* Truncated files will just have all 0's at the end of the images */
-		CHECK_FOR_ERROR(pnmscanner_eof(scan), info->jmpbuf,
-				_("PNM: Premature end of file."));
-		if (info->np)
-		  pnmscanner_gettoken(scan, buf, BUFLEN);
-		else
-		  pnmscanner_getsmalltoken(scan, buf);
-		switch (info->maxval)
-		  {
-		  case 255:
-		    d[b] = g_ascii_isdigit (*buf) ? atoi (buf) : 0;
-		    break;
-		  case 1:
-		    d[b] = (*buf=='0')?0xff:0x00;
-		    break;
-		  default:
-		    d[b] = (255.0 * (((gdouble)(g_ascii_isdigit (*buf) ? atoi (buf) : 0))
-                                     / (gdouble)(info->maxval)));
-		  }
-	      }
+        for (x = 0; x < info->xres; x++)
+          {
+            for (b = 0; b < np; b++)
+              {
+                /* Truncated files will just have all 0's at the end of the images */
+                CHECK_FOR_ERROR (pnmscanner_eof(scan), info->jmpbuf,
+                                 _("PNM: Premature end of file."));
+                if (info->np)
+                  pnmscanner_gettoken (scan, buf, BUFLEN);
+                else
+                  pnmscanner_getsmalltoken (scan, buf);
+                switch (info->maxval)
+                  {
+                  case 255:
+                    d[b] = g_ascii_isdigit (*buf) ? atoi (buf) : 0;
+                    break;
 
-	    d += np;
-	  }
+                  case 1:
+                    d[b] = (*buf == '0') ? 0xff : 0x00;
+                    break;
+
+                  default:
+                    d[b] = (255.0 * (((gdouble)(g_ascii_isdigit (*buf) ? atoi (buf) : 0))
+                                     / (gdouble)(info->maxval)));
+                  }
+              }
+
+            d += np;
+          }
 
       gimp_progress_update ((double) y / (double) info->yres);
       gimp_pixel_rgn_set_rect (pixel_rgn, data, 0, y, info->xres, scanlines);
@@ -615,16 +617,16 @@ pnm_load_ascii (PNMScanner   *scan,
 
 static void
 pnm_load_raw (PNMScanner   *scan,
-	      PNMInfo      *info,
-	      GimpPixelRgn *pixel_rgn)
+              PNMInfo      *info,
+              GimpPixelRgn *pixel_rgn)
 {
   guchar *data, *d;
   gint    x, y, i;
   gint    start, end, scanlines;
   gint    fd;
 
-  data = g_malloc (gimp_tile_height () * info->xres * info->np);
-  fd = pnmscanner_fd(scan);
+  data = g_new (guchar, gimp_tile_height () * info->xres * info->np);
+  fd = pnmscanner_fd (scan);
 
   for (y = 0; y < info->yres; )
     {
@@ -635,23 +637,23 @@ pnm_load_raw (PNMScanner   *scan,
       d = data;
 
       for (i = 0; i < scanlines; i++)
-	{
-	  CHECK_FOR_ERROR((info->xres*info->np
-			   != read(fd, d, info->xres*info->np)),
-			  info->jmpbuf,
-			  _("PNM: Premature end of file."));
+        {
+          CHECK_FOR_ERROR ((info->xres*info->np
+                            != read(fd, d, info->xres*info->np)),
+                           info->jmpbuf,
+                           _("PNM: Premature end of file."));
 
-	  if (info->maxval != 255)	/* Normalize if needed */
-	    {
-	      for (x = 0; x < info->xres * info->np; x++)
-		{
+          if (info->maxval != 255)      /* Normalize if needed */
+            {
+              for (x = 0; x < info->xres * info->np; x++)
+                {
                   d[x] = MIN (d[x], info->maxval); /* guard against overflow */
                   d[x] = 255.0 * (gdouble) d[x] / (gdouble) info->maxval;
                 }
             }
 
-	  d += info->xres * info->np;
-	}
+          d += info->xres * info->np;
+        }
 
       gimp_progress_update ((double) y / (double) info->yres);
       gimp_pixel_rgn_set_rect (pixel_rgn, data, 0, y, info->xres, scanlines);
@@ -663,21 +665,21 @@ pnm_load_raw (PNMScanner   *scan,
 
 static void
 pnm_load_rawpbm (PNMScanner   *scan,
-		 PNMInfo      *info,
-		 GimpPixelRgn *pixel_rgn)
+                 PNMInfo      *info,
+                 GimpPixelRgn *pixel_rgn)
 {
-  unsigned char *buf;
-  unsigned char  curbyte;
-  unsigned char *data, *d;
-  int            x, y, i;
-  int            start, end, scanlines;
-  int            fd;
-  int            rowlen, bufpos;
+  guchar *buf;
+  guchar  curbyte;
+  guchar *data, *d;
+  gint    x, y, i;
+  gint    start, end, scanlines;
+  gint    fd;
+  gint    rowlen, bufpos;
 
-  fd = pnmscanner_fd(scan);
-  rowlen = (int)ceil((double)(info->xres)/8.0);
-  data = g_malloc (gimp_tile_height () * info->xres);
-  buf = g_new (unsigned char, rowlen);
+  fd = pnmscanner_fd (scan);
+  rowlen = (int)ceil ((double)(info->xres)/8.0);
+  data = g_new (guchar, gimp_tile_height () * info->xres);
+  buf = g_new (guchar, rowlen);
 
   for (y = 0; y < info->yres; )
     {
@@ -688,47 +690,47 @@ pnm_load_rawpbm (PNMScanner   *scan,
       d = data;
 
       for (i = 0; i < scanlines; i++)
-	{
-	  CHECK_FOR_ERROR((rowlen != read(fd, buf, rowlen)),
-			  info->jmpbuf, _("PNM: Error reading file."));
-	  bufpos = 0;
-	  curbyte = buf[0];
+        {
+          CHECK_FOR_ERROR ((rowlen != read(fd, buf, rowlen)),
+                           info->jmpbuf, _("PNM: Error reading file."));
+          bufpos = 0;
+          curbyte = buf[0];
 
-	  for (x = 0; x < info->xres; x++)
-	    {
-	      if ((x % 8) == 0)
-		curbyte = buf[bufpos++];
-	      d[x] = (curbyte&0x80) ? 0x00 : 0xff;
-	      curbyte <<= 1;
-	    }
+          for (x = 0; x < info->xres; x++)
+            {
+              if ((x % 8) == 0)
+                curbyte = buf[bufpos++];
+              d[x] = (curbyte & 0x80) ? 0x00 : 0xff;
+              curbyte <<= 1;
+            }
 
-	  d += info->xres;
-	}
+          d += info->xres;
+        }
 
       gimp_progress_update ((double) y / (double) info->yres);
       gimp_pixel_rgn_set_rect (pixel_rgn, data, 0, y, info->xres, scanlines);
       y += scanlines;
     }
 
-  g_free(buf);
+  g_free (buf);
   g_free (data);
 }
 
 /* Writes out RGB and greyscale raw rows */
 static void
-pnmsaverow_raw (PNMRowInfo    *ri,
-		unsigned char *data)
+pnmsaverow_raw (PNMRowInfo *ri,
+                guchar     *data)
 {
-  write(ri->fd, data, ri->xres*ri->np);
+  write (ri->fd, data, ri->xres*ri->np);
 }
 
 /* Writes out indexed raw rows */
 static void
-pnmsaverow_raw_indexed (PNMRowInfo    *ri,
-			unsigned char *data)
+pnmsaverow_raw_indexed (PNMRowInfo *ri,
+                        guchar     *data)
 {
-  int i;
-  char *rbcur = ri->rowbuf;
+  gint   i;
+  gchar *rbcur = ri->rowbuf;
 
   for (i = 0; i < ri->xres; i++)
     {
@@ -736,71 +738,71 @@ pnmsaverow_raw_indexed (PNMRowInfo    *ri,
       *(rbcur++) = ri->grn[*data];
       *(rbcur++) = ri->blu[*(data++)];
     }
-  write(ri->fd, ri->rowbuf, ri->xres*3);
+  write (ri->fd, ri->rowbuf, ri->xres * 3);
 }
 
 /* Writes out RGB and greyscale ascii rows */
 static void
-pnmsaverow_ascii (PNMRowInfo    *ri,
-		  unsigned char *data)
+pnmsaverow_ascii (PNMRowInfo *ri,
+                  guchar     *data)
 {
-  int i;
-  char *rbcur = ri->rowbuf;
+  gint   i;
+  gchar *rbcur = ri->rowbuf;
 
   for (i = 0; i < ri->xres*ri->np; i++)
     {
-      sprintf((char *) rbcur,"%d\n", 0xff & *(data++));
-      rbcur += strlen(rbcur);
+      sprintf ((char *) rbcur,"%d\n", 0xff & *(data++));
+      rbcur += strlen (rbcur);
     }
-  write(ri->fd, ri->rowbuf, strlen((char *) ri->rowbuf));
+  write (ri->fd, ri->rowbuf, strlen ((char *) ri->rowbuf));
 }
 
 /* Writes out RGB and greyscale ascii rows */
 static void
-pnmsaverow_ascii_indexed (PNMRowInfo    *ri,
-			  unsigned char *data)
+pnmsaverow_ascii_indexed (PNMRowInfo *ri,
+                          guchar     *data)
 {
-  int i;
-  char *rbcur = ri->rowbuf;
+  gint   i;
+  gchar *rbcur = ri->rowbuf;
 
   for (i = 0; i < ri->xres; i++)
     {
-      sprintf((char *) rbcur,"%d\n", 0xff & ri->red[*(data)]);
-      rbcur += strlen(rbcur);
-      sprintf((char *) rbcur,"%d\n", 0xff & ri->grn[*(data)]);
-      rbcur += strlen(rbcur);
-      sprintf((char *) rbcur,"%d\n", 0xff & ri->blu[*(data++)]);
-      rbcur += strlen(rbcur);
+      sprintf ((char *) rbcur,"%d\n", 0xff & ri->red[*(data)]);
+      rbcur += strlen (rbcur);
+      sprintf ((char *) rbcur,"%d\n", 0xff & ri->grn[*(data)]);
+      rbcur += strlen (rbcur);
+      sprintf ((char *) rbcur,"%d\n", 0xff & ri->blu[*(data++)]);
+      rbcur += strlen (rbcur);
     }
-  write(ri->fd, ri->rowbuf, strlen((char *) ri->rowbuf));
+  write (ri->fd, ri->rowbuf, strlen ((char *) ri->rowbuf));
 }
 
-static gint
+static gboolean
 save_image (const gchar *filename,
-	    gint32       image_ID,
-	    gint32       drawable_ID)
+            gint32       image_ID,
+            gint32       drawable_ID)
 {
   GimpPixelRgn   pixel_rgn;
   GimpDrawable  *drawable;
   GimpImageType  drawable_type;
   PNMRowInfo     rowinfo;
-  void (*saverow) (PNMRowInfo *, unsigned char *) = NULL;
-  unsigned char  red[256];
-  unsigned char  grn[256];
-  unsigned char  blu[256];
-  unsigned char *data, *d;
-  char          *rowbuf;
-  char           buf[BUFLEN];
-  int            np = 0;
-  int            xres, yres;
-  int            ypos, yend;
-  int            rowbufsize = 0;
-  int            fd;
+  void (*saverow) (PNMRowInfo *, guchar *) = NULL;
+  guchar         red[256];
+  guchar         grn[256];
+  guchar         blu[256];
+  guchar        *data, *d;
+  gchar         *rowbuf;
+  gchar          buf[BUFLEN];
+  gint           np = 0;
+  gint           xres, yres;
+  gint           ypos, yend;
+  gint           rowbufsize = 0;
+  gint           fd;
 
   drawable = gimp_drawable_get (drawable_ID);
   drawable_type = gimp_drawable_type (drawable_ID);
   gimp_pixel_rgn_init (&pixel_rgn, drawable,
-		       0, 0, drawable->width, drawable->height, FALSE, FALSE);
+                       0, 0, drawable->width, drawable->height, FALSE, FALSE);
 
   /*  Make sure we're not saving an image with an alpha channel  */
   if (gimp_drawable_has_alpha (drawable_ID))
@@ -830,51 +832,57 @@ save_image (const gchar *filename,
     switch (drawable_type)
       {
       case GIMP_GRAY_IMAGE:
-	write(fd, "P2\n", 3);
-	np = 1;
-	rowbufsize = xres * 4;
-	saverow = pnmsaverow_ascii;
-	break;
+        write (fd, "P2\n", 3);
+        np = 1;
+        rowbufsize = xres * 4;
+        saverow = pnmsaverow_ascii;
+        break;
+
       case GIMP_RGB_IMAGE:
-	write(fd, "P3\n", 3);
-	np = 3;
-	rowbufsize = xres * 12;
-	saverow = pnmsaverow_ascii;
-	break;
+        write (fd, "P3\n", 3);
+        np = 3;
+        rowbufsize = xres * 12;
+        saverow = pnmsaverow_ascii;
+        break;
+
       case GIMP_INDEXED_IMAGE:
-	write(fd, "P3\n", 3);
-	np = 1;
-	rowbufsize = xres * 12;
-	saverow = pnmsaverow_ascii_indexed;
-	break;
+        write (fd, "P3\n", 3);
+        np = 1;
+        rowbufsize = xres * 12;
+        saverow = pnmsaverow_ascii_indexed;
+        break;
+
       default:
-	g_warning ("pnm: unknown drawable_type\n");
-	return FALSE;
+        g_warning ("pnm: unknown drawable_type\n");
+        return FALSE;
       }
   else if (psvals.raw == TRUE)
     switch (drawable_type)
       {
       case GIMP_GRAY_IMAGE:
-	write(fd, "P5\n", 3);
-	np = 1;
-	rowbufsize = xres;
-	saverow = pnmsaverow_raw;
-	break;
+        write (fd, "P5\n", 3);
+        np = 1;
+        rowbufsize = xres;
+        saverow = pnmsaverow_raw;
+        break;
+
       case GIMP_RGB_IMAGE:
-	write(fd, "P6\n", 3);
-	np = 3;
-	rowbufsize = xres * 3;
-	saverow = pnmsaverow_raw;
-	break;
+        write (fd, "P6\n", 3);
+        np = 3;
+        rowbufsize = xres * 3;
+        saverow = pnmsaverow_raw;
+        break;
+
       case GIMP_INDEXED_IMAGE:
-	write(fd, "P6\n", 3);
-	np = 1;
-	rowbufsize = xres * 3;
-	saverow = pnmsaverow_raw_indexed;
-	break;
+        write (fd, "P6\n", 3);
+        np = 1;
+        rowbufsize = xres * 3;
+        saverow = pnmsaverow_raw_indexed;
+        break;
+
       default:
-	g_warning ("pnm: unknown drawable_type\n");
-	return FALSE;
+        g_warning ("pnm: unknown drawable_type\n");
+        return FALSE;
     }
 
   if (drawable_type == GIMP_INDEXED_IMAGE)
@@ -886,11 +894,11 @@ save_image (const gchar *filename,
       cmap = gimp_image_get_colormap (image_ID, &colors);
 
       for (i = 0; i < colors; i++)
-	{
-	  red[i] = *cmap++;
-	  grn[i] = *cmap++;
-	  blu[i] = *cmap++;
-	}
+        {
+          red[i] = *cmap++;
+          grn[i] = *cmap++;
+          blu[i] = *cmap++;
+        }
 
       rowinfo.red = red;
       rowinfo.grn = grn;
@@ -907,7 +915,7 @@ save_image (const gchar *filename,
   sprintf (buf, "%d %d\n255\n", xres, yres);
   write (fd, buf, strlen(buf));
 
-  rowbuf = g_malloc (rowbufsize + 1);
+  rowbuf = g_new (gchar, rowbufsize + 1);
   rowinfo.fd = fd;
   rowinfo.rowbuf = rowbuf;
   rowinfo.xres = xres;
@@ -919,19 +927,19 @@ save_image (const gchar *filename,
   for (ypos = 0; ypos < yres; ypos++)
     {
       if ((ypos % gimp_tile_height ()) == 0)
-	{
-	  yend = ypos + gimp_tile_height ();
-	  yend = MIN (yend, yres);
-	  gimp_pixel_rgn_get_rect (&pixel_rgn, data,
-				   0, ypos, xres, (yend - ypos));
-	  d = data;
-	}
+        {
+          yend = ypos + gimp_tile_height ();
+          yend = MIN (yend, yres);
+          gimp_pixel_rgn_get_rect (&pixel_rgn, data,
+                                   0, ypos, xres, (yend - ypos));
+          d = data;
+        }
 
       (*saverow)(&rowinfo, d);
       d += xres*np;
 
       if ((ypos % 20) == 0)
-	gimp_progress_update ((double) ypos / (double) yres);
+        gimp_progress_update ((double) ypos / (double) yres);
     }
 
   /* close the file */
@@ -970,13 +978,13 @@ save_dialog (void)
 
   /*  file save type  */
   frame = gimp_int_radio_group_new (TRUE, _("Data formatting"),
-				    G_CALLBACK (gimp_radio_button_update),
-				    &psvals.raw, psvals.raw,
+                                    G_CALLBACK (gimp_radio_button_update),
+                                    &psvals.raw, psvals.raw,
 
-				    _("Raw"),   TRUE,  NULL,
-				    _("Ascii"), FALSE, NULL,
+                                    _("Raw"),   TRUE,  NULL,
+                                    _("Ascii"), FALSE, NULL,
 
-				    NULL);
+                                    NULL);
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
                       frame, FALSE, TRUE, 0);
@@ -1006,8 +1014,8 @@ pnmscanner_create (gint fd)
   s = g_new (PNMScanner, 1);
   s->fd = fd;
   s->inbuf = NULL;
-  s->eof = !read(s->fd, &(s->cur), 1);
-  return(s);
+  s->eof = !read (s->fd, &(s->cur), 1);
+  return s;
 }
 
 /* pnmscanner_destroy ---
@@ -1016,8 +1024,9 @@ pnmscanner_create (gint fd)
 static void
 pnmscanner_destroy (PNMScanner *s)
 {
-  if (s->inbuf) g_free(s->inbuf);
-  g_free(s);
+  if (s->inbuf)
+    g_free (s->inbuf);
+  g_free (s);
 }
 
 /* pnmscanner_createbuffer ---
@@ -1025,12 +1034,12 @@ pnmscanner_destroy (PNMScanner *s)
  */
 static void
 pnmscanner_createbuffer (PNMScanner *s,
-			 gint        bufsize)
+                         gint        bufsize)
 {
-  s->inbuf = g_new (char, bufsize);
+  s->inbuf = g_new (gchar, bufsize);
   s->inbufsize = bufsize;
   s->inbufpos = 0;
-  s->inbufvalidsize = read(s->fd, s->inbuf, bufsize);
+  s->inbufvalidsize = read (s->fd, s->inbuf, bufsize);
 }
 
 /* pnmscanner_gettoken ---
@@ -1038,8 +1047,8 @@ pnmscanner_createbuffer (PNMScanner *s,
  */
 static void
 pnmscanner_gettoken (PNMScanner *s,
-		     gchar      *buf,
-		     gint        bufsize)
+                     gchar      *buf,
+                     gint        bufsize)
 {
   int ctr=0;
 
@@ -1050,7 +1059,7 @@ pnmscanner_gettoken (PNMScanner *s,
          (ctr < bufsize))
     {
       buf[ctr++] = s->cur;
-      pnmscanner_getchar(s);
+      pnmscanner_getchar (s);
     }
   buf[ctr] = '\0';
 }
@@ -1060,13 +1069,13 @@ pnmscanner_gettoken (PNMScanner *s,
  */
 static void
 pnmscanner_getsmalltoken (PNMScanner *s,
-			  gchar      *buf)
+                          gchar      *buf)
 {
-  pnmscanner_eatwhitespace(s);
+  pnmscanner_eatwhitespace (s);
   if (!(s->eof) && !g_ascii_isspace (s->cur) && (s->cur != '#'))
     {
       *buf = s->cur;
-      pnmscanner_getchar(s);
+      pnmscanner_getchar (s);
     }
 }
 
@@ -1080,16 +1089,16 @@ pnmscanner_getchar (PNMScanner *s)
     {
       s->cur = s->inbuf[s->inbufpos++];
       if (s->inbufpos >= s->inbufvalidsize)
-	{
-	  if (s->inbufsize > s->inbufvalidsize)
-	    s->eof = 1;
-	  else
-	    s->inbufvalidsize = read(s->fd, s->inbuf, s->inbufsize);
-	  s->inbufpos = 0;
-	}
+        {
+          if (s->inbufsize > s->inbufvalidsize)
+            s->eof = 1;
+          else
+            s->inbufvalidsize = read (s->fd, s->inbuf, s->inbufsize);
+          s->inbufpos = 0;
+        }
     }
   else
-    s->eof = !read(s->fd, &(s->cur), 1);
+    s->eof = !read (s->fd, &(s->cur), 1);
 }
 
 /* pnmscanner_eatwhitespace ---
@@ -1104,24 +1113,24 @@ pnmscanner_eatwhitespace (PNMScanner *s)
   while (!(s->eof) && (state != -1))
     {
       switch (state)
-	{
-	case 0:  /* in whitespace */
-	  if (s->cur == '#')
-	    {
-	      state = 1;  /* goto comment */
-	      pnmscanner_getchar(s);
-	    }
-	  else if (!g_ascii_isspace (s->cur))
-	    state = -1;
-	  else
-	    pnmscanner_getchar(s);
-	  break;
+        {
+        case 0:  /* in whitespace */
+          if (s->cur == '#')
+            {
+              state = 1;  /* goto comment */
+              pnmscanner_getchar(s);
+            }
+          else if (!g_ascii_isspace (s->cur))
+            state = -1;
+          else
+            pnmscanner_getchar (s);
+          break;
 
-	case 1:  /* in comment */
-	  if (s->cur == '\n')
-	    state = 0;  /* goto whitespace */
-	  pnmscanner_getchar(s);
-	  break;
-	}
+        case 1:  /* in comment */
+          if (s->cur == '\n')
+            state = 0;  /* goto whitespace */
+          pnmscanner_getchar (s);
+          break;
+        }
     }
 }

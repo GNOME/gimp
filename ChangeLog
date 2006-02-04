@@ -1,3 +1,8 @@
+2006-02-04  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/common/pnm.c: untabbified and some other small
+	style-related fixes.
+
 2006-02-03  Karine Delvare  <kdelvare@nerim.net>
 
 	* app/tools/gimprectangletool.c: aspect ratio should be width /
