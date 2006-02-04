@@ -1,7 +1,8 @@
 2006-02-03  Carol Spears  <carol@gimp.org>
 
 	* app/tools/gimprectangletool.c: Applied patch from Joao S. O. Bueno
-	Calligaris that corrects status bar coordinate display
+	Calligaris that corrects status bar coordinate display.  Fixes bug 
+        #329817
 
 2006-02-04  DindinX  <dindinx@gimp.org>
 
