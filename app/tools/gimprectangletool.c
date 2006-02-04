@@ -1811,16 +1811,17 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
 
   gimp_rectangle_tool_update_options (rectangle, gdisp);
 
-  if (function == RECT_CREATING      ||
-      function == RECT_RESIZING_UPPER_LEFT ||
-      function == RECT_RESIZING_LOWER_RIGHT)
+  if (function != RECT_MOVING     &&
+      function != RECT_EXECUTING)
     {
       gimp_tool_pop_status (tool, gdisp);
       gimp_tool_push_status_coords (tool, gdisp,
                                     _("Rectangle: "),
-                                    rx2 - rx1,
+                                    (rx2 > max_x ? max_x : rx2) -
+                                    (rx1 < min_x ? min_x : rx1),
                                     " x ",
-                                    ry2 - ry1);
+                                    (ry2 > max_y ? max_y : ry2) -
+                                    (ry1 < min_y ? min_y : ry1));
     }
 
   if (function == RECT_CREATING)
