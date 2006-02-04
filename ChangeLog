@@ -1,3 +1,8 @@
+2006-02-03  Jay Cox  <jaycox@gimp.org>
+
+	* plug-ins/common/ripple.c: Fixed antialiasing.  Replaced "black"
+	with "blank".  Fixes bug #308750
+
 2006-02-03  Carol Spears  <carol@gimp.org>
 
 	* app/tools/gimprectangletool.c: Applied patch from Joao S. O. Bueno
