@@ -7,6 +7,27 @@ This is the development branch of The GIMP. Here's where all the shiny
 new stuff is being done that will one day be released as GIMP 2.4.
 
 
+Changes in GIMP 2.3.7
+=====================
+
+- depend on GTK+ 2.8, use some of the new features
+- removed workarounds for problems in GTK+ 2.6
+- moved Align Visible Layers to the Image menu
+- started to add a new vectors PDB API
+- make it more obvious that docks can be rearranged by drag and drop
+- modified the behaviour of the Tab key
+- added --license command-line option
+- improved dither matrix for RGB->Indexed conversion
+- added PDB API to stroke with any paint method
+- gave some plug-ins more sensible names
+- keep settings of brush/pattern/font/... button popups across sessions
+- reduced number of memory allocations by declaring some strings as static
+- some improvements to the plug-in preview widgets
+- added links to important topics in the user manual
+- let the configure script display a summary of options
+- bug fixes and code cleanup
+
+
 Changes in GIMP 2.3.6
 =====================
 
