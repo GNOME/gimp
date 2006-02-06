@@ -1,22 +1,21 @@
 # translation of gimp-script-fu.HEAD.po to Bulgarian
 # Bulgarian translation of gimp script-fu
-# Copyright (C) 2005 THE GIMP'S COPYRIGHT HOLDER
+# Copyright (C) 2005, 2006 THE GIMP'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the GIMP package.
 # Alexander Shopov <ash@contact.bg>, 2005.
-# Victor Dachev <vdachev@gmail.com>, 2005.
+# Victor Dachev <vdachev@gmail.com>, 2005, 2006.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-01 10:28+0200\n"
-"PO-Revision-Date: 2005-11-01 10:28+0200\n"
+"POT-Creation-Date: 2006-02-06 11:03+0200\n"
+"PO-Revision-Date: 2006-02-06 11:03+0200\n"
 "Last-Translator: Victor Dachev <vdachev@gmail.com>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: KBabel 1.10\n"
 
 #: ../plug-ins/script-fu/script-fu-console.c:144
 msgid "Script-Fu Console"
@@ -146,10 +145,9 @@ msgid "Script-Fu _Console"
 msgstr "_Конзола на Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu.c:123 ../plug-ins/script-fu/script-fu.c:152
-#: ../plug-ins/script-fu/script-fu.c:315
-#, fuzzy
+#: ../plug-ins/script-fu/script-fu.c:313
 msgid "<Toolbox>/Xtns/Languages/Script-Fu"
-msgstr "<Кутия с инструменти>/Разширения/Script-Fu"
+msgstr "<Кутия с инструменти>/Разширения/езици/Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu.c:145
 msgid "_Start Server..."
@@ -204,18 +202,14 @@ msgid "Alpha to _Logo"
 msgstr "Прозрачност в _Лого"
 
 #: ../plug-ins/script-fu/script-fu.c:295
-msgid "A_nimators"
-msgstr "_Аниматори"
-
-#: ../plug-ins/script-fu/script-fu.c:297
 msgid "_Decor"
 msgstr "_Декор"
 
-#: ../plug-ins/script-fu/script-fu.c:299
+#: ../plug-ins/script-fu/script-fu.c:297
 msgid "_Render"
 msgstr "_Генериране"
 
-#: ../plug-ins/script-fu/script-fu.c:307
+#: ../plug-ins/script-fu/script-fu.c:305
 msgid "_Refresh Scripts"
 msgstr "_Обновяване на скриптовете"
 
@@ -472,7 +466,7 @@ msgstr "Работа върху копие"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:1
 msgid "Add _Border..."
-msgstr "Добавяне на _Рамка..."
+msgstr "Добавяне на _рамка..."
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:2
 msgid "Border X size"
@@ -610,7 +604,7 @@ msgstr "Размер на сиянието (в пиксели * 4)"
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:1
 msgid "Alien _Neon..."
-msgstr "Извънземен _Неон..."
+msgstr "Извънземен _неон..."
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:3
 msgid "Fade away"
@@ -1001,13 +995,12 @@ msgid "_Clothify..."
 msgstr "_Тъкан..."
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:1
-#, fuzzy
 msgid ""
 "Darken only\n"
 "(Better, but only for images with a lot of white)"
 msgstr ""
-"Само тъмните\n"
-"(По-добре, но само за изображения с много бяло)"
+"Само по-тъмните\n"
+"(По-добро, но само за изображения с много бяло)"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:2
 msgid "Stains"
@@ -1032,7 +1025,7 @@ msgstr "Размер на очертание"
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:2
 msgid "Cool _Metal..."
-msgstr "Хладен _Метал..."
+msgstr "Хладен _метал..."
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:3
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:2
@@ -1143,7 +1136,6 @@ msgid "Rows/cols"
 msgstr "Редове/колони"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:10
-#, fuzzy
 msgid "_Erase Every Other Row..."
 msgstr "_Изтриване на всеки втори ред..."
 
@@ -1433,7 +1425,7 @@ msgstr "Създава четири водача около рамката на 
 
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm.h:2
 msgid "New Guides from _Selection"
-msgstr "Нови водачи от _Селекцията"
+msgstr "Нови водачи от _селекцията"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:1
 #: ../plug-ins/script-fu/scripts/guides-new.scm.h:1
@@ -1501,7 +1493,7 @@ msgstr "Начало по вертикал"
 
 #: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:9
 msgid "Use selection bounds instead of belows"
-msgstr "Изпозлване границите на селекцията вместо това"
+msgstr "Използване границите на селекцията вместо това"
 
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:3
 msgid "Frame color"
@@ -1538,7 +1530,7 @@ msgstr "Разпръскване"
 
 #: ../plug-ins/script-fu/scripts/lava.scm.h:7
 msgid "Use current gradient"
-msgstr "Изпозлване на текущата преливка"
+msgstr "Използване на текущата преливка"
 
 #: ../plug-ins/script-fu/scripts/lava.scm.h:8
 msgid "_Lava..."
@@ -1912,14 +1904,12 @@ msgid "Frame"
 msgstr "Рамка"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:10
-#, fuzzy
 msgid "Gradient: loop sawtooth"
-msgstr "Преливка: повторение - трион"
+msgstr "Преливка: повторение трион"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:11
-#, fuzzy
 msgid "Gradient: loop triangle"
-msgstr "Преливка: триъгълно повторение"
+msgstr "Преливка: повторение триъгълник"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:12
 msgid "Hexagon"
@@ -2207,16 +2197,52 @@ msgid "_Weave..."
 msgstr "_Вълна..."
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:1
+msgid "Create and use _Selections"
+msgstr "Създаване и използва на _селекции"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:2
+msgid "Create, Open and Save _Files"
+msgstr "Създаване, отваряне и запазване на _файлове"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:3
+msgid "Drawing _Simple Objects"
+msgstr "Изчертаване на _прости обекти"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:4
+msgid "Howto use _Dialogs"
+msgstr "Как да се ползват _диалогови кутии"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:5
 msgid "Plug-in _Registry"
 msgstr "Регистрация на разширенията"
 
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:2
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:6
+msgid "Using _Paths"
+msgstr "Използване на _пътища"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:7
+msgid "_Basics of TheGIMP"
+msgstr "_Основи на The Gimp"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:8
 msgid "_Developer Web Site"
 msgstr "_Сайт на създателя"
 
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:3
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:9
 msgid "_Main Web Site"
 msgstr "_Главен сайт"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:10
+msgid "_Preparing your Images for the web"
+msgstr "_Подготвяне на изображенията за Интернет"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:11
+msgid "_User Manual Web Site"
+msgstr "_Главен сайт на ръководството"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:12
+msgid "_Working with Digital Camera Photos"
+msgstr "_Работа с цифрови фотографии"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:1
 msgid "Drop shadow X offset"

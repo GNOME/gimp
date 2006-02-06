@@ -1,22 +1,22 @@
 # translation of gimp-libgimp.HEAD.po to Bulgarian
 # Bulgarian translation of libgimp
-# Copyright (C) 2005 THE GIMP'S COPYRIGHT HOLDER
+# Copyright (C) 2005, 2006 THE GIMP'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the GIMP package.
 # Alexander Shopov <ash@contact.bg>, 2005.
-# Victor Dachev <vdachev@gmail.com>, 2005.
+# Victor Dachev <vdachev@gmail.com>, 2005, 2006
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-01 10:26+0200\n"
-"PO-Revision-Date: 2005-11-01 10:27+0200\n"
+"POT-Creation-Date: 2006-02-06 10:43+0200\n"
+"PO-Revision-Date: 2006-02-06 10:43+0200\n"
 "Last-Translator: Victor Dachev <vdachev@gmail.com>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: KBabel 1.10\n"
 
 #: ../libgimp/gimpbrushmenu.c:140
 msgid "Brush Selection"
@@ -29,7 +29,7 @@ msgstr "_Разглеждане..."
 #: ../libgimp/gimpexport.c:215 ../libgimp/gimpexport.c:251
 #, c-format
 msgid "%s can't handle layers"
-msgstr "%s не потдържа слоеве"
+msgstr "%s не поддържа слоеве"
 
 #: ../libgimp/gimpexport.c:216 ../libgimp/gimpexport.c:225
 #: ../libgimp/gimpexport.c:234
@@ -39,12 +39,12 @@ msgstr "Сливане на видимите слоеве"
 #: ../libgimp/gimpexport.c:224
 #, c-format
 msgid "%s can't handle layer offsets, size or opacity"
-msgstr "%s не потдържа отмествания, размери или прозрачност на слоеве"
+msgstr "%s не поддържа отмествания, размери или прозрачност на слоеве"
 
 #: ../libgimp/gimpexport.c:233 ../libgimp/gimpexport.c:242
 #, c-format
 msgid "%s can only handle layers as animation frames"
-msgstr "%s потдържа слоеве само като кадри от анимация"
+msgstr "%s поддържа слоеве само като кадри от анимация"
 
 #: ../libgimp/gimpexport.c:234 ../libgimp/gimpexport.c:243
 msgid "Save as Animation"
@@ -58,12 +58,12 @@ msgstr "Изравняване на изображението"
 #: ../libgimp/gimpexport.c:260
 #, c-format
 msgid "%s can't handle transparency"
-msgstr "%s не потдържа прозрачност"
+msgstr "%s не поддържа прозрачност"
 
 #: ../libgimp/gimpexport.c:269
 #, c-format
 msgid "%s can't handle layer masks"
-msgstr "%s не потдържа слоеви маски"
+msgstr "%s не поддържа слоеви маски"
 
 #: ../libgimp/gimpexport.c:270
 msgid "Apply Layer Masks"
@@ -72,7 +72,7 @@ msgstr "Прилагане на слоеви маски"
 #: ../libgimp/gimpexport.c:278
 #, c-format
 msgid "%s can only handle RGB images"
-msgstr "%s потдържа само ЧЗС изображения"
+msgstr "%s поддържа само ЧЗС изображения"
 
 #: ../libgimp/gimpexport.c:279 ../libgimp/gimpexport.c:317
 #: ../libgimp/gimpexport.c:326
@@ -82,7 +82,7 @@ msgstr "Преобразуване в ЧЗС"
 #: ../libgimp/gimpexport.c:287
 #, c-format
 msgid "%s can only handle grayscale images"
-msgstr "%s потдържа само изображения в степени на сивото"
+msgstr "%s поддържа само изображения в степени на сивото"
 
 #: ../libgimp/gimpexport.c:288 ../libgimp/gimpexport.c:317
 #: ../libgimp/gimpexport.c:338
@@ -92,7 +92,7 @@ msgstr "Преобразуване в степени на сивото"
 #: ../libgimp/gimpexport.c:296
 #, c-format
 msgid "%s can only handle indexed images"
-msgstr "%s потдържа само изображения с индексирани цветове"
+msgstr "%s поддържа само изображения с индексирани цветове"
 
 #: ../libgimp/gimpexport.c:297 ../libgimp/gimpexport.c:326
 #: ../libgimp/gimpexport.c:336
@@ -108,7 +108,7 @@ msgstr ""
 #, c-format
 msgid "%s can only handle bitmap (two color) indexed images"
 msgstr ""
-"%s потдържа само черно-бели (двуцветни) изображения с индексирани цветове"
+"%s поддържа само черно-бели (двуцветни) изображения с индексирани цветове"
 
 #: ../libgimp/gimpexport.c:307
 msgid ""
@@ -122,18 +122,18 @@ msgstr ""
 #: ../libgimp/gimpexport.c:316
 #, c-format
 msgid "%s can only handle RGB or grayscale images"
-msgstr "%s потдържа само изображения с цветност ЧЗС или степени на сивото"
+msgstr "%s поддържа само изображения с цветност ЧЗС или степени на сивото"
 
 #: ../libgimp/gimpexport.c:325
 #, c-format
 msgid "%s can only handle RGB or indexed images"
-msgstr "%s потдържа само изображения ЧЗС или индексирани цветове"
+msgstr "%s поддържа само изображения ЧЗС или индексирани цветове"
 
 #: ../libgimp/gimpexport.c:335
 #, c-format
 msgid "%s can only handle grayscale or indexed images"
 msgstr ""
-"%s потдържа само изображения в степени на сивото или с индексирани цветове"
+"%s поддържа само изображения в степени на сивото или с индексирани цветове"
 
 #: ../libgimp/gimpexport.c:346
 #, c-format
@@ -197,11 +197,11 @@ msgstr ""
 "Опитвате се да запазите като канал (запазена селекция) %s \n"
 "Това няма да запази видимите слоеве."
 
-#: ../libgimp/gimpfontselectbutton.c:124 ../libgimp/gimpfontselectbutton.c:169
+#: ../libgimp/gimpfontselectbutton.c:126 ../libgimp/gimpfontselectbutton.c:177
 msgid "Font Selection"
 msgstr "Избор на шрифт"
 
-#: ../libgimp/gimpfontselectbutton.c:137 ../libgimp/gimpfontselectbutton.c:170
+#: ../libgimp/gimpfontselectbutton.c:139 ../libgimp/gimpfontselectbutton.c:178
 msgid "Sans"
 msgstr "Прав"
 
@@ -209,7 +209,7 @@ msgstr "Прав"
 msgid "Gradient Selection"
 msgstr "Селекция с преливка"
 
-#: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:167
+#: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:131
 msgid "(Empty)"
 msgstr "(Празно)"
 
@@ -221,76 +221,78 @@ msgstr "Избор на палитра"
 msgid "Pattern Selection"
 msgstr "Избор на шарка"
 
-#: ../libgimp/gimpprocbrowserdialog.c:171
+#: ../libgimp/gimpprocbrowserdialog.c:140
 msgid "by name"
 msgstr "по име"
 
-#: ../libgimp/gimpprocbrowserdialog.c:172
+#: ../libgimp/gimpprocbrowserdialog.c:141
 msgid "by description"
 msgstr "по описание"
 
-#: ../libgimp/gimpprocbrowserdialog.c:173
+#: ../libgimp/gimpprocbrowserdialog.c:142
 msgid "by help"
 msgstr "по помощ"
 
-#: ../libgimp/gimpprocbrowserdialog.c:174
+#: ../libgimp/gimpprocbrowserdialog.c:143
 msgid "by author"
 msgstr "по автор"
 
-#: ../libgimp/gimpprocbrowserdialog.c:175
+#: ../libgimp/gimpprocbrowserdialog.c:144
 msgid "by copyright"
 msgstr "по авторски права"
 
-#: ../libgimp/gimpprocbrowserdialog.c:176
+#: ../libgimp/gimpprocbrowserdialog.c:145
 msgid "by date"
 msgstr "по дата"
 
-#: ../libgimp/gimpprocbrowserdialog.c:177
+#: ../libgimp/gimpprocbrowserdialog.c:146
 msgid "by type"
 msgstr "по тип"
 
-#: ../libgimp/gimpprocbrowserdialog.c:408
+#: ../libgimp/gimpprocbrowserdialog.c:377
 msgid "Searching"
 msgstr "Търсене"
 
-#: ../libgimp/gimpprocbrowserdialog.c:419
+#: ../libgimp/gimpprocbrowserdialog.c:388
 msgid "Searching by name"
 msgstr "Търсене по име"
 
-#: ../libgimp/gimpprocbrowserdialog.c:440
+#: ../libgimp/gimpprocbrowserdialog.c:409
 msgid "Searching by description"
 msgstr "Търсене по описание"
 
-#: ../libgimp/gimpprocbrowserdialog.c:447
+#: ../libgimp/gimpprocbrowserdialog.c:416
 msgid "Searching by help"
 msgstr "Търсене по помощ"
 
-#: ../libgimp/gimpprocbrowserdialog.c:454
+#: ../libgimp/gimpprocbrowserdialog.c:423
 msgid "Searching by author"
 msgstr "Търсене по автор"
 
-#: ../libgimp/gimpprocbrowserdialog.c:461
+#: ../libgimp/gimpprocbrowserdialog.c:430
 msgid "Searching by copyright"
 msgstr "Търсене по авторски права"
 
-#: ../libgimp/gimpprocbrowserdialog.c:468
+#: ../libgimp/gimpprocbrowserdialog.c:437
 msgid "Searching by date"
 msgstr "Търсене по дата"
 
-#: ../libgimp/gimpprocbrowserdialog.c:475
+#: ../libgimp/gimpprocbrowserdialog.c:444
 msgid "Searching by type"
 msgstr "Търсене по тип"
 
-#: ../libgimp/gimpprocbrowserdialog.c:484
+#: ../libgimp/gimpprocbrowserdialog.c:454
 #, c-format
-msgid "%d procedures"
-msgstr "%d процедури"
+msgid "%d procedure"
+msgid_plural "%d procedures"
+msgstr[0] "%d процедури"
+msgstr[1] "%d процедури"
 
-#: ../libgimp/gimpprocbrowserdialog.c:491
+#: ../libgimp/gimpprocbrowserdialog.c:463
 msgid "No matches for your query"
 msgstr "Няма отговарящи на търсенето"
 
-#: ../libgimp/gimpprocbrowserdialog.c:495
+#: ../libgimp/gimpprocbrowserdialog.c:467
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
@@ -298,7 +300,7 @@ msgstr[0] "%d съвпадения с критериите"
 msgstr[1] "%d процедури съвпадат с критериите"
 
 #. count label
-#: ../libgimp/gimpprocbrowserdialog.c:544 ../libgimpwidgets/gimpbrowser.c:145
+#: ../libgimp/gimpprocbrowserdialog.c:516 ../libgimpwidgets/gimpbrowser.c:114
 msgid "No matches"
 msgstr "Няма съвпадения"
 
@@ -312,7 +314,7 @@ msgstr "Върнати стойности"
 
 #: ../libgimp/gimpprocview.c:169
 msgid "Additional Information"
-msgstr "Допълнитена информация"
+msgstr "Допълнителна информация"
 
 #: ../libgimp/gimpprocview.c:210
 msgid "Author:"
@@ -650,71 +652,73 @@ msgstr "Напред"
 msgid "Backward"
 msgstr "Назад"
 
-#: ../libgimpbase/gimpbaseenums.c:813
+#: ../libgimpbase/gimpbaseenums.c:815
 msgid "Internal GIMP procedure"
 msgstr "Вътрешна GIMP процедура"
 
-#: ../libgimpbase/gimpbaseenums.c:814
+#: ../libgimpbase/gimpbaseenums.c:816
 msgid "GIMP Plug-In"
 msgstr "GIMP приставка"
 
-#: ../libgimpbase/gimpbaseenums.c:815
+#: ../libgimpbase/gimpbaseenums.c:817
 msgid "GIMP Extension"
 msgstr "GIMP разширение"
 
-#: ../libgimpbase/gimpbaseenums.c:816
+#: ../libgimpbase/gimpbaseenums.c:818
 msgid "Temporary Procedure"
 msgstr "Временна процедура"
 
-#: ../libgimpbase/gimpmemsize.c:177
+#: ../libgimpbase/gimpmemsize.c:180
 #, c-format
-msgid "%d Bytes"
-msgstr "%d байта"
-
-#: ../libgimpbase/gimpmemsize.c:182
-#, c-format
-msgid "%.2f KB"
-msgstr "%.2f KB"
+msgid "%d Byte"
+msgid_plural "%d Bytes"
+msgstr[0] "%d байта"
+msgstr[1] "%d байта"
 
 #: ../libgimpbase/gimpmemsize.c:186
 #, c-format
-msgid "%.1f KB"
-msgstr "%.1f KB"
+msgid "%.2f KB"
+msgstr "%.2f КБ"
 
 #: ../libgimpbase/gimpmemsize.c:190
 #, c-format
-msgid "%d KB"
-msgstr "%d KB"
+msgid "%.1f KB"
+msgstr "%.1f КБ"
 
-#: ../libgimpbase/gimpmemsize.c:197
+#: ../libgimpbase/gimpmemsize.c:194
 #, c-format
-msgid "%.2f MB"
-msgstr "%.2f MB"
+msgid "%d KB"
+msgstr "%d КБ"
 
 #: ../libgimpbase/gimpmemsize.c:201
 #, c-format
-msgid "%.1f MB"
-msgstr "%.1f MB"
+msgid "%.2f MB"
+msgstr "%.2f МБ"
 
 #: ../libgimpbase/gimpmemsize.c:205
 #, c-format
-msgid "%d MB"
-msgstr "%d MB"
+msgid "%.1f MB"
+msgstr "%.1f МБ"
 
-#: ../libgimpbase/gimpmemsize.c:212
+#: ../libgimpbase/gimpmemsize.c:209
 #, c-format
-msgid "%.2f GB"
-msgstr "%.2f GB"
+msgid "%d MB"
+msgstr "%d МБ"
 
 #: ../libgimpbase/gimpmemsize.c:216
 #, c-format
-msgid "%.1f GB"
-msgstr "%.1f GB"
+msgid "%.2f GB"
+msgstr "%.2f ГБ"
 
 #: ../libgimpbase/gimpmemsize.c:220
 #, c-format
+msgid "%.1f GB"
+msgstr "%.1f ГБ"
+
+#: ../libgimpbase/gimpmemsize.c:224
+#, c-format
 msgid "%d GB"
-msgstr "%d GB"
+msgstr "%d ГБ"
 
 #: ../libgimpbase/gimputils.c:169 ../libgimpbase/gimputils.c:174
 #: ../modules/cdisplay_lcms.c:246
@@ -736,7 +740,7 @@ msgid ""
 "fallback."
 msgstr ""
 "Когато е включено, GIMP ще се опита да използва цветовия профил на монитора "
-"от графичната система. Конфигурираният профил на моитор тогава ще се с "
+"от графичната система. Конфигурираният профил на монитор тогава ще се с "
 "използва само в случай на проблем."
 
 #: ../libgimpconfig/gimpcolorconfig.c:48
@@ -811,22 +815,22 @@ msgstr "стойността за команда %s не е правилна UTF
 #: ../libgimpconfig/gimpconfig-deserialize.c:423
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
-msgstr "при очаквано 'да' или 'не' за %s, е получено'%s'"
+msgstr "при очаквано „да“ или „не“ за %s, е получено „%s“"
 
 #: ../libgimpconfig/gimpconfig-deserialize.c:497
 #, c-format
 msgid "invalid value '%s' for token %s"
-msgstr "Грешна стойност за '%s' в '%s'"
+msgstr "Грешна стойност за „%s“ в „%s“"
 
 #: ../libgimpconfig/gimpconfig-deserialize.c:512
 #, c-format
 msgid "invalid value '%ld' for token %s"
-msgstr "Грешна стойност за '%ld' в '%s'"
+msgstr "Грешна стойност за „%ld“ в „%s“"
 
 #: ../libgimpconfig/gimpconfig-deserialize.c:581
 #, c-format
 msgid "while parsing token '%s': %s"
-msgstr "при четене на '%s': %s"
+msgstr "при четене на „%s“: %s"
 
 #: ../libgimpconfig/gimpconfig-iface.c:453
 #: ../libgimpconfig/gimpconfig-iface.c:466 ../libgimpconfig/gimpscanner.c:498
@@ -842,12 +846,12 @@ msgstr "Не може да се покаже ${%s}"
 #: ../libgimpconfig/gimpconfigwriter.c:135
 #, c-format
 msgid "Could not create temporary file for '%s': %s"
-msgstr "Не може да се създаде временен файл за '%s': %s"
+msgstr "Не може да се създаде временен файл за „%s“: %s"
 
 #: ../libgimpconfig/gimpconfigwriter.c:148
 #, c-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "Не може да се отвори '%s' за запис: '%s'"
+msgstr "Не може да се отвори „%s“ за запис: „%s“"
 
 #: ../libgimpconfig/gimpconfigwriter.c:667
 #, c-format
@@ -855,7 +859,7 @@ msgid ""
 "Error writing to temporary file for '%s': %s\n"
 "The original file has not been touched."
 msgstr ""
-"Грешка при запис на временен файл за '%s': %s\n"
+"Грешка при запис на временен файл за „%s“: %s\n"
 "Оригиналния файл не е бил променен."
 
 #: ../libgimpconfig/gimpconfigwriter.c:675
@@ -864,18 +868,18 @@ msgid ""
 "Error writing to temporary file for '%s': %s\n"
 "No file has been created."
 msgstr ""
-"Грешка при запис на временен файл за '%s': %s\n"
+"Грешка при запис на временен файл за „%s“: %s\n"
 "Не е създаден файл."
 
 #: ../libgimpconfig/gimpconfigwriter.c:686
 #, c-format
 msgid "Error writing to '%s': %s"
-msgstr "Грешка при запис на '%s': %s"
+msgstr "Грешка при запис на „%s“: %s"
 
 #: ../libgimpconfig/gimpconfigwriter.c:704
 #, c-format
 msgid "Could not create '%s': %s"
-msgstr "Не може да се създаде '%s': %s"
+msgstr "Не може да се създаде „%s“: %s"
 
 #: ../libgimpconfig/gimpscanner.c:255
 msgid "invalid UTF-8 string"
@@ -884,38 +888,28 @@ msgstr "Невалиден UTF-8"
 #: ../libgimpconfig/gimpscanner.c:606
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
-msgstr "Грешка при четене на '%s' в ред %d: %s"
+msgstr "Грешка при четене на „%s“ в ред %d: %s"
 
-#: ../libgimpmodule/gimpmodule.c:180
-#, c-format
-msgid "Loading module: '%s'\n"
-msgstr "Зареждане на модул: '%s'\n"
-
-#: ../libgimpmodule/gimpmodule.c:197 ../libgimpmodule/gimpmodule.c:216
-#: ../libgimpmodule/gimpmodule.c:330 ../libgimpmodule/gimpmodule.c:358
-#: ../libgimpmodule/gimpmodule.c:470
+#: ../libgimpmodule/gimpmodule.c:152 ../libgimpmodule/gimpmodule.c:170
+#: ../libgimpmodule/gimpmodule.c:279 ../libgimpmodule/gimpmodule.c:306
+#: ../libgimpmodule/gimpmodule.c:417
 #, c-format
 msgid "Module '%s' load error: %s"
-msgstr "Грешка при зареждане на модул '%s': %s"
+msgstr "Грешка при зареждане на модул „%s“: %s"
 
-#: ../libgimpmodule/gimpmodule.c:286
-#, c-format
-msgid "Skipping module: '%s'\n"
-msgstr "Пропускане на модул: '%s'\n"
-
-#: ../libgimpmodule/gimpmodule.c:426
+#: ../libgimpmodule/gimpmodule.c:374
 msgid "Module error"
 msgstr "Грешка в модула"
 
-#: ../libgimpmodule/gimpmodule.c:427
+#: ../libgimpmodule/gimpmodule.c:375
 msgid "Loaded"
 msgstr "Зареден"
 
-#: ../libgimpmodule/gimpmodule.c:428
+#: ../libgimpmodule/gimpmodule.c:376
 msgid "Load failed"
 msgstr "Зареждането е невъзможно"
 
-#: ../libgimpmodule/gimpmodule.c:429
+#: ../libgimpmodule/gimpmodule.c:377
 msgid "Not loaded"
 msgstr "Незареден"
 
@@ -927,19 +921,19 @@ msgid ""
 msgstr ""
 "Не може да се определи валидна домашна папка.\n"
 "Вместо това предварителните прегледи ще се запазват във папката за временни "
-"файлове (%s) ."
+"файлове (%s)."
 
 #: ../libgimpthumb/gimpthumb-utils.c:249 ../libgimpthumb/gimpthumb-utils.c:317
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
-msgstr "Грешка при създаване на папка за умалени копия '%s'."
+msgstr "Грешка при създаване на папка за умалени копия „%s“."
 
-#: ../libgimpthumb/gimpthumbnail.c:919
+#: ../libgimpthumb/gimpthumbnail.c:889
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Не може да бъде създаден предварителен преглед за %s: %s"
 
-#: ../libgimpwidgets/gimpbrowser.c:129
+#: ../libgimpwidgets/gimpbrowser.c:98
 msgid "_Search:"
 msgstr "_Търсене:"
 
@@ -959,65 +953,107 @@ msgstr "_Черно"
 msgid "_White"
 msgstr "_Бяло"
 
-#: ../libgimpwidgets/gimpcolorscales.c:129
+#: ../libgimpwidgets/gimpcolorscales.c:98
 msgid "Scales"
 msgstr "Мащабирания"
 
-#: ../libgimpwidgets/gimpcolorselection.c:218
+#: ../libgimpwidgets/gimpcolorselection.c:187
 msgid "Current:"
 msgstr "Текущ:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:240
+#: ../libgimpwidgets/gimpcolorselection.c:209
 msgid "Old:"
 msgstr "Стар:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:294
+#: ../libgimpwidgets/gimpcolorselection.c:263
 msgid "Hexadecimal color notation as used in HTML and CSS"
 msgstr "Хексадецимална нотация на цветовете, като използваното в HTML и CSS"
 
-#: ../libgimpwidgets/gimpcolorselection.c:299
+#: ../libgimpwidgets/gimpcolorselection.c:268
 msgid "HTML _notation:"
 msgstr "HTML _нотация:"
 
-#: ../libgimpwidgets/gimpfileentry.c:351
+#: ../libgimpwidgets/gimpfileentry.c:320
 msgid "Select Folder"
 msgstr "Избор на папка"
 
-#: ../libgimpwidgets/gimpfileentry.c:353
+#: ../libgimpwidgets/gimpfileentry.c:322
 msgid "Select File"
 msgstr "Избор на файл"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:232
+#: ../libgimpwidgets/gimpmemsizeentry.c:203
 msgid "Kilobytes"
 msgstr "Килобайти"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:233
+#: ../libgimpwidgets/gimpmemsizeentry.c:204
 msgid "Megabytes"
 msgstr "Мегабайти"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:234
+#: ../libgimpwidgets/gimpmemsizeentry.c:205
 msgid "Gigabytes"
 msgstr "Гигабайти"
 
-#: ../libgimpwidgets/gimppatheditor.c:243
+#. Count label
+#: ../libgimpwidgets/gimppageselector.c:269
+#: ../libgimpwidgets/gimppageselector.c:1171
+msgid "Nothing selected"
+msgstr "Няма избрано"
+
+#: ../libgimpwidgets/gimppageselector.c:287
+msgid "Select _All"
+msgstr "Избор на _всички"
+
+#: ../libgimpwidgets/gimppageselector.c:307
+msgid "Select _range:"
+msgstr "Избор на _периметър:"
+
+#: ../libgimpwidgets/gimppageselector.c:319
+msgid "Open _pages as"
+msgstr "Отваряне на _страници като"
+
+#: ../libgimpwidgets/gimppageselector.c:420
+msgid "Page 000"
+msgstr "Страница 000"
+
+#: ../libgimpwidgets/gimppageselector.c:512
+#: ../libgimpwidgets/gimppageselector.c:749
+#, c-format
+msgid "Page %d"
+msgstr "Страница %d"
+
+#: ../libgimpwidgets/gimppageselector.c:1176
+msgid "One page selected"
+msgstr "Избрана е една страница"
+
+#: ../libgimpwidgets/gimppageselector.c:1183
+#, c-format
+msgid "All %d pages selected"
+msgstr "Избрани са всички %d страници"
+
+#: ../libgimpwidgets/gimppageselector.c:1185
+#, c-format
+msgid "%d pages selected"
+msgstr "Избрани са %d страници"
+
+#: ../libgimpwidgets/gimppatheditor.c:212
 msgid "Writable"
 msgstr "Записваемо"
 
-#: ../libgimpwidgets/gimppatheditor.c:252
+#: ../libgimpwidgets/gimppatheditor.c:221
 msgid "Folder"
 msgstr "Папка"
 
-#: ../libgimpwidgets/gimppickbutton.c:138
+#: ../libgimpwidgets/gimppickbutton.c:107
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
 msgstr "Изберете пипетата, след това цвят където и да е на екрана."
 
-#: ../libgimpwidgets/gimppreviewarea.c:126
+#: ../libgimpwidgets/gimppreviewarea.c:94
 msgid "Check Size"
 msgstr "Размер на квадратчето"
 
-#: ../libgimpwidgets/gimppreviewarea.c:133
+#: ../libgimpwidgets/gimppreviewarea.c:101
 msgid "Check Style"
 msgstr "Вид на квадратчето"
 
@@ -1026,10 +1062,12 @@ msgstr "Вид на квадратчето"
 msgid "_Preview"
 msgstr "_Предварителен преглед"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1868
+#: ../libgimpwidgets/gimppropwidgets.c:1872
 #, c-format
-msgid "This text input field is limited to %d characters."
-msgstr "Полето за въвеждане на текст има ограничение от %d знака."
+msgid "This text input field is limited to %d character."
+msgid_plural "This text input field is limited to %d characters."
+msgstr[0] "Полето за въвеждане на текст има ограничение от %d знака."
+msgstr[1] "Полето за въвеждане на текст има ограничение от %d знака."
 
 #: ../libgimpwidgets/gimpresolutionentry.c:382
 #, c-format
@@ -1108,19 +1146,19 @@ msgstr "_Завъртане"
 msgid "_Shear"
 msgstr "_Деформиране"
 
-#: ../libgimpwidgets/gimpunitmenu.c:302
+#: ../libgimpwidgets/gimpunitmenu.c:267
 msgid "More..."
 msgstr "Още..."
 
-#: ../libgimpwidgets/gimpunitmenu.c:612
+#: ../libgimpwidgets/gimpunitmenu.c:577
 msgid "Unit Selection"
 msgstr "Избор на единици"
 
-#: ../libgimpwidgets/gimpunitmenu.c:660
+#: ../libgimpwidgets/gimpunitmenu.c:625
 msgid "Unit"
 msgstr "Единица"
 
-#: ../libgimpwidgets/gimpunitmenu.c:664
+#: ../libgimpwidgets/gimpunitmenu.c:629
 msgid "Factor"
 msgstr "Фактор"
 
@@ -1130,7 +1168,7 @@ msgid ""
 "a given \"random\" operation"
 msgstr ""
 "Използване на тази стойност за генериране на случайни стойности за "
-"разпръскването - това позволява повтарянето на дадена \"случайна\" операция"
+"разпръскването - това позволява повтарянето на дадена „случайна“ операция"
 
 #: ../libgimpwidgets/gimpwidgets.c:1007
 msgid "_New Seed"
@@ -1236,7 +1274,7 @@ msgstr "_Гама:"
 
 #: ../modules/cdisplay_highcontrast.c:91
 msgid "High Contrast color display filter"
-msgstr "Показване на цветове свисок контраст"
+msgstr "Показване на цветове с висок контраст"
 
 #: ../modules/cdisplay_highcontrast.c:160
 msgid "Contrast"
@@ -1374,3 +1412,173 @@ msgstr "Акварел"
 #: ../modules/colorsel_water.c:220
 msgid "Pressure"
 msgstr "Натиск"
+
+#: ../modules/controller_linux_input.c:56
+msgid "Button 0"
+msgstr "Бутон 0"
+
+#: ../modules/controller_linux_input.c:57
+msgid "Button 1"
+msgstr "Бутон 1"
+
+#: ../modules/controller_linux_input.c:58
+msgid "Button 2"
+msgstr "Бутон 2"
+
+#: ../modules/controller_linux_input.c:59
+msgid "Button 3"
+msgstr "Бутон 3"
+
+#: ../modules/controller_linux_input.c:60
+msgid "Button 4"
+msgstr "Бутон 4"
+
+#: ../modules/controller_linux_input.c:61
+msgid "Button 5"
+msgstr "Бутон 5"
+
+#: ../modules/controller_linux_input.c:62
+msgid "Button 6"
+msgstr "Бутон 6"
+
+#: ../modules/controller_linux_input.c:63
+msgid "Button 7"
+msgstr "Бутон 7"
+
+#: ../modules/controller_linux_input.c:64
+msgid "Button 8"
+msgstr "Бутон 8"
+
+#: ../modules/controller_linux_input.c:65
+msgid "Button 9"
+msgstr "Бутон 9"
+
+#: ../modules/controller_linux_input.c:66
+msgid "Button Mouse"
+msgstr "Бутон на мишката"
+
+#: ../modules/controller_linux_input.c:67
+msgid "Button Left"
+msgstr "Ляв бутон"
+
+#: ../modules/controller_linux_input.c:68
+msgid "Button Right"
+msgstr "Десен бутон"
+
+#: ../modules/controller_linux_input.c:69
+msgid "Button Middle"
+msgstr "Среден бутон"
+
+#: ../modules/controller_linux_input.c:70
+msgid "Button Side"
+msgstr "Страничен бутон"
+
+#: ../modules/controller_linux_input.c:71
+msgid "Button Extra"
+msgstr "Допълнителен бутон"
+
+#: ../modules/controller_linux_input.c:72
+#: ../modules/controller_linux_input.c:73
+msgid "Button Forward"
+msgstr "Бутон напред"
+
+#: ../modules/controller_linux_input.c:75
+msgid "Button Wheel"
+msgstr "Бутон на колелцето"
+
+#: ../modules/controller_linux_input.c:78
+msgid "Button Gear Down"
+msgstr "Долен механичен бутон"
+
+#: ../modules/controller_linux_input.c:81
+msgid "Button Gear Up"
+msgstr "Горен механичен бутон"
+
+#: ../modules/controller_linux_input.c:87
+msgid "Wheel Turn Left"
+msgstr "Завъртане колелцето на ляво"
+
+#: ../modules/controller_linux_input.c:88
+msgid "Wheel Turn Right"
+msgstr "Завъртане колелцето на дясно"
+
+#: ../modules/controller_linux_input.c:89
+msgid "Dial Turn Left"
+msgstr "Набиране обърнато на ляво"
+
+#: ../modules/controller_linux_input.c:90
+msgid "Dial Turn Right"
+msgstr "Набиране обърнато на дясно"
+
+#: ../modules/controller_linux_input.c:154
+msgid "Linux input event controller"
+msgstr "Linux контролер на входните устройства"
+
+#: ../modules/controller_linux_input.c:222 ../modules/controller_midi.c:244
+msgid "Device:"
+msgstr "Устройство:"
+
+#: ../modules/controller_linux_input.c:223
+msgid "The name of the device to read Linux Input events from."
+msgstr "Името на устройството, от което Linux да получава команди"
+
+#: ../modules/controller_linux_input.c:227
+msgid "Linux Input"
+msgstr "Linux входящи"
+
+#: ../modules/controller_linux_input.c:351
+msgid "Linux Input Events"
+msgstr "Linux входящи събития"
+
+#: ../modules/controller_linux_input.c:372 ../modules/controller_midi.c:480
+#: ../modules/controller_midi.c:506
+#, c-format
+msgid "Reading from %s"
+msgstr "Четене от %s"
+
+#: ../modules/controller_linux_input.c:388
+#: ../modules/controller_linux_input.c:431 ../modules/controller_midi.c:462
+#: ../modules/controller_midi.c:523 ../modules/controller_midi.c:594
+#, c-format
+msgid "Device not available: %s"
+msgstr "Устройството не е на разположение: %s"
+
+#: ../modules/controller_linux_input.c:396 ../modules/controller_midi.c:531
+msgid "No device configured"
+msgstr "Не е конфигурирано устройство"
+
+#: ../modules/controller_linux_input.c:440 ../modules/controller_midi.c:603
+msgid "End of file"
+msgstr "Край на файла"
+
+#: ../modules/controller_midi.c:166
+msgid "MIDI event controller"
+msgstr "MIDI контролер на събития"
+
+#: ../modules/controller_midi.c:235
+msgid "The name of the device to read MIDI events from."
+msgstr "Име на устройството, от което да се получават MIDI събития."
+
+#: ../modules/controller_midi.c:238
+msgid "Enter 'alsa' to use the ALSA sequencer."
+msgstr "Въведете „alsa“ за да се използва ALSA модула."
+
+#: ../modules/controller_midi.c:253
+msgid "Channel:"
+msgstr "Канал:"
+
+#: ../modules/controller_midi.c:254
+msgid ""
+"The MIDI channel to read events from. Set to -1 for reading from all MIDI "
+"channels."
+msgstr ""
+"MIDI канала, от който да се получават команди. Задава се -1 за четене от "
+"всички MIDI канали."
+
+#: ../modules/controller_midi.c:258
+msgid "MIDI"
+msgstr "MIDI"
+
+#: ../modules/controller_midi.c:434
+msgid "MIDI Events"
+msgstr "MIDI команди"
