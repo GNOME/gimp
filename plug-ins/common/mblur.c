@@ -236,7 +236,7 @@ run (const gchar      *name,
       if (nparams == 9)
         {
           mbvals.blur_outward = param[6].data.d_int32;
-	  --nparams;
+          --nparams;
         }
 
       if (nparams == 8)
@@ -705,16 +705,16 @@ mblur_zoom (GimpDrawable *drawable,
 
               for (i = 0; i < n; ++i)
                 {
-		  if (mbvals.blur_outward)
-		    {
-		      xx = center_x + (x - center_x) * (1.0 - f * i);
-		      yy = center_y + (y - center_y) * (1.0 - f * i);
-		    }
-		  else
-		    {
-		      xx = center_x + (x - center_x) * (1.0 + f * i);
-		      yy = center_y + (y - center_y) * (1.0 + f * i);
-		    }
+                  if (mbvals.blur_outward)
+                    {
+                      xx = center_x + (x - center_x) * (1.0 - f * i);
+                      yy = center_y + (y - center_y) * (1.0 - f * i);
+                    }
+                  else
+                    {
+                      xx = center_x + (x - center_x) * (1.0 + f * i);
+                      yy = center_y + (y - center_y) * (1.0 + f * i);
+                    }
 
                   if ((yy < drawable_y1) || (yy >= drawable_y2) ||
                       (xx < drawable_x1) || (xx >= drawable_x2))
@@ -1021,7 +1021,7 @@ mblur_dialog (gint32        image_ID,
 
   length = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
                                  _("L_ength:"), 150, 3,
-                                 mbvals.length, 0.0, 256.0, 1.0, 8.0, 0,
+                                 mbvals.length, 1.0, 256.0, 1.0, 8.0, 0,
                                  TRUE, 0, 0,
                                  NULL, NULL);
 

@@ -1,3 +1,9 @@
+2006-02-06  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/common/mblur.c: length should at least be 1, or the zoom
+	mode will produce garbage. length==0 is useless in other modes.
+	(reported by daelstorm on freenode/#gimp)
+
 2006-02-03  Jay Cox  <jaycox@gimp.org>
 
 	* plug-ins/common/ripple.c: Fixed antialiasing.  Replaced "black"
