@@ -459,35 +459,36 @@ browser_dialog_load (const gchar *uri,
 static GtkUIManager *
 ui_manager_new (GtkWidget *window)
 {
-  static GtkActionEntry actions[] =
+  static const GtkActionEntry actions[] =
   {
     { "back", GTK_STOCK_GO_BACK,
       NULL, "<alt>Left", N_("Go back one page"),
-      G_CALLBACK (back_callback) },
-
+      G_CALLBACK (back_callback)
+    },
     { "forward", GTK_STOCK_GO_FORWARD,
       NULL, "<alt>Right", N_("Go forward one page"),
-      G_CALLBACK (forward_callback) },
-
+      G_CALLBACK (forward_callback)
+    },
     { "index", GTK_STOCK_INDEX,
       NULL, "<alt>Home", N_("Go to the index page"),
-      G_CALLBACK (index_callback) },
-
+      G_CALLBACK (index_callback)
+    },
     { "zoom-in", GTK_STOCK_ZOOM_IN,
       NULL, "<control>plus", NULL,
-      G_CALLBACK (zoom_in_callback) },
-
+      G_CALLBACK (zoom_in_callback)
+    },
     { "zoom-out", GTK_STOCK_ZOOM_OUT,
       NULL, "<control>minus", NULL,
-      G_CALLBACK (zoom_out_callback) },
-
+      G_CALLBACK (zoom_out_callback)
+    },
     { "close", GTK_STOCK_CLOSE,
       NULL, "<control>W", NULL,
-      G_CALLBACK (close_callback) },
-
+      G_CALLBACK (close_callback)
+    },
     { "quit", GTK_STOCK_QUIT,
       NULL, "<control>Q", NULL,
-      G_CALLBACK (close_callback) },
+      G_CALLBACK (close_callback)
+    }
   };
 
   GtkUIManager   *ui_manager = gtk_ui_manager_new ();

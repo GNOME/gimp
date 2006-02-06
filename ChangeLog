@@ -1,5 +1,9 @@
 2006-02-06  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/helpbrowser/dialog.c: added const qualifier.
+
+2006-02-06  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimppreview.c: connect-after to "realize" and
 	"size-allocate" signals of the preview area and call the
 	set-cursor method from the callback.
