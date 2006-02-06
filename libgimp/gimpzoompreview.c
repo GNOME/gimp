@@ -68,11 +68,13 @@ static void     gimp_zoom_preview_draw_thumb      (GimpPreview     *preview,
                                                    GimpPreviewArea *area,
                                                    gint             width,
                                                    gint             height);
+static void     gimp_zoom_preview_set_cursor      (GimpPreview     *preview);
 static gboolean gimp_zoom_preview_get_bounds      (GimpDrawable    *drawable,
                                                    gint            *xmin,
                                                    gint            *ymin,
                                                    gint            *xmax,
                                                    gint            *ymax);
+
 
 G_DEFINE_TYPE (GimpZoomPreview, gimp_zoom_preview, GIMP_TYPE_SCROLLED_PREVIEW)
 #define parent_class gimp_zoom_preview_parent_class
@@ -89,6 +91,7 @@ gimp_zoom_preview_class_init (GimpZoomPreviewClass *klass)
   preview_class->draw        = gimp_zoom_preview_draw;
   preview_class->draw_buffer = gimp_zoom_preview_draw_buffer;
   preview_class->draw_thumb  = gimp_zoom_preview_draw_thumb;
+  preview_class->set_cursor  = gimp_zoom_preview_set_cursor;
 
   g_type_class_add_private (object_class, sizeof (GimpZoomPreviewPrivate));
 }
@@ -477,6 +480,24 @@ gimp_zoom_preview_draw_thumb (GimpPreview     *preview,
       g_free (buffer);
     }
 }
+
+static void
+gimp_zoom_preview_set_cursor (GimpPreview *preview)
+{
+  if (! GTK_WIDGET_REALIZED (preview->area))
+    return;
+
+  if (gimp_zoom_preview_get_factor (GIMP_ZOOM_PREVIEW (preview)) > 1.0)
+    {
+      gdk_window_set_cursor (preview->area->window,
+                             GIMP_SCROLLED_PREVIEW (preview)->cursor_move);
+    }
+  else
+    {
+      gdk_window_set_cursor (preview->area->window, preview->default_cursor);
+    }
+}
+
 
 #define MAX3(a, b, c)  (MAX (MAX ((a), (b)), (c)))
 #define MIN3(a, b, c)  (MIN (MIN ((a), (b)), (c)))

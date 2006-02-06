@@ -241,8 +241,6 @@ gimp_scrolled_preview_area_realize (GtkWidget           *widget,
   g_return_if_fail (preview->cursor_move == NULL);
 
   preview->cursor_move = gdk_cursor_new_for_display (display, GDK_FLEUR);
-
-  gimp_scrolled_preview_set_cursor (GIMP_PREVIEW (preview));
 }
 
 static void
@@ -300,17 +298,14 @@ gimp_scrolled_preview_area_size_allocate (GtkWidget           *widget,
                                           GimpScrolledPreview *preview)
 {
   GimpScrolledPreviewPrivate *priv = GIMP_SCROLLED_PREVIEW_GET_PRIVATE (preview);
-  GdkCursor *cursor = GIMP_PREVIEW (preview)->default_cursor;
-  gint       width  = GIMP_PREVIEW (preview)->xmax - GIMP_PREVIEW (preview)->xmin;
-  gint       height = GIMP_PREVIEW (preview)->ymax - GIMP_PREVIEW (preview)->ymin;
+
+  gint width  = GIMP_PREVIEW (preview)->xmax - GIMP_PREVIEW (preview)->xmin;
+  gint height = GIMP_PREVIEW (preview)->ymax - GIMP_PREVIEW (preview)->ymin;
 
   GIMP_PREVIEW (preview)->width  = MIN (width,  allocation->width);
   GIMP_PREVIEW (preview)->height = MIN (height, allocation->height);
 
   gimp_scrolled_preview_hscr_update (preview);
-
-  if (width > GIMP_PREVIEW (preview)->width)
-    cursor = preview->cursor_move;
 
   switch (priv->hscr_policy)
     {
@@ -331,9 +326,6 @@ gimp_scrolled_preview_area_size_allocate (GtkWidget           *widget,
     }
 
   gimp_scrolled_preview_vscr_update (preview);
-
-  if (height > GIMP_PREVIEW (preview)->height)
-    cursor = preview->cursor_move;
 
   switch (priv->vscr_policy)
     {
@@ -363,9 +355,6 @@ gimp_scrolled_preview_area_size_allocate (GtkWidget           *widget,
     {
       gtk_widget_hide (preview->nav_icon);
     }
-
-  if (GTK_WIDGET_REALIZED (widget))
-    gdk_window_set_cursor (widget->window, cursor);
 
   gimp_preview_draw (GIMP_PREVIEW (preview));
   gimp_preview_invalidate (GIMP_PREVIEW (preview));
@@ -757,6 +746,9 @@ gimp_scrolled_preview_nav_popup_expose (GtkWidget           *widget,
 static void
 gimp_scrolled_preview_set_cursor (GimpPreview *preview)
 {
+  if (! GTK_WIDGET_REALIZED (preview->area))
+    return;
+
   if (preview->xmax - preview->xmin > preview->width  ||
       preview->ymax - preview->ymin > preview->height)
     {

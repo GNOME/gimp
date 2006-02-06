@@ -1,3 +1,15 @@
+2006-02-06  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimppreview.c: connect-after to "realize" and
+	"size-allocate" signals of the preview area and call the
+	set-cursor method from the callback.
+
+	* libgimpwidgets/gimpscrolledpreview.c: no need to explicitely set
+	the cursor now that the virtual method is used correctly.
+
+	* libgimp/gimpzoompreview.c: implement set-cursor and set the move
+	cursor in accordance with the zoom factor.
+
 2006-02-06  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/common/mblur.c: length should at least be 1, or the zoom

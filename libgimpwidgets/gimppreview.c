@@ -79,6 +79,7 @@ static void      gimp_preview_area_unrealize      (GtkWidget        *widget,
 static void      gimp_preview_area_size_allocate  (GtkWidget        *widget,
                                                    GtkAllocation    *allocation,
                                                    GimpPreview      *preview);
+static void      gimp_preview_area_set_cursor     (GimpPreview      *preview);
 static gboolean  gimp_preview_area_event          (GtkWidget        *area,
                                                    GdkEvent         *event,
                                                    GimpPreview      *preview);
@@ -89,7 +90,7 @@ static void      gimp_preview_toggle_callback     (GtkWidget        *toggle,
 static void      gimp_preview_notify_checks       (GimpPreview      *preview);
 
 static gboolean  gimp_preview_invalidate_now      (GimpPreview      *preview);
-static void      gimp_preview_set_cursor          (GimpPreview      *preview);
+static void      gimp_preview_real_set_cursor     (GimpPreview      *preview);
 
 
 static guint preview_signals[LAST_SIGNAL] = { 0 };
@@ -153,7 +154,7 @@ gimp_preview_class_init (GimpPreviewClass *klass)
   klass->draw                     = NULL;
   klass->draw_thumb               = NULL;
   klass->draw_buffer              = NULL;
-  klass->set_cursor               = gimp_preview_set_cursor;
+  klass->set_cursor               = gimp_preview_real_set_cursor;
 
   g_type_class_add_private (object_class, sizeof (GimpPreviewPrivate));
 
@@ -243,9 +244,17 @@ gimp_preview_init (GimpPreview *preview)
                     G_CALLBACK (gimp_preview_area_unrealize),
                     preview);
 
+  g_signal_connect_data (preview->area, "realize",
+                         G_CALLBACK (gimp_preview_area_set_cursor),
+                         preview, NULL, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
+
   g_signal_connect (preview->area, "size-allocate",
                     G_CALLBACK (gimp_preview_area_size_allocate),
                     preview);
+
+  g_signal_connect_data (preview->area, "size-allocate",
+                         G_CALLBACK (gimp_preview_area_set_cursor),
+                         preview, NULL, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
 
   priv->controls = gtk_hbox_new (FALSE, 6);
   gtk_table_attach (GTK_TABLE (preview->table), priv->controls, 0, 2, 2, 3,
@@ -381,6 +390,11 @@ gimp_preview_area_size_allocate (GtkWidget     *widget,
   gimp_preview_invalidate (preview);
 }
 
+static void
+gimp_preview_area_set_cursor (GimpPreview *preview)
+{
+  GIMP_PREVIEW_GET_CLASS (preview)->set_cursor (preview);
+}
 
 static gboolean
 gimp_preview_area_event (GtkWidget   *area,
@@ -471,10 +485,11 @@ gimp_preview_invalidate_now (GimpPreview *preview)
 }
 
 static void
-gimp_preview_set_cursor (GimpPreview *preview)
+gimp_preview_real_set_cursor (GimpPreview *preview)
 {
-  gdk_window_set_cursor (preview->area->window,
-                         preview->default_cursor);
+  if (GTK_WIDGET_REALIZED (preview->area))
+    gdk_window_set_cursor (preview->area->window,
+                           preview->default_cursor);
 }
 
 /**
