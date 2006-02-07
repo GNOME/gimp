@@ -1,5 +1,7 @@
 2006-02-07  Sven Neumann  <sven@gimp.org>
 
+	* app/main.c (gimp_show_version): use GIMP_NAME.
+
 	* app/about.h (GIMP_LICENSE): s/This program/GIMP/g
 
 2006-02-06  Sven Neumann  <sven@gimp.org>
