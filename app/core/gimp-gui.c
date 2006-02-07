@@ -20,7 +20,7 @@
 
 #include <glib-object.h>
 
-#include "libgimpbase/gimputils.h"
+#include "libgimpbase/gimpbase.h"
 
 #include "core-types.h"
 
