@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-17 13:41+0100\n"
-"PO-Revision-Date: 2006-01-17 13:41+0100\n"
+"POT-Creation-Date: 2006-02-07 13:04+0100\n"
+"PO-Revision-Date: 2006-02-07 12:05+0100\n"
 "Last-Translator: Róman Joost <romanofski@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -24,11 +24,16 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../app/about.h:26 ../desktop/gimp.desktop.in.in.h:2
+#: ../app/about.h:24 ../app/core/gimp-gui.c:155
+#: ../app/widgets/gimptoolbox.c:549
+msgid "GIMP"
+msgstr "GIMP"
+
+#: ../app/about.h:27 ../desktop/gimp.desktop.in.in.h:2
 msgid "GNU Image Manipulation Program"
 msgstr "GNU Image Manipulation Program"
 
-#: ../app/about.h:29
+#: ../app/about.h:30
 msgid ""
 "Copyright (C) 1995-2006\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team"
@@ -36,35 +41,35 @@ msgstr ""
 "Copyright © 1995-2006\n"
 "Spencer Kimball, Peter Mattis und das GIMP-Entwicklerteam"
 
-#: ../app/about.h:33
+#: ../app/about.h:34
 msgid ""
-"This program is free software; you can redistribute it and/or modify it "
-"under the terms of the GNU General Public License as published by the Free "
-"Software Foundation; either version 2 of the License, or (at your option) "
-"any later version.\n"
+"GIMP is free software; you can redistribute it and/or modify it under the "
+"terms of the GNU General Public License as published by the Free Software "
+"Foundation; either version 2 of the License, or (at your option) any later "
+"version.\n"
 "\n"
-"This program is distributed in the hope that it will be useful, but WITHOUT "
-"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
-"FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for "
-"more details.\n"
+"GIMP is distributed in the hope that it will be useful, but WITHOUT ANY "
+"WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
+"FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more "
+"details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"this program; if not, write to the Free Software Foundation, Inc., 59 Temple "
-"Place - Suite 330, Boston, MA 02111-1307, USA."
+"GIMP; if not, write to the Free Software Foundation, Inc., 59 Temple Place - "
+"Suite 330, Boston, MA 02111-1307, USA."
 msgstr ""
-"Dieses Programm ist freie Software. Sie können es unter den Bedingungen der "
-"GNU General Public License, wie von der Free Software Foundation "
-"herausgegeben, weitergeben und/oder modifizieren, entweder unter Version 2 "
-"der Lizenz oder (wenn Sie es wünschen) jeder späteren Version.\n"
+"GIMP ist freie Software. Sie können es unter den Bedingungen der GNU General "
+"Public License, wie von der Free Software Foundation herausgegeben, "
+"weitergeben und/oder modifizieren, entweder unter Version 2 der Lizenz oder "
+"(wenn Sie es wünschen) jeder späteren Version.\n"
 "\n"
-"Die Veröffentlichung dieses Programms erfolgt in der Hoffnung, dass es Ihnen "
-"von Nutzen sein wird, aber OHNE JEDE GEWÄHRLEISTUNG - sogar ohne die "
-"implizite Gewährleistung der MARKTREIFE oder der EIGNUNG FÜR EINEN "
-"BESTIMMTEN ZWECK. Details finden Sie in der GNU General Public License.\n"
+"Die Veröffentlichung von GIMP erfolgt in der Hoffnung, dass es Ihnen von "
+"Nutzen sein wird, aber OHNE JEDE GEWÄHRLEISTUNG - sogar ohne die implizite "
+"Gewährleistung der MARKTREIFE oder der EIGNUNG FÜR EINEN BESTIMMTEN ZWECK. "
+"Details finden Sie in der GNU General Public License.\n"
 "\n"
-"Sie sollten eine Kopie der GNU General Public License zusammen mit diesem "
-"Programm erhalten haben. Falls nicht, schreiben Sie an die Free Software "
-"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA."
+"Sie sollten eine Kopie der GNU General Public License zusammen mit GIMP "
+"erhalten haben. Falls nicht, schreiben Sie an die Free Software Foundation, "
+"Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA."
 
 #: ../app/app_procs.c:134
 msgid "(This console window will close in ten seconds)\n"
@@ -2023,7 +2028,7 @@ msgstr "_Hilfslinie"
 msgid "I_nfo"
 msgstr "_Information"
 
-#: ../app/actions/image-actions.c:67 ../app/tools/gimplevelstool.c:607
+#: ../app/actions/image-actions.c:67 ../app/tools/gimplevelstool.c:611
 msgid "_Auto"
 msgstr "_Automatisch"
 
@@ -2991,7 +2996,7 @@ msgstr "Textdatei (UTF-8) öffnen"
 #: ../app/actions/text-editor-commands.c:137
 #: ../app/config/gimpconfig-file.c:57 ../app/core/gimpbrush-load.c:115
 #: ../app/core/gimpbrush-load.c:395 ../app/core/gimpbrushgenerated.c:560
-#: ../app/core/gimpbrushpipe.c:300 ../app/core/gimpgradient-load.c:62
+#: ../app/core/gimpbrushpipe.c:314 ../app/core/gimpgradient-load.c:62
 #: ../app/core/gimppalette.c:322 ../app/core/gimppattern.c:263
 #: ../app/tools/gimpimagemaptool.c:581 ../app/xcf/xcf.c:295
 #, c-format
@@ -4809,10 +4814,6 @@ msgstr "VG nach HG (HSV-Farbton im Uhrzeigersinn)"
 msgid "FG to Transparent"
 msgstr "VG nach Transparent"
 
-#: ../app/core/gimp-gui.c:155 ../app/widgets/gimptoolbox.c:549
-msgid "GIMP"
-msgstr "GIMP"
-
 #: ../app/core/gimp.c:546
 msgid "Initialization"
 msgstr "Initialisierung"
@@ -4895,7 +4896,7 @@ msgstr ""
 "vollständig zu sein."
 
 #: ../app/core/gimpbrush-load.c:251 ../app/core/gimpbrushgenerated.c:607
-#: ../app/core/gimpbrushpipe.c:316
+#: ../app/core/gimpbrushpipe.c:330
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Ungültiger UTF-8 Text in Pinseldatei »%s«."
@@ -4965,8 +4966,8 @@ msgid "File is truncated"
 msgstr "Datei ist verkürzt"
 
 # CHECK
-#: ../app/core/gimpbrushpipe.c:332 ../app/core/gimpbrushpipe.c:352
-#: ../app/core/gimpbrushpipe.c:442
+#: ../app/core/gimpbrushpipe.c:346 ../app/core/gimpbrushpipe.c:366
+#: ../app/core/gimpbrushpipe.c:456
 #, c-format
 msgid "Fatal parse error in brush file '%s': File is corrupt."
 msgstr ""
@@ -8612,23 +8613,23 @@ msgstr "Werkzeug-Modus (%s)"
 msgid "Current layer only"
 msgstr "Nur die aktive Ebene"
 
-#: ../app/tools/gimpcroptool.c:95
+#: ../app/tools/gimpcroptool.c:96
 msgid "Crop & Resize"
 msgstr "Zuschneiden / Größe ändern"
 
-#: ../app/tools/gimpcroptool.c:96
+#: ../app/tools/gimpcroptool.c:97
 msgid "Crop or Resize an image"
 msgstr "Bildgröße ändern / Bild zuschneiden"
 
-#: ../app/tools/gimpcroptool.c:97
+#: ../app/tools/gimpcroptool.c:98
 msgid "_Crop & Resize"
 msgstr "_Zuschneiden / Größe ändern"
 
-#: ../app/tools/gimpcroptool.c:217
+#: ../app/tools/gimpcroptool.c:218
 msgid "Click or press enter to crop."
 msgstr "Anklicken oder die Eingabetaste drücken, um zuzuschneiden."
 
-#: ../app/tools/gimpcroptool.c:220
+#: ../app/tools/gimpcroptool.c:221
 msgid "Click or press enter to resize."
 msgstr "Anklicken oder die Eingabetaste drücken, um die Größe zu ändern."
 
@@ -8672,16 +8673,16 @@ msgstr "Klicken, um einen Kontrollpunkt hinzuzufügen."
 msgid "Click to add control points to all channels."
 msgstr "Anklicken, um Kontrollpunkte zu allen Kanälen hinzuzufügen."
 
-#: ../app/tools/gimpcurvestool.c:556 ../app/tools/gimplevelstool.c:366
+#: ../app/tools/gimpcurvestool.c:556 ../app/tools/gimplevelstool.c:370
 msgid "Cha_nnel:"
 msgstr "Ka_nal:"
 
-#: ../app/tools/gimpcurvestool.c:578 ../app/tools/gimplevelstool.c:388
+#: ../app/tools/gimpcurvestool.c:578 ../app/tools/gimplevelstool.c:392
 msgid "R_eset Channel"
 msgstr "Kanal _Zurücksetzen"
 
 #. Horizontal button box for load / save
-#: ../app/tools/gimpcurvestool.c:682 ../app/tools/gimplevelstool.c:582
+#: ../app/tools/gimpcurvestool.c:682 ../app/tools/gimplevelstool.c:586
 msgid "All Channels"
 msgstr "Alle Kanäle"
 
@@ -8955,7 +8956,7 @@ msgid "Adjustment"
 msgstr "Justierung"
 
 #: ../app/tools/gimpinkoptions-gui.c:70 ../app/tools/gimpinkoptions-gui.c:95
-#: ../app/tools/gimptextoptions.c:436
+#: ../app/tools/gimptextoptions.c:439
 msgid "Size:"
 msgstr "Größe:"
 
@@ -9034,33 +9035,33 @@ msgstr "Aktuelle Werte in Datei speichern"
 msgid "Levels for indexed layers cannot be adjusted."
 msgstr "Werte für indizierte Ebenen können nicht geändert werden. "
 
-#: ../app/tools/gimplevelstool.c:305
+#: ../app/tools/gimplevelstool.c:306
 msgid "Pick black point"
 msgstr "Schwarz-Punkt wählen"
 
-#: ../app/tools/gimplevelstool.c:309
+#: ../app/tools/gimplevelstool.c:310
 msgid "Pick gray point"
 msgstr "Grau-Punkt wählen"
 
-#: ../app/tools/gimplevelstool.c:313
+#: ../app/tools/gimplevelstool.c:314
 msgid "Pick white point"
 msgstr "Weiß-Punkt wählen"
 
 #. Input levels frame
-#: ../app/tools/gimplevelstool.c:403
+#: ../app/tools/gimplevelstool.c:407
 msgid "Input Levels"
 msgstr "Quellwerte"
 
-#: ../app/tools/gimplevelstool.c:490
+#: ../app/tools/gimplevelstool.c:494
 msgid "Gamma"
 msgstr "Gamma"
 
 #. Output levels frame
-#: ../app/tools/gimplevelstool.c:517
+#: ../app/tools/gimplevelstool.c:521
 msgid "Output Levels"
 msgstr "Zielwerte"
 
-#: ../app/tools/gimplevelstool.c:609
+#: ../app/tools/gimplevelstool.c:613
 msgid "Adjust levels automatically"
 msgstr "Werte automatisch anpassen"
 
@@ -9275,46 +9276,46 @@ msgstr "Posterisieren funktioniert nicht mit indizierten Ebenen."
 msgid "Posterize _levels:"
 msgstr "_Farbanzahl:"
 
-#: ../app/tools/gimprectangleoptions.c:660
+#: ../app/tools/gimprectangleoptions.c:666
 msgid "Highlight"
 msgstr "Hervorheben"
 
-#: ../app/tools/gimprectangleoptions.c:672
+#: ../app/tools/gimprectangleoptions.c:678
 msgid "Fix"
 msgstr "Fest"
 
-#: ../app/tools/gimprectangleoptions.c:677 ../app/widgets/gimpgrideditor.c:239
+#: ../app/tools/gimprectangleoptions.c:683 ../app/widgets/gimpgrideditor.c:239
 #: ../app/widgets/gimpgrideditor.c:271
 msgid "Width"
 msgstr "Breite"
 
-#: ../app/tools/gimprectangleoptions.c:687 ../app/widgets/gimpgrideditor.c:241
+#: ../app/tools/gimprectangleoptions.c:693 ../app/widgets/gimpgrideditor.c:241
 #: ../app/widgets/gimpgrideditor.c:273
 msgid "Height"
 msgstr "Höhe"
 
-#: ../app/tools/gimprectangleoptions.c:697
+#: ../app/tools/gimprectangleoptions.c:703
 msgid "Aspect"
 msgstr "Perspektive"
 
-#: ../app/tools/gimprectangletool.c:1787 ../app/tools/gimprectangletool.c:2214
+#: ../app/tools/gimprectangletool.c:1819 ../app/tools/gimprectangletool.c:2246
 msgid "Rectangle: "
 msgstr "Rechteck: "
 
-#: ../app/tools/gimprectangletool.c:2613
+#: ../app/tools/gimprectangletool.c:2645
 msgid "1 "
 msgstr "1 "
 
-#: ../app/tools/gimprectangletool.c:2614
+#: ../app/tools/gimprectangletool.c:2646
 msgid "2 "
 msgstr "2 "
 
-#: ../app/tools/gimprectangletool.c:2615 ../app/widgets/gimpcursorview.c:136
+#: ../app/tools/gimprectangletool.c:2647 ../app/widgets/gimpcursorview.c:136
 #: ../app/widgets/gimpcursorview.c:158
 msgid "X"
 msgstr "X"
 
-#: ../app/tools/gimprectangletool.c:2616 ../app/widgets/gimpcursorview.c:142
+#: ../app/tools/gimprectangletool.c:2648 ../app/widgets/gimpcursorview.c:142
 #: ../app/widgets/gimpcursorview.c:164
 msgid "Y"
 msgstr "Y"
@@ -9407,7 +9408,7 @@ msgstr "Auswahl auf alle sichtbaren Bereiche stützen"
 msgid "Use all visible layers when shrinking the selection"
 msgstr "Beim Verkleinern der Auswahl alle sichtbaren Ebenen verwenden"
 
-#: ../app/tools/gimpselectionoptions.c:412 ../app/tools/gimptextoptions.c:457
+#: ../app/tools/gimpselectionoptions.c:412 ../app/tools/gimptextoptions.c:460
 msgid "Antialiasing"
 msgstr "Kantenglättung"
 
@@ -9494,43 +9495,43 @@ msgstr ""
 msgid "Indentation of the first line"
 msgstr "Einzug der ersten Zeile"
 
-#: ../app/tools/gimptextoptions.c:153
+#: ../app/tools/gimptextoptions.c:154
 msgid "Adjust line spacing"
 msgstr "Zeilenabstand"
 
-#: ../app/tools/gimptextoptions.c:158
+#: ../app/tools/gimptextoptions.c:160
 msgid "Adjust letter spacing"
 msgstr "Zeichenabstand"
 
-#: ../app/tools/gimptextoptions.c:429
+#: ../app/tools/gimptextoptions.c:432
 msgid "Font:"
 msgstr "Schrift:"
 
-#: ../app/tools/gimptextoptions.c:441
+#: ../app/tools/gimptextoptions.c:444
 msgid "Hinting"
 msgstr "Hinting"
 
-#: ../app/tools/gimptextoptions.c:448
+#: ../app/tools/gimptextoptions.c:451
 msgid "Force auto-hinter"
 msgstr "Auto-Hinting erzwingen"
 
-#: ../app/tools/gimptextoptions.c:463
+#: ../app/tools/gimptextoptions.c:466
 msgid "Text Color"
 msgstr "Text-Farbe"
 
-#: ../app/tools/gimptextoptions.c:468
+#: ../app/tools/gimptextoptions.c:471
 msgid "Color:"
 msgstr "Farbe:"
 
-#: ../app/tools/gimptextoptions.c:473
+#: ../app/tools/gimptextoptions.c:476
 msgid "Justify:"
 msgstr "Ausrichtung:"
 
-#: ../app/tools/gimptextoptions.c:492
+#: ../app/tools/gimptextoptions.c:495
 msgid "Create Path from Text"
 msgstr "Pfad aus Text erzeugen"
 
-#: ../app/tools/gimptextoptions.c:500
+#: ../app/tools/gimptextoptions.c:503
 msgid "Text along Path"
 msgstr "Text an Pfad"
 
@@ -10814,16 +10815,16 @@ msgstr ""
 "Klick erneuert die Vorschau\n"
 "%s%sKlick erzwingt eine neue Vorschau"
 
-#: ../app/widgets/gimpthumbbox.c:382 ../app/widgets/gimpthumbbox.c:451
+#: ../app/widgets/gimpthumbbox.c:382 ../app/widgets/gimpthumbbox.c:457
 msgid "No selection"
 msgstr "Keine Auswahl"
 
-#: ../app/widgets/gimpthumbbox.c:579 ../app/widgets/gimpthumbbox.c:603
+#: ../app/widgets/gimpthumbbox.c:585 ../app/widgets/gimpthumbbox.c:609
 #, c-format
 msgid "Thumbnail %d of %d"
 msgstr "Vorschau %d von %d"
 
-#: ../app/widgets/gimpthumbbox.c:716 ../app/widgets/gimpthumbbox.c:726
+#: ../app/widgets/gimpthumbbox.c:722 ../app/widgets/gimpthumbbox.c:732
 msgid "Creating preview..."
 msgstr "Vorschau wird erzeugt..."
 
