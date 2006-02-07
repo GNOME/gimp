@@ -32,10 +32,8 @@
 
 #include "libgimp-intl.h"
 
+#include "gimpdrawablepreview.h"
 #include "gimpzoompreview.h"
-
-
-#define SELECTION_BORDER  2
 
 
 typedef struct GimpZoomPreviewPrivate
