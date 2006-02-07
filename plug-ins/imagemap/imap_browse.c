@@ -130,7 +130,7 @@ browse_widget_new (const gchar *name)
    gtk_box_pack_start (GTK_BOX(browse->hbox), browse->file, TRUE, TRUE, 0);
    gtk_drag_dest_set (browse->file, GTK_DEST_DEFAULT_ALL, target_table,
 		      2, GDK_ACTION_COPY);
-   g_signal_connect (browse->file, "drag_data_received",
+   g_signal_connect (browse->file, "drag-data-received",
 		     G_CALLBACK(handle_drop), NULL);
 
    gtk_widget_show (browse->file);

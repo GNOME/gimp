@@ -251,7 +251,8 @@ browser_dialog_open (void)
   gtk_widget_show (drag_source);
 
   gimp_help_set_help_data (drag_source,
-                           _("Drag and drop this icon to a web browser"), NULL);
+                           _("Drag and drop this icon to a web browser"),
+			   NULL);
 
   gtk_drag_source_set (GTK_WIDGET (drag_source),
                        GDK_BUTTON1_MASK,
@@ -259,10 +260,10 @@ browser_dialog_open (void)
                        G_N_ELEMENTS (help_dnd_target_table),
                        GDK_ACTION_COPY);
 
-  g_signal_connect (drag_source, "drag_begin",
+  g_signal_connect (drag_source, "drag-begin",
                     G_CALLBACK (drag_begin),
                     NULL);
-  g_signal_connect (drag_source, "drag_data_get",
+  g_signal_connect (drag_source, "drag-data-get",
                     G_CALLBACK (drag_data_get),
                     NULL);
 
@@ -320,13 +321,13 @@ browser_dialog_open (void)
 
   html_view_set_document (HTML_VIEW (html), html_document_new ());
 
-  g_signal_connect (HTML_VIEW (html)->document, "title_changed",
+  g_signal_connect (HTML_VIEW (html)->document, "title-changed",
                     G_CALLBACK (title_changed),
                     combo);
-  g_signal_connect (HTML_VIEW (html)->document, "link_clicked",
+  g_signal_connect (HTML_VIEW (html)->document, "link-clicked",
                     G_CALLBACK (link_clicked),
                     NULL);
-  g_signal_connect (HTML_VIEW (html)->document, "request_url",
+  g_signal_connect (HTML_VIEW (html)->document, "request-url",
                     G_CALLBACK (request_url),
                     NULL);
 
@@ -461,31 +462,38 @@ ui_manager_new (GtkWidget *window)
 {
   static const GtkActionEntry actions[] =
   {
-    { "back", GTK_STOCK_GO_BACK,
+    {
+      "back", GTK_STOCK_GO_BACK,
       NULL, "<alt>Left", N_("Go back one page"),
       G_CALLBACK (back_callback)
     },
-    { "forward", GTK_STOCK_GO_FORWARD,
+    {
+      "forward", GTK_STOCK_GO_FORWARD,
       NULL, "<alt>Right", N_("Go forward one page"),
       G_CALLBACK (forward_callback)
     },
-    { "index", GTK_STOCK_INDEX,
+    {
+      "index", GTK_STOCK_INDEX,
       NULL, "<alt>Home", N_("Go to the index page"),
       G_CALLBACK (index_callback)
     },
-    { "zoom-in", GTK_STOCK_ZOOM_IN,
+    {
+      "zoom-in", GTK_STOCK_ZOOM_IN,
       NULL, "<control>plus", NULL,
       G_CALLBACK (zoom_in_callback)
     },
-    { "zoom-out", GTK_STOCK_ZOOM_OUT,
+    {
+      "zoom-out", GTK_STOCK_ZOOM_OUT,
       NULL, "<control>minus", NULL,
       G_CALLBACK (zoom_out_callback)
     },
-    { "close", GTK_STOCK_CLOSE,
+    {
+      "close", GTK_STOCK_CLOSE,
       NULL, "<control>W", NULL,
       G_CALLBACK (close_callback)
     },
-    { "quit", GTK_STOCK_QUIT,
+    {
+      "quit", GTK_STOCK_QUIT,
       NULL, "<control>Q", NULL,
       G_CALLBACK (close_callback)
     }

@@ -951,7 +951,7 @@ load_dialog (gchar *filename)
   gtk_container_add (GTK_CONTAINER (frame), preview);
   gtk_widget_show (preview);
 
-  g_signal_connect_after (preview, "size_allocate",
+  g_signal_connect_after (preview, "size-allocate",
                           G_CALLBACK (preview_update),
                           NULL);
 
@@ -1068,7 +1068,7 @@ load_dialog (gchar *filename)
                              _("Pal_ette File:"), 0.0, 0.5,
                              entry, 2, FALSE);
 
-  g_signal_connect (entry, "filename_changed",
+  g_signal_connect (entry, "filename-changed",
                     G_CALLBACK (palette_callback),
                     preview);
 

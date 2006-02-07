@@ -708,7 +708,7 @@ create_printer_dialog (void)
   gtk_container_add (GTK_CONTAINER (printer_crawler), printer_driver);
   gtk_widget_show (printer_driver);
 
-  g_signal_connect (printer_driver, "select_row",
+  g_signal_connect (printer_driver, "select-row",
                     G_CALLBACK (gimp_print_driver_callback),
                     NULL);
 

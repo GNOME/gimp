@@ -454,7 +454,7 @@ create_edit_area_info_dialog(Object_t *obj)
    default_dialog_set_cancel_cb(data->dialog, edit_area_cancel_cb, data);
 
    data->notebook = notebook = gtk_notebook_new();
-   g_signal_connect_after(notebook, "switch_page",
+   g_signal_connect_after(notebook, "switch-page",
                           G_CALLBACK(switch_page), (gpointer) data);
 
    gtk_box_pack_start(GTK_BOX(data->dialog->vbox), notebook, TRUE, TRUE, 0);

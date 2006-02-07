@@ -1411,10 +1411,10 @@ gfig_grid_action_callback (GtkAction *action,
                                         5, 360, 5, 1, 0,
                                         TRUE, 0, 0,
                                         NULL, NULL);
-      g_signal_connect (sectors_data, "value_changed",
+      g_signal_connect (sectors_data, "value-changed",
                         G_CALLBACK (gimp_int_adjustment_update),
                         &selvals.opts.grid_sectors_desired);
-      g_signal_connect (sectors_data, "value_changed",
+      g_signal_connect (sectors_data, "value-changed",
                         G_CALLBACK (draw_grid_clear),
                         NULL);
 
@@ -1433,10 +1433,10 @@ gfig_grid_action_callback (GtkAction *action,
                                         5, 50, 5, 1, 0,
                                         TRUE, 0, 0,
                                         NULL, NULL);
-      g_signal_connect (radius_data, "value_changed",
+      g_signal_connect (radius_data, "value-changed",
                         G_CALLBACK (gimp_double_adjustment_update),
                         &selvals.opts.grid_radius_interval);
-      g_signal_connect (radius_data, "value_changed",
+      g_signal_connect (radius_data, "value-changed",
                         G_CALLBACK (draw_grid_clear),
                         NULL);
 
