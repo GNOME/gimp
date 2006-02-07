@@ -1,5 +1,11 @@
 2006-02-07  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpdrawablepreview.[ch]
+	* libgimp/gimpzoompreview.c: reduced code duplication by exporting
+	two GimpDrawablePreview functions for internal use.
+
+2006-02-07  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpscrolledpreview.c
 	(gimp_scrolled_preview_area_event): fixed check that suppresses
 	the redraw for motion events that don't cause the preview to scroll.

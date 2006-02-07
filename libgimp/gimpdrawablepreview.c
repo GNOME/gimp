@@ -54,11 +54,6 @@ static void  gimp_drawable_preview_draw_thumb    (GimpPreview     *preview,
 static void  gimp_drawable_preview_draw_buffer   (GimpPreview     *preview,
                                                   const guchar    *buffer,
                                                   gint             rowstride);
-static gboolean gimp_drawable_preview_get_bounds (GimpDrawable    *drawable,
-                                                  gint            *xmin,
-                                                  gint            *ymin,
-                                                  gint            *xmax,
-                                                  gint            *ymax);
 
 
 G_DEFINE_TYPE (GimpDrawablePreview, gimp_drawable_preview,
@@ -177,16 +172,27 @@ gimp_drawable_preview_draw_thumb (GimpPreview     *preview,
 {
   GimpDrawablePreview *drawable_preview = GIMP_DRAWABLE_PREVIEW (preview);
   GimpDrawable        *drawable         = drawable_preview->drawable;
-  guchar              *buffer;
-  gint                 x1, y1, x2, y2;
-  gint                 bpp;
-  gint                 size = 100;
-  gint                 nav_width, nav_height;
 
-  if (! drawable)
-    return;
+  if (drawable)
+    _gimp_drawable_preview_area_draw_thumb (area, drawable, width, height);
+}
 
-  if (gimp_drawable_preview_get_bounds (drawable, &x1, &y1, &x2, &y2))
+void
+_gimp_drawable_preview_area_draw_thumb (GimpPreviewArea *area,
+					GimpDrawable    *drawable,
+					gint             width,
+					gint             height)
+{
+  guchar *buffer;
+  gint    x1, y1, x2, y2;
+  gint    bpp;
+  gint    size = 100;
+  gint    nav_width, nav_height;
+
+  g_return_if_fail (GIMP_IS_PREVIEW_AREA (area));
+  g_return_if_fail (drawable != NULL);
+
+  if (_gimp_drawable_preview_get_bounds (drawable, &x1, &y1, &x2, &y2))
     {
       width  = x2 - x1;
       height = y2 - y1;
@@ -208,16 +214,18 @@ gimp_drawable_preview_draw_thumb (GimpPreview     *preview,
       nav_width  = (width * nav_height) / height;
     }
 
-  if (gimp_drawable_preview_get_bounds (drawable, &x1, &y1, &x2, &y2))
+  if (_gimp_drawable_preview_get_bounds (drawable, &x1, &y1, &x2, &y2))
     {
       buffer = gimp_drawable_get_sub_thumbnail_data (drawable->drawable_id,
                                                      x1, y1, x2 - x1, y2 - y1,
-                                                     &nav_width, &nav_height, &bpp);
+                                                     &nav_width, &nav_height,
+						     &bpp);
     }
   else
     {
       buffer = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
-                                                 &nav_width, &nav_height, &bpp);
+                                                 &nav_width, &nav_height,
+						 &bpp);
     }
 
   if (buffer)
@@ -338,7 +346,7 @@ gimp_drawable_preview_set_drawable (GimpDrawablePreview *drawable_preview,
 
   drawable_preview->drawable = drawable;
 
-  gimp_drawable_preview_get_bounds (drawable, &x1, &y1, &x2, &y2);
+  _gimp_drawable_preview_get_bounds (drawable, &x1, &y1, &x2, &y2);
 
   gimp_preview_set_bounds (preview, x1, y1, x2, y2);
 
@@ -359,12 +367,12 @@ gimp_drawable_preview_set_drawable (GimpDrawablePreview *drawable_preview,
 #define MAX3(a, b, c)  (MAX (MAX ((a), (b)), (c)))
 #define MIN3(a, b, c)  (MIN (MIN ((a), (b)), (c)))
 
-static gboolean
-gimp_drawable_preview_get_bounds (GimpDrawable *drawable,
-                                  gint         *xmin,
-                                  gint         *ymin,
-                                  gint         *xmax,
-                                  gint         *ymax)
+gboolean
+_gimp_drawable_preview_get_bounds (GimpDrawable *drawable,
+				   gint         *xmin,
+				   gint         *ymin,
+				   gint         *xmax,
+				   gint         *ymax)
 {
   gint     width;
   gint     height;
@@ -373,6 +381,8 @@ gimp_drawable_preview_get_bounds (GimpDrawable *drawable,
   gint     x1, y1;
   gint     x2, y2;
   gboolean retval;
+
+  g_return_val_if_fail (drawable != NULL, FALSE);
 
   width  = gimp_drawable_width (drawable->drawable_id);
   height = gimp_drawable_height (drawable->drawable_id);
