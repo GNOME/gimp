@@ -30,8 +30,6 @@
 
 #include "gimp.h"
 
-#include "libgimp-intl.h"
-
 #include "gimpdrawablepreview.h"
 #include "gimpzoompreview.h"
 
