@@ -275,8 +275,8 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
           image_map_tool->save_button =
             g_object_new (GIMP_TYPE_BUTTON,
                           "label",         GTK_STOCK_SAVE,
-                          "use_stock",     TRUE,
-                          "use_underline", TRUE,
+                          "use-stock",     TRUE,
+                          "use-underline", TRUE,
                           NULL);
 
           g_signal_connect (image_map_tool->save_button, "clicked",

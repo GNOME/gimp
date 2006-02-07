@@ -1,5 +1,9 @@
 2006-02-07  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpimagemaptool.c: use canonical property names.
+
+2006-02-07  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/raw.c
 	* plug-ins/gfig/gfig-dialog.c 
 	* plug-ins/helpbrowser/dialog.c
