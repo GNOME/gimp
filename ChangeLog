@@ -1,5 +1,11 @@
 2006-02-07  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimprectangletool.c: applied a patch from Dennis
+	Bjorklund that prevents a possible division by zero and fixes the
+	calculation of the center point.
+
+2006-02-07  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimp-gui.c
 	* app/widgets/gimptoolbox.c: use GIMP_ACRONYM.
 

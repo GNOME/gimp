@@ -2548,13 +2548,13 @@ gimp_rectangle_tool_update_options (GimpRectangleTool *rectangle,
   width  = x2 - x1;
   height = y2 - y1;
 
-  if (width > 0.01)
+  if (height > 0.01)
     aspect = width / height;
   else
-    aspect = 0;
+    aspect = 0.0;
 
-  center_x = (x1 + x2) / 2;
-  center_y = (y1 + y2) / 2;
+  center_x = (x1 + x2) / 2.0;
+  center_y = (y1 + y2) / 2.0;
 
   g_signal_handlers_block_by_func (entry,
                                    rectangle_dimensions_changed,
