@@ -401,31 +401,26 @@ gimp_scrolled_preview_area_event (GtkWidget           *area,
     case GDK_MOTION_NOTIFY:
       if (priv->in_drag)
         {
-          gint x, y;
-          gint dx, dy;
-          gint xoff, yoff;
+	  GtkAdjustment *hadj;
+	  GtkAdjustment *vadj;
+          gint           x, y;
+
+	  hadj = gtk_range_get_adjustment (GTK_RANGE (preview->hscr));
+	  vadj = gtk_range_get_adjustment (GTK_RANGE (preview->vscr));
 
           gtk_widget_get_pointer (area, &x, &y);
 
-          dx = x - priv->drag_x;
-          dy = y - priv->drag_y;
+          x = priv->drag_xoff - (x - priv->drag_x);
+          y = priv->drag_yoff - (y - priv->drag_y);
 
-          xoff = CLAMP (priv->drag_xoff - dx,
-                        0,
-                        GIMP_PREVIEW (preview)->xmax -
-                        GIMP_PREVIEW (preview)->xmin -
-                        GIMP_PREVIEW (preview)->width);
-          yoff = CLAMP (priv->drag_yoff - dy,
-                        0,
-                        GIMP_PREVIEW (preview)->ymax -
-                        GIMP_PREVIEW (preview)->ymin -
-                        GIMP_PREVIEW (preview)->height);
+          x = CLAMP (x, hadj->lower, hadj->upper - hadj->page_size);
+          y = CLAMP (y, vadj->lower, vadj->upper - vadj->page_size);
 
-          if (GIMP_PREVIEW (preview)->xoff != xoff ||
-              GIMP_PREVIEW (preview)->yoff != yoff)
+          if (GIMP_PREVIEW (preview)->xoff != x ||
+              GIMP_PREVIEW (preview)->yoff != y)
             {
-              gtk_range_set_value (GTK_RANGE (preview->hscr), xoff);
-              gtk_range_set_value (GTK_RANGE (preview->vscr), yoff);
+              gtk_adjustment_set_value (hadj, x);
+              gtk_adjustment_set_value (vadj, y);
 
               gimp_preview_draw (GIMP_PREVIEW (preview));
               gimp_preview_invalidate (GIMP_PREVIEW (preview));
