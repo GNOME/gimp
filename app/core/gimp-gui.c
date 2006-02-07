@@ -20,6 +20,8 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimputils.h"
+
 #include "core-types.h"
 
 #include "gimp.h"
@@ -29,7 +31,7 @@
 #include "gimpimage.h"
 #include "gimpprogress.h"
 
-#include "libgimpbase/gimputils.h"
+#include "about.h"
 
 #include "gimp-intl.h"
 
@@ -152,7 +154,7 @@ gimp_message (Gimp        *gimp,
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   if (! domain)
-    domain = _("GIMP");
+    domain = GIMP_ACRONYM;
 
   if (! gimp->console_messages && gimp->gui.message)
     gimp->gui.message (gimp, domain, message2);

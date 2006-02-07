@@ -1,5 +1,8 @@
 2006-02-07  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimp-gui.c
+	* app/widgets/gimptoolbox.c: use GIMP_ACRONYM.
+
 	* app/main.c (gimp_show_version): use GIMP_NAME.
 
 	* app/about.h (GIMP_LICENSE): s/This program/GIMP/g
