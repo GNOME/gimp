@@ -1,3 +1,7 @@
+2006-02-08  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/scripts/web-browser.scm: string review.
+
 2006-02-07  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpimagemaptool.c: use canonical property names.
