@@ -21,7 +21,7 @@
 
 # Sets the swap file location. GIMP uses a tile based memory allocation
 # scheme. The swap file is used to quickly and easily swap tiles out to disk
-# and back in. Be aware that the swap file can easily get very largeif GIMP
+# and back in. Be aware that the swap file can easily get very large if GIMP
 # is used with large images. Also, things can get horribly slow if the swap
 # file is created on a directory that is mounted over NFS.  For these
 # reasons, it may be desirable to put your swap file in "/tmp".  This is a
@@ -314,14 +314,14 @@
 # 
 # (perfect-mouse yes)
 
-# Sets the mode of cursor the GIMP will use.  Possible values are tool-icon,
+# Sets the type of mouse pointers to use.  Possible values are tool-icon,
 # tool-crosshair and crosshair.
 # 
 # (cursor-mode tool-icon)
 
-# Context-dependent cursors are cool.  They are enabled by default. However,
-# they require overhead that you may want to do without.  Possible values are
-# yes and no.
+# Context-dependent mouse pointers are helpful.  They are enabled by default.
+#  However, they require overhead that you may want to do without.  Possible
+# values are yes and no.
 # 
 # (cursor-updating yes)
 
@@ -330,8 +330,8 @@
 # 
 # (show-brush-outline yes)
 
-# When enabled, the cursor will be shown over the image while using a paint
-# tool.  Possible values are yes and no.
+# When enabled, the mouse pointer will be shown over the image while using a
+# paint tool.  Possible values are yes and no.
 # 
 # (show-paint-tool-cursor yes)
 
@@ -622,7 +622,7 @@
 # 
 # (transient-docks no)
 
-# Sets the pixel format of cursors the GIMP will use.  Possible values are
+# Sets the pixel format to use for mouse pointers.  Possible values are
 # bitmap and pixbuf.
 # 
 # (cursor-format pixbuf)

@@ -48,7 +48,7 @@ shared by other users.  This is a single folder.
 
 Sets the swap file location. GIMP uses a tile based memory allocation scheme.
 The swap file is used to quickly and easily swap tiles out to disk and back
-in. Be aware that the swap file can easily get very largeif GIMP is used with
+in. Be aware that the swap file can easily get very large if GIMP is used with
 large images. Also, things can get horribly slow if the swap file is created
 on a directory that is mounted over NFS.  For these reasons, it may be
 desirable to put your swap file in "/tmp".  This is a single folder.
@@ -387,15 +387,15 @@ values are yes and no.
 .TP
 (cursor-mode tool-icon)
 
-Sets the mode of cursor the GIMP will use.  Possible values are tool-icon,
+Sets the type of mouse pointers to use.  Possible values are tool-icon,
 tool-crosshair and crosshair.
 
 .TP
 (cursor-updating yes)
 
-Context-dependent cursors are cool.  They are enabled by default. However,
-they require overhead that you may want to do without.  Possible values are
-yes and no.
+Context-dependent mouse pointers are helpful.  They are enabled by default. 
+However, they require overhead that you may want to do without.  Possible
+values are yes and no.
 
 .TP
 (show-brush-outline yes)
@@ -406,8 +406,8 @@ outline.  Possible values are yes and no.
 .TP
 (show-paint-tool-cursor yes)
 
-When enabled, the cursor will be shown over the image while using a paint
-tool.  Possible values are yes and no.
+When enabled, the mouse pointer will be shown over the image while using a
+paint tool.  Possible values are yes and no.
 
 .TP
 (image-title-format "%D*%f-%p.%i (%t, %L) %wx%h")
@@ -790,8 +790,8 @@ values are yes and no.
 .TP
 (cursor-format pixbuf)
 
-Sets the pixel format of cursors the GIMP will use.  Possible values are
-bitmap and pixbuf.
+Sets the pixel format to use for mouse pointers.  Possible values are bitmap
+and pixbuf.
 
 .TP
 (fractalexplorer-path "${gimp_dir}/fractalexplorer:${gimp_data_dir}/fractalexplorer")
@@ -844,7 +844,7 @@ environment variable GIMP2_DATADIR or to the compiled-in default value
 @gimpdatadir@.
 .TP
 .I gimp_plug_in_dir
-Base to paths for architecture-specific plug-ins and modules, which is set
+Base to paths for architecture-specific plugins and modules, which is set
 to the value of the environment variable GIMP2_PLUGINDIR or to the
 compiled-in default value @gimpplugindir@.
 .TP
