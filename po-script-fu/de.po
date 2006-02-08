@@ -11,31 +11,27 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-20 20:32+0200\n"
-"PO-Revision-Date: 2005-10-20 20:33+0200\n"
+"POT-Creation-Date: 2006-02-08 15:57+0100\n"
+"PO-Revision-Date: 2006-02-08 15:58+0100\n"
 "Last-Translator: Róman Joost <romanofski@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit"
+"Content-Transfer-Encoding: 8bit\n"
 
-#: ../plug-ins/script-fu/script-fu-console.c:132
-msgid "Script-Fu console mode allows only interactive invocation"
-msgstr "Der Skript-Fu Konsolenmodus kann nur interaktiv gestartet werden"
-
-#: ../plug-ins/script-fu/script-fu-console.c:165
+#: ../plug-ins/script-fu/script-fu-console.c:144
 msgid "Script-Fu Console"
 msgstr "Skript-Fu Konsole"
 
-#: ../plug-ins/script-fu/script-fu-console.c:258
+#: ../plug-ins/script-fu/script-fu-console.c:237
 msgid "_Browse..."
 msgstr "_Durchsuchen..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:296
+#: ../plug-ins/script-fu/script-fu-console.c:275
 msgid "Script-Fu Procedure Browser"
 msgstr "Script-Fu-Prozeduren-Browser"
 
-#: ../plug-ins/script-fu/script-fu-console.c:605
+#: ../plug-ins/script-fu/script-fu-console.c:584
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Der Skript-Fu-Auswertemodus ermöglicht nur nicht-interaktive Aufrufe"
 
@@ -151,7 +147,7 @@ msgid "Script-Fu _Console"
 msgstr "Skript-Fu-_Konsole"
 
 #: ../plug-ins/script-fu/script-fu.c:123 ../plug-ins/script-fu/script-fu.c:152
-#: ../plug-ins/script-fu/script-fu.c:315
+#: ../plug-ins/script-fu/script-fu.c:316
 msgid "<Toolbox>/Xtns/Languages/Script-Fu"
 msgstr "<Toolbox>/Xtns/Sprachen/Skript-Fu"
 
@@ -159,67 +155,72 @@ msgstr "<Toolbox>/Xtns/Sprachen/Skript-Fu"
 msgid "_Start Server..."
 msgstr "_Server starten..."
 
+#: ../plug-ins/script-fu/script-fu.c:269
+msgid "_GIMP Online"
+msgstr "_GIMP im Netz"
+
 #: ../plug-ins/script-fu/script-fu.c:270
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:11
+msgid "_User Manual"
+msgstr "_Benutzerhandbuch"
+
+#: ../plug-ins/script-fu/script-fu.c:273
 msgid "_Script-Fu"
 msgstr "_Skript-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:272
+#: ../plug-ins/script-fu/script-fu.c:275
 msgid "_Buttons"
 msgstr "_Schaltflächen"
 
-#: ../plug-ins/script-fu/script-fu.c:274
+#: ../plug-ins/script-fu/script-fu.c:277
 msgid "_Logos"
 msgstr "_Logos"
 
-#: ../plug-ins/script-fu/script-fu.c:276
+#: ../plug-ins/script-fu/script-fu.c:279
 msgid "_Misc"
 msgstr "_Verschiedenes"
 
-#: ../plug-ins/script-fu/script-fu.c:278
+#: ../plug-ins/script-fu/script-fu.c:281
 msgid "_Patterns"
 msgstr "_Muster"
 
-#: ../plug-ins/script-fu/script-fu.c:280
+#: ../plug-ins/script-fu/script-fu.c:283
 msgid "_Test"
 msgstr "_Test"
 
-#: ../plug-ins/script-fu/script-fu.c:282
+#: ../plug-ins/script-fu/script-fu.c:285
 msgid "_Utils"
 msgstr "_Hilfsmittel"
 
-#: ../plug-ins/script-fu/script-fu.c:284
+#: ../plug-ins/script-fu/script-fu.c:287
 msgid "_Web Page Themes"
 msgstr "_Web-Seiten"
 
-#: ../plug-ins/script-fu/script-fu.c:286
+#: ../plug-ins/script-fu/script-fu.c:289
 msgid "_Alien Glow"
 msgstr "_Alien Glow"
 
-#: ../plug-ins/script-fu/script-fu.c:288
+#: ../plug-ins/script-fu/script-fu.c:291
 msgid "_Beveled Pattern"
 msgstr "A_bgeschrägt, gemustert"
 
-#: ../plug-ins/script-fu/script-fu.c:290
+#: ../plug-ins/script-fu/script-fu.c:293
 msgid "_Classic.Gimp.Org"
 msgstr "_classic.gimp.org"
 
-#: ../plug-ins/script-fu/script-fu.c:293
+#: ../plug-ins/script-fu/script-fu.c:296
 msgid "Alpha to _Logo"
 msgstr "Alpha als _Logo"
 
-#: ../plug-ins/script-fu/script-fu.c:295
-msgid "A_nimators"
-msgstr "A_nimationen"
-
-#: ../plug-ins/script-fu/script-fu.c:297
+#: ../plug-ins/script-fu/script-fu.c:298
 msgid "_Decor"
 msgstr "_Dekoration"
 
-#: ../plug-ins/script-fu/script-fu.c:299
+#: ../plug-ins/script-fu/script-fu.c:300
 msgid "_Render"
 msgstr "_Rendern"
 
-#: ../plug-ins/script-fu/script-fu.c:307
+#: ../plug-ins/script-fu/script-fu.c:308
 msgid "_Refresh Scripts"
 msgstr "Skripte _auffrischen"
 
@@ -2210,16 +2211,48 @@ msgid "_Weave..."
 msgstr "_Weben..."
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:1
+msgid "Create and Use _Selections"
+msgstr "_Auswahlen erstellen und benutzen"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:2
+msgid "Create, Open and Save _Files"
+msgstr "_Bilder erstellen, öffnen und speichern"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:3
+msgid "Drawing _Simple Objects"
+msgstr "Einfache _Objekte zeichnen"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:4
+msgid "How to Use _Dialogs"
+msgstr "_Docken von Dialogen"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:5
 msgid "Plug-in _Registry"
 msgstr "_Plugin Registrierung"
 
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:2
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:6
+msgid "Using _Paths"
+msgstr "_Pfade verwenden"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:7
+msgid "_Basic Concepts"
+msgstr "_Grundlegende Konzepte"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:8
 msgid "_Developer Web Site"
 msgstr "_Entwicklung"
 
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:3
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:9
 msgid "_Main Web Site"
 msgstr "_GIMP"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:10
+msgid "_Preparing your Images for the Web"
+msgstr "_Bilder für das Internet optimieren"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:12
+msgid "_Working with Digital Camera Photos"
+msgstr "_Arbeiten mit digitalen Photos"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:1
 msgid "Drop shadow X offset"
@@ -2256,4 +2289,3 @@ msgstr "Glanzlicht Deckkraft"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:11
 msgid "_Xach-Effect..."
 msgstr "_Xach-Effekt..."
-

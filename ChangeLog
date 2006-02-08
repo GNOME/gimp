@@ -1,5 +1,8 @@
 2006-02-08  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/script-fu.c: register menu branches for the
+	web-browser script.
+
 	* plug-ins/script-fu/scripts/web-browser.scm: string review.
 
 2006-02-07  Sven Neumann  <sven@gimp.org>
