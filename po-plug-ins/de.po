@@ -9583,7 +9583,7 @@ msgid ""
 "http://docs.gimp.org/."
 msgstr ""
 "Bitte installieren Sie das separat erhältliche Hilfe-Paket oder verwenden "
-"Sie das Online-Benutzerhandbuch unter http://docs.gim.org/."
+"Sie das Online-Benutzerhandbuch unter http://docs.gimp.org/de/."
 
 #: ../plug-ins/help/domain.c:184
 msgid "There is a problem with the GIMP help files."

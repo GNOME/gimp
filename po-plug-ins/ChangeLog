@@ -1,3 +1,8 @@
+2006-02-08  Roman Joost	<romanofski@gimp.org>
+
+	* de.po: fixed little typo in URL to http://docs.gimp.org, which
+	was spotted by Matthias Hembrock
+
 2006-02-06  Alexander Shopov  <ash@contact.bg>
 
 	* bg.po: Updated Bulgarian translation by
