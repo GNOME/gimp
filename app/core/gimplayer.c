@@ -523,7 +523,7 @@ gimp_layer_duplicate (GimpItem *item,
 
   if (GIMP_IS_LAYER (new_item))
     {
-      GimpLayer *layer     = GIMP_LAYER (item);;
+      GimpLayer *layer     = GIMP_LAYER (item);
       GimpLayer *new_layer = GIMP_LAYER (new_item);
 
       new_layer->mode       = layer->mode;

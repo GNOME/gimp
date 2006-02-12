@@ -1,3 +1,8 @@
+2006-02-12  <weskaggs@primate.ucdavis.edu>
+
+	* app/core/gimplayer.c: remove extra semicolon; fix for
+	bug #330882 from Jens Granseuer.
+
 2006-02-09  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped version to 2.3.8.
