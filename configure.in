@@ -897,7 +897,7 @@ if test "$gdk_target" = x11; then
    DOC_SHOOTER=doc-shooter
 
     dnl Test for Xmu
-    have_gimp_remote=yes
+    enable_gimp_remote=yes
     if test -z "$LIBXMU"; then
       gimp_save_CFLAGS="$CFLAGS"
       gimp_save_LDFLAGS="$LDFLAGS"
@@ -908,8 +908,8 @@ if test "$gdk_target" = x11; then
           GIMP_REMOTE='gimp-remote-gimp_app_version$(EXEEXT)';
 	  have_libxmu=yes
           LIBXMU="$X_LIBS $X_PRE_LIBS -lX11 -lXmu -lXt",
-	  [have_gimp_remote="no (XMU header file not found)"],[#include <gdk/gdkx.h>])],
-	[have_gimp_remote="no (XMU library not found)"], -lXt -lX11)
+	  [enable_gimp_remote="no (XMU header file not found)"],[#include <gdk/gdkx.h>])],
+	[enable_gimp_remote="no (XMU library not found)"], -lXt -lX11)
       CFLAGS="$gimp_save_CFLAGS"
       LDFLAGS="$gimp_save_LDFLAGS"
       LIBSCREENSHOT="$LIBXMU"
@@ -1242,6 +1242,7 @@ fi
 # Check for gnome-vfs (and optionally libgnomeui and gnome-keyring)
 ###################################################################
 
+uri_plugin=no
 uri_modules="gnome-vfs-2.0 >= gnome_vfs_required_version"
 
 if $PKG_CONFIG --atleast-version=gnomeui_required_version libgnomeui-2.0; then
@@ -1263,6 +1264,12 @@ PKG_CHECK_MODULES(URI, $uri_modules,
   have_gnomevfs="no (gnome-vfs-2.0 not found)")
 
 AM_CONDITIONAL(HAVE_GNOMEVFS, test x$have_gnomevfs = xyes)
+
+if test "x$have_gnomevfs" = xyes; then
+  uri_plugin="yes (using gnome-vfs)" 
+elif test x"$os_win32" = xno; then
+  uri_plugin="yes (using wget)"
+fi
 
 if test "x$have_gnomeui" = xyes; then
   AC_DEFINE(HAVE_GNOMEUI, 1, [Define to 1 if libgnomeui is available])
@@ -1548,13 +1555,12 @@ AC_SUBST(WMF)
 # Check for Mac OS X TWAIN framework (can't build on Darwin)
 ############################################################
 
+twain_ok=$os_win32
 AC_MSG_CHECKING([checking for Mac OS X TWAIN support])
 AC_TRY_CPP([
 #include <Carbon/Carbon.h>
 #include <TWAIN/TWAIN.h>
-],
-twain_ok=yes,
-twain_ok=no)
+], twain_ok=yes)
 AC_MSG_RESULT($twain_ok)
 AM_CONDITIONAL(HAVE_MAC_TWAIN, test x$twain_ok = xyes)
 
@@ -1906,30 +1912,41 @@ AC_OUTPUT
 dnl Print a summary of features enabled/disabled:
 AC_MSG_RESULT([
 Building GIMP with prefix=$prefix
-GIMP Features:
-  gimp-remote: $have_gimp_remote
-  tiff:        $have_libtiff
-  jpeg:        $jpeg_ok
-  xjt:         $have_xjt
-  tiff:        $have_libtiff
-  zlib:        $have_zlib
-  png:         $have_libpng
-  mng:         $have_libmng
-  exif:        $have_libexif
-  aa:          $have_libaa
-  xpm:         $have_libxpm
-  help:        $have_gtkhtml2
-  svg:         $have_librsvg
-  poppler:     $have_poppler
-  gnome ui:    $have_gnomeui
-  keyring:     $have_gnome_keyring
-  gnome vfs:   $have_gnomevfs
-  gnomeprint:  $have_gnomeprint
-  gimp-print:  $have_gimp_print
-  wmf:         $have_libwmf
-  littlecms:   $have_lcms
-  alsa:        $have_alsa
-  linux input: $have_linux_input
-  perl pdbgen: $with_pdbgen
+Desktop files install into $DESKTOP_DATADIR
+
+Extra Binaries:
+  gimp-console:     $enable_gimp_console
+  gimp-remote:      $enable_gimp_remote
+
+Optional Plug-Ins:
+  Ascii Art:        $have_libaa
+  Help Browser:     $have_gtkhtml2
+  Gimp-Print:       $have_gimp_print
+  GNOME Print:      $have_gnomeprint
+  JPEG:             $jpeg_ok
+  MNG:              $have_libmng
+  PDF:              $have_poppler
+  PNG:              $have_libpng
+  PSP:              $have_zlib
+  SVG:              $have_librsvg
+  TIFF:             $have_libtiff
+  TWAIN:            $twain_ok
+  URI:              $uri_plugin
+  Win Print:        $os_win32
+  Win Snap:         $os_win32
+  WMF:              $have_libwmf
+  XJT:              $have_xjt
+  XPM:              $have_libxpm
+
+Plug-In Features:
+  EXIF support:     $have_libexif
+  GNOME UI:         $have_gnomeui
+  GNOME keyring:    $have_gnome_keyring
+
+Optional Modules:
+  ALSA (MIDI):      $have_alsa
+  Linux Input:      $have_linux_input
+  Color Correction: $have_lcms
+  Soft Proof:       $have_lcms
 ]);
 
