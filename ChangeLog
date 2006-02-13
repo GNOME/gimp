@@ -1,3 +1,10 @@
+2006-02-13  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
+	* app/config/gimpguiconfig.c: make the internal help browser the
+	default for all platforms (bug #329888).
+
 2006-02-01  Matt Wilson  <msw@gimp.org>
 
 	Merged from HEAD branch:

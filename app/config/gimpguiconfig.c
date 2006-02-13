@@ -37,6 +37,16 @@
 #include "gimp-intl.h"
 
 
+#define DEFAULT_GIMP_HELP_BROWSER  GIMP_HELP_BROWSER_WEB_BROWSER
+#define DEFAULT_THEME              "Default"
+
+#ifdef G_OS_WIN32
+#  define DEFAULT_WEB_BROWSER      "not used on Windows"
+#else
+#  define DEFAULT_WEB_BROWSER      "mozilla %s"
+#endif
+
+
 static void  gimp_gui_config_class_init   (GimpGuiConfigClass *klass);
 static void  gimp_gui_config_finalize     (GObject            *object);
 static void  gimp_gui_config_set_property (GObject            *object,
@@ -47,17 +57,6 @@ static void  gimp_gui_config_get_property (GObject            *object,
                                            guint               property_id,
                                            GValue             *value,
                                            GParamSpec         *pspec);
-
-
-#define   DEFAULT_THEME        "Default"
-
-#ifdef G_OS_WIN32
-#  define DEFAULT_GIMP_HELP_BROWSER GIMP_HELP_BROWSER_WEB_BROWSER
-#  define DEFAULT_WEB_BROWSER  "not used on Windows"
-#else
-#  define DEFAULT_GIMP_HELP_BROWSER GIMP_HELP_BROWSER_GIMP
-#  define DEFAULT_WEB_BROWSER  "mozilla %s"
-#endif
 
 enum
 {
