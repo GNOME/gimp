@@ -34,14 +34,13 @@
 #include "gimp-intl.h"
 
 
-#define   DEFAULT_THEME        "Default"
+#define DEFAULT_GIMP_HELP_BROWSER  GIMP_HELP_BROWSER_GIMP
+#define DEFAULT_THEME              "Default"
 
 #ifdef G_OS_WIN32
-#  define DEFAULT_GIMP_HELP_BROWSER GIMP_HELP_BROWSER_WEB_BROWSER
-#  define DEFAULT_WEB_BROWSER  "not used on Windows"
+#  define DEFAULT_WEB_BROWSER      "not used on Windows"
 #else
-#  define DEFAULT_GIMP_HELP_BROWSER GIMP_HELP_BROWSER_GIMP
-#  define DEFAULT_WEB_BROWSER  "mozilla-firefox %s"
+#  define DEFAULT_WEB_BROWSER      "mozilla-firefox %s"
 #endif
 
 

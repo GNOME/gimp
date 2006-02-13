@@ -1,5 +1,10 @@
 2006-02-13  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpguiconfig.c: make the internal help browser the
+	default for all platforms (bug #329888).
+
+2006-02-13  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: output a nicer and more complete summary.
 
 2006-02-12  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
