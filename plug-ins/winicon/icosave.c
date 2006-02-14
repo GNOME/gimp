@@ -295,7 +295,7 @@ ico_set_bit_in_data (guint8 *data,
   offset = bit_num % line_width;
   bit_val = bit_val & 0x00000001;
 
-  data[line * width32 * 4 + offset/8] |= (bit_val << (7 - (bit_num % 8)));
+  data[line * width32 * 4 + offset/8] |= (bit_val << (7 - (offset % 8)));
 }
 
 
@@ -316,7 +316,7 @@ ico_set_nibble_in_data (guint8 *data,
   offset = nibble_num % line_width;
   nibble_val = nibble_val & 0x0000000F;
 
-  data[line * width8 * 4 + offset/2] |= (nibble_val << (4 * (1 - (nibble_num % 2))));
+  data[line * width8 * 4 + offset/2] |= (nibble_val << (4 * (1 - (offset % 2))));
 }
 
 
