@@ -940,7 +940,7 @@ gauss (GimpDrawable *drawable,
             }
 
           if (has_alpha)
-            multiply_alpha (dest, width, bytes);
+            multiply_alpha (src, width, bytes);
 
           switch (method)
             {
