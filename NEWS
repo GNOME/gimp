@@ -6,6 +6,21 @@ here. New features are being added in the HEAD branch that will be
 released as GIMP version 2.4.
 
 
+Bugs fixed in GIMP 2.2.11
+=========================
+
+- fixed handling of EXIF data in JPEG plug-in (bug #303383)
+- let gimptool use pkg-config to determine compiler and linker flags at
+  run-time (bug #324761)
+- added GTK+ category in gimp.desktop file (bug #328012)
+- fixed guides scripts to allow guides at the right and bottom (bug #328320)
+- fixed icons in color picker buttons in Levels tool (bug #325745)
+- fixed parameter check in Compressor plug-in
+- made the internal help browser the default for all platforms (bug #329888)
+- fixed handling of alpha channel in Gaussian Blur plug-in (bug #331051)
+- fixed incorrect bitshifts in Win Icon plug-in (bug #330692)
+
+
 Bugs fixed in GIMP 2.2.10
 =========================
 
