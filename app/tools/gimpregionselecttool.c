@@ -96,7 +96,7 @@ gimp_fuzzy_select_tool_register (GimpToolRegisterCallback  callback,
                 "gimp-fuzzy-select-tool",
                 _("Fuzzy Select"),
                 _("Select contiguous regions"),
-                N_("Fu_zzy Select"), "Z",
+                N_("Fu_zzy Select"), "U",
                 NULL, GIMP_HELP_TOOL_FUZZY_SELECT,
                 GIMP_STOCK_TOOL_FUZZY_SELECT,
                 data);

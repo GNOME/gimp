@@ -1,5 +1,14 @@
 2006-02-14  Sven Neumann  <sven@gimp.org>
 
+	Added some tool shortcuts:
+
+	* app/tools/gimpcroptool.c: Shift+C
+	* app/tools/gimpfuzzyselecttool.c: changed from Z to U.
+	* app/tools/gimpmagnifytool.c: Z.
+	* app/tools/gimpmeasuretool.c: Shift+M.
+
+2006-02-14  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/despeckle.c (despeckle_median): fixed incorrect
 	loop boundaries. Should fix bug #331044.
 

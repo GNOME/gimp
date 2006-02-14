@@ -91,7 +91,7 @@ gimp_magnify_tool_register (GimpToolRegisterCallback  callback,
                 "gimp-magnify-tool",
                 _("Magnify"),
                 _("Zoom in & out"),
-                N_("M_agnify"), NULL,
+                N_("M_agnify"), "Z",
                 NULL, GIMP_HELP_TOOL_ZOOM,
                 GIMP_STOCK_TOOL_ZOOM,
                 data);
