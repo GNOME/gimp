@@ -533,33 +533,28 @@ preview_update (GtkWidget *widget)
   gint          x1,y1;
   gint          width, height;
 
-  img_bpp    = gimp_drawable_bpp (drawable->drawable_id);
   preview = GIMP_PREVIEW (widget);
+
+  img_bpp = gimp_drawable_bpp (drawable->drawable_id);
 
   width  = preview->width;
   height = preview->height;
-  /*
-   * Setup for filter...
-   */
+
   gimp_preview_get_position (preview, &x1, &y1);
 
   gimp_pixel_rgn_init (&src_rgn, drawable, x1, y1, width, height, FALSE, FALSE);
 
-  /*
-   * Pre-load the preview rectangle...
-   */
   dst = g_new (guchar, width * height * img_bpp);
   src = g_new (guchar, width * height * img_bpp);
+
   gimp_pixel_rgn_get_rect (&src_rgn, src, x1, y1, width, height);
 
   despeckle_median (src, dst, width, height, img_bpp, despeckle_radius, TRUE);
 
-  /*
-   * Update the screen...
-   */
   gimp_preview_draw_buffer (preview, dst, width * img_bpp);
-  g_free (dst);
+
   g_free (src);
+  g_free (dst);
 }
 
 
@@ -631,11 +626,11 @@ despeckle_median (guchar   *src,
           gint hist255 = 0;
           gint count   = 0;
 
-          for (v = ymin; v <= ymax; v++)
+          for (v = ymin; v < ymax; v++)
             {
               gint off2 = v * width * bpp;
 
-              for (u = xmin, off2 += xmin * bpp; u <= xmax; u++, off2 += bpp)
+              for (u = xmin, off2 += xmin * bpp; u < xmax; u++, off2 += bpp)
                 {
                   guchar value = pixel_luminance (src + off2, bpp);
 

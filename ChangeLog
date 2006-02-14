@@ -1,5 +1,10 @@
 2006-02-14  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/despeckle.c (despeckle_median): fixed incorrect
+	loop boundaries. Should fix bug #331044.
+
+2006-02-14  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/winicon/icoload.c
 	* plug-ins/winicon/icosave.c: applied patches from Felix Pahl.
 	Fixes incorrect bit shifts that caused scrambled transparency
