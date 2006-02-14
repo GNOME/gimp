@@ -1,3 +1,9 @@
+2006-02-14  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/gauss.c (gauss): apply multiply_alpha() on the
+	source buffer, not the destination (bug #331051, spotted by
+	Stephane Chauveau).
+
 2006-02-13  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpguiconfig.c: make the internal help browser the
