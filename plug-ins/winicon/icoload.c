@@ -263,7 +263,7 @@ ico_get_bit_from_data (const guint8 *data,
   line = bit / line_width;
   offset = bit % line_width;
 
-  result = (data[line * width32 * 4 + offset/8] & (1 << (7 - (bit % 8))));
+  result = (data[line * width32 * 4 + offset/8] & (1 << (7 - (offset % 8))));
 
   return (result ? 1 : 0);
 }
@@ -285,9 +285,9 @@ ico_get_nibble_from_data (const guint8 *data,
   offset = nibble % line_width;
 
   result =
-    (data[line * width32 * 4 + offset/2] & (0x0F << (4 * (1 - nibble % 2))));
+    (data[line * width32 * 4 + offset/2] & (0x0F << (4 * (1 - offset % 2))));
 
-  if (nibble % 2 == 0)
+  if (offset % 2 == 0)
     result = result >> 4;
 
   return result;
