@@ -61,7 +61,7 @@ typedef struct
   gdouble   spike_pts;
   gdouble   spike_angle;
   gdouble   density;
-  gdouble   opacity;
+  gdouble   transparency;
   gdouble   random_hue;
   gdouble   random_saturation;
   gboolean  preserve_luminosity;
@@ -139,7 +139,7 @@ static SparkleVals svals =
   4.0,     /* spike points         */
   15.0,    /* spike angle          */
   1.0,     /* spike density        */
-  0.0,     /* opacity              */
+  0.0,     /* transparency         */
   0.0,     /* random hue           */
   0.0,     /* random saturation    */
   FALSE,   /* preserve_luminosity  */
@@ -168,7 +168,7 @@ query (void)
     { GIMP_PDB_INT32,    "spike-pts",     "# of spike points" },
     { GIMP_PDB_INT32,    "spike-angle",   "Spike angle (0-360 degrees, -1: random)" },
     { GIMP_PDB_FLOAT,    "density",       "Spike density (0.0 - 1.0)" },
-    { GIMP_PDB_FLOAT,    "opacity",       "Opacity (0.0 - 1.0)" },
+    { GIMP_PDB_FLOAT,    "transparency",  "Transparency (0.0 - 1.0)" },
     { GIMP_PDB_FLOAT,    "random-hue",    "Random hue (0.0 - 1.0)" },
     { GIMP_PDB_FLOAT,    "random-saturation",   "Random saturation (0.0 - 1.0)" },
     { GIMP_PDB_INT32,    "preserve-luminosity", "Preserve luminosity (TRUE/FALSE)" },
@@ -254,7 +254,7 @@ run (const gchar      *name,
           svals.spike_pts = param[6].data.d_int32;
           svals.spike_angle = param[7].data.d_int32;
           svals.density = param[8].data.d_float;
-          svals.opacity = param[9].data.d_float;
+          svals.transparency = param[9].data.d_float;
           svals.random_hue = param[10].data.d_float;
           svals.random_saturation = param[11].data.d_float;
           svals.preserve_luminosity = (param[12].data.d_int32) ? TRUE : FALSE;
@@ -274,7 +274,7 @@ run (const gchar      *name,
             status = GIMP_PDB_CALLING_ERROR;
           else if (svals.density < 0.0 || svals.density > 1.0)
             status = GIMP_PDB_CALLING_ERROR;
-          else if (svals.opacity < 0.0 || svals.opacity > 1.0)
+          else if (svals.transparency < 0.0 || svals.transparency > 1.0)
             status = GIMP_PDB_CALLING_ERROR;
           else if (svals.random_hue < 0.0 || svals.random_hue > 1.0)
             status = GIMP_PDB_CALLING_ERROR;
@@ -376,7 +376,7 @@ sparkle_dialog (GimpDrawable *drawable)
               _("Luminosity _threshold:"), SCALE_WIDTH, ENTRY_WIDTH,
               svals.lum_threshold, 0.0, 0.1, 0.001, 0.01, 3,
               TRUE, 0, 0,
-              _("Adjust the Luminosity Threshold"), NULL);
+              _("Adjust the luminosity threshold"), NULL);
   g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.lum_threshold);
@@ -389,7 +389,7 @@ sparkle_dialog (GimpDrawable *drawable)
               _("F_lare intensity:"), SCALE_WIDTH, ENTRY_WIDTH,
               svals.flare_inten, 0.0, 1.0, 0.01, 0.1, 2,
               TRUE, 0, 0,
-              _("Adjust the Flare Intensity"), NULL);
+              _("Adjust the flare intensity"), NULL);
   g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.flare_inten);
@@ -402,7 +402,7 @@ sparkle_dialog (GimpDrawable *drawable)
               _("_Spike length:"), SCALE_WIDTH, ENTRY_WIDTH,
               svals.spike_len, 1, 100, 1, 10, 0,
               TRUE, 0, 0,
-              _("Adjust the Spike Length"), NULL);
+              _("Adjust the spike length"), NULL);
   g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.spike_len);
@@ -415,7 +415,7 @@ sparkle_dialog (GimpDrawable *drawable)
               _("Sp_ike points:"), SCALE_WIDTH, ENTRY_WIDTH,
               svals.spike_pts, 0, 16, 1, 4, 0,
               TRUE, 0, 0,
-              _("Adjust the Number of Spikes"), NULL);
+              _("Adjust the number of spikes"), NULL);
   g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.spike_pts);
@@ -428,8 +428,8 @@ sparkle_dialog (GimpDrawable *drawable)
               _("Spi_ke angle (-1: random):"), SCALE_WIDTH, ENTRY_WIDTH,
               svals.spike_angle, -1, 360, 1, 15, 0,
               TRUE, 0, 0,
-              _("Adjust the Spike Angle "
-                "(-1 means a Random Angle is chosen)"), NULL);
+              _("Adjust the spike angle "
+                "(-1 causes a random angle to be chosen)"), NULL);
   g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.spike_angle);
@@ -442,7 +442,7 @@ sparkle_dialog (GimpDrawable *drawable)
               _("Spik_e density:"), SCALE_WIDTH, ENTRY_WIDTH,
               svals.density, 0.0, 1.0, 0.01, 0.1, 2,
               TRUE, 0, 0,
-              _("Adjust the Spike Density"), NULL);
+              _("Adjust the spike density"), NULL);
   g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.density);
@@ -452,13 +452,13 @@ sparkle_dialog (GimpDrawable *drawable)
 
   scale_data =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 6,
-              _("Op_acity:"), SCALE_WIDTH, ENTRY_WIDTH,
-              svals.opacity, 0.0, 1.0, 0.01, 0.1, 2,
+              _("Tr_ansparency:"), SCALE_WIDTH, ENTRY_WIDTH,
+              svals.transparency, 0.0, 1.0, 0.01, 0.1, 2,
               TRUE, 0, 0,
-              _("Adjust the Opacity of the Spikes"), NULL);
+              _("Adjust the opacity of the spikes"), NULL);
   g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
-                    &svals.opacity);
+                    &svals.transparency);
   g_signal_connect_swapped (scale_data, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
@@ -468,8 +468,7 @@ sparkle_dialog (GimpDrawable *drawable)
               _("_Random hue:"), SCALE_WIDTH, ENTRY_WIDTH,
               svals.random_hue, 0.0, 1.0, 0.01, 0.1, 2,
               TRUE, 0, 0,
-              _("Adjust the Value how much the Hue should "
-                "be changed randomly"), NULL);
+              _("Adjust how much the hue should be changed randomly"), NULL);
   g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.random_hue);
@@ -482,8 +481,8 @@ sparkle_dialog (GimpDrawable *drawable)
               _("Rando_m saturation:"), SCALE_WIDTH, ENTRY_WIDTH,
               svals.random_saturation, 0.0, 1.0, 0.01, 0.1, 2,
               TRUE, 0, 0,
-              _("Adjust the Value how much the Saturation should "
-                "be changed randomly"), NULL);
+              _("Adjust how much the saturation should be changed randomly"),
+              NULL);
   g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.random_saturation);
@@ -506,7 +505,7 @@ sparkle_dialog (GimpDrawable *drawable)
   gtk_widget_show (toggle);
 
   gimp_help_set_help_data (toggle,
-                           _("Should the Luminosity be preserved?"), NULL);
+                           _("Should the luminosity be preserved?"), NULL);
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
@@ -521,7 +520,7 @@ sparkle_dialog (GimpDrawable *drawable)
   gtk_widget_show (toggle);
 
   gimp_help_set_help_data (toggle,
-                           _("Should an Inverse Effect be done?"), NULL);
+                           _("Should the effect be inversed?"), NULL);
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
@@ -536,7 +535,7 @@ sparkle_dialog (GimpDrawable *drawable)
   gtk_widget_show (toggle);
 
   gimp_help_set_help_data (toggle,
-                           _("Draw a Border of Spikes around the Image"), NULL);
+                           _("Draw a border of spikes around the image"), NULL);
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
@@ -973,17 +972,17 @@ rpnt (GimpDrawable *drawable,
             {
               if (new < color[b])
                 {
-                  new *= (1.0 - val * (1.0 - svals.opacity));
+                  new *= (1.0 - val * (1.0 - svals.transparency));
                 }
               else
                 {
-                  new -= val * color[b] * (1.0 - svals.opacity);
+                  new -= val * color[b] * (1.0 - svals.transparency);
                   if (new < 0.0)
                     new = 0.0;
                 }
             }
 
-          new *= 1.0 - val * svals.opacity;
+          new *= 1.0 - val * svals.transparency;
           new += val * color[b];
 
           if (new > 255)

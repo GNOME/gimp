@@ -1,5 +1,9 @@
 2006-02-14  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/sparkle.c: renamed parameter from opacity to
+	transparency, since that's how it is being used (bug #331086,
+	spotted by Joao).
+
 	* plug-ins/common/gauss.c (gauss): apply multiply_alpha() on the
 	source buffer, not the destination (bug #331051, spotted by
 	Stephane Chauveau).
