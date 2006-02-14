@@ -609,8 +609,9 @@ render_frame (gint32 whichframe)
 
   drawable = gimp_drawable_get (layers[total_frames-(whichframe+1)]);
   /* Lame attempt to catch the case that a user has closed the image. */
-  if (! (drawable->width > 0 && drawable->height > 0))
+  if (!drawable)
     {
+      gimp_message ("Tried to display an invalid layer.");
       gtk_main_quit ();
       return;
     }
