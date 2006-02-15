@@ -1,3 +1,7 @@
+2006-02-15  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/info-dialog.c: unset focus-on-map for info dialogs.
+
 2006-02-14  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/animationplay.c (render_frame): applied patch
