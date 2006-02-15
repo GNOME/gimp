@@ -1,3 +1,8 @@
+2006-02-15  Carol Spears  <carol@gimp.org>
+
+	* plug-ins/pygimp/gimpfu.py: removed the snake image from the
+        gimp-python dialogs.
+
 2006-02-15  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimptooldialog.c: do not unset focus-on-map for all

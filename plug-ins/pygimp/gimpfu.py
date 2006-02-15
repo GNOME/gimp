@@ -469,11 +469,6 @@ def _interact(func_name, start_params):
     hbox.pack_start(vbox, expand=False)
     vbox.show()
 
-    pix = _get_logo()
-    if pix:
-        vbox.pack_start(pix, expand=False)
-        pix.show()
-
     label = gtk.Label(blurb)
     label.set_line_wrap(True)
     label.set_justify(gtk.JUSTIFY_LEFT)
@@ -642,18 +637,3 @@ def fail(msg):
     gimp.message(msg)
     raise error, msg
 
-def _get_logo():
-    import gtk, gobject
-
-    import os.path
-    logofile = os.path.join(os.path.dirname(__file__), 'pygimp-logo.png')
-
-    try:
-        pixbuf = gtk.gdk.pixbuf_new_from_file(logofile)
-    except gobject.GError, e:
-        return None
-
-    image = gtk.Image()
-    image.set_from_pixbuf(pixbuf)
-
-    return image
