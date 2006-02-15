@@ -1,5 +1,13 @@
 2006-02-15  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimptooldialog.c: do not unset focus-on-map for all
+	tool dialogs.
+
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimpmeasuretool.c: explicitely do it here instead.
+
+2006-02-15  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/info-dialog.c: unset focus-on-map for info dialogs.
 
 2006-02-14  Sven Neumann  <sven@gimp.org>

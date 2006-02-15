@@ -357,6 +357,8 @@ gimp_color_picker_tool_info_create (GimpColorPickerTool *picker_tool)
 
                                               NULL);
 
+  gtk_window_set_focus_on_map (GTK_WINDOW (picker_tool->dialog), FALSE);
+
   gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (picker_tool->dialog),
                                      GIMP_VIEWABLE (tool->drawable));
 

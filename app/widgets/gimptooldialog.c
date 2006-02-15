@@ -87,7 +87,6 @@ gimp_tool_dialog_new (GimpToolInfo *tool_info,
                          "stock-id",     stock_id,
                          "description",  desc ? desc : tool_info->help,
                          "parent",       parent,
-                         "focus-on-map", FALSE,
                          NULL);
 
   va_start (args, desc);

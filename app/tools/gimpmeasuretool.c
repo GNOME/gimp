@@ -788,16 +788,23 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *mtool,
     {
       g_snprintf (format, sizeof (format), "%%.%df",
                   _gimp_unit_get_digits (image->gimp, shell->unit));
-
       /* Distance */
       g_snprintf (buf, sizeof (buf), "%.1f", pixel_distance);
       gtk_label_set_text (GTK_LABEL (mtool->distance_label[0]), buf);
 
-      g_snprintf (buf, sizeof (buf), format, unit_distance);
-      gtk_label_set_text (GTK_LABEL (mtool->distance_label[1]), buf);
+      if (shell->unit != GIMP_UNIT_PIXEL)
+        {
+          g_snprintf (buf, sizeof (buf), format, unit_distance);
+          gtk_label_set_text (GTK_LABEL (mtool->distance_label[1]), buf);
 
-      gtk_label_set_text (GTK_LABEL (mtool->unit_label[0]),
-                          _gimp_unit_get_plural (image->gimp, shell->unit));
+          gtk_label_set_text (GTK_LABEL (mtool->unit_label[0]),
+                              _gimp_unit_get_plural (image->gimp, shell->unit));
+        }
+      else
+        {
+          gtk_label_set_text (GTK_LABEL (mtool->distance_label[1]), " ");
+          gtk_label_set_text (GTK_LABEL (mtool->unit_label[0]),  " ");
+        }
 
       /* Angle */
       g_snprintf (buf, sizeof (buf), "%.2f", pixel_angle);
@@ -820,21 +827,37 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *mtool,
       g_snprintf (buf, sizeof (buf), "%d", pixel_width);
       gtk_label_set_text (GTK_LABEL (mtool->width_label[0]), buf);
 
-      g_snprintf (buf, sizeof (buf), format, unit_width);
-      gtk_label_set_text (GTK_LABEL (mtool->width_label[1]), buf);
+      if (shell->unit != GIMP_UNIT_PIXEL)
+        {
+          g_snprintf (buf, sizeof (buf), format, unit_width);
+          gtk_label_set_text (GTK_LABEL (mtool->width_label[1]), buf);
 
-      gtk_label_set_text (GTK_LABEL (mtool->unit_label[2]),
-                          _gimp_unit_get_plural (image->gimp, shell->unit));
+          gtk_label_set_text (GTK_LABEL (mtool->unit_label[2]),
+                              _gimp_unit_get_plural (image->gimp, shell->unit));
+        }
+      else
+        {
+          gtk_label_set_text (GTK_LABEL (mtool->width_label[1]), " ");
+          gtk_label_set_text (GTK_LABEL (mtool->unit_label[2]), " ");
+        }
 
-      /* Height */
       g_snprintf (buf, sizeof (buf), "%d", pixel_height);
       gtk_label_set_text (GTK_LABEL (mtool->height_label[0]), buf);
 
-      g_snprintf (buf, sizeof (buf), format, unit_height);
-      gtk_label_set_text (GTK_LABEL (mtool->height_label[1]), buf);
+      /* Height */
+      if (shell->unit != GIMP_UNIT_PIXEL)
+        {
+          g_snprintf (buf, sizeof (buf), format, unit_height);
+          gtk_label_set_text (GTK_LABEL (mtool->height_label[1]), buf);
 
-      gtk_label_set_text (GTK_LABEL (mtool->unit_label[3]),
-                          _gimp_unit_get_plural (image->gimp, shell->unit));
+          gtk_label_set_text (GTK_LABEL (mtool->unit_label[3]),
+                              _gimp_unit_get_plural (image->gimp, shell->unit));
+        }
+      else
+        {
+          gtk_label_set_text (GTK_LABEL (mtool->height_label[1]), " ");
+          gtk_label_set_text (GTK_LABEL (mtool->unit_label[3]), " ");
+        }
 
       if (GTK_WIDGET_VISIBLE (mtool->dialog))
         gdk_window_show (mtool->dialog->window);
@@ -858,6 +881,8 @@ gimp_measure_tool_dialog_new (GimpMeasureTool *mtool)
                                  GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 
                                  NULL);
+
+  gtk_window_set_focus_on_map (GTK_WINDOW (dialog), FALSE);
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (gtk_widget_destroy),

@@ -219,7 +219,6 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
                                                GTK_RESPONSE_CANCEL,
                                                -1);
 
-
       g_signal_connect_object (shell, "response",
                                G_CALLBACK (gimp_image_map_tool_response),
                                G_OBJECT (image_map_tool), 0);
