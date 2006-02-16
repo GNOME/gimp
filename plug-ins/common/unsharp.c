@@ -179,7 +179,8 @@ run (const gchar      *name,
    * Get drawable information...
    */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
-  gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
+  gimp_tile_cache_ntiles (2 * MAX (drawable->width  / gimp_tile_width () + 1 ,
+			           drawable->height / gimp_tile_height () + 1));
 
   switch (run_mode)
     {
