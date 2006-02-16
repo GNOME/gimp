@@ -3,23 +3,24 @@
 # Courtesy of mkde team (http://mkde.sourceforge.net/) -- 2004.
 #
 # This file is distributed under the same license as the gimp package.
+#
+#
+#
+#
 # Maintainer: Vladimir Stefanov <vladoboss@mt.net.mk>, 2004, 2005.
-#
-#
-#
-#
+# Vladimir Stefanov <vladoboss@gmail.com>, 2006.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.HEAD.mk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-28 19:22+0100\n"
-"PO-Revision-Date: 2005-11-28 22:43+0100\n"
-"Last-Translator: Vladimir Stefanov <vladoboss@mt.net.mk>\n"
-"Language-Team: Macedonian <mkde-l10n@lists.sourceforge.net>\n"
+"POT-Creation-Date: 2006-02-02 11:31+0100\n"
+"PO-Revision-Date: 2006-02-10 11:17+0100\n"
+"Last-Translator: Vladimir Stefanov <vladoboss@gmail.com>\n"
+"Language-Team: Macedonian <dev@mk.openoffice.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.10.2\n"
+"X-Generator: KBabel 1.11.1\n"
 
 #: ../plug-ins/script-fu/script-fu-console.c:144
 msgid "Script-Fu Console"
@@ -2203,16 +2204,52 @@ msgid "_Weave..."
 msgstr "_Бран..."
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:1
+msgid "Create and use _Selections"
+msgstr "Создади и користи ги _Селекциите"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:2
+msgid "Create, Open and Save _Files"
+msgstr "Создади, отвори и зачувај _датотеки"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:3
+msgid "Drawing _Simple Objects"
+msgstr "Цртање на _Едноставни објекти"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:4
+msgid "Howto use _Dialogs"
+msgstr "_Дијалози за користење на КакоДа"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:5
 msgid "Plug-in _Registry"
 msgstr "_Регистер на додатоци"
 
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:2
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:6
+msgid "Using _Paths"
+msgstr "Користење на _патеки"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:7
+msgid "_Basics of TheGIMP"
+msgstr "_Основи на ГИМП"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:8
 msgid "_Developer Web Site"
 msgstr "Веб страница на _развивачот"
 
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:3
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:9
 msgid "_Main Web Site"
 msgstr "_Главна веб страница"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:10
+msgid "_Preparing your Images for the web"
+msgstr "Ги _подготвувам вашите слики за на интернет"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:11
+msgid "_User Manual Web Site"
+msgstr "Веб страница за упатство за _корисникот"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:12
+msgid "_Working with Digital Camera Photos"
+msgstr "_Работење со фотографии од дигитални камери"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:1
 msgid "Drop shadow X offset"
