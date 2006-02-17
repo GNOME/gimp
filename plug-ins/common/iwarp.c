@@ -663,11 +663,12 @@ iwarp_supersample (gint    sxl,
           (*progress)++;
         }
 
-      gimp_progress_update ((gdouble) (*progress) / max_progress);
       vh = srow_old;
       srow_old = srow;
       srow = vh;
     }
+
+  gimp_progress_update ((gdouble) (*progress) / max_progress);
 
   g_free (srow);
   g_free (srow_old);
@@ -742,8 +743,8 @@ iwarp_frame (void)
                 }
 
               dest_row += dest_rgn.rowstride;
-              gimp_progress_update ((gdouble) (progress) / max_progress);
             }
+	  gimp_progress_update ((gdouble) (progress) / max_progress);
         }
       else
         {

@@ -885,6 +885,7 @@ ifs_render (AffElement     **elements,
   guchar  *brush = NULL;
   gint     brush_size = 1;
   gdouble  brush_offset = 0.0;
+  gint     next_progress = 0 ;
 
   if (preview)
     subdivide = 1;
@@ -939,9 +940,10 @@ ifs_render (AffElement     **elements,
   /* now run the iteration */
   for (i = 0; i < nsteps; i++)
     {
-      if (!preview && !(i % 5000))
+      if (!preview && (i > next_progress )) {
+        next_progress = i + nsteps/32 + 100 ;
         gimp_progress_update ((gdouble) i / (gdouble) nsteps);
-
+      }
       p0 = g_random_int ();
       k = 0;
 
@@ -1045,6 +1047,10 @@ ifs_render (AffElement     **elements,
                 }
           }
     } /* main iteration */
+  
+  if (!preview ) {
+    gimp_progress_update (1.0);
+  }
 
   g_free (brush);
   g_free (prob);
