@@ -1,3 +1,8 @@
+2006-02-17  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/preferences-dialog.c: use a scrolled window as
+	suggested in bug #331436.
+
 2006-02-16  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpguiconfig.c: as an experiment, changed default
