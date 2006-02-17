@@ -68,7 +68,7 @@ desaturate_dialog_new (GimpDrawable       *drawable,
                               NULL);
 
   button = gtk_dialog_add_button (GTK_DIALOG (dialog->dialog),
-                                  _("Desaturate"), GTK_RESPONSE_OK);
+                                  _("_Desaturate"), GTK_RESPONSE_OK);
   gtk_button_set_image (GTK_BUTTON (button),
                         gtk_image_new_from_stock (GIMP_STOCK_CONVERT_GRAYSCALE,
                                                   GTK_ICON_SIZE_BUTTON));
