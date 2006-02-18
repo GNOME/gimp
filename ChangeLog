@@ -1,3 +1,9 @@
+2006-02-18  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpguiconfig.c: as an experiment, removed the color
+	and foo area from the toolbox and added a Colors dock to the
+	default session.
+
 2006-02-17  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/desaturate-dialog.c: applied patch from Alexandre
