@@ -1,5 +1,10 @@
 2006-02-18  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/gauss.c: applied patch from Stephane Chauveau.
+	Code cleanup and major performance improvements (bug #331569).
+
+2006-02-18  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpguiconfig.c: as an experiment, removed the color
 	and foo area from the toolbox and added a Colors dock to the
 	default session.

@@ -5,7 +5,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,14 +25,12 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-
 #define GAUSS_PROC      "plug-in-gauss"
 #define GAUSS_IIR_PROC  "plug-in-gauss-iir"
 #define GAUSS_IIR2_PROC "plug-in-gauss-iir2"
 #define GAUSS_RLE_PROC  "plug-in-gauss-rle"
 #define GAUSS_RLE2_PROC "plug-in-gauss-rle2"
 #define PLUG_IN_BINARY  "gauss"
-
 
 typedef enum
 {
@@ -74,25 +72,40 @@ static gboolean  gauss_dialog      (gint32            image_ID,
 /*
  * Gaussian blur helper functions
  */
-static void      find_constants    (gdouble  n_p[],
-                                    gdouble  n_m[],
-                                    gdouble  d_p[],
-                                    gdouble  d_m[],
-                                    gdouble  bd_p[],
-                                    gdouble  bd_m[],
-                                    gdouble  std_dev);
+static void      find_iir_constants    (gdouble  n_p[],
+					gdouble  n_m[],
+					gdouble  d_p[],
+					gdouble  d_m[],
+					gdouble  bd_p[],
+					gdouble  bd_m[],
+					gdouble  std_dev);
+
 static void      transfer_pixels   (gdouble *src1,
                                     gdouble *src2,
                                     guchar  *dest,
                                     gint     bytes,
                                     gint     width);
 
-static gint *    make_curve        (gdouble    sigma,
-                                    gint      *length);
-static void      run_length_encode (guchar    *src,
-                                    gint      *dest,
-                                    gint       bytes,
-                                    gint       width);
+static void  make_rle_curve (gdouble   sigma,
+			     gint   ** p_curve,
+			     gint    * p_length,
+			     gint   ** p_sum,
+			     gint    * p_total
+			     )  ;
+
+static void free_rle_curve (gint    * curve ,
+			    gint      length ,
+			    gint    * sum
+			    ) ;
+
+static inline int  run_length_encode (const guchar *src,
+				      gint      *repeat,
+				      gint      *dest,
+				      gint       bytes,
+				      gint       width,
+				      gint       border,
+				      gint       pack
+				      );
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -277,7 +290,7 @@ run (const gchar      *name,
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   /*  set the tile cache size so that the gaussian blur works well  */
-  gimp_tile_cache_ntiles (2 *
+  gimp_tile_cache_ntiles (2*
                           (MAX (drawable->width, drawable->height) /
                            gimp_tile_width () + 1));
 
@@ -620,28 +633,242 @@ separate_alpha (guchar *buf,
     }
 }
 
+/* 
+ * run_length_encode( src, rle, pix, dist, width, border, pack ) ;
+ *
+ * Copy 'width' 8bit pixels from 'src' to 'pix' and extend both sides 
+ * by 'border' pixels so 'pix[]' is filled from '-border' to 'width+border-1'. 
+ *
+ * 'dist' is the distance between the pixels in 'src'.
+ * 
+ * If 'pack' is non-zero, then 'rle' is filled with a run-length encoding of 
+ * the pixels. In plain english, that means that rle[i] gives the number of times
+ * the same pixel is found  pix[i], pix[i+1], ...
+ * A standalone pixel has a rle value of 1.
+ * 
+ * The function returns the number of times 2 identical consecutive pixels 
+ * were found.
+ *
+ * Note: The function must be inlined to insure that all tests on 'pack' are efficiently
+ *       resolved by the compiler (they are in the critical loop). 
+ *       As a consequence, the function should only be called with known constant value
+ *       for 'pack'. 
+ *       In the current implementation, 'pack' is always 1 but it might be more efficient
+ *       to have an 'adaptative' algotirhm that switches to 0 when the run-length 
+ *       is innefficient
+ *      
+ * 
+ */ 
+
+
+static inline int
+run_length_encode(const guchar *src,
+		  gint   *rle,
+		  gint   *pix,     
+		  gint    dist,     /* distance between 2 src pixels */
+		  gint    width,
+		  gint    border,
+		  gint    pack
+		  )
+{
+  gint last  ;
+  gint count = 0 ;
+  gint i = width ; 
+
+  gint same = 0 ; 
+
+  src += dist*(width-1) ;
+  if (pack) {  
+    rle += width + border - 1 ;
+  }
+  pix += width + border - 1 ;
+
+  last  = *src ;
+  count = 0 ;
+
+  /* the 'end' border */
+  for (i=0;i<border;i++) {
+    count++ ; 
+    *pix--   = last ;
+    if (pack) { 
+      *rle-- = count ;
+    }
+  }
+
+  /* the real pixels */
+  for (i=0;i<width;i++) {
+    gint c  = *src ; 
+    src    -= dist ;
+    if (pack && c==last) {
+      count++ ; 
+      *pix-- = last ;
+      *rle-- = count ;
+      same++ ; 
+    } else {
+      count   = 1 ; 
+      last    = c ; 
+      *pix--  = last ;
+      if ( pack ) {
+	*rle-- = count ;
+      }
+    }
+  }
+
+  /* the start pixels */
+  for (i=0;i<border;i++) {
+    count++ ; 
+    *pix--   = last ;
+    if ( pack ) {
+      *rle-- = count ;
+    }
+  }
+  
+  return same ; 
+}
+
+
 static void
-gauss (GimpDrawable *drawable,
-       gdouble       horz,
-       gdouble       vert,
-       BlurMethod    method,
-       GtkWidget    *preview)
+do_encoded_lre( gint *enc , gint *src,  guchar *dest , gint width, gint length , gint dist  , gint *curve,  gint ctotal , gint *csum ) 
+{
+  gint col ; 
+  for (col = 0; col < width; col++)
+    {
+      gint * rpt ;
+      gint * pix ;
+      gint nb ;
+      gint s1 ;
+      gint i ;
+      gint val = 0;
+      gint start = -length ; 
+      
+      rpt = &enc[col+start] ;
+      pix = &src[col+start] ;
+      
+      s1 = csum[start] ;
+      nb = rpt[0];
+      i  = start + nb;
+
+      while (i <= length)
+	{           
+	  int s2 = csum[i] ;
+	  val   += pix[0] * (s2-s1);
+	  s1     = s2 ; 
+	  rpt    = &rpt[nb] ;
+	  pix    = &pix[nb] ;
+	  nb     = rpt[0];
+	  i     += nb;
+	}
+      
+      val += pix[0] * ( csum[length] - s1 );
+      
+      *dest = val / ctotal;
+
+      dest += dist ;
+    }
+}
+
+static void
+do_full_lre( gint *src , guchar *dest , gint width, gint length , gint dist  , gint *curve,  gint ctotal ) 
+{
+  gint col ; 
+
+  for (col = 0; col < width; col++)
+    {
+      gint * x1 ;
+      gint * x2 ;
+      gint * c = &curve[0] ;
+      gint   i ;
+      gint   val ; 
+
+      x1 = x2 = &src[col] ;
+      
+      /* The central point is a special case since it should only be processed ONCE */
+      
+      val = x1[0] * c[0] ;
+      
+      c  += 1 ;
+      x1 += 1 ;
+      x2 -= 1 ;
+      i   = length ;
+      
+      /* Processing multiple points in a single iteration should be 
+       * faster but is not strictly required.  
+       * Some precise benchmarking will be needed to figure out
+       * if this is really interesting. 
+       */
+      while (i>=8) 
+	{
+	  val += ( x1[0] + x2[-0] ) * c[0] ;
+	  val += ( x1[1] + x2[-1] ) * c[1] ;
+	  val += ( x1[2] + x2[-2] ) * c[2] ;
+	  val += ( x1[3] + x2[-3] ) * c[3] ;
+	  val += ( x1[4] + x2[-4] ) * c[4] ;
+	  val += ( x1[5] + x2[-5] ) * c[5] ;
+	  val += ( x1[6] + x2[-6] ) * c[6] ;
+	  val += ( x1[7] + x2[-7] ) * c[7] ;
+	 
+	  c  += 8 ; 
+	  x1 += 8 ;
+	  x2 -= 8 ;
+	  i  -= 8 ;
+	}
+      
+      while (i>=4) 
+	{
+	  val += ( x1[0] + x2[-0] ) * c[0] ;
+	  val += ( x1[1] + x2[-1] ) * c[1] ;
+	  val += ( x1[2] + x2[-2] ) * c[2] ;
+	  val += ( x1[3] + x2[-3] ) * c[3] ;
+	  c  += 4 ;
+	  x1 += 4 ;
+	  x2 -= 4 ;
+	  i  -= 4 ;
+	}
+      
+      /* Only that final loop is strictly required */
+      
+      while (i>=1) 
+	{
+	  /* process the pixels at the distance i before and after the 
+	   * central point. They must have the same coefficient
+	   */
+	  val += ( x1[0] + x2[-0] ) * c[0] ;
+	  c  += 1 ; 
+	  x1 += 1 ;
+	  x2 -= 1 ;
+	  i  -= 1 ;
+	}
+      
+      *dest = val / ctotal ; 
+      dest += dist ; 
+      
+    }
+  
+}
+ 
+static void
+gauss_iir(GimpDrawable *drawable,
+	  gdouble       horz,
+	  gdouble       vert,
+	  BlurMethod    method,
+	  guchar       *preview_buffer ,
+	  gint          x1 , 
+	  gint          y1 , 
+	  gint          width, 
+	  gint          height
+	  )
 {
   GimpPixelRgn  src_rgn, dest_rgn;
-  gint          width, height;
   gint          bytes;
   gint          has_alpha;
-  guchar       *dest, *dp;
-  guchar       *src, *sp, *sp_p, *sp_m;
-  gint         *buf = NULL;
-  gint         *bb;
+  guchar       *dest;
+  guchar       *src,  *sp_p, *sp_m;
   gdouble       n_p[5], n_m[5];
   gdouble       d_p[5], d_m[5];
   gdouble       bd_p[5], bd_m[5];
   gdouble      *val_p = NULL;
   gdouble      *val_m = NULL;
   gdouble      *vp, *vm;
-  gint          x1, y1, x2, y2;
   gint          i, j;
   gint          row, col, b;
   gint          terms;
@@ -649,75 +876,313 @@ gauss (GimpDrawable *drawable,
   gint          initial_p[4];
   gint          initial_m[4];
   gdouble       std_dev;
-  gint          pixels;
-  gint          total = 1;
-  gint          start, end;
-  gint         *curve = NULL;
-  gint         *sum   = NULL;
-  gint          val;
-  gint          length;
-  gint          initial_pp, initial_mm;
-  guchar       *preview_buffer1 = NULL;
-  guchar       *preview_buffer2 = NULL;
+  gboolean      direct  ;  
+  gint          progress_step  ;  
 
-  /*
-   * IIR goes wrong if the blur radius is less than 1, so we silently
-   * switch to RLE in this case.  See bug #315953
-   */
-  if (horz <= 1.0 || vert <= 1.0)
-    method = BLUR_RLE;
 
-  if (horz <= 0.0 && vert <= 0.0)
-    {
-      if (preview)
-        gimp_preview_draw (GIMP_PREVIEW (preview));
-
-      return;
-    }
-
-  if (preview)
-    {
-      gimp_preview_get_position (GIMP_PREVIEW (preview), &x1, &y1);
-      gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
-    }
-  else
-    {
-      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-
-      width  = (x2 - x1);
-      height = (y2 - y1);
-    }
-
-  if (width < 1 || height < 1)
-    return;
+  direct = (preview_buffer == NULL) ;
 
   bytes = drawable->bpp;
   has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
-
-  switch (method)
-    {
-    case BLUR_IIR:
-      val_p = g_new (gdouble, MAX (width, height) * bytes);
-      val_m = g_new (gdouble, MAX (width, height) * bytes);
-      break;
-
-    case BLUR_RLE:
-      buf = g_new (gint, MAX (width, height) * 2);
-      break;
-    }
-
+ 
+  val_p = g_new (gdouble, MAX (width, height) * bytes);
+  val_m = g_new (gdouble, MAX (width, height) * bytes);
+     
   src =  g_new (guchar, MAX (width, height) * bytes);
   dest = g_new (guchar, MAX (width, height) * bytes);
 
   gimp_pixel_rgn_init (&src_rgn,
                        drawable, 0, 0, drawable->width, drawable->height,
                        FALSE, FALSE);
-  if (preview)
-    {
-      preview_buffer1 = g_new (guchar, width * height * bytes);
-      preview_buffer2 = g_new (guchar, width * height * bytes);
+  if (direct)
+    { 
+      gimp_pixel_rgn_init (&dest_rgn,
+                           drawable, 0, 0, drawable->width, drawable->height,
+                           TRUE, TRUE);
     }
-  else
+  
+
+  progress = 0.0;
+  max_progress  = (horz <= 0.0 ) ? 0 : width * height * horz;
+  max_progress += (vert <= 0.0 ) ? 0 : width * height * vert;
+
+    
+  /*  First the vertical pass  */
+  if (vert > 0.0)
+    {
+      vert = fabs (vert) + 1.0;
+      std_dev = sqrt (-(vert * vert) / (2 * log (1.0 / 255.0)));
+
+      /* We do not want too many progress updates because they 
+       * can slow down the processing significantly for very 
+       * large images
+       */
+      progress_step = width / 100  ;
+      if ( progress_step < 5 ) {
+	progress_step = 5 ; 
+      }
+
+      /*  derive the constants for calculating the gaussian
+       *  from the std dev
+       */
+
+      find_iir_constants (n_p, n_m, d_p, d_m, bd_p, bd_m, std_dev);
+        
+
+      for (col = 0; col < width; col++)
+        {
+          
+	  memset (val_p, 0, height * bytes * sizeof (gdouble));
+	  memset (val_m, 0, height * bytes * sizeof (gdouble));
+             
+          gimp_pixel_rgn_get_col (&src_rgn, src, col + x1, y1, height);
+
+          if (has_alpha)
+            multiply_alpha (src, height, bytes);
+        
+	  sp_p = src;
+	  sp_m = src + (height - 1) * bytes;
+	  vp = val_p;
+	  vm = val_m + (height - 1) * bytes;
+
+	  /*  Set up the first vals  */
+	  for (i = 0; i < bytes; i++)
+	    {
+	      initial_p[i] = sp_p[i];
+	      initial_m[i] = sp_m[i];
+	    }
+
+	  for (row = 0; row < height; row++)
+	    {
+	      gdouble *vpptr, *vmptr;
+	      terms = (row < 4) ? row : 4;
+
+	      for (b = 0; b < bytes; b++)
+		{
+		  vpptr = vp + b; vmptr = vm + b;
+		  for (i = 0; i <= terms; i++)
+		    {
+		      *vpptr += n_p[i] * sp_p[(-i * bytes) + b] - d_p[i] * vp[(-i * bytes) + b];
+		      *vmptr += n_m[i] * sp_m[( i * bytes) + b] - d_m[i] * vm[( i * bytes) + b];
+		    }
+		  for (j = i; j <= 4; j++)
+		    {
+		      *vpptr += (n_p[j] - bd_p[j]) * initial_p[b];
+		      *vmptr += (n_m[j] - bd_m[j]) * initial_m[b];
+		    }
+		}
+
+	      sp_p += bytes;
+	      sp_m -= bytes;
+	      vp += bytes;
+	      vm -= bytes;
+	    }
+
+	  transfer_pixels (val_p, val_m, dest, bytes, height);
+             
+
+          if (has_alpha)
+            separate_alpha (dest, height, bytes);
+
+          if (direct)
+	    {
+              gimp_pixel_rgn_set_col(&dest_rgn, dest, col + x1, y1, height);
+
+              progress += height * vert;
+              if ((col % progress_step) == 0)
+		gimp_progress_update (progress / max_progress) ;
+            }  
+          else
+	    {
+              for (row = 0 ; row < height ; row++)
+                memcpy (preview_buffer + (row * width + col) * bytes,
+                        dest + row * bytes,
+                        bytes);
+            }
+        }
+
+      
+
+      /*  prepare for the horizontal pass  */
+      gimp_pixel_rgn_init (&src_rgn,
+                           drawable, 
+			   0, 0, 
+			   drawable->width, drawable->height,
+                           FALSE, TRUE);
+    }
+  else if (!direct)
+    {
+      gimp_pixel_rgn_get_rect (&src_rgn,
+                               preview_buffer, 
+			       x1, y1, 
+			       width, height);
+    }
+
+  /*  Now the horizontal pass  */
+  if (horz > 0.0)
+    {
+
+      /* We do not want too many progress updates because they 
+       * can slow down the processing significantly for very 
+       * large images
+       */
+      progress_step = height / 100 ;
+      if ( progress_step < 5 ) {
+	progress_step = 5 ; 
+      }
+
+      horz = fabs (horz) + 1.0;
+
+      if (horz != vert)
+        {
+          std_dev = sqrt (-(horz * horz) / (2 * log (1.0 / 255.0)));
+
+	  /*  derive the constants for calculating the gaussian
+	   *  from the std dev
+	   */
+	  find_iir_constants (n_p, n_m, d_p, d_m, bd_p, bd_m, std_dev);
+            
+        }
+
+      
+      for (row = 0; row < height; row++)
+        {
+        
+	  memset (val_p, 0, width * bytes * sizeof (gdouble));
+	  memset (val_m, 0, width * bytes * sizeof (gdouble));
+
+          if (direct)
+	    {
+              gimp_pixel_rgn_get_row (&src_rgn, src, x1, row + y1, width);
+            }
+	  else
+	    {
+              memcpy (src,
+                      preview_buffer + row * width * bytes,
+                      width * bytes);
+            }
+           
+
+          if (has_alpha)
+            multiply_alpha (src, width, bytes);
+
+        
+	  sp_p = src;
+	  sp_m = src + (width - 1) * bytes;
+	  vp = val_p;
+	  vm = val_m + (width - 1) * bytes;
+
+	  /*  Set up the first vals  */
+	  for (i = 0; i < bytes; i++)
+	    {
+	      initial_p[i] = sp_p[i];
+	      initial_m[i] = sp_m[i];
+	    }
+
+	  for (col = 0; col < width; col++)
+	    {
+	      gdouble *vpptr, *vmptr;
+	      terms = (col < 4) ? col : 4;
+
+	      for (b = 0; b < bytes; b++)
+		{
+		  vpptr = vp + b; vmptr = vm + b;
+		  for (i = 0; i <= terms; i++)
+		    {
+		      *vpptr += n_p[i] * sp_p[(-i * bytes) + b] -
+			d_p[i] * vp[(-i * bytes) + b];
+		      *vmptr += n_m[i] * sp_m[(i * bytes) + b] -
+			d_m[i] * vm[(i * bytes) + b];
+		    }
+		  for (j = i; j <= 4; j++)
+		    {
+		      *vpptr += (n_p[j] - bd_p[j]) * initial_p[b];
+		      *vmptr += (n_m[j] - bd_m[j]) * initial_m[b];
+		    }
+		}
+
+	      sp_p += bytes;
+	      sp_m -= bytes;
+	      vp += bytes;
+	      vm -= bytes;
+	    }
+
+	  transfer_pixels (val_p, val_m, dest, bytes, width);
+
+          if (has_alpha)
+            separate_alpha (dest, width, bytes);
+
+          if (direct)
+            {
+	      gimp_pixel_rgn_set_row (&dest_rgn, dest, x1, row + y1, width); 
+
+              progress += width * horz;
+              if ( ( row % progress_step ) == 0) 
+		gimp_progress_update (progress / max_progress)  ; 
+            }
+	  else
+	    {
+              memcpy (preview_buffer + row * width * bytes,
+                      dest,
+                      width * bytes);
+            }
+            
+        }
+      
+
+    }
+
+  /*  free up buffers  */
+ 
+  g_free (val_p);
+  g_free (val_m);
+
+  g_free (src);
+  g_free (dest);
+
+}
+
+
+static void
+gauss_rle(GimpDrawable *drawable,
+	  gdouble       horz,
+	  gdouble       vert,
+	  BlurMethod    method,
+	  guchar       *preview_buffer ,
+	  gint          x1,
+	  gint          y1,
+	  gint          width, 
+	  gint          height
+	  )
+{
+  GimpPixelRgn  src_rgn, dest_rgn;
+  gint          bytes;
+  gboolean      has_alpha;
+  guchar       *dest;
+  guchar       *src ;
+  gint          row, col, b;
+  gdouble       progress, max_progress;
+  gdouble       std_dev;
+  gint          total = 1;
+  gint         *curve = NULL;
+  gint         *sum   = NULL;
+  gint          length;
+  gboolean      direct  ;  
+  gint          progress_step  ;  
+
+  direct = (preview_buffer == NULL) ;
+
+  bytes = drawable->bpp;
+  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
+   
+  src  = g_new (guchar, MAX (width, height) * bytes);
+  dest = g_new (guchar, MAX (width, height) * bytes);
+
+  gimp_pixel_rgn_init (&src_rgn,
+                       drawable, 0, 0, drawable->width, drawable->height,
+                       FALSE, FALSE);
+
+  if (direct)
     {
       gimp_pixel_rgn_init (&dest_rgn,
                            drawable, 0, 0, drawable->width, drawable->height,
@@ -728,362 +1193,258 @@ gauss (GimpDrawable *drawable,
   max_progress  = (horz <= 0.0 ) ? 0 : width * height * horz;
   max_progress += (vert <= 0.0 ) ? 0 : width * height * vert;
 
-
+    
   /*  First the vertical pass  */
   if (vert > 0.0)
     {
+      gint   * rle = NULL;
+      gint   * pix = NULL;
+
       vert = fabs (vert) + 1.0;
       std_dev = sqrt (-(vert * vert) / (2 * log (1.0 / 255.0)));
 
-      switch (method)
-        {
-        case BLUR_IIR:
-          /*  derive the constants for calculating the gaussian
-           *  from the std dev
-           */
-          find_constants (n_p, n_m, d_p, d_m, bd_p, bd_m, std_dev);
-          break;
+      /* Insure that we do not have too many progress updates for 
+       * images with a lot of rows or columns
+       */
+      progress_step = width / 150  ;
+      if ( progress_step < 5 ) {
+	progress_step = 5 ; 
+      }
 
-        case BLUR_RLE:
-          curve = make_curve (std_dev, &length);
-          sum = g_new (gint, 2 * length + 1);
+      make_rle_curve( std_dev, &curve , &length , &sum , &total );
 
-          sum[0] = 0;
+      rle = g_new(gint, height+2*length ) ;
+      rle += length ; /* rle[] extends from -length to height+length-1 */
 
-          for (i = 1; i <= length*2; i++)
-            sum[i] = curve[i-length-1] + sum[i-1];
-          sum += length;
-
-          total = sum[length] - sum[-length];
-          break;
-        }
+      pix = g_new(gint, height+2*length ) ;
+      pix += length ; /* pix[] extends from -length to height+length-1 */
 
       for (col = 0; col < width; col++)
         {
-          switch (method)
-            {
-            case BLUR_IIR:
-              memset (val_p, 0, height * bytes * sizeof (gdouble));
-              memset (val_m, 0, height * bytes * sizeof (gdouble));
-              break;
-
-            case BLUR_RLE:
-              break;
-            }
-
+          
           gimp_pixel_rgn_get_col (&src_rgn, src, col + x1, y1, height);
 
           if (has_alpha)
             multiply_alpha (src, height, bytes);
 
-          switch (method)
-            {
-            case BLUR_IIR:
-              sp_p = src;
-              sp_m = src + (height - 1) * bytes;
-              vp = val_p;
-              vm = val_m + (height - 1) * bytes;
-
-              /*  Set up the first vals  */
-              for (i = 0; i < bytes; i++)
-                {
-                  initial_p[i] = sp_p[i];
-                  initial_m[i] = sp_m[i];
-                }
-
-              for (row = 0; row < height; row++)
-                {
-                  gdouble *vpptr, *vmptr;
-                  terms = (row < 4) ? row : 4;
-
-                  for (b = 0; b < bytes; b++)
-                    {
-                      vpptr = vp + b; vmptr = vm + b;
-                      for (i = 0; i <= terms; i++)
-                        {
-                          *vpptr += n_p[i] * sp_p[(-i * bytes) + b] -
-                            d_p[i] * vp[(-i * bytes) + b];
-                          *vmptr += n_m[i] * sp_m[(i * bytes) + b] -
-                            d_m[i] * vm[(i * bytes) + b];
-                        }
-                      for (j = i; j <= 4; j++)
-                        {
-                          *vpptr += (n_p[j] - bd_p[j]) * initial_p[b];
-                          *vmptr += (n_m[j] - bd_m[j]) * initial_m[b];
-                        }
-                    }
-
-                  sp_p += bytes;
-                  sp_m -= bytes;
-                  vp += bytes;
-                  vm -= bytes;
-                }
-
-              transfer_pixels (val_p, val_m, dest, bytes, height);
-              break;
-
-            case BLUR_RLE:
-              sp = src;
-              dp = dest;
-
-              for (b = 0; b < bytes; b++)
-                {
-                  initial_pp = sp[b];
-                  initial_mm = sp[(height-1) * bytes + b];
-
-                  /*  Determine a run-length encoded version of the row  */
-                  run_length_encode (sp + b, buf, bytes, height);
-
-                  for (row = 0; row < height; row++)
-                    {
-                      start = (row < length) ? -row : -length;
-                      end = (height <= (row + length) ?
-                             (height - row - 1) : length);
-
-                      val = 0;
-                      i = start;
-                      bb = buf + (row + i) * 2;
-
-                      if (start != -length)
-                        val += initial_pp * (sum[start] - sum[-length]);
-
-                      while (i < end)
-                        {
-                          pixels = bb[0];
-                          i += pixels;
-                          if (i > end)
-                            i = end;
-                          val += bb[1] * (sum[i] - sum[start]);
-                          bb += (pixels * 2);
-                          start = i;
-                        }
-
-                      if (end != length)
-                        val += initial_mm * (sum[length] - sum[end]);
-
-                      dp[row * bytes + b] = val / total;
-                    }
-                 }
-              break;
-            }
+	  for (b = 0; b < bytes; b++)
+	    {
+	      gint same =  run_length_encode(src + b, rle, pix, bytes, height, length , 1 );
+	      if ( same > (3*height)/4 ) {
+		/* encoded_rle is only fastest if there are a lot of repeating pixels */  
+		do_encoded_lre( rle ,pix , dest+b , height , length  , bytes , curve , total , sum )  ; 
+	      } else {
+		/* else a full but more simple algorithm is better */  
+		do_full_lre( pix , dest+b , height , length  , bytes , curve , total )  ; 
+	      }
+	    }
 
           if (has_alpha)
-            separate_alpha (src, height, bytes);
+            separate_alpha (dest, height, bytes);
 
-          if (preview)
-            {
+          if (direct)
+           {
+              gimp_pixel_rgn_set_col(&dest_rgn, dest, col + x1, y1, height);
+              progress += height * vert;
+              if ((col % progress_step) == 0)
+		gimp_progress_update (progress / max_progress) ;
+            }
+          else 
+	    {
               for (row = 0 ; row < height ; row++)
-                memcpy (preview_buffer1 + (row * width + col) * bytes,
+                memcpy (preview_buffer + (row * width + col) * bytes,
                         dest + row * bytes,
                         bytes);
             }
-          else
-            {
-              gimp_pixel_rgn_set_col (&dest_rgn, dest, col + x1, y1, height);
-
-              progress += height * vert;
-              if ((col % 5) == 0)
-                gimp_progress_update (progress / max_progress);
-            }
+            
         }
 
-      /*  prepare for the horizontal pass  */
+      
+      g_free (rle - length);
+      g_free (pix - length);
+
+      /* prepare for the horizontal pass  */
       gimp_pixel_rgn_init (&src_rgn,
                            drawable, 0, 0, drawable->width, drawable->height,
                            FALSE, TRUE);
     }
-  else if (preview)
+  else if (!direct)
     {
       gimp_pixel_rgn_get_rect (&src_rgn,
-                               preview_buffer1, x1, y1, width, height);
+                               preview_buffer, 
+			       x1, y1, 
+			       width, height
+			       );
     }
 
   /*  Now the horizontal pass  */
   if (horz > 0.0)
     {
+      gint   * rle = NULL;
+      gint   * pix = NULL;
+       
+      /* Insure that we do not have too many progress updates for 
+       * images with a lot of rows or columns
+       */
+      progress_step = height / 150 ;
+      if ( progress_step < 5 ) {
+	progress_step = 5 ; 
+      }
+
       horz = fabs (horz) + 1.0;
 
+      /* euse the same curve if possible else recompute a new one */
       if (horz != vert)
         {
+	  
           std_dev = sqrt (-(horz * horz) / (2 * log (1.0 / 255.0)));
+         
+	  if ( curve != NULL ) {
+	    free_rle_curve( curve , length, sum ) ;
+	  }
 
-          switch (method)
-            {
-            case BLUR_IIR:
-              /*  derive the constants for calculating the gaussian
-               *  from the std dev
-               */
-              find_constants (n_p, n_m, d_p, d_m, bd_p, bd_m, std_dev);
-              break;
-
-            case BLUR_RLE:
-              if (vert > 0.0)
-                {
-                  g_free (sum - length);
-                  g_free (curve - length);
-                }
-
-              curve = make_curve (std_dev, &length);
-              sum = g_new (gint, 2 * length + 1);
-
-              sum[0] = 0;
-
-              for (i = 1; i <= length*2; i++)
-                sum[i] = curve[i-length-1] + sum[i-1];
-              sum += length;
-
-              total = sum[length] - sum[-length];
-              break;
-            }
+	  make_rle_curve(std_dev, &curve , &length , &sum , &total );
+             
         }
+
+      
+      rle = g_new (gint, width+2*length ) ;
+      rle += length ; /* so rle[] extends from -width to width+length-1 */
+
+      pix = g_new (gint, width+2*length ) ;
+      pix += length ; /* so pix[] extends from -width to width+length-1 */
 
       for (row = 0; row < height; row++)
         {
-          switch (method)
-            {
-            case BLUR_IIR:
-              memset (val_p, 0, width * bytes * sizeof (gdouble));
-              memset (val_m, 0, width * bytes * sizeof (gdouble));
-              break;
-
-            case BLUR_RLE:
-              break;
-            }
-
-          if (preview)
-            {
-              memcpy (src,
-                      preview_buffer1 + row * width * bytes,
-                      width * bytes);
-            }
-          else
+          
+          if (direct)
             {
               gimp_pixel_rgn_get_row (&src_rgn, src, x1, row + y1, width);
+            }
+	  else 
+	    {
+              memcpy (src,
+                      preview_buffer + row * width * bytes,
+                      width * bytes);
             }
 
           if (has_alpha)
             multiply_alpha (src, width, bytes);
+		
+	  for (b = 0; b < bytes; b++)
+	    {
+	      gint same = run_length_encode(src + b, rle, pix, bytes, width, length , 1 );
 
-          switch (method)
-            {
-            case BLUR_IIR:
-              sp_p = src;
-              sp_m = src + (width - 1) * bytes;
-              vp = val_p;
-              vm = val_m + (width - 1) * bytes;
-
-              /*  Set up the first vals  */
-              for (i = 0; i < bytes; i++)
-                {
-                  initial_p[i] = sp_p[i];
-                  initial_m[i] = sp_m[i];
-                }
-
-              for (col = 0; col < width; col++)
-                {
-                  gdouble *vpptr, *vmptr;
-                  terms = (col < 4) ? col : 4;
-
-                  for (b = 0; b < bytes; b++)
-                    {
-                      vpptr = vp + b; vmptr = vm + b;
-                      for (i = 0; i <= terms; i++)
-                        {
-                          *vpptr += n_p[i] * sp_p[(-i * bytes) + b] -
-                            d_p[i] * vp[(-i * bytes) + b];
-                          *vmptr += n_m[i] * sp_m[(i * bytes) + b] -
-                            d_m[i] * vm[(i * bytes) + b];
-                        }
-                      for (j = i; j <= 4; j++)
-                        {
-                          *vpptr += (n_p[j] - bd_p[j]) * initial_p[b];
-                          *vmptr += (n_m[j] - bd_m[j]) * initial_m[b];
-                        }
-                    }
-
-                  sp_p += bytes;
-                  sp_m -= bytes;
-                  vp += bytes;
-                  vm -= bytes;
-                }
-
-              transfer_pixels (val_p, val_m, dest, bytes, width);
-              break;
-
-            case BLUR_RLE:
-              sp = src;
-              dp = dest;
-
-              for (b = 0; b < bytes; b++)
-                {
-                  initial_pp = sp[b];
-                  initial_mm = sp[(width-1) * bytes + b];
-
-                  /*  Determine a run-length encoded version of the row  */
-                  run_length_encode (sp + b, buf, bytes, width);
-
-                  for (col = 0; col < width; col++)
-                    {
-                      start = (col < length) ? -col : -length;
-                      end = (width <= (col + length)) ? (width - col - 1) : length;
-
-                      val = 0;
-                      i = start;
-                      bb = buf + (col + i) * 2;
-
-                      if (start != -length)
-                        val += initial_pp * (sum[start] - sum[-length]);
-
-                      while (i < end)
-                        {
-                          pixels = bb[0];
-                          i += pixels;
-                          if (i > end)
-                            i = end;
-                          val += bb[1] * (sum[i] - sum[start]);
-                          bb += (pixels * 2);
-                          start = i;
-                        }
-
-                      if (end != length)
-                        val += initial_mm * (sum[length] - sum[end]);
-
-                      dp[col * bytes + b] = val / total;
-                    }
-                }
-              break;
-            }
+	      if ( same > (3*width)/4 ) {
+		/* encoded_rle is only fastest if there are a lot of repeating pixels */  
+		do_encoded_lre( rle ,pix , dest+b , width , length  , bytes , curve , total , sum )  ; 
+	      } else {
+		/* else a full but more simple algorithm is better */  
+		do_full_lre( pix , dest+b , width , length  , bytes , curve , total )  ; 
+	      }
+	    }
+		
 
           if (has_alpha)
             separate_alpha (dest, width, bytes);
 
-          if (preview)
+          if (direct)
             {
-              memcpy (preview_buffer2 + row * width * bytes,
-                      dest,
-                      width * bytes);
+	      gimp_pixel_rgn_set_row (&dest_rgn, dest, x1, row + y1, width); 
+
+              progress += width * horz;
+              if ( ( row % progress_step ) == 0) 
+		gimp_progress_update (progress / max_progress)  ; 
             }
           else
             {
-              gimp_pixel_rgn_set_row (&dest_rgn, dest, x1, row + y1, width);
-
-              progress += width * horz;
-              if ((row % 5) == 0)
-                gimp_progress_update (progress / max_progress);
+              memcpy (preview_buffer + row * width * bytes,
+                      dest,
+                      width * bytes);
             }
         }
+      
+      g_free (rle - length );
+      g_free (pix - length );
+
+
     }
-  else if (preview)
+
+
+
+  if ( curve != NULL ) {
+    free_rle_curve( curve , length, sum ) ;
+  }
+
+  g_free (src);
+  g_free (dest);
+
+}
+
+
+
+static void
+gauss (GimpDrawable *drawable,
+       gdouble       horz,
+       gdouble       vert,
+       BlurMethod    method,
+       GtkWidget    *preview)
+{
+
+  gint     x1, y1, x2, y2 ;
+  gint     width, height ;
+  guchar * preview_buffer;
+
+  /*
+   * IIR goes wrong if the blur radius is less than 1, so we silently
+   * switch to RLE in this case.  See bug #315953
+   */
+  if (horz <= 1.0 || vert <= 1.0) 
+    method = BLUR_RLE;
+  
+  if (horz <= 0.0 && vert <= 0.0)
     {
-      memcpy (preview_buffer2, preview_buffer1, width * height * bytes);
+      if (preview)
+        gimp_preview_draw (GIMP_PREVIEW (preview));
+      return;
     }
 
   if (preview)
     {
-      gimp_preview_draw_buffer (GIMP_PREVIEW (preview),
-                                preview_buffer2, width * bytes);
-      g_free (preview_buffer1);
-      g_free (preview_buffer2);
+      gimp_preview_get_position (GIMP_PREVIEW (preview), &x1, &y1);
+      gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
+
+      if (width < 1 || height < 1)
+	return;
+
+      preview_buffer = g_new (guchar, width * height * drawable->bpp);
+
+    }
+  else
+    {
+      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+
+      width  = (x2 - x1);
+      height = (y2 - y1);
+
+      if (width < 1 || height < 1)
+	return;
+
+      preview_buffer = NULL ; 
+
+    }
+
+  
+  if (method == BLUR_IIR){
+    gauss_iir(drawable, horz, vert, method, preview_buffer, x1, y1 , width , height ) ; 
+  } else {
+    gauss_rle(drawable, horz, vert, method, preview_buffer, x1, y1 , width , height ) ; 
+  }
+  
+  if (preview)
+    {
+      gimp_preview_draw_buffer (GIMP_PREVIEW (preview),  preview_buffer, width * drawable->bpp);
+      g_free (preview_buffer);
     }
   else
     {
@@ -1093,27 +1454,12 @@ gauss (GimpDrawable *drawable,
       gimp_drawable_update (drawable->drawable_id, x1, y1, width, height);
     }
 
-  /*  free up buffers  */
-  switch (method)
-    {
-    case BLUR_IIR:
-      g_free (val_p);
-      g_free (val_m);
-      break;
+  
 
-    case BLUR_RLE:
-      if (horz > 0.0 || vert > 0.0)
-        {
-          g_free (sum - length);
-          g_free (curve - length);
-        }
-      g_free (buf);
-      break;
-    }
-
-  g_free (src);
-  g_free (dest);
 }
+
+
+
 
 static void
 transfer_pixels (gdouble *src1,
@@ -1130,23 +1476,30 @@ transfer_pixels (gdouble *src1,
     {
       sum = *src1++ + *src2++;
       if (sum > 255) sum = 255;
-      else if(sum < 0) sum = 0;
+      else if (sum < 0) sum = 0;
 
       *dest++ = (guchar) sum;
     }
 }
 
 static void
-find_constants (gdouble n_p[],
-                gdouble n_m[],
-                gdouble d_p[],
-                gdouble d_m[],
-                gdouble bd_p[],
-                gdouble bd_m[],
-                gdouble std_dev)
+find_iir_constants (gdouble n_p[],
+		    gdouble n_m[],
+		    gdouble d_p[],
+		    gdouble d_m[],
+		    gdouble bd_p[],
+		    gdouble bd_m[],
+		    gdouble std_dev)
 {
   gint    i;
-  gdouble constants [8];
+  gdouble x0;
+  gdouble x1;
+  gdouble x2;
+  gdouble x3;
+  gdouble x4;
+  gdouble x5;
+  gdouble x6;
+  gdouble x7;
   gdouble div;
 
   /*  The constants used in the implemenation of a casual sequence
@@ -1154,49 +1507,36 @@ find_constants (gdouble n_p[],
    */
 
   div = sqrt(2 * G_PI) * std_dev;
-  constants [0] = -1.783 / std_dev;
-  constants [1] = -1.723 / std_dev;
-  constants [2] = 0.6318 / std_dev;
-  constants [3] = 1.997  / std_dev;
-  constants [4] = 1.6803 / div;
-  constants [5] = 3.735 / div;
-  constants [6] = -0.6803 / div;
-  constants [7] = -0.2598 / div;
+  x0 = -1.783 / std_dev;
+  x1 = -1.723 / std_dev;
+  x2 = 0.6318 / std_dev;
+  x3 = 1.997  / std_dev;
+  x4 = 1.6803 / div;
+  x5 = 3.735 / div;
+  x6 = -0.6803 / div;
+  x7 = -0.2598 / div;
 
-  n_p [0] = constants[4] + constants[6];
-  n_p [1] = exp (constants[1]) *
-    (constants[7] * sin (constants[3]) -
-     (constants[6] + 2 * constants[4]) * cos (constants[3])) +
-       exp (constants[0]) *
-         (constants[5] * sin (constants[2]) -
-          (2 * constants[6] + constants[4]) * cos (constants[2]));
-  n_p [2] = 2 * exp (constants[0] + constants[1]) *
-    ((constants[4] + constants[6]) * cos (constants[3]) * cos (constants[2]) -
-     constants[5] * cos (constants[3]) * sin (constants[2]) -
-     constants[7] * cos (constants[2]) * sin (constants[3])) +
-       constants[6] * exp (2 * constants[0]) +
-         constants[4] * exp (2 * constants[1]);
-  n_p [3] = exp (constants[1] + 2 * constants[0]) *
-    (constants[7] * sin (constants[3]) - constants[6] * cos (constants[3])) +
-      exp (constants[0] + 2 * constants[1]) *
-        (constants[5] * sin (constants[2]) - constants[4] * cos (constants[2]));
+  n_p [0] = x4 + x6;
+  n_p [1] = exp(x1)*(x7*sin(x3)-(x6+2*x4)*cos(x3)) + exp(x0)*(x5*sin(x2) - (2*x6+x4)*cos (x2));
+  n_p [2] = 2*exp(x0+x1) * ((x4+x6)*cos(x3)*cos(x2) - x5*cos(x3)*sin(x2) - x7*cos(x2)*sin(x3)) 
+          + x6*exp(2*x0) + x4*exp(2*x1);
+  n_p [3] = exp(x1+2*x0) * ( x7*sin(x3) - x6*cos(x3)) +  exp(x0+2*x1) * (x5*sin(x2) - x4*cos(x2));
   n_p [4] = 0.0;
 
   d_p [0] = 0.0;
-  d_p [1] = -2 * exp (constants[1]) * cos (constants[3]) -
-    2 * exp (constants[0]) * cos (constants[2]);
-  d_p [2] = 4 * cos (constants[3]) * cos (constants[2]) * exp (constants[0] + constants[1]) +
-    exp (2 * constants[1]) + exp (2 * constants[0]);
-  d_p [3] = -2 * cos (constants[2]) * exp (constants[0] + 2 * constants[1]) -
-    2 * cos (constants[3]) * exp (constants[1] + 2 * constants[0]);
-  d_p [4] = exp (2 * constants[0] + 2 * constants[1]);
+  d_p [1] = -2 * exp(x1) * cos(x3) -  2 * exp(x0) * cos (x2);
+  d_p [2] = 4 * cos(x3) * cos(x2) * exp(x0 + x1) +  exp(2 * x1) + exp(2 * x0);
+  d_p [3] = -2 * cos(x2) * exp(x0 + 2*x1) -  2*cos(x3) * exp(x1 + 2*x0);
+  d_p [4] = exp(2*x0 + 2*x1);
 
-  for (i = 0; i <= 4; i++)
-    d_m [i] = d_p [i];
+  for (i = 0; i <= 4; i++) {
+    d_m[i] = d_p[i];
+  }
 
   n_m[0] = 0.0;
-  for (i = 1; i <= 4; i++)
-    n_m [i] = n_p[i] - d_p[i] * n_p[0];
+  for (i = 1; i <= 4; i++) {
+    n_m[i] = n_p[i] - d_p[i] * n_p[0];
+  }
 
   {
     gdouble sum_n_p, sum_n_m, sum_d;
@@ -1225,19 +1565,39 @@ find_constants (gdouble n_p[],
 
 
 /*
- * The equations: g(r) = exp (- r^2 / (2 * sigma^2))
- *                   r = sqrt (x^2 + y ^2)
+ * make_rle_curve( sigma , &curve , &length , &sum , &total ) 
+ *
+ * 
+ * Fill the Gauss curve.
+ *
+ *               g(r) = exp (- r^2 / (2 * sigma^2))
+ *                  r = sqrt (x^2 + y ^2)
+ * 
+ * o length is filled with the length the curve (in both directions)
+ * o curve[-length .. length] is allocated and filled with the (scaled) gauss curve. 
+ * o sum[-length .. length]   is allocated and filled with the 'summed' curve. 
+ * o total is filled with the sum of all elements in the curve (for normalization).
+ *
+ *  
+ *
  */
 
-static gint *
-make_curve (gdouble  sigma,
-            gint    *length)
+
+static void
+make_rle_curve (gdouble   sigma,
+		gint   ** p_curve,
+		gint    * p_length,
+		gint   ** p_sum,
+		gint    * p_total
+		) 
 {
   gint    *curve;
   gdouble  sigma2;
   gdouble  l;
   gint     temp;
   gint     i, n;
+  gint     length;
+  gint    *sum;
 
   sigma2 = 2 * sigma * sigma;
   l = sqrt (-sigma2 * log (1.0 / 255.0));
@@ -1248,53 +1608,44 @@ make_curve (gdouble  sigma,
 
   curve = g_new (gint, n);
 
-  *length = n / 2;
-  curve += *length;
+  length = n / 2;
+  curve += length; /* 'center' the curve[] */ 
   curve[0] = 255;
 
-  for (i = 1; i <= *length; i++)
+  for (i = 1; i <= length; i++)
     {
       temp = (gint) (exp (- (i * i) / sigma2) * 255);
       curve[-i] = temp;
       curve[i] = temp;
     }
 
-  return curve;
+  sum   = g_new (gint, 2 * length + 1);
+
+  sum[0] = 0;
+  for (i = 1; i <= length*2; i++) {
+    sum[i] = curve[i-length-1] + sum[i-1];
+  }
+
+  sum += length; /* 'center' the sum[] */ 
+   
+  *p_total  = sum[length] - sum[-length];
+  *p_curve  = curve ;
+  *p_sum    = sum ;
+  *p_length = length ;
+
 }
 
+/*
+ * Free a curve previously allocated with make_rle_curve
+ */
 static void
-run_length_encode (guchar *src,
-                   gint   *dest,
-                   gint    bytes,
-                   gint    width)
+free_rle_curve (gint    * curve ,
+		gint      length ,
+		gint    * sum
+		) 
 {
-  gint   start;
-  gint   i;
-  gint   j;
-  guchar last;
-
-  last = *src;
-  src += bytes;
-  start = 0;
-
-  for (i = 1; i < width; i++)
-    {
-      if (*src != last)
-        {
-          for (j = start; j < i; j++)
-            {
-              *dest++ = (i - j);
-              *dest++ = last;
-            }
-          start = i;
-          last = *src;
-        }
-      src += bytes;
-    }
-
-  for (j = start; j < i; j++)
-    {
-      *dest++ = (i - j);
-      *dest++ = last;
-    }
+   g_free (sum - length);
+   g_free (curve - length);
 }
+
+
