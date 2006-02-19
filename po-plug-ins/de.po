@@ -15,10 +15,10 @@
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP HEAD\n"
+"Project-Id-Version: GIMP 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-08 10:59+0100\n"
-"PO-Revision-Date: 2006-02-08 10:58+0100\n"
+"POT-Creation-Date: 2006-02-19 19:29+0100\n"
+"PO-Revision-Date: 2006-02-19 19:37+0100\n"
 "Last-Translator: Hendrik Brandt <heb@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -396,7 +396,7 @@ msgstr "_Fraktale"
 #: ../plug-ins/common/xbm.c:1002 ../plug-ins/common/xwd.c:565
 #: ../plug-ins/fits/fits.c:454 ../plug-ins/flame/flame.c:442
 #: ../plug-ins/gfig/gfig.c:787 ../plug-ins/gfli/gfli.c:714
-#: ../plug-ins/ifscompose/ifscompose.c:2387 ../plug-ins/jpeg/jpeg-save.c:268
+#: ../plug-ins/ifscompose/ifscompose.c:2379 ../plug-ins/jpeg/jpeg-save.c:268
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:268
 #: ../plug-ins/winicon/icosave.c:244 ../plug-ins/xjt/xjt.c:1272
 #: ../plug-ins/xjt/xjt.c:1706
@@ -429,7 +429,7 @@ msgstr "Fraktalparameter speichern"
 #: ../plug-ins/common/mng.c:1124 ../plug-ins/common/pat.c:321
 #: ../plug-ins/common/pcx.c:309 ../plug-ins/common/pix.c:329
 #: ../plug-ins/common/png.c:720 ../plug-ins/common/pnm.c:442
-#: ../plug-ins/common/poppler.c:368 ../plug-ins/common/postscript.c:1012
+#: ../plug-ins/common/poppler.c:367 ../plug-ins/common/postscript.c:1012
 #: ../plug-ins/common/postscript.c:2977 ../plug-ins/common/psd.c:1880
 #: ../plug-ins/common/psp.c:1463 ../plug-ins/common/raw.c:242
 #: ../plug-ins/common/raw.c:647 ../plug-ins/common/spheredesigner.c:2009
@@ -980,7 +980,7 @@ msgstr "_Tiefe:"
 msgid "Antialiasing quality. Higher is better, but slower"
 msgstr "Qualität der Kantenglättung. Höher ist besser, aber langsamer"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:591 ../plug-ins/common/unsharp.c:695
+#: ../plug-ins/MapObject/mapobject_ui.c:591 ../plug-ins/common/unsharp.c:696
 #: ../plug-ins/common/wind.c:1008 ../plug-ins/imagemap/imap_preferences.c:441
 msgid "_Threshold:"
 msgstr "_Schwellwert:"
@@ -1194,7 +1194,7 @@ msgstr "Fehlerhafte Palette"
 #: ../plug-ins/common/gifload.c:302 ../plug-ins/common/gih.c:654
 #: ../plug-ins/common/pat.c:326 ../plug-ins/common/pcx.c:314
 #: ../plug-ins/common/pix.c:334 ../plug-ins/common/png.c:727
-#: ../plug-ins/common/pnm.c:447 ../plug-ins/common/poppler.c:465
+#: ../plug-ins/common/pnm.c:447 ../plug-ins/common/poppler.c:464
 #: ../plug-ins/common/postscript.c:1018 ../plug-ins/common/psd.c:1885
 #: ../plug-ins/common/raw.c:652 ../plug-ins/common/sunras.c:433
 #: ../plug-ins/common/tga.c:419 ../plug-ins/common/tiff.c:535
@@ -1993,7 +1993,11 @@ msgstr "Animation zurück setzen"
 msgid "Animation Playback:"
 msgstr "Animation abspielen:"
 
-#: ../plug-ins/common/animationplay.c:1160
+#: ../plug-ins/common/animationplay.c:641
+msgid "Tried to display an invalid layer."
+msgstr ""
+
+#: ../plug-ins/common/animationplay.c:1161
 #, c-format
 msgid "Frame %d of %d"
 msgstr "Einzelbild %d von %d"
@@ -2135,7 +2139,7 @@ msgstr "_Anzahl Segmente:"
 msgid "_Blur"
 msgstr "_Weichzeichnen"
 
-#: ../plug-ins/common/blur.c:190 ../plug-ins/common/unsharp.c:429
+#: ../plug-ins/common/blur.c:190 ../plug-ins/common/unsharp.c:430
 msgid "Blurring"
 msgstr "Weichzeichnen"
 
@@ -2247,7 +2251,7 @@ msgid "Ca_rtoon..."
 msgstr "Cartoon..."
 
 #: ../plug-ins/common/cartoon.c:231 ../plug-ins/common/dog.c:249
-#: ../plug-ins/common/gauss.c:435 ../plug-ins/common/neon.c:225
+#: ../plug-ins/common/gauss.c:445 ../plug-ins/common/neon.c:225
 #: ../plug-ins/common/photocopy.c:244 ../plug-ins/common/sel_gauss.c:205
 #: ../plug-ins/common/softglow.c:222 ../plug-ins/gflare/gflare.c:969
 #: ../plug-ins/sgi/sgi.c:520 ../plug-ins/xjt/xjt.c:1680
@@ -2785,7 +2789,7 @@ msgstr "_1 Byte Run-Length-Encoding verwenden"
 msgid "Sa_ve alpha channel (RGBA/RGB)"
 msgstr "_Alphakanal (RGBA/RGB) speichern"
 
-#: ../plug-ins/common/csource.c:750 ../plug-ins/common/sparkle.c:455
+#: ../plug-ins/common/csource.c:750
 msgid "Op_acity:"
 msgstr "_Deckkraft:"
 
@@ -3170,7 +3174,7 @@ msgstr "Ska_lierung 2:"
 msgid "Des_peckle..."
 msgstr "_Flecken entfernen..."
 
-#: ../plug-ins/common/despeckle.c:393 ../plug-ins/common/despeckle.c:618
+#: ../plug-ins/common/despeckle.c:393 ../plug-ins/common/despeckle.c:613
 msgid "Despeckle"
 msgstr "Flecken entfernen"
 
@@ -3188,7 +3192,7 @@ msgstr "Re_kursiv"
 
 #: ../plug-ins/common/despeckle.c:461 ../plug-ins/common/neon.c:739
 #: ../plug-ins/common/nlfilt.c:1091 ../plug-ins/common/nova.c:364
-#: ../plug-ins/common/unsharp.c:669 ../plug-ins/common/whirlpinch.c:588
+#: ../plug-ins/common/unsharp.c:670 ../plug-ins/common/whirlpinch.c:588
 #: ../plug-ins/gflare/gflare.c:2688 ../plug-ins/imagemap/imap_circle.c:278
 msgid "_Radius:"
 msgstr "_Radius:"
@@ -3865,39 +3869,39 @@ msgstr "Y_1:"
 msgid "Y_2:"
 msgstr "Y_2:"
 
-#: ../plug-ins/common/gauss.c:162
+#: ../plug-ins/common/gauss.c:172
 msgid "_Gaussian Blur..."
 msgstr "_Gaußscher Weichzeichner..."
 
-#: ../plug-ins/common/gauss.c:418 ../plug-ins/common/gauss.c:466
+#: ../plug-ins/common/gauss.c:428 ../plug-ins/common/gauss.c:476
 msgid "Gaussian Blur"
 msgstr "Gaußscher Weichzeichner"
 
 #. parameter settings
-#: ../plug-ins/common/gauss.c:496
+#: ../plug-ins/common/gauss.c:506
 msgid "Blur Radius"
 msgstr "Radius"
 
-#: ../plug-ins/common/gauss.c:510 ../plug-ins/common/jigsaw.c:2458
+#: ../plug-ins/common/gauss.c:520 ../plug-ins/common/jigsaw.c:2458
 #: ../plug-ins/common/spread.c:386
 msgid "_Horizontal:"
 msgstr "_Horizontal"
 
-#: ../plug-ins/common/gauss.c:514 ../plug-ins/common/jigsaw.c:2475
+#: ../plug-ins/common/gauss.c:524 ../plug-ins/common/jigsaw.c:2475
 #: ../plug-ins/common/spread.c:390
 msgid "_Vertical:"
 msgstr "_Vertikal:"
 
 # TODO
-#: ../plug-ins/common/gauss.c:537
+#: ../plug-ins/common/gauss.c:547
 msgid "Blur Method"
 msgstr "Method"
 
-#: ../plug-ins/common/gauss.c:541
+#: ../plug-ins/common/gauss.c:551
 msgid "_IIR"
 msgstr "_IIR"
 
-#: ../plug-ins/common/gauss.c:542
+#: ../plug-ins/common/gauss.c:552
 msgid "_RLE"
 msgstr "_RLE"
 
@@ -3986,26 +3990,15 @@ msgid ""
 "Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgstr "Kann keine RGB-Bilder speichern. Konvertieren Sie zu indiziert."
 
-#: ../plug-ins/common/gif.c:1117
-msgid ""
-"Warning:\n"
-"Transparent color in written file might be incorrect on viewers which don't "
-"support transparency."
-msgstr ""
-"Warnung:\n"
-"Die gerade gespeicherte Datei enthält transparente Farben. Unter Umständen "
-"wird deshalb die Datei in Bildbetrachtern die keine Transparenz unterstützen "
-"nicht richtig angezeigt."
+#: ../plug-ins/common/gif.c:1153
+msgid "Delay inserted to prevent evil CPU-sucking animation."
+msgstr "Pause eingefügt, um unnötige Prozessorbelastung zu verhindern."
 
-#: ../plug-ins/common/gif.c:1156
-msgid "Delay inserted to prevent evil CPU-sucking anim."
-msgstr "Eingefügte verzögern, um unnötige Prozessorbelastung zu verhindern."
-
-#: ../plug-ins/common/gif.c:1198
+#: ../plug-ins/common/gif.c:1195
 msgid "GIF Warning"
 msgstr "GIF Warnung"
 
-#: ../plug-ins/common/gif.c:1222
+#: ../plug-ins/common/gif.c:1219
 msgid ""
 "The image which you are trying to save as a GIF\n"
 "contains layers which extend beyond the actual\n"
@@ -4022,70 +4015,70 @@ msgstr ""
 "Sie können jetzt diese Ebenen entweder auf den Rand\n"
 "zuschneiden, oder das Speichern abbrechen."
 
-#: ../plug-ins/common/gif.c:1266
+#: ../plug-ins/common/gif.c:1263
 msgid "Save as GIF"
 msgstr "Als GIF speichern"
 
 #. regular gif parameter settings
-#: ../plug-ins/common/gif.c:1288
+#: ../plug-ins/common/gif.c:1285
 msgid "GIF Options"
 msgstr "GIF Einstellungen"
 
-#: ../plug-ins/common/gif.c:1294
+#: ../plug-ins/common/gif.c:1291
 msgid "I_nterlace"
 msgstr "I_nterlace"
 
-#: ../plug-ins/common/gif.c:1310
+#: ../plug-ins/common/gif.c:1307
 msgid "_GIF comment:"
 msgstr "_GIF Kommentar:"
 
 #. additional animated gif parameter settings
-#: ../plug-ins/common/gif.c:1367
+#: ../plug-ins/common/gif.c:1364
 msgid "Animated GIF Options"
 msgstr "Einstellungen für Animations-GIF's"
 
-#: ../plug-ins/common/gif.c:1373
+#: ../plug-ins/common/gif.c:1370
 msgid "_Loop forever"
 msgstr "_Unendliche Schleife"
 
-#: ../plug-ins/common/gif.c:1386
+#: ../plug-ins/common/gif.c:1383
 msgid "_Delay between frames where unspecified:"
 msgstr "_Pause zwischen Einzelbildern wenn nicht angegeben:"
 
-#: ../plug-ins/common/gif.c:1401 ../plug-ins/common/mng.c:1542
+#: ../plug-ins/common/gif.c:1398 ../plug-ins/common/mng.c:1542
 msgid "milliseconds"
 msgstr "Millisekunden"
 
-#: ../plug-ins/common/gif.c:1411
+#: ../plug-ins/common/gif.c:1408
 msgid "_Frame disposal where unspecified:"
 msgstr "Einzelbildübergang wenn nicht angegeben:"
 
-#: ../plug-ins/common/gif.c:1415
+#: ../plug-ins/common/gif.c:1412
 msgid "I don't care"
 msgstr "Ist mir egal"
 
-#: ../plug-ins/common/gif.c:1417
+#: ../plug-ins/common/gif.c:1414
 msgid "Cumulative layers (combine)"
 msgstr "Kumulative Ebenen (Kombinieren)"
 
-#: ../plug-ins/common/gif.c:1419
+#: ../plug-ins/common/gif.c:1416
 msgid "One frame per layer (replace)"
 msgstr "Ein Einzelbild pro Ebene (Ersetzen)"
 
 #. The "Always use default values" toggles
-#: ../plug-ins/common/gif.c:1435
+#: ../plug-ins/common/gif.c:1432
 msgid "_Use delay entered above for all frames"
 msgstr "_Unten angegebene Pause bei allen Einzelbildern verwenden"
 
-#: ../plug-ins/common/gif.c:1445
+#: ../plug-ins/common/gif.c:1442
 msgid "U_se disposal entered above for all frames"
 msgstr "_Den oben eingegebenen Übergang für alle Einzelbilder verwenden"
 
-#: ../plug-ins/common/gif.c:2655
+#: ../plug-ins/common/gif.c:2652
 msgid "Error writing output file."
 msgstr "Fehler beim schreiben der Ziel Datei."
 
-#: ../plug-ins/common/gif.c:2725
+#: ../plug-ins/common/gif.c:2722
 #, c-format
 msgid "The default comment is limited to %d characters."
 msgstr "Der Standard-Kommentar ist auf %d Zeichen beschränkt."
@@ -4103,8 +4096,8 @@ msgstr "Unquadratische Pixel. Das Bild könnte gequetscht aussehen."
 msgid "Background (%d%s)"
 msgstr "Hintergrund (%d%s)"
 
-#: ../plug-ins/common/gifload.c:918 ../plug-ins/common/iwarp.c:797
-#: ../plug-ins/common/iwarp.c:832
+#: ../plug-ins/common/gifload.c:918 ../plug-ins/common/iwarp.c:798
+#: ../plug-ins/common/iwarp.c:833
 #, c-format
 msgid "Frame %d"
 msgstr "Einzelbild %d"
@@ -4283,8 +4276,9 @@ msgid "Intersection"
 msgstr "Schnittpunkte"
 
 #. Width and Height
-#: ../plug-ins/common/grid.c:724 ../plug-ins/common/svg.c:788
-#: ../plug-ins/common/wmf.c:549 ../plug-ins/print/gimp_main_window.c:1009
+#: ../plug-ins/common/grid.c:724 ../plug-ins/common/poppler.c:876
+#: ../plug-ins/common/svg.c:788 ../plug-ins/common/wmf.c:549
+#: ../plug-ins/print/gimp_main_window.c:1009
 #: ../plug-ins/print/gimp_main_window.c:1216
 msgid "Width:"
 msgstr "Breite:"
@@ -4503,101 +4497,101 @@ msgstr "Modus _2"
 msgid "_IWarp..."
 msgstr "_IWarp..."
 
-#: ../plug-ins/common/iwarp.c:703
+#: ../plug-ins/common/iwarp.c:704
 msgid "Warping"
 msgstr "Verformen"
 
-#: ../plug-ins/common/iwarp.c:808
+#: ../plug-ins/common/iwarp.c:809
 #, c-format
 msgid "Warping Frame %d"
 msgstr "Einzelbild Nr. %d verformen..."
 
-#: ../plug-ins/common/iwarp.c:820
+#: ../plug-ins/common/iwarp.c:821
 msgid "Ping pong"
 msgstr "Ping-Pong"
 
-#: ../plug-ins/common/iwarp.c:1026
+#: ../plug-ins/common/iwarp.c:1027
 msgid "A_nimate"
 msgstr "Ani_mation"
 
-#: ../plug-ins/common/iwarp.c:1045
+#: ../plug-ins/common/iwarp.c:1046
 msgid "Number of _frames:"
 msgstr "Anzahl der _Einzelbilder:"
 
-#: ../plug-ins/common/iwarp.c:1054
+#: ../plug-ins/common/iwarp.c:1055
 msgid "R_everse"
 msgstr "_Umgekehrt"
 
-#: ../plug-ins/common/iwarp.c:1063
+#: ../plug-ins/common/iwarp.c:1064
 msgid "_Ping pong"
 msgstr "_Ping-Pong"
 
-#: ../plug-ins/common/iwarp.c:1076
+#: ../plug-ins/common/iwarp.c:1077
 msgid "_Animate"
 msgstr "A_nimation"
 
-#: ../plug-ins/common/iwarp.c:1097
+#: ../plug-ins/common/iwarp.c:1098
 msgid "Deform Mode"
 msgstr "Deformations-Modus"
 
-#: ../plug-ins/common/iwarp.c:1110
+#: ../plug-ins/common/iwarp.c:1111
 msgid "_Move"
 msgstr "Be_wegen"
 
-#: ../plug-ins/common/iwarp.c:1111
+#: ../plug-ins/common/iwarp.c:1112
 msgid "_Grow"
 msgstr "_Vergrößern"
 
-#: ../plug-ins/common/iwarp.c:1112
+#: ../plug-ins/common/iwarp.c:1113
 msgid "S_wirl CCW"
 msgstr "Verdrehen gegen den _Uhrzeigersinn"
 
-#: ../plug-ins/common/iwarp.c:1113
+#: ../plug-ins/common/iwarp.c:1114
 msgid "Remo_ve"
 msgstr "_Entfernen"
 
-#: ../plug-ins/common/iwarp.c:1114
+#: ../plug-ins/common/iwarp.c:1115
 msgid "S_hrink"
 msgstr "_Schrumpfen"
 
-#: ../plug-ins/common/iwarp.c:1115
+#: ../plug-ins/common/iwarp.c:1116
 msgid "Sw_irl CW"
 msgstr "Verdrehen i_m Uhrzeigersinn"
 
-#: ../plug-ins/common/iwarp.c:1144
+#: ../plug-ins/common/iwarp.c:1145
 msgid "_Deform radius:"
 msgstr "De_formations-Radius:"
 
-#: ../plug-ins/common/iwarp.c:1154
+#: ../plug-ins/common/iwarp.c:1155
 msgid "D_eform amount:"
 msgstr "_Deformation:"
 
-#: ../plug-ins/common/iwarp.c:1163
+#: ../plug-ins/common/iwarp.c:1164
 msgid "_Bilinear"
 msgstr "_Bilinear"
 
-#: ../plug-ins/common/iwarp.c:1177
+#: ../plug-ins/common/iwarp.c:1178
 msgid "Adaptive s_upersample"
 msgstr "Anpassende _Hochrechnung"
 
-#: ../plug-ins/common/iwarp.c:1197
+#: ../plug-ins/common/iwarp.c:1198
 msgid "Ma_x depth:"
 msgstr "Ma_x. Tiefe:"
 
-#: ../plug-ins/common/iwarp.c:1207
+#: ../plug-ins/common/iwarp.c:1208
 msgid "Thresho_ld:"
 msgstr "Sc_hwellwert:"
 
-#: ../plug-ins/common/iwarp.c:1220 ../plug-ins/common/sinus.c:771
+#: ../plug-ins/common/iwarp.c:1221 ../plug-ins/common/sinus.c:771
 #: ../plug-ins/gflare/gflare.c:2797
 msgid "_Settings"
 msgstr "_Einstellungen"
 
-#: ../plug-ins/common/iwarp.c:1270
+#: ../plug-ins/common/iwarp.c:1271
 msgid "IWarp"
 msgstr "IWarp"
 
-#: ../plug-ins/common/iwarp.c:1307
+#: ../plug-ins/common/iwarp.c:1308
 msgid ""
 "Click and drag in the preview to define the distortions to apply to the "
 "image."
@@ -5126,7 +5120,7 @@ msgstr "Neon"
 msgid "Neon Detection"
 msgstr "Neon Kantenfinder"
 
-#: ../plug-ins/common/neon.c:754 ../plug-ins/common/unsharp.c:682
+#: ../plug-ins/common/neon.c:754 ../plug-ins/common/unsharp.c:683
 msgid "_Amount:"
 msgstr "_Menge:"
 
@@ -5791,38 +5785,60 @@ msgstr ""
 msgid "Portable Document Format"
 msgstr "Portable Document Format"
 
-#: ../plug-ins/common/poppler.c:503
+#: ../plug-ins/common/poppler.c:502
 #, c-format
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/poppler.c:505 ../plug-ins/common/postscript.c:1100
+#: ../plug-ins/common/poppler.c:504 ../plug-ins/common/postscript.c:1100
 #, c-format
 msgid "%s-pages"
 msgstr "%s-Seiten"
 
-#: ../plug-ins/common/poppler.c:701
+#: ../plug-ins/common/poppler.c:801
 msgid "Import from PDF"
 msgstr "Aus PDF importieren"
 
-#: ../plug-ins/common/poppler.c:706 ../plug-ins/common/postscript.c:3032
+#: ../plug-ins/common/poppler.c:806 ../plug-ins/common/postscript.c:3032
 msgid "_Import"
 msgstr "_Importieren"
 
-#: ../plug-ins/common/poppler.c:767
-msgid "_Width (pixels):"
-msgstr "_Breite (Pixel):"
+#: ../plug-ins/common/poppler.c:882 ../plug-ins/common/svg.c:794
+#: ../plug-ins/common/wmf.c:555 ../plug-ins/print/gimp_main_window.c:1026
+#: ../plug-ins/print/gimp_main_window.c:1229
+msgid "Height:"
+msgstr "Höhe:"
 
-#: ../plug-ins/common/poppler.c:768
-msgid "_Height (pixels):"
-msgstr "_Höhe (Pixel):"
+#: ../plug-ins/common/poppler.c:956 ../plug-ins/common/svg.c:868
+#: ../plug-ins/common/wmf.c:629
+msgid "_X ratio:"
+msgstr "_X-Anteil:"
 
-#: ../plug-ins/common/poppler.c:771 ../plug-ins/common/poppler.c:772
-msgid "_Resolution:"
-msgstr "A_uflösung:"
+#: ../plug-ins/common/poppler.c:978 ../plug-ins/common/svg.c:890
+#: ../plug-ins/common/wmf.c:651
+msgid "_Y ratio:"
+msgstr "_Y-Anteil:"
+
+#: ../plug-ins/common/poppler.c:992 ../plug-ins/common/svg.c:904
+#: ../plug-ins/common/wmf.c:665
+msgid "Constrain aspect ratio"
+msgstr "Seitenverhältnis beschränken"
+
+#. Resolution
+#: ../plug-ins/common/poppler.c:997 ../plug-ins/common/postscript.c:3084
+#: ../plug-ins/common/svg.c:909 ../plug-ins/common/wmf.c:670
+#: ../plug-ins/print/gimp_main_window.c:1104
+msgid "Resolution:"
+msgstr "Auflösung:"
+
+#: ../plug-ins/common/poppler.c:1003 ../plug-ins/common/svg.c:915
+#: ../plug-ins/common/wmf.c:676
+#, c-format
+msgid "pixels/%a"
+msgstr "Pixel/%a"
 
 #. Antialiasing
-#: ../plug-ins/common/poppler.c:786
+#: ../plug-ins/common/poppler.c:1021
 msgid "A_ntialiasing"
 msgstr "_Kantenglättung"
 
@@ -5877,12 +5893,6 @@ msgstr "Aus Postscript importieren"
 #: ../plug-ins/common/postscript.c:3068
 msgid "Rendering"
 msgstr "Rendere"
-
-#. Resolution
-#: ../plug-ins/common/postscript.c:3084 ../plug-ins/common/svg.c:909
-#: ../plug-ins/common/wmf.c:670 ../plug-ins/print/gimp_main_window.c:1104
-msgid "Resolution:"
-msgstr "Auflösung:"
 
 #: ../plug-ins/common/postscript.c:3114
 msgid "Pages:"
@@ -6747,7 +6757,7 @@ msgid "Luminosity _threshold:"
 msgstr "Leuchtstärke-_Schwellwert:"
 
 #: ../plug-ins/common/sparkle.c:379
-msgid "Adjust the Luminosity Threshold"
+msgid "Adjust the luminosity threshold"
 msgstr "Leuchtstärke Schwellwert anpassen"
 
 #: ../plug-ins/common/sparkle.c:389
@@ -6755,7 +6765,7 @@ msgid "F_lare intensity:"
 msgstr "_Leuchtintensität:"
 
 #: ../plug-ins/common/sparkle.c:392
-msgid "Adjust the Flare Intensity"
+msgid "Adjust the flare intensity"
 msgstr "Flacker Intensität anpassen"
 
 #: ../plug-ins/common/sparkle.c:402
@@ -6763,7 +6773,7 @@ msgid "_Spike length:"
 msgstr "_Strahlenlänge:"
 
 #: ../plug-ins/common/sparkle.c:405
-msgid "Adjust the Spike Length"
+msgid "Adjust the spike length"
 msgstr "Einstellen der Strahlenlänge"
 
 #: ../plug-ins/common/sparkle.c:415
@@ -6771,7 +6781,7 @@ msgid "Sp_ike points:"
 msgstr "St_rahlzentren:"
 
 #: ../plug-ins/common/sparkle.c:418
-msgid "Adjust the Number of Spikes"
+msgid "Adjust the number of spikes"
 msgstr "Einstellen der Anzahl der Strahlen"
 
 #: ../plug-ins/common/sparkle.c:428
@@ -6779,7 +6789,7 @@ msgid "Spi_ke angle (-1: random):"
 msgstr "Stra_hlwinkel (-1: Zufällig)"
 
 #: ../plug-ins/common/sparkle.c:431
-msgid "Adjust the Spike Angle (-1 means a Random Angle is chosen)"
+msgid "Adjust the spike angle (-1 causes a random angle to be chosen)"
 msgstr ""
 "Einstellen des Winkels zwischen den Strahlen (-1 bedeutet einen zufällig "
 "gewählten Winkel)"
@@ -6789,11 +6799,15 @@ msgid "Spik_e density:"
 msgstr "Strahl_endichte:"
 
 #: ../plug-ins/common/sparkle.c:445
-msgid "Adjust the Spike Density"
+msgid "Adjust the spike density"
 msgstr "Einstellen der Strahlendichte"
 
+#: ../plug-ins/common/sparkle.c:455
+msgid "Tr_ansparency:"
+msgstr "_Transparenz:"
+
 #: ../plug-ins/common/sparkle.c:458
-msgid "Adjust the Opacity of the Spikes"
+msgid "Adjust the opacity of the spikes"
 msgstr "Deckkraft der Strahlen anpassen"
 
 #: ../plug-ins/common/sparkle.c:468
@@ -6801,62 +6815,62 @@ msgid "_Random hue:"
 msgstr "_Zufallsfarbton:"
 
 #: ../plug-ins/common/sparkle.c:471
-msgid "Adjust the Value how much the Hue should be changed randomly"
+msgid "Adjust how much the hue should be changed randomly"
 msgstr "Wie sehr soll der Farbton zufällig geändert werden"
 
-#: ../plug-ins/common/sparkle.c:482
+#: ../plug-ins/common/sparkle.c:481
 msgid "Rando_m saturation:"
 msgstr "Zu_fällige Sättigung:"
 
-#: ../plug-ins/common/sparkle.c:485
-msgid "Adjust the Value how much the Saturation should be changed randomly"
+#: ../plug-ins/common/sparkle.c:484
+msgid "Adjust how much the saturation should be changed randomly"
 msgstr "Einstellen wie zufällig die Sättigung geändert wird"
 
-#: ../plug-ins/common/sparkle.c:502
+#: ../plug-ins/common/sparkle.c:501
 msgid "_Preserve luminosity"
 msgstr "Helligkeit _erhalten"
 
-#: ../plug-ins/common/sparkle.c:509
-msgid "Should the Luminosity be preserved?"
+#: ../plug-ins/common/sparkle.c:508
+msgid "Should the luminosity be preserved?"
 msgstr "Soll die Helligkeit erhalten bleiben?"
 
-#: ../plug-ins/common/sparkle.c:518
+#: ../plug-ins/common/sparkle.c:517
 msgid "In_verse"
 msgstr "In_vertieren"
 
-#: ../plug-ins/common/sparkle.c:524
-msgid "Should an Inverse Effect be done?"
+#: ../plug-ins/common/sparkle.c:523
+msgid "Should the effect be inversed?"
 msgstr "Möchten Sie einen Umkehreffekt anwenden?"
 
-#: ../plug-ins/common/sparkle.c:533
+#: ../plug-ins/common/sparkle.c:532
 msgid "A_dd border"
 msgstr "Rand hin_zufügen"
 
-#: ../plug-ins/common/sparkle.c:539
-msgid "Draw a Border of Spikes around the Image"
+#: ../plug-ins/common/sparkle.c:538
+msgid "Draw a border of spikes around the image"
 msgstr "Zeichne einen Rand aus Strahlen um das Bild"
 
-#: ../plug-ins/common/sparkle.c:553
+#: ../plug-ins/common/sparkle.c:552
 msgid "_Natural color"
 msgstr "_Natürliche Farbe"
 
-#: ../plug-ins/common/sparkle.c:554
+#: ../plug-ins/common/sparkle.c:553
 msgid "_Foreground color"
 msgstr "_Vordergrundfarbe"
 
-#: ../plug-ins/common/sparkle.c:555
+#: ../plug-ins/common/sparkle.c:554
 msgid "_Background color"
 msgstr "_Hintergrundfarbe"
 
-#: ../plug-ins/common/sparkle.c:562
+#: ../plug-ins/common/sparkle.c:561
 msgid "Use the color of the image"
 msgstr "Die Farbe des Bildes verwenden"
 
-#: ../plug-ins/common/sparkle.c:563
+#: ../plug-ins/common/sparkle.c:562
 msgid "Use the foreground color"
 msgstr "Die Vordergrundfarbe verwenden"
 
-#: ../plug-ins/common/sparkle.c:564
+#: ../plug-ins/common/sparkle.c:563
 msgid "Use the background color"
 msgstr "Die Hintergrundfarbe verwenden"
 
@@ -7148,29 +7162,6 @@ msgstr "%d x %d"
 #: ../plug-ins/common/svg.c:724
 msgid "Render Scalable Vector Graphics"
 msgstr "Skalierbare Vektorgrafik (SVG) rendern"
-
-#: ../plug-ins/common/svg.c:794 ../plug-ins/common/wmf.c:555
-#: ../plug-ins/print/gimp_main_window.c:1026
-#: ../plug-ins/print/gimp_main_window.c:1229
-msgid "Height:"
-msgstr "Höhe:"
-
-#: ../plug-ins/common/svg.c:868 ../plug-ins/common/wmf.c:629
-msgid "_X ratio:"
-msgstr "_X-Anteil:"
-
-#: ../plug-ins/common/svg.c:890 ../plug-ins/common/wmf.c:651
-msgid "_Y ratio:"
-msgstr "_Y-Anteil:"
-
-#: ../plug-ins/common/svg.c:904 ../plug-ins/common/wmf.c:665
-msgid "Constrain aspect ratio"
-msgstr "Seitenverhältnis beschränken"
-
-#: ../plug-ins/common/svg.c:915 ../plug-ins/common/wmf.c:676
-#, c-format
-msgid "pixels/%a"
-msgstr "Pixel/%a"
 
 #. Path Import
 #: ../plug-ins/common/svg.c:935
@@ -7526,11 +7517,11 @@ msgstr "Einheiten-Editor"
 msgid "_Unsharp Mask..."
 msgstr "_Unscharf Maskieren..."
 
-#: ../plug-ins/common/unsharp.c:465
+#: ../plug-ins/common/unsharp.c:466
 msgid "Merging"
 msgstr "Zusammenfügen"
 
-#: ../plug-ins/common/unsharp.c:632
+#: ../plug-ins/common/unsharp.c:633
 msgid "Unsharp Mask"
 msgstr "Unscharf Maskieren"
 
@@ -9846,44 +9837,38 @@ msgstr "Unterteilung:"
 msgid "Spot radius:"
 msgstr "Punktradius:"
 
-#: ../plug-ins/ifscompose/ifscompose.c:1306
+#: ../plug-ins/ifscompose/ifscompose.c:1305
 #, c-format
 msgid "Rendering IFS (%d/%d)"
 msgstr "IFS (%d/%d) wird berechnet"
 
-#. transfer the image to the drawable
-#: ../plug-ins/ifscompose/ifscompose.c:1323
-#, c-format
-msgid "Copying IFS to image (%d/%d)"
-msgstr "IFS wird ins Bild (%d/%d) kopiert"
-
-#: ../plug-ins/ifscompose/ifscompose.c:1479
+#: ../plug-ins/ifscompose/ifscompose.c:1471
 #, c-format
 msgid "Transformation %s"
 msgstr "Transformation %s"
 
-#: ../plug-ins/ifscompose/ifscompose.c:2392
+#: ../plug-ins/ifscompose/ifscompose.c:2384
 #: ../plug-ins/metadata/interface.c:563 ../plug-ins/metadata/interface.c:573
 msgid "Save failed"
 msgstr "Speichern fehlgeschlagen"
 
-#: ../plug-ins/ifscompose/ifscompose.c:2473
-#: ../plug-ins/ifscompose/ifscompose.c:2486
+#: ../plug-ins/ifscompose/ifscompose.c:2465
+#: ../plug-ins/ifscompose/ifscompose.c:2478
 #: ../plug-ins/metadata/interface.c:462 ../plug-ins/metadata/interface.c:472
 #: ../plug-ins/metadata/interface.c:548
 msgid "Open failed"
 msgstr "Öffnen fehlgeschlagen"
 
-#: ../plug-ins/ifscompose/ifscompose.c:2481
+#: ../plug-ins/ifscompose/ifscompose.c:2473
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Fractal file."
 msgstr "Die Datei »%s« scheint keine IFS-Fraktal-Datei zu sein."
 
-#: ../plug-ins/ifscompose/ifscompose.c:2521
+#: ../plug-ins/ifscompose/ifscompose.c:2513
 msgid "Save as IFS Fractal file"
 msgstr "Als IFS-Fraktal-Datei speichern"
 
-#: ../plug-ins/ifscompose/ifscompose.c:2556
+#: ../plug-ins/ifscompose/ifscompose.c:2548
 msgid "Open IFS Fractal file"
 msgstr "IFS-Fraktal-Datei öffnen"
 
@@ -11881,24 +11866,3 @@ msgstr "Fehler: XJT-Eigenschaften-Datei »%s« konnte nicht gelesen werden."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Fehler: Die XJT Eigenschaften-Datei »%s« ist leer."
-
-#~ msgid "FlareFX"
-#~ msgstr "Linsenreflexe"
-
-#~ msgid "_Show cursor"
-#~ msgstr "_Zeige Cursor"
-
-#~ msgid "S_how cursor"
-#~ msgstr "Cursor _zeigen"
-
-#~ msgid "_Use intensity algorithm"
-#~ msgstr "Intensitäts-Algorithmus _verwenden"
-
-#~ msgid "Polarizing"
-#~ msgstr "Polarisieren"
-
-#~ msgid "Polarize"
-#~ msgstr "Polarkoordinaten"
-
-#~ msgid "Take a screenshot of your _desktop"
-#~ msgstr "Ein Bildschirmfoto des _Desktops machen."
