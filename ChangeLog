@@ -1,3 +1,8 @@
+2006-02-19  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/common/mosaic.c: applied a (slightly modified) patch from
+	Esben Mose Hansen which add triangles as a tile type.
+
 2006-02-19  Manish Singh  <yosh@gimp.org>
 
 	* m4macros/binreloc.m4: introduce automake conditional USE_BINRELOC.
