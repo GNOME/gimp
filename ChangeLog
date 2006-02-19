@@ -1,3 +1,10 @@
+2006-02-19  Manish Singh  <yosh@gimp.org>
+
+	* m4macros/binreloc.m4: introduce automake conditional USE_BINRELOC.
+
+	* app/Makefile.am: ... and use the above here, so that -rpath is only
+	specified when binreloc functionality is enabled. Fixes bug #331677.
+
 2006-02-19  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/gif.c (save_image): removed warning when reusing

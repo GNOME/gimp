@@ -71,7 +71,7 @@ endif
 if OS_WIN32
 mwindows = -mwindows
 endif
-if OS_UNIX
+if USE_BINRELOC
 munix = -Wl,-rpath '-Wl,$$ORIGIN/../lib'
 endif
 
