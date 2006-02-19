@@ -1096,8 +1096,9 @@ save_image (const gchar *filename,
 					 drawable->width * drawable->height);
 	}
       else
-	transparent = -1;
-
+        {
+          transparent = -1;
+        }
 
       BitsPerPixel = colorstobpp (colors);
 
@@ -1106,23 +1107,19 @@ save_image (const gchar *filename,
 	  /* We were able to re-use an index within the existing bitspace,
 	     whereas the estimate in the header was pessimistic but still
 	     needs to be upheld... */
+#ifdef GIFDEBUG
 	  static gboolean onceonly = FALSE;
 
 	  if (!onceonly)
 	    {
-#ifdef GIFDEBUG
 	      g_warning ("Promised %d bpp, pondered writing chunk with %d bpp!",
                          liberalBPP, BitsPerPixel);
-#endif
-	      g_message (_("Warning:\n"
-                           "Transparent color in written file might be "
-                           "incorrect on viewers which don't support "
-                           "transparency."));
               onceonly = TRUE;
 	    }
+#endif
 	}
-      useBPP = (BitsPerPixel > liberalBPP) ? BitsPerPixel : liberalBPP;
 
+      useBPP = (BitsPerPixel > liberalBPP) ? BitsPerPixel : liberalBPP;
 
       if (is_gif89)
 	{
@@ -1154,7 +1151,7 @@ save_image (const gchar *filename,
 	      if (!onceonly)
 		{
 		  g_message (_("Delay inserted to prevent evil "
-                               "CPU-sucking anim."));
+                               "CPU-sucking animation."));
 		  onceonly = TRUE;
 		}
 	      Delay89 = 1;
