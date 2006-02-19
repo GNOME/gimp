@@ -80,11 +80,11 @@ static void      find_iir_constants    (gdouble  n_p[],
                                         gdouble  bd_m[],
                                         gdouble  std_dev);
 
-static void      transfer_pixels   (gdouble  *src1,
-                                    gdouble  *src2,
-                                    guchar   *dest,
-                                    gint      bytes,
-                                    gint      width);
+static void      transfer_pixels   (const gdouble  *src1,
+                                    const gdouble  *src2,
+                                    guchar         *dest,
+                                    gint            bytes,
+                                    gint            width);
 
 static void      make_rle_curve    (gdouble   sigma,
                                     gint    **p_curve,
@@ -102,7 +102,7 @@ static inline gint run_length_encode (const guchar *src,
                                       gint          bytes,
                                       gint          width,
                                       gint          border,
-                                      gint          pack);
+                                      gboolean      pack);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -631,17 +631,17 @@ separate_alpha (guchar *buf,
 }
 
 /*
- * run_length_encode(src, rle, pix, dist, width, border, pack);
+ * run_length_encode (src, rle, pix, dist, width, border, pack);
  *
  * Copy 'width' 8bit pixels from 'src' to 'pix' and extend both sides
  * by 'border' pixels so 'pix[]' is filled from '-border' to 'width+border-1'.
  *
  * 'dist' is the distance between the pixels in 'src'.
  *
- * If 'pack' is non-zero, then 'rle' is filled with a run-length
- * encoding of the pixels. In plain english, that means that rle[i]
- * gives the number of times the same pixel is found pix[i], pix[i+1], ...
- * A standalone pixel has a rle value of 1.
+ * If 'pack' is TRUE, then 'rle' is filled with a run-length encoding
+ * of the pixels. In plain english, that means that rle[i] gives the
+ * number of times the same pixel is found pix[i], pix[i+1], ...  A
+ * standalone pixel has a rle value of 1.
  *
  * The function returns the number of times 2 identical consecutive pixels
  * were found.
@@ -650,22 +650,18 @@ separate_alpha (guchar *buf,
  *       'pack' are efficiently resolved by the compiler (they are in
  *       the critical loop).  As a consequence, the function should
  *       only be called with known constant value for 'pack'.  In the
- *       current implementation, 'pack' is always 1 but it might be
- *       more efficient to have an 'adaptative' algotirhm that
- *       switches to 0 when the run-length is innefficient
- *
- *
+ *       current implementation, 'pack' is always TRUE but it might be
+ *       more efficient to have an 'adaptive' algorithm that switches
+ *       to FALSE when the run-length is innefficient.
  */
-
-
 static inline gint
-run_length_encode(const guchar *src,
-                  gint         *rle,
-                  gint         *pix,
-                  gint          dist,  /* distance between 2 src pixels */
-                  gint          width,
-                  gint          border,
-                  gint          pack)
+run_length_encode (const guchar *src,
+                   gint         *rle,
+                   gint         *pix,
+                   gint          dist,  /* distance between 2 src pixels */
+                   gint          width,
+                   gint          border,
+                   gboolean      pack)
 {
   gint last;
   gint count = 0;
@@ -731,30 +727,30 @@ run_length_encode(const guchar *src,
 
 
 static void
-do_encoded_lre (gint   *enc,
-                gint   *src,
-                guchar *dest,
-                gint    width,
-                gint    length,
-                gint    dist,
-                gint   *curve,
-                gint    ctotal,
-                gint   *csum)
+do_encoded_lre (const gint *enc,
+                const gint *src,
+                guchar     *dest,
+                gint        width,
+                gint        length,
+                gint        dist,
+                const gint *curve,
+                gint        ctotal,
+                const gint *csum)
 {
   gint col;
 
   for (col = 0; col < width; col++)
     {
-      gint *rpt;
-      gint *pix;
-      gint  nb;
-      gint  s1;
-      gint  i;
-      gint  val   = 0;
-      gint  start = -length;
+      const gint *rpt;
+      const gint *pix;
+      gint        nb;
+      gint        s1;
+      gint        i;
+      gint        val   = 0;
+      gint        start = - length;
 
-      rpt = &enc[col+start];
-      pix = &src[col+start];
+      rpt = &enc[col + start];
+      pix = &src[col + start];
 
       s1 = csum[start];
       nb = rpt[0];
@@ -781,23 +777,23 @@ do_encoded_lre (gint   *enc,
 }
 
 static void
-do_full_lre (gint   *src,
-             guchar *dest,
-             gint    width,
-             gint    length,
-             gint    dist,
-             gint   *curve,
-             gint    ctotal)
+do_full_lre (const gint *src,
+             guchar     *dest,
+             gint        width,
+             gint        length,
+             gint        dist,
+             const gint *curve,
+             gint        ctotal)
 {
   gint col;
 
   for (col = 0; col < width; col++)
     {
-      gint * x1;
-      gint * x2;
-      gint * c = &curve[0];
-      gint   i;
-      gint   val;
+      const gint *x1;
+      const gint *x2;
+      const gint *c = &curve[0];
+      gint        i;
+      gint        val;
 
       x1 = x2 = &src[col];
 
@@ -848,7 +844,7 @@ do_full_lre (gint   *src,
 
       /* Only that final loop is strictly required */
 
-      while (i>=1)
+      while (i >= 1)
         {
           /* process the pixels at the distance i before and after the
            * central point. They must have the same coefficient
@@ -864,20 +860,18 @@ do_full_lre (gint   *src,
       dest += dist;
 
     }
-
 }
 
 static void
-gauss_iir(GimpDrawable *drawable,
-          gdouble       horz,
-          gdouble       vert,
-          BlurMethod    method,
-          guchar       *preview_buffer,
-          gint          x1,
-          gint          y1,
-          gint          width,
-          gint          height
-         )
+gauss_iir (GimpDrawable *drawable,
+           gdouble       horz,
+           gdouble       vert,
+           BlurMethod    method,
+           guchar       *preview_buffer,
+           gint          x1,
+           gint          y1,
+           gint          width,
+           gint          height)
 {
   GimpPixelRgn  src_rgn, dest_rgn;
   gint          bytes;
@@ -948,10 +942,8 @@ gauss_iir(GimpDrawable *drawable,
 
       find_iir_constants (n_p, n_m, d_p, d_m, bd_p, bd_m, std_dev);
 
-
       for (col = 0; col < width; col++)
         {
-
           memset (val_p, 0, height * bytes * sizeof (gdouble));
           memset (val_m, 0, height * bytes * sizeof (gdouble));
 
@@ -1020,8 +1012,6 @@ gauss_iir(GimpDrawable *drawable,
                         bytes);
             }
         }
-
-
 
       /*  prepare for the horizontal pass  */
       gimp_pixel_rgn_init (&src_rgn,
@@ -1102,6 +1092,7 @@ gauss_iir(GimpDrawable *drawable,
           for (col = 0; col < width; col++)
             {
               gdouble *vpptr, *vmptr;
+
               terms = (col < 4) ? col : 4;
 
               for (b = 0; b < bytes; b++)
@@ -1148,10 +1139,7 @@ gauss_iir(GimpDrawable *drawable,
                       dest,
                       width * bytes);
             }
-
         }
-
-
     }
 
   /*  free up buffers  */
@@ -1165,16 +1153,15 @@ gauss_iir(GimpDrawable *drawable,
 
 
 static void
-gauss_rle(GimpDrawable *drawable,
-          gdouble       horz,
-          gdouble       vert,
-          BlurMethod    method,
-          guchar       *preview_buffer,
-          gint          x1,
-          gint          y1,
-          gint          width,
-          gint          height
-         )
+gauss_rle (GimpDrawable *drawable,
+           gdouble       horz,
+           gdouble       vert,
+           BlurMethod    method,
+           guchar       *preview_buffer,
+           gint          x1,
+           gint          y1,
+           gint          width,
+           gint          height)
 {
   GimpPixelRgn  src_rgn, dest_rgn;
   gint          bytes;
@@ -1249,14 +1236,15 @@ gauss_rle(GimpDrawable *drawable,
           for (b = 0; b < bytes; b++)
             {
               gint same =  run_length_encode (src + b, rle, pix, bytes,
-					      height, length, 1);
-              if (same > (3*height)/4)
+					      height, length, TRUE);
+
+              if (same > (3 * height) / 4)
 		{
 		  /* encoded_rle is only fastest if there are a lot of
 		   * repeating pixels
 		   */
-                do_encoded_lre (rle, pix, dest + b, height, length, bytes,
-				curve, total, sum);
+                  do_encoded_lre (rle, pix, dest + b, height, length, bytes,
+                                  curve, total, sum);
 		}
 	      else
 		{
@@ -1270,8 +1258,9 @@ gauss_rle(GimpDrawable *drawable,
             separate_alpha (dest, height, bytes);
 
           if (direct)
-           {
-              gimp_pixel_rgn_set_col(&dest_rgn, dest, col + x1, y1, height);
+            {
+              gimp_pixel_rgn_set_col (&dest_rgn, dest, col + x1, y1, height);
+
               progress += height * vert;
               if ((col % progress_step) == 0)
                 gimp_progress_update (progress / max_progress);
@@ -1298,10 +1287,7 @@ gauss_rle(GimpDrawable *drawable,
   else if (!direct)
     {
       gimp_pixel_rgn_get_rect (&src_rgn,
-                               preview_buffer,
-                               x1, y1,
-                               width, height
-                              );
+                               preview_buffer, x1, y1, width, height);
     }
 
   /*  Now the horizontal pass  */
@@ -1360,21 +1346,21 @@ gauss_rle(GimpDrawable *drawable,
           for (b = 0; b < bytes; b++)
             {
               gint same = run_length_encode (src + b, rle, pix, bytes,
-					     width, length, 1);
+					     width, length, TRUE);
 
-              if (same > (3*width)/4)
+              if (same > (3 * width) / 4)
 		{
-		  /* encoded_rle is only fastest if there are
-		     a lot of repeating pixels
+		  /* encoded_rle is only fastest if there are a lot of
+		   * repeating pixels
 		   */
-                do_encoded_lre (rle, pix, dest + b, width, length, bytes,
-				curve, total, sum);
+                  do_encoded_lre (rle, pix, dest + b, width, length, bytes,
+                                  curve, total, sum);
 		}
 	      else
 		{
 		  /* else a full but more simple algorithm is better */
-		  do_full_lre (pix, dest + b, width, length,
-			       bytes, curve, total);
+		  do_full_lre (pix, dest + b, width, length, bytes,
+                               curve, total);
 		}
             }
 
@@ -1400,21 +1386,14 @@ gauss_rle(GimpDrawable *drawable,
 
       g_free (rle - length);
       g_free (pix - length);
-
-
     }
 
-
-
-  if (curve != NULL) {
-    free_rle_curve(curve, length, sum);
-  }
+  if (curve)
+    free_rle_curve (curve, length, sum);
 
   g_free (src);
   g_free (dest);
-
 }
-
 
 
 static void
@@ -1425,9 +1404,9 @@ gauss (GimpDrawable *drawable,
        GtkWidget    *preview)
 {
 
-  gint     x1, y1, x2, y2;
-  gint     width, height;
-  guchar * preview_buffer;
+  gint    x1, y1, x2, y2;
+  gint    width, height;
+  guchar *preview_buffer;
 
   /*
    * IIR goes wrong if the blur radius is less than 1, so we silently
@@ -1489,17 +1468,14 @@ gauss (GimpDrawable *drawable,
       gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
       gimp_drawable_update (drawable->drawable_id, x1, y1, width, height);
     }
-
-
-
 }
 
 static void
-transfer_pixels (gdouble *src1,
-                 gdouble *src2,
-                 guchar  *dest,
-                 gint     bytes,
-                 gint     width)
+transfer_pixels (const gdouble *src1,
+                 const gdouble *src2,
+                 guchar        *dest,
+                 gint           bytes,
+                 gint           width)
 {
   gint    b;
   gint    bend = bytes * width;
@@ -1519,13 +1495,13 @@ transfer_pixels (gdouble *src1,
 }
 
 static void
-find_iir_constants (gdouble n_p[],
-                    gdouble n_m[],
-                    gdouble d_p[],
-                    gdouble d_m[],
-                    gdouble bd_p[],
-                    gdouble bd_m[],
-                    gdouble std_dev)
+find_iir_constants (gdouble *n_p,
+                    gdouble *n_m,
+                    gdouble *d_p,
+                    gdouble *d_m,
+                    gdouble *bd_p,
+                    gdouble *bd_m,
+                    gdouble  std_dev)
 {
   gint    i;
   gdouble x0;
