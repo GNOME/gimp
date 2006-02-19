@@ -1555,14 +1555,14 @@ AC_SUBST(WMF)
 # Check for Mac OS X TWAIN framework (can't build on Darwin)
 ############################################################
 
-twain_ok=$os_win32
+mac_twain_ok=no
 AC_MSG_CHECKING([checking for Mac OS X TWAIN support])
 AC_TRY_CPP([
 #include <Carbon/Carbon.h>
 #include <TWAIN/TWAIN.h>
-], twain_ok=yes)
-AC_MSG_RESULT($twain_ok)
-AM_CONDITIONAL(HAVE_MAC_TWAIN, test x$twain_ok = xyes)
+], mac_twain_ok=yes)
+AC_MSG_RESULT($mac_twain_ok)
+AM_CONDITIONAL(HAVE_MAC_TWAIN, test x$mac_twain_ok = xyes)
 
 
 ##########################################################
@@ -1930,7 +1930,7 @@ Optional Plug-Ins:
   PSP:              $have_zlib
   SVG:              $have_librsvg
   TIFF:             $have_libtiff
-  TWAIN:            $twain_ok
+  MacOS X TWAIN:    $mac_twain_ok
   URI:              $uri_plugin
   Win Print:        $os_win32
   Win Snap:         $os_win32

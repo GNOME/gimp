@@ -1,3 +1,7 @@
+2006-02-19  Tor Lillqvist  <tml@novell.com>
+
+	* configure.in: Don't think we have Mac OS X TWAIN if on Win32.
+
 2006-02-19  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/common/mosaic.c: applied a (slightly modified) patch from
