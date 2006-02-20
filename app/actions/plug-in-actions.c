@@ -156,7 +156,7 @@ plug_in_actions_setup (GimpActionGroup *group)
       entries[i].name           = g_strdup_printf ("plug-in-recent-%02d",
                                                    i + 1);
       entries[i].stock_id       = GIMP_STOCK_RESHOW_FILTER;
-      entries[i].label          = NULL;
+      entries[i].label          = "";
       entries[i].tooltip        = NULL;
       entries[i].value          = i;
       entries[i].value_variable = FALSE;

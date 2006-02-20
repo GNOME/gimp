@@ -1,3 +1,11 @@
+2006-02-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/file-actions.c (file_actions_setup)
+	* app/actions/plug-in-actions.c (plug_in_actions_setup): use ""
+	instead of NULL for "no label" on an action (we can't rely on the
+	stock item to provide the label that prevents the gtk warning from
+	firing).
+
 2006-02-20  Karine Delvare  <kdelvare@nerim.net>
 
 	* app/tools/gimprectangletool.c: zero division check should be
