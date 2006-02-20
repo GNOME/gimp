@@ -159,7 +159,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
     }
 
   frame = jitter_options_gui (options->jitter_options,
-			      options, tool_type);
+                              options, tool_type);
   if (frame)
     {
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
@@ -374,8 +374,8 @@ fade_options_gui (GimpFadeOptions  *fade,
 
 static GtkWidget *
 jitter_options_gui (GimpJitterOptions  *jitter,
-		    GimpPaintOptions   *paint_options,
-		    GType               tool_type)
+                    GimpPaintOptions   *paint_options,
+                    GType               tool_type)
 {
   GObject   *config = G_OBJECT (paint_options);
   GtkWidget *frame  = NULL;
@@ -412,7 +412,7 @@ jitter_options_gui (GimpJitterOptions  *jitter,
                                  GTK_TABLE (table), 0, 0,
                                  _("Amount:"),
                                  0.01, 0.1, 2,
-                                 TRUE, 0.0, 2.0);
+                                 TRUE, 0.0, 5.0);
     }
 
   return frame;

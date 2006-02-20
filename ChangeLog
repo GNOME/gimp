@@ -1,3 +1,7 @@
+2006-02-20  Simon Budig  <simon@gimp.org>
+
+	* app/tools/gimppaintoptions-gui.c: allow maximum jitter of 5.0.
+
 2006-02-20  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpcoreconfig.[ch]
