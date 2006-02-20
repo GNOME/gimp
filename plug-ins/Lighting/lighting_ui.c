@@ -445,6 +445,7 @@ create_light_page (void)
 
 
   label = gtk_label_new (_("Position"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach_defaults (GTK_TABLE (table), label, 3, 4, 0, 1);
   gtk_widget_show (label);
 
@@ -489,6 +490,7 @@ create_light_page (void)
 
 
   label = gtk_label_new (_("Direction"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach_defaults (GTK_TABLE (table), label, 5, 6, 0, 1);
   gtk_widget_show (label);
 
@@ -529,8 +531,7 @@ create_light_page (void)
                            _("Light source Z direction in XYZ space"),
                            NULL);
 
-  isolate_button = gtk_toggle_button_new_with_mnemonic (_("I_solate"));
-  gtk_toggle_button_set_mode   (GTK_TOGGLE_BUTTON (isolate_button), FALSE);
+  isolate_button = gtk_check_button_new_with_mnemonic (_("I_solate"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (isolate_button),
                                 mapvals.light_isolated);
   g_signal_connect (isolate_button, "toggled",
