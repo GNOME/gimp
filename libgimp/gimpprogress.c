@@ -51,7 +51,10 @@ static void   gimp_temp_progress_run (const gchar      *name,
 
 /*  private variables  */
 
-static GHashTable *gimp_progress_ht = NULL;
+static GHashTable   * gimp_progress_ht      = NULL;
+
+static gdouble        gimp_progress_current = 0.0;
+static const gdouble  gimp_progress_step    = (1.0 / 300.0);
 
 
 /*  public functions  */
@@ -214,6 +217,26 @@ gimp_progress_uninstall (const gchar *progress_callback)
   return user_data;
 }
 
+
+/**
+ * gimp_progress_init:
+ * @message: Message to use in the progress dialog.
+ *
+ * Initializes the progress bar for the current plug-in.
+ *
+ * Initializes the progress bar for the current plug-in. It is only
+ * valid to call this procedure from a plug-in.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_progress_init (const gchar  *message)
+{
+  gimp_progress_current = 0.0;
+
+  return _gimp_progress_init (message);
+}
+
 /**
  * gimp_progress_init_printf:
  * @format: a standard printf() format string
@@ -283,6 +306,43 @@ gimp_progress_set_text_printf (const gchar *format,
   g_free (text);
 
   return retval;
+}
+
+/**
+ * gimp_progress_update:
+ * @percentage: Percentage of progress completed (in the range from 0.0 to 1.0).
+ *
+ * Updates the progress bar for the current plug-in.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_progress_update (gdouble percentage)
+{
+  gboolean changed;
+
+  if (percentage <= 0.0)
+    {
+      changed = (gimp_progress_current != 0.0);
+      percentage = 0.0;
+    }
+  else if (percentage >= 1.0)
+    {
+      changed = (gimp_progress_current != 1.0);
+      percentage = 1.0;
+    }
+  else
+    {
+      changed =
+        (fabs (gimp_progress_current - percentage) > gimp_progress_step);
+    }
+
+  if (! changed)
+    return TRUE;
+
+  gimp_progress_current = percentage;
+
+  return _gimp_progress_update (gimp_progress_current);
 }
 
 

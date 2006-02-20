@@ -1,5 +1,17 @@
 2006-02-20  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/pdb/progress.pdb
+
+	* libgimp/gimpprogress.[ch]: applied slightly modified patch from
+	Stephane Chauveau.  Wraps the gimp_progress_update() PDB call so
+	that redundant progress updates are suppressed in libgimp.  This
+	gives a noticeable speedup for all plug-ins that update the
+	progress too often (bug #331470).
+
+	* libgimp/gimpprogress_pdb.[ch]: regenerated.
+
+2006-02-20  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpplugin.c (gimp_plugin_icon_register): added a cast to
 	get rid of a compiler warning.
 

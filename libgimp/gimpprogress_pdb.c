@@ -26,7 +26,7 @@
 #include "gimp.h"
 
 /**
- * gimp_progress_init:
+ * _gimp_progress_init:
  * @message: Message to use in the progress dialog.
 
  *
@@ -38,7 +38,7 @@
  * Returns: TRUE on success.
  */
 gboolean
-gimp_progress_init (const gchar *message)
+_gimp_progress_init (const gchar *message)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -58,7 +58,7 @@ gimp_progress_init (const gchar *message)
 }
 
 /**
- * gimp_progress_update:
+ * _gimp_progress_update:
  * @percentage: Percentage of progress completed which must be between 0.0 and 1.0.
  *
  * Updates the progress bar for the current plug-in.
@@ -69,7 +69,7 @@ gimp_progress_init (const gchar *message)
  * Returns: TRUE on success.
  */
 gboolean
-gimp_progress_update (gdouble percentage)
+_gimp_progress_update (gdouble percentage)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
