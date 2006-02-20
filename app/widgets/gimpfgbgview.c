@@ -161,7 +161,8 @@ gimp_fg_bg_view_draw_rect (GimpFgBgView  *view,
   gint    xx, yy;
   guchar *bp;
 
-  g_return_if_fail (width > 0 && height > 0);
+  if (! (width > 0 && height > 0))
+    return;
 
   gimp_rgb_get_uchar (color, &r, &g, &b);
 
@@ -223,13 +224,13 @@ gimp_fg_bg_view_expose (GtkWidget      *widget,
       gimp_fg_bg_view_draw_rect (view,
                                  widget->window,
                                  widget->style->fg_gc[0],
-                                 width - rect_w, height - rect_h,
-                                 rect_w, rect_h,
+                                 width - rect_w + 1, height - rect_h + 1,
+                                 rect_w - 2, rect_h - 2,
                                  &color);
     }
 
   gtk_paint_shadow (widget->style, widget->window, GTK_STATE_NORMAL,
-                    GTK_SHADOW_ETCHED_IN,
+                    GTK_SHADOW_IN,
                     NULL, widget, NULL,
                     width - rect_w, height - rect_h, rect_w, rect_h);
 
@@ -241,13 +242,13 @@ gimp_fg_bg_view_expose (GtkWidget      *widget,
       gimp_fg_bg_view_draw_rect (view,
                                  widget->window,
                                  widget->style->fg_gc[0],
-                                 0, 0,
-                                 rect_w, rect_h,
+                                 1, 1,
+                                 rect_w - 2, rect_h - 2,
                                  &color);
     }
 
   gtk_paint_shadow (widget->style, widget->window, GTK_STATE_NORMAL,
-                    GTK_SHADOW_ETCHED_IN,
+                    GTK_SHADOW_OUT,
                     NULL, widget, NULL,
                     0, 0, rect_w, rect_h);
 
