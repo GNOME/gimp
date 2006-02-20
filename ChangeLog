@@ -1,7 +1,11 @@
 2006-02-20  Sven Neumann  <sven@gimp.org>
 
-	* tools/pdbgen/pdb/progress.pdb
+	* plug-ins/common/mosaic.c: use a combo-box to select the tiling
+	primitives.
 
+2006-02-20  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/progress.pdb
 	* libgimp/gimpprogress.[ch]: applied slightly modified patch from
 	Stephane Chauveau.  Wraps the gimp_progress_update() PDB call so
 	that redundant progress updates are suppressed in libgimp.  This

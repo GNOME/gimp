@@ -580,15 +580,11 @@ mosaic_dialog (GimpDrawable *drawable)
   GtkWidget *preview;
   GtkWidget *toggle;
   GtkWidget *vbox;
-  GtkWidget *toggle_vbox;
   GtkWidget *hbox;
-  GtkWidget *frame;
+  GtkWidget *combo;
   GtkWidget *table;
-  GtkWidget *square;
-  GtkWidget *hexagon;
-  GtkWidget *triangle;
-  GtkWidget *octogon;
   GtkObject *scale_data;
+  gint       row = 0;
   gboolean   run;
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
@@ -623,128 +619,36 @@ mosaic_dialog (GimpDrawable *drawable)
                             drawable);
 
   /*  The hbox -- splits the scripts and the info vbox  */
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_hbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  /*  The vbox for first column of options  */
-  vbox = gtk_vbox_new (FALSE, 12);
-  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
-
-  /*  the vertical box and its toggle buttons  */
-  frame = gimp_frame_new (_("Options"));
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-
-  toggle_vbox = gtk_vbox_new (FALSE, 6);
-  gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
-
-  toggle = gtk_check_button_new_with_mnemonic (_("_Antialiasing"));
-  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), mvals.antialiasing);
-  gtk_widget_show (toggle);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &mvals.antialiasing);
-  g_signal_connect_swapped (toggle, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
-
-  toggle = gtk_check_button_new_with_mnemonic ( _("Co_lor averaging"));
-  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                mvals.color_averaging);
-  gtk_widget_show (toggle);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &mvals.color_averaging);
-  g_signal_connect_swapped (toggle, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
-
-  toggle = gtk_check_button_new_with_mnemonic ( _("Allo_w tile splitting"));
-  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                mvals.tile_allow_split);
-  gtk_widget_show (toggle);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &mvals.tile_allow_split);
-  g_signal_connect_swapped (toggle, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
-
-  toggle = gtk_check_button_new_with_mnemonic ( _("_Pitted surfaces"));
-  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                (mvals.tile_surface == ROUGH));
-  gtk_widget_show (toggle);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &mvals.tile_surface);
-  g_signal_connect_swapped (toggle, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
-
-  toggle = gtk_check_button_new_with_mnemonic ( _("_FG/BG lighting"));
-  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                (mvals.grout_color == FG_BG));
-  gtk_widget_show (toggle);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &mvals.grout_color);
-  g_signal_connect_swapped (toggle, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
-
-  gtk_widget_show (toggle_vbox);
-  gtk_widget_show (frame);
-
-  /*  tiling primitive  */
-  frame = gimp_int_radio_group_new (TRUE, _("Tiling Primitives"),
-                                    G_CALLBACK (gimp_radio_button_update),
-                                    &mvals.tile_type, mvals.tile_type,
-
-                                    _("_Squares"),            SQUARES,  &square,
-                                    _("He_xagons"),           HEXAGONS, &hexagon,
-                                    _("Oc_tagons & squares"), OCTAGONS, &octogon,
-                                    _("T_riangles"),          TRIANGLES, &triangle,
-
-                                    NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  g_signal_connect_swapped (square, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
-  g_signal_connect_swapped (hexagon, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
-  g_signal_connect_swapped (octogon, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
-  g_signal_connect_swapped (triangle, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
-
-  gtk_widget_show (vbox);
-
-  /*  parameter settings  */
-  frame = gimp_frame_new (_("Settings"));
-  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
-
-  table = gtk_table_new (6, 3, FALSE);
+  table = gtk_table_new (7, 3, FALSE);
+  gtk_box_pack_start (GTK_BOX (hbox), table, TRUE, TRUE, 0);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_widget_show (table);
 
-  scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                                     _("T_ile size:"), SCALE_WIDTH, 5,
+  combo = gimp_int_combo_box_new (_("Squares"),            SQUARES,
+                                  _("Hexagons"),           HEXAGONS,
+                                  _("Octagons & squares"), OCTAGONS,
+                                  _("Triangles"),          TRIANGLES,
+                                  NULL);
+  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
+                              mvals.tile_type,
+                              G_CALLBACK (gimp_int_combo_box_get_active),
+                              &mvals.tile_type);
+
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+                             _("_Tiling primitives:"), 0.0, 0.5,
+                             combo, 2, FALSE);
+
+  g_signal_connect_swapped (combo, "changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
+
+  scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
+                                     _("Tile _size:"), SCALE_WIDTH, 5,
                                      mvals.tile_size, 5.0, 100.0, 1.0, 10.0, 1,
                                      TRUE, 0, 0,
                                      NULL, NULL);
@@ -755,11 +659,12 @@ mosaic_dialog (GimpDrawable *drawable)
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+  scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
                                      _("Tile _height:"), SCALE_WIDTH, 5,
                                      mvals.tile_height, 1.0, 50.0, 1.0, 10.0, 1,
                                      TRUE, 0, 0,
                                      NULL, NULL);
+
   g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mvals.tile_height);
@@ -767,7 +672,7 @@ mosaic_dialog (GimpDrawable *drawable)
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
+  scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
                                      _("Til_e spacing:"), SCALE_WIDTH, 5,
                                      mvals.tile_spacing, 1.0, 50.0, 1.0, 10.0, 1,
                                      TRUE, 0, 0,
@@ -779,7 +684,7 @@ mosaic_dialog (GimpDrawable *drawable)
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
+  scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
                                      _("Tile _neatness:"), SCALE_WIDTH, 5,
                                      mvals.tile_neatness,
                                      0.0, 1.0, 0.10, 0.1, 2,
@@ -792,7 +697,7 @@ mosaic_dialog (GimpDrawable *drawable)
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
+  scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
                                      _("Light _direction:"), SCALE_WIDTH, 5,
                                      mvals.light_dir, 0.0, 360.0, 1.0, 15.0, 1,
                                      TRUE, 0, 0,
@@ -804,7 +709,7 @@ mosaic_dialog (GimpDrawable *drawable)
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 5,
+  scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
                                      _("Color _variation:"), SCALE_WIDTH, 5,
                                      mvals.color_variation,
                                      0.0, 1.0, 0.01, 0.1, 2,
@@ -817,8 +722,74 @@ mosaic_dialog (GimpDrawable *drawable)
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  gtk_widget_show (frame);
-  gtk_widget_show (table);
+  /*  the vertical box and its toggle buttons  */
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
+
+  toggle = gtk_check_button_new_with_mnemonic (_("_Antialiasing"));
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), mvals.antialiasing);
+  gtk_widget_show (toggle);
+
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &mvals.antialiasing);
+  g_signal_connect_swapped (toggle, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
+
+  toggle = gtk_check_button_new_with_mnemonic ( _("Co_lor averaging"));
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+                                mvals.color_averaging);
+  gtk_widget_show (toggle);
+
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &mvals.color_averaging);
+  g_signal_connect_swapped (toggle, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
+
+  toggle = gtk_check_button_new_with_mnemonic ( _("Allo_w tile splitting"));
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+                                mvals.tile_allow_split);
+  gtk_widget_show (toggle);
+
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &mvals.tile_allow_split);
+  g_signal_connect_swapped (toggle, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
+
+  toggle = gtk_check_button_new_with_mnemonic ( _("_Pitted surfaces"));
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+                                (mvals.tile_surface == ROUGH));
+  gtk_widget_show (toggle);
+
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &mvals.tile_surface);
+  g_signal_connect_swapped (toggle, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
+
+  toggle = gtk_check_button_new_with_mnemonic ( _("_FG/BG lighting"));
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+                                (mvals.grout_color == FG_BG));
+  gtk_widget_show (toggle);
+
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &mvals.grout_color);
+  g_signal_connect_swapped (toggle, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   gtk_widget_show (dialog);
 
