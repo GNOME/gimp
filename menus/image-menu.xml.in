@@ -512,7 +512,7 @@
       </menu>
       <menuitem action="tools-vector" />
       <menuitem action="tools-color-picker" />
-      <menuitem action="tools-magnify" />
+      <menuitem action="tools-zoom" />
       <menuitem action="tools-measure" />
       <menuitem action="tools-text" />
     </menu>
@@ -529,6 +529,9 @@
     <menu action="plug-in-menu" name="Filters">
       <menuitem action="plug-in-repeat" />
       <menuitem action="plug-in-reshow" />
+      <menu action="plug-in-repeat-recent-menu" name="Repeat">
+        <placeholder name="Plug-Ins" />
+      </menu>
       <menuitem action="plug-in-reset-all" />
       <separator />
       <menu action="plug-in-blur-menu" name="Blur" />

@@ -1,5 +1,11 @@
 2006-02-20  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpmagnifytool.c: renamed to Zoom tool.
+
+	* menus/image-menu.xml.in: changed accordingly.
+
+2006-02-20  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpfgbgview.c (gimp_fg_bg_view_expose): tweaked
 	drawing of shadows.
 

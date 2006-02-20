@@ -3,7 +3,7 @@
                          Development Branch
                    ------------------------------
 
-This is the development branch of The GIMP. Here's where all the shiny
+This is the development branch of GIMP. Here's where all the shiny
 new stuff is being done that will one day be released as GIMP 2.4.
 
 
@@ -15,7 +15,7 @@ Changes in GIMP 2.3.8
 - suppress redundant progress updates from plug-ins
 - changed some gimprc and sessionrc default values
 - do not focus transform tool dialogs on map
-- added some missing tool shortcuts
+- renamed Magnify tool to Zoom tool and added some missing tool shortcuts
 - bug fixes and code cleanup
 
 
