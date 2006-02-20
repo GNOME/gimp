@@ -1691,7 +1691,7 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
       switch (function)
         {
         case RECT_RESIZING_UPPER_LEFT:
-          if (inc_x == 0 || inc_x / inc_y < aspect)
+          if (inc_y == 0 || inc_x / inc_y < aspect)
             x1 = rx2 - (ry2 - y1) * aspect + .5;
           else
             y1 = ry2 - (rx2 - x1) / aspect + .5;
@@ -1699,7 +1699,7 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
 
         case RECT_RESIZING_UPPER_RIGHT:
         case RECT_RESIZING_TOP:
-          if (inc_x == 0 || inc_x / inc_y < aspect)
+          if (inc_y == 0 || inc_x / inc_y < aspect)
             x2 = rx1 + (ry2 - y1) * aspect + .5;
           else
             y1 = ry2 - (x2 - rx1) / aspect + .5;
@@ -1707,7 +1707,7 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
 
         case RECT_RESIZING_LOWER_LEFT:
         case RECT_RESIZING_LEFT:
-          if (inc_x == 0 || inc_x / inc_y < aspect)
+          if (inc_y == 0 || inc_x / inc_y < aspect)
             x1 = rx2 - (y2 - ry1) * aspect + .5;
           else
             y2 = ry1 + (rx2 - x1) / aspect + .5;
@@ -1716,7 +1716,7 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
         case RECT_RESIZING_LOWER_RIGHT:
         case RECT_RESIZING_RIGHT:
         case RECT_RESIZING_BOTTOM:
-          if (inc_x == 0 || inc_x / inc_y < aspect)
+          if (inc_y == 0 || inc_x / inc_y < aspect)
             x2 = rx1 + (y2 - ry1) * aspect + .5;
           else
             y2 = ry1 + (x2 - rx1) / aspect + .5;
