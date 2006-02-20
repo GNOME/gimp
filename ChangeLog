@@ -1,5 +1,9 @@
 2006-02-20  Sven Neumann  <sven@gimp.org>
 
+	* etc/sessionrc: set tab-style for dockables.
+
+2006-02-20  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: updated comments.
 
 2006-02-20  Sven Neumann  <sven@gimp.org>

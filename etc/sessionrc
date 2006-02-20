@@ -21,15 +21,23 @@
         (follow-active-image "true"))
     (dock
         (book
-            (dockable "gimp-layer-list")
-            (dockable "gimp-channel-list")
-            (dockable "gimp-vectors-list")
-            (dockable "gimp-undo-history"))
+            (dockable "gimp-layer-list"
+	        (tab-style icon))
+            (dockable "gimp-channel-list"
+	        (tab-style icon))
+            (dockable "gimp-vectors-list"
+	        (tab-style icon))
+            (dockable "gimp-undo-history"
+	        (tab-style icon)))
         (book
             (position 360)
-            (dockable "gimp-color-editor")
-            (dockable "gimp-brush-grid")
-            (dockable "gimp-pattern-grid")
-            (dockable "gimp-gradient-list"))))
+            (dockable "gimp-color-editor"
+	        (tab-style preview))
+            (dockable "gimp-brush-grid"
+	        (tab-style preview))
+            (dockable "gimp-pattern-grid"
+	        (tab-style preview))
+            (dockable "gimp-gradient-list"
+	        (tab-style preview)))))
 
 # end of sessionrc
