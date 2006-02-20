@@ -79,6 +79,7 @@ enum
   PROP_UNDO_LEVELS,
   PROP_UNDO_SIZE,
   PROP_UNDO_PREVIEW_SIZE,
+  PROP_PLUG_IN_HISTORY_SIZE,
   PROP_PLUGINRC_PATH,
   PROP_LAYER_PREVIEWS,
   PROP_LAYER_PREVIEW_SIZE,
@@ -298,6 +299,12 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                  GIMP_VIEW_SIZE_LARGE,
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
+  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_PLUG_IN_HISTORY_SIZE,
+                                "plug-in-history-size",
+                                PLUG_IN_HISTORY_SIZE_BLURB,
+                                0, 256, 10,
+                                GIMP_PARAM_STATIC_STRINGS |
+                                GIMP_CONFIG_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class,
                                  PROP_PLUGINRC_PATH,
                                  "pluginrc-path", PLUGINRC_PATH_BLURB,
@@ -519,6 +526,9 @@ gimp_core_config_set_property (GObject      *object,
         gimp_config_sync (g_value_get_object (value),
                           G_OBJECT (core_config->default_grid), 0);
       break;
+    case PROP_PLUG_IN_HISTORY_SIZE:
+      core_config->plug_in_history_size = g_value_get_int (value);
+      break;
     case PROP_UNDO_LEVELS:
       core_config->levels_of_undo = g_value_get_int (value);
       break;
@@ -655,6 +665,9 @@ gimp_core_config_get_property (GObject    *object,
       break;
     case PROP_DEFAULT_GRID:
       g_value_set_object (value, core_config->default_grid);
+      break;
+    case PROP_PLUG_IN_HISTORY_SIZE:
+      g_value_set_int (value, core_config->plug_in_history_size);
       break;
     case PROP_UNDO_LEVELS:
       g_value_set_int (value, core_config->levels_of_undo);

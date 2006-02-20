@@ -236,6 +236,9 @@ N_("When enabled, the X server is queried for the mouse's current position " \
    "be slower.  Perversely, on some X servers enabling this option results " \
    "in faster painting.")
 
+#define PLUG_IN_HISTORY_SIZE_BLURB \
+"How many recently used plug-ins to keep on the Filters menu."
+
 #define PLUG_IN_PATH_BLURB \
 "Sets the plug-in search path."
 

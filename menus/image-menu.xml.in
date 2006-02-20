@@ -529,7 +529,7 @@
     <menu action="plug-in-menu" name="Filters">
       <menuitem action="plug-in-repeat" />
       <menuitem action="plug-in-reshow" />
-      <menu action="plug-in-repeat-recent-menu" name="Repeat">
+      <menu action="plug-in-recent-menu" name="Recently Used">
         <placeholder name="Plug-Ins" />
       </menu>
       <menuitem action="plug-in-reset-all" />

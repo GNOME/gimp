@@ -26,6 +26,8 @@
 
 #include "menus-types.h"
 
+#include "config/gimpcoreconfig.h"
+
 #include "core/gimp.h"
 
 #include "plug-in/plug-ins.h"
@@ -117,11 +119,36 @@ void
 plug_in_menus_setup (GimpUIManager *manager,
                      const gchar   *ui_path)
 {
-  GTree  *menu_entries;
-  GSList *list;
+  GtkUIManager *ui_manager;
+  GTree        *menu_entries;
+  GSList       *list;
+  guint         merge_id;
+  gint          i;
 
   g_return_if_fail (GIMP_IS_UI_MANAGER (manager));
   g_return_if_fail (ui_path != NULL);
+
+  ui_manager = GTK_UI_MANAGER (manager);
+
+  merge_id = gtk_ui_manager_new_merge_id (ui_manager);
+
+  for (i = 0; i < manager->gimp->config->plug_in_history_size; i++)
+    {
+      gchar *action_name;
+      gchar *action_path;
+
+      action_name = g_strdup_printf ("plug-in-recent-%02d", i + 1);
+      action_path = g_strdup_printf ("%s/Filters/Recently Used/Plug-Ins",
+                                     ui_path);
+
+      gtk_ui_manager_add_ui (ui_manager, merge_id,
+                             action_path, action_name, action_name,
+                             GTK_UI_MANAGER_MENUITEM,
+                             FALSE);
+
+      g_free (action_name);
+      g_free (action_path);
+    }
 
   menu_entries = g_tree_new_full ((GCompareDataFunc) strcmp, NULL,
                                   g_free, g_free);

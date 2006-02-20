@@ -196,6 +196,7 @@ plug_in_run (Gimp         *gimp,
 
 void
 plug_in_repeat (Gimp         *gimp,
+                gint          index,
                 GimpContext  *context,
                 GimpProgress *progress,
                 gint          display_ID,
@@ -203,21 +204,25 @@ plug_in_repeat (Gimp         *gimp,
                 gint          drawable_ID,
                 gboolean      with_interface)
 {
-  Argument *args;
-  gint      i;
+  PlugInProcDef *proc_def;
+  Argument      *args;
+  gint           i;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (index >= 0);
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
-  if (gimp->last_plug_in)
+  proc_def = g_slist_nth_data (gimp->last_plug_ins, index);
+
+  if (proc_def)
     {
       /* construct the procedures arguments */
       args = g_new (Argument, 3);
 
       /* initialize the first three argument types */
       for (i = 0; i < 3; i++)
-	args[i].arg_type = gimp->last_plug_in->db_info.args[i].arg_type;
+	args[i].arg_type = proc_def->db_info.args[i].arg_type;
 
       /* initialize the first three plug-in arguments  */
       args[0].value.pdb_int = (with_interface ?
@@ -226,7 +231,7 @@ plug_in_repeat (Gimp         *gimp,
       args[2].value.pdb_int = drawable_ID;
 
       /* run the plug-in procedure */
-      plug_in_run (gimp, context, progress, &gimp->last_plug_in->db_info,
+      plug_in_run (gimp, context, progress, &proc_def->db_info,
                    args, 3, FALSE, TRUE, display_ID);
 
       g_free (args);

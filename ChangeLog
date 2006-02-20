@@ -1,5 +1,20 @@
 2006-02-20  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpcoreconfig.[ch]
+	* app/config/gimprc-blurbs.h
+	* app/core/gimp.[ch]: keep a history of recently used plug-ins.
+
+	* app/plug-in/plug-in-run.[ch] (plug_in_repeat): pass an index
+	into the plug-in history.
+
+	* app/actions/plug-in-actions.c
+	* app/actions/plug-in-commands.c
+	* app/menus/plug-in-menus.c
+	* menus/image-menu.xml.in: added a submenu with recently used
+	plug-ins to the Filters menu. Fixes bug #148855.
+
+2006-02-20  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpmagnifytool.c: renamed to Zoom tool.
 
 	* menus/image-menu.xml.in: changed accordingly.

@@ -79,7 +79,7 @@ enum
   RESTORE,
   EXIT,
   BUFFER_CHANGED,
-  LAST_PLUG_IN_CHANGED,
+  LAST_PLUG_INS_CHANGED,
   LAST_SIGNAL
 };
 
@@ -157,11 +157,11 @@ gimp_class_init (GimpClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
-  gimp_signals[LAST_PLUG_IN_CHANGED] =
-    g_signal_new ("last-plug-in-changed",
+  gimp_signals[LAST_PLUG_INS_CHANGED] =
+    g_signal_new ("last-plug-ins-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (GimpClass, last_plug_in_changed),
+                  G_STRUCT_OFFSET (GimpClass, last_plug_ins_changed),
                   NULL, NULL,
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
@@ -289,6 +289,12 @@ gimp_finalize (GObject *object)
     g_print ("EXIT: gimp_finalize\n");
 
   gimp_contexts_exit (gimp);
+
+  if (gimp->last_plug_ins)
+    {
+      g_slist_free (gimp->last_plug_ins);
+      gimp->last_plug_ins = NULL;
+    }
 
   if (gimp->image_new_last_template)
     {
@@ -913,11 +919,25 @@ void
 gimp_set_last_plug_in (Gimp          *gimp,
                        PlugInProcDef *proc_def)
 {
+  GSList *list;
+  gint    history_size;
+
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  gimp->last_plug_in = proc_def;
+  history_size = MAX (1, gimp->config->plug_in_history_size);
 
-  g_signal_emit (gimp, gimp_signals[LAST_PLUG_IN_CHANGED], 0);
+  gimp->last_plug_ins = g_slist_remove (gimp->last_plug_ins, proc_def);
+  gimp->last_plug_ins = g_slist_prepend (gimp->last_plug_ins, proc_def);
+
+  list = g_slist_nth (gimp->last_plug_ins, history_size);
+
+  if (list)
+    {
+      gimp->last_plug_ins = g_slist_remove_link (gimp->last_plug_ins, list);
+      g_slist_free (list);
+    }
+
+  g_signal_emit (gimp, gimp_signals[LAST_PLUG_INS_CHANGED], 0);
 }
 
 GimpImage *

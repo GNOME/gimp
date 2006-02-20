@@ -18,6 +18,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
@@ -157,7 +159,7 @@ plug_in_repeat_cmd_callback (GtkAction *action,
 {
   GimpDisplay  *gdisp;
   GimpDrawable *drawable;
-  gboolean      interactive;
+  gboolean      interactive = TRUE;
 
   gdisp = action_data_get_display (data);
   if (! gdisp)
@@ -167,9 +169,10 @@ plug_in_repeat_cmd_callback (GtkAction *action,
   if (! drawable)
     return;
 
-  interactive = value ? TRUE : FALSE;
+  if (strcmp (gtk_action_get_name (action), "plug-in-repeat") == 0)
+    interactive = FALSE;
 
-  plug_in_repeat (gdisp->gimage->gimp,
+  plug_in_repeat (gdisp->gimage->gimp, value,
                   gimp_get_user_context (gdisp->gimage->gimp),
                   GIMP_PROGRESS (gdisp),
                   gimp_display_get_ID (gdisp),

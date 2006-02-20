@@ -80,7 +80,7 @@ struct _Gimp
   PlugIn                 *current_plug_in;
   GSList                 *open_plug_ins;
   GSList                 *plug_in_stack;
-  PlugInProcDef          *last_plug_in;
+  GSList                 *last_plug_ins;
 
   PlugInShm              *plug_in_shm;
   GimpInterpreterDB      *interpreter_db;
@@ -140,15 +140,15 @@ struct _GimpClass
 {
   GimpObjectClass  parent_class;
 
-  void     (* initialize)           (Gimp               *gimp,
-                                     GimpInitStatusFunc  status_callback);
-  void     (* restore)              (Gimp               *gimp,
-                                     GimpInitStatusFunc  status_callback);
-  gboolean (* exit)                 (Gimp               *gimp,
-                                     gboolean            force);
+  void     (* initialize)            (Gimp               *gimp,
+                                      GimpInitStatusFunc  status_callback);
+  void     (* restore)               (Gimp               *gimp,
+                                      GimpInitStatusFunc  status_callback);
+  gboolean (* exit)                  (Gimp               *gimp,
+                                      gboolean            force);
 
-  void     (* buffer_changed)       (Gimp               *gimp);
-  void     (* last_plug_in_changed) (Gimp               *gimp);
+  void     (* buffer_changed)        (Gimp               *gimp);
+  void     (* last_plug_ins_changed) (Gimp               *gimp);
 };
 
 

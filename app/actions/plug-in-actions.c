@@ -27,6 +27,8 @@
 
 #include "actions-types.h"
 
+#include "config/gimpcoreconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
@@ -60,6 +62,7 @@ static void     plug_in_actions_build_path        (GimpActionGroup *group,
 static GimpActionEntry plug_in_actions[] =
 {
   { "plug-in-menu",                   NULL, N_("Filte_rs")          },
+  { "plug-in-recent-menu",            NULL, N_("Recently Used")     },
   { "plug-in-blur-menu",              NULL, N_("_Blur")             },
   { "plug-in-noise-menu",             NULL, N_("_Noise")            },
   { "plug-in-edge-detect-menu",       NULL, N_("Edge-De_tect")      },
@@ -87,12 +90,12 @@ static GimpEnumActionEntry plug_in_repeat_actions[] =
 {
   { "plug-in-repeat", GTK_STOCK_EXECUTE,
     N_("Re_peat Last"), "<control>F", NULL,
-    FALSE, FALSE,
+    0, FALSE,
     GIMP_HELP_FILTER_REPEAT },
 
   { "plug-in-reshow", GIMP_STOCK_RESHOW_FILTER,
     N_("R_e-Show Last"), "<control><shift>F", NULL,
-    TRUE, FALSE,
+    0, FALSE,
     GIMP_HELP_FILTER_RESHOW }
 };
 
@@ -102,7 +105,10 @@ static GimpEnumActionEntry plug_in_repeat_actions[] =
 void
 plug_in_actions_setup (GimpActionGroup *group)
 {
-  GSList *list;
+  GimpEnumActionEntry *entries;
+  GSList              *list;
+  gint                 n_entries;
+  gint                 i;
 
   gimp_action_group_add_actions (group,
                                  plug_in_actions,
@@ -141,7 +147,35 @@ plug_in_actions_setup (GimpActionGroup *group)
         }
     }
 
-  g_signal_connect_object (group->gimp, "last-plug-in-changed",
+  n_entries = group->gimp->config->plug_in_history_size;
+
+  entries = g_new0 (GimpEnumActionEntry, n_entries);
+
+  for (i = 0; i < n_entries; i++)
+    {
+      entries[i].name           = g_strdup_printf ("plug-in-recent-%02d",
+                                                   i + 1);
+      entries[i].stock_id       = GIMP_STOCK_RESHOW_FILTER;
+      entries[i].label          = NULL;
+      entries[i].tooltip        = NULL;
+      entries[i].value          = i;
+      entries[i].value_variable = FALSE;
+      entries[i].help_id        = GIMP_HELP_FILTER_RESHOW;
+      entries[i].accelerator    = "";
+    }
+
+  gimp_action_group_add_enum_actions (group, entries, n_entries,
+                                      G_CALLBACK (plug_in_repeat_cmd_callback));
+
+  for (i = 0; i < n_entries; i++)
+    {
+      gimp_action_group_set_action_visible (group, entries[i].name, FALSE);
+      g_free ((gchar *) entries[i].name);
+    }
+
+  g_free (entries);
+
+  g_signal_connect_object (group->gimp, "last-plug-ins-changed",
                            G_CALLBACK (plug_in_actions_last_changed),
                            group, 0);
 
@@ -155,6 +189,7 @@ plug_in_actions_update (GimpActionGroup *group,
   GimpImage     *gimage = action_data_get_image (data);
   GimpImageType  type   = -1;
   GSList        *list;
+  gint           i;
 
   if (gimage)
     {
@@ -184,8 +219,8 @@ plug_in_actions_update (GimpActionGroup *group,
 	}
     }
 
-  if (group->gimp->last_plug_in &&
-      plug_in_proc_def_get_sensitive (group->gimp->last_plug_in, type))
+  if (group->gimp->last_plug_ins &&
+      plug_in_proc_def_get_sensitive (group->gimp->last_plug_ins->data, type))
     {
       gimp_action_group_set_action_sensitive (group, "plug-in-repeat", TRUE);
       gimp_action_group_set_action_sensitive (group, "plug-in-reshow", TRUE);
@@ -194,6 +229,19 @@ plug_in_actions_update (GimpActionGroup *group,
     {
       gimp_action_group_set_action_sensitive (group, "plug-in-repeat", FALSE);
       gimp_action_group_set_action_sensitive (group, "plug-in-reshow", FALSE);
+    }
+
+  for (list = group->gimp->last_plug_ins, i = 0; list; list = list->next, i++)
+    {
+      PlugInProcDef *proc_def = list->data;
+      gchar         *name     = g_strdup_printf ("plug-in-recent-%02d", i + 1);
+      gboolean       sensitive;
+
+      sensitive = plug_in_proc_def_get_sensitive (proc_def, type);
+
+      gimp_action_group_set_action_sensitive (group, name, sensitive);
+
+      g_free (name);
     }
 }
 
@@ -374,11 +422,14 @@ static void
 plug_in_actions_last_changed (Gimp            *gimp,
                               GimpActionGroup *group)
 {
-  if (gimp->last_plug_in)
+  GSList      *list;
+  const gchar *progname;
+  const gchar *domain;
+  gint         i;
+
+  if (gimp->last_plug_ins)
     {
-      PlugInProcDef *proc_def = gimp->last_plug_in;
-      const gchar   *progname;
-      const gchar   *domain;
+      PlugInProcDef *proc_def = gimp->last_plug_ins->data;
       gchar         *label;
       gchar         *repeat;
       gchar         *reshow;
@@ -407,7 +458,44 @@ plug_in_actions_last_changed (Gimp            *gimp,
                                           _("Re-Show Last"));
     }
 
-  /* update sensitivity of the "plug-in-repeat" and "plug-in-reshow" actions */
+  for (list = gimp->last_plug_ins, i = 0; list; list = list->next, i++)
+    {
+      GtkAction     *action;
+      PlugInProcDef *proc_def = list->data;
+      gchar         *name     = g_strdup_printf ("plug-in-recent-%02d", i + 1);
+      gchar         *label;
+
+      action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), name);
+      g_free (name);
+
+      progname = plug_in_proc_def_get_progname (proc_def);
+      domain   = plug_ins_locale_domain (gimp, progname, NULL);
+
+      label = plug_in_proc_def_get_label (proc_def, domain);
+
+      g_object_set (action,
+                    "label",    label,
+                    "visible",  TRUE,
+                    "stock-id", plug_in_proc_def_get_stock_id (proc_def),
+                    NULL);
+
+      g_free (label);
+    }
+
+  for (; i < gimp->config->plug_in_history_size; i++)
+    {
+      GtkAction *action;
+      gchar     *name = g_strdup_printf ("plug-in-recent-%02d", i + 1);
+
+      action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), name);
+      g_free (name);
+
+      g_object_set (action,
+                    "visible", FALSE,
+                    NULL);
+    }
+
+  /* update sensitivity of the actions */
   plug_in_actions_update (group, gimp);
 }
 
