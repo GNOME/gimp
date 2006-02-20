@@ -1,3 +1,8 @@
+2006-02-20  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimpplugin.c (gimp_plugin_icon_register): added a cast to
+	get rid of a compiler warning.
+
 2006-02-19  Tor Lillqvist  <tml@novell.com>
 
 	* configure.in: Don't think we have Mac OS X TWAIN if on Win32.

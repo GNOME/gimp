@@ -39,7 +39,7 @@ gimp_plugin_icon_register (const gchar  *procedure_name,
     {
     case GIMP_ICON_TYPE_STOCK_ID:
     case GIMP_ICON_TYPE_IMAGE_FILE:
-      icon_data_length = strlen (icon_data) + 1;
+      icon_data_length = strlen ((const gchar *) icon_data) + 1;
       break;
 
     case GIMP_ICON_TYPE_INLINE_PIXBUF:
