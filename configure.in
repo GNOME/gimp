@@ -1664,15 +1664,11 @@ GIMP_MKENUMS="\$(PERL) \$(top_srcdir)/tools/gimp-mkenums"
 AC_SUBST(GIMP_MKENUMS)
 
 
-#############################
-# Disable deprecated GIMP API
-#############################
+#########################
+# Disable deprecated APIs
+#########################
 
 CPPFLAGS="${CPPFLAGS} -DGIMP_DISABLE_DEPRECATED"
-
-##############################################################
-# Default to disable deprecated GTK+ stuff for 2.4.x and 2.6.x
-##############################################################
 
 if test "x$have_glib_2_9" != "xyes"; then
   CPPFLAGS="${CPPFLAGS} -DG_DISABLE_DEPRECATED"
@@ -1685,6 +1681,7 @@ fi
 if test "x$have_pango_1_11" != "xyes"; then
   CPPFLAGS="${CPPFLAGS} -DPANGO_DISABLE_DEPRECATED"
 fi
+
 
 ############################
 # Require multihead safe API
