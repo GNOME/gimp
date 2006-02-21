@@ -1,3 +1,18 @@
+2006-02-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/Makefile.am
+	* app/plug-in/plug-in-data.[ch]: new files which keep the
+	plug-in data list.
+
+	* app/pdb/procedural_db.[ch]: removed here, it only cluttered the
+	file with unrelated functionality.
+
+	* app/core/gimp.[ch]
+	* app/actions/plug-in-commands.c
+	* tools/pdbgen/pdb/procedural_db.pdb: changed accordingly.
+
+	* app/pdb/procedural_db_cmds.c: regenerated.
+
 2006-02-20  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/file-actions.c (file_actions_setup)

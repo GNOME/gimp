@@ -154,14 +154,5 @@ Argument     * procedural_db_return_args   (ProcRecord   *procedure,
 void           procedural_db_destroy_args  (Argument     *args,
                                             gint          nargs);
 
-void           procedural_db_free_data     (Gimp         *gimp);
-void           procedural_db_set_data      (Gimp         *gimp,
-                                            const gchar  *identifier,
-                                            gint32        bytes,
-                                            const guint8 *data);
-const guint8 * procedural_db_get_data      (Gimp         *gimp,
-                                            const gchar  *identifier,
-                                            gint32       *bytes);
-
 
 #endif  /*  __PROCEDURAL_DB_H__  */

@@ -311,7 +311,7 @@ HELP
 
   canonical = gimp_canonicalize_identifier (identifier);
 
-  data = procedural_db_get_data (gimp, canonical, &bytes);
+  data = plug_in_data_get (gimp, canonical, &bytes);
   success = (data != NULL);
 
   g_free (canonical);
@@ -347,7 +347,7 @@ HELP
 
   canonical = gimp_canonicalize_identifier (identifier);
 
-  data = procedural_db_get_data (gimp, canonical, &bytes);
+  data = plug_in_data_get (gimp, canonical, &bytes);
   success = (data != NULL);
 
   g_free (canonical);
@@ -380,7 +380,7 @@ HELP
 
   canonical = gimp_canonicalize_identifier (identifier);
 
-  procedural_db_set_data (gimp, canonical, bytes, data);
+  plug_in_data_set (gimp, canonical, bytes, data);
 
   g_free (canonical);
 }
@@ -388,7 +388,8 @@ CODE
     );
 }
 
-@headers = qw("libgimpbase/gimpbase.h" "core/gimp.h" "procedural-db-query.h");
+@headers = qw("libgimpbase/gimpbase.h" "core/gimp.h" "plug-in/plug-in-data.h"
+              "procedural-db-query.h");
 
 @procs = qw(procedural_db_temp_name procedural_db_dump
             procedural_db_query procedural_db_proc_info

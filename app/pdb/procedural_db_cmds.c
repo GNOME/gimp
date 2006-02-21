@@ -29,6 +29,7 @@
 #include "procedural_db.h"
 
 #include "core/gimp.h"
+#include "plug-in/plug-in-data.h"
 #include "procedural-db-query.h"
 
 static ProcRecord procedural_db_temp_name_proc;
@@ -647,7 +648,7 @@ procedural_db_get_data_invoker (Gimp         *gimp,
 
       canonical = gimp_canonicalize_identifier (identifier);
 
-      data = procedural_db_get_data (gimp, canonical, &bytes);
+      data = plug_in_data_get (gimp, canonical, &bytes);
       success = (data != NULL);
 
       g_free (canonical);
@@ -730,7 +731,7 @@ procedural_db_get_data_size_invoker (Gimp         *gimp,
 
       canonical = gimp_canonicalize_identifier (identifier);
 
-      data = procedural_db_get_data (gimp, canonical, &bytes);
+      data = plug_in_data_get (gimp, canonical, &bytes);
       success = (data != NULL);
 
       g_free (canonical);
@@ -807,7 +808,7 @@ procedural_db_set_data_invoker (Gimp         *gimp,
 
       canonical = gimp_canonicalize_identifier (identifier);
 
-      procedural_db_set_data (gimp, canonical, bytes, data);
+      plug_in_data_set (gimp, canonical, bytes, data);
 
       g_free (canonical);
     }

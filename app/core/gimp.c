@@ -206,6 +206,7 @@ gimp_init (Gimp *gimp)
   gimp->environ_table       = gimp_environ_table_new ();
 
   gimp->plug_in_debug       = NULL;
+  gimp->plug_in_data_list   = NULL;
 
   gimp->images              = gimp_list_new_weak (GIMP_TYPE_IMAGE, FALSE);
   gimp_object_set_name (GIMP_OBJECT (gimp->images), "images");
@@ -458,6 +459,9 @@ gimp_get_memsize (GimpObject *object,
 
   memsize += gimp_g_object_get_memsize (G_OBJECT (gimp->module_db));
 
+  memsize += gimp_g_list_get_memsize (gimp->plug_in_data_list,
+                                      0 /* FIXME */);
+
   memsize += gimp_g_hash_table_get_memsize (gimp->image_table);
   memsize += gimp_g_hash_table_get_memsize (gimp->item_table);
 
@@ -482,9 +486,6 @@ gimp_get_memsize (GimpObject *object,
 
   memsize += gimp_g_hash_table_get_memsize (gimp->procedural_ht);
   memsize += gimp_g_hash_table_get_memsize (gimp->procedural_compat_ht);
-
-  memsize += gimp_g_list_get_memsize (gimp->procedural_db_data_list,
-                                      0 /* FIXME */);
 
   memsize += gimp_g_slist_get_memsize (gimp->load_procs, 0 /* FIXME */);
   memsize += gimp_g_slist_get_memsize (gimp->save_procs, 0 /* FIXME */);

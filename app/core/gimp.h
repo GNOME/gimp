@@ -86,6 +86,7 @@ struct _Gimp
   GimpInterpreterDB      *interpreter_db;
   GimpEnvironTable       *environ_table;
   GimpPlugInDebug        *plug_in_debug;
+  GList                  *plug_in_data_list;
 
   GimpContainer          *images;
   gint                    next_image_ID;
@@ -111,7 +112,6 @@ struct _Gimp
 
   GHashTable             *procedural_ht;
   GHashTable             *procedural_compat_ht;
-  GList                  *procedural_db_data_list;
 
   GSList                 *load_procs;
   GSList                 *save_procs;

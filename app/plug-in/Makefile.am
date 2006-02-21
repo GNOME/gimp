@@ -21,6 +21,8 @@ libappplug_in_a_SOURCES = \
 	plug-in.h		\
 	plug-in-context.c	\
 	plug-in-context.h	\
+	plug-in-data.c		\
+	plug-in-data.h		\
 	plug-in-debug.c		\
 	plug-in-debug.h		\
 	plug-in-def.c		\

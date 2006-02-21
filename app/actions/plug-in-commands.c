@@ -32,8 +32,7 @@
 #include "core/gimpitem.h"
 #include "core/gimpprogress.h"
 
-#include "pdb/procedural_db.h"
-
+#include "plug-in/plug-in-data.h"
 #include "plug-in/plug-in-run.h"
 #include "plug-in/plug-in-proc-def.h"
 
@@ -227,5 +226,5 @@ plug_in_reset_all_response (GtkWidget *dialog,
   gtk_widget_destroy (dialog);
 
   if (response_id == GTK_RESPONSE_OK)
-    procedural_db_free_data (gimp);
+    plug_in_data_free (gimp);
 }

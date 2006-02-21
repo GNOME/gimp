@@ -40,6 +40,7 @@
 
 #include "plug-in.h"
 #include "plug-ins.h"
+#include "plug-in-data.h"
 #include "plug-in-def.h"
 #include "plug-in-params.h"
 #include "plug-in-proc-def.h"
@@ -412,6 +413,8 @@ plug_ins_exit (Gimp *gimp)
 
   g_slist_free (gimp->plug_in_help_domains);
   gimp->plug_in_help_domains = NULL;
+
+  plug_in_data_free (gimp);
 }
 
 void
