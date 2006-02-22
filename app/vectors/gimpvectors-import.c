@@ -779,6 +779,9 @@ svg_handler_ellipse_start (SvgHandler   *handler,
           parse_svg_length (*values,
                             handler->width, parser->image->xresolution,
                             &rx);
+          parse_svg_length (*values,
+                            handler->height, parser->image->yresolution,
+                            &ry);
         }
       else if (strcmp (*names, "rx") == 0)
         {
