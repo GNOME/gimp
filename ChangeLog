@@ -1,3 +1,7 @@
+2006-02-22  Simon Budig  <simon@gimp.org>
+
+	* app/vectors/gimpvectors-import.c: fix the import of svg circles.
+
 2006-02-21  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug-in/Makefile.am

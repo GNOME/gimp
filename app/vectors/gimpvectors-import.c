@@ -801,17 +801,26 @@ svg_handler_ellipse_start (SvgHandler   *handler,
 
         case 'r':
           if (strcmp (*names, "r") == 0)
-            parse_svg_length (*values,
-                              handler->width, parser->image->xresolution,
-                              &rx);
+            {
+              parse_svg_length (*values,
+                                handler->width, parser->image->xresolution,
+                                &rx);
+              parse_svg_length (*values,
+                                handler->height, parser->image->yresolution,
+                                &ry);
+            }
           else if (strcmp (*names, "rx") == 0)
-            parse_svg_length (*values,
-                              handler->width, parser->image->xresolution,
-                              &rx);
+            {
+              parse_svg_length (*values,
+                                handler->width, parser->image->xresolution,
+                                &rx);
+            }
           else if (strcmp (*names, "ry") == 0)
-            parse_svg_length (*values,
-                              handler->height, parser->image->yresolution,
-                              &ry);
+            {
+              parse_svg_length (*values,
+                                handler->height, parser->image->yresolution,
+                                &ry);
+            }
           break;
 
         case 't':
