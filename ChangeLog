@@ -1,3 +1,10 @@
+2006-02-23  Sven Neumann  <sven@gimp.org>
+
+	* libgimpbase/gimpwire.[ch]: added utility functions to send
+	GimpRGB values over the wire.
+
+	* libgimpbase/gimpprotocol.c: use the functions.
+
 2006-02-22  Simon Budig  <simon@gimp.org>
 
 	* app/vectors/gimpvectors-import.c: fix the import of svg circles.

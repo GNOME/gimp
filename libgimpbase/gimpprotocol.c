@@ -1396,21 +1396,9 @@ _gp_params_read (GIOChannel  *channel,
           break;
 
         case GIMP_PDB_COLOR:
-	  if (! _gimp_wire_read_double (channel,
-                                        &(*params)[i].data.d_color.r, 1,
-                                        user_data))
-	    goto cleanup;
-	  if (! _gimp_wire_read_double (channel,
-                                        &(*params)[i].data.d_color.g, 1,
-                                        user_data))
-	    goto cleanup;
-	  if (! _gimp_wire_read_double (channel,
-                                        &(*params)[i].data.d_color.b, 1,
-                                        user_data))
-	    goto cleanup;
-	  if (! _gimp_wire_read_double (channel,
-                                        &(*params)[i].data.d_color.a, 1,
-                                        user_data))
+	  if (! _gimp_wire_read_color (channel,
+                                       &(*params)[i].data.d_color, 1,
+                                       user_data))
 	    goto cleanup;
 	  break;
 
@@ -1626,18 +1614,9 @@ _gp_params_write (GIOChannel *channel,
           break;
 
         case GIMP_PDB_COLOR:
-	  {
-	    GimpRGB *color = (GimpRGB *) &params[i].data.d_color;
-
-	    if (! _gimp_wire_write_double (channel, &color->r, 1, user_data))
-	      return;
-	    if (! _gimp_wire_write_double (channel, &color->g, 1, user_data))
-	      return;
-	    if (! _gimp_wire_write_double (channel, &color->b, 1, user_data))
-	      return;
-	    if (! _gimp_wire_write_double (channel, &color->a, 1, user_data))
-	      return;
-	  }
+	  if (! _gimp_wire_write_color (channel,
+                                        &params[i].data.d_color, 1, user_data))
+            return;
           break;
 
         case GIMP_PDB_REGION:
