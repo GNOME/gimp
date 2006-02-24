@@ -1,3 +1,13 @@
+2006-02-24  Simon Budig  <simon@gimp.org>
+
+	* app/base/lut-funcs.c: change the LUT function for the contrast.
+	Fixes the buggy behaviour as described in bug #319872 and
+	bug #332068 and makes the behaviour consistent with the standard
+	contrast formula. However, I am leaving the bug open to discuss
+	further improvements.
+
+	Untabbified.
+
 2006-02-23  Sven Neumann  <sven@gimp.org>
 
 	* libgimpbase/gimpwire.[ch]: added utility functions to send
