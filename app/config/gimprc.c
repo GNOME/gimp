@@ -500,7 +500,7 @@ gimp_rc_save (GimpRc *rc)
     "takes precedence over the value defined in the system-wide gimprc: ";
   const gchar *bottom =
     "\n"
-    "Most values can be set within The GIMP by changing some options in "
+    "Most values can be set within GIMP by changing some options in "
     "the Preferences dialog.";
   const gchar *footer =
     "end of gimprc";

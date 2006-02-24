@@ -209,10 +209,10 @@ session_save (Gimp     *gimp,
 				 "GIMP sessionrc\n\n"
 				 "This file takes session-specific info "
 				 "(that is info, you want to keep between "
-				 "two GIMP sessions). You are not supposed "
+				 "two GIMP sessions).  You are not supposed "
 				 "to edit it manually, but of course you "
-				 "can do. The sessionrc will be entirely "
-                                 "rewritten every time you quit The GIMP. "
+				 "can do.  The sessionrc will be entirely "
+                                 "rewritten every time you quit GIMP.  "
                                  "If this file isn't found, defaults are "
                                  "used.",
 				 NULL);

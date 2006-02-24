@@ -1,3 +1,8 @@
+2006-02-24  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimprc.c (gimp_rc_save)
+	* app/gui/session.c (session_save): s/The GIMP/GIMP/
+
 2006-02-24  Simon Budig  <simon@gimp.org>
 
 	* app/base/lut-funcs.c: change the LUT function for the contrast.
@@ -13,7 +18,7 @@
 	* libgimpbase/gimpwire.[ch]: added utility functions to send
 	GimpRGB values over the wire.
 
-	* libgimpbase/gimpprotocol.c: use the functions.
+	* libgimpbase/gimpprotocol.c: use the new functions.
 
 2006-02-22  Simon Budig  <simon@gimp.org>
 
