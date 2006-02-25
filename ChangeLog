@@ -1,5 +1,10 @@
 2006-02-25  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/animationplay.c: use a normal toplevel window for
+	the plug-in dialog. Moved the Help button to the toolbar.
+
+2006-02-25  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpstock.h: added a define for GIMP_STOCK_DETACH
 	to the list of missing icons.
 

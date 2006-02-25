@@ -77,9 +77,7 @@ static void run   (const gchar      *name,
 
 static void do_playback                (void);
 
-static void window_response            (GtkWidget      *widget,
-                                        gint            response_id,
-                                        gpointer        data);
+static void window_destroy             (GtkWidget      *widget);
 static void play_callback              (GtkAction      *action);
 static void step_callback              (GtkAction      *action);
 static void rewind_callback            (GtkAction      *action);
@@ -119,7 +117,7 @@ GimpPlugInInfo PLUG_IN_INFO =
 
 
 /* Global widgets'n'stuff */
-static GtkWidget         *dlg          = NULL;
+static GtkWidget         *window       = NULL;
 static GtkUIManager      *ui_manager   = NULL;
 static guchar            *preview_data = NULL;
 static GtkWidget         *drawing_area = NULL;
@@ -366,8 +364,16 @@ static void
 close_callback (GtkAction *action,
                 gpointer   data)
 {
-  gtk_dialog_response (GTK_DIALOG (data), GTK_RESPONSE_CLOSE);
+  gtk_widget_destroy (GTK_WIDGET (data));
 }
+
+static void
+help_callback (GtkAction *action,
+               gpointer   data)
+{
+  gimp_standard_help_func (PLUG_IN_PROC, data);
+}
+
 
 static void
 detach_callback (GtkToggleAction *action)
@@ -440,7 +446,11 @@ ui_manager_new (GtkWidget *window)
 
     { "rewind", GTK_STOCK_MEDIA_REWIND,
       NULL, NULL, N_("Rewind animation"),
-      G_CALLBACK (rewind_callback) }
+      G_CALLBACK (rewind_callback) },
+
+    { "help", GTK_STOCK_HELP,
+      NULL, NULL, NULL,
+      G_CALLBACK (help_callback) }
   };
 
   static GtkToggleActionEntry toggle_actions[] =
@@ -481,7 +491,9 @@ ui_manager_new (GtkWidget *window)
                                      "    <toolitem action=\"rewind\" />"
                                      "    <separator />"
                                      "    <toolitem action=\"detach\" />"
-                                     "  </toolbar>"
+                                     "    <separator name=\"space\" />"
+                                     "    <toolitem action=\"help\" />"
+                                      "  </toolbar>"
                                      "</ui>",
                                      -1, &error);
 
@@ -517,45 +529,46 @@ static void
 build_dialog (GimpImageBaseType  basetype,
               gchar             *imagename)
 {
-  GtkWidget *toolbar;
-  GtkWidget *frame;
-  GtkWidget *vbox;
-  GtkWidget *abox;
-  GtkWidget *eventbox;
-  GdkCursor *cursor;
-  gchar     *name;
+  GtkWidget   *toolbar;
+  GtkWidget   *frame;
+  GtkWidget   *vbox;
+  GtkWidget   *abox;
+  GtkWidget   *eventbox;
+  GtkToolItem *item;
+  GdkCursor   *cursor;
+  gchar       *name;
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
   name = g_strconcat (_("Animation Playback:"), " ", imagename, NULL);
 
-  dlg = gimp_dialog_new (name, PLUG_IN_BINARY,
-                         NULL, 0,
-                         gimp_standard_help_func, PLUG_IN_PROC,
-
-                         GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
-
-                         NULL);
+  window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+  gtk_window_set_title (GTK_WINDOW (window), name);
+  gtk_window_set_role (GTK_WINDOW (window), "animation-playback");
 
   g_free (name);
 
-  gimp_window_set_transient (GTK_WINDOW (dlg));
-
-  g_signal_connect (dlg, "response",
-                    G_CALLBACK (window_response),
+  g_signal_connect (window, "destroy",
+                    G_CALLBACK (window_destroy),
                     NULL);
 
-  ui_manager = ui_manager_new (dlg);
+  gimp_help_connect (window, gimp_standard_help_func, PLUG_IN_PROC, NULL);
+
+  ui_manager = ui_manager_new (window);
+
+  vbox = gtk_vbox_new (FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (window), vbox);
+  gtk_widget_show (vbox);
 
   toolbar = gtk_ui_manager_get_widget (ui_manager, "/anim-play-toolbar");
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), toolbar,
-                      FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), toolbar, FALSE, FALSE, 0);
   gtk_widget_show (toolbar);
 
-  vbox = gtk_vbox_new (FALSE, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  item =
+    GTK_TOOL_ITEM (gtk_ui_manager_get_widget (ui_manager,
+                                              "/anim-play-toolbar/space"));
+  gtk_separator_tool_item_set_draw (GTK_SEPARATOR_TOOL_ITEM (item), FALSE);
+  gtk_tool_item_set_expand (item, TRUE);
 
   abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), abox, TRUE, TRUE, 0);
@@ -597,7 +610,7 @@ build_dialog (GimpImageBaseType  basetype,
       gtk_action_set_sensitive (action, FALSE);
     }
 
-  gtk_widget_show (dlg);
+  gtk_widget_show (window);
 
   /* let's get into shape. */
   shape_window = gtk_window_new (GTK_WINDOW_POPUP);
@@ -682,7 +695,6 @@ do_playback (void)
   show_frame ();
 
   gtk_main ();
-  gdk_flush ();
 }
 
 
@@ -721,7 +733,7 @@ render_frame (gint32 whichframe)
   /* Image has been closed/etc since we got the layer list? */
   /* FIXME - How do we tell if a gimp_drawable_get() fails? */
   if (gimp_drawable_width (drawable->drawable_id) == 0)
-    gtk_dialog_response (GTK_DIALOG (dlg), GTK_RESPONSE_CLOSE);
+    gtk_widget_destroy (window);
 
   if (((dispose == DISPOSE_REPLACE) || (whichframe == 0)) &&
       gimp_drawable_has_alpha (drawable->drawable_id))
@@ -1309,19 +1321,14 @@ do_step (void)
 /*  Callbacks  */
 
 static void
-window_response (GtkWidget *widget,
-                 gint       response_id,
-                 gpointer   data)
+window_destroy (GtkWidget *widget)
 {
-  gtk_widget_destroy (widget);
-
   if (playing)
     remove_timer ();
 
   if (shape_window)
     gtk_widget_destroy (GTK_WIDGET (shape_window));
 
-  gdk_flush ();
   gtk_main_quit ();
 }
 
