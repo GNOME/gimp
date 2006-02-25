@@ -77,32 +77,32 @@ static void run   (const gchar      *name,
 
 static void do_playback                (void);
 
-static void window_destroy             (GtkWidget      *widget);
-static void play_callback              (GtkAction      *action);
-static void step_callback              (GtkAction      *action);
-static void rewind_callback            (GtkAction      *action);
-static gboolean repaint_sda            (GtkWidget      *darea,
-                                        GdkEventExpose *event,
-                                        gpointer        data);
-static gboolean repaint_da             (GtkWidget      *darea,
-                                        GdkEventExpose *event,
-                                        gpointer        data);
+static void window_destroy             (GtkWidget       *widget);
+static void play_callback              (GtkToggleAction *action);
+static void step_callback              (GtkAction       *action);
+static void rewind_callback            (GtkAction       *action);
+static gboolean repaint_sda            (GtkWidget       *darea,
+                                        GdkEventExpose  *event,
+                                        gpointer         data);
+static gboolean repaint_da             (GtkWidget       *darea,
+                                        GdkEventExpose  *event,
+                                        gpointer         data);
 
-static void        render_frame        (gint32          whichframe);
+static void        render_frame        (gint32       whichframe);
 static void        show_frame          (void);
-static void        total_alpha_preview (guchar         *ptr);
+static void        total_alpha_preview (guchar      *ptr);
 static void        init_preview_misc   (void);
 
 
 /* tag util functions*/
-static int         parse_ms_tag        (const char  *str);
-static DisposeType parse_disposal_tag  (const char  *str);
+static int         parse_ms_tag        (const gchar *str);
+static DisposeType parse_disposal_tag  (const gchar *str);
 static DisposeType get_frame_disposal  (guint        whichframe);
 static guint32     get_frame_duration  (guint        whichframe);
-static gboolean    is_disposal_tag     (const char  *str,
+static gboolean    is_disposal_tag     (const gchar *str,
                                         DisposeType *disposal,
                                         int         *taglength);
-static gboolean    is_ms_tag           (const char  *str,
+static gboolean    is_ms_tag           (const gchar *str,
                                         int         *duration,
                                         int         *taglength);
 
@@ -436,10 +436,6 @@ ui_manager_new (GtkWidget *window)
       NULL, NULL, NULL,
       G_CALLBACK (close_callback) },
 
-    { "play", GTK_STOCK_MEDIA_PLAY,
-      NULL, NULL, N_("Start/Stop playback"),
-      G_CALLBACK (play_callback) },
-
     { "step", GTK_STOCK_MEDIA_NEXT,
       N_("_Step"), NULL, N_("Step to next frame"),
       G_CALLBACK (step_callback) },
@@ -455,6 +451,10 @@ ui_manager_new (GtkWidget *window)
 
   static GtkToggleActionEntry toggle_actions[] =
   {
+    { "play", GTK_STOCK_MEDIA_PLAY,
+      NULL, NULL, N_("Start/Stop playback"),
+      G_CALLBACK (play_callback), FALSE },
+
     { "detach", GIMP_STOCK_DETACH,
       N_("Detach"), NULL,
       N_("Detach the animation from the dialog window"),
@@ -1347,29 +1347,16 @@ advance_frame_callback (gpointer data)
 }
 
 static void
-play_callback (GtkAction *action)
+play_callback (GtkToggleAction *action)
 {
-  GtkWidget *widget;
+  if (playing)
+    remove_timer ();
+
+  playing = gtk_toggle_action_get_active (action);
 
   if (playing)
-    {
-      playing = FALSE;
-      remove_timer ();
-    }
-  else
-    {
-      playing = TRUE;
-      timer = g_timeout_add (get_frame_duration (frame_number),
-                             advance_frame_callback, NULL);
-    }
-
-  widget = gtk_ui_manager_get_widget (ui_manager, "/anim-play-toolbar/play");
-  g_object_set (widget,
-                "label",        NULL,
-                "label-widget", NULL,
-                "stock-id",     (playing ?
-                                 GTK_STOCK_MEDIA_PAUSE : GTK_STOCK_MEDIA_PLAY),
-                NULL);
+    timer = g_timeout_add (get_frame_duration (frame_number),
+                           advance_frame_callback, NULL);
 }
 
 static void
