@@ -1,5 +1,10 @@
 2006-02-25  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/quit-dialog.c (quit_close_all_dialog_container_changed):
+	default to GTK_RESPONSE_CANCEL.
+
+2006-02-25  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimage-convert.c (remap_indexed_layer): fixed bug
 	introduced by optimization (bug #332324).
 

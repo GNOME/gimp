@@ -233,7 +233,8 @@ quit_close_all_dialog_container_changed (GimpContainer  *images,
                     "use-stock", FALSE,
                     "image",     icon,
                     NULL);
-      gtk_window_set_default (GTK_WINDOW (dialog), NULL);
+      gtk_dialog_set_default_response (GTK_DIALOG (dialog),
+                                       GTK_RESPONSE_CANCEL);
     }
 }
 
