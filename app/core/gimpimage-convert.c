@@ -694,14 +694,9 @@ remap_indexed_layer (GimpLayer    *layer,
                      const guchar *remap_table,
                      gint          num_entries)
 {
-  PixelRegion   srcPR, destPR;
-  gpointer      pr;
-  gboolean      has_alpha;
-  gint          pixels;
-  const guchar *src;
-  guchar       *dest;
-
-  has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
+  PixelRegion  srcPR, destPR;
+  gpointer     pr;
+  gboolean     has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
 
   pixel_region_init (&srcPR, GIMP_DRAWABLE (layer)->tiles,
                      0, 0,
@@ -714,42 +709,28 @@ remap_indexed_layer (GimpLayer    *layer,
                      GIMP_ITEM (layer)->height,
                      TRUE);
 
-  if (has_alpha)
+  for (pr = pixel_regions_register (2, &srcPR, &destPR);
+       pr != NULL;
+       pr = pixel_regions_process (pr))
     {
-      for (pr = pixel_regions_register (2, &srcPR, &destPR);
-           pr != NULL;
-           pr = pixel_regions_process (pr))
-        {
-          src = srcPR.data;
-          dest = destPR.data;
-          pixels = srcPR.h * srcPR.w;
+      const guchar *src    = srcPR.data;
+      guchar       *dest   = destPR.data;
+      gint          pixels = srcPR.h * srcPR.w;
 
+      if (has_alpha)
+        {
           while (pixels--)
-            {
-              if (src[ALPHA_I_PIX])
-                dest[INDEXED_PIX] = remap_table[src[INDEXED_PIX]];
-            }
-
-          src += srcPR.bytes;
-          dest += destPR.bytes;
+            if (src[ALPHA_I_PIX])
+              dest[INDEXED_PIX] = remap_table[src[INDEXED_PIX]];
         }
-    }
-  else
-    {
-      for (pr = pixel_regions_register (2, &srcPR, &destPR);
-           pr != NULL;
-           pr = pixel_regions_process (pr))
+      else
         {
-          src = srcPR.data;
-          dest = destPR.data;
-          pixels = srcPR.h * srcPR.w;
-
           while (pixels--)
             dest[INDEXED_PIX] = remap_table[src[INDEXED_PIX]];
-
-          src += srcPR.bytes;
-          dest += destPR.bytes;
         }
+
+      src += srcPR.bytes;
+      dest += destPR.bytes;
     }
 }
 
@@ -1138,13 +1119,9 @@ generate_histogram_gray (CFHistogram  histogram,
                          GimpLayer   *layer,
                          gboolean     alpha_dither)
 {
-  PixelRegion   srcPR;
-  const guchar *data;
-  gint          size;
-  gpointer      pr;
-  gboolean      has_alpha;
-
-  has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
+  PixelRegion  srcPR;
+  gpointer     pr;
+  gboolean     has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
 
   pixel_region_init (&srcPR, GIMP_DRAWABLE (layer)->tiles,
                      0, 0,
@@ -1156,12 +1133,26 @@ generate_histogram_gray (CFHistogram  histogram,
        pr != NULL;
        pr = pixel_regions_process (pr))
     {
-      data = srcPR.data;
-      size = srcPR.w * srcPR.h;
-      while (size--)
+      const guchar *data = srcPR.data;
+      gint          size = srcPR.w * srcPR.h;
+
+      if (has_alpha)
         {
-          histogram[*data]++;
-          data += srcPR.bytes;
+          while (size--)
+            {
+              if (data[ALPHA_G_PIX] > 127)
+                histogram[*data]++;
+
+              data += srcPR.bytes;
+            }
+        }
+      else
+        {
+          while (size--)
+            {
+              histogram[*data]++;
+              data += srcPR.bytes;
+            }
         }
     }
 }
@@ -1176,22 +1167,19 @@ generate_histogram_rgb (CFHistogram   histogram,
                         gint          nth_layer,
                         gint          n_layers)
 {
-  PixelRegion   srcPR;
-  const guchar *data;
-  gint          size;
-  gpointer      pr;
-  ColorFreq    *colfreq;
-  gboolean      has_alpha;
-  gint          nfc_iter;
-  gint          row, col, coledge;
-  gint          offsetx, offsety;
-  glong         total_size = 0, layer_size;
-
-  has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
+  PixelRegion  srcPR;
+  gpointer     pr;
+  ColorFreq   *colfreq;
+  gint         nfc_iter;
+  gint         row, col, coledge;
+  gint         offsetx, offsety;
+  glong        layer_size;
+  glong        total_size = 0;
+  gboolean     has_alpha  = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
 
   gimp_item_offsets (GIMP_ITEM (layer), &offsetx, &offsety);
 
-/*  g_print ("col_limit = %d, nfc = %d\n", col_limit, num_found_cols);*/
+  /*  g_printerr ("col_limit = %d, nfc = %d\n", col_limit, num_found_cols); */
 
   pixel_region_init (&srcPR, GIMP_DRAWABLE (layer)->tiles,
                      0, 0,
@@ -1208,8 +1196,8 @@ generate_histogram_rgb (CFHistogram   histogram,
        pr != NULL;
        pr = pixel_regions_process (pr))
     {
-      data = srcPR.data;
-      size = srcPR.w * srcPR.h;
+      const guchar *data = srcPR.data;
+      gint          size = srcPR.w * srcPR.h;
 
       total_size += size;
 
@@ -1228,13 +1216,8 @@ generate_histogram_rgb (CFHistogram   histogram,
 
               while (size--)
                 {
-                  if (
-                      (
-                       has_alpha && (
-                                     (data[ALPHA_PIX]) >
-                                     (DM[col&DM_WIDTHMASK][row&DM_HEIGHTMASK])
-                                     )
-                       )
+                  if ((has_alpha && ((data[ALPHA_PIX]) >
+                                     (DM[col&DM_WIDTHMASK][row&DM_HEIGHTMASK])))
                       || (!has_alpha))
                     {
                       colfreq = HIST_RGB (histogram,
@@ -1258,12 +1241,7 @@ generate_histogram_rgb (CFHistogram   histogram,
             {
               while (size--)
                 {
-                  if (
-                      (
-                       has_alpha && (
-                                     (data[ALPHA_PIX] > 127)
-                                     )
-                       )
+                  if ((has_alpha && ((data[ALPHA_PIX] > 127)))
                       || (!has_alpha))
                     {
                       colfreq = HIST_RGB (histogram,
