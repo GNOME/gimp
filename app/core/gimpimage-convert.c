@@ -720,17 +720,24 @@ remap_indexed_layer (GimpLayer    *layer,
       if (has_alpha)
         {
           while (pixels--)
-            if (src[ALPHA_I_PIX])
-              dest[INDEXED_PIX] = remap_table[src[INDEXED_PIX]];
+            {
+              if (src[ALPHA_I_PIX])
+                dest[INDEXED_PIX] = remap_table[src[INDEXED_PIX]];
+
+              src += srcPR.bytes;
+              dest += destPR.bytes;
+            }
         }
       else
         {
           while (pixels--)
-            dest[INDEXED_PIX] = remap_table[src[INDEXED_PIX]];
-        }
+            {
+              dest[INDEXED_PIX] = remap_table[src[INDEXED_PIX]];
 
-      src += srcPR.bytes;
-      dest += destPR.bytes;
+              src += srcPR.bytes;
+              dest += destPR.bytes;
+            }
+        }
     }
 }
 
@@ -1040,9 +1047,7 @@ gimp_image_convert (GimpImage              *gimage,
                list;
                list = g_list_next (list))
             {
-              layer = (GimpLayer *) list->data;
-
-              remap_indexed_layer (layer, remap_table, num_entries);
+              remap_indexed_layer (list->data, remap_table, num_entries);
             }
 #else
           memcpy (new_palette, old_palette, 256 * 3);

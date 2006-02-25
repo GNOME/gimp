@@ -1,5 +1,10 @@
 2006-02-25  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpimage-convert.c (remap_indexed_layer): fixed bug
+	introduced by optimization (bug #332324).
+
+2006-02-25  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimage-convert.c (generate_histogram_gray): only
 	count pixels with an alpha value > 127.
 
