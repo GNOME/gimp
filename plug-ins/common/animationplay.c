@@ -80,12 +80,9 @@ static void do_playback                (void);
 static void window_response            (GtkWidget      *widget,
                                         gint            response_id,
                                         gpointer        data);
-static void play_callback              (GtkAction      *action,
-                                        gpointer        data);
-static void step_callback              (GtkAction      *action,
-                                        gpointer        data);
-static void rewind_callback            (GtkAction      *action,
-                                        gpointer        data);
+static void play_callback              (GtkAction      *action);
+static void step_callback              (GtkAction      *action);
+static void rewind_callback            (GtkAction      *action);
 static gboolean repaint_sda            (GtkWidget      *darea,
                                         GdkEventExpose *event,
                                         gpointer        data);
@@ -93,9 +90,9 @@ static gboolean repaint_da             (GtkWidget      *darea,
                                         GdkEventExpose *event,
                                         gpointer        data);
 
-static void        render_frame        (gint32 whichframe);
+static void        render_frame        (gint32          whichframe);
 static void        show_frame          (void);
-static void        total_alpha_preview (guchar* ptr);
+static void        total_alpha_preview (guchar         *ptr);
 static void        init_preview_misc   (void);
 
 
@@ -150,10 +147,10 @@ typedef struct
   gint x, y;
 } CursorOffset;
 
-static gchar     *shape_preview_mask;
-static GtkWidget *shape_window;
-static gint       shaping = 0;
-static GdkWindow *root_win = NULL;
+static gchar     *shape_preview_mask = NULL;
+static GtkWidget *shape_window       = NULL;
+static GdkWindow *root_win           = NULL;
+static gboolean   detached           = FALSE;
 
 
 MAIN ()
@@ -222,13 +219,13 @@ run (const gchar      *name,
 }
 
 static void
-reshape_from_bitmap (gchar* bitmap)
+reshape_from_bitmap (const gchar *bitmap)
 {
-  GdkBitmap *shape_mask;
+  GdkBitmap    *shape_mask;
   static gchar *prev_bitmap = NULL;
 
   if ((!prev_bitmap) ||
-      (memcmp(prev_bitmap, bitmap, (width*height)/8 +height)))
+      (memcmp (prev_bitmap, bitmap, (width * height) / 8 + height)))
     {
       shape_mask = gdk_bitmap_create_from_data (shape_window->window,
                                                 bitmap,
@@ -237,9 +234,8 @@ reshape_from_bitmap (gchar* bitmap)
       g_object_unref (shape_mask);
 
       if (!prev_bitmap)
-        {
-          prev_bitmap = g_malloc ((width * height) / 8 + height);
-        }
+        prev_bitmap = g_malloc ((width * height) / 8 + height);
+
       memcpy (prev_bitmap, bitmap, (width * height) / 8 + height);
     }
 }
@@ -254,12 +250,27 @@ shape_pressed (GtkWidget      *widget,
   if (event->type != GDK_BUTTON_PRESS)
     return FALSE;
 
+  if (event->button == 3 && event->type == GDK_BUTTON_PRESS)
+    {
+      GtkWidget *menu = gtk_ui_manager_get_widget (ui_manager,
+                                                   "/anim-play-popup");
+
+      gtk_widget_grab_focus (widget);
+
+      gtk_menu_set_screen (GTK_MENU (menu), gtk_widget_get_screen (widget));
+      gtk_menu_popup (GTK_MENU (menu),
+                      NULL, NULL, NULL, NULL,
+                      event->button, event->time);
+
+      return FALSE;
+    }
+
   p = g_object_get_data (G_OBJECT(widget), "cursor-offset");
   if (!p)
     return FALSE;
 
-  p->x = (int) event->x;
-  p->y = (int) event->y;
+  p->x = (gint) event->x;
+  p->y = (gint) event->y;
 
   gtk_grab_add (widget);
   gdk_pointer_grab (widget->window, TRUE,
@@ -331,7 +342,7 @@ repaint_da (GtkWidget      *darea,
   gdk_draw_rgb_image (drawing_area->window,
                       drawing_area->style->white_gc,
                       0, 0, width, height,
-                      (total_frames==1) ? GDK_RGB_DITHER_MAX : DITHERTYPE,
+                      (total_frames == 1) ? GDK_RGB_DITHER_MAX : DITHERTYPE,
                       drawing_area_data, width * 3);
 
   return TRUE;
@@ -345,47 +356,69 @@ repaint_sda (GtkWidget      *darea,
   gdk_draw_rgb_image (shape_drawing_area->window,
                       shape_drawing_area->style->white_gc,
                       0, 0, width, height,
-                      (total_frames==1) ? GDK_RGB_DITHER_MAX : DITHERTYPE,
+                      (total_frames == 1) ? GDK_RGB_DITHER_MAX : DITHERTYPE,
                       shape_drawing_area_data, width * 3);
 
   return TRUE;
 }
 
-static gboolean
-preview_pressed (GtkWidget      *widget,
-                 GdkEventButton *event)
+static void
+close_callback (GtkAction *action,
+                gpointer   data)
 {
-  gint            xp, yp;
-  GdkModifierType mask;
+  gtk_dialog_response (GTK_DIALOG (data), GTK_RESPONSE_CLOSE);
+}
 
-  if (shaping)
-    return FALSE;
+static void
+detach_callback (GtkToggleAction *action)
+{
+  gboolean active = gtk_toggle_action_get_active (action);
 
-  /* Create a total-alpha buffer merely for the not-shaped
-     drawing area to now display. */
+  if (active == detached)
+    {
+      g_warning ("detached state and toggle action are out of sync");
+      return;
+    }
 
-  drawing_area_data = g_malloc (width * height * 3);
-  total_alpha_preview (drawing_area_data);
+  detached = active;
 
-  gdk_window_get_pointer (root_win, &xp, &yp, &mask);
-  gtk_window_move (GTK_WINDOW (shape_window), xp  - event->x, yp  - event->y);
+  if (detached)
+    {
+      /* Create a total-alpha buffer merely for the not-shaped
+         drawing area to now display. */
 
-  gtk_widget_show (shape_window);
+      drawing_area_data = g_malloc (width * height * 3);
+      total_alpha_preview (drawing_area_data);
 
-  gdk_window_set_back_pixmap (shape_window->window, NULL, 0);
-  gdk_window_set_back_pixmap (shape_drawing_area->window, NULL, 1);
+      gtk_window_set_screen (GTK_WINDOW (shape_window),
+                             gtk_widget_get_screen (drawing_area));
 
-  show_frame ();
+      if (GTK_WIDGET_REALIZED (drawing_area))
+        {
+          gint x, y;
 
-  shaping = 1;
-  memset (shape_preview_mask, 0, (width * height) / 8 + height);
-  render_frame (frame_number);
-  show_frame ();
+          gdk_window_get_origin (drawing_area->window, &x, &y);
+          gtk_window_move (GTK_WINDOW (shape_window), x, y);
+        }
 
-  repaint_da (NULL, NULL, NULL);
+      gtk_widget_show (shape_window);
 
-  /* mildly amusing hack */
-  return shape_pressed (shape_window, event);
+      gdk_window_set_back_pixmap (shape_drawing_area->window, NULL, TRUE);
+
+      memset (shape_preview_mask, 0, (width * height) / 8 + height);
+      render_frame (frame_number);
+    }
+  else
+    {
+      g_free (drawing_area_data);
+      drawing_area_data = shape_drawing_area_data;
+
+      render_frame (frame_number);
+
+      gtk_widget_hide (shape_window);
+    }
+
+  gtk_widget_queue_draw (drawing_area);
 }
 
 static GtkUIManager *
@@ -393,6 +426,10 @@ ui_manager_new (GtkWidget *window)
 {
   static GtkActionEntry actions[] =
   {
+    { "close", GTK_STOCK_CLOSE,
+      NULL, NULL, NULL,
+      G_CALLBACK (close_callback) },
+
     { "play", GTK_STOCK_MEDIA_PLAY,
       NULL, NULL, N_("Start/Stop playback"),
       G_CALLBACK (play_callback) },
@@ -406,12 +443,28 @@ ui_manager_new (GtkWidget *window)
       G_CALLBACK (rewind_callback) }
   };
 
+  static GtkToggleActionEntry toggle_actions[] =
+  {
+    { "detach", GIMP_STOCK_DETACH,
+      N_("Detach"), NULL,
+      N_("Detach the animation from the dialog window"),
+      G_CALLBACK (detach_callback), FALSE }
+  };
+
   GtkUIManager   *ui_manager = gtk_ui_manager_new ();
   GtkActionGroup *group      = gtk_action_group_new ("Actions");
   GError         *error      = NULL;
 
   gtk_action_group_set_translation_domain (group, NULL);
-  gtk_action_group_add_actions (group, actions, G_N_ELEMENTS (actions), NULL);
+
+  gtk_action_group_add_actions (group,
+                                actions,
+                                G_N_ELEMENTS (actions),
+                                window);
+  gtk_action_group_add_toggle_actions (group,
+                                       toggle_actions,
+                                       G_N_ELEMENTS (toggle_actions),
+                                       NULL);
 
   gtk_window_add_accel_group (GTK_WINDOW (window),
                               gtk_ui_manager_get_accel_group (ui_manager));
@@ -426,7 +479,28 @@ ui_manager_new (GtkWidget *window)
                                      "    <toolitem action=\"play\" />"
                                      "    <toolitem action=\"step\" />"
                                      "    <toolitem action=\"rewind\" />"
+                                     "    <separator />"
+                                     "    <toolitem action=\"detach\" />"
                                      "  </toolbar>"
+                                     "</ui>",
+                                     -1, &error);
+
+  if (error)
+    {
+      g_warning ("error parsing ui: %s", error->message);
+      g_clear_error (&error);
+    }
+
+  gtk_ui_manager_add_ui_from_string (ui_manager,
+                                     "<ui>"
+                                     "  <popup name=\"anim-play-popup\">"
+                                     "    <menuitem action=\"play\" />"
+                                     "    <menuitem action=\"step\" />"
+                                     "    <menuitem action=\"rewind\" />"
+                                     "    <separator />"
+                                     "    <menuitem action=\"detach\" />"
+                                     "    <menuitem action=\"close\" />"
+                                     "  </popup>"
                                      "</ui>",
                                      -1, &error);
 
@@ -443,14 +517,13 @@ static void
 build_dialog (GimpImageBaseType  basetype,
               gchar             *imagename)
 {
-  CursorOffset *icon_pos;
-  GtkWidget    *toolbar;
-  GtkWidget    *frame;
-  GtkWidget    *vbox;
-  GtkWidget    *abox;
-  GtkWidget    *eventbox;
-  GdkCursor    *cursor;
-  gchar        *name;
+  GtkWidget *toolbar;
+  GtkWidget *frame;
+  GtkWidget *vbox;
+  GtkWidget *abox;
+  GtkWidget *eventbox;
+  GdkCursor *cursor;
+  gchar     *name;
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
@@ -536,33 +609,33 @@ build_dialog (GimpImageBaseType  basetype,
   gtk_widget_add_events (shape_drawing_area, GDK_BUTTON_PRESS_MASK);
   gtk_widget_realize (shape_window);
 
-  gdk_window_set_back_pixmap (shape_window->window, NULL, 0);
+  gdk_window_set_back_pixmap (shape_window->window, NULL, FALSE);
 
   cursor = gdk_cursor_new_for_display (gtk_widget_get_display (shape_window),
-                                       GDK_CENTER_PTR);
-  gdk_window_set_cursor(shape_window->window, cursor);
+                                       GDK_HAND2);
+  gdk_window_set_cursor (shape_window->window, cursor);
   gdk_cursor_unref (cursor);
 
   g_signal_connect (shape_window, "button-press-event",
-                    G_CALLBACK (shape_pressed),NULL);
+                    G_CALLBACK (shape_pressed),
+                    NULL);
   g_signal_connect (shape_window, "button-release-event",
-                    G_CALLBACK (shape_released),NULL);
+                    G_CALLBACK (shape_released),
+                    NULL);
   g_signal_connect (shape_window, "motion-notify-event",
-                    G_CALLBACK (shape_motion),NULL);
+                    G_CALLBACK (shape_motion),
+                    NULL);
 
-  icon_pos = g_new (CursorOffset, 1);
-  g_object_set_data (G_OBJECT (shape_window), "cursor-offset", icon_pos);
-
-  /*  gtk_widget_show (shape_window);*/
-
-  g_signal_connect (eventbox, "button-press-event",
-                    G_CALLBACK (preview_pressed), NULL);
+  g_object_set_data (G_OBJECT (shape_window),
+                     "cursor-offset", g_new0 (CursorOffset, 1));
 
   g_signal_connect (drawing_area, "expose-event",
-                    G_CALLBACK (repaint_da), drawing_area);
+                    G_CALLBACK (repaint_da),
+                    NULL);
 
   g_signal_connect (shape_drawing_area, "expose-event",
-                    G_CALLBACK (maybeblocked_expose), shape_drawing_area);
+                    G_CALLBACK (maybeblocked_expose),
+                    NULL);
 
   root_win = gdk_get_default_root_window ();
 }
@@ -650,7 +723,7 @@ render_frame (gint32 whichframe)
   if (gimp_drawable_width (drawable->drawable_id) == 0)
     gtk_dialog_response (GTK_DIALOG (dlg), GTK_RESPONSE_CLOSE);
 
-  if (((dispose==DISPOSE_REPLACE) || (whichframe==0)) &&
+  if (((dispose == DISPOSE_REPLACE) || (whichframe == 0)) &&
       gimp_drawable_has_alpha (drawable->drawable_id))
     {
       total_alpha_preview (preview_data);
@@ -725,7 +798,7 @@ render_frame (gint32 whichframe)
                 }
 
               /* calculate the shape mask */
-              if (shaping)
+              if (detached)
                 {
                   srcptr = rawframe + 3;
                   for (j = 0; j < rawheight; j++)
@@ -748,7 +821,7 @@ render_frame (gint32 whichframe)
                   memcpy (preview_data, rawframe, width * height * 3);
                 }
 
-              if (shaping)
+              if (detached)
                 {
                   /* opacify the shape mask */
                   memset (shape_preview_mask, 255,
@@ -756,7 +829,7 @@ render_frame (gint32 whichframe)
                 }
             }
           /* Display the preview buffer... finally. */
-          if (shaping)
+          if (detached)
             {
               reshape_from_bitmap (shape_preview_mask);
               gdk_draw_rgb_image (shape_drawing_area->window,
@@ -807,7 +880,7 @@ render_frame (gint32 whichframe)
                     }
                 }
 
-              if (shaping)
+              if (detached)
                 {
                   srcptr = rawframe + 3;
                   for (j=rawy; j<rawheight+rawy; j++)
@@ -850,7 +923,7 @@ render_frame (gint32 whichframe)
             }
 
           /* Display the preview buffer... finally. */
-          if (shaping)
+          if (detached)
             {
               if ((dispose != DISPOSE_REPLACE) && (whichframe != 0))
                 {
@@ -944,7 +1017,7 @@ render_frame (gint32 whichframe)
                 }
 
               /* calculate the shape mask */
-              if (shaping)
+              if (detached)
                 {
                   srcptr = rawframe + 1;
                   for (j = 0; j < rawheight; j++)
@@ -973,7 +1046,7 @@ render_frame (gint32 whichframe)
                   srcptr++;
                 }
 
-              if (shaping)
+              if (detached)
                 {
                   /* opacify the shape mask */
                   memset (shape_preview_mask, 255,
@@ -982,7 +1055,7 @@ render_frame (gint32 whichframe)
             }
 
           /* Display the preview buffer... finally. */
-          if (shaping)
+          if (detached)
             {
               reshape_from_bitmap (shape_preview_mask);
               gdk_draw_rgb_image (shape_drawing_area->window,
@@ -1035,7 +1108,7 @@ render_frame (gint32 whichframe)
                     }
                 }
 
-              if (shaping)
+              if (detached)
                 {
                   srcptr = rawframe + 1;
                   for (j=rawy; j<rawheight+rawy; j++)
@@ -1081,7 +1154,7 @@ render_frame (gint32 whichframe)
             }
 
           /* Display the preview buffer... finally. */
-          if (shaping)
+          if (detached)
             {
               if ((dispose != DISPOSE_REPLACE) && (whichframe != 0))
                 {
@@ -1173,9 +1246,9 @@ init_preview_misc (void)
   preview_alpha1_data = g_malloc (width * 3);
   preview_alpha2_data = g_malloc (width * 3);
 
-  for (i=0;i<width;i++)
+  for (i = 0; i < width; i++)
     {
-      if (i&8)
+      if (i & 8)
         {
           preview_alpha1_data[i*3 + 0] =
           preview_alpha1_data[i*3 + 1] =
@@ -1200,23 +1273,16 @@ init_preview_misc (void)
 }
 
 static void
-total_alpha_preview (guchar* ptr)
+total_alpha_preview (guchar *ptr)
 {
-  if (shaping)
-    {
-      memset(shape_preview_mask, 0, (width * height) / 8 + height);
-    }
-  else
-    {
-      gint i;
+  gint i;
 
-      for (i = 0;i < height; i++)
-        {
-          if (i & 8)
-            memcpy (&ptr[i * 3 * width], preview_alpha1_data, 3 * width);
-          else
-            memcpy (&ptr[i * 3 * width], preview_alpha2_data, 3 * width);
-        }
+  for (i = 0; i < height; i++)
+    {
+      if (i & 8)
+        memcpy (&ptr[i * 3 * width], preview_alpha1_data, 3 * width);
+      else
+        memcpy (&ptr[i * 3 * width], preview_alpha2_data, 3 * width);
     }
 }
 
@@ -1235,7 +1301,7 @@ remove_timer (void)
 static void
 do_step (void)
 {
-  frame_number = (frame_number+1)%total_frames;
+  frame_number = (frame_number + 1) % total_frames;
   render_frame (frame_number);
 }
 
@@ -1274,8 +1340,7 @@ advance_frame_callback (gpointer data)
 }
 
 static void
-play_callback (GtkAction *action,
-               gpointer   data)
+play_callback (GtkAction *action)
 {
   GtkWidget *widget;
 
@@ -1301,8 +1366,7 @@ play_callback (GtkAction *action,
 }
 
 static void
-step_callback (GtkAction *action,
-               gpointer   data)
+step_callback (GtkAction *action)
 {
   if (playing)
     gtk_action_activate (gtk_ui_manager_get_action (ui_manager,
@@ -1312,8 +1376,7 @@ step_callback (GtkAction *action,
 }
 
 static void
-rewind_callback (GtkAction *action,
-                 gpointer   data)
+rewind_callback (GtkAction *action)
 {
   if (playing)
     gtk_action_activate (gtk_ui_manager_get_action (ui_manager,
@@ -1360,8 +1423,8 @@ get_frame_duration (guint whichframe)
 
 static gboolean
 is_ms_tag (const char *str,
-	   int *duration,
-	   int *taglength)
+	   gint       *duration,
+	   gint       *taglength)
 {
   gint sum = 0;
   gint offset;
@@ -1375,7 +1438,7 @@ is_ms_tag (const char *str,
   offset = 1;
 
   /* eat any spaces between open-parenthesis and number */
-  while ((offset<length) && (str[offset] == ' '))
+  while ((offset < length) && (str[offset] == ' '))
     offset++;
 
   if ((offset>=length) || (!g_ascii_isdigit (str[offset])))

@@ -59,7 +59,7 @@ static GimpActionEntry dockable_actions[] =
     G_CALLBACK (dockable_close_tab_cmd_callback),
     GIMP_HELP_DOCK_TAB_CLOSE },
 
-  { "dockable-detach-tab", GTK_STOCK_CONVERT,
+  { "dockable-detach-tab", GIMP_STOCK_DETACH,
     N_("_Detach Tab"), "", NULL,
     G_CALLBACK (dockable_detach_tab_cmd_callback),
     GIMP_HELP_DOCK_TAB_DETACH }

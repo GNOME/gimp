@@ -1,5 +1,16 @@
 2006-02-25  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpstock.h: added a define for GIMP_STOCK_DETACH
+	to the list of missing icons.
+
+	* app/actions/dockable-actions.c: use GIMP_STOCK_DETACH instead of
+	GTK_STOCK_CONVERT.
+
+	* plug-ins/common/animationplay.c: unveiled a long-standing secret
+	feature of the Animation Playback plug-in by. Needs more love.
+
+2006-02-25  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/quit-dialog.c (quit_close_all_dialog_container_changed):
 	default to GTK_RESPONSE_CANCEL.
 
