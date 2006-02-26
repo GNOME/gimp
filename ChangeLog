@@ -1,5 +1,10 @@
 2006-02-26  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpaspectpreview.c: added "drawable" as construct-only
+	property so that the widget can be constructed using g_object_new().
+
+2006-02-26  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpdrawablepreview.c: added "drawable" as construct-only
 	property so that the widget can be constructed using g_object_new().
 
