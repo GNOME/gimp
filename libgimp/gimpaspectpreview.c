@@ -41,10 +41,6 @@ enum
 };
 
 
-static GObject * gimp_aspect_preview_constructor (GType                  type,
-						  guint                  n_params,
-						  GObjectConstructParam *params);
-
 static void  gimp_aspect_preview_get_property (GObject         *object,
 					       guint            property_id,
 					       GValue          *value,
@@ -76,7 +72,6 @@ gimp_aspect_preview_class_init (GimpAspectPreviewClass *klass)
   GtkWidgetClass   *widget_class  = GTK_WIDGET_CLASS (klass);
   GimpPreviewClass *preview_class = GIMP_PREVIEW_CLASS (klass);
 
-  object_class->constructor  = gimp_aspect_preview_constructor;
   object_class->get_property = gimp_aspect_preview_get_property;
   object_class->set_property = gimp_aspect_preview_set_property;
 
@@ -103,18 +98,6 @@ gimp_aspect_preview_init (GimpAspectPreview *preview)
                 "check-size", gimp_check_size (),
                 "check-type", gimp_check_type (),
                 NULL);
-}
-
-static GObject *
-gimp_aspect_preview_constructor (GType                  type,
-				 guint                  n_params,
-				 GObjectConstructParam *params)
-{
-  GObject *object;
-
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  return object;
 }
 
 static void
