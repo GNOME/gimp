@@ -1,3 +1,7 @@
+2005-06-26  Hans Breuer  <hans@breuer.org>
+
+	* **/makefile.msc app/gimpcore.def : updated
+	
 2006-02-26  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpzoompreview.c: added "drawable" as construct-only

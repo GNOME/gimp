@@ -39,6 +39,7 @@ PDB_WRAPPERS_O = \
 	gimpbrush_pdb.obj \
 	gimpbrushes_pdb.obj \
 	gimpbrushselect_pdb.obj \
+	gimpbuffer_pdb.obj \
 	gimpchannel_pdb.obj \
 	gimpcolor_pdb.obj \
 	gimpcontext_pdb.obj \
@@ -55,6 +56,7 @@ PDB_WRAPPERS_O = \
 	gimpgradient_pdb.obj \
 	gimpgradients_pdb.obj \
 	gimpgradientselect_pdb.obj \
+	gimpgrid_pdb.obj \
 	gimpguides_pdb.obj \
 	gimphelp_pdb.obj \
 	gimpimage_pdb.obj \
@@ -79,6 +81,7 @@ PDB_WRAPPERS_O = \
 	gimptransformtools_pdb.obj \
 	gimpundo_pdb.obj \
 	gimpunit_pdb.obj \
+	gimpvectors_pdb.obj \
 
 
 gimp_OBJECTS = \

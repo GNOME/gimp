@@ -25,6 +25,7 @@ all : \
 
 OBJECTS = \
 	actions.obj \
+	brush-editor-actions.obj \
 	brushes-actions.obj \
 	buffers-actions.obj \
 	buffers-commands.obj \
@@ -37,6 +38,7 @@ OBJECTS = \
 	cursor-info-actions.obj \
 	cursor-info-commands.obj \
 	data-commands.obj \
+	data-editor-commands.obj \
 	debug-actions.obj \
 	debug-commands.obj \
 	dialogs-actions.obj \
@@ -95,6 +97,7 @@ OBJECTS = \
 	view-actions.obj \
 	view-commands.obj \
 	window-actions.obj \
+	window-commands.obj \
 
 
 $(PRJ_TOP)\config.h: $(PRJ_TOP)\config.h.win32

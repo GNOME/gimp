@@ -39,6 +39,7 @@ OBJECTS = \
 	procedural_db.obj \
 	brush_cmds.obj \
 	brushes_cmds.obj \
+	buffer_cmds.obj \
 	channel_cmds.obj \
 	color_cmds.obj \
 	context_cmds.obj \
@@ -54,6 +55,7 @@ OBJECTS = \
 	gimprc_cmds.obj \
 	gradient_cmds.obj \
 	gradients_cmds.obj \
+	grid_cmds.obj \
 	guides_cmds.obj \
 	help_cmds.obj \
 	image_cmds.obj \

@@ -34,7 +34,8 @@ EXPORTS
 	file_open_with_proc_and_display
 	file_save
 	file_utils_filename_to_uri
-	file_utils_uri_to_utf8_basename
+	file_utils_uri_display_basename
+	file_utils_uri_display_name
 	file_utils_uri_to_utf8_filename
 	floating_sel_anchor
 	floating_sel_remove
@@ -106,6 +107,7 @@ EXPORTS
 	gimp_clone_get_type
 	gimp_clone_options_get_type
 	gimp_config_connect
+	gimp_config_connect_full
 	gimp_config_dump
 	gimp_config_file_backup_on_error
 	gimp_config_file_copy
@@ -199,6 +201,8 @@ EXPORTS
 	gimp_drawable_desaturate
 	gimp_drawable_equalize
 	gimp_drawable_fill_by_type
+	gimp_drawable_foreground_extract_siox_done
+	gimp_drawable_foreground_extract_siox_init
 	gimp_drawable_get_type
 	gimp_drawable_has_alpha
 	gimp_drawable_invert
@@ -634,6 +638,7 @@ EXPORTS
 	pixel_region_set_row
 	pixel_regions_process
 	pixel_regions_register
+	plug_in_data_free
 	plug_in_proc_def_get_help_id
 	plug_in_proc_def_get_label
 	plug_in_proc_def_get_pixbuf
@@ -647,7 +652,6 @@ EXPORTS
 	posterize_lut_setup
 	procedural_db_destroy_args
 	procedural_db_execute
-	procedural_db_free_data
 	procedural_db_lookup
 	procedural_db_run_proc
 	read_pixel_data_1

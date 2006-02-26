@@ -19,6 +19,7 @@ PKG_LINK = \
 OBJECTS = \
 	plug-in.obj \
 	plug-in-context.obj \
+	plug-in-data.obj \
 	plug-in-debug.obj \
 	plug-in-def.obj \
 	plug-in-message.obj \
