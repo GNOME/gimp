@@ -23,6 +23,11 @@ GimpZoomPreview
 </para>
 
 
+<!-- ##### ARG GimpZoomPreview:drawable ##### -->
+<para>
+
+</para>
+
 <!-- ##### FUNCTION gimp_zoom_preview_new ##### -->
 <para>
 

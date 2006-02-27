@@ -23,6 +23,11 @@ A widget providing a preview of a #GimpDrawable.
 </para>
 
 
+<!-- ##### ARG GimpDrawablePreview:drawable ##### -->
+<para>
+
+</para>
+
 <!-- ##### FUNCTION gimp_drawable_preview_new ##### -->
 <para>
 

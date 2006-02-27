@@ -23,6 +23,11 @@ A widget providing a preview with fixed aspect ratio.
 </para>
 
 
+<!-- ##### ARG GimpAspectPreview:drawable ##### -->
+<para>
+
+</para>
+
 <!-- ##### FUNCTION gimp_aspect_preview_new ##### -->
 <para>
 
