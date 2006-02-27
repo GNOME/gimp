@@ -273,7 +273,7 @@ shape_pressed (GtkWidget      *widget,
   gtk_grab_add (widget);
   gdk_pointer_grab (widget->window, TRUE,
                     GDK_BUTTON_RELEASE_MASK |
-                    GDK_BUTTON_MOTION_MASK |
+                    GDK_BUTTON_MOTION_MASK  |
                     GDK_POINTER_MOTION_HINT_MASK,
                     NULL, NULL, 0);
   gdk_window_raise (widget->window);
@@ -312,11 +312,7 @@ shape_motion (GtkWidget      *widget,
   gdk_window_get_pointer (root_win, &xp, &yp, &mask);
 
   /* if a button is still held by the time we process this event... */
-  if (mask & (GDK_BUTTON1_MASK|
-              GDK_BUTTON2_MASK|
-              GDK_BUTTON3_MASK|
-              GDK_BUTTON4_MASK|
-              GDK_BUTTON5_MASK))
+  if (mask & GDK_BUTTON1_MASK)
     {
       p = g_object_get_data (G_OBJECT (widget), "cursor-offset");
       if (!p)
@@ -326,7 +322,7 @@ shape_motion (GtkWidget      *widget,
     }
   else /* the user has released all buttons */
     {
-      shape_released(widget);
+      shape_released (widget);
     }
 
   return FALSE;
@@ -404,7 +400,8 @@ detach_callback (GtkToggleAction *action)
           gint x, y;
 
           gdk_window_get_origin (drawing_area->window, &x, &y);
-          gtk_window_move (GTK_WINDOW (shape_window), x, y);
+
+          gtk_window_move (GTK_WINDOW (shape_window), x + 6, y + 6);
         }
 
       gtk_widget_show (shape_window);
@@ -1401,11 +1398,11 @@ get_frame_duration (guint whichframe)
   gchar *layer_name;
   gint   duration = 0;
 
-  layer_name = gimp_drawable_get_name(layers[total_frames-(whichframe+1)]);
+  layer_name = gimp_drawable_get_name (layers[total_frames-(whichframe+1)]);
   if (layer_name)
     {
-      duration = parse_ms_tag(layer_name);
-      g_free(layer_name);
+      duration = parse_ms_tag (layer_name);
+      g_free (layer_name);
     }
 
   if (duration < 0) duration = 100;  /* FIXME for default-if-not-said  */
@@ -1525,14 +1522,12 @@ parse_disposal_tag (const char *str)
   int         i, dummy;
   gint        length;
 
-  length = strlen(str);
+  length = strlen (str);
 
   for (i = 0; i < length; i++)
     {
       if (is_disposal_tag (&str[i], &rtn, &dummy))
-        {
-          return rtn;
-        }
+        return rtn;
     }
 
   return DISPOSE_UNDEFINED; /* FIXME */
