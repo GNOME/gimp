@@ -132,7 +132,7 @@ gimp_image_flatten (GimpImage   *gimage,
        list;
        list = g_list_next (list))
     {
-      layer = (GimpLayer *) list->data;
+      layer = list->data;
 
       if (gimp_item_get_visible (GIMP_ITEM (layer)))
         merge_list = g_slist_append (merge_list, layer);
@@ -155,10 +155,9 @@ gimp_image_merge_down (GimpImage     *gimage,
                        GimpContext   *context,
                        GimpMergeType  merge_type)
 {
-  GimpLayer *layer;
-  GList     *list;
-  GList     *layer_list;
-  GSList    *merge_list;
+  GList  *list;
+  GList  *layer_list;
+  GSList *merge_list;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -167,7 +166,7 @@ gimp_image_merge_down (GimpImage     *gimage,
        list && !layer_list;
        list = g_list_next (list))
     {
-      layer = (GimpLayer *) list->data;
+      GimpLayer *layer = list->data;
 
       if (layer == current_layer)
         break;
@@ -177,7 +176,7 @@ gimp_image_merge_down (GimpImage     *gimage,
        layer_list && !merge_list;
        layer_list = g_list_next (layer_list))
     {
-      layer = (GimpLayer *) layer_list->data;
+      GimpLayer *layer = list->data;
 
       if (gimp_item_get_visible (GIMP_ITEM (layer)))
         merge_list = g_slist_append (NULL, layer);
@@ -185,6 +184,8 @@ gimp_image_merge_down (GimpImage     *gimage,
 
   if (merge_list)
     {
+      GimpLayer *layer;
+
       merge_list = g_slist_prepend (merge_list, current_layer);
 
       gimp_set_busy (gimage->gimp);

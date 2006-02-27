@@ -1,5 +1,9 @@
 2006-02-27  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpimage-merge.c: purely cosmetic change.
+
+2006-02-27  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/animationplay.c (detach_callback): show the
 	shape window with a small offset.
 
