@@ -268,9 +268,11 @@ WriteBMP (const gchar *filename,
          *    n dots    inch     100 cm   m dots
          *    ------ * ------- * ------ = ------
          *     inch    2.54 cm     m       inch
+         *
+         * We add 0.5 for proper rounding.
          */
-        Bitmap_Head.biXPels = (long int) (xresolution * 100.0 / 2.54);
-        Bitmap_Head.biYPels = (long int) (yresolution * 100.0 / 2.54);
+        Bitmap_Head.biXPels = (long int) (xresolution * 100.0 / 2.54 + 0.5);
+        Bitmap_Head.biYPels = (long int) (yresolution * 100.0 / 2.54 + 0.5);
       }
   }
 
