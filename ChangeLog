@@ -1,5 +1,9 @@
 2006-02-27  Sven Neumann  <sven@gimp.org>
 
+	* data/images/gimp-splash.png: back to the original 2.2 splash.
+
+2006-02-27  Sven Neumann  <sven@gimp.org>
+
 	Merged from HEAD branch:
 
 	* plug-ins/bmp/bmpwrite.c: properly round the resolution entry.

@@ -19,6 +19,10 @@ Bugs fixed in GIMP 2.2.11
 - made the internal help browser the default for all platforms (bug #329888)
 - fixed handling of alpha channel in Gaussian Blur plug-in (bug #331051)
 - fixed incorrect bitshifts in Win Icon plug-in (bug #330692)
+- fixed a potential crash in the Animation Playback plug-in (bug #328919)
+- corrected tile cache size in Unsharp Mask plug-in (bug #331344)
+- fixed the import of SVG circles
+- fixed rounding of resolution in BMP plug-in (bug #332501)
 
 
 Bugs fixed in GIMP 2.2.10
