@@ -13,12 +13,12 @@ extern gboolean gimp_composite_sse_install (void);
 #if defined(USE_SSE)
 #if defined(ARCH_X86)
 #if __GNUC__ >= 3
-#if defined(ARCH_X86_64) || !defined(PIC)
+#if defined(ARCH_X86_64) || (!defined(PIC) && !defined(__PIC__))
 #define COMPILE_SSE_IS_OKAY
-#endif		/* defined(ARCH_X86_64) || !defined(PIC) */
-#endif		/* __GNUC__ >= 3 */
-#endif		/*  */
-#endif		/*  */
+#endif /* defined(ARCH_X86_64) || !defined(PIC) */
+#endif /* __GNUC__ >= 3 */
+#endif /* defined(ARCH_X86) */
+#endif /* defined(USE_SSE) */
 #endif		/*  */
 
 #ifdef COMPILE_SSE_IS_OKAY

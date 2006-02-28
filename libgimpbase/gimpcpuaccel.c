@@ -79,7 +79,7 @@ enum
   ARCH_X86_INTEL_FEATURE_PNI      = 1 << 0
 };
 
-#if !defined(ARCH_X86_64) && defined(PIC)
+#if !defined(ARCH_X86_64) && (defined(PIC) || defined(__PIC__))
 #define cpuid(op,eax,ebx,ecx,edx)  \
   __asm__ ("movl %%ebx, %%esi\n\t" \
            "cpuid\n\t"             \

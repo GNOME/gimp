@@ -19,9 +19,9 @@ extern gboolean gimp_composite_mmx_install (void);
 #if defined(USE_MMX)
 #if defined(ARCH_X86)
 #if __GNUC__ >= 3
-#if defined(ARCH_X86_64) || !defined(PIC)
+#if defined(ARCH_X86_64) || (!defined(PIC) && !defined(__PIC__))
 #define COMPILE_MMX_IS_OKAY (1)
-#endif /* defined(ARCH_X86_64) || !defined(PIC) */
+#endif /* defined(ARCH_X86_64) || (!defined(PIC) && !defined(__PIC__)) */
 #endif /* __GNUC__ >= 3 */
 #endif /* defined(ARCH_X86) */
 #endif /* defined(USE_MMX) */

@@ -1,3 +1,12 @@
+2006-02-27  Manish Singh  <yosh@gimp.org>
+
+	* app/base/cpu-accel.c
+	* app/composite/gimp-composite-3dnow.h
+	* app/composite/gimp-composite-mmx.h
+	* app/composite/gimp-composite-sse.h
+	* app/composite/gimp-composite-sse2.h: check for __PIC__ in addition
+	to PIC.
+
 2006-02-27  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimage-merge.c: purely cosmetic change.
