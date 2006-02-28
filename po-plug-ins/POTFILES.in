@@ -1,6 +1,8 @@
 # Files from the Gimp distribution which have already been
 # marked to allow runtime translation of messages
 
+[encoding: UTF-8]
+
 plug-ins/FractalExplorer/Dialogs.c
 plug-ins/FractalExplorer/FractalExplorer.c
 plug-ins/Lighting/lighting_apply.c

@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-20 18:17+0100\n"
-"PO-Revision-Date: 2006-02-20 18:21+0100\n"
+"POT-Creation-Date: 2006-02-28 13:19+0100\n"
+"PO-Revision-Date: 2006-02-28 13:21+0100\n"
 "Last-Translator: Róman Joost <romanofski@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -243,7 +243,7 @@ msgstr "Pinseleditor"
 
 #. initialize the list of gimp brushes
 #: ../app/actions/actions.c:101 ../app/actions/dialogs-actions.c:130
-#: ../app/core/gimp.c:838 ../app/dialogs/dialogs.c:148
+#: ../app/core/gimp.c:839 ../app/dialogs/dialogs.c:148
 #: ../app/dialogs/preferences-dialog.c:2416
 msgid "Brushes"
 msgstr "Pinsel"
@@ -312,7 +312,7 @@ msgstr "Datei"
 
 #. initialize the list of gimp fonts
 #: ../app/actions/actions.c:146 ../app/actions/dialogs-actions.c:150
-#: ../app/core/gimp.c:854 ../app/dialogs/dialogs.c:156
+#: ../app/core/gimp.c:855 ../app/dialogs/dialogs.c:156
 #: ../app/dialogs/preferences-dialog.c:2432
 msgid "Fonts"
 msgstr "Schriften"
@@ -324,7 +324,7 @@ msgstr "Farbverlaufseditor"
 
 #. initialize the list of gimp gradients
 #: ../app/actions/actions.c:152 ../app/actions/dialogs-actions.c:140
-#: ../app/core/gimp.c:850 ../app/dialogs/dialogs.c:152
+#: ../app/core/gimp.c:851 ../app/dialogs/dialogs.c:152
 #: ../app/dialogs/preferences-dialog.c:2428
 msgid "Gradients"
 msgstr "Farbverläufe"
@@ -355,14 +355,14 @@ msgstr "Farbpaletteneditor"
 
 #. initialize the list of gimp palettes
 #: ../app/actions/actions.c:170 ../app/actions/dialogs-actions.c:145
-#: ../app/core/gimp.c:846 ../app/dialogs/dialogs.c:154
+#: ../app/core/gimp.c:847 ../app/dialogs/dialogs.c:154
 #: ../app/dialogs/preferences-dialog.c:2424
 msgid "Palettes"
 msgstr "Farbpaletten"
 
 #. initialize the list of gimp patterns
 #: ../app/actions/actions.c:173 ../app/actions/dialogs-actions.c:135
-#: ../app/core/gimp.c:842 ../app/dialogs/dialogs.c:150
+#: ../app/core/gimp.c:843 ../app/dialogs/dialogs.c:150
 #: ../app/dialogs/preferences-dialog.c:2420
 msgid "Patterns"
 msgstr "Muster"
@@ -386,7 +386,7 @@ msgid "Select"
 msgstr "Auswählen"
 
 #. initialize the template list
-#: ../app/actions/actions.c:188 ../app/core/gimp.c:863
+#: ../app/actions/actions.c:188 ../app/core/gimp.c:864
 #: ../app/dialogs/dialogs.c:164
 msgid "Templates"
 msgstr "Vorlagen"
@@ -2710,11 +2710,11 @@ msgstr "Letzten Vorgang wiederholen"
 msgid "Re-Show Last"
 msgstr "Letzten Vorgang nochmal anzeigen"
 
-#: ../app/actions/plug-in-commands.c:194
+#: ../app/actions/plug-in-commands.c:193
 msgid "Reset all Filters"
 msgstr "Alle Filter zurücksetzen"
 
-#: ../app/actions/plug-in-commands.c:213
+#: ../app/actions/plug-in-commands.c:212
 msgid "Do you really want to reset all filters to default values?"
 msgstr ""
 "Möchten sie alle Filter auf Vorgabeeinstellungen zurücksetzen?Wollen Sie "
@@ -3691,7 +3691,7 @@ msgstr ""
 "s« wurde eine Sicherungskopie Ihrer Konfiguration gespeichert."
 
 #: ../app/config/gimprc.c:259 ../app/config/gimprc.c:272
-#: ../app/plug-in/plug-ins.c:141
+#: ../app/plug-in/plug-ins.c:142
 #, c-format
 msgid "Parsing '%s'\n"
 msgstr "»%s« wird verarbeitet\n"
@@ -4817,39 +4817,39 @@ msgstr "VG nach HG (HSV-Farbton im Uhrzeigersinn)"
 msgid "FG to Transparent"
 msgstr "VG nach Transparent"
 
-#: ../app/core/gimp.c:552
+#: ../app/core/gimp.c:553
 msgid "Initialization"
 msgstr "Initialisierung"
 
 #. register all internal procedures
-#: ../app/core/gimp.c:609
+#: ../app/core/gimp.c:610
 msgid "Internal Procedures"
 msgstr "Interne Prozeduren"
 
-#: ../app/core/gimp.c:612
+#: ../app/core/gimp.c:613
 msgid "Plug-In Interpreters"
 msgstr "Plugin-Interpreten"
 
-#: ../app/core/gimp.c:618
+#: ../app/core/gimp.c:619
 msgid "Plug-In Environment"
 msgstr "Plugin-Umgebung"
 
 #. initialize  the global parasite table
-#: ../app/core/gimp.c:834
+#: ../app/core/gimp.c:835
 msgid "Looking for data files"
 msgstr "Suche nach Arbeitsdaten"
 
-#: ../app/core/gimp.c:834
+#: ../app/core/gimp.c:835
 msgid "Parasites"
 msgstr "Parasiten"
 
 #. initialize the document history
-#: ../app/core/gimp.c:859
+#: ../app/core/gimp.c:860
 msgid "Documents"
 msgstr "Dokumente"
 
 #. initialize the module list
-#: ../app/core/gimp.c:867 ../app/dialogs/preferences-dialog.c:2444
+#: ../app/core/gimp.c:868 ../app/dialogs/preferences-dialog.c:2444
 msgid "Modules"
 msgstr "Module"
 
@@ -5282,27 +5282,27 @@ msgstr "Farbpaletteneintrag ändern"
 msgid "Add Color to Colormap"
 msgstr "Farbe zur Farbpalette hinzufügen"
 
-#: ../app/core/gimpimage-convert.c:810
+#: ../app/core/gimpimage-convert.c:798
 msgid "Cannot convert image: palette is empty."
 msgstr "Bild konnte nicht konvertiert werden: die Palette ist leer."
 
-#: ../app/core/gimpimage-convert.c:824
+#: ../app/core/gimpimage-convert.c:812
 msgid "Convert Image to RGB"
 msgstr "Bild nach RGB konvertieren"
 
-#: ../app/core/gimpimage-convert.c:828
+#: ../app/core/gimpimage-convert.c:816
 msgid "Convert Image to Grayscale"
 msgstr "Bild in Graustufen konvertieren"
 
-#: ../app/core/gimpimage-convert.c:832
+#: ../app/core/gimpimage-convert.c:820
 msgid "Convert Image to Indexed"
 msgstr "Bild in indizierte Farben konvertieren"
 
-#: ../app/core/gimpimage-convert.c:914
+#: ../app/core/gimpimage-convert.c:902
 msgid "Converting to indexed (stage 2)"
 msgstr "Bild in indizierte Farben konvertieren (Stufe 2)"
 
-#: ../app/core/gimpimage-convert.c:959
+#: ../app/core/gimpimage-convert.c:947
 msgid "Converting to indexed (stage 3)"
 msgstr "Bild in indizierte Farben konvertieren (Stufe 3)"
 
@@ -5344,21 +5344,21 @@ msgstr ""
 msgid "Flatten Image"
 msgstr "Bild zusammenfügen"
 
-#: ../app/core/gimpimage-merge.c:193
+#: ../app/core/gimpimage-merge.c:194
 msgid "Merge Down"
 msgstr "Nach unten vereinen"
 
-#: ../app/core/gimpimage-merge.c:202
+#: ../app/core/gimpimage-merge.c:203
 msgid "There are not enough visible layers for a merge down."
 msgstr ""
 "Es sind nicht genügend Ebenen unter dieser Ebene als »Sichtbar«\n"
 "markiert, um den Vorgang »Nach unten vereinen« auszuführen."
 
-#: ../app/core/gimpimage-merge.c:544
+#: ../app/core/gimpimage-merge.c:545
 msgid "Merge Visible Paths"
 msgstr "Sichtbare Pfade vereinen"
 
-#: ../app/core/gimpimage-merge.c:581
+#: ../app/core/gimpimage-merge.c:582
 msgid "Not enough visible paths for a merge. There must be at least two."
 msgstr ""
 "Es sind nicht genügend Pfade als »Sichtbar« markiert, um den Vorgang "
@@ -5561,10 +5561,10 @@ msgstr "(Vorschau könnte veraltet sein)"
 #: ../app/core/gimpimagefile.c:610 ../app/widgets/gimpimagepropview.c:323
 #: ../app/widgets/gimpsizebox.c:431 ../app/widgets/gimptemplateeditor.c:564
 #, c-format
-msgid "%d x %d pixel"
-msgid_plural "%d x %d pixels"
-msgstr[0] "%d x %d Pixel"
-msgstr[1] "%d x %d Pixel"
+msgid "%d × %d pixel"
+msgid_plural "%d × %d pixels"
+msgstr[0] "%d × %d Pixel"
+msgstr[1] "%d × %d Pixel"
 
 #: ../app/core/gimpimagefile.c:627 ../app/display/gimpdisplayshell-title.c:316
 #, c-format
@@ -6897,8 +6897,8 @@ msgstr "DPI"
 # c-format
 #: ../app/dialogs/preferences-dialog.c:2087
 #, c-format
-msgid "From _windowing system (currently %d x %d dpi)"
-msgstr "Auflösung vom _Fenstersystem beziehen (zurzeit %d x %d dpi)"
+msgid "From _windowing system (currently %d × %d dpi)"
+msgstr "Auflösung vom _Fenstersystem beziehen (zurzeit %d × %d dpi)"
 
 #: ../app/dialogs/preferences-dialog.c:2107
 msgid "_Manually"
@@ -7901,7 +7901,7 @@ msgstr "Ungültige Zeichenfolge in URI"
 msgid "GIMP Startup"
 msgstr "GIMP Start"
 
-#: ../app/gui/themes.c:231 ../app/plug-in/plug-ins.c:274
+#: ../app/gui/themes.c:231 ../app/plug-in/plug-ins.c:275
 #, c-format
 msgid "Writing '%s'\n"
 msgstr "»%s« wird geschrieben\n"
@@ -8031,7 +8031,7 @@ msgstr ""
 "Da die Auflösung des Bildes außerhalb des gültigen Bereiches liegt, wird die "
 "Vorgabeauflösung verwendet."
 
-#: ../app/pdb/procedural_db.c:264
+#: ../app/pdb/procedural_db.c:251
 #, c-format
 msgid ""
 "PDB calling error:\n"
@@ -8040,7 +8040,7 @@ msgstr ""
 "PDB-Aufruffehler:\n"
 "Prozedur '%s' nicht gefunden"
 
-#: ../app/pdb/procedural_db.c:291 ../app/pdb/procedural_db.c:418
+#: ../app/pdb/procedural_db.c:278 ../app/pdb/procedural_db.c:405
 #, c-format
 msgid ""
 "PDB calling error for procedure '%s':\n"
@@ -8088,37 +8088,37 @@ msgstr "ungültiger Wert »%s« für Symboltyp"
 msgid "invalid value '%ld' for icon type"
 msgstr "ungültiger Wert »%ld« für Symboltyp"
 
-#: ../app/plug-in/plug-ins.c:137
+#: ../app/plug-in/plug-ins.c:138
 msgid "Resource configuration"
 msgstr "Ressourcenkonfiguration"
 
 #. query any plug-ins that have changed since we last wrote out
 #. *  the pluginrc file
 #.
-#: ../app/plug-in/plug-ins.c:154
+#: ../app/plug-in/plug-ins.c:155
 msgid "Querying new Plug-ins"
 msgstr "Neue Plugins werden abgefragt"
 
-#: ../app/plug-in/plug-ins.c:181
+#: ../app/plug-in/plug-ins.c:182
 #, c-format
 msgid "Querying plug-in: '%s'\n"
 msgstr "Plugin »%s« wird abgefragt\n"
 
 #. initialize the plug-ins
-#: ../app/plug-in/plug-ins.c:189
+#: ../app/plug-in/plug-ins.c:190
 msgid "Initializing Plug-ins"
 msgstr "Plugins werden initialisiert"
 
-#: ../app/plug-in/plug-ins.c:214
+#: ../app/plug-in/plug-ins.c:215
 #, c-format
 msgid "Initializing plug-in: '%s'\n"
 msgstr "Plugin »%s« wird initialisiert\n"
 
-#: ../app/plug-in/plug-ins.c:341
+#: ../app/plug-in/plug-ins.c:342
 msgid "Starting Extensions"
 msgstr "Erweiterungen werden gestartet"
 
-#: ../app/plug-in/plug-ins.c:348
+#: ../app/plug-in/plug-ins.c:349
 #, c-format
 msgid "Starting extension: '%s'\n"
 msgstr "Erweiterung »%s« wird gestartet\n"
@@ -10644,8 +10644,8 @@ msgstr "Pixel/%s"
 
 #: ../app/widgets/gimpimagepropview.c:348
 #, c-format
-msgid "%g x %g %s"
-msgstr "%g x %g %s"
+msgid "%g × %g %s"
+msgstr "%g × %g %s"
 
 #: ../app/widgets/gimpimagepropview.c:368
 msgid "colors"
@@ -10725,8 +10725,8 @@ msgstr "Ungültiges UTF-8"
 
 #: ../app/widgets/gimpsizebox.c:457
 #, c-format
-msgid "%d x %d dpi"
-msgstr "%d x %d dpi"
+msgid "%d × %d dpi"
+msgstr "%d × %d dpi"
 
 #: ../app/widgets/gimpsizebox.c:459
 #, c-format
@@ -10797,8 +10797,8 @@ msgstr "_Symbol:"
 
 #: ../app/widgets/gimptemplateeditor.c:668
 #, c-format
-msgid "%d x %d dpi, %s"
-msgstr "%d x %d dpi, %s"
+msgid "%d × %d dpi, %s"
+msgstr "%d × %d dpi, %s"
 
 #: ../app/widgets/gimptemplateeditor.c:670
 #, c-format

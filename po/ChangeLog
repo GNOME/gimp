@@ -1,3 +1,9 @@
+2006-02-28  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: specify encoding.
+
+	* de.po: updated german translation.
+
 2006-02-24  Marco Ciampa <ciampix@libero.it>
 
 	* it.po: updated italian translation.
