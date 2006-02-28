@@ -13,12 +13,12 @@ extern gboolean gimp_composite_3dnow_install (void);
 #if defined(USE_MMX)
 #if defined(ARCH_X86)
 #if __GNUC__ >= 3
-#if defined(ARCH_X86_64) || !defined(PIC)
+#if defined(ARCH_X86_64) || (!defined(PIC) && !defined(__PIC__))
 #define COMPILE_3DNOW_IS_OKAY (1)
-#endif /* ARCH_X86_64 || !PIC */
+#endif /* ARCH_X86_64 || (!defined(PIC) && !defined(__PIC__)) */
 #endif /* __GNUC__ > 3 */
 #endif /* ARCH_X86 */
-#endif  /* USE_MMX */
+#endif /* USE_MMX */
 #endif /* !defined(__INTEL_COMPILER) */
 
 #endif

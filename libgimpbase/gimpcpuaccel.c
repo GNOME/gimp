@@ -74,7 +74,7 @@ enum
   ARCH_X86_CYRIX_FEATURE_MMXEXT   = 1 << 24
 };
 
-#if !defined(ARCH_X86_64) && defined(PIC)
+#if !defined(ARCH_X86_64) && (defined(PIC) || defined(__PIC__))
 #define cpuid(op,eax,ebx,ecx,edx)  \
   __asm__ ("movl %%ebx, %%esi\n\t" \
            "cpuid\n\t"             \
