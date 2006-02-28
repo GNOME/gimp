@@ -1819,7 +1819,7 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
                                     _("Rectangle: "),
                                     (rx2 > max_x ? max_x : rx2) -
                                     (rx1 < min_x ? min_x : rx1),
-                                    " x ",
+                                    " × ",
                                     (ry2 > max_y ? max_y : ry2) -
                                     (ry1 < min_y ? min_y : ry1));
     }

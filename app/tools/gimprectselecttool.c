@@ -358,7 +358,7 @@ gimp_rect_select_tool_motion (GimpTool        *tool,
   gimp_tool_pop_status (tool, gdisp);
   gimp_tool_push_status_coords (tool, gdisp,
                                 _("Selection: "),
-                                rect_sel->w, " x ", rect_sel->h);
+                                rect_sel->w, " × ", rect_sel->h);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }

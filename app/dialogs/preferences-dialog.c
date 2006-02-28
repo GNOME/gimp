@@ -2084,7 +2084,7 @@ prefs_dialog_new (Gimp       *gimp,
 
     gimp_get_screen_resolution (NULL, &xres, &yres);
 
-    str = g_strdup_printf (_("From _windowing system (currently %d x %d dpi)"),
+    str = g_strdup_printf (_("From _windowing system (currently %d × %d dpi)"),
                            ROUND (xres), ROUND (yres));
 
     button = gtk_radio_button_new_with_mnemonic (group, str);

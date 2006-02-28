@@ -267,7 +267,7 @@ gimp_brush_get_description (GimpViewable  *viewable,
 {
   GimpBrush *brush = GIMP_BRUSH (viewable);
 
-  return g_strdup_printf ("%s (%d x %d)",
+  return g_strdup_printf ("%s (%d × %d)",
                           GIMP_OBJECT (brush)->name,
                           brush->mask->width,
                           brush->mask->height);

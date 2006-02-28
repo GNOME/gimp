@@ -561,8 +561,8 @@ static void
 gimp_template_editor_set_pixels (GimpTemplateEditor *editor,
                                  GimpTemplate       *template)
 {
-  gchar *text = g_strdup_printf (ngettext ("%d x %d pixel",
-                                           "%d x %d pixels", template->height),
+  gchar *text = g_strdup_printf (ngettext ("%d × %d pixel",
+                                           "%d × %d pixels", template->height),
                                  template->width, template->height);
   gtk_label_set_text (GTK_LABEL (editor->pixel_label), text);
   g_free (text);
@@ -665,7 +665,7 @@ gimp_template_editor_template_notify (GimpTemplate       *template,
   yres = ROUND (template->yresolution);
 
   if (xres != yres)
-    text = g_strdup_printf (_("%d x %d dpi, %s"), xres, yres, desc);
+    text = g_strdup_printf (_("%d × %d dpi, %s"), xres, yres, desc);
   else
     text = g_strdup_printf (_("%d dpi, %s"), yres, desc);
 

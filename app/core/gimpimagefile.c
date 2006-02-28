@@ -513,7 +513,7 @@ gimp_imagefile_get_description (GimpViewable   *viewable,
     {
       gchar *tmp = basename;
 
-      basename = g_strdup_printf ("%s (%d x %d)",
+      basename = g_strdup_printf ("%s (%d × %d)",
                                   tmp,
                                   thumbnail->image_width,
                                   thumbnail->image_height);
@@ -607,8 +607,8 @@ gimp_imagefile_get_desc_string (GimpImagefile *imagefile)
               if (thumbnail->image_width > 0 && thumbnail->image_height > 0)
                 {
                   g_string_append_printf (str,
-                                          ngettext ("%d x %d pixel",
-                                                    "%d x %d pixels",
+                                          ngettext ("%d × %d pixel",
+                                                    "%d × %d pixels",
                                                     thumbnail->image_height),
                                           thumbnail->image_width,
                                           thumbnail->image_height);

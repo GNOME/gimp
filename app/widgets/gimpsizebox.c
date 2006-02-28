@@ -428,8 +428,8 @@ gimp_size_box_update_size (GimpSizeBox *box)
 
   if (priv->pixel_label)
     {
-      gchar *text = g_strdup_printf (ngettext ("%d x %d pixel",
-                                               "%d x %d pixels", box->height),
+      gchar *text = g_strdup_printf (ngettext ("%d × %d pixel",
+                                               "%d × %d pixels", box->height),
                                      box->width, box->height);
       gtk_label_set_text (GTK_LABEL (priv->pixel_label), text);
       g_free (text);
@@ -454,7 +454,7 @@ gimp_size_box_update_resolution (GimpSizeBox *box)
       gint   yres = ROUND (box->yresolution);
 
       if (xres != yres)
-        text = g_strdup_printf (_("%d x %d dpi"), xres, yres);
+        text = g_strdup_printf (_("%d × %d dpi"), xres, yres);
       else
         text = g_strdup_printf (_("%d dpi"), yres);
 

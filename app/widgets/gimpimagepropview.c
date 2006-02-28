@@ -320,8 +320,8 @@ gimp_image_prop_view_update (GimpImagePropView *view)
   gchar              buf[256];
 
   /*  pixel size  */
-  g_snprintf (buf, sizeof (buf), ngettext ("%d x %d pixel",
-                                           "%d x %d pixels", image->height),
+  g_snprintf (buf, sizeof (buf), ngettext ("%d × %d pixel",
+                                           "%d × %d pixels", image->height),
               image->width, image->height);
   gtk_label_set_text (GTK_LABEL (view->pixel_size_label), buf);
 
@@ -331,7 +331,7 @@ gimp_image_prop_view_update (GimpImagePropView *view)
   unit_factor = _gimp_unit_get_factor (image->gimp, unit);
   unit_digits = _gimp_unit_get_digits (image->gimp, unit);
 
-  g_snprintf (format_buf, sizeof (format_buf), "%%.%df x %%.%df %s",
+  g_snprintf (format_buf, sizeof (format_buf), "%%.%df × %%.%df %s",
               unit_digits + 1, unit_digits + 1,
               _gimp_unit_get_plural (image->gimp, unit));
   g_snprintf (buf, sizeof (buf), format_buf,
@@ -345,7 +345,7 @@ gimp_image_prop_view_update (GimpImagePropView *view)
 
   g_snprintf (format_buf, sizeof (format_buf), _("pixels/%s"),
               _gimp_unit_get_abbreviation (image->gimp, unit));
-  g_snprintf (buf, sizeof (buf), _("%g x %g %s"),
+  g_snprintf (buf, sizeof (buf), _("%g × %g %s"),
               image->xresolution / unit_factor,
               image->yresolution / unit_factor,
               unit == GIMP_UNIT_INCH ? _("dpi") : format_buf);

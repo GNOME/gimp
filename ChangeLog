@@ -1,5 +1,21 @@
 2006-02-28  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpbrush.c
+	* app/core/gimpbuffer.c
+	* app/core/gimpimagefile.c
+	* app/core/gimppattern.c
+	* app/dialogs/preferences-dialog.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimprectangletool.c
+	* app/tools/gimprectselecttool.c
+	* app/widgets/gimpimagepropview.c
+	* app/widgets/gimpsizebox.c
+	* app/widgets/gimptemplateeditor.c
+	* plug-ins/imagemap/imap_statusbar.c: use U+00D7 MULTIPLICATION SIGN
+	instead of x when displaying sizes.
+
+2006-02-28  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/animationplay.c: coding style cleanup.
 
 2006-02-27  Manish Singh  <yosh@gimp.org>

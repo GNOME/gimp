@@ -129,9 +129,9 @@ void statusbar_clear_xy(StatusBar_t *statusbar)
 void
 statusbar_set_dimension(StatusBar_t *statusbar, gint w, gint h)
 {
-   char scratch[16];
+   gchar scratch[16];
 
-   sprintf(scratch, "%d x %d", (int) w, (int) h);
+   snprintf (scratch, sizeof (scratch), "%d × %d", (gint) w, (gint) h);
    gtk_entry_set_text(GTK_ENTRY(statusbar->dimension), scratch);
 }
 

@@ -765,14 +765,14 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *mtool,
 
   if (shell->unit == GIMP_UNIT_PIXEL)
     {
-      g_snprintf (buf, sizeof (buf), "%.1f %s, %.2f \302\260 (%d x %d)",
+      g_snprintf (buf, sizeof (buf), "%.1f %s, %.2f \302\260 (%d × %d)",
                   pixel_distance, _("pixels"), pixel_angle,
                   pixel_width, pixel_height);
     }
   else
     {
       g_snprintf (format, sizeof (format),
-                  "%%.%df %s, %%.2f \302\260 (%%.%df x %%.%df)",
+                  "%%.%df %s, %%.2f \302\260 (%%.%df × %%.%df)",
                   _gimp_unit_get_digits (image->gimp, shell->unit),
                   _gimp_unit_get_plural (image->gimp, shell->unit),
                   _gimp_unit_get_digits (image->gimp, shell->unit),
