@@ -516,7 +516,7 @@ load_get_size_callback (gint     *width,
     {
       if (size_label)
         {
-          gchar *text = g_strdup_printf (_("%d x %d"), *width, *height);
+          gchar *text = g_strdup_printf (_("%d × %d"), *width, *height);
 
           gtk_label_set_text (GTK_LABEL (size_label), text);
           g_free (text);

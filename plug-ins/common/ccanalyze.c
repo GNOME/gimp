@@ -385,7 +385,7 @@ doDialog (void)
   gtk_container_add (GTK_CONTAINER (frame), preview);
 
   /* output results */
-  doLabel (vbox, _("Image dimensions: %d x %d"), width, height);
+  doLabel (vbox, _("Image dimensions: %d × %d"), width, height);
 
   if (uniques == 0)
     doLabel (vbox, _("No colors"));

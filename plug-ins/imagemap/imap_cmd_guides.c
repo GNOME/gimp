@@ -230,13 +230,14 @@ init_guides_dialog(GuidesDialog_t *dialog, ObjectList_t *list)
    gchar *dimension;
 
    dialog->list = list;
-   dimension = g_strdup_printf (_("Image dimensions: %d x %d"), get_image_width(),
-			       get_image_height());
-   gtk_label_set_text(GTK_LABEL(dialog->image_dimensions), dimension);
+   dimension = g_strdup_printf (_("Image dimensions: %d × %d"),
+                                get_image_width(),
+                                get_image_height());
+   gtk_label_set_text (GTK_LABEL(dialog->image_dimensions), dimension);
    g_free (dimension);
-   gtk_label_set_text(GTK_LABEL(dialog->guide_bounds),
-		      _("Resulting Guide Bounds: 0,0 to 0,0 (0 areas)"));
-   gtk_widget_grab_focus(dialog->width);
+   gtk_label_set_text (GTK_LABEL(dialog->guide_bounds),
+                       _("Resulting Guide Bounds: 0,0 to 0,0 (0 areas)"));
+   gtk_widget_grab_focus (dialog->width);
 }
 
 static void
