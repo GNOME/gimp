@@ -1,3 +1,7 @@
+2006-03-01  Sven Neumann  <sven@gimp.org>
+
+	* app/about.h: use U+00A9 COPYRIGHT SIGN.
+
 2006-02-28  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/Makefile.am
