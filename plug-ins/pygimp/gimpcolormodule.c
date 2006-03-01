@@ -24,6 +24,8 @@
 
 #include "pygimpcolor.h"
 
+#include "pygimp-util.h"
+
 
 #if PY_VERSION_HEX >= 0x2030000
 #define ARG_UINTARRAY_FORMAT "(IIII)"
@@ -361,7 +363,7 @@ initgimpcolor(void)
 {
     PyObject *m, *d;
 
-    init_pygobject();
+    pygimp_init_pygobject();
 
     /* Create the module and add the functions */
     m = Py_InitModule3("gimpcolor", gimpcolor_methods, gimpcolor_doc);

@@ -1,3 +1,13 @@
+2006-02-28  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/Makefile.am
+	* plug-ins/pygimp/pygimp-util.h: New file, provides only an
+	initialization wrapper for now (pygimp_init_pygobject).
+
+	* plug-ins/pygimp/gimpcolormodule.c
+	* plug-ins/pygimp/gimpenumsmodule.c: Use pygimp_init_pygobject here.
+	Closes bug #332622.
+
 2006-02-28  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpbrush.c

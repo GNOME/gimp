@@ -29,6 +29,7 @@
 #include <pygobject.h>
 
 #include "pygimp-api.h"
+#include "pygimp-util.h"
 
 
 static void
@@ -103,7 +104,8 @@ init_gimpenums(void)
 {
     PyObject *m;
 
-    init_pygobject();
+    pygimp_init_pygobject();
+
     init_pygimp();
 
     gimp_enums_init();

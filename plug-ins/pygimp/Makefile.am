@@ -36,7 +36,8 @@ gimp_la_SOURCES = \
 	pygimp-pdb.c		\
 	pygimp-tile.c		\
 	pygimp.h		\
-	pygimp-api.h
+	pygimp-api.h		\
+	pygimp-util.h
 
 gimp_la_LDFLAGS = -module -avoid-version $(no_undefined) \
 	-export-symbols-regex initgimp
