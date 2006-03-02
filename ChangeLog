@@ -1,3 +1,36 @@
+2006-03-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimppickable.[ch]: added new methods ::get_bytes() and
+	::flush()
+
+	* app/core/gimpchannel.c
+	* app/core/gimpdrawable.c
+	* app/core/gimpimagemap.c
+	* app/core/gimpprojection.c: implement ::get_bytes()
+
+	* app/core/gimpprojection.c: implement ::flush() (immediately
+	process both the idle renderer's queue and the unflushed update
+	areas, to make sure that any reading from the projection will
+	re-construct it).
+
+	* app/core/gimp-edit.c
+	* app/core/gimpchannel.c
+	* app/core/gimpimage-contiguous-region.c
+	* app/core/gimpimage-crop.c
+	* app/core/gimppalette-import.c
+	* app/paint/gimpclone.c
+	* app/tools/gimpbycolorselecttool.c
+	* app/tools/gimpiscissorstool.c
+	* tools/pdbgen/pdb/image.pdb: use the pickable interface more
+	consistently when reading from any drawable or the projection, and
+	call gimp_pickable_flush() before doing so. Fixes bug #332933.
+
+	* app/core/gimpimage-pick-color.c: added comment why the we don't
+	call gimp_pickable_flush() here.
+
+	* app/pdb/image_cmds.c
+	* libgimp/gimpimage_pdb.c: regenerated.
+
 2006-03-02  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/pdb/image.pdb: corrected documentation for

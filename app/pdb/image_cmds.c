@@ -48,6 +48,7 @@
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 #include "core/gimplist.h"
+#include "core/gimppickable.h"
 #include "core/gimpunit.h"
 #include "gimp-intl.h"
 #include "vectors/gimpvectors.h"
@@ -1642,15 +1643,22 @@ image_pick_color_invoker (Gimp         *gimp,
           success = FALSE;
 
       if (success)
-        success = gimp_image_pick_color (gimage,
-                                         drawable,
-                                         (gint) x, (gint) y,
-                                         sample_merged,
-                                         sample_average,
-                                         average_radius,
-                                         NULL,
-                                         &color,
-                                         NULL);
+        {
+          if (sample_merged)
+            gimp_pickable_flush (GIMP_PICKABLE (gimage->projection));
+          else
+            gimp_pickable_flush (GIMP_PICKABLE (drawable));
+
+          success = gimp_image_pick_color (gimage,
+                                           drawable,
+                                           (gint) x, (gint) y,
+                                           sample_merged,
+                                           sample_average,
+                                           average_radius,
+                                           NULL,
+                                           &color,
+                                           NULL);
+        }
     }
 
   return_args = procedural_db_return_args (&image_pick_color_proc, success);
@@ -1714,7 +1722,7 @@ static ProcRecord image_pick_color_proc =
   "gimp-image-pick-color",
   "gimp-image-pick-color",
   "Determine the color at the given drawable coordinates",
-  "This tool determines the color at the specified coordinates. The returned color is an RGB triplet even for grayscale and indexed drawables. If the coordinates lie outside of the extents of the specified drawable, then an error is returned. If the drawable has an alpha channel, the algorithm examines the alpha value of the drawable at the coordinates. If the alpha value is completely transparent (0), then an error is returned. If the sample_merged parameter is non-zero, the data of the composite image will be used instead of that for the specified drawable. This is equivalent to sampling for colors after merging all visible layers. In the case of a merged sampling, the supplied drawable is ignored except for finding the image it belongs to.",
+  "This tool determines the color at the specified coordinates. The returned color is an RGB triplet even for grayscale and indexed drawables. If the coordinates lie outside of the extents of the specified drawable, then an error is returned. If the drawable has an alpha channel, the algorithm examines the alpha value of the drawable at the coordinates. If the alpha value is completely transparent (0), then an error is returned. If the sample_merged parameter is non-zero, the data of the composite image will be used instead of that for the specified drawable. This is equivalent to sampling for colors after merging all visible layers. In the case of a merged sampling, the supplied drawable is ignored.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

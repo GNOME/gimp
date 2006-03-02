@@ -169,6 +169,8 @@ gimp_by_color_select_tool_button_release (GimpTool        *tool,
       else
         pickable = GIMP_PICKABLE (drawable);
 
+      gimp_pickable_flush (pickable);
+
       col = gimp_pickable_get_color_at (pickable,
                                         by_color_sel->x,
                                         by_color_sel->y);

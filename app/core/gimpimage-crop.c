@@ -320,6 +320,8 @@ gimp_image_crop_auto_shrink (GimpImage *gimage,
       pickable = GIMP_PICKABLE (gimage->projection);
    }
 
+  gimp_pickable_flush (pickable);
+
   type      = gimp_pickable_get_image_type (pickable);
   bytes     = GIMP_IMAGE_TYPE_BYTES (type);
   has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (type);

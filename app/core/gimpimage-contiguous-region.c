@@ -127,6 +127,8 @@ gimp_image_contiguous_region_by_seed (GimpImage    *gimage,
   else
     pickable = GIMP_PICKABLE (drawable);
 
+  gimp_pickable_flush (pickable);
+
   src_type  = gimp_pickable_get_image_type (pickable);
   has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (src_type);
   bytes     = GIMP_IMAGE_TYPE_BYTES (src_type);
@@ -229,6 +231,8 @@ gimp_image_contiguous_region_by_color (GimpImage     *gimage,
     pickable = GIMP_PICKABLE (gimage->projection);
   else
     pickable = GIMP_PICKABLE (drawable);
+
+  gimp_pickable_flush (pickable);
 
   cont.type      = gimp_pickable_get_image_type (pickable);
   cont.has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (cont.type);

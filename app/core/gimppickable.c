@@ -56,6 +56,19 @@ gimp_pickable_interface_get_type (void)
   return pickable_iface_type;
 }
 
+void
+gimp_pickable_flush (GimpPickable *pickable)
+{
+  GimpPickableInterface *pickable_iface;
+
+  g_return_if_fail (GIMP_IS_PICKABLE (pickable));
+
+  pickable_iface = GIMP_PICKABLE_GET_INTERFACE (pickable);
+
+  if (pickable_iface->flush)
+    return pickable_iface->flush (pickable);
+}
+
 GimpImage *
 gimp_pickable_get_image (GimpPickable *pickable)
 {
@@ -84,6 +97,21 @@ gimp_pickable_get_image_type (GimpPickable *pickable)
     return pickable_iface->get_image_type (pickable);
 
   return -1;
+}
+
+gint
+gimp_pickable_get_bytes (GimpPickable *pickable)
+{
+  GimpPickableInterface *pickable_iface;
+
+  g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), 0);
+
+  pickable_iface = GIMP_PICKABLE_GET_INTERFACE (pickable);
+
+  if (pickable_iface->get_bytes)
+    return pickable_iface->get_bytes (pickable);
+
+  return 0;
 }
 
 TileManager *

@@ -22,10 +22,10 @@
 
 #include "core-types.h"
 
-#include "core/gimpdrawable.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-pick-color.h"
-#include "core/gimppickable.h"
+#include "gimpdrawable.h"
+#include "gimpimage.h"
+#include "gimpimage-pick-color.h"
+#include "gimppickable.h"
 
 
 gboolean
@@ -71,6 +71,11 @@ gimp_image_pick_color (GimpImage     *gimage,
 
       pickable = GIMP_PICKABLE (drawable);
     }
+
+  /* Do *not* call gimp_pickable_flush() here because it's too expensive
+   * to call it unconditionally each time e.g. the cursor view is updated.
+   * Instead, call gimp_pickable_flush() in the callers if needed.
+   */
 
   if (sample_type)
     *sample_type = gimp_pickable_get_image_type (pickable);

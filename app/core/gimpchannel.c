@@ -53,7 +53,6 @@
 #include "gimpmarshal.h"
 #include "gimppaintinfo.h"
 #include "gimppickable.h"
-#include "gimpprojection.h"
 #include "gimpstrokedesc.h"
 
 #include "gimp-intl.h"
@@ -1549,7 +1548,9 @@ gimp_channel_new_from_component (GimpImage       *gimage,
 
   g_return_val_if_fail (pixel != -1, NULL);
 
-  projection = gimp_projection_get_tiles (gimage->projection);
+  gimp_pickable_flush (GIMP_PICKABLE (gimage->projection));
+
+  projection = gimp_pickable_get_tiles (GIMP_PICKABLE (gimage->projection));
   width  = tile_manager_width  (projection);
   height = tile_manager_height (projection);
 

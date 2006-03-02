@@ -50,6 +50,7 @@ static void       gimp_projection_finalize              (GObject        *object)
 static gint64     gimp_projection_get_memsize           (GimpObject     *object,
                                                          gint64         *gui_size);
 
+static void       gimp_projection_pickable_flush        (GimpPickable   *pickable);
 static guchar   * gimp_projection_get_color_at          (GimpPickable   *pickable,
                                                          gint            x,
                                                          gint            y);
@@ -150,8 +151,10 @@ gimp_projection_init (GimpProjection *proj)
 static void
 gimp_projection_pickable_iface_init (GimpPickableInterface *iface)
 {
+  iface->flush          = gimp_projection_pickable_flush;
   iface->get_image      = gimp_projection_get_image;
   iface->get_image_type = gimp_projection_get_image_type;
+  iface->get_bytes      = gimp_projection_get_bytes;
   iface->get_tiles      = gimp_projection_get_tiles;
   iface->get_color_at   = gimp_projection_get_color_at;
   iface->get_opacity_at = gimp_projection_get_opacity_at;
@@ -195,6 +198,15 @@ gimp_projection_get_memsize (GimpObject *object,
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
+}
+
+static void
+gimp_projection_pickable_flush (GimpPickable *pickable)
+{
+  GimpProjection *proj = GIMP_PROJECTION (pickable);
+
+  gimp_projection_finish_draw (proj);
+  gimp_projection_flush_now (proj);
 }
 
 static guchar *
@@ -330,6 +342,10 @@ gimp_projection_finish_draw (GimpProjection *proj)
 
   if (proj->idle_render.idle_id)
     {
+#if 0
+      g_printerr ("%s: flushing idle render queue\n", G_STRFUNC);
+#endif
+
       g_source_remove (proj->idle_render.idle_id);
       proj->idle_render.idle_id = 0;
 

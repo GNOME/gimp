@@ -43,7 +43,7 @@
 #include "gimplayer-floating-sel.h"
 #include "gimplist.h"
 #include "gimppattern.h"
-#include "gimpprojection.h"
+#include "gimppickable.h"
 #include "gimpselection.h"
 
 #include "gimp-intl.h"
@@ -508,10 +508,11 @@ static GimpBuffer *
 gimp_edit_extract_visible (GimpImage   *gimage,
                            GimpContext *context)
 {
-  PixelRegion  srcPR, destPR;
-  TileManager *tiles;
-  gboolean     non_empty;
-  gint         x1, y1, x2, y2;
+  GimpPickable *pickable;
+  TileManager  *tiles;
+  PixelRegion   srcPR, destPR;
+  gboolean      non_empty;
+  gint          x1, y1, x2, y2;
 
   non_empty = gimp_channel_bounds (gimp_image_get_mask (gimage),
                                    &x1, &y1, &x2, &y2);
@@ -522,11 +523,15 @@ gimp_edit_extract_visible (GimpImage   *gimage,
       return NULL;
     }
 
+  pickable = GIMP_PICKABLE (gimage->projection);
+
+  gimp_pickable_flush (pickable);
+
   tiles = tile_manager_new (x2 - x1, y2 - y1,
-                            gimp_projection_get_bytes (gimage->projection));
+                            gimp_pickable_get_bytes (pickable));
   tile_manager_set_offsets (tiles, x1, y1);
 
-  pixel_region_init (&srcPR, gimp_projection_get_tiles (gimage->projection),
+  pixel_region_init (&srcPR, gimp_pickable_get_tiles (pickable),
 		     x1, y1,
                      x2 - x1, y2 - y1,
                      FALSE);

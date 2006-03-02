@@ -48,7 +48,7 @@
 #include "gimpgradient.h"
 #include "gimpimage.h"
 #include "gimppalette.h"
-#include "gimpprojection.h"
+#include "gimppickable.h"
 
 #include "gimp-intl.h"
 
@@ -330,16 +330,21 @@ gimp_palette_import_from_image (GimpImage   *gimage,
 				gint         n_colors,
 				gint         threshold)
 {
-  GHashTable *colors;
+  GimpPickable *pickable;
+  GHashTable   *colors;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (palette_name != NULL, NULL);
   g_return_val_if_fail (n_colors > 1, NULL);
   g_return_val_if_fail (threshold > 0, NULL);
 
+  pickable = GIMP_PICKABLE (gimage->projection);
+
+  gimp_pickable_flush (pickable);
+
   colors = gimp_palette_import_extract (gimage,
-                                        gimp_projection_get_tiles (gimage->projection),
-                                        gimp_projection_get_image_type (gimage->projection),
+                                        gimp_pickable_get_tiles (pickable),
+                                        gimp_pickable_get_image_type (pickable),
                                         0, 0, gimage->width, gimage->height,
                                         n_colors, threshold);
 

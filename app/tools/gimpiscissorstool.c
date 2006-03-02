@@ -67,7 +67,6 @@
 #include "core/gimpchannel-select.h"
 #include "core/gimpimage.h"
 #include "core/gimppickable.h"
-#include "core/gimpprojection.h"
 #include "core/gimpscanconvert.h"
 #include "core/gimptoolinfo.h"
 
@@ -1675,19 +1674,20 @@ gradmap_tile_validate (TileManager *tm,
 {
   static gboolean first_gradient = TRUE;
 
-  gint         x, y;
-  gint         dw, dh;
-  gint         sw, sh;
-  gint         i, j;
-  gint         b;
-  gfloat       gradient;
-  guint8      *gradmap;
-  guint8      *tiledata;
-  guint8      *datah, *datav;
-  gint8        hmax, vmax;
-  Tile        *srctile;
-  PixelRegion  srcPR, destPR;
-  GimpImage   *gimage;
+  gint          x, y;
+  gint          dw, dh;
+  gint          sw, sh;
+  gint          i, j;
+  gint          b;
+  gfloat        gradient;
+  guint8       *gradmap;
+  guint8       *tiledata;
+  guint8       *datah, *datav;
+  gint8         hmax, vmax;
+  GimpPickable *pickable;
+  Tile         *srctile;
+  PixelRegion   srcPR, destPR;
+  GimpImage    *gimage;
 
   gimage = (GimpImage *) tile_manager_get_user_data (tm);
 
@@ -1708,8 +1708,12 @@ gradmap_tile_validate (TileManager *tm,
   dw = tile_ewidth (tile);
   dh = tile_eheight (tile);
 
+  pickable = GIMP_PICKABLE (gimage->projection);
+
+  gimp_pickable_flush (pickable);
+
   /* get corresponding tile in the gimage */
-  srctile = tile_manager_get_tile (gimp_projection_get_tiles (gimage->projection),
+  srctile = tile_manager_get_tile (gimp_pickable_get_tiles (pickable),
 				   x, y, TRUE, FALSE);
   if (!srctile)
     return;
@@ -1718,8 +1722,8 @@ gradmap_tile_validate (TileManager *tm,
   sh = tile_eheight (srctile);
 
   pixel_region_init_data (&srcPR, tile_data_pointer (srctile, 0, 0),
-                          gimp_projection_get_bytes (gimage->projection),
-                          gimp_projection_get_bytes (gimage->projection) *
+                          gimp_pickable_get_bytes (pickable),
+                          gimp_pickable_get_bytes (pickable) *
                           MIN (dw, sw),
                           0, 0, MIN (dw, sw), MIN (dh, sh));
 

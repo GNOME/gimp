@@ -804,8 +804,7 @@ gimp_image_floating_sel_attached_to (gint32 image_ID)
  * parameter is non-zero, the data of the composite image will be used
  * instead of that for the specified drawable. This is equivalent to
  * sampling for colors after merging all visible layers. In the case of
- * a merged sampling, the supplied drawable is ignored except for
- * finding the image it belongs to.
+ * a merged sampling, the supplied drawable is ignored.
  *
  * Returns: TRUE on success.
  */

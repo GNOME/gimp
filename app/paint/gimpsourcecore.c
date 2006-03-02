@@ -36,7 +36,6 @@
 #include "core/gimpimage.h"
 #include "core/gimppattern.h"
 #include "core/gimppickable.h"
-#include "core/gimpprojection.h"
 
 #include "gimpclone.h"
 #include "gimpcloneoptions.h"
@@ -268,6 +267,8 @@ gimp_clone_motion (GimpPaintCore    *paint_core,
           offset_x += off_x;
           offset_y += off_y;
         }
+
+      gimp_pickable_flush (src_pickable);
     }
 
   area = gimp_paint_core_get_paint_area (paint_core, drawable, paint_options);
