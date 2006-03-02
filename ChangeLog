@@ -1,3 +1,8 @@
+2005-03-02  Øyvind Kolås  <pippin@gimp.org>
+
+	* autogen.sh: added improved check_version() function that handles
+	multiple digits in major/minor/micro.
+
 2006-03-02  Sven Neumann  <sven@gimp.org>
 
 	* autogen.sh: removed version check for glib-gettextize. It didn't

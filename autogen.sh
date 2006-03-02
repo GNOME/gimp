@@ -31,13 +31,41 @@ test -z "$srcdir" && srcdir=.
 ORIGDIR=`pwd`
 cd $srcdir
 
-
 check_version ()
 {
-    if expr "$1" \>= "$2" > /dev/null; then
-	echo "yes (version $1)"
+    VERSION_A=$1
+    VERSION_B=$2
+
+    save_ifs="$IFS"
+    IFS=.
+    set dummy $VERSION_A 0 0 0
+    MAJOR_A=$2
+    MINOR_A=$3
+    MICRO_A=$4
+    set dummy $VERSION_B 0 0 0
+    MAJOR_B=$2
+    MINOR_B=$3
+    MICRO_B=$4
+    IFS="$save_ifs"
+
+    if expr "$MAJOR_A" = "$MAJOR_B" > /dev/null; then
+        if expr "$MINOR_A" \> "$MINOR_B" > /dev/null; then
+           echo "yes (version $VERSION_A)"
+        elif expr "$MINOR_A" = "$MINOR_B" > /dev/null; then
+            if expr "$MICRO_A" \>= "$MICRO_B" > /dev/null; then
+               echo "yes (version $VERSION_A)"
+            else
+                echo "Too old (version $VERSION_A)"
+                DIE=1
+            fi
+        else
+            echo "Too old (version $VERSION_A)"
+            DIE=1
+        fi
+    elif expr "$MAJOR_A" \> "$MAJOR_B" > /dev/null; then
+	echo "Major version might be too new ($VERSION_A)"
     else
-	echo "Too old (found version [$1] expected [$2])"
+	echo "Too old (version $VERSION_A)"
 	DIE=1
     fi
 }
