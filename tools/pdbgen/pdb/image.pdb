@@ -90,15 +90,12 @@ sub type_move {
 	$extra =~ s/_/ /g;
     }
 
-    my $layer = "";
-    $layer = ', or the layer has no alpha channel' if $type eq 'layer';
-
     $blurb = "\u$op the specified $type in the image's $type stack";
     $blurb .= " $extra of stack" if $extra;
 
     $help = <<HELP;
 This procedure ${op}s the specified $type one step in the existing $type stack.
-It will not move the $type if there is no $type $pos it$layer.
+It will not move the $type if there is no $type $pos it.
 HELP
     $help =~ s/one step in/"$extra of"/e if $extra;
 

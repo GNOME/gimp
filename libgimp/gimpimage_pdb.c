@@ -968,7 +968,7 @@ gimp_image_remove_layer (gint32 image_ID,
  *
  * This procedure raises the specified layer one step in the existing
  * layer stack. It will not move the layer if there is no layer above
- * it, or the layer has no alpha channel.
+ * it.
  *
  * Returns: TRUE on success.
  */
@@ -1002,7 +1002,7 @@ gimp_image_raise_layer (gint32 image_ID,
  *
  * This procedure lowers the specified layer one step in the existing
  * layer stack. It will not move the layer if there is no layer below
- * it, or the layer has no alpha channel.
+ * it.
  *
  * Returns: TRUE on success.
  */
@@ -1036,7 +1036,7 @@ gimp_image_lower_layer (gint32 image_ID,
  *
  * This procedure raises the specified layer to top of the existing
  * layer stack. It will not move the layer if there is no layer above
- * it, or the layer has no alpha channel.
+ * it.
  *
  * Returns: TRUE on success.
  */
@@ -1071,7 +1071,7 @@ gimp_image_raise_layer_to_top (gint32 image_ID,
  *
  * This procedure lowers the specified layer to bottom of the existing
  * layer stack. It will not move the layer if there is no layer below
- * it, or the layer has no alpha channel.
+ * it.
  *
  * Returns: TRUE on success.
  */
@@ -1427,7 +1427,7 @@ gimp_image_raise_channel (gint32 image_ID,
  *
  * This procedure lowers the specified layer one step in the existing
  * layer stack. It will not move the layer if there is no layer below
- * it, or the layer has no alpha channel.
+ * it.
  *
  * Returns: TRUE on success.
  */
