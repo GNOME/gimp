@@ -1,5 +1,10 @@
 2006-03-02  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage.c (gimp_image_real_flush): made it a static
+	function (was accidentially non-static).
+
+2006-03-02  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimppickable.[ch]: added new methods ::get_bytes() and
 	::flush()
 

@@ -1064,7 +1064,7 @@ gimp_image_real_colormap_changed (GimpImage *gimage,
     }
 }
 
-void
+static void
 gimp_image_real_flush (GimpImage *gimage)
 {
   if (gimage->flush_accum.alpha_changed)
