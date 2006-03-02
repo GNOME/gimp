@@ -87,6 +87,10 @@
 #define IFDBG if (DEBUG)
 #define IF_DEEP_DBG if (DEBUG && DEBUG_LEVEL == 2)
 
+
+#define PSD_UNIT_INCH 1
+#define PSD_UNIT_CM   2
+
 /* *** END OF DEFINES *** */
 
 
@@ -800,6 +804,44 @@ save_resources (FILE *fd, gint32 image_id)
       IFDBG printf ("      Total length of 0x0400 resource: %d\n", (int) sizeof (gshort));
     }
 
+  /* --------------- Write resolution data ------------------- */
+  {
+    gdouble xres = 0, yres = 0;
+    guint32 xres_fix, yres_fix;
+    GimpUnit g_unit;
+    gshort psd_unit;
+
+    g_unit = gimp_image_get_unit (image_id);
+    gimp_image_get_resolution (image_id, &xres, &yres);
+
+    if (g_unit == GIMP_UNIT_MM)
+      {
+        gdouble factor = gimp_unit_get_factor (g_unit) / 10.0;
+
+	xres /= factor;
+        yres /= factor;
+
+	psd_unit = PSD_UNIT_CM;
+      }
+    else
+      {
+	psd_unit = PSD_UNIT_INCH;
+      }
+
+    xres_fix = xres * 65536.0 + .5; /* Convert to 16.16 fixed point */
+    yres_fix = yres * 65536.0 + .5; /* Convert to 16.16 fixed point */
+
+    xfwrite (fd, "8BIM", 4, "imageresources signature (for resolution)");
+    write_gshort(fd, 0x03ed, "0x03ed Id (resolution)");
+    write_gshort (fd, 0, "Id name"); /* Set to null string (two zeros) */
+    write_glong (fd, 16, "0x0400 resource size");
+    write_glong (fd,  xres_fix, "hRes (16.16 fixed point)");
+    write_gshort (fd, psd_unit, "hRes unit");
+    write_gshort (fd, psd_unit, "width unit");
+    write_glong (fd,  yres_fix, "vRes (16.16 fixed point)");
+    write_gshort (fd, psd_unit, "vRes unit");
+    write_gshort (fd, psd_unit, "height unit");
+  }
   /* --------------- Write Active Layer Number --------------- */
 
   if (ActiveLayerPresent)

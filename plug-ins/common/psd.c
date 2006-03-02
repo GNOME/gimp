@@ -1801,13 +1801,22 @@ load_image (const gchar *name)
 
       if (psd_image.resolution_is_set)
 	{
-	  gimp_image_set_resolution(image_ID,
-				    psd_image.resolution.hRes / 65536.0,
-				    psd_image.resolution.vRes / 65536.0);
+	  if (psd_image.resolution.widthUnit == 2)  /* px/cm */
+            {
+              gdouble factor = gimp_unit_get_factor (GIMP_UNIT_MM) / 10.0;
+
+              psd_image.resolution.hRes *= factor;
+              psd_image.resolution.vRes *= factor;
+            }
+
+	  gimp_image_set_resolution (image_ID,
+                                     psd_image.resolution.hRes / 65536.0,
+                                     psd_image.resolution.vRes / 65536.0);
+
 	  /* currently can only set one unit for the image so we use the
 	     horizontal unit from the psd image */
-	  gimp_image_set_unit(image_ID,
-                              psd_unit_to_gimp_unit (psd_image.resolution.widthUnit));
+	  gimp_image_set_unit (image_ID,
+                               psd_unit_to_gimp_unit (psd_image.resolution.widthUnit));
 	}
 
       fgetpos (fd, &tmpfpos);
