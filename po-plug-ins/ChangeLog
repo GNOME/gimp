@@ -1,3 +1,7 @@
+2006-03-02  Inaki Larranaga  <dooteo@euskalgnu.org>
+
+	* eu.po: Updated Basque translation.
+
 2006-02-28  Sven Neumann  <sven@gimp.org>
 
 	* Makefile.in.in: changed sed expression to deal with the encoding
