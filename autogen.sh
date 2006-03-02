@@ -9,22 +9,21 @@
 # tools and you shouldn't use this script.  Just call ./configure
 # directly.
 
+ACLOCAL=${ACLOCAL-aclocal-1.9}
 AUTOCONF=${AUTOCONF-autoconf}
 AUTOHEADER=${AUTOHEADER-autoheader}
 AUTOMAKE=${AUTOMAKE-automake-1.9}
-ACLOCAL=${ACLOCAL-aclocal-1.9}
 LIBTOOLIZE=${LIBTOOLIZE-libtoolize}
+
+AUTOCONF_REQUIRED_VERSION=2.54
+AUTOMAKE_REQUIRED_VERSION=1.8.3
+INTLTOOL_REQUIRED_VERSION=0.31
+LIBTOOL_REQUIRED_VERSION=1.4
+LIBTOOL_WIN32=1.5
 
 PROJECT="GNU Image Manipulation Program"
 TEST_TYPE=-d
 FILE=plug-ins
-
-LIBTOOL_REQUIRED_VERSION=1.4
-LIBTOOL_WIN32=1.5
-AUTOCONF_REQUIRED_VERSION=2.54
-AUTOMAKE_REQUIRED_VERSION=1.8.3
-GLIB_REQUIRED_VERSION=2.2.0
-INTLTOOL_REQUIRED_VERSION=0.31
 
 
 srcdir=`dirname $0`
@@ -44,8 +43,8 @@ check_version ()
 }
 
 echo
-echo "I am testing that you have the required versions of libtool, autoconf," 
-echo "automake, glib-gettextize and intltoolize. This test is not foolproof,"
+echo "I am testing that you have the tools required to build the"
+echo "$PROJECT from CVS. This test is not foolproof,"
 echo "so if anything goes wrong, see the file HACKING for more information..."
 echo
 
@@ -152,11 +151,9 @@ if test x$AUTOMAKE != x; then
 fi
 
 
-echo -n "checking for glib-gettextize >= $GLIB_REQUIRED_VERSION ... "
+echo -n "checking for glib-gettextize ... "
 if (glib-gettextize --version) < /dev/null > /dev/null 2>&1; then
-    VER=`glib-gettextize --version \
-         | grep glib-gettextize | sed "s/.* \([0-9.]*\)/\1/"`
-    check_version $VER $GLIB_REQUIRED_VERSION
+    echo "yes"
 else
     echo
     echo "  You must have glib-gettextize installed to compile $PROJECT."

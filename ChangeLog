@@ -1,3 +1,8 @@
+2006-03-02  Sven Neumann  <sven@gimp.org>
+
+	* autogen.sh: removed version check for glib-gettextize. It didn't
+	work with glib 2.10.x.
+
 2006-03-01  Sven Neumann  <sven@gimp.org>
 
 	* app/about.h: use U+00A9 COPYRIGHT SIGN.
