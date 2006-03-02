@@ -1,3 +1,7 @@
+2006-03-02  Sven Neumann  <sven@gimp.org>
+
+	* autogen.sh: readded version check for glib-gettextize.
+
 2005-03-02  Øyvind Kolås  <pippin@gimp.org>
 
 	* autogen.sh: added improved check_version() function that handles

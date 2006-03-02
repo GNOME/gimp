@@ -17,9 +17,11 @@ LIBTOOLIZE=${LIBTOOLIZE-libtoolize}
 
 AUTOCONF_REQUIRED_VERSION=2.54
 AUTOMAKE_REQUIRED_VERSION=1.8.3
+GLIB_REQUIRED_VERSION=2.2.0
 INTLTOOL_REQUIRED_VERSION=0.31
 LIBTOOL_REQUIRED_VERSION=1.4
 LIBTOOL_WIN32=1.5
+
 
 PROJECT="GNU Image Manipulation Program"
 TEST_TYPE=-d
@@ -30,6 +32,7 @@ srcdir=`dirname $0`
 test -z "$srcdir" && srcdir=.
 ORIGDIR=`pwd`
 cd $srcdir
+
 
 check_version ()
 {
@@ -181,7 +184,9 @@ fi
 
 echo -n "checking for glib-gettextize ... "
 if (glib-gettextize --version) < /dev/null > /dev/null 2>&1; then
-    echo "yes"
+    VER=`glib-gettextize --version \
+         | grep glib-gettextize | sed "s/.* \([0-9.]*\)/\1/"`
+    check_version $VER $GLIB_REQUIRED_VERSION
 else
     echo
     echo "  You must have glib-gettextize installed to compile $PROJECT."
