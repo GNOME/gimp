@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-03-03 16:11+0200\n"
-"PO-Revision-Date: 2006-03-03 22:11+0200\n"
+"PO-Revision-Date: 2006-03-04 00:05+0200\n"
 "Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
@@ -933,9 +933,8 @@ msgid "Pointer"
 msgstr "Žymeklis"
 
 #: ../app/actions/dialogs-actions.c:120
-#, fuzzy
 msgid "_Sample Points"
-msgstr "_Pavyzdiniai taškai"
+msgstr "_Pavyzdžių taškai"
 
 #: ../app/actions/dialogs-actions.c:125
 msgid "Colo_rs"
@@ -1488,7 +1487,7 @@ msgstr "_Rinkmena"
 
 #: ../app/actions/file-actions.c:65
 msgid "Open _Recent"
-msgstr "Atverti _paskutiniasias"
+msgstr "Atverti _paskutiniąsias"
 
 #: ../app/actions/file-actions.c:66
 msgid "_Acquire"
@@ -1785,15 +1784,13 @@ msgstr "Iš_trinti segmentą"
 
 # Nesu tikra.
 #: ../app/actions/gradient-editor-actions.c:622
-#, fuzzy
 msgid "Re-_center Segment's Midpoint"
 msgstr "Atnaujinti se_gmento vidurio taškų vietas"
 
 # Nesu tikra.
 #: ../app/actions/gradient-editor-actions.c:624
-#, fuzzy
 msgid "Re-distribute _Handles in Segment"
-msgstr "Pakeisti veiksmo tipą segmente"
+msgstr "Perskirstyti _valdiklius segmente"
 
 #: ../app/actions/gradient-editor-actions.c:629
 msgid "_Blending Function for Selection"
@@ -1825,15 +1822,13 @@ msgstr "_Ištrinti pažymėjimą"
 
 # Nesu tikra.
 #: ../app/actions/gradient-editor-actions.c:644
-#, fuzzy
 msgid "Re-_center Midpoints in Selection"
 msgstr "Atnaujinti _vidurio taškų vietas pažymėjime"
 
 # Nesu tikra.
 #: ../app/actions/gradient-editor-actions.c:646
-#, fuzzy
 msgid "Re-distribute _Handles in Selection"
-msgstr "Pakeisti _veiksmo tipą pažymėjime"
+msgstr "Perskirstyti _valdiklius pažymėjime"
 
 #: ../app/actions/gradient-editor-commands.c:85
 msgid "Left Endpoint Color"
@@ -2759,9 +2754,8 @@ msgid "_Mask opacity:"
 msgstr "_Kaukės nepermatomumas:"
 
 #: ../app/actions/sample-point-editor-actions.c:40
-#, fuzzy
 msgid "Sample Point Menu"
-msgstr "Palečių redaktoriaus meniu"
+msgstr "Pavyzdžių taškų meniu"
 
 #: ../app/actions/select-actions.c:44
 msgid "Selection Editor Menu"
@@ -3332,7 +3326,7 @@ msgstr "_Mastelis"
 
 #: ../app/actions/view-actions.c:67
 msgid "_Padding Color"
-msgstr ""
+msgstr "_Užpildo spalva"
 
 #: ../app/actions/view-actions.c:69
 msgid "Move to Screen"
@@ -3400,7 +3394,7 @@ msgstr "Rodyti _tinklelį"
 
 #: ../app/actions/view-actions.c:149
 msgid "Show Sample Points"
-msgstr ""
+msgstr "Rodyti pavyzdžių taškus"
 
 #: ../app/actions/view-actions.c:155
 msgid "Sn_ap to Guides"
@@ -3851,6 +3845,9 @@ msgid ""
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
 msgstr ""
+"Nurodo monitoriaus horizontalią raišką, taškais colyje. Jei nurodyta 0, "
+"priverstinai užklausia X serverį tiek horizontalios, tiek vertikalios "
+"raiškos informacijos."
 
 #: ../app/config/gimprc-blurbs.h:205
 msgid ""
@@ -3858,6 +3855,9 @@ msgid ""
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
 msgstr ""
+"Nurodo monitoriaus vertikalią raišką, taškais colyje. Jei nurodyta 0, "
+"priverstinai užklausia X serverį tiek horizontalios, tiek vertikalios "
+"raiškos informacijos."
 
 #: ../app/config/gimprc-blurbs.h:210
 msgid ""
@@ -3865,6 +3865,9 @@ msgid ""
 "path is being picked. This used to be the default behaviour in older "
 "versions."
 msgstr ""
+"Jei įjungta, perkėlimo įrankis pakeičia aktyvų sluoksnį ar kontūrą, kai "
+"pasirenkamas sluoksnis ar kontūras. Tai buvo numatytoji elgsena senesnėse "
+"versijose."
 
 #: ../app/config/gimprc-blurbs.h:215
 msgid ""
@@ -3879,8 +3882,8 @@ msgid ""
 "On multiprocessor machines, if GIMP has been compiled with --enable-mp this "
 "sets how many processors GIMP should use simultaneously."
 msgstr ""
-"Multiprocesorinėse mašinose, jei GIMP buvo sukompiliuotas su --enable-mp "
-"nustatymu, kuris nustato kiek procesorių lygiagrečiai GIMP gali naudoti"
+"Multiprocesoriniuose kompiuteriuose, jei GIMP buvo sukompiliuotas su "
+"--enable-mp parametru, tai nurodo kiek procesorių GIMP lygiagrečiai gali naudoti."
 
 #: ../app/config/gimprc-blurbs.h:233
 msgid ""
@@ -3977,7 +3980,7 @@ msgid ""
 "with the \"View->Show Menubar\" command."
 msgstr ""
 "Kai įjungta, yra numatytas meniu juostos rodymas. Tą tai pat galima "
-"perjungti naudojant „Vaizdas->Rodyti meniu juostą“ komandą."
+"perjungti naudojant „Rodymas->Rodyti meniu juostą“ komandą."
 
 #: ../app/config/gimprc-blurbs.h:302
 msgid ""
@@ -3985,7 +3988,7 @@ msgid ""
 "with the \"View->Show Rulers\" command."
 msgstr ""
 "Kai įjungta, yra numatytas liniuočių maatymas. Tą taip pat galima perjungti "
-"naudojant „Vaizdas->Rodyti liniuotes“ komandą."
+"naudojant „Rodymas->Rodyti liniuotes“ komandą."
 
 #: ../app/config/gimprc-blurbs.h:306
 msgid ""
@@ -3993,7 +3996,7 @@ msgid ""
 "toggled with the \"View->Show Scrollbars\" command."
 msgstr ""
 "Kai įjungta, slinkties juostos yra matoma pagal nutylėjimą. Tai galima taip "
-"pat perjungti naudojant \"Vaizdas->Rodyti slinkties juostas\" komandą."
+"pat perjungti naudojant „Rodymas->Rodyti slinkties juostas“ komandą."
 
 #: ../app/config/gimprc-blurbs.h:310
 msgid ""
@@ -4001,7 +4004,7 @@ msgid ""
 "with the \"View->Show Statusbar\" command."
 msgstr ""
 "Kai įjungta, būsenos juosta yra matoma pagal nutylėjimą. Tai galima taip pat "
-"perjungti naudojant \"Vaizdas->Rodyti būsenos juostą\" komandą."
+"perjungti naudojant „Rodymas->Rodyti būsenos juostą“ komandą."
 
 #: ../app/config/gimprc-blurbs.h:314
 msgid ""
@@ -4009,7 +4012,7 @@ msgid ""
 "with the \"View->Show Selection\" command."
 msgstr ""
 "Kai įjungta, pažymėjimai yra matomi pagal nutylėjimą. Tai galima taip pat "
-"perjungti naudojant \"Vaizdas->Rodyti pažymėjimą\" komandą."
+"perjungti naudojant „Rodymas->Rodyti pažymėjimą“ komandą."
 
 #: ../app/config/gimprc-blurbs.h:318
 msgid ""
@@ -4017,7 +4020,7 @@ msgid ""
 "toggled with the \"View->Show Layer Boundary\" command."
 msgstr ""
 "Kai įjungta, sluoksnių ribos yra matomos pagal nutylėjimą. Tai galima taip "
-"pat perjungti naudojant \"Vaizdas->Rodyti sluoksnių ribas\" komandą."
+"pat perjungti naudojant „Rodymas->Rodyti sluoksnių ribas“ komandą."
 
 #: ../app/config/gimprc-blurbs.h:322
 msgid ""
@@ -4025,24 +4028,23 @@ msgid ""
 "with the \"View->Show Guides\" command."
 msgstr ""
 "Kai įjungta, pagalbinės linijos yra matomos pagal nutylėjimą. Tai galima "
-"taip pat perjungti naudojant \"Vaizdas->Rodyti pagalbines linijas\" komandą."
+"taip pat perjungti naudojant „Rodymas->Rodyti pagalbines linijas“ komandą."
 
 #: ../app/config/gimprc-blurbs.h:326
 msgid ""
 "When enabled, the grid is visible by default. This can also be toggled with "
 "the \"View->Show Grid\" command."
 msgstr ""
-"Kai įjungta, tinklelis yra matomas pagal nutylėjimą. Tai galima taip pat "
-"perjungti naudojant \"Vaizdas->Rodyti tinklelį\" komandą."
+"Kai įjungta, tinklelis yra matomas pagal numatymą. Tai galima taip pat "
+"perjungti naudojant „Rodymas->Rodyti tinklelį“ komandą."
 
 #: ../app/config/gimprc-blurbs.h:330
-#, fuzzy
 msgid ""
 "When enabled, the sample points are visible by default. This can also be "
 "toggled with the \"View->Show Sample Points\" command."
 msgstr ""
-"Kai įjungta, liniuotės yra matomos pagal nutylėjimą. Tai galima taip pat "
-"perjungti naudojant \"Vaizdas->Rodyti liniuotes\" komandą."
+"Kai įjungta, pavyzdžių taškai yra matomos pagal nutylėjimą. Tai taip pat "
+"galima perjungti naudojant komandą „Rodymas->Rodyti pavyzdžių taškus“."
 
 #: ../app/config/gimprc-blurbs.h:334
 msgid "Enable displaying a handy GIMP tip on startup."
@@ -4050,7 +4052,7 @@ msgstr "Įjungti naudingų patarimų rodymą GIMP paleidimo metu."
 
 #: ../app/config/gimprc-blurbs.h:337
 msgid "Enable tooltips display."
-msgstr "Įjungti patarimų rodymą."
+msgstr "Įjungti paaiškinimų rodymą."
 
 #: ../app/config/gimprc-blurbs.h:340
 msgid ""
@@ -4061,6 +4063,13 @@ msgid ""
 "file is created on a directory that is mounted over NFS.  For these reasons, "
 "it may be desirable to put your swap file in \"/tmp\"."
 msgstr ""
+"Nurodo mainų rinkmenos vietą. GIMP naudoja tekstūromis paremtą atminties "
+"paskirstymo schemą. Mainų rinkmena naudojama greitai ir paprastai įkelti "
+"tekstūras į diską ir iš jo. Turėkite omenyje, kad mainų rinkmena lengvai "
+"gali tapti labai didelė, jei GIMP naudojami labai dideli paveikslėliai. "
+"Taip pat, sistema gali nepakenčiamai sulėtėti, jei mainų rinkmena "
+"sukuriama aplanke prijungtame naudojant NFS. Dėl šiu priežasčių, "
+"rekomenduojama patalpinti mainų rinkmeną į „/tmp“."
 
 #: ../app/config/gimprc-blurbs.h:349
 msgid "When enabled, menus can be torn off."
@@ -4096,18 +4105,26 @@ msgid ""
 "but some files are likely to remain, so it is best if this directory not be "
 "one that is shared by other users."
 msgstr ""
+"Nurodo laikinąjį saugojimo aplanką. Ten bus saugomos rinkmenos naudojimosi "
+"GIMP metu. Po GIMP uždarymo dauguma rinkmenų pranyks, tačiau kai kurios gali "
+"likti, taigi, būtų geriausia, jei šis aplankas būtų neviešinamas kitiems "
+"naudotojams."
 
 #: ../app/config/gimprc-blurbs.h:380
 msgid ""
 "Sets the size of the thumbnail shown in the Open dialog. Note that GIMP can "
 "not create thumbnails if layer previews are disabled."
 msgstr ""
+"Nurodo lange „Atverti“ rodomų miniatiūrų dydį. Turėkite omenyje, kad GIMP "
+"gali nekurti miniatiūrų, jei išjungtos sluoksnių peržiūros."
 
 #: ../app/config/gimprc-blurbs.h:384
 msgid ""
 "The thumbnail in the Open dialog will be automatically updated if the file "
 "being previewed is smaller than the size set here."
 msgstr ""
+"Miniatiūros lange „Atverti“ bus automatiškai atnaujinamos, jei peržiūrėtina "
+"rinkmena yra mažesnė, nei dydis nurodytas čia."
 
 #: ../app/config/gimprc-blurbs.h:388
 msgid ""
@@ -4116,6 +4133,11 @@ msgid ""
 "swap space, but will also cause the GIMP to use more memory. Conversely, a "
 "smaller cache size causes the GIMP to use more swap space and less memory."
 msgstr ""
+"Tekstūrų podėlis naudojamas užtikrinti, kad GIMP nesugadintų tekstūrų "
+"tarp atminties ir disko. Nustačius šią reikšmę į didesnę, GIMP naudos mažiau "
+"mainų srities vietos, bet tuo pačiu GIMP naudos daugiau atminties. Ir "
+"atvirkščiai, esant mažesniam podėlio dydžiui, GIMP naudoja daugiau mainų "
+"srities vietos ir mažiau atminties."
 
 #: ../app/config/gimprc-blurbs.h:399
 msgid ""
@@ -4125,26 +4147,26 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:403
 msgid "Sets the manner in which transparency is displayed in images."
-msgstr ""
+msgstr "Nurodo paveikslėliuose esančio permatomumo vaizdavimo tipą."
 
 #: ../app/config/gimprc-blurbs.h:406
 msgid "Sets the size of the checkerboard used to display transparency."
-msgstr ""
+msgstr "Nurodo šaškių lentos naudojamos pavaizduoti permatomumui dydį."
 
 #: ../app/config/gimprc-blurbs.h:409
-#, fuzzy
 msgid ""
 "When enabled, the GIMP will not save an image if it has not been changed "
 "since it was opened."
 msgstr ""
-"Kai įjungta, GIMP neišsaugos paveikslėlio jei paveikslėlis buvo pakeistas po "
-"atidarymo."
+"Kai įjungta, GIMP neišsaugos paveikslėlio, jei jis nuo atvėrimo nebuvo pakeistas."
 
 #: ../app/config/gimprc-blurbs.h:413
 msgid ""
 "Sets the minimal number of operations that can be undone. More undo levels "
 "are kept available until the undo-size limit is reached."
 msgstr ""
+"Nurodo mažiausią skaičių operacijų, kurios negali būti atšauktos. Daugiau "
+"atšaukimo lygių yra prieinami, kol nepasiekiamas atšaukimų dydžio limitas."
 
 #: ../app/config/gimprc-blurbs.h:417
 msgid ""
@@ -4155,26 +4177,26 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:422
 msgid "Sets the size of the previews in the Undo History."
-msgstr ""
+msgstr "Nurodo peržiūrų rodomų atšaukimų istorijoje dydį."
 
 #: ../app/config/gimprc-blurbs.h:425
 msgid "When enabled, pressing F1 will open the help browser."
-msgstr "Kai įjunga, klavišu F1 iškviečiama pagalbos naršyklė."
+msgstr "Kai įjunga, paspaudus klavišą F1 bus atverta žinyno naršyklė."
 
 #: ../app/config/gimprc-blurbs.h:428
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Sets the external web browser to be used.  This can be an absolute path or "
 "the name of an executable to search for in the user's PATH. If the command "
 "contains '%s' it will be replaced with the URL, else the URL will be "
 "appended to the command with a space separating the two."
-msgstr "Nustato išorinę interneto naršyklę, kuri bus naudojama. "
+msgstr ""
 
 #: ../app/config/gimprc-deserialize.c:135 ../app/core/gimp-modules.c:134
 #: ../app/core/gimp-units.c:164 ../app/gui/session.c:160
 #: ../app/plug-in/plug-in-rc.c:204
 msgid "fatal parse error"
-msgstr "kritinė analizavimo klaida"
+msgstr "kritinė apdorojimo klaida"
 
 #: ../app/config/gimprc-deserialize.c:163
 #, c-format
@@ -4198,9 +4220,8 @@ msgid "Floyd-Steinberg (reduced color bleeding)"
 msgstr "Floyd-Steinberg (sumažintas spalvų nublukimas)"
 
 #: ../app/core/core-enums.c:56
-#, fuzzy
 msgid "Positioned"
-msgstr "Vieta: %0.6f"
+msgstr ""
 
 #: ../app/core/core-enums.c:85
 msgid "Generate optimum palette"
@@ -4242,7 +4263,7 @@ msgstr "Raštai"
 
 #: ../app/core/core-enums.c:231
 msgid "Stroke line"
-msgstr "Apvedimo linija"
+msgstr "Apvesti linija"
 
 #: ../app/core/core-enums.c:232
 msgid "Stroke with a paint tool"
@@ -4252,10 +4273,12 @@ msgstr "Apvesti su piešimo įrankiu"
 msgid "Solid"
 msgstr "Vientisas"
 
+# Miter apibrėžimas (http://dictionary.cambridge.org/define.asp?key=51203&dict=CALD): 
+#. n 1: joint that forms a corner; usually both sides are bevelled at a 45-degree
+#.      angle to form a 90-degree corner [syn: miter joint, mitre joint, mitre] 
 #: ../app/core/core-enums.c:288
-#, fuzzy
 msgid "Miter"
-msgstr "Pagrindinis"
+msgstr "Kampinis"
 
 #: ../app/core/core-enums.c:289 ../app/core/core-enums.c:319
 msgid "Round"
@@ -4263,15 +4286,19 @@ msgstr "Apvalus"
 
 #: ../app/core/core-enums.c:290
 msgid "Bevel"
-msgstr "Nuožulnumas"
+msgstr "Nuožulnus"
 
+#. Butt apibrėžimas:
+#. n 1: thick end of the handle [syn: butt end]
+#. 8. (Mech.) (a) A joint where the ends of two objects come squarely together
+#.                without scarfing or chamfering; -- also called butt joint.
 #: ../app/core/core-enums.c:318
 msgid "Butt"
-msgstr ""
+msgstr "Nukirstas"
 
 #: ../app/core/core-enums.c:320 ../app/core/core-enums.c:395
 msgid "Square"
-msgstr "Kvadratas"
+msgstr "Kvadratinis"
 
 #: ../app/core/core-enums.c:356
 msgid "Custom"
@@ -4307,7 +4334,7 @@ msgstr "Tankūs taškeliai"
 
 #: ../app/core/core-enums.c:364
 msgid "Stipples"
-msgstr ""
+msgstr "Mažyčiai taškeliai"
 
 #: ../app/core/core-enums.c:365
 msgid "Dash, dot"
@@ -4461,7 +4488,7 @@ msgstr "Tinklelis"
 
 #: ../app/core/core-enums.c:812 ../app/core/core-enums.c:842
 msgid "Sample Point"
-msgstr ""
+msgstr "Pavyzdžio taškas"
 
 #: ../app/core/core-enums.c:813 ../app/core/core-enums.c:844
 msgid "Layer/Channel"
@@ -4920,7 +4947,6 @@ msgid "Invert Channel"
 msgstr "Invertuoti kanalą"
 
 #: ../app/core/gimpchannel.c:289
-#, fuzzy
 msgid "Border Channel"
 msgstr "Įrėminti kanalą"
 
@@ -5028,16 +5054,15 @@ msgstr "Užpildymas"
 #: ../app/core/gimpdrawable-desaturate.c:97
 #: ../app/dialogs/desaturate-dialog.c:59
 msgid "Desaturate"
-msgstr "Nusordrinti"
+msgstr "Nusodrinti"
 
 #: ../app/core/gimpdrawable-equalize.c:78
 msgid "Equalize"
 msgstr "Išlyginti"
 
 #: ../app/core/gimpdrawable-foreground-extract.c:134
-#, fuzzy
 msgid "Foreground Extraction"
-msgstr "Priekinio plano išėmimas"
+msgstr "Priekinio plano ištraukimas"
 
 #: ../app/core/gimpdrawable-invert.c:61
 msgid "Invert"
@@ -5251,17 +5276,15 @@ msgstr "Išjungti greitą kaukę"
 
 #: ../app/core/gimpimage-sample-points.c:55
 msgid "Add Sample_Point"
-msgstr ""
+msgstr "Pridėti pavyzdžio _tašką"
 
 #: ../app/core/gimpimage-sample-points.c:121 ../app/tools/gimpcolortool.c:409
-#, fuzzy
 msgid "Remove Sample Point"
-msgstr "Pašalinti kontūrą"
+msgstr "Pašalinti pavyzdžio tašką"
 
 #: ../app/core/gimpimage-sample-points.c:158
-#, fuzzy
 msgid "Move Sample Point"
-msgstr "Perkelti pažymėjimą"
+msgstr "Perkelti pavyzdžio tašką"
 
 #: ../app/core/gimpimage-undo-push.c:3298
 #, c-format
@@ -5864,19 +5887,20 @@ msgstr "_Maksimalus spalvų skaičius:"
 msgid "_Remove unused colors from final palette"
 msgstr "_Pašalinti nenaudojamas spalvas iš galutinės paletės"
 
-#. dithering
+#. Apibrėžimas:
+#. n : the process of representing intermediate colors by patterns of
+#.     tiny colored dots that simulate the desired color
 #: ../app/dialogs/convert-dialog.c:224 ../app/tools/gimpblendoptions.c:239
 msgid "Dithering"
-msgstr ""
+msgstr "Smulkinimas"
 
 #: ../app/dialogs/convert-dialog.c:236
 msgid "Color _dithering:"
-msgstr ""
+msgstr "Spalvų _smulkinimas:"
 
 #: ../app/dialogs/convert-dialog.c:251
-#, fuzzy
 msgid "Enable dithering of _transparency"
-msgstr "Įjungti permatomumo suliejimą"
+msgstr "Įjungti _permatomumo smulkinimą"
 
 #: ../app/dialogs/convert-dialog.c:277
 msgid "Converting to indexed"
@@ -6190,7 +6214,7 @@ msgstr "Būsena:"
 
 #: ../app/dialogs/module-dialog.c:506
 msgid "Last error:"
-msgstr "Paskutinė klaida:"
+msgstr "Paskutinioji klaida:"
 
 #: ../app/dialogs/module-dialog.c:507
 msgid "Available types:"
@@ -7798,9 +7822,8 @@ msgid "Registered"
 msgstr "Užregistruota"
 
 #: ../app/paint/paint-enums.c:28
-#, fuzzy
 msgid "Fixed"
-msgstr "Užpildyta"
+msgstr "Fiksuota"
 
 #: ../app/paint/paint-enums.c:55
 msgid "Blur"
@@ -8168,10 +8191,9 @@ msgstr "Forma:"
 
 #: ../app/tools/gimpblendoptions.c:231 ../app/tools/gimppaintoptions-gui.c:494
 msgid "Repeat:"
-msgstr "Kartoti:"
+msgstr "Kartojimas:"
 
 #: ../app/tools/gimpblendoptions.c:249
-#, fuzzy
 msgid "Adaptive supersampling"
 msgstr ""
 
@@ -10805,7 +10827,7 @@ msgstr "Kraštovaizdis"
 
 #: ../app/widgets/widgets-enums.c:113
 msgid "Pixel"
-msgstr "Taškelių"
+msgstr "Taškeliai"
 
 #: ../app/widgets/widgets-enums.c:115
 msgid "HSV"
