@@ -208,7 +208,7 @@ file_load_layer_invoker (Gimp         *gimp,
 
       if (success)
         layer = file_open_layer (gimp, context, progress,
-                                 image, uri, run_mode, &status, NULL);
+                                 image, uri, run_mode, NULL, &status, NULL);
 
       success = layer != NULL;
     }

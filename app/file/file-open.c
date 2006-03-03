@@ -350,6 +350,7 @@ file_open_layer (Gimp               *gimp,
                  GimpImage          *dest_image,
                  const gchar        *uri,
                  GimpRunMode         run_mode,
+                 PlugInProcDef      *file_proc,
                  GimpPDBStatusType  *status,
                  GError            **error)
 {
@@ -367,7 +368,8 @@ file_open_layer (Gimp               *gimp,
 
   new_image = file_open_image (gimp, context, progress,
                                uri, uri,
-                               NULL, run_mode,
+                               file_proc,
+                               run_mode,
                                status, &mime_type, error);
 
   if (new_image)

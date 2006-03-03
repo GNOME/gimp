@@ -63,6 +63,7 @@ GimpLayer * file_open_layer                 (Gimp               *gimp,
                                              GimpImage          *dest_image,
                                              const gchar        *uri,
                                              GimpRunMode         run_mode,
+                                             PlugInProcDef      *file_proc,
                                              GimpPDBStatusType  *status,
                                              GError            **error);
 

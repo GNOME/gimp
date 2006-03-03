@@ -419,7 +419,7 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
 
       new_layer = file_open_layer (gimage->gimp, context,
                                    GIMP_PROGRESS (shell->statusbar),
-                                   gimage, uri, GIMP_RUN_INTERACTIVE,
+                                   gimage, uri, GIMP_RUN_INTERACTIVE, NULL,
                                    &status, &error);
 
       if (new_layer)
