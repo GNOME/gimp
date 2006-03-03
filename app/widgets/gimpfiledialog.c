@@ -437,12 +437,12 @@ gimp_file_dialog_add_filters (GimpFileDialog *dialog,
   GSList        *list;
 
   all = gtk_file_filter_new ();
-  gtk_file_filter_set_name (all, _("All Files"));
+  gtk_file_filter_set_name (all, _("All files"));
   gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), all);
   gtk_file_filter_add_pattern (all, "*");
 
   all = gtk_file_filter_new ();
-  gtk_file_filter_set_name (all, _("All Images"));
+  gtk_file_filter_set_name (all, _("All images"));
   gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), all);
 
   for (list = file_procs; list; list = g_slist_next (list))

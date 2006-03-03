@@ -1,5 +1,11 @@
 2006-03-03  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/vectors-import-dialog.c (vectors_import_dialog_new)
+	* app/widgets/gimpfiledialog.c (gimp_file_dialog_add_filters):
+	fixed capitalization of filter names.
+
+2006-03-03  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/pdb/fileops.pdb: 
 	* app/dialogs/file-open-dialog.c
 	* app/display/gimpdisplayshell-dnd.c

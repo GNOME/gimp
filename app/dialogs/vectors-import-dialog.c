@@ -85,7 +85,7 @@ vectors_import_dialog_new (GimpImage *image,
                     NULL);
 
   filter = gtk_file_filter_new ();
-  gtk_file_filter_set_name (filter, _("All Files (*.*)"));
+  gtk_file_filter_set_name (filter, _("All files (*.*)"));
   gtk_file_filter_add_pattern (filter, "*");
   gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog->dialog), filter);
 
