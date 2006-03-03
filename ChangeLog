@@ -1,3 +1,8 @@
+2006-03-02  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/jpeg/jpeg-exif.c (jpeg_query): use proper sentinel type
+	for gtk_dialog_set_alternative_button_order. Fixes bug #330800.
+
 2006-03-02  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage.c (gimp_image_real_flush): made it a static
