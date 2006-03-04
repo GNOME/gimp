@@ -173,10 +173,6 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
   gtk_container_add (GTK_CONTAINER (editor->add_button), image);
   gtk_widget_show (image);
 
-  gimp_help_set_help_data (editor->add_button,
-                           _("Add the selected filter to the list of "
-                             "active filters."), NULL);
-
   g_signal_connect (editor->add_button, "clicked",
                     G_CALLBACK (gimp_color_display_editor_add_clicked),
                     editor);
@@ -189,10 +185,6 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
   image = gtk_image_new_from_stock (GTK_STOCK_GO_BACK, GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (editor->remove_button), image);
   gtk_widget_show (image);
-
-  gimp_help_set_help_data (editor->remove_button,
-                           _("Remove the selected filter from the list of "
-                             "active filters."), NULL);
 
   g_signal_connect (editor->remove_button, "clicked",
                     G_CALLBACK (gimp_color_display_editor_remove_clicked),
@@ -461,6 +453,7 @@ gimp_color_display_editor_src_changed (GtkTreeSelection       *sel,
 {
   GtkTreeModel *model;
   GtkTreeIter   iter;
+  gchar        *tip  = NULL;
   const gchar  *name = NULL;
 
   if (gtk_tree_selection_get_selected (sel, &model, &iter))
@@ -471,10 +464,15 @@ gimp_color_display_editor_src_changed (GtkTreeSelection       *sel,
 
       name = g_value_get_string (&val);
 
+      tip = g_strdup_printf (_("Add '%s' to the list of active filters"), name);
+
       g_value_unset (&val);
     }
 
   gtk_widget_set_sensitive (editor->add_button, name != NULL);
+
+  gimp_help_set_help_data (editor->add_button, tip, NULL);
+  g_free (tip);
 }
 
 static void
@@ -484,6 +482,7 @@ gimp_color_display_editor_dest_changed (GtkTreeSelection       *sel,
   GtkTreeModel     *model;
   GtkTreeIter       iter;
   GimpColorDisplay *display = NULL;
+  gchar            *tip     = NULL;
 
   if (editor->selected)
     {
@@ -501,7 +500,13 @@ gimp_color_display_editor_dest_changed (GtkTreeSelection       *sel,
       display = g_value_get_object (&val);
 
       g_value_unset (&val);
+
+      tip = g_strdup_printf (_("Remove '%s' from the list of active filters"),
+                             GIMP_COLOR_DISPLAY_GET_CLASS (display)->name);
     }
+
+  gimp_help_set_help_data (editor->remove_button, tip, NULL);
+  g_free (tip);
 
   gtk_widget_set_sensitive (editor->remove_button, display != NULL);
   gtk_widget_set_sensitive (editor->reset_button,  display != NULL);

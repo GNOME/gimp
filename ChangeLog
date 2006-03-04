@@ -1,5 +1,6 @@
 2006-03-04  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpcolordisplayeditor.c
 	* app/widgets/gimpcontrollereditor.c
 	* app/widgets/gimpcontrollerlist.c: set tooltips dynamically.
 
