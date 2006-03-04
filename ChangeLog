@@ -1,3 +1,8 @@
+2006-03-04  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpcontrollereditor.c
+	* app/widgets/gimpcontrollerlist.c: set tooltips dynamically.
+
 2006-03-03  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/vectors-import-dialog.c (vectors_import_dialog_new)

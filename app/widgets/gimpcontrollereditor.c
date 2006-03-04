@@ -408,21 +408,13 @@ gimp_controller_editor_constructor (GType                  type,
                     G_CALLBACK (gimp_controller_editor_edit_clicked),
                     editor);
 
-  gimp_help_set_help_data (editor->edit_button,
-                           _("Assign an action to the selected event"),
-                           NULL);
-
-  editor->delete_button = gtk_button_new_from_stock (GTK_STOCK_DELETE);
+  editor->delete_button = gtk_button_new_from_stock (GTK_STOCK_CLEAR);
   gtk_box_pack_start (GTK_BOX (hbox), editor->delete_button, TRUE, TRUE, 0);
   gtk_widget_show (editor->delete_button);
 
   g_signal_connect (editor->delete_button, "clicked",
                     G_CALLBACK (gimp_controller_editor_delete_clicked),
                     editor);
-
-  gimp_help_set_help_data (editor->delete_button,
-                           _("Remove the action from the selected event"),
-                           NULL);
 
   gtk_widget_set_sensitive (editor->edit_button,   FALSE);
   gtk_widget_set_sensitive (editor->delete_button, FALSE);
@@ -521,14 +513,18 @@ gimp_controller_editor_sel_changed (GtkTreeSelection     *sel,
 {
   GtkTreeModel *model;
   GtkTreeIter   iter;
+  gchar        *edit_help        = NULL;
+  gchar        *delete_help      = NULL;
   gboolean      edit_sensitive   = FALSE;
   gboolean      delete_sensitive = FALSE;
 
   if (gtk_tree_selection_get_selected (sel, &model, &iter))
     {
+      gchar *event  = NULL;
       gchar *action = NULL;
 
       gtk_tree_model_get (model, &iter,
+                          COLUMN_BLURB,  &event,
                           COLUMN_ACTION, &action,
                           -1);
 
@@ -537,13 +533,23 @@ gimp_controller_editor_sel_changed (GtkTreeSelection     *sel,
           g_free (action);
 
           delete_sensitive = TRUE;
+          delete_help =
+            g_strdup_printf (_("Remove the action assigned to '%s'"), event);
         }
 
       edit_sensitive = TRUE;
+      edit_help = g_strdup_printf (_("Assign an action to '%s'"), event);
+
+      g_free (event);
     }
 
-  gtk_widget_set_sensitive (editor->edit_button,   edit_sensitive);
+  gimp_help_set_help_data (editor->edit_button, edit_help, NULL);
+  gtk_widget_set_sensitive (editor->edit_button, edit_sensitive);
+  g_free (edit_help);
+
+  gimp_help_set_help_data (editor->delete_button, delete_help, NULL);
   gtk_widget_set_sensitive (editor->delete_button, delete_sensitive);
+  g_free (delete_help);
 
   gimp_controller_info_set_event_snooper (editor->info, NULL, NULL);
 }
@@ -798,6 +804,8 @@ gimp_controller_editor_edit_response (GtkWidget            *dialog,
       g_free (event_name);
       g_free (stock_id);
       g_free (action_name);
+
+      gimp_controller_editor_sel_changed (editor->edit_sel, editor);
     }
 
   gtk_widget_destroy (dialog);

@@ -243,10 +243,6 @@ gimp_controller_list_init (GimpControllerList *list)
   gtk_container_add (GTK_CONTAINER (list->add_button), image);
   gtk_widget_show (image);
 
-  gimp_help_set_help_data (list->add_button,
-                           _("Create a controller of the selected type."),
-                           NULL);
-
   g_signal_connect (list->add_button, "clicked",
                     G_CALLBACK (gimp_controller_list_add_clicked),
                     list);
@@ -262,10 +258,6 @@ gimp_controller_list_init (GimpControllerList *list)
   image = gtk_image_new_from_stock (GTK_STOCK_GO_BACK, GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (list->remove_button), image);
   gtk_widget_show (image);
-
-  gimp_help_set_help_data (list->remove_button,
-                           _("Remove the selected filter from the list of "
-                             "active filters."), NULL);
 
   g_signal_connect (list->remove_button, "clicked",
                     G_CALLBACK (gimp_controller_list_remove_clicked),
@@ -416,20 +408,37 @@ gimp_controller_list_src_sel_changed (GtkTreeSelection   *sel,
 {
   GtkTreeModel *model;
   GtkTreeIter   iter;
+  gchar        *tip = NULL;
 
   if (gtk_tree_selection_get_selected (sel, &model, &iter))
     {
+      gchar *name;
+
       gtk_tree_model_get (model, &iter,
+                          COLUMN_NAME, &name,
                           COLUMN_TYPE, &list->src_gtype,
                           -1);
 
       if (list->add_button)
-        gtk_widget_set_sensitive (list->add_button, TRUE);
+        {
+          tip =
+            g_strdup_printf (_("Add '%s' to the list of active controllers"),
+                             name);
+          gtk_widget_set_sensitive (list->add_button, TRUE);
+        }
+
+      g_free (name);
     }
   else
     {
       if (list->add_button)
         gtk_widget_set_sensitive (list->add_button, FALSE);
+    }
+
+  if (list->add_button)
+    {
+      gimp_help_set_help_data (list->add_button, tip, NULL);
+      g_free (tip);
     }
 }
 
@@ -456,7 +465,20 @@ gimp_controller_list_select_item (GimpContainerView  *view,
   selected = GIMP_IS_CONTROLLER_INFO (list->dest_info);
 
   if (list->remove_button)
-    gtk_widget_set_sensitive (list->remove_button, selected);
+    {
+      GimpObject *object = GIMP_OBJECT (list->dest_info);
+      gchar      *tip    = NULL;
+
+      gtk_widget_set_sensitive (list->remove_button, selected);
+
+      if (selected)
+        tip =
+          g_strdup_printf (_("Remove '%s' from the list of active controllers"),
+                           gimp_object_get_name (object));
+
+      gimp_help_set_help_data (list->remove_button, tip, NULL);
+      g_free (tip);
+    }
 
   gtk_widget_set_sensitive (list->edit_button, selected);
   gtk_widget_set_sensitive (list->up_button,   selected);
