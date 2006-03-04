@@ -391,8 +391,8 @@ file_save_dialog_use_extension (GtkWidget   *save_dialog,
                                     save_dialog, GTK_DIALOG_DESTROY_WITH_PARENT,
                                     gimp_standard_help_func, NULL,
 
-                                    GTK_STOCK_NO,  GTK_RESPONSE_CANCEL,
-                                    GTK_STOCK_YES, GTK_RESPONSE_OK,
+                                    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                    GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
 
                                     NULL);
 
@@ -406,7 +406,8 @@ file_save_dialog_use_extension (GtkWidget   *save_dialog,
                                        "not match the chosen file type."));
 
   gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
-                             _("Do you want to use this name anyway?"));
+                             _("Do you want to save the image using this "
+                               "name anyway?"));
 
   gtk_dialog_set_response_sensitive (GTK_DIALOG (save_dialog),
                                      GTK_RESPONSE_CANCEL, FALSE);

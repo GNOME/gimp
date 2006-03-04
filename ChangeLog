@@ -1,5 +1,10 @@
 2006-03-04  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/file-save-dialog.c (file_save_dialog_use_extension):
+	use descriptive verbs in action buttons instead of Yes and No.
+
+2006-03-04  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpcolordisplayeditor.c
 	* app/widgets/gimpcontrollereditor.c
 	* app/widgets/gimpcontrollerlist.c: set tooltips dynamically.
