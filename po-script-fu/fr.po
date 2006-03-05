@@ -1851,7 +1851,7 @@ msgstr "Coins·a_rrondis..."
 
 #: scripts/selection-round.sct.h:1
 msgid "<Image>/Select/Modify"
-msgstr "<Image>Sélection/Modifier"
+msgstr "<Image>/Sélection/Modifier"
 
 #: scripts/selection-round.sct.h:2
 msgid "Concave"

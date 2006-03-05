@@ -176,7 +176,7 @@ gimp_image_merge_down (GimpImage     *gimage,
        layer_list && !merge_list;
        layer_list = g_list_next (layer_list))
     {
-      GimpLayer *layer = list->data;
+      GimpLayer *layer = layer_list->data;
 
       if (gimp_item_get_visible (GIMP_ITEM (layer)))
         merge_list = g_slist_append (NULL, layer);
