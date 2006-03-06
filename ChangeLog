@@ -1,3 +1,13 @@
+2006-03-06  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
+	* app/display/gimpdisplay.c (gimp_display_reconnect): keep a
+	reference on the old image until the display is connected to the
+	new one. Fixes bug #333568.
+
+	* app/display/gimpdisplay-handlers.c: fixed typo in comment.
+
 2006-03-02  Sven Neumann  <sven.gimp.org>
 
 	Merged from HEAD branch (bug #310426):

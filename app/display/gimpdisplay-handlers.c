@@ -98,7 +98,7 @@ gimp_display_disconnect (GimpDisplay *gdisp)
 #endif
 
   /*  set gdisp->gimage to NULL before unrefing because there may be code
-   *  that listenes for image removals and then iterates the display list
+   *  that listens for image removals and then iterates the display list
    *  to find a valid display.
    */
   gimage = gdisp->gimage;

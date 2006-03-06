@@ -436,6 +436,8 @@ void
 gimp_display_reconnect (GimpDisplay *gdisp,
                         GimpImage   *gimage)
 {
+  GimpImage *old_image;
+
   g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
@@ -444,9 +446,12 @@ gimp_display_reconnect (GimpDisplay *gdisp,
 
   gimp_display_shell_disconnect (GIMP_DISPLAY_SHELL (gdisp->shell));
 
-  gimp_display_disconnect (gdisp);
+  old_image = g_object_ref (gdisp->gimage);
 
+  gimp_display_disconnect (gdisp);
   gimp_display_connect (gdisp, gimage);
+
+  g_object_unref (old_image);
 
   gimp_display_shell_reconnect (GIMP_DISPLAY_SHELL (gdisp->shell));
 }
