@@ -555,9 +555,7 @@ file_revert_confirm_response (GtkWidget   *dialog,
         }
       else if (status != GIMP_PDB_CANCEL)
         {
-          gchar *filename;
-
-          filename = file_utils_uri_display_name (uri);
+          gchar *filename = file_utils_uri_display_name (uri);
 
           g_message (_("Reverting to '%s' failed:\n\n%s"),
                      filename, error->message);

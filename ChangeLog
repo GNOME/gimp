@@ -1,3 +1,13 @@
+2006-03-06  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplay.c (gimp_display_reconnect): keep a
+	reference on the old image until the display is connected to the
+	new one. Fixes bug #333568.
+
+	* app/display/gimpdisplay-handlers.c: fixed typo in comment.
+
+	* app/actions/file-commands.c: cosmetics.
+
 2006-03-05  DindinX  <dindinx@gimp.org>
 
 	* app/core/gimpimage-merge.c: fixed merge down (previously broken by a
