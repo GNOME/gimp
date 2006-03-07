@@ -1,7 +1,8 @@
-# translation of fr.po to 
+# translation of fr_gimp2210.po to
+# translation of fr.po to
 # translation of gimp.HEAD.po to
 # French translation for The Gimp.
-# Copyright (C) 1998-2004, 2005 Free Software Foundation, Inc.
+# Copyright (C) 1998-2004, 2005, 2006 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
 # Vincent Renardias <vincent@ldsol.com>, 1998-2000.
 # David Monniaux <monniaux@brick.ens.fr>, 1999-2000.
@@ -9,21 +10,21 @@
 # Christophe Merlet (RedFox) <redfox@redfoxcenter.org>, 2000-2004.
 # maintainer: Raymond Ostertag <r.ostertag@caramail.com>, 2002-2004.
 # Thomas Morin <t0m@free.fr>, 2002-2003.
-# Jean-Louis Berliet <jl.berliet@free.fr>, 2004, 2005.
+# Jean-Louis Berliet <jl.berliet@free.fr>, 2004, 2005, 2006.
 #
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: fr\n"
+"Project-Id-Version: fr_gimp2210\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-01-25 19:55+0100\n"
-"PO-Revision-Date: 2005-02-19 02:49+0100\n"
-"Last-Translator: \n"
-"Language-Team:  <fr@li.org>\n"
+"PO-Revision-Date: 2006-03-05 17:17+0100\n"
+"Last-Translator: Raymond Ostertag\n"
+"Language-Team:  <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.3.1\n"
+"X-Generator: KBabel 1.10.2\n"
 
 #: app/app_procs.c:144
 msgid "(This console window will close in ten seconds)\n"
@@ -131,8 +132,7 @@ msgstr ""
 
 #: app/main.c:516
 msgid "  --no-cpu-accel           Do not use special CPU accelerations.\n"
-msgstr ""
-"  --no-cpu-accel           N'utilise pas les accélérations propre au CPU.\n"
+msgstr "  --no-cpu-accel           N'utilise pas les accélérations propre au CPU.\n"
 
 #: app/main.c:517
 msgid ""
@@ -171,8 +171,7 @@ msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
 msgstr "  --system-gimprc <gimprc> Utilise un autre fichier système gimprc.\n"
 
 #: app/main.c:525
-msgid ""
-"  --dump-gimprc            Output a gimprc file with default settings.\n"
+msgid "  --dump-gimprc            Output a gimprc file with default settings.\n"
 msgstr ""
 "  --dump-gimprc            Créé un fichier gimprc avec les réglages par "
 "défaut.\n"
@@ -186,8 +185,7 @@ msgstr ""
 "place d'une boîte de dialogue.\n"
 
 #: app/main.c:527
-msgid ""
-"  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
+msgid "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr ""
 "  --debug-handlers         Active le déboguage des gestionnaires de signaux "
 "pour les signaux non fatals.\n"
@@ -2676,8 +2674,7 @@ msgstr "Supprimer le modèle"
 
 #: app/actions/templates-commands.c:243
 #, c-format
-msgid ""
-"Are you sure you want to delete template '%s' from the list and from disk?"
+msgid "Are you sure you want to delete template '%s' from the list and from disk?"
 msgstr ""
 "Êtes-vous sûr de vouloir supprimer le modèle « %s » de la liste et du "
 "disque ?"
@@ -3282,8 +3279,7 @@ msgstr ""
 #: app/config/gimpconfig-deserialize.c:100
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
-msgstr ""
-"La valeur de l'expression %s n'est pas une chaîne de caractère UTF-8 valide"
+msgstr "La valeur de l'expression %s n'est pas une chaîne de caractère UTF-8 valide"
 
 #: app/config/gimpconfig-deserialize.c:217 app/config/gimpconfig.c:424
 #: app/config/gimpconfig.c:437 app/config/gimpscanner.c:417
@@ -3297,8 +3293,7 @@ msgstr "erreur fatale d'interprétation"
 #: app/config/gimpconfig-deserialize.c:467
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
-msgstr ""
-"« oui » ou « non » attendus pour l'expression booléenne %s, « %s » reçu"
+msgstr "« oui » ou « non » attendus pour l'expression booléenne %s, « %s » reçu"
 
 #: app/config/gimpconfig-deserialize.c:541
 #, c-format
@@ -3502,13 +3497,11 @@ msgstr "Défini le navigateur utilisé par le système d'aide."
 
 #: app/config/gimprc-blurbs.h:154
 msgid "Sets the text to appear in image window status bars."
-msgstr ""
-"Contrôle le texte apparaissant dans la barre d'état des fenêtres d'image."
+msgstr "Contrôle le texte apparaissant dans la barre d'état des fenêtres d'image."
 
 #: app/config/gimprc-blurbs.h:157
 msgid "Sets the text to appear in image window titles."
-msgstr ""
-"Contrôle le texte apparaissant dans la barre de titre des fenêtres d'image."
+msgstr "Contrôle le texte apparaissant dans la barre de titre des fenêtres d'image."
 
 #: app/config/gimprc-blurbs.h:160
 msgid "When enabled, the GIMP will use a different info window per image view."
@@ -3525,15 +3518,13 @@ msgstr ""
 "ouverture, sinon elles seront affichées à l'échelle 1:1."
 
 #: app/config/gimprc-blurbs.h:167
-msgid ""
-"Install a private colormap; might be useful on 8-bit (256 colors) displays."
+msgid "Install a private colormap; might be useful on 8-bit (256 colors) displays."
 msgstr ""
 "Installer une palette de couleurs privée ; utile pour les modes d'affichage "
 "en 8 bits (256 couleurs)."
 
 #: app/config/gimprc-blurbs.h:170
-msgid ""
-"Sets the level of interpolation used for scaling and other transformations."
+msgid "Sets the level of interpolation used for scaling and other transformations."
 msgstr ""
 "Détermine le niveau d'interpolation utilisé pour les changements d'échelle "
 "et autres transformations."
@@ -3675,8 +3666,7 @@ msgstr ""
 "sauvée."
 
 #: app/config/gimprc-blurbs.h:265
-msgid ""
-"Remember the current tool, pattern, color, and brush across GIMP sessions."
+msgid "Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr ""
 "Se souvenir d'une session à l'autre de l'outil, de la couleur, de la brosse "
 "et du motif courants."
@@ -3899,13 +3889,11 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:388
 msgid "Sets the manner in which transparency is displayed in images."
-msgstr ""
-"Détermine comment les zones transparentes sont représentées dans les images."
+msgstr "Détermine comment les zones transparentes sont représentées dans les images."
 
 #: app/config/gimprc-blurbs.h:391
 msgid "Sets the size of the checkerboard used to display transparency."
-msgstr ""
-"Détermine la taille du damier utilisé pour représenter la transparence."
+msgstr "Détermine la taille du damier utilisé pour représenter la transparence."
 
 #: app/config/gimprc-blurbs.h:394
 msgid ""
@@ -4662,8 +4650,7 @@ msgstr ""
 #: app/core/gimpbrush.c:572
 #, c-format
 msgid "Fatal parse error in brush file '%s': Bytes = 0."
-msgstr ""
-"Erreur fatale d'interprétation dans le fichier de brosse « %s » : Octets = 0"
+msgstr "Erreur fatale d'interprétation dans le fichier de brosse « %s » : Octets = 0"
 
 #: app/core/gimpbrush.c:596
 #, c-format
@@ -4967,8 +4954,7 @@ msgstr ""
 #: app/core/gimpgradient-load.c:87
 #, c-format
 msgid "Invalid UTF-8 string in gradient file '%s'."
-msgstr ""
-"Chaîne de caractères UTF-8 non valide dans le fichier de dégradé « %s »."
+msgstr "Chaîne de caractères UTF-8 non valide dans le fichier de dégradé « %s »."
 
 #: app/core/gimpgradient-load.c:115
 #, c-format
@@ -5008,8 +4994,7 @@ msgid "The foreground color of the grid."
 msgstr "La couleur du premier plan de la grille."
 
 #: app/core/gimpgrid.c:139
-msgid ""
-"The background color of the grid; only used in double dashed line style."
+msgid "The background color of the grid; only used in double dashed line style."
 msgstr ""
 "La couleur de l'arrière-plan de la grille ; utilisée seulement pour le style "
 "de lignes en doubles tirets."
@@ -5023,8 +5008,7 @@ msgid "Vertical spacing of grid lines."
 msgstr "Espacement vertical des lignes de la grille"
 
 #: app/core/gimpgrid.c:159
-msgid ""
-"Horizontal offset of the first grid line; this may be a negative number."
+msgid "Horizontal offset of the first grid line; this may be a negative number."
 msgstr ""
 "Décalage horizontal de la première ligne de la grille ; ça peut être un "
 "nombre négatif."
@@ -5199,8 +5183,7 @@ msgstr "Envoyer le Calque tout en bas"
 #: app/core/gimpimage.c:2941
 #, c-format
 msgid "Layer '%s' has no alpha. Layer was placed above it."
-msgstr ""
-"Le calque « %s » n'a pas de canal alpha. Le calque a été placé au-dessus."
+msgstr "Le calque « %s » n'a pas de canal alpha. Le calque a été placé au-dessus."
 
 #: app/core/gimpimage.c:2993
 msgid "Add Channel"
@@ -5350,8 +5333,7 @@ msgstr "Supprimer la sélection flottante"
 
 #: app/core/gimplayer-floating-sel.c:129
 msgid "Cannot anchor this layer because it is not a floating selection."
-msgstr ""
-"Impossible d'ancrer ce calque car ce n'est pas une sélection flottante."
+msgstr "Impossible d'ancrer ce calque car ce n'est pas une sélection flottante."
 
 #: app/core/gimplayer-floating-sel.c:136
 msgid "Anchor Floating Selection"
@@ -5493,8 +5475,7 @@ msgstr ""
 #: app/core/gimppalette.c:410
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
-msgstr ""
-"Chaîne de caractères UTF-8 non valide dans le fichier de palette « %s »"
+msgstr "Chaîne de caractères UTF-8 non valide dans le fichier de palette « %s »"
 
 #: app/core/gimppalette.c:438
 #, c-format
@@ -5509,20 +5490,17 @@ msgstr ""
 #: app/core/gimppalette.c:484
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
-msgstr ""
-"Chargement de la palette « %s » : composante ROUGE manquante à la ligne %d."
+msgstr "Chargement de la palette « %s » : composante ROUGE manquante à la ligne %d."
 
 #: app/core/gimppalette.c:492
 #, c-format
 msgid "Reading palette '%s': Missing GREEN component in line %d."
-msgstr ""
-"Chargement de la palette « %s » : composante VERTE manquante à la ligne %d."
+msgstr "Chargement de la palette « %s » : composante VERTE manquante à la ligne %d."
 
 #: app/core/gimppalette.c:500
 #, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
-msgstr ""
-"Chargement de la palette « %s » : composante BLEUE manquante à la ligne %d."
+msgstr "Chargement de la palette « %s » : composante BLEUE manquante à la ligne %d."
 
 #: app/core/gimppalette.c:510
 #, c-format
@@ -5541,8 +5519,7 @@ msgstr ""
 
 #: app/core/gimppattern.c:357
 #, c-format
-msgid ""
-"Fatal parse error in pattern file '%s': Unknown pattern format version %d."
+msgid "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
 msgstr ""
 "Erreur fatale d'interprétation du fichier de motif « %s » : version de "
 "format de motif inconnue %d."
@@ -7033,8 +7010,7 @@ msgstr "<b>Votre fichier d'astuces semble manquer !</b>"
 #: app/dialogs/tips-dialog.c:92
 #, c-format
 msgid "There should be a file called '%s'. Please check your installation."
-msgstr ""
-"Il devrait y avoir un fichier nommé « %s ». Vérifiez votre installation."
+msgstr "Il devrait y avoir un fichier nommé « %s ». Vérifiez votre installation."
 
 #: app/dialogs/tips-dialog.c:98
 msgid "<b>The GIMP tips file could not be parsed!</b>"
@@ -7424,8 +7400,7 @@ msgstr ""
 "paramètres ci-dessus."
 
 #: app/dialogs/user-install-dialog.c:1005
-msgid ""
-"<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
+msgid "<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
 msgstr ""
 "<b>Pour des performances optimales de GIMP, certains paramètres devront\n"
 "être ajustés.</b>"
@@ -7685,8 +7660,7 @@ msgstr "Le fichier n'est pas un fichier ordinaire."
 
 #: app/file/file-open.c:173
 msgid "Plug-In returned SUCCESS but did not return an image"
-msgstr ""
-"Le greffon a rapporté avoir terminé avec succès mais n'a pas renvoyé d'image."
+msgstr "Le greffon a rapporté avoir terminé avec succès mais n'a pas renvoyé d'image."
 
 #: app/file/file-open.c:181
 msgid "Plug-In could not open image"
@@ -7865,8 +7839,7 @@ msgid "(invalid UTF-8 string)"
 msgstr "(chaîne de caractères UTF-8 non valide)"
 
 #: app/pdb/image_cmds.c:3898
-msgid ""
-"Image resolution is out of bounds, using the default resolution instead."
+msgid "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
 "Le résolution de l'image est hors des limites, utilisation de la résolution "
 "par défaut à la place."
@@ -8341,8 +8314,7 @@ msgstr "Ajuste la luminosité et le contraste"
 
 #: app/tools/gimpbrightnesscontrasttool.c:181
 msgid "Brightness-Contrast does not operate on indexed layers."
-msgstr ""
-"Luminosité-Contraste ne peut opérer sur des calques en couleurs indexées."
+msgstr "Luminosité-Contraste ne peut opérer sur des calques en couleurs indexées."
 
 #: app/tools/gimpbrightnesscontrasttool.c:236
 msgid "_Brightness:"
@@ -8928,8 +8900,7 @@ msgstr "Enregistrer les réglages de niveaux dans le fichier"
 
 #: app/tools/gimplevelstool.c:285
 msgid "Levels for indexed layers cannot be adjusted."
-msgstr ""
-"Les niveaux ne sont pas ajustables sur des calques en couleurs indexées."
+msgstr "Les niveaux ne sont pas ajustables sur des calques en couleurs indexées."
 
 #: app/tools/gimplevelstool.c:355
 msgid "Pick black point"
@@ -9222,15 +9193,15 @@ msgstr "Informations d'étirement/rétrécissement"
 
 #: app/tools/gimpscaletool.c:163
 msgid "Original Width:"
-msgstr "Largeur d'origine :"
+msgstr "Largeur :"
 
 #: app/tools/gimpscaletool.c:170
 msgid "Current width:"
-msgstr "Largeur actuelle :"
+msgstr "Largeur modifiée :"
 
 #: app/tools/gimpscaletool.c:174
 msgid "Current height:"
-msgstr "Largeur actuelle :"
+msgstr "Hauteur modifiée :"
 
 #: app/tools/gimpscaletool.c:189
 msgid "Scale ratio X:"
@@ -9313,8 +9284,7 @@ msgid "_Smudge"
 msgstr "_Barbouiller"
 
 #: app/tools/gimptextoptions.c:146
-msgid ""
-"Hinting alters the font outline to produce a crisp bitmap at small sizes"
+msgid "Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr ""
 "Les indices d'ajustement altèrent les polices pour produire des lettres "
 "nettes dans les petites tailles"
@@ -9421,8 +9391,7 @@ msgstr "Appliquer les seuils"
 
 #: app/tools/gimpthresholdtool.c:199
 msgid "Threshold does not operate on indexed layers."
-msgstr ""
-"Les seuils ne sont pas appliquables sur les calques en couleurs indexées."
+msgstr "Les seuils ne sont pas appliquables sur les calques en couleurs indexées."
 
 #: app/tools/gimptransformoptions.c:329
 msgid "Transform Direction"
@@ -10403,10 +10372,8 @@ msgid "Could not find GIMP help browser."
 msgstr "Impossible de trouver le navigateur d'aide de GIMP."
 
 #: app/widgets/gimphelp.c:189
-msgid ""
-"The GIMP help browser plug-in appears to be missing from your installation."
-msgstr ""
-"Le greffon du navigateur d'aide de Gimp semble manquer à votre installation."
+msgid "The GIMP help browser plug-in appears to be missing from your installation."
+msgstr "Le greffon du navigateur d'aide de Gimp semble manquer à votre installation."
 
 #: app/widgets/gimphelp.c:213
 msgid "Help browser doesn't start"
@@ -10449,8 +10416,7 @@ msgid "Auto"
 msgstr "Auto"
 
 #: app/widgets/gimpimagedock.c:214
-msgid ""
-"When enabled the dialog automatically follows the image you are working on."
+msgid "When enabled the dialog automatically follows the image you are working on."
 msgstr ""
 "Si cette option est activée, le dialogue suit automatiquement l'image sur "
 "laquelle vous travaillez."
@@ -10964,32 +10930,3 @@ msgstr "Crée et modifier des images ou des photographies"
 msgid "Image Editor"
 msgstr "Éditeur d'image"
 
-#~ msgid "Keep aspect ratio"
-#~ msgstr "Ratio d'aspect fixe"
-
-#~ msgid "Y:"
-#~ msgstr "Y :"
-
-#~ msgid "Transformations do not work on layers that contain layer masks."
-#~ msgstr ""
-#~ "Les transformations ne s'appliquent pas sur les calques qui contiennent "
-#~ "des masques."
-
-#~ msgid "Main Keyboard"
-#~ msgstr "Clavier principal"
-
-#~ msgid "Main Mouse Wheel"
-#~ msgstr "Roulette de la souris principale"
-
-#~ msgid "Resize Error: Both width and height must be greater than zero."
-#~ msgstr ""
-#~ "Erreur de redimensionnement : Les hauteurs et largeurs doivent être "
-#~ "supérieures à zéro."
-
-#~ msgid "Scale Error: Both width and height must be greater than zero."
-#~ msgstr ""
-#~ "Erreur d'étirement : Les hauteurs et largeurs doivent être supérieures à "
-#~ "zéro."
-
-#~ msgid "C_enter"
-#~ msgstr "_Centrer"
