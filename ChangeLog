@@ -1,3 +1,8 @@
+2006-03-08  Sven Neumann  <sven@gimp.org>
+
+	* app/base/siox.c (find_max_blob): free the whole list instead of
+	deleting it one element at a time.
+
 2006-03-06  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplay.c (gimp_display_reconnect): keep a

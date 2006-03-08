@@ -584,6 +584,7 @@ find_max_blob (TileManager *mask,
                const gint   sizeFactorToKeep)
 {
   GSList     *list = NULL;
+  GSList     *iter;
   PixelRegion region;
   gpointer    pr;
   gint        row, col;
@@ -633,11 +634,9 @@ find_max_blob (TileManager *mask,
         }
     }
 
-  while (list != NULL)
+  for (iter = list; iter; iter = iter->next)
     {
-      struct blob *b = list->data;
-
-      list = g_slist_delete_link (list, list);
+      struct blob *b = iter->data;
 
       depth_first_search (mask, x, y, x + width, y + height, b,
                           (b->mustkeep
@@ -645,6 +644,8 @@ find_max_blob (TileManager *mask,
                           FIND_BLOB_FINAL : 0);
       g_free (b);
     }
+
+  g_slist_free (list);
 }
 
 /* Creates a key for the hashtable from a given pixel color value */
@@ -797,11 +798,11 @@ siox_foreground_extract (SioxState          *state,
   gint         x, y;
   gint         width, height;
   gfloat       clustersize;
+  lab         *surebg      = NULL;
+  lab         *surefg      = NULL;
   gint         surebgcount = 0;
   gint         surefgcount = 0;
   gint         i, j;
-  lab         *surebg;
-  lab         *surefg;
   gfloat       limits[3];
 
   g_return_if_fail (state != NULL);
