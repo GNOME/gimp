@@ -29,6 +29,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimppickable.h"
+#include "core/gimpprojection.h"
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -200,9 +201,16 @@ gimp_by_color_select_tool_button_release (GimpTool        *tool,
       guchar       *col;
 
       if (options->sample_merged)
-        pickable = GIMP_PICKABLE (gdisp->gimage->projection);
+        {
+          pickable = GIMP_PICKABLE (gdisp->gimage->projection);
+
+          gimp_projection_finish_draw (gdisp->gimage->projection);
+          gimp_projection_flush_now (gdisp->gimage->projection);
+        }
       else
-        pickable = GIMP_PICKABLE (drawable);
+        {
+          pickable = GIMP_PICKABLE (drawable);
+        }
 
       col = gimp_pickable_get_color_at (pickable,
                                         by_color_sel->x,

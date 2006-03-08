@@ -290,6 +290,9 @@ gimp_palette_import_from_image (GimpImage   *gimage,
   g_return_val_if_fail (n_colors > 1, NULL);
   g_return_val_if_fail (threshold > 0, NULL);
 
+  gimp_projection_finish_draw (gimage->projection);
+  gimp_projection_flush_now (gimage->projection);
+
   /*  Get the image information  */
   d_type    = gimp_projection_get_image_type (gimage->projection);
   bytes     = gimp_projection_get_bytes (gimage->projection);

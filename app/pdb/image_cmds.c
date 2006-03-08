@@ -48,6 +48,7 @@
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 #include "core/gimplist.h"
+#include "core/gimpprojection.h"
 #include "core/gimpunit.h"
 #include "gimp-intl.h"
 
@@ -1518,15 +1519,23 @@ image_pick_color_invoker (Gimp         *gimp,
           success = FALSE;
 
       if (success)
-        success = gimp_image_pick_color (gimage,
-                                         drawable,
-                                         (gint) x, (gint) y,
-                                         sample_merged,
-                                         sample_average,
-                                         average_radius,
-                                         NULL,
-                                         &color,
-                                         NULL);
+        {
+          if (sample_merged)
+            {
+              gimp_projection_finish_draw (gimage->projection);
+              gimp_projection_flush_now (gimage->projection);
+            }
+
+          success = gimp_image_pick_color (gimage,
+                                           drawable,
+                                           (gint) x, (gint) y,
+                                             sample_merged,
+                                           sample_average,
+                                           average_radius,
+                                           NULL,
+                                           &color,
+                                           NULL);
+        }
     }
 
   return_args = procedural_db_return_args (&image_pick_color_proc, success);

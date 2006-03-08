@@ -1736,6 +1736,9 @@ gradmap_tile_validate (TileManager *tm,
   dw = tile_ewidth (tile);
   dh = tile_eheight (tile);
 
+  gimp_projection_finish_draw (gimage->projection);
+  gimp_projection_flush_now (gimage->projection);
+
   /* get corresponding tile in the gimage */
   srctile = tile_manager_get_tile (gimp_projection_get_tiles (gimage->projection),
 				   x, y, TRUE, FALSE);

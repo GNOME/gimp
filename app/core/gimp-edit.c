@@ -111,6 +111,9 @@ gimp_edit_copy_visible (GimpImage   *gimage,
       return NULL;
     }
 
+  gimp_projection_finish_draw (gimage->projection);
+  gimp_projection_flush_now (gimage->projection);
+
   tiles = tile_manager_new (x2 - x1, y2 - y1,
                             gimp_projection_get_bytes (gimage->projection));
   tile_manager_set_offsets (tiles, x1, y1);

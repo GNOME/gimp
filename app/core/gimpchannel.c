@@ -1494,6 +1494,9 @@ gimp_channel_new_from_component (GimpImage       *gimage,
 
   g_return_val_if_fail (pixel != -1, NULL);
 
+  gimp_projection_finish_draw (gimage->projection);
+  gimp_projection_flush_now (gimage->projection);
+
   projection = gimp_projection_get_tiles (gimage->projection);
   width  = tile_manager_width  (projection);
   height = tile_manager_height (projection);

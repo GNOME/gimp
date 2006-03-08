@@ -36,6 +36,7 @@
 #include "gimplayer.h"
 #include "gimplist.h"
 #include "gimppickable.h"
+#include "gimpprojection.h"
 
 #include "gimp-intl.h"
 
@@ -291,7 +292,10 @@ gimp_image_crop_auto_shrink (GimpImage *gimage,
   else
     {
       pickable = GIMP_PICKABLE (gimage->projection);
-   }
+
+      gimp_projection_finish_draw (gimage->projection);
+      gimp_projection_flush_now (gimage->projection);
+    }
 
   type      = gimp_pickable_get_image_type (pickable);
   bytes     = GIMP_IMAGE_TYPE_BYTES (type);

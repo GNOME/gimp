@@ -577,7 +577,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("core/gimpimage-pick-color.h") ],
+	headers => [ qw("core/gimpimage-pick-color.h" "core/gimpprojection.h") ],
 	code => <<'CODE'
 {
   if (!sample_merged)
@@ -585,15 +585,23 @@ HELP
       success = FALSE;
 
   if (success)
-    success = gimp_image_pick_color (gimage,
-                                     drawable,
-                                     (gint) x, (gint) y,
-			             sample_merged,
-                                     sample_average,
-                                     average_radius,
-                                     NULL,
-                                     &color,
-                                     NULL);
+    {
+      if (sample_merged)
+        {
+          gimp_projection_finish_draw (gimage->projection);
+          gimp_projection_flush_now (gimage->projection);
+        }
+
+      success = gimp_image_pick_color (gimage,
+                                       drawable,
+                                       (gint) x, (gint) y,
+		  	               sample_merged,
+                                       sample_average,
+                                       average_radius,
+                                       NULL,
+                                       &color,
+                                       NULL);
+    }
 }
 CODE
     );

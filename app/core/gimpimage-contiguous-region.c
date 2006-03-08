@@ -34,6 +34,7 @@
 #include "gimpimage.h"
 #include "gimpimage-contiguous-region.h"
 #include "gimppickable.h"
+#include "gimpprojection.h"
 
 
 /*  local function prototypes  */
@@ -105,9 +106,16 @@ gimp_image_contiguous_region_by_seed (GimpImage    *gimage,
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
   if (sample_merged)
-    pickable = GIMP_PICKABLE (gimage->projection);
+    {
+      pickable = GIMP_PICKABLE (gimage->projection);
+
+      gimp_projection_finish_draw (gimage->projection);
+      gimp_projection_flush_now (gimage->projection);
+    }
   else
-    pickable = GIMP_PICKABLE (drawable);
+    {
+      pickable = GIMP_PICKABLE (drawable);
+    }
 
   src_type  = gimp_pickable_get_image_type (pickable);
   has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (src_type);
@@ -211,9 +219,16 @@ gimp_image_contiguous_region_by_color (GimpImage     *gimage,
   gimp_rgba_get_uchar (color, &col[0], &col[1], &col[2], &col[3]);
 
   if (sample_merged)
-    pickable = GIMP_PICKABLE (gimage->projection);
+    {
+      pickable = GIMP_PICKABLE (gimage->projection);
+
+      gimp_projection_finish_draw (gimage->projection);
+      gimp_projection_flush_now (gimage->projection);
+    }
   else
-    pickable = GIMP_PICKABLE (drawable);
+    {
+      pickable = GIMP_PICKABLE (drawable);
+    }
 
   d_type    = gimp_pickable_get_image_type (pickable);
   bytes     = GIMP_IMAGE_TYPE_BYTES (d_type);
