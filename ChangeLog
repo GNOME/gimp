@@ -1,5 +1,12 @@
 2006-03-09  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/imagemap/imap_main.c (button_press): do not attempt to
+	use a NULL function pointer.
+
+	* plug-ins/imagemap/imap_preview.c: added some sanity checks.
+
+2006-03-09  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/animationplay.c: also add the popup menu to the
 	standard playback window, not only to the detached one.
 

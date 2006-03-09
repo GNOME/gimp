@@ -302,6 +302,8 @@ preview_expose(GtkWidget *widget, GdkEventExpose *event)
 void
 add_preview_motion_event(Preview_t *preview, GCallback func)
 {
+   g_return_if_fail (func != NULL);
+
    g_signal_connect(preview->preview, "motion-notify-event",
 		    func, NULL);
 }
@@ -309,6 +311,8 @@ add_preview_motion_event(Preview_t *preview, GCallback func)
 void
 add_enter_notify_event(Preview_t *preview, GCallback func)
 {
+   g_return_if_fail (func != NULL);
+
    g_signal_connect(preview->preview, "enter-notify-event",
 		    func, NULL);
 }
@@ -316,6 +320,8 @@ add_enter_notify_event(Preview_t *preview, GCallback func)
 void
 add_leave_notify_event(Preview_t *preview, GCallback func)
 {
+   g_return_if_fail (func != NULL);
+
    g_signal_connect(preview->preview, "leave-notify-event",
 		    func, NULL);
 }
@@ -323,6 +329,8 @@ add_leave_notify_event(Preview_t *preview, GCallback func)
 void
 add_preview_button_press_event(Preview_t *preview, GCallback func)
 {
+   g_return_if_fail (func != NULL);
+
    g_signal_connect(preview->preview, "button-press-event",
 		    func, NULL);
 }
