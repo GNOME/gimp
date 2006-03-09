@@ -1096,7 +1096,7 @@ button_press(GtkWidget* widget, GdkEventButton* event, gpointer data)
   if (_button_press_func)
     return _button_press_func(widget, event, _button_press_param);
 
-  return NULL;
+  return FALSE;
 }
 
 /* A few global vars for key movement */
