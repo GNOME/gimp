@@ -124,7 +124,7 @@ static GtkWidget         *drawing_area            = NULL;
 static GtkWidget         *shape_drawing_area      = NULL;
 static guchar            *shape_drawing_area_data = NULL;
 static guchar            *drawing_area_data       = NULL;
-static GtkProgressBar    *progress;
+static GtkWidget         *progress;
 static guint              width, height;
 static guchar            *preview_alpha1_data;
 static guchar            *preview_alpha2_data;
@@ -177,6 +177,8 @@ query (void)
                           args, NULL);
 
   gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Animation");
+  gimp_plugin_icon_register (PLUG_IN_PROC,
+                             GIMP_ICON_TYPE_STOCK_ID, GTK_STOCK_MEDIA_PLAY);
 }
 
 static void
@@ -439,7 +441,7 @@ ui_manager_new (GtkWidget *window)
       G_CALLBACK (step_callback) },
 
     { "rewind", GTK_STOCK_MEDIA_REWIND,
-      NULL, NULL, N_("Rewind animation"),
+      NULL, NULL, N_("Rewind the animation"),
       G_CALLBACK (rewind_callback) },
 
     { "help", GTK_STOCK_HELP,
@@ -450,7 +452,7 @@ ui_manager_new (GtkWidget *window)
   static GtkToggleActionEntry toggle_actions[] =
   {
     { "play", GTK_STOCK_MEDIA_PLAY,
-      NULL, NULL, N_("Start/Stop playback"),
+      NULL, NULL, N_("Start playback"),
       G_CALLBACK (play_callback), FALSE },
 
     { "detach", GIMP_STOCK_DETACH,
@@ -531,7 +533,6 @@ build_dialog (GimpImageBaseType  basetype,
   GtkWidget   *frame;
   GtkWidget   *vbox;
   GtkWidget   *abox;
-  GtkWidget   *eventbox;
   GtkToolItem *item;
   GdkCursor   *cursor;
   gchar       *name;
@@ -577,19 +578,14 @@ build_dialog (GimpImageBaseType  basetype,
   gtk_container_add (GTK_CONTAINER (abox), frame);
   gtk_widget_show (frame);
 
-  eventbox = gtk_event_box_new();
-  gtk_widget_add_events (eventbox, GDK_BUTTON_PRESS_MASK);
-  gtk_container_add (GTK_CONTAINER (frame), GTK_WIDGET (eventbox));
-  gtk_widget_show (eventbox);
-
   drawing_area = gtk_drawing_area_new ();
   gtk_widget_set_size_request (drawing_area, width, height);
-  gtk_container_add (GTK_CONTAINER (eventbox), GTK_WIDGET (drawing_area));
+  gtk_container_add (GTK_CONTAINER (frame), drawing_area);
   gtk_widget_show (drawing_area);
 
-  progress = GTK_PROGRESS_BAR (gtk_progress_bar_new ());
-  gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET (progress), FALSE, FALSE, 0);
-  gtk_widget_show (GTK_WIDGET (progress));
+  progress = gtk_progress_bar_new ();
+  gtk_box_pack_start (GTK_BOX (vbox), progress, FALSE, FALSE, 0);
+  gtk_widget_show (progress);
 
   if (total_frames < 2)
     {
@@ -1242,12 +1238,12 @@ show_frame (void)
   gchar *text;
 
   /* update the dialog's progress bar */
-  gtk_progress_bar_set_fraction (progress,
+  gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (progress),
                                  ((gfloat) frame_number /
                                   (gfloat) (total_frames - 0.999)));
 
   text = g_strdup_printf (_("Frame %d of %d"), frame_number + 1, total_frames);
-  gtk_progress_bar_set_text (progress, text);
+  gtk_progress_bar_set_text (GTK_PROGRESS_BAR (progress), text);
   g_free (text);
 }
 
@@ -1360,6 +1356,10 @@ play_callback (GtkToggleAction *action)
   if (playing)
     timer = g_timeout_add (get_frame_duration (frame_number),
                            advance_frame_callback, NULL);
+
+  g_object_set (action,
+		"tooltip", playing ? _("Stop playback") : _("Start playback"),
+		NULL);
 }
 
 static void

@@ -1,3 +1,8 @@
+2006-03-09  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/animationplay.c: register an icon, improved
+	tooltips, some minor cleanups.
+
 2006-03-08  Sven Neumann  <sven@gimp.org>
 
 	* app/base/siox.c (find_max_blob): free the whole list instead of
