@@ -552,6 +552,8 @@ ui_manager_new (GtkWidget *window)
                                      "    <separator />"
                                      "    <menuitem action=\"zoom-in\" />"
                                      "    <menuitem action=\"zoom-out\" />"
+                                     "    <separator />"
+                                     "    <menuitem action=\"close\" />"
                                      "  </popup>"
                                      "</ui>",
                                      -1, &error);

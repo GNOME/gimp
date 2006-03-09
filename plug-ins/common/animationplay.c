@@ -237,9 +237,7 @@ menu_popup (GtkWidget      *widget,
       GtkWidget *menu = gtk_ui_manager_get_widget (ui_manager,
                                                    "/anim-play-popup");
 
-      gtk_widget_grab_focus (widget);
-
-      gtk_menu_set_screen (GTK_MENU (menu), gtk_widget_get_screen (widget));
+      gtk_menu_attach_to_widget (GTK_MENU (menu), widget, NULL);
       gtk_menu_popup (GTK_MENU (menu),
                       NULL, NULL, NULL, NULL,
                       event->button, event->time);
@@ -428,10 +426,6 @@ ui_manager_new (GtkWidget *window)
 {
   static GtkActionEntry actions[] =
   {
-    { "close", GTK_STOCK_CLOSE,
-      NULL, NULL, NULL,
-      G_CALLBACK (close_callback) },
-
     { "step", GTK_STOCK_MEDIA_NEXT,
       N_("_Step"), NULL, N_("Step to next frame"),
       G_CALLBACK (step_callback) },
@@ -442,7 +436,17 @@ ui_manager_new (GtkWidget *window)
 
     { "help", GTK_STOCK_HELP,
       NULL, NULL, NULL,
-      G_CALLBACK (help_callback) }
+      G_CALLBACK (help_callback) },
+
+    { "close", GTK_STOCK_CLOSE,
+      NULL, "<control>W", NULL,
+      G_CALLBACK (close_callback)
+    },
+    {
+      "quit", GTK_STOCK_QUIT,
+      NULL, "<control>Q", NULL,
+      G_CALLBACK (close_callback)
+    }
   };
 
   static GtkToggleActionEntry toggle_actions[] =
@@ -489,7 +493,9 @@ ui_manager_new (GtkWidget *window)
                                      "    <toolitem action=\"detach\" />"
                                      "    <separator name=\"space\" />"
                                      "    <toolitem action=\"help\" />"
-                                      "  </toolbar>"
+                                     "  </toolbar>"
+                                     "  <accelerator action=\"close\" />"
+                                     "  <accelerator action=\"quit\" />"
                                      "</ui>",
                                      -1, &error);
 
