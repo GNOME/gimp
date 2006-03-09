@@ -1,5 +1,9 @@
 2006-03-09  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/gui.c: show tooltps from the global image popup menu too.
+
+2006-03-09  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpuimanager.[ch]: added "show-tooltip" and
 	"hide-tooltip" signals. Connect to each menu item's
 	enter-notify-event and leave-notify-event. On enter, emit

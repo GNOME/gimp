@@ -42,6 +42,7 @@
 #include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-render.h"
+#include "display/gimpstatusbar.h"
 
 #include "tools/gimp-tools.h"
 
@@ -110,6 +111,12 @@ static void       gui_tearoff_menus_notify      (GimpGuiConfig      *gui_config,
 static void       gui_device_change_notify      (Gimp               *gimp);
 
 static void       gui_global_buffer_changed     (Gimp               *gimp);
+
+static void       gui_menu_show_tooltip         (GimpUIManager      *manager,
+                                                 const gchar        *tooltip,
+                                                 Gimp               *gimp);
+static void       gui_menu_hide_tooltip         (GimpUIManager      *manager,
+                                                 Gimp               *gimp);
 
 static void       gui_display_changed           (GimpContext        *context,
                                                  GimpDisplay        *display,
@@ -437,6 +444,12 @@ gui_restore_after_callback (Gimp               *gimp,
   g_signal_connect_object (gui_config, "notify::tearoff-menus",
                            G_CALLBACK (gui_tearoff_menus_notify),
                            image_ui_manager, 0);
+  g_signal_connect (image_ui_manager, "show-tooltip",
+                    G_CALLBACK (gui_menu_show_tooltip),
+                    gimp);
+  g_signal_connect (image_ui_manager, "hide-tooltip",
+                    G_CALLBACK (gui_menu_hide_tooltip),
+                    gimp);
 
   gimp_devices_restore (gimp);
   gimp_controllers_restore (gimp, image_ui_manager);
@@ -587,6 +600,38 @@ static void
 gui_global_buffer_changed (Gimp *gimp)
 {
   gimp_clipboard_set_buffer (gimp, gimp->global_buffer);
+}
+
+static void
+gui_menu_show_tooltip (GimpUIManager *manager,
+                       const gchar   *tooltip,
+                       Gimp          *gimp)
+{
+  GimpContext *context = gimp_get_user_context (gimp);
+  GimpDisplay *display = gimp_context_get_display (context);
+
+  if (display)
+    {
+      GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (display->shell);
+
+      gimp_statusbar_push (GIMP_STATUSBAR (shell->statusbar), "menu-tooltip",
+                           tooltip);
+    }
+}
+
+static void
+gui_menu_hide_tooltip (GimpUIManager *manager,
+                       Gimp          *gimp)
+{
+  GimpContext *context = gimp_get_user_context (gimp);
+  GimpDisplay *display = gimp_context_get_display (context);
+
+  if (display)
+    {
+      GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (display->shell);
+
+      gimp_statusbar_pop (GIMP_STATUSBAR (shell->statusbar), "menu-tooltip");
+    }
 }
 
 static void
