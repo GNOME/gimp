@@ -1924,18 +1924,24 @@ load_image (const gchar *name)
 	  gint      numc;
 	  guchar   *merged_data = NULL;
 	  PSDlayer *layer       = psd_image.layer + lnum;
+          gboolean  empty       = FALSE;
 
 	  /*
-	   * since ps supports sloppy bounding boxes it is possible to
+	   * Since PS supports sloppy bounding boxes it is possible to
 	   * have a 0x0 or Xx0 or 0xY layer.  Gimp doesn't support a
-	   * 0x0 layer so we will just skip these.  We might be able
-	   * to do something better here.
+	   * 0x0 layer so we insert an empty layer of image size
+	   * instead.
 	   */
 	  if ((layer->width == 0) || (layer->height == 0))
 	    {
-	      IFDBG printf ("(bad layer dimensions -- skipping)");
-	      continue;
+              empty = TRUE;
+
+              layer->x      = 0;
+              layer->y      = 0;
+              layer->width  = gimp_image_width (image_ID);
+              layer->height = gimp_image_height (image_ID);
 	    }
+
 	  numc = layer->num_channels;
 
 	  IFDBG printf ("Hey, it's a LAYER with %d channels!\n", numc);
@@ -1945,27 +1951,30 @@ load_image (const gchar *name)
 	    case GIMP_GRAY:
 	      {
 		IFDBG printf("It's GRAY.\n");
-		if (!psd_layer_has_alpha (layer))
-		  {
-		    merged_data = g_malloc (layer->width * layer->height);
-		    seek_to_and_unpack_pixeldata (fd, lnum, 0);
-		    memcpy (merged_data, layer->channel[0].data,
-                            layer->width * layer->height);
+                if (! empty)
+                  {
+                    if (!psd_layer_has_alpha (layer))
+                      {
+                        merged_data = g_malloc (layer->width * layer->height);
+                        seek_to_and_unpack_pixeldata (fd, lnum, 0);
+                        memcpy (merged_data, layer->channel[0].data,
+                                layer->width * layer->height);
 
-		    g_free (layer->channel[0].data);
-		  }
-		else
-		  {
-		    seek_to_and_unpack_pixeldata (fd, lnum, 0);
-		    seek_to_and_unpack_pixeldata (fd, lnum, 1);
-		    merged_data =
-		      chans_to_GRAYA (layer->channel[1].data,
-				      layer->channel[0].data,
-				      layer->width * layer->height);
+                        g_free (layer->channel[0].data);
+                      }
+                    else
+                      {
+                        seek_to_and_unpack_pixeldata (fd, lnum, 0);
+                        seek_to_and_unpack_pixeldata (fd, lnum, 1);
+                        merged_data = chans_to_GRAYA (layer->channel[1].data,
+                                                      layer->channel[0].data,
+                                                      layer->width *
+                                                      layer->height);
 
-		    g_free (layer->channel[0].data);
-		    g_free (layer->channel[1].data);
-		  }
+                        g_free (layer->channel[0].data);
+                        g_free (layer->channel[1].data);
+                      }
+                  }
 
 		layer_ID = gimp_layer_new (image_ID,
 					   layer->name,
@@ -1982,74 +1991,77 @@ load_image (const gchar *name)
 	      {
 		IFDBG printf ("It's RGB, %dx%d.\n", layer->width,
                               layer->height);
-		if (!psd_layer_has_alpha (layer))
-		  {
-		    seek_to_and_unpack_pixeldata (fd, lnum, 0);
-		    seek_to_and_unpack_pixeldata (fd, lnum, 1);
-		    seek_to_and_unpack_pixeldata (fd, lnum, 2);
-		    merged_data =
-		      chans_to_RGB (layer->channel[0].data,
-				    layer->channel[1].data,
-				    layer->channel[2].data,
-				    layer->width *
-				    layer->height);
 
-		    g_free (layer->channel[0].data);
-		    g_free (layer->channel[1].data);
-		    g_free (layer->channel[2].data);
-
-		    IFDBG fprintf (stderr, "YAH0a\n");
-		  }
-		else
-		  {
-		    seek_to_and_unpack_pixeldata (fd, lnum, 0);
-		    seek_to_and_unpack_pixeldata (fd, lnum, 1);
-		    seek_to_and_unpack_pixeldata (fd, lnum, 2);
-		    seek_to_and_unpack_pixeldata (fd, lnum, 3);
-
-		    /* Fix for unexpected layer data order for files
-                     * from PS files created by PanoTools. Rather
-		     * than assuming an order, we find the actual order.
-		     */
-
-		    red_chan = grn_chan = blu_chan = alpha_chan = -1;
-
-		    for (ichan = 0; ichan < numc; ichan++)
+                if (! empty)
+                  {
+                    if (!psd_layer_has_alpha (layer))
                       {
-                        switch (psd_image.layer[lnum].channel[ichan].type)
+                        seek_to_and_unpack_pixeldata (fd, lnum, 0);
+                        seek_to_and_unpack_pixeldata (fd, lnum, 1);
+                        seek_to_and_unpack_pixeldata (fd, lnum, 2);
+                        merged_data = chans_to_RGB (layer->channel[0].data,
+                                                    layer->channel[1].data,
+                                                    layer->channel[2].data,
+                                                    layer->width *
+                                                    layer->height);
+
+                        g_free (layer->channel[0].data);
+                        g_free (layer->channel[1].data);
+                        g_free (layer->channel[2].data);
+
+                        IFDBG fprintf (stderr, "YAH0a\n");
+                      }
+                    else
+                      {
+                        seek_to_and_unpack_pixeldata (fd, lnum, 0);
+                        seek_to_and_unpack_pixeldata (fd, lnum, 1);
+                        seek_to_and_unpack_pixeldata (fd, lnum, 2);
+                        seek_to_and_unpack_pixeldata (fd, lnum, 3);
+
+                        /* Fix for unexpected layer data order for files
+                         * from PS files created by PanoTools. Rather
+                         * than assuming an order, we find the actual order.
+                         */
+
+                        red_chan = grn_chan = blu_chan = alpha_chan = -1;
+
+                        for (ichan = 0; ichan < numc; ichan++)
                           {
-                          case 0:    red_chan = ichan; break;
-                          case 1:    grn_chan = ichan; break;
-                          case 2:    blu_chan = ichan; break;
-                          case -1: alpha_chan = ichan; break;
+                            switch (psd_image.layer[lnum].channel[ichan].type)
+                              {
+                              case 0:    red_chan = ichan; break;
+                              case 1:    grn_chan = ichan; break;
+                              case 2:    blu_chan = ichan; break;
+                              case -1: alpha_chan = ichan; break;
+                              }
                           }
+
+                        if ((red_chan < 0) ||
+                            (grn_chan < 0) ||
+                            (blu_chan < 0) ||
+                            (alpha_chan < 0))
+                          {
+                            g_message ("Error: Cannot identify required RGBA channels");
+                            gimp_quit ();
+                            break;
+                          }
+
+                        merged_data =
+                          chans_to_RGBA (psd_image.layer[lnum].channel[red_chan].data,
+                                         psd_image.layer[lnum].channel[grn_chan].data,
+                                         psd_image.layer[lnum].channel[blu_chan].data,
+                                         psd_image.layer[lnum].channel[alpha_chan].data,
+                                         psd_image.layer[lnum].width *
+                                         psd_image.layer[lnum].height);
+
+                        g_free (layer->channel[0].data);
+                        g_free (layer->channel[1].data);
+                        g_free (layer->channel[2].data);
+                        g_free (layer->channel[3].data);
+
+                        IFDBG fprintf (stderr, "YAH0b\n");
                       }
-
-		    if ((red_chan < 0) ||
-                        (grn_chan < 0) ||
-                        (blu_chan < 0) ||
-                        (alpha_chan < 0))
-                      {
-                        g_message ("Error: Cannot identify required RGBA channels");
-                        gimp_quit ();
-                        break;
-                      }
-
-		    merged_data =
-		      chans_to_RGBA (psd_image.layer[lnum].channel[red_chan].data,
-				     psd_image.layer[lnum].channel[grn_chan].data,
-				     psd_image.layer[lnum].channel[blu_chan].data,
-				     psd_image.layer[lnum].channel[alpha_chan].data,
-				     psd_image.layer[lnum].width *
-				     psd_image.layer[lnum].height);
-
-		    g_free (layer->channel[0].data);
-		    g_free (layer->channel[1].data);
-		    g_free (layer->channel[2].data);
-		    g_free (layer->channel[3].data);
-
-		    IFDBG fprintf (stderr, "YAH0b\n");
-		  }
+                  }
 
 		IFDBG fprintf (stderr, "YAH1\n");
 
@@ -2077,7 +2089,7 @@ load_image (const gchar *name)
 	  IFDBG fprintf (stderr, "YAH3\n");
 
 	  /* Do a layer mask if it exists */
-	  for (iter = 0; iter < layer->num_channels; iter++)
+	  for (iter = 0; !empty && iter < layer->num_channels; iter++)
 	    {
 	      if (layer->channel[iter].type == -2) /* is mask */
 		{
@@ -2157,13 +2169,20 @@ load_image (const gchar *name)
                          drawable->height,
                          drawable->bpp);
 
-	  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
-			       layer->width, layer->height,
-			       TRUE, FALSE);
-	  gimp_pixel_rgn_set_rect (&pixel_rgn, merged_data, 0, 0,
-				   layer->width, layer->height);
+          if (empty)
+            {
+              gimp_drawable_fill (layer_ID, GIMP_TRANSPARENT_FILL);
+            }
+          else
+            {
+              gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
+                                   layer->width, layer->height,
+                                   TRUE, FALSE);
+              gimp_pixel_rgn_set_rect (&pixel_rgn, merged_data, 0, 0,
+                                       layer->width, layer->height);
 
-	  IFDBG fprintf(stderr, "YAH6\n");
+              IFDBG fprintf(stderr, "YAH6\n");
+            }
 
 	  gimp_drawable_flush (drawable);
 	  gimp_drawable_detach (drawable);

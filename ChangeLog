@@ -1,5 +1,10 @@
 2006-03-09  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/psd.c: create empty layers of image size instead
+	of skipping empty layers in PSD files (bug #317044).
+
+2006-03-09  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpexport.c (gimp_export_image): offer the choice to
 	Flatten or Merge Visible Layers (bug #332336).
 
