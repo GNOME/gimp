@@ -244,13 +244,13 @@ static ExportAction export_action_animate_or_flatten =
   0
 };
 
-static ExportAction export_action_merge_flat =
+static ExportAction export_action_merge_or_flatten =
 {
   export_flatten,
-  NULL,
+  export_merge,
   N_("%s can't handle layers"),
-  { N_("Flatten Image"), NULL },
-  0
+  { N_("Flatten Image"), N_("Merge Visible Layers") },
+  1
 };
 
 static ExportAction export_action_flatten =
@@ -539,7 +539,8 @@ export_dialog (GSList      *actions,
 	  g_signal_connect (button, "toggled",
                             G_CALLBACK (export_toggle_callback),
                             &action->choice);
-	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                        (action->choice == 0));
 	  gtk_widget_show (button);
 
 	  button = gtk_radio_button_new_with_label (radio_group,
@@ -548,6 +549,8 @@ export_dialog (GSList      *actions,
                                  GTK_JUSTIFY_LEFT);
 	  radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
 	  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                        (action->choice == 1));
 	  gtk_widget_show (button);
 	}
       else if (action->possibilities[0])
@@ -764,7 +767,8 @@ gimp_export_image (gint32                 *image_ID,
         {
           if (capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION)
             {
-              if (background_has_alpha || capabilities & GIMP_EXPORT_NEEDS_ALPHA)
+              if (background_has_alpha ||
+                  capabilities & GIMP_EXPORT_NEEDS_ALPHA)
                 actions = g_slist_prepend (actions,
                                            &export_action_animate_or_merge);
               else
@@ -773,12 +777,12 @@ gimp_export_image (gint32                 *image_ID,
             }
           else if (! (capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS))
             {
-              if (background_has_alpha || capabilities & GIMP_EXPORT_NEEDS_ALPHA)
+              if (capabilities & GIMP_EXPORT_NEEDS_ALPHA)
                 actions = g_slist_prepend (actions,
                                            &export_action_merge);
               else
                 actions = g_slist_prepend (actions,
-                                           &export_action_merge_flat);
+                                           &export_action_merge_or_flatten);
             }
         }
 
