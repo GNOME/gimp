@@ -52,58 +52,66 @@ enum
 enum
 {
   UPDATE,
+  SHOW_TOOLTIP,
+  HIDE_TOOLTIP,
   LAST_SIGNAL
 };
 
 
-static GObject * gimp_ui_manager_constructor   (GType               type,
-                                                guint               n_params,
-                                                GObjectConstructParam *params);
-static void     gimp_ui_manager_dispose        (GObject            *object);
-static void     gimp_ui_manager_finalize       (GObject            *object);
-static void     gimp_ui_manager_set_property   (GObject            *object,
-                                                guint               prop_id,
-                                                const GValue       *value,
-                                                GParamSpec         *pspec);
-static void     gimp_ui_manager_get_property   (GObject            *object,
-                                                guint               prop_id,
-                                                GValue             *value,
-                                                GParamSpec         *pspec);
-static void     gimp_ui_manager_connect_proxy  (GtkUIManager       *manager,
-                                                GtkAction          *action,
-                                                GtkWidget          *proxy);
-static GtkWidget * gimp_ui_manager_get_widget  (GtkUIManager       *manager,
-                                                const gchar        *path);
-static GtkAction * gimp_ui_manager_get_action  (GtkUIManager       *manager,
-                                                const gchar        *path);
-static void     gimp_ui_manager_real_update    (GimpUIManager      *manager,
-                                                gpointer            update_data);
+static GObject * gimp_ui_manager_constructor    (GType               type,
+                                                 guint               n_params,
+                                                 GObjectConstructParam *params);
+static void     gimp_ui_manager_dispose         (GObject            *object);
+static void     gimp_ui_manager_finalize        (GObject            *object);
+static void     gimp_ui_manager_set_property    (GObject            *object,
+                                                 guint               prop_id,
+                                                 const GValue       *value,
+                                                 GParamSpec         *pspec);
+static void     gimp_ui_manager_get_property    (GObject            *object,
+                                                 guint               prop_id,
+                                                 GValue             *value,
+                                                 GParamSpec         *pspec);
+static void     gimp_ui_manager_connect_proxy   (GtkUIManager       *manager,
+                                                 GtkAction          *action,
+                                                 GtkWidget          *proxy);
+static GtkWidget * gimp_ui_manager_get_widget   (GtkUIManager       *manager,
+                                                 const gchar        *path);
+static GtkAction * gimp_ui_manager_get_action   (GtkUIManager       *manager,
+                                                 const gchar        *path);
+static void     gimp_ui_manager_real_update     (GimpUIManager      *manager,
+                                                 gpointer            update_data);
 static GimpUIManagerUIEntry *
-                gimp_ui_manager_entry_get      (GimpUIManager      *manager,
-                                                const gchar        *ui_path);
-static gboolean gimp_ui_manager_entry_load     (GimpUIManager      *manager,
-                                                GimpUIManagerUIEntry *entry,
-                                                GError            **error);
+                gimp_ui_manager_entry_get       (GimpUIManager      *manager,
+                                                 const gchar        *ui_path);
+static gboolean gimp_ui_manager_entry_load      (GimpUIManager      *manager,
+                                                 GimpUIManagerUIEntry *entry,
+                                                 GError            **error);
 static GimpUIManagerUIEntry *
-                gimp_ui_manager_entry_ensure   (GimpUIManager      *manager,
-                                                const gchar        *path);
-static void     gimp_ui_manager_menu_position  (GtkMenu            *menu,
-                                                gint               *x,
-                                                gint               *y,
-                                                gpointer            data);
-static void     gimp_ui_manager_menu_pos       (GtkMenu            *menu,
-                                                gint               *x,
-                                                gint               *y,
-                                                gboolean           *push_in,
-                                                gpointer            data);
+                gimp_ui_manager_entry_ensure    (GimpUIManager      *manager,
+                                                 const gchar        *path);
+static void     gimp_ui_manager_menu_position   (GtkMenu            *menu,
+                                                 gint               *x,
+                                                 gint               *y,
+                                                 gpointer            data);
+static void     gimp_ui_manager_menu_pos        (GtkMenu            *menu,
+                                                 gint               *x,
+                                                 gint               *y,
+                                                 gboolean           *push_in,
+                                                 gpointer            data);
 static void
-           gimp_ui_manager_delete_popdown_data (GtkObject          *object,
-                                                GimpUIManager      *manager);
-static void     gimp_ui_manager_item_realize   (GtkWidget          *widget,
-                                                GimpUIManager      *manager);
-static gboolean gimp_ui_manager_item_key_press (GtkWidget          *widget,
-                                                GdkEventKey        *kevent,
-                                                GimpUIManager      *manager);
+            gimp_ui_manager_delete_popdown_data (GtkObject          *object,
+                                                 GimpUIManager      *manager);
+static void     gimp_ui_manager_item_realize    (GtkWidget          *widget,
+                                                 GimpUIManager      *manager);
+static gboolean gimp_ui_manager_menu_item_enter (GtkWidget          *widget,
+                                                 GdkEvent           *event,
+                                                 GimpUIManager      *manager);
+static gboolean gimp_ui_manager_menu_item_leave (GtkWidget          *widget,
+                                                 GdkEvent           *event,
+                                                 GimpUIManager      *manager);
+static gboolean gimp_ui_manager_item_key_press  (GtkWidget          *widget,
+                                                 GdkEventKey        *kevent,
+                                                 GimpUIManager      *manager);
 
 
 G_DEFINE_TYPE (GimpUIManager, gimp_ui_manager, GTK_TYPE_UI_MANAGER);
@@ -140,6 +148,26 @@ gimp_ui_manager_class_init (GimpUIManagerClass *klass)
 		  gimp_marshal_VOID__POINTER,
 		  G_TYPE_NONE, 1,
                   G_TYPE_POINTER);
+
+  manager_signals[SHOW_TOOLTIP] =
+    g_signal_new ("show-tooltip",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_LAST,
+		  G_STRUCT_OFFSET (GimpUIManagerClass, show_tooltip),
+		  NULL, NULL,
+		  gimp_marshal_VOID__STRING,
+		  G_TYPE_NONE, 1,
+                  G_TYPE_STRING);
+
+  manager_signals[HIDE_TOOLTIP] =
+    g_signal_new ("hide-tooltip",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_LAST,
+		  G_STRUCT_OFFSET (GimpUIManagerClass, hide_tooltip),
+		  NULL, NULL,
+		  gimp_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0,
+                  G_TYPE_NONE);
 
   g_object_class_install_property (object_class, PROP_NAME,
                                    g_param_spec_string ("name",
@@ -801,6 +829,13 @@ gimp_ui_manager_item_realize (GtkWidget     *widget,
                                         gimp_ui_manager_item_realize,
                                         manager);
 
+  g_signal_connect (widget, "enter-notify-event",
+                    G_CALLBACK (gimp_ui_manager_menu_item_enter),
+                    manager);
+  g_signal_connect (widget, "leave-notify-event",
+                    G_CALLBACK (gimp_ui_manager_menu_item_leave),
+                    manager);
+
   if (GTK_IS_MENU_SHELL (widget->parent))
     {
       static GQuark quark_key_press_connected = 0;
@@ -828,6 +863,40 @@ gimp_ui_manager_item_realize (GtkWidget     *widget,
     g_object_set_qdata (G_OBJECT (submenu), GIMP_HELP_ID,
                         g_object_get_qdata (G_OBJECT (widget),
                                             GIMP_HELP_ID));
+}
+
+static gboolean
+gimp_ui_manager_menu_item_enter (GtkWidget     *widget,
+                                 GdkEvent      *event,
+                                 GimpUIManager *manager)
+{
+  GtkAction *action = g_object_get_data (G_OBJECT (widget), "gtk-action");
+
+  if (action)
+    {
+      gchar *tooltip;
+
+      g_object_get (action, "tooltip", &tooltip, NULL);
+
+      if (tooltip)
+        {
+          g_signal_emit (manager, manager_signals[SHOW_TOOLTIP], 0,
+                         tooltip);
+          g_free (tooltip);
+        }
+    }
+
+  return FALSE;
+}
+
+static gboolean
+gimp_ui_manager_menu_item_leave (GtkWidget     *widget,
+                                 GdkEvent      *event,
+                                 GimpUIManager *manager)
+{
+  g_signal_emit (manager, manager_signals[HIDE_TOOLTIP], 0);
+
+  return FALSE;
 }
 
 static gboolean

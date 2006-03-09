@@ -113,6 +113,11 @@ static void      gimp_display_shell_menu_position  (GtkMenu          *menu,
                                                     gint             *x,
                                                     gint             *y,
                                                     gpointer          data);
+static void      gimp_display_shell_show_tooltip   (GimpUIManager    *manager,
+                                                    const gchar      *tooltip,
+                                                    GimpDisplayShell *shell);
+static void      gimp_display_shell_hide_tooltip   (GimpUIManager    *manager,
+                                                    GimpDisplayShell *shell);
 
 
 G_DEFINE_TYPE (GimpDisplayShell, gimp_display_shell, GTK_TYPE_WINDOW);
@@ -552,6 +557,22 @@ gimp_display_shell_menu_position (GtkMenu  *menu,
   gimp_button_menu_position (GTK_WIDGET (data), menu, GTK_POS_RIGHT, x, y);
 }
 
+static void
+gimp_display_shell_show_tooltip (GimpUIManager    *manager,
+                                 const gchar      *tooltip,
+                                 GimpDisplayShell *shell)
+{
+  gimp_statusbar_push (GIMP_STATUSBAR (shell->statusbar), "menu-tooltip",
+                       tooltip);
+}
+
+static void
+gimp_display_shell_hide_tooltip (GimpUIManager    *manager,
+                                 GimpDisplayShell *shell)
+{
+  gimp_statusbar_pop (GIMP_STATUSBAR (shell->statusbar), "menu-tooltip");
+}
+
 
 /*  public functions  */
 
@@ -676,6 +697,13 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
 
   gtk_window_add_accel_group (GTK_WINDOW (shell),
                               gtk_ui_manager_get_accel_group (GTK_UI_MANAGER (shell->menubar_manager)));
+
+  g_signal_connect (shell->menubar_manager, "show-tooltip",
+                    G_CALLBACK (gimp_display_shell_show_tooltip),
+                    shell);
+  g_signal_connect (shell->menubar_manager, "hide-tooltip",
+                    G_CALLBACK (gimp_display_shell_hide_tooltip),
+                    shell);
 
   /*  GtkTable widgets are not able to shrink a row/column correctly if
    *  widgets are attached with GTK_EXPAND even if those widgets have

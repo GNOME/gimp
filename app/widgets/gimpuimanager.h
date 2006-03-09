@@ -62,8 +62,11 @@ struct _GimpUIManagerClass
 
   GHashTable        *managers;
 
-  void (* update) (GimpUIManager *manager,
-                   gpointer       update_data);
+  void (* update)       (GimpUIManager *manager,
+                         gpointer       update_data);
+  void (* show_tooltip) (GimpUIManager *manager,
+                         const gchar   *tooltip);
+  void (* hide_tooltip) (GimpUIManager *manager);
 };
 
 
