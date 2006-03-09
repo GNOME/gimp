@@ -22,19 +22,6 @@
  */
 
 /*
- * BUGS:
- *  Gets understandably upset if the source image is deleted
- *    while the animation is playing.  Decent solution welcome.
- *
- *  In shaped mode, the shaped-window's mask and its pixmap contents
- *    can get way out of sync (specifically, the mask changes but
- *    the contents are frozen).  Starvation of GTK's redrawing thread?
- *    How do I fix this?
- *
- *  Any more?  Let me know!
- */
-
-/*
  * TODO:
  *  pdb interface - should we bother?
  *
@@ -242,15 +229,9 @@ reshape_from_bitmap (const gchar *bitmap)
 }
 
 static gboolean
-shape_pressed (GtkWidget      *widget,
-               GdkEventButton *event)
+menu_popup (GtkWidget      *widget,
+            GdkEventButton *event)
 {
-  CursorOffset *p;
-
-  /* ignore double and triple click */
-  if (event->type != GDK_BUTTON_PRESS)
-    return FALSE;
-
   if (event->button == 3 && event->type == GDK_BUTTON_PRESS)
     {
       GtkWidget *menu = gtk_ui_manager_get_widget (ui_manager,
@@ -263,23 +244,38 @@ shape_pressed (GtkWidget      *widget,
                       NULL, NULL, NULL, NULL,
                       event->button, event->time);
 
-      return FALSE;
+      return TRUE;
     }
 
-  p = g_object_get_data (G_OBJECT(widget), "cursor-offset");
-  if (!p)
-    return FALSE;
+  return FALSE;
+}
 
-  p->x = (gint) event->x;
-  p->y = (gint) event->y;
+static gboolean
+shape_pressed (GtkWidget      *widget,
+               GdkEventButton *event)
+{
+  if (menu_popup (widget, event))
+    return TRUE;
 
-  gtk_grab_add (widget);
-  gdk_pointer_grab (widget->window, TRUE,
-                    GDK_BUTTON_RELEASE_MASK |
-                    GDK_BUTTON_MOTION_MASK  |
-                    GDK_POINTER_MOTION_HINT_MASK,
-                    NULL, NULL, 0);
-  gdk_window_raise (widget->window);
+  /* ignore double and triple click */
+  if (event->type == GDK_BUTTON_PRESS)
+    {
+      CursorOffset *p = g_object_get_data (G_OBJECT(widget), "cursor-offset");
+
+      if (!p)
+        return FALSE;
+
+      p->x = (gint) event->x;
+      p->y = (gint) event->y;
+
+      gtk_grab_add (widget);
+      gdk_pointer_grab (widget->window, TRUE,
+                        GDK_BUTTON_RELEASE_MASK |
+                        GDK_BUTTON_MOTION_MASK  |
+                        GDK_POINTER_MOTION_HINT_MASK,
+                        NULL, NULL, 0);
+      gdk_window_raise (widget->window);
+    }
 
   return FALSE;
 }
@@ -580,8 +576,13 @@ build_dialog (GimpImageBaseType  basetype,
 
   drawing_area = gtk_drawing_area_new ();
   gtk_widget_set_size_request (drawing_area, width, height);
+  gtk_widget_add_events (drawing_area, GDK_BUTTON_PRESS_MASK);
   gtk_container_add (GTK_CONTAINER (frame), drawing_area);
   gtk_widget_show (drawing_area);
+
+  g_signal_connect (drawing_area, "button-press-event",
+                    G_CALLBACK (menu_popup),
+                    NULL);
 
   progress = gtk_progress_bar_new ();
   gtk_box_pack_start (GTK_BOX (vbox), progress, FALSE, FALSE, 0);
