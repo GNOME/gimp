@@ -253,7 +253,8 @@ plug_in_actions_add_proc (GimpActionGroup *group,
   const gchar           *progname;
   const gchar           *locale_domain;
   const gchar           *help_domain;
-  const gchar           *label_translated;
+  const gchar           *label;
+  const gchar           *tooltip          = NULL;
   gchar                 *path_original    = NULL;
   gchar                 *path_translated  = NULL;
 
@@ -267,7 +268,7 @@ plug_in_actions_add_proc (GimpActionGroup *group,
 
   if (proc_def->menu_label)
     {
-      label_translated = dgettext (locale_domain, proc_def->menu_label);
+      label = dgettext (locale_domain, proc_def->menu_label);
     }
   else
     {
@@ -289,20 +290,22 @@ plug_in_actions_add_proc (GimpActionGroup *group,
       *p1 = '\0';
       *p2 = '\0';
 
-      label_translated = p2 + 1;
+      label = p2 + 1;
     }
+
+  if (proc_def->db_info.blurb)
+    tooltip = dgettext (locale_domain, proc_def->db_info.blurb);
 
   entry.name        = proc_def->db_info.name;
   entry.stock_id    = plug_in_proc_def_get_stock_id (proc_def);
-  entry.label       = label_translated;
+  entry.label       = label;
   entry.accelerator = NULL;
-  entry.tooltip     = NULL;
+  entry.tooltip     = tooltip;
   entry.proc_def    = proc_def;
   entry.help_id     = plug_in_proc_def_get_help_id (proc_def, help_domain);
 
 #if 0
-  g_print ("adding plug-in action '%s' (%s)\n",
-           proc_def->db_info.name, label_translated);
+  g_print ("adding plug-in action '%s' (%s)\n", proc_def->db_info.name, label);
 #endif
 
   gimp_action_group_add_plug_in_actions (group, &entry, 1,

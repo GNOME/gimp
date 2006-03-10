@@ -164,7 +164,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "Motion blur of image",
+                          N_("Simulate movement by applying a blur effect"),
                           "This plug-in simulates the effect seen when "
                           "photographing a moving object at a slow shutter "
                           "speed. Done by adding multiple displaced copies.",

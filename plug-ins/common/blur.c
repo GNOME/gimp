@@ -126,23 +126,16 @@ query (void)
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"               },
   };
 
-  const gchar *blurb =
-    "Apply a 3x3 blurring convolution kernel to the specified drawable.";
-  const gchar *help =
-    "This plug-in blurs the specified drawable, using a 3x3 blur. "
-    "Indexed images are not supported.";
-  const gchar *author = "Miles O'Neal  <meo@rru.com>";
-  const gchar *copyrights =
-    "Miles O'Neal, Spencer Kimball, Peter Mattis, Torsten Martinsen, "
-    "Brian Degenhardt, Federico Mena Quintero, Stephen Norris, Daniel Cotting";
-  const gchar *copyright_date = "1995-1998";
-
   gimp_install_procedure (PLUG_IN_PROC,
-                          blurb,
-                          help,
-                          author,
-                          copyrights,
-                          copyright_date,
+                          N_("Apply a 3x3 blurring convolution kernel"),
+                          "This plug-in blurs the specified drawable, using "
+                          "a 3x3 blur. Indexed images are not supported.",
+                          "Miles O'Neal  <meo@rru.com>",
+                          "Miles O'Neal, Spencer Kimball, Peter Mattis, "
+                          "Torsten Martinsen, Brian Degenhardt, "
+                          "Federico Mena Quintero, Stephen Norris, "
+                          "Daniel Cotting",
+                          "1995-1998",
                           N_("_Blur"),
                           "RGB*, GRAY*",
                           GIMP_PLUGIN,

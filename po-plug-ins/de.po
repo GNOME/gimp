@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-28 13:28+0100\n"
-"PO-Revision-Date: 2006-02-28 13:29+0100\n"
+"POT-Creation-Date: 2006-03-10 10:51+0100\n"
+"PO-Revision-Date: 2006-03-10 10:32+0100\n"
 "Last-Translator: Hendrik Brandt <heb@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -1969,46 +1969,51 @@ msgstr "Die unterste Ebene _ignorieren, auch wenn sie sichtbar ist"
 msgid "_Use the (invisible) bottom layer as the base"
 msgstr "Die unterste (unsichtbare) Ebene als Basis _verwenden"
 
-#: ../plug-ins/common/animationplay.c:173
+#: ../plug-ins/common/animationplay.c:160
 msgid "_Playback..."
 msgstr "Animation _abspielen..."
 
-#: ../plug-ins/common/animationplay.c:438
+#: ../plug-ins/common/animationplay.c:430
 msgid "_Step"
 msgstr "_Schritt"
 
-#: ../plug-ins/common/animationplay.c:438
+#: ../plug-ins/common/animationplay.c:430
 msgid "Step to next frame"
 msgstr "Zum nächsten Einzelbild"
 
-#: ../plug-ins/common/animationplay.c:442
-msgid "Rewind animation"
-msgstr "Animation zurück setzen"
+#: ../plug-ins/common/animationplay.c:434
+msgid "Rewind the animation"
+msgstr "Animation zurückspulen"
 
-#: ../plug-ins/common/animationplay.c:453
-msgid "Start/Stop playback"
-msgstr "Wiedergabe starten/stoppen"
+#: ../plug-ins/common/animationplay.c:455
+#: ../plug-ins/common/animationplay.c:1368
+msgid "Start playback"
+msgstr "Wiedergabe starten"
 
-#: ../plug-ins/common/animationplay.c:457
+#: ../plug-ins/common/animationplay.c:459
 msgid "Detach"
 msgstr "Trennen"
 
-#: ../plug-ins/common/animationplay.c:458
+#: ../plug-ins/common/animationplay.c:460
 msgid "Detach the animation from the dialog window"
 msgstr "Die Animation aus dem Dialogfenster lösen"
 
-#: ../plug-ins/common/animationplay.c:541
+#: ../plug-ins/common/animationplay.c:544
 msgid "Animation Playback:"
 msgstr "Animation abspielen:"
 
-#: ../plug-ins/common/animationplay.c:724
+#: ../plug-ins/common/animationplay.c:727
 msgid "Tried to display an invalid layer."
 msgstr ""
 
-#: ../plug-ins/common/animationplay.c:1249
+#: ../plug-ins/common/animationplay.c:1252
 #, c-format
 msgid "Frame %d of %d"
 msgstr "Einzelbild %d von %d"
+
+#: ../plug-ins/common/animationplay.c:1368
+msgid "Stop playback"
+msgstr "Wiedergabe stoppen"
 
 #: ../plug-ins/common/animoptimize.c:145
 msgid "Optimize (for _GIF)"
@@ -2143,11 +2148,15 @@ msgstr "Ver_schiebung:"
 msgid "_Number of segments:"
 msgstr "_Anzahl Segmente:"
 
-#: ../plug-ins/common/blur.c:146
+#: ../plug-ins/common/blur.c:130
+msgid "Apply a 3x3 blurring convolution kernel"
+msgstr "Eine weichzeichnende 3x3 Faltungsmatrix anwenden"
+
+#: ../plug-ins/common/blur.c:139
 msgid "_Blur"
 msgstr "_Weichzeichnen"
 
-#: ../plug-ins/common/blur.c:190 ../plug-ins/common/unsharp.c:430
+#: ../plug-ins/common/blur.c:183 ../plug-ins/common/unsharp.c:430
 msgid "Blurring"
 msgstr "Weichzeichnen"
 
@@ -3543,7 +3552,7 @@ msgid "Composing images"
 msgstr "Bilder werden kombiniert"
 
 #: ../plug-ins/common/film.c:436 ../plug-ins/common/guillotine.c:187
-#: ../plug-ins/helpbrowser/dialog.c:850
+#: ../plug-ins/helpbrowser/dialog.c:852
 msgid "Untitled"
 msgstr "Unbenannt"
 
@@ -3875,6 +3884,12 @@ msgstr "Y_1:"
 #: ../plug-ins/common/fractaltrace.c:783
 msgid "Y_2:"
 msgstr "Y_2:"
+
+#: ../plug-ins/common/gauss.c:159 ../plug-ins/common/gauss.c:179
+#: ../plug-ins/common/gauss.c:199 ../plug-ins/common/gauss.c:219
+#: ../plug-ins/common/gauss.c:239
+msgid "Apply a gaussian blur"
+msgstr "Gaußschen Weichzeichner anwenden"
 
 #: ../plug-ins/common/gauss.c:172
 msgid "_Gaussian Blur..."
@@ -4878,6 +4893,10 @@ msgstr "Die maximalen Kanäle _halten"
 #: ../plug-ins/common/max_rgb.c:297
 msgid "Ho_ld the minimal channels"
 msgstr "Die minimalen Kanäle h_alten"
+
+#: ../plug-ins/common/mblur.c:167
+msgid "Simulate movement by applying a blur effect"
+msgstr "Simuliere Bewegung durch Weichzeichnen"
 
 #: ../plug-ins/common/mblur.c:174
 msgid "_Motion Blur..."
@@ -9722,11 +9741,11 @@ msgstr "Zum Inhaltsverzeichnis"
 msgid "Visit the GIMP documentation website"
 msgstr "Besuchen Sie die GIMP Dokumentations-Webseite"
 
-#: ../plug-ins/helpbrowser/dialog.c:586
+#: ../plug-ins/helpbrowser/dialog.c:588
 msgid "Document not found"
 msgstr "Dokument nicht gefunden"
 
-#: ../plug-ins/helpbrowser/dialog.c:588
+#: ../plug-ins/helpbrowser/dialog.c:590
 msgid "The requested URL could not be loaded:"
 msgstr "Die angegebene Adresse konnte nicht geladen werden:"
 
@@ -11877,6 +11896,3 @@ msgstr "Fehler: XJT-Eigenschaften-Datei »%s« konnte nicht gelesen werden."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Fehler: Die XJT Eigenschaften-Datei »%s« ist leer."
-
-#~ msgid "Settings"
-#~ msgstr "Einstellungen"

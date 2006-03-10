@@ -55,19 +55,19 @@ static void      run    (const gchar      *name,
                          gint             *nreturn_vals,
                          GimpParam       **return_vals);
 
-static void      gauss             (GimpDrawable     *drawable,
-                                    gdouble           horizontal,
-                                    gdouble           vertical,
-                                    BlurMethod        method,
-                                    GtkWidget        *preview);
+static void      gauss             (GimpDrawable *drawable,
+                                    gdouble       horizontal,
+                                    gdouble       vertical,
+                                    BlurMethod    method,
+                                    GtkWidget    *preview);
 
-static void      update_preview    (GtkWidget        *preview,
-                                    GtkWidget        *size);
+static void      update_preview    (GtkWidget    *preview,
+                                    GtkWidget    *size);
 /*
  * Gaussian blur interface
  */
-static gboolean  gauss_dialog      (gint32            image_ID,
-                                    GimpDrawable     *drawable);
+static gboolean  gauss_dialog      (gint32        image_ID,
+                                    GimpDrawable *drawable);
 
 /*
  * Gaussian blur helper functions
@@ -80,11 +80,11 @@ static void      find_iir_constants    (gdouble  n_p[],
                                         gdouble  bd_m[],
                                         gdouble  std_dev);
 
-static void      transfer_pixels   (const gdouble  *src1,
-                                    const gdouble  *src2,
-                                    guchar         *dest,
-                                    gint            bytes,
-                                    gint            width);
+static void      transfer_pixels   (const gdouble *src1,
+                                    const gdouble *src2,
+                                    guchar        *dest,
+                                    gint           bytes,
+                                    gint           width);
 
 static void      make_rle_curve    (gdouble   sigma,
                                     gint    **p_curve,
@@ -156,7 +156,7 @@ query (void)
   };
 
   gimp_install_procedure (GAUSS_PROC,
-                          "Applies a gaussian blur to the specified drawable.",
+                          N_("Apply a gaussian blur"),
                           "Applies a gaussian blur to the drawable, with "
                           "specified radius of affect.  The standard deviation "
                           "of the normal distribution used to modify pixel "
@@ -176,7 +176,7 @@ query (void)
                           args, NULL);
 
   gimp_install_procedure (GAUSS_IIR_PROC,
-                          "Applies a gaussian blur to the specified drawable.",
+                          N_("Apply a gaussian blur"),
                           "Applies a gaussian blur to the drawable, with "
                           "specified radius of affect.  The standard deviation "
                           "of the normal distribution used to modify pixel "
@@ -196,7 +196,7 @@ query (void)
                           args1, NULL);
 
   gimp_install_procedure (GAUSS_IIR2_PROC,
-                          "Applies a gaussian blur to the specified drawable.",
+                          N_("Apply a gaussian blur"),
                           "Applies a gaussian blur to the drawable, with "
                           "specified radius of affect.  The standard deviation "
                           "of the normal distribution used to modify pixel "
@@ -216,7 +216,7 @@ query (void)
                           args2, NULL);
 
   gimp_install_procedure (GAUSS_RLE_PROC,
-                          "Applies a gaussian blur to the specified drawable.",
+                          N_("Apply a gaussian blur"),
                           "Applies a gaussian blur to the drawable, with "
                           "specified radius of affect.  The standard deviation "
                           "of the normal distribution used to modify pixel "
@@ -236,7 +236,7 @@ query (void)
                           args1, NULL);
 
   gimp_install_procedure (GAUSS_RLE2_PROC,
-                          "Applies a gaussian blur to the specified drawable.",
+                          N_("Apply a gaussian blur"),
                           "Applies a gaussian blur to the drawable, with "
                           "specified radius of affect.  The standard deviation "
                           "of the normal distribution used to modify pixel "

@@ -386,7 +386,9 @@ procedural_db_print_entry (gpointer key,
           output_string (file, buf->str);
         }
       else
-        output_string (file, procedure->name);
+        {
+          output_string (file, procedure->name);
+        }
 
       type_desc = gimp_enum_get_desc (proc_class, procedure->proc_type);
 

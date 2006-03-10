@@ -1,3 +1,15 @@
+2006-03-10  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/plug-in-actions.c (plug_in_actions_add_proc): use
+	the procedure blurb as tooltip.
+
+	* plug-ins/common/blur.c
+	* plug-ins/common/gauss.c
+	* plug-ins/common/mblur.c: rephrased some blurbs and marked them
+	for translation.
+
+	* app/pdb/procedural-db-query.c: formatting.
+
 2006-03-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpuimanager.c: connect to the menu items' "select"
