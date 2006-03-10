@@ -69,62 +69,74 @@ static GimpActionEntry image_actions[] =
   { "colors-components-menu", NULL, N_("_Components") },
 
   { "image-new", GTK_STOCK_NEW,
-    N_("_New..."), "<control>N", NULL,
+    N_("_New..."), "<control>N",
+    N_("Create a new image"),
     G_CALLBACK (image_new_cmd_callback),
     GIMP_HELP_FILE_NEW },
 
   { "image-new-from-image", GTK_STOCK_NEW,
-    N_("_New..."), NULL, NULL,
+    N_("_New..."), NULL,
+    N_("Create a new image"),
     G_CALLBACK (image_new_from_image_cmd_callback),
     GIMP_HELP_FILE_NEW },
 
   { "image-resize", GIMP_STOCK_RESIZE,
-    N_("Can_vas Size..."), NULL, NULL,
+    N_("Can_vas Size..."), NULL,
+    N_("Adjust the image dimensions"),
     G_CALLBACK (image_resize_cmd_callback),
     GIMP_HELP_IMAGE_RESIZE },
 
   { "image-resize-to-layers", NULL,
-    N_("F_it Canvas to Layers"), NULL, NULL,
+    N_("F_it Canvas to Layers"), NULL,
+    N_("Resize the image to enclose all layers"),
     G_CALLBACK (image_resize_to_layers_cmd_callback),
     GIMP_HELP_IMAGE_RESIZE_TO_LAYERS },
 
   { "image-print-size", GIMP_STOCK_PRINT_RESOLUTION,
-    N_("_Print Size..."), NULL, NULL,
+    N_("_Print Size..."), NULL,
+    N_("Adjust the print resolution"),
     G_CALLBACK (image_print_size_cmd_callback),
     GIMP_HELP_IMAGE_PRINT_SIZE },
 
   { "image-scale", GIMP_STOCK_SCALE,
-    N_("_Scale Image..."), NULL, NULL,
+    N_("_Scale Image..."), NULL,
+    N_("Change the number of pixels in the image"),
     G_CALLBACK (image_scale_cmd_callback),
     GIMP_HELP_IMAGE_SCALE },
 
   { "image-crop", GIMP_STOCK_TOOL_CROP,
-    N_("_Crop Image"), NULL, NULL,
+    N_("_Crop Image"), NULL,
+    N_("Crop the image to the bounding box of the selection"),
     G_CALLBACK (image_crop_cmd_callback),
     GIMP_HELP_IMAGE_CROP },
 
   { "image-duplicate", GIMP_STOCK_DUPLICATE,
-    N_("_Duplicate"), "<control>D", NULL,
+    N_("_Duplicate"), "<control>D",
+    N_("Create a duplicate of this image"),
     G_CALLBACK (image_duplicate_cmd_callback),
     GIMP_HELP_IMAGE_DUPLICATE },
 
   { "image-merge-layers", NULL,
-    N_("Merge Visible _Layers..."), "<control>M", NULL,
+    N_("Merge Visible _Layers..."), "<control>M",
+    N_("Merge all visible layers into one layer"),
     G_CALLBACK (image_merge_layers_cmd_callback),
     GIMP_HELP_IMAGE_MERGE_LAYERS },
 
   { "image-flatten", NULL,
-    N_("_Flatten Image"), NULL, NULL,
+    N_("_Flatten Image"), NULL,
+    N_("Merge all layers into one and remove transparency"),
     G_CALLBACK (image_flatten_image_cmd_callback),
     GIMP_HELP_IMAGE_FLATTEN },
 
   { "image-configure-grid", GIMP_STOCK_GRID,
-    N_("Configure G_rid..."), NULL, NULL,
+    N_("Configure G_rid..."), NULL,
+    N_("Configure the grid for this image"),
     G_CALLBACK (image_configure_grid_cmd_callback),
     GIMP_HELP_IMAGE_GRID },
 
   { "image-properties", GTK_STOCK_INFO,
-    N_("Image Properties"), NULL, NULL,
+    N_("Image Properties"), NULL,
+    N_("Display information about this image"),
     G_CALLBACK (image_properties_cmd_callback),
     GIMP_HELP_IMAGE_PROPERTIES }
 };
@@ -132,17 +144,20 @@ static GimpActionEntry image_actions[] =
 static GimpEnumActionEntry image_convert_actions[] =
 {
   { "image-convert-rgb", GIMP_STOCK_CONVERT_RGB,
-    N_("_RGB"), NULL, NULL,
+    N_("_RGB"), NULL,
+    N_("Convert the image to the RGB colorspace"),
     GIMP_RGB, FALSE,
     GIMP_HELP_IMAGE_CONVERT_RGB },
 
   { "image-convert-grayscale", GIMP_STOCK_CONVERT_GRAYSCALE,
-    N_("_Grayscale"), NULL, NULL,
+    N_("_Grayscale"), NULL,
+    N_("Convert the image to grayscale"),
     GIMP_GRAY, FALSE,
     GIMP_HELP_IMAGE_CONVERT_GRAYSCALE },
 
   { "image-convert-indexed", GIMP_STOCK_CONVERT_INDEXED,
-    N_("_Indexed..."), NULL, NULL,
+    N_("_Indexed..."), NULL,
+    N_("Convert the image to indexed colors"),
     GIMP_INDEXED, FALSE,
     GIMP_HELP_IMAGE_CONVERT_INDEXED }
 };
@@ -150,12 +165,14 @@ static GimpEnumActionEntry image_convert_actions[] =
 static GimpEnumActionEntry image_flip_actions[] =
 {
   { "image-flip-horizontal", GIMP_STOCK_FLIP_HORIZONTAL,
-    N_("Flip _Horizontally"), NULL, NULL,
+    N_("Flip _Horizontally"), NULL,
+    N_("Flip image horizontally"),
     GIMP_ORIENTATION_HORIZONTAL, FALSE,
     GIMP_HELP_IMAGE_FLIP_HORIZONTAL },
 
   { "image-flip-vertical", GIMP_STOCK_FLIP_VERTICAL,
-    N_("Flip _Vertically"), NULL, NULL,
+    N_("Flip _Vertically"), NULL,
+    N_("Flip image vertically"),
     GIMP_ORIENTATION_VERTICAL, FALSE,
     GIMP_HELP_IMAGE_FLIP_VERTICAL }
 };
@@ -163,18 +180,20 @@ static GimpEnumActionEntry image_flip_actions[] =
 static GimpEnumActionEntry image_rotate_actions[] =
 {
   { "image-rotate-90", GIMP_STOCK_ROTATE_90,
-    /*  please use the degree symbol in the translation  */
-    N_("Rotate 90 degrees _CW"), NULL, NULL,
+    N_("Rotate 90° _clockwise"), NULL,
+    N_("Rotate the image 90 degrees to the right"),
     GIMP_ROTATE_90, FALSE,
     GIMP_HELP_IMAGE_ROTATE_90 },
 
   { "image-rotate-180", GIMP_STOCK_ROTATE_180,
-    N_("Rotate _180 degrees"), NULL, NULL,
+    N_("Rotate _180°"), NULL,
+    N_("Turn the image upside-down"),
     GIMP_ROTATE_180, FALSE,
     GIMP_HELP_IMAGE_ROTATE_180 },
 
   { "image-rotate-270", GIMP_STOCK_ROTATE_270,
-    N_("Rotate 90 degrees CC_W"), NULL, NULL,
+    N_("Rotate 90° counter-clock_wise"), NULL,
+    N_("Rotate the image 90 degrees to the left"),
     GIMP_ROTATE_270, FALSE,
     GIMP_HELP_IMAGE_ROTATE_270 }
 };
