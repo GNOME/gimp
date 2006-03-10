@@ -1,5 +1,9 @@
 2006-03-10  Sven Neumann  <sven@gimp.org>
 
+	* modules/colorsel_water.c: remove color if Shift is pressed.
+
+2006-03-10  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/drawable-actions.c
 	* app/actions/image-actions.c
 	* app/actions/layers-actions.c: added tooltips, more to come here.

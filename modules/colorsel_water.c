@@ -51,7 +51,6 @@ struct _ColorselWater
 
   gfloat             pressure_adjust;
   guint32            motion_time;
-  gint               button_state;
 };
 
 struct _ColorselWaterClass
@@ -69,9 +68,6 @@ static void       select_area_expose        (GtkWidget          *widget,
 static gboolean   button_press_event        (GtkWidget          *widget,
                                              GdkEventButton     *event,
                                              ColorselWater      *water);
-static gboolean   button_release_event      (GtkWidget          *widget,
-                                             GdkEventButton     *event,
-                                             ColorselWater      *water);
 static gboolean   motion_notify_event       (GtkWidget          *widget,
                                              GdkEventMotion     *event,
                                              ColorselWater      *water);
@@ -87,9 +83,9 @@ static const GimpModuleInfo colorsel_water_info =
   GIMP_MODULE_ABI_VERSION,
   N_("Watercolor style color selector"),
   "Raph Levien <raph@acm.org>, Sven Neumann <sven@gimp.org>",
-  "v0.3",
-  "(c) 1998-1999, released under the GPL",
-  "May, 10 1999"
+  "v0.4",
+  "released under the GPL",
+  "1998-2006"
 };
 
 static const GtkTargetEntry targets[] =
@@ -186,9 +182,6 @@ colorsel_water_init (ColorselWater *water)
                     water);
   g_signal_connect (area, "button-press-event",
                     G_CALLBACK (button_press_event),
-                    water);
-  g_signal_connect (area, "button-release-event",
-                    G_CALLBACK (button_release_event),
                     water);
   g_signal_connect (area, "proximity-out-event",
                     G_CALLBACK (proximity_out_event),
@@ -349,26 +342,17 @@ button_press_event (GtkWidget      *widget,
   water->last_x = event->x / widget->allocation.width;
   water->last_y = event->y / widget->allocation.height;
 
-  water->button_state |= 1 << event->button;
-
   erase = (event->button != 1);
   /* FIXME: (event->source == GDK_SOURCE_ERASER) */
+
+  if (event->state & GDK_SHIFT_MASK)
+    erase = !erase;
 
   add_pigment (water, erase, water->last_x, water->last_y, 0.05);
 
   water->motion_time = event->time;
 
   return FALSE;
-}
-
-static gboolean
-button_release_event (GtkWidget      *widget,
-                      GdkEventButton *event,
-                      ColorselWater  *water)
-{
-  water->button_state &= ~(1 << event->button);
-
-  return TRUE;
 }
 
 static gboolean
@@ -386,14 +370,15 @@ motion_notify_event (GtkWidget      *widget,
                       GDK_BUTTON3_MASK |
                       GDK_BUTTON4_MASK))
     {
-      guint32 last_motion_time;
-
-      last_motion_time = event->time;
+      guint32 last_motion_time = event->time;
 
       erase = ((event->state &
                 (GDK_BUTTON2_MASK | GDK_BUTTON3_MASK | GDK_BUTTON4_MASK)) ||
                FALSE);
       /* FIXME: (event->source == GDK_SOURCE_ERASER) */
+
+      if (event->state & GDK_SHIFT_MASK)
+        erase = !erase;
 
       water->motion_time = event->time;
 
