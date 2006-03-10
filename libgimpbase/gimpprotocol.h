@@ -75,7 +75,7 @@ struct _GPConfig
   gint8    gimp_reserved_7;
   gint8    gimp_reserved_8;
   gint8    install_cmap;
-  gint8    show_tool_tips;
+  gint8    show_tooltips;
   gint32   min_colors;
   gint32   gdisp_ID;
   gchar   *app_name;

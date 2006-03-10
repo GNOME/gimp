@@ -1690,7 +1690,7 @@ gimp_config (GPConfig *config)
   _check_size       = config->check_size;
   _check_type       = config->check_type;
   _install_cmap     = config->install_cmap;
-  _show_tool_tips   = config->show_tool_tips;
+  _show_tool_tips   = config->show_tooltips;
   _show_help_button = config->show_help_button;
   _min_colors       = config->min_colors;
   _gdisp_ID         = config->gdisp_ID;

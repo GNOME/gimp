@@ -42,14 +42,13 @@ struct _GimpGuiConfig
 
   gint                 default_threshold;
   gboolean             move_tool_changes_active;
-  gboolean             info_window_per_display;  /*  unused  */
   gboolean             trust_dirty_flag;
   gboolean             save_device_status;
   gboolean             save_session_info;
   gboolean             restore_session;
   gboolean             save_tool_options;
   gboolean             show_tips;
-  gboolean             show_tool_tips;
+  gboolean             show_tooltips;
   gboolean             tearoff_menus;
   gboolean             can_change_accels;
   gboolean             save_accels;

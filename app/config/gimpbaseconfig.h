@@ -40,7 +40,6 @@ struct _GimpBaseConfig
 
   gchar    *temp_path;
   gchar    *swap_path;
-  gboolean  stingy_memory_use;  /*  unused  */
   guint     num_processors;
   guint64   tile_cache_size;
 };

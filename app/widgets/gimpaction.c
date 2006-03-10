@@ -223,6 +223,23 @@ gimp_action_name_compare (GimpAction  *action1,
 /*  private functions  */
 
 static void
+gimp_action_set_proxy_tooltip (GimpAction *action,
+                               GtkWidget  *proxy)
+{
+  gchar *tooltip;
+
+  g_object_get (action, "tooltip", &tooltip, NULL);
+
+  if (tooltip)
+    {
+      gimp_help_set_help_data (proxy, tooltip,
+                               g_object_get_qdata (G_OBJECT (proxy),
+                                                   GIMP_HELP_ID));
+      g_free (tooltip);
+    }
+}
+
+static void
 gimp_action_set_proxy (GimpAction *action,
                        GtkWidget  *proxy)
 {
@@ -235,19 +252,7 @@ gimp_action_set_proxy (GimpAction *action,
    */
   if (action->viewable)
     {
-      gchar *tooltip = NULL;
-
-      g_object_get (action, "tooltip", &tooltip, NULL);
-
-      if (tooltip)
-        {
-          const gchar *help_id;
-
-          help_id = g_object_get_qdata (G_OBJECT (proxy), GIMP_HELP_ID);
-
-          gimp_help_set_help_data (proxy, tooltip, help_id);
-          g_free (tooltip);
-        }
+      gimp_action_set_proxy_tooltip (action, proxy);
     }
 
   if (action->color)

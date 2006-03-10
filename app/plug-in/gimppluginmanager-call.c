@@ -119,7 +119,7 @@ plug_in_run (Gimp         *gimp,
       config.gimp_reserved_7  = 0;
       config.gimp_reserved_8  = 0;
       config.install_cmap     = gimp->config->install_cmap;
-      config.show_tool_tips   = gui_config->show_tool_tips;
+      config.show_tooltips    = gui_config->show_tooltips;
       config.min_colors       = CLAMP (gimp->config->min_colors, 27, 256);
       config.gdisp_ID         = gdisp_ID;
       config.app_name         = (gchar *) g_get_application_name ();

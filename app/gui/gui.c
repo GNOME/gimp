@@ -363,10 +363,10 @@ gui_restore_callback (Gimp               *gimp,
 				G_CALLBACK (gui_image_disconnect),
 				gimp);
 
-  if (! gui_config->show_tool_tips)
+  if (! gui_config->show_tooltips)
     gimp_help_disable_tooltips ();
 
-  g_signal_connect (gui_config, "notify::show-tool-tips",
+  g_signal_connect (gui_config, "notify::show-tooltips",
                     G_CALLBACK (gui_show_tooltips_notify),
                     gimp);
 
@@ -555,7 +555,7 @@ gui_show_tooltips_notify (GimpGuiConfig *gui_config,
                           GParamSpec    *param_spec,
                           Gimp          *gimp)
 {
-  if (gui_config->show_tool_tips)
+  if (gui_config->show_tooltips)
     gimp_help_enable_tooltips ();
   else
     gimp_help_disable_tooltips ();

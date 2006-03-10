@@ -41,9 +41,11 @@ enum
   PROP_0,
   PROP_TEMP_PATH,
   PROP_SWAP_PATH,
-  PROP_STINGY_MEMORY_USE,
   PROP_NUM_PROCESSORS,
-  PROP_TILE_CACHE_SIZE
+  PROP_TILE_CACHE_SIZE,
+
+  /* ignored, only for backward compatibility: */
+  PROP_STINGY_MEMORY_USE
 };
 
 
@@ -84,10 +86,6 @@ gimp_base_config_class_init (GimpBaseConfigClass *klass)
                                  "${gimp_dir}",
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_STINGY_MEMORY_USE,
-                                    "stingy-memory-use", NULL,
-                                    FALSE,
-                                    GIMP_CONFIG_PARAM_IGNORE);
   GIMP_CONFIG_INSTALL_PROP_UINT (object_class, PROP_NUM_PROCESSORS,
                                  "num-processors", NUM_PROCESSORS_BLURB,
                                  1, GIMP_MAX_NUM_THREADS, 2,
@@ -98,6 +96,12 @@ gimp_base_config_class_init (GimpBaseConfigClass *klass)
                                     1 << 28, /* 256MB */
                                     GIMP_PARAM_STATIC_STRINGS |
                                     GIMP_CONFIG_PARAM_CONFIRM);
+
+  /*  only for backward compatibility:  */
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_STINGY_MEMORY_USE,
+                                    "stingy-memory-use", NULL,
+                                    FALSE,
+                                    GIMP_CONFIG_PARAM_IGNORE);
 }
 
 static void
@@ -134,15 +138,17 @@ gimp_base_config_set_property (GObject      *object,
       g_free (base_config->swap_path);
       base_config->swap_path = g_value_dup_string (value);
       break;
-    case PROP_STINGY_MEMORY_USE:
-      base_config->stingy_memory_use = g_value_get_boolean (value);
-      break;
     case PROP_NUM_PROCESSORS:
       base_config->num_processors = g_value_get_uint (value);
       break;
     case PROP_TILE_CACHE_SIZE:
       base_config->tile_cache_size = g_value_get_uint64 (value);
       break;
+
+    case PROP_STINGY_MEMORY_USE:
+      /* ignored */
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -165,15 +171,17 @@ gimp_base_config_get_property (GObject    *object,
     case PROP_SWAP_PATH:
       g_value_set_string (value, base_config->swap_path);
       break;
-    case PROP_STINGY_MEMORY_USE:
-      g_value_set_boolean (value, base_config->stingy_memory_use);
-      break;
     case PROP_NUM_PROCESSORS:
       g_value_set_uint (value, base_config->num_processors);
       break;
     case PROP_TILE_CACHE_SIZE:
       g_value_set_uint64 (value, base_config->tile_cache_size);
       break;
+
+    case PROP_STINGY_MEMORY_USE:
+      /* ignored */
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;

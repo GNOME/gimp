@@ -49,14 +49,13 @@ enum
   PROP_0,
   PROP_DEFAULT_THRESHOLD,
   PROP_MOVE_TOOL_CHANGES_ACTIVE,
-  PROP_INFO_WINDOW_PER_DISPLAY,
   PROP_TRUST_DIRTY_FLAG,
   PROP_SAVE_DEVICE_STATUS,
   PROP_SAVE_SESSION_INFO,
   PROP_RESTORE_SESSION,
   PROP_SAVE_TOOL_OPTIONS,
   PROP_SHOW_TIPS,
-  PROP_SHOW_TOOL_TIPS,
+  PROP_SHOW_TOOLTIPS,
   PROP_TEAROFF_MENUS,
   PROP_CAN_CHANGE_ACCELS,
   PROP_SAVE_ACCELS,
@@ -77,7 +76,11 @@ enum
   PROP_TOOLBOX_WINDOW_HINT,
   PROP_DOCK_WINDOW_HINT,
   PROP_TRANSIENT_DOCKS,
-  PROP_CURSOR_FORMAT
+  PROP_CURSOR_FORMAT,
+
+  /* ignored, only for backward compatibility: */
+  PROP_INFO_WINDOW_PER_DISPLAY,
+  PROP_SHOW_TOOL_TIPS
 };
 
 
@@ -116,12 +119,6 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                     MOVE_TOOL_CHANGES_ACTIVE_BLURB,
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_INFO_WINDOW_PER_DISPLAY,
-                                    "info-window-per-display",
-                                    NULL,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS |
-                                    GIMP_CONFIG_PARAM_IGNORE);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_TRUST_DIRTY_FLAG,
                                     "trust-dirty-flag",
                                     TRUST_DIRTY_FLAG_BLURB,
@@ -150,8 +147,8 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                     "show-tips", SHOW_TIPS_BLURB,
                                     TRUE,
                                     GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_TOOL_TIPS,
-                                    "show-tool-tips", SHOW_TOOL_TIPS_BLURB,
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_TOOLTIPS,
+                                    "show-tooltips", SHOW_TOOLTIPS_BLURB,
                                     TRUE,
                                     GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_TEAROFF_MENUS,
@@ -256,6 +253,19 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                  GIMP_TYPE_CURSOR_FORMAT,
                                  GIMP_CURSOR_FORMAT_PIXBUF,
                                  GIMP_PARAM_STATIC_STRINGS);
+
+  /*  only for backward compatibility:  */
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_INFO_WINDOW_PER_DISPLAY,
+                                    "info-window-per-display",
+                                    NULL,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS |
+                                    GIMP_CONFIG_PARAM_IGNORE);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_TOOL_TIPS,
+                                    "show-tool-tips", NULL,
+                                    TRUE,
+                                    GIMP_PARAM_STATIC_STRINGS |
+                                    GIMP_CONFIG_PARAM_IGNORE);
 }
 
 static void
@@ -292,9 +302,6 @@ gimp_gui_config_set_property (GObject      *object,
     case PROP_MOVE_TOOL_CHANGES_ACTIVE:
       gui_config->move_tool_changes_active = g_value_get_boolean (value);
       break;
-    case PROP_INFO_WINDOW_PER_DISPLAY:
-      gui_config->info_window_per_display = g_value_get_boolean (value);
-      break;
     case PROP_TRUST_DIRTY_FLAG:
       gui_config->trust_dirty_flag = g_value_get_boolean (value);
       break;
@@ -313,8 +320,8 @@ gimp_gui_config_set_property (GObject      *object,
     case PROP_SHOW_TIPS:
       gui_config->show_tips = g_value_get_boolean (value);
       break;
-    case PROP_SHOW_TOOL_TIPS:
-      gui_config->show_tool_tips = g_value_get_boolean (value);
+    case PROP_SHOW_TOOLTIPS:
+      gui_config->show_tooltips = g_value_get_boolean (value);
       break;
     case PROP_TEAROFF_MENUS:
       gui_config->tearoff_menus = g_value_get_boolean (value);
@@ -384,6 +391,11 @@ gimp_gui_config_set_property (GObject      *object,
       gui_config->cursor_format = g_value_get_enum (value);
       break;
 
+    case PROP_INFO_WINDOW_PER_DISPLAY:
+    case PROP_SHOW_TOOL_TIPS:
+      /* ignored */
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -406,9 +418,6 @@ gimp_gui_config_get_property (GObject    *object,
     case PROP_MOVE_TOOL_CHANGES_ACTIVE:
       g_value_set_boolean (value, gui_config->move_tool_changes_active);
       break;
-    case PROP_INFO_WINDOW_PER_DISPLAY:
-      g_value_set_boolean (value, gui_config->info_window_per_display);
-      break;
     case PROP_TRUST_DIRTY_FLAG:
       g_value_set_boolean (value, gui_config->trust_dirty_flag);
       break;
@@ -427,8 +436,8 @@ gimp_gui_config_get_property (GObject    *object,
     case PROP_SHOW_TIPS:
       g_value_set_boolean (value, gui_config->show_tips);
       break;
-    case PROP_SHOW_TOOL_TIPS:
-      g_value_set_boolean (value, gui_config->show_tool_tips);
+    case PROP_SHOW_TOOLTIPS:
+      g_value_set_boolean (value, gui_config->show_tooltips);
       break;
     case PROP_TEAROFF_MENUS:
       g_value_set_boolean (value, gui_config->tearoff_menus);
@@ -492,6 +501,11 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_CURSOR_FORMAT:
       g_value_set_enum (value, gui_config->cursor_format);
+      break;
+
+    case PROP_INFO_WINDOW_PER_DISPLAY:
+    case PROP_SHOW_TOOL_TIPS:
+      /* ignored */
       break;
 
     default:
