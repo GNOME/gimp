@@ -1,3 +1,9 @@
+2006-03-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpuimanager.c: connect to the menu items' "select"
+	and "deselect" signals instead of "enter-notify-event" and
+	"leave-notify-event", so tooltips work with keynav.
+
 2006-03-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/gui.c: show tooltps from the global image popup menu too.

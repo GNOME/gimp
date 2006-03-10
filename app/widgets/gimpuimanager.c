@@ -103,11 +103,9 @@ static void
                                                  GimpUIManager      *manager);
 static void     gimp_ui_manager_item_realize    (GtkWidget          *widget,
                                                  GimpUIManager      *manager);
-static gboolean gimp_ui_manager_menu_item_enter (GtkWidget          *widget,
-                                                 GdkEvent           *event,
+static void    gimp_ui_manager_menu_item_select (GtkWidget          *widget,
                                                  GimpUIManager      *manager);
-static gboolean gimp_ui_manager_menu_item_leave (GtkWidget          *widget,
-                                                 GdkEvent           *event,
+static void  gimp_ui_manager_menu_item_deselect (GtkWidget          *widget,
                                                  GimpUIManager      *manager);
 static gboolean gimp_ui_manager_item_key_press  (GtkWidget          *widget,
                                                  GdkEventKey        *kevent,
@@ -829,11 +827,11 @@ gimp_ui_manager_item_realize (GtkWidget     *widget,
                                         gimp_ui_manager_item_realize,
                                         manager);
 
-  g_signal_connect (widget, "enter-notify-event",
-                    G_CALLBACK (gimp_ui_manager_menu_item_enter),
+  g_signal_connect (widget, "select",
+                    G_CALLBACK (gimp_ui_manager_menu_item_select),
                     manager);
-  g_signal_connect (widget, "leave-notify-event",
-                    G_CALLBACK (gimp_ui_manager_menu_item_leave),
+  g_signal_connect (widget, "deselect",
+                    G_CALLBACK (gimp_ui_manager_menu_item_deselect),
                     manager);
 
   if (GTK_IS_MENU_SHELL (widget->parent))
@@ -865,10 +863,9 @@ gimp_ui_manager_item_realize (GtkWidget     *widget,
                                             GIMP_HELP_ID));
 }
 
-static gboolean
-gimp_ui_manager_menu_item_enter (GtkWidget     *widget,
-                                 GdkEvent      *event,
-                                 GimpUIManager *manager)
+static void
+gimp_ui_manager_menu_item_select (GtkWidget     *widget,
+                                  GimpUIManager *manager)
 {
   GtkAction *action = g_object_get_data (G_OBJECT (widget), "gtk-action");
 
@@ -885,18 +882,13 @@ gimp_ui_manager_menu_item_enter (GtkWidget     *widget,
           g_free (tooltip);
         }
     }
-
-  return FALSE;
 }
 
-static gboolean
-gimp_ui_manager_menu_item_leave (GtkWidget     *widget,
-                                 GdkEvent      *event,
-                                 GimpUIManager *manager)
+static void
+gimp_ui_manager_menu_item_deselect (GtkWidget     *widget,
+                                    GimpUIManager *manager)
 {
   g_signal_emit (manager, manager_signals[HIDE_TOOLTIP], 0);
-
-  return FALSE;
 }
 
 static gboolean
