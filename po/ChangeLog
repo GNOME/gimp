@@ -4,11 +4,11 @@
 
 2006-03-03  Jakub Friedl  <jfriedl@suse.cz>
 
-	* po/cs.po: fixed a minor bug in translation
+	* cs.po: fixed a minor bug in translation
 
 2006-01-27  Karine Delvare  <kdelvare@nerim.net>
 
-	* po/fr.po: fixed typo and spelling error.
+	* fr.po: fixed typo and spelling error.
 
 2005-12-26  Hendrik Richter  <hendi@gnome-de.org>
 
