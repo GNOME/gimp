@@ -142,7 +142,7 @@ static gboolean   gimp_plugin_io_error_handler (GIOChannel      *channel,
                                                 GIOCondition     cond,
                                                 gpointer         data);
 static gboolean   gimp_write                   (GIOChannel      *channel,
-                                                guint8          *buf,
+                                                const guint8    *buf,
                                                 gulong           count,
                                                 gpointer         user_data);
 static gboolean   gimp_flush                   (GIOChannel      *channel,
@@ -1520,10 +1520,10 @@ gimp_plugin_io_error_handler (GIOChannel   *channel,
 }
 
 static gboolean
-gimp_write (GIOChannel *channel,
-            guint8     *buf,
-            gulong      count,
-            gpointer    user_data)
+gimp_write (GIOChannel   *channel,
+            const guint8 *buf,
+            gulong        count,
+            gpointer      user_data)
 {
   gulong bytes;
 

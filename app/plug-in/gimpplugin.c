@@ -92,7 +92,7 @@
 /*  local funcion prototypes  */
 
 static gboolean   plug_in_write         (GIOChannel   *channel,
-                                         guint8       *buf,
+                                         const guint8 *buf,
                                          gulong        count,
                                          gpointer      user_data);
 static gboolean   plug_in_flush         (GIOChannel   *channel,
@@ -144,9 +144,7 @@ plug_in_exit (Gimp *gimp)
   list = gimp->open_plug_ins;
   while (list)
     {
-      PlugIn *plug_in;
-
-      plug_in = (PlugIn *) list->data;
+      PlugIn *plug_in = list->data;
 
       list = list->next;
 
@@ -766,10 +764,10 @@ plug_in_recv_message (GIOChannel   *channel,
 }
 
 static gboolean
-plug_in_write (GIOChannel *channel,
-	       guint8     *buf,
-	       gulong      count,
-               gpointer    user_data)
+plug_in_write (GIOChannel   *channel,
+	       const guint8 *buf,
+	       gulong        count,
+               gpointer      user_data)
 {
   PlugIn *plug_in = user_data;
   gulong  bytes;

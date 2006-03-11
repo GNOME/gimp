@@ -35,7 +35,7 @@ typedef void     (* GimpWireWriteFunc)   (GIOChannel      *channel,
                                           gpointer         user_data);
 typedef void     (* GimpWireDestroyFunc) (GimpWireMessage *msg);
 typedef gboolean (* GimpWireIOFunc)      (GIOChannel      *channel,
-                                          guint8          *buf,
+                                          const guint8    *buf,
                                           gulong           count,
                                           gpointer         user_data);
 typedef gboolean (* GimpWireFlushFunc)   (GIOChannel      *channel,
