@@ -2926,19 +2926,8 @@ gboolean
 gimp_image_raise_layer_to_top (GimpImage *gimage,
                                GimpLayer *layer)
 {
-  gint index;
-
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
-
-  index = gimp_container_get_child_index (gimage->layers,
-                                          GIMP_OBJECT (layer));
-
-  if (index == 0)
-    {
-      g_message (_("Layer is already on top."));
-      return FALSE;
-    }
 
   return gimp_image_position_layer (gimage, layer, 0,
                                     TRUE, _("Raise Layer to Top"));
@@ -2948,22 +2937,12 @@ gboolean
 gimp_image_lower_layer_to_bottom (GimpImage *gimage,
                                   GimpLayer *layer)
 {
-  gint index;
   gint length;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
 
-  index = gimp_container_get_child_index (gimage->layers,
-                                          GIMP_OBJECT (layer));
-
   length = gimp_container_num_children (gimage->layers);
-
-  if (index == length - 1)
-    {
-      g_message (_("Layer is already on the bottom."));
-      return FALSE;
-    }
 
   return gimp_image_position_layer (gimage, layer, length - 1,
                                     TRUE, _("Lower Layer to Bottom"));

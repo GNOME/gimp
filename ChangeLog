@@ -1,3 +1,9 @@
+2006-03-13  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimage.c (gimp_image_raise_layer_to_top,
+	gimp_image_lower_layer_to_bottom): silently return TRUE if the
+	layer is already at the top (or the bottom respectively).
+
 2006-03-11  Sven Neumann  <sven@gimp.org>
 
 	* libgimpbase/gimpwire.h: added a const qualifier to the
