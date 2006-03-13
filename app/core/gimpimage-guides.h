@@ -50,6 +50,12 @@ void        gimp_image_move_guide     (GimpImage *gimage,
                                        gint       position,
                                        gboolean   push_undo);
 
+GimpGuide * gimp_image_get_guide      (GimpImage *gimage,
+                                       guint32    id);
+GimpGuide * gimp_image_get_next_guide (GimpImage *gimage,
+                                       guint32    id,
+                                       gboolean  *guide_found);
+
 GimpGuide * gimp_image_find_guide     (GimpImage *gimage,
                                        gdouble    x,
                                        gdouble    y,

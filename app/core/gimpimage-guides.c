@@ -172,6 +172,57 @@ gimp_image_move_guide (GimpImage *gimage,
 }
 
 GimpGuide *
+gimp_image_get_guide (GimpImage *gimage,
+                      guint32    id)
+{
+  GList *guides;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+
+  for (guides = gimage->guides; guides; guides = g_list_next (guides))
+    {
+      GimpGuide *guide = guides->data;
+
+      if (guide->guide_ID == id && guide->position >= 0)
+        return guide;
+    }
+
+  return NULL;
+}
+
+GimpGuide *
+gimp_image_get_next_guide (GimpImage *gimage,
+                           guint32    id,
+                           gboolean  *guide_found)
+{
+  GList *guides;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (guide_found != NULL, NULL);
+
+  if (id == 0)
+    *guide_found = TRUE;
+  else
+    *guide_found = FALSE;
+
+  for (guides = gimage->guides; guides; guides = g_list_next (guides))
+    {
+      GimpGuide *guide = guides->data;
+
+      if (guide->position < 0)
+        continue;
+
+      if (*guide_found) /* this is the first guide after the found one */
+        return guide;
+
+      if (guide->guide_ID == id) /* found it, next one will be returned */
+        *guide_found = TRUE;
+    }
+
+  return NULL;
+}
+
+GimpGuide *
 gimp_image_find_guide (GimpImage *gimage,
                        gdouble    x,
                        gdouble    y,

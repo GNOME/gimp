@@ -43,19 +43,20 @@ HELP
     );
 
     @outargs = (
-	{ name => 'guide', type => 'guide', init => 1, alias => 'guide_ID',
+	{ name => 'guide', type => 'guide', init => 1,
 	  desc => 'The new guide' }
     );
 
     my $func = substr($desc, 0, 1);
     %invoke = (
-	vars => [ 'GimpGuide *guide' ],
 	code => <<CODE
 {
   if (offset <= gimage->$max)
     {
-      guide = gimp_image_add_${func}guide (gimage, offset, TRUE);
-      guide_ID = guide->guide_ID;
+      GimpGuide *g;
+
+      g = gimp_image_add_${func}guide (gimage, offset, TRUE);
+      guide = g->guide_ID;
     }
   else
     success = FALSE;
@@ -91,22 +92,14 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'GList *guides' ],
 	code => <<'CODE'
 {
-  success = FALSE;
+  GimpGuide *g = gimp_image_get_guide (gimage, guide);
 
-  for (guides = gimage->guides; guides; guides = g_list_next (guides))
-    {
-      GimpGuide *g = (GimpGuide *) guides->data;
-
-      if ((g->guide_ID == guide) && (g->position >= 0))
-	{
-          gimp_image_remove_guide (gimage, g, TRUE);
-	  success = TRUE;
-	  break;
-	}
-    }
+  if (g)
+    gimp_image_remove_guide (gimage, g, TRUE);
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -136,44 +129,12 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'GList *guides', 'gboolean guide_found' ],
 	code => <<'CODE'
 {
-  if (gimage->guides != NULL)
-    {
-      success     = FALSE;
-      guide_found = FALSE;
+  GimpGuide *g = gimp_image_get_next_guide (gimage, guide, &success);
 
-      for (guides = gimage->guides; guides; guides = g_list_next (guides))
-        {
-          GimpGuide *g = (GimpGuide *) guides->data;
-
-          if (g->position < 0)
-            continue;
-
-          if (guide == 0)  /* init - Return first guide ID in list */
-            {
-              next_guide = g->guide_ID;
-
-              guide_found = TRUE;
-              break;
-            }
-
-          if (! guide_found)
-            {
-              if (g->guide_ID == guide)
-                guide_found = TRUE;
-            }
-          else
-            {
-              next_guide = g->guide_ID;
-	      break;
-            }
-        }
-
-      if (guide_found)
-        success = TRUE;
-    }
+  if (g)
+    next_guide = g->guide_ID;
 }
 CODE
     );
@@ -202,23 +163,14 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'GList *guides' ],
 	code => <<'CODE'
 {
-  success = FALSE;
+  GimpGuide *g = gimp_image_get_guide (gimage, guide);
 
-  for (guides = gimage->guides; guides; guides = g_list_next (guides))
-    {
-      GimpGuide *g = (GimpGuide *) guides->data;
-
-      if ((g->guide_ID == guide) && (g->position >= 0))
-	{
-	  orientation = g->orientation;
-
-	  success = TRUE;
-	  break;
-	}
-    }
+  if (g)
+    orientation = g->orientation;
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -246,23 +198,14 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'GList *guides' ],
 	code => <<'CODE'
 {
-  success = FALSE;
+  GimpGuide *g = gimp_image_get_guide (gimage, guide);
 
-  for (guides = gimage->guides; guides; guides = g_list_next (guides))
-    {
-      GimpGuide *g = (GimpGuide *) guides->data;
-
-      if ((g->guide_ID == guide) && (g->position >= 0))
-	{
-	  position = g->position;
-
-	  success = TRUE;
-	  break;
-	}
-    }
+  if (g)
+    position = g->position;
+  else
+    success = FALSE;
 }
 CODE
     );

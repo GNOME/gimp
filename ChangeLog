@@ -1,3 +1,14 @@
+2006-03-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimage-guides.[ch]: added gimp_image_get_guide() and
+	gimp_image_get_next_guide(), which take a guide_ID and return the
+	image's GimpGuide with that ID (the one after that for next_guide())
+
+	* tools/pdbgen/pdb/guides.pdb: use them instead of having this
+	code here.
+
+	* app/pdb/guides_cmds.c: regenerated.
+
 2006-03-13  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimage.c (gimp_image_raise_layer_to_top,
