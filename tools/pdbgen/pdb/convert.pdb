@@ -17,19 +17,26 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub simple_inargs {
+sub image_convert_rgb {
+    $blurb = 'Convert specified image to RGB color';
+
+    $help = <<'HELP';
+This procedure converts the specified image to RGB color. This process
+requires an image of type GIMP_GRAY or GIMP_INDEXED. No image content
+is lost in this process aside from the colormap for an indexed image.
+HELP
+
+    &std_pdb_misc;
+
     @inargs = (
 	&std_image_arg
     );
-}
 
-sub simple_invoke {
-    my $type = shift;
     %invoke = (
 	code => <<CODE
 {
-  if (gimp_image_base_type (gimage) != $type)
-    gimp_image_convert (gimage, $type, 0, 0, FALSE, FALSE, 0, NULL, NULL);
+  if (gimp_image_base_type (gimage) != GIMP_RGB)
+    gimp_image_convert (gimage, GIMP_RGB, 0, 0, FALSE, FALSE, 0, NULL, NULL);
   else
     success = FALSE;
 }
@@ -37,32 +44,31 @@ CODE
     );
 }
 
-sub image_convert_rgb {
-    $blurb = 'Convert specified image to RGB color';
-
-    $help = <<'HELP';
-This procedure converts the specified image to RGB color. This process requires
-an image of type GIMP_GRAY or GIMP_INDEXED. No image content is lost in this 
-process aside from the colormap for an indexed image.
-HELP
-
-    &std_pdb_misc;
-    &simple_inargs;
-    &simple_invoke('GIMP_RGB');
-}
-
 sub image_convert_grayscale {
     $blurb = 'Convert specified image to grayscale (256 intensity levels)';
 
     $help = <<'HELP';
-This procedure converts the specified image to grayscale with 8 bits per pixel
-(256 intensity levels). This process requires an image of type GIMP_RGB or 
-GIMP_INDEXED.
+This procedure converts the specified image to grayscale with 8 bits
+per pixel (256 intensity levels). This process requires an image of
+type GIMP_RGB or GIMP_INDEXED.
 HELP
 
     &std_pdb_misc;
-    &simple_inargs;
-    &simple_invoke('GIMP_GRAY');
+
+    @inargs = (
+	&std_image_arg
+    );
+
+    %invoke = (
+	code => <<CODE
+{
+  if (gimp_image_base_type (gimage) != GIMP_GRAY)
+    gimp_image_convert (gimage, GIMP_GRAY, 0, 0, FALSE, FALSE, 0, NULL, NULL);
+  else
+    success = FALSE;
+}
+CODE
+    );
 }
 
 sub image_convert_indexed {

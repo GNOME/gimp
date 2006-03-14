@@ -17,37 +17,20 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-# Transform Tools
-
-# shortcuts
-
-sub drawable_arg () {{
-    name => 'drawable',
-    type => 'drawable',
-    desc => 'The affected drawable',
-}}
-
-sub drawable_out_arg {
-    my $type = shift;
-    my $arg = &drawable_arg;
-    $arg->{desc} = "The $type drawable";
-    $arg->{no_declare} = 1;
-    $arg;
-}
-
-
-# The defs
-
 sub flip {
     &std_pdb_deprecated ('gimp-drawable-transform-flip-simple');
 
     @inargs = (
-	&drawable_arg,
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The affected drawable' },
 	{ name => 'flip_type', type => &std_orientation_enum,
 	  desc => 'Type of flip: %%desc%%' }
     );
 
-    @outargs = ( &drawable_out_arg('flipped') );
+    @outargs = (
+	{ name => 'drawable', type => 'drawable', no_declare => 1,
+	  desc => 'The flipped drawable' }
+    );
 
     %invoke = (
 	code => <<'CODE'
@@ -71,7 +54,8 @@ sub perspective {
     &std_pdb_deprecated ('gimp-drawable-transform-perspective-default');
 
     @inargs = (
-	&drawable_arg,
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The affected drawable' },
 	{ name => 'interpolation', type => 'boolean',
 	  desc => 'Whether to use interpolation' }
     );
@@ -88,7 +72,10 @@ sub perspective {
 	$pos++;
     }
 
-    @outargs = ( &drawable_out_arg('newly mapped') );
+    @outargs = (
+	{ name => 'drawable', type => 'drawable', no_declare => 1,
+	  desc => 'The newly mapped drawable' }
+    );
 
     %invoke = (
 	vars => [ 'gdouble trans_info[8]' ],
@@ -138,14 +125,18 @@ sub rotate {
     &std_pdb_deprecated ('gimp-drawable-transform-rotate-default');
 
     @inargs = (
-	&drawable_arg,
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The affected drawable' },
 	{ name => 'interpolation', type => 'boolean',
 	  desc => 'Whether to use interpolation' },
 	{ name => 'angle', type => 'float',
 	  desc => 'The angle of rotation (radians)' }
     );
 
-    @outargs = ( &drawable_out_arg('rotated') );
+    @outargs = (
+	{ name => 'drawable', type => 'drawable', no_declare => 1,
+	  desc => 'The rotated drawable' }
+    );
 
     %invoke = (
 	code => <<'CODE'
@@ -190,24 +181,32 @@ sub scale {
     &std_pdb_deprecated ('gimp-drawable-transform-scale-default');
 
     @inargs = (
-	&drawable_arg,
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The affected drawable' },
 	{ name => 'interpolation', type => 'boolean',
-	  desc => 'Whether to use interpolation' }
+	  desc => 'Whether to use interpolation' },
+	{ name => 'x0', type => 'float',
+	  desc => 'The new x coordinate of the upper-left corner of the
+		    scaled region',
+	  alias => 'trans_info[X0]', no_declare => 1 },
+	{ name => 'y0', type => 'float',
+	  desc => 'The new y coordinate of the upper-left corner of the
+		    scaled region',
+	  alias => 'trans_info[Y0]', no_declare => 1 },
+	{ name => 'x1', type => 'float',
+	  desc => 'The new x coordinate of the lower-right corner of the
+		    scaled region',
+	  alias => 'trans_info[X1]', no_declare => 1 },
+	{ name => 'y1', type => 'float',
+	  desc => 'The new y coordinate of the lower-right corner of the
+		    scaled region',
+	  alias => 'trans_info[Y1]', no_declare => 1 }
     );
 
-    my $pos = 0;
-    foreach $where (qw(upper-left lower-right)) {
-	foreach (qw(x y)) {
-	    push @inargs,
-	    	 { name => "$_$pos", type => 'float',
-		   desc => "The new $_ coordinate of $where corner of newly
-			    scaled region",
-		   alias => "trans_info[\U$_\E$pos]", no_declare => 1 }
-	}
-	$pos++;
-    }
-
-    @outargs = ( &drawable_out_arg('scaled') );
+    @outargs = (
+	{ name => 'drawable', type => 'drawable', no_declare => 1,
+	  desc => 'The scaled drawable' }
+    );
 
     %invoke = (
 	vars => [ 'gdouble trans_info[4]' ],
@@ -259,7 +258,8 @@ sub shear {
     &std_pdb_deprecated ('gimp-drawable-transform-shear-default');
 
     @inargs = (
-	&drawable_arg,
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The affected drawable' },
 	{ name => 'interpolation', type => 'boolean',
 	  desc => 'Whether to use interpolation' },
 	{ name => 'shear_type', type => &std_orientation_enum,
@@ -268,7 +268,10 @@ sub shear {
 	  desc => 'The magnitude of the shear' }
     );
 
-    @outargs = ( &drawable_out_arg('sheared') );
+    @outargs = (
+	{ name => 'drawable', type => 'drawable', no_declare => 1,
+	  desc => 'The sheared drawable' }
+    );
 
     %invoke = (
 	code => <<'CODE'
@@ -314,7 +317,8 @@ sub transform_2d {
     &std_pdb_deprecated ('gimp-drawable-transform-2d-default');
 
     @inargs = (
-	&drawable_arg,
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The affected drawable' },
 	{ name => 'interpolation', type => 'boolean',
 	  desc => 'Whether to use interpolation' },
 	{ name => 'source_x', type => 'float',
@@ -333,7 +337,10 @@ sub transform_2d {
 	  desc => 'Y coordinate of where the centre goes' }
     );
 
-    @outargs = ( &drawable_out_arg('transformed') );
+    @outargs = (
+	{ name => 'drawable', type => 'drawable', no_declare => 1,
+	  desc => 'The transformed drawable' }
+    );
 
     %invoke = (
 	code => <<'CODE'

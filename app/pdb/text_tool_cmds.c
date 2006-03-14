@@ -221,7 +221,6 @@ text_get_extents_fontname_invoker (Gimp         *gimp,
   gint32 height;
   gint32 ascent;
   gint32 descent;
-  gchar *real_fontname;
 
   text = (gchar *) args[0].value.pdb_pointer;
   if (text == NULL || !g_utf8_validate (text, -1, NULL))
@@ -241,7 +240,7 @@ text_get_extents_fontname_invoker (Gimp         *gimp,
 
   if (success)
     {
-      real_fontname = g_strdup_printf ("%s %d", fontname, (gint) size);
+      gchar *real_fontname = g_strdup_printf ("%s %d", fontname, (gint) size);
 
       success = text_get_extents (real_fontname, text,
                                   &width, &height,
@@ -580,7 +579,6 @@ text_get_extents_invoker (Gimp         *gimp,
   gint32 height;
   gint32 ascent;
   gint32 descent;
-  gchar *real_fontname;
 
   text = (gchar *) args[0].value.pdb_pointer;
   if (text == NULL || !g_utf8_validate (text, -1, NULL))
@@ -628,7 +626,7 @@ text_get_extents_invoker (Gimp         *gimp,
 
   if (success)
     {
-      real_fontname = g_strdup_printf ("%s %d", family, (gint) size);
+      gchar *real_fontname = g_strdup_printf ("%s %d", family, (gint) size);
 
       success = text_get_extents (real_fontname, text,
                                   &width, &height,

@@ -17,13 +17,6 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub pdb_misc {
-    $author = $copyright = 'Sven Neumann';
-    $date = '2003';
-}
-
-# The defs
-
 sub fonts_refresh {
     $blurb = 'Refresh current fonts. This function always succeeds.';
 
@@ -32,7 +25,7 @@ This procedure retrieves all fonts currently in the user's font path
 and updates the font dialogs accordingly.
 HELP
 
-    &pdb_misc;
+    &neo_pdb_misc('2003');
 
     %invoke = (
 	code => 'gimp_fonts_load (gimp);'
@@ -46,7 +39,7 @@ sub fonts_get_list {
 This procedure returns a list of the fonts that are currently available.
 HELP
 
-    &pdb_misc;
+    &neo_pdb_misc('2003');
 
     @inargs = (
 	{ name => 'filter', type => 'string', null_ok => 1,

@@ -113,7 +113,7 @@ static ProcRecord buffers_get_list_proc =
   "Retrieve a complete listing of the available buffers.",
   "This procedure returns a complete listing of available named buffers.",
   "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer",
   "2005",
   NULL,
   GIMP_INTERNAL,
@@ -146,9 +146,7 @@ buffer_rename_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpBuffer *buffer;
-
-      buffer = (GimpBuffer *)
+      GimpBuffer *buffer = (GimpBuffer *)
         gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
 
       success = (buffer != NULL && strlen (new_name) > 0);
@@ -198,7 +196,7 @@ static ProcRecord buffer_rename_proc =
   "Renames a named buffer.",
   "This procedure renames a named buffer.",
   "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer",
   "2005",
   NULL,
   GIMP_INTERNAL,
@@ -224,9 +222,7 @@ buffer_delete_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpBuffer *buffer;
-
-      buffer = (GimpBuffer *)
+      GimpBuffer *buffer = (GimpBuffer *)
         gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
 
       success = (buffer != NULL);
@@ -274,7 +270,7 @@ buffer_get_width_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   gchar *buffer_name;
-  GimpBuffer *buffer = NULL;
+  gint32 width = 0;
 
   buffer_name = (gchar *) args[0].value.pdb_pointer;
   if (buffer_name == NULL || !g_utf8_validate (buffer_name, -1, NULL))
@@ -282,16 +278,19 @@ buffer_get_width_invoker (Gimp         *gimp,
 
   if (success)
     {
-      buffer = (GimpBuffer *)
+      GimpBuffer *buffer = (GimpBuffer *)
         gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
 
-      success = (buffer != NULL);
+      if (buffer)
+        width = gimp_buffer_get_width (buffer);
+      else
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&buffer_get_width_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_buffer_get_width (buffer);
+    return_args[1].value.pdb_int = width;
 
   return return_args;
 }
@@ -321,7 +320,7 @@ static ProcRecord buffer_get_width_proc =
   "Retrieves the specified buffer's width.",
   "This procedure retrieves the specified named buffer's width.",
   "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer",
   "2005",
   NULL,
   GIMP_INTERNAL,
@@ -341,7 +340,7 @@ buffer_get_height_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   gchar *buffer_name;
-  GimpBuffer *buffer = NULL;
+  gint32 height = 0;
 
   buffer_name = (gchar *) args[0].value.pdb_pointer;
   if (buffer_name == NULL || !g_utf8_validate (buffer_name, -1, NULL))
@@ -349,16 +348,19 @@ buffer_get_height_invoker (Gimp         *gimp,
 
   if (success)
     {
-      buffer = (GimpBuffer *)
+      GimpBuffer *buffer = (GimpBuffer *)
         gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
 
-      success = (buffer != NULL);
+      if (buffer)
+        height = gimp_buffer_get_height (buffer);
+      else
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&buffer_get_height_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_buffer_get_height (buffer);
+    return_args[1].value.pdb_int = height;
 
   return return_args;
 }
@@ -388,7 +390,7 @@ static ProcRecord buffer_get_height_proc =
   "Retrieves the specified buffer's height.",
   "This procedure retrieves the specified named buffer's height.",
   "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer",
   "2005",
   NULL,
   GIMP_INTERNAL,
@@ -408,7 +410,7 @@ buffer_get_bytes_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   gchar *buffer_name;
-  GimpBuffer *buffer = NULL;
+  gint32 bytes = 0;
 
   buffer_name = (gchar *) args[0].value.pdb_pointer;
   if (buffer_name == NULL || !g_utf8_validate (buffer_name, -1, NULL))
@@ -416,16 +418,19 @@ buffer_get_bytes_invoker (Gimp         *gimp,
 
   if (success)
     {
-      buffer = (GimpBuffer *)
+      GimpBuffer *buffer = (GimpBuffer *)
         gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
 
-      success = (buffer != NULL);
+      if (buffer)
+        bytes = gimp_buffer_get_bytes (buffer);
+      else
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&buffer_get_bytes_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_buffer_get_bytes (buffer);
+    return_args[1].value.pdb_int = bytes;
 
   return return_args;
 }
@@ -455,7 +460,7 @@ static ProcRecord buffer_get_bytes_proc =
   "Retrieves the specified buffer's bytes.",
   "This procedure retrieves the specified named buffer's bytes.",
   "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer",
   "2005",
   NULL,
   GIMP_INTERNAL,
@@ -475,7 +480,7 @@ buffer_get_image_type_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   gchar *buffer_name;
-  GimpBuffer *buffer = NULL;
+  gint32 image_type = 0;
 
   buffer_name = (gchar *) args[0].value.pdb_pointer;
   if (buffer_name == NULL || !g_utf8_validate (buffer_name, -1, NULL))
@@ -483,16 +488,19 @@ buffer_get_image_type_invoker (Gimp         *gimp,
 
   if (success)
     {
-      buffer = (GimpBuffer *)
+      GimpBuffer *buffer = (GimpBuffer *)
         gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
 
-      success = (buffer != NULL);
+      if (buffer)
+        image_type = gimp_buffer_get_image_type (buffer);
+      else
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&buffer_get_image_type_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_buffer_get_image_type (buffer);
+    return_args[1].value.pdb_int = image_type;
 
   return return_args;
 }
@@ -522,7 +530,7 @@ static ProcRecord buffer_get_image_type_proc =
   "Retrieves the specified buffer's image type.",
   "This procedure retrieves the specified named buffer's image type.",
   "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer",
   "2005",
   NULL,
   GIMP_INTERNAL,

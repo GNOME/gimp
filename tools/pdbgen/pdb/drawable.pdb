@@ -17,30 +17,6 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub drawable_arg () {{
-    name => 'drawable',
-    type => 'drawable',
-    desc => 'The drawable',
-}}
-
-sub drawable_coord_args () {
-    @inargs = ( &drawable_arg );
-
-    foreach (qw(x y)) {
-	push @inargs, { name => "${_}_coord", type => '0 <= int32',
-			desc => "The $_ coordinate", alias => $_ }
-    }
-}
-
-sub pixel_arg () {{
-    name => 'pixel',
-    type => 'int8array',
-    desc => 'The pixel value',
-    array => { name => 'num_channels', type => 'int32',
-	       desc => 'The number of channels for the pixel',
-	       no_success => 1 }
-}}
-
 sub drawable_prop_proc {
     my ($return, $name, $type, $func, $desc, $core_type, $core_var) = @_;
 
@@ -51,7 +27,10 @@ sub drawable_prop_proc {
 
     &std_pdb_misc;
 
-    @inargs = ( &drawable_arg );
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' }
+    );
 
     @outargs = (
 	{ name => $name, type => $type, desc => $desc,
@@ -100,7 +79,10 @@ sub drawable_get_prop_proc {
 
     &std_pdb_misc;
 
-    @inargs = ( &drawable_arg );
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' }
+    );
 
     @outargs = (
 	{ name => $prop, type => $type,
@@ -125,7 +107,8 @@ sub drawable_set_prop_proc {
     &std_pdb_misc;
 
     @inargs = (
-	&drawable_arg,
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' },
 	{ name => $prop, type => $type,
 	  desc => "The new drawable $desc" }
     );
@@ -175,7 +158,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&drawable_arg,
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' },
         { name => 'undo', type => 'boolean',
 	  desc => 'Push merge to undo stack?' }
     );
@@ -221,7 +205,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&drawable_arg,
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' },
 	{ name => 'fill_type', type => 'enum GimpFillType',
 	  desc => 'The type of fill: %%desc%%' }
     );
@@ -241,7 +226,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&drawable_arg,
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' },
 	{ name => 'x', type => 'int32',
 	  desc => 'x coordinate of upper left corner of update region' },
 	{ name => 'y', type => 'int32',
@@ -278,22 +264,23 @@ HELP
 
     &std_pdb_misc;
 
-    @inargs = ( &drawable_arg );
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' }
+    );
 
     @outargs = (
 	{ name => 'non_empty', type => 'boolean', init => 1,
 	  desc => 'TRUE if there is a selection' },
+	{ name => 'x1', type => 'int32',
+	  desc => "x coordinate of the upper left corner of selection bounds" },
+	{ name => 'y1', type => 'int32',
+	  desc => "y coordinate of the upper left corner of selection bounds" },
+	{ name => 'x2', type => 'int32',
+	  desc => "x coordinate of the lower right corner of selection bounds" },
+	{ name => 'y2', type => 'int32',
+	  desc => "y coordinate of the lower right corner of selection bounds" }
     );
-
-    my $pos = 1;
-    foreach $where ('upper left', 'lower right') {
-	foreach (qw(x y)) {
-	    push @outargs, { name => "$_$pos", type => 'int32',
-	    		     desc => "$_ coordinate of the $where corner of
-			     	      selection bounds" }
-	}
-	$pos++;
-    }
 
     %invoke = (
 	code => <<'CODE'
@@ -317,12 +304,12 @@ If there is no selection this function returns TRUE and the returned
 bounds are the extents of the whole drawable.
 HELP
 
-    $author    = 'Michael Natterer <mitch@gimp.org>';
-    $copyright = 'Michael Natterer';
-    $date      = '2004';
-    $since     = '2.2';
+    &mitch_pdb_misc('2004', '2.2');
 
-    @inargs = ( &drawable_arg );
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' }
+    );
 
     @outargs = (
 	{ name => 'non_empty', type => 'boolean', init => 1,
@@ -351,9 +338,14 @@ sub drawable_get_image {
 
     &std_pdb_misc;
 
-    @inargs = ( &drawable_arg );
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' }
+    );
 
-    @outargs = ( &std_image_arg );
+    @outargs = (
+	&std_image_arg
+    );
     $outargs[0]->{desc} = "The drawable's image";
     $outargs[0]->{init} = 1;
 
@@ -444,12 +436,17 @@ HELP
 
     &std_pdb_misc;
 
-    @inargs = ( &drawable_arg );
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' }
+    );
 
-    foreach (qw(x y)) {
-	push @outargs, { name => "offset_$_", type => 'int32',
-			 desc => "$_ offset of drawable", void_ret => 1 }
-    }
+    @outargs = (
+	{ name => 'offset_x', type => 'int32',
+	  desc => "x offset of drawable", void_ret => 1 },
+	{ name => 'offset_y', type => 'int32',
+	  desc => "y offset of drawable" }
+    );
 
     %invoke = ( code => 'gimp_item_offsets (GIMP_ITEM (drawable), &offset_x, &offset_y);' );
 }
@@ -477,8 +474,7 @@ CODE
 
 &drawable_accessors('linked', 'boolean', 'linked state', 1,
                     <<'CODE', 'item', 'GIMP_ITEM (drawable)');
-    $author = $copyright = 'Wolfgang Hofer';
-    $date = '1998';
+    &wolfgang_pdb_misc('1998');
 
     if (scalar @outargs) {
         $outargs[0]->{desc} .= ' (for moves)'
@@ -492,8 +488,7 @@ A tattoo is a unique and permanent identifier attached to a drawable that can be
 used to uniquely identify a drawable within an image even between sessions
 HELP
 
-    $author = $copyright = 'Jay Cox';
-    $date = '1998';
+    &jay_pdb_misc('1998');
 CODE
 
 sub drawable_get_pixel {
@@ -508,10 +503,22 @@ HELP
     &std_pdb_misc;
     $date = '1997';
 
-    &drawable_coord_args();
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' },
+	{ name => 'x_coord', type => '0 <= int32',
+	  desc => "The x coordinate", alias => 'x' },
+	{ name => 'y_coord', type => '0 <= int32',
+	  desc => "The y coordinate", alias => 'y' }
+    );
 
-    @outargs = ( &pixel_arg );
-    $outargs[0]->{init} = $outargs[0]->{array}->{init} = 1;
+    @outargs = (
+	{ name => 'pixel', type => 'int8array',
+	  desc => 'The pixel value', init => 1,
+	  array => { name => 'num_channels', type => 'int32',
+	  	     desc => 'The number of channels for the pixel',
+	   	     no_success => 1, init => 1 } }
+    );
 
     %invoke = (
 	vars => [ 'guint8 *p', 'gint b', 'Tile *tile' ],
@@ -555,8 +562,19 @@ HELP
     &std_pdb_misc;
     $date = '1997';
 
-    &drawable_coord_args;
-    push @inargs, &pixel_arg;
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' },
+	{ name => 'x_coord', type => '0 <= int32',
+	  desc => "The x coordinate", alias => 'x' },
+	{ name => 'y_coord', type => '0 <= int32',
+	  desc => "The y coordinate", alias => 'y' },
+	{ name => 'pixel', type => 'int8array',
+	  desc => 'The pixel value',
+	  array => { name => 'num_channels', type => 'int32',
+	  	     desc => 'The number of channels for the pixel',
+	   	     no_success => 1 } }
+    );
 
     %invoke = (
 	vars => [ 'guint8 *p', 'gint b', 'Tile *tile' ],
@@ -589,7 +607,8 @@ sub drawable_set_image {
     &std_pdb_deprecated();
 
     @inargs = (
-	&drawable_arg,
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' },
 	&std_image_arg
     );
 
@@ -599,15 +618,6 @@ sub drawable_set_image {
 }
 CODE
     );
-}
-
-
-sub dim_args () {
-    my @args;
-    foreach (qw(width height bpp)) {
-	push @args, { name => $_, type => 'int32', desc => "The previews $_", init => 1 };
-    }
-    @args;
 }
 
 sub drawable_thumbnail {
@@ -620,11 +630,11 @@ returned in RGB[A] or GRAY[A] format. The bpp return value gives the
 number of bytes in the image.
 HELP
 
-    $author = $copyright = 'Andy Thomas';
-    $date = '1999';
+    &andy_pdb_misc('1999');
 
     @inargs = (
-	&drawable_arg,
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' },
 	{ name => 'width', type => '0 < int32 <= 512',
 	  desc => 'The thumbnail width', alias => 'req_width' },
 	{ name => 'height', type => '0 < int32 <= 512',
@@ -632,14 +642,18 @@ HELP
     );
 
     @outargs = (
-	&dim_args,
+	{ name => 'width', type => 'int32', void_ret => 1,
+	  desc => 'The previews width', init => 1 },
+	{ name => 'height', type => 'int32',
+	  desc => 'The previews height', init => 1 },
+	{ name => 'bpp', type => 'int32',
+	  desc => 'The previews bpp', init => 1 },
         { name => 'thumbnail_data', type => 'int8array',
 	  desc => 'The thumbnail data', init => 1, wrap => 1,
 	  array => { name => 'thumbnail_data_count',
 		     desc => 'The number of bytes in thumbnail data',
 		     alias => 'num_bytes', init => 1 } }
     );
-    $outargs[0]->{void_ret} = 1;
 
     %invoke = (
 	code => <<'CODE'
@@ -695,12 +709,11 @@ returned in RGB[A] or GRAY[A] format. The bpp return value gives the
 number of bytes in the image.
 HELP
 
-    $author = $copyright = 'Michael Natterer <mitch@gimp.org>';
-    $date   = '2004';
-    $since  = '2.2';
+    &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	&drawable_arg,
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' },
         { name => 'src_x', type => '0 <= int32',
           desc => 'The x coordinate of the area' },
         { name => 'src_y', type => '0 <= int32',
@@ -716,14 +729,18 @@ HELP
     );
 
     @outargs = (
-	&dim_args,
+	{ name => 'width', type => 'int32', void_ret => 1,
+	  desc => 'The previews width', init => 1 },
+	{ name => 'height', type => 'int32',
+	  desc => 'The previews height', init => 1 },
+	{ name => 'bpp', type => 'int32',
+	  desc => 'The previews bpp', init => 1 },
         { name => 'thumbnail_data', type => 'int8array',
 	  desc => 'The thumbnail data', init => 1, wrap => 1,
 	  array => { name => 'thumbnail_data_count',
 		     desc => 'The number of bytes in thumbnail data',
 		     alias => 'num_bytes', init => 1 } }
     );
-    $outargs[0]->{void_ret} = 1;
 
     %invoke = (
 	headers => [ qw("core/gimpdrawable-preview.h") ],
@@ -824,8 +841,10 @@ HELP
 
     &std_pdb_misc;
 
-    @inargs = ( &drawable_arg );
-    $inargs[0]->{desc} .= ' to delete';
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable to delete' }
+    );
 
     %invoke = ( code => <<'CODE' );
 {
@@ -851,13 +870,15 @@ HELP
     $since     = '2.4';
 
     @inargs = (
-	&drawable_arg,
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' },
         { name => 'mode', type => 'enum GimpForegroundExtractMode',
 	  desc => 'The algorithm to use: %%desc%%' },
         { name => 'mask', type => 'drawable', desc => 'Tri-Map' }
     );
 
-    %invoke = ( headers => [ qw("core/gimpdrawable-foreground-extract.h") ],
+    %invoke = (
+	headers => [ qw("core/gimpdrawable-foreground-extract.h") ],
         code    => <<'CODE'
 {
   success = gimp_item_is_attached (GIMP_ITEM (drawable));

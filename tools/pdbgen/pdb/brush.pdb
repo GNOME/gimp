@@ -17,30 +17,10 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub mitch_misc {
-    $author = 'Michael Natterer <mitch@gimp.org>';
-    $copyright = 'Michael Natterer';
-    $date = '2004';
-    $since = '2.2';
-}
-
-sub bill_misc {
-    $author = 'Bill Skaggs <weskaggs@primate.ucdavis.edu';
-    $copyright = 'Bill Skaggs';
-    $date = '2004';
-    $since = '2.4';
-}
-
 sub brush_arg () {{
     name => 'name',
     type => 'string',
     desc => 'The brush name'
-}}
-
-sub spacing_arg () {{
-    name => 'spacing',
-    type => '0 <= int32 <= 1000',
-    desc => 'The brush spacing: %%desc%%'
 }}
 
 
@@ -50,7 +30,7 @@ sub brush_new {
     $blurb = "Creates a new brush";
     $help  = "This procedure creates a new, uninitialized brush";
 
-    &mitch_misc;
+    &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
 	{ name => 'name', type => 'string',
@@ -80,7 +60,7 @@ sub brush_duplicate {
     $blurb = "Duplicates a brush";
     $help  = "This procedure creates an identical brush by a different name";
 
-    &mitch_misc;
+    &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
         &brush_arg
@@ -120,7 +100,7 @@ sub brush_is_generated {
     $blurb = "Tests if generated";
     $help  = "Returns True if this brush is parametric, False for other types";
 
-    &bill_misc;
+    &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
         &brush_arg
@@ -153,7 +133,7 @@ sub brush_is_editable {
     $blurb = "Tests if brush can be edited";
     $help  = "Returns True if you have permission to change the brush";
 
-    &bill_misc;
+    &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
         &brush_arg
@@ -186,7 +166,7 @@ sub brush_rename {
     $blurb = "Rename a brush";
     $help  = "This procedure renames a brush";
 
-    &mitch_misc;
+    &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
         &brush_arg,
@@ -220,7 +200,7 @@ sub brush_delete {
     $blurb = "Deletes a brush";
     $help  = "This procedure deletes a brush";
 
-    &mitch_misc;
+    &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
         &brush_arg
@@ -261,7 +241,7 @@ This procedure retrieves information about the specified brush. This
 includes the brush name, and the brush extents (width and height).
 HELP
 
-    &mitch_misc;
+    &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
         &brush_arg
@@ -305,7 +285,7 @@ This procedure retrieves information about the specified brush. This
 includes the brush extents (width and height) and its pixels data.
 HELP
 
-    &mitch_misc;
+    &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
         &brush_arg
@@ -369,18 +349,18 @@ The return value is an integer between 0 and 1000 which represents
 percentage of the maximum of the width and height of the mask.
 HELP
 
-    &mitch_misc;
+    &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
         &brush_arg
     );
 
     @outargs = (
-        &spacing_arg
+	{ name => 'spacing', type => '0 <= int32 <= 1000',
+	  desc => 'The brush spacing: %%desc%%',
+	  alias => 'gimp_brush_get_spacing (brush)',
+	  no_declare => 1, void_ret => 1 }
     );
-    $outargs[0]->{alias} = 'gimp_brush_get_spacing (brush)';
-    $outargs[0]->{no_declare} = 1;
-    $outargs[0]->{void_ret} = 1;
 
     %invoke = (
 	vars => [ 'GimpBrush *brush = NULL' ],
@@ -407,7 +387,7 @@ Square (GIMP_BRUSH_GENERATED_SQUARE), and Diamond
 added in the future. 
 HELP
 
-    &bill_misc;
+    &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
         &brush_arg
@@ -441,7 +421,7 @@ This procedure gets the radius value for a generated brush.  If
 called for any other type of brush, it does not succeed.
 HELP
 
-    &bill_misc;
+    &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
         &brush_arg
@@ -475,7 +455,7 @@ This procedure gets the number of spikes for a generated brush.
 If called for any other type of brush, it does not succeed.
 HELP
 
-    &bill_misc;
+    &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
         &brush_arg
@@ -511,7 +491,7 @@ outside edge. If called for any other type of brush, the function
  does not succeed.
 HELP
 
-    &bill_misc;
+    &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
         &brush_arg
@@ -545,7 +525,7 @@ This procedure gets the aspect ratio of a generated brush.
 If called for any other type of brush, it does not succeed.
 HELP
 
-    &bill_misc;
+    &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
         &brush_arg
@@ -579,7 +559,7 @@ This procedure gets the angle of rotation for a generated brush.
 If called for any other type of brush, it does not succeed.
 HELP
 
-    &bill_misc;
+    &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
         &brush_arg
@@ -613,11 +593,12 @@ This procedure modifies the spacing setting for the specified brush.
 The value should be a integer between 0 and 1000.
 HELP
 
-    &bill_misc;
+    &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
         &brush_arg,
-        &spacing_arg
+	{ name => 'spacing', type => '0 <= int32 <= 1000',
+	  desc => 'The brush spacing: %%desc%%' }
     );
 
     %invoke = (
@@ -649,7 +630,7 @@ Square (GIMP_BRUSH_GENERATED_SQUARE), and Diamond
 added in the future. 
 HELP
 
-    &bill_misc;
+    &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
         &brush_arg,
@@ -688,7 +669,7 @@ This procedure sets the radius for a generated brush.  If
 called for any other type of brush, it does not succeed.
 HELP
 
-    &bill_misc;
+    &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
         &brush_arg,
@@ -727,7 +708,7 @@ This procedure sets the number of spikes for a generated brush.  If
 called for any other type of brush, it does not succeed.
 HELP
 
-    &bill_misc;
+    &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
         &brush_arg,
@@ -766,7 +747,7 @@ This procedure sets the hardness for a generated brush.  If
 called for any other type of brush, it does not succeed.
 HELP
 
-    &bill_misc;
+    &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
         &brush_arg,
@@ -805,7 +786,7 @@ This procedure sets the aspect ratio for a generated brush.  If
 called for any other type of brush, it does not succeed.
 HELP
 
-    &bill_misc;
+    &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
         &brush_arg,
@@ -844,7 +825,7 @@ This procedure sets the rotation angle for a generated brush.  If
 called for any other type of brush, it does not succeed.
 HELP
 
-    &bill_misc;
+    &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
         &brush_arg,

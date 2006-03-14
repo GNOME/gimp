@@ -97,7 +97,7 @@ vectors_new_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpImage *gimage;
-  gchar *name = NULL;
+  gchar *name;
   GimpVectors *vectors = NULL;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
@@ -173,8 +173,6 @@ vectors_get_strokes_invoker (Gimp         *gimp,
   GimpVectors *vectors;
   gint32 num_strokes = 0;
   gint32 *stroke_ids = NULL;
-  gint i = 0;
-  GimpStroke *cur_stroke = NULL;
 
   vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
@@ -186,6 +184,9 @@ vectors_get_strokes_invoker (Gimp         *gimp,
 
       if (num_strokes)
         {
+          GimpStroke *cur_stroke;
+          gint        i = 0;
+
           stroke_ids = g_new (gint32, num_strokes);
 
           for (cur_stroke = gimp_vectors_stroke_get_next (vectors, NULL);
@@ -386,7 +387,7 @@ vectors_set_linked_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   GimpVectors *vectors;
-  gboolean linked = FALSE;
+  gboolean linked;
 
   vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
@@ -506,7 +507,7 @@ vectors_set_visible_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   GimpVectors *vectors;
-  gboolean visible = FALSE;
+  gboolean visible;
 
   vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
@@ -626,7 +627,7 @@ vectors_set_name_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   GimpVectors *vectors;
-  gchar *name = NULL;
+  gchar *name;
 
   vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
@@ -749,7 +750,7 @@ vectors_set_tattoo_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   GimpVectors *vectors;
-  gint32 tattoo = 0;
+  gint32 tattoo;
 
   vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
@@ -808,8 +809,7 @@ vectors_stroke_get_length_invoker (Gimp         *gimp,
   GimpVectors *vectors;
   gint32 stroke_id;
   gdouble prescision;
-  gdouble length;
-  GimpStroke *stroke;
+  gdouble length = 0;
 
   vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
@@ -821,16 +821,12 @@ vectors_stroke_get_length_invoker (Gimp         *gimp,
 
   if (success)
     {
-      stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
+      GimpStroke *stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
 
-      if (!stroke)
-        {
-          success = FALSE;
-        }
+      if (stroke)
+        length = gimp_stroke_get_length (stroke, prescision);
       else
-        {
-          length = gimp_stroke_get_length (stroke, prescision);
-        }
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&vectors_stroke_get_length_proc, success);
@@ -873,7 +869,7 @@ static ProcRecord vectors_stroke_get_length_proc =
 {
   "gimp-vectors-stroke-get-length",
   "gimp-vectors-stroke-get-length",
-  "measures the length of the given stroke.",
+  "Measure the length of the given stroke.",
   "Measure the length of the given stroke.",
   "Simon Budig",
   "Simon Budig",
@@ -903,8 +899,6 @@ vectors_stroke_get_point_at_dist_invoker (Gimp         *gimp,
   gdouble y_point = 0;
   gdouble slope = 0;
   gboolean valid = FALSE;
-  GimpStroke *stroke;
-  GimpCoords  coord;
 
   vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
@@ -918,10 +912,12 @@ vectors_stroke_get_point_at_dist_invoker (Gimp         *gimp,
 
   if (success)
     {
-      stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
+      GimpStroke *stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
 
       if (stroke)
         {
+          GimpCoords coord;
+
           valid = gimp_stroke_get_point_at_dist (stroke, dist, prescision,
                                                  &coord, &slope);
           x_point = valid ? coord.x : 0;
@@ -1021,7 +1017,6 @@ vectors_stroke_remove_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   GimpVectors *vectors;
   gint32 stroke_id;
-  GimpStroke *stroke;
 
   vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
@@ -1031,7 +1026,7 @@ vectors_stroke_remove_invoker (Gimp         *gimp,
 
   if (success)
     {
-      stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
+      GimpStroke *stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
 
       if (stroke)
         gimp_vectors_stroke_remove (vectors, stroke);
@@ -1083,7 +1078,6 @@ vectors_stroke_close_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   GimpVectors *vectors;
   gint32 stroke_id;
-  GimpStroke *stroke;
 
   vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
@@ -1093,7 +1087,7 @@ vectors_stroke_close_invoker (Gimp         *gimp,
 
   if (success)
     {
-      stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
+      GimpStroke *stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
 
       if (stroke)
         gimp_stroke_close (stroke);
@@ -1147,7 +1141,6 @@ vectors_stroke_translate_invoker (Gimp         *gimp,
   gint32 stroke_id;
   gint32 off_x;
   gint32 off_y;
-  GimpStroke *stroke;
 
   vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
@@ -1161,7 +1154,7 @@ vectors_stroke_translate_invoker (Gimp         *gimp,
 
   if (success)
     {
-      stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
+      GimpStroke *stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
 
       if (stroke)
         gimp_stroke_translate (stroke, off_x, off_y);
@@ -1225,7 +1218,6 @@ vectors_stroke_scale_invoker (Gimp         *gimp,
   gint32 stroke_id;
   gdouble scale_x;
   gdouble scale_y;
-  GimpStroke *stroke;
 
   vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
@@ -1239,7 +1231,7 @@ vectors_stroke_scale_invoker (Gimp         *gimp,
 
   if (success)
     {
-      stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
+      GimpStroke *stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
 
       if (stroke)
         gimp_stroke_scale (stroke, scale_x, scale_y);
@@ -1306,9 +1298,6 @@ vectors_stroke_interpolate_invoker (Gimp         *gimp,
   gboolean closed;
   gint32 num_coords = 0;
   gdouble *coords = NULL;
-  GimpStroke *stroke;
-  GArray     *coords_array;
-  gint        i;
 
   vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
@@ -1320,11 +1309,15 @@ vectors_stroke_interpolate_invoker (Gimp         *gimp,
 
   if (success)
     {
-      stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
+      GimpStroke *stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
 
       if (stroke)
         {
+          GArray *coords_array;
+          gint    i;
+
           coords_array = gimp_stroke_interpolate (stroke, prescision, &closed);
+
           if (coords_array)
             {
               num_coords = coords_array->len;
@@ -1429,8 +1422,6 @@ vectors_bezier_stroke_new_moveto_invoker (Gimp         *gimp,
   gdouble x0 = 0;
   gdouble y0 = 0;
   gint32 stroke_id = 0;
-  GimpStroke *stroke;
-  GimpCoords  coord0;
 
   vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
@@ -1442,12 +1433,15 @@ vectors_bezier_stroke_new_moveto_invoker (Gimp         *gimp,
 
   if (success)
     {
-      coord0.x = x0;
-      coord0.y = y0;
+      GimpStroke *stroke;
+      GimpCoords  coord0;
+
+      coord0.x        = x0;
+      coord0.y        = y0;
       coord0.pressure = GIMP_COORDS_DEFAULT_PRESSURE;
-      coord0.xtilt = GIMP_COORDS_DEFAULT_TILT;
-      coord0.ytilt = GIMP_COORDS_DEFAULT_TILT;
-      coord0.wheel = GIMP_COORDS_DEFAULT_WHEEL;
+      coord0.xtilt    = GIMP_COORDS_DEFAULT_TILT;
+      coord0.ytilt    = GIMP_COORDS_DEFAULT_TILT;
+      coord0.wheel    = GIMP_COORDS_DEFAULT_WHEEL;
 
       stroke = gimp_bezier_stroke_new_moveto (&coord0);
       gimp_vectors_stroke_add (vectors, stroke);
@@ -1519,8 +1513,6 @@ vectors_bezier_stroke_lineto_invoker (Gimp         *gimp,
   gint32 stroke_id;
   gdouble x0 = 0;
   gdouble y0 = 0;
-  GimpStroke *stroke;
-  GimpCoords  coord0;
 
   vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
@@ -1534,18 +1526,25 @@ vectors_bezier_stroke_lineto_invoker (Gimp         *gimp,
 
   if (success)
     {
-      coord0.x = x0;
-      coord0.y = y0;
-      coord0.pressure = GIMP_COORDS_DEFAULT_PRESSURE;
-      coord0.xtilt = GIMP_COORDS_DEFAULT_TILT;
-      coord0.ytilt = GIMP_COORDS_DEFAULT_TILT;
-      coord0.wheel = GIMP_COORDS_DEFAULT_WHEEL;
+      GimpStroke *stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
 
-      stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
       if (stroke)
-        gimp_bezier_stroke_lineto (stroke, &coord0);
+        {
+          GimpCoords coord0;
+
+          coord0.x        = x0;
+          coord0.y        = y0;
+          coord0.pressure = GIMP_COORDS_DEFAULT_PRESSURE;
+          coord0.xtilt    = GIMP_COORDS_DEFAULT_TILT;
+          coord0.ytilt    = GIMP_COORDS_DEFAULT_TILT;
+          coord0.wheel    = GIMP_COORDS_DEFAULT_WHEEL;
+
+          gimp_bezier_stroke_lineto (stroke, &coord0);
+        }
       else
-        success = FALSE;
+        {
+          success = FALSE;
+        }
     }
 
   return procedural_db_return_args (&vectors_bezier_stroke_lineto_proc, success);
@@ -1602,12 +1601,10 @@ vectors_bezier_stroke_conicto_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   GimpVectors *vectors;
   gint32 stroke_id;
-  gdouble x0 = 0;
-  gdouble y0 = 0;
-  gdouble x1 = 0;
-  gdouble y1 = 0;
-  GimpStroke *stroke;
-  GimpCoords  coord0, coord1;
+  gdouble x0;
+  gdouble y0;
+  gdouble x1;
+  gdouble y1;
 
   vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
@@ -1625,22 +1622,29 @@ vectors_bezier_stroke_conicto_invoker (Gimp         *gimp,
 
   if (success)
     {
-      coord0.x = x0;
-      coord0.y = y0;
-      coord0.pressure = GIMP_COORDS_DEFAULT_PRESSURE;
-      coord0.xtilt = GIMP_COORDS_DEFAULT_TILT;
-      coord0.ytilt = GIMP_COORDS_DEFAULT_TILT;
-      coord0.wheel = GIMP_COORDS_DEFAULT_WHEEL;
+      GimpStroke *stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
 
-      coord1 = coord0;
-      coord1.x = x1;
-      coord1.y = y1;
-
-      stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
       if (stroke)
-        gimp_bezier_stroke_conicto (stroke, &coord0, &coord1);
+        {
+          GimpCoords  coord0, coord1;
+
+          coord0.x        = x0;
+          coord0.y        = y0;
+          coord0.pressure = GIMP_COORDS_DEFAULT_PRESSURE;
+          coord0.xtilt    = GIMP_COORDS_DEFAULT_TILT;
+          coord0.ytilt    = GIMP_COORDS_DEFAULT_TILT;
+          coord0.wheel    = GIMP_COORDS_DEFAULT_WHEEL;
+
+          coord1   = coord0;
+          coord1.x = x1;
+          coord1.y = y1;
+
+          gimp_bezier_stroke_conicto (stroke, &coord0, &coord1);
+        }
       else
-        success = FALSE;
+        {
+          success = FALSE;
+        }
     }
 
   return procedural_db_return_args (&vectors_bezier_stroke_conicto_proc, success);
@@ -1707,14 +1711,12 @@ vectors_bezier_stroke_cubicto_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   GimpVectors *vectors;
   gint32 stroke_id;
-  gdouble x0 = 0;
-  gdouble y0 = 0;
-  gdouble x1 = 0;
-  gdouble y1 = 0;
-  gdouble x2 = 0;
-  gdouble y2 = 0;
-  GimpStroke *stroke;
-  GimpCoords  coord0, coord1, coord2;
+  gdouble x0;
+  gdouble y0;
+  gdouble x1;
+  gdouble y1;
+  gdouble x2;
+  gdouble y2;
 
   vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
@@ -1736,26 +1738,33 @@ vectors_bezier_stroke_cubicto_invoker (Gimp         *gimp,
 
   if (success)
     {
-      coord0.x = x0;
-      coord0.y = y0;
-      coord0.pressure = GIMP_COORDS_DEFAULT_PRESSURE;
-      coord0.xtilt = GIMP_COORDS_DEFAULT_TILT;
-      coord0.ytilt = GIMP_COORDS_DEFAULT_TILT;
-      coord0.wheel = GIMP_COORDS_DEFAULT_WHEEL;
+      GimpStroke *stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
 
-      coord1 = coord0;
-      coord1.x = x1;
-      coord1.y = y1;
-
-      coord2 = coord0;
-      coord2.x = x2;
-      coord2.y = y2;
-
-      stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
       if (stroke)
-        gimp_bezier_stroke_cubicto (stroke, &coord0, &coord1, &coord2);
+        {
+          GimpCoords coord0, coord1, coord2;
+
+          coord0.x        = x0;
+          coord0.y        = y0;
+          coord0.pressure = GIMP_COORDS_DEFAULT_PRESSURE;
+          coord0.xtilt    = GIMP_COORDS_DEFAULT_TILT;
+          coord0.ytilt    = GIMP_COORDS_DEFAULT_TILT;
+          coord0.wheel    = GIMP_COORDS_DEFAULT_WHEEL;
+
+          coord1   = coord0;
+          coord1.x = x1;
+          coord1.y = y1;
+
+          coord2   = coord0;
+          coord2.x = x2;
+          coord2.y = y2;
+
+          gimp_bezier_stroke_cubicto (stroke, &coord0, &coord1, &coord2);
+        }
       else
-        success = FALSE;
+        {
+          success = FALSE;
+        }
     }
 
   return procedural_db_return_args (&vectors_bezier_stroke_cubicto_proc, success);
@@ -1832,14 +1841,12 @@ vectors_bezier_stroke_new_ellipse_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpVectors *vectors;
-  gdouble x0 = 0;
-  gdouble y0 = 0;
-  gdouble radius_x = 0;
-  gdouble radius_y = 0;
-  gdouble angle = 0;
+  gdouble x0;
+  gdouble y0;
+  gdouble radius_x;
+  gdouble radius_y;
+  gdouble angle;
   gint32 stroke_id = 0;
-  GimpStroke *stroke;
-  GimpCoords  coord0;
 
   vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
@@ -1857,12 +1864,15 @@ vectors_bezier_stroke_new_ellipse_invoker (Gimp         *gimp,
 
   if (success)
     {
-      coord0.x = x0;
-      coord0.y = y0;
+      GimpStroke *stroke;
+      GimpCoords  coord0;
+
+      coord0.x        = x0;
+      coord0.y        = y0;
       coord0.pressure = GIMP_COORDS_DEFAULT_PRESSURE;
-      coord0.xtilt = GIMP_COORDS_DEFAULT_TILT;
-      coord0.ytilt = GIMP_COORDS_DEFAULT_TILT;
-      coord0.wheel = GIMP_COORDS_DEFAULT_WHEEL;
+      coord0.xtilt    = GIMP_COORDS_DEFAULT_TILT;
+      coord0.ytilt    = GIMP_COORDS_DEFAULT_TILT;
+      coord0.wheel    = GIMP_COORDS_DEFAULT_WHEEL;
 
       stroke = gimp_bezier_stroke_new_ellipse (&coord0, radius_x, radius_y, angle);
       gimp_vectors_stroke_add (vectors, stroke);

@@ -17,8 +17,6 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-# The defs
-
 sub image_undo_group_start {
     $blurb = 'Starts a group undo.';
 
@@ -35,9 +33,10 @@ HELP
     $inargs[0]->{desc} = 'The ID of the image in which to open an undo group';
 
     %invoke = ( headers => [ qw("core/gimp.h" "plug-in/plug-in.h") ],
-                vars => [ 'gchar *undo_desc = NULL' ],
                 code => <<CODE
 {
+  gchar *undo_desc = NULL;
+
   if (gimp->current_plug_in)
     undo_desc = plug_in_get_undo_desc (gimp->current_plug_in);
 
@@ -77,8 +76,7 @@ and want to check if their caller has already used 'gimp_image_undo_disable'
 or 'gimp_image_undo_freeze'.
 HELP
 
-    $author = $copyright = 'Raphael Quinet';
-    $date = '1999';
+    &raphael_pdb_misc('1999');
 
     @inargs = ( &std_image_arg );
 
@@ -138,8 +136,7 @@ HELP
 sub image_undo_freeze {
     $blurb = "Freeze the image's undo stack.";
 
-    $author = $copyright = 'Adam D. Moss';
-    $date = '1999';
+    &adam_pdb_misc('1999');
 
     $help = <<'HELP';
 This procedure freezes the image's undo stack, allowing subsequent operations
@@ -167,8 +164,7 @@ HELP
 sub image_undo_thaw {
     $blurb = "Thaw the image's undo stack.";
 
-    $author = $copyright = 'Adam D. Moss';
-    $date = '1999';
+    &adam_pdb_misc('1999');
 
     $help = <<'HELP';
 This procedure thaws the image's undo stack, allowing subsequent operations to 

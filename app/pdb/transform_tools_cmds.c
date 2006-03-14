@@ -498,22 +498,22 @@ static ProcArg scale_inargs[] =
   {
     GIMP_PDB_FLOAT,
     "x0",
-    "The new x coordinate of upper-left corner of newly scaled region"
+    "The new x coordinate of the upper-left corner of the scaled region"
   },
   {
     GIMP_PDB_FLOAT,
     "y0",
-    "The new y coordinate of upper-left corner of newly scaled region"
+    "The new y coordinate of the upper-left corner of the scaled region"
   },
   {
     GIMP_PDB_FLOAT,
     "x1",
-    "The new x coordinate of lower-right corner of newly scaled region"
+    "The new x coordinate of the lower-right corner of the scaled region"
   },
   {
     GIMP_PDB_FLOAT,
     "y1",
-    "The new y coordinate of lower-right corner of newly scaled region"
+    "The new y coordinate of the lower-right corner of the scaled region"
   }
 };
 

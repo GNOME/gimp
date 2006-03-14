@@ -82,9 +82,7 @@ an Xlib XID. A value of 0 is returned for an invalid display or if this
 function is unimplemented for the windowing system that is being used.
 HELP
 
-    $author = $copyright = 'Sven Neumann';
-    $date = '2005';
-    $since = '2.4';
+    &neo_pdb_misc('2005', '2.4');
 
     @inargs = (
 	{ name => 'display', type => 'display',

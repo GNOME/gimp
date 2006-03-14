@@ -17,71 +17,6 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub rock_misc {
-    $author = 'Nathan Summers <rock@gimp.org>';
-    $copyright = 'Nathan Summers';
-    $date = '2001';
-}
-
-sub adrian_misc {
-    $author = 'Adrian Likins <adrian@gimp.org>';
-    $copyright = 'Adrian Likins';
-    $date = '1998';
-}
-
-sub mitch_misc {
-    $author = 'Michael Natterer <mitch@gimp.org>';
-    $copyright = 'Michael Natterer';
-    $date = '2004';
-    $since = '2.2';
-}
-
-sub palette_arg () {{
-    name => 'name',
-    type => 'string',
-    desc => 'The palette name',
-    null_ok => '1'
-}}
-
-sub dim_args () {
-    my @args;
-    foreach (qw(num_colors)) {
-        push @args, { name => $_, type => 'int32', desc => "The palette $_" };
-    }
-    @args;
-}
-
-sub palette_outargs {
-    foreach (@outargs) {
-        my $alias;
-        if ($_->{type} eq 'string') {
-            $alias = "GIMP_OBJECT (palette)->$_->{name}";
-        } else {
-            $alias = "palette->$_->{name}";
-        }
-        $alias = "g_strdup ($alias)" if $_->{type} eq 'string';
-        $alias =~ s/num_colors/n_colors/ if $_->{name} =~ /num_colors/;
-        $_->{alias} = $alias;
-        $_->{no_declare} = 1;
-    }
-}
-
-my $get_palette_from_name = <<'CODE';
-if (name && strlen (name))
-  {
-    palette = (GimpPalette *)
-      gimp_container_get_child_by_name (gimp->palette_factory->container,
-                                        name);
-  }
-else
-  {
-    palette = gimp_context_get_palette (context);
-  }
-CODE
-
-
-# The defs
-
 sub palettes_refresh {
     $blurb = 'Refreshes current palettes. This function always succeeds.';
 
@@ -90,7 +25,7 @@ This procedure retrieves all palettes currently in the user's palette path
 and updates the palette dialogs accordingly.
 HELP
 
-    &adrian_misc;
+    &adrian_pdb_misc('1998');
 
     %invoke = (
         code => 'gimp_data_factory_data_refresh (gimp->palette_factory);'
@@ -105,7 +40,7 @@ This procedure returns a complete listing of available palettes. Each name
 returned can be used as input to the command 'gimp-context-set-palette'.
 HELP
 
-    &rock_misc;
+    &rock_pdb_misc('2001');
 
     @inargs = (
 	{ name => 'filter', type => 'string', null_ok => 1,
@@ -130,11 +65,13 @@ sub palettes_get_palette {
     &std_pdb_deprecated ('gimp-context-get-palette');
 
     @outargs = (
-        &palette_arg,
-        &dim_args,
+	{ name => 'name', type => 'string', no_declare => 1,
+	  desc => 'The palette name', null_ok => '1',
+	  alias => 'g_strdup (GIMP_OBJECT (palette)->name)' },
+	{ name => 'num_colors', type => 'int32', no_declare => 1,
+	  desc => 'The palette num_colors',
+	  alias => 'palette->n_colors' }
     );
-
-    &palette_outargs;
 
     %invoke = (
         vars => [ 'GimpPalette *palette' ],
@@ -146,27 +83,38 @@ sub palettes_get_palette_entry {
     &std_pdb_deprecated ('gimp-palette-entry-get-color');
 
     @inargs = (
-        &palette_arg,
+	{ name => 'name', type => 'string',
+	  desc => 'The palette name ("" means currently active palette)',
+	  null_ok => '1' },
         { name => 'entry_num', type => 'int32',
           desc => 'The entry to retrieve' }
     );
-    $inargs[0]->{desc} = 'The palette name ("" means currently active palette)';
 
     @outargs = (
-        &palette_arg,
-        &dim_args,
+	{ name => 'name', type => 'string', no_declare => 1,
+	  desc => 'The palette name', null_ok => '1',
+	  alias => 'g_strdup (GIMP_OBJECT (palette)->name)' },
+	{ name => 'num_colors', type => 'int32', no_declare => 1,
+	  desc => 'The palette num_colors',
+	  alias => 'palette->n_colors' },
+	{ name => 'color', type => 'color', void_ret => 1,
+	  desc => 'The color requested' }
     );
-
-    &palette_outargs;
-
-    push @outargs, { name => 'color', type => 'color', void_ret => 1,
-                     desc => 'The color requested' };
 
     %invoke = (
 	vars => [ 'GimpPalette *palette = NULL' ],
 	code => <<"CODE"
 {
-  $get_palette_from_name
+  if (name && strlen (name))
+    {
+      palette = (GimpPalette *)
+        gimp_container_get_child_by_name (gimp->palette_factory->container,
+                                          name);
+    }
+  else
+    {
+      palette = gimp_context_get_palette (context);
+    }
 
   if (palette)
     {

@@ -65,7 +65,7 @@ static ProcRecord patterns_refresh_proc =
   "gimp-patterns-refresh",
   "Refresh current patterns. This function always succeeds.",
   "This procedure retrieves all patterns currently in the user's pattern path and updates all pattern dialogs accordingly.",
-  "Michael Natterer",
+  "Michael Natterer <mitch@gimp.org>",
   "Michael Natterer",
   "2002",
   NULL,

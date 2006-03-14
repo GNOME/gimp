@@ -17,18 +17,11 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub pdb_misc {
-    $author = 'Sven Neumann  <sven@gimp.org>';
-    $copyright = 'Sven Neumann';
-    $date = '2003';
-}
-
 sub fonts_popup {
     $blurb = 'Invokes the Gimp font selection.';
+    $help  = 'This procedure popups the font selection dialog.';
 
-    $help = 'This procedure popups the font selection dialog.';
-
-    &pdb_misc;
+    &neo_pdb_misc('2003');
 
     @inargs = (
 	{ name => 'font_callback', type => 'string',
@@ -57,10 +50,9 @@ CODE
 
 sub fonts_close_popup {
     $blurb = 'Popdown the Gimp font selection.';
+    $help  = 'This procedure closes an opened font selection dialog.';
 
-    $help = 'This procedure closes an opened font selection dialog.';
-
-    &pdb_misc;
+    &neo_pdb_misc('2003');
 
     @inargs = (
 	{ name => 'font_callback', type => 'string',
@@ -81,10 +73,9 @@ CODE
 
 sub fonts_set_popup {
     $blurb = 'Sets the current font selection in a popup.';
+    $help  = $blurb;
 
-    $help = $blurb;
-
-    &pdb_misc;
+    &neo_pdb_misc('2003');
 
     @inargs = (
 	{ name => 'font_callback', type => 'string',

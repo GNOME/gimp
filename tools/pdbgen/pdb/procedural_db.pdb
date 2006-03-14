@@ -17,32 +17,6 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub proc_name_arg () {{
-    name  => 'procedure',
-    type  => 'string',
-    desc  => 'The procedure name',
-    alias => 'proc_name'
-}}
-
-sub data_ident_arg () {{
-    name => 'identifier',
-    type => 'string',
-    desc => 'The identifier associated with data'
-}}
-
-sub data_bytes_arg () {{
-    name => 'bytes',
-    type => '0 < int32',
-    desc => 'The number of bytes in the data',
-}}
-
-sub data_arg () {{
-    name  => 'data',
-    type  => 'int8array',
-    desc  => 'A byte array containing data',
-    array => &data_bytes_arg
-}}
-
 sub arg_info_proc {
     my ($type, $long_type, $real_type) = @_;
 
@@ -60,7 +34,8 @@ HELP
     $date = '1997';
 
     @inargs = (
-	&proc_name_arg,
+	{ name  => 'procedure', type  => 'string',
+	  desc  => 'The procedure name', alias => 'proc_name' },
 	{ name => "${type}_num", type => 'int32',
 	  desc => "The $long_type number" }
     );
@@ -119,8 +94,7 @@ unique. It is mainly used by the interactive popup dialogs to generate a PDB
 entry name.
 HELP
 
-    $author = $copyright = 'Andy Thomas';
-    $date = '1998';
+    &andy_pdb_misc('1998');
 
     @outargs = (
 	{ name => 'temp_name', type => 'string',
@@ -128,9 +102,12 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'static gint proc_number = 0' ],
 	code => <<'CODE'
-temp_name = g_strdup_printf ("temp-procedure-number-%d", proc_number++);
+{
+  static gint proc_number = 0;
+
+  temp_name = g_strdup_printf ("temp-procedure-number-%d", proc_number++);
+}
 CODE
     );
 }
@@ -233,7 +210,10 @@ HELP
     &std_pdb_misc;
     $date = '1997';
 
-    @inargs = ( &proc_name_arg );
+    @inargs = (
+	{ name  => 'procedure', type  => 'string',
+	  desc  => 'The procedure name', alias => 'proc_name' }
+    );
 
     @outargs = (
 	{ name => 'blurb', type => 'string', void_ret => 1, wrap => 1,
@@ -295,19 +275,24 @@ HELP
     &std_pdb_misc;
     $date = '1997';
 
-    @inargs = ( &data_ident_arg );
+    @inargs = (
+	{ name => 'identifier', type => 'string',
+	  desc => 'The identifier associated with data' }
+    );
 
-    @outargs = ( &data_arg );
-    $outargs[0]->{alias} = 'data_copy';
-    $outargs[0]->{init} = 1;
-    $outargs[0]->{wrap} = 1;
-    $outargs[0]->{void_ret} = 1;
+    @outargs = (
+	{ name  => 'data', type  => 'int8array',
+	  desc  => 'A byte array containing data', wrap => 1, init => 1,
+	  alias => 'data_copy', void_ret => 1,
+	  array => { name => 'bytes', type => '0 < int32',
+		     desc => 'The number of bytes in the data' } }
+    );
 
     %invoke = (
-	vars => [ 'const guint8 *data' ],
 	code => <<'CODE'
 {
-  gchar *canonical;
+  const guint8 *data;
+  gchar        *canonical;
 
   canonical = gimp_canonicalize_identifier (identifier);
 
@@ -332,18 +317,23 @@ the specified identifier. If no data has been associated with the identifier,
 an error is returned.
 HELP
 
-    $author = $copyright = 'Nick Lamb';
-    $date = '1998';
+    &nick_pdb_misc('1998');
 
-    @inargs = ( &data_ident_arg );
+    @inargs = (
+	{ name => 'identifier', type => 'string',
+	  desc => 'The identifier associated with data' }
+    );
 
-    @outargs = ( &data_bytes_arg );
+    @outargs = (
+	{ name => 'bytes', type => '0 < int32',
+	  desc => 'The number of bytes in the data' }
+    );
 
     %invoke = (
-	vars => [ 'const guint8 *data' ],
 	code => <<'CODE'
 {
-  gchar *canonical;
+  const guint8 *data;
+  gchar        *canonical;
 
   canonical = gimp_canonicalize_identifier (identifier);
 
@@ -369,9 +359,14 @@ HELP
     &std_pdb_misc;
     $date = '1997';
 
-    @inargs = ( &data_ident_arg, &data_arg );
-    $inargs[1]->{wrap} = 1;
-    delete @{$inargs[1]->{array}}{qw(alias no_declare)};
+    @inargs = (
+	{ name => 'identifier', type => 'string',
+	  desc => 'The identifier associated with data' },
+	{ name  => 'data', type  => 'int8array',
+	  desc  => 'A byte array containing data', wrap => 1,
+	  array => { name => 'bytes', type => '0 < int32',
+		     desc => 'The number of bytes in the data' } }
+    );
 
     %invoke = (
 	code => <<'CODE'

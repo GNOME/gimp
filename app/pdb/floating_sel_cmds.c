@@ -221,10 +221,10 @@ floating_sel_attach_invoker (Gimp         *gimp,
 
   if (success)
     {
-      success = gimp_item_is_attached (GIMP_ITEM (drawable));
-
-      if (success)
+      if (gimp_item_is_attached (GIMP_ITEM (drawable)))
         floating_sel_attach (layer, drawable);
+      else
+        success = FALSE;
     }
 
   return procedural_db_return_args (&floating_sel_attach_proc, success);

@@ -2526,7 +2526,7 @@ static ProcRecord drawable_sub_thumbnail_proc =
   "Get a thumbnail of a sub-area of a drawable drawable.",
   "This function gets data from which a thumbnail of a drawable preview can be created. Maximum x or y dimension is 512 pixels. The pixels are returned in RGB[A] or GRAY[A] format. The bpp return value gives the number of bytes in the image.",
   "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer",
   "2004",
   NULL,
   GIMP_INTERNAL,

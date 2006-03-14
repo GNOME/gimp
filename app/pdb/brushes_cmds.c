@@ -171,7 +171,7 @@ brushes_get_brush_invoker (Gimp         *gimp,
       return_args[1].value.pdb_pointer = g_strdup (GIMP_OBJECT (brush)->name);
       return_args[2].value.pdb_int = brush->mask->width;
       return_args[3].value.pdb_int = brush->mask->height;
-      return_args[4].value.pdb_int = brush->spacing;
+      return_args[4].value.pdb_int = gimp_brush_get_spacing (brush);
     }
 
   return return_args;
@@ -350,7 +350,7 @@ brushes_get_brush_data_invoker (Gimp         *gimp,
     {
       return_args[1].value.pdb_pointer = g_strdup (GIMP_OBJECT (brush)->name);
       return_args[2].value.pdb_float = 1.0;
-      return_args[3].value.pdb_int = brush->spacing;
+      return_args[3].value.pdb_int = gimp_brush_get_spacing (brush);
       return_args[4].value.pdb_int = 0;
       return_args[5].value.pdb_int = brush->mask->width;
       return_args[6].value.pdb_int = brush->mask->height;

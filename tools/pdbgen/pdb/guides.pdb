@@ -17,10 +17,6 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub pdb_misc {
-    $author = $copyright = 'Adam D. Moss';
-    $date = '1998';
-}
 
 sub image_add_guide {
     my ($desc, $type, $max, $pos) = @_;
@@ -33,7 +29,7 @@ $type-position of the new guide as parameters. It returns the guide ID of the
 new guide.
 HELP
 
-    &pdb_misc;
+    &adam_pdb_misc('1998');
 
     @inargs = (
 	&std_image_arg,
@@ -83,7 +79,7 @@ This procedure takes an image and a guide ID as input and removes the specified
 guide from the specified image.
 HELP
 
-    &pdb_misc;
+    &adam_pdb_misc('1998');
 
     @inargs = (
 	&std_image_arg,
@@ -115,7 +111,7 @@ guide ID is 0, the procedure will return the first Guide. The procedure will
 return 0 if given the final guide ID as an argument or the image has no guides.
 HELP
 
-    &pdb_misc;
+    &adam_pdb_misc('1998');
 
     @inargs = (
 	&std_image_arg,
@@ -148,7 +144,7 @@ This procedure takes an image and a guide ID as input and returns the
 orientations of the guide.
 HELP
 
-    &pdb_misc;
+    &adam_pdb_misc('1998');
 
     @inargs = (
 	&std_image_arg,
@@ -184,7 +180,7 @@ This procedure takes an image and a guide ID as input and returns the position
 of the guide relative to the top or left of the image.
 HELP
 
-    &pdb_misc;
+    &adam_pdb_misc('1998');
 
     @inargs = (
 	&std_image_arg,

@@ -408,7 +408,7 @@ gimp_vectors_set_tattoo (gint32 vectors_ID,
  * @stroke_id: The stroke ID.
  * @prescision: The prescision used for the approximation.
  *
- * measures the length of the given stroke.
+ * Measure the length of the given stroke.
  *
  * Measure the length of the given stroke.
  *

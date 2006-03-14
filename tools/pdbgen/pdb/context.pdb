@@ -24,13 +24,6 @@ sub pdb_misc {
    $since = '2.2';
 }
 
-sub mitch_misc {
-   $author = 'Michael Natterer <mitch@gimp.org>';
-   $copyright = 'Michael Natterer';
-   $date = '2005';
-   $since = '2.4';
-}
-
 sub context_push {
     $blurb = 'Pushes a context to the top of the plug-in\'s context stack.';
 
@@ -92,7 +85,7 @@ sub context_get_paint_method {
 This procedure returns the name of the currently active paint method.
 HELP
 
-    &mitch_misc;
+    &mitch_pdb_misc('2005', '2.4');
 
     @outargs = (
 	{ name  => 'name', type  => 'string',
@@ -119,7 +112,7 @@ method becomes active and will be used in all subsequent paint
 operations.
 HELP
 
-    &mitch_misc;
+    &mitch_pdb_misc('2005', '2.4');
 
     @inargs = (
         { name => 'name', type => 'string',

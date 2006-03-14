@@ -1,3 +1,25 @@
+2006-03-14  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/*.pdb: remove lots of perl crack:
+	- create almost	all parameter arrays manually instead of
+	  generating them from utility functions
+	- removed lots of other utility functions
+	- moved variable declarations into the enclosed code snippets
+	  where possible
+	- some cleanup and API doc fixes
+
+	* tools/pdbgen/stddefs.pdb: added some perl crack:
+	define utility functions for all contributors which own more than
+	some functions, so they can change their names and email addresses
+	at a central place.
+
+	* app/pdb/[many].c: regenerated.
+
+	* libgimp/gimpcolor_pdb.c
+	* libgimp/gimpdrawabletransform_pdb.c
+	* libgimp/gimptransformtools_pdb.c
+	* libgimp/gimpvectors_pdb.c: ditto. Changed affect only API docs.
+
 2006-03-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage-guides.[ch]: added gimp_image_get_guide() and

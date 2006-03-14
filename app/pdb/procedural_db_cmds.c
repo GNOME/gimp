@@ -64,6 +64,7 @@ procedural_db_temp_name_invoker (Gimp         *gimp,
 {
   Argument *return_args;
   gchar *temp_name;
+
   static gint proc_number = 0;
 
   temp_name = g_strdup_printf ("temp-procedure-number-%d", proc_number++);
@@ -636,7 +637,6 @@ procedural_db_get_data_invoker (Gimp         *gimp,
   gchar *identifier;
   gint32 bytes;
   guint8 *data_copy = NULL;
-  const guint8 *data;
 
   identifier = (gchar *) args[0].value.pdb_pointer;
   if (identifier == NULL || !g_utf8_validate (identifier, -1, NULL))
@@ -644,7 +644,8 @@ procedural_db_get_data_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gchar *canonical;
+      const guint8 *data;
+      gchar        *canonical;
 
       canonical = gimp_canonicalize_identifier (identifier);
 
@@ -719,7 +720,6 @@ procedural_db_get_data_size_invoker (Gimp         *gimp,
   Argument *return_args;
   gchar *identifier;
   gint32 bytes;
-  const guint8 *data;
 
   identifier = (gchar *) args[0].value.pdb_pointer;
   if (identifier == NULL || !g_utf8_validate (identifier, -1, NULL))
@@ -727,7 +727,8 @@ procedural_db_get_data_size_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gchar *canonical;
+      const guint8 *data;
+      gchar        *canonical;
 
       canonical = gimp_canonicalize_identifier (identifier);
 

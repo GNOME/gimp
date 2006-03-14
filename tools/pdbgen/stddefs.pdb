@@ -22,6 +22,110 @@ sub std_pdb_misc {
     $date   = '1995-1996';
 }
 
+sub contrib_pdb_misc {
+    my $a = shift;
+    my $e = shift;
+    my $d = shift;
+    my $s = shift;
+
+    if ($e eq '') {
+        $author = "$a";
+    } else {
+	$author = "$a <$e>";
+    }
+
+    $copyright = "$a";
+    $date = "$d";
+
+    if ($s) {
+	$since = "$s";
+    }
+}
+
+sub adam_pdb_misc {
+    contrib_pdb_misc('Adam D. Moss', '', @_);
+}
+
+sub adrian_pdb_misc {
+    contrib_pdb_misc('Adrian Likins', 'adrian@gimp.org', @_);
+}
+
+sub andy_pdb_misc {
+    contrib_pdb_misc('Andy Thomas', '', @_);
+}
+
+sub austin_pdb_misc {
+    contrib_pdb_misc('Austin Donnelly', '', @_);
+}
+
+sub bill_pdb_misc {
+    contrib_pdb_misc('Bill Skaggs', 'weskaggs@primate.ucdavis.edu', @_);
+}
+
+sub federico_pdb_misc {
+    contrib_pdb_misc('Federico Mena Quintero', '', @_);
+}
+
+sub jay_pdb_misc {
+    contrib_pdb_misc('Jay Cox', '', @_);
+}
+
+sub joao_pdb_misc {
+    contrib_pdb_misc('Jo\xc3\xa3o S. O. Bueno Calligaris', '', @_);
+}
+
+sub josh_pdb_misc {
+    contrib_pdb_misc('Josh MacDonald', '', @_);
+}
+
+sub larry_pdb_misc {
+    contrib_pdb_misc('Larry Ewing', '', @_);
+}
+
+sub marc_pdb_misc {
+    contrib_pdb_misc('Marc Lehmann', '', @_);
+}
+
+sub mitch_pdb_misc {
+    contrib_pdb_misc('Michael Natterer', 'mitch@gimp.org', @_);
+}
+
+sub neo_pdb_misc {
+    contrib_pdb_misc('Sven Neumann', 'sven@gimp.org', @_);
+}
+
+sub nick_pdb_misc {
+    contrib_pdb_misc('Nick Lamb', '', @_);
+}
+
+sub raphael_pdb_misc {
+    contrib_pdb_misc('Raphael Quinet', '', @_);
+}
+
+sub rock_pdb_misc {
+    contrib_pdb_misc('Nathan Summers', 'rock@gimp.org', @_);
+}
+
+sub seth_pdb_misc {
+    contrib_pdb_misc('Seth Burgess', '', @_);
+}
+
+sub shlomi_pdb_misc {
+    contrib_pdb_misc('Shlomi Fish', 'shlomif@iglu.org.il', @_);
+}
+
+sub simon_pdb_misc {
+    contrib_pdb_misc('Simon Budig', '', @_);
+}
+
+sub wolfgang_pdb_misc {
+    contrib_pdb_misc('Wolfgang Hofer', '', @_);
+}
+
+sub yosh_pdb_misc {
+    contrib_pdb_misc('Manish Singh', '', @_);
+}
+
 sub std_pdb_deprecated {
     if (@_) {
         $blurb = $help = "This procedure is deprecated! Use '@_' instead.";

@@ -145,7 +145,6 @@ palette_duplicate_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   gchar *name;
-  GimpPalette *palette = NULL;
   GimpPalette *palette_copy = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
@@ -154,7 +153,7 @@ palette_duplicate_invoker (Gimp         *gimp,
 
   if (success)
     {
-      palette = (GimpPalette *)
+      GimpPalette *palette = (GimpPalette *)
         gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
       if (palette)
@@ -182,7 +181,7 @@ static ProcArg palette_duplicate_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The palette name."
+    "The palette name"
   }
 };
 
@@ -257,7 +256,7 @@ static ProcArg palette_rename_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The palette name."
+    "The palette name"
   },
   {
     GIMP_PDB_STRING,
@@ -301,7 +300,6 @@ palette_delete_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   gchar *name;
-  GimpPalette *palette = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -309,7 +307,7 @@ palette_delete_invoker (Gimp         *gimp,
 
   if (success)
     {
-      palette = (GimpPalette *)
+      GimpPalette *palette = (GimpPalette *)
         gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
       if (palette && GIMP_DATA (palette)->deletable)
@@ -338,7 +336,7 @@ static ProcArg palette_delete_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The palette name."
+    "The palette name"
   }
 };
 
@@ -399,7 +397,7 @@ static ProcArg palette_is_editable_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The palette name."
+    "The palette name"
   }
 };
 
@@ -418,7 +416,7 @@ static ProcRecord palette_is_editable_proc =
   "gimp-palette-is-editable",
   "Tests if palette can be edited",
   "Returns True if you have permission to change the palette",
-  "Bill Skaggs <weskaggs@primate.ucdavis.edu",
+  "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
   "Bill Skaggs",
   "2004",
   NULL,
@@ -466,7 +464,7 @@ static ProcArg palette_get_info_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The palette name."
+    "The palette name"
   }
 };
 
@@ -533,7 +531,7 @@ static ProcArg palette_get_columns_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The palette name."
+    "The palette name"
   }
 };
 
@@ -573,7 +571,6 @@ palette_set_columns_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   gchar *name;
   gint32 columns;
-  GimpPalette *palette = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -585,7 +582,7 @@ palette_set_columns_invoker (Gimp         *gimp,
 
   if (success)
     {
-      palette = (GimpPalette *)
+      GimpPalette *palette = (GimpPalette *)
         gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
       if (palette && GIMP_DATA (palette)->writable)
@@ -602,7 +599,7 @@ static ProcArg palette_set_columns_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The palette name."
+    "The palette name"
   },
   {
     GIMP_PDB_INT32,
@@ -640,7 +637,6 @@ palette_add_entry_invoker (Gimp         *gimp,
   gchar *name;
   gchar *entry_name;
   GimpRGB color;
-  GimpPalette *palette = NULL;
   GimpPaletteEntry *entry = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
@@ -655,7 +651,7 @@ palette_add_entry_invoker (Gimp         *gimp,
 
   if (success)
     {
-      palette = (GimpPalette *)
+      GimpPalette *palette = (GimpPalette *)
         gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
       if (palette && GIMP_DATA (palette)->writable)
@@ -677,7 +673,7 @@ static ProcArg palette_add_entry_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The palette name."
+    "The palette name"
   },
   {
     GIMP_PDB_STRING,
@@ -727,8 +723,6 @@ palette_delete_entry_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   gchar *name;
   gint32 entry_num;
-  GimpPalette *palette = NULL;
-  GimpPaletteEntry *entry = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -738,14 +732,14 @@ palette_delete_entry_invoker (Gimp         *gimp,
 
   if (success)
     {
-      palette = (GimpPalette *)
+      GimpPalette *palette = (GimpPalette *)
         gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
       if (palette && GIMP_DATA (palette)->writable)
         {
           if (entry_num >= 0 && entry_num < palette->n_colors)
             {
-              entry = g_list_nth_data (palette->colors, entry_num);
+              GimpPaletteEntry *entry = g_list_nth_data (palette->colors, entry_num);
 
               gimp_palette_delete_entry (palette, entry);
             }
@@ -764,7 +758,7 @@ static ProcArg palette_delete_entry_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The palette name."
+    "The palette name"
   },
   {
     GIMP_PDB_INT32,
@@ -802,8 +796,6 @@ palette_entry_get_color_invoker (Gimp         *gimp,
   gchar *name;
   gint32 entry_num;
   GimpRGB color;
-  GimpPalette *palette = NULL;
-  GimpPaletteEntry *entry = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -813,14 +805,14 @@ palette_entry_get_color_invoker (Gimp         *gimp,
 
   if (success)
     {
-      palette = (GimpPalette *)
+      GimpPalette *palette = (GimpPalette *)
         gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
       if (palette)
         {
           if (entry_num >= 0 && entry_num < palette->n_colors)
             {
-              entry = g_list_nth_data (palette->colors, entry_num);
+              GimpPaletteEntry *entry = g_list_nth_data (palette->colors, entry_num);
 
               color = entry->color;
             }
@@ -844,7 +836,7 @@ static ProcArg palette_entry_get_color_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The palette name."
+    "The palette name"
   },
   {
     GIMP_PDB_INT32,
@@ -890,8 +882,6 @@ palette_entry_set_color_invoker (Gimp         *gimp,
   gchar *name;
   gint32 entry_num;
   GimpRGB color;
-  GimpPalette *palette = NULL;
-  GimpPaletteEntry *entry = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -903,14 +893,14 @@ palette_entry_set_color_invoker (Gimp         *gimp,
 
   if (success)
     {
-      palette = (GimpPalette *)
+      GimpPalette *palette = (GimpPalette *)
         gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
       if (palette && GIMP_DATA (palette)->writable)
         {
           if (entry_num >= 0 && entry_num < palette->n_colors)
             {
-              entry = g_list_nth_data (palette->colors, entry_num);
+              GimpPaletteEntry *entry = g_list_nth_data (palette->colors, entry_num);
 
               entry->color = color;
 
@@ -931,7 +921,7 @@ static ProcArg palette_entry_set_color_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The palette name."
+    "The palette name"
   },
   {
     GIMP_PDB_INT32,
@@ -973,7 +963,6 @@ palette_entry_get_name_invoker (Gimp         *gimp,
   Argument *return_args;
   gchar *name;
   gint32 entry_num;
-  GimpPalette *palette = NULL;
   GimpPaletteEntry *entry = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
@@ -984,7 +973,7 @@ palette_entry_get_name_invoker (Gimp         *gimp,
 
   if (success)
     {
-      palette = (GimpPalette *)
+      GimpPalette *palette = (GimpPalette *)
         gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
       if (palette)
@@ -1011,7 +1000,7 @@ static ProcArg palette_entry_get_name_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The palette name."
+    "The palette name"
   },
   {
     GIMP_PDB_INT32,
@@ -1057,8 +1046,6 @@ palette_entry_set_name_invoker (Gimp         *gimp,
   gchar *name;
   gint32 entry_num;
   gchar *entry_name;
-  GimpPalette *palette = NULL;
-  GimpPaletteEntry *entry = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -1072,14 +1059,14 @@ palette_entry_set_name_invoker (Gimp         *gimp,
 
   if (success)
     {
-      palette = (GimpPalette *)
+      GimpPalette *palette = (GimpPalette *)
         gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
       if (palette && GIMP_DATA (palette)->writable)
         {
           if (entry_num >= 0 && entry_num < palette->n_colors)
             {
-              entry = g_list_nth_data (palette->colors, entry_num);
+              GimpPaletteEntry *entry = g_list_nth_data (palette->colors, entry_num);
 
               g_free (entry->name);
               entry->name = g_strdup (entry_name);
@@ -1101,7 +1088,7 @@ static ProcArg palette_entry_set_name_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The palette name."
+    "The palette name"
   },
   {
     GIMP_PDB_INT32,

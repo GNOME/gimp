@@ -226,15 +226,15 @@ palettes_get_palette_entry_invoker (Gimp         *gimp,
   if (success)
     {
       if (name && strlen (name))
-      {
-        palette = (GimpPalette *)
-          gimp_container_get_child_by_name (gimp->palette_factory->container,
-                                            name);
-      }
-    else
-      {
-        palette = gimp_context_get_palette (context);
-      }
+        {
+          palette = (GimpPalette *)
+            gimp_container_get_child_by_name (gimp->palette_factory->container,
+                                              name);
+        }
+      else
+        {
+          palette = gimp_context_get_palette (context);
+        }
 
       if (palette)
         {

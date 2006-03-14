@@ -17,32 +17,14 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub channel_arg () {{
-    name => 'channel',
-    type => 'channel',
-    desc => 'The channel'
-}}
-
-sub operation_arg () {{
-    name => 'operation',
-    type => 'enum GimpChannelOps',
-    desc => 'The selection operation: { %%desc%% }'
-}}
-
-sub coord_args {
-    my ($name, $desc, $args) = @_;
-    foreach (qw(x y)) {
-	push @$args, { name => eval qq/"$name"/, type => 'int32',
-		       desc => eval qq/"$desc"/ }
-    }
-}
-
 sub selection_simple_proc {
     my $op = shift;
 
     &std_pdb_misc;
 
-    @inargs = ( &std_image_arg );
+    @inargs = (
+	&std_image_arg
+    );
 
     %invoke = ( code => "gimp_channel_$op (gimp_image_get_mask (gimage), TRUE);" );
 }
@@ -51,8 +33,7 @@ sub selection_change_proc {
     my ($op, $arg, $type, $edge_lock) = @_;
 
     $blurb = "\u$op the image's selection";
-
-    $help = "This procedure ${op}s the selection. ";
+    $help  = "This procedure ${op}s the selection. ";
 
     &std_pdb_misc;
 
@@ -82,20 +63,22 @@ HELP
 
     &std_pdb_misc;
 
-    @inargs = ( &std_image_arg );
+    @inargs = (
+	&std_image_arg
+    );
 
     @outargs = (
 	{ name => 'non_empty', type => 'boolean', void_ret => 1,
-	  desc => 'True if there is a selection', init => 1 }
+	  desc => 'True if there is a selection', init => 1 },
+	{ name => 'x1', type => 'int32',
+	  desc => 'x coordinate of upper left corner of selection bounds' },
+	{ name => 'y1', type => 'int32',
+	  desc => 'y coordinate of upper left corner of selection bounds' },
+	{ name => 'x2', type => 'int32',
+	  desc => 'x coordinate of lower right corner of selection bounds' },
+	{ name => 'y2', type => 'int32',
+	  desc => 'y coordinate of lower right corner of selection bounds' }
     );
-
-    my $count = 1;
-    foreach ('upper left', 'lower right') {
-	&coord_args("\${_}$count",
-		    "\$_ coordinate of $_ corner of selection bounds",
-		    \@outargs);
-	$count++;
-    }
 
     %invoke = (
 	code => 'non_empty = gimp_channel_bounds (gimp_image_get_mask (gimage), &x1, &y1, &x2, &y2);'
@@ -112,8 +95,13 @@ HELP
 
     &std_pdb_misc;
 
-    @inargs = ( &std_image_arg );
-    &coord_args('$_', '$_ coordinate of value', \@inargs);
+    @inargs = (
+	&std_image_arg,
+	{ name => 'x', type => 'int32',
+	  desc => 'x coordinate of value' },
+	{ name => 'y', type => 'int32',
+	  desc => 'y coordinate of value' }
+    );
 
     @outargs = (
 	{ name => 'value', type => '0 <= int32 <= 255',
@@ -133,7 +121,9 @@ HELP
 
     &std_pdb_misc;
 
-    @inargs = ( &std_image_arg);
+    @inargs = (
+	&std_image_arg
+    );
 
     @outargs = (
 	{ name => 'is_empty', type => 'boolean',
@@ -155,8 +145,13 @@ HELP
 
     &std_pdb_misc;
 
-    @inargs = ( &std_image_arg );
-    &coord_args('off$_', '$_ offset for translation', \@inargs);
+    @inargs = (
+	&std_image_arg,
+	{ name => 'offx', type => 'int32',
+	  desc => 'x offset for translation' },
+	{ name => 'offy', type => 'int32',
+	  desc => 'y offset for translation' }
+    );
 
     %invoke = ( code => 'gimp_item_translate (GIMP_ITEM (gimp_image_get_mask (gimage)), offx, offy, TRUE);' );
 }
@@ -178,9 +173,12 @@ HELP
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
-	  desc => 'The drawable from which to float selection' }
+	  desc => 'The drawable from which to float selection' },
+	{ name => 'offx', type => 'int32',
+	  desc => 'x offset for translation' },
+	{ name => 'offy', type => 'int32',
+	  desc => 'y offset for translation' }
     );
-    &coord_args('off$_', '$_ offset for translation', \@inargs);
 
     @outargs = (
 	{ name => 'layer', type => 'layer', wrap => 1,
@@ -250,7 +248,9 @@ HELP
 
     &std_pdb_misc;
 
-    @inargs = ( &std_image_arg );
+    @inargs = (
+	&std_image_arg
+    );
 
     %invoke = ( code => "gimp_channel_clear (gimp_image_get_mask (gimage), NULL, TRUE);" );
 }
@@ -309,10 +309,10 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'GimpImage *gimage' ],
 	code => <<'CODE'
 {
-  gimage = gimp_item_get_image (GIMP_ITEM (layer));
+  GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (layer));
+
   gimp_channel_select_alpha (gimp_image_get_mask (gimage),
                              GIMP_DRAWABLE (layer),
                              GIMP_CHANNEL_OP_REPLACE, FALSE, 0.0, 0.0);
@@ -330,7 +330,10 @@ HELP
 
     &std_pdb_misc;
 
-    @inargs = ( &channel_arg );
+    @inargs = (
+	{ name => 'channel', type => 'channel',
+	  desc => 'The channel' }
+    );
 
     %invoke = (
 	code => <<'CODE'
@@ -361,7 +364,12 @@ HELP
 
     &std_pdb_misc;
 
-    @inargs = ( &channel_arg, &operation_arg );
+    @inargs = (
+	{ name => 'channel', type => 'channel',
+	  desc => 'The channel' },
+	{ name => 'operation', type => 'enum GimpChannelOps',
+	  desc => 'The selection operation: { %%desc%% }' }
+    );
 
     %invoke = (
 	code => <<'CODE'
@@ -394,7 +402,9 @@ HELP
 
     &std_pdb_misc;
 
-    @inargs = ( &std_image_arg );
+    @inargs = (
+	&std_image_arg
+    );
 
     @outargs = (
 	{ name => 'channel', type => 'channel',

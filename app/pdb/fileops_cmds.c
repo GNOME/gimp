@@ -92,10 +92,11 @@ file_load_invoker (Gimp         *gimp,
 {
   Argument *new_args;
   Argument *return_vals;
-  PlugInProcDef *file_proc;
+
+  PlugInProcDef    *file_proc;
   const ProcRecord *proc;
-  gchar *uri;
-  gint i;
+  gchar            *uri;
+  gint              i;
 
   uri = file_utils_filename_to_uri (gimp->load_procs, (gchar *) args[1].value.pdb_pointer, NULL);
 
@@ -185,8 +186,6 @@ file_load_layer_invoker (Gimp         *gimp,
   GimpImage *image;
   gchar *filename;
   GimpLayer *layer = NULL;
-  GimpPDBStatusType status;
-  gchar *uri;
 
   run_mode = args[0].value.pdb_int;
   if (run_mode < GIMP_RUN_INTERACTIVE || run_mode > GIMP_RUN_NONINTERACTIVE)
@@ -202,6 +201,9 @@ file_load_layer_invoker (Gimp         *gimp,
 
   if (success)
     {
+      GimpPDBStatusType  status;
+      gchar             *uri;
+
       uri = file_utils_filename_to_uri (gimp->load_procs, filename, NULL);
       if (! uri)
         success = FALSE;
@@ -255,7 +257,7 @@ static ProcRecord file_load_layer_proc =
   "gimp-file-load-layer",
   "Loads an image file as a layer into an already opened image.",
   "This procedure behaves like the file-load procedure but opens the specified image as a layer into an already opened image.",
-  "Sven Neumann",
+  "Sven Neumann <sven@gimp.org>",
   "Sven Neumann",
   "2005",
   NULL,
@@ -280,9 +282,6 @@ file_load_thumbnail_invoker (Gimp         *gimp,
   gint32 height = 0;
   gint32 num_bytes = 0;
   guint8 *thumb_data = NULL;
-  gchar *uri;
-  GimpThumbnail *thumbnail = NULL;
-  GdkPixbuf *pixbuf = NULL;
 
   filename = (gchar *) args[0].value.pdb_pointer;
   if (filename == NULL)
@@ -290,6 +289,10 @@ file_load_thumbnail_invoker (Gimp         *gimp,
 
   if (success)
     {
+      GimpThumbnail *thumbnail = NULL;
+      GdkPixbuf     *pixbuf    = NULL;
+      gchar         *uri;
+
       uri = g_filename_to_uri (filename, NULL, NULL);
 
       if (uri)
@@ -409,10 +412,11 @@ file_save_invoker (Gimp         *gimp,
 {
   Argument *new_args;
   Argument *return_vals;
-  PlugInProcDef *file_proc;
+
+  PlugInProcDef    *file_proc;
   const ProcRecord *proc;
-  gchar *uri;
-  gint i;
+  gchar            *uri;
+  gint              i;
 
   uri = file_utils_filename_to_uri (gimp->load_procs, (gchar *) args[3].value.pdb_pointer, NULL);
 
@@ -500,9 +504,6 @@ file_save_thumbnail_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   GimpImage *gimage;
   gchar *filename;
-  GimpImagefile *imagefile;
-  gchar *uri;
-  const gchar *image_uri;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -514,13 +515,15 @@ file_save_thumbnail_invoker (Gimp         *gimp,
 
   if (success)
     {
-      image_uri = gimp_object_get_name (GIMP_OBJECT (gimage));
+      const gchar *image_uri = gimp_object_get_name (GIMP_OBJECT (gimage));
+
       if (! image_uri)
         success = FALSE;
 
       if (success)
         {
-          uri = g_filename_to_uri (filename, NULL, NULL);
+          gchar *uri = g_filename_to_uri (filename, NULL, NULL);
+
           if (! uri)
             success = FALSE;
 
@@ -531,6 +534,8 @@ file_save_thumbnail_invoker (Gimp         *gimp,
 
               if (success)
                 {
+                  GimpImagefile *imagefile;
+
                   imagefile = gimp_imagefile_new (gimp, uri);
                   success = gimp_imagefile_save_thumbnail (imagefile, NULL, gimage);
                   g_object_unref (imagefile);
@@ -586,10 +591,6 @@ temp_name_invoker (Gimp         *gimp,
   Argument *return_args;
   gchar *extension;
   gchar *name = NULL;
-  static gint id = 0;
-  static gint pid;
-  gchar *filename;
-  gchar *path;
 
   extension = (gchar *) args[0].value.pdb_pointer;
   if (extension == NULL)
@@ -597,6 +598,11 @@ temp_name_invoker (Gimp         *gimp,
 
   if (success)
     {
+      static gint  id = 0;
+      static gint  pid;
+      gchar       *filename;
+      gchar       *path;
+
       if (id == 0)
         pid = getpid ();
 
@@ -667,8 +673,6 @@ register_magic_load_handler_invoker (Gimp         *gimp,
   gchar *extensions;
   gchar *prefixes;
   gchar *magics;
-  ProcRecord *proc;
-  PlugInProcDef *file_proc;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -682,7 +686,9 @@ register_magic_load_handler_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gchar *canonical;
+      ProcRecord    *proc;
+      PlugInProcDef *file_proc;
+      gchar         *canonical;
 
       success = FALSE;
 
@@ -831,8 +837,6 @@ register_save_handler_invoker (Gimp         *gimp,
   gchar *name;
   gchar *extensions;
   gchar *prefixes;
-  ProcRecord *proc;
-  PlugInProcDef *file_proc;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -844,7 +848,9 @@ register_save_handler_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gchar *canonical;
+      ProcRecord    *proc;
+      PlugInProcDef *file_proc;
+      gchar         *canonical;
 
       success = FALSE;
 
@@ -975,7 +981,7 @@ static ProcRecord register_file_handler_mime_proc =
   "gimp-register-file-handler-mime",
   "Associates a MIME type with a file handler procedure.",
   "Registers a MIME type for a file handler procedure. This allows GIMP to determine the MIME type of the file opened or saved using this procedure.",
-  "Sven Neumann",
+  "Sven Neumann <sven@gimp.org>",
   "Sven Neumann",
   "2004",
   NULL,
@@ -1040,7 +1046,7 @@ static ProcRecord register_thumbnail_loader_proc =
   "gimp-register-thumbnail-loader",
   "Associates a thumbnail loader with a file load procedure.",
   "Some file formats allow for embedded thumbnails, other file formats contain a scalable image or provide the image data in different resolutions. A file plug-in for such a format may register a special procedure that allows GIMP to load a thumbnail preview of the image. This procedure is then associated with the standard load procedure using this function.",
-  "Sven Neumann",
+  "Sven Neumann <sven@gimp.org>",
   "Sven Neumann",
   "2004",
   NULL,

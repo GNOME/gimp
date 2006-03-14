@@ -18,36 +18,6 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub pdb_misc {
-    $author = $copyright = 'Josh MacDonald';
-    $date = '1997';
-}
-
-sub list_arg {
-    my ($type, $name, $desc, $example) = @_;
-    push @inargs, { name => $name, type => 'string', no_success => 1,
-		    desc => qq/comma separated list of $desc this handler
-			       can $type (i.e. "$example")/ }
-}
-
-sub handler_args {
-    my $type = shift;
-
-    my $action = $type;
-    $action =~ s/e$//;
-    $action .= 'ing';
-
-    push @inargs, { name => 'procedure_name', type => 'string',
-		    desc => "The name of the procedure to be used for $action",
-		    alias => 'name' };
-
-    foreach ([ 'extensions', 'jpg,jpeg' ], [ 'prefixes', 'http:,ftp:' ]) {
-	&list_arg($type, $_->[0], @$_);
-    }
-}
-
-# The defs
-
 sub file_load {
     $blurb = 'Loads an image file by invoking the right load handler.';
 
@@ -60,7 +30,7 @@ this is that if the user types http://www.xcf/~gimp/ he wants to fetch a URL,
 and the full pathname will not look like a URL."
 HELP
 
-    &pdb_misc;
+    &josh_pdb_misc('1997');
 
     @inargs = (
 	{ name => 'run_mode',
@@ -78,10 +48,13 @@ HELP
     %invoke = (
 	proc => [ 'proc->name', 'new_args' ],
 	args => [ 'new_args', 'return_vals' ],
-	vars => [ 'PlugInProcDef *file_proc', 'const ProcRecord *proc',
-                  'gchar *uri', 'gint i' ],
 	code => <<'CODE'
 {
+  PlugInProcDef    *file_proc;
+  const ProcRecord *proc;
+  gchar            *uri;
+  gint              i;
+
   uri = file_utils_filename_to_uri (gimp->load_procs, %%filename%%, NULL);
 
   if (! uri)
@@ -123,9 +96,7 @@ This procedure behaves like the file-load procedure but opens the specified
 image as a layer into an already opened image.
 HELP
 
-    $author = $copyright = 'Sven Neumann';
-    $date = '2005';
-    $since = '2.4';
+    &neo_pdb_misc('2005', '2.4');
 
     @inargs = (
 	{ name => 'run_mode',
@@ -144,9 +115,11 @@ HELP
 
     %invoke = (
         headers => [ qw("file/file-open.h") ],
-	vars    => [ 'GimpPDBStatusType status', 'gchar *uri' ],
 	code    => <<'CODE'
 {
+  GimpPDBStatusType  status;
+  gchar             *uri;
+
   uri = file_utils_filename_to_uri (gimp->load_procs, filename, NULL);
   if (! uri)
     success = FALSE;
@@ -173,7 +146,7 @@ http://www.xcf/~gimp/ she wants to fetch a URL, and the full pathname will not
 look like a URL.
 HELP
 
-    &pdb_misc;
+    &josh_pdb_misc('1997');
 
     @inargs = (
 	{ name => 'run_mode',
@@ -194,10 +167,13 @@ HELP
 	headers => [ qw(<string.h>) ],
 	proc => [ 'proc->name', 'new_args' ],
 	args => [ 'new_args', 'return_vals' ],
-	vars => [ 'PlugInProcDef *file_proc', 'const ProcRecord *proc',
-                  'gchar *uri', 'gint i' ],
 	code => <<'CODE'
 {
+  PlugInProcDef    *file_proc;
+  const ProcRecord *proc;
+  gchar            *uri;
+  gint              i;
+
   uri = file_utils_filename_to_uri (gimp->load_procs, %%filename%%, NULL);
 
   if (! uri)
@@ -264,11 +240,12 @@ HELP
     );
 
     %invoke = (
-	vars    => [ 'gchar *uri',
-                     'GimpThumbnail *thumbnail = NULL',
-                     'GdkPixbuf *pixbuf = NULL' ],
-	code    => <<'CODE'
+	code => <<'CODE'
 {
+  GimpThumbnail *thumbnail = NULL;
+  GdkPixbuf     *pixbuf    = NULL;
+  gchar         *uri;
+
   uri = g_filename_to_uri (filename, NULL, NULL);
 
   if (uri)
@@ -331,7 +308,7 @@ will fail.  This procedure may become useful if you want to
 explicitely save a thumbnail with a file.
 HELP
 
-    &pdb_misc;
+    &josh_pdb_misc('1997');
 
     @inargs = (
 	&std_image_arg,
@@ -340,17 +317,17 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'GimpImagefile *imagefile', 'gchar *uri',
-                  'const gchar *image_uri' ],
 	code => <<'CODE'
 {
-  image_uri = gimp_object_get_name (GIMP_OBJECT (gimage));
+  const gchar *image_uri = gimp_object_get_name (GIMP_OBJECT (gimage));
+
   if (! image_uri)
     success = FALSE;
 
   if (success)
     {
-      uri = g_filename_to_uri (filename, NULL, NULL);
+      gchar *uri = g_filename_to_uri (filename, NULL, NULL);
+
       if (! uri)
         success = FALSE;
 
@@ -361,6 +338,8 @@ HELP
 
           if (success)
             {
+              GimpImagefile *imagefile;
+
               imagefile = gimp_imagefile_new (gimp, uri);
               success = gimp_imagefile_save_thumbnail (imagefile, NULL, gimage);
               g_object_unref (imagefile);
@@ -381,7 +360,7 @@ sub temp_name {
 Generates a unique filename using the temp path supplied in the user's gimprc.
 HELP
 
-    &pdb_misc;
+    &josh_pdb_misc('1997');
 
     @inargs = (
 	{ name => 'extension', type => 'string', no_validate => 1,
@@ -394,12 +373,14 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw(<process.h>
-	                "config/gimpbaseconfig.h") ],
-	vars => [ 'static gint id = 0', 'static gint pid',
-	          'gchar *filename', 'gchar *path' ],
+	headers => [ qw(<process.h> "config/gimpbaseconfig.h") ],
 	code => <<'CODE'
 {
+  static gint  id = 0;
+  static gint  pid;
+  gchar       *filename;
+  gchar       *path;
+
   if (id == 0)
     pid = getpid ();
 
@@ -428,14 +409,27 @@ HELP
 
     &std_pdb_misc;
 
-    &handler_args('load');
-    &list_arg('load', 'magics', 'magic file information', '0,string,GIF');
+    @inargs = (
+	{ name => 'procedure_name', type => 'string',
+	  desc => 'The name of the procedure to be used for loading',
+	  alias => 'name' },
+	{ name => 'extensions', type => 'string', no_success => 1,
+	  desc => 'comma separated list of extensions this handler
+		   can load (i.e. "jpg,jpeg")' },
+	{ name => 'prefixes', type => 'string', no_success => 1,
+	  desc => 'comma separated list of prefixes this handler
+		   can load (i.e. "http:,ftp:")' },
+	{ name => 'magics', type => 'string', no_success => 1,
+	  desc => 'comma separated list of magic file information
+                   this handler can load (i.e. "0,string,GIF")' }
+    );
 
     %invoke = (
-	vars => [ 'ProcRecord *proc', 'PlugInProcDef *file_proc' ],
 	code => <<'CODE'
 {
-  gchar *canonical;
+  ProcRecord    *proc;
+  PlugInProcDef *file_proc;
+  gchar         *canonical;
 
   success = FALSE;
 
@@ -487,7 +481,17 @@ HELP
 
     &std_pdb_misc;
 
-    &handler_args('load');
+    @inargs = (
+	{ name => 'procedure_name', type => 'string',
+	  desc => 'The name of the procedure to be used for loading',
+	  alias => 'name' },
+	{ name => 'extensions', type => 'string', no_success => 1,
+	  desc => 'comma separated list of extensions this handler
+		   can load (i.e. "jpg,jpeg")' },
+	{ name => 'prefixes', type => 'string', no_success => 1,
+	  desc => 'comma separated list of prefixes this handler
+		   can load (i.e. "http:,ftp:")' }
+    );
 
     %invoke = (
 	pass_through => 'register_magic_load_handler',
@@ -506,13 +510,24 @@ HELP
 
     &std_pdb_misc;
 
-    &handler_args('save');
+    @inargs = (
+	{ name => 'procedure_name', type => 'string',
+	  desc => 'The name of the procedure to be used for saving',
+	  alias => 'name' },
+	{ name => 'extensions', type => 'string', no_success => 1,
+	  desc => 'comma separated list of extensions this handler
+		   can save (i.e. "jpg,jpeg")' },
+	{ name => 'prefixes', type => 'string', no_success => 1,
+	  desc => 'comma separated list of prefixes this handler
+		   can save (i.e. "http:,ftp:")' }
+    );
 
     %invoke = (
-	vars => [ 'ProcRecord *proc', 'PlugInProcDef *file_proc' ],
 	code => <<'CODE'
 {
-  gchar *canonical;
+  ProcRecord    *proc;
+  PlugInProcDef *file_proc;
+  gchar         *canonical;
 
   success = FALSE;
 
@@ -563,9 +578,7 @@ to determine the MIME type of the file opened or saved using this
 procedure.
 HELP
 
-    $author = $copyright = 'Sven Neumann';
-    $date = '2004';
-    $since = '2.2';
+    &neo_pdb_misc('2004', '2.2');
 
     @inargs = (
 	{ name => 'procedure_name', type => 'string', alias => 'name',
@@ -596,9 +609,7 @@ sub register_thumbnail_loader {
 Some file formats allow for embedded thumbnails, other file formats contain a scalable image or provide the image data in different resolutions. A file plug-in for such a format may register a special procedure that allows GIMP to load a thumbnail preview of the image. This procedure is then associated with the standard load procedure using this function.
 HELP
 
-    $author = $copyright = 'Sven Neumann';
-    $date = '2004';
-    $since = '2.2';
+    &neo_pdb_misc('2004', '2.2');
 
     @inargs = (
 	{ name => 'load_proc', type => 'string',

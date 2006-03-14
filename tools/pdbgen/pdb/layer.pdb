@@ -17,12 +17,6 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub layer_arg () {{
-    name => 'layer',
-    type => 'layer',
-    desc => 'The layer'
-}}
-
 sub layer_dim_proc {
     my ($op, $morehelp, @args) = @_;
 
@@ -38,7 +32,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&layer_arg,
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' },
 	{ name => 'new_width', type => '0 < int32',
 	  desc => 'New layer width: (%%desc%%)' },
 	{ name => 'new_height', type => '0 < int32',
@@ -81,7 +76,10 @@ sub layer_get_prop_proc {
 
     &std_pdb_misc;
 
-    @inargs = ( &layer_arg );
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' }
+    );
 
     @outargs = (
 	{ name => $prop, type => $type,
@@ -106,7 +104,8 @@ sub layer_set_prop_proc {
     &std_pdb_misc;
 
     @inargs = (
-	&layer_arg,
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' },
 	{ name => $prop, type => $type,
 	  desc => "The new layer $desc" }
     );
@@ -192,10 +191,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  layer = gimp_layer_new (gimage,
-                          width, height,
-			  type,
-                          name,
+  layer = gimp_layer_new (gimage, width, height, type, name,
 			  opacity / 100.0, mode);
   success = (layer != NULL);
 }
@@ -217,11 +213,11 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&layer_arg,
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer to copy' },
 	{ name => 'add_alpha', type => 'boolean',
 	  desc => 'Add an alpha channel to the copied layer' }
     );
-    $inargs[0]->{desc} .= ' to copy';
 
     @outargs = (
 	{ name => 'layer_copy', type => 'layer', init => 1, wrap => 1,
@@ -251,11 +247,11 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&layer_arg,
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer to which to add the mask' },
  	{ name => 'mask_type', type => 'enum GimpAddMaskType',
 	  desc => 'The type of mask: { %%desc%% }' }
     );
-    $inargs[0]->{desc} .= ' to which to add the mask';
 
     @outargs = (
 	{ name => 'mask', type => 'layer_mask',
@@ -283,11 +279,11 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&layer_arg,
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer to receive the mask' },
 	{ name => 'mask', type => 'layer_mask',
 	  desc => 'The mask to add to the layer' }
     );
-    $inargs[0]->{desc} .= ' to receive the mask';
 
     %invoke = (
 	code => <<'CODE'
@@ -312,13 +308,14 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&layer_arg,
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer from which to remove mask' },
 	{ name => 'mode', type => 'enum GimpMaskApplyMode',
 	  desc => 'Removal mode: { %%desc%% }' }
     );
-    $inargs[0]->{desc} .= ' from which to remove mask';
 
-    %invoke = ( code => <<'CODE'
+    %invoke = (
+	code => <<'CODE'
 {
   success = gimp_item_is_attached (GIMP_ITEM (layer));
 
@@ -361,11 +358,12 @@ This procedure resizes the layer so that it's new width and height are equal to
 the width and height of its image container.
 HELP
 
-    $author = $copyright = 'Manish Singh';
-    $date = '2003';
+    &yosh_pdb_misc('2003');
 
-    @inargs = ( &layer_arg );
-    $inargs[0]->{desc} .= ' to resize';
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer to resize' }
+    );
 
     %invoke = ( code => <<'CODE' );
 {
@@ -390,11 +388,14 @@ HELP
 
     &std_pdb_misc;
 
-    @inargs = ( &layer_arg );
-    foreach (qw(x y)) {
-	push @inargs, { name => "off$_", type => 'int32',
-			desc => "Offset in $_ direction" }
-    }
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' },
+	{ name => 'offx', type => 'int32',
+	  desc => "Offset in x direction" },
+	{ name => 'offy', type => 'int32',
+	  desc => "Offset in y direction" }
+    );
 
     %invoke = ( code => <<'CODE');
 {
@@ -428,7 +429,10 @@ HELP
 
     &std_pdb_misc;
 
-    @inargs = ( &layer_arg );
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' }
+    );
 
     %invoke = ( code => 'gimp_layer_add_alpha (layer);' );
 }
@@ -459,7 +463,10 @@ HELP
 
     &std_pdb_misc;
 
-    @inargs = ( &layer_arg );
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' }
+    );
 
     @outargs = (
 	{ name => 'mask', type => 'channel',
@@ -512,7 +519,10 @@ HELP
 
     &std_pdb_misc;
 
-    @inargs = ( &layer_arg );
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' }
+    );
 
     @outargs = (
 	{ name => 'is_floating_sel', type => 'boolean',

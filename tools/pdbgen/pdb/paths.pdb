@@ -17,13 +17,6 @@
 
 # "Perlized" from C source by Andy Thomas <alt@gimp.org>
 
-sub pdb_misc {
-    $author = $copyright = 'Andy Thomas';
-    $date = '1999';
-}
-
-# The defs
-
 sub path_list {
     $blurb = 'List the paths associated with the passed image.';
 
@@ -31,7 +24,7 @@ sub path_list {
 List the paths associated with the passed image.
 HELP
 
-    &pdb_misc;
+    &andy_pdb_misc('1999');
 
     @inargs = ( &std_image_arg );
     $inargs[0]->{desc} = 'The ID of the image to list the paths from';
@@ -56,7 +49,7 @@ sub path_get_points {
 List the points associated with the named path.
 HELP
 
-    &pdb_misc;
+    &andy_pdb_misc('1999');
 
     @inargs = (
 	&std_image_arg,
@@ -139,7 +132,7 @@ sub path_get_current {
 The name of the current path. Error if no paths.
 HELP
 
-    &pdb_misc;
+    &andy_pdb_misc('1999');
 
     @inargs = ( &std_image_arg );
     $inargs[0]->{desc} = 'The ID of the image to get the current path from.';
@@ -151,10 +144,9 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'GimpVectors *vectors' ],
 	code => <<'CODE'
 {
-  vectors = gimp_image_get_active_vectors (gimage);
+  GimpVectors *vectors = gimp_image_get_active_vectors (gimage);
 
   if (vectors)
     name = g_strdup (gimp_object_get_name (GIMP_OBJECT (vectors)));
@@ -172,7 +164,7 @@ sub path_set_current {
 Sets a named path as the current path.
 HELP
 
-    &pdb_misc;
+    &andy_pdb_misc('1999');
 
     @inargs = (
 	&std_image_arg,
@@ -182,10 +174,9 @@ HELP
     $inargs[0]->{desc} = 'The ID of the image in which a path will become current.';
 
     %invoke = (
-	vars => [ 'GimpVectors *vectors' ],
 	code => <<'CODE'
 {
-  vectors = gimp_image_get_vectors_by_name (gimage, name);
+  GimpVectors *vectors = gimp_image_get_vectors_by_name (gimage, name);
 
   if (vectors)
     gimp_image_set_active_vectors (gimage, vectors);
@@ -203,7 +194,7 @@ sub path_set_points {
 Set the points associated with the named path.
 HELP
 
-    &pdb_misc;
+    &andy_pdb_misc('1999');
 
     @inargs = (
 	&std_image_arg,
@@ -244,9 +235,10 @@ HELP
     $inargs[0]->{desc} = 'The ID of the image to set the paths in.';
 
     %invoke = (
-	vars => [ 'gboolean closed = FALSE' ],
 	code  => <<'CODE'
 {
+  gboolean closed = FALSE;
+
   if ((num_path_points / 3) % 3 == 0)
     closed = TRUE;
   else if ((num_path_points / 3) % 3 != 2)
@@ -295,7 +287,7 @@ sub path_stroke_current {
 Stroke the current path in the passed image.
 HELP
 
-    &pdb_misc;
+    &andy_pdb_misc('1999');
 
     @inargs = ( &std_image_arg );
     $inargs[0]->{desc} = 'The ID of the image which contains the path to
@@ -337,7 +329,7 @@ start of the path is the first point on the path that was created. This might
 not be obvious. Note the current path is used.
 HELP
 
-    &pdb_misc;
+    &andy_pdb_misc('1999');
 
     @inargs = (
 	&std_image_arg,
@@ -356,11 +348,15 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'GimpVectors *vectors', 'GimpStroke *stroke',
-	          'gdouble distance_along', 'gdouble stroke_length',
-		  'gdouble stroke_distance', 'GimpCoords position' ],
 	code => <<'CODE'
 {
+  GimpVectors *vectors;
+  GimpStroke  *stroke;
+  gdouble      distance_along;
+  gdouble      stroke_length;
+  gdouble      stroke_distance;
+  GimpCoords   position;
+
   vectors = gimp_image_get_active_vectors (gimage);
 
   if (vectors)
@@ -417,7 +413,7 @@ tattoo is a unique and permanent identifier attached to a path that can
 be used to uniquely identify a path within an image even between sessions.
 HELP
 
-    &pdb_misc;
+    &andy_pdb_misc('1999');
 
     @inargs = (
 	&std_image_arg,
@@ -431,10 +427,9 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'GimpVectors *vectors' ],
 	code => <<'CODE'
 {
-  vectors = gimp_image_get_vectors_by_name (gimage, name);
+  GimpVectors *vectors = gimp_image_get_vectors_by_name (gimage, name);
 
   if (vectors)
     tattoo = gimp_item_get_tattoo (GIMP_ITEM (vectors));
@@ -456,7 +451,7 @@ sessions. Note that the value passed to this function must have been
 obtained from a previous call to path_get_tattoo.
 HELP
 
-    &pdb_misc;
+    &andy_pdb_misc('1999');
 
     @inargs = (
 	&std_image_arg,
@@ -469,10 +464,9 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'GimpVectors *vectors' ],
 	code => <<'CODE'
 {
-  vectors = gimp_image_get_vectors_by_name (gimage, name);
+  GimpVectors *vectors = gimp_image_get_vectors_by_name (gimage, name);
 
   if (vectors)
     gimp_item_set_tattoo (GIMP_ITEM (vectors), tattovalue);
@@ -494,7 +488,7 @@ and will be preserved across sessions and through renaming of the path.
 An error is returned if no path with the specified tattoo can be found.
 HELP
 
-    &pdb_misc;
+    &andy_pdb_misc('1999');
 
     @inargs = (
 	&std_image_arg,
@@ -508,10 +502,9 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'GimpVectors *vectors' ],
 	code => <<'CODE'
 {
-  vectors = gimp_image_get_vectors_by_tattoo (gimage, tattoo);
+  GimpVectors *vectors = gimp_image_get_vectors_by_tattoo (gimage, tattoo);
 
   if (vectors)
     name = g_strdup (gimp_object_get_name (GIMP_OBJECT (vectors)));
@@ -529,7 +522,7 @@ sub path_delete {
 Delete the named path.
 HELP
 
-    &pdb_misc;
+    &andy_pdb_misc('1999');
 
     @inargs = (
 	&std_image_arg,
@@ -539,10 +532,9 @@ HELP
     $inargs[0]->{desc} = 'The ID of the image to delete the path from.';
 
     %invoke = (
-	vars => [ 'GimpVectors *vectors' ],
 	code => <<'CODE'
 {
-  vectors = gimp_image_get_vectors_by_name (gimage, name);
+  GimpVectors *vectors = gimp_image_get_vectors_by_name (gimage, name);
 
   if (vectors)
     gimp_image_remove_vectors (gimage, vectors);
@@ -562,7 +554,7 @@ path.  A path can be "locked" which means that the transformation
 tool operations will also apply to the path.
 HELP
 
-    &pdb_misc;
+    &andy_pdb_misc('1999');
 
     @inargs = (
 	&std_image_arg,
@@ -577,10 +569,9 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'GimpVectors *vectors' ],
 	code => <<'CODE'
 {
-  vectors = gimp_image_get_vectors_by_name (gimage, name);
+  GimpVectors *vectors = gimp_image_get_vectors_by_name (gimage, name);
 
   if (vectors)
     locked = gimp_item_get_linked (GIMP_ITEM (vectors));
@@ -600,7 +591,7 @@ path can be "locked" which means that the transformation tool operations
 will also apply to the path.
 HELP
 
-    &pdb_misc;
+    &andy_pdb_misc('1999');
 
     @inargs = (
 	&std_image_arg,
@@ -611,10 +602,9 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'GimpVectors *vectors' ],
 	code => <<'CODE'
 {
-  vectors = gimp_image_get_vectors_by_name (gimage, name);
+  GimpVectors *vectors = gimp_image_get_vectors_by_name (gimage, name);
 
   if (vectors)
     gimp_item_set_linked (GIMP_ITEM (vectors), locked, TRUE);
@@ -632,7 +622,7 @@ sub path_get_visible {
 This procedure returns the visibility of the specified path.
 HELP
 
-    &pdb_misc;
+    &andy_pdb_misc('1999');
 
     @inargs = (
 	&std_image_arg,
@@ -646,10 +636,9 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'GimpVectors *vectors' ],
 	code => <<'CODE'
 {
-  vectors = gimp_image_get_vectors_by_name (gimage, name);
+  GimpVectors *vectors = gimp_image_get_vectors_by_name (gimage, name);
 
   if (vectors)
     visible = gimp_item_get_visible (GIMP_ITEM (vectors));
@@ -667,9 +656,7 @@ sub path_set_visible {
 This procedure sets the specified path's visibility.
 HELP
 
-    $author = $copyright = 'Sven Neumann';
-    $date = '2005';
-    $since = '2.4';
+    &neo_pdb_misc('2005', '2.4');
 
     @inargs = (
 	&std_image_arg,
@@ -680,10 +667,9 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'GimpVectors *vectors' ],
 	code => <<'CODE'
 {
-  vectors = gimp_image_get_vectors_by_name (gimage, name);
+  GimpVectors *vectors = gimp_image_get_vectors_by_name (gimage, name);
 
   if (vectors)
     gimp_item_set_visible (GIMP_ITEM (vectors), visible, TRUE);
@@ -701,9 +687,7 @@ sub path_to_selection {
 This procedure renders the desired path into the current selection.
 HELP
 
-
-    $author = $copyright = 'Joao S. O. Bueno';
-    $date = '2003';
+    &joao_pdb_misc('2003');
 
     @inargs = (
 	&std_image_arg,
@@ -722,10 +706,9 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'GimpVectors *vectors' ],
 	code => <<'CODE'
 {
-  vectors = gimp_image_get_vectors_by_name (gimage, name);
+  GimpVectors *vectors = gimp_image_get_vectors_by_name (gimage, name);
 
   if (vectors)
     gimp_channel_select_vectors (gimp_image_get_mask (gimage),
@@ -751,8 +734,7 @@ This procedure imports paths from an SVG file. SVG elements other than
 paths and basic shapes are ignored.
 HELP
 
-    $author = $copyright = 'Sven Neumann';
-    $date = '2003';
+    &neo_pdb_misc('2003');
 
     @inargs = (
 	&std_image_arg,
@@ -779,9 +761,7 @@ than reading the SVG from a file. This allows you to write scripts that
 generate SVG and feed it to GIMP.
 HELP
 
-    $author = $copyright = 'Sven Neumann';
-    $date = '2005';
-    $since = '2.4';
+    &neo_pdb_misc('2005', '2.4');
 
     @inargs = (
 	&std_image_arg,

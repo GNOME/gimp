@@ -15,31 +15,6 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
-sub bill_misc {
-    $author = 'Bill Skaggs <weskaggs@primate.ucdavis.edu';
-    $copyright = 'Bill Skaggs';
-    $date = '2004';
-    $since = '2.4';
-}
-
-sub shlomi_misc {
-    $author = $copyright = 'Shlomi Fish';
-    $date   = '2003';
-    $since  = '2.2';
-}
-
-sub federico_misc {
-    $author = $copyright = 'Federico Mena Quintero';
-    $date   = '1997';
-    $since  = '2.2';
-}
-
-sub gradient_arg () {{
-    name => 'name',
-    type => 'string',
-    desc => 'The gradient name'
-}}
-
 sub _gen_gradient_search_for_segment_code
 {
     my $action_on_success = shift;
@@ -76,27 +51,10 @@ $action_on_success
 CODE
 }
 
-sub other_side
-{
-    my $side = shift;
-
-    return ($side eq "left") ? "right" : "left";
-}
-
-sub _grad_and_seg_params
-{
-    return
-        ( &gradient_arg,
-          { name => 'segment', type => '0 <= int32',
-            desc => 'The index of the segment within the gradient' }
-        );
-}
-
 sub _gen_gradient_set_side_color
 {
     my $side = shift;
-
-    my $other_side = other_side($side);
+    my $other_side = ($side eq "left") ? "right" : "left";
 
     $blurb = "Retrieves the $side endpoint color of the specified gradient and segment";
 
@@ -105,17 +63,17 @@ This procedure retrieves the $side endpoint color of the specified segment of
 the specified gradient.
 HELP
 
-    &shlomi_misc;
+    &shlomi_pdb_misc('2003', '2.2');
 
     @inargs = (
-        &_grad_and_seg_params,
+	{ name => 'name', type => 'string',
+	  desc => 'The gradient name' },
+        { name => 'segment', type => '0 <= int32',
+          desc => 'The index of the segment within the gradient' },
         { name => 'color', type => 'color',
           desc => "The color to set" },
         { name => "opacity", type => '0 <= float <= 100.0',
           desc => "The opacity to set for the endpoint" }
-    );
-
-    @outargs = (
     );
 
     my @blend_params = ("&color","&(seg->${other_side}_color)");
@@ -144,10 +102,13 @@ This procedure retrieves the $side endpoint color of the specified segment of
 the specified gradient.
 HELP
 
-    &shlomi_misc;
+    &shlomi_pdb_misc('2003', '2.2');
 
     @inargs = (
-        &_grad_and_seg_params,
+	{ name => 'name', type => 'string',
+	  desc => 'The gradient name' },
+        { name => 'segment', type => '0 <= int32',
+          desc => 'The index of the segment within the gradient' }
     );
 
     @outargs = (
@@ -183,9 +144,14 @@ This procedure retrieves the $side_endpoint position of the specified segment of
 the specified gradient.
 HELP
 
-    &shlomi_misc;
+    &shlomi_pdb_misc('2003', '2.2');
 
-    @inargs = &_grad_and_seg_params;
+    @inargs = (
+	{ name => 'name', type => 'string',
+	  desc => 'The gradient name' },
+        { name => 'segment', type => '0 <= int32',
+          desc => 'The index of the segment within the gradient' }
+    );
 
     @outargs = (
         { name => 'pos', type => 'float',
@@ -229,10 +195,13 @@ the specified gradient. The final position will be between $betweens{$side}.
 This procedure returns the final position.
 HELP
 
-    &shlomi_misc;
+    &shlomi_pdb_misc('2003', '2.2');
 
     @inargs = (
-        &_grad_and_seg_params,
+	{ name => 'name', type => 'string',
+	  desc => 'The gradient name' },
+        { name => 'segment', type => '0 <= int32',
+          desc => 'The index of the segment within the gradient' },
         { name => 'pos', type => "0.0 <= float <= 1.0",
           desc => "The position to set the guidepoint in." }
     );
@@ -258,7 +227,7 @@ sub gradient_new {
     $blurb = "Creates a new gradient";
     $help  = "This procedure creates a new, uninitialized gradient";
 
-    &shlomi_misc;
+    &shlomi_pdb_misc('2003', '2.2');
 
     @inargs = (
 	{ name => 'name', type => 'string',
@@ -288,10 +257,11 @@ sub gradient_duplicate {
     $blurb = "Duplicates a gradient";
     $help  = "This procedure creates an identical gradient by a different name";
 
-    &shlomi_misc;
+    &shlomi_pdb_misc('2003', '2.2');
 
     @inargs = (
-        &gradient_arg
+	{ name => 'name', type => 'string',
+	  desc => 'The gradient name' }
     );
 
     @outargs = (
@@ -328,10 +298,11 @@ sub gradient_is_editable {
     $blurb = "Tests if gradient can be edited";
     $help  = "Returns True if you have permission to change the gradient";
 
-    &bill_misc;
+    &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
-        &gradient_arg
+	{ name => 'name', type => 'string',
+	  desc => 'The gradient name' }
     );
 
     @outargs = (
@@ -361,10 +332,11 @@ sub gradient_rename {
     $blurb = "Rename a gradient";
     $help  = "This procedure renames a gradient";
 
-    &shlomi_misc;
+    &shlomi_pdb_misc('2003', '2.2');
 
     @inargs = (
-        &gradient_arg,
+	{ name => 'name', type => 'string',
+	  desc => 'The gradient name' },
         { name => 'new_name', type => 'string',
           desc => "The new name of the gradient" }
     );
@@ -395,10 +367,11 @@ sub gradient_delete {
     $blurb = "Deletes a gradient";
     $help  = "This procedure deletes a gradient";
 
-    &shlomi_misc;
+    &shlomi_pdb_misc('2003', '2.2');
 
     @inargs = (
-        &gradient_arg
+	{ name => 'name', type => 'string',
+	  desc => 'The gradient name' }
     );
 
     %invoke = (
@@ -434,11 +407,6 @@ sub sample_num_arg {
       desc => 'The number of samples to take' }
 }
 
-sub reverse_arg {
-    { name => 'reverse', type => 'boolean',
-      desc => 'Use the reverse gradient (%%desc%%)' }
-}
-
 sub sample_outargs {
     @outargs = (
         { name => 'color_samples', type => 'floatarray', init => 1,
@@ -462,12 +430,14 @@ samples to take is 2, in which case the returned colors will correspond to the
 is 3, the procedure will return the colors at positions { 0.0, 0.5, 1.0 }.
 HELP
 
-    &federico_misc;
+    &federico_pdb_misc('1997', '2.2');
 
     @inargs = (
-         &gradient_arg,
-	 &sample_num_arg('2 <= '),
-	 &reverse_arg
+	{ name => 'name', type => 'string',
+	  desc => 'The gradient name' },
+	&sample_num_arg('2 <= '),
+	{ name => 'reverse', type => 'boolean',
+	  desc => 'Use the reverse gradient (%%desc%%)' }
     );
 
     &sample_outargs;
@@ -523,16 +493,18 @@ procedure returns a list of floating-point values which correspond to
 the RGBA values for each sample.
 HELP
 
-    &federico_misc;
+    &federico_pdb_misc('1997', '2.2');
 
     @inargs = (
-         &gradient_arg,
+	{ name => 'name', type => 'string',
+	  desc => 'The gradient name' },
 	{ name  => 'positions',
 	  type  => 'floatarray',
 	  desc  => 'The list of positions to sample along the gradient',
 	  alias => 'pos',
 	  array => &sample_num_arg("") },
-	&reverse_arg
+	{ name => 'reverse', type => 'boolean',
+	  desc => 'Use the reverse gradient (%%desc%%)' }
     );
 
     &sample_outargs;
@@ -633,9 +605,14 @@ This procedure retrieves the blending function of the segment at the
 specified gradient name and segment index.
 HELP
 
-    &shlomi_misc;
+    &shlomi_pdb_misc('2003', '2.2');
 
-    @inargs = &_grad_and_seg_params;
+    @inargs = (
+	{ name => 'name', type => 'string',
+	  desc => 'The gradient name' },
+        { name => 'segment', type => '0 <= int32',
+          desc => 'The index of the segment within the gradient' }
+    );
 
     @outargs = (
         { name => 'blend_func', type => 'enum GimpGradientSegmentType',
@@ -661,9 +638,14 @@ This procedure retrieves the coloring type of the segment at the
 specified gradient name and segment index.
 HELP
 
-    &shlomi_misc;
+    &shlomi_pdb_misc('2003', '2.2');
 
-    @inargs = &_grad_and_seg_params;
+    @inargs = (
+	{ name => 'name', type => 'string',
+	  desc => 'The gradient name' },
+        { name => 'segment', type => '0 <= int32',
+          desc => 'The index of the segment within the gradient' }
+    );
 
     @outargs = (
         { name => 'coloring_type', type => 'enum GimpGradientSegmentColor',
@@ -688,10 +670,11 @@ sub _gen_gradient_operate_on_segments_range
 
     $help = $args{help};
 
-    &shlomi_misc;
+    &shlomi_pdb_misc('2003', '2.2');
 
     @inargs = (
-        &gradient_arg,
+	{ name => 'name', type => 'string',
+	  desc => 'The gradient name' },
         { name => 'start_segment', type => '0 <= int32',
           desc => 'The index of the first segment to operate on' },
         { name => 'end_segment', type => 'int32',
@@ -719,6 +702,7 @@ sub _gen_gradient_operate_on_segments_range
   if (gradient)
     {
       GimpGradientSegment *start_seg, *end_seg;
+
       start_seg = gimp_gradient_segment_get_nth (gradient->segments,
                                                  start_segment);
       if (start_seg)

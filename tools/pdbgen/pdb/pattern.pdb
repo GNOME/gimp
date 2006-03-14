@@ -17,33 +17,19 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub mitch_misc {
-    $author = 'Michael Natterer <mitch@gimp.org>';
-    $copyright = 'Michael Natterer';
-    $date = '2004';
-    $since = '2.2';
-}
-
-sub pattern_arg () {{
-    name => 'name',
-    type => 'string',
-    desc => 'The pattern name.'
-}}
-
-
-# The defs
-
 sub pattern_get_info {
     $blurb = 'Retrieve information about the specified pattern.';
+
     $help = <<'HELP';
 This procedure retrieves information about the specified pattern.
 This includes the pattern extents (width and height).
 HELP
 
-    &mitch_misc;
+    &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-        &pattern_arg
+	{ name => 'name', type => 'string',
+	  desc => 'The pattern name.' }
     );
 
     @outargs = (
@@ -82,10 +68,11 @@ includes the pattern extents (width and height), its bpp and its pixel
 data.
 HELP
 
-    &mitch_misc;
+    &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-        &pattern_arg
+	{ name => 'name', type => 'string',
+	  desc => 'The pattern name.' }
     );
 
     @outargs = (

@@ -17,11 +17,6 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub pdb_misc {
-    $author = $copyright = 'Manish Singh';
-    $date = '1998';
-}
-
 sub message {
     $blurb = 'Displays a dialog box with a message.';
 
@@ -30,7 +25,7 @@ Displays a dialog box with a message. Useful for status or error reporting.
 The message must be in UTF-8 encoding.
 HELP
 
-    &pdb_misc;
+    &yosh_pdb_misc('1998');
 
     @inargs = (
 	{ name => 'message', type => 'string', const => 1,
@@ -59,7 +54,7 @@ This procedure returns the way g_message warnings are displayed. They can be
 shown in a dialog box or printed on the console where gimp was started.
 HELP
 
-    &pdb_misc;
+    &yosh_pdb_misc('1998');
 
     @outargs = (
 	{ name => 'handler', type => 'enum GimpMessageHandlerType',
@@ -76,7 +71,7 @@ This procedure controls how g_message warnings are displayed. They can be shown
 in a dialog box or printed on the console where gimp was started.
 HELP
 
-    &pdb_misc;
+    &yosh_pdb_misc('1998');
 
     @inargs = (
 	{ name => 'handler', type => 'enum GimpMessageHandlerType',
@@ -86,9 +81,8 @@ HELP
     %invoke = ( code => 'gimp->message_handler = handler;' );
 }
 
-@headers = qw(<string.h>
-              "core/gimp.h" "plug-in/plug-in.h" "plug-in/plug-in-progress.h"
-              "gimp-intl.h");
+@headers = qw(<string.h> "core/gimp.h" "plug-in/plug-in.h"
+              "plug-in/plug-in-progress.h" "gimp-intl.h");
 
 @procs = qw(message message_get_handler message_set_handler);
 %exports = (app => [@procs], lib => [@procs]);

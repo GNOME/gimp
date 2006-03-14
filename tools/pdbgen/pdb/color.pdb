@@ -17,18 +17,6 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub drawable_arg () {{
-    name => 'drawable',
-    type => 'drawable',
-    desc => 'The drawable',
-}}
-
-sub channel_arg () {{
-    name => 'channel',
-    type => 'enum GimpHistogramChannel',
-    desc => 'The channel to modify: { %%desc%% }'
-}}
-
 sub brightness_contrast {
     $blurb = 'Modify brightness/contrast in the specified drawable.';
 
@@ -41,11 +29,14 @@ HELP
     &std_pdb_misc;
     $date = '1997';
 
-    @inargs = ( &drawable_arg );
-    foreach (qw( brightness contrast)) {
-	push @inargs, { name => $_, type => '-127 <= int32 <= 127',
-			desc => "\u$_ adjustment: (%%desc%%)" }
-    }
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' },
+	{ name => 'brightness', type => '-127 <= int32 <= 127',
+	  desc => 'Brightness adjustment: (%%desc%%)' },
+	{ name => 'contrast', type => '-127 <= int32 <= 127',
+	  desc => 'Contrast adjustment: (%%desc%%)' }
+    );
 
     %invoke = (
 	code => <<'CODE'
@@ -108,19 +99,21 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&drawable_arg,
-	&channel_arg
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' },
+	{ name => 'channel', type => 'enum GimpHistogramChannel',
+	  desc => 'The channel to modify: { %%desc%% }' },
+	{ name => 'low_input', type => '0 <= int32 <= 255',
+	  desc => "Intensity of lowest input: (%%desc%%)" },
+	{ name => 'high_input', type => '0 <= int32 <= 255',
+	  desc => "Intensity of highest input: (%%desc%%)" },
+	{ name => 'gamma', type => '0.1 <= float <= 10',
+	  desc => 'Gamma correction factor: (%%desc%%)' },
+	{ name => 'low_output', type => '0 <= int32 <= 255',
+	  desc => "Intensity of lowest output: (%%desc%%)" },
+	{ name => 'high_output', type => '0 <= int32 <= 255',
+	  desc => "Intensity of highest output: (%%desc%%)" }
     );
-
-    foreach $arg (qw(input output)) {
-	foreach (qw(low high)) {
-	    push @inargs, { name => "${_}_$arg", type => '0 <= int32 <= 255',
-			    desc => "Intensity of ${_}est $arg: (%%desc%%)" }
-	}
-	push @inargs, { name => 'gamma', type => '0.1 <= float <= 10',
-			desc => 'Gamma correction factor: (%%desc%%)' }
-    }
-    $#inargs--;
 
     %invoke = (
 	headers => [ qw("base/levels.h"
@@ -162,7 +155,10 @@ HELP
     $author = $copyright = 'Joao S.O. Bueno, Shawn Willden';
     $date = '2003';
 
-    @inargs = ( &drawable_arg );
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' }
+    );
 
     %invoke = (
         headers => [ qw("base/levels.h"
@@ -187,7 +183,10 @@ CODE
 sub levels_auto {
     &std_pdb_deprecated ('gimp_levels_stretch');
 
-    @inargs = ( &drawable_arg );
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' }
+    );
 
     %invoke = (
         headers => [ qw("base/levels.h"
@@ -219,7 +218,8 @@ HELP
     $date = '1997';
 
     @inargs = (
-	&drawable_arg,
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' },
 	{ name => 'levels', type => '2 <= int32 <= 255',
 	  desc => 'Levels of posterization: (%%desc%%)' }
     );
@@ -273,7 +273,10 @@ HELP
 
     &std_pdb_misc;
 
-    @inargs = ( &drawable_arg );
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' }
+    );
 
     %invoke = (
 	headers => [ qw("core/gimpdrawable-desaturate.h") ],
@@ -303,7 +306,8 @@ HELP
     $since = '2.4';
 
     @inargs = (
-        &drawable_arg,
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' },
 	{ name => 'desaturate_mode', type => 'enum GimpDesaturateMode',
 	  desc => 'The formula to use to desaturate' }
     );
@@ -339,7 +343,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&drawable_arg,
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' },
 	{ name => 'mask_only', type => 'boolean',
 	  desc => 'Equalization option' }
     );
@@ -370,7 +375,10 @@ HELP
 
     &std_pdb_misc;
 
-    @inargs = ( &drawable_arg );
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' }
+    );
 
     %invoke = (
 	headers => [ qw("core/gimpdrawable-invert.h") ],
@@ -402,8 +410,10 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&drawable_arg,
-	&channel_arg,
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' },
+	{ name => 'channel', type => 'enum GimpHistogramChannel',
+	  desc => 'The channel to modify: { %%desc%% }' },
 	{ name => 'control_pts', type => 'int8array',
 	  desc => 'The spline control points: { cp1.x, cp1.y, cp2.x, cp2.y,
 		   ... }',
@@ -497,8 +507,10 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&drawable_arg,
-	&channel_arg,
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' },
+	{ name => 'channel', type => 'enum GimpHistogramChannel',
+	  desc => 'The channel to modify: { %%desc%% }' },
 	{ name => 'curve', type => 'int8array',
 	  desc => 'The explicit curve',
 	  array => { name => 'num_bytes',
@@ -584,19 +596,19 @@ HELP
     $date = '1997';
 
     @inargs = (
-	&drawable_arg,
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' },
 	{ name => 'transfer_mode', type => 'enum GimpTransferMode',
 	  desc => 'Transfer mode: { %%desc%% }' },
 	{ name => 'preserve_lum', type => 'boolean',
-	  desc => 'Preserve luminosity values at each pixel' }
+	  desc => 'Preserve luminosity values at each pixel' },
+	{ name => 'cyan_red', type => '-100 <= float <= 100',
+	  desc => 'Cyan-Red color balance: (%%desc%%)' },
+	{ name => 'magenta_green', type => '-100 <= float <= 100',
+	  desc => 'Magenta-Green color balance: (%%desc%%)' },
+	{ name => 'yellow_blue', type => '-100 <= float <= 100',
+	  desc => 'Yellow-Blue color balance: (%%desc%%)' }
     );
-
-    foreach (qw(cyan_red magenta_green yellow_blue)) {
-	my $arg = { name => $_, type => '-100 <= float <= 100' };
-        ($arg->{desc} = ucfirst $_) =~ s/_(.)/-\U$1\E/;
-	 $arg->{desc} .= ' color balance: (%%desc%%)';
-	push @inargs, $arg;
-    }
 
     %invoke = (
 	headers => [ qw("base/color-balance.h") ],
@@ -652,12 +664,11 @@ only valid on RGB color images. It will not operate on grayscale or indexed
 drawables.
 HELP
 
-    &std_pdb_misc;
-    $date = '2004';
-    $since = '2.2';
+    &neo_pdb_misc('2004', '2.2');
 
     @inargs = (
-	&drawable_arg,
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' },
 	{ name => 'hue', type => '0 <= float <= 360',
 	  desc => 'Hue in degrees: (%%desc%%)' },
 	{ name => 'saturation', type => '0 <= float <= 100',
@@ -731,33 +742,30 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&drawable_arg,
-	&channel_arg,
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' },
+	{ name => 'channel', type => 'enum GimpHistogramChannel',
+	  desc => 'The channel to modify: { %%desc%% }' },
+	{ name => 'start_range', type => '0 <= int32 < 256',
+	  desc => 'Start of the intensity measurement range' },
+	{ name => 'end_range', type => '0 <= int32 < 256',
+	  desc => 'End of the intensity measurement range' }
     );
-
-    foreach (qw(start end)) {
-	push @inargs, { name => "${_}_range", type => '0 <= int32 < 256',
-			desc => "\u$_ of the intensity measurement range" }
-    }
 
     @outargs = (
-	{ name => 'mean', void_ret => 1, init => 1,
+	{ name => 'mean', type => 'float', void_ret => 1, init => 1,
 	  desc => 'Mean intensity value' },
-	{ name => 'std_dev', init => 1,
+	{ name => 'std_dev',  type => 'float', init => 1,
 	  desc => 'Standard deviation of intensity values' },
-	{ name => 'median', init => 1,
+	{ name => 'median',  type => 'float', init => 1,
 	  desc => 'Median intensity value' },
-	{ name => 'pixels', init => 1,
+	{ name => 'pixels',  type => 'float', init => 1,
 	  desc => 'Alpha-weighted pixel count for entire image' },
-	{ name => 'count', init => 1,
+	{ name => 'count',  type => 'float', init => 1,
 	  desc => 'Alpha-weighted pixel count for range' },
-	{ name => 'percentile', init => 1,
+	{ name => 'percentile',  type => 'float', init => 1,
 	  desc => 'Percentile that range falls under' }
     );
-
-    foreach (@outargs) {
-       @$_{qw(type alias)} = ('float', "$_->{name}", 1)
-    }
 
     %invoke = (
 	headers => [ qw("core/gimp.h" "core/gimpdrawable-histogram.h") ],
@@ -810,17 +818,17 @@ HELP
     $date = '1997';
 
     @inargs = (
-	&drawable_arg,
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' },
 	{ name => 'hue_range', type => 'enum GimpHueRange',
 	  desc => 'Range of affected hues: { %%desc%% }' },
 	{ name => 'hue_offset', type => '-180 <= float <= 180',
-	  desc => 'Hue offset in degrees: (%%desc%%)' }
+	  desc => 'Hue offset in degrees: (%%desc%%)' },
+	{ name => 'lightness', type => '-100 <= float <= 100',
+	  desc => 'Lightness modification: (%%desc%%)' },
+	{ name => 'saturation', type => '-100 <= float <= 100',
+	  desc => 'Saturation modification: (%%desc%%)' }
     );
-
-    foreach (qw(lightness saturation)) {
-	push @inargs, { name => $_, type => '-100 <= float <= 100',
-			desc => "$_ modification: (%%desc%%)" }
-    }
 
     %invoke = (
 	headers => [ qw("base/hue-saturation.h") ],
@@ -878,11 +886,14 @@ HELP
     &std_pdb_misc;
     $date = '1997';
 
-    @inargs = ( &drawable_arg );
-    foreach (qw(low high)) {
-	push @inargs, { name => "${_}_threshold", type => '0 <= int32 <= 255',
-			desc => "The $_ threshold value: %%desc%%" }
-    }
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' },
+	{ name => 'low_threshold', type => '0 <= int32 <= 255',
+	  desc => 'The low threshold value: %%desc%%' },
+	{ name => 'high_threshold', type => '0 <= int32 <= 255',
+	  desc => 'The high threshold value: %%desc%%' }
+    );
 
     %invoke = (
 	headers => [ qw("base/threshold.h") ],

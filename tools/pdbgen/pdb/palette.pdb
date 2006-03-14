@@ -17,54 +17,11 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub bill_misc {
-    $author = 'Bill Skaggs <weskaggs@primate.ucdavis.edu';
-    $copyright = 'Bill Skaggs';
-    $date = '2004';
-    $since = '2.4';
-}
-
-sub mitch_misc {
-    $author = 'Michael Natterer <mitch@gimp.org>';
-    $copyright = 'Michael Natterer';
-    $date = '2004';
-    $since = '2.2';
-}
-
-sub neo_misc {
-    $author = 'Sven Neumann <sven@gimp.org>';
-    $copyright = 'Sven Neumann';
-    $date = '2005';
-    $since = '2.4';
-}
-
-sub palette_arg () {{
-    name => 'name',
-    type => 'string',
-    desc => 'The palette name.'
-}}
-
-my $get_palette_from_name = <<'CODE';
-if (name && strlen (name))
-  {
-    palette = (GimpPalette *)
-      gimp_container_get_child_by_name (gimp->palette_factory->container,
-                                        name);
-  }
-else
-  {
-    palette = gimp_context_get_palette (context);
-  }
-CODE
-
-
-# The defs
-
 sub palette_new {
     $blurb = "Creates a new palette";
     $help  = "This procedure creates a new, uninitialized palette";
 
-    &mitch_misc;
+    &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
 	{ name => 'name', type => 'string',
@@ -94,10 +51,11 @@ sub palette_is_editable {
     $blurb = "Tests if palette can be edited";
     $help  = "Returns True if you have permission to change the palette";
 
-    &bill_misc;
+    &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
-        &palette_arg
+	{ name => 'name', type => 'string',
+	  desc => 'The palette name' }
     );
 
     @outargs = (
@@ -127,10 +85,11 @@ sub palette_duplicate {
     $blurb = "Duplicates a palette";
     $help  = "This procedure creates an identical palette by a different name";
 
-    &mitch_misc;
+    &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-        &palette_arg
+	{ name => 'name', type => 'string',
+	  desc => 'The palette name' }
     );
 
     @outargs = (
@@ -141,11 +100,10 @@ sub palette_duplicate {
     );
 
     %invoke = (
-	vars => [ 'GimpPalette *palette = NULL',
-                  'GimpPalette *palette_copy = NULL' ],
+	vars => [ 'GimpPalette *palette_copy = NULL' ],
         code => <<'CODE'
 {
-  palette = (GimpPalette *)
+  GimpPalette *palette = (GimpPalette *)
     gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
   if (palette)
@@ -167,10 +125,11 @@ sub palette_rename {
     $blurb = "Rename a palette";
     $help  = "This procedure renames a palette";
 
-    &mitch_misc;
+    &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-        &palette_arg,
+	{ name => 'name', type => 'string',
+	  desc => 'The palette name' },
         { name => 'new_name', type => 'string',
           desc => "The new name of the palette" }
     );
@@ -201,17 +160,17 @@ sub palette_delete {
     $blurb = "Deletes a palette";
     $help  = "This procedure deletes a palette";
 
-    &mitch_misc;
+    &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-        &palette_arg
+	{ name => 'name', type => 'string',
+	  desc => 'The palette name' }
     );
 
     %invoke = (
-	vars => [ 'GimpPalette *palette = NULL' ],
 	code => <<'CODE'
 {
-  palette = (GimpPalette *)
+  GimpPalette *palette = (GimpPalette *)
     gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
   if (palette && GIMP_DATA (palette)->deletable)
@@ -243,10 +202,11 @@ This procedure retrieves information about the specified palette. This
 includes the name, and the number of colors.
 HELP
 
-    &mitch_misc;
+    &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-        &palette_arg
+	{ name => 'name', type => 'string',
+	  desc => 'The palette name' }
     );
 
     @outargs = (
@@ -275,10 +235,11 @@ This procedures retrieves the prefered number of columns to use when the
 palette is being displayed.
 HELP
 
-    &neo_misc;
+    &neo_pdb_misc('2005', '2.4');
 
     @inargs = (
-	&palette_arg
+	{ name => 'name', type => 'string',
+	  desc => 'The palette name' }
     );
 
     @outargs = (
@@ -308,19 +269,19 @@ palette is being displayed. This value can only be changed if the palette
 is writable. The maximum allowed value is 64.
 HELP
 
-    &neo_misc;
+    &neo_pdb_misc('2005', '2.4');
 
     @inargs = (
-        &palette_arg,
+	{ name => 'name', type => 'string',
+	  desc => 'The palette name' },
         { name => 'columns', type => '0 <= int32 <= 64',
           desc => "The new number of columns" }
     );
 
     %invoke = (
-	vars => [ 'GimpPalette *palette = NULL' ],
 	code => <<'CODE'
 {
-  palette = (GimpPalette *)
+  GimpPalette *palette = (GimpPalette *)
     gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
   if (palette && GIMP_DATA (palette)->writable)
@@ -340,10 +301,11 @@ This procedure adds an entry to the specifed palette.
 It returns an error if the entry palette does not exist.
 HELP
 
-    &mitch_misc;
+    &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-        &palette_arg,
+	{ name => 'name', type => 'string',
+	  desc => 'The palette name' },
         { name => 'entry_name', type => 'string', null_ok => '1',
           desc => 'The name of the entry' },
         { name => 'color', type => 'color',
@@ -357,11 +319,10 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'GimpPalette *palette = NULL',
-                  'GimpPaletteEntry *entry = NULL' ],
+	vars => [ 'GimpPaletteEntry *entry = NULL' ],
 	code => <<'CODE'
 {
-  palette = (GimpPalette *)
+  GimpPalette *palette = (GimpPalette *)
     gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
   if (palette && GIMP_DATA (palette)->writable)
@@ -381,27 +342,26 @@ This procedure deletes an entry from the specifed palette.
 It returns an error if the entry palette does not exist.
 HELP
 
-    &mitch_misc;
+    &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-        &palette_arg,
+	{ name => 'name', type => 'string',
+	  desc => 'The palette name' },
         { name => 'entry_num', type => 'int32',
           desc => 'The index of the added entry' }
     );
 
     %invoke = (
-	vars => [ 'GimpPalette *palette = NULL',
-                  'GimpPaletteEntry *entry = NULL' ],
 	code => <<'CODE'
 {
-  palette = (GimpPalette *)
+  GimpPalette *palette = (GimpPalette *)
     gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
   if (palette && GIMP_DATA (palette)->writable)
     {
       if (entry_num >= 0 && entry_num < palette->n_colors)
         {
-          entry = g_list_nth_data (palette->colors, entry_num);
+          GimpPaletteEntry *entry = g_list_nth_data (palette->colors, entry_num);
 
           gimp_palette_delete_entry (palette, entry);
         }
@@ -423,10 +383,11 @@ This procedure retrieves the color of the zero-based entry specifed for the
 specified palette. It returns an error if the entry does not exist.
 HELP
 
-    &mitch_misc;
+    &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-        &palette_arg,
+	{ name => 'name', type => 'string',
+	  desc => 'The palette name' },
         { name => 'entry_num', type => 'int32',
           desc => 'The entry to retrieve' }
     );
@@ -437,18 +398,16 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'GimpPalette *palette = NULL',
-                  'GimpPaletteEntry *entry = NULL' ],
 	code => <<'CODE'
 {
-  palette = (GimpPalette *)
+  GimpPalette *palette = (GimpPalette *)
     gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
   if (palette)
     {
       if (entry_num >= 0 && entry_num < palette->n_colors)
         {
-          entry = g_list_nth_data (palette->colors, entry_num);
+          GimpPaletteEntry *entry = g_list_nth_data (palette->colors, entry_num);
 
           color = entry->color;
         }
@@ -470,10 +429,11 @@ This procedure sets the color of the zero-based entry specifed for the
 specified palette. It returns an error if the entry does not exist.
 HELP
 
-    &mitch_misc;
+    &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-        &palette_arg,
+	{ name => 'name', type => 'string',
+	  desc => 'The palette name' },
         { name => 'entry_num', type => 'int32',
           desc => 'The entry to retrieve' },
         { name => 'color', type => 'color',
@@ -481,18 +441,16 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'GimpPalette *palette = NULL',
-                  'GimpPaletteEntry *entry = NULL' ],
 	code => <<'CODE'
 {
-  palette = (GimpPalette *)
+  GimpPalette *palette = (GimpPalette *)
     gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
   if (palette && GIMP_DATA (palette)->writable)
     {
       if (entry_num >= 0 && entry_num < palette->n_colors)
         {
-          entry = g_list_nth_data (palette->colors, entry_num);
+          GimpPaletteEntry *entry = g_list_nth_data (palette->colors, entry_num);
 
           entry->color = color;
 
@@ -516,10 +474,11 @@ This procedure retrieves the name of the zero-based entry specifed for the
 specified palette. It returns an error if the entry does not exist.
 HELP
 
-    &mitch_misc;
+    &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-        &palette_arg,
+	{ name => 'name', type => 'string',
+	  desc => 'The palette name' },
         { name => 'entry_num', type => 'int32',
           desc => 'The entry to retrieve' }
     );
@@ -531,11 +490,10 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'GimpPalette *palette = NULL',
-                  'GimpPaletteEntry *entry = NULL' ],
+	vars => [ 'GimpPaletteEntry *entry = NULL' ],
 	code => <<'CODE'
 {
-  palette = (GimpPalette *)
+  GimpPalette *palette = (GimpPalette *)
     gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
   if (palette)
@@ -560,10 +518,11 @@ This procedure sets the name of the zero-based entry specifed for the
 specified palette. It returns an error if the entry does not exist.
 HELP
 
-    &mitch_misc;
+    &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-        &palette_arg,
+	{ name => 'name', type => 'string',
+	  desc => 'The palette name' },
         { name => 'entry_num', type => 'int32',
           desc => 'The entry to retrieve' },
         { name => 'entry_name', type => 'string', null_ok => '1',
@@ -571,18 +530,16 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'GimpPalette *palette = NULL',
-                  'GimpPaletteEntry *entry = NULL' ],
 	code => <<'CODE'
 {
-  palette = (GimpPalette *)
+  GimpPalette *palette = (GimpPalette *)
     gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
   if (palette && GIMP_DATA (palette)->writable)
     {
       if (entry_num >= 0 && entry_num < palette->n_colors)
         {
-          entry = g_list_nth_data (palette->colors, entry_num);
+          GimpPaletteEntry *entry = g_list_nth_data (palette->colors, entry_num);
 
           g_free (entry->name);
           entry->name = g_strdup (entry_name);

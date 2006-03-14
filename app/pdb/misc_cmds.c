@@ -124,7 +124,7 @@ static ProcRecord getpid_proc =
   "gimp-getpid",
   "Returns the PID of the host gimp process.",
   "This procedure returns the process ID of the currently running gimp.",
-  "Michael Natterer",
+  "Michael Natterer <mitch@gimp.org>",
   "Michael Natterer",
   "2005",
   NULL,

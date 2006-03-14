@@ -17,8 +17,6 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-# The defs
-
 sub buffers_get_list {
     $blurb = 'Retrieve a complete listing of the available buffers.';
 
@@ -26,9 +24,7 @@ sub buffers_get_list {
 This procedure returns a complete listing of available named buffers.
 HELP
 
-    $author = $copyright = 'Michael Natterer <mitch@gimp.org>';
-    $date   = '2005';
-    $since  = '2.4';
+    &mitch_pdb_misc('2005', '2.4');
 
     @inargs = (
 	{ name => 'filter', type => 'string', null_ok => 1,
@@ -50,14 +46,9 @@ HELP
 
 sub buffer_rename {
     $blurb = 'Renames a named buffer.';
+    $help  = 'This procedure renames a named buffer.';
 
-    $help = <<'HELP';
-This procedure renames a named buffer.
-HELP
-
-    $author = $copyright = 'Michael Natterer <mitch@gimp.org>';
-    $date   = '2005';
-    $since  = '2.4';
+    &mitch_pdb_misc('2005', '2.4');
 
     @inargs = (
         { name => 'buffer_name', type => 'string',
@@ -74,9 +65,7 @@ HELP
     %invoke = (
 	code => <<CODE
 {
-  GimpBuffer *buffer;
-
-  buffer = (GimpBuffer *)
+  GimpBuffer *buffer = (GimpBuffer *)
     gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
 
   success = (buffer != NULL && strlen (new_name) > 0);
@@ -93,10 +82,7 @@ CODE
 
 sub buffer_delete {
     $blurb = 'Deletes a named buffer.';
-
-    $help = <<'HELP';
-This procedure deletes a named buffer.
-HELP
+    $help  = 'This procedure deletes a named buffer.';
 
     $author = $copyright = 'David Gowers <neota@softhome.net>';
     $date   = '2005';
@@ -110,9 +96,7 @@ HELP
     %invoke = (
 	code => <<CODE
 {
-  GimpBuffer *buffer;
-
-  buffer = (GimpBuffer *)
+  GimpBuffer *buffer = (GimpBuffer *)
     gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
 
   success = (buffer != NULL);
@@ -126,13 +110,9 @@ CODE
 
 sub buffer_get_width {
     $blurb = "Retrieves the specified buffer's width.";
-    $help = <<'HELP';
-This procedure retrieves the specified named buffer's width.
-HELP
+    $help  = "This procedure retrieves the specified named buffer's width.";
 
-    $author = $copyright = 'Michael Natterer <mitch@gimp.org>';
-    $date   = '2005';
-    $since  = '2.4';
+    &mitch_pdb_misc('2005', '2.4');
 
     @inargs = (
         { name => 'buffer_name', type => 'string',
@@ -140,19 +120,20 @@ HELP
     );
 
     @outargs = (
-	{ name => 'width', type => 'int32', no_declare => '1',
-          alias => 'gimp_buffer_get_width (buffer)',
+	{ name => 'width', type => 'int32', init => 1,
           desc => "The buffer width" }
     );
 
     %invoke = (
-	vars => [ 'GimpBuffer *buffer = NULL' ],
 	code => <<'CODE'
 {
-  buffer = (GimpBuffer *)
+  GimpBuffer *buffer = (GimpBuffer *)
     gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
 
-  success = (buffer != NULL);
+  if (buffer)
+    width = gimp_buffer_get_width (buffer);
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -160,13 +141,9 @@ CODE
 
 sub buffer_get_height {
     $blurb = "Retrieves the specified buffer's height.";
-    $help = <<'HELP';
-This procedure retrieves the specified named buffer's height.
-HELP
+    $help  = "This procedure retrieves the specified named buffer's height.";
 
-    $author = $copyright = 'Michael Natterer <mitch@gimp.org>';
-    $date   = '2005';
-    $since  = '2.4';
+    &mitch_pdb_misc('2005', '2.4');
 
     @inargs = (
         { name => 'buffer_name', type => 'string',
@@ -174,19 +151,20 @@ HELP
     );
 
     @outargs = (
-	{ name => 'height', type => 'int32', no_declare => '1',
-          alias => 'gimp_buffer_get_height (buffer)',
+	{ name => 'height', type => 'int32', init => 1,
           desc => "The buffer height" }
     );
 
     %invoke = (
-	vars => [ 'GimpBuffer *buffer = NULL' ],
 	code => <<'CODE'
 {
-  buffer = (GimpBuffer *)
+  GimpBuffer *buffer = (GimpBuffer *)
     gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
 
-  success = (buffer != NULL);
+  if (buffer)
+    height = gimp_buffer_get_height (buffer);
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -194,13 +172,9 @@ CODE
 
 sub buffer_get_bytes {
     $blurb = "Retrieves the specified buffer's bytes.";
-    $help = <<'HELP';
-This procedure retrieves the specified named buffer's bytes.
-HELP
+    $help  = "This procedure retrieves the specified named buffer's bytes.";
 
-    $author = $copyright = 'Michael Natterer <mitch@gimp.org>';
-    $date   = '2005';
-    $since  = '2.4';
+    &mitch_pdb_misc('2005', '2.4');
 
     @inargs = (
         { name => 'buffer_name', type => 'string',
@@ -208,19 +182,20 @@ HELP
     );
 
     @outargs = (
-	{ name => 'bytes', type => 'int32', no_declare => '1',
-          alias => 'gimp_buffer_get_bytes (buffer)',
+	{ name => 'bytes', type => 'int32', init => 1,
           desc => "The buffer bpp" }
     );
 
     %invoke = (
-	vars => [ 'GimpBuffer *buffer = NULL' ],
 	code => <<'CODE'
 {
-  buffer = (GimpBuffer *)
+  GimpBuffer *buffer = (GimpBuffer *)
     gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
 
-  success = (buffer != NULL);
+  if (buffer)
+    bytes = gimp_buffer_get_bytes (buffer);
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -228,13 +203,9 @@ CODE
 
 sub buffer_get_image_type {
     $blurb = "Retrieves the specified buffer's image type.";
-    $help = <<'HELP';
-This procedure retrieves the specified named buffer's image type.
-HELP
+    $help  = "This procedure retrieves the specified named buffer's image type.";
 
-    $author = $copyright = 'Michael Natterer <mitch@gimp.org>';
-    $date   = '2005';
-    $since  = '2.4';
+    &mitch_pdb_misc('2005', '2.4');
 
     @inargs = (
         { name => 'buffer_name', type => 'string',
@@ -242,20 +213,20 @@ HELP
     );
 
     @outargs = (
-	{ name => 'image_type', type => 'enum GimpImageBaseType',
-          no_declare => '1',
-          alias => 'gimp_buffer_get_image_type (buffer)',
+	{ name => 'image_type', type => 'enum GimpImageBaseType', init => 1,
           desc => "The buffer image type" }
     );
 
     %invoke = (
-	vars => [ 'GimpBuffer *buffer = NULL' ],
 	code => <<'CODE'
 {
-  buffer = (GimpBuffer *)
+  GimpBuffer *buffer = (GimpBuffer *)
     gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
 
-  success = (buffer != NULL);
+  if (buffer)
+    image_type = gimp_buffer_get_image_type (buffer);
+  else
+    success = FALSE;
 }
 CODE
     );

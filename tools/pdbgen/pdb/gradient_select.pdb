@@ -17,26 +17,11 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub pdb_misc {
-    $author = $copyright = 'Andy Thomas';
-    $date = '1998';
-}
-
-sub sample_size_arg {{
-    name => 'sample_size',
-    type => '0 < int32 <= 10000',
-    desc => 'Size of the sample to return when the gradient is changed
-	    (%%desc%%)',
-    on_fail => 'sample_size = GIMP_GRADIENT_DEFAULT_SAMPLE_SIZE;',
-    no_success => 1
-}}
-
 sub gradients_popup {
     $blurb = 'Invokes the Gimp gradients selection.';
+    $help  = 'This procedure popups the gradients selection dialog.';
 
-    $help = 'This procedure popups the gradients selection dialog.';
-
-    &pdb_misc;
+    &andy_pdb_misc('1998');
 
     @inargs = (
 	{ name => 'gradient_callback', type => 'string',
@@ -47,7 +32,11 @@ sub gradients_popup {
 	{ name => 'initial_gradient', type => 'string',
 	  desc => 'The name of the pattern to set as the first selected',
 	  null_ok => 1 },
-	&sample_size_arg
+	{ name => 'sample_size', type => '0 < int32 <= 10000',
+	  desc => 'Size of the sample to return when the gradient is changed
+		   (%%desc%%)',
+	  on_fail => 'sample_size = GIMP_GRADIENT_DEFAULT_SAMPLE_SIZE;',
+	  no_success => 1 }
     );
 
     %invoke = (
@@ -67,10 +56,9 @@ CODE
 
 sub gradients_close_popup {
     $blurb = 'Popdown the Gimp gradient selection.';
+    $help  = 'This procedure closes an opened gradient selection dialog.';
 
-    $help = 'This procedure closes an opened gradient selection dialog.';
-
-    &pdb_misc;
+    &andy_pdb_misc('1998');
 
     @inargs = (
 	{ name => 'gradient_callback', type => 'string',
@@ -92,10 +80,9 @@ CODE
 
 sub gradients_set_popup {
     $blurb = 'Sets the current gradient selection in a popup.';
+    $help  = $blurb;
 
-    $help = $blurb;
-
-    &pdb_misc;
+    &andy_pdb_misc('1998');
 
     @inargs = (
 	{ name => 'gradient_callback', type => 'string',

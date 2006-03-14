@@ -17,28 +17,19 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub pdb_misc {
-    $author = $copyright = 'Michael Natterer';
-    $date = '1999';
-}
-
-sub unit_arg () {{
-    name => 'unit_id',
-    type => 'unit',
-    desc => "The unit's integer ID",
-    alias => 'unit',
-    wrap => 1
-}}
-
 sub unit_prop_proc {
     my ($prop, $type, $desc) = @_;
     $desc = $prop unless $desc;
 
     $blurb = "Returns the $desc of the unit.";
 
-    &pdb_misc;
+    &mitch_pdb_misc('1999');
 
-    @inargs = ( &unit_arg );
+    @inargs = (
+	{ name => 'unit_id', type => 'unit',
+	  desc => "The unit's integer ID",
+	  alias => 'unit', wrap => 1 }
+    );
 
     @outargs = (
 	{ name => $prop, type => $type,
@@ -57,7 +48,7 @@ sub unit_get_number_of_units {
 
     $help = 'This procedure returns the number of defined units.';
 
-    &pdb_misc;
+    &mitch_pdb_misc('1999');
 
     @outargs = (
 	{ name => 'num_units', type => 'int32', libdef => 'GIMP_UNIT_END',
@@ -73,7 +64,7 @@ sub unit_get_number_of_built_in_units {
 This procedure returns the number of defined units built-in to the GIMP.
 HELP
 
-    &pdb_misc;
+    &mitch_pdb_misc('1999');
 
     @outargs = (
 	{ name => 'num_units', type => 'int32', libdef => 'GIMP_UNIT_END',
@@ -92,7 +83,7 @@ new unit will have it's deletion flag set to TRUE, so you will have to set it
 to FALSE with gimp_unit_set_deletion_flag to make it persistent.
 HELP
 
-    &pdb_misc;
+    &mitch_pdb_misc('1999');
 
     @inargs = (
 	{ name => 'identifier', type => 'string', wrap => 1,
@@ -111,15 +102,18 @@ HELP
 	  desc => "The new unit's plural form" }
     );
 
-    @outargs = ( &unit_arg );
-    $outargs[0]->{desc} = "The new unit's ID";
-    $outargs[0]->{init} = 1;
-    $outargs[0]->{libdef} = 'GIMP_UNIT_INCH';
+    @outargs = (
+	{ name => 'unit_id', type => 'unit', init => 1,
+	  desc => "The new unit's ID",
+	  alias => 'unit', wrap => 1, libdef => 'GIMP_UNIT_INCH' }
+    );
 
     %invoke = (
 	code => <<'CODE'
-unit = _gimp_unit_new (gimp, identifier, factor, digits, symbol, abbreviation,
-		       singular, plural);
+{
+  unit = _gimp_unit_new (gimp, identifier, factor, digits, symbol, abbreviation,
+                         singular, plural);
+}
 CODE
     );
 }
@@ -142,10 +136,12 @@ TRUE on gimp exit, this unit's definition will not be saved in the user's
 unitrc.
 HELP
 
-    &pdb_misc;
+    &mitch_pdb_misc('1999');
 
     @inargs = (
-	&unit_arg,
+	{ name => 'unit_id', type => 'unit',
+	  desc => "The unit's integer ID",
+	  alias => 'unit', wrap => 1 },
 	{ name => 'deletion_flag', type => 'boolean',
 	  desc => 'The new deletion flag of the unit' }
     );
@@ -199,17 +195,13 @@ HELP
 }
 
 sub unit_get_singular {
-    $help  = <<'HELP';
-This procedure returns the singular form of the unit.
-HELP
+    $help = 'This procedure returns the singular form of the unit.';
 
     &unit_prop_proc('singular', 'string', 'singular form');
 }
 
 sub unit_get_plural {
-    $help = <<'HELP';
-This procedure returns the plural form of the unit.
-HELP
+    $help = 'This procedure returns the plural form of the unit.';
 
     &unit_prop_proc('plural', 'string', 'plural form');
 }

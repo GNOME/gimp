@@ -17,15 +17,12 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-# The defs
-
 sub plugins_query {
     $blurb = 'Queries the plugin database for its contents.';
 
     $help = 'This procedure queries the contents of the plugin database.';
 
-    $author = $copyright = 'Andy Thomas';
-    $date = '1998';
+    &andy_pdb_misc('1998');
 
     @inargs = (
 	{ name  => 'search_string', type => 'string',
@@ -92,8 +89,7 @@ in the query function of a plug-in and it has to be called before any
 procedure is installed.
 HELP
 
-    $author = $copyright = 'Sven Neumann';
-    $date = '2000';
+    &neo_pdb_misc('2000');
 
     @inargs = (
 	{ name => 'domain_name', type => 'string',
@@ -130,8 +126,7 @@ subsequent calls of gimp_help from this plug-in will be interpreted relative
 to this rootdir.
 HELP
 
-    $author = $copyright = 'Michael Natterer <mitch@gimp.org>';
-    $date = '2000';
+    &mitch_pdb_misc('2000');
 
     @inargs = (
 	{ name => 'domain_name', type => 'string',
@@ -164,9 +159,7 @@ sub plugin_menu_register {
 This procedure installs an additional menu entry for the given procedure.
 HELP
 
-    $author = $copyright = 'Michael Natterer <mitch@gimp.org>';
-    $date = '2004';
-    $since = '2.2';
+    &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
 	{ name => 'procedure_name', type => 'string',
@@ -202,9 +195,7 @@ sub plugin_menu_branch_register {
 This procedure installs an sub-menu which does not belong to any procedure.
 HELP
 
-    $author = $copyright = 'Michael Natterer <mitch@gimp.org>';
-    $date = '2005';
-    $since = '2.4';
+    &mitch_pdb_misc('2005', '2.4');
 
     @inargs = (
 	{ name => 'menu_path', type => 'string',
@@ -243,9 +234,7 @@ sub plugin_icon_register {
 This procedure installs an icon for the given procedure.
 HELP
 
-    $author = $copyright = 'Michael Natterer <mitch@gimp.org>';
-    $date = '2004';
-    $since = '2.2';
+    &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
 	{ name => 'procedure_name', type => 'string', wrap => 1,

@@ -66,7 +66,7 @@ static ProcRecord gradients_refresh_proc =
   "gimp-gradients-refresh",
   "Refresh current gradients. This function always succeeds.",
   "This procedure retrieves all gradients currently in the user's gradient path and updates the gradient dialogs accordingly.",
-  "Michael Natterer",
+  "Michael Natterer <mitch@gimp.org>",
   "Michael Natterer",
   "2002",
   NULL,
@@ -161,10 +161,6 @@ gradients_sample_uniform_invoker (Gimp         *gimp,
   gboolean reverse;
   gint32 array_length = 0;
   gdouble *color_samples = NULL;
-  GimpGradient *gradient;
-  gdouble pos, delta;
-  GimpRGB color;
-  gdouble *pv;
 
   i = args[0].value.pdb_int;
   if (i < 2)
@@ -174,7 +170,11 @@ gradients_sample_uniform_invoker (Gimp         *gimp,
 
   if (success)
     {
+      GimpGradient        *gradient;
       GimpGradientSegment *seg = NULL;
+      gdouble              pos, delta;
+      GimpRGB              color;
+      gdouble             *pv;
 
       pos   = 0.0;
       delta = 1.0 / (i - 1);
@@ -268,9 +268,6 @@ gradients_sample_custom_invoker (Gimp         *gimp,
   gboolean reverse;
   gint32 array_length = 0;
   gdouble *color_samples = NULL;
-  GimpGradient *gradient;
-  GimpRGB color;
-  gdouble *pv;
 
   i = args[0].value.pdb_int;
   if (i <= 0)
@@ -282,7 +279,10 @@ gradients_sample_custom_invoker (Gimp         *gimp,
 
   if (success)
     {
+      GimpGradient        *gradient;
       GimpGradientSegment *seg = NULL;
+      GimpRGB              color;
+      gdouble             *pv;
 
       array_length = i * 4;
 

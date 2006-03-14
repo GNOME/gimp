@@ -16,10 +16,6 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
-#   Added a PDB entry for writing a gimprc entry, by 
-#  Seth Burgess <sjburges@gimp.org> 15/04/99
-
-# The defs
 
 sub gimprc_query {
     $blurb = <<'BLURB';
@@ -46,14 +42,11 @@ HELP
     );
 
     @outargs = (
-	{ name => 'value', type => 'string',
-	  desc => 'The value associated with the queried token',
-	  no_declare => 1 }
+	{ name => 'value', type => 'string', init => 1,
+	  desc => 'The value associated with the queried token' }
     );
 
     %invoke = (
-	headers => [ qw("config/gimprc.h") ],
-	vars => [ 'gchar *value = NULL' ],
 	code => <<'CODE'
 {
   if (strlen (token))
@@ -79,8 +72,7 @@ gimp_gimprc_query to retrieve it.  This will accept _only_ string values in
 UTF-8 encoding.
 HELP
 
-    $author = $copyright = 'Seth Burgess';
-    $date = '1999';
+    &seth_pdb_misc('1999');
 	
     @inargs = (
 	{ name => 'token', type => 'string',
@@ -115,8 +107,6 @@ HELP
 
     &std_pdb_misc;
 
-    @inargs = ( );
-
     @outargs = (
 	{  name => 'xres', type => 'float', void_ret => 1,
 	   desc => 'X resolution', alias => 'xres' },
@@ -125,7 +115,6 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("config/gimpdisplayconfig.h") ],
 	code => <<'CODE'
 {
   xres = GIMP_DISPLAY_CONFIG (gimp->config)->monitor_xres;
@@ -137,12 +126,9 @@ CODE
 
 sub get_default_comment {
     $blurb = 'Get the default image comment as specified in the Preferences.';
-
-    $help = 'Returns a copy of the default image comment.';
+    $help  = 'Returns a copy of the default image comment.';
 
     &std_pdb_misc;
-
-    @inargs = ( );
 
     @outargs = (
 	{  name => 'comment', type => 'string',
@@ -150,7 +136,7 @@ sub get_default_comment {
     );
 
     %invoke = (
-	headers => [ qw("config/gimpcoreconfig.h" "core/gimptemplate.h") ],
+	headers => [ qw("core/gimptemplate.h") ],
 	code => <<'CODE'
 {
   comment = g_strdup (gimp->config->default_image->comment);
@@ -161,12 +147,9 @@ CODE
 
 sub get_theme_dir {
     $blurb = 'Get the directory of the current GUI theme.';
-
-    $help = 'Returns a copy of the current GUI theme dir.';
+    $help  = 'Returns a copy of the current GUI theme dir.';
 
     &std_pdb_misc;
-
-    @inargs = ( );
 
     @outargs = (
 	{  name => 'theme_dir', type => 'string',
@@ -186,11 +169,7 @@ sub get_color_configuration {
     $blurb = 'Get a serialized version of the color management configuration.';
     $help = 'Returns a string that can be deserialized into a GimpColorConfig object representing the current color management configuration.';
 
-    $author = $copyright = 'Sven Neumann';
-    $date = '2005';
-    $since = '2.4';
-
-    @inargs = ( );
+    &neo_pdb_misc('2005', '2.4');
 
     @outargs = (
 	{  name => 'config', type => 'string',
@@ -199,7 +178,7 @@ sub get_color_configuration {
     );
 
     %invoke = (
-	headers => [ qw("libgimpconfig/gimpconfig.h" "config/gimpcoreconfig.h") ],
+	headers => [ qw("libgimpconfig/gimpconfig.h") ],
 	code => <<'CODE'
 {
   config = gimp_config_serialize_to_string (GIMP_CONFIG (gimp->config->color_management), NULL);
@@ -210,12 +189,9 @@ CODE
 
 sub get_module_load_inhibit {
     $blurb = 'Get the list of modules which should not be loaded.';
-
-    $help = 'Returns a copy of the list of modules which should not be loaded.';
+    $help  = 'Returns a copy of the list of modules which should not be loaded.';
 
     &std_pdb_misc;
-
-    @inargs = ( );
 
     @outargs = (
 	{  name => 'load_inhibit', type => 'string',
@@ -232,7 +208,7 @@ CODE
     );
 }
 
-@headers = qw(<string.h> "core/gimp.h");
+@headers = qw(<string.h> "core/gimp.h" "config/gimprc.h");
 
 @procs = qw(gimprc_query gimprc_set 
 	    get_default_comment get_monitor_resolution get_theme_dir

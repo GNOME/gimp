@@ -17,24 +17,6 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub pdb_misc {
-    $author = $copyright = 'Jay Cox';
-    $date = '1998';
-}
-
-sub name_arg {{
-    name => 'name',
-    type => 'string',
-    desc => "The name of the parasite to $_[0]"
-}}
-
-sub parasite_outarg {{
-    name => 'parasite',
-    type => 'parasite',
-    desc => "The $_[0] parasite",
-    init => 1
-}}
-
 sub drawable_arg () {{
     name => 'drawable',
     type => 'drawable',
@@ -70,11 +52,18 @@ sub parasite_find {
 Finds and returns the named parasite that was previously attached to the gimp.
 HELP
 
-    &pdb_misc;
+    &jay_pdb_misc('1998');
 
-    @inargs = ( &name_arg('find') );
+    @inargs = (
+	{ name => 'name', type => 'string',
+	  desc => 'The name of the parasite to find' }
+    );
 
-    @outargs = ( &parasite_outarg('found') );
+    @outargs = (
+	{ name => 'parasite', type => 'parasite',
+	  desc => 'The found parasite',
+	  init => 1 }
+    );
 
     %invoke = (
 	code => <<'CODE'
@@ -93,7 +82,7 @@ sub parasite_attach {
 This procedure attaches a parasite to the gimp. It has no return values.
 HELP
 
-    &pdb_misc;
+    &jay_pdb_misc('1998');
 
     @inargs = (
 	{ name => 'parasite', type => 'parasite',
@@ -110,20 +99,21 @@ sub parasite_detach {
 This procedure detaches a parasite from the gimp. It has no return values.
 HELP
 
-    &pdb_misc;
+    &jay_pdb_misc('1998');
 
-    @inargs = ( &name_arg('detach from the gimp.') );
+    @inargs = (
+	{ name => 'name', type => 'string',
+	  desc => 'The name of the parasite to detach from the gimp.' }
+    );
 
     %invoke = ( code => 'gimp_parasite_detach (gimp, name);' );
 }
 
 sub parasite_list {
     $blurb = 'List all parasites.';
+    $help  = 'Returns a list of all currently attached parasites.';
 
-    $help = 'Returns a list of all currently attached parasites.';
-
-    $author = $copyright = 'Marc Lehmann';
-    $date = '1999';
+    &marc_pdb_misc('1999');
 
     @outargs = (
 	{ name => 'parasites', type => 'stringarray', void_ret => 1,

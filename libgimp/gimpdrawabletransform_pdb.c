@@ -524,10 +524,10 @@ gimp_drawable_transform_rotate_default (gint32   drawable_ID,
 /**
  * gimp_drawable_transform_scale:
  * @drawable_ID: The affected drawable.
- * @x0: The new x coordinate of upper-left corner of newly scaled region.
- * @y0: The new y coordinate of upper-left corner of newly scaled region.
- * @x1: The new x coordinate of lower-right corner of newly scaled region.
- * @y1: The new y coordinate of lower-right corner of newly scaled region.
+ * @x0: The new x coordinate of the upper-left corner of the scaled region.
+ * @y0: The new y coordinate of the upper-left corner of the scaled region.
+ * @x1: The new x coordinate of the lower-right corner of the scaled region.
+ * @y1: The new y coordinate of the lower-right corner of the scaled region.
  * @transform_direction: Direction of Transformation.
  * @interpolation: Type of interpolation.
  * @supersample: Whether to perform supersample.
@@ -589,10 +589,10 @@ gimp_drawable_transform_scale (gint32                 drawable_ID,
 /**
  * gimp_drawable_transform_scale_default:
  * @drawable_ID: The affected drawable.
- * @x0: The new x coordinate of upper-left corner of newly scaled region.
- * @y0: The new y coordinate of upper-left corner of newly scaled region.
- * @x1: The new x coordinate of lower-right corner of newly scaled region.
- * @y1: The new y coordinate of lower-right corner of newly scaled region.
+ * @x0: The new x coordinate of the upper-left corner of the scaled region.
+ * @y0: The new y coordinate of the upper-left corner of the scaled region.
+ * @x1: The new x coordinate of the lower-right corner of the scaled region.
+ * @y1: The new y coordinate of the lower-right corner of the scaled region.
  * @interpolate: Whether to use interpolation and supersampling.
  * @clip_result: Whether to clip results.
  *

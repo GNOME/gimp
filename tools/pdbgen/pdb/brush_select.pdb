@@ -17,11 +17,6 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub pdb_misc {
-    $author = $copyright = 'Andy Thomas';
-    $date = '1998';
-}
-
 sub brush_args {(
     { name => 'opacity',
       type => '0 <= float <= 100',
@@ -36,10 +31,9 @@ sub brush_args {(
 
 sub brushes_popup {
     $blurb = 'Invokes the Gimp brush selection.';
+    $help  = 'This procedure popups the brush selection dialog.';
 
-    $help = 'This procedure popups the brush selection dialog.';
-
-    &pdb_misc;
+    &andy_pdb_misc('1998');
 
     @inargs = (
 	{ name => 'brush_callback', type => 'string',
@@ -72,10 +66,9 @@ CODE
 
 sub brushes_close_popup {
     $blurb = 'Popdown the Gimp brush selection.';
+    $help  = 'This procedure closes an opened brush selection dialog.';
 
-    $help = 'This procedure closes an opened brush selection dialog.';
-
-    &pdb_misc;
+    &andy_pdb_misc('1998');
 
     @inargs = (
 	{ name => 'brush_callback', type => 'string',
@@ -97,10 +90,9 @@ CODE
 
 sub brushes_set_popup {
     $blurb = 'Sets the current brush selection in a popup.';
+    $help  = $blurb;
 
-    $help = $blurb;
-
-    &pdb_misc;
+    &andy_pdb_misc('1998');
 
     @inargs = (
 	{ name => 'brush_callback', type => 'string',

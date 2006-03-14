@@ -17,29 +17,6 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub inargs {
-    @inargs = (
-	{ name => 'floating_sel', type => 'layer',
-	  desc => 'The floating selection' }
-    );
-}
-
-sub invoke {
-    my @subname = split /::/, (caller 1)[3];
-    my $cmd = pop @subname;
-    %invoke = (
-	headers => [ qw("core/gimplayer-floating-sel.h") ],
-	code => <<CODE
-{
-  if (gimp_layer_is_floating_sel (floating_sel))
-    $cmd (floating_sel);
-  else
-    success = FALSE;
-}
-CODE
-    );
-}
-
 sub floating_sel_remove {
     $blurb = <<'BLURB';
 Remove the specified floating selection from its associated drawable.
@@ -51,8 +28,22 @@ effects. The associated drawable is then set to active.
 HELP
 
     &std_pdb_misc;
-    &inargs;
-    &invoke;
+
+    @inargs = (
+	{ name => 'floating_sel', type => 'layer',
+	  desc => 'The floating selection' }
+    );
+
+    %invoke = (
+	code => <<CODE
+{
+  if (gimp_layer_is_floating_sel (floating_sel))
+    floating_sel_remove (floating_sel);
+  else
+    success = FALSE;
+}
+CODE
+    );
 }
 
 sub floating_sel_anchor {
@@ -67,8 +58,22 @@ selection layer is no longer valid after this operation.
 HELP
 
     &std_pdb_misc;
-    &inargs;
-    &invoke;
+
+    @inargs = (
+	{ name => 'floating_sel', type => 'layer',
+	  desc => 'The floating selection' }
+    );
+
+    %invoke = (
+	code => <<CODE
+{
+  if (gimp_layer_is_floating_sel (floating_sel))
+    floating_sel_anchor (floating_sel);
+  else
+    success = FALSE;
+}
+CODE
+    );
 }
 
 sub floating_sel_to_layer {
@@ -85,8 +90,22 @@ floating selection is above an auxillary channel or a layer mask.
 HELP
 
     &std_pdb_misc;
-    &inargs;
-    &invoke;
+
+    @inargs = (
+	{ name => 'floating_sel', type => 'layer',
+	  desc => 'The floating selection' }
+    );
+
+    %invoke = (
+	code => <<CODE
+{
+  if (gimp_layer_is_floating_sel (floating_sel))
+    floating_sel_to_layer (floating_sel);
+  else
+    success = FALSE;
+}
+CODE
+    );
 }
 
 sub floating_sel_attach {
@@ -108,13 +127,12 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("core/gimplayer-floating-sel.h") ],
 	code => <<CODE
 {
-  success = gimp_item_is_attached (GIMP_ITEM (drawable));
-
-  if (success)
+  if (gimp_item_is_attached (GIMP_ITEM (drawable)))
     floating_sel_attach (layer, drawable);
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -122,35 +140,55 @@ CODE
 
 sub floating_sel_rigor {
     $blurb = 'Rigor the floating selection.';
-
-    $help = <<'HELP';
-This procedure rigors the floating selection.
-HELP
+    $help  = 'This procedure rigors the floating selection.';
 
     &std_pdb_misc;
 
-    &inargs;
-    push @inargs, { name => 'undo', type => 'boolean', desc => '%%desc%%' };
+    @inargs = (
+	{ name => 'floating_sel', type => 'layer',
+	  desc => 'The floating selection' },
+	{ name => 'undo', type => 'boolean',
+	  desc => '%%desc%%' }
+    );
 
-    &invoke;
-    $invoke{code} =~ s/\(floating_sel\);/(floating_sel, undo);/;
+    %invoke = (
+	code => <<CODE
+{
+  if (gimp_layer_is_floating_sel (floating_sel))
+    floating_sel_rigor (floating_sel, undo);
+  else
+    success = FALSE;
+}
+CODE
+    );
 }
 
 sub floating_sel_relax {
     $blurb = 'Relax the floating selection.';
-
-    $help = <<'HELP';
-This procedure relaxes the floating selection.
-HELP
+    $help  = 'This procedure relaxes the floating selection.';
 
     &std_pdb_misc;
 
-    &inargs;
-    push @inargs, { name => 'undo', type => 'boolean', desc => '%%desc%%' };
+    @inargs = (
+	{ name => 'floating_sel', type => 'layer',
+	  desc => 'The floating selection' },
+	{ name => 'undo', type => 'boolean',
+	  desc => '%%desc%%' }
+    );
 
-    &invoke;
-    $invoke{code} =~ s/\(floating_sel\);/(floating_sel, undo);/;
+    %invoke = (
+	code => <<CODE
+{
+  if (gimp_layer_is_floating_sel (floating_sel))
+    floating_sel_relax (floating_sel, undo);
+  else
+    success = FALSE;
 }
+CODE
+    );
+}
+
+@headers = qw("core/gimplayer-floating-sel.h");
 
 @procs = qw(floating_sel_remove floating_sel_anchor floating_sel_to_layer
 	    floating_sel_attach floating_sel_rigor floating_sel_relax);

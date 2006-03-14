@@ -222,15 +222,18 @@ image_list_invoker (Gimp         *gimp,
   Argument *return_args;
   gint32 num_images = 0;
   gint32 *image_ids = NULL;
+
   GList *list = NULL;
-  gint i;
 
   list = GIMP_LIST (gimp->images)->list;
   num_images = g_list_length (list);
 
   if (num_images)
     {
+      gint i;
+
       image_ids = g_new (gint32, num_images);
+
       for (i = 0; i < num_images; i++, list = g_list_next (list))
         image_ids[i] = gimp_image_get_ID (GIMP_IMAGE (list->data));
     }
@@ -1100,7 +1103,7 @@ static ProcRecord image_rotate_proc =
   "gimp-image-rotate",
   "Rotates the image by the specified degrees.",
   "This procedure rotates the image.",
-  "Michael Natterer",
+  "Michael Natterer <mitch@gimp.org>",
   "Michael Natterer",
   "2003",
   NULL,
@@ -1123,8 +1126,6 @@ image_get_layers_invoker (Gimp         *gimp,
   GimpImage *gimage;
   gint32 num_layers = 0;
   gint32 *layer_ids = NULL;
-  GList *list = NULL;
-  gint i;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -1132,12 +1133,17 @@ image_get_layers_invoker (Gimp         *gimp,
 
   if (success)
     {
+      GList *list = NULL;
+
       list = GIMP_LIST (gimage->layers)->list;
       num_layers = g_list_length (list);
 
       if (num_layers)
         {
+          gint i;
+
           layer_ids = g_new (gint32, num_layers);
+
           for (i = 0; i < num_layers; i++, list = g_list_next (list))
             layer_ids[i] = gimp_item_get_ID (GIMP_ITEM (list->data));
         }
@@ -1206,8 +1212,6 @@ image_get_channels_invoker (Gimp         *gimp,
   GimpImage *gimage;
   gint32 num_channels = 0;
   gint32 *channel_ids = NULL;
-  GList *list = NULL;
-  gint i;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -1215,12 +1219,17 @@ image_get_channels_invoker (Gimp         *gimp,
 
   if (success)
     {
+      GList *list = NULL;
+
       list = GIMP_LIST (gimage->channels)->list;
       num_channels = g_list_length (list);
 
       if (num_channels)
         {
+          gint i;
+
           channel_ids = g_new (gint32, num_channels);
+
           for (i = 0; i < num_channels; i++, list = g_list_next (list))
             channel_ids[i] = gimp_item_get_ID (GIMP_ITEM (list->data));
         }
@@ -1289,8 +1298,6 @@ image_get_vectors_invoker (Gimp         *gimp,
   GimpImage *gimage;
   gint32 num_vectors = 0;
   gint32 *vector_ids = NULL;
-  GList *list = NULL;
-  gint i;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -1298,12 +1305,17 @@ image_get_vectors_invoker (Gimp         *gimp,
 
   if (success)
     {
+      GList *list = NULL;
+
       list = GIMP_LIST (gimage->vectors)->list;
       num_vectors = g_list_length (list);
 
       if (num_vectors)
         {
+          gint i;
+
           vector_ids = g_new (gint32, num_vectors);
+
           for (i = 0; i < num_vectors; i++, list = g_list_next (list))
             vector_ids[i] = gimp_item_get_ID (GIMP_ITEM (list->data));
         }
@@ -1541,7 +1553,6 @@ image_floating_sel_attached_to_invoker (Gimp         *gimp,
   Argument *return_args;
   GimpImage *gimage;
   GimpDrawable *drawable = NULL;
-  GimpLayer *floating_sel;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -1549,7 +1560,7 @@ image_floating_sel_attached_to_invoker (Gimp         *gimp,
 
   if (success)
     {
-      floating_sel = gimp_image_floating_sel (gimage);
+      GimpLayer *floating_sel = gimp_image_floating_sel (gimage);
 
       if (floating_sel)
         drawable = GIMP_DRAWABLE (GIMP_LAYER (floating_sel)->fs.drawable);
@@ -2213,7 +2224,7 @@ static ProcRecord image_raise_vectors_proc =
   "Raise the specified vectors in the image's vectors stack",
   "This procedure raises the specified vectors one step in the existing vectors stack. It will not move the vectors if there is no vectors above it.",
   "Simon Budig",
-  "Spencer Kimball & Peter Mattis",
+  "Simon Budig",
   "2005",
   NULL,
   GIMP_INTERNAL,
@@ -2269,7 +2280,7 @@ static ProcRecord image_lower_vectors_proc =
   "Lower the specified vectors in the image's vectors stack",
   "This procedure lowers the specified vectors one step in the existing vectors stack. It will not move the vectors if there is no vectors below it.",
   "Simon Budig",
-  "Spencer Kimball & Peter Mattis",
+  "Simon Budig",
   "2005",
   NULL,
   GIMP_INTERNAL,
@@ -2325,7 +2336,7 @@ static ProcRecord image_raise_vectors_to_top_proc =
   "Raise the specified vectors in the image's vectors stack to top of stack",
   "This procedure raises the specified vectors to top of the existing vectors stack. It will not move the vectors if there is no vectors above it.",
   "Simon Budig",
-  "Spencer Kimball & Peter Mattis",
+  "Simon Budig",
   "2005",
   NULL,
   GIMP_INTERNAL,
@@ -2381,7 +2392,7 @@ static ProcRecord image_lower_vectors_to_bottom_proc =
   "Lower the specified vectors in the image's vectors stack to bottom of stack",
   "This procedure lowers the specified vectors to bottom of the existing vectors stack. It will not move the vectors if there is no vectors below it.",
   "Simon Budig",
-  "Spencer Kimball & Peter Mattis",
+  "Simon Budig",
   "2005",
   NULL,
   GIMP_INTERNAL,
@@ -2628,7 +2639,7 @@ static ProcRecord image_remove_vectors_proc =
   "Remove the specified path from the image.",
   "This procedure removes the specified path from the image. If the path doesn't exist, an error is returned.",
   "Simon Budig",
-  "Spencer Kimball & Peter Mattis",
+  "Simon Budig",
   "2005",
   NULL,
   GIMP_INTERNAL,
@@ -4615,7 +4626,7 @@ static ProcRecord image_get_unit_proc =
   "gimp-image-get-unit",
   "Returns the specified image's unit.",
   "This procedure returns the specified image's unit. This value is independent of any of the layers in this image. See the gimp_unit_* procedure definitions for the valid range of unit IDs and a description of the unit system.",
-  "Michael Natterer",
+  "Michael Natterer <mitch@gimp.org>",
   "Michael Natterer",
   "1998",
   NULL,
@@ -4671,7 +4682,7 @@ static ProcRecord image_set_unit_proc =
   "gimp-image-set-unit",
   "Sets the specified image's unit.",
   "This procedure sets the specified image's unit. No scaling or resizing is performed. This value is independent of any of the layers in this image. See the gimp_unit_* procedure definitions for the valid range of unit IDs and a description of the unit system.",
-  "Michael Natterer",
+  "Michael Natterer <mitch@gimp.org>",
   "Michael Natterer",
   "1998",
   NULL,

@@ -17,52 +17,6 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-# Selection Tools
-
-# shortcuts
-
-sub drawable_arg () {{
-    name => 'drawable',
-    type => 'drawable',
-    desc => 'The affected drawable',
-}}
-
-sub drawable_out_arg {
-    my $type = shift;
-    my $arg = &drawable_arg;
-    $arg->{desc} = "The $type drawable";
-    $arg->{no_declare} = 1;
-    $arg;
-}
-
-sub sample_merged_arg () {{
-    name => 'sample_merged',
-    type => 'boolean',
-    desc => 'Use the composite image, not the drawable'
-}}
-
-sub operation_arg () {{
-    name => 'operation',
-    type => 'enum GimpChannelOps',
-    desc => 'The selection operation: { %%desc%% }'
-}}
-
-sub threshold_arg () {{
-    name => 'threshold',
-    type => '0 <= int32 <= 255',
-    desc => 'Threshold in intensity levels %%desc%%'
-}}
-
-sub feather_select_args () {(
-    { name => 'feather', type => 'boolean',
-      desc => 'Feather option for selections' },
-    { name => 'feather_radius', type => 'float',
-      desc => 'Radius for feather operation' }
-)}
-
-
-# The defs
-
 sub by_color_select {
     $blurb = <<'BLURB';
 Create a selection by selecting all pixels (in the specified drawable) with the
@@ -86,21 +40,27 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&drawable_arg,
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The affected drawable' },
 	{ name => 'color', type => 'color',
 	  desc => 'The color to select' },
-	&threshold_arg,
-	&operation_arg,
+	{ name => 'threshold', type => '0 <= int32 <= 255',
+	  desc => 'Threshold in intensity levels %%desc%%' },
+	{ name => 'operation', type => 'enum GimpChannelOps',
+	  desc => 'The selection operation: { %%desc%% }' },
 	&std_antialias_arg,
-	&feather_select_args,
-	&sample_merged_arg
+	{ name => 'feather', type => 'boolean',
+	  desc => 'Feather option for selections' },
+	{ name => 'feather_radius', type => 'float',
+	  desc => 'Radius for feather operation' },
+	{ name => 'sample_merged', type => 'boolean',
+	  desc => 'Use the composite image, not the drawable' }
     );
 
     %invoke = (
-	vars => [ 'GimpImage *gimage' ],
 	code => <<'CODE'
 {
-  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+  GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
   gimp_channel_select_by_color (gimp_image_get_mask (gimage), drawable,
                                 sample_merged,
@@ -143,21 +103,27 @@ HELP
 	  desc => 'The width of the ellipse: %%desc%%' },
 	{ name => 'height', type => '0 < float',
 	  desc => 'The height of the ellipse: %%desc%%' },
-	&operation_arg,
+	{ name => 'operation', type => 'enum GimpChannelOps',
+	  desc => 'The selection operation: { %%desc%% }' },
 	&std_antialias_arg,
-	&feather_select_args
+	{ name => 'feather', type => 'boolean',
+	  desc => 'Feather option for selections' },
+	{ name => 'feather_radius', type => 'float',
+	  desc => 'Radius for feather operation' }
     );
 
     %invoke = (
 	code => <<'CODE'
-gimp_channel_select_ellipse (gimp_image_get_mask (gimage),
-                             (gint) x, (gint) y,
-                             (gint) width, (gint) height,
-                             operation,
-                             antialias,
-                             feather,
-                             feather_radius,
-                             feather_radius);
+{
+  gimp_channel_select_ellipse (gimp_image_get_mask (gimage),
+                               (gint) x, (gint) y,
+                               (gint) width, (gint) height,
+                               operation,
+                               antialias,
+                               feather,
+                               feather_radius,
+                               feather_radius);
+}
 CODE
     );
 }
@@ -187,22 +153,28 @@ HELP
           array => { type => '2 <= int32', on_success => 'num_segs /= 2;',
                      desc => 'Number of points (count 1 coordinate as two
                               points)' } },
-        &operation_arg,
+	{ name => 'operation', type => 'enum GimpChannelOps',
+	  desc => 'The selection operation: { %%desc%% }' },
         &std_antialias_arg,
-        &feather_select_args
+	{ name => 'feather', type => 'boolean',
+	  desc => 'Feather option for selections' },
+	{ name => 'feather_radius', type => 'float',
+	  desc => 'Radius for feather operation' }
     );
 
     %invoke = (
         code => <<'CODE'
-gimp_channel_select_polygon (gimp_image_get_mask (gimage),
-                             _("Free Select"),
-                             num_segs,
-                             (GimpVector2 *) segs,
-                             operation,
-                             antialias,
-                             feather,
-                             feather_radius,
-                             feather_radius);
+{
+  gimp_channel_select_polygon (gimp_image_get_mask (gimage),
+                               _("Free Select"),
+                               num_segs,
+                               (GimpVector2 *) segs,
+                               operation,
+                               antialias,
+                               feather,
+                               feather_radius,
+                               feather_radius);
+}
 CODE
     );
 }
@@ -234,25 +206,31 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&drawable_arg,
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The affected drawable' },
 	{ name => 'x', type => 'float',
 	  desc => 'x coordinate of initial seed fill point: (image
 	  	   coordinates)' },
 	{ name => 'y', type => 'float',
 	  desc => 'y coordinate of initial seed fill point: (image
 	  	   coordinates)' },
-	&threshold_arg,
-	&operation_arg,
+	{ name => 'threshold', type => '0 <= int32 <= 255',
+	  desc => 'Threshold in intensity levels %%desc%%' },
+	{ name => 'operation', type => 'enum GimpChannelOps',
+	  desc => 'The selection operation: { %%desc%% }' },
 	&std_antialias_arg,
-	&feather_select_args,
-	&sample_merged_arg
+	{ name => 'feather', type => 'boolean',
+	  desc => 'Feather option for selections' },
+	{ name => 'feather_radius', type => 'float',
+	  desc => 'Radius for feather operation' },
+	{ name => 'sample_merged', type => 'boolean',
+	  desc => 'Use the composite image, not the drawable' }
     );
 
     %invoke = (
-	vars => [ 'GimpImage *gimage' ],
 	code => <<'CODE'
 {
-  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+  GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
   gimp_channel_select_fuzzy (gimp_image_get_mask (gimage),
                              drawable,
@@ -293,19 +271,25 @@ HELP
 	  desc => 'The width of the rectangle: %%desc%%' },
 	{ name => 'height', type => '0 < float',
 	  desc => 'The height of the rectangle: %%desc%%' },
-	&operation_arg,
-	&feather_select_args,
+	{ name => 'operation', type => 'enum GimpChannelOps',
+	  desc => 'The selection operation: { %%desc%% }' },
+	{ name => 'feather', type => 'boolean',
+	  desc => 'Feather option for selections' },
+	{ name => 'feather_radius', type => 'float',
+	  desc => 'Radius for feather operation' }
     );
 
     %invoke = (
 	code => <<'CODE'
-gimp_channel_select_rectangle (gimp_image_get_mask (gimage),
-                               (gint) x, (gint) y,
-                               (gint) width, (gint) height,
-                               operation,
-                               feather,
-                               feather_radius,
-                               feather_radius);
+{
+  gimp_channel_select_rectangle (gimp_image_get_mask (gimage),
+                                 (gint) x, (gint) y,
+                                 (gint) width, (gint) height,
+                                 operation,
+                                 feather,
+                                 feather_radius,
+                                 feather_radius);
+}
 CODE
     );
 }

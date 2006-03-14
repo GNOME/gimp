@@ -867,7 +867,6 @@ selection_layer_alpha_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   GimpLayer *layer;
-  GimpImage *gimage;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
@@ -875,7 +874,8 @@ selection_layer_alpha_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gimage = gimp_item_get_image (GIMP_ITEM (layer));
+      GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (layer));
+
       gimp_channel_select_alpha (gimp_image_get_mask (gimage),
                                  GIMP_DRAWABLE (layer),
                                  GIMP_CHANNEL_OP_REPLACE, FALSE, 0.0, 0.0);

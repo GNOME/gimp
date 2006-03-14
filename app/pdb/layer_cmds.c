@@ -144,10 +144,7 @@ layer_new_invoker (Gimp         *gimp,
 
   if (success)
     {
-      layer = gimp_layer_new (gimage,
-                              width, height,
-                              type,
-                              name,
+      layer = gimp_layer_new (gimage, width, height, type, name,
                               opacity / 100.0, mode);
       success = (layer != NULL);
     }

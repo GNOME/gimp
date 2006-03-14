@@ -618,8 +618,8 @@ gimp_histogram (gint32                drawable_ID,
  * @drawable_ID: The drawable.
  * @hue_range: Range of affected hues.
  * @hue_offset: Hue offset in degrees.
- * @lightness: lightness modification.
- * @saturation: saturation modification.
+ * @lightness: Lightness modification.
+ * @saturation: Saturation modification.
  *
  * Modify hue, lightness, and saturation in the specified drawable.
  *

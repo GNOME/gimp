@@ -17,18 +17,11 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub pdb_misc {
-    $author = 'Michael Natterer <mitch@gimp.org>';
-    $copyright = 'Michael Natterer';
-    $date = '2002';
-}
-
 sub palettes_popup {
     $blurb = 'Invokes the Gimp palette selection.';
+    $help  = 'This procedure popups the palette selection dialog.';
 
-    $help = 'This procedure popups the palette selection dialog.';
-
-    &pdb_misc;
+    &mitch_pdb_misc('2002');
 
     @inargs = (
 	{ name => 'palette_callback', type => 'string',
@@ -57,10 +50,9 @@ CODE
 
 sub palettes_close_popup {
     $blurb = 'Popdown the Gimp palette selection.';
+    $help  = 'This procedure closes an opened palette selection dialog.';
 
-    $help = 'This procedure closes an opened palette selection dialog.';
-
-    &pdb_misc;
+    &mitch_pdb_misc('2002');
 
     @inargs = (
 	{ name => 'palette_callback', type => 'string',
@@ -82,10 +74,9 @@ CODE
 
 sub palettes_set_popup {
     $blurb = 'Sets the current palette selection in a popup.';
+    $help  = $blurb;
 
-    $help = $blurb;
-
-    &pdb_misc;
+    &mitch_pdb_misc('2002');
 
     @inargs = (
 	{ name => 'palette_callback', type => 'string',

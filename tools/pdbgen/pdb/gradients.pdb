@@ -17,14 +17,6 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub federico_misc {
-    $author = $copyright = 'Federico Mena Quintero';
-    $date = '1997';
-}
-
-
-# The defs
-
 sub gradients_refresh {
     $blurb = 'Refresh current gradients. This function always succeeds.';
 
@@ -33,8 +25,7 @@ This procedure retrieves all gradients currently in the user's gradient path
 and updates the gradient dialogs accordingly.
 HELP
 
-    $author = $copyright = 'Michael Natterer';
-    $date = '2002';
+    &mitch_pdb_misc('2002');
 
     %invoke = (
         code => 'gimp_data_factory_data_refresh (gimp->gradient_factory);'
@@ -50,7 +41,7 @@ You can later use the 'gimp-context-set-gradient' function to
 set the active gradient.
 HELP
 
-    &federico_misc;
+    &federico_pdb_misc('1997');
 
     @inargs = (
 	{ name => 'filter', type => 'string', null_ok => 1,
@@ -71,17 +62,16 @@ HELP
     );
 }
 
-sub sample_num_arg {
-    { name => 'num_samples', type => $_[0] . 'int32',
-      desc => 'The number of samples to take', alias => 'i' }
-}
+sub gradients_sample_uniform {
+    &std_pdb_deprecated ('gimp-gradient-get-uniform-samples');
 
-sub reverse_arg {
-    { name => 'reverse', type => 'boolean',
-      desc => 'Use the reverse gradient (%%desc%%)' }
-}
+    @inargs = (
+	{ name => 'num_samples', type => '2 <= int32',
+	  desc => 'The number of samples to take', alias => 'i' },
+	{ name => 'reverse', type => 'boolean',
+	  desc => 'Use the reverse gradient (%%desc%%)' }
+    );
 
-sub sample_outargs {
     @outargs = (
         { name => 'color_samples', type => 'floatarray', init => 1,
 	  desc => 'Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }',
@@ -89,23 +79,15 @@ sub sample_outargs {
 		     desc => 'Length of the color_samples array (4 *
 			      num_samples)' } }
     );
-}
-
-sub gradients_sample_uniform {
-    &std_pdb_deprecated ('gimp-gradient-get-uniform-samples');
-
-    @inargs = (
-	 &sample_num_arg('2 <= '),
-	 &reverse_arg
-    );
-    &sample_outargs;
 
     %invoke = (
-	vars => [ 'GimpGradient *gradient', 'gdouble pos, delta',
-                  'GimpRGB color', 'gdouble *pv' ],
 	code => <<'CODE'
 {
+  GimpGradient        *gradient;
   GimpGradientSegment *seg = NULL;
+  gdouble              pos, delta;
+  GimpRGB              color;
+  gdouble             *pv;
 
   pos   = 0.0;
   delta = 1.0 / (i - 1);
@@ -140,17 +122,27 @@ sub gradients_sample_custom {
 	  type  => 'floatarray',
 	  desc  => 'The list of positions to sample along the gradient',
 	  alias => 'pos',
-	  array => &sample_num_arg("") },
-	&reverse_arg
+	  array => { name => 'num_samples', type => 'int32',
+		     desc => 'The number of samples to take', alias => 'i' } },
+	{ name => 'reverse', type => 'boolean',
+	  desc => 'Use the reverse gradient (%%desc%%)' }
     );
 
-    &sample_outargs;
+    @outargs = (
+        { name => 'color_samples', type => 'floatarray', init => 1,
+	  desc => 'Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }',
+	  array => { name => 'array_length', no_lib => 1, init => 1,
+		     desc => 'Length of the color_samples array (4 *
+			      num_samples)' } }
+    );
 
     %invoke = (
-	vars => [ 'GimpGradient *gradient', 'GimpRGB color', 'gdouble *pv' ],
 	code => <<'CODE'
 {
+  GimpGradient        *gradient;
   GimpGradientSegment *seg = NULL;
+  GimpRGB              color;
+  gdouble             *pv;
 
   array_length = i * 4;
 
@@ -174,15 +166,6 @@ CODE
     );
 }
 
-sub sample_size_arg {
-    { name => 'sample_size',
-      type => '0 < int32 <= 10000',
-      desc => 'Size of the sample to return when the gradient is changed
-	      (%%desc%%)',
-      on_fail => 'sample_size = GIMP_GRADIENT_DEFAULT_SAMPLE_SIZE;',
-      no_success => 1 }
-}
-
 sub gradients_get_gradient_data {
     &std_pdb_deprecated ('gimp-gradient-get-uniform-samples');
 
@@ -190,8 +173,13 @@ sub gradients_get_gradient_data {
 	{ name => 'name', type => 'string',
 	  desc => 'The gradient name ("" means current active gradient)',
           null_ok => '1' },
-	&sample_size_arg,
-	&reverse_arg
+	{ name => 'sample_size', type => '0 < int32 <= 10000',
+	  desc => 'Size of the sample to return when the gradient is changed
+	           (%%desc%%)',
+	  on_fail => 'sample_size = GIMP_GRADIENT_DEFAULT_SAMPLE_SIZE;',
+	  no_success => 1 },
+	{ name => 'reverse', type => 'boolean',
+	  desc => 'Use the reverse gradient (%%desc%%)' }
     );
 
     @outargs = (

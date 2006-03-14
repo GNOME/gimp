@@ -162,7 +162,6 @@ path_get_current_invoker (Gimp         *gimp,
   Argument *return_args;
   GimpImage *gimage;
   gchar *name = NULL;
-  GimpVectors *vectors;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -170,7 +169,7 @@ path_get_current_invoker (Gimp         *gimp,
 
   if (success)
     {
-      vectors = gimp_image_get_active_vectors (gimage);
+      GimpVectors *vectors = gimp_image_get_active_vectors (gimage);
 
       if (vectors)
         name = g_strdup (gimp_object_get_name (GIMP_OBJECT (vectors)));
@@ -231,7 +230,6 @@ path_set_current_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   GimpImage *gimage;
   gchar *name;
-  GimpVectors *vectors;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -243,7 +241,7 @@ path_set_current_invoker (Gimp         *gimp,
 
   if (success)
     {
-      vectors = gimp_image_get_vectors_by_name (gimage, name);
+      GimpVectors *vectors = gimp_image_get_vectors_by_name (gimage, name);
 
       if (vectors)
         gimp_image_set_active_vectors (gimage, vectors);
@@ -295,7 +293,6 @@ path_delete_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   GimpImage *gimage;
   gchar *name;
-  GimpVectors *vectors;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -307,7 +304,7 @@ path_delete_invoker (Gimp         *gimp,
 
   if (success)
     {
-      vectors = gimp_image_get_vectors_by_name (gimage, name);
+      GimpVectors *vectors = gimp_image_get_vectors_by_name (gimage, name);
 
       if (vectors)
         gimp_image_remove_vectors (gimage, vectors);
@@ -496,7 +493,6 @@ path_set_points_invoker (Gimp         *gimp,
   gint32 ptype;
   gint32 num_path_points = 0;
   gdouble *points_pairs;
-  gboolean closed = FALSE;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -516,6 +512,8 @@ path_set_points_invoker (Gimp         *gimp,
 
   if (success)
     {
+      gboolean closed = FALSE;
+
       if ((num_path_points / 3) % 3 == 0)
         closed = TRUE;
       else if ((num_path_points / 3) % 3 != 2)
@@ -680,12 +678,6 @@ path_get_point_at_dist_invoker (Gimp         *gimp,
   gint32 x_point = 0;
   gint32 y_point = 0;
   gdouble slope = 0;
-  GimpVectors *vectors;
-  GimpStroke *stroke;
-  gdouble distance_along;
-  gdouble stroke_length;
-  gdouble stroke_distance;
-  GimpCoords position;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -695,6 +687,13 @@ path_get_point_at_dist_invoker (Gimp         *gimp,
 
   if (success)
     {
+      GimpVectors *vectors;
+      GimpStroke  *stroke;
+      gdouble      distance_along;
+      gdouble      stroke_length;
+      gdouble      stroke_distance;
+      GimpCoords   position;
+
       vectors = gimp_image_get_active_vectors (gimage);
 
       if (vectors)
@@ -813,7 +812,6 @@ path_get_tattoo_invoker (Gimp         *gimp,
   GimpImage *gimage;
   gchar *name;
   gint32 tattoo = 0;
-  GimpVectors *vectors;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -825,7 +823,7 @@ path_get_tattoo_invoker (Gimp         *gimp,
 
   if (success)
     {
-      vectors = gimp_image_get_vectors_by_name (gimage, name);
+      GimpVectors *vectors = gimp_image_get_vectors_by_name (gimage, name);
 
       if (vectors)
         tattoo = gimp_item_get_tattoo (GIMP_ITEM (vectors));
@@ -892,7 +890,6 @@ path_set_tattoo_invoker (Gimp         *gimp,
   GimpImage *gimage;
   gchar *name;
   gint32 tattovalue = 0;
-  GimpVectors *vectors;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -906,7 +903,7 @@ path_set_tattoo_invoker (Gimp         *gimp,
 
   if (success)
     {
-      vectors = gimp_image_get_vectors_by_name (gimage, name);
+      GimpVectors *vectors = gimp_image_get_vectors_by_name (gimage, name);
 
       if (vectors)
         gimp_item_set_tattoo (GIMP_ITEM (vectors), tattovalue);
@@ -965,7 +962,6 @@ get_path_by_tattoo_invoker (Gimp         *gimp,
   GimpImage *gimage;
   gint32 tattoo;
   gchar *name = NULL;
-  GimpVectors *vectors;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -975,7 +971,7 @@ get_path_by_tattoo_invoker (Gimp         *gimp,
 
   if (success)
     {
-      vectors = gimp_image_get_vectors_by_tattoo (gimage, tattoo);
+      GimpVectors *vectors = gimp_image_get_vectors_by_tattoo (gimage, tattoo);
 
       if (vectors)
         name = g_strdup (gimp_object_get_name (GIMP_OBJECT (vectors)));
@@ -1043,7 +1039,6 @@ path_get_locked_invoker (Gimp         *gimp,
   GimpImage *gimage;
   gchar *name;
   gboolean locked = FALSE;
-  GimpVectors *vectors;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -1055,7 +1050,7 @@ path_get_locked_invoker (Gimp         *gimp,
 
   if (success)
     {
-      vectors = gimp_image_get_vectors_by_name (gimage, name);
+      GimpVectors *vectors = gimp_image_get_vectors_by_name (gimage, name);
 
       if (vectors)
         locked = gimp_item_get_linked (GIMP_ITEM (vectors));
@@ -1122,7 +1117,6 @@ path_set_locked_invoker (Gimp         *gimp,
   GimpImage *gimage;
   gchar *name;
   gboolean locked = FALSE;
-  GimpVectors *vectors;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -1136,7 +1130,7 @@ path_set_locked_invoker (Gimp         *gimp,
 
   if (success)
     {
-      vectors = gimp_image_get_vectors_by_name (gimage, name);
+      GimpVectors *vectors = gimp_image_get_vectors_by_name (gimage, name);
 
       if (vectors)
         gimp_item_set_linked (GIMP_ITEM (vectors), locked, TRUE);
@@ -1195,7 +1189,6 @@ path_get_visible_invoker (Gimp         *gimp,
   GimpImage *gimage;
   gchar *name;
   gboolean visible = FALSE;
-  GimpVectors *vectors;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -1207,7 +1200,7 @@ path_get_visible_invoker (Gimp         *gimp,
 
   if (success)
     {
-      vectors = gimp_image_get_vectors_by_name (gimage, name);
+      GimpVectors *vectors = gimp_image_get_vectors_by_name (gimage, name);
 
       if (vectors)
         visible = gimp_item_get_visible (GIMP_ITEM (vectors));
@@ -1274,7 +1267,6 @@ path_set_visible_invoker (Gimp         *gimp,
   GimpImage *gimage;
   gchar *name;
   gboolean visible = FALSE;
-  GimpVectors *vectors;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -1288,7 +1280,7 @@ path_set_visible_invoker (Gimp         *gimp,
 
   if (success)
     {
-      vectors = gimp_image_get_vectors_by_name (gimage, name);
+      GimpVectors *vectors = gimp_image_get_vectors_by_name (gimage, name);
 
       if (vectors)
         gimp_item_set_visible (GIMP_ITEM (vectors), visible, TRUE);
@@ -1324,7 +1316,7 @@ static ProcRecord path_set_visible_proc =
   "gimp-path-set-visible",
   "Sets the visibility of the named path.",
   "This procedure sets the specified path's visibility.",
-  "Sven Neumann",
+  "Sven Neumann <sven@gimp.org>",
   "Sven Neumann",
   "2005",
   NULL,
@@ -1350,7 +1342,6 @@ path_to_selection_invoker (Gimp         *gimp,
   gboolean feather;
   gdouble feather_radius_x;
   gdouble feather_radius_y;
-  GimpVectors *vectors;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -1374,7 +1365,7 @@ path_to_selection_invoker (Gimp         *gimp,
 
   if (success)
     {
-      vectors = gimp_image_get_vectors_by_name (gimage, name);
+      GimpVectors *vectors = gimp_image_get_vectors_by_name (gimage, name);
 
       if (vectors)
         gimp_channel_select_vectors (gimp_image_get_mask (gimage),
@@ -1437,8 +1428,8 @@ static ProcRecord path_to_selection_proc =
   "gimp-path-to-selection",
   "Transforms the active path into a selection",
   "This procedure renders the desired path into the current selection.",
-  "Joao S. O. Bueno",
-  "Joao S. O. Bueno",
+  "Jo\xc3\xa3o S. O. Bueno Calligaris",
+  "Jo\xc3\xa3o S. O. Bueno Calligaris",
   "2003",
   NULL,
   GIMP_INTERNAL,
@@ -1509,7 +1500,7 @@ static ProcRecord path_import_proc =
   "gimp-path-import",
   "Import paths from an SVG file.",
   "This procedure imports paths from an SVG file. SVG elements other than paths and basic shapes are ignored.",
-  "Sven Neumann",
+  "Sven Neumann <sven@gimp.org>",
   "Sven Neumann",
   "2003",
   NULL,
@@ -1589,7 +1580,7 @@ static ProcRecord path_import_string_proc =
   "gimp-path-import-string",
   "Import paths from an SVG string.",
   "This procedure works like gimp_path_import() but takes a string rather than reading the SVG from a file. This allows you to write scripts that generate SVG and feed it to GIMP.",
-  "Sven Neumann",
+  "Sven Neumann <sven@gimp.org>",
   "Sven Neumann",
   "2005",
   NULL,

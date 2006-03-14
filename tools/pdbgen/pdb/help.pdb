@@ -29,8 +29,7 @@ help_domain is NULL and no help domain was registered, the help domain
 of the main GIMP installation is used.
 HELP
 
-    $author = $copyright = 'Michael Natterer <mitch@gimp.org>';
-    $date = '2000';
+    &mitch_pdb_misc('2000');
 
     @inargs = (
 	{ name => 'help_domain', type => 'string', null_ok => 1,

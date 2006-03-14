@@ -271,7 +271,7 @@ static ProcRecord edit_copy_visible_proc =
   "Copy from the projection.",
   "If there is a selection in the image, then the area specified by the selection is copied from the projection and placed in an internal GIMP edit buffer. It can subsequently be retrieved using the 'gimp-edit-paste' command. If there is no selection, then the projection's contents will be stored in the internal GIMP edit buffer.",
   "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer",
   "2004",
   NULL,
   GIMP_INTERNAL,
@@ -407,7 +407,7 @@ static ProcRecord edit_paste_as_new_proc =
   "Paste buffer to a new image.",
   "This procedure pastes a copy of the internal GIMP edit buffer to a new image. The GIMP edit buffer will be empty unless a call was previously made to either 'gimp-edit-cut' or 'gimp-edit-copy'. This procedure returns the new image.",
   "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer",
   "2005",
   NULL,
   GIMP_INTERNAL,
@@ -495,7 +495,7 @@ static ProcRecord edit_named_cut_proc =
   "Cut into a named buffer.",
   "This procedure works like gimp-edit-cut, but additionally stores the cut buffer into a named buffer that will stay available for later pasting, regardless of any intermediate copy or cut operations.",
   "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer",
   "2005",
   NULL,
   GIMP_INTERNAL,
@@ -583,7 +583,7 @@ static ProcRecord edit_named_copy_proc =
   "Copy into a named buffer.",
   "This procedure works like gimp-edit-copy, but additionally stores the copied buffer into a named buffer that will stay available for later pasting, regardless of any intermediate copy or cut operations.",
   "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer",
   "2005",
   NULL,
   GIMP_INTERNAL,
@@ -668,7 +668,7 @@ static ProcRecord edit_named_copy_visible_proc =
   "Copy from the projection into a named buffer.",
   "This procedure works like gimp-edit-copy-visible, but additionally stores the copied buffer into a named buffer that will stay available for later pasting, regardless of any intermediate copy or cut operations.",
   "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer",
   "2005",
   NULL,
   GIMP_INTERNAL,
@@ -764,7 +764,7 @@ static ProcRecord edit_named_paste_proc =
   "Paste named buffer to the specified drawable.",
   "This procedure works like gimp-edit-paste but pastes a named buffer instead of the global buffer.",
   "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer",
   "2005",
   NULL,
   GIMP_INTERNAL,
@@ -840,7 +840,7 @@ static ProcRecord edit_named_paste_as_new_proc =
   "Paste named buffer to a new image.",
   "This procedure works like gimp-edit-paste-as-new but pastes a named buffer instead of the global buffer.",
   "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer",
   "2005",
   NULL,
   GIMP_INTERNAL,
@@ -932,7 +932,8 @@ edit_fill_invoker (Gimp         *gimp,
         {
           GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
 
-          success = gimp_edit_fill (image, drawable, context, (GimpFillType) fill_type);
+          success = gimp_edit_fill (image, drawable, context,
+                                    (GimpFillType) fill_type);
         }
     }
 

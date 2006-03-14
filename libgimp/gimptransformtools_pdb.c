@@ -152,10 +152,10 @@ gimp_rotate (gint32   drawable_ID,
  * gimp_scale:
  * @drawable_ID: The affected drawable.
  * @interpolation: Whether to use interpolation.
- * @x0: The new x coordinate of upper-left corner of newly scaled region.
- * @y0: The new y coordinate of upper-left corner of newly scaled region.
- * @x1: The new x coordinate of lower-right corner of newly scaled region.
- * @y1: The new y coordinate of lower-right corner of newly scaled region.
+ * @x0: The new x coordinate of the upper-left corner of the scaled region.
+ * @y0: The new y coordinate of the upper-left corner of the scaled region.
+ * @x1: The new x coordinate of the lower-right corner of the scaled region.
+ * @y1: The new y coordinate of the lower-right corner of the scaled region.
  *
  * This procedure is deprecated! Use
  * gimp_drawable_transform_scale_default() instead.

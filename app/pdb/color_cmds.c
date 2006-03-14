@@ -1225,8 +1225,8 @@ static ProcRecord colorize_proc =
   "gimp-colorize",
   "Render the drawable as a grayscale image seen through a colored glass.",
   "Desatures the drawable, then tints it with the specified color. This tool is only valid on RGB color images. It will not operate on grayscale or indexed drawables.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
+  "Sven Neumann <sven@gimp.org>",
+  "Sven Neumann",
   "2004",
   NULL,
   GIMP_INTERNAL,
@@ -1489,12 +1489,12 @@ static ProcArg hue_saturation_inargs[] =
   {
     GIMP_PDB_FLOAT,
     "lightness",
-    "lightness modification: (-100 <= lightness <= 100)"
+    "Lightness modification: (-100 <= lightness <= 100)"
   },
   {
     GIMP_PDB_FLOAT,
     "saturation",
-    "saturation modification: (-100 <= saturation <= 100)"
+    "Saturation modification: (-100 <= saturation <= 100)"
   }
 };
 

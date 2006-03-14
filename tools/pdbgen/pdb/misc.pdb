@@ -26,8 +26,7 @@ BLURB
 This procedure returns the version number of the currently running gimp.
 HELP
 
-    $author = $copyright = 'Manish Singh';
-    $date = '1999';
+    &yosh_pdb_misc('1999');
 
     @outargs = (
 	{ name => 'version', type => 'string',
@@ -47,9 +46,7 @@ BLURB
 This procedure returns the process ID of the currently running gimp.
 HELP
 
-    $author = $copyright = 'Michael Natterer';
-    $date = '2005';
-    $since = '2.4';
+    &mitch_pdb_misc('2005', '2.4');
 
     @outargs = (
 	{ name => 'pid', type => 'int32',

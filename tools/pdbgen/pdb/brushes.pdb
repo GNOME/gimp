@@ -17,65 +17,6 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub brush_arg () {{
-    name => 'name',
-    type => 'string',
-    desc => 'The brush name',
-    null_ok => '1'
-}}
-
-sub dim_args () {
-    my @args;
-    foreach (qw(width height)) {
-	push @args, { name => $_, type => 'int32', desc => "The brush $_" };
-    }
-    @args;
-}
-
-sub opacity_arg () {{
-    name => 'opacity',
-    type => '0 <= float <= 100',
-    desc => 'The brush opacity: %%desc%%'
-}}
-
-sub spacing_arg () {{
-    name => 'spacing',
-    type => '0 <= int32 <= 1000',
-    desc => 'The brush spacing: %%desc%%'
-}}
-
-sub paint_mode_arg () {{
-    name => 'paint_mode', type => 'enum GimpLayerModeEffects',
-    desc => 'The paint mode: { %%desc%% }'
-}}
-
-sub brush_outargs {
-    foreach (@outargs) {
-	my $alias = ($_->{type} eq 'string') ?
-	            "GIMP_OBJECT (brush)->$_->{name}" : "brush->$_->{name}";
-	$alias = "g_strdup ($alias)" if $_->{type} eq 'string';
-	$alias =~ s/brush/brush->mask/ if $_->{name} =~ /width|height/;
-	$_->{alias} = $alias;
-	$_->{no_declare} = 1;
-    }
-}
-
-my $get_brush_from_name = <<'CODE';
-if (name && strlen (name))
-  {
-    brush = (GimpBrush *)
-      gimp_container_get_child_by_name (gimp->brush_factory->container,
-                                        name);
-  }
-else
-  {
-    brush = gimp_context_get_brush (context);
-  }
-CODE
-
-
-# The defs
-
 sub brushes_refresh {
     $blurb = 'Refresh current brushes. This function always succeeds.';
 
@@ -84,8 +25,7 @@ This procedure retrieves all brushes currently in the user's brush path
 and updates the brush dialogs accordingly.
 HELP
 
-    $author = $copyright = 'Seth Burgess';
-    $date = '1997';
+    &seth_pdb_misc('1997');
 
     %invoke = (
 	code => 'gimp_data_factory_data_refresh (gimp->brush_factory);'
@@ -126,12 +66,19 @@ sub brushes_get_brush {
     &std_pdb_deprecated ('gimp-context-get-brush');
 
     @outargs = (
-	&brush_arg,
-	&dim_args,
-	&spacing_arg
+	{ name => 'name', type => 'string', no_declare => 1,
+	  desc => 'The brush name',
+	  alias => 'g_strdup (GIMP_OBJECT (brush)->name)' },
+	{ name => 'width', type => 'int32', no_declare => 1,
+	  desc => 'The brush width',
+	  alias => 'brush->mask->width' },
+	{ name => 'height', type => 'int32', no_declare => 1,
+	  desc => 'The brush height',
+	  alias => 'brush->mask->height' },
+	{ name => 'spacing', type => '0 <= int32 <= 1000', no_declare => 1,
+	  desc => 'The brush spacing: %%desc%%',
+	  alias => 'gimp_brush_get_spacing (brush)' }
     );
-
-    &brush_outargs;
 
     %invoke = (
 	vars => [ 'GimpBrush *brush' ],
@@ -142,15 +89,21 @@ sub brushes_get_brush {
 sub brushes_get_spacing {
     &std_pdb_deprecated ('gimp-brush-get-spacing');
 
-    @outargs = ( &spacing_arg );
-    $outargs[0]->{alias} = 'gimp_brush_get_spacing (gimp_context_get_brush (context))';
-    $outargs[0]->{no_declare} = 1;
+    @outargs = (
+	{ name => 'spacing', type => '0 <= int32 <= 1000',
+	  desc => 'The brush spacing: %%desc%%',
+	  alias => 'gimp_brush_get_spacing (gimp_context_get_brush (context))',
+	  no_declare => 1 }
+    );
 }
 
 sub brushes_set_spacing {
     &std_pdb_deprecated ('gimp-brush-set-spacing');
 
-    @inargs = ( &spacing_arg );
+    @inargs = (
+	{ name => 'spacing', type => '0 <= int32 <= 1000',
+	  desc => 'The brush spacing: %%desc%%' }
+    );
 
     %invoke = (
 	code => 'gimp_brush_set_spacing (gimp_context_get_brush (context), spacing);'
@@ -161,28 +114,37 @@ sub brushes_get_brush_data {
     &std_pdb_deprecated ('gimp-brush-get-pixels');
 
     @inargs = (
-        &brush_arg
+	{ name => 'name', type => 'string',
+	  desc => 'The brush name ("" means current active brush)',
+	  null_ok => '1' }
     );
-    $inargs[0]->{desc} = 'The brush name ("" means current active brush)';
 
     @outargs = (
-	&brush_arg,
-	&opacity_arg,
-	&spacing_arg,
-	&paint_mode_arg,
-	&dim_args,
+	{ name => 'name', type => 'string', no_declare => 1,
+	  desc => 'The brush name',
+	  alias => 'g_strdup (GIMP_OBJECT (brush)->name)' },
+	{ name => 'opacity', type => '0 <= float <= 100', no_declare => 1,
+	  desc => 'The brush opacity: %%desc%%',
+	  alias => '1.0' },
+	{ name => 'spacing', type => '0 <= int32 <= 1000', no_declare => 1,
+	  desc => 'The brush spacing: %%desc%%',
+	  alias => 'gimp_brush_get_spacing (brush)' },
+	{ name => 'paint_mode', type => 'enum GimpLayerModeEffects',
+	  no_declare => 1,
+	  desc => 'The paint mode: { %%desc%% }',
+	  alias => '0' },
+	{ name => 'width', type => 'int32', no_declare => 1,
+	  desc => 'The brush width',
+	  alias => 'brush->mask->width' },
+	{ name => 'height', type => 'int32', no_declare => 1,
+	  desc => 'The brush height',
+	  alias => 'brush->mask->height' },
+	{ name => 'mask_data', type => 'int8array', init => 1,
+	  desc => 'The brush mask data',
+	  array => { name => 'length', init => 1,
+		     desc => 'Length of brush mask data' } }
     );
 
-    &brush_outargs;
-
-    $outargs[1]->{alias} = '1.0';
-    $outargs[3]->{alias} = '0';
-
-    push @outargs, { name => 'mask_data', type => 'int8array', init => 1,
-		     desc => 'The brush mask data',
-		     array => { name => 'length', init => 1,
-				desc => 'Length of brush mask data' } };
-    
     %invoke = (
 	vars => [ 'GimpBrush *brush = NULL' ],
 	code => <<'CODE'

@@ -17,18 +17,6 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub channel_arg () {{
-    name => 'channel',
-    type => 'channel',
-    desc => 'The channel'
-}}
-
-sub operation_arg () {{
-    name => 'operation',
-    type => 'enum GimpChannelOps',
-    desc => 'The selection operation: { %%desc%% }'
-}}
-
 sub channel_get_prop_proc {
     my ($prop, $type, $desc, $undo, $core_type, $core_var) = @_;
 
@@ -41,7 +29,10 @@ sub channel_get_prop_proc {
 
     &std_pdb_misc;
 
-    @inargs = ( &channel_arg );
+    @inargs = (
+	{ name => 'channel', type => 'channel',
+	  desc => 'The channel' }
+    );
 
     @outargs = (
 	{ name => $prop, type => $type,
@@ -71,7 +62,8 @@ sub channel_set_prop_proc {
     &std_pdb_misc;
 
     @inargs = (
-	&channel_arg,
+	{ name => 'channel', type => 'channel',
+	  desc => 'The channel' },
 	{ name => $prop, type => $type,
 	  desc => "The new channel $desc" }
     );
@@ -178,8 +170,10 @@ HELP
 
     &std_pdb_misc;
 
-    @inargs = ( &channel_arg );
-    $inargs[0]->{desc} .= ' to copy';
+    @inargs = (
+	{ name => 'channel', type => 'channel',
+	  desc => 'The channel to copy' }
+    );
 
     @outargs = (
 	{ name => 'channel_copy', type => 'channel', init => 1,
@@ -207,19 +201,20 @@ HELP
 
     &std_pdb_misc;
 
-    @inargs = ( &channel_arg, &channel_arg, &operation_arg );
-	       
-    foreach my $i (0,1) {
-        foreach my $unused (qw(name desc)) {
-  	  $inargs[$i]{$unused} .= $i + 1;
-        }
-    }
-
-    foreach (qw(x y)) {
-        push @inargs, { name => "off$_", type => 'int32',
-                        desc => "$_ offset between upper left corner of
-                                 channels: (second - first)" }
-    }
+    @inargs = (
+	{ name => 'channel1', type => 'channel',
+	  desc => 'The channel1' },
+	{ name => 'channel2', type => 'channel',
+	  desc => 'The channel2' },
+	{ name => 'operation', type => 'enum GimpChannelOps',
+	  desc => 'The selection operation: { %%desc%% }' },
+	{ name => 'offx', type => 'int32',
+	  desc => "x offset between upper left corner of
+                   channels: (second - first)" },
+	{ name => 'offy', type => 'int32',
+	  desc => "y offset between upper left corner of
+                   channels: (second - first)" }
+    );
 
     %invoke = (
         headers => [ qw("core/gimpchannel-combine.h") ],
@@ -238,17 +233,14 @@ sub channel_new_from_component {
 This procedure creates a new channel from a color component.
 HELP
 
-    $author = 'Shlomi Fish <shlomif@iglu.org.il>';
-    $copyright = 'Shlomi Fish';
-    $date = '2005';
-    $since = '2.4';
+    &shlomi_pdb_misc('2005', '2.4');
 
     @inargs = (
 	&std_image_arg,
-    { name => 'component', type => 'enum GimpChannelType',
-      desc => 'The image component: { %%desc%% }' },
-    { name => 'name', type => 'string',
-      desc => 'The channel name' },
+	{ name => 'component', type => 'enum GimpChannelType',
+	  desc => 'The image component: { %%desc%% }' },
+	{ name => 'name', type => 'string',
+	  desc => 'The channel name' },
     );
     $inargs[0]->{desc} .= ' to which to add the channel';
 

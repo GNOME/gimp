@@ -157,7 +157,7 @@ static ProcRecord gradient_new_proc =
   "gimp-gradient-new",
   "Creates a new gradient",
   "This procedure creates a new, uninitialized gradient",
-  "Shlomi Fish",
+  "Shlomi Fish <shlomif@iglu.org.il>",
   "Shlomi Fish",
   "2003",
   NULL,
@@ -234,7 +234,7 @@ static ProcRecord gradient_duplicate_proc =
   "gimp-gradient-duplicate",
   "Duplicates a gradient",
   "This procedure creates an identical gradient by a different name",
-  "Shlomi Fish",
+  "Shlomi Fish <shlomif@iglu.org.il>",
   "Shlomi Fish",
   "2003",
   NULL,
@@ -304,7 +304,7 @@ static ProcRecord gradient_is_editable_proc =
   "gimp-gradient-is-editable",
   "Tests if gradient can be edited",
   "Returns True if you have permission to change the gradient",
-  "Bill Skaggs <weskaggs@primate.ucdavis.edu",
+  "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
   "Bill Skaggs",
   "2004",
   NULL,
@@ -384,7 +384,7 @@ static ProcRecord gradient_rename_proc =
   "gimp-gradient-rename",
   "Rename a gradient",
   "This procedure renames a gradient",
-  "Shlomi Fish",
+  "Shlomi Fish <shlomif@iglu.org.il>",
   "Shlomi Fish",
   "2003",
   NULL,
@@ -451,7 +451,7 @@ static ProcRecord gradient_delete_proc =
   "gimp-gradient-delete",
   "Deletes a gradient",
   "This procedure deletes a gradient",
-  "Shlomi Fish",
+  "Shlomi Fish <shlomif@iglu.org.il>",
   "Shlomi Fish",
   "2003",
   NULL,
@@ -801,7 +801,7 @@ static ProcRecord gradient_segment_get_left_color_proc =
   "gimp-gradient-segment-get-left-color",
   "Retrieves the left endpoint color of the specified gradient and segment",
   "This procedure retrieves the left endpoint color of the specified segment of the specified gradient.",
-  "Shlomi Fish",
+  "Shlomi Fish <shlomif@iglu.org.il>",
   "Shlomi Fish",
   "2003",
   NULL,
@@ -896,7 +896,7 @@ static ProcRecord gradient_segment_set_left_color_proc =
   "gimp-gradient-segment-set-left-color",
   "Retrieves the left endpoint color of the specified gradient and segment",
   "This procedure retrieves the left endpoint color of the specified segment of the specified gradient.",
-  "Shlomi Fish",
+  "Shlomi Fish <shlomif@iglu.org.il>",
   "Shlomi Fish",
   "2003",
   NULL,
@@ -998,7 +998,7 @@ static ProcRecord gradient_segment_get_right_color_proc =
   "gimp-gradient-segment-get-right-color",
   "Retrieves the right endpoint color of the specified gradient and segment",
   "This procedure retrieves the right endpoint color of the specified segment of the specified gradient.",
-  "Shlomi Fish",
+  "Shlomi Fish <shlomif@iglu.org.il>",
   "Shlomi Fish",
   "2003",
   NULL,
@@ -1093,7 +1093,7 @@ static ProcRecord gradient_segment_set_right_color_proc =
   "gimp-gradient-segment-set-right-color",
   "Retrieves the right endpoint color of the specified gradient and segment",
   "This procedure retrieves the right endpoint color of the specified segment of the specified gradient.",
-  "Shlomi Fish",
+  "Shlomi Fish <shlomif@iglu.org.il>",
   "Shlomi Fish",
   "2003",
   NULL,
@@ -1185,7 +1185,7 @@ static ProcRecord gradient_segment_get_left_pos_proc =
   "gimp-gradient-segment-get-left-pos",
   "Retrieves the left endpoint position of the specified gradient and segment",
   "This procedure retrieves the left endpoint position of the specified segment of the specified gradient.",
-  "Shlomi Fish",
+  "Shlomi Fish <shlomif@iglu.org.il>",
   "Shlomi Fish",
   "2003",
   NULL,
@@ -1288,7 +1288,7 @@ static ProcRecord gradient_segment_set_left_pos_proc =
   "gimp-gradient-segment-set-left-pos",
   "Sets the left endpoint position of the specified gradient and segment",
   "This procedure sets the left endpoint position of the specified segment of the specified gradient. The final position will be between the position of the middle point to the left to the middle point of the current segement. This procedure returns the final position.",
-  "Shlomi Fish",
+  "Shlomi Fish <shlomif@iglu.org.il>",
   "Shlomi Fish",
   "2003",
   NULL,
@@ -1380,7 +1380,7 @@ static ProcRecord gradient_segment_get_middle_pos_proc =
   "gimp-gradient-segment-get-middle-pos",
   "Retrieves the middle point position of the specified gradient and segment",
   "This procedure retrieves the middle point position of the specified segment of the specified gradient.",
-  "Shlomi Fish",
+  "Shlomi Fish <shlomif@iglu.org.il>",
   "Shlomi Fish",
   "2003",
   NULL,
@@ -1483,7 +1483,7 @@ static ProcRecord gradient_segment_set_middle_pos_proc =
   "gimp-gradient-segment-set-middle-pos",
   "Sets the middle point position of the specified gradient and segment",
   "This procedure sets the middle point position of the specified segment of the specified gradient. The final position will be between the two endpoints of the segment. This procedure returns the final position.",
-  "Shlomi Fish",
+  "Shlomi Fish <shlomif@iglu.org.il>",
   "Shlomi Fish",
   "2003",
   NULL,
@@ -1575,7 +1575,7 @@ static ProcRecord gradient_segment_get_right_pos_proc =
   "gimp-gradient-segment-get-right-pos",
   "Retrieves the right endpoint position of the specified gradient and segment",
   "This procedure retrieves the right endpoint position of the specified segment of the specified gradient.",
-  "Shlomi Fish",
+  "Shlomi Fish <shlomif@iglu.org.il>",
   "Shlomi Fish",
   "2003",
   NULL,
@@ -1678,7 +1678,7 @@ static ProcRecord gradient_segment_set_right_pos_proc =
   "gimp-gradient-segment-set-right-pos",
   "Sets the right endpoint position of the specified gradient and segment",
   "This procedure sets the right endpoint position of the specified segment of the specified gradient. The final position will be between the position of the middle point of the current segment and the middle point of the segment to the right. This procedure returns the final position.",
-  "Shlomi Fish",
+  "Shlomi Fish <shlomif@iglu.org.il>",
   "Shlomi Fish",
   "2003",
   NULL,
@@ -1771,7 +1771,7 @@ static ProcRecord gradient_segment_get_blending_function_proc =
   "gimp-gradient-segment-get-blending-function",
   "Retrieves the gradient segment's blending function",
   "This procedure retrieves the blending function of the segment at the specified gradient name and segment index.",
-  "Shlomi Fish",
+  "Shlomi Fish <shlomif@iglu.org.il>",
   "Shlomi Fish",
   "2003",
   NULL,
@@ -1864,7 +1864,7 @@ static ProcRecord gradient_segment_get_coloring_type_proc =
   "gimp-gradient-segment-get-coloring-type",
   "Retrieves the gradient segment's coloring type",
   "This procedure retrieves the coloring type of the segment at the specified gradient name and segment index.",
-  "Shlomi Fish",
+  "Shlomi Fish <shlomif@iglu.org.il>",
   "Shlomi Fish",
   "2003",
   NULL,
@@ -1911,6 +1911,7 @@ gradient_segment_range_set_blending_function_invoker (Gimp         *gimp,
       if (gradient)
         {
           GimpGradientSegment *start_seg, *end_seg;
+
           start_seg = gimp_gradient_segment_get_nth (gradient->segments,
                                                      start_segment);
           if (start_seg)
@@ -1980,7 +1981,7 @@ static ProcRecord gradient_segment_range_set_blending_function_proc =
   "gimp-gradient-segment-range-set-blending-function",
   "Change the blending function of a segments range",
   "This function changes the blending function of a segment range to the specified blending function.",
-  "Shlomi Fish",
+  "Shlomi Fish <shlomif@iglu.org.il>",
   "Shlomi Fish",
   "2003",
   NULL,
@@ -2027,6 +2028,7 @@ gradient_segment_range_set_coloring_type_invoker (Gimp         *gimp,
       if (gradient)
         {
           GimpGradientSegment *start_seg, *end_seg;
+
           start_seg = gimp_gradient_segment_get_nth (gradient->segments,
                                                      start_segment);
           if (start_seg)
@@ -2096,7 +2098,7 @@ static ProcRecord gradient_segment_range_set_coloring_type_proc =
   "gimp-gradient-segment-range-set-coloring-type",
   "Change the coloring type of a segments range",
   "This function changes the coloring type of a segment range to the specified coloring type.",
-  "Shlomi Fish",
+  "Shlomi Fish <shlomif@iglu.org.il>",
   "Shlomi Fish",
   "2003",
   NULL,
@@ -2138,6 +2140,7 @@ gradient_segment_range_flip_invoker (Gimp         *gimp,
       if (gradient)
         {
           GimpGradientSegment *start_seg, *end_seg;
+
           start_seg = gimp_gradient_segment_get_nth (gradient->segments,
                                                      start_segment);
           if (start_seg)
@@ -2202,7 +2205,7 @@ static ProcRecord gradient_segment_range_flip_proc =
   "gimp-gradient-segment-range-flip",
   "Flip the segment range",
   "This function flips a segment range.",
-  "Shlomi Fish",
+  "Shlomi Fish <shlomif@iglu.org.il>",
   "Shlomi Fish",
   "2003",
   NULL,
@@ -2249,6 +2252,7 @@ gradient_segment_range_replicate_invoker (Gimp         *gimp,
       if (gradient)
         {
           GimpGradientSegment *start_seg, *end_seg;
+
           start_seg = gimp_gradient_segment_get_nth (gradient->segments,
                                                      start_segment);
           if (start_seg)
@@ -2319,7 +2323,7 @@ static ProcRecord gradient_segment_range_replicate_proc =
   "gimp-gradient-segment-range-replicate",
   "Replicate the segment range",
   "This function replicates a segment range a given number of times. Instead of the original segment range, several smaller scaled copies of it will appear in equal widths.",
-  "Shlomi Fish",
+  "Shlomi Fish <shlomif@iglu.org.il>",
   "Shlomi Fish",
   "2003",
   NULL,
@@ -2361,6 +2365,7 @@ gradient_segment_range_split_midpoint_invoker (Gimp         *gimp,
       if (gradient)
         {
           GimpGradientSegment *start_seg, *end_seg;
+
           start_seg = gimp_gradient_segment_get_nth (gradient->segments,
                                                      start_segment);
           if (start_seg)
@@ -2425,7 +2430,7 @@ static ProcRecord gradient_segment_range_split_midpoint_proc =
   "gimp-gradient-segment-range-split-midpoint",
   "Splits each segment in the segment range at midpoint",
   "This function splits each segment in the segment range at its midpoint.",
-  "Shlomi Fish",
+  "Shlomi Fish <shlomif@iglu.org.il>",
   "Shlomi Fish",
   "2003",
   NULL,
@@ -2472,6 +2477,7 @@ gradient_segment_range_split_uniform_invoker (Gimp         *gimp,
       if (gradient)
         {
           GimpGradientSegment *start_seg, *end_seg;
+
           start_seg = gimp_gradient_segment_get_nth (gradient->segments,
                                                      start_segment);
           if (start_seg)
@@ -2542,7 +2548,7 @@ static ProcRecord gradient_segment_range_split_uniform_proc =
   "gimp-gradient-segment-range-split-uniform",
   "Splits each segment in the segment range uniformly",
   "This function splits each segment in the segment range uniformly according to the number of times specified by the parameter.",
-  "Shlomi Fish",
+  "Shlomi Fish <shlomif@iglu.org.il>",
   "Shlomi Fish",
   "2003",
   NULL,
@@ -2584,6 +2590,7 @@ gradient_segment_range_delete_invoker (Gimp         *gimp,
       if (gradient)
         {
           GimpGradientSegment *start_seg, *end_seg;
+
           start_seg = gimp_gradient_segment_get_nth (gradient->segments,
                                                      start_segment);
           if (start_seg)
@@ -2648,7 +2655,7 @@ static ProcRecord gradient_segment_range_delete_proc =
   "gimp-gradient-segment-range-delete",
   "Delete the segment range",
   "This function deletes a segment range.",
-  "Shlomi Fish",
+  "Shlomi Fish <shlomif@iglu.org.il>",
   "Shlomi Fish",
   "2003",
   NULL,
@@ -2690,6 +2697,7 @@ gradient_segment_range_redistribute_handles_invoker (Gimp         *gimp,
       if (gradient)
         {
           GimpGradientSegment *start_seg, *end_seg;
+
           start_seg = gimp_gradient_segment_get_nth (gradient->segments,
                                                      start_segment);
           if (start_seg)
@@ -2753,7 +2761,7 @@ static ProcRecord gradient_segment_range_redistribute_handles_proc =
   "gimp-gradient-segment-range-redistribute-handles",
   "Uniformly redistribute the segment range's handles",
   "This function redistributes the handles of the specified segment range of the specified gradient, so they'll be evenly spaced.",
-  "Shlomi Fish",
+  "Shlomi Fish <shlomif@iglu.org.il>",
   "Shlomi Fish",
   "2003",
   NULL,
@@ -2795,6 +2803,7 @@ gradient_segment_range_blend_colors_invoker (Gimp         *gimp,
       if (gradient)
         {
           GimpGradientSegment *start_seg, *end_seg;
+
           start_seg = gimp_gradient_segment_get_nth (gradient->segments,
                                                      start_segment);
           if (start_seg)
@@ -2860,7 +2869,7 @@ static ProcRecord gradient_segment_range_blend_colors_proc =
   "gimp-gradient-segment-range-blend-colors",
   "Blend the colors of the segment range.",
   "This function blends the colors (but not the opacity) of the segments' range of the gradient. Using it, the colors' transition will be uniform across the range.",
-  "Shlomi Fish",
+  "Shlomi Fish <shlomif@iglu.org.il>",
   "Shlomi Fish",
   "2003",
   NULL,
@@ -2902,6 +2911,7 @@ gradient_segment_range_blend_opacity_invoker (Gimp         *gimp,
       if (gradient)
         {
           GimpGradientSegment *start_seg, *end_seg;
+
           start_seg = gimp_gradient_segment_get_nth (gradient->segments,
                                                      start_segment);
           if (start_seg)
@@ -2967,7 +2977,7 @@ static ProcRecord gradient_segment_range_blend_opacity_proc =
   "gimp-gradient-segment-range-blend-opacity",
   "Blend the opacity of the segment range.",
   "This function blends the opacity (but not the colors) of the segments' range of the gradient. Using it, the opacity's transition will be uniform across the range.",
-  "Shlomi Fish",
+  "Shlomi Fish <shlomif@iglu.org.il>",
   "Shlomi Fish",
   "2003",
   NULL,
@@ -3019,6 +3029,7 @@ gradient_segment_range_move_invoker (Gimp         *gimp,
       if (gradient)
         {
           GimpGradientSegment *start_seg, *end_seg;
+
           start_seg = gimp_gradient_segment_get_nth (gradient->segments,
                                                      start_segment);
           if (start_seg)
@@ -3109,7 +3120,7 @@ static ProcRecord gradient_segment_range_move_proc =
   "gimp-gradient-segment-range-move",
   "Move the position of an entire segment range by a delta.",
   "This funtions moves the position of an entire segment range by a delta. The actual delta (which is returned) will be limited by the control points of the neighboring segments.",
-  "Shlomi Fish",
+  "Shlomi Fish <shlomif@iglu.org.il>",
   "Shlomi Fish",
   "2003",
   NULL,

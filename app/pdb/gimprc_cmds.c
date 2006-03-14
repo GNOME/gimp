@@ -30,8 +30,6 @@
 #include "pdb-types.h"
 #include "procedural_db.h"
 
-#include "config/gimpcoreconfig.h"
-#include "config/gimpdisplayconfig.h"
 #include "config/gimprc.h"
 #include "core/gimp.h"
 #include "core/gimptemplate.h"
@@ -363,7 +361,7 @@ static ProcRecord get_color_configuration_proc =
   "gimp-get-color-configuration",
   "Get a serialized version of the color management configuration.",
   "Returns a string that can be deserialized into a GimpColorConfig object representing the current color management configuration.",
-  "Sven Neumann",
+  "Sven Neumann <sven@gimp.org>",
   "Sven Neumann",
   "2005",
   NULL,
