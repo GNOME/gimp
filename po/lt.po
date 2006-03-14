@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-03-03 16:11+0200\n"
-"PO-Revision-Date: 2006-03-04 00:05+0200\n"
+"PO-Revision-Date: 2006-03-13 14:44+0200\n"
 "Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
@@ -289,7 +289,7 @@ msgstr "Dokumentų istorija"
 
 #: ../app/actions/actions.c:134
 msgid "Drawable"
-msgstr ""
+msgstr "Piešiama"
 
 #: ../app/actions/actions.c:137 ../app/tools/tools-enums.c:174
 msgid "Edit"
@@ -298,7 +298,7 @@ msgstr "Keisti"
 #: ../app/actions/actions.c:140 ../app/actions/dialogs-actions.c:180
 #: ../app/dialogs/dialogs.c:137
 msgid "Error Console"
-msgstr "GIMP klaidų terminalas"
+msgstr "Klaidų konsolė"
 
 #: ../app/actions/actions.c:143
 msgid "File"
@@ -373,7 +373,7 @@ msgstr "Greita kaukė"
 #: ../app/actions/actions.c:182 ../app/actions/dialogs-actions.c:120
 #: ../app/dialogs/dialogs.c:197
 msgid "Sample Points"
-msgstr ""
+msgstr "Mėginių taškai"
 
 #: ../app/actions/actions.c:185
 msgid "Select"
@@ -623,7 +623,7 @@ msgstr "_Sankirta su pažymėjimu"
 
 #: ../app/actions/channels-actions.c:124 ../app/actions/vectors-actions.c:186
 msgid "Intersect"
-msgstr ""
+msgstr "Sankirta"
 
 #: ../app/actions/channels-commands.c:86
 #: ../app/actions/channels-commands.c:397
@@ -674,7 +674,7 @@ msgstr "Pakeisti kanalą pažymėjimu"
 
 #: ../app/actions/colormap-editor-actions.c:43
 msgid "Colormap Menu"
-msgstr ""
+msgstr "Gamų meniu"
 
 #: ../app/actions/colormap-editor-actions.c:47
 #: ../app/actions/palette-editor-actions.c:48
@@ -796,12 +796,12 @@ msgstr "Žymeklio informacijos meniu"
 #: ../app/actions/sample-point-editor-actions.c:47
 #: ../app/widgets/gimpcursorview.c:191
 msgid "_Sample Merged"
-msgstr ""
+msgstr "_Sujungtas mėginys"
 
 #: ../app/actions/cursor-info-actions.c:48
 #: ../app/actions/sample-point-editor-actions.c:48
 msgid "Sample Merged"
-msgstr ""
+msgstr "Sujungtas mėginys"
 
 #: ../app/actions/data-commands.c:102 ../app/actions/documents-commands.c:320
 #: ../app/actions/file-commands.c:174 ../app/dialogs/file-open-dialog.c:208
@@ -934,7 +934,7 @@ msgstr "Žymeklis"
 
 #: ../app/actions/dialogs-actions.c:120
 msgid "_Sample Points"
-msgstr "_Pavyzdžių taškai"
+msgstr "_Mėginių taškai"
 
 #: ../app/actions/dialogs-actions.c:125
 msgid "Colo_rs"
@@ -1487,7 +1487,7 @@ msgstr "_Rinkmena"
 
 #: ../app/actions/file-actions.c:65
 msgid "Open _Recent"
-msgstr "Atverti _paskutiniąsias"
+msgstr "Atverti _paskutiniuosius"
 
 #: ../app/actions/file-actions.c:66
 msgid "_Acquire"
@@ -1527,7 +1527,7 @@ msgstr "Ats_tatyti"
 
 #: ../app/actions/file-actions.c:114
 msgid "Close all"
-msgstr "Užverti visas"
+msgstr "Užverti visus"
 
 #: ../app/actions/file-actions.c:119
 msgid "_Quit"
@@ -2017,7 +2017,7 @@ msgstr "_Transformuoti"
 
 #: ../app/actions/image-actions.c:63
 msgid "_Guides"
-msgstr "_Pagalbinės linijos"
+msgstr "_Gairės"
 
 #: ../app/actions/image-actions.c:66
 msgid "I_nfo"
@@ -2636,7 +2636,7 @@ msgstr "K_ombinuoti"
 
 #: ../app/actions/plug-in-actions.c:71
 msgid "_Generic"
-msgstr "_Daugybiniai"
+msgstr "_Bendri"
 
 #: ../app/actions/plug-in-actions.c:72
 msgid "_Light and Shadow"
@@ -2755,7 +2755,7 @@ msgstr "_Kaukės nepermatomumas:"
 
 #: ../app/actions/sample-point-editor-actions.c:40
 msgid "Sample Point Menu"
-msgstr "Pavyzdžių taškų meniu"
+msgstr "Mėginių taškų meniu"
 
 #: ../app/actions/select-actions.c:44
 msgid "Selection Editor Menu"
@@ -3394,11 +3394,11 @@ msgstr "Rodyti _tinklelį"
 
 #: ../app/actions/view-actions.c:149
 msgid "Show Sample Points"
-msgstr "Rodyti pavyzdžių taškus"
+msgstr "Rodyti mėginių taškus"
 
 #: ../app/actions/view-actions.c:155
 msgid "Sn_ap to Guides"
-msgstr "Ki_bti prie pagalbinių linijų"
+msgstr "Ki_bti prie gairių"
 
 #: ../app/actions/view-actions.c:161
 msgid "Sna_p to Grid"
@@ -3749,7 +3749,7 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:76
 msgid "This is the distance in pixels where Guide and Grid snapping activates."
 msgstr ""
-"Tai yra atstumas taškais, kur aktyvuojamas pagalbinių linijų ir grotelių kibumas."
+"Tai yra atstumas taškais, kur aktyvuojamas gairių ir grotelių kibumas."
 
 #: ../app/config/gimprc-blurbs.h:80
 msgid ""
@@ -3795,14 +3795,15 @@ msgid ""
 "When enabled, this will ensure that the full image is visible after a file "
 "is opened, otherwise it will be displayed with a scale of 1:1."
 msgstr ""
-"Kai įjungta, tai užtikrins, kad po atvėrus rinkmeną bus matomas visas "
-"paveikslėlis, kitu atveju jis bus rodomas santykiu 1:1."
+"Įjungus užtikrinama, kad atvėrus rinkmeną bus matomas visas paveikslėlis, "
+"kitu atveju jis bus rodomas santykiu 1:1."
 
 #: ../app/config/gimprc-blurbs.h:165
 msgid ""
 "Install a private colormap; might be useful on 8-bit (256 colors) displays."
 msgstr ""
-"Įdiegti privačią spalvų gamą; gali būti naudinga 8-ių bitų (256 spalvų) ekranuose."
+"Įdiegti privačią spalvų gamą; gali būti naudinga 8-ių bitų (256 spalvų) "
+"ekranuose."
 
 #: ../app/config/gimprc-blurbs.h:168
 msgid ""
@@ -3820,6 +3821,8 @@ msgid ""
 "Speed of marching ants in the selection outline.  This value is in "
 "milliseconds (less time indicates faster marching)."
 msgstr ""
+"Pasirinkimo kontūre judančių brūkšnelių greitis. Ši reikšmė yra "
+"milisekundėmis (mažesnis laikas - greitesnis judėjimas)."
 
 #: ../app/config/gimprc-blurbs.h:182
 msgid ""
@@ -3838,6 +3841,8 @@ msgid ""
 "Generally only a concern for 8-bit displays, this sets the minimum number of "
 "system colors allocated for the GIMP."
 msgstr ""
+"Paprastai reikalinga tik 8 bitų ekranams, čia nurodomas minimalus sistemos "
+"spalvų skaičius paskiriamas GIMP."
 
 #: ../app/config/gimprc-blurbs.h:200
 msgid ""
@@ -3900,14 +3905,17 @@ msgid ""
 "the layers and channels dialog are nice to have but they can slow things "
 "down when working with large images."
 msgstr ""
+"Nurodo ar GIMP turėtų kurti sluoksnių ir kanalų peržiūras. Peržiūros "
+"sluoksnių ir kanalų dialoguose yra patogu, tačiau jos gali viską sulėtinti, "
+"kai dirbama su dideliais paveikslėliais."
 
 #: ../app/config/gimprc-blurbs.h:254
 msgid ""
 "Sets the preview size used for layers and channel previews in newly created "
 "dialogs."
 msgstr ""
-"Nurodo peržiūros dydį naudojamą sluoksnių bei kanalų peržiūroms naujai sukurtuose "
-"languose."
+"Nurodo peržiūros dydį naudojamą sluoksnių bei kanalų peržiūroms naujai "
+"sukurtuose languose."
 
 #: ../app/config/gimprc-blurbs.h:258
 msgid ""
@@ -4027,8 +4035,8 @@ msgid ""
 "When enabled, the guides are visible by default. This can also be toggled "
 "with the \"View->Show Guides\" command."
 msgstr ""
-"Kai įjungta, pagalbinės linijos yra matomos pagal nutylėjimą. Tai galima "
-"taip pat perjungti naudojant „Rodymas->Rodyti pagalbines linijas“ komandą."
+"Kai įjungta, gairės yra matomos pagal nutylėjimą. Tai galima taip pat "
+"perjungti naudojant „Rodymas->Rodyti gaires“ komandą."
 
 #: ../app/config/gimprc-blurbs.h:326
 msgid ""
@@ -4044,7 +4052,7 @@ msgid ""
 "toggled with the \"View->Show Sample Points\" command."
 msgstr ""
 "Kai įjungta, pavyzdžių taškai yra matomos pagal nutylėjimą. Tai taip pat "
-"galima perjungti naudojant komandą „Rodymas->Rodyti pavyzdžių taškus“."
+"galima perjungti naudojant komandą „Rodymas->Rodyti mėginių taškus“."
 
 #: ../app/config/gimprc-blurbs.h:334
 msgid "Enable displaying a handy GIMP tip on startup."
@@ -4144,6 +4152,8 @@ msgid ""
 "The window type hint that is set on the toolbox. This may affect how your "
 "window manager decorates and handles the toolbox window."
 msgstr ""
+"Langų tipo patarimas nustatomas įrankių dėžei. Tai gali įtakoti kaip Jūsų "
+"langų valdyklė apipavidalina ir valdo įrankių langą."
 
 #: ../app/config/gimprc-blurbs.h:403
 msgid "Sets the manner in which transparency is displayed in images."
@@ -4174,6 +4184,9 @@ msgid ""
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
 "as configured can be undone."
 msgstr ""
+"Čia nurodomas viršutinė atminties, naudojamos kiekvienam paveikslėliui "
+"išlaikyti orientaciją atšaukimų dėkle, riba. Nepaisant šio nustatymo, gali "
+"būti atšaukta tiek veiksmų, kiek yra sukonfigūruota."
 
 #: ../app/config/gimprc-blurbs.h:422
 msgid "Sets the size of the previews in the Undo History."
@@ -4191,6 +4204,10 @@ msgid ""
 "contains '%s' it will be replaced with the URL, else the URL will be "
 "appended to the command with a space separating the two."
 msgstr ""
+"Nurodo naudotiną išorinę žiniatinklio naršyklę. Tai gali būti absoliutus "
+"kelias arba vykdomosios rinkmenos esančios naudotojo „PATH“ pavadinimas. "
+"Jeigu komandoje yra „%s“, tai bus pakeista URL, kitu atveju URL bus pridėtas "
+"prie komandos atskiriant juos tarpu."
 
 #: ../app/config/gimprc-deserialize.c:135 ../app/core/gimp-modules.c:134
 #: ../app/core/gimp-units.c:164 ../app/gui/session.c:160
@@ -4478,7 +4495,7 @@ msgstr "Sujungti kontūrus"
 
 #: ../app/core/core-enums.c:810 ../app/core/core-enums.c:840
 msgid "Guide"
-msgstr "Pagalbinė linija"
+msgstr "Gairė"
 
 #: ../app/core/core-enums.c:811 ../app/core/core-enums.c:841
 #: ../app/core/gimpimage-grid.c:58 ../app/dialogs/grid-dialog.c:149
@@ -4488,7 +4505,7 @@ msgstr "Tinklelis"
 
 #: ../app/core/core-enums.c:812 ../app/core/core-enums.c:842
 msgid "Sample Point"
-msgstr "Pavyzdžio taškas"
+msgstr "Mėginio taškas"
 
 #: ../app/core/core-enums.c:813 ../app/core/core-enums.c:844
 msgid "Layer/Channel"
@@ -5224,19 +5241,19 @@ msgstr "Keisti paveikslėlio dydį"
 
 #: ../app/core/gimpimage-guides.c:53
 msgid "Add Horizontal Guide"
-msgstr "Pridėti horizontalią pagalbinę liniją"
+msgstr "Pridėti horizontalią gairę"
 
 #: ../app/core/gimpimage-guides.c:80
 msgid "Add Vertical Guide"
-msgstr "Pridėti vertikalią pagalbinę liniją"
+msgstr "Pridėti vertikalią gairę"
 
 #: ../app/core/gimpimage-guides.c:143 ../app/tools/gimpmovetool.c:540
 msgid "Remove Guide"
-msgstr "Pašalinti pagalbines linijas"
+msgstr "Pašalinti gaires"
 
 #: ../app/core/gimpimage-guides.c:167
 msgid "Move Guide"
-msgstr "Perkelti pagalbinę liniją"
+msgstr "Perkelti gairę"
 
 #: ../app/core/gimpimage-merge.c:91
 msgid "Merge Visible Layers"
@@ -5276,15 +5293,15 @@ msgstr "Išjungti greitą kaukę"
 
 #: ../app/core/gimpimage-sample-points.c:55
 msgid "Add Sample_Point"
-msgstr "Pridėti pavyzdžio _tašką"
+msgstr "Pridėti mėginio _tašką"
 
 #: ../app/core/gimpimage-sample-points.c:121 ../app/tools/gimpcolortool.c:409
 msgid "Remove Sample Point"
-msgstr "Pašalinti pavyzdžio tašką"
+msgstr "Pašalinti mėginio tašką"
 
 #: ../app/core/gimpimage-sample-points.c:158
 msgid "Move Sample Point"
-msgstr "Perkelti pavyzdžio tašką"
+msgstr "Perkelti mėginio tašką"
 
 #: ../app/core/gimpimage-undo-push.c:3298
 #, c-format
@@ -6540,15 +6557,15 @@ msgstr "Perkra_uti esamą temą"
 
 #: ../app/dialogs/preferences-dialog.c:1563
 msgid "Help System"
-msgstr "Pagalbos sistema"
+msgstr "Žinyno sistema"
 
 #: ../app/dialogs/preferences-dialog.c:1578
 msgid "Show tool _tips"
-msgstr "Rodyti pa_tarimus"
+msgstr "Rodyti p_aaiškinimus"
 
 #: ../app/dialogs/preferences-dialog.c:1581
 msgid "Show help _buttons"
-msgstr "Rodyti pagalbos _mygtukus"
+msgstr "Rodyti žinyno _mygtukus"
 
 #: ../app/dialogs/preferences-dialog.c:1584
 msgid "Show tips on _startup"
@@ -6557,11 +6574,11 @@ msgstr "Paleidimo metu rodyti patarimu_s"
 #. Help Browser
 #: ../app/dialogs/preferences-dialog.c:1588
 msgid "Help Browser"
-msgstr "Pagalbos naršyklė"
+msgstr "Žinyno naršyklė"
 
 #: ../app/dialogs/preferences-dialog.c:1592
 msgid "H_elp browser to use:"
-msgstr "Naudotina pagal_bos naršyklė:"
+msgstr "Naudotina žin_yno naršyklė:"
 
 #: ../app/dialogs/preferences-dialog.c:1597
 msgid "Web Browser"
@@ -6590,7 +6607,7 @@ msgstr "_Atstatyti numatytasias įrankių nustatymų reikšmes"
 #. Snapping Distance
 #: ../app/dialogs/preferences-dialog.c:1653
 msgid "Guide & Grid Snapping"
-msgstr "Pagalbinių linijų bei grotelių kibumas"
+msgstr "Gairių bei tinklelio kibumas"
 
 #: ../app/dialogs/preferences-dialog.c:1658
 msgid "_Snap distance:"
@@ -6604,7 +6621,7 @@ msgstr "Numatytoji _interpoliacija:"
 #. Global Brush, Pattern, ...
 #: ../app/dialogs/preferences-dialog.c:1673
 msgid "Paint Options Shared Between Tools"
-msgstr "Bendri piešimo nustatymai tarp įrankių"
+msgstr "Bendri įrankių piešimo nustatymai"
 
 #: ../app/dialogs/preferences-dialog.c:1686
 msgid "Move Tool"
@@ -6659,11 +6676,11 @@ msgstr "Paveikslėlių langai"
 
 #: ../app/dialogs/preferences-dialog.c:1816
 msgid "Use \"_Dot for dot\" by default"
-msgstr ""
+msgstr "Numatytasis „Taškas į tašką“ naudojimas"
 
 #: ../app/dialogs/preferences-dialog.c:1822
 msgid "Marching _ants speed:"
-msgstr ""
+msgstr "Judančių _brūkšnelių greitis:"
 
 #. Zoom & Resize Behavior
 #: ../app/dialogs/preferences-dialog.c:1826
@@ -6705,7 +6722,7 @@ msgstr "Žymeklio _režimas:"
 
 #: ../app/dialogs/preferences-dialog.c:1861
 msgid "Pointer re_ndering:"
-msgstr "Žymeklio va_zdavimas:"
+msgstr "Žymeklių vai_zdavimas:"
 
 #: ../app/dialogs/preferences-dialog.c:1873
 msgid "Image Window Appearance"
@@ -7725,7 +7742,7 @@ msgstr "Šešėlio tipas"
 
 #: ../app/display/gimpstatusbar.c:108
 msgid "Style of bevel around the statusbar text"
-msgstr ""
+msgstr "Rėmelio aplink būklės juostos tekstą stilius"
 
 #: ../app/display/gimpstatusbar.c:189
 msgid "Cancel"
@@ -8158,7 +8175,7 @@ msgstr "Tinklelio linijų skaičius"
 
 #: ../app/tools/tools-enums.c:235
 msgid "Grid line spacing"
-msgstr "Tarpai tarp pagalbinių linijų"
+msgstr "Tarpai tarp tinklelio linijų"
 
 #: ../app/tools/gimp-tools.c:315
 msgid "This tool has no options."
@@ -8414,7 +8431,7 @@ msgstr "Š_viesumas:"
 
 #: ../app/tools/gimpcoloroptions.c:161
 msgid "Sample average"
-msgstr ""
+msgstr "Mėginio vidurkis"
 
 #: ../app/tools/gimpcoloroptions.c:171 ../app/tools/gimpselectionoptions.c:450
 #: ../app/widgets/gimpbrusheditor.c:123
@@ -8452,15 +8469,15 @@ msgstr "Spalvų pipetės informacija"
 
 #: ../app/tools/gimpcolortool.c:242 ../app/tools/gimpcolortool.c:416
 msgid "Move Sample Point: "
-msgstr ""
+msgstr "Perkelti mėginio tašką: "
 
 #: ../app/tools/gimpcolortool.c:410
 msgid "Cancel Sample Point"
-msgstr ""
+msgstr "Atšaukti mėginio tašką"
 
 #: ../app/tools/gimpcolortool.c:417
 msgid "Add Sample Point: "
-msgstr ""
+msgstr "Pridėti mėginio tašką: "
 
 #: ../app/tools/gimpconvolvetool.c:69
 msgid "Blur or Sharpen"
@@ -8973,7 +8990,7 @@ msgstr "_Matuoti"
 
 #: ../app/tools/gimpmeasuretool.c:235
 msgid "Add Guides"
-msgstr "Pridėti pagalbinių linijų"
+msgstr "Pridėti gaires"
 
 #. tool->gdisp->shell
 #: ../app/tools/gimpmeasuretool.c:879
@@ -8986,7 +9003,7 @@ msgstr "Atstumas:"
 
 #: ../app/tools/gimpmoveoptions.c:142
 msgid "Pick a layer or guide"
-msgstr "Pasirinkti sluoksnį ar pagalbinę liniją"
+msgstr "Pasirinkti sluoksnį ar gairę"
 
 #: ../app/tools/gimpmoveoptions.c:143
 msgid "Move the current layer"
@@ -9014,15 +9031,15 @@ msgstr "_Perkelti"
 
 #: ../app/tools/gimpmovetool.c:268 ../app/tools/gimpmovetool.c:546
 msgid "Move Guide: "
-msgstr "Perkelti pagalbinę liniją:"
+msgstr "Perkelti gairę:"
 
 #: ../app/tools/gimpmovetool.c:540
 msgid "Cancel Guide"
-msgstr "Atšaukti pagalbinę liniją"
+msgstr "Atšaukti gairę"
 
 #: ../app/tools/gimpmovetool.c:546
 msgid "Add Guide: "
-msgstr "Pridėti pagalbinę liniją:"
+msgstr "Pridėti gairę:"
 
 #: ../app/tools/gimppaintbrushtool.c:52
 msgid "Paint fuzzy brush strokes"
@@ -9276,7 +9293,7 @@ msgstr "Leisti pasirinkti visiškai permatomus regionus"
 
 #: ../app/tools/gimpselectionoptions.c:128
 msgid "Base selection on all visible layers"
-msgstr "Pasirinkti visuose matomuose sluoksnkuose"
+msgstr "Pasirinkti visuose matomuose sluoksniuose"
 
 #: ../app/tools/gimpselectionoptions.c:143
 msgid "Use all visible layers when shrinking the selection"
@@ -9500,7 +9517,7 @@ msgstr "Nekeisti pločio  (%s)"
 #: ../app/tools/gimptransformoptions.c:424
 #, c-format
 msgid "Keep aspect  (%s)"
-msgstr ""
+msgstr "Išlaikyti perspektyvą  (%s)"
 
 #: ../app/tools/gimptransformtool.c:225
 msgid "Transforming"
@@ -10403,24 +10420,24 @@ msgstr "Tarpai"
 
 #: ../app/widgets/gimphelp.c:187
 msgid "Help browser not found"
-msgstr "Pagalbos naršyklė nerasta"
+msgstr "Žinyno naršyklė nerasta"
 
 #: ../app/widgets/gimphelp.c:188
 msgid "Could not find GIMP help browser."
-msgstr "Nepavyko rasti GIMP pagalbos naršyklės."
+msgstr "Nepavyko rasti GIMP žinyno naršyklės."
 
 #: ../app/widgets/gimphelp.c:189
 msgid ""
 "The GIMP help browser plug-in appears to be missing from your installation."
-msgstr "Panašu, kad pas Jus neįdiegtas GIMP pagalbos naršyklės įskiepis."
+msgstr "Panašu, kad pas Jus neįdiegtas GIMP žinyno naršyklės įskiepis."
 
 #: ../app/widgets/gimphelp.c:213
 msgid "Help browser doesn't start"
-msgstr "Nepavyksta paleisti pagalbos naršyklės"
+msgstr "Nepavyksta paleisti žinyno naršyklės"
 
 #: ../app/widgets/gimphelp.c:214
 msgid "Could not start the GIMP help browser plug-in."
-msgstr "Nepavyko paleisti GIMP pagalbos naršyklės įskiepio."
+msgstr "Nepavyko paleisti GIMP žinyno naršyklės įskiepio."
 
 #: ../app/widgets/gimphelp.c:240
 msgid "Use _web browser instead"
@@ -10847,7 +10864,7 @@ msgstr "Gražūs"
 
 #: ../app/widgets/widgets-enums.c:199
 msgid "GIMP help browser"
-msgstr "GIMP pagalbos naršyklė"
+msgstr "GIMP žinyno naršyklė"
 
 #: ../app/widgets/widgets-enums.c:200
 msgid "Web browser"

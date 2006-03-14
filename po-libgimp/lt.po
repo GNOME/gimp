@@ -1,16 +1,16 @@
 # Lithuanian translation of GIMP (libgimp).
-# Copyright (C) 2001-2005 Free Software Foundation, Inc.
+# Copyright (C) 2001-2006 Free Software Foundation, Inc.
 # Mantas Kriaučiūnas <mantas@akl.lt>, 2001.
-# Žygimantas Beručka <zygis@gnome.org>, 2004-2005.
 # Linas Vasiliauskas <linasv@centras.lt>, 2004.
-# 
+# Žygimantas Beručka <zygis@gnome.org>, 2004-2006.
+#
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP (libgimp) HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-04 14:37+0200\n"
-"PO-Revision-Date: 2005-11-04 14:37+0200\n"
+"POT-Creation-Date: 2006-03-09 16:24+0200\n"
+"PO-Revision-Date: 2006-03-09 16:34+0200\n"
 "Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
@@ -151,7 +151,7 @@ msgstr "Patvirtinkite"
 
 #: ../libgimp/gimpexport.c:462
 msgid "Export File"
-msgstr "Eksportuoti bylą"
+msgstr "Eksportuoti rinkmeną"
 
 #: ../libgimp/gimpexport.c:466
 msgid "_Ignore"
@@ -194,11 +194,11 @@ msgstr ""
 "Jūs ketinate išsaugoti kanalą (išsaugotą pasirinkimą) kaip %s.\n"
 "Turėkite omenyje, kad matomi sluoksniai išsaugoti nebus."
 
-#: ../libgimp/gimpfontselectbutton.c:124 ../libgimp/gimpfontselectbutton.c:169
+#: ../libgimp/gimpfontselectbutton.c:126 ../libgimp/gimpfontselectbutton.c:177
 msgid "Font Selection"
 msgstr "Šriftų pasirinkimas"
 
-#: ../libgimp/gimpfontselectbutton.c:137 ../libgimp/gimpfontselectbutton.c:170
+#: ../libgimp/gimpfontselectbutton.c:139 ../libgimp/gimpfontselectbutton.c:178
 msgid "Sans"
 msgstr "Sans"
 
@@ -206,7 +206,7 @@ msgstr "Sans"
 msgid "Gradient Selection"
 msgstr "Perėjimų pasirinkimas"
 
-#: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:167
+#: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:131
 msgid "(Empty)"
 msgstr "(Tuščias)"
 
@@ -218,67 +218,67 @@ msgstr "Paletės pasirinkimas"
 msgid "Pattern Selection"
 msgstr "Raštų pasirinkimas"
 
-#: ../libgimp/gimpprocbrowserdialog.c:171
+#: ../libgimp/gimpprocbrowserdialog.c:140
 msgid "by name"
 msgstr "pagal pavadinimą"
 
-#: ../libgimp/gimpprocbrowserdialog.c:172
+#: ../libgimp/gimpprocbrowserdialog.c:141
 msgid "by description"
 msgstr "pagal aprašymą"
 
-#: ../libgimp/gimpprocbrowserdialog.c:173
+#: ../libgimp/gimpprocbrowserdialog.c:142
 msgid "by help"
 msgstr "pagal pagalbą"
 
-#: ../libgimp/gimpprocbrowserdialog.c:174
+#: ../libgimp/gimpprocbrowserdialog.c:143
 msgid "by author"
 msgstr "pagal autorių"
 
-#: ../libgimp/gimpprocbrowserdialog.c:175
+#: ../libgimp/gimpprocbrowserdialog.c:144
 msgid "by copyright"
 msgstr "pagal autorines teises"
 
-#: ../libgimp/gimpprocbrowserdialog.c:176
+#: ../libgimp/gimpprocbrowserdialog.c:145
 msgid "by date"
 msgstr "pagal datą"
 
-#: ../libgimp/gimpprocbrowserdialog.c:177
+#: ../libgimp/gimpprocbrowserdialog.c:146
 msgid "by type"
 msgstr "pagal tipą"
 
-#: ../libgimp/gimpprocbrowserdialog.c:408
+#: ../libgimp/gimpprocbrowserdialog.c:377
 msgid "Searching"
 msgstr "Ieškoma"
 
-#: ../libgimp/gimpprocbrowserdialog.c:419
+#: ../libgimp/gimpprocbrowserdialog.c:388
 msgid "Searching by name"
 msgstr "Ieškoma pagal pavadinimą"
 
-#: ../libgimp/gimpprocbrowserdialog.c:440
+#: ../libgimp/gimpprocbrowserdialog.c:409
 msgid "Searching by description"
 msgstr "Ieškoma pagal aprašymą"
 
-#: ../libgimp/gimpprocbrowserdialog.c:447
+#: ../libgimp/gimpprocbrowserdialog.c:416
 msgid "Searching by help"
 msgstr "Ieškoma pagal pagalbą"
 
-#: ../libgimp/gimpprocbrowserdialog.c:454
+#: ../libgimp/gimpprocbrowserdialog.c:423
 msgid "Searching by author"
 msgstr "Ieškoma pagal autorių"
 
-#: ../libgimp/gimpprocbrowserdialog.c:461
+#: ../libgimp/gimpprocbrowserdialog.c:430
 msgid "Searching by copyright"
 msgstr "Ieškoma pagal autorines teises"
 
-#: ../libgimp/gimpprocbrowserdialog.c:468
+#: ../libgimp/gimpprocbrowserdialog.c:437
 msgid "Searching by date"
 msgstr "Ieškoma pagal datą"
 
-#: ../libgimp/gimpprocbrowserdialog.c:475
+#: ../libgimp/gimpprocbrowserdialog.c:444
 msgid "Searching by type"
 msgstr "Ieškoma pagal tipą"
 
-#: ../libgimp/gimpprocbrowserdialog.c:485
+#: ../libgimp/gimpprocbrowserdialog.c:454
 #, c-format
 msgid "%d procedure"
 msgid_plural "%d procedures"
@@ -286,11 +286,11 @@ msgstr[0] "%d procedūra"
 msgstr[1] "%d procedūros"
 msgstr[2] "%d procedūrų"
 
-#: ../libgimp/gimpprocbrowserdialog.c:494
+#: ../libgimp/gimpprocbrowserdialog.c:463
 msgid "No matches for your query"
 msgstr "Jūsų užklausai atitikmenų nerasta"
 
-#: ../libgimp/gimpprocbrowserdialog.c:498
+#: ../libgimp/gimpprocbrowserdialog.c:467
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
@@ -299,7 +299,7 @@ msgstr[1] "%d procedūros atitinka Jūsų užklausą"
 msgstr[2] "%d procedūrų atitinka Jūsų užklausą"
 
 #. count label
-#: ../libgimp/gimpprocbrowserdialog.c:547 ../libgimpwidgets/gimpbrowser.c:145
+#: ../libgimp/gimpprocbrowserdialog.c:516 ../libgimpwidgets/gimpbrowser.c:114
 msgid "No matches"
 msgstr "Atitikmenų nėra"
 
@@ -541,11 +541,11 @@ msgstr "Susikirtimai (kryželiai)"
 
 #: ../libgimpbase/gimpbaseenums.c:429
 msgid "Dashed"
-msgstr ""
+msgstr "Brūkšniuota"
 
 #: ../libgimpbase/gimpbaseenums.c:430
 msgid "Double dashed"
-msgstr ""
+msgstr "Dvigubai brūkšniuota"
 
 #: ../libgimpbase/gimpbaseenums.c:431
 msgid "Solid"
@@ -561,7 +561,7 @@ msgstr "Vidinis pixbuf"
 
 #: ../libgimpbase/gimpbaseenums.c:462
 msgid "Image file"
-msgstr "Paveikslėlio byla"
+msgstr "Paveikslėlio rinkmena"
 
 #: ../libgimpbase/gimpbaseenums.c:491
 msgid "RGB color"
@@ -651,19 +651,19 @@ msgstr "Į priekį"
 msgid "Backward"
 msgstr "Atgal"
 
-#: ../libgimpbase/gimpbaseenums.c:813
+#: ../libgimpbase/gimpbaseenums.c:815
 msgid "Internal GIMP procedure"
 msgstr "Vidinė GIMP procedūra"
 
-#: ../libgimpbase/gimpbaseenums.c:814
+#: ../libgimpbase/gimpbaseenums.c:816
 msgid "GIMP Plug-In"
 msgstr "GIMP įskiepis"
 
-#: ../libgimpbase/gimpbaseenums.c:815
+#: ../libgimpbase/gimpbaseenums.c:817
 msgid "GIMP Extension"
 msgstr "GIMP išplėtimas"
 
-#: ../libgimpbase/gimpbaseenums.c:816
+#: ../libgimpbase/gimpbaseenums.c:818
 msgid "Temporary Procedure"
 msgstr "Laikina procedūra"
 
@@ -848,7 +848,7 @@ msgstr "Negalima išplėsti ${%s}"
 #: ../libgimpconfig/gimpconfigwriter.c:135
 #, c-format
 msgid "Could not create temporary file for '%s': %s"
-msgstr "Nepavyko sukurti laikinos bylos „%s“: %s"
+msgstr "Nepavyko sukurti laikinos rinkmenos „%s“: %s"
 
 #: ../libgimpconfig/gimpconfigwriter.c:148
 #, c-format
@@ -861,8 +861,8 @@ msgid ""
 "Error writing to temporary file for '%s': %s\n"
 "The original file has not been touched."
 msgstr ""
-"Klaida rašant į laikinąją bylą „%s“: %s\n"
-"Originali byla buvo nepaliesta."
+"Klaida rašant į laikinąją rinkmeną „%s“: %s\n"
+"Originali rinkmena buvo nepaliesta."
 
 #: ../libgimpconfig/gimpconfigwriter.c:675
 #, c-format
@@ -870,8 +870,8 @@ msgid ""
 "Error writing to temporary file for '%s': %s\n"
 "No file has been created."
 msgstr ""
-"Klaida rašant į laikinąją bylą „%s“: %s\n"
-"Jokia byla nebuvo sukurta."
+"Klaida rašant į laikinąją rinkmeną „%s“: %s\n"
+"Jokia rinkmena nebuvo sukurta."
 
 #: ../libgimpconfig/gimpconfigwriter.c:686
 #, c-format
@@ -892,36 +892,26 @@ msgstr "nekorektiška UTF-8 eilutė"
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Klaida skaitant „%s“ eilutėje %d: %s"
 
-#: ../libgimpmodule/gimpmodule.c:180
-#, c-format
-msgid "Loading module: '%s'\n"
-msgstr "Įkeliamas modulis: „%s“\n"
-
-#: ../libgimpmodule/gimpmodule.c:197 ../libgimpmodule/gimpmodule.c:216
-#: ../libgimpmodule/gimpmodule.c:330 ../libgimpmodule/gimpmodule.c:358
-#: ../libgimpmodule/gimpmodule.c:470
+#: ../libgimpmodule/gimpmodule.c:152 ../libgimpmodule/gimpmodule.c:170
+#: ../libgimpmodule/gimpmodule.c:279 ../libgimpmodule/gimpmodule.c:306
+#: ../libgimpmodule/gimpmodule.c:417
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Modulio „%s“ įkėlimo klaida: %s"
 
-#: ../libgimpmodule/gimpmodule.c:286
-#, c-format
-msgid "Skipping module: '%s'\n"
-msgstr "Praleidžiamas modulis: „%s“\n"
-
-#: ../libgimpmodule/gimpmodule.c:426
+#: ../libgimpmodule/gimpmodule.c:374
 msgid "Module error"
 msgstr "Modulio klaida"
 
-#: ../libgimpmodule/gimpmodule.c:427
+#: ../libgimpmodule/gimpmodule.c:375
 msgid "Loaded"
 msgstr "Įkeltas"
 
-#: ../libgimpmodule/gimpmodule.c:428
+#: ../libgimpmodule/gimpmodule.c:376
 msgid "Load failed"
 msgstr "Įkėlimas nepavyko"
 
-#: ../libgimpmodule/gimpmodule.c:429
+#: ../libgimpmodule/gimpmodule.c:377
 msgid "Not loaded"
 msgstr "Neįkelta"
 
@@ -932,19 +922,19 @@ msgid ""
 "Thumbnails will be stored in the folder for temporary files (%s) instead."
 msgstr ""
 "Nepavyko aptikti tinkamo namų aplanko.\n"
-"Todėl mini vaizdai bus išsaugoti laikinųjų bylų aplanke (%s)."
+"Todėl mini vaizdai bus išsaugoti laikinųjų rinkmenų aplanke (%s)."
 
 #: ../libgimpthumb/gimpthumb-utils.c:249 ../libgimpthumb/gimpthumb-utils.c:317
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Nepavyko sukurti mini vaizdų aplanko „%s“."
 
-#: ../libgimpthumb/gimpthumbnail.c:919
+#: ../libgimpthumb/gimpthumbnail.c:889
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Nepavyko sukurti %s mini vaizdo: %s"
 
-#: ../libgimpwidgets/gimpbrowser.c:129
+#: ../libgimpwidgets/gimpbrowser.c:98
 msgid "_Search:"
 msgstr "_Ieškoti:"
 
@@ -964,55 +954,97 @@ msgstr "_Juoda"
 msgid "_White"
 msgstr "_Balta"
 
-#: ../libgimpwidgets/gimpcolorscales.c:129
+#: ../libgimpwidgets/gimpcolorscales.c:98
 msgid "Scales"
 msgstr ""
 
-#: ../libgimpwidgets/gimpcolorselection.c:218
+#: ../libgimpwidgets/gimpcolorselection.c:187
 msgid "Current:"
 msgstr "Dabartinė:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:240
+#: ../libgimpwidgets/gimpcolorselection.c:209
 msgid "Old:"
 msgstr "Sena:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:294
+#: ../libgimpwidgets/gimpcolorselection.c:263
 msgid "Hexadecimal color notation as used in HTML and CSS"
 msgstr "Šešioliktainė spalvos notacija kaip naudojama HTML ir CSS"
 
-#: ../libgimpwidgets/gimpcolorselection.c:299
+#: ../libgimpwidgets/gimpcolorselection.c:268
 msgid "HTML _notation:"
 msgstr "HTML _notacija:"
 
-#: ../libgimpwidgets/gimpfileentry.c:351
+#: ../libgimpwidgets/gimpfileentry.c:320
 msgid "Select Folder"
 msgstr "Pasirinkite aplanką"
 
-#: ../libgimpwidgets/gimpfileentry.c:353
+#: ../libgimpwidgets/gimpfileentry.c:322
 msgid "Select File"
-msgstr "Pasirinkite bylą"
+msgstr "Pasirinkite rinkmeną"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:232
+#: ../libgimpwidgets/gimpmemsizeentry.c:203
 msgid "Kilobytes"
-msgstr "Kilobaitų"
+msgstr "Kilobaitai"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:233
+#: ../libgimpwidgets/gimpmemsizeentry.c:204
 msgid "Megabytes"
-msgstr "Megabaitų"
+msgstr "Megabaitai"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:234
+#: ../libgimpwidgets/gimpmemsizeentry.c:205
 msgid "Gigabytes"
-msgstr "Gigabaitų"
+msgstr "Gigabaitai"
 
-#: ../libgimpwidgets/gimppatheditor.c:243
+#. Count label
+#: ../libgimpwidgets/gimppageselector.c:269
+#: ../libgimpwidgets/gimppageselector.c:1171
+msgid "Nothing selected"
+msgstr "Nieko nepasirinkta"
+
+#: ../libgimpwidgets/gimppageselector.c:287
+msgid "Select _All"
+msgstr "Pasirinkti _viską"
+
+#: ../libgimpwidgets/gimppageselector.c:307
+msgid "Select _range:"
+msgstr "Pasirinkti _diapazoną:"
+
+#: ../libgimpwidgets/gimppageselector.c:319
+msgid "Open _pages as"
+msgstr "Atverti _puslapius kaip"
+
+#: ../libgimpwidgets/gimppageselector.c:420
+msgid "Page 000"
+msgstr "Puslapis 000"
+
+#: ../libgimpwidgets/gimppageselector.c:512
+#: ../libgimpwidgets/gimppageselector.c:749
+#, c-format
+msgid "Page %d"
+msgstr "Puslapis %d"
+
+#: ../libgimpwidgets/gimppageselector.c:1176
+msgid "One page selected"
+msgstr "Pasirinktas vienas puslapis"
+
+#: ../libgimpwidgets/gimppageselector.c:1183
+#, c-format
+msgid "All %d pages selected"
+msgstr "Pasirinkti visi %d psl."
+
+#: ../libgimpwidgets/gimppageselector.c:1185
+#, c-format
+msgid "%d pages selected"
+msgstr "pasirinkta %d psl."
+
+#: ../libgimpwidgets/gimppatheditor.c:212
 msgid "Writable"
 msgstr "Rašomas"
 
-#: ../libgimpwidgets/gimppatheditor.c:252
+#: ../libgimpwidgets/gimppatheditor.c:221
 msgid "Folder"
 msgstr "Aplankas"
 
-#: ../libgimpwidgets/gimppickbutton.c:138
+#: ../libgimpwidgets/gimppickbutton.c:107
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
@@ -1020,16 +1052,16 @@ msgstr ""
 "Spragtelėkite ant pipetės, tada spragtelėkite bet kurioje ekrano vietoje "
 "norėdami pasirinkti tą spalvą."
 
-#: ../libgimpwidgets/gimppreviewarea.c:126
+#: ../libgimpwidgets/gimppreviewarea.c:94
 msgid "Check Size"
 msgstr "Kvadratėlių dydis"
 
-#: ../libgimpwidgets/gimppreviewarea.c:133
+#: ../libgimpwidgets/gimppreviewarea.c:101
 msgid "Check Style"
 msgstr "Kvadratėlių stilius"
 
 #. toggle button to (des)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:256
+#: ../libgimpwidgets/gimppreview.c:265
 msgid "_Preview"
 msgstr "_Peržiūra"
 
@@ -1118,19 +1150,19 @@ msgstr "_Pasukti"
 msgid "_Shear"
 msgstr "Š_lytis"
 
-#: ../libgimpwidgets/gimpunitmenu.c:302
+#: ../libgimpwidgets/gimpunitmenu.c:267
 msgid "More..."
 msgstr "Daugiau..."
 
-#: ../libgimpwidgets/gimpunitmenu.c:612
+#: ../libgimpwidgets/gimpunitmenu.c:577
 msgid "Unit Selection"
 msgstr "Matavimo vienetų pasirinkimas"
 
-#: ../libgimpwidgets/gimpunitmenu.c:660
+#: ../libgimpwidgets/gimpunitmenu.c:625
 msgid "Unit"
 msgstr "Matavimo vienetai"
 
-#: ../libgimpwidgets/gimpunitmenu.c:664
+#: ../libgimpwidgets/gimpunitmenu.c:629
 msgid "Factor"
 msgstr "Koeficientas"
 
@@ -1382,3 +1414,172 @@ msgstr "Vandeniniai dažai"
 #: ../modules/colorsel_water.c:220
 msgid "Pressure"
 msgstr "Spaudimas"
+
+#: ../modules/controller_linux_input.c:56
+msgid "Button 0"
+msgstr "Mygtukas 0"
+
+#: ../modules/controller_linux_input.c:57
+msgid "Button 1"
+msgstr "Mygtukas 1"
+
+#: ../modules/controller_linux_input.c:58
+msgid "Button 2"
+msgstr "Mygtukas 2"
+
+#: ../modules/controller_linux_input.c:59
+msgid "Button 3"
+msgstr "Mygtukas 3"
+
+#: ../modules/controller_linux_input.c:60
+msgid "Button 4"
+msgstr "Mygtukas 4"
+
+#: ../modules/controller_linux_input.c:61
+msgid "Button 5"
+msgstr "Mygtukas 5"
+
+#: ../modules/controller_linux_input.c:62
+msgid "Button 6"
+msgstr "Mygtukas 6"
+
+#: ../modules/controller_linux_input.c:63
+msgid "Button 7"
+msgstr "Mygtukas 7"
+
+#: ../modules/controller_linux_input.c:64
+msgid "Button 8"
+msgstr "Mygtukas 8"
+
+#: ../modules/controller_linux_input.c:65
+msgid "Button 9"
+msgstr "Mygtukas 9"
+
+#: ../modules/controller_linux_input.c:66
+msgid "Button Mouse"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:67
+msgid "Button Left"
+msgstr "Mygtukas kairėn"
+
+#: ../modules/controller_linux_input.c:68
+msgid "Button Right"
+msgstr "Mygtukas dešinėn"
+
+#: ../modules/controller_linux_input.c:69
+msgid "Button Middle"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:70
+msgid "Button Side"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:71
+msgid "Button Extra"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:72
+#: ../modules/controller_linux_input.c:73
+msgid "Button Forward"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:75
+msgid "Button Wheel"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:78
+msgid "Button Gear Down"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:81
+msgid "Button Gear Up"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:87
+msgid "Wheel Turn Left"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:88
+msgid "Wheel Turn Right"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:89
+msgid "Dial Turn Left"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:90
+msgid "Dial Turn Right"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:154
+msgid "Linux input event controller"
+msgstr "Linux įvesties įvykių kontroleris"
+
+#: ../modules/controller_linux_input.c:222 ../modules/controller_midi.c:244
+msgid "Device:"
+msgstr "Įrenginys:"
+
+#: ../modules/controller_linux_input.c:223
+msgid "The name of the device to read Linux Input events from."
+msgstr ""
+
+#: ../modules/controller_linux_input.c:227
+msgid "Linux Input"
+msgstr "Linux įvestis"
+
+#: ../modules/controller_linux_input.c:351
+msgid "Linux Input Events"
+msgstr "Linux įvesties įvykiai"
+
+#: ../modules/controller_linux_input.c:372 ../modules/controller_midi.c:480
+#: ../modules/controller_midi.c:506
+#, c-format
+msgid "Reading from %s"
+msgstr "Skaitoma iš %s"
+
+#: ../modules/controller_linux_input.c:388
+#: ../modules/controller_linux_input.c:431 ../modules/controller_midi.c:462
+#: ../modules/controller_midi.c:523 ../modules/controller_midi.c:594
+#, c-format
+msgid "Device not available: %s"
+msgstr "Įrenginys neprieinamas: %s"
+
+#: ../modules/controller_linux_input.c:396 ../modules/controller_midi.c:531
+msgid "No device configured"
+msgstr "Nėra sukonfigūruoto įrenginio"
+
+#: ../modules/controller_linux_input.c:440 ../modules/controller_midi.c:603
+msgid "End of file"
+msgstr "Rinkmenos pabaiga"
+
+#: ../modules/controller_midi.c:166
+msgid "MIDI event controller"
+msgstr "MIDI įvykių kontroleris"
+
+#: ../modules/controller_midi.c:235
+msgid "The name of the device to read MIDI events from."
+msgstr ""
+
+#: ../modules/controller_midi.c:238
+#, fuzzy
+msgid "Enter 'alsa' to use the ALSA sequencer."
+msgstr "Įveskite „alsa“ norėdami naudoti ALSA seką."
+
+#: ../modules/controller_midi.c:253
+msgid "Channel:"
+msgstr "Kanalas:"
+
+#: ../modules/controller_midi.c:254
+msgid ""
+"The MIDI channel to read events from. Set to -1 for reading from all MIDI "
+"channels."
+msgstr ""
+
+#: ../modules/controller_midi.c:258
+msgid "MIDI"
+msgstr "MIDI"
+
+#: ../modules/controller_midi.c:434
+msgid "MIDI Events"
+msgstr "MIDI įvykiai"

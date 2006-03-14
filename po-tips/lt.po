@@ -1,82 +1,82 @@
-# Lithuanian translation of GIMP TIPS.
-# Copyright (C) 2004, Free Software Foundation, Inc.
+# Lithuanian translation of GIMP Tips.
+# Copyright (C) 2004-2006, Free Software Foundation, Inc.
 # This file is distributed under the same license as the Gimp package.
-# Linas Vasiliauskas <linasv@delfi.lt>, 2004
-# Linas <linasv@delfi.lt>, 2004.
+# Linas Vasiliauskas <linasv@delfi.lt>, 2004.
+# Žygimantas Beručka <zygis@gnome.org>, 2005-2006.
 # 
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP (tips) HEAD\n"
+"Project-Id-Version: gimp-tips HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-05-14 17:18+0200\n"
-"PO-Revision-Date: 2004-05-23 14:17+0300\n"
-"Last-Translator: Žygimantas Beručka <uid0@akl.lt>\n"
+"POT-Creation-Date: 2006-03-13 15:57+0200\n"
+"PO-Revision-Date: 2006-03-13 20:05+0200\n"
+"Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../tips/gimp-tips.xml.in.h:1
-#, fuzzy
+#: ../data/tips/gimp-tips.xml.in.h:1
 msgid "<big>Welcome to the GNU Image Manipulation Program!</big>"
-msgstr "<big>Sveiki GIMP vartotojai!</big>"
+msgstr ""
+"<big>Sveikiname paleidus GNU paveikslėlių manipuliavimo programą!</big>"
 
-#: ../tips/gimp-tips.xml.in.h:2
+#: ../data/tips/gimp-tips.xml.in.h:2
 msgid ""
 "<tt>Alt</tt>-click on the layer mask's preview in the Layers dialog toggles "
 "viewing the mask directly."
 msgstr ""
-"Nuspaudę <tt>Alt</tt> spragtelėkite pele ant sluoksnio kaukės peržiūros "
-"Sluoksnių dialoge, kad peržiūrėtumėte kaukę tiesiogiai."
+"Norėdami peržiūrėti kaukę tiesiogiai, nuspaudę <tt>Alt</tt> spragtelėkite "
+"pele ant sluoksnio kaukės peržiūros Sluoksnių dialoge."
 
-#: ../tips/gimp-tips.xml.in.h:3
+#: ../data/tips/gimp-tips.xml.in.h:3
 msgid ""
 "<tt>Ctrl</tt>-click on the layer mask's preview in the Layers dialog toggles "
 "the effect of the layer mask."
 msgstr ""
-"Spragtelėkite pele laikydami <tt>Ctrl</tt> klavišą ant sluoksnio kaukės "
-"peržiūros Sluoksnių dialoge, kad peržiūrėtumėte kaukę tiesiogiai."
+"Norėdami tiesiogiai peržiūrėti sluoksnio kaukės efektą, laikydami <tt>Ctrl</t"
+"t> spragtelėkite pele ant sluoksnio kaukės peržiūros Sluoksnių dialoge."
 
-#: ../tips/gimp-tips.xml.in.h:4
+#: ../data/tips/gimp-tips.xml.in.h:4
 msgid ""
 "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
 "color instead of the foreground color."
 msgstr ""
-"Jei naudodami Užpildymo įrankį, nuspauskite <tt>Ctrl</tt> klavišą, tai "
+"Jei naudodami Užpildymo įrankį, nuspausite <tt>Ctrl</tt> klavišą, tai "
 "užpildysite ne priekinio plano, o fono spalva."
 
-#: ../tips/gimp-tips.xml.in.h:5
+#: ../data/tips/gimp-tips.xml.in.h:5
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
 msgstr ""
-"Transformavimo įrankiu pasuksite tiksliai kas 15 laipsnių kampu, jei  "
-"spausite <tt>Ctrl</tt>."
+"Sukimo įrankiu pasuksite tiksliai kas 15 laipsnių kampu, jei tempdami "
+"laikysite paspaudę <tt>Ctrl</tt>."
 
-#: ../tips/gimp-tips.xml.in.h:6
+#: ../data/tips/gimp-tips.xml.in.h:6
 msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
 "but that one. <tt>Shift</tt>-click again to show all layers."
 msgstr ""
-"Spragtelėkite pele ant akies ženklo Sluoksnių dialoge laikydami <tt>Shift</"
-"tt> klavišą, kad paslėptumėte visus sluoksnius išskyrus pažymėtąjį. "
-"Pakartokite tai dar kartą jei norite, kad visi sluoksniai vėl būtų matomi."
+"Norėdami paslėpti visus sluoksnius išskyrus pažymėtąjį, laikydami nuspaudę "
+"<tt>Shift</tt> klavišą spragtelėkite pele akies piktogramą Sluoksnių dialoge. "
+"Jei norite, kad visi sluoksniai vėl būtų matomi, pakartokite procedūrą dar "
+"kartą."
 
-#: ../tips/gimp-tips.xml.in.h:7
-#, fuzzy
+#: ../data/tips/gimp-tips.xml.in.h:7
 msgid ""
 "A floating selection must be anchored to a new layer or to the last active "
 "layer before doing other operations on the image. Click on the &quot;New "
 "Layer&quot; or the &quot;Anchor Layer&quot; button in the Layers dialog, or "
 "use the menus to do the same."
 msgstr ""
-"Prieš veiksmų atlikimą plaukiojantis pažymėjimas turi būti pririštas prie "
-"naujo sluoksnio arba prie paskutinio aktyvaus sluoksnio. Tai įvykdysite "
-"Sluoksnių dialoge paspaudę mygtukus (arba meniu) \"Naujas sluoksnis\"  arba "
-"\"Pritvirtinti sluoksnį\"."
+"Prieš veiksmų atlikimą plaukiojantį pažymėjimą reikia pritvirtinti prie "
+"paskutiniojo aktyvaus sluoksnio. Tai galite padaryti spragtelėję „Naujas "
+"sluoksnis“ arba „Pritvirtinti sluoksnį“ mygtukus esančius sluoksnių dialoge, "
+"tą patį galite atlikti ir naudodami meniu."
 
-#: ../tips/gimp-tips.xml.in.h:8
+#: ../data/tips/gimp-tips.xml.in.h:8
 #, fuzzy
 msgid ""
 "After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
@@ -91,7 +91,7 @@ msgstr ""
 "Klavišų kombinacija bus išsaugota uždarius GIMP, jei bus įjungta „Išsaugoti "
 "klavišų kombinacijas“."
 
-#: ../tips/gimp-tips.xml.in.h:9
+#: ../data/tips/gimp-tips.xml.in.h:9
 #, fuzzy
 msgid ""
 "Click and drag on a ruler to place a guide on an image. All dragged "
@@ -103,42 +103,46 @@ msgstr ""
 "pagalbinių linijų. Pagalbines linijas pašalinsite, nutempdami jas už "
 "paveikslėlio ribų poslinkio įrankiu."
 
-#: ../tips/gimp-tips.xml.in.h:10
+#: ../data/tips/gimp-tips.xml.in.h:10
 msgid ""
 "GIMP allows you to undo most changes to the image, so feel free to "
 "experiment."
 msgstr ""
+"GIMP leidžia atšaukti daugumą paveikslėlyje atliktų pakeitimų, tad leiskite "
+"sau paeksperimentuoti."
 
-#: ../tips/gimp-tips.xml.in.h:11
-#, fuzzy
+#: ../data/tips/gimp-tips.xml.in.h:11
 msgid ""
 "GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
 "bz2</tt>, if you have bzip2 installed) to the filename and your image will "
 "be saved compressed. Of course loading compressed images works too."
 msgstr ""
-"GIMP galite panaudoti gzip archyvavimą. Pridėkite <tt>.gz</tt> (arba <tt>."
+"GIMP palaiko archyvavimą su gzip. Tiesiog pridėkite <tt>.gz</tt> (arba <tt>."
 "bz2</tt>, jei turite įdiegtą bzip2) prie bylos pavadinimo, ir išsaugosite "
-"suarchyvuotą paveikslėlį. Taip pat ir su atidaromais paveikslėliais."
+"suarchyvuotą paveikslėlį. Suarchyvuotų paveikslėlių įkėlimas, žinoma, taip "
+"pat veikia."
 
-#: ../tips/gimp-tips.xml.in.h:12
-#, fuzzy
+#: ../data/tips/gimp-tips.xml.in.h:12
 msgid ""
 "GIMP uses layers to let you organize your image. Think of them as a stack of "
 "slides or filters, such that looking through them you see a composite of "
 "their contents."
 msgstr ""
-"GIMP naudojami sluoksniai padės Jums sutvarkyti paveikslėlį. įsivaizduokite, "
-"kad sluoksniai yra filtrų arba skaidrių rinkinys, pro kurį žiūrėdami "
+"GIMP naudojami sluoksniai padės Jums sutvarkyti paveikslėlį. Įsivaizduokite, "
+"kad sluoksniai yra filtrų arba skaidrių krūva, pro kurią žiūrėdami "
 "matysite iš jų sudarytą paveikslėlį."
 
-#: ../tips/gimp-tips.xml.in.h:13
+#: ../data/tips/gimp-tips.xml.in.h:13
 msgid ""
 "If a layer's name in the Layers dialog is displayed in <b>bold</b>, this "
 "layer doesn't have an alpha-channel. You can add an alpha-channel using "
 "Layer-&gt;Transparency-&gt;Add Alpha Channel."
 msgstr ""
+"Jeigu sluoksnio pavadinimas sluoksnių dialoge rodomas <b>pastorintas</b>, "
+"šis sluoksnis neturi alfa kanalo. Alfą kanalą galite pridėti naudodamiesi "
+"Sluoksniai-&gt;Permatomumas-&gt;Pridėti alfa kanalą."
 
-#: ../tips/gimp-tips.xml.in.h:14
+#: ../data/tips/gimp-tips.xml.in.h:14
 #, fuzzy
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
@@ -151,17 +155,17 @@ msgstr ""
 "(Paveikslėlis-&gt;Spalvos-&gt;Sluoksniai).Atspalvius galite koreguoti "
 "Kreivėmis (Paveikslėlis-&gt;Spalvos-&gt;Kreivės)."
 
-#: ../tips/gimp-tips.xml.in.h:15
+#: ../data/tips/gimp-tips.xml.in.h:15
 msgid ""
 "If you stroke a path (Edit-&gt;Stroke Path), the paint tools can be used "
 "with their current settings. You can use the Paintbrush in gradient mode or "
 "even the Eraser or the Smudge tool."
 msgstr ""
-"Jei Jūs apvesite kontūrą (Keisti-&gt;Apvesti), bus naudojamas aktyvus "
+"Jei Jūs apvesite kontūrą (Keisti-&gt;Apvesti kelią), bus naudojamas aktyvus "
 "įrankis ir jo nustatymai. Galite naudoti teptuką su perėjimu, klonavimo "
 "įrankį su raštu arba net trintuką, tepimo įrankį."
 
-#: ../tips/gimp-tips.xml.in.h:16
+#: ../data/tips/gimp-tips.xml.in.h:16
 msgid ""
 "If your screen is too cluttered, you can press <tt>Tab</tt> multiple times "
 "in an image window to hide or show the toolbox and other dialogs."
@@ -169,7 +173,7 @@ msgstr ""
 "Jei Jūsų ekranas per daug apkrautas, galite keletą kartų paspausti <tt>Tab</"
 "tt> paveikslėlio lange, kad paslėptumėte įrankinę ir kitus dialogų langus."
 
-#: ../tips/gimp-tips.xml.in.h:17
+#: ../data/tips/gimp-tips.xml.in.h:17
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
 "you will have to merge all layers (Image-&gt;Flatten Image) if you want the "
@@ -179,7 +183,7 @@ msgstr ""
 "pasitaiko atvejų, kai reikia, kad priedas veiktų visą paveikslėlį. Tada "
 "reikia sujungti sluoksnius (Paveikslėlis-&gt;Sujungti sluoksnius)."
 
-#: ../tips/gimp-tips.xml.in.h:18
+#: ../data/tips/gimp-tips.xml.in.h:18
 #, fuzzy
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
@@ -193,7 +197,7 @@ msgstr ""
 "(Sluoksniai-&gt;Permatomumas-&gt;Pridėti Alfa kanalą) arba sujungti "
 "paveikslėlio sluoksnius (Paveikslėlis-&gt;Sujungti sluoksnius)."
 
-#: ../tips/gimp-tips.xml.in.h:19
+#: ../data/tips/gimp-tips.xml.in.h:19
 msgid ""
 "Pressing and holding the <tt>Shift</tt> key before making a selection allows "
 "you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
@@ -203,7 +207,7 @@ msgstr ""
 "papildysite pažymėtą plotą, o ne atliksite naują pažymėjimą. Naudodami "
 "<tt>Ctlr</tt> klavišu atimsite žymimą plotą iš jau pažymėto."
 
-#: ../tips/gimp-tips.xml.in.h:20
+#: ../data/tips/gimp-tips.xml.in.h:20
 #, fuzzy
 msgid ""
 "To create a circle-shaped selection, hold <tt>Shift</tt> while doing an "
@@ -217,7 +221,7 @@ msgstr ""
 "pagalbinių linijų susikitimo tašką ir nuspaudę <tt>Shift</tt> klavišą "
 "temkite kursorių pele, kol gausite norimą apskritimą."
 
-#: ../tips/gimp-tips.xml.in.h:21
+#: ../data/tips/gimp-tips.xml.in.h:21
 msgid ""
 "When using a drawing tool (Paintbrush, Airbrush, or Pencil), <tt>Shift</tt>-"
 "click will draw a straight line from your last drawing point to your current "
@@ -228,7 +232,7 @@ msgstr ""
 "tt> klavišą, nubrėšite tiesią liniją. Jei tuo pačiu spausite <tt>Ctrl</tt> "
 "klavišą, liniją bus galima sukioti 15 laipsnių žingsniu."
 
-#: ../tips/gimp-tips.xml.in.h:22
+#: ../data/tips/gimp-tips.xml.in.h:22
 #, fuzzy
 msgid ""
 "When you save an image to work on it again later, try using XCF, GIMP's "
@@ -236,12 +240,11 @@ msgid ""
 "the layers and every aspect of your work-in-progress. Once a project is "
 "completed, you can save it as JPEG, PNG, GIF, ..."
 msgstr ""
-"Išsaugokite paveikslėlį XCF formatu, (GIMP'o formatas su praplėtimu <tt>."
-"xcf</tt>). Jame išlieka darbinė paveikslėlio būsena (sluoksniai ir t.t.). "
-"Kai baigsite darbą, galėsite išsaugoti paveikslėlį JPEG, PNG, GIF, ir kitais "
-"formatais."
+"Kai saugote paveikslėlį norėdami jį dar redaguoti ateityje, pabandykite jį "
+"išsaugoti naudodami GIMP įgimtą XCF formatą (naudokite rinkmeno plėtinį "
+"<tt>.xcf</tt>). Taip išsaugomi sluoksniai ir "
 
-#: ../tips/gimp-tips.xml.in.h:23
+#: ../data/tips/gimp-tips.xml.in.h:23
 #, fuzzy
 msgid ""
 "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
@@ -253,13 +256,13 @@ msgstr ""
 "jau naudojamas. Pabandykite paspausti ir <tt>Shift</tt> tuo pačiu metu, kai "
 "spaudžiate <tt>Alt</tt>."
 
-#: ../tips/gimp-tips.xml.in.h:24
+#: ../data/tips/gimp-tips.xml.in.h:24
 msgid ""
 "You can adjust the selection range for fuzzy select by clicking and dragging "
 "left and right."
 msgstr ""
 
-#: ../tips/gimp-tips.xml.in.h:25
+#: ../data/tips/gimp-tips.xml.in.h:25
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
@@ -269,7 +272,7 @@ msgstr ""
 "Kontūrų dialogas suteikia galimybę dirbti su daugeriopais kontūrais ir "
 "paversti juos pažymėjimais."
 
-#: ../tips/gimp-tips.xml.in.h:26
+#: ../data/tips/gimp-tips.xml.in.h:26
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
@@ -277,7 +280,7 @@ msgstr ""
 "Galite nuvilkti pele sluoksnį iš Sluoksnių dialogo ir paleisti ant "
 "įrankinės. Taip sukursite naują paveikslėlį, kuriame bus tik šis sluoksnis."
 
-#: ../tips/gimp-tips.xml.in.h:27
+#: ../data/tips/gimp-tips.xml.in.h:27
 #, fuzzy
 msgid ""
 "You can drag and drop many things in GIMP. For example, dragging a color "
@@ -289,7 +292,7 @@ msgstr ""
 "paletės ir paleisite paveikslėlyje, šia spalva bus užpildytas aktyvus "
 "paveikslėlis arba pažymėjimas."
 
-#: ../tips/gimp-tips.xml.in.h:28
+#: ../data/tips/gimp-tips.xml.in.h:28
 msgid ""
 "You can draw simple squares or circles using Edit-&gt;Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "
@@ -300,7 +303,7 @@ msgstr ""
 "Sudėtingesnes kreives nupiešite naudodami Kontūrų įrankį arba Filtrai-&gt;"
 "Perteikimas-&gt;Gfig."
 
-#: ../tips/gimp-tips.xml.in.h:29
+#: ../data/tips/gimp-tips.xml.in.h:29
 msgid ""
 "You can get context-sensitive help for most of the GIMP's features by "
 "pressing the F1 key at any time. This also works inside the menus."
@@ -308,7 +311,7 @@ msgstr ""
 "Bet kuriuo metu paspaudę F1 klavišą, gausite susijusią su kontekstu pagalbą."
 "Tokiu pat būdu galite gauti pagalbą apie meniu punktus."
 
-#: ../tips/gimp-tips.xml.in.h:30
+#: ../data/tips/gimp-tips.xml.in.h:30
 msgid ""
 "You can perform many layer operations by right-clicking on the text label of "
 "a layer in the Layers dialog."
@@ -316,7 +319,7 @@ msgstr ""
 "Galite atlikti daug veiksmų su sluoksniu, paspaudę dešinį pelės klavišą ant "
 "jo pavadinimo Sluoksnių dialoge."
 
-#: ../tips/gimp-tips.xml.in.h:31
+#: ../data/tips/gimp-tips.xml.in.h:31
 #, fuzzy
 msgid ""
 "You can press or release the <tt>Shift</tt> and <tt>Ctrl</tt> keys while you "
@@ -326,7 +329,7 @@ msgstr ""
 "Jei norite pažymėti tikslų kvadratą arba apskritimą ir žymėti juos nuo "
 "centrinio taško, žymėdami spauskite <tt>Ctrl</tt> ir <tt>Shift</tt>."
 
-#: ../tips/gimp-tips.xml.in.h:32
+#: ../data/tips/gimp-tips.xml.in.h:32
 msgid ""
 "You can save a selection to a channel (Select-&gt;Save to Channel) and then "
 "modify this channel with any paint tools. Using the buttons in the Channels "
@@ -337,7 +340,7 @@ msgstr ""
 "keisti kanalą bet kuriuo piešimo įrankiu. Mygtukais Kanalų dialoge galite "
 "įjungti/išjungti naują kanalą arba paversti jį pažymėjimu."
 
-#: ../tips/gimp-tips.xml.in.h:33
+#: ../data/tips/gimp-tips.xml.in.h:33
 msgid ""
 "You can use <tt>Alt</tt>-<tt>Tab</tt> to cycle through all layers in an "
 "image (if your window manager doesn't trap those keys...)."
@@ -345,15 +348,15 @@ msgstr ""
 "Spausdami <tt>Alt</tt>-<tt>Tab</tt> pereisite visus paveikslėlio sluoksnius "
 "(jei šie klavišai nenaudojami kitur)."
 
-#: ../tips/gimp-tips.xml.in.h:34
+#: ../data/tips/gimp-tips.xml.in.h:34
 msgid ""
 "You can use the middle mouse button to pan around the image, if it's larger "
 "than its display window."
 msgstr ""
-"Nuspaudę vidurinį pelės klavišą galite stumdyti paveikslėlį, jei jis yra "
-"didesnis nei paveikslėlio langas."
+"Jei paveikslėlis yra didesnis nei langas, tai nuspaudę vidurinį pelės "
+"klavišą galite stumdyti paveikslėlį."
 
-#: ../tips/gimp-tips.xml.in.h:35
+#: ../data/tips/gimp-tips.xml.in.h:35
 #, fuzzy
 msgid ""
 "You can use the paint tools to change the selection. Click on the &quot;"
@@ -365,32 +368,3 @@ msgstr ""
 "Greitos Kaukės mygtuko kairiajame apatiniame paveikslėlio kampe. Piešdami "
 "pakeiskite pažymėjimą ir paspauskite tą patį mygtuką, kad grįžtumėte į "
 "normalų režimą."
-
-#, fuzzy
-#~ msgid ""
-#~ "The layer named &quot;Background&quot; is special because it lacks "
-#~ "transparency. This prevents you from moving the layer up in the stack. "
-#~ "You may add transparency to it by right-clicking in the Layers dialog and "
-#~ "selecting &quot;Add Alpha Channel&quot;."
-#~ msgstr ""
-#~ "Sluoksnis „Fonas“ neturi permatomumo savybės. Todėl Jūs negalėsite uždėti "
-#~ "sluoksnio kaukės arba perkelti sluoksnio aukštyn sluoksnių sąraše. "
-#~ "Permatomumą galite pridėti paspaudę dešinį klavišą Sluoksnių dialoge ir "
-#~ "pasirinkę „Pridėti Alfa kanalą“."
-
-#~ msgid ""
-#~ "The file selection dialog box has command-line completion with <tt>Tab</"
-#~ "tt>, just like the shell. Type part of a filename, hit <tt>Tab</tt>, and "
-#~ "voila, it's completed."
-#~ msgstr ""
-#~ "Bylos išrinkimo meniu komandinėje eilutėje rašomą bylos pvadinimą galima "
-#~ "užbaigti <tt>Tab</tt> klavišu. Įveskite dalį bylos pavadinimo, "
-#~ "paspauskite <tt>Tab</tt> ir ... valioooo! Visas pavadinimas įvestas"
-
-#~ msgid ""
-#~ "Nearly all image operations are performed by right-clicking on the image. "
-#~ "And don't worry, you can undo most mistakes..."
-#~ msgstr ""
-#~ "Beveik visi veiksmai vykdomi dešiniojo pelės klavišo paspaudimu "
-#~ "paveikslėlyje. Dirbkite nesijaudindami, GIMP galėsite atšaukti daug "
-#~ "klaidingai įvykdytų veiksmų."

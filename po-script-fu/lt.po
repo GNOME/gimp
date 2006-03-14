@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-03-04 00:31+0200\n"
-"PO-Revision-Date: 2006-03-04 00:41+0200\n"
+"POT-Creation-Date: 2006-03-10 18:02+0200\n"
+"PO-Revision-Date: 2006-03-13 14:40+0200\n"
 "Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
@@ -198,7 +198,7 @@ msgstr "_Ateivių švytėjimas"
 
 #: ../plug-ins/script-fu/script-fu.c:291
 msgid "_Beveled Pattern"
-msgstr ""
+msgstr "_Nuožulnaus krašto raštas"
 
 #: ../plug-ins/script-fu/script-fu.c:293
 msgid "_Classic.Gimp.Org"
@@ -206,15 +206,15 @@ msgstr "_Classic.Gimp.Org"
 
 #: ../plug-ins/script-fu/script-fu.c:296
 msgid "Alpha to _Logo"
-msgstr ""
+msgstr "Alfa į _logotipą"
 
 #: ../plug-ins/script-fu/script-fu.c:298
 msgid "_Decor"
-msgstr ""
+msgstr "_Dekoravimas"
 
 #: ../plug-ins/script-fu/script-fu.c:300
 msgid "_Render"
-msgstr ""
+msgstr "_Atvaizduoti"
 
 #: ../plug-ins/script-fu/script-fu.c:308
 msgid "_Refresh Scripts"
@@ -310,7 +310,7 @@ msgstr "Šriftas"
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/title-header.scm.h:2
 msgid "Font size (pixels)"
-msgstr "Šrifto dydis (pikseliais)"
+msgstr "Šrifto dydis (taškeliais)"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:6
 msgid "Outline blur radius"
@@ -426,22 +426,22 @@ msgstr "Blokų dydis"
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:4
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:5
 msgid "End blend"
-msgstr ""
+msgstr "Perėjimo pabaiga"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:5
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:4
 msgid "Number of X tiles"
-msgstr ""
+msgstr "X detalių skaičius"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:6
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:5
 msgid "Number of Y tiles"
-msgstr ""
+msgstr "Y detalių skaičius"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:7
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:14
 msgid "Start blend"
-msgstr ""
+msgstr "Perėjimo pradžia"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:8
 msgid "Supersample"
@@ -451,11 +451,11 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:3
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:7
 msgid "Thickness"
-msgstr ""
+msgstr "Storis"
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:1
 msgid "Add B_evel..."
-msgstr ""
+msgstr "Pridėti n_uožulnius kraštus..."
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:2
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:10
@@ -570,7 +570,7 @@ msgstr "Spindulys"
 #: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
 #: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
 msgid "_Bullet..."
-msgstr ""
+msgstr "_Punktas..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:1
 #: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
@@ -584,7 +584,7 @@ msgstr "Švytėjimo spindulys"
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
 #: ../plug-ins/script-fu/scripts/beveled-button.scm.h:5
 msgid "Padding"
-msgstr ""
+msgstr "Užpildymas"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:10
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:5
@@ -615,33 +615,33 @@ msgstr "Ateivių _neonas..."
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:3
 msgid "Fade away"
-msgstr ""
+msgstr "Nykstantis"
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:7
 msgid "Number of bands"
-msgstr ""
+msgstr "Bangų kiekis"
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:9
 msgid "Width of bands"
-msgstr ""
+msgstr "Bangų plotis"
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:10
 msgid "Width of gaps"
-msgstr ""
+msgstr "Tarpų plotis"
 
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:6
 msgid "_Basic I..."
-msgstr ""
+msgstr "_Paprastas I..."
 
 #: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:1
 msgid "B_asic II..."
-msgstr ""
+msgstr "P_aprastas II..."
 
 #: ../plug-ins/script-fu/scripts/beveled-button.scm.h:1
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:1
 msgid "Bevel width"
-msgstr ""
+msgstr "Nuožulnaus krašto plotis"
 
 #: ../plug-ins/script-fu/scripts/beveled-button.scm.h:4
 msgid "Lower-right color"
@@ -651,11 +651,11 @@ msgstr "Apatinė dešinė spalva"
 #: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:5
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:10
 msgid "Pressed"
-msgstr "Paspausta"
+msgstr "Paspaustas"
 
 #: ../plug-ins/script-fu/scripts/beveled-button.scm.h:7
 msgid "Simple _Beveled Button..."
-msgstr ""
+msgstr "Paprastas mygtukas _nuožulniais kraštais..."
 
 #: ../plug-ins/script-fu/scripts/beveled-button.scm.h:10
 msgid "Upper-left color"
@@ -700,7 +700,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:3
 msgid "Max. blur radius"
-msgstr ""
+msgstr "Maks. išliejimo spindulys"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:4
 msgid "_Blend..."
@@ -712,23 +712,23 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:3
 msgid "Blend mode"
-msgstr ""
+msgstr "Perėjimo režimas"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:4
 msgid "Custom Gradient"
-msgstr ""
+msgstr "Kitas perėjimas"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:6
 msgid "FG-BG-HSV"
-msgstr "FG-BG-HSV"
+msgstr "P.planas-Fonas-HSV"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:7
 msgid "FG-BG-RGB"
-msgstr "FG-BG-RGB"
+msgstr "P.planas-Fonas-RGB"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:8
 msgid "FG-Transparent"
-msgstr "FG-Permatomas"
+msgstr "P.planas-Permatomas"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:11
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:5
@@ -787,11 +787,11 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
 msgid "Fadeout"
-msgstr ""
+msgstr "Išblukimas"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
 msgid "Fadeout width"
-msgstr ""
+msgstr "Išblukimo plotis"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
 msgid "Prepare for GIF"
@@ -859,7 +859,7 @@ msgstr "Graviruotas..."
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:6
 msgid "Padding around text"
-msgstr ""
+msgstr "Užpildymas aplink tekstą"
 
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:2
 msgid "Chalk color"
@@ -916,7 +916,7 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:4
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:4
 msgid "Chrome saturation"
-msgstr ""
+msgstr "Chromo sodrumas"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:5
 msgid "Chrome white areas"
@@ -926,7 +926,7 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:5
 msgid "Environment map"
-msgstr ""
+msgstr "Aplinkos žemėlapis"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:7
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:8
@@ -947,14 +947,14 @@ msgstr "Poslinkiai (pikseliai * 2)"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:1
 msgid "Circuit seed"
-msgstr ""
+msgstr "Žiedo sėkla"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:2
 #: ../plug-ins/script-fu/scripts/lava.scm.h:2
 #: ../plug-ins/script-fu/scripts/predator.scm.h:2
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Keep selection"
-msgstr ""
+msgstr "Palikti pasirinkimą"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:3
 msgid "No background (only for separate layer)"
@@ -972,7 +972,7 @@ msgstr "Atskiras sluoksnis"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:6
 msgid "_Circuit..."
-msgstr ""
+msgstr "Ži_edas..."
 
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:1
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:1
@@ -999,7 +999,7 @@ msgstr "Pakėlimas"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:6
 msgid "_Clothify..."
-msgstr ""
+msgstr "Padengti a_udiniu..."
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:1
 msgid ""
@@ -1037,7 +1037,7 @@ msgstr "Šaltas _metalas..."
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:3
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:2
 msgid "Effect size (pixels)"
-msgstr "Efekto dydis (pikseliais)"
+msgstr "Efekto dydis (taškeliais)"
 
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:3
 msgid "Crystal..."
@@ -1163,12 +1163,12 @@ msgstr "Išvalyti nepasirinktą kaukės vietą"
 #: ../plug-ins/script-fu/scripts/fade-outline.scm.h:5
 #, no-c-format
 msgid "Fade from %"
-msgstr ""
+msgstr "Išblukimas iš %"
 
 #: ../plug-ins/script-fu/scripts/fade-outline.scm.h:7
 #, no-c-format
 msgid "Fade to %"
-msgstr ""
+msgstr "Išblukimas į %"
 
 #: ../plug-ins/script-fu/scripts/fade-outline.scm.h:8
 msgid "Use growing selection"
@@ -1176,7 +1176,7 @@ msgstr "Naudoti didėjantį pasirinkimą"
 
 #: ../plug-ins/script-fu/scripts/fade-outline.scm.h:9
 msgid "_Fade to Layer Mask..."
-msgstr ""
+msgstr "_Išblukimas į sluoksnio kaukę..."
 
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:1
 #: ../plug-ins/script-fu/scripts/land.scm.h:1
@@ -1210,7 +1210,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:7
 msgid "_Flatland..."
-msgstr ""
+msgstr "_Plokščia žemė..."
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:1
 msgid "Active colors"
@@ -1222,11 +1222,11 @@ msgstr "Juoda ant balto"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:3
 msgid "Font _size (pixels)"
-msgstr "Šrifto _dydis (pikseliais)"
+msgstr "Šrifto _dydis (taškeliais)"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:4
 msgid "Render _Font Map..."
-msgstr ""
+msgstr "Atvaizduoti šri_ftų žemėlapį..."
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:5
 msgid "Use font _name as text"
@@ -1234,7 +1234,7 @@ msgstr "Naudoti šrifto _pavadinimą kaip tekstą"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:6
 msgid "_Border (pixels)"
-msgstr "_Rėmelis (pikseliais)"
+msgstr "_Rėmelis (taškeliais)"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:7
 msgid "_Color scheme"
@@ -1271,7 +1271,7 @@ msgstr "Grūdėtumas (1 yra mažas)"
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:8
 #, no-c-format
 msgid "Shadow weight (%)"
-msgstr ""
+msgstr "Šešėlio stiprumas (%s)"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:10
 msgid "_Fuzzy Border..."
@@ -1279,7 +1279,7 @@ msgstr "_Neryškus rėmelis..."
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:1
 msgid "Autocrop"
-msgstr ""
+msgstr "Automatinis apkirpimas"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:2
 msgid "Dark color"
@@ -1308,7 +1308,7 @@ msgstr "Pašalinti foną"
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:9
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:10
 msgid "Select-by-color threshold"
-msgstr ""
+msgstr "„Pasirinkti pagal spalvą“ slenkstis"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:10
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:11
@@ -1321,7 +1321,7 @@ msgstr "_Didelė antraštė..."
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:14
 msgid "_Small Header..."
-msgstr "_Mažas antraštė..."
+msgstr "_Maža antraštė..."
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:12
 msgid "T_ube Sub-Button Label..."
@@ -1353,7 +1353,7 @@ msgstr "Ž_vilgantis..."
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:8
 msgid "Outline gradient reverse"
-msgstr ""
+msgstr "Kontūro perėjimas atvirkščias"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:10
 msgid "Pattern (outline)"
@@ -1404,7 +1404,7 @@ msgstr "Nuožulnaus krašto aukštis (aštrumas)"
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:3
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:2
 msgid "Border size (pixels)"
-msgstr "Rėmelio dydis (pikseliais)"
+msgstr "Rėmelio dydis (taškeliais)"
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
 msgid "Gradient Beve_l..."
@@ -1412,27 +1412,27 @@ msgstr "Nuožulnių _kraštų perėjimas..."
 
 #: ../plug-ins/script-fu/scripts/gradient-example.scm.h:3
 msgid "Render _Image..."
-msgstr ""
+msgstr "Atvaizduoti pa_veikslėlį..."
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm.h:1
 msgid "X divisions"
-msgstr ""
+msgstr "X padalijimai"
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm.h:2
 msgid "Y divisions"
-msgstr ""
+msgstr "Y padalijimai"
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm.h:3
 msgid "_Divisions..."
-msgstr ""
+msgstr "_Padalijimai..."
 
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm.h:1
 msgid "Creates four Guides around the bounding box of the current selection."
-msgstr ""
+msgstr "Sukuria keturias gaires aplink supančią esamą pasirinkimą dėžutę."
 
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm.h:2
 msgid "New Guides from _Selection"
-msgstr ""
+msgstr "Naujos gairės iš _pasirinkimo"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:1
 #: ../plug-ins/script-fu/scripts/guides-new.scm.h:1
@@ -1472,15 +1472,15 @@ msgstr "Fono nepermatomumas"
 
 #: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:2
 msgid "Draw _HSV Graph..."
-msgstr ""
+msgstr "Nubrėžti _HSV grafiką..."
 
 #: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:3
 msgid "End X"
-msgstr ""
+msgstr "Pabaigos X"
 
 #: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:4
 msgid "End Y"
-msgstr ""
+msgstr "Pabaigos Y"
 
 #: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:5
 msgid "From top-left to bottom-right"
@@ -1492,11 +1492,11 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:7
 msgid "Start X"
-msgstr ""
+msgstr "Pradžios X"
 
 #: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:8
 msgid "Start Y"
-msgstr ""
+msgstr "Pradžios Y"
 
 #: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:9
 msgid "Use selection bounds instead of belows"
@@ -1504,11 +1504,11 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:3
 msgid "Frame color"
-msgstr ""
+msgstr "Kadro spalva"
 
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:4
 msgid "Frame size"
-msgstr ""
+msgstr "Kadro dydis"
 
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:5
 msgid "Imigre-_26..."
@@ -1524,7 +1524,7 @@ msgstr "Jūros gylis"
 
 #: ../plug-ins/script-fu/scripts/land.scm.h:10
 msgid "_Land..."
-msgstr "_Žemė"
+msgstr "Ž_emė..."
 
 #: ../plug-ins/script-fu/scripts/lava.scm.h:3
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:7
@@ -1573,7 +1573,7 @@ msgstr "Pavadinimas"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:4
 msgid "New Elli_ptical..."
-msgstr ""
+msgstr "Naujas eli_psinis..."
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:5
 msgid "New Elliptical, Feathered..."
@@ -1581,7 +1581,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:6
 msgid "New Re_ctangular..."
-msgstr ""
+msgstr "Naujas stačia_kampis..."
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:7
 msgid "New Rectangular, Feathered..."
@@ -1599,7 +1599,7 @@ msgstr "Sukurti šešėlį"
 
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:3
 msgid "Effect size (pixels * 5)"
-msgstr "Efekto dydis (pikseliai * 5)"
+msgstr "Efekto dydis (taškeliai  * 5)"
 
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:7
 msgid "N_eon..."
@@ -1607,7 +1607,7 @@ msgstr "N_eonas..."
 
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:3
 msgid "Cell size (pixels)"
-msgstr "Langelio dydis (pikseliais)"
+msgstr "Langelio dydis (taškeliais)"
 
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:5
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:3
@@ -1621,7 +1621,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:2
 msgid "Defocus"
-msgstr ""
+msgstr "Defokusuoti"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:3
 msgid "Mottle"
@@ -1633,7 +1633,7 @@ msgstr "Sepija"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:6
 msgid "_Old Photo..."
-msgstr "_Sena nuotrauka..."
+msgstr "_Sena fotografija..."
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:1
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:1
@@ -1702,7 +1702,7 @@ msgstr "Apatinė spalva"
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:5
 msgid "Lower color (active)"
-msgstr "Apatinė spalva (aktyvus)"
+msgstr "Apatinė spalva (aktyvi)"
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:6
 msgid "Not pressed"
@@ -1714,19 +1714,19 @@ msgstr "Paspaustas (aktyvus)"
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:8
 msgid "Padding X"
-msgstr ""
+msgstr "Užpildas X"
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:9
 msgid "Padding Y"
-msgstr ""
+msgstr "Užpildas Y"
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:11
 msgid "Round ratio"
-msgstr ""
+msgstr "Apvalumo dydis"
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:14
 msgid "Text color (active)"
-msgstr ""
+msgstr "Teksto spalva (aktyvi)"
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:15
 msgid "Upper color"
@@ -1746,19 +1746,19 @@ msgstr "Elgsena"
 
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:2
 msgid "Detail in middle"
-msgstr ""
+msgstr "Detalė viduryje"
 
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:7
 msgid "Render _Map..."
-msgstr ""
+msgstr "Atvaizduoti že_mėlapį..."
 
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:8
 msgid "Tile"
-msgstr ""
+msgstr "Plytelė"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:1
 msgid "Black"
-msgstr ""
+msgstr "Juoda"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:2
 msgid "Edge behavior"
@@ -1775,11 +1775,11 @@ msgstr "Raibuliavimo stiprumas"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:5
 msgid "Smear"
-msgstr ""
+msgstr "Išterlioti"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:6
 msgid "Wrap"
-msgstr ""
+msgstr "Apvynioti"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:7
 msgid "_Rippling..."
@@ -1815,7 +1815,7 @@ msgstr "Į _raštą..."
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm.h:1
 msgid "Concave"
-msgstr ""
+msgstr "Įgaubtas"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm.h:3
 #, no-c-format
@@ -1832,7 +1832,7 @@ msgstr "Šrifto spalva"
 
 #: ../plug-ins/script-fu/scripts/slide.scm.h:3
 msgid "Number"
-msgstr ""
+msgstr "Numeris"
 
 #: ../plug-ins/script-fu/scripts/slide.scm.h:6
 msgid "_Slide..."
@@ -1844,19 +1844,19 @@ msgstr "SOTA chromas..."
 
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:6
 msgid "Speed Text..."
-msgstr ""
+msgstr "Greičio tekstas..."
 
 #: ../plug-ins/script-fu/scripts/sphere.scm.h:2
 msgid "Lighting (degrees)"
-msgstr ""
+msgstr "Apšvietimas (laipsniais)"
 
 #: ../plug-ins/script-fu/scripts/sphere.scm.h:3
 msgid "Radius (pixels)"
-msgstr ""
+msgstr "Spindulys (taškeliais)"
 
 #: ../plug-ins/script-fu/scripts/sphere.scm.h:5
 msgid "Sphere color"
-msgstr ""
+msgstr "Sferos spalva"
 
 #: ../plug-ins/script-fu/scripts/sphere.scm.h:6
 msgid "_Sphere..."
@@ -1868,7 +1868,7 @@ msgstr "Kadrai"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:2
 msgid "Index to n colors (0 = remain RGB)"
-msgstr ""
+msgstr "Indeksas į n spalvų (0 = išlieka RGB)"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:4
 msgid "Turn from left to right"
@@ -1876,7 +1876,7 @@ msgstr "Sukti iš kairės į dešinę"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:6
 msgid "_Spinning Globe..."
-msgstr "_Besisukantis gaublys..."
+msgstr "Besisukantis _gaublys..."
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:1
 msgid "Airbrush"
@@ -1918,7 +1918,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:12
 msgid "Hexagon"
-msgstr ""
+msgstr "Šešiakampis"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:13
 msgid "Hole ratio"
@@ -1926,7 +1926,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:14
 msgid "Inner teeth"
-msgstr ""
+msgstr "Vidiniai dantys"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:15
 msgid "Lissajous"
@@ -1934,11 +1934,11 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:16
 msgid "Margin (pixels)"
-msgstr "Paraštė (taškais)"
+msgstr "Paraštė (taškeliais)"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:17
 msgid "Outer teeth"
-msgstr ""
+msgstr "Išoriniai dantys"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:18
 msgid "Pencil"
@@ -1950,19 +1950,19 @@ msgstr "Pentagonas"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:20
 msgid "Polygon: 10 sides"
-msgstr "Poligonas: 10 kraštinių"
+msgstr "Daugiakampis: 10 kraštinių"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:21
 msgid "Polygon: 7 sides"
-msgstr "Poligonas: 7 kraštinės"
+msgstr "Daugiakampis: 7 kraštinės"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:22
 msgid "Polygon: 8 sides"
-msgstr "Poligonas: 8 kraštinės"
+msgstr "Daugiakampis: 8 kraštinės"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:23
 msgid "Polygon: 9 sides"
-msgstr "Poligonas: 9 kraštinės"
+msgstr "Daugiakampis: 9 kraštinės"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:24
 msgid "Shape"
@@ -2003,7 +2003,7 @@ msgstr "_Spyrogimp..."
 
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:2
 msgid "Burst color"
-msgstr ""
+msgstr "Sprogimo spalva"
 
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:3
 msgid "Effect size (pixels * 30)"
@@ -2011,11 +2011,11 @@ msgstr "Efekto dydis (taškai * 30)"
 
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:6
 msgid "Starb_urst..."
-msgstr ""
+msgstr "Ž_vaigždės sprogimas..."
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:1
 msgid "Effect size (pixels * 4)"
-msgstr "Efekto dydis (taškai * 4)"
+msgstr "Efekto dydis (taškeliai * 4)"
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:5
 msgid "Sta_rscape..."
@@ -2023,39 +2023,39 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:8
 msgid "Swirl-_Tile..."
-msgstr ""
+msgstr "Sūkuriuo_ta plytelė..."
 
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:9
 msgid "Whirl amount"
-msgstr ""
+msgstr "Sūkurio kiekis"
 
 #: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
 msgid "Number of times to whirl"
-msgstr ""
+msgstr "Susukimų kiekis"
 
 #: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
 msgid "Quarter size"
-msgstr ""
+msgstr "Ketvirčio dydis"
 
 #: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:3
 msgid "Whirl angle"
-msgstr ""
+msgstr "Sūkurio kampas"
 
 #: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:4
 msgid "_Swirly..."
-msgstr ""
+msgstr "_Sūkuriuotas..."
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
 msgid "Base color"
-msgstr ""
+msgstr "Pagrindo spalva"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:4
 msgid "Edge only"
-msgstr ""
+msgstr "Tik kraštas"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:5
 msgid "Edge width"
-msgstr ""
+msgstr "Krašto plotis"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:8
 msgid "Hit rate"
@@ -2063,35 +2063,35 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:10
 msgid "_Particle Trace..."
-msgstr ""
+msgstr "_Kristalų pėdsakas..."
 
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:1
 msgid "Antialias"
-msgstr ""
+msgstr "Glotninimas"
 
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:2
 msgid "Fill angle"
-msgstr ""
+msgstr "Užpildymo kampas"
 
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:8
 msgid "Text C_ircle..."
-msgstr ""
+msgstr "Teksto apskr_itimas..."
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:3
 msgid "Ending blend"
-msgstr ""
+msgstr "Perėjimo pradžia"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:6
 msgid "Hexagons"
-msgstr ""
+msgstr "Šešiakampiai"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:7
 msgid "Mosaic tile type"
-msgstr ""
+msgstr "Mozaikos plytelių tipas"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:8
 msgid "Octagons"
-msgstr ""
+msgstr "Aštuonkampiai"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:10
 msgid "Squares"
@@ -2099,11 +2099,11 @@ msgstr "Kvadratai"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:11
 msgid "Starting blend"
-msgstr ""
+msgstr "Perėjimo pabaiga"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:13
 msgid "Text pattern"
-msgstr ""
+msgstr "Teksto raštas"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:14
 msgid "_Textured..."
@@ -2135,7 +2135,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/title-header.scm.h:5
 msgid "Web Title Header..."
-msgstr "Žiniatinklio pavadinimo antraštė..."
+msgstr "Žiniatinklio pava_dinimo antraštė..."
 
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:3
 msgid "Foreground color"
@@ -2147,11 +2147,11 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/unsharp-mask.scm.h:1
 msgid "Mask opacity"
-msgstr ""
+msgstr "Kaukės nepermatomumas"
 
 #: ../plug-ins/script-fu/scripts/unsharp-mask.scm.h:2
 msgid "Mask size"
-msgstr ""
+msgstr "Kaukės dydis"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:1
 msgid "Amplitude"
@@ -2159,7 +2159,7 @@ msgstr "Amplitudė"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:2
 msgid "Invert direction"
-msgstr ""
+msgstr "Invertuoti kryptį"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:4
 msgid "Wavelength"
@@ -2171,39 +2171,39 @@ msgstr "_Bangos..."
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:1
 msgid "Ribbon spacing"
-msgstr ""
+msgstr "Juostos tarpai"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:2
 msgid "Ribbon width"
-msgstr ""
+msgstr "Juostos plotis"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:3
 msgid "Shadow darkness"
-msgstr ""
+msgstr "Šešėlio tamsumas"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:4
 msgid "Shadow depth"
-msgstr ""
+msgstr "Šešėlio gylis"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:5
 msgid "Thread density"
-msgstr ""
+msgstr "Gijų tankumas"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:6
 msgid "Thread intensity"
-msgstr ""
+msgstr "Gijų intensyvumas"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:7
 msgid "Thread length"
-msgstr ""
+msgstr "Gijų ilgis"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:8
 msgid "_Weave..."
-msgstr "_Austi..."
+msgstr "_Audimas..."
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:1
 msgid "Create and Use _Selections"
-msgstr "Sukurti ir naudoti _pasirinkimus"
+msgstr "Kurti ir naudoti _pasirinkimus"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:2
 msgid "Create, Open and Save _Files"
@@ -2247,39 +2247,36 @@ msgstr "_Darbas su skaitmeninių fotoaparatų nuotraukomis"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:1
 msgid "Drop shadow X offset"
-msgstr ""
+msgstr "Metamo šešėlio X poslinkis"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:2
 msgid "Drop shadow Y offset"
-msgstr ""
+msgstr "Metamo šešėlio Y poslinkis"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:3
 msgid "Drop shadow blur radius"
-msgstr ""
+msgstr "Metamo šešėlio išliejimo spindulys"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:4
 msgid "Drop shadow color"
-msgstr ""
+msgstr "Metamo šešėlio spalva"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:5
 msgid "Drop shadow opacity"
-msgstr ""
+msgstr "Metamo šešėlio nepermatomumas"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:6
 msgid "Highlight X offset"
-msgstr ""
+msgstr "Paryškinimo X poslinkis"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:7
 msgid "Highlight Y offset"
-msgstr ""
+msgstr "Paryškinimo Y poslinkis"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:9
 msgid "Highlight opacity"
-msgstr ""
+msgstr "Paryškinimo nepermatomumas"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:11
 msgid "_Xach-Effect..."
-msgstr ""
-
-#~ msgid "_Basics of TheGIMP"
-#~ msgstr "GIMP _pagrindai"
+msgstr "_Xach efektas..."
