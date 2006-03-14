@@ -16,6 +16,11 @@ Changes in GIMP 2.3.8
 - changed some gimprc and sessionrc default values
 - do not focus transform tool dialogs on map
 - renamed Magnify tool to Zoom tool and added some missing tool shortcuts
+- added a submenu with recently used plug-ins to the Filters menu
+- fixed look-up table used for Contrast adjustments
+- improved the user interface of the Animation Playback plug-in
+- added framework for showing describing menu entries in the statusbar
+- remove color from the Watercolor selector if Shift is being pressed
 - bug fixes and code cleanup
 
 
