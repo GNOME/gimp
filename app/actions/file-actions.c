@@ -101,22 +101,26 @@ static GimpActionEntry file_actions[] =
     GIMP_HELP_FILE_SAVE_A_COPY },
 
   { "file-save-as-template", NULL,
-    N_("Save as _Template..."), NULL, NULL,
+    N_("Save as _Template..."), NULL,
+    N_("Create a new template from this image"),
     G_CALLBACK (file_save_template_cmd_callback),
     GIMP_HELP_FILE_SAVE_AS_TEMPLATE },
 
   { "file-revert", GTK_STOCK_REVERT_TO_SAVED,
-    N_("Re_vert"), NULL, NULL,
+    N_("Re_vert"), NULL,
+    N_("Reload the image file from disk"),
     G_CALLBACK (file_revert_cmd_callback),
     GIMP_HELP_FILE_REVERT },
 
   { "file-close-all", GTK_STOCK_CLOSE,
-    N_("Close all"), "<shift><control>W", NULL,
+    N_("Close all"), "<shift><control>W",
+    N_("Close all opened images"),
     G_CALLBACK (file_close_all_cmd_callback),
     GIMP_HELP_FILE_CLOSE_ALL },
 
   { "file-quit", GTK_STOCK_QUIT,
-    N_("_Quit"), "<control>Q", NULL,
+    N_("_Quit"), "<control>Q",
+    N_("Quit the GNU Image Manipulation Program"),
     G_CALLBACK (file_quit_cmd_callback),
     GIMP_HELP_FILE_QUIT }
 };

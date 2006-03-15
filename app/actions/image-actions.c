@@ -100,7 +100,7 @@ static GimpActionEntry image_actions[] =
 
   { "image-scale", GIMP_STOCK_SCALE,
     N_("_Scale Image..."), NULL,
-    N_("Change the number of pixels in the image"),
+    N_("Change the size of the image content"),
     G_CALLBACK (image_scale_cmd_callback),
     GIMP_HELP_IMAGE_SCALE },
 

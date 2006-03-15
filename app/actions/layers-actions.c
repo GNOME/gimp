@@ -71,7 +71,7 @@ static GimpActionEntry layers_actions[] =
 
   { "layers-new", GTK_STOCK_NEW,
     N_("_New Layer..."), "<control><shift>N",
-    N_("Create a new layer"),
+    N_("Create a new layer and add it to the image"),
     G_CALLBACK (layers_new_cmd_callback),
     GIMP_HELP_LAYER_NEW },
 
@@ -142,23 +142,26 @@ static GimpActionEntry layers_actions[] =
     GIMP_HELP_IMAGE_FLATTEN },
 
   { "layers-text-discard", GIMP_STOCK_TOOL_TEXT,
-    N_("_Discard Text Information"), NULL, NULL,
+    N_("_Discard Text Information"), NULL,
+    N_("Turn this text layer into a normal layer"),
     G_CALLBACK (layers_text_discard_cmd_callback),
     GIMP_HELP_LAYER_TEXT_DISCARD },
 
   { "layers-resize", GIMP_STOCK_RESIZE,
-    N_("Layer B_oundary Size..."), NULL, NULL,
+    N_("Layer B_oundary Size..."), NULL,
+    N_("Adjust the layer dimensions"),
     G_CALLBACK (layers_resize_cmd_callback),
     GIMP_HELP_LAYER_RESIZE },
 
   { "layers-resize-to-image", GIMP_STOCK_LAYER_TO_IMAGESIZE,
-    N_("Layer to _Image Size"), NULL, NULL,
+    N_("Layer to _Image Size"), NULL,
+    N_("Resize the layer to the size of the image"),
     G_CALLBACK (layers_resize_to_image_cmd_callback),
     GIMP_HELP_LAYER_RESIZE_TO_IMAGE },
 
   { "layers-scale", GIMP_STOCK_SCALE,
     N_("_Scale Layer..."), NULL,
-    N_("Scale the layer's pixels"),
+    N_("Change the size of the layer content"),
     G_CALLBACK (layers_scale_cmd_callback),
     GIMP_HELP_LAYER_SCALE },
 

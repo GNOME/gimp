@@ -68,54 +68,61 @@ static GimpActionEntry edit_actions[] =
 
   { "edit-undo", GTK_STOCK_UNDO,
     N_("_Undo"), "<control>Z",
-    N_("Undo"),
+    N_("Undo the last operation"),
     G_CALLBACK (edit_undo_cmd_callback),
     GIMP_HELP_EDIT_UNDO },
 
   { "edit-redo", GTK_STOCK_REDO,
     N_("_Redo"), "<control>Y",
-    N_("Redo"),
+    N_("Redo the last operation that was undone"),
     G_CALLBACK (edit_redo_cmd_callback),
     GIMP_HELP_EDIT_REDO },
 
   { "edit-undo-clear", GTK_STOCK_CLEAR,
     N_("_Clear Undo History"), "",
-    N_("Clear undo history"),
+    N_("Remove all operations from the undo history"),
     G_CALLBACK (edit_undo_clear_cmd_callback),
     GIMP_HELP_EDIT_UNDO_CLEAR },
 
   { "edit-cut", GTK_STOCK_CUT,
-    N_("Cu_t"), "<control>X", NULL,
+    N_("Cu_t"), "<control>X",
+    N_("Move the selected pixels to the clipboard"),
     G_CALLBACK (edit_cut_cmd_callback),
     GIMP_HELP_EDIT_CUT },
 
   { "edit-copy", GTK_STOCK_COPY,
-    N_("_Copy"), "<control>C", NULL,
+    N_("_Copy"), "<control>C",
+    N_("Copy the selected pixels to the clipboard"),
     G_CALLBACK (edit_copy_cmd_callback),
     GIMP_HELP_EDIT_COPY },
 
   { "edit-copy-visible", NULL, /* GIMP_STOCK_COPY_VISIBLE, */
-    N_("Copy _Visible"), "", NULL,
+    N_("Copy _Visible"), "",
+    N_("Copy the selected region to the clipboard"),
     G_CALLBACK (edit_copy_visible_cmd_callback),
     GIMP_HELP_EDIT_COPY_VISIBLE },
 
   { "edit-paste", GTK_STOCK_PASTE,
-    N_("_Paste"), "<control>V", NULL,
+    N_("_Paste"), "<control>V",
+    N_("Paste the content of the clipboard"),
     G_CALLBACK (edit_paste_cmd_callback),
     GIMP_HELP_EDIT_PASTE },
 
   { "edit-paste-into", GIMP_STOCK_PASTE_INTO,
-    N_("Paste _Into"), NULL, NULL,
+    N_("Paste _Into"), NULL,
+    N_("Paste the content of the clipboard into the current selection"),
     G_CALLBACK (edit_paste_into_cmd_callback),
     GIMP_HELP_EDIT_PASTE_INTO },
 
   { "edit-paste-as-new", GIMP_STOCK_PASTE_AS_NEW,
-    N_("Paste as New"), NULL, NULL,
+    N_("Paste as New"), NULL,
+    N_("Create a new image from the content of the clipboard"),
     G_CALLBACK (edit_paste_as_new_cmd_callback),
     GIMP_HELP_EDIT_PASTE_AS_NEW },
 
   { "edit-paste-as-new-short", GIMP_STOCK_PASTE_AS_NEW,
-    N_("_New Image"), NULL, NULL,
+    N_("_New Image"), NULL,
+    N_("Create a new image from the content of the clipboard"),
     G_CALLBACK (edit_paste_as_new_cmd_callback),
     GIMP_HELP_EDIT_PASTE_AS_NEW },
 
@@ -140,7 +147,8 @@ static GimpActionEntry edit_actions[] =
     GIMP_HELP_BUFFER_PASTE },
 
   { "edit-clear", GTK_STOCK_CLEAR,
-    N_("Cl_ear"), "Delete", NULL,
+    N_("Cl_ear"), "Delete",
+    N_("Clear the selected pixels"),
     G_CALLBACK (edit_clear_cmd_callback),
     GIMP_HELP_EDIT_CLEAR }
 };
@@ -148,17 +156,20 @@ static GimpActionEntry edit_actions[] =
 static GimpEnumActionEntry edit_fill_actions[] =
 {
   { "edit-fill-fg", GIMP_STOCK_TOOL_BUCKET_FILL,
-    N_("Fill with _FG Color"), "<control>comma", NULL,
+    N_("Fill with _FG Color"), "<control>comma",
+    N_("Fill the selection using the foreground color"),
     GIMP_FOREGROUND_FILL, FALSE,
     GIMP_HELP_EDIT_FILL_FG },
 
   { "edit-fill-bg", GIMP_STOCK_TOOL_BUCKET_FILL,
-    N_("Fill with B_G Color"), "<control>period", NULL,
+    N_("Fill with B_G Color"), "<control>period",
+    N_("Fill the selection using the background color"),
     GIMP_BACKGROUND_FILL, FALSE,
     GIMP_HELP_EDIT_FILL_BG },
 
   { "edit-fill-pattern", GIMP_STOCK_TOOL_BUCKET_FILL,
-    N_("Fill with P_attern"), "<control>semicolon", NULL,
+    N_("Fill with P_attern"), "<control>semicolon",
+    N_("Fill the selection using the active pattern"),
     GIMP_PATTERN_FILL, FALSE,
     GIMP_HELP_EDIT_FILL_PATTERN }
 };

@@ -75,7 +75,8 @@ static GimpActionEntry view_actions[] =
     GIMP_HELP_VIEW_NEW },
 
   { "view-close", GTK_STOCK_CLOSE,
-    N_( "_Close"), "<control>W", NULL,
+    N_( "_Close"), "<control>W",
+    N_("Close this image window"),
     G_CALLBACK (window_close_cmd_callback),
     GIMP_HELP_FILE_CLOSE },
 
@@ -103,12 +104,13 @@ static GimpActionEntry view_actions[] =
 
   { "view-shrink-wrap", GTK_STOCK_ZOOM_FIT,
     N_("Shrink _Wrap"), "<control>E",
-    N_("Shrink wrap"),
+    N_("Reduce the image window to the size of the image display"),
     G_CALLBACK (view_shrink_wrap_cmd_callback),
     GIMP_HELP_VIEW_SHRINK_WRAP },
 
   { "view-open-display", NULL,
-    N_("_Open Display..."), NULL, NULL,
+    N_("_Open Display..."), NULL,
+    N_("Connect to another display"),
     G_CALLBACK (window_open_display_cmd_callback),
     NULL }
 };
@@ -116,19 +118,22 @@ static GimpActionEntry view_actions[] =
 static GimpToggleActionEntry view_toggle_actions[] =
 {
   { "view-dot-for-dot", NULL,
-    N_("_Dot for Dot"), NULL, NULL,
+    N_("_Dot for Dot"), NULL,
+    N_("A Pixel on the screen represents an image pixel"),
     G_CALLBACK (view_dot_for_dot_cmd_callback),
     TRUE,
     GIMP_HELP_VIEW_DOT_FOR_DOT },
 
   { "view-show-selection", NULL,
-    N_("Show _Selection"), "<control>T", NULL,
+    N_("Show _Selection"), "<control>T",
+    N_("Display the selection outline"),
     G_CALLBACK (view_toggle_selection_cmd_callback),
     TRUE,
     GIMP_HELP_VIEW_SHOW_SELECTION },
 
   { "view-show-layer-boundary", NULL,
-    N_("Show _Layer Boundary"), NULL, NULL,
+    N_("Show _Layer Boundary"), NULL,
+    N_("Draw a border around the active layer"),
     G_CALLBACK (view_toggle_layer_boundary_cmd_callback),
     TRUE,
     GIMP_HELP_VIEW_SHOW_LAYER_BOUNDARY },
@@ -200,7 +205,8 @@ static GimpToggleActionEntry view_toggle_actions[] =
     GIMP_HELP_VIEW_SHOW_STATUSBAR },
 
   { "view-fullscreen", GTK_STOCK_FULLSCREEN,
-    N_("Fullscr_een"), "F11", NULL,
+    N_("Fullscr_een"), "F11",
+    N_("Toggle fullscreen view"),
     G_CALLBACK (view_fullscreen_cmd_callback),
     FALSE,
     GIMP_HELP_VIEW_FULLSCREEN }
