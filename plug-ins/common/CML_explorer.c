@@ -454,7 +454,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "Make an image of Coupled-Map Lattice",
+                          N_("Create abstract Coupled-Map Lattice patterns."),
                           "Make an image of Coupled-Map Lattice (CML). CML is "
                           "a kind of Cellula Automata on continuous (value) "
                           "domain. In GIMP_RUN_NONINTERACTIVE, the name of a "

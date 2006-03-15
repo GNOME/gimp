@@ -132,7 +132,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "Edge detection using difference of Gaussians.",
+                          N_("Edge detection with control of edge thickness."),
                           "Applies two Gaussian blurs to the drawable, and "
                           "subtracts the results.  This is robust and widely "
                           "used method for detecting edges. Uses Gauss IIR "

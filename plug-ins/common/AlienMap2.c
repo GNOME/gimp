@@ -180,7 +180,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "Alien Map Color Transformation Plug-In",
+                          N_("Alter colors in various psychedelic ways."),
                           "No help yet. Just try it and you'll see!",
                           "Martin Weber (martweb@gmx.net)",
                           "Martin Weber (martweb@gmx.net",

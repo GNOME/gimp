@@ -353,7 +353,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "Renders a jigsaw puzzle look",
+                          N_("Add a jigsaw-puzzle pattern to the image."),
                           "Jigsaw puzzle look",
                           "Nigel Wetten",
                           "Nigel Wetten",

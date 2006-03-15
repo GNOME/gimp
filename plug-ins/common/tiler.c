@@ -64,7 +64,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-			  "Seamless tile creation",
+			  N_("Alters edges to make the image seamlessly tileable."),
 			  "This plugin creates a seamless tileable from "
                           "the input drawable",
 			  "Tim Rowley",

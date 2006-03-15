@@ -115,7 +115,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "Distort the image with waves",
+                          N_("Distort the image with waves."),
                           "none yet",
                           "Eric L. Hernes, Stephen Norris",
                           "Stephen Norris",

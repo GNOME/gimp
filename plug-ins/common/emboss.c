@@ -123,7 +123,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "Emboss filter",
+                          N_("Simulate an image created by embossing."),
                           "Emboss or Bumpmap the given drawable, specifying "
                           "the angle and elevation for the light source.",
                           "Eric L. Hernes, John Schlag",

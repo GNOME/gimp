@@ -216,8 +216,7 @@ query (void)
   };
 
   gimp_install_procedure (PRINT_PROC,
-			  "This plug-in prints images from the GIMP.",
-			  "Prints images to any printer recognized by Windows.",
+			  N_("Print image to any recognized printer."),
 			  "Tor Lillqvist <tml@iki.fi>",
 			  "Copyright 1999 Tor Lillqvist",
 			  "$Id$",
@@ -228,8 +227,7 @@ query (void)
 			  print_args, NULL);
 
   gimp_install_procedure (PAGE_SETUP_PROC,
-			  "This plug-in sets up the page for printing from the GIMP.",
-			  "Sets up the page parameters for printing to any Windows printer.",
+			  N_("Set up  page layout for printing."),
 			  "Tor Lillqvist <tml@iki.fi>",
 			  "Copyright 1999 Tor Lillqvist",
 			  "$Id$",

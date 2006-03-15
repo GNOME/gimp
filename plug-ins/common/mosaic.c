@@ -358,7 +358,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "Convert the input drawable into a collection of tiles",
+                          N_("Convert the image into irregular tiles"),
                           "Help not yet written for this plug-in",
                           "Spencer Kimball",
                           "Spencer Kimball & Peter Mattis",

@@ -230,7 +230,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-			  "Compose several images to a roll film",
+			  N_("Combine several images on a film strip."),
 			  "Compose several images to a roll film",
 			  "Peter Kirchgessner",
 			  "Peter Kirchgessner (peter@kirchgessner.net)",

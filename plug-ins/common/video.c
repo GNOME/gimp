@@ -1803,8 +1803,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "Apply low-dotpitch RGB simulation to the "
-                          "specified drawable",
+                          N_("Simulate distortion produced by a fuzzy or low-res monitor."),
                           "This function simulates the degradation of "
                           "being on an old low-dotpitch RGB video monitor "
                           "to the specified drawable.",

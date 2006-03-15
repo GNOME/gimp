@@ -516,7 +516,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "Re-sample the image to give a newspaper-like effect",
+                          N_("Halftone the image to give newspaper-like effect"),
                           "Halftone the image, trading off resolution to "
                           "represent colors or grey levels using the process "
                           "described both in the PostScript language "

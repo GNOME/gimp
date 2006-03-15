@@ -80,7 +80,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "List available procedures in the PDB",
+                          N_("List available procedures in the PDB"),
                           "",
                           "Thomas Noel",
                           "Thomas Noel",

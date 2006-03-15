@@ -90,7 +90,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "Deinterlace",
+                          N_("Fix images where every other row is missing."),
                           "Deinterlace is useful for processing images from "
                           "video capture cards. When only the odd or even "
                           "fields get captured, deinterlace can be used to "

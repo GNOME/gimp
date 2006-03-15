@@ -112,8 +112,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "Sharpen filter, typically used to 'sharpen' a "
-                          "photographic image.",
+                          N_("Make image sharper (less powerful than Unsharp Mask)."),
                           "This plug-in selectively performs a convolution "
                           "filter on an image.",
                           "Michael Sweet <mike@easysw.com>",

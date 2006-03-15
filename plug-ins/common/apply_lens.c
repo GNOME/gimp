@@ -106,7 +106,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "Apply a lens effect",
+                          N_("Simulate an elliptical lens over the image."),
                           "This plug-in uses Snell's law to draw "
                           "an ellipsoid lens over the image",
                           "Morten Eriksen",

@@ -139,7 +139,7 @@ void query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "Draws a grid.",
+                          N_("Draw a grid on the image."),
                           "Draws a grid using the specified colors. "
                           "The grid origin is the upper left corner.",
                           "Tim Newsome",

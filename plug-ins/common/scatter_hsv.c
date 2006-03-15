@@ -102,7 +102,7 @@ query (void)
   };
 
   gimp_install_procedure (HSV_NOISE_PROC,
-                          "Scattering pixel values in HSV space",
+                          N_("Randomize hue/saturation/value independently"),
                           "Scattering pixel values in HSV space",
                           "Shuji Narazaki (narazaki@InetQ.or.jp)",
                           "Shuji Narazaki",

@@ -377,7 +377,7 @@ query (void)
   };
 
   gimp_install_procedure (COMPOSE_PROC,
-			  "Compose an image from multiple gray images",
+			  N_("Create an image using multiple gray images as color channels."),
 			  "This function creates a new image from "
 			  "multiple gray images",
 			  "Peter Kirchgessner",
@@ -407,7 +407,7 @@ query (void)
 			  drw_args, drw_return_vals);
 
   gimp_install_procedure (RECOMPOSE_PROC,
-			  "Recompose a layer from multiple drawables of gray images",
+			  N_("Recompose an image that was previously decomposed."),
 			  "This function recombines the grayscale layers produced "
 			  "by Decompose into a single RGB or RGBA layer, and "
                           "replaces the originally decomposed layer with the "

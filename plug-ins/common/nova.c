@@ -164,7 +164,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "Produce Supernova effect to the specified drawable",
+                          N_("Add a starburst to the image"),
                           "This plug-in produces an effect like a supernova "
                           "burst. The amount of the light effect is "
                           "approximately in proportion to 1/r, where r is the "

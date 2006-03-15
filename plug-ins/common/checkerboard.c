@@ -86,7 +86,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "Adds a checkerboard pattern to an image",
+                          N_("Create a checkerboard pattern."),
                           "More here later",
                           "Brent Burton & the Edward Blevins",
                           "Brent Burton & the Edward Blevins",

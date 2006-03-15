@@ -81,7 +81,7 @@ query (void)
   };
 
   gimp_install_procedure (AUTOCROP_PROC,
-                          "Automagically crops an image.",
+                          N_("Remove empty borders from the image."),
                           "",
                           "Tim Newsome",
                           "Tim Newsome",
@@ -95,7 +95,7 @@ query (void)
   gimp_plugin_menu_register (AUTOCROP_PROC, "<Image>/Image/Crop");
 
   gimp_install_procedure (AUTOCROP_LAYER_PROC,
-                          "Automagically crops a layer.",
+                          N_("Remove empty borders from the layer."),
                           "",
                           "Tim Newsome",
                           "Tim Newsome",

@@ -396,7 +396,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "Create images based on a random genetic formula",
+                          N_("Generate a huge variety of abstract patterns."),
                           "This Plug-in is based on an article by "
                           "Jörn Loviscach (appeared in c't 10/95, page 326). "
                           "It generates modern art pictures from a random "

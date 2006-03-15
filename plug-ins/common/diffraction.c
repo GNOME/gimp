@@ -164,7 +164,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "Generate diffraction patterns",
+                          N_("Generate diffraction patterns."),
                           "Help?  What help?  Real men do not need help :-)",
                           "Federico Mena Quintero",
                           "Federico Mena Quintero & David Bleecker",

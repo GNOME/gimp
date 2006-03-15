@@ -127,7 +127,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Apply a 3x3 blurring convolution kernel"),
+                          N_("Simple blur, fast but not very strong."),
                           "This plug-in blurs the specified drawable, using "
                           "a 3x3 blur. Indexed images are not supported.",
                           "Miles O'Neal  <meo@rru.com>",

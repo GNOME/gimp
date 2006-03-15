@@ -151,7 +151,7 @@ query (void)
     "versions.";
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "Perform edge detection on the contents of the specified drawable",
+                          N_("Several simple methods for detecting edges."),
                           help_string,
                           "Peter Mattis & (ported to 1.0 by) Eiichi Takamori",
                           "Peter Mattis",

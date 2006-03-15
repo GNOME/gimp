@@ -88,7 +88,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "produce illusion",
+                          N_("Superimpose many altered copies of the image"),
                           "produce illusion",
                           "Hirotsuna Mizuno <s1041150@u-aizu.ac.jp>",
                           "Hirotsuna Mizuno",

@@ -72,7 +72,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-			  "Edge Detection with Laplace Operation",
+			  N_("High-resolution edge detection"),
 			  "This plugin creates one-pixel wide edges from the "
 			  "image, with the value proportional to the gradient. "
 			  "It uses the Laplace operator (a 3x3 kernel with -8 "

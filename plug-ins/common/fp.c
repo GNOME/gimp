@@ -321,8 +321,8 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "Allows the user to change H, S, or C with many previews",
-                          "No help available",
+                          N_("Interactively modify the image colors."),
+                          "Interactively modify the image colors.",
                           "Pavel Grinfeld (pavel@ml.com)",
                           "Pavel Grinfeld (pavel@ml.com)",
                           "27th March 1997",

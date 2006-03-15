@@ -250,7 +250,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-			  "pipe files to uuencode then mail them",
+			  N_("Email the image."),
 			  "You need to have uuencode and mail installed",
 			  "Adrian Likins, Reagan Blundell",
 			  "Adrian Likins, Reagan Blundell, Daniel Risacher, "

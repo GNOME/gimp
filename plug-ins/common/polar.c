@@ -151,7 +151,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "Converts an image to and from polar coordinates",
+                          N_("Convert image to or from polar coordinates."),
                           "Remaps and image from rectangular coordinates "
                           "to polar coordinates "
                           "or vice versa",

@@ -88,7 +88,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "Spread the contents of the specified drawable",
+                          N_("Move pixels around randomly."),
                           "Spreads the pixels of the specified drawable.  "
                           "Pixels are randomly moved to another location whose "
                           "distance varies from the original by the horizontal "

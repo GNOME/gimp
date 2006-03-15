@@ -175,8 +175,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "Create a plasma cloud like image on the "
-                          "specified drawable",
+                          N_("Create a random plasma texture."),
                           "More help",
                           "Stephen Norris & (ported to 1.0 by) Eiichi Takamori",
                           "Stephen Norris",

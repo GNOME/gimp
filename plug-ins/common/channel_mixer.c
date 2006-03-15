@@ -175,7 +175,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "Mix RGB Channels.",
+                          N_("Alter colors by mixing RGB Channels."),
                           "This plug-in mixes the RGB channels.",
                           "Martin Guldahl <mguldahl@xmission.com>",
                           "Martin Guldahl <mguldahl@xmission.com>",

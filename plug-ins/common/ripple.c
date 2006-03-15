@@ -126,7 +126,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "Ripple the contents of the specified drawable",
+                          N_("Displace pixels in a ripple pattern."),
                           "Ripples the pixels of the specified drawable. "
                           "Each row or column will be displaced a certain "
                           "number of pixels coinciding with the given wave form",

@@ -327,8 +327,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "Create an embossing effect using an image as a "
-                          "bump map",
+                          N_("Create an embossing effect using a bump map."),
                           "This plug-in uses the algorithm described by John "
                           "Schlag, \"Fast Embossing Effects on Raster Image "
                           "Data\" in Graphics GEMS IV (ISBN 0-12-336155-9). "

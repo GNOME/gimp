@@ -74,8 +74,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-			  "Normalize the contrast of the specified drawable to "
-			  "cover all possible ranges.",
+			  N_("Stretch brightness values to cover the full range."),
 			  "This plugin performs almost the same operation as "
 			  "the 'contrast autostretch' plugin, except that it "
 			  "won't allow the color channels to normalize "

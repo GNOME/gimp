@@ -811,8 +811,7 @@ plugin_query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-			  "Cuts an image into paper tiles, and slides each "
-                          "paper tile.",
+			  N_("Cut image into paper tiles, and slide them."),
 			  "This plug-in cuts an image into paper tiles and "
                           "slides each paper tile.",
 			  "Hirotsuna Mizuno <s1041150@u-aizu.ac.jp>",

@@ -229,7 +229,7 @@ query (void)
   };
 
   gimp_install_procedure (VPROPAGATE_PROC,
-                          "Propagate values of the layer",
+                          N_("Propagate certain colors to neighboring pixels"),
                           "Propagate values of the layer",
                           "Shuji Narazaki (narazaki@InetQ.or.jp)",
                           "Shuji Narazaki",
@@ -241,7 +241,7 @@ query (void)
                           args, NULL);
 
   gimp_install_procedure (ERODE_PROC,
-                          "Erode image",
+                          N_("Shrink darker areas of the image"),
                           "Erode image",
                           "Shuji Narazaki (narazaki@InetQ.or.jp)",
                           "Shuji Narazaki",
@@ -253,7 +253,7 @@ query (void)
                           args, NULL);
 
   gimp_install_procedure (DILATE_PROC,
-                          "Dilate image",
+                          N_("Grow darker areas of the image."),
                           "Dilate image",
                           "Shuji Narazaki (narazaki@InetQ.or.jp)",
                           "Shuji Narazaki",

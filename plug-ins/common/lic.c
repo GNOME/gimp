@@ -807,7 +807,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "Creates a Van Gogh effect (Line Integral Convolution)",
+                          N_("Special effects that nobody understands."),
                           "No help yet",
                           "Tom Bech & Federico Mena Quintero",
                           "Tom Bech & Federico Mena Quintero",

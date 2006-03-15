@@ -130,6 +130,7 @@ query (void)
   };
 
   gimp_install_procedure (OPTIMIZE_PROC,
+                          N_("Modify image to reduce size when saved as GIF animation."),
                           "This procedure applies various optimizations to"
                           " a GIMP layer-based animation in an attempt to"
                           " reduce the final file size.  If a frame of the"
@@ -138,7 +139,6 @@ query (void)
                           " ajdacent pixels having the same color, which"
                           " improves the compression for some image formats"
                           " such as GIF or MNG.",
-                          "",
                           "Adam D. Moss <adam@gimp.org>",
                           "Adam D. Moss <adam@gimp.org>",
                           "1997-2003",
@@ -150,13 +150,13 @@ query (void)
                           args, return_args);
 
   gimp_install_procedure (OPTIMIZE_DIFF_PROC,
+                          N_("Reduce file size where combining layers is possible."),
                           "This procedure applies various optimizations to"
                           " a GIMP layer-based animation in an attempt to"
                           " reduce the final file size.  If a frame of the"
                           " animation can use the 'combine' mode, this"
                           " procedure uses a simple difference between the"
                           " frames.",
-                          "",
                           "Adam D. Moss <adam@gimp.org>",
                           "Adam D. Moss <adam@gimp.org>",
                           "1997-2001",
@@ -168,10 +168,10 @@ query (void)
                           args, return_args);
 
   gimp_install_procedure (UNOPTIMIZE_PROC,
+                          N_("Remove optimization to make editing easier."),
                           "This procedure 'simplifies' a GIMP layer-based"
                           " animation that has been optimized for animation. "
                           "This makes editing the animation much easier.",
-                          "",
                           "Adam D. Moss <adam@gimp.org>",
                           "Adam D. Moss <adam@gimp.org>",
                           "1997-2001",

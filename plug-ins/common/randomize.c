@@ -197,11 +197,11 @@ query (void)
   };
 
   const gchar *hurl_blurb =
-    "Add a random factor to the image by hurling random data at it.";
+    N_("Completely randomize a fraction of pixels.");
   const gchar *pick_blurb =
-    "Add a random factor to the image by picking a random adjacent pixel.";
+    N_("Randomly interchange some pixels with neighbors.");
   const gchar *slur_blurb =
-    "Add a random factor to the image by slurring (similar to melting).";
+    N_("Randomly slide some pixels downward (similar to melting).");
 
   const gchar *hurl_help =
     "This plug-in ``hurls'' randomly-valued pixels onto the selection or "

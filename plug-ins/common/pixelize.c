@@ -161,7 +161,7 @@ query (void)
   };
 
   gimp_install_procedure (PIXELIZE_PROC,
-                          "Pixelize the contents of the specified drawable",
+                          N_("Simplify image into an array of solid-colored squares"),
                           "Pixelize the contents of the specified drawable "
                           "with speficied pixelizing width.",
                           "Spencer Kimball & Peter Mattis, Tracy Scott, "

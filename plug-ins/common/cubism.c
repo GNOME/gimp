@@ -147,8 +147,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "Convert the input drawable into a collection "
-                          "of rotated squares",
+                          N_("Convert the image into randomly rotated square blobs."),
                           "Help not yet written for this plug-in",
                           "Spencer Kimball & Tracy Scott",
                           "Spencer Kimball & Tracy Scott",

@@ -151,8 +151,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "This plugin allows you to preview a GIMP "
-                          "layer-based animation.",
+                          N_("Preview a GIMP layer-based animation."),
                           "",
                           "Adam D. Moss <adam@gimp.org>",
                           "Adam D. Moss <adam@gimp.org>",

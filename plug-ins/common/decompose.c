@@ -244,7 +244,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-			  "Decompose an image into different types of channels",
+			  N_("Decompose an image into separate colorspace components."),
 			  "This function creates new gray images with "
 			  "different channel information in each of them",
 			  "Peter Kirchgessner",

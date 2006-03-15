@@ -113,9 +113,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "Adds a blinds effect to the image. Rather like "
-                          "putting the image on a set of window blinds and "
-                          "the closing or opening the blinds",
+                          N_("Simulate an image painted on window blinds."),
                           "More here later",
                           "Andy Thomas",
                           "Andy Thomas",

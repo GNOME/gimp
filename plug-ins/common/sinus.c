@@ -183,7 +183,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "Generates a texture with sinus functions",
+                          N_("Generate complex sinusoidal textures."),
                           "FIX ME: sinus help",
                           "Xavier Bouchoux",
                           "Xavier Bouchoux",

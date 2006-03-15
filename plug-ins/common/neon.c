@@ -131,7 +131,7 @@ query (void)
     "standard deviations.";
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "Resolution independent edge detection",
+                          N_("Simulate the glowing boundary of a neon light"),
                           help_string,
                           "Spencer Kimball",
                           "Bit Specialists, Inc.",

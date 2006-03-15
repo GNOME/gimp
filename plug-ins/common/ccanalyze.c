@@ -104,7 +104,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "Colorcube analysis",
+                          N_("Analyze the set of colors in the image"),
                           "Analyze colorcube and print some information about "
                           "the current image (also displays a color-histogram)",
                           "robert@experimental.net",

@@ -96,7 +96,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "Borderaverage",
+                          N_("Set foreground to the average color of the image border."),
                           "",
                           "Philipp Klaus",
                           "Internet Access AG",

@@ -87,10 +87,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "Return an image in which each pixel holds only "
-                          "the channel that has the maximum value in three "
-                          "(red, green, blue) channels, and other channels "
-                          "are zero-cleared",
+                          N_("Reduce image to pure red, green, and blue."),
                           "There's no help yet.",
                           "Shuji Narazaki (narazaki@InetQ.or.jp)",
                           "Shuji Narazaki",

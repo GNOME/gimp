@@ -98,7 +98,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "A big hello from the GIMP team!",
+                          N_("A big hello from the GIMP team!"),
                           "Beyond help.",
                           "Adam D. Moss <adam@gimp.org>",
                           "Adam D. Moss <adam@gimp.org>",

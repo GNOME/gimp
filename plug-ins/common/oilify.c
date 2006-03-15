@@ -94,8 +94,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "Modify the specified drawable to resemble an oil "
-                          "painting",
+                          N_("Smear colors to simulate an oil painting"),
                           "This function performs the well-known oil-paint "
                           "effect on the specified drawable.  The size of the "
                           "input mask is specified by 'mask_size'.",

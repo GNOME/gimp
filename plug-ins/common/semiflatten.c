@@ -65,9 +65,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-			  "Flatten pixels in an RGBA image that aren't "
-			  "completely transparent against the current GIMP "
-			  "background color",
+			  N_("Replace partial transparency with the current background color."),
 			  "This plugin flattens pixels in an RGBA image that "
 			  "aren't completely transparent against the current "
 			  "GIMP background color",

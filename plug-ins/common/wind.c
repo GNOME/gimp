@@ -174,7 +174,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "Renders a wind effect.",
+                          N_("Smear image to give windblown effect."),
                           "Renders a wind effect.",
                           "Nigel Wetten",
                           "Nigel Wetten",

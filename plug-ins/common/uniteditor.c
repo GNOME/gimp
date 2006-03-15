@@ -142,7 +142,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "The GIMP unit editor",
+                          N_("Create or alter units used in GIMP."),
                           "The GIMP unit editor",
                           "Michael Natterer <mitch@gimp.org>",
                           "Michael Natterer <mitch@gimp.org>",

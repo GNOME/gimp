@@ -105,7 +105,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "Edge Detection with Sobel Operation",
+                          N_("Specialized direction-dependent edge detection."),
                           "This plugin calculates the gradient with a sobel "
                           "operator. The user can specify which direction to "
                           "use. When both directions are used, the result is "

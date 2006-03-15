@@ -152,8 +152,7 @@ query (void)
     "achieve the opposite effect.";
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "Propagates dark values and white regions in an "
-                          "image to achieve photocopy effect",
+                          N_("Simulate color distortion produced by a copy machine"),
                           help_string,
                           "Spencer Kimball",
                           "Bit Specialists, Inc.",

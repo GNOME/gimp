@@ -82,7 +82,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "",
+                          N_("Make transparency all-or-nothing."),
                           "",
                           "Shuji Narazaki (narazaki@InetQ.or.jp)",
                           "Shuji Narazaki",

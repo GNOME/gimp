@@ -175,7 +175,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "Creates a grayscale noise texture",
+                          N_("Create a random cloud-like texture."),
                           "Generates 2D textures using Perlin's classic "
                           "solid noise function.",
                           "Marcelo de Gomensoro Malheiros",

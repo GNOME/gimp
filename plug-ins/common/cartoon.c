@@ -141,7 +141,7 @@ query (void)
     "noticable; larger values achieve the opposite effect.";
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "Propagates dark values in an image to achieve cartoon rendering",
+                          N_("Simulate a cartoon by enhancing edges."),
                           help_string,
                           "Spencer Kimball",
                           "Bit Specialists, Inc.",
