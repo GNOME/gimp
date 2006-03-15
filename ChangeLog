@@ -1,5 +1,11 @@
 2006-03-15  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpaction.c (gimp_action_set_proxy): enabled
+	tooltips on all menu items for easier review of the action blurbs.
+	This should be made configurable.
+
+2006-03-15  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/image-actions.c
 	* app/actions/layers-actions.c: added more tooltips, please review.
 

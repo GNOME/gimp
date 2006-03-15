@@ -246,6 +246,7 @@ gimp_action_set_proxy (GimpAction *action,
   if (! GTK_IS_IMAGE_MENU_ITEM (proxy))
     return;
 
+#ifdef DISABLE_MENU_TOOLTIPS
   /*  This is not quite the correct check, but works fine to enable
    *  tooltips only for the "Open Recent" menu items, since they are
    *  the only ones having both a viewable and a tooltip. --mitch
@@ -254,6 +255,9 @@ gimp_action_set_proxy (GimpAction *action,
     {
       gimp_action_set_proxy_tooltip (action, proxy);
     }
+#else
+  gimp_action_set_proxy_tooltip (action, proxy);
+#endif
 
   if (action->color)
     {
