@@ -57,24 +57,24 @@ image_add_hguide_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpImage *gimage;
-  gint32 offset;
+  gint32 yposition;
   gint32 guide = 0;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
-  offset = args[1].value.pdb_int;
-  if (offset < 0)
+  yposition = args[1].value.pdb_int;
+  if (yposition < 0)
     success = FALSE;
 
   if (success)
     {
-      if (offset <= gimage->height)
+      if (yposition <= gimage->height)
         {
           GimpGuide *g;
 
-          g = gimp_image_add_hguide (gimage, offset, TRUE);
+          g = gimp_image_add_hguide (gimage, yposition, TRUE);
           guide = g->guide_ID;
         }
       else
@@ -139,24 +139,24 @@ image_add_vguide_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpImage *gimage;
-  gint32 offset;
+  gint32 xposition;
   gint32 guide = 0;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
-  offset = args[1].value.pdb_int;
-  if (offset < 0)
+  xposition = args[1].value.pdb_int;
+  if (xposition < 0)
     success = FALSE;
 
   if (success)
     {
-      if (offset <= gimage->width)
+      if (xposition <= gimage->width)
         {
           GimpGuide *g;
 
-          g = gimp_image_add_vguide (gimage, offset, TRUE);
+          g = gimp_image_add_vguide (gimage, xposition, TRUE);
           guide = g->guide_ID;
         }
       else

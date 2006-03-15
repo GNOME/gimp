@@ -1560,15 +1560,15 @@ HELP
     @inargs = (
     	&std_image_arg,
 	{ name => 'width', type => '0 < int32 <= 1024',
-	  desc => 'The thumbnail width', alias => 'req_width' },
+	  desc => 'The requested thumbnail width' },
 	{ name => 'height', type => '0 < int32 <= 1024',
-	  desc => 'The thumbnail height', alias => 'req_height' }
+	  desc => 'The requested thumbnail height' }
     );
 
     @outargs = (
-	{ name => 'width', type => 'int32',
+	{ name => 'actual_width', type => 'int32',
 	  desc => 'The previews width', init => 1 },
-	{ name => 'height', type => 'int32',
+	{ name => 'actual_height', type => 'int32',
 	  desc => 'The previews height', init => 1 },
 	{ name => 'bpp', type => 'int32',
 	  desc => 'The previews bpp', init => 1 },
@@ -1576,7 +1576,7 @@ HELP
 	  desc => 'The thumbnail data', init => 1,
 	  array => { name => 'thumbnail_data_count',
 		     desc => 'The number of bytes in thumbnail data',
-		     alias => 'num_bytes', init => 1 } }
+		     init => 1 } }
     );
     $outargs[0]->{void_ret} = 1;
 
@@ -1593,26 +1593,27 @@ HELP
   dheight = gimp_image_get_height (gimage);
 
   if (dwidth > dheight)
-    req_height = MAX (1, (req_width * dheight) / dwidth);
+    height = MAX (1, (width * dheight) / dwidth);
   else
-    req_width  = MAX (1, (req_height * dwidth) / dheight);
+    width  = MAX (1, (height * dwidth) / dheight);
 
   if (gimage->gimp->config->layer_previews)
     buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (gimage),
-                                         req_width, req_height);
+                                         width, height);
   else
     buf = gimp_viewable_get_dummy_preview (GIMP_VIEWABLE (gimage),
-                                           req_width, req_height,
+                                           width, height,
                                            gimp_image_has_alpha (gimage) ?
                                            4 : 3);
 
   if (buf)
     {
-      num_bytes      = buf->height * buf->width * buf->bytes;
-      thumbnail_data = g_memdup (temp_buf_data (buf), num_bytes);
-      width          = buf->width;
-      height         = buf->height;
-      bpp            = buf->bytes;
+      actual_width         = buf->width;
+      actual_height        = buf->height;
+      bpp                  = buf->bytes;
+      thumbnail_data_count = actual_width * actual_height * bpp;
+      thumbnail_data       = g_memdup (temp_buf_data (buf),
+                                       thumbnail_data_count);
 
       temp_buf_free (buf);
     }

@@ -494,10 +494,8 @@ HELP
     @inargs = (
 	{ name => 'name', type => 'string',
 	  desc => 'The gradient name' },
-	{ name  => 'positions',
-	  type  => 'floatarray',
+	{ name  => 'positions', type  => 'floatarray',
 	  desc  => 'The list of positions to sample along the gradient',
-	  alias => 'pos',
 	  array => &sample_num_arg("") },
 	{ name => 'reverse', type => 'boolean',
 	  desc => 'Use the reverse gradient (%%desc%%)' }
@@ -524,14 +522,15 @@ HELP
         {
           GimpRGB color;
 
-          seg = gimp_gradient_get_color_at (gradient, seg, *pos, reverse, &color);
+          seg = gimp_gradient_get_color_at (gradient, seg, *positions,
+                                            reverse, &color);
 
           *sample++ = color.r;
           *sample++ = color.g;
           *sample++ = color.b;
           *sample++ = color.a;
 
-          pos++;
+          positions++;
         }
     }
   else

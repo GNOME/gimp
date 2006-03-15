@@ -280,7 +280,7 @@ file_load_thumbnail_invoker (Gimp         *gimp,
   gchar *filename;
   gint32 width = 0;
   gint32 height = 0;
-  gint32 num_bytes = 0;
+  gint32 thumb_data_count = 0;
   guint8 *thumb_data = NULL;
 
   filename = (gchar *) args[0].value.pdb_pointer;
@@ -325,8 +325,9 @@ file_load_thumbnail_invoker (Gimp         *gimp,
               pixbuf = tmp;
             }
 
-          num_bytes  = 3 * width * height;
-          thumb_data = g_memdup (gdk_pixbuf_get_pixels (pixbuf), num_bytes);
+          thumb_data_count = 3 * width * height;
+          thumb_data       = g_memdup (gdk_pixbuf_get_pixels (pixbuf),
+                                       thumb_data_count);
 
           g_object_unref (pixbuf);
 
@@ -346,7 +347,7 @@ file_load_thumbnail_invoker (Gimp         *gimp,
     {
       return_args[1].value.pdb_int = width;
       return_args[2].value.pdb_int = height;
-      return_args[3].value.pdb_int = num_bytes;
+      return_args[3].value.pdb_int = thumb_data_count;
       return_args[4].value.pdb_pointer = thumb_data;
     }
 
@@ -376,7 +377,7 @@ static ProcArg file_load_thumbnail_outargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "thumbnail-data-count",
+    "thumb-data-count",
     "The number of bytes in thumbnail data"
   },
   {
@@ -669,13 +670,13 @@ register_magic_load_handler_invoker (Gimp         *gimp,
                                      Argument     *args)
 {
   gboolean success = TRUE;
-  gchar *name;
+  gchar *procedure_name;
   gchar *extensions;
   gchar *prefixes;
   gchar *magics;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+  procedure_name = (gchar *) args[0].value.pdb_pointer;
+  if (procedure_name == NULL || !g_utf8_validate (procedure_name, -1, NULL))
     success = FALSE;
 
   extensions = (gchar *) args[1].value.pdb_pointer;
@@ -692,7 +693,7 @@ register_magic_load_handler_invoker (Gimp         *gimp,
 
       success = FALSE;
 
-      canonical = gimp_canonicalize_identifier (name);
+      canonical = gimp_canonicalize_identifier (procedure_name);
 
       proc = procedural_db_lookup (gimp, canonical);
 
@@ -834,12 +835,12 @@ register_save_handler_invoker (Gimp         *gimp,
                                Argument     *args)
 {
   gboolean success = TRUE;
-  gchar *name;
+  gchar *procedure_name;
   gchar *extensions;
   gchar *prefixes;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+  procedure_name = (gchar *) args[0].value.pdb_pointer;
+  if (procedure_name == NULL || !g_utf8_validate (procedure_name, -1, NULL))
     success = FALSE;
 
   extensions = (gchar *) args[1].value.pdb_pointer;
@@ -854,7 +855,7 @@ register_save_handler_invoker (Gimp         *gimp,
 
       success = FALSE;
 
-      canonical = gimp_canonicalize_identifier (name);
+      canonical = gimp_canonicalize_identifier (procedure_name);
 
       proc = procedural_db_lookup (gimp, canonical);
 
@@ -936,11 +937,11 @@ register_file_handler_mime_invoker (Gimp         *gimp,
                                     Argument     *args)
 {
   gboolean success = TRUE;
-  gchar *name;
+  gchar *procedure_name;
   gchar *mime_type;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+  procedure_name = (gchar *) args[0].value.pdb_pointer;
+  if (procedure_name == NULL || !g_utf8_validate (procedure_name, -1, NULL))
     success = FALSE;
 
   mime_type = (gchar *) args[1].value.pdb_pointer;
@@ -951,7 +952,7 @@ register_file_handler_mime_invoker (Gimp         *gimp,
     {
       gchar *canonical;
 
-      canonical = gimp_canonicalize_identifier (name);
+      canonical = gimp_canonicalize_identifier (procedure_name);
 
       success = (plug_ins_file_register_mime (gimp, canonical, mime_type) != NULL);
 

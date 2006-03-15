@@ -234,9 +234,8 @@ HELP
 	  desc => 'The height of the thumbnail' },
 	{ name => 'thumb_data', type => 'int8array', init => 1,
 	  desc => 'The thumbnail data',
-          array =>  { name => 'thumbnail_data_count',
-		      desc => 'The number of bytes in thumbnail data',
-		      alias => 'num_bytes', init => 1 } },
+          array =>  { name => 'thumb_data_count', init => 1,
+		      desc => 'The number of bytes in thumbnail data' } }
     );
 
     %invoke = (
@@ -278,8 +277,9 @@ HELP
           pixbuf = tmp;
         }
 
-      num_bytes  = 3 * width * height;
-      thumb_data = g_memdup (gdk_pixbuf_get_pixels (pixbuf), num_bytes);
+      thumb_data_count = 3 * width * height;
+      thumb_data       = g_memdup (gdk_pixbuf_get_pixels (pixbuf),
+                                   thumb_data_count);
 
       g_object_unref (pixbuf);
 
@@ -411,8 +411,7 @@ HELP
 
     @inargs = (
 	{ name => 'procedure_name', type => 'string',
-	  desc => 'The name of the procedure to be used for loading',
-	  alias => 'name' },
+	  desc => 'The name of the procedure to be used for loading' },
 	{ name => 'extensions', type => 'string', no_success => 1,
 	  desc => 'comma separated list of extensions this handler
 		   can load (i.e. "jpg,jpeg")' },
@@ -433,7 +432,7 @@ HELP
 
   success = FALSE;
 
-  canonical = gimp_canonicalize_identifier (name);
+  canonical = gimp_canonicalize_identifier (procedure_name);
 
   proc = procedural_db_lookup (gimp, canonical);
 
@@ -483,8 +482,7 @@ HELP
 
     @inargs = (
 	{ name => 'procedure_name', type => 'string',
-	  desc => 'The name of the procedure to be used for loading',
-	  alias => 'name' },
+	  desc => 'The name of the procedure to be used for loading' },
 	{ name => 'extensions', type => 'string', no_success => 1,
 	  desc => 'comma separated list of extensions this handler
 		   can load (i.e. "jpg,jpeg")' },
@@ -512,8 +510,7 @@ HELP
 
     @inargs = (
 	{ name => 'procedure_name', type => 'string',
-	  desc => 'The name of the procedure to be used for saving',
-	  alias => 'name' },
+	  desc => 'The name of the procedure to be used for saving' },
 	{ name => 'extensions', type => 'string', no_success => 1,
 	  desc => 'comma separated list of extensions this handler
 		   can save (i.e. "jpg,jpeg")' },
@@ -531,7 +528,7 @@ HELP
 
   success = FALSE;
 
-  canonical = gimp_canonicalize_identifier (name);
+  canonical = gimp_canonicalize_identifier (procedure_name);
 
   proc = procedural_db_lookup (gimp, canonical);
 
@@ -581,9 +578,9 @@ HELP
     &neo_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'procedure_name', type => 'string', alias => 'name',
+	{ name => 'procedure_name', type => 'string',
 	  desc => "The name of the procedure to associate a MIME type with." },
-	{ name => 'mime_type',      type => 'string',
+	{ name => 'mime_type', type => 'string',
 	  desc => "A single MIME type, like for example \"image/jpeg\"."     }
     );
 
@@ -592,7 +589,7 @@ HELP
 {
   gchar *canonical;
 
-  canonical = gimp_canonicalize_identifier (name);
+  canonical = gimp_canonicalize_identifier (procedure_name);
 
   success = (plug_ins_file_register_mime (gimp, canonical, mime_type) != NULL);
 

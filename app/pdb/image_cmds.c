@@ -3373,24 +3373,24 @@ image_thumbnail_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpImage *gimage;
-  gint32 req_width;
-  gint32 req_height;
-  gint32 width = 0;
-  gint32 height = 0;
+  gint32 width;
+  gint32 height;
+  gint32 actual_width = 0;
+  gint32 actual_height = 0;
   gint32 bpp = 0;
-  gint32 num_bytes = 0;
+  gint32 thumbnail_data_count = 0;
   guint8 *thumbnail_data = NULL;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
-  req_width = args[1].value.pdb_int;
-  if (req_width <= 0 || req_width > 1024)
+  width = args[1].value.pdb_int;
+  if (width <= 0 || width > 1024)
     success = FALSE;
 
-  req_height = args[2].value.pdb_int;
-  if (req_height <= 0 || req_height > 1024)
+  height = args[2].value.pdb_int;
+  if (height <= 0 || height > 1024)
     success = FALSE;
 
   if (success)
@@ -3405,26 +3405,27 @@ image_thumbnail_invoker (Gimp         *gimp,
       dheight = gimp_image_get_height (gimage);
 
       if (dwidth > dheight)
-        req_height = MAX (1, (req_width * dheight) / dwidth);
+        height = MAX (1, (width * dheight) / dwidth);
       else
-        req_width  = MAX (1, (req_height * dwidth) / dheight);
+        width  = MAX (1, (height * dwidth) / dheight);
 
       if (gimage->gimp->config->layer_previews)
         buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (gimage),
-                                             req_width, req_height);
+                                             width, height);
       else
         buf = gimp_viewable_get_dummy_preview (GIMP_VIEWABLE (gimage),
-                                               req_width, req_height,
+                                               width, height,
                                                gimp_image_has_alpha (gimage) ?
                                                4 : 3);
 
       if (buf)
         {
-          num_bytes      = buf->height * buf->width * buf->bytes;
-          thumbnail_data = g_memdup (temp_buf_data (buf), num_bytes);
-          width          = buf->width;
-          height         = buf->height;
-          bpp            = buf->bytes;
+          actual_width         = buf->width;
+          actual_height        = buf->height;
+          bpp                  = buf->bytes;
+          thumbnail_data_count = actual_width * actual_height * bpp;
+          thumbnail_data       = g_memdup (temp_buf_data (buf),
+                                           thumbnail_data_count);
 
           temp_buf_free (buf);
         }
@@ -3438,10 +3439,10 @@ image_thumbnail_invoker (Gimp         *gimp,
 
   if (success)
     {
-      return_args[1].value.pdb_int = width;
-      return_args[2].value.pdb_int = height;
+      return_args[1].value.pdb_int = actual_width;
+      return_args[2].value.pdb_int = actual_height;
       return_args[3].value.pdb_int = bpp;
-      return_args[4].value.pdb_int = num_bytes;
+      return_args[4].value.pdb_int = thumbnail_data_count;
       return_args[5].value.pdb_pointer = thumbnail_data;
     }
 
@@ -3458,12 +3459,12 @@ static ProcArg image_thumbnail_inargs[] =
   {
     GIMP_PDB_INT32,
     "width",
-    "The thumbnail width"
+    "The requested thumbnail width"
   },
   {
     GIMP_PDB_INT32,
     "height",
-    "The thumbnail height"
+    "The requested thumbnail height"
   }
 };
 
@@ -3471,12 +3472,12 @@ static ProcArg image_thumbnail_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "width",
+    "actual-width",
     "The previews width"
   },
   {
     GIMP_PDB_INT32,
-    "height",
+    "actual-height",
     "The previews height"
   },
   {

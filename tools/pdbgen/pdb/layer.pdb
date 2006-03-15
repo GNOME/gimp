@@ -469,10 +469,17 @@ HELP
     );
 
     @outargs = (
-	{ name => 'mask', type => 'channel',
+	{ name => 'mask', type => 'channel', init => 1,
 	  desc => 'The layer mask',
-	  alias => 'layer->mask', no_declare => 1,
 	  return_fail => -1 }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  mask = gimp_layer_get_mask (layer);
+}
+CODE
     );
 }
 
@@ -526,8 +533,15 @@ HELP
 
     @outargs = (
 	{ name => 'is_floating_sel', type => 'boolean',
-	  desc => 'Non-zero if the layer is a floating selection',
-	  alias => 'gimp_layer_is_floating_sel (layer)', no_declare => 1 }
+	  desc => 'Non-zero if the layer is a floating selection' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  is_floating_sel = gimp_layer_is_floating_sel (layer);
+}
+CODE
     );
 }
 

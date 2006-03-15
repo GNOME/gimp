@@ -103,12 +103,11 @@ HELP
     @inargs = ( &std_image_arg );
 
     @outargs = (
-	{ name => 'disabled', type => 'boolean',
-	  desc => 'True if the image undo has been disabled',
-	  alias => 'success ? TRUE : FALSE', no_declare => 1 }
+	{ name => 'disabled', type => 'boolean', init => 1,
+	  desc => 'True if the image undo has been disabled' }
     );
 
-    %invoke = ( code => 'success = gimp_image_undo_disable (gimage);' );
+    %invoke = ( code => 'disabled = gimp_image_undo_disable (gimage);' );
 }
 
 sub image_undo_enable {
@@ -125,12 +124,11 @@ HELP
     @inargs = ( &std_image_arg );
 
     @outargs = (
-	{ name => 'enabled', type => 'boolean',
-	  desc => 'True if the image undo has been enabled',
-	  alias => 'success ? TRUE : FALSE', no_declare => 1 }
+	{ name => 'enabled', type => 'boolean', init => 1,
+	  desc => 'True if the image undo has been enabled' }
     );
 
-    %invoke = ( code => 'success = gimp_image_undo_enable (gimage);' );
+    %invoke = ( code => 'enabled = gimp_image_undo_enable (gimage);' );
 }
 
 sub image_undo_freeze {
@@ -153,12 +151,11 @@ HELP
     @inargs = ( &std_image_arg );
 
     @outargs = (
-	{ name => 'frozen', type => 'boolean',
-	  desc => 'True if the image undo has been frozen',
-	  alias => 'success ? TRUE : FALSE', no_declare => 1 }
+	{ name => 'frozen', type => 'boolean', init => 1,
+	  desc => 'True if the image undo has been frozen' }
     );
 
-    %invoke = ( code => 'success = gimp_image_undo_freeze (gimage);' );
+    %invoke = ( code => 'frozen = gimp_image_undo_freeze (gimage);' );
 }
 
 sub image_undo_thaw {
@@ -181,12 +178,11 @@ HELP
     @inargs = ( &std_image_arg );
 
     @outargs = (
-	{ name => 'thawed', type => 'boolean',
-	  desc => 'True if the image undo has been thawed',
-	  alias => 'success ? TRUE : FALSE', no_declare => 1 }
+	{ name => 'thawed', type => 'boolean', init => 1,
+	  desc => 'True if the image undo has been thawed' }
     );
 
-    %invoke = ( code => 'success = gimp_image_undo_thaw (gimage);' );
+    %invoke = ( code => 'thawed = gimp_image_undo_thaw (gimage);' );
 }
 
 @headers = qw("core/gimpimage-undo.h");

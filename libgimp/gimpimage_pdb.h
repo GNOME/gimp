@@ -129,8 +129,8 @@ gboolean          gimp_image_is_dirty                 (gint32                ima
 gboolean          _gimp_image_thumbnail               (gint32                image_ID,
 						       gint                  width,
 						       gint                  height,
-						       gint                 *ret_width,
-						       gint                 *ret_height,
+						       gint                 *actual_width,
+						       gint                 *actual_height,
 						       gint                 *bpp,
 						       gint                 *thumbnail_data_count,
 						       guint8              **thumbnail_data) G_GNUC_INTERNAL;

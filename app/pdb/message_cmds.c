@@ -102,9 +102,12 @@ message_get_handler_invoker (Gimp         *gimp,
                              Argument     *args)
 {
   Argument *return_args;
+  gint32 handler = 0;
+
+  handler = gimp->message_handler;
 
   return_args = procedural_db_return_args (&message_get_handler_proc, TRUE);
-  return_args[1].value.pdb_int = gimp->message_handler;
+  return_args[1].value.pdb_int = handler;
 
   return return_args;
 }
@@ -150,7 +153,9 @@ message_set_handler_invoker (Gimp         *gimp,
     success = FALSE;
 
   if (success)
-    gimp->message_handler = handler;
+    {
+      gimp->message_handler = handler;
+    }
 
   return procedural_db_return_args (&message_set_handler_proc, success);
 }

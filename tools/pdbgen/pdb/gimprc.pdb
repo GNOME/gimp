@@ -109,9 +109,9 @@ HELP
 
     @outargs = (
 	{  name => 'xres', type => 'float', void_ret => 1,
-	   desc => 'X resolution', alias => 'xres' },
+	   desc => 'X resolution' },
 	{  name => 'yres', type => 'float',
-	   desc => 'Y resolution', alias => 'yres' },	   
+	   desc => 'Y resolution' },	   
     );
 
     %invoke = (

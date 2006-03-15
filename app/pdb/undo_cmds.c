@@ -224,18 +224,19 @@ image_undo_disable_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpImage *gimage;
+  gboolean disabled = FALSE;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
   if (success)
-    success = gimp_image_undo_disable (gimage);
+    disabled = gimp_image_undo_disable (gimage);
 
   return_args = procedural_db_return_args (&image_undo_disable_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = success ? TRUE : FALSE;
+    return_args[1].value.pdb_int = disabled;
 
   return return_args;
 }
@@ -285,18 +286,19 @@ image_undo_enable_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpImage *gimage;
+  gboolean enabled = FALSE;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
   if (success)
-    success = gimp_image_undo_enable (gimage);
+    enabled = gimp_image_undo_enable (gimage);
 
   return_args = procedural_db_return_args (&image_undo_enable_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = success ? TRUE : FALSE;
+    return_args[1].value.pdb_int = enabled;
 
   return return_args;
 }
@@ -346,18 +348,19 @@ image_undo_freeze_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpImage *gimage;
+  gboolean frozen = FALSE;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
   if (success)
-    success = gimp_image_undo_freeze (gimage);
+    frozen = gimp_image_undo_freeze (gimage);
 
   return_args = procedural_db_return_args (&image_undo_freeze_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = success ? TRUE : FALSE;
+    return_args[1].value.pdb_int = frozen;
 
   return return_args;
 }
@@ -407,18 +410,19 @@ image_undo_thaw_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpImage *gimage;
+  gboolean thawed = FALSE;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
   if (success)
-    success = gimp_image_undo_thaw (gimage);
+    thawed = gimp_image_undo_thaw (gimage);
 
   return_args = procedural_db_return_args (&image_undo_thaw_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = success ? TRUE : FALSE;
+    return_args[1].value.pdb_int = thawed;
 
   return return_args;
 }

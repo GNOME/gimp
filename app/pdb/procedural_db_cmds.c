@@ -294,7 +294,7 @@ procedural_db_proc_info_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   Argument *return_args;
-  gchar *proc_name;
+  gchar *procedure;
   gchar *blurb;
   gchar *help;
   gchar *author;
@@ -304,8 +304,8 @@ procedural_db_proc_info_invoker (Gimp         *gimp,
   gint32 num_args;
   gint32 num_values;
 
-  proc_name = (gchar *) args[0].value.pdb_pointer;
-  if (proc_name == NULL || !g_utf8_validate (proc_name, -1, NULL))
+  procedure = (gchar *) args[0].value.pdb_pointer;
+  if (procedure == NULL || !g_utf8_validate (procedure, -1, NULL))
     success = FALSE;
 
   if (success)
@@ -313,10 +313,11 @@ procedural_db_proc_info_invoker (Gimp         *gimp,
       GimpPDBProcType  ptype;
       gchar           *canonical;
 
-      canonical = gimp_canonicalize_identifier (proc_name);
+      canonical = gimp_canonicalize_identifier (procedure);
 
       success = procedural_db_proc_info (gimp, canonical,
-                                         &blurb, &help, &author, &copyright, &date, &ptype,
+                                         &blurb, &help, &author,
+                                         &copyright, &date, &ptype,
                                          &num_args, &num_values);
       proc_type = ptype;
 
@@ -419,14 +420,14 @@ procedural_db_proc_arg_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   Argument *return_args;
-  gchar *proc_name;
+  gchar *procedure;
   gint32 arg_num;
   gint32 arg_type = 0;
   gchar *arg_name = NULL;
   gchar *arg_desc = NULL;
 
-  proc_name = (gchar *) args[0].value.pdb_pointer;
-  if (proc_name == NULL || !g_utf8_validate (proc_name, -1, NULL))
+  procedure = (gchar *) args[0].value.pdb_pointer;
+  if (procedure == NULL || !g_utf8_validate (procedure, -1, NULL))
     success = FALSE;
 
   arg_num = args[1].value.pdb_int;
@@ -436,7 +437,7 @@ procedural_db_proc_arg_invoker (Gimp         *gimp,
       ProcRecord *proc;
       gchar      *canonical;
 
-      canonical = gimp_canonicalize_identifier (proc_name);
+      canonical = gimp_canonicalize_identifier (procedure);
 
       proc = procedural_db_lookup (gimp, canonical);
 
@@ -535,14 +536,14 @@ procedural_db_proc_val_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   Argument *return_args;
-  gchar *proc_name;
+  gchar *procedure;
   gint32 val_num;
   gint32 val_type = 0;
   gchar *val_name = NULL;
   gchar *val_desc = NULL;
 
-  proc_name = (gchar *) args[0].value.pdb_pointer;
-  if (proc_name == NULL || !g_utf8_validate (proc_name, -1, NULL))
+  procedure = (gchar *) args[0].value.pdb_pointer;
+  if (procedure == NULL || !g_utf8_validate (procedure, -1, NULL))
     success = FALSE;
 
   val_num = args[1].value.pdb_int;
@@ -552,7 +553,7 @@ procedural_db_proc_val_invoker (Gimp         *gimp,
       ProcRecord *proc;
       gchar      *canonical;
 
-      canonical = gimp_canonicalize_identifier (proc_name);
+      canonical = gimp_canonicalize_identifier (procedure);
 
       proc = procedural_db_lookup (gimp, canonical);
 
@@ -653,7 +654,7 @@ procedural_db_get_data_invoker (Gimp         *gimp,
   Argument *return_args;
   gchar *identifier;
   gint32 bytes;
-  guint8 *data_copy = NULL;
+  guint8 *data = NULL;
 
   identifier = (gchar *) args[0].value.pdb_pointer;
   if (identifier == NULL || !g_utf8_validate (identifier, -1, NULL))
@@ -661,18 +662,18 @@ procedural_db_get_data_invoker (Gimp         *gimp,
 
   if (success)
     {
-      const guint8 *data;
+      const guint8 *orig_data;
       gchar        *canonical;
 
       canonical = gimp_canonicalize_identifier (identifier);
 
-      data = plug_in_data_get (gimp, canonical, &bytes);
-      success = (data != NULL);
+      orig_data = plug_in_data_get (gimp, canonical, &bytes);
+      success = (orig_data != NULL);
 
       g_free (canonical);
 
       if (success)
-        data_copy = g_memdup (data, bytes);
+        data = g_memdup (orig_data, bytes);
     }
 
   return_args = procedural_db_return_args (&procedural_db_get_data_proc, success);
@@ -680,7 +681,7 @@ procedural_db_get_data_invoker (Gimp         *gimp,
   if (success)
     {
       return_args[1].value.pdb_int = bytes;
-      return_args[2].value.pdb_pointer = data_copy;
+      return_args[2].value.pdb_pointer = data;
     }
 
   return return_args;

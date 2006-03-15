@@ -35,7 +35,7 @@ HELP
 
     @inargs = (
 	{ name  => 'procedure', type  => 'string',
-	  desc  => 'The procedure name', alias => 'proc_name' },
+	  desc  => 'The procedure name' },
 	{ name => "${type}_num", type => 'int32',
 	  desc => "The $long_type number" }
     );
@@ -56,7 +56,7 @@ HELP
   ProcRecord *proc;
   gchar      *canonical;
 
-  canonical = gimp_canonicalize_identifier (proc_name);
+  canonical = gimp_canonicalize_identifier (procedure);
 
   proc = procedural_db_lookup (gimp, canonical);
 
@@ -222,7 +222,7 @@ HELP
 
     @inargs = (
 	{ name  => 'procedure', type  => 'string',
-	  desc  => 'The procedure name', alias => 'proc_name' }
+	  desc  => 'The procedure name' }
     );
 
     @outargs = (
@@ -250,10 +250,11 @@ HELP
   GimpPDBProcType  ptype;
   gchar           *canonical;
 
-  canonical = gimp_canonicalize_identifier (proc_name);
+  canonical = gimp_canonicalize_identifier (procedure);
 
   success = procedural_db_proc_info (gimp, canonical,
-                                     &blurb, &help, &author, &copyright, &date, &ptype,
+                                     &blurb, &help, &author,
+                                     &copyright, &date, &ptype,
                                      &num_args, &num_values);
   proc_type = ptype;
 
@@ -272,8 +273,6 @@ sub procedural_db_proc_val {
 }
 
 sub procedural_db_get_data {
-    $alias{lib} = 'get_data';
-
     $blurb = 'Returns data associated with the specified identifier.';
 
     $help = <<'HELP';
@@ -293,7 +292,7 @@ HELP
     @outargs = (
 	{ name  => 'data', type  => 'int8array',
 	  desc  => 'A byte array containing data', wrap => 1, init => 1,
-	  alias => 'data_copy', void_ret => 1,
+	  void_ret => 1,
 	  array => { name => 'bytes', type => '0 < int32',
 		     desc => 'The number of bytes in the data' } }
     );
@@ -301,18 +300,18 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  const guint8 *data;
+  const guint8 *orig_data;
   gchar        *canonical;
 
   canonical = gimp_canonicalize_identifier (identifier);
 
-  data = plug_in_data_get (gimp, canonical, &bytes);
-  success = (data != NULL);
+  orig_data = plug_in_data_get (gimp, canonical, &bytes);
+  success = (orig_data != NULL);
 
   g_free (canonical);
 
   if (success)
-    data_copy = g_memdup (data, bytes);
+    data = g_memdup (orig_data, bytes);
 }
 CODE
     );
@@ -357,8 +356,6 @@ CODE
 }
 
 sub procedural_db_set_data {
-    $alias{lib} = 'set_data';
-
     $blurb = 'Associates the specified identifier with the supplied data.';
 
     $help = <<'HELP';

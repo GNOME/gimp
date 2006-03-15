@@ -33,7 +33,7 @@ HELP
     );
 
     %invoke = (
-	code => <<CODE
+	code => <<'CODE'
 {
   if (gimp_image_base_type (gimage) != GIMP_RGB)
     gimp_image_convert (gimage, GIMP_RGB, 0, 0, FALSE, FALSE, 0, NULL, NULL);
@@ -60,7 +60,7 @@ HELP
     );
 
     %invoke = (
-	code => <<CODE
+	code => <<'CODE'
 {
   if (gimp_image_base_type (gimage) != GIMP_GRAY)
     gimp_image_convert (gimage, GIMP_GRAY, 0, 0, FALSE, FALSE, 0, NULL, NULL);
@@ -108,14 +108,13 @@ HELP
 		   palette, ignored if (palette_type == GIMP_MAKE_PALETTE)' },
 	{ name => 'palette', type => 'string',
 	  desc => 'The name of the custom palette to use, ignored unless
-		   (palette_type == GIMP_CUSTOM_PALETTE)',
-	  alias => 'palette_name' }
+		   (palette_type == GIMP_CUSTOM_PALETTE)' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *palette = NULL;
+  GimpPalette *pal = NULL;
 
   if (gimp_image_base_type (gimage) != GIMP_INDEXED)
     {
@@ -127,10 +126,10 @@ HELP
 	  break;
 
 	case GIMP_CUSTOM_PALETTE:
-          palette = (GimpPalette *)
+          pal = (GimpPalette *)
             gimp_container_get_child_by_name (gimp->palette_factory->container,
-                                              palette_name);
-	  if (palette == NULL)
+                                              palette);
+	  if (pal == NULL)
 	    success = FALSE;
 	  break;
 
@@ -139,13 +138,11 @@ HELP
 	}
     }
   else
-    {
-      success = FALSE;
-    }
+    success = FALSE;
 
   if (success)
     gimp_image_convert (gimage, GIMP_INDEXED, num_cols, dither_type,
-		        alpha_dither, remove_unused, palette_type, palette,
+		        alpha_dither, remove_unused, palette_type, pal,
                         NULL);
 }
 CODE

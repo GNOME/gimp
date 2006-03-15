@@ -160,7 +160,7 @@ image_convert_indexed_invoker (Gimp         *gimp,
   gint32 num_cols;
   gboolean alpha_dither;
   gboolean remove_unused;
-  gchar *palette_name;
+  gchar *palette;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -180,13 +180,13 @@ image_convert_indexed_invoker (Gimp         *gimp,
 
   remove_unused = args[5].value.pdb_int ? TRUE : FALSE;
 
-  palette_name = (gchar *) args[6].value.pdb_pointer;
-  if (palette_name == NULL || !g_utf8_validate (palette_name, -1, NULL))
+  palette = (gchar *) args[6].value.pdb_pointer;
+  if (palette == NULL || !g_utf8_validate (palette, -1, NULL))
     success = FALSE;
 
   if (success)
     {
-      GimpPalette *palette = NULL;
+      GimpPalette *pal = NULL;
 
       if (gimp_image_base_type (gimage) != GIMP_INDEXED)
         {
@@ -198,10 +198,10 @@ image_convert_indexed_invoker (Gimp         *gimp,
               break;
 
             case GIMP_CUSTOM_PALETTE:
-              palette = (GimpPalette *)
+              pal = (GimpPalette *)
                 gimp_container_get_child_by_name (gimp->palette_factory->container,
-                                                  palette_name);
-              if (palette == NULL)
+                                                  palette);
+              if (pal == NULL)
                 success = FALSE;
               break;
 
@@ -210,13 +210,11 @@ image_convert_indexed_invoker (Gimp         *gimp,
             }
         }
       else
-        {
-          success = FALSE;
-        }
+        success = FALSE;
 
       if (success)
         gimp_image_convert (gimage, GIMP_INDEXED, num_cols, dither_type,
-                            alpha_dither, remove_unused, palette_type, palette,
+                            alpha_dither, remove_unused, palette_type, pal,
                             NULL);
     }
 

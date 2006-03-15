@@ -28,6 +28,7 @@
 
 #include "config/gimpcoreconfig.h"
 #include "core/gimp.h"
+#include "core/gimpchannel.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage.h"
@@ -875,15 +876,21 @@ layer_get_mask_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpLayer *layer;
+  GimpChannel *mask = NULL;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
     success = FALSE;
 
+  if (success)
+    {
+      mask = gimp_layer_get_mask (layer);
+    }
+
   return_args = procedural_db_return_args (&layer_get_mask_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = layer->mask ? gimp_item_get_ID (GIMP_ITEM (layer->mask)) : -1;
+    return_args[1].value.pdb_int = mask ? gimp_item_get_ID (GIMP_ITEM (mask)) : -1;
 
   return return_args;
 }
@@ -1119,15 +1126,21 @@ layer_is_floating_sel_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpLayer *layer;
+  gboolean is_floating_sel;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
     success = FALSE;
 
+  if (success)
+    {
+      is_floating_sel = gimp_layer_is_floating_sel (layer);
+    }
+
   return_args = procedural_db_return_args (&layer_is_floating_sel_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_layer_is_floating_sel (layer);
+    return_args[1].value.pdb_int = is_floating_sel;
 
   return return_args;
 }

@@ -157,13 +157,13 @@ gradients_sample_uniform_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   Argument *return_args;
-  gint32 i;
+  gint32 num_samples;
   gboolean reverse;
   gint32 array_length = 0;
   gdouble *color_samples = NULL;
 
-  i = args[0].value.pdb_int;
-  if (i < 2)
+  num_samples = args[0].value.pdb_int;
+  if (num_samples < 2)
     success = FALSE;
 
   reverse = args[1].value.pdb_int ? TRUE : FALSE;
@@ -177,15 +177,15 @@ gradients_sample_uniform_invoker (Gimp         *gimp,
       gdouble             *pv;
 
       pos   = 0.0;
-      delta = 1.0 / (i - 1);
+      delta = 1.0 / (num_samples - 1);
 
-      array_length = i * 4;
+      array_length = num_samples * 4;
 
       pv = color_samples = g_new (gdouble, array_length);
 
       gradient = gimp_context_get_gradient (context);
 
-      while (i--)
+      while (num_samples--)
         {
           seg = gimp_gradient_get_color_at (gradient, seg, pos, reverse, &color);
 
@@ -263,17 +263,17 @@ gradients_sample_custom_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   Argument *return_args;
-  gint32 i;
-  gdouble *pos;
+  gint32 num_samples;
+  gdouble *positions;
   gboolean reverse;
   gint32 array_length = 0;
   gdouble *color_samples = NULL;
 
-  i = args[0].value.pdb_int;
-  if (i <= 0)
+  num_samples = args[0].value.pdb_int;
+  if (num_samples <= 0)
     success = FALSE;
 
-  pos = (gdouble *) args[1].value.pdb_pointer;
+  positions = (gdouble *) args[1].value.pdb_pointer;
 
   reverse = args[2].value.pdb_int ? TRUE : FALSE;
 
@@ -284,22 +284,23 @@ gradients_sample_custom_invoker (Gimp         *gimp,
       GimpRGB              color;
       gdouble             *pv;
 
-      array_length = i * 4;
+      array_length = num_samples * 4;
 
       pv = color_samples = g_new (gdouble, array_length);
 
       gradient = gimp_context_get_gradient (context);
 
-      while (i--)
+      while (num_samples--)
         {
-          seg = gimp_gradient_get_color_at (gradient, seg, *pos, reverse, &color);
+          seg = gimp_gradient_get_color_at (gradient, seg, *positions,
+                                            reverse, &color);
 
           *pv++ = color.r;
           *pv++ = color.g;
           *pv++ = color.b;
           *pv++ = color.a;
 
-          pos++;
+          positions++;
         }
     }
 
@@ -378,7 +379,7 @@ gradients_get_gradient_data_invoker (Gimp         *gimp,
   gboolean reverse;
   gchar *actual_name = NULL;
   gint32 width = 0;
-  gdouble *values = NULL;
+  gdouble *grad_data = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name && !g_utf8_validate (name, -1, NULL))
@@ -416,10 +417,10 @@ gradients_get_gradient_data_invoker (Gimp         *gimp,
           delta = 1.0 / (sample_size - 1);
 
           actual_name = g_strdup (GIMP_OBJECT (gradient)->name);
-          values      = g_new (gdouble, sample_size * 4);
+          grad_data   = g_new (gdouble, sample_size * 4);
           width       = sample_size * 4;
 
-          pv = values;
+          pv = grad_data;
 
           while (sample_size)
             {
@@ -443,7 +444,7 @@ gradients_get_gradient_data_invoker (Gimp         *gimp,
     {
       return_args[1].value.pdb_pointer = actual_name;
       return_args[2].value.pdb_int = width;
-      return_args[3].value.pdb_pointer = values;
+      return_args[3].value.pdb_pointer = grad_data;
     }
 
   return return_args;

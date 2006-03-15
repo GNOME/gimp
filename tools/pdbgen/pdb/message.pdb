@@ -33,7 +33,7 @@ HELP
     );
 
     %invoke = (
-        code => <<CODE
+        code => <<'CODE'
 {
   if (gimp->current_plug_in)
     plug_in_progress_message (gimp->current_plug_in, message);
@@ -57,9 +57,16 @@ HELP
     &yosh_pdb_misc('1998');
 
     @outargs = (
-	{ name => 'handler', type => 'enum GimpMessageHandlerType',
-	  desc => 'The current handler type: { %%desc%% }',
-	  alias => 'gimp->message_handler', no_declare => 1 }
+	{ name => 'handler', type => 'enum GimpMessageHandlerType', init => 1,
+	  desc => 'The current handler type: { %%desc%% }' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  handler = gimp->message_handler;
+}
+CODE
     );
 }
 
@@ -78,7 +85,13 @@ HELP
 	  desc => 'The new handler type: { %%desc%% }' }
     );
 
-    %invoke = ( code => 'gimp->message_handler = handler;' );
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp->message_handler = handler;
+}
+CODE
+    );
 }
 
 @headers = qw(<string.h> "core/gimp.h" "plug-in/plug-in.h"

@@ -266,12 +266,12 @@ context_get_foreground_invoker (Gimp         *gimp,
                                 Argument     *args)
 {
   Argument *return_args;
-  GimpRGB color;
+  GimpRGB foreground;
 
-  gimp_context_get_foreground (context, &color);
+  gimp_context_get_foreground (context, &foreground);
 
   return_args = procedural_db_return_args (&context_get_foreground_proc, TRUE);
-  return_args[1].value.pdb_color = color;
+  return_args[1].value.pdb_color = foreground;
 
   return return_args;
 }
@@ -309,12 +309,12 @@ context_set_foreground_invoker (Gimp         *gimp,
                                 GimpProgress *progress,
                                 Argument     *args)
 {
-  GimpRGB color;
+  GimpRGB foreground;
 
-  color = args[0].value.pdb_color;
+  foreground = args[0].value.pdb_color;
 
-  gimp_rgb_set_alpha (&color, 1.0);
-  gimp_context_set_foreground (context, &color);
+  gimp_rgb_set_alpha (&foreground, 1.0);
+  gimp_context_set_foreground (context, &foreground);
 
   return procedural_db_return_args (&context_set_foreground_proc, TRUE);
 }
@@ -353,12 +353,12 @@ context_get_background_invoker (Gimp         *gimp,
                                 Argument     *args)
 {
   Argument *return_args;
-  GimpRGB color;
+  GimpRGB background;
 
-  gimp_context_get_background (context, &color);
+  gimp_context_get_background (context, &background);
 
   return_args = procedural_db_return_args (&context_get_background_proc, TRUE);
-  return_args[1].value.pdb_color = color;
+  return_args[1].value.pdb_color = background;
 
   return return_args;
 }
@@ -396,12 +396,12 @@ context_set_background_invoker (Gimp         *gimp,
                                 GimpProgress *progress,
                                 Argument     *args)
 {
-  GimpRGB color;
+  GimpRGB background;
 
-  color = args[0].value.pdb_color;
+  background = args[0].value.pdb_color;
 
-  gimp_rgb_set_alpha (&color, 1.0);
-  gimp_context_set_background (context, &color);
+  gimp_rgb_set_alpha (&background, 1.0);
+  gimp_context_set_background (context, &background);
 
   return procedural_db_return_args (&context_set_background_proc, TRUE);
 }
@@ -496,9 +496,12 @@ context_get_opacity_invoker (Gimp         *gimp,
                              Argument     *args)
 {
   Argument *return_args;
+  gdouble opacity = 0;
+
+  opacity = gimp_context_get_opacity (context) * 100.0;
 
   return_args = procedural_db_return_args (&context_get_opacity_proc, TRUE);
-  return_args[1].value.pdb_float = gimp_context_get_opacity (context) * 100.0;
+  return_args[1].value.pdb_float = opacity;
 
   return return_args;
 }
@@ -544,7 +547,9 @@ context_set_opacity_invoker (Gimp         *gimp,
     success = FALSE;
 
   if (success)
-    gimp_context_set_opacity (context, opacity / 100.0);
+    {
+      gimp_context_set_opacity (context, opacity / 100.0);
+    }
 
   return procedural_db_return_args (&context_set_opacity_proc, success);
 }
@@ -583,9 +588,12 @@ context_get_paint_mode_invoker (Gimp         *gimp,
                                 Argument     *args)
 {
   Argument *return_args;
+  gint32 paint_mode = 0;
+
+  paint_mode = gimp_context_get_paint_mode (context);
 
   return_args = procedural_db_return_args (&context_get_paint_mode_proc, TRUE);
-  return_args[1].value.pdb_int = gimp_context_get_paint_mode (context);
+  return_args[1].value.pdb_int = paint_mode;
 
   return return_args;
 }
@@ -631,7 +639,9 @@ context_set_paint_mode_invoker (Gimp         *gimp,
     success = FALSE;
 
   if (success)
-    gimp_context_set_paint_mode (context, paint_mode);
+    {
+      gimp_context_set_paint_mode (context, paint_mode);
+    }
 
   return procedural_db_return_args (&context_set_paint_mode_proc, success);
 }

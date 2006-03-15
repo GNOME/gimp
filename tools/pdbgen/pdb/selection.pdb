@@ -104,10 +104,16 @@ HELP
     );
 
     @outargs = (
-	{ name => 'value', type => '0 <= int32 <= 255',
-	  desc => 'Value of the selection: (%%desc%%)',
-	  alias => 'gimp_pickable_get_opacity_at (GIMP_PICKABLE (gimp_image_get_mask (gimage)), x, y)',
-          no_declare => 1 }
+	{ name => 'value', type => '0 <= int32 <= 255', init => 1,
+	  desc => 'Value of the selection: (%%desc%%)' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  value = gimp_pickable_get_opacity_at (GIMP_PICKABLE (gimp_image_get_mask (gimage)), x, y);
+}
+CODE
     );
 }
 
@@ -126,10 +132,16 @@ HELP
     );
 
     @outargs = (
-	{ name => 'is_empty', type => 'boolean',
-	  desc => 'Is the selection empty?',
-	  alias => 'gimp_channel_is_empty (gimp_image_get_mask (gimage))',
-          no_declare => 1 }
+	{ name => 'is_empty', type => 'boolean', init => 1,
+	  desc => 'Is the selection empty?' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  is_empty = gimp_channel_is_empty (gimp_image_get_mask (gimage));
+}
+CODE
     );
 }
 

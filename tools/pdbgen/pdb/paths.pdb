@@ -73,10 +73,9 @@ HELP
 		   2.0 = BEZIER_CONTROL, 3.0 = BEZIER_MOVE). Note all points
 		   are returned in pixel resolution.',
 	  init => 1,
-	  array => { name => 'num_path_point_details',
+	  array => { name => 'num_path_point_details', init => 1,
 		     desc => 'The number of points returned. Each point is
-			      made up of (x, y, pnt_type) of floats.',
-		     alias => 'num_point_details', init => 1 } }
+			      made up of (x, y, pnt_type) of floats.' } }
     );
 
     %invoke = (
@@ -94,14 +93,14 @@ HELP
       points = gimp_vectors_compat_get_points (vectors, &num_points,
                                                &path_closed);
 
-      num_point_details = num_points * 3;
+      num_path_point_details = num_points * 3;
 
       if (points)
         {
           gdouble *curr_point;
           gint     i;
 
-          points_pairs = g_new0 (gdouble, num_point_details);
+          points_pairs = g_new0 (gdouble, num_path_point_details);
 
           for (i = 0, curr_point = points_pairs;
                i < num_points;

@@ -145,11 +145,16 @@ HELP
 
     @outargs = (
         { name => 'foreground', type => 'color',
-          desc => "The foreground color", alias => 'color',
-          void_ret => 1 }
+          desc => 'The foreground color', void_ret => 1 }
     );
 
-    %invoke = ( code => 'gimp_context_get_foreground (context, &color);' );
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_context_get_foreground (context, &foreground);
+}
+CODE
+    );
 }
 
 sub context_set_foreground {
@@ -165,15 +170,14 @@ HELP
 
     @inargs = (
         { name => 'foreground', type => 'color',
-          desc => "The foreground color", alias => 'color',
-          void_ret => 1 }
+          desc => 'The foreground color', void_ret => 1 }
     );
 
     %invoke = (
-	code => <<CODE
+	code => <<'CODE'
 {
-  gimp_rgb_set_alpha (&color, 1.0);
-  gimp_context_set_foreground (context, &color);
+  gimp_rgb_set_alpha (&foreground, 1.0);
+  gimp_context_set_foreground (context, &foreground);
 }
 CODE
     );
@@ -192,11 +196,16 @@ HELP
 
     @outargs = (
         { name => 'background', type => 'color',
-          desc => "The background color", alias => 'color',
-          void_ret => 1 }
+          desc => 'The background color', void_ret => 1 }
     );
 
-    %invoke = ( code => 'gimp_context_get_background (context, &color);' );
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_context_get_background (context, &background);
+}
+CODE
+    );
 }
 
 sub context_set_background {
@@ -212,15 +221,14 @@ HELP
 
     @inargs = (
         { name => 'background', type => 'color',
-          desc => "The background color", alias => 'color',
-          void_ret => 1 }
+          desc => 'The background color', void_ret => 1 }
     );
 
     %invoke = (
-	code => <<CODE
+	code => <<'CODE'
 {
-  gimp_rgb_set_alpha (&color, 1.0);
-  gimp_context_set_background (context, &color);
+  gimp_rgb_set_alpha (&background, 1.0);
+  gimp_context_set_background (context, &background);
 }
 CODE
     );
@@ -238,7 +246,13 @@ HELP
 
     &pdb_misc;
 
-    %invoke = ( code => 'gimp_context_set_default_colors (context);' );
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_context_set_default_colors (context);
+}
+CODE
+    );
 }
 
 sub context_swap_colors {
@@ -251,7 +265,13 @@ HELP
 
     &pdb_misc;
 
-    %invoke = ( code => 'gimp_context_swap_colors (context);' );
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_context_swap_colors (context);
+}
+CODE
+    );
 }
 
 sub context_get_opacity {
@@ -265,10 +285,16 @@ HELP
     &pdb_misc;
 
     @outargs = (
-        { name => 'opacity', type => '0 <= float <= 100',
-          desc => 'The opacity: %%desc%%',
-          alias => 'gimp_context_get_opacity (context) * 100.0',
-          no_declare => 1 }
+        { name => 'opacity', type => '0 <= float <= 100', init => 1,
+          desc => 'The opacity: %%desc%%' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  opacity = gimp_context_get_opacity (context) * 100.0;
+}
+CODE
     );
 }
 
@@ -287,7 +313,13 @@ HELP
           desc => 'The opacity: %%desc%%' }
     );
 
-    %invoke = ( code => 'gimp_context_set_opacity (context, opacity / 100.0);' );
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_context_set_opacity (context, opacity / 100.0);
+}
+CODE
+    );
 }
 
 sub context_get_paint_mode {
@@ -302,10 +334,16 @@ HELP
     &pdb_misc;
 
     @outargs = (
-        { name => 'paint_mode', type => 'enum GimpLayerModeEffects',
-          desc => 'The paint mode: { %%desc%% }',
-          alias => 'gimp_context_get_paint_mode (context)',
-          no_declare => 1 }
+        { name => 'paint_mode', type => 'enum GimpLayerModeEffects', init => 1,
+          desc => 'The paint mode: { %%desc%% }' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  paint_mode = gimp_context_get_paint_mode (context);
+}
+CODE
     );
 }
 
@@ -323,7 +361,13 @@ HELP
           desc => 'The paint mode: { %%desc%% }' }
     );
 
-    %invoke = ( code => 'gimp_context_set_paint_mode (context, paint_mode);' );
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_context_set_paint_mode (context, paint_mode);
+}
+CODE
+    );
 }
 
 sub context_get_brush {

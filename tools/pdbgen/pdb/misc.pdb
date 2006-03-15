@@ -18,9 +18,7 @@
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
 sub version {
-    $blurb = <<'BLURB';
-Returns the host gimp version.
-BLURB
+    $blurb = 'Returns the host gimp version.';
 
     $help = <<'HELP';
 This procedure returns the version number of the currently running gimp.
@@ -29,18 +27,22 @@ HELP
     &yosh_pdb_misc('1999');
 
     @outargs = (
-	{ name => 'version', type => 'string',
-	  desc => 'The gimp version',
-	  alias => 'g_strdup (GIMP_VERSION)', no_declare => 1 }
+	{ name => 'version', type => 'string', init => 1,
+	  desc => 'The gimp version' }
     );
 
-    %invoke = ( headers => [ qw("libgimpbase/gimpbase.h") ] );
+    %invoke = (
+	headers => [ qw("libgimpbase/gimpbase.h") ],
+	code    => <<'CODE'
+{
+  version = g_strdup (GIMP_VERSION);
+}
+CODE
+    );
 }
 
 sub getpid {
-    $blurb = <<'BLURB';
-Returns the PID of the host gimp process.
-BLURB
+    $blurb = 'Returns the PID of the host gimp process.';
 
     $help = <<'HELP';
 This procedure returns the process ID of the currently running gimp.
@@ -49,12 +51,18 @@ HELP
     &mitch_pdb_misc('2005', '2.4');
 
     @outargs = (
-	{ name => 'pid', type => 'int32',
-	  desc => 'The PID',
-	  alias => 'getpid ()', no_declare => 1 }
+	{ name => 'pid', type => 'int32', init => 1,
+	  desc => 'The PID' }
     );
 
-    %invoke = ( headers => [ qw(<sys/types.h> <unistd.h> <process.h>) ] );
+    %invoke = (
+	headers => [ qw(<sys/types.h> <unistd.h> <process.h>) ],
+	code    => <<'CODE'
+{
+  pid = getpid ();
+}
+CODE
+    );
 }
 
 sub quit {
@@ -77,7 +85,11 @@ HELP
 
     %invoke = (
 	headers => [ qw("core/gimp.h") ],
-	code => 'gimp_exit (gimp, force);'
+	code => <<'CODE'
+{
+  gimp_exit (gimp, force);
+}
+CODE
     );
 }
 

@@ -27,29 +27,23 @@ sub plugins_query {
     @inargs = (
 	{ name  => 'search_string', type => 'string',
 	  desc  => 'If not an empty string then use this as a search pattern',
-	  alias => 'search_str', no_success => 1 }
+	  no_success => 1 }
     );
 
     @outargs = (
 	{ name => 'menu_path', type => 'stringarray',
-	  desc => 'The menu path of the plugin',
-	  alias => 'menu_strs' },
+	  desc => 'The menu path of the plugin' },
 	{ name => 'plugin_accelerator', type => 'stringarray',
 	  desc => 'String representing keyboard accelerator (could be empty
-		   string)',
-	  alias => 'accel_strs' },
+		   string)' },
 	{ name => 'plugin_location', type => 'stringarray',
-	  desc => 'Location of the plugin program',
-	  alias => 'prog_strs' },
+	  desc => 'Location of the plugin program' },
 	{ name => 'plugin_image_type', type => 'stringarray',
-	  desc => 'Type of image that this plugin will work on',
-	  alias => 'types_strs' },
+	  desc => 'Type of image that this plugin will work on' },
 	{ name => 'plugin_install_time', type => 'int32array',
-	  desc => 'Time that the plugin was installed',
-	  alias => 'time_ints' },
+	  desc => 'Time that the plugin was installed' },
 	{ name => 'plugin_real_name', type => 'stringarray',
-	  desc => 'The internal name of the plugin',
-	  alias => 'realname_strs' }
+	  desc => 'The internal name of the plugin' }
     );
 
     foreach (@outargs) {
@@ -63,13 +57,13 @@ sub plugins_query {
     %invoke = (
 	code => <<'CODE'
 {
-  num_plugins = plug_ins_query (gimp, search_str,
-                                &menu_strs,
-                                &accel_strs,
-                                &prog_strs,
-                                &types_strs,
-                                &realname_strs,
-                                &time_ints);
+  num_plugins = plug_ins_query (gimp, search_string,
+                                &menu_path,
+                                &plugin_accelerator,
+                                &plugin_location,
+                                &plugin_image_type,
+                                &plugin_real_name,
+                                &plugin_install_time);
 }
 CODE
     );

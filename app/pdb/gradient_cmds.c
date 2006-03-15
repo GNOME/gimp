@@ -604,7 +604,7 @@ gradient_get_custom_samples_invoker (Gimp         *gimp,
   Argument *return_args;
   gchar *name;
   gint32 num_samples;
-  gdouble *pos;
+  gdouble *positions;
   gboolean reverse;
   gint32 num_color_samples = 0;
   gdouble *color_samples = NULL;
@@ -617,7 +617,7 @@ gradient_get_custom_samples_invoker (Gimp         *gimp,
   if (num_samples <= 0)
     success = FALSE;
 
-  pos = (gdouble *) args[2].value.pdb_pointer;
+  positions = (gdouble *) args[2].value.pdb_pointer;
 
   reverse = args[3].value.pdb_int ? TRUE : FALSE;
 
@@ -639,14 +639,15 @@ gradient_get_custom_samples_invoker (Gimp         *gimp,
             {
               GimpRGB color;
 
-              seg = gimp_gradient_get_color_at (gradient, seg, *pos, reverse, &color);
+              seg = gimp_gradient_get_color_at (gradient, seg, *positions,
+                                                reverse, &color);
 
               *sample++ = color.r;
               *sample++ = color.g;
               *sample++ = color.b;
               *sample++ = color.a;
 
-              pos++;
+              positions++;
             }
         }
       else

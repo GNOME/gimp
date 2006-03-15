@@ -98,8 +98,8 @@ gboolean      gimp_drawable_offset             (gint32                      draw
 gboolean      _gimp_drawable_thumbnail         (gint32                      drawable_ID,
 						gint                        width,
 						gint                        height,
-						gint                       *ret_width,
-						gint                       *ret_height,
+						gint                       *actual_width,
+						gint                       *actual_height,
 						gint                       *bpp,
 						gint                       *thumbnail_data_count,
 						guint8                    **thumbnail_data) G_GNUC_INTERNAL;

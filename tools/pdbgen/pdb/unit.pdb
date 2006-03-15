@@ -27,14 +27,13 @@ sub unit_prop_proc {
 
     @inargs = (
 	{ name => 'unit_id', type => 'unit',
-	  desc => "The unit's integer ID",
-	  alias => 'unit', wrap => 1 }
+	  desc => "The unit's integer ID", wrap => 1 }
     );
 
     @outargs = (
 	{ name => $prop, type => $type,
 	  desc => "The unit's $desc",
-	  alias => "_gimp_unit_get_$prop (gimp, unit)",
+	  alias => "_gimp_unit_get_$prop (gimp, unit_id)",
 	  no_declare => 1 }
     );
 
@@ -52,8 +51,15 @@ sub unit_get_number_of_units {
 
     @outargs = (
 	{ name => 'num_units', type => 'int32', libdef => 'GIMP_UNIT_END',
-	  desc => 'The number of units', wrap => 1,
-	  alias => '_gimp_unit_get_number_of_units (gimp)', no_declare => 1 }
+	  desc => 'The number of units', wrap => 1 }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  num_units = _gimp_unit_get_number_of_units (gimp);
+}
+CODE
     );
 }
 
@@ -68,8 +74,15 @@ HELP
 
     @outargs = (
 	{ name => 'num_units', type => 'int32', libdef => 'GIMP_UNIT_END',
-	  desc => 'The number of built-in units', wrap => 1,
-	  alias => '_gimp_unit_get_number_of_units (gimp)', no_declare => 1 }
+	  desc => 'The number of built-in units', wrap => 1 }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  num_units = _gimp_unit_get_number_of_built_in_units (gimp);
+}
+CODE
     );
 }
 
@@ -105,14 +118,14 @@ HELP
     @outargs = (
 	{ name => 'unit_id', type => 'unit', init => 1,
 	  desc => "The new unit's ID",
-	  alias => 'unit', wrap => 1, libdef => 'GIMP_UNIT_INCH' }
+	  wrap => 1, libdef => 'GIMP_UNIT_INCH' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  unit = _gimp_unit_new (gimp, identifier, factor, digits, symbol, abbreviation,
-                         singular, plural);
+  unit_id = _gimp_unit_new (gimp, identifier, factor, digits,
+                            symbol, abbreviation, singular, plural);
 }
 CODE
     );
@@ -140,13 +153,18 @@ HELP
 
     @inargs = (
 	{ name => 'unit_id', type => 'unit',
-	  desc => "The unit's integer ID",
-	  alias => 'unit', wrap => 1 },
+	  desc => "The unit's integer ID", wrap => 1 },
 	{ name => 'deletion_flag', type => 'boolean',
 	  desc => 'The new deletion flag of the unit' }
     );
 
-    %invoke = ( code => '_gimp_unit_set_deletion_flag (gimp, unit, deletion_flag);' );
+    %invoke = (
+	code => <<'CODE'
+{
+  _gimp_unit_set_deletion_flag (gimp, unit_id, deletion_flag);
+}
+CODE
+    );
 }
 
 sub unit_get_identifier {

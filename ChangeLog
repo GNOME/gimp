@@ -1,5 +1,49 @@
 2006-03-15  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb/context.pdb
+	* tools/pdbgen/pdb/convert.pdb
+	* tools/pdbgen/pdb/drawable.pdb
+	* tools/pdbgen/pdb/edit.pdb
+	* tools/pdbgen/pdb/fileops.pdb
+	* tools/pdbgen/pdb/gimprc.pdb
+	* tools/pdbgen/pdb/gradient.pdb
+	* tools/pdbgen/pdb/gradients.pdb
+	* tools/pdbgen/pdb/guides.pdb
+	* tools/pdbgen/pdb/image.pdb
+	* tools/pdbgen/pdb/layer.pdb
+	* tools/pdbgen/pdb/message.pdb
+	* tools/pdbgen/pdb/misc.pdb
+	* tools/pdbgen/pdb/paths.pdb
+	* tools/pdbgen/pdb/plug_in.pdb
+	* tools/pdbgen/pdb/procedural_db.pdb
+	* tools/pdbgen/pdb/selection.pdb
+	* tools/pdbgen/pdb/undo.pdb
+	* tools/pdbgen/pdb/unit.pdb: get rid of much more alias => 'foo'.
+	Even more cleanup.
+
+	* app/pdb/context_cmds.c
+	* app/pdb/convert_cmds.c
+	* app/pdb/drawable_cmds.c
+	* app/pdb/edit_cmds.c
+	* app/pdb/fileops_cmds.c
+	* app/pdb/gradient_cmds.c
+	* app/pdb/gradients_cmds.c
+	* app/pdb/guides_cmds.c
+	* app/pdb/image_cmds.c
+	* app/pdb/layer_cmds.c
+	* app/pdb/message_cmds.c
+	* app/pdb/misc_cmds.c
+	* app/pdb/paths_cmds.c
+	* app/pdb/plug_in_cmds.c
+	* app/pdb/procedural_db_cmds.c
+	* app/pdb/selection_cmds.c
+	* app/pdb/undo_cmds.c
+	* app/pdb/unit_cmds.c
+	* libgimp/gimpdrawable_pdb.[ch]
+	* libgimp/gimpimage_pdb.[ch]: regenerated.
+
+2006-03-15  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/pdb/brush.pdb
 	* tools/pdbgen/pdb/brushes.pdb
 	* tools/pdbgen/pdb/context.pdb

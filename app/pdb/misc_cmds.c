@@ -61,9 +61,12 @@ version_invoker (Gimp         *gimp,
                  Argument     *args)
 {
   Argument *return_args;
+  gchar *version = NULL;
+
+  version = g_strdup (GIMP_VERSION);
 
   return_args = procedural_db_return_args (&version_proc, TRUE);
-  return_args[1].value.pdb_pointer = g_strdup (GIMP_VERSION);
+  return_args[1].value.pdb_pointer = version;
 
   return return_args;
 }
@@ -102,9 +105,12 @@ getpid_invoker (Gimp         *gimp,
                 Argument     *args)
 {
   Argument *return_args;
+  gint32 pid = 0;
+
+  pid = getpid ();
 
   return_args = procedural_db_return_args (&getpid_proc, TRUE);
-  return_args[1].value.pdb_int = getpid ();
+  return_args[1].value.pdb_int = pid;
 
   return return_args;
 }

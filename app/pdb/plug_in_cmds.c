@@ -64,39 +64,39 @@ plugins_query_invoker (Gimp         *gimp,
                        Argument     *args)
 {
   Argument *return_args;
-  gchar *search_str;
+  gchar *search_string;
   gint32 num_plugins = 0;
-  gchar **menu_strs;
-  gchar **accel_strs;
-  gchar **prog_strs;
-  gchar **types_strs;
-  gint32 *time_ints;
-  gchar **realname_strs;
+  gchar **menu_path;
+  gchar **plugin_accelerator;
+  gchar **plugin_location;
+  gchar **plugin_image_type;
+  gint32 *plugin_install_time;
+  gchar **plugin_real_name;
 
-  search_str = (gchar *) args[0].value.pdb_pointer;
+  search_string = (gchar *) args[0].value.pdb_pointer;
 
-  num_plugins = plug_ins_query (gimp, search_str,
-                                &menu_strs,
-                                &accel_strs,
-                                &prog_strs,
-                                &types_strs,
-                                &realname_strs,
-                                &time_ints);
+  num_plugins = plug_ins_query (gimp, search_string,
+                                &menu_path,
+                                &plugin_accelerator,
+                                &plugin_location,
+                                &plugin_image_type,
+                                &plugin_real_name,
+                                &plugin_install_time);
 
   return_args = procedural_db_return_args (&plugins_query_proc, TRUE);
 
   return_args[1].value.pdb_int = num_plugins;
-  return_args[2].value.pdb_pointer = menu_strs;
+  return_args[2].value.pdb_pointer = menu_path;
   return_args[3].value.pdb_int = num_plugins;
-  return_args[4].value.pdb_pointer = accel_strs;
+  return_args[4].value.pdb_pointer = plugin_accelerator;
   return_args[5].value.pdb_int = num_plugins;
-  return_args[6].value.pdb_pointer = prog_strs;
+  return_args[6].value.pdb_pointer = plugin_location;
   return_args[7].value.pdb_int = num_plugins;
-  return_args[8].value.pdb_pointer = types_strs;
+  return_args[8].value.pdb_pointer = plugin_image_type;
   return_args[9].value.pdb_int = num_plugins;
-  return_args[10].value.pdb_pointer = time_ints;
+  return_args[10].value.pdb_pointer = plugin_install_time;
   return_args[11].value.pdb_int = num_plugins;
-  return_args[12].value.pdb_pointer = realname_strs;
+  return_args[12].value.pdb_pointer = plugin_real_name;
 
   return return_args;
 }

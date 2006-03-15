@@ -178,6 +178,7 @@ selection_value_invoker (Gimp         *gimp,
   GimpImage *gimage;
   gint32 x;
   gint32 y;
+  gint32 value = 0;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -187,10 +188,15 @@ selection_value_invoker (Gimp         *gimp,
 
   y = args[2].value.pdb_int;
 
+  if (success)
+    {
+      value = gimp_pickable_get_opacity_at (GIMP_PICKABLE (gimp_image_get_mask (gimage)), x, y);
+    }
+
   return_args = procedural_db_return_args (&selection_value_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_pickable_get_opacity_at (GIMP_PICKABLE (gimp_image_get_mask (gimage)), x, y);
+    return_args[1].value.pdb_int = value;
 
   return return_args;
 }
@@ -250,15 +256,21 @@ selection_is_empty_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpImage *gimage;
+  gboolean is_empty = FALSE;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
+  if (success)
+    {
+      is_empty = gimp_channel_is_empty (gimp_image_get_mask (gimage));
+    }
+
   return_args = procedural_db_return_args (&selection_is_empty_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_channel_is_empty (gimp_image_get_mask (gimage));
+    return_args[1].value.pdb_int = is_empty;
 
   return return_args;
 }

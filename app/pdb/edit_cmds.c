@@ -292,7 +292,7 @@ edit_paste_invoker (Gimp         *gimp,
   Argument *return_args;
   GimpDrawable *drawable;
   gboolean paste_into;
-  GimpLayer *layer = NULL;
+  GimpLayer *floating_sel = NULL;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
@@ -307,10 +307,10 @@ edit_paste_invoker (Gimp         *gimp,
 
       if (success)
         {
-          layer = gimp_edit_paste (gimp_item_get_image (GIMP_ITEM (drawable)),
-                                   drawable, gimp->global_buffer,
-                                   paste_into, -1, -1, -1, -1);
-          if (! layer)
+          floating_sel = gimp_edit_paste (gimp_item_get_image (GIMP_ITEM (drawable)),
+                                          drawable, gimp->global_buffer,
+                                          paste_into, -1, -1, -1, -1);
+          if (! floating_sel)
             success = FALSE;
         }
     }
@@ -318,7 +318,7 @@ edit_paste_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&edit_paste_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (layer));
+    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (floating_sel));
 
   return return_args;
 }
@@ -690,7 +690,7 @@ edit_named_paste_invoker (Gimp         *gimp,
   GimpDrawable *drawable;
   gchar *buffer_name;
   gboolean paste_into;
-  GimpLayer *layer = NULL;
+  GimpLayer *floating_sel = NULL;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
@@ -713,10 +713,10 @@ edit_named_paste_invoker (Gimp         *gimp,
 
       if (success)
         {
-          layer = gimp_edit_paste (gimp_item_get_image (GIMP_ITEM (drawable)),
-                                   drawable, buffer,
-                                   paste_into, -1, -1, -1, -1);
-          if (! layer)
+          floating_sel = gimp_edit_paste (gimp_item_get_image (GIMP_ITEM (drawable)),
+                                          drawable, buffer,
+                                          paste_into, -1, -1, -1, -1);
+          if (! floating_sel)
             success = FALSE;
         }
     }
@@ -724,7 +724,7 @@ edit_named_paste_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&edit_named_paste_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (layer));
+    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (floating_sel));
 
   return return_args;
 }

@@ -34,8 +34,7 @@ HELP
     @inargs = (
 	&std_image_arg,
 	{ name => "${type}position", type => '0 <= int32',
-	  desc => "The guide's ${type}-offset from $pos of image",
-	  alias => 'offset' }
+	  desc => "The guide's ${type}-offset from $pos of image" }
     );
 
     @outargs = (
@@ -47,11 +46,11 @@ HELP
     %invoke = (
 	code => <<CODE
 {
-  if (offset <= gimage->$max)
+  if (${type}position <= gimage->$max)
     {
       GimpGuide *g;
 
-      g = gimp_image_add_${func}guide (gimage, offset, TRUE);
+      g = gimp_image_add_${func}guide (gimage, ${type}position, TRUE);
       guide = g->guide_ID;
     }
   else

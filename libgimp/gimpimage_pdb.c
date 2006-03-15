@@ -1716,10 +1716,10 @@ gimp_image_is_dirty (gint32 image_ID)
 /**
  * _gimp_image_thumbnail:
  * @image_ID: The image.
- * @width: The thumbnail width.
- * @height: The thumbnail height.
- * @ret_width: The previews width.
- * @ret_height: The previews height.
+ * @width: The requested thumbnail width.
+ * @height: The requested thumbnail height.
+ * @actual_width: The previews width.
+ * @actual_height: The previews height.
  * @bpp: The previews bpp.
  * @thumbnail_data_count: The number of bytes in thumbnail data.
  * @thumbnail_data: The thumbnail data.
@@ -1737,8 +1737,8 @@ gboolean
 _gimp_image_thumbnail (gint32   image_ID,
 		       gint     width,
 		       gint     height,
-		       gint    *ret_width,
-		       gint    *ret_height,
+		       gint    *actual_width,
+		       gint    *actual_height,
 		       gint    *bpp,
 		       gint    *thumbnail_data_count,
 		       guint8 **thumbnail_data)
@@ -1754,8 +1754,8 @@ _gimp_image_thumbnail (gint32   image_ID,
 				    GIMP_PDB_INT32, height,
 				    GIMP_PDB_END);
 
-  *ret_width = 0;
-  *ret_height = 0;
+  *actual_width = 0;
+  *actual_height = 0;
   *bpp = 0;
   *thumbnail_data_count = 0;
   *thumbnail_data = NULL;
@@ -1764,8 +1764,8 @@ _gimp_image_thumbnail (gint32   image_ID,
 
   if (success)
     {
-      *ret_width = return_vals[1].data.d_int32;
-      *ret_height = return_vals[2].data.d_int32;
+      *actual_width = return_vals[1].data.d_int32;
+      *actual_height = return_vals[2].data.d_int32;
       *bpp = return_vals[3].data.d_int32;
       *thumbnail_data_count = return_vals[4].data.d_int32;
       *thumbnail_data = g_new (guint8, *thumbnail_data_count);

@@ -67,7 +67,7 @@ sub gradients_sample_uniform {
 
     @inargs = (
 	{ name => 'num_samples', type => '2 <= int32',
-	  desc => 'The number of samples to take', alias => 'i' },
+	  desc => 'The number of samples to take' },
 	{ name => 'reverse', type => 'boolean',
 	  desc => 'Use the reverse gradient (%%desc%%)' }
     );
@@ -90,15 +90,15 @@ sub gradients_sample_uniform {
   gdouble             *pv;
 
   pos   = 0.0;
-  delta = 1.0 / (i - 1);
+  delta = 1.0 / (num_samples - 1);
 
-  array_length = i * 4;
+  array_length = num_samples * 4;
 
   pv = color_samples = g_new (gdouble, array_length);
 
   gradient = gimp_context_get_gradient (context);
 
-  while (i--)
+  while (num_samples--)
     {
       seg = gimp_gradient_get_color_at (gradient, seg, pos, reverse, &color);
 
@@ -118,12 +118,10 @@ sub gradients_sample_custom {
     &std_pdb_deprecated ('gimp-gradient-get-custom-samples');
 
     @inargs = (
-	{ name  => 'positions',
-	  type  => 'floatarray',
+	{ name  => 'positions', type  => 'floatarray',
 	  desc  => 'The list of positions to sample along the gradient',
-	  alias => 'pos',
 	  array => { name => 'num_samples', type => 'int32',
-		     desc => 'The number of samples to take', alias => 'i' } },
+		     desc => 'The number of samples to take' } },
 	{ name => 'reverse', type => 'boolean',
 	  desc => 'Use the reverse gradient (%%desc%%)' }
     );
@@ -144,22 +142,23 @@ sub gradients_sample_custom {
   GimpRGB              color;
   gdouble             *pv;
 
-  array_length = i * 4;
+  array_length = num_samples * 4;
 
   pv = color_samples = g_new (gdouble, array_length);
 
   gradient = gimp_context_get_gradient (context);
 
-  while (i--)
+  while (num_samples--)
     {
-      seg = gimp_gradient_get_color_at (gradient, seg, *pos, reverse, &color);
+      seg = gimp_gradient_get_color_at (gradient, seg, *positions,
+                                        reverse, &color);
 
       *pv++ = color.r;
       *pv++ = color.g;
       *pv++ = color.b;
       *pv++ = color.a;
 
-      pos++;
+      positions++;
     }
 }
 CODE
@@ -185,7 +184,7 @@ sub gradients_get_gradient_data {
     @outargs = (
 	{ name => 'actual_name', type => 'string', init => 1,
 	  desc => 'The gradient name' },
-	{ name => 'grad_data', type => 'floatarray', alias => 'values',
+	{ name => 'grad_data', type => 'floatarray',
 	  desc => 'The gradient sample data', init => 1,
 	  array => { name => 'width', init => 1,
 		     desc => 'The gradient sample width (r,g,b,a)' } }
@@ -218,10 +217,10 @@ sub gradients_get_gradient_data {
       delta = 1.0 / (sample_size - 1);
 
       actual_name = g_strdup (GIMP_OBJECT (gradient)->name);
-      values      = g_new (gdouble, sample_size * 4);
+      grad_data   = g_new (gdouble, sample_size * 4);
       width       = sample_size * 4;
 
-      pv = values;
+      pv = grad_data;
 
       while (sample_size)
 	{
