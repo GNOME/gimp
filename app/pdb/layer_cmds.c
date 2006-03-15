@@ -28,7 +28,6 @@
 
 #include "config/gimpcoreconfig.h"
 #include "core/gimp.h"
-#include "core/gimpchannel.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage.h"
@@ -36,7 +35,6 @@
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 #include "gimp-intl.h"
-#include "pdb_glue.h"
 
 static ProcRecord layer_new_proc;
 static ProcRecord layer_new_from_drawable_proc;
@@ -398,7 +396,9 @@ layer_add_alpha_invoker (Gimp         *gimp,
     success = FALSE;
 
   if (success)
-    gimp_layer_add_alpha (layer);
+    {
+      gimp_layer_add_alpha (layer);
+    }
 
   return procedural_db_return_args (&layer_add_alpha_proc, success);
 }
@@ -461,7 +461,9 @@ layer_scale_invoker (Gimp         *gimp,
       success = gimp_item_is_attached (GIMP_ITEM (layer));
 
       if (success)
-        gimp_item_scale_by_origin (GIMP_ITEM (layer), new_width, new_height, gimp->config->interpolation_type, NULL, local_origin);
+        gimp_item_scale_by_origin (GIMP_ITEM (layer), new_width, new_height,
+                                   gimp->config->interpolation_type, NULL,
+                                   local_origin);
     }
 
   return procedural_db_return_args (&layer_scale_proc, success);
@@ -496,7 +498,7 @@ static ProcRecord layer_scale_proc =
   "gimp-layer-scale",
   "gimp-layer-scale",
   "Scale the layer to the specified extents.",
-  "This procedure scales the layer so that it's new width and height are equal to the supplied parameters. The \"local_origin\" parameter specifies whether to scale from the center of the layer, or from the image origin. This operation only works if the layer has been added to an image.",
+  "This procedure scales the layer so that its new width and height are equal to the supplied parameters. The \"local_origin\" parameter specifies whether to scale from the center of the layer, or from the image origin. This operation only works if the layer has been added to an image.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -543,7 +545,8 @@ layer_resize_invoker (Gimp         *gimp,
       success = gimp_item_is_attached (GIMP_ITEM (layer));
 
       if (success)
-        gimp_item_resize (GIMP_ITEM (layer), context, new_width, new_height, offx, offy);
+        gimp_item_resize (GIMP_ITEM (layer), context,
+                          new_width, new_height, offx, offy);
     }
 
   return procedural_db_return_args (&layer_resize_proc, success);
@@ -583,7 +586,7 @@ static ProcRecord layer_resize_proc =
   "gimp-layer-resize",
   "gimp-layer-resize",
   "Resize the layer to the specified extents.",
-  "This procedure resizes the layer so that it's new width and height are equal to the supplied parameters. Offsets are also provided which describe the position of the previous layer's content. This operation only works if the layer has been added to an image.",
+  "This procedure resizes the layer so that its new width and height are equal to the supplied parameters. Offsets are also provided which describe the position of the previous layer's content. This operation only works if the layer has been added to an image.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -876,7 +879,7 @@ layer_get_mask_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpLayer *layer;
-  GimpChannel *mask = NULL;
+  GimpLayerMask *mask = NULL;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
@@ -1190,15 +1193,21 @@ layer_get_lock_alpha_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpLayer *layer;
+  gboolean lock_alpha = FALSE;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
     success = FALSE;
 
+  if (success)
+    {
+      lock_alpha = gimp_layer_get_lock_alpha (layer);
+    }
+
   return_args = procedural_db_return_args (&layer_get_lock_alpha_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_layer_get_lock_alpha (layer);
+    return_args[1].value.pdb_int = lock_alpha;
 
   return return_args;
 }
@@ -1256,7 +1265,9 @@ layer_set_lock_alpha_invoker (Gimp         *gimp,
   lock_alpha = args[1].value.pdb_int ? TRUE : FALSE;
 
   if (success)
-    gimp_layer_set_lock_alpha (layer, lock_alpha, TRUE);
+    {
+      gimp_layer_set_lock_alpha (layer, lock_alpha, TRUE);
+    }
 
   return procedural_db_return_args (&layer_set_lock_alpha_proc, success);
 }
@@ -1302,15 +1313,24 @@ layer_get_apply_mask_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpLayer *layer;
+  gboolean apply_mask = FALSE;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
     success = FALSE;
 
+  if (success)
+    {
+      if (layer->mask)
+        apply_mask = gimp_layer_mask_get_apply (layer->mask);
+      else
+        apply_mask = FALSE;
+    }
+
   return_args = procedural_db_return_args (&layer_get_apply_mask_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_layer_get_apply_mask (layer);
+    return_args[1].value.pdb_int = apply_mask;
 
   return return_args;
 }
@@ -1329,7 +1349,7 @@ static ProcArg layer_get_apply_mask_outargs[] =
   {
     GIMP_PDB_INT32,
     "apply-mask",
-    "The layer apply mask"
+    "The layer's apply mask setting"
   }
 };
 
@@ -1337,8 +1357,8 @@ static ProcRecord layer_get_apply_mask_proc =
 {
   "gimp-layer-get-apply-mask",
   "gimp-layer-get-apply-mask",
-  "Get the apply mask of the specified layer.",
-  "This procedure returns the specified layer's apply mask. If the value is non-zero, then the layer mask for this layer is currently being composited with the layer's alpha channel.",
+  "Get the apply mask setting of the specified layer.",
+  "This procedure returns the specified layer's apply mask setting. If the value is non-zero, then the layer mask for this layer is currently being composited with the layer's alpha channel.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -1368,7 +1388,12 @@ layer_set_apply_mask_invoker (Gimp         *gimp,
   apply_mask = args[1].value.pdb_int ? TRUE : FALSE;
 
   if (success)
-    gimp_layer_set_apply_mask (layer, apply_mask);
+    {
+      if (layer->mask)
+        gimp_layer_mask_set_apply (layer->mask, apply_mask, TRUE);
+      else
+        success = FALSE;
+    }
 
   return procedural_db_return_args (&layer_set_apply_mask_proc, success);
 }
@@ -1383,7 +1408,7 @@ static ProcArg layer_set_apply_mask_inargs[] =
   {
     GIMP_PDB_INT32,
     "apply-mask",
-    "The new layer apply mask"
+    "The new layer's apply mask setting"
   }
 };
 
@@ -1391,8 +1416,8 @@ static ProcRecord layer_set_apply_mask_proc =
 {
   "gimp-layer-set-apply-mask",
   "gimp-layer-set-apply-mask",
-  "Set the apply mask of the specified layer.",
-  "This procedure sets the specified layer's apply mask. This controls whether the layer's mask is currently affecting the alpha channel. If there is no layer mask, this function will return an error.",
+  "Set the apply mask setting of the specified layer.",
+  "This procedure sets the specified layer's apply mask setting. This controls whether the layer's mask is currently affecting the alpha channel. If there is no layer mask, this function will return an error.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -1414,15 +1439,24 @@ layer_get_show_mask_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpLayer *layer;
+  gboolean show_mask = FALSE;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
     success = FALSE;
 
+  if (success)
+    {
+      if (layer->mask)
+        show_mask = gimp_layer_mask_get_show (layer->mask);
+      else
+        show_mask = FALSE;
+    }
+
   return_args = procedural_db_return_args (&layer_get_show_mask_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_layer_get_show_mask (layer);
+    return_args[1].value.pdb_int = show_mask;
 
   return return_args;
 }
@@ -1441,7 +1475,7 @@ static ProcArg layer_get_show_mask_outargs[] =
   {
     GIMP_PDB_INT32,
     "show-mask",
-    "The layer show mask"
+    "The layer's show mask setting"
   }
 };
 
@@ -1449,8 +1483,8 @@ static ProcRecord layer_get_show_mask_proc =
 {
   "gimp-layer-get-show-mask",
   "gimp-layer-get-show-mask",
-  "Get the show mask of the specified layer.",
-  "This procedure returns the specified layer's show mask. If the value is non-zero, then the layer mask for this layer is currently being shown instead of the layer.",
+  "Get the show mask setting of the specified layer.",
+  "This procedure returns the specified layer's show mask setting. This controls whether the layer or its mask is visible. Non-zero values indicate that the mask should be visible. If the layer has no mask, then this function returns an error.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -1480,7 +1514,12 @@ layer_set_show_mask_invoker (Gimp         *gimp,
   show_mask = args[1].value.pdb_int ? TRUE : FALSE;
 
   if (success)
-    gimp_layer_set_show_mask (layer, show_mask);
+    {
+      if (layer->mask)
+        gimp_layer_mask_set_show (layer->mask, show_mask, TRUE);
+      else
+        success = FALSE;
+    }
 
   return procedural_db_return_args (&layer_set_show_mask_proc, success);
 }
@@ -1495,7 +1534,7 @@ static ProcArg layer_set_show_mask_inargs[] =
   {
     GIMP_PDB_INT32,
     "show-mask",
-    "The new layer show mask"
+    "The new layer's show mask setting"
   }
 };
 
@@ -1503,8 +1542,8 @@ static ProcRecord layer_set_show_mask_proc =
 {
   "gimp-layer-set-show-mask",
   "gimp-layer-set-show-mask",
-  "Set the show mask of the specified layer.",
-  "This procedure sets the specified layer's show mask. This controls whether the layer or it's mask is visible. Non-zero values indicate that the mask should be visible. If the layer has no mask, then this function returns an error.",
+  "Set the show mask setting of the specified layer.",
+  "This procedure sets the specified layer's show mask setting. This controls whether the layer's mask is currently affecting the alpha channel. If there is no layer mask, this function will return an error.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -1526,15 +1565,24 @@ layer_get_edit_mask_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpLayer *layer;
+  gboolean edit_mask = FALSE;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
     success = FALSE;
 
+  if (success)
+    {
+      if (layer->mask)
+        edit_mask = gimp_layer_mask_get_edit (layer->mask);
+      else
+        edit_mask = FALSE;
+    }
+
   return_args = procedural_db_return_args (&layer_get_edit_mask_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_layer_get_edit_mask (layer);
+    return_args[1].value.pdb_int = edit_mask;
 
   return return_args;
 }
@@ -1553,7 +1601,7 @@ static ProcArg layer_get_edit_mask_outargs[] =
   {
     GIMP_PDB_INT32,
     "edit-mask",
-    "The layer edit mask"
+    "The layer's edit mask setting"
   }
 };
 
@@ -1561,8 +1609,8 @@ static ProcRecord layer_get_edit_mask_proc =
 {
   "gimp-layer-get-edit-mask",
   "gimp-layer-get-edit-mask",
-  "Get the edit mask of the specified layer.",
-  "This procedure returns the specified layer's edit mask. If the value is non-zero, then the layer mask for this layer is currently active, and not the layer.",
+  "Get the edit mask setting of the specified layer.",
+  "This procedure returns the specified layer's edit mask setting. If the value is non-zero, then the layer mask for this layer is currently active, and not the layer.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -1592,7 +1640,12 @@ layer_set_edit_mask_invoker (Gimp         *gimp,
   edit_mask = args[1].value.pdb_int ? TRUE : FALSE;
 
   if (success)
-    gimp_layer_set_edit_mask (layer, edit_mask);
+    {
+      if (layer->mask)
+        gimp_layer_mask_set_edit (layer->mask, edit_mask);
+      else
+        success = FALSE;
+    }
 
   return procedural_db_return_args (&layer_set_edit_mask_proc, success);
 }
@@ -1607,7 +1660,7 @@ static ProcArg layer_set_edit_mask_inargs[] =
   {
     GIMP_PDB_INT32,
     "edit-mask",
-    "The new layer edit mask"
+    "The new layer's edit mask setting"
   }
 };
 
@@ -1615,8 +1668,8 @@ static ProcRecord layer_set_edit_mask_proc =
 {
   "gimp-layer-set-edit-mask",
   "gimp-layer-set-edit-mask",
-  "Set the edit mask of the specified layer.",
-  "This procedure sets the specified layer's edit mask. This controls whether the layer or it's mask is currently active for editing. If the specified layer has no layer mask, then this procedure will return an error.",
+  "Set the edit mask setting of the specified layer.",
+  "This procedure sets the specified layer's edit mask setting. This controls whether the layer or it's mask is currently active for editing. If the specified layer has no layer mask, then this procedure will return an error.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -1638,15 +1691,21 @@ layer_get_opacity_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpLayer *layer;
+  gdouble opacity = 0.0;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
     success = FALSE;
 
+  if (success)
+    {
+      opacity = gimp_layer_get_opacity (layer) * 100.0;
+    }
+
   return_args = procedural_db_return_args (&layer_get_opacity_proc, success);
 
   if (success)
-    return_args[1].value.pdb_float = gimp_layer_get_opacity (layer) * 100.0;
+    return_args[1].value.pdb_float = opacity;
 
   return return_args;
 }
@@ -1706,7 +1765,9 @@ layer_set_opacity_invoker (Gimp         *gimp,
     success = FALSE;
 
   if (success)
-    gimp_layer_set_opacity (layer, opacity / 100.0, TRUE);
+    {
+      gimp_layer_set_opacity (layer, opacity / 100.0, TRUE);
+    }
 
   return procedural_db_return_args (&layer_set_opacity_proc, success);
 }
@@ -1752,15 +1813,21 @@ layer_get_mode_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpLayer *layer;
+  gint32 mode = 0;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
     success = FALSE;
 
+  if (success)
+    {
+      mode = gimp_layer_get_mode (layer);
+    }
+
   return_args = procedural_db_return_args (&layer_get_mode_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_layer_get_mode (layer);
+    return_args[1].value.pdb_int = mode;
 
   return return_args;
 }
@@ -1820,7 +1887,9 @@ layer_set_mode_invoker (Gimp         *gimp,
     success = FALSE;
 
   if (success)
-    gimp_layer_set_mode (layer, mode, TRUE);
+    {
+      gimp_layer_set_mode (layer, mode, TRUE);
+    }
 
   return procedural_db_return_args (&layer_set_mode_proc, success);
 }
@@ -1835,7 +1904,7 @@ static ProcArg layer_set_mode_inargs[] =
   {
     GIMP_PDB_INT32,
     "mode",
-    "The new layer combination mode"
+    "The new layer combination mode (GIMP_NORMAL_MODE (0), GIMP_DISSOLVE_MODE (1), GIMP_BEHIND_MODE (2), GIMP_MULTIPLY_MODE (3), GIMP_SCREEN_MODE (4), GIMP_OVERLAY_MODE (5), GIMP_DIFFERENCE_MODE (6), GIMP_ADDITION_MODE (7), GIMP_SUBTRACT_MODE (8), GIMP_DARKEN_ONLY_MODE (9), GIMP_LIGHTEN_ONLY_MODE (10), GIMP_HUE_MODE (11), GIMP_SATURATION_MODE (12), GIMP_COLOR_MODE (13), GIMP_VALUE_MODE (14), GIMP_DIVIDE_MODE (15), GIMP_DODGE_MODE (16), GIMP_BURN_MODE (17), GIMP_HARDLIGHT_MODE (18), GIMP_SOFTLIGHT_MODE (19), GIMP_GRAIN_EXTRACT_MODE (20), GIMP_GRAIN_MERGE_MODE (21), GIMP_COLOR_ERASE_MODE (22))"
   }
 };
 

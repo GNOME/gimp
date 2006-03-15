@@ -1,9 +1,24 @@
 2006-03-15  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb/channel.pdb
+	* tools/pdbgen/pdb/layer.pdb: removed dim(), accessors(),
+	get_prop() and set_prop() utility functions and expand everything
+	to pdbgen boilerplate code. Use the real layer mask API instead of
+	the crap from pdb_glue.h. Fixed some API docs.
+
+	* app/pdb/channel_cmds.c
+	* app/pdb/layer_cmds.c
+	* libgimp/gimplayer_pdb.c: regenerated.
+
+	* app/pdb/Makefile.am
+	* app/pdb/pdb_glue.h: bye bye uglyness.
+
+2006-03-15  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/pdb.pl: define init values for all pdb types.
 
 	* tools/pdbgen/app.pl: unconditionally initialize all return
-	values, and no parameter.
+	values, and don't initialize any parameter.
 
 	* tools/pdbgen/pdb/*.pdb: removed init => 1 from all arguments
 	and return values.

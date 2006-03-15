@@ -4,7 +4,6 @@ noinst_LIBRARIES = libapppdb.a
 
 libapppdb_a_SOURCES = \
 	pdb-types.h			\
-	pdb_glue.h			\
 	procedural_db.c			\
 	procedural_db.h			\
 	procedural-db-query.c		\

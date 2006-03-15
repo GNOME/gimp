@@ -196,8 +196,8 @@ gimp_layer_add_alpha (gint32 layer_ID)
  *
  * Scale the layer to the specified extents.
  *
- * This procedure scales the layer so that it's new width and height
- * are equal to the supplied parameters. The \"local_origin\" parameter
+ * This procedure scales the layer so that its new width and height are
+ * equal to the supplied parameters. The \"local_origin\" parameter
  * specifies whether to scale from the center of the layer, or from the
  * image origin. This operation only works if the layer has been added
  * to an image.
@@ -239,7 +239,7 @@ gimp_layer_scale (gint32   layer_ID,
  *
  * Resize the layer to the specified extents.
  *
- * This procedure resizes the layer so that it's new width and height
+ * This procedure resizes the layer so that its new width and height
  * are equal to the supplied parameters. Offsets are also provided
  * which describe the position of the previous layer's content. This
  * operation only works if the layer has been added to an image.
@@ -446,7 +446,7 @@ gimp_layer_get_mask (gint32 layer_ID)
 				    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    mask_ID = return_vals[1].data.d_channel;
+    mask_ID = return_vals[1].data.d_layer_mask;
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
@@ -656,13 +656,13 @@ gimp_layer_set_lock_alpha (gint32   layer_ID,
  * gimp_layer_get_apply_mask:
  * @layer_ID: The layer.
  *
- * Get the apply mask of the specified layer.
+ * Get the apply mask setting of the specified layer.
  *
- * This procedure returns the specified layer's apply mask. If the
- * value is non-zero, then the layer mask for this layer is currently
- * being composited with the layer's alpha channel.
+ * This procedure returns the specified layer's apply mask setting. If
+ * the value is non-zero, then the layer mask for this layer is
+ * currently being composited with the layer's alpha channel.
  *
- * Returns: The layer apply mask.
+ * Returns: The layer's apply mask setting.
  */
 gboolean
 gimp_layer_get_apply_mask (gint32 layer_ID)
@@ -687,13 +687,14 @@ gimp_layer_get_apply_mask (gint32 layer_ID)
 /**
  * gimp_layer_set_apply_mask:
  * @layer_ID: The layer.
- * @apply_mask: The new layer apply mask.
+ * @apply_mask: The new layer's apply mask setting.
  *
- * Set the apply mask of the specified layer.
+ * Set the apply mask setting of the specified layer.
  *
- * This procedure sets the specified layer's apply mask. This controls
- * whether the layer's mask is currently affecting the alpha channel.
- * If there is no layer mask, this function will return an error.
+ * This procedure sets the specified layer's apply mask setting. This
+ * controls whether the layer's mask is currently affecting the alpha
+ * channel. If there is no layer mask, this function will return an
+ * error.
  *
  * Returns: TRUE on success.
  */
@@ -722,13 +723,14 @@ gimp_layer_set_apply_mask (gint32   layer_ID,
  * gimp_layer_get_show_mask:
  * @layer_ID: The layer.
  *
- * Get the show mask of the specified layer.
+ * Get the show mask setting of the specified layer.
  *
- * This procedure returns the specified layer's show mask. If the value
- * is non-zero, then the layer mask for this layer is currently being
- * shown instead of the layer.
+ * This procedure returns the specified layer's show mask setting. This
+ * controls whether the layer or its mask is visible. Non-zero values
+ * indicate that the mask should be visible. If the layer has no mask,
+ * then this function returns an error.
  *
- * Returns: The layer show mask.
+ * Returns: The layer's show mask setting.
  */
 gboolean
 gimp_layer_get_show_mask (gint32 layer_ID)
@@ -753,14 +755,14 @@ gimp_layer_get_show_mask (gint32 layer_ID)
 /**
  * gimp_layer_set_show_mask:
  * @layer_ID: The layer.
- * @show_mask: The new layer show mask.
+ * @show_mask: The new layer's show mask setting.
  *
- * Set the show mask of the specified layer.
+ * Set the show mask setting of the specified layer.
  *
- * This procedure sets the specified layer's show mask. This controls
- * whether the layer or it's mask is visible. Non-zero values indicate
- * that the mask should be visible. If the layer has no mask, then this
- * function returns an error.
+ * This procedure sets the specified layer's show mask setting. This
+ * controls whether the layer's mask is currently affecting the alpha
+ * channel. If there is no layer mask, this function will return an
+ * error.
  *
  * Returns: TRUE on success.
  */
@@ -789,13 +791,13 @@ gimp_layer_set_show_mask (gint32   layer_ID,
  * gimp_layer_get_edit_mask:
  * @layer_ID: The layer.
  *
- * Get the edit mask of the specified layer.
+ * Get the edit mask setting of the specified layer.
  *
- * This procedure returns the specified layer's edit mask. If the value
- * is non-zero, then the layer mask for this layer is currently active,
- * and not the layer.
+ * This procedure returns the specified layer's edit mask setting. If
+ * the value is non-zero, then the layer mask for this layer is
+ * currently active, and not the layer.
  *
- * Returns: The layer edit mask.
+ * Returns: The layer's edit mask setting.
  */
 gboolean
 gimp_layer_get_edit_mask (gint32 layer_ID)
@@ -820,14 +822,14 @@ gimp_layer_get_edit_mask (gint32 layer_ID)
 /**
  * gimp_layer_set_edit_mask:
  * @layer_ID: The layer.
- * @edit_mask: The new layer edit mask.
+ * @edit_mask: The new layer's edit mask setting.
  *
- * Set the edit mask of the specified layer.
+ * Set the edit mask setting of the specified layer.
  *
- * This procedure sets the specified layer's edit mask. This controls
- * whether the layer or it's mask is currently active for editing. If
- * the specified layer has no layer mask, then this procedure will
- * return an error.
+ * This procedure sets the specified layer's edit mask setting. This
+ * controls whether the layer or it's mask is currently active for
+ * editing. If the specified layer has no layer mask, then this
+ * procedure will return an error.
  *
  * Returns: TRUE on success.
  */

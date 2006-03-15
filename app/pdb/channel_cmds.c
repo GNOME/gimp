@@ -424,15 +424,21 @@ channel_get_show_masked_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpChannel *channel;
+  gboolean show_masked = FALSE;
 
   channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_CHANNEL (channel) && ! gimp_item_is_removed (GIMP_ITEM (channel))))
     success = FALSE;
 
+  if (success)
+    {
+      show_masked = gimp_channel_get_show_masked (channel);
+    }
+
   return_args = procedural_db_return_args (&channel_get_show_masked_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_channel_get_show_masked (channel);
+    return_args[1].value.pdb_int = show_masked;
 
   return return_args;
 }
@@ -490,7 +496,9 @@ channel_set_show_masked_invoker (Gimp         *gimp,
   show_masked = args[1].value.pdb_int ? TRUE : FALSE;
 
   if (success)
-    gimp_channel_set_show_masked (channel, show_masked);
+    {
+      gimp_channel_set_show_masked (channel, show_masked);
+    }
 
   return procedural_db_return_args (&channel_set_show_masked_proc, success);
 }
@@ -536,15 +544,21 @@ channel_get_opacity_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpChannel *channel;
+  gdouble opacity = 0.0;
 
   channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_CHANNEL (channel) && ! gimp_item_is_removed (GIMP_ITEM (channel))))
     success = FALSE;
 
+  if (success)
+    {
+      opacity = gimp_channel_get_opacity (channel) * 100;
+    }
+
   return_args = procedural_db_return_args (&channel_get_opacity_proc, success);
 
   if (success)
-    return_args[1].value.pdb_float = gimp_channel_get_opacity (channel) * 100.0;
+    return_args[1].value.pdb_float = opacity;
 
   return return_args;
 }
@@ -604,7 +618,9 @@ channel_set_opacity_invoker (Gimp         *gimp,
     success = FALSE;
 
   if (success)
-    gimp_channel_set_opacity (channel, opacity / 100.0, TRUE);
+    {
+      gimp_channel_set_opacity (channel, opacity / 100.0, TRUE);
+    }
 
   return procedural_db_return_args (&channel_set_opacity_proc, success);
 }
@@ -657,7 +673,9 @@ channel_get_color_invoker (Gimp         *gimp,
     success = FALSE;
 
   if (success)
-    gimp_channel_get_color (channel, &color);
+    {
+      gimp_channel_get_color (channel, &color);
+    }
 
   return_args = procedural_db_return_args (&channel_get_color_proc, success);
 
