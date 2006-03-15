@@ -62,7 +62,7 @@ buffers_get_list_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   gchar *filter;
-  gint32 num_buffers;
+  gint32 num_buffers = 0;
   gchar **buffer_list = NULL;
 
   filter = (gchar *) args[0].value.pdb_pointer;

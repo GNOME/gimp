@@ -873,8 +873,8 @@ drawable_offsets_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpDrawable *drawable;
-  gint32 offset_x;
-  gint32 offset_y;
+  gint32 offset_x = 0;
+  gint32 offset_y = 0;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
@@ -1517,10 +1517,10 @@ drawable_mask_bounds_invoker (Gimp         *gimp,
   Argument *return_args;
   GimpDrawable *drawable;
   gboolean non_empty = FALSE;
-  gint32 x1;
-  gint32 y1;
-  gint32 x2;
-  gint32 y2;
+  gint32 x1 = 0;
+  gint32 y1 = 0;
+  gint32 x2 = 0;
+  gint32 y2 = 0;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
@@ -1609,10 +1609,10 @@ drawable_mask_intersect_invoker (Gimp         *gimp,
   Argument *return_args;
   GimpDrawable *drawable;
   gboolean non_empty = FALSE;
-  gint32 x;
-  gint32 y;
-  gint32 width;
-  gint32 height;
+  gint32 x = 0;
+  gint32 y = 0;
+  gint32 width = 0;
+  gint32 height = 0;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))

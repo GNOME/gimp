@@ -753,17 +753,17 @@ HELP
     );
 
     @outargs = (
-	{ name => 'mean', type => 'float', void_ret => 1, init => 1,
+	{ name => 'mean', type => 'float', void_ret => 1,
 	  desc => 'Mean intensity value' },
-	{ name => 'std_dev',  type => 'float', init => 1,
+	{ name => 'std_dev',  type => 'float',
 	  desc => 'Standard deviation of intensity values' },
-	{ name => 'median',  type => 'float', init => 1,
+	{ name => 'median',  type => 'float',
 	  desc => 'Median intensity value' },
-	{ name => 'pixels',  type => 'float', init => 1,
+	{ name => 'pixels',  type => 'float',
 	  desc => 'Alpha-weighted pixel count for entire image' },
-	{ name => 'count',  type => 'float', init => 1,
+	{ name => 'count',  type => 'float',
 	  desc => 'Alpha-weighted pixel count for range' },
-	{ name => 'percentile',  type => 'float', init => 1,
+	{ name => 'percentile',  type => 'float',
 	  desc => 'Percentile that range falls under' }
     );
 

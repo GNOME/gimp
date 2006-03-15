@@ -61,8 +61,7 @@ HELP
 
     @outargs = (
 	{ name => 'parasite', type => 'parasite',
-	  desc => 'The found parasite',
-	  init => 1 }
+	  desc => 'The found parasite' }
     );
 
     %invoke = (
@@ -144,7 +143,7 @@ foreach $type (@types) {
 	}
 	elsif (/list/) {
 	    $pre = "\@inargs = ( $type->[1] );";
-    	    $post = "\@inargs = ( $type->[1] ); \$outargs[0]->{init} = 1;";
+    	    $post = "\@inargs = ( $type->[1] );";
 	}
 
 	eval <<SUB;

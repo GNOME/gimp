@@ -27,7 +27,7 @@ HELP
     &yosh_pdb_misc('1999');
 
     @outargs = (
-	{ name => 'version', type => 'string', init => 1,
+	{ name => 'version', type => 'string',
 	  desc => 'The gimp version' }
     );
 
@@ -51,7 +51,7 @@ HELP
     &mitch_pdb_misc('2005', '2.4');
 
     @outargs = (
-	{ name => 'pid', type => 'int32', init => 1,
+	{ name => 'pid', type => 'int32',
 	  desc => 'The PID' }
     );
 

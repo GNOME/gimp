@@ -116,7 +116,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'unit_id', type => 'unit', init => 1,
+	{ name => 'unit_id', type => 'unit',
 	  desc => "The new unit's ID",
 	  wrap => 1, libdef => 'GIMP_UNIT_INCH' }
     );

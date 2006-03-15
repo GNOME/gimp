@@ -87,7 +87,7 @@ palettes_get_list_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   gchar *filter;
-  gint32 num_palettes;
+  gint32 num_palettes = 0;
   gchar **palette_list = NULL;
 
   filter = (gchar *) args[0].value.pdb_pointer;
@@ -225,7 +225,7 @@ palettes_get_palette_entry_invoker (Gimp         *gimp,
   gint32 entry_num;
   gchar *actual_name = NULL;
   gint32 num_colors = 0;
-  GimpRGB color;
+  GimpRGB color = { 0.0, 0.0, 0.0, 1.0 };
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name && !g_utf8_validate (name, -1, NULL))

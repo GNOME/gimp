@@ -112,8 +112,8 @@ HELP
 
     @outargs = (
         { name => 'color', type => 'color',
-          desc => "The return color", void_ret => 1, init => 1 },
-        { name => "opacity", type => 'float', init => 1,
+          desc => "The return color", void_ret => 1 },
+        { name => "opacity", type => 'float',
           desc => "The opacity of the endpoint" }
     );
 
@@ -153,7 +153,7 @@ HELP
 
     @outargs = (
         { name => 'pos', type => 'float',
-          desc => "The return position", void_ret => 1, init => 1 }
+          desc => "The return position", void_ret => 1 }
     );
 
     %invoke = (
@@ -205,7 +205,7 @@ HELP
 
     @outargs = (
         { name => 'final_pos', type => 'float',
-          desc => "The return position", void_ret => 1, init => 1 }
+          desc => "The return position", void_ret => 1 }
     );
 
     %invoke = (
@@ -231,7 +231,7 @@ sub gradient_new {
     );
 
     @outargs = (
-	{ name => 'actual_name', type => 'string', init => 1,
+	{ name => 'actual_name', type => 'string',
 	  desc => 'The actual new gradient name' }
     );
 
@@ -266,7 +266,7 @@ sub gradient_duplicate {
     );
 
     @outargs = (
-	{ name => 'copy_name', type => 'string', init => 1,
+	{ name => 'copy_name', type => 'string',
 	  desc => "The name of the gradient's copy" }
     );
 
@@ -306,7 +306,7 @@ sub gradient_is_editable {
     );
 
     @outargs = (
-	{ name => 'editable', type => 'boolean', init => 1,
+	{ name => 'editable', type => 'boolean',
 	  desc => "True if the gradient can be edited" }
     );
 
@@ -339,7 +339,7 @@ sub gradient_rename {
     );
 
     @outargs = (
-	{ name => 'actual_name', type => 'string', init => 1,
+	{ name => 'actual_name', type => 'string',
 	  desc => "The actual new name of the gradient" }
     );
 
@@ -406,11 +406,9 @@ sub sample_num_arg {
 
 sub sample_outargs {
     @outargs = (
-        { name => 'color_samples', type => 'floatarray', init => 1,
-          void_ret => 1,
+        { name => 'color_samples', type => 'floatarray', void_ret => 1,
 	  desc => 'Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }',
-	  array => { init => 1,
-                     desc => 'Length of the color_samples array (4 *
+	  array => { desc => 'Length of the color_samples array (4 *
 			      num_samples)' } }
     );
 }
@@ -611,7 +609,7 @@ HELP
     @outargs = (
         { name => 'blend_func', type => 'enum GimpGradientSegmentType',
           desc => "The blending function of the segment: { %%desc%% }",
-          void_ret => 1, init => 1 }
+          void_ret => 1 }
     );
 
     %invoke = (
@@ -643,7 +641,7 @@ HELP
     @outargs = (
         { name => 'coloring_type', type => 'enum GimpGradientSegmentColor',
           desc => "The coloring type of the segment: { %%desc%% }",
-          void_ret => 1, init => 1 }
+          void_ret => 1 }
     );
 
     %invoke = (
@@ -952,7 +950,7 @@ HELP
               'desc' => "Whether or not to compress the neighboring segments" }
         ],
         'outargs' => [
-            { 'name' => "final_delta", 'type' => "float", init => 1,
+            { 'name' => "final_delta", 'type' => "float",
               'desc' => "The final delta by which the range moved" }
         ],
         'action_on_success' => <<'CODE',

@@ -973,7 +973,7 @@ brush_get_radius_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   gchar *name;
-  gdouble radius = 0;
+  gdouble radius = 0.0;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -1113,7 +1113,7 @@ brush_get_hardness_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   gchar *name;
-  gdouble hardness = 0;
+  gdouble hardness = 0.0;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -1183,7 +1183,7 @@ brush_get_aspect_ratio_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   gchar *name;
-  gdouble aspect_ratio = 0;
+  gdouble aspect_ratio = 0.0;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -1253,7 +1253,7 @@ brush_get_angle_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   gchar *name;
-  gdouble angle = 0;
+  gdouble angle = 0.0;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -1406,7 +1406,7 @@ brush_set_radius_invoker (Gimp         *gimp,
   Argument *return_args;
   gchar *name;
   gdouble radius_in;
-  gdouble radius_out = 0;
+  gdouble radius_out = 0.0;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -1570,7 +1570,7 @@ brush_set_hardness_invoker (Gimp         *gimp,
   Argument *return_args;
   gchar *name;
   gdouble hardness_in;
-  gdouble hardness_out = 0;
+  gdouble hardness_out = 0.0;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -1652,7 +1652,7 @@ brush_set_aspect_ratio_invoker (Gimp         *gimp,
   Argument *return_args;
   gchar *name;
   gdouble aspect_ratio_in;
-  gdouble aspect_ratio_out = 0;
+  gdouble aspect_ratio_out = 0.0;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -1734,7 +1734,7 @@ brush_set_angle_invoker (Gimp         *gimp,
   Argument *return_args;
   gchar *name;
   gdouble angle_in;
-  gdouble angle_out = 0;
+  gdouble angle_out = 0.0;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))

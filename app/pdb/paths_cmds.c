@@ -90,7 +90,7 @@ path_list_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpImage *gimage;
-  gint32 num_paths;
+  gint32 num_paths = 0;
   gchar **path_list = NULL;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
@@ -488,9 +488,9 @@ path_set_points_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   GimpImage *gimage;
-  gchar *name = NULL;
+  gchar *name;
   gint32 ptype;
-  gint32 num_path_points = 0;
+  gint32 num_path_points;
   gdouble *points_pairs;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
@@ -676,7 +676,7 @@ path_get_point_at_dist_invoker (Gimp         *gimp,
   gdouble distance;
   gint32 x_point = 0;
   gint32 y_point = 0;
-  gdouble slope = 0;
+  gdouble slope = 0.0;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -888,7 +888,7 @@ path_set_tattoo_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   GimpImage *gimage;
   gchar *name;
-  gint32 tattovalue = 0;
+  gint32 tattovalue;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -1115,7 +1115,7 @@ path_set_locked_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   GimpImage *gimage;
   gchar *name;
-  gboolean locked = FALSE;
+  gboolean locked;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -1265,7 +1265,7 @@ path_set_visible_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   GimpImage *gimage;
   gchar *name;
-  gboolean visible = FALSE;
+  gboolean visible;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))

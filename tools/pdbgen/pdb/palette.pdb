@@ -29,7 +29,7 @@ sub palette_new {
     );
 
     @outargs = (
-	{ name => 'actual_name', type => 'string', init => 1,
+	{ name => 'actual_name', type => 'string',
 	  desc => 'The actual new palette name' }
     );
 
@@ -64,7 +64,7 @@ sub palette_is_editable {
     );
 
     @outargs = (
-	{ name => 'editable', type => 'boolean', init => 1,
+	{ name => 'editable', type => 'boolean',
 	  desc => "True if the palette can be edited" }
     );
 
@@ -95,7 +95,7 @@ sub palette_duplicate {
     );
 
     @outargs = (
-	{ name => 'copy_name', type => 'string', init => 1,
+	{ name => 'copy_name', type => 'string',
 	  desc => "The name of the palette's copy" }
     );
 
@@ -137,7 +137,7 @@ sub palette_rename {
     );
 
     @outargs = (
-	{ name => 'actual_name', type => 'string', init => 1,
+	{ name => 'actual_name', type => 'string',
 	  desc => "The actual new name of the palette" }
     );
 
@@ -213,7 +213,7 @@ HELP
     );
 
     @outargs = (
-        { name => 'num_colors', type => 'int32', void_ret => '1', init => 1,
+        { name => 'num_colors', type => 'int32', void_ret => '1',
           desc => "The number of colors in the palette" }
     );
 
@@ -247,7 +247,7 @@ HELP
     );
 
     @outargs = (
-        { name => 'num_columns', type => 'int32', init => 1,
+        { name => 'num_columns', type => 'int32',
           desc => "The number of columns used to display this palette" }
     );
 
@@ -318,7 +318,7 @@ HELP
     );
 
     @outargs = (
-        { name => 'entry_num', type => 'int32', void_ret => '1', init => 1,
+        { name => 'entry_num', type => 'int32', void_ret => '1',
           desc => 'The index of the added entry' }
     );
 
@@ -492,7 +492,7 @@ HELP
     );
 
     @outargs = (
-        { name => 'entry_name', type => 'string', void_ret => 1, init => 1,
+        { name => 'entry_name', type => 'string', void_ret => 1,
           desc => 'The name requested' }
     );
 

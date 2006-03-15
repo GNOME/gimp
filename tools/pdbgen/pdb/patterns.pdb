@@ -51,8 +51,7 @@ HELP
 	{ name => 'pattern_list', type => 'stringarray',
 	  desc => 'The list of pattern names',
 	  array => { name => 'num_patterns',
-		     desc => 'The number of patterns in the pattern list' },
-	  init => 1 }
+		     desc => 'The number of patterns in the pattern list' } }
     );
 
     %invoke = (
@@ -65,11 +64,11 @@ sub patterns_get_pattern {
     &std_pdb_deprecated ('gimp-context-get-pattern');
 
     @outargs = (
-	{ name => 'name', type => 'string', init => 1,
+	{ name => 'name', type => 'string',
 	  desc => 'The pattern name' },
-	{ name => 'width', type => 'int32', init => 1,
+	{ name => 'width', type => 'int32',
 	  desc => 'The pattern width' },
-	{ name => 'height', type => 'int32', init => 1,
+	{ name => 'height', type => 'int32',
 	  desc => 'The pattern height' }
     );
 
@@ -101,17 +100,17 @@ sub patterns_get_pattern_data {
     );
 
     @outargs = (
-	{ name => 'actual_name', type => 'string', init => 1,
+	{ name => 'actual_name', type => 'string',
 	  desc => 'The pattern name' },
-	{ name => 'width', type => 'int32', init => 1,
+	{ name => 'width', type => 'int32',
 	  desc => 'The pattern width' },
-	{ name => 'height', type => 'int32', init => 1,
+	{ name => 'height', type => 'int32',
 	  desc => 'The pattern height' },
-	{ name => 'mask_bpp', type => 'int32', init => 1,
+	{ name => 'mask_bpp', type => 'int32',
 	  desc => 'Pattern bytes per pixel' },
-	{ name => 'mask_data', type => 'int8array', init => 1,
+	{ name => 'mask_data', type => 'int8array',
 	  desc => 'The pattern mask data',
-	  array => { name => 'length', init => 1,
+	  array => { name => 'length',
 		     desc => 'Length of pattern mask data' } }
     );
     

@@ -42,7 +42,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'value', type => 'string', init => 1,
+	{ name => 'value', type => 'string',
 	  desc => 'The value associated with the queried token' }
     );
 

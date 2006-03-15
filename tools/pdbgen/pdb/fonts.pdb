@@ -50,8 +50,7 @@ HELP
 	{ name => 'font_list', type => 'stringarray',
 	  desc => 'The list of font names',
 	  array => { name => 'num_fonts',
-		     desc => 'The number of available fonts' },
-	  init => 1 }
+		     desc => 'The number of available fonts' } }
     );
 
     %invoke = (

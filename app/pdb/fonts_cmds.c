@@ -78,7 +78,7 @@ fonts_get_list_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   gchar *filter;
-  gint32 num_fonts;
+  gint32 num_fonts = 0;
   gchar **font_list = NULL;
 
   filter = (gchar *) args[0].value.pdb_pointer;

@@ -36,7 +36,7 @@ HELP
 
     @outargs = (
 	{ name => 'display', type => 'display',
-	  desc => 'The new display', init => 1 }
+	  desc => 'The new display' }
     );
 
     %invoke = (
@@ -91,7 +91,7 @@ HELP
 
     @outargs = (
         { name => 'window', type => 'int32',
-          desc => 'The native window handle or 0', init => 1 }
+          desc => 'The native window handle or 0' }
     );
 
     %invoke = ( code => 'window = (gint32) gimp_get_display_window (gimp, display);' );

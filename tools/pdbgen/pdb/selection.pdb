@@ -69,7 +69,7 @@ HELP
 
     @outargs = (
 	{ name => 'non_empty', type => 'boolean', void_ret => 1,
-	  desc => 'True if there is a selection', init => 1 },
+	  desc => 'True if there is a selection' },
 	{ name => 'x1', type => 'int32',
 	  desc => 'x coordinate of upper left corner of selection bounds' },
 	{ name => 'y1', type => 'int32',
@@ -104,7 +104,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'value', type => '0 <= int32 <= 255', init => 1,
+	{ name => 'value', type => '0 <= int32 <= 255',
 	  desc => 'Value of the selection: (%%desc%%)' }
     );
 
@@ -132,7 +132,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'is_empty', type => 'boolean', init => 1,
+	{ name => 'is_empty', type => 'boolean',
 	  desc => 'Is the selection empty?' }
     );
 
@@ -194,7 +194,7 @@ HELP
 
     @outargs = (
 	{ name => 'layer', type => 'layer', wrap => 1,
-	  desc => 'The floated layer', init => 1 }
+	  desc => 'The floated layer' }
     );
 
     %invoke = (
@@ -420,7 +420,7 @@ HELP
 
     @outargs = (
 	{ name => 'channel', type => 'channel',
-	  desc => 'The new channel', init => 1 }
+	  desc => 'The new channel' }
     );
 
     %invoke = (

@@ -819,7 +819,7 @@ palette_entry_get_color_invoker (Gimp         *gimp,
   Argument *return_args;
   gchar *name;
   gint32 entry_num;
-  GimpRGB color;
+  GimpRGB color = { 0.0, 0.0, 0.0, 1.0 };
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))

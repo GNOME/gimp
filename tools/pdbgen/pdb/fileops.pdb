@@ -109,7 +109,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'layer', type => 'layer', init => 1,
+	{ name => 'layer', type => 'layer',
 	  desc => 'The layer created when loading the image file' }
     );
 
@@ -228,13 +228,13 @@ HELP
     );
 
     @outargs = (
-	{ name => 'width', type => 'int32', init => 1,
+	{ name => 'width', type => 'int32',
 	  desc => 'The width of the thumbnail' },
-	{ name => 'height', type => 'int32', init => 1,
+	{ name => 'height', type => 'int32',
 	  desc => 'The height of the thumbnail' },
-	{ name => 'thumb_data', type => 'int8array', init => 1,
+	{ name => 'thumb_data', type => 'int8array',
 	  desc => 'The thumbnail data',
-          array =>  { name => 'thumb_data_count', init => 1,
+          array =>  { name => 'thumb_data_count',
 		      desc => 'The number of bytes in thumbnail data' } }
     );
 
@@ -368,7 +368,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'name', type => 'string', init => 1,
+	{ name => 'name', type => 'string',
 	  desc => 'The new temp filename' }
     );
 

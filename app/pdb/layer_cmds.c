@@ -1126,7 +1126,7 @@ layer_is_floating_sel_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpLayer *layer;
-  gboolean is_floating_sel;
+  gboolean is_floating_sel = FALSE;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))

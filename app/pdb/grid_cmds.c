@@ -68,8 +68,8 @@ image_grid_get_spacing_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpImage *gimage;
-  gdouble xspacing = 0;
-  gdouble yspacing = 0;
+  gdouble xspacing = 0.0;
+  gdouble yspacing = 0.0;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -221,8 +221,8 @@ image_grid_get_offset_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpImage *gimage;
-  gdouble xoffset = 0;
-  gdouble yoffset = 0;
+  gdouble xoffset = 0.0;
+  gdouble yoffset = 0.0;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -374,7 +374,7 @@ image_grid_get_foreground_color_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpImage *gimage;
-  GimpRGB fgcolor;
+  GimpRGB fgcolor = { 0.0, 0.0, 0.0, 1.0 };
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -506,7 +506,7 @@ image_grid_get_background_color_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpImage *gimage;
-  GimpRGB bgcolor;
+  GimpRGB bgcolor = { 0.0, 0.0, 0.0, 1.0 };
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -649,9 +649,7 @@ image_grid_get_style_invoker (Gimp         *gimp,
       GimpGrid *grid = gimp_image_get_grid (gimage);
 
       if (grid)
-        {
-          style = grid->style;
-        }
+        style = grid->style;
       else
         success = FALSE;
     }

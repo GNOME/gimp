@@ -52,8 +52,7 @@ HELP
 	{ name => 'gradient_list', type => 'stringarray',
 	  desc => 'The list of gradient names',
 	  array => { name => 'num_gradients',
-		     desc => 'The number of loaded gradients' },
-	  init => 1 }
+		     desc => 'The number of loaded gradients' } }
     );
 
     %invoke = (
@@ -73,9 +72,9 @@ sub gradients_sample_uniform {
     );
 
     @outargs = (
-        { name => 'color_samples', type => 'floatarray', init => 1,
+        { name => 'color_samples', type => 'floatarray',
 	  desc => 'Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }',
-	  array => { name => 'array_length', no_lib => 1, init => 1,
+	  array => { name => 'array_length', no_lib => 1,
 		     desc => 'Length of the color_samples array (4 *
 			      num_samples)' } }
     );
@@ -127,9 +126,9 @@ sub gradients_sample_custom {
     );
 
     @outargs = (
-        { name => 'color_samples', type => 'floatarray', init => 1,
+        { name => 'color_samples', type => 'floatarray',
 	  desc => 'Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }',
-	  array => { name => 'array_length', no_lib => 1, init => 1,
+	  array => { name => 'array_length', no_lib => 1,
 		     desc => 'Length of the color_samples array (4 *
 			      num_samples)' } }
     );
@@ -182,11 +181,11 @@ sub gradients_get_gradient_data {
     );
 
     @outargs = (
-	{ name => 'actual_name', type => 'string', init => 1,
+	{ name => 'actual_name', type => 'string',
 	  desc => 'The gradient name' },
 	{ name => 'grad_data', type => 'floatarray',
-	  desc => 'The gradient sample data', init => 1,
-	  array => { name => 'width', init => 1,
+	  desc => 'The gradient sample data',
+	  array => { name => 'width',
 		     desc => 'The gradient sample width (r,g,b,a)' } }
     );
 

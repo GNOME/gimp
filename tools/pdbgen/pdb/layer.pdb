@@ -185,7 +185,7 @@ HELP
 
     @outargs = (
 	{ name => 'layer', type => 'layer', wrap => 1,
-	  desc => 'The newly created layer', init => 1 }
+	  desc => 'The newly created layer' }
     );
 
     %invoke = (
@@ -220,7 +220,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'layer_copy', type => 'layer', init => 1, wrap => 1,
+	{ name => 'layer_copy', type => 'layer', wrap => 1,
 	  desc => 'The newly copied layer' }
     );
 
@@ -255,7 +255,7 @@ HELP
 
     @outargs = (
 	{ name => 'mask', type => 'layer_mask',
-	  desc => 'The newly created mask', init => 1 }
+	  desc => 'The newly created mask' }
     );
 
     %invoke = (
@@ -469,7 +469,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'mask', type => 'channel', init => 1,
+	{ name => 'mask', type => 'channel',
 	  desc => 'The layer mask',
 	  return_fail => -1 }
     );
@@ -501,7 +501,7 @@ HELP
     );
 
     @outargs = (
-        { name => 'layer', type => 'layer', init => 1,
+        { name => 'layer', type => 'layer',
           desc => 'The mask\'s layer',
 	  return_fail => -1 }
     );
@@ -565,7 +565,7 @@ HELP
      );
 
     @outargs = (
-	{ name => 'layer_copy', type => 'layer', init => 1,
+	{ name => 'layer_copy', type => 'layer',
 	  desc => 'The newly copied layer' }
     );
 

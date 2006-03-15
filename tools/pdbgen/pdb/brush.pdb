@@ -38,7 +38,7 @@ sub brush_new {
     );
 
     @outargs = (
-	{ name => 'actual_name', type => 'string', init => 1,
+	{ name => 'actual_name', type => 'string',
 	  desc => 'The actual new brush name' }
     );
 
@@ -72,7 +72,7 @@ sub brush_duplicate {
     );
 
     @outargs = (
-	{ name => 'copy_name', type => 'string', init => 1,
+	{ name => 'copy_name', type => 'string',
 	  desc => "The name of the brush's copy" }
     );
 
@@ -111,7 +111,7 @@ sub brush_is_generated {
     );
 
     @outargs = (
-	{ name => 'generated', type => 'boolean', init => 1,
+	{ name => 'generated', type => 'boolean',
 	  desc => "True if the brush is generated" }
     );
 
@@ -141,7 +141,7 @@ sub brush_is_editable {
     );
 
     @outargs = (
-	{ name => 'editable', type => 'boolean', init => 1,
+	{ name => 'editable', type => 'boolean',
 	  desc => "True if the brush can be edited" }
     );
 
@@ -173,7 +173,7 @@ sub brush_rename {
     );
 
     @outargs = (
-	{ name => 'actual_name', type => 'string', init => 1,
+	{ name => 'actual_name', type => 'string',
 	  desc => "The actual new name of the brush" }
     );
 
@@ -246,13 +246,13 @@ HELP
     );
 
     @outargs = (
-	{ name => 'width', type => 'int32', init => 1, void_ret => 1,
+	{ name => 'width', type => 'int32', void_ret => 1,
           desc => "The brush width" },
-	{ name => 'height', type => 'int32', init => 1,
+	{ name => 'height', type => 'int32',
           desc => "The brush height" },
-	{ name => 'mask_bpp', type => 'int32', init => 1,
+	{ name => 'mask_bpp', type => 'int32',
           desc => "The brush mask bpp" },
-	{ name => 'color_bpp', type => 'int32', init => 1,
+	{ name => 'color_bpp', type => 'int32',
           desc => "The brush color bpp" }
     );
 
@@ -293,22 +293,20 @@ HELP
     );
 
     @outargs = (
-	{ name => 'width', type => 'int32', init => 1, void_ret => '1',
+	{ name => 'width', type => 'int32', void_ret => '1',
           desc => "The brush width" },
-	{ name => 'height', type => 'int32', init => 1,
+	{ name => 'height', type => 'int32',
           desc => "The brush height" },
-	{ name => 'mask_bpp', type => 'int32', init => '1',
+	{ name => 'mask_bpp', type => 'int32',
           desc => "The brush mask bpp" },
-        { name => 'mask_bytes', type => 'int8array', init => '1',
+        { name => 'mask_bytes', type => 'int8array',
 	  desc => 'The brush mask data',
-          array => { init => '1',
-                     desc => 'Length of brush mask data' } },
-	{ name => 'color_bpp', type => 'int32', init => '1',
+          array => { desc => 'Length of brush mask data' } },
+	{ name => 'color_bpp', type => 'int32',
           desc => "The brush color bpp" },
-        { name => 'color_bytes', type => 'int8array', init => '1',
+        { name => 'color_bytes', type => 'int8array',
 	  desc => 'The brush color data',
-          array => { init => '1',
-                     desc => 'Length of brush color data' } }
+          array => { desc => 'Length of brush color data' } }
     );
 
     %invoke = (
@@ -356,7 +354,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'spacing', type => '0 <= int32 <= 1000', init => 1,
+	{ name => 'spacing', type => '0 <= int32 <= 1000',
 	  desc => 'The brush spacing: %%desc%%',
 	  void_ret => 1 }
     );
@@ -395,7 +393,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'shape', type => 'int32', init => 1,
+	{ name => 'shape', type => 'int32',
           desc => "An enumerated value representing the brush shape" }
     );
 
@@ -430,7 +428,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'radius', type => 'float', init => 1,
+	{ name => 'radius', type => 'float',
           desc => "The radius of the brush in pixels" }
     );
 
@@ -464,7 +462,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'spikes', type => 'int32', init => 1,
+	{ name => 'spikes', type => 'int32',
           desc => "The number of spikes on the brush." }
     );
 
@@ -500,7 +498,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'hardness', type => 'float', init => 1,
+	{ name => 'hardness', type => 'float',
           desc => "The hardness of the brush." }
     );
 
@@ -534,7 +532,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'aspect_ratio', type => 'float', init => 1,
+	{ name => 'aspect_ratio', type => 'float',
           desc => "The aspect ratio of the brush." }
     );
 
@@ -568,7 +566,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'angle', type => 'float', init => 1,
+	{ name => 'angle', type => 'float',
           desc => "The rotation angle of the brush." }
     );
 
@@ -640,7 +638,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'shape_out', type => 'int32', init => 1,
+	{ name => 'shape_out', type => 'int32',
           desc => "The brush shape actually assigned" }
     );
 
@@ -681,7 +679,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'radius_out', type => 'float', init => 1,
+	{ name => 'radius_out', type => 'float',
           desc => "The brush radius actually assigned" }
     );
 
@@ -722,7 +720,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'spikes_out', type => 'int32', init => 1,
+	{ name => 'spikes_out', type => 'int32',
           desc => "The number of spikes actually assigned" }
     );
 
@@ -763,7 +761,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'hardness_out', type => 'float', init => 1,
+	{ name => 'hardness_out', type => 'float',
           desc => "The brush hardness actually assigned" }
     );
 
@@ -804,7 +802,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'aspect_ratio_out', type => 'float', init => 1,
+	{ name => 'aspect_ratio_out', type => 'float',
           desc => "The brush aspect ratio actually assigned" }
     );
 
@@ -845,7 +843,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'angle_out', type => 'float', init => 1,
+	{ name => 'angle_out', type => 'float',
           desc => "The brush rotation angle actually assigned" }
     );
 

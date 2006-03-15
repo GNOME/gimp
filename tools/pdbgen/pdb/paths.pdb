@@ -33,8 +33,7 @@ HELP
 	{ name => 'path_list', type => 'stringarray',
 	  desc => 'List of the paths belonging to this image.',
 	  array => { name => 'num_paths',
-		     desc => 'The number of paths returned.' },
-	  init => 1 }
+		     desc => 'The number of paths returned.' } }
     );
 
     %invoke = (
@@ -59,10 +58,10 @@ HELP
     $inargs[0]->{desc} = 'The ID of the image to list the paths from.';
 
     @outargs = (
-	{ name => 'path_type', type => 'int32', init => 1,
+	{ name => 'path_type', type => 'int32',
 	  desc => 'The type of the path. Currently only one type (1 = Bezier)
 		   is supported' },
-	{ name => 'path_closed', type => 'int32', init => 1,
+	{ name => 'path_closed', type => 'int32',
 	  desc => 'Return if the path is closed. (0 = path open, 1 = path
 		   closed)' },
 	{ name => 'points_pairs', type => 'floatarray',
@@ -72,8 +71,7 @@ HELP
 		   (type 1 paths) the type can either be (1.0 = BEZIER_ANCHOR,
 		   2.0 = BEZIER_CONTROL, 3.0 = BEZIER_MOVE). Note all points
 		   are returned in pixel resolution.',
-	  init => 1,
-	  array => { name => 'num_path_point_details', init => 1,
+	  array => { name => 'num_path_point_details',
 		     desc => 'The number of points returned. Each point is
 			      made up of (x, y, pnt_type) of floats.' } }
     );
@@ -137,8 +135,7 @@ HELP
 
     @outargs = (
 	{ name => 'name', type => 'string',
-	  desc => 'The name of the current path.',
-	  init => 1 }
+	  desc => 'The name of the current path.' }
     );
 
     %invoke = (
@@ -200,8 +197,7 @@ HELP
 	  desc => 'The name of the path to create. If it exists then a unique
 		   name will be created - query the list of paths if you want
 		   to make sure that the name of the path you create is 
-		   unique. This will be set as the current path.',
-	  init => 1 },
+		   unique. This will be set as the current path.' },
 	{ name => 'ptype', type => 'int32',
 	  desc => 'The type of the path. Currently only one type (1 = Bezier)
 		   is supported.' },
@@ -227,8 +223,7 @@ HELP
 			      two points passed (2 x,y pairs). If
 			      (num_path_points/3) % 3 = 0 then the path is
 			      assumed to be closed and the points are
-			      ACCACCACCACC.',
-		     init => 1 } }
+			      ACCACCACCACC.' } }
     );
     $inargs[0]->{desc} = 'The ID of the image to set the paths in.';
 
@@ -338,11 +333,11 @@ HELP
 
     @outargs = (
 	{ name => 'x_point', type => 'int32',
-	  desc => 'The x position of the point.', init => 1 },
+	  desc => 'The x position of the point.' },
 	{ name => 'y_point', type => 'int32',
-	  desc => 'The y position of the point.', init => 1 },
+	  desc => 'The y position of the point.' },
 	{ name => 'slope', type => 'float',
-	  desc => 'The slope (dy / dx) at the specified point.', init => 1 }
+	  desc => 'The slope (dy / dx) at the specified point.' }
     );
 
     %invoke = (
@@ -421,7 +416,7 @@ HELP
 
     @outargs = (
 	{ name => 'tattoo', type => 'int32',
-	  desc => 'The tattoo associated with the named path.', init => 1  }
+	  desc => 'The tattoo associated with the named path.' }
     );
 
     %invoke = (
@@ -457,8 +452,7 @@ HELP
 	  desc => 'the name of the path whose tattoo should be set' },
         { name => 'tattovalue', type => 'int32',
 	  desc => "The tattoo associated with the name path. Only values
-		   returned from 'path_get_tattoo' should be used here",
-		   init => 1  }
+		   returned from 'path_get_tattoo' should be used here" }
     );
 
     %invoke = (
@@ -495,7 +489,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'name', type => 'string', init => 1,
+	{ name => 'name', type => 'string',
 	  desc => 'The name of the path with the specified tattoo.' }
     );
 
@@ -563,7 +557,7 @@ HELP
 
     @outargs = (
 	{ name => 'locked', type => 'boolean',
-	  desc => 'TRUE if the path is locked, FALSE otherwise', init => 1 }
+	  desc => 'TRUE if the path is locked, FALSE otherwise' }
     );
 
     %invoke = (
@@ -596,7 +590,7 @@ HELP
 	{ name => 'name', type => 'string',
 	  desc => 'the name of the path whose locked status should be set' },
 	{ name => 'locked', type => 'boolean',
-	  desc => 'Whether the path is locked', init => 1 }
+	  desc => 'Whether the path is locked' }
     );
 
     %invoke = (
@@ -630,7 +624,7 @@ HELP
 
     @outargs = (
 	{ name => 'visible', type => 'boolean',
-	  desc => 'TRUE if the path is visible, FALSE otherwise', init => 1 }
+	  desc => 'TRUE if the path is visible, FALSE otherwise' }
     );
 
     %invoke = (
@@ -661,7 +655,7 @@ HELP
 	{ name => 'name', type => 'string',
 	  desc => 'The name of the path whose visibility should be set' },
 	{ name => 'visible', type => 'boolean',
-	  desc => 'The new path visibility', init => 1 }
+	  desc => 'The new path visibility' }
     );
 
     %invoke = (

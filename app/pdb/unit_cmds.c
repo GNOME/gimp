@@ -67,7 +67,7 @@ unit_get_number_of_units_invoker (Gimp         *gimp,
                                   Argument     *args)
 {
   Argument *return_args;
-  gint32 num_units;
+  gint32 num_units = 0;
 
   num_units = _gimp_unit_get_number_of_units (gimp);
 
@@ -111,7 +111,7 @@ unit_get_number_of_built_in_units_invoker (Gimp         *gimp,
                                            Argument     *args)
 {
   Argument *return_args;
-  gint32 num_units;
+  gint32 num_units = 0;
 
   num_units = _gimp_unit_get_number_of_built_in_units (gimp);
 

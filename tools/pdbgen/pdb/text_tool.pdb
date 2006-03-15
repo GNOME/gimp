@@ -87,7 +87,7 @@ HELP
     @outargs = (
 	{ name => 'text_layer', type => 'layer',
 	  desc => 'The new text layer or -1 if no layer was created.',
-	  init => 1, return_fail => -1 }
+	  return_fail => -1 }
     );
 
     %invoke = (
@@ -164,7 +164,7 @@ sub text {
     @outargs = (
 	{ name => 'text_layer', type => 'layer',
 	  desc => 'The new text layer or -1 if no layer was created.',
-	  init => 1, return_fail => -1 }
+	  return_fail => -1 }
     );
 
     %invoke = (

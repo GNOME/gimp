@@ -1,5 +1,17 @@
 2006-03-15  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb.pl: define init values for all pdb types.
+
+	* tools/pdbgen/app.pl: unconditionally initialize all return
+	values, and no parameter.
+
+	* tools/pdbgen/pdb/*.pdb: removed init => 1 from all arguments
+	and return values.
+
+	* app/pdb/*_cmds.c: regenerated.
+
+2006-03-15  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/pdb/context.pdb
 	* tools/pdbgen/pdb/convert.pdb
 	* tools/pdbgen/pdb/drawable.pdb

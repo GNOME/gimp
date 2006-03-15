@@ -731,8 +731,8 @@ gradient_segment_get_left_color_invoker (Gimp         *gimp,
   Argument *return_args;
   gchar *name;
   gint32 segment;
-  GimpRGB color;
-  gdouble opacity = 0;
+  GimpRGB color = { 0.0, 0.0, 0.0, 1.0 };
+  gdouble opacity = 0.0;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -926,8 +926,8 @@ gradient_segment_get_right_color_invoker (Gimp         *gimp,
   Argument *return_args;
   gchar *name;
   gint32 segment;
-  GimpRGB color;
-  gdouble opacity = 0;
+  GimpRGB color = { 0.0, 0.0, 0.0, 1.0 };
+  gdouble opacity = 0.0;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -1121,7 +1121,7 @@ gradient_segment_get_left_pos_invoker (Gimp         *gimp,
   Argument *return_args;
   gchar *name;
   gint32 segment;
-  gdouble pos = 0;
+  gdouble pos = 0.0;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -1213,7 +1213,7 @@ gradient_segment_set_left_pos_invoker (Gimp         *gimp,
   gchar *name;
   gint32 segment;
   gdouble pos;
-  gdouble final_pos = 0;
+  gdouble final_pos = 0.0;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -1314,7 +1314,7 @@ gradient_segment_get_middle_pos_invoker (Gimp         *gimp,
   Argument *return_args;
   gchar *name;
   gint32 segment;
-  gdouble pos = 0;
+  gdouble pos = 0.0;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -1406,7 +1406,7 @@ gradient_segment_set_middle_pos_invoker (Gimp         *gimp,
   gchar *name;
   gint32 segment;
   gdouble pos;
-  gdouble final_pos = 0;
+  gdouble final_pos = 0.0;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -1507,7 +1507,7 @@ gradient_segment_get_right_pos_invoker (Gimp         *gimp,
   Argument *return_args;
   gchar *name;
   gint32 segment;
-  gdouble pos = 0;
+  gdouble pos = 0.0;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -1599,7 +1599,7 @@ gradient_segment_set_right_pos_invoker (Gimp         *gimp,
   gchar *name;
   gint32 segment;
   gdouble pos;
-  gdouble final_pos = 0;
+  gdouble final_pos = 0.0;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -2990,7 +2990,7 @@ gradient_segment_range_move_invoker (Gimp         *gimp,
   gint32 end_segment;
   gdouble delta;
   gboolean control_compress;
-  gdouble final_delta = 0;
+  gdouble final_delta = 0.0;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))

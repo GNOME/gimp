@@ -217,10 +217,10 @@ text_get_extents_fontname_invoker (Gimp         *gimp,
   gdouble size;
   gint32 size_type;
   gchar *fontname;
-  gint32 width;
-  gint32 height;
-  gint32 ascent;
-  gint32 descent;
+  gint32 width = 0;
+  gint32 height = 0;
+  gint32 ascent = 0;
+  gint32 descent = 0;
 
   text = (gchar *) args[0].value.pdb_pointer;
   if (text == NULL || !g_utf8_validate (text, -1, NULL))
@@ -575,10 +575,10 @@ text_get_extents_invoker (Gimp         *gimp,
   gchar *spacing;
   gchar *registry;
   gchar *encoding;
-  gint32 width;
-  gint32 height;
-  gint32 ascent;
-  gint32 descent;
+  gint32 width = 0;
+  gint32 height = 0;
+  gint32 ascent = 0;
+  gint32 descent = 0;
 
   text = (gchar *) args[0].value.pdb_pointer;
   if (text == NULL || !g_utf8_validate (text, -1, NULL))

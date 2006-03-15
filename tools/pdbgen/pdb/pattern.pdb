@@ -33,11 +33,11 @@ HELP
     );
 
     @outargs = (
-	{ name => 'width', type => 'int32', init => 1, void_ret => '1',
+	{ name => 'width', type => 'int32', void_ret => '1',
           desc => "The pattern width" },
-	{ name => 'height', type => 'int32', init => 1,
+	{ name => 'height', type => 'int32',
           desc => "The pattern height" },
-	{ name => 'bpp', type => 'int32', init => 1,
+	{ name => 'bpp', type => 'int32',
           desc => "The pattern bpp" }
     );
 
@@ -79,16 +79,15 @@ HELP
     );
 
     @outargs = (
-	{ name => 'width', type => 'int32', init => 1, void_ret => '1',
+	{ name => 'width', type => 'int32', void_ret => '1',
           desc => "The pattern width" },
-	{ name => 'height', type => 'int32', init => 1,
+	{ name => 'height', type => 'int32',
           desc => "The pattern height" },
-	{ name => 'bpp', type => 'int32', init => 1,
+	{ name => 'bpp', type => 'int32',
           desc => "The pattern bpp" },
-        { name => 'color_bytes', type => 'int8array', init => 1,
+        { name => 'color_bytes', type => 'int8array',
 	  desc => 'The pattern data.',
-          array => { init => 1,
-		     desc => 'Number of pattern bytes' } }
+          array => { desc => 'Number of pattern bytes' } }
     );
     
     %invoke = (

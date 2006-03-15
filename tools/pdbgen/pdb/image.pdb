@@ -49,9 +49,9 @@ HELP
     @inargs = ( &std_image_arg );
 
     @outargs = (
-	{ name => "${type}_ids", type => 'int32array', init => 1,
+	{ name => "${type}_ids", type => 'int32array',
 	  desc => "The list of ${type}s contained in the image",
-	  array => { name => "num_${type}s", init => 1,
+	  array => { name => "num_${type}s",
 		     desc => "The number of ${type}s contained in the image" } }
     );
 
@@ -234,7 +234,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'image', type => 'image', init => 1,
+	{ name => 'image', type => 'image',
 	  desc => 'The ID of the newly created image' }
     );
 
@@ -263,7 +263,7 @@ HELP
 
     @outargs = (
 	{ name => 'new_image', type => 'image',
-	  desc => 'The new, duplicated image', init => 1 }
+	  desc => 'The new, duplicated image' }
     );
 
     %invoke = (
@@ -583,7 +583,7 @@ HELP
 
     @outargs = (
 	{ name => 'color', type => 'color', void_ret => 1,
-	  desc => 'The return color', init => 1 }
+	  desc => 'The return color' }
     );
 
     %invoke = (
@@ -635,7 +635,7 @@ HELP
     }
 
     @outargs = (
-	{ name => 'layer', type => 'layer', init => 1,
+	{ name => 'layer', type => 'layer',
 	  desc => 'The layer found at the specified coordinates' }
     );
 
@@ -688,7 +688,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'layer', type => 'layer', init => 1,
+	{ name => 'layer', type => 'layer',
 	  desc => 'The resulting layer' }
     );
 
@@ -727,7 +727,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'layer', type => 'layer', init => 1,
+	{ name => 'layer', type => 'layer',
 	  desc => 'The resulting layer' }
     );
 
@@ -758,7 +758,7 @@ HELP
     @inargs = ( &std_image_arg );
 
     @outargs = (
-	{ name => 'layer', type => 'layer', init => 1,
+	{ name => 'layer', type => 'layer',
 	  desc => 'The resulting layer' }
     );
 
@@ -1002,7 +1002,7 @@ HELP
     @inargs = ( &std_image_arg );
 
     @outargs = (
-	{ name => 'drawable', type => 'drawable', init => 1,
+	{ name => 'drawable', type => 'drawable',
 	  desc => 'The active drawable' }
     );
 
@@ -1026,7 +1026,7 @@ HELP
     @inargs = ( &std_image_arg );
 
     @outargs = (
-	{ name => 'base_type', type => 'enum GimpImageBaseType', init => 1,
+	{ name => 'base_type', type => 'enum GimpImageBaseType',
 	  desc => "The image's base type: { %%desc%% }" }
     );
 
@@ -1048,9 +1048,9 @@ HELP
     @inargs = ( &std_image_arg );
 
     @outargs = (
-	{ name => 'colormap', type => 'int8array', init => 1, wrap => 1,
+	{ name => 'colormap', type => 'int8array', wrap => 1,
 	  desc => "The image's colormap",
-	  array => { name => 'num_bytes', init => 1,
+	  array => { name => 'num_bytes',
 		     desc => 'Number of bytes in the colormap array:
 			      %%desc%%' } }
     );
@@ -1126,7 +1126,7 @@ HELP
     @inargs = ( &std_image_arg );
 
     @outargs = (
-	{ name => 'dirty', type => 'boolean', init => 1,
+	{ name => 'dirty', type => 'boolean',
 	  desc => 'True if the image has unsaved changes.' }
     );
 
@@ -1146,7 +1146,7 @@ HELP
     @inargs = ( &std_image_arg );
 
     @outargs = (
-	{ name => 'floating_sel', type => 'layer', init => 1,
+	{ name => 'floating_sel', type => 'layer',
 	  desc => "The image's floating selection",
 	  return_fail => -1 }
     );
@@ -1167,7 +1167,7 @@ HELP
     @inargs = ( &std_image_arg );
 
     @outargs = (
-	{ name => 'drawable', type => 'drawable', init => 1,
+	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable the floating selection is attached to',
 	  return_fail => -1 }
     );
@@ -1214,7 +1214,6 @@ SUB
     $invoke{code} = "active_layer = $outargs[0]->{alias};";
     delete @{$outargs[0]}{qw(alias no_declare)};
     $outargs[0]->{return_fail} = -1;
-    $outargs[0]->{init} = 1;
 
     $help = <<'HELP';
 If there is an active layer, its ID will be returned, otherwise, -1.  If a
@@ -1238,7 +1237,6 @@ CODE2
     $invoke{code} = "active_channel = $outargs[0]->{alias};";
     delete @{$outargs[0]}{qw(alias no_declare)};
     $outargs[0]->{return_fail} = -1;
-    $outargs[0]->{init} = 1;
 
     $help = <<'HELP';
 If there is an active channel, this will return the channel ID, otherwise, -1.
@@ -1260,7 +1258,6 @@ CODE2
     $invoke{code} = "active_vectors = $outargs[0]->{alias};";
     delete @{$outargs[0]}{qw(alias no_declare)};
     $outargs[0]->{return_fail} = -1;
-    $outargs[0]->{init} = 1;
 
     $help = <<'HELP';
 If there is an active path, its ID will be returned, otherwise, -1.
@@ -1279,7 +1276,6 @@ CODE2
     $invoke{code} = "success = (selection = gimp_image_get_mask (gimage)) != NULL;";
     delete @{$outargs[0]}{qw(alias no_declare)};
     $outargs[0]->{desc} .= ' channel';
-    $outargs[0]->{init} = 1;
 
     $help = <<'HELP';
 This will always return a valid ID for a selection -- which is represented as a
@@ -1392,7 +1388,6 @@ CODE2
 &image_accessors('name', 'string', 'name', 1,
 		 [ <<'CODE1', undef ]);
     delete @{$outargs[0]}{qw(alias no_declare)};
-    $outargs[0]->{init} = 1;
 
     %invoke = (
 	code => <<'CODE2'
@@ -1529,7 +1524,7 @@ HELP
     );
 
     \@outargs = (
-	{ name => '$_', type => '$_', init => 1,
+	{ name => '$_', type => '$_',
 	  desc => 'The $_ with the specified tattoo' }
     );
 
@@ -1567,16 +1562,15 @@ HELP
 
     @outargs = (
 	{ name => 'actual_width', type => 'int32',
-	  desc => 'The previews width', init => 1 },
+	  desc => 'The previews width' },
 	{ name => 'actual_height', type => 'int32',
-	  desc => 'The previews height', init => 1 },
+	  desc => 'The previews height' },
 	{ name => 'bpp', type => 'int32',
-	  desc => 'The previews bpp', init => 1 },
+	  desc => 'The previews bpp' },
         { name => 'thumbnail_data', type => 'int8array', wrap => 1,
-	  desc => 'The thumbnail data', init => 1,
+	  desc => 'The thumbnail data',
 	  array => { name => 'thumbnail_data_count',
-		     desc => 'The number of bytes in thumbnail data',
-		     init => 1 } }
+		     desc => 'The number of bytes in thumbnail data' } }
     );
     $outargs[0]->{void_ret} = 1;
 

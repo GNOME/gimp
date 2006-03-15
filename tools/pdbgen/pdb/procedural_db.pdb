@@ -42,11 +42,11 @@ HELP
 
     @outargs = (
 	{ name => "${type}_type",
-	  type => 'enum GimpPDBArgType (no GIMP_PDB_END)', init => 1,
+	  type => 'enum GimpPDBArgType (no GIMP_PDB_END)',
 	  desc => "The type of $long_type { %%desc%% }", void_ret => 1 },
-	{ name => "${type}_name", type => 'string', init => 1,
+	{ name => "${type}_name", type => 'string',
 	  desc => "The name of the $long_type" },
-	{ name => "${type}_desc", type => 'string', init => 1,
+	{ name => "${type}_desc", type => 'string',
 	  desc => "A description of the $long_type" }
     );
 
@@ -186,8 +186,8 @@ HELP
 
     @outargs = (
 	{ name  => 'procedure_names', type  => 'stringarray', void_ret => 1,
-	  desc  => 'The list of procedure names', init => 1,
-	  array => { name  => 'num_matches', init => 1,
+	  desc  => 'The list of procedure names',
+	  array => { name  => 'num_matches',
 		     desc  => 'The number of matching procedures' } }
     );
 
@@ -237,7 +237,7 @@ HELP
 	{ name => 'date', type => 'string',
 	  desc => 'Copyright date' },
         { name => 'proc_type', type => 'enum GimpPDBProcType',
-	  desc => 'The procedure type: { %%desc%% }', init => 1 },
+	  desc => 'The procedure type: { %%desc%% }' },
         { name => 'num_args', type => 'int32',
 	  desc => 'The number of input arguments' },
         { name => 'num_values', type => 'int32',
@@ -291,7 +291,7 @@ HELP
 
     @outargs = (
 	{ name  => 'data', type  => 'int8array',
-	  desc  => 'A byte array containing data', wrap => 1, init => 1,
+	  desc  => 'A byte array containing data', wrap => 1,
 	  void_ret => 1,
 	  array => { name => 'bytes', type => '0 < int32',
 		     desc => 'The number of bytes in the data' } }

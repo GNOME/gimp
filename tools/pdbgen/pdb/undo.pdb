@@ -81,7 +81,7 @@ HELP
     @inargs = ( &std_image_arg );
 
     @outargs = (
-	{ name => 'enabled', type => 'boolean', init => 1,
+	{ name => 'enabled', type => 'boolean',
 	  desc => 'True if undo is enabled for this image' }
     );
 
@@ -103,7 +103,7 @@ HELP
     @inargs = ( &std_image_arg );
 
     @outargs = (
-	{ name => 'disabled', type => 'boolean', init => 1,
+	{ name => 'disabled', type => 'boolean',
 	  desc => 'True if the image undo has been disabled' }
     );
 
@@ -124,7 +124,7 @@ HELP
     @inargs = ( &std_image_arg );
 
     @outargs = (
-	{ name => 'enabled', type => 'boolean', init => 1,
+	{ name => 'enabled', type => 'boolean',
 	  desc => 'True if the image undo has been enabled' }
     );
 
@@ -151,7 +151,7 @@ HELP
     @inargs = ( &std_image_arg );
 
     @outargs = (
-	{ name => 'frozen', type => 'boolean', init => 1,
+	{ name => 'frozen', type => 'boolean',
 	  desc => 'True if the image undo has been frozen' }
     );
 
@@ -178,7 +178,7 @@ HELP
     @inargs = ( &std_image_arg );
 
     @outargs = (
-	{ name => 'thawed', type => 'boolean', init => 1,
+	{ name => 'thawed', type => 'boolean',
 	  desc => 'True if the image undo has been thawed' }
     );
 

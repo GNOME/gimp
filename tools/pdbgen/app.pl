@@ -118,6 +118,7 @@ sub make_arg_test {
 sub declare_args {
     my $proc = shift;
     my $out = shift;
+    my $init = shift;
 
     local $result = "";
 
@@ -136,13 +137,8 @@ sub declare_args {
 		my $type = exists $_->{no_id_lookup} ? 'gint32 ' : $arg->{type};
 
 		$result .= ' ' x 2 . $type . &arg_vname($_);
-		if (!exists $_->{no_init} && exists $_->{init} && 
-		    !exists $arg->{struct}) {
-		    for ($arg->{type}) {
-			/\*$/     && do { $result .= ' = NULL';  last };
-			/boolean/ && do { $result .= ' = FALSE'; last };
-					  $result .= ' = 0';
-		    }
+		if ($init) {
+		    $result .= " = $arg->{init_value}";
 		}
 		$result .= ";\n";
 
@@ -549,7 +545,7 @@ CODE
 		push @{$tempproc->{inargs}}, $_ if !exists $pass{$_->{argpos}};
 	    }
 
-	    $code .= &declare_args($tempproc, $out, qw(inargs)) . "\n";
+	    $code .= &declare_args($tempproc, $out, 0, qw(inargs)) . "\n";
 
 	    my $marshal = "";
 	    foreach (@{$tempproc->{inargs}}) {
@@ -609,7 +605,8 @@ CODE
 	    my $invoker = "";
 	
 	    $invoker .= ' ' x 2 . "Argument *return_args;\n" if scalar @outargs;
-	    $invoker .= &declare_args($proc, $out, qw(inargs outargs));
+	    $invoker .= &declare_args($proc, $out, 0, qw(inargs));
+	    $invoker .= &declare_args($proc, $out, 1, qw(outargs));
 
 	    $invoker .= &marshal_inargs($proc, 0);
 	    $invoker .= "\n" if $invoker && $invoker !~ /\n\n/s;

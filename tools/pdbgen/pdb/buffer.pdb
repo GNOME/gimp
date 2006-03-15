@@ -35,8 +35,7 @@ HELP
 	{ name => 'buffer_list', type => 'stringarray',
 	  desc => 'The list of buffer names',
 	  array => { name => 'num_buffers',
-		     desc => 'The number of buffers' },
-	  init => 1 }
+		     desc => 'The number of buffers' } }
     );
 
     %invoke = (
@@ -58,7 +57,7 @@ sub buffer_rename {
     );
 
     @outargs = (
-	{ name => 'real_name', type => 'string', init => 1,
+	{ name => 'real_name', type => 'string',
 	  desc => 'The real name given to the buffer' }
     );
 
@@ -120,7 +119,7 @@ sub buffer_get_width {
     );
 
     @outargs = (
-	{ name => 'width', type => 'int32', init => 1,
+	{ name => 'width', type => 'int32',
           desc => "The buffer width" }
     );
 
@@ -151,7 +150,7 @@ sub buffer_get_height {
     );
 
     @outargs = (
-	{ name => 'height', type => 'int32', init => 1,
+	{ name => 'height', type => 'int32',
           desc => "The buffer height" }
     );
 
@@ -182,7 +181,7 @@ sub buffer_get_bytes {
     );
 
     @outargs = (
-	{ name => 'bytes', type => 'int32', init => 1,
+	{ name => 'bytes', type => 'int32',
           desc => "The buffer bpp" }
     );
 
@@ -213,7 +212,7 @@ sub buffer_get_image_type {
     );
 
     @outargs = (
-	{ name => 'image_type', type => 'enum GimpImageBaseType', init => 1,
+	{ name => 'image_type', type => 'enum GimpImageBaseType',
           desc => "The buffer image type" }
     );
 

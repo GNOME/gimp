@@ -38,7 +38,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'guide', type => 'guide', init => 1,
+	{ name => 'guide', type => 'guide',
 	  desc => 'The new guide' }
     );
 
@@ -119,7 +119,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'next_guide', type => 'guide', init => 1,
+	{ name => 'next_guide', type => 'guide',
 	  desc => "The next guide's ID" }
     );
 
@@ -152,7 +152,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'orientation', type => &std_orientation_enum, init => 1,
+	{ name => 'orientation', type => &std_orientation_enum,
 	  desc => "The guide's orientation: { %%desc%% }",
 	  libdef => 'GIMP_ORIENTATION_UNKNOWN' }
     );
@@ -188,7 +188,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'position', type => 'int32', init => 1, libdef => '-1',
+	{ name => 'position', type => 'int32', libdef => '-1',
 	  desc => "The guide's position relative to top or left of image" }
     );
 

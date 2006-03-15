@@ -270,7 +270,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'non_empty', type => 'boolean', init => 1,
+	{ name => 'non_empty', type => 'boolean',
 	  desc => 'TRUE if there is a selection' },
 	{ name => 'x1', type => 'int32',
 	  desc => "x coordinate of the upper left corner of selection bounds" },
@@ -312,7 +312,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'non_empty', type => 'boolean', init => 1,
+	{ name => 'non_empty', type => 'boolean',
 	  desc => 'TRUE if the returned area is not empty' },
 	{ name => 'x', type => 'int32',
           desc => 'x coordinate of the upper left corner of the intersection' },
@@ -347,7 +347,6 @@ sub drawable_get_image {
 	&std_image_arg
     );
     $outargs[0]->{desc} = "The drawable's image";
-    $outargs[0]->{init} = 1;
 
     %invoke = (
 	code => 'success = (gimage = gimp_item_get_image (GIMP_ITEM (drawable))) != NULL;'
@@ -514,10 +513,10 @@ HELP
 
     @outargs = (
 	{ name => 'pixel', type => 'int8array',
-	  desc => 'The pixel value', init => 1,
+	  desc => 'The pixel value',
 	  array => { name => 'num_channels', type => 'int32',
 	  	     desc => 'The number of channels for the pixel',
-	   	     no_success => 1, init => 1 } }
+	   	     no_success => 1 } }
     );
 
     %invoke = (
@@ -651,14 +650,14 @@ HELP
 
     @outargs = (
 	{ name => 'actual_width', type => 'int32', void_ret => 1,
-	  desc => 'The previews width', init => 1 },
+	  desc => 'The previews width' },
 	{ name => 'actual_height', type => 'int32',
-	  desc => 'The previews height', init => 1 },
+	  desc => 'The previews height' },
 	{ name => 'bpp', type => 'int32',
-	  desc => 'The previews bpp', init => 1 },
+	  desc => 'The previews bpp' },
         { name => 'thumbnail_data', type => 'int8array',
-	  desc => 'The thumbnail data', init => 1, wrap => 1,
-	  array => { name => 'thumbnail_data_count', init => 1,
+	  desc => 'The thumbnail data', wrap => 1,
+	  array => { name => 'thumbnail_data_count',
 		     desc => 'The number of bytes in thumbnail data' } }
     );
 
@@ -736,14 +735,14 @@ HELP
 
     @outargs = (
 	{ name => 'width', type => 'int32', void_ret => 1,
-	  desc => 'The previews width', init => 1 },
+	  desc => 'The previews width' },
 	{ name => 'height', type => 'int32',
-	  desc => 'The previews height', init => 1 },
+	  desc => 'The previews height' },
 	{ name => 'bpp', type => 'int32',
-	  desc => 'The previews bpp', init => 1 },
+	  desc => 'The previews bpp' },
         { name => 'thumbnail_data', type => 'int8array',
-	  desc => 'The thumbnail data', init => 1, wrap => 1,
-	  array => { name => 'thumbnail_data_count', init => 1,
+	  desc => 'The thumbnail data', wrap => 1,
+	  array => { name => 'thumbnail_data_count',
 		     desc => 'The number of bytes in thumbnail data' } }
     );
 

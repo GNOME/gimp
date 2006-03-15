@@ -33,8 +33,7 @@ HELP
     @outargs = (
         { name => 'vectors', type => 'vectors',
           desc => 'the current vector object, 0 if no vector exists
-                   in the image.',
-          init => 1 }
+                   in the image.' }
     );
 
     %invoke = (
@@ -59,8 +58,7 @@ sub vectors_get_current {
     @outargs = (
         { name => 'vectors', type => 'vectors',
           desc => 'the current vector object, 0 if no vector exists
-                   in the image.',
-          init => 1 }
+                   in the image.' }
     );
 
     %invoke = (
@@ -86,7 +84,7 @@ sub vectors_get_image {
 
     @outargs = (
         { name => 'image', type => 'image',
-          desc => 'The vectors image', init => 1 }
+          desc => 'The vectors image' }
     );
 
     %invoke = (
@@ -112,7 +110,7 @@ sub vectors_get_linked {
 
     @outargs = (
         { name => 'linked', type => 'boolean',
-          desc => 'TRUE if the path is linked, FALSE otherwise', init => 1 }
+          desc => 'TRUE if the path is linked, FALSE otherwise' }
     );
 
     %invoke = (
@@ -161,7 +159,7 @@ sub vectors_get_tattoo {
 
     @outargs = (
         { name => 'tattoo', type => 'int32',
-          desc => 'The vectors tattoo', init => 1 }
+          desc => 'The vectors tattoo' }
     );
 
     %invoke = (
@@ -210,7 +208,7 @@ sub vectors_get_visible {
 
     @outargs = (
         { name => 'visible', type => 'boolean',
-          desc => 'TRUE if the path is visible, FALSE otherwise', init => 1 }
+          desc => 'TRUE if the path is visible, FALSE otherwise' }
     );
 
     %invoke = (
@@ -259,7 +257,7 @@ sub vectors_get_name {
 
     @outargs = (
         { name => 'name', type => 'string',
-          desc => 'The name of the vectors object', init => 1 }
+          desc => 'The name of the vectors object' }
     );
 
     %invoke = (
@@ -314,9 +312,7 @@ HELP
         { name => 'stroke_ids', type => 'int32array',
           desc => 'List of the strokes belonging to the path.',
           array => { name => 'num_strokes',
-                     desc => 'The number of strokes returned.',
-                     init => 1 },
-          init => 1 }
+                     desc => 'The number of strokes returned.' } }
     );
 
     %invoke = (
@@ -361,7 +357,7 @@ sub vectors_stroke_get_length {
     );
 
     @outargs = (
-        { name => 'length', type => 'float', init => 1,
+        { name => 'length', type => 'float',
           desc => 'The length (in pixels) of the given stroke.' }
     );
 
@@ -406,14 +402,13 @@ HELP
 
     @outargs = (
         { name => 'x_point', type => 'float',
-          desc => 'The x position of the point.', init => 1 },
+          desc => 'The x position of the point.' },
         { name => 'y_point', type => 'float',
-          desc => 'The y position of the point.', init => 1 },
+          desc => 'The y position of the point.' },
         { name => 'slope', type => 'float',
-          desc => 'The slope (dy / dx) at the specified point.', init => 1 },
+          desc => 'The slope (dy / dx) at the specified point.' },
         { name => 'valid', type => 'boolean',
-          desc => 'Indicator for the validity of the returned data.',
-          init => 1 }
+          desc => 'Indicator for the validity of the returned data.' }
     );
 
     %invoke = (
@@ -594,9 +589,7 @@ HELP
         { name => 'coords', type => 'floatarray',
           desc => 'List of the coords along the path (x0, y0, x1, y1, ...).',
           array => { name => 'num_coords',
-                     desc => 'The number of floats returned.',
-                     init => 1 },
-          init => 1 }
+                     desc => 'The number of floats returned.' } }
     );
 
     %invoke = (
@@ -652,17 +645,14 @@ HELP
 	{ name => 'vectors', type => 'vectors',
 	  desc => 'The vectors object' },
         { name => 'x0', type => 'float',
-          desc => 'The x-coordinate of the moveto',
-          init => 1 },
+          desc => 'The x-coordinate of the moveto' },
         { name => 'y0', type => 'float',
-          desc => 'The y-coordinate of the moveto',
-          init => 1 }
+          desc => 'The y-coordinate of the moveto' }
     );
 
     @outargs = (
         { name => 'stroke_id', type => 'int32',
-          desc => 'The resulting stroke',
-          init => 1 },
+          desc => 'The resulting stroke' }
     );
 
     %invoke = (
@@ -701,11 +691,9 @@ HELP
 	{ name => 'stroke_id', type => 'int32',
 	  desc => 'The stroke ID' },
         { name => 'x0', type => 'float',
-          desc => 'The x-coordinate of the lineto',
-          init => 1 },
+          desc => 'The x-coordinate of the lineto' },
         { name => 'y0', type => 'float',
-          desc => 'The y-coordinate of the lineto',
-          init => 1 }
+          desc => 'The y-coordinate of the lineto' }
     );
 
     %invoke = (
@@ -882,8 +870,7 @@ HELP
 
     @outargs = (
         { name => 'stroke_id', type => 'int32',
-          desc => 'The resulting stroke',
-          init => 1 },
+          desc => 'The resulting stroke' }
     );
 
     %invoke = (

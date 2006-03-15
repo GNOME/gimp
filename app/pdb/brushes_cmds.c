@@ -90,7 +90,7 @@ brushes_get_list_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   gchar *filter;
-  gint32 num_brushes;
+  gint32 num_brushes = 0;
   gchar **brush_list = NULL;
 
   filter = (gchar *) args[0].value.pdb_pointer;
@@ -340,7 +340,7 @@ brushes_get_brush_data_invoker (Gimp         *gimp,
   Argument *return_args;
   gchar *name;
   gchar *actual_name = NULL;
-  gdouble opacity = 0;
+  gdouble opacity = 0.0;
   gint32 spacing = 0;
   gint32 paint_mode = 0;
   gint32 width = 0;

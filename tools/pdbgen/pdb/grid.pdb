@@ -42,14 +42,10 @@ HELP
     );
 
     @outargs = (
-        { name => "x$type", type => $bounded_type,
-          void_ret => 1,
-          desc => "The image's grid horizontal $type",
-          init => 1 },
-        { name => "y$type", type => $bounded_type,
-          void_ret => 1,
-          desc => "The image's grid vertical $type",
-          init => 1 }
+        { name => "x$type", type => $bounded_type, void_ret => 1,
+          desc => "The image's grid horizontal $type" },
+        { name => "y$type", type => $bounded_type, void_ret => 1,
+          desc => "The image's grid vertical $type" }
     );
 
     %invoke = (
@@ -217,7 +213,6 @@ sub image_grid_set_background_color {
 }
 
 sub image_grid_get_style {
-
     $blurb = "Gets the style of an image's grid.";
 
     $help = <<HELP;
@@ -231,10 +226,8 @@ HELP
     );
 
     @outargs = (
-        { name => 'style',
-          type => 'enum GimpGridStyle',
-          desc => "The image's grid style",
-          init => 1 }
+        { name => 'style', type => 'enum GimpGridStyle',
+          desc => "The image's grid style" }
     );
 
     %invoke = (
@@ -243,9 +236,7 @@ HELP
   GimpGrid *grid = gimp_image_get_grid (gimage);
 
   if (grid)
-    {
-      style = grid->style;
-    }
+    style = grid->style;
   else
     success = FALSE;
 }
@@ -254,7 +245,6 @@ CODE
 }
 
 sub image_grid_set_style {
-
     $blurb = "Sets the style unit of an image's grid.";
 
     $help = <<HELP;
@@ -266,8 +256,7 @@ HELP
 
     @inargs = (
         &std_image_arg,
-        { name => 'style',
-          type => 'enum GimpGridStyle',
+        { name => 'style', type => 'enum GimpGridStyle',
           desc => "The image's grid style" }
     );
 

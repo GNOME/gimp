@@ -37,7 +37,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'non_empty', type => 'boolean', init => 1,
+	{ name => 'non_empty', type => 'boolean',
 	  desc => 'TRUE if the cut was successful, FALSE if the
                    selection contained only transparent pixels' }
     );
@@ -78,7 +78,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'non_empty', type => 'boolean', init => 1,
+	{ name => 'non_empty', type => 'boolean',
 	  desc => 'TRUE if the copy was successful, FALSE if the
                    selection contained only transparent pixels' }
     );
@@ -118,7 +118,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'non_empty', type => 'boolean', init => 1,
+	{ name => 'non_empty', type => 'boolean',
 	  desc => 'TRUE if the copy was successful, FALSE if the
                    selection contained only transparent pixels' }
     );
@@ -163,7 +163,7 @@ HELP
 
     @outargs = (
 	{ name  => 'floating_sel', type  => 'layer',
-	  desc  => 'The new floating selection', init => 1 }
+	  desc  => 'The new floating selection' }
     );
 
     %invoke = (
@@ -198,7 +198,7 @@ HELP
     &mitch_pdb_misc('2005', '2.4');
 
     @outargs = (
-	{ name => 'image', type => 'image', init => 1,
+	{ name => 'image', type => 'image',
 	  desc => 'The new image' }
     );
     %invoke = (
@@ -235,7 +235,7 @@ HELP
           desc => 'The name of the buffer to create' }
     );
     @outargs = (
-	{ name => 'real_name', type => 'string', init => 1,
+	{ name => 'real_name', type => 'string',
 	  desc => 'The real name given to the buffer, or NULL if the
                    selection contained only transparent pixels' }
     );
@@ -281,7 +281,7 @@ HELP
           desc => 'The name of the buffer to create' }
     );
     @outargs = (
-	{ name => 'real_name', type => 'string', init => 1,
+	{ name => 'real_name', type => 'string',
 	  desc => 'The real name given to the buffer, or NULL if the
                    selection contained only transparent pixels' }
     );
@@ -329,7 +329,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'real_name', type => 'string', init => 1,
+	{ name => 'real_name', type => 'string',
 	  desc => 'The real name given to the buffer' }
     );
 
@@ -374,7 +374,7 @@ HELP
 
     @outargs = (
 	{ name  => 'floating_sel', type  => 'layer',
-	  desc  => 'The new floating selection', init => 1 }
+	  desc  => 'The new floating selection' }
     );
 
     %invoke = (
@@ -416,7 +416,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'image', type => 'image', init => 1,
+	{ name => 'image', type => 'image',
 	  desc => 'The new image' }
     );
 

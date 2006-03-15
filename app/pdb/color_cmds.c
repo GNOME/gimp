@@ -1249,12 +1249,12 @@ histogram_invoker (Gimp         *gimp,
   gint32 channel;
   gint32 start_range;
   gint32 end_range;
-  gdouble mean = 0;
-  gdouble std_dev = 0;
-  gdouble median = 0;
-  gdouble pixels = 0;
-  gdouble count = 0;
-  gdouble percentile = 0;
+  gdouble mean = 0.0;
+  gdouble std_dev = 0.0;
+  gdouble median = 0.0;
+  gdouble pixels = 0.0;
+  gdouble count = 0.0;
+  gdouble percentile = 0.0;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))

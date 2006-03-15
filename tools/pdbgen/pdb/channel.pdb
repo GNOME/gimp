@@ -145,7 +145,7 @@ HELP
 
     @outargs = (
 	{ name => 'channel', type => 'channel', wrap => 1,
-	  desc => 'The newly created channel', init => 1 }
+	  desc => 'The newly created channel' }
     );
 
     %invoke = (
@@ -176,7 +176,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'channel_copy', type => 'channel', init => 1,
+	{ name => 'channel_copy', type => 'channel',
 	  desc => 'The newly copied channel' }
     );
 
@@ -245,7 +245,7 @@ HELP
     $inargs[0]->{desc} .= ' to which to add the channel';
 
     @outargs = (
-	{ name => 'channel', type => 'channel', init => 1,
+	{ name => 'channel', type => 'channel',
 	  desc => 'The newly created channel' }
     );
 

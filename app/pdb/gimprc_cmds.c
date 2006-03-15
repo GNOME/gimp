@@ -195,7 +195,7 @@ get_default_comment_invoker (Gimp         *gimp,
                              Argument     *args)
 {
   Argument *return_args;
-  gchar *comment;
+  gchar *comment = NULL;
 
   comment = g_strdup (gimp->config->default_image->comment);
 
@@ -239,8 +239,8 @@ get_monitor_resolution_invoker (Gimp         *gimp,
                                 Argument     *args)
 {
   Argument *return_args;
-  gdouble xres;
-  gdouble yres;
+  gdouble xres = 0.0;
+  gdouble yres = 0.0;
 
   xres = GIMP_DISPLAY_CONFIG (gimp->config)->monitor_xres;
   yres = GIMP_DISPLAY_CONFIG (gimp->config)->monitor_yres;
@@ -292,7 +292,7 @@ get_theme_dir_invoker (Gimp         *gimp,
                        Argument     *args)
 {
   Argument *return_args;
-  gchar *theme_dir;
+  gchar *theme_dir = NULL;
 
   theme_dir = g_strdup (gimp_get_theme_dir (gimp));
 
@@ -336,7 +336,7 @@ get_color_configuration_invoker (Gimp         *gimp,
                                  Argument     *args)
 {
   Argument *return_args;
-  gchar *config;
+  gchar *config = NULL;
 
   config = gimp_config_serialize_to_string (GIMP_CONFIG (gimp->config->color_management), NULL);
 
@@ -380,7 +380,7 @@ get_module_load_inhibit_invoker (Gimp         *gimp,
                                  Argument     *args)
 {
   Argument *return_args;
-  gchar *load_inhibit;
+  gchar *load_inhibit = NULL;
 
   load_inhibit = g_strdup (gimp_module_db_get_load_inhibit (gimp->module_db));
 

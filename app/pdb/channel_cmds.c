@@ -650,7 +650,7 @@ channel_get_color_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpChannel *channel;
-  GimpRGB color;
+  GimpRGB color = { 0.0, 0.0, 0.0, 1.0 };
 
   channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_CHANNEL (channel) && ! gimp_item_is_removed (GIMP_ITEM (channel))))

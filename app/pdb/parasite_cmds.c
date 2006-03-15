@@ -226,8 +226,8 @@ parasite_list_invoker (Gimp         *gimp,
                        Argument     *args)
 {
   Argument *return_args;
-  gint32 num_parasites;
-  gchar **parasites;
+  gint32 num_parasites = 0;
+  gchar **parasites = NULL;
 
   parasites = gimp_parasite_list (gimp, &num_parasites);
 
@@ -467,7 +467,7 @@ drawable_parasite_list_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpDrawable *drawable;
-  gint32 num_parasites;
+  gint32 num_parasites = 0;
   gchar **parasites = NULL;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
@@ -725,7 +725,7 @@ image_parasite_list_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpImage *gimage;
-  gint32 num_parasites;
+  gint32 num_parasites = 0;
   gchar **parasites = NULL;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);

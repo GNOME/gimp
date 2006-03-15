@@ -51,8 +51,7 @@ HELP
         { name => 'palette_list', type => 'stringarray',
           desc => 'The list of palette names',
           array => { name => 'num_palettes',
-                     desc => 'The number of palettes in the list' },
-	  init => 1 }
+                     desc => 'The number of palettes in the list' } }
     );
 
     %invoke = (
@@ -65,9 +64,9 @@ sub palettes_get_palette {
     &std_pdb_deprecated ('gimp-context-get-palette');
 
     @outargs = (
-	{ name => 'name', type => 'string', init => 1,
+	{ name => 'name', type => 'string',
 	  desc => 'The palette name', null_ok => '1' },
-	{ name => 'num_colors', type => 'int32', init => 1,
+	{ name => 'num_colors', type => 'int32',
 	  desc => 'The palette num_colors' }
     );
 
@@ -100,9 +99,9 @@ sub palettes_get_palette_entry {
     );
 
     @outargs = (
-	{ name => 'actual_name', type => 'string', init => 1,
+	{ name => 'actual_name', type => 'string',
 	  desc => 'The palette name' },
-	{ name => 'num_colors', type => 'int32', init => 1,
+	{ name => 'num_colors', type => 'int32',
 	  desc => 'The palette num_colors' },
 	{ name => 'color', type => 'color', void_ret => 1,
 	  desc => 'The color requested' }

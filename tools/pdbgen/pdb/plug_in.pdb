@@ -51,7 +51,6 @@ sub plugins_query {
 			desc => 'The number of plugins' }
     }
 
-    $outargs[0]->{array}->{init} = 1;
     delete $outargs[0]->{array}->{no_declare};
 
     %invoke = (

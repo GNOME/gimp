@@ -66,12 +66,12 @@ plugins_query_invoker (Gimp         *gimp,
   Argument *return_args;
   gchar *search_string;
   gint32 num_plugins = 0;
-  gchar **menu_path;
-  gchar **plugin_accelerator;
-  gchar **plugin_location;
-  gchar **plugin_image_type;
-  gint32 *plugin_install_time;
-  gchar **plugin_real_name;
+  gchar **menu_path = NULL;
+  gchar **plugin_accelerator = NULL;
+  gchar **plugin_location = NULL;
+  gchar **plugin_image_type = NULL;
+  gint32 *plugin_install_time = NULL;
+  gchar **plugin_real_name = NULL;
 
   search_string = (gchar *) args[0].value.pdb_pointer;
 

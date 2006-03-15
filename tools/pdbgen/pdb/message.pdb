@@ -57,7 +57,7 @@ HELP
     &yosh_pdb_misc('1998');
 
     @outargs = (
-	{ name => 'handler', type => 'enum GimpMessageHandlerType', init => 1,
+	{ name => 'handler', type => 'enum GimpMessageHandlerType',
 	  desc => 'The current handler type: { %%desc%% }' }
     );
 

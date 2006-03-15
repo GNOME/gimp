@@ -63,7 +63,7 @@ procedural_db_temp_name_invoker (Gimp         *gimp,
                                  Argument     *args)
 {
   Argument *return_args;
-  gchar *temp_name;
+  gchar *temp_name = NULL;
 
   static gint proc_number = 0;
 
@@ -295,14 +295,14 @@ procedural_db_proc_info_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   gchar *procedure;
-  gchar *blurb;
-  gchar *help;
-  gchar *author;
-  gchar *copyright;
-  gchar *date;
+  gchar *blurb = NULL;
+  gchar *help = NULL;
+  gchar *author = NULL;
+  gchar *copyright = NULL;
+  gchar *date = NULL;
   gint32 proc_type = 0;
-  gint32 num_args;
-  gint32 num_values;
+  gint32 num_args = 0;
+  gint32 num_values = 0;
 
   procedure = (gchar *) args[0].value.pdb_pointer;
   if (procedure == NULL || !g_utf8_validate (procedure, -1, NULL))
@@ -653,7 +653,7 @@ procedural_db_get_data_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   gchar *identifier;
-  gint32 bytes;
+  gint32 bytes = 0;
   guint8 *data = NULL;
 
   identifier = (gchar *) args[0].value.pdb_pointer;
@@ -737,7 +737,7 @@ procedural_db_get_data_size_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   gchar *identifier;
-  gint32 bytes;
+  gint32 bytes = 0;
 
   identifier = (gchar *) args[0].value.pdb_pointer;
   if (identifier == NULL || !g_utf8_validate (identifier, -1, NULL))

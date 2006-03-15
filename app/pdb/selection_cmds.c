@@ -85,10 +85,10 @@ selection_bounds_invoker (Gimp         *gimp,
   Argument *return_args;
   GimpImage *gimage;
   gboolean non_empty = FALSE;
-  gint32 x1;
-  gint32 y1;
-  gint32 x2;
-  gint32 y2;
+  gint32 x1 = 0;
+  gint32 y1 = 0;
+  gint32 x2 = 0;
+  gint32 y2 = 0;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))

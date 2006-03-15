@@ -266,7 +266,7 @@ context_get_foreground_invoker (Gimp         *gimp,
                                 Argument     *args)
 {
   Argument *return_args;
-  GimpRGB foreground;
+  GimpRGB foreground = { 0.0, 0.0, 0.0, 1.0 };
 
   gimp_context_get_foreground (context, &foreground);
 
@@ -353,7 +353,7 @@ context_get_background_invoker (Gimp         *gimp,
                                 Argument     *args)
 {
   Argument *return_args;
-  GimpRGB background;
+  GimpRGB background = { 0.0, 0.0, 0.0, 1.0 };
 
   gimp_context_get_background (context, &background);
 
@@ -496,7 +496,7 @@ context_get_opacity_invoker (Gimp         *gimp,
                              Argument     *args)
 {
   Argument *return_args;
-  gdouble opacity = 0;
+  gdouble opacity = 0.0;
 
   opacity = gimp_context_get_opacity (context) * 100.0;
 
