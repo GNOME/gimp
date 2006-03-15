@@ -94,7 +94,7 @@ brush_new_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   gchar *name;
-  GimpData *data = NULL;
+  gchar *actual_name = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -103,15 +103,22 @@ brush_new_invoker (Gimp         *gimp,
   if (success)
     {
       if (strlen (name))
-        data = gimp_data_factory_data_new (gimp->brush_factory, name);
+        {
+          GimpData *data = gimp_data_factory_data_new (gimp->brush_factory, name);
 
-      success = (data != NULL);
+          if (data)
+            actual_name = g_strdup (GIMP_OBJECT (data)->name);
+          else
+            success = FALSE;
+        }
+      else
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&brush_new_proc, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = g_strdup (GIMP_OBJECT (data)->name);
+    return_args[1].value.pdb_pointer = actual_name;
 
   return return_args;
 }
@@ -129,7 +136,7 @@ static ProcArg brush_new_outargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "name",
+    "actual-name",
     "The actual new brush name"
   }
 };
@@ -161,8 +168,7 @@ brush_duplicate_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   gchar *name;
-  GimpBrush *brush = NULL;
-  GimpBrush *brush_copy = NULL;
+  gchar *copy_name = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -170,16 +176,19 @@ brush_duplicate_invoker (Gimp         *gimp,
 
   if (success)
     {
-      brush = (GimpBrush *)
+      GimpBrush *brush = (GimpBrush *)
         gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
       if (brush)
         {
-          brush_copy = (GimpBrush *)
+          GimpBrush *brush_copy = (GimpBrush *)
             gimp_data_factory_data_duplicate (gimp->brush_factory,
                                               GIMP_DATA (brush));
 
-          success = (brush_copy != NULL);
+          if (brush_copy)
+            copy_name = g_strdup (GIMP_OBJECT (brush_copy)->name);
+          else
+            success = FALSE;
         }
       else
         success = FALSE;
@@ -188,7 +197,7 @@ brush_duplicate_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&brush_duplicate_proc, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = g_strdup (GIMP_OBJECT (brush_copy)->name);
+    return_args[1].value.pdb_pointer = copy_name;
 
   return return_args;
 }
@@ -206,7 +215,7 @@ static ProcArg brush_duplicate_outargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "name",
+    "copy-name",
     "The name of the brush's copy"
   }
 };
@@ -238,7 +247,7 @@ brush_is_generated_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   gchar *name;
-  GimpBrush *brush = NULL;
+  gboolean generated = FALSE;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -246,11 +255,11 @@ brush_is_generated_invoker (Gimp         *gimp,
 
   if (success)
     {
-      brush = (GimpBrush *)
+      GimpBrush *brush = (GimpBrush *)
         gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
       if (brush)
-        success = TRUE;
+        generated = GIMP_IS_BRUSH_GENERATED (brush);
       else
         success = FALSE;
     }
@@ -258,7 +267,7 @@ brush_is_generated_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&brush_is_generated_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = GIMP_IS_BRUSH_GENERATED (brush);
+    return_args[1].value.pdb_int = generated;
 
   return return_args;
 }
@@ -309,7 +318,7 @@ brush_rename_invoker (Gimp         *gimp,
   Argument *return_args;
   gchar *name;
   gchar *new_name;
-  GimpBrush *brush = NULL;
+  gchar *actual_name = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -321,11 +330,14 @@ brush_rename_invoker (Gimp         *gimp,
 
   if (success)
     {
-      brush = (GimpBrush *)
+      GimpBrush *brush = (GimpBrush *)
         gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
       if (brush && GIMP_DATA (brush)->writable)
-        gimp_object_set_name (GIMP_OBJECT (brush), new_name);
+        {
+          gimp_object_set_name (GIMP_OBJECT (brush), new_name);
+          actual_name = g_strdup (GIMP_OBJECT (brush)->name);
+        }
       else
         success = FALSE;
     }
@@ -333,7 +345,7 @@ brush_rename_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&brush_rename_proc, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = g_strdup (GIMP_OBJECT (brush)->name);
+    return_args[1].value.pdb_pointer = actual_name;
 
   return return_args;
 }
@@ -356,7 +368,7 @@ static ProcArg brush_rename_outargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "name",
+    "actual-name",
     "The actual new name of the brush"
   }
 };
@@ -387,7 +399,6 @@ brush_delete_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   gchar *name;
-  GimpBrush *brush = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -395,7 +406,7 @@ brush_delete_invoker (Gimp         *gimp,
 
   if (success)
     {
-      brush = (GimpBrush *)
+      GimpBrush *brush = (GimpBrush *)
         gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
       if (brush && GIMP_DATA (brush)->deletable)
@@ -455,7 +466,7 @@ brush_is_editable_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   gchar *name;
-  GimpBrush *brush = NULL;
+  gboolean editable = FALSE;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -463,11 +474,11 @@ brush_is_editable_invoker (Gimp         *gimp,
 
   if (success)
     {
-      brush = (GimpBrush *)
+      GimpBrush *brush = (GimpBrush *)
         gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
       if (brush)
-        success = TRUE;
+        editable = GIMP_DATA (brush)->writable;
       else
         success = FALSE;
     }
@@ -475,7 +486,7 @@ brush_is_editable_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&brush_is_editable_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = GIMP_DATA (brush)->writable;
+    return_args[1].value.pdb_int = editable;
 
   return return_args;
 }
@@ -525,7 +536,10 @@ brush_get_info_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   gchar *name;
-  GimpBrush *brush = NULL;
+  gint32 width = 0;
+  gint32 height = 0;
+  gint32 mask_bpp = 0;
+  gint32 color_bpp = 0;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -533,20 +547,28 @@ brush_get_info_invoker (Gimp         *gimp,
 
   if (success)
     {
-      brush = (GimpBrush *)
+      GimpBrush *brush = (GimpBrush *)
         gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
-      success = (brush != NULL);
+      if (brush)
+        {
+          width     = brush->mask->width;
+          height    = brush->mask->height;
+          mask_bpp  = brush->mask->bytes;
+          color_bpp = brush->pixmap ? brush->pixmap->bytes : 0;
+        }
+      else
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&brush_get_info_proc, success);
 
   if (success)
     {
-      return_args[1].value.pdb_int = brush->mask->width;
-      return_args[2].value.pdb_int = brush->mask->height;
-      return_args[3].value.pdb_int = brush->mask->bytes;
-      return_args[4].value.pdb_int = brush->pixmap ? brush->pixmap->bytes : 0;
+      return_args[1].value.pdb_int = width;
+      return_args[2].value.pdb_int = height;
+      return_args[3].value.pdb_int = mask_bpp;
+      return_args[4].value.pdb_int = color_bpp;
     }
 
   return return_args;
@@ -612,13 +634,14 @@ brush_get_pixels_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   gchar *name;
+  gint32 width = 0;
+  gint32 height = 0;
   gint32 mask_bpp = 0;
   gint32 num_mask_bytes = 0;
   guint8 *mask_bytes = NULL;
   gint32 color_bpp = 0;
   gint32 num_color_bytes = 0;
   guint8 *color_bytes = NULL;
-  GimpBrush *brush = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -626,11 +649,13 @@ brush_get_pixels_invoker (Gimp         *gimp,
 
   if (success)
     {
-      brush = (GimpBrush *)
+      GimpBrush *brush = (GimpBrush *)
         gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
       if (brush)
         {
+          width          = brush->mask->width;
+          height         = brush->mask->height;
           mask_bpp       = brush->mask->bytes;
           num_mask_bytes = brush->mask->height * brush->mask->width;
           mask_bytes     = g_memdup (temp_buf_data (brush->mask), num_mask_bytes);
@@ -651,8 +676,8 @@ brush_get_pixels_invoker (Gimp         *gimp,
 
   if (success)
     {
-      return_args[1].value.pdb_int = brush->mask->width;
-      return_args[2].value.pdb_int = brush->mask->height;
+      return_args[1].value.pdb_int = width;
+      return_args[2].value.pdb_int = height;
       return_args[3].value.pdb_int = mask_bpp;
       return_args[4].value.pdb_int = num_mask_bytes;
       return_args[5].value.pdb_pointer = mask_bytes;
@@ -744,7 +769,7 @@ brush_get_spacing_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   gchar *name;
-  GimpBrush *brush = NULL;
+  gint32 spacing = 0;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -752,16 +777,19 @@ brush_get_spacing_invoker (Gimp         *gimp,
 
   if (success)
     {
-      brush = (GimpBrush *)
+      GimpBrush *brush = (GimpBrush *)
         gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
-      success = (brush != NULL);
+      if (brush)
+        spacing = gimp_brush_get_spacing (brush);
+      else
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&brush_get_spacing_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_brush_get_spacing (brush);
+    return_args[1].value.pdb_int = spacing;
 
   return return_args;
 }
@@ -811,7 +839,6 @@ brush_set_spacing_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   gchar *name;
   gint32 spacing;
-  GimpBrush *brush = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -823,7 +850,7 @@ brush_set_spacing_invoker (Gimp         *gimp,
 
   if (success)
     {
-      brush = (GimpBrush *)
+      GimpBrush *brush = (GimpBrush *)
         gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
       if (brush)
@@ -876,7 +903,7 @@ brush_get_shape_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   gchar *name;
-  GimpBrush *brush = NULL;
+  gint32 shape = 0;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -884,16 +911,19 @@ brush_get_shape_invoker (Gimp         *gimp,
 
   if (success)
     {
-      brush = (GimpBrush *)
+      GimpBrush *brush = (GimpBrush *)
         gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
-      success = (brush != NULL && GIMP_IS_BRUSH_GENERATED (brush));
+      if (GIMP_IS_BRUSH_GENERATED (brush))
+        shape = GIMP_BRUSH_GENERATED (brush)->shape;
+      else
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&brush_get_shape_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = GIMP_BRUSH_GENERATED (brush)->shape;
+    return_args[1].value.pdb_int = shape;
 
   return return_args;
 }
@@ -943,7 +973,7 @@ brush_get_radius_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   gchar *name;
-  GimpBrush *brush = NULL;
+  gdouble radius = 0;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -951,16 +981,19 @@ brush_get_radius_invoker (Gimp         *gimp,
 
   if (success)
     {
-      brush = (GimpBrush *)
+      GimpBrush *brush = (GimpBrush *)
         gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
-      success = (brush != NULL && GIMP_IS_BRUSH_GENERATED (brush));
+      if (GIMP_IS_BRUSH_GENERATED (brush))
+        radius = GIMP_BRUSH_GENERATED (brush)->radius;
+      else
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&brush_get_radius_proc, success);
 
   if (success)
-    return_args[1].value.pdb_float = GIMP_BRUSH_GENERATED (brush)->radius;
+    return_args[1].value.pdb_float = radius;
 
   return return_args;
 }
@@ -1010,7 +1043,7 @@ brush_get_spikes_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   gchar *name;
-  GimpBrush *brush = NULL;
+  gint32 spikes = 0;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -1018,16 +1051,19 @@ brush_get_spikes_invoker (Gimp         *gimp,
 
   if (success)
     {
-      brush = (GimpBrush *)
+      GimpBrush *brush = (GimpBrush *)
         gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
-      success = (brush != NULL && GIMP_IS_BRUSH_GENERATED (brush));
+      if (GIMP_IS_BRUSH_GENERATED (brush))
+        spikes = GIMP_BRUSH_GENERATED (brush)->spikes;
+      else
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&brush_get_spikes_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = GIMP_BRUSH_GENERATED (brush)->spikes;
+    return_args[1].value.pdb_int = spikes;
 
   return return_args;
 }
@@ -1077,7 +1113,7 @@ brush_get_hardness_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   gchar *name;
-  GimpBrush *brush = NULL;
+  gdouble hardness = 0;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -1085,16 +1121,19 @@ brush_get_hardness_invoker (Gimp         *gimp,
 
   if (success)
     {
-      brush = (GimpBrush *)
+      GimpBrush *brush = (GimpBrush *)
         gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
-      success = (brush != NULL && GIMP_IS_BRUSH_GENERATED (brush));
+      if (GIMP_IS_BRUSH_GENERATED (brush))
+        hardness = GIMP_BRUSH_GENERATED (brush)->hardness;
+      else
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&brush_get_hardness_proc, success);
 
   if (success)
-    return_args[1].value.pdb_float = GIMP_BRUSH_GENERATED (brush)->hardness;
+    return_args[1].value.pdb_float = hardness;
 
   return return_args;
 }
@@ -1144,7 +1183,7 @@ brush_get_aspect_ratio_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   gchar *name;
-  GimpBrush *brush = NULL;
+  gdouble aspect_ratio = 0;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -1152,16 +1191,19 @@ brush_get_aspect_ratio_invoker (Gimp         *gimp,
 
   if (success)
     {
-      brush = (GimpBrush *)
+      GimpBrush *brush = (GimpBrush *)
         gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
-      success = (brush != NULL && GIMP_IS_BRUSH_GENERATED (brush));
+      if (GIMP_IS_BRUSH_GENERATED (brush))
+        aspect_ratio = GIMP_BRUSH_GENERATED (brush)->aspect_ratio;
+      else
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&brush_get_aspect_ratio_proc, success);
 
   if (success)
-    return_args[1].value.pdb_float = GIMP_BRUSH_GENERATED (brush)->aspect_ratio;
+    return_args[1].value.pdb_float = aspect_ratio;
 
   return return_args;
 }
@@ -1211,7 +1253,7 @@ brush_get_angle_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   gchar *name;
-  GimpBrush *brush = NULL;
+  gdouble angle = 0;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -1219,16 +1261,19 @@ brush_get_angle_invoker (Gimp         *gimp,
 
   if (success)
     {
-      brush = (GimpBrush *)
+      GimpBrush *brush = (GimpBrush *)
         gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
-      success = (brush != NULL && GIMP_IS_BRUSH_GENERATED (brush));
+      if (GIMP_IS_BRUSH_GENERATED (brush))
+        angle = GIMP_BRUSH_GENERATED (brush)->angle;
+      else
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&brush_get_angle_proc, success);
 
   if (success)
-    return_args[1].value.pdb_float = GIMP_BRUSH_GENERATED (brush)->angle;
+    return_args[1].value.pdb_float = angle;
 
   return return_args;
 }
@@ -1279,7 +1324,7 @@ brush_set_shape_invoker (Gimp         *gimp,
   Argument *return_args;
   gchar *name;
   gint32 shape_in;
-  GimpBrush *brush = NULL;
+  gint32 shape_out = 0;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -1289,11 +1334,15 @@ brush_set_shape_invoker (Gimp         *gimp,
 
   if (success)
     {
-      brush = (GimpBrush *)
+      GimpBrush *brush = (GimpBrush *)
         gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
       if (brush && GIMP_DATA (brush)->writable && GIMP_IS_BRUSH_GENERATED (brush))
-        gimp_brush_generated_set_shape (GIMP_BRUSH_GENERATED (brush), shape_in);
+        {
+          gimp_brush_generated_set_shape (GIMP_BRUSH_GENERATED (brush),
+                                          shape_in);
+          shape_out = GIMP_BRUSH_GENERATED (brush)->shape;
+        }
       else
         success = FALSE;
     }
@@ -1301,7 +1350,7 @@ brush_set_shape_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&brush_set_shape_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = GIMP_BRUSH_GENERATED (brush)->shape;
+    return_args[1].value.pdb_int = shape_out;
 
   return return_args;
 }
@@ -1357,7 +1406,7 @@ brush_set_radius_invoker (Gimp         *gimp,
   Argument *return_args;
   gchar *name;
   gdouble radius_in;
-  GimpBrush *brush = NULL;
+  gdouble radius_out = 0;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -1367,11 +1416,15 @@ brush_set_radius_invoker (Gimp         *gimp,
 
   if (success)
     {
-      brush = (GimpBrush *)
+      GimpBrush *brush = (GimpBrush *)
         gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
       if (brush && GIMP_DATA (brush)->writable && GIMP_IS_BRUSH_GENERATED (brush))
-        gimp_brush_generated_set_radius (GIMP_BRUSH_GENERATED (brush), radius_in);
+        {
+          gimp_brush_generated_set_radius (GIMP_BRUSH_GENERATED (brush),
+                                           radius_in);
+          radius_out = GIMP_BRUSH_GENERATED (brush)->radius;
+        }
       else
         success = FALSE;
     }
@@ -1379,7 +1432,7 @@ brush_set_radius_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&brush_set_radius_proc, success);
 
   if (success)
-    return_args[1].value.pdb_float = GIMP_BRUSH_GENERATED (brush)->radius;
+    return_args[1].value.pdb_float = radius_out;
 
   return return_args;
 }
@@ -1435,7 +1488,7 @@ brush_set_spikes_invoker (Gimp         *gimp,
   Argument *return_args;
   gchar *name;
   gint32 spikes_in;
-  GimpBrush *brush = NULL;
+  gint32 spikes_out = 0;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -1445,11 +1498,15 @@ brush_set_spikes_invoker (Gimp         *gimp,
 
   if (success)
     {
-      brush = (GimpBrush *)
+      GimpBrush *brush = (GimpBrush *)
         gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
       if (brush && GIMP_DATA (brush)->writable && GIMP_IS_BRUSH_GENERATED (brush))
-        gimp_brush_generated_set_spikes (GIMP_BRUSH_GENERATED (brush), spikes_in);
+        {
+          gimp_brush_generated_set_spikes (GIMP_BRUSH_GENERATED (brush),
+                                           spikes_in);
+          spikes_out = GIMP_BRUSH_GENERATED (brush)->spikes;
+        }
       else
         success = FALSE;
     }
@@ -1457,7 +1514,7 @@ brush_set_spikes_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&brush_set_spikes_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = GIMP_BRUSH_GENERATED (brush)->spikes;
+    return_args[1].value.pdb_int = spikes_out;
 
   return return_args;
 }
@@ -1513,7 +1570,7 @@ brush_set_hardness_invoker (Gimp         *gimp,
   Argument *return_args;
   gchar *name;
   gdouble hardness_in;
-  GimpBrush *brush = NULL;
+  gdouble hardness_out = 0;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -1523,11 +1580,15 @@ brush_set_hardness_invoker (Gimp         *gimp,
 
   if (success)
     {
-      brush = (GimpBrush *)
+      GimpBrush *brush = (GimpBrush *)
         gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
       if (brush && GIMP_DATA (brush)->writable && GIMP_IS_BRUSH_GENERATED (brush))
-        gimp_brush_generated_set_hardness (GIMP_BRUSH_GENERATED (brush), hardness_in);
+        {
+          gimp_brush_generated_set_hardness (GIMP_BRUSH_GENERATED (brush),
+                                             hardness_in);
+          hardness_out = GIMP_BRUSH_GENERATED (brush)->hardness;
+        }
       else
         success = FALSE;
     }
@@ -1535,7 +1596,7 @@ brush_set_hardness_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&brush_set_hardness_proc, success);
 
   if (success)
-    return_args[1].value.pdb_float = GIMP_BRUSH_GENERATED (brush)->hardness;
+    return_args[1].value.pdb_float = hardness_out;
 
   return return_args;
 }
@@ -1591,7 +1652,7 @@ brush_set_aspect_ratio_invoker (Gimp         *gimp,
   Argument *return_args;
   gchar *name;
   gdouble aspect_ratio_in;
-  GimpBrush *brush = NULL;
+  gdouble aspect_ratio_out = 0;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -1601,11 +1662,15 @@ brush_set_aspect_ratio_invoker (Gimp         *gimp,
 
   if (success)
     {
-      brush = (GimpBrush *)
+      GimpBrush *brush = (GimpBrush *)
         gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
       if (brush && GIMP_DATA (brush)->writable && GIMP_IS_BRUSH_GENERATED (brush))
-        gimp_brush_generated_set_aspect_ratio (GIMP_BRUSH_GENERATED (brush), aspect_ratio_in);
+        {
+          gimp_brush_generated_set_aspect_ratio (GIMP_BRUSH_GENERATED (brush),
+                                                 aspect_ratio_in);
+          aspect_ratio_out = GIMP_BRUSH_GENERATED (brush)->aspect_ratio;
+        }
       else
         success = FALSE;
     }
@@ -1613,7 +1678,7 @@ brush_set_aspect_ratio_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&brush_set_aspect_ratio_proc, success);
 
   if (success)
-    return_args[1].value.pdb_float = GIMP_BRUSH_GENERATED (brush)->aspect_ratio;
+    return_args[1].value.pdb_float = aspect_ratio_out;
 
   return return_args;
 }
@@ -1669,7 +1734,7 @@ brush_set_angle_invoker (Gimp         *gimp,
   Argument *return_args;
   gchar *name;
   gdouble angle_in;
-  GimpBrush *brush = NULL;
+  gdouble angle_out = 0;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -1679,11 +1744,15 @@ brush_set_angle_invoker (Gimp         *gimp,
 
   if (success)
     {
-      brush = (GimpBrush *)
+      GimpBrush *brush = (GimpBrush *)
         gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
       if (brush && GIMP_DATA (brush)->writable && GIMP_IS_BRUSH_GENERATED (brush))
-        gimp_brush_generated_set_angle (GIMP_BRUSH_GENERATED (brush), angle_in);
+        {
+          gimp_brush_generated_set_angle (GIMP_BRUSH_GENERATED (brush),
+                                          angle_in);
+          angle_out = GIMP_BRUSH_GENERATED (brush)->angle;
+        }
       else
         success = FALSE;
     }
@@ -1691,7 +1760,7 @@ brush_set_angle_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&brush_set_angle_proc, success);
 
   if (success)
-    return_args[1].value.pdb_float = GIMP_BRUSH_GENERATED (brush)->angle;
+    return_args[1].value.pdb_float = angle_out;
 
   return return_args;
 }

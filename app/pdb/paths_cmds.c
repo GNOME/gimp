@@ -361,7 +361,6 @@ path_get_points_invoker (Gimp         *gimp,
   gint32 path_closed = 0;
   gint32 num_point_details = 0;
   gdouble *points_pairs = NULL;
-  GimpVectors *vectors;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -373,7 +372,7 @@ path_get_points_invoker (Gimp         *gimp,
 
   if (success)
     {
-      vectors = gimp_image_get_vectors_by_name (gimage, name);
+      GimpVectors *vectors = gimp_image_get_vectors_by_name (gimage, name);
 
       if (vectors)
         {

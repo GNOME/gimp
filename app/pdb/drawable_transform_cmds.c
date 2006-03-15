@@ -500,32 +500,39 @@ drawable_transform_perspective_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpDrawable *drawable;
+  gdouble x0;
+  gdouble y0;
+  gdouble x1;
+  gdouble y1;
+  gdouble x2;
+  gdouble y2;
+  gdouble x3;
+  gdouble y3;
   gint32 transform_direction;
   gint32 interpolation;
   gboolean supersample;
   gint32 recursion_level;
   gboolean clip_result;
-  gdouble trans_info[8];
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
     success = FALSE;
 
-  trans_info[X0] = args[1].value.pdb_float;
+  x0 = args[1].value.pdb_float;
 
-  trans_info[Y0] = args[2].value.pdb_float;
+  y0 = args[2].value.pdb_float;
 
-  trans_info[X1] = args[3].value.pdb_float;
+  x1 = args[3].value.pdb_float;
 
-  trans_info[Y1] = args[4].value.pdb_float;
+  y1 = args[4].value.pdb_float;
 
-  trans_info[X2] = args[5].value.pdb_float;
+  x2 = args[5].value.pdb_float;
 
-  trans_info[Y2] = args[6].value.pdb_float;
+  y2 = args[6].value.pdb_float;
 
-  trans_info[X3] = args[7].value.pdb_float;
+  x3 = args[7].value.pdb_float;
 
-  trans_info[Y3] = args[8].value.pdb_float;
+  y3 = args[8].value.pdb_float;
 
   transform_direction = args[9].value.pdb_int;
   if (transform_direction < GIMP_TRANSFORM_FORWARD || transform_direction > GIMP_TRANSFORM_BACKWARD)
@@ -558,10 +565,10 @@ drawable_transform_perspective_invoker (Gimp         *gimp,
           gimp_matrix3_identity (&matrix);
           gimp_transform_matrix_perspective (&matrix,
                                              x, y, width, height,
-                                             trans_info[X0], trans_info[Y0],
-                                             trans_info[X1], trans_info[Y1],
-                                             trans_info[X2], trans_info[Y2],
-                                             trans_info[X3], trans_info[Y3]);
+                                             x0, y0,
+                                             x1, y1,
+                                             x2, y2,
+                                             x3, y3);
 
           if (progress)
             gimp_progress_start (progress, _("Perspective"), FALSE);
@@ -696,29 +703,36 @@ drawable_transform_perspective_default_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpDrawable *drawable;
+  gdouble x0;
+  gdouble y0;
+  gdouble x1;
+  gdouble y1;
+  gdouble x2;
+  gdouble y2;
+  gdouble x3;
+  gdouble y3;
   gboolean interpolate;
   gboolean clip_result;
-  gdouble trans_info[8];
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
     success = FALSE;
 
-  trans_info[X0] = args[1].value.pdb_float;
+  x0 = args[1].value.pdb_float;
 
-  trans_info[Y0] = args[2].value.pdb_float;
+  y0 = args[2].value.pdb_float;
 
-  trans_info[X1] = args[3].value.pdb_float;
+  x1 = args[3].value.pdb_float;
 
-  trans_info[Y1] = args[4].value.pdb_float;
+  y1 = args[4].value.pdb_float;
 
-  trans_info[X2] = args[5].value.pdb_float;
+  x2 = args[5].value.pdb_float;
 
-  trans_info[Y2] = args[6].value.pdb_float;
+  y2 = args[6].value.pdb_float;
 
-  trans_info[X3] = args[7].value.pdb_float;
+  x3 = args[7].value.pdb_float;
 
-  trans_info[Y3] = args[8].value.pdb_float;
+  y3 = args[8].value.pdb_float;
 
   interpolate = args[9].value.pdb_int ? TRUE : FALSE;
 
@@ -740,10 +754,10 @@ drawable_transform_perspective_default_invoker (Gimp         *gimp,
           gimp_matrix3_identity (&matrix);
           gimp_transform_matrix_perspective (&matrix,
                                              x, y, width, height,
-                                             trans_info[X0], trans_info[Y0],
-                                             trans_info[X1], trans_info[Y1],
-                                             trans_info[X2], trans_info[Y2],
-                                             trans_info[X3], trans_info[Y3]);
+                                             x0, y0,
+                                             x1, y1,
+                                             x2, y2,
+                                             x3, y3);
 
           if (interpolate)
             interpolation_type = gimp->config->interpolation_type;
@@ -1296,24 +1310,27 @@ drawable_transform_scale_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpDrawable *drawable;
+  gdouble x0;
+  gdouble y0;
+  gdouble x1;
+  gdouble y1;
   gint32 transform_direction;
   gint32 interpolation;
   gboolean supersample;
   gint32 recursion_level;
   gboolean clip_result;
-  gdouble trans_info[4];
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
     success = FALSE;
 
-  trans_info[X0] = args[1].value.pdb_float;
+  x0 = args[1].value.pdb_float;
 
-  trans_info[Y0] = args[2].value.pdb_float;
+  y0 = args[2].value.pdb_float;
 
-  trans_info[X1] = args[3].value.pdb_float;
+  x1 = args[3].value.pdb_float;
 
-  trans_info[Y1] = args[4].value.pdb_float;
+  y1 = args[4].value.pdb_float;
 
   transform_direction = args[5].value.pdb_int;
   if (transform_direction < GIMP_TRANSFORM_FORWARD || transform_direction > GIMP_TRANSFORM_BACKWARD)
@@ -1335,9 +1352,7 @@ drawable_transform_scale_invoker (Gimp         *gimp,
     {
       gint x, y, width, height;
 
-      success = (gimp_item_is_attached (GIMP_ITEM (drawable)) &&
-                 trans_info[X0] < trans_info[X1] &&
-                 trans_info[Y0] < trans_info[Y1]);
+      success = (gimp_item_is_attached (GIMP_ITEM (drawable)) && x0 < x1 && y0 < y1);
 
       if (success &&
           gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
@@ -1348,10 +1363,9 @@ drawable_transform_scale_invoker (Gimp         *gimp,
           gimp_matrix3_identity (&matrix);
           gimp_transform_matrix_scale (&matrix,
                                        x, y, width, height,
-                                       trans_info[X0],
-                                       trans_info[Y0],
-                                       trans_info[X1] - trans_info[X0],
-                                       trans_info[Y1] - trans_info[Y0]);
+                                       x0, y0,
+                                       x1 - x0,
+                                       y1 - y0);
 
           if (progress)
             gimp_progress_start (progress, _("Scaling"), FALSE);
@@ -1466,21 +1480,24 @@ drawable_transform_scale_default_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpDrawable *drawable;
+  gdouble x0;
+  gdouble y0;
+  gdouble x1;
+  gdouble y1;
   gboolean interpolate;
   gboolean clip_result;
-  gdouble trans_info[4];
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
     success = FALSE;
 
-  trans_info[X0] = args[1].value.pdb_float;
+  x0 = args[1].value.pdb_float;
 
-  trans_info[Y0] = args[2].value.pdb_float;
+  y0 = args[2].value.pdb_float;
 
-  trans_info[X1] = args[3].value.pdb_float;
+  x1 = args[3].value.pdb_float;
 
-  trans_info[Y1] = args[4].value.pdb_float;
+  y1 = args[4].value.pdb_float;
 
   interpolate = args[5].value.pdb_int ? TRUE : FALSE;
 
@@ -1490,9 +1507,7 @@ drawable_transform_scale_default_invoker (Gimp         *gimp,
     {
       gint x, y, width, height;
 
-      success = (gimp_item_is_attached (GIMP_ITEM (drawable)) &&
-                 trans_info[X0] < trans_info[X1] &&
-                 trans_info[Y0] < trans_info[Y1]);
+      success = (gimp_item_is_attached (GIMP_ITEM (drawable)) && x0 < x1 && y0 < y1);
 
       if (success &&
           gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
@@ -1504,10 +1519,9 @@ drawable_transform_scale_default_invoker (Gimp         *gimp,
           gimp_matrix3_identity (&matrix);
           gimp_transform_matrix_scale (&matrix,
                                        x, y, width, height,
-                                       trans_info[X0],
-                                       trans_info[Y0],
-                                       trans_info[X1] - trans_info[X0],
-                                       trans_info[Y1] - trans_info[Y0]);
+                                       x0, y0,
+                                       x1 - x0,
+                                       y1 - y0);
 
           if (interpolate)
             interpolation_type = gimp->config->interpolation_type;

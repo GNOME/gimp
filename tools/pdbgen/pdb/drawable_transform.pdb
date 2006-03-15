@@ -44,15 +44,14 @@ sub transform_options_default_args () {
 }
 
 sub transform_invoke {
-    my ($progress_text, $assemble_matrix, $variables, $check) = @_;
+    my ($progress_text, $assemble_matrix, $check) = @_;
     my $success_check = 'gimp_item_is_attached (GIMP_ITEM (drawable));';
 
     if ($check) {
-        $success_check = "(gimp_item_is_attached (GIMP_ITEM (drawable)) &&\n" . $check;
+        $success_check = "(gimp_item_is_attached (GIMP_ITEM (drawable)) && " . $check . ");";
     }
 
     %invoke = (
-        vars => $variables,
         code => <<"CODE"
 {
   gint x, y, width, height;
@@ -86,15 +85,14 @@ CODE
 }
 
 sub transform_default_invoke {
-    my ($progress_text, $assemble_matrix, $variables, $check) = @_;
+    my ($progress_text, $assemble_matrix, $check) = @_;
     my $success_check = 'gimp_item_is_attached (GIMP_ITEM (drawable));';
 
     if ($check) {
-        $success_check = "(gimp_item_is_attached (GIMP_ITEM (drawable)) &&\n" . $check;
+        $success_check = "(gimp_item_is_attached (GIMP_ITEM (drawable)) && " . $check . ");";
     }
 
     %invoke = (
-        vars => $variables,
         code => <<"CODE"
 {
   gint x, y, width, height;
@@ -316,8 +314,7 @@ HELP
             push @inargs,
                  { name => "$_$pos", type => 'float',
                    desc => "The new $_ coordinate of $where corner of original
-                            bounding box",
-                   alias => "trans_info[\U$_\E$pos]", no_declare => 1 }
+                            bounding box" }
         }
         $pos++;
     }
@@ -330,14 +327,14 @@ HELP
 	  desc => 'The newly mapped drawable' }
     );
 
-    transform_invoke ("Perspective", <<CODE, [ 'gdouble trans_info[8]' ]);
+    transform_invoke ("Perspective", <<CODE);
       gimp_matrix3_identity (&matrix);
       gimp_transform_matrix_perspective (&matrix,
                                          x, y, width, height,
-                                         trans_info[X0], trans_info[Y0],
-                                         trans_info[X1], trans_info[Y1],
-                                         trans_info[X2], trans_info[Y2],
-                                         trans_info[X3], trans_info[Y3]);
+                                         x0, y0,
+                                         x1, y1,
+                                         x2, y2,
+                                         x3, y3);
 CODE
 }
 
@@ -366,8 +363,7 @@ HELP
             push @inargs,
                  { name => "$_$pos", type => 'float',
                    desc => "The new $_ coordinate of $where corner of original
-                            bounding box",
-                   alias => "trans_info[\U$_\E$pos]", no_declare => 1 }
+                            bounding box" }
         }
         $pos++;
     }
@@ -380,14 +376,14 @@ HELP
 	  desc => 'The newly mapped drawable' }
     );
 
-    transform_default_invoke ("Perspective", <<CODE, [ 'gdouble trans_info[8]' ]);
+    transform_default_invoke ("Perspective", <<CODE);
       gimp_matrix3_identity (&matrix);
       gimp_transform_matrix_perspective (&matrix,
                                          x, y, width, height,
-                                         trans_info[X0], trans_info[Y0],
-                                         trans_info[X1], trans_info[Y1],
-                                         trans_info[X2], trans_info[Y2],
-                                         trans_info[X3], trans_info[Y3]);
+                                         x0, y0,
+                                         x1, y1,
+                                         x2, y2,
+                                         x3, y3);
 CODE
 }
 
@@ -559,20 +555,16 @@ HELP
 	  desc => 'The affected drawable' },
 	{ name => 'x0', type => 'float',
 	  desc => 'The new x coordinate of the upper-left corner of the
-		    scaled region',
-	  alias => 'trans_info[X0]', no_declare => 1 },
+		    scaled region' },
 	{ name => 'y0', type => 'float',
 	  desc => 'The new y coordinate of the upper-left corner of the
-		    scaled region',
-	  alias => 'trans_info[Y0]', no_declare => 1 },
+		    scaled region' },
 	{ name => 'x1', type => 'float',
 	  desc => 'The new x coordinate of the lower-right corner of the
-		    scaled region',
-	  alias => 'trans_info[X1]', no_declare => 1 },
+		    scaled region' },
 	{ name => 'y1', type => 'float',
 	  desc => 'The new y coordinate of the lower-right corner of the
-		    scaled region',
-	  alias => 'trans_info[Y1]', no_declare => 1 },
+		    scaled region' },
 	&transform_options_args
     );
 
@@ -581,18 +573,14 @@ HELP
 	  desc => 'The scaled drawable' }
     );
 
-    transform_invoke ("Scaling", <<CODE, [ 'gdouble trans_info[4]' ], <<CODE2);
+    transform_invoke ("Scaling", <<CODE, 'x0 < x1 && y0 < y1');
       gimp_matrix3_identity (&matrix);
       gimp_transform_matrix_scale (&matrix,
                                    x, y, width, height,
-                                   trans_info[X0],
-                                   trans_info[Y0],
-                                   trans_info[X1] - trans_info[X0],
-                                   trans_info[Y1] - trans_info[Y0]);
+                                   x0, y0,
+                                   x1 - x0,
+                                   y1 - y0);
 CODE
-             trans_info[X0] < trans_info[X1] &&
-             trans_info[Y0] < trans_info[Y1]);
-CODE2
 }
 
 
@@ -612,20 +600,16 @@ HELP
 	  desc => 'The affected drawable' },
 	{ name => 'x0', type => 'float',
 	  desc => 'The new x coordinate of the upper-left corner of the
-		    scaled region',
-	  alias => 'trans_info[X0]', no_declare => 1 },
+		    scaled region' },
 	{ name => 'y0', type => 'float',
 	  desc => 'The new y coordinate of the upper-left corner of the
-		    scaled region',
-	  alias => 'trans_info[Y0]', no_declare => 1 },
+		    scaled region' },
 	{ name => 'x1', type => 'float',
 	  desc => 'The new x coordinate of the lower-right corner of the
-		    scaled region',
-	  alias => 'trans_info[X1]', no_declare => 1 },
+		    scaled region' },
 	{ name => 'y1', type => 'float',
 	  desc => 'The new y coordinate of the lower-right corner of the
-		    scaled region',
-	  alias => 'trans_info[Y1]', no_declare => 1 },
+		    scaled region' },
         &transform_options_default_args
     );
 
@@ -634,18 +618,14 @@ HELP
 	  desc => 'The scaled drawable' }
     );
 
-    transform_default_invoke ("Scaling", <<CODE, [ 'gdouble trans_info[4]' ], <<CODE2);
+    transform_default_invoke ("Scaling", <<CODE, 'x0 < x1 && y0 < y1');
       gimp_matrix3_identity (&matrix);
       gimp_transform_matrix_scale (&matrix,
                                    x, y, width, height,
-                                   trans_info[X0],
-                                   trans_info[Y0],
-                                   trans_info[X1] - trans_info[X0],
-                                   trans_info[Y1] - trans_info[Y0]);
+                                   x0, y0,
+                                   x1 - x0,
+                                   y1 - y0);
 CODE
-             trans_info[X0] < trans_info[X1] &&
-             trans_info[Y0] < trans_info[Y1]);
-CODE2
 }
 
 

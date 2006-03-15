@@ -165,8 +165,8 @@ procedural_db_query_invoker (Gimp         *gimp,
   gchar *copyright;
   gchar *date;
   gchar *proc_type;
-  gint num_procs;
-  gchar **procs;
+  gint32 num_matches = 0;
+  gchar **procedure_names = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL)
@@ -199,16 +199,17 @@ procedural_db_query_invoker (Gimp         *gimp,
   if (success)
     {
       success = procedural_db_query (gimp,
-                                     name, blurb, help, author, copyright, date, proc_type,
-                                     &num_procs, &procs);
+                                     name, blurb, help, author,
+                                     copyright, date, proc_type,
+                                     &num_matches, &procedure_names);
     }
 
   return_args = procedural_db_return_args (&procedural_db_query_proc, success);
 
   if (success)
     {
-      return_args[1].value.pdb_int = num_procs;
-      return_args[2].value.pdb_pointer = procs;
+      return_args[1].value.pdb_int = num_matches;
+      return_args[2].value.pdb_pointer = procedure_names;
     }
 
   return return_args;
@@ -420,8 +421,9 @@ procedural_db_proc_arg_invoker (Gimp         *gimp,
   Argument *return_args;
   gchar *proc_name;
   gint32 arg_num;
-  ProcRecord *proc;
-  ProcArg *arg = NULL;
+  gint32 arg_type = 0;
+  gchar *arg_name = NULL;
+  gchar *arg_desc = NULL;
 
   proc_name = (gchar *) args[0].value.pdb_pointer;
   if (proc_name == NULL || !g_utf8_validate (proc_name, -1, NULL))
@@ -431,7 +433,8 @@ procedural_db_proc_arg_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gchar *canonical;
+      ProcRecord *proc;
+      gchar      *canonical;
 
       canonical = gimp_canonicalize_identifier (proc_name);
 
@@ -450,7 +453,13 @@ procedural_db_proc_arg_invoker (Gimp         *gimp,
       g_free (canonical);
 
       if (proc && (arg_num >= 0 && arg_num < proc->num_args))
-        arg = &proc->args[arg_num];
+        {
+          ProcArg *arg = &proc->args[arg_num];
+
+          arg_type = arg->arg_type;
+          arg_name = g_strdup (arg->name);
+          arg_desc = g_strdup (arg->description);
+        }
       else
         success = FALSE;
     }
@@ -459,9 +468,9 @@ procedural_db_proc_arg_invoker (Gimp         *gimp,
 
   if (success)
     {
-      return_args[1].value.pdb_int = arg->arg_type;
-      return_args[2].value.pdb_pointer = g_strdup (arg->name);
-      return_args[3].value.pdb_pointer = g_strdup (arg->description);
+      return_args[1].value.pdb_int = arg_type;
+      return_args[2].value.pdb_pointer = arg_name;
+      return_args[3].value.pdb_pointer = arg_desc;
     }
 
   return return_args;
@@ -528,8 +537,9 @@ procedural_db_proc_val_invoker (Gimp         *gimp,
   Argument *return_args;
   gchar *proc_name;
   gint32 val_num;
-  ProcRecord *proc;
-  ProcArg *val = NULL;
+  gint32 val_type = 0;
+  gchar *val_name = NULL;
+  gchar *val_desc = NULL;
 
   proc_name = (gchar *) args[0].value.pdb_pointer;
   if (proc_name == NULL || !g_utf8_validate (proc_name, -1, NULL))
@@ -539,7 +549,8 @@ procedural_db_proc_val_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gchar *canonical;
+      ProcRecord *proc;
+      gchar      *canonical;
 
       canonical = gimp_canonicalize_identifier (proc_name);
 
@@ -558,7 +569,13 @@ procedural_db_proc_val_invoker (Gimp         *gimp,
       g_free (canonical);
 
       if (proc && (val_num >= 0 && val_num < proc->num_values))
-        val = &proc->values[val_num];
+        {
+          ProcArg *val = &proc->values[val_num];
+
+          val_type = val->arg_type;
+          val_name = g_strdup (val->name);
+          val_desc = g_strdup (val->description);
+        }
       else
         success = FALSE;
     }
@@ -567,9 +584,9 @@ procedural_db_proc_val_invoker (Gimp         *gimp,
 
   if (success)
     {
-      return_args[1].value.pdb_int = val->arg_type;
-      return_args[2].value.pdb_pointer = g_strdup (val->name);
-      return_args[3].value.pdb_pointer = g_strdup (val->description);
+      return_args[1].value.pdb_int = val_type;
+      return_args[2].value.pdb_pointer = val_name;
+      return_args[3].value.pdb_pointer = val_desc;
     }
 
   return return_args;

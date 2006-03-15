@@ -157,16 +157,25 @@ palettes_get_palette_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GimpPalette *palette;
+  gchar *name = NULL;
+  gint32 num_colors = 0;
 
-  success = (palette = gimp_context_get_palette (context)) != NULL;
+  GimpPalette *palette = gimp_context_get_palette (context);
+
+  if (palette)
+    {
+      name       = g_strdup (GIMP_OBJECT (palette)->name);
+      num_colors = palette->n_colors;
+    }
+  else
+    success = FALSE;
 
   return_args = procedural_db_return_args (&palettes_get_palette_proc, success);
 
   if (success)
     {
-      return_args[1].value.pdb_pointer = g_strdup (GIMP_OBJECT (palette)->name);
-      return_args[2].value.pdb_int = palette->n_colors;
+      return_args[1].value.pdb_pointer = name;
+      return_args[2].value.pdb_int = num_colors;
     }
 
   return return_args;
@@ -214,8 +223,9 @@ palettes_get_palette_entry_invoker (Gimp         *gimp,
   Argument *return_args;
   gchar *name;
   gint32 entry_num;
+  gchar *actual_name = NULL;
+  gint32 num_colors = 0;
   GimpRGB color;
-  GimpPalette *palette = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name && !g_utf8_validate (name, -1, NULL))
@@ -225,6 +235,8 @@ palettes_get_palette_entry_invoker (Gimp         *gimp,
 
   if (success)
     {
+      GimpPalette *palette;
+
       if (name && strlen (name))
         {
           palette = (GimpPalette *)
@@ -238,19 +250,16 @@ palettes_get_palette_entry_invoker (Gimp         *gimp,
 
       if (palette)
         {
-          if (entry_num < 0 || entry_num >= palette->n_colors)
+          if (entry_num >= 0 && entry_num < palette->n_colors)
             {
-              success = FALSE;
+              GimpPaletteEntry *entry = g_list_nth_data (palette->colors, entry_num);
+
+              actual_name = g_strdup (GIMP_OBJECT (palette)->name);
+              num_colors  = palette->n_colors;
+              color       = entry->color;
             }
           else
-            {
-              GimpPaletteEntry *entry;
-
-              entry = (GimpPaletteEntry *)
-                g_list_nth_data (palette->colors, entry_num);
-
-              color = entry->color;
-            }
+            success = FALSE;
         }
       else
         success = FALSE;
@@ -260,8 +269,8 @@ palettes_get_palette_entry_invoker (Gimp         *gimp,
 
   if (success)
     {
-      return_args[1].value.pdb_pointer = g_strdup (GIMP_OBJECT (palette)->name);
-      return_args[2].value.pdb_int = palette->n_colors;
+      return_args[1].value.pdb_pointer = actual_name;
+      return_args[2].value.pdb_int = num_colors;
       return_args[3].value.pdb_color = color;
     }
 
@@ -286,7 +295,7 @@ static ProcArg palettes_get_palette_entry_outargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "name",
+    "actual-name",
     "The palette name"
   },
   {

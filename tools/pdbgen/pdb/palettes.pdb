@@ -65,17 +65,26 @@ sub palettes_get_palette {
     &std_pdb_deprecated ('gimp-context-get-palette');
 
     @outargs = (
-	{ name => 'name', type => 'string', no_declare => 1,
-	  desc => 'The palette name', null_ok => '1',
-	  alias => 'g_strdup (GIMP_OBJECT (palette)->name)' },
-	{ name => 'num_colors', type => 'int32', no_declare => 1,
-	  desc => 'The palette num_colors',
-	  alias => 'palette->n_colors' }
+	{ name => 'name', type => 'string', init => 1,
+	  desc => 'The palette name', null_ok => '1' },
+	{ name => 'num_colors', type => 'int32', init => 1,
+	  desc => 'The palette num_colors' }
     );
 
     %invoke = (
-        vars => [ 'GimpPalette *palette' ],
-        code => 'success = (palette = gimp_context_get_palette (context)) != NULL;'
+        code => <<'CODE'
+{
+  GimpPalette *palette = gimp_context_get_palette (context);
+
+  if (palette)
+    {
+      name       = g_strdup (GIMP_OBJECT (palette)->name);
+      num_colors = palette->n_colors;
+    }
+  else
+    success = FALSE;
+}
+CODE
     );
 }
 
@@ -91,20 +100,19 @@ sub palettes_get_palette_entry {
     );
 
     @outargs = (
-	{ name => 'name', type => 'string', no_declare => 1,
-	  desc => 'The palette name', null_ok => '1',
-	  alias => 'g_strdup (GIMP_OBJECT (palette)->name)' },
-	{ name => 'num_colors', type => 'int32', no_declare => 1,
-	  desc => 'The palette num_colors',
-	  alias => 'palette->n_colors' },
+	{ name => 'actual_name', type => 'string', init => 1,
+	  desc => 'The palette name' },
+	{ name => 'num_colors', type => 'int32', init => 1,
+	  desc => 'The palette num_colors' },
 	{ name => 'color', type => 'color', void_ret => 1,
 	  desc => 'The color requested' }
     );
 
     %invoke = (
-	vars => [ 'GimpPalette *palette = NULL' ],
 	code => <<"CODE"
 {
+  GimpPalette *palette;
+
   if (name && strlen (name))
     {
       palette = (GimpPalette *)
@@ -118,19 +126,16 @@ sub palettes_get_palette_entry {
 
   if (palette)
     {
-      if (entry_num < 0 || entry_num >= palette->n_colors)
+      if (entry_num >= 0 && entry_num < palette->n_colors)
         {
-          success = FALSE;
+          GimpPaletteEntry *entry = g_list_nth_data (palette->colors, entry_num);
+
+          actual_name = g_strdup (GIMP_OBJECT (palette)->name);
+          num_colors  = palette->n_colors;
+          color       = entry->color;
         }
       else
-        {
-          GimpPaletteEntry *entry;
-
-          entry = (GimpPaletteEntry *)
-            g_list_nth_data (palette->colors, entry_num);
-
-          color = entry->color;
-        }
+        success = FALSE;
     }
   else
     success = FALSE;

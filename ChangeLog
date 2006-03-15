@@ -1,3 +1,51 @@
+2006-03-15  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/brush.pdb
+	* tools/pdbgen/pdb/brushes.pdb
+	* tools/pdbgen/pdb/context.pdb
+	* tools/pdbgen/pdb/drawable.pdb
+	* tools/pdbgen/pdb/drawable_transform.pdb
+	* tools/pdbgen/pdb/gradient.pdb
+	* tools/pdbgen/pdb/gradients.pdb
+	* tools/pdbgen/pdb/image.pdb
+	* tools/pdbgen/pdb/palette.pdb
+	* tools/pdbgen/pdb/palettes.pdb
+	* tools/pdbgen/pdb/paths.pdb
+	* tools/pdbgen/pdb/pattern.pdb
+	* tools/pdbgen/pdb/patterns.pdb
+	* tools/pdbgen/pdb/procedural_db.pdb
+	* tools/pdbgen/pdb/transform_tools.pdb: let pdbgen handle *only*
+	variables for arguments and return values and declare all local
+	variables inside the C code. Removed lots of alias => '<expression>'
+	and no_declare => 1 stuff from return values, instead let pdbgen
+	declare the variables and assign them manually in the C code.
+	More cleanup.
+
+	* tools/pdbgen/app.pl: removed support for proc->vars.
+
+	* app/pdb/brush_cmds.c
+	* app/pdb/brushes_cmds.c
+	* app/pdb/context_cmds.c
+	* app/pdb/drawable_cmds.c
+	* app/pdb/drawable_transform_cmds.c
+	* app/pdb/gradient_cmds.c
+	* app/pdb/gradients_cmds.c
+	* app/pdb/image_cmds.c
+	* app/pdb/palette_cmds.c
+	* app/pdb/palettes_cmds.c
+	* app/pdb/paths_cmds.c
+	* app/pdb/pattern_cmds.c
+	* app/pdb/patterns_cmds.c
+	* app/pdb/procedural_db_cmds.c
+	* app/pdb/transform_tools_cmds.c
+	* libgimp/gimpbrush_pdb.c
+	* libgimp/gimpbrushes_pdb.c
+	* libgimp/gimpgradient_pdb.c
+	* libgimp/gimpgradients_pdb.c
+	* libgimp/gimppalette_pdb.c
+	* libgimp/gimppalettes_pdb.c
+	* libgimp/gimppatterns_pdb.c: regenerated.
+
 2006-03-15  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/channels-actions.c

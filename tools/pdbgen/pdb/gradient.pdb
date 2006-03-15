@@ -28,7 +28,7 @@ sub _gen_gradient_search_for_segment_code
 
     return <<"CODE";
 {
-  gradient = (GimpGradient *)
+  GimpGradient *gradient = (GimpGradient *)
     gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
   if (gradient)
@@ -83,7 +83,6 @@ HELP
     }
 
     %invoke = (
-        vars => [ 'GimpGradient *gradient = NULL' ],
         code => &_gen_gradient_search_for_segment_code(<<"CODE"),
 color.a = opacity / 100.0;
 gimp_gradient_segment_set_${side}_color (gradient, seg, &color);
@@ -119,7 +118,6 @@ HELP
     );
 
     %invoke = (
-        vars => [ 'GimpGradient *gradient = NULL' ],
         code => &_gen_gradient_search_for_segment_code(<<"CODE"),
 gimp_gradient_segment_get_${side}_color (gradient, seg, &color);
 opacity = color.a * 100.0;
@@ -159,7 +157,6 @@ HELP
     );
 
     %invoke = (
-        vars => [ 'GimpGradient *gradient = NULL' ],
         code => &_gen_gradient_search_for_segment_code(<<"CODE"),
 pos = gimp_gradient_segment_get_${side}_pos (gradient, seg);
 CODE
@@ -212,7 +209,6 @@ HELP
     );
 
     %invoke = (
-        vars => [ 'GimpGradient *gradient = NULL' ],
         code => &_gen_gradient_search_for_segment_code(<<"CODE"),
 final_pos =
   gimp_gradient_segment_set_${side}_pos (gradient, seg, pos);
@@ -235,19 +231,24 @@ sub gradient_new {
     );
 
     @outargs = (
-	{ name => 'name', type => 'string',
-	  desc => 'The actual new gradient name',
-	  alias => 'g_strdup (GIMP_OBJECT (data)->name)', no_declare => 1 },
+	{ name => 'actual_name', type => 'string', init => 1,
+	  desc => 'The actual new gradient name' }
     );
 
     %invoke = (
-        vars => [ 'GimpData *data = NULL'],
         code => <<'CODE'
 {
   if (strlen (name))
-    data = gimp_data_factory_data_new (gimp->gradient_factory, name);
+    {
+      GimpData *data = gimp_data_factory_data_new (gimp->gradient_factory, name);
 
-  success = (data != NULL);
+      if (data)
+        actual_name = g_strdup (GIMP_OBJECT (data)->name);
+      else
+        success = FALSE;
+    }
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -265,27 +266,26 @@ sub gradient_duplicate {
     );
 
     @outargs = (
-	{ name => 'name', type => 'string',
-	  desc => "The name of the gradient's copy",
-	  alias => 'g_strdup (GIMP_OBJECT (gradient_copy)->name)',
-          no_declare => 1 }
+	{ name => 'copy_name', type => 'string', init => 1,
+	  desc => "The name of the gradient's copy" }
     );
 
     %invoke = (
-	vars => [ 'GimpGradient *gradient = NULL',
-                  'GimpGradient *gradient_copy = NULL' ],
         code => <<"CODE"
 {
-  gradient = (GimpGradient *)
+  GimpGradient *gradient = (GimpGradient *)
     gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
   if (gradient)
     {
-      gradient_copy = (GimpGradient *)
+      GimpGradient *gradient_copy = (GimpGradient *)
         gimp_data_factory_data_duplicate (gimp->gradient_factory,
                                           GIMP_DATA (gradient));
 
-      success = (gradient_copy != NULL);
+      if (gradient_copy)
+        copy_name = g_strdup (GIMP_OBJECT (gradient_copy)->name);
+      else
+        success = FALSE;
     }
   else
     success = FALSE;
@@ -306,21 +306,18 @@ sub gradient_is_editable {
     );
 
     @outargs = (
-	{ name => 'editable', type => 'boolean',
-	  desc => "True if the gradient can be edited",
-	  alias => 'GIMP_DATA (gradient)->writable',
-          no_declare => 1 }
+	{ name => 'editable', type => 'boolean', init => 1,
+	  desc => "True if the gradient can be edited" }
     );
 
     %invoke = (
-	vars => [ 'GimpGradient *gradient = NULL' ],
         code => <<'CODE'
 {
-  gradient = (GimpGradient *)
+  GimpGradient *gradient = (GimpGradient *)
     gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
   if (gradient)
-    success = TRUE;
+    editable = GIMP_DATA (gradient)->writable;
   else
     success = FALSE;
 }
@@ -342,20 +339,21 @@ sub gradient_rename {
     );
 
     @outargs = (
-	{ name => 'name', type => 'string',
-	  desc => "The actual new name of the gradient",
-	  alias => 'g_strdup (GIMP_OBJECT (gradient)->name)', no_declare => 1 }
+	{ name => 'actual_name', type => 'string', init => 1,
+	  desc => "The actual new name of the gradient" }
     );
 
     %invoke = (
-	vars => [ 'GimpGradient *gradient = NULL' ],
 	code => <<"CODE"
 {
-  gradient = (GimpGradient *)
+  GimpGradient *gradient = (GimpGradient *)
     gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
   if (gradient && GIMP_DATA (gradient)->writable)
-    gimp_object_set_name (GIMP_OBJECT (gradient), new_name);
+    {
+      gimp_object_set_name (GIMP_OBJECT (gradient), new_name);
+      actual_name = g_strdup (GIMP_OBJECT (gradient)->name);
+    }
   else
     success = FALSE;
 }
@@ -375,10 +373,9 @@ sub gradient_delete {
     );
 
     %invoke = (
-	vars => [ 'GimpGradient *gradient = NULL' ],
 	code => <<"CODE"
 {
-  gradient = (GimpGradient *)
+  GimpGradient *gradient = (GimpGradient *)
     gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
   if (gradient && GIMP_DATA (gradient)->deletable)
@@ -443,10 +440,9 @@ HELP
     &sample_outargs;
 
     %invoke = (
-	vars => [ 'GimpGradient *gradient' ],
 	code => <<'CODE'
 {
-  gradient = (GimpGradient *)
+  GimpGradient *gradient = (GimpGradient *)
     gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
   if (gradient)
@@ -510,10 +506,9 @@ HELP
     &sample_outargs;
 
     %invoke = (
-	vars => [ 'GimpGradient *gradient' ],
 	code => <<'CODE'
 {
-  gradient = (GimpGradient *)
+  GimpGradient *gradient = (GimpGradient *)
     gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
   if (gradient)
@@ -621,7 +616,6 @@ HELP
     );
 
     %invoke = (
-        vars => [ 'GimpGradient *gradient = NULL' ],
         code => &_gen_gradient_search_for_segment_code(<<"CODE"),
 blend_func =
   gimp_gradient_segment_get_blending_function (gradient, seg);
@@ -654,7 +648,6 @@ HELP
     );
 
     %invoke = (
-        vars => [ 'GimpGradient *gradient = NULL' ],
         code => &_gen_gradient_search_for_segment_code(<<"CODE"),
 coloring_type =
   gimp_gradient_segment_get_coloring_type (gradient, seg);
@@ -693,10 +686,9 @@ sub _gen_gradient_operate_on_segments_range
     $action_on_success =~ s/^$indent/' ' x 14/meg;
 
     %invoke = (
-        vars => [ 'GimpGradient *gradient = NULL' ],
         code => <<"CODE",
 {
-  gradient = (GimpGradient *)
+  GimpGradient *gradient = (GimpGradient *)
     gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
   if (gradient)

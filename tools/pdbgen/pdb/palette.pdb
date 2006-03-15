@@ -29,19 +29,24 @@ sub palette_new {
     );
 
     @outargs = (
-	{ name => 'name', type => 'string',
-	  desc => 'The actual new palette name',
-	  alias => 'g_strdup (GIMP_OBJECT (data)->name)', no_declare => 1 },
+	{ name => 'actual_name', type => 'string', init => 1,
+	  desc => 'The actual new palette name' }
     );
 
     %invoke = (
-        vars => [ 'GimpData *data = NULL'],
         code => <<'CODE'
 {
   if (strlen (name))
-    data = gimp_data_factory_data_new (gimp->palette_factory, name);
+    {
+      GimpData *data = gimp_data_factory_data_new (gimp->palette_factory, name);
 
-  success = (data != NULL);
+      if (data)
+        actual_name = g_strdup (GIMP_OBJECT (data)->name);
+      else
+        success = FALSE;
+    }
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -59,21 +64,18 @@ sub palette_is_editable {
     );
 
     @outargs = (
-	{ name => 'editable', type => 'boolean',
-	  desc => "True if the palette can be edited",
-	  alias => 'GIMP_DATA (palette)->writable',
-          no_declare => 1 }
+	{ name => 'editable', type => 'boolean', init => 1,
+	  desc => "True if the palette can be edited" }
     );
 
     %invoke = (
-	vars => [ 'GimpPalette *palette = NULL' ],
         code => <<'CODE'
 {
-  palette = (GimpPalette *)
+  GimpPalette *palette = (GimpPalette *)
     gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
   if (palette)
-    success = TRUE;
+    editable = GIMP_DATA (palette)->writable;
   else
     success = FALSE;
 }
@@ -93,14 +95,11 @@ sub palette_duplicate {
     );
 
     @outargs = (
-	{ name => 'name', type => 'string',
-	  desc => "The name of the palette's copy",
-	  alias => 'g_strdup (GIMP_OBJECT (palette_copy)->name)',
-          no_declare => 1 }
+	{ name => 'copy_name', type => 'string', init => 1,
+	  desc => "The name of the palette's copy" }
     );
 
     %invoke = (
-	vars => [ 'GimpPalette *palette_copy = NULL' ],
         code => <<'CODE'
 {
   GimpPalette *palette = (GimpPalette *)
@@ -108,11 +107,14 @@ sub palette_duplicate {
 
   if (palette)
     {
-      palette_copy = (GimpPalette *)
+      GimpPalette *palette_copy = (GimpPalette *)
         gimp_data_factory_data_duplicate (gimp->palette_factory,
                                           GIMP_DATA (palette));
 
-      success = (palette_copy != NULL);
+      if (palette_copy)
+        copy_name = g_strdup (GIMP_OBJECT (palette_copy)->name);
+      else
+        success = FALSE;
     }
   else
     success = FALSE;
@@ -135,20 +137,21 @@ sub palette_rename {
     );
 
     @outargs = (
-	{ name => 'name', type => 'string',
-	  desc => "The actual new name of the palette",
-	  alias => 'g_strdup (GIMP_OBJECT (palette)->name)', no_declare => 1 },
+	{ name => 'actual_name', type => 'string', init => 1,
+	  desc => "The actual new name of the palette" }
     );
 
     %invoke = (
-	vars => [ 'GimpPalette *palette = NULL' ],
 	code => <<'CODE'
 {
-  palette = (GimpPalette *)
+  GimpPalette *palette = (GimpPalette *)
     gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
   if (palette && GIMP_DATA (palette)->writable)
-    gimp_object_set_name (GIMP_OBJECT (palette), new_name);
+    {
+      gimp_object_set_name (GIMP_OBJECT (palette), new_name);
+      actual_name = g_strdup (GIMP_OBJECT (palette)->name);
+    }
   else
     success = FALSE;
 }
@@ -210,19 +213,20 @@ HELP
     );
 
     @outargs = (
-        { name => 'num_colors', type => 'int32', no_declare => '1',
-          alias => 'palette->n_colors', void_ret => '1',
+        { name => 'num_colors', type => 'int32', void_ret => '1', init => 1,
           desc => "The number of colors in the palette" }
     );
 
     %invoke = (
-	vars => [ 'GimpPalette *palette = NULL' ],
 	code => <<'CODE'
 {
-  palette = (GimpPalette *)
+  GimpPalette *palette = (GimpPalette *)
     gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
-  success = (palette != NULL);
+  if (palette)
+    num_colors = palette->n_colors;
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -243,19 +247,20 @@ HELP
     );
 
     @outargs = (
-        { name => 'num_columns', type => 'int32', no_declare => '0',
-          alias => 'palette->n_columns',
+        { name => 'num_columns', type => 'int32', init => 1,
           desc => "The number of columns used to display this palette" }
     );
 
     %invoke = (
-	vars => [ 'GimpPalette *palette = NULL' ],
 	code => <<'CODE'
 {
-  palette = (GimpPalette *)
+  GimpPalette *palette = (GimpPalette *)
     gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
-  success = (palette != NULL);
+  if (palette)
+    num_columns = palette->n_columns;
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -313,20 +318,23 @@ HELP
     );
 
     @outargs = (
-        { name => 'entry_num', type => 'int32', void_ret => '1',
-          alias => 'entry->position', no_declare => '1',
+        { name => 'entry_num', type => 'int32', void_ret => '1', init => 1,
           desc => 'The index of the added entry' }
     );
 
     %invoke = (
-	vars => [ 'GimpPaletteEntry *entry = NULL' ],
 	code => <<'CODE'
 {
   GimpPalette *palette = (GimpPalette *)
     gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
   if (palette && GIMP_DATA (palette)->writable)
-    entry = gimp_palette_add_entry (palette, -1, entry_name, &color);
+    {
+      GimpPaletteEntry *entry =
+        gimp_palette_add_entry (palette, -1, entry_name, &color);
+
+      entry_num = entry->position;
+    }
   else
     success = FALSE;
 }
@@ -484,13 +492,11 @@ HELP
     );
 
     @outargs = (
-        { name => 'entry_name', type => 'string', void_ret => 1,
-          no_declare => '1', alias => 'g_strdup (entry->name)',
+        { name => 'entry_name', type => 'string', void_ret => 1, init => 1,
           desc => 'The name requested' }
     );
 
     %invoke = (
-	vars => [ 'GimpPaletteEntry *entry = NULL' ],
 	code => <<'CODE'
 {
   GimpPalette *palette = (GimpPalette *)
@@ -499,7 +505,11 @@ HELP
   if (palette)
     {
       if (entry_num >= 0 && entry_num < palette->n_colors)
-        entry = g_list_nth_data (palette->colors, entry_num);
+        {
+          GimpPaletteEntry *entry = g_list_nth_data (palette->colors, entry_num);
+
+          entry_name = g_strdup (entry->name);
+        }
       else
         success = FALSE;
     }

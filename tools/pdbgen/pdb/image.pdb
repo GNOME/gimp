@@ -1395,10 +1395,9 @@ CODE2
     $outargs[0]->{init} = 1;
 
     %invoke = (
-	vars => [ 'gchar *filename' ],
 	code => <<'CODE2'
 {
-  filename = gimp_image_get_filename (gimage);
+  gchar *filename = gimp_image_get_filename (gimage);
 
   if (filename)
     name = g_filename_display_basename (filename);

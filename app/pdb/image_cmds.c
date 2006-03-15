@@ -4378,7 +4378,6 @@ image_get_name_invoker (Gimp         *gimp,
   Argument *return_args;
   GimpImage *gimage;
   gchar *name = NULL;
-  gchar *filename;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -4386,7 +4385,7 @@ image_get_name_invoker (Gimp         *gimp,
 
   if (success)
     {
-      filename = gimp_image_get_filename (gimage);
+      gchar *filename = gimp_image_get_filename (gimage);
 
       if (filename)
         name = g_filename_display_basename (filename);

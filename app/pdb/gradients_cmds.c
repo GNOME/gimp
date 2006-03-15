@@ -376,8 +376,9 @@ gradients_get_gradient_data_invoker (Gimp         *gimp,
   gchar *name;
   gint32 sample_size;
   gboolean reverse;
+  gchar *actual_name = NULL;
+  gint32 width = 0;
   gdouble *values = NULL;
-  GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name && !g_utf8_validate (name, -1, NULL))
@@ -391,6 +392,8 @@ gradients_get_gradient_data_invoker (Gimp         *gimp,
 
   if (success)
     {
+      GimpGradient *gradient;
+
       if (name && strlen (name))
         {
           gradient = (GimpGradient *)
@@ -408,15 +411,17 @@ gradients_get_gradient_data_invoker (Gimp         *gimp,
           gdouble             *pv;
           gdouble              pos, delta;
           GimpRGB              color;
-          gint                 i;
 
-          i     = sample_size;
           pos   = 0.0;
-          delta = 1.0 / (i - 1);
+          delta = 1.0 / (sample_size - 1);
 
-          pv = values = g_new (gdouble, i * 4);
+          actual_name = g_strdup (GIMP_OBJECT (gradient)->name);
+          values      = g_new (gdouble, sample_size * 4);
+          width       = sample_size * 4;
 
-          while (i--)
+          pv = values;
+
+          while (sample_size)
             {
               seg = gimp_gradient_get_color_at (gradient, seg, pos, reverse, &color);
 
@@ -436,8 +441,8 @@ gradients_get_gradient_data_invoker (Gimp         *gimp,
 
   if (success)
     {
-      return_args[1].value.pdb_pointer = g_strdup (GIMP_OBJECT (gradient)->name);
-      return_args[2].value.pdb_int = sample_size * 4;
+      return_args[1].value.pdb_pointer = actual_name;
+      return_args[2].value.pdb_int = width;
       return_args[3].value.pdb_pointer = values;
     }
 
@@ -467,7 +472,7 @@ static ProcArg gradients_get_gradient_data_outargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "name",
+    "actual-name",
     "The gradient name"
   },
   {

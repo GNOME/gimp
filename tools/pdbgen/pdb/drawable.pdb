@@ -521,12 +521,15 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'guint8 *p', 'gint b', 'Tile *tile' ],
 	code => <<'CODE'
 {
   if (x < gimp_item_width  (GIMP_ITEM (drawable)) &&
       y < gimp_item_height (GIMP_ITEM (drawable)))
     {
+      Tile   *tile;
+      guint8 *p;
+      gint    b;
+
       num_channels = gimp_drawable_bytes (drawable);
       pixel = g_new (guint8, num_channels);
 
@@ -577,13 +580,16 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'guint8 *p', 'gint b', 'Tile *tile' ],
 	code => <<'CODE'
 {
   if (x < gimp_item_width  (GIMP_ITEM (drawable)) &&
       y < gimp_item_height (GIMP_ITEM (drawable)) &&
       num_channels == gimp_drawable_bytes (drawable))
     {
+      Tile   *tile;
+      guint8 *p;
+      gint    b;
+
       tile = tile_manager_get_tile (gimp_drawable_data (drawable), x, y,
 				    TRUE, TRUE);
 

@@ -65,20 +65,29 @@ sub patterns_get_pattern {
     &std_pdb_deprecated ('gimp-context-get-pattern');
 
     @outargs = (
-	{ name => 'name', type => 'string', no_declare => 1,
-	  desc => 'The pattern name',
-	  alias =>'g_strdup (GIMP_OBJECT (pattern)->name)' },
-	{ name => 'width', type => 'int32', no_declare => 1,
-	  desc => 'The pattern width',
-	  alias => 'pattern->mask->width' },
-	{ name => 'height', type => 'int32', no_declare => 1,
-	  desc => 'The pattern height',
-	  alias => 'pattern->mask->height' }
+	{ name => 'name', type => 'string', init => 1,
+	  desc => 'The pattern name' },
+	{ name => 'width', type => 'int32', init => 1,
+	  desc => 'The pattern width' },
+	{ name => 'height', type => 'int32', init => 1,
+	  desc => 'The pattern height' }
     );
 
     %invoke = (
-	vars => [ 'GimpPattern *pattern' ],
-	code => 'success = (pattern = gimp_context_get_pattern (context)) != NULL;'
+	code =><<'CODE'
+{
+  GimpPattern *pattern = gimp_context_get_pattern (context);
+
+  if (pattern)
+    {
+      name   = g_strdup (GIMP_OBJECT (pattern)->name);
+      width  = pattern->mask->width;
+      height = pattern->mask->height;
+    }
+  else
+    success = FALSE;
+}
+CODE
     );
 }
 
@@ -92,18 +101,14 @@ sub patterns_get_pattern_data {
     );
 
     @outargs = (
-	{ name => 'name', type => 'string', no_declare => 1,
-	  desc => 'The pattern name',
-	  alias =>'g_strdup (GIMP_OBJECT (pattern)->name)' },
-	{ name => 'width', type => 'int32', no_declare => 1,
-	  desc => 'The pattern width',
-	  alias => 'pattern->mask->width' },
-	{ name => 'height', type => 'int32', no_declare => 1,
-	  desc => 'The pattern height',
-	  alias => 'pattern->mask->height' },
+	{ name => 'actual_name', type => 'string', init => 1,
+	  desc => 'The pattern name' },
+	{ name => 'width', type => 'int32', init => 1,
+	  desc => 'The pattern width' },
+	{ name => 'height', type => 'int32', init => 1,
+	  desc => 'The pattern height' },
 	{ name => 'mask_bpp', type => 'int32', init => 1,
-	  desc => 'Pattern bytes per pixel',
-	  alias => 'pattern->mask->bytes', no_declare => 1 },
+	  desc => 'Pattern bytes per pixel' },
 	{ name => 'mask_data', type => 'int8array', init => 1,
 	  desc => 'The pattern mask data',
 	  array => { name => 'length', init => 1,
@@ -111,9 +116,10 @@ sub patterns_get_pattern_data {
     );
     
     %invoke = (
-	vars => [ 'GimpPattern *pattern = NULL' ],
 	code => <<'CODE'
 {
+  GimpPattern *pattern;
+
   if (name && strlen (name))
     {
       pattern = (GimpPattern *)
@@ -127,9 +133,13 @@ sub patterns_get_pattern_data {
 
   if (pattern)
     {
-      length = pattern->mask->height * pattern->mask->width *
-	       pattern->mask->bytes;
-      mask_data = g_memdup (temp_buf_data (pattern->mask), length);
+      actual_name = g_strdup (GIMP_OBJECT (pattern)->name);
+      width       = pattern->mask->width;
+      height      = pattern->mask->height;
+      mask_bpp    = pattern->mask->bytes;
+      length      = pattern->mask->height * pattern->mask->width *
+	            pattern->mask->bytes;
+      mask_data   = g_memdup (temp_buf_data (pattern->mask), length);
     }
   else
     success = FALSE;

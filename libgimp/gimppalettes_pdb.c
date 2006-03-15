@@ -146,7 +146,7 @@ gimp_palettes_get_palette_entry (const gchar *name,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gchar *ret_name = NULL;
+  gchar *actual_name = NULL;
 
   return_vals = gimp_run_procedure ("gimp-palettes-get-palette-entry",
 				    &nreturn_vals,
@@ -156,12 +156,12 @@ gimp_palettes_get_palette_entry (const gchar *name,
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     {
-      ret_name = g_strdup (return_vals[1].data.d_string);
+      actual_name = g_strdup (return_vals[1].data.d_string);
       *num_colors = return_vals[2].data.d_int32;
       *color = return_vals[3].data.d_color;
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
-  return ret_name;
+  return actual_name;
 }

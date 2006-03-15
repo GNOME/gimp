@@ -97,13 +97,9 @@ context_push_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   if (gimp->current_plug_in && gimp->current_plug_in->open)
-    {
-      success = plug_in_context_push (gimp->current_plug_in);
-    }
+    success = plug_in_context_push (gimp->current_plug_in);
   else
-    {
-      success = FALSE;
-    }
+    success = FALSE;
   return procedural_db_return_args (&context_push_proc, success);
 }
 
@@ -133,13 +129,9 @@ context_pop_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   if (gimp->current_plug_in && gimp->current_plug_in->open)
-    {
-      success = plug_in_context_pop (gimp->current_plug_in);
-    }
+    success = plug_in_context_pop (gimp->current_plug_in);
   else
-    {
-      success = FALSE;
-    }
+    success = FALSE;
   return procedural_db_return_args (&context_pop_proc, success);
 }
 
@@ -169,14 +161,19 @@ context_get_paint_method_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GimpPaintInfo *paint_info;
+  gchar *name = NULL;
 
-  success = (paint_info = gimp_context_get_paint_info (context)) != NULL;
+  GimpPaintInfo *paint_info = gimp_context_get_paint_info (context);
+
+  if (paint_info)
+    name = g_strdup (gimp_object_get_name (GIMP_OBJECT (paint_info)));
+  else
+    success = FALSE;
 
   return_args = procedural_db_return_args (&context_get_paint_method_proc, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = g_strdup (gimp_object_get_name (GIMP_OBJECT (paint_info)));
+    return_args[1].value.pdb_pointer = name;
 
   return return_args;
 }
@@ -216,7 +213,6 @@ context_set_paint_method_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   gchar *name;
-  GimpPaintInfo *paint_info;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -224,7 +220,7 @@ context_set_paint_method_invoker (Gimp         *gimp,
 
   if (success)
     {
-      paint_info = (GimpPaintInfo *)
+      GimpPaintInfo *paint_info = (GimpPaintInfo *)
         gimp_container_get_child_by_name (gimp->paint_info_list, name);
 
       if (paint_info)
@@ -675,14 +671,19 @@ context_get_brush_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GimpBrush *brush;
+  gchar *name = NULL;
 
-  success = (brush = gimp_context_get_brush (context)) != NULL;
+  GimpBrush *brush = gimp_context_get_brush (context);
+
+  if (brush)
+    name = g_strdup (gimp_object_get_name (GIMP_OBJECT (brush)));
+  else
+    success = FALSE;
 
   return_args = procedural_db_return_args (&context_get_brush_proc, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = g_strdup (gimp_object_get_name (GIMP_OBJECT (brush)));
+    return_args[1].value.pdb_pointer = name;
 
   return return_args;
 }
@@ -722,7 +723,6 @@ context_set_brush_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   gchar *name;
-  GimpBrush *brush;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -730,7 +730,7 @@ context_set_brush_invoker (Gimp         *gimp,
 
   if (success)
     {
-      brush = (GimpBrush *)
+      GimpBrush *brush = (GimpBrush *)
         gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
       if (brush)
@@ -777,14 +777,19 @@ context_get_pattern_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GimpPattern *pattern;
+  gchar *name = NULL;
 
-  success = (pattern = gimp_context_get_pattern (context)) != NULL;
+  GimpPattern *pattern = gimp_context_get_pattern (context);
+
+  if (pattern)
+    name = g_strdup (gimp_object_get_name (GIMP_OBJECT (pattern)));
+  else
+    success = FALSE;
 
   return_args = procedural_db_return_args (&context_get_pattern_proc, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = g_strdup (gimp_object_get_name (GIMP_OBJECT (pattern)));
+    return_args[1].value.pdb_pointer = name;
 
   return return_args;
 }
@@ -824,7 +829,6 @@ context_set_pattern_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   gchar *name;
-  GimpPattern *pattern;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -832,7 +836,7 @@ context_set_pattern_invoker (Gimp         *gimp,
 
   if (success)
     {
-      pattern = (GimpPattern *)
+      GimpPattern *pattern = (GimpPattern *)
         gimp_container_get_child_by_name (gimp->pattern_factory->container, name);
 
       if (pattern)
@@ -879,14 +883,19 @@ context_get_gradient_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GimpGradient *gradient;
+  gchar *name = NULL;
 
-  success = (gradient = gimp_context_get_gradient (context)) != NULL;
+  GimpGradient *gradient = gimp_context_get_gradient (context);
+
+  if (gradient)
+    name = g_strdup (gimp_object_get_name (GIMP_OBJECT (gradient)));
+  else
+    success = FALSE;
 
   return_args = procedural_db_return_args (&context_get_gradient_proc, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = g_strdup (gimp_object_get_name (GIMP_OBJECT (gradient)));
+    return_args[1].value.pdb_pointer = name;
 
   return return_args;
 }
@@ -926,7 +935,6 @@ context_set_gradient_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   gchar *name;
-  GimpGradient *gradient;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -934,7 +942,7 @@ context_set_gradient_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gradient = (GimpGradient *)
+      GimpGradient *gradient = (GimpGradient *)
         gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
       if (gradient)
@@ -981,14 +989,19 @@ context_get_palette_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GimpPalette *palette;
+  gchar *name = NULL;
 
-  success = (palette = gimp_context_get_palette (context)) != NULL;
+  GimpPalette *palette = gimp_context_get_palette (context);
+
+  if (palette)
+    name = g_strdup (gimp_object_get_name (GIMP_OBJECT (palette)));
+  else
+    success = FALSE;
 
   return_args = procedural_db_return_args (&context_get_palette_proc, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = g_strdup (gimp_object_get_name (GIMP_OBJECT (palette)));
+    return_args[1].value.pdb_pointer = name;
 
   return return_args;
 }
@@ -1028,7 +1041,6 @@ context_set_palette_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   gchar *name;
-  GimpPalette *palette;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -1036,7 +1048,7 @@ context_set_palette_invoker (Gimp         *gimp,
 
   if (success)
     {
-      palette = (GimpPalette *)
+      GimpPalette *palette = (GimpPalette *)
         gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
       if (palette)
@@ -1083,14 +1095,19 @@ context_get_font_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GimpFont *font;
+  gchar *name = NULL;
 
-  success = (font = gimp_context_get_font (context)) != NULL;
+  GimpFont *font = gimp_context_get_font (context);
+
+  if (font)
+    name = g_strdup (gimp_object_get_name (GIMP_OBJECT (font)));
+  else
+    success = FALSE;
 
   return_args = procedural_db_return_args (&context_get_font_proc, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = g_strdup (gimp_object_get_name (GIMP_OBJECT (font)));
+    return_args[1].value.pdb_pointer = name;
 
   return return_args;
 }
@@ -1130,7 +1147,6 @@ context_set_font_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   gchar *name;
-  GimpFont *font;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -1138,7 +1154,7 @@ context_set_font_invoker (Gimp         *gimp,
 
   if (success)
     {
-      font = (GimpFont *)
+      GimpFont *font = (GimpFont *)
         gimp_container_get_child_by_name (gimp->fonts, name);
 
       if (font)

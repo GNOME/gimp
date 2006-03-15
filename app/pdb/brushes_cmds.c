@@ -160,18 +160,31 @@ brushes_get_brush_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GimpBrush *brush;
+  gchar *name = NULL;
+  gint32 width = 0;
+  gint32 height = 0;
+  gint32 spacing = 0;
 
-  success = (brush = gimp_context_get_brush (context)) != NULL;
+  GimpBrush *brush = gimp_context_get_brush (context);
+
+  if (brush)
+    {
+      name    = g_strdup (GIMP_OBJECT (brush)->name);
+      width   = brush->mask->width;
+      height  = brush->mask->height;
+      spacing = gimp_brush_get_spacing (brush);
+    }
+  else
+    success = FALSE;
 
   return_args = procedural_db_return_args (&brushes_get_brush_proc, success);
 
   if (success)
     {
-      return_args[1].value.pdb_pointer = g_strdup (GIMP_OBJECT (brush)->name);
-      return_args[2].value.pdb_int = brush->mask->width;
-      return_args[3].value.pdb_int = brush->mask->height;
-      return_args[4].value.pdb_int = gimp_brush_get_spacing (brush);
+      return_args[1].value.pdb_pointer = name;
+      return_args[2].value.pdb_int = width;
+      return_args[3].value.pdb_int = height;
+      return_args[4].value.pdb_int = spacing;
     }
 
   return return_args;
@@ -225,10 +238,21 @@ brushes_get_spacing_invoker (Gimp         *gimp,
                              GimpProgress *progress,
                              Argument     *args)
 {
+  gboolean success = TRUE;
   Argument *return_args;
+  gint32 spacing = 0;
 
-  return_args = procedural_db_return_args (&brushes_get_spacing_proc, TRUE);
-  return_args[1].value.pdb_int = gimp_brush_get_spacing (gimp_context_get_brush (context));
+  GimpBrush *brush = gimp_context_get_brush (context);
+
+  if (brush)
+    spacing = gimp_brush_get_spacing (brush);
+  else
+    success = FALSE;
+
+  return_args = procedural_db_return_args (&brushes_get_spacing_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = spacing;
 
   return return_args;
 }
@@ -315,9 +339,14 @@ brushes_get_brush_data_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   gchar *name;
+  gchar *actual_name = NULL;
+  gdouble opacity = 0;
+  gint32 spacing = 0;
+  gint32 paint_mode = 0;
+  gint32 width = 0;
+  gint32 height = 0;
   gint32 length = 0;
   guint8 *mask_data = NULL;
-  GimpBrush *brush = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name && !g_utf8_validate (name, -1, NULL))
@@ -325,6 +354,8 @@ brushes_get_brush_data_invoker (Gimp         *gimp,
 
   if (success)
     {
+      GimpBrush *brush;
+
       if (name && strlen (name))
         {
           brush = (GimpBrush *)
@@ -337,8 +368,14 @@ brushes_get_brush_data_invoker (Gimp         *gimp,
 
       if (brush)
         {
-          length    = brush->mask->height * brush->mask->width;
-          mask_data = g_memdup (temp_buf_data (brush->mask), length);
+          actual_name = g_strdup (GIMP_OBJECT (brush)->name);
+          opacity     = 1.0;
+          spacing     = gimp_brush_get_spacing (brush);
+          paint_mode  = 0;
+          width       = brush->mask->width;
+          height      = brush->mask->height;
+          length      = brush->mask->height * brush->mask->width;
+          mask_data   = g_memdup (temp_buf_data (brush->mask), length);
         }
       else
         success = FALSE;
@@ -348,12 +385,12 @@ brushes_get_brush_data_invoker (Gimp         *gimp,
 
   if (success)
     {
-      return_args[1].value.pdb_pointer = g_strdup (GIMP_OBJECT (brush)->name);
-      return_args[2].value.pdb_float = 1.0;
-      return_args[3].value.pdb_int = gimp_brush_get_spacing (brush);
-      return_args[4].value.pdb_int = 0;
-      return_args[5].value.pdb_int = brush->mask->width;
-      return_args[6].value.pdb_int = brush->mask->height;
+      return_args[1].value.pdb_pointer = actual_name;
+      return_args[2].value.pdb_float = opacity;
+      return_args[3].value.pdb_int = spacing;
+      return_args[4].value.pdb_int = paint_mode;
+      return_args[5].value.pdb_int = width;
+      return_args[6].value.pdb_int = height;
       return_args[7].value.pdb_int = length;
       return_args[8].value.pdb_pointer = mask_data;
     }
@@ -374,7 +411,7 @@ static ProcArg brushes_get_brush_data_outargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "name",
+    "actual-name",
     "The brush name"
   },
   {

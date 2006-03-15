@@ -41,22 +41,20 @@ HELP
     );
 
     @outargs = (
-	{ name => "${type}_type", type => 'enum GimpPDBArgType (no GIMP_PDB_END)',
-	  desc => "The type of $long_type { %%desc%% }", void_ret => 1,
-	  alias => "${type}->arg_type", no_declare => 1 },
-	{ name => "${type}_name", type => 'string',
-	  desc => "The name of the $long_type",
-	  alias => "g_strdup (${type}->name)", no_declare => 1 },
-	{ name => "${type}_desc", type => 'string',
-	  desc => "A description of the $long_type",
-	  alias => "g_strdup (${type}->description)", no_declare => 1 }
+	{ name => "${type}_type",
+	  type => 'enum GimpPDBArgType (no GIMP_PDB_END)', init => 1,
+	  desc => "The type of $long_type { %%desc%% }", void_ret => 1 },
+	{ name => "${type}_name", type => 'string', init => 1,
+	  desc => "The name of the $long_type" },
+	{ name => "${type}_desc", type => 'string', init => 1,
+	  desc => "A description of the $long_type" }
     );
 
    %invoke = (
-	vars => [ 'ProcRecord *proc', "ProcArg *$type = NULL" ],
 	code => <<CODE
 {
-  gchar *canonical;
+  ProcRecord *proc;
+  gchar      *canonical;
 
   canonical = gimp_canonicalize_identifier (proc_name);
 
@@ -75,7 +73,13 @@ HELP
   g_free (canonical);
 
   if (proc && (${type}_num >= 0 && ${type}_num < proc->num_$real_type))
-    $type = \&proc->${real_type}\[${type}_num];
+    {
+      ProcArg *$type = \&proc->${real_type}\[${type}_num];
+
+      ${type}_type = ${type}->arg_type;
+      ${type}_name = g_strdup (${type}->name);
+      ${type}_desc = g_strdup (${type}->description);
+    }
   else
     success = FALSE;
 }
@@ -161,33 +165,39 @@ HELP
 
     &std_pdb_misc;
 
-    foreach (qw(name blurb help author copyright date proc_type)) {
-	push @inargs, { name => $_, type => 'string', no_validate => 1,
-			desc => "The regex for procedure $_" };
-    }
-
-    $inargs[$#inargs]->{desc} =~
-	s <proc_type$>
-	  <type: { 'Internal GIMP procedure', 'GIMP Plug-In',
-		   'GIMP Extension', 'Temporary Procedure' }>;
+    @inargs = (
+	{ name => 'name', type => 'string', no_validate => 1,
+	  desc => 'The regex for procedure name' },
+	{ name => 'blurb', type => 'string', no_validate => 1,
+	  desc => 'The regex for procedure blurb' },
+	{ name => 'help', type => 'string', no_validate => 1,
+	  desc => 'The regex for procedure help' },
+	{ name => 'author', type => 'string', no_validate => 1,
+	  desc => 'The regex for procedure author' },
+	{ name => 'copyright', type => 'string', no_validate => 1,
+	  desc => 'The regex for procedure copyright' },
+	{ name => 'date', type => 'string', no_validate => 1,
+	  desc => 'The regex for procedure date' },
+	{ name => 'proc_type', type => 'string', no_validate => 1,
+	  desc => 'The regex for procedure type: { \'Internal GIMP procedure\',
+		   \'GIMP Plug-In\', \'GIMP Extension\',
+		   \'Temporary Procedure\' }' }
+    );
 
     @outargs = (
 	{ name  => 'procedure_names', type  => 'stringarray', void_ret => 1,
-	  desc  => 'The list of procedure names',
-	  alias => 'procs', no_declare => 1,
-	  array => { name  => 'num_matches',
-		     desc  => 'The number of matching procedures',
-		     alias => 'num_procs', no_declare => 1 }
-	}
+	  desc  => 'The list of procedure names', init => 1,
+	  array => { name  => 'num_matches', init => 1,
+		     desc  => 'The number of matching procedures' } }
     );
 
     %invoke = (
-	vars => [ 'gint num_procs', 'gchar **procs' ],
 	code => <<CODE
 {
   success = procedural_db_query (gimp,
-                                 name, blurb, help, author, copyright, date, proc_type,
-                                 &num_procs, &procs);
+                                 name, blurb, help, author,
+                                 copyright, date, proc_type,
+                                 &num_matches, &procedure_names);
 }
 CODE
     );

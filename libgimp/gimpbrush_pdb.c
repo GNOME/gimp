@@ -44,7 +44,7 @@ gimp_brush_new (const gchar *name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gchar *ret_name = NULL;
+  gchar *actual_name = NULL;
 
   return_vals = gimp_run_procedure ("gimp-brush-new",
 				    &nreturn_vals,
@@ -52,11 +52,11 @@ gimp_brush_new (const gchar *name)
 				    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    ret_name = g_strdup (return_vals[1].data.d_string);
+    actual_name = g_strdup (return_vals[1].data.d_string);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
-  return ret_name;
+  return actual_name;
 }
 
 /**
@@ -76,7 +76,7 @@ gimp_brush_duplicate (const gchar *name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gchar *ret_name = NULL;
+  gchar *copy_name = NULL;
 
   return_vals = gimp_run_procedure ("gimp-brush-duplicate",
 				    &nreturn_vals,
@@ -84,11 +84,11 @@ gimp_brush_duplicate (const gchar *name)
 				    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    ret_name = g_strdup (return_vals[1].data.d_string);
+    copy_name = g_strdup (return_vals[1].data.d_string);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
-  return ret_name;
+  return copy_name;
 }
 
 /**
@@ -142,7 +142,7 @@ gimp_brush_rename (const gchar *name,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gchar *ret_name = NULL;
+  gchar *actual_name = NULL;
 
   return_vals = gimp_run_procedure ("gimp-brush-rename",
 				    &nreturn_vals,
@@ -151,11 +151,11 @@ gimp_brush_rename (const gchar *name,
 				    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    ret_name = g_strdup (return_vals[1].data.d_string);
+    actual_name = g_strdup (return_vals[1].data.d_string);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
-  return ret_name;
+  return actual_name;
 }
 
 /**

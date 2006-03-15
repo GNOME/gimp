@@ -80,10 +80,9 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'GimpVectors *vectors' ],
 	code => <<'CODE'
 {
-  vectors = gimp_image_get_vectors_by_name (gimage, name);
+  GimpVectors *vectors = gimp_image_get_vectors_by_name (gimage, name);
 
   if (vectors)
     {

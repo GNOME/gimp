@@ -154,7 +154,7 @@ gimp_patterns_get_pattern_data (const gchar  *name,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gchar *ret_name = NULL;
+  gchar *actual_name = NULL;
 
   return_vals = gimp_run_procedure ("gimp-patterns-get-pattern-data",
 				    &nreturn_vals,
@@ -165,7 +165,7 @@ gimp_patterns_get_pattern_data (const gchar  *name,
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     {
-      ret_name = g_strdup (return_vals[1].data.d_string);
+      actual_name = g_strdup (return_vals[1].data.d_string);
       *width = return_vals[2].data.d_int32;
       *height = return_vals[3].data.d_int32;
       *mask_bpp = return_vals[4].data.d_int32;
@@ -177,5 +177,5 @@ gimp_patterns_get_pattern_data (const gchar  *name,
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
-  return ret_name;
+  return actual_name;
 }

@@ -1853,9 +1853,6 @@ drawable_get_pixel_invoker (Gimp         *gimp,
   gint32 y;
   gint32 num_channels = 0;
   guint8 *pixel = NULL;
-  guint8 *p;
-  gint b;
-  Tile *tile;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
@@ -1874,6 +1871,10 @@ drawable_get_pixel_invoker (Gimp         *gimp,
       if (x < gimp_item_width  (GIMP_ITEM (drawable)) &&
           y < gimp_item_height (GIMP_ITEM (drawable)))
         {
+          Tile   *tile;
+          guint8 *p;
+          gint    b;
+
           num_channels = gimp_drawable_bytes (drawable);
           pixel = g_new (guint8, num_channels);
 
@@ -1967,9 +1968,6 @@ drawable_set_pixel_invoker (Gimp         *gimp,
   gint32 y;
   gint32 num_channels;
   guint8 *pixel;
-  guint8 *p;
-  gint b;
-  Tile *tile;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
@@ -1993,6 +1991,10 @@ drawable_set_pixel_invoker (Gimp         *gimp,
           y < gimp_item_height (GIMP_ITEM (drawable)) &&
           num_channels == gimp_drawable_bytes (drawable))
         {
+          Tile   *tile;
+          guint8 *p;
+          gint    b;
+
           tile = tile_manager_get_tile (gimp_drawable_data (drawable), x, y,
                                         TRUE, TRUE);
 

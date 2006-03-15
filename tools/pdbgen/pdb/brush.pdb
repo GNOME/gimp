@@ -38,19 +38,24 @@ sub brush_new {
     );
 
     @outargs = (
-	{ name => 'name', type => 'string',
-	  desc => 'The actual new brush name',
-	  alias => 'g_strdup (GIMP_OBJECT (data)->name)', no_declare => 1 },
+	{ name => 'actual_name', type => 'string', init => 1,
+	  desc => 'The actual new brush name' }
     );
 
     %invoke = (
-        vars => [ 'GimpData *data = NULL'],
         code => <<'CODE'
 {
   if (strlen (name))
-    data = gimp_data_factory_data_new (gimp->brush_factory, name);
+    {
+      GimpData *data = gimp_data_factory_data_new (gimp->brush_factory, name);
 
-  success = (data != NULL);
+      if (data)
+        actual_name = g_strdup (GIMP_OBJECT (data)->name);
+      else
+        success = FALSE;
+    }
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -67,27 +72,26 @@ sub brush_duplicate {
     );
 
     @outargs = (
-	{ name => 'name', type => 'string',
-	  desc => "The name of the brush's copy",
-	  alias => 'g_strdup (GIMP_OBJECT (brush_copy)->name)',
-          no_declare => 1 }
+	{ name => 'copy_name', type => 'string', init => 1,
+	  desc => "The name of the brush's copy" }
     );
 
     %invoke = (
-	vars => [ 'GimpBrush *brush = NULL',
-                  'GimpBrush *brush_copy = NULL' ],
         code => <<'CODE'
 {
-  brush = (GimpBrush *)
+  GimpBrush *brush = (GimpBrush *)
     gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
   if (brush)
     {
-      brush_copy = (GimpBrush *)
+      GimpBrush *brush_copy = (GimpBrush *)
         gimp_data_factory_data_duplicate (gimp->brush_factory,
                                           GIMP_DATA (brush));
 
-      success = (brush_copy != NULL);
+      if (brush_copy)
+        copy_name = g_strdup (GIMP_OBJECT (brush_copy)->name);
+      else
+        success = FALSE;
     }
   else
     success = FALSE;
@@ -107,21 +111,18 @@ sub brush_is_generated {
     );
 
     @outargs = (
-	{ name => 'generated', type => 'boolean',
-	  desc => "True if the brush is generated",
-	  alias => 'GIMP_IS_BRUSH_GENERATED (brush)',
-          no_declare => 1 }
+	{ name => 'generated', type => 'boolean', init => 1,
+	  desc => "True if the brush is generated" }
     );
 
     %invoke = (
-	vars => [ 'GimpBrush *brush = NULL' ],
         code => <<'CODE'
 {
-  brush = (GimpBrush *)
+  GimpBrush *brush = (GimpBrush *)
     gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
   if (brush)
-    success = TRUE;
+    generated = GIMP_IS_BRUSH_GENERATED (brush);
   else
     success = FALSE;
 }
@@ -140,21 +141,18 @@ sub brush_is_editable {
     );
 
     @outargs = (
-	{ name => 'editable', type => 'boolean',
-	  desc => "True if the brush can be edited",
-	  alias => 'GIMP_DATA (brush)->writable',
-          no_declare => 1 }
+	{ name => 'editable', type => 'boolean', init => 1,
+	  desc => "True if the brush can be edited" }
     );
 
     %invoke = (
-	vars => [ 'GimpBrush *brush = NULL' ],
         code => <<'CODE'
 {
-  brush = (GimpBrush *)
+  GimpBrush *brush = (GimpBrush *)
     gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
   if (brush)
-    success = TRUE;
+    editable = GIMP_DATA (brush)->writable;
   else
     success = FALSE;
 }
@@ -175,20 +173,21 @@ sub brush_rename {
     );
 
     @outargs = (
-	{ name => 'name', type => 'string',
-	  desc => "The actual new name of the brush",
-	  alias => 'g_strdup (GIMP_OBJECT (brush)->name)', no_declare => 1 },
+	{ name => 'actual_name', type => 'string', init => 1,
+	  desc => "The actual new name of the brush" }
     );
 
     %invoke = (
-	vars => [ 'GimpBrush *brush = NULL' ],
 	code => <<'CODE'
 {
-  brush = (GimpBrush *)
+  GimpBrush *brush = (GimpBrush *)
     gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
   if (brush && GIMP_DATA (brush)->writable)
-    gimp_object_set_name (GIMP_OBJECT (brush), new_name);
+    {
+      gimp_object_set_name (GIMP_OBJECT (brush), new_name);
+      actual_name = g_strdup (GIMP_OBJECT (brush)->name);
+    }
   else
     success = FALSE;
 }
@@ -207,10 +206,9 @@ sub brush_delete {
     );
 
     %invoke = (
-	vars => [ 'GimpBrush *brush = NULL' ],
 	code => <<'CODE'
 {
-  brush = (GimpBrush *)
+  GimpBrush *brush = (GimpBrush *)
     gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
   if (brush && GIMP_DATA (brush)->deletable)
@@ -248,28 +246,31 @@ HELP
     );
 
     @outargs = (
-	{ name => 'width', type => 'int32', no_declare => '1',
-          alias => 'brush->mask->width', void_ret => '1',
+	{ name => 'width', type => 'int32', init => 1, void_ret => 1,
           desc => "The brush width" },
-	{ name => 'height', type => 'int32', no_declare => '1',
-          alias => 'brush->mask->height',
+	{ name => 'height', type => 'int32', init => 1,
           desc => "The brush height" },
-	{ name => 'mask_bpp', type => 'int32', no_declare => '1',
-          alias => 'brush->mask->bytes',
+	{ name => 'mask_bpp', type => 'int32', init => 1,
           desc => "The brush mask bpp" },
-	{ name => 'color_bpp', type => 'int32', no_declare => '1',
-          alias => 'brush->pixmap ? brush->pixmap->bytes : 0',
+	{ name => 'color_bpp', type => 'int32', init => 1,
           desc => "The brush color bpp" }
     );
 
     %invoke = (
-	vars => [ 'GimpBrush *brush = NULL' ],
 	code => <<'CODE'
 {
-  brush = (GimpBrush *)
+  GimpBrush *brush = (GimpBrush *)
     gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
-  success = (brush != NULL);
+  if (brush)
+    {
+      width     = brush->mask->width;
+      height    = brush->mask->height;
+      mask_bpp  = brush->mask->bytes;
+      color_bpp = brush->pixmap ? brush->pixmap->bytes : 0;
+    }
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -292,11 +293,9 @@ HELP
     );
 
     @outargs = (
-	{ name => 'width', type => 'int32', no_declare => '1',
-          alias => 'brush->mask->width', void_ret => '1',
+	{ name => 'width', type => 'int32', init => 1, void_ret => '1',
           desc => "The brush width" },
-	{ name => 'height', type => 'int32', no_declare => '1',
-          alias => 'brush->mask->height',
+	{ name => 'height', type => 'int32', init => 1,
           desc => "The brush height" },
 	{ name => 'mask_bpp', type => 'int32', init => '1',
           desc => "The brush mask bpp" },
@@ -313,14 +312,15 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'GimpBrush *brush = NULL' ],
 	code => <<'CODE'
 {
-  brush = (GimpBrush *)
+  GimpBrush *brush = (GimpBrush *)
     gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
   if (brush)
     {
+      width          = brush->mask->width;
+      height         = brush->mask->height;
       mask_bpp       = brush->mask->bytes;
       num_mask_bytes = brush->mask->height * brush->mask->width;
       mask_bytes     = g_memdup (temp_buf_data (brush->mask), num_mask_bytes);
@@ -356,20 +356,21 @@ HELP
     );
 
     @outargs = (
-	{ name => 'spacing', type => '0 <= int32 <= 1000',
+	{ name => 'spacing', type => '0 <= int32 <= 1000', init => 1,
 	  desc => 'The brush spacing: %%desc%%',
-	  alias => 'gimp_brush_get_spacing (brush)',
-	  no_declare => 1, void_ret => 1 }
+	  void_ret => 1 }
     );
 
     %invoke = (
-	vars => [ 'GimpBrush *brush = NULL' ],
 	code => <<'CODE'
 {
-  brush = (GimpBrush *)
+  GimpBrush *brush = (GimpBrush *)
     gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
-  success = (brush != NULL);
+  if (brush)
+    spacing = gimp_brush_get_spacing (brush);
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -394,20 +395,21 @@ HELP
     );
 
     @outargs = (
-	{ name => 'shape', type => 'int32', no_declare => '1',
-          alias => 'GIMP_BRUSH_GENERATED (brush)->shape',
+	{ name => 'shape', type => 'int32', init => 1,
           desc => "An enumerated value representing the brush shape" }
     );
 
 
     %invoke = (
-	vars => [ 'GimpBrush *brush = NULL' ],
 	code => <<'CODE'
 {
-  brush = (GimpBrush *)
+  GimpBrush *brush = (GimpBrush *)
     gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
-  success = (brush != NULL && GIMP_IS_BRUSH_GENERATED (brush));
+  if (GIMP_IS_BRUSH_GENERATED (brush))
+    shape = GIMP_BRUSH_GENERATED (brush)->shape;
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -428,20 +430,20 @@ HELP
     );
 
     @outargs = (
-	{ name => 'radius', type => 'float', no_declare => '1',
-          alias => 'GIMP_BRUSH_GENERATED (brush)->radius',
+	{ name => 'radius', type => 'float', init => 1,
           desc => "The radius of the brush in pixels" }
     );
 
-
     %invoke = (
-	vars => [ 'GimpBrush *brush = NULL' ],
 	code => <<'CODE'
 {
-  brush = (GimpBrush *)
+  GimpBrush *brush = (GimpBrush *)
     gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
-  success = (brush != NULL && GIMP_IS_BRUSH_GENERATED (brush));
+  if (GIMP_IS_BRUSH_GENERATED (brush))
+    radius = GIMP_BRUSH_GENERATED (brush)->radius;
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -462,20 +464,20 @@ HELP
     );
 
     @outargs = (
-	{ name => 'spikes', type => 'int32', no_declare => '1',
-          alias => 'GIMP_BRUSH_GENERATED (brush)->spikes',
+	{ name => 'spikes', type => 'int32', init => 1,
           desc => "The number of spikes on the brush." }
     );
 
-
     %invoke = (
-	vars => [ 'GimpBrush *brush = NULL' ],
 	code => <<'CODE'
 {
-  brush = (GimpBrush *)
+  GimpBrush *brush = (GimpBrush *)
     gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
-  success = (brush != NULL && GIMP_IS_BRUSH_GENERATED (brush));
+  if (GIMP_IS_BRUSH_GENERATED (brush))
+    spikes = GIMP_BRUSH_GENERATED (brush)->spikes;
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -498,20 +500,20 @@ HELP
     );
 
     @outargs = (
-	{ name => 'hardness', type => 'float', no_declare => '1',
-          alias => 'GIMP_BRUSH_GENERATED (brush)->hardness',
+	{ name => 'hardness', type => 'float', init => 1,
           desc => "The hardness of the brush." }
     );
 
-
     %invoke = (
-	vars => [ 'GimpBrush *brush = NULL' ],
 	code => <<'CODE'
 {
-  brush = (GimpBrush *)
+  GimpBrush *brush = (GimpBrush *)
     gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
-  success = (brush != NULL && GIMP_IS_BRUSH_GENERATED (brush));
+  if (GIMP_IS_BRUSH_GENERATED (brush))
+    hardness = GIMP_BRUSH_GENERATED (brush)->hardness;
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -532,20 +534,20 @@ HELP
     );
 
     @outargs = (
-	{ name => 'aspect_ratio', type => 'float', no_declare => '1',
-          alias => 'GIMP_BRUSH_GENERATED (brush)->aspect_ratio',
+	{ name => 'aspect_ratio', type => 'float', init => 1,
           desc => "The aspect ratio of the brush." }
     );
 
-
     %invoke = (
-	vars => [ 'GimpBrush *brush = NULL' ],
 	code => <<'CODE'
 {
-  brush = (GimpBrush *)
+  GimpBrush *brush = (GimpBrush *)
     gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
-  success = (brush != NULL && GIMP_IS_BRUSH_GENERATED (brush));
+  if (GIMP_IS_BRUSH_GENERATED (brush))
+    aspect_ratio = GIMP_BRUSH_GENERATED (brush)->aspect_ratio;
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -566,20 +568,20 @@ HELP
     );
 
     @outargs = (
-	{ name => 'angle', type => 'float', no_declare => '1',
-          alias => 'GIMP_BRUSH_GENERATED (brush)->angle',
+	{ name => 'angle', type => 'float', init => 1,
           desc => "The rotation angle of the brush." }
     );
 
-
     %invoke = (
-	vars => [ 'GimpBrush *brush = NULL' ],
 	code => <<'CODE'
 {
-  brush = (GimpBrush *)
+  GimpBrush *brush = (GimpBrush *)
     gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
-  success = (brush != NULL && GIMP_IS_BRUSH_GENERATED (brush));
+  if (GIMP_IS_BRUSH_GENERATED (brush))
+    angle = GIMP_BRUSH_GENERATED (brush)->angle;
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -602,10 +604,9 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'GimpBrush *brush = NULL' ],
 	code => <<'CODE'
 {
-  brush = (GimpBrush *)
+  GimpBrush *brush = (GimpBrush *)
     gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
   if (brush)
@@ -639,20 +640,22 @@ HELP
     );
 
     @outargs = (
-	{ name => 'shape_out', type => 'int32', no_declare => '1',
-          alias => 'GIMP_BRUSH_GENERATED (brush)->shape',
+	{ name => 'shape_out', type => 'int32', init => 1,
           desc => "The brush shape actually assigned" }
     );
 
     %invoke = (
-	vars => [ 'GimpBrush *brush = NULL' ],
 	code => <<'CODE'
 {
-  brush = (GimpBrush *)
+  GimpBrush *brush = (GimpBrush *)
     gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
   if (brush && GIMP_DATA (brush)->writable && GIMP_IS_BRUSH_GENERATED (brush))
-    gimp_brush_generated_set_shape (GIMP_BRUSH_GENERATED (brush), shape_in);
+    {
+      gimp_brush_generated_set_shape (GIMP_BRUSH_GENERATED (brush),
+                                      shape_in);
+      shape_out = GIMP_BRUSH_GENERATED (brush)->shape;
+    }
   else
     success = FALSE;
 }
@@ -678,20 +681,22 @@ HELP
     );
 
     @outargs = (
-	{ name => 'radius_out', type => 'float', no_declare => '1',
-          alias => 'GIMP_BRUSH_GENERATED (brush)->radius',
+	{ name => 'radius_out', type => 'float', init => 1,
           desc => "The brush radius actually assigned" }
     );
 
     %invoke = (
-	vars => [ 'GimpBrush *brush = NULL' ],
 	code => <<'CODE'
 {
-  brush = (GimpBrush *)
+  GimpBrush *brush = (GimpBrush *)
     gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
   if (brush && GIMP_DATA (brush)->writable && GIMP_IS_BRUSH_GENERATED (brush))
-    gimp_brush_generated_set_radius (GIMP_BRUSH_GENERATED (brush), radius_in);
+    {
+      gimp_brush_generated_set_radius (GIMP_BRUSH_GENERATED (brush),
+                                       radius_in);
+      radius_out = GIMP_BRUSH_GENERATED (brush)->radius;
+    }
   else
     success = FALSE;
 }
@@ -717,20 +722,22 @@ HELP
     );
 
     @outargs = (
-	{ name => 'spikes_out', type => 'int32', no_declare => '1',
-          alias => 'GIMP_BRUSH_GENERATED (brush)->spikes',
+	{ name => 'spikes_out', type => 'int32', init => 1,
           desc => "The number of spikes actually assigned" }
     );
 
     %invoke = (
-	vars => [ 'GimpBrush *brush = NULL' ],
 	code => <<'CODE'
 {
-  brush = (GimpBrush *)
+  GimpBrush *brush = (GimpBrush *)
     gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
   if (brush && GIMP_DATA (brush)->writable && GIMP_IS_BRUSH_GENERATED (brush))
-    gimp_brush_generated_set_spikes (GIMP_BRUSH_GENERATED (brush), spikes_in);
+    {
+      gimp_brush_generated_set_spikes (GIMP_BRUSH_GENERATED (brush),
+                                       spikes_in);
+      spikes_out = GIMP_BRUSH_GENERATED (brush)->spikes;
+    }
   else
     success = FALSE;
 }
@@ -756,20 +763,22 @@ HELP
     );
 
     @outargs = (
-	{ name => 'hardness_out', type => 'float', no_declare => '1',
-          alias => 'GIMP_BRUSH_GENERATED (brush)->hardness',
+	{ name => 'hardness_out', type => 'float', init => 1,
           desc => "The brush hardness actually assigned" }
     );
 
     %invoke = (
-	vars => [ 'GimpBrush *brush = NULL' ],
 	code => <<'CODE'
 {
-  brush = (GimpBrush *)
+  GimpBrush *brush = (GimpBrush *)
     gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
   if (brush && GIMP_DATA (brush)->writable && GIMP_IS_BRUSH_GENERATED (brush))
-    gimp_brush_generated_set_hardness (GIMP_BRUSH_GENERATED (brush), hardness_in);
+    {
+      gimp_brush_generated_set_hardness (GIMP_BRUSH_GENERATED (brush),
+                                         hardness_in);
+      hardness_out = GIMP_BRUSH_GENERATED (brush)->hardness;
+    }
   else
     success = FALSE;
 }
@@ -795,20 +804,22 @@ HELP
     );
 
     @outargs = (
-	{ name => 'aspect_ratio_out', type => 'float', no_declare => '1',
-          alias => 'GIMP_BRUSH_GENERATED (brush)->aspect_ratio',
+	{ name => 'aspect_ratio_out', type => 'float', init => 1,
           desc => "The brush aspect ratio actually assigned" }
     );
 
     %invoke = (
-	vars => [ 'GimpBrush *brush = NULL' ],
 	code => <<'CODE'
 {
-  brush = (GimpBrush *)
+  GimpBrush *brush = (GimpBrush *)
     gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
   if (brush && GIMP_DATA (brush)->writable && GIMP_IS_BRUSH_GENERATED (brush))
-    gimp_brush_generated_set_aspect_ratio (GIMP_BRUSH_GENERATED (brush), aspect_ratio_in);
+    {
+      gimp_brush_generated_set_aspect_ratio (GIMP_BRUSH_GENERATED (brush),
+                                             aspect_ratio_in);
+      aspect_ratio_out = GIMP_BRUSH_GENERATED (brush)->aspect_ratio;
+    }
   else
     success = FALSE;
 }
@@ -834,20 +845,22 @@ HELP
     );
 
     @outargs = (
-	{ name => 'angle_out', type => 'float', no_declare => '1',
-          alias => 'GIMP_BRUSH_GENERATED (brush)->angle',
+	{ name => 'angle_out', type => 'float', init => 1,
           desc => "The brush rotation angle actually assigned" }
     );
 
     %invoke = (
-	vars => [ 'GimpBrush *brush = NULL' ],
 	code => <<'CODE'
 {
-  brush = (GimpBrush *)
+  GimpBrush *brush = (GimpBrush *)
     gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
   if (brush && GIMP_DATA (brush)->writable && GIMP_IS_BRUSH_GENERATED (brush))
-    gimp_brush_generated_set_angle (GIMP_BRUSH_GENERATED (brush), angle_in);
+    {
+      gimp_brush_generated_set_angle (GIMP_BRUSH_GENERATED (brush),
+                                      angle_in);
+      angle_out = GIMP_BRUSH_GENERATED (brush)->angle;
+    }
   else
     success = FALSE;
 }

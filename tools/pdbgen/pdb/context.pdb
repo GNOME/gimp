@@ -39,13 +39,9 @@ HELP
 	code => <<'CODE'
 {
   if (gimp->current_plug_in && gimp->current_plug_in->open)
-    {
-      success = plug_in_context_push (gimp->current_plug_in);
-    }
+    success = plug_in_context_push (gimp->current_plug_in);
   else
-    {
-      success = FALSE;
-    }
+    success = FALSE;
 }
 CODE
     );
@@ -66,13 +62,9 @@ HELP
 	code => <<'CODE'
 {
   if (gimp->current_plug_in && gimp->current_plug_in->open)
-    {
-      success = plug_in_context_pop (gimp->current_plug_in);
-    }
+    success = plug_in_context_pop (gimp->current_plug_in);
   else
-    {
-      success = FALSE;
-    }
+    success = FALSE;
 }
 CODE
     );
@@ -88,15 +80,21 @@ HELP
     &mitch_pdb_misc('2005', '2.4');
 
     @outargs = (
-	{ name  => 'name', type  => 'string',
-	  desc  => 'The name of the active paint method',
-	  alias => 'g_strdup (gimp_object_get_name (GIMP_OBJECT (paint_info)))',
-	  no_declare => 1 }
+	{ name  => 'name', type  => 'string', init => 1,
+	  desc  => 'The name of the active paint method' }
     );
 
     %invoke = (
-	vars => [ 'GimpPaintInfo *paint_info' ],
-	code => 'success = (paint_info = gimp_context_get_paint_info (context)) != NULL;'
+	code => <<'CODE'
+{
+  GimpPaintInfo *paint_info = gimp_context_get_paint_info (context);
+
+  if (paint_info)
+    name = g_strdup (gimp_object_get_name (GIMP_OBJECT (paint_info)));
+  else
+    success = FALSE;
+}
+CODE
     );
 }
 
@@ -120,10 +118,9 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'GimpPaintInfo *paint_info' ],
 	code => <<'CODE'
 {
-  paint_info = (GimpPaintInfo *)
+  GimpPaintInfo *paint_info = (GimpPaintInfo *)
     gimp_container_get_child_by_name (gimp->paint_info_list, name);
 
   if (paint_info)
@@ -341,15 +338,21 @@ HELP
     &pdb_misc;
 
     @outargs = (
-	{ name  => 'name', type  => 'string',
-	  desc  => 'The name of the active brush',
-	  alias => 'g_strdup (gimp_object_get_name (GIMP_OBJECT (brush)))',
-	  no_declare => 1 }
+	{ name  => 'name', type  => 'string', init => 1,
+	  desc  => 'The name of the active brush' }
     );
 
     %invoke = (
-	vars => [ 'GimpBrush *brush' ],
-	code => 'success = (brush = gimp_context_get_brush (context)) != NULL;'
+	code => <<'CODE'
+{
+  GimpBrush *brush = gimp_context_get_brush (context);
+
+  if (brush)
+    name = g_strdup (gimp_object_get_name (GIMP_OBJECT (brush)));
+  else
+    success = FALSE;
+}
+CODE
     );
 }
 
@@ -372,10 +375,9 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'GimpBrush *brush' ],
 	code => <<'CODE'
 {
-  brush = (GimpBrush *)
+  GimpBrush *brush = (GimpBrush *)
     gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
   if (brush)
@@ -399,15 +401,21 @@ HELP
     &pdb_misc;
 
     @outargs = (
-	{ name  => 'name', type  => 'string',
-	  desc  => 'The name of the active pattern',
-	  alias => 'g_strdup (gimp_object_get_name (GIMP_OBJECT (pattern)))',
-	  no_declare => 1 }
+	{ name  => 'name', type  => 'string', init => 1,
+	  desc  => 'The name of the active pattern' }
     );
 
     %invoke = (
-	vars => [ 'GimpPattern *pattern' ],
-	code => 'success = (pattern = gimp_context_get_pattern (context)) != NULL;'
+	code => <<'CODE'
+{
+  GimpPattern *pattern = gimp_context_get_pattern (context);
+
+  if (pattern)
+    name = g_strdup (gimp_object_get_name (GIMP_OBJECT (pattern)));
+  else
+    success = FALSE;
+}
+CODE
     );
 }
 
@@ -430,10 +438,9 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'GimpPattern *pattern' ],
 	code => <<'CODE'
 {
-  pattern = (GimpPattern *)
+  GimpPattern *pattern = (GimpPattern *)
     gimp_container_get_child_by_name (gimp->pattern_factory->container, name);
 
   if (pattern)
@@ -455,15 +462,21 @@ HELP
     &pdb_misc;
 
     @outargs = (
-	{ name  => 'name', type  => 'string',
-	  desc  => 'The name of the active gradient',
-	  alias => 'g_strdup (gimp_object_get_name (GIMP_OBJECT (gradient)))',
-	  no_declare => 1 }
+	{ name  => 'name', type  => 'string', init => 1,
+	  desc  => 'The name of the active gradient' }
     );
 
     %invoke = (
-	vars => [ 'GimpGradient *gradient' ],
-	code => 'success = (gradient = gimp_context_get_gradient (context)) != NULL;'
+	code => <<'CODE'
+{
+  GimpGradient *gradient = gimp_context_get_gradient (context);
+
+  if (gradient)
+    name = g_strdup (gimp_object_get_name (GIMP_OBJECT (gradient)));
+  else
+    success = FALSE;
+}
+CODE
     );
 }
 
@@ -486,10 +499,9 @@ HELP
     );
 
     %invoke = (
-        vars => [ 'GimpGradient *gradient' ],
         code => <<'CODE'
 {
-  gradient = (GimpGradient *)
+  GimpGradient *gradient = (GimpGradient *)
     gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
   if (gradient)
@@ -511,15 +523,21 @@ HELP
     &pdb_misc;
 
     @outargs = (
-	{ name  => 'name', type  => 'string',
-	  desc  => 'The name of the active palette',
-	  alias => 'g_strdup (gimp_object_get_name (GIMP_OBJECT (palette)))',
-	  no_declare => 1 }
+	{ name  => 'name', type  => 'string', init => 1,
+	  desc  => 'The name of the active palette' }
     );
 
     %invoke = (
-        vars => [ 'GimpPalette *palette' ],
-        code => 'success = (palette = gimp_context_get_palette (context)) != NULL;'
+        code => <<'CODE'
+{
+  GimpPalette *palette = gimp_context_get_palette (context);
+
+  if (palette)
+    name = g_strdup (gimp_object_get_name (GIMP_OBJECT (palette)));
+  else
+    success = FALSE;
+}
+CODE
     );
 }
 
@@ -542,10 +560,9 @@ HELP
     );
 
     %invoke = (
-        vars => [ 'GimpPalette *palette' ],
         code => <<'CODE'
 {
-  palette = (GimpPalette *)
+  GimpPalette *palette = (GimpPalette *)
     gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
   if (palette)
@@ -567,15 +584,21 @@ HELP
     &pdb_misc;
 
     @outargs = (
-	{ name  => 'name', type  => 'string',
-	  desc  => 'The name of the active font',
-	  alias => 'g_strdup (gimp_object_get_name (GIMP_OBJECT (font)))',
-	  no_declare => 1 }
+	{ name  => 'name', type  => 'string', init => 1,
+	  desc  => 'The name of the active font' }
     );
 
     %invoke = (
-        vars => [ 'GimpFont *font' ],
-        code => 'success = (font = gimp_context_get_font (context)) != NULL;'
+        code => <<'CODE'
+{
+  GimpFont *font = gimp_context_get_font (context);
+
+  if (font)
+    name = g_strdup (gimp_object_get_name (GIMP_OBJECT (font)));
+  else
+    success = FALSE;
+}
+CODE
     );
 }
 
@@ -598,10 +621,9 @@ HELP
     );
 
     %invoke = (
-        vars => [ 'GimpFont *font' ],
         code => <<'CODE'
 {
-  font = (GimpFont *)
+  GimpFont *font = (GimpFont *)
     gimp_container_get_child_by_name (gimp->fonts, name);
 
   if (font)

@@ -156,17 +156,28 @@ patterns_get_pattern_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GimpPattern *pattern;
+  gchar *name = NULL;
+  gint32 width = 0;
+  gint32 height = 0;
 
-  success = (pattern = gimp_context_get_pattern (context)) != NULL;
+  GimpPattern *pattern = gimp_context_get_pattern (context);
+
+  if (pattern)
+    {
+      name   = g_strdup (GIMP_OBJECT (pattern)->name);
+      width  = pattern->mask->width;
+      height = pattern->mask->height;
+    }
+  else
+    success = FALSE;
 
   return_args = procedural_db_return_args (&patterns_get_pattern_proc, success);
 
   if (success)
     {
-      return_args[1].value.pdb_pointer = g_strdup (GIMP_OBJECT (pattern)->name);
-      return_args[2].value.pdb_int = pattern->mask->width;
-      return_args[3].value.pdb_int = pattern->mask->height;
+      return_args[1].value.pdb_pointer = name;
+      return_args[2].value.pdb_int = width;
+      return_args[3].value.pdb_int = height;
     }
 
   return return_args;
@@ -218,9 +229,12 @@ patterns_get_pattern_data_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   gchar *name;
+  gchar *actual_name = NULL;
+  gint32 width = 0;
+  gint32 height = 0;
+  gint32 mask_bpp = 0;
   gint32 length = 0;
   guint8 *mask_data = NULL;
-  GimpPattern *pattern = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name && !g_utf8_validate (name, -1, NULL))
@@ -228,6 +242,8 @@ patterns_get_pattern_data_invoker (Gimp         *gimp,
 
   if (success)
     {
+      GimpPattern *pattern;
+
       if (name && strlen (name))
         {
           pattern = (GimpPattern *)
@@ -241,9 +257,13 @@ patterns_get_pattern_data_invoker (Gimp         *gimp,
 
       if (pattern)
         {
-          length = pattern->mask->height * pattern->mask->width *
-                   pattern->mask->bytes;
-          mask_data = g_memdup (temp_buf_data (pattern->mask), length);
+          actual_name = g_strdup (GIMP_OBJECT (pattern)->name);
+          width       = pattern->mask->width;
+          height      = pattern->mask->height;
+          mask_bpp    = pattern->mask->bytes;
+          length      = pattern->mask->height * pattern->mask->width *
+                        pattern->mask->bytes;
+          mask_data   = g_memdup (temp_buf_data (pattern->mask), length);
         }
       else
         success = FALSE;
@@ -253,10 +273,10 @@ patterns_get_pattern_data_invoker (Gimp         *gimp,
 
   if (success)
     {
-      return_args[1].value.pdb_pointer = g_strdup (GIMP_OBJECT (pattern)->name);
-      return_args[2].value.pdb_int = pattern->mask->width;
-      return_args[3].value.pdb_int = pattern->mask->height;
-      return_args[4].value.pdb_int = pattern->mask->bytes;
+      return_args[1].value.pdb_pointer = actual_name;
+      return_args[2].value.pdb_int = width;
+      return_args[3].value.pdb_int = height;
+      return_args[4].value.pdb_int = mask_bpp;
       return_args[5].value.pdb_int = length;
       return_args[6].value.pdb_pointer = mask_data;
     }
@@ -277,7 +297,7 @@ static ProcArg patterns_get_pattern_data_outargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "name",
+    "actual-name",
     "The pattern name"
   },
   {

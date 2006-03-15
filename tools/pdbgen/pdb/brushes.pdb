@@ -66,23 +66,32 @@ sub brushes_get_brush {
     &std_pdb_deprecated ('gimp-context-get-brush');
 
     @outargs = (
-	{ name => 'name', type => 'string', no_declare => 1,
-	  desc => 'The brush name',
-	  alias => 'g_strdup (GIMP_OBJECT (brush)->name)' },
-	{ name => 'width', type => 'int32', no_declare => 1,
-	  desc => 'The brush width',
-	  alias => 'brush->mask->width' },
-	{ name => 'height', type => 'int32', no_declare => 1,
-	  desc => 'The brush height',
-	  alias => 'brush->mask->height' },
-	{ name => 'spacing', type => '0 <= int32 <= 1000', no_declare => 1,
-	  desc => 'The brush spacing: %%desc%%',
-	  alias => 'gimp_brush_get_spacing (brush)' }
+	{ name => 'name', type => 'string', init => 1,
+	  desc => 'The brush name' },
+	{ name => 'width', type => 'int32', init => 1,
+	  desc => 'The brush width' },
+	{ name => 'height', type => 'int32', init => 1,
+	  desc => 'The brush height' },
+	{ name => 'spacing', type => '0 <= int32 <= 1000', init => 1,
+	  desc => 'The brush spacing: %%desc%%' }
     );
 
     %invoke = (
-	vars => [ 'GimpBrush *brush' ],
-	code => 'success = (brush = gimp_context_get_brush (context)) != NULL;'
+	code =><<'CODE'
+{
+  GimpBrush *brush = gimp_context_get_brush (context);
+
+  if (brush)
+    {
+      name    = g_strdup (GIMP_OBJECT (brush)->name);
+      width   = brush->mask->width;
+      height  = brush->mask->height;
+      spacing = gimp_brush_get_spacing (brush);
+    }
+  else
+    success = FALSE;
+}
+CODE
     );
 }
 
@@ -90,10 +99,21 @@ sub brushes_get_spacing {
     &std_pdb_deprecated ('gimp-brush-get-spacing');
 
     @outargs = (
-	{ name => 'spacing', type => '0 <= int32 <= 1000',
-	  desc => 'The brush spacing: %%desc%%',
-	  alias => 'gimp_brush_get_spacing (gimp_context_get_brush (context))',
-	  no_declare => 1 }
+	{ name => 'spacing', type => '0 <= int32 <= 1000', init => 1,
+	  desc => 'The brush spacing: %%desc%%' }
+    );
+
+    %invoke = (
+	code =><<'CODE'
+{
+  GimpBrush *brush = gimp_context_get_brush (context);
+
+  if (brush)
+    spacing = gimp_brush_get_spacing (brush);
+  else
+    success = FALSE;
+}
+CODE
     );
 }
 
@@ -120,25 +140,18 @@ sub brushes_get_brush_data {
     );
 
     @outargs = (
-	{ name => 'name', type => 'string', no_declare => 1,
-	  desc => 'The brush name',
-	  alias => 'g_strdup (GIMP_OBJECT (brush)->name)' },
-	{ name => 'opacity', type => '0 <= float <= 100', no_declare => 1,
-	  desc => 'The brush opacity: %%desc%%',
-	  alias => '1.0' },
-	{ name => 'spacing', type => '0 <= int32 <= 1000', no_declare => 1,
-	  desc => 'The brush spacing: %%desc%%',
-	  alias => 'gimp_brush_get_spacing (brush)' },
-	{ name => 'paint_mode', type => 'enum GimpLayerModeEffects',
-	  no_declare => 1,
-	  desc => 'The paint mode: { %%desc%% }',
-	  alias => '0' },
-	{ name => 'width', type => 'int32', no_declare => 1,
-	  desc => 'The brush width',
-	  alias => 'brush->mask->width' },
-	{ name => 'height', type => 'int32', no_declare => 1,
-	  desc => 'The brush height',
-	  alias => 'brush->mask->height' },
+	{ name => 'actual_name', type => 'string', init => 1,
+	  desc => 'The brush name' },
+	{ name => 'opacity', type => '0 <= float <= 100', init => 1,
+	  desc => 'The brush opacity: %%desc%%' },
+	{ name => 'spacing', type => '0 <= int32 <= 1000', init => 1,
+	  desc => 'The brush spacing: %%desc%%' },
+	{ name => 'paint_mode', type => 'enum GimpLayerModeEffects', init => 1,
+	  desc => 'The paint mode: { %%desc%% }' },
+	{ name => 'width', type => 'int32', init => 1,
+	  desc => 'The brush width' },
+	{ name => 'height', type => 'int32', init => 1,
+	  desc => 'The brush height' },
 	{ name => 'mask_data', type => 'int8array', init => 1,
 	  desc => 'The brush mask data',
 	  array => { name => 'length', init => 1,
@@ -146,9 +159,10 @@ sub brushes_get_brush_data {
     );
 
     %invoke = (
-	vars => [ 'GimpBrush *brush = NULL' ],
 	code => <<'CODE'
 {
+  GimpBrush *brush;
+
   if (name && strlen (name))
     {
       brush = (GimpBrush *)
@@ -161,8 +175,14 @@ sub brushes_get_brush_data {
 
   if (brush)
     {
-      length    = brush->mask->height * brush->mask->width;
-      mask_data = g_memdup (temp_buf_data (brush->mask), length);
+      actual_name = g_strdup (GIMP_OBJECT (brush)->name);
+      opacity     = 1.0;
+      spacing     = gimp_brush_get_spacing (brush);
+      paint_mode  = 0;
+      width       = brush->mask->width;
+      height      = brush->mask->height;
+      length      = brush->mask->height * brush->mask->width;
+      mask_data   = g_memdup (temp_buf_data (brush->mask), length);
     }
   else
     success = FALSE;

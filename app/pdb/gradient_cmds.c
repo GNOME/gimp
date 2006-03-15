@@ -111,7 +111,7 @@ gradient_new_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   gchar *name;
-  GimpData *data = NULL;
+  gchar *actual_name = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -120,15 +120,22 @@ gradient_new_invoker (Gimp         *gimp,
   if (success)
     {
       if (strlen (name))
-        data = gimp_data_factory_data_new (gimp->gradient_factory, name);
+        {
+          GimpData *data = gimp_data_factory_data_new (gimp->gradient_factory, name);
 
-      success = (data != NULL);
+          if (data)
+            actual_name = g_strdup (GIMP_OBJECT (data)->name);
+          else
+            success = FALSE;
+        }
+      else
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&gradient_new_proc, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = g_strdup (GIMP_OBJECT (data)->name);
+    return_args[1].value.pdb_pointer = actual_name;
 
   return return_args;
 }
@@ -146,7 +153,7 @@ static ProcArg gradient_new_outargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "name",
+    "actual-name",
     "The actual new gradient name"
   }
 };
@@ -178,8 +185,7 @@ gradient_duplicate_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   gchar *name;
-  GimpGradient *gradient = NULL;
-  GimpGradient *gradient_copy = NULL;
+  gchar *copy_name = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -187,16 +193,19 @@ gradient_duplicate_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gradient = (GimpGradient *)
+      GimpGradient *gradient = (GimpGradient *)
         gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
       if (gradient)
         {
-          gradient_copy = (GimpGradient *)
+          GimpGradient *gradient_copy = (GimpGradient *)
             gimp_data_factory_data_duplicate (gimp->gradient_factory,
                                               GIMP_DATA (gradient));
 
-          success = (gradient_copy != NULL);
+          if (gradient_copy)
+            copy_name = g_strdup (GIMP_OBJECT (gradient_copy)->name);
+          else
+            success = FALSE;
         }
       else
         success = FALSE;
@@ -205,7 +214,7 @@ gradient_duplicate_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&gradient_duplicate_proc, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = g_strdup (GIMP_OBJECT (gradient_copy)->name);
+    return_args[1].value.pdb_pointer = copy_name;
 
   return return_args;
 }
@@ -223,7 +232,7 @@ static ProcArg gradient_duplicate_outargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "name",
+    "copy-name",
     "The name of the gradient's copy"
   }
 };
@@ -255,7 +264,7 @@ gradient_is_editable_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   gchar *name;
-  GimpGradient *gradient = NULL;
+  gboolean editable = FALSE;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -263,11 +272,11 @@ gradient_is_editable_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gradient = (GimpGradient *)
+      GimpGradient *gradient = (GimpGradient *)
         gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
       if (gradient)
-        success = TRUE;
+        editable = GIMP_DATA (gradient)->writable;
       else
         success = FALSE;
     }
@@ -275,7 +284,7 @@ gradient_is_editable_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&gradient_is_editable_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = GIMP_DATA (gradient)->writable;
+    return_args[1].value.pdb_int = editable;
 
   return return_args;
 }
@@ -326,7 +335,7 @@ gradient_rename_invoker (Gimp         *gimp,
   Argument *return_args;
   gchar *name;
   gchar *new_name;
-  GimpGradient *gradient = NULL;
+  gchar *actual_name = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -338,11 +347,14 @@ gradient_rename_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gradient = (GimpGradient *)
+      GimpGradient *gradient = (GimpGradient *)
         gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
       if (gradient && GIMP_DATA (gradient)->writable)
-        gimp_object_set_name (GIMP_OBJECT (gradient), new_name);
+        {
+          gimp_object_set_name (GIMP_OBJECT (gradient), new_name);
+          actual_name = g_strdup (GIMP_OBJECT (gradient)->name);
+        }
       else
         success = FALSE;
     }
@@ -350,7 +362,7 @@ gradient_rename_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&gradient_rename_proc, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = g_strdup (GIMP_OBJECT (gradient)->name);
+    return_args[1].value.pdb_pointer = actual_name;
 
   return return_args;
 }
@@ -373,7 +385,7 @@ static ProcArg gradient_rename_outargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "name",
+    "actual-name",
     "The actual new name of the gradient"
   }
 };
@@ -404,7 +416,6 @@ gradient_delete_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   gchar *name;
-  GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -412,7 +423,7 @@ gradient_delete_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gradient = (GimpGradient *)
+      GimpGradient *gradient = (GimpGradient *)
         gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
       if (gradient && GIMP_DATA (gradient)->deletable)
@@ -476,7 +487,6 @@ gradient_get_uniform_samples_invoker (Gimp         *gimp,
   gboolean reverse;
   gint32 num_color_samples = 0;
   gdouble *color_samples = NULL;
-  GimpGradient *gradient;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -490,7 +500,7 @@ gradient_get_uniform_samples_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gradient = (GimpGradient *)
+      GimpGradient *gradient = (GimpGradient *)
         gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
       if (gradient)
@@ -598,7 +608,6 @@ gradient_get_custom_samples_invoker (Gimp         *gimp,
   gboolean reverse;
   gint32 num_color_samples = 0;
   gdouble *color_samples = NULL;
-  GimpGradient *gradient;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -614,7 +623,7 @@ gradient_get_custom_samples_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gradient = (GimpGradient *)
+      GimpGradient *gradient = (GimpGradient *)
         gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
       if (gradient)
@@ -723,7 +732,6 @@ gradient_segment_get_left_color_invoker (Gimp         *gimp,
   gint32 segment;
   GimpRGB color;
   gdouble opacity = 0;
-  GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -735,7 +743,7 @@ gradient_segment_get_left_color_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gradient = (GimpGradient *)
+      GimpGradient *gradient = (GimpGradient *)
         gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
       if (gradient)
@@ -824,7 +832,6 @@ gradient_segment_set_left_color_invoker (Gimp         *gimp,
   gint32 segment;
   GimpRGB color;
   gdouble opacity;
-  GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -842,7 +849,7 @@ gradient_segment_set_left_color_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gradient = (GimpGradient *)
+      GimpGradient *gradient = (GimpGradient *)
         gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
       if (gradient)
@@ -920,7 +927,6 @@ gradient_segment_get_right_color_invoker (Gimp         *gimp,
   gint32 segment;
   GimpRGB color;
   gdouble opacity = 0;
-  GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -932,7 +938,7 @@ gradient_segment_get_right_color_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gradient = (GimpGradient *)
+      GimpGradient *gradient = (GimpGradient *)
         gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
       if (gradient)
@@ -1021,7 +1027,6 @@ gradient_segment_set_right_color_invoker (Gimp         *gimp,
   gint32 segment;
   GimpRGB color;
   gdouble opacity;
-  GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -1039,7 +1044,7 @@ gradient_segment_set_right_color_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gradient = (GimpGradient *)
+      GimpGradient *gradient = (GimpGradient *)
         gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
       if (gradient)
@@ -1116,7 +1121,6 @@ gradient_segment_get_left_pos_invoker (Gimp         *gimp,
   gchar *name;
   gint32 segment;
   gdouble pos = 0;
-  GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -1128,7 +1132,7 @@ gradient_segment_get_left_pos_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gradient = (GimpGradient *)
+      GimpGradient *gradient = (GimpGradient *)
         gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
       if (gradient)
@@ -1209,7 +1213,6 @@ gradient_segment_set_left_pos_invoker (Gimp         *gimp,
   gint32 segment;
   gdouble pos;
   gdouble final_pos = 0;
-  GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -1225,7 +1228,7 @@ gradient_segment_set_left_pos_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gradient = (GimpGradient *)
+      GimpGradient *gradient = (GimpGradient *)
         gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
       if (gradient)
@@ -1311,7 +1314,6 @@ gradient_segment_get_middle_pos_invoker (Gimp         *gimp,
   gchar *name;
   gint32 segment;
   gdouble pos = 0;
-  GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -1323,7 +1325,7 @@ gradient_segment_get_middle_pos_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gradient = (GimpGradient *)
+      GimpGradient *gradient = (GimpGradient *)
         gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
       if (gradient)
@@ -1404,7 +1406,6 @@ gradient_segment_set_middle_pos_invoker (Gimp         *gimp,
   gint32 segment;
   gdouble pos;
   gdouble final_pos = 0;
-  GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -1420,7 +1421,7 @@ gradient_segment_set_middle_pos_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gradient = (GimpGradient *)
+      GimpGradient *gradient = (GimpGradient *)
         gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
       if (gradient)
@@ -1506,7 +1507,6 @@ gradient_segment_get_right_pos_invoker (Gimp         *gimp,
   gchar *name;
   gint32 segment;
   gdouble pos = 0;
-  GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -1518,7 +1518,7 @@ gradient_segment_get_right_pos_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gradient = (GimpGradient *)
+      GimpGradient *gradient = (GimpGradient *)
         gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
       if (gradient)
@@ -1599,7 +1599,6 @@ gradient_segment_set_right_pos_invoker (Gimp         *gimp,
   gint32 segment;
   gdouble pos;
   gdouble final_pos = 0;
-  GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -1615,7 +1614,7 @@ gradient_segment_set_right_pos_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gradient = (GimpGradient *)
+      GimpGradient *gradient = (GimpGradient *)
         gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
       if (gradient)
@@ -1701,7 +1700,6 @@ gradient_segment_get_blending_function_invoker (Gimp         *gimp,
   gchar *name;
   gint32 segment;
   gint32 blend_func = 0;
-  GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -1713,7 +1711,7 @@ gradient_segment_get_blending_function_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gradient = (GimpGradient *)
+      GimpGradient *gradient = (GimpGradient *)
         gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
       if (gradient)
@@ -1794,7 +1792,6 @@ gradient_segment_get_coloring_type_invoker (Gimp         *gimp,
   gchar *name;
   gint32 segment;
   gint32 coloring_type = 0;
-  GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -1806,7 +1803,7 @@ gradient_segment_get_coloring_type_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gradient = (GimpGradient *)
+      GimpGradient *gradient = (GimpGradient *)
         gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
       if (gradient)
@@ -1887,7 +1884,6 @@ gradient_segment_range_set_blending_function_invoker (Gimp         *gimp,
   gint32 start_segment;
   gint32 end_segment;
   gint32 blending_function;
-  GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -1905,7 +1901,7 @@ gradient_segment_range_set_blending_function_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gradient = (GimpGradient *)
+      GimpGradient *gradient = (GimpGradient *)
         gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
       if (gradient)
@@ -2004,7 +2000,6 @@ gradient_segment_range_set_coloring_type_invoker (Gimp         *gimp,
   gint32 start_segment;
   gint32 end_segment;
   gint32 coloring_type;
-  GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -2022,7 +2017,7 @@ gradient_segment_range_set_coloring_type_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gradient = (GimpGradient *)
+      GimpGradient *gradient = (GimpGradient *)
         gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
       if (gradient)
@@ -2120,7 +2115,6 @@ gradient_segment_range_flip_invoker (Gimp         *gimp,
   gchar *name;
   gint32 start_segment;
   gint32 end_segment;
-  GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -2134,7 +2128,7 @@ gradient_segment_range_flip_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gradient = (GimpGradient *)
+      GimpGradient *gradient = (GimpGradient *)
         gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
       if (gradient)
@@ -2228,7 +2222,6 @@ gradient_segment_range_replicate_invoker (Gimp         *gimp,
   gint32 start_segment;
   gint32 end_segment;
   gint32 replicate_times;
-  GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -2246,7 +2239,7 @@ gradient_segment_range_replicate_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gradient = (GimpGradient *)
+      GimpGradient *gradient = (GimpGradient *)
         gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
       if (gradient)
@@ -2345,7 +2338,6 @@ gradient_segment_range_split_midpoint_invoker (Gimp         *gimp,
   gchar *name;
   gint32 start_segment;
   gint32 end_segment;
-  GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -2359,7 +2351,7 @@ gradient_segment_range_split_midpoint_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gradient = (GimpGradient *)
+      GimpGradient *gradient = (GimpGradient *)
         gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
       if (gradient)
@@ -2453,7 +2445,6 @@ gradient_segment_range_split_uniform_invoker (Gimp         *gimp,
   gint32 start_segment;
   gint32 end_segment;
   gint32 split_parts;
-  GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -2471,7 +2462,7 @@ gradient_segment_range_split_uniform_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gradient = (GimpGradient *)
+      GimpGradient *gradient = (GimpGradient *)
         gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
       if (gradient)
@@ -2570,7 +2561,6 @@ gradient_segment_range_delete_invoker (Gimp         *gimp,
   gchar *name;
   gint32 start_segment;
   gint32 end_segment;
-  GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -2584,7 +2574,7 @@ gradient_segment_range_delete_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gradient = (GimpGradient *)
+      GimpGradient *gradient = (GimpGradient *)
         gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
       if (gradient)
@@ -2677,7 +2667,6 @@ gradient_segment_range_redistribute_handles_invoker (Gimp         *gimp,
   gchar *name;
   gint32 start_segment;
   gint32 end_segment;
-  GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -2691,7 +2680,7 @@ gradient_segment_range_redistribute_handles_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gradient = (GimpGradient *)
+      GimpGradient *gradient = (GimpGradient *)
         gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
       if (gradient)
@@ -2783,7 +2772,6 @@ gradient_segment_range_blend_colors_invoker (Gimp         *gimp,
   gchar *name;
   gint32 start_segment;
   gint32 end_segment;
-  GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -2797,7 +2785,7 @@ gradient_segment_range_blend_colors_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gradient = (GimpGradient *)
+      GimpGradient *gradient = (GimpGradient *)
         gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
       if (gradient)
@@ -2891,7 +2879,6 @@ gradient_segment_range_blend_opacity_invoker (Gimp         *gimp,
   gchar *name;
   gint32 start_segment;
   gint32 end_segment;
-  GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -2905,7 +2892,7 @@ gradient_segment_range_blend_opacity_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gradient = (GimpGradient *)
+      GimpGradient *gradient = (GimpGradient *)
         gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
       if (gradient)
@@ -3003,7 +2990,6 @@ gradient_segment_range_move_invoker (Gimp         *gimp,
   gdouble delta;
   gboolean control_compress;
   gdouble final_delta = 0;
-  GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -3023,7 +3009,7 @@ gradient_segment_range_move_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gradient = (GimpGradient *)
+      GimpGradient *gradient = (GimpGradient *)
         gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
       if (gradient)

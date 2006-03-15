@@ -158,17 +158,6 @@ sub declare_args {
     $result;
 }
 
-sub declare_vars {
-    my $proc = shift;
-    my $code = "";
-    if (exists $proc->{invoke}->{vars}) {
-	foreach (@{$proc->{invoke}->{vars}}) {
-	   $code .= ' ' x 2 . $_ . ";\n";
-	}
-    }
-    $code;
-}
-
 sub make_arg_recs {
     my $proc = shift;
 
@@ -530,7 +519,6 @@ CODE
 		$pos++;
 	    }
 
-	    $code .= &declare_vars($proc);
 	    $code .= "\n" if length($code);
 	    $code .= &format_code_frag($custom, 0) . "}\n";
 	}
@@ -562,7 +550,6 @@ CODE
 	    }
 
 	    $code .= &declare_args($tempproc, $out, qw(inargs)) . "\n";
-	    $code .= &declare_vars($proc);
 
 	    my $marshal = "";
 	    foreach (@{$tempproc->{inargs}}) {
@@ -623,7 +610,6 @@ CODE
 	
 	    $invoker .= ' ' x 2 . "Argument *return_args;\n" if scalar @outargs;
 	    $invoker .= &declare_args($proc, $out, qw(inargs outargs));
-	    $invoker .= &declare_vars($proc);
 
 	    $invoker .= &marshal_inargs($proc, 0);
 	    $invoker .= "\n" if $invoker && $invoker !~ /\n\n/s;

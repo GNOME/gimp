@@ -33,25 +33,28 @@ HELP
     );
 
     @outargs = (
-	{ name => 'width', type => 'int32', no_declare => '1',
-          alias => 'pattern->mask->width', void_ret => '1',
+	{ name => 'width', type => 'int32', init => 1, void_ret => '1',
           desc => "The pattern width" },
-	{ name => 'height', type => 'int32', no_declare => '1',
-          alias => 'pattern->mask->height',
+	{ name => 'height', type => 'int32', init => 1,
           desc => "The pattern height" },
-	{ name => 'bpp', type => 'int32', no_declare => '1',
-          alias => 'pattern->mask->bytes',
+	{ name => 'bpp', type => 'int32', init => 1,
           desc => "The pattern bpp" }
     );
 
     %invoke = (
-	vars => [ 'GimpPattern *pattern = NULL' ],
 	code => <<'CODE'
 {
-  pattern = (GimpPattern *)
+  GimpPattern *pattern = (GimpPattern *)
     gimp_container_get_child_by_name (gimp->pattern_factory->container, name);
 
-  success = (pattern != NULL);
+  if (pattern)
+    {
+      width  = pattern->mask->width;
+      height = pattern->mask->height;
+      bpp    = pattern->mask->bytes;
+    }
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -76,14 +79,11 @@ HELP
     );
 
     @outargs = (
-	{ name => 'width', type => 'int32', no_declare => '1',
-          alias => 'pattern->mask->width', void_ret => '1',
+	{ name => 'width', type => 'int32', init => 1, void_ret => '1',
           desc => "The pattern width" },
-	{ name => 'height', type => 'int32', no_declare => '1',
-          alias => 'pattern->mask->height',
+	{ name => 'height', type => 'int32', init => 1,
           desc => "The pattern height" },
-	{ name => 'bpp', type => 'int32', no_declare => '1',
-          alias => 'pattern->mask->bytes',
+	{ name => 'bpp', type => 'int32', init => 1,
           desc => "The pattern bpp" },
         { name => 'color_bytes', type => 'int8array', init => 1,
 	  desc => 'The pattern data.',
@@ -92,14 +92,16 @@ HELP
     );
     
     %invoke = (
-	vars => [ 'GimpPattern *pattern = NULL' ],
 	code => <<'CODE'
 {
-  pattern = (GimpPattern *)
+  GimpPattern *pattern = (GimpPattern *)
     gimp_container_get_child_by_name (gimp->pattern_factory->container, name);
 
   if (pattern)
     {
+      width           = pattern->mask->width;
+      height          = pattern->mask->height;
+      bpp             = pattern->mask->bytes;
       num_color_bytes = pattern->mask->height * pattern->mask->width *
 	                pattern->mask->bytes;
       color_bytes     = g_memdup (temp_buf_data (pattern->mask),
