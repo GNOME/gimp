@@ -1,3 +1,8 @@
+2006-03-15  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/image-actions.c
+	* app/actions/layers-actions.c: added more tooltips, please review.
+
 2006-03-14  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/*.pdb: remove lots of perl crack:

@@ -106,7 +106,7 @@ static GimpActionEntry image_actions[] =
 
   { "image-crop", GIMP_STOCK_TOOL_CROP,
     N_("_Crop Image"), NULL,
-    N_("Crop the image to the bounding box of the selection"),
+    N_("Crop the image to the extents of the selection"),
     G_CALLBACK (image_crop_cmd_callback),
     GIMP_HELP_IMAGE_CROP },
 
