@@ -223,9 +223,8 @@ image_list_invoker (Gimp         *gimp,
   gint32 num_images = 0;
   gint32 *image_ids = NULL;
 
-  GList *list = NULL;
+  GList *list = GIMP_LIST (gimp->images)->list;
 
-  list = GIMP_LIST (gimp->images)->list;
   num_images = g_list_length (list);
 
   if (num_images)
@@ -547,15 +546,21 @@ image_width_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpImage *gimage;
+  gint32 width = 0;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
+  if (success)
+    {
+      width = gimp_image_get_width (gimage);
+    }
+
   return_args = procedural_db_return_args (&image_width_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimage->width;
+    return_args[1].value.pdb_int = width;
 
   return return_args;
 }
@@ -605,15 +610,21 @@ image_height_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpImage *gimage;
+  gint32 height = 0;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
+  if (success)
+    {
+      height = gimp_image_get_height (gimage);
+    }
+
   return_args = procedural_db_return_args (&image_height_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimage->height;
+    return_args[1].value.pdb_int = height;
 
   return return_args;
 }
@@ -1133,9 +1144,8 @@ image_get_layers_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GList *list = NULL;
+      GList *list = GIMP_LIST (gimage->layers)->list;
 
-      list = GIMP_LIST (gimage->layers)->list;
       num_layers = g_list_length (list);
 
       if (num_layers)
@@ -1219,9 +1229,8 @@ image_get_channels_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GList *list = NULL;
+      GList *list = GIMP_LIST (gimage->channels)->list;
 
-      list = GIMP_LIST (gimage->channels)->list;
       num_channels = g_list_length (list);
 
       if (num_channels)
@@ -1305,9 +1314,8 @@ image_get_vectors_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GList *list = NULL;
+      GList *list = GIMP_LIST (gimage->vectors)->list;
 
-      list = GIMP_LIST (gimage->vectors)->list;
       num_vectors = g_list_length (list);
 
       if (num_vectors)
@@ -1361,9 +1369,9 @@ static ProcRecord image_get_vectors_proc =
   "gimp-image-get-vectors",
   "Returns the list of vectors contained in the specified image.",
   "This procedure returns the list of vectors contained in the specified image.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
+  "Simon Budig",
+  "Simon Budig",
+  "2005",
   NULL,
   GIMP_INTERNAL,
   1,
@@ -1974,7 +1982,9 @@ image_raise_layer_invoker (Gimp         *gimp,
     success = FALSE;
 
   if (success)
-    success = gimp_image_raise_layer (gimage, layer);
+    {
+      success = gimp_image_raise_layer (gimage, layer);
+    }
 
   return procedural_db_return_args (&image_raise_layer_proc, success);
 }
@@ -2030,7 +2040,9 @@ image_lower_layer_invoker (Gimp         *gimp,
     success = FALSE;
 
   if (success)
-    success = gimp_image_lower_layer (gimage, layer);
+    {
+      success = gimp_image_lower_layer (gimage, layer);
+    }
 
   return procedural_db_return_args (&image_lower_layer_proc, success);
 }
@@ -2086,7 +2098,9 @@ image_raise_layer_to_top_invoker (Gimp         *gimp,
     success = FALSE;
 
   if (success)
-    success = gimp_image_raise_layer_to_top (gimage, layer);
+    {
+      success = gimp_image_raise_layer_to_top (gimage, layer);
+    }
 
   return procedural_db_return_args (&image_raise_layer_to_top_proc, success);
 }
@@ -2142,7 +2156,9 @@ image_lower_layer_to_bottom_invoker (Gimp         *gimp,
     success = FALSE;
 
   if (success)
-    success = gimp_image_lower_layer_to_bottom (gimage, layer);
+    {
+      success = gimp_image_lower_layer_to_bottom (gimage, layer);
+    }
 
   return procedural_db_return_args (&image_lower_layer_to_bottom_proc, success);
 }
@@ -2198,7 +2214,9 @@ image_raise_vectors_invoker (Gimp         *gimp,
     success = FALSE;
 
   if (success)
-    success = gimp_image_raise_vectors (gimage, vectors);
+    {
+      success = gimp_image_raise_vectors (gimage, vectors);
+    }
 
   return procedural_db_return_args (&image_raise_vectors_proc, success);
 }
@@ -2254,7 +2272,9 @@ image_lower_vectors_invoker (Gimp         *gimp,
     success = FALSE;
 
   if (success)
-    success = gimp_image_lower_vectors (gimage, vectors);
+    {
+      success = gimp_image_lower_vectors (gimage, vectors);
+    }
 
   return procedural_db_return_args (&image_lower_vectors_proc, success);
 }
@@ -2310,7 +2330,9 @@ image_raise_vectors_to_top_invoker (Gimp         *gimp,
     success = FALSE;
 
   if (success)
-    success = gimp_image_raise_vectors_to_top (gimage, vectors);
+    {
+      success = gimp_image_raise_vectors_to_top (gimage, vectors);
+    }
 
   return procedural_db_return_args (&image_raise_vectors_to_top_proc, success);
 }
@@ -2366,7 +2388,9 @@ image_lower_vectors_to_bottom_invoker (Gimp         *gimp,
     success = FALSE;
 
   if (success)
-    success = gimp_image_lower_vectors_to_bottom (gimage, vectors);
+    {
+      success = gimp_image_lower_vectors_to_bottom (gimage, vectors);
+    }
 
   return procedural_db_return_args (&image_lower_vectors_to_bottom_proc, success);
 }
@@ -2669,7 +2693,9 @@ image_raise_channel_invoker (Gimp         *gimp,
     success = FALSE;
 
   if (success)
-    success = gimp_image_raise_channel (gimage, channel);
+    {
+      success = gimp_image_raise_channel (gimage, channel);
+    }
 
   return procedural_db_return_args (&image_raise_channel_proc, success);
 }
@@ -2714,18 +2740,20 @@ image_lower_channel_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   GimpImage *gimage;
-  GimpLayer *layer;
+  GimpChannel *channel;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
-  layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
+  channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
+  if (! (GIMP_IS_CHANNEL (channel) && ! gimp_item_is_removed (GIMP_ITEM (channel))))
     success = FALSE;
 
   if (success)
-    success = gimp_image_lower_layer (gimage, layer);
+    {
+      success = gimp_image_lower_channel (gimage, channel);
+    }
 
   return procedural_db_return_args (&image_lower_channel_proc, success);
 }
@@ -2738,9 +2766,9 @@ static ProcArg image_lower_channel_inargs[] =
     "The image"
   },
   {
-    GIMP_PDB_LAYER,
-    "layer",
-    "The layer to lower"
+    GIMP_PDB_CHANNEL,
+    "channel",
+    "The channel to lower"
   }
 };
 
@@ -2748,8 +2776,8 @@ static ProcRecord image_lower_channel_proc =
 {
   "gimp-image-lower-channel",
   "gimp-image-lower-channel",
-  "Lower the specified layer in the image's layer stack",
-  "This procedure lowers the specified layer one step in the existing layer stack. It will not move the layer if there is no layer below it.",
+  "Lower the specified channel in the image's channel stack",
+  "This procedure lowers the specified channel one step in the existing channel stack. It will not move the channel if there is no channel below it.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

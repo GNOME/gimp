@@ -112,7 +112,7 @@ gboolean          gimp_image_remove_vectors           (gint32                ima
 gboolean          gimp_image_raise_channel            (gint32                image_ID,
 						       gint32                channel_ID);
 gboolean          gimp_image_lower_channel            (gint32                image_ID,
-						       gint32                layer_ID);
+						       gint32                channel_ID);
 gint32            gimp_image_flatten                  (gint32                image_ID);
 gint32            gimp_image_merge_visible_layers     (gint32                image_ID,
 						       GimpMergeType         merge_type);

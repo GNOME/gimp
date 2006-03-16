@@ -17,100 +17,6 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub layer_arg () {{
-    name => 'layer',
-    type => 'layer',
-    desc => 'The layer'
-}}
-
-sub channel_arg () {{
-    name => 'channel',
-    type => 'channel',
-    desc => 'The channel'
-}}
-
-sub vectors_arg () {{
-    name => 'vectors',
-    type => 'vectors',
-    desc => 'The vectors object'
-}}
-
-sub image_list_proc {
-    my $type = shift;
-
-    $blurb = "Returns the list of ${type}s contained in the specified image.";
-
-    $help = <<HELP;
-This procedure returns the list of ${type}s contained in the specified image.
-HELP
-
-    &std_pdb_misc;
-
-    @inargs = ( &std_image_arg );
-
-    @outargs = (
-	{ name => "${type}_ids", type => 'int32array',
-	  desc => "The list of ${type}s contained in the image",
-	  array => { name => "num_${type}s",
-		     desc => "The number of ${type}s contained in the image" } }
-    );
-
-    %invoke = (
-	code => <<CODE
-{
-  GList *list = NULL;
-
-  list = GIMP_LIST (gimage->${type}s)->list;
-  num_${type}s = g_list_length (list);
-
-  if (num_${type}s)
-    {
-      gint i;
-
-      ${type}_ids = g_new (gint32, num_${type}s);
-
-      for (i = 0; i < num_${type}s; i++, list = g_list_next (list))
-	${type}_ids[i] = gimp_item_get_ID (GIMP_ITEM (list->data));
-    }
-}
-CODE
-    );
-}
-
-sub type_move {
-    my ($type, $op, $pos) = @_;
-    my $extra = "";
-
-    if ($op =~ /_/) {
-	($op, $extra) = $op =~ /([^_]+)_(.*)/;
-	$extra =~ s/_/ /g;
-    }
-
-    $blurb = "\u$op the specified $type in the image's $type stack";
-    $blurb .= " $extra of stack" if $extra;
-
-    $help = <<HELP;
-This procedure ${op}s the specified $type one step in the existing $type stack.
-It will not move the $type if there is no $type $pos it.
-HELP
-    $help =~ s/one step in/"$extra of"/e if $extra;
-
-    @inargs = (
-	&std_image_arg,
-	&{"${type}_arg"}
-    );
-    $inargs[1]->{desc} .= " to $op $extra";
-
-    if ($extra) {
-	$extra =~ s/ /_/g;
-	$extra = "_$extra";
-    }
-
-    %invoke = (
-	code => "success = gimp_image_${op}_$type$extra (gimage, $type);"
-    );
-}
-
 sub image_get_prop_proc {
     my ($prop, $type, $desc, $func) = @_;
 
@@ -193,22 +99,34 @@ sub image_list {
 This procedure returns the list of images currently open in the GIMP.
 HELP
 
-    &image_list_proc('image');
+    &std_pdb_misc;
 
-    undef @inargs;
+    @outargs = (
+	{ name => 'image_ids', type => 'int32array',
+	  desc => 'The list of images currently open',
+	  array => { name => 'num_images',
+		     desc => 'The number of images currently open' } }
+    );
 
-    foreach ($blurb, $help, $outargs[0]->{desc}, $outargs[0]->{array}->{desc}) {
-	s/contained.*/currently open/
+    %invoke = (
+	code => <<CODE
+{
+  GList *list = GIMP_LIST (gimp->images)->list;
+
+  num_images = g_list_length (list);
+
+  if (num_images)
+    {
+      gint i;
+
+      image_ids = g_new (gint32, num_images);
+
+      for (i = 0; i < num_images; i++, list = g_list_next (list))
+	image_ids[i] = gimp_image_get_ID (GIMP_IMAGE (list->data));
     }
-
-    $blurb .= '.';
-    $help  .= ' in the GIMP.';
-
-    for ($invoke{code}) {
-	s/gimage->images/gimp->images/;
-	s/ITEM/IMAGE/;
-	s/gimp_item_get_ID/gimp_image_get_ID/;
-    }
+}
+CODE
+    );
 }
 
 sub image_new {
@@ -505,24 +423,129 @@ HELP
 }
 
 sub image_get_layers {
-    &image_list_proc('layer');
+    $blurb = 'Returns the list of layers contained in the specified image.';
 
-    $help .= 'The order of layers is from topmost to bottommost.';
+    $help = <<HELP;
+This procedure returns the list of layers contained in the specified image.
+The order of layers is from topmost to bottommost.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&std_image_arg
+    );
+
+    @outargs = (
+	{ name => "layer_ids", type => 'int32array',
+	  desc => "The list of layers contained in the image",
+	  array => { name => "num_layers",
+		     desc => "The number of layers contained in the image" } }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GList *list = GIMP_LIST (gimage->layers)->list;
+
+  num_layers = g_list_length (list);
+
+  if (num_layers)
+    {
+      gint i;
+
+      layer_ids = g_new (gint32, num_layers);
+
+      for (i = 0; i < num_layers; i++, list = g_list_next (list))
+	layer_ids[i] = gimp_item_get_ID (GIMP_ITEM (list->data));
+    }
+}
+CODE
+    );
 }
 
 sub image_get_channels {
-    &image_list_proc('channel');
+    $blurb = 'Returns the list of channels contained in the specified image.';
 
-    $help .= <<'HELP';
+    $help = <<HELP;
+This procedure returns the list of channels contained in the specified image.
 This does not include the selection mask, or layer masks. The order is from
 topmost to bottommost.
 HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&std_image_arg
+    );
+
+    @outargs = (
+	{ name => "channel_ids", type => 'int32array',
+	  desc => "The list of channels contained in the image",
+	  array => { name => "num_channels",
+		     desc => "The number of channels contained in the image" } }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GList *list = GIMP_LIST (gimage->channels)->list;
+
+  num_channels = g_list_length (list);
+
+  if (num_channels)
+    {
+      gint i;
+
+      channel_ids = g_new (gint32, num_channels);
+
+      for (i = 0; i < num_channels; i++, list = g_list_next (list))
+	channel_ids[i] = gimp_item_get_ID (GIMP_ITEM (list->data));
+    }
+}
+CODE
+    );
 }
 
 sub image_get_vectors {
-    &image_list_proc('vector');
+    $blurb = 'Returns the list of vectors contained in the specified image.';
 
-    $since = '2.4';
+    $help = <<HELP;
+This procedure returns the list of vectors contained in the specified image.
+HELP
+
+    &simon_pdb_misc('2005', '2.4');
+
+    @inargs = (
+	&std_image_arg
+    );
+
+    @outargs = (
+	{ name => "vector_ids", type => 'int32array',
+	  desc => "The list of vectors contained in the image",
+	  array => { name => "num_vectors",
+		     desc => "The number of vectors contained in the image" } }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GList *list = GIMP_LIST (gimage->vectors)->list;
+
+  num_vectors = g_list_length (list);
+
+  if (num_vectors)
+    {
+      gint i;
+
+      vector_ids = g_new (gint32, num_vectors);
+
+      for (i = 0; i < num_vectors; i++, list = g_list_next (list))
+	vector_ids[i] = gimp_item_get_ID (GIMP_ITEM (list->data));
+    }
+}
+CODE
+    );
 }
 
 sub image_unset_active_channel {
@@ -628,11 +651,13 @@ HELP
 
     &std_pdb_misc;
 
-    @inargs = ( &std_image_arg );
-    foreach (qw(x y)) {
-	push @inargs, { name => $_, type => 'int32',
-			desc => "The $_ coordinate for the pick" }
-    }
+    @inargs = (
+	&std_image_arg,
+	{ name => 'x', type => 'int32',
+	  desc => 'The x coordinate for the pick' },
+	{ name => 'y', type => 'int32',
+	  desc => 'The y coordinate for the pick' }
+    );
 
     @outargs = (
 	{ name => 'layer', type => 'layer',
@@ -645,25 +670,109 @@ HELP
 }
 
 sub image_raise_layer {
-    &type_move('layer', 'raise', 'above');
+    $blurb = "Raise the specified layer in the image's layer stack";
+
+    $help = <<'HELP';
+This procedure raises the specified layer one step in the existing layer stack.
+It will not move the layer if there is no layer above it.
+HELP
+
     &std_pdb_misc;
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer to raise' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  success = gimp_image_raise_layer (gimage, layer);
+}
+CODE
+    );
 }
 
 sub image_lower_layer {
-    &type_move('layer', 'lower', 'below');
+    $blurb = "Lower the specified layer in the image's layer stack";
+
+    $help = <<'HELP';
+This procedure lowers the specified layer one step in the existing layer stack.
+It will not move the layer if there is no layer below it.
+HELP
+
     &std_pdb_misc;
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer to lower' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  success = gimp_image_lower_layer (gimage, layer);
+}
+CODE
+    );
 }
 
 sub image_raise_layer_to_top {
-    &type_move('layer', 'raise_to_top', 'above');
+    $blurb = <<'BLURB';
+Raise the specified layer in the image's layer stack to top of stack
+BLURB
+
+    $help = <<'HELP';
+This procedure raises the specified layer to top of the existing layer stack.
+It will not move the layer if there is no layer above it.
+HELP
+
     &wolfgang_pdb_misc('1998');
     $author .= ", Sven Neumann";
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer to raise to top' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  success = gimp_image_raise_layer_to_top (gimage, layer);
+}
+CODE
+    );
 }
 
 sub image_lower_layer_to_bottom {
-    &type_move('layer', 'lower_to_bottom', 'below');
+    $blurb = <<'BLURB';
+Lower the specified layer in the image's layer stack to bottom of stack
+BLURB
+
+    $help = <<'HELP';
+This procedure lowers the specified layer to bottom of the existing layer stack.
+It will not move the layer if there is no layer below it.
+HELP
+
     &wolfgang_pdb_misc('1998');
     $author .= ", Sven Neumann";
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer to lower to bottom' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  success = gimp_image_lower_layer_to_bottom (gimage, layer);
+}
+CODE
+    );
 }
 
 sub image_merge_visible_layers {
@@ -862,13 +971,55 @@ sub image_remove_layer_mask {
 }
 
 sub image_raise_channel {
-    &type_move('channel', 'raise', 'above');
+    $blurb = "Raise the specified channel in the image's channel stack";
+
+    $help = <<'HELP';
+This procedure raises the specified channel one step in the existing
+channel stack. It will not move the channel if there is no channel
+above it.
+HELP
+
     &std_pdb_misc;
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'channel', type => 'channel',
+	  desc => 'The channel to raise' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  success = gimp_image_raise_channel (gimage, channel);
+}
+CODE
+    );
 }
 
 sub image_lower_channel {
-    &type_move('layer', 'lower', 'below');
+    $blurb = "Lower the specified channel in the image's channel stack";
+
+    $help = <<'HELP';
+This procedure lowers the specified channel one step in the existing
+channel stack. It will not move the channel if there is no channel
+below it.
+HELP
+
     &std_pdb_misc;
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'channel', type => 'channel',
+	  desc => 'The channel to lower' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  success = gimp_image_lower_channel (gimage, channel);
+}
+CODE
+    );
 }
 
 sub image_add_channel {
@@ -967,23 +1118,111 @@ HELP
 }
 
 sub image_raise_vectors {
-    &type_move('vectors', 'raise', 'above');
+    $blurb = "Raise the specified vectors in the image's vectors stack";
+
+    $help = <<'HELP';
+This procedure raises the specified vectors one step in the existing
+vectors stack. It will not move the vectors if there is no vectors
+above it.
+HELP
+
     &simon_pdb_misc('2005', '2.4');
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'vectors', type => 'vectors',
+	  desc => 'The vectors object to raise' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  success = gimp_image_raise_vectors (gimage, vectors);
+}
+CODE
+    );
 }
 
 sub image_lower_vectors {
-    &type_move('vectors', 'lower', 'below');
+    $blurb = "Lower the specified vectors in the image's vectors stack";
+
+    $help = <<'HELP';
+This procedure lowers the specified vectors one step in the existing
+vectors stack. It will not move the vectors if there is no vectors
+below it.
+HELP
+
     &simon_pdb_misc('2005', '2.4');
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'vectors', type => 'vectors',
+	  desc => 'The vectors object to lower' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  success = gimp_image_lower_vectors (gimage, vectors);
+}
+CODE
+    );
 }
 
 sub image_raise_vectors_to_top {
-    &type_move('vectors', 'raise_to_top', 'above');
+    $blurb = <<'BLURB';
+Raise the specified vectors in the image's vectors stack to top of stack
+BLURB
+
+    $help = <<'HELP';
+This procedure raises the specified vectors to top of the existing
+vectors stack. It will not move the vectors if there is no vectors
+above it.
+HELP
+
     &simon_pdb_misc('2005', '2.4');
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'vectors', type => 'vectors',
+	  desc => 'The vectors object to raise to top' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  success = gimp_image_raise_vectors_to_top (gimage, vectors);
+}
+CODE
+    );
 }
 
 sub image_lower_vectors_to_bottom {
-    &type_move('vectors', 'lower_to_bottom', 'below');
+    $blurb = <<'BLURB';
+Lower the specified vectors in the image's vectors stack to bottom of stack
+BLURB
+
+    $help = <<'HELP';
+This procedure lowers the specified vectors to bottom of the existing
+vectors stack. It will not move the vectors if there is no vectors
+below it.
+HELP
+
     &simon_pdb_misc('2005', '2.4');
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'vectors', type => 'vectors',
+	  desc => 'The vectors object to lower to bottom' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  success = gimp_image_lower_vectors_to_bottom (gimage, vectors);
+}
+CODE
+    );
 }
 
 sub image_get_active_drawable {
@@ -1186,27 +1425,56 @@ CODE
     );
 }
 
-foreach (qw(width height)) {
-    eval <<SUB;
-sub image_$_ {
-    \$blurb = 'Return the $_ of the image';
+sub image_width {
+    $blurb = 'Return the width of the image';
 
-    \$help = <<'HELP';
-This procedure returns the image's $_. This value is independent of any of
-the layers in this image. This is the "canvas" $_.
+    $help = <<'HELP';
+This procedure returns the image's width. This value is independent of any of
+the layers in this image. This is the "canvas" width.
 HELP
 
-    \&std_pdb_misc;
+    &std_pdb_misc;
 
-    \@inargs = ( \&std_image_arg );
+    @inargs = ( &std_image_arg );
 
-    \@outargs = (
-	{ name => '$_', type => 'int32',
-	  desc => "The image's $_",
-	  alias => 'gimage->$_', no_declare => 1 }
+    @outargs = (
+	{ name => 'width', type => 'int32',
+	  desc => "The image's width" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  width = gimp_image_get_width (gimage);
+}
+CODE
     );
 }
-SUB
+
+sub image_height {
+    $blurb = 'Return the height of the image';
+
+    $help = <<'HELP';
+This procedure returns the image's height. This value is independent of any of
+the layers in this image. This is the "canvas" height.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = ( &std_image_arg );
+
+    @outargs = (
+	{ name => 'height', type => 'int32',
+	  desc => "The image's height" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  height = gimp_image_get_height (gimage);
+}
+CODE
+    );
 }
 
 &image_accessors('active_layer', 'layer', 'active layer', 1,

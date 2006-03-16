@@ -1420,19 +1420,19 @@ gimp_image_raise_channel (gint32 image_ID,
 /**
  * gimp_image_lower_channel:
  * @image_ID: The image.
- * @layer_ID: The layer to lower.
+ * @channel_ID: The channel to lower.
  *
- * Lower the specified layer in the image's layer stack
+ * Lower the specified channel in the image's channel stack
  *
- * This procedure lowers the specified layer one step in the existing
- * layer stack. It will not move the layer if there is no layer below
- * it.
+ * This procedure lowers the specified channel one step in the existing
+ * channel stack. It will not move the channel if there is no channel
+ * below it.
  *
  * Returns: TRUE on success.
  */
 gboolean
 gimp_image_lower_channel (gint32 image_ID,
-			  gint32 layer_ID)
+			  gint32 channel_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -1441,7 +1441,7 @@ gimp_image_lower_channel (gint32 image_ID,
   return_vals = gimp_run_procedure ("gimp-image-lower-channel",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_LAYER, layer_ID,
+				    GIMP_PDB_CHANNEL, channel_ID,
 				    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
