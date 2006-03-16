@@ -3,6 +3,7 @@
 # Robert Brady <robert@susu.org.uk>, 2000.
 # Piers Cornwell <piers.cornwell@usa.net>, 2000.
 # Gareth Owen <gowen72@yahoo.com>, David Lodge <dave@cirt.net>, 2004
+# Thomas Thurman <thomas@thurman.org.uk>
 #
 msgid ""
 msgstr ""
@@ -10,7 +11,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-04-19 20:30-0400\n"
 "PO-Revision-Date: 2005-04-19 20:43-0400\n"
-"Last-Translator: David Lodge <dave@cirt.net>\n"
+"Last-Translator: Thomas Thurman <thomas@thurman.org.uk>\n"
 "Language-Team: English, British\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -3889,7 +3890,7 @@ msgstr "Sets the manner in which transparency is displayed in images."
 
 #: ../app/config/gimprc-blurbs.h:404
 msgid "Sets the size of the checkerboard used to display transparency."
-msgstr "Sets the size of the checkerboard used to display transparency."
+msgstr "Sets the size of the chequerboard used to display transparency."
 
 #: ../app/config/gimprc-blurbs.h:407
 msgid ""
@@ -4472,7 +4473,7 @@ msgstr "FG to BG (RGB)"
 
 #: ../app/core/gimp-gradients.c:75
 msgid "FG to BG (HSV counter-clockwise)"
-msgstr "FG to BG (HSV counter-clockwise)"
+msgstr "FG to BG (HSV anti-clockwise)"
 
 #: ../app/core/gimp-gradients.c:80
 msgid "FG to BG (HSV clockwise hue)"
@@ -7489,11 +7490,6 @@ msgstr "(clean)"
 #: ../app/display/gimpdisplayshell-title.c:314
 msgid "1 layer"
 msgstr "1 layer"
-
-#: ../app/display/gimpdisplayshell-title.c:314
-#, c-format
-msgid "%d layers"
-msgstr "%d layers"
 
 #: ../app/display/gimpdisplayshell-title.c:326
 #: ../app/display/gimpdisplayshell-title.c:338
@@ -11352,3 +11348,1222 @@ msgstr "Couldn't start '%s': %s"
 
 #~ msgid "Main Mouse Wheel"
 #~ msgstr "Main Mouse Wheel"
+#: ../app/actions/plug-in-actions.c:69
+msgid "_Light and Shadow"
+msgstr "_Light and Shadow"
+
+#: ../app/config/gimprc-blurbs.h:406
+msgid "When enabled, the GIMP will not save an image if it has not been changed since it was opened."
+msgstr "When enabled, the GIMP will not save an image if it has not been changed since it was opened."
+
+#: ../app/core/core-enums.c:365
+msgid "Dash, dot"
+msgstr "Dash, dot"
+
+#: ../app/display/gimpdisplayshell-scale.c:517
+msgid "Zoom ratio:"
+msgstr "Zoom ratio:"
+
+#: ../app/dialogs/preferences-dialog.c:2212
+msgid "_Try to obtain the monitor profile from the X server"
+msgstr "_Try to obtain the monitor profile from the X server"
+
+#: ../app/widgets/gimpgradienteditor.c:955
+#, c-format
+msgid "Luminance: %0.3f    Opacity: %0.3f"
+msgstr "Luminance: %0.3f    Opacity: %0.3f"
+
+#: ../app/main.c:128
+msgid "Show license information and exit"
+msgstr "Show licence information and exit"
+
+#: ../app/core/core-enums.c:857
+msgid "Text layer"
+msgstr "Text layer"
+
+#: ../app/core/gimpimage-convert.c:914
+msgid "Converting to indexed (stage 2)"
+msgstr "Converting to indexed (stage 2)"
+
+#: ../app/tools/gimpblendoptions.c:267
+msgid "Max depth:"
+msgstr "Max depth:"
+
+#: ../app/tools/gimpforegroundselectoptions.c:106
+msgid "Sensitivity for red/green component"
+msgstr "Sensitivity for red/green component"
+
+#: ../app/actions/palettes-actions.c:73
+msgid "Copy palette file location to clipboard"
+msgstr "Copy palette file location to clipboard"
+
+#: ../app/tools/gimpforegroundselectoptions.c:240
+msgid "Small brush"
+msgstr "Small brush"
+
+#: ../app/tools/gimpcurvestool.c:578 ../app/tools/gimplevelstool.c:392
+msgid "R_eset Channel"
+msgstr "R_eset Channel"
+
+#: ../app/dialogs/module-dialog.c:506
+msgid "Last error:"
+msgstr "Last error:"
+
+#: ../app/actions/documents-commands.c:224
+msgid "Clearing the document history will permanently remove all currently listed entries."
+msgstr "Clearing the document history will permanently remove all currently listed entries."
+
+#: ../app/dialogs/tips-dialog.c:227
+msgid "_Next Tip"
+msgstr "_Next Tip"
+
+#: ../app/dialogs/preferences-dialog.c:2164
+msgid "Select CMYK Color Profile"
+msgstr "Select CMYK Colour Profile"
+
+#: ../app/core/gimpimagefile.c:627 ../app/display/gimpdisplayshell-title.c:316
+#, c-format
+msgid "%d layers"
+msgstr "%d layers"
+
+#: ../app/dialogs/user-install-dialog.c:168
+msgid "The sessionrc is used to store what dialog windows were open the last time you quit GIMP.  You can configure GIMP to reopen these dialogs at the saved position."
+msgstr "The sessionrc is used to store what dialogue windows were open the last time you quit GIMP.  You can configure GIMP to reopen these dialogues at the saved position."
+
+#: ../app/actions/gradient-editor-actions.c:121
+msgid "Edit Active Gradient"
+msgstr "Edit Active Gradient"
+
+#: ../app/actions/view-actions.c:638
+#, c-format
+msgid "Othe_r (%s)..."
+msgstr "Othe_r (%s)..."
+
+#: ../app/tools/gimpforegroundselectoptions.c:271
+msgid "Smoothing:"
+msgstr "Smoothing:"
+
+#: ../app/dialogs/vectors-options-dialog.c:118
+msgid "Path name:"
+msgstr "Path name:"
+
+#: ../app/widgets/gimptexteditor.c:200
+msgid "_Use selected font"
+msgstr "_Use selected font"
+
+#: ../app/actions/dockable-actions.c:108
+msgid "Show _Button Bar"
+msgstr "Show _Button Bar"
+
+#: ../app/actions/dock-actions.c:52 ../app/actions/view-actions.c:111
+msgid "_Open Display..."
+msgstr "_Open Display..."
+
+#: ../app/actions/brushes-actions.c:65
+msgid "Copy Brush _Location"
+msgstr "Copy Brush _Location"
+
+#: ../app/config/gimprc-blurbs.h:270
+msgid "Add all opened and saved files to the document history on disk."
+msgstr "Add all opened and saved files to the document history on disk."
+
+#: ../app/widgets/gimpdnd-xds.c:204
+msgid "File Exists"
+msgstr "File Exists"
+
+#: ../app/tools/gimptransformoptions.c:424
+#, c-format
+msgid "Keep aspect  (%s)"
+msgstr "Keep aspect  (%s)"
+
+#: ../app/dialogs/user-install-dialog.c:197
+msgid "This folder is used to store fonts you only want to be visible in GIMP. GIMP checks this folder in addition to the system-wide fonts installation. Use this only if you really want to have fonts available in GIMP only, otherwise put them in your global font directory."
+msgstr "This folder is used to store fonts you only want to be visible in GIMP. GIMP checks this folder in addition to the system-wide fonts installation. Use this only if you really want to have fonts available in GIMP only, otherwise put them in your global font directory."
+
+#: ../app/core/gimpprogress.c:107 ../app/core/gimpprogress.c:154
+msgid "Please wait"
+msgstr "Please wait"
+
+#: ../app/dialogs/user-install-dialog.c:148
+msgid "Plug-ins and extensions are external programs which provide additional functionality to GIMP.  These programs are searched for at run-time and information about their functionality is cached in this file.  This file is intended to be written to by GIMP only, and should not be edited."
+msgstr "Plug-ins and extensions are external programs which provide additional functionality to GIMP.  These programs are searched for at run-time and information about their functionality is cached in this file.  This file is intended to be written to by GIMP only, and should not be edited."
+
+#: ../app/core/core-enums.c:858
+msgid "Text layer modification"
+msgstr "Text layer modification"
+
+#: ../app/config/gimprc-blurbs.h:331
+msgid "Enable displaying a handy GIMP tip on startup."
+msgstr "Enable displaying a handy GIMP tip on startup."
+
+#: ../app/tools/gimpselectiontool.c:236
+msgid "Move a copy of the selected pixels"
+msgstr "Move a copy of the selected pixels"
+
+#: ../app/actions/documents-actions.c:64
+msgid "Copy Image _Location"
+msgstr "Copy Image _Location"
+
+#: ../app/actions/tool-options-actions.c:60
+msgid "_Save Options To"
+msgstr "_Save Options To"
+
+#: ../app/tools/gimpforegroundselectoptions.c:224
+msgid "Mark background"
+msgstr "Mark background"
+
+#: ../app/about.h:29
+msgid ""
+"Copyright (C) 1995-2006\n"
+"Spencer Kimball, Peter Mattis and the GIMP Development Team"
+msgstr ""
+"Copyright (C) 1995-2006\n"
+"Spencer Kimball, Peter Mattis and the GIMP Development Team"
+
+#. single / multiple objects
+#: ../app/tools/gimpforegroundselectoptions.c:217
+msgid "Contiguous"
+msgstr "Contiguous"
+
+#: ../app/widgets/gimpimagepropview.c:176
+msgid "Redo steps:"
+msgstr "Redo steps:"
+
+#: ../app/tools/gimpselectiontool.c:232
+msgid "Move the selected pixels"
+msgstr "Move the selected pixels"
+
+#: ../app/dialogs/about-dialog.c:668
+msgid "GIMP is brought to you by"
+msgstr "GIMP is brought to you by"
+
+#: ../app/dialogs/user-install-dialog.c:213
+msgid "This folder is used to store user defined palettes.  GIMP checks this folder in addition to the system-wide palettes installation."
+msgstr "This folder is used to store user defined palettes.  GIMP checks this folder in addition to the system-wide palettes installation."
+
+#: ../app/core/core-enums.c:839
+msgid "Image resolution change"
+msgstr "Image resolution change"
+
+#: ../app/actions/image-actions.c:66
+msgid "I_nfo"
+msgstr "I_nfo"
+
+#: ../app/widgets/gimpcontrollerlist.c:306
+msgid "Move the selected controller up"
+msgstr "Move the selected controller up"
+
+#: ../app/actions/actions.c:116 ../app/actions/dialogs-actions.c:115
+#: ../app/dialogs/dialogs.c:141
+msgid "Pointer Information"
+msgstr "Pointer Information"
+
+#: ../app/widgets/gimpcontrollerlist.c:525
+msgid "Disable Controller"
+msgstr "Disable Controller"
+
+#: ../app/dialogs/convert-dialog.c:133
+msgid "C_onvert"
+msgstr "C_onvert"
+
+#: ../app/actions/gradients-actions.c:60
+msgid "Copy Gradient _Location"
+msgstr "Copy Gradient _Location"
+
+#: ../app/actions/edit-actions.c:62
+msgid "_Paste as"
+msgstr "_Paste as"
+
+#: ../app/tools/gimpforegroundselecttool.c:138
+msgid "Foreground Select"
+msgstr "Foreground Select"
+
+#: ../app/actions/file-actions.c:109
+msgid "Re_vert"
+msgstr "Re_vert"
+
+#: ../app/tools/gimpforegroundselecttool.c:298
+msgid "Mark foreground by painting on the object to extract"
+msgstr "Mark foreground by painting on the object to extract"
+
+#: ../app/actions/edit-actions.c:66
+msgid "Undo History Menu"
+msgstr "Undo History Menu"
+
+#: ../app/widgets/gimpcontrollereditor.c:424
+msgid "Remove the action from the selected event"
+msgstr "Remove the action from the selected event"
+
+#: ../app/widgets/gimpcontrollerlist.c:282
+msgid "Active Controllers"
+msgstr "Active Controllers"
+
+#: ../app/tools/gimpforegroundselectoptions.c:111
+msgid "Sensitivity for yellow/blue component"
+msgstr "Sensitivity for yellow/blue component"
+
+#: ../app/widgets/gimpcontrollereditor.c:412
+msgid "Assign an action to the selected event"
+msgstr "Assign an action to the selected event"
+
+#. fill type
+#: ../app/tools/gimpbucketfilloptions.c:213
+#, c-format
+msgid "Fill Type  (%s)"
+msgstr "Fill Type  (%s)"
+
+#. the type (dodge or burn)
+#: ../app/tools/gimpdodgeburntool.c:160
+#, c-format
+msgid "Type  (%s)"
+msgstr "Type  (%s)"
+
+#: ../app/dialogs/layer-options-dialog.c:206
+msgid "Set name from _text"
+msgstr "Set name from _text"
+
+#: ../app/dialogs/resize-dialog.c:289
+msgid "Resize _layers:"
+msgstr "Resize _layers:"
+
+#: ../app/widgets/gimpgrideditor.c:195
+msgid "Line _style:"
+msgstr "Line _style:"
+
+#: ../app/dialogs/channel-options-dialog.c:144
+msgid "Channel _name:"
+msgstr "Channel _name:"
+
+#: ../app/actions/brush-editor-actions.c:42
+msgid "Brush Editor Menu"
+msgstr "Brush Editor Menu"
+
+#: ../app/dialogs/user-install-dialog.c:235
+msgid "This folder is used to store user created, temporary, or otherwise non-system-supported DLL modules.  GIMP checks this folder in addition to the system-wide module folder."
+msgstr "This folder is used to store user created, temporary, or otherwise non-system-supported DLL modules.  GIMP checks this folder in addition to the system-wide module folder."
+
+#: ../app/core/core-enums.c:856
+msgid "Lock/Unlock alpha channel"
+msgstr "Lock/Unlock alpha channel"
+
+#: ../app/actions/brush-editor-actions.c:49
+msgid "Edit Active Brush"
+msgstr "Edit Active Brush"
+
+#: ../app/actions/dialogs-actions.c:195
+msgid "_Keyboard Shortcuts"
+msgstr "_Keyboard Shortcuts"
+
+#: ../app/widgets/gimpcontrollerlist.c:298
+msgid "Configure the selected controller"
+msgstr "Configure the selected controller"
+
+#: ../app/dialogs/preferences-dialog.c:2180
+msgid "_Display rendering intent:"
+msgstr "_Display rendering intent:"
+
+#: ../app/dialogs/preferences-dialog.c:2166
+msgid "Select Monitor Color Profile"
+msgstr "Select Monitor Colour Profile"
+
+#: ../app/batch.c:84 ../app/batch.c:101
+#, c-format
+msgid "The batch interpreter '%s' is not available. Batch mode disabled."
+msgstr "The batch interpreter '%s' is not available. Batch mode disabled."
+
+#: ../app/actions/tool-options-actions.c:64
+msgid "_Restore Options From"
+msgstr "_Restore Options From"
+
+#: ../app/config/gimprc-blurbs.h:255
+msgid "When enabled, the image window will automatically resize itself whenever the physical image size changes."
+msgstr "When enabled, the image window will automatically resize itself whenever the physical image size changes."
+
+#: ../app/dialogs/channel-options-dialog.c:173
+msgid "Initialize from _selection"
+msgstr "Initialise from _selection"
+
+#: ../app/widgets/gimplayertreeview.c:307
+msgid "Lock:"
+msgstr "Lock:"
+
+#. the pick FG/BG frame
+#: ../app/tools/gimpcolorpickeroptions.c:167
+#, c-format
+msgid "Pick Mode  (%s)"
+msgstr "Pick Mode  (%s)"
+
+#: ../app/actions/documents-actions.c:76
+msgid "_Clear History"
+msgstr "_Clear History"
+
+#: ../app/pdb/drawable_transform_cmds.c:1665
+#: ../app/pdb/drawable_transform_cmds.c:1808
+#: ../app/pdb/transform_tools_cmds.c:594 ../app/tools/gimpsheartool.c:121
+msgid "Shearing"
+msgstr "Shearing"
+
+#: ../app/tools/gimpforegroundselectoptions.c:85
+msgid "Size of the brush used for refinements"
+msgstr "Size of the brush used for refinements"
+
+#: ../app/dialogs/preferences-dialog.c:1378
+msgid "Save document _history on exit"
+msgstr "Save document _history on exit"
+
+#: ../app/actions/layers-actions.c:184
+msgid "Lock Alph_a Channel"
+msgstr "Lock Alph_a Channel"
+
+#: ../app/core/core-enums.c:869
+msgid "Path modification"
+msgstr "Path modification"
+
+#: ../app/actions/documents-actions.c:77
+msgid "Clear the entire document history"
+msgstr "Clear the entire document history"
+
+#: ../app/dialogs/layer-options-dialog.c:119
+msgid "Layer _name:"
+msgstr "Layer _name:"
+
+#: ../app/tools/gimphuesaturationtool.c:418
+msgid "R_eset Color"
+msgstr "R_eset Colour"
+
+#: ../app/tools/gimpscaletool.c:114
+msgid "Scaling Information"
+msgstr "Scaling Information"
+
+#: ../app/dialogs/user-install-dialog.c:158
+msgid "Key shortcuts can be dynamically redefined. The menurc is a dump of your configuration so it can be remembered for the next session.  You may edit this file if you wish, but it is much easier to define the keys from within GIMP.  Deleting this file will restore the default shortcuts."
+msgstr "Key shortcuts can be dynamically redefined. The menurc is a dump of your configuration so it can be remembered for the next session.  You may edit this file if you wish, but it is much easier to define the keys from within GIMP.  Deleting this file will restore the default shortcuts."
+
+#: ../app/dialogs/preferences-dialog.c:2163
+msgid "_CMYK profile:"
+msgstr "_CMYK profile:"
+
+#: ../app/dialogs/preferences-dialog.c:2316
+msgid "Hint for other _docks:"
+msgstr "Hint for other _docks:"
+
+#: ../app/widgets/gimpcontrollerlist.c:182
+msgid "Available Controllers"
+msgstr "Available Controllers"
+
+#: ../app/actions/edit-commands.c:296
+msgid "Copy Visible Named "
+msgstr "Copy Visible Named "
+
+#: ../app/widgets/gimpcontrollerlist.c:603
+msgid "Configure Controller"
+msgstr "Configure Controller"
+
+#: ../app/core/gimpdrawable-foreground-extract.c:134
+msgid "Foreground Extraction"
+msgstr "Foreground Extraction"
+
+#: ../app/actions/palettes-actions.c:72
+msgid "Copy Palette _Location"
+msgstr "Copy Palette _Location"
+
+#: ../app/core/gimpimagefile.c:588
+msgid "Loading preview..."
+msgstr "Loading preview..."
+
+#: ../app/core/gimpdatafactory.c:406 ../app/core/gimpdatafactory.c:580
+#, c-format
+msgid ""
+"Failed to save data:\n"
+"\n"
+"%s"
+msgstr ""
+"Failed to save data:\n"
+"\n"
+"%s"
+
+#: ../app/actions/plug-in-actions.c:81
+msgid "Reset all _Filters"
+msgstr "Reset all _Filters"
+
+#: ../app/dialogs/preferences-dialog.c:2162
+msgid "Select RGB Color Profile"
+msgstr "Select RGB Colour Profile"
+
+#: ../app/core/core-enums.c:813 ../app/core/core-enums.c:844
+msgid "Layer/Channel"
+msgstr "Layer/Channel"
+
+#: ../app/actions/documents-commands.c:197
+msgid "Clear Document History"
+msgstr "Clear Document History"
+
+#: ../app/tools/gimptransformoptions.c:420
+#, c-format
+msgid "Keep height  (%s)"
+msgstr "Keep height  (%s)"
+
+#: ../app/tools/gimptextoptions.c:503
+msgid "Text along Path"
+msgstr "Text along Path"
+
+#: ../app/actions/file-actions.c:94
+msgid "Save _As..."
+msgstr "Save _As..."
+
+#: ../app/widgets/gimpstrokeeditor.c:178
+msgid "Line width:"
+msgstr "Line width:"
+
+#: ../app/core/gimppalette-import.c:369
+#, c-format
+msgid "Index %d"
+msgstr "Index %d"
+
+#: ../app/tools/gimpforegroundselecttool.c:312
+msgid "Draw a rough circle around the object to extract"
+msgstr "Draw a rough circle around the object to extract"
+
+#: ../app/widgets/gimpthumbbox.c:311
+#, c-format
+msgid ""
+"Click to update preview\n"
+"%s%sClick to force update even if preview is up-to-date"
+msgstr ""
+"Click to update preview\n"
+"%s%sClick to force update even if preview is up-to-date"
+
+#: ../app/widgets/gimpcontrollerlist.c:494
+msgid ""
+"There can only be one active wheel controller.\n"
+"\n"
+"You already have a wheel controller in your list of active controllers."
+msgstr ""
+"There can only be one active wheel controller.\n"
+"\n"
+"You already have a wheel controller in your list of active controllers."
+
+#: ../app/config/gimprc-blurbs.h:42
+msgid "Context-dependent mouse pointers are helpful.  They are enabled by default.  However, they require overhead that you may want to do without."
+msgstr "Context-dependent mouse pointers are helpful.  They are enabled by default.  However, they require overhead that you may want to do without."
+
+#: ../app/tools/gimphuesaturationtool.c:344
+msgid "Adjust Selected Color"
+msgstr "Adjust Selected Colour"
+
+#: ../app/actions/cursor-info-actions.c:48
+#: ../app/actions/sample-point-editor-actions.c:48
+msgid "Sample Merged"
+msgstr "Sample Merged"
+
+#: ../app/config/gimprc-blurbs.h:291
+msgid "When enabled, the mouse pointer will be shown over the image while using a paint tool."
+msgstr "When enabled, the mouse pointer will be shown over the image while using a paint tool."
+
+#: ../app/tools/gimpcurvestool.c:359
+msgid "Click to add control points to all channels."
+msgstr "Click to add control points to all channels."
+
+#: ../app/dialogs/preferences-dialog.c:1598
+msgid "Select Web Browser"
+msgstr "Select Web Browser"
+
+#: ../app/widgets/gimpimagepropview.c:181
+msgid "Number of pixels:"
+msgstr "Number of pixels:"
+
+#: ../app/actions/cursor-info-actions.c:47
+#: ../app/actions/sample-point-editor-actions.c:47
+#: ../app/widgets/gimpcursorview.c:191
+msgid "_Sample Merged"
+msgstr "_Sample Merged"
+
+#: ../app/tools/gimptextoptions.c:154
+msgid "Adjust line spacing"
+msgstr "Adjust line spacing"
+
+#: ../app/dialogs/image-merge-layers-dialog.c:68
+msgid "_Merge"
+msgstr "_Merge"
+
+#: ../app/dialogs/preferences-dialog.c:2168
+msgid "Select Printer Color Profile"
+msgstr "Select Printer Colour Profile"
+
+#: ../app/widgets/gimpcontrollerlist.c:538
+#, c-format
+msgid "Remove Controller '%s'?"
+msgstr "Remove Controller '%s'?"
+
+#: ../app/actions/quick-mask-commands.c:112
+msgid "_Mask opacity:"
+msgstr "_Mask opacity:"
+
+#: ../app/tools/gimpforegroundselectoptions.c:248
+msgid "Large brush"
+msgstr "Large brush"
+
+#: ../app/widgets/gimpcontrollereditor.c:389
+msgid "_Grab event"
+msgstr "_Grab event"
+
+#: ../app/actions/channels-commands.c:92
+#: ../app/actions/channels-commands.c:125
+msgid "_Fill opacity:"
+msgstr "_Fill opacity:"
+
+#: ../app/actions/window-actions.c:168
+#, c-format
+msgid "Screen %s"
+msgstr "Screen %s"
+
+#: ../app/widgets/gimpdock.c:287
+msgid "Close all Tabs?"
+msgstr "Close all Tabs?"
+
+#: ../app/actions/brushes-actions.c:66
+msgid "Copy brush file location to clipboard"
+msgstr "Copy brush file location to clipboard"
+
+#: ../app/tools/gimptransformoptions.c:400
+#, c-format
+msgid "15 degrees  (%s)"
+msgstr "15 degrees  (%s)"
+
+#: ../app/core/gimppalette-import.c:599
+#, c-format
+msgid "Unknown type of palette file: %s"
+msgstr "Unknown type of palette file: %s"
+
+#: ../app/dialogs/quit-dialog.c:162
+msgid "If you close these images now, changes will be lost."
+msgstr "If you close these images now, changes will be lost."
+
+#: ../app/widgets/gimpcoloreditor.c:243
+msgid "Hexadecimal color notation as used in HTML and CSS"
+msgstr "Hexadecimal colour notation as used in HTML and CSS"
+
+#: ../app/config/gimprc-blurbs.h:39
+msgid "Sets the type of mouse pointers to use."
+msgstr "Sets the type of mouse pointers to use."
+
+#: ../app/tools/gimpcolorbalancetool.c:239
+msgid "Select Range to Adjust"
+msgstr "Select Range to Adjust"
+
+#: ../app/dialogs/user-install-dialog.c:190
+msgid "This folder is used to store user defined brushes. GIMP checks this folder in addition to the system-wide brushes installation."
+msgstr "This folder is used to store user defined brushes. GIMP checks this folder in addition to the system-wide brushes installation."
+
+#: ../app/pdb/edit_cmds.c:1181 ../app/tools/gimpblendtool.c:205
+msgid "Blending"
+msgstr "Blending"
+
+#: ../app/actions/edit-actions.c:118
+msgid "_New Image"
+msgstr "_New Image"
+
+#: ../app/tools/gimphuesaturationtool.c:239
+msgid "Select Primary Color to Adjust"
+msgstr "Select Primary Colour to Adjust"
+
+#: ../app/tools/gimppaintoptions-gui.c:413
+msgid "Amount:"
+msgstr "Amount:"
+
+#: ../app/actions/patterns-actions.c:71
+msgid "_Delete Pattern"
+msgstr "_Delete Pattern"
+
+#: ../app/config/gimprc-blurbs.h:334
+msgid "Enable tooltips display."
+msgstr "Enable tooltips display."
+
+#: ../app/tools/gimpforegroundselectoptions.c:76
+msgid "Select a single contiguous area"
+msgstr "Select a single contiguous area"
+
+#: ../app/tools/gimpcolorbalancetool.c:286
+msgid "R_eset Range"
+msgstr "R_eset Range"
+
+#: ../app/widgets/gimpcontrollereditor.c:399
+msgid "Select the next event arriving from the controller"
+msgstr "Select the next event arriving from the controller"
+
+#: ../app/widgets/gimpuimanager.c:677
+#, c-format
+msgid "There was an error parsing the menu definition from %s: %s"
+msgstr "There was an error parsing the menu definition from %s: %s"
+
+#: ../app/actions/patterns-actions.c:65
+msgid "Copy Pattern _Location"
+msgstr "Copy Pattern _Location"
+
+#: ../app/widgets/gimpcontrollerlist.c:247
+msgid "Create a controller of the selected type."
+msgstr "Create a controller of the selected type."
+
+#: ../app/core/gimp-edit.c:565
+msgid "Global Buffer"
+msgstr "Global Buffer"
+
+#: ../app/core/gimpdatafactory.c:721
+#, c-format
+msgid ""
+"Failed to load data:\n"
+"\n"
+"%s"
+msgstr ""
+"Failed to load data:\n"
+"\n"
+"%s"
+
+#: ../app/core/core-enums.c:366
+msgid "Dash, dot, dot"
+msgstr "Dash, dot, dot"
+
+#: ../app/config/gimprc-blurbs.h:259
+msgid "When enabled, the image window will automatically resize itself when zooming into and out of images."
+msgstr "When enabled, the image window will automatically resize itself when zooming into and out of images."
+
+#: ../app/tools/gimpclonetool.c:319
+msgid "Alignment:"
+msgstr "Alignment:"
+
+#: ../app/widgets/gimpcontrollerlist.c:542
+msgid ""
+"Removing this controller from the list of active controllers will permanently delete all event mappings you have configured.\n"
+"\n"
+"Selecting \"Disable Controller\" will disable the controller without removing it."
+msgstr ""
+"Removing this controller from the list of active controllers will permanently delete all event mappings you have configured.\n"
+"\n"
+"Selecting \"Disable Controller\" will disable the controller without removing it."
+
+#: ../app/core/gimpstrokeoptions.c:119
+msgid "Convert a mitered join to a bevelled join if the miter would extend to a distance of more than miter-limit * line-width from the actual join point."
+msgstr "Convert a mitred join to a bevelled join if the mitre would extend to a distance of more than mitre-limit * line-width from the actual join point."
+
+#: ../app/actions/image-commands.c:298
+#: ../app/pdb/drawable_transform_cmds.c:250
+#: ../app/pdb/drawable_transform_cmds.c:406
+msgid "Flipping"
+msgstr "Flipping"
+
+#: ../app/dialogs/user-install-dialog.c:220
+msgid "This folder is used to store user defined patterns.  GIMP checks this folder in addition to the system-wide patterns installation when searching for patterns."
+msgstr "This folder is used to store user defined patterns.  GIMP checks this folder in addition to the system-wide patterns installation when searching for patterns."
+
+#: ../app/display/gimpdisplayshell-close.c:135
+msgid "Do_n't Save"
+msgstr "Do_n't Save"
+
+#. the anti_erase toggle
+#: ../app/tools/gimperasertool.c:151
+#, c-format
+msgid "Anti erase  (%s)"
+msgstr "Anti erase  (%s)"
+
+#: ../app/dialogs/user-install-dialog.c:280
+msgid "This folder is used for temporary files."
+msgstr "This folder is used for temporary files."
+
+#. Snapping Distance
+#: ../app/dialogs/preferences-dialog.c:1650
+msgid "Guide & Grid Snapping"
+msgstr "Guide & Grid Snapping"
+
+#: ../app/actions/layers-actions.c:176
+msgid "_Remove Alpha Channel"
+msgstr "_Remove Alpha Channel"
+
+#. granularity
+#: ../app/tools/gimpforegroundselectoptions.c:274
+msgid "Color Sensitivity"
+msgstr "Colour Sensitivity"
+
+#: ../app/dialogs/user-install-dialog.c:227
+msgid "This folder is used to store user created, temporary, or otherwise non-system-supported plug-ins.  GIMP checks this folder in addition to the system-wide plug-in folder."
+msgstr "This folder is used to store user created, temporary, or otherwise non-system-supported plug-ins.  GIMP checks this folder in addition to the system-wide plug-in folder."
+
+#: ../app/widgets/gimpimagepropview.c:173
+msgid "Undo steps:"
+msgstr "Undo steps:"
+
+#: ../app/dialogs/user-install-dialog.c:206
+msgid "This folder is used to store user defined gradients.  GIMP checks this folder in addition to the system-wide gradients installation."
+msgstr "This folder is used to store user defined gradients.  GIMP checks this folder in addition to the system-wide gradients installation."
+
+#: ../app/core/core-enums.c:814 ../app/core/core-enums.c:845
+msgid "Layer/Channel modification"
+msgstr "Layer/Channel modification"
+
+#: ../app/sanity.c:211
+#, c-format
+msgid ""
+"The name of the directory holding the GIMP user configuration cannot be converted to UTF-8: %s\n"
+"\n"
+"Your filesystem probably stores files in an encoding other than UTF-8 and you didn't tell GLib about this. Please set the environment variable G_FILENAME_ENCODING."
+msgstr ""
+"The name of the directory holding the GIMP user configuration cannot be converted to UTF-8: %s\n"
+"\n"
+"Your filesystem probably stores files in an encoding other than UTF-8 and you didn't tell GLib about this. Please set the environment variable G_FILENAME_ENCODING."
+
+#: ../app/actions/file-actions.c:114
+msgid "Close all"
+msgstr "Close all"
+
+#: ../app/dialogs/user-install-dialog.c:243
+msgid "This folder is used to store configuration for user created, temporary, or otherwise non-system-supported plug-in interpreters.  GIMP checks this folder in addition to the system-wide GIMP interpreters folder when searching for plug-in interpreter configuration files."
+msgstr "This folder is used to store configuration for user created, temporary, or otherwise non-system-supported plug-in interpreters.  GIMP checks this folder in addition to the system-wide GIMP interpreters folder when searching for plug-in interpreter configuration files."
+
+#. tool toggle
+#: ../app/tools/gimpflipoptions.c:139
+#, c-format
+msgid "Flip Type  (%s)"
+msgstr "Flip Type  (%s)"
+
+#: ../app/actions/palette-editor-actions.c:63
+msgid "Edit Active Palette"
+msgstr "Edit Active Palette"
+
+#: ../app/actions/cursor-info-actions.c:40
+msgid "Pointer Information Menu"
+msgstr "Pointer Information Menu"
+
+#: ../app/dialogs/preferences-dialog.c:2183
+msgid "_Softproof rendering intent:"
+msgstr "_Softproof rendering intent:"
+
+#: ../app/actions/documents-commands.c:220
+msgid "Remove all entries from the document history?"
+msgstr "Remove all entries from the document history?"
+
+#: ../app/core/gimplayer.c:1662
+msgid "Remove Alpha Channel"
+msgstr "Remove Alpha Channel"
+
+#: ../app/tools/gimpselectiontool.c:240
+msgid "Anchor the floating selection"
+msgstr "Anchor the floating selection"
+
+#: ../app/actions/gradients-actions.c:61
+msgid "Copy gradient file location to clipboard"
+msgstr "Copy gradient file location to clipboard"
+
+#: ../app/tools/gimpforegroundselecttool.c:296
+msgid "Add more strokes or press Enter to accept the selection"
+msgstr "Add more strokes or press Enter to accept the selection"
+
+#: ../app/dialogs/convert-dialog.c:277
+msgid "Converting to indexed"
+msgstr "Converting to indexed"
+
+#: ../app/dialogs/preferences-dialog.c:2161
+msgid "_RGB profile:"
+msgstr "_RGB profile:"
+
+#. GPL_PAGE
+#. version number
+#: ../app/dialogs/user-install-dialog.c:789
+#, c-format
+msgid "Welcome to GIMP %d.%d"
+msgstr "Welcome to GIMP %d.%d"
+
+#: ../app/widgets/gimpcontrollerlist.c:486
+msgid ""
+"There can only be one active keyboard controller.\n"
+"\n"
+"You already have a keyboard controller in your list of active controllers."
+msgstr ""
+"There can only be one active keyboard controller.\n"
+"\n"
+"You already have a keyboard controller in your list of active controllers."
+
+#: ../app/dialogs/user-install-dialog.c:253
+msgid "This folder is used to store user created, temporary, or otherwise non-system-supported additions to the plug-in environment.  GIMP checks this folder in addition to the system-wide GIMP environment folder when searching for plug-in environment modification files."
+msgstr "This folder is used to store user created, temporary, or otherwise non-system-supported additions to the plug-in environment.  GIMP checks this folder in addition to the system-wide GIMP environment folder when searching for plug-in environment modification files."
+
+#: ../app/core/gimppattern.c:272 ../app/core/gimppattern.c:318
+#: ../app/core/gimppattern.c:349
+#, c-format
+msgid "Fatal parse error in pattern file '%s': File appears truncated."
+msgstr "Fatal parse error in pattern file '%s': File appears truncated."
+
+#: ../app/widgets/gimpcontrollerlist.c:527
+msgid "Remove Controller"
+msgstr "Remove Controller"
+
+#: ../app/widgets/gimphistogrameditor.c:99
+msgid "Std dev:"
+msgstr "Std dev:"
+
+#: ../app/actions/tool-options-actions.c:87
+msgid "Reset _all Tool Options"
+msgstr "Reset _all Tool Options"
+
+#: ../app/core/core-enums.c:808
+msgid "Merge paths"
+msgstr "Merge paths"
+
+#: ../app/dialogs/stroke-dialog.c:212
+msgid "Paint tool:"
+msgstr "Paint tool:"
+
+#. Mouse Pointers
+#: ../app/dialogs/preferences-dialog.c:1842
+msgid "Mouse Pointers"
+msgstr "Mouse Pointers"
+
+#. fill selection
+#: ../app/tools/gimpbucketfilloptions.c:226
+#, c-format
+msgid "Affected Area  (%s)"
+msgstr "Affected Area  (%s)"
+
+#: ../app/core/gimp.c:546
+msgid "Initialization"
+msgstr "Initialisation"
+
+#: ../app/tools/gimpforegroundselecttool.c:140
+msgid "F_oreground Select"
+msgstr "F_oreground Select"
+
+#: ../app/dialogs/module-dialog.c:507
+msgid "Available types:"
+msgstr "Available types:"
+
+#: ../app/dialogs/user-install-dialog.c:1428
+msgid "Select Swap Dir"
+msgstr "Select Swap Dir"
+
+#: ../app/actions/image-commands.c:319
+#: ../app/pdb/drawable_transform_cmds.c:1043
+#: ../app/pdb/drawable_transform_cmds.c:1202
+#: ../app/pdb/transform_tools_cmds.c:343 ../app/tools/gimprotatetool.c:121
+msgid "Rotating"
+msgstr "Rotating"
+
+#: ../app/config/gimprc-blurbs.h:337
+msgid "Sets the swap file location. GIMP uses a tile based memory allocation scheme. The swap file is used to quickly and easily swap tiles out to disk and back in. Be aware that the swap file can easily get very large if GIMP is used with large images. Also, things can get horribly slow if the swap file is created on a directory that is mounted over NFS.  For these reasons, it may be desirable to put your swap file in \"/tmp\"."
+msgstr "Sets the swap file location. GIMP uses a tile based memory allocation scheme. The swap file is used to quickly and easily swap tiles out to disk and back in. Be aware that the swap file can easily get very large if GIMP is used with large images. Also, things can get horribly slow if the swap file is created on a directory that is mounted over NFS.  For these reasons, it may be desirable to put your swap file in \"/tmp\"."
+
+#: ../app/dialogs/desaturate-dialog.c:61
+msgid "Remove Colors"
+msgstr "Remove Colours"
+
+#: ../app/core/gimpimage-convert.c:810
+msgid "Cannot convert image: palette is empty."
+msgstr "Cannot convert image: palette is empty."
+
+#: ../app/tools/gimpforegroundselecttool.c:139
+msgid "Extract foreground objects"
+msgstr "Extract foreground objects"
+
+#: ../app/pdb/drawable_transform_cmds.c:2143
+#: ../app/pdb/drawable_transform_cmds.c:2331
+#: ../app/pdb/drawable_transform_cmds.c:2533
+msgid "2D Transforming"
+msgstr "2D Transforming"
+
+#: ../app/widgets/gimpcontrollerlist.c:314
+msgid "Move the selected controller down"
+msgstr "Move the selected controller down"
+
+#: ../app/dialogs/preferences-dialog.c:2167
+msgid "_Print simulation profile:"
+msgstr "_Print simulation profile:"
+
+#: ../app/tools/gimpforegroundselectoptions.c:90
+msgid "Smaller values give a more accurate selection border but may introduce holes in the selection"
+msgstr "Smaller values give a more accurate selection border but may introduce holes in the selection"
+
+#: ../app/tools/gimpcroptool.c:221
+msgid "Click or press enter to resize."
+msgstr "Click or press enter to resize."
+
+#: ../app/dialogs/preferences-dialog.c:2320
+msgid "Toolbox and other docks are transient to the active display"
+msgstr "Toolbox and other docks are transient to the active display"
+
+#: ../app/widgets/gimptoolbox.c:700
+msgid "Foreground & background colors.  The black and white squares reset colors.  The arrows swap colors. Click to open the color selection dialog."
+msgstr "Foreground & background colours.  The black and white squares reset colours.  The arrows swap colours. Click to open the colour selection dialogue."
+
+#. tool toggle
+#: ../app/tools/gimpcropoptions.c:189 ../app/tools/gimpmagnifyoptions.c:182
+#: ../app/tools/gimpmoveoptions.c:188
+#, c-format
+msgid "Tool Toggle  (%s)"
+msgstr "Tool Toggle  (%s)"
+
+#: ../app/dialogs/preferences-dialog.c:2165
+msgid "_Monitor profile:"
+msgstr "_Monitor profile:"
+
+#: ../app/dialogs/quit-dialog.c:102
+msgid "Quit GIMP"
+msgstr "Quit GIMP"
+
+#: ../app/tools/gimpforegroundselectoptions.c:225
+msgid "Mark foreground"
+msgstr "Mark foreground"
+
+#: ../app/tools/gimppaintoptions-gui.c:396
+msgid "Apply Jitter"
+msgstr "Apply Jitter"
+
+#: ../app/actions/sample-point-editor-actions.c:40
+msgid "Sample Point Menu"
+msgstr "Sample Point Menu"
+
+#: ../app/tools/gimphuesaturationtool.c:131
+msgid "Adjust Hue / Lightness / Saturation"
+msgstr "Adjust Hue / Lightness / Saturation"
+
+#: ../app/actions/edit-commands.c:148
+#, c-format
+msgid "Clearing the undo history of this image will gain %s of memory."
+msgstr "Clearing the undo history of this image will gain %s of memory."
+
+#: ../app/actions/dialogs-actions.c:115 ../app/dialogs/dialogs.c:141
+msgid "Pointer"
+msgstr "Pointer"
+
+#: ../app/actions/image-commands.c:228 ../app/actions/image-commands.c:488
+msgid "Resizing"
+msgstr "Resizing"
+
+#: ../app/actions/gradients-actions.c:72
+msgid "_Delete Gradient"
+msgstr "_Delete Gradient"
+
+#: ../app/dialogs/palette-import-dialog.c:329
+msgid "Palette _name:"
+msgstr "Palette _name:"
+
+#: ../app/tools/gimptextoptions.c:160
+msgid "Adjust letter spacing"
+msgstr "Adjust letter spacing"
+
+#: ../app/core/core-enums.c:867
+msgid "New path"
+msgstr "New path"
+
+#. GIMP_STOCK_COPY_VISIBLE,
+#: ../app/actions/edit-actions.c:133
+msgid "Copy _Visible Named..."
+msgstr "Copy _Visible Named..."
+
+#: ../app/actions/edit-actions.c:83
+msgid "Clear undo history"
+msgstr "Clear undo history"
+
+#: ../app/dialogs/preferences-dialog.c:431
+msgid "Configure Input Devices"
+msgstr "Configure Input Devices"
+
+#: ../app/about.h:33
+msgid ""
+"This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA."
+msgstr ""
+"This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public Licence as published by the Free Software Foundation; either version 2 of the Licence, or (at your option) any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public Licence for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public Licence along with this program; if not, write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA."
+
+#: ../app/widgets/gimpcontrollereditor.c:657
+#, c-format
+msgid "Select Action for Event '%s'"
+msgstr "Select Action for Event '%s'"
+
+#: ../app/actions/edit-actions.c:113
+msgid "Paste as New"
+msgstr "Paste as New"
+
+#: ../app/dialogs/preferences-dialog.c:1855
+msgid "Pointer _mode:"
+msgstr "Pointer _mode:"
+
+#: ../app/dialogs/preferences-dialog.c:1849
+msgid "Show pointer for paint _tools"
+msgstr "Show pointer for paint _tools"
+
+#: ../app/core/gimpimage-convert.c:959
+msgid "Converting to indexed (stage 3)"
+msgstr "Converting to indexed (stage 3)"
+
+#: ../app/actions/image-actions.c:69
+msgid "_Components"
+msgstr "_Components"
+
+#: ../app/tools/tools-enums.c:29
+msgid "Add to palette"
+msgstr "Add to palette"
+
+#: ../app/actions/plug-in-actions.c:392
+#, c-format
+msgid "R_e-Show \"%s\""
+msgstr "R_e-Show \"%s\""
+
+#: ../app/dialogs/quit-dialog.c:102
+msgid "Close All Images"
+msgstr "Close All Images"
+
+#. offset, used as a verb
+#: ../app/dialogs/offset-dialog.c:117
+msgid "_Offset"
+msgstr "_Offset"
+
+#: ../app/dialogs/preferences-dialog.c:1129
+msgid "Select Custom Canvas Padding Color"
+msgstr "Select Custom Canvas Padding Colour"
+
+#: ../app/tools/gimphuesaturationtool.c:272
+msgid "Adjust all colors"
+msgstr "Adjust all colours"
+
+#: ../app/actions/patterns-actions.c:66
+msgid "Copy pattern file location to clipboard"
+msgstr "Copy pattern file location to clipboard"
+
+#: ../app/dialogs/module-dialog.c:175
+msgid "Module Path"
+msgstr "Module Path"
+
+#: ../app/tools/gimpselectiontool.c:228
+msgid "Move the selection mask"
+msgstr "Move the selection mask"
+
+#: ../app/core/core-enums.c:817 ../app/core/core-enums.c:850
+msgid "Link/Unlink item"
+msgstr "Link/Unlink item"
+
+#: ../app/widgets/gimplayertreeview.c:295
+msgid "Lock alpha channel"
+msgstr "Lock alpha channel"
+
+#: ../app/tools/gimptextoptions.c:495
+msgid "Create Path from Text"
+msgstr "Create Path from Text"
+
+#: ../app/tools/gimpcroptool.c:218
+msgid "Click or press enter to crop."
+msgstr "Click or press enter to crop."
+
+#: ../app/core/core-enums.c:877
+msgid "Select foreground"
+msgstr "Select foreground"
+
+#: ../app/core/core-enums.c:870
+msgid "Reposition path"
+msgstr "Reposition path"
+
+#. the type radio box
+#: ../app/tools/gimpconvolvetool.c:159
+#, c-format
+msgid "Convolve Type  (%s)"
+msgstr "Convolve Type  (%s)"
+
+#: ../app/tools/gimptransformoptions.c:422
+#, c-format
+msgid "Keep width  (%s)"
+msgstr "Keep width  (%s)"
+
+#: ../app/dialogs/layer-add-mask-dialog.c:100
+msgid "In_vert mask"
+msgstr "In_vert mask"
+
+#: ../app/config/gimprc-blurbs.h:349
+msgid "When enabled, dock windows (the toolbox and palettes) are set to be transient to the active image window. Most window managers will keep the dock windows above the image window then, but it may also have other effects."
+msgstr "When enabled, dock windows (the toolbox and palettes) are set to be transient to the active image window. Most window managers will keep the dock windows above the image window then, but it may also have other effects."
+
+#: ../app/tools/gimpforegroundselectoptions.c:101
+msgid "Sensitivity for brightness component"
+msgstr "Sensitivity for brightness component"
+
+#: ../app/tools/gimpforegroundselectoptions.c:223
+msgid "Interactive refinement"
+msgstr "Interactive refinement"
+
+#: ../app/actions/documents-actions.c:65
+msgid "Copy image location to clipboard"
+msgstr "Copy image location to clipboard"
+
+#: ../app/tools/gimpcurvestool.c:354
+msgid "Click to add a control point."
+msgstr "Click to add a control point."
+
+#: ../app/dialogs/tips-dialog.c:218
+msgid "_Previous Tip"
+msgstr "_Previous Tip"
+
+#: ../app/widgets/gimpcontrollerlist.c:520
+msgid "Remove Controller?"
+msgstr "Remove Controller?"
+
+#: ../app/widgets/gimpcontrollerlist.c:606
+msgid "Configure Input Controller"
+msgstr "Configure Input Controller"
+
+#: ../app/dialogs/about-dialog.c:125
+msgid "Visit the GIMP website"
+msgstr "Visit the GIMP website"
+
+#: ../app/dialogs/palette-import-dialog.c:283
+msgid "Select Palette File"
+msgstr "Select Palette File"
+
+#: ../app/pdb/drawable_transform_cmds.c:1961
+#: ../app/pdb/transform_tools_cmds.c:728
+msgid "2D Transform"
+msgstr "2D Transform"
+
+#: ../app/dialogs/user-install-dialog.c:263
+msgid "This folder is used to store user created and installed scripts.  GIMP checks this folder in addition to the systemwide scripts folder."
+msgstr "This folder is used to store user created and installed scripts.  GIMP checks this folder in addition to the systemwide scripts folder."
+
+#: ../app/dialogs/preferences-dialog.c:2036
+msgid "_Check style:"
+msgstr "_Check style:"
+
+#: ../app/paint/paint-enums.c:28
+msgid "Fixed"
+msgstr "Fixed"
+
+#: ../app/tools/gimptransformtool.c:225
+msgid "Transforming"
+msgstr "Transforming"
+
+#: ../app/tools/gimpvectoroptions.c:167
+msgid "Create Selection from Path"
+msgstr "Create Selection from Path"
+
+#: ../app/config/gimprc-blurbs.h:36
+msgid "Sets the pixel format to use for mouse pointers."
+msgstr "Sets the pixel format to use for mouse pointers."
+
+#. the use_info_window toggle button
+#: ../app/tools/gimpcolorpickeroptions.c:176
+#, c-format
+msgid "Use info window  (%s)"
+msgstr "Use info window  (%s)"
+
+#: ../app/widgets/gimpstrokeeditor.c:268
+msgid "Dash _preset:"
+msgstr "Dash _preset:"
+
+#: ../app/dialogs/preferences-dialog.c:1858
+msgid "Pointer re_ndering:"
+msgstr "Pointer re_ndering:"
+
+#: ../app/widgets/gimpthumbbox.c:722 ../app/widgets/gimpthumbbox.c:732
+msgid "Creating preview..."
+msgstr "Creating preview..."
+
