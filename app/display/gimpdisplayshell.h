@@ -169,6 +169,7 @@ struct _GimpDisplayShell
 
   GdkRectangle     *highlight;         /* in image coordinates, can be NULL   */
   GimpDrawable     *mask;
+  GimpChannelType   mask_color;
 
   gpointer          scroll_info;
 };
@@ -240,7 +241,8 @@ void        gimp_display_shell_selection_visibility  (GimpDisplayShell *shell,
 void        gimp_display_shell_set_highlight         (GimpDisplayShell *shell,
                                                       const GdkRectangle *highlight);
 void        gimp_display_shell_set_mask              (GimpDisplayShell *shell,
-                                                      GimpDrawable     *mask);
+                                                      GimpDrawable     *mask,
+                                                      GimpChannelType   color);
 
 
 #endif /* __GIMP_DISPLAY_SHELL_H__ */

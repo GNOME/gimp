@@ -1631,6 +1631,7 @@ gimp_display_shell_set_highlight (GimpDisplayShell   *shell,
  * gimp_display_shell_set_mask:
  * @shell: a #GimpDisplayShell
  * @mask:  a #GimpDrawable (1 byte per pixel)
+ * @color: the color to use for drawing the mask
  *
  * Allows to preview a selection (used by the foreground selection
  * tool).  Pixels that are not selected (> 127) in the mask are tinted
@@ -1638,20 +1639,25 @@ gimp_display_shell_set_highlight (GimpDisplayShell   *shell,
  **/
 void
 gimp_display_shell_set_mask (GimpDisplayShell *shell,
-                             GimpDrawable     *mask)
+                             GimpDrawable     *mask,
+                             GimpChannelType   color)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (mask == NULL ||
                     (GIMP_IS_DRAWABLE (mask) &&
                      gimp_drawable_bytes (mask) == 1));
 
-  if (shell->mask == mask)
+  if (shell->mask == mask && shell->mask_color == color)
     return;
+
+  if (mask)
+    g_object_ref (mask);
 
   if (shell->mask)
     g_object_unref (shell->mask);
 
-  shell->mask = mask ? g_object_ref (mask) : NULL;
+  shell->mask = mask;
+  shell->mask_color = color;
 
   gimp_display_shell_expose_full (shell);
 }

@@ -659,7 +659,8 @@ gimp_foreground_select_tool_set_mask (GimpForegroundSelectTool *fg_select,
                                       GimpDisplay              *gdisp,
                                       GimpChannel              *mask)
 {
-  GimpTool *tool = GIMP_TOOL (fg_select);
+  GimpTool                    *tool = GIMP_TOOL (fg_select);
+  GimpForegroundSelectOptions *options;
 
   if (fg_select->mask == mask)
     return;
@@ -673,8 +674,10 @@ gimp_foreground_select_tool_set_mask (GimpForegroundSelectTool *fg_select,
   if (mask)
     fg_select->mask = g_object_ref (mask);
 
+  options = GIMP_FOREGROUND_SELECT_OPTIONS (tool->tool_info->tool_options);
+
   gimp_display_shell_set_mask (GIMP_DISPLAY_SHELL (gdisp->shell),
-                               GIMP_DRAWABLE (mask));
+                               GIMP_DRAWABLE (mask), options->mask_color);
 
   if (mask)
     {
@@ -827,16 +830,26 @@ gimp_foreground_select_options_notify (GimpForegroundSelectOptions *options,
       refinement = SIOX_REFINEMENT_CHANGE_SENSITIVITY;
     }
 
-  if (! refinement)
-    return;
+  if (refinement)
+    {
+      fg_select->refinement |= refinement;
 
-  fg_select->refinement |= refinement;
+      if (fg_select->idle_id)
+        g_source_remove (fg_select->idle_id);
 
-  if (fg_select->idle_id)
-    g_source_remove (fg_select->idle_id);
+      fg_select->idle_id =
+        g_idle_add_full (G_PRIORITY_LOW,
+                         (GSourceFunc) gimp_foreground_select_tool_idle_select,
+                         fg_select, NULL);
+    }
 
-  fg_select->idle_id =
-    g_idle_add_full (G_PRIORITY_LOW,
-                     (GSourceFunc) gimp_foreground_select_tool_idle_select,
-                     fg_select, NULL);
+  if (strncmp (pspec->name, "mask-color", strlen ("mask-color")) == 0)
+    {
+      GimpTool *tool = GIMP_TOOL (fg_select);
+
+      if (tool->gdisp)
+        gimp_display_shell_set_mask (GIMP_DISPLAY_SHELL (tool->gdisp->shell),
+                                     GIMP_DRAWABLE (fg_select->mask),
+                                     options->mask_color);
+    }
 }

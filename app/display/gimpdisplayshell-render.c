@@ -365,15 +365,45 @@ gimp_display_shell_render_mask (GimpDisplayShell *shell,
 	  const guchar *src  = info->src;
 	  guchar       *dest = info->dest;
 
-	  for (x = info->x; x < xe; x++, src++, dest += 3)
-	    {
-              if (*src & 0x80)
-                continue;
+          switch (shell->mask_color)
+            {
+            case GIMP_RED_CHANNEL:
+              for (x = info->x; x < xe; x++, src++, dest += 3)
+                {
+                  if (*src & 0x80)
+                    continue;
 
-              dest[0] = dest[0] >> 2;
-              dest[1] = dest[1] >> 2;
+                  dest[1] = dest[1] >> 2;
+                  dest[2] = dest[2] >> 2;
+                }
+              break;
+
+            case GIMP_GREEN_CHANNEL:
+              for (x = info->x; x < xe; x++, src++, dest += 3)
+                {
+                  if (*src & 0x80)
+                    continue;
+
+                  dest[0] = dest[0] >> 2;
+                  dest[2] = dest[2] >> 2;
+                }
+              break;
+
+            case GIMP_BLUE_CHANNEL:
+              for (x = info->x; x < xe; x++, src++, dest += 3)
+                {
+                  if (*src & 0x80)
+                    continue;
+
+                  dest[0] = dest[0] >> 2;
+                  dest[1] = dest[1] >> 2;
+                }
+              break;
+
+            default:
+              break;
             }
-	}
+        }
 
       if (++y == ye)
         break;

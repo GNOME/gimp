@@ -42,6 +42,7 @@ enum
   PROP_BACKGROUND,
   PROP_STROKE_WIDTH,
   PROP_SMOOTHNESS,
+  PROP_MASK_COLOR,
   PROP_EXPANDED,
   PROP_SENSITIVITY_L,
   PROP_SENSITIVITY_A,
@@ -92,6 +93,11 @@ gimp_foreground_select_options_class_init (GimpForegroundSelectOptionsClass *kla
                                   "in the selection"),
                                 0, 8, SIOX_DEFAULT_SMOOTHNESS,
                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_MASK_COLOR,
+                                 "mask-color", NULL,
+                                 GIMP_TYPE_CHANNEL_TYPE,
+                                 GIMP_BLUE_CHANNEL,
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_EXPANDED,
                                     "expanded", NULL,
                                     FALSE,
@@ -140,6 +146,9 @@ gimp_foreground_select_options_set_property (GObject      *object,
     case PROP_SMOOTHNESS:
       options->smoothness = g_value_get_int (value);
       break;
+    case PROP_MASK_COLOR:
+      options->mask_color = g_value_get_enum (value);
+      break;
     case PROP_EXPANDED:
       options->expanded = g_value_get_boolean (value);
       break;
@@ -180,6 +189,9 @@ gimp_foreground_select_options_get_property (GObject    *object,
     case PROP_SMOOTHNESS:
       g_value_set_int (value, options->smoothness);
       break;
+    case PROP_MASK_COLOR:
+      g_value_set_enum (value, options->mask_color);
+      break;
     case PROP_EXPANDED:
       g_value_set_boolean (value, options->expanded);
       break;
@@ -208,6 +220,7 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
   GtkWidget *frame;
   GtkWidget *scale;
   GtkWidget *label;
+  GtkWidget *menu;
   GtkWidget *inner_frame;
   GtkWidget *table;
   GtkObject *adj;
@@ -259,7 +272,8 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (scale);
 
   /*  smoothness  */
-  table = gtk_table_new (1, 3, FALSE);
+  table = gtk_table_new (2, 3, FALSE);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
@@ -269,6 +283,12 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_RIGHT);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("Smoothing:"), 0.0, 0.5, scale, 2, FALSE);
+
+  /*  mask color */
+  menu = gimp_prop_enum_combo_box_new (config, "mask-color",
+                                       GIMP_RED_CHANNEL, GIMP_BLUE_CHANNEL);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+                             _("Preview color:"), 0.0, 0.5, menu, 2, FALSE);
 
   /*  granularity  */
   frame = gimp_prop_expander_new (config, "expanded", _("Color Sensitivity"));

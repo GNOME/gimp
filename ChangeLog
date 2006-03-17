@@ -1,5 +1,13 @@
 2006-03-17  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-render.c
+	* app/display/gimpdisplayshell.[ch]
+	* app/tools/gimpforegroundselectoptions.[ch]
+	* app/tools/gimpforegroundselecttool.c: allow to use red, green or
+	blue for the selection preview used by the foreground selection tool.
+
+2006-03-17  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/*.c: removed trailing period from procedure blurbs.
 
 2006-03-16  Michael Natterer  <mitch@gimp.org>
