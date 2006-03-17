@@ -181,7 +181,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_NAME,
-                          N_("Combine two images using depth maps (z-buffers)."),
+                          N_("Combine two images using depth maps (z-buffers)"),
                           "Taking as input two full-color, full-alpha "
                             "images and two corresponding grayscale depth "
                             "maps, this plug-in combines the images based "

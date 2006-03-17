@@ -197,11 +197,11 @@ query (void)
   };
 
   const gchar *hurl_blurb =
-    N_("Completely randomize a fraction of pixels.");
+    N_("Completely randomize a fraction of pixels");
   const gchar *pick_blurb =
-    N_("Randomly interchange some pixels with neighbors.");
+    N_("Randomly interchange some pixels with neighbors");
   const gchar *slur_blurb =
-    N_("Randomly slide some pixels downward (similar to melting).");
+    N_("Randomly slide some pixels downward (similar to melting)");
 
   const gchar *hurl_help =
     "This plug-in ``hurls'' randomly-valued pixels onto the selection or "
