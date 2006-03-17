@@ -1,5 +1,29 @@
 2006-03-17  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb.pl: generically map NULL to -1 when returning
+	object IDs.
+
+	* tools/pdbgen/app.pl: remove support for "return_fail => foo"
+	which did the same on a per-return-value basis. Removed some more
+	obscure perl without any effect on the generated code.
+
+	* tools/pdbgen/pdb/image.pdb
+	* tools/pdbgen/pdb/text_tool.pdb: don't use "return_fail => foo".
+
+	* app/pdb/channel_cmds.c
+	* app/pdb/display_cmds.c
+	* app/pdb/drawable_cmds.c
+	* app/pdb/drawable_transform_cmds.c
+	* app/pdb/edit_cmds.c
+	* app/pdb/fileops_cmds.c
+	* app/pdb/image_cmds.c
+	* app/pdb/layer_cmds.c
+	* app/pdb/selection_cmds.c
+	* app/pdb/transform_tools_cmds.c
+	* app/pdb/vectors_cmds.c: regenerated.
+
+2006-03-17  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/pdb/image.pdb: removed all remaining utility
 	functions, some cleanup and doc fixes.
 

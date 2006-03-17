@@ -956,7 +956,7 @@ drawable_get_image_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&drawable_get_image_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_image_get_ID (gimage);
+    return_args[1].value.pdb_int = gimage ? gimp_image_get_ID (gimage) : -1;
 
   return return_args;
 }

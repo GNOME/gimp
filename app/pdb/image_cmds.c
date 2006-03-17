@@ -313,7 +313,7 @@ image_new_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&image_new_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_image_get_ID (image);
+    return_args[1].value.pdb_int = image ? gimp_image_get_ID (image) : -1;
 
   return return_args;
 }
@@ -390,7 +390,7 @@ image_duplicate_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&image_duplicate_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_image_get_ID (new_image);
+    return_args[1].value.pdb_int = new_image ? gimp_image_get_ID (new_image) : -1;
 
   return return_args;
 }
@@ -1800,7 +1800,7 @@ image_pick_correlate_layer_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&image_pick_correlate_layer_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (layer));
+    return_args[1].value.pdb_int = layer ? gimp_item_get_ID (GIMP_ITEM (layer)) : -1;
 
   return return_args;
 }
@@ -2841,7 +2841,7 @@ image_flatten_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&image_flatten_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (layer));
+    return_args[1].value.pdb_int = layer ? gimp_item_get_ID (GIMP_ITEM (layer)) : -1;
 
   return return_args;
 }
@@ -2911,7 +2911,7 @@ image_merge_visible_layers_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&image_merge_visible_layers_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (layer));
+    return_args[1].value.pdb_int = layer ? gimp_item_get_ID (GIMP_ITEM (layer)) : -1;
 
   return return_args;
 }
@@ -2991,7 +2991,7 @@ image_merge_down_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&image_merge_down_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (layer));
+    return_args[1].value.pdb_int = layer ? gimp_item_get_ID (GIMP_ITEM (layer)) : -1;
 
   return return_args;
 }
@@ -3976,7 +3976,7 @@ image_get_selection_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&image_get_selection_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (selection));
+    return_args[1].value.pdb_int = selection ? gimp_item_get_ID (GIMP_ITEM (selection)) : -1;
 
   return return_args;
 }

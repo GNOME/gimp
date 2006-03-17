@@ -318,7 +318,7 @@ edit_paste_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&edit_paste_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (floating_sel));
+    return_args[1].value.pdb_int = floating_sel ? gimp_item_get_ID (GIMP_ITEM (floating_sel)) : -1;
 
   return return_args;
 }
@@ -386,7 +386,7 @@ edit_paste_as_new_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&edit_paste_as_new_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_image_get_ID (image);
+    return_args[1].value.pdb_int = image ? gimp_image_get_ID (image) : -1;
 
   return return_args;
 }
@@ -724,7 +724,7 @@ edit_named_paste_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&edit_named_paste_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (floating_sel));
+    return_args[1].value.pdb_int = floating_sel ? gimp_item_get_ID (GIMP_ITEM (floating_sel)) : -1;
 
   return return_args;
 }
@@ -810,7 +810,7 @@ edit_named_paste_as_new_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&edit_named_paste_as_new_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_image_get_ID (image);
+    return_args[1].value.pdb_int = image ? gimp_image_get_ID (image) : -1;
 
   return return_args;
 }

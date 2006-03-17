@@ -422,15 +422,7 @@ CODE
 	    $argc++; $outargs .= ' ' x 2;
 
             if (exists $arg->{id_ret_func}) {
-		my $ret = eval qq/"$arg->{id_ret_func}"/;
-		$ret = eval qq/"$_->{id_ret_func}"/ if exists $_->{id_ret_func};
-
-		if (exists $_->{return_fail}) {
-		    $var = "$var ? $ret : $_->{return_fail}";
-		}
-		else {
-		    $var = $ret;
-		}
+		$var = eval qq/"$arg->{id_ret_func}"/;
 	    }
 
 	    $outargs .= "return_args[$argc].value.pdb_$type = $var;\n";

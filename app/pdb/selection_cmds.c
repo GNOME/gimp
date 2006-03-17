@@ -412,7 +412,7 @@ selection_float_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&selection_float_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (layer));
+    return_args[1].value.pdb_int = layer ? gimp_item_get_ID (GIMP_ITEM (layer)) : -1;
 
   return return_args;
 }
@@ -1003,7 +1003,7 @@ selection_save_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&selection_save_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (channel));
+    return_args[1].value.pdb_int = channel ? gimp_item_get_ID (GIMP_ITEM (channel)) : -1;
 
   return return_args;
 }

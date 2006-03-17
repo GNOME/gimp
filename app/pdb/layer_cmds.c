@@ -151,7 +151,7 @@ layer_new_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&layer_new_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (layer));
+    return_args[1].value.pdb_int = layer ? gimp_item_get_ID (GIMP_ITEM (layer)) : -1;
 
   return return_args;
 }
@@ -266,7 +266,7 @@ layer_new_from_drawable_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&layer_new_from_drawable_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (layer_copy));
+    return_args[1].value.pdb_int = layer_copy ? gimp_item_get_ID (GIMP_ITEM (layer_copy)) : -1;
 
   return return_args;
 }
@@ -336,7 +336,7 @@ layer_copy_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&layer_copy_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (layer_copy));
+    return_args[1].value.pdb_int = layer_copy ? gimp_item_get_ID (GIMP_ITEM (layer_copy)) : -1;
 
   return return_args;
 }
@@ -824,7 +824,7 @@ layer_create_mask_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&layer_create_mask_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (mask));
+    return_args[1].value.pdb_int = mask ? gimp_item_get_ID (GIMP_ITEM (mask)) : -1;
 
   return return_args;
 }

@@ -91,7 +91,7 @@ flip_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&flip_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (drawable));
+    return_args[1].value.pdb_int = drawable ? gimp_item_get_ID (GIMP_ITEM (drawable)) : -1;
 
   return return_args;
 }
@@ -220,7 +220,7 @@ perspective_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&perspective_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (drawable));
+    return_args[1].value.pdb_int = drawable ? gimp_item_get_ID (GIMP_ITEM (drawable)) : -1;
 
   return return_args;
 }
@@ -364,7 +364,7 @@ rotate_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&rotate_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (drawable));
+    return_args[1].value.pdb_int = drawable ? gimp_item_get_ID (GIMP_ITEM (drawable)) : -1;
 
   return return_args;
 }
@@ -486,7 +486,7 @@ scale_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&scale_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (drawable));
+    return_args[1].value.pdb_int = drawable ? gimp_item_get_ID (GIMP_ITEM (drawable)) : -1;
 
   return return_args;
 }
@@ -616,7 +616,7 @@ shear_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&shear_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (drawable));
+    return_args[1].value.pdb_int = drawable ? gimp_item_get_ID (GIMP_ITEM (drawable)) : -1;
 
   return return_args;
 }
@@ -749,7 +749,7 @@ transform_2d_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&transform_2d_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (drawable));
+    return_args[1].value.pdb_int = drawable ? gimp_item_get_ID (GIMP_ITEM (drawable)) : -1;
 
   return return_args;
 }

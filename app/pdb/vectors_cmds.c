@@ -116,7 +116,7 @@ vectors_new_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&vectors_new_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (vectors));
+    return_args[1].value.pdb_int = vectors ? gimp_item_get_ID (GIMP_ITEM (vectors)) : -1;
 
   return return_args;
 }
@@ -274,7 +274,7 @@ vectors_get_image_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&vectors_get_image_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_image_get_ID (image);
+    return_args[1].value.pdb_int = image ? gimp_image_get_ID (image) : -1;
 
   return return_args;
 }

@@ -1232,7 +1232,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'drawable', type => 'drawable', return_fail => '-1',
+	{ name => 'drawable', type => 'drawable',
 	  desc => 'The active drawable' }
     );
 
@@ -1412,8 +1412,7 @@ HELP
 
     @outargs = (
 	{ name => 'floating_sel', type => 'layer',
-	  desc => "The image's floating selection",
-	  return_fail => -1 }
+	  desc => "The image's floating selection" }
     );
 
     %invoke = (
@@ -1441,8 +1440,7 @@ HELP
 
     @outargs = (
 	{ name => 'drawable', type => 'drawable',
-	  desc => 'The drawable the floating selection is attached to',
-	  return_fail => -1 }
+	  desc => 'The drawable the floating selection is attached to' }
     );
 
     %invoke = (
@@ -1532,7 +1530,7 @@ HELP
 
     @outargs = (
 	{ name => 'active_layer', type => 'layer',
-	  desc => 'The active layer', return_fail => '-1' }
+	  desc => 'The active layer' }
     );
 
     %invoke = (
@@ -1587,7 +1585,7 @@ HELP
 
     @outargs = (
 	{ name => 'active_channel', type => 'channel',
-	  desc => 'The active channel', return_fail => '-1' }
+	  desc => 'The active channel' }
     );
 
     %invoke = (
@@ -1642,7 +1640,7 @@ HELP
 
     @outargs = (
 	{ name => 'active_vectors', type => 'vectors',
-	  desc => 'The active vectors', return_fail => '-1' }
+	  desc => 'The active vectors' }
     );
 
     %invoke = (
@@ -2171,7 +2169,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'layer', type => 'layer', return_fail => '-1',
+	{ name => 'layer', type => 'layer',
 	  desc => 'The layer with the specified tattoo' }
     );
 
@@ -2200,7 +2198,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'channel', type => 'channel', return_fail => '-1',
+	{ name => 'channel', type => 'channel',
 	  desc => 'The channel with the specified tattoo' }
     );
 
@@ -2229,7 +2227,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'vectors', type => 'vectors', return_fail => '-1',
+	{ name => 'vectors', type => 'vectors',
 	  desc => 'The vectors with the specified tattoo' }
     );
 

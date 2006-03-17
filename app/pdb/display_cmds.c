@@ -75,7 +75,7 @@ display_new_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&display_new_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_get_display_ID (gimp, display);
+    return_args[1].value.pdb_int = display ? gimp_get_display_ID (gimp, display) : -1;
 
   return return_args;
 }

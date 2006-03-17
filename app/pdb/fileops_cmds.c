@@ -218,7 +218,7 @@ file_load_layer_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&file_load_layer_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (layer));
+    return_args[1].value.pdb_int = layer ? gimp_item_get_ID (GIMP_ITEM (layer)) : -1;
 
   return return_args;
 }

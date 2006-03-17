@@ -108,7 +108,7 @@ channel_new_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&channel_new_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (channel));
+    return_args[1].value.pdb_int = channel ? gimp_item_get_ID (GIMP_ITEM (channel)) : -1;
 
   return return_args;
 }
@@ -214,7 +214,7 @@ channel_new_from_component_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&channel_new_from_component_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (channel));
+    return_args[1].value.pdb_int = channel ? gimp_item_get_ID (GIMP_ITEM (channel)) : -1;
 
   return return_args;
 }
@@ -290,7 +290,7 @@ channel_copy_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&channel_copy_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (channel_copy));
+    return_args[1].value.pdb_int = channel_copy ? gimp_item_get_ID (GIMP_ITEM (channel_copy)) : -1;
 
   return return_args;
 }
